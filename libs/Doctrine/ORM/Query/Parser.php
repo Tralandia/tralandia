@@ -323,7 +323,7 @@ class Parser
 
         return $this->_parserResult;
     }
-    
+
     private function assertSelectEntityRootAliasRequirement()
     {
         if ( count($this->_identVariableExpressions) > 0) {
@@ -333,20 +333,20 @@ class Parser
                     $foundRootEntity = true;
                 }
             }
-            
+
             if (!$foundRootEntity) {
                 $this->semanticalError('Cannot select entity through identification variables without choosing at least one root entity alias.');
             }
         }
     }
-    
+
     /**
      * Fix order of identification variables.
-     * 
+     *
      * They have to appear in the select clause in the same order as the
      * declarations (from ... x join ... y join ... z ...) appear in the query
      * as the hydration process relies on that order for proper operation.
-     * 
+     *
      * @param AST\SelectStatement|AST\DeleteStatement|AST\UpdateStatement $AST
      * @return void
      */
@@ -467,7 +467,7 @@ class Parser
 
             $token = $this->_lexer->peek();
         }
-        
+
         $this->_lexer->resetPeek();
 
         return $token;
@@ -661,7 +661,7 @@ class Parser
             if (($field = $pathExpression->field) === null) {
                 $field = $pathExpression->field = $class->identifier[0];
             }
-            
+
             // Check if field or association exists
             if ( ! isset($class->associationMappings[$field]) && ! isset($class->fieldMappings[$field])) {
                 $this->semanticalError(
@@ -716,7 +716,7 @@ class Parser
 
                 $this->semanticalError($semanticalError, $deferredItem['token']);
             }
-            
+
             // We need to force the type in PathExpression
             $pathExpression->type = $fieldType;
         }
@@ -967,7 +967,7 @@ class Parser
 
             $field = $this->_lexer->token['value'];
         }
-        
+
         // Creating AST node
         $pathExpr = new AST\PathExpression($expectedTypes, $identVariable, $field);
 
@@ -1518,7 +1518,7 @@ class Parser
             $this->match(Lexer::T_IDENTIFIER);
             $partialFieldSet[] = $this->_lexer->token['value'];
         }
-        
+
         $this->match(Lexer::T_CLOSE_CURLY_BRACE);
 
         $partialObjectExpression = new AST\PartialObjectExpression($identificationVariable, $partialFieldSet);
@@ -1645,7 +1645,7 @@ class Parser
         } else if ($lookahead == Lexer::T_INTEGER || $lookahead == Lexer::T_FLOAT) {
             return $this->SimpleArithmeticExpression();
         } else if ($lookahead == Lexer::T_CASE || $lookahead == Lexer::T_COALESCE || $lookahead == Lexer::T_NULLIF) {
-            // Since NULLIF and COALESCE can be identified as a function, 
+            // Since NULLIF and COALESCE can be identified as a function,
             // we need to check if before check for FunctionDeclaration
             return $this->CaseExpression();
         } else if ($this->_isFunction() || $this->_isAggregateFunction($this->_lexer->lookahead['type'])) {
@@ -1677,7 +1677,7 @@ class Parser
     public function CaseExpression()
     {
         $lookahead = $this->_lexer->lookahead['type'];
-        
+
         // if "CASE" "WHEN" => GeneralCaseExpression
         // else if "CASE" => SimpleCaseExpression
         // [DONE] else if "COALESCE" => CoalesceExpression
@@ -1685,26 +1685,26 @@ class Parser
         switch ($lookahead) {
             case Lexer::T_NULLIF:
                 return $this->NullIfExpression();
-                
+
             case Lexer::T_COALESCE:
                 return $this->CoalesceExpression();
-                
+
             default:
                 $this->semanticalError('CaseExpression not yet supported.');
                 return null;
         }
     }
-    
+
     /**
      * CoalesceExpression ::= "COALESCE" "(" ScalarExpression {"," ScalarExpression}* ")"
-     * 
-     * @return Doctrine\ORM\Query\AST\CoalesceExpression 
+     *
+     * @return Doctrine\ORM\Query\AST\CoalesceExpression
      */
     public function CoalesceExpression()
     {
         $this->match(Lexer::T_COALESCE);
         $this->match(Lexer::T_OPEN_PARENTHESIS);
-        
+
         // Process ScalarExpressions (1..N)
         $scalarExpressions = array();
         $scalarExpressions[] = $this->ScalarExpression();
@@ -1713,26 +1713,26 @@ class Parser
             $this->match(Lexer::T_COMMA);
             $scalarExpressions[] = $this->ScalarExpression();
         }
-        
+
         $this->match(Lexer::T_CLOSE_PARENTHESIS);
-        
+
         return new AST\CoalesceExpression($scalarExpressions);
     }
-    
+
     /**
      * NullIfExpression ::= "NULLIF" "(" ScalarExpression "," ScalarExpression ")"
-     * 
-     * @return Doctrine\ORM\Query\AST\ExistsExpression 
+     *
+     * @return Doctrine\ORM\Query\AST\ExistsExpression
      */
     public function NullIfExpression()
     {
         $this->match(Lexer::T_NULLIF);
         $this->match(Lexer::T_OPEN_PARENTHESIS);
-        
+
         $firstExpression = $this->ScalarExpression();
         $this->match(Lexer::T_COMMA);
         $secondExpression = $this->ScalarExpression();
-        
+
         $this->match(Lexer::T_CLOSE_PARENTHESIS);
 
         return new AST\NullIfExpression($firstExpression, $secondExpression);
@@ -1774,10 +1774,10 @@ class Parser
             }
         } else if ($this->_isFunction()) {
             $this->_lexer->peek(); // "("
-            
+
             $lookaheadType = $this->_lexer->lookahead['type'];
             $beyond        = $this->_peekBeyondClosingParenthesis();
-            
+
             if ($this->_isMathOperator($beyond)) {
                 $expression = $this->ScalarExpression();
             } else if ($this->_isAggregateFunction($this->_lexer->lookahead['type'])) {
@@ -1949,7 +1949,7 @@ class Parser
             $this->match(Lexer::T_NOT);
             $not = true;
         }
-        
+
         $conditionalPrimary = $this->ConditionalPrimary();
 
         // Phase 1 AST optimization: Prevent AST\ConditionalFactor
@@ -2275,7 +2275,7 @@ class Parser
             $this->match(($isPlus) ? Lexer::T_PLUS : Lexer::T_MINUS);
             $sign = $isPlus;
         }
-        
+
         $primary = $this->ArithmeticPrimary();
 
         // Phase 1 AST optimization: Prevent AST\ArithmeticFactor
@@ -2290,7 +2290,7 @@ class Parser
     /**
      * ArithmeticPrimary ::= SingleValuedPathExpression | Literal | "(" SimpleArithmeticExpression ")"
      *          | FunctionsReturningNumerics | AggregateExpression | FunctionsReturningStrings
-     *          | FunctionsReturningDatetime | IdentificationVariable | ResultVariable 
+     *          | FunctionsReturningDatetime | IdentificationVariable | ResultVariable
      */
     public function ArithmeticPrimary()
     {
@@ -2314,11 +2314,11 @@ class Parser
                 if ($peek['value'] == '.') {
                     return $this->SingleValuedPathExpression();
                 }
-                
+
                 if (isset($this->_queryComponents[$this->_lexer->lookahead['value']]['resultVariable'])) {
                     return $this->ResultVariable();
                 }
-                
+
                 return $this->StateFieldPathExpression();
 
             case Lexer::T_INPUT_PARAMETER:
@@ -2609,7 +2609,7 @@ class Parser
         }
 
         $instanceOfExpression->value = $exprValue;
-        
+
         return $instanceOfExpression;
     }
 

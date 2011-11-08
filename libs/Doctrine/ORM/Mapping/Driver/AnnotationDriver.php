@@ -499,15 +499,15 @@ class AnnotationDriver implements Driver
                     new \RecursiveDirectoryIterator($path, \FilesystemIterator::SKIP_DOTS),
                     \RecursiveIteratorIterator::LEAVES_ONLY
                 ),
-                '/^.+\\' . $this->_fileExtension . '$/i', 
+                '/^.+\\' . $this->_fileExtension . '$/i',
                 \RecursiveRegexIterator::GET_MATCH
             );
-            
+
             foreach ($iterator as $file) {
                 $sourceFile = realpath($file[0]);
-                
+
                 require_once $sourceFile;
-                
+
                 $includedFiles[] = $sourceFile;
             }
         }

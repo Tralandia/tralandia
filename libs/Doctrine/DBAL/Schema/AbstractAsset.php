@@ -71,7 +71,7 @@ abstract class AbstractAsset
 
     /**
      * Trim quotes from the identifier.
-     * 
+     *
      * @param  string $identifier
      * @return string
      */
@@ -82,7 +82,7 @@ abstract class AbstractAsset
 
     /**
      * Return name of this schema asset.
-     * 
+     *
      * @return string
      */
     public function getName()

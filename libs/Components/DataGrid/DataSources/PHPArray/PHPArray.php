@@ -11,7 +11,7 @@ class PHPArray extends DataGrid\DataSources\DataSource
 {
 	/** @var array */
 	private $items;
-	
+
 	/** @var array */
 	private $source;
 

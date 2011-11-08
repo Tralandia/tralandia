@@ -13,7 +13,7 @@ abstract class BasePresenter extends Presenter {
 	protected function createComponentFlashes($name) {
 		return new FlashesControl($this, $name);
 	}
-	
+
 	public function getParams() {
 		return (object)$this->getParam();
 	}
@@ -22,15 +22,15 @@ abstract class BasePresenter extends Presenter {
 		parent::flashMessage($message, $type);
 		$this->getComponent('flashes')->invalidateControl();
 	}
-	
+
 	public function invalidateFlashMessage() {
 		$this->getComponent('flashes')->invalidateControl();
 	}
-	
+
 	public function getEntityManager() {
 		return $this->context->doctrine->entityManager;
 	}
-	
+
 	public function getEm() {
 		return $this->getEntityManager();
 	}

@@ -6,31 +6,31 @@
  * @HasLifecycleCallbacks
  */
 class User extends BaseEntity {
-	
+
 	const ROLE_GUEST = 'guest';
 	const ROLE_MEMBER = 'member';
 	const ROLE_ADMIN = 'admin';
-	
+
 	/**
 	 * @Column(type="string")
 	 */
 	protected $email;
-	
+
 	/**
 	 * @Column(type="string")
 	 */
 	protected $password;
-	
+
 	/**
 	 * @Column(type="string", length=10)
 	 */
 	protected $role;
-	
+
 	/**
 	 * @Column(type="string")
 	 */
 	protected $fullname;
-	
+
 	/**
 	 * @Column(type="datetime")
 	 */
@@ -40,12 +40,12 @@ class User extends BaseEntity {
 	 * @Column(type="datetime")
 	 */
 	protected $modified;
-	
+
 	/**
 	 * @OneToMany(targetEntity="Article", mappedBy="user")
 	 */
 	protected $articles = null;
-	
+
 	/**
 	 * Startup
 	 */
@@ -53,7 +53,7 @@ class User extends BaseEntity {
 		$this->articles = new \Doctrine\Common\Collections\ArrayCollection;
 		parent::__construct($data);
 	}
-	
+
 	/**
 	 * Create user
 	 * @PrePersist
@@ -61,7 +61,7 @@ class User extends BaseEntity {
 	public function created() {
 		$this->created = new \DateTime('now');
 	}
-	
+
 	/**
 	 * Modify user
 	 * @PrePersist
@@ -70,7 +70,7 @@ class User extends BaseEntity {
 	public function modified() {
 		$this->modified = new \DateTime('now');
 	}
-	
+
 	/**
 	 * Password setter
 	 * @param string $password
@@ -78,7 +78,7 @@ class User extends BaseEntity {
 	public function setPassword($password) {
 		$this->password = \Authenticator::calculateHash($password);
 	}
-	
+
 	/**
 	 * Password getter
 	 * @return string
@@ -86,7 +86,7 @@ class User extends BaseEntity {
 	public function getPassword() {
 		return $this->password;
 	}
-	
+
 	/**
 	 * Role setter
 	 * @param string $role
@@ -97,7 +97,7 @@ class User extends BaseEntity {
 		}
 		$this->role = $role;
 	}
-	
+
 	/**
 	 * Role getter
 	 * @return string

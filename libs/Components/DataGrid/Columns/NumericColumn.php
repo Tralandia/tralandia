@@ -55,7 +55,7 @@ class NumericColumn extends Column
 
 	/**
 	 * Filter data source
-	 * 
+	 *
 	 * @param  mixed
 	 * @return void
 	 */
@@ -66,7 +66,7 @@ class NumericColumn extends Column
 		$dataGrid = $this->getDataGrid();
 
 		if ($value === 'NULL' || $value === 'NOT NULL') {
-			
+
 			$dataGrid->getDataSource()->filter($this->name, "IS $value");
 
 		} else {

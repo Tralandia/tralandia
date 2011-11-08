@@ -6,7 +6,7 @@ $(document).ready(function() {
 	} else if ($.browser.opera) {
 		$("body").addClass("opera");
 	}
-	
+
 	$("a.ajax, a.datagrid-ajax").live("click", function (event) {
 	    event.preventDefault();
 	    $.get(this.href);
@@ -17,7 +17,7 @@ $(document).ready(function() {
 		$(this).ajaxSubmit();
 		return false;
     });
-	
+
 	$("form.ajax :submit, form.datagrid :submit").live("click", function(e) {
 		try {tinyMCE.triggerSave();} catch (e) {};
 		$(this).ajaxSubmit();
@@ -29,12 +29,12 @@ $(document).ready(function() {
 		$(this).ajaxSubmit();
 		return false;
 	});
-	
+
 	$("form.datagrid select").live("change", function() {
 		$(this).parents("form.datagrid").find("input:submit[name=itemsSubmit]").ajaxSubmit();
 		return false;
 	});
-	
+
 	$("input.datepicker").livequery(function() {
 		$(this).datepicker({duration: 'fast'});
 	});
@@ -44,12 +44,12 @@ $(document).ready(function() {
 });
 
 
-Function.prototype.bind = function(obj) { 
-	var method = this, 
-	temp = function() { 
-		return method.apply(obj, arguments); 
-	}; 
-	return temp; 
+Function.prototype.bind = function(obj) {
+	var method = this,
+	temp = function() {
+		return method.apply(obj, arguments);
+	};
+	return temp;
 }
 function goLocation(url) {
 	document.location = url;

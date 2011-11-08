@@ -3,15 +3,15 @@
 use Nette;
 
 class SpeedUploadAuthenticator extends Nette\Object implements Nette\Security\IAuthenticator {
-	
+
 	private $userlist;
 	private $identity = null;
-	
+
 	public function __construct(array $userlist, Nette\Security\Identity $identity = null) {
 		$this->userlist = $userlist;
 		$this->identity = $identity;
 	}
-	
+
 	public function authenticate(array $credentials) {
 		list($username, $password) = $credentials;
 		foreach ($this->userlist as $name => $pass) {

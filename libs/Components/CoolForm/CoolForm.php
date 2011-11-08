@@ -9,9 +9,9 @@ use Nette\Environment,
  */
 
 class CoolForm extends Form {
-	
+
 	const AJAX_CLASS = 'ajax';
-	
+
     public function __construct(\Nette\ComponentModel\IContainer $parent = NULL, $name = NULL) {
 		parent::__construct($parent, $name);
 		$this->getElementPrototype()->class(self::AJAX_CLASS);
@@ -32,25 +32,25 @@ class CoolForm extends Form {
 			return ObjectMixin::get($this, $name);
 		}
 	}
-	
+
 	public function onInvalid(Form $form) {
 		foreach ($form->getErrors() AS $error) {
 			$this->parent->flashMessage($error, 'error');
 		}
 	}
-	
+
 	public function getUser() {
 		return $this->em->find('User', $this->parent->user->id);
 	}
-	
+
 	public function getEm() {
 		return $this->parent->getEntityManager();
 	}
-	
+
 	public function getParam($key) {
 		return $this->parent->getParam($key);
 	}
-	
+
 	public function flashMessage($message, $type = 'info') {
 		$this->parent->flashMessage($message, $type);
 	}

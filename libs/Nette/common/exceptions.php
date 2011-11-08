@@ -150,5 +150,3 @@ class FatalErrorException extends \ErrorException
 	}
 
 }
-
-

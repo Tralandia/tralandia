@@ -14,16 +14,16 @@ class Configurator extends Nette\Configurator {
 	public static function createServiceDoctrine(DI\Container $container) {
 		$doctrine = new Kdyby\Doctrine\Container;
 		$doctrine->addService('container', $container);
-		
+
 		$doctrine->configuration->addCustomStringFunction('DATE_FORMAT', 'DateFormatFunction');
 		\Doctrine\DBAL\Types\Type::addType('blob', 'Doctrine\DBAL\Types\BlobType');
-		
+
 		$doctrine->entityManager->getConnection()->getDatabasePlatform()->registerDoctrineTypeMapping('BLOB', 'blob');
 		$doctrine->entityManager->getConnection()->getDatabasePlatform()->registerDoctrineTypeMapping('enum', 'string');
-		
+
 		return $doctrine;
 	}
-	
+
 	/**
 	 * @param DI\Container $container
 	 * @return Authenticator

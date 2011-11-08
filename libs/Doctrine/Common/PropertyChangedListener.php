@@ -45,4 +45,3 @@ interface PropertyChangedListener
      */
     function propertyChanged($sender, $propertyName, $oldValue, $newValue);
 }
-

@@ -218,7 +218,7 @@ class Gettext extends \Nette\Object implements IEditable
 		if (!is_int($form) || $form === NULL) {
 			$form = 1;
 		}
-		
+
 		if (!empty($message) && isset($this->dictionary[$message])) {
 			$tmp = preg_replace('/([a-z]+)/', '$$1', "n=$form;".$this->metadata['Plural-Forms']);
 			eval($tmp);
@@ -488,8 +488,8 @@ class Gettext extends \Nette\Object implements IEditable
 	{
 		//debug($options->getService('translator'));
 		//return new static(isset($options['dir']) ? (array) $options['dir'] : NULL, Environment::getVariable('lang', 'en'));
-		
-	
+
+
 		return new static(array(
 			Environment::getVariable('appDir') . '/locale',
 		), Environment::getVariable('lang', 'en'));

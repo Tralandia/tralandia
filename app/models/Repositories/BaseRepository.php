@@ -1,7 +1,7 @@
 <?php
 
 class BaseRepository extends Doctrine\ORM\EntityRepository {
-	
+
 	public function fetchPairs($key, $value = null) {
 		$collection = array();
 		foreach ($this->findAll() as $entity) {

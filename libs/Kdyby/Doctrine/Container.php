@@ -77,7 +77,7 @@ class Container extends Nette\DI\Container
 		// Proxies
 		$config->setProxyDir($this->container->params['proxiesDir']);
 		$config->setProxyNamespace(@$this->container->params['proxyNamespace'] ?: 'App\Models\Proxies');
-	
+
 		if ($this->container->params['productionMode']) {
 			$config->setAutoGenerateProxyClasses(FALSE);
 		} else {

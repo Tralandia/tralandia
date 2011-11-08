@@ -12,7 +12,7 @@
  * @property-read array $properties
  */
 class RssControl extends Nette\Application\UI\Control {
-	
+
 	/** @var array */
 	private $properties;
 
@@ -50,7 +50,7 @@ class RssControl extends Nette\Application\UI\Control {
 				throw new InvalidStateException("One of title or description has to be set.");
 			}
 		}
-		
+
 		// render template
 		$template = $this->getTemplate();
 		$template->setFile(dirname(__FILE__) . "/template.phtml");
@@ -70,7 +70,7 @@ class RssControl extends Nette\Application\UI\Control {
 		if ($date instanceof \DateTime) {
 			$date = $date->format('U');
 		}
-		
+
 		if (is_string($date) && $date === (string) (int) $date) {
 			$date = (int) $date;
 		}
@@ -82,7 +82,7 @@ class RssControl extends Nette\Application\UI\Control {
 		if (is_int($date)) {
 			$date = gmdate('D, d M Y H:i:s', $date) . " GMT";
 		}
-		
+
 		return (string)$date;
 	}
 
@@ -98,7 +98,7 @@ class RssControl extends Nette\Application\UI\Control {
 		if (isset($properties["lastBuildDate"])) {
 			$properties["lastBuildDate"] = self::prepareDate($properties["lastBuildDate"]);
 		}
-		
+
 		return $properties;
 	}
 
@@ -120,7 +120,7 @@ class RssControl extends Nette\Application\UI\Control {
 		if (isset($item["pubDate"])) {
 			$item["pubDate"] = self::prepareDate($item["pubDate"]);
 		}
-		
+
 		return $item;
 	}
 

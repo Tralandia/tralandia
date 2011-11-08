@@ -20,4 +20,3 @@ define('TEMP_DIR', ROOT_DIR . '/temp');
 
 // load bootstrap file
 require APP_DIR . '/bootstrap.php';
-

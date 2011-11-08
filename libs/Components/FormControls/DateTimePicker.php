@@ -26,7 +26,7 @@ class DateTimePicker extends Nette\Forms\Controls\TextInput
 
 	/**
 	 * Returns control's value.
-	 * @return mixed 
+	 * @return mixed
 	 */
 	public function getValue()
 	{
@@ -62,10 +62,10 @@ class DateTimePicker extends Nette\Forms\Controls\TextInput
 	 * @return Html
 	 */
 	public function getControl()
-	{		
+	{
 		$control = parent::getControl();
 		$control->class = 'datetimepicker';
-		
+
 		return $control;
 	}
 

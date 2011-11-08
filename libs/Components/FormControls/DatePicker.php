@@ -26,18 +26,18 @@ class DatePicker extends Nette\Forms\Controls\TextInput
 
 	/**
 	 * Returns control's value.
-	 * @return mixed 
+	 * @return mixed
 	 */
 	public function getValue()
 	{
 		if (strlen($this->value)) {
 			$tmp = preg_replace('~([[:space:]])~', '', $this->value);
 			$tmp = explode('.', $tmp);
-			
+
 			// database format Y-m-d
 			return \DateTime::createFromFormat("Y-m-d", $tmp[2] . '-' . $tmp[1] . '-' . $tmp[0]);
 		}
-		
+
 		return $this->value;
 	}
 
@@ -63,10 +63,10 @@ class DatePicker extends Nette\Forms\Controls\TextInput
 	 * @return Html
 	 */
 	public function getControl()
-	{		
+	{
 		$control = parent::getControl();
 		$control->class = 'datepicker';
-		
+
 		return $control;
 	}
 

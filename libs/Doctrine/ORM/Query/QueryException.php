@@ -135,7 +135,7 @@ class QueryException extends \Doctrine\ORM\ORMException
             "in the query."
         );
     }
-    
+
     public static function instanceOfUnrelatedClass($className, $rootClass)
     {
         return new self("Cannot check if a child of '" . $rootClass . "' is instanceof '" . $className . "', " .

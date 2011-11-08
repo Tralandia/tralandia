@@ -194,15 +194,15 @@ abstract class Type
     /**
      * Gets the (preferred) binding type for values of this type that
      * can be used when binding parameters to prepared statements.
-     * 
+     *
      * This method should return one of the PDO::PARAM_* constants, that is, one of:
-     * 
+     *
      * PDO::PARAM_BOOL
      * PDO::PARAM_NULL
      * PDO::PARAM_INT
      * PDO::PARAM_STR
      * PDO::PARAM_LOB
-     * 
+     *
      * @return integer
      */
     public function getBindingType()
@@ -244,7 +244,7 @@ abstract class Type
 
     /**
      * Modifies the SQL expression (identifier, parameter) to convert to a database value.
-     * 
+     *
      * @param string $sqlExpr
      * @param AbstractPlatform $platform
      * @return string

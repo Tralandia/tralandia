@@ -64,4 +64,3 @@ class DebugStack implements SQLLogger
         $this->queries[$this->currentQuery]['executionMS'] = microtime(true) - $this->start;
     }
 }
-

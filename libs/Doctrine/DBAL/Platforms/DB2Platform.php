@@ -347,7 +347,7 @@ class DB2Platform extends AbstractPlatform
             $indexes = $options['indexes'];
         }
         $options['indexes'] = array();
-        
+
         $sqls = parent::_getCreateTableSQL($tableName, $columns, $options);
 
         foreach ($indexes as $index => $definition) {
@@ -550,7 +550,7 @@ class DB2Platform extends AbstractPlatform
     {
         return false;
     }
-    
+
     protected function getReservedKeywordsClass()
     {
         return 'Doctrine\DBAL\Platforms\Keywords\DB2Keywords';

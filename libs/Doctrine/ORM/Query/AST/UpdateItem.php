@@ -50,4 +50,3 @@ class UpdateItem extends Node
         return $sqlWalker->walkUpdateItem($this);
     }
 }
-

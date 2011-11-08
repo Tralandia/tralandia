@@ -34,7 +34,7 @@ class ORMException extends Exception
         return new self("It's a requirement to specify a Metadata Driver and pass it ".
             "to Doctrine\ORM\Configuration::setMetadataDriverImpl().");
     }
-    
+
     public static function entityMissingForeignAssignedId($entity, $relatedEntity)
     {
         return new self(
@@ -50,7 +50,7 @@ class ORMException extends Exception
     {
         return new self("Entity of type " . get_class($entity) . " is missing an assigned ID. " .
             "The identifier generation strategy for this entity requires the ID field to be populated before ".
-            "EntityManager#persist() is called. If you want automatically generated identifiers instead " . 
+            "EntityManager#persist() is called. If you want automatically generated identifiers instead " .
             "you need to adjust the metadata mapping accordingly."
         );
     }

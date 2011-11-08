@@ -9,46 +9,46 @@ use Nette\Application as NA,
 	Nette\Utils\Strings;
 
 class RentalPresenter extends BasePresenter {
-	
-	public function renderDefault() {	
+
+	public function renderDefault() {
 		$this->template->articles = $this->em->getRepository('Article')->findAll();
 	}
 
 	public function renderAdd() {
 		$this->template->form = $this->getComponent('form');
 	}
-	
+
 	public function renderEdit($id = 0) {
 		$form = $this->getComponent('form');
 		$row = $this->em->find('Article', $id);
-		
+
 		if (!$row) {
 			throw new NA\BadRequestException('Record not found');
 		}
 		if (!$form->isSubmitted()) {
 			$form->setDefaults($row->toFormArray());
 		}
-		
+
 		$this->template->article = $row;
 		$this->template->form = $this->getComponent('form');
 	}
-	
+
 	public function actionDelete($id = 0) {
 		$row = $this->em->find('Article', $id);
 		if (!$row) {
 			throw new NA\BadRequestException('Record not found');
 		}
-		
+
 		$this->em->remove($row);
 		$this->em->flush();
 		$this->flashMessage('Article has been deleted.');
 		$this->redirect('default');
 	}
-	
+
 	protected function createComponentForm($name) {
 		return new \Forms\Rental($this, $name);
 	}
-	
+
 	protected function createComponentGrid($name) {
 		$grid = new \DataGrid\DataGrid;
 		$grid->setTranslator(Environment::getService('translator'));

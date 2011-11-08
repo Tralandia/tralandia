@@ -64,19 +64,18 @@ class SubstringFunction extends FunctionNode
         $parser->match(Lexer::T_OPEN_PARENTHESIS);
 
         $this->stringPrimary = $parser->StringPrimary();
-        
+
         $parser->match(Lexer::T_COMMA);
-        
+
         $this->firstSimpleArithmeticExpression = $parser->SimpleArithmeticExpression();
 
         $lexer = $parser->getLexer();
         if ($lexer->isNextToken(Lexer::T_COMMA)) {
             $parser->match(Lexer::T_COMMA);
-        
+
             $this->secondSimpleArithmeticExpression = $parser->SimpleArithmeticExpression();
         }
 
         $parser->match(Lexer::T_CLOSE_PARENTHESIS);
     }
 }
-

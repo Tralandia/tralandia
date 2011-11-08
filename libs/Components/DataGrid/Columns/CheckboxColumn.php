@@ -43,7 +43,7 @@ class CheckboxColumn extends NumericColumn
 
 	/**
 	 * Filter data source
-	 * 
+	 *
 	 * @param  mixed
 	 * @return void
 	 */

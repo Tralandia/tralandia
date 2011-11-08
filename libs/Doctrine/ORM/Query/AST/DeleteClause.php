@@ -47,4 +47,3 @@ class DeleteClause extends Node
         return $sqlWalker->walkDeleteClause($this);
     }
 }
-

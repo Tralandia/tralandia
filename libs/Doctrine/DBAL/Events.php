@@ -35,4 +35,3 @@ final class Events
 
     const postConnect = 'postConnect';
 }
-

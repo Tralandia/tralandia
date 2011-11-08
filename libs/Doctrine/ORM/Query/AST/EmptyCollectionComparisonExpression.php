@@ -18,7 +18,7 @@
  * and is licensed under the LGPL. For more information, see
  * <http://www.doctrine-project.org>.
  */
- 
+
 namespace Doctrine\ORM\Query\AST;
 
 /**
@@ -47,4 +47,3 @@ class EmptyCollectionComparisonExpression extends Node
         return $sqlWalker->walkEmptyCollectionComparisonExpression($this);
     }
 }
-

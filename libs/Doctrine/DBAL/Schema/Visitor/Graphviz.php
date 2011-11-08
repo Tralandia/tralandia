@@ -35,7 +35,7 @@ class Graphviz implements \Doctrine\DBAL\Schema\Visitor\Visitor
 
     public function acceptColumn(Table $table, Column $column)
     {
-        
+
     }
 
     public function acceptForeignKey(Table $localTable, ForeignKeyConstraint $fkConstraint)
@@ -53,7 +53,7 @@ class Graphviz implements \Doctrine\DBAL\Schema\Visitor\Visitor
 
     public function acceptIndex(Table $table, Index $index)
     {
-        
+
     }
 
     public function acceptSchema(Schema $schema)
@@ -68,7 +68,7 @@ class Graphviz implements \Doctrine\DBAL\Schema\Visitor\Visitor
 
     public function acceptSequence(Sequence $sequence)
     {
-        
+
     }
 
     public function acceptTable(Table $table)
@@ -139,7 +139,7 @@ class Graphviz implements \Doctrine\DBAL\Schema\Visitor\Visitor
      * You have to convert the output into a viewable format. For example use "neato" on linux systems
      * and execute:
      *
-     *  neato -Tpng -o er.png er.dot 
+     *  neato -Tpng -o er.png er.dot
      *
      * @param string $filename
      * @return void

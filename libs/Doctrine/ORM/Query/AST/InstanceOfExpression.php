@@ -35,7 +35,7 @@ class InstanceOfExpression extends Node
     public $not;
     public $identificationVariable;
     public $value;
-    
+
     public function __construct($identVariable)
     {
         $this->identificationVariable = $identVariable;
@@ -46,4 +46,3 @@ class InstanceOfExpression extends Node
         return $sqlWalker->walkInstanceOfExpression($this);
     }
 }
-

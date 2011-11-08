@@ -257,7 +257,7 @@ class ManyToManyPersister extends AbstractCollectionPersister
             $targetClass = $this->_em->getClassMetadata($mapping['sourceEntity']);
             $sourceId = $uow->getEntityIdentifier($element);
             $targetId = $uow->getEntityIdentifier($coll->getOwner());
-            
+
             $mapping = $sourceClass->associationMappings[$mapping['mappedBy']];
         } else {
             $sourceClass = $this->_em->getClassMetadata($mapping['sourceEntity']);

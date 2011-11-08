@@ -43,7 +43,7 @@ class DateTimeType extends Type
         return ($value !== null && !empty($value))
             ? $value->format($platform->getDateTimeFormatString()) : null;
     }
-    
+
     public function convertToPHPValue($value, AbstractPlatform $platform)
     {
         if ($value === null) {

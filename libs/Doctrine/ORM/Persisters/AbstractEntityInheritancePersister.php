@@ -26,7 +26,7 @@ use Doctrine\ORM\Mapping\ClassMetadata,
  * Base class for entity persisters that implement a certain inheritance mapping strategy.
  * All these persisters are assumed to use a discriminator column to discriminate entity
  * types in the hierarchy.
- * 
+ *
  * @author Roman Borschel <roman@code-factory.org>
  * @author Benjamin Eberlei <kontakt@beberlei.de>
  * @since 2.0
@@ -48,7 +48,7 @@ abstract class AbstractEntityInheritancePersister extends BasicEntityPersister
 
     /**
      * Gets the name of the table that contains the discriminator column.
-     * 
+     *
      * @return string The table name.
      */
     abstract protected function _getDiscriminatorColumnTableName();
@@ -71,7 +71,7 @@ abstract class AbstractEntityInheritancePersister extends BasicEntityPersister
         $columnAlias = $joinColumnName . $this->_sqlAliasCounter++;
         $resultColumnName = $this->_platform->getSQLResultCasing($columnAlias);
         $this->_rsm->addMetaResult('r', $resultColumnName, $joinColumnName);
-        
+
         return $tableAlias . ".$joinColumnName AS $columnAlias";
     }
 }

@@ -162,7 +162,7 @@ abstract class AbstractQuery
     {
         return $this->_params;
     }
-    
+
     /**
      * Get all defined parameter types.
      *
@@ -219,10 +219,10 @@ abstract class AbstractQuery
         if ($type === null) {
             $type = Query\ParameterTypeInferer::inferType($value);
         }
-        
+
         $this->_paramTypes[$key] = $type;
         $this->_params[$key] = $value;
-        
+
         return $this;
     }
 
@@ -532,7 +532,7 @@ abstract class AbstractQuery
 
     /**
      * Return the key value map of query hints that are currently set.
-     * 
+     *
      * @return array
      */
     public function getHints()

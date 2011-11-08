@@ -9,7 +9,7 @@
 
 $(function () {
 	var slideToggleComplete = true;
-	
+
     // vhodně nastylovaný div vložím po načtení stránky
     $('<div id="ajax-spinner">Loading...</div>').hide().ajaxStart(function() {
 		if (slideToggleComplete == true) {
@@ -26,7 +26,7 @@ $(function () {
 
 jQuery.extend({
 	nette: {
-		updateSnippet: function (id, html) {			
+		updateSnippet: function (id, html) {
 			$("#" + id).html(html);
 			try {$("select").combobox();} catch (e) {};
 		},
@@ -104,14 +104,14 @@ jQuery.fn.extend({
 				sendValues[name] = values[i].value;
 			}
 		}
-		
+
 		// send ajax request
 		var ajaxOptions = {
 			url: form.attr("action"),
 			data: sendValues,
 			type: form.attr("method") || "get"
 		};
-		
+
 		if (callback) {
 			ajaxOptions.success = callback;
 		}

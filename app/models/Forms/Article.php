@@ -7,10 +7,10 @@ use Nette\Forms\Form,
 	Nette\Diagnostics\Debugger;
 
 class Article extends \CoolForm {
-	
+
     public function __construct(\Nette\ComponentModel\IContainer $parent = null, $name = null) {
 		parent::__construct($parent, $name);
-		
+
 		$this->addText('title', 'Title');
 		$this->addTextArea('content', 'Content')
 			->setRequired('Content must be filled');
@@ -19,17 +19,17 @@ class Article extends \CoolForm {
 		$this->addSelect('status', 'Category', array(
 			\Article::STATUS_DRAFT => 'Draft',
 			\Article::STATUS_PUBLISHED => 'Published'
-		))->setRequired('Category must be filled');			
+		))->setRequired('Category must be filled');
 		$this->addDateTimePicker('published', 'Published');
 		$this->addSubmit('publish', 'Publish');
 		$this->addSubmit('draft', 'Draft');
 		$this->addSubmit('save', 'Save');
 		$this->onSuccess[] = callback($this, 'onSave');
 	}
-	
+
 	public function onSave(Form $form) {
 		$this->parent->invalidateControl();
-		
+
 		//zistim ci neprisla poziadavnka na novu kategoriu
 		if ($form->category->isNewValue()) {
 			$category = new \Category(array(
@@ -48,7 +48,7 @@ class Article extends \CoolForm {
 				$article->setCategory($category);
 				$this->em->persist($article);
 				$this->em->flush();
-								
+
 				$this->flashMessage('The client has been updated.');
 				if (!$this->parent->isAjax()) $this->parent->redirect('this');
 			} else {
@@ -58,7 +58,7 @@ class Article extends \CoolForm {
 				$article->setCategory($category);
 				$this->em->persist($article);
 				$this->em->flush();
-				
+
 				$this->flashMessage('The client has been added.');
 				$this->parent->redirect('edit', $article->id);
 			}

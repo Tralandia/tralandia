@@ -169,7 +169,7 @@ class OneToManyPersister extends AbstractCollectionPersister
     {
         $mapping = $coll->getMapping();
         $uow = $this->_em->getUnitOfWork();
-        
+
         // shortcut for new entities
         if ($uow->getEntityState($element, UnitOfWork::STATE_NEW) == UnitOfWork::STATE_NEW) {
             return false;

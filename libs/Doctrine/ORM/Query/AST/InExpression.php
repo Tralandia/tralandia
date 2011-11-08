@@ -49,4 +49,3 @@ class InExpression extends Node
         return $sqlWalker->walkInExpression($this);
     }
 }
-

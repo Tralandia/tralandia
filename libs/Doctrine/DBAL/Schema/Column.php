@@ -95,7 +95,7 @@ class Column extends AbstractAsset
 
     /**
      * Create a new Column
-     * 
+     *
      * @param string $columnName
      * @param Doctrine\DBAL\Types\Type $type
      * @param int $length

@@ -49,4 +49,3 @@ class UpdateClause extends Node
         return $sqlWalker->walkUpdateClause($this);
     }
 }
-

@@ -165,7 +165,7 @@ class QueryBuilder extends DataSources\Mapped
 		$this->data = $this->qb->getQuery()->getScalarResult();
 
 		// Detect mapping type. It will affect the hydrated column names.
-		$this->detectMappingType(); 
+		$this->detectMappingType();
 
 		// Create mapping index
 		$data = array();
@@ -191,7 +191,7 @@ class QueryBuilder extends DataSources\Mapped
 		if ($this->mappingType === self::MAP_PROPERTIES) {
 			return substr($column, strpos($column, '.') !== FALSE ? strpos($column, '.') + 1 : 0);
 		}
-		
+
 		if ($this->mappingType === self::MAP_OBJECTS) {
 			return strtr($column, '.', '_');
 		}

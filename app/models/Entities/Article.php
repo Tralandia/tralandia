@@ -6,35 +6,35 @@
  * @HasLifecycleCallbacks
  */
 class Article extends BaseEntity {
-	
+
 	const STATUS_DRAFT = 'draft';
 	const STATUS_PUBLISHED = 'published';
-	
+
 	/**
 	 * @Column(type="string")
 	 */
 	protected $title;
-	
+
 	/**
 	 * @Column(type="text")
 	 */
 	protected $content;
-	
+
 	/**
 	 * @Column(type="string", nullable=true)
 	 */
 	protected $image;
-	
+
 	/**
 	 * @Column(type="string", length=10)
 	 */
 	protected $status = self::STATUS_DRAFT;
-	
+
 	/**
 	 * @Column(type="integer")
 	 */
 	protected $views = 0;
-	
+
 	/**
 	 * @Column(type="datetime")
 	 */
@@ -44,17 +44,17 @@ class Article extends BaseEntity {
 	 * @Column(type="datetime")
 	 */
 	protected $modified;
-	
+
 	/**
 	 * @Column(type="datetime", nullable=true)
 	 */
 	protected $published;
-	
+
 	/**
 	 * @ManyToOne(targetEntity="User", inversedBy="articles")
 	 */
 	protected $user = null;
-	
+
 	/**
 	 * Status setter
 	 * @param string $role
@@ -65,7 +65,7 @@ class Article extends BaseEntity {
 		}
 		$this->status = $status;
 	}
-	
+
 	/**
 	 * Status getter
 	 * @return string
@@ -73,7 +73,7 @@ class Article extends BaseEntity {
 	public function getStatus() {
 		return $this->status;
 	}
-	
+
 	/**
 	 * User setter
 	 * @param User $user
@@ -81,7 +81,7 @@ class Article extends BaseEntity {
 	public function setUser(\User $user = null) {
 		$this->user = $user;
 	}
-	
+
 	/**
 	 * User getter
 	 * @return User
@@ -89,7 +89,7 @@ class Article extends BaseEntity {
 	public function getUser() {
 		return $this->user;
 	}
-	
+
 	/**
 	 * Create article
 	 * @PrePersist
@@ -97,7 +97,7 @@ class Article extends BaseEntity {
 	public function created() {
 		$this->created = new \DateTime('now');
 	}
-	
+
 	/**
 	 * Modify article
 	 * @PrePersist
@@ -106,7 +106,7 @@ class Article extends BaseEntity {
 	public function modified() {
 		$this->modified = new \DateTime('now');
 	}
-	
+
 	/**
 	 * Publish article
 	 */
@@ -114,14 +114,14 @@ class Article extends BaseEntity {
 		$this->status = self::STATUS_PUBLISHED;
 		$this->published = new \DateTime("now");
 	}
-	
+
 	/**
 	 * Draft article
 	 */
 	public function draft() {
 		$this->status = self::STATUS_DRAFT;
 	}
-	
+
 	/**
 	 * Checked
 	 * @return string

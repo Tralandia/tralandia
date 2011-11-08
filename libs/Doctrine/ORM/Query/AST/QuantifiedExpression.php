@@ -65,4 +65,3 @@ class QuantifiedExpression extends Node
         return $sqlWalker->walkQuantifiedExpression($this);
     }
 }
-

@@ -47,4 +47,3 @@ class ExistsExpression extends Node
         return $sqlWalker->walkExistsExpression($this);
     }
 }
-

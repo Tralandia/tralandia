@@ -8,7 +8,7 @@ class ErrorPresenter extends Presenter {
 
 	public function renderDefault($exception) {
 		$this->template->back = "javascript:history.back(1);";
-		
+
 		if ($this->isAjax()) { // AJAX request? Just note this error in payload.
 			Debugger::log($exception, Debugger::ERROR);
 			$this->payload->error = TRUE;

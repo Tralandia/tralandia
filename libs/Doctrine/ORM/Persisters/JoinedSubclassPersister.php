@@ -45,7 +45,7 @@ class JoinedSubclassPersister extends AbstractEntityInheritancePersister
 
     /**
      * Map of table to quoted table names.
-     * 
+     *
      * @var array
      */
     private $_quotedTableMap = array();
@@ -245,10 +245,10 @@ class JoinedSubclassPersister extends AbstractEntityInheritancePersister
 
         // Create the column list fragment only once
         if ($this->_selectColumnListSql === null) {
-            
+
             $this->_rsm = new ResultSetMapping();
             $this->_rsm->addEntityResult($this->_class->name, 'r');
-            
+
             // Add regular columns
             $columnList = '';
             foreach ($this->_class->fieldMappings as $fieldName => $mapping) {
@@ -389,13 +389,13 @@ class JoinedSubclassPersister extends AbstractEntityInheritancePersister
 
         return 'FROM ' . $this->_class->getQuotedTableName($this->_platform) . ' ' . $baseTableAlias . $joinSql;
     }
-    
+
     /* Ensure this method is never called. This persister overrides _getSelectEntitiesSQL directly. */
     protected function _getSelectColumnListSQL()
     {
         throw new \BadMethodCallException("Illegal invocation of ".__METHOD__.".");
     }
-    
+
     /** {@inheritdoc} */
     protected function _getInsertColumnList()
     {
