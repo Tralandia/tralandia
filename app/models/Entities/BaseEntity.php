@@ -2,6 +2,12 @@
 
 abstract class BaseEntity extends \Nette\Object implements \IteratorAggregate {
 	
+	/**
+	 * @Id @Column(type="integer")
+	 * @GeneratedValue
+	 */
+	protected $id;
+	
 	public function __construct($data = array()) {
 		$this->setData($data);
 	}

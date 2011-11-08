@@ -9,12 +9,6 @@ class Article extends BaseEntity {
 	
 	const STATUS_DRAFT = 'draft';
 	const STATUS_PUBLISHED = 'published';
-		
-	/**
-	 * @Id @Column(type="integer")
-	 * @GeneratedValue
-	 */
-	protected $id;
 	
 	/**
 	 * @Column(type="string")
@@ -60,11 +54,6 @@ class Article extends BaseEntity {
 	 * @ManyToOne(targetEntity="User", inversedBy="articles")
 	 */
 	protected $user = null;
-
-	/**
-	 * @ManyToOne(targetEntity="Category", inversedBy="articles")
-	 */
-	protected $category = null;
 	
 	/**
 	 * Status setter
@@ -83,22 +72,6 @@ class Article extends BaseEntity {
 	 */
 	public function getStatus() {
 		return $this->status;
-	}
-	
-	/**
-	 * Category setter
-	 * @param Category $category
-	 */
-	public function setCategory(\Category $category = null) {
-		$this->category = $category;
-	}
-	
-	/**
-	 * Category getter
-	 * @return Category
-	 */
-	public function getCategory() {
-		return $this->category;
 	}
 	
 	/**

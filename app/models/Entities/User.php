@@ -12,12 +12,6 @@ class User extends BaseEntity {
 	const ROLE_ADMIN = 'admin';
 	
 	/**
-	 * @Id @Column(type="integer")
-	 * @GeneratedValue
-	 */
-	protected $id;
-	
-	/**
 	 * @Column(type="string")
 	 */
 	protected $email;
