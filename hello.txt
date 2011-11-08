@@ -1,3 +1,18 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+c
+=======
+a
+>>>>>>> merge
+=======
+a
+=======
 ahoj svet
 
 bla bla
+>>>>>>> c638d24ff6e5ed78001eed2e0baf27f94cf92e2e
+>>>>>>> merge
+=======
+a
+>>>>>>> fix
