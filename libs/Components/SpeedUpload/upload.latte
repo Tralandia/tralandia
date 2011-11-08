@@ -1,0 +1,25 @@
+<input id="up_{!$randomName}" name="{$filename}" type="file" />
+
+<link href="{$publish->uploadifyCss}" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="{$publish->uploadifyJs}"></script>
+<script type="text/javascript" n:syntax="double">
+$(document).ready(function() {
+	$('#up_{{!$randomName}}').uploadify({
+		swf: {{$publish->uploadifySwf}},
+		uploader: {{link upload!}},
+		cancelImage: {{$publish->uploadifyCancel}},
+		fileObjName: {{$filename}},
+		checkExisting: false,
+		removeTimeout: 1,
+		auto: true,
+		multi: {{$multi}},
+		onUploadStart: function(file) {
+			var data = $.ajax({url: {{link ticket!}}, async: false});
+			$('#up_{{!$randomName}}').uploadifySettings('postData', {{{$ticketKeyName}}: $.trim(data.responseText)});
+		},
+		onUploadSuccess: function (file, data, response) {
+			try {$.nette.success($.parseJSON(data));} catch (e) {}
+		}
+	});
+});
+</script>

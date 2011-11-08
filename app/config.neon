@@ -1,0 +1,50 @@
+common:
+	php:
+		date.timezone: Europe/Bratislava
+		debug.editor = "txmt://open/?url=file://%file&line=%line"
+		
+	security:
+		salt: '8723lks762ngknl90835bkd'
+		sender: 'noreply@tralandia.sk'
+		
+	database:
+		user: root
+		password: root
+		host: 127.0.0.1
+		dbname: tralandia
+		charset: utf8
+		driver: pdo_mysql
+	
+	proxiesDir: '%tempDir%/proxies'
+
+	entityDirs: '%appDir%/models/Entities'
+		
+	services:
+		robotLoader:
+			run: true
+
+		doctrineLoader:
+			factory: Kdyby\Loaders\DoctrineLoader::register
+			tags: ['run']
+			
+		symfonyLoader:
+			factory: Kdyby\Loaders\SymfonyLoader::register
+			tags: ['run']
+
+production < common:
+	database:
+		user: tralandia
+		password: 897247889729787892
+		host: 192.168.1.1
+		dbname: tralandia
+		
+console < common:
+
+development < common:
+	database:
+		user: root
+		password: root
+		host: 127.0.0.1
+		dbname: tralandia
+		
+vaculciak < development:

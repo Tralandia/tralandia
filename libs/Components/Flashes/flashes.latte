@@ -1,0 +1,8 @@
+{snippet}
+{foreach $flashes as $flash}
+<ul class="{$flash->type}">
+	<li>{_($flash->message)}</li>
+</ul>
+{/foreach}
+<script type="text/javascript"></script>
+{/snippet}
