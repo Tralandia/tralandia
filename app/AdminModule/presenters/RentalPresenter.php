@@ -8,7 +8,7 @@ use Nette\Application as NA,
 	Nette\Utils\Html,
 	Nette\Utils\Strings;
 
-class ArticlePresenter extends BasePresenter {
+class RentalPresenter extends BasePresenter {
 	
 	public function renderDefault() {	
 		$this->template->articles = $this->em->getRepository('Article')->findAll();
@@ -46,15 +46,7 @@ class ArticlePresenter extends BasePresenter {
 	}
 	
 	protected function createComponentForm($name) {
-		return new \Forms\Article($this, $name);
-	}
-	
-	protected function createComponentSpeedUpload($name) {
-		$control = new \SpeedUpload($this, $name);
-		$control->multi = false;
-		$control->onSuccess[] = callback($this, 'onUpload');
-		$control->onError[] = callback($this, 'onErrorUpload');
-		return $control;
+		return new \Forms\Rental($this, $name);
 	}
 	
 	protected function createComponentGrid($name) {
@@ -84,40 +76,5 @@ class ArticlePresenter extends BasePresenter {
 		$grid->addAction('Delete', 'delete', Html::el('span')->class('icon delete'), false);
 
 		return $grid;
-	}
-
-	public function onUpload(\Nette\Http\FileUpload $file) {
-		$this->invalidateControl();
-		$config = Environment::getConfig('image');
-		$id = $this->getParams()->id;
-		
-		if ($file->isOk() && $file->isImage()) {
-			$filename = '/' . $id . '.' . \Tools::getExt($file->getName());
-			$thumbname = '/' . $id . '-' . $config->width . 'x' . $config->height . '.' . \Tools::getExt($file->getName());
-
-			// ulozenie zaznamu o obrazku
-			$article = $this->em->find('Article', $id);
-			$article->image = $config->baseUrl . $filename;
-			$this->template->article = $article;
-			$this->em->persist($article);
-			$this->em->flush();
-			
-			// skopcenie obrazku
-			$file->move($config->basePath . $filename);
-			
-			// vytvorenie miniatury
-			$image = $file->toImage();
-			$image->resizeCrop($config->width, $config->height);
-			$image->alphaBlending(false);
-			$image->saveAlpha(true);
-			$image->save($config->basePath . $thumbname);
-			
-			// a printim hlasku
-			$this->flashMessage('Image was uploaded.');
-		}
-	}
-	
-	public function onErrorUpload($message) {
-		Debugger::log($message);
 	}
 }

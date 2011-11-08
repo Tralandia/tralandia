@@ -1,5 +1,5 @@
 body {
-	background-color: #555b60;
+	background-color: #f4f4f4;
     color: #333333;
     font-family: Helvetica,Arial,Sans-Serif;
     font-size: 13px;
@@ -54,4 +54,9 @@ hr {
 	font-weight: normal;
 	font-size: small;
 	color: #999;
+}
+
+#layout {
+	width: 800px;
+	margin: 40px auto;
 }
