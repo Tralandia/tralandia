@@ -1,9 +1,1 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-uhig
-=======
 kjlahsdfahjlsdfklhjasdfhjkl
->>>>>>> eedea822c2fa396c19048e1103eca9e84a509576
-=======
-kjlahsdfahjlsdfklhjasdfhjkl
->>>>>>> eedea822c2fa396c19048e1103eca9e84a509576
