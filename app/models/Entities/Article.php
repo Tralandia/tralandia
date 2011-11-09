@@ -12,11 +12,15 @@ class Article extends BaseEntity {
 
 	/**
 	 * @Column(type="string")
+	 * @UIControl(type="text", filter="trim")
+	 * @Validator(callback="FormRules::isEmpty", msg="%name% must by filled.")
+	 * @Validator(callback="%this%, myValidator", msg="%name% must by filled.")
 	 */
 	protected $title;
 
 	/**
 	 * @Column(type="text")
+	 * @UIControl(type="textarea", filter="trim")
 	 */
 	protected $content;
 
@@ -27,6 +31,7 @@ class Article extends BaseEntity {
 
 	/**
 	 * @Column(type="string", length=10)
+	 * @UIControl(type="text", filter="trim")
 	 */
 	protected $status = self::STATUS_DRAFT;
 
@@ -47,6 +52,7 @@ class Article extends BaseEntity {
 
 	/**
 	 * @Column(type="datetime", nullable=true)
+	 * @UIControl(type="datepicker")
 	 */
 	protected $published;
 

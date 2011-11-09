@@ -16,7 +16,7 @@ class CoolForm extends Form {
 		parent::__construct($parent, $name);
 		$this->getElementPrototype()->class(self::AJAX_CLASS);
 		$this->addProtection('Validity expired form.');
-		$this->setTranslator(Environment::getService('translator'));
+		//$this->setTranslator(Environment::getService('translator'));
 		$this->onError[] = callback($this, 'onInvalid');
     }
 
