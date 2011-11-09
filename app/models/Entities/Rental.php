@@ -12,21 +12,25 @@ class Rental extends BaseEntity {
 
 	/**
 	 * @Column(type="string", nullable=true)
+	 * @UIControl(type="select", options="STATUS_*")
 	 */
-	protected $status;
+	protected $status = self::STATUS_NONE;
 
 	/**
 	 * @Column(type="string")
+	 * @UIControl(type="url", label="Name url")
 	 */
 	protected $nameUrl;
 
 	/**
 	 * @OneToMany(type="User")
+	 * @UIControl(type="select", options="%service%, getList")
 	 */
-	protected $active;
-
+	protected $user;
+	
 	/**
 	 * @OneToMany(type="Country")
+	 * @UIControl(type="select", options="%service%, getList")
 	 */
 	protected $country;
 }
