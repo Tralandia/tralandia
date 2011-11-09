@@ -1,6 +1,13 @@
 <?php
 
+namespace Services;
+
 class Rental extends BaseService {
+
+	public function prepareFormRental(\Forms\Rental $form) {
+		$this->getReflector()->extend($form, '\Rental');
+		$this->getReflector()->extend($form, '\Article', 'art');
+	}
 
 	public function create(array $data = array()) {
 		
@@ -17,5 +24,4 @@ class Rental extends BaseService {
 	public function sendEmail($type = NULL) {
 		
 	}
-
 }
