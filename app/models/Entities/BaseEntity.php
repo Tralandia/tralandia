@@ -7,7 +7,18 @@ abstract class BaseEntity extends \Nette\Object implements \IteratorAggregate {
 	 * @GeneratedValue
 	 */
 	protected $id;
+	
+	/** 
+	 * @Column(type="datetime")
+	 */
+	protected $created;
 
+	/** 
+	 * @Column(type="datetime")
+	 */
+	protected $updated;
+
+	
 	public function __construct($data = array()) {
 		$this->setData($data);
 	}

@@ -4,25 +4,15 @@
  * @Entity(repositoryClass="BaseRepository")
  * @HasLifecycleCallbacks
  */
-class User extends BaseEntity {
+class Language extends BaseEntity {
 
 	/**
 	 * @Column(type="string")
 	 */
-	protected $login;
-
-	/**
-	 * @Column(type="string")
-	 */
-	protected $password;
+	protected $iso;
 
 	/**
 	 * @Column(type="boolean")
 	 */
 	protected $active;
-
-	/**
-	 * @OneToMany(type="Country")
-	 */
-	protected $country;
 }
