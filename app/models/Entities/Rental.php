@@ -29,7 +29,7 @@ class Rental extends BaseEntity {
 	protected $user;
 	
 	/**
-	 * @ManyToOne(targetEntity="\Country")
+	 * @ManyToOne(targetEntity="\Tra\Country")
 	 * @UIControl(type="select", callback="getList", value="iso")
 	 */
 	protected $country;

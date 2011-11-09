@@ -7,6 +7,7 @@ use Nette;
 class Reflector extends Nette\Object {
 	
 	protected $service = null;
+	private $reflectedEntities = array();
 	
 	public function __construct(IService $service) {
 		$this->service = $service;
@@ -14,6 +15,11 @@ class Reflector extends Nette\Object {
 	
 	public function extend(Nette\Forms\Form $form, $class) {
 		$classReflection = \Nette\Reflection\ClassType::from($class);
+		
+		// poznacim si, ktore entity som v tejto service uz reflektoval
+		if (!in_array($class, $this->reflectedEntities)) {
+			array_push($this->reflectedEntities, $classReflection->getName());
+		}
 
 		$container = $classReflection->getName();
 		if ($form->getComponent($container, false)) {
@@ -52,7 +58,7 @@ class Reflector extends Nette\Object {
 					if (!isset($association->targetEntity)) {
 						throw new \Exception("Nedefinoval si `targetEntity` v {$property->getName()} - @ManyToOne");
 					}
-					$control->setItems($callback($association->targetEntity, isset($ui->value) ? $ui->value : $property->getName()));
+					$control->setItems($callback($association->targetEntity, isset($ui->value) ? $ui->value : $class::PRIMARY_KEY));
 				} elseif (isset($ui->options) && $options = $this->getOptions($classReflection, $ui->options)) {
 					// data volane cez options
 					if (!isset($ui->options) && !isset($ui->callback)) {
@@ -68,16 +74,18 @@ class Reflector extends Nette\Object {
 		}
 	}
 	
-	public function getAssocationColumns($class) {
-		$classReflection = \Nette\Reflection\ClassType::from($class);
-		$columns = array();
-		foreach ($classReflection->getProperties() as $property) {
-			if ($property->hasAnnotation('ManyToOne')) {
-				$association = $property->getAnnotation('ManyToOne');
-				$columns[$property->getName()] = $association->targetEntity;
+	public function getAssocations() {
+		$return = array();
+		foreach ($this->reflectedEntities as $class) {
+			$classReflection = \Nette\Reflection\ClassType::from($class);
+			foreach ($classReflection->getProperties() as $property) {
+				if ($property->hasAnnotation('ManyToOne')) {
+					$association = $property->getAnnotation('ManyToOne');
+					$return[$class][$property->getName()] = $association->targetEntity;
+				}
 			}
 		}
-		return $columns;
+		return $return;
 	}
 	
 	private function getOptions($classReflection, $options) {
