@@ -1,10 +1,8 @@
 <?php
 
-namespace Services;
+namespace Tra\Services;
 
-use Tra;
-
-abstract class BaseService extends \Nette\Object {
+abstract class BaseService extends \Nette\Object implements IService {
 	
 	protected $reflector = null;
 
@@ -14,7 +12,7 @@ abstract class BaseService extends \Nette\Object {
 	
 	public function getReflector() {
 		if ($this->reflector === null) {
-			$this->reflector = new Tra\Reflector\Service();
+			$this->reflector = new Reflector($this);
 		}
 		return $this->reflector;
 	}

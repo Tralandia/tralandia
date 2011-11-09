@@ -2,15 +2,16 @@
 
 use Nette\Templating\DefaultHelpers,
 	Nette\Application\UI\Form,
+	Nette\Forms\Container as FormContainer,
 	Nette\Diagnostics\Debugger,
 	Nette\Environment,
 	Nette\Database\Table\Selection,
 	Nette\Image;
 
 DefaultHelpers::$dateFormat = Tools::$datetimeFormat;
-Form::extensionMethod('addDatePicker', 'Tools::addDatePicker');
-Form::extensionMethod('addDateTimePicker', 'Tools::addDateTimePicker');
-Form::extensionMethod('addComboSelect', 'Tools::addComboSelect');
+FormContainer::extensionMethod('addDatePicker', 'Tools::addDatePicker');
+FormContainer::extensionMethod('addDateTimePicker', 'Tools::addDateTimePicker');
+FormContainer::extensionMethod('addComboSelect', 'Tools::addComboSelect');
 Selection::extensionMethod('fetchTree', 'Tools::selectionTree');
 Image::extensionMethod('resizeCrop', 'Tools::resizeCrop');
 
@@ -39,15 +40,15 @@ class Tools {
 		}
 	}
 
-	public static function addDatePicker(Form $_this, $name, $label, $cols = NULL, $maxLength = NULL) {
+	public static function addDatePicker(FormContainer $_this, $name, $label, $cols = NULL, $maxLength = NULL) {
 		return $_this[$name] = new DatePicker($label, $cols, $maxLength);
 	}
 
-	public static function addDateTimePicker(Form $_this, $name, $label, $cols = NULL, $maxLength = NULL) {
+	public static function addDateTimePicker(FormContainer $_this, $name, $label, $cols = NULL, $maxLength = NULL) {
 		return $_this[$name] = new DateTimePicker($label, $cols, $maxLength);
 	}
 
-	public static function addComboSelect(Form $_this, $name, $label, array $items = NULL, $size = NULL) {
+	public static function addComboSelect(FormContainer $_this, $name, $label, array $items = NULL, $size = NULL) {
 		return $_this[$name] = new ComboSelect($_this, $name, $label, $items, $size);
 	}
 

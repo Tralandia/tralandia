@@ -1,12 +1,12 @@
 <?php
 
-namespace Services;
+namespace Tra\Services;
 
 class Rental extends BaseService {
 
 	public function prepareFormRental(\Forms\Rental $form) {
 		$this->getReflector()->extend($form, '\Rental');
-		$this->getReflector()->extend($form, '\Article', 'art');
+		$this->getReflector()->extend($form, '\Article');
 	}
 
 	public function create(array $data = array()) {

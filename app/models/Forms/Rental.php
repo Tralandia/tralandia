@@ -5,7 +5,7 @@ namespace Forms;
 use Nette\Forms\Form,
 	Nette\Application as NA,
 	Nette\Diagnostics\Debugger,
-	\Services;
+	Tra\Services;
 
 class Rental extends \CoolForm {
 

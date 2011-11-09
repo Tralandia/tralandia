@@ -12,9 +12,9 @@ class Article extends BaseEntity {
 
 	/**
 	 * @Column(type="string")
-	 * @UIControl(type="text", filter="trim")
+	 * @UIControl(type="text", label="Titttttleee", filter="trim")
 	 * @Validator(callback="FormRules::isEmpty", msg="%name% must by filled.")
-	 * @Validator(callback="%this%, myValidator", msg="%name% must by filled.")
+	 * @Validator(callback="%service%, myValidator", msg="%name% must by filled.")
 	 */
 	protected $title;
 
