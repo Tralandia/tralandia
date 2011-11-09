@@ -46,7 +46,7 @@ class RentalPresenter extends BasePresenter {
 	}
 
 	protected function createComponentForm($name) {
-		return new \Forms\Rental($this, $name);
+		return new \Tra\Forms\Rental($this, $name);
 	}
 
 	protected function createComponentGrid($name) {

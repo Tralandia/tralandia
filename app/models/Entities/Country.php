@@ -1,10 +1,12 @@
 <?php
 
+namespace Tra;
+
 /**
  * @Entity(repositoryClass="BaseRepository")
  * @HasLifecycleCallbacks
  */
-class Country extends BaseEntity {
+class Country extends \BaseEntity {
 
 	/**
 	 * @Column(type="string")
