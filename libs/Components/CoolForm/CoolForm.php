@@ -43,10 +43,6 @@ class CoolForm extends Form {
 		return $this->em->find('User', $this->parent->user->id);
 	}
 
-	public function getEm() {
-		return $this->parent->getEntityManager();
-	}
-
 	public function getParam($key) {
 		return $this->parent->getParam($key);
 	}

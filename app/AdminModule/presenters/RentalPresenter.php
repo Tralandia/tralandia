@@ -12,20 +12,6 @@ class RentalPresenter extends BasePresenter {
 
 	public function renderList() {
 		
-		$ref = \Nette\Reflection\ClassType::from("\Article");
-		
-		//debug($ref);
-		
-		foreach ($ref->getProperties() as $property) {
-			//debug($property);
-			debug($property->getAnnotations());
-			
-				if ($property->hasAnnotation('UIControl')) {
-
-				}
-		}
-		
-		//$this->template->articles = $this->em->getRepository('Article')->findAll();
 	}
 
 	public function renderAdd() {

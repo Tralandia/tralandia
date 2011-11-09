@@ -68,7 +68,6 @@ class SelectBox extends BaseControl
 		if ($this->prompt) {
 			$allowed = array_slice($allowed, 1, count($allowed), TRUE);
 		}
-
 		return is_scalar($this->value) && isset($allowed[$this->value]) ? $this->value : NULL;
 	}
 

@@ -25,8 +25,8 @@ class User extends BaseEntity {
 	protected $active;
 
 	/**
-	 * @OneToMany(type="Country")
-	 * @UIControl(type="select", options="%service%, getList")
+	 * @ManyToOne(targetEntity="\Country")
+	 * @UIControl(type="select", callback="getList")
 	 */
 	protected $country;
 }

@@ -1,6 +1,8 @@
 <?php
 
 abstract class BaseEntity extends \Nette\Object implements \IteratorAggregate {
+	
+	const PRIMARY_KEY = 'id';
 
 	/**
 	 * @Id @Column(type="integer")
