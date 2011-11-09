@@ -23,13 +23,13 @@ class Rental extends BaseEntity {
 	protected $nameUrl;
 
 	/**
-	 * @ManyToOne(targetEntity="\User")
+	 * @ManyToOne(targetEntity="User")
 	 * @UIControl(type="select", options="STATUS_NONE:None, STATUS_CHECKED:Checked")
 	 */
 	protected $user;
 	
 	/**
-	 * @ManyToOne(targetEntity="\Tra\Country")
+	 * @ManyToOne(targetEntity="Country")
 	 * @UIControl(type="select", callback="getList", value="iso")
 	 */
 	protected $country;

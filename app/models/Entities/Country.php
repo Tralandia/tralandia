@@ -1,12 +1,10 @@
 <?php
 
-namespace Tra;
-
 /**
  * @Entity(repositoryClass="BaseRepository")
  * @HasLifecycleCallbacks
  */
-class Country extends \BaseEntity {
+class Country extends BaseEntity {
 
 	/**
 	 * @Column(type="string")
@@ -15,7 +13,7 @@ class Country extends \BaseEntity {
 	protected $iso;
 
 	/**
-	 * @ManyToOne(targetEntity="\Language")
+	 * @ManyToOne(targetEntity="Language")
 	 * @UIControl(type="select", options="%service%, getList")
 	 */
 	protected $language;

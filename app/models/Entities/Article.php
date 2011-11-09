@@ -2,7 +2,6 @@
 
 /**
  * @Entity(repositoryClass="ArticleRepository")
- * @Table(name="article")
  * @HasLifecycleCallbacks
  */
 class Article extends BaseEntity {
