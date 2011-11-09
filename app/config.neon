@@ -31,6 +31,9 @@ common:
 			factory: Kdyby\Loaders\SymfonyLoader::register
 			tags: ['run']
 
+	envOptions:
+		sendEmail: TRUE
+
 production < common:
 	database:
 		user: tralandia
@@ -46,6 +49,12 @@ development < common:
 		password: root
 		host: 127.0.0.1
 		dbname: tralandia
+
+	envOptions:
+		sendEmail: FASLE
+
 		
 vaculciak < development:
 durika < development:
+	envOptions:
+		email: tralandia.david@gmail.com
