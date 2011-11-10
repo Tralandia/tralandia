@@ -12,7 +12,7 @@ class Rental extends BaseEntity {
 
 	/**
 	 * @Column(type="string", nullable=true)
-	 * @UIControl(type="select", options="STATUS_NONE:Nič, STATUS_CHECKED:Checked")
+	 * @UIControl(type="select", options="STATUS_NONE:Nič, STATUS_CHECKED:Checked, STATUS_LIVE:Live")
 	 */
 	protected $status = self::STATUS_NONE;
 
@@ -24,7 +24,7 @@ class Rental extends BaseEntity {
 
 	/**
 	 * @ManyToOne(targetEntity="User")
-	 * @UIControl(type="select", options="STATUS_NONE:None, STATUS_CHECKED:Checked")
+	 * @UIControl(type="select", callback="getList", value="login")
 	 */
 	protected $user;
 	

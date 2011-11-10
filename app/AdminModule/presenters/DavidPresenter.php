@@ -11,7 +11,7 @@ use Nette\Application as NA,
 class DavidPresenter extends BasePresenter {
 
 	public function actionList() {
-		debug(\Nette\Environment::getConfig('envOptions'));
+		
 	}
 
 }
