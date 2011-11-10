@@ -29,4 +29,18 @@ class User extends BaseEntity {
 	 * @UIControl(type="select", callback="getList", value="iso")
 	 */
 	protected $country;
+	
+	/**
+	 * @OneToMany(targetEntity="Rental", mappedBy="user", cascade={"persist", "remove"})
+	 */
+	protected $rentals;
+	
+	public function __construct($data = array()) {
+       $this->rentals = new \Doctrine\Common\Collections\ArrayCollection;
+	}
+	
+	public function addRental(\Rental $rental) {
+		$this->rentals[] = $rental;
+		$rental->user = $this;
+	}
 }

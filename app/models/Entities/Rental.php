@@ -23,7 +23,7 @@ class Rental extends BaseEntity {
 	protected $nameUrl;
 
 	/**
-	 * @ManyToOne(targetEntity="User")
+	 * @ManyToOne(targetEntity="User", inversedBy="rentals")
 	 * @UIControl(type="select", callback="getList", value="login")
 	 */
 	protected $user;
