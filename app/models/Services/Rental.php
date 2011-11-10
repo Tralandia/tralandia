@@ -11,8 +11,11 @@ class Rental extends BaseService {
 		//$this->getReflector()->extend($form, '\Article');
 	}
 	
-	public function create(array $data = array()) {
-		
+	public function create(\Nette\ArrayHash $data) {
+		$eRental = new \Rental($data->Rental);
+		$this->em->persist($eRental);
+		$this->em->flush();
+		debuge($eRental);
 	}
 	
 	public function update(array $data = array()) {

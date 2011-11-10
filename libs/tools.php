@@ -19,6 +19,11 @@ function debug() {
 	Tools::dump(func_get_args());
 }
 
+function debuge() {
+	Tools::dump(func_get_args());
+	exit;
+}
+
 class Tools {
 
 	public static $dateFormat = '%d.%m.%Y';

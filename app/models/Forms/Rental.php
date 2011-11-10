@@ -22,11 +22,8 @@ class Rental extends Form {
 	}
 
 	public function onSave(Form $form) {
-		$values = $form->getPrepareValues($this->sRental);
+		$values = $form->getPrepareValues($this->sRental);		
 		
-		debug($values);
-		
-		
-	//	$this->sRental->sendEmail();
+		$this->sRental->create($values);
     }
 }
