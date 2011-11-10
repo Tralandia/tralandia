@@ -4,15 +4,15 @@ namespace Tra\Forms;
 
 use Tra\Services;
 
-class Rental extends Form {
+class User extends Form {
 
-	private $sRental;
+	private $sUser;
 
     public function __construct(\Nette\ComponentModel\IContainer $parent = null, $name = null) {
 		parent::__construct($parent, $name);
 
-		$this->sRental = new Services\Rental;
-		$this->sRental->prepareForm($this);
+		$this->sUser = new Services\User;
+		$this->sUser->prepareForm($this);
 				
 				
 				
@@ -22,8 +22,8 @@ class Rental extends Form {
 	}
 
 	public function onSave(Form $form) {
-		$values = $form->getPrepareValues($this->sRental);		
+		$values = $form->getPrepareValues($this->sUser);		
 		
-		$this->sRental->create($values);
+		$this->sUser->create($values);
     }
 }

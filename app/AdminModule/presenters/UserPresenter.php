@@ -8,7 +8,7 @@ use Nette\Application as NA,
 	Nette\Utils\Html,
 	Nette\Utils\Strings;
 
-class RentalPresenter extends BasePresenter {
+class UserPresenter extends BasePresenter {
 
 	public function renderList() {
 		
@@ -19,34 +19,15 @@ class RentalPresenter extends BasePresenter {
 	}
 
 	public function renderEdit($id = 0) {
-		$form = $this->getComponent('form');
-		$row = $this->em->find('Article', $id);
-
-		if (!$row) {
-			throw new NA\BadRequestException('Record not found');
-		}
-		if (!$form->isSubmitted()) {
-			$form->setDefaults($row->toFormArray());
-		}
-
-		$this->template->article = $row;
 		$this->template->form = $this->getComponent('form');
 	}
 
 	public function actionDelete($id = 0) {
-		$row = $this->em->find('Article', $id);
-		if (!$row) {
-			throw new NA\BadRequestException('Record not found');
-		}
 
-		$this->em->remove($row);
-		$this->em->flush();
-		$this->flashMessage('Article has been deleted.');
-		$this->redirect('default');
 	}
 
 	protected function createComponentForm($name) {
-		return new \Tra\Forms\Rental($this, $name);
+		return new \Tra\Forms\User($this, $name);
 	}
 
 	protected function createComponentGrid($name) {
@@ -56,22 +37,24 @@ class RentalPresenter extends BasePresenter {
 		$grid->multiOrder = FALSE;
 		$grid->displayedItems = array(20, 50, 100);
 
-		$dataSource = new \DataGrid\DataSources\Doctrine\QueryBuilder($this->em->getRepository('Rental')->getDataSource());
+		$dataSource = new \DataGrid\DataSources\Doctrine\QueryBuilder($this->em->getRepository('User')->getDataSource());
 		$dataSource->setMapping(array(
-			'id' => 'r.id',
+			'id' => 'u.id',
 			'country' => 'c.iso',
-			'user' => 'u.login',
-			'url' => 'r.nameUrl',
-			'status' => 'r.status',
-			'created' => 'r.created'
+			'login' => 'u.login',
+			'password' => 'u.password',
+			'active' => 'u.active',
+			'created' => 'u.created'
 		));
 
 		$grid->setDataSource($dataSource);
-		$grid->addColumn('country', 'ISO');
-		$grid->addColumn('user', 'User');
-		$grid->addColumn('url', 4242);
-		$grid->addColumn('status', 'Status');
+		
+		$grid->addColumn('login', 'Login');
+		$grid->addColumn('password', 'Password');
+		$grid->addCheckboxColumn('active', 'Active');
+		$grid->addColumn('country', 'Country');
 		$grid->addDateColumn('created', 'Date', '%d.%m.%Y')->addDefaultSorting('desc');
+		
 		$grid->addActionColumn('Actions');
 		$grid->addAction('Edit', 'edit', Html::el('span')->class('icon edit')->setText('Edit') , false);
 		$grid->addAction('Delete', 'delete', Html::el('span')->class('icon delete')->setText('Delete'), false);

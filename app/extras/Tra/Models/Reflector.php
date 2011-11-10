@@ -66,7 +66,7 @@ class Reflector extends Nette\Object {
 					}
 					$control->setItems($options);
 				} else {
-					throw new \Exception("Callback alebo options nie sú validné");
+					throw new \Exception("Callback alebo options v `{$class} - {$property->getName()}` nie sú validné");
 				}
 			}
 			

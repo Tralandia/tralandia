@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @Entity(repositoryClass="BaseRepository")
+ * @Entity(repositoryClass="UserRepository")
  * @HasLifecycleCallbacks
  */
 class User extends BaseEntity {
@@ -20,13 +20,13 @@ class User extends BaseEntity {
 
 	/**
 	 * @Column(type="boolean")
-	 * @UIControl(type="select", label="Is active?", options="Yes, No")
+	 * @UIControl(type="checkbox", label="Is active?")
 	 */
 	protected $active;
 
 	/**
 	 * @ManyToOne(targetEntity="Country")
-	 * @UIControl(type="select", callback="getList")
+	 * @UIControl(type="select", callback="getList", value="iso")
 	 */
 	protected $country;
 }
