@@ -1,6 +1,6 @@
 <?php
 /**
- * @Entity
+ * @MappedSuperclass
  * @HasLifecycleCallbacks
  */
 abstract class BaseEntity extends Entity {
