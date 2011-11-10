@@ -196,7 +196,7 @@ class DataGrid extends Nette\Application\UI\Control implements \ArrayAccess
 
 	/**
 	 * Iterates over datagrid rows.
-	 *
+	 * 
 	 * @throws \InvalidStateException
 	 * @return \Iterator
 	 */
@@ -211,7 +211,7 @@ class DataGrid extends Nette\Application\UI\Control implements \ArrayAccess
 
 	/**
 	 * Iterates over datagrid columns.
-	 *
+	 * 
 	 * @param string $type
 	 * @throws \InvalidArgumentException
 	 * @return \ArrayIterator
@@ -434,7 +434,7 @@ class DataGrid extends Nette\Application\UI\Control implements \ArrayAccess
 	protected function finalize()
 	{
 		$presenter = $this->getPresenter();
-
+		
 		if ($this->presenter->isAjax()) {
 
 			$presenter->payload->snippets = array();
@@ -447,13 +447,13 @@ class DataGrid extends Nette\Application\UI\Control implements \ArrayAccess
 			$stop = - strlen('</div>');
 			$html = trim(mb_substr($html, $start, $stop));
 
-			// Send snippet
+			// Send snippet 
 			$presenter->payload->snippets[$snippet] = $html;
 			$presenter->sendPayload();
 			$presenter->terminate();
 
 		} else {
-
+			
 			$presenter->redirect('this');
 		}
 	}
@@ -969,7 +969,7 @@ class DataGrid extends Nette\Application\UI\Control implements \ArrayAccess
 
 
 	/******************** Column Factories ********************/
-
+	
 
 	/**
 	 * Adds column of textual values.

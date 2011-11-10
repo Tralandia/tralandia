@@ -96,7 +96,7 @@ class Conventional extends Nette\Object implements IRenderer
 	public $paginatorFormat = '%label% %input% of %count%';
 
 	/** @var string */
-	public $infoFormat = '<span class="text">Items %from% - %to% of %count% | </span><span class="text">Display:</span> %selectbox% | %reset%';
+	public $infoFormat = 'Items %from% - %to% of %count% | Display: %selectbox% | %reset%';
 
 	/** @var string  template file*/
 	public $file;
@@ -572,7 +572,7 @@ class Conventional extends Nette\Object implements IRenderer
 				$cell->addClass('actions');
 
 			} else {
-				if (!isset($data[$column->getName()])) {
+				if (!array_key_exists($column->getName(), $data)) {
 					throw new \InvalidArgumentException("Non-existing column '" . $column->getName() . "' in datagrid '" . $this->dataGrid->getName() . "'");
 				}
 				$value = $column->formatContent($data[$column->getName()], $data);

@@ -122,6 +122,7 @@ class QueryBuilder extends DataSources\Mapped
 		if (!$this->hasColumn($column)) {
 			throw new \InvalidArgumentException('Trying to sort data source by unknown column.');
 		}
+		
 		$this->qb->addOrderBy($this->mapping[$column], $order === self::ASCENDING ? 'ASC' : 'DESC');
 
 		return $this;
@@ -161,11 +162,10 @@ class QueryBuilder extends DataSources\Mapped
 	 */
 	public function fetch()
 	{
-		debug($this->qb->getQuery()->getDql());
 		$this->data = $this->qb->getQuery()->getScalarResult();
 
 		// Detect mapping type. It will affect the hydrated column names.
-		$this->detectMappingType();
+		$this->detectMappingType(); 
 
 		// Create mapping index
 		$data = array();
@@ -191,7 +191,7 @@ class QueryBuilder extends DataSources\Mapped
 		if ($this->mappingType === self::MAP_PROPERTIES) {
 			return substr($column, strpos($column, '.') !== FALSE ? strpos($column, '.') + 1 : 0);
 		}
-
+		
 		if ($this->mappingType === self::MAP_OBJECTS) {
 			return strtr($column, '.', '_');
 		}
@@ -210,7 +210,7 @@ class QueryBuilder extends DataSources\Mapped
 			if (is_string($expr->expression)) {
 				$this->mappingType = self::MAP_OBJECTS;
 			}
-		};
+		}
 	}
 
 

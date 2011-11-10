@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @Entity(repositoryClass="BaseRepository")
+ * @Entity(repositoryClass="RentalRepository")
  * @HasLifecycleCallbacks
  */
 class Rental extends BaseEntity {

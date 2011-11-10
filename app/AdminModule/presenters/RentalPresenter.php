@@ -51,26 +51,27 @@ class RentalPresenter extends BasePresenter {
 
 	protected function createComponentGrid($name) {
 		$grid = new \DataGrid\DataGrid;
-		$grid->setTranslator(Environment::getService('translator'));
+		//$grid->setTranslator(Environment::getService('translator'));
 		$grid->itemsPerPage = 20;
 		$grid->multiOrder = false;
 		$grid->displayedItems = array(20, 50, 100);
 
-		$dataSource = new \DataGrid\DataSources\Doctrine\QueryBuilder($this->em->getRepository('Article')->getDataSource());
+		$dataSource = new \DataGrid\DataSources\Doctrine\QueryBuilder($this->em->getRepository('Rental')->getDataSource());
 		$dataSource->setMapping(array(
-			'id' => 'a.id',
-			'title' => 'a.title',
-			'content' => 'a.content',
-			'category' => 'c.name',
-			'published' => 'a.published'
+			'id' => 'r.id',
+			'country' => 'c.iso',
+			'user' => 'u.name',
+			'url' => 'u.nameUrl',
+			'status' => 'r.status',
+			'created' => 'r.created'
 		));
 
 		$grid->setDataSource($dataSource);
-		$grid->addColumn('title', 'Title')->formatCallback[] = function($value, $item) {
-			return $value ? Strings::truncate($value, 100) : Html::el('i')->add(Strings::truncate(strip_tags($item['content']), 100));
-		};
-		$grid->addColumn('category', 'Category');
-		$grid->addDateColumn('published', 'Published', '%d.%m.%Y')->addDefaultSorting('desc');
+		$grid->addColumn('country', 'ISO');
+		$grid->addColumn('user', 'User');
+		$grid->addColumn('url', 4242);
+		$grid->addColumn('status', 'Status');
+		$grid->addDateColumn('created', 'Date', '%d.%m.%Y')->addDefaultSorting('desc');
 		$grid->addActionColumn('Actions');
 		$grid->addAction('Edit', 'edit', Html::el('span')->class('icon edit'), false);
 		$grid->addAction('Delete', 'delete', Html::el('span')->class('icon delete'), false);

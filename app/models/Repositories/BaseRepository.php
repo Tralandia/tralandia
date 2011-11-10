@@ -1,6 +1,12 @@
 <?php
 
 class BaseRepository extends Doctrine\ORM\EntityRepository {
+	
+	public function getDataSource() {
+		$query = $this->_em->createQueryBuilder();
+		$query->select('e')->from($this->_entityName, 'e');
+		return $query;
+	}
 
 	public function fetchPairs($key, $value = null) {
 		$collection = array();
