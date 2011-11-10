@@ -31,6 +31,9 @@ common:
 			factory: Kdyby\Loaders\SymfonyLoader::register
 			tags: ['run']
 
+		translator:
+			factory: \MyTranslator::getTranslator
+			
 	envOptions:
 		sendEmail: TRUE
 

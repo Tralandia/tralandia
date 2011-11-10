@@ -752,6 +752,8 @@ class DataGrid extends Nette\Application\UI\Control implements \ArrayAccess
 	 */
 	public function render()
 	{
+		
+		
 		if (!$this->wasRendered) {
 			$this->wasRendered = TRUE;
 
@@ -779,7 +781,7 @@ class DataGrid extends Nette\Application\UI\Control implements \ArrayAccess
 				$this->regenerateFormControls();
 			}
 		}
-
+		
 		$args = func_get_args();
 		array_unshift($args, $this);
 		$s = call_user_func_array(array($this->getRenderer(), 'render'), $args);

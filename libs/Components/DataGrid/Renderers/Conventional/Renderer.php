@@ -133,6 +133,7 @@ class Conventional extends Nette\Object implements IRenderer
 	 */
 	public function render(DataGrid\DataGrid $dataGrid, $mode = NULL)
 	{
+
 		if ($this->dataGrid !== $dataGrid) {
 			$this->dataGrid = $dataGrid;
 		}
