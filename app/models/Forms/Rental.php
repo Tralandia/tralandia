@@ -15,7 +15,6 @@ class Rental extends Form {
 		$this->sRental->prepareForm($this);
 				
 				
-				
 		$this->ajax(false);
 		$this->addSubmit('save', 'Save');
 		$this->onSuccess[] = callback($this, 'onSave');

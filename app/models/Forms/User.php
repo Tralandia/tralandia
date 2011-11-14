@@ -13,9 +13,7 @@ class User extends Form {
 
 		$this->sUser = new Services\User;
 		$this->sUser->prepareForm($this);
-				
-				
-				
+			
 		$this->ajax(false);
 		$this->addSubmit('save', 'Save');
 		$this->onSuccess[] = callback($this, 'onSave');

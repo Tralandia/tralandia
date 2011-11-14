@@ -34,7 +34,7 @@ class UserPresenter extends BasePresenter {
 		$grid = new \DataGrid\DataGrid;
 		//$grid->setTranslator(Environment::getService('translator'));
 		$grid->itemsPerPage = 20;
-		$grid->multiOrder = FALSE;
+		$grid->multiOrder = TRUE;
 		$grid->displayedItems = array(20, 50, 100);
 
 		$dataSource = new \DataGrid\DataSources\Doctrine\QueryBuilder($this->em->getRepository('User')->getDataSource());

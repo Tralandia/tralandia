@@ -62,7 +62,7 @@ class RentalPresenter extends BasePresenter {
 			'id' => 'r.id',
 			'country' => 'c.iso',
 			'user' => 'u.login',
-			'url' => 'r.nameUrl',
+			'nameUrl' => 'r.nameUrl',
 			'status' => 'r.status',
 			'created' => 'r.created'
 		));
@@ -70,7 +70,7 @@ class RentalPresenter extends BasePresenter {
 		$grid->setDataSource($dataSource);
 		$grid->addColumn('country', 'ISO');
 		$grid->addColumn('user', 'User');
-		$grid->addColumn('url', 4242);
+		$grid->addColumn('nameUrl', 4242);
 		$grid->addColumn('status', 'Status');
 		$grid->addDateColumn('created', 'Date', '%d.%m.%Y')->addDefaultSorting('desc');
 		$grid->addActionColumn('Actions');
@@ -78,11 +78,14 @@ class RentalPresenter extends BasePresenter {
 		$grid->addAction('Delete', 'delete', Html::el('span')->class('icon delete')->setText('Delete'), false);
 
 		
+		//$grid->setEditForm($this->getComponent('gridForm'));
+		//debuge($this->getComponent('gridForm'));
 		$grid->setEditForm($this->getComponent('gridForm'));
-		$grid->addEditableField('country');
+		//$grid->addEditableField('country');
+		$grid->setContainer('Rental');
 		$grid->addEditableField('user');
-		$grid->addEditableField('url');
-		$grid->addEditableField('status');
+		$grid->addEditableField('nameUrl');
+		//$grid->addEditableField('status');
 		$grid->onDataReceived[] = array($this, 'onDataRecieved');
 		$grid->onInvalidDataReceived[] = array($this, 'onDataRecieved');
 		$grid->onInvalidDataReceived[] = array($this, 'onInvalidDataRecieved');
@@ -91,25 +94,7 @@ class RentalPresenter extends BasePresenter {
 	}
 	
 	function createComponentGridForm($name) {
-		$form = new Form($this,$name);
-		$form->getElementPrototype()->addClass("ajax"); // Zajaxovatění formulářů v jquery.nette.js
-
-		$form->addText("country", "Kranija")
-			->addRule(Form::FILLED, "Toto je validační pravidlo v Nette formulářích: políčko je prázdné!");
-
-		$form->addTextArea("user", "User")
-			->addRule(Form::FILLED,"Musí být vyplněno!")
-			->addRule(Form::REGEXP, "Musí začínat na m!","/^m(.*)$/i");
-
-		$form->addTextArea("url", "URL Address")
-			->addRule(Form::FILLED, "Toto je validační pravidlo v Nette formulářích: políčko je prázdné!")
-			->addRule(Form::URL, "Toto je validační pravidlo v Nette formulářích: políčko nie je platná URL!");
-
-		$form->addSelect("status", "Status", array('Cancelled' => 'Cancelled', 'Resolved' => 'Resolved', 'Shipped' => 'Shipped', 'NULL' => "Without orders"))
-			->addRule(Form::FILLED, "Toto je validační pravidlo v Nette formulářích: políčko je prázdné!");
-
-		$form->addSubmit("odeslat", "Odeslat");
-		return $form;
+		return new \Tra\Forms\Rental($this, $name);
 	}
 
 	function onDataRecieved($cisloRadku, \Nette\Forms\IControl $policko, $origSha1) {

@@ -11,29 +11,24 @@ use Nette\Application as NA,
 class DavidPresenter extends BasePresenter {
 
 	public function actionList() {
-//		$language = $this->em->find('Language', 2);
+	
+//		$country = $this->em->find('Country', 2);
+//
+//		$rental = new \Rental;
+//		$rental->country = $country;
+//		$rental->status = 'live';
+//		$rental->nameUrl = 'live.sk';
 //		
-//		$country = new \Country;
-//		$country->iso = 'fr';
-//		$country->language = $language;
-		
-		$country = $this->em->find('Country', 2);
-
-		$rental = new \Rental;
-		$rental->country = $country;
-		$rental->status = 'live';
-		$rental->nameUrl = 'live.sk';
-		
-		$user = new \User;
-		$user->login = 'Rado';
-		$user->password = 'tajneheslo';
-		$user->country = $country;
-		$user->active = FALSE;
-		
-		$user->addRental($rental);
-		
-		$this->em->persist($user);
-		$this->em->flush();
+//		$user = new \User;
+//		$user->login = 'Rado';
+//		$user->password = 'tajneheslo';
+//		$user->country = $country;
+//		$user->active = FALSE;
+//		
+//		$user->addRental($rental);
+//		
+//		$this->em->persist($user);
+//		$this->em->flush();
 	
 	}
 

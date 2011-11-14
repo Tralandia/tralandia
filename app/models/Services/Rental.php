@@ -6,10 +6,10 @@ use Tra;
 
 class Rental extends BaseService {
 
-	public function prepareForm(Tra\Forms\Rental $form) {
-		$this->getReflector()->extend($form, '\Rental');
+	public function prepareForm(Tra\Forms\Rental $form, $dataGrid = NULL) {
+		$this->getReflector()->extend($form, '\Rental', $dataGrid);
 	}
-	
+
 	public function create(\Nette\ArrayHash $data) {
 		$eRental = new \Rental($data->Rental);
 		$this->em->persist($eRental);

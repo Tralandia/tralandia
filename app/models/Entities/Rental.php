@@ -19,12 +19,14 @@ class Rental extends BaseEntity {
 	/**
 	 * @Column(type="string")
 	 * @UIControl(type="text", label="Name url")
+	 * @GridControl(type="text", label="Name url")
 	 */
 	protected $nameUrl;
 
 	/**
 	 * @ManyToOne(targetEntity="User", inversedBy="rentals")
 	 * @UIControl(type="select", callback="getList", value="login")
+	 * @GridControl(type="select", callback="getList", value="login")
 	 */
 	protected $user;
 	

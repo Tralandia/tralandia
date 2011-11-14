@@ -63,6 +63,8 @@ class Datagrid extends \DataGrid\DataGrid {
         self::SELECT,
         self::DATE
     );
+	
+	private $currentContainer = NULL;
 
     /**
      * Getts form
@@ -83,6 +85,10 @@ class Datagrid extends \DataGrid\DataGrid {
         $this->editForm = $form;
         return $this;
     }
+	
+	public function setContainer($container) {
+		$this->currentContainer = $container;
+	}
 
     /**
      * Adds editable column
@@ -90,7 +96,13 @@ class Datagrid extends \DataGrid\DataGrid {
      */
     function addEditableField($name,$type=null){
         $form = $this->getEditForm();
-        $formCol = $form[$name]; // Is column in Form?
+
+		if($this->currentContainer) {
+			$formCol = $form[$this->currentContainer][$name]; // Is column in Form?
+			
+		} else {
+			$formCol = $form[$name]; // Is column in Form?
+		}
         $this[$name]; // Is column in datagrid?
         if($type===null){
             if($formCol instanceof Nette\Forms\Controls\TextArea){
