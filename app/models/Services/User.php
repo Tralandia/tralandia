@@ -7,7 +7,12 @@ use Tra;
 class User extends BaseService {
 	
 	public function prepareForm(Tra\Forms\User $form) {
-		$this->getReflector()->extend($form, '\User');
+		$user = '\User';
+		$reflector = $this->getReflector();
+		//$reflector->allow($user, array('id', 'login'));
+		//$reflector->allow($user, array('active', 'login', 'password'));
+		//$reflector->except($user, array('active'));
+		$reflector->extend($form, '\User');
 	}
 	
 	public function create(\Nette\ArrayHash $data) {

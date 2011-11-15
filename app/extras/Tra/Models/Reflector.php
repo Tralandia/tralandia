@@ -9,28 +9,52 @@ class Reflector extends Nette\Object {
 	const UI_CONTROL = 'UIControl';
 	
 	protected $service = null;
-	private $reflectedEntities = array();
+	protected $reflectedEntities = array();
 	
+	protected $fields = array();
+
+
 	public function __construct(IService $service) {
 		$this->service = $service;
 	}
 	
-	public function extend(Nette\Forms\Form $form, $class) {
-		$classReflection = \Nette\Reflection\ClassType::from($class);
+	public function allow($class, array $fields = array()) {		
+		$classReflection = $this->getServiceReflection($class);
 		
-		// poznacim si, ktore entity som v tejto service uz reflektoval
-		if (!in_array($class, $this->reflectedEntities)) {
-			array_push($this->reflectedEntities, $classReflection->getName());
+		foreach ($classReflection->getProperties() as $property) {
+			if(count($fields) === 0 || in_array($property->name, $fields)) $this->fields[$class][$property->name] = $property;
 		}
+		
+		return $this;
+	}
+	
+	public function except($class, array $fields) {
+		foreach ($this->getFields($class) as $field) {
+			if(in_array($field->name, $fields)) unset($this->fields[$class][$field->name]);
+		}
+		
+		return $this;
+	}
 
+
+	public function getFields($class) {
+		if(!isset($this->fields[$class])) {
+			$this->allow($class);
+		}
+		return $this->fields[$class];
+	}
+	
+	public function extend(Nette\Forms\Form $form, $class) {
+		$classReflection = $this->getServiceReflection($class);
+		
 		$container = $classReflection->getName();
 		if ($form->getComponent($container, false)) {
 			$container = $form->getComponent($container);
 		} else {
 			$container = $form->addContainer($container);
 		}
-		
-		foreach ($classReflection->getProperties() as $property) {
+				
+		foreach ($this->getFields($class) as $property) {
 			unset($ui, $control, $validators, $association);
 
 			$annotation = self::UI_CONTROL;
@@ -110,4 +134,16 @@ class Reflector extends Nette\Object {
 		//list($object, $method) = explode(',', $callback);
 		return callback($this->service, trim($callback));
 	}
+	
+	private function getServiceReflection($class) {
+		$classReflection = \Nette\Reflection\ClassType::from($class);
+		
+		// poznacim si, ktore entity som v tejto service uz reflektoval
+		if (!in_array($class, $this->reflectedEntities)) {
+			array_push($this->reflectedEntities, $classReflection->getName());
+		}
+		
+		return $classReflection;
+	}
+	
 }

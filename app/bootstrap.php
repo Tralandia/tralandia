@@ -30,6 +30,11 @@ $application->catchExceptions = false;
 $application->onStartup[] = function() use ($application) {
 	$router = $application->getRouter();
 	$router[] = new Route('index.php', 'Admin:Rental:list', Route::ONE_WAY);
+	$router[] = new Route('admin/<presenter david>/[<action>[/<id [0-9]+>]]', array(
+		'module' => 'Admin',
+		'presenter' => NULL,
+		'action' =>  'list'
+	));
 	$router[] = new AdminRoute('admin/<form>/[<action list|edit|add>[/<id [0-9]+>]]', array(
 		'module' => 'Admin',
 		'presenter' => 'Admin',

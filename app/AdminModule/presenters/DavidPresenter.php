@@ -31,5 +31,13 @@ class DavidPresenter extends BasePresenter {
 //		$this->em->flush();
 	
 	}
+	
+	public function renderAdd() {
+		$this->template->form = $this->getComponent('form');
+	}
+
+	protected function createComponentForm($name) {
+		return new \Tra\Forms\User($this, $name);
+	}
 
 }
