@@ -11,12 +11,15 @@ require LIBS_DIR . '/tools.php';
 // Enable Nette\Debug for error visualisation & logging
 //Debugger::$strictMode = TRUE;
 Debugger::enable();
-Debugger::$editor = "txmt://open/?url=file://%file&line=%line";
 
 // Load configuration from config.neon file);
 require_once APP_DIR . '/Configurator.php';
 $configurator = new Configurator;
 $configurator->loadConfig(APP_DIR . '/config.neon', isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : null);
+
+if(isset($configurator->container->params['envOptions']['editor'])){
+	Debugger::$editor = $configurator->container->params['envOptions']['editor'];
+}
 
 // Configure application
 $application = $configurator->container->application;
@@ -27,7 +30,7 @@ $application->catchExceptions = false;
 $application->onStartup[] = function() use ($application) {
 	$router = $application->getRouter();
 	$router[] = new Route('index.php', 'Admin:Rental:list', Route::ONE_WAY);
-	$router[] = new AdminRoute('admin/<form>/[<action list|edit>[/<id [0-9]+>]]', array(
+	$router[] = new AdminRoute('admin/<form>/[<action list|edit|add>[/<id [0-9]+>]]', array(
 		'module' => 'Admin',
 		'presenter' => 'Admin',
 		'action' =>  'list'

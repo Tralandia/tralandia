@@ -58,6 +58,9 @@ development < common:
 
 		
 vaculciak < development:
+		editor: 'txmt://open/?url=file://%file&line=%line'
+
 durika < development:
 	envOptions:
 		email: tralandia.david@gmail.com
+		editor: 'edit://open/?url=file://%file&line=%line'
