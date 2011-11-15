@@ -27,9 +27,9 @@ $application->catchExceptions = false;
 $application->onStartup[] = function() use ($application) {
 	$router = $application->getRouter();
 	$router[] = new Route('index.php', 'Admin:Rental:list', Route::ONE_WAY);
-	$router[] = new Route('<presenter>[/<action>[/<id [0-9]+>]]', array(
+	$router[] = new AdminRoute('admin/<form>/[<action list|edit>[/<id [0-9]+>]]', array(
 		'module' => 'Admin',
-		'presenter' => 'Rental',
+		'presenter' => 'Admin',
 		'action' =>  'list'
 	));
 };
