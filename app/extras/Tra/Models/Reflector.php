@@ -7,7 +7,6 @@ use Nette;
 class Reflector extends Nette\Object {
 	
 	const UI_CONTROL = 'UIControl';
-	const GRID_CONTROL = 'GridControl';
 	
 	protected $service = null;
 	private $reflectedEntities = array();
@@ -16,7 +15,7 @@ class Reflector extends Nette\Object {
 		$this->service = $service;
 	}
 	
-	public function extend(Nette\Forms\Form $form, $class, $dataGrid = NULL) {
+	public function extend(Nette\Forms\Form $form, $class) {
 		$classReflection = \Nette\Reflection\ClassType::from($class);
 		
 		// poznacim si, ktore entity som v tejto service uz reflektoval
@@ -34,13 +33,9 @@ class Reflector extends Nette\Object {
 		foreach ($classReflection->getProperties() as $property) {
 			unset($ui, $control, $validators, $association);
 
+			$annotation = self::UI_CONTROL;
 			// ak najdem anotaciu UIControl, vykreslim UI prvok formualra
-			if($dataGrid) {
-				$annotation = self::GRID_CONTROL;
-			} else {
-				$annotation = self::UI_CONTROL;
-			}
-			
+
 			if ($property->hasAnnotation($annotation)) {
 				$ui = $property->getAnnotation($annotation);
 
