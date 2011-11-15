@@ -5,56 +5,41 @@ namespace AdminModule;
 use Nette\Application as NA,
 	Nette\Environment,
 	Nette\Diagnostics\Debugger,
-	Nette\Utils\Html,
-	Nette\Utils\Strings,
-	\Nette\Application\UI\Form;
+	Nette\Utils\Html;
 
 class AdminPresenter extends BasePresenter {
-
-	public function renderList() {
+	
+	private $serviceSettings;
+	
+	private $service;
+	
+	public function startup() {
+		parent::startup();
 		
-		$this->template->list = \Nette\ArrayHash::from(array(
-			'name' => ucfirst($this->getParams()->form) . ' ' . ucfirst($this->action)
+		$this->serviceSettings = \Nette\ArrayHash::from(array(
+			'name' => ucfirst($this->getParams()->form) . ' ' . ucfirst($this->action),
+			'class' => '\\Tra\\Services\\' . ucfirst($this->getParams()->form)
 		));
 	}
-/*
-	public function renderAdd() {
-		$this->template->form = $this->getComponent('form');
-	}
+	
 
+	public function renderList() {
+		$this->template->settings = $this->serviceSettings;
+	}
+	
 	public function renderEdit($id = 0) {
-		$form = $this->getComponent('form');
-		$row = $this->em->find('Article', $id);
-
-		if (!$row) {
-			throw new NA\BadRequestException('Record not found');
-		}
-		if (!$form->isSubmitted()) {
-			$form->setDefaults($row->toFormArray());
-		}
-
-		$this->template->article = $row;
-		$this->template->form = $this->getComponent('form');
-	}
-
-	public function actionDelete($id = 0) {
-		$row = $this->em->find('Article', $id);
-		if (!$row) {
-			throw new NA\BadRequestException('Record not found');
-		}
-
-		$this->em->remove($row);
-		$this->em->flush();
-		$this->flashMessage('Article has been deleted.');
-		$this->redirect('default');
-	}
-
-	protected function createComponentForm($name) {
-		return new \Tra\Forms\Rental($this, $name);
+		
+		
+		$this->template->settings = $this->serviceSettings;
 	}
 	
 	protected function createComponentGrid($name) {
 		$grid = new \EditableDataGrid\DataGrid;
+		
+		$this->service = new $this->serviceSettings->class;
+		$this->service->prepareDataGrid($grid);
+		
+		/*
 		$grid->setTranslator(Environment::getService('translator'));
 		$grid->itemsPerPage = 20;
 		$grid->multiOrder = FALSE;
@@ -76,6 +61,7 @@ class AdminPresenter extends BasePresenter {
 		$grid->addColumn('nameUrl', 4242);
 		$grid->addColumn('status', 'Status');
 		$grid->addDateColumn('created', 'Date', '%d.%m.%Y')->addDefaultSorting('desc');
+		*/
 		$grid->addActionColumn('Actions');
 		$grid->addAction('Edit', 'edit', Html::el('span')->class('icon edit')->setText('Edit') , false);
 		$grid->addAction('Delete', 'delete', Html::el('span')->class('icon delete')->setText('Delete'), false);
@@ -97,15 +83,13 @@ class AdminPresenter extends BasePresenter {
 	}
 	
 	function createComponentGridForm($name) {
-		return new \Tra\Forms\Rental($this, $name);
+		
+		$grid = new \Tra\Forms\Grid($this, $name);
+		
+		$this->service = new $this->serviceSettings->class;
+		$this->service->prepareGridForm($grid);
+		
+		
+		return $grid;
 	}
-
-	function onDataRecieved($cisloRadku, \Nette\Forms\IControl $policko, $origSha1) {
-		$this->flashMessage("Data přijata na řádku ".$cisloRadku.", data: ".$policko->value." a původní sha1 zadaných dat (kvůli současným úpravám více uživatelů, složí k porovnání s aktuální hodnotou v DB):".$origSha1,"info");
-	}
-
-	function onInvalidDataRecieved($cisloRadku, \Nette\Forms\IControl $policko, $origSha1) {
-		$this->flashMessage("Přijatá data jsou neplatná, protože neprošla validací!","error");
-	}
-	*/
 }

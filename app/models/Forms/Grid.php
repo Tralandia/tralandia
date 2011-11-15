@@ -4,7 +4,7 @@ namespace Tra\Forms;
 
 use Tra\Services;
 
-class RentalGrid extends Form {
+class Grid extends Form {
 
 	private $sRental;
 
