@@ -16,22 +16,37 @@ class AdminPresenter extends BasePresenter {
 	public function startup() {
 		parent::startup();
 		
-		$this->serviceSettings = \Nette\ArrayHash::from(array(
+		$this->template->settings = $this->serviceSettings = \Nette\ArrayHash::from(array(
 			'name' => ucfirst($this->getParams()->form) . ' ' . ucfirst($this->action),
 			'class' => '\\Tra\\Services\\' . ucfirst($this->getParams()->form)
 		));
+		
+		
+		debug($this->serviceSettings);
 	}
 	
 
 	public function renderList() {
-		$this->template->settings = $this->serviceSettings;
+	}
+	
+	public function renderAdd() {
 	}
 	
 	public function renderEdit($id = 0) {
-		
-		
-		$this->template->settings = $this->serviceSettings;
 	}
+	
+	protected function createComponentForm($name) {
+		
+		$form = new \Tra\Forms\Form($this, $name);
+		
+		$this->service = new $this->serviceSettings->class;
+		$this->service->prepareForm($form);
+		
+		
+		return $form;
+	}
+	
+	
 	
 	protected function createComponentGrid($name) {
 		$grid = new \EditableDataGrid\DataGrid;

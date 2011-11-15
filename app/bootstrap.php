@@ -35,7 +35,12 @@ $application->onStartup[] = function() use ($application) {
 		'presenter' => NULL,
 		'action' =>  'list'
 	));
-	$router[] = new AdminRoute('admin/<form>/[<action list|edit|add>[/<id [0-9]+>]]', array(
+	$router[] = new Route('admin/<presenter>/<id [0-9]+>', array(
+		'module' => 'Admin',
+		'presenter' => 'Admin',
+		'action' =>  'edit'
+	));
+	$router[] = new Route('admin/<presenter>/[<action list|add>]', array(
 		'module' => 'Admin',
 		'presenter' => 'Admin',
 		'action' =>  'list'
