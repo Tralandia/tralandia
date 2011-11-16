@@ -16,22 +16,9 @@ class AdminPresenter extends BasePresenter {
 	public function startup() {
 		parent::startup();
 		
-		
 		$settings = $this->getService('settings');
-		
-		debug($settings->getServiceClass());
-		
-		$form = str_replace('Presenter', null, $this->getReflection()->getShortName());
-		$this->template->settings = $this->serviceSettings = \Nette\ArrayHash::from(array(
-			'name' => $form,
-			'title' => $form . ' ' . ucfirst($this->action),
-			'class' => '\\Tra\\Services\\' . $form
-		));
-		
+		$this->template->settings = $settings;
 		$this->service = new $settings->serviceClass;
-		
-		debug($this->serviceSettings);
-		debug($this->service);
 	}
 	
 

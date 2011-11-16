@@ -37,7 +37,7 @@ common:
 			factory: \MyTranslator::getTranslator
 			
 		settings:
-			factory: \Settings::factory
+			factory: \PresenterSettings::factory
 			
 	envOptions:
 		sendEmail: TRUE

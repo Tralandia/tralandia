@@ -1,9 +1,12 @@
 <?php
 
-use Nette\DI;
+use Nette\DI,
+	Nette\ArrayHash,
+	Nette\Config\Config;
 
-class Settings extends \Nette\Object {
+class PresenterSettings extends \Nette\Object {
 	
+	protected $params;
 	protected $settingsDir;
 	protected $presenter;
 	protected $name;
@@ -17,6 +20,7 @@ class Settings extends \Nette\Object {
 		$this->presenter = $presenter;
 		$this->settingsDir = $settingsDir;
 		$this->name = str_replace('Presenter', null, $presenter->getReflection()->getShortName());
+		$this->params = ArrayHash::from(Config::fromFile($this->settingsDir . '/presenters/' . strtolower($this->getName()) . '.neon', 'common'));
 	}
 	
 	public function getName() {
@@ -29,5 +33,13 @@ class Settings extends \Nette\Object {
 	
 	public function getServiceClass() {
 		return '\\Tra\\Services\\' . $this->getName();
+	}
+	
+	public function getParams() {
+		return $this->params;
+	}
+	
+	public function getTitle() {
+		return isset($this->params->title) ? $this->params->title : $this->name;
 	}
 }

@@ -1,9 +1,9 @@
-rental:
+common:
 	title: Rental Main Title
 	h1: Rental Main H1
 
 
-rentalBase < rental:
+base < common:
 	title: Rental Base
 
 	grid:
