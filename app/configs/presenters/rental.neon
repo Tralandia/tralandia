@@ -7,8 +7,11 @@ base < common:
 	title: Rental Base
 
 	grid:
-		querySelect: 'id, nameUrl, User'
-		mapper: 
+		columns: 
 			id: e.id
 			nameUrl: e.nameUrl
-			User: e.user
+			user: r.login
+			nieco: c.id
+			asdf: d.id
+			asdfasdfas: d.name
+			vypocet: rrr

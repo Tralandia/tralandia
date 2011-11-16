@@ -73,16 +73,25 @@ class AdminPresenter extends BasePresenter {
 		$grid = new \EditableDataGrid\DataGrid;
 
 		$dataSource = new \DataGrid\DataSources\Doctrine\QueryBuilder($this->service->getDataSource());
-		
-		debug($dataSource);
-		
+		$dataSource->setMapping(array(
+			'id' => 'e.id',
+			'country' => 'e.country',
+			'user' => 'e.user',
+			'nameUrl' => 'e.nameUrl',
+			'status' => 'e.status',
+			'created' => 'e.created'
+		));
+
 		$grid->setDataSource($dataSource);
 		//$this->service->prepareDataGrid($grid);
 		
-		$grid->addColumn('id', 'ID');
-		$grid->addColumn('e', 'E')->formatCallback[] = function($a, $b) {
+		$grid->addColumn('country', 'ISO');
+		$grid->addColumn('user', 'User')->formatCallback[] = function($a, $b) {
 			debug($a, $b);
 		};
+		$grid->addColumn('nameUrl', 4242);
+		$grid->addColumn('status', 'Status');
+		$grid->addDateColumn('created', 'Date', '%d.%m.%Y')->addDefaultSorting('desc');
 		
 		/*
 		$grid->setTranslator(Environment::getService('translator'));

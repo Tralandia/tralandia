@@ -162,6 +162,7 @@ class QueryBuilder extends DataSources\Mapped
 	 */
 	public function fetch()
 	{
+		debug($this->qb->getQuery()->getResult());
 		$this->data = $this->qb->getQuery()->getScalarResult();
 
 		// Detect mapping type. It will affect the hydrated column names.
