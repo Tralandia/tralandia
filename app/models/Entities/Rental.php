@@ -3,6 +3,7 @@
 /**
  * @Entity(repositoryClass="RentalRepository")
  * @HasLifecycleCallbacks
+ * @Primary(key="id", value="nameUrl")
  */
 class Rental extends BaseEntity {
 	
@@ -19,20 +20,18 @@ class Rental extends BaseEntity {
 	/**
 	 * @Column(type="string")
 	 * @UIControl(type="text", label="Name url")
-	 * @GridControl(type="text", label="Name url")
 	 */
 	protected $nameUrl;
 
 	/**
 	 * @ManyToOne(targetEntity="User", inversedBy="rentals")
-	 * @UIControl(type="select", callback="getList", value="login")
-	 * @GridControl(type="select", callback="getList", value="login")
+	 * @UIControl(type="select", callback="getList")
 	 */
 	protected $user;
 	
 	/**
 	 * @ManyToOne(targetEntity="Country")
-	 * @UIControl(type="select", callback="getList", value="iso")
+	 * @UIControl(type="select", callback="getList")
 	 */
 	protected $country;
 }

@@ -4,8 +4,6 @@
  * @HasLifecycleCallbacks
  */
 abstract class BaseEntity extends Entity {
-	
-	const PRIMARY_KEY = 'id';
 
 	/**
 	 * @Id @Column(type="integer")

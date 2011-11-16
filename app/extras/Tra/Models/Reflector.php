@@ -6,6 +6,8 @@ use Nette;
 
 class Reflector extends Nette\Object {
 	
+	const ANN_PRIMARY = 'Primary';
+	
 	const UI_CONTROL = 'UIControl';
 	
 	protected $service = null;
@@ -86,7 +88,11 @@ class Reflector extends Nette\Object {
 					if (!isset($association->targetEntity)) {
 						throw new \Exception("Nedefinoval si `targetEntity` v {$property->getName()} - @ManyToOne");
 					}
-					$control->setItems($callback($association->targetEntity, isset($ui->value) ? $ui->value : $class::PRIMARY_KEY));
+
+					$primaryValue = $this->getEntityPrimaryData($association->targetEntity)->value;
+					$primaryKey = $this->getEntityPrimaryData($association->targetEntity)->key;
+					
+					$control->setItems($callback($association->targetEntity, $primaryKey, isset($primaryValue) ? $primaryValue : $primaryKey));
 				} elseif (isset($ui->options) && $options = $this->getOptions($classReflection, $ui->options)) {
 					// data volane cez options
 					if (!isset($ui->options) && !isset($ui->callback)) {
@@ -114,6 +120,10 @@ class Reflector extends Nette\Object {
 			}
 		}
 		return $return;
+	}
+	
+	public static function getEntityPrimaryData($class) {
+		return \Nette\Reflection\ClassType::from($class)->getAnnotation(self::ANN_PRIMARY);
 	}
 	
 	private function getOptions($classReflection, $options) {

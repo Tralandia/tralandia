@@ -3,6 +3,7 @@
 /**
  * @Entity(repositoryClass="UserRepository")
  * @HasLifecycleCallbacks
+ * @Primary(key="id", value="login")
  */
 class User extends BaseEntity {
 
@@ -26,7 +27,7 @@ class User extends BaseEntity {
 
 	/**
 	 * @ManyToOne(targetEntity="Country")
-	 * @UIControl(type="select", callback="getList", value="iso")
+	 * @UIControl(type="select", callback="getList")
 	 */
 	protected $country;
 	
@@ -41,6 +42,6 @@ class User extends BaseEntity {
 	
 	public function addRental(\Rental $rental) {
 		$this->rentals[] = $rental;
-		$rental->user = $this; // ??? preo sa tu musi definovat aj tento vstah? 
+		$rental->user = $this; // ??? preco sa tu musi definovat aj tento vstah? 
 	}
 }

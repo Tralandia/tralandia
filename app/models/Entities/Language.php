@@ -3,6 +3,7 @@
 /**
  * @Entity(repositoryClass="BaseRepository")
  * @HasLifecycleCallbacks
+ * @Primary(key="id", value="iso")
  */
 class Language extends BaseEntity {
 

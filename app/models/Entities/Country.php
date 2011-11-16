@@ -3,6 +3,7 @@
 /**
  * @Entity(repositoryClass="BaseRepository")
  * @HasLifecycleCallbacks
+ * @Primary(key="id", value="iso")
  */
 class Country extends BaseEntity {
 
