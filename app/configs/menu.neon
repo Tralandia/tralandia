@@ -1,4 +1,18 @@
-menu:
-	items:
-		- name: david
-		- name: brano
+common:
+	menu:
+		items:
+			rentals:
+				name: Rentals
+				link: admin:rental
+				items: 
+					add:
+						name: Add
+						link: admin:rental:add
+			
+			users:
+				name: Users
+				link: admin:user
+
+			countries:
+				name: Countries
+				link: admin:country
