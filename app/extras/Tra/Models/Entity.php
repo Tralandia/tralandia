@@ -65,4 +65,14 @@ abstract class Entity extends \Nette\Object implements \IteratorAggregate {
 		}
 		parent::__set($name, $value);
 	}
+	
+	public function getPrimaryKey() {
+		$key = $this->getReflection()->getAnnotation('Primary')->id;
+		return $this->$key;
+	}
+	
+	public function getPrimaryValue() {
+		$key = $this->getReflection()->getAnnotation('Primary')->value;
+		return $this->$key;
+	}
 }

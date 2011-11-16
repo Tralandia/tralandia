@@ -17,4 +17,10 @@ class BaseService extends Service {
 	public function getList($class, $key, $value) {
 		return $this->em->getRepository($class)->fetchPairs($key, $value);
 	}
+	
+	public function getDataSource() {
+		$query = $this->em->createQueryBuilder();
+		$query->select('e')->from($this->mainEntity, 'e');
+		return $query;
+	}
 }

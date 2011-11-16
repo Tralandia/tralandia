@@ -3,7 +3,7 @@
  * @MappedSuperclass
  * @HasLifecycleCallbacks
  */
-abstract class BaseEntity extends Entity {
+abstract class BaseEntity extends Entity implements IEntity {
 
 	/**
 	 * @Id @Column(type="integer")
@@ -20,7 +20,6 @@ abstract class BaseEntity extends Entity {
 	 * @Column(type="datetime")
 	 */
 	protected $updated;
-
 	
 	/**
 	 * @prePersist
@@ -36,5 +35,4 @@ abstract class BaseEntity extends Entity {
 	public function setUpdated(){
 		$this->updated = new \Nette\DateTime;
 	}
-
 }

@@ -41,8 +41,6 @@ class AdminPresenter extends BasePresenter {
 		$form = $this->getComponent('form');
 		$row = $this->service->get($id);
 
-debug($this->link('this'));
-
 		if (!$row) {
 			throw new NA\BadRequestException('Record not found');
 		}
@@ -81,9 +79,18 @@ debug($this->link('this'));
 	
 	protected function createComponentGrid($name) {
 		$grid = new \EditableDataGrid\DataGrid;
+
+		$dataSource = new \DataGrid\DataSources\Doctrine\QueryBuilder($this->service->getDataSource());
 		
-		$this->service = new $this->serviceSettings->class;
-		$this->service->prepareDataGrid($grid);
+		debug($dataSource);
+		
+		$grid->setDataSource($dataSource);
+		//$this->service->prepareDataGrid($grid);
+		
+		$grid->addColumn('id', 'ID');
+		$grid->addColumn('e', 'E')->formatCallback[] = function($a, $b) {
+			debug($a, $b);
+		};
 		
 		/*
 		$grid->setTranslator(Environment::getService('translator'));
@@ -112,7 +119,7 @@ debug($this->link('this'));
 		$grid->addAction('Edit', 'edit', Html::el('span')->class('icon edit')->setText('Edit') , false);
 		$grid->addAction('Delete', 'delete', Html::el('span')->class('icon delete')->setText('Delete'), false);
 
-		
+		/*
 		//$grid->setEditForm($this->getComponent('gridForm'));
 		//debuge($this->getComponent('gridForm'));
 		$grid->setEditForm($this->getComponent('gridForm'));
@@ -124,7 +131,8 @@ debug($this->link('this'));
 		$grid->onDataReceived[] = array($this, 'onDataRecieved');
 		$grid->onInvalidDataReceived[] = array($this, 'onDataRecieved');
 		$grid->onInvalidDataReceived[] = array($this, 'onInvalidDataRecieved');
-
+		*/
+		
 		return $grid;
 	}
 	
@@ -132,8 +140,7 @@ debug($this->link('this'));
 		
 		$grid = new \Tra\Forms\Grid($this, $name);
 		
-		$this->service = new $this->serviceSettings->class;
-		$this->service->prepareGridForm($grid);
+		//$this->service->prepareGridForm($grid);
 		
 		
 		return $grid;
