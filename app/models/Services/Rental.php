@@ -10,10 +10,12 @@ class Rental extends BaseService {
 	
 	public function getDataSource() {
 		$query = $this->em->createQueryBuilder();
-		$query->select('e, 1 rren, e.id eid')->from($this->mainEntity, 'e');
+		$query->select('1 rrr, e, e.id id')->from($this->mainEntity, 'e');
 		
-		foreach ($query->getQuery()->getResult() as $e) {
-		//	debug($e);
+		debug($query->getQuery()->getAST()->selectClause->selectExpressions);
+		
+		foreach ($query->getQuery()->getScalarResult() as $e) {
+			debug($e);
 		}
 		
 		return $query;

@@ -18,6 +18,8 @@ common:
 	proxiesDir: '%tempDir%/proxies'
 
 	entityDirs: '%appDir%/models/Entities'
+	
+	settingsDir: '%appDir%/configs/'
 		
 	services:
 		robotLoader:
@@ -33,6 +35,9 @@ common:
 
 		translator:
 			factory: \MyTranslator::getTranslator
+			
+		settings:
+			factory: \Settings::factory
 			
 	envOptions:
 		sendEmail: TRUE
