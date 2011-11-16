@@ -1,0 +1,14 @@
+rental:
+	title: Rental Main Title
+	h1: Rental Main H1
+
+
+rentalBase < rental:
+	title: Rental Base
+
+	grid:
+		querySelect: 'id, nameUrl, User'
+		mapper: 
+			id: e.id
+			nameUrl: e.nameUrl
+			User: e.user
