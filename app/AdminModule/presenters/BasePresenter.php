@@ -6,9 +6,39 @@ use Nette\Environment;
 
 abstract class BasePresenter extends \BasePresenter {
 	
-
 	protected function startup() {
 		$this->autoCanonicalize = FALSE;
 		parent::startup();
+	}
+	
+	public function formatTemplateFiles() {
+		$name = $this->getName();
+		$presenter = substr($name, strrpos(':' . $name, ':'));
+		$module = substr($this->getReflection()->getName(), 0, strpos($this->getReflection()->getName(), '\\'));
+		$dir = APP_DIR . '/' . $module;
+
+		return array(
+			"$dir/templates/$presenter/$this->view.latte",
+			"$dir/templates/$presenter.$this->view.latte",
+			"$dir/templates/Admin/$this->view.latte"
+		);
+	}
+	
+	public function formatLayoutTemplateFiles() {
+		$name = $this->getName();
+		$presenter = substr($name, strrpos(':' . $name, ':'));
+		$layout = $this->layout ? $this->layout : 'layout';
+		$module = substr($this->getReflection()->getName(), 0, strpos($this->getReflection()->getName(), '\\'));
+		$dir = APP_DIR . '/' . $module;
+		$list = array(
+			"$dir/templates/$presenter/@$layout.latte",
+			"$dir/templates/$presenter.@$layout.latte",
+			"$dir/templates/Admin/@$layout.latte"
+		);
+		do {
+			$list[] = "$dir/templates/@$layout.latte";
+			$dir = dirname($dir);
+		} while ($dir && ($name = substr($name, 0, strrpos($name, ':'))));
+		return $list;
 	}
 }

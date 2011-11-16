@@ -9,7 +9,7 @@ use Nette\Application as NA,
 	Nette\Utils\Strings,
 	\Nette\Application\UI\Form;
 
-class RentalPresenter extends BasePresenter {
+class RentalPresenter22 extends BasePresenter {
 
 	public function renderList() {
 		

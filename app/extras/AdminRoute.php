@@ -217,6 +217,12 @@ class AdminRoute extends Nette\Object implements Application\IRouter
 			unset($params[self::PRESENTER_KEY]);
 		}
 
+
+//debug($presenter);
+//debug($params);
+
+		$form = strtolower(substr($presenter, strrpos($presenter, ':') + 1));
+
 		return new Application\Request(
 			$presenter,
 			$httpRequest->getMethod(),
@@ -244,6 +250,9 @@ class AdminRoute extends Nette\Object implements Application\IRouter
 		$params = $appRequest->getParams();
 		$metadata = $this->metadata;
 		$presenter = $oldPresenter = $appRequest->getPresenterName();
+		
+//debug($presenter);
+		
 		$presenter = 'Admin:Admin';
 		$params[self::PRESENTER_KEY] = $presenter;
 
@@ -263,6 +272,8 @@ class AdminRoute extends Nette\Object implements Application\IRouter
 		}
 		
 		$params['form'] = strtolower(substr($oldPresenter, strrpos($oldPresenter, ':') + 1));
+		
+debug($params);
 		
 		foreach ($metadata as $name => $meta) {
 			if (!isset($params[$name])) {

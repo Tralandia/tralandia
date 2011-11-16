@@ -5,11 +5,20 @@ use Nette, Tra;
 
 abstract class Service extends Nette\Object implements IService {
 	
+	protected $mainEntity = null;
 	protected $reflector = null;
 	private $em = null;
 
 	public function __construct() {
 
+	}
+	
+	public function getMainEntity() {
+		if ($this->mainEntity === null) {
+			throw new Exception("Exte nebola zadana hlavna entita");
+		}
+		
+		return $this->mainEntity;
 	}
 	
 	public function getReflector() {

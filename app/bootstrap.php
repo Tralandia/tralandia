@@ -9,7 +9,7 @@ require LIBS_DIR . '/Nette/loader.php';
 require LIBS_DIR . '/tools.php';
 
 // Enable Nette\Debug for error visualisation & logging
-//Debugger::$strictMode = TRUE;
+Debugger::$strictMode = TRUE;
 Debugger::enable();
 
 // Load configuration from config.neon file);
@@ -20,6 +20,9 @@ $configurator->loadConfig(APP_DIR . '/config.neon', isset($_SERVER['APPENV']) ? 
 if(isset($configurator->container->params['envOptions']['editor'])){
 	Debugger::$editor = $configurator->container->params['envOptions']['editor'];
 }
+
+// Enable dynamic presenter factory
+DynamicPresenterFactory::enable();
 
 // Configure application
 $application = $configurator->container->application;
@@ -37,7 +40,7 @@ $application->onStartup[] = function() use ($application) {
 	));
 	$router[] = new Route('admin/<presenter>/<id [0-9]+>', array(
 		'module' => 'Admin',
-		'presenter' => 'Admin',
+		'presenter' => 'Rental',
 		'action' =>  'edit'
 	));
 	$router[] = new Route('admin/<presenter>/[<action list|add>]', array(

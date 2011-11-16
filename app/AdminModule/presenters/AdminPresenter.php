@@ -16,13 +16,17 @@ class AdminPresenter extends BasePresenter {
 	public function startup() {
 		parent::startup();
 		
+		$form = str_replace('Presenter', null, $this->getReflection()->getShortName());
 		$this->template->settings = $this->serviceSettings = \Nette\ArrayHash::from(array(
-			'name' => ucfirst($this->getParams()->form) . ' ' . ucfirst($this->action),
-			'class' => '\\Tra\\Services\\' . ucfirst($this->getParams()->form)
+			'name' => $form,
+			'title' => $form . ' ' . ucfirst($this->action),
+			'class' => '\\Tra\\Services\\' . $form
 		));
 		
+		$this->service = new $this->serviceSettings->class;
 		
 		debug($this->serviceSettings);
+		debug($this->service);
 	}
 	
 
@@ -30,22 +34,49 @@ class AdminPresenter extends BasePresenter {
 	}
 	
 	public function renderAdd() {
+		$form = $this->getComponent('form');
 	}
 	
 	public function renderEdit($id = 0) {
+		$form = $this->getComponent('form');
+		$row = $this->service->get($id);
+
+debug($this->link('this'));
+
+		if (!$row) {
+			throw new NA\BadRequestException('Record not found');
+		}
+		if (!$form->isSubmitted()) {
+			$form->setDefaults($row);
+		}
+
+		$this->template->record = $row;
+		$this->template->form = $form;
 	}
 	
 	protected function createComponentForm($name) {
-		
 		$form = new \Tra\Forms\Form($this, $name);
-		
-		$this->service = new $this->serviceSettings->class;
 		$this->service->prepareForm($form);
 		
+		$form->ajax(false);
+		$form->addSubmit('save', 'Save');
+		$form->onSuccess[] = callback($this, 'onSave');
 		
 		return $form;
 	}
 	
+	public function onSave(\Tra\Forms\Form $form) {
+		$id = (int)$this->getParam()->id;
+		$values = $form->getPrepareValues($this->service);		
+		
+		if ($id > 0) {
+			// EDIT
+			$this->service->update($values);
+		} else {
+			// ADD
+			$this->service->create($values);
+		}	
+    }
 	
 	
 	protected function createComponentGrid($name) {

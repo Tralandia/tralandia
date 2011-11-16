@@ -5,9 +5,14 @@ namespace Tra\Services;
 use Tra;
 
 class Rental extends BaseService {
+	
+	protected $mainEntity = 'Rental';
 
-	public function prepareForm(Tra\Forms\Rental $form, $dataGrid = NULL) {
-		$this->getReflector()->extend($form, '\Rental', $dataGrid);
+	public function prepareForm(\Nette\Application\UI\Form $form) {
+		$reflector = $this->getReflector();
+		//$reflector->allow('\Rental');
+		//$reflector->deny('\Rental');
+		$reflector->extend($form, '\Rental');
 	}
 
 	public function create(\Nette\ArrayHash $data) {
