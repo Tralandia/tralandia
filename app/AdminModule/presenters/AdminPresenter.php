@@ -72,25 +72,26 @@ class AdminPresenter extends BasePresenter {
 	protected function createComponentGrid($name) {
 		$grid = new \EditableDataGrid\DataGrid;
 
-		$dataSource = new \DataGrid\DataSources\Doctrine\QueryBuilder($this->service->getDataSource());
+		$dataSource = new \DataGrid\DataSources\Doctrine\LalaQueryBuilder($this->service->getDataSource());
 		$dataSource->setMapping(array(
 			'id' => 'e.id',
-			'country' => 'e.country',
-			'user' => 'e.user',
+			'country' => 'e.country.iso',
+			'countryID' => 'e.country.id',
+			'user' => 'e.user.login',
 			'nameUrl' => 'e.nameUrl',
 			'status' => 'e.status',
-			'created' => 'e.created'
+			'created' => 'e.created',
+			'total' => 'total'
 		));
 
 		$grid->setDataSource($dataSource);
 		//$this->service->prepareDataGrid($grid);
 		
 		$grid->addColumn('country', 'ISO');
-		$grid->addColumn('user', 'User')->formatCallback[] = function($a, $b) {
-			debug($a, $b);
-		};
+		$grid->addColumn('user', 'User');
 		$grid->addColumn('nameUrl', 4242);
 		$grid->addColumn('status', 'Status');
+		$grid->addColumn('total', 'Total');
 		$grid->addDateColumn('created', 'Date', '%d.%m.%Y')->addDefaultSorting('desc');
 		
 		/*

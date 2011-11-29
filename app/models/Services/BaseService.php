@@ -23,4 +23,8 @@ class BaseService extends Service {
 		$query->select('e')->from($this->mainEntity, 'e');
 		return $query;
 	}
+	
+	public function getMainEntity() {
+		return $this->mainEntity;
+	}
 }

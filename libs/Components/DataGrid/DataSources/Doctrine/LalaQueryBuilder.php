@@ -9,14 +9,13 @@ use Doctrine,
 
 /**
  * Query Builder based data source
- * @author Michael Moravec
- * @author Štěpán Svoboda
- * @author Milan Lempera
+ * @author Branislav Vaculčiak
  */
-class QueryBuilder extends DataSources\Mapped
+class LalaQueryBuilder extends DataSources\Mapped
 {
 	const MAP_PROPERTIES = 1;
 	const MAP_OBJECTS = 2;
+	const ENTITY_PREFIX = 'e';
 
 	/**
 	 * @var Doctrine\ORM\QueryBuilder Query builder instance
@@ -162,13 +161,14 @@ class QueryBuilder extends DataSources\Mapped
 	 */
 	public function fetch()
 	{
-		debug($this->qb->getQuery()->getResult());
-		$this->data = $this->qb->getQuery()->getScalarResult();
-
-debug($this->data);
-
-		// Detect mapping type. It will affect the hydrated column names.
-		$this->detectMappingType(); 
+		$em = $this->qb->getEntityManager();
+		$query = $this->qb->getQuery();
+		$mainEntity = current($this->qb->getRootEntities());
+		foreach ($em->getClassMetadata($mainEntity)->getAssociationNames() as $assoc) {
+			$query->setFetchMode($mainEntity, $assoc, \Doctrine\ORM\Mapping\ClassMetadata::FETCH_EAGER);
+		}
+		
+		$this->data = $query->getResult();
 
 		// Create mapping index
 		$data = array();
@@ -176,7 +176,7 @@ debug($this->data);
 		foreach ($this->data as & $row) {
 			$data[$i] = array();
 			foreach ($this->mapping as $alias => $column) {
-				$data[$i][$alias] = & $row[$this->getHydratedColumnName($column)];
+				$data[$i][$alias] = $this->getColumnValue($row, $column);
 			}
 			$i++;
 		}
@@ -185,18 +185,21 @@ debug($this->data);
 	}
 
 	/**
-	 * Returns hydrated column name based on the mapping type.
+	 * Returns column value on the mapping type.
+	 * @param array $row
 	 * @param string $column
 	 * @return string
 	 */
-	private function getHydratedColumnName($column)
+	private function getColumnValue(&$row, $column)
 	{
-		if ($this->mappingType === self::MAP_PROPERTIES) {
-			return substr($column, strpos($column, '.') !== FALSE ? strpos($column, '.') + 1 : 0);
-		}
+		//debug($row, $column);
 		
-		if ($this->mappingType === self::MAP_OBJECTS) {
-			return strtr($column, '.', '_');
+		if (strpos($column, self::ENTITY_PREFIX . '.') === 0) {
+			$column = str_replace('.', '->', substr($column, 2));
+			eval('$value = $row[0]->' . $column . ';');
+			return $value;
+		} else {
+			return $row[$column];
 		}
 	}
 
