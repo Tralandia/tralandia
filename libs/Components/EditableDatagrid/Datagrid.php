@@ -45,7 +45,7 @@ class Datagrid extends \DataGrid\DataGrid {
      * Callback - save data
      * @var array
      */
-    public $onInvalidDataReceived = array();
+    public $onInvalidDataRecieved = array();
 
     /**
      * How much rows can be on one page in fast mode.
@@ -99,7 +99,6 @@ class Datagrid extends \DataGrid\DataGrid {
 
 		if($this->currentContainer) {
 			$formCol = $form[$this->currentContainer][$name]; // Is column in Form?
-			
 		} else {
 			$formCol = $form[$name]; // Is column in Form?
 		}
@@ -182,45 +181,50 @@ class Datagrid extends \DataGrid\DataGrid {
 
 		echo mb_convert_encoding($s, 'HTML-ENTITIES', 'UTF-8');
 
-        //if(SnippetHelper::$outputAllowed){ // Template si to řeší sama
+        if (isset($args[1]) && $args[1] == 'end' && !$this->getPresenter()->isAjax()) {
             $template = $this->createTemplate();
             $template->setFile(dirname(__FILE__)."/grid.phtml");
             $template->render();
-        //}
+        }
     }
 
-    function handleSaveColumnData($nazevPolicka, $data, $cisloRadku, $dataGrid,$origSha1){
+    function handleSaveColumnData($data, $cisloRadku, $dataGrid) {
+		$form = $this->getEditForm();
+		$data = \Nette\Utils\Json::decode($data);
+
         if($this->getUniqueId() != $dataGrid)
             throw new \InvalidArgumentException("Invalid datagrid id.");
-        if(!isSet($this->editableFields[$nazevPolicka]))
-            throw new \InvalidStateException("Field '".$nazevPolicka."' is not editable.");
-        $form = $this->getEditForm();
-        $policko = $form[$nazevPolicka]; // Vyhodí výjimku pokud není nalezeno
 
-        $origValue = $policko->value;
-        $errors = $policko->errors;
-
-        $policko->value = $data;
-
-        if(!IsSet($this->presenter->payload->editableDatagrid))
+		foreach ($data as $cell => $value) {
+			$path = trim(strtr($cell, array('][' => '-', '[' => '-', ']' => '-')), '-');
+			if(!$this->getEditForm()->getComponent($path, false))
+	            throw new \InvalidStateException("Field '".$nazevPolicka."' is not editable.");
+	
+			$cell = $form->getComponent($path);
+			$cell->setValue($value);
+		}
+		$cell = $form->getComponent('id');
+		$cell->setValue($cisloRadku);
+		
+		if (!isset($this->presenter->payload->editableDatagrid))
             $this->presenter->payload->editableDatagrid = (object)null;
         $payload = $this->presenter->payload->editableDatagrid;
 
-        $success = $policko->rules->validate();
-        $payload->success = $success;
-        
-        if($success){
-            $this->onDataReceived($cisloRadku,$policko,$origSha1);
-        }else{
-            foreach($form->errors AS $error){
-                $this->addError($error);
-            }
-            $this->onInvalidDataReceived($cisloRadku,$policko,$origSha1);
+		if ($form->isValid()) {
+			$payload->success = true;
+            $this->onDataReceived($form);
+        } else {
+			$payload->success = false;
+			foreach ($form->getErrors() as $error) {
+				$this->addError($error);
+			}
+            $this->onInvalidDataRecieved($form);
         }
-        $policko->value = $origValue;
+
+		$this->getPresenter()->sendPayload();
     }
 
-    function addError($text){
+    function addError($text) {
         if(!IsSet($this->presenter->payload->editableDatagrid))
             $this->presenter->payload->editableDatagrid = (object)null;
         $payload = $this->presenter->payload->editableDatagrid;

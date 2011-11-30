@@ -55,4 +55,18 @@ abstract class Service extends Nette\Object implements IService {
 		}
 		return $values;
 	}
+	
+	public function prepareGridData(Tra\Forms\Form $form) {
+		$assocations = $this->getReflector()->getAssocations();
+		$values = $form->getValues();
+
+		foreach ($assocations as $entity => $columns) {
+			$container = $form->getComponent($entity);
+			foreach ($columns as $name => $target) {
+				$control = $container->getComponent($name);
+				$values->{$entity}->{$name} = $this->em->find($target, $control->getValue());
+			}
+		}
+		return $values;
+	}
 }

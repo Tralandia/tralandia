@@ -71,7 +71,8 @@ class AdminPresenter extends BasePresenter {
 	
 	protected function createComponentGrid($name) {
 		$grid = new \EditableDataGrid\DataGrid;
-
+		//$grid->itemsPerPage = 3;
+		
 		$dataSource = new \DataGrid\DataSources\Doctrine\LalaQueryBuilder($this->service->getDataSource());
 		$dataSource->setMapping(array(
 			'id' => 'e.id',
@@ -89,51 +90,29 @@ class AdminPresenter extends BasePresenter {
 		
 		$grid->addColumn('country', 'ISO');
 		$grid->addColumn('user', 'User');
-		$grid->addColumn('nameUrl', 4242);
+		$grid->addColumn('nameUrl', 'URL name');
 		$grid->addColumn('status', 'Status');
 		$grid->addColumn('total', 'Total');
 		$grid->addDateColumn('created', 'Date', '%d.%m.%Y')->addDefaultSorting('desc');
 		
-		/*
-		$grid->setTranslator(Environment::getService('translator'));
-		$grid->itemsPerPage = 20;
-		$grid->multiOrder = FALSE;
-		$grid->displayedItems = array(20, 50, 100);
-
-		$dataSource = new \DataGrid\DataSources\Doctrine\QueryBuilder($this->em->getRepository('Rental')->getDataSource());
-		$dataSource->setMapping(array(
-			'id' => 'r.id',
-			'country' => 'c.iso',
-			'user' => 'u.login',
-			'nameUrl' => 'r.nameUrl',
-			'status' => 'r.status',
-			'created' => 'r.created'
-		));
-
-		$grid->setDataSource($dataSource);
-		$grid->addColumn('country', 'ISO');
-		$grid->addColumn('user', 'User');
-		$grid->addColumn('nameUrl', 4242);
-		$grid->addColumn('status', 'Status');
-		$grid->addDateColumn('created', 'Date', '%d.%m.%Y')->addDefaultSorting('desc');
-		*/
 		$grid->addActionColumn('Actions');
 		$grid->addAction('Edit', 'edit', Html::el('span')->class('icon edit')->setText('Edit') , false);
 		$grid->addAction('Delete', 'delete', Html::el('span')->class('icon delete')->setText('Delete'), false);
 
-		/*
+		
 		//$grid->setEditForm($this->getComponent('gridForm'));
 		//debuge($this->getComponent('gridForm'));
-		$grid->setEditForm($this->getComponent('gridForm'));
-		//$grid->addEditableField('country');
+		$gridForm = $this->getComponent('gridForm');
+		$grid->setEditForm($gridForm);
+
 		$grid->setContainer('Rental');
+		$grid->addEditableField('country');
 		$grid->addEditableField('user');
 		$grid->addEditableField('nameUrl');
-		//$grid->addEditableField('status');
-		$grid->onDataReceived[] = array($this, 'onDataRecieved');
-		$grid->onInvalidDataReceived[] = array($this, 'onDataRecieved');
-		$grid->onInvalidDataReceived[] = array($this, 'onInvalidDataRecieved');
-		*/
+		$grid->addEditableField('status');
+		$grid->onDataReceived[] = array($gridForm, 'onDataRecieved');
+		$grid->onInvalidDataRecieved[] = array($gridForm, 'onInvalidDataRecieved');
+
 		
 		return $grid;
 	}

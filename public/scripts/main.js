@@ -30,7 +30,7 @@ $(document).ready(function() {
 		return false;
 	});
 
-	$("form.datagrid select").live("change", function() {
+	$("form.datagrid .footer select").live("change", function() {
 		$(this).parents("form.datagrid").find("input:submit[name=itemsSubmit]").ajaxSubmit();
 		return false;
 	});

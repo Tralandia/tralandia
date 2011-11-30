@@ -3,7 +3,7 @@
         $(this).attr("contentEditable",true).addClass("editable")
 
         .focus(function(){
-            $(this).data("editable",{originalContent:$(this).html()}) // UloÅ¾Ã­me aktuÃ¡lnÃ­ obsah polÃ­Äka
+            $(this).data("editable",{originalContent:$(this).html()})
             //.addClass("ui-state-active");
         })
 
