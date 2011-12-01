@@ -9,16 +9,16 @@ use Nette\Application as NA,
 
 class AdminPresenter extends BasePresenter {
 	
-	private $serviceSettings;
+	private $settings;
 	
 	private $service;
 	
 	public function startup() {
 		parent::startup();
 		
-		$settings = $this->getService('settings');
-		$this->template->settings = $settings;
-		$this->service = new $settings->serviceClass;
+		$this->settings = $this->getService('settings');
+		$this->template->settings = $this->settings;
+		$this->service = new $this->settings->serviceClass;
 	}
 	
 
@@ -70,60 +70,78 @@ class AdminPresenter extends BasePresenter {
 	
 	
 	protected function createComponentGrid($name) {
+		$form = $this->getComponent('gridForm');
 		$grid = new \EditableDataGrid\DataGrid;
 		//$grid->itemsPerPage = 3;
 		
-		$dataSource = new \DataGrid\DataSources\Doctrine\LalaQueryBuilder($this->service->getDataSource());
-		$dataSource->setMapping(array(
-			'id' => 'e.id',
-			'country' => 'e.country.iso',
-			'countryID' => 'e.country.id',
-			'user' => 'e.user.login',
-			'nameUrl' => 'e.nameUrl',
-			'status' => 'e.status',
-			'created' => 'e.created',
-			'total' => 'total'
-		));
+		$grid->setEditForm($form);
+		$grid->setContainer($this->service->getMainEntity());	
+		$grid->onDataReceived[] = array($form, 'onDataRecieved');
+		$grid->onInvalidDataRecieved[] = array($form, 'onInvalidDataRecieved');
+		
+		$mapper = array(); $editable = false;
+		foreach ($this->settings->params->grid->columns as $alias => $column) {
+			$mapper[$alias] = $column->mapper;
+			
+			if (!isset($column->draw) || (isset($column->draw) && $column->draw == true)) {
+				$type = isset($column->type) ? $column->type : 'text';				
+				$property = substr($column->mapper, strrpos($column->mapper, '.')+1);
+				
+				if ($controlAnnotation = $this->service->getReflector()->getAnnotation('Rental', $property, 'Column')) {
+					$type = $controlAnnotation->type;
+				}
 
-		$grid->setDataSource($dataSource);
-		//$this->service->prepareDataGrid($grid);
+				if ($controlAnnotation = $this->service->getReflector()->getAnnotation('Rental', $property, 'UIControl')) {
+					$type = $controlAnnotation->type;
+				}
+				
+				switch ($type) {
+					case 'datetime':	
+					case 'date':	$grid->addDateColumn($alias, $column->label, '%d.%m.%Y'); break; // TODO: poriesit formatovanie datumov
+					default:		$grid->addColumn($alias, $column->label);
+				}
+				
+				if (isset($column->callback)) {
+					$column->callback->class == '%this%' ? $column->callback->class = $this : $column->callback->class;
+					
+					$grid->getComponent($alias)->formatCallback[] = new \DataGrid\Callback(
+						$column->callback->class,
+						$column->callback->method,
+						isset($column->callback->params) ? $column->callback->params : null
+					);
+				}
+			}
+			if (isset($column->editable) && $column->editable == true) {
+				$editable = true;
+				$grid->addEditableField($alias);
+			}
+		}
 		
-		$grid->addColumn('country', 'ISO');
-		$grid->addColumn('user', 'User');
-		$grid->addColumn('nameUrl', 'URL name');
-		$grid->addColumn('status', 'Status');
-		$grid->addColumn('total', 'Total');
-		$grid->addDateColumn('created', 'Date', '%d.%m.%Y')->addDefaultSorting('desc');
-		
+		$dataSource = new \DataGrid\DataSources\Doctrine\LalaQueryBuilder($this->service->getDataSource());
+		$dataSource->setMapping($mapper);
+		$grid->setDataSource($dataSource);	
 		$grid->addActionColumn('Actions');
+		
+		
 		$grid->addAction('Edit', 'edit', Html::el('span')->class('icon edit')->setText('Edit') , false);
 		$grid->addAction('Delete', 'delete', Html::el('span')->class('icon delete')->setText('Delete'), false);
-
-		
-		//$grid->setEditForm($this->getComponent('gridForm'));
-		//debuge($this->getComponent('gridForm'));
-		$gridForm = $this->getComponent('gridForm');
-		$grid->setEditForm($gridForm);
-
-		$grid->setContainer('Rental');
-		$grid->addEditableField('country');
-		$grid->addEditableField('user');
-		$grid->addEditableField('nameUrl');
-		$grid->addEditableField('status');
-		$grid->onDataReceived[] = array($gridForm, 'onDataRecieved');
-		$grid->onInvalidDataRecieved[] = array($gridForm, 'onInvalidDataRecieved');
-
 		
 		return $grid;
 	}
 	
-	function createComponentGridForm($name) {
-		
+	public function createComponentGridForm($name) {
 		$grid = new \Tra\Forms\Grid($this, $name);
-		
-		//$this->service->prepareGridForm($grid);
-		
-		
 		return $grid;
 	}
+	
+	public function pattern($value, $row, $params = null) {
+		return preg_replace_callback('/%([\w]*)%/', function($matches) use ($row) {
+			return isset($row[$matches[1]]) ? $row[$matches[1]] : $matches[0];
+		}, $params->pattern);
+	}
+
+	public function nieco($value, $row, $params = null) {
+		//debug($value, $row, $params);
+		return $value;
+	}	
 }

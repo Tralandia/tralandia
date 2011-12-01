@@ -11,7 +11,7 @@
     foreach($grid->getComponents(false, '\DataGrid\Columns\IColumn') AS $dgColName => $dgColumn) {
 		// pridanie classy
 		$dgColumn->getCellPrototype()->addClass('editable');
-		
+
         $sloupecek = $sloupecky[$i] = (object)null;
         $sloupecek->editable = false;
         if(isset($editovatelnePolicka[$dgColName])) {
@@ -35,6 +35,7 @@
 
     $sloupecky_json = \Nette\Utils\Json::encode($sloupecky);
 ?>
+{if !$presenter->isAjax()}
 <style type="text/css">
     .ui-effects-transfer { border: 2px dotted gray; } 
 </style>
@@ -42,6 +43,7 @@
 <script type="text/JavaScript" src="{$basePath}/scripts/sha1.js"></script>
 <script type="text/JavaScript" src="{$basePath}/scripts/rawurlencode.js"></script>
 <script type="text/JavaScript" src="{$basePath}/scripts/utf8_encode.js"></script>
+{/if}
 <script type="text/JavaScript" n:syntax="double">
 
 	/**
@@ -66,7 +68,7 @@
 	    }
 	}
 
-	$("table.datagrid tbody tr").live('click', function() {
+	$("table.datagrid tbody tr").click(function() {
 		var ok = $('<a href="#">ok</a>');
 		var nok = $('<a href="#">x</a>');
 		$("table.datagrid tbody tr td.editableActions").remove();
@@ -109,7 +111,7 @@
 		});
 	});
 	
-    $("table.datagrid tbody tr td:not(.checker,.actions,.editableActions)").livequery(function(){
+    $("table.datagrid tbody tr td:not(.checker,.actions,.editableActions)").each(function(){
         var sloupecky = {{!$sloupecky_json}};
         var t = $(this);
         var cisloSloupecku = t.parent().find("td:not(.checker)").index(t);

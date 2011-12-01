@@ -55,3 +55,11 @@ hr {
 	width: 800px;
 	margin: 40px auto;
 }
+
+
+table.datagrid {
+	width: 100%;
+}
+table.datagrid td {
+	line-height: 2;
+}

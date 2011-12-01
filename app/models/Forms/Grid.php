@@ -6,14 +6,14 @@ use Tra\Services;
 
 class Grid extends Form {
 
-	private $sRental;
+	private $service;
 
     public function __construct(\Nette\ComponentModel\IContainer $parent = null, $name = null) {
 		parent::__construct($parent, $name);
 
 		
-		$this->sRental = new Services\Rental;
-		$this->sRental->prepareForm($this);
+		$this->service = new Services\Rental;
+		$this->service->prepareForm($this);
 		
 		$this->ajax(false);
 		$this->addHidden('id');
@@ -21,11 +21,15 @@ class Grid extends Form {
 	}
 	
 	public function onDataRecieved($form) {
-		//$values = $form->getPrepareValues($this->sRental);		
-		//debug($values);
+		$values = $form->getPrepareValues($this->service);		
+
+		$this->service->gridUpdate($form->getValues()->id, $values);
+		
+		/*
 		debug($form);
 		debug($form->getValues()->id);
 		debug($form->getValues()->Rental);
+		*/
     }
 
 	public function onInvalidDataRecieved($form) {

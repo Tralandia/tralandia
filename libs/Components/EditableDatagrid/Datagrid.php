@@ -181,7 +181,7 @@ class Datagrid extends \DataGrid\DataGrid {
 
 		echo mb_convert_encoding($s, 'HTML-ENTITIES', 'UTF-8');
 
-        if (isset($args[1]) && $args[1] == 'end' && !$this->getPresenter()->isAjax()) {
+        if (isset($args[1]) && $args[1] == 'end') {
             $template = $this->createTemplate();
             $template->setFile(dirname(__FILE__)."/grid.phtml");
             $template->render();
@@ -191,7 +191,7 @@ class Datagrid extends \DataGrid\DataGrid {
     function handleSaveColumnData($data, $cisloRadku, $dataGrid) {
 		$form = $this->getEditForm();
 		$data = \Nette\Utils\Json::decode($data);
-
+		
         if($this->getUniqueId() != $dataGrid)
             throw new \InvalidArgumentException("Invalid datagrid id.");
 
@@ -221,7 +221,9 @@ class Datagrid extends \DataGrid\DataGrid {
             $this->onInvalidDataRecieved($form);
         }
 
-		$this->getPresenter()->sendPayload();
+		$this->invalidateControl();
+
+		//$this->getPresenter()->sendPayload();
     }
 
     function addError($text) {

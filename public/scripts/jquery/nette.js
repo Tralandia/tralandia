@@ -28,7 +28,6 @@ jQuery.extend({
 	nette: {
 		updateSnippet: function (id, html) {
 			$("#" + id).html(html);
-			try {$("select").combobox();} catch (e) {};
 		},
 
 		success: function (payload) {

@@ -29,6 +29,12 @@ class Rental extends BaseService {
 		$this->em->flush();
 	}
 	
+	public function gridUpdate($id, $data = array()) {
+		$entity = $this->em->find($this->mainEntity, $id);
+		$entity->setData($data->Rental);
+		$this->em->flush();
+	}
+	
 	public function update(array $data = array()) {
 		
 	}

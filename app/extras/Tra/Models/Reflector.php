@@ -126,6 +126,13 @@ class Reflector extends Nette\Object {
 		return \Nette\Reflection\ClassType::from($class)->getAnnotation(self::ANN_PRIMARY);
 	}
 	
+	public static function getAnnotation($class, $property, $annotation = 'UIControl') {
+		if (\Nette\Reflection\ClassType::from($class)->hasProperty($property)) {
+			return \Nette\Reflection\ClassType::from($class)->getProperty($property)->getAnnotation($annotation);
+		}
+		return false;
+	}
+	
 	private function getOptions($classReflection, $options) {
 		$return = array();
 		foreach (explode(',', $options) as $option) {
