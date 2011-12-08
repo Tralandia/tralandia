@@ -17,8 +17,8 @@ require_once APP_DIR . '/Configurator.php';
 $configurator = new Configurator;
 $configurator->loadConfig(APP_DIR . '/config.neon', isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : null);
 
-if(isset($configurator->container->params['envOptions']['editor'])){
-	Debugger::$editor = $configurator->container->params['envOptions']['editor'];
+if(isset($configurator->container->params['editor'])){
+	Debugger::$editor = $configurator->container->params['editor'];
 }
 
 // Enable dynamic presenter factory

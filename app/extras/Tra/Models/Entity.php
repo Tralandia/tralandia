@@ -1,6 +1,6 @@
 <?php
 
-abstract class Entity extends \Nette\Object implements \IteratorAggregate {
+abstract class Entity extends \Nette\Object implements \Nette\Security\IResource, \IteratorAggregate {
 	
 	public function __construct($data = array()) {
 		$this->setData($data);
@@ -49,6 +49,10 @@ abstract class Entity extends \Nette\Object implements \IteratorAggregate {
 
 	public function setId() {
 		throw new \InvalidArgumentException("Nemozes nastavovat ID");
+	}
+	
+	public function getResourceId() {
+		return $this->getReflection()->getName();
 	}
 
 	public function &__get($name) {

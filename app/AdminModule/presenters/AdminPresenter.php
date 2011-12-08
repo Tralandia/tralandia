@@ -135,6 +135,8 @@ class AdminPresenter extends BasePresenter {
 	}
 	
 	public function pattern($value, $row, $params = null) {
+		debug("odpoved=" . $this->user->isAllowed($row->getEntity(), 'show'));
+		
 		return preg_replace_callback('/%([\w]*)%/', function($matches) use ($row) {
 			return isset($row[$matches[1]]) ? $row[$matches[1]] : $matches[0];
 		}, $params->pattern);

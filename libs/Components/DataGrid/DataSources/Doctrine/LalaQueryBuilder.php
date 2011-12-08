@@ -121,7 +121,6 @@ class LalaQueryBuilder extends DataSources\Mapped
 		if (!$this->hasColumn($column)) {
 			throw new \InvalidArgumentException('Trying to sort data source by unknown column.');
 		}
-		
 		$this->qb->addOrderBy($this->mapping[$column], $order === self::ASCENDING ? 'ASC' : 'DESC');
 
 		return $this;
@@ -174,13 +173,10 @@ class LalaQueryBuilder extends DataSources\Mapped
 		$data = array();
 		$i = 0;
 		foreach ($this->data as & $row) {
-			$data[$i] = array();
-			foreach ($this->mapping as $alias => $column) {
-				$data[$i][$alias] = $this->getColumnValue($row, $column);
-			}
+			$data[$i] = new \DataGrid\DataSources\Doctrine\Entity($row, $this->mapping);
 			$i++;
 		}
-
+		
 		return $this->data = $data;
 	}
 
@@ -192,8 +188,6 @@ class LalaQueryBuilder extends DataSources\Mapped
 	 */
 	private function getColumnValue(&$row, $column)
 	{
-		//debug($row, $column);
-		
 		if (strpos($column, self::ENTITY_PREFIX . '.') === 0) {
 			$column = str_replace('.', '->', substr($column, 2));
 			eval('$value = $row[0]->' . $column . ';');

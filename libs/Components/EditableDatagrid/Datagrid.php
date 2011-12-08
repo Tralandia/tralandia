@@ -142,7 +142,7 @@ class Datagrid extends \DataGrid\DataGrid {
 		}
 	
         $key = $this->keyName;
-        $row->id = $this->getUniqueId()."___id___".$data->$key;
+        $row->id = $this->getUniqueId()."___id___".$data[$key];
     }
 
     public function render() {

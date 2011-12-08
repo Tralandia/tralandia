@@ -33,6 +33,9 @@ common:
 			factory: Kdyby\Loaders\SymfonyLoader::register
 			tags: ['run']
 
+		authorizator: 
+			class: \Security\Acl
+
 		translator:
 			factory: \MyTranslator::getTranslator
 			
