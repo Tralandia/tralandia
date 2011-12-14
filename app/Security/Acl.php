@@ -23,7 +23,6 @@ class Acl extends Permission {
 		
 		// definovanie prav pre admina
 		//$this->allow('admin', Permission::ALL, Permission::ALL);
-		
-		//MyAssertion
+
     }
 }

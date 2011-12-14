@@ -50,5 +50,6 @@ $application->onStartup[] = function() use ($application) {
 	));
 };
 
+
 // Run the application!
 $application->run();

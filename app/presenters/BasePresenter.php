@@ -6,7 +6,7 @@ use Nette\Application\UI\Presenter,
 abstract class BasePresenter extends Presenter {
 
 	public function beforeRender() {
-		//$this->template->setTranslator($this->getService('translator'));
+		$this->template->setTranslator($this->getService('translator'));
 		$this->template->registerHelper('image', callback('Tools::helperImage'));
 	}
 
