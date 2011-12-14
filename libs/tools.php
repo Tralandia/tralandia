@@ -103,4 +103,15 @@ class Tools {
 			}
 		}
 	}
+	
+	public static function link($control, $params) {
+		$a = \Nette\Utils\Html::el('a');
+		debug($control, $params);
+				
+		isset($params['link']) ? $a->href($control->link($params['link'])) : null;
+		isset($params['text']) ? $a->setText($params['text']) : $a->setText($params['link']);
+		isset($params['title']) ? $a->title($params['title']) : $a->title($params['text']);
+
+		return $a;
+	}
 }
