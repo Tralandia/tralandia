@@ -22,7 +22,7 @@ class BaseRepository extends Doctrine\ORM\EntityRepository {
 		$query = $query->getQuery();
 		
 		//$query->setResultCacheDriver(new \Doctrine\Common\Cache\ApcCache());
-		$query->useResultCache(true, 5, 'ooo');
+		//$query->useResultCache(true, 5, 'ooo');
 		return $query->getResult();
 	}
 
@@ -31,9 +31,9 @@ class BaseRepository extends Doctrine\ORM\EntityRepository {
 		//debug($this->findAll());
 		
 		foreach ($this->findAll() as $entity) {
-			debug($entity);
+			//debug($entity);
 			
-			/*
+			
 			if (isset($entity->country))
 				debug($entity->country);
 		
@@ -41,10 +41,10 @@ class BaseRepository extends Doctrine\ORM\EntityRepository {
 				debug($entity->rentals);
 			
 			if ($value instanceof Closure) {
-				//$collection[$entity->$key] = $value($entity);
+				$collection[$entity->$key] = $value($entity);
 			} else {
-				//$collection[$entity->$key] = !empty($value) ? $entity->$value : $entity;
-			}*/
+				$collection[$entity->$key] = !empty($value) ? $entity->$value : $entity;
+			}
 		}
 		
 		return $collection;
