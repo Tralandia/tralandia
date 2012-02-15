@@ -19,7 +19,7 @@ common:
 
 	entityDirs: '%appDir%/models/Entities'
 	
-	settingsDir: '%appDir%/configs/'
+	settingsDir: '%appDir%/configs'
 		
 	services:
 		robotLoader:

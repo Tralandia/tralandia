@@ -9,7 +9,9 @@ class DynamicPresenterFactory {
 	public static function autoload($class) {
 		$loader = \Nette\Environment::getRobotLoader();
 		if (strpos($class, "Presenter") && !array_key_exists($class, $loader->getIndexedClasses())) {
-			eval("namespace AdminModule { class RentalPresenter extends AdminPresenter {} }");
+			$class = explode('\\', $class);
+			$class = array_pop($class);
+			eval("namespace AdminModule { class $class extends AdminPresenter {} }");
 		}
 	}
 }
