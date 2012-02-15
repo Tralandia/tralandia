@@ -11,7 +11,21 @@ use Nette\Application as NA,
 class DavidPresenter extends BasePresenter {
 
 	public function actionList() {
-	
+
+		$country = new \Tra\Services\Country(1);
+
+		debug($country);
+
+		return;
+
+		$user = new \Tra\Services\User;
+		$user->country_id = $country;
+		$user->login = 'waccoTEST';
+		$user->password = 'testik';
+		$user->save();
+
+
+
 //		$country = $this->em->find('Country', 2);
 //
 //		$rental = new \Rental;

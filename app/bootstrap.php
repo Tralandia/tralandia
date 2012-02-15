@@ -9,7 +9,7 @@ require LIBS_DIR . '/Nette/loader.php';
 require LIBS_DIR . '/tools.php';
 
 // Enable Nette\Debug for error visualisation & logging
-Debugger::$strictMode = TRUE;
+//Debugger::$strictMode = TRUE;
 Debugger::enable();
 
 // Load configuration from config.neon file);
