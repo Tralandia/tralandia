@@ -48,7 +48,7 @@ class Reflector extends Nette\Object {
 	
 	public function extend(Nette\Forms\Form $form, $class) {
 		$classReflection = $this->getServiceReflection($class);
-		
+
 		$container = $classReflection->getName();
 		if ($form->getComponent($container, false)) {
 			$container = $form->getComponent($container);

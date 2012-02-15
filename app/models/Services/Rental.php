@@ -16,7 +16,7 @@ class Rental extends BaseService {
 		return $query;
 	}
 	
-	public function prepareForm(\Nette\Application\UI\Form $form) {
+	public function prepareForm($form) {debug("RENTAAAl");
 		$reflector = $this->getReflector();
 		//$reflector->allow('\Rental');
 		//$reflector->except('\Rental', array('nameUrl'));

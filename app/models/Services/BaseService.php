@@ -16,7 +16,7 @@ class BaseService extends Service {
 	
 	public function get($id) {
 		return \Nette\ArrayHash::from(array(
-			$this->mainEntity => $this->em->find($this->getMainEntity(), $id)
+			$this->getMainEntity() => $this->em->find($this->getMainEntity(), $id)
 		));
 	}
 	
@@ -26,7 +26,7 @@ class BaseService extends Service {
 	
 	public function getDataSource() {
 		$query = $this->em->createQueryBuilder();
-		$query->select('e')->from($this->mainEntity, 'e');
+		$query->select('e')->from($this->getMainEntity(), 'e');
 		return $query;
 	}
 }

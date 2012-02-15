@@ -12,7 +12,7 @@ class Grid extends Form {
 		parent::__construct($parent, $name);
 
 		
-		$this->service = new Services\Rental;
+		$this->service = $this->getParentService();
 		$this->service->prepareForm($this);
 		
 		$this->ajax(false);

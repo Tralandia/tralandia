@@ -31,4 +31,8 @@ class Form extends \CoolForm {
 	public function getPrepareValues(Tra\Services\Iservice $service) {
 		return $service->prepareData($this);
     }
+
+   	public function getParentService() {
+		return $this->getPresenter()->getMainService();
+    }
 }

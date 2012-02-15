@@ -5,9 +5,11 @@ namespace Tra\Services;
 use Tra;
 
 class User extends BaseService {
+
+	protected $mainEntity = 'User';
 	
-	public function prepareForm(Tra\Forms\User $form) {
-		$user = '\User';
+	public function prepareForm($form) {
+		//$user = '\User';
 		$reflector = $this->getReflector();
 		//$reflector->allow($user, array('id', 'login'));
 		//$reflector->allow($user, array('active', 'login', 'password'));

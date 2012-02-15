@@ -31,8 +31,12 @@ class AdminPresenter extends BasePresenter {
 		//debug($this->em->find('Country', '0000000005755852000000001ef2b9d1'));
 	}
 	
+	public function getMainService() {
+		return $this->service;
+	}
 
 	public function renderList() {
+		
 	}
 	
 	public function renderAdd() {
@@ -57,6 +61,7 @@ class AdminPresenter extends BasePresenter {
 	
 	protected function createComponentForm($name) {
 		$form = new \Tra\Forms\Form($this, $name);
+
 		$this->service->prepareForm($form);
 		
 		$form->ajax(false);
@@ -67,6 +72,7 @@ class AdminPresenter extends BasePresenter {
 	}
 	
 	public function onSave(\Tra\Forms\Form $form) {
+		// TODO: dorobit na nove service
 		$id = (int)$this->getParam()->id;
 		$values = $form->getPrepareValues($this->service);		
 		
@@ -127,16 +133,15 @@ class AdminPresenter extends BasePresenter {
 				$grid->addEditableField($alias);
 			}
 		}
-		
+
 		$dataSource = new \DataGrid\DataSources\Doctrine\LalaQueryBuilder($this->service->getDataSource());
 		$dataSource->setMapping($mapper);
 		$grid->setDataSource($dataSource);	
 		$grid->addActionColumn('Actions');
 		
-		
 		$grid->addAction('Edit', 'edit', Html::el('span')->class('icon edit')->setText('Edit') , false);
 		$grid->addAction('Delete', 'delete', Html::el('span')->class('icon delete')->setText('Delete'), false);
-		
+
 		return $grid;
 	}
 	

@@ -173,7 +173,7 @@ class LalaQueryBuilder extends DataSources\Mapped
 		$data = array();
 		$i = 0;
 		foreach ($this->data as & $row) {
-			$data[$i] = new \DataGrid\DataSources\Doctrine\Entity($row, $this->mapping);
+			$data[$i] = new \DataGrid\DataSources\Doctrine\Entity($row, $this->mapping, $mainEntity);
 			$i++;
 		}
 		
