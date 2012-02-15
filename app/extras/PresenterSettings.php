@@ -42,4 +42,9 @@ class PresenterSettings extends \Nette\Object {
 	public function getTitle() {
 		return isset($this->params->title) ? $this->params->title : $this->name;
 	}
+
+	public function getH1() {
+		return isset($this->params->h1) ? $this->params->h1 : $this->title;
+	}
+
 }
