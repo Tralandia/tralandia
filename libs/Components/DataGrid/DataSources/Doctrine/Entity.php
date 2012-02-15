@@ -45,6 +45,7 @@ class Entity implements \ArrayAccess, \IteratorAggregate {
 		if (strpos($column, self::ENTITY_PREFIX . '.') === 0) {
 			$column = str_replace('.', '->', substr($column, 2));
 
+			// TODO: zamysliet sa ako odstranime tento eval
 			if (is_array($this->row)) {
 				eval('$value = $this->row[0]->' . $column . ';');
 			} else {
