@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @Entity(repositoryClass="BaseRepository")
+ * @Entity(repositoryClass="CountryRepository")
  * @HasLifecycleCallbacks
  * @Primary(key="id", value="iso")
  */

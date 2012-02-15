@@ -46,11 +46,11 @@ abstract class Entity extends \Nette\Object implements \Nette\Security\IResource
 	public function getId() {
 		return $this->id;
 	}
-
+/*
 	public function setId() {
 		throw new \InvalidArgumentException("Nemozes nastavovat ID");
 	}
-	
+*/	
 	public function getResourceId() {
 		return $this->getReflection()->getName();
 	}
@@ -63,7 +63,7 @@ abstract class Entity extends \Nette\Object implements \Nette\Security\IResource
 	}
 
 	public function __set($name, $value) {
-		if ($this->getReflection()->hasProperty($name) && $name != 'id') {
+		if ($this->getReflection()->hasProperty($name)) {
 			$this->{$name} = $value;
 			return;
 		}

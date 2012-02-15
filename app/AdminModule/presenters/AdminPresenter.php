@@ -19,6 +19,16 @@ class AdminPresenter extends BasePresenter {
 		$this->settings = $this->getService('settings');
 		$this->template->settings = $this->settings;
 		$this->service = new $this->settings->serviceClass;
+		
+		/*
+		$country = new \Country;
+		$country->iso = 'iso-' . sha1(microtime(true));
+		$country->language = $this->em->find('Language', 1);
+		debug($country);
+		$this->em->getRepository('Country')->persist($country);
+		debug($country);
+		*/
+		//debug($this->em->find('Country', '0000000005755852000000001ef2b9d1'));
 	}
 	
 
@@ -41,6 +51,7 @@ class AdminPresenter extends BasePresenter {
 		}
 
 		$this->template->record = $row;
+		$this->template->entity = $row->{$this->service->getMainEntity()};
 		$this->template->form = $form;
 	}
 	
@@ -135,7 +146,7 @@ class AdminPresenter extends BasePresenter {
 	}
 	
 	public function pattern($value, $row, $params = null) {
-		debug("odpoved=" . $this->user->isAllowed($row->getEntity(), 'show'));
+		//debug("odpoved=" . $this->user->isAllowed($row->getEntity(), 'show'));
 		
 		return preg_replace_callback('/%([\w]*)%/', function($matches) use ($row) {
 			return isset($row[$matches[1]]) ? $row[$matches[1]] : $matches[0];
