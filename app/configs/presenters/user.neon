@@ -14,7 +14,7 @@ common:
 			created:
 				label: Dátum vytvorenia
 				mapper: e.created
-
+		
 
 base < common:
 	title: User Base

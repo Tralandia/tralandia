@@ -10,7 +10,6 @@ abstract class Entity extends \Nette\Object implements \Nette\Security\IResource
 		if (is_array($data)) {
 			$data = \Nette\ArrayHash::from($data);
 		}
-		
 		foreach ($this->getReflection()->getProperties() as $property) {
 			if ($data->offsetExists($property->getName()) && $property->getName() != 'id') {
 				$this->{$property->getName()} = $data->offsetGet($property->getName());

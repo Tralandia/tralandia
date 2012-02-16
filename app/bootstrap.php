@@ -16,6 +16,8 @@ Debugger::enable();
 require_once APP_DIR . '/Configurator.php';
 $configurator = new Configurator;
 $configurator->loadConfig(APP_DIR . '/config.neon', isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : null);
+//$configurator->container->robotLoader->autoRebuild = true;
+
 
 if(isset($configurator->container->params['editor'])){
 	Debugger::$editor = $configurator->container->params['editor'];
@@ -43,7 +45,7 @@ $application->onStartup[] = function() use ($application) {
 		'presenter' => 'Rental',
 		'action' =>  'edit'
 	));
-	$router[] = new Route('admin/<presenter>/[<action list|add>]', array(
+	$router[] = new Route('admin/<presenter>/[<action list|add|registration>]', array(
 		'module' => 'Admin',
 		'presenter' => 'Admin',
 		'action' =>  'list'
