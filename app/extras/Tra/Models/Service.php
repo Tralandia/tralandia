@@ -1,25 +1,39 @@
 <?php
 
 namespace Tra\Services;
-use Nette, Tra;
+use Nette, Tra, Entity;
 
 abstract class Service extends Nette\Object implements IService {
 	
-	protected $mainEntity = null;
+	const MAIN_ENTITY_NAME = null;
+	protected $mainEntity = false;
 	protected $reflector = null;
 	private $em = null;
+	private $mainData = null;
 
 	public function __construct() {
 
 	}
 	
-	public function getMainEntity() {
-		if ($this->mainEntity === null) {
-			trigger_error("Este nebola zadana `mainEntity` v " . $this->getReflection()->getName(), E_USER_NOTICE);
-			return $this->getReflection()->getShortName();
+	public function __set($name, $value) {
+		if ($this->mainEntity instanceof Entity) {
+			$this->mainEntity->$name = $value;
+		}
+	}
+
+	public function &__get($name) {
+		if ($this->mainEntity instanceof Entity) {
+			return $this->mainEntity->$name;
+		}
+		return parent::__get($name);
+	}
+
+	public function getMainEntityName() {
+		if (!static::MAIN_ENTITY_NAME) {
+			throw new Exception("Este nebola zadana `mainEntity`");
 		}
 		
-		return $this->mainEntity;
+		return static::MAIN_ENTITY_NAME;
 	}
 	
 	public function getReflector() {

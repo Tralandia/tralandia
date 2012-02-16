@@ -38,6 +38,7 @@ class User extends BaseEntity {
 	
 	public function __construct($data = array()) {
        $this->rentals = new \Doctrine\Common\Collections\ArrayCollection;
+       parent::__construct($data);
 	}
 	
 	public function addRental(\Rental $rental) {
