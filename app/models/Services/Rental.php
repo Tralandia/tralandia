@@ -6,12 +6,12 @@ use Tra;
 
 class Rental extends BaseService {
 	
-	protected $mainEntity = 'Rental';
+	const MAIN_ENTITY_NAME = 'Rental';
 	
 	public function getDataSource() {
 		$query = $this->em->createQueryBuilder();
 		$query->select('3 total, e')
-			->from($this->mainEntity, 'e');
+			->from($this->mainEntityName, 'e');
 		
 		return $query;
 	}
@@ -23,34 +23,9 @@ class Rental extends BaseService {
 		$reflector->extend($form, '\Rental');
 	}
 
-	public function prepareRegistrationForm($form) {
-		$reflector = $this->getReflector();
-		//$reflector->allow('\Rental');
-		$reflector->except('\Rental', array('user', 'country'));
-		$reflector->extend($form, '\Rental');
-	}
-
-	public function create(\Nette\ArrayHash $data) {
-		$eRental = new \Rental($data->Rental);
-		$this->em->persist($eRental);
-		$this->em->flush();
-	}
-	
 	public function gridUpdate($id, $data = array()) {
-		$entity = $this->em->find($this->mainEntity, $id);
+		$entity = $this->em->find($this->mainEntityName, $id);
 		$entity->setData($data->Rental);
 		$this->em->flush();
-	}
-	
-	public function update(array $data = array()) {
-		
-	}
-
-	public function delete(array $data = array()) {
-		
-	}
-
-	public function sendEmail($type = NULL) {
-		
 	}
 }
