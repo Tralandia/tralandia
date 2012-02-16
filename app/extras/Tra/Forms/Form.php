@@ -28,7 +28,7 @@ class Form extends \CoolForm {
 		));
 	}
 */
-	public function getPrepareValues(Tra\Services\Iservice $service) {
+	public function getPreparedValues(Tra\Services\Iservice $service) {
 		return $service->prepareData($this);
     }
 

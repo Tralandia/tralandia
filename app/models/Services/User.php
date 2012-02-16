@@ -33,6 +33,7 @@ class User extends BaseService {
 		$eUser = new \User($data->User);
 		$this->em->persist($eUser);
 		$this->em->flush();
+		return $eUser;
 	}
 	
 	public function update(\Nette\ArrayHash $data) {
@@ -44,6 +45,6 @@ class User extends BaseService {
 	}
 
 	public function sendEmail($type = NULL) {
-		
+		debug('poslal som email');
 	}
 }

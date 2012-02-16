@@ -16,10 +16,17 @@ class Rental extends BaseService {
 		return $query;
 	}
 	
-	public function prepareForm($form) {debug("RENTAAAl");
+	public function prepareForm($form) {
 		$reflector = $this->getReflector();
 		//$reflector->allow('\Rental');
 		//$reflector->except('\Rental', array('nameUrl'));
+		$reflector->extend($form, '\Rental');
+	}
+
+	public function prepareRegistrationForm($form) {
+		$reflector = $this->getReflector();
+		//$reflector->allow('\Rental');
+		$reflector->except('\Rental', array('user', 'country'));
 		$reflector->extend($form, '\Rental');
 	}
 
