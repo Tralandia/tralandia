@@ -16,11 +16,13 @@ class DavidPresenter extends BasePresenter {
 		$country->iso = 'sk';
 		$country->save();
 
+
 		$user = new \Tra\Services\User;
 		$user->country = $country;
 		$user->login = 'waccoTEST';
+		$user->active = true;
 		$user->password = 'testik';
-		$user->save();	
+		$user->save();
 	}
 	
 	public function renderAdd() {

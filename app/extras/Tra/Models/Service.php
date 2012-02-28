@@ -1,7 +1,7 @@
 <?php
 
 namespace Tra\Services;
-use Nette, Tra, Entity;
+use Nette, Tra, Entity, Nette\ObjectMixin, Nette\MemberAccessException;
 
 abstract class Service extends Nette\Object implements IService {
 	
@@ -9,28 +9,41 @@ abstract class Service extends Nette\Object implements IService {
 	protected $mainEntity = false;
 	protected $reflector = null;
 	private $em = null;
-	private $mainData = null;
 
 	public function __construct() {
 
 	}
 	
 	public function __set($name, $value) {
+		if ($value instanceof Service) {
+			return $this->mainEntity->$name = $value->getMainEntity();
+		}
 		if ($this->mainEntity instanceof Entity) {
-			$this->mainEntity->$name = $value;
+			return $this->mainEntity->$name = $value;
 		}
 	}
 
 	public function &__get($name) {
 		if ($this->mainEntity instanceof Entity) {
-			return $this->mainEntity->$name;
+			try {
+				return ObjectMixin::get($this->mainEntity, $name);
+			} catch (MemberAccessException $e) {}
 		}
-		return parent::__get($name);
+
+		return ObjectMixin::get($this, $name);
+	}
+
+	public function getMainEntity() {
+		if (!$this->mainEntity) {
+			throw new Exception("Este nebola zadana `mainEntity`");
+		}
+		
+		return $this->mainEntity;
 	}
 
 	public function getMainEntityName() {
 		if (!static::MAIN_ENTITY_NAME) {
-			throw new Exception("Este nebola zadana `mainEntity`");
+			throw new Exception("Este nebola zadana `mainEntity`, preto nemozem ziskat jej nazov");
 		}
 		
 		return static::MAIN_ENTITY_NAME;

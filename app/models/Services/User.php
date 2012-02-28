@@ -8,6 +8,7 @@ class User extends BaseService {
 
 	const MAIN_ENTITY_NAME = 'User';
 	
+	/*
 	public function prepareForm($form) {
 		//$user = '\User';
 		$reflector = $this->getReflector();
@@ -16,6 +17,8 @@ class User extends BaseService {
 		//$reflector->except($user, array('active'));
 		$reflector->extend($form, '\User');
 	}
+	*/
+
 
 	public function sendEmail($type = NULL) {
 		

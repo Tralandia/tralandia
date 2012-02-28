@@ -15,6 +15,13 @@ class Rental extends BaseService {
 		
 		return $query;
 	}
+/*
+	public static function prepareForm($form) {
+		$reflector = $this->getReflector();
+		//$reflector->allow('\Rental');
+		//$reflector->except('\Rental', array('nameUrl'));
+		$reflector->extend($form, self::MAIN_ENTITY_NAME);
+	}
 	
 	public function prepareForm($form) {
 		$reflector = $this->getReflector();
@@ -22,7 +29,7 @@ class Rental extends BaseService {
 		//$reflector->except('\Rental', array('nameUrl'));
 		$reflector->extend($form, '\Rental');
 	}
-
+*/
 	public function gridUpdate($id, $data = array()) {
 		$entity = $this->em->find($this->mainEntityName, $id);
 		$entity->setData($data->Rental);

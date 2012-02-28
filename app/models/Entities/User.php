@@ -26,7 +26,7 @@ class User extends BaseEntity {
 	protected $active;
 
 	/**
-	 * @ManyToOne(targetEntity="Country")
+	 * @ManyToOne(targetEntity="Country", inversedBy="user")
 	 * @UIControl(type="select", callback="getList")
 	 */
 	protected $country;

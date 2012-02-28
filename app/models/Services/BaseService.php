@@ -13,31 +13,36 @@ class BaseService extends Service {
 			$this->mainEntity = $this->find($id);
 			$this->isPersist = true;
 		} else {
-			$this->mainEntity = new $this->mainEntityName;
+			$entityName = $this->getMainEntityName();
+			$this->mainEntity = new $entityName;
 		}
 	}
 
 	protected function find($id) {
-		return $this->getEm()->find($this->getMainEntityName(), $id);
+		return $this->em->find($this->getMainEntityName(), $id);
 	}
 	
 	public function save() {
-		if ($this->mainEntity instanceof Entity) {
-			if (!$this->isPersist) {
-				//$this->getEm()->persist($this->mainEntity);
+		try {
+			if ($this->mainEntity instanceof Entity) {
+				if (!$this->isPersist) {
+					$this->em->persist($this->mainEntity);
+				}
+				$this->em->flush();
 			}
-			$this->getEm()->flush();
+		} catch (\PDOException $e) {
+			throw $e;
 		}
 	}
 
 	public function delete() {
 		if ($this->mainEntity instanceof Entity) {
-			$this->getEm()->remove($this->mainEntity);
-			$this->getEm()->flush();
+			$this->em->remove($this->mainEntity);
+			$this->em->flush();
 		}
 	}
 
-	public function getList($class, $key, $value) {
+	public function getList($class, $key, $value) {debug($this->em);
 		return $this->em->getRepository($class)->fetchPairs($key, $value);
 	}
 	
