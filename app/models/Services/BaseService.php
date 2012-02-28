@@ -13,6 +13,7 @@ class BaseService extends Service {
 			$this->mainEntity = $this->find($id);
 			$this->isPersist = true;
 		} else {
+			$namespace = $this->getReflection()->getNamespaceName();
 			$entityName = $this->getMainEntityName();
 			$this->mainEntity = new $entityName;
 		}

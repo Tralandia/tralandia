@@ -15,7 +15,7 @@ class Phrase extends \BaseEntityDetails
 
 	/**
 	 * @var Collection
-	 * @OneToMany(type="\Translation")
+	 * @OneToMany(type="Translation")
 	 */
 	protected $translations;
 
@@ -33,7 +33,7 @@ class Phrase extends \BaseEntityDetails
 
 	/**
 	 * @var Collection
-	 * @Column(type="Type")
+	 * @ManyToOne(targetEntity="Type")
 	 */
 	protected $type;
 

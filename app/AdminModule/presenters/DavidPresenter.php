@@ -17,6 +17,11 @@ class DavidPresenter extends BasePresenter {
 
 	public function actionList() {
 
+		$dic = new \Tra\Services\Dictionary;
+		$dic->run();
+		debug($dic);
+
+		/*
 		$country = new \Tra\Services\Country(1);
 		$country->iso = 'sk';
 		$country->save();
@@ -28,6 +33,7 @@ class DavidPresenter extends BasePresenter {
 		$user->active = true;
 		$user->password = 'testik';
 		$user->save();
+		*/
 	}
 	
 	public function renderAdd() {
