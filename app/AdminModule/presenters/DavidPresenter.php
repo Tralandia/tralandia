@@ -10,16 +10,43 @@ use Nette\Application as NA,
 
 class DavidPresenter extends BasePresenter {
 
+	public function beforeRender() {
+		parent::beforeRender();
+		$this->setView('list');
+	}
 
-	public function actionTest() {
-		
+
+	public function actionAddPhrase() {
+		$dictionary = new \Tra\Services\DictionaryService;
+
+		$type = $dictionary->getType(3);
+		$phrase = $dictionary->addPhrase(array(
+			'type' => $type,
+			'ready' => FALSE,
+			'entityId' => FALSE,
+		));
+		debug($phrase);
 	}
 
 	public function actionList() {
 
-		$dic = new \Tra\Services\Dictionary;
-		$dic->run();
-		debug($dic);
+		$dictionary = new \Tra\Services\DictionaryService;
+
+		$quality = $dictionary->addQuality('basic3', 12);
+		debug($quality);
+
+		$type = $dictionary->addType(array(
+			'entityName' => 'rental',
+			'entityAttribute' => 'name',
+			'translationQualityRequirement' => $quality, 
+			'isMultitranslationRequired' => FALSE, 
+			'isGenderNumberRequired' => FALSE, 
+			'isLocativeRequired' => FALSE, 
+			'isPositionRequired' => FALSE, 
+			'isWebalizedRequired' => FALSE, 
+		));
+		debug($type);
+		debug($dictionary);
 
 		/*
 		$country = new \Tra\Services\Country(1);
