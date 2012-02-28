@@ -179,7 +179,7 @@ class FileStorage extends Nette\Object implements Nette\Caching\IStorage
 		$cacheFile = $this->getCacheFile($key);
 		if ($this->useDirs && !is_dir($dir = dirname($cacheFile))) {
 			umask(0000);
-			if (!mkdir($dir, 0777)) {
+			if (@!mkdir($dir, 0777)) {
 				return;
 			}
 		}
