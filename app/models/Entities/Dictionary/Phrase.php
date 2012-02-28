@@ -28,7 +28,7 @@ class Phrase extends \BaseEntityDetails
 
 	/**
 	 * @var Collection
-	 * @OneToMany(targetEntity="\Language", mappedBy="phrase")
+	 * @ManyToMany(targetEntity="\Language")
 	 */
 	protected $languages;
 
@@ -44,6 +44,11 @@ class Phrase extends \BaseEntityDetails
 	 */
 	protected $entityId;
 
+
+	public function __construct() {
+		$this->translations = new ArrayCollection();
+		$this->languages = new ArrayCollection();
+	}
 
 
 	/**
@@ -100,11 +105,26 @@ class Phrase extends \BaseEntityDetails
 	/**
 	 * @return Language
 	 */
-	public function getLanguages()
+	// public function getLanguages()
+	// {
+	// 	return $this->languages;
+	// }
+
+	public function addLanguage(\Language  $languages)
 	{
-		return $this->languages;
+		$this->languages->add($languages);
+		return $this;
 	}
 
+	public function removeLanguage(\Language  $languages)
+	{
+		$this->languages->removeElement($languages);
+		return $this;
+	}
+
+	public function getLanguages() {
+		return $this->languages->toArray();
+	}
 
 	/**
 	 * @param Type $type

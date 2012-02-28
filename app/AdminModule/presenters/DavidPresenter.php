@@ -6,7 +6,8 @@ use Nette\Application as NA,
 	Nette\Environment,
 	Nette\Diagnostics\Debugger,
 	Nette\Utils\Html,
-	Nette\Utils\Strings;
+	Nette\Utils\Strings,
+	Tra\Services as S;
 
 class DavidPresenter extends BasePresenter {
 
@@ -17,7 +18,7 @@ class DavidPresenter extends BasePresenter {
 
 
 	public function actionAddPhrase() {
-		$dictionary = new \Tra\Services\DictionaryService;
+		$dictionary = new S\DictionaryService;
 
 		$type = $dictionary->getType(3);
 		$phrase = $dictionary->addPhrase(array(
@@ -28,9 +29,30 @@ class DavidPresenter extends BasePresenter {
 		debug($phrase);
 	}
 
+	public function actionUpdatePhrase($id) {
+		$phrase = new S\PhraseService($id);
+		debug($phrase->languages);
+
+		$language = new S\LanguageService(1);
+		$language = new S\LanguageService(2);
+
+		$phrase->addLanguage($language);
+		$phrase->removeLanguage($language);
+		$phrase->save();
+		debug($phrase->languages);
+	}
+
+	public function actionAddLanguage() {
+		$language = new S\LanguageService;
+		$language->iso = 'gr';
+		$language->supported = false;
+		$language->save();
+		debug($language);
+	}
+
 	public function actionList() {
 
-		$dictionary = new \Tra\Services\DictionaryService;
+		$dictionary = new S\DictionaryService;
 
 		$quality = $dictionary->addQuality('basic3', 12);
 		debug($quality);
