@@ -14,7 +14,7 @@ $phrase = new Tra\Services\PhraseService;
 Assert::instance('BaseEntity', $phrase->getMainEntity());
 
 // pridam jazyk ku fraze
-$phrase = $phrase->addLanguage($language);
+$phrase->addLanguage($language);
 
 // ziskam jazyky priradene ku fraze
 foreach ($phrase->getLanguages() as $lang) {
