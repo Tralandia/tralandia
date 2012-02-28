@@ -2,4 +2,4 @@
 
 namespace Tra\Services;
 
-class ServiceException extends Exception {}
+class ServiceException extends \Exception {}

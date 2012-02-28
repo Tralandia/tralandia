@@ -33,11 +33,12 @@ class DavidPresenter extends BasePresenter {
 		$phrase = new S\PhraseService($id);
 		debug($phrase->languages);
 
-		$language = new S\LanguageService(1);
 		$language = new S\LanguageService(2);
-
 		$phrase->addLanguage($language);
+
+		$language = new S\LanguageService(1);
 		$phrase->removeLanguage($language);
+
 		$phrase->save();
 		debug($phrase->languages);
 	}
