@@ -1,0 +1,23 @@
+array(
+	'email' => 'vaculciak@softone.sk',
+	'password' => '965a6ccfa229acac150455459428e9510c6c7af7',
+	'fullname' => 'Ferko Taraba',
+	'role' => 'user',
+	'currency' => 'EUR',
+	'note' => 'poznámka',
+	'created' => Nette\DateTime::__set_state(array(
+		'date' => '2012-01-21 14:37:22',
+		'timezone_type' => 3,
+		'timezone' => 'Europe/Bratislava',
+	)),
+	'modified' => Nette\DateTime::__set_state(array(
+		'date' => '2012-01-21 14:37:22',
+		'timezone_type' => 3,
+		'timezone' => 'Europe/Bratislava',
+	)),
+	'logged' => Nette\DateTime::__set_state(array(
+		'date' => '2012-01-21 14:37:22',
+		'timezone_type' => 3,
+		'timezone' => 'Europe/Bratislava',
+	)),
+)

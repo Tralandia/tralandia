@@ -1,0 +1,4 @@
+Log: output.txt
+..
+
+OK (2 tests, 0 skipped)
