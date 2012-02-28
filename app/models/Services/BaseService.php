@@ -32,14 +32,18 @@ class BaseService extends Service {
 				$this->em->flush();
 			}
 		} catch (\PDOException $e) {
-			throw $e;
+			throw new ServiceException($e->getMessage());
 		}
 	}
 
 	public function delete() {
-		if ($this->mainEntity instanceof Entity) {
-			$this->em->remove($this->mainEntity);
-			$this->em->flush();
+		try {
+			if ($this->mainEntity instanceof Entity) {
+				$this->em->remove($this->mainEntity);
+				$this->em->flush();
+			}
+		} catch (\PDOException $e) {
+			throw new ServiceException($e->getMessage());
 		}
 	}
 
