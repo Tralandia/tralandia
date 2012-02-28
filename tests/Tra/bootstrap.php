@@ -1,4 +1,4 @@
-<?php
+<<?php
 
 /**
  * Test initialization and helpers.
@@ -23,12 +23,14 @@ require APP_DIR . '/Configurator.php';
 
 // Load configuration from config.neon
 $configurator = new Configurator;
+$configurator->loadConfig(APP_DIR . '/config.neon', isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : null);
+/*
 $configurator->setTempDirectory(TEMP_DIR);
 $configurator->addConfig(APP_DIR . '/config.neon', isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : null);
 $configurator->createRobotLoader()->addDirectory(APP_DIR)->addDirectory(LIBS_DIR)->register();
 $configurator->setTempDirectory(TEMP_DIR);
 $container = $configurator->createContainer();
-
+*/
 
 // configure environment
 error_reporting(E_ALL | E_STRICT);
