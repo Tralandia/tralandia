@@ -27,11 +27,11 @@ class Language extends \BaseEntityDetails
 	 */
 	protected $supported;
 
-	/**
-	 * @var Collection
-	 * @ManyToOne(targetEntity="Dictionary\Phrase")
-	 */
-	protected $phrase;
+	// /**
+	//  * @var Collection
+	//  * @ManyToMany(targetEntity="Dictionary\Phrase")
+	//  */
+	// protected $phrase;
 
 
 	/**
