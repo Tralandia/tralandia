@@ -20,3 +20,9 @@ $phrase = $phrase->addLanguage($language);
 foreach ($phrase->getLanguages() as $lang) {
 	Assert::instance('Tra\Services\LanguageService', $lang);
 }
+
+
+
+// vymazem veci
+$language->delete();
+$phrase->delete();
