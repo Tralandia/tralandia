@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @Entity()
+ * @Table(name="DictionaryType")
  */
 class Type extends \BaseEntity
 {

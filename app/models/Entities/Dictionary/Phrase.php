@@ -9,13 +9,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @Entity()
+ * @Table(name="DictionaryPhrase")
  */
 class Phrase extends \BaseEntityDetails
 {
 
 	/**
 	 * @var Collection
-	 * @OneToMany(type="Translation")
+	 * @OneToMany(targetEntity="Translation", mappedBy="phrase")
 	 */
 	protected $translations;
 
@@ -27,7 +28,7 @@ class Phrase extends \BaseEntityDetails
 
 	/**
 	 * @var Collection
-	 * @OneToMany(targetEntity="\Language")
+	 * @OneToMany(targetEntity="\Language", mappedBy="phrase")
 	 */
 	protected $languages;
 
@@ -89,7 +90,7 @@ class Phrase extends \BaseEntityDetails
 	 * @param Language $languages
 	 * @return Phrase
 	 */
-	public function setLanguages(Language  $languages)
+	public function setLanguages(\Language  $languages)
 	{
 		$this->languages = $languages;
 		return $this;

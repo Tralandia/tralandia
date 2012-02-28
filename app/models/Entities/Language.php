@@ -27,6 +27,12 @@ class Language extends \BaseEntityDetails
 	 */
 	protected $supported;
 
+	/**
+	 * @var Collection
+	 * @ManyToOne(targetEntity="Dictionary\Phrase")
+	 */
+	protected $phrase;
+
 
 	/**
 	 * @param Dictionary\Phrase $name

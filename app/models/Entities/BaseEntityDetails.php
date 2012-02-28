@@ -4,7 +4,7 @@
 
 
 /**
- * @Entity()
+ * @MappedSuperclass
  */
 class BaseEntityDetails extends BaseEntity
 {

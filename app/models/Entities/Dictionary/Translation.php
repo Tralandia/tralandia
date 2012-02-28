@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @Entity()
+ * @Table(name="DictionaryTranslation")
  */
 class Translation extends \BaseEntity
 {
@@ -96,7 +97,7 @@ class Translation extends \BaseEntity
 	 * @param Language $language
 	 * @return Translation
 	 */
-	public function setLanguage(Language  $language)
+	public function setLanguage(\Language  $language)
 	{
 		$this->language = $language;
 		return $this;
