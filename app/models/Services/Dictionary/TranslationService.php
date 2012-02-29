@@ -1,10 +1,10 @@
 <?php
 
-namespace Tra\Services;
+namespace Tra\Services\Dictionary;
 
 use Tra;
 
-class TranslationService extends BaseService {
+class TranslationService extends \Tra\Services\BaseService {
 
 	const MAIN_ENTITY_NAME = '\Dictionary\Translation';
 

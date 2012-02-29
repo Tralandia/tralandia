@@ -22,7 +22,7 @@ class Translation extends \BaseEntity
 
 	/**
 	 * @var Collection
-	 * @OneToOne(targetEntity="\Language")
+	 * @ManyToOne(targetEntity="Language")
 	 */
 	protected $language;
 
@@ -97,7 +97,7 @@ class Translation extends \BaseEntity
 	 * @param Language $language
 	 * @return Translation
 	 */
-	public function setLanguage(\Language  $language)
+	public function setLanguage(Language  $language)
 	{
 		$this->language = $language;
 		return $this;

@@ -14,7 +14,7 @@ class Country extends BaseEntity {
 	protected $iso;
 
 	/**
-	 * @ManyToOne(targetEntity="Language")
+	 * @ManyToOne(targetEntity="\Dictionary\Language")
 	 * @UIControl(type="select", options="%service%, getList")
 	 */
 	protected $language;

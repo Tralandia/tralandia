@@ -43,6 +43,6 @@ class User extends BaseEntity {
 	
 	public function addRental(\Rental $rental) {
 		$this->rentals[] = $rental;
-		$rental->user = $this; // ??? preco sa tu musi definovat aj tento vstah? 
+		$rental->user = $this; 
 	}
 }

@@ -32,7 +32,7 @@ class Uri extends BaseEntity {
 	protected $row;
 
 	/**
-	 * @ManyToOne(targetEntity="Language")
+	 * @ManyToOne(targetEntity="\Dictionary\Language")
 	 * @UIControl(type="select", options="%service%, getList")
 	 */
 	protected $language;

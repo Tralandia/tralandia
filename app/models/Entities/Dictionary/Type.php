@@ -16,7 +16,7 @@ class Type extends \BaseEntity
 
 	/**
 	 * @var Collection
-	 * @OneToOne(targetEntity="Dictionary\Phrase")
+	 * @OneToOne(targetEntity="Phrase")
 	 */
 	protected $name;
 

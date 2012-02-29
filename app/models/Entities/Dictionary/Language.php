@@ -1,17 +1,21 @@
 <?php
 
-//use Dictionary;
+namespace Dictionary;
 
+use Dictionary;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @Entity()
+ * @Table(name="DictionaryLanguage")
  */
 class Language extends \BaseEntityDetails
 {
 
 	/**
 	 * @var Collection
-	 * @OneToOne(targetEntity="Dictionary\Phrase")
+	 * @OneToOne(targetEntity="Phrase")
 	 */
 	protected $name;
 
@@ -38,7 +42,7 @@ class Language extends \BaseEntityDetails
 	 * @param Dictionary\Phrase $name
 	 * @return Language
 	 */
-	public function setName(Dictionary\Phrase  $name)
+	public function setName(Phrase  $name)
 	{
 		$this->name = $name;
 		return $this;

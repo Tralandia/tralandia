@@ -1,11 +1,11 @@
 <?php
 
-namespace Tra\Services;
+namespace Tra\Services\Dictionary;
 
 use Tra;
 
-class DictionaryService extends BaseService {
-
+class DictionaryService extends \Tra\Services\BaseService { 
+	// @todo: toto musi by serviceList!
 	const MAIN_ENTITY_NAME = '\Dictionary\Phrase';
 
 	public function getPendingTranslations(Language $language) {
@@ -16,28 +16,31 @@ class DictionaryService extends BaseService {
 
 	}
 
-	public function addPhrase($data) {
-		$phrase = new \Dictionary\Phrase;
+	public function createPhrase($data) {
+		$phrase = new PhraseService;
 		foreach ($data as $key => $val) {
 			$phrase->$key = $val;
 		}
-		$this->em->persist($phrase);
-		$this->em->flush();
+		$phrase->save();
 		return $phrase;
 	}
 
-	public function addQuality($name, $value) {
-		$quality = new \Dictionary\Quality;
+	public function createQuality($name, $value) {
+		$quality = new QualityService;
 		$quality->name = $name;
 		$quality->value = $value;
-		$this->em->persist($quality);
-		$this->em->flush();
+		$quality->save();
+
 		return $quality;
 	}
 
-	public function addType($data) {
+	public function createType($data) {
 		$type = new \Dictionary\Type;
 		foreach ($data as $key => $val) {
+			if($val instanceof \Tra\Services\Service) {
+				$val = $val->getMainEntity();
+				debug($val);
+			}
 			$type->$key = $val;
 		}
 		$this->em->persist($type);

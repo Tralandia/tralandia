@@ -6,7 +6,7 @@ namespace Dictionary;
 
 /**
  * @Entity()
-  * @Table(name="DictionaryQuality")
+ * @Table(name="DictionaryQuality")
  */
 class Quality extends \BaseEntity
 {

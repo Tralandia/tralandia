@@ -28,7 +28,7 @@ class Phrase extends \BaseEntityDetails
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="\Language")
+	 * @ManyToMany(targetEntity="Language")
 	 */
 	protected $languages;
 
@@ -70,6 +70,24 @@ class Phrase extends \BaseEntityDetails
 		return $this->translations;
 	}
 
+	public function addTranslation(Translation  $translation)
+	{
+		if(!$this->translations->contains($translation)) {
+			$this->translations->add($translation);
+			$translation->phrase = $this;
+		}
+
+		return $this;
+	}
+
+	public function removeTranslation(Translation  $translation)
+	{
+		if($this->translations->contains($translation)) {
+			$this->translations->removeElement($translation);
+		}
+
+		return $this;
+	}
 
 	/**
 	 * @param boolean $ready
@@ -95,7 +113,7 @@ class Phrase extends \BaseEntityDetails
 	 * @param Language $languages
 	 * @return Phrase
 	 */
-	public function setLanguages(\Language  $languages)
+	public function setLanguages(Language  $languages)
 	{
 		$this->languages = $languages;
 		return $this;
@@ -105,12 +123,8 @@ class Phrase extends \BaseEntityDetails
 	/**
 	 * @return Language
 	 */
-	// public function getLanguages()
-	// {
-	// 	return $this->languages;
-	// }
 
-	public function addLanguage(\Language  $language)
+	public function addLanguage(Language  $language)
 	{
 		if(!$this->languages->contains($language)) {
 			$this->languages->add($language);
@@ -119,7 +133,7 @@ class Phrase extends \BaseEntityDetails
 		return $this;
 	}
 
-	public function removeLanguage(\Language  $language)
+	public function removeLanguage(Language  $language)
 	{
 		if($this->languages->contains($language)) {
 			$this->languages->removeElement($language);
@@ -129,8 +143,9 @@ class Phrase extends \BaseEntityDetails
 	}
 
 	public function getLanguages() {
-		return $this->languages->toArray();
+		return $this->languages;
 	}
+
 
 	/**
 	 * @param Type $type
