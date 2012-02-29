@@ -38,8 +38,8 @@ abstract class Service extends Nette\Object implements IService {
 	}
 
 	public function __call($name, $arguments) {
-		if($this->mainEntity instanceof Entity) {
-			try {
+		try {
+			if($this->mainEntity instanceof Entity) {
 				if(count($arguments) == 1) {
 					$first = reset($arguments);
 					if($first instanceof Service) {
@@ -47,8 +47,8 @@ abstract class Service extends Nette\Object implements IService {
 						return $this;
 					}
 				}
-			} catch (MemberAccessException $e) {}
-		}
+			}
+		} catch (MemberAccessException $e) {}
 	}
 
 	public function getMainEntity() {
