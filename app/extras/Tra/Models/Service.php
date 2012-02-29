@@ -1,7 +1,11 @@
 <?php
 
 namespace Tra\Services;
-use Nette, Tra, Entity, Nette\ObjectMixin, Nette\MemberAccessException;
+use Nette, 
+	Tra, 
+	Entity, 
+	Nette\ObjectMixin, 
+	Nette\MemberAccessException;
 
 abstract class Service extends Nette\Object implements IService {
 	
@@ -31,6 +35,20 @@ abstract class Service extends Nette\Object implements IService {
 		}
 
 		return ObjectMixin::get($this, $name);
+	}
+
+	public function __call($name, $arguments) {
+		if($this->mainEntity instanceof Entity) {
+			try {
+				if(count($arguments) == 1) {
+					$first = reset($arguments);
+					if($first instanceof Service) {
+						$this->mainEntity->{$name}($first->mainEntity);
+						return $this;
+					}
+				}
+			} catch (MemberAccessException $e) {}
+		}
 	}
 
 	public function getMainEntity() {

@@ -110,15 +110,21 @@ class Phrase extends \BaseEntityDetails
 	// 	return $this->languages;
 	// }
 
-	public function addLanguage(\Language  $languages)
+	public function addLanguage(\Language  $language)
 	{
-		$this->languages->add($languages);
+		if(!$this->languages->contains($language)) {
+			$this->languages->add($language);
+		}
+
 		return $this;
 	}
 
-	public function removeLanguage(\Language  $languages)
+	public function removeLanguage(\Language  $language)
 	{
-		$this->languages->removeElement($languages);
+		if($this->languages->contains($language)) {
+			$this->languages->removeElement($language);
+		}
+
 		return $this;
 	}
 
