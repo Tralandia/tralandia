@@ -5,9 +5,9 @@
 
 /**
  * @Entity()
+ * @Table(name="baseentity")
  */
-class BaseEntity
-{
+class BaseEntity {
 
 	/**
 	 * @var integer
@@ -29,8 +29,7 @@ class BaseEntity
 	protected $updated;
 
 
-	public function __construct()
-	{
+	public function __construct() {
 
 	}
 
@@ -39,8 +38,7 @@ class BaseEntity
 	 * @param integer $id
 	 * @return BaseEntity
 	 */
-	public function setId($id)
-	{
+	public function setId($id) {
 		$this->id = $id;
 		return $this;
 	}
@@ -49,8 +47,7 @@ class BaseEntity
 	/**
 	 * @return integer
 	 */
-	public function getId()
-	{
+	public function getId() {
 		return $this->id;
 	}
 
@@ -59,8 +56,7 @@ class BaseEntity
 	 * @param datetime $created
 	 * @return BaseEntity
 	 */
-	public function setCreated($created)
-	{
+	public function setCreated($created) {
 		$this->created = $created;
 		return $this;
 	}
@@ -69,8 +65,7 @@ class BaseEntity
 	/**
 	 * @return datetime
 	 */
-	public function getCreated()
-	{
+	public function getCreated() {
 		return $this->created;
 	}
 
@@ -79,8 +74,7 @@ class BaseEntity
 	 * @param datetime $updated
 	 * @return BaseEntity
 	 */
-	public function setUpdated($updated)
-	{
+	public function setUpdated($updated) {
 		$this->updated = $updated;
 		return $this;
 	}
@@ -89,8 +83,7 @@ class BaseEntity
 	/**
 	 * @return datetime
 	 */
-	public function getUpdated()
-	{
+	public function getUpdated() {
 		return $this->updated;
 	}
 

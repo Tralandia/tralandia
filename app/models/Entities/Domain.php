@@ -7,13 +7,13 @@ use Doctrine\Common\Collections\ArrayCollection
 
 /**
  * @Entity()
+ * @Table(name="domain")
  */
-class Domain extends \BaseEntity
-{
+class Domain extends \BaseEntity {
 
 	/**
 	 * @var string
-	 * @Column(type="string")
+	 * @Column(type="string", nullable=true)
 	 */
 	protected $domain;
 
@@ -24,8 +24,7 @@ class Domain extends \BaseEntity
 	protected $locations;
 
 
-	public function __construct()
-	{
+	public function __construct() {
 		$this->locations = new ArrayCollection();
 	}
 
@@ -34,8 +33,7 @@ class Domain extends \BaseEntity
 	 * @param string $domain
 	 * @return Domain
 	 */
-	public function setDomain($domain)
-	{
+	public function setDomain($domain) {
 		$this->domain = $domain;
 		return $this;
 	}
@@ -44,8 +42,7 @@ class Domain extends \BaseEntity
 	/**
 	 * @return string
 	 */
-	public function getDomain()
-	{
+	public function getDomain() {
 		return $this->domain;
 	}
 
@@ -54,8 +51,7 @@ class Domain extends \BaseEntity
 	 * @param Location\Location $location
 	 * @return Domain
 	 */
-	public function addLocation(Location\Location  $location)
-	{
+	public function addLocation(Location\Location  $location) {
 		$this->locations->add($location);
 		return $this;
 	}
@@ -65,8 +61,7 @@ class Domain extends \BaseEntity
 	 * @param Location\Location $location
 	 * @return Domain
 	 */
-	public function removeLocation(Location\Location  $location)
-	{
+	public function removeLocation(Location\Location  $location) {
 		$this->locations->removeElement($location);
 		return $this;
 	}
@@ -75,8 +70,7 @@ class Domain extends \BaseEntity
 	/**
 	 * @return Location\Location[]
 	 */
-	public function getLocation()
-	{
+	public function getLocation() {
 		return $this->locations->toArray();
 	}
 

@@ -125,6 +125,12 @@ class Invoice extends \BaseEntity {
 	protected $vat;
 
 	/**
+	 * @var decimal
+	 * @Column(type="decimal")
+	 */
+	protected $exchange_rate;
+
+	/**
 	 * @var string
 	 * @Column(type="string", nullable=true)
 	 */
@@ -475,6 +481,24 @@ class Invoice extends \BaseEntity {
 	 */
 	public function getVat() {
 		return $this->vat;
+	}
+
+
+	/**
+	 * @param decimal $exchange_rate
+	 * @return Invoice
+	 */
+	public function setExchange_rate($exchange_rate) {
+		$this->exchange_rate = $exchange_rate;
+		return $this;
+	}
+
+
+	/**
+	 * @return decimal
+	 */
+	public function getExchange_rate() {
+		return $this->exchange_rate;
 	}
 
 
