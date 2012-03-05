@@ -3,49 +3,49 @@
 namespace Entities\Emailing;
 
 use Entities\Emailing;
-use Doctrine\Common\Collections\Collection
-use Doctrine\Common\Collections\ArrayCollection
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
- * @Entity()
- * @Table(name="emailing_batch")
+ * @ORM\Entity()
+ * @ORM\Table(name="emailing_batch")
  */
 class Batch extends \BaseEntityDetails {
 
 	/**
 	 * @var boolean
-	 * @Column(type="boolean")
+	 * @ORM\ManyToMany(type="boolean")
 	 */
 	protected $confirmed;
 
 	/**
 	 * @var Collection
-	 * @Column(type="Email")
+	 * @ORM\ManyToMany(type="Email")
 	 */
 	protected $template;
 
 	/**
 	 * @var integer
-	 * @Column(type="integer")
+	 * @ORM\ManyToMany(type="integer")
 	 */
 	protected $totalCount;
 
 	/**
 	 * @var text
-	 * @Column(type="text")
+	 * @ORM\ManyToMany(type="text")
 	 */
 	protected $subject;
 
 	/**
 	 * @var text
-	 * @Column(type="text")
+	 * @ORM\ManyToMany(type="text")
 	 */
 	protected $body;
 
 	/**
 	 * @var text
-	 * @Column(type="text")
+	 * @ORM\ManyToMany(type="text")
 	 */
 	protected $bodyHtml;
 

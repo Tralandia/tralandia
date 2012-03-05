@@ -5,20 +5,20 @@ namespace Entities\Log\System;
 
 
 /**
- * @Entity()
- * @Table(name="log_system_systemlog")
+ * @ORM\Entity()
+ * @ORM\Table(name="log_system_systemlog")
  */
 class SystemLog extends \BaseEntityDetails {
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\ManyToMany(type="string", nullable=true)
 	 */
 	protected $name;
 
 	/**
 	 * @var text
-	 * @Column(type="text")
+	 * @ORM\ManyToMany(type="text")
 	 */
 	protected $comment;
 

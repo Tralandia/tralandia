@@ -6,151 +6,151 @@ use Entities\Company;
 use Entities\Dictionary;
 use Entities\Invoicing;
 use Entities\Rental;
-use Doctrine\Common\Collections\Collection
-use Doctrine\Common\Collections\ArrayCollection
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
- * @Entity()
- * @Table(name="invoicing_invoice")
+ * @ORM\Entity()
+ * @ORM\Table(name="invoicing_invoice")
  */
 class Invoice extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @Column(type="Item")
+	 * @ORM\Column(type="Item")
 	 */
 	protected $items;
 
 	/**
 	 * @var integer
-	 * @Column(type="integer")
+	 * @ORM\Column(type="integer")
 	 */
 	protected $invoiceNumber;
 
 	/**
 	 * @var integer
-	 * @Column(type="integer")
+	 * @ORM\Column(type="integer")
 	 */
 	protected $invoiceVariableNumber;
 
 	/**
 	 * @var Collection
-	 * @ManyToOne(targetEntity="Company\Company", inversedBy="invoices")
+	 * @ORM\ManyToOne(targetEntity="Company\Company", inversedBy="invoices")
 	 */
 	protected $invoicingCompany;
 
 	/**
 	 * @var Collection
-	 * @ManyToOne(targetEntity="Rental\Rental", inversedBy="invoices")
+	 * @ORM\ManyToOne(targetEntity="Rental\Rental", inversedBy="invoices")
 	 */
 	protected $rental;
 
 	/**
 	 * @var datetime
-	 * @Column(type="datetime")
+	 * @ORM\Column(type="datetime")
 	 */
 	protected $due;
 
 	/**
 	 * @var datetime
-	 * @Column(type="datetime")
+	 * @ORM\Column(type="datetime")
 	 */
 	protected $paid;
 
 	/**
 	 * @var boolean
-	 * @Column(type="boolean")
+	 * @ORM\Column(type="boolean")
 	 */
 	protected $checked;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $clientName;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $clientPhone;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $clientEmail;
 
 	/**
 	 * @var url
-	 * @Column(type="url")
+	 * @ORM\Column(type="url")
 	 */
 	protected $clientUrl;
 
 	/**
 	 * @var address
-	 * @Column(type="address")
+	 * @ORM\Column(type="address")
 	 */
 	protected $clientAddress;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Dictionary\Language")
+	 * @ORM\ManyToMany(targetEntity="Dictionary\Language")
 	 */
 	protected $clientLanguage;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $clientCompanyName;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $clientCompanyId;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $clientCompanyVatId;
 
 	/**
 	 * @var decimal
-	 * @Column(type="decimal")
+	 * @ORM\Column(type="decimal")
 	 */
 	protected $vat;
 
 	/**
 	 * @var decimal
-	 * @Column(type="decimal")
+	 * @ORM\Column(type="decimal")
 	 */
 	protected $exchangeRate;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $createdBy;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $referrer;
 
 	/**
 	 * @var decimal
-	 * @Column(type="decimal")
+	 * @ORM\Column(type="decimal")
 	 */
 	protected $referrerCommission;
 
 	/**
 	 * @var json
-	 * @Column(type="json")
+	 * @ORM\Column(type="json")
 	 */
 	protected $paymentInfo;
 

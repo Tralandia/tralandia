@@ -3,151 +3,151 @@
 namespace Entities\Dictionary;
 
 use Entities\Dictionary;
-use Doctrine\Common\Collections\Collection
-use Doctrine\Common\Collections\ArrayCollection
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
- * @Entity()
- * @Table(name="dictionary_translation")
+ * @ORM\Entity()
+ * @ORM\Table(name="dictionary_translation")
  */
 class Translation extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @Column(type="Phrase")
+	 * @ORM\ManyToMany(type="Phrase")
 	 */
 	protected $phrase;
 
 	/**
 	 * @var Collection
-	 * @Column(type="Language")
+	 * @ORM\ManyToMany(type="Language")
 	 */
 	protected $language;
 
 	/**
 	 * @var text
-	 * @Column(type="text")
+	 * @ORM\ManyToMany(type="text")
 	 */
 	protected $translation;
 
 	/**
 	 * @var text
-	 * @Column(type="text")
+	 * @ORM\ManyToMany(type="text")
 	 */
 	protected $translation2;
 
 	/**
 	 * @var text
-	 * @Column(type="text")
+	 * @ORM\ManyToMany(type="text")
 	 */
 	protected $translation3;
 
 	/**
 	 * @var text
-	 * @Column(type="text")
+	 * @ORM\ManyToMany(type="text")
 	 */
 	protected $translation4;
 
 	/**
 	 * @var text
-	 * @Column(type="text")
+	 * @ORM\ManyToMany(type="text")
 	 */
 	protected $translation5;
 
 	/**
 	 * @var text
-	 * @Column(type="text")
+	 * @ORM\ManyToMany(type="text")
 	 */
 	protected $translation6;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\ManyToMany(type="string", nullable=true)
 	 */
 	protected $translationWebalized;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\ManyToMany(type="string", nullable=true)
 	 */
 	protected $translationWebalized2;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\ManyToMany(type="string", nullable=true)
 	 */
 	protected $translationWebalized3;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\ManyToMany(type="string", nullable=true)
 	 */
 	protected $translationWebalized4;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\ManyToMany(type="string", nullable=true)
 	 */
 	protected $translationWebalized5;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\ManyToMany(type="string", nullable=true)
 	 */
 	protected $translationWebalized6;
 
 	/**
 	 * @var text
-	 * @Column(type="text")
+	 * @ORM\ManyToMany(type="text")
 	 */
 	protected $translationPending;
 
 	/**
 	 * @var text
-	 * @Column(type="text")
+	 * @ORM\ManyToMany(type="text")
 	 */
 	protected $translationPending2;
 
 	/**
 	 * @var text
-	 * @Column(type="text")
+	 * @ORM\ManyToMany(type="text")
 	 */
 	protected $translationPending3;
 
 	/**
 	 * @var text
-	 * @Column(type="text")
+	 * @ORM\ManyToMany(type="text")
 	 */
 	protected $translationPending4;
 
 	/**
 	 * @var text
-	 * @Column(type="text")
+	 * @ORM\ManyToMany(type="text")
 	 */
 	protected $translationPending5;
 
 	/**
 	 * @var text
-	 * @Column(type="text")
+	 * @ORM\ManyToMany(type="text")
 	 */
 	protected $translationPending6;
 
 	/**
 	 * @var datetime
-	 * @Column(type="datetime")
+	 * @ORM\ManyToMany(type="datetime")
 	 */
 	protected $translated;
 
 	/**
 	 * @var json
-	 * @Column(type="json")
+	 * @ORM\ManyToMany(type="json")
 	 */
 	protected $variations;
 
 	/**
 	 * @var json
-	 * @Column(type="json")
+	 * @ORM\ManyToMany(type="json")
 	 */
 	protected $variationsPending;
 

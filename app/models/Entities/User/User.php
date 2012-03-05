@@ -7,133 +7,133 @@ use Entities\Dictionary;
 use Entities\Location;
 use Entities\Rental;
 use Entities\User;
-use Doctrine\Common\Collections\Collection
-use Doctrine\Common\Collections\ArrayCollection
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
- * @Entity()
- * @Table(name="user_user")
+ * @ORM\Entity()
+ * @ORM\Table(name="user_user")
  */
 class User extends \BaseEntity {
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\ManyToMany(type="string", nullable=true)
 	 */
 	protected $login;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\ManyToMany(type="string", nullable=true)
 	 */
 	protected $password;
 
 	/**
 	 * @var Collection
-	 * @Column(type="Role")
+	 * @ORM\ManyToMany(type="Role")
 	 */
 	protected $roles;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Contact\Contact")
+	 * @ORM\ManyToMany(targetEntity="Contact\Contact")
 	 */
 	protected $contacts;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Dictionary\Language")
+	 * @ORM\ManyToMany(targetEntity="Dictionary\Language")
 	 */
 	protected $languageDefault;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Location\Location")
+	 * @ORM\ManyToMany(targetEntity="Location\Location")
 	 */
 	protected $locations;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Rental\Type")
+	 * @ORM\ManyToMany(targetEntity="Rental\Type")
 	 */
 	protected $rentalTypes;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\ManyToMany(type="string", nullable=true)
 	 */
 	protected $invoicingSalutation;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\ManyToMany(type="string", nullable=true)
 	 */
 	protected $invoicingFirstName;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\ManyToMany(type="string", nullable=true)
 	 */
 	protected $invoicingLastName;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\ManyToMany(type="string", nullable=true)
 	 */
 	protected $invoicingCompanyName;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Contact\Contact")
+	 * @ORM\ManyToMany(targetEntity="Contact\Contact")
 	 */
 	protected $invoicingEmail;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Contact\Contact")
+	 * @ORM\ManyToMany(targetEntity="Contact\Contact")
 	 */
 	protected $invoicingPhone;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Contact\Contact")
+	 * @ORM\ManyToMany(targetEntity="Contact\Contact")
 	 */
 	protected $invoicingUrl;
 
 	/**
 	 * @var address
-	 * @Column(type="address")
+	 * @ORM\ManyToMany(type="address")
 	 */
 	protected $invoicingAddress;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\ManyToMany(type="string", nullable=true)
 	 */
 	protected $invoicingCompanyId;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\ManyToMany(type="string", nullable=true)
 	 */
 	protected $invoicingCompanyVatId;
 
 	/**
 	 * @var Collection
-	 * @Column(type="User")
+	 * @ORM\ManyToMany(type="User")
 	 */
 	protected $telmarkCurrentOperator;
 
 	/**
 	 * @var json
-	 * @Column(type="json")
+	 * @ORM\ManyToMany(type="json")
 	 */
 	protected $attributes;
 
 	/**
 	 * @var Collection
-	 * @Column(type="Combination")
+	 * @ORM\ManyToMany(type="Combination")
 	 */
 	protected $combinations;
 

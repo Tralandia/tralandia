@@ -5,43 +5,43 @@ namespace Entities\Invoicing;
 use Entities\Dictionary;
 use Entities\Invoicing;
 use Entities\Location;
-use Doctrine\Common\Collections\Collection
-use Doctrine\Common\Collections\ArrayCollection
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
- * @Entity()
- * @Table(name="invoicing_package")
+ * @ORM\Entity()
+ * @ORM\Table(name="invoicing_package")
  */
 class Package extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Dictionary\Phrase")
+	 * @ORM\ManyToMany(targetEntity="Dictionary\Phrase")
 	 */
 	protected $name;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Dictionary\Phrase")
+	 * @ORM\ManyToMany(targetEntity="Dictionary\Phrase")
 	 */
 	protected $teaser;
 
 	/**
 	 * @var Collection
-	 * @Column(type="Use")
+	 * @ORM\ManyToMany(type="Use")
 	 */
 	protected $uses;
 
 	/**
 	 * @var Collection
-	 * @OneToOne(targetEntity="Location\Location")
+	 * @ORM\OneToOne(targetEntity="Location\Location")
 	 */
 	protected $country;
 
 	/**
 	 * @var Collection
-	 * @OneToMany(targetEntity="Invoicing\Service\Service", mappedBy="package")
+	 * @ORM\OneToMany(targetEntity="Invoicing\Service\Service", mappedBy="package")
 	 */
 	protected $services;
 

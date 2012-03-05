@@ -5,43 +5,43 @@ namespace Entities\Routing;
 use Entities\Dictionary;
 use Entities\Location;
 use Entities\Routing;
-use Doctrine\Common\Collections\Collection
-use Doctrine\Common\Collections\ArrayCollection
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
- * @Entity()
- * @Table(name="routing_pathsegmentold")
+ * @ORM\Entity()
+ * @ORM\Table(name="routing_pathsegmentold")
  */
 class PathSegmentOld extends \BaseEntity {
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\ManyToMany(type="string", nullable=true)
 	 */
 	protected $pathSegment;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Location\Location")
+	 * @ORM\ManyToMany(targetEntity="Location\Location")
 	 */
 	protected $country;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Dictionary\Language")
+	 * @ORM\ManyToMany(targetEntity="Dictionary\Language")
 	 */
 	protected $language;
 
 	/**
 	 * @var Integer
-	 * @Column(type="Integer")
+	 * @ORM\ManyToMany(type="Integer")
 	 */
 	protected $type;
 
 	/**
 	 * @var integer
-	 * @Column(type="integer")
+	 * @ORM\ManyToMany(type="integer")
 	 */
 	protected $entityId;
 

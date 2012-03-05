@@ -3,25 +3,25 @@
 namespace Entities\Company;
 
 use Entities\Company;
-use Doctrine\Common\Collections\Collection
-use Doctrine\Common\Collections\ArrayCollection
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
- * @Entity()
- * @Table(name="company_office")
+ * @ORM\Entity()
+ * @ORM\Table(name="company_office")
  */
 class Office extends \BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @Column(type="Company")
+	 * @ORM\ManyToMany(type="Company")
 	 */
 	protected $company;
 
 	/**
 	 * @var address
-	 * @Column(type="address")
+	 * @ORM\ManyToMany(type="address")
 	 */
 	protected $address;
 

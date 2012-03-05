@@ -4,109 +4,109 @@ namespace Entities\Location;
 
 use Entities\Dictionary;
 use Entities\Location;
-use Doctrine\Common\Collections\Collection
-use Doctrine\Common\Collections\ArrayCollection
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
- * @Entity()
- * @Table(name="location_location")
+ * @ORM\Entity()
+ * @ORM\Table(name="location_location")
  */
 class Location extends \BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Dictionary\Language")
+	 * @ORM\ManyToMany(targetEntity="Dictionary\Language")
 	 */
 	protected $languages;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Dictionary\Phrase")
+	 * @ORM\ManyToMany(targetEntity="Dictionary\Phrase")
 	 */
 	protected $name;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Dictionary\Phrase")
+	 * @ORM\ManyToMany(targetEntity="Dictionary\Phrase")
 	 */
 	protected $nameOfficial;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Dictionary\Phrase")
+	 * @ORM\ManyToMany(targetEntity="Dictionary\Phrase")
 	 */
 	protected $nameShort;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\ManyToMany(type="string", nullable=true)
 	 */
 	protected $iso;
 
 	/**
 	 * @var slug
-	 * @Column(type="slug")
+	 * @ORM\ManyToMany(type="slug")
 	 */
 	protected $slug;
 
 	/**
 	 * @var integer
-	 * @Column(type="integer")
+	 * @ORM\ManyToMany(type="integer")
 	 */
 	protected $nestedLeft;
 
 	/**
 	 * @var integer
-	 * @Column(type="integer")
+	 * @ORM\ManyToMany(type="integer")
 	 */
 	protected $nestedRight;
 
 	/**
 	 * @var Collection
-	 * @Column(type="Type")
+	 * @ORM\ManyToMany(type="Type")
 	 */
 	protected $type;
 
 	/**
 	 * @var json
-	 * @Column(type="json")
+	 * @ORM\ManyToMany(type="json")
 	 */
 	protected $polygon;
 
 	/**
 	 * @var latlong
-	 * @Column(type="latlong")
+	 * @ORM\ManyToMany(type="latlong")
 	 */
 	protected $latitude;
 
 	/**
 	 * @var latlong
-	 * @Column(type="latlong")
+	 * @ORM\ManyToMany(type="latlong")
 	 */
 	protected $longitude;
 
 	/**
 	 * @var integer
-	 * @Column(type="integer")
+	 * @ORM\ManyToMany(type="integer")
 	 */
 	protected $defaultZoom;
 
 	/**
 	 * @var Collection
-	 * @Column(type="Travelink")
+	 * @ORM\ManyToMany(type="Travelink")
 	 */
 	protected $travelingsFrom;
 
 	/**
 	 * @var Collection
-	 * @Column(type="Travelink")
+	 * @ORM\ManyToMany(type="Travelink")
 	 */
 	protected $travelingsTo;
 
 	/**
 	 * @var Collection
-	 * @Column(type="Country")
+	 * @ORM\ManyToMany(type="Country")
 	 */
 	protected $country;
 

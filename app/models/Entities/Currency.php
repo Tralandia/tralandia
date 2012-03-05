@@ -3,43 +3,43 @@
 namespace Entities;
 
 use Entities\Dictionary;
-use Doctrine\Common\Collections\Collection
-use Doctrine\Common\Collections\ArrayCollection
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
- * @Entity()
- * @Table(name="currency")
+ * @ORM\Entity()
+ * @ORM\Table(name="currency")
  */
 class Currency extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @OneToOne(targetEntity="Dictionary\Phrase")
+	 * @ORM\OneToOne(targetEntity="Dictionary\Phrase")
 	 */
 	protected $name;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\ManyToMany(type="string", nullable=true)
 	 */
 	protected $iso;
 
 	/**
 	 * @var decimal
-	 * @Column(type="decimal")
+	 * @ORM\ManyToMany(type="decimal")
 	 */
 	protected $exchangeRate;
 
 	/**
 	 * @var integer
-	 * @Column(type="integer")
+	 * @ORM\ManyToMany(type="integer")
 	 */
 	protected $decimalPlaces;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\ManyToMany(type="string", nullable=true)
 	 */
 	protected $rounding;
 

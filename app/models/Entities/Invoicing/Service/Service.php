@@ -3,43 +3,43 @@
 namespace Entities\Invoicing\Service;
 
 use Entities\Invoicing;
-use Doctrine\Common\Collections\Collection
-use Doctrine\Common\Collections\ArrayCollection
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
- * @Entity()
- * @Table(name="invoicing_service_service")
+ * @ORM\Entity()
+ * @ORM\Table(name="invoicing_service_service")
  */
 class Service extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ManyToOne(targetEntity="Invoicing\Package", inversedBy="services")
+	 * @ORM\ManyToOne(targetEntity="Invoicing\Package", inversedBy="services")
 	 */
 	protected $package;
 
 	/**
 	 * @var Collection
-	 * @Column(type="Type")
+	 * @ORM\ManyToMany(type="Type")
 	 */
 	protected $type;
 
 	/**
 	 * @var Collection
-	 * @Column(type="Duration")
+	 * @ORM\ManyToMany(type="Duration")
 	 */
 	protected $duration;
 
 	/**
 	 * @var price
-	 * @Column(type="price")
+	 * @ORM\ManyToMany(type="price")
 	 */
 	protected $defaultPrice;
 
 	/**
 	 * @var price
-	 * @Column(type="price")
+	 * @ORM\ManyToMany(type="price")
 	 */
 	protected $currentPrice;
 

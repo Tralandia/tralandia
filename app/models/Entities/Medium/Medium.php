@@ -4,37 +4,37 @@ namespace Entities\Medium;
 
 use Entities\Dictionary;
 use Entities\Medium;
-use Doctrine\Common\Collections\Collection
-use Doctrine\Common\Collections\ArrayCollection
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
- * @Entity()
- * @Table(name="medium_medium")
+ * @ORM\Entity()
+ * @ORM\Table(name="medium_medium")
  */
 class Medium extends \BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @Column(type="Type")
+	 * @ORM\ManyToMany(type="Type")
 	 */
 	protected $type;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Dictionary\Phrase")
+	 * @ORM\ManyToMany(targetEntity="Dictionary\Phrase")
 	 */
 	protected $name;
 
 	/**
 	 * @var text
-	 * @Column(type="text")
+	 * @ORM\ManyToMany(type="text")
 	 */
 	protected $location;
 
 	/**
 	 * @var integer
-	 * @Column(type="integer")
+	 * @ORM\ManyToMany(type="integer")
 	 */
 	protected $sort;
 

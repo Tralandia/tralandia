@@ -4,67 +4,67 @@ namespace Entities\Company;
 
 use Entities\Company;
 use Entities\Location;
-use Doctrine\Common\Collections\Collection
-use Doctrine\Common\Collections\ArrayCollection
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
- * @Entity()
- * @Table(name="company_bankaccount")
+ * @ORM\Entity()
+ * @ORM\Table(name="company_bankaccount")
  */
 class BankAccount extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Location\Location")
+	 * @ORM\ManyToMany(targetEntity="Location\Location")
 	 */
 	protected $countries;
 
 	/**
 	 * @var Collection
-	 * @Column(type="Company")
+	 * @ORM\ManyToMany(type="Company")
 	 */
 	protected $company;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\ManyToMany(type="string", nullable=true)
 	 */
 	protected $bankName;
 
 	/**
 	 * @var address
-	 * @Column(type="address")
+	 * @ORM\ManyToMany(type="address")
 	 */
 	protected $bankAddress;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\ManyToMany(type="string", nullable=true)
 	 */
 	protected $bankSwift;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\ManyToMany(type="string", nullable=true)
 	 */
 	protected $accountNumber;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\ManyToMany(type="string", nullable=true)
 	 */
 	protected $accountName;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\ManyToMany(type="string", nullable=true)
 	 */
 	protected $accountIban;
 
 	/**
 	 * @var text
-	 * @Column(type="text")
+	 * @ORM\ManyToMany(type="text")
 	 */
 	protected $notes;
 

@@ -3,67 +3,67 @@
 namespace Entities\Dictionary;
 
 use Entities\Dictionary;
-use Doctrine\Common\Collections\Collection
-use Doctrine\Common\Collections\ArrayCollection
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
- * @Entity()
- * @Table(name="dictionary_type")
+ * @ORM\Entity()
+ * @ORM\Table(name="dictionary_type")
  */
 class Type extends \BaseEntity {
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\ManyToMany(type="string", nullable=true)
 	 */
 	protected $name;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\ManyToMany(type="string", nullable=true)
 	 */
 	protected $entityName;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\ManyToMany(type="string", nullable=true)
 	 */
 	protected $entityAttribute;
 
 	/**
 	 * @var Collection
-	 * @Column(type="integer")
+	 * @ORM\ManyToMany(type="integer")
 	 */
 	protected $translationLevelRequirement;
 
 	/**
 	 * @var boolean
-	 * @Column(type="boolean")
+	 * @ORM\ManyToMany(type="boolean")
 	 */
 	protected $multitranslationRequired;
 
 	/**
 	 * @var boolean
-	 * @Column(type="boolean")
+	 * @ORM\ManyToMany(type="boolean")
 	 */
 	protected $genderNumberRequired;
 
 	/**
 	 * @var boolean
-	 * @Column(type="boolean")
+	 * @ORM\ManyToMany(type="boolean")
 	 */
 	protected $locativeRequired;
 
 	/**
 	 * @var boolean
-	 * @Column(type="boolean")
+	 * @ORM\ManyToMany(type="boolean")
 	 */
 	protected $positionRequired;
 
 	/**
 	 * @var boolean
-	 * @Column(type="boolean")
+	 * @ORM\ManyToMany(type="boolean")
 	 */
 	protected $webalizedRequired;
 

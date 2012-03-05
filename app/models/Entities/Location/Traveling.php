@@ -3,37 +3,37 @@
 namespace Entities\Location;
 
 use Entities\Location;
-use Doctrine\Common\Collections\Collection
-use Doctrine\Common\Collections\ArrayCollection
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
- * @Entity()
- * @Table(name="location_traveling")
+ * @ORM\Entity()
+ * @ORM\Table(name="location_traveling")
  */
 class Traveling extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @Column(type="Location")
+	 * @ORM\ManyToMany(type="Location")
 	 */
 	protected $source;
 
 	/**
 	 * @var Collection
-	 * @Column(type="Location")
+	 * @ORM\ManyToMany(type="Location")
 	 */
 	protected $destination;
 
 	/**
 	 * @var integer
-	 * @Column(type="integer")
+	 * @ORM\ManyToMany(type="integer")
 	 */
 	protected $peopleCount;
 
 	/**
 	 * @var integer
-	 * @Column(type="integer")
+	 * @ORM\ManyToMany(type="integer")
 	 */
 	protected $year;
 

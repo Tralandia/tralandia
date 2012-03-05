@@ -3,43 +3,43 @@
 namespace Entities\Dictionary;
 
 use Entities\Dictionary;
-use Doctrine\Common\Collections\Collection
-use Doctrine\Common\Collections\ArrayCollection
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
- * @Entity()
- * @Table(name="dictionary_phrase")
+ * @ORM\Entity()
+ * @ORM\Table(name="dictionary_phrase")
  */
 class Phrase extends \BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @Column(type="Translation")
+	 * @ORM\ManyToMany(type="Translation")
 	 */
 	protected $translations;
 
 	/**
 	 * @var boolean
-	 * @Column(type="boolean")
+	 * @ORM\ManyToMany(type="boolean")
 	 */
 	protected $ready;
 
 	/**
 	 * @var Collection
-	 * @Column(type="Language")
+	 * @ORM\ManyToMany(type="Language")
 	 */
 	protected $languages;
 
 	/**
 	 * @var Collection
-	 * @Column(type="Type")
+	 * @ORM\ManyToMany(type="Type")
 	 */
 	protected $type;
 
 	/**
 	 * @var integer
-	 * @Column(type="integer")
+	 * @ORM\ManyToMany(type="integer")
 	 */
 	protected $entityId;
 

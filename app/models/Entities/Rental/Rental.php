@@ -9,193 +9,193 @@ use Entities\Location;
 use Entities\Medium;
 use Entities\Rental;
 use Entities\User;
-use Doctrine\Common\Collections\Collection
-use Doctrine\Common\Collections\ArrayCollection
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
- * @Entity()
- * @Table(name="rental_rental")
+ * @ORM\Entity()
+ * @ORM\Table(name="rental_rental")
  */
 class Rental extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @OneToOne(targetEntity="User\User")
+	 * @ORM\OneToOne(targetEntity="User\User")
 	 */
 	protected $owner;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Dictionary\Language")
+	 * @ORM\ManyToMany(targetEntity="Dictionary\Language")
 	 */
 	protected $editLanguage;
 
 	/**
 	 * @var integer
-	 * @Column(type="integer")
+	 * @ORM\ManyToMany(type="integer")
 	 */
 	protected $status;
 
 	/**
 	 * @var Collection
-	 * @Column(type="Type")
+	 * @ORM\ManyToMany(type="Type")
 	 */
 	protected $types;
 
 	/**
 	 * @var datetime
-	 * @Column(type="datetime")
+	 * @ORM\ManyToMany(type="datetime")
 	 */
 	protected $timeDeleted;
 
 	/**
 	 * @var decimal
-	 * @Column(type="decimal")
+	 * @ORM\ManyToMany(type="decimal")
 	 */
 	protected $rank;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Location\Location")
+	 * @ORM\ManyToMany(targetEntity="Location\Location")
 	 */
 	protected $locations;
 
 	/**
 	 * @var address
-	 * @Column(type="address")
+	 * @ORM\ManyToMany(type="address")
 	 */
 	protected $address;
 
 	/**
 	 * @var latlong
-	 * @Column(type="latlong")
+	 * @ORM\ManyToMany(type="latlong")
 	 */
 	protected $latitude;
 
 	/**
 	 * @var latlong
-	 * @Column(type="latlong")
+	 * @ORM\ManyToMany(type="latlong")
 	 */
 	protected $longitude;
 
 	/**
 	 * @var webalizedString
-	 * @Column(type="webalizedString")
+	 * @ORM\ManyToMany(type="webalizedString")
 	 */
 	protected $slug;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Dictionary\Phrase")
+	 * @ORM\ManyToMany(targetEntity="Dictionary\Phrase")
 	 */
 	protected $name;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Dictionary\Phrase")
+	 * @ORM\ManyToMany(targetEntity="Dictionary\Phrase")
 	 */
 	protected $briefDescription;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Dictionary\Phrase")
+	 * @ORM\ManyToMany(targetEntity="Dictionary\Phrase")
 	 */
 	protected $description;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Dictionary\Phrase")
+	 * @ORM\ManyToMany(targetEntity="Dictionary\Phrase")
 	 */
 	protected $teaser;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Contact\Contact")
+	 * @ORM\ManyToMany(targetEntity="Contact\Contact")
 	 */
 	protected $contacts;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Dictionary\Language")
+	 * @ORM\ManyToMany(targetEntity="Dictionary\Language")
 	 */
 	protected $languagesSpoken;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Rental\Amenity\Amenity")
+	 * @ORM\ManyToMany(targetEntity="Rental\Amenity\Amenity")
 	 */
 	protected $amenities;
 
 	/**
 	 * @var time
-	 * @Column(type="time")
+	 * @ORM\ManyToMany(type="time")
 	 */
 	protected $checkIn;
 
 	/**
 	 * @var time
-	 * @Column(type="time")
+	 * @ORM\ManyToMany(type="time")
 	 */
 	protected $checkOut;
 
 	/**
 	 * @var integer
-	 * @Column(type="integer")
+	 * @ORM\ManyToMany(type="integer")
 	 */
 	protected $capacityMin;
 
 	/**
 	 * @var integer
-	 * @Column(type="integer")
+	 * @ORM\ManyToMany(type="integer")
 	 */
 	protected $capacityMax;
 
 	/**
 	 * @var json
-	 * @Column(type="json")
+	 * @ORM\ManyToMany(type="json")
 	 */
 	protected $pricelist;
 
 	/**
 	 * @var price
-	 * @Column(type="price")
+	 * @ORM\ManyToMany(type="price")
 	 */
 	protected $priceSeason;
 
 	/**
 	 * @var price
-	 * @Column(type="price")
+	 * @ORM\ManyToMany(type="price")
 	 */
 	protected $priceOffseason;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Medium\Medium")
+	 * @ORM\ManyToMany(targetEntity="Medium\Medium")
 	 */
 	protected $media;
 
 	/**
 	 * @var text
-	 * @Column(type="text")
+	 * @ORM\ManyToMany(type="text")
 	 */
 	protected $calendar;
 
 	/**
 	 * @var datetime
-	 * @Column(type="datetime")
+	 * @ORM\ManyToMany(type="datetime")
 	 */
 	protected $calendarUpdated;
 
 	/**
 	 * @var Collection
-	 * @Column(type="Fulltext")
+	 * @ORM\ManyToMany(type="Fulltext")
 	 */
 	protected $fulltexts;
 
 	/**
 	 * @var Collection
-	 * @OneToMany(targetEntity="Invoicing\Invoice", mappedBy="rental")
+	 * @ORM\OneToMany(targetEntity="Invoicing\Invoice", mappedBy="rental")
 	 */
 	protected $invoices;
 

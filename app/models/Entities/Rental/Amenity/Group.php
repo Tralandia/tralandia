@@ -4,25 +4,25 @@ namespace Entities\Rental\Amenity;
 
 use Entities\Dictionary;
 use Entities\Rental;
-use Doctrine\Common\Collections\Collection
-use Doctrine\Common\Collections\ArrayCollection
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
- * @Entity()
- * @Table(name="rental_amenity_group")
+ * @ORM\Entity()
+ * @ORM\Table(name="rental_amenity_group")
  */
 class Group extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @Column(type="Amenity")
+	 * @ORM\ManyToMany(type="Amenity")
 	 */
 	protected $amenities;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Dictionary\Phrase")
+	 * @ORM\ManyToMany(targetEntity="Dictionary\Phrase")
 	 */
 	protected $name;
 

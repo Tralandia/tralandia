@@ -4,14 +4,14 @@
 
 
 /**
- * @Entity()
- * @Table(name="baseentitydetails")
+ * @ORM\Entity()
+ * @ORM\Table(name="baseentitydetails")
  */
 class BaseEntityDetails extends BaseEntity {
 
 	/**
 	 * @var json
-	 * @Column(type="json")
+	 * @ORM\ManyToMany(type="json")
 	 */
 	protected $details;
 

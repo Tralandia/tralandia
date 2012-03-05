@@ -5,37 +5,37 @@ namespace Entities\Ticket;
 use Entities\Dictionary;
 use Entities\Medium;
 use Entities\Ticket;
-use Doctrine\Common\Collections\Collection
-use Doctrine\Common\Collections\ArrayCollection
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
- * @Entity()
- * @Table(name="ticket_message")
+ * @ORM\Entity()
+ * @ORM\Table(name="ticket_message")
  */
 class Message extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @Column(type="Ticket")
+	 * @ORM\ManyToMany(type="Ticket")
 	 */
 	protected $ticket;
 
 	/**
 	 * @var email
-	 * @Column(type="email")
+	 * @ORM\ManyToMany(type="email")
 	 */
 	protected $senderEmail;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Dictionary\Phrase")
+	 * @ORM\ManyToMany(targetEntity="Dictionary\Phrase")
 	 */
 	protected $message;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Medium\Medium")
+	 * @ORM\ManyToMany(targetEntity="Medium\Medium")
 	 */
 	protected $attachments;
 

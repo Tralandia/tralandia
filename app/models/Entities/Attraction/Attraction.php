@@ -8,67 +8,67 @@ use Entities\Dictionary;
 use Entities\Location;
 use Entities\Medium;
 use Entities\User;
-use Doctrine\Common\Collections\Collection
-use Doctrine\Common\Collections\ArrayCollection
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
- * @Entity()
- * @Table(name="attraction_attraction")
+ * @ORM\Entity()
+ * @ORM\Table(name="attraction_attraction")
  */
 class Attraction extends \BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @Column(type="Type")
+	 * @ORM\ManyToMany(type="Type")
 	 */
 	protected $type;
 
 	/**
 	 * @var Collection
-	 * @OneToOne(targetEntity="Dictionary\Phrase")
+	 * @ORM\OneToOne(targetEntity="Dictionary\Phrase")
 	 */
 	protected $name;
 
 	/**
 	 * @var Collection
-	 * @OneToOne(targetEntity="Dictionary\Phrase")
+	 * @ORM\OneToOne(targetEntity="Dictionary\Phrase")
 	 */
 	protected $description;
 
 	/**
 	 * @var Collection
-	 * @OneToOne(targetEntity="Location\Location")
+	 * @ORM\OneToOne(targetEntity="Location\Location")
 	 */
 	protected $country;
 
 	/**
 	 * @var latlong
-	 * @Column(type="latlong")
+	 * @ORM\ManyToMany(type="latlong")
 	 */
 	protected $latitude;
 
 	/**
 	 * @var latlong
-	 * @Column(type="latlong")
+	 * @ORM\ManyToMany(type="latlong")
 	 */
 	protected $longitude;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Contact\Contact")
+	 * @ORM\ManyToMany(targetEntity="Contact\Contact")
 	 */
 	protected $contacts;
 
 	/**
 	 * @var Collection
-	 * @OneToOne(targetEntity="User\User")
+	 * @ORM\OneToOne(targetEntity="User\User")
 	 */
 	protected $managingUser;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Medium\Medium")
+	 * @ORM\ManyToMany(targetEntity="Medium\Medium")
 	 */
 	protected $media;
 

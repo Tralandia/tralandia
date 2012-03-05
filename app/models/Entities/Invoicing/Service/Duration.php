@@ -3,31 +3,31 @@
 namespace Entities\Invoicing\Service;
 
 use Entities\Dictionary;
-use Doctrine\Common\Collections\Collection
-use Doctrine\Common\Collections\ArrayCollection
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
- * @Entity()
- * @Table(name="invoicing_service_duration")
+ * @ORM\Entity()
+ * @ORM\Table(name="invoicing_service_duration")
  */
 class Duration extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Dictionary\Phrase")
+	 * @ORM\ManyToMany(targetEntity="Dictionary\Phrase")
 	 */
 	protected $name;
 
 	/**
 	 * @var datetime
-	 * @Column(type="datetime")
+	 * @ORM\ManyToMany(type="datetime")
 	 */
 	protected $duration;
 
 	/**
 	 * @var integer
-	 * @Column(type="integer")
+	 * @ORM\ManyToMany(type="integer")
 	 */
 	protected $sort;
 

@@ -5,115 +5,115 @@ namespace Entities\Location;
 use Entities\Contact;
 use Entities\Dictionary;
 use Entities\Location;
-use Doctrine\Common\Collections\Collection
-use Doctrine\Common\Collections\ArrayCollection
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
- * @Entity()
- * @Table(name="location_country")
+ * @ORM\Entity()
+ * @ORM\Table(name="location_country")
  */
 class Country extends \BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Currency")
+	 * @ORM\ManyToMany(targetEntity="Currency")
 	 */
 	protected $defaultCurrency;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Currency")
+	 * @ORM\ManyToMany(targetEntity="Currency")
 	 */
 	protected $currencies;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Dictionary\Language")
+	 * @ORM\ManyToMany(targetEntity="Dictionary\Language")
 	 */
 	protected $defaultLanguage;
 
 	/**
 	 * @var integer
-	 * @Column(type="integer")
+	 * @ORM\ManyToMany(type="integer")
 	 */
 	protected $population;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\ManyToMany(type="string", nullable=true)
 	 */
 	protected $phonePrefix;
 
 	/**
 	 * @var Collection
-	 * @Column(type="Location")
+	 * @ORM\ManyToMany(type="Location")
 	 */
 	protected $neighbours;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Contact\Contact")
+	 * @ORM\ManyToMany(targetEntity="Contact\Contact")
 	 */
 	protected $fbGroup;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\ManyToMany(type="string", nullable=true)
 	 */
 	protected $capitalCity;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Contact\Contact")
+	 * @ORM\ManyToMany(targetEntity="Contact\Contact")
 	 */
 	protected $phoneNumberEmergency;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Contact\Contact")
+	 * @ORM\ManyToMany(targetEntity="Contact\Contact")
 	 */
 	protected $phoneNumberPolice;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Contact\Contact")
+	 * @ORM\ManyToMany(targetEntity="Contact\Contact")
 	 */
 	protected $phoneNumberMedical;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Contact\Contact")
+	 * @ORM\ManyToMany(targetEntity="Contact\Contact")
 	 */
 	protected $phoneNumberFire;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Contact\Contact")
+	 * @ORM\ManyToMany(targetEntity="Contact\Contact")
 	 */
 	protected $wikipediaLink;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\ManyToMany(type="string", nullable=true)
 	 */
 	protected $drivingSide;
 
 	/**
 	 * @var price
-	 * @Column(type="price")
+	 * @ORM\ManyToMany(type="price")
 	 */
 	protected $pricesPizza;
 
 	/**
 	 * @var price
-	 * @Column(type="price")
+	 * @ORM\ManyToMany(type="price")
 	 */
 	protected $pricesDinner;
 
 	/**
 	 * @var text
-	 * @Column(type="text")
+	 * @ORM\ManyToMany(type="text")
 	 */
 	protected $airports;
 

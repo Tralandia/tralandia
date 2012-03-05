@@ -3,25 +3,25 @@
 namespace Entities\Emailing;
 
 use Entities\Dictionary;
-use Doctrine\Common\Collections\Collection
-use Doctrine\Common\Collections\ArrayCollection
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
- * @Entity()
- * @Table(name="emailing_type")
+ * @ORM\Entity()
+ * @ORM\Table(name="emailing_type")
  */
 class Type extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Dictionary\Phrase")
+	 * @ORM\ManyToMany(targetEntity="Dictionary\Phrase")
 	 */
 	protected $name;
 
 	/**
 	 * @var boolean
-	 * @Column(type="boolean")
+	 * @ORM\ManyToMany(type="boolean")
 	 */
 	protected $translationsRequired;
 

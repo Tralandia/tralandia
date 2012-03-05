@@ -6,49 +6,49 @@ use Entities\Dictionary;
 use Entities\Location;
 use Entities\Ticket;
 use Entities\User;
-use Doctrine\Common\Collections\Collection
-use Doctrine\Common\Collections\ArrayCollection
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
- * @Entity()
- * @Table(name="ticket_ticket")
+ * @ORM\Entity()
+ * @ORM\Table(name="ticket_ticket")
  */
 class Ticket extends \BaseEntity {
 
 	/**
 	 * @var email
-	 * @Column(type="email")
+	 * @ORM\ManyToMany(type="email")
 	 */
 	protected $client;
 
 	/**
 	 * @var Collection
-	 * @OneToOne(targetEntity="User\User")
+	 * @ORM\OneToOne(targetEntity="User\User")
 	 */
 	protected $staff;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Location\Location")
+	 * @ORM\ManyToMany(targetEntity="Location\Location")
 	 */
 	protected $country;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Dictionary\Language")
+	 * @ORM\ManyToMany(targetEntity="Dictionary\Language")
 	 */
 	protected $language;
 
 	/**
 	 * @var Collection
-	 * @Column(type="Status")
+	 * @ORM\ManyToMany(type="Status")
 	 */
 	protected $status;
 
 	/**
 	 * @var Collection
-	 * @Column(type="Message")
+	 * @ORM\ManyToMany(type="Message")
 	 */
 	protected $messages;
 

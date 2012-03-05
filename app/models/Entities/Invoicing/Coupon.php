@@ -3,61 +3,61 @@
 namespace Entities\Invoicing;
 
 use Entities\Invoicing;
-use Doctrine\Common\Collections\Collection
-use Doctrine\Common\Collections\ArrayCollection
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
- * @Entity()
- * @Table(name="invoicing_coupon")
+ * @ORM\Entity()
+ * @ORM\Table(name="invoicing_coupon")
  */
 class Coupon extends \BaseEntity {
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $name;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $code;
 
 	/**
 	 * @var integer
-	 * @Column(type="integer")
+	 * @ORM\Column(type="integer")
 	 */
 	protected $countTotal;
 
 	/**
 	 * @var integer
-	 * @Column(type="integer")
+	 * @ORM\Column(type="integer")
 	 */
 	protected $countLeft;
 
 	/**
 	 * @var datetime
-	 * @Column(type="datetime")
+	 * @ORM\Column(type="datetime")
 	 */
 	protected $validFrom;
 
 	/**
 	 * @var datetime
-	 * @Column(type="datetime")
+	 * @ORM\Column(type="datetime")
 	 */
 	protected $validTo;
 
 	/**
 	 * @var Collection
-	 * @Column(type="Package")
+	 * @ORM\Column(type="Package")
 	 */
 	protected $recommenderPackage;
 
 	/**
 	 * @var Collection
-	 * @Column(type="Package")
+	 * @ORM\Column(type="Package")
 	 */
 	protected $recommendeePackage;
 

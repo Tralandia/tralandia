@@ -6,49 +6,49 @@ use Entities\Dictionary;
 use Entities\Rental;
 use Entities\User;
 use Entities\Visitor;
-use Doctrine\Common\Collections\Collection
-use Doctrine\Common\Collections\ArrayCollection
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
- * @Entity()
- * @Table(name="visitor_interaction")
+ * @ORM\Entity()
+ * @ORM\Table(name="visitor_interaction")
  */
 class Interaction extends \BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @Column(type="Type")
+	 * @ORM\ManyToMany(type="Type")
 	 */
 	protected $type;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="User\Role")
+	 * @ORM\ManyToMany(targetEntity="User\Role")
 	 */
 	protected $role;
 
 	/**
 	 * @var email
-	 * @Column(type="email")
+	 * @ORM\ManyToMany(type="email")
 	 */
 	protected $senderEmail;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Dictionary\Language")
+	 * @ORM\ManyToMany(targetEntity="Dictionary\Language")
 	 */
 	protected $language;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Rental\Rental")
+	 * @ORM\ManyToMany(targetEntity="Rental\Rental")
 	 */
 	protected $rental;
 
 	/**
 	 * @var integer
-	 * @Column(type="integer")
+	 * @ORM\ManyToMany(type="integer")
 	 */
 	protected $status;
 

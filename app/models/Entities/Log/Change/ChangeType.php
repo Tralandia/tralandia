@@ -5,20 +5,20 @@ namespace Entities\Log\Change;
 
 
 /**
- * @Entity()
- * @Table(name="log_change_changetype")
+ * @ORM\Entity()
+ * @ORM\Table(name="log_change_changetype")
  */
 class ChangeType extends \BaseEntity {
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\ManyToMany(type="string", nullable=true)
 	 */
 	protected $name;
 
 	/**
 	 * @var boolean
-	 * @Column(type="boolean")
+	 * @ORM\ManyToMany(type="boolean")
 	 */
 	protected $important;
 

@@ -4,109 +4,109 @@ namespace Entities\Invoicing;
 
 use Entities\Attraction;
 use Entities\Invoicing;
-use Doctrine\Common\Collections\Collection
-use Doctrine\Common\Collections\ArrayCollection
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
- * @Entity()
- * @Table(name="invoicing_item")
+ * @ORM\Entity()
+ * @ORM\Table(name="invoicing_item")
  */
 class Item extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @Column(type="Invoice")
+	 * @ORM\ManyToMany(type="Invoice")
 	 */
 	protected $invoice;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Attraction\Type")
+	 * @ORM\ManyToMany(targetEntity="Attraction\Type")
 	 */
 	protected $serviceType;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\ManyToMany(type="string", nullable=true)
 	 */
 	protected $name;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\ManyToMany(type="string", nullable=true)
 	 */
 	protected $nameEn;
 
 	/**
 	 * @var datetime
-	 * @Column(type="datetime")
+	 * @ORM\ManyToMany(type="datetime")
 	 */
 	protected $serviceFrom;
 
 	/**
 	 * @var datetime
-	 * @Column(type="datetime")
+	 * @ORM\ManyToMany(type="datetime")
 	 */
 	protected $serviceTo;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\ManyToMany(type="string", nullable=true)
 	 */
 	protected $durationName;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\ManyToMany(type="string", nullable=true)
 	 */
 	protected $durationNameEn;
 
 	/**
 	 * @var price
-	 * @Column(type="price")
+	 * @ORM\ManyToMany(type="price")
 	 */
 	protected $price;
 
 	/**
 	 * @var price
-	 * @Column(type="price")
+	 * @ORM\ManyToMany(type="price")
 	 */
 	protected $priceEur;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\ManyToMany(type="string", nullable=true)
 	 */
 	protected $marketingName;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\ManyToMany(type="string", nullable=true)
 	 */
 	protected $marketingNameEn;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\ManyToMany(type="string", nullable=true)
 	 */
 	protected $couponName;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\ManyToMany(type="string", nullable=true)
 	 */
 	protected $couponNameEn;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\ManyToMany(type="string", nullable=true)
 	 */
 	protected $packageName;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\ManyToMany(type="string", nullable=true)
 	 */
 	protected $packageNameEn;
 

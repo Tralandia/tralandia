@@ -3,25 +3,25 @@
 namespace Entities\User;
 
 use Entities\Dictionary;
-use Doctrine\Common\Collections\Collection
-use Doctrine\Common\Collections\ArrayCollection
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
- * @Entity()
- * @Table(name="user_role")
+ * @ORM\Entity()
+ * @ORM\Table(name="user_role")
  */
 class Role extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Dictionary\Phrase")
+	 * @ORM\ManyToMany(targetEntity="Dictionary\Phrase")
 	 */
 	protected $name;
 
 	/**
 	 * @var url
-	 * @Column(type="url")
+	 * @ORM\ManyToMany(type="url")
 	 */
 	protected $homePage;
 

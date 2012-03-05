@@ -3,25 +3,25 @@
 namespace Entities\Contact;
 
 use Entities\Dictionary;
-use Doctrine\Common\Collections\Collection
-use Doctrine\Common\Collections\ArrayCollection
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
- * @Entity()
- * @Table(name="contact_type")
+ * @ORM\Entity()
+ * @ORM\Table(name="contact_type")
  */
 class Type extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @OneToOne(targetEntity="Dictionary\Phrase")
+	 * @ORM\OneToOne(targetEntity="Dictionary\Phrase")
 	 */
 	protected $name;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\ManyToMany(type="string", nullable=true)
 	 */
 	protected $class;
 

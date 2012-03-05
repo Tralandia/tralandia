@@ -5,73 +5,73 @@ namespace Entities\Invoicing;
 use Entities\Dictionary;
 use Entities\Invoicing;
 use Entities\Location;
-use Doctrine\Common\Collections\Collection
-use Doctrine\Common\Collections\ArrayCollection
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
- * @Entity()
- * @Table(name="invoicing_marketing")
+ * @ORM\Entity()
+ * @ORM\Table(name="invoicing_marketing")
  */
 class Marketing extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Dictionary\Phrase")
+	 * @ORM\ManyToMany(targetEntity="Dictionary\Phrase")
 	 */
 	protected $name;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Dictionary\Phrase")
+	 * @ORM\ManyToMany(targetEntity="Dictionary\Phrase")
 	 */
 	protected $description;
 
 	/**
 	 * @var Collection
-	 * @Column(type="Package")
+	 * @ORM\ManyToMany(type="Package")
 	 */
 	protected $package;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Location\Location")
+	 * @ORM\ManyToMany(targetEntity="Location\Location")
 	 */
 	protected $locationsIncluded;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Location\Location")
+	 * @ORM\ManyToMany(targetEntity="Location\Location")
 	 */
 	protected $locationsExcluded;
 
 	/**
 	 * @var integer
-	 * @Column(type="integer")
+	 * @ORM\ManyToMany(type="integer")
 	 */
 	protected $countTotal;
 
 	/**
 	 * @var integer
-	 * @Column(type="integer")
+	 * @ORM\ManyToMany(type="integer")
 	 */
 	protected $countLeft;
 
 	/**
 	 * @var datetime
-	 * @Column(type="datetime")
+	 * @ORM\ManyToMany(type="datetime")
 	 */
 	protected $validFrom;
 
 	/**
 	 * @var datetime
-	 * @Column(type="datetime")
+	 * @ORM\ManyToMany(type="datetime")
 	 */
 	protected $validTo;
 
 	/**
 	 * @var Collection
-	 * @Column(type="Use")
+	 * @ORM\ManyToMany(type="Use")
 	 */
 	protected $uses;
 

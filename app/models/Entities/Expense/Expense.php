@@ -4,43 +4,43 @@ namespace Entities\Expense;
 
 use Entities\Expense;
 use Entities\Location;
-use Doctrine\Common\Collections\Collection
-use Doctrine\Common\Collections\ArrayCollection
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
- * @Entity()
- * @Table(name="expense_expense")
+ * @ORM\Entity()
+ * @ORM\Table(name="expense_expense")
  */
 class Expense extends \BaseEntity {
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\ManyToMany(type="string", nullable=true)
 	 */
 	protected $name;
 
 	/**
 	 * @var price
-	 * @Column(type="price")
+	 * @ORM\ManyToMany(type="price")
 	 */
 	protected $amount;
 
 	/**
 	 * @var Collection
-	 * @Column(type="Type")
+	 * @ORM\ManyToMany(type="Type")
 	 */
 	protected $type;
 
 	/**
 	 * @var Collection
-	 * @OneToOne(targetEntity="Location\Location")
+	 * @ORM\OneToOne(targetEntity="Location\Location")
 	 */
 	protected $country;
 
 	/**
 	 * @var Collection
-	 * @Column(type="")
+	 * @ORM\ManyToMany(type="")
 	 */
 	protected $company;
 

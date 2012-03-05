@@ -3,31 +3,31 @@
 namespace Entities\Log\Change;
 
 use Entities\Log;
-use Doctrine\Common\Collections\Collection
-use Doctrine\Common\Collections\ArrayCollection
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
- * @Entity()
- * @Table(name="log_change_changelog")
+ * @ORM\Entity()
+ * @ORM\Table(name="log_change_changelog")
  */
 class ChangeLog extends \BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @Column(type="ChangeType")
+	 * @ORM\ManyToMany(type="ChangeType")
 	 */
 	protected $type;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\ManyToMany(type="string", nullable=true)
 	 */
 	protected $entityName;
 
 	/**
 	 * @var integer
-	 * @Column(type="integer")
+	 * @ORM\ManyToMany(type="integer")
 	 */
 	protected $entityId;
 

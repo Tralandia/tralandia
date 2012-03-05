@@ -4,31 +4,31 @@ namespace Entities\Rental;
 
 use Entities\Dictionary;
 use Entities\Rental;
-use Doctrine\Common\Collections\Collection
-use Doctrine\Common\Collections\ArrayCollection
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
- * @Entity()
- * @Table(name="rental_fulltext")
+ * @ORM\Entity()
+ * @ORM\Table(name="rental_fulltext")
  */
 class Fulltext extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @Column(type="Rental")
+	 * @ORM\ManyToMany(type="Rental")
 	 */
 	protected $rental;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Dictionary\Language")
+	 * @ORM\ManyToMany(targetEntity="Dictionary\Language")
 	 */
 	protected $language;
 
 	/**
 	 * @var text
-	 * @Column(type="text")
+	 * @ORM\ManyToMany(type="text")
 	 */
 	protected $value;
 

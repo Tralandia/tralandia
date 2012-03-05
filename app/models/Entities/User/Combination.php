@@ -5,37 +5,37 @@ namespace Entities\User;
 use Entities\Dictionary;
 use Entities\Location;
 use Entities\User;
-use Doctrine\Common\Collections\Collection
-use Doctrine\Common\Collections\ArrayCollection
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
- * @Entity()
- * @Table(name="user_combination")
+ * @ORM\Entity()
+ * @ORM\Table(name="user_combination")
  */
 class Combination extends \BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @Column(type="User")
+	 * @ORM\ManyToMany(type="User")
 	 */
 	protected $user;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Location\Location")
+	 * @ORM\ManyToMany(targetEntity="Location\Location")
 	 */
 	protected $country;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Dictionary\Language")
+	 * @ORM\ManyToMany(targetEntity="Dictionary\Language")
 	 */
 	protected $language;
 
 	/**
 	 * @var Collection
-	 * @Column(type="integer")
+	 * @ORM\ManyToMany(type="integer")
 	 */
 	protected $languageLevel;
 

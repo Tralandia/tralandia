@@ -5,32 +5,32 @@ namespace Entities\Autopilot;
 
 
 /**
- * @Entity()
- * @Table(name="autopilot_type")
+ * @ORM\Entity()
+ * @ORM\Table(name="autopilot_type")
  */
 class Type extends \BaseEntityDetails {
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\ManyToMany(type="string", nullable=true)
 	 */
 	protected $name;
 
 	/**
 	 * @var time
-	 * @Column(type="time")
+	 * @ORM\ManyToMany(type="time")
 	 */
 	protected $durationPaid;
 
 	/**
 	 * @var json
-	 * @Column(type="json")
+	 * @ORM\ManyToMany(type="json")
 	 */
 	protected $validation;
 
 	/**
 	 * @var integer
-	 * @Column(type="integer")
+	 * @ORM\ManyToMany(type="integer")
 	 */
 	protected $stackable;
 

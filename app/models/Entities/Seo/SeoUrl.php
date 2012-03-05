@@ -7,85 +7,85 @@ use Entities\Dictionary;
 use Entities\Location;
 use Entities\Medium;
 use Entities\Rental;
-use Doctrine\Common\Collections\Collection
-use Doctrine\Common\Collections\ArrayCollection
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
- * @Entity()
- * @Table(name="seo_seourl")
+ * @ORM\Entity()
+ * @ORM\Table(name="seo_seourl")
  */
 class SeoUrl extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Location\Location")
+	 * @ORM\ManyToMany(targetEntity="Location\Location")
 	 */
 	protected $country;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Rental\Type")
+	 * @ORM\ManyToMany(targetEntity="Rental\Type")
 	 */
 	protected $rentalType;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Location\Location")
+	 * @ORM\ManyToMany(targetEntity="Location\Location")
 	 */
 	protected $location;
 
 	/**
 	 * @var integer
-	 * @Column(type="integer")
+	 * @ORM\ManyToMany(type="integer")
 	 */
 	protected $page;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Rental\Amenity\Amenity")
+	 * @ORM\ManyToMany(targetEntity="Rental\Amenity\Amenity")
 	 */
 	protected $tag;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Attraction\Attraction")
+	 * @ORM\ManyToMany(targetEntity="Attraction\Attraction")
 	 */
 	protected $attractionType;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Medium\Medium")
+	 * @ORM\ManyToMany(targetEntity="Medium\Medium")
 	 */
 	protected $media;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Dictionary\Phrase")
+	 * @ORM\ManyToMany(targetEntity="Dictionary\Phrase")
 	 */
 	protected $title;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Dictionary\Phrase")
+	 * @ORM\ManyToMany(targetEntity="Dictionary\Phrase")
 	 */
 	protected $h1;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Dictionary\Phrase")
+	 * @ORM\ManyToMany(targetEntity="Dictionary\Phrase")
 	 */
 	protected $tabName;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Dictionary\Phrase")
+	 * @ORM\ManyToMany(targetEntity="Dictionary\Phrase")
 	 */
 	protected $description;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Dictionary\Phrase")
+	 * @ORM\ManyToMany(targetEntity="Dictionary\Phrase")
 	 */
 	protected $ppcKeywords;
 

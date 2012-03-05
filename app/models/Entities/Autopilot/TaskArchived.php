@@ -6,97 +6,97 @@ use Entities\Autopilot;
 use Entities\Dictionary;
 use Entities\Location;
 use Entities\User;
-use Doctrine\Common\Collections\Collection
-use Doctrine\Common\Collections\ArrayCollection
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
- * @Entity()
- * @Table(name="autopilot_taskarchived")
+ * @ORM\Entity()
+ * @ORM\Table(name="autopilot_taskarchived")
  */
 class TaskArchived extends \BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @Column(type="Type")
+	 * @ORM\ManyToMany(type="Type")
 	 */
 	protected $type;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\ManyToMany(type="string", nullable=true)
 	 */
 	protected $subtype;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\ManyToMany(type="string", nullable=true)
 	 */
 	protected $name;
 
 	/**
 	 * @var text
-	 * @Column(type="text")
+	 * @ORM\ManyToMany(type="text")
 	 */
 	protected $mission;
 
 	/**
 	 * @var datetime
-	 * @Column(type="datetime")
+	 * @ORM\ManyToMany(type="datetime")
 	 */
 	protected $startTime;
 
 	/**
 	 * @var time
-	 * @Column(type="time")
+	 * @ORM\ManyToMany(type="time")
 	 */
 	protected $durationPaid;
 
 	/**
 	 * @var json
-	 * @Column(type="json")
+	 * @ORM\ManyToMany(type="json")
 	 */
 	protected $links;
 
 	/**
 	 * @var Collection
-	 * @OneToOne(targetEntity="User\User")
+	 * @ORM\OneToOne(targetEntity="User\User")
 	 */
 	protected $user;
 
 	/**
 	 * @var Collection
-	 * @OneToOne(targetEntity="Location\Location")
+	 * @ORM\OneToOne(targetEntity="Location\Location")
 	 */
 	protected $userCountry;
 
 	/**
 	 * @var Collection
-	 * @OneToOne(targetEntity="Dictionary\Language")
+	 * @ORM\OneToOne(targetEntity="Dictionary\Language")
 	 */
 	protected $userLanguage;
 
 	/**
 	 * @var Collection
-	 * @OneToOne(targetEntity="Dictionary\Quality")
+	 * @ORM\OneToOne(targetEntity="Dictionary\Quality")
 	 */
 	protected $userLanguageQuality;
 
 	/**
 	 * @var Collection
-	 * @OneToOne(targetEntity="User\Role")
+	 * @ORM\OneToOne(targetEntity="User\Role")
 	 */
 	protected $userRole;
 
 	/**
 	 * @var json
-	 * @Column(type="json")
+	 * @ORM\ManyToMany(type="json")
 	 */
 	protected $validation;
 
 	/**
 	 * @var json
-	 * @Column(type="json")
+	 * @ORM\ManyToMany(type="json")
 	 */
 	protected $actions;
 

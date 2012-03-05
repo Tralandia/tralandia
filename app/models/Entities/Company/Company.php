@@ -7,79 +7,79 @@ use Entities\Dictionary;
 use Entities\Invoicing;
 use Entities\Location;
 use Entities\Medium;
-use Doctrine\Common\Collections\Collection
-use Doctrine\Common\Collections\ArrayCollection
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
- * @Entity()
- * @Table(name="company_company")
+ * @ORM\Entity()
+ * @ORM\Table(name="company_company")
  */
 class Company extends \BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @Column(type="BankAccount")
+	 * @ORM\ManyToMany(type="BankAccount")
 	 */
 	protected $accounts;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Location\Location")
+	 * @ORM\ManyToMany(targetEntity="Location\Location")
 	 */
 	protected $countries;
 
 	/**
 	 * @var Collection
-	 * @Column(type="Office")
+	 * @ORM\ManyToMany(type="Office")
 	 */
 	protected $offices;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\ManyToMany(type="string", nullable=true)
 	 */
 	protected $name;
 
 	/**
 	 * @var address
-	 * @Column(type="address")
+	 * @ORM\ManyToMany(type="address")
 	 */
 	protected $address;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\ManyToMany(type="string", nullable=true)
 	 */
 	protected $companyId;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @ORM\ManyToMany(type="string", nullable=true)
 	 */
 	protected $companyVatId;
 
 	/**
 	 * @var decimal
-	 * @Column(type="decimal")
+	 * @ORM\ManyToMany(type="decimal")
 	 */
 	protected $vat;
 
 	/**
 	 * @var Collection
-	 * @OneToOne(targetEntity="Dictionary\Phrase")
+	 * @ORM\OneToOne(targetEntity="Dictionary\Phrase")
 	 */
 	protected $registrator;
 
 	/**
 	 * @var Collection
-	 * @OneToOne(targetEntity="Medium\Medium")
+	 * @ORM\OneToOne(targetEntity="Medium\Medium")
 	 */
 	protected $signature;
 
 	/**
 	 * @var Collection
-	 * @OneToMany(targetEntity="Invoicing\Invoice", mappedBy="invoicingCompany")
+	 * @ORM\OneToMany(targetEntity="Invoicing\Invoice", mappedBy="invoicingCompany")
 	 */
 	protected $invoices;
 
