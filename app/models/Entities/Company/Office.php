@@ -1,8 +1,8 @@
 <?php
 
-namespace Company;
+namespace Entities\Company;
 
-use Company;
+use Entities\Company;
 use Doctrine\Common\Collections\Collection
 use Doctrine\Common\Collections\ArrayCollection
 

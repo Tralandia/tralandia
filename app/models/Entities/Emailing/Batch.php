@@ -1,8 +1,8 @@
 <?php
 
-namespace Emailing;
+namespace Entities\Emailing;
 
-use Emailing;
+use Entities\Emailing;
 use Doctrine\Common\Collections\Collection
 use Doctrine\Common\Collections\ArrayCollection
 

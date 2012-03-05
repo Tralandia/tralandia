@@ -1,6 +1,6 @@
 <?php
 
-namespace Log\Change;
+namespace Entities\Log\Change;
 
 
 

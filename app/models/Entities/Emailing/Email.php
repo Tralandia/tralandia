@@ -1,9 +1,9 @@
 <?php
 
-namespace Emailing;
+namespace Entities\Emailing;
 
-use Dictionary;
-use Emailing;
+use Entities\Dictionary;
+use Entities\Emailing;
 use Doctrine\Common\Collections\Collection
 use Doctrine\Common\Collections\ArrayCollection
 

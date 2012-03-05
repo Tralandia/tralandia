@@ -1,9 +1,9 @@
 <?php
 
-namespace Rental\Amenity;
+namespace Entities\Rental\Amenity;
 
-use Dictionary;
-use Rental;
+use Entities\Dictionary;
+use Entities\Rental;
 use Doctrine\Common\Collections\Collection
 use Doctrine\Common\Collections\ArrayCollection
 

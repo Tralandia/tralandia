@@ -1,5 +1,7 @@
 <?php
 
+namespace Entities;
+
 use Location;
 use Doctrine\Common\Collections\Collection
 use Doctrine\Common\Collections\ArrayCollection

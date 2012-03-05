@@ -1,11 +1,11 @@
 <?php
 
-namespace Invoicing;
+namespace Entities\Invoicing;
 
-use Company;
-use Dictionary;
-use Invoicing;
-use Rental;
+use Entities\Company;
+use Entities\Dictionary;
+use Entities\Invoicing;
+use Entities\Rental;
 use Doctrine\Common\Collections\Collection
 use Doctrine\Common\Collections\ArrayCollection
 

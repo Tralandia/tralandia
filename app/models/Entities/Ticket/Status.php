@@ -1,8 +1,8 @@
 <?php
 
-namespace Ticket;
+namespace Entities\Ticket;
 
-use Dictionary;
+use Entities\Dictionary;
 use Doctrine\Common\Collections\Collection
 use Doctrine\Common\Collections\ArrayCollection
 

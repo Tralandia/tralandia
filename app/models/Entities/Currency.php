@@ -1,6 +1,8 @@
 <?php
 
-use Dictionary;
+namespace Entities;
+
+use Entities\Dictionary;
 use Doctrine\Common\Collections\Collection
 use Doctrine\Common\Collections\ArrayCollection
 

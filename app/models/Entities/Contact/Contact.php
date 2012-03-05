@@ -1,8 +1,8 @@
 <?php
 
-namespace Contact;
+namespace Entities\Contact;
 
-use Contact;
+use Entities\Contact;
 use Doctrine\Common\Collections\Collection
 use Doctrine\Common\Collections\ArrayCollection
 

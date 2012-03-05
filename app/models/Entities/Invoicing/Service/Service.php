@@ -1,8 +1,8 @@
 <?php
 
-namespace Invoicing\Service;
+namespace Entities\Invoicing\Service;
 
-use Invoicing;
+use Entities\Invoicing;
 use Doctrine\Common\Collections\Collection
 use Doctrine\Common\Collections\ArrayCollection
 

@@ -1,12 +1,12 @@
 <?php
 
-namespace Company;
+namespace Entities\Company;
 
-use Company;
-use Dictionary;
-use Invoicing;
-use Location;
-use Medium;
+use Entities\Company;
+use Entities\Dictionary;
+use Entities\Invoicing;
+use Entities\Location;
+use Entities\Medium;
 use Doctrine\Common\Collections\Collection
 use Doctrine\Common\Collections\ArrayCollection
 

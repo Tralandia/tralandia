@@ -1,8 +1,8 @@
 <?php
 
-namespace Medium;
+namespace Entities\Medium;
 
-use Dictionary;
+use Entities\Dictionary;
 use Doctrine\Common\Collections\Collection
 use Doctrine\Common\Collections\ArrayCollection
 

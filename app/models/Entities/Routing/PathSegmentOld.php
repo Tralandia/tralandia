@@ -1,10 +1,10 @@
 <?php
 
-namespace Routing;
+namespace Entities\Routing;
 
-use Dictionary;
-use Location;
-use Routing;
+use Entities\Dictionary;
+use Entities\Location;
+use Entities\Routing;
 use Doctrine\Common\Collections\Collection
 use Doctrine\Common\Collections\ArrayCollection
 

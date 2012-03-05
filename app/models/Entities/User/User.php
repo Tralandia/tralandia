@@ -1,12 +1,12 @@
 <?php
 
-namespace User;
+namespace Entities\User;
 
-use Contact;
-use Dictionary;
-use Location;
-use Rental;
-use User;
+use Entities\Contact;
+use Entities\Dictionary;
+use Entities\Location;
+use Entities\Rental;
+use Entities\User;
 use Doctrine\Common\Collections\Collection
 use Doctrine\Common\Collections\ArrayCollection
 

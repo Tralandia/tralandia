@@ -1,10 +1,10 @@
 <?php
 
-namespace Invoicing;
+namespace Entities\Invoicing;
 
-use Dictionary;
-use Invoicing;
-use Location;
+use Entities\Dictionary;
+use Entities\Invoicing;
+use Entities\Location;
 use Doctrine\Common\Collections\Collection
 use Doctrine\Common\Collections\ArrayCollection
 

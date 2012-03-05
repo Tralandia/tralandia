@@ -1,10 +1,10 @@
 <?php
 
-namespace User;
+namespace Entities\User;
 
-use Dictionary;
-use Location;
-use User;
+use Entities\Dictionary;
+use Entities\Location;
+use Entities\User;
 use Doctrine\Common\Collections\Collection
 use Doctrine\Common\Collections\ArrayCollection
 

@@ -1,13 +1,13 @@
 <?php
 
-namespace Attraction;
+namespace Entities\Attraction;
 
-use Attraction;
-use Contact;
-use Dictionary;
-use Location;
-use Medium;
-use User;
+use Entities\Attraction;
+use Entities\Contact;
+use Entities\Dictionary;
+use Entities\Location;
+use Entities\Medium;
+use Entities\User;
 use Doctrine\Common\Collections\Collection
 use Doctrine\Common\Collections\ArrayCollection
 

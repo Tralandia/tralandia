@@ -1,14 +1,14 @@
 <?php
 
-namespace Rental;
+namespace Entities\Rental;
 
-use Contact;
-use Dictionary;
-use Invoicing;
-use Location;
-use Medium;
-use Rental;
-use User;
+use Entities\Contact;
+use Entities\Dictionary;
+use Entities\Invoicing;
+use Entities\Location;
+use Entities\Medium;
+use Entities\Rental;
+use Entities\User;
 use Doctrine\Common\Collections\Collection
 use Doctrine\Common\Collections\ArrayCollection
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace Company;
+namespace Entities\Company;
 
-use Company;
-use Location;
+use Entities\Company;
+use Entities\Location;
 use Doctrine\Common\Collections\Collection
 use Doctrine\Common\Collections\ArrayCollection
 

@@ -1,11 +1,11 @@
 <?php
 
-namespace Visitor;
+namespace Entities\Visitor;
 
-use Dictionary;
-use Rental;
-use User;
-use Visitor;
+use Entities\Dictionary;
+use Entities\Rental;
+use Entities\User;
+use Entities\Visitor;
 use Doctrine\Common\Collections\Collection
 use Doctrine\Common\Collections\ArrayCollection
 

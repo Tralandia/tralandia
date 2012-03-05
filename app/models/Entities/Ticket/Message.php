@@ -1,10 +1,10 @@
 <?php
 
-namespace Ticket;
+namespace Entities\Ticket;
 
-use Dictionary;
-use Medium;
-use Ticket;
+use Entities\Dictionary;
+use Entities\Medium;
+use Entities\Ticket;
 use Doctrine\Common\Collections\Collection
 use Doctrine\Common\Collections\ArrayCollection
 

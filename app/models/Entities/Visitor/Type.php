@@ -1,8 +1,8 @@
 <?php
 
-namespace Visitor;
+namespace Entities\Visitor;
 
-use Dictionary;
+use Entities\Dictionary;
 use Doctrine\Common\Collections\Collection
 use Doctrine\Common\Collections\ArrayCollection
 

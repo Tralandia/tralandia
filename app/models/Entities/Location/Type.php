@@ -1,8 +1,8 @@
 <?php
 
-namespace Location;
+namespace Entities\Location;
 
-use Dictionary;
+use Entities\Dictionary;
 use Doctrine\Common\Collections\Collection
 use Doctrine\Common\Collections\ArrayCollection
 

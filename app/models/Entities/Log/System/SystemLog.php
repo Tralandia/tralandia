@@ -1,6 +1,6 @@
 <?php
 
-namespace Log\System;
+namespace Entities\Log\System;
 
 
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace Expense;
+namespace Entities\Expense;
 
-use Expense;
-use Location;
+use Entities\Expense;
+use Entities\Location;
 use Doctrine\Common\Collections\Collection
 use Doctrine\Common\Collections\ArrayCollection
 

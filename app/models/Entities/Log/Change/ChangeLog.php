@@ -1,8 +1,8 @@
 <?php
 
-namespace Log\Change;
+namespace Entities\Log\Change;
 
-use Log;
+use Entities\Log;
 use Doctrine\Common\Collections\Collection
 use Doctrine\Common\Collections\ArrayCollection
 

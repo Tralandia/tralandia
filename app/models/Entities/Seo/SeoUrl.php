@@ -1,12 +1,12 @@
 <?php
 
-namespace Seo;
+namespace Entities\Seo;
 
-use Attraction;
-use Dictionary;
-use Location;
-use Medium;
-use Rental;
+use Entities\Attraction;
+use Entities\Dictionary;
+use Entities\Location;
+use Entities\Medium;
+use Entities\Rental;
 use Doctrine\Common\Collections\Collection
 use Doctrine\Common\Collections\ArrayCollection
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace Location;
+namespace Entities\Location;
 
-use Contact;
-use Dictionary;
-use Location;
+use Entities\Contact;
+use Entities\Dictionary;
+use Entities\Location;
 use Doctrine\Common\Collections\Collection
 use Doctrine\Common\Collections\ArrayCollection
 

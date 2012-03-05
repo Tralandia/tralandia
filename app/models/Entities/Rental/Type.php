@@ -1,8 +1,8 @@
 <?php
 
-namespace Rental;
+namespace Entities\Rental;
 
-use Dictionary;
+use Entities\Dictionary;
 use Doctrine\Common\Collections\Collection
 use Doctrine\Common\Collections\ArrayCollection
 

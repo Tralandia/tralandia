@@ -1,9 +1,9 @@
 <?php
 
-namespace Medium;
+namespace Entities\Medium;
 
-use Dictionary;
-use Medium;
+use Entities\Dictionary;
+use Entities\Medium;
 use Doctrine\Common\Collections\Collection
 use Doctrine\Common\Collections\ArrayCollection
 
