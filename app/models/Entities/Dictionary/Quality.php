@@ -2,44 +2,66 @@
 
 namespace Dictionary;
 
-use Dictionary;
-use Doctrine\Common\Collections\Collection
-use Doctrine\Common\Collections\ArrayCollection
 
 
 /**
  * @Entity()
- * @Table(name="dictionary_quality")
+ * @Table(name="DictionaryQuality")
  */
-class Quality extends \BaseEntity {
+class Quality extends \BaseEntity
+{
 
 	/**
-	 * @var Collection
-	 * @Column(type="Phrase")
+	 * @var string
+	 * @Column(type="string")
 	 */
 	protected $name;
 
+	/**
+	 * @var string
+	 * @Column(type="string")
+	 */
+	protected $value;
 
-	public function __construct() {
-
-	}
 
 
 	/**
-	 * @param Phrase $name
+	 * @param string $name
 	 * @return Quality
 	 */
-	public function setName(Phrase  $name) {
+	public function setName($name)
+	{
 		$this->name = $name;
 		return $this;
 	}
 
 
 	/**
-	 * @return Phrase
+	 * @return string
 	 */
-	public function getName() {
+	public function getName()
+	{
 		return $this->name;
+	}
+
+
+	/**
+	 * @param string $value
+	 * @return Quality
+	 */
+	public function setValue($value)
+	{
+		$this->value = $value;
+		return $this;
+	}
+
+
+	/**
+	 * @return string
+	 */
+	public function getValue()
+	{
+		return $this->value;
 	}
 
 }

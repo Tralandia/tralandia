@@ -3,25 +3,26 @@
 namespace Dictionary;
 
 use Dictionary;
-use Doctrine\Common\Collections\Collection
-use Doctrine\Common\Collections\ArrayCollection
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
  * @Entity()
- * @Table(name="dictionary_translation")
+ * @Table(name="DictionaryTranslation")
  */
-class Translation extends \BaseEntity {
+class Translation extends \BaseEntity
+{
 
 	/**
 	 * @var Collection
-	 * @Column(type="Phrase")
+	 * @ManyToOne(targetEntity="Phrase")
 	 */
 	protected $phrase;
 
 	/**
 	 * @var Collection
-	 * @Column(type="Language")
+	 * @ManyToOne(targetEntity="Language")
 	 */
 	protected $language;
 
@@ -37,65 +38,19 @@ class Translation extends \BaseEntity {
 	 */
 	protected $translation2;
 
-	/**
-	 * @var text
-	 * @Column(type="text")
-	 */
-	protected $translation3;
-
-	/**
-	 * @var text
-	 * @Column(type="text")
-	 */
-	protected $translation4;
-
-	/**
-	 * @var text
-	 * @Column(type="text")
-	 */
-	protected $translation5;
-
-	/**
-	 * @var text
-	 * @Column(type="text")
-	 */
-	protected $translation6;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @Column(type="string")
 	 */
 	protected $translationWebalized;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @Column(type="string")
 	 */
 	protected $translationWebalized2;
 
-	/**
-	 * @var string
-	 * @Column(type="string", nullable=true)
-	 */
-	protected $translationWebalized3;
-
-	/**
-	 * @var string
-	 * @Column(type="string", nullable=true)
-	 */
-	protected $translationWebalized4;
-
-	/**
-	 * @var string
-	 * @Column(type="string", nullable=true)
-	 */
-	protected $translationWebalized5;
-
-	/**
-	 * @var string
-	 * @Column(type="string", nullable=true)
-	 */
-	protected $translationWebalized6;
 
 	/**
 	 * @var text
@@ -109,29 +64,6 @@ class Translation extends \BaseEntity {
 	 */
 	protected $translationPending2;
 
-	/**
-	 * @var text
-	 * @Column(type="text")
-	 */
-	protected $translationPending3;
-
-	/**
-	 * @var text
-	 * @Column(type="text")
-	 */
-	protected $translationPending4;
-
-	/**
-	 * @var text
-	 * @Column(type="text")
-	 */
-	protected $translationPending5;
-
-	/**
-	 * @var text
-	 * @Column(type="text")
-	 */
-	protected $translationPending6;
 
 	/**
 	 * @var datetime
@@ -139,29 +71,14 @@ class Translation extends \BaseEntity {
 	 */
 	protected $translated;
 
-	/**
-	 * @var json
-	 * @Column(type="json")
-	 */
-	protected $variations;
-
-	/**
-	 * @var json
-	 * @Column(type="json")
-	 */
-	protected $variationsPending;
-
-
-	public function __construct() {
-
-	}
 
 
 	/**
 	 * @param Phrase $phrase
 	 * @return Translation
 	 */
-	public function setPhrase(Phrase  $phrase) {
+	public function setPhrase(Phrase  $phrase)
+	{
 		$this->phrase = $phrase;
 		return $this;
 	}
@@ -170,7 +87,8 @@ class Translation extends \BaseEntity {
 	/**
 	 * @return Phrase
 	 */
-	public function getPhrase() {
+	public function getPhrase()
+	{
 		return $this->phrase;
 	}
 
@@ -179,7 +97,8 @@ class Translation extends \BaseEntity {
 	 * @param Language $language
 	 * @return Translation
 	 */
-	public function setLanguage(Language  $language) {
+	public function setLanguage(Language  $language)
+	{
 		$this->language = $language;
 		return $this;
 	}
@@ -188,7 +107,8 @@ class Translation extends \BaseEntity {
 	/**
 	 * @return Language
 	 */
-	public function getLanguage() {
+	public function getLanguage()
+	{
 		return $this->language;
 	}
 
@@ -197,7 +117,8 @@ class Translation extends \BaseEntity {
 	 * @param text $translation
 	 * @return Translation
 	 */
-	public function setTranslation($translation) {
+	public function setTranslation($translation)
+	{
 		$this->translation = $translation;
 		return $this;
 	}
@@ -206,7 +127,8 @@ class Translation extends \BaseEntity {
 	/**
 	 * @return text
 	 */
-	public function getTranslation() {
+	public function getTranslation()
+	{
 		return $this->translation;
 	}
 
@@ -215,7 +137,8 @@ class Translation extends \BaseEntity {
 	 * @param text $translation2
 	 * @return Translation
 	 */
-	public function setTranslation2($translation2) {
+	public function setTranslation2($translation2)
+	{
 		$this->translation2 = $translation2;
 		return $this;
 	}
@@ -224,80 +147,9 @@ class Translation extends \BaseEntity {
 	/**
 	 * @return text
 	 */
-	public function getTranslation2() {
+	public function getTranslation2()
+	{
 		return $this->translation2;
-	}
-
-
-	/**
-	 * @param text $translation3
-	 * @return Translation
-	 */
-	public function setTranslation3($translation3) {
-		$this->translation3 = $translation3;
-		return $this;
-	}
-
-
-	/**
-	 * @return text
-	 */
-	public function getTranslation3() {
-		return $this->translation3;
-	}
-
-
-	/**
-	 * @param text $translation4
-	 * @return Translation
-	 */
-	public function setTranslation4($translation4) {
-		$this->translation4 = $translation4;
-		return $this;
-	}
-
-
-	/**
-	 * @return text
-	 */
-	public function getTranslation4() {
-		return $this->translation4;
-	}
-
-
-	/**
-	 * @param text $translation5
-	 * @return Translation
-	 */
-	public function setTranslation5($translation5) {
-		$this->translation5 = $translation5;
-		return $this;
-	}
-
-
-	/**
-	 * @return text
-	 */
-	public function getTranslation5() {
-		return $this->translation5;
-	}
-
-
-	/**
-	 * @param text $translation6
-	 * @return Translation
-	 */
-	public function setTranslation6($translation6) {
-		$this->translation6 = $translation6;
-		return $this;
-	}
-
-
-	/**
-	 * @return text
-	 */
-	public function getTranslation6() {
-		return $this->translation6;
 	}
 
 
@@ -305,7 +157,8 @@ class Translation extends \BaseEntity {
 	 * @param string $translationWebalized
 	 * @return Translation
 	 */
-	public function setTranslationWebalized($translationWebalized) {
+	public function setTranslationWebalized($translationWebalized)
+	{
 		$this->translationWebalized = $translationWebalized;
 		return $this;
 	}
@@ -314,7 +167,8 @@ class Translation extends \BaseEntity {
 	/**
 	 * @return string
 	 */
-	public function getTranslationWebalized() {
+	public function getTranslationWebalized()
+	{
 		return $this->translationWebalized;
 	}
 
@@ -323,7 +177,8 @@ class Translation extends \BaseEntity {
 	 * @param string $translationWebalized2
 	 * @return Translation
 	 */
-	public function setTranslationWebalized2($translationWebalized2) {
+	public function setTranslationWebalized2($translationWebalized2)
+	{
 		$this->translationWebalized2 = $translationWebalized2;
 		return $this;
 	}
@@ -332,80 +187,9 @@ class Translation extends \BaseEntity {
 	/**
 	 * @return string
 	 */
-	public function getTranslationWebalized2() {
+	public function getTranslationWebalized2()
+	{
 		return $this->translationWebalized2;
-	}
-
-
-	/**
-	 * @param string $translationWebalized3
-	 * @return Translation
-	 */
-	public function setTranslationWebalized3($translationWebalized3) {
-		$this->translationWebalized3 = $translationWebalized3;
-		return $this;
-	}
-
-
-	/**
-	 * @return string
-	 */
-	public function getTranslationWebalized3() {
-		return $this->translationWebalized3;
-	}
-
-
-	/**
-	 * @param string $translationWebalized4
-	 * @return Translation
-	 */
-	public function setTranslationWebalized4($translationWebalized4) {
-		$this->translationWebalized4 = $translationWebalized4;
-		return $this;
-	}
-
-
-	/**
-	 * @return string
-	 */
-	public function getTranslationWebalized4() {
-		return $this->translationWebalized4;
-	}
-
-
-	/**
-	 * @param string $translationWebalized5
-	 * @return Translation
-	 */
-	public function setTranslationWebalized5($translationWebalized5) {
-		$this->translationWebalized5 = $translationWebalized5;
-		return $this;
-	}
-
-
-	/**
-	 * @return string
-	 */
-	public function getTranslationWebalized5() {
-		return $this->translationWebalized5;
-	}
-
-
-	/**
-	 * @param string $translationWebalized6
-	 * @return Translation
-	 */
-	public function setTranslationWebalized6($translationWebalized6) {
-		$this->translationWebalized6 = $translationWebalized6;
-		return $this;
-	}
-
-
-	/**
-	 * @return string
-	 */
-	public function getTranslationWebalized6() {
-		return $this->translationWebalized6;
 	}
 
 
@@ -413,7 +197,8 @@ class Translation extends \BaseEntity {
 	 * @param text $translationPending
 	 * @return Translation
 	 */
-	public function setTranslationPending($translationPending) {
+	public function setTranslationPending($translationPending)
+	{
 		$this->translationPending = $translationPending;
 		return $this;
 	}
@@ -422,7 +207,8 @@ class Translation extends \BaseEntity {
 	/**
 	 * @return text
 	 */
-	public function getTranslationPending() {
+	public function getTranslationPending()
+	{
 		return $this->translationPending;
 	}
 
@@ -431,7 +217,8 @@ class Translation extends \BaseEntity {
 	 * @param text $translationPending2
 	 * @return Translation
 	 */
-	public function setTranslationPending2($translationPending2) {
+	public function setTranslationPending2($translationPending2)
+	{
 		$this->translationPending2 = $translationPending2;
 		return $this;
 	}
@@ -440,80 +227,9 @@ class Translation extends \BaseEntity {
 	/**
 	 * @return text
 	 */
-	public function getTranslationPending2() {
+	public function getTranslationPending2()
+	{
 		return $this->translationPending2;
-	}
-
-
-	/**
-	 * @param text $translationPending3
-	 * @return Translation
-	 */
-	public function setTranslationPending3($translationPending3) {
-		$this->translationPending3 = $translationPending3;
-		return $this;
-	}
-
-
-	/**
-	 * @return text
-	 */
-	public function getTranslationPending3() {
-		return $this->translationPending3;
-	}
-
-
-	/**
-	 * @param text $translationPending4
-	 * @return Translation
-	 */
-	public function setTranslationPending4($translationPending4) {
-		$this->translationPending4 = $translationPending4;
-		return $this;
-	}
-
-
-	/**
-	 * @return text
-	 */
-	public function getTranslationPending4() {
-		return $this->translationPending4;
-	}
-
-
-	/**
-	 * @param text $translationPending5
-	 * @return Translation
-	 */
-	public function setTranslationPending5($translationPending5) {
-		$this->translationPending5 = $translationPending5;
-		return $this;
-	}
-
-
-	/**
-	 * @return text
-	 */
-	public function getTranslationPending5() {
-		return $this->translationPending5;
-	}
-
-
-	/**
-	 * @param text $translationPending6
-	 * @return Translation
-	 */
-	public function setTranslationPending6($translationPending6) {
-		$this->translationPending6 = $translationPending6;
-		return $this;
-	}
-
-
-	/**
-	 * @return text
-	 */
-	public function getTranslationPending6() {
-		return $this->translationPending6;
 	}
 
 
@@ -521,7 +237,8 @@ class Translation extends \BaseEntity {
 	 * @param datetime $translated
 	 * @return Translation
 	 */
-	public function setTranslated($translated) {
+	public function setTranslated($translated)
+	{
 		$this->translated = $translated;
 		return $this;
 	}
@@ -530,7 +247,8 @@ class Translation extends \BaseEntity {
 	/**
 	 * @return datetime
 	 */
-	public function getTranslated() {
+	public function getTranslated()
+	{
 		return $this->translated;
 	}
 
@@ -539,7 +257,8 @@ class Translation extends \BaseEntity {
 	 * @param json $variations
 	 * @return Translation
 	 */
-	public function setVariations($variations) {
+	public function setVariations($variations)
+	{
 		$this->variations = $variations;
 		return $this;
 	}
@@ -548,26 +267,9 @@ class Translation extends \BaseEntity {
 	/**
 	 * @return json
 	 */
-	public function getVariations() {
+	public function getVariations()
+	{
 		return $this->variations;
-	}
-
-
-	/**
-	 * @param json $variationsPending
-	 * @return Translation
-	 */
-	public function setVariationsPending($variationsPending) {
-		$this->variationsPending = $variationsPending;
-		return $this;
-	}
-
-
-	/**
-	 * @return json
-	 */
-	public function getVariationsPending() {
-		return $this->variationsPending;
 	}
 
 }

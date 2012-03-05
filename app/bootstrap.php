@@ -27,6 +27,8 @@ $container = $configurator->createContainer();
 //	Debugger::$editor = $container->parameters['editor'];
 //}
 
+debug($container->doctrine);
+
 // Enable dynamic presenter factory
 DynamicPresenterFactory::enable($robotLoader);
 

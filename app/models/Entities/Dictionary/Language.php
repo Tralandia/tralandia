@@ -3,25 +3,25 @@
 namespace Dictionary;
 
 use Dictionary;
-use Doctrine\Common\Collections\Collection
-use Doctrine\Common\Collections\ArrayCollection
-
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @Entity()
- * @Table(name="dictionary_language")
+ * @Table(name="DictionaryLanguage")
  */
-class Language extends \BaseEntityDetails {
+class Language extends \BaseEntityDetails
+{
 
 	/**
 	 * @var Collection
-	 * @Column(type="Phrase")
+	 * @OneToOne(targetEntity="Phrase")
 	 */
 	protected $name;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @Column(type="string")
 	 */
 	protected $iso;
 
@@ -31,56 +31,29 @@ class Language extends \BaseEntityDetails {
 	 */
 	protected $supported;
 
-	/**
-	 * @var string
-	 * @Column(type="string", nullable=true)
-	 */
-	protected $defaultCollation;
-
-	/**
-	 * @var json
-	 * @Column(type="json")
-	 */
-	protected $salutations;
-
-	/**
-	 * @var json
-	 * @Column(type="json")
-	 */
-	protected $multitranslationOptions;
-
-	/**
-	 * @var json
-	 * @Column(type="json")
-	 */
-	protected $genderNumberOptions;
-
-	/**
-	 * @var json
-	 * @Column(type="json")
-	 */
-	protected $ppcPatterns;
-
-
-	public function __construct() {
-
-	}
+	// /**
+	//  * @var Collection
+	//  * @ManyToMany(targetEntity="Dictionary\Phrase")
+	//  */
+	// protected $phrase;
 
 
 	/**
-	 * @param Phrase $name
+	 * @param Dictionary\Phrase $name
 	 * @return Language
 	 */
-	public function setName(Phrase  $name) {
+	public function setName(Phrase  $name)
+	{
 		$this->name = $name;
 		return $this;
 	}
 
 
 	/**
-	 * @return Phrase
+	 * @return Dictionary\Phrase
 	 */
-	public function getName() {
+	public function getName()
+	{
 		return $this->name;
 	}
 
@@ -89,7 +62,8 @@ class Language extends \BaseEntityDetails {
 	 * @param string $iso
 	 * @return Language
 	 */
-	public function setIso($iso) {
+	public function setIso($iso)
+	{
 		$this->iso = $iso;
 		return $this;
 	}
@@ -98,7 +72,8 @@ class Language extends \BaseEntityDetails {
 	/**
 	 * @return string
 	 */
-	public function getIso() {
+	public function getIso()
+	{
 		return $this->iso;
 	}
 
@@ -107,7 +82,8 @@ class Language extends \BaseEntityDetails {
 	 * @param boolean $supported
 	 * @return Language
 	 */
-	public function setSupported($supported) {
+	public function setSupported($supported)
+	{
 		$this->supported = $supported;
 		return $this;
 	}
@@ -116,98 +92,9 @@ class Language extends \BaseEntityDetails {
 	/**
 	 * @return boolean
 	 */
-	public function getSupported() {
+	public function getSupported()
+	{
 		return $this->supported;
-	}
-
-
-	/**
-	 * @param string $defaultCollation
-	 * @return Language
-	 */
-	public function setDefaultCollation($defaultCollation) {
-		$this->defaultCollation = $defaultCollation;
-		return $this;
-	}
-
-
-	/**
-	 * @return string
-	 */
-	public function getDefaultCollation() {
-		return $this->defaultCollation;
-	}
-
-
-	/**
-	 * @param json $salutations
-	 * @return Language
-	 */
-	public function setSalutations($salutations) {
-		$this->salutations = $salutations;
-		return $this;
-	}
-
-
-	/**
-	 * @return json
-	 */
-	public function getSalutations() {
-		return $this->salutations;
-	}
-
-
-	/**
-	 * @param json $multitranslationOptions
-	 * @return Language
-	 */
-	public function setMultitranslationOptions($multitranslationOptions) {
-		$this->multitranslationOptions = $multitranslationOptions;
-		return $this;
-	}
-
-
-	/**
-	 * @return json
-	 */
-	public function getMultitranslationOptions() {
-		return $this->multitranslationOptions;
-	}
-
-
-	/**
-	 * @param json $genderNumberOptions
-	 * @return Language
-	 */
-	public function setGenderNumberOptions($genderNumberOptions) {
-		$this->genderNumberOptions = $genderNumberOptions;
-		return $this;
-	}
-
-
-	/**
-	 * @return json
-	 */
-	public function getGenderNumberOptions() {
-		return $this->genderNumberOptions;
-	}
-
-
-	/**
-	 * @param json $ppcPatterns
-	 * @return Language
-	 */
-	public function setPpcPatterns($ppcPatterns) {
-		$this->ppcPatterns = $ppcPatterns;
-		return $this;
-	}
-
-
-	/**
-	 * @return json
-	 */
-	public function getPpcPatterns() {
-		return $this->ppcPatterns;
 	}
 
 }

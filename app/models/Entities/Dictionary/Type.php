@@ -3,37 +3,38 @@
 namespace Dictionary;
 
 use Dictionary;
-use Doctrine\Common\Collections\Collection
-use Doctrine\Common\Collections\ArrayCollection
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
  * @Entity()
- * @Table(name="dictionary_type")
+ * @Table(name="DictionaryType")
  */
-class Type extends \BaseEntity {
+class Type extends \BaseEntity
+{
 
 	/**
-	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @var Collection
+	 * @OneToOne(targetEntity="Phrase")
 	 */
 	protected $name;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @Column(type="string")
 	 */
 	protected $entityName;
 
 	/**
 	 * @var string
-	 * @Column(type="string", nullable=true)
+	 * @Column(type="string")
 	 */
 	protected $entityAttribute;
 
 	/**
 	 * @var Collection
-	 * @Column(type="Quality")
+	 * @ManyToOne(targetEntity="Quality")
 	 */
 	protected $translationQualityRequirement;
 
@@ -41,43 +42,40 @@ class Type extends \BaseEntity {
 	 * @var boolean
 	 * @Column(type="boolean")
 	 */
-	protected $multitranslationRequired;
+	protected $isMultitranslationRequired;
 
 	/**
 	 * @var boolean
 	 * @Column(type="boolean")
 	 */
-	protected $genderNumberRequired;
+	protected $isGenderNumberRequired;
 
 	/**
 	 * @var boolean
 	 * @Column(type="boolean")
 	 */
-	protected $locativeRequired;
+	protected $isLocativeRequired;
 
 	/**
 	 * @var boolean
 	 * @Column(type="boolean")
 	 */
-	protected $positionRequired;
+	protected $isPositionRequired;
 
 	/**
 	 * @var boolean
 	 * @Column(type="boolean")
 	 */
-	protected $webalizedRequired;
+	protected $isWebalizedRequired;
 
-
-	public function __construct() {
-
-	}
 
 
 	/**
 	 * @param string $name
 	 * @return Type
 	 */
-	public function setName($name) {
+	public function setName($name)
+	{
 		$this->name = $name;
 		return $this;
 	}
@@ -86,7 +84,8 @@ class Type extends \BaseEntity {
 	/**
 	 * @return string
 	 */
-	public function getName() {
+	public function getName()
+	{
 		return $this->name;
 	}
 
@@ -95,7 +94,8 @@ class Type extends \BaseEntity {
 	 * @param string $entityName
 	 * @return Type
 	 */
-	public function setEntityName($entityName) {
+	public function setEntityName($entityName)
+	{
 		$this->entityName = $entityName;
 		return $this;
 	}
@@ -104,7 +104,8 @@ class Type extends \BaseEntity {
 	/**
 	 * @return string
 	 */
-	public function getEntityName() {
+	public function getEntityName()
+	{
 		return $this->entityName;
 	}
 
@@ -113,7 +114,8 @@ class Type extends \BaseEntity {
 	 * @param string $entityAttribute
 	 * @return Type
 	 */
-	public function setEntityAttribute($entityAttribute) {
+	public function setEntityAttribute($entityAttribute)
+	{
 		$this->entityAttribute = $entityAttribute;
 		return $this;
 	}
@@ -122,7 +124,8 @@ class Type extends \BaseEntity {
 	/**
 	 * @return string
 	 */
-	public function getEntityAttribute() {
+	public function getEntityAttribute()
+	{
 		return $this->entityAttribute;
 	}
 
@@ -131,7 +134,8 @@ class Type extends \BaseEntity {
 	 * @param Quality $translationQualityRequirement
 	 * @return Type
 	 */
-	public function setTranslationQualityRequirement(Quality  $translationQualityRequirement) {
+	public function setTranslationQualityRequirement(Quality  $translationQualityRequirement)
+	{
 		$this->translationQualityRequirement = $translationQualityRequirement;
 		return $this;
 	}
@@ -140,17 +144,19 @@ class Type extends \BaseEntity {
 	/**
 	 * @return Quality
 	 */
-	public function getTranslationQualityRequirement() {
+	public function getTranslationQualityRequirement()
+	{
 		return $this->translationQualityRequirement;
 	}
 
 
 	/**
-	 * @param boolean $multitranslationRequired
+	 * @param boolean $isMultitranslationRequired
 	 * @return Type
 	 */
-	public function setMultitranslationRequired($multitranslationRequired) {
-		$this->multitranslationRequired = $multitranslationRequired;
+	public function setIsMultitranslationRequired($isMultitranslationRequired)
+	{
+		$this->isMultitranslationRequired = $isMultitranslationRequired;
 		return $this;
 	}
 
@@ -158,17 +164,19 @@ class Type extends \BaseEntity {
 	/**
 	 * @return boolean
 	 */
-	public function getMultitranslationRequired() {
-		return $this->multitranslationRequired;
+	public function getIsMultitranslationRequired()
+	{
+		return $this->isMultitranslationRequired;
 	}
 
 
 	/**
-	 * @param boolean $genderNumberRequired
+	 * @param boolean $isGenderNumberRequired
 	 * @return Type
 	 */
-	public function setGenderNumberRequired($genderNumberRequired) {
-		$this->genderNumberRequired = $genderNumberRequired;
+	public function setIsGenderNumberRequired($isGenderNumberRequired)
+	{
+		$this->isGenderNumberRequired = $isGenderNumberRequired;
 		return $this;
 	}
 
@@ -176,17 +184,19 @@ class Type extends \BaseEntity {
 	/**
 	 * @return boolean
 	 */
-	public function getGenderNumberRequired() {
-		return $this->genderNumberRequired;
+	public function getIsGenderNumberRequired()
+	{
+		return $this->isGenderNumberRequired;
 	}
 
 
 	/**
-	 * @param boolean $locativeRequired
+	 * @param boolean $isLocativeRequired
 	 * @return Type
 	 */
-	public function setLocativeRequired($locativeRequired) {
-		$this->locativeRequired = $locativeRequired;
+	public function setIsLocativeRequired($isLocativeRequired)
+	{
+		$this->isLocativeRequired = $isLocativeRequired;
 		return $this;
 	}
 
@@ -194,17 +204,19 @@ class Type extends \BaseEntity {
 	/**
 	 * @return boolean
 	 */
-	public function getLocativeRequired() {
-		return $this->locativeRequired;
+	public function getIsLocativeRequired()
+	{
+		return $this->isLocativeRequired;
 	}
 
 
 	/**
-	 * @param boolean $positionRequired
+	 * @param boolean $isPositionRequired
 	 * @return Type
 	 */
-	public function setPositionRequired($positionRequired) {
-		$this->positionRequired = $positionRequired;
+	public function setIsPositionRequired($isPositionRequired)
+	{
+		$this->isPositionRequired = $isPositionRequired;
 		return $this;
 	}
 
@@ -212,17 +224,19 @@ class Type extends \BaseEntity {
 	/**
 	 * @return boolean
 	 */
-	public function getPositionRequired() {
-		return $this->positionRequired;
+	public function getIsPositionRequired()
+	{
+		return $this->isPositionRequired;
 	}
 
 
 	/**
-	 * @param boolean $webalizedRequired
+	 * @param boolean $isWebalizedRequired
 	 * @return Type
 	 */
-	public function setWebalizedRequired($webalizedRequired) {
-		$this->webalizedRequired = $webalizedRequired;
+	public function setIsWebalizedRequired($isWebalizedRequired)
+	{
+		$this->isWebalizedRequired = $isWebalizedRequired;
 		return $this;
 	}
 
@@ -230,8 +244,9 @@ class Type extends \BaseEntity {
 	/**
 	 * @return boolean
 	 */
-	public function getWebalizedRequired() {
-		return $this->webalizedRequired;
+	public function getIsWebalizedRequired()
+	{
+		return $this->isWebalizedRequired;
 	}
 
 }
