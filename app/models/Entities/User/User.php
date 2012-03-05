@@ -49,24 +49,6 @@ class User extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Dictionary\Language")
-	 */
-	protected $languagesPasive;
-
-	/**
-	 * @var Collection
-	 * @ManyToMany(targetEntity="Dictionary\Language")
-	 */
-	protected $languagesActive;
-
-	/**
-	 * @var Collection
-	 * @ManyToMany(targetEntity="Dictionary\Language")
-	 */
-	protected $languagesNative;
-
-	/**
-	 * @var Collection
 	 * @ManyToMany(targetEntity="Location\Location")
 	 */
 	protected $locations;
@@ -248,60 +230,6 @@ class User extends \BaseEntity {
 	 */
 	public function getLanguageDefault() {
 		return $this->languageDefault;
-	}
-
-
-	/**
-	 * @param Dictionary\Language $languagesPasive
-	 * @return User
-	 */
-	public function setLanguagesPasive(Dictionary\Language  $languagesPasive) {
-		$this->languagesPasive = $languagesPasive;
-		return $this;
-	}
-
-
-	/**
-	 * @return Dictionary\Language
-	 */
-	public function getLanguagesPasive() {
-		return $this->languagesPasive;
-	}
-
-
-	/**
-	 * @param Dictionary\Language $languagesActive
-	 * @return User
-	 */
-	public function setLanguagesActive(Dictionary\Language  $languagesActive) {
-		$this->languagesActive = $languagesActive;
-		return $this;
-	}
-
-
-	/**
-	 * @return Dictionary\Language
-	 */
-	public function getLanguagesActive() {
-		return $this->languagesActive;
-	}
-
-
-	/**
-	 * @param Dictionary\Language $languagesNative
-	 * @return User
-	 */
-	public function setLanguagesNative(Dictionary\Language  $languagesNative) {
-		$this->languagesNative = $languagesNative;
-		return $this;
-	}
-
-
-	/**
-	 * @return Dictionary\Language
-	 */
-	public function getLanguagesNative() {
-		return $this->languagesNative;
 	}
 
 

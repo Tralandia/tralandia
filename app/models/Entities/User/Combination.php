@@ -33,6 +33,12 @@ class Combination extends \BaseEntityDetails {
 	 */
 	protected $language;
 
+	/**
+	 * @var Collection
+	 * @Column(type="integer")
+	 */
+	protected $languageLevel;
+
 
 	public function __construct() {
 

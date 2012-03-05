@@ -128,7 +128,7 @@ class Invoice extends \BaseEntity {
 	 * @var decimal
 	 * @Column(type="decimal")
 	 */
-	protected $exchange_rate;
+	protected $exchangeRate;
 
 	/**
 	 * @var string

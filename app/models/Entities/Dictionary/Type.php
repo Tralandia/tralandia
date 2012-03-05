@@ -33,9 +33,9 @@ class Type extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @Column(type="Quality")
+	 * @Column(type="integer")
 	 */
-	protected $translationQualityRequirement;
+	protected $translationLevelRequirement;
 
 	/**
 	 * @var boolean
