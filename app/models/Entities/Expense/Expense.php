@@ -6,7 +6,7 @@ use Entities\Expense;
 use Entities\Location;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
