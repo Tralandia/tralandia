@@ -1,6 +1,6 @@
 <?php
 
-namespace Dictionary;
+namespace Attraction;
 
 use Dictionary;
 use Doctrine\Common\Collections\Collection
@@ -9,13 +9,13 @@ use Doctrine\Common\Collections\ArrayCollection
 
 /**
  * @Entity()
- * @Table(name="dictionary_quality")
+ * @Table(name="attraction_type")
  */
-class Quality extends \BaseEntity {
+class Type extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @Column(type="Phrase")
+	 * @OneToOne(targetEntity="Dictionary\Phrase")
 	 */
 	protected $name;
 
@@ -26,17 +26,17 @@ class Quality extends \BaseEntity {
 
 
 	/**
-	 * @param Phrase $name
-	 * @return Quality
+	 * @param Dictionary\Phrase $name
+	 * @return Type
 	 */
-	public function setName(Phrase  $name) {
+	public function setName(Dictionary\Phrase  $name) {
 		$this->name = $name;
 		return $this;
 	}
 
 
 	/**
-	 * @return Phrase
+	 * @return Dictionary\Phrase
 	 */
 	public function getName() {
 		return $this->name;

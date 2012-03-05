@@ -1,38 +1,97 @@
 <?php
+
+
+
+
 /**
- * @MappedSuperclass
- * @HasLifecycleCallbacks
+ * @Entity()
  */
-abstract class BaseEntity extends Entity implements IEntity {
+class BaseEntity
+{
 
 	/**
-	 * @Id @Column(type="integer")
-	 * @GeneratedValue
+	 * @var integer
+	 * @Id @GeneratedValue
+	 * @Column(type="integer")
 	 */
 	protected $id;
-	
-	/** 
+
+	/**
+	 * @var datetime
 	 * @Column(type="datetime")
 	 */
 	protected $created;
 
-	/** 
+	/**
+	 * @var datetime
 	 * @Column(type="datetime")
 	 */
 	protected $updated;
-	
-	/**
-	 * @prePersist
-	 */
-	public function setCreated(){
-		$this->created = new \Nette\DateTime;
+
+
+	public function __construct()
+	{
+
 	}
 
+
 	/**
-	 * @prePersist
-	 * @preUpdate
+	 * @param integer $id
+	 * @return BaseEntity
 	 */
-	public function setUpdated(){
-		$this->updated = new \Nette\DateTime;
+	public function setId($id)
+	{
+		$this->id = $id;
+		return $this;
 	}
+
+
+	/**
+	 * @return integer
+	 */
+	public function getId()
+	{
+		return $this->id;
+	}
+
+
+	/**
+	 * @param datetime $created
+	 * @return BaseEntity
+	 */
+	public function setCreated($created)
+	{
+		$this->created = $created;
+		return $this;
+	}
+
+
+	/**
+	 * @return datetime
+	 */
+	public function getCreated()
+	{
+		return $this->created;
+	}
+
+
+	/**
+	 * @param datetime $updated
+	 * @return BaseEntity
+	 */
+	public function setUpdated($updated)
+	{
+		$this->updated = $updated;
+		return $this;
+	}
+
+
+	/**
+	 * @return datetime
+	 */
+	public function getUpdated()
+	{
+		return $this->updated;
+	}
+
 }
