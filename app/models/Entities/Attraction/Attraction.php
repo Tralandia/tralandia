@@ -74,6 +74,7 @@ class Attraction extends \BaseEntityDetails {
 
 
 	public function __construct() {
+		parent::__construct();
 		$this->contacts = new ArrayCollection();
 		$this->media = new ArrayCollection();
 	}

@@ -201,6 +201,7 @@ class Rental extends \BaseEntity {
 
 
 	public function __construct() {
+		parent::__construct();
 		$this->invoices = new ArrayCollection();
 	}
 

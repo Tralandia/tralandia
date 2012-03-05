@@ -156,6 +156,7 @@ class Invoice extends \BaseEntity {
 
 
 	public function __construct() {
+		parent::__construct();
 
 	}
 

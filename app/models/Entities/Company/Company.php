@@ -85,6 +85,7 @@ class Company extends \BaseEntityDetails {
 
 
 	public function __construct() {
+		parent::__construct();
 		$this->countries = new ArrayCollection();
 		$this->invoices = new ArrayCollection();
 	}

@@ -77,6 +77,7 @@ class Marketing extends \BaseEntity {
 
 
 	public function __construct() {
+		parent::__construct();
 		$this->locationsIncluded = new ArrayCollection();
 		$this->locationsExcluded = new ArrayCollection();
 	}

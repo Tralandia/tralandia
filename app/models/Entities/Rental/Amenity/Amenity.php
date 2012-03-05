@@ -28,6 +28,7 @@ class Amenity extends \BaseEntity {
 
 
 	public function __construct() {
+		parent::__construct();
 
 	}
 
