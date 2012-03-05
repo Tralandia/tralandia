@@ -1,13 +1,15 @@
 <?php
 
+use Doctrine\ORM\Mapping as ORM;
+
 /**
- * @Entity()
+ * @ORM\Entity()
  */
 class Type extends \BaseEntity
 {
 	/**
 	 * @var string
-	 * @Column(type="string")
+	 * @ORM\Column(type="string")
 	 */
 	protected $name;
 }

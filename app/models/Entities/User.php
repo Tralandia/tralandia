@@ -1,38 +1,39 @@
 <?php
 
+use Doctrine\ORM\Mapping as ORM;
+
 /**
- * @Entity(repositoryClass="UserRepository")
- * @HasLifecycleCallbacks
- * @Primary(key="id", value="login")
+ * @ORM\Entity(repositoryClass="UserRepository")
+ * @ORM\Primary(key="id", value="login")
  */
 class User extends BaseEntity {
 
 	/**
-	 * @Column(type="string")
+	 * @ORM\Column(type="string")
 	 * @UIControl(type="text")
 	 */
 	protected $login;
 
 	/**
-	 * @Column(type="string")
+	 * @ORM\Column(type="string")
 	 * @UIControl(type="text")
 	 */
 	protected $password;
 
 	/**
-	 * @Column(type="boolean")
+	 * @ORM\Column(type="boolean")
 	 * @UIControl(type="checkbox", label="Is active?")
 	 */
 	protected $active;
 
 	/**
-	 * @ManyToOne(targetEntity="Country", inversedBy="user")
+	 * @ORM\ManyToOne(targetEntity="Country", inversedBy="user")
 	 * @UIControl(type="select", callback="getList")
 	 */
 	protected $country;
 	
 	/**
-	 * @OneToMany(targetEntity="Rental", mappedBy="user", cascade={"persist", "remove"})
+	 * @ORM\OneToMany(targetEntity="Rental", mappedBy="user", cascade={"persist", "remove"})
 	 */
 	protected $rentals;
 	

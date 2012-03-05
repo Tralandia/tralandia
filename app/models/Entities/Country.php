@@ -1,20 +1,21 @@
 <?php
 
+use Doctrine\ORM\Mapping as ORM;
+
 /**
- * @Entity(repositoryClass="CountryRepository")
- * @HasLifecycleCallbacks
- * @Primary(key="id", value="iso")
+ * @ORM\Entity(repositoryClass="CountryRepository")
+ * @ORM\Primary(key="id", value="iso")
  */
 class Country extends BaseEntity {
 
 	/**
-	 * @Column(type="string")
+	 * @ORM\Column(type="string")
 	 * @UIControl(type="text")
 	 */
 	protected $iso;
 
 	/**
-	 * @ManyToOne(targetEntity="\Dictionary\Language")
+	 * @ORM\ManyToOne(targetEntity="\Dictionary\Language")
 	 * @UIControl(type="select", options="%service%, getList")
 	 */
 	protected $language;

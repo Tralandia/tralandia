@@ -1,36 +1,39 @@
 <?php
+
+use Doctrine\ORM\Mapping as ORM;
+
 /**
- * @MappedSuperclass
- * @HasLifecycleCallbacks
+ * @ORM\MappedSuperclass
+ * @ORM\HasLifecycleCallbacks
  */
 abstract class BaseEntity extends Entity implements IEntity {
 
 	/**
-	 * @Id @Column(type="integer")
-	 * @GeneratedValue
+	 * @ORM\Id @ORM\Column(type="integer")
+	 * @ORM\GeneratedValue
 	 */
 	protected $id;
 	
 	/** 
-	 * @Column(type="datetime")
+	 * @ORM\Column(type="datetime")
 	 */
 	protected $created;
 
 	/** 
-	 * @Column(type="datetime")
+	 * @ORM\Column(type="datetime")
 	 */
 	protected $updated;
 	
 	/**
-	 * @prePersist
+	 * @ORM\prePersist
 	 */
 	public function setCreated(){
 		$this->created = new \Nette\DateTime;
 	}
 
 	/**
-	 * @prePersist
-	 * @preUpdate
+	 * @ORM\prePersist
+	 * @ORM\preUpdate
 	 */
 	public function setUpdated(){
 		$this->updated = new \Nette\DateTime;

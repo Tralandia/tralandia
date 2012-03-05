@@ -59,7 +59,7 @@ class Composite extends Base
         }
 
         // Fixes DDC-1237: User may have added a where item containing nested expression (with "OR" or "AND")
-        if (mb_stripos($queryPart, ' OR ') !== false || mb_stripos($queryPart, ' AND ') !== false) {
+        if (stripos($queryPart, ' OR ') !== false || stripos($queryPart, ' AND ') !== false) {
             return $this->_preSeparator . $queryPart . $this->_postSeparator;
         }
 

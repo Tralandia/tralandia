@@ -116,24 +116,54 @@ class OraclePlatform extends AbstractPlatform
         return "TRUNC(TO_NUMBER(SUBSTR((" . $date1 . "-" . $date2 . "), 1, INSTR(" . $date1 . "-" . $date2 .", ' '))))";
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getDateAddDaysExpression($date, $days)
     {
         return '(' . $date . '+' . $days . ')';
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getDateSubDaysExpression($date, $days)
     {
         return '(' . $date . '-' . $days . ')';
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getDateAddMonthExpression($date, $months)
     {
         return "ADD_MONTHS(" . $date . ", " . $months . ")";
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getDateSubMonthExpression($date, $months)
     {
         return "ADD_MONTHS(" . $date . ", -" . $months . ")";
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getBitAndComparisonExpression($value1, $value2)
+    {
+        return 'BITAND('.$value1 . ', ' . $value2 . ')';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getBitOrComparisonExpression($value1, $value2)
+    {
+        return '(' . $value1 . '-' .
+                $this->getBitAndComparisonExpression($value1, $value2)
+                . '+' . $value2 . ')';
     }
 
     /**
@@ -450,16 +480,13 @@ END;';
           cols.position,
           r_alc.table_name \"references_table\",
           r_cols.column_name \"foreign_column\"
-     FROM all_cons_columns cols
-LEFT JOIN all_constraints alc
+     FROM user_cons_columns cols
+LEFT JOIN user_constraints alc
        ON alc.constraint_name = cols.constraint_name
-      AND alc.owner = cols.owner
-LEFT JOIN all_constraints r_alc
+LEFT JOIN user_constraints r_alc
        ON alc.r_constraint_name = r_alc.constraint_name
-      AND alc.r_owner = r_alc.owner
-LEFT JOIN all_cons_columns r_cols
+LEFT JOIN user_cons_columns r_cols
        ON r_alc.constraint_name = r_cols.constraint_name
-      AND r_alc.owner = r_cols.owner
       AND cols.position = r_cols.position
     WHERE alc.constraint_name = cols.constraint_name
       AND alc.constraint_type = 'R'
@@ -475,9 +502,18 @@ LEFT JOIN all_cons_columns r_cols
     public function getListTableColumnsSQL($table, $database = null)
     {
         $table = strtoupper($table);
-        return "SELECT c.*, d.comments FROM all_tab_columns c ".
-               "INNER JOIN all_col_comments d ON d.OWNER = c.OWNER AND d.TABLE_NAME = c.TABLE_NAME AND d.COLUMN_NAME = c.COLUMN_NAME ".
-               "WHERE c.table_name = '" . $table . "' ORDER BY c.column_name";
+
+        $tabColumnsTableName = "user_tab_columns";
+        $ownerCondition = '';
+        if(null !== $database){
+            $database = strtoupper($database);
+            $tabColumnsTableName = "all_tab_columns";
+            $ownerCondition = "AND c.owner = '".$database."'";
+        }
+
+        return "SELECT c.*, d.comments FROM $tabColumnsTableName c ".
+               "INNER JOIN user_col_comments d ON d.TABLE_NAME = c.TABLE_NAME AND d.COLUMN_NAME = c.COLUMN_NAME ".
+               "WHERE c.table_name = '" . $table . "' ".$ownerCondition." ORDER BY c.column_name";
     }
 
     /**
@@ -533,9 +569,14 @@ LEFT JOIN all_cons_columns r_cols
     {
         $sql = array();
         $commentsSQL = array();
+        $columnSql = array();
 
         $fields = array();
         foreach ($diff->addedColumns AS $column) {
+            if ($this->onSchemaAlterTableAddColumn($column, $diff, $columnSql)) {
+                continue;
+            }
+
             $fields[] = $this->getColumnDeclarationSQL($column->getQuotedName($this), $column->toArray());
             if ($comment = $this->getColumnComment($column)) {
                 $commentsSQL[] = $this->getCommentOnColumnSQL($diff->name, $column->getName(), $comment);
@@ -547,6 +588,10 @@ LEFT JOIN all_cons_columns r_cols
 
         $fields = array();
         foreach ($diff->changedColumns AS $columnDiff) {
+            if ($this->onSchemaAlterTableChangeColumn($columnDiff, $diff, $columnSql)) {
+                continue;
+            }
+
             $column = $columnDiff->column;
             $fields[] = $column->getQuotedName($this). ' ' . $this->getColumnDeclarationSQL('', $column->toArray());
             if ($columnDiff->hasChanged('comment') && $comment = $this->getColumnComment($column)) {
@@ -558,22 +603,36 @@ LEFT JOIN all_cons_columns r_cols
         }
 
         foreach ($diff->renamedColumns AS $oldColumnName => $column) {
+            if ($this->onSchemaAlterTableRenameColumn($oldColumnName, $column, $diff, $columnSql)) {
+                continue;
+            }
+
             $sql[] = 'ALTER TABLE ' . $diff->name . ' RENAME COLUMN ' . $oldColumnName .' TO ' . $column->getQuotedName($this);
         }
 
         $fields = array();
         foreach ($diff->removedColumns AS $column) {
+            if ($this->onSchemaAlterTableRemoveColumn($column, $diff, $columnSql)) {
+                continue;
+            }
+
             $fields[] = $column->getQuotedName($this);
         }
         if (count($fields)) {
             $sql[] = 'ALTER TABLE ' . $diff->name . ' DROP (' . implode(', ', $fields).')';
         }
 
-        if ($diff->newName !== false) {
-            $sql[] = 'ALTER TABLE ' . $diff->name . ' RENAME TO ' . $diff->newName;
+        $tableSql = array();
+
+        if (!$this->onSchemaAlterTable($diff, $tableSql)) {
+            if ($diff->newName !== false) {
+                $sql[] = 'ALTER TABLE ' . $diff->name . ' RENAME TO ' . $diff->newName;
+            }
+
+            $sql = array_merge($sql, $this->_getAlterTableIndexForeignKeySQL($diff), $commentsSQL);
         }
 
-        return array_merge($sql, $this->_getAlterTableIndexForeignKeySQL($diff), $commentsSQL);
+        return array_merge($sql, $tableSql, $columnSql);
     }
 
     /**
@@ -747,8 +806,11 @@ LEFT JOIN all_cons_columns r_cols
             'long'              => 'string',
             'clob'              => 'text',
             'nclob'             => 'text',
+            'raw'               => 'text',
+            'long raw'          => 'text',
             'rowid'             => 'string',
-            'urowid'            => 'string'
+            'urowid'            => 'string',
+            'blob'              => 'blob',
         );
     }
 
@@ -766,5 +828,13 @@ LEFT JOIN all_cons_columns r_cols
     protected function getReservedKeywordsClass()
     {
         return 'Doctrine\DBAL\Platforms\Keywords\OracleKeywords';
+    }
+
+    /**
+     * Gets the SQL Snippet used to declare a BLOB column type.
+     */
+    public function getBlobTypeDeclarationSQL(array $field)
+    {
+        return 'BLOB';
     }
 }

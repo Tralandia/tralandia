@@ -270,10 +270,10 @@ class TreeWalkerChain implements TreeWalker
      * @param GroupByItem
      * @return string The SQL.
      */
-    public function walkGroupByItem(AST\PathExpression $pathExpr)
+    public function walkGroupByItem($groupByItem)
     {
         foreach ($this->_walkers as $walker) {
-            $walker->walkGroupByItem($pathExpr);
+            $walker->walkGroupByItem($groupByItem);
         }
     }
 
@@ -638,6 +638,19 @@ class TreeWalkerChain implements TreeWalker
     {
         foreach ($this->_walkers as $walker) {
             $walker->walkPathExpression($pathExpr);
+        }
+    }
+
+    /**
+     * Walks down an ResultVariable AST node, thereby generating the appropriate SQL.
+     *
+     * @param string $resultVariable
+     * @return string The SQL.
+     */
+    public function walkResultVariable($resultVariable)
+    {
+        foreach ($this->_walkers as $walker) {
+            $walker->walkResultVariable($resultVariable);
         }
     }
 

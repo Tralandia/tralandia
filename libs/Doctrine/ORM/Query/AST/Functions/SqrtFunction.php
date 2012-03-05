@@ -58,3 +58,4 @@ class SqrtFunction extends FunctionNode
         $parser->match(Lexer::T_CLOSE_PARENTHESIS);
     }
 }
+

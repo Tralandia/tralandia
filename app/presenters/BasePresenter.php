@@ -28,7 +28,7 @@ abstract class BasePresenter extends Presenter {
 	}
 
 	public function getEntityManager() {
-		return $this->context->doctrine->entityManager;
+		return $this->context->entityManager;
 	}
 
 	public function getEm() {

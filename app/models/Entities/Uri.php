@@ -1,9 +1,10 @@
 <?php
 
+use Doctrine\ORM\Mapping as ORM;
+
 /**
- * @Entity(repositoryClass="BaseRepository")
- * @HasLifecycleCallbacks
- * @Primary(key="id", value="name")
+ * @ORM\Entity(repositoryClass="BaseRepository")
+ * @ORM\Primary(key="id", value="name")
  */
 class Uri extends BaseEntity {
 	
@@ -14,31 +15,31 @@ class Uri extends BaseEntity {
 	const TYPE_TAG = 10;
 
 	/**
-	 * @Column(type="string")
+	 * @ORM\Column(type="string")
 	 * @UIControl(type="text")
 	 */
 	protected $name;
 
 	/**
-	 * @Column(type="string")
+	 * @ORM\Column(type="string")
 	 * @UIControl(type="select", options="TYPE_PAGE:page, TYPE_LOCATION:location")
 	 */
 	protected $type;
 
 	/**
-	 * @Column(type="string")
+	 * @ORM\Column(type="string")
 	 * @UIControl(type="intiger")
 	 */
 	protected $row;
 
 	/**
-	 * @ManyToOne(targetEntity="\Dictionary\Language")
+	 * @ORM\ManyToOne(targetEntity="\Dictionary\Language")
 	 * @UIControl(type="select", options="%service%, getList")
 	 */
 	protected $language;
 	
 	/**
-	 * @ManyToOne(targetEntity="Country", fetch="EAGER")
+	 * @ORM\ManyToOne(targetEntity="Country", fetch="EAGER")
 	 * @UIControl(type="select", callback="getList")
 	 */
 	protected $country;

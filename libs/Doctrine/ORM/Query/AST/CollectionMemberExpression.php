@@ -49,3 +49,4 @@ class CollectionMemberExpression extends Node
         return $walker->walkCollectionMemberExpression($this);
     }
 }
+

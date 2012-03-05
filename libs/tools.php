@@ -1,6 +1,6 @@
 <?php
 
-use Nette\Templating\DefaultHelpers,
+use Nette\Templating\Helpers,
 	Nette\Application\UI\Form,
 	Nette\Forms\Container as FormContainer,
 	Nette\Diagnostics\Debugger,
@@ -8,7 +8,7 @@ use Nette\Templating\DefaultHelpers,
 	Nette\Database\Table\Selection,
 	Nette\Image;
 
-DefaultHelpers::$dateFormat = Tools::$datetimeFormat;
+Helpers::$dateFormat = Tools::$datetimeFormat;
 FormContainer::extensionMethod('addDatePicker', 'Tools::addDatePicker');
 FormContainer::extensionMethod('addDateTimePicker', 'Tools::addDateTimePicker');
 FormContainer::extensionMethod('addComboSelect', 'Tools::addComboSelect');

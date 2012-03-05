@@ -2,72 +2,73 @@
 
 namespace Dictionary;
 
+use Doctrine\ORM\Mapping as ORM;
 use Dictionary;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
- * @Entity()
- * @Table(name="DictionaryTranslation")
+ * @ORM\Entity()
+ * @ORM\Table(name="DictionaryTranslation")
  */
 class Translation extends \BaseEntity
 {
 
 	/**
 	 * @var Collection
-	 * @ManyToOne(targetEntity="Phrase")
+	 * @ORM\ManyToOne(targetEntity="Phrase")
 	 */
 	protected $phrase;
 
 	/**
 	 * @var Collection
-	 * @ManyToOne(targetEntity="Language")
+	 * @ORM\ManyToOne(targetEntity="Language")
 	 */
 	protected $language;
 
 	/**
 	 * @var text
-	 * @Column(type="text")
+	 * @ORM\Column(type="text")
 	 */
 	protected $translation;
 
 	/**
 	 * @var text
-	 * @Column(type="text")
+	 * @ORM\Column(type="text")
 	 */
 	protected $translation2;
 
 
 	/**
 	 * @var string
-	 * @Column(type="string")
+	 * @ORM\Column(type="string")
 	 */
 	protected $translationWebalized;
 
 	/**
 	 * @var string
-	 * @Column(type="string")
+	 * @ORM\Column(type="string")
 	 */
 	protected $translationWebalized2;
 
 
 	/**
 	 * @var text
-	 * @Column(type="text")
+	 * @ORM\Column(type="text")
 	 */
 	protected $translationPending;
 
 	/**
 	 * @var text
-	 * @Column(type="text")
+	 * @ORM\Column(type="text")
 	 */
 	protected $translationPending2;
 
 
 	/**
 	 * @var datetime
-	 * @Column(type="datetime")
+	 * @ORM\Column(type="datetime")
 	 */
 	protected $translated;
 

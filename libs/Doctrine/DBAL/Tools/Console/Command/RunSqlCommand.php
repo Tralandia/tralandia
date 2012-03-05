@@ -78,6 +78,10 @@ EOT
             $resultSet = $conn->executeUpdate($sql);
         }
 
+        ob_start();
         \Doctrine\Common\Util\Debug::dump($resultSet, (int) $depth);
+        $message = ob_get_clean();
+
+        $output->write($message);
     }
 }

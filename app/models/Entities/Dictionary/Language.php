@@ -2,13 +2,14 @@
 
 namespace Dictionary;
 
+use Doctrine\ORM\Mapping as ORM;
 use Dictionary;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @Entity()
- * @Table(name="DictionaryLanguage")
+ * @ORM\Entity()
+ * @ORM\Table(name="DictionaryLanguage")
  */
 class Language extends \BaseEntityDetails
 {
@@ -21,19 +22,19 @@ class Language extends \BaseEntityDetails
 
 	/**
 	 * @var string
-	 * @Column(type="string")
+	 * @ORM\Column(type="string")
 	 */
 	protected $iso;
 
 	/**
 	 * @var boolean
-	 * @Column(type="boolean")
+	 * @ORM\Column(type="boolean")
 	 */
 	protected $supported;
 
 	// /**
 	//  * @var Collection
-	//  * @ManyToMany(targetEntity="Dictionary\Phrase")
+	//  * @ORM\ManyToMany(targetEntity="Dictionary\Phrase")
 	//  */
 	// protected $phrase;
 

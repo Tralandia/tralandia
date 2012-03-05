@@ -2,40 +2,60 @@
 
 use Nette\Diagnostics\Debugger,
 	Nette\Environment,
-	Nette\Application\Routers\Route;
+	Nette\Application\Routers\Route,
+	Nella\Addons\Doctrine\Config\Extension;
 
 // Load Nette Framework
 require_once LIBS_DIR . '/Nette/loader.php';
-require_once APP_DIR . '/Configurator.php';
+//require_once APP_DIR . '/Configurator.php';
 require_once LIBS_DIR . '/tools.php';
 
 // Enable Nette\Debug for error visualisation & logging
 Debugger::enable();
 
-// Load configuration from config.neon file);
-$configurator = new Configurator;
+// Configure application
+$configurator = new Nette\Config\Configurator;
 $configurator->setTempDirectory(TEMP_DIR);
-$configurator->addConfig(APP_DIR . '/config.neon', isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : null);
+$configurator->enableDebugger(ROOT_DIR . '/log');
+
+// Enable RobotLoader - this will load all classes automatically
 $robotLoader = $configurator->createRobotLoader();
 $robotLoader->addDirectory(APP_DIR)
 	->addDirectory(LIBS_DIR)
 	->register();
-$configurator->setTempDirectory(TEMP_DIR);
+
+// Setup doctrine loader
+Extension::register($configurator);
+
+// Create Dependency Injection container from config.neon file
+$configurator->addConfig(APP_DIR . '/config.neon', isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : null);
 $container = $configurator->createContainer();
 
 //if(isset($container->parameters['editor'])){
 //	Debugger::$editor = $container->parameters['editor'];
 //}
 
-debug($container->doctrine);
-
+//debug($container->doctrine);
+/*
 // Enable dynamic presenter factory
 DynamicPresenterFactory::enable($robotLoader);
 
+// Register the ORM Annotations in the AnnotationRegistry
+Doctrine\Common\Annotations\AnnotationRegistry::registerFile(LIBS_DIR . '/Doctrine/ORM/Mapping/Driver/DoctrineAnnotations.php');
+
+$reader = new Doctrine\Common\Annotations\SimpleAnnotationReader();
+$reader->addNamespace('Doctrine\ORM\Mapping');
+$reader = new Doctrine\Common\Annotations\CachedReader($reader, new Doctrine\Common\Cache\ArrayCache());
+
+$driver = new Doctrine\ORM\Mapping\Driver\AnnotationDriver($reader, (array)$paths);
+
+$config->setMetadataDriverImpl($driver);
+*/
+
 // Configure application
 $application = $container->application;
-$application->errorPresenter = 'Error';
-$application->catchExceptions = false;
+//$application->errorPresenter = 'Error';
+//$application->catchExceptions = false;
 
 // Setup router
 $application->onStartup[] = function() use ($application, $container) {
@@ -58,6 +78,9 @@ $application->onStartup[] = function() use ($application, $container) {
 	));
 };
 
-
 // Run the application!
-$application->run();
+if (PHP_SAPI == 'cli') {
+	$container->console->run();
+} else {
+	$container->application->run();
+}

@@ -167,7 +167,7 @@ class Table extends AbstractAsset
      */
     public function addUniqueIndex(array $columnNames, $indexName = null)
     {
-        if ($indexName == null) {
+        if ($indexName === null) {
             $indexName = $this->_generateIdentifierName(
                 array_merge(array($this->getName()), $columnNames), "uniq", $this->_getMaxIdentifierLength()
             );
@@ -465,6 +465,16 @@ class Table extends AbstractAsset
         return $this->_fkConstraints[$constraintName];
     }
 
+    public function removeForeignKey($constraintName)
+    {
+        $constraintName = strtolower($constraintName);
+        if(!$this->hasForeignKey($constraintName)) {
+            throw SchemaException::foreignKeyDoesNotExist($constraintName, $this->_name);
+        }
+
+        unset($this->_fkConstraints[$constraintName]);
+    }
+
     /**
      * @return Column[]
      */
@@ -475,7 +485,7 @@ class Table extends AbstractAsset
         $pkCols = array();
         $fkCols = array();
 
-        if ($this->hasIndex($this->_primaryKeyName)) {
+        if ($this->hasPrimaryKey()) {
             $pkCols = $this->getPrimaryKey()->getColumns();
         }
         foreach ($this->getForeignKeys() AS $fk) {
@@ -520,10 +530,13 @@ class Table extends AbstractAsset
     }
 
     /**
-     * @return Index
+     * @return Index|null
      */
     public function getPrimaryKey()
     {
+        if (!$this->hasPrimaryKey()) {
+            return null;
+        }
         return $this->getIndex($this->_primaryKeyName);
     }
 

@@ -2,69 +2,70 @@
 
 namespace Dictionary;
 
+use Doctrine\ORM\Mapping as ORM;
 use Dictionary;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
- * @Entity()
- * @Table(name="DictionaryType")
+ * @ORM\Entity()
+ * @ORM\Table(name="DictionaryType")
  */
 class Type extends \BaseEntity
 {
 
 	/**
 	 * @var Collection
-	 * @OneToOne(targetEntity="Phrase")
+	 * @ORM\OneToOne(targetEntity="Phrase")
 	 */
 	protected $name;
 
 	/**
 	 * @var string
-	 * @Column(type="string")
+	 * @ORM\Column(type="string")
 	 */
 	protected $entityName;
 
 	/**
 	 * @var string
-	 * @Column(type="string")
+	 * @ORM\Column(type="string")
 	 */
 	protected $entityAttribute;
 
 	/**
 	 * @var Collection
-	 * @ManyToOne(targetEntity="Quality")
+	 * @ORM\ManyToOne(targetEntity="Quality")
 	 */
 	protected $translationQualityRequirement;
 
 	/**
 	 * @var boolean
-	 * @Column(type="boolean")
+	 * @ORM\Column(type="boolean")
 	 */
 	protected $isMultitranslationRequired;
 
 	/**
 	 * @var boolean
-	 * @Column(type="boolean")
+	 * @ORM\Column(type="boolean")
 	 */
 	protected $isGenderNumberRequired;
 
 	/**
 	 * @var boolean
-	 * @Column(type="boolean")
+	 * @ORM\Column(type="boolean")
 	 */
 	protected $isLocativeRequired;
 
 	/**
 	 * @var boolean
-	 * @Column(type="boolean")
+	 * @ORM\Column(type="boolean")
 	 */
 	protected $isPositionRequired;
 
 	/**
 	 * @var boolean
-	 * @Column(type="boolean")
+	 * @ORM\Column(type="boolean")
 	 */
 	protected $isWebalizedRequired;
 

@@ -21,6 +21,8 @@ namespace Doctrine\ORM\Tools;
 
 use Doctrine\ORM\ORMException,
     Doctrine\DBAL\Types\Type,
+    Doctrine\DBAL\Schema\Schema,
+    Doctrine\DBAL\Schema\Visitor\RemoveNamespacedAssets,
     Doctrine\ORM\EntityManager,
     Doctrine\ORM\Mapping\ClassMetadata,
     Doctrine\ORM\Internal\CommitOrderCalculator,
@@ -56,7 +58,7 @@ class SchemaTool
      * Initializes a new SchemaTool instance that uses the connection of the
      * provided EntityManager.
      *
-     * @param Doctrine\ORM\EntityManager $em
+     * @param \Doctrine\ORM\EntityManager $em
      */
     public function __construct(EntityManager $em)
     {
@@ -67,7 +69,9 @@ class SchemaTool
     /**
      * Creates the database schema for the given array of ClassMetadata instances.
      *
+     * @throws ToolsException
      * @param array $classes
+     * @return void
      */
     public function createSchema(array $classes)
     {
@@ -75,7 +79,11 @@ class SchemaTool
         $conn = $this->_em->getConnection();
 
         foreach ($createSchemaSql as $sql) {
-            $conn->executeQuery($sql);
+            try {
+                $conn->executeQuery($sql);
+            } catch(\Exception $e) {
+                throw ToolsException::schemaToolFailure($sql, $e);
+            }
         }
     }
 
@@ -121,7 +129,7 @@ class SchemaTool
         $sm = $this->_em->getConnection()->getSchemaManager();
         $metadataSchemaConfig = $sm->createSchemaConfig();
         $metadataSchemaConfig->setExplicitForeignKeyIndexes(false);
-        $schema = new \Doctrine\DBAL\Schema\Schema(array(), array(), $metadataSchemaConfig);
+        $schema = new Schema(array(), array(), $metadataSchemaConfig);
 
         $evm = $this->_em->getEventManager();
 
@@ -139,7 +147,7 @@ class SchemaTool
                 $this->_gatherRelationsSql($class, $table, $schema);
 
                 // Add the discriminator column
-                $discrColumnDef = $this->_getDiscriminatorColumnDefinition($class, $table);
+                $this->addDiscriminatorColumnDefinition($class, $table);
 
                 // Aggregate all the information from all classes in the hierarchy
                 foreach ($class->parentClasses as $parentClassName) {
@@ -171,10 +179,10 @@ class SchemaTool
 
                 // Add the discriminator column only to the root table
                 if ($class->name == $class->rootEntityName) {
-                    $discrColumnDef = $this->_getDiscriminatorColumnDefinition($class, $table);
+                    $this->addDiscriminatorColumnDefinition($class, $table);
                 } else {
                     // Add an ID FK column to child tables
-                    /* @var Doctrine\ORM\Mapping\ClassMetadata $class */
+                    /* @var \Doctrine\ORM\Mapping\ClassMetadata $class */
                     $idMapping = $class->fieldMappings[$class->identifier[0]];
                     $this->_gatherColumn($class, $idMapping, $table);
                     $columnName = $class->getQuotedColumnName($class->identifier[0], $this->_platform);
@@ -217,13 +225,13 @@ class SchemaTool
 
             if (isset($class->table['indexes'])) {
                 foreach ($class->table['indexes'] AS $indexName => $indexData) {
-                    $table->addIndex($indexData['columns'], $indexName);
+                    $table->addIndex($indexData['columns'], is_numeric($indexName) ? null : $indexName);
                 }
             }
 
             if (isset($class->table['uniqueConstraints'])) {
                 foreach ($class->table['uniqueConstraints'] AS $indexName => $indexData) {
-                    $table->addUniqueIndex($indexData['columns'], $indexName);
+                    $table->addUniqueIndex($indexData['columns'], is_numeric($indexName) ? null : $indexName);
                 }
             }
 
@@ -246,6 +254,10 @@ class SchemaTool
             }
         }
 
+        if ( ! $this->_platform->supportsSchemas() && ! $this->_platform->canEmulateSchemas() ) {
+            $schema->visit(new RemoveNamespacedAssets());
+        }
+
         if ($evm->hasListeners(ToolEvents::postGenerateSchema)) {
             $evm->dispatchEvent(ToolEvents::postGenerateSchema, new GenerateSchemaEventArgs($this->_em, $schema));
         }
@@ -261,7 +273,7 @@ class SchemaTool
      * @return array The portable column definition of the discriminator column as required by
      *              the DBAL.
      */
-    private function _getDiscriminatorColumnDefinition($class, $table)
+    private function addDiscriminatorColumnDefinition($class, $table)
     {
         $discrColumn = $class->discriminatorColumn;
 
@@ -352,6 +364,10 @@ class SchemaTool
 
         if (isset($mapping['columnDefinition'])) {
             $options['columnDefinition'] = $mapping['columnDefinition'];
+        }
+
+        if (isset($mapping['options'])) {
+            $options['customSchemaOptions'] = $mapping['options'];
         }
 
         if ($class->isIdGeneratorIdentity() && $class->getIdentifierFieldNames() == array($mapping['fieldName'])) {
@@ -521,10 +537,6 @@ class SchemaTool
 
             if (isset($joinColumn['unique']) && $joinColumn['unique'] == true) {
                 $uniqueConstraints[] = array('columns' => array($columnName));
-            }
-
-            if (isset($joinColumn['onUpdate'])) {
-                $fkOptions['onUpdate'] = $joinColumn['onUpdate'];
             }
 
             if (isset($joinColumn['onDelete'])) {

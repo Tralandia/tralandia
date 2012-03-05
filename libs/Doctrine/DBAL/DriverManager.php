@@ -44,6 +44,7 @@ final class DriverManager
             'ibm_db2' => 'Doctrine\DBAL\Driver\IBMDB2\DB2Driver',
             'pdo_ibm' => 'Doctrine\DBAL\Driver\PDOIbm\Driver',
             'pdo_sqlsrv' => 'Doctrine\DBAL\Driver\PDOSqlsrv\Driver',
+            'mysqli' => 'Doctrine\DBAL\Driver\Mysqli\Driver',
             );
 
     /** Private constructor. This class cannot be instantiated. */
@@ -85,6 +86,9 @@ final class DriverManager
      * <b>wrapperClass</b>:
      * You may specify a custom wrapper class through the 'wrapperClass'
      * parameter but this class MUST inherit from Doctrine\DBAL\Connection.
+     *
+     * <b>driverClass</b>:
+     * The driver class to use.
      *
      * @param array $params The parameters.
      * @param Doctrine\DBAL\Configuration The configuration to use.

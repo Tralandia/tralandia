@@ -51,3 +51,4 @@ class BetweenExpression extends Node
         return $sqlWalker->walkBetweenExpression($this);
     }
 }
+

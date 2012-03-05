@@ -99,22 +99,22 @@ class PostgreSqlPlatform extends AbstractPlatform
 
     public function getDateAddDaysExpression($date, $days)
     {
-        return "(" . $date . "+ interval '" . $days . " day')";
+        return "(" . $date ." + (" . $days . " || ' day')::interval)";
     }
 
     public function getDateSubDaysExpression($date, $days)
     {
-        return "(" . $date . "- interval '" . $days . " day')";
+        return "(" . $date ." - (" . $days . " || ' day')::interval)";
     }
 
     public function getDateAddMonthExpression($date, $months)
     {
-        return "(" . $date . "+ interval '" . $months . " month')";
+        return "(" . $date ." + (" . $months . " || ' month')::interval)";
     }
 
     public function getDateSubMonthExpression($date, $months)
     {
-        return "(" . $date . "- interval '" . $months . " month')";
+        return "(" . $date ." - (" . $months . " || ' month')::interval)";
     }
 
     /**
@@ -194,7 +194,7 @@ class PostgreSqlPlatform extends AbstractPlatform
     public function getListTablesSQL()
     {
         return "SELECT tablename AS table_name, schemaname AS schema_name
-                FROM pg_tables WHERE schemaname NOT LIKE 'pg_%' AND schemaname != 'information_schema'";
+                FROM pg_tables WHERE schemaname NOT LIKE 'pg_%' AND schemaname != 'information_schema' AND tablename != 'geometry_columns' AND tablename != 'spatial_ref_sys'";
     }
 
     public function getListViewsSQL($database)
@@ -210,8 +210,7 @@ class PostgreSqlPlatform extends AbstractPlatform
                   (
                       SELECT c.oid
                       FROM pg_catalog.pg_class c, pg_catalog.pg_namespace n
-                      WHERE " .$this->getTableWhereClause($table) ."
-                        AND n.oid = c.relnamespace
+                      WHERE " .$this->getTableWhereClause($table) ." AND n.oid = c.relnamespace
                   )
                   AND r.contype = 'f'";
     }
@@ -259,15 +258,23 @@ class PostgreSqlPlatform extends AbstractPlatform
                  ) AND pg_index.indexrelid = oid";
     }
 
+    /**
+     * @param string $table
+     * @param string $classAlias
+     * @param string $namespaceAlias
+     * @return string
+     */
     private function getTableWhereClause($table, $classAlias = 'c', $namespaceAlias = 'n')
     {
-        $whereClause = "";
+        $whereClause = $namespaceAlias.".nspname NOT IN ('pg_catalog', 'information_schema', 'pg_toast') AND ";
         if (strpos($table, ".") !== false) {
             list($schema, $table) = explode(".", $table);
-            $whereClause = "$classAlias.relname = '" . $table . "' AND $namespaceAlias.nspname = '" . $schema . "'";
+            $schema = "'" . $schema . "'";
         } else {
-            $whereClause = "$classAlias.relname = '" . $table . "'";
+            $schema = "ANY(string_to_array((select setting from pg_catalog.pg_settings where name = 'search_path'),','))";
         }
+        $whereClause .= "$classAlias.relname = '" . $table . "' AND $namespaceAlias.nspname = $schema";
+
         return $whereClause;
     }
 
@@ -374,8 +381,13 @@ class PostgreSqlPlatform extends AbstractPlatform
     {
         $sql = array();
         $commentsSQL = array();
+        $columnSql = array();
 
         foreach ($diff->addedColumns as $column) {
+            if ($this->onSchemaAlterTableAddColumn($column, $diff, $columnSql)) {
+                continue;
+            }
+
             $query = 'ADD ' . $this->getColumnDeclarationSQL($column->getQuotedName($this), $column->toArray());
             $sql[] = 'ALTER TABLE ' . $diff->name . ' ' . $query;
             if ($comment = $this->getColumnComment($column)) {
@@ -384,11 +396,19 @@ class PostgreSqlPlatform extends AbstractPlatform
         }
 
         foreach ($diff->removedColumns as $column) {
+            if ($this->onSchemaAlterTableRemoveColumn($column, $diff, $columnSql)) {
+                continue;
+            }
+
             $query = 'DROP ' . $column->getQuotedName($this);
             $sql[] = 'ALTER TABLE ' . $diff->name . ' ' . $query;
         }
 
         foreach ($diff->changedColumns AS $columnDiff) {
+            if ($this->onSchemaAlterTableChangeColumn($columnDiff, $diff, $columnSql)) {
+                continue;
+            }
+
             $oldColumnName = $columnDiff->oldColumnName;
             $column = $columnDiff->column;
 
@@ -428,14 +448,24 @@ class PostgreSqlPlatform extends AbstractPlatform
         }
 
         foreach ($diff->renamedColumns as $oldColumnName => $column) {
+            if ($this->onSchemaAlterTableRenameColumn($oldColumnName, $column, $diff, $columnSql)) {
+                continue;
+            }
+
             $sql[] = 'ALTER TABLE ' . $diff->name . ' RENAME COLUMN ' . $oldColumnName . ' TO ' . $column->getQuotedName($this);
         }
 
-        if ($diff->newName !== false) {
-            $sql[] = 'ALTER TABLE ' . $diff->name . ' RENAME TO ' . $diff->newName;
+        $tableSql = array();
+
+        if (!$this->onSchemaAlterTable($diff, $tableSql)) {
+            if ($diff->newName !== false) {
+                $sql[] = 'ALTER TABLE ' . $diff->name . ' RENAME TO ' . $diff->newName;
+            }
+
+            $sql = array_merge($sql, $this->_getAlterTableIndexForeignKeySQL($diff), $commentsSQL);
         }
 
-        return array_merge($sql, $this->_getAlterTableIndexForeignKeySQL($diff), $commentsSQL);
+        return array_merge($sql, $tableSql, $columnSql);
     }
 
     /**
@@ -738,6 +768,7 @@ class PostgreSqlPlatform extends AbstractPlatform
             'money'         => 'decimal',
             'numeric'       => 'decimal',
             'year'          => 'date',
+            'bytea'         => 'blob',
         );
     }
 
@@ -749,5 +780,13 @@ class PostgreSqlPlatform extends AbstractPlatform
     protected function getReservedKeywordsClass()
     {
         return 'Doctrine\DBAL\Platforms\Keywords\PostgreSQLKeywords';
+    }
+
+    /**
+     * Gets the SQL Snippet used to declare a BLOB column type.
+     */
+    public function getBlobTypeDeclarationSQL(array $field)
+    {
+        return 'BYTEA';
     }
 }

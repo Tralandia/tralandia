@@ -36,38 +36,38 @@ use Doctrine\DBAL\Platforms\AbstractPlatform,
  * @license http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link    www.doctrine-project.org
  * @since   2.0
- * @version $Revision$
  * @author  Benjamin Eberlei <kontakt@beberlei.de>
  */
 class DropSchemaSqlCollector implements Visitor
 {
     /**
-     * @var array
+     * @var \SplObjectStorage
      */
-    private $_constraints = array();
+    private $constraints;
 
     /**
-     * @var array
+     * @var \SplObjectStorage
      */
-    private $_sequences = array();
+    private $sequences;
 
     /**
-     * @var array
+     * @var \SplObjectStorage
      */
-    private $_tables = array();
+    private $tables;
 
     /**
      *
      * @var \Doctrine\DBAL\Platforms\AbstractPlatform
      */
-    private $_platform = null;
+    private $platform;
 
     /**
      * @param AbstractPlatform $platform
      */
     public function __construct(AbstractPlatform $platform)
     {
-        $this->_platform = $platform;
+        $this->platform = $platform;
+        $this->clearQueries();
     }
 
     /**
@@ -83,7 +83,7 @@ class DropSchemaSqlCollector implements Visitor
      */
     public function acceptTable(Table $table)
     {
-        $this->_tables[] = $this->_platform->getDropTableSQL($table->getQuotedName($this->_platform));
+        $this->tables->attach($table);
     }
 
     /**
@@ -104,7 +104,8 @@ class DropSchemaSqlCollector implements Visitor
             throw SchemaException::namedForeignKeyRequired($localTable, $fkConstraint);
         }
 
-        $this->_constraints[] = $this->_platform->getDropForeignKeySQL($fkConstraint->getQuotedName($this->_platform), $localTable->getQuotedName($this->_platform));
+        $this->constraints->attach($fkConstraint);
+        $this->constraints[$fkConstraint] = $localTable;
     }
 
     /**
@@ -121,15 +122,17 @@ class DropSchemaSqlCollector implements Visitor
      */
     public function acceptSequence(Sequence $sequence)
     {
-        $this->_sequences[] = $this->_platform->getDropSequenceSQL($sequence->getQuotedName($this->_platform));
+        $this->sequences->attach($sequence);
     }
 
     /**
-     * @return array
+     * @return void
      */
     public function clearQueries()
     {
-        $this->_constraints = $this->_sequences = $this->_tables = array();
+        $this->constraints = new \SplObjectStorage();
+        $this->sequences = new \SplObjectStorage();
+        $this->tables = new \SplObjectStorage();
     }
 
     /**
@@ -137,6 +140,20 @@ class DropSchemaSqlCollector implements Visitor
      */
     public function getQueries()
     {
-        return array_merge($this->_constraints, $this->_sequences, $this->_tables);
+        $sql = array();
+        foreach ($this->constraints AS $fkConstraint) {
+            $localTable = $this->constraints[$fkConstraint];
+            $sql[] = $this->platform->getDropForeignKeySQL($fkConstraint, $localTable);
+        }
+
+        foreach ($this->sequences AS $sequence) {
+            $sql[] = $this->platform->getDropSequenceSQL($sequence);
+        }
+
+        foreach ($this->tables AS $table) {
+            $sql[] = $this->platform->getDropTableSQL($table);
+        }
+
+        return $sql;
     }
 }

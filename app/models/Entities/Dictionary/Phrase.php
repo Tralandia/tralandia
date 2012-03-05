@@ -2,45 +2,46 @@
 
 namespace Dictionary;
 
+use Doctrine\ORM\Mapping as ORM;
 use Dictionary;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
- * @Entity()
- * @Table(name="DictionaryPhrase")
+ * @ORM\Entity()
+ * @ORM\Table(name="DictionaryPhrase")
  */
 class Phrase extends \BaseEntityDetails
 {
 
 	/**
 	 * @var Collection
-	 * @OneToMany(targetEntity="Translation", mappedBy="phrase")
+	 * @ORM\OneToMany(targetEntity="Translation", mappedBy="phrase")
 	 */
 	protected $translations;
 
 	/**
 	 * @var boolean
-	 * @Column(type="boolean")
+	 * @ORM\Column(type="boolean")
 	 */
 	protected $ready;
 
 	/**
 	 * @var Collection
-	 * @ManyToMany(targetEntity="Language")
+	 * @ORM\ManyToMany(targetEntity="Language")
 	 */
 	protected $languages;
 
 	/**
 	 * @var Collection
-	 * @ManyToOne(targetEntity="Type")
+	 * @ORM\ManyToOne(targetEntity="Type")
 	 */
 	protected $type;
 
 	/**
 	 * @var integer
-	 * @Column(type="integer")
+	 * @ORM\Column(type="integer")
 	 */
 	protected $entityId;
 

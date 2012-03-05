@@ -32,28 +32,28 @@ use PDO,
  * @author Roman Borschel <roman@code-factory.org>
  * @since 2.0
  */
-class Statement implements DriverStatement
+class Statement implements \IteratorAggregate, DriverStatement
 {
     /**
      * @var string The SQL statement.
      */
-    private $_sql;
+    protected $sql;
     /**
      * @var array The bound parameters.
      */
-    private $_params = array();
+    protected $params = array();
     /**
      * @var Doctrine\DBAL\Driver\Statement The underlying driver statement.
      */
-    private $_stmt;
+    protected $stmt;
     /**
      * @var Doctrine\DBAL\Platforms\AbstractPlatform The underlying database platform.
      */
-    private $_platform;
+    protected $platform;
     /**
      * @var Doctrine\DBAL\Connection The connection this statement is bound to and executed on.
      */
-    private $_conn;
+    protected $conn;
 
     /**
      * Creates a new <tt>Statement</tt> for the given SQL and <tt>Connection</tt>.
@@ -63,10 +63,10 @@ class Statement implements DriverStatement
      */
     public function __construct($sql, Connection $conn)
     {
-        $this->_sql = $sql;
-        $this->_stmt = $conn->getWrappedConnection()->prepare($sql);
-        $this->_conn = $conn;
-        $this->_platform = $conn->getDatabasePlatform();
+        $this->sql = $sql;
+        $this->stmt = $conn->getWrappedConnection()->prepare($sql);
+        $this->conn = $conn;
+        $this->platform = $conn->getDatabasePlatform();
     }
 
     /**
@@ -84,20 +84,20 @@ class Statement implements DriverStatement
      */
     public function bindValue($name, $value, $type = null)
     {
-        $this->_params[$name] = $value;
+        $this->params[$name] = $value;
         if ($type !== null) {
             if (is_string($type)) {
                 $type = Type::getType($type);
             }
             if ($type instanceof Type) {
-                $value = $type->convertToDatabaseValue($value, $this->_platform);
+                $value = $type->convertToDatabaseValue($value, $this->platform);
                 $bindingType = $type->getBindingType();
             } else {
                 $bindingType = $type; // PDO::PARAM_* constants
             }
-            return $this->_stmt->bindValue($name, $value, $bindingType);
+            return $this->stmt->bindValue($name, $value, $bindingType);
         } else {
-            return $this->_stmt->bindValue($name, $value);
+            return $this->stmt->bindValue($name, $value);
         }
     }
 
@@ -113,7 +113,7 @@ class Statement implements DriverStatement
      */
     public function bindParam($name, &$var, $type = PDO::PARAM_STR)
     {
-        return $this->_stmt->bindParam($name, $var, $type);
+        return $this->stmt->bindParam($name, $var, $type);
     }
 
     /**
@@ -123,17 +123,17 @@ class Statement implements DriverStatement
      */
     public function execute($params = null)
     {
-        $hasLogger = $this->_conn->getConfiguration()->getSQLLogger();
+        $hasLogger = $this->conn->getConfiguration()->getSQLLogger();
         if ($hasLogger) {
-            $this->_conn->getConfiguration()->getSQLLogger()->startQuery($this->_sql, $this->_params);
+            $this->conn->getConfiguration()->getSQLLogger()->startQuery($this->sql, $this->params);
         }
 
-        $stmt = $this->_stmt->execute($params);
+        $stmt = $this->stmt->execute($params);
 
         if ($hasLogger) {
-            $this->_conn->getConfiguration()->getSQLLogger()->stopQuery();
+            $this->conn->getConfiguration()->getSQLLogger()->stopQuery();
         }
-        $this->_params = array();
+        $this->params = array();
         return $stmt;
     }
 
@@ -144,7 +144,7 @@ class Statement implements DriverStatement
      */
     public function closeCursor()
     {
-        return $this->_stmt->closeCursor();
+        return $this->stmt->closeCursor();
     }
 
     /**
@@ -154,7 +154,7 @@ class Statement implements DriverStatement
      */
     public function columnCount()
     {
-        return $this->_stmt->columnCount();
+        return $this->stmt->columnCount();
     }
 
     /**
@@ -164,7 +164,7 @@ class Statement implements DriverStatement
      */
     public function errorCode()
     {
-        return $this->_stmt->errorCode();
+        return $this->stmt->errorCode();
     }
 
     /**
@@ -174,7 +174,17 @@ class Statement implements DriverStatement
      */
     public function errorInfo()
     {
-        return $this->_stmt->errorInfo();
+        return $this->stmt->errorInfo();
+    }
+
+    public function setFetchMode($fetchStyle)
+    {
+        return $this->stmt->setFetchMode($fetchStyle);
+    }
+
+    public function getIterator()
+    {
+        return $this->stmt;
     }
 
     /**
@@ -186,22 +196,22 @@ class Statement implements DriverStatement
      */
     public function fetch($fetchStyle = PDO::FETCH_BOTH)
     {
-        return $this->_stmt->fetch($fetchStyle);
+        return $this->stmt->fetch($fetchStyle);
     }
 
     /**
      * Returns an array containing all of the result set rows.
      *
      * @param integer $fetchStyle
-     * @param integer $columnIndex
+     * @param mixed $fetchArgument
      * @return array An array containing all of the remaining rows in the result set.
      */
-    public function fetchAll($fetchStyle = PDO::FETCH_BOTH, $columnIndex = 0)
+    public function fetchAll($fetchStyle = PDO::FETCH_BOTH, $fetchArgument = 0)
     {
-        if ($columnIndex != 0) {
-            return $this->_stmt->fetchAll($fetchStyle, $columnIndex);
+        if ($fetchArgument !== 0) {
+            return $this->stmt->fetchAll($fetchStyle, $fetchArgument);
         }
-        return $this->_stmt->fetchAll($fetchStyle);
+        return $this->stmt->fetchAll($fetchStyle);
     }
 
     /**
@@ -212,7 +222,7 @@ class Statement implements DriverStatement
      */
     public function fetchColumn($columnIndex = 0)
     {
-        return $this->_stmt->fetchColumn($columnIndex);
+        return $this->stmt->fetchColumn($columnIndex);
     }
 
     /**
@@ -222,7 +232,7 @@ class Statement implements DriverStatement
      */
     public function rowCount()
     {
-        return $this->_stmt->rowCount();
+        return $this->stmt->rowCount();
     }
 
     /**
@@ -232,6 +242,6 @@ class Statement implements DriverStatement
      */
     public function getWrappedStatement()
     {
-        return $this->_stmt;
+        return $this->stmt;
     }
 }

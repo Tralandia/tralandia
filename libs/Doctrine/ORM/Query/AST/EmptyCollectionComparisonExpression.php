@@ -47,3 +47,4 @@ class EmptyCollectionComparisonExpression extends Node
         return $sqlWalker->walkEmptyCollectionComparisonExpression($this);
     }
 }
+

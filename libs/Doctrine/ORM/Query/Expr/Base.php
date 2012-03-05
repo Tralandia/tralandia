@@ -51,11 +51,13 @@ abstract class Base
         foreach ((array) $args as $arg) {
             $this->add($arg);
         }
+
+        return $this;
     }
 
     public function add($arg)
     {
-        if ( $arg !== null || ($arg instanceof self && $arg->count() > 0)) {
+        if ( $arg !== null || ($arg instanceof self && $arg->count() > 0) ) {
             // If we decide to keep Expr\Base instances, we can use this check
             if ( ! is_string($arg)) {
                 $class = get_class($arg);
@@ -67,6 +69,8 @@ abstract class Base
 
             $this->_parts[] = $arg;
         }
+
+        return $this;
     }
 
     public function count()

@@ -1,6 +1,12 @@
 common:
 	php:
 		date.timezone: Europe/Bratislava
+		zlib.output_compression: yes
+		max_execution_time: 60
+
+	nette:
+			session:
+				autoStart: smart
 		
 	parameters:
 		security:
@@ -23,18 +29,26 @@ common:
 		
 		envOptions:
 			sendEmail: TRUE
+			
+	doctrine:
+		connections:
+			default: %database%
+
+		entityManagers:
+			default:
+				connection: default
+
+		console:
+			entityManager: default
 		
 	services:
-		doctrineLoader:
-			factory: Kdyby\Loaders\DoctrineLoader::register
-			tags: ['run']
-			
-		symfonyLoader:
-			factory: Kdyby\Loaders\SymfonyLoader::register
-			tags: ['run']
+		console: @doctrine.console
+		
+		entityManager: @doctrine.entityManagers.default
+		
+		authenticator: Security\Authenticator( @entityManager::getRepository('User') )
 
-		authorizator: 
-			class: \Security\Acl
+		authorizator: Security\Acl
 
 		translator:
 			factory: \MyTranslator::getTranslator

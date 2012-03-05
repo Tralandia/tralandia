@@ -40,7 +40,7 @@ class DateTimeType extends Type
 
     public function convertToDatabaseValue($value, AbstractPlatform $platform)
     {
-        return ($value !== null && !empty($value))
+        return ($value !== null)
             ? $value->format($platform->getDateTimeFormatString()) : null;
     }
 

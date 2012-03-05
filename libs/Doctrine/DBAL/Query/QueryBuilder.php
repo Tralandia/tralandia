@@ -963,7 +963,14 @@ class QueryBuilder
                 }
             }
 
-            $fromClauses[] = $fromClause;
+            $fromClauses[$from['alias']] = $fromClause;
+        }
+
+        // loop through all JOIN clasues for validation purpose
+        foreach ($this->sqlParts['join'] as $fromAlias => $joins) {
+            if ( ! isset($fromClauses[$fromAlias]) ) {
+                throw QueryException::unknownFromAlias($fromAlias, array_keys($fromClauses));
+            }
         }
 
         $query .= implode(', ', $fromClauses)

@@ -23,7 +23,11 @@ use PDO, Closure, Exception,
     Doctrine\DBAL\Types\Type,
     Doctrine\DBAL\Driver\Connection as DriverConnection,
     Doctrine\Common\EventManager,
-    Doctrine\DBAL\DBALException;
+    Doctrine\DBAL\DBALException,
+    Doctrine\DBAL\Cache\ResultCacheStatement,
+    Doctrine\DBAL\Cache\QueryCacheProfile,
+    Doctrine\DBAL\Cache\ArrayStatement,
+    Doctrine\DBAL\Cache\CacheException;
 
 /**
  * A wrapper around a Doctrine\DBAL\Driver\Connection that adds features like
@@ -209,6 +213,8 @@ class Connection implements DriverConnection
         } else {
             throw DBALException::invalidPlatformSpecified();
         }
+
+        $this->_platform->setEventManager($eventManager);
 
         $this->_transactionIsolationLevel = $this->_platform->getDefaultTransactionIsolationLevel();
     }
@@ -471,9 +477,10 @@ class Connection implements DriverConnection
      *
      * @param string $table The name of the table to update.
      * @param array $identifier The update criteria. An associative array containing column-value pairs.
+     * @param array $types Types of the merged $data and $identifier arrays in that order.
      * @return integer The number of affected rows.
      */
-    public function update($tableName, array $data, array $identifier)
+    public function update($tableName, array $data, array $identifier, array $types = array())
     {
         $this->connect();
         $set = array();
@@ -487,7 +494,7 @@ class Connection implements DriverConnection
                 . ' WHERE ' . implode(' = ? AND ', array_keys($identifier))
                 . ' = ?';
 
-        return $this->executeUpdate($sql, $params);
+        return $this->executeUpdate($sql, $params, $types);
     }
 
     /**
@@ -495,9 +502,10 @@ class Connection implements DriverConnection
      *
      * @param string $table The name of the table to insert data into.
      * @param array $data An associative array containing column-value pairs.
+     * @param array $types Types of the inserted data.
      * @return integer The number of affected rows.
      */
-    public function insert($tableName, array $data)
+    public function insert($tableName, array $data, array $types = array())
     {
         $this->connect();
 
@@ -514,7 +522,7 @@ class Connection implements DriverConnection
                . ' (' . implode(', ', $cols) . ')'
                . ' VALUES (' . implode(', ', $placeholders) . ')';
 
-        return $this->executeUpdate($query, array_values($data));
+        return $this->executeUpdate($query, array_values($data), $types);
     }
 
     /**
@@ -556,7 +564,8 @@ class Connection implements DriverConnection
     {
         $this->connect();
 
-        return $this->_conn->quote($input, $type);
+        list($value, $bindingType) = $this->getBindingInfo($input, $type);
+        return $this->_conn->quote($input, $bindingType);
     }
 
     /**
@@ -592,11 +601,17 @@ class Connection implements DriverConnection
      *
      * @param string $query The SQL query to execute.
      * @param array $params The parameters to bind to the query, if any.
+     * @param array $types The types the previous parameters are in.
+     * @param QueryCacheProfile $qcp
      * @return Doctrine\DBAL\Driver\Statement The executed statement.
      * @internal PERF: Directly prepares a driver statement, not a wrapper.
      */
-    public function executeQuery($query, array $params = array(), $types = array())
+    public function executeQuery($query, array $params = array(), $types = array(), QueryCacheProfile $qcp = null)
     {
+        if ($qcp !== null) {
+            return $this->executeCacheQuery($query, $params, $types, $qcp);
+        }
+
         $this->connect();
 
         $hasLogger = $this->_config->getSQLLogger() !== null;
@@ -623,6 +638,36 @@ class Connection implements DriverConnection
         }
 
         return $stmt;
+    }
+
+    /**
+     * Execute a caching query and
+     *
+     * @param string $query
+     * @param array $params
+     * @param array $types
+     * @param QueryCacheProfile $qcp
+     * @return \Doctrine\DBAL\Driver\ResultStatement
+     */
+    public function executeCacheQuery($query, $params, $types, QueryCacheProfile $qcp)
+    {
+        $resultCache = $qcp->getResultCacheDriver() ?: $this->_config->getResultCacheImpl();
+        if (!$resultCache) {
+            throw CacheException::noResultDriverConfigured();
+        }
+
+        list($cacheKey, $realKey) = $qcp->generateCacheKeys($query, $params, $types);
+
+        // fetch the row pointers entry
+        if ($data = $resultCache->fetch($cacheKey)) {
+            // is the real key part of this row pointers map or is the cache only pointing to other cache keys?
+            if (isset($data[$realKey])) {
+                return new ArrayStatement($data[$realKey]);
+            } else if (array_key_exists($realKey, $data)) {
+                return new ArrayStatement(array());
+            }
+        }
+        return new ResultCacheStatement($this->executeQuery($query, $params, $types), $resultCache, $cacheKey, $realKey, $qcp->getLifetime());
     }
 
     /**
@@ -983,7 +1028,7 @@ class Connection implements DriverConnection
      * Gets the SchemaManager that can be used to inspect or change the
      * database schema through the connection.
      *
-     * @return Doctrine\DBAL\Schema\SchemaManager
+     * @return Doctrine\DBAL\Schema\AbstractSchemaManager
      */
     public function getSchemaManager()
     {
@@ -1069,15 +1114,7 @@ class Connection implements DriverConnection
                 $typeIndex = $bindIndex + $typeOffset;
                 if (isset($types[$typeIndex])) {
                     $type = $types[$typeIndex];
-                    if (is_string($type)) {
-                        $type = Type::getType($type);
-                    }
-                    if ($type instanceof Type) {
-                        $value = $type->convertToDatabaseValue($value, $this->_platform);
-                        $bindingType = $type->getBindingType();
-                    } else {
-                        $bindingType = $type; // PDO::PARAM_* constants
-                    }
+                    list($value, $bindingType) = $this->getBindingInfo($value, $type);
                     $stmt->bindValue($bindIndex, $value, $bindingType);
                 } else {
                     $stmt->bindValue($bindIndex, $value);
@@ -1089,21 +1126,34 @@ class Connection implements DriverConnection
             foreach ($params as $name => $value) {
                 if (isset($types[$name])) {
                     $type = $types[$name];
-                    if (is_string($type)) {
-                        $type = Type::getType($type);
-                    }
-                    if ($type instanceof Type) {
-                        $value = $type->convertToDatabaseValue($value, $this->_platform);
-                        $bindingType = $type->getBindingType();
-                    } else {
-                        $bindingType = $type; // PDO::PARAM_* constants
-                    }
+                    list($value, $bindingType) = $this->getBindingInfo($value, $type);
                     $stmt->bindValue($name, $value, $bindingType);
                 } else {
                     $stmt->bindValue($name, $value);
                 }
             }
         }
+    }
+
+    /**
+     * Gets the binding type of a given type. The given type can be a PDO or DBAL mapping type.
+     *
+     * @param mixed $value The value to bind
+     * @param mixed $type The type to bind (PDO or DBAL)
+     * @return array [0] => the (escaped) value, [1] => the binding type
+     */
+    private function getBindingInfo($value, $type)
+    {
+        if (is_string($type)) {
+            $type = Type::getType($type);
+        }
+        if ($type instanceof Type) {
+            $value = $type->convertToDatabaseValue($value, $this->_platform);
+            $bindingType = $type->getBindingType();
+        } else {
+            $bindingType = $type; // PDO::PARAM_* constants
+        }
+        return array($value, $bindingType);
     }
 
     /**

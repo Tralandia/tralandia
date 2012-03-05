@@ -46,6 +46,7 @@ abstract class Type
     const SMALLINT = 'smallint';
     const STRING = 'string';
     const TEXT = 'text';
+    const BLOB = 'blob';
     const FLOAT = 'float';
 
     /** Map of already instantiated type objects. One instance per type (flyweight). */
@@ -67,6 +68,7 @@ abstract class Type
         self::TIME => 'Doctrine\DBAL\Types\TimeType',
         self::DECIMAL => 'Doctrine\DBAL\Types\DecimalType',
         self::FLOAT => 'Doctrine\DBAL\Types\FloatType',
+        self::BLOB => 'Doctrine\DBAL\Types\BlobType',
     );
 
     /* Prevent instantiation and force use of the factory method. */
@@ -186,6 +188,10 @@ abstract class Type
     {
         if ( ! isset(self::$_typesMap[$name])) {
             throw DBALException::typeNotFound($name);
+        }
+        
+        if (isset(self::$_typeObjects[$name])) {
+            unset(self::$_typeObjects[$name]);
         }
 
         self::$_typesMap[$name] = $className;

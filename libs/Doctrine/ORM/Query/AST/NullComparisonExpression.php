@@ -47,3 +47,4 @@ class NullComparisonExpression extends Node
         return $sqlWalker->walkNullComparisonExpression($this);
     }
 }
+

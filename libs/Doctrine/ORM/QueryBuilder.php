@@ -50,6 +50,7 @@ class QueryBuilder
      * @var array The array of DQL parts collected.
      */
     private $_dqlParts = array(
+        'distinct' => false,
         'select'  => array(),
         'from'    => array(),
         'join'    => array(),
@@ -119,7 +120,7 @@ class QueryBuilder
      * For more complex expression construction, consider storing the expression
      * builder object in a local variable.
      *
-     * @return Expr
+     * @return Query\Expr
      */
     public function expr()
     {
@@ -313,7 +314,7 @@ class QueryBuilder
      *         ->select('u')
      *         ->from('User', 'u')
      *         ->where('u.id = :user_id')
-     *         ->setParameter(':user_id', 1);
+     *         ->setParameter('user_id', 1);
      * </code>
      *
      * @param string|integer $key The parameter position or name.
@@ -323,6 +324,8 @@ class QueryBuilder
      */
     public function setParameter($key, $value, $type = null)
     {
+        $key = trim($key, ':');
+
         if ($type === null) {
             $type = Query\ParameterTypeInferer::inferType($value);
         }
@@ -342,9 +345,9 @@ class QueryBuilder
      *         ->from('User', 'u')
      *         ->where('u.id = :user_id1 OR u.id = :user_id2')
      *         ->setParameters(array(
-     *             ':user_id1' => 1,
-     *             ':user_id2' => 2
-     *         ));
+     *             'user_id1' => 1,
+     *             'user_id2' => 2
+              ));
      * </code>
      *
      * @param array $params The query parameters to set.
@@ -353,12 +356,9 @@ class QueryBuilder
     public function setParameters(array $params, array $types = array())
     {
         foreach ($params as $key => $value) {
-            if (isset($types[$key])) {
-                $this->setParameter($key, $value, $types[$key]);
-            } else {
-                $this->setParameter($key, $value);
-            }
+            $this->setParameter($key, $value, isset($types[$key]) ? $types[$key] : null);
         }
+
         return $this;
     }
 
@@ -392,6 +392,7 @@ class QueryBuilder
     public function setFirstResult($firstResult)
     {
         $this->_firstResult = $firstResult;
+
         return $this;
     }
 
@@ -415,6 +416,7 @@ class QueryBuilder
     public function setMaxResults($maxResults)
     {
         $this->_maxResults = $maxResults;
+
         return $this;
     }
 
@@ -503,6 +505,25 @@ class QueryBuilder
     }
 
     /**
+     * Add a DISTINCT flag to this query.
+     *
+     * <code>
+     *     $qb = $em->createQueryBuilder()
+     *         ->select('u')
+     *         ->distinct()
+     *         ->from('User', 'u');
+     * </code>
+     *
+     * @param bool
+     * @return QueryBuilder
+     */
+    public function distinct($flag = true)
+    {
+        $this->_dqlParts['distinct'] = (bool) $flag;
+        return $this;
+    }
+
+    /**
      * Adds an item that is to be returned in the query result.
      *
      * <code>
@@ -537,7 +558,7 @@ class QueryBuilder
      *     $qb = $em->createQueryBuilder()
      *         ->delete('User', 'u')
      *         ->where('u.id = :user_id');
-     *         ->setParameter(':user_id', 1);
+     *         ->setParameter('user_id', 1);
      * </code>
      *
      * @param string $delete The class/type whose instances are subject to the deletion.
@@ -593,11 +614,12 @@ class QueryBuilder
      *
      * @param string $from   The class name.
      * @param string $alias  The alias of the class.
+     * @param string $indexBy The index for the from.
      * @return QueryBuilder This QueryBuilder instance.
      */
-    public function from($from, $alias)
+    public function from($from, $alias, $indexBy = null)
     {
-        return $this->add('from', new Expr\From($from, $alias), true);
+        return $this->add('from', new Expr\From($from, $alias, $indexBy), true);
     }
 
     /**
@@ -649,13 +671,16 @@ class QueryBuilder
     public function innerJoin($join, $alias, $conditionType = null, $condition = null, $indexBy = null)
     {
         $rootAlias = substr($join, 0, strpos($join, '.'));
-        if (!in_array($rootAlias, $this->getRootAliases())) {
+
+        if ( ! in_array($rootAlias, $this->getRootAliases())) {
             $rootAlias = $this->getRootAlias();
         }
 
-        return $this->add('join', array(
-            $rootAlias => new Expr\Join(Expr\Join::INNER_JOIN, $join, $alias, $conditionType, $condition, $indexBy)
-        ), true);
+        $join = new Expr\Join(
+            Expr\Join::INNER_JOIN, $join, $alias, $conditionType, $condition, $indexBy
+        );
+
+        return $this->add('join', array($rootAlias => $join), true);
     }
 
     /**
@@ -682,13 +707,16 @@ class QueryBuilder
     public function leftJoin($join, $alias, $conditionType = null, $condition = null, $indexBy = null)
     {
         $rootAlias = substr($join, 0, strpos($join, '.'));
-        if (!in_array($rootAlias, $this->getRootAliases())) {
+
+        if ( ! in_array($rootAlias, $this->getRootAliases())) {
             $rootAlias = $this->getRootAlias();
         }
 
-        return $this->add('join', array(
-            $rootAlias => new Expr\Join(Expr\Join::LEFT_JOIN, $join, $alias, $conditionType, $condition, $indexBy)
-        ), true);
+        $join = new Expr\Join(
+            Expr\Join::LEFT_JOIN, $join, $alias, $conditionType, $condition, $indexBy
+        );
+
+        return $this->add('join', array($rootAlias => $join), true);
     }
 
     /**
@@ -973,7 +1001,9 @@ class QueryBuilder
 
     private function _getDQLForSelect()
     {
-        $dql = 'SELECT' . $this->_getReducedDQLQueryPart('select', array('pre' => ' ', 'separator' => ', '));
+        $dql = 'SELECT'
+              . ($this->_dqlParts['distinct']===true ? ' DISTINCT' : '')
+              . $this->_getReducedDQLQueryPart('select', array('pre' => ' ', 'separator' => ', '));
 
         $fromParts   = $this->getDQLPart('from');
         $joinParts   = $this->getDQLPart('join');

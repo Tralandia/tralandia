@@ -2,24 +2,24 @@
 
 namespace Dictionary;
 
-
+use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity()
- * @Table(name="DictionaryQuality")
+ * @ORM\Entity()
+ * @ORM\Table(name="DictionaryQuality")
  */
 class Quality extends \BaseEntity
 {
 
 	/**
 	 * @var string
-	 * @Column(type="string")
+	 * @ORM\Column(type="string")
 	 */
 	protected $name;
 
 	/**
 	 * @var string
-	 * @Column(type="string")
+	 * @ORM\Column(type="string")
 	 */
 	protected $value;
 

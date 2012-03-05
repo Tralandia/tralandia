@@ -78,7 +78,7 @@ abstract class Service extends Nette\Object implements IService {
 		if ($this->em == null) {
 			// TODO: treba vyriesit ako sa zbavit Environmentu
 			$context = Nette\Environment::getContainer();
-			$this->em = $context->getService('doctrine')->entityManager;
+			$this->em = $context->entityManager;
 		}
 		
 		return $this->em;

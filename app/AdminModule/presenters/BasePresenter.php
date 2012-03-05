@@ -10,12 +10,12 @@ abstract class BasePresenter extends \BasePresenter {
 		$this->autoCanonicalize = FALSE;
 		parent::startup();
 	}
-	
+	/*
 	public function templatePrepareFilters($tpl) {
 		$tpl->registerFilter($latte = new \Nette\Latte\Engine);
 		$set = \Nette\Latte\Macros\MacroSet::install($latte->parser);
 		$set->addMacro('url', 'echo \Tools::link($control, %node.array);');
-	}
+	}*/
 	
 	public function formatTemplateFiles() {
 		$name = $this->getName();

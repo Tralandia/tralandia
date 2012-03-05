@@ -1,12 +1,11 @@
 <?php
 
-
-
+use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @MappedSuperclass
+ * @ORM\MappedSuperclass
  */
-class BaseEntityDetails extends BaseEntity
+abstract class BaseEntityDetails extends BaseEntity
 {
 
 

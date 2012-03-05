@@ -1,9 +1,10 @@
 <?php
 
+use Doctrine\ORM\Mapping as ORM;
+
 /**
- * @Entity(repositoryClass="RentalRepository")
- * @HasLifecycleCallbacks
- * @Primary(key="id", value="nameUrl")
+ * @ORM\Entity(repositoryClass="RentalRepository")
+ * @ORM\Primary(key="id", value="nameUrl")
  */
 class Rental extends BaseEntity {
 	
@@ -12,25 +13,25 @@ class Rental extends BaseEntity {
 	const STATUS_LIVE = 'live';
 
 	/**
-	 * @Column(type="string", nullable=true)
+	 * @ORM\Column(type="string", nullable=true)
 	 * @UIControl(type="select", options="STATUS_NONE:Nič, STATUS_CHECKED:Checked, STATUS_LIVE:Live")
 	 */
 	protected $status = self::STATUS_NONE;
 
 	/**
-	 * @Column(type="string")
+	 * @ORM\Column(type="string")
 	 * @UIControl(type="text", label="Name url")
 	 */
 	protected $nameUrl;
 
 	/**
-	 * @ManyToOne(targetEntity="User", inversedBy="rentals")
+	 * @ORM\ManyToOne(targetEntity="User", inversedBy="rentals")
 	 * @UIControl(type="select", callback="getList")
 	 */
 	protected $user;
 	
 	/**
-	 * @ManyToOne(targetEntity="Country", fetch="EAGER")
+	 * @ORM\ManyToOne(targetEntity="Country", fetch="EAGER")
 	 * @UIControl(type="select", callback="getList")
 	 */
 	protected $country;
