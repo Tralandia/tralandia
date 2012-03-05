@@ -3,7 +3,7 @@
 /**
  * This file is part of the Nette Framework (http://nette.org)
  *
- * Copyright (c) 2004, 2011 David Grudl (http://davidgrudl.com)
+ * Copyright (c) 2004 David Grudl (http://davidgrudl.com)
  *
  * For the full copyright and license information, please view
  * the file license.txt that was distributed with this source code.
@@ -11,7 +11,8 @@
 
 namespace Nette\Utils;
 
-use Nette;
+use Nette,
+	Nette\Diagnostics\Debugger;
 
 
 
@@ -96,6 +97,36 @@ class Strings
 	public static function endsWith($haystack, $needle)
 	{
 		return strlen($needle) === 0 || substr($haystack, -strlen($needle)) === $needle;
+	}
+
+
+
+	/**
+	 * Does $haystack contain $needle?
+	 * @param  string
+	 * @param  string
+	 * @return bool
+	 */
+	public static function contains($haystack, $needle)
+	{
+		return strpos($haystack, $needle) !== FALSE;
+	}
+
+
+
+	/**
+	 * Returns a part of UTF-8 string.
+	 * @param  string
+	 * @param  int
+	 * @param  int
+	 * @return string
+	 */
+	public static function substring($s, $start, $length = NULL)
+	{
+		if ($length === NULL) {
+			$length = self::length($s);
+		}
+		return function_exists('mb_substr') ? mb_substr($s, $start, $length, 'UTF-8') : iconv_substr($s, $start, $length, 'UTF-8'); // MB is much faster
 	}
 
 
@@ -188,7 +219,7 @@ class Strings
 				return $matches[0] . $append;
 
 			} else {
-				return iconv_substr($s, 0, $maxLen, 'UTF-8') . $append;
+				return self::substring($s, 0, $maxLen) . $append;
 			}
 		}
 		return $s;
@@ -241,7 +272,7 @@ class Strings
 	 */
 	public static function firstUpper($s)
 	{
-		return self::upper(mb_substr($s, 0, 1, 'UTF-8')) . mb_substr($s, 1, self::length($s), 'UTF-8');
+		return self::upper(self::substring($s, 0, 1)) . self::substring($s, 1);
 	}
 
 
@@ -268,11 +299,11 @@ class Strings
 	public static function compare($left, $right, $len = NULL)
 	{
 		if ($len < 0) {
-			$left = iconv_substr($left, $len, -$len, 'UTF-8');
-			$right = iconv_substr($right, $len, -$len, 'UTF-8');
+			$left = self::substring($left, $len, -$len);
+			$right = self::substring($right, $len, -$len);
 		} elseif ($len !== NULL) {
-			$left = iconv_substr($left, 0, $len, 'UTF-8');
-			$right = iconv_substr($right, 0, $len, 'UTF-8');
+			$left = self::substring($left, 0, $len);
+			$right = self::substring($right, 0, $len);
 		}
 		return self::lower($left) === self::lower($right);
 	}
@@ -286,7 +317,7 @@ class Strings
 	 */
 	public static function length($s)
 	{
-		return function_exists('mb_strlen') ? mb_strlen($s, 'UTF-8') : strlen(utf8_decode($s));
+		return strlen(utf8_decode($s)); // fastest way
 	}
 
 
@@ -316,7 +347,7 @@ class Strings
 	{
 		$length = max(0, $length - self::length($s));
 		$padLen = self::length($pad);
-		return str_repeat($pad, $length / $padLen) . iconv_substr($pad, 0, $length % $padLen, 'UTF-8') . $s;
+		return str_repeat($pad, $length / $padLen) . self::substring($pad, 0, $length % $padLen) . $s;
 	}
 
 
@@ -332,7 +363,19 @@ class Strings
 	{
 		$length = max(0, $length - self::length($s));
 		$padLen = self::length($pad);
-		return $s . str_repeat($pad, $length / $padLen) . iconv_substr($pad, 0, $length % $padLen, 'UTF-8');
+		return $s . str_repeat($pad, $length / $padLen) . self::substring($pad, 0, $length % $padLen);
+	}
+
+
+
+	/**
+	 * Reverse string.
+	 * @param  string  UTF-8 encoding
+	 * @return string
+	 */
+	public static function reverse($s)
+	{
+		return @iconv('UTF-32LE', 'UTF-8', strrev(@iconv('UTF-8', 'UTF-32BE', $s)));
 	}
 
 
@@ -374,9 +417,11 @@ class Strings
 	 */
 	public static function split($subject, $pattern, $flags = 0)
 	{
-		Nette\Diagnostics\Debugger::tryError();
+		Debugger::tryError();
 		$res = preg_split($pattern, $subject, -1, $flags | PREG_SPLIT_DELIM_CAPTURE);
-		self::catchPregError($pattern);
+		if (Debugger::catchError($e) || preg_last_error()) { // compile error XOR run-time error
+			throw new RegexpException($e ? $e->getMessage() : NULL, $e ? NULL : preg_last_error(), $pattern);
+		}
 		return $res;
 	}
 
@@ -395,9 +440,11 @@ class Strings
 		if ($offset > strlen($subject)) {
 			return NULL;
 		}
-		Nette\Diagnostics\Debugger::tryError();
+		Debugger::tryError();
 		$res = preg_match($pattern, $subject, $m, $flags, $offset);
-		self::catchPregError($pattern);
+		if (Debugger::catchError($e) || preg_last_error()) { // compile error XOR run-time error
+			throw new RegexpException($e ? $e->getMessage() : NULL, $e ? NULL : preg_last_error(), $pattern);
+		}
 		if ($res) {
 			return $m;
 		}
@@ -418,13 +465,15 @@ class Strings
 		if ($offset > strlen($subject)) {
 			return array();
 		}
-		Nette\Diagnostics\Debugger::tryError();
+		Debugger::tryError();
 		$res = preg_match_all(
 			$pattern, $subject, $m,
 			($flags & PREG_PATTERN_ORDER) ? $flags : ($flags | PREG_SET_ORDER),
 			$offset
 		);
-		self::catchPregError($pattern);
+		if (Debugger::catchError($e) || preg_last_error()) { // compile error XOR run-time error
+			throw new RegexpException($e ? $e->getMessage() : NULL, $e ? NULL : preg_last_error(), $pattern);
+		}
 		return $m;
 	}
 
@@ -440,92 +489,35 @@ class Strings
 	 */
 	public static function replace($subject, $pattern, $replacement = NULL, $limit = -1)
 	{
-		Nette\Diagnostics\Debugger::tryError();
 		if (is_object($replacement) || is_array($replacement)) {
 			if ($replacement instanceof Nette\Callback) {
 				$replacement = $replacement->getNative();
 			}
 			if (!is_callable($replacement, FALSE, $textual)) {
-				Nette\Diagnostics\Debugger::catchError($foo);
 				throw new Nette\InvalidStateException("Callback '$textual' is not callable.");
 			}
-			$res = preg_replace_callback($pattern, $replacement, $subject, $limit);
 
-			if (Nette\Diagnostics\Debugger::catchError($e)) { // compile error
-				$trace = $e->getTrace();
-				if (isset($trace[2]['class']) && $trace[2]['class'] === __CLASS__) {
-					throw new RegexpException($e->getMessage() . " in pattern: $pattern");
-				}
+			Debugger::tryError();
+			preg_match($pattern, '');
+			if (Debugger::catchError($e)) { // compile error
+				throw new RegexpException($e->getMessage(), NULL, $pattern);
 			}
+
+			$res = preg_replace_callback($pattern, $replacement, $subject, $limit);
+			if ($res === NULL && preg_last_error()) { // run-time error
+				throw new RegexpException(NULL, preg_last_error(), $pattern);
+			}
+			return $res;
 
 		} elseif (is_array($pattern)) {
-			$res = preg_replace(array_keys($pattern), array_values($pattern), $subject, $limit);
-
-		} else {
-			$res = preg_replace($pattern, $replacement, $subject, $limit);
+			$replacement = array_values($pattern);
+			$pattern = array_keys($pattern);
 		}
-		self::catchPregError($pattern);
-		return $res;
-	}
 
-
-
-	/** @internal */
-	public static function catchPregError($pattern)
-	{
-		if (Nette\Diagnostics\Debugger::catchError($e)) { // compile error
-			throw new RegexpException($e->getMessage() . " in pattern: $pattern");
-
-		} elseif (preg_last_error()) { // run-time error
-			static $messages = array(
-				PREG_INTERNAL_ERROR => 'Internal error',
-				PREG_BACKTRACK_LIMIT_ERROR => 'Backtrack limit was exhausted',
-				PREG_RECURSION_LIMIT_ERROR => 'Recursion limit was exhausted',
-				PREG_BAD_UTF8_ERROR => 'Malformed UTF-8 data',
-				5 => 'Offset didn\'t correspond to the begin of a valid UTF-8 code point', // PREG_BAD_UTF8_OFFSET_ERROR
-			);
-			$code = preg_last_error();
-			throw new RegexpException((isset($messages[$code]) ? $messages[$code] : 'Unknown error') . " (pattern: $pattern)", $code);
-		}
-	}
-
-
-
-	/**
-	 * Expands %placeholders% in string.
-	 * @param  string
-	 * @param  array
-	 * @param  bool
-	 * @return mixed
-	 * @throws Nette\InvalidArgumentException
-	 */
-	public static function expand($s, array $params, $recursive = FALSE)
-	{
-		$parts = preg_split('#%([\w.-]*)%#i', $s, -1, PREG_SPLIT_DELIM_CAPTURE);
-		$res = '';
-		foreach ($parts as $n => $part) {
-			if ($n % 2 === 0) {
-				$res .= $part;
-
-			} elseif ($part === '') {
-				$res .= '%';
-
-			} elseif (isset($recursive[$part])) {
-				throw new Nette\InvalidArgumentException('Circular reference detected for variables: ' . implode(', ', array_keys($recursive)) . '.');
-
-			} else {
-				$val = Arrays::get($params, explode('.', $part));
-				if ($recursive && is_string($val)) {
-					$val = self::expand($val, $params, (is_array($recursive) ? $recursive : array()) + array($part => 1));
-				}
-				if (strlen($part) + 2 === strlen($s)) {
-					return $val;
-				}
-				if (!is_scalar($val)) {
-					throw new Nette\InvalidArgumentException("Unable to concatenate non-scalar parameter '$part' into '$s'.");
-				}
-				$res .= $val;
-			}
+		Debugger::tryError();
+		$res = preg_replace($pattern, $replacement, $subject, $limit);
+		if (Debugger::catchError($e) || preg_last_error()) { // compile error XOR run-time error
+			throw new RegexpException($e ? $e->getMessage() : NULL, $e ? NULL : preg_last_error(), $pattern);
 		}
 		return $res;
 	}
@@ -539,4 +531,22 @@ class Strings
  */
 class RegexpException extends \Exception
 {
+	static public $messages = array(
+				PREG_INTERNAL_ERROR => 'Internal error',
+				PREG_BACKTRACK_LIMIT_ERROR => 'Backtrack limit was exhausted',
+				PREG_RECURSION_LIMIT_ERROR => 'Recursion limit was exhausted',
+				PREG_BAD_UTF8_ERROR => 'Malformed UTF-8 data',
+				5 => 'Offset didn\'t correspond to the begin of a valid UTF-8 code point', // PREG_BAD_UTF8_OFFSET_ERROR
+			);
+
+	public function __construct($message, $code = NULL, $pattern = NULL)
+	{
+		if (!$message) {
+			$message = (isset(self::$messages[$code]) ? self::$messages[$code] : 'Unknown error') . ($pattern ? " (pattern: $pattern)" : '');
+		} elseif ($pattern) {
+			$message .= " in pattern: $pattern";
+		}
+		parent::__construct($message, $code);
+	}
+
 }

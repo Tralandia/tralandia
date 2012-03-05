@@ -3,7 +3,7 @@
 /**
  * This file is part of the Nette Framework (http://nette.org)
  *
- * Copyright (c) 2004, 2011 David Grudl (http://davidgrudl.com)
+ * Copyright (c) 2004 David Grudl (http://davidgrudl.com)
  *
  * For the full copyright and license information, please view
  * the file license.txt that was distributed with this source code.
@@ -21,9 +21,9 @@ use Nette;
  * @author     David Grudl
  *
  * @property-read mixed $rawValue
+ * @property   bool $prompt
  * @property   array $items
- * @property-read mixed $selectedItem
- * @property-read bool $firstSkipped
+ * @property-read string $selectedItem
  */
 class SelectBox extends BaseControl
 {
@@ -68,6 +68,7 @@ class SelectBox extends BaseControl
 		if ($this->prompt) {
 			$allowed = array_slice($allowed, 1, count($allowed), TRUE);
 		}
+
 		return is_scalar($this->value) && isset($allowed[$this->value]) ? $this->value : NULL;
 	}
 
@@ -243,7 +244,7 @@ class SelectBox extends BaseControl
 				} else {
 					$key2 = $this->useKeys ? $key2 : $value2;
 					$value2 = $this->translate((string) $value2);
-					$dest->add((string) $option->value($key2 === $value2 ? NULL : $key2)
+					$dest->add((string) $option->value($key2)
 						->selected(isset($selected[$key2]))
 						->setText($value2));
 				}

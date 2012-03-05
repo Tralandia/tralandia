@@ -3,7 +3,7 @@
 /**
  * This file is part of the Nette Framework (http://nette.org)
  *
- * Copyright (c) 2004, 2011 David Grudl (http://davidgrudl.com)
+ * Copyright (c) 2004 David Grudl (http://davidgrudl.com)
  *
  * For the full copyright and license information, please view
  * the file license.txt that was distributed with this source code.
@@ -19,11 +19,11 @@ use Nette,
 
 
 /**
- * Standard template run-time helpers shipped with Nette Framework (http://nette.org)
+ * Template helpers.
  *
  * @author     David Grudl
  */
-final class DefaultHelpers
+final class Helpers
 {
 	private static $helpers = array(
 		'normalize' => 'Nette\Utils\Strings::normalize',
@@ -41,7 +41,7 @@ final class DefaultHelpers
 		'url' => 'rawurlencode',
 		'striptags' => 'strip_tags',
 		'nl2br' => 'nl2br',
-		'substr' => 'iconv_substr',
+		'substr' => 'Nette\Utils\Strings::substring',
 		'repeat' => 'str_repeat',
 		'implode' => 'implode',
 		'number' => 'number_format',
@@ -70,7 +70,7 @@ final class DefaultHelpers
 
 	/**
 	 * Escapes string for use inside HTML template.
-	 * @param  mixed  UTF-8 encoding or 8-bit
+	 * @param  mixed  UTF-8 encoding
 	 * @param  int    optional attribute quotes
 	 * @return string
 	 */
@@ -86,7 +86,7 @@ final class DefaultHelpers
 
 	/**
 	 * Escapes string for use inside HTML comments.
-	 * @param  mixed  UTF-8 encoding or 8-bit
+	 * @param  string  UTF-8 encoding
 	 * @return string
 	 */
 	public static function escapeHtmlComment($s)
@@ -99,7 +99,7 @@ final class DefaultHelpers
 
 	/**
 	 * Escapes string for use inside XML 1.0 template.
-	 * @param  string UTF-8 encoding or 8-bit
+	 * @param  string UTF-8 encoding
 	 * @return string
 	 */
 	public static function escapeXML($s)
@@ -114,7 +114,7 @@ final class DefaultHelpers
 
 	/**
 	 * Escapes string for use inside CSS template.
-	 * @param  string UTF-8 encoding or 8-bit
+	 * @param  string UTF-8 encoding
 	 * @return string
 	 */
 	public static function escapeCss($s)
@@ -208,9 +208,9 @@ final class DefaultHelpers
 		}
 
 		$time = Nette\DateTime::from($time);
-		return strpos($format, '%') === FALSE
-			? $time->format($format) // formats using date()
-			: strftime($format, $time->format('U')); // formats according to locales
+		return Strings::contains($format, '%')
+			? strftime($format, $time->format('U')) // formats according to locales
+			: $time->format($format); // formats using date()
 	}
 
 
@@ -286,6 +286,77 @@ final class DefaultHelpers
 	public static function null($value)
 	{
 		return '';
+	}
+
+
+
+	/********************* Template tools ****************d*g**/
+
+
+
+	/**
+	 * Removes unnecessary blocks of PHP code.
+	 * @param  string
+	 * @return string
+	 */
+	public static function optimizePhp($source, $lineLength = 80, $existenceOfThisParameterSolvesDamnBugInPHP535 = NULL)
+	{
+		$res = $php = '';
+		$lastChar = ';';
+		$tokens = new \ArrayIterator(token_get_all($source));
+		foreach ($tokens as $key => $token) {
+			if (is_array($token)) {
+				if ($token[0] === T_INLINE_HTML) {
+					$lastChar = '';
+					$res .= $token[1];
+
+				} elseif ($token[0] === T_CLOSE_TAG) {
+					$next = isset($tokens[$key + 1]) ? $tokens[$key + 1] : NULL;
+					if (substr($res, -1) !== '<' && preg_match('#^<\?php\s*$#', $php)) {
+						$php = ''; // removes empty (?php ?), but retains ((?php ?)?php
+
+					} elseif (is_array($next) && $next[0] === T_OPEN_TAG) { // remove ?)(?php
+						if (!strspn($lastChar, ';{}:/')) {
+							$php .= $lastChar = ';';
+						}
+						if (substr($next[1], -1) === "\n") {
+							$php .= "\n";
+						}
+						$tokens->next();
+
+					} elseif ($next) {
+						$res .= preg_replace('#;?(\s)*$#', '$1', $php) . $token[1]; // remove last semicolon before ?)
+						if (strlen($res) - strrpos($res, "\n") > $lineLength
+							&& (!is_array($next) || strpos($next[1], "\n") === FALSE)
+						) {
+							$res .= "\n";
+						}
+						$php = '';
+
+					} else { // remove last ?)
+						if (!strspn($lastChar, '};')) {
+							$php .= ';';
+						}
+					}
+
+				} elseif ($token[0] === T_ELSE || $token[0] === T_ELSEIF) {
+					if ($tokens[$key + 1] === ':' && $lastChar === '}') {
+						$php .= ';'; // semicolon needed in if(): ... if() ... else:
+					}
+					$lastChar = '';
+					$php .= $token[1];
+
+				} else {
+					if (!in_array($token[0], array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT, T_OPEN_TAG))) {
+						$lastChar = '';
+					}
+					$php .= $token[1];
+				}
+			} else {
+				$php .= $lastChar = $token;
+			}
+		}
+		return $res . $php;
 	}
 
 }

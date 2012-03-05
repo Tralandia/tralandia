@@ -3,7 +3,7 @@
 /**
  * This file is part of the Nette Framework (http://nette.org)
  *
- * Copyright (c) 2004, 2011 David Grudl (http://davidgrudl.com)
+ * Copyright (c) 2004 David Grudl (http://davidgrudl.com)
  *
  * For the full copyright and license information, please view
  * the file license.txt that was distributed with this source code.
@@ -70,6 +70,36 @@ final class ObjectMixin
 		}
 
 		throw new MemberAccessException("Call to undefined method $class->name::$name().");
+	}
+
+
+
+	/**
+	 * Call to undefined method.
+	 * @param  object
+	 * @param  string  method name
+	 * @param  array   arguments
+	 * @return mixed
+	 * @throws MemberAccessException
+	 */
+	public static function callProperty($_this, $name, $args)
+	{
+		if (strlen($name) > 3) {
+			$op = substr($name, 0, 3);
+			$prop = strtolower($name[3]) . substr($name, 4);
+			if ($op === 'add' && property_exists($_this, $prop.'s')) {
+				$_this->{$prop.'s'}[] = $args[0];
+				return $_this;
+
+			} elseif ($op === 'set' && property_exists($_this, $prop)) {
+				$_this->$prop = $args[0];
+				return $_this;
+
+			} elseif ($op === 'get' && property_exists($_this, $prop)) {
+				return $_this->$prop;
+			}
+		}
+		self::call($_this, $name, $args);
 	}
 
 

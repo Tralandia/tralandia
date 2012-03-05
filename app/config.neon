@@ -1,30 +1,30 @@
 common:
 	php:
 		date.timezone: Europe/Bratislava
-		debug.editor = "txmt://open/?url=file://%file&line=%line"
 		
-	security:
-		salt: '8723lks762ngknl90835bkd'
-		sender: 'noreply@tralandia.sk'
+	parameters:
+		security:
+			salt: '8723lks762ngknl90835bkd'
+			sender: 'noreply@tralandia.sk'
 		
-	database:
-		user: root
-		password: root
-		host: 127.0.0.1
-		dbname: tralandia
-		charset: utf8
-		driver: pdo_mysql
+		database:
+			user: root
+			password: root
+			host: 127.0.0.1
+			dbname: tralandia
+			charset: utf8
+			driver: pdo_mysql
 	
-	proxiesDir: '%tempDir%/proxies'
+		proxiesDir: '%tempDir%/proxies'
 
-	entityDirs: '%appDir%/models/Entities'
+		entityDirs: '%appDir%/models/Entities'
 	
-	settingsDir: '%appDir%/configs'
+		settingsDir: '%appDir%/configs'
+		
+		envOptions:
+			sendEmail: TRUE
 		
 	services:
-		robotLoader:
-			run: true
-
 		doctrineLoader:
 			factory: Kdyby\Loaders\DoctrineLoader::register
 			tags: ['run']
@@ -41,34 +41,37 @@ common:
 			
 		settings:
 			factory: \PresenterSettings::factory
-			
-	envOptions:
-		sendEmail: TRUE
+		
 
 production < common:
-	database:
-		user: tralandia
-		password: 897247889729787892
-		host: 192.168.1.1
-		dbname: tralandia
+	parameters:
+		database:
+			user: tralandia
+			password: 897247889729787892
+			host: 192.168.1.1
+			dbname: tralandia
 		
 console < common:
 
 development < common:
-	database:
-		user: root
-		password: root
-		host: 127.0.0.1
-		dbname: tralandia
+	parameters:
+		database:
+			user: root
+			password: root
+			host: 127.0.0.1
+			dbname: tralandia
 
-	envOptions:
-		sendEmail: FASLE
+		envOptions:
+			sendEmail: FASLE
 
 		
 vaculciak < development:
+	parameters:
 		editor: 'txmt://open/?url=file://%file&line=%line'
 
 durika < development:
-	envOptions:
-		email: tralandia.david@gmail.com
+	parameters:
 		editor: 'edit://open/?url=file://%file&line=%line'
+		envOptions:
+			email: tralandia.david@gmail.com
+			
