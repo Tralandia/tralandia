@@ -92,7 +92,7 @@ class AdminPresenter extends BasePresenter {
 		//$grid->itemsPerPage = 3;
 		
 		$grid->setEditForm($form);
-		$grid->setContainer($this->service->getMainEntity());	
+		$grid->setContainer($this->service->getMainEntityName());	
 		$grid->onDataReceived[] = array($form, 'onDataRecieved');
 		$grid->onInvalidDataRecieved[] = array($form, 'onInvalidDataRecieved');
 		
@@ -104,7 +104,7 @@ class AdminPresenter extends BasePresenter {
 				$type = isset($column->type) ? $column->type : 'text';				
 				$property = substr($column->mapper, strrpos($column->mapper, '.')+1);
 				
-				if ($controlAnnotation = $this->service->getReflector()->getAnnotation('Rental', $property, 'Column')) {
+				if ($controlAnnotation = $this->service->getReflector()->getAnnotation('Rental', $property, 'ORM\Column')) {
 					$type = $controlAnnotation->type;
 				}
 
