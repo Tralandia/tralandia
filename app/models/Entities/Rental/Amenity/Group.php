@@ -4,8 +4,6 @@ namespace Entities\Rental\Amenity;
 
 use Entities\Dictionary;
 use Entities\Rental;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
