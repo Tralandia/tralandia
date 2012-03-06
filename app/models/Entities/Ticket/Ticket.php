@@ -16,152 +16,38 @@ class Ticket extends \BaseEntity {
 
 	/**
 	 * @var email
-	 * @ORM\ManyToMany(type="email")
+	 * @ORM\Column(type="email")
 	 */
 	protected $client;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="User\User")
+	 * @ORM\ManyToOne(targetEntity="User\User")
 	 */
 	protected $staff;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Location\Location")
+	 * @ORM\ManyToOne(targetEntity="Location\Location")
 	 */
 	protected $country;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Dictionary\Language")
+	 * @ORM\ManyToOne(targetEntity="Dictionary\Language")
 	 */
 	protected $language;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(type="Status")
+	 * @ORM\Column(type="integer")
 	 */
 	protected $status;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(type="Message")
+	 * @ORM\OneToMany(targetEntity="Message", mappedBy="ticket")
 	 */
 	protected $messages;
-
-
-	public function __construct() {
-		parent::__construct();
-
-	}
-
-
-	/**
-	 * @param email $client
-	 * @return Ticket
-	 */
-	public function setClient($client) {
-		$this->client = $client;
-		return $this;
-	}
-
-
-	/**
-	 * @return email
-	 */
-	public function getClient() {
-		return $this->client;
-	}
-
-
-	/**
-	 * @param User\User $staff
-	 * @return Ticket
-	 */
-	public function setStaff(User\User  $staff) {
-		$this->staff = $staff;
-		return $this;
-	}
-
-
-	/**
-	 * @return User\User
-	 */
-	public function getStaff() {
-		return $this->staff;
-	}
-
-
-	/**
-	 * @param Location\Location $country
-	 * @return Ticket
-	 */
-	public function setCountry(Location\Location  $country) {
-		$this->country = $country;
-		return $this;
-	}
-
-
-	/**
-	 * @return Location\Location
-	 */
-	public function getCountry() {
-		return $this->country;
-	}
-
-
-	/**
-	 * @param Dictionary\Language $language
-	 * @return Ticket
-	 */
-	public function setLanguage(Dictionary\Language  $language) {
-		$this->language = $language;
-		return $this;
-	}
-
-
-	/**
-	 * @return Dictionary\Language
-	 */
-	public function getLanguage() {
-		return $this->language;
-	}
-
-
-	/**
-	 * @param Status $status
-	 * @return Ticket
-	 */
-	public function setStatus(Status  $status) {
-		$this->status = $status;
-		return $this;
-	}
-
-
-	/**
-	 * @return Status
-	 */
-	public function getStatus() {
-		return $this->status;
-	}
-
-
-	/**
-	 * @param Message $messages
-	 * @return Ticket
-	 */
-	public function setMessages(Message  $messages) {
-		$this->messages = $messages;
-		return $this;
-	}
-
-
-	/**
-	 * @return Message
-	 */
-	public function getMessages() {
-		return $this->messages;
-	}
 
 }

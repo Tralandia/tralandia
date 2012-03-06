@@ -15,25 +15,25 @@ class Package extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Dictionary\Phrase")
+	 * @ORM\OneToOne(targetEntity="Dictionary\Phrase")
 	 */
 	protected $name;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Dictionary\Phrase")
+	 * @ORM\OneToOne(targetEntity="Dictionary\Phrase")
 	 */
 	protected $teaser;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(type="Use")
+	 * @ORM\OneToMany(type="Use")
 	 */
 	protected $uses;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Location\Location")
+	 * @ORM\ManyToOne(targetEntity="Location\Location")
 	 */
 	protected $country;
 
@@ -42,111 +42,5 @@ class Package extends \BaseEntity {
 	 * @ORM\OneToMany(targetEntity="Invoicing\Service\Service", mappedBy="package")
 	 */
 	protected $services;
-
-
-	public function __construct() {
-		parent::__construct();
-		$this->services = new ArrayCollection();
-	}
-
-
-	/**
-	 * @param Dictionary\Phrase $name
-	 * @return Package
-	 */
-	public function setName(Dictionary\Phrase  $name) {
-		$this->name = $name;
-		return $this;
-	}
-
-
-	/**
-	 * @return Dictionary\Phrase
-	 */
-	public function getName() {
-		return $this->name;
-	}
-
-
-	/**
-	 * @param Dictionary\Phrase $teaser
-	 * @return Package
-	 */
-	public function setTeaser(Dictionary\Phrase  $teaser) {
-		$this->teaser = $teaser;
-		return $this;
-	}
-
-
-	/**
-	 * @return Dictionary\Phrase
-	 */
-	public function getTeaser() {
-		return $this->teaser;
-	}
-
-
-	/**
-	 * @param Use $uses
-	 * @return Package
-	 */
-	public function setUses(Use  $uses) {
-		$this->uses = $uses;
-		return $this;
-	}
-
-
-	/**
-	 * @return Use
-	 */
-	public function getUses() {
-		return $this->uses;
-	}
-
-
-	/**
-	 * @param Location\Location $country
-	 * @return Package
-	 */
-	public function setCountry(Location\Location  $country) {
-		$this->country = $country;
-		return $this;
-	}
-
-
-	/**
-	 * @return Location\Location
-	 */
-	public function getCountry() {
-		return $this->country;
-	}
-
-
-	/**
-	 * @param Invoicing\Service\Service $service
-	 * @return Package
-	 */
-	public function addService(Invoicing\Service\Service  $service) {
-		$this->services->add($service);
-		return $this;
-	}
-
-
-	/**
-	 * @param Invoicing\Service\Service $service
-	 * @return Package
-	 */
-	public function removeService(Invoicing\Service\Service  $service) {
-		$this->services->removeElement($service);
-		return $this;
-	}
-
-
-	/**
-	 * @return Invoicing\Service\Service[]
-	 */
-	public function getService() {
-		return $this->services->toArray();
-	}
 
 }

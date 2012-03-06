@@ -14,56 +14,14 @@ class Group extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(type="Amenity")
+	 * @ORM\OneToMany(type="Amenity", mappedBy="goup")
 	 */
 	protected $amenities;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Dictionary\Phrase")
+	 * @ORM\OneToOne(targetEntity="Dictionary\Phrase")
 	 */
 	protected $name;
-
-
-	public function __construct() {
-		parent::__construct();
-
-	}
-
-
-	/**
-	 * @param Amenity $amenities
-	 * @return Group
-	 */
-	public function setAmenities(Amenity  $amenities) {
-		$this->amenities = $amenities;
-		return $this;
-	}
-
-
-	/**
-	 * @return Amenity
-	 */
-	public function getAmenities() {
-		return $this->amenities;
-	}
-
-
-	/**
-	 * @param Dictionary\Phrase $name
-	 * @return Group
-	 */
-	public function setName(Dictionary\Phrase  $name) {
-		$this->name = $name;
-		return $this;
-	}
-
-
-	/**
-	 * @return Dictionary\Phrase
-	 */
-	public function getName() {
-		return $this->name;
-	}
 
 }

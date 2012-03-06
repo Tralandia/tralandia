@@ -13,56 +13,14 @@ class Office extends \BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(type="Company")
+	 * @ORM\ManyToOne(type="Company", inversedBy="offices")
 	 */
 	protected $company;
 
 	/**
 	 * @var address
-	 * @ORM\ManyToMany(type="address")
+	 * @ORM\Column(type="address")
 	 */
 	protected $address;
-
-
-	public function __construct() {
-		parent::__construct();
-
-	}
-
-
-	/**
-	 * @param Company $company
-	 * @return Office
-	 */
-	public function setCompany(Company  $company) {
-		$this->company = $company;
-		return $this;
-	}
-
-
-	/**
-	 * @return Company
-	 */
-	public function getCompany() {
-		return $this->company;
-	}
-
-
-	/**
-	 * @param address $address
-	 * @return Office
-	 */
-	public function setAddress($address) {
-		$this->address = $address;
-		return $this;
-	}
-
-
-	/**
-	 * @return address
-	 */
-	public function getAddress() {
-		return $this->address;
-	}
 
 }

@@ -13,56 +13,14 @@ class Role extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Dictionary\Phrase")
+	 * @ORM\OneToOne(targetEntity="Dictionary\Phrase")
 	 */
 	protected $name;
 
 	/**
 	 * @var url
-	 * @ORM\ManyToMany(type="url")
+	 * @ORM\Column(type="url")
 	 */
 	protected $homePage;
-
-
-	public function __construct() {
-		parent::__construct();
-
-	}
-
-
-	/**
-	 * @param Dictionary\Phrase $name
-	 * @return Role
-	 */
-	public function setName(Dictionary\Phrase  $name) {
-		$this->name = $name;
-		return $this;
-	}
-
-
-	/**
-	 * @return Dictionary\Phrase
-	 */
-	public function getName() {
-		return $this->name;
-	}
-
-
-	/**
-	 * @param url $homePage
-	 * @return Role
-	 */
-	public function setHomePage($homePage) {
-		$this->homePage = $homePage;
-		return $this;
-	}
-
-
-	/**
-	 * @return url
-	 */
-	public function getHomePage() {
-		return $this->homePage;
-	}
 
 }

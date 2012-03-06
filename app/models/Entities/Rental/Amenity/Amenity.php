@@ -14,56 +14,14 @@ class Amenity extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(type="Group")
+	 * @ORM\ManyToOne(type="Group", inversedBy="amenities")
 	 */
 	protected $group;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Dictionary\Phrase")
+	 * @ORM\OneToOne(targetEntity="Dictionary\Phrase")
 	 */
 	protected $name;
-
-
-	public function __construct() {
-		parent::__construct();
-
-	}
-
-
-	/**
-	 * @param Group $group
-	 * @return Amenity
-	 */
-	public function setGroup(Group  $group) {
-		$this->group = $group;
-		return $this;
-	}
-
-
-	/**
-	 * @return Group
-	 */
-	public function getGroup() {
-		return $this->group;
-	}
-
-
-	/**
-	 * @param Dictionary\Phrase $name
-	 * @return Amenity
-	 */
-	public function setName(Dictionary\Phrase  $name) {
-		$this->name = $name;
-		return $this;
-	}
-
-
-	/**
-	 * @return Dictionary\Phrase
-	 */
-	public function getName() {
-		return $this->name;
-	}
 
 }

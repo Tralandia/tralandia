@@ -13,56 +13,14 @@ class Type extends \BaseEntity {
 
 	/**
 	 * @var string
-	 * @ORM\ManyToMany(type="string", nullable=true)
+	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $nameTechnical;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Dictionary\Phrase")
+	 * @ORM\OneToOne(targetEntity="Dictionary\Phrase")
 	 */
 	protected $name;
-
-
-	public function __construct() {
-		parent::__construct();
-
-	}
-
-
-	/**
-	 * @param string $nameTechnical
-	 * @return Type
-	 */
-	public function setNameTechnical($nameTechnical) {
-		$this->nameTechnical = $nameTechnical;
-		return $this;
-	}
-
-
-	/**
-	 * @return string
-	 */
-	public function getNameTechnical() {
-		return $this->nameTechnical;
-	}
-
-
-	/**
-	 * @param Dictionary\Phrase $name
-	 * @return Type
-	 */
-	public function setName(Dictionary\Phrase  $name) {
-		$this->name = $name;
-		return $this;
-	}
-
-
-	/**
-	 * @return Dictionary\Phrase
-	 */
-	public function getName() {
-		return $this->name;
-	}
 
 }
