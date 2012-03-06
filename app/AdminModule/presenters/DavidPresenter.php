@@ -20,7 +20,7 @@ class DavidPresenter extends BasePresenter {
 	public function actionTest() {
 		$phrase = new D\PhraseService(1);
 		$translation = $phrase->getTranslation(new D\LanguageService(1));
-		debug($translation);
+		//debug($translation);
 	}
 
 	public function actionAddPhrase() {
@@ -32,12 +32,12 @@ class DavidPresenter extends BasePresenter {
 			'ready' => FALSE,
 			'entityId' => FALSE,
 		));
-		debug($phrase);
+		//debug($phrase);
 	}
 
 	public function actionUpdatePhrase($id) {
 		$phrase = new D\PhraseService($id);
-		debug($phrase);
+		//debug($phrase);
 
 		$l1 = new D\LanguageService(3);
 		$l2 = new D\LanguageService(1);
@@ -57,14 +57,14 @@ class DavidPresenter extends BasePresenter {
 		));
 
 		$phrase->save();
-		debug($phrase);
+		//debug($phrase);
 	}
 
 	public function actionUpdateLanguage($id) {
 		$translation = new D\LanguageService($id);
 		$translation->name = new D\PhraseService(1);
 		$translation->save();
-		debug($translation);
+		//debug($translation);
 	}
 
 	public function actionAddLanguage($id) {
@@ -72,7 +72,7 @@ class DavidPresenter extends BasePresenter {
 		$language->iso = $id;
 		$language->supported = false;
 		$language->save();
-		debug($language);
+		//debug($language);
 	}
 
 	public function actionList() {
@@ -80,7 +80,7 @@ class DavidPresenter extends BasePresenter {
 		$dictionary = new D\DictionaryService;
 
 		$quality = $dictionary->createQuality('basic3', 12);
-		debug($quality);
+		//debug($quality);
 
 		$type = $dictionary->createType(array(
 			'entityName' => 'rental',
@@ -92,8 +92,8 @@ class DavidPresenter extends BasePresenter {
 			'isPositionRequired' => FALSE, 
 			'isWebalizedRequired' => FALSE, 
 		));
-		debug($type);
-		debug($dictionary);
+		//debug($type);
+		//debug($dictionary);
 
 		/*
 		$country = new \Tra\Services\Country(1);

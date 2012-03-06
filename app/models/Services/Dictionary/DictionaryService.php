@@ -39,7 +39,7 @@ class DictionaryService extends \Tra\Services\BaseService {
 		foreach ($data as $key => $val) {
 			if($val instanceof \Tra\Services\Service) {
 				$val = $val->getMainEntity();
-				debug($val);
+				//debug($val);
 			}
 			$type->$key = $val;
 		}
