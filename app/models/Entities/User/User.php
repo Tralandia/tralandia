@@ -6,7 +6,6 @@ use Entities\Contact;
 use Entities\Dictionary;
 use Entities\Location;
 use Entities\Rental;
-use Entities\User;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

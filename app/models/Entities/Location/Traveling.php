@@ -2,7 +2,6 @@
 
 namespace Entities\Location;
 
-use Entities\Location;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

@@ -2,7 +2,6 @@
 
 namespace Entities\Company;
 
-use Entities\Company;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

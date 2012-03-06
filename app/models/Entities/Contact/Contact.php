@@ -2,7 +2,6 @@
 
 namespace Entities\Contact;
 
-use Entities\Contact;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

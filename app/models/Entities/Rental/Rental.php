@@ -7,7 +7,6 @@ use Entities\Dictionary;
 use Entities\Invoicing;
 use Entities\Location;
 use Entities\Medium;
-use Entities\Rental;
 use Entities\User;
 use Doctrine\ORM\Mapping as ORM;
 

@@ -4,7 +4,6 @@ namespace Entities\Ticket;
 
 use Entities\Dictionary;
 use Entities\Location;
-use Entities\Ticket;
 use Entities\User;
 use Doctrine\ORM\Mapping as ORM;
 

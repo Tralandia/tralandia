@@ -2,7 +2,6 @@
 
 namespace Entities\Expense;
 
-use Entities\Expense;
 use Entities\Location;
 use Entities\Company;
 use Entities\User;

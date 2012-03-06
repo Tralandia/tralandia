@@ -2,7 +2,6 @@
 
 namespace Entities\Attraction;
 
-use Entities\Attraction;
 use Entities\Contact;
 use Entities\Dictionary;
 use Entities\Location;

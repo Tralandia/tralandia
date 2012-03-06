@@ -2,7 +2,6 @@
 
 namespace Entities\Company;
 
-use Entities\Company;
 use Entities\Dictionary;
 use Entities\Invoicing;
 use Entities\Location;

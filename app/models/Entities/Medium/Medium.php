@@ -3,7 +3,6 @@
 namespace Entities\Medium;
 
 use Entities\Dictionary;
-use Entities\Medium;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

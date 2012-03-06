@@ -3,7 +3,6 @@
 namespace Entities\Location;
 
 use Entities\Dictionary;
-use Entities\Location;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
