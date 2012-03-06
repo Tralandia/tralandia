@@ -21,25 +21,25 @@ class Currency extends \BaseEntity {
 
 	/**
 	 * @var string
-	 * @ORM\ManyToMany(type="string", nullable=true)
+	 * @ORM\Column(type="string")
 	 */
 	protected $iso;
 
 	/**
 	 * @var decimal
-	 * @ORM\ManyToMany(type="decimal")
+	 * @ORM\Column(type="decimal")
 	 */
 	protected $exchangeRate;
 
 	/**
 	 * @var integer
-	 * @ORM\ManyToMany(type="integer")
+	 * @ORM\Column(type="integer")
 	 */
 	protected $decimalPlaces;
 
 	/**
 	 * @var string
-	 * @ORM\ManyToMany(type="string", nullable=true)
+	 * @ORM\Column(type="string")
 	 */
 	protected $rounding;
 

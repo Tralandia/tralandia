@@ -2,7 +2,7 @@
 
 namespace Entities;
 
-use Location;
+use Entities\Location;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -16,13 +16,13 @@ class Domain extends \BaseEntity {
 
 	/**
 	 * @var string
-	 * @ORM\ManyToMany(type="string", nullable=true)
+	 * @ORM\Column(type="string")
 	 */
 	protected $domain;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Location\Location")
+	 * @ORM\OneToMany(targetEntity="Location\Location")
 	 */
 	protected $locations;
 
@@ -56,7 +56,10 @@ class Domain extends \BaseEntity {
 	 * @return Domain
 	 */
 	public function addLocation(Location\Location  $location) {
-		$this->locations->add($location);
+		if(!$this->locations->contains($location)) {
+			$this->locations->add($location);
+		}
+
 		return $this;
 	}
 
@@ -66,7 +69,10 @@ class Domain extends \BaseEntity {
 	 * @return Domain
 	 */
 	public function removeLocation(Location\Location  $location) {
-		$this->locations->removeElement($location);
+		if($this->locations->contains($location)) {
+			$this->locations->removeElement($location);
+		}
+
 		return $this;
 	}
 

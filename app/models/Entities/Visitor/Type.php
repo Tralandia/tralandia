@@ -15,7 +15,7 @@ class Type extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Dictionary\Phrase")
+	 * @ORM\OneToOne(targetEntity="Dictionary\Phrase")
 	 */
 	protected $name;
 

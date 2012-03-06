@@ -18,37 +18,37 @@ class Interaction extends \BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(type="Type")
+	 * @ORM\ManyToOne(targetEntity="Type")
 	 */
 	protected $type;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="User\Role")
+	 * @ORM\ManyToOne(targetEntity="User\Role")
 	 */
 	protected $role;
 
 	/**
 	 * @var email
-	 * @ORM\ManyToMany(type="email")
+	 * @ORM\Column(type="email")
 	 */
 	protected $senderEmail;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Dictionary\Language")
+	 * @ORM\ManyToOne(targetEntity="Dictionary\Language")
 	 */
 	protected $language;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Rental\Rental")
+	 * @ORM\ManyToOne(targetEntity="Rental\Rental")
 	 */
 	protected $rental;
 
 	/**
 	 * @var integer
-	 * @ORM\ManyToMany(type="integer")
+	 * @ORM\Column(type="integer")
 	 */
 	protected $status;
 

@@ -11,7 +11,7 @@ class BaseEntityDetails extends BaseEntity {
 
 	/**
 	 * @var json
-	 * @ORM\ManyToMany(type="json")
+	 * @ORM\Column(type="json")
 	 */
 	protected $details;
 
