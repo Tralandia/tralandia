@@ -2,7 +2,7 @@
 
 use Nette\DI,
 	Nette\ArrayHash,
-	Nette\Config\Config;
+	Nette\Utils\Neon;
 
 class PresenterSettings extends \Nette\Object {
 	
@@ -20,7 +20,9 @@ class PresenterSettings extends \Nette\Object {
 		$this->presenter = $presenter;
 		$this->settingsDir = $settingsDir;
 		$this->name = str_replace('Presenter', null, $presenter->getReflection()->getShortName());
-		$this->params = ArrayHash::from(Config::fromFile($this->settingsDir . '/presenters/' . strtolower($this->getName()) . '.neon', 'common'));
+		
+		$config = new Nette\Config\Loader;
+		$this->params = ArrayHash::from($config->load($this->settingsDir . '/presenters/' . strtolower($this->getName()) . '.neon', 'common'));
 	}
 	
 	public function getName() {
@@ -46,5 +48,4 @@ class PresenterSettings extends \Nette\Object {
 	public function getH1() {
 		return isset($this->params->h1) ? $this->params->h1 : $this->title;
 	}
-
 }

@@ -97,7 +97,9 @@ class Datagrid extends \DataGrid\DataGrid {
     function addEditableField($name,$type=null){
         $form = $this->getEditForm();
 
-		if($this->currentContainer) {
+		if($this->currentContainer && is_object($this->currentContainer)) {
+			$formCol = $form[get_class($this->currentContainer)][$name]; // Is column in Form?
+		} elseif($this->currentContainer) {
 			$formCol = $form[$this->currentContainer][$name]; // Is column in Form?
 		} else {
 			$formCol = $form[$name]; // Is column in Form?

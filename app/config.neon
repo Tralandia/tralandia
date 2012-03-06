@@ -5,8 +5,8 @@ common:
 		max_execution_time: 60
 
 	nette:
-			session:
-				autoStart: smart
+		session:
+			autoStart: smart
 		
 	parameters:
 		security:
@@ -42,6 +42,10 @@ common:
 			entityManager: default
 		
 	services:
+		nette.presenterFactory:
+			class: DynamicPresenterFactory
+			factory: DynamicPresenterFactory::factory
+	
 		console: @doctrine.console
 		
 		entityManager: @doctrine.entityManagers.default
