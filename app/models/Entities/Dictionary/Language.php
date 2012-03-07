@@ -13,7 +13,7 @@ class Language extends \BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(type="Phrase")
+	 * @ORM\OneToOne(targetEntity="Phrase")
 	 */
 	protected $name;
 
@@ -58,5 +58,17 @@ class Language extends \BaseEntityDetails {
 	 * @ORM\Column(type="json")
 	 */
 	protected $ppcPatterns;
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToMany(targetEntity="Entities\Location\Location", inversedBy="langages")
+	 */
+	protected $locations;
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToMany(targetEntity="Entities\Rental\Rental", inversedBy="langages")
+	 */
+	protected $languages;
 
 }

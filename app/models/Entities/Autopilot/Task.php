@@ -2,7 +2,6 @@
 
 namespace Entities\Autopilot;
 
-use Entities\Autopilot;
 use Entities\Dictionary;
 use Entities\Location;
 use Entities\User;
@@ -58,31 +57,31 @@ class Task extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="User\User")
+	 * @ORM\ManyToOne(targetEntity="Entities\User\User")
 	 */
 	protected $user;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Location\Location")
+	 * @ORM\ManyToOne(targetEntity="Entities\Location\Location")
 	 */
 	protected $userCountry;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Dictionary\Language")
+	 * @ORM\ManyToOne(targetEntity="Entities\Dictionary\Language")
 	 */
 	protected $userLanguage;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Dictionary\Quality")
+	 * @ORM\Column(type="integer")
 	 */
-	protected $userLanguageQuality;
+	protected $userLanguageLevel;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="User\Role")
+	 * @ORM\ManyToOne(targetEntity="Entities\User\Role")
 	 */
 	protected $userRole;
 

@@ -27,13 +27,13 @@ class Message extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Dictionary\Phrase")
+	 * @ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase")
 	 */
 	protected $message;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Medium\Medium")
+	 * @ORM\OneToMany(targetEntity="Entities\Medium\Medium")
 	 */
 	protected $attachments;
 

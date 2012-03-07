@@ -34,13 +34,13 @@ class Invoice extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Company\Company", inversedBy="invoices")
+	 * @ORM\ManyToOne(targetEntity="Entities\Company\Company", inversedBy="invoices")
 	 */
 	protected $invoicingCompany;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Rental\Rental", inversedBy="invoices")
+	 * @ORM\ManyToOne(targetEntity="Entities\Rental\Rental", inversedBy="invoices")
 	 */
 	protected $rental;
 
@@ -94,7 +94,7 @@ class Invoice extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Dictionary\Language")
+	 * @ORM\ManyToOne(targetEntity="Entities\Dictionary\Language")
 	 */
 	protected $clientLanguage;
 

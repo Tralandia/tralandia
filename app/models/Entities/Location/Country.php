@@ -15,19 +15,19 @@ class Country extends \BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Currency")
+	 * @ORM\ManyToOne(targetEntity="Entities\Currency")
 	 */
 	protected $defaultCurrency;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Currency")
+	 * @ORM\ManyToMany(targetEntity="Entities\Currency", mappedBy="countries")
 	 */
 	protected $currencies;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Dictionary\Language")
+	 * @ORM\ManyToOne(targetEntity="Entities\Dictionary\Language")
 	 */
 	protected $defaultLanguage;
 
@@ -43,15 +43,15 @@ class Country extends \BaseEntityDetails {
 	 */
 	protected $phonePrefix;
 
-	/**
-	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Location")
-	 */
-	protected $neighbours;
+	// /**
+	//  * @var Collection
+	//  * @ORM\OneToMany(targetEntity="Location")
+	//  */
+	// protected $neighbours;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Contact\Contact")
+	 * @ORM\ManyToOne(targetEntity="Entities\Contact\Contact")
 	 */
 	protected $fbGroup;
 
@@ -63,31 +63,31 @@ class Country extends \BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Contact\Contact")
+	 * @ORM\ManyToOne(targetEntity="Entities\Contact\Contact")
 	 */
 	protected $phoneNumberEmergency;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Contact\Contact")
+	 * @ORM\ManyToOne(targetEntity="Entities\Contact\Contact")
 	 */
 	protected $phoneNumberPolice;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Contact\Contact")
+	 * @ORM\ManyToOne(targetEntity="Entities\Contact\Contact")
 	 */
 	protected $phoneNumberMedical;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Contact\Contact")
+	 * @ORM\ManyToOne(targetEntity="Entities\Contact\Contact")
 	 */
 	protected $phoneNumberFire;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Contact\Contact")
+	 * @ORM\ManyToOne(targetEntity="Entities\Contact\Contact")
 	 */
 	protected $wikipediaLink;
 
@@ -119,6 +119,6 @@ class Country extends \BaseEntityDetails {
 	 * @var Collection
 	 * @ORM\OneToOne(targetEntity="Location", mappedBy="country")
 	 */
-	protected $Location;
+	protected $location;
 
 }

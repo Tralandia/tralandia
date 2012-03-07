@@ -13,7 +13,7 @@ class Service extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Invoicing\Package", inversedBy="services")
+	 * @ORM\ManyToOne(targetEntity="Entities\Invoicing\Package", inversedBy="services")
 	 */
 	protected $package;
 

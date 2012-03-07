@@ -20,7 +20,7 @@ class Group extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Dictionary\Phrase")
+	 * @ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase")
 	 */
 	protected $name;
 

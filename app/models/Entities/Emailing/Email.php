@@ -20,25 +20,25 @@ class Email extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Dictionary\Phrase")
+	 * @ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase")
 	 */
 	protected $subject;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Dictionary\Phrase")
+	 * @ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase")
 	 */
 	protected $body;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Dictionary\Phrase")
+	 * @ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase")
 	 */
 	protected $bodyHtml;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Dictionary\Language")
+	 * @ORM\ManyToOne(targetEntity="Entities\Dictionary\Language")
 	 */
 	protected $language;
 

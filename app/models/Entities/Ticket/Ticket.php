@@ -21,19 +21,19 @@ class Ticket extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="User\User")
+	 * @ORM\ManyToOne(targetEntity="Entities\User\User")
 	 */
 	protected $staff;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Location\Location")
+	 * @ORM\ManyToOne(targetEntity="Entities\Location\Location")
 	 */
 	protected $country;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Dictionary\Language")
+	 * @ORM\ManyToOne(targetEntity="Entities\Dictionary\Language")
 	 */
 	protected $language;
 

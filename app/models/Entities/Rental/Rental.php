@@ -18,13 +18,13 @@ class Rental extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="User\User", inversedBy="rentals")
+	 * @ORM\ManyToOne(targetEntity="Entities\User\User", inversedBy="rentals")
 	 */
 	protected $user;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Dictionary\Language")
+	 * @ORM\ManyToOne(targetEntity="Entities\Dictionary\Language")
 	 */
 	protected $editLanguage;
 
@@ -54,7 +54,7 @@ class Rental extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Location\Location")
+	 * @ORM\ManyToMany(targetEntity="Entities\Location\Location", mappedBy="rentals")
 	 */
 	protected $locations;
 
@@ -84,43 +84,43 @@ class Rental extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Dictionary\Phrase")
+	 * @ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase")
 	 */
 	protected $name;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Dictionary\Phrase")
+	 * @ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase")
 	 */
 	protected $briefDescription;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Dictionary\Phrase")
+	 * @ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase")
 	 */
 	protected $description;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Dictionary\Phrase")
+	 * @ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase")
 	 */
 	protected $teaser;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Contact\Contact")
+	 * @ORM\OneToMany(targetEntity="Entities\Contact\Contact")
 	 */
 	protected $contacts;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Dictionary\Language")
+	 * @ORM\OneToMany(targetEntity="Entities\Dictionary\Language")
 	 */
 	protected $languagesSpoken;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Rental\Amenity\Amenity")
+	 * @ORM\OneToMany(targetEntity="Entities\Rental\Amenity\Amenity")
 	 */
 	protected $amenities;
 
@@ -168,7 +168,7 @@ class Rental extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Medium\Medium")
+	 * @ORM\OneToMany(targetEntity="Entities\Medium\Medium")
 	 */
 	protected $media;
 
@@ -192,7 +192,7 @@ class Rental extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Invoicing\Invoice", mappedBy="rental")
+	 * @ORM\OneToMany(targetEntity="Entities\Invoicing\Invoice", mappedBy="rental")
 	 */
 	protected $invoices;
 

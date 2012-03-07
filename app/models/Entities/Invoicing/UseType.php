@@ -13,8 +13,20 @@ class UseType extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Dictionary\Phrase")
+	 * @ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase")
 	 */
 	protected $name;
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToMany(targetEntity="Package", inversedBy="uses")
+	 */
+	protected $packages;
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToMany(targetEntity="Marketing", inversedBy="uses")
+	 */
+	protected $marketings;
 
 }

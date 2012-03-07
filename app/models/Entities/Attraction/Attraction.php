@@ -23,19 +23,19 @@ class Attraction extends \BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Dictionary\Phrase")
+	 * @ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase")
 	 */
 	protected $name;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Dictionary\Phrase")
+	 * @ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase")
 	 */
 	protected $description;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Location\Location")
+	 * @ORM\ManyToOne(targetEntity="Entities\Location\Location")
 	 */
 	protected $country;
 
@@ -53,19 +53,19 @@ class Attraction extends \BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Contact\Contact")
+	 * @ORM\ManyToMany(targetEntity="Entities\Contact\Contact", mappedBy="attractions")
 	 */
 	protected $contacts;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="User\User")
+	 * @ORM\ManyToOne(targetEntity="Entities\User\User")
 	 */
 	protected $managingUser;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Medium\Medium")
+	 * @ORM\ManyToMany(targetEntity="Entities\Medium\Medium", mappedBy="attractions")
 	 */
 	protected $media;
 

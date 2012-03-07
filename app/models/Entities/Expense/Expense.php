@@ -33,25 +33,25 @@ class Expense extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Location\Location")
+	 * @ORM\ManyToOne(targetEntity="Entities\Location\Location")
 	 */
 	protected $country;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Company\Company")
+	 * @ORM\ManyToOne(targetEntity="Entities\Company\Company")
 	 */
 	protected $company;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Company\BankAccount")
+	 * @ORM\ManyToOne(targetEntity="Entities\Company\BankAccount")
 	 */
 	protected $bankAccount;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="User\User")
+	 * @ORM\ManyToOne(targetEntity="Entities\User\User")
 	 */
 	protected $user;
 

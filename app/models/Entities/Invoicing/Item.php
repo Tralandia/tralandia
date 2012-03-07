@@ -20,7 +20,7 @@ class Item extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Attraction\Type")
+	 * @ORM\ManyToOne(targetEntity="Entities\Attraction\Type")
 	 */
 	protected $serviceType;
 

@@ -22,7 +22,7 @@ class Interaction extends \BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="User\Role")
+	 * @ORM\ManyToOne(targetEntity="Entities\User\Role")
 	 */
 	protected $role;
 
@@ -34,13 +34,13 @@ class Interaction extends \BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Dictionary\Language")
+	 * @ORM\ManyToOne(targetEntity="Entities\Dictionary\Language")
 	 */
 	protected $language;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Rental\Rental")
+	 * @ORM\ManyToOne(targetEntity="Entities\Rental\Rental")
 	 */
 	protected $rental;
 

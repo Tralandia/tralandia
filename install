@@ -38,5 +38,8 @@ else
 	chmod -R 777 ./public/storage
 fi
 
-#cd public
-#php -f doctrine-cli.php orm:generate-proxies
+#@toto toto je tu len docasne!
+rm -rf ./log/*
+
+cd public
+php -f index.php orm:generate-proxies

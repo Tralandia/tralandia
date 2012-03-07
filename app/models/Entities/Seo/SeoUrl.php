@@ -17,19 +17,19 @@ class SeoUrl extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Location\Location")
+	 * @ORM\ManyToOne(targetEntity="Entities\Location\Location")
 	 */
 	protected $country;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Rental\Type")
+	 * @ORM\ManyToOne(targetEntity="Entities\Rental\Type")
 	 */
 	protected $rentalType;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Location\Location")
+	 * @ORM\ManyToOne(targetEntity="Entities\Location\Location")
 	 */
 	protected $location;
 
@@ -41,49 +41,49 @@ class SeoUrl extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Rental\Amenity\Amenity")
+	 * @ORM\ManyToOne(targetEntity="Entities\Rental\Amenity\Amenity")
 	 */
 	protected $tag;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Attraction\Attraction")
+	 * @ORM\ManyToOne(targetEntity="Entities\Attraction\Attraction")
 	 */
 	protected $attractionType;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Medium\Medium")
+	 * @ORM\OneToMany(targetEntity="Entities\Medium\Medium")
 	 */
 	protected $media;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Dictionary\Phrase")
+	 * @ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase")
 	 */
 	protected $title;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Dictionary\Phrase")
+	 * @ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase")
 	 */
 	protected $h1;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Dictionary\Phrase")
+	 * @ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase")
 	 */
 	protected $tabName;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Dictionary\Phrase")
+	 * @ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase")
 	 */
 	protected $description;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Dictionary\Phrase")
+	 * @ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase")
 	 */
 	protected $ppcKeywords;
 

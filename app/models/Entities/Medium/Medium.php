@@ -3,6 +3,7 @@
 namespace Entities\Medium;
 
 use Entities\Dictionary;
+use Entities\Attraction;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -19,9 +20,15 @@ class Medium extends \BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Dictionary\Phrase")
+	 * @ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase")
 	 */
 	protected $name;
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToMany(targetEntity="Entities\Attraction\Attraction", inversedBy="media")
+	 */
+	protected $attractions;
 
 	/**
 	 * @var text

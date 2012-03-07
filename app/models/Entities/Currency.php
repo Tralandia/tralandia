@@ -13,7 +13,7 @@ class Currency extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Dictionary\Phrase")
+	 * @ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase")
 	 */
 	protected $name;
 
@@ -40,5 +40,11 @@ class Currency extends \BaseEntity {
 	 * @ORM\Column(type="string")
 	 */
 	protected $rounding;
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToMany(targetEntity="Entities\Location\Country", inversedBy="currencies")
+	 */
+	protected $coutries;
 
 }

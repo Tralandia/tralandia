@@ -13,25 +13,25 @@ class Location extends \BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Dictionary\Language")
+	 * @ORM\OneToMany(targetEntity="Entities\Dictionary\Language", mappedBy="locations")
 	 */
 	protected $languages;
 
 	/**
 	 * @var Collection
-	 * @ORM\OntToOne(targetEntity="Dictionary\Phrase")
+	 * @ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase")
 	 */
 	protected $name;
 
 	/**
 	 * @var Collection
-	 * @ORM\OntToOne(targetEntity="Dictionary\Phrase")
+	 * @ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase")
 	 */
 	protected $nameOfficial;
 
 	/**
 	 * @var Collection
-	 * @ORM\OntToOne(targetEntity="Dictionary\Phrase")
+	 * @ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase")
 	 */
 	protected $nameShort;
 
@@ -91,13 +91,49 @@ class Location extends \BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Travelink", mappedBy="destination")
+	 * @ORM\ManyToMany(targetEntity="Entities\Company\BankAccount", inversedBy="countries")
+	 */
+	protected $bankAccounts;
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToMany(targetEntity="Entities\Company\Company", inversedBy="countries")
+	 */
+	protected $companies;
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToMany(targetEntity="Entities\Domain", inversedBy="locations")
+	 */
+	protected $domains;
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToMany(targetEntity="Entities\Invoicing\Marketing", inversedBy="locations")
+	 */
+	protected $marketings;
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToMany(targetEntity="Entities\Rental\Rental", inversedBy="locations")
+	 */
+	protected $rentals;
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToMany(targetEntity="Entities\User\User", inversedBy="locations")
+	 */
+	protected $users;
+
+	/**
+	 * @var Collection
+	 * @ORM\OneToMany(targetEntity="Traveling", mappedBy="destination")
 	 */
 	protected $incomings;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Travelink", mappedBy="source")
+	 * @ORM\OneToMany(targetEntity="Traveling", mappedBy="source")
 	 */
 	protected $travelings;
 

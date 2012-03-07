@@ -2,6 +2,7 @@
 
 namespace Entities\Contact;
 
+use Entities\Attraction;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -21,6 +22,12 @@ class Contact extends \BaseEntity {
 	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $value;
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToMany(targetEntity="Entities\Attraction\Attraction", inversedBy="contacts")
+	 */
+	protected $attractions;
 
 	/**
 	 * @var json

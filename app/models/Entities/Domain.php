@@ -20,7 +20,7 @@ class Domain extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Location\Location")
+	 * @ORM\ManyToMany(targetEntity="Entities\Location\Location", mappedBy="domains")
 	 */
 	protected $locations;
 

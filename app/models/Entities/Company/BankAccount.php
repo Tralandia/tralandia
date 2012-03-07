@@ -2,7 +2,6 @@
 
 namespace Entities\Company;
 
-use Entities\Company;
 use Entities\Location;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -14,7 +13,7 @@ class BankAccount extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Location\Location")
+	 * @ORM\ManyToMany(targetEntity="Entities\Location\Location", mappedBy="bankAccounts")
 	 */
 	protected $countries;
 

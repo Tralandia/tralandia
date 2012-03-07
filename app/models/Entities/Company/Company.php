@@ -22,7 +22,7 @@ class Company extends \BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Location\Location")
+	 * @ORM\ManyToMany(targetEntity="Entities\Location\Location", mappedBy="companies")
 	 */
 	protected $countries;
 
@@ -64,19 +64,19 @@ class Company extends \BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Dictionary\Phrase")
+	 * @ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase")
 	 */
 	protected $registrator;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Medium\Medium")
+	 * @ORM\ManyToOne(targetEntity="Entities\Medium\Medium")
 	 */
 	protected $signature;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Invoicing\Invoice", mappedBy="invoicingCompany")
+	 * @ORM\OneToMany(targetEntity="Entities\Invoicing\Invoice", mappedBy="invoicingCompany")
 	 */
 	protected $invoices;
 

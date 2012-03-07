@@ -3,7 +3,6 @@
 namespace Entities\Invoicing;
 
 use Entities\Dictionary;
-use Entities\Invoicing;
 use Entities\Location;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -15,31 +14,31 @@ class Package extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Dictionary\Phrase")
+	 * @ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase")
 	 */
 	protected $name;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Dictionary\Phrase")
+	 * @ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase")
 	 */
 	protected $teaser;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="UseType")
+	 * @ORM\ManyToMany(targetEntity="UseType", mappedBy="packages")
 	 */
 	protected $uses;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Location\Location")
+	 * @ORM\ManyToOne(targetEntity="Entities\Location\Location")
 	 */
 	protected $country;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Invoicing\Service\Service", mappedBy="package")
+	 * @ORM\OneToMany(targetEntity="Entities\Invoicing\Service\Service", mappedBy="package")
 	 */
 	protected $services;
 

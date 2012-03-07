@@ -15,13 +15,13 @@ class Marketing extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Dictionary\Phrase")
+	 * @ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase")
 	 */
 	protected $name;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Dictionary\Phrase")
+	 * @ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase")
 	 */
 	protected $description;
 
@@ -33,15 +33,9 @@ class Marketing extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Location\Location")
+	 * @ORM\ManyToMany(targetEntity="Entities\Location\Location", mappedBy="marketings")
 	 */
-	protected $locationsIncluded;
-
-	/**
-	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Location\Location")
-	 */
-	protected $locationsExcluded;
+	protected $locations;
 
 	/**
 	 * @var integer
@@ -69,7 +63,7 @@ class Marketing extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="UseType")
+	 * @ORM\ManyToMany(targetEntity="UseType", mappedBy="marketings")
 	 */
 	protected $uses;
 

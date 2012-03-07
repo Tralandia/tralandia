@@ -34,25 +34,25 @@ class User extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Contact\Contact")
+	 * @ORM\OneToMany(targetEntity="Entities\Contact\Contact")
 	 */
 	protected $contacts;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Dictionary\Language")
+	 * @ORM\ManyToOne(targetEntity="Entities\Dictionary\Language")
 	 */
 	protected $languageDefault;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Location\Location")
+	 * @ORM\ManyToMany(targetEntity="Entities\Location\Location", mappedBy="users")
 	 */
 	protected $locations;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Rental\Type")
+	 * @ORM\OneToMany(targetEntity="Entities\Rental\Type")
 	 */
 	protected $rentalTypes;
 
@@ -82,19 +82,19 @@ class User extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Contact\Contact")
+	 * @ORM\ManyToOne(targetEntity="Entities\Contact\Contact")
 	 */
 	protected $invoicingEmail;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Contact\Contact")
+	 * @ORM\ManyToOne(targetEntity="Entities\Contact\Contact")
 	 */
 	protected $invoicingPhone;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Contact\Contact")
+	 * @ORM\ManyToOne(targetEntity="Entities\Contact\Contact")
 	 */
 	protected $invoicingUrl;
 
@@ -136,7 +136,7 @@ class User extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Rental\Rental", mappedBy="user")
+	 * @ORM\OneToMany(targetEntity="Entities\Rental\Rental", mappedBy="user")
 	 */
 	protected $rentals;
 
