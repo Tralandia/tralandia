@@ -1,12 +1,19 @@
 <?php
 
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\MappedSuperclass
+ * @ORM\Entity()
+ * @ORM\Table(name="baseentitydetails")
+ * @ORM\MappedSuperclass()
  */
-abstract class BaseEntityDetails extends BaseEntity
-{
+class BaseEntityDetails extends BaseEntity {
 
+	/**
+	 * @var json
+	 * @ORM\Column(type="json")
+	 */
+	protected $details;
 
 }

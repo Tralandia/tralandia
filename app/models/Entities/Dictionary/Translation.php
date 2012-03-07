@@ -1,70 +1,135 @@
 <?php
 
-namespace Dictionary;
+namespace Entities\Dictionary;
 
+use Entities\Dictionary;
 use Doctrine\ORM\Mapping as ORM;
-use Dictionary;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\ArrayCollection;
-
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="DictionaryTranslation")
+ * @ORM\Table(name="dictionary_translation")
  */
-class Translation extends \BaseEntity
-{
+class Translation extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Phrase")
+	 * @ORM\ManyToOne(type="Phrase", inversedBy="translations")
 	 */
 	protected $phrase;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Language")
+	 * @ORM\ManyToOne(type="Language")
 	 */
 	protected $language;
 
 	/**
 	 * @var text
-	 * @ORM\Column(type="text")
+	 * @ORM\Column(type="text", nullable=true)
 	 */
 	protected $translation;
 
 	/**
 	 * @var text
-	 * @ORM\Column(type="text")
+	 * @ORM\Column(type="text", nullable=true)
 	 */
 	protected $translation2;
 
+	/**
+	 * @var text
+	 * @ORM\Column(type="text", nullable=true)
+	 */
+	protected $translation3;
+
+	/**
+	 * @var text
+	 * @ORM\Column(type="text", nullable=true)
+	 */
+	protected $translation4;
+
+	/**
+	 * @var text
+	 * @ORM\Column(type="text", nullable=true)
+	 */
+	protected $translation5;
+
+	/**
+	 * @var text
+	 * @ORM\Column(type="text", nullable=true)
+	 */
+	protected $translation6;
 
 	/**
 	 * @var string
-	 * @ORM\Column(type="string")
+	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $translationWebalized;
 
 	/**
 	 * @var string
-	 * @ORM\Column(type="string")
+	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $translationWebalized2;
 
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $translationWebalized3;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $translationWebalized4;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $translationWebalized5;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $translationWebalized6;
 
 	/**
 	 * @var text
-	 * @ORM\Column(type="text")
+	 * @ORM\Column(type="text", nullable=true)
 	 */
 	protected $translationPending;
 
 	/**
 	 * @var text
-	 * @ORM\Column(type="text")
+	 * @ORM\Column(type="text", nullable=true)
 	 */
 	protected $translationPending2;
 
+	/**
+	 * @var text
+	 * @ORM\Column(type="text", nullable=true)
+	 */
+	protected $translationPending3;
+
+	/**
+	 * @var text
+	 * @ORM\Column(type="text", nullable=true)
+	 */
+	protected $translationPending4;
+
+	/**
+	 * @var text
+	 * @ORM\Column(type="text", nullable=true)
+	 */
+	protected $translationPending5;
+
+	/**
+	 * @var text
+	 * @ORM\Column(type="text", nullable=true)
+	 */
+	protected $translationPending6;
 
 	/**
 	 * @var datetime
@@ -72,205 +137,16 @@ class Translation extends \BaseEntity
 	 */
 	protected $translated;
 
-
+	/**
+	 * @var json
+	 * @ORM\Column(type="json")
+	 */
+	protected $variations;
 
 	/**
-	 * @param Phrase $phrase
-	 * @return Translation
+	 * @var json
+	 * @ORM\Column(type="json")
 	 */
-	public function setPhrase(Phrase  $phrase)
-	{
-		$this->phrase = $phrase;
-		return $this;
-	}
-
-
-	/**
-	 * @return Phrase
-	 */
-	public function getPhrase()
-	{
-		return $this->phrase;
-	}
-
-
-	/**
-	 * @param Language $language
-	 * @return Translation
-	 */
-	public function setLanguage(Language  $language)
-	{
-		$this->language = $language;
-		return $this;
-	}
-
-
-	/**
-	 * @return Language
-	 */
-	public function getLanguage()
-	{
-		return $this->language;
-	}
-
-
-	/**
-	 * @param text $translation
-	 * @return Translation
-	 */
-	public function setTranslation($translation)
-	{
-		$this->translation = $translation;
-		return $this;
-	}
-
-
-	/**
-	 * @return text
-	 */
-	public function getTranslation()
-	{
-		return $this->translation;
-	}
-
-
-	/**
-	 * @param text $translation2
-	 * @return Translation
-	 */
-	public function setTranslation2($translation2)
-	{
-		$this->translation2 = $translation2;
-		return $this;
-	}
-
-
-	/**
-	 * @return text
-	 */
-	public function getTranslation2()
-	{
-		return $this->translation2;
-	}
-
-
-	/**
-	 * @param string $translationWebalized
-	 * @return Translation
-	 */
-	public function setTranslationWebalized($translationWebalized)
-	{
-		$this->translationWebalized = $translationWebalized;
-		return $this;
-	}
-
-
-	/**
-	 * @return string
-	 */
-	public function getTranslationWebalized()
-	{
-		return $this->translationWebalized;
-	}
-
-
-	/**
-	 * @param string $translationWebalized2
-	 * @return Translation
-	 */
-	public function setTranslationWebalized2($translationWebalized2)
-	{
-		$this->translationWebalized2 = $translationWebalized2;
-		return $this;
-	}
-
-
-	/**
-	 * @return string
-	 */
-	public function getTranslationWebalized2()
-	{
-		return $this->translationWebalized2;
-	}
-
-
-	/**
-	 * @param text $translationPending
-	 * @return Translation
-	 */
-	public function setTranslationPending($translationPending)
-	{
-		$this->translationPending = $translationPending;
-		return $this;
-	}
-
-
-	/**
-	 * @return text
-	 */
-	public function getTranslationPending()
-	{
-		return $this->translationPending;
-	}
-
-
-	/**
-	 * @param text $translationPending2
-	 * @return Translation
-	 */
-	public function setTranslationPending2($translationPending2)
-	{
-		$this->translationPending2 = $translationPending2;
-		return $this;
-	}
-
-
-	/**
-	 * @return text
-	 */
-	public function getTranslationPending2()
-	{
-		return $this->translationPending2;
-	}
-
-
-	/**
-	 * @param datetime $translated
-	 * @return Translation
-	 */
-	public function setTranslated($translated)
-	{
-		$this->translated = $translated;
-		return $this;
-	}
-
-
-	/**
-	 * @return datetime
-	 */
-	public function getTranslated()
-	{
-		return $this->translated;
-	}
-
-
-	/**
-	 * @param json $variations
-	 * @return Translation
-	 */
-	public function setVariations($variations)
-	{
-		$this->variations = $variations;
-		return $this;
-	}
-
-
-	/**
-	 * @return json
-	 */
-	public function getVariations()
-	{
-		return $this->variations;
-	}
+	protected $variationsPending;
 
 }

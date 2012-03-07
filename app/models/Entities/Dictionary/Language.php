@@ -1,28 +1,25 @@
 <?php
 
-namespace Dictionary;
+namespace Entities\Dictionary;
 
+use Entities\Dictionary;
 use Doctrine\ORM\Mapping as ORM;
-use Dictionary;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="DictionaryLanguage")
+ * @ORM\Table(name="dictionary_language")
  */
-class Language extends \BaseEntityDetails
-{
+class Language extends \BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @OneToOne(targetEntity="Phrase")
+	 * @ORM\OneToOne(type="Phrase")
 	 */
 	protected $name;
 
 	/**
 	 * @var string
-	 * @ORM\Column(type="string")
+	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $iso;
 
@@ -32,70 +29,34 @@ class Language extends \BaseEntityDetails
 	 */
 	protected $supported;
 
-	// /**
-	//  * @var Collection
-	//  * @ORM\ManyToMany(targetEntity="Dictionary\Phrase")
-	//  */
-	// protected $phrase;
-
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $defaultCollation;
 
 	/**
-	 * @param Dictionary\Phrase $name
-	 * @return Language
+	 * @var json
+	 * @ORM\Column(type="json")
 	 */
-	public function setName(Phrase  $name)
-	{
-		$this->name = $name;
-		return $this;
-	}
-
+	protected $salutations;
 
 	/**
-	 * @return Dictionary\Phrase
+	 * @var json
+	 * @ORM\Column(type="json")
 	 */
-	public function getName()
-	{
-		return $this->name;
-	}
-
+	protected $multitranslationOptions;
 
 	/**
-	 * @param string $iso
-	 * @return Language
+	 * @var json
+	 * @ORM\Column(type="json")
 	 */
-	public function setIso($iso)
-	{
-		$this->iso = $iso;
-		return $this;
-	}
-
+	protected $genderNumberOptions;
 
 	/**
-	 * @return string
+	 * @var json
+	 * @ORM\Column(type="json")
 	 */
-	public function getIso()
-	{
-		return $this->iso;
-	}
-
-
-	/**
-	 * @param boolean $supported
-	 * @return Language
-	 */
-	public function setSupported($supported)
-	{
-		$this->supported = $supported;
-		return $this;
-	}
-
-
-	/**
-	 * @return boolean
-	 */
-	public function getSupported()
-	{
-		return $this->supported;
-	}
+	protected $ppcPatterns;
 
 }
