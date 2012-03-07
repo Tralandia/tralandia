@@ -14,7 +14,7 @@ class Amenity extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(type="Group", inversedBy="amenities")
+	 * @ORM\ManyToOne(targetEntity="Group", inversedBy="amenities")
 	 */
 	protected $group;
 

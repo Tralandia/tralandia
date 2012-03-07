@@ -27,7 +27,7 @@ class Marketing extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(type="Package")
+	 * @ORM\ManyToOne(targetEntity="Package")
 	 */
 	protected $package;
 
@@ -69,7 +69,7 @@ class Marketing extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(type="UseType")
+	 * @ORM\OneToMany(targetEntity="UseType")
 	 */
 	protected $uses;
 

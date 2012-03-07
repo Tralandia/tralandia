@@ -14,7 +14,7 @@ class Group extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(type="Amenity", mappedBy="goup")
+	 * @ORM\OneToMany(targetEntity="Amenity", mappedBy="goup")
 	 */
 	protected $amenities;
 

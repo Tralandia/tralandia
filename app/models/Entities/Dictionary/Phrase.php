@@ -13,7 +13,7 @@ class Phrase extends \BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(type="Translation", mappedBy="phrase")
+	 * @ORM\OneToMany(targetEntity="Translation", mappedBy="phrase")
 	 */
 	protected $translations;
 
@@ -25,7 +25,7 @@ class Phrase extends \BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(type="Type")
+	 * @ORM\ManyToOne(targetEntity="Type")
 	 */
 	protected $type;
 

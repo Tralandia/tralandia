@@ -45,7 +45,7 @@ class Country extends \BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(type="Location")
+	 * @ORM\OneToMany(targetEntity="Location")
 	 */
 	protected $neighbours;
 

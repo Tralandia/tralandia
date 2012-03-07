@@ -16,7 +16,7 @@ class Company extends \BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(type="BankAccount", mappedBy="company")
+	 * @ORM\OneToMany(targetEntity="BankAccount", mappedBy="company")
 	 */
 	protected $accounts;
 

@@ -16,7 +16,7 @@ class Task extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(type="Type")
+	 * @ORM\ManyToOne(targetEntity="Type")
 	 */
 	protected $type;
 

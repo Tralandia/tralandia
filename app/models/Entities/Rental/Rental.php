@@ -36,7 +36,7 @@ class Rental extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(type="Type")
+	 * @ORM\OneToMany(targetEntity="Type")
 	 */
 	protected $types;
 
@@ -186,7 +186,7 @@ class Rental extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(type="Fulltext", mappedBy="rental")
+	 * @ORM\OneToMany(targetEntity="Fulltext", mappedBy="rental")
 	 */
 	protected $fulltexts;
 

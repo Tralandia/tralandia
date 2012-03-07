@@ -13,13 +13,13 @@ class Translation extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(type="Phrase", inversedBy="translations")
+	 * @ORM\ManyToOne(targetEntity="Phrase", inversedBy="translations")
 	 */
 	protected $phrase;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(type="Language")
+	 * @ORM\ManyToOne(targetEntity="Language")
 	 */
 	protected $language;
 

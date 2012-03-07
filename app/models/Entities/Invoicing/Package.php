@@ -27,7 +27,7 @@ class Package extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(type="UseType")
+	 * @ORM\OneToMany(targetEntity="UseType")
 	 */
 	protected $uses;
 

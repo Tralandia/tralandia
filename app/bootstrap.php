@@ -31,6 +31,11 @@ $configurator->addConfig(APP_DIR . '/config.neon', isset($_SERVER['APPENV']) ? $
 $container = $configurator->createContainer();
 $container->addService('robotLoader', $robotLoader); // dolezite pre dynamicke presentery
 
+
+debug($container->entityManager);
+
+Doctrine\DBAL\Types\Type::addType('json', 'Doctrine\Types\Json');
+
 // Setup router // TODO: presunut do config.neon
 $container->application->onStartup[] = function() use ($container) {
 	$router = $container->application->getRouter();

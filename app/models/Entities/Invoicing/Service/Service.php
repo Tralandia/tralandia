@@ -19,13 +19,13 @@ class Service extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(type="Type")
+	 * @ORM\ManyToOne(targetEntity="Type")
 	 */
 	protected $type;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(type="Duration")
+	 * @ORM\ManyToOne(targetEntity="Duration")
 	 */
 	protected $duration;
 

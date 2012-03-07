@@ -12,7 +12,7 @@ class Office extends \BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(type="Company", inversedBy="offices")
+	 * @ORM\ManyToOne(targetEntity="Company", inversedBy="offices")
 	 */
 	protected $company;
 

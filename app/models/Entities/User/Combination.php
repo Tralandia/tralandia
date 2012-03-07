@@ -15,7 +15,7 @@ class Combination extends \BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(type="User")
+	 * @ORM\ManyToOne(targetEntity="User")
 	 */
 	protected $user;
 

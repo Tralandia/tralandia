@@ -14,7 +14,7 @@ class Item extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(type="Invoice", inversedBy="items")
+	 * @ORM\ManyToOne(targetEntity="Invoice", inversedBy="items")
 	 */
 	protected $invoice;
 

@@ -14,7 +14,7 @@ class Fulltext extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(type="Rental", inversedBy="fulltexts")
+	 * @ORM\ManyToOne(targetEntity="Rental", inversedBy="fulltexts")
 	 */
 	protected $rental;
 
