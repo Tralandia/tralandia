@@ -6,7 +6,7 @@ use Tra;
 
 class User extends BaseService {
 
-	const MAIN_ENTITY_NAME = 'User';
+	const MAIN_ENTITY_NAME = '\Entities\User';
 	
 	/*
 	public function prepareForm($form) {

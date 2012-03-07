@@ -6,7 +6,7 @@ use Tra;
 
 class Rental extends BaseService {
 	
-	const MAIN_ENTITY_NAME = 'Rental';
+	const MAIN_ENTITY_NAME = '\Entities\Rental';
 	
 	public function getDataSource() {
 		$query = $this->em->createQueryBuilder();

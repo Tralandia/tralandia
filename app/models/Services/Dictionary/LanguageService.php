@@ -6,7 +6,7 @@ use Tra;
 
 class LanguageService extends \Tra\Services\BaseService {
 
-	const MAIN_ENTITY_NAME = '\Dictionary\Language';
+	const MAIN_ENTITY_NAME = '\Entities\Dictionary\Language';
 
 	public function isSupported() {
 		return (bool)$this->supported;

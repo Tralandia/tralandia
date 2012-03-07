@@ -6,7 +6,7 @@ use Tra;
 
 class DictionaryService extends \Tra\Services\BaseService { 
 	// @todo: toto musi by serviceList!
-	const MAIN_ENTITY_NAME = '\Dictionary\Phrase';
+	const MAIN_ENTITY_NAME = '\Entities\Dictionary\Phrase';
 
 	public function getPendingTranslations(Language $language) {
 
@@ -26,16 +26,19 @@ class DictionaryService extends \Tra\Services\BaseService {
 	}
 
 	public function createQuality($name, $value) {
+/*
 		$quality = new QualityService;
 		$quality->name = $name;
 		$quality->value = $value;
 		$quality->save();
 
 		return $quality;
+*/
 	}
 
 	public function createType($data) {
-		$type = new \Dictionary\Type;
+/*
+		$type = new \Entities\Dictionary\Type;
 		foreach ($data as $key => $val) {
 			if($val instanceof \Tra\Services\Service) {
 				$val = $val->getMainEntity();
@@ -46,9 +49,10 @@ class DictionaryService extends \Tra\Services\BaseService {
 		$this->em->persist($type);
 		$this->em->flush();
 		return $type;
+*/
 	}
 
 	public function getType($id) {
-		return $this->em->find('\Dictionary\Type', $id);
+		return $this->em->find('\Entities\Dictionary\Type', $id);
 	}
 }

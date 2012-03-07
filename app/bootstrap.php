@@ -7,7 +7,6 @@ use Nette\Diagnostics\Debugger,
 
 // Load Nette Framework
 require_once LIBS_DIR . '/Nette/loader.php';
-//require_once APP_DIR . '/Configurator.php';
 require_once LIBS_DIR . '/tools.php';
 
 // Enable Nette\Debug for error visualisation & logging
@@ -30,16 +29,11 @@ Extension::register($configurator);
 // Create Dependency Injection container from config.neon file
 $configurator->addConfig(APP_DIR . '/config.neon', isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : null);
 $container = $configurator->createContainer();
-$container->addService('robotLoader', $robotLoader);
+$container->addService('robotLoader', $robotLoader); // dolezite pre dynamicke presentery
 
-// Configure application
-$application = $container->application;
-//$application->errorPresenter = 'Error';
-//$application->catchExceptions = false;
-
-// Setup router
-$application->onStartup[] = function() use ($application, $container) {
-	$router = $application->getRouter();
+// Setup router // TODO: presunut do config.neon
+$container->application->onStartup[] = function() use ($container) {
+	$router = $container->application->getRouter();
 	$router[] = new Route('index.php', 'Admin:Rental:list', Route::ONE_WAY);
 	$router[] = new Route('admin/<presenter david>/[<action>[/<id>]]', array(
 		'module' => 'Admin',

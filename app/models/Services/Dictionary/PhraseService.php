@@ -8,7 +8,7 @@ use Tra,
 
 class PhraseService extends \Tra\Services\BaseService {
 
-	const MAIN_ENTITY_NAME = '\Dictionary\Phrase';
+	const MAIN_ENTITY_NAME = '\Entities\Dictionary\Phrase';
 
 	// public function addLanguage(LanguageService $languageService) {
 	// 	$languages = $this->getMainEntity()->languages;

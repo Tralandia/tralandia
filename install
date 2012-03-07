@@ -38,5 +38,5 @@ else
 	chmod -R 777 ./public/storage
 fi
 
-#cd bin
+#cd public
 #php -f doctrine-cli.php orm:generate-proxies
