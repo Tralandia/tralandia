@@ -40,7 +40,7 @@ class Extension extends \Nette\Config\CompilerExtension
 	public $entityManagerDefaults = array(
 		'class' => 'Doctrine\ORM\EntityManager',
 		'entityDirs' => array('%appDir%'),
-		'proxyDir' => '%appDir%/proxies',
+		'proxyDir' => '%tempDir%/proxies',
 		'proxyNamespace' => 'App\Model\Proxies',
 		'proxyAutogenerate' => NULL,
 		'useAnnotationNamespace' => FALSE,
