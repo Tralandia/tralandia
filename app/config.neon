@@ -21,7 +21,7 @@ common:
 			charset: utf8
 			driver: pdo_mysql
 	
-		proxiesDir: '%tempDir%/proxies'
+		proxyDir: '%tempDir%/proxies'
 
 		entityDirs: '%appDir%/models/Entities'
 	

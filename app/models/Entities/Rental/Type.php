@@ -25,7 +25,7 @@ class Type extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Rental", inversedBy="rentalTypes")
+	 * @ORM\ManyToMany(targetEntity="Entities\User\User", inversedBy="rentalTypes")
 	 */
 	protected $users;
 
