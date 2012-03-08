@@ -26,9 +26,27 @@ class Medium extends \BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entities\Attraction\Attraction", inversedBy="media")
+	 * @ORM\ManyToOne(targetEntity="Entities\Attraction\Attraction", inversedBy="media")
 	 */
-	protected $attractions;
+	protected $attraction;
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToOne(targetEntity="Entities\Rental\Rental", inversedBy="media")
+	 */
+	protected $rental;
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToOne(targetEntity="Entities\Seo\SeoUrl", inversedBy="media")
+	 */
+	protected $seoUrl;
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToOne(targetEntity="Entities\Ticket\Message", inversedBy="media")
+	 */
+	protected $message;
 
 	/**
 	 * @var text

@@ -17,4 +17,16 @@ class Type extends \BaseEntity {
 	 */
 	protected $name;
 
+	/**
+	 * @var Collection
+	 * @ORM\ManyToMany(targetEntity="Rental", inversedBy="types")
+	 */
+	protected $rentals;
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToMany(targetEntity="Rental", inversedBy="rentalTypes")
+	 */
+	protected $users;
+
 }

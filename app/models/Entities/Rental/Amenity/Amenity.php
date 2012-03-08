@@ -20,6 +20,12 @@ class Amenity extends \BaseEntity {
 
 	/**
 	 * @var Collection
+	 * @ORM\ManyToOne(targetEntity="Entities\Rental\Rental", inversedBy="amenities")
+	 */
+	protected $rentals;
+
+	/**
+	 * @var Collection
 	 * @ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase")
 	 */
 	protected $name;

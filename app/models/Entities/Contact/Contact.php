@@ -30,6 +30,18 @@ class Contact extends \BaseEntity {
 	protected $attractions;
 
 	/**
+	 * @var Collection
+	 * @ORM\ManyToMany(targetEntity="Entities\Rental\Rental", inversedBy="contacts")
+	 */
+	protected $rentals;
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToOne(targetEntity="Entities\Rental\Rental", inversedBy="contact")
+	 */
+	protected $user;
+
+	/**
 	 * @var json
 	 * @ORM\Column(type="json")
 	 */

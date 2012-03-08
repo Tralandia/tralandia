@@ -67,8 +67,8 @@ class Language extends \BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entities\Rental\Rental", inversedBy="langages")
+	 * @ORM\ManyToMany(targetEntity="Entities\Rental\Rental", inversedBy="languagesSpoken")
 	 */
-	protected $languages;
+	protected $rentals;
 
 }

@@ -15,7 +15,7 @@ class Combination extends \BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="User")
+	 * @ORM\ManyToOne(targetEntity="User", inversedBy="combinations")
 	 */
 	protected $user;
 

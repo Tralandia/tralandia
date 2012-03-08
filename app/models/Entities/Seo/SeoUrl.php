@@ -53,7 +53,7 @@ class SeoUrl extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Entities\Medium\Medium")
+	 * @ORM\OneToMany(targetEntity="Entities\Medium\Medium", mappedBy="seoUrl")
 	 */
 	protected $media;
 

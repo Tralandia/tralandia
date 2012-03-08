@@ -36,7 +36,7 @@ class Rental extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Type")
+	 * @ORM\ManyToMany(targetEntity="Type", mappedBy="rentals")
 	 */
 	protected $types;
 
@@ -108,19 +108,19 @@ class Rental extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Entities\Contact\Contact")
+	 * @ORM\ManyToMany(targetEntity="Entities\Contact\Contact", mappedBy="rentals")
 	 */
 	protected $contacts;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Entities\Dictionary\Language")
+	 * @ORM\ManyToMany(targetEntity="Entities\Dictionary\Language", mappedBy="rentals")
 	 */
 	protected $languagesSpoken;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Entities\Rental\Amenity\Amenity")
+	 * @ORM\ManyToMany(targetEntity="Entities\Rental\Amenity\Amenity", mappedBy="rentals")
 	 */
 	protected $amenities;
 
@@ -168,7 +168,7 @@ class Rental extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Entities\Medium\Medium")
+	 * @ORM\OneToMany(targetEntity="Entities\Medium\Medium", mappedBy="rental")
 	 */
 	protected $media;
 

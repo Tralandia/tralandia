@@ -65,7 +65,7 @@ class Attraction extends \BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entities\Medium\Medium", mappedBy="attractions")
+	 * @ORM\OneToMany(targetEntity="Entities\Medium\Medium", mappedBy="attraction")
 	 */
 	protected $media;
 

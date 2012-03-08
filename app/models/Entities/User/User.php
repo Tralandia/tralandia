@@ -34,9 +34,9 @@ class User extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Entities\Contact\Contact")
+	 * @ORM\OneToMany(targetEntity="Entities\Contact\Contact", mappedBy="user")
 	 */
-	protected $contacts;
+	protected $contact;
 
 	/**
 	 * @var Collection
@@ -52,7 +52,7 @@ class User extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Entities\Rental\Type")
+	 * @ORM\ManyToMany(targetEntity="Entities\Rental\Type", mappedBy="users")
 	 */
 	protected $rentalTypes;
 
@@ -130,7 +130,7 @@ class User extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Combination")
+	 * @ORM\OneToMany(targetEntity="Combination", mappedBy="user")
 	 */
 	protected $combinations;
 

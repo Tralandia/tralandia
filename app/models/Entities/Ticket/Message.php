@@ -33,7 +33,7 @@ class Message extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Entities\Medium\Medium")
+	 * @ORM\OneToMany(targetEntity="Entities\Medium\Medium", mappedBy="message")
 	 */
 	protected $attachments;
 
