@@ -14,7 +14,7 @@ class Address extends Type {
 	}
 
 	public function getSqlDeclaration(array $fieldDeclaration, AbstractPlatform $platform) {
-		return 'varchar';
+		return 'varchar(255)';
 	}
 
 	public function convertToPHPValue($value, AbstractPlatform $platform) {
