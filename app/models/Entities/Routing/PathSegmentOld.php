@@ -39,7 +39,7 @@ class PathSegmentOld extends \BaseEntity {
 
 	/**
 	 * @var Integer
-	 * @ORM\Column(type="Integer")
+	 * @ORM\Column(type="integer")
 	 */
 	protected $type;
 

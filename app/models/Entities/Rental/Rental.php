@@ -77,8 +77,8 @@ class Rental extends \BaseEntity {
 	protected $longitude;
 
 	/**
-	 * @var webalizedString
-	 * @ORM\Column(type="webalizedString")
+	 * @var slug
+	 * @ORM\Column(type="slug")
 	 */
 	protected $slug;
 

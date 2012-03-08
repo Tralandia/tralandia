@@ -385,6 +385,10 @@ class Extension extends \Nette\Config\CompilerExtension
 			$evm->addEventSubscriber($container->getService($name));
 		}
 
+		$tablePrefix = new \DoctrineExtensions\TablePrefix('prefix_');
+		$evm->addEventListener(\Doctrine\ORM\Events::loadClassMetadata, $tablePrefix);
+
+
 		return $evm;
 	}
 
