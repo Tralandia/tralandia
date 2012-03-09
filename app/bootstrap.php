@@ -32,7 +32,7 @@ $container = $configurator->createContainer();
 $container->addService('robotLoader', $robotLoader); // dolezite pre dynamicke presentery
 
 
-debug($container->entityManager);
+//debug($container->entityManager);
 
 Doctrine\DBAL\Types\Type::addType('json', 'Doctrine\Types\Json');
 Doctrine\DBAL\Types\Type::addType('latlong', 'Doctrine\Types\LatLong');
@@ -41,15 +41,6 @@ Doctrine\DBAL\Types\Type::addType('slug', 'Doctrine\Types\Slug');
 Doctrine\DBAL\Types\Type::addType('price', 'Doctrine\Types\Price');
 Doctrine\DBAL\Types\Type::addType('url', 'Doctrine\Types\Url');
 Doctrine\DBAL\Types\Type::addType('email', 'Doctrine\Types\Email');
-
-
-// $evm = new \Doctrine\Common\EventManager;
-
-// // Table Prefix
-// $tablePrefix = new \DoctrineExtensions\TablePrefix('prefix_');
-// $evm->addEventListener(\Doctrine\ORM\Events::loadClassMetadata, $tablePrefix);
-
-// $em = \Doctrine\ORM\EntityManager::create($connectionOptions, $config, $evm);
 
 
 // Setup router // TODO: presunut do config.neon
@@ -71,6 +62,12 @@ $container->application->onStartup[] = function() use ($container) {
 		'presenter' => 'Admin',
 		'action' =>  'list'
 	));
+	$router[] = new Route('admin/<presenter>/[<action>[/<id>]]', array(
+		'module' => 'Admin',
+		'presenter' => 'Admin',
+		'action' =>  'list'
+	));
+
 };
 
 // Run the application!
