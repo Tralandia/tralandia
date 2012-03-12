@@ -23,4 +23,10 @@ class Role extends \BaseEntity {
 	 */
 	protected $homePage;
 
+	/**
+	 * @var Collection
+	 * @ORM\ManyToMany(targetEntity="Entities\User\User", inversedBy="roles")
+	 */
+	protected $users;
+
 }

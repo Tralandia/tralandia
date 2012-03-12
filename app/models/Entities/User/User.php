@@ -28,7 +28,7 @@ class User extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Role")
+	 * @ORM\ManyToMany(targetEntity="Role", mappedBy="users")
 	 */
 	protected $roles;
 

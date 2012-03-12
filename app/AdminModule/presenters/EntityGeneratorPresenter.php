@@ -4,7 +4,7 @@ namespace AdminModule;
 
 use Nette\Reflection;
 use Nette\Utils\PhpGenerator;
-use Nette\Utils\Stings;
+use Nette\Utils\Strings;
 use Doctrine\ORM\Mapping as ORM;
 
 class EntityGeneratorPresenter extends BasePresenter {
@@ -25,22 +25,27 @@ class EntityGeneratorPresenter extends BasePresenter {
 		$properties = $mainEntity->getProperties();
 		foreach ($properties as $property) {
 			$property = $this->getPropertyInfo($property);
-			//debug($annotations);
+			//debug($property);
 			if($property->isCollection) {
-				$targetEntity = $this->getEntityReflection($property->targetEntity);
-				$targetedEntityPropery = $this->getPropertyInfo($targetEntity->getProperty($property->mappedBy));
-				debug($targetedEntityPropery);
-				if($property->association == ORM\ClassMetadataInfo::MANY_TO_MANY) {
-					if($targetedEntityPropery->association == ORM\ClassMetadataInfo::MANY_TO_MANY) { // Many To Many Uni
 
+				$targetEntity = $this->getEntityReflection($property->targetEntity);
+				$targetedEntityPropery = NULL;
+				if(isset($property->mappedBy)) {
+					$targetedEntityPropery = $this->getPropertyInfo($targetEntity->getProperty($property->mappedBy));
+				} else if(isset($property->inversedBy)) {
+					$targetedEntityPropery = $this->getPropertyInfo($targetEntity->getProperty($property->inversedBy));
+				}
+
+				if($property->association == ORM\ClassMetadataInfo::MANY_TO_ONE && $targetedEntityPropery == NULL) {
+					//$this->addManyToOneUni($newClass, $property);
+				}else if($property->association == ORM\ClassMetadataInfo::MANY_TO_MANY) {
+					if($targetedEntityPropery->association == ORM\ClassMetadataInfo::MANY_TO_MANY) { // Many To Many Bi
+						$this->addManyToManyBi($newClass, $property);
 					} else if ($targetedEntityPropery->association == ORM\ClassMetadataInfo::MANY_TO_MANY) {
 
 					}
-					$method = $newClass->addMethod('add'.$this->toSingular($property->name));
-					$firstParameter = $method->addParameter('language');
-					$firstParameter->typeHint = '\Entities\Language\Language';
-					$method->addBody('$foo->bar($test,$annotations);');
 				} else if($property->association == ORM\ClassMetadataInfo::MANY_TO_ONE){
+				} else if($property->association == ORM\ClassMetadataInfo::ONE_TO_ONE){
 					
 				}
 				//debug($association);
@@ -54,6 +59,9 @@ class EntityGeneratorPresenter extends BasePresenter {
 	}
 
 	public function toSingular($name) {
+		if(Strings::endsWith($name, 's')) {
+			$name = substr($name, 0 , -1);
+		}
 		return $name;
 	}
 
@@ -67,8 +75,11 @@ class EntityGeneratorPresenter extends BasePresenter {
 	public function getPropertyInfo(Reflection\Property $property) {
 		$return = array();
 		$annotations = $property->getAnnotations();
+
 		if($annotations['var'][0] == 'Collection') {
+
 			$return['isCollection'] = TRUE;
+
 			if(array_key_exists('ORM\ManyToMany', $annotations)) {
 				$association = 'ORM\ManyToMany';
 				$return['association'] = ORM\ClassMetadataInfo::MANY_TO_MANY;
@@ -84,22 +95,59 @@ class EntityGeneratorPresenter extends BasePresenter {
 			} else {
 				$return['association'] = 0;			
 			}
+
+			if(array_key_exists('targetEntity', $annotations[$association][0])) {
+				$return['targetEntity'] = $annotations[$association][0]['targetEntity'];
+				if(!Strings::startsWith($return['targetEntity'], 'Entities')) {
+					$class = $this->getEntityReflection($property->class);
+					$classNamespace = $class->getNamespaceName();
+					$return['targetEntity'] = $classNamespace.'\\'.$return['targetEntity'];
+				}
+			}
+
 			if(array_key_exists('mappedBy', $annotations[$association][0])) {
 				$return['mappedBy'] = $annotations[$association][0]['mappedBy'];
 			}
-			if(array_key_exists('targetEntity', $annotations[$association][0])) {
-				$return['targetEntity'] = $annotations[$association][0]['targetEntity'];
-			}
+
 			if(array_key_exists('inversedBy', $annotations[$association][0])) {
 				$return['inversedBy'] = $annotations[$association][0]['inversedBy'];
 			}
+
 		} else {
 			$return['isCollection'] = FALSE;
 		}
+
 		$return['name'] = $property->name;
+		$return['nameFu'] = Strings::firstUpper($return['name']);
+
+		$return['class'] = $property->class;
+
 		$return['singular'] = $this->toSingular($property->name);
+		$return['singularFu'] = Strings::firstUpper($return['singular']);
 
 		return \Nette\ArrayHash::from($return);
+	}
+
+	public function addOneToOneBi() {
+
+	}
+
+	public function addManyToOneUni($newClass, $property) {
+		$method = $newClass->addMethod('add'.$property->nameFu);
+
+		$firstParameter = $method->addParameter($property->name);
+		$firstParameter->typeHint = $property->targetEntity;
+		
+		$body = sprintf('$this->%s = %s;', $property->name, $property->name);
+		$method->addBody($body);
+	}
+
+	public function addManyToManyBy($newClass, $property) {
+		$method = $newClass->addMethod('add'.$property->singularFu);
+		$firstParameter = $method->addParameter($property->singular);
+		$firstParameter->typeHint = $property->targetEntity;
+		$body = sprintf('$this->%s[] = %s;', $property->name, $property->singular);
+		$method->addBody($body);
 	}
 
 }

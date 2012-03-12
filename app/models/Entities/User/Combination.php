@@ -4,7 +4,6 @@ namespace Entities\User;
 
 use Entities\Dictionary;
 use Entities\Location;
-use Entities\User;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
