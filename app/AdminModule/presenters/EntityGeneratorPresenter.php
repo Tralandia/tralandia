@@ -37,10 +37,10 @@ class EntityGeneratorPresenter extends BasePresenter {
 				}
 
 				if($property->association == ORM\ClassMetadataInfo::MANY_TO_ONE && $targetedEntityPropery == NULL) {
-					//$this->addManyToOneUni($newClass, $property);
+					$this->addManyToOneUni($newClass, $property);
 				}else if($property->association == ORM\ClassMetadataInfo::MANY_TO_MANY) {
 					if($targetedEntityPropery->association == ORM\ClassMetadataInfo::MANY_TO_MANY) { // Many To Many Bi
-						$this->addManyToManyBi($newClass, $property);
+						$this->addManyToManyBi($newClass, $property, $targetedEntityPropery);
 					} else if ($targetedEntityPropery->association == ORM\ClassMetadataInfo::MANY_TO_MANY) {
 
 					}
@@ -128,26 +128,53 @@ class EntityGeneratorPresenter extends BasePresenter {
 		return \Nette\ArrayHash::from($return);
 	}
 
+	public function addMethod($type, $newClass, $property, $tagetPropery = NULL) {
+		$snippet = \Nette\ArrayHash::from(array());
+		if(in_array($type, array('add', 'remove'))) {
+			$snippet->type = 1;
+			if($type == 'add') {
+				$snippet->var = 'add';
+			} else {
+				$snippet->var = 'removeElement';
+			}
+		} else if($type == 'set') {
+			$snippet->type = 2;
+		}
+
+		$method = $newClass->addMethod($type.$property->singularFu);
+
+		$parameter = $property->singular;
+		$firstParameter = $method->addParameter($property->singular);
+		$firstParameter->typeHint = $property->targetEntity;
+
+		$body = array();
+		if($snippet->type == 1) {
+			$body[] = sprintf('if(!$this->%s->contains($%s)) {', $property->name, $parameter);
+			$body[] = sprintf('%s$this->%s->%s($%s);', "\t", $property->name, $snippet->var, $parameter);
+			$body[] = sprintf('%s$%s->%s%s($this);', "\t", $parameter, $type, $tagetPropery->singularFu);
+			$body[] = '}';			
+		} else if($snippet->type == 2) {
+			$body[] = sprintf('$this->%s = $%s;', $property->name, $property->name);
+		}
+		$body[] = '';
+		$body[] = 'return $this;';
+
+		foreach ($body as $key => $val) {
+			$method->addBody($val);
+		}		
+	}
+
 	public function addOneToOneBi() {
 
 	}
 
 	public function addManyToOneUni($newClass, $property) {
-		$method = $newClass->addMethod('add'.$property->nameFu);
-
-		$firstParameter = $method->addParameter($property->name);
-		$firstParameter->typeHint = $property->targetEntity;
-		
-		$body = sprintf('$this->%s = %s;', $property->name, $property->name);
-		$method->addBody($body);
+		$this->addMethod('set', $newClass, $property);
 	}
 
-	public function addManyToManyBy($newClass, $property) {
-		$method = $newClass->addMethod('add'.$property->singularFu);
-		$firstParameter = $method->addParameter($property->singular);
-		$firstParameter->typeHint = $property->targetEntity;
-		$body = sprintf('$this->%s[] = %s;', $property->name, $property->singular);
-		$method->addBody($body);
+	public function addManyToManyBi($newClass, $property, $tagetPropery) {
+		$this->addMethod('add', $newClass, $property, $tagetPropery);
+		$this->addMethod('remove', $newClass, $property, $tagetPropery);
 	}
 
 }
