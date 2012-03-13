@@ -3,7 +3,6 @@
 namespace Entities\Rental;
 
 use Entities\Dictionary;
-use Entities\Rental;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
