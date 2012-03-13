@@ -133,7 +133,7 @@ class ClassType extends Nette\Object
 			. $this->name . ' '
 			. ($this->extends ? 'extends ' . implode(', ', (array) $this->extends) . ' ' : '')
 			. ($this->implements ? 'implements ' . implode(', ', (array) $this->implements) . ' ' : '')
-			. "\n{\n\n"
+			. "{\n\n"
 			. Nette\Utils\Strings::indent(
 				($this->traits ? "use " . implode(', ', (array) $this->traits) . ";\n\n" : '')
 				. ($this->consts ? implode('', $consts) . "\n\n" : '')

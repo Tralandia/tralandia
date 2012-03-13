@@ -16,11 +16,13 @@ class EntityGeneratorPresenter extends BasePresenter {
 		$this->setView('default');
 	}
 
-	public function actionTest() {
-		$mainEntity = $this->getEntityReflection('Entities\User\User');
+	public function actionDefault($id) {
+
+		$mainEntity = $this->getEntityReflection($id);
 		$newClass = new PhpGenerator\ClassType('User');
 		
 		$newClass->extends[] = 'BaseEntity';
+		$construct = $newClass->addMethod('__construct');
 
 		$properties = $mainEntity->getProperties();
 		foreach ($properties as $property) {
@@ -36,16 +38,26 @@ class EntityGeneratorPresenter extends BasePresenter {
 					$targetedEntityPropery = $this->getPropertyInfo($targetEntity->getProperty($property->inversedBy));
 				}
 
-				if($property->association == ORM\ClassMetadataInfo::MANY_TO_ONE && $targetedEntityPropery == NULL) {
-					$this->addManyToOneUni($newClass, $property);
-				}else if($property->association == ORM\ClassMetadataInfo::MANY_TO_MANY) {
-					if($targetedEntityPropery->association == ORM\ClassMetadataInfo::MANY_TO_MANY) { // Many To Many Bi
-						$this->addManyToManyBi($newClass, $property, $targetedEntityPropery);
-					} else if ($targetedEntityPropery->association == ORM\ClassMetadataInfo::MANY_TO_MANY) {
+				if($property->association == ORM\ClassMetadataInfo::MANY_TO_ONE) {
 
+					if($targetedEntityPropery == NULL) {												// Many To One Uni
+						$this->addManyToOneUni($newClass, $property);
 					}
+
+				} else if($property->association == ORM\ClassMetadataInfo::MANY_TO_MANY) {
+
+					if($targetedEntityPropery->association == ORM\ClassMetadataInfo::MANY_TO_MANY) { 	// Many To Many Bi
+						$this->addManyToManyBi($newClass, $property, $targetedEntityPropery);
+					}
+
+				} else if($property->association == ORM\ClassMetadataInfo::ONE_TO_MANY){
+					if($targetedEntityPropery->association == ORM\ClassMetadataInfo::MANY_TO_ONE) { 	// One To Many Bi
+						$this->addMethod('get',$newClass, $property, $targetedEntityPropery);
+						$this->addMethod('add2',$newClass, $property, $targetedEntityPropery);
+						$this->addMethod('remove2',$newClass, $property, $targetedEntityPropery);
+					}
+
 				} else if($property->association == ORM\ClassMetadataInfo::MANY_TO_ONE){
-				} else if($property->association == ORM\ClassMetadataInfo::ONE_TO_ONE){
 					
 				}
 				//debug($association);
@@ -55,12 +67,17 @@ class EntityGeneratorPresenter extends BasePresenter {
 			//break;
 			//debug($annotations);
 		}
+
+		$this->fillConstruct($construct);
+
 		$this->template->newClass = $newClass;
 	}
 
-	public function toSingular($name) {
+	public function toSingular($name) { // @todo
 		if(Strings::endsWith($name, 's')) {
 			$name = substr($name, 0 , -1);
+		} else if (Strings::endsWith($name, 'ies')) {
+			$name = substr($name, 0 , -3).'y';
 		}
 		return $name;
 	}
@@ -130,37 +147,82 @@ class EntityGeneratorPresenter extends BasePresenter {
 
 	public function addMethod($type, $newClass, $property, $tagetPropery = NULL) {
 		$snippet = \Nette\ArrayHash::from(array());
-		if(in_array($type, array('add', 'remove'))) {
+		$methodPrefix = $type;
+		if(in_array($type, array('add', 'add2', 'remove', 'remove2'))) {
 			$snippet->type = 1;
+			$snippet->returnThis = TRUE;
 			if($type == 'add') {
 				$snippet->var = 'add';
-			} else {
+				$snippet->var2 = TRUE;
+			} else if ($type == 'add2') {
+				$methodPrefix = 'add';
+				$snippet->var = 'add';
+				$snippet->var2 = FALSE;
+			} else if ($type == 'remove') {
 				$snippet->var = 'removeElement';
+				$snippet->var2 = TRUE;
+			} else if ($type == 'remove2') {
+				$methodPrefix = 'remove';
+				$snippet->var = 'removeElement';
+				$snippet->var2 = FALSE;
 			}
 		} else if($type == 'set') {
 			$snippet->type = 2;
+			$snippet->returnThis = TRUE;
+		} else if($type == 'get') {
+			$snippet->type = 3;
+			$snippet->returnThis = FALSE;
 		}
-
-		$method = $newClass->addMethod($type.$property->singularFu);
+		$method = $newClass->addMethod($methodPrefix.$property->singularFu);
 
 		$parameter = $property->singular;
-		$firstParameter = $method->addParameter($property->singular);
+		if($snippet->type == 2) {
+			$firstParameter = $method->addParameter($property->singular, NULL);
+		} else {
+			$firstParameter = $method->addParameter($property->singular);
+		}
 		$firstParameter->typeHint = $property->targetEntity;
 
 		$body = array();
 		if($snippet->type == 1) {
+			$method->documents[] = '@param Entity';
 			$body[] = sprintf('if(!$this->%s->contains($%s)) {', $property->name, $parameter);
 			$body[] = sprintf('%s$this->%s->%s($%s);', "\t", $property->name, $snippet->var, $parameter);
-			$body[] = sprintf('%s$%s->%s%s($this);', "\t", $parameter, $type, $tagetPropery->singularFu);
 			$body[] = '}';			
+			if($snippet->var2) {
+				$body[] = sprintf('$%s->%s%s($this);', $parameter, $type, $tagetPropery->singularFu);
+			} else {
+				if($methodPrefix == 'add') {
+					$body[] = sprintf('$%s->set%s($this);', $parameter, $tagetPropery->nameFu);
+				} else {
+					$body[] = sprintf('$%s->set%s();', $parameter, $tagetPropery->nameFu);					
+				}
+			}
 		} else if($snippet->type == 2) {
+			$method->documents[] = '@param Entity|NULL';
 			$body[] = sprintf('$this->%s = $%s;', $property->name, $property->name);
+		} else if($snippet->type == 3) {
+			$method->documents[] = '@param Entity';
+			$method->documents[] = '@return Collection';
+			$body[] = sprintf('return $this->%s;', $property->name, $property->name);
 		}
-		$body[] = '';
-		$body[] = 'return $this;';
+
+		if($snippet->returnThis) {
+			$method->documents[] = '@return this';
+			$body[] = '';
+			$body[] = 'return $this;';
+		}
 
 		foreach ($body as $key => $val) {
 			$method->addBody($val);
+		}		
+	}
+
+	public function fillConstruct($construct) {
+		$body = array();
+		$body[] = 'parent::__construct();';
+		foreach ($body as $key => $val) {
+			$construct->addBody($val);
 		}		
 	}
 
@@ -173,6 +235,7 @@ class EntityGeneratorPresenter extends BasePresenter {
 	}
 
 	public function addManyToManyBi($newClass, $property, $tagetPropery) {
+		$this->addMethod('get', $newClass, $property, $tagetPropery);
 		$this->addMethod('add', $newClass, $property, $tagetPropery);
 		$this->addMethod('remove', $newClass, $property, $tagetPropery);
 	}
