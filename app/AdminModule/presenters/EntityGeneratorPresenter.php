@@ -21,7 +21,9 @@ class EntityGeneratorPresenter extends BasePresenter {
 		$dir = APP_DIR . '/models/Entities/';
 		$menu = array();
 		foreach (Finder::findFiles('*.php')->from($dir) as $key => $file) {
-			debug($key, $file->getRealPath());
+			list($x, $entityNameTemp) = explode('/models/', $key, 2);
+			$entityNameTemp = str_replace(array('/', '.php'), array('\\', ''), $entityNameTemp);
+			$menu[] = array('fullname' => $entityNameTemp, 'name' => str_replace('Entities\\', '', $entityNameTemp));
 		}
 
 		$mainEntity = $this->getEntityReflection($id);
@@ -117,6 +119,7 @@ class EntityGeneratorPresenter extends BasePresenter {
 
 		$this->fillConstruct($construct, $collections);
 
+		$this->template->menu = $menu;
 		$this->template->newClass = $newClass;
 	}
 

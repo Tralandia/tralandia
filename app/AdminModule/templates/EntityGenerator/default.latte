@@ -1,5 +1,9 @@
 {block content}
 
+<ul n:inner-foreach="$menu as $val">
+	<li><a n:href="EntityGenerator:default $val['fullname']">{$val['name']}</a></li>
+</ul>
+
 <pre class="brush: php">
 {$newClass}
 </pre>

@@ -57,12 +57,12 @@ $container->application->onStartup[] = function() use ($container) {
 		'presenter' => 'Rental',
 		'action' =>  'edit'
 	));
-	$router[] = new Route('admin/<presenter>/[<action list|add|registration>]', array(
+/*	$router[] = new Route('admin/<presenter>/[<action list|add|registration>]', array(
 		'module' => 'Admin',
 		'presenter' => 'Admin',
 		'action' =>  'list'
 	));
-	$router[] = new Route('admin/<presenter>/[<action>[/<id>]]', array(
+*/	$router[] = new Route('admin/<presenter>/[<action>[/<id>]]', array(
 		'module' => 'Admin',
 		'presenter' => 'Admin',
 		'action' =>  'list'
