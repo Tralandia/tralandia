@@ -310,8 +310,8 @@ class EntityGeneratorPresenter extends BasePresenter {
 			$method->documents[] = sprintf('@param %s', $tagetProperyClass);
 			$body[] = sprintf('return $%s->add%s($this);', $firstParameter->name, $property->singularFu);
 		} else if($snippet->type == 7) {
-			$method->documents[] = sprintf('@return array of %s', $tagetProperyClass);
-			$body[] = sprintf('return $this->%s->toArray();', $property->name, $property->name);
+			$method->documents[] = sprintf('@return \Doctrine\Common\Collections\ArrayCollection of %s', $tagetProperyClass);
+			$body[] = sprintf('return $this->%s;', $property->name, $property->name);
 		} else if($snippet->type == 8) {
 			$body[] = sprintf('$this->%s = NULL;', $property->name);
 		}
@@ -332,7 +332,6 @@ class EntityGeneratorPresenter extends BasePresenter {
 
 	public function fillConstruct($construct, $collections) {
 		$body = array();
-		$body[] = '//@brano construct nema ziadne parametre?';
 		$body[] = 'parent::__construct();';
 		$body[] = '';
 		foreach ($collections as $key => $val) {
