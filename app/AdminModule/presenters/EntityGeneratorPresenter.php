@@ -21,7 +21,7 @@ class EntityGeneratorPresenter extends BasePresenter {
 		$dir = APP_DIR . '/models/Entities/';
 		$menu = array();
 		foreach (Finder::findFiles('*.php')->from($dir) as $key => $file) {
-			debug($key, $file);
+			debug($key, $file->getRealPath());
 		}
 
 		$mainEntity = $this->getEntityReflection($id);
