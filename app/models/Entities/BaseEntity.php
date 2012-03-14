@@ -31,15 +31,15 @@ class BaseEntity extends Entity{
 
 
 	/**
-	 * @prePersist
+	 * @ORM\prePersist
 	 */
 	public function setCreated(){
 		$this->created = new \Nette\DateTime;
 	}
 
 	/**
-	 * @prePersist
-	 * @preUpdate
+	 * @ORM\prePersist
+	 * @ORM\preUpdate
 	 */
 	public function setUpdated(){
 		$this->updated = new \Nette\DateTime;
