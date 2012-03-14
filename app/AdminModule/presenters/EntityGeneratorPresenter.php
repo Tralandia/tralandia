@@ -209,9 +209,12 @@ class EntityGeneratorPresenter extends BasePresenter {
 
 	public function addMethod($type, $newClass, $property, $tagetPropery) {
 		if(is_string($tagetPropery)) {
-			$tagetProperyClass = $tagetPropery;
+			if(Strings::startsWith($tagetPropery, 'Entities'))
+				$tagetProperyClass = '\\'.$tagetPropery;
+			else 
+				$tagetProperyClass = $tagetPropery;
 		} else if($tagetPropery instanceof \Nette\ArrayHash){
-			$tagetProperyClass = $tagetPropery->class;
+			$tagetProperyClass = '\\'.$tagetPropery->class;
 		} else {
 			debug($type, $newClass, $property, $tagetPropery);
 			$tagetProperyClass = '#todo';
@@ -324,7 +327,7 @@ class EntityGeneratorPresenter extends BasePresenter {
 		}
 
 		if($snippet->returnThis) {
-			$method->documents[] = sprintf('@return %s', $property->class);
+			$method->documents[] = sprintf('@return %s', '\\'.$property->class);
 			$body[] = '';
 			$body[] = 'return $this;';
 		}

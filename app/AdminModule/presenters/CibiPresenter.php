@@ -29,8 +29,14 @@ class CibiPresenter extends BasePresenter {
 			->setDecimalPlaces(2)
 			->setRounding(2);
 		
-		debug($currency);
 		$currency->save();
+<<<<<<< HEAD
+=======
+		debug($currency);
+	}
+
+	public function renderDefault() {
+>>>>>>> 99965602595f770da49e5b6d9290718972c77af1
 
 	}
 
