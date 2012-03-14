@@ -126,7 +126,7 @@ class EntityGeneratorPresenter extends BasePresenter {
 	}
 
 	public function toSingular($name) {
-		if(in_array($name, array('status', 'address'))) return $name;
+		if(in_array($name, array('status', 'address', 'decimalPlaces'))) return $name;
 		if(Strings::endsWith($name, 'ies')) {
 			$name = substr($name, 0 , -3).'y';
 		} else if (Strings::endsWith($name, 's')) {
@@ -186,7 +186,7 @@ class EntityGeneratorPresenter extends BasePresenter {
 		} else {
 			$return['isCollection'] = FALSE;
 			$return['type'] = $annotations['ORM\Column'][0]['type'];
-			if(!in_array($return['type'], array('integer', 'string', 'boolean'))) {
+			if(!in_array($return['type'], array('integer', 'string', 'boolean', 'decimal'))) {
 				$return['type'] = '\Extras\Types\\'.Strings::firstUpper($return['type']);
 			}
 			if(array_key_exists('nullabale', $annotations['ORM\Column'][0])) {
@@ -281,7 +281,7 @@ class EntityGeneratorPresenter extends BasePresenter {
 
 		} else {
 			$firstParameter = $method->addParameter($property->singular);
-			if(!in_array($tagetProperyClass, array('integer', 'string'))) {
+			if(!in_array($tagetProperyClass, array('integer', 'string', 'boolean', 'decimal'))) {
 				$firstParameter->typeHint = $tagetProperyClass;
 			}
 		}
