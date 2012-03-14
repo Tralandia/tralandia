@@ -99,7 +99,8 @@ class EntityGeneratorPresenter extends BasePresenter {
 							$this->addMethod('setPhrase', $newClass, $property, $targetEntity->name);
 							$this->addMethod('get', $newClass, $property, $targetEntity->name);
 						} else {
-							$this->addMethod('todo', $newClass, $property, $targetedEntityPropery);
+							$this->addMethod('set', $newClass, $property, $targetEntity->name);
+							$this->addMethod('get2', $newClass, $property, $targetEntity->name);
 						}
 					} else {
 						$this->addMethod('todo', $newClass, $property, $targetedEntityPropery);
@@ -280,7 +281,9 @@ class EntityGeneratorPresenter extends BasePresenter {
 
 		} else {
 			$firstParameter = $method->addParameter($property->singular);
-			$firstParameter->typeHint = $tagetProperyClass;
+			if(!in_array($tagetProperyClass, array('integer', 'string'))) {
+				$firstParameter->typeHint = $tagetProperyClass;
+			}
 		}
 
 		$body = array();
