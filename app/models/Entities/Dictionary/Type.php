@@ -30,7 +30,7 @@ class Type extends \BaseEntity {
 	protected $entityAttribute;
 
 	/**
-	 * @var Collection
+	 * @var integer
 	 * @ORM\Column(type="integer")
 	 */
 	protected $translationLevelRequirement;

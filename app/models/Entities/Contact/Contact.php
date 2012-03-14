@@ -51,7 +51,7 @@ class Contact extends \BaseEntity {
 	 * @var boolean
 	 * @ORM\Column(type="boolean")
 	 */
-	protected $unsubscribed;
+	protected $subscribed;
 
 	/**
 	 * @var boolean

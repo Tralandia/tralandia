@@ -38,7 +38,7 @@ class Ticket extends \BaseEntity {
 	protected $language;
 
 	/**
-	 * @var Collection
+	 * @var integer
 	 * @ORM\Column(type="integer")
 	 */
 	protected $status;

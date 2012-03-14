@@ -18,7 +18,7 @@ class Company extends \BaseEntityDetails {
 	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="BankAccount", mappedBy="company")
 	 */
-	protected $accounts;
+	protected $bankAccounts;
 
 	/**
 	 * @var Collection
@@ -67,12 +67,6 @@ class Company extends \BaseEntityDetails {
 	 * @ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase")
 	 */
 	protected $registrator;
-
-	/**
-	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entities\Medium\Medium")
-	 */
-	protected $signature;
 
 	/**
 	 * @var Collection

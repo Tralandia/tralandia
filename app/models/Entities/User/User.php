@@ -120,7 +120,7 @@ class User extends \BaseEntity {
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="User")
 	 */
-	protected $telmarkCurrentOperator;
+	protected $currentTelmarkOperator;
 
 	/**
 	 * @var json

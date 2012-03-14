@@ -53,7 +53,7 @@ class Country extends \BaseEntityDetails {
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entities\Contact\Contact")
 	 */
-	protected $fbGroup;
+	protected $facebookGroup;
 
 	/**
 	 * @var string

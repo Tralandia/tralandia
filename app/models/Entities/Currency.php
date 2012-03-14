@@ -45,6 +45,6 @@ class Currency extends \BaseEntity {
 	 * @var Collection
 	 * @ORM\ManyToMany(targetEntity="Entities\Location\Country", inversedBy="currencies")
 	 */
-	protected $coutries;
+	protected $countries;
 
 }

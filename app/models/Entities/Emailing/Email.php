@@ -50,7 +50,7 @@ class Email extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Batch", mappedBy="email")
+	 * @ORM\OneToMany(targetEntity="Batch", mappedBy="emailTemplate")
 	 */
 	protected $batches;
 

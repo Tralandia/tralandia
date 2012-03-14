@@ -21,7 +21,7 @@ class Batch extends \BaseEntityDetails {
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Email", inversedBy="batches")
 	 */
-	protected $email;
+	protected $emailTemplate;
 
 	/**
 	 * @var integer

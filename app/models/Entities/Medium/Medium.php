@@ -52,7 +52,7 @@ class Medium extends \BaseEntityDetails {
 	 * @var text
 	 * @ORM\Column(type="text")
 	 */
-	protected $location;
+	protected $uri;
 
 	/**
 	 * @var integer

@@ -103,9 +103,15 @@ class Location extends \BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entities\Domain", inversedBy="locations")
+	 * @ORM\ManyToMany(targetEntity="Entities\Company\Office", inversedBy="countries")
 	 */
-	protected $domains;
+	protected $offices;
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToOne(targetEntity="Entities\Domain", inversedBy="locations")
+	 */
+	protected $domain;
 
 	/**
 	 * @var Collection

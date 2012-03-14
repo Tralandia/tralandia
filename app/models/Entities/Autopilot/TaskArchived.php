@@ -75,7 +75,7 @@ class TaskArchived extends \BaseEntityDetails {
 	protected $userLanguage;
 
 	/**
-	 * @var Collection
+	 * @var integer
 	 * @ORM\Column(type="integer")
 	 */
 	protected $userLanguageLevel;

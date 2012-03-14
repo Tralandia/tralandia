@@ -14,13 +14,13 @@ class Traveling extends \BaseEntity {
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Location", inversedBy="travelings")
 	 */
-	protected $source;
+	protected $sourceLocation;
 
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Location", inversedBy="incomings")
 	 */
-	protected $destination;
+	protected $destinationLocation;
 
 	/**
 	 * @var integer

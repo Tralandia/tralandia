@@ -19,7 +19,7 @@ class BankAccount extends \BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Company", inversedBy="accounts")
+	 * @ORM\ManyToOne(targetEntity="Company", inversedBy="bankAccounts")
 	 */
 	protected $company;
 
