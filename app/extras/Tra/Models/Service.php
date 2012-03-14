@@ -45,7 +45,13 @@ abstract class Service extends Nette\Object implements IService {
 					if($first instanceof Service) {
 						$this->mainEntity->{$name}($first->mainEntity);
 						return $this;
+					} else {
+						$this->mainEntity->{$name}($first);
+						return $this;
 					}
+				} else if(count($arguments) == 0) {
+					$this->mainEntity->{$name}();
+					return $this;
 				}
 			}
 		} catch (MemberAccessException $e) {}

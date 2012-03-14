@@ -8,13 +8,29 @@ use Nette\Application as NA,
 	Nette\Utils\Html,
 	Nette\Utils\Strings,
 	Tra\Services\Dictionary as D,
-	Tra\Services as S;
+	Services as S,
+	Services\Log\Change as SLog;
 
 class DavidPresenter extends BasePresenter {
 
 	public function beforeRender() {
 		parent::beforeRender();
 		$this->setView('list');
+	}
+
+	public function actionLog() {
+		$data = array(
+			'old' => array(),
+			'new' => array(),
+		);
+
+		$log = new S\Log\Change\ChangeLog;
+		$log->setType(new S\Log\Change\ChangeType(2));
+		
+		SLog\ChangeLog::bla($email, $service, $logType, $details);
+		
+		debug($log);
+		debug($type);
 	}
 
 	public function actionTest() {

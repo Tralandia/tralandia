@@ -1,14 +1,14 @@
 <?php
 
-namespace Tra\Services;
+namespace Services;
 
 use Entity;
 
-class BaseService extends Service {
+class BaseService extends \Tra\Services\Service {
 	
 	private $isPersist = false;
 
-	public function __construct($id = false) {
+	public function __construct($id = NULL) {
 		if ($id) {
 			$this->mainEntity = $this->find($id);
 			$this->isPersist = true;
