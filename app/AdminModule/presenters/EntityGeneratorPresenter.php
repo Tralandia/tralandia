@@ -5,6 +5,7 @@ namespace AdminModule;
 use Nette\Reflection;
 use Nette\Utils\PhpGenerator;
 use Nette\Utils\Strings;
+use Nette\Utils\Finder;
 use Doctrine\ORM\Mapping as ORM;
 
 class EntityGeneratorPresenter extends BasePresenter {
@@ -17,6 +18,11 @@ class EntityGeneratorPresenter extends BasePresenter {
 	}
 
 	public function actionDefault($id) {
+		$dir = APP_DIR . '/models/Entities/';
+		$menu = array();
+		foreach (Finder::findFiles('*.php')->from($dir) as $key => $file) {
+			debug($key, $file);
+		}
 
 		$mainEntity = $this->getEntityReflection($id);
 		$newClass = new PhpGenerator\ClassType($mainEntity->name);
@@ -50,6 +56,8 @@ class EntityGeneratorPresenter extends BasePresenter {
 						$this->addMethod('get', $newClass, $property, $targetedEntityPropery);
 					} else {
 						$this->addMethod('set', $newClass, $property, $targetEntity->name);
+						$this->addMethod('unset', $newClass, $property, $targetEntity->name);
+						$this->addMethod('get2', $newClass, $property, $targetEntity->name);
 					}
 
 
@@ -58,9 +66,9 @@ class EntityGeneratorPresenter extends BasePresenter {
 					if($targetedEntityPropery->association == ORM\ClassMetadataInfo::MANY_TO_MANY) { 	// Many To Many Bi
 						
 						if(isset($property->mappedBy)) {
-							$this->addMethod('get', $newClass, $property, $targetedEntityPropery);
 							$this->addMethod('add', $newClass, $property, $targetedEntityPropery);
 							$this->addMethod('remove', $newClass, $property, $targetedEntityPropery);							
+							$this->addMethod('get', $newClass, $property, $targetedEntityPropery);
 						} else if(isset($property->inversedBy)) {							
 							$this->addMethod('get', $newClass, $property, $targetedEntityPropery);
 						} else {
@@ -74,9 +82,9 @@ class EntityGeneratorPresenter extends BasePresenter {
 				} else if($property->association == ORM\ClassMetadataInfo::ONE_TO_MANY){
 					
 					if($targetedEntityPropery->association == ORM\ClassMetadataInfo::MANY_TO_ONE) { 	// One To Many Bi
-						$this->addMethod('get', $newClass, $property, $targetedEntityPropery);
 						$this->addMethod('add2', $newClass, $property, $targetedEntityPropery);
 						$this->addMethod('remove2', $newClass, $property, $targetedEntityPropery);
+						$this->addMethod('get', $newClass, $property, $targetedEntityPropery);
 					} else {
 						$this->addMethod('todo', $newClass, $property, $targetedEntityPropery);
 					}
@@ -112,8 +120,8 @@ class EntityGeneratorPresenter extends BasePresenter {
 		$this->template->newClass = $newClass;
 	}
 
-	public function toSingular($name) { // @todo
-		if(in_array($name, array('status'))) return $name;
+	public function toSingular($name) {
+		if(in_array($name, array('status', 'address'))) return $name;
 		if(Strings::endsWith($name, 'ies')) {
 			$name = substr($name, 0 , -3).'y';
 		} else if (Strings::endsWith($name, 's')) {
@@ -234,7 +242,11 @@ class EntityGeneratorPresenter extends BasePresenter {
 		} else if(in_array($type, array('get', 'get2'))) {
 			$methodName->prefix = 'get';
 			$methodName->name = $property->nameFu;
-			$snippet->type = 3;
+			if($type == 'get2') {
+				$snippet->type = 3;
+			} else {
+				$snippet->type = 7;
+			}
 			$snippet->returnThis = FALSE;
 		} else if($type == 'todo') {
 			$methodName->prefix = 'todo';
@@ -249,6 +261,10 @@ class EntityGeneratorPresenter extends BasePresenter {
 			$methodName->prefix = 'add';
 			$snippet->type = 6;
 			$snippet->returnThis = FALSE;
+		} else if($type == 'unset') {
+			$methodName->prefix = 'unset';
+			$snippet->type = 8;
+			$snippet->returnThis = TRUE;
 		} else {
 			throw new \Exception("Neblbni!", 1);
 		}
@@ -256,19 +272,17 @@ class EntityGeneratorPresenter extends BasePresenter {
 		$method = $newClass->addMethod($methodName->prefix.$methodName->name);
 
 		$parameter = $property->singular;
-		if($snippet->type == 2) {
-			$firstParameter = $method->addParameter($property->singular, NULL);
-		} else if($snippet->type == 3 || $snippet->type == 4){			
+		if(in_array($snippet->type, array(3, 4, 7, 8))) {
 
 		} else {
 			$firstParameter = $method->addParameter($property->singular);
-			$firstParameter->typeHint = $property->targetEntity;
+			$firstParameter->typeHint = $tagetProperyClass;
 		}
 
 		$body = array();
 		if($snippet->type == 1) {
 			$method->documents[] = sprintf('@param %s', $tagetProperyClass);
-			$body[] = sprintf('if(!$this->%s->contains($%s)) {', $property->name, $firstParameter->name);
+			$body[] = sprintf('if(%s$this->%s->contains($%s)) {', ($methodName->prefix == 'add' ? '!' : NULL), $property->name, $firstParameter->name);
 			$body[] = sprintf('%s$this->%s->%s($%s);', "\t", $property->name, $snippet->var, $firstParameter->name);
 			$body[] = '}';			
 			if($snippet->var2 === TRUE) {
@@ -281,11 +295,11 @@ class EntityGeneratorPresenter extends BasePresenter {
 				}
 			}
 		} else if($snippet->type == 2) {
-			$method->documents[] = sprintf('@param %s|NULL', $tagetProperyClass);
+			$method->documents[] = sprintf('@param %s', $tagetProperyClass);
 			$body[] = sprintf('$this->%s = $%s;', $property->name, $property->name);
 		} else if($snippet->type == 3) {
-			$method->documents[] = sprintf('@return %s', $tagetProperyClass);
-			$body[] = sprintf('return $this->%s; //@brano tu sa bude vracat Collection alebo?', $property->name, $property->name);
+			$method->documents[] = sprintf('@return %s|NULL', $tagetProperyClass);
+			$body[] = sprintf('return $this->%s;', $property->name, $property->name);
 		} else if($snippet->type == 4) {
 			$method->documents[] = sprintf('@todo %s', $property->name);
 		} else if($snippet->type == 5) {
@@ -295,6 +309,11 @@ class EntityGeneratorPresenter extends BasePresenter {
 		} else if($snippet->type == 6) {
 			$method->documents[] = sprintf('@param %s', $tagetProperyClass);
 			$body[] = sprintf('return $%s->add%s($this);', $firstParameter->name, $property->singularFu);
+		} else if($snippet->type == 7) {
+			$method->documents[] = sprintf('@return array of %s', $tagetProperyClass);
+			$body[] = sprintf('return $this->%s->toArray();', $property->name, $property->name);
+		} else if($snippet->type == 8) {
+			$body[] = sprintf('$this->%s = NULL;', $property->name);
 		}
 
 		if($snippet->returnThis) {
@@ -313,7 +332,8 @@ class EntityGeneratorPresenter extends BasePresenter {
 
 	public function fillConstruct($construct, $collections) {
 		$body = array();
-		$body[] = 'parent::__construct();'; //@todo comstruct nema ziadne parametre?
+		$body[] = '//@brano construct nema ziadne parametre?';
+		$body[] = 'parent::__construct();';
 		$body[] = '';
 		foreach ($collections as $key => $val) {
 			$body[] = sprintf('$this->%s = new \Doctrine\Common\Collections\ArrayCollection;', $val->name);
