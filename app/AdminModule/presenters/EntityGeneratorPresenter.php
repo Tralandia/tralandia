@@ -285,7 +285,7 @@ class EntityGeneratorPresenter extends BasePresenter {
 			$body[] = sprintf('$this->%s = $%s;', $property->name, $property->name);
 		} else if($snippet->type == 3) {
 			$method->documents[] = sprintf('@return %s', $tagetProperyClass);
-			$body[] = sprintf('return $this->%s;', $property->name, $property->name);
+			$body[] = sprintf('return $this->%s; //@brano tu sa bude vracat Collection alebo?', $property->name, $property->name);
 		} else if($snippet->type == 4) {
 			$method->documents[] = sprintf('@todo %s', $property->name);
 		} else if($snippet->type == 5) {
