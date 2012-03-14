@@ -18,12 +18,13 @@ class EntityGeneratorPresenter extends BasePresenter {
 	}
 
 	public function actionDefault($id) {
+		$id = str_replace('-', '\\', $id);
 		$dir = APP_DIR . '/models/Entities/';
 		$menu = array();
 		foreach (Finder::findFiles('*.php')->from($dir) as $key => $file) {
 			list($x, $entityNameTemp) = explode('/models/', $key, 2);
 			$entityNameTemp = str_replace(array('/', '.php'), array('\\', ''), $entityNameTemp);
-			$menu[] = array('fullname' => $entityNameTemp, 'name' => str_replace('Entities\\', '', $entityNameTemp));
+			$menu[] = array('fullname' => str_replace('\\', '-', $entityNameTemp), 'name' => str_replace('Entities\\', '', $entityNameTemp));
 		}
 
 		$mainEntity = $this->getEntityReflection($id);
