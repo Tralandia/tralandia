@@ -28,4 +28,20 @@ class BaseEntity extends Entity{
 	 */
 	protected $updated;
 
+
+	/**
+	 * @prePersist
+	 */
+	public function setCreated(){
+		$this->created = new \Nette\DateTime;
+	}
+
+	/**
+	 * @prePersist
+	 * @preUpdate
+	 */
+	public function setUpdated(){
+		$this->updated = new \Nette\DateTime;
+	}
+
 }
