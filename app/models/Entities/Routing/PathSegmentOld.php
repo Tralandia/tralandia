@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 class PathSegmentOld extends \BaseEntity {
 
 	/**
-	 * @var string
+	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="PathSegment")
 	 */
 	protected $pathSegmentNew;

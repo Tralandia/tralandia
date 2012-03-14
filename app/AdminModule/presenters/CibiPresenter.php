@@ -12,12 +12,10 @@ class CibiPresenter extends BasePresenter {
 			->setIso(66)
 			->setExchangeRate(56.0)
 			->setDecimalPlaces(2)
-			->setRounding(2)
-			->setCreated()
-			->setUpdated();
+			->setRounding(2);
 		
-		debug($currency);
 		$currency->save();
+		debug($currency);
 	}
 
 	public function renderDefault() {
