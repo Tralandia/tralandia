@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="invoicing_marketing")
  */
-class Marketing extends \BaseEntity {
+class Marketing extends BaseEntity {
 
 	/**
 	 * @var Collection

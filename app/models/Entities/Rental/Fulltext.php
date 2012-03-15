@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="rental_fulltext")
  */
-class Fulltext extends \BaseEntity {
+class Fulltext extends BaseEntity {
 
 	/**
 	 * @var Collection

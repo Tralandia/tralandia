@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="routing_pathsegment")
  */
-class PathSegment extends \BaseEntity {
+class PathSegment extends BaseEntity {
 
 	/**
 	 * @var Collection

@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="seo_seourl")
  */
-class SeoUrl extends \BaseEntity {
+class SeoUrl extends BaseEntity {
 
 	/**
 	 * @var Collection

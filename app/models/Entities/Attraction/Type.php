@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="attraction_type")
  */
-class Type extends \BaseEntity {
+class Type extends BaseEntity {
 
 	/**
 	 * @var Collection

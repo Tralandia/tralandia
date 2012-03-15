@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="seo_titlesuffix")
  */
-class TitleSuffix extends \BaseEntity {
+class TitleSuffix extends BaseEntity {
 
 	/**
 	 * @var Collection

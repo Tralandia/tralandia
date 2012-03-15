@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="ticket_message")
  */
-class Message extends \BaseEntity {
+class Message extends BaseEntity {
 
 	/**
 	 * @var Collection

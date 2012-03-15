@@ -29,14 +29,15 @@ class EntityGeneratorPresenter extends BasePresenter {
 
 		$mainEntity = $this->getEntityReflection($id);
 		$newClass = new PhpGenerator\ClassType($mainEntity->name);
-		
+
 		$newClass->extends[] = 'BaseEntity';
 		$construct = $newClass->addMethod('__construct');
 		$collections = array();
 
 		$properties = $mainEntity->getProperties();
 		foreach ($properties as $property) {
-			if(in_array($property->name, array('id', 'created', 'updated', 'details'))) continue;
+			if(in_array($property->name, array('id', 'created', 'updated')) && $mainEntity->name != 'Entities\BaseEntity') continue;
+			if(in_array($property->name, array('details')) && $mainEntity->name != 'Entities\BaseEntityDetails') continue;
 
 			$property = $this->getPropertyInfo($property);
 
@@ -66,6 +67,7 @@ class EntityGeneratorPresenter extends BasePresenter {
 
 				} else if($property->association == ORM\ClassMetadataInfo::MANY_TO_MANY) {
 					$collections[] = $property;
+
 					if($targetedEntityPropery->association == ORM\ClassMetadataInfo::MANY_TO_MANY) { 	// Many To Many Bi
 						
 						if(isset($property->mappedBy)) {
@@ -91,7 +93,8 @@ class EntityGeneratorPresenter extends BasePresenter {
 					}
 
 				} else if($property->association == ORM\ClassMetadataInfo::ONE_TO_MANY){
-					
+					$collections[] = $property;
+
 					if($targetedEntityPropery->association == ORM\ClassMetadataInfo::MANY_TO_ONE) { 	// One To Many Bi
 						$this->addMethod('add2', $newClass, $property, $targetedEntityPropery);
 						$this->addMethod('remove2', $newClass, $property, $targetedEntityPropery);

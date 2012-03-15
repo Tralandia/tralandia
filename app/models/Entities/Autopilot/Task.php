@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="autopilot_task")
  */
-class Task extends \BaseEntity {
+class Task extends BaseEntity {
 
 	/**
 	 * @var Collection
