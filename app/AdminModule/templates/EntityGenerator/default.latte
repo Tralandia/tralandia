@@ -11,7 +11,8 @@
 
 </pre>
 
-{* <textarea style="width:900px;height:800px;">{$newClass}</textarea> *}
+{var $n = "\n"}
+<textarea style="width:900px;height:800px;" n:inner-foreach="$newClass->methods as $method">{$n}{$method|indent:1}{$n}</textarea>
 
 <script type="text/javascript">
      SyntaxHighlighter.all()
