@@ -11,29 +11,39 @@ class CibiPresenter extends BasePresenter {
 		
 		//$this->Currency();
 		//$this->ChangeLog();
-		$this->SystemLog();
+		//$this->SystemLog();
+		$this->Dictionary();
 
 	}
 
-	public function renderDefault() {
+	private function Dictionary() {
 
-	}
+		$d = new S\Dictionary\PhraseService;
+		$d	->setTranslations(new \Entities\Dictionary\Translation)
+			->setReady(true)
+	    	->setType(new \Entities\Dictionary\Type)
+	    	->setEntityId(1)
+	    	->setDetails("[]")
+	    	->save();
+		debug($d);
+		
+	} 
 
 	private function SystemLog() {
 
-		$changeLog = new S\Log\System\SystemLogService(1);
-		$changeLog
+		$sLog = new S\Log\System\SystemLogService;
+		$sLog
 			->setName("test")
-			->setComment("test comment")
-			->setDetails("detail")
+			->setComment("test comment2")
+			->setDetails("[]")
 			->save();
 
 	}
 
 	private function ChangeLog() {
 
-		$changeLog = new S\Log\Change\ChangeLogService;
-		$changeLog
+		$cLog = new S\Log\Change\ChangeLogService;
+		$cLog
 			->setEntityName("test")
 			->setUserEmail(new Types\Email("jan@czibula.com"))
 			->setEntityId(1)
@@ -43,21 +53,15 @@ class CibiPresenter extends BasePresenter {
 	}
 
 	private function Currency() {
-
-		$c = new S\CurrencyService(2);
-		$c->setIso(33)->save();
-		debug($c);
 		
 		$currency = new S\CurrencyService;
 		$currency
 			->setIso(66)
 			->setExchangeRate(56.0)
 			->setDecimalPlaces(2)
-			->setRounding(2);
-		
-		$currency->save();
+			->setRounding(2)
+			->save();
 
-		debug($currency);
 	}
 
 }
