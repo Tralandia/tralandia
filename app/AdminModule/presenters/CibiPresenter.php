@@ -10,8 +10,8 @@ class CibiPresenter extends BasePresenter {
 	public function actionDefault() {
 		
 		//$this->Currency();
-		//$this->ChangeLog();
-		$this->SystemLog();
+		$this->ChangeLog();
+		//$this->SystemLog();
 
 	}
 
