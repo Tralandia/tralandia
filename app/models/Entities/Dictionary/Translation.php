@@ -13,7 +13,7 @@ class Translation extends \Entities\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Phrase", inversedBy="translations")
+	 * @ORM\ManyToOne(targetEntity="Phrase", inversedBy="translations", cascade={"persist", "remove"})
 	 */
 	protected $phrase;
 
@@ -152,6 +152,16 @@ class Translation extends \Entities\BaseEntity {
 
 	public function __construct() {
 	    parent::__construct();
+	}
+
+	/**
+	 * @param \Entities\Dictionary\Phrase
+	 * @return \Entities\Dictionary\Translation
+	 */
+	public function setPhrase(\Entities\Dictionary\Phrase $phrase) {
+		$this->phrase = $phrase;
+
+		return $this;
 	}
 	 
 	/**

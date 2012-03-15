@@ -17,14 +17,19 @@ class CibiPresenter extends BasePresenter {
 
 	private function Dictionary() {
 
-		$phrase = new S\Dictionary\PhraseService(1);
-		$phrase->addTranslation(new S\Dictionary\TranslationService(1));
-		$phrase->type = new S\Dictionary\TypeService(1);
-		$phrase->ready = false;
-	    $phrase->entityId = 2;
-	    $phrase->details = new \Extras\Types\Json("[]");
-	    $phrase->save();
+		$translation = new S\Dictionary\TranslationService(1);
+
+		$phrase = new S\Dictionary\PhraseService();
+		$phrase
+			->addTranslation($translation)
+			->setType(new S\Dictionary\TypeService(1))
+			->setReady(false)
+	    	->setEntityId(2)
+	    	->setDetails(new \Extras\Types\Json("[]"))
+	    	->save();
+	    $translation->save();
 	    debug($phrase);
+
 
 /*
 		$type = new S\Dictionary\TypeService;
@@ -40,12 +45,12 @@ class CibiPresenter extends BasePresenter {
 			->setWebalizedRequired(1)
 			->save();
 
-		$language = new S\Dictionary\LanguageService(1);
+		$language = new S\Dictionary\LanguageService;
 		$language
-			->setName(new S\Dictionary\PhraseService(1))
-		    ->setIso("en")
+			//->setName(new S\Dictionary\PhraseService(1))
+		    ->setIso("sk")
 		    ->setSupported(true)
-		    ->setDefaultCollation("English")
+		    ->setDefaultCollation("Slovak")
 		    ->setSalutations(new \Extras\Types\Json("[]"))
 		    ->setMultitranslationOptions(new \Extras\Types\Json("[]"))
 		    ->setGenderNumberOptions(new \Extras\Types\Json("[]"))
@@ -55,9 +60,9 @@ class CibiPresenter extends BasePresenter {
 		    ->setDetails(new \Extras\Types\Json("[]"))
 			->save();
 
-		$translation = new S\Dictionary\TranslationService(1);
+		$translation = new S\Dictionary\TranslationService;
 		$translation
-			->setLanguage(new S\Dictionary\LanguageService(1))
+			->setLanguage(new S\Dictionary\LanguageService(2))
 			->setTranslation("Home")
 			->setTranslationWebalized("Preklad Webalized")
 			->setTranslationPending("Preklad pending")

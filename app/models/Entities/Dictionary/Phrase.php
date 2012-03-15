@@ -50,7 +50,8 @@ class Phrase extends \Entities\BaseEntityDetails {
 		if(!$this->translations->contains($translation)) {
 			$this->translations->add($translation);
 		}
-	 
+		$translation->setPhrase($this);
+
 		return $this;
 	}
 	 
@@ -62,7 +63,8 @@ class Phrase extends \Entities\BaseEntityDetails {
 		if($this->translations->contains($translation)) {
 			$this->translations->removeElement($translation);
 		}
-	 
+		$translation->unsetPhrase();
+
 		return $this;
 	}
 	 
