@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="log_change_changetype")
  */
-class ChangeType extends \BaseEntity {
+class ChangeType extends \Entities\BaseEntity {
 
 	/**
 	 * @var string

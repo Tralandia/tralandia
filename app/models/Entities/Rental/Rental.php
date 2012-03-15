@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="rental_rental")
  */
-class Rental extends \BaseEntity {
+class Rental extends \Entities\BaseEntity {
 
 	/**
 	 * @var Collection

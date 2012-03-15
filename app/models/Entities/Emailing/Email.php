@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="emailing_email")
  */
-class Email extends \BaseEntity {
+class Email extends \Entities\BaseEntity {
 
 	/**
 	 * @var string

@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="user_role")
  */
-class Role extends \BaseEntity {
+class Role extends \Entities\BaseEntity {
 
 	/**
 	 * @var Collection

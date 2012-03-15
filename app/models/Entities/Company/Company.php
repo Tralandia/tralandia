@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="company_company")
  */
-class Company extends \BaseEntityDetails {
+class Company extends \Entities\BaseEntityDetails {
 
 	/**
 	 * @var Collection

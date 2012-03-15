@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="location_location")
  */
-class Location extends \BaseEntityDetails {
+class Location extends \Entities\BaseEntityDetails {
 
 	/**
 	 * @var Collection

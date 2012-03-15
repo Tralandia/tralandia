@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="invoicing_invoice")
  */
-class Invoice extends \BaseEntity {
+class Invoice extends \Entities\BaseEntity {
 
 	/**
 	 * @var Collection

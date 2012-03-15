@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="medium_medium")
  */
-class Medium extends \BaseEntityDetails {
+class Medium extends \Entities\BaseEntityDetails {
 
 	/**
 	 * @var Collection

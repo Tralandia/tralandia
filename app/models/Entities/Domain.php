@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="domain")
  */
-class Domain extends \BaseEntity {
+class Domain extends \Entities\BaseEntity {
 
 	/**
 	 * @var string

@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="invoicing_service_service")
  */
-class Service extends \BaseEntity {
+class Service extends \Entities\BaseEntity {
 
 	/**
 	 * @var Collection

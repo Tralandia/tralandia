@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="autopilot_taskarchived")
  */
-class TaskArchived extends \BaseEntityDetails {
+class TaskArchived extends \Entities\BaseEntityDetails {
 
 	/**
 	 * @var Collection

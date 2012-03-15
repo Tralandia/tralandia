@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="emailing_batch")
  */
-class Batch extends \BaseEntityDetails {
+class Batch extends \Entities\BaseEntityDetails {
 
 	/**
 	 * @var boolean

@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="log_change_changelog")
  */
-class ChangeLog extends \BaseEntityDetails {
+class ChangeLog extends \Entities\BaseEntityDetails {
 
 	/**
 	 * @var Collection

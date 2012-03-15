@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="visitor_interaction")
  */
-class Interaction extends \BaseEntityDetails {
+class Interaction extends \Entities\BaseEntityDetails {
 
 	/**
 	 * @var Collection

@@ -1,12 +1,14 @@
 <?php
 
+namespace Entities;
+
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\MappedSuperclass()
  */
-class BaseEntityDetails extends BaseEntity {
+class BaseEntityDetails extends \Entities\BaseEntity {
 
 	/**
 	 * @var json
@@ -15,10 +17,10 @@ class BaseEntityDetails extends BaseEntity {
 	protected $details;
 
     /**
-     * @param json
+     * @param \Extras\Types\Json
      * @return self
      */
-    public function setDetails($details) {
+    public function setDetails(\Extras\Types\Json $details) {
         $this->details = $details;
  
         return $this;
@@ -36,7 +38,7 @@ class BaseEntityDetails extends BaseEntity {
  
  
     /**
-     * @return json|NULL
+     * @return \Extras\Types\Json|NULL
      */
     public function getDetails() {
         return $this->details;
