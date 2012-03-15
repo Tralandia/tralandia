@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="expense_expense")
  */
-class Expense extends BaseEntity {
+class Expense extends \Entities\BaseEntity {
 
 	/**
 	 * @var string

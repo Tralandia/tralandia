@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="attraction_attraction")
  */
-class Attraction extends BaseEntityDetails {
+class Attraction extends \Entities\BaseEntityDetails {
 
 	/**
 	 * @var Collection

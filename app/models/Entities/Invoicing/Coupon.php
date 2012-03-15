@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="invoicing_coupon")
  */
-class Coupon extends BaseEntity {
+class Coupon extends \Entities\BaseEntity {
 
 	/**
 	 * @var string

@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="invoicing_service_duration")
  */
-class Duration extends BaseEntity {
+class Duration extends \Entities\BaseEntity {
 
 	/**
 	 * @var Collection

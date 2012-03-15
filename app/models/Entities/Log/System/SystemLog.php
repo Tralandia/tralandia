@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="log_system_systemlog")
  */
-class SystemLog extends BaseEntityDetails {
+class SystemLog extends \Entities\BaseEntityDetails {
 
 	/**
 	 * @var string

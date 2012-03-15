@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="dictionary_language")
  */
-class Language extends BaseEntityDetails {
+class Language extends \Entities\BaseEntityDetails {
 
 	/**
 	 * @var Collection

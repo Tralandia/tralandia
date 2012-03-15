@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="invoicing_use")
  */
-class UseType extends BaseEntity {
+class UseType extends \Entities\BaseEntity {
 
 	/**
 	 * @var Collection

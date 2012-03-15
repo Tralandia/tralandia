@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="user_user")
  */
-class User extends BaseEntity {
+class User extends \Entities\BaseEntity {
 
 	/**
 	 * @var string

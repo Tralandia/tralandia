@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="ticket_ticket")
  */
-class Ticket extends BaseEntity {
+class Ticket extends \Entities\BaseEntity {
 
 	/**
 	 * @var email

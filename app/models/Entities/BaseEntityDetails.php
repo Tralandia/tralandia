@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\MappedSuperclass()
  */
-class BaseEntityDetails extends BaseEntity {
+class BaseEntityDetails extends \Entities\BaseEntity {
 
 	/**
 	 * @var json

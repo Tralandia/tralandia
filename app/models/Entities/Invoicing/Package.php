@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="invoicing_package")
  */
-class Package extends BaseEntity {
+class Package extends \Entities\BaseEntity {
 
 	/**
 	 * @var Collection

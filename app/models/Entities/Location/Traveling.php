@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="location_traveling")
  */
-class Traveling extends BaseEntity {
+class Traveling extends \Entities\BaseEntity {
 
 	/**
 	 * @var Collection
