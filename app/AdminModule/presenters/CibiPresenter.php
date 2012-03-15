@@ -17,17 +17,13 @@ class CibiPresenter extends BasePresenter {
 
 	private function Dictionary() {
 
-		$translation = new S\Dictionary\TranslationService(1);
-
 		$phrase = new S\Dictionary\PhraseService(1);
-		$phrase
-			->addTranslation($translation)
-			->setType(new S\Dictionary\TypeService(1))
-			->setReady(false)
-	    	->setEntityId(2)
-	    	->setDetails(new \Extras\Types\Json("[]"))
-	    	->save();
-	    $translation->save();
+		$phrase->addTranslation(new S\Dictionary\TranslationService(1));
+		$phrase->type = new S\Dictionary\TypeService(1);
+		$phrase->ready = false;
+	    $phrase->entityId = 2;
+	    $phrase->details = new \Extras\Types\Json("[]");
+	    $phrase->save();
 	    debug($phrase);
 
 /*
