@@ -11,6 +11,18 @@ class DictionaryService extends \Services\BaseService {
 
 	public function toTranslate() {
 
+		$qb = $this->em->createQueryBuilder();
+		$qb->select('d, t')
+			->from('\Entities\Dictionary\Phrase', "d")
+			->leftJoin('d.translations', "t");
+		$data = $qb->getQuery()->getResult();
+
+		foreach ($data as $phrase) {
+			foreach ($phrase->translations as $translation) {
+				debug($translation);
+			}
+		}
+
 	}
 
 	public function getSourceLanguage() {

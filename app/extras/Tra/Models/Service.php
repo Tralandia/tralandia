@@ -59,7 +59,7 @@ abstract class Service extends Nette\Object implements IService {
 
 	public function getMainEntity() {
 		if (!$this->mainEntity) {
-			throw new Exception("Este nebola zadana `mainEntity`");
+			throw new \Exception("Este nebola zadana `mainEntity`");
 		}
 		
 		return $this->mainEntity;

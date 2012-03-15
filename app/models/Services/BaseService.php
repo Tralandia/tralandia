@@ -43,7 +43,7 @@ class BaseService extends \Tra\Services\Service {
 				$this->em->flush();
 			}
 		} catch (\PDOException $e) {
-			throw new ServiceException($e->getMessage());
+			throw new \Tra\Services\ServiceException($e->getMessage());
 		}
 	}
 

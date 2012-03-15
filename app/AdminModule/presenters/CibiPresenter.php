@@ -3,36 +3,96 @@
 namespace AdminModule;
 
 use \Services as S,
-	\Extras\Types;
+	\Services\Dictionary as D,
+	\Extras\Types as T;
 
 class CibiPresenter extends BasePresenter {
 
 	public function actionDefault() {
-		
-		$d = new S\Dictionary\DictionaryService;
 
-		$this->Dictionary();
+		$dictionary = new S\Dictionary\DictionaryService;
+		$dictionary->toTranslate();
 
 	}
 
 	private function Dictionary() {
+/*
+		$language = new D\LanguageService(3);
+		$language->setName(new D\PhraseService(3))->save();
+	
+		$lang = array(
+			1 => array(
+					1 => "English",
+					2 => "Anglicky",
+					3 => "Anglicky",
+				),
+			2 => array(
+					1 => "Slovak",
+					2 => "Slovensky",
+					3 => "Slovensky",
+				),
+			3 => array(
+					1 => "Hello World!",
+					2 => "Ahoj svet!",
+					3 => "Ahoj světe!",
+				),
+			4 => array(
+					1 => "Login",
+					2 => "Prihlásiť",
+					3 => "Přihlášení",
+				),
+			5 => array(
+					1 => "Logout",
+					2 => "Odhlásiť",
+					3 => "Odhlásit",
+				),
+			6 => array(
+					1 => "Home",
+					2 => "Domov",
+					3 => "Domu",
+				),
+			7 => array(
+					1 => "Phrase",
+					2 => "Fráza",
+					3 => "Fráze",
+				),
+		);
 
-		$translation = new S\Dictionary\TranslationService(1);
+		foreach ($lang as $p => $value) {
 
-		$phrase = new S\Dictionary\PhraseService();
-		$phrase
-			->addTranslation($translation)
-			->setType(new S\Dictionary\TypeService(1))
-			->setReady(false)
-	    	->setEntityId(2)
-	    	->setDetails(new \Extras\Types\Json("[]"))
-	    	->save();
-	    $translation->save();
-	    debug($phrase);
+			foreach ($value as $language => $string) {
 
+				$translation = new D\TranslationService();
+				$translation->language = new D\LanguageService($language);
+				$translation->translation = $string;
+				$translation->translated = new T\Datetime;
+				$translation->variations = new T\Json("[]");
+				$translation->variationsPending = new T\Json("[]");
+				$translation->save();
+
+				$phrase = new D\PhraseService($p);
+				$phrase->addTranslation($translation);
+				$phrase->type = new D\TypeService(1);
+				$phrase->ready = true;
+			    $phrase->entityId = 2;
+			    $phrase->details = new T\Json("[]");
+			    $phrase->save();
+
+			}
+
+		}
 
 /*
-		$type = new S\Dictionary\TypeService;
+
+		$phrase = new D\PhraseService(8);
+		$phrase->addTranslation(new D\TranslationService(1));
+		$phrase->type = new D\TypeService(1);
+		$phrase->ready = false;
+	    $phrase->entityId = 2;
+	    $phrase->details = new \Extras\Types\Json("[]");
+	    $phrase->save();
+
+		$type = new D\TypeService;
 		$type
 			->setName("test")
 			->setEntityName("test")
@@ -45,9 +105,9 @@ class CibiPresenter extends BasePresenter {
 			->setWebalizedRequired(1)
 			->save();
 
-		$language = new S\Dictionary\LanguageService;
+		$language = new D\LanguageService;
 		$language
-			//->setName(new S\Dictionary\PhraseService(1))
+			//->setName(new D\PhraseService(1))
 		    ->setIso("sk")
 		    ->setSupported(true)
 		    ->setDefaultCollation("Slovak")
@@ -60,9 +120,9 @@ class CibiPresenter extends BasePresenter {
 		    ->setDetails(new \Extras\Types\Json("[]"))
 			->save();
 
-		$translation = new S\Dictionary\TranslationService;
+		$translation = new D\TranslationService;
 		$translation
-			->setLanguage(new S\Dictionary\LanguageService(2))
+			->setLanguage(new D\LanguageService(2))
 			->setTranslation("Home")
 			->setTranslationWebalized("Preklad Webalized")
 			->setTranslationPending("Preklad pending")
