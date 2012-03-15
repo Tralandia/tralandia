@@ -1,4 +1,4 @@
-->set<?php
+<?php
 
 namespace AdminModule;
 
@@ -34,15 +34,13 @@ class CibiPresenter extends BasePresenter {
 */
 
 		$language = new S\Dictionary\LanguageService;
-		debug($language);
-		return false;
 		$language
-			->setName(new S\Dictionary\Phrase(1))
+			->setName(new S\Dictionary\PhraseService(1))
 		    ->setIso("en")
 		    ->setSupported(true)
 		    ->setDefaultCollation("en")
 		    ->setSalutations("[]")
-		    ->setMultitranslationOptions("[]")
+		    ->setMultitranslationOptions()
 		    ->setGenderNumberOptions("[]")
 		    ->setPpcPatterns("[]")
 		    //->setLocations()

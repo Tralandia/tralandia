@@ -205,7 +205,7 @@ class Language extends \Entities\BaseEntityDetails {
 	 * @param \Extras\Types\Json
 	 * @return \Entities\Dictionary\Language
 	 */
-	public function setMultitranslationOption(\Extras\Types\Json $multitranslationOption) {
+	public function setMultitranslationOptions(\Extras\Types\Json $multitranslationOptions) {
 		$this->multitranslationOptions = $multitranslationOptions;
 
 		return $this;
@@ -214,7 +214,7 @@ class Language extends \Entities\BaseEntityDetails {
 	/**
 	 * @return \Entities\Dictionary\Language
 	 */
-	public function unsetMultitranslationOption() {
+	public function unsetMultitranslationOptions() {
 		$this->multitranslationOptions = NULL;
 
 		return $this;
@@ -292,6 +292,5 @@ class Language extends \Entities\BaseEntityDetails {
 	public function getRentals() {
 		return $this->rentals;
 	}
-
 
 }
