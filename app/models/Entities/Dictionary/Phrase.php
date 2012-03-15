@@ -13,7 +13,7 @@ class Phrase extends \Entities\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Translation", mappedBy="phrase")
+	 * @ORM\OneToMany(targetEntity="Translation", mappedBy="phrase", cascade={"persist", "remove"})
 	 */
 	protected $translations;
 

@@ -71,7 +71,7 @@ class Language extends \Entities\BaseEntityDetails {
 	 */
 	protected $rentals;
 
-
+	
 	public function __construct() {
 		parent::__construct();
 
@@ -179,7 +179,7 @@ class Language extends \Entities\BaseEntityDetails {
 	 * @param \Extras\Types\Json
 	 * @return \Entities\Dictionary\Language
 	 */
-	public function setSalutation(\Extras\Types\Json $salutation) {
+	public function setSalutations(\Extras\Types\Json $salutations) {
 		$this->salutations = $salutations;
 
 		return $this;
@@ -188,7 +188,7 @@ class Language extends \Entities\BaseEntityDetails {
 	/**
 	 * @return \Entities\Dictionary\Language
 	 */
-	public function unsetSalutation() {
+	public function unsetSalutations() {
 		$this->salutations = NULL;
 
 		return $this;
@@ -231,7 +231,7 @@ class Language extends \Entities\BaseEntityDetails {
 	 * @param \Extras\Types\Json
 	 * @return \Entities\Dictionary\Language
 	 */
-	public function setGenderNumberOption(\Extras\Types\Json $genderNumberOption) {
+	public function setGenderNumberOptions(\Extras\Types\Json $genderNumberOptions) {
 		$this->genderNumberOptions = $genderNumberOptions;
 
 		return $this;
@@ -240,7 +240,7 @@ class Language extends \Entities\BaseEntityDetails {
 	/**
 	 * @return \Entities\Dictionary\Language
 	 */
-	public function unsetGenderNumberOption() {
+	public function unsetGenderNumberOptions() {
 		$this->genderNumberOptions = NULL;
 
 		return $this;
@@ -257,7 +257,7 @@ class Language extends \Entities\BaseEntityDetails {
 	 * @param \Extras\Types\Json
 	 * @return \Entities\Dictionary\Language
 	 */
-	public function setPpcPattern(\Extras\Types\Json $ppcPattern) {
+	public function setPpcPatterns(\Extras\Types\Json $ppcPatterns) {
 		$this->ppcPatterns = $ppcPatterns;
 
 		return $this;
@@ -266,7 +266,7 @@ class Language extends \Entities\BaseEntityDetails {
 	/**
 	 * @return \Entities\Dictionary\Language
 	 */
-	public function unsetPpcPattern() {
+	public function unsetPpcPatterns() {
 		$this->ppcPatterns = NULL;
 
 		return $this;

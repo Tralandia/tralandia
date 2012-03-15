@@ -9,14 +9,26 @@ class CibiPresenter extends BasePresenter {
 
 	public function actionDefault() {
 		
-		//$this->Currency();
-		//$this->ChangeLog();
-		//$this->SystemLog();
+		$d = new S\Dictionary\DictionaryService;
+
 		$this->Dictionary();
 
 	}
 
 	private function Dictionary() {
+
+		$translation = new S\Dictionary\TranslationService(1);
+
+		$phrase = new S\Dictionary\PhraseService(1);
+		$phrase
+			->addTranslation($translation)
+			->setType(new S\Dictionary\TypeService(1))
+			->setReady(false)
+	    	->setEntityId(2)
+	    	->setDetails(new \Extras\Types\Json("[]"))
+	    	->save();
+	    $translation->save();
+	    debug($phrase);
 
 /*
 		$type = new S\Dictionary\TypeService;
@@ -31,62 +43,34 @@ class CibiPresenter extends BasePresenter {
 			->setPositionRequired(1)
 			->setWebalizedRequired(1)
 			->save();
-*/
 
-		$language = new S\Dictionary\LanguageService;
+		$language = new S\Dictionary\LanguageService(1);
 		$language
 			->setName(new S\Dictionary\PhraseService(1))
 		    ->setIso("en")
 		    ->setSupported(true)
-		    ->setDefaultCollation("en")
-		    ->setSalutations("[]")
-		    ->setMultitranslationOptions()
-		    ->setGenderNumberOptions("[]")
-		    ->setPpcPatterns("[]")
+		    ->setDefaultCollation("English")
+		    ->setSalutations(new \Extras\Types\Json("[]"))
+		    ->setMultitranslationOptions(new \Extras\Types\Json("[]"))
+		    ->setGenderNumberOptions(new \Extras\Types\Json("[]"))
+		    ->setPpcPatterns(new \Extras\Types\Json("[]"))
 		    //->setLocations()
 		    //->setRentals()
-		    ->setDetails("[]")
+		    ->setDetails(new \Extras\Types\Json("[]"))
 			->save();
 
-/*
-		$translation = new \Entities\Dictionary\Translation;
+		$translation = new S\Dictionary\TranslationService(1);
 		$translation
-			->setPhrase(new S\Dictionary\PhraseService(2))
-			->setLanguage()
-			->setTranslation()
-			->setTranslation2()
-			->setTranslation3()
-			->setTranslation4()
-			->setTranslation5()
-			->setTranslation6()
-			->setTranslationWebalized()
-			->setTranslationWebalized2()
-			->setTranslationWebalized3()
-			->setTranslationWebalized4()
-			->setTranslationWebalized5()
-			->setTranslationWebalized6()
-			->setTranslationPending()
-			->setTranslationPending2()
-			->setTranslationPending3()
-			->setTranslationPending4()
-			->setTranslationPending5()
-			->setTranslationPending6()
-			->setTranslated()
-			->setVariations()
-			->setVariationsPending();
-
-		debug($translation);
-		return false;
+			->setLanguage(new S\Dictionary\LanguageService(1))
+			->setTranslation("Home")
+			->setTranslationWebalized("Preklad Webalized")
+			->setTranslationPending("Preklad pending")
+			->setTranslated(new \Extras\Types\Datetime)
+			->setVariations(new \Extras\Types\Json("[]"))
+			->setVariationsPending(new \Extras\Types\Json("[]"))
+			->save();
 */
-/*
-		$phrase = new S\Dictionary\PhraseService;
-		$phrase
-			->setType(new S\Dictionary\TypeService(1))
-			->setReady(false)
-	    	->setEntityId(1)
-	    	->setDetails("[]")
-	    	->save();
-*/		
+		
 	} 
 
 	private function SystemLog() {

@@ -685,7 +685,7 @@ class Translation extends \Entities\BaseEntity {
 	 * @param \Extras\Types\Json
 	 * @return \Entities\Dictionary\Translation
 	 */
-	public function setVariation(\Extras\Types\Json $variation) {
+	public function setVariations(\Extras\Types\Json $variations) {
 	    $this->variations = $variations;
 	 
 	    return $this;

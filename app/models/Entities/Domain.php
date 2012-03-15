@@ -24,65 +24,68 @@ class Domain extends \Entities\BaseEntity {
 	 */
 	protected $locations;
 
+	
 	public function __construct() {
-	    parent::__construct();
+		parent::__construct();
+
+		$this->locations = new \Doctrine\Common\Collections\ArrayCollection;
 	}
-	 
+
 	/**
-	 * @param string
-	 * @return \Entities\Domain
-	 */
+	 * @param string
+	 * @return \Entities\Domain
+	 */
 	public function setDomain($domain) {
-	    $this->domain = $domain;
-	 
-	    return $this;
+		$this->domain = $domain;
+
+		return $this;
 	}
-	 
+
 	/**
-	 * @return \Entities\Domain
-	 */
+	 * @return \Entities\Domain
+	 */
 	public function unsetDomain() {
-	    $this->domain = NULL;
-	 
-	    return $this;
+		$this->domain = NULL;
+
+		return $this;
 	}
-	 
+
 	/**
-	 * @return string|NULL
-	 */
+	 * @return string|NULL
+	 */
 	public function getDomain() {
-	    return $this->domain;
+		return $this->domain;
 	}
-	 
+
 	/**
-	 * @param \Entities\Location\Location
-	 * @return \Entities\Domain
-	 */
+	 * @param \Entities\Location\Location
+	 * @return \Entities\Domain
+	 */
 	public function addLocation(\Entities\Location\Location $location) {
-	    if(!$this->locations->contains($location)) {
-	        $this->locations->add($location);
-	    }
-	 
-	    return $this;
+		if(!$this->locations->contains($location)) {
+			$this->locations->add($location);
+		}
+
+		return $this;
 	}
-	 
+
 	/**
-	 * @param \Entities\Location\Location
-	 * @return \Entities\Domain
-	 */
+	 * @param \Entities\Location\Location
+	 * @return \Entities\Domain
+	 */
 	public function removeLocation(\Entities\Location\Location $location) {
-	    if($this->locations->contains($location)) {
-	        $this->locations->removeElement($location);
-	    }
-	 
-	    return $this;
+		if($this->locations->contains($location)) {
+			$this->locations->removeElement($location);
+		}
+
+		return $this;
 	}
-	 
+
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entities\Location\Location
-	 */
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entities\Location\Location
+	 */
 	public function getLocations() {
-	    return $this->locations;
+		return $this->locations;
 	}
 
 }
