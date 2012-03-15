@@ -216,7 +216,11 @@ class EntityGeneratorPresenter extends BasePresenter {
 
 		$return['class'] = $property->class;
 
-		$return['singular'] = $this->toSingular($property->name);
+		if($return['isCollection'])
+			$return['singular'] = $this->toSingular($property->name);
+		else 
+			$return['singular'] = $property->name;
+
 		$return['singularFu'] = Strings::firstUpper($return['singular']);
 
 		return \Nette\ArrayHash::from($return);
