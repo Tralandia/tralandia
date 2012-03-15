@@ -13,7 +13,7 @@ class Location extends \BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Entities\Dictionary\Language", mappedBy="locations")
+	 * @ORM\ManyToMany(targetEntity="Entities\Dictionary\Language", mappedBy="locations")
 	 */
 	protected $languages;
 

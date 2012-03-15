@@ -61,7 +61,7 @@ class Language extends \BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entities\Location\Location", inversedBy="langages")
+	 * @ORM\ManyToMany(targetEntity="Entities\Location\Location", inversedBy="languages")
 	 */
 	protected $locations;
 
