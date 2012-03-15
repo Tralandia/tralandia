@@ -149,4 +149,587 @@ class Translation extends \BaseEntity {
 	 */
 	protected $variationsPending;
 
+
+	public function __construct() {
+	    parent::__construct();
+	}
+	 
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entities\Dictionary\Phrase
+	 */
+	public function getPhrase() {
+	    return $this->phrase;
+	}
+	 
+	/**
+	 * @param \Entities\Dictionary\Language
+	 * @return \Entities\Dictionary\Translation
+	 */
+	public function setLanguage(\Entities\Dictionary\Language $language) {
+	    $this->language = $language;
+	 
+	    return $this;
+	}
+	 
+	/**
+	 * @return \Entities\Dictionary\Translation
+	 */
+	public function unsetLanguage() {
+	    $this->language = NULL;
+	 
+	    return $this;
+	}
+	 
+	/**
+	 * @return \Entities\Dictionary\Language|NULL
+	 */
+	public function getLanguage() {
+	    return $this->language;
+	}
+	 
+	/**
+	 * @param string
+	 * @return \Entities\Dictionary\Translation
+	 */
+	public function setTranslation($translation) {
+	    $this->translation = $translation;
+	 
+	    return $this;
+	}
+	 
+	/**
+	 * @return \Entities\Dictionary\Translation
+	 */
+	public function unsetTranslation() {
+	    $this->translation = NULL;
+	 
+	    return $this;
+	}
+	 
+	/**
+	 * @return string|NULL
+	 */
+	public function getTranslation() {
+	    return $this->translation;
+	}
+	 
+	/**
+	 * @param string
+	 * @return \Entities\Dictionary\Translation
+	 */
+	public function setTranslation2($translation2) {
+	    $this->translation2 = $translation2;
+	 
+	    return $this;
+	}
+	 
+	/**
+	 * @return \Entities\Dictionary\Translation
+	 */
+	public function unsetTranslation2() {
+	    $this->translation2 = NULL;
+	 
+	    return $this;
+	}
+	 
+	/**
+	 * @return string|NULL
+	 */
+	public function getTranslation2() {
+	    return $this->translation2;
+	}
+	 
+	/**
+	 * @param string
+	 * @return \Entities\Dictionary\Translation
+	 */
+	public function setTranslation3($translation3) {
+	    $this->translation3 = $translation3;
+	 
+	    return $this;
+	}
+	 
+	/**
+	 * @return \Entities\Dictionary\Translation
+	 */
+	public function unsetTranslation3() {
+	    $this->translation3 = NULL;
+	 
+	    return $this;
+	}
+	 
+	/**
+	 * @return string|NULL
+	 */
+	public function getTranslation3() {
+	    return $this->translation3;
+	}
+	 
+	/**
+	 * @param string
+	 * @return \Entities\Dictionary\Translation
+	 */
+	public function setTranslation4($translation4) {
+	    $this->translation4 = $translation4;
+	 
+	    return $this;
+	}
+	 
+	/**
+	 * @return \Entities\Dictionary\Translation
+	 */
+	public function unsetTranslation4() {
+	    $this->translation4 = NULL;
+	 
+	    return $this;
+	}
+	 
+	/**
+	 * @return string|NULL
+	 */
+	public function getTranslation4() {
+	    return $this->translation4;
+	}
+	 
+	/**
+	 * @param string
+	 * @return \Entities\Dictionary\Translation
+	 */
+	public function setTranslation5($translation5) {
+	    $this->translation5 = $translation5;
+	 
+	    return $this;
+	}
+	 
+	/**
+	 * @return \Entities\Dictionary\Translation
+	 */
+	public function unsetTranslation5() {
+	    $this->translation5 = NULL;
+	 
+	    return $this;
+	}
+	 
+	/**
+	 * @return string|NULL
+	 */
+	public function getTranslation5() {
+	    return $this->translation5;
+	}
+	 
+	/**
+	 * @param string
+	 * @return \Entities\Dictionary\Translation
+	 */
+	public function setTranslation6($translation6) {
+	    $this->translation6 = $translation6;
+	 
+	    return $this;
+	}
+	 
+	/**
+	 * @return \Entities\Dictionary\Translation
+	 */
+	public function unsetTranslation6() {
+	    $this->translation6 = NULL;
+	 
+	    return $this;
+	}
+	 
+	/**
+	 * @return string|NULL
+	 */
+	public function getTranslation6() {
+	    return $this->translation6;
+	}
+	 
+	/**
+	 * @param string
+	 * @return \Entities\Dictionary\Translation
+	 */
+	public function setTranslationWebalized($translationWebalized) {
+	    $this->translationWebalized = $translationWebalized;
+	 
+	    return $this;
+	}
+	 
+	/**
+	 * @return \Entities\Dictionary\Translation
+	 */
+	public function unsetTranslationWebalized() {
+	    $this->translationWebalized = NULL;
+	 
+	    return $this;
+	}
+	 
+	/**
+	 * @return string|NULL
+	 */
+	public function getTranslationWebalized() {
+	    return $this->translationWebalized;
+	}
+	 
+	/**
+	 * @param string
+	 * @return \Entities\Dictionary\Translation
+	 */
+	public function setTranslationWebalized2($translationWebalized2) {
+	    $this->translationWebalized2 = $translationWebalized2;
+	 
+	    return $this;
+	}
+	 
+	/**
+	 * @return \Entities\Dictionary\Translation
+	 */
+	public function unsetTranslationWebalized2() {
+	    $this->translationWebalized2 = NULL;
+	 
+	    return $this;
+	}
+	 
+	/**
+	 * @return string|NULL
+	 */
+	public function getTranslationWebalized2() {
+	    return $this->translationWebalized2;
+	}
+	 
+	/**
+	 * @param string
+	 * @return \Entities\Dictionary\Translation
+	 */
+	public function setTranslationWebalized3($translationWebalized3) {
+	    $this->translationWebalized3 = $translationWebalized3;
+	 
+	    return $this;
+	}
+	 
+	/**
+	 * @return \Entities\Dictionary\Translation
+	 */
+	public function unsetTranslationWebalized3() {
+	    $this->translationWebalized3 = NULL;
+	 
+	    return $this;
+	}
+	 
+	/**
+	 * @return string|NULL
+	 */
+	public function getTranslationWebalized3() {
+	    return $this->translationWebalized3;
+	}
+	 
+	/**
+	 * @param string
+	 * @return \Entities\Dictionary\Translation
+	 */
+	public function setTranslationWebalized4($translationWebalized4) {
+	    $this->translationWebalized4 = $translationWebalized4;
+	 
+	    return $this;
+	}
+	 
+	/**
+	 * @return \Entities\Dictionary\Translation
+	 */
+	public function unsetTranslationWebalized4() {
+	    $this->translationWebalized4 = NULL;
+	 
+	    return $this;
+	}
+	 
+	/**
+	 * @return string|NULL
+	 */
+	public function getTranslationWebalized4() {
+	    return $this->translationWebalized4;
+	}
+	 
+	/**
+	 * @param string
+	 * @return \Entities\Dictionary\Translation
+	 */
+	public function setTranslationWebalized5($translationWebalized5) {
+	    $this->translationWebalized5 = $translationWebalized5;
+	 
+	    return $this;
+	}
+	 
+	/**
+	 * @return \Entities\Dictionary\Translation
+	 */
+	public function unsetTranslationWebalized5() {
+	    $this->translationWebalized5 = NULL;
+	 
+	    return $this;
+	}
+	 
+	/**
+	 * @return string|NULL
+	 */
+	public function getTranslationWebalized5() {
+	    return $this->translationWebalized5;
+	}
+	 
+	/**
+	 * @param string
+	 * @return \Entities\Dictionary\Translation
+	 */
+	public function setTranslationWebalized6($translationWebalized6) {
+	    $this->translationWebalized6 = $translationWebalized6;
+	 
+	    return $this;
+	}
+	 
+	/**
+	 * @return \Entities\Dictionary\Translation
+	 */
+	public function unsetTranslationWebalized6() {
+	    $this->translationWebalized6 = NULL;
+	 
+	    return $this;
+	}
+	 
+	/**
+	 * @return string|NULL
+	 */
+	public function getTranslationWebalized6() {
+	    return $this->translationWebalized6;
+	}
+	 
+	/**
+	 * @param string
+	 * @return \Entities\Dictionary\Translation
+	 */
+	public function setTranslationPending($translationPending) {
+	    $this->translationPending = $translationPending;
+	 
+	    return $this;
+	}
+	 
+	/**
+	 * @return \Entities\Dictionary\Translation
+	 */
+	public function unsetTranslationPending() {
+	    $this->translationPending = NULL;
+	 
+	    return $this;
+	}
+	 
+	/**
+	 * @return string|NULL
+	 */
+	public function getTranslationPending() {
+	    return $this->translationPending;
+	}
+	 
+	/**
+	 * @param string
+	 * @return \Entities\Dictionary\Translation
+	 */
+	public function setTranslationPending2($translationPending2) {
+	    $this->translationPending2 = $translationPending2;
+	 
+	    return $this;
+	}
+	 
+	/**
+	 * @return \Entities\Dictionary\Translation
+	 */
+	public function unsetTranslationPending2() {
+	    $this->translationPending2 = NULL;
+	 
+	    return $this;
+	}
+	 
+	/**
+	 * @return string|NULL
+	 */
+	public function getTranslationPending2() {
+	    return $this->translationPending2;
+	}
+	 
+	/**
+	 * @param string
+	 * @return \Entities\Dictionary\Translation
+	 */
+	public function setTranslationPending3($translationPending3) {
+	    $this->translationPending3 = $translationPending3;
+	 
+	    return $this;
+	}
+	 
+	/**
+	 * @return \Entities\Dictionary\Translation
+	 */
+	public function unsetTranslationPending3() {
+	    $this->translationPending3 = NULL;
+	 
+	    return $this;
+	}
+	 
+	/**
+	 * @return string|NULL
+	 */
+	public function getTranslationPending3() {
+	    return $this->translationPending3;
+	}
+	 
+	/**
+	 * @param string
+	 * @return \Entities\Dictionary\Translation
+	 */
+	public function setTranslationPending4($translationPending4) {
+	    $this->translationPending4 = $translationPending4;
+	 
+	    return $this;
+	}
+	 
+	/**
+	 * @return \Entities\Dictionary\Translation
+	 */
+	public function unsetTranslationPending4() {
+	    $this->translationPending4 = NULL;
+	 
+	    return $this;
+	}
+	 
+	/**
+	 * @return string|NULL
+	 */
+	public function getTranslationPending4() {
+	    return $this->translationPending4;
+	}
+	 
+	/**
+	 * @param string
+	 * @return \Entities\Dictionary\Translation
+	 */
+	public function setTranslationPending5($translationPending5) {
+	    $this->translationPending5 = $translationPending5;
+	 
+	    return $this;
+	}
+	 
+	/**
+	 * @return \Entities\Dictionary\Translation
+	 */
+	public function unsetTranslationPending5() {
+	    $this->translationPending5 = NULL;
+	 
+	    return $this;
+	}
+	 
+	/**
+	 * @return string|NULL
+	 */
+	public function getTranslationPending5() {
+	    return $this->translationPending5;
+	}
+	 
+	/**
+	 * @param string
+	 * @return \Entities\Dictionary\Translation
+	 */
+	public function setTranslationPending6($translationPending6) {
+	    $this->translationPending6 = $translationPending6;
+	 
+	    return $this;
+	}
+	 
+	/**
+	 * @return \Entities\Dictionary\Translation
+	 */
+	public function unsetTranslationPending6() {
+	    $this->translationPending6 = NULL;
+	 
+	    return $this;
+	}
+	 
+	/**
+	 * @return string|NULL
+	 */
+	public function getTranslationPending6() {
+	    return $this->translationPending6;
+	}
+	 
+	/**
+	 * @param \Extras\Types\Datetime
+	 * @return \Entities\Dictionary\Translation
+	 */
+	public function setTranslated(\Extras\Types\Datetime $translated) {
+	    $this->translated = $translated;
+	 
+	    return $this;
+	}
+	 
+	/**
+	 * @return \Entities\Dictionary\Translation
+	 */
+	public function unsetTranslated() {
+	    $this->translated = NULL;
+	 
+	    return $this;
+	}
+	 
+	/**
+	 * @return \Extras\Types\Datetime|NULL
+	 */
+	public function getTranslated() {
+	    return $this->translated;
+	}
+	 
+	/**
+	 * @param \Extras\Types\Json
+	 * @return \Entities\Dictionary\Translation
+	 */
+	public function setVariation(\Extras\Types\Json $variation) {
+	    $this->variations = $variations;
+	 
+	    return $this;
+	}
+	 
+	/**
+	 * @return \Entities\Dictionary\Translation
+	 */
+	public function unsetVariation() {
+	    $this->variations = NULL;
+	 
+	    return $this;
+	}
+	 
+	/**
+	 * @return \Extras\Types\Json|NULL
+	 */
+	public function getVariations() {
+	    return $this->variations;
+	}
+	 
+	/**
+	 * @param \Extras\Types\Json
+	 * @return \Entities\Dictionary\Translation
+	 */
+	public function setVariationsPending(\Extras\Types\Json $variationsPending) {
+	    $this->variationsPending = $variationsPending;
+	 
+	    return $this;
+	}
+	 
+	/**
+	 * @return \Entities\Dictionary\Translation
+	 */
+	public function unsetVariationsPending() {
+	    $this->variationsPending = NULL;
+	 
+	    return $this;
+	}
+	 
+	/**
+	 * @return \Extras\Types\Json|NULL
+	 */
+	public function getVariationsPending() {
+	    return $this->variationsPending;
+	}
 }

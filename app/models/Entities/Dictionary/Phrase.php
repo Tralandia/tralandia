@@ -37,7 +37,9 @@ class Phrase extends \BaseEntityDetails {
 
 
 	public function __construct() {
-	    parent::__construct();
+		parent::__construct();
+		
+		$this->translations = new \Doctrine\Common\Collections\ArrayCollection;
 	}
 	
 	/**
@@ -45,11 +47,11 @@ class Phrase extends \BaseEntityDetails {
 	 * @return \Entities\Dictionary\Phrase
 	 */
 	public function addTranslation(\Entities\Dictionary\Translation $translation) {
-	    if(!$this->translations->contains($translation)) {
-	        $this->translations->add($translation);
-	    }
+		if(!$this->translations->contains($translation)) {
+			$this->translations->add($translation);
+		}
 	 
-	    return $this;
+		return $this;
 	}
 	 
 	/**
@@ -57,18 +59,18 @@ class Phrase extends \BaseEntityDetails {
 	 * @return \Entities\Dictionary\Phrase
 	 */
 	public function removeTranslation(\Entities\Dictionary\Translation $translation) {
-	    if($this->translations->contains($translation)) {
-	        $this->translations->removeElement($translation);
-	    }
+		if($this->translations->contains($translation)) {
+			$this->translations->removeElement($translation);
+		}
 	 
-	    return $this;
+		return $this;
 	}
 	 
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entities\Dictionary\Translation
 	 */
 	public function getTranslations() {
-	    return $this->translations;
+		return $this->translations;
 	}
 	 
 	/**
@@ -76,25 +78,25 @@ class Phrase extends \BaseEntityDetails {
 	 * @return \Entities\Dictionary\Phrase
 	 */
 	public function setReady($ready) {
-	    $this->ready = $ready;
+		$this->ready = $ready;
 	 
-	    return $this;
+		return $this;
 	}
 	 
 	/**
 	 * @return \Entities\Dictionary\Phrase
 	 */
 	public function unsetReady() {
-	    $this->ready = NULL;
-	 
-	    return $this;
+		$this->ready = NULL;
+	
+		return $this;
 	}
 	 
 	/**
 	 * @return boolean|NULL
 	 */
 	public function getReady() {
-	    return $this->ready;
+		return $this->ready;
 	}
 	 
 	/**
@@ -102,25 +104,25 @@ class Phrase extends \BaseEntityDetails {
 	 * @return \Entities\Dictionary\Phrase
 	 */
 	public function setType(\Entities\Dictionary\Type $type) {
-	    $this->type = $type;
+		$this->type = $type;
 	 
-	    return $this;
+		return $this;
 	}
 	 
 	/**
 	 * @return \Entities\Dictionary\Phrase
 	 */
 	public function unsetType() {
-	    $this->type = NULL;
+		$this->type = NULL;
 	 
-	    return $this;
+		return $this;
 	}
 	 
 	/**
 	 * @return \Entities\Dictionary\Type|NULL
 	 */
 	public function getType() {
-	    return $this->type;
+		return $this->type;
 	}
 	 
 	/**
@@ -128,24 +130,24 @@ class Phrase extends \BaseEntityDetails {
 	 * @return \Entities\Dictionary\Phrase
 	 */
 	public function setEntityId($entityId) {
-	    $this->entityId = $entityId;
+		$this->entityId = $entityId;
 	 
-	    return $this;
+		return $this;
 	}
 	 
 	/**
 	 * @return \Entities\Dictionary\Phrase
 	 */
 	public function unsetEntityId() {
-	    $this->entityId = NULL;
+		$this->entityId = NULL;
 	 
-	    return $this;
+		return $this;
 	}
 	 
 	/**
 	 * @return integer|NULL
 	 */
 	public function getEntityId() {
-	    return $this->entityId;
+		return $this->entityId;
 	}
 }

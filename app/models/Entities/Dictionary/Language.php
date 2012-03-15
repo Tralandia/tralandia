@@ -71,4 +71,227 @@ class Language extends \BaseEntityDetails {
 	 */
 	protected $rentals;
 
+
+	public function __construct() {
+		parent::__construct();
+
+		$this->locations = new \Doctrine\Common\Collections\ArrayCollection;
+		$this->rentals = new \Doctrine\Common\Collections\ArrayCollection;
+	}
+
+	/**
+	 * @param \Entities\Dictionary\Phrase
+	 * @return \Entities\Dictionary\Language
+	 */
+	public function setName(\Entities\Dictionary\Phrase $name) {
+		$this->name = $name;
+		$name->setEntityId($this->getId());
+
+		return $this;
+	}
+
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entities\Dictionary\Phrase
+	 */
+	public function getName() {
+		return $this->name;
+	}
+
+	/**
+	 * @param string
+	 * @return \Entities\Dictionary\Language
+	 */
+	public function setIso($iso) {
+		$this->iso = $iso;
+
+		return $this;
+	}
+
+	/**
+	 * @return \Entities\Dictionary\Language
+	 */
+	public function unsetIso() {
+		$this->iso = NULL;
+
+		return $this;
+	}
+
+	/**
+	 * @return string|NULL
+	 */
+	public function getIso() {
+		return $this->iso;
+	}
+
+	/**
+	 * @param boolean
+	 * @return \Entities\Dictionary\Language
+	 */
+	public function setSupported($supported) {
+		$this->supported = $supported;
+
+		return $this;
+	}
+
+	/**
+	 * @return \Entities\Dictionary\Language
+	 */
+	public function unsetSupported() {
+		$this->supported = NULL;
+
+		return $this;
+	}
+
+	/**
+	 * @return boolean|NULL
+	 */
+	public function getSupported() {
+		return $this->supported;
+	}
+
+	/**
+	 * @param string
+	 * @return \Entities\Dictionary\Language
+	 */
+	public function setDefaultCollation($defaultCollation) {
+		$this->defaultCollation = $defaultCollation;
+
+		return $this;
+	}
+
+	/**
+	 * @return \Entities\Dictionary\Language
+	 */
+	public function unsetDefaultCollation() {
+		$this->defaultCollation = NULL;
+
+		return $this;
+	}
+
+	/**
+	 * @return string|NULL
+	 */
+	public function getDefaultCollation() {
+		return $this->defaultCollation;
+	}
+
+	/**
+	 * @param \Extras\Types\Json
+	 * @return \Entities\Dictionary\Language
+	 */
+	public function setSalutation(\Extras\Types\Json $salutation) {
+		$this->salutations = $salutations;
+
+		return $this;
+	}
+
+	/**
+	 * @return \Entities\Dictionary\Language
+	 */
+	public function unsetSalutation() {
+		$this->salutations = NULL;
+
+		return $this;
+	}
+
+	/**
+	 * @return \Extras\Types\Json|NULL
+	 */
+	public function getSalutations() {
+		return $this->salutations;
+	}
+
+	/**
+	 * @param \Extras\Types\Json
+	 * @return \Entities\Dictionary\Language
+	 */
+	public function setMultitranslationOption(\Extras\Types\Json $multitranslationOption) {
+		$this->multitranslationOptions = $multitranslationOptions;
+
+		return $this;
+	}
+
+	/**
+	 * @return \Entities\Dictionary\Language
+	 */
+	public function unsetMultitranslationOption() {
+		$this->multitranslationOptions = NULL;
+
+		return $this;
+	}
+
+	/**
+	 * @return \Extras\Types\Json|NULL
+	 */
+	public function getMultitranslationOptions() {
+		return $this->multitranslationOptions;
+	}
+
+	/**
+	 * @param \Extras\Types\Json
+	 * @return \Entities\Dictionary\Language
+	 */
+	public function setGenderNumberOption(\Extras\Types\Json $genderNumberOption) {
+		$this->genderNumberOptions = $genderNumberOptions;
+
+		return $this;
+	}
+
+	/**
+	 * @return \Entities\Dictionary\Language
+	 */
+	public function unsetGenderNumberOption() {
+		$this->genderNumberOptions = NULL;
+
+		return $this;
+	}
+
+	/**
+	 * @return \Extras\Types\Json|NULL
+	 */
+	public function getGenderNumberOptions() {
+		return $this->genderNumberOptions;
+	}
+
+	/**
+	 * @param \Extras\Types\Json
+	 * @return \Entities\Dictionary\Language
+	 */
+	public function setPpcPattern(\Extras\Types\Json $ppcPattern) {
+		$this->ppcPatterns = $ppcPatterns;
+
+		return $this;
+	}
+
+	/**
+	 * @return \Entities\Dictionary\Language
+	 */
+	public function unsetPpcPattern() {
+		$this->ppcPatterns = NULL;
+
+		return $this;
+	}
+
+	/**
+	 * @return \Extras\Types\Json|NULL
+	 */
+	public function getPpcPatterns() {
+		return $this->ppcPatterns;
+	}
+
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entities\Location\Location
+	 */
+	public function getLocations() {
+		return $this->locations;
+	}
+
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entities\Rental\Rental
+	 */
+	public function getRentals() {
+		return $this->rentals;
+	}
+
+
 }

@@ -1,4 +1,4 @@
-<?php
+->set<?php
 
 namespace AdminModule;
 
@@ -18,15 +18,77 @@ class CibiPresenter extends BasePresenter {
 
 	private function Dictionary() {
 
-		$d = new S\Dictionary\PhraseService;
-		$d	->setTranslations(new \Entities\Dictionary\Translation)
-			->setReady(true)
-	    	->setType(new \Entities\Dictionary\Type)
+/*
+		$type = new S\Dictionary\TypeService;
+		$type
+			->setName("test")
+			->setEntityName("test")
+			->setEntityAttribute("test")
+			->setTranslationLevelRequirement(1)
+			->setMultitranslationRequired(1)
+			->setGenderNumberRequired(1)
+			->setLocativeRequired(1)
+			->setPositionRequired(1)
+			->setWebalizedRequired(1)
+			->save();
+*/
+
+		$language = new S\Dictionary\LanguageService;
+		debug($language);
+		return false;
+		$language
+			->setName(new S\Dictionary\Phrase(1))
+		    ->setIso("en")
+		    ->setSupported(true)
+		    ->setDefaultCollation("en")
+		    ->setSalutations("[]")
+		    ->setMultitranslationOptions("[]")
+		    ->setGenderNumberOptions("[]")
+		    ->setPpcPatterns("[]")
+		    //->setLocations()
+		    //->setRentals()
+		    ->setDetails("[]")
+			->save();
+
+/*
+		$translation = new \Entities\Dictionary\Translation;
+		$translation
+			->setPhrase(new S\Dictionary\PhraseService(2))
+			->setLanguage()
+			->setTranslation()
+			->setTranslation2()
+			->setTranslation3()
+			->setTranslation4()
+			->setTranslation5()
+			->setTranslation6()
+			->setTranslationWebalized()
+			->setTranslationWebalized2()
+			->setTranslationWebalized3()
+			->setTranslationWebalized4()
+			->setTranslationWebalized5()
+			->setTranslationWebalized6()
+			->setTranslationPending()
+			->setTranslationPending2()
+			->setTranslationPending3()
+			->setTranslationPending4()
+			->setTranslationPending5()
+			->setTranslationPending6()
+			->setTranslated()
+			->setVariations()
+			->setVariationsPending();
+
+		debug($translation);
+		return false;
+*/
+/*
+		$phrase = new S\Dictionary\PhraseService;
+		$phrase
+			->setType(new S\Dictionary\TypeService(1))
+			->setReady(false)
 	    	->setEntityId(1)
 	    	->setDetails("[]")
 	    	->save();
-		debug($d);
-		
+*/		
 	} 
 
 	private function SystemLog() {
