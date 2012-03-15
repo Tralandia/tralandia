@@ -36,7 +36,7 @@ class EntityGeneratorPresenter extends BasePresenter {
 
 		$properties = $mainEntity->getProperties();
 		foreach ($properties as $property) {
-			if(in_array($property->name, array('id', 'created', 'updated'))) continue;
+			if(in_array($property->name, array('id', 'created', 'updated', 'details'))) continue;
 
 			$property = $this->getPropertyInfo($property);
 

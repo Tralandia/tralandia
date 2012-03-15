@@ -14,4 +14,32 @@ class BaseEntityDetails extends BaseEntity {
 	 */
 	protected $details;
 
+    /**
+     * @param json
+     * @return self
+     */
+    public function setDetails($details) {
+        $this->details = $details;
+ 
+        return $this;
+    }
+ 
+ 
+    /**
+     * @return self
+     */
+    public function unsetDetails() {
+        $this->details = NULL;
+ 
+        return $this;
+    }
+ 
+ 
+    /**
+     * @return json|NULL
+     */
+    public function getDetails() {
+        return $this->details;
+    }
+
 }
