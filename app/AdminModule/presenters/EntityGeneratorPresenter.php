@@ -114,6 +114,7 @@ class EntityGeneratorPresenter extends BasePresenter {
 
 			} else {
 				$this->addMethod('set', $newClass, $property, $property->type);
+				$this->addMethod('unset', $newClass, $property, $property->type);
 				$this->addMethod('get2', $newClass, $property, $property->type);
 			}
 
@@ -186,6 +187,9 @@ class EntityGeneratorPresenter extends BasePresenter {
 		} else {
 			$return['isCollection'] = FALSE;
 			$return['type'] = $annotations['ORM\Column'][0]['type'];
+			
+			if($return['type'] == 'text') $return['type'] = 'string';
+
 			if(!in_array($return['type'], array('integer', 'string', 'boolean', 'decimal'))) {
 				$return['type'] = '\Extras\Types\\'.Strings::firstUpper($return['type']);
 			}

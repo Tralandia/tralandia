@@ -5,8 +5,10 @@
 </ul>
 <b>POZOR: skontroluj ci sa v texte nenachadza 'todo'!!!</b>
 <span>ak ano kontaktuj svojho administratora</span>
-<pre class="brush: php">
-{$newClass}
+<pre class="brush: php" n:inner-foreach="$newClass->methods as $method">
+
+{$method}
+
 </pre>
 
 {* <textarea style="width:900px;height:800px;">{$newClass}</textarea> *}
