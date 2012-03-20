@@ -13,7 +13,7 @@ class Translation extends \Entities\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Phrase", inversedBy="translations")
+	 * @ORM\ManyToOne(targetEntity="Phrase", inversedBy="translations", cascade={"persist", "remove"})
 	 */
 	protected $phrase;
 

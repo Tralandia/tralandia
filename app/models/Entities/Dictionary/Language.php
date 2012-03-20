@@ -37,25 +37,25 @@ class Language extends \Entities\BaseEntityDetails {
 
 	/**
 	 * @var json
-	 * @ORM\Column(type="json")
+	 * @ORM\Column(type="json", nullable=true)
 	 */
 	protected $salutations;
 
 	/**
 	 * @var json
-	 * @ORM\Column(type="json")
+	 * @ORM\Column(type="json", nullable=true)
 	 */
 	protected $multitranslationOptions;
 
 	/**
 	 * @var json
-	 * @ORM\Column(type="json")
+	 * @ORM\Column(type="json", nullable=true)
 	 */
 	protected $genderNumberOptions;
 
 	/**
 	 * @var json
-	 * @ORM\Column(type="json")
+	 * @ORM\Column(type="json", nullable=true)
 	 */
 	protected $ppcPatterns;
 

@@ -11,6 +11,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Type extends \Entities\BaseEntity {
 
+	const TRANSLATION_LEVEL_PASSIVE = 0;
+	const TRANSLATION_LEVEL_ACTIVE = 2;
+	const TRANSLATION_LEVEL_NATIVE = 4;
+	const TRANSLATION_LEVEL_MARKETING = 6;
+
 	/**
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
@@ -25,6 +30,12 @@ class Type extends \Entities\BaseEntity {
 
 	/**
 	 * @var string
+	 * @ORM\Column(type="string")
+	 */
+	protected $requiredLanguages;
+	
+	/**
+	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $entityAttribute;
@@ -33,39 +44,46 @@ class Type extends \Entities\BaseEntity {
 	 * @var integer
 	 * @ORM\Column(type="integer")
 	 */
-	protected $translationLevelRequirement;
+	protected $translationLevelRequirement = FALSE;
 
 	/**
 	 * @var boolean
 	 * @ORM\Column(type="boolean")
 	 */
-	protected $multitranslationRequired;
+	protected $multitranslationRequired = FALSE;
 
 	/**
 	 * @var boolean
 	 * @ORM\Column(type="boolean")
 	 */
-	protected $genderNumberRequired;
+	protected $genderNumberRequired = FALSE;
 
 	/**
 	 * @var boolean
 	 * @ORM\Column(type="boolean")
 	 */
-	protected $locativeRequired;
+	protected $locativeRequired = FALSE;
 
 	/**
 	 * @var boolean
 	 * @ORM\Column(type="boolean")
 	 */
-	protected $positionRequired;
+	protected $positionRequired = FALSE;
 
 	/**
 	 * @var boolean
 	 * @ORM\Column(type="boolean")
 	 */
-	protected $webalizedRequired;
+	protected $webalizedRequired = FALSE;
 
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $helpForTranslator;
 	
+
+
 	public function __construct() {
 		parent::__construct();
 	}
@@ -146,6 +164,32 @@ class Type extends \Entities\BaseEntity {
 	 */
 	public function getEntityAttribute() {
 		return $this->entityAttribute;
+	}
+
+	/**
+	 * @param string
+	 * @return \Entities\Dictionary\Type
+	 */
+	public function setRequiredLanguages($requiredLanguages) {
+		$this->requiredLanguages = $requiredLanguages;
+
+		return $this;
+	}
+
+	/**
+	 * @return \Entities\Dictionary\Type
+	 */
+	public function unsetRequiredLanguages() {
+		$this->requiredLanguages = NULL;
+
+		return $this;
+	}
+
+	/**
+	 * @return string|NULL
+	 */
+	public function getRequiredLanguages() {
+		return $this->requiredLanguages;
 	}
 
 	/**
@@ -304,4 +348,29 @@ class Type extends \Entities\BaseEntity {
 		return $this->webalizedRequired;
 	}
 
+	/**
+	 * @param string
+	 * @return \Entities\Dictionary\Type
+	 */
+	public function setHelpForTranslator($helpForTranslator) {
+		$this->helpForTranslator = $helpForTranslator;
+
+		return $this;
+	}
+
+	/**
+	 * @return \Entities\Dictionary\Type
+	 */
+	public function unsetHelpForTranslator() {
+		$this->helpForTranslator = NULL;
+
+		return $this;
+	}
+
+	/**
+	 * @return string|NULL
+	 */
+	public function getHelpForTranslator() {
+		return $this->helpForTranslator;
+	}
 }

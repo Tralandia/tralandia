@@ -13,7 +13,7 @@ class Currency extends \Entities\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase")
+	 * @ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $name;
 
@@ -25,19 +25,19 @@ class Currency extends \Entities\BaseEntity {
 
 	/**
 	 * @var decimal
-	 * @ORM\Column(type="decimal")
+	 * @ORM\Column(type="decimal", nullable=true)
 	 */
 	protected $exchangeRate;
 
 	/**
 	 * @var integer
-	 * @ORM\Column(type="integer")
+	 * @ORM\Column(type="integer", nullable=true)
 	 */
 	protected $decimalPlaces;
 
 	/**
 	 * @var string
-	 * @ORM\Column(type="string")
+	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $rounding;
 

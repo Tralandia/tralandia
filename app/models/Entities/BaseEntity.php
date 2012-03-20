@@ -31,6 +31,10 @@ class BaseEntity extends \Entity{
 	protected $updated;
 
 
+	public function __construct() {
+		parent::__construct();
+	}
+
 	/**
 	 * @param integer
 	 * @return \Entities\BaseEntity
@@ -70,12 +74,12 @@ class BaseEntity extends \Entity{
 	 * @ORM\preUpdate
 	 * @return \Entities\BaseEntity
 	 */
-	public function setUpdated(){
-		$this->updated = new \Nette\DateTime;
-	}
-
-		public function __construct() {
-		parent::__construct();
+	public function setUpdated() {
+		if (\Import::$updateDateTime instanceof \Nette\DateTime) {
+			$this->updated = \Import::$updateDateTime;
+		} else {
+			$this->updated = new \Nette\DateTime;
+		}
 	}
 
 	/**

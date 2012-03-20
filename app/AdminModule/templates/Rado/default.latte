@@ -1,2 +1,9 @@
 {block content}
-{$test}
+<h1>TRAx Import</h1>
+
+<a href="?truncateDatabase=1">Truncate Database</a>
+<ul>
+{foreach $sections as $key => $value}
+    <li>{$value} <a href="?undoSection={$value}">UNDO</a> <a href="?redoSection={$value}">REDO</a> <a href="?importSection={$value}">IMPORT</a></li>
+{/foreach}
+</ul>

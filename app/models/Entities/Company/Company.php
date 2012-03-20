@@ -16,7 +16,7 @@ class Company extends \Entities\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="BankAccount", mappedBy="company")
+	 * @ORM\OneToMany(targetEntity="BankAccount", mappedBy="company", cascade={"persist", "remove"})
 	 */
 	protected $bankAccounts;
 
@@ -28,7 +28,7 @@ class Company extends \Entities\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Office", mappedBy="company")
+	 * @ORM\OneToMany(targetEntity="Office", mappedBy="company", cascade={"persist", "remove"})
 	 */
 	protected $offices;
 
@@ -40,7 +40,7 @@ class Company extends \Entities\BaseEntityDetails {
 
 	/**
 	 * @var address
-	 * @ORM\Column(type="address")
+	 * @ORM\Column(type="address", nullable=true)
 	 */
 	protected $address;
 
@@ -58,13 +58,13 @@ class Company extends \Entities\BaseEntityDetails {
 
 	/**
 	 * @var decimal
-	 * @ORM\Column(type="decimal")
+	 * @ORM\Column(type="decimal", nullable=true)
 	 */
 	protected $vat;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase")
+	 * @ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $registrator;
 
