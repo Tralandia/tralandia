@@ -5,17 +5,36 @@ use Nette,
 	Tra, 
 	Entity, 
 	Nette\ObjectMixin, 
-	Nette\MemberAccessException;
+	Nette\MemberAccessException,
+	Doctrine\ORM\EntityManager;
 
 abstract class Service extends Nette\Object implements IService {
 	
 	const MAIN_ENTITY_NAME = null;
 	protected $mainEntity = false;
 	protected $reflector = null;
-	private $em = null;
+	private static $em = null;
+	private static $flush = true;
 
 	public function __construct() {
 
+	}
+
+	public static function setEntityManager(EntityManager $em) {
+		self::$em = $em;
+	}
+
+	public static function preventFlush() {
+		self::$flush = false;
+	}
+	
+	public static function flush() {
+		self::$em->flush();
+		self::$flush = true;
+	}
+	
+	public static function isFlushable() {
+		return self::$flush;
 	}
 	
 	public function __set($name, $value) {
@@ -80,18 +99,12 @@ abstract class Service extends Nette\Object implements IService {
 		return $this->reflector;
 	}
 
-	public function getEntityManager() {
-		if ($this->em == null) {
-			// TODO: treba vyriesit ako sa zbavit Environmentu
-			$context = Nette\Environment::getContainer();
-			$this->em = $context->entityManager;
-		}
-		
-		return $this->em;
+	public static function getEntityManager() {
+		return self::$em;
 	}
 
-	public function getEm() {
-		return $this->getEntityManager();
+	public static function getEm() {
+		return self::getEntityManager();
 	}
 	
 	public function prepareData(Tra\Forms\Form $form) {

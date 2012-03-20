@@ -30,6 +30,9 @@ Extension::register($configurator);
 // Create Dependency Injection container from config.neon file
 $configurator->addConfig(APP_DIR . '/config.neon', isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : null);
 $container = $configurator->createContainer();
+$container->createService();
+
+
 $container->addService('robotLoader', $robotLoader); // dolezite pre dynamicke presentery
 Debugger::$editor = $container->parameters['editor'];
 

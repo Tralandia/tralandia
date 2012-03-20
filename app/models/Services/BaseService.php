@@ -29,7 +29,9 @@ class BaseService extends \Tra\Services\Service {
 				if (!$this->isPersist) {
 					$this->em->persist($this->mainEntity);
 				}
-				$this->em->flush();
+				if ($this->isFlushable()) {
+					$this->em->flush();
+				}
 			}
 		} catch (\PDOException $e) {
 			throw new \Tra\Services\ServiceException($e->getMessage());

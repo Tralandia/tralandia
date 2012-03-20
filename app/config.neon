@@ -48,9 +48,7 @@ common:
 	
 		console: @doctrine.console
 		
-		entityManager: @doctrine.entityManagers.default
-		
-		authenticator: Security\Authenticator( @entityManager::getRepository('User') )
+		#authenticator: Security\Authenticator( @entityManager::getRepository('User') )
 
 		authorizator: Security\Acl
 
@@ -60,6 +58,8 @@ common:
 		settings:
 			factory: \PresenterSettings::factory
 		
+	factories:
+		service: Tra\Services\Service::setEntityManager(@doctrine.entityManagers.default)
 
 production < common:
 	parameters:

@@ -7,7 +7,7 @@ use Nette\Application as NA,
 	Nette\Diagnostics\Debugger,
 	Nette\Utils\Html,
 	Nette\Utils\Strings,
-	Tra\Services\Dictionary as D,
+	Services\Dictionary as D,
 	Services as S,
 	Services\Log\Change as SLog;
 
@@ -93,37 +93,20 @@ class DavidPresenter extends BasePresenter {
 
 	public function actionList() {
 
-		$dictionary = new D\DictionaryService;
+		\Services\CurrencyService::preventFlush();
 
-		$quality = $dictionary->createQuality('basic3', 12);
-		//debug($quality);
+		for ($i = 0; $i < 100; $i++) {
+			$service = new \Services\CurrencyService;
+			$service->iso = \Nette\Utils\Strings::random(5, 'A-Z');
+			$service->exchangeRate = 1;
+			$service->decimalPlaces = 1;
+			$service->rounding = 'r';
+			$service->created = new \Nette\DateTime;
+			$service->updated = new \Nette\DateTime;
+			$service->save();
+		}
 
-		$type = $dictionary->createType(array(
-			'entityName' => 'rental',
-			'entityAttribute' => 'name',
-			'translationQualityRequirement' => $quality, 
-			'isMultitranslationRequired' => FALSE, 
-			'isGenderNumberRequired' => FALSE, 
-			'isLocativeRequired' => FALSE, 
-			'isPositionRequired' => FALSE, 
-			'isWebalizedRequired' => FALSE, 
-		));
-		//debug($type);
-		//debug($dictionary);
-
-		/*
-		$country = new \Tra\Services\Country(1);
-		$country->iso = 'sk';
-		$country->save();
-
-
-		$user = new \Tra\Services\User;
-		$user->country = $country;
-		$user->login = 'waccoTEST';
-		$user->active = true;
-		$user->password = 'testik';
-		$user->save();
-		*/
+		\Services\CurrencyService::flush();
 	}
 	
 	public function renderAdd() {
