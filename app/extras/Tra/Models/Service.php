@@ -1,6 +1,7 @@
 <?php
 
 namespace Tra\Services;
+namespace Tra\Services;
 use Nette, 
 	Tra, 
 	Entity, 
@@ -86,7 +87,7 @@ abstract class Service extends Nette\Object implements IService {
 
 	public function getMainEntityName() {
 		if (!static::MAIN_ENTITY_NAME) {
-			throw new Exception("Este nebola zadana `mainEntity`, preto nemozem ziskat jej nazov");
+			throw new \Exception("Este nebola zadana `mainEntity`, preto nemozem ziskat jej nazov");
 		}
 		
 		return static::MAIN_ENTITY_NAME;
@@ -99,11 +100,11 @@ abstract class Service extends Nette\Object implements IService {
 		return $this->reflector;
 	}
 
-	public static function getEntityManager() {
+	protected function getEntityManager() {
 		return self::$em;
 	}
 
-	public static function getEm() {
+	protected function getEm() {
 		return self::getEntityManager();
 	}
 	
