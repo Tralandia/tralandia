@@ -93,6 +93,7 @@ class DavidPresenter extends BasePresenter {
 
 	public function actionList() {
 
+/*
 		\Services\CurrencyService::preventFlush();
 
 		for ($i = 0; $i < 100; $i++) {
@@ -107,6 +108,14 @@ class DavidPresenter extends BasePresenter {
 		}
 
 		\Services\CurrencyService::flush();
+*/
+
+		$a = \Services\CurrencyService::get(10);
+		$b = \Services\CurrencyService::get(10);
+
+		if ($a === $b) {
+			echo "OBJEKTY SA ROVNAJU";
+		}
 	}
 	
 	public function renderAdd() {
