@@ -32,7 +32,7 @@ $configurator->addConfig(APP_DIR . '/config.neon', isset($_SERVER['APPENV']) ? $
 $container = $configurator->createContainer();
 $container->createService();
 
-
+// Pridanie sluzby robot loadera
 $container->addService('robotLoader', $robotLoader); // dolezite pre dynamicke presentery
 Debugger::$editor = $container->parameters['editor'];
 
