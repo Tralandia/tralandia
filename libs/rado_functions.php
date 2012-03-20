@@ -5,8 +5,8 @@ function q($query, $show = 0) {
 
 	if (!$link) {
 		$link=mysql_connect('localhost', 'root', 'root');
-		mysql_select_db('tralandia_old', $link);
 	}
+	mysql_select_db('tralandia_old', $link);
 
 	if ($show == 1) debug($query);
 	if ($r =@mysql_query($query, $link)) {
@@ -18,18 +18,18 @@ function q($query, $show = 0) {
 }
 
 function qNew($query, $show = 0) {
-	static $link;
+	static $link1;
 
-	if (!$link) {
-		$link=mysql_connect('localhost', 'root', 'root');
-		mysql_select_db('tralandia', $link);
+	if (!$link1) {
+		$link1=mysql_connect('localhost', 'root', 'root');
 	}
+	mysql_select_db('tralandia', $link1);
 
 	if ($show == 1) debug($query);
-	if ($r =@mysql_query($query, $link)) {
+	if ($r = @mysql_query($query, $link1)) {
 		return $r;
 	} else {
-		debug($query." ---> mySQL Error: ".mysql_error($link));
+		debug($query." ---> mySQL Error: ".mysql_error($link1));
 		return FALSE;
 	}
 }
@@ -60,8 +60,15 @@ function addIdPair($oldTable, $oldId, $entity, $newId) {
 	return TRUE;
 }
 
-function getNewId($entity, $oldId) {
-	return (int)qc('select newId from _idPairs where entity = "'.mysql_real_escape_string($entity).'" and oldId = '.$oldId);
+
+function getByOldId($entityName, $oldId) {
+	$tableName = str_replace('\\', '_', $entityName);
+	$tableName = trim($tableName, '_');
+	$tableName = strtolower($tableName);
+	$r = qNew('select id from '.$tableName.' where oldId = '.$oldId);
+	$id = mysql_fetch_array($r);
+	$id = $id[0];
+	return $id;
 }
 
 function getNewIds($entity, $oldIds) {

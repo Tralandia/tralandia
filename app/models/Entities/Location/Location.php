@@ -19,25 +19,25 @@ class Location extends \Entities\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase")
+	 * @ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $name;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase")
+	 * @ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $nameOfficial;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase")
+	 * @ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $nameShort;
 
 	/**
 	 * @var string
-	 * @ORM\Column(type="string", unique=true)
+	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $iso;
 
@@ -133,13 +133,13 @@ class Location extends \Entities\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Traveling", mappedBy="destination")
+	 * @ORM\OneToMany(targetEntity="Traveling", mappedBy="destinationLocation")
 	 */
 	protected $incomings;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Traveling", mappedBy="source")
+	 * @ORM\OneToMany(targetEntity="Traveling", mappedBy="sourceLocation")
 	 */
 	protected $travelings;
 
@@ -148,5 +148,4 @@ class Location extends \Entities\BaseEntityDetails {
 	 * @ORM\OneToOne(targetEntity="Country", mappedBy="location")
 	 */
 	protected $country;
-
 }

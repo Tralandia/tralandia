@@ -20,26 +20,26 @@ class RadoPresenter extends BasePresenter {
 			$import->truncateDatabase();
 
 			$this->flashMessage('Truncate Done');
-			$this->redirect('Rado:default');
+			//$this->redirect('Rado:default');
 		}
 		if (isset($this->params['undoSection'])) {
 			$import = new \Import();
 			$import->undoSection($this->params['undoSection']);
 			$this->flashMessage('Section UNDONE');
-			$this->redirect('Rado:default');
+			//$this->redirect('Rado:default');
 		}
 		if (isset($this->params['importSection'])) {
 			$import = new \Import();
 			$action = 'import'.ucfirst($this->params['importSection']);
 			$import->{$action}();
 			$import->saveVariables();
-			$this->redirect('Rado:default');
+			//$this->redirect('Rado:default');
 		}
 	}
 
 	public function renderDefault() {
+		debug(Debugger::timer());
 		$import = new \Import();
-
 
 		$sections = $import->getSections();
 		$temp = array();
@@ -47,6 +47,7 @@ class RadoPresenter extends BasePresenter {
 			$temp[] = $key;
 		}
 		$this->template->sections = $temp;
+		debug(Debugger::timer());
 		return;
 
 		// debug($this->params); return;	

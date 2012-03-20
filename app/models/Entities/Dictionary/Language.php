@@ -13,7 +13,7 @@ class Language extends \Entities\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Phrase")
+	 * @ORM\OneToOne(targetEntity="Phrase", cascade={"persist", "remove"})
 	 */
 	protected $name;
 

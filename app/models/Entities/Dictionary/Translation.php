@@ -19,7 +19,7 @@ class Translation extends \Entities\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Language")
+	 * @ORM\ManyToOne(targetEntity="Language", cascade={"persist"})
 	 */
 	protected $language;
 

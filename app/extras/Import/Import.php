@@ -19,17 +19,21 @@ class Import {
 	public function __construct() {
 		$this->setSections();
 		$this->loadVariables();
+		debug($this->savedVariables);
 	}
 
 	public function truncateDatabase() {
+		debug('Truncate Start '.Debugger::timer());
 		qNew('SET FOREIGN_KEY_CHECKS = 0;');
 		$allTables = qNew('SHOW tables');
 		while ($table = mysql_fetch_array($allTables)) {
 			qNew('truncate table '.$table[0]);
 		}
-		q('truncate table _idPairs');
 		qNew('SET FOREIGN_KEY_CHECKS = 1;');
-		$this->savedVariables['importedSections'] = array();
+		foreach ($this->savedVariables['importedSections'] as $key => $value) {
+			$this->savedVariables['importedSections'][$key] = 0;
+		}
+		debug('Truncate End '.Debugger::timer());
 		$this->saveVariables();
 	}
 
@@ -40,28 +44,26 @@ class Import {
 				$tableName = str_replace('\\', '_', $key2);
 				$tableName = trim($tableName, '_');
 				$tableName = strtolower($tableName);
-				debug($tableName);
 
 				$r = qNew('select id from '.$tableName.' order by id DESC');
 				while ($x = mysql_fetch_array($r)) {
 					$serviceName = '\Services'.$key2.'Service';
-					debug($serviceName.':'.$x['id']);
 					$s = new $serviceName($x['id']);
 					$s->delete();
 				}
-				q('delete from table _idPairs where entity = "'.mysql_real_escape_string($key2).'"');
 			}
-			unset($this->savedVariables['importedSections'][$key]);
+			$this->savedVariables['importedSections'][$key]=0;
 			if ($key == $section) break;
 		}
 		$this->saveVariables();
 	}
 
 	public function importLanguages() {
-		$this->savedVariables['importedSections']['languages']['started'] = 1;
+		$this->savedVariables['importedSections']['languages'] = 1;
 		$r = q('select * from languages order by id');
 		while($x = mysql_fetch_array($r)) {
 			$s = new D\LanguageService();
+			$s->oldId = $x['id'];
 			$s->iso = $x['iso'];
 			$s->supported = (bool)$x['translated'];
 			$s->defaultCollation = $x['default_collation'];
@@ -69,17 +71,20 @@ class Import {
 
 			$s->save();
 
-			addIdPair('languages', $x['id'], '\Dictionary\Language', $s->id);
 		}
+		$s->getEntityManager()->flush();
+
 		$this->createPhrasesByOld('\Dictionary\Language', 'name', 'supportedLanguages', 'ACTIVE', 'languages', 'name_dic_id');
-		$this->savedVariables['importedSections']['languages']['ended'] = 1;
+		$s->getEntityManager()->flush();
+		$this->savedVariables['importedSections']['languages'] = 2;
 	}
 
 	public function importCurrencies() {
-		$this->savedVariables['importedSections']['currencies']['started'] = 1;
+		$this->savedVariables['importedSections']['currencies'] = 1;
 		$r = q('select * from currencies order by id');
 		while($x = mysql_fetch_array($r)) {
 			$s = new S\CurrencyService();
+			$s->oldId = $x['id'];
 			$s->iso = $x['iso'];
 			$s->exchangeRate = (bool)$x['exchange_rate'];
 			$s->decimalPlaces = $x['decimal_places'];
@@ -87,18 +92,18 @@ class Import {
 
 			$s->save();
 
-			addIdPair('currencies', $x['id'], '\Currency', $s->id);
 		}
 
 		$this->createPhrasesByOld('\Currency', 'name', 'supportedLanguages', 'ACTIVE', 'currencies', 'name_dic_id');
-		$this->savedVariables['importedSections']['currencies']['ended'] = 1;
+		$this->savedVariables['importedSections']['currencies'] = 2;
 	}
 
 	public function importDomains() {
-		$this->savedVariables['importedSections']['domains']['started'] = 1;
+		$this->savedVariables['importedSections']['domains'] = 1;
 		$r = q('select domain from countries where length(domain)>0');
 		while($x = mysql_fetch_array($r)) {
 			$s = new S\DomainService();
+			$s->oldId = $x['id'];
 			$s->domain = $x['domain'];
 			$s->save();
 		}
@@ -106,14 +111,34 @@ class Import {
 		$s = new S\DomainService();
 		$s->domain = 'tralandia.com';
 		$s->save();
-		$this->savedVariables['importedSections']['domains']['ended'] = 1;
+		$this->savedVariables['importedSections']['domains'] = 2;
+	}
+
+	public function importLocations() {
+		$this->savedVariables['importedSections']['locations'] = 1;
+		$r = q('select domain from continents order by id');
+		while($x = mysql_fetch_array($r)) {
+			$dictionaryType = new D\TypeService();
+			$dictionaryType->entityName = '\Location\Location';
+			$dictionaryType->entityAttribute = 'name';
+			$dictionaryType->requiredLanguages = 'incomingLanguages';
+			$dictionaryType->translationLevelRequirement = \Entities\Dictionary\Type::TRANSLATION_LEVEL_NATIVE;
+			$dictionaryType->save();
+
+			$s = new S\Location\LocationService();
+			$s->name = createNewPhrase($dictionaryType, $x['name_dic_id']);
+			$s->save();
+		}
+
+		$this->savedVariables['importedSections']['locations'] = 2;
 	}
 
 	public function importCompanies() {
-		$this->savedVariables['importedSections']['companies']['started'] = 1;
+		$this->savedVariables['importedSections']['companies'] = 1;
 		$r = q('select * from companies order by id');
 		while($x = mysql_fetch_array($r)) {
 			$s = new S\Company\CompanyService();
+			$s->oldId = $x['id'];
 			$s->name = $x['name'];
 			// @todo - prerobit, ked budeme mat objekt Address()
 			$s->address = json_encode(array(
@@ -135,15 +160,13 @@ class Import {
 			$s->details = new \Extras\Types\Json("[]");
 			$s->save();
 
-			addIdPair('companies', $x['id'], '\Company\Company', $s->id);
 		}
-
+		
 		$this->createPhrasesByOld('\Company\Company', 'registrator', 'supportedLanguages', 'ACTIVE', 'companies', 'registrator_dic_id');
-		$this->savedVariables['importedSections']['companies']['ended'] = 1;
+		$this->savedVariables['importedSections']['companies'] = 2;
 	}
 
 	private function createPhrasesByOld($entityName, $entityAttribute, $requiredLanguages, $level, $oldTableName, $oldAttribute) {
-		debug(Debugger::timer());
 		eval('$level = \Entities\Dictionary\Type::TRANSLATION_LEVEL_'.strtoupper($level).';');
 		$dictionaryType = new D\TypeService();
 		$dictionaryType->entityName = $entityName;
@@ -155,26 +178,23 @@ class Import {
 		$r = q('select * from '.$oldTableName.' order by id');
 		while($x = mysql_fetch_array($r)) {
 			if ($x[$oldAttribute]) {
-				$newEntityId = getNewId($entityName, $x['id']);
-				$phrase = $this->createNewPhrase($dictionaryType, $newEntityId, $x[$oldAttribute]);
+				$newEntityId = getByOldId($entityName, $x['id']);
+				$phrase = $this->createNewPhrase($dictionaryType, $x[$oldAttribute]);
 				if ($phrase instanceof D\PhraseService) {
-					debug($newEntityId);
 					eval('$s = new \Services'.$entityName.'Service('.$newEntityId.');');
-					debug($s);
 					$s->{$entityAttribute} = $phrase;
-					$s->save();
-				}			
+					$s->save();						
+				}
 			}
 		}
 	}
 
-	private function createNewPhrase(\Services\Dictionary\TypeService $type, $entityId, $oldPhraseId) {
+	private function createNewPhrase(\Services\Dictionary\TypeService $type, $oldPhraseId) {
 		$oldPhraseData = qf('select * from dictionary where id = '.$oldPhraseId);
 		if (!$oldPhraseData) return FALSE;
 
 		$phrase = new \Services\Dictionary\PhraseService();
 		$phrase->ready = (bool)$oldPhraseData['ready'];
-		$phrase->entityId = (int)$entityId;
 		$phrase->type = $type;
 		$phrase->details = new \Extras\Types\Json("[]");
 		$phrase->save();
@@ -184,24 +204,24 @@ class Import {
 			$oldTranslation = qf('select * from '.$table[0].' where id = '.$oldPhraseId);
 			if (!$oldTranslation || strlen($oldTranslation['text']) == 0) continue;
 
-			$translation = new \Services\Dictionary\TranslationService();
-			$languageId = getNewId('\Dictionary\Language', qc('select id from languages where iso = "'.substr($table[0], 2).'"'));
+			$translation = new \Services\Dictionary\TranslationService;
 
-			$translation->language = new \Services\Dictionary\LanguageService($languageId);
+			$newEntityId = getByOldId('\Dictionary\Language', qc('select id from languages where iso = "'.substr($table[0], 2).'"'));
+
+			$translation->language = new \Services\Dictionary\LanguageService($newEntityId);
 			$translation->translation = $oldTranslation['text'];
 			
 			$translation->translated = fromStamp($oldTranslation['updated']);
 			$translation->variations = new \Extras\Types\Json("[]");
 			$translation->variationsPending = new \Extras\Types\Json("[]");
 
-			self::$updateDateTime = fromStamp($oldTranslation['updated']);
 			$translation->save();
 
 			$phrase->addTranslation($translation);
 		}
-		self::$updateDateTime = NULL;
 
 		$phrase->save();
+		//$phrase->getEntityManager()->flush();
 		return $phrase;
 	}
 
@@ -254,6 +274,9 @@ class Import {
 			'domains' => array(
 				'\Domain' => array(),
 			),
+			'locations' => array(
+				'\Location\Location' => array(),
+			),
 			'companies' => array(
 				'\Company\Company' => array(),
 			),
@@ -264,11 +287,12 @@ class Import {
 		return $this->sections;
 	}
 
-	private function loadVariables() {
-		$this->savedVariables = json_decode(qc('select value from _importVariables where id = 1'));
+	public function loadVariables() {
+		$t = qc('select value from _importVariables where id = 1');
+		$this->savedVariables = \Nette\Utils\Json::decode($t, TRUE);
 	}
 
-	private function saveVariables() {
-		q('update _importVariables set value ="'.mysql_real_escape_string(json_encode($this->savedVariables)).'"  where id = 1');
+	public function saveVariables() {
+		q('update _importVariables set value ="'.mysql_real_escape_string(\Nette\Utils\Json::encode($this->savedVariables)).'"  where id = 1');
 	}
 }

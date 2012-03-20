@@ -19,6 +19,12 @@ class BaseEntity extends \Entity{
 	protected $id;
 
 	/**
+	 * @var integer
+	 * @ORM\Column(type="integer", nullable=true)
+	 */
+	protected $oldId;
+
+	/**
 	 * @var datetime
 	 * @ORM\Column(type="datetime")
 	 */
@@ -50,6 +56,32 @@ class BaseEntity extends \Entity{
 	 */
 	public function getId() {
 		return $this->id;
+	}
+
+	/**
+	 * @param integer
+	 * @return \Entities\BaseEntity
+	 */
+	public function setOldId($oldId) {
+		$this->oldId = $oldId;
+
+		return $this;
+	}
+
+	/**
+	 * @return \Entities\BaseEntity
+	 */
+	public function unsetOldId() {
+		$this->oldId = NULL;
+
+		return $this;
+	}
+
+	/**
+	 * @return integer|NULL
+	 */
+	public function getOldId() {
+		return $this->oldId;
 	}
 
 	/**
