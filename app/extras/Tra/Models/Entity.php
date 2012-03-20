@@ -1,6 +1,8 @@
 <?php
 
-
+/**
+ * Abstrakcia vrstvy entita
+ */
 abstract class Entity extends \Nette\Object implements \Nette\Security\IResource, \IteratorAggregate {
 	
 	public function __construct($data = array()) {
