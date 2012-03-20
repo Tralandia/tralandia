@@ -133,13 +133,13 @@ class Location extends \Entities\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Traveling", mappedBy="destination")
+	 * @ORM\OneToMany(targetEntity="Traveling", mappedBy="destinationLocation")
 	 */
 	protected $incomings;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Traveling", mappedBy="source")
+	 * @ORM\OneToMany(targetEntity="Traveling", mappedBy="sourceLocation")
 	 */
 	protected $travelings;
 

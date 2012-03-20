@@ -338,7 +338,7 @@ class EntityGeneratorPresenter extends BasePresenter {
 		} else if($snippet->type == 5) {
 			$method->documents[] = sprintf('@param %s', $tagetProperyClass);
 			$body[] = sprintf('$this->%s = $%s;', $property->name, $firstParameter->name);
-			$body[] = sprintf('$%s->setEntityId($this->getId());', $firstParameter->name);
+			//$body[] = sprintf('$%s->setEntityId($this->getId());', $firstParameter->name);
 		} else if($snippet->type == 6) {
 			$method->documents[] = sprintf('@param %s', $tagetProperyClass);
 			$body[] = sprintf('return $%s->add%s($this);', $firstParameter->name, $property->singularFu);
