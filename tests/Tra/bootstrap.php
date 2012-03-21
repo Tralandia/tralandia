@@ -19,8 +19,10 @@ define('TESTS_DIR', ROOT_DIR . '/tests');
 require TESTS_DIR . '/Test/TestHelpers.php';
 require TESTS_DIR . '/Test/Assert.php';
 require LIBS_DIR . '/Nette/loader.php';
-require APP_DIR . '/Configurator.php';
 
+use Nella\Addons\Doctrine\Config\Extension;
+
+/*
 // Load configuration from config.neon
 $configurator = new Configurator;
 $configurator->loadConfig(APP_DIR . '/config.neon', isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : null);
@@ -31,6 +33,26 @@ $configurator->createRobotLoader()->addDirectory(APP_DIR)->addDirectory(LIBS_DIR
 $configurator->setTempDirectory(TEMP_DIR);
 $container = $configurator->createContainer();
 */
+
+// Configure application
+$configurator = new Nette\Config\Configurator;
+$configurator->setTempDirectory(TEMP_DIR);
+$configurator->enableDebugger(ROOT_DIR . '/log');
+
+// Enable RobotLoader - this will load all classes automatically
+$robotLoader = $configurator->createRobotLoader();
+$robotLoader->addDirectory(APP_DIR)
+	->addDirectory(LIBS_DIR)
+	->register();
+
+// Setup doctrine loader
+Extension::register($configurator);
+
+// Create Dependency Injection container from config.neon file
+$configurator->addConfig(APP_DIR . '/config.neon', isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : null);
+$container = $configurator->createContainer();
+$container->createService();
+
 
 // configure environment
 error_reporting(E_ALL | E_STRICT);
