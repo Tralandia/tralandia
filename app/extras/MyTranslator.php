@@ -1,5 +1,8 @@
 <?php
 
+namespace Extras;
+
+
 class MyTranslator implements \Nette\Localization\ITranslator {
 	
 	public function translate($message, $count = NULL, $note = NULL) {

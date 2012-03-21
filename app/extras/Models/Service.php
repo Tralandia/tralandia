@@ -1,14 +1,11 @@
 <?php
 
-namespace Tra\Services;
+namespace Extras\Models;
 
 use Nette, 
-	Tra, 
-	Entity, 
 	Nette\ObjectMixin, 
 	Nette\MemberAccessException,
-	Doctrine\ORM\EntityManager,
-	Tra\Services\ServiceLoader;
+	Doctrine\ORM\EntityManager;
 
 /**
  * Abstrakcia mocnej vrstvy sluzba

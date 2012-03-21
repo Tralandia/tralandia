@@ -1,5 +1,7 @@
 <?php
 
+namespace Extras;
+
 use Nette,
 	Nette\Application,
 	Nette\Utils\Strings;

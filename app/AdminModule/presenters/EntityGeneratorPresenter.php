@@ -127,7 +127,8 @@ class EntityGeneratorPresenter extends BasePresenter {
 
 			} else {
 				$this->addMethod('set', $newClass, $property, $property->type);
-				$this->addMethod('unset', $newClass, $property, $property->type);
+				//debug($property->isNullable);
+				if($property->isNullable) $this->addMethod('unset', $newClass, $property, $property->type);
 				$this->addMethod('get2', $newClass, $property, $property->type);
 			}
 
@@ -206,7 +207,8 @@ class EntityGeneratorPresenter extends BasePresenter {
 			if(!in_array($return['type'], array('integer', 'string', 'boolean', 'decimal'))) {
 				$return['type'] = '\Extras\Types\\'.Strings::firstUpper($return['type']);
 			}
-			if(array_key_exists('nullabale', $annotations['ORM\Column'][0])) {
+
+			if(array_key_exists('nullable', $annotations['ORM\Column'][0])) {
 				$return['isNullable'] = $annotations['ORM\Column'][0]['nullable'];
 			} else {
 				$return['isNullable'] = NULL;
@@ -336,7 +338,7 @@ class EntityGeneratorPresenter extends BasePresenter {
 		} else if($snippet->type == 5) {
 			$method->documents[] = sprintf('@param %s', $tagetProperyClass);
 			$body[] = sprintf('$this->%s = $%s;', $property->name, $firstParameter->name);
-			$body[] = sprintf('$%s->setEntityId($this->getId());', $firstParameter->name);
+			//$body[] = sprintf('$%s->setEntityId($this->getId());', $firstParameter->name);
 		} else if($snippet->type == 6) {
 			$method->documents[] = sprintf('@param %s', $tagetProperyClass);
 			$body[] = sprintf('return $%s->add%s($this);', $firstParameter->name, $property->singularFu);

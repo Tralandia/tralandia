@@ -1,6 +1,6 @@
 <?php
 
-namespace Tra\Mail\Message;
+namespace Extras\Mail\Message;
 
 class Message extends \Nette\Mail\Message {
 

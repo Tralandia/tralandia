@@ -1,9 +1,8 @@
 <?php
 
-/**
- * Abstrakcia vrstvy entita
- */
-abstract class Entity extends \Nette\Object implements \Nette\Security\IResource, \IteratorAggregate {
+namespace Extras\Models;
+
+abstract class Entity extends \Nette\Object implements IEntity, \Nette\Security\IResource, \IteratorAggregate {
 	
 	public function __construct($data = array()) {
 		$this->setData($data);
