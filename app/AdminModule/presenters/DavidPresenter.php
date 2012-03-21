@@ -124,7 +124,9 @@ class DavidPresenter extends BasePresenter {
 
 
 		$list = new \Services\CurrencyList;
-
+		foreach ($list as $entity) {
+			debug($entity);
+		}
 		debug($list);
 
 	}

@@ -2,6 +2,11 @@
 
 namespace Tra\Services;
 
-class ServiceList implements \Nette\ArrayList {
+class ServiceList extends \ArrayIterator implements \Iterator {
+
+	public function current3() {
+
+	}
+
 
 }
