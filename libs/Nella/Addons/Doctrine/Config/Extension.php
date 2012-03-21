@@ -232,6 +232,14 @@ class Extension extends \Nette\Config\CompilerExtension
 				->setFactory(get_called_class().'::createConsole', array('@container'))
 				->setAutowired(FALSE);
 		}
+
+		\Doctrine\DBAL\Types\Type::addType('json', 'Doctrine\Types\Json');
+		\Doctrine\DBAL\Types\Type::addType('latlong', 'Doctrine\Types\LatLong');
+		\Doctrine\DBAL\Types\Type::addType('address', 'Doctrine\Types\Address');
+		\Doctrine\DBAL\Types\Type::addType('slug', 'Doctrine\Types\Slug');
+		\Doctrine\DBAL\Types\Type::addType('price', 'Doctrine\Types\Price');
+		\Doctrine\DBAL\Types\Type::addType('url', 'Doctrine\Types\Url');
+		\Doctrine\DBAL\Types\Type::addType('email', 'Doctrine\Types\Email');
 	}
 
 	/**

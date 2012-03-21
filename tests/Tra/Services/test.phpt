@@ -4,8 +4,16 @@
 require __DIR__ . '/../bootstrap.php';
 
 
+$service = new Services\CurrencyService;
+Assert::instance('Services\CurrencyService', $service);
+
+$service->iso = 'SK';
+
+exit;
+
+
 // vyrvorim novy jazyk
-$language = new Tra\Services\LanguageService;
+$language = new Services\LanguageService;
 Assert::instance('BaseEntity', $language->getMainEntity());
 
 // naplnim jazyk a ulozim do DB
@@ -14,7 +22,7 @@ $language->supported = true;
 $language->save();
 
 // skusim ziskat jazyk z DB
-$language = new Tra\Services\LanguageService($language->id);
+$language = new Services\LanguageService($language->id);
 Assert::instance('BaseEntity', $language->getMainEntity());
 
 // overim ci je podporovany jazyk
