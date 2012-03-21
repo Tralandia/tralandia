@@ -109,21 +109,20 @@ class DavidPresenter extends BasePresenter {
 
 		\Services\CurrencyService::flush();
 */
-		$service = new \Services\CurrencyService;
-		$service->iso = \Nette\Utils\Strings::random(5, 'A-Z');
-		$service->exchangeRate = 1;
-		$service->decimalPlaces = 1;
-		$service->rounding = 'r';
-		$service->created = new \Nette\DateTime;
-		$service->updated = new \Nette\DateTime;
-		$service->save();
-
-		$a = \Services\CurrencyService::get(10);
-		$b = \Services\CurrencyService::get(10);
-
-		if ($a === $b) {
-			echo "OBJEKTY SA ROVNAJU";
+/*
+		$n = new \Services\CurrencyService;
+		foreach ($n->getDataSource()->getQuery()->getResult() as $row) {
+			$c = \Services\CurrencyService::get($row);
 		}
+		debug($c);
+*/
+		
+		//$a = \Services\CurrencyService::get(10);
+		//$b = \Services\CurrencyService::get(10);
+		
+		//debug($a);
+
+
 	}
 	
 	public function renderAdd() {

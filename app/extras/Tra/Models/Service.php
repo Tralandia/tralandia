@@ -91,17 +91,23 @@ abstract class Service extends Nette\Object implements IService {
 
 	/**
 	 * Ziska jedinecnu instanciu servisy
-	 * @param integer
+	 * @param integer|Entity
 	 * @return IService
 	 */
-	public static function get($id) {
-		$key = get_called_class() . '#' . $id;
+	public static function get($value) {
+		$mainEntityName = self::getMainEntityName();
+
+		if ($value instanceof $mainEntityName) {
+			$key = get_called_class() . '#' . $value->getId();
+		} else {
+			$key = get_called_class() . '#' . $value;
+		}
 
 		if (ServiceLoader::exists($key)) {
 			return ServiceLoader::get($key);
 		}
 		$service = new static(false);
-		$service->load($id);
+		$service->load($value);
 		ServiceLoader::set($key, $service);
 		return $service;
 	}
@@ -177,7 +183,7 @@ abstract class Service extends Nette\Object implements IService {
 	 * Ziskanie nazvu hlavnej entity
 	 * @return string
 	 */
-	public function getMainEntityName() {
+	public static function getMainEntityName() {
 		if (!static::MAIN_ENTITY_NAME) {
 			throw new \Exception("Este nebola zadana `mainEntity`, preto nemozem ziskat jej nazov");
 		}
@@ -232,10 +238,16 @@ abstract class Service extends Nette\Object implements IService {
 
 	/**
 	 * Ziskanie hlavnej entity z entity manazera
-	 * @param integer
+	 * @param integer|Entity
 	 */
-	protected function load($id) {
-		if ($entity = $this->getEm()->find($this->getMainEntityName(), $id)) {
+	protected function load($value) {
+		if ($value instanceof Entity) {
+			$this->isPersist = true;
+			$this->mainEntity = $value;
+			return;
+		}
+
+		if ($entity = $this->getEm()->find($this->getMainEntityName(), $value)) {
 			$this->isPersist = true;
 			$this->mainEntity = $entity;
 		}
