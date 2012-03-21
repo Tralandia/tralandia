@@ -39,15 +39,6 @@ Debugger::$editor = $container->parameters['editor'];
 Debugger::$strictMode = FALSE;
 
 
-		\Doctrine\DBAL\Types\Type::addType('json', 'Doctrine\Types\Json');
-		\Doctrine\DBAL\Types\Type::addType('latlong', 'Doctrine\Types\LatLong');
-		\Doctrine\DBAL\Types\Type::addType('address', 'Doctrine\Types\Address');
-		\Doctrine\DBAL\Types\Type::addType('slug', 'Doctrine\Types\Slug');
-		\Doctrine\DBAL\Types\Type::addType('price', 'Doctrine\Types\Price');
-		\Doctrine\DBAL\Types\Type::addType('url', 'Doctrine\Types\Url');
-		\Doctrine\DBAL\Types\Type::addType('email', 'Doctrine\Types\Email');
-
-
 // Setup router // TODO: presunut do config.neon
 $container->application->onStartup[] = function() use ($container) {
 	$router = $container->application->getRouter();
