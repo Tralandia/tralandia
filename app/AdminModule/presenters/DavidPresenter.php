@@ -139,11 +139,11 @@ $service->save();
 
 
 		$list = new \Services\CurrencyList;
-		foreach ($list as $entity) {
-			debug($entity);
-		}
-		debug($list);
+		//$list->getIterator();
 
+		foreach ($list as $i => $entity) {
+			debug($list[0]);
+		}
 	}
 	
 	public function renderAdd() {

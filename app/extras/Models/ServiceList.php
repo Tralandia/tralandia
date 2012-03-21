@@ -2,12 +2,19 @@
 
 namespace Extras\Models;
 
-use Doctrine\ORM\EntityManager;
+use Nette\Object,
+	Nette\OutOfRangeException,
+	Doctrine\ORM\EntityManager;
 
 /**
- * 
+ * Abstrakcia zoznamu
  */
-class ServiceList extends \Nette\ArrayList {
+abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \IteratorAggregate, IServiceList {
+
+	/**
+	 * @var array
+	 */
+	protected $list = null;
 
 	/**
 	 * @var EntityManager
@@ -38,10 +45,78 @@ class ServiceList extends \Nette\ArrayList {
 		return self::getEntityManager();
 	}
 
+	/**
+	 * Vracia iterator nad vsetkymi polozkami
+	 * @return \ArrayIterator
+	 */
 	public function getIterator() {
-		debug($this->getEm());
-		return parent::getIterator();
+		if ($this->list === null) {
+			$this->list = array();
+			$this->prepareList();
+		}
+		
+		return new \ArrayIterator($this->list);
 	}
 
+	/**
+	 * Vracia pocet poloziek
+	 * @return int
+	 */
+	public function count() {
+		return count($this->list);
+	}
 
+	/**
+	 * Setter polozky
+	 * @param  int
+	 * @param  mixed
+	 * @return void
+	 * @throws OutOfRangeException
+	 */
+	public function offsetSet($index, $value) {
+		if ($index === NULL) {
+			$this->list[] = $value;
+
+		} elseif ($index < 0 || $index >= count($this->list)) {
+			throw new OutOfRangeException("Offset invalid or out of range");
+
+		} else {
+			$this->list[(int) $index] = $value;
+		}
+	}
+
+	/**
+	 * Getter polozky
+	 * @param  int
+	 * @return mixed
+	 * @throws OutOfRangeException
+	 */
+	public function offsetGet($index) {
+		if ($index < 0 || $index >= count($this->list)) {
+			throw new OutOfRangeException("Offset invalid or out of range");
+		}
+		return $this->list[(int) $index];
+	}
+
+	/**
+	 * Zistenie ci polozka existuje
+	 * @param  int
+	 * @return bool
+	 */
+	public function offsetExists($index) {
+		return $index >= 0 && $index < count($this->list);
+	}
+
+	/**
+	 * Zrusenie polozky
+	 * @param  int
+	 * @return void
+	 * @throws OutOfRangeException
+	 */
+	public function offsetUnset($index) {
+		if ($index < 0 || $index >= count($this->list)) {
+			throw new OutOfRangeException("Offset invalid or out of range");
+		}
+		array_splice($this->list, (int) $index, 1);
+	}
 }
