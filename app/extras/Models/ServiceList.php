@@ -1,6 +1,6 @@
 <?php
 
-namespace Tra\Services;
+namespace Extras\Models;
 
 class ServiceList extends \ArrayIterator implements \Iterator {
 

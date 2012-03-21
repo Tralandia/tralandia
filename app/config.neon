@@ -43,8 +43,8 @@ common:
 		
 	services:
 		nette.presenterFactory:
-			class: \ExtrasDynamicPresenterFactory
-			factory: \ExtrasDynamicPresenterFactory::factory
+			class: \Extras\DynamicPresenterFactory
+			factory: \Extras\DynamicPresenterFactory::factory
 	
 		console: @doctrine.console
 		
@@ -59,7 +59,7 @@ common:
 			factory: \Extras\PresenterSettings::factory
 		
 	factories:
-		service: Tra\Services\Service::setEntityManager(@doctrine.entityManagers.default)
+		service: \Extras\Models\Service::setEntityManager(@doctrine.entityManagers.default)
 
 production < common:
 	parameters:

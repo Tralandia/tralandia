@@ -24,7 +24,7 @@ class PresenterSettings extends \Nette\Object {
 		$this->settingsDir = $settingsDir;
 		$this->name = str_replace('Presenter', null, $presenter->getReflection()->getShortName());
 		
-		$config = new Nette\Config\Loader;
+		$config = new \Nette\Config\Loader;
 		$this->params = ArrayHash::from($config->load($this->settingsDir . '/presenters/' . strtolower($this->getName()) . '.neon', 'common'));
 	}
 	

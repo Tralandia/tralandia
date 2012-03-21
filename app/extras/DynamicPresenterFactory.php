@@ -2,6 +2,7 @@
 
 namespace Extras;
 
+use Nette;
 
 class DynamicPresenterFactory extends Nette\Application\PresenterFactory {
 	
