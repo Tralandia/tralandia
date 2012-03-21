@@ -232,15 +232,7 @@ class Extension extends \Nette\Config\CompilerExtension
 				->setFactory(get_called_class().'::createConsole', array('@container'))
 				->setAutowired(FALSE);
 		}
-
-/*		\Doctrine\DBAL\Types\Type::addType('json', 'Doctrine\Types\Json');
-		\Doctrine\DBAL\Types\Type::addType('latlong', 'Doctrine\Types\LatLong');
-		\Doctrine\DBAL\Types\Type::addType('address', 'Doctrine\Types\Address');
-		\Doctrine\DBAL\Types\Type::addType('slug', 'Doctrine\Types\Slug');
-		\Doctrine\DBAL\Types\Type::addType('price', 'Doctrine\Types\Price');
-		\Doctrine\DBAL\Types\Type::addType('url', 'Doctrine\Types\Url');
-		\Doctrine\DBAL\Types\Type::addType('email', 'Doctrine\Types\Email');
-*/	}
+	}
 
 	/**
 	 * @param string
@@ -444,6 +436,14 @@ class Extension extends \Nette\Config\CompilerExtension
 	 */
 	public static function register(Configurator $configurator, $name = 'doctrine')
 	{
+		\Doctrine\DBAL\Types\Type::addType('json', 'Doctrine\Types\Json');
+		\Doctrine\DBAL\Types\Type::addType('latlong', 'Doctrine\Types\LatLong');
+		\Doctrine\DBAL\Types\Type::addType('address', 'Doctrine\Types\Address');
+		\Doctrine\DBAL\Types\Type::addType('slug', 'Doctrine\Types\Slug');
+		\Doctrine\DBAL\Types\Type::addType('price', 'Doctrine\Types\Price');
+		\Doctrine\DBAL\Types\Type::addType('url', 'Doctrine\Types\Url');
+		\Doctrine\DBAL\Types\Type::addType('email', 'Doctrine\Types\Email');
+
 		$class = get_called_class();
 		$configurator->onCompile[] = function(Configurator $configurator, \Nette\Config\Compiler $compiler) use($class, $name) {
 			$compiler->addExtension($name, new $class);
