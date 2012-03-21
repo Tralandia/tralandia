@@ -29,13 +29,6 @@ class Phrase extends \Entities\BaseEntityDetails {
 	 */
 	protected $type;
 
-	/**
-	 * @var integer
-	 * @ORM\Column(type="integer")
-	 */
-	protected $entityId;
-
-
 	public function __construct() {
 		parent::__construct();
 		

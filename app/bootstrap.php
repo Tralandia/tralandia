@@ -38,6 +38,7 @@ $container->addService('robotLoader', $robotLoader); // dolezite pre dynamicke p
 Debugger::$editor = $container->parameters['editor'];
 Debugger::$strictMode = FALSE;
 
+
 		\Doctrine\DBAL\Types\Type::addType('json', 'Doctrine\Types\Json');
 		\Doctrine\DBAL\Types\Type::addType('latlong', 'Doctrine\Types\LatLong');
 		\Doctrine\DBAL\Types\Type::addType('address', 'Doctrine\Types\Address');

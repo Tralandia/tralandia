@@ -57,8 +57,8 @@ class Company extends \Entities\BaseEntityDetails {
 	protected $companyVatId;
 
 	/**
-	 * @var decimal
-	 * @ORM\Column(type="decimal", nullable=true)
+	 * @var float
+	 * @ORM\Column(type="float", nullable=true)
 	 */
 	protected $vat;
 
