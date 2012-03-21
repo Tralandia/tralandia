@@ -76,6 +76,7 @@ abstract class Service extends Nette\Object implements IService {
 	public static function flush() {
 		self::$em->flush();
 		self::$flush = true;
+		ServiceLoader::flushStack();
 	}
 	
 	/**
@@ -91,13 +92,18 @@ abstract class Service extends Nette\Object implements IService {
 	 * @param integer|Entity
 	 * @return IService
 	 */
-	public static function get($value) {
+	public static function get($value = NULL) {
 		$mainEntityName = self::getMainEntityName();
 
 		if ($value instanceof $mainEntityName) {
 			$key = get_called_class() . '#' . $value->getId();
-		} else {
+		} else if(is_numeric($value) {
 			$key = get_called_class() . '#' . $value;
+		} else if($value === NULL) {
+			$className = get_called_class();
+			return new $className;
+		} else {
+			throw new \Nette\InvalidArgumentException('Service::get()');
 		}
 
 		if (ServiceLoader::exists($key)) {
@@ -260,7 +266,10 @@ abstract class Service extends Nette\Object implements IService {
 					$this->getEm()->persist($this->mainEntity);
 				}
 				if ($this->isFlushable()) {
-					$this->getEm()->flush();
+					self::flush();
+					ServiceLoader::set(get_class($this) . '#' . $this->getId(), $this);
+				} else {
+					ServiceLoader::addToStack($this);
 				}
 			}
 		} catch (\PDOException $e) {

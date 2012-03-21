@@ -37,7 +37,7 @@ $robotLoader->addDirectory(APP_DIR)
 Extension::register($configurator);
 
 // Create Dependency Injection container from config.neon file
-$configurator->addConfig(APP_DIR . '/config.neon', isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : null);
+$configurator->addConfig(APP_DIR . '/config.neon', 'test');
 $container = $configurator->createContainer();
 $container->createService();
 $container->createList();
