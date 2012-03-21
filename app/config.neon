@@ -60,6 +60,7 @@ common:
 		
 	factories:
 		service: Tra\Services\Service::setEntityManager(@doctrine.entityManagers.default)
+		list: Tra\Services\ServiceList::setEntityManager(@doctrine.entityManagers.default)
 
 production < common:
 	parameters:

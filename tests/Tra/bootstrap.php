@@ -52,6 +52,7 @@ Extension::register($configurator);
 $configurator->addConfig(APP_DIR . '/config.neon', isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : null);
 $container = $configurator->createContainer();
 $container->createService();
+$container->createList()
 
 
 // configure environment
