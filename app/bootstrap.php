@@ -31,7 +31,7 @@ Extension::register($configurator);
 $configurator->addConfig(APP_DIR . '/config.neon', isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : null);
 $container = $configurator->createContainer();
 $container->addService('robotLoader', $robotLoader); // dolezite pre dynamicke presentery
-Debugger::$editor = $container->parameters['editor'];
+//Debugger::$editor = $container->parameters['editor'];
 
 //debug($container->entityManager);
 

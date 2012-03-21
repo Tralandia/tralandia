@@ -23,7 +23,6 @@ class Import {
 	}
 
 	public function truncateDatabase() {
-		debug('Truncate Start '.Debugger::timer());
 		qNew('SET FOREIGN_KEY_CHECKS = 0;');
 		$allTables = qNew('SHOW tables');
 		while ($table = mysql_fetch_array($allTables)) {
@@ -33,7 +32,6 @@ class Import {
 		foreach ($this->savedVariables['importedSections'] as $key => $value) {
 			$this->savedVariables['importedSections'][$key] = 0;
 		}
-		debug('Truncate End '.Debugger::timer());
 		$this->saveVariables();
 	}
 
@@ -94,7 +92,11 @@ class Import {
 
 		}
 
+		$s->getEntityManager()->flush();
+
 		$this->createPhrasesByOld('\Currency', 'name', 'supportedLanguages', 'ACTIVE', 'currencies', 'name_dic_id');
+		$s->getEntityManager()->flush();
+
 		$this->savedVariables['importedSections']['currencies'] = 2;
 	}
 
@@ -103,7 +105,6 @@ class Import {
 		$r = q('select domain from countries where length(domain)>0');
 		while($x = mysql_fetch_array($r)) {
 			$s = new S\DomainService();
-			$s->oldId = $x['id'];
 			$s->domain = $x['domain'];
 			$s->save();
 		}
@@ -111,6 +112,7 @@ class Import {
 		$s = new S\DomainService();
 		$s->domain = 'tralandia.com';
 		$s->save();
+		$s->getEntityManager()->flush();
 		$this->savedVariables['importedSections']['domains'] = 2;
 	}
 
@@ -127,9 +129,11 @@ class Import {
 
 			$s = new S\Location\LocationService();
 			$s->name = createNewPhrase($dictionaryType, $x['name_dic_id']);
+			//$s->slug = new \Extras\Types\Slug();
 			$s->save();
 		}
 
+		$s->getEntityManager()->flush();
 		$this->savedVariables['importedSections']['locations'] = 2;
 	}
 
@@ -161,8 +165,10 @@ class Import {
 			$s->save();
 
 		}
+		$s->getEntityManager()->flush();
 		
 		$this->createPhrasesByOld('\Company\Company', 'registrator', 'supportedLanguages', 'ACTIVE', 'companies', 'registrator_dic_id');
+		$s->getEntityManager()->flush();
 		$this->savedVariables['importedSections']['companies'] = 2;
 	}
 

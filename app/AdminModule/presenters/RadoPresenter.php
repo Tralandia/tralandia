@@ -43,9 +43,18 @@ class RadoPresenter extends BasePresenter {
 
 		$sections = $import->getSections();
 		$temp = array();
+		$nextNoImport = FALSE;
 		foreach ($sections as $key => $value) {
-			$temp[] = $key;
+			if ($nextNoImport == TRUE) {
+				$temp[$key] = NULL;
+			} else {
+				$temp[$key] = (int)@$import->savedVariables['importedSections'][$key];
+			}
+			if ($temp[$key] == FALSE) {
+				$nextNoImport = TRUE;
+			}
 		}
+		debug($temp);
 		$this->template->sections = $temp;
 		debug(Debugger::timer());
 		return;
