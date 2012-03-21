@@ -2,6 +2,9 @@
 
 namespace Services\Dictionary;
 
+use Entities;
+use Nette\Utils\Strings;
+
 
 class TranslationService extends \Services\BaseService {
 	
@@ -14,7 +17,11 @@ class TranslationService extends \Services\BaseService {
 	
 
 	public function setWebalizedTexts() {
-		$type = $this->phrase->type();
-		//if($type instanceof)
+		$type = $this->phrase->type;
+		if($type instanceof Entities\BaseEntity) {
+			if($type->webalizedRequired === TRUE) {
+				
+			}
+		}
 	}
 }
