@@ -48,11 +48,6 @@ ini_set('display_errors', TRUE);
 ini_set('html_errors', FALSE);
 ini_set('log_errors', FALSE);
 
-
-// create temporary directory
-//TestHelpers::purge(TEMP_DIR);
-
-
 // catch unexpected errors/warnings/notices
 set_error_handler(function($severity, $message, $file, $line) {
 	if (($severity & error_reporting()) === $severity) {
