@@ -139,10 +139,9 @@ $service->save();
 
 
 		$list = new \Services\CurrencyList;
-		//$list->getIterator();
-
-		foreach ($list as $i => $entity) {
-			debug($list[0]);
+		foreach ($list as $entity) {
+			$c = \Services\CurrencyService::get($entity);
+			//debug($entity, $c);
 		}
 	}
 	
