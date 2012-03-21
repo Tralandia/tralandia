@@ -43,8 +43,8 @@ common:
 		
 	services:
 		nette.presenterFactory:
-			class: DynamicPresenterFactory
-			factory: DynamicPresenterFactory::factory
+			class: \ExtrasDynamicPresenterFactory
+			factory: \ExtrasDynamicPresenterFactory::factory
 	
 		console: @doctrine.console
 		
@@ -55,10 +55,10 @@ common:
 		authorizator: Security\Acl
 
 		translator:
-			factory: \MyTranslator::getTranslator
+			factory: \Extras\MyTranslator::getTranslator
 			
 		settings:
-			factory: \PresenterSettings::factory
+			factory: \Extras\PresenterSettings::factory
 		
 
 production < common:

@@ -1,5 +1,5 @@
 <?php
 
-namespace Tra\Services;
+namespace Extras\Models;
 
 class ServiceException extends \Exception {}

@@ -1,5 +1,8 @@
 <?php
 
+namespace Extras;
+
+
 class DynamicPresenterFactory extends Nette\Application\PresenterFactory {
 	
 	/** @var Nette\DI\IContainer */

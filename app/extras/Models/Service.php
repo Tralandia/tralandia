@@ -1,9 +1,9 @@
 <?php
 
-namespace Tra\Services;
+namespace Extras\Models;
+
 use Nette, 
-	Tra, 
-	Entity, 
+	Extras\Entity, 
 	Nette\ObjectMixin, 
 	Nette\MemberAccessException;
 

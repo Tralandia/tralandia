@@ -1,5 +1,8 @@
 <?php
 
+namespace Extras;
+
+
 use Nette\DI,
 	Nette\ArrayHash,
 	Nette\Utils\Neon;
