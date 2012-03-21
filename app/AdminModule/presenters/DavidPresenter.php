@@ -116,12 +116,16 @@ class DavidPresenter extends BasePresenter {
 		}
 		debug($c);
 */
-		
+
 		//$a = \Services\CurrencyService::get(10);
 		//$b = \Services\CurrencyService::get(10);
 		
 		//debug($a);
 
+
+		$list = new \Services\CurrencyList;
+
+		debug($list);
 
 	}
 	
