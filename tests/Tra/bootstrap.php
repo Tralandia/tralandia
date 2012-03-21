@@ -51,7 +51,7 @@ ini_set('log_errors', FALSE);
 
 
 // create temporary directory
-TestHelpers::purge(TEMP_DIR);
+//TestHelpers::purge(TEMP_DIR);
 
 
 // catch unexpected errors/warnings/notices

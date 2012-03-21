@@ -264,7 +264,7 @@ abstract class Service extends Nette\Object implements IService {
 				}
 			}
 		} catch (\PDOException $e) {
-			throw new \Tra\Services\ServiceException($e->getMessage());
+			throw new ServiceException($e->getMessage());
 		}
 	}
 
@@ -279,7 +279,7 @@ abstract class Service extends Nette\Object implements IService {
 				$this->getEm()->flush();
 			}
 		} catch (\PDOException $e) {
-			throw new \Tra\Services\ServiceException($e->getMessage());
+			throw new ServiceException($e->getMessage());
 		}
 	}
 
