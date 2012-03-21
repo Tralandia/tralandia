@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\MappedSuperclass()
  * @ORM\HasLifecycleCallbacks
  */
-class BaseEntity extends \Entity{
+class BaseEntity extends \Extras\Models\Entity {
 
 	/**
 	 * @var integer

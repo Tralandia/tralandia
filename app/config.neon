@@ -43,8 +43,8 @@ common:
 		
 	services:
 		nette.presenterFactory:
-			class: \Extras\DynamicPresenterFactory
-			factory: \Extras\DynamicPresenterFactory::factory
+			class: Extras\DynamicPresenterFactory
+			factory: Extras\DynamicPresenterFactory::factory
 	
 		console: @doctrine.console
 		
@@ -53,13 +53,14 @@ common:
 		authorizator: Security\Acl
 
 		translator:
-			factory: \Extras\MyTranslator::getTranslator
+			factory: Extras\MyTranslator::getTranslator
 			
 		settings:
-			factory: \Extras\PresenterSettings::factory
+			factory: Extras\PresenterSettings::factory
 		
 	factories:
-		service: \Extras\Models\Service::setEntityManager(@doctrine.entityManagers.default)
+		service: Extras\Models\Service::setEntityManager(@doctrine.entityManagers.default)
+		list: Extras\Models\ServiceList::setEntityManager(@doctrine.entityManagers.default)
 
 production < common:
 	parameters:

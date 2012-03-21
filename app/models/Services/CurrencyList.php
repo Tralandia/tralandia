@@ -2,7 +2,7 @@
 
 namespace Services;
 
-use Tra\Services\ServiceList;
+use Extras\Models\ServiceList;
 
 class CurrencyList extends ServiceList {
 

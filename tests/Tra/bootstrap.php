@@ -1,4 +1,4 @@
-<<?php
+<?php
 
 /**
  * Test initialization and helpers.
@@ -22,18 +22,6 @@ require LIBS_DIR . '/Nette/loader.php';
 
 use Nella\Addons\Doctrine\Config\Extension;
 
-/*
-// Load configuration from config.neon
-$configurator = new Configurator;
-$configurator->loadConfig(APP_DIR . '/config.neon', isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : null);
-/*
-$configurator->setTempDirectory(TEMP_DIR);
-$configurator->addConfig(APP_DIR . '/config.neon', isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : null);
-$configurator->createRobotLoader()->addDirectory(APP_DIR)->addDirectory(LIBS_DIR)->register();
-$configurator->setTempDirectory(TEMP_DIR);
-$container = $configurator->createContainer();
-*/
-
 // Configure application
 $configurator = new Nette\Config\Configurator;
 $configurator->setTempDirectory(TEMP_DIR);
@@ -52,6 +40,7 @@ Extension::register($configurator);
 $configurator->addConfig(APP_DIR . '/config.neon', isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : null);
 $container = $configurator->createContainer();
 $container->createService();
+$container->createList();
 
 
 // configure environment
