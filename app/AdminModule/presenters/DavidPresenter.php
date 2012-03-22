@@ -92,7 +92,7 @@ class DavidPresenter extends BasePresenter {
 
 
 		//\Services\CurrencyService::preventFlush();
-
+/*
 		for ($i = 0; $i < 2; $i++) {
 			$service = \Services\CurrencyService::get();
 			$service->iso = \Nette\Utils\Strings::random(5, 'A-Z');
@@ -103,7 +103,7 @@ class DavidPresenter extends BasePresenter {
 			$service->updated = new \Nette\DateTime;
 			$service->save();
 		}
-
+*/
 		//\Services\CurrencyService::flush();
 
 
@@ -114,8 +114,8 @@ class DavidPresenter extends BasePresenter {
 		debug($c);
 */
 
-		$a = \Services\CurrencyService::get($service->id);
-		$b = \Services\CurrencyService::get($service->getMainEntity());
+		$a = \Services\CurrencyService::get(12000000);
+		$b = \Services\CurrencyService::get(12);
 
 		if($a === $b) debug('$a === $b', $a);
 		else debug('$a !== $b', $a, $b);
