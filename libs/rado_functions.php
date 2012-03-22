@@ -86,3 +86,14 @@ function fromStamp($stamp) {
 
 	return $t;
 }
+
+function getLangByIso($iso) {
+	$id = qNew('select id from dictionary_language where iso = "'.$iso.'"');
+	$id = mysql_fetch_array($id);
+	$id = $id[0];
+
+	return new \Services\Dictionary\LanguageService($id);
+}
+
+
+
