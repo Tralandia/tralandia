@@ -216,7 +216,7 @@ abstract class Service extends Nette\Object implements IService {
 	 * Ziskanie entity manazera
 	 * @return EntityManager
 	 */
-	protected function getEntityManager() {
+	protected static function getEntityManager() {
 		return self::$em;
 	}
 
@@ -224,7 +224,7 @@ abstract class Service extends Nette\Object implements IService {
 	 * Alias na entity manazera
 	 * @return EntityManager
 	 */
-	protected function getEm() {
+	protected static function getEm() {
 		return self::getEntityManager();
 	}
 

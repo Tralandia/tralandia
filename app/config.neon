@@ -21,7 +21,7 @@ common:
 			charset: utf8
 			driver: pdo_mysql
 			debugger: false
-				
+
 		proxyDir: '%tempDir%/proxies'
 
 		entityDirs: '%appDir%/models/Entities'
@@ -95,6 +95,7 @@ development < common:
 			charset: utf8
 			driver: pdo_mysql
 			unix_socket: /var/run/mysqld/mysqld.sock
+			debugger: false
 
 		envOptions:
 			sendEmail: FASLE
@@ -102,10 +103,17 @@ development < common:
 		
 vaculciak < development:
 	parameters:
+		database:
+			debugger: true
+
 		editor: 'txmt://open/?url=file://%file&line=%line'
 
 durika < development:
 	parameters:
+
+		database:
+			debugger: true
+
 		editor: 'edit://open/?url=file://%file&line=%line'
 		envOptions:
 			email: tralandia.david@gmail.com

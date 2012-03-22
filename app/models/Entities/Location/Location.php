@@ -4,12 +4,13 @@ namespace Entities\Location;
 
 use Entities\Dictionary;
 use Doctrine\ORM\Mapping as ORM;
+use DoctrineExtensions\NestedSet\Node;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="location_location")
  */
-class Location extends \Entities\BaseEntityDetails {
+class Location extends \Entities\BaseEntityDetails implements Node {
 
 	/**
 	 * @var Collection
@@ -51,13 +52,13 @@ class Location extends \Entities\BaseEntityDetails {
 	 * @var integer
 	 * @ORM\Column(type="integer", nullable=true)
 	 */
-	protected $nestedLeft;
+	protected $lft;
 
 	/**
 	 * @var integer
 	 * @ORM\Column(type="integer", nullable=true)
 	 */
-	protected $nestedRight;
+	protected $rgt;
 
 	/**
 	 * @var Collection
@@ -290,12 +291,20 @@ class Location extends \Entities\BaseEntityDetails {
 		return $this->slug;
 	}
 
+	public function getLeftValue() { return $this->lft; }
+	public function setLeftValue($lft) { $this->lft = $lft; }
+
+	public function getRightValue() { return $this->rgt; }
+	public function setRightValue($rgt) { $this->rgt = $rgt; }
+
+	public function __toString() { return $this->slug; }
+
 	/**
 	 * @param integer
 	 * @return \Entities\Location\Location
 	 */
-	public function setNestedLeft($nestedLeft) {
-		$this->nestedLeft = $nestedLeft;
+	public function setLft($lft) {
+		$this->lft = $lft;
 
 		return $this;
 	}
@@ -303,8 +312,8 @@ class Location extends \Entities\BaseEntityDetails {
 	/**
 	 * @return \Entities\Location\Location
 	 */
-	public function unsetNestedLeft() {
-		$this->nestedLeft = NULL;
+	public function unsetLft() {
+		$this->lft = NULL;
 
 		return $this;
 	}
@@ -312,16 +321,16 @@ class Location extends \Entities\BaseEntityDetails {
 	/**
 	 * @return integer|NULL
 	 */
-	public function getNestedLeft() {
-		return $this->nestedLeft;
+	public function getLft() {
+		return $this->lft;
 	}
 
 	/**
 	 * @param integer
 	 * @return \Entities\Location\Location
 	 */
-	public function setNestedRight($nestedRight) {
-		$this->nestedRight = $nestedRight;
+	public function setRgt($rgt) {
+		$this->rgt = $rgt;
 
 		return $this;
 	}
@@ -329,8 +338,8 @@ class Location extends \Entities\BaseEntityDetails {
 	/**
 	 * @return \Entities\Location\Location
 	 */
-	public function unsetNestedRight() {
-		$this->nestedRight = NULL;
+	public function unsetRgt() {
+		$this->rgt = NULL;
 
 		return $this;
 	}
@@ -338,8 +347,8 @@ class Location extends \Entities\BaseEntityDetails {
 	/**
 	 * @return integer|NULL
 	 */
-	public function getNestedRight() {
-		return $this->nestedRight;
+	public function getRgt() {
+		return $this->rgt;
 	}
 
 	/**

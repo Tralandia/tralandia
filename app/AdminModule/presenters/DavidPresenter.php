@@ -7,6 +7,8 @@ use Nette\Application as NA,
 	Nette\Diagnostics\Debugger,
 	Nette\Utils\Html,
 	Nette\Utils\Strings,
+	DoctrineExtensions\NestedSet,
+	Extras\Models\Service,
 	Services\Dictionary as D,
 	Services as S,
 	Services\Log\Change as SLog;
@@ -34,6 +36,22 @@ class DavidPresenter extends BasePresenter {
 	}
 
 	public function actionTest() {
+
+		//debug($this->getService('doctrine')->entityManagers->default);
+
+		$nsm = S\Location\LocationService::getNsm();
+		debug($nsm);
+		$service = S\Location\LocationService::get();
+		$service->slug = 'root blabla';
+		$rootNode = $nsm->createRoot($service->getMainEntity());
+
+		$child1 = S\Location\LocationService::get();
+		$child1->slug = 'child 1 of blabla';
+
+		$rootNode->addChild($child1->getMainEntity());
+
+		debug($rootNode);
+		
 	}
 
 	public function actionAddPhrase() {
