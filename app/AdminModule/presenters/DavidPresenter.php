@@ -114,7 +114,7 @@ class DavidPresenter extends BasePresenter {
 		debug($c);
 */
 
-		$a = \Services\CurrencyService::get(12000000);
+		$a = \Services\CurrencyService::get(12);
 		$b = \Services\CurrencyService::get(12);
 
 		if($a === $b) debug('$a === $b', $a);

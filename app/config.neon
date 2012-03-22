@@ -20,7 +20,8 @@ common:
 			dbname: tralandia
 			charset: utf8
 			driver: pdo_mysql
-	
+			debugger: false
+				
 		proxyDir: '%tempDir%/proxies'
 
 		entityDirs: '%appDir%/models/Entities'
@@ -36,6 +37,7 @@ common:
 	doctrine:
 		connections:
 			default: %database%
+
 
 		entityManagers:
 			default:
