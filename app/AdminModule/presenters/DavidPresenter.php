@@ -34,8 +34,6 @@ class DavidPresenter extends BasePresenter {
 	}
 
 	public function actionTest() {
-
-
 	}
 
 	public function actionAddPhrase() {
@@ -92,11 +90,11 @@ class DavidPresenter extends BasePresenter {
 
 	public function actionList() {
 
-/*
-		\Services\CurrencyService::preventFlush();
 
-		for ($i = 0; $i < 100; $i++) {
-			$service = new \Services\CurrencyService;
+		//\Services\CurrencyService::preventFlush();
+
+		for ($i = 0; $i < 2; $i++) {
+			$service = \Services\CurrencyService::get();
 			$service->iso = \Nette\Utils\Strings::random(5, 'A-Z');
 			$service->exchangeRate = 1;
 			$service->decimalPlaces = 1;
@@ -106,28 +104,29 @@ class DavidPresenter extends BasePresenter {
 			$service->save();
 		}
 
-		\Services\CurrencyService::flush();
-*/
-/*
-		$n = new \Services\CurrencyService;
+		//\Services\CurrencyService::flush();
+
+
+/*		$n = new \Services\CurrencyService;
 		foreach ($n->getDataSource()->getQuery()->getResult() as $row) {
 			$c = \Services\CurrencyService::get($row);
 		}
 		debug($c);
 */
 
-		//$a = \Services\CurrencyService::get(10);
-		//$b = \Services\CurrencyService::get(10);
-		
-		//debug($a);
+		$a = \Services\CurrencyService::get($service->id);
+		$b = \Services\CurrencyService::get($service->getMainEntity());
+
+		if($a === $b) debug('$a === $b', $a);
+		else debug('$a !== $b', $a, $b);
 
 
-		$list = new \Services\CurrencyList;
+/*		$list = new \Services\CurrencyList;
 		foreach ($list as $entity) {
 			$c = \Services\CurrencyService::get($entity);
 			//debug($entity, $c);
 		}
-	}
+*/	}
 	
 	public function renderAdd() {
 		$this->template->form = $this->getComponent('form');

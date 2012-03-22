@@ -45,7 +45,7 @@ abstract class Service extends Nette\Object implements IService {
 	/**
 	 * @param bool
 	 */
-	public function __construct($new = true) {
+	protected function __construct($new = true) {
 		if ($this->getEntityManager() === null) {
 			throw new \Exception("Nie je dostupny EntityManager");
 		}
