@@ -1,10 +1,13 @@
 <?php
 
+namespace Extras\Import;
+
 use Nette\Application as NA,
 	Nette\Environment,
 	Nette\Diagnostics\Debugger,
 	Nette\Utils\Html,
 	Nette\Utils\Strings,
+	Extras\Models\Service,
 	Services\Dictionary as D,
 	Services as S,
 	Services\Log\Change as SLog;
@@ -59,27 +62,29 @@ class Import {
 	public function importLanguages() {
 		$this->savedVariables['importedSections']['languages'] = 1;
 		$r = q('select * from languages order by id');
+		Service::preventFlush();
 		while($x = mysql_fetch_array($r)) {
 			$s = new D\LanguageService();
 			$s->oldId = $x['id'];
 			$s->iso = $x['iso'];
 			$s->supported = (bool)$x['translated'];
+			debug($s);
 			$s->defaultCollation = $x['default_collation'];
 			$s->details = json_encode(explode2Levels(';', ':', $x['attributes']));
-
 			$s->save();
 
 		}
-		$s->getEntityManager()->flush();
+		Service::flush(FALSE);
 
 		$this->createPhrasesByOld('\Dictionary\Language', 'name', 'supportedLanguages', 'ACTIVE', 'languages', 'name_dic_id');
-		$s->getEntityManager()->flush();
+		Service::flush(FALSE);
 		$this->savedVariables['importedSections']['languages'] = 2;
 	}
 
 	public function importCurrencies() {
 		$this->savedVariables['importedSections']['currencies'] = 1;
 		$r = q('select * from currencies order by id');
+		Service::preventFlush();
 		while($x = mysql_fetch_array($r)) {
 			$s = new S\CurrencyService();
 			$s->oldId = $x['id'];
@@ -92,10 +97,10 @@ class Import {
 
 		}
 
-		$s->getEntityManager()->flush();
+		Service::flush(FALSE);
 
 		$this->createPhrasesByOld('\Currency', 'name', 'supportedLanguages', 'ACTIVE', 'currencies', 'name_dic_id');
-		$s->getEntityManager()->flush();
+		Service::flush(FALSE);
 
 		$this->savedVariables['importedSections']['currencies'] = 2;
 	}
@@ -103,6 +108,7 @@ class Import {
 	public function importDomains() {
 		$this->savedVariables['importedSections']['domains'] = 1;
 		$r = q('select domain from countries where length(domain)>0');
+		Service::preventFlush();
 		while($x = mysql_fetch_array($r)) {
 			$s = new S\DomainService();
 			$s->domain = $x['domain'];
@@ -112,13 +118,14 @@ class Import {
 		$s = new S\DomainService();
 		$s->domain = 'tralandia.com';
 		$s->save();
-		$s->getEntityManager()->flush();
+		Service::flush(FALSE);
 		$this->savedVariables['importedSections']['domains'] = 2;
 	}
 
 	public function importLocations() {
 		$this->savedVariables['importedSections']['locations'] = 1;
 		$r = q('select domain from continents order by id');
+		Service::preventFlush();
 		while($x = mysql_fetch_array($r)) {
 			$dictionaryType = new D\TypeService();
 			$dictionaryType->entityName = '\Location\Location';
@@ -133,13 +140,14 @@ class Import {
 			$s->save();
 		}
 
-		$s->getEntityManager()->flush();
+		Service::flush(FALSE);
 		$this->savedVariables['importedSections']['locations'] = 2;
 	}
 
 	public function importCompanies() {
 		$this->savedVariables['importedSections']['companies'] = 1;
 		$r = q('select * from companies order by id');
+		Service::preventFlush();
 		while($x = mysql_fetch_array($r)) {
 			$s = new S\Company\CompanyService();
 			$s->oldId = $x['id'];
@@ -161,14 +169,14 @@ class Import {
 			// foreach ($countries as $key => $value) {
 			// 	$s->addCountry(new S\Location\LocationService($value));
 			// }
-			$s->details = new \Extras\Types\Json("[]");
+			$s->details = '';
 			$s->save();
 
 		}
-		$s->getEntityManager()->flush();
+		Service::flush(FALSE);
 		
 		$this->createPhrasesByOld('\Company\Company', 'registrator', 'supportedLanguages', 'ACTIVE', 'companies', 'registrator_dic_id');
-		$s->getEntityManager()->flush();
+		Service::flush(FALSE);
 		$this->savedVariables['importedSections']['companies'] = 2;
 	}
 
@@ -202,7 +210,7 @@ class Import {
 		$phrase = new \Services\Dictionary\PhraseService();
 		$phrase->ready = (bool)$oldPhraseData['ready'];
 		$phrase->type = $type;
-		$phrase->details = new \Extras\Types\Json("[]");
+		$phrase->details = '';
 		$phrase->save();
 
 		$allLanguages = q('SHOW tables like "z_%"');
@@ -214,13 +222,12 @@ class Import {
 
 			$newEntityId = getByOldId('\Dictionary\Language', qc('select id from languages where iso = "'.substr($table[0], 2).'"'));
 
-			$translation->language = new \Services\Dictionary\LanguageService($newEntityId);
+			$translation->language = \Services\Dictionary\LanguageService::get($newEntityId);
 			$translation->translation = $oldTranslation['text'];
 			
 			$translation->translated = fromStamp($oldTranslation['updated']);
-			$translation->variations = new \Extras\Types\Json("[]");
-			$translation->variationsPending = new \Extras\Types\Json("[]");
-
+			$translation->variations = '';
+			$translation->variationsPending = '';
 			$translation->save();
 
 			$phrase->addTranslation($translation);
@@ -248,7 +255,7 @@ class Import {
 			$phrase->ready = TRUE;
 			$phrase->entityId = $s->id;
 			$phrase->type = $dictionaryType;
-			$phrase->details = new \Extras\Types\Json("[]");
+			$phrase->details = '';
 			$phrase->save();
 
 			if ($phrase instanceof D\PhraseService) {
@@ -257,8 +264,8 @@ class Import {
 				$translation->translation = $x[$oldAttribute];
 				
 				$translation->translated = new \Nette\DateTime();
-				$translation->variations = new \Extras\Types\Json("[]");
-				$translation->variationsPending = new \Extras\Types\Json("[]");
+				$translation->variations = '';
+				$translation->variationsPending = '';
 
 				$translation->save();
 

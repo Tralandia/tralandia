@@ -64,10 +64,11 @@ abstract class Entity extends \Nette\Object implements IEntity, \Nette\Security\
 	}
 
 	public function __set($name, $value) {
-		if ($this->getReflection()->hasProperty($name)) {
-			$this->{$name} = $value;
-			return;
-		}
+		// if ($this->getReflection()->hasProperty($name)) {
+		// 	$this->{$name} = $value;
+		// 	return;
+		// }
+		if($name == 'type') debug($name, $value);
 		parent::__set($name, $value);
 	}
 	

@@ -2,7 +2,7 @@ common:
 	php:
 		date.timezone: Europe/Bratislava
 		zlib.output_compression: yes
-		max_execution_time: 60
+		max_execution_time: 900
 
 	nette:
 		session:

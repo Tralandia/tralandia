@@ -73,10 +73,12 @@ abstract class Service extends Nette\Object implements IService {
 	/**
 	 * Vykona odoslanie pozastavenych sql dotazov
 	 */
-	public static function flush() {
+	public static function flush($pernament = TRUE) {
 		self::$em->flush();
-		self::$flush = true;
 		ServiceLoader::flushStack();
+		if($pernament) {
+			self::$flush = true;
+		}
 	}
 	
 	/**
@@ -122,9 +124,9 @@ abstract class Service extends Nette\Object implements IService {
 	 */
 	public function __set($name, $value) {
 		if ($value instanceof Service) {
-			$this->mainEntity->$name = $value->getMainEntity();
-		}
-		if ($this->mainEntity instanceof Entity) {
+			if($name == 'type') debug($name, $value->getMainEntity());
+			$this->mainEntity->{$name} = $value->getMainEntity();
+		}else {
 			$this->mainEntity->$name = $value;
 		}
 	}
@@ -151,6 +153,7 @@ abstract class Service extends Nette\Object implements IService {
 	 * @param mixed
 	 */
 	public function __call($name, $arguments) {
+		if($name == 'language') debug($name, $arguments);
 		try {
 			if($this->mainEntity instanceof Entity) {
 				if(count($arguments) == 1) {
@@ -266,7 +269,7 @@ abstract class Service extends Nette\Object implements IService {
 				}
 				if ($this->isFlushable()) {
 					self::flush();
-					//ServiceLoader::set(get_class($this) . '#' . $this->getId(), $this);
+					ServiceLoader::set(get_class($this) . '#' . $this->getId(), $this);
 				} else {
 					ServiceLoader::addToStack($this);
 				}
@@ -284,7 +287,7 @@ abstract class Service extends Nette\Object implements IService {
 			if ($this->mainEntity instanceof Entity) {
 				$this->getEm()->remove($this->mainEntity);
 				//TODO: netreba sa pytat tiez na $this->isFlushable() ?
-				$this->getEm()->flush();
+				self::flush();
 			}
 		} catch (\PDOException $e) {
 			throw new ServiceException($e->getMessage());

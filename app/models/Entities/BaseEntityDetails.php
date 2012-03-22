@@ -20,7 +20,7 @@ class BaseEntityDetails extends \Entities\BaseEntity {
      * @param \Extras\Types\Json
      * @return self
      */
-    public function setDetails(\Extras\Types\Json $details) {
+    public function setDetails($details) {
         $this->details = $details;
  
         return $this;

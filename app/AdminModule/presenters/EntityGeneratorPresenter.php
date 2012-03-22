@@ -38,7 +38,7 @@ class EntityGeneratorPresenter extends BasePresenter {
 
 		$properties = $mainEntity->getProperties();
 		foreach ($properties as $property) {
-			if(in_array($property->name, array('id', 'created', 'updated')) && $mainEntity->name != 'Entities\BaseEntity') continue;
+			if(in_array($property->name, array('id', 'created', 'updated', 'oldId')) && $mainEntity->name != 'Entities\BaseEntity') continue;
 			if(in_array($property->name, array('details')) && $mainEntity->name != 'Entities\BaseEntityDetails') continue;
 
 			$property = $this->getPropertyInfo($property);
@@ -207,7 +207,12 @@ class EntityGeneratorPresenter extends BasePresenter {
 			if($return['type'] == 'text') $return['type'] = 'string';
 
 			if(!in_array($return['type'], self::$skipTypeHintIn)) {
-				$return['type'] = '\Extras\Types\\'.Strings::firstUpper($return['type']);
+				$typeTemp = Strings::firstUpper($return['type']);
+				if($return['type'] == 'datetime') {
+					$return['type'] = '\Nette\\'.$typeTemp;
+				} else {
+					$return['type'] = '\Extras\Types\\'.$typeTemp;
+				}
 			}
 
 			if(array_key_exists('nullable', $annotations['ORM\Column'][0])) {
