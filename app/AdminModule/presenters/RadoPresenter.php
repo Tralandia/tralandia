@@ -7,6 +7,7 @@ use Nette\Application as NA,
 	Nette\Diagnostics\Debugger,
 	Nette\Utils\Html,
 	Nette\Utils\Strings,
+	Extras\Import\Import,
 	Services\Dictionary as D,
 	Services as S,
 	Services\Log\Change as SLog;
@@ -15,7 +16,7 @@ class RadoPresenter extends BasePresenter {
 
 	public function actionDefault() {
 		ini_set('max_execution_time', 0);
-		$import = new \Import();
+		$import = new Import();
 		$redirect = FALSE;
 		if (isset($this->params['dropAllTables'])) {
 			$import->dropAllTables();
@@ -48,7 +49,7 @@ class RadoPresenter extends BasePresenter {
 
 	public function renderDefault() {
 		Debugger::timer();
-		$import = new \Import();
+		$import = new Import();
 
 		$sections = $import->getSections();
 		$temp = array();
@@ -72,7 +73,7 @@ class RadoPresenter extends BasePresenter {
 		// debug($this->context->session); return;	
 		// debug($this->post); return;	
 		
-		$import = new \Import();
+		$import = new Import();
 		$import->importCompanies();
 		//$import->truncateDatabase();
 		//$import->importLanguages();

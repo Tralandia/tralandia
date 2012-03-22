@@ -1,10 +1,13 @@
 <?php
 
+namespace Extras\Import;
+
 use Nette\Application as NA,
 	Nette\Environment,
 	Nette\Diagnostics\Debugger,
 	Nette\Utils\Html,
 	Nette\Utils\Strings,
+	Extras\Models\Service,
 	Services\Dictionary as D,
 	Services as S,
 	Services\Log\Change as SLog;
@@ -73,6 +76,7 @@ class Import {
 	public function importLanguages() {
 		$this->savedVariables['importedSections']['languages'] = 1;
 		$r = q('select * from languages order by id');
+		Service::preventFlush();
 		while($x = mysql_fetch_array($r)) {
 			$s = new D\LanguageService();
 			$s->oldId = $x['id'];
@@ -84,10 +88,10 @@ class Import {
 			$s->save();
 
 		}
-		$s->getEntityManager()->flush();
+		Service::flush(FALSE);
 
 		$this->createPhrasesByOld('\Dictionary\Language', 'name', 'supportedLanguages', 'ACTIVE', 'languages', 'name_dic_id');
-		$s->getEntityManager()->flush();
+		Service::flush(FALSE);
 		$this->savedVariables['importedSections']['languages'] = 2;
 	}
 
@@ -96,6 +100,7 @@ class Import {
 		$dictionaryType = $this->createDictionaryType('\Currency', 'name', 'supportedLanguages', 'ACTIVE');
 
 		$r = q('select * from currencies order by id');
+		Service::preventFlush();
 		while($x = mysql_fetch_array($r)) {
 			$s = new S\CurrencyService();
 			$s->oldId = $x['id'];
@@ -106,16 +111,16 @@ class Import {
 			$s->rounding = $x['decimal_places'];
 
 			$s->save();
-
 		}
 
-		$s->getEntityManager()->flush();
+		Service::flush(FALSE);
 		$this->savedVariables['importedSections']['currencies'] = 2;
 	}
 
 	public function importDomains() {
 		$this->savedVariables['importedSections']['domains'] = 1;
 		$r = q('select domain from countries where length(domain)>0');
+		Service::preventFlush();
 		while($x = mysql_fetch_array($r)) {
 			$s = new S\DomainService();
 			$s->domain = $x['domain'];
@@ -125,7 +130,7 @@ class Import {
 		$s = new S\DomainService();
 		$s->domain = 'tralandia.com';
 		$s->save();
-		$s->getEntityManager()->flush();
+		Service::flush(FALSE);
 		$this->savedVariables['importedSections']['domains'] = 2;
 	}
 
@@ -144,6 +149,7 @@ class Import {
 		$dictionaryType->save();
 
 		$r = q('select * from continents order by id');
+		Service::preventFlush();
 		while($x = mysql_fetch_array($r)) {
 			$s = new S\Location\LocationService();
 			$s->name = $this->createNewPhrase($dictionaryType, $x['name_dic_id']);
@@ -157,13 +163,14 @@ class Import {
 			$s->save();
 		}
 
-		$s->getEntityManager()->flush();
+		Service::flush(FALSE);
 		$this->savedVariables['importedSections']['locations'] = 2;
 	}
 
 	public function importCompanies() {
 		$this->savedVariables['importedSections']['companies'] = 1;
 		$r = q('select * from companies order by id');
+		Service::preventFlush();
 		while($x = mysql_fetch_array($r)) {
 			$s = new S\Company\CompanyService();
 			$s->oldId = $x['id'];
@@ -189,10 +196,10 @@ class Import {
 			$s->save();
 
 		}
-		$s->getEntityManager()->flush();
+		Service::flush(FALSE);
 		
 		$this->createPhrasesByOld('\Company\Company', 'registrator', 'supportedLanguages', 'ACTIVE', 'companies', 'registrator_dic_id');
-		$s->getEntityManager()->flush();
+		Service::flush(FALSE);
 		$this->savedVariables['importedSections']['companies'] = 2;
 	}
 
