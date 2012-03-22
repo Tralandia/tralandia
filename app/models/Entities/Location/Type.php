@@ -17,6 +17,9 @@ class Type extends \Entities\BaseEntityDetails {
 	 */
 	protected $name;
 	
+	/* ----------------------------- Methods ----------------------------- */
+
+
 	public function __construct() {
 		parent::__construct();
 	}
@@ -36,32 +39,6 @@ class Type extends \Entities\BaseEntityDetails {
 	 */
 	public function getName() {
 		return $this->name;
-	}
-
-	/**
-	 * @param integer
-	 * @return \Entities\BaseEntity
-	 */
-	public function setOldId($oldId) {
-		$this->oldId = $oldId;
-
-		return $this;
-	}
-
-	/**
-	 * @return \Entities\BaseEntity
-	 */
-	public function unsetOldId() {
-		$this->oldId = NULL;
-
-		return $this;
-	}
-
-	/**
-	 * @return integer|NULL
-	 */
-	public function getOldId() {
-		return $this->oldId;
 	}
 
 }

@@ -35,9 +35,11 @@ class RadoPresenter extends BasePresenter {
 			$redirect = TRUE;
 		}
 		if (isset($this->params['importSection'])) {
+			\Extras\Models\Service::preventFlush();
 			$action = 'import'.ucfirst($this->params['importSection']);
 			$import->{$action}();
 			$import->saveVariables();
+			\Extras\Models\Service::flush(FALSE);
 			$this->flashMessage('Importing Done');
 			$redirect = TRUE;
 		}

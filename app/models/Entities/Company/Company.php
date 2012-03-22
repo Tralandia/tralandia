@@ -74,4 +74,295 @@ class Company extends \Entities\BaseEntityDetails {
 	 */
 	protected $invoices;
 
+	/* ----------------------------- Methods ----------------------------- */
+
+
+	public function __construct() {
+		parent::__construct();
+
+		$this->bankAccounts = new \Doctrine\Common\Collections\ArrayCollection;
+		$this->countries = new \Doctrine\Common\Collections\ArrayCollection;
+		$this->offices = new \Doctrine\Common\Collections\ArrayCollection;
+		$this->invoices = new \Doctrine\Common\Collections\ArrayCollection;
+	}
+
+	/**
+	 * @param \Entities\Company\BankAccount
+	 * @return \Entities\Company\Company
+	 */
+	public function addBankAccount(\Entities\Company\BankAccount $bankAccount) {
+		if(!$this->bankAccounts->contains($bankAccount)) {
+			$this->bankAccounts->add($bankAccount);
+		}
+		$bankAccount->setCompany($this);
+
+		return $this;
+	}
+
+	/**
+	 * @param \Entities\Company\BankAccount
+	 * @return \Entities\Company\Company
+	 */
+	public function removeBankAccount(\Entities\Company\BankAccount $bankAccount) {
+		if($this->bankAccounts->contains($bankAccount)) {
+			$this->bankAccounts->removeElement($bankAccount);
+		}
+		$bankAccount->unsetCompany();
+
+		return $this;
+	}
+
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entities\Company\BankAccount
+	 */
+	public function getBankAccounts() {
+		return $this->bankAccounts;
+	}
+
+	/**
+	 * @param \Entities\Location\Location
+	 * @return \Entities\Company\Company
+	 */
+	public function addCountry(\Entities\Location\Location $country) {
+		if(!$this->countries->contains($country)) {
+			$this->countries->add($country);
+		}
+		$country->addCompany($this);
+
+		return $this;
+	}
+
+	/**
+	 * @param \Entities\Location\Location
+	 * @return \Entities\Company\Company
+	 */
+	public function removeCountry(\Entities\Location\Location $country) {
+		if($this->countries->contains($country)) {
+			$this->countries->removeElement($country);
+		}
+		$country->removeCompany($this);
+
+		return $this;
+	}
+
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entities\Location\Location
+	 */
+	public function getCountries() {
+		return $this->countries;
+	}
+
+	/**
+	 * @param \Entities\Company\Office
+	 * @return \Entities\Company\Company
+	 */
+	public function addOffice(\Entities\Company\Office $office) {
+		if(!$this->offices->contains($office)) {
+			$this->offices->add($office);
+		}
+		$office->setCompany($this);
+
+		return $this;
+	}
+
+	/**
+	 * @param \Entities\Company\Office
+	 * @return \Entities\Company\Company
+	 */
+	public function removeOffice(\Entities\Company\Office $office) {
+		if($this->offices->contains($office)) {
+			$this->offices->removeElement($office);
+		}
+		$office->unsetCompany();
+
+		return $this;
+	}
+
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entities\Company\Office
+	 */
+	public function getOffices() {
+		return $this->offices;
+	}
+
+	/**
+	 * @param string
+	 * @return \Entities\Company\Company
+	 */
+	public function setName($name) {
+		$this->name = $name;
+
+		return $this;
+	}
+
+	/**
+	 * @return \Entities\Company\Company
+	 */
+	public function unsetName() {
+		$this->name = NULL;
+
+		return $this;
+	}
+
+	/**
+	 * @return string|NULL
+	 */
+	public function getName() {
+		return $this->name;
+	}
+
+	/**
+	 * @param \Extras\Types\Address
+	 * @return \Entities\Company\Company
+	 */
+	public function setAddress(\Extras\Types\Address $address) {
+		$this->address = $address;
+
+		return $this;
+	}
+
+	/**
+	 * @return \Entities\Company\Company
+	 */
+	public function unsetAddress() {
+		$this->address = NULL;
+
+		return $this;
+	}
+
+	/**
+	 * @return \Extras\Types\Address|NULL
+	 */
+	public function getAddress() {
+		return $this->address;
+	}
+
+	/**
+	 * @param string
+	 * @return \Entities\Company\Company
+	 */
+	public function setCompanyId($companyId) {
+		$this->companyId = $companyId;
+
+		return $this;
+	}
+
+	/**
+	 * @return \Entities\Company\Company
+	 */
+	public function unsetCompanyId() {
+		$this->companyId = NULL;
+
+		return $this;
+	}
+
+	/**
+	 * @return string|NULL
+	 */
+	public function getCompanyId() {
+		return $this->companyId;
+	}
+
+	/**
+	 * @param string
+	 * @return \Entities\Company\Company
+	 */
+	public function setCompanyVatId($companyVatId) {
+		$this->companyVatId = $companyVatId;
+
+		return $this;
+	}
+
+	/**
+	 * @return \Entities\Company\Company
+	 */
+	public function unsetCompanyVatId() {
+		$this->companyVatId = NULL;
+
+		return $this;
+	}
+
+	/**
+	 * @return string|NULL
+	 */
+	public function getCompanyVatId() {
+		return $this->companyVatId;
+	}
+
+	/**
+	 * @param \Extras\Types\Float
+	 * @return \Entities\Company\Company
+	 */
+	public function setVat(\Extras\Types\Float $vat) {
+		$this->vat = $vat;
+
+		return $this;
+	}
+
+	/**
+	 * @return \Entities\Company\Company
+	 */
+	public function unsetVat() {
+		$this->vat = NULL;
+
+		return $this;
+	}
+
+	/**
+	 * @return \Extras\Types\Float|NULL
+	 */
+	public function getVat() {
+		return $this->vat;
+	}
+
+	/**
+	 * @param \Entities\Dictionary\Phrase
+	 * @return \Entities\Company\Company
+	 */
+	public function setRegistrator(\Entities\Dictionary\Phrase $registrator) {
+		$this->registrator = $registrator;
+
+		return $this;
+	}
+
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entities\Dictionary\Phrase
+	 */
+	public function getRegistrator() {
+		return $this->registrator;
+	}
+
+	/**
+	 * @param \Entities\Invoicing\Invoice
+	 * @return \Entities\Company\Company
+	 */
+	public function addInvoice(\Entities\Invoicing\Invoice $invoice) {
+		if(!$this->invoices->contains($invoice)) {
+			$this->invoices->add($invoice);
+		}
+		$invoice->setInvoicingCompany($this);
+
+		return $this;
+	}
+
+	/**
+	 * @param \Entities\Invoicing\Invoice
+	 * @return \Entities\Company\Company
+	 */
+	public function removeInvoice(\Entities\Invoicing\Invoice $invoice) {
+		if($this->invoices->contains($invoice)) {
+			$this->invoices->removeElement($invoice);
+		}
+		$invoice->unsetInvoicingCompany();
+
+		return $this;
+	}
+
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entities\Invoicing\Invoice
+	 */
+	public function getInvoices() {
+		return $this->invoices;
+	}
+
 }

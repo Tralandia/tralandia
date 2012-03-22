@@ -152,7 +152,6 @@ class Translation extends \Entities\BaseEntity {
 
 	/* ----------------------------- Methods ----------------------------- */
 
-
 	public function __construct() {
 		parent::__construct();
 	}

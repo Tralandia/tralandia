@@ -92,7 +92,7 @@ function getLangByIso($iso) {
 	$id = mysql_fetch_array($id);
 	$id = $id[0];
 
-	return new \Services\Dictionary\LanguageService($id);
+	return \Services\Dictionary\LanguageService::get($id);
 }
 
 

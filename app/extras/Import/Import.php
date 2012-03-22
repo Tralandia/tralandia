@@ -62,7 +62,7 @@ class Import {
 				while ($x = mysql_fetch_array($r)) {
 					$serviceName = '\Services'.$key2.'Service';
 					debug($serviceName);
-					$s = new $serviceName($x['id']);
+					$s = $serviceName::get($x['id']);
 					$s->delete();
 				}
 			}
@@ -76,20 +76,19 @@ class Import {
 	public function importLanguages() {
 		$this->savedVariables['importedSections']['languages'] = 1;
 		$r = q('select * from languages order by id');
-		Service::preventFlush();
 		while($x = mysql_fetch_array($r)) {
-			$s = new D\LanguageService();
+			$s = D\LanguageService::get();
 			$s->oldId = $x['id'];
 			$s->iso = $x['iso'];
 			$s->supported = (bool)$x['translated'];
 			$s->defaultCollation = $x['default_collation'];
-			$s->details = json_encode(explode2Levels(';', ':', $x['attributes']));
+			$s->details = explode2Levels(';', ':', $x['attributes']);
 			$s->save();
 
 		}
 		Service::flush(FALSE);
-		$this->createPhrasesByOld('\Dictionary\Language', 'name', 'supportedLanguages', 'ACTIVE', 'languages', 'name_dic_id');
-		Service::flush(FALSE);
+
+		$this->createPhrasesByOld('\Dictionary\Language', 'name', 'supportedLanguages', 'ACTIVE', 'languages', 'name_dic_id');		
 		$this->savedVariables['importedSections']['languages'] = 2;
 	}
 
@@ -98,117 +97,93 @@ class Import {
 		$dictionaryType = $this->createDictionaryType('\Currency', 'name', 'supportedLanguages', 'ACTIVE');
 
 		$r = q('select * from currencies order by id');
-		Service::preventFlush();
 		while($x = mysql_fetch_array($r)) {
-			$s = new S\CurrencyService();
+			$s = S\CurrencyService::get();
 			$s->oldId = $x['id'];
 			$s->iso = $x['iso'];
 			$s->name = $this->createNewPhrase($dictionaryType, $x['name_dic_id']);
-			$s->exchangeRate = (bool)$x['exchange_rate'];
+			$s->exchangeRate = $x['exchange_rate'];
 			$s->decimalPlaces = $x['decimal_places'];
 			$s->rounding = $x['decimal_places'];
 
 			$s->save();
 		}
-
-		Service::flush(FALSE);
 		$this->savedVariables['importedSections']['currencies'] = 2;
 	}
 
 	public function importDomains() {
 		$this->savedVariables['importedSections']['domains'] = 1;
 		$r = q('select domain from countries where length(domain)>0');
-		Service::preventFlush();
 		while($x = mysql_fetch_array($r)) {
-			$s = new S\DomainService();
+			$s = S\DomainService::get();
 			$s->domain = $x['domain'];
 			$s->save();
 		}
 
-		$s = new S\DomainService();
+		$s = S\DomainService::get();
 		$s->domain = 'tralandia.com';
 		$s->save();
-		Service::flush(FALSE);
+
 		$this->savedVariables['importedSections']['domains'] = 2;
 	}
 
 	public function importLocations() {
 		$this->savedVariables['importedSections']['locations'] = 1;
-		$locationType = new S\Location\TypeService();
-		$locationType->name = $this->createPhraseFromString('\Location\Location', 'name', 'incomingLanguages', 'NATIVE', 'continent', getLangByIso('en'));
-		$locationType->details = new \Extras\Types\Json("[]");;
+
+		$language = getLangByIso('en');
+		$locationType = S\Location\TypeService::get();
+		$locationType->name = $this->createPhraseFromString('\Location\Location', 'name', 'incomingLanguages', 'NATIVE', 'continent', $language);
 		$locationType->save();
 
-		$dictionaryType = new D\TypeService();
-		$dictionaryType->entityName = '\Location\Location';
-		$dictionaryType->entityAttribute = 'name';
-		$dictionaryType->requiredLanguages = 'incomingLanguages';
-		$dictionaryType->translationLevelRequirement = \Entities\Dictionary\Type::TRANSLATION_LEVEL_NATIVE;
-		$dictionaryType->save();
+		$dictionaryType = $this->createDictionaryType('\Location\Location', 'name', 'incomingLanguages', 'NATIVE');
 
 		$r = q('select * from continents order by id');
-		Service::preventFlush();
 		while($x = mysql_fetch_array($r)) {
-			$s = new S\Location\LocationService();
+			$s = S\Location\LocationService::get();
 			$s->name = $this->createNewPhrase($dictionaryType, $x['name_dic_id']);
-			//$s->iso = 'iso';
 			$s->slug = qc('select text from z_en where id = '.$x['name_dic_id']);
 			$s->type = $locationType;
-			//$s->polygon = new \Extras\Types\Json("[]");
-			//$s->latitude = new \Extras\Types\Latlong("[]");
-			//$s->longitude = new \Extras\Types\Latlong("[]");
-			//$s->defaultZoom = 2;
 			$s->save();
 		}
 
-		Service::flush(FALSE);
 		$this->savedVariables['importedSections']['locations'] = 2;
 	}
 
 	public function importCompanies() {
 		$this->savedVariables['importedSections']['companies'] = 1;
 		$r = q('select * from companies order by id');
-		Service::preventFlush();
+
+		$dictionaryTypeRegistrator = $this->createDictionaryType('\Company\Company', 'registrator', 'supportedLanguages', 'ACTIVE');
+
 		while($x = mysql_fetch_array($r)) {
-			$s = new S\Company\CompanyService();
+			$s = S\Company\CompanyService::get();
 			$s->oldId = $x['id'];
 			$s->name = $x['name'];
-			// @todo - prerobit, ked budeme mat objekt Address()
-			$s->address = json_encode(array(
+
+			$s->address = new \Extras\Types\Address(array(
 				'address' => array_filter(array($x['address'], $x['address2'])),
 				'postcode' => $x['postcode'],
 				'locality' => $x['locality'],
+				'country' => getByOldId('\Location\Location', $x['locality']),
 			));
 			$s->companyId = $x['company_id'];
 			$s->companyVatId = $x['company_vat_id'];
 			$s->vat = $x['vat'];
+			$s->registrator = $this->createNewPhrase(dictionaryTypeRegistrator, $x['registrator_dic_id']);
 
-			// @todo country treba pridat do adresy podla dohody....
+			$countries = getNewIds('\Company\Company', $x['for_countries_ids']);
+			foreach ($countries as $key => $value) {
+				$s->addCountry(S\Location\LocationService::get($value));
+			}
 
-			// @todo toto treba robit az potom, co budem mat locations naimportovane
-			// $countries = getNewIds('\Company\Company', $x['for_countries_ids']);
-			// foreach ($countries as $key => $value) {
-			// 	$s->addCountry(new S\Location\LocationService($value));
-			// }
-			$s->details = new \Extras\Types\Json("[]");
 			$s->save();
-
 		}
-		Service::flush(FALSE);
-		
-		$this->createPhrasesByOld('\Company\Company', 'registrator', 'supportedLanguages', 'ACTIVE', 'companies', 'registrator_dic_id');
-		Service::flush(FALSE);
+	
 		$this->savedVariables['importedSections']['companies'] = 2;
 	}
 
 	private function createPhrasesByOld($entityName, $entityAttribute, $requiredLanguages, $level, $oldTableName, $oldAttribute) {
-		eval('$level = \Entities\Dictionary\Type::TRANSLATION_LEVEL_'.strtoupper($level).';');
-		$dictionaryType = new D\TypeService();
-		$dictionaryType->entityName = $entityName;
-		$dictionaryType->entityAttribute = $entityAttribute;
-		$dictionaryType->requiredLanguages = $requiredLanguages;
-		$dictionaryType->translationLevelRequirement = $level;
-		$dictionaryType->save();
+		$dictionaryType = $this->createDictionaryType($entityName, $entityAttribute, $requiredLanguages, $level);
 
 		$r = q('select * from '.$oldTableName.' order by id');
 		while($x = mysql_fetch_array($r)) {
@@ -223,7 +198,6 @@ class Import {
 					} else {
 						debug($s);
 						debug($newEntityId); return;	
-											
 					}
 				}
 			}
@@ -234,10 +208,9 @@ class Import {
 		$oldPhraseData = qf('select * from dictionary where id = '.$oldPhraseId);
 		if (!$oldPhraseData) return FALSE;
 
-		$phrase = new \Services\Dictionary\PhraseService();
+		$phrase = \Services\Dictionary\PhraseService::get();
 		$phrase->ready = (bool)$oldPhraseData['ready'];
 		$phrase->type = $type;
-		$phrase->details = new \Extras\Types\Json("[]");
 		$phrase->save();
 
 		$allLanguages = q('SHOW tables like "z_%"');
@@ -245,22 +218,13 @@ class Import {
 			$oldTranslation = qf('select * from '.$table[0].' where id = '.$oldPhraseId);
 			if (!$oldTranslation || strlen($oldTranslation['text']) == 0) continue;
 
-			$translation = new \Services\Dictionary\TranslationService;
-
 			$newEntityId = getByOldId('\Dictionary\Language', qc('select id from languages where iso = "'.substr($table[0], 2).'"'));
-
 			$language = \Services\Dictionary\LanguageService::get($newEntityId);
-				debug($language);
+
 			if ($language->getMainEntity() instanceof \Entities\Dictionary\Language && $language->id > 0) {
-				$translation->language = $language;
-				$translation->translation = $oldTranslation['text'];
-				
+				$translation = $this->createTranslation($language, $oldTranslation['text']);				
 				$translation->translated = fromStamp($oldTranslation['updated']);
-				$translation->variations = new \Extras\Types\Json("[]");
-				$translation->variationsPending = new \Extras\Types\Json("[]");
-
 				$translation->save();
-
 				$phrase->addTranslation($translation);
 
 			} else {
@@ -273,32 +237,14 @@ class Import {
 	}
 
 	private function createPhraseFromString($entityName, $entityAttribute, $requiredLanguages, $level, $text, $textLanguage) {
+		$dictionaryType = $this->createDictionaryType($entityName, $entityAttribute, $requiredLanguages, $level);
 
-		eval('$level = \Entities\Dictionary\Type::TRANSLATION_LEVEL_'.strtoupper($level).';');
-		$dictionaryType = new D\TypeService();
-		$dictionaryType->entityName = $entityName;
-		$dictionaryType->entityAttribute = $entityAttribute;
-		$dictionaryType->requiredLanguages = $requiredLanguages;
-		$dictionaryType->translationLevelRequirement = $level;
-		$dictionaryType->save();
-
-		$phrase = new \Services\Dictionary\PhraseService();
+		$phrase = \Services\Dictionary\PhraseService::get();
 		$phrase->ready = TRUE;
 		$phrase->type = $dictionaryType;
-		$phrase->details = new \Extras\Types\Json("[]");
 
 		if ($phrase instanceof D\PhraseService) {
-			$translation = new \Services\Dictionary\TranslationService();
-			$translation->language = $textLanguage;
-			$translation->translation = $text;
-			
-			$translation->translated = new \Nette\DateTime();
-			$translation->variations = new \Extras\Types\Json("[]");
-			$translation->variationsPending = new \Extras\Types\Json("[]");
-
-			$translation->save();
-
-			$phrase->addTranslation($translation);
+			$phrase->addTranslation($this->createTranslation($textLanguage, $text));
 		}
 
 		$phrase->save();
@@ -307,42 +253,23 @@ class Import {
 
 	private function createPhrasesFromString($entityName, $entityAttribute, $requiredLanguages, $level, $oldTableName, $oldAttribute, $textLanguage) {
 
-		eval('$level = \Entities\Dictionary\Type::TRANSLATION_LEVEL_'.strtoupper($level).';');
-		$dictionaryType = new D\TypeService();
-		$dictionaryType->entityName = $entityName;
-		$dictionaryType->entityAttribute = $entityAttribute;
-		$dictionaryType->requiredLanguages = $requiredLanguages;
-		$dictionaryType->translationLevelRequirement = $level;
-		$dictionaryType->save();
+		$dictionaryType = $this->createDictionaryType($entityName, $entityAttribute, $requiredLanguages, $level);
 
 		$r = q('select * from '.$oldTableName.' order by id');
 		while($x = mysql_fetch_array($r)) {
-			$phrase = new \Services\Dictionary\PhraseService();
+			$phrase = \Services\Dictionary\PhraseService::get();
 			$phrase->ready = TRUE;
 			$phrase->type = $dictionaryType;
-			$phrase->details = new \Extras\Types\Json("[]");
-			$phrase->save();
 
 			if ($phrase instanceof D\PhraseService) {
-				$translation = new \Services\Dictionary\TranslationService();
-				$translation->language = $textLanguage;
-				$translation->translation = $x[$oldAttribute];
-				
-				$translation->translated = new \Nette\DateTime();
-				$translation->variations = new \Extras\Types\Json("[]");
-				$translation->variationsPending = new \Extras\Types\Json("[]");
-
-				$translation->save();
-
-				$phrase->addTranslation($translation);
-				$phrase->save();
+				$phrase->addTranslation($this->createTranslation($textLanguage, $x[$oldAttribute]));
 			}
 		}
+		$phrase->save();
 		return TRUE;
 	}
 
 	private function createDictionaryType($entityName, $entityAttribute, $requiredLanguages, $level) {
-
 		eval('$level = \Entities\Dictionary\Type::TRANSLATION_LEVEL_'.strtoupper($level).';');
 		$dictionaryType = new D\TypeService();
 		$dictionaryType->entityName = $entityName;
@@ -352,6 +279,16 @@ class Import {
 		$dictionaryType->save();
 
 		return $dictionaryType;
+	}
+
+	private function createTranslation(\Services\Dictionary\LanguageService $language, $text) {
+		$translation = \Services\Dictionary\TranslationService::get();
+		$translation->language = $language;
+		$translation->translation = $text;
+		$translation->translated = new \Nette\DateTime();
+		$translation->save();
+
+		return $translation;
 	}
 
 	private function setSections() {

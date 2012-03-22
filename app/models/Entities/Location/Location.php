@@ -149,6 +149,9 @@ class Location extends \Entities\BaseEntityDetails {
 	 */
 	protected $country;
 
+	/* ----------------------------- Methods ----------------------------- */
+
+
 	public function __construct() {
 		parent::__construct();
 
@@ -379,6 +382,15 @@ class Location extends \Entities\BaseEntityDetails {
 	}
 
 	/**
+	 * @return \Entities\Location\Location
+	 */
+	public function unsetPolygon() {
+		$this->polygon = NULL;
+
+		return $this;
+	}
+
+	/**
 	 * @return json|NULL
 	 */
 	public function getPolygon() {
@@ -391,6 +403,15 @@ class Location extends \Entities\BaseEntityDetails {
 	 */
 	public function setLatitude(\Extras\Types\Latlong $latitude) {
 		$this->latitude = $latitude;
+
+		return $this;
+	}
+
+	/**
+	 * @return \Entities\Location\Location
+	 */
+	public function unsetLatitude() {
+		$this->latitude = NULL;
 
 		return $this;
 	}
@@ -413,6 +434,15 @@ class Location extends \Entities\BaseEntityDetails {
 	}
 
 	/**
+	 * @return \Entities\Location\Location
+	 */
+	public function unsetLongitude() {
+		$this->longitude = NULL;
+
+		return $this;
+	}
+
+	/**
 	 * @return \Extras\Types\Latlong|NULL
 	 */
 	public function getLongitude() {
@@ -425,6 +455,15 @@ class Location extends \Entities\BaseEntityDetails {
 	 */
 	public function setDefaultZoom($defaultZoom) {
 		$this->defaultZoom = $defaultZoom;
+
+		return $this;
+	}
+
+	/**
+	 * @return \Entities\Location\Location
+	 */
+	public function unsetDefaultZoom() {
+		$this->defaultZoom = NULL;
 
 		return $this;
 	}
@@ -644,32 +683,6 @@ class Location extends \Entities\BaseEntityDetails {
 	 */
 	public function todoCountry() {
 
-	}
-
-	/**
-	 * @param integer
-	 * @return \Entities\BaseEntity
-	 */
-	public function setOldId($oldId) {
-		$this->oldId = $oldId;
-
-		return $this;
-	}
-
-	/**
-	 * @return \Entities\BaseEntity
-	 */
-	public function unsetOldId() {
-		$this->oldId = NULL;
-
-		return $this;
-	}
-
-	/**
-	 * @return integer|NULL
-	 */
-	public function getOldId() {
-		return $this->oldId;
 	}
 
 }

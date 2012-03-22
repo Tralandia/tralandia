@@ -23,7 +23,7 @@ class Json extends Type {
 
 	public function convertToDatabaseValue($value, AbstractPlatform $platform) {
 		if (!is_string($value)) {
-			$valiue = NU\Json::encode($value);
+			$value = NU\Json::encode($value);
 		}
 		return $value;
 	}
