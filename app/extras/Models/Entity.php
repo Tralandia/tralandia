@@ -68,7 +68,6 @@ abstract class Entity extends \Nette\Object implements IEntity, \Nette\Security\
 		// 	$this->{$name} = $value;
 		// 	return;
 		// }
-		if($name == 'type') debug($name, $value);
 		parent::__set($name, $value);
 	}
 	

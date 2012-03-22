@@ -124,7 +124,6 @@ abstract class Service extends Nette\Object implements IService {
 	 */
 	public function __set($name, $value) {
 		if ($value instanceof Service) {
-			if($name == 'type') debug($name, $value->getMainEntity());
 			$this->mainEntity->{$name} = $value->getMainEntity();
 		}else {
 			$this->mainEntity->$name = $value;
@@ -153,7 +152,6 @@ abstract class Service extends Nette\Object implements IService {
 	 * @param mixed
 	 */
 	public function __call($name, $arguments) {
-		if($name == 'language') debug($name, $arguments);
 		try {
 			if($this->mainEntity instanceof Entity) {
 				if(count($arguments) == 1) {

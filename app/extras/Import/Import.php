@@ -63,13 +63,13 @@ class Import {
 					$serviceName = '\Services'.$key2.'Service';
 					debug($serviceName);
 					$s = new $serviceName($x['id']);
-					debug($s);
 					$s->delete();
 				}
 			}
 			$this->savedVariables['importedSections'][$key]=0;
 			if ($key == $section) break;
 		}
+		Service::flush(FALSE);
 		$this->saveVariables();
 	}
 
@@ -84,12 +84,10 @@ class Import {
 			$s->supported = (bool)$x['translated'];
 			$s->defaultCollation = $x['default_collation'];
 			$s->details = json_encode(explode2Levels(';', ':', $x['attributes']));
-
 			$s->save();
 
 		}
 		Service::flush(FALSE);
-
 		$this->createPhrasesByOld('\Dictionary\Language', 'name', 'supportedLanguages', 'ACTIVE', 'languages', 'name_dic_id');
 		Service::flush(FALSE);
 		$this->savedVariables['importedSections']['languages'] = 2;
@@ -218,9 +216,15 @@ class Import {
 				$newEntityId = getByOldId($entityName, $x['id']);
 				$phrase = $this->createNewPhrase($dictionaryType, $x[$oldAttribute]);
 				if ($phrase instanceof D\PhraseService) {
-					eval('$s = new \Services'.$entityName.'Service('.$newEntityId.');');
-					$s->{$entityAttribute} = $phrase;
-					$s->save();						
+					eval('$s = \Services'.$entityName.'Service::get('.$newEntityId.');');
+					if ($s->id > 0) {
+						$s->{$entityAttribute} = $phrase;
+						$s->save();						
+					} else {
+						debug($s);
+						debug($newEntityId); return;	
+											
+					}
 				}
 			}
 		}
@@ -245,20 +249,28 @@ class Import {
 
 			$newEntityId = getByOldId('\Dictionary\Language', qc('select id from languages where iso = "'.substr($table[0], 2).'"'));
 
-			$translation->language = new \Services\Dictionary\LanguageService($newEntityId);
-			$translation->translation = $oldTranslation['text'];
-			
-			$translation->translated = fromStamp($oldTranslation['updated']);
-			$translation->variations = new \Extras\Types\Json("[]");
-			$translation->variationsPending = new \Extras\Types\Json("[]");
+			$language = \Services\Dictionary\LanguageService::get($newEntityId);
+				debug($language);
+			if ($language->getMainEntity() instanceof \Entities\Dictionary\Language && $language->id > 0) {
+				$translation->language = $language;
+				$translation->translation = $oldTranslation['text'];
+				
+				$translation->translated = fromStamp($oldTranslation['updated']);
+				$translation->variations = new \Extras\Types\Json("[]");
+				$translation->variationsPending = new \Extras\Types\Json("[]");
 
-			$translation->save();
+				$translation->save();
+				Service::flush(FALSE);
 
-			$phrase->addTranslation($translation);
+				$phrase->addTranslation($translation);
+
+			} else {
+				debug('nejde to '.$table[0]);return;
+			}
 		}
 
 		$phrase->save();
-		//$phrase->getEntityManager()->flush();
+		Service::flush(FALSE);
 		return $phrase;
 	}
 
