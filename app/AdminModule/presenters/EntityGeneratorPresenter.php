@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 class EntityGeneratorPresenter extends BasePresenter {
 
-	public static $skipTypeHintIn = array('integer', 'string', 'boolean', 'decimal', 'json', 'slug');
+	public static $skipTypeHintIn = array('integer', 'string', 'boolean', 'decimal', 'json', 'slug', 'float');
 
 	protected $entitiesReflection = array();
 

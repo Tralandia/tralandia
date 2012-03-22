@@ -295,8 +295,11 @@ class Extension extends \Nette\Config\CompilerExtension
 			);
 		}
 
+
 		$cfg = new \Doctrine\DBAL\Configuration;
-		if (isset($config['debugger']) && $config['debugger'] === TRUE) {
+		if (isset($config['debugger']) && $config['debugger'] === FALSE) {
+
+		} else if (isset($config['debugger']) && $config['debugger'] === TRUE) {
 			$panel = new \Nella\Addons\Doctrine\Diagnostics\ConnectionPanel;
 			if (Debugger::$bar) {
 				Debugger::$bar->addPanel($panel);
