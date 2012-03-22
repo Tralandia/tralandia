@@ -45,7 +45,7 @@ abstract class Service extends Nette\Object implements IService {
 	/**
 	 * @param bool
 	 */
-	public function __construct($new = true) {
+	protected function __construct($new = true) {
 		if ($this->getEntityManager() === null) {
 			throw new \Exception("Nie je dostupny EntityManager");
 		}
@@ -109,12 +109,19 @@ abstract class Service extends Nette\Object implements IService {
 		}
 
 		if (ServiceLoader::exists($key)) {
-			return ServiceLoader::get($key);
+			$service = ServiceLoader::get($key);
+		} else {
+			$service = new static(false);
+			$service->load($value);
+			ServiceLoader::set($key, $service);
 		}
-		$service = new static(false);
-		$service->load($value);
-		ServiceLoader::set($key, $service);
-		return $service;
+
+		if($service instanceof self && $service->getId() > 0) {
+			return $service;
+		} else {
+			throw new ServiceException('Zle inicializovane servisa: '.get_called_class());
+		}
+
 	}
 	
 	/**

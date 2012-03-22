@@ -18,6 +18,7 @@ define('TESTS_DIR', ROOT_DIR . '/tests');
 
 require TESTS_DIR . '/Test/TestHelpers.php';
 require TESTS_DIR . '/Test/Assert.php';
+require TESTS_DIR . '/extras/MyAssert.php';
 require LIBS_DIR . '/Nette/loader.php';
 
 use Nella\Addons\Doctrine\Config\Extension;

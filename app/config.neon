@@ -2,7 +2,7 @@ common:
 	php:
 		date.timezone: Europe/Bratislava
 		zlib.output_compression: yes
-		max_execution_time: 900
+		max_execution_time: 60
 
 	nette:
 		session:
@@ -79,6 +79,11 @@ production < common:
 console < common:
 
 development < common:
+	php:
+		max_execution_time: 0
+		memory_limit: 1024M
+
+
 	parameters:
 		database:
 			user: root
