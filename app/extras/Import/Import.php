@@ -260,7 +260,6 @@ class Import {
 				$translation->variationsPending = new \Extras\Types\Json("[]");
 
 				$translation->save();
-				Service::flush(FALSE);
 
 				$phrase->addTranslation($translation);
 
@@ -270,7 +269,6 @@ class Import {
 		}
 
 		$phrase->save();
-		Service::flush(FALSE);
 		return $phrase;
 	}
 
