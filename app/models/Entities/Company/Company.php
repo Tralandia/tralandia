@@ -293,7 +293,7 @@ class Company extends \Entities\BaseEntityDetails {
 	 * @param \Extras\Types\Float
 	 * @return \Entities\Company\Company
 	 */
-	public function setVat(\Extras\Types\Float $vat) {
+	public function setVat($vat) {
 		$this->vat = $vat;
 
 		return $this;

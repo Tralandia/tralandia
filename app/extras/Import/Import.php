@@ -74,6 +74,7 @@ class Import {
 	}
 
 	public function importLanguages() {
+		\Extras\Models\Service::preventFlush();
 		$this->savedVariables['importedSections']['languages'] = 1;
 		$r = q('select * from languages order by id');
 		while($x = mysql_fetch_array($r)) {
@@ -145,6 +146,9 @@ class Import {
 			$s->type = $locationType;
 			$s->save();
 		}
+
+		Service::flush(FALSE);
+
 
 		$this->savedVariables['importedSections']['locations'] = 2;
 	}
@@ -271,7 +275,7 @@ class Import {
 
 	private function createDictionaryType($entityName, $entityAttribute, $requiredLanguages, $level) {
 		eval('$level = \Entities\Dictionary\Type::TRANSLATION_LEVEL_'.strtoupper($level).';');
-		$dictionaryType = new D\TypeService();
+		$dictionaryType = D\TypeService::get();
 		$dictionaryType->entityName = $entityName;
 		$dictionaryType->entityAttribute = $entityAttribute;
 		$dictionaryType->requiredLanguages = $requiredLanguages;

@@ -116,7 +116,7 @@ class Country extends \Entities\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Location", mappedBy="country")
+	 * @ORM\OneToOne(targetEntity="Location", inversedBy="country")
 	 */
 	protected $location;
 
