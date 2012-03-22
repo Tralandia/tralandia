@@ -63,3 +63,7 @@ table.datagrid {
 table.datagrid td {
 	line-height: 2;
 }
+
+.flashMessage { position: fixed; left: 0; top: 5px; right: 0; text-align: center; z-index: 999; }
+.flashMessage .msg { background-color: #F9EDBE; padding: 6px 10px; border: 1px solid transparent; border-radius: 2px; -webkit-border-radius: 2px; -moz-border-radius: 2px; -moz-box-shadow: 0 2px 4px rgba(0,0,0,0.2); -webkit-box-shadow: 0 2px 4px rgba(0,0,0,0.2); box-shadow: 0 2px 4px rgba(0,0,0,0.2); border-color: #F0C36D; }  
+

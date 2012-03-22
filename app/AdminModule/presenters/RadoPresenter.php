@@ -15,30 +15,39 @@ class RadoPresenter extends BasePresenter {
 
 	public function actionDefault() {
 		ini_set('max_execution_time', 0);
-		if (isset($this->params['truncateDatabase'])) {
-			$import = new \Import();
-			$import->truncateDatabase();
+		$import = new \Import();
+		$redirect = FALSE;
+		if (isset($this->params['dropAllTables'])) {
+			$import->dropAllTables();
 
+			$this->flashMessage('Dropping Done');
+			$redirect = TRUE;
+		}
+		if (isset($this->params['truncateDatabase'])) {
+			$import->truncateDatabase();
 			$this->flashMessage('Truncate Done');
-			//$this->redirect('Rado:default');
+			$redirect = TRUE;
 		}
 		if (isset($this->params['undoSection'])) {
-			$import = new \Import();
 			$import->undoSection($this->params['undoSection']);
 			$this->flashMessage('Section UNDONE');
-			//$this->redirect('Rado:default');
+			$redirect = TRUE;
 		}
 		if (isset($this->params['importSection'])) {
-			$import = new \Import();
 			$action = 'import'.ucfirst($this->params['importSection']);
 			$import->{$action}();
 			$import->saveVariables();
+			$this->flashMessage('Importing Done');
+			$redirect = TRUE;
+		}
+
+		if ($redirect) {
 			//$this->redirect('Rado:default');
 		}
 	}
 
 	public function renderDefault() {
-		debug(Debugger::timer());
+		Debugger::timer();
 		$import = new \Import();
 
 		$sections = $import->getSections();

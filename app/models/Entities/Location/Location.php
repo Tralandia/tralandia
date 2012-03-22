@@ -67,25 +67,25 @@ class Location extends \Entities\BaseEntityDetails {
 
 	/**
 	 * @var json
-	 * @ORM\Column(type="json")
+	 * @ORM\Column(type="json", nullable=true)
 	 */
 	protected $polygon;
 
 	/**
 	 * @var latlong
-	 * @ORM\Column(type="latlong")
+	 * @ORM\Column(type="latlong", nullable=true)
 	 */
 	protected $latitude;
 
 	/**
 	 * @var latlong
-	 * @ORM\Column(type="latlong")
+	 * @ORM\Column(type="latlong", nullable=true)
 	 */
 	protected $longitude;
 
 	/**
 	 * @var integer
-	 * @ORM\Column(type="integer")
+	 * @ORM\Column(type="integer", nullable=true)
 	 */
 	protected $defaultZoom;
 

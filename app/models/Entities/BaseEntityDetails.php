@@ -12,7 +12,7 @@ class BaseEntityDetails extends \Entities\BaseEntity {
 
 	/**
 	 * @var json
-	 * @ORM\Column(type="json")
+	 * @ORM\Column(type="json", nullable=true)
 	 */
 	protected $details;
 
