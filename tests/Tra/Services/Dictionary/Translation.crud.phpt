@@ -1,7 +1,7 @@
 <?php
 
 require __DIR__ . '/../../bootstrap.php';
-//die;
+die;
 
 $service = new \Services\Dictionary\TranslationService;
 

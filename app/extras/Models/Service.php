@@ -97,7 +97,7 @@ abstract class Service extends Nette\Object implements IService {
 
 		if ($value instanceof $mainEntityName) {
 			$key = get_called_class() . '#' . $value->getId();
-		} else if(is_numeric($value) {
+		} else if(is_numeric($value)) {
 			$key = get_called_class() . '#' . $value;
 		} else if($value === NULL) {
 			$className = get_called_class();
@@ -163,8 +163,7 @@ abstract class Service extends Nette\Object implements IService {
 						return $this;
 					}
 				} else if(count($arguments) == 0) {
-					$this->mainEntity->{$name}();
-					return $this;
+					return $this->mainEntity->{$name}();
 				}
 			}
 		} catch (MemberAccessException $e) {}
@@ -267,7 +266,7 @@ abstract class Service extends Nette\Object implements IService {
 				}
 				if ($this->isFlushable()) {
 					self::flush();
-					ServiceLoader::set(get_class($this) . '#' . $this->getId(), $this);
+					//ServiceLoader::set(get_class($this) . '#' . $this->getId(), $this);
 				} else {
 					ServiceLoader::addToStack($this);
 				}

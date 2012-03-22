@@ -10,6 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 class EntityGeneratorPresenter extends BasePresenter {
 
+	public static $skipTypeHintIn = array('integer', 'string', 'boolean', 'decimal', 'json', 'slug');
+
 	protected $entitiesReflection = array();
 
 	public function beforeRender() {
@@ -204,7 +206,7 @@ class EntityGeneratorPresenter extends BasePresenter {
 			
 			if($return['type'] == 'text') $return['type'] = 'string';
 
-			if(!in_array($return['type'], array('integer', 'string', 'boolean', 'decimal'))) {
+			if(!in_array($return['type'], self::$skipTypeHintIn)) {
 				$return['type'] = '\Extras\Types\\'.Strings::firstUpper($return['type']);
 			}
 
@@ -307,7 +309,7 @@ class EntityGeneratorPresenter extends BasePresenter {
 
 		} else {
 			$firstParameter = $method->addParameter($property->singular);
-			if(!in_array($tagetProperyClass, array('integer', 'string', 'boolean', 'decimal'))) {
+			if(!in_array($tagetProperyClass, self::$skipTypeHintIn)) {
 				$firstParameter->typeHint = $tagetProperyClass;
 			}
 		}

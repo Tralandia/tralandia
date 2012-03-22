@@ -274,26 +274,17 @@ class Location extends \Entities\BaseEntityDetails {
 	}
 
 	/**
-	 * @param \Extras\Types\Slug
+	 * @param slug
 	 * @return \Entities\Location\Location
 	 */
-	public function setSlug(\Extras\Types\Slug $slug) {
+	public function setSlug($slug) {
 		$this->slug = $slug;
 
 		return $this;
 	}
 
 	/**
-	 * @return \Entities\Location\Location
-	 */
-	public function unsetSlug() {
-		$this->slug = NULL;
-
-		return $this;
-	}
-
-	/**
-	 * @return \Extras\Types\Slug|NULL
+	 * @return slug|NULL
 	 */
 	public function getSlug() {
 		return $this->slug;
@@ -378,26 +369,17 @@ class Location extends \Entities\BaseEntityDetails {
 	}
 
 	/**
-	 * @param \Extras\Types\Json
+	 * @param json
 	 * @return \Entities\Location\Location
 	 */
-	public function setPolygon(\Extras\Types\Json $polygon) {
+	public function setPolygon($polygon) {
 		$this->polygon = $polygon;
 
 		return $this;
 	}
 
 	/**
-	 * @return \Entities\Location\Location
-	 */
-	public function unsetPolygon() {
-		$this->polygon = NULL;
-
-		return $this;
-	}
-
-	/**
-	 * @return \Extras\Types\Json|NULL
+	 * @return json|NULL
 	 */
 	public function getPolygon() {
 		return $this->polygon;
@@ -409,15 +391,6 @@ class Location extends \Entities\BaseEntityDetails {
 	 */
 	public function setLatitude(\Extras\Types\Latlong $latitude) {
 		$this->latitude = $latitude;
-
-		return $this;
-	}
-
-	/**
-	 * @return \Entities\Location\Location
-	 */
-	public function unsetLatitude() {
-		$this->latitude = NULL;
 
 		return $this;
 	}
@@ -440,15 +413,6 @@ class Location extends \Entities\BaseEntityDetails {
 	}
 
 	/**
-	 * @return \Entities\Location\Location
-	 */
-	public function unsetLongitude() {
-		$this->longitude = NULL;
-
-		return $this;
-	}
-
-	/**
 	 * @return \Extras\Types\Latlong|NULL
 	 */
 	public function getLongitude() {
@@ -461,15 +425,6 @@ class Location extends \Entities\BaseEntityDetails {
 	 */
 	public function setDefaultZoom($defaultZoom) {
 		$this->defaultZoom = $defaultZoom;
-
-		return $this;
-	}
-
-	/**
-	 * @return \Entities\Location\Location
-	 */
-	public function unsetDefaultZoom() {
-		$this->defaultZoom = NULL;
 
 		return $this;
 	}
@@ -716,4 +671,5 @@ class Location extends \Entities\BaseEntityDetails {
 	public function getOldId() {
 		return $this->oldId;
 	}
+
 }

@@ -34,24 +34,8 @@ class DavidPresenter extends BasePresenter {
 	}
 
 	public function actionTest() {
-$service = new \Services\Dictionary\TranslationService;
-
-$properties = \Nette\ArrayHash::from(array(
-	'translation' => 'slovo',
-	'translation2' => 'slova',
-	'translation3' => 'slov',
-));
-
-foreach ($properties as $key => $val) {
-	$service->{$key} = $val;
-}
 
 
-$service->save();
-
-		$phrase = new D\PhraseService();
-//		$translation = $phrase->getTranslation(new D\LanguageService(1));
-		debug($phrase);
 	}
 
 	public function actionAddPhrase() {
