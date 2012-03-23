@@ -60,7 +60,6 @@ class Currency extends \Entities\BaseEntity {
      */
     public function setName(\Entities\Dictionary\Phrase $name) {
         $this->name = $name;
-        $name->setEntityId($this->getId());
  
         return $this;
     }

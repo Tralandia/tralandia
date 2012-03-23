@@ -29,12 +29,15 @@ class Phrase extends \Entities\BaseEntityDetails {
 	 */
 	protected $type;
 
+	/* ----------------------------- Methods ----------------------------- */
+
+
 	public function __construct() {
 		parent::__construct();
-		
+
 		$this->translations = new \Doctrine\Common\Collections\ArrayCollection;
 	}
-	
+
 	/**
 	 * @param \Entities\Dictionary\Translation
 	 * @return \Entities\Dictionary\Phrase
@@ -47,7 +50,7 @@ class Phrase extends \Entities\BaseEntityDetails {
 
 		return $this;
 	}
-	 
+
 	/**
 	 * @param \Entities\Dictionary\Translation
 	 * @return \Entities\Dictionary\Phrase
@@ -60,89 +63,55 @@ class Phrase extends \Entities\BaseEntityDetails {
 
 		return $this;
 	}
-	 
+
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entities\Dictionary\Translation
 	 */
 	public function getTranslations() {
 		return $this->translations;
 	}
-	 
+
 	/**
 	 * @param boolean
 	 * @return \Entities\Dictionary\Phrase
 	 */
 	public function setReady($ready) {
 		$this->ready = $ready;
-	 
+
 		return $this;
 	}
-	 
-	/**
-	 * @return \Entities\Dictionary\Phrase
-	 */
-	public function unsetReady() {
-		$this->ready = NULL;
-	
-		return $this;
-	}
-	 
+
 	/**
 	 * @return boolean|NULL
 	 */
 	public function getReady() {
 		return $this->ready;
 	}
-	 
+
 	/**
 	 * @param \Entities\Dictionary\Type
 	 * @return \Entities\Dictionary\Phrase
 	 */
 	public function setType(\Entities\Dictionary\Type $type) {
 		$this->type = $type;
-	 
+
 		return $this;
 	}
-	 
+
 	/**
 	 * @return \Entities\Dictionary\Phrase
 	 */
 	public function unsetType() {
 		$this->type = NULL;
-	 
+
 		return $this;
 	}
-	 
+
 	/**
 	 * @return \Entities\Dictionary\Type|NULL
 	 */
 	public function getType() {
 		return $this->type;
 	}
-	 
-	/**
-	 * @param integer
-	 * @return \Entities\Dictionary\Phrase
-	 */
-	public function setEntityId($entityId) {
-		$this->entityId = $entityId;
-	 
-		return $this;
-	}
-	 
-	/**
-	 * @return \Entities\Dictionary\Phrase
-	 */
-	public function unsetEntityId() {
-		$this->entityId = NULL;
-	 
-		return $this;
-	}
-	 
-	/**
-	 * @return integer|NULL
-	 */
-	public function getEntityId() {
-		return $this->entityId;
-	}
+
 }

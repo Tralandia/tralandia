@@ -22,7 +22,7 @@ class Slug extends Type {
 	}
 
 	public function convertToDatabaseValue($value, AbstractPlatform $platform) {
-		return $value;
+		return NU\Strings::truncate(NU\Strings::webalize($value), 255, '');
 	}
 /*
 	public function canRequireSQLConversion() {

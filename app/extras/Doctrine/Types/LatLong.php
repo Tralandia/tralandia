@@ -14,7 +14,7 @@ class LatLong extends Type {
 	}
 
 	public function getSqlDeclaration(array $fieldDeclaration, AbstractPlatform $platform) {
-		return 'decimal';
+		return 'float';
 	}
 
 	public function convertToPHPValue($value, AbstractPlatform $platform) {

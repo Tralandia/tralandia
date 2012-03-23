@@ -61,9 +61,9 @@ class Language extends \Entities\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entities\Location\Location", inversedBy="languages")
+	 * @ORM\ManyToMany(targetEntity="Entities\Location\Country", inversedBy="languages")
 	 */
-	protected $locations;
+	protected $countries;
 
 	/**
 	 * @var Collection
@@ -71,11 +71,12 @@ class Language extends \Entities\BaseEntityDetails {
 	 */
 	protected $rentals;
 
-	
+	/* ----------------------------- Methods ----------------------------- */
+
+
 	public function __construct() {
 		parent::__construct();
 
-		$this->locations = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->rentals = new \Doctrine\Common\Collections\ArrayCollection;
 	}
 
@@ -85,7 +86,6 @@ class Language extends \Entities\BaseEntityDetails {
 	 */
 	public function setName(\Entities\Dictionary\Phrase $name) {
 		$this->name = $name;
-		$name->setEntityId($this->getId());
 
 		return $this;
 	}
@@ -134,15 +134,6 @@ class Language extends \Entities\BaseEntityDetails {
 	}
 
 	/**
-	 * @return \Entities\Dictionary\Language
-	 */
-	public function unsetSupported() {
-		$this->supported = NULL;
-
-		return $this;
-	}
-
-	/**
 	 * @return boolean|NULL
 	 */
 	public function getSupported() {
@@ -176,10 +167,10 @@ class Language extends \Entities\BaseEntityDetails {
 	}
 
 	/**
-	 * @param \Extras\Types\Json
+	 * @param json
 	 * @return \Entities\Dictionary\Language
 	 */
-	public function setSalutations(\Extras\Types\Json $salutations) {
+	public function setSalutations($salutations) {
 		$this->salutations = $salutations;
 
 		return $this;
@@ -195,17 +186,17 @@ class Language extends \Entities\BaseEntityDetails {
 	}
 
 	/**
-	 * @return \Extras\Types\Json|NULL
+	 * @return json|NULL
 	 */
 	public function getSalutations() {
 		return $this->salutations;
 	}
 
 	/**
-	 * @param \Extras\Types\Json
+	 * @param json
 	 * @return \Entities\Dictionary\Language
 	 */
-	public function setMultitranslationOptions(\Extras\Types\Json $multitranslationOptions) {
+	public function setMultitranslationOptions($multitranslationOptions) {
 		$this->multitranslationOptions = $multitranslationOptions;
 
 		return $this;
@@ -221,17 +212,17 @@ class Language extends \Entities\BaseEntityDetails {
 	}
 
 	/**
-	 * @return \Extras\Types\Json|NULL
+	 * @return json|NULL
 	 */
 	public function getMultitranslationOptions() {
 		return $this->multitranslationOptions;
 	}
 
 	/**
-	 * @param \Extras\Types\Json
+	 * @param json
 	 * @return \Entities\Dictionary\Language
 	 */
-	public function setGenderNumberOptions(\Extras\Types\Json $genderNumberOptions) {
+	public function setGenderNumberOptions($genderNumberOptions) {
 		$this->genderNumberOptions = $genderNumberOptions;
 
 		return $this;
@@ -247,17 +238,17 @@ class Language extends \Entities\BaseEntityDetails {
 	}
 
 	/**
-	 * @return \Extras\Types\Json|NULL
+	 * @return json|NULL
 	 */
 	public function getGenderNumberOptions() {
 		return $this->genderNumberOptions;
 	}
 
 	/**
-	 * @param \Extras\Types\Json
+	 * @param json
 	 * @return \Entities\Dictionary\Language
 	 */
-	public function setPpcPatterns(\Extras\Types\Json $ppcPatterns) {
+	public function setPpcPatterns($ppcPatterns) {
 		$this->ppcPatterns = $ppcPatterns;
 
 		return $this;
@@ -273,10 +264,23 @@ class Language extends \Entities\BaseEntityDetails {
 	}
 
 	/**
-	 * @return \Extras\Types\Json|NULL
+	 * @return json|NULL
 	 */
 	public function getPpcPatterns() {
 		return $this->ppcPatterns;
+	}
+
+	/**
+	 * @param \Entities\Location\Location
+	 * @return \Entities\Dictionary\Language
+	 */
+	public function addLocation(\Entities\Location\Location $location) {
+		if(!$this->locations->contains($location)) {
+			$this->locations->add($location);
+		}
+		$location->addLanguage($this);
+
+		return $this;
 	}
 
 	/**
@@ -284,6 +288,19 @@ class Language extends \Entities\BaseEntityDetails {
 	 */
 	public function getLocations() {
 		return $this->locations;
+	}
+
+	/**
+	 * @param \Entities\Rental\Rental
+	 * @return \Entities\Dictionary\Language
+	 */
+	public function addRental(\Entities\Rental\Rental $rental) {
+		if(!$this->rentals->contains($rental)) {
+			$this->rentals->add($rental);
+		}
+		$rental->addLanguagesSpoken($this);
+
+		return $this;
 	}
 
 	/**

@@ -31,6 +31,7 @@ class Type extends \Entities\BaseEntity {
 	/**
 	 * @var string
 	 * @ORM\Column(type="string")
+	 * "supportedLanguages", "incomingLanguages" or list of IDs separated by ",": ",1,2,3,4,"
 	 */
 	protected $requiredLanguages;
 	
@@ -82,6 +83,9 @@ class Type extends \Entities\BaseEntity {
 	 */
 	protected $helpForTranslator;
 	
+
+
+	/* ----------------------------- Methods ----------------------------- */
 
 
 	public function __construct() {
@@ -144,6 +148,23 @@ class Type extends \Entities\BaseEntity {
 	 * @param string
 	 * @return \Entities\Dictionary\Type
 	 */
+	public function setRequiredLanguages($requiredLanguages) {
+		$this->requiredLanguages = $requiredLanguages;
+
+		return $this;
+	}
+
+	/**
+	 * @return string|NULL
+	 */
+	public function getRequiredLanguages() {
+		return $this->requiredLanguages;
+	}
+
+	/**
+	 * @param string
+	 * @return \Entities\Dictionary\Type
+	 */
 	public function setEntityAttribute($entityAttribute) {
 		$this->entityAttribute = $entityAttribute;
 
@@ -167,46 +188,11 @@ class Type extends \Entities\BaseEntity {
 	}
 
 	/**
-	 * @param string
-	 * @return \Entities\Dictionary\Type
-	 */
-	public function setRequiredLanguages($requiredLanguages) {
-		$this->requiredLanguages = $requiredLanguages;
-
-		return $this;
-	}
-
-	/**
-	 * @return \Entities\Dictionary\Type
-	 */
-	public function unsetRequiredLanguages() {
-		$this->requiredLanguages = NULL;
-
-		return $this;
-	}
-
-	/**
-	 * @return string|NULL
-	 */
-	public function getRequiredLanguages() {
-		return $this->requiredLanguages;
-	}
-
-	/**
 	 * @param integer
 	 * @return \Entities\Dictionary\Type
 	 */
 	public function setTranslationLevelRequirement($translationLevelRequirement) {
 		$this->translationLevelRequirement = $translationLevelRequirement;
-
-		return $this;
-	}
-
-	/**
-	 * @return \Entities\Dictionary\Type
-	 */
-	public function unsetTranslationLevelRequirement() {
-		$this->translationLevelRequirement = NULL;
 
 		return $this;
 	}
@@ -229,15 +215,6 @@ class Type extends \Entities\BaseEntity {
 	}
 
 	/**
-	 * @return \Entities\Dictionary\Type
-	 */
-	public function unsetMultitranslationRequired() {
-		$this->multitranslationRequired = NULL;
-
-		return $this;
-	}
-
-	/**
 	 * @return boolean|NULL
 	 */
 	public function getMultitranslationRequired() {
@@ -250,15 +227,6 @@ class Type extends \Entities\BaseEntity {
 	 */
 	public function setGenderNumberRequired($genderNumberRequired) {
 		$this->genderNumberRequired = $genderNumberRequired;
-
-		return $this;
-	}
-
-	/**
-	 * @return \Entities\Dictionary\Type
-	 */
-	public function unsetGenderNumberRequired() {
-		$this->genderNumberRequired = NULL;
 
 		return $this;
 	}
@@ -281,15 +249,6 @@ class Type extends \Entities\BaseEntity {
 	}
 
 	/**
-	 * @return \Entities\Dictionary\Type
-	 */
-	public function unsetLocativeRequired() {
-		$this->locativeRequired = NULL;
-
-		return $this;
-	}
-
-	/**
 	 * @return boolean|NULL
 	 */
 	public function getLocativeRequired() {
@@ -307,15 +266,6 @@ class Type extends \Entities\BaseEntity {
 	}
 
 	/**
-	 * @return \Entities\Dictionary\Type
-	 */
-	public function unsetPositionRequired() {
-		$this->positionRequired = NULL;
-
-		return $this;
-	}
-
-	/**
 	 * @return boolean|NULL
 	 */
 	public function getPositionRequired() {
@@ -328,15 +278,6 @@ class Type extends \Entities\BaseEntity {
 	 */
 	public function setWebalizedRequired($webalizedRequired) {
 		$this->webalizedRequired = $webalizedRequired;
-
-		return $this;
-	}
-
-	/**
-	 * @return \Entities\Dictionary\Type
-	 */
-	public function unsetWebalizedRequired() {
-		$this->webalizedRequired = NULL;
 
 		return $this;
 	}
@@ -373,4 +314,5 @@ class Type extends \Entities\BaseEntity {
 	public function getHelpForTranslator() {
 		return $this->helpForTranslator;
 	}
+
 }
