@@ -7,7 +7,7 @@ use Nette\Application as NA,
 	Nette\Diagnostics\Debugger,
 	Nette\Utils\Html,
 	Nette\Utils\Strings,
-	Extras\Import\Import,
+	Extras\Import as I,
 	Services\Dictionary as D,
 	Services as S,
 	Services\Log\Change as SLog;
@@ -16,28 +16,31 @@ class RadoPresenter extends BasePresenter {
 
 	public function actionDefault() {
 		ini_set('max_execution_time', 0);
-		$import = new Import();
 		$redirect = FALSE;
 		if (isset($this->params['dropAllTables'])) {
+			$import = new I\BaseImport();
 			$import->dropAllTables();
 
 			$this->flashMessage('Dropping Done');
 			$redirect = TRUE;
 		}
 		if (isset($this->params['truncateDatabase'])) {
+			$import = new I\BaseImport();
 			$import->truncateDatabase();
 			$this->flashMessage('Truncate Done');
 			$redirect = TRUE;
 		}
 		if (isset($this->params['undoSection'])) {
+			$import = new I\BaseImport();
 			$import->undoSection($this->params['undoSection']);
 			$this->flashMessage('Section UNDONE');
 			$redirect = TRUE;
 		}
 		if (isset($this->params['importSection'])) {
 			\Extras\Models\Service::preventFlush();
-			$action = 'import'.ucfirst($this->params['importSection']);
-			$import->{$action}();
+			$className = 'Extras\Import\Import'.ucfirst($this->params['importSection']);
+			$import = new $className();
+			$import->doImport();
 			$import->saveVariables();
 			\Extras\Models\Service::flush(FALSE);
 			$this->flashMessage('Importing Done');
@@ -50,8 +53,7 @@ class RadoPresenter extends BasePresenter {
 	}
 
 	public function renderDefault() {
-		Debugger::timer();
-		$import = new Import();
+		$import = new I\BaseImport();
 
 		$sections = $import->getSections();
 		$temp = array();
@@ -66,21 +68,8 @@ class RadoPresenter extends BasePresenter {
 				$nextNoImport = TRUE;
 			}
 		}
-		debug($temp);
 		$this->template->sections = $temp;
-		debug(Debugger::timer());
 		return;
-
-		// debug($this->params); return;	
-		// debug($this->context->session); return;	
-		// debug($this->post); return;	
-		
-		$import = new Import();
-		$import->importCompanies();
-		//$import->truncateDatabase();
-		//$import->importLanguages();
-		//$import->importCurrencies();
-		//$import->importDomains();
 	}
 
 }

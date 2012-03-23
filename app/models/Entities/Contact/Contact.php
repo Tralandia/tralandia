@@ -42,6 +42,12 @@ class Contact extends \Entities\BaseEntity {
 	protected $user;
 
 	/**
+	 * @var Collection
+	 * @ORM\ManyToMany(targetEntity="Entities\Location\Country", inversedBy="contacts")
+	 */
+	protected $countries;
+
+	/**
 	 * @var json
 	 * @ORM\Column(type="json", nullable=true)
 	 */
@@ -72,12 +78,15 @@ class Contact extends \Entities\BaseEntity {
 	protected $spam = FALSE;
 
 
+	/* ----------------------------- Methods ----------------------------- */
+
 
 	public function __construct() {
 		parent::__construct();
 
 		$this->attractions = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->rentals = new \Doctrine\Common\Collections\ArrayCollection;
+		$this->countries = new \Doctrine\Common\Collections\ArrayCollection;
 	}
 
 	/**
@@ -190,6 +199,26 @@ class Contact extends \Entities\BaseEntity {
 	}
 
 	/**
+	 * @param \Entities\Location\Country
+	 * @return \Entities\Contact\Contact
+	 */
+	public function addCountry(\Entities\Location\Country $country) {
+		if(!$this->countries->contains($country)) {
+			$this->countries->add($country);
+		}
+		$country->addContact($this);
+
+		return $this;
+	}
+
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entities\Location\Country
+	 */
+	public function getCountries() {
+		return $this->countries;
+	}
+
+	/**
 	 * @param json
 	 * @return \Entities\Contact\Contact
 	 */
@@ -281,32 +310,6 @@ class Contact extends \Entities\BaseEntity {
 	 */
 	public function getSpam() {
 		return $this->spam;
-	}
-
-	/**
-	 * @param integer
-	 * @return \Entities\BaseEntity
-	 */
-	public function setOldId($oldId) {
-		$this->oldId = $oldId;
-
-		return $this;
-	}
-
-	/**
-	 * @return \Entities\BaseEntity
-	 */
-	public function unsetOldId() {
-		$this->oldId = NULL;
-
-		return $this;
-	}
-
-	/**
-	 * @return integer|NULL
-	 */
-	public function getOldId() {
-		return $this->oldId;
 	}
 
 }

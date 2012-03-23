@@ -31,6 +31,7 @@ class Type extends \Entities\BaseEntity {
 	/**
 	 * @var string
 	 * @ORM\Column(type="string")
+	 * "supportedLanguages", "incomingLanguages" or list of IDs separated by ",": ",1,2,3,4,"
 	 */
 	protected $requiredLanguages;
 	

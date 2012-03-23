@@ -107,11 +107,7 @@ class BaseEntity extends \Extras\Models\Entity {
 	 * @return \Entities\BaseEntity
 	 */
 	public function setUpdated() {
-		if (\Extras\Import\Import::$updateDateTime instanceof \Nette\DateTime) {
-			$this->updated = \Extras\Import\Import::$updateDateTime;
-		} else {
-			$this->updated = new \Nette\DateTime;
-		}
+		$this->updated = new \Nette\DateTime;
 	}
 
 	/**

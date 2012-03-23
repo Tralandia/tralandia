@@ -11,7 +11,7 @@ class Price extends \Nette\Object {
 	}
 
 	public function __toString() {
-		return $this->price;
+		return (string)$this->price; // @todo - ten cast som len docasne pridal
 	}
 
 }

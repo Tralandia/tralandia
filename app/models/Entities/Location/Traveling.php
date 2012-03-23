@@ -12,28 +12,27 @@ class Traveling extends \Entities\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Location", inversedBy="travelings")
+	 * @ORM\ManyToOne(targetEntity="Location", inversedBy="outgoingLocations")
 	 */
 	protected $sourceLocation;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Location", inversedBy="incomings")
+	 * @ORM\ManyToOne(targetEntity="Location", inversedBy="incomingLocations")
 	 */
 	protected $destinationLocation;
 
 	/**
 	 * @var integer
-	 * @ORM\Column(type="integer")
+	 * @ORM\Column(type="integer", nullable=true)
 	 */
 	protected $peopleCount;
 
 	/**
 	 * @var integer
-	 * @ORM\Column(type="integer")
+	 * @ORM\Column(type="integer", nullable=true)
 	 */
 	protected $year;
-
 	/* ----------------------------- Methods ----------------------------- */
 
 
@@ -86,6 +85,15 @@ class Traveling extends \Entities\BaseEntity {
 	}
 
 	/**
+	 * @return \Entities\Location\Traveling
+	 */
+	public function unsetPeopleCount() {
+		$this->peopleCount = NULL;
+
+		return $this;
+	}
+
+	/**
 	 * @return integer|NULL
 	 */
 	public function getPeopleCount() {
@@ -103,10 +111,21 @@ class Traveling extends \Entities\BaseEntity {
 	}
 
 	/**
+	 * @return \Entities\Location\Traveling
+	 */
+	public function unsetYear() {
+		$this->year = NULL;
+
+		return $this;
+	}
+
+	/**
 	 * @return integer|NULL
 	 */
 	public function getYear() {
 		return $this->year;
 	}
+
+
 
 }

@@ -13,26 +13,50 @@ use Doctrine\ORM\Mapping as ORM;
 class Country extends \Entities\BaseEntityDetails {
 
 	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $status;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $iso;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $iso3;
+
+	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entities\Currency")
+	 * @ORM\ManyToOne(targetEntity="Entities\Currency", cascade={"persist"})
 	 */
 	protected $defaultCurrency;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entities\Currency", mappedBy="countries")
+	 * @ORM\ManyToMany(targetEntity="Entities\Currency", mappedBy="countries", cascade={"persist"})
 	 */
 	protected $currencies;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entities\Dictionary\Language")
+	 * @ORM\ManyToOne(targetEntity="Entities\Dictionary\Language", cascade={"persist"})
 	 */
 	protected $defaultLanguage;
 
 	/**
+	 * @var Collection
+	 * @ORM\ManyToMany(targetEntity="Entities\Dictionary\Language", mappedBy="countries", cascade={"persist"})
+	 */
+	protected $languages;
+
+	/**
 	 * @var integer
-	 * @ORM\Column(type="integer")
+	 * @ORM\Column(type="integer", nullable=true)
 	 */
 	protected $population;
 
@@ -42,11 +66,17 @@ class Country extends \Entities\BaseEntityDetails {
 	 */
 	protected $phonePrefix;
 
-	// /**
-	//  * @var Collection
-	//  * @ORM\OneToMany(targetEntity="Location")
-	//  */
-	// protected $neighbours;
+  //   /**
+	 // * @var Collection
+  //    * @ManyToMany(targetEntity="Entities\Location\Country", mappedBy="myNeighbours")
+  //    */
+  //   private $neighbours;
+
+  //   /**
+	 // * @var Collection
+  //    * @ManyToMany(targetEntity="Entities\Location\Country", inversedBy="neighbours")
+  //     */
+  //   private $myNeighbours;
 
 	/**
 	 * @var Collection
@@ -91,6 +121,12 @@ class Country extends \Entities\BaseEntityDetails {
 	protected $wikipediaLink;
 
 	/**
+	 * @var Collection
+	 * @ORM\ManyToMany(targetEntity="Entities\Contact\Contact", mappedBy="countries")
+	 */
+	protected $contacts;
+
+	/**
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
 	 */
@@ -98,19 +134,19 @@ class Country extends \Entities\BaseEntityDetails {
 
 	/**
 	 * @var price
-	 * @ORM\Column(type="price")
+	 * @ORM\Column(type="price", nullable=true)
 	 */
 	protected $pricesPizza;
 
 	/**
 	 * @var price
-	 * @ORM\Column(type="price")
+	 * @ORM\Column(type="price", nullable=true)
 	 */
 	protected $pricesDinner;
 
 	/**
 	 * @var text
-	 * @ORM\Column(type="text")
+	 * @ORM\Column(type="text", nullable=true)
 	 */
 	protected $airports;
 
@@ -127,6 +163,86 @@ class Country extends \Entities\BaseEntityDetails {
 		parent::__construct();
 
 		$this->currencies = new \Doctrine\Common\Collections\ArrayCollection;
+		$this->languages = new \Doctrine\Common\Collections\ArrayCollection;
+		$this->contacts = new \Doctrine\Common\Collections\ArrayCollection;
+	}
+
+	/**
+	 * @param string
+	 * @return \Entities\Location\Country
+	 */
+	public function setStatus($status) {
+		$this->status = $status;
+
+		return $this;
+	}
+
+	/**
+	 * @return \Entities\Location\Country
+	 */
+	public function unsetStatus() {
+		$this->status = NULL;
+
+		return $this;
+	}
+
+	/**
+	 * @return string|NULL
+	 */
+	public function getStatus() {
+		return $this->status;
+	}
+
+	/**
+	 * @param string
+	 * @return \Entities\Location\Country
+	 */
+	public function setIso($iso) {
+		$this->iso = $iso;
+
+		return $this;
+	}
+
+	/**
+	 * @return \Entities\Location\Country
+	 */
+	public function unsetIso() {
+		$this->iso = NULL;
+
+		return $this;
+	}
+
+	/**
+	 * @return string|NULL
+	 */
+	public function getIso() {
+		return $this->iso;
+	}
+
+	/**
+	 * @param string
+	 * @return \Entities\Location\Country
+	 */
+	public function setIso3($iso3) {
+		$this->iso3 = $iso3;
+
+		return $this;
+	}
+
+	/**
+	 * @return \Entities\Location\Country
+	 */
+	public function unsetIso3() {
+		$this->iso3 = NULL;
+
+		return $this;
+	}
+
+	/**
+	 * @return string|NULL
+	 */
+	public function getIso3() {
+		return $this->iso3;
 	}
 
 	/**
@@ -215,11 +331,53 @@ class Country extends \Entities\BaseEntityDetails {
 	}
 
 	/**
+	 * @param \Entities\Dictionary\Language
+	 * @return \Entities\Location\Country
+	 */
+	public function addLanguage(\Entities\Dictionary\Language $language) {
+		if(!$this->languages->contains($language)) {
+			$this->languages->add($language);
+		}
+		$language->addCountry($this);
+
+		return $this;
+	}
+
+	/**
+	 * @param \Entities\Dictionary\Language
+	 * @return \Entities\Location\Country
+	 */
+	public function removeLanguage(\Entities\Dictionary\Language $language) {
+		if($this->languages->contains($language)) {
+			$this->languages->removeElement($language);
+		}
+		$language->removeCountry($this);
+
+		return $this;
+	}
+
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entities\Dictionary\Language
+	 */
+	public function getLanguages() {
+		return $this->languages;
+	}
+
+	/**
 	 * @param integer
 	 * @return \Entities\Location\Country
 	 */
 	public function setPopulation($population) {
 		$this->population = $population;
+
+		return $this;
+	}
+
+	/**
+	 * @return \Entities\Location\Country
+	 */
+	public function unsetPopulation() {
+		$this->population = NULL;
 
 		return $this;
 	}
@@ -476,6 +634,15 @@ class Country extends \Entities\BaseEntityDetails {
 	}
 
 	/**
+	 * @return \Entities\Location\Country
+	 */
+	public function unsetPricesPizza() {
+		$this->pricesPizza = NULL;
+
+		return $this;
+	}
+
+	/**
 	 * @return \Extras\Types\Price|NULL
 	 */
 	public function getPricesPizza() {
@@ -488,6 +655,15 @@ class Country extends \Entities\BaseEntityDetails {
 	 */
 	public function setPricesDinner(\Extras\Types\Price $pricesDinner) {
 		$this->pricesDinner = $pricesDinner;
+
+		return $this;
+	}
+
+	/**
+	 * @return \Entities\Location\Country
+	 */
+	public function unsetPricesDinner() {
+		$this->pricesDinner = NULL;
 
 		return $this;
 	}
@@ -510,6 +686,15 @@ class Country extends \Entities\BaseEntityDetails {
 	}
 
 	/**
+	 * @return \Entities\Location\Country
+	 */
+	public function unsetAirports() {
+		$this->airports = NULL;
+
+		return $this;
+	}
+
+	/**
 	 * @return string|NULL
 	 */
 	public function getAirports() {
@@ -517,10 +702,55 @@ class Country extends \Entities\BaseEntityDetails {
 	}
 
 	/**
-	 * @todo location
+	 * @param \Entities\Location\Location
+	 * @return \Entities\Location\Country
 	 */
-	public function todoLocation() {
+	public function setLocation(\Entities\Location\Location $location) {
+		$this->location = $location;
 
+		return $this;
 	}
+
+
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entities\Location\Location
+	 */
+	public function getLocation() {
+		return $this->location;
+	}
+
+	/**
+	 * @param \Entities\Contact\Contact
+	 * @return \Entities\Location\Country
+	 */
+	public function addContact(\Entities\Contact\Contact $contact) {
+		if(!$this->contacts->contains($contact)) {
+			$this->contacts->add($contact);
+		}
+		$contact->addCountry($this);
+
+		return $this;
+	}
+
+	/**
+	 * @param \Entities\Contact\Contact
+	 * @return \Entities\Location\Country
+	 */
+	public function removeContact(\Entities\Contact\Contact $contact) {
+		if($this->contacts->contains($contact)) {
+			$this->contacts->removeElement($contact);
+		}
+		$contact->removeCountry($this);
+
+		return $this;
+	}
+
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entities\Contact\Contact
+	 */
+	public function getContacts() {
+		return $this->contacts;
+	}
+
 
 }

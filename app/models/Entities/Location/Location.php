@@ -13,12 +13,6 @@ class Location extends \Entities\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entities\Dictionary\Language", mappedBy="locations")
-	 */
-	protected $languages;
-
-	/**
-	 * @var Collection
 	 * @ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $name;
@@ -34,12 +28,6 @@ class Location extends \Entities\BaseEntityDetails {
 	 * @ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $nameShort;
-
-	/**
-	 * @var string
-	 * @ORM\Column(type="string", nullable=true)
-	 */
-	protected $iso;
 
 	/**
 	 * @var slug
@@ -133,21 +121,21 @@ class Location extends \Entities\BaseEntityDetails {
 
 	/**
 	 * @var Collection
+	 * @ORM\OneToOne(targetEntity="Country", mappedBy="location", cascade={"persist", "remove"})
+	 */
+	protected $country;
+
+	/**
+	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="Traveling", mappedBy="destinationLocation")
 	 */
-	protected $incomings;
+	protected $incomingLocations;
 
 	/**
 	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="Traveling", mappedBy="sourceLocation")
 	 */
-	protected $travelings;
-
-	/**
-	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Country", mappedBy="location")
-	 */
-	protected $country;
+	protected $outgoingLocations;
 
 	/* ----------------------------- Methods ----------------------------- */
 
@@ -155,48 +143,14 @@ class Location extends \Entities\BaseEntityDetails {
 	public function __construct() {
 		parent::__construct();
 
-		$this->languages = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->bankAccounts = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->companies = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->offices = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->marketings = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->rentals = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->users = new \Doctrine\Common\Collections\ArrayCollection;
-		$this->incomings = new \Doctrine\Common\Collections\ArrayCollection;
-		$this->travelings = new \Doctrine\Common\Collections\ArrayCollection;
-	}
-
-	/**
-	 * @param \Entities\Dictionary\Language
-	 * @return \Entities\Location\Location
-	 */
-	public function addLanguage(\Entities\Dictionary\Language $language) {
-		if(!$this->languages->contains($language)) {
-			$this->languages->add($language);
-		}
-		$language->addLocation($this);
-
-		return $this;
-	}
-
-	/**
-	 * @param \Entities\Dictionary\Language
-	 * @return \Entities\Location\Location
-	 */
-	public function removeLanguage(\Entities\Dictionary\Language $language) {
-		if($this->languages->contains($language)) {
-			$this->languages->removeElement($language);
-		}
-		$language->removeLocation($this);
-
-		return $this;
-	}
-
-	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entities\Dictionary\Language
-	 */
-	public function getLanguages() {
-		return $this->languages;
+		$this->incomingLocations = new \Doctrine\Common\Collections\ArrayCollection;
+		$this->outgoingLocations = new \Doctrine\Common\Collections\ArrayCollection;
 	}
 
 	/**
@@ -248,32 +202,6 @@ class Location extends \Entities\BaseEntityDetails {
 	 */
 	public function getNameShort() {
 		return $this->nameShort;
-	}
-
-	/**
-	 * @param string
-	 * @return \Entities\Location\Location
-	 */
-	public function setIso($iso) {
-		$this->iso = $iso;
-
-		return $this;
-	}
-
-	/**
-	 * @return \Entities\Location\Location
-	 */
-	public function unsetIso() {
-		$this->iso = NULL;
-
-		return $this;
-	}
-
-	/**
-	 * @return string|NULL
-	 */
-	public function getIso() {
-		return $this->iso;
 	}
 
 	/**
@@ -613,14 +541,32 @@ class Location extends \Entities\BaseEntityDetails {
 	}
 
 	/**
+	 * @param \Entities\Location\Country
+	 * @return \Entities\Location\Location
+	 */
+	public function setCountry(\Entities\Location\Country $country) {
+		//$this->country = $country;
+		$country->location = $this;
+
+		return $this;
+	}
+
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entities\Location\Country
+	 */
+	public function getCountry() {
+		return $this->country;
+	}
+
+	/**
 	 * @param \Entities\Location\Traveling
 	 * @return \Entities\Location\Location
 	 */
-	public function addIncoming(\Entities\Location\Traveling $incoming) {
-		if(!$this->incomings->contains($incoming)) {
-			$this->incomings->add($incoming);
+	public function addIncomingLocation(\Entities\Location\Traveling $incomingLocation) {
+		if(!$this->incomingLocations->contains($incomingLocation)) {
+			$this->incomingLocations->add($incomingLocation);
 		}
-		$incoming->setDestinationLocation($this);
+		$incomingLocation->setDestinationLocation($this);
 
 		return $this;
 	}
@@ -629,44 +575,11 @@ class Location extends \Entities\BaseEntityDetails {
 	 * @param \Entities\Location\Traveling
 	 * @return \Entities\Location\Location
 	 */
-	public function removeIncoming(\Entities\Location\Traveling $incoming) {
-		if($this->incomings->contains($incoming)) {
-			$this->incomings->removeElement($incoming);
+	public function removeIncomingLocation(\Entities\Location\Traveling $incomingLocation) {
+		if($this->incomingLocations->contains($incomingLocation)) {
+			$this->incomingLocations->removeElement($incomingLocation);
 		}
-		$incoming->unsetDestinationLocation();
-
-		return $this;
-	}
-
-	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entities\Location\Traveling
-	 */
-	public function getIncomings() {
-		return $this->incomings;
-	}
-
-	/**
-	 * @param \Entities\Location\Traveling
-	 * @return \Entities\Location\Location
-	 */
-	public function addTraveling(\Entities\Location\Traveling $traveling) {
-		if(!$this->travelings->contains($traveling)) {
-			$this->travelings->add($traveling);
-		}
-		$traveling->setSourceLocation($this);
-
-		return $this;
-	}
-
-	/**
-	 * @param \Entities\Location\Traveling
-	 * @return \Entities\Location\Location
-	 */
-	public function removeTraveling(\Entities\Location\Traveling $traveling) {
-		if($this->travelings->contains($traveling)) {
-			$this->travelings->removeElement($traveling);
-		}
-		$traveling->unsetSourceLocation();
+		$incomingLocation->unsetDestinationLocation();
 
 		return $this;
 	}
@@ -674,15 +587,41 @@ class Location extends \Entities\BaseEntityDetails {
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entities\Location\Traveling
 	 */
-	public function getTravelings() {
-		return $this->travelings;
+	public function getIncomingLocations() {
+		return $this->incomingLocations;
 	}
 
 	/**
-	 * @todo country
+	 * @param \Entities\Location\Traveling
+	 * @return \Entities\Location\Location
 	 */
-	public function todoCountry() {
+	public function addOutgoingLocation(\Entities\Location\Traveling $outgoingLocation) {
+		if(!$this->outgoingLocations->contains($outgoingLocation)) {
+			$this->outgoingLocations->add($outgoingLocation);
+		}
+		$outgoingLocation->setSourceLocation($this);
 
+		return $this;
+	}
+
+	/**
+	 * @param \Entities\Location\Traveling
+	 * @return \Entities\Location\Location
+	 */
+	public function removeOutgoingLocation(\Entities\Location\Traveling $outgoingLocation) {
+		if($this->outgoingLocations->contains($outgoingLocation)) {
+			$this->outgoingLocations->removeElement($outgoingLocation);
+		}
+		$outgoingLocation->unsetSourceLocation();
+
+		return $this;
+	}
+
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entities\Location\Traveling
+	 */
+	public function getOutgoingLocations() {
+		return $this->outgoingLocations;
 	}
 
 }

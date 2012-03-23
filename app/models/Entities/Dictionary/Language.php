@@ -61,9 +61,9 @@ class Language extends \Entities\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entities\Location\Location", inversedBy="languages")
+	 * @ORM\ManyToMany(targetEntity="Entities\Location\Country", inversedBy="languages")
 	 */
-	protected $locations;
+	protected $countries;
 
 	/**
 	 * @var Collection
@@ -77,7 +77,6 @@ class Language extends \Entities\BaseEntityDetails {
 	public function __construct() {
 		parent::__construct();
 
-		$this->locations = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->rentals = new \Doctrine\Common\Collections\ArrayCollection;
 	}
 
