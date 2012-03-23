@@ -117,6 +117,15 @@ class EntityGeneratorPresenter extends BasePresenter {
 							$this->addMethod('set', $newClass, $property, $targetEntity->name);
 							$this->addMethod('get2', $newClass, $property, $targetEntity->name);
 						}
+					}else if($targetedEntityPropery->association == ORM\ClassMetadataInfo::ONE_TO_ONE){
+						if(isset($property->mappedBy)) {
+							$this->addMethod('set', $newClass, $property, $targetedEntityPropery);
+							$this->addMethod('get', $newClass, $property, $targetedEntityPropery);
+						} else if(isset($property->inversedBy)) {					
+							$this->addMethod('get', $newClass, $property, $targetedEntityPropery);
+						} else {
+							$this->addMethod('todo', $newClass, $property, $targetedEntityPropery);
+						}						
 					} else {
 						$this->addMethod('todo', $newClass, $property, $targetedEntityPropery);
 					}

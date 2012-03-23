@@ -52,13 +52,13 @@ class Location extends \Entities\BaseEntityDetails implements Node {
 	 * @var integer
 	 * @ORM\Column(type="integer", nullable=true)
 	 */
-	protected $lft;
+	protected $nestedLeft;
 
 	/**
 	 * @var integer
 	 * @ORM\Column(type="integer", nullable=true)
 	 */
-	protected $rgt;
+	protected $nestedRight;
 
 	/**
 	 * @var Collection
@@ -291,65 +291,13 @@ class Location extends \Entities\BaseEntityDetails implements Node {
 		return $this->slug;
 	}
 
-	public function getLeftValue() { return $this->lft; }
-	public function setLeftValue($lft) { $this->lft = $lft; }
+	public function getLeftValue() { return $this->nestedLeft; }
+	public function setLeftValue($nestedLeft) { $this->nestedLeft = $nestedLeft; }
 
-	public function getRightValue() { return $this->rgt; }
-	public function setRightValue($rgt) { $this->rgt = $rgt; }
+	public function getRightValue() { return $this->nestedRight; }
+	public function setRightValue($nestedRight) { $this->nestedRight = $nestedRight; }
 
 	public function __toString() { return $this->slug; }
-
-	/**
-	 * @param integer
-	 * @return \Entities\Location\Location
-	 */
-	public function setLft($lft) {
-		$this->lft = $lft;
-
-		return $this;
-	}
-
-	/**
-	 * @return \Entities\Location\Location
-	 */
-	public function unsetLft() {
-		$this->lft = NULL;
-
-		return $this;
-	}
-
-	/**
-	 * @return integer|NULL
-	 */
-	public function getLft() {
-		return $this->lft;
-	}
-
-	/**
-	 * @param integer
-	 * @return \Entities\Location\Location
-	 */
-	public function setRgt($rgt) {
-		$this->rgt = $rgt;
-
-		return $this;
-	}
-
-	/**
-	 * @return \Entities\Location\Location
-	 */
-	public function unsetRgt() {
-		$this->rgt = NULL;
-
-		return $this;
-	}
-
-	/**
-	 * @return integer|NULL
-	 */
-	public function getRgt() {
-		return $this->rgt;
-	}
 
 	/**
 	 * @param \Entities\Location\Type
