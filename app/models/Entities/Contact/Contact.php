@@ -13,7 +13,7 @@ class Contact extends \Entities\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Type")
+	 * @ORM\ManyToOne(targetEntity="Type", cascade={"persist"})
 	 */
 	protected $type;
 

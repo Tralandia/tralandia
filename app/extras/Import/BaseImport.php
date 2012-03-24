@@ -27,8 +27,9 @@ class BaseImport {
 			'\Contact\Type' => array(),
 		),
 		'locations' => array(
-			'\Location\Location' => array(),
 			'\Location\Type' => array(),
+			'\Location\Location' => array(),
+			'\Location\Country' => array(),
 			'\Location\Traveling' => array(),
 		),
 		'companies' => array(
@@ -71,6 +72,7 @@ class BaseImport {
 	public function undoSection($section) {
 		$tempSections = array_reverse($this->sections);
 		foreach ($tempSections as $key => $value) {
+			$value = array_reverse($value);
 			foreach ($value as $key2 => $value2) {
 				$tableName = str_replace('\\', '_', $key2);
 				$tableName = trim($tableName, '_');
@@ -206,6 +208,7 @@ class BaseImport {
 			'Phone' => 3,
 			'Url' => 4,
 		);
+		debug(\Services\Contact\TypeService::getByClass($type)); return;
 		$contact = \Services\Contact\ContactService::get();
 		//$contact->type = \Services\Contact\TypeList::getByClass('\Extras\Types\\'.ucfirst($type))->fetch(); // @todo podla ServiceList - docasne riesenie...
 		$contact->type = \Services\Contact\TypeService::get($ids[$type]);

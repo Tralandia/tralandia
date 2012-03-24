@@ -21,11 +21,14 @@ class ImportLocations extends BaseImport {
 	public function doImport() {
 		$this->savedVariables['importedSections']['locations'] = 1;
 
+			$this->createContact('Phone', '12341234');
+			return;
+
 		$this->dictionaryTypeName = $this->createDictionaryType('\Location\Location', 'name', 'supportedLanguages', 'NATIVE', array('locativeRequired' => TRUE));
 		$this->dictionaryTypeNameOfficial = $this->createDictionaryType('\Location\Location', 'nameOfficial', 'supportedLanguages', 'NATIVE', array('locativeRequired' => TRUE));
 		$this->dictionaryTypeNameShort = $this->createDictionaryType('\Location\Location', 'nameShort', 'supportedLanguages', 'NATIVE', array('locativeRequired' => TRUE));
 
-		$this->importContinents();
+		//$this->importContinents();
 		$this->importCountries();
 		//$this->importTravelings();
 		//$this->importRegions();
@@ -52,6 +55,7 @@ class ImportLocations extends BaseImport {
 			$s->slug = qc('select text from z_en where id = '.$x['name_dic_id']);
 			$s->type = $locationType;
 			$s->save();
+			//debug($s);
 		}
 
 		Service::flush(FALSE);
@@ -124,10 +128,16 @@ class ImportLocations extends BaseImport {
 
 			$country->details = $countryDetails;
 
-			$country->addContact(createContact('Phone', $x['phone']));
-			$country->addContact(createContact('Skype', $x['skype']));
-			// @todo pridat aj email podla domeny
-			// @todo priradovat aj domenu ku krajine (alebo opacne)
+			// if (strlen($x['skype'])) $country->addContact($this->createContact('Skype', $x['skype']));
+			// if (strlen($x['phone'])) $country->addContact($this->createContact('Phone', $x['phone']));
+			// $t = qNew('select id from domain where domain = "'.$x['domain'].'"');
+			// $t = mysql_fetch_array($t);
+
+			// if ($t[0] > 0) {
+			// 	$thisDomain = \Services\DomainService::get($t[0]);
+			// 	$country->addContact($this->createContact('Email', 'info@'.$thisDomain->domain));
+			// }
+
 			// @todo $location->parent...
 
 			/*
@@ -151,18 +161,18 @@ class ImportLocations extends BaseImport {
 			// @todo - getTranslation zatial nefunguje...
 			//$location->slug = $location->name->getTranslation(getLangByIso('en'));
 			
-			$location->nestedLeft = '';
-			$location->nestedRight = '';
 			$location->type = $locationType;
 			$location->polygon = NULL;
 			$location->latitude = new \Extras\Types\Latlong($x['latitude']);
 			$location->longitude = new \Extras\Types\Latlong($x['longitude']);
 			$location->defaultZoom = $x['default_zoom'];
-			$location->save();
+			//$location->domain = $thisDomain;
 
 			$location->country = $country; 
-			// debug($location);
-			// debug($country);
+
+			debug($location); debug($country); return;
+
+			$location->save();
 			$country->save();
 		}		
 	}
