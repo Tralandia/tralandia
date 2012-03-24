@@ -11,6 +11,10 @@ use Nette\Object,
  */
 abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \IteratorAggregate, IServiceList {
 
+
+	const RETIRN_ENTITIES = 1;
+	const RETURN_SERVICES = 2;
+
 	/**
 	 * @var array
 	 */

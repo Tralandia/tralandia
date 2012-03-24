@@ -36,7 +36,7 @@ $container->createList();
 // Pridanie sluzby robot loadera
 $container->addService('robotLoader', $robotLoader); // dolezite pre dynamicke presentery
 Debugger::$editor = $container->parameters['editor'];
-Debugger::$strictMode = FALSE;
+//Debugger::$strictMode = FALSE;
 
 
 // Setup router // TODO: presunut do config.neon

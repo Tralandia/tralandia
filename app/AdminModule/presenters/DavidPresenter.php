@@ -37,8 +37,9 @@ class DavidPresenter extends BasePresenter {
 
 	public function actionTest() {
 
-		$service = S\Contact\TypeService::getByClass('Email');
-		debug($service);
+		$service = D\TypeService::get(5);
+		$serviceList = $service->translateToLanguages();
+		debug($serviceList);
 		
 	}
 

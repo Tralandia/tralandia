@@ -16,6 +16,9 @@ class Type extends \Entities\BaseEntity {
 	const TRANSLATION_LEVEL_NATIVE = 4;
 	const TRANSLATION_LEVEL_MARKETING = 6;
 
+	const REQUIRED_LANGUAGES_SUPPORTED = 'supportedLanguages';
+	const REQUIRED_LANGUAGES_INCOMING = 'incomingLanguages';
+
 	/**
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
