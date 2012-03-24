@@ -11,6 +11,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Language extends \Entities\BaseEntityDetails {
 
+	const SUPPORTED = TRUE;
+	const NOT_SUPPORTED = FALSE;
+
 	/**
 	 * @var Collection
 	 * @ORM\OneToOne(targetEntity="Phrase", cascade={"persist", "remove"})

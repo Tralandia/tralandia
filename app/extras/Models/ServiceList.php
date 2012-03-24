@@ -11,6 +11,10 @@ use Nette\Object,
  */
 abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \IteratorAggregate, IServiceList {
 
+
+	const RETIRN_ENTITIES = 1;
+	const RETURN_SERVICES = 2;
+
 	/**
 	 * @var array
 	 */
@@ -56,6 +60,22 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 		}
 		
 		return new \ArrayIterator($this->list);
+	}
+
+	public function getIteratorAsServices($serviceName) {
+		$iterator = $this->getIterator();
+		$newIterator = array();
+		foreach ($iterator as $key => $val) {
+			if($val instanceof Entity) {
+				$newIterator[] = $serviceName::get($val);
+			} else if($val instanceof $serviceName) {
+				$newIterator[] = $val;
+			} else {
+				// @todo method or operation is not implemented
+				throw new \Nette\NotImplementedException('Requested method or operation is not implemented');
+			}
+		}
+		return $newIterator;
 	}
 
 	/**

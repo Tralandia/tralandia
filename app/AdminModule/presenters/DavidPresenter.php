@@ -37,22 +37,10 @@ class DavidPresenter extends BasePresenter {
 
 	public function actionTest() {
 
-		//debug($this->getService('doctrine')->entityManagers->default);
-
-		
-		$service = S\Location\LocationService::get(2);
-		//$service->slug = 'root blabla'; $service->createRoot();
-
-		$child1 = S\Location\LocationService::get();
-		$child1->slug = 'child 1-1 of blabla';
-		$service->addChild($child1);
-
-		$child2 = S\Location\LocationService::get();
-		$child2->slug = 'child 1-2 of blabla';
-
-		$service->addChild($child2);
-
-		debug($service);
+		$url = new \Extras\Types\Url('https://api.nette.org/2.0/source-Http.Url.php.html?test=1#91');
+		debug("$url");
+		debug($url->getRelativeUrl());
+		debug($url->getSortUrl());
 		
 	}
 
