@@ -23,13 +23,13 @@ class Attraction extends \Entities\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase")
+	 * @ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $name;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase")
+	 * @ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $description;
 

@@ -18,7 +18,7 @@ class Url extends Type {
 	}
 
 	public function convertToPHPValue($value, AbstractPlatform $platform) {
-		return $value;
+		return \Extras\Types\Url($value);
 	}
 
 	public function convertToDatabaseValue($value, AbstractPlatform $platform) {

@@ -2,16 +2,18 @@
 
 namespace Extras\Types;
 
-class Url extends \Nette\Object {
-	
-	protected $url;
+class Url extends \Nette\Http\Url {
 
-	public function __construct($url) {
-		$this->url = $url;
+	public function __construct($url = NULL) {
+		parent::__construct($url);
+
+		if(!$this->getScheme()) {
+			$this->setScheme('http');
+		}
 	}
 
-	public function __toString() {
-		return $this->url;
+	public function getSortUrl() {
+		return $this->getAuthority() . $this->getBasePath() . $this->getRelativeUrl();
 	}
 
 }

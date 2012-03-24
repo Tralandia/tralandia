@@ -18,10 +18,13 @@ class LatLong extends Type {
 	}
 
 	public function convertToPHPValue($value, AbstractPlatform $platform) {
-		return $value;
+		return NU\Json::decode($value);
 	}
 
 	public function convertToDatabaseValue($value, AbstractPlatform $platform) {
+		if (!is_string($value)) {
+			$value = NU\Json::encode($value);
+		}
 		return $value;
 	}
 /*

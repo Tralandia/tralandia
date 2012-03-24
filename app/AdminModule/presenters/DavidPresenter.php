@@ -37,9 +37,10 @@ class DavidPresenter extends BasePresenter {
 
 	public function actionTest() {
 
-		$service = D\TypeService::get(4);
-		$serviceList = $service->translateToLanguages();
-		debug($serviceList);
+		$url = new \Extras\Types\Url('https://api.nette.org/2.0/source-Http.Url.php.html?test=1#91');
+		debug("$url");
+		debug($url->getRelativeUrl());
+		debug($url->getSortUrl());
 		
 	}
 
