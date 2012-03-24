@@ -12,9 +12,5 @@ class TypeList extends ServiceList {
 		$this->list = $query->getQuery()->getResult();
 	}
 
-	public function getByClass($class) {
-		$query = $this->getEm()->createQueryBuilder();
-		$query->select('e')->from('Entities\Contact\Type', 'e')->where('class = ?1', $class);
-		$this->list = $query->getQuery()->getResult();
-	}
+
 }
