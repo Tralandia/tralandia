@@ -14,7 +14,7 @@ class TypeService extends \Services\BaseService {
 		if(!$requiredLanguages) {
 			return NULL;
 		} else if($requiredLanguages == ED\Type::REQUIRED_LANGUAGES_SUPPORTED) {
-			$languagesList = LanguageList::getBySupported(ED\Language::SUPPORTED);
+			$languagesList = LanguageList::getBySupported(ED\Language::SUPPORTED)->getIteratorAsServices('\Services\Dictionary\LanguageService');
 		} else if($requiredLanguages == ED\Type::REQUIRED_LANGUAGES_INCOMING) {
 			// @todo method or operation is not implemented
 			throw new \Nette\NotImplementedException('Requested method or operation is not implemented');

@@ -37,7 +37,7 @@ class DavidPresenter extends BasePresenter {
 
 	public function actionTest() {
 
-		$service = D\TypeService::get(5);
+		$service = D\TypeService::get(4);
 		$serviceList = $service->translateToLanguages();
 		debug($serviceList);
 		
