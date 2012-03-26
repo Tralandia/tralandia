@@ -202,16 +202,8 @@ class BaseImport {
 	}
 
 	protected function createContact($type, $value) {
-		$ids = array(
-			'Address' => 1,
-			'Email' => 2,
-			'Phone' => 3,
-			'Url' => 4,
-		);
-		debug(\Services\Contact\TypeService::getByClass($type)); return;
 		$contact = \Services\Contact\ContactService::get();
-		//$contact->type = \Services\Contact\TypeList::getByClass('\Extras\Types\\'.ucfirst($type))->fetch(); // @todo podla ServiceList - docasne riesenie...
-		$contact->type = \Services\Contact\TypeService::get($ids[$type]);
+		$contact->type = \Services\Contact\TypeService::getByClass($type);
 		$contact->value = $value;
 		$contact->save();
 

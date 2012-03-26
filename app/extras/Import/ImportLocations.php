@@ -21,9 +21,6 @@ class ImportLocations extends BaseImport {
 	public function doImport() {
 		$this->savedVariables['importedSections']['locations'] = 1;
 
-			$this->createContact('Phone', '12341234');
-			return;
-
 		$this->dictionaryTypeName = $this->createDictionaryType('\Location\Location', 'name', 'supportedLanguages', 'NATIVE', array('locativeRequired' => TRUE));
 		$this->dictionaryTypeNameOfficial = $this->createDictionaryType('\Location\Location', 'nameOfficial', 'supportedLanguages', 'NATIVE', array('locativeRequired' => TRUE));
 		$this->dictionaryTypeNameShort = $this->createDictionaryType('\Location\Location', 'nameShort', 'supportedLanguages', 'NATIVE', array('locativeRequired' => TRUE));
@@ -108,7 +105,7 @@ class ImportLocations extends BaseImport {
 			$country->population = $x['population'];
 			$country->phonePrefix = $x['phone_prefix'];
 			
-			$country->facebookGroup = $this->createContact('Url', $x['fb_group']);
+			if (strlen($x['fb_group'])) $country->facebookGroup = $this->createContact('Url', $x['fb_group']);
 			$country->capitalCity = $x['capital_city'];
 
 			$country->phoneNumberEmergency = $this->createContact('Phone', $x['phone_number_emergency']);
@@ -128,7 +125,7 @@ class ImportLocations extends BaseImport {
 
 			$country->details = $countryDetails;
 
-			// if (strlen($x['skype'])) $country->addContact($this->createContact('Skype', $x['skype']));
+			// if (strlen($x['skype'])) $country->addContact($this->createContact('Skype', $x['skype'])); @david
 			// if (strlen($x['phone'])) $country->addContact($this->createContact('Phone', $x['phone']));
 			// $t = qNew('select id from domain where domain = "'.$x['domain'].'"');
 			// $t = mysql_fetch_array($t);
@@ -148,7 +145,7 @@ class ImportLocations extends BaseImport {
 			*/
 
 			$namePhrase = $this->createNewPhrase($this->dictionaryTypeName, $x['name_dic_id']);
-			// $r1 = q('select * from countries_translations where location_id = '.$x['id'])
+			// $r1 = q('select * from countries_translations where location_id = '.$x['id']);
 			// while ($x1 = mysql_fetch_array($r1)) {				
 			// }
 			$location->name = $namePhrase;
@@ -156,10 +153,10 @@ class ImportLocations extends BaseImport {
 			if ($x['name_long_dic_id'] > 0) {
 				$location->nameOfficial = $this->createNewPhrase($this->dictionaryTypeNameOfficial, $x['name_long_dic_id']);
 			}
+
 			//$location->nameShort = NULL;
-			
-			// @todo - getTranslation zatial nefunguje...
-			//$location->slug = $location->name->getTranslation(getLangByIso('en'));
+			//$t = \Services\Dictionary\PhraseService::get($location->name); @david - problem s ukladanim bez ID
+			//$location->slug = $namePhrase->getTranslation(getLangByIso('en'))->translation; @david
 			
 			$location->type = $locationType;
 			$location->polygon = NULL;

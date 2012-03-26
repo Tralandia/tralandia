@@ -12,7 +12,7 @@ class Url extends \Nette\Http\Url {
 		}
 	}
 
-	public function getSortUrl() {
+	public function getShortUrl() {
 		return $this->getAuthority() . $this->getBasePath() . $this->getRelativeUrl();
 	}
 

@@ -18,8 +18,8 @@ class TypeService extends \Services\BaseService {
 		} else if($requiredLanguages == ED\Type::REQUIRED_LANGUAGES_INCOMING) {
 			// @todo method or operation is not implemented
 			throw new \Nette\NotImplementedException('Requested method or operation is not implemented');
-		} else if(Strings::startsWith($requiredLanguages, ',,') && Strings::endsWith($requiredLanguages, ',,')) {
-			$requiredLanguages = array_filter(explode(',,', $requiredLanguages));
+		} else if(Strings::startsWith($requiredLanguages, ',') && Strings::endsWith($requiredLanguages, ',')) {
+			$requiredLanguages = array_filter(explode(',', $requiredLanguages));
 			$languagesList = array();
 			foreach ($requiredLanguages as $val) {
 				$languagesList[] = LanguageService::get($val);
