@@ -77,8 +77,9 @@ class EntityGeneratorPresenter extends BasePresenter {
 							$this->addMethod('add', $newClass, $property, $targetedEntityPropery);
 							$this->addMethod('remove', $newClass, $property, $targetedEntityPropery);							
 							$this->addMethod('get', $newClass, $property, $targetedEntityPropery);
-						} else if(isset($property->inversedBy)) {					
-							$this->addMethod('add', $newClass, $property, $targetedEntityPropery);
+						} else if(isset($property->inversedBy)) {
+							debug($property);				
+							$this->addMethod('add2', $newClass, $property, $targetedEntityPropery);
 							$this->addMethod('get', $newClass, $property, $targetedEntityPropery);
 						} else {
 							$this->addMethod('todo', $newClass, $property, $targetedEntityPropery);
@@ -337,11 +338,11 @@ class EntityGeneratorPresenter extends BasePresenter {
 			if($snippet->var2 === TRUE) {
 				$body[] = sprintf('$%s->%s%s($this);', $parameter, $type, $tagetPropery->singularFu);
 			} else if($snippet->var2 === FALSE){
-				if($methodName->prefix == 'add') {
-					$body[] = sprintf('$%s->set%s($this);', $parameter, $tagetPropery->nameFu);
-				} else {
-					$body[] = sprintf('$%s->unset%s();', $parameter, $tagetPropery->nameFu);					
-				}
+				// if($methodName->prefix == 'add') {
+				// 	$body[] = sprintf('$%s->set%s($this);', $parameter, $tagetPropery->nameFu);
+				// } else {
+				// 	$body[] = sprintf('$%s->unset%s();', $parameter, $tagetPropery->nameFu);					
+				// }
 			}
 		} else if($snippet->type == 2) {
 			$method->documents[] = sprintf('@param %s', $tagetProperyClass);

@@ -98,12 +98,17 @@ abstract class Service extends Nette\Object implements IService {
 		$mainEntityName = self::getMainEntityName();
 
 		if ($value instanceof $mainEntityName) {
-			$key = get_called_class() . '#' . $value->getId();
+			if($value->getId() > 0) {
+				$key = get_called_class() . '#' . $value->getId();
+			} else {
+				$service = new static(false);
+				$service->load($value);
+				return $service;
+			}
 		} else if(is_numeric($value)) {
 			$key = get_called_class() . '#' . $value;
 		} else if($value === NULL) {
-			$className = get_called_class();
-			return new $className;
+			return new static();
 		} else {
 			throw new \Nette\InvalidArgumentException('Service::get()');
 		}

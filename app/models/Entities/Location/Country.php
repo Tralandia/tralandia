@@ -122,7 +122,7 @@ class Country extends \Entities\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entities\Contact\Contact", mappedBy="countries")
+	 * @ORM\ManyToMany(targetEntity="Entities\Contact\Contact", mappedBy="countries", cascade={"persist"})
 	 */
 	protected $contacts;
 
@@ -152,7 +152,7 @@ class Country extends \Entities\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Location", inversedBy="country")
+	 * @ORM\OneToOne(targetEntity="Location", inversedBy="country", cascade={"persist"})
 	 */
 	protected $location;
 

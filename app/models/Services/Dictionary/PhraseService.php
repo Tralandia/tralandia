@@ -17,6 +17,17 @@ class PhraseService extends \Services\BaseService {
 			throw new \Nette\InvalidArgumentException('$language argument does not match with the expected value');
 		}
 
+		$translations = $this->translations;
+
+		$data = NULL;
+		foreach ($translations as $key => $val) {
+			if($val->language == $language) {
+				$data = $val;
+				break;
+			}
+		}
+
+/*		
 		$qb = $this->getEm()->createQueryBuilder();
 		$qb->select('t')
 			->from('\Entities\Dictionary\Translation', 't')
@@ -26,8 +37,9 @@ class PhraseService extends \Services\BaseService {
 				1 => $this->getMainEntity(),
 				2 => $language,
 			));
-		$data = $qb->getQuery()->getOneOrNullResult();
 
+		$data = $qb->getQuery()->getOneOrNullResult();
+*/
 		return !$data ? : TranslationService::get($data);
 	}
 	

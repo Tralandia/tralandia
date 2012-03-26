@@ -91,7 +91,7 @@ development < common:
 			user: root
 			password: root
 			host: 127.0.0.1
-			dbname: tralandia
+			dbname: tralandia_test
 			charset: utf8
 			driver: pdo_mysql
 			unix_socket: /var/run/mysqld/mysqld.sock

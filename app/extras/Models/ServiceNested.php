@@ -16,6 +16,7 @@ abstract class ServiceNested extends Service {
 			$config = new NestedSet\Config(self::getEm(), self::getMainEntityName());
 			$config->setLeftFieldName('nestedLeft');
 			$config->setRightFieldName('nestedRight');
+			$config->setRootFieldName('nestedRoot');
 
 			self::$nsm = new NestedSet\Manager($config);
 		}
@@ -24,6 +25,12 @@ abstract class ServiceNested extends Service {
 	
 	public static function getNsm() {
 		return self::getNestedSetManager();
+	}
+
+	public function getNestedNode() {
+		$nsm = self::getNsm();
+		return $nsm->wrapNode($this->getMainEntity());
+
 	}
 
 	public function createRoot() {
@@ -40,8 +47,7 @@ abstract class ServiceNested extends Service {
 			throw new \Nette\InvalidArgumentException('$child argument does not match with the expected value');
 		}
 
-		$nsm = self::getNsm();
-		$wrapNode = $nsm->wrapNode($this->getMainEntity());
+		$wrapNode = $this->getNestedNode();
 		return $wrapNode->addChild($child);
 	}
 

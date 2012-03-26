@@ -17,6 +17,7 @@ class ImportLocations extends BaseImport {
 	private $dictionaryTypeName;
 	private $dictionaryTypeNameOfficial;
 	private $dictionaryTypeNameShort;
+	private $continentsByOldId = array();
 
 	public function doImport() {
 		$this->savedVariables['importedSections']['locations'] = 1;
@@ -25,7 +26,7 @@ class ImportLocations extends BaseImport {
 		$this->dictionaryTypeNameOfficial = $this->createDictionaryType('\Location\Location', 'nameOfficial', 'supportedLanguages', 'NATIVE', array('locativeRequired' => TRUE));
 		$this->dictionaryTypeNameShort = $this->createDictionaryType('\Location\Location', 'nameShort', 'supportedLanguages', 'NATIVE', array('locativeRequired' => TRUE));
 
-		//$this->importContinents();
+		$this->importContinents();
 		$this->importCountries();
 		//$this->importTravelings();
 		//$this->importRegions();
@@ -52,6 +53,9 @@ class ImportLocations extends BaseImport {
 			$s->slug = qc('select text from z_en where id = '.$x['name_dic_id']);
 			$s->type = $locationType;
 			$s->save();
+
+			$s->createRoot();
+			$this->continentsByOldId[$x['id']] = $s;
 			//debug($s);
 		}
 
@@ -123,10 +127,13 @@ class ImportLocations extends BaseImport {
 			$countryDetails['beta'] = $x['beta'];
 			$countryDetails['inEu'] = $x['in_eu'];
 
+			$country->oldId = $x['id'];
 			$country->details = $countryDetails;
 
-			// if (strlen($x['skype'])) $country->addContact($this->createContact('Skype', $x['skype'])); @david
-			// if (strlen($x['phone'])) $country->addContact($this->createContact('Phone', $x['phone']));
+
+
+			if (strlen($x['skype'])) $country->addContact($this->createContact('Skype', $x['skype']));
+			if (strlen($x['phone'])) $country->addContact($this->createContact('Phone', $x['phone']));
 			// $t = qNew('select id from domain where domain = "'.$x['domain'].'"');
 			// $t = mysql_fetch_array($t);
 
@@ -135,7 +142,6 @@ class ImportLocations extends BaseImport {
 			// 	$country->addContact($this->createContact('Email', 'info@'.$thisDomain->domain));
 			// }
 
-			// @todo $location->parent...
 
 			/*
 				name - importujem z countries.name, a locative hladam v countries_translations, kde name = '' a name_locative mame, ak je done = 1 hned aj dame activated
@@ -155,8 +161,10 @@ class ImportLocations extends BaseImport {
 			}
 
 			//$location->nameShort = NULL;
-			//$t = \Services\Dictionary\PhraseService::get($location->name); @david - problem s ukladanim bez ID
-			//$location->slug = $namePhrase->getTranslation(getLangByIso('en'))->translation; @david
+
+			$t = \Services\Dictionary\PhraseService::get($location->name); # @david - problem s ukladanim bez ID
+
+			$location->slug = $namePhrase->getTranslation(getLangByIso('en'))->translation; // @david 
 			
 			$location->type = $locationType;
 			$location->polygon = NULL;
@@ -167,10 +175,16 @@ class ImportLocations extends BaseImport {
 
 			$location->country = $country; 
 
-			debug($location); debug($country); return;
+			// @david naschval som to dal na koniec!
+			if(array_key_exists($x['continent'], $this->continentsByOldId)) {
+				$continent = $this->continentsByOldId[$x['continent']];
+				$continent->addChild($location);
+			}
+
 
 			$location->save();
 			$country->save();
+			//debug($location); debug($country); return;
 		}		
 	}
 

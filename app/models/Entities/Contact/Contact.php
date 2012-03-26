@@ -25,25 +25,25 @@ class Contact extends \Entities\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entities\Attraction\Attraction", inversedBy="contacts")
+	 * @ORM\ManyToMany(targetEntity="Entities\Attraction\Attraction", inversedBy="contacts", cascade={"persist"})
 	 */
 	protected $attractions;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entities\Rental\Rental", inversedBy="contacts")
+	 * @ORM\ManyToMany(targetEntity="Entities\Rental\Rental", inversedBy="contacts", cascade={"persist"})
 	 */
 	protected $rentals;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entities\User\User", inversedBy="contact")
+	 * @ORM\ManyToOne(targetEntity="Entities\User\User", inversedBy="contact", cascade={"persist"})
 	 */
 	protected $user;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entities\Location\Country", inversedBy="contacts")
+	 * @ORM\ManyToMany(targetEntity="Entities\Location\Country", inversedBy="contacts", cascade={"persist"})
 	 */
 	protected $countries;
 
@@ -76,7 +76,6 @@ class Contact extends \Entities\BaseEntity {
 	 * @ORM\Column(type="boolean")
 	 */
 	protected $spam = FALSE;
-
 
 	/* ----------------------------- Methods ----------------------------- */
 
@@ -149,7 +148,6 @@ class Contact extends \Entities\BaseEntity {
 		if(!$this->attractions->contains($attraction)) {
 			$this->attractions->add($attraction);
 		}
-		$attraction->addContact($this);
 
 		return $this;
 	}
@@ -169,7 +167,6 @@ class Contact extends \Entities\BaseEntity {
 		if(!$this->rentals->contains($rental)) {
 			$this->rentals->add($rental);
 		}
-		$rental->addContact($this);
 
 		return $this;
 	}
@@ -206,7 +203,6 @@ class Contact extends \Entities\BaseEntity {
 		if(!$this->countries->contains($country)) {
 			$this->countries->add($country);
 		}
-		$country->addContact($this);
 
 		return $this;
 	}
