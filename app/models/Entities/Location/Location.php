@@ -4,13 +4,13 @@ namespace Entities\Location;
 
 use Entities\Dictionary;
 use Doctrine\ORM\Mapping as ORM;
-use DoctrineExtensions\NestedSet\Node;
+use DoctrineExtensions\NestedSet\MultipleRootNode;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="location_location")
  */
-class Location extends \Entities\BaseEntityDetails implements Node {
+class Location extends \Entities\BaseEntityDetails implements MultipleRootNode {
 
 	/**
 	 * @var Collection
@@ -47,6 +47,12 @@ class Location extends \Entities\BaseEntityDetails implements Node {
 	 * @ORM\Column(type="integer", nullable=true)
 	 */
 	protected $nestedRight;
+
+	/**
+	 * @var integer
+	 * @ORM\Column(type="integer", nullable=true)
+	 */
+	private $nestedRoot;
 
 	/**
 	 * @var Collection
@@ -228,7 +234,10 @@ class Location extends \Entities\BaseEntityDetails implements Node {
 	public function getRightValue() { return $this->nestedRight; }
 	public function setRightValue($nestedRight) { $this->nestedRight = $nestedRight; }
 
-	public function __toString() { return $this->slug; }
+	public function getRootValue() { return $this->nestedRoot; }
+	public function setRootValue($nestedRoot) { $this->nestedRoot = $nestedRoot; }
+
+	public function __toString() { return (string)$this->slug; }
 
 	/**
 	 * @param \Entities\Location\Type
