@@ -135,7 +135,7 @@ class ImportLocations extends BaseImport {
 			// 	$country->addContact($this->createContact('Email', 'info@'.$thisDomain->domain));
 			// }
 
-			// @todo $location->parent...
+			// @todo $location->parent... @david - dorobit do nested set
 
 			/*
 				name - importujem z countries.name, a locative hladam v countries_translations, kde name = '' a name_locative mame, ak je done = 1 hned aj dame activated
