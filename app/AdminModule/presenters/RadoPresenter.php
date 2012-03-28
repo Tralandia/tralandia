@@ -16,6 +16,7 @@ class RadoPresenter extends BasePresenter {
 
 	public function actionDefault() {
 		ini_set('max_execution_time', 0);
+		Debugger::$maxDepth = 8;
 		$redirect = FALSE;
 		if (isset($this->params['dropAllTables'])) {
 			$import = new I\BaseImport();

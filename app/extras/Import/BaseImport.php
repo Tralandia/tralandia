@@ -38,9 +38,17 @@ class BaseImport {
 	);
 
 	public $savedVariables = array();
+	public $languagesByIso = array();
+	public $languagesByOldId = array();
 
 	public function __construct() {
 		$this->loadVariables();
+		$langs = qNew('select id, iso, oldId from dictionary_language');
+		while($value = mysql_fetch_array($langs)) {
+			$this->languagesByIso[$value['iso']] = \Services\Dictionary\LanguageService::get($value['id']);
+			$this->languagesByOldId[$value['oldId']] = \Services\Dictionary\LanguageService::get($value['id']);
+		}
+		return;
 	}
 
 	public function truncateDatabase() {

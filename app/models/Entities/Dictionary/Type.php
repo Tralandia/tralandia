@@ -85,9 +85,13 @@ class Type extends \Entities\BaseEntity {
 	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $helpForTranslator;
+
+	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean", nullable=true)
+	 */
+	protected $checkingRequired;
 	
-
-
 	/* ----------------------------- Methods ----------------------------- */
 
 
@@ -316,6 +320,32 @@ class Type extends \Entities\BaseEntity {
 	 */
 	public function getHelpForTranslator() {
 		return $this->helpForTranslator;
+	}
+
+	/**
+	 * @param boolean
+	 * @return \Entities\Dictionary\Type
+	 */
+	public function setCheckingRequired($checkingRequired) {
+		$this->checkingRequired = $checkingRequired;
+
+		return $this;
+	}
+
+	/**
+	 * @return \Entities\Dictionary\Type
+	 */
+	public function unsetCheckingRequired() {
+		$this->checkingRequired = NULL;
+
+		return $this;
+	}
+
+	/**
+	 * @return boolean|NULL
+	 */
+	public function getCheckingRequired() {
+		return $this->checkingRequired;
 	}
 
 }

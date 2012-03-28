@@ -17,6 +17,12 @@ class Type extends \Entities\BaseEntityDetails {
 	 */
 	protected $name;
 	
+	/**
+	 * @var slug
+	 * @ORM\Column(type="slug")
+	 */
+	protected $slug;
+
 	/* ----------------------------- Methods ----------------------------- */
 
 
@@ -39,6 +45,23 @@ class Type extends \Entities\BaseEntityDetails {
 	 */
 	public function getName() {
 		return $this->name;
+	}
+
+	/**
+	 * @param slug
+	 * @return \Entities\Location\Type
+	 */
+	public function setSlug($slug) {
+		$this->slug = $slug;
+
+		return $this;
+	}
+
+	/**
+	 * @return slug|NULL
+	 */
+	public function getSlug() {
+		return $this->slug;
 	}
 
 }
