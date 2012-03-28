@@ -16,7 +16,7 @@ Selection::extensionMethod('fetchTree', 'Tools::selectionTree');
 Image::extensionMethod('resizeCrop', 'Tools::resizeCrop');
 
 function debug() {
-	Tools::dump(func_get_args());
+	return Tools::dump(func_get_args());
 }
 
 function debuge() {
@@ -42,7 +42,9 @@ class Tools {
 					Debugger::fireLog($array);
 				}
 			}
+			return $params[0][0];
 		}
+		return NULL;
 	}
 
 	public static function addDatePicker(FormContainer $_this, $name, $label, $cols = NULL, $maxLength = NULL) {

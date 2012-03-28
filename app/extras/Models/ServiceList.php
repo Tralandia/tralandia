@@ -9,21 +9,46 @@ use Nette\Object,
 /**
  * Abstrakcia zoznamu
  */
-abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \IteratorAggregate, IServiceList {
+abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \Iterator {
 
-
-	const RETURN_ENTITIES = 1;
-	const RETURN_SERVICES = 2;
+	const RETURN_ENTITIES = 'Entities';
 
 	/**
 	 * @var array
 	 */
-	protected $list = null;
+	protected $list = NULL;
+
+	protected $iteratorPosition = 0;
+
+	protected $returnAs = self::RETURN_ENTITIES;
 
 	/**
 	 * @var EntityManager
 	 */
-	private static $em = null;
+	private static $em = NULL;
+
+
+	public function __construct($param = NULL) {
+		if(is_array($param)) {
+			$this->list = $param;
+		} else if(is_string($param)) {
+			$this->prepareBaseList($param);
+		} else if($param === NULL) {
+
+		} else {
+			throw new \Nette\InvalidArgumentException('Argument does not match with the expected value');
+		}
+
+		$this->iteratorPosition = 0;
+	}
+
+
+	protected function prepareBaseList($entity) {
+		$query = $this->getEm()->createQueryBuilder();
+		$query->select('e')->from($entity, 'e');
+		$this->list = $query->getQuery()->getResult();
+	}
+
 
 	/**
 	 * Nastavenie entity manazera
@@ -49,18 +74,26 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 		return self::getEntityManager();
 	}
 
-	/**
-	 * Vracia iterator nad vsetkymi polozkami
-	 * @return \ArrayIterator
-	 */
-	public function getIterator() {
-		if ($this->list === null) {
-			$this->list = array();
-			$this->prepareList();
-		}
-		
-		return new \ArrayIterator($this->list);
+
+	public function returnAs($returnAs) {
+		$this->returnAs = $returnAs;
+
+		return $this;
 	}
+
+	// /**
+	//  * Vracia iterator nad vsetkymi polozkami
+	//  * @return \ArrayIterator
+	//  */
+	// public function getIterator() {
+	// 	debug('getIterator');
+	// 	if ($this->list === null) {
+	// 		$this->list = array();
+	// 		$this->prepareList();
+	// 	}
+		
+	// 	return new \ArrayIterator($this->list);
+	// }
 
 	public function getIteratorAsServices($serviceName) {
 		$iterator = $this->getIterator();
@@ -78,6 +111,7 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 		return $newIterator;
 	}
 
+	/* --------------------- Inherited methods from Countable --------------------- */
 	/**
 	 * Vracia pocet poloziek
 	 * @return int
@@ -86,6 +120,32 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 		return count($this->list);
 	}
 
+	/* --------------------- Inherited methods from Iterator --------------------- */
+
+
+	function rewind() {
+		$this->iteratorPosition = 0;
+	}
+
+	function current() {
+		return $this->offsetGet($this->iteratorPosition);
+	}
+
+	function key() {
+		return $this->iteratorPosition;
+	}
+
+	function next() {
+		++$this->iteratorPosition;
+	}
+
+	function valid() {
+		return isset($this->list[$this->iteratorPosition]);
+	}
+
+
+
+	/* --------------------- Inherited methods from ArrayAccess --------------------- */
 	/**
 	 * Setter polozky
 	 * @param  int
@@ -115,7 +175,21 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 		if ($index < 0 || $index >= count($this->list)) {
 			throw new OutOfRangeException("Offset invalid or out of range");
 		}
-		return $this->list[(int) $index];
+
+		debug($index);
+		$value = $this->list[$index];
+		if($this->returnAs != self::RETURN_ENTITIES) {
+			if($value instanceof Entity) {
+				$serviceName = $this->returnAs;
+				$value = $serviceName::get($value);
+			} else if($value instanceof $this->returnAs) {
+			} else {
+				// @todo method or operation is not implemented
+				throw new \Nette\NotImplementedException('Requested method or operation is not implemented');
+			}
+		}
+
+		return $value;
 	}
 
 	/**

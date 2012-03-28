@@ -36,7 +36,25 @@ class DavidPresenter extends BasePresenter {
 	}
 
 	public function actionTest() {
+		
+		$list = D\PhraseList::toTranslate();
+		debug($list);
+	
+	}
 
+	public function actionListTest() {
+		$list = D\LanguageList::getBySupported(\Entities\Dictionary\Language::SUPPORTED);
+
+		$i = 0;
+		foreach ($list->returnAs('Services\Dictionary\LanguageService') as $key => $val) {
+			debug($val);
+			$list->returnAs(\Extras\Models\ServiceList::RETURN_ENTITIES);
+			if($i++ >= 5) break; 
+
+			//break;
+		}
+		$list->returnAs(\Extras\Models\ServiceList::RETURN_ENTITIES);
+		debug($list[$i]);
 	
 	}
 
