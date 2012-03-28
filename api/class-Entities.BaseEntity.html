@@ -7,7 +7,7 @@
 	<title>Class Entities\BaseEntity | Tralandia</title>
 
 	<script type="text/javascript" src="resources/combined.js?1841058525"></script>
-	<script type="text/javascript" src="elementlist.js?1692514351"></script>
+	<script type="text/javascript" src="elementlist.js?817446370"></script>
 	<script type="text/javascript">
 		var ApiGen = ApiGen || {};
 		ApiGen.options = {"elementDetailsCollapsed":true,"elementsOrder":"natural"};
@@ -26,8 +26,6 @@
 			<h3>Namespaces</h3>
 			<ul>
 				<li><a href="namespace-AdminModule.html">AdminModule</a>
-						</li>
-				<li><a href="namespace-API.html">API</a>
 						</li>
 				<li><a href="namespace-Doctrine.html">Doctrine</a>
 						<span></span>
@@ -92,6 +90,16 @@
 				<li><a href="namespace-Extras.html">Extras</a>
 						<span></span>
 						<ul>
+				<li><a href="namespace-Extras.Import.html">Import</a>
+						</li>
+				<li><a href="namespace-Extras.Mail.html">Mail</a>
+						<span></span>
+						<ul>
+				<li><a href="namespace-Extras.Mail.Message.html">Message</a>
+						</li>
+							</ul></li>
+				<li><a href="namespace-Extras.Models.html">Models</a>
+						</li>
 				<li><a href="namespace-Extras.Types.html">Types</a>
 						</li>
 							</ul></li>
@@ -165,16 +173,7 @@
 						<ul>
 				<li><a href="namespace-Tra.Forms.User.html">User</a>
 						</li>
-							</ul></li>
-				<li><a href="namespace-Tra.Mail.html">Mail</a>
-						<span></span>
-						<ul>
-				<li><a href="namespace-Tra.Mail.Message.html">Message</a>
-						</li>
-							</ul></li>
-				<li><a href="namespace-Tra.Services.html">Services</a>
-						</li>
-							</ul></li>
+							</ul></li></ul></li>
 			</ul>
 		</div>
 
@@ -240,9 +239,11 @@ Nette\Object
 		</dd>
 		<dd style="padding-left:30px">
 			<img src="resources/inherit.png" alt="Extended by">
-			<a href="class-Entity.html">Entity</a>
+			<a href="class-Extras.Models.Entity.html">Extras\Models\Entity</a>
 			
 			 implements 
+				<a href="class-Extras.Models.IEntity.html">Extras\Models\IEntity</a>, 
+			
 Nette\Security\IResource, 
 			
 				<a href="class-IteratorAggregate.html">IteratorAggregate</a>
@@ -352,7 +353,7 @@ Nette\Security\IResource,
 
 		<td class="name"><div>
 		<a class="anchor" href="#___construct">#</a>
-		<code><a href="source-class-Entities.BaseEntity.html#34" title="Go to source code">__construct</a>( )</code>
+		<code><a href="source-class-Entities.BaseEntity.html#40" title="Go to source code">__construct</a>( )</code>
 
 		<div class="description short">
 			
@@ -381,7 +382,7 @@ Nette\Security\IResource,
 
 		<td class="name"><div>
 		<a class="anchor" href="#_setId">#</a>
-		<code><a href="source-class-Entities.BaseEntity.html#38" title="Go to source code">setId</a>( <span>integer <var>$id</var></span> )</code>
+		<code><a href="source-class-Entities.BaseEntity.html#44" title="Go to source code">setId</a>( <span>integer <var>$id</var></span> )</code>
 
 		<div class="description short">
 			
@@ -419,7 +420,111 @@ Nette\Security\IResource,
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getId">#</a>
-		<code><a href="source-class-Entities.BaseEntity.html#48" title="Go to source code">getId</a>( )</code>
+		<code><a href="source-class-Entities.BaseEntity.html#54" title="Go to source code">getId</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>integer|null</code><br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setOldId" id="_setOldId">
+
+		<td class="attributes"><code>
+			
+			 public 
+			<code><a href="class-Entities.BaseEntity.html">Entities\BaseEntity</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setOldId">#</a>
+		<code><a href="source-class-Entities.BaseEntity.html#61" title="Go to source code">setOldId</a>( <span>integer <var>$oldId</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$oldId</var></dt>
+					<dd><code>integer</code></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-Entities.BaseEntity.html">Entities\BaseEntity</a></code></code><br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="unsetOldId" id="_unsetOldId">
+
+		<td class="attributes"><code>
+			
+			 public 
+			<code><a href="class-Entities.BaseEntity.html">Entities\BaseEntity</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_unsetOldId">#</a>
+		<code><a href="source-class-Entities.BaseEntity.html#71" title="Go to source code">unsetOldId</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-Entities.BaseEntity.html">Entities\BaseEntity</a></code></code><br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getOldId" id="_getOldId">
+
+		<td class="attributes"><code>
+			
+			 public 
+			integer|null
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getOldId">#</a>
+		<code><a href="source-class-Entities.BaseEntity.html#80" title="Go to source code">getOldId</a>( )</code>
 
 		<div class="description short">
 			
@@ -452,7 +557,7 @@ Nette\Security\IResource,
 
 		<td class="name"><div>
 		<a class="anchor" href="#_setCreated">#</a>
-		<code><a href="source-class-Entities.BaseEntity.html#55" title="Go to source code">setCreated</a>( )</code>
+		<code><a href="source-class-Entities.BaseEntity.html#87" title="Go to source code">setCreated</a>( )</code>
 
 		<div class="description short">
 			
@@ -488,7 +593,7 @@ Nette\Security\IResource,
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getCreated">#</a>
-		<code><a href="source-class-Entities.BaseEntity.html#65" title="Go to source code">getCreated</a>( )</code>
+		<code><a href="source-class-Entities.BaseEntity.html#97" title="Go to source code">getCreated</a>( )</code>
 
 		<div class="description short">
 			
@@ -521,7 +626,7 @@ Nette\Security\IResource,
 
 		<td class="name"><div>
 		<a class="anchor" href="#_setUpdated">#</a>
-		<code><a href="source-class-Entities.BaseEntity.html#72" title="Go to source code">setUpdated</a>( )</code>
+		<code><a href="source-class-Entities.BaseEntity.html#104" title="Go to source code">setUpdated</a>( )</code>
 
 		<div class="description short">
 			
@@ -560,7 +665,7 @@ Nette\Security\IResource,
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getUpdated">#</a>
-		<code><a href="source-class-Entities.BaseEntity.html#85" title="Go to source code">getUpdated</a>( )</code>
+		<code><a href="source-class-Entities.BaseEntity.html#113" title="Go to source code">getUpdated</a>( )</code>
 
 		<div class="description short">
 			
@@ -584,18 +689,18 @@ Nette\Security\IResource,
 	</table>
 
 	<table class="summary inherited">
-	<caption>Methods inherited from <a href="class-Entity.html#methods">Entity</a></caption>
+	<caption>Methods inherited from <a href="class-Extras.Models.Entity.html#methods">Extras\Models\Entity</a></caption>
 	<tr>
 		<td><code>
-<a href="class-Entity.html#___get">__get()</a>, 
-<a href="class-Entity.html#___set">__set()</a>, 
-<a href="class-Entity.html#_getIterator">getIterator()</a>, 
-<a href="class-Entity.html#_getPrimaryKey">getPrimaryKey()</a>, 
-<a href="class-Entity.html#_getPrimaryValue">getPrimaryValue()</a>, 
-<a href="class-Entity.html#_getResourceId">getResourceId()</a>, 
-<a href="class-Entity.html#_setData">setData()</a>, 
-<a href="class-Entity.html#_toArray">toArray()</a>, 
-<a href="class-Entity.html#_toFormArray">toFormArray()</a>
+<a href="class-Extras.Models.Entity.html#___get">__get()</a>, 
+<a href="class-Extras.Models.Entity.html#___set">__set()</a>, 
+<a href="class-Extras.Models.Entity.html#_getIterator">getIterator()</a>, 
+<a href="class-Extras.Models.Entity.html#_getPrimaryKey">getPrimaryKey()</a>, 
+<a href="class-Extras.Models.Entity.html#_getPrimaryValue">getPrimaryValue()</a>, 
+<a href="class-Extras.Models.Entity.html#_getResourceId">getResourceId()</a>, 
+<a href="class-Extras.Models.Entity.html#_setData">setData()</a>, 
+<a href="class-Extras.Models.Entity.html#_toArray">toArray()</a>, 
+<a href="class-Extras.Models.Entity.html#_toFormArray">toFormArray()</a>
 		</code></td>
 	</tr>
 	</table>
@@ -641,6 +746,35 @@ Nette\Security\IResource,
 			</div>
 		</div></td>
 	</tr>
+	<tr data-order="oldId" id="$oldId">
+
+		<td class="attributes"><code>
+			
+			protected 
+			integer
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-Entities.BaseEntity.html#21" title="Go to source code"><var>$oldId</var></a>
+		</td>
+		<td class="value"><code></code></td>
+		<td class="description"><div>
+			<a href="#$oldId" class="anchor">#</a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+					<h4>ORM\Column(type="integer",</h4>
+					<div class="list">
+							nullable=true)<br>
+					</div>
+			</div>
+		</div></td>
+	</tr>
 	<tr data-order="created" id="$created">
 
 		<td class="attributes"><code>
@@ -650,7 +784,7 @@ Nette\Security\IResource,
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Entities.BaseEntity.html#21" title="Go to source code"><var>$created</var></a>
+				<a href="source-class-Entities.BaseEntity.html#27" title="Go to source code"><var>$created</var></a>
 		</td>
 		<td class="value"><code></code></td>
 		<td class="description"><div>
@@ -678,7 +812,7 @@ Nette\Security\IResource,
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Entities.BaseEntity.html#27" title="Go to source code"><var>$updated</var></a>
+				<a href="source-class-Entities.BaseEntity.html#33" title="Go to source code"><var>$updated</var></a>
 		</td>
 		<td class="value"><code></code></td>
 		<td class="description"><div>

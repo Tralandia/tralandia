@@ -7,7 +7,7 @@
 	<title>Class Entities\Contact\Type | Tralandia</title>
 
 	<script type="text/javascript" src="resources/combined.js?1841058525"></script>
-	<script type="text/javascript" src="elementlist.js?1692514351"></script>
+	<script type="text/javascript" src="elementlist.js?817446370"></script>
 	<script type="text/javascript">
 		var ApiGen = ApiGen || {};
 		ApiGen.options = {"elementDetailsCollapsed":true,"elementsOrder":"natural"};
@@ -26,8 +26,6 @@
 			<h3>Namespaces</h3>
 			<ul>
 				<li><a href="namespace-AdminModule.html">AdminModule</a>
-						</li>
-				<li><a href="namespace-API.html">API</a>
 						</li>
 				<li><a href="namespace-Doctrine.html">Doctrine</a>
 						<span></span>
@@ -92,6 +90,16 @@
 				<li><a href="namespace-Extras.html">Extras</a>
 						<span></span>
 						<ul>
+				<li><a href="namespace-Extras.Import.html">Import</a>
+						</li>
+				<li><a href="namespace-Extras.Mail.html">Mail</a>
+						<span></span>
+						<ul>
+				<li><a href="namespace-Extras.Mail.Message.html">Message</a>
+						</li>
+							</ul></li>
+				<li><a href="namespace-Extras.Models.html">Models</a>
+						</li>
 				<li><a href="namespace-Extras.Types.html">Types</a>
 						</li>
 							</ul></li>
@@ -165,16 +173,7 @@
 						<ul>
 				<li><a href="namespace-Tra.Forms.User.html">User</a>
 						</li>
-							</ul></li>
-				<li><a href="namespace-Tra.Mail.html">Mail</a>
-						<span></span>
-						<ul>
-				<li><a href="namespace-Tra.Mail.Message.html">Message</a>
-						</li>
-							</ul></li>
-				<li><a href="namespace-Tra.Services.html">Services</a>
-						</li>
-							</ul></li>
+							</ul></li></ul></li>
 			</ul>
 		</div>
 
@@ -238,9 +237,11 @@ Nette\Object
 		</dd>
 		<dd style="padding-left:30px">
 			<img src="resources/inherit.png" alt="Extended by">
-			<a href="class-Entity.html">Entity</a>
+			<a href="class-Extras.Models.Entity.html">Extras\Models\Entity</a>
 			
 			 implements 
+				<a href="class-Extras.Models.IEntity.html">Extras\Models\IEntity</a>, 
+			
 Nette\Security\IResource, 
 			
 				<a href="class-IteratorAggregate.html">IteratorAggregate</a>
@@ -281,12 +282,322 @@ Nette\Security\IResource,
 	</div>
 
 
+	<table class="summary" id="methods">
+	<caption>Methods summary</caption>
+	<tr data-order="__construct" id="___construct">
+
+		<td class="attributes"><code>
+			
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#___construct">#</a>
+		<code><a href="source-class-Entities.Contact.Type.html#27" title="Go to source code">__construct</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setName" id="_setName">
+
+		<td class="attributes"><code>
+			
+			 public 
+			<code><a href="class-Entities.Contact.Type.html">Entities\Contact\Type</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setName">#</a>
+		<code><a href="source-class-Entities.Contact.Type.html#31" title="Go to source code">setName</a>( <span><a href="class-Entities.Dictionary.Phrase.html">Entities\Dictionary\Phrase</a> <var>$name</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$name</var></dt>
+					<dd><code><code><a href="class-Entities.Dictionary.Phrase.html">Entities\Dictionary\Phrase</a></code></code></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-Entities.Contact.Type.html">Entities\Contact\Type</a></code></code><br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getName" id="_getName">
+
+		<td class="attributes"><code>
+			
+			 public 
+			Doctrine\Common\Collections\ArrayCollection
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getName">#</a>
+		<code><a href="source-class-Entities.Contact.Type.html#41" title="Go to source code">getName</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>Doctrine\Common\Collections\ArrayCollection</code><br>of \Entities\Dictionary\Phrase<br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setClass" id="_setClass">
+
+		<td class="attributes"><code>
+			
+			 public 
+			<code><a href="class-Entities.Contact.Type.html">Entities\Contact\Type</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setClass">#</a>
+		<code><a href="source-class-Entities.Contact.Type.html#48" title="Go to source code">setClass</a>( <span>string <var>$class</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$class</var></dt>
+					<dd><code>string</code></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-Entities.Contact.Type.html">Entities\Contact\Type</a></code></code><br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="unsetClass" id="_unsetClass">
+
+		<td class="attributes"><code>
+			
+			 public 
+			<code><a href="class-Entities.Contact.Type.html">Entities\Contact\Type</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_unsetClass">#</a>
+		<code><a href="source-class-Entities.Contact.Type.html#58" title="Go to source code">unsetClass</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-Entities.Contact.Type.html">Entities\Contact\Type</a></code></code><br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getClass" id="_getClass">
+
+		<td class="attributes"><code>
+			
+			 public 
+			string|null
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getClass">#</a>
+		<code><a href="source-class-Entities.Contact.Type.html#67" title="Go to source code">getClass</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>string|null</code><br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setOldId" id="_setOldId">
+
+		<td class="attributes"><code>
+			
+			 public 
+			<code><a href="class-Entities.BaseEntity.html">Entities\BaseEntity</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setOldId">#</a>
+		<code><a href="source-class-Entities.Contact.Type.html#74" title="Go to source code">setOldId</a>( <span>integer <var>$oldId</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$oldId</var></dt>
+					<dd><code>integer</code></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-Entities.BaseEntity.html">Entities\BaseEntity</a></code></code><br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="unsetOldId" id="_unsetOldId">
+
+		<td class="attributes"><code>
+			
+			 public 
+			<code><a href="class-Entities.BaseEntity.html">Entities\BaseEntity</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_unsetOldId">#</a>
+		<code><a href="source-class-Entities.Contact.Type.html#84" title="Go to source code">unsetOldId</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-Entities.BaseEntity.html">Entities\BaseEntity</a></code></code><br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getOldId" id="_getOldId">
+
+		<td class="attributes"><code>
+			
+			 public 
+			integer|null
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getOldId">#</a>
+		<code><a href="source-class-Entities.Contact.Type.html#93" title="Go to source code">getOldId</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>integer|null</code><br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	</table>
 
 	<table class="summary inherited">
 	<caption>Methods inherited from <a href="class-Entities.BaseEntity.html#methods">Entities\BaseEntity</a></caption>
 	<tr>
 		<td><code>
-<a href="class-Entities.BaseEntity.html#___construct">__construct()</a>, 
 <a href="class-Entities.BaseEntity.html#_getCreated">getCreated()</a>, 
 <a href="class-Entities.BaseEntity.html#_getId">getId()</a>, 
 <a href="class-Entities.BaseEntity.html#_getUpdated">getUpdated()</a>, 
@@ -297,18 +608,18 @@ Nette\Security\IResource,
 	</tr>
 	</table>
 	<table class="summary inherited">
-	<caption>Methods inherited from <a href="class-Entity.html#methods">Entity</a></caption>
+	<caption>Methods inherited from <a href="class-Extras.Models.Entity.html#methods">Extras\Models\Entity</a></caption>
 	<tr>
 		<td><code>
-<a href="class-Entity.html#___get">__get()</a>, 
-<a href="class-Entity.html#___set">__set()</a>, 
-<a href="class-Entity.html#_getIterator">getIterator()</a>, 
-<a href="class-Entity.html#_getPrimaryKey">getPrimaryKey()</a>, 
-<a href="class-Entity.html#_getPrimaryValue">getPrimaryValue()</a>, 
-<a href="class-Entity.html#_getResourceId">getResourceId()</a>, 
-<a href="class-Entity.html#_setData">setData()</a>, 
-<a href="class-Entity.html#_toArray">toArray()</a>, 
-<a href="class-Entity.html#_toFormArray">toFormArray()</a>
+<a href="class-Extras.Models.Entity.html#___get">__get()</a>, 
+<a href="class-Extras.Models.Entity.html#___set">__set()</a>, 
+<a href="class-Extras.Models.Entity.html#_getIterator">getIterator()</a>, 
+<a href="class-Extras.Models.Entity.html#_getPrimaryKey">getPrimaryKey()</a>, 
+<a href="class-Extras.Models.Entity.html#_getPrimaryValue">getPrimaryValue()</a>, 
+<a href="class-Extras.Models.Entity.html#_getResourceId">getResourceId()</a>, 
+<a href="class-Extras.Models.Entity.html#_setData">setData()</a>, 
+<a href="class-Extras.Models.Entity.html#_toArray">toArray()</a>, 
+<a href="class-Extras.Models.Entity.html#_toFormArray">toFormArray()</a>
 		</code></td>
 	</tr>
 	</table>
@@ -342,8 +653,9 @@ Nette\Security\IResource,
 			<div class="description detailed hidden">
 				
 
-					<h4>ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase")</h4>
+					<h4>ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase",</h4>
 					<div class="list">
+							cascade={"persist", "remove"})<br>
 					</div>
 			</div>
 		</div></td>
@@ -385,6 +697,7 @@ Nette\Security\IResource,
 		<td><code>
 <a href="class-Entities.BaseEntity.html#$created"><var>$created</var></a>, 
 <a href="class-Entities.BaseEntity.html#$id"><var>$id</var></a>, 
+<a href="class-Entities.BaseEntity.html#$oldId"><var>$oldId</var></a>, 
 <a href="class-Entities.BaseEntity.html#$updated"><var>$updated</var></a>
 		</code></td>
 	</tr>

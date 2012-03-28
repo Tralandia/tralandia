@@ -7,7 +7,7 @@
 	<title>Class Entities\Location\Location | Tralandia</title>
 
 	<script type="text/javascript" src="resources/combined.js?1841058525"></script>
-	<script type="text/javascript" src="elementlist.js?1692514351"></script>
+	<script type="text/javascript" src="elementlist.js?817446370"></script>
 	<script type="text/javascript">
 		var ApiGen = ApiGen || {};
 		ApiGen.options = {"elementDetailsCollapsed":true,"elementsOrder":"natural"};
@@ -26,8 +26,6 @@
 			<h3>Namespaces</h3>
 			<ul>
 				<li><a href="namespace-AdminModule.html">AdminModule</a>
-						</li>
-				<li><a href="namespace-API.html">API</a>
 						</li>
 				<li><a href="namespace-Doctrine.html">Doctrine</a>
 						<span></span>
@@ -92,6 +90,16 @@
 				<li><a href="namespace-Extras.html">Extras</a>
 						<span></span>
 						<ul>
+				<li><a href="namespace-Extras.Import.html">Import</a>
+						</li>
+				<li><a href="namespace-Extras.Mail.html">Mail</a>
+						<span></span>
+						<ul>
+				<li><a href="namespace-Extras.Mail.Message.html">Message</a>
+						</li>
+							</ul></li>
+				<li><a href="namespace-Extras.Models.html">Models</a>
+						</li>
 				<li><a href="namespace-Extras.Types.html">Types</a>
 						</li>
 							</ul></li>
@@ -165,16 +173,7 @@
 						<ul>
 				<li><a href="namespace-Tra.Forms.User.html">User</a>
 						</li>
-							</ul></li>
-				<li><a href="namespace-Tra.Mail.html">Mail</a>
-						<span></span>
-						<ul>
-				<li><a href="namespace-Tra.Mail.Message.html">Message</a>
-						</li>
-							</ul></li>
-				<li><a href="namespace-Tra.Services.html">Services</a>
-						</li>
-							</ul></li>
+							</ul></li></ul></li>
 			</ul>
 		</div>
 
@@ -240,9 +239,11 @@ Nette\Object
 		</dd>
 		<dd style="padding-left:30px">
 			<img src="resources/inherit.png" alt="Extended by">
-			<a href="class-Entity.html">Entity</a>
+			<a href="class-Extras.Models.Entity.html">Extras\Models\Entity</a>
 			
 			 implements 
+				<a href="class-Extras.Models.IEntity.html">Extras\Models\IEntity</a>, 
+			
 Nette\Security\IResource, 
 			
 				<a href="class-IteratorAggregate.html">IteratorAggregate</a>
@@ -266,6 +267,8 @@ Nette\Security\IResource,
 		<dd style="padding-left:120px">
 			<img src="resources/inherit.png" alt="Extended by">
 <b>Entities\Location\Location</b>			
+			 implements 
+DoctrineExtensions\NestedSet\MultipleRootNode
 			
 			
 		</dd>
@@ -286,10 +289,1835 @@ Nette\Security\IResource,
 				<br>
 				<b>ORM\Table(name="location_location")</b>
 				<br>
-		<b>Located at</b> <a href="source-class-Entities.Location.Location.html#8" title="Go to source code">models/Entities/Location/Location.php</a><br>
+		<b>Located at</b> <a href="source-class-Entities.Location.Location.html#9" title="Go to source code">models/Entities/Location/Location.php</a><br>
 	</div>
 
 
+	<table class="summary" id="methods">
+	<caption>Methods summary</caption>
+	<tr data-order="__construct" id="___construct">
+
+		<td class="attributes"><code>
+			
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#___construct">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#150" title="Go to source code">__construct</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setName" id="_setName">
+
+		<td class="attributes"><code>
+			
+			 public 
+			<code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setName">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#163" title="Go to source code">setName</a>( <span><a href="class-Entities.Dictionary.Phrase.html">Entities\Dictionary\Phrase</a> <var>$name</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$name</var></dt>
+					<dd><code><code><a href="class-Entities.Dictionary.Phrase.html">Entities\Dictionary\Phrase</a></code></code></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code></code><br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getName" id="_getName">
+
+		<td class="attributes"><code>
+			
+			 public 
+			Doctrine\Common\Collections\ArrayCollection
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getName">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#173" title="Go to source code">getName</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>Doctrine\Common\Collections\ArrayCollection</code><br>of \Entities\Dictionary\Phrase<br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setNameOfficial" id="_setNameOfficial">
+
+		<td class="attributes"><code>
+			
+			 public 
+			<code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setNameOfficial">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#180" title="Go to source code">setNameOfficial</a>( <span><a href="class-Entities.Dictionary.Phrase.html">Entities\Dictionary\Phrase</a> <var>$nameOfficial</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$nameOfficial</var></dt>
+					<dd><code><code><a href="class-Entities.Dictionary.Phrase.html">Entities\Dictionary\Phrase</a></code></code></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code></code><br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getNameOfficial" id="_getNameOfficial">
+
+		<td class="attributes"><code>
+			
+			 public 
+			Doctrine\Common\Collections\ArrayCollection
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getNameOfficial">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#190" title="Go to source code">getNameOfficial</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>Doctrine\Common\Collections\ArrayCollection</code><br>of \Entities\Dictionary\Phrase<br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setNameShort" id="_setNameShort">
+
+		<td class="attributes"><code>
+			
+			 public 
+			<code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setNameShort">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#197" title="Go to source code">setNameShort</a>( <span><a href="class-Entities.Dictionary.Phrase.html">Entities\Dictionary\Phrase</a> <var>$nameShort</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$nameShort</var></dt>
+					<dd><code><code><a href="class-Entities.Dictionary.Phrase.html">Entities\Dictionary\Phrase</a></code></code></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code></code><br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getNameShort" id="_getNameShort">
+
+		<td class="attributes"><code>
+			
+			 public 
+			Doctrine\Common\Collections\ArrayCollection
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getNameShort">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#207" title="Go to source code">getNameShort</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>Doctrine\Common\Collections\ArrayCollection</code><br>of \Entities\Dictionary\Phrase<br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setSlug" id="_setSlug">
+
+		<td class="attributes"><code>
+			
+			 public 
+			<code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setSlug">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#214" title="Go to source code">setSlug</a>( <span><code><a href="class-Entities.Location.Location.html#$slug">Entities\Location\Location::<var>$slug</var></a></code> <var>$slug</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$slug</var></dt>
+					<dd><code><code><a href="class-Entities.Location.Location.html#$slug">Entities\Location\Location::<var>$slug</var></a></code></code></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code></code><br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getSlug" id="_getSlug">
+
+		<td class="attributes"><code>
+			
+			 public 
+			<code><a href="class-Entities.Location.Location.html#$slug">Entities\Location\Location::<var>$slug</var></a></code>|null
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getSlug">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#224" title="Go to source code">getSlug</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-Entities.Location.Location.html#$slug">Entities\Location\Location::<var>$slug</var></a></code>|null</code><br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getLeftValue" id="_getLeftValue">
+
+		<td class="attributes"><code>
+			
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getLeftValue">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#231" title="Go to source code">getLeftValue</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setLeftValue" id="_setLeftValue">
+
+		<td class="attributes"><code>
+			
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setLeftValue">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#232" title="Go to source code">setLeftValue</a>( <span> <var>$nestedLeft</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getRightValue" id="_getRightValue">
+
+		<td class="attributes"><code>
+			
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getRightValue">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#234" title="Go to source code">getRightValue</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setRightValue" id="_setRightValue">
+
+		<td class="attributes"><code>
+			
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setRightValue">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#235" title="Go to source code">setRightValue</a>( <span> <var>$nestedRight</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getRootValue" id="_getRootValue">
+
+		<td class="attributes"><code>
+			
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getRootValue">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#237" title="Go to source code">getRootValue</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setRootValue" id="_setRootValue">
+
+		<td class="attributes"><code>
+			
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setRootValue">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#238" title="Go to source code">setRootValue</a>( <span> <var>$nestedRoot</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="__toString" id="___toString">
+
+		<td class="attributes"><code>
+			
+			 public 
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#___toString">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#240" title="Go to source code">__toString</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setType" id="_setType">
+
+		<td class="attributes"><code>
+			
+			 public 
+			<code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setType">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#242" title="Go to source code">setType</a>( <span><a href="class-Entities.Location.Type.html">Entities\Location\Type</a> <var>$type</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$type</var></dt>
+					<dd><code><code><a href="class-Entities.Location.Type.html">Entities\Location\Type</a></code></code></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code></code><br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="unsetType" id="_unsetType">
+
+		<td class="attributes"><code>
+			
+			 public 
+			<code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_unsetType">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#252" title="Go to source code">unsetType</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code></code><br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getType" id="_getType">
+
+		<td class="attributes"><code>
+			
+			 public 
+			<code><a href="class-Entities.Location.Type.html">Entities\Location\Type</a></code>|null
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getType">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#261" title="Go to source code">getType</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-Entities.Location.Type.html">Entities\Location\Type</a></code>|null</code><br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setPolygon" id="_setPolygon">
+
+		<td class="attributes"><code>
+			
+			 public 
+			<code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setPolygon">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#268" title="Go to source code">setPolygon</a>( <span>json <var>$polygon</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$polygon</var></dt>
+					<dd><code>json</code></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code></code><br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="unsetPolygon" id="_unsetPolygon">
+
+		<td class="attributes"><code>
+			
+			 public 
+			<code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_unsetPolygon">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#278" title="Go to source code">unsetPolygon</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code></code><br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getPolygon" id="_getPolygon">
+
+		<td class="attributes"><code>
+			
+			 public 
+			json|null
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getPolygon">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#287" title="Go to source code">getPolygon</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>json|null</code><br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setLatitude" id="_setLatitude">
+
+		<td class="attributes"><code>
+			
+			 public 
+			<code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setLatitude">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#294" title="Go to source code">setLatitude</a>( <span><a href="class-Extras.Types.Latlong.html">Extras\Types\Latlong</a> <var>$latitude</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$latitude</var></dt>
+					<dd><code><code><a href="class-Extras.Types.Latlong.html">Extras\Types\Latlong</a></code></code></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code></code><br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="unsetLatitude" id="_unsetLatitude">
+
+		<td class="attributes"><code>
+			
+			 public 
+			<code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_unsetLatitude">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#304" title="Go to source code">unsetLatitude</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code></code><br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getLatitude" id="_getLatitude">
+
+		<td class="attributes"><code>
+			
+			 public 
+			<code><a href="class-Extras.Types.Latlong.html">Extras\Types\Latlong</a></code>|null
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getLatitude">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#313" title="Go to source code">getLatitude</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-Extras.Types.Latlong.html">Extras\Types\Latlong</a></code>|null</code><br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setLongitude" id="_setLongitude">
+
+		<td class="attributes"><code>
+			
+			 public 
+			<code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setLongitude">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#320" title="Go to source code">setLongitude</a>( <span><a href="class-Extras.Types.Latlong.html">Extras\Types\Latlong</a> <var>$longitude</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$longitude</var></dt>
+					<dd><code><code><a href="class-Extras.Types.Latlong.html">Extras\Types\Latlong</a></code></code></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code></code><br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="unsetLongitude" id="_unsetLongitude">
+
+		<td class="attributes"><code>
+			
+			 public 
+			<code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_unsetLongitude">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#330" title="Go to source code">unsetLongitude</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code></code><br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getLongitude" id="_getLongitude">
+
+		<td class="attributes"><code>
+			
+			 public 
+			<code><a href="class-Extras.Types.Latlong.html">Extras\Types\Latlong</a></code>|null
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getLongitude">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#339" title="Go to source code">getLongitude</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-Extras.Types.Latlong.html">Extras\Types\Latlong</a></code>|null</code><br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setDefaultZoom" id="_setDefaultZoom">
+
+		<td class="attributes"><code>
+			
+			 public 
+			<code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setDefaultZoom">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#346" title="Go to source code">setDefaultZoom</a>( <span>integer <var>$defaultZoom</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$defaultZoom</var></dt>
+					<dd><code>integer</code></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code></code><br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="unsetDefaultZoom" id="_unsetDefaultZoom">
+
+		<td class="attributes"><code>
+			
+			 public 
+			<code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_unsetDefaultZoom">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#356" title="Go to source code">unsetDefaultZoom</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code></code><br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getDefaultZoom" id="_getDefaultZoom">
+
+		<td class="attributes"><code>
+			
+			 public 
+			integer|null
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getDefaultZoom">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#365" title="Go to source code">getDefaultZoom</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>integer|null</code><br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="addBankAccount" id="_addBankAccount">
+
+		<td class="attributes"><code>
+			
+			 public 
+			<code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_addBankAccount">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#372" title="Go to source code">addBankAccount</a>( <span><a href="class-Entities.Company.BankAccount.html">Entities\Company\BankAccount</a> <var>$bankAccount</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$bankAccount</var></dt>
+					<dd><code><code><a href="class-Entities.Company.BankAccount.html">Entities\Company\BankAccount</a></code></code></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code></code><br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getBankAccounts" id="_getBankAccounts">
+
+		<td class="attributes"><code>
+			
+			 public 
+			Doctrine\Common\Collections\ArrayCollection
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getBankAccounts">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#385" title="Go to source code">getBankAccounts</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>Doctrine\Common\Collections\ArrayCollection</code><br>of \Entities\Company\BankAccount<br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="addCompany" id="_addCompany">
+
+		<td class="attributes"><code>
+			
+			 public 
+			<code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_addCompany">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#392" title="Go to source code">addCompany</a>( <span><a href="class-Entities.Company.Company.html">Entities\Company\Company</a> <var>$company</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$company</var></dt>
+					<dd><code><code><a href="class-Entities.Company.Company.html">Entities\Company\Company</a></code></code></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code></code><br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getCompanies" id="_getCompanies">
+
+		<td class="attributes"><code>
+			
+			 public 
+			Doctrine\Common\Collections\ArrayCollection
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getCompanies">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#405" title="Go to source code">getCompanies</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>Doctrine\Common\Collections\ArrayCollection</code><br>of \Entities\Company\Company<br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="addOffice" id="_addOffice">
+
+		<td class="attributes"><code>
+			
+			 public 
+			<code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_addOffice">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#412" title="Go to source code">addOffice</a>( <span><a href="class-Entities.Company.Office.html">Entities\Company\Office</a> <var>$office</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$office</var></dt>
+					<dd><code><code><a href="class-Entities.Company.Office.html">Entities\Company\Office</a></code></code></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code></code><br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getOffices" id="_getOffices">
+
+		<td class="attributes"><code>
+			
+			 public 
+			Doctrine\Common\Collections\ArrayCollection
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getOffices">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#425" title="Go to source code">getOffices</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>Doctrine\Common\Collections\ArrayCollection</code><br>of \Entities\Company\Office<br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setDomain" id="_setDomain">
+
+		<td class="attributes"><code>
+			
+			 public 
+			<code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setDomain">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#432" title="Go to source code">setDomain</a>( <span><a href="class-Entities.Domain.html">Entities\Domain</a> <var>$domain</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$domain</var></dt>
+					<dd><code><code><a href="class-Entities.Domain.html">Entities\Domain</a></code></code></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code></code><br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getDomain" id="_getDomain">
+
+		<td class="attributes"><code>
+			
+			 public 
+			Doctrine\Common\Collections\ArrayCollection
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getDomain">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#442" title="Go to source code">getDomain</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>Doctrine\Common\Collections\ArrayCollection</code><br>of \Entities\Domain<br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="addMarketing" id="_addMarketing">
+
+		<td class="attributes"><code>
+			
+			 public 
+			<code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_addMarketing">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#449" title="Go to source code">addMarketing</a>( <span><a href="class-Entities.Invoicing.Marketing.html">Entities\Invoicing\Marketing</a> <var>$marketing</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$marketing</var></dt>
+					<dd><code><code><a href="class-Entities.Invoicing.Marketing.html">Entities\Invoicing\Marketing</a></code></code></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code></code><br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getMarketings" id="_getMarketings">
+
+		<td class="attributes"><code>
+			
+			 public 
+			Doctrine\Common\Collections\ArrayCollection
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getMarketings">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#462" title="Go to source code">getMarketings</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>Doctrine\Common\Collections\ArrayCollection</code><br>of \Entities\Invoicing\Marketing<br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="addRental" id="_addRental">
+
+		<td class="attributes"><code>
+			
+			 public 
+			<code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_addRental">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#469" title="Go to source code">addRental</a>( <span><a href="class-Entities.Rental.Rental.html">Entities\Rental\Rental</a> <var>$rental</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$rental</var></dt>
+					<dd><code><code><a href="class-Entities.Rental.Rental.html">Entities\Rental\Rental</a></code></code></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code></code><br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getRentals" id="_getRentals">
+
+		<td class="attributes"><code>
+			
+			 public 
+			Doctrine\Common\Collections\ArrayCollection
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getRentals">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#482" title="Go to source code">getRentals</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>Doctrine\Common\Collections\ArrayCollection</code><br>of \Entities\Rental\Rental<br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="addUser" id="_addUser">
+
+		<td class="attributes"><code>
+			
+			 public 
+			<code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_addUser">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#489" title="Go to source code">addUser</a>( <span><a href="class-Entities.User.User.html">Entities\User\User</a> <var>$user</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$user</var></dt>
+					<dd><code><code><a href="class-Entities.User.User.html">Entities\User\User</a></code></code></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code></code><br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getUsers" id="_getUsers">
+
+		<td class="attributes"><code>
+			
+			 public 
+			Doctrine\Common\Collections\ArrayCollection
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getUsers">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#502" title="Go to source code">getUsers</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>Doctrine\Common\Collections\ArrayCollection</code><br>of \Entities\User\User<br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setCountry" id="_setCountry">
+
+		<td class="attributes"><code>
+			
+			 public 
+			<code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setCountry">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#509" title="Go to source code">setCountry</a>( <span><a href="class-Entities.Location.Country.html">Entities\Location\Country</a> <var>$country</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$country</var></dt>
+					<dd><code><code><a href="class-Entities.Location.Country.html">Entities\Location\Country</a></code></code></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code></code><br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getCountry" id="_getCountry">
+
+		<td class="attributes"><code>
+			
+			 public 
+			Doctrine\Common\Collections\ArrayCollection
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getCountry">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#520" title="Go to source code">getCountry</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>Doctrine\Common\Collections\ArrayCollection</code><br>of \Entities\Location\Country<br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="addIncomingLocation" id="_addIncomingLocation">
+
+		<td class="attributes"><code>
+			
+			 public 
+			<code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_addIncomingLocation">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#527" title="Go to source code">addIncomingLocation</a>( <span><a href="class-Entities.Location.Traveling.html">Entities\Location\Traveling</a> <var>$incomingLocation</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$incomingLocation</var></dt>
+					<dd><code><code><a href="class-Entities.Location.Traveling.html">Entities\Location\Traveling</a></code></code></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code></code><br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="removeIncomingLocation" id="_removeIncomingLocation">
+
+		<td class="attributes"><code>
+			
+			 public 
+			<code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_removeIncomingLocation">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#540" title="Go to source code">removeIncomingLocation</a>( <span><a href="class-Entities.Location.Traveling.html">Entities\Location\Traveling</a> <var>$incomingLocation</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$incomingLocation</var></dt>
+					<dd><code><code><a href="class-Entities.Location.Traveling.html">Entities\Location\Traveling</a></code></code></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code></code><br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getIncomingLocations" id="_getIncomingLocations">
+
+		<td class="attributes"><code>
+			
+			 public 
+			Doctrine\Common\Collections\ArrayCollection
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getIncomingLocations">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#553" title="Go to source code">getIncomingLocations</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>Doctrine\Common\Collections\ArrayCollection</code><br>of \Entities\Location\Traveling<br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="addOutgoingLocation" id="_addOutgoingLocation">
+
+		<td class="attributes"><code>
+			
+			 public 
+			<code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_addOutgoingLocation">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#560" title="Go to source code">addOutgoingLocation</a>( <span><a href="class-Entities.Location.Traveling.html">Entities\Location\Traveling</a> <var>$outgoingLocation</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$outgoingLocation</var></dt>
+					<dd><code><code><a href="class-Entities.Location.Traveling.html">Entities\Location\Traveling</a></code></code></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code></code><br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="removeOutgoingLocation" id="_removeOutgoingLocation">
+
+		<td class="attributes"><code>
+			
+			 public 
+			<code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_removeOutgoingLocation">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#573" title="Go to source code">removeOutgoingLocation</a>( <span><a href="class-Entities.Location.Traveling.html">Entities\Location\Traveling</a> <var>$outgoingLocation</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$outgoingLocation</var></dt>
+					<dd><code><code><a href="class-Entities.Location.Traveling.html">Entities\Location\Traveling</a></code></code></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code></code><br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getOutgoingLocations" id="_getOutgoingLocations">
+
+		<td class="attributes"><code>
+			
+			 public 
+			Doctrine\Common\Collections\ArrayCollection
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getOutgoingLocations">#</a>
+		<code><a href="source-class-Entities.Location.Location.html#586" title="Go to source code">getOutgoingLocations</a>( )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code>Doctrine\Common\Collections\ArrayCollection</code><br>of \Entities\Location\Traveling<br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	</table>
 
 	<table class="summary inherited">
 	<caption>Methods inherited from <a href="class-Entities.BaseEntityDetails.html#methods">Entities\BaseEntityDetails</a></caption>
@@ -305,29 +2133,31 @@ Nette\Security\IResource,
 	<caption>Methods inherited from <a href="class-Entities.BaseEntity.html#methods">Entities\BaseEntity</a></caption>
 	<tr>
 		<td><code>
-<a href="class-Entities.BaseEntity.html#___construct">__construct()</a>, 
 <a href="class-Entities.BaseEntity.html#_getCreated">getCreated()</a>, 
 <a href="class-Entities.BaseEntity.html#_getId">getId()</a>, 
+<a href="class-Entities.BaseEntity.html#_getOldId">getOldId()</a>, 
 <a href="class-Entities.BaseEntity.html#_getUpdated">getUpdated()</a>, 
 <a href="class-Entities.BaseEntity.html#_setCreated">setCreated()</a>, 
 <a href="class-Entities.BaseEntity.html#_setId">setId()</a>, 
-<a href="class-Entities.BaseEntity.html#_setUpdated">setUpdated()</a>
+<a href="class-Entities.BaseEntity.html#_setOldId">setOldId()</a>, 
+<a href="class-Entities.BaseEntity.html#_setUpdated">setUpdated()</a>, 
+<a href="class-Entities.BaseEntity.html#_unsetOldId">unsetOldId()</a>
 		</code></td>
 	</tr>
 	</table>
 	<table class="summary inherited">
-	<caption>Methods inherited from <a href="class-Entity.html#methods">Entity</a></caption>
+	<caption>Methods inherited from <a href="class-Extras.Models.Entity.html#methods">Extras\Models\Entity</a></caption>
 	<tr>
 		<td><code>
-<a href="class-Entity.html#___get">__get()</a>, 
-<a href="class-Entity.html#___set">__set()</a>, 
-<a href="class-Entity.html#_getIterator">getIterator()</a>, 
-<a href="class-Entity.html#_getPrimaryKey">getPrimaryKey()</a>, 
-<a href="class-Entity.html#_getPrimaryValue">getPrimaryValue()</a>, 
-<a href="class-Entity.html#_getResourceId">getResourceId()</a>, 
-<a href="class-Entity.html#_setData">setData()</a>, 
-<a href="class-Entity.html#_toArray">toArray()</a>, 
-<a href="class-Entity.html#_toFormArray">toFormArray()</a>
+<a href="class-Extras.Models.Entity.html#___get">__get()</a>, 
+<a href="class-Extras.Models.Entity.html#___set">__set()</a>, 
+<a href="class-Extras.Models.Entity.html#_getIterator">getIterator()</a>, 
+<a href="class-Extras.Models.Entity.html#_getPrimaryKey">getPrimaryKey()</a>, 
+<a href="class-Extras.Models.Entity.html#_getPrimaryValue">getPrimaryValue()</a>, 
+<a href="class-Extras.Models.Entity.html#_getResourceId">getResourceId()</a>, 
+<a href="class-Extras.Models.Entity.html#_setData">setData()</a>, 
+<a href="class-Extras.Models.Entity.html#_toArray">toArray()</a>, 
+<a href="class-Extras.Models.Entity.html#_toFormArray">toFormArray()</a>
 		</code></td>
 	</tr>
 	</table>
@@ -339,35 +2169,6 @@ Nette\Security\IResource,
 
 	<table class="summary" id="properties">
 	<caption>Properties summary</caption>
-	<tr data-order="languages" id="$languages">
-
-		<td class="attributes"><code>
-			
-			protected 
-			Collection
-		</code></td>
-
-		<td class="name">
-				<a href="source-class-Entities.Location.Location.html#14" title="Go to source code"><var>$languages</var></a>
-		</td>
-		<td class="value"><code></code></td>
-		<td class="description"><div>
-			<a href="#$languages" class="anchor">#</a>
-
-			<div class="description short">
-				
-			</div>
-
-			<div class="description detailed hidden">
-				
-
-					<h4>ORM\ManyToMany(targetEntity="Entities\Dictionary\Language",</h4>
-					<div class="list">
-							mappedBy="locations")<br>
-					</div>
-			</div>
-		</div></td>
-	</tr>
 	<tr data-order="name" id="$name">
 
 		<td class="attributes"><code>
@@ -377,7 +2178,7 @@ Nette\Security\IResource,
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Entities.Location.Location.html#20" title="Go to source code"><var>$name</var></a>
+				<a href="source-class-Entities.Location.Location.html#15" title="Go to source code"><var>$name</var></a>
 		</td>
 		<td class="value"><code></code></td>
 		<td class="description"><div>
@@ -390,8 +2191,9 @@ Nette\Security\IResource,
 			<div class="description detailed hidden">
 				
 
-					<h4>ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase")</h4>
+					<h4>ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase",</h4>
 					<div class="list">
+							cascade={"persist", "remove"})<br>
 					</div>
 			</div>
 		</div></td>
@@ -405,7 +2207,7 @@ Nette\Security\IResource,
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Entities.Location.Location.html#26" title="Go to source code"><var>$nameOfficial</var></a>
+				<a href="source-class-Entities.Location.Location.html#21" title="Go to source code"><var>$nameOfficial</var></a>
 		</td>
 		<td class="value"><code></code></td>
 		<td class="description"><div>
@@ -418,8 +2220,9 @@ Nette\Security\IResource,
 			<div class="description detailed hidden">
 				
 
-					<h4>ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase")</h4>
+					<h4>ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase",</h4>
 					<div class="list">
+							cascade={"persist", "remove"})<br>
 					</div>
 			</div>
 		</div></td>
@@ -433,7 +2236,7 @@ Nette\Security\IResource,
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Entities.Location.Location.html#32" title="Go to source code"><var>$nameShort</var></a>
+				<a href="source-class-Entities.Location.Location.html#27" title="Go to source code"><var>$nameShort</var></a>
 		</td>
 		<td class="value"><code></code></td>
 		<td class="description"><div>
@@ -446,37 +2249,9 @@ Nette\Security\IResource,
 			<div class="description detailed hidden">
 				
 
-					<h4>ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase")</h4>
+					<h4>ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase",</h4>
 					<div class="list">
-					</div>
-			</div>
-		</div></td>
-	</tr>
-	<tr data-order="iso" id="$iso">
-
-		<td class="attributes"><code>
-			
-			protected 
-			string
-		</code></td>
-
-		<td class="name">
-				<a href="source-class-Entities.Location.Location.html#38" title="Go to source code"><var>$iso</var></a>
-		</td>
-		<td class="value"><code></code></td>
-		<td class="description"><div>
-			<a href="#$iso" class="anchor">#</a>
-
-			<div class="description short">
-				
-			</div>
-
-			<div class="description detailed hidden">
-				
-
-					<h4>ORM\Column(type="string",</h4>
-					<div class="list">
-							unique=true)<br>
+							cascade={"persist", "remove"})<br>
 					</div>
 			</div>
 		</div></td>
@@ -490,7 +2265,7 @@ Nette\Security\IResource,
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Entities.Location.Location.html#44" title="Go to source code"><var>$slug</var></a>
+				<a href="source-class-Entities.Location.Location.html#33" title="Go to source code"><var>$slug</var></a>
 		</td>
 		<td class="value"><code></code></td>
 		<td class="description"><div>
@@ -518,7 +2293,7 @@ Nette\Security\IResource,
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Entities.Location.Location.html#50" title="Go to source code"><var>$nestedLeft</var></a>
+				<a href="source-class-Entities.Location.Location.html#39" title="Go to source code"><var>$nestedLeft</var></a>
 		</td>
 		<td class="value"><code></code></td>
 		<td class="description"><div>
@@ -531,8 +2306,9 @@ Nette\Security\IResource,
 			<div class="description detailed hidden">
 				
 
-					<h4>ORM\Column(type="integer")</h4>
+					<h4>ORM\Column(type="integer",</h4>
 					<div class="list">
+							nullable=true)<br>
 					</div>
 			</div>
 		</div></td>
@@ -546,7 +2322,7 @@ Nette\Security\IResource,
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Entities.Location.Location.html#56" title="Go to source code"><var>$nestedRight</var></a>
+				<a href="source-class-Entities.Location.Location.html#45" title="Go to source code"><var>$nestedRight</var></a>
 		</td>
 		<td class="value"><code></code></td>
 		<td class="description"><div>
@@ -559,8 +2335,9 @@ Nette\Security\IResource,
 			<div class="description detailed hidden">
 				
 
-					<h4>ORM\Column(type="integer")</h4>
+					<h4>ORM\Column(type="integer",</h4>
 					<div class="list">
+							nullable=true)<br>
 					</div>
 			</div>
 		</div></td>
@@ -574,7 +2351,7 @@ Nette\Security\IResource,
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Entities.Location.Location.html#62" title="Go to source code"><var>$type</var></a>
+				<a href="source-class-Entities.Location.Location.html#57" title="Go to source code"><var>$type</var></a>
 		</td>
 		<td class="value"><code></code></td>
 		<td class="description"><div>
@@ -602,7 +2379,7 @@ Nette\Security\IResource,
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Entities.Location.Location.html#68" title="Go to source code"><var>$polygon</var></a>
+				<a href="source-class-Entities.Location.Location.html#63" title="Go to source code"><var>$polygon</var></a>
 		</td>
 		<td class="value"><code></code></td>
 		<td class="description"><div>
@@ -615,8 +2392,9 @@ Nette\Security\IResource,
 			<div class="description detailed hidden">
 				
 
-					<h4>ORM\Column(type="json")</h4>
+					<h4>ORM\Column(type="json",</h4>
 					<div class="list">
+							nullable=true)<br>
 					</div>
 			</div>
 		</div></td>
@@ -630,7 +2408,7 @@ Nette\Security\IResource,
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Entities.Location.Location.html#74" title="Go to source code"><var>$latitude</var></a>
+				<a href="source-class-Entities.Location.Location.html#69" title="Go to source code"><var>$latitude</var></a>
 		</td>
 		<td class="value"><code></code></td>
 		<td class="description"><div>
@@ -643,8 +2421,9 @@ Nette\Security\IResource,
 			<div class="description detailed hidden">
 				
 
-					<h4>ORM\Column(type="latlong")</h4>
+					<h4>ORM\Column(type="latlong",</h4>
 					<div class="list">
+							nullable=true)<br>
 					</div>
 			</div>
 		</div></td>
@@ -658,7 +2437,7 @@ Nette\Security\IResource,
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Entities.Location.Location.html#80" title="Go to source code"><var>$longitude</var></a>
+				<a href="source-class-Entities.Location.Location.html#75" title="Go to source code"><var>$longitude</var></a>
 		</td>
 		<td class="value"><code></code></td>
 		<td class="description"><div>
@@ -671,8 +2450,9 @@ Nette\Security\IResource,
 			<div class="description detailed hidden">
 				
 
-					<h4>ORM\Column(type="latlong")</h4>
+					<h4>ORM\Column(type="latlong",</h4>
 					<div class="list">
+							nullable=true)<br>
 					</div>
 			</div>
 		</div></td>
@@ -686,7 +2466,7 @@ Nette\Security\IResource,
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Entities.Location.Location.html#86" title="Go to source code"><var>$defaultZoom</var></a>
+				<a href="source-class-Entities.Location.Location.html#81" title="Go to source code"><var>$defaultZoom</var></a>
 		</td>
 		<td class="value"><code></code></td>
 		<td class="description"><div>
@@ -699,8 +2479,9 @@ Nette\Security\IResource,
 			<div class="description detailed hidden">
 				
 
-					<h4>ORM\Column(type="integer")</h4>
+					<h4>ORM\Column(type="integer",</h4>
 					<div class="list">
+							nullable=true)<br>
 					</div>
 			</div>
 		</div></td>
@@ -714,7 +2495,7 @@ Nette\Security\IResource,
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Entities.Location.Location.html#92" title="Go to source code"><var>$bankAccounts</var></a>
+				<a href="source-class-Entities.Location.Location.html#87" title="Go to source code"><var>$bankAccounts</var></a>
 		</td>
 		<td class="value"><code></code></td>
 		<td class="description"><div>
@@ -743,7 +2524,7 @@ Nette\Security\IResource,
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Entities.Location.Location.html#98" title="Go to source code"><var>$companies</var></a>
+				<a href="source-class-Entities.Location.Location.html#93" title="Go to source code"><var>$companies</var></a>
 		</td>
 		<td class="value"><code></code></td>
 		<td class="description"><div>
@@ -772,7 +2553,7 @@ Nette\Security\IResource,
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Entities.Location.Location.html#104" title="Go to source code"><var>$offices</var></a>
+				<a href="source-class-Entities.Location.Location.html#99" title="Go to source code"><var>$offices</var></a>
 		</td>
 		<td class="value"><code></code></td>
 		<td class="description"><div>
@@ -801,7 +2582,7 @@ Nette\Security\IResource,
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Entities.Location.Location.html#110" title="Go to source code"><var>$domain</var></a>
+				<a href="source-class-Entities.Location.Location.html#105" title="Go to source code"><var>$domain</var></a>
 		</td>
 		<td class="value"><code></code></td>
 		<td class="description"><div>
@@ -830,7 +2611,7 @@ Nette\Security\IResource,
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Entities.Location.Location.html#116" title="Go to source code"><var>$marketings</var></a>
+				<a href="source-class-Entities.Location.Location.html#111" title="Go to source code"><var>$marketings</var></a>
 		</td>
 		<td class="value"><code></code></td>
 		<td class="description"><div>
@@ -859,7 +2640,7 @@ Nette\Security\IResource,
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Entities.Location.Location.html#122" title="Go to source code"><var>$rentals</var></a>
+				<a href="source-class-Entities.Location.Location.html#117" title="Go to source code"><var>$rentals</var></a>
 		</td>
 		<td class="value"><code></code></td>
 		<td class="description"><div>
@@ -888,7 +2669,7 @@ Nette\Security\IResource,
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Entities.Location.Location.html#128" title="Go to source code"><var>$users</var></a>
+				<a href="source-class-Entities.Location.Location.html#123" title="Go to source code"><var>$users</var></a>
 		</td>
 		<td class="value"><code></code></td>
 		<td class="description"><div>
@@ -908,64 +2689,6 @@ Nette\Security\IResource,
 			</div>
 		</div></td>
 	</tr>
-	<tr data-order="incomings" id="$incomings">
-
-		<td class="attributes"><code>
-			
-			protected 
-			Collection
-		</code></td>
-
-		<td class="name">
-				<a href="source-class-Entities.Location.Location.html#134" title="Go to source code"><var>$incomings</var></a>
-		</td>
-		<td class="value"><code></code></td>
-		<td class="description"><div>
-			<a href="#$incomings" class="anchor">#</a>
-
-			<div class="description short">
-				
-			</div>
-
-			<div class="description detailed hidden">
-				
-
-					<h4>ORM\OneToMany(targetEntity="Traveling",</h4>
-					<div class="list">
-							mappedBy="destination")<br>
-					</div>
-			</div>
-		</div></td>
-	</tr>
-	<tr data-order="travelings" id="$travelings">
-
-		<td class="attributes"><code>
-			
-			protected 
-			Collection
-		</code></td>
-
-		<td class="name">
-				<a href="source-class-Entities.Location.Location.html#140" title="Go to source code"><var>$travelings</var></a>
-		</td>
-		<td class="value"><code></code></td>
-		<td class="description"><div>
-			<a href="#$travelings" class="anchor">#</a>
-
-			<div class="description short">
-				
-			</div>
-
-			<div class="description detailed hidden">
-				
-
-					<h4>ORM\OneToMany(targetEntity="Traveling",</h4>
-					<div class="list">
-							mappedBy="source")<br>
-					</div>
-			</div>
-		</div></td>
-	</tr>
 	<tr data-order="country" id="$country">
 
 		<td class="attributes"><code>
@@ -975,7 +2698,7 @@ Nette\Security\IResource,
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Entities.Location.Location.html#146" title="Go to source code"><var>$country</var></a>
+				<a href="source-class-Entities.Location.Location.html#129" title="Go to source code"><var>$country</var></a>
 		</td>
 		<td class="value"><code></code></td>
 		<td class="description"><div>
@@ -990,7 +2713,65 @@ Nette\Security\IResource,
 
 					<h4>ORM\OneToOne(targetEntity="Country",</h4>
 					<div class="list">
-							mappedBy="location")<br>
+							mappedBy="location", cascade={"persist", "remove"})<br>
+					</div>
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="incomingLocations" id="$incomingLocations">
+
+		<td class="attributes"><code>
+			
+			protected 
+			Collection
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-Entities.Location.Location.html#135" title="Go to source code"><var>$incomingLocations</var></a>
+		</td>
+		<td class="value"><code></code></td>
+		<td class="description"><div>
+			<a href="#$incomingLocations" class="anchor">#</a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+					<h4>ORM\OneToMany(targetEntity="Traveling",</h4>
+					<div class="list">
+							mappedBy="destinationLocation")<br>
+					</div>
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="outgoingLocations" id="$outgoingLocations">
+
+		<td class="attributes"><code>
+			
+			protected 
+			Collection
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-Entities.Location.Location.html#141" title="Go to source code"><var>$outgoingLocations</var></a>
+		</td>
+		<td class="value"><code></code></td>
+		<td class="description"><div>
+			<a href="#$outgoingLocations" class="anchor">#</a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+					<h4>ORM\OneToMany(targetEntity="Traveling",</h4>
+					<div class="list">
+							mappedBy="sourceLocation")<br>
 					</div>
 			</div>
 		</div></td>
@@ -1011,6 +2792,7 @@ Nette\Security\IResource,
 		<td><code>
 <a href="class-Entities.BaseEntity.html#$created"><var>$created</var></a>, 
 <a href="class-Entities.BaseEntity.html#$id"><var>$id</var></a>, 
+<a href="class-Entities.BaseEntity.html#$oldId"><var>$oldId</var></a>, 
 <a href="class-Entities.BaseEntity.html#$updated"><var>$updated</var></a>
 		</code></td>
 	</tr>

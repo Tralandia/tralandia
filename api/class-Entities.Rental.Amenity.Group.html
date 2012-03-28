@@ -7,7 +7,7 @@
 	<title>Class Entities\Rental\Amenity\Group | Tralandia</title>
 
 	<script type="text/javascript" src="resources/combined.js?1841058525"></script>
-	<script type="text/javascript" src="elementlist.js?1692514351"></script>
+	<script type="text/javascript" src="elementlist.js?817446370"></script>
 	<script type="text/javascript">
 		var ApiGen = ApiGen || {};
 		ApiGen.options = {"elementDetailsCollapsed":true,"elementsOrder":"natural"};
@@ -26,8 +26,6 @@
 			<h3>Namespaces</h3>
 			<ul>
 				<li><a href="namespace-AdminModule.html">AdminModule</a>
-						</li>
-				<li><a href="namespace-API.html">API</a>
 						</li>
 				<li><a href="namespace-Doctrine.html">Doctrine</a>
 						<span></span>
@@ -92,6 +90,16 @@
 				<li><a href="namespace-Extras.html">Extras</a>
 						<span></span>
 						<ul>
+				<li><a href="namespace-Extras.Import.html">Import</a>
+						</li>
+				<li><a href="namespace-Extras.Mail.html">Mail</a>
+						<span></span>
+						<ul>
+				<li><a href="namespace-Extras.Mail.Message.html">Message</a>
+						</li>
+							</ul></li>
+				<li><a href="namespace-Extras.Models.html">Models</a>
+						</li>
 				<li><a href="namespace-Extras.Types.html">Types</a>
 						</li>
 							</ul></li>
@@ -165,16 +173,7 @@
 						<ul>
 				<li><a href="namespace-Tra.Forms.User.html">User</a>
 						</li>
-							</ul></li>
-				<li><a href="namespace-Tra.Mail.html">Mail</a>
-						<span></span>
-						<ul>
-				<li><a href="namespace-Tra.Mail.Message.html">Message</a>
-						</li>
-							</ul></li>
-				<li><a href="namespace-Tra.Services.html">Services</a>
-						</li>
-							</ul></li>
+							</ul></li></ul></li>
 			</ul>
 		</div>
 
@@ -238,9 +237,11 @@ Nette\Object
 		</dd>
 		<dd style="padding-left:30px">
 			<img src="resources/inherit.png" alt="Extended by">
-			<a href="class-Entity.html">Entity</a>
+			<a href="class-Extras.Models.Entity.html">Extras\Models\Entity</a>
 			
 			 implements 
+				<a href="class-Extras.Models.IEntity.html">Extras\Models\IEntity</a>, 
+			
 Nette\Security\IResource, 
 			
 				<a href="class-IteratorAggregate.html">IteratorAggregate</a>
@@ -289,26 +290,29 @@ Nette\Security\IResource,
 <a href="class-Entities.BaseEntity.html#___construct">__construct()</a>, 
 <a href="class-Entities.BaseEntity.html#_getCreated">getCreated()</a>, 
 <a href="class-Entities.BaseEntity.html#_getId">getId()</a>, 
+<a href="class-Entities.BaseEntity.html#_getOldId">getOldId()</a>, 
 <a href="class-Entities.BaseEntity.html#_getUpdated">getUpdated()</a>, 
 <a href="class-Entities.BaseEntity.html#_setCreated">setCreated()</a>, 
 <a href="class-Entities.BaseEntity.html#_setId">setId()</a>, 
-<a href="class-Entities.BaseEntity.html#_setUpdated">setUpdated()</a>
+<a href="class-Entities.BaseEntity.html#_setOldId">setOldId()</a>, 
+<a href="class-Entities.BaseEntity.html#_setUpdated">setUpdated()</a>, 
+<a href="class-Entities.BaseEntity.html#_unsetOldId">unsetOldId()</a>
 		</code></td>
 	</tr>
 	</table>
 	<table class="summary inherited">
-	<caption>Methods inherited from <a href="class-Entity.html#methods">Entity</a></caption>
+	<caption>Methods inherited from <a href="class-Extras.Models.Entity.html#methods">Extras\Models\Entity</a></caption>
 	<tr>
 		<td><code>
-<a href="class-Entity.html#___get">__get()</a>, 
-<a href="class-Entity.html#___set">__set()</a>, 
-<a href="class-Entity.html#_getIterator">getIterator()</a>, 
-<a href="class-Entity.html#_getPrimaryKey">getPrimaryKey()</a>, 
-<a href="class-Entity.html#_getPrimaryValue">getPrimaryValue()</a>, 
-<a href="class-Entity.html#_getResourceId">getResourceId()</a>, 
-<a href="class-Entity.html#_setData">setData()</a>, 
-<a href="class-Entity.html#_toArray">toArray()</a>, 
-<a href="class-Entity.html#_toFormArray">toFormArray()</a>
+<a href="class-Extras.Models.Entity.html#___get">__get()</a>, 
+<a href="class-Extras.Models.Entity.html#___set">__set()</a>, 
+<a href="class-Extras.Models.Entity.html#_getIterator">getIterator()</a>, 
+<a href="class-Extras.Models.Entity.html#_getPrimaryKey">getPrimaryKey()</a>, 
+<a href="class-Extras.Models.Entity.html#_getPrimaryValue">getPrimaryValue()</a>, 
+<a href="class-Extras.Models.Entity.html#_getResourceId">getResourceId()</a>, 
+<a href="class-Extras.Models.Entity.html#_setData">setData()</a>, 
+<a href="class-Extras.Models.Entity.html#_toArray">toArray()</a>, 
+<a href="class-Extras.Models.Entity.html#_toFormArray">toFormArray()</a>
 		</code></td>
 	</tr>
 	</table>
@@ -371,8 +375,9 @@ Nette\Security\IResource,
 			<div class="description detailed hidden">
 				
 
-					<h4>ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase")</h4>
+					<h4>ORM\OneToOne(targetEntity="Entities\Dictionary\Phrase",</h4>
 					<div class="list">
+							cascade={"persist", "remove"})<br>
 					</div>
 			</div>
 		</div></td>
@@ -385,6 +390,7 @@ Nette\Security\IResource,
 		<td><code>
 <a href="class-Entities.BaseEntity.html#$created"><var>$created</var></a>, 
 <a href="class-Entities.BaseEntity.html#$id"><var>$id</var></a>, 
+<a href="class-Entities.BaseEntity.html#$oldId"><var>$oldId</var></a>, 
 <a href="class-Entities.BaseEntity.html#$updated"><var>$updated</var></a>
 		</code></td>
 	</tr>

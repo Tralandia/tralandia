@@ -7,7 +7,7 @@
 	<title>Class Entities\Dictionary\Language | Tralandia</title>
 
 	<script type="text/javascript" src="resources/combined.js?1841058525"></script>
-	<script type="text/javascript" src="elementlist.js?1692514351"></script>
+	<script type="text/javascript" src="elementlist.js?817446370"></script>
 	<script type="text/javascript">
 		var ApiGen = ApiGen || {};
 		ApiGen.options = {"elementDetailsCollapsed":true,"elementsOrder":"natural"};
@@ -26,8 +26,6 @@
 			<h3>Namespaces</h3>
 			<ul>
 				<li><a href="namespace-AdminModule.html">AdminModule</a>
-						</li>
-				<li><a href="namespace-API.html">API</a>
 						</li>
 				<li><a href="namespace-Doctrine.html">Doctrine</a>
 						<span></span>
@@ -92,6 +90,16 @@
 				<li><a href="namespace-Extras.html">Extras</a>
 						<span></span>
 						<ul>
+				<li><a href="namespace-Extras.Import.html">Import</a>
+						</li>
+				<li><a href="namespace-Extras.Mail.html">Mail</a>
+						<span></span>
+						<ul>
+				<li><a href="namespace-Extras.Mail.Message.html">Message</a>
+						</li>
+							</ul></li>
+				<li><a href="namespace-Extras.Models.html">Models</a>
+						</li>
 				<li><a href="namespace-Extras.Types.html">Types</a>
 						</li>
 							</ul></li>
@@ -165,16 +173,7 @@
 						<ul>
 				<li><a href="namespace-Tra.Forms.User.html">User</a>
 						</li>
-							</ul></li>
-				<li><a href="namespace-Tra.Mail.html">Mail</a>
-						<span></span>
-						<ul>
-				<li><a href="namespace-Tra.Mail.Message.html">Message</a>
-						</li>
-							</ul></li>
-				<li><a href="namespace-Tra.Services.html">Services</a>
-						</li>
-							</ul></li>
+							</ul></li></ul></li>
 			</ul>
 		</div>
 
@@ -240,9 +239,11 @@ Nette\Object
 		</dd>
 		<dd style="padding-left:30px">
 			<img src="resources/inherit.png" alt="Extended by">
-			<a href="class-Entity.html">Entity</a>
+			<a href="class-Extras.Models.Entity.html">Extras\Models\Entity</a>
 			
 			 implements 
+				<a href="class-Extras.Models.IEntity.html">Extras\Models\IEntity</a>, 
+			
 Nette\Security\IResource, 
 			
 				<a href="class-IteratorAggregate.html">IteratorAggregate</a>
@@ -304,7 +305,7 @@ Nette\Security\IResource,
 
 		<td class="name"><div>
 		<a class="anchor" href="#___construct">#</a>
-		<code><a href="source-class-Entities.Dictionary.Language.html#75" title="Go to source code">__construct</a>( )</code>
+		<code><a href="source-class-Entities.Dictionary.Language.html#80" title="Go to source code">__construct</a>( )</code>
 
 		<div class="description short">
 			
@@ -333,7 +334,7 @@ Nette\Security\IResource,
 
 		<td class="name"><div>
 		<a class="anchor" href="#_setName">#</a>
-		<code><a href="source-class-Entities.Dictionary.Language.html#82" title="Go to source code">setName</a>( <span><a href="class-Entities.Dictionary.Phrase.html">Entities\Dictionary\Phrase</a> <var>$name</var></span> )</code>
+		<code><a href="source-class-Entities.Dictionary.Language.html#86" title="Go to source code">setName</a>( <span><a href="class-Entities.Dictionary.Phrase.html">Entities\Dictionary\Phrase</a> <var>$name</var></span> )</code>
 
 		<div class="description short">
 			
@@ -371,7 +372,7 @@ Nette\Security\IResource,
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getName">#</a>
-		<code><a href="source-class-Entities.Dictionary.Language.html#93" title="Go to source code">getName</a>( )</code>
+		<code><a href="source-class-Entities.Dictionary.Language.html#96" title="Go to source code">getName</a>( )</code>
 
 		<div class="description short">
 			
@@ -404,7 +405,7 @@ Nette\Security\IResource,
 
 		<td class="name"><div>
 		<a class="anchor" href="#_setIso">#</a>
-		<code><a href="source-class-Entities.Dictionary.Language.html#100" title="Go to source code">setIso</a>( <span>string <var>$iso</var></span> )</code>
+		<code><a href="source-class-Entities.Dictionary.Language.html#103" title="Go to source code">setIso</a>( <span>string <var>$iso</var></span> )</code>
 
 		<div class="description short">
 			
@@ -442,7 +443,7 @@ Nette\Security\IResource,
 
 		<td class="name"><div>
 		<a class="anchor" href="#_unsetIso">#</a>
-		<code><a href="source-class-Entities.Dictionary.Language.html#110" title="Go to source code">unsetIso</a>( )</code>
+		<code><a href="source-class-Entities.Dictionary.Language.html#113" title="Go to source code">unsetIso</a>( )</code>
 
 		<div class="description short">
 			
@@ -475,7 +476,7 @@ Nette\Security\IResource,
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getIso">#</a>
-		<code><a href="source-class-Entities.Dictionary.Language.html#119" title="Go to source code">getIso</a>( )</code>
+		<code><a href="source-class-Entities.Dictionary.Language.html#122" title="Go to source code">getIso</a>( )</code>
 
 		<div class="description short">
 			
@@ -508,7 +509,7 @@ Nette\Security\IResource,
 
 		<td class="name"><div>
 		<a class="anchor" href="#_setSupported">#</a>
-		<code><a href="source-class-Entities.Dictionary.Language.html#126" title="Go to source code">setSupported</a>( <span>boolean <var>$supported</var></span> )</code>
+		<code><a href="source-class-Entities.Dictionary.Language.html#129" title="Go to source code">setSupported</a>( <span>boolean <var>$supported</var></span> )</code>
 
 		<div class="description short">
 			
@@ -534,39 +535,6 @@ Nette\Security\IResource,
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="unsetSupported" id="_unsetSupported">
-
-		<td class="attributes"><code>
-			
-			 public 
-			<code><a href="class-Entities.Dictionary.Language.html">Entities\Dictionary\Language</a></code>
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_unsetSupported">#</a>
-		<code><a href="source-class-Entities.Dictionary.Language.html#136" title="Go to source code">unsetSupported</a>( )</code>
-
-		<div class="description short">
-			
-		</div>
-
-		<div class="description detailed hidden">
-			
-
-
-
-				<h4>Returns</h4>
-				<div class="list">
-					<code><code><a href="class-Entities.Dictionary.Language.html">Entities\Dictionary\Language</a></code></code><br>
-				</div>
-
-
-
-		</div>
-		</div></td>
-	</tr>
 	<tr data-order="getSupported" id="_getSupported">
 
 		<td class="attributes"><code>
@@ -579,7 +547,7 @@ Nette\Security\IResource,
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getSupported">#</a>
-		<code><a href="source-class-Entities.Dictionary.Language.html#145" title="Go to source code">getSupported</a>( )</code>
+		<code><a href="source-class-Entities.Dictionary.Language.html#139" title="Go to source code">getSupported</a>( )</code>
 
 		<div class="description short">
 			
@@ -612,7 +580,7 @@ Nette\Security\IResource,
 
 		<td class="name"><div>
 		<a class="anchor" href="#_setDefaultCollation">#</a>
-		<code><a href="source-class-Entities.Dictionary.Language.html#152" title="Go to source code">setDefaultCollation</a>( <span>string <var>$defaultCollation</var></span> )</code>
+		<code><a href="source-class-Entities.Dictionary.Language.html#146" title="Go to source code">setDefaultCollation</a>( <span>string <var>$defaultCollation</var></span> )</code>
 
 		<div class="description short">
 			
@@ -650,7 +618,7 @@ Nette\Security\IResource,
 
 		<td class="name"><div>
 		<a class="anchor" href="#_unsetDefaultCollation">#</a>
-		<code><a href="source-class-Entities.Dictionary.Language.html#162" title="Go to source code">unsetDefaultCollation</a>( )</code>
+		<code><a href="source-class-Entities.Dictionary.Language.html#156" title="Go to source code">unsetDefaultCollation</a>( )</code>
 
 		<div class="description short">
 			
@@ -683,7 +651,7 @@ Nette\Security\IResource,
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getDefaultCollation">#</a>
-		<code><a href="source-class-Entities.Dictionary.Language.html#171" title="Go to source code">getDefaultCollation</a>( )</code>
+		<code><a href="source-class-Entities.Dictionary.Language.html#165" title="Go to source code">getDefaultCollation</a>( )</code>
 
 		<div class="description short">
 			
@@ -716,7 +684,7 @@ Nette\Security\IResource,
 
 		<td class="name"><div>
 		<a class="anchor" href="#_setSalutations">#</a>
-		<code><a href="source-class-Entities.Dictionary.Language.html#178" title="Go to source code">setSalutations</a>( <span><a href="class-Extras.Types.Json.html">Extras\Types\Json</a> <var>$salutations</var></span> )</code>
+		<code><a href="source-class-Entities.Dictionary.Language.html#172" title="Go to source code">setSalutations</a>( <span>json <var>$salutations</var></span> )</code>
 
 		<div class="description short">
 			
@@ -729,7 +697,7 @@ Nette\Security\IResource,
 				<h4>Parameters</h4>
 				<div class="list"><dl>
 					<dt><var>$salutations</var></dt>
-					<dd><code><code><a href="class-Extras.Types.Json.html">Extras\Types\Json</a></code></code></dd>
+					<dd><code>json</code></dd>
 				</dl></div>
 
 				<h4>Returns</h4>
@@ -754,7 +722,7 @@ Nette\Security\IResource,
 
 		<td class="name"><div>
 		<a class="anchor" href="#_unsetSalutations">#</a>
-		<code><a href="source-class-Entities.Dictionary.Language.html#188" title="Go to source code">unsetSalutations</a>( )</code>
+		<code><a href="source-class-Entities.Dictionary.Language.html#182" title="Go to source code">unsetSalutations</a>( )</code>
 
 		<div class="description short">
 			
@@ -780,14 +748,14 @@ Nette\Security\IResource,
 		<td class="attributes"><code>
 			
 			 public 
-			<code><a href="class-Extras.Types.Json.html">Extras\Types\Json</a></code>|null
+			json|null
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getSalutations">#</a>
-		<code><a href="source-class-Entities.Dictionary.Language.html#197" title="Go to source code">getSalutations</a>( )</code>
+		<code><a href="source-class-Entities.Dictionary.Language.html#191" title="Go to source code">getSalutations</a>( )</code>
 
 		<div class="description short">
 			
@@ -800,7 +768,7 @@ Nette\Security\IResource,
 
 				<h4>Returns</h4>
 				<div class="list">
-					<code><code><a href="class-Extras.Types.Json.html">Extras\Types\Json</a></code>|null</code><br>
+					<code>json|null</code><br>
 				</div>
 
 
@@ -820,7 +788,7 @@ Nette\Security\IResource,
 
 		<td class="name"><div>
 		<a class="anchor" href="#_setMultitranslationOptions">#</a>
-		<code><a href="source-class-Entities.Dictionary.Language.html#204" title="Go to source code">setMultitranslationOptions</a>( <span><a href="class-Extras.Types.Json.html">Extras\Types\Json</a> <var>$multitranslationOptions</var></span> )</code>
+		<code><a href="source-class-Entities.Dictionary.Language.html#198" title="Go to source code">setMultitranslationOptions</a>( <span>json <var>$multitranslationOptions</var></span> )</code>
 
 		<div class="description short">
 			
@@ -833,7 +801,7 @@ Nette\Security\IResource,
 				<h4>Parameters</h4>
 				<div class="list"><dl>
 					<dt><var>$multitranslationOptions</var></dt>
-					<dd><code><code><a href="class-Extras.Types.Json.html">Extras\Types\Json</a></code></code></dd>
+					<dd><code>json</code></dd>
 				</dl></div>
 
 				<h4>Returns</h4>
@@ -858,7 +826,7 @@ Nette\Security\IResource,
 
 		<td class="name"><div>
 		<a class="anchor" href="#_unsetMultitranslationOptions">#</a>
-		<code><a href="source-class-Entities.Dictionary.Language.html#214" title="Go to source code">unsetMultitranslationOptions</a>( )</code>
+		<code><a href="source-class-Entities.Dictionary.Language.html#208" title="Go to source code">unsetMultitranslationOptions</a>( )</code>
 
 		<div class="description short">
 			
@@ -884,14 +852,14 @@ Nette\Security\IResource,
 		<td class="attributes"><code>
 			
 			 public 
-			<code><a href="class-Extras.Types.Json.html">Extras\Types\Json</a></code>|null
+			json|null
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getMultitranslationOptions">#</a>
-		<code><a href="source-class-Entities.Dictionary.Language.html#223" title="Go to source code">getMultitranslationOptions</a>( )</code>
+		<code><a href="source-class-Entities.Dictionary.Language.html#217" title="Go to source code">getMultitranslationOptions</a>( )</code>
 
 		<div class="description short">
 			
@@ -904,7 +872,7 @@ Nette\Security\IResource,
 
 				<h4>Returns</h4>
 				<div class="list">
-					<code><code><a href="class-Extras.Types.Json.html">Extras\Types\Json</a></code>|null</code><br>
+					<code>json|null</code><br>
 				</div>
 
 
@@ -924,7 +892,7 @@ Nette\Security\IResource,
 
 		<td class="name"><div>
 		<a class="anchor" href="#_setGenderNumberOptions">#</a>
-		<code><a href="source-class-Entities.Dictionary.Language.html#230" title="Go to source code">setGenderNumberOptions</a>( <span><a href="class-Extras.Types.Json.html">Extras\Types\Json</a> <var>$genderNumberOptions</var></span> )</code>
+		<code><a href="source-class-Entities.Dictionary.Language.html#224" title="Go to source code">setGenderNumberOptions</a>( <span>json <var>$genderNumberOptions</var></span> )</code>
 
 		<div class="description short">
 			
@@ -937,7 +905,7 @@ Nette\Security\IResource,
 				<h4>Parameters</h4>
 				<div class="list"><dl>
 					<dt><var>$genderNumberOptions</var></dt>
-					<dd><code><code><a href="class-Extras.Types.Json.html">Extras\Types\Json</a></code></code></dd>
+					<dd><code>json</code></dd>
 				</dl></div>
 
 				<h4>Returns</h4>
@@ -962,7 +930,7 @@ Nette\Security\IResource,
 
 		<td class="name"><div>
 		<a class="anchor" href="#_unsetGenderNumberOptions">#</a>
-		<code><a href="source-class-Entities.Dictionary.Language.html#240" title="Go to source code">unsetGenderNumberOptions</a>( )</code>
+		<code><a href="source-class-Entities.Dictionary.Language.html#234" title="Go to source code">unsetGenderNumberOptions</a>( )</code>
 
 		<div class="description short">
 			
@@ -988,14 +956,14 @@ Nette\Security\IResource,
 		<td class="attributes"><code>
 			
 			 public 
-			<code><a href="class-Extras.Types.Json.html">Extras\Types\Json</a></code>|null
+			json|null
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getGenderNumberOptions">#</a>
-		<code><a href="source-class-Entities.Dictionary.Language.html#249" title="Go to source code">getGenderNumberOptions</a>( )</code>
+		<code><a href="source-class-Entities.Dictionary.Language.html#243" title="Go to source code">getGenderNumberOptions</a>( )</code>
 
 		<div class="description short">
 			
@@ -1008,7 +976,7 @@ Nette\Security\IResource,
 
 				<h4>Returns</h4>
 				<div class="list">
-					<code><code><a href="class-Extras.Types.Json.html">Extras\Types\Json</a></code>|null</code><br>
+					<code>json|null</code><br>
 				</div>
 
 
@@ -1028,7 +996,7 @@ Nette\Security\IResource,
 
 		<td class="name"><div>
 		<a class="anchor" href="#_setPpcPatterns">#</a>
-		<code><a href="source-class-Entities.Dictionary.Language.html#256" title="Go to source code">setPpcPatterns</a>( <span><a href="class-Extras.Types.Json.html">Extras\Types\Json</a> <var>$ppcPatterns</var></span> )</code>
+		<code><a href="source-class-Entities.Dictionary.Language.html#250" title="Go to source code">setPpcPatterns</a>( <span>json <var>$ppcPatterns</var></span> )</code>
 
 		<div class="description short">
 			
@@ -1041,7 +1009,7 @@ Nette\Security\IResource,
 				<h4>Parameters</h4>
 				<div class="list"><dl>
 					<dt><var>$ppcPatterns</var></dt>
-					<dd><code><code><a href="class-Extras.Types.Json.html">Extras\Types\Json</a></code></code></dd>
+					<dd><code>json</code></dd>
 				</dl></div>
 
 				<h4>Returns</h4>
@@ -1066,7 +1034,7 @@ Nette\Security\IResource,
 
 		<td class="name"><div>
 		<a class="anchor" href="#_unsetPpcPatterns">#</a>
-		<code><a href="source-class-Entities.Dictionary.Language.html#266" title="Go to source code">unsetPpcPatterns</a>( )</code>
+		<code><a href="source-class-Entities.Dictionary.Language.html#260" title="Go to source code">unsetPpcPatterns</a>( )</code>
 
 		<div class="description short">
 			
@@ -1092,14 +1060,14 @@ Nette\Security\IResource,
 		<td class="attributes"><code>
 			
 			 public 
-			<code><a href="class-Extras.Types.Json.html">Extras\Types\Json</a></code>|null
+			json|null
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getPpcPatterns">#</a>
-		<code><a href="source-class-Entities.Dictionary.Language.html#275" title="Go to source code">getPpcPatterns</a>( )</code>
+		<code><a href="source-class-Entities.Dictionary.Language.html#269" title="Go to source code">getPpcPatterns</a>( )</code>
 
 		<div class="description short">
 			
@@ -1112,7 +1080,45 @@ Nette\Security\IResource,
 
 				<h4>Returns</h4>
 				<div class="list">
-					<code><code><a href="class-Extras.Types.Json.html">Extras\Types\Json</a></code>|null</code><br>
+					<code>json|null</code><br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="addLocation" id="_addLocation">
+
+		<td class="attributes"><code>
+			
+			 public 
+			<code><a href="class-Entities.Dictionary.Language.html">Entities\Dictionary\Language</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_addLocation">#</a>
+		<code><a href="source-class-Entities.Dictionary.Language.html#276" title="Go to source code">addLocation</a>( <span><a href="class-Entities.Location.Location.html">Entities\Location\Location</a> <var>$location</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$location</var></dt>
+					<dd><code><code><a href="class-Entities.Location.Location.html">Entities\Location\Location</a></code></code></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-Entities.Dictionary.Language.html">Entities\Dictionary\Language</a></code></code><br>
 				</div>
 
 
@@ -1132,7 +1138,7 @@ Nette\Security\IResource,
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getLocations">#</a>
-		<code><a href="source-class-Entities.Dictionary.Language.html#282" title="Go to source code">getLocations</a>( )</code>
+		<code><a href="source-class-Entities.Dictionary.Language.html#289" title="Go to source code">getLocations</a>( )</code>
 
 		<div class="description short">
 			
@@ -1153,6 +1159,44 @@ Nette\Security\IResource,
 		</div>
 		</div></td>
 	</tr>
+	<tr data-order="addRental" id="_addRental">
+
+		<td class="attributes"><code>
+			
+			 public 
+			<code><a href="class-Entities.Dictionary.Language.html">Entities\Dictionary\Language</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_addRental">#</a>
+		<code><a href="source-class-Entities.Dictionary.Language.html#296" title="Go to source code">addRental</a>( <span><a href="class-Entities.Rental.Rental.html">Entities\Rental\Rental</a> <var>$rental</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$rental</var></dt>
+					<dd><code><code><a href="class-Entities.Rental.Rental.html">Entities\Rental\Rental</a></code></code></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><code><a href="class-Entities.Dictionary.Language.html">Entities\Dictionary\Language</a></code></code><br>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
 	<tr data-order="getRentals" id="_getRentals">
 
 		<td class="attributes"><code>
@@ -1165,7 +1209,7 @@ Nette\Security\IResource,
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getRentals">#</a>
-		<code><a href="source-class-Entities.Dictionary.Language.html#289" title="Go to source code">getRentals</a>( )</code>
+		<code><a href="source-class-Entities.Dictionary.Language.html#309" title="Go to source code">getRentals</a>( )</code>
 
 		<div class="description short">
 			
@@ -1204,32 +1248,84 @@ Nette\Security\IResource,
 		<td><code>
 <a href="class-Entities.BaseEntity.html#_getCreated">getCreated()</a>, 
 <a href="class-Entities.BaseEntity.html#_getId">getId()</a>, 
+<a href="class-Entities.BaseEntity.html#_getOldId">getOldId()</a>, 
 <a href="class-Entities.BaseEntity.html#_getUpdated">getUpdated()</a>, 
 <a href="class-Entities.BaseEntity.html#_setCreated">setCreated()</a>, 
 <a href="class-Entities.BaseEntity.html#_setId">setId()</a>, 
-<a href="class-Entities.BaseEntity.html#_setUpdated">setUpdated()</a>
+<a href="class-Entities.BaseEntity.html#_setOldId">setOldId()</a>, 
+<a href="class-Entities.BaseEntity.html#_setUpdated">setUpdated()</a>, 
+<a href="class-Entities.BaseEntity.html#_unsetOldId">unsetOldId()</a>
 		</code></td>
 	</tr>
 	</table>
 	<table class="summary inherited">
-	<caption>Methods inherited from <a href="class-Entity.html#methods">Entity</a></caption>
+	<caption>Methods inherited from <a href="class-Extras.Models.Entity.html#methods">Extras\Models\Entity</a></caption>
 	<tr>
 		<td><code>
-<a href="class-Entity.html#___get">__get()</a>, 
-<a href="class-Entity.html#___set">__set()</a>, 
-<a href="class-Entity.html#_getIterator">getIterator()</a>, 
-<a href="class-Entity.html#_getPrimaryKey">getPrimaryKey()</a>, 
-<a href="class-Entity.html#_getPrimaryValue">getPrimaryValue()</a>, 
-<a href="class-Entity.html#_getResourceId">getResourceId()</a>, 
-<a href="class-Entity.html#_setData">setData()</a>, 
-<a href="class-Entity.html#_toArray">toArray()</a>, 
-<a href="class-Entity.html#_toFormArray">toFormArray()</a>
+<a href="class-Extras.Models.Entity.html#___get">__get()</a>, 
+<a href="class-Extras.Models.Entity.html#___set">__set()</a>, 
+<a href="class-Extras.Models.Entity.html#_getIterator">getIterator()</a>, 
+<a href="class-Extras.Models.Entity.html#_getPrimaryKey">getPrimaryKey()</a>, 
+<a href="class-Extras.Models.Entity.html#_getPrimaryValue">getPrimaryValue()</a>, 
+<a href="class-Extras.Models.Entity.html#_getResourceId">getResourceId()</a>, 
+<a href="class-Extras.Models.Entity.html#_setData">setData()</a>, 
+<a href="class-Extras.Models.Entity.html#_toArray">toArray()</a>, 
+<a href="class-Extras.Models.Entity.html#_toFormArray">toFormArray()</a>
 		</code></td>
 	</tr>
 	</table>
 
 
 
+	<table class="summary" id="constants">
+	<caption>Constants summary</caption>
+	<tr data-order="SUPPORTED" id="SUPPORTED">
+
+		<td class="attributes"><code>
+			
+			boolean
+		</code></td>
+		<td class="name"><code>
+				<a href="source-class-Entities.Dictionary.Language.html#14" title="Go to source code"><b>SUPPORTED</b></a>
+		</code></td>
+		<td class="value"><code><span class="php-keyword1">TRUE</span></code></td>
+		<td class="description"><div>
+			<a href="#SUPPORTED" class="anchor">#</a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</div></td>
+	</tr>
+	<tr data-order="NOT_SUPPORTED" id="NOT_SUPPORTED">
+
+		<td class="attributes"><code>
+			
+			boolean
+		</code></td>
+		<td class="name"><code>
+				<a href="source-class-Entities.Dictionary.Language.html#15" title="Go to source code"><b>NOT_SUPPORTED</b></a>
+		</code></td>
+		<td class="value"><code><span class="php-keyword1">FALSE</span></code></td>
+		<td class="description"><div>
+			<a href="#NOT_SUPPORTED" class="anchor">#</a>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</div></td>
+	</tr>
+	</table>
 
 
 
@@ -1244,7 +1340,7 @@ Nette\Security\IResource,
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Entities.Dictionary.Language.html#14" title="Go to source code"><var>$name</var></a>
+				<a href="source-class-Entities.Dictionary.Language.html#17" title="Go to source code"><var>$name</var></a>
 		</td>
 		<td class="value"><code></code></td>
 		<td class="description"><div>
@@ -1257,8 +1353,9 @@ Nette\Security\IResource,
 			<div class="description detailed hidden">
 				
 
-					<h4>ORM\OneToOne(targetEntity="Phrase")</h4>
+					<h4>ORM\OneToOne(targetEntity="Phrase",</h4>
 					<div class="list">
+							cascade={"persist", "remove"})<br>
 					</div>
 			</div>
 		</div></td>
@@ -1272,7 +1369,7 @@ Nette\Security\IResource,
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Entities.Dictionary.Language.html#20" title="Go to source code"><var>$iso</var></a>
+				<a href="source-class-Entities.Dictionary.Language.html#23" title="Go to source code"><var>$iso</var></a>
 		</td>
 		<td class="value"><code></code></td>
 		<td class="description"><div>
@@ -1301,7 +1398,7 @@ Nette\Security\IResource,
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Entities.Dictionary.Language.html#26" title="Go to source code"><var>$supported</var></a>
+				<a href="source-class-Entities.Dictionary.Language.html#29" title="Go to source code"><var>$supported</var></a>
 		</td>
 		<td class="value"><code></code></td>
 		<td class="description"><div>
@@ -1329,7 +1426,7 @@ Nette\Security\IResource,
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Entities.Dictionary.Language.html#32" title="Go to source code"><var>$defaultCollation</var></a>
+				<a href="source-class-Entities.Dictionary.Language.html#35" title="Go to source code"><var>$defaultCollation</var></a>
 		</td>
 		<td class="value"><code></code></td>
 		<td class="description"><div>
@@ -1358,7 +1455,7 @@ Nette\Security\IResource,
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Entities.Dictionary.Language.html#38" title="Go to source code"><var>$salutations</var></a>
+				<a href="source-class-Entities.Dictionary.Language.html#41" title="Go to source code"><var>$salutations</var></a>
 		</td>
 		<td class="value"><code></code></td>
 		<td class="description"><div>
@@ -1387,7 +1484,7 @@ Nette\Security\IResource,
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Entities.Dictionary.Language.html#44" title="Go to source code"><var>$multitranslationOptions</var></a>
+				<a href="source-class-Entities.Dictionary.Language.html#47" title="Go to source code"><var>$multitranslationOptions</var></a>
 		</td>
 		<td class="value"><code></code></td>
 		<td class="description"><div>
@@ -1416,7 +1513,7 @@ Nette\Security\IResource,
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Entities.Dictionary.Language.html#50" title="Go to source code"><var>$genderNumberOptions</var></a>
+				<a href="source-class-Entities.Dictionary.Language.html#53" title="Go to source code"><var>$genderNumberOptions</var></a>
 		</td>
 		<td class="value"><code></code></td>
 		<td class="description"><div>
@@ -1445,7 +1542,7 @@ Nette\Security\IResource,
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Entities.Dictionary.Language.html#56" title="Go to source code"><var>$ppcPatterns</var></a>
+				<a href="source-class-Entities.Dictionary.Language.html#59" title="Go to source code"><var>$ppcPatterns</var></a>
 		</td>
 		<td class="value"><code></code></td>
 		<td class="description"><div>
@@ -1465,7 +1562,7 @@ Nette\Security\IResource,
 			</div>
 		</div></td>
 	</tr>
-	<tr data-order="locations" id="$locations">
+	<tr data-order="countries" id="$countries">
 
 		<td class="attributes"><code>
 			
@@ -1474,11 +1571,11 @@ Nette\Security\IResource,
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Entities.Dictionary.Language.html#62" title="Go to source code"><var>$locations</var></a>
+				<a href="source-class-Entities.Dictionary.Language.html#65" title="Go to source code"><var>$countries</var></a>
 		</td>
 		<td class="value"><code></code></td>
 		<td class="description"><div>
-			<a href="#$locations" class="anchor">#</a>
+			<a href="#$countries" class="anchor">#</a>
 
 			<div class="description short">
 				
@@ -1487,7 +1584,7 @@ Nette\Security\IResource,
 			<div class="description detailed hidden">
 				
 
-					<h4>ORM\ManyToMany(targetEntity="Entities\Location\Location",</h4>
+					<h4>ORM\ManyToMany(targetEntity="Entities\Location\Country",</h4>
 					<div class="list">
 							inversedBy="languages")<br>
 					</div>
@@ -1503,7 +1600,7 @@ Nette\Security\IResource,
 		</code></td>
 
 		<td class="name">
-				<a href="source-class-Entities.Dictionary.Language.html#68" title="Go to source code"><var>$rentals</var></a>
+				<a href="source-class-Entities.Dictionary.Language.html#71" title="Go to source code"><var>$rentals</var></a>
 		</td>
 		<td class="value"><code></code></td>
 		<td class="description"><div>
@@ -1539,6 +1636,7 @@ Nette\Security\IResource,
 		<td><code>
 <a href="class-Entities.BaseEntity.html#$created"><var>$created</var></a>, 
 <a href="class-Entities.BaseEntity.html#$id"><var>$id</var></a>, 
+<a href="class-Entities.BaseEntity.html#$oldId"><var>$oldId</var></a>, 
 <a href="class-Entities.BaseEntity.html#$updated"><var>$updated</var></a>
 		</code></td>
 	</tr>
