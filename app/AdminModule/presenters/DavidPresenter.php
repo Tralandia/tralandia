@@ -36,6 +36,13 @@ class DavidPresenter extends BasePresenter {
 	}
 
 	public function actionTest() {
+		
+		$list = D\PhraseList::toTranslate();
+		debug($list);
+	
+	}
+
+	public function actionListTest() {
 		$list = D\LanguageList::getBySupported(\Entities\Dictionary\Language::SUPPORTED);
 
 		$i = 0;

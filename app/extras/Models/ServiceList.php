@@ -9,9 +9,9 @@ use Nette\Object,
 /**
  * Abstrakcia zoznamu
  */
-abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \Iterator, IServiceList {
+abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \Iterator {
 
-	const RETURN_ENTITIES = 1;
+	const RETURN_ENTITIES = 'Entities';
 
 	/**
 	 * @var array
@@ -28,9 +28,27 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 	private static $em = NULL;
 
 
-	public function __construct() {
+	public function __construct($param = NULL) {
+		if(is_array($param)) {
+			$this->list = $param;
+		} else if(is_string($param)) {
+			$this->prepareBaseList($param);
+		} else if($param === NULL) {
+
+		} else {
+			throw new \Nette\InvalidArgumentException('Argument does not match with the expected value');
+		}
+
 		$this->iteratorPosition = 0;
 	}
+
+
+	protected function prepareBaseList($entity) {
+		$query = $this->getEm()->createQueryBuilder();
+		$query->select('e')->from($entity, 'e');
+		$this->list = $query->getQuery()->getResult();
+	}
+
 
 	/**
 	 * Nastavenie entity manazera
