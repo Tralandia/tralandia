@@ -16,7 +16,7 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 	/**
 	 * @var array
 	 */
-	protected $list = NULL;
+	protected $list = array();
 
 	protected $iteratorPosition = 0;
 

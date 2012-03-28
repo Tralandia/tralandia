@@ -5,6 +5,7 @@ use Nette\Diagnostics\Debugger,
 	Nette\Application\Routers\Route,
 	Nella\Addons\Doctrine\Config\Extension;
 
+
 // Load Nette Framework
 require_once LIBS_DIR . '/Nette/loader.php';
 require_once LIBS_DIR . '/tools.php';
@@ -13,10 +14,13 @@ require_once LIBS_DIR . '/rado_functions.php';
 // Enable Nette\Debug for error visualisation & logging
 Debugger::enable();
 
+
 // Configure application
 $configurator = new Nette\Config\Configurator;
 $configurator->setTempDirectory(TEMP_DIR);
 $configurator->enableDebugger(ROOT_DIR . '/log');
+
+
 
 // Enable RobotLoader - this will load all classes automatically
 $robotLoader = $configurator->createRobotLoader();

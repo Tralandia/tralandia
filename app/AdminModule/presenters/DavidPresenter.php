@@ -37,9 +37,7 @@ class DavidPresenter extends BasePresenter {
 
 	public function actionTest() {
 		
-		$list = D\PhraseList::toTranslate();
-		debug($list);
-	
+		//$r = exec('');
 	}
 
 	public function actionListTest() {
