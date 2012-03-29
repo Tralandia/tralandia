@@ -244,10 +244,8 @@ class ImportLocations extends BaseImport {
 	// ------------- Regions
 	// ----------------------------------------------------------
 	private function importRegions() {
-		$language = getLangByIso('en');
-
 		$locationType = S\Location\TypeService::get();
-		$locationType->name = $this->createPhraseFromString('\Location\Location', 'name', 'supportedLanguages', 'NATIVE', 'region', $language);
+		$locationType->name = $this->createPhraseFromString('\Location\Location', 'name', 'supportedLanguages', 'NATIVE', 'region', \Services\Dictionary\Language::getByIso('en'));
 		$locationType->slug = 'region';
 		$locationType->save();
 		$this->regionsType = $locationType;
@@ -267,22 +265,19 @@ class ImportLocations extends BaseImport {
 				$variations = array(
 					'locative' => $x1['name_locative'],
 				);
-				$t = $this->createTranslation($this->languagesByOldId[$x1['language_id']], $x['name'], $variations);
+				$t = $this->createTranslation(\Services\Dictionary\Language::getByOldId($x1['language_id']), $x['name'], $variations);
 				$namePhrase->addTranslation($t);
 			}
 
 
 			$location->name = $namePhrase;
-			$location->slug = $x['name_url'];
-			
 			$location->type = $locationType;
+			$location->slug = $x['name_url'];			
 
 			$location->oldId = $x['id'];
-			
-			$t = qNew('select location_id from location_country where oldId = '.$x['country_id']);
-			$t = mysql_fetch_array($t);
 
-			$location->parentId = $t[0];
+			$location->parentId = \Services\Location\CountryService::getByOldId($x['country_id'])->oldId;
+			debug($location); return;
 			$location->save();
 			return; 
 			//debug($s);
