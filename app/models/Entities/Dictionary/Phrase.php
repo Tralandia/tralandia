@@ -29,6 +29,13 @@ class Phrase extends \Entities\BaseEntityDetails {
 	 */
 	protected $type;
 
+	/**
+	 * @var Collection
+	 * @ORM\ManyToOne(targetEntity="Language", cascade={"persist"})
+	 * This will be used by Locations (localities) to make sure we know the original language of the name of the locality to translate from
+	 */
+	protected $sourceLanguage;
+
 	/* ----------------------------- Methods ----------------------------- */
 
 
@@ -46,7 +53,6 @@ class Phrase extends \Entities\BaseEntityDetails {
 		if(!$this->translations->contains($translation)) {
 			$this->translations->add($translation);
 		}
-		$translation->setPhrase($this);
 
 		return $this;
 	}
@@ -59,7 +65,6 @@ class Phrase extends \Entities\BaseEntityDetails {
 		if($this->translations->contains($translation)) {
 			$this->translations->removeElement($translation);
 		}
-		$translation->unsetPhrase();
 
 		return $this;
 	}
@@ -112,6 +117,32 @@ class Phrase extends \Entities\BaseEntityDetails {
 	 */
 	public function getType() {
 		return $this->type;
+	}
+
+	/**
+	 * @param \Entities\Dictionary\Language
+	 * @return \Entities\Dictionary\Phrase
+	 */
+	public function setSourceLanguage(\Entities\Dictionary\Language $sourceLanguage) {
+		$this->sourceLanguage = $sourceLanguage;
+
+		return $this;
+	}
+
+	/**
+	 * @return \Entities\Dictionary\Phrase
+	 */
+	public function unsetSourceLanguage() {
+		$this->sourceLanguage = NULL;
+
+		return $this;
+	}
+
+	/**
+	 * @return \Entities\Dictionary\Language|NULL
+	 */
+	public function getSourceLanguage() {
+		return $this->sourceLanguage;
 	}
 
 }

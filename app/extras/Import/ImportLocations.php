@@ -54,6 +54,7 @@ class ImportLocations extends BaseImport {
 			$s->name = $this->createNewPhrase($this->dictionaryTypeName, $x['name_dic_id']);
 			$s->slug = qc('select text from z_en where id = '.$x['name_dic_id']);
 			$s->type = $locationType;
+			$s->oldId = $x['id'];
 			$s->save();
 
 			$s->createRoot();
@@ -75,8 +76,8 @@ class ImportLocations extends BaseImport {
 		$locationType->slug = 'country';
 		$locationType->save();
 
-		//$r = q('select * from countries order by id');
-		$r = q('select * from countries where id = 46 order by id');
+		$r = q('select * from countries order by id');
+		//$r = q('select * from countries where id = 46 order by id');
 		while($x = mysql_fetch_array($r)) {
 			$location = S\Location\LocationService::get();
 			$country = S\Location\CountryService::get();
@@ -130,10 +131,7 @@ class ImportLocations extends BaseImport {
 			$countryDetails['beta'] = $x['beta'];
 			$countryDetails['inEu'] = $x['in_eu'];
 
-			$country->oldId = $x['id'];
 			$country->details = $countryDetails;
-
-
 
 			if (strlen($x['skype'])) $country->addContact($this->createContact('Skype', $x['skype']));
 			if (strlen($x['phone'])) $country->addContact($this->createContact('Phone', $x['phone']));
@@ -164,17 +162,21 @@ class ImportLocations extends BaseImport {
 			$location->name = $namePhrase;
 
 			if ($x['name_long_dic_id'] > 0) {
+
 				$nameOfficialPhrase = $this->createNewPhrase($this->dictionaryTypeNameOfficial, $x['name_long_dic_id']);
+				
 				$t = $nameOfficialPhrase->getTranslations();
 				foreach ($t as $key => $value) {
+					$value = \Services\Dictionary\TranslationService::get($value);
 					$language = \Services\Dictionary\LanguageService::get($value->language);
 					$x1 = qf('select * from countries_synonyms where country_id = '.$x['id'].' and language_id = '.$language->oldId.' order by length(name) DESC limit 1');
-					$t->translation = $x1['name'];
+					$value->translation = $x1['name'];
 					$variations = array(
 						'translation' => $x1['name'],
 						'locative' => $x1['name_locative'],
 					);
-					$t->variations = $variations;
+					$value->variations = $variations;
+					$value->save();
 				}
 
 				$location->nameOfficial = $nameOfficialPhrase;
@@ -190,15 +192,17 @@ class ImportLocations extends BaseImport {
 			$location->longitude = new \Extras\Types\Latlong($x['longitude']);
 			$location->defaultZoom = $x['default_zoom'];
 
+			$t = mysql_fetch_array(qNew('select id from location_location where oldId = '.$x['continent']));
+			$location->parentId = $t[0];
+
 			if ($x['domain']) $location->domain = \Services\DomainService::getByDomain($x['domain']);
 
-			$location->country = $country; 
-
-			debug($location); debug($country); return;
+			$location->country = $country;
+			// debug($location->parentId); return;
+			// debug($location); debug($country); return;
 
 			$location->save();
 			$country->save();
-			return;
 		}
 	}
 
