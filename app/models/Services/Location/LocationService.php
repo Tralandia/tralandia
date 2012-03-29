@@ -16,20 +16,28 @@ class LocationService extends \Extras\Models\ServiceNested {
 		}
 
 		$slug = Strings::webalize(Strings::trim($slug));
-		$type = $this->type;
-		if(in_array($type->slug, array('region', 'city')))  { # @todo
-			$types = array();
-			$types[] = TypeService::getBySlug('region');
-			$types[] = TypeService::getBySlug('city');
-			$locationList = S\Location\LocationList::getBySlugInTypes($slug, $types);
-		} else {
-			$locationList = S\Location\LocationList::getBySlugInTypes($slug, array($type));
-		}
-		if($locationList->count()) {
-			$slug .= '-'.time();
+		$available = $this->slugIsAvailable($slug);
+		$i = 0;
+		while (!$available) {
+			$i++;
+			$available = $this->slugIsAvailable($slug.'-'.$i);
 		}
 
-		return $this->getMainEntity()->setSlug($slug);
+		return $this->getMainEntity()->setSlug($i ? $slug.'-'.$i : $slug);
+	}
+
+	public function slugIsAvailable($slug) {
+		$type = $this->type;
+		if(in_array($type->slug, array('region', 'locality')))  { # @todo
+			$types = array();
+			$types[] = TypeService::getBySlug('region');
+			$types[] = TypeService::getBySlug('locality');
+			$locationList = LocationList::getBySlugInType($slug, $types);
+		} else {
+			$locationList = LocationList::getBySlugInType($slug, array($type));
+		}
+		return $locationList->count() ? FALSE : TRUE;
+
 	}
 
 	

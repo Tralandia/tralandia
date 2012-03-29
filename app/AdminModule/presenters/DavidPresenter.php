@@ -38,11 +38,11 @@ class DavidPresenter extends BasePresenter {
 	public function actionTest() {
 
 		//$s = S\Location\LocationService::getBySlug('asia');
-		//$s = S\Location\LocationService::get(3);
+		$s = S\Location\LocationService::get(3);
 		//$s->setSlug('smola');
-		//$s->slug = 'smola';
-		$type = S\Location\TypeService::getBySlug('country');
-		$s = S\Location\LocationList::getBySlugInType('asia', array($type));
+		$s->slug = 'asia';
+		// $type = S\Location\TypeService::getBySlug('country');
+		// $s = S\Location\LocationList::getBySlugInType('asia', array($type));
 		debug($s);
 
 	}
@@ -54,7 +54,7 @@ class DavidPresenter extends BasePresenter {
 		foreach ($list->returnAs('Services\Dictionary\LanguageService') as $key => $val) {
 			debug($val);
 			$list->returnAs(\Extras\Models\ServiceList::RETURN_ENTITIES);
-			if($i++ >= 5) break; 
+			if($i++ >= 5) break;
 
 			//break;
 		}
