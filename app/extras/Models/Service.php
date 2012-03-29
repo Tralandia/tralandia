@@ -193,7 +193,7 @@ abstract class Service extends Nette\Object implements IService {
 
 	public static function __callStatic($name, $arguments) {
 		if(Strings::startsWith($name, 'getBy')) {
-			$name = Strings::lower(str_replace('getBy', '', $name));
+			$name = str_replace('getBy', '', $name);
 			return static::getBy($name, $arguments);
 		} else {
 			return parent::__callStatic($name, $arguments);
