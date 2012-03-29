@@ -49,9 +49,10 @@ class DavidPresenter extends BasePresenter {
 
 	public function actionListTest() {
 		$list = D\LanguageList::getBySupported(\Entities\Dictionary\Language::SUPPORTED);
-
+		$list->returnAs('Services\Dictionary\LanguageService');
+		debug(count($list));
 		$i = 0;
-		foreach ($list->returnAs('Services\Dictionary\LanguageService') as $key => $val) {
+		foreach ($list as $key => $val) {
 			debug($val);
 			$list->returnAs(\Extras\Models\ServiceList::RETURN_ENTITIES);
 			if($i++ >= 5) break;
@@ -59,7 +60,7 @@ class DavidPresenter extends BasePresenter {
 			//break;
 		}
 		$list->returnAs(\Extras\Models\ServiceList::RETURN_ENTITIES);
-		debug($list[$i]);
+		//debug($list[$i]);
 	
 	}
 
