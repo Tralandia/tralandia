@@ -86,6 +86,12 @@ class Task extends \Entities\BaseEntity {
 	protected $userRole;
 
 	/**
+	 * @var Collection
+	 * @ORM\ManyToMany(targetEntity="Entities\User\User", mappedBy="tasks")
+	 */
+	protected $usersExcluded;
+
+	/**
 	 * @var json
 	 * @ORM\Column(type="json")
 	 */

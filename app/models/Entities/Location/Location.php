@@ -40,6 +40,12 @@ class Location extends \Entities\BaseEntityDetails implements MultipleRootNode {
 	 * @var integer
 	 * @ORM\Column(type="integer", nullable=true)
 	 */
+	protected $parentId;
+
+	/**
+	 * @var integer
+	 * @ORM\Column(type="integer", nullable=true)
+	 */
 	protected $nestedLeft;
 
 	/**
@@ -144,6 +150,21 @@ class Location extends \Entities\BaseEntityDetails implements MultipleRootNode {
 	 */
 	protected $outgoingLocations;
 
+
+	/* ----------------------------- Nested Set Methods - DO NOT DELETE ----------------------------- */
+
+	public function getLeftValue() { return $this->nestedLeft; }
+	public function setLeftValue($nestedLeft) { $this->nestedLeft = $nestedLeft; }
+
+	public function getRightValue() { return $this->nestedRight; }
+	public function setRightValue($nestedRight) { $this->nestedRight = $nestedRight; }
+
+	public function getRootValue() { return $this->nestedRoot; }
+	public function setRootValue($nestedRoot) { $this->nestedRoot = $nestedRoot; }
+
+	public function __toString() { return (string)$this->slug; }
+
+
 	/* ----------------------------- Methods ----------------------------- */
 
 
@@ -228,16 +249,109 @@ class Location extends \Entities\BaseEntityDetails implements MultipleRootNode {
 		return $this->slug;
 	}
 
-	public function getLeftValue() { return $this->nestedLeft; }
-	public function setLeftValue($nestedLeft) { $this->nestedLeft = $nestedLeft; }
+	/**
+	 * @param integer
+	 * @return \Entities\Location\Location
+	 */
+	public function setParentId($parentId) {
+		$this->parentId = $parentId;
 
-	public function getRightValue() { return $this->nestedRight; }
-	public function setRightValue($nestedRight) { $this->nestedRight = $nestedRight; }
+		return $this;
+	}
 
-	public function getRootValue() { return $this->nestedRoot; }
-	public function setRootValue($nestedRoot) { $this->nestedRoot = $nestedRoot; }
+	/**
+	 * @return \Entities\Location\Location
+	 */
+	public function unsetParentId() {
+		$this->parentId = NULL;
 
-	public function __toString() { return (string)$this->slug; }
+		return $this;
+	}
+
+	/**
+	 * @return integer|NULL
+	 */
+	public function getParentId() {
+		return $this->parentId;
+	}
+
+	/**
+	 * @param integer
+	 * @return \Entities\Location\Location
+	 */
+	public function setNestedLeft($nestedLeft) {
+		$this->nestedLeft = $nestedLeft;
+
+		return $this;
+	}
+
+	/**
+	 * @return \Entities\Location\Location
+	 */
+	public function unsetNestedLeft() {
+		$this->nestedLeft = NULL;
+
+		return $this;
+	}
+
+	/**
+	 * @return integer|NULL
+	 */
+	public function getNestedLeft() {
+		return $this->nestedLeft;
+	}
+
+	/**
+	 * @param integer
+	 * @return \Entities\Location\Location
+	 */
+	public function setNestedRight($nestedRight) {
+		$this->nestedRight = $nestedRight;
+
+		return $this;
+	}
+
+	/**
+	 * @return \Entities\Location\Location
+	 */
+	public function unsetNestedRight() {
+		$this->nestedRight = NULL;
+
+		return $this;
+	}
+
+	/**
+	 * @return integer|NULL
+	 */
+	public function getNestedRight() {
+		return $this->nestedRight;
+	}
+
+	/**
+	 * @param integer
+	 * @return \Entities\Location\Location
+	 */
+	public function setNestedRoot($nestedRoot) {
+		$this->nestedRoot = $nestedRoot;
+
+		return $this;
+	}
+
+	/**
+	 * @return \Entities\Location\Location
+	 */
+	public function unsetNestedRoot() {
+		$this->nestedRoot = NULL;
+
+		return $this;
+	}
+
+	/**
+	 * @return integer|NULL
+	 */
+	public function getNestedRoot() {
+		return $this->nestedRoot;
+	}
 
 	/**
 	 * @param \Entities\Location\Type
@@ -377,7 +491,6 @@ class Location extends \Entities\BaseEntityDetails implements MultipleRootNode {
 		if(!$this->bankAccounts->contains($bankAccount)) {
 			$this->bankAccounts->add($bankAccount);
 		}
-		$bankAccount->addCountry($this);
 
 		return $this;
 	}
@@ -397,7 +510,6 @@ class Location extends \Entities\BaseEntityDetails implements MultipleRootNode {
 		if(!$this->companies->contains($company)) {
 			$this->companies->add($company);
 		}
-		$company->addCountry($this);
 
 		return $this;
 	}
@@ -417,7 +529,6 @@ class Location extends \Entities\BaseEntityDetails implements MultipleRootNode {
 		if(!$this->offices->contains($office)) {
 			$this->offices->add($office);
 		}
-		$office->addCountry($this);
 
 		return $this;
 	}
@@ -454,7 +565,6 @@ class Location extends \Entities\BaseEntityDetails implements MultipleRootNode {
 		if(!$this->marketings->contains($marketing)) {
 			$this->marketings->add($marketing);
 		}
-		$marketing->addLocation($this);
 
 		return $this;
 	}
@@ -474,7 +584,6 @@ class Location extends \Entities\BaseEntityDetails implements MultipleRootNode {
 		if(!$this->rentals->contains($rental)) {
 			$this->rentals->add($rental);
 		}
-		$rental->addLocation($this);
 
 		return $this;
 	}
@@ -494,7 +603,6 @@ class Location extends \Entities\BaseEntityDetails implements MultipleRootNode {
 		if(!$this->users->contains($user)) {
 			$this->users->add($user);
 		}
-		$user->addLocation($this);
 
 		return $this;
 	}
@@ -511,8 +619,7 @@ class Location extends \Entities\BaseEntityDetails implements MultipleRootNode {
 	 * @return \Entities\Location\Location
 	 */
 	public function setCountry(\Entities\Location\Country $country) {
-		//$this->country = $country;
-		$country->location = $this;
+		$this->country = $country;
 
 		return $this;
 	}
@@ -532,7 +639,6 @@ class Location extends \Entities\BaseEntityDetails implements MultipleRootNode {
 		if(!$this->incomingLocations->contains($incomingLocation)) {
 			$this->incomingLocations->add($incomingLocation);
 		}
-		$incomingLocation->setDestinationLocation($this);
 
 		return $this;
 	}
@@ -545,7 +651,6 @@ class Location extends \Entities\BaseEntityDetails implements MultipleRootNode {
 		if($this->incomingLocations->contains($incomingLocation)) {
 			$this->incomingLocations->removeElement($incomingLocation);
 		}
-		$incomingLocation->unsetDestinationLocation();
 
 		return $this;
 	}
@@ -565,7 +670,6 @@ class Location extends \Entities\BaseEntityDetails implements MultipleRootNode {
 		if(!$this->outgoingLocations->contains($outgoingLocation)) {
 			$this->outgoingLocations->add($outgoingLocation);
 		}
-		$outgoingLocation->setSourceLocation($this);
 
 		return $this;
 	}
@@ -578,7 +682,6 @@ class Location extends \Entities\BaseEntityDetails implements MultipleRootNode {
 		if($this->outgoingLocations->contains($outgoingLocation)) {
 			$this->outgoingLocations->removeElement($outgoingLocation);
 		}
-		$outgoingLocation->unsetSourceLocation();
 
 		return $this;
 	}

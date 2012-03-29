@@ -140,4 +140,9 @@ class User extends \Entities\BaseEntity {
 	 */
 	protected $rentals;
 
+	/**
+	 * @var Collection
+	 * @ORM\ManyToMany(targetEntity="Entities\Autopilot\Task", inversedBy="usersExcluded")
+	 */
+	protected $tasks;
 }

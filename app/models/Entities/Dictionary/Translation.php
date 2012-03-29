@@ -32,7 +32,7 @@ class Translation extends \Entities\BaseEntity {
 	/**
 	 * @var json
 	 * @ORM\Column(type="json")
-	 * contains multitranslations, webalized versions, locative versions, everything, even contains the $translation original version
+	 * contains keys: translation, multiTranslations, webalized, locative. Even contains the $translation original version
 	 */
 	protected $variations;
 
@@ -43,10 +43,10 @@ class Translation extends \Entities\BaseEntity {
 	protected $timeTranslated;
 
 	/**
-	 * @var text
-	 * @ORM\Column(type="text", nullable=true)
+	 * @var boolean
+	 * @ORM\Column(type="boolean", nullable=true)
 	 */
-	protected $pendingVariations;
+	protected $checked;
 
 	/* ----------------------------- Methods ----------------------------- */
 
@@ -168,11 +168,11 @@ class Translation extends \Entities\BaseEntity {
 	}
 
 	/**
-	 * @param string
+	 * @param boolean
 	 * @return \Entities\Dictionary\Translation
 	 */
-	public function setPendingVariations($pendingVariations) {
-		$this->pendingVariations = $pendingVariations;
+	public function setChecked($checked) {
+		$this->checked = $checked;
 
 		return $this;
 	}
@@ -180,17 +180,17 @@ class Translation extends \Entities\BaseEntity {
 	/**
 	 * @return \Entities\Dictionary\Translation
 	 */
-	public function unsetPendingVariations() {
-		$this->pendingVariations = NULL;
+	public function unsetChecked() {
+		$this->checked = NULL;
 
 		return $this;
 	}
 
 	/**
-	 * @return string|NULL
+	 * @return boolean|NULL
 	 */
-	public function getPendingVariations() {
-		return $this->pendingVariations;
+	public function getChecked() {
+		return $this->checked;
 	}
 
 }

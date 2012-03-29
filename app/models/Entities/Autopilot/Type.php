@@ -30,8 +30,7 @@ class Type extends \Entities\BaseEntityDetails {
 
 	/**
 	 * @var integer
-	 * @ORM\Column(type="integer")
+	 * @ORM\Column(type="integer", nullable=true)
 	 */
 	protected $stackable;
-
 }

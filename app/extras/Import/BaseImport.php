@@ -38,9 +38,17 @@ class BaseImport {
 	);
 
 	public $savedVariables = array();
+	public $languagesByIso = array();
+	public $languagesByOldId = array();
 
 	public function __construct() {
 		$this->loadVariables();
+		$langs = qNew('select id, iso, oldId from dictionary_language');
+		while($value = mysql_fetch_array($langs)) {
+			$this->languagesByIso[$value['iso']] = \Services\Dictionary\LanguageService::get($value['id']);
+			$this->languagesByOldId[$value['oldId']] = \Services\Dictionary\LanguageService::get($value['id']);
+		}
+		return;
 	}
 
 	public function truncateDatabase() {
@@ -182,20 +190,18 @@ class BaseImport {
 		return $dictionaryType;
 	}
 
-	protected function createTranslation(\Services\Dictionary\LanguageService $language, $text, $params = NULL) {
+	protected function createTranslation(\Services\Dictionary\LanguageService $language, $text, $variations = NULL) {
 		$translation = \Services\Dictionary\TranslationService::get();
 		$translation->language = $language;
 		$translation->translation = $text;
 		$translation->timeTranslated = new \Nette\DateTime();
 
-		$variations = array();
-		$variations['translation'] = $text;
-		if (isset($params) && count($params) > 0) {
-			foreach ($params as $key => $value) {
-				$variations[$key] = $value;
-			}
+		if ($variations == NULL) {
+			$variations = array();
 		}
+		$variations['translation'] = $text;
 		$translation->variations = $variations;
+
 		$translation->save();
 
 		return $translation;
