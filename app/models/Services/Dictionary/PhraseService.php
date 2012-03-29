@@ -27,20 +27,7 @@ class PhraseService extends \Services\BaseService {
 			}
 		}
 
-/*		
-		$qb = $this->getEm()->createQueryBuilder();
-		$qb->select('t')
-			->from('\Entities\Dictionary\Translation', 't')
-			->where('t.phrase = ?1')
-			->andWhere('t.language = ?2')
-			->setParameters(array(
-				1 => $this->getMainEntity(),
-				2 => $language,
-			));
-
-		$data = $qb->getQuery()->getOneOrNullResult();
-*/
-		return !$data ? : TranslationService::get($data);
+		return $data ? TranslationService::get($data) : NULL;
 	}
 	
 }

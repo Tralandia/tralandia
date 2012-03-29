@@ -3,6 +3,7 @@
 namespace Extras\Models;
 
 use Nette, 
+	Nette\Utils\Strings,
 	Nette\ObjectMixin, 
 	Nette\MemberAccessException,
 	Doctrine\ORM\EntityManager;
@@ -180,6 +181,14 @@ abstract class Service extends Nette\Object implements IService {
 				}
 			}
 		} catch (MemberAccessException $e) {}
+	}
+
+
+	public static function getBy($name, $criteria) {
+		$repo = static::getEm()->getRepository(static::getMainEntityName());
+		$method = 'findOneBy'.Strings::firstUpper($name);
+		$result = $repo->{$method}($criteria);
+		return $result ? static::get($result) : NULL;
 	}
 
 	/**

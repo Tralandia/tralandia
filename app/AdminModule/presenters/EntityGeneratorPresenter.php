@@ -38,6 +38,7 @@ class EntityGeneratorPresenter extends BasePresenter {
 
 		$properties = $mainEntity->getProperties();
 		foreach ($properties as $property) {
+			if(in_array($property->name, array('nestedLeft', 'nestedRight', 'nestedRoot'))) continue;
 			if(in_array($property->name, array('id', 'created', 'updated', 'oldId')) && $mainEntity->name != 'Entities\BaseEntity') continue;
 			if(in_array($property->name, array('details')) && $mainEntity->name != 'Entities\BaseEntityDetails') continue;
 
@@ -60,7 +61,7 @@ class EntityGeneratorPresenter extends BasePresenter {
 						$this->addMethod('todo', $newClass, $property, $targetedEntityPropery);						
 					} else if(isset($property->inversedBy)) {
 						$this->addMethod('set', $newClass, $property, $targetedEntityPropery);
-						$this->addMethod('get', $newClass, $property, $targetedEntityPropery);
+						$this->addMethod('get2', $newClass, $property, $targetedEntityPropery);
 					} else {
 						$this->addMethod('set', $newClass, $property, $targetEntity->name);
 						$this->addMethod('unset', $newClass, $property, $targetEntity->name);
@@ -78,7 +79,6 @@ class EntityGeneratorPresenter extends BasePresenter {
 							$this->addMethod('remove', $newClass, $property, $targetedEntityPropery);							
 							$this->addMethod('get', $newClass, $property, $targetedEntityPropery);
 						} else if(isset($property->inversedBy)) {
-							debug($property);				
 							$this->addMethod('add2', $newClass, $property, $targetedEntityPropery);
 							$this->addMethod('get', $newClass, $property, $targetedEntityPropery);
 						} else {
@@ -113,7 +113,7 @@ class EntityGeneratorPresenter extends BasePresenter {
 					if($targetedEntityPropery == NULL) {												// One To One Uni
 						if($targetEntity->name == 'Entities\Dictionary\Phrase') {
 							$this->addMethod('setPhrase', $newClass, $property, $targetEntity->name);
-							$this->addMethod('get', $newClass, $property, $targetEntity->name);
+							$this->addMethod('get2', $newClass, $property, $targetEntity->name);
 						} else {
 							$this->addMethod('set', $newClass, $property, $targetEntity->name);
 							$this->addMethod('get2', $newClass, $property, $targetEntity->name);
@@ -122,8 +122,9 @@ class EntityGeneratorPresenter extends BasePresenter {
 						if(isset($property->mappedBy)) {
 							$this->addMethod('set', $newClass, $property, $targetedEntityPropery);
 							$this->addMethod('get', $newClass, $property, $targetedEntityPropery);
-						} else if(isset($property->inversedBy)) {					
-							$this->addMethod('get', $newClass, $property, $targetedEntityPropery);
+						} else if(isset($property->inversedBy)) {
+							$this->addMethod('setInverse', $newClass, $property, $targetedEntityPropery);
+							$this->addMethod('get2', $newClass, $property, $targetedEntityPropery);
 						} else {
 							$this->addMethod('todo', $newClass, $property, $targetedEntityPropery);
 						}						
@@ -287,6 +288,12 @@ class EntityGeneratorPresenter extends BasePresenter {
 		} else if($type == 'set') {
 			$snippet->type = 2;
 			$snippet->returnThis = TRUE;
+			$snippet->var = FALSE;
+		} else if($type == 'setInverse') {
+			$methodName->prefix = 'set';
+			$snippet->type = 2;
+			$snippet->returnThis = TRUE;
+			$snippet->var = TRUE;
 		} else if(in_array($type, array('get', 'get2'))) {
 			$methodName->prefix = 'get';
 			$methodName->name = $property->nameFu;
@@ -345,6 +352,9 @@ class EntityGeneratorPresenter extends BasePresenter {
 				// }
 			}
 		} else if($snippet->type == 2) {
+			if($snippet->var) {
+				$method->documents[] = sprintf('@warning Bacha inverzna strana!');
+			}
 			$method->documents[] = sprintf('@param %s', $tagetProperyClass);
 			$body[] = sprintf('$this->%s = $%s;', $property->name, $property->name);
 		} else if($snippet->type == 3) {
