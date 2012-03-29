@@ -9,25 +9,28 @@ class LocationService extends \Extras\Models\ServiceNested {
 	
 	const MAIN_ENTITY_NAME = '\Entities\Location\Location';
 
-/*	public function setSlug($slug) {
+	public function setSlug($slug) {
 
 		if(!$this->getType() instanceof \Entities\Location\Type) {
 			throw new ServiceException('Pred pridanim slagu musis definovat Type locality.');
 		}
 
 		$slug = Strings::webalize(Strings::trim($slug));
-		$typeSlug = $this->type->slug;
-		if(in_array($typeSlug, array('region', 'city')))  { # @todo
-			
+		$type = $this->type;
+		if(in_array($type->slug, array('region', 'city')))  { # @todo
+			$types = array();
+			$types[] = TypeService::getBySlug('region');
+			$types[] = TypeService::getBySlug('city');
+			$locationList = S\Location\LocationList::getBySlugInTypes($slug, $types);
 		} else {
-			$slugExist = LocationService::getBy('slug', $slug);
-			if($slugExist) {
-				$slig .= '-'.time();
-			}
+			$locationList = S\Location\LocationList::getBySlugInTypes($slug, array($type));
+		}
+		if($locationList->count()) {
+			$slug .= '-'.time();
 		}
 
 		return $this->getMainEntity()->setSlug($slug);
 	}
-*/
+
 	
 }

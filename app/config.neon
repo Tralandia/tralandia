@@ -111,7 +111,7 @@ durika < development:
 	parameters:
 
 		database:
-			debugger: false
+			debugger: true
 
 		editor: 'edit://open/?url=file://%file&line=%line'
 		envOptions:

@@ -35,7 +35,12 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 	private $list = array();
 
 	public static function __callStatic($name, $arguments) {
-		if(Strings::startsWith($name, 'getBy')) {
+		list($name, $nameBy, $nameIn) = Strings::match('getBySlugInType', '~^getBy([A-Za-z]+)In([A-Za-z]+)$~');
+		if(isset($name, $nameBy, $nameIn)) {
+			$nameBy = Strings::lower($nameBy);
+			$nameIn = Strings::lower($nameIn);
+			return static::getByIn($nameBy, $nameIn, array_shift($arguments), array_shift($arguments));
+		}else if(Strings::startsWith($name, 'getBy')) {
 			$name = Strings::lower(str_replace('getBy', '', $name));
 			return static::getBy($name, $arguments);
 		} else {
@@ -43,8 +48,7 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 		}
 	}
 
-	public static function getBy($name, $criterium, $entityName = NULL) {
-
+	public static function getBy($name, $by, $entityName = NULL) {
 		if($entityName === NULL) {
 			$entityName = static::getMainEntityName();
 		}
@@ -52,8 +56,37 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 		$serviceList = new static;
 		$repository = $serviceList->getEm()->getRepository($entityName);
 		$method = 'findBy'.Strings::firstUpper($name);
-		$serviceList->setList($repository->{$method}($criterium));
+		$serviceList->setList($repository->{$method}($by));
 		return $serviceList;
+	}
+
+
+	public static function getByIn($nameBy, $nameIn, $by, array $in, $entityName = NULL) {
+		if($entityName === NULL) {
+			$entityName = static::getMainEntityName();
+		}
+
+		$parsedIn = array();
+		foreach ($in as $key => $value) {
+			if($value instanceof Service || $value instanceof Entity) {
+				$parsedIn[] = $value->id;
+			} else {
+				$parsedIn[] = $value;
+			}
+		}
+
+		$serviceList = new static;
+
+		$qb = $serviceList->getEm()->createQueryBuilder();
+		$qb->select('e')
+			->from($entityName, 'e')
+			->where('e.'.$nameBy.' = :by')
+			->andWhere($qb->expr()->in('e.'.$nameIn, $parsedIn))
+			->setParameter('by', $by);
+		$serviceList->setList($qb->getQuery()->getResult());
+
+		return $serviceList;
+
 	}
 
 
