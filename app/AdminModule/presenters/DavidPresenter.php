@@ -37,11 +37,12 @@ class DavidPresenter extends BasePresenter {
 
 	public function actionTest() {
 
-		//$s = S\Location\LocationService::getBy('slug', 'asia');
-		$s = S\Location\LocationService::get(3);
+		$s = S\Location\LocationService::getBySlug('asia');
+		//$s = S\Location\LocationService::get(3);
 		//$s->setSlug('smola');
 		//$s->slug = 'smola';
-		debug($s->slug);
+		//$s = S\Location\LocationList::getByTest();
+		debug($s);
 
 	}
 

@@ -191,6 +191,16 @@ abstract class Service extends Nette\Object implements IService {
 	}
 
 
+	public static function __callStatic($name, $arguments) {
+		if(Strings::startsWith($name, 'getBy')) {
+			$name = Strings::lower(str_replace('getBy', '', $name));
+			return static::getBy($name, $arguments);
+		} else {
+			return parent::__callStatic($name, $arguments);
+		}
+	}
+
+
 	public static function getBy($name, $criteria) {
 		$repo = static::getEm()->getRepository(static::getMainEntityName());
 		$method = 'findOneBy'.Strings::firstUpper($name);
