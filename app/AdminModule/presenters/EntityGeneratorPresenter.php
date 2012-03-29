@@ -120,8 +120,9 @@ class EntityGeneratorPresenter extends BasePresenter {
 						}
 					}else if($targetedEntityPropery->association == ORM\ClassMetadataInfo::ONE_TO_ONE){
 						if(isset($property->mappedBy)) {
-							$this->addMethod('set', $newClass, $property, $targetedEntityPropery);
-							$this->addMethod('get', $newClass, $property, $targetedEntityPropery);
+							$this->addMethod('setMapped', $newClass, $property, $targetedEntityPropery);
+							$this->addMethod('unsetMapped', $newClass, $property, $targetedEntityPropery);
+							$this->addMethod('get2', $newClass, $property, $targetedEntityPropery);
 						} else if(isset($property->inversedBy)) {
 							$this->addMethod('setInverse', $newClass, $property, $targetedEntityPropery);
 							$this->addMethod('get2', $newClass, $property, $targetedEntityPropery);
@@ -285,15 +286,10 @@ class EntityGeneratorPresenter extends BasePresenter {
 				$snippet->var = 'removeElement';
 				$snippet->var2 = FALSE;
 			}
-		} else if($type == 'set') {
-			$snippet->type = 2;
-			$snippet->returnThis = TRUE;
-			$snippet->var = FALSE;
-		} else if($type == 'setInverse') {
+		} else if(in_array($type, array('set', 'setMapped', 'setInverse'))) {
 			$methodName->prefix = 'set';
 			$snippet->type = 2;
 			$snippet->returnThis = TRUE;
-			$snippet->var = TRUE;
 		} else if(in_array($type, array('get', 'get2'))) {
 			$methodName->prefix = 'get';
 			$methodName->name = $property->nameFu;
@@ -316,7 +312,7 @@ class EntityGeneratorPresenter extends BasePresenter {
 			$methodName->prefix = 'add';
 			$snippet->type = 6;
 			$snippet->returnThis = FALSE;
-		} else if($type == 'unset') {
+		} else if(in_array($type, array('unset', 'unsetMapped',))) {
 			$methodName->prefix = 'unset';
 			$snippet->type = 8;
 			$snippet->returnThis = TRUE;
@@ -352,11 +348,14 @@ class EntityGeneratorPresenter extends BasePresenter {
 				// }
 			}
 		} else if($snippet->type == 2) {
-			if($snippet->var) {
+			if($type == 'setInverse') {
 				$method->documents[] = sprintf('@warning Bacha inverzna strana!');
 			}
 			$method->documents[] = sprintf('@param %s', $tagetProperyClass);
 			$body[] = sprintf('$this->%s = $%s;', $property->name, $property->name);
+			if($type == 'setMapped') {
+				$body[] = sprintf('$%s->set%s($this);', $parameter, $tagetPropery->nameFu);
+			}
 		} else if($snippet->type == 3) {
 			$method->documents[] = sprintf('@return %s|NULL', $tagetProperyClass);
 			$body[] = sprintf('return $this->%s;', $property->name, $property->name);
@@ -365,7 +364,6 @@ class EntityGeneratorPresenter extends BasePresenter {
 		} else if($snippet->type == 5) {
 			$method->documents[] = sprintf('@param %s', $tagetProperyClass);
 			$body[] = sprintf('$this->%s = $%s;', $property->name, $firstParameter->name);
-			//$body[] = sprintf('$%s->setEntityId($this->getId());', $firstParameter->name);
 		} else if($snippet->type == 6) {
 			$method->documents[] = sprintf('@param %s', $tagetProperyClass);
 			$body[] = sprintf('return $%s->add%s($this);', $firstParameter->name, $property->singularFu);
@@ -374,6 +372,9 @@ class EntityGeneratorPresenter extends BasePresenter {
 			$body[] = sprintf('return $this->%s;', $property->name, $property->name);
 		} else if($snippet->type == 8) {
 			$body[] = sprintf('$this->%s = NULL;', $property->name);
+			if($type == 'unsetMapped') {
+				$body[] = sprintf('$%s->set%s();', $parameter, $tagetPropery->nameFu);
+			}
 		}
 
 		if($snippet->returnThis) {

@@ -136,7 +136,10 @@ abstract class Service extends Nette\Object implements IService {
 	 * @param mixed
 	 */
 	public function __set($name, $value) {
-		if ($value instanceof Service) {
+		$method = 'set'.Strings::firstUpper($name);
+		if(method_exists($this, $method)){
+			$this->{$method}($value);
+		}else if ($value instanceof Service) {
 			$this->mainEntity->{$name} = $value->getMainEntity();
 		}else {
 			$this->mainEntity->$name = $value;
@@ -150,7 +153,11 @@ abstract class Service extends Nette\Object implements IService {
 	 * @return mixed
 	 */
 	public function &__get($name) {
-		if ($this->mainEntity instanceof Entity) {
+		$method = 'get'.Strings::firstUpper($name);
+		if(method_exists($this, $method)){
+			$return = $this->{$method}();
+			return $return;
+		}else if ($this->mainEntity instanceof Entity) {
 			try {
 				return ObjectMixin::get($this->mainEntity, $name);
 			} catch (MemberAccessException $e) {}
