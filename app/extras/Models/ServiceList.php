@@ -3,6 +3,7 @@
 namespace Extras\Models;
 
 use Nette\Object,
+	Nette\Utils\Strings,
 	Nette\OutOfRangeException,
 	Doctrine\ORM\EntityManager;
 
@@ -14,9 +15,10 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 	const RETURN_ENTITIES = 'Entities';
 
 	/**
-	 * @var array
+	 * @var string
 	 */
-	protected $list = array();
+	const MAIN_ENTITY_NAME = null;
+
 
 	protected $iteratorPosition = 0;
 
@@ -27,10 +29,37 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 	 */
 	private static $em = NULL;
 
+	/**
+	 * @var array
+	 */
+	private $list = array();
+
+	public static function __callStatic($name, $arguments) {
+		if(Strings::startsWith($name, 'getBy')) {
+			$name = Strings::lower(str_replace('getBy', '', $name));
+			return static::getBy($name, $arguments);
+		} else {
+			return parent::__callStatic($name, $arguments);
+		}
+	}
+
+	public static function getBy($name, $criterium, $entityName = NULL) {
+
+		if($entityName === NULL) {
+			$entityName = static::getMainEntityName();
+		}
+
+		$serviceList = new static;
+		$repository = $serviceList->getEm()->getRepository($entityName);
+		$method = 'findBy'.Strings::firstUpper($name);
+		$serviceList->setList($repository->{$method}($criterium));
+		return $serviceList;
+	}
+
 
 	public function __construct($param = NULL) {
 		if(is_array($param)) {
-			$this->list = $param;
+			$this->setList($param);
 		} else if(is_string($param)) {
 			$this->prepareBaseList($param);
 		} else if($param === NULL) {
@@ -38,17 +67,30 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 		} else {
 			throw new \Nette\InvalidArgumentException('Argument does not match with the expected value');
 		}
-
-		$this->iteratorPosition = 0;
 	}
-
 
 	protected function prepareBaseList($entity) {
 		$query = $this->getEm()->createQueryBuilder();
 		$query->select('e')->from($entity, 'e');
-		$this->list = $query->getQuery()->getResult();
+		$this->setList($query->getQuery()->getResult());
 	}
 
+	public function setList($list) {
+		$this->list = $list;
+		$this->iteratorPosition = 0;
+	}
+
+	/**
+	 * Ziskanie nazvu hlavnej entity
+	 * @return string
+	 */
+	public static function getMainEntityName() {
+		if (!static::MAIN_ENTITY_NAME) {
+			throw new \Exception("Este nebola zadana `mainEntity`, preto nemozem ziskat jej nazov");
+		}
+		
+		return static::MAIN_ENTITY_NAME;
+	}
 
 	/**
 	 * Nastavenie entity manazera
