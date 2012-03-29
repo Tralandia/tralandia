@@ -8,6 +8,8 @@ use Nette\Application as NA,
 	Nette\Utils\Html,
 	Nette\Utils\Strings,
 	Extras\Models\Service,
+	Extras\Types\Price,
+	Extras\Types\Latlong,
 	Services\Dictionary as D,
 	Services as S,
 	Services\Log\Change as SLog;
@@ -27,10 +29,10 @@ class ImportLocations extends BaseImport {
 		$this->dictionaryTypeNameShort = $this->createDictionaryType('\Location\Location', 'nameShort', 'supportedLanguages', 'NATIVE', array('locativeRequired' => TRUE));
 
 		//$this->importContinents();
-		$this->importCountries();
+		//$this->importCountries();
 		//$this->updateNestedSetCountries();
 		//$this->importTravelings();
-		//$this->importRegions();
+		$this->importRegions();
 		//$this->importLocalities();
 
 		$this->savedVariables['importedSections']['locations'] = 2;
@@ -123,9 +125,9 @@ class ImportLocations extends BaseImport {
 			$country->wikipediaLink = $this->createContact('Url', $x['wikipedia_link']);
 
 			$country->drivingSide = $x['driving_side'];
-			$country->pricesPizza = new \Extras\Types\Price($x['prices_pizza']);
-			$country->pricesDinner = new \Extras\Types\Price($x['prices_dinner']);
-			$country->airports = $x['airports']; // @todo - tu je chyba, pri pismene š to odreze, proste ako keby mal problem s diakritikou...
+			$country->pricesPizza = new Price($x['prices_pizza']); // @todo - spravit menu, aby som posielal ako entitu / servicu
+			$country->pricesDinner = new Price($x['prices_dinner']);
+			$country->airports = $x['airports'];
 
 			$countryDetails = array();
 			$countryDetails['beta'] = $x['beta'];
@@ -188,8 +190,8 @@ class ImportLocations extends BaseImport {
 			
 			$location->type = $locationType;
 			$location->polygon = NULL;
-			$location->latitude = new \Extras\Types\Latlong($x['latitude']);
-			$location->longitude = new \Extras\Types\Latlong($x['longitude']);
+			$location->latitude = new Latlong($x['latitude']);
+			$location->longitude = new Latlong($x['longitude']);
 			$location->defaultZoom = $x['default_zoom'];
 
 			$t = mysql_fetch_array(qNew('select id from location_location where oldId = '.$x['continent']));
@@ -198,8 +200,8 @@ class ImportLocations extends BaseImport {
 			if ($x['domain']) $location->domain = \Services\DomainService::getByDomain($x['domain']);
 
 			$location->country = $country;
-			// debug($location->parentId); return;
-			// debug($location); debug($country); return;
+			//debug($location->parentId); return;
+			//debug($location); debug($country); return;
 
 			$location->save();
 			$country->save();
@@ -215,7 +217,8 @@ class ImportLocations extends BaseImport {
 			$continent = $this->continentsByOldId[$x['continent']];
 			$continent->addChild($location);
 		}
-*/	}
+*/
+	}
 
 	// ----------------------------------------------------------
 	// ------------- COUNTRIES Travelings
@@ -226,7 +229,6 @@ class ImportLocations extends BaseImport {
 		while ($x = mysql_fetch_array($r)) {
 			$sourceCountry = \Services\Location\CountryService::get($countriesByOld[$x['source_country_id']]);
 			$destinationCountry = \Services\Location\CountryService::get($countriesByOld[$x['destination_country_id']]);
-
 			$traveling = \Services\Location\TravelingService::get();
 			$traveling->sourceLocation = $sourceCountry->location;
 			$traveling->destinationLocation = $destinationCountry->location;
@@ -237,4 +239,56 @@ class ImportLocations extends BaseImport {
 		}
 		return false;
 	}
+
+	// ----------------------------------------------------------
+	// ------------- Regions
+	// ----------------------------------------------------------
+	private function importRegions() {
+		$language = getLangByIso('en');
+
+		$locationType = S\Location\TypeService::get();
+		$locationType->name = $this->createPhraseFromString('\Location\Location', 'name', 'supportedLanguages', 'NATIVE', 'region', $language);
+		$locationType->slug = 'region';
+		$locationType->save();
+		$this->regionsType = $locationType;
+
+		//$r = q('select * from regions order by id');
+		//$r = q('select * from regions where country_id = 46 and level = 0 order by id');
+		$r = q('select * from regions where id = 48978 order by id');
+		while($x = mysql_fetch_array($r)) {
+			$location = S\Location\LocationService::get();
+
+			$namePhrase = \Services\Dictionary\PhraseService::get();
+			$namePhrase->type = $this->dictionaryTypeName;
+			$namePhrase->ready = TRUE;
+
+			$r1 = q('select * from regions_translations where location_id = '.$x['id']);
+			while ($x1 = mysql_fetch_array($r1)) {
+				$variations = array(
+					'locative' => $x1['name_locative'],
+				);
+				$t = $this->createTranslation($this->languagesByOldId[$x1['language_id']], $x['name'], $variations);
+				$namePhrase->addTranslation($t);
+			}
+
+
+			$location->name = $namePhrase;
+			$location->slug = $x['name_url'];
+			
+			$location->type = $locationType;
+
+			$location->oldId = $x['id'];
+			
+			$t = qNew('select location_id from location_country where oldId = '.$x['country_id']);
+			$t = mysql_fetch_array($t);
+
+			$location->parentId = $t[0];
+			$location->save();
+			return; 
+			//debug($s);
+		}
+
+		Service::flush(FALSE);
+	}
+
 }
