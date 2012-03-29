@@ -35,14 +35,14 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 	private $list = array();
 
 	public static function __callStatic($name, $arguments) {
-		list($name, $nameBy, $nameIn) = Strings::match('getBySlugInType', '~^getBy([A-Za-z]+)In([A-Za-z]+)$~');
-		if(isset($name, $nameBy, $nameIn)) {
+		list($nameTemp, $nameBy, $nameIn) = Strings::match($name, '~^getBy([A-Za-z]+)In([A-Za-z]+)$~');
+		if($nameTemp && $nameBy && $nameIn) {
 			$nameBy = Strings::lower($nameBy);
 			$nameIn = Strings::lower($nameIn);
 			return static::getByIn($nameBy, $nameIn, array_shift($arguments), array_shift($arguments));
-		}else if(Strings::startsWith($name, 'getBy')) {
-			$name = Strings::lower(str_replace('getBy', '', $name));
-			return static::getBy($name, $arguments);
+		} else if(Strings::startsWith($name, 'getBy')) {
+			$name = str_replace('getBy', '', $name);
+			return static::getBy($name, array_shift($arguments));
 		} else {
 			return parent::__callStatic($name, $arguments);
 		}
@@ -251,7 +251,6 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 			throw new OutOfRangeException("Offset invalid or out of range");
 		}
 
-		debug($index);
 		$value = $this->list[$index];
 		if($this->returnAs != self::RETURN_ENTITIES) {
 			if($value instanceof Entity) {

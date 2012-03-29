@@ -6,12 +6,6 @@ use Extras\Models\ServiceList;
 
 class LanguageList extends ServiceList {
 
+	const MAIN_ENTITY_NAME = '\Entities\Dictionary\Language';
 
-	public static function getBySupported($param) {
-		$serviceList = new self;
-		$serviceList->list = $serviceList->getEm()->getRepository('Entities\Dictionary\Language')
-			->findBySupported($param);
-
-		return $serviceList;
-	}
 }
