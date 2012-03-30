@@ -3,8 +3,8 @@
 namespace Extras\Models;
 
 use Nette\Object,
-	Nette\Utils\Strings,
 	Nette\OutOfRangeException,
+	Tra\Utils\Strings,
 	Doctrine\ORM\EntityManager;
 
 /**
@@ -37,8 +37,8 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 	public static function __callStatic($name, $arguments) {
 		list($nameTemp, $nameBy, $nameIn) = Strings::match($name, '~^getBy([A-Za-z]+)In([A-Za-z]+)$~');
 		if($nameTemp && $nameBy && $nameIn) {
-			$nameBy = Strings::lower($nameBy);
-			$nameIn = Strings::lower($nameIn);
+			$nameBy = Strings::firstLower($nameBy);
+			$nameIn = Strings::firstLower($nameIn);
 			return static::getByIn($nameBy, $nameIn, array_shift($arguments), array_shift($arguments));
 		} else if(Strings::startsWith($name, 'getBy')) {
 			$name = str_replace('getBy', '', $name);

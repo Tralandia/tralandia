@@ -41,8 +41,9 @@ class DavidPresenter extends BasePresenter {
 		$s = S\Location\LocationService::get(3);
 		//$s->setSlug('smola');
 		$s->slug = 'asia';
-		// $type = S\Location\TypeService::getBySlug('country');
+		$type = S\Location\TypeService::getBySlug('country');
 		// $s = S\Location\LocationList::getBySlugInType('asia', array($type));
+		$s = S\Location\LocationService::getBySlugAndType('asia', $type);
 		debug($s);
 
 	}
