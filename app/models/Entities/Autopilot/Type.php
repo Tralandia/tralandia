@@ -58,12 +58,6 @@ class Type extends \Entities\BaseEntityDetails {
 	 * @var json
 	 * @ORM\Column(type="json")
 	 */
-	protected $validation;
-
-	/**
-	 * @var json
-	 * @ORM\Column(type="json")
-	 */
 	protected $actions;
 
 }
