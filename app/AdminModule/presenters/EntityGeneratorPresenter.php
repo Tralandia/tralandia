@@ -101,9 +101,17 @@ class EntityGeneratorPresenter extends BasePresenter {
 					$collections[] = $property;
 
 					if($targetedEntityPropery->association == ORM\ClassMetadataInfo::MANY_TO_ONE) { 	// One To Many Bi
-						$this->addMethod('add2', $newClass, $property, $targetedEntityPropery);
-						$this->addMethod('remove2', $newClass, $property, $targetedEntityPropery);
-						$this->addMethod('get', $newClass, $property, $targetedEntityPropery);
+						if(isset($property->mappedBy)) {
+							$this->addMethod('add', $newClass, $property, $targetedEntityPropery);
+							$this->addMethod('remove', $newClass, $property, $targetedEntityPropery);
+							$this->addMethod('get', $newClass, $property, $targetedEntityPropery);
+						} else if(isset($property->inversedBy)) {
+							$this->addMethod('add2', $newClass, $property, $targetedEntityPropery);
+							$this->addMethod('remove2', $newClass, $property, $targetedEntityPropery);
+							$this->addMethod('get', $newClass, $property, $targetedEntityPropery);
+						} else {
+							$this->addMethod('todo', $newClass, $property, $targetedEntityPropery);
+						}						
 					} else {
 						$this->addMethod('todo', $newClass, $property, $targetedEntityPropery);
 					}

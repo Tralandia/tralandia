@@ -3,9 +3,9 @@
 namespace Extras\Models;
 
 use Nette, 
-	Nette\Utils\Strings,
 	Nette\ObjectMixin, 
 	Nette\MemberAccessException,
+	Tra\Utils\Strings,
 	Doctrine\ORM\EntityManager;
 
 /**
@@ -192,21 +192,36 @@ abstract class Service extends Nette\Object implements IService {
 
 
 	public static function __callStatic($name, $arguments) {
-		if(Strings::startsWith($name, 'getBy')) {
+		list($nameTemp, $name1, $name2) = Strings::match($name, '~^getBy([A-Za-z]+)And([A-Za-z]+)$~');
+		if($nameTemp && $name1 && $name2) {
+			$name1 = Strings::firstLower($name1);
+			$name2 = Strings::firstLower($name2);
+			$params = array(
+				$name1 => array_shift($arguments),
+				$name2 => array_shift($arguments),
+			);
+			return static::getBy($params);
+		} else if(Strings::startsWith($name, 'getBy')) {
 			$name = str_replace('getBy', '', $name);
-			return static::getBy($name, $arguments);
+			$name = Strings::firstLower($name);
+			return static::getBy(array($name => $arguments));
 		} else {
 			return parent::__callStatic($name, $arguments);
 		}
 	}
 
 
-	public static function getBy($name, $criteria) {
+	public static function getBy($criteria) {
+		foreach ($criteria as $key => $value) {
+			if($value instanceof Service || $value instanceof Entity) {
+				$criteria[$key] = $value->id;
+			}
+		}
 		$repo = static::getEm()->getRepository(static::getMainEntityName());
-		$method = 'findOneBy'.Strings::firstUpper($name);
-		$result = $repo->{$method}($criteria);
+		$result = $repo->findOneBy($criteria);
 		return $result ? static::get($result) : NULL;
 	}
+
 
 	/**
 	 * Ziskanie hlavnej entity
