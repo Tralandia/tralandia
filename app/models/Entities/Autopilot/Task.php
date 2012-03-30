@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="autopilot_task")
  */
-class Task extends \Entities\BaseEntity {
+class Task extends \Entities\BaseEntityDetails {
 
 	/**
 	 * @var Collection
@@ -42,6 +42,12 @@ class Task extends \Entities\BaseEntity {
 	 * @ORM\Column(type="datetime")
 	 */
 	protected $startTime;
+
+	/**
+	 * @var datetime
+	 * @ORM\Column(type="datetime")
+	 */
+	protected $due;
 
 	/**
 	 * @var time
