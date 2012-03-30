@@ -10,9 +10,8 @@ use Nette\Application as NA,
 	Extras\Models\Service,
 	Extras\Types\Price,
 	Extras\Types\Latlong,
-	Services\Dictionary as D,
-	Services as S,
-	Services\Log\Change as SLog;
+	Services\Autopilot as AP,
+	Services\Log\Change as ChangeLog;
 
 class ImportLocations extends BaseImport {
 
@@ -340,6 +339,7 @@ class ImportLocations extends BaseImport {
 		$r = q('select * from regions where country_id = 46 and level = 2 order by id');
 		//$r = q('select * from regions where id = 48978 order by id');
 		while($x = mysql_fetch_array($r)) {
+			debug($x['id']); return;
 			$location = S\Location\LocationService::get();
 
 			$namePhrase = \Services\Dictionary\PhraseService::get();
@@ -360,8 +360,17 @@ class ImportLocations extends BaseImport {
 			$location->slug = $x['name_url'];			
 
 			$location->oldId = $x['id'];
+			$t = \Services\Location\LocationService::getByOldIdAndType($x['parent_id'], $this->administrativeRegions1Type);
 
-			$location->parentId = \Services\Location\LocationService::getByOldIdAndType($x['parent_id'], $this->administrativeRegions1Type)->id;
+			if ($t) {
+				$location->parentId = $t->id;
+			} else {
+				AP::addTask('LocationLocationLevel2NoParent', array(
+					'userCountry' => \Services\Location\CountryService::getByOldId($x['country_id'])->location->id,
+					'userRole' => \Services\User\Role::getBySlug('manager');
+				));
+			}
+			debug($t);
 			debug($location); return;
 			$location->save();
 		}

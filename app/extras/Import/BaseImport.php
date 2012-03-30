@@ -20,6 +20,9 @@ class BaseImport {
 		'currencies' => array(
 			'\Currency' => array(),
 		),
+		'autopilot' => array(
+			'\Autopilot\Type' => array(),
+		),
 		'domains' => array(
 			'\Domain' => array(),
 		),
