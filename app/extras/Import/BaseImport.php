@@ -23,6 +23,9 @@ class BaseImport {
 		'autopilot' => array(
 			'\Autopilot\Type' => array(),
 		),
+		'userRoles' => array(
+			'\User\Role' => array(),
+		),
 		'domains' => array(
 			'\Domain' => array(),
 		),
@@ -54,7 +57,7 @@ class BaseImport {
 		return;
 	}
 
-	public function truncateDatabase() {
+	public function truncateAllTables() {
 		qNew('SET FOREIGN_KEY_CHECKS = 0;');
 		$allTables = qNew('SHOW tables');
 		while ($table = mysql_fetch_array($allTables)) {

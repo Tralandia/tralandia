@@ -5,6 +5,7 @@ function q($query, $show = 0) {
 
 	if (!$link) {
 		$link=mysql_connect('localhost', 'root', 'root');
+		q("SET character_set_client = binary;"); q("SET character_set_connection = binary;"); q("SET character_set_results = binary;"); q("SET character_set_database = binary;"); q("SET character_set_server = binary;");
 	}
 	mysql_select_db('tralandia_old', $link);
 

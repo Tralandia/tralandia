@@ -27,7 +27,6 @@ class ImportCurrencies extends BaseImport {
 			$s->exchangeRate = $x['exchange_rate'];
 			$s->decimalPlaces = $x['decimal_places'];
 			$s->rounding = $x['decimal_places'];
-
 			$s->save();
 		}
 		$this->savedVariables['importedSections']['currencies'] = 2;

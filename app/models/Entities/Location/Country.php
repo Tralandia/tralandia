@@ -598,6 +598,39 @@ class Country extends \Entities\BaseEntityDetails {
 	}
 
 	/**
+	 * @param \Entities\Contact\Contact
+	 * @return \Entities\Location\Country
+	 */
+	public function addContact(\Entities\Contact\Contact $contact) {
+		if(!$this->contacts->contains($contact)) {
+			$this->contacts->add($contact);
+		}
+		$contact->addCountry($this);
+
+		return $this;
+	}
+
+	/**
+	 * @param \Entities\Contact\Contact
+	 * @return \Entities\Location\Country
+	 */
+	public function removeContact(\Entities\Contact\Contact $contact) {
+		if($this->contacts->contains($contact)) {
+			$this->contacts->removeElement($contact);
+		}
+		$contact->removeCountry($this);
+
+		return $this;
+	}
+
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entities\Contact\Contact
+	 */
+	public function getContacts() {
+		return $this->contacts;
+	}
+
+	/**
 	 * @param string
 	 * @return \Entities\Location\Country
 	 */
@@ -702,6 +735,7 @@ class Country extends \Entities\BaseEntityDetails {
 	}
 
 	/**
+	 * @warning Bacha inverzna strana!
 	 * @param \Entities\Location\Location
 	 * @return \Entities\Location\Country
 	 */
@@ -711,46 +745,11 @@ class Country extends \Entities\BaseEntityDetails {
 		return $this;
 	}
 
-
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entities\Location\Location
+	 * @return \Entities\Location\Location|NULL
 	 */
 	public function getLocation() {
 		return $this->location;
 	}
-
-	/**
-	 * @param \Entities\Contact\Contact
-	 * @return \Entities\Location\Country
-	 */
-	public function addContact(\Entities\Contact\Contact $contact) {
-		if(!$this->contacts->contains($contact)) {
-			$this->contacts->add($contact);
-		}
-		$contact->addCountry($this);
-
-		return $this;
-	}
-
-	/**
-	 * @param \Entities\Contact\Contact
-	 * @return \Entities\Location\Country
-	 */
-	public function removeContact(\Entities\Contact\Contact $contact) {
-		if($this->contacts->contains($contact)) {
-			$this->contacts->removeElement($contact);
-		}
-		$contact->removeCountry($this);
-
-		return $this;
-	}
-
-	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entities\Contact\Contact
-	 */
-	public function getContacts() {
-		return $this->contacts;
-	}
-
 
 }
