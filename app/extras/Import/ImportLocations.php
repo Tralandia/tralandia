@@ -33,8 +33,8 @@ class ImportLocations extends BaseImport {
 		//$this->updateNestedSetCountries();
 		//$this->importTravelings();
 		//$this->importRegions();
-		$this->importAdministrativeRegions1();
-		//$this->importAdministrativeRegions2();
+		//$this->importAdministrativeRegions1();
+		$this->importAdministrativeRegions2();
 		//$this->importLocalities();
 
 		$this->savedVariables['importedSections']['locations'] = 2;
@@ -321,7 +321,6 @@ class ImportLocations extends BaseImport {
 
 			$location->parentId = \Services\Location\CountryService::getByOldId($x['country_id'])->location->id;
 			$location->save();
-			return;
 		}
 
 	}
