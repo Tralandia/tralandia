@@ -48,6 +48,20 @@ class DavidPresenter extends BasePresenter {
 
 	}
 
+	public function actionAddTask() {
+		$typeName = 'test';
+		$attributes = array();
+		$params = array();
+		$task = \Services\Autopilot\Autopilot::addTask($typeName, $attributes, $params);
+		debug($task->getMainEntity());
+
+		$typeName = 'improveRental';
+		$attributes = array();
+		$params = array();		
+		$task = \Services\Autopilot\Autopilot::addTask($typeName, $attributes, $params);
+		debug($task->getMainEntity());
+	}
+
 	public function actionListTest() {
 		$list = D\LanguageList::getBySupported(\Entities\Dictionary\Language::SUPPORTED);
 		$list->returnAs('Services\Dictionary\LanguageService');
