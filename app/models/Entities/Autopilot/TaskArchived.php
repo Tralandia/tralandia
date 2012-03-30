@@ -45,6 +45,12 @@ class TaskArchived extends \Entities\BaseEntityDetails {
 	protected $startTime;
 
 	/**
+	 * @var datetime
+	 * @ORM\Column(type="datetime")
+	 */
+	protected $due;
+
+	/**
 	 * @var time
 	 * @ORM\Column(type="time")
 	 */
@@ -97,5 +103,11 @@ class TaskArchived extends \Entities\BaseEntityDetails {
 	 * @ORM\Column(type="json")
 	 */
 	protected $actions;
+
+	/**
+	 * @var datetime
+	 * @ORM\Column(type="datetime")
+	 */
+	protected $completed;
 
 }
