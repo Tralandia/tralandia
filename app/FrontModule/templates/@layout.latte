@@ -1,0 +1,11 @@
+{control header}
+<body>
+	<div id="header"></div>
+	<div class="flashMessage"><div n:foreach="$flashes as $flash" class="msg {$flash->type}">{$flash->message}</div></div>
+	<div id="layout">
+		<div class="body">
+			{include #content}
+		</div>
+	</div>
+</body>
+</html>

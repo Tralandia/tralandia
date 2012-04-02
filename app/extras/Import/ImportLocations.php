@@ -32,7 +32,9 @@ class ImportLocations extends BaseImport {
 		//$this->importCountries();
 		//$this->updateNestedSetCountries();
 		//$this->importTravelings();
-		$this->importRegions();
+		//$this->importRegions();
+		$this->importAdministrativeRegions1();
+		//$this->importAdministrativeRegions2();
 		//$this->importLocalities();
 
 		$this->savedVariables['importedSections']['locations'] = 2;
@@ -62,8 +64,6 @@ class ImportLocations extends BaseImport {
 			$s->createRoot();
 			//debug($s);
 		}
-
-		Service::flush(FALSE);
 	}
 
 	// ----------------------------------------------------------
@@ -241,20 +241,18 @@ class ImportLocations extends BaseImport {
 	}
 
 	// ----------------------------------------------------------
-	// ------------- Regions
+	// ------------- Regions Level 0
 	// ----------------------------------------------------------
 	private function importRegions() {
-		$language = getLangByIso('en');
-
 		$locationType = S\Location\TypeService::get();
-		$locationType->name = $this->createPhraseFromString('\Location\Location', 'name', 'supportedLanguages', 'NATIVE', 'region', $language);
+		$locationType->name = $this->createPhraseFromString('\Location\Location', 'name', 'supportedLanguages', 'NATIVE', 'region', \Services\Dictionary\LanguageService::getByIso('en'));
 		$locationType->slug = 'region';
 		$locationType->save();
 		$this->regionsType = $locationType;
 
 		//$r = q('select * from regions order by id');
-		//$r = q('select * from regions where country_id = 46 and level = 0 order by id');
-		$r = q('select * from regions where id = 48978 order by id');
+		$r = q('select * from regions where country_id = 46 and level = 0 order by id');
+		//$r = q('select * from regions where id = 48978 order by id');
 		while($x = mysql_fetch_array($r)) {
 			$location = S\Location\LocationService::get();
 
@@ -267,28 +265,108 @@ class ImportLocations extends BaseImport {
 				$variations = array(
 					'locative' => $x1['name_locative'],
 				);
-				$t = $this->createTranslation($this->languagesByOldId[$x1['language_id']], $x['name'], $variations);
+				$t = $this->createTranslation(\Services\Dictionary\LanguageService::getByOldId($x1['language_id']), $x['name'], $variations);
 				$namePhrase->addTranslation($t);
 			}
 
-
 			$location->name = $namePhrase;
-			$location->slug = $x['name_url'];
-			
 			$location->type = $locationType;
+			$location->slug = $x['name_url'];			
 
 			$location->oldId = $x['id'];
-			
-			$t = qNew('select location_id from location_country where oldId = '.$x['country_id']);
-			$t = mysql_fetch_array($t);
 
-			$location->parentId = $t[0];
+			$location->parentId = \Services\Location\CountryService::getByOldId($x['country_id'])->location->id;
+			//debug($location); return;
 			$location->save();
-			return; 
-			//debug($s);
+		}
+	}
+
+	// ----------------------------------------------------------
+	// ------------- Administrative Regions
+	// ----------------------------------------------------------
+	private function importAdministrativeRegions1() {
+
+		// Level 1
+
+		$locationType = S\Location\TypeService::get();
+		$locationType->name = $this->createPhraseFromString('\Location\Location', 'name', 'supportedLanguages', 'NATIVE', 'administrativeRegionLevelOne', \Services\Dictionary\LanguageService::getByIso('en'));
+		$locationType->slug = 'administrativeRegionLevelOne';
+		$locationType->save();
+		$this->administrativeRegions1Type = $locationType;
+
+		//$r = q('select * from regions order by id');
+		$r = q('select * from regions where country_id = 46 and level = 1 order by id');
+		//$r = q('select * from regions where id = 48978 order by id');
+		while($x = mysql_fetch_array($r)) {
+			$location = S\Location\LocationService::get();
+
+			$namePhrase = \Services\Dictionary\PhraseService::get();
+			$namePhrase->type = $this->dictionaryTypeName;
+			$namePhrase->ready = TRUE;
+
+			$r1 = q('select * from regions_translations where location_id = '.$x['id']);
+			while ($x1 = mysql_fetch_array($r1)) {
+				$variations = array(
+					'locative' => $x1['name_locative'],
+				);
+				$t = $this->createTranslation(\Services\Dictionary\LanguageService::getByOldId($x1['language_id']), $x['name'], $variations);
+				$namePhrase->addTranslation($t);
+			}
+
+			$location->name = $namePhrase;
+			$location->type = $locationType;
+			$location->slug = $x['name_url'];			
+
+			$location->oldId = $x['id'];
+
+			$location->parentId = \Services\Location\CountryService::getByOldId($x['country_id'])->location->id;
+			$location->save();
+			return;
 		}
 
-		Service::flush(FALSE);
+	}
+
+	private function importAdministrativeRegions2() {
+		// Level 2
+
+		$locationType = S\Location\TypeService::get();
+		$locationType->name = $this->createPhraseFromString('\Location\Location', 'name', 'supportedLanguages', 'NATIVE', 'administrativeRegionLevelTwo', \Services\Dictionary\LanguageService::getByIso('en'));
+		$locationType->slug = 'administrativeRegionLevelTwo';
+		$locationType->save();
+		$this->administrativeRegions2Type = $locationType;
+
+		$this->administrativeRegions1Type = S\Location\TypeService::getBySlug('administrativeregionlevelone');
+
+		//$r = q('select * from regions order by id');
+		$r = q('select * from regions where country_id = 46 and level = 2 order by id');
+		//$r = q('select * from regions where id = 48978 order by id');
+		while($x = mysql_fetch_array($r)) {
+			$location = S\Location\LocationService::get();
+
+			$namePhrase = \Services\Dictionary\PhraseService::get();
+			$namePhrase->type = $this->dictionaryTypeName;
+			$namePhrase->ready = TRUE;
+
+			$r1 = q('select * from regions_translations where location_id = '.$x['id']);
+			while ($x1 = mysql_fetch_array($r1)) {
+				$variations = array(
+					'locative' => $x1['name_locative'],
+				);
+				$t = $this->createTranslation(\Services\Dictionary\LanguageService::getByOldId($x1['language_id']), $x['name'], $variations);
+				$namePhrase->addTranslation($t);
+			}
+
+			$location->name = $namePhrase;
+			$location->type = $locationType;
+			$location->slug = $x['name_url'];			
+
+			$location->oldId = $x['id'];
+
+			$location->parentId = \Services\Location\LocationService::getByOldIdAndType($x['parent_id'], $this->administrativeRegions1Type)->id;
+			debug($location); return;
+			$location->save();
+		}
+
 	}
 
 }

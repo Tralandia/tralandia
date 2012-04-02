@@ -41,10 +41,25 @@ class DavidPresenter extends BasePresenter {
 		$s = S\Location\LocationService::get(3);
 		//$s->setSlug('smola');
 		$s->slug = 'asia';
-		// $type = S\Location\TypeService::getBySlug('country');
+		$type = S\Location\TypeService::getBySlug('country');
 		// $s = S\Location\LocationList::getBySlugInType('asia', array($type));
+		$s = S\Location\LocationService::getBySlugAndType('asia', $type);
 		debug($s);
 
+	}
+
+	public function actionAddTask() {
+		$typeName = 'test';
+		$attributes = array();
+		$params = array();
+		$task = \Services\Autopilot\Autopilot::addTask($typeName, $attributes, $params);
+		debug($task->getMainEntity());
+
+		$typeName = 'improveRental';
+		$attributes = array();
+		$params = array();		
+		$task = \Services\Autopilot\Autopilot::addTask($typeName, $attributes, $params);
+		debug($task->getMainEntity());
 	}
 
 	public function actionListTest() {
