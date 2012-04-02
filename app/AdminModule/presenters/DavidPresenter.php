@@ -48,6 +48,24 @@ class DavidPresenter extends BasePresenter {
 
 	}
 
+	public function actionAddTranslation () {
+		$p = D\PhraseService::get(7);
+		$t = D\TranslationService::get();
+		$p->addTranslation($t);
+		$t->language = D\LanguageService::get(140);
+		$t->translation = ' Toto je NEvebalizovaná veria prekladu		';
+		$t->save();
+		debug($p->type->entityName);
+		debug($t->variations);
+	}
+
+	public function actionDuplicatePhrase($id) {
+		$p = D\PhraseService::get($id);
+		$pNew = $p->duplicate(TRUE);
+		debug($p->translations->toArray());
+		debug($pNew);
+	}
+
 	public function actionAddTask() {
 		$typeName = 'test';
 		$attributes = array();
