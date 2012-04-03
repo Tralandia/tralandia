@@ -21,12 +21,12 @@ class EntityGeneratorPresenter extends BasePresenter {
 
 	public function actionDefault($id) {
 		$id = str_replace('-', '\\', $id);
-		$dir = APP_DIR . '/models/Entities/';
+		$dir = APP_DIR . '/models/Entity/';
 		$menu = array();
 		foreach (Finder::findFiles('*.php')->from($dir) as $key => $file) {
 			list($x, $entityNameTemp) = explode('/models/', $key, 2);
 			$entityNameTemp = str_replace(array('/', '.php'), array('\\', ''), $entityNameTemp);
-			$menu[] = array('fullname' => str_replace('\\', '-', $entityNameTemp), 'name' => str_replace('Entities\\', '', $entityNameTemp));
+			$menu[] = array('fullname' => str_replace('\\', '-', $entityNameTemp), 'name' => str_replace('Entity\\', '', $entityNameTemp));
 		}
 
 		$mainEntity = $this->getEntityReflection($id);
@@ -39,8 +39,8 @@ class EntityGeneratorPresenter extends BasePresenter {
 		$properties = $mainEntity->getProperties();
 		foreach ($properties as $property) {
 			if(in_array($property->name, array('nestedLeft', 'nestedRight', 'nestedRoot'))) continue;
-			if(in_array($property->name, array('id', 'created', 'updated', 'oldId')) && $mainEntity->name != 'Entities\BaseEntity') continue;
-			if(in_array($property->name, array('details')) && $mainEntity->name != 'Entities\BaseEntityDetails') continue;
+			if(in_array($property->name, array('id', 'created', 'updated', 'oldId')) && $mainEntity->name != 'Entity\BaseEntity') continue;
+			if(in_array($property->name, array('details')) && $mainEntity->name != 'Entity\BaseEntityDetails') continue;
 
 			$property = $this->getPropertyInfo($property);
 
@@ -119,7 +119,7 @@ class EntityGeneratorPresenter extends BasePresenter {
 				} else if($property->association == ORM\ClassMetadataInfo::ONE_TO_ONE){
 					
 					if($targetedEntityPropery == NULL) {												// One To One Uni
-						if($targetEntity->name == 'Entities\Dictionary\Phrase') {
+						if($targetEntity->name == 'Entity\Dictionary\Phrase') {
 							$this->addMethod('setPhrase', $newClass, $property, $targetEntity->name);
 							$this->addMethod('get2', $newClass, $property, $targetEntity->name);
 						} else {
@@ -205,7 +205,7 @@ class EntityGeneratorPresenter extends BasePresenter {
 
 			if(array_key_exists('targetEntity', $annotations[$association][0])) {
 				$return['targetEntity'] = $annotations[$association][0]['targetEntity'];
-				if(!Strings::startsWith($return['targetEntity'], 'Entities')) {
+				if(!Strings::startsWith($return['targetEntity'], 'Entity')) {
 					$class = $this->getEntityReflection($property->class);
 					$classNamespace = $class->getNamespaceName();
 					$return['targetEntity'] = $classNamespace.'\\'.$return['targetEntity'];
@@ -259,7 +259,7 @@ class EntityGeneratorPresenter extends BasePresenter {
 
 	public function addMethod($type, $newClass, $property, $tagetPropery) {
 		if(is_string($tagetPropery)) {
-			if(Strings::startsWith($tagetPropery, 'Entities'))
+			if(Strings::startsWith($tagetPropery, 'Entity'))
 				$tagetProperyClass = '\\'.$tagetPropery;
 			else 
 				$tagetProperyClass = $tagetPropery;

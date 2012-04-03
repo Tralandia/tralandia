@@ -34,6 +34,19 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 	 */
 	private $list = array();
 
+
+	public function __construct($param = NULL) {
+		if(is_array($param)) {
+			$this->setList($param);
+		} else if(is_string($param)) {
+			$this->prepareBaseList($param);
+		} else if($param === NULL) {
+			// create empty list
+		} else {
+			throw new \Nette\InvalidArgumentException('Argument does not match with the expected value');
+		}
+	}
+
 	public static function __callStatic($name, $arguments) {
 		list($nameTemp, $nameBy, $nameIn) = Strings::match($name, '~^getBy([A-Za-z]+)In([A-Za-z]+)$~');
 		if($nameTemp && $nameBy && $nameIn) {
@@ -58,6 +71,10 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 		$method = 'findBy'.Strings::firstUpper($name);
 		$serviceList->setList($repository->{$method}($by));
 		return $serviceList;
+	}
+
+	public static function getAll($entity = NULL) {
+		return new static($entity ? : static::MAIN_ENTITY_NAME);
 	}
 
 
@@ -90,17 +107,6 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 	}
 
 
-	public function __construct($param = NULL) {
-		if(is_array($param)) {
-			$this->setList($param);
-		} else if(is_string($param)) {
-			$this->prepareBaseList($param);
-		} else if($param === NULL) {
-
-		} else {
-			throw new \Nette\InvalidArgumentException('Argument does not match with the expected value');
-		}
-	}
 
 	protected function prepareBaseList($entity) {
 		$query = $this->getEm()->createQueryBuilder();
