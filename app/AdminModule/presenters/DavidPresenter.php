@@ -41,22 +41,23 @@ class DavidPresenter extends BasePresenter {
 		//$s = S\Location\LocationService::get(3);
 		//$s->setSlug('smola');
 		//$s->slug = 'asia';
-		$type = S\Location\Type::getBySlug('country');
-		$s = S\Location\LocationList::getBySlugInType('asia', array($type));
+		//$type = S\Location\Type::getBySlug('country');
+		//$s = S\Location\LocationList::getBySlugInType('asia', array($type));
 		//$s = S\Location\LocationService::getBySlugAndType('asia', $type);
 		//$s = S\Company\Company::get(1);
 		//$s->address = new \Extras\Types\Address(array('city' => 'Nesvady', 'country' => 'Slovakia'));
 		//$s->save();
-		debug($s[0]);
+		$s = S\Location\LocationList::getAll();
+		debug($s);
 	}
 
 
 
 	public function actionAddTranslation () {
-		$p = D\PhraseService::get(7);
-		$t = D\TranslationService::get();
+		$p = D\Phrase::get(7);
+		$t = D\Translation::get();
 		$p->addTranslation($t);
-		$t->language = D\LanguageService::get(140);
+		$t->language = D\Language::get(140);
 		$t->translation = ' Toto je NEvebalizovaná veria prekladu		';
 		$t->save();
 		debug($p->type->entityName);
@@ -64,7 +65,7 @@ class DavidPresenter extends BasePresenter {
 	}
 
 	public function actionDuplicatePhrase($id) {
-		$p = D\PhraseService::get($id);
+		$p = D\Phrase::get($id);
 		$pNew = $p->duplicate(TRUE);
 		debug($p->translations->toArray());
 		debug($pNew);
@@ -85,24 +86,24 @@ class DavidPresenter extends BasePresenter {
 	}
 
 	public function actionListTest() {
-		$list = D\LanguageList::getBySupported(\Entities\Dictionary\Language::SUPPORTED);
+		$list = D\LanguageList::getBySupported(\Entity\Dictionary\Language::SUPPORTED);
 		$list->returnAs('Services\Dictionary\LanguageService');
 		debug(count($list));
 		$i = 0;
 		foreach ($list as $key => $val) {
 			debug($val);
-			$list->returnAs(\Extras\Models\ServiceList::RETURN_ENTITIES);
+			$list->returnAs(D\LanguageList::RETURN_ENTITIES);
 			if($i++ >= 5) break;
 
 			//break;
 		}
-		$list->returnAs(\Extras\Models\ServiceList::RETURN_ENTITIES);
+		$list->returnAs(D\LanguageList::RETURN_ENTITIES);
 		//debug($list[$i]);
 	
 	}
 
 	public function actionAddPhrase() {
-		$dictionary = new D\DictionaryService;
+		$dictionary = new D\Dictionary;
 
 		$type = $dictionary->getType(1);
 		$phrase = $dictionary->createPhrase(array(
@@ -114,14 +115,14 @@ class DavidPresenter extends BasePresenter {
 	}
 
 	public function actionUpdatePhrase($id) {
-		$phrase = new D\PhraseService($id);
+		$phrase = new D\Phrase($id);
 		//debug($phrase);
 
-		$l1 = new D\LanguageService(3);
-		$l2 = new D\LanguageService(1);
+		$l1 = new D\Language(3);
+		$l2 = new D\Language(1);
 		$phrase->addLanguage($l1)->addLanguage($l2);
 
-		$language = new D\LanguageService(2);
+		$language = new D\Language(2);
 		$phrase->removeLanguage($language);
 
 		$phrase->createTranslation(array(
@@ -139,14 +140,14 @@ class DavidPresenter extends BasePresenter {
 	}
 
 	public function actionUpdateLanguage($id) {
-		$translation = new D\LanguageService($id);
-		$translation->name = new D\PhraseService(1);
+		$translation = new D\Language($id);
+		$translation->name = new D\Phrase(1);
 		$translation->save();
 		//debug($translation);
 	}
 
 	public function actionAddLanguage($id) {
-		$language = new D\LanguageService;
+		$language = new D\Language;
 		$language->iso = $id;
 		$language->supported = false;
 		$language->save();

@@ -1,6 +1,6 @@
 <?php
 
-namespace Service\Copmany;
+namespace Service\Company;
 
 
 class BankAccount extends \Service\BaseService {
