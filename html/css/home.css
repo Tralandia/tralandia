@@ -1,0 +1,64 @@
+/* ľšč*/
+div.homeObjectList {
+    margin: 10px 0px 0px 0px;
+}
+div.homeObjectListItem {
+    float: left;
+    width: 234px;
+    height: 155px;
+    margin: 0px 0px 0px 10px;
+    position: relative;
+    background: url(../images/matrix_main.png) -640px -755px;
+}
+div.homeObjectList div.top {
+    position: absolute;
+    width: 33px;
+    height: 23px;
+    background: url(../images/matrix_main.png) -230px -930px;
+    top: 3px;
+    left: 198px;
+}
+div.homeObjectList div.title {
+    position: absolute;
+    width: 234px;
+    height: 20px;
+    padding: 5px 0px 0px 0px;
+    overflow: hidden;
+    background: url(../images/matrix_main.png) -640px -875px;
+    top: 120px;
+    text-align: center;
+    color: #fff;
+}
+div.homeObjectListItem img {
+    width: 234px;
+    height: 145px;
+}
+div.homeObjectListItemDescription {
+    position: absolute;
+    width: 224px;
+    height: 135px;
+    background: url(../images/matrix_main.png) -410px -880px;
+    z-index: 100;
+    top: 141px;
+    left: 5px;
+    text-align: center;
+}
+div.homeObjectListItemDescription p {
+    padding: 0 5px 2px 5px;
+}
+div.homeObjectListItemDescription p:first-child {
+    height: 29px;
+    overflow: hidden;
+    margin-top: 17px;
+}
+div.homeObjectListItemDescription span {
+    line-height: 12px;
+    background: url(../images/matrix_main.png) -310px -930px;
+    padding: 0px 12px 2px 0;
+}
+div.homeObjectListItemDescription span.full {
+    background-position: -270px -930px;
+}
+div.homeObjectListItemDescription span.half {
+    background-position: -290px -930px;
+}

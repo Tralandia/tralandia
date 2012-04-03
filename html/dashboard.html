@@ -1,0 +1,676 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="page-type" content="" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Tralandia - dashboard</title>
+    <link rel="stylesheet" type="text/css" href="css/default.css" />
+    <link rel="stylesheet" type="text/css" href="css/mainHeader.css" />
+    <link rel="stylesheet" type="text/css" href="css/mainFooter.css" />
+    <link rel="stylesheet" type="text/css" href="css/search.css" />
+    <link rel="stylesheet" type="text/css" href="css/clickMap.css" />
+    <link rel="stylesheet" type="text/css" href="css/home.css" />
+    <link rel="stylesheet" type="text/css" href="css/objectsList.css" />
+    <link rel="stylesheet" type="text/css" href="css/objectDetails.css" />
+    <link rel="stylesheet" type="text/css" href="css/calendar.css" />
+    <link rel="stylesheet" type="text/css" href="css/forms.css" />
+    <link rel="stylesheet" type="text/css" href="css/listPanel.css" />
+    <link rel="stylesheet" type="text/css" href="css/dashboard.css" />
+    <link rel="stylesheet" type="text/css" href="css/admin.css" />
+    <script type="text/javascript" src="libs/jquery/jquery-1.6.2.min.js"></script>
+
+    <script type="text/javascript" src="libs/skinnedcombo/jquery.skinned-combo.pack.js"></script>
+    <link rel="stylesheet" type="text/css" href="libs/skinnedcombo/skin.css" />
+
+    <script type="text/javascript" src="libs/ui/jquery-ui-1.8.4.custom.min.js"></script>
+    <script type="text/javascript" src="libs/ui/jquery.ui.datepicker-sk.js"></script>
+    <link rel="stylesheet" type="text/css" href="libs/ui/jquery-ui-1.8.4.custom.css" />
+
+</head>
+<body>
+    <div class="mainHolder">
+        <!-- pri strankach bez laveho search pridat .wide a netreba generovat div.search: -->
+        <div class="mainBody wide">
+
+            <div class="mainRight">
+                <div class="dashboard">
+                    <div class="dashboardMenu">
+                        <a class="profile" href="#"><h3>Vas profil</h3>klingacik@martinko.com</a>
+                        <a class="invoices" href="#"><h3>Vase faktury</h3>Mate <b>2 neuhradene</b> faktury</a>
+                        <a class="credits" href="#"><h3>Vase kredity</h3>Mate <b>123</b> kreditov</a>
+                        <a class="add" href="#"><h3>Pridat zariadenie</h3></a>
+                        <a class="logout" href="#">Odhlasit sa</a>
+                    </div>
+
+                    <div class="dashboardObject">
+                        <div class="dashboardMainInfo">
+                            <div class="dashboardObjectPhoto">
+                                <div class="mask">&nbsp;</div>
+                                <img src="images/img_1.gif" />
+                            </div>
+                            <div class="dashboardObjectInfo">
+                                <div class="dashboardObjectInfoTop">
+                                    <h2>Chata Franka</h2>
+                                    <p><span>Zaplateny do:</span> 12. 3. 2012</p>
+                                    <p><span>Zaplateny do:</span> 12. 3. 2012</p>
+                                    <p><span>Zaplateny do:</span> 12. 3. 2012</p>
+                                    <p><span>Zaplateny do:</span> 12. 3. 2012</p>
+                                    <p><span>Zaplateny do:</span> 12. 3. 2012</p>
+                                    <p><span>Zaplateny do:</span> 12. 3. 2012</p>
+                                </div>
+                                <div class="dashboardObjectInfoTabs">
+                                    <a class="edit" href="#"><span class="text">Upravit objekt</span><span class="corner">&nbsp;</span></a>
+                                    <a class="actualize" href="#"><span class="text">Aktualizujte obsadenost</span><span class="corner">&nbsp;</span></a>
+                                    <a class="calendar" href="#"><span class="text">Kalendar obsadenosti</span><span class="corner">&nbsp;</span></a>
+                                    <a class="reservations" href="#"><span class="text">Rezervacie a dopyty</span><span class="corner">&nbsp;</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dashboardDetails">
+                            Lorem Ipsum
+                        </div>
+                    </div>
+
+                    <div class="dashboardObject open">
+                        <div class="dashboardMainInfo">
+                            <div class="dashboardObjectPhoto">
+                                <div class="mask">&nbsp;</div>
+                                <img src="images/img_1.gif" />
+                            </div>
+                            <div class="dashboardObjectInfo">
+                                <div class="dashboardObjectInfoTop">
+                                    <h2>Chata Franka</h2>
+                                    <p><span>Zaplateny do:</span> 12. 3. 2012</p>
+                                    <p><span>Zaplateny do:</span> 12. 3. 2012</p>
+                                    <p><span>Zaplateny do:</span> 12. 3. 2012</p>
+                                    <p><span>Zaplateny do:</span> 12. 3. 2012</p>
+                                    <p><span>Zaplateny do:</span> 12. 3. 2012</p>
+                                    <p><span>Zaplateny do:</span> 12. 3. 2012</p>
+                                </div>
+                                <div class="dashboardObjectInfoTabs">
+                                    <a class="edit active" href="#"><span class="text">Upravit objekt</span><span class="corner">&nbsp;</span></a>
+                                    <a class="actualize" href="#"><span class="text">Aktualizujte obsadenost</span><span class="corner">&nbsp;</span></a>
+                                    <a class="calendar" href="#"><span class="text">Kalendar obsadenosti</span><span class="corner">&nbsp;</span></a>
+                                    <a class="reservations" href="#"><span class="text">Rezervacie a dopyty</span><span class="corner">&nbsp;</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dashboardDetails">
+                            <div class="dashboardDetailsContent">
+                                <div class="dashboardEditTab">
+                                    <form>
+
+                                        <fieldset>
+                                            <a class="fieldsetHeader">
+                                                <div class="progress required">
+                                                    <div class="text">60 % complete</div>
+                                                    <div class="percentage" style="width: 60%;"></div>
+                                                </div>
+                                                <h3>About the accommodation facility</h3>
+                                            </a>
+                                            <div class="fieldsetContent">
+                                                aaa
+                                            </div>
+                                        </fieldset>
+
+                                        <fieldset class="open">
+                                            <a class="fieldsetHeader">
+                                                <div class="progress required">
+                                                    <div class="text">60 % complete</div>
+                                                    <div class="percentage" style="width: 60%;"></div>
+                                                </div>
+                                                <h3>About the accommodation facility</h3>
+                                            </a>
+                                            <div class="fieldsetContent">
+                                                <div class="fieldsetBody">
+
+                                                    <div class="formBlock">
+                                                        <div class="status">&nbsp;</div>
+                                                        <label>City/Town <span>(Some comment)</span></label>
+                                                        <input type="text" value="Piste sem" />
+                                                        <span class="help">Lorem ipsum</span>
+                                                    </div>
+                                                    <div class="formBlock statusOK">
+                                                        <div class="status">&nbsp;</div>
+                                                        <label>City/Town <span>(Some comment)</span></label>
+                                                        <input type="text" />
+                                                        <span class="help">Lorem ipsum</span>
+                                                    </div>
+                                                    <div class="formBlock statusInvalid">
+                                                        <div class="status">&nbsp;</div>
+                                                        <label>City/Town <span>(Some comment)</span></label>
+                                                        <input type="text" />
+                                                        <span class="help">Lorem ipsum</span>
+                                                    </div>
+
+                                                    <div class="formBlock short statusOK">
+                                                        <div class="status">&nbsp;</div>
+                                                        <label>Latitude <span>(Some comment)</span></label>
+                                                        <input type="text" />
+                                                        <span class="help">Lorem ipsum</span>
+                                                    </div>
+                                                    <div class="formBlock short right statusInvalid">
+                                                        <div class="status">&nbsp;</div>
+                                                        <label>Longitude <span>(Some comment)</span></label>
+                                                        <input type="text" />
+                                                        <span class="help">Lorem ipsum</span>
+                                                    </div>
+                                                    <div class="cleaner"></div>
+
+                                                    <div class="formBlock short">
+                                                        <div class="status">&nbsp;</div>
+                                                        <label>Longitude <span>(Some comment)</span></label>
+                                                        <select class="w432">
+                                                            <option>a</option>
+                                                            <option>b</option>
+                                                            <option>c</option>
+                                                        </select>
+                                                        <span class="help">Lorem ipsum</span>
+                                                    </div>
+                                                    <div class="formBlock short right">
+                                                        <div class="status">&nbsp;</div>
+                                                        <label>Longitude <span>(Some comment)</span></label>
+                                                        <select class="w432">
+                                                            <option>a</option>
+                                                            <option>b</option>
+                                                            <option>c</option>
+                                                        </select>
+                                                        <span class="help">Lorem ipsum</span>
+                                                    </div>
+                                                    <div class="cleaner"></div>
+
+                                                    <div class="formBlock varHeight statusOK">
+                                                        <div class="status">&nbsp;</div>
+                                                        <label>Longitude 1 column<span> (Some comment)</span></label>
+                                                        <div class="checkboxes">
+                                                            <input type="checkbox" /><label>Hlorem ipsum</label>
+                                                            <input type="checkbox" checked="checked" /><label>Hlorem ipsum</label>
+                                                            <input type="checkbox" /><label>Hlorem ipsum</label>
+                                                            <input type="checkbox" /><label>Hlorem ipsum</label>
+                                                        </div>
+                                                        <div class="cleaner"></div>
+                                                        <span class="help">Lorem ipsum</span>
+                                                    </div>
+
+                                                    <div class="formBlock varHeight cols_2 statusInvalid">
+                                                        <div class="status">&nbsp;</div>
+                                                        <label>Longitude 2 columns<span> (Some comment)</span></label>
+                                                        <div class="checkboxes">
+                                                            <input type="checkbox" /><label>Hlorem ipsum</label>
+                                                            <input type="checkbox" checked="checked" /><label>Hlorem ipsum</label>
+                                                            <input type="checkbox" /><label>Hlorem ipsum</label>
+                                                            <input type="checkbox" /><label>Hlorem ipsum</label>
+                                                        </div>
+                                                        <div class="checkboxes">
+                                                            <input type="checkbox" /><label>Hlorem ipsum</label>
+                                                            <input type="checkbox" checked="checked" /><label>Hlorem ipsum</label>
+                                                            <input type="checkbox" /><label>Hlorem ipsum</label>
+                                                            <input type="checkbox" /><label>Hlorem ipsum</label>
+                                                        </div>
+                                                        <div class="cleaner"></div>
+                                                        <span class="help">Lorem ipsum</span>
+                                                    </div>
+
+                                                    <div class="formBlock varHeight cols_3">
+                                                        <div class="status">&nbsp;</div>
+                                                        <label>Longitude 3 columns<span> (Some comment)</span></label>
+                                                        <div class="checkboxes">
+                                                            <input type="checkbox" /><label>Hlorem ipsum</label>
+                                                            <input type="checkbox" checked="checked" /><label>Hlorem ipsum</label>
+                                                            <input type="checkbox" /><label>Hlorem ipsum</label>
+                                                            <input type="checkbox" /><label>Hlorem ipsum</label>
+                                                        </div>
+                                                        <div class="checkboxes">
+                                                            <input type="checkbox" /><label>Hlorem ipsum</label>
+                                                            <input type="checkbox" checked="checked" /><label>Hlorem ipsum</label>
+                                                            <input type="checkbox" /><label>Hlorem ipsum</label>
+                                                            <input type="checkbox" /><label>Hlorem ipsum</label>
+                                                        </div>
+                                                        <div class="checkboxes">
+                                                            <input type="checkbox" /><label>Hlorem ipsum</label>
+                                                            <input type="checkbox" checked="checked" /><label>Hlorem ipsum</label>
+                                                            <input type="checkbox" /><label>Hlorem ipsum</label>
+                                                            <input type="checkbox" /><label>Hlorem ipsum</label>
+                                                        </div>
+                                                        <div class="cleaner"></div>
+                                                        <span class="help">Lorem ipsum</span>
+                                                    </div>
+
+                                                    <div class="formBlock varHeight cols_4">
+                                                        <div class="status">&nbsp;</div>
+                                                        <label>Longitude 4 columns<span> (Some comment)</span></label>
+                                                        <div class="checkboxes">
+                                                            <input type="checkbox" /><label>Hlorem ipsum</label>
+                                                            <input type="checkbox" checked="checked" /><label>Hlorem ipsum</label>
+                                                            <input type="checkbox" /><label>Hlorem ipsum</label>
+                                                            <input type="checkbox" /><label>Hlorem ipsum</label>
+                                                        </div>
+                                                        <div class="checkboxes">
+                                                            <input type="checkbox" /><label>Hlorem ipsum</label>
+                                                            <input type="checkbox" checked="checked" /><label>Hlorem ipsum</label>
+                                                            <input type="checkbox" /><label>Hlorem ipsum</label>
+                                                            <input type="checkbox" /><label>Hlorem ipsum</label>
+                                                        </div>
+                                                        <div class="checkboxes">
+                                                            <input type="checkbox" /><label>Hlorem ipsum</label>
+                                                            <input type="checkbox" checked="checked" /><label>Hlorem ipsum</label>
+                                                            <input type="checkbox" /><label>Hlorem ipsum</label>
+                                                            <input type="checkbox" /><label>Hlorem ipsum</label>
+                                                        </div>
+                                                        <div class="checkboxes">
+                                                            <input type="checkbox" /><label>Hlorem ipsum</label>
+                                                            <input type="checkbox" checked="checked" /><label>Hlorem ipsum</label>
+                                                            <input type="checkbox" /><label>Hlorem ipsum</label>
+                                                            <input type="checkbox" /><label>Hlorem ipsum</label>
+                                                        </div>
+                                                        <div class="cleaner"></div>
+                                                        <span class="help">Lorem ipsum</span>
+                                                    </div>
+
+                                                    <div class="formBlock varHeight cols_5">
+                                                        <div class="status">&nbsp;</div>
+                                                        <label>Longitude 5 columns<span> (Some comment)</span></label>
+                                                        <div class="checkboxes">
+                                                            <input type="checkbox" /><label>Hlorem ipsum</label>
+                                                            <input type="checkbox" checked="checked" /><label>Hlorem ipsum</label>
+                                                            <input type="checkbox" /><label>Hlorem ipsum</label>
+                                                            <input type="checkbox" /><label>Hlorem ipsum</label>
+                                                        </div>
+                                                        <div class="checkboxes">
+                                                            <input type="checkbox" /><label>Hlorem ipsum</label>
+                                                            <input type="checkbox" checked="checked" /><label>Hlorem ipsum</label>
+                                                            <input type="checkbox" /><label>Hlorem ipsum</label>
+                                                            <input type="checkbox" /><label>Hlorem ipsum</label>
+                                                        </div>
+                                                        <div class="checkboxes">
+                                                            <input type="checkbox" /><label>Hlorem ipsum</label>
+                                                            <input type="checkbox" checked="checked" /><label>Hlorem ipsum</label>
+                                                            <input type="checkbox" /><label>Hlorem ipsum</label>
+                                                            <input type="checkbox" /><label>Hlorem ipsum</label>
+                                                        </div>
+                                                        <div class="checkboxes">
+                                                            <input type="checkbox" /><label>Hlorem ipsum</label>
+                                                            <input type="checkbox" checked="checked" /><label>Hlorem ipsum</label>
+                                                            <input type="checkbox" /><label>Hlorem ipsum</label>
+                                                            <input type="checkbox" /><label>Hlorem ipsum</label>
+                                                        </div>
+                                                        <div class="checkboxes">
+                                                            <input type="checkbox" /><label>Hlorem ipsum</label>
+                                                            <input type="checkbox" checked="checked" /><label>Hlorem ipsum</label>
+                                                            <input type="checkbox" /><label>Hlorem ipsum</label>
+                                                            <input type="checkbox" /><label>Hlorem ipsum</label>
+                                                        </div>
+                                                        <div class="cleaner"></div>
+                                                        <span class="help">Lorem ipsum</span>
+                                                    </div>
+
+                                                    <div class="formSubmitWrapper block"><a class="formSubmit" href="#"><span class="text">Ulozit a pokracovat</span><span class="space">&nbsp;</span></a></div>
+
+                                                </div>
+                                                <div class="fieldsetFooter">&nbsp;</div>
+                                            </div>
+                                        </fieldset>
+
+                                    </form>
+
+                                    <div class="dashboardWarning">
+                                        <table class="holder">
+                                            <tr>
+                                                <td class="icon"></td>
+                                                <td>Lorem ipsum dolor sit amet, elit, labore et dolore magna aliqua. Ut enim ad minim veniam, aliquip ex ea commodo consequat.</td>
+                                                <td class="remove"><a href="#">&nbsp;</a></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="dashboardInfo">
+                                        <table class="holder">
+                                            <tr>
+                                                <td class="icon"></td>
+                                                <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</td>
+                                                <td class="remove"><a href="#">&nbsp;</a></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+
+                                    <div>
+                                        <div class="adminTableHeader">&nbsp;</div>
+                                        <table class="holder adminTable">
+                                            <thead>
+                                                <tr>
+                                                    <th>mID</th>
+                                                    <th>oID</th>
+                                                    <th>Name</th>
+                                                    <th>Quality</th>
+                                                    <th>Created</th>
+                                                    <th>Updated</th>
+                                                    <th>&nbsp;</th>
+                                                    <th>&nbsp;</th>
+                                                    <th>&nbsp;</th>
+                                                    <th>&nbsp;</th>
+                                                    <th>&nbsp;</th>
+                                                    <th>&nbsp;</th>
+                                                </tr>
+                                            </thead>
+                                            <tr>
+                                                <td><b>3130</b></td>
+                                                <td><b>3895</b></td>
+                                                <td>(<a href="#">cz</a>) Apartmany Magicka zahrada</td>
+                                                <td>34.66%</td>
+                                                <td>13.1.2011</td>
+                                                <td>3 min.</td>
+                                                <td><a class="btn view" href="">View<span>&nbsp;&nbsp;</span></a></td>
+                                                <td><a class="btn edit" href="">Edit<span>&nbsp;&nbsp;</span></a></td>
+                                                <td><a class="btn login" href="">Login<span>&nbsp;&nbsp;</span></a></td>
+                                                <td><a class="btn delete" href="">Delete<span>&nbsp;&nbsp;</span></a></td>
+                                                <td><a class="btn checked" href="">Checked<span>&nbsp;&nbsp;</span></a></td>
+                                                <td><a class="btn updated" href="">Updated<span>&nbsp;&nbsp;</span></a></td>
+                                            </tr>
+                                            <tr class="even">
+                                                <td><b>3130</b></td>
+                                                <td><b>3895</b></td>
+                                                <td>(<a href="#">cz</a>) Apartmany Magicka zahrada</td>
+                                                <td>34.66%</td>
+                                                <td>13.1.2011</td>
+                                                <td>1182 min.</td>
+                                                <td><a class="btn view" href="">View<span>&nbsp;&nbsp;</span></a></td>
+                                                <td><a class="btn edit" href="">Edit<span>&nbsp;&nbsp;</span></a></td>
+                                                <td><a class="btn login" href="">Login<span>&nbsp;&nbsp;</span></a></td>
+                                                <td><span class="btn" href="">Delete<span>&nbsp;&nbsp;</span></span></td>
+                                                <td><a class="btn checked" href="">Checked<span>&nbsp;&nbsp;</span></a></td>
+                                                <td><a class="btn updated" href="">Updated<span>&nbsp;&nbsp;</span></a></td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>3130</b></td>
+                                                <td><b>3895</b></td>
+                                                <td>(<a href="#">cz</a>) Apartmany Magicka zahrada</td>
+                                                <td>34.66%</td>
+                                                <td>13.1.2011</td>
+                                                <td>davno</td>
+                                                <td><a class="btn view" href="">View<span>&nbsp;&nbsp;</span></a></td>
+                                                <td><a class="btn edit" href="">Edit<span>&nbsp;&nbsp;</span></a></td>
+                                                <td><a class="btn login" href="">Login<span>&nbsp;&nbsp;</span></a></td>
+                                                <td><a class="btn delete" href="">Delete<span>&nbsp;&nbsp;</span></a></td>
+                                                <td><span class="btn" href="">Checked<span>&nbsp;&nbsp;</span></span></td>
+                                                <td><a class="btn updated" href="">Updated<span>&nbsp;&nbsp;</span></a></td>
+                                            </tr>
+                                            <tr class="even">
+                                                <td><b>3130</b></td>
+                                                <td><b>3895</b></td>
+                                                <td>(<a href="#">cz</a>) Apartmany Magicka zahrada</td>
+                                                <td>34.66%</td>
+                                                <td>13.1.2011</td>
+                                                <td>3 min.</td>
+                                                <td><a class="btn view" href="">View<span>&nbsp;&nbsp;</span></a></td>
+                                                <td><a class="btn edit" href="">Edit<span>&nbsp;&nbsp;</span></a></td>
+                                                <td><a class="btn login" href="">Login<span>&nbsp;&nbsp;</span></a></td>
+                                                <td><span class="btn" href="">Delete<span>&nbsp;&nbsp;</span></span></td>
+                                                <td><a class="btn checked" href="">Checked<span>&nbsp;&nbsp;</span></a></td>
+                                                <td><a class="btn updated" href="">Updated<span>&nbsp;&nbsp;</span></a></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+
+                                    <table class="holder pager" style="margin: 10px 0px 0px 0px;">
+                                        <tr>
+                                            <td class="buttons">
+                                                <table class="holder">
+                                                    <tr>
+                                                        <td><a class="first" href="#">&nbsp;</a></td>
+                                                        <td><a class="prev" href="#">&nbsp;</a></td>
+                                                        <td><a class="" href="#">1</a></td>
+                                                        <td><span>2</span></td>
+                                                        <td><a class="" href="#">3</a></td>
+                                                        <td><a class="" href="#">4</a></td>
+                                                        <td><a class="next" href="#">&nbsp;</a></td>
+                                                        <td><a class="last" href="#">&nbsp;</a></td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td class="corners">&nbsp;</td>
+                                        </tr>
+                                    </table>
+                                    <div class="cleaner"></div>
+
+                                </div>
+                            </div>
+                            <div class="dashboardDetailsFooter">&nbsp;</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="mainLeft">
+                <div class="search">
+                    <div class="searchHeader">
+                        <div class="holder">
+                            <h2>Vyhladavanie</h2>
+                            <a href="#">Nemate cas hladat?</a><br />
+                            <span><span>&nbsp;&nbsp;&nbsp;</span><a class="reset" href="#">Vymazat vsetky kriteria</a></span>
+                        </div>
+                        <input class="input" type="text" value="Hladat vo vysledkoch" />
+                        <input class="btn" type="submit" value="" />
+                    </div>
+                    <div class="searchCriteria">
+                        <div class="searchItem">
+                            <h3>Lokalita objektu</h3>
+                            <div class="searchItemFulltext">
+                                <input class="input" type="text" value="Co hladate" />
+                                <input class="btn" type="submit" value="" />
+                            </div>
+                            <div class="searchItemDropdown tempShow">
+                                <a class="link" href="#"><span>&nbsp;</span>Bratislavsky</a>
+                                <a class="link" href="#"><span>&nbsp;</span>Nitriansky</a>
+                                <a class="link" href="#"><span>&nbsp;</span>Presovsky</a>
+                                <a class="showMore" href="#">Dalsie moznosti<span>&nbsp;</span></a>
+                            </div>
+                        </div>
+                        <div class="searchItem">
+                            <h3>Lokalita objektu</h3>
+                            <a class="link" href="#"><span>&nbsp;</span>Bratislavsky (24)</a>
+                            <a class="link" href="#"><span>&nbsp;</span>Nitriansky (105)</a>
+                            <a class="link" href="#"><span>&nbsp;</span>Presovsky</a>
+                            <a class="folder" href="#"><span>&nbsp;</span>Bratislavsky</a>
+                            <a class="folder" href="#"><span>&nbsp;</span>Nitriansky</a>
+                            <a class="child" href="#"><span>&nbsp;</span>Presovsky</a>
+                            <a class="child" href="#"><span>&nbsp;</span>Presovsky</a>
+                        </div>
+                        <div class="searchItem">
+                            <h3>Lokalita objektu</h3>
+                            <a class="selected" href="#"><span>&nbsp;</span><b>Anglicky</b> (174)<span class="reset">&nbsp;</span></a>
+                        </div>
+                    </div>
+                    <div class="searchFooter"></div>
+                </div>
+            </div>
+            <div class="cleaner"></div>
+            <div class="mainFooter">
+                <div class="mainFooterSeparator_1"></div>
+                <div class="mainFooterInfoOwners">
+                    <div class="icon"></div>
+                    <h2><b>Informacie</b> pre ubytovatelov</h2>
+                    <a class="mainFooterBanner" style="background: url(images/sk.registerBanner.png)"></a>
+                    <div class="mainFooterTestimonials">
+                        <div class="item">
+                            <div class="holder">
+                                <div class="quota"></div>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                            </div>
+                        </div>
+                        <b>Miro Mazgut</b>
+                        <div class="item">
+                            <div class="holder">
+                                <div class="quota"></div>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                            </div>
+                        </div>
+                        <b>Miro Mazgut</b>
+                    </div>
+                    <div class="all">
+                        <a href="#"><span class="text">pozri vsetky nazory</span><span class="space">&nbsp;</span></a>
+                    </div>
+                </div>
+                <div class="mainFooterNewObjects">
+                    <div class="icon"></div>
+                    <h2><b>Najnovsie</b> objekty</h2>
+                    <ul>
+                        <li><span>&nbsp;</span><div><a href="#">Penzion Adalbert</a> (<a href="#">Vysoke Tatry</a>)</div></li>
+                        <li><span>&nbsp;</span><div><a href="#">Penzion Adalbert</a> (<a href="#">Vysoke Tatry</a>)</div></li>
+                        <li><span>&nbsp;</span><div><a href="#">Penzion Adalbert</a> (<a href="#">Vysoke Tatry</a>)</div></li>
+                        <li><span>&nbsp;</span><div><a href="#">Penzion Adalbert</a> (<a href="#">Vysoke Tatry</a>)</div></li>
+                        <li><span>&nbsp;</span><div><a href="#">Penzion Adalbert</a> (<a href="#">Vysoke Tatry</a>)</div></li>
+                    </ul>
+                </div>
+                <div class="mainFooterInfo">
+                    <div class="icon"></div>
+                    <h2><b>Informacie</b> o nas</h2>
+                    <ul>
+                        <li><span>&nbsp;</span><a href="#">O nas</a></li>
+                        <li><span>&nbsp;</span><a href="#">Pre ubytovatelov</a></li>
+                        <li><span>&nbsp;</span><a href="#">FAQ</a></li>
+                        <li><span>&nbsp;</span><a href="#">Mapa stranok</a></li>
+                    </ul>
+                    <div class="fb">
+                        <span>&nbsp;</span><a href="#">Stante sa fanusikom</a>
+                    </div>
+                    <span class="copy">&copy; Copyright 2011 <b>Tralandia</b>.sk</span>
+                </div>
+                <div class="cleaner"></div>
+
+                <div class="mainFooterCountryLinks">
+                    <h2><b>Ubytovanie</b> v dalsich krajinach</h2>
+                    <ul>
+                        <li><span>&nbsp;</span><a href="#">Albania</a></li>
+                        <li><span>&nbsp;</span><a href="#">Andorra</a></li>
+                        <li><span>&nbsp;</span><a class="full" href="#">Liechtenstein (105)</a></li>
+                        <li><span>&nbsp;</span><a href="#">Belarus</a></li>
+                    </ul>
+                    <ul>
+                        <li><span>&nbsp;</span><a href="#">Albania</a></li>
+                        <li><span>&nbsp;</span><a href="#">Andorra</a></li>
+                        <li><span>&nbsp;</span><a class="full" href="#">Liechtenstein (105)</a></li>
+                        <li><span>&nbsp;</span><a href="#">Belarus</a></li>
+                    </ul>
+                    <ul>
+                        <li><span>&nbsp;</span><a href="#">Albania</a></li>
+                        <li><span>&nbsp;</span><a href="#">Andorra</a></li>
+                        <li><span>&nbsp;</span><a class="full" href="#">Bosnia and Herzegovina (105)</a></li>
+                        <li><span>&nbsp;</span><a href="#">Belarus</a></li>
+                    </ul>
+                    <ul>
+                        <li><span>&nbsp;</span><a href="#">Albania</a></li>
+                        <li><span>&nbsp;</span><a href="#">Andorra</a></li>
+                        <li><span>&nbsp;</span><a class="full" href="#">Liechtenstein (105)</a></li>
+                        <li><span>&nbsp;</span><a href="#">Belarus</a></li>
+                    </ul>
+                    <ul>
+                        <li><span>&nbsp;</span><a href="#">Albania</a></li>
+                        <li><span>&nbsp;</span><a href="#">Andorra</a></li>
+                        <li><span>&nbsp;</span><a class="full" href="#">Liechtenstein (105)</a></li>
+                        <li><span>&nbsp;</span><a href="#">Belarus</a></li>
+                    </ul>
+                    <div class="cleaner"></div>
+                    <div class="mainFooterSeparator_2"></div>
+                </div>
+            </div>
+        </div>
+        <div class="mainHeader" style="background-image: url(images/sk.country.png);">
+            <div class="mask">
+                <div class="mainHeaderLogo">
+                    <table class="holder">
+                        <tr>
+                            <td><a href="#"><img src="images/logo.png" alt="" /></a></td>
+                            <td><a class="mainHeaderTitle" href="#"><img src="images/sk.domain.png" alt="" /></a><a class="mainHeaderSlogan" href="#"><img src="images/sk.sk.slogan.png" alt="" /></a></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="mainHeaderCounter">
+                    <span>2328</span><br />ubytovaní
+                </div>
+                <div class="headerBarHolder">
+                    <div class="headerBar">
+                        <table class="holder">
+                            <tr>
+                                <td><a class="login" href="#">Upravte si ubytovanie</a>|</td>
+                                <td><a class="add" href="#"><b class="red">+ Pridajte ubytovanie</b></a>|</td>
+                                <td><a class="fb" href="#">&nbsp;</a>|</td>
+                                <td><a class="language" href="#">Slovensky<span class="arrow">&nbsp;</span></a>|</td>
+                                <td>
+                                    <div class="dropdown">
+                                        <a href="#">Slovensky</a>
+                                        <a href="#">Cesky</a>
+                                        <a href="#">Polsky</a>
+                                        <a href="#">Madarsky</a>
+                                        <div class="cleaner"></div>
+                                    </div>
+                                    <a class="country" href="#"><div class="flag" style="background: url(images/flags/sk.gif) 50% top">&nbsp;</div><div class="arrow">&nbsp;</div></a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="mainHeaderMenu">
+                    <table class="holder">
+                        <tr>
+                            <td><a href="#">Uvod</a></td>
+                            <td><a href="#">Chaty a chalupy</a></td>
+                            <td><a href="#">Apartmany</a></td>
+                            <td><a href="#">Uvod</a></td>
+                            <td><a href="#">Chaty a chalupy</a></td>
+                            <td><a href="#">Apartmany</a></td>
+                            <td><a href="#">Uvod</a></td>
+                            <td><a href="#">Chaty a chalupy</a></td>
+                            <td><a href="#">Apartmany</a></td>
+                            <td><a href="#">Apartmany</a></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script type="text/javascript">
+    function alignSkinnedCheckboxes(){
+        $('div.checkboxes input').each(function() {
+            if($(this).is(':checked')){
+                $(this).next().addClass('checked');
+            } else {
+                $(this).next().removeClass('checked');
+            }
+        });
+    }
+    $(document).ready(function() {
+        // skinned selects
+        $('select.w432').sexyCombo({
+    		skin: 'w432',
+    		suffix: '_skinned',
+    		hiddenSuffix: '_skinnedHidden'
+        });
+
+        // checkboxes skinning
+        $('div.checkboxes input').each(function() {
+            $(this).after('<div></div>');
+            //alert('');
+        });
+        alignSkinnedCheckboxes();
+
+        $('div.checkboxes div').live('click', function() {
+            if($(this).prev().is(':checked')){
+                $(this).prev().attr('checked', false);
+            } else {
+                $(this).prev().attr('checked', true);
+            }
+            alignSkinnedCheckboxes();
+        });
+        $('div.checkboxes label').live('click', function() {
+            if($(this).prev().prev().is(':checked')){
+                $(this).prev().prev().attr('checked', false);
+            } else {
+                $(this).prev().prev().attr('checked', true);
+            }
+            alignSkinnedCheckboxes();
+        });
+        $('.adminTable').parent().height($('.adminTable').height());
+        //alert();
+    });
+</script>

@@ -1,0 +1,358 @@
+/* ľšč*/
+
+.formRow {
+    margin: 0px 0px 30px 0px;
+}
+.formRow label {
+    display: block;
+    float: left;
+    width: 220px;
+    margin: 0px 10px 0px 0px;
+    color: #630;
+    font-size: 14px;
+    font-weight: bold;
+}
+.formRow label span {
+    display: block;
+    color: #666;
+    font-size: 11px;
+    font-weight: normal;
+}
+.formRow input {
+    display: block;
+    float: left;
+    width: 412px;
+    height: 40px;
+    background: url(../images/matrix_main.png) 0 -3270px;
+    color: #a0b325;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 0px 10px 0px 10px;
+}
+.formRow .status {
+    float: left;
+    width: 28px;
+    height: 22px;
+    margin: 8px 0px 0px 10px;
+}
+.formRow.statusOK .status {
+    background: url(../images/matrix_main.png) -380px -1150px;
+}
+.formRow.statusInvalid input {
+    background-position: -440px -3270px;
+    color: #f00;
+}
+.formRow.statusInvalid .status {
+    background: url(../images/matrix_main.png) -380px -1190px;
+}
+
+/*****/
+
+.formBlock {
+    height: 82px;
+    padding: 0px 0px 8px 0px;
+}
+.formBlock.varHeight {
+    height: inherit;
+}
+.formBlock label {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    margin: 0px 0px 6px 0px;
+}
+.formBlock label span {
+    font-size: 11px;
+    font-weight: normal;
+    color: #999;
+}
+.formBlock input {
+    background: url("../images/matrix_main.png") repeat scroll 0 -3320px transparent;
+    color: #A0B325;
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    height: 40px;
+    padding: 0 10px;
+    width: 873px;
+}
+.formBlock.statusInvalid input {
+    background-position: 0 -3370px;
+    color: #f00;
+}
+.formBlock .help {
+    color: #f00;
+    visibility: hidden;
+}
+.formBlock .status {
+    position: absolute;
+    width: 28px;
+    height: 22px;
+    margin: 0px 0px 0px 863px;
+}
+.formBlock.statusOK .status {
+    background: url(../images/matrix_main.png) -380px -1150px;
+}
+.formBlock.statusInvalid .status {
+    background: url(../images/matrix_main.png) -380px -1190px;
+}
+.formBlock.statusInvalid .help {
+    visibility: visible;
+}
+.formBlock.cols_2 .checkboxes {
+    float: left;
+    width: 436px;
+    padding-right: 10px;
+}
+.formBlock.cols_3 .checkboxes {
+    float: left;
+    width: 288px;
+    padding-right: 10px;
+}
+.formBlock.cols_4 .checkboxes {
+    float: left;
+    width: 213px;
+    padding-right: 10px;
+}
+.formBlock.cols_5 .checkboxes {
+    float: left;
+    width: 168px;
+    padding-right: 10px;
+}
+
+
+.formBlock.short {
+    float: left;
+    width: 433px;
+}
+.formBlock.short.right {
+    margin-left: 28px;
+}
+.formBlock.short input {
+    background-position: 0 -3270px;
+    width: 412px;
+}
+.formBlock.short.statusInvalid input {
+    background-position: -440px -3270px;
+}
+.formBlock.short .status {
+    margin: 0px 0px 0px 402px;
+}
+
+
+/*****/
+
+
+a.formSubmit {
+    color: #fff;
+    text-decoration: none;
+}
+a.formSubmit:hover {
+    color: #fff;
+}
+a.formSubmit, a.formSubmit * {
+    line-height: 40px;
+    font-size: 18px;
+    font-weight: bold;
+}
+ a.formSubmit * {
+    background: url(../images/matrix_bt.png);
+    padding: 9px 0 10px;
+    color: #fff;
+}
+ a.formSubmit:hover * {
+    color: #fff;
+}
+ a.formSubmit .text {
+    background-position: 0 -160px;
+    padding-left: 49px;
+}
+ a.formSubmit .space {
+    background-position: right -160px;
+    padding-right: 9px;
+}
+ a.formSubmit:hover .text {
+    background-position: 0 -205px;
+}
+ a.formSubmit:hover .space {
+    background-position: right -205px;
+}
+div.formSubmitWrapper.rows {
+    margin: 0px 0px 0px 230px;
+}
+div.formSubmitWrapper.block {
+    text-align: center;
+}
+
+
+/**** object details form ****/
+
+.smallForm input {
+    background: none;
+    font-weight: bold;
+    background: url(../images/matrix_main.png) 0 -1145px;
+    width: 170px;
+    margin: 6px 0px 0px 0px;
+    padding: 6px 5px 8px 5px;
+}
+.smallForm input.w105 {
+    display: block;
+    background: none;
+    font-weight: bold;
+    background: url(../images/matrix_main.png) 0 -1175px;
+    width: 105px;
+    margin: 6px 0px 0px 0px;
+    padding: 6px 5px 8px 5px;
+}
+.smallForm div.datepicker {
+    background: url(../images/matrix_main.png) 0 -1205px;
+    margin: 6px 0px 0px 0px;
+}
+.smallForm div.datepicker input {
+    background: none;
+    width: 145px;
+    margin: 0;
+    padding: 6px 5px 5px 5px;
+    vertical-align: top;
+}
+.smallForm img.ui-datepicker-trigger {
+    height: 24px;
+    width: 24px;
+}
+.smallForm textarea {
+    height: 56px;
+    width: 170px;
+    background: url(../images/matrix_main.png) 0 -1235px;
+    padding: 5px;
+    margin: 6px 0px 0px 0px;
+    overflow: auto;
+}
+
+.smallForm a {
+    font-weight: bold;
+    color: #fff;
+    text-decoration: none;
+}
+.smallForm a:hover {
+    color: #fff;
+}
+.smallForm a, .smallForm a * {
+    line-height: 25px;
+}
+.smallForm a * {
+    background: url(../images/matrix_bt.png);
+    padding: 5px 0 6px;
+    color: #fff;
+}
+.smallForm a:hover * {
+    color: #fff;
+}
+.smallForm a .text {
+    background-position: 0 -665px;
+    padding-left: 31px;
+}
+.smallForm a .space {
+    background-position: right -665px;
+    padding-right: 4px;
+}
+.smallForm a:hover .text {
+    background-position: 0 -695px;
+}
+.smallForm a:hover .space {
+    background-position: right -695px;
+}
+
+
+
+a.fieldsetHeader {
+    display: block;
+    width: 923px;
+    height: 60px;
+    background: url(../images/matrix_main.png) 0 -3600px;
+    cursor: pointer;
+}
+a.fieldsetHeader:hover {
+    background-position: 0 -3670px;
+}
+fieldset.open a.fieldsetHeader {
+    background-position: 0 -3740px;
+    cursor: default;
+}
+fieldset.open a.fieldsetHeader:hover {
+    background-position: 0 -3740px;
+}
+a.fieldsetHeader h3 {
+    color: #a0b325;
+    font-size: 20px;
+    font-weight: normal;
+    padding: 16px 0px 0px 49px;
+}
+a.fieldsetHeader .progress {
+    background: url(../images/matrix_main.png) -500px -1191px;
+    margin: 23px 0 0 770px;
+    position: absolute;
+    width: 135px;
+    height: 16px;
+}
+a.fieldsetHeader .progress .text {
+    position: absolute;
+    width: 135px;
+    text-align: center;
+    color: #fff;
+}
+a.fieldsetHeader .progress .percentage {
+    background: url(../images/matrix_main.png) -500px -1171px;
+    height: 16px;
+}
+
+
+fieldset {
+    margin: 0px 0px 10px 0px;
+}
+fieldset .fieldsetContent {
+    display: none;
+}
+fieldset.open .fieldsetContent {
+    display: block;
+}
+.fieldsetBody {
+    border-left: 1px solid #cacac8;
+    border-right: 1px solid #cacac8;
+    padding: 15px 13px 0px 14px;
+}
+.fieldsetFooter {
+    font-size: 1px;
+    height: 10px;
+    background: url(../images/matrix_main.png) 0 -3840px;
+}
+
+
+.formBlock .checkboxes div, .compareChecks .checkboxes div {
+    background: url("../images/matrix_main.png") repeat scroll -380px -1128px transparent;
+    height: 22px;
+    width: 22px;
+    float: left;
+    margin: 0px 10px 8px 0px;
+    clear: left;
+}
+.compareChecks .checkboxes div {
+    float: none;
+    margin: 0px auto 0 auto;
+}
+.formBlock .checkboxes div.checked, .compareChecks .checkboxes div.checked {
+    background-position: -380px -1108px;
+}
+.formBlock .checkboxes label {
+    color: #999;
+    font-size: 11px;
+    font-weight: normal;
+    line-height: 21px;
+    margin: 0;
+    padding: 0;
+    float: left;
+}
+.formBlock .checkboxes input, .compareChecks .checkboxes input {
+    display: none;
+}
+
+

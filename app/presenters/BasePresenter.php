@@ -48,13 +48,13 @@ abstract class BasePresenter extends Presenter {
 		// facebook xml namespace
 		//$header->htmlTag->attrs['xmlns:fb'] = 'http://www.facebook.com/2008/fbml';
 
-		$header->setTitleSeparator(' | ')
+		$header->setTitleSeparator(' - ')
 				->setTitlesReverseOrder(true)
 				->setFavicon('favicon.ico')
-				->addKeywords(array('reštaurácia', 'pizza', 'pizzeria', 'obedovať', 'obedové menu', 'obed'))
-				->setDescription('Obedové menu vo vašich oblúbených reštauráciách a pizzeriách')
+				->addKeywords(array())
+				->setDescription('')
 				->setRobots('index,follow')
-				->setAuthor('David Durika');
+				->setAuthor('Tralandia ltd.');
 
 		//CssLoader
 		$css = $header['css'];
@@ -73,6 +73,13 @@ abstract class BasePresenter extends Presenter {
 		$styles = array();
 		$scripts = array();
 		if($modul == 'Front') {
+			$styles[] = 'default.css';
+			$styles[] = 'mainHeader.css';
+			$styles[] = 'mainFooter.css';
+			$styles[] = 'search.css';
+			$styles[] = 'clickMap.css'; 
+			$styles[] = 'home.css';
+			$styles[] = 'forms.css';
 		} else {
 			$styles[] = 'main.css';
 			
