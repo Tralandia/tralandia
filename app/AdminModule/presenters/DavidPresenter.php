@@ -47,8 +47,11 @@ class DavidPresenter extends BasePresenter {
 		//$s = S\Company\Company::get(1);
 		//$s->address = new \Extras\Types\Address(array('city' => 'Nesvady', 'country' => 'Slovakia'));
 		//$s->save();
-		$s = S\Location\LocationList::getAll();
-		debug($s);
+		//$s = S\Location\LocationList::getAll();
+		//debug($s);
+		$e = $this->getEnvironment();
+		debug($e->country);
+		debug($e);
 	}
 
 
