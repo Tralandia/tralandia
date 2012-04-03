@@ -37,7 +37,7 @@ class Contact extends \Entities\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entities\User\User", inversedBy="contact", cascade={"persist"})
+	 * @ORM\ManyToOne(targetEntity="Entities\User\User", inversedBy="contacts", cascade={"persist"})
 	 */
 	protected $user;
 
