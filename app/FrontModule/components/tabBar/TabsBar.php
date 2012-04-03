@@ -3,7 +3,7 @@ namespace FrontModule;
 
 use Nette\Application\UI\Control;
 
-class TabBar extends Control {
+class TabsBar extends Control {
 
 	private $tabs = array();
 	private $active = null;
@@ -21,10 +21,11 @@ class TabBar extends Control {
 
 	}
 
-	public function addTab(\Service\Dictionary\Phrase $name, $content) {
+	public function addTab(\Service\Dictionary\Phrase $phrase, $attrId, $content) {
 
-		$this->tabs[$name->id] = array(
-			'name' => $name,
+		$this->tabs[$attrId] = array(
+			'attrId' => $attrId,
+			'phrase' => $phrase,
 			'content' => $content
 		);
 

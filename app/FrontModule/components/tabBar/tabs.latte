@@ -1,10 +1,17 @@
 
-<div class="tabBar" n:inner-foreach="$tabs as $id=>$tab">
-	<a href="#" n:class="$active==$id ? active"><h2>{_$id}</h2></a>
+<div class="tabBar" n:inner-foreach="$tabs as $id=>$v">
+	<a href="#{$v['attrId']}" n:class="$active==$v['attrId'] ? active"><h2>{_$v['phrase']->id}</h2></a>
 	<div class="cleaner" n:if="$iterator->last"></div>
 </div>
 
-<div class="tabContent">
+<div class="tabsContent" n:inner-foreach="$tabs as $id=>$v">
+	<div id="tab-{$v['attrId']}" class="{$active==$v['attrId'] ? active} tabContent">
+		{$v['content']}
+	</div>
+</div>
+
+<!--
+<div class="tabsContent">
 	<div class="homeObjectList">
 		<div class="homeObjectListItem">
 			<div class="top"></div>
@@ -59,3 +66,4 @@
 		<div class="cleaner"></div>
 	</div>
 </div>
+-->
