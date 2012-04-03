@@ -2,6 +2,6 @@
 
 namespace Services;
 
-class BaseService extends \Extras\Models\Service {
+class Base extends \Extras\Models\Service {
 	
 }
