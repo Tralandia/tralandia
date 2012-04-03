@@ -27,7 +27,7 @@
 					</td>
 					<td>
 						<div class="dropdown" n:inner-foreach="$allDomains as $v">
-							<a href="#">{$v}</a>
+							<a href="#">{$v->domain}</a>
 							<div class="cleaner" n:if="$iterator->last"></div>
 						</div>
 						<a class="country" href="#"><div class="flag" style="background: url(images/flags/{$currentLanguage["iso"]}.gif) 50% top">&nbsp;</div><div class="arrow">&nbsp;</div></a>
