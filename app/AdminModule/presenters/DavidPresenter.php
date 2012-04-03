@@ -38,14 +38,36 @@ class DavidPresenter extends BasePresenter {
 	public function actionTest() {
 
 		//$s = S\Location\LocationService::getBySlug('asia');
-		$s = S\Location\LocationService::get(3);
+		//$s = S\Location\LocationService::get(3);
 		//$s->setSlug('smola');
-		$s->slug = 'asia';
-		$type = S\Location\TypeService::getBySlug('country');
+		//$s->slug = 'asia';
+		//$type = S\Location\TypeService::getBySlug('country');
 		// $s = S\Location\LocationList::getBySlugInType('asia', array($type));
-		$s = S\Location\LocationService::getBySlugAndType('asia', $type);
-		debug($s);
+		//$s = S\Location\LocationService::getBySlugAndType('asia', $type);
+		$s = S\Company\CompanyService::get(1);
+		//$s->address = new \Extras\Types\Address(array('city' => 'Nesvady', 'country' => 'Slovakia'));
+		$s->save();
+		debug($s->address);
+	}
 
+
+
+	public function actionAddTranslation () {
+		$p = D\PhraseService::get(7);
+		$t = D\TranslationService::get();
+		$p->addTranslation($t);
+		$t->language = D\LanguageService::get(140);
+		$t->translation = ' Toto je NEvebalizovaná veria prekladu		';
+		$t->save();
+		debug($p->type->entityName);
+		debug($t->variations);
+	}
+
+	public function actionDuplicatePhrase($id) {
+		$p = D\PhraseService::get($id);
+		$pNew = $p->duplicate(TRUE);
+		debug($p->translations->toArray());
+		debug($pNew);
 	}
 
 	public function actionAddTask() {

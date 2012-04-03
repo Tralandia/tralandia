@@ -145,7 +145,7 @@ class Translation extends \Entities\BaseEntity {
 	 * @param \Nette\Datetime
 	 * @return \Entities\Dictionary\Translation
 	 */
-	public function setTimeTranslated(\Nette\Datetime $timeTranslated) {
+	public function setTimeTranslated(\Datetime $timeTranslated) {
 		$this->timeTranslated = $timeTranslated;
 
 		return $this;
