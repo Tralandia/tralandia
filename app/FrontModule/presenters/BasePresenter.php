@@ -15,15 +15,19 @@ abstract class BasePresenter extends \BasePresenter {
 
 		parent::beforeRender();
 
-		$this->template->supportedLanguages = \Services\Dictionary\LanguageList::getBySupported(\Entities\Dictionary\Language::SUPPORTED);
+		$this->template->supportedLanguages = \Service\Dictionary\LanguageList::getBySupported(\Entity\Dictionary\Language::SUPPORTED);
 
 		/******* Things TODO *****/
-		$this->template->allDomains = $this->getAllDomains(); //\Services\DomainList::getAll();
+		$this->template->allDomains = $this->getAllDomains(); //\Service\DomainList::getAll();
 		$this->template->mainMenuItems = $this->getMainMenuItems();
-		$this->template->liveRentalsCount = 2569; //count(\Services\Rental\RentalList::getByStatus(\Entities\Rental\Rental::STATUS_LIVE));
+		$this->template->liveRentalsCount = 2569; //count(\Service\Rental\RentalList::getByStatus(\Entity\Rental\Rental::STATUS_LIVE));
 		$this->template->currentLanguage = array("name"=>"Slovensky", "iso"=>"sk");
 		$this->template->currentDomain = array("iso"=>"sk");
 
+	}
+
+	protected function createComponentHead() {
+		return ;
 	}
 
 	/******* Things TODO *****/
