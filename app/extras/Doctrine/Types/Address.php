@@ -18,13 +18,15 @@ class Address extends Type {
 	}
 
 	public function convertToPHPValue($value, AbstractPlatform $platform) {
-		return NU\Json::decode($value);
+		return NU\Json::decode($value, NU\Json::FORCE_ARRAY);
 	}
 
 	public function convertToDatabaseValue($value, AbstractPlatform $platform) {
 		if (!is_string($value)) {
-			$value = NU\Json::encode($value);
+			//$value = NU\Json::encode($value);
+			$value = $value->encode();
 		}
+
 		return $value;
 	}
 /*

@@ -16,6 +16,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Rental extends \Entities\BaseEntity {
 
+	const STATUS_DRAFT = 0;
+	const STATUS_CHECKED = 3;
+	const STATUS_LIVE = 6;
+
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entities\User\User", inversedBy="rentals")

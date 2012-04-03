@@ -29,5 +29,27 @@ class PhraseService extends \Services\BaseService {
 
 		return $data ? TranslationService::get($data) : NULL;
 	}
+
+	public function duplicate($save = FALSE) {
+		$newPhrase = self::get();
+
+		if(isset($this->ready)) $newPhrase->ready = $this->ready;
+		if(isset($this->sourceLanguage)) $newPhrase->sourceLanguage = $this->sourceLanguage;
+		if(isset($this->details)) $newPhrase->details = $this->details;
+		//$newPhrase-> = NULL;
+
+		foreach ($this->translations as $translation) {
+			$newTranslation = TranslationService::get();
+			$newTranslation->language = $translation->language;
+			$newTranslation->variations = $translation->variations;
+			if(isset($translation->timeTranslated)) $newTranslation->timeTranslated = $translation->timeTranslated;
+			if(isset($translation->checked)) $newTranslation->checked = $translation->checked;
+			$newPhrase->addTranslation($newTranslation);
+		}
+		if($save) {
+			$newPhrase->save();
+		}
+		return $newPhrase;
+	}
 	
 }

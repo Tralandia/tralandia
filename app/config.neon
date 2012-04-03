@@ -33,6 +33,8 @@ common:
 		
 		editor: 'txmt://open/?url=file://%file&line=%line'
 
+		baseUri: /
+
 			
 	doctrine:
 		connections:

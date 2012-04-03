@@ -18,11 +18,18 @@ class Autopilot extends \Nette\Object {
 		$task->mission = $type->mission;
 
 		if($type->technicalName == 'improveRental') {
-			$links = Arrays::get($params, 'links', array());
-			if(array_key_exists('rental', $attributes) && ($attributes['rental'] instanceof \Services\Rental\RentalService || $attributes['rental'] instanceof \Entities\Rental\Rental)) {
-				$links['rental'] = $attributes['rental'];
+			$links = Arrays::get($attributes, 'links', array());
+			if(array_key_exists('rental', $params) && ($params['rental'] instanceof \Services\Rental\RentalService || $params['rental'] instanceof \Entities\Rental\Rental)) {
+				$links['rental'] = $params['rental'];
 			} else {
-				throw new \Nette\InvalidArgumentException('Argument $attributes["rental"] does not match with the expected value');
+				throw new \Nette\InvalidArgumentException('Argument $params["rental"] does not match with the expected value');
+			}
+		} else if($type->technicalName == '\Location\Location - Level2HasNoParent') {
+			$links = Arrays::get($attributes, 'links', array());
+			if(array_key_exists('location', $params) && ($params['location'] instanceof \Services\Location\LocationService || $params['location'] instanceof \Entities\Location\Location)) {
+				$links['location'] = $params['location'];
+			} else {
+				throw new \Nette\InvalidArgumentException('Argument $params["location"] does not match with the expected value');
 			}
 		} else {
 
@@ -35,6 +42,7 @@ class Autopilot extends \Nette\Object {
 		if(!$task->durationPaid) $task->durationPaid = $type->durationPaid;
 		if(!$task->validation) $task->validation = $type->validation;
 		if(!$task->actions) $task->actions = $type->actions;
+		if(is_array($links) && count($links)) $task->links = $links;
 
 		$task->save();
 		return $task;

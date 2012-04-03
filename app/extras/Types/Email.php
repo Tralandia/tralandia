@@ -2,13 +2,7 @@
 
 namespace Extras\Types;
 
-class Email extends \Nette\Object {
-	
-	protected $email;
-
-	public function __construct($email) {
-		$this->email = $email;
-	}
+class Email extends BaseType {
 
 	public function __toString() {
 		return $this->email;

@@ -166,6 +166,20 @@ abstract class Service extends Nette\Object implements IService {
 		return ObjectMixin::get($this, $name);
 	}
 
+
+	# @todo @brano je toto spravne ?
+	# toto iste je aj v Entity.php
+	public function __isset($name) {
+		// toto mi nefungovalo spravne
+		// $isset = ObjectMixin::has($this, $name);
+		// if(!$isset) {
+		// 	$isset = isset($this->getMainEntity()->{$name});
+		// }
+
+		// toto uz ide OK
+		return $this->{$name} !== NULL;
+	}
+
 	/**
 	 * Magia
 	 * @param string

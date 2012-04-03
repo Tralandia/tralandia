@@ -2,16 +2,7 @@
 
 namespace Extras\Types;
 
-class Latlong extends \Nette\Object {
-	
-	protected $latlong;
+class Latlong extends BaseType {
 
-	public function __construct($latlong) {
-		$this->latlong = $latlong;
-	}
-
-	public function __toString() {
-		return $this->latlong;
-	}
 
 }

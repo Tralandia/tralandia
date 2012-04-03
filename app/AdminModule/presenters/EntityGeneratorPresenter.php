@@ -229,7 +229,7 @@ class EntityGeneratorPresenter extends BasePresenter {
 			if(!in_array($return['type'], self::$skipTypeHintIn)) {
 				$typeTemp = Strings::firstUpper($return['type']);
 				if($return['type'] == 'datetime') {
-					$return['type'] = '\Nette\\'.$typeTemp;
+					$return['type'] = '\\DateTime';
 				} else {
 					$return['type'] = '\Extras\Types\\'.$typeTemp;
 				}
