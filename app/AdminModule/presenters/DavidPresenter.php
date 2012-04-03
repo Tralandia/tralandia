@@ -37,7 +37,10 @@ class DavidPresenter extends BasePresenter {
 
 	public function actionTest() {
 
-		//$s = S\Location\LocationService::getBySlug('asia');
+		$s = S\Dictionary\Phrase::get(3);
+		$t = S\Dictionary\Translation::get(4);
+		$s->addTranslation($t);
+		//$s->blabal('sdf');
 		//$s = S\Location\LocationService::get(3);
 		//$s->setSlug('smola');
 		//$s->slug = 'asia';
@@ -48,10 +51,8 @@ class DavidPresenter extends BasePresenter {
 		//$s->address = new \Extras\Types\Address(array('city' => 'Nesvady', 'country' => 'Slovakia'));
 		//$s->save();
 		//$s = S\Location\LocationList::getAll();
-		//debug($s);
-		$e = $this->getEnvironment();
-		debug($e->country);
-		debug($e);
+		debug($t->language->iso);
+		debug($s->translations->toArray());
 	}
 
 
