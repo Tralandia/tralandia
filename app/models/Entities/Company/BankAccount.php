@@ -61,7 +61,7 @@ class BankAccount extends \Entities\BaseEntity {
 
 	/**
 	 * @var text
-	 * @ORM\Column(type="text")
+	 * @ORM\Column(type="text", nullable=true)
 	 */
 	protected $notes;
 

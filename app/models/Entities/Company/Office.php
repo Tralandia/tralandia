@@ -18,7 +18,7 @@ class Office extends \Entities\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entities\Location\Location", mappedBy="offices")
+	 * @ORM\ManyToMany(targetEntity="Entities\Location\Location", mappedBy="offices", cascade={"persist"})
 	 */
 	protected $countries;
 

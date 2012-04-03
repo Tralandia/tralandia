@@ -92,19 +92,19 @@ class Location extends \Entities\BaseEntityDetails implements MultipleRootNode {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entities\Company\BankAccount", inversedBy="countries")
+	 * @ORM\ManyToMany(targetEntity="Entities\Company\BankAccount", inversedBy="countries", cascade={"persist"})
 	 */
 	protected $bankAccounts;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entities\Company\Company", inversedBy="countries")
+	 * @ORM\ManyToMany(targetEntity="Entities\Company\Company", inversedBy="countries", cascade={"persist"})
 	 */
 	protected $companies;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entities\Company\Office", inversedBy="countries")
+	 * @ORM\ManyToMany(targetEntity="Entities\Company\Office", inversedBy="countries", cascade={"persist"})
 	 */
 	protected $offices;
 

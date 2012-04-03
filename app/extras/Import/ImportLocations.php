@@ -1,5 +1,9 @@
 <?php
 
+/*
+ * @todo:
+ * tu zatial vsade importujem len SK regiony / obce, bude sa to musiet upravit pred finalnym importom
+*/
 namespace Extras\Import;
 
 use Nette\Application as NA,
@@ -34,7 +38,7 @@ class ImportLocations extends BaseImport {
 		//$this->importRegions();
 		//$this->importAdministrativeRegions1();
 		//$this->importAdministrativeRegions2();
-		//$this->importLocalities();
+		$this->importLocalities();
 
 		$this->savedVariables['importedSections']['locations'] = 2;
 
@@ -379,6 +383,49 @@ class ImportLocations extends BaseImport {
 			$location->save();
 		}
 
+	}
+
+	// ----------------------------------------------------------
+	// ------------- Localities
+	// ----------------------------------------------------------
+	private function importLocalities() {
+
+		$locationType = \Services\Location\TypeService::get();
+		$locationType->name = $this->createPhraseFromString('\Location\Location', 'name', 'supportedLanguages', 'NATIVE', 'locality', \Services\Dictionary\LanguageService::getByIso('en'));
+		$locationType->slug = 'locality';
+		$locationType->save();
+		$this->localitiesType = $locationType;
+
+		//$r = q('select * from localities order by id');
+		$r = q('select * from localities where country_id = 46 order by id');
+		//$r = q('select * from localities where id = 48978 order by id');
+		while($x = mysql_fetch_array($r)) {
+			$location = \Services\Location\LocationService::get();
+
+			$namePhrase = \Services\Dictionary\PhraseService::get();
+			$namePhrase->type = $this->dictionaryTypeName;
+			$namePhrase->ready = TRUE;
+
+			$r1 = q('select * from localities_translations where location_id = '.$x['id']);
+			while ($x1 = mysql_fetch_array($r1)) {
+				$country = \Services\Location\CountryService::getByOldId($x['country_id']);
+				$variations = array(
+					'locative' => $x1['name_locative'],
+				);
+				$t = $this->createTranslation(\Services\Dictionary\LanguageService::getByOldId($country->defaultLanguage), $x['name'], $variations);
+				$namePhrase->addTranslation($t);
+			}
+
+			$location->name = $namePhrase;
+			$location->type = $locationType;
+			$location->slug = $x['name_url'];			
+
+			$location->oldId = $x['id'];
+
+			$location->parentId = $country->location->id;
+			$location->save();
+			//debug($location); return;
+		}
 	}
 
 }

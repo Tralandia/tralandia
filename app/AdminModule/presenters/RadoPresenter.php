@@ -54,6 +54,9 @@ class RadoPresenter extends BasePresenter {
 	}
 
 	public function renderDefault() {
+		// $this->template->sections = '';
+		// $t = \Services\Location\LocationService::get(848); $t->delete(); return;
+
 		$import = new I\BaseImport();
 
 		$sections = $import->getSections();

@@ -180,20 +180,26 @@ class BaseImport {
 	}
 
 	protected function createDictionaryType($entityName, $entityAttribute, $requiredLanguages, $level, $params = NULL) {
-		eval('$level = \Entities\Dictionary\Type::TRANSLATION_LEVEL_'.strtoupper($level).';');
-		$dictionaryType = D\TypeService::get();
-		$dictionaryType->entityName = $entityName;
-		$dictionaryType->entityAttribute = $entityAttribute;
-		$dictionaryType->requiredLanguages = $requiredLanguages;
-		$dictionaryType->translationLevelRequirement = $level;
-		if (isset($params) && count($params) > 0) {
-			foreach ($params as $key => $value) {
-				$dictionaryType->$key = $value;
-			}
-		}
-		$dictionaryType->save();
 
-		return $dictionaryType;
+		$dictionaryType = D\TypeService::getByEntityNameAndEntityAttribute($entityName, $entityAttribute);
+		if ($dictionaryType) {
+			debug('iba vraciam premennu '.$dictionaryType->entityName.'->'.$dictionaryType->entityAttribute);
+			return $dictionaryType;
+		} else {
+			eval('$level = \Entities\Dictionary\Type::TRANSLATION_LEVEL_'.strtoupper($level).';');
+			$dictionaryType = D\TypeService::get();
+			$dictionaryType->entityName = $entityName;
+			$dictionaryType->entityAttribute = $entityAttribute;
+			$dictionaryType->requiredLanguages = $requiredLanguages;
+			$dictionaryType->translationLevelRequirement = $level;
+			if (isset($params) && count($params) > 0) {
+				foreach ($params as $key => $value) {
+					$dictionaryType->$key = $value;
+				}
+			}
+			$dictionaryType->save();			
+			return $dictionaryType;
+		}
 	}
 
 	protected function createTranslation(\Services\Dictionary\LanguageService $language, $text, $variations = NULL) {
