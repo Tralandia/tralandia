@@ -20,14 +20,13 @@ class ImportCurrencies extends BaseImport {
 
 		$r = q('select * from currencies order by id');
 		while($x = mysql_fetch_array($r)) {
-			$s = S\CurrencyService::get();
+			$s = S\Currency::get();
 			$s->oldId = $x['id'];
 			$s->iso = $x['iso'];
 			$s->name = $this->createNewPhrase($dictionaryType, $x['name_dic_id']);
 			$s->exchangeRate = $x['exchange_rate'];
 			$s->decimalPlaces = $x['decimal_places'];
 			$s->rounding = $x['decimal_places'];
-
 			$s->save();
 		}
 		$this->savedVariables['importedSections']['currencies'] = 2;

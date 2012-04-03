@@ -18,12 +18,12 @@ class ImportDomains extends BaseImport {
 		$this->savedVariables['importedSections']['domains'] = 1;
 		$r = q('select domain from countries where length(domain)>0');
 		while($x = mysql_fetch_array($r)) {
-			$s = S\DomainService::get();
+			$s = S\Domain::get();
 			$s->domain = $x['domain'];
 			$s->save();
 		}
 
-		$s = S\DomainService::get();
+		$s = S\Domain::get();
 		$s->domain = 'tralandia.com';
 		$s->save();
 

@@ -19,22 +19,22 @@ class ImportContactTypes extends BaseImport {
 
 		$language = getLangByIso('en');
 
-		$s = S\Contact\TypeService::get();
+		$s = S\Contact\Type::get();
 		$s->name = $this->createPhraseFromString('\Location\Location', 'name', 'supportedLanguages', 'NATIVE', 'Address', $language);;
 		$s->class = 'Address';
 		$s->save();
 
-		$s = S\Contact\TypeService::get();
+		$s = S\Contact\Type::get();
 		$s->name = $this->createPhraseFromString('\Location\Location', 'name', 'supportedLanguages', 'NATIVE', 'Email', $language);;
 		$s->class = 'Email';
 		$s->save();
 
-		$s = S\Contact\TypeService::get();
+		$s = S\Contact\Type::get();
 		$s->name = $this->createPhraseFromString('\Location\Location', 'name', 'supportedLanguages', 'NATIVE', 'Phone', $language);;
 		$s->class = 'Phone';
 		$s->save();
 
-		$s = S\Contact\TypeService::get();
+		$s = S\Contact\Type::get();
 		$s->name = $this->createPhraseFromString('\Location\Location', 'name', 'supportedLanguages', 'NATIVE', 'Url', $language);;
 		$s->class = 'Url';
 		$s->save();

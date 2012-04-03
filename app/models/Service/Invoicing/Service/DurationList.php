@@ -2,9 +2,7 @@
 
 namespace Service\Invoicing\Service;
 
-use Extras\Models\ServiceList;
-
-class DurationList extends ServiceList {
+class DurationList extends \Extras\Models\ServiceList {
 
 	const MAIN_ENTITY_NAME = '\Entity\Invoicing\Service\Duration';
 

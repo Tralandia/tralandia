@@ -2,7 +2,7 @@
 <h1>TRAx Import</h1>
 
 <a href="?dropAllTables=1">Drop All Tables</a>
-<a href="?truncateDatabase=1">Truncate Database</a>
+<a href="?truncateAllTables=1">Truncate All Tables</a>
 <ul>
 {foreach $sections as $key => $value}
     <li>{$key} {if $value>0}<a href="?undoSection={$key}">UNDO</a>{/if} {if $value===0}<a href="?importSection={$key}">IMPORT</a>{/if}</li>
