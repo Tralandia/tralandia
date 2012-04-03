@@ -18,7 +18,7 @@ class ImportUserRoles extends BaseImport {
 		$allRoles = array('Guest', 'Visitor', 'Owner', 'Assistant', 'Vendor', 'Manager', 'Admin', 'SuperAdmin');
 
 		foreach ($allRoles as $key => $value) {
-			$role = \Services\User\RoleService::get();
+			$role = \Service\User\Role::get();
 			$role->name = $value;
 			$role->slug = $role->name;
 			$role->save();
