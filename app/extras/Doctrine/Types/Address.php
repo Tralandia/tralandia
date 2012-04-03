@@ -22,8 +22,9 @@ class Address extends Type {
 	}
 
 	public function convertToDatabaseValue($value, AbstractPlatform $platform) {
-		if (!is_string($value)) {
-			//$value = NU\Json::encode($value);
+		if (is_string($value)) {
+			$value = NU\Json::encode($value);
+		} else if ($value instanceof \Extras\Types\BaseType) {
 			$value = $value->encode();
 		}
 

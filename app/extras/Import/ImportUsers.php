@@ -34,9 +34,8 @@ class ImportUsers extends BaseImport {
 		$user->login = 'toth@tralandia.com';
 		$user->password = 'radkos';
 		$user->addRole($role);
-		$user->addContact(createContact('email', 'toth@tralandia.com'));
+		$user->addContact($this->createContact('email', 'toth@tralandia.com'));
 		$user->defaultLanguage = $this->languagesByIso['en'];
-		debug($user); return;
 		$user->save();
 
 		// David
@@ -44,7 +43,25 @@ class ImportUsers extends BaseImport {
 		$user->login = 'durika@tralandia.com';
 		$user->password = 'davidheslo';
 		$user->addRole($role);
-		$user->addContact(createContact('email', 'durika@tralandia.com'));
+		$user->addContact($this->createContact('email', 'durika@tralandia.com'));
+		$user->defaultLanguage = $this->languagesByIso['en'];
+		$user->save();
+
+		// Cibi
+		$user = \Service\User\User::get();
+		$user->login = 'czibula@tralandia.com';
+		$user->password = 'kscibiks';
+		$user->addRole($role);
+		$user->addContact($this->createContact('email', 'czibula@tralandia.com'));
+		$user->defaultLanguage = $this->languagesByIso['en'];
+		$user->save();
+
+		// Brano
+		$user = \Service\User\User::get();
+		$user->login = 'vaculciak@tralandia.com';
+		$user->password = 'branoheslo';
+		$user->addRole($role);
+		$user->addContact($this->createContact('email', 'vaculciak@tralandia.com'));
 		$user->defaultLanguage = $this->languagesByIso['en'];
 		$user->save();
 
