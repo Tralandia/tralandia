@@ -14,7 +14,10 @@ class MyTranslator implements \Nette\Localization\ITranslator {
 	
 	public function translate($message, $count = NULL, $note = NULL) {
 
-		$phrase = D\Phrase::get($message);
+		if(!$message instanceof D\Phrase) {
+			$phrase = D\Phrase::get($message);
+		}
+		
 		$message = $phrase->getTranslation($this->language)->translation;
 		
 		if (is_array($message))
