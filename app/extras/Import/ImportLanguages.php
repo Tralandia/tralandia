@@ -19,7 +19,7 @@ class ImportLanguages extends BaseImport {
 		$this->savedVariables['importedSections']['languages'] = 1;
 		$r = q('select * from languages order by id');
 		while($x = mysql_fetch_array($r)) {
-			$s = D\LanguageService::get();
+			$s = D\Language::get();
 			$s->oldId = $x['id'];
 			$s->iso = $x['iso'];
 			$s->supported = (bool)$x['translated'];
@@ -28,7 +28,7 @@ class ImportLanguages extends BaseImport {
 			$s->save();
 
 		}
-		Service::flush(FALSE);
+		\Extras\Models\Service::flush(FALSE);
 
 		$this->createPhrasesByOld('\Dictionary\Language', 'name', 'supportedLanguages', 'ACTIVE', 'languages', 'name_dic_id');		
 		$this->savedVariables['importedSections']['languages'] = 2;

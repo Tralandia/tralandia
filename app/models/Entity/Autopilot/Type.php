@@ -10,6 +10,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Type extends \Entity\BaseEntityDetails {
 
+	const ACTION_ON_SAVE = 'onSave';
+	const ACTION_ON_DELEGATE = 'onDelegate';
+	const ACTION_ON_COMPLETED = 'onCompleted';
+	const ACTION_ON_DEFER = 'onDefer';
+
 	/**
 	 * @var string
 	 * @ORM\Column(type="string")

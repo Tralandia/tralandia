@@ -5,6 +5,8 @@ function q($query, $show = 0) {
 
 	if (!$link) {
 		$link=mysql_connect('localhost', 'root', 'root');
+		q("SET character_set_client = binary;"); q("SET character_set_connection = binary;"); q("SET character_set_results = binary;"); 
+		q("SET character_set_database = binary;"); q("SET character_set_server = binary;");
 	}
 	mysql_select_db('tralandia_old', $link);
 
@@ -80,12 +82,12 @@ function getNewIds($entityName, $oldIds) {
 	return $newIds;
 }
 
-function getNewIdsByOld($entityName) {
+function getNewIdsByOld($entityName, $extraWhere = NULL) {
 	$tableName = str_replace('\\', '_', $entityName);
 	$tableName = trim($tableName, '_');
 	$tableName = strtolower($tableName);
 
-	$r = qNew('select id, oldId from '.$tableName);
+	$r = qNew('select id, oldId from '.$tableName.($extraWhere ? ' where '.$extraWhere : ''));
 	$ids = array();
 	while ($x = mysql_fetch_array($r)) {
 		$ids[$x['oldId']] = $x['id'];

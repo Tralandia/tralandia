@@ -16,7 +16,7 @@ class RadoPresenter extends BasePresenter {
 
 	public function actionDefault() {
 		ini_set('max_execution_time', 0);
-		Debugger::$maxDepth = 7;
+		Debugger::$maxDepth = 5;
 		$redirect = FALSE;
 		if (isset($this->params['dropAllTables'])) {
 			$import = new I\BaseImport();
@@ -25,10 +25,10 @@ class RadoPresenter extends BasePresenter {
 			$this->flashMessage('Dropping Done');
 			$redirect = TRUE;
 		}
-		if (isset($this->params['truncateDatabase'])) {
+		if (isset($this->params['truncateAllTables'])) {
 			$import = new I\BaseImport();
-			$import->truncateDatabase();
-			$this->flashMessage('Truncate Done');
+			$import->truncateAllTables();
+			$this->flashMessage('Truncating Done');
 			$redirect = TRUE;
 		}
 		if (isset($this->params['undoSection'])) {
@@ -54,6 +54,9 @@ class RadoPresenter extends BasePresenter {
 	}
 
 	public function renderDefault() {
+		// $this->template->sections = '';
+		// $t = \Services\Location\LocationService::get(848); $t->delete(); return;
+
 		$import = new I\BaseImport();
 
 		$sections = $import->getSections();
