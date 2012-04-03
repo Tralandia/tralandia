@@ -28,7 +28,7 @@ class User extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Role", mappedBy="users")
+	 * @ORM\ManyToMany(targetEntity="Role", mappedBy="users", cascade={"persist"})
 	 */
 	protected $roles;
 

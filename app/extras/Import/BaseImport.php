@@ -8,9 +8,9 @@ use Nette\Application as NA,
 	Nette\Utils\Html,
 	Nette\Utils\Strings,
 	Extras\Models\Service,
-	Services\Dictionary as D,
-	Services as S,
-	Services\Log\Change as SLog;
+	Service\Dictionary as D,
+	Service as S,
+	Service\Log\Change as SLog;
 
 class BaseImport {
 	public $sections = array(
@@ -132,14 +132,14 @@ class BaseImport {
 		}
 	}
 
-	protected function createNewPhrase(\Service\Dictionary\TypeService $type, $oldPhraseId, $oldLocativePhraseId = NULL) {
+	protected function createNewPhrase(\Service\Dictionary\Type $type, $oldPhraseId, $oldLocativePhraseId = NULL) {
 		$oldPhraseData = qf('select * from dictionary where id = '.$oldPhraseId);
 		if (!$oldPhraseData) return FALSE;
 
 		$phrase = \Service\Dictionary\Phrase::get();
 		$phrase->ready = (bool)$oldPhraseData['ready'];
 		$phrase->type = $type;
-		$phrase->save();
+		$phrase->oldId = $oldPhraseId;
 
 		if ($phrase->type->requiredLanguages == 'supportedLanguages') {
 			$allLanguages = getSupportedLanguages();
@@ -160,10 +160,8 @@ class BaseImport {
 
 			$translation = $this->createTranslation($language, (string)$oldTranslation['text'], $params);				
 			$translation->timeTranslated = fromStamp($oldTranslation['updated']);
-			$translation->save();
 			$phrase->addTranslation($translation);
 		}
-
 		$phrase->save();
 		return $phrase;
 	}
@@ -206,7 +204,7 @@ class BaseImport {
 		}
 	}
 
-	protected function createTranslation(\Service\Dictionary\LanguageService $language, $text, $variations = NULL) {
+	protected function createTranslation(\Service\Dictionary\Language $language, $text, $variations = NULL) {
 		$translation = \Service\Dictionary\Translation::get();
 		$translation->language = $language;
 		$translation->translation = $text;
@@ -217,8 +215,6 @@ class BaseImport {
 		}
 		$variations['translation'] = $text;
 		$translation->variations = $variations;
-
-		$translation->save();
 
 		return $translation;
 	}
