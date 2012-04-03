@@ -9,9 +9,9 @@ use Nette\Application as NA,
 	Nette\Utils\Strings,
 	DoctrineExtensions\NestedSet,
 	Extras\Models\Service,
-	Services\Dictionary as D,
-	Services as S,
-	Services\Log\Change as SLog;
+	Service\Dictionary as D,
+	Service as S,
+	Service\Log\Change as SLog;
 
 class DavidPresenter extends BasePresenter {
 
@@ -41,13 +41,13 @@ class DavidPresenter extends BasePresenter {
 		//$s = S\Location\LocationService::get(3);
 		//$s->setSlug('smola');
 		//$s->slug = 'asia';
-		//$type = S\Location\TypeService::getBySlug('country');
-		// $s = S\Location\LocationList::getBySlugInType('asia', array($type));
+		$type = S\Location\Type::getBySlug('country');
+		$s = S\Location\LocationList::getBySlugInType('asia', array($type));
 		//$s = S\Location\LocationService::getBySlugAndType('asia', $type);
-		$s = S\Company\CompanyService::get(1);
+		//$s = S\Company\Company::get(1);
 		//$s->address = new \Extras\Types\Address(array('city' => 'Nesvady', 'country' => 'Slovakia'));
-		$s->save();
-		debug($s->address);
+		//$s->save();
+		debug($s[0]);
 	}
 
 
