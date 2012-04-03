@@ -18,6 +18,12 @@ class Role extends \Entity\BaseEntity {
 	protected $name;
 
 	/**
+	 * @var slug
+	 * @ORM\Column(type="slug")
+	 */
+	protected $slug;
+
+	/**
 	 * @var url
 	 * @ORM\Column(type="url")
 	 */
