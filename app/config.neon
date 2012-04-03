@@ -96,7 +96,7 @@ development < common:
 			dbname: tralandia
 			charset: utf8
 			driver: pdo_mysql
-			debugger: false
+			debugger: true
 
 		envOptions:
 			sendEmail: FASLE

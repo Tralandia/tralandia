@@ -11,7 +11,7 @@ class Phrase extends \Service\BaseService {
 	public function getTranslation($language) {
 		if($language instanceof Language) {
 			$language = $language->getMainEntity();
-		} else if($language instanceof \Entities\Dictionary\Language) {
+		} else if($language instanceof \Entity\Dictionary\Language) {
 
 		} else {
 			throw new \Nette\InvalidArgumentException('$language argument does not match with the expected value');

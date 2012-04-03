@@ -3,8 +3,8 @@
 	<div class="mainHeaderLogo">
 		<table class="holder">
 			<tr>
-				<td><a href="#"><img src="images/logo.png" alt="" /></a></td>
-				<td><a class="mainHeaderTitle" href="#"><img src="images/{$currentLanguage["iso"]}.domain.png" alt="" /></a><a class="mainHeaderSlogan" href="#"><img src="images/slogans/{$currentLanguage["iso"]}{$currentDomain["iso"]}.png" alt="" /></a></td>
+				<td><a href="#"><img src="{$staticPath}images/logo.png" alt="" /></a></td>
+				<td><a class="mainHeaderTitle" href="#"><img src="images/{$currentLanguage["iso"]}.domain.png" alt="" /></a><a class="mainHeaderSlogan" href="#"><img src="{$staticPath}images/slogans/{$currentLanguage["iso"]}{$currentDomain["iso"]}.png" alt="" /></a></td>
 			</tr>
 		</table>
 	</div>
@@ -30,7 +30,7 @@
 							<a href="#">{$v->domain}</a>
 							<div class="cleaner" n:if="$iterator->last"></div>
 						</div>
-						<a class="country" href="#"><div class="flag" style="background: url(images/flags/{$currentLanguage["iso"]}.gif) 50% top">&nbsp;</div><div class="arrow">&nbsp;</div></a>
+						<a class="country" href="#"><div class="flag" style="background: url({$staticPath}images/flags/{$currentLanguage["iso"]}.gif) 50% top">&nbsp;</div><div class="arrow">&nbsp;</div></a>
 					</td>
 				</tr>
 			</table>
