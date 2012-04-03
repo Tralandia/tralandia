@@ -49,7 +49,7 @@ class ImportLocations extends BaseImport {
 	// ----------------------------------------------------------
 	private function importContinents() {
 		$language = getLangByIso('en');
-		$locationType = \Services\Location\TypeService::get();
+		$locationType = \Service\Location\Type::get();
 		$locationType->name = $this->createPhraseFromString('\Location\Location', 'name', 'supportedLanguages', 'NATIVE', 'continent', $language);
 		$locationType->slug = 'continent';
 		$locationType->save();
@@ -57,7 +57,7 @@ class ImportLocations extends BaseImport {
 
 		$r = q('select * from continents order by id');
 		while($x = mysql_fetch_array($r)) {
-			$s = \Services\Location\LocationService::get();
+			$s = \Service\Location\Location::get();
 			$s->name = $this->createNewPhrase($this->dictionaryTypeName, $x['name_dic_id']);
 			$s->type = $locationType;
 			$s->slug = qc('select text from z_en where id = '.$x['name_dic_id']);
@@ -76,7 +76,7 @@ class ImportLocations extends BaseImport {
 
 		$dictionaryType = $this->createDictionaryType('\Location\TypeService', 'name', 'supportedLanguages', 'ACTIVE');
 
-		$locationType = \Services\Location\TypeService::get();
+		$locationType = \Service\Location\Type::get();
 		$locationType->name = $this->createNewPhrase($dictionaryType, 865);
 		$locationType->slug = 'country';
 		$locationType->save();
@@ -84,21 +84,21 @@ class ImportLocations extends BaseImport {
 		$r = q('select * from countries order by id');
 		//$r = q('select * from countries where id = 46 order by id');
 		while($x = mysql_fetch_array($r)) {
-			$location = \Services\Location\LocationService::get();
-			$country = \Services\Location\CountryService::get();
+			$location = \Service\Location\Location::get();
+			$country = \Service\Location\Country::get();
 
 			$country->status = $x['supported'] == 1 ? 'supported' : ($x['status'] == 1 ? 'launched' : '');
 			$country->oldId = $x['id'];
 			$country->iso = $x['iso'];
 			$country->iso3 = $x['iso3'];
-			$country->defaultLanguage = \Services\Dictionary\LanguageService::get(getByOldId('\Dictionary\Language', $x['default_language_id']));
+			$country->defaultLanguage = \Service\Dictionary\Language::get(getByOldId('\Dictionary\Language', $x['default_language_id']));
 			$t = getNewIds('\Dictionary\Language', $x['languages']);
 			foreach ($t as $key => $value) {
-				$t1 = \Services\Dictionary\LanguageService::get($value);
+				$t1 = \Service\Dictionary\Language::get($value);
 				$country->addLanguage($t1);
 			}
 
-			$t = \Services\CurrencyService::get(getByOldId('\Currency', $x['default_currency_id']));
+			$t = \Service\Currency::get(getByOldId('\Currency', $x['default_currency_id']));
 			if ($t->id) {
 				$country->defaultCurrency = $t;
 			}
@@ -106,7 +106,7 @@ class ImportLocations extends BaseImport {
 			$t = str_replace(',', '', $x['currencies']);
 			$t1 = NULL;
 			if (((int)$t) > 0) {
-				$t1 = \Services\CurrencyService::get(getByOldId('\Currency', (int)$t));
+				$t1 = \Service\Currency::get(getByOldId('\Currency', (int)$t));
 			} else if (strlen($t) == 3) {
 				$t1 = getCurrencyByIso($t);
 			}
@@ -172,8 +172,8 @@ class ImportLocations extends BaseImport {
 				
 				$t = $nameOfficialPhrase->getTranslations();
 				foreach ($t as $key => $value) {
-					$value = \Services\Dictionary\TranslationService::get($value);
-					$language = \Services\Dictionary\LanguageService::get($value->language);
+					$value = \Service\Dictionary\Translation::get($value);
+					$language = \Service\Dictionary\Language::get($value->language);
 					$x1 = qf('select * from countries_synonyms where country_id = '.$x['id'].' and language_id = '.$language->oldId.' order by length(name) DESC limit 1');
 					$value->translation = $x1['name'];
 					$variations = array(
@@ -190,7 +190,7 @@ class ImportLocations extends BaseImport {
 			//$location->nameShort = NULL;
 
 			$location->type = $locationType;
-			$location->slug = $namePhrase->getTranslation(\Services\Dictionary\LanguageService::getByIso('en'))->translation;
+			$location->slug = $namePhrase->getTranslation(\Service\Dictionary\Language::getByIso('en'))->translation;
 			
 			$location->polygon = NULL;
 			$location->latitude = new Latlong($x['latitude']);
@@ -200,7 +200,7 @@ class ImportLocations extends BaseImport {
 			$t = mysql_fetch_array(qNew('select id from location_location where oldId = '.$x['continent']));
 			$location->parentId = $t[0];
 
-			if ($x['domain']) $location->domain = \Services\DomainService::getByDomain($x['domain']);
+			if ($x['domain']) $location->domain = \Service\Domain::getByDomain($x['domain']);
 
 			$location->country = $country;
 			//debug($location->parentId); return;
@@ -215,7 +215,7 @@ class ImportLocations extends BaseImport {
 	// ------------- COUNTRIES Update Nested Set
 	// ----------------------------------------------------------
 	private function updateNestedSetCountries() {
-/*		$continents = new \Services\Location\LocationList::getByType();
+/*		$continents = new \Service\Location\LocationList::getByType();
 		if(array_key_exists($x['continent'], $this->continentsByOldId)) {
 			$continent = $this->continentsByOldId[$x['continent']];
 			$continent->addChild($location);
@@ -230,9 +230,9 @@ class ImportLocations extends BaseImport {
 		$countriesByOld = getNewIdsByOld('\Location\Country');
 		$r = q('select * from countries_traveling order by id');
 		while ($x = mysql_fetch_array($r)) {
-			$sourceCountry = \Services\Location\CountryService::get($countriesByOld[$x['source_country_id']]);
-			$destinationCountry = \Services\Location\CountryService::get($countriesByOld[$x['destination_country_id']]);
-			$traveling = \Services\Location\TravelingService::get();
+			$sourceCountry = \Service\Location\Country::get($countriesByOld[$x['source_country_id']]);
+			$destinationCountry = \Service\Location\Country::get($countriesByOld[$x['destination_country_id']]);
+			$traveling = \Service\Location\Traveling::get();
 			$traveling->sourceLocation = $sourceCountry->location;
 			$traveling->destinationLocation = $destinationCountry->location;
 			$traveling->peopleCount = $x['people_count'];
@@ -247,8 +247,8 @@ class ImportLocations extends BaseImport {
 	// ------------- Regions Level 0
 	// ----------------------------------------------------------
 	private function importRegions() {
-		$locationType = \Services\Location\TypeService::get();
-		$locationType->name = $this->createPhraseFromString('\Location\Location', 'name', 'supportedLanguages', 'NATIVE', 'region', \Services\Dictionary\LanguageService::getByIso('en'));
+		$locationType = \Service\Location\Type::get();
+		$locationType->name = $this->createPhraseFromString('\Location\Location', 'name', 'supportedLanguages', 'NATIVE', 'region', \Service\Dictionary\Language::getByIso('en'));
 		$locationType->slug = 'region';
 		$locationType->save();
 		$this->regionsType = $locationType;
@@ -257,9 +257,9 @@ class ImportLocations extends BaseImport {
 		$r = q('select * from regions where country_id = 46 and level = 0 order by id');
 		//$r = q('select * from regions where id = 48978 order by id');
 		while($x = mysql_fetch_array($r)) {
-			$location = \Services\Location\LocationService::get();
+			$location = \Service\Location\Location::get();
 
-			$namePhrase = \Services\Dictionary\PhraseService::get();
+			$namePhrase = \Service\Dictionary\Phrase::get();
 			$namePhrase->type = $this->dictionaryTypeName;
 			$namePhrase->ready = TRUE;
 
@@ -268,7 +268,7 @@ class ImportLocations extends BaseImport {
 				$variations = array(
 					'locative' => $x1['name_locative'],
 				);
-				$t = $this->createTranslation(\Services\Dictionary\LanguageService::getByOldId($x1['language_id']), $x['name'], $variations);
+				$t = $this->createTranslation(\Service\Dictionary\Language::getByOldId($x1['language_id']), $x['name'], $variations);
 				$namePhrase->addTranslation($t);
 			}
 
@@ -278,7 +278,7 @@ class ImportLocations extends BaseImport {
 
 			$location->oldId = $x['id'];
 
-			$location->parentId = \Services\Location\CountryService::getByOldId($x['country_id'])->location->id;
+			$location->parentId = \Service\Location\Country::getByOldId($x['country_id'])->location->id;
 			//debug($location); return;
 			$location->save();
 		}
@@ -291,8 +291,8 @@ class ImportLocations extends BaseImport {
 
 		// Level 1
 
-		$locationType = \Services\Location\TypeService::get();
-		$locationType->name = $this->createPhraseFromString('\Location\Location', 'name', 'supportedLanguages', 'NATIVE', 'administrativeRegionLevelOne', \Services\Dictionary\LanguageService::getByIso('en'));
+		$locationType = \Service\Location\Type::get();
+		$locationType->name = $this->createPhraseFromString('\Location\Location', 'name', 'supportedLanguages', 'NATIVE', 'administrativeRegionLevelOne', \Service\Dictionary\Language::getByIso('en'));
 		$locationType->slug = 'administrativeRegionLevelOne';
 		$locationType->save();
 		$this->administrativeRegions1Type = $locationType;
@@ -301,9 +301,9 @@ class ImportLocations extends BaseImport {
 		$r = q('select * from regions where country_id = 46 and level = 1 order by id');
 		//$r = q('select * from regions where id = 48978 order by id');
 		while($x = mysql_fetch_array($r)) {
-			$location = \Services\Location\LocationService::get();
+			$location = \Service\Location\Location::get();
 
-			$namePhrase = \Services\Dictionary\PhraseService::get();
+			$namePhrase = \Service\Dictionary\Phrase::get();
 			$namePhrase->type = $this->dictionaryTypeName;
 			$namePhrase->ready = TRUE;
 
@@ -312,7 +312,7 @@ class ImportLocations extends BaseImport {
 				$variations = array(
 					'locative' => $x1['name_locative'],
 				);
-				$t = $this->createTranslation(\Services\Dictionary\LanguageService::getByOldId($x1['language_id']), $x['name'], $variations);
+				$t = $this->createTranslation(\Service\Dictionary\Language::getByOldId($x1['language_id']), $x['name'], $variations);
 				$namePhrase->addTranslation($t);
 			}
 
@@ -322,7 +322,7 @@ class ImportLocations extends BaseImport {
 
 			$location->oldId = $x['id'];
 
-			$location->parentId = \Services\Location\CountryService::getByOldId($x['country_id'])->location->id;
+			$location->parentId = \Service\Location\Country::getByOldId($x['country_id'])->location->id;
 			$location->save();
 		}
 
@@ -331,21 +331,21 @@ class ImportLocations extends BaseImport {
 	private function importAdministrativeRegions2() {
 		// Level 2
 
-		$locationType = \Services\Location\TypeService::get();
-		$locationType->name = $this->createPhraseFromString('\Location\Location', 'name', 'supportedLanguages', 'NATIVE', 'administrativeRegionLevelTwo', \Services\Dictionary\LanguageService::getByIso('en'));
+		$locationType = \Service\Location\Type::get();
+		$locationType->name = $this->createPhraseFromString('\Location\Location', 'name', 'supportedLanguages', 'NATIVE', 'administrativeRegionLevelTwo', \Service\Dictionary\Language::getByIso('en'));
 		$locationType->slug = 'administrativeRegionLevelTwo';
 		$locationType->save();
 		$this->administrativeRegions2Type = $locationType;
 
-		$this->administrativeRegions1Type = \Services\Location\TypeService::getBySlug('administrativeregionlevelone');
+		$this->administrativeRegions1Type = \Service\Location\Type::getBySlug('administrativeregionlevelone');
 
 		//$r = q('select * from regions order by id');
 		$r = q('select * from regions where country_id = 46 and level = 2 order by id');
 		//$r = q('select * from regions where id = 48978 order by id');
 		while($x = mysql_fetch_array($r)) {
-			$location = \Services\Location\LocationService::get();
+			$location = \Service\Location\Location::get();
 
-			$namePhrase = \Services\Dictionary\PhraseService::get();
+			$namePhrase = \Service\Dictionary\Phrase::get();
 			$namePhrase->type = $this->dictionaryTypeName;
 			$namePhrase->ready = TRUE;
 
@@ -354,7 +354,7 @@ class ImportLocations extends BaseImport {
 				$variations = array(
 					'locative' => $x1['name_locative'],
 				);
-				$t = $this->createTranslation(\Services\Dictionary\LanguageService::getByOldId($x1['language_id']), $x['name'], $variations);
+				$t = $this->createTranslation(\Service\Dictionary\Language::getByOldId($x1['language_id']), $x['name'], $variations);
 				$namePhrase->addTranslation($t);
 			}
 
@@ -366,14 +366,14 @@ class ImportLocations extends BaseImport {
 
 			//debug($x['parent_id']); debug($this->administrativeRegions1Type); return;
 
-			$t = \Services\Location\LocationService::getByOldIdAndType($x['parent_id'], $this->administrativeRegions1Type);
+			$t = \Service\Location\Location::getByOldIdAndType($x['parent_id'], $this->administrativeRegions1Type);
 			if ($t) {
 				$location->parentId = $t->id;
 			} else {
 				AP::addTask('\Location\Location - Level2HasNoParent', 
 					array(
-						'userCountry' => \Services\Location\CountryService::getByOldId($x['country_id'])->location->id,
-						'userRole' => \Services\User\RoleService::getBySlug('manager'),
+						'userCountry' => \Service\Location\Country::getByOldId($x['country_id'])->location->id,
+						'userRole' => \Service\User\Role::getBySlug('manager'),
 					),
 					array(
 						'location' => $location,
@@ -390,8 +390,8 @@ class ImportLocations extends BaseImport {
 	// ----------------------------------------------------------
 	private function importLocalities() {
 
-		$locationType = \Services\Location\TypeService::get();
-		$locationType->name = $this->createPhraseFromString('\Location\Location', 'name', 'supportedLanguages', 'NATIVE', 'locality', \Services\Dictionary\LanguageService::getByIso('en'));
+		$locationType = \Service\Location\Type::get();
+		$locationType->name = $this->createPhraseFromString('\Location\Location', 'name', 'supportedLanguages', 'NATIVE', 'locality', \Service\Dictionary\Language::getByIso('en'));
 		$locationType->slug = 'locality';
 		$locationType->save();
 		$this->localitiesType = $locationType;
@@ -400,19 +400,19 @@ class ImportLocations extends BaseImport {
 		$r = q('select * from localities where country_id = 46 order by id');
 		//$r = q('select * from localities where id = 48978 order by id');
 		while($x = mysql_fetch_array($r)) {
-			$location = \Services\Location\LocationService::get();
+			$location = \Service\Location\Location::get();
 
-			$namePhrase = \Services\Dictionary\PhraseService::get();
+			$namePhrase = \Service\Dictionary\Phrase::get();
 			$namePhrase->type = $this->dictionaryTypeName;
 			$namePhrase->ready = TRUE;
 
 			$r1 = q('select * from localities_translations where location_id = '.$x['id']);
 			while ($x1 = mysql_fetch_array($r1)) {
-				$country = \Services\Location\CountryService::getByOldId($x['country_id']);
+				$country = \Service\Location\Country::getByOldId($x['country_id']);
 				$variations = array(
 					'locative' => $x1['name_locative'],
 				);
-				$t = $this->createTranslation(\Services\Dictionary\LanguageService::getByOldId($country->defaultLanguage), $x['name'], $variations);
+				$t = $this->createTranslation(\Service\Dictionary\Language::getByOldId($country->defaultLanguage), $x['name'], $variations);
 				$namePhrase->addTranslation($t);
 			}
 

@@ -41,6 +41,10 @@ class BaseImport {
 		'companies' => array(
 			'\Company\Company' => array(),
 		),
+		'users' => array(
+			'\User\User' => array(),
+			'\User\Combination' => array(),
+		),
 	);
 
 	public $savedVariables = array();
@@ -51,8 +55,8 @@ class BaseImport {
 		$this->loadVariables();
 		$langs = qNew('select id, iso, oldId from dictionary_language');
 		while($value = mysql_fetch_array($langs)) {
-			$this->languagesByIso[$value['iso']] = \Services\Dictionary\LanguageService::get($value['id']);
-			$this->languagesByOldId[$value['oldId']] = \Services\Dictionary\LanguageService::get($value['id']);
+			$this->languagesByIso[$value['iso']] = \Service\Dictionary\Language::get($value['id']);
+			$this->languagesByOldId[$value['oldId']] = \Service\Dictionary\Language::get($value['id']);
 		}
 		return;
 	}
@@ -102,7 +106,7 @@ class BaseImport {
 			$this->savedVariables['importedSections'][$key]=0;
 			if ($key == $section) break;
 		}
-		Service::flush(FALSE);
+		\Extras\Models\Service\Extras\Models\Service::flush(FALSE);
 		$this->saveVariables();
 	}
 
@@ -115,7 +119,7 @@ class BaseImport {
 				$newEntityId = getByOldId($entityName, $x['id']);
 				$phrase = $this->createNewPhrase($dictionaryType, $x[$oldAttribute]);
 				if ($phrase instanceof D\PhraseService) {
-					eval('$s = \Services'.$entityName.'Service::get('.$newEntityId.');');
+					eval('$s = \Services'.$entityName.'::get('.$newEntityId.');');
 					if ($s->id > 0) {
 						$s->{$entityAttribute} = $phrase;
 						$s->save();						
@@ -128,11 +132,11 @@ class BaseImport {
 		}
 	}
 
-	protected function createNewPhrase(\Services\Dictionary\TypeService $type, $oldPhraseId, $oldLocativePhraseId = NULL) {
+	protected function createNewPhrase(\Service\Dictionary\TypeService $type, $oldPhraseId, $oldLocativePhraseId = NULL) {
 		$oldPhraseData = qf('select * from dictionary where id = '.$oldPhraseId);
 		if (!$oldPhraseData) return FALSE;
 
-		$phrase = \Services\Dictionary\PhraseService::get();
+		$phrase = \Service\Dictionary\Phrase::get();
 		$phrase->ready = (bool)$oldPhraseData['ready'];
 		$phrase->type = $type;
 		$phrase->save();
@@ -144,7 +148,7 @@ class BaseImport {
 		}
 
 		foreach ($allLanguages as $key => $value) {
-			$language = \Services\Dictionary\LanguageService::get($value);
+			$language = \Service\Dictionary\Language::get($value);
 			$oldTranslation = qf('select * from z_'.$language->iso.' where id = '.$oldPhraseId);
 			$params = NULL;
 			if ($oldLocativePhraseId > 0) {
@@ -167,7 +171,7 @@ class BaseImport {
 	protected function createPhraseFromString($entityName, $entityAttribute, $requiredLanguages, $level, $text, $textLanguage) {
 		$dictionaryType = $this->createDictionaryType($entityName, $entityAttribute, $requiredLanguages, $level);
 
-		$phrase = \Services\Dictionary\PhraseService::get();
+		$phrase = \Service\Dictionary\Phrase::get();
 		$phrase->ready = TRUE;
 		$phrase->type = $dictionaryType;
 
@@ -181,13 +185,13 @@ class BaseImport {
 
 	protected function createDictionaryType($entityName, $entityAttribute, $requiredLanguages, $level, $params = NULL) {
 
-		$dictionaryType = D\TypeService::getByEntityNameAndEntityAttribute($entityName, $entityAttribute);
+		$dictionaryType = D\Type::getByEntityNameAndEntityAttribute($entityName, $entityAttribute);
 		if ($dictionaryType) {
 			debug('iba vraciam premennu '.$dictionaryType->entityName.'->'.$dictionaryType->entityAttribute);
 			return $dictionaryType;
 		} else {
-			eval('$level = \Entities\Dictionary\Type::TRANSLATION_LEVEL_'.strtoupper($level).';');
-			$dictionaryType = D\TypeService::get();
+			eval('$level = \Entity\Dictionary\Type::TRANSLATION_LEVEL_'.strtoupper($level).';');
+			$dictionaryType = D\Type::get();
 			$dictionaryType->entityName = $entityName;
 			$dictionaryType->entityAttribute = $entityAttribute;
 			$dictionaryType->requiredLanguages = $requiredLanguages;
@@ -202,8 +206,8 @@ class BaseImport {
 		}
 	}
 
-	protected function createTranslation(\Services\Dictionary\LanguageService $language, $text, $variations = NULL) {
-		$translation = \Services\Dictionary\TranslationService::get();
+	protected function createTranslation(\Service\Dictionary\LanguageService $language, $text, $variations = NULL) {
+		$translation = \Service\Dictionary\Translation::get();
 		$translation->language = $language;
 		$translation->translation = $text;
 		$translation->timeTranslated = new \Nette\DateTime();
@@ -219,9 +223,9 @@ class BaseImport {
 		return $translation;
 	}
 
-	protected function createContact($type, $value) {
-		$contact = \Services\Contact\ContactService::get();
-		$contact->type = \Services\Contact\TypeService::getByClass($type);
+	protected function createContact($slug, $value) {
+		$contact = \Service\Contact\Contact::get();
+		$contact->type = \Service\Contact\Type::getBySlug($slug);
 		$contact->value = $value;
 		$contact->save();
 

@@ -16,52 +16,46 @@ class ImportUsers extends BaseImport {
 		$this->savedVariables['importedSections']['users'] = 1;
 
 		$this->importSuperAdmins();
-		$this->importAdmins();
-		$this->importRegionalManagers();
-		$this->importAssistantsVendors();
-		$this->importOwners();
-		$this->importVisitors();
+		//$this->importAdmins();
+		//$this->importRegionalManagers();
+		//$this->importAssistantsVendors();
+		//$this->importOwners();
+		//$this->importVisitors();
 
 		$this->savedVariables['importedSections']['users'] = 2;
 	}
 
 	private function importSuperAdmins() {
 
-		$role = \Services\User\Role::getBySlug('superadmin');
+		$role = \Service\User\Role::getBySlug('superadmin');
 
-		$user = \Services\User\User::get();
+		// Rado
+		$user = \Service\User\User::get();
 		$user->login = 'toth@tralandia.com';
 		$user->password = 'radkos';
 		$user->addRole($role);
+		$user->addContact(createContact('email', 'toth@tralandia.com'));
+		$user->defaultLanguage = $this->languagesByIso['en'];
+		debug($user); return;
+		$user->save();
 
-		$user->addContact = '';
-		
-		$user->defaultLanguage = '';
-		$user->addLocation();
-		$user->addRentalType();
+		// David
+		$user = \Service\User\User::get();
+		$user->login = 'durika@tralandia.com';
+		$user->password = 'davidheslo';
+		$user->addRole($role);
+		$user->addContact(createContact('email', 'durika@tralandia.com'));
+		$user->defaultLanguage = $this->languagesByIso['en'];
+		$user->save();
 
-		$user->invoicingSalutation = '';
-		$user->invoicingFirstName = '';
-		$user->invoicingLastName = '';
-		$user->invoicingEmail = '';
-		$user->invoicingPhone = '';
-		$user->invoicingUrl = '';
-		$user->invoicingAddress = '';
-		$user->invoicingCompanyId = '';
-		$user->invoicingCompanyVatId = '';
-
-		$user->currentTelmarkOperator = '';
-		$user->attributes = '';
-
-		$user->addCombination();
-
+		return TRUE;
 	}
 
 	private function importVisitors() {
 
-		$role = \Services\User\Role::getBySlug('visitor');
+		$role = \Service\User\Role::getBySlug('visitor');
 
-		$user = \Services\User\User::get();
+		$user = \Service\User\User::get();
 		$user->login = '';
 		$user->password = '';
 		$user->addRole($role);

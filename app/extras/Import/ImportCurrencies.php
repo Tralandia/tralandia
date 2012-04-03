@@ -20,7 +20,7 @@ class ImportCurrencies extends BaseImport {
 
 		$r = q('select * from currencies order by id');
 		while($x = mysql_fetch_array($r)) {
-			$s = S\CurrencyService::get();
+			$s = S\Currency::get();
 			$s->oldId = $x['id'];
 			$s->iso = $x['iso'];
 			$s->name = $this->createNewPhrase($dictionaryType, $x['name_dic_id']);

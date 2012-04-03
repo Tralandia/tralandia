@@ -31,7 +31,7 @@ class ImportCompanies extends BaseImport {
 		$dictionaryTypeRegistrator = $this->createDictionaryType('\Company\Company', 'registrator', 'supportedLanguages', 'ACTIVE');
 
 		while($x = mysql_fetch_array($r)) {
-			$s = S\Company\CompanyService::get();
+			$s = S\Company\Company::get();
 			$s->oldId = $x['id'];
 			$s->name = $x['name'];
 
@@ -50,7 +50,7 @@ class ImportCompanies extends BaseImport {
 
 			$countries = getNewIds('\Company\Company', $x['for_countries_ids']);
 			foreach ($countries as $key => $value) {
-				$s->addCountry(S\Location\LocationService::get($value));
+				$s->addCountry(S\Location\Location::get($value));
 			}
 			$s->save();
 		}
@@ -62,18 +62,18 @@ class ImportCompanies extends BaseImport {
 		$dictionaryTypeRegistrator = $this->createDictionaryType('\Company\Company', 'registrator', 'supportedLanguages', 'ACTIVE');
 
 		while($x = mysql_fetch_array($r)) {
-			$s = S\Company\OfficeService::get();
+			$s = S\Company\Office::get();
 			$s->oldId = $x['id'];
 
 			$s->address = new \Extras\Types\Address(array(
 				'address' => array_filter(array($x['address'], $x['address_2'])),
 				'postcode' => $x['postcode'],
 				'locality' => $x['locality'],
-				'country' => \Services\Location\CountryService::getByOldId($x['id'])->location->id,
+				'country' => \Service\Location\Country::getByOldId($x['id'])->location->id,
 			)); // @todo - toto este neuklada ok, je na to task v taskee
 
-			$s->company = \Services\Company\CompanyService::get(3);
-			$s->addCountry(\Services\Location\CountryService::getByOldId($x['id'])->location);
+			$s->company = \Service\Company\Company::get(3);
+			$s->addCountry(\Service\Location\Country::getByOldId($x['id'])->location);
 			$s->save();
 		}
 	}
@@ -84,22 +84,22 @@ class ImportCompanies extends BaseImport {
 		$dictionaryTypeRegistrator = $this->createDictionaryType('\Company\Company', 'registrator', 'supportedLanguages', 'ACTIVE');
 
 		while($x = mysql_fetch_array($r)) {
-			$s = S\Company\BankAccountService::get();
+			$s = S\Company\BankAccount::get();
 			$s->oldId = $x['id'];
-			$s->company = \Services\Company\CompanyService::getByOldId($x['companies_id']);
+			$s->company = \Service\Company\Company::getByOldId($x['companies_id']);
 			$s->bankName = $x['bank_name'];
 			$s->bankSwift = $x['bank_swift'];
 
 			$s->bankAddress = new \Extras\Types\Address(array(
 				'address' => $x['bank_address'],
-				'country' => \Services\Location\CountryService::getByOldId($x['bank_country_id'])->location->id,
+				'country' => \Service\Location\Country::getByOldId($x['bank_country_id'])->location->id,
 			)); // @todo - toto este neuklada ok, je na to task v taskee
 			
 			$s->accountNumber = $x['account_number'];
 			$s->accountName = $x['account_name'];
 			$s->accountIban = $x['account_iban'];
 
-			$s->addCountry(\Services\Location\CountryService::getByOldId($x['bank_country_id'])->location);
+			$s->addCountry(\Service\Location\Country::getByOldId($x['bank_country_id'])->location);
 			$s->save();
 		}
 	}

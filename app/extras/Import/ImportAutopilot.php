@@ -15,7 +15,7 @@ class ImportAutopilot extends BaseImport {
 	public function doImport() {
 		$this->savedVariables['importedSections']['autopilot'] = 1;
 
-		$type = \Services\Autopilot\TypeService::get();
+		$type = \Service\Autopilot\Type::get();
 		$type->name = 'Administrative region at level 2 has no parent.';
 		$type->technicalName = '\Location\Location - Level2HasNoParent';
 		$type->mission = 'This Level 2 Administrative location does not have a parent (Level 1 administrative region) defined. Please select one or add a new one.';
