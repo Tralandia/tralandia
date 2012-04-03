@@ -20,7 +20,7 @@
 					<td><a class="fb" href="#">&nbsp;</a>|</td>
 					<td>
 						<div class="dropdown" n:inner-foreach="$supportedLanguages as $v">
-							<a href="#">{$v->iso}</a>
+							<a href="#">{_$v->name->id}</a>
 							<div class="cleaner" n:if="$iterator->last"></div>
 						</div>
 						<a class="language" href="#">{$currentLanguage["name"]}<span class="arrow">&nbsp;</span></a>|

@@ -2,19 +2,19 @@
 
 namespace Extras;
 
-use Services\Dictionary as D;
+use Service\Dictionary as D;
 
 class MyTranslator implements \Nette\Localization\ITranslator {
 
 	protected $language = 144;
 
 	public function __construct() {
-		$this->language = D\LanguageService::get($this->language);
+		$this->language = D\Language::get($this->language);
 	}
 	
 	public function translate($message, $count = NULL, $note = NULL) {
 
-		$phrase = D\PhraseService::get($message);
+		$phrase = D\Phrase::get($message);
 		$message = $phrase->getTranslation($this->language)->translation;
 		
 		if (is_array($message))

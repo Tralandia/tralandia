@@ -1,0 +1,50 @@
+<?php
+
+namespace Entity\Emailing;
+
+use Entity\Emailing;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity()
+ * @ORM\Table(name="emailing_batch")
+ */
+class Batch extends \Entity\BaseEntityDetails {
+
+	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean")
+	 */
+	protected $confirmed;
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToOne(targetEntity="Email", inversedBy="batches")
+	 */
+	protected $emailTemplate;
+
+	/**
+	 * @var integer
+	 * @ORM\Column(type="integer")
+	 */
+	protected $totalCount;
+
+	/**
+	 * @var text
+	 * @ORM\Column(type="text")
+	 */
+	protected $subject;
+
+	/**
+	 * @var text
+	 * @ORM\Column(type="text")
+	 */
+	protected $body;
+
+	/**
+	 * @var text
+	 * @ORM\Column(type="text")
+	 */
+	protected $bodyHtml;
+
+}

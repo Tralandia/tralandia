@@ -1,0 +1,91 @@
+<?php
+
+namespace Entity;
+
+use Entity\Location;
+use Doctrine\ORM\Mapping as ORM;
+
+
+/**
+ * @ORM\Entity()
+ * @ORM\Table(name="domain")
+ */
+class Domain extends \Entity\BaseEntity {
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string")
+	 */
+	protected $domain;
+
+	/**
+	 * @var Collection
+	 * @ORM\OneToMany(targetEntity="Entity\Location\Location", mappedBy="domain")
+	 */
+	protected $locations;
+
+	
+	public function __construct() {
+		parent::__construct();
+
+		$this->locations = new \Doctrine\Common\Collections\ArrayCollection;
+	}
+
+	/**
+	 * @param string
+	 * @return \Entity\Domain
+	 */
+	public function setDomain($domain) {
+		$this->domain = $domain;
+
+		return $this;
+	}
+
+	/**
+	 * @return \Entity\Domain
+	 */
+	public function unsetDomain() {
+		$this->domain = NULL;
+
+		return $this;
+	}
+
+	/**
+	 * @return string|NULL
+	 */
+	public function getDomain() {
+		return $this->domain;
+	}
+
+	/**
+	 * @param \Entity\Location\Location
+	 * @return \Entity\Domain
+	 */
+	public function addLocation(\Entity\Location\Location $location) {
+		if(!$this->locations->contains($location)) {
+			$this->locations->add($location);
+		}
+
+		return $this;
+	}
+
+	/**
+	 * @param \Entity\Location\Location
+	 * @return \Entity\Domain
+	 */
+	public function removeLocation(\Entity\Location\Location $location) {
+		if($this->locations->contains($location)) {
+			$this->locations->removeElement($location);
+		}
+
+		return $this;
+	}
+
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Location\Location
+	 */
+	public function getLocations() {
+		return $this->locations;
+	}
+
+}
