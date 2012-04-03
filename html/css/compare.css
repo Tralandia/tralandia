@@ -1,0 +1,65 @@
+/* ľšč*/
+table {border-spacing: 0; border-collapse: collapse; padding: 0; margin: 10px auto 0 auto; border: 0; background: #fbfdf7}
+table td {margin: 0;  border: 1px solid #c4d67e; padding: 6px 10px 7px; width: 150px;}
+table td:first-child {width: 190px; text-align: right; font-weight: bold; color: #a0b325; background: #fbfdf7!important}
+table tr:first-child td {vertical-align: top; padding-top: 10px}
+tr.lighter td {background-color: #fff}
+.compareLogo {
+    width: 130px;
+    height: 123px;
+    background: url(../images/matrix_main.png) -504px -1037px;
+    margin: 0px 0px 0px 42px;
+}
+.compareThumb {
+    width: 150px;
+    height: 93px;
+}
+.compareThumb a {
+    display: block;
+    width: 22px;
+    height: 22px;
+    margin: 0px 0px 0px auto;
+    background: url(../images/matrix_main.png) -380px -1031px;
+    text-decoration: none;
+}
+.compareThumb a:hover {
+    background-position: -380px -1071px;
+}
+h2 {
+    font-size: 12px;
+    padding: 5px 0px 0px 0px;
+}
+.compareLang img {
+    width: 20px;
+    height: 13px;
+    margin: 1px 2px 0px 2px;
+    border: 1px solid #aed141;
+}
+.compareChecks a {
+    display: block;
+    text-decoration: none;
+    color: #f54407
+}
+.compareChecks a * {
+    padding: 5px 0px 7px 0px;
+    line-height: 35px;
+}
+.compareChecks a span {
+    background: url(../images/matrix_main.png) -406px -1031px;
+    padding-left: 33px;
+}
+.compareChecks a.contact span {
+    background-position: -406px -1069px;
+}
+.compareChecks a.friends span {
+    background-position: -406px -1112px;
+}
+/*.compareChecks div {
+    width: 22px;
+    height: 22px;
+    background: url(../images/matrix_main.png) -380px -1128px;
+    margin-left: 67px;
+}
+.compareChecks td.checked div {
+    background-position: -380px -1108px;
+}*/

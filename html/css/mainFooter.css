@@ -1,0 +1,248 @@
+/* ľšč*/
+div.mainFooter {
+    background: #fdfdf8;
+}
+div.mainFooterSeparator_1 {
+    height: 11px;
+    background: #fff url(../images/matrix_main.png) 0px -185px;
+}
+div.mainFooterInfoOwners {
+    width: 490px;
+    height: 335px;
+    overflow: hidden;
+    position: relative;
+    float: left;
+}
+div.mainFooterInfoOwners .icon {
+    width: 37px;
+    height: 46px;
+    background: url(../images/matrix_main.png) -947px -920px;
+    position: absolute;
+    top: 7px;
+    left: 8px;
+}
+div.mainFooterInfoOwners h2 {
+    font-size: 18px;
+    margin: 11px 0 0 52px;
+    font-weight: normal;
+}
+div.mainFooterInfoOwners h2 b {
+    color: #f35405;
+}
+div.mainFooterInfoOwners div.all {
+    text-align: right;
+    padding: 0px 13px 0px 0px;
+}
+div.mainFooterInfoOwners div.all a {
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #fff;
+    text-decoration: none;
+}
+div.mainFooterInfoOwners div.all a:hover {
+    color: #f35405;
+}
+div.mainFooterInfoOwners div.all a * {
+    background: url(../images/matrix_bt.png);
+    padding: 6px 0 6px;
+    color: #f35405;
+}
+div.mainFooterInfoOwners div.all a:hover * {
+    color: #fff;
+}
+div.mainFooterInfoOwners div.all a .text {
+    padding-left: 10px;
+}
+div.mainFooterInfoOwners div.all a .space {
+    background-position: right 0;
+    padding-right: 4px;
+}
+div.mainFooterInfoOwners div.all a:hover .text {
+    background-position: 0 -30px;
+}
+div.mainFooterInfoOwners div.all a:hover .space {
+    background-position: right -30px;
+}
+div.mainFooterNewObjects {
+    width: 245px;
+    height: 312px;
+    position: relative;
+    border-left: 1px solid #C7D29B;
+    border-right: 1px solid #C7D29B;
+    float: left;
+    margin-top: 15px;
+}
+div.mainFooterNewObjects .icon {
+    width: 37px;
+    height: 46px;
+    background: url(../images/matrix_main.png) -947px -1020px;
+    position: absolute;
+    top: -10px;
+    left: 8px;
+}
+div.mainFooterNewObjects h2 {
+    font-size: 18px;
+    margin: -4px 0 0 52px;
+    font-weight: normal;
+}
+div.mainFooterNewObjects h2 b {
+    color: #f35405;
+}
+div.mainFooterNewObjects ul * {
+    color: #a0b325;
+}
+div.mainFooterNewObjects a {
+    text-decoration: none;
+}
+div.mainFooterNewObjects a:hover {
+    text-decoration: underline;
+}
+div.mainFooterNewObjects ul {
+    margin: 25px 12px 0px 14px;
+}
+div.mainFooterNewObjects li span {
+    position: absolute;
+    background: url(../images/matrix_main.png) -320px -1108px;
+    padding: 0px 0px 0px 12px;
+}
+div.mainFooterNewObjects li div {
+    margin: 0px 0px 4px 12px;
+}
+div.mainFooterInfo {
+    width: 240px;
+    height: 335px;
+    overflow: hidden;
+    position: relative;
+    float: left;
+}
+div.mainFooterInfo .icon {
+    width: 37px;
+    height: 46px;
+    background: url(../images/matrix_main.png) -947px -969px;
+    position: absolute;
+    top: 7px;
+    left: 8px;
+}
+div.mainFooterInfo h2 {
+    font-size: 18px;
+    margin: 11px 0 0 52px;
+    font-weight: normal;
+}
+div.mainFooterInfo h2 b {
+    color: #f35405;
+}
+div.mainFooterInfo ul * {
+    color: #a0b325;
+}
+div.mainFooterInfo a {
+    text-decoration: none;
+}
+div.mainFooterInfo a:hover {
+    text-decoration: underline;
+}
+div.mainFooterInfo ul {
+    margin: 25px 12px 0px 14px;
+}
+div.mainFooterInfo li span {
+    position: absolute;
+    background: url(../images/matrix_main.png) -320px -1108px;
+    padding: 0px 0px 0px 12px;
+}
+div.mainFooterInfo li a {
+    display: block;
+    margin: 0px 0px 4px 12px;
+}
+div.mainFooterInfo div.fb {
+    padding: 12px 0px 12px 15px;
+}
+div.mainFooterInfo div.fb a {
+    color: #5f78ae;
+}
+div.mainFooterInfo div.fb span {
+    background: url(../images/matrix_main.png) -320px -1070px;
+    padding: 1px 0px 2px 20px;
+}
+div.mainFooterInfo span.copy {
+    padding: 0px 0px 0px 15px;
+}
+a.mainFooterBanner {
+    display: block;
+    float: left;
+    width: 238px;
+    height: 251px;
+    cursor: pointer;
+    margin: 21px 0px 0px 10px;
+}
+div.mainFooterTestimonials {
+    float: right;
+    width: 221px;
+    height: 221px;
+    margin: 21px 12px 0px 0px;
+    overflow: hidden;
+    text-align: right;
+}
+div.mainFooterTestimonials .item {
+    height: 73px;
+    margin: 0px 0px 0px 0px;
+    padding: 10px 13px 0px 12px;
+    overflow: hidden;
+    background: url(../images/matrix_main.png) -615px -1500px;
+    line-height: 1.25;
+    text-align: left;
+}
+div.mainFooterTestimonials .quota {
+    float: left;
+    height: 27px;
+    width: 43px;
+}
+div.mainFooterTestimonials .holder {
+    height: 59px;
+    overflow: hidden;
+}
+div.mainFooterTestimonials b {
+    display: block;
+    padding: 0px 13px 2px 0px;
+}
+
+a.mainFooterBanner:hover {
+    background-position: 238px 0!important;
+}
+div.mainFooterCountryLinks {
+    background: #fdfdf8 url(../images/matrix_main.png) 0px -205px;
+}
+div.mainFooterCountryLinks h2 {
+    font-size: 18px;
+    padding: 25px 0 13px 54px;
+    color: #fff;
+    font-weight: normal;
+}
+div.mainFooterCountryLinks a {
+    color: #fff;
+    text-decoration: none;
+    padding: 0px 0px 0px 14px;
+    display: block;
+}
+div.mainFooterCountryLinks a.full {
+    font-weight: bold;
+}
+div.mainFooterCountryLinks a:hover {
+    text-decoration: underline;
+}
+div.mainFooterCountryLinks ul {
+    float: left;
+    width: 181px;
+    margin: 0px 0px 0px 15px;
+}
+div.mainFooterCountryLinks li {
+    /*background: url(../images/matrix_main.png) -495px -1158px;*/
+    padding: 0px 0px 4px 1px;
+}
+div.mainFooterCountryLinks li span {
+    position: absolute;
+    background: url(../images/matrix_main.png) -280px -1170px;
+    padding: 0px 8px 0px 0px;
+}
+div.mainFooterSeparator_2 {
+    height: 11px;
+    background: url(../images/matrix_main.png) 0px -690px;
+}

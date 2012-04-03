@@ -1,0 +1,216 @@
+/* ľšč*/
+.dashboardMenu {
+    width: 964px;
+    height: 60px;
+    overflow: hidden;
+}
+.dashboardMenu a {
+    display: block;
+    float: left;
+    background: url(../images/matrix_bt.png) -8px -1873px;
+    overflow: hidden;
+    width: 188px;
+    height: 51px;
+    color: #fff;
+    text-decoration: none;
+    border-right: 1px solid #fff;
+    padding: 9px 10px 0px 10px;
+}
+.dashboardMenu a:hover {
+    color: #630;
+}
+.dashboardMenu a h3 {
+    font-size: 15px;
+    font-weight: bold;
+    color: #fff;
+}
+.dashboardMenu a:hover h3 {
+    color: #630;
+}
+.dashboardMenu a.profile {
+    background-position: 0 -1873px;
+}
+.dashboardMenu a.add {
+    background-position: -175px -1873px;
+    width: 153px;
+    padding: 9px 45px 0px 10px;
+}
+.dashboardMenu a.logout {
+    width: 79px;
+    height: 38px;
+    background-position: right -1873px;
+    padding: 22px 38px 0px 10px;
+}
+.dashboardMenu a:hover {
+    background-position:  -8px -1943px;
+}
+.dashboardMenu a:hover.profile {
+    background-position: 0 -1943px;
+}
+.dashboardMenu a:hover.add {
+    background-position: -175px -1943px;
+}
+.dashboardMenu a:hover.logout {
+    background-position: right -1943px;
+}
+
+.dashboardMainInfo {
+    width: 964px;
+    height: 167px;
+    background: url(../images/matrix_main.png) 0 -3420px;
+    margin-top: 10px;
+    overflow: hidden;
+}
+.dashboardObjectPhoto {
+    width: 270px;
+    height: 167px;
+    float: left;
+}
+.dashboardObjectPhoto img {
+    display: block;
+    width: 268px;
+    height: 163px;
+    margin: 2px 0 0 2px;
+}
+.dashboardObjectPhoto .mask {
+    position: absolute;
+    width: 8px;
+    height: 167px;
+    background: url(../images/matrix_main.png) -975px -3420px;
+}
+.dashboardObjectInfo {
+    width: 694px;
+    height: 167px;
+    float: left;
+}
+.dashboardObjectInfoTop {
+    height: 113px;
+}
+.dashboardObjectInfoTop h2 {
+    font-size: 20px;
+    font-weight: normal;
+    padding: 11px 0px 21px 10px;
+}
+.dashboardObjectInfoTop p {
+    float: left;
+    width: 218px;
+    margin: 0px 0px 5px 10px;
+    font-weight: bold;
+    font-size: 12px;
+}
+.dashboardObjectInfoTop span {
+    font-weight: normal;
+    color: #a0b325;
+    font-size: 11px;
+}
+.dashboardObjectInfoTabs a {
+    display: block;
+    float: left;
+    text-decoration: none;
+    margin: 0px 0px 0px 10px;
+}
+.dashboardObjectInfoTabs a .text {
+    display: block;
+    float: left;
+    background: url(../images/matrix_bt.png) 0 -941px;
+    width: 106px;
+    height: 43px;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 11px 0px 0px 48px;
+}
+.dashboardObjectInfoTabs a .corner {
+    display: block;
+    float: left;
+    background: url(../images/matrix_bt.png) right -941px;
+    width: 6px;
+    height: 54px;
+}
+.dashboardObjectInfoTabs a.active .text {
+    background-position: 0 -1005px;
+}
+.dashboardObjectInfoTabs a.active .corner {
+    background-position: right -1005px;
+}
+.dashboardObjectInfoTabs a.actualize .text {
+    background-position: 0 -1061px;
+}
+.dashboardObjectInfoTabs a.calendar .text {
+    background-position: 0 -1181px;
+}
+.dashboardObjectInfoTabs a.reservations .text {
+    background-position: 0 -1301px;
+}
+.dashboardObjectInfoTabs a.active.actualize .text {
+    background-position: 0 -1125px;
+}
+.dashboardObjectInfoTabs a.active.calendar .text {
+    background-position: 0 -1245px;
+}
+.dashboardObjectInfoTabs a.active.reservations .text {
+    background-position: 0 -1365px;
+}
+
+.dashboardDetails {
+    display: none;
+}
+.dashboardObject.open .dashboardMainInfo {
+    background: url(../images/matrix_main.png) 0 -3860px;
+}
+.dashboardObject.open .dashboardDetails {
+    display: block;
+}
+.dashboardDetailsContent {
+    background: #fdfef8;
+    border-left: 1px solid #cad2a3;
+    border-right: 1px solid #cad2a3;
+    padding: 20px 20px 10px 19px;
+}
+.dashboardDetailsFooter {
+    font-size: 1px;
+    height: 10px;
+    background: url(../images/matrix_main.png) 0 -4046px;
+}
+
+
+.dashboardWarning, .dashboardInfo {
+    height: 49px;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+.dashboardWarning {
+    background: url(../images/matrix_main.png) 0 -4060px;
+}
+.dashboardInfo {
+    background: url(../images/matrix_main.png) 0 -4120px;
+}
+.dashboardWarning table, .dashboardInfo table {
+    width: 923px;
+}
+.dashboardWarning td, .dashboardInfo td {
+    height: 49px;
+    overflow: hidden;
+    font-size: 12px;
+    font-weight: bold;
+    color: #666;
+}
+.dashboardWarning .icon, .dashboardInfo .icon {
+    width: 52px;
+}
+.dashboardWarning .remove, .dashboardInfo .remove {
+    width: 52px;
+}
+.dashboardWarning .remove a, .dashboardInfo .remove a {
+    background: url(../images/matrix_main.png) -380px -1230px;
+    display: block;
+    height: 19px;
+    margin: 0 auto;
+    width: 19px;
+    text-decoration: none;
+}
+.dashboardWarning .remove a:hover, .dashboardInfo .remove a:hover {
+    background-position: -380px -1270px;
+}
+
+
+
