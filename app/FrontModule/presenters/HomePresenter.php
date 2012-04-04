@@ -10,15 +10,22 @@ class HomePresenter extends BasePresenter {
 
 	}
 
-	public function createComponentTabsBar($name) {
+	public function createComponentTabControl($name) {
 
-		$tabBar = new \FrontModule\TabsBar($this, $name);
+		$tabBar = new \FrontModule\TabControl\TabControl($this, $name);
 
-		$tabBar->addTab(\Service\Dictionary\Phrase::get(1), 'tab1', 'content1');
-		$tabBar->addTab(\Service\Dictionary\Phrase::get(2), 'tab2', 'content2');
-		$tabBar->addTab(\Service\Dictionary\Phrase::get(3), 'tab3', 'content3');
+		$t = $tabBar->addTab('tab1');
+		$t->header = 1;
+		$t->active = true;
+		$t->content = 'content 1';
 
-		$tabBar->setActive('tab1');
+		$t = $tabBar->addTab('tab2');
+		$t->header = 2;
+		$t->content = 'content 2';
+
+		$t = $tabBar->addTab('tab3');
+		$t->header = 3;
+		$t->content = 'content 3';
 
 		return $tabBar;
 
