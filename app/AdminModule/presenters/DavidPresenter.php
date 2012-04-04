@@ -37,22 +37,8 @@ class DavidPresenter extends BasePresenter {
 
 	public function actionTest() {
 
-		$s = S\Dictionary\Phrase::get(3);
-		$t = S\Dictionary\Translation::get(4);
-		$s->addTranslation($t);
-		//$s->blabal('sdf');
-		//$s = S\Location\LocationService::get(3);
-		//$s->setSlug('smola');
-		//$s->slug = 'asia';
-		//$type = S\Location\Type::getBySlug('country');
-		//$s = S\Location\LocationList::getBySlugInType('asia', array($type));
-		//$s = S\Location\LocationService::getBySlugAndType('asia', $type);
-		//$s = S\Company\Company::get(1);
-		//$s->address = new \Extras\Types\Address(array('city' => 'Nesvady', 'country' => 'Slovakia'));
-		//$s->save();
-		//$s = S\Location\LocationList::getAll();
-		debug($t->language->iso);
-		debug($s->translations->toArray());
+		$s = S\Medium\Medium::createFromUrl('http://www.tralandia.sk/u/01/13220628889049.png');
+		debug($s);
 	}
 
 
