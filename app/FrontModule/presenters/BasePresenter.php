@@ -16,7 +16,7 @@ abstract class BasePresenter extends \BasePresenter {
 		parent::beforeRender();
 
 		$this->template->supportedLanguages = \Service\Dictionary\LanguageList::getBySupported(\Entity\Dictionary\Language::SUPPORTED);
-		$this->template->allDomains = \Service\DomainList::getAll();
+		$this->template->launchedCountries = \Service\Location\LocationList::getByType(6); // TODO: este vyfiltrovat tie ktore maju status launched
 		$this->template->liveRentalsCount = count(\Service\Rental\RentalList::getByStatus(\Entity\Rental\Rental::STATUS_LIVE));
 
 		/******* Things TODO *****/

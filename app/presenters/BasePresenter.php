@@ -62,7 +62,7 @@ abstract class BasePresenter extends Presenter {
 		$css = $header['css'];
 		$css->sourcePath = WWW_DIR . '/styles';
 		$css->tempPath = WWW_DIR . '/webtemp';
-		$css->tempUri = '/webtemp';	
+		$css->tempUri = '/webtemp'; 
 
 
 		//JavascriptLoader
@@ -114,5 +114,10 @@ abstract class BasePresenter extends Presenter {
 		return $header;
 	}
 
+	public function templatePrepareFilters($template) {
+		$latte = new \Nette\Latte\Engine;
+		$template->registerFilter($latte);
+		\Extras\MyMacros::install($latte->compiler);
+	}
 
 }
