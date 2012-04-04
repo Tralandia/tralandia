@@ -14,18 +14,20 @@ class HomePresenter extends BasePresenter {
 
 		$tabBar = new \FrontModule\TabControl\TabControl($this, $name);
 
-		$t = $tabBar->addTab('tab1');
-		$t->header = 1;
-		$t->active = true;
-		$t->content = 'content 1';
+		$t = $tabBar->addTab('top');
+		$t->setHeader(10)->setActive(true)->setContent('Top Objekty');
 
-		$t = $tabBar->addTab('tab2');
-		$t->header = 2;
-		$t->content = 'content 2';
+		$t = $tabBar->addTab('regions');
+		$t->setHeader(15)->setContent('Regiony');
 
-		$t = $tabBar->addTab('tab3');
-		$t->header = 3;
-		$t->content = 'content 3';
+		$t = $tabBar->addTab('localities');
+		$t->setHeader(12)->setContent('Mesta/Obce');
+
+		$t = $tabBar->addTab('tags');
+		$t->setHeader(13)->setContent('Typy pobytov');
+
+		$t = $tabBar->addTab('about');
+		$t->setHeader(14)->setContent('O nas');
 
 		return $tabBar;
 

@@ -16,8 +16,15 @@ class Tab extends Control {
 	public function __construct(TabControl $parent, $id) {
 
 		parent::__construct($parent, $id);
-		$this->id = $id;
+		$this->setId($id);
 		
+	}
+
+	public function __call($name, $args) {
+
+		$this->{lcfirst(substr($name, 3))} = $args[0];
+		return $this;
+
 	}
 
 }
