@@ -59,4 +59,6 @@ class Coupon extends \Entity\BaseEntity {
 	 */
 	protected $recommendeePackage;
 
+	//@entity-generator-code
+
 }

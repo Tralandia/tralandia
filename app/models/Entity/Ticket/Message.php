@@ -37,4 +37,6 @@ class Message extends \Entity\BaseEntity {
 	 */
 	protected $attachments;
 
+	//@entity-generator-code
+
 }

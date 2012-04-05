@@ -29,4 +29,6 @@ class UseType extends \Entity\BaseEntity {
 	 */
 	protected $marketings;
 
+	//@entity-generator-code
+
 }

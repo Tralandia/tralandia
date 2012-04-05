@@ -29,4 +29,6 @@ class Duration extends \Entity\BaseEntity {
 	 */
 	protected $sort;
 
+	//@entity-generator-code
+
 }

@@ -200,4 +200,6 @@ class Rental extends \Entity\BaseEntity {
 	 */
 	protected $invoices;
 
+	//@entity-generator-code
+
 }

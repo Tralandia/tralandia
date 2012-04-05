@@ -31,14 +31,29 @@ class ImportLocations extends BaseImport {
 		$this->dictionaryTypeNameOfficial = $this->createDictionaryType('\Location\Location', 'nameOfficial', 'supportedLanguages', 'NATIVE', array('locativeRequired' => TRUE));
 		$this->dictionaryTypeNameShort = $this->createDictionaryType('\Location\Location', 'nameShort', 'supportedLanguages', 'NATIVE', array('locativeRequired' => TRUE));
 
-		//$this->importContinents();
-		//$this->importCountries();
-		//$this->updateNestedSetCountries();
-		//$this->importTravelings();
-		//$this->importRegions();
-		//$this->importAdministrativeRegions1();
-		//$this->importAdministrativeRegions2();
-		$this->importLocalities();
+		$allSubsections = array('importContinents', 'importCountries', 'importTravelings', 'importRegions', 'importAdministrativeRegions1', 'importAdministrativeRegions2', 'importLocalities');
+
+		if (!isset($this->savedVariables['importedSubSections'])) {
+			$this->savedVariables['importedSubSections'] = array();
+		}
+
+		if (!isset($this->savedVariables['importedSubSections']['locations'])) {
+			$this->savedVariables['importedSubSections']['locations'] = array();
+			foreach ($allSubsections as $key => $value) {
+				$this->savedVariables['importedSubSections']['locations'][$value] = 0;
+			}
+		}
+
+		foreach ($allSubsections as $key => $value) {
+			if ($this->savedVariables['importedSubSections']['locations'][$value] == 1) {
+				continue;
+			}
+			debug($value);
+
+			$this->$value(); 
+			$this->savedVariables['importedSubSections']['locations'][$value] = 1;
+			return;
+		}
 
 		$this->savedVariables['importedSections']['locations'] = 2;
 
@@ -48,7 +63,28 @@ class ImportLocations extends BaseImport {
 	// ------------- CONTINENTS
 	// ----------------------------------------------------------
 	private function importContinents() {
-		$language = getLangByIso('en');
+		$language = \Service\Dictionary\Language::getByIso('en');
+
+		// Create location type for world
+		$locationType = \Service\Location\Type::get();
+		$locationType->name = $this->createPhraseFromString('\Location\Location', 'name', 'supportedLanguages', 'NATIVE', 'world', $language);
+		$locationType->slug = 'world';
+		$locationType->save();
+		$this->worldType = $locationType;
+
+		// Create location World
+		$namePhrase = \Service\Dictionary\Phrase::get();
+		$namePhrase->type = $this->dictionaryTypeName;
+		$namePhrase->addTranslation($this->createTranslation($language, 'World'));
+		$namePhrase->save();
+
+		$s = \Service\Location\Location::get();
+		$s->name = $namePhrase;
+		$s->type = $this->worldType;
+		$s->slug = 'world';
+		$s->save();
+
+
 		$locationType = \Service\Location\Type::get();
 		$locationType->name = $this->createPhraseFromString('\Location\Location', 'name', 'supportedLanguages', 'NATIVE', 'continent', $language);
 		$locationType->slug = 'continent';

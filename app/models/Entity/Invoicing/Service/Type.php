@@ -23,4 +23,6 @@ class Type extends \Entity\BaseEntity {
 	 */
 	protected $name;
 
+	//@entity-generator-code
+
 }

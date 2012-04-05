@@ -17,30 +17,29 @@ class ImportContactTypes extends BaseImport {
 	public function doImport() {
 		$this->savedVariables['importedSections']['contactTypes'] = 1;
 
-		$language = getLangByIso('en');
+		$language = \Service\Dictionary\Language::getByIso('en');
 
 		$s = S\Contact\Type::get();
 		$s->name = $this->createPhraseFromString('\Location\Location', 'name', 'supportedLanguages', 'NATIVE', 'Address', $language);;
-		$s->class = 'Address';
+		$s->slug = 'Address';
 		$s->save();
 
 		$s = S\Contact\Type::get();
 		$s->name = $this->createPhraseFromString('\Location\Location', 'name', 'supportedLanguages', 'NATIVE', 'Email', $language);;
-		$s->class = 'Email';
+		$s->slug = 'Email';
 		$s->save();
 
 		$s = S\Contact\Type::get();
 		$s->name = $this->createPhraseFromString('\Location\Location', 'name', 'supportedLanguages', 'NATIVE', 'Phone', $language);;
-		$s->class = 'Phone';
+		$s->slug = 'Phone';
 		$s->save();
 
 		$s = S\Contact\Type::get();
 		$s->name = $this->createPhraseFromString('\Location\Location', 'name', 'supportedLanguages', 'NATIVE', 'Url', $language);;
-		$s->class = 'Url';
+		$s->slug = 'Url';
 		$s->save();
 
 		$this->savedVariables['importedSections']['contactTypes'] = 2;
 
 	}
-
 }

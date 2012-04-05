@@ -54,4 +54,6 @@ class Email extends \Entity\BaseEntity {
 	 */
 	protected $batches;
 
+	//@entity-generator-code
+
 }

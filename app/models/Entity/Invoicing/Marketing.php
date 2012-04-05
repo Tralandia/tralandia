@@ -67,4 +67,6 @@ class Marketing extends \Entity\BaseEntity {
 	 */
 	protected $uses;
 
+	//@entity-generator-code
+
 }

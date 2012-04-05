@@ -30,4 +30,6 @@ class Amenity extends \Entity\BaseEntity {
 	 */
 	protected $name;
 
+	//@entity-generator-code
+
 }

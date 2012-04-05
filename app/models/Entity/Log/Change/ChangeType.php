@@ -23,42 +23,6 @@ class ChangeType extends \Entity\BaseEntity {
 	protected $important;
 
 
-
-    /**
-     * @param string|NULL
-     * @return Entity\Log\Change\ChangeType
-     */
-    public function setName($name = NULL) {
-        $this->name = $name;
- 
-        return $this;
-    }
- 
- 
-    /**
-     * @return string|NULL
-     */
-    public function getName() {
-        return $this->name;
-    }
- 
- 
-    /**
-     * @param boolean|NULL
-     * @return Entity\Log\Change\ChangeType
-     */
-    public function setImportant($important = NULL) {
-        $this->important = $important;
- 
-        return $this;
-    }
- 
- 
-    /**
-     * @return boolean|NULL
-     */
-    public function getImportant() {
-        return $this->important;
-    }
+    //@entity-generator-code
 
 }

@@ -17,29 +17,5 @@ class Type extends \Entity\BaseEntityDetails {
 	 */
 	protected $name;
 
-
-	/* ----------------------------- Methods ----------------------------- */
-
-
-	public function __construct() {
-		parent::__construct();
-	}
-
-	/**
-	 * @param \Entity\Dictionary\Phrase
-	 * @return \Entity\Medium\Type
-	 */
-	public function setName(\Entity\Dictionary\Phrase $name) {
-		$this->name = $name;
-
-		return $this;
-	}
-
-	/**
-	 * @return \Entity\Dictionary\Phrase|NULL
-	 */
-	public function getName() {
-		return $this->name;
-	}
-
+	//@entity-generator-code
 }

@@ -47,4 +47,6 @@ class Batch extends \Entity\BaseEntityDetails {
 	 */
 	protected $bodyHtml;
 
+	//@entity-generator-code
+
 }

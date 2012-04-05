@@ -55,4 +55,6 @@ class Expense extends \Entity\BaseEntity {
 	 */
 	protected $user;
 
+	//@entity-generator-code
+
 }

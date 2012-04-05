@@ -87,4 +87,6 @@ class SeoUrl extends \Entity\BaseEntity {
 	 */
 	protected $ppcKeywords;
 
+	//@entity-generator-code
+
 }

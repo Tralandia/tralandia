@@ -23,6 +23,5 @@ class Type extends \Entity\BaseEntity {
 	 */
 	protected $slug;
 
-
-
+	//@entity-generator-code
 }

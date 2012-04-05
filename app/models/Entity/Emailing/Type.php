@@ -23,4 +23,6 @@ class Type extends \Entity\BaseEntity {
 	 */
 	protected $translationsRequired;
 
+	//@entity-generator-code
+
 }

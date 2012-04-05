@@ -41,4 +41,6 @@ class Service extends \Entity\BaseEntity {
 	 */
 	protected $currentPrice;
 
+	//@entity-generator-code
+
 }

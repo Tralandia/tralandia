@@ -29,4 +29,6 @@ class Fulltext extends \Entity\BaseEntity {
 	 */
 	protected $value;
 
+	//@entity-generator-code
+
 }

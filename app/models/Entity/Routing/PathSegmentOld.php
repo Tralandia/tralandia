@@ -49,4 +49,6 @@ class PathSegmentOld extends \Entity\BaseEntity {
 	 */
 	protected $entityId;
 
+	//@entity-generator-code
+
 }

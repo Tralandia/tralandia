@@ -49,4 +49,6 @@ class Ticket extends \Entity\BaseEntity {
 	 */
 	protected $messages;
 
+	//@entity-generator-code
+
 }

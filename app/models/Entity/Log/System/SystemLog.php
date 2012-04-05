@@ -23,46 +23,6 @@ class SystemLog extends \Entity\BaseEntityDetails {
 	protected $comment;
 
 
-    public function __construct() {
-        parent::__construct();
-    }
- 
- 
-    /**
-     * @param string
-     * @return \Entity\Log\System\SystemLog
-     */
-    public function setName($name) {
-        $this->name = $name;
- 
-        return $this;
-    }
- 
- 
-    /**
-     * @return string|NULL
-     */
-    public function getName() {
-        return $this->name;
-    }
- 
- 
-    /**
-     * @param string
-     * @return \Entity\Log\System\SystemLog
-     */
-    public function setComment($comment) {
-        $this->comment = $comment;
- 
-        return $this;
-    }
- 
- 
-    /**
-     * @return string|NULL
-     */
-    public function getComment() {
-        return $this->comment;
-    }
+    //@entity-generator-code
 
 }

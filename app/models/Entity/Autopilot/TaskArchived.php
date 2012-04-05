@@ -110,4 +110,6 @@ class TaskArchived extends \Entity\BaseEntityDetails {
 	 */
 	protected $completed;
 
+	//@entity-generator-code
+
 }

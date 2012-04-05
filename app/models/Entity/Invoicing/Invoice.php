@@ -152,4 +152,6 @@ class Invoice extends \Entity\BaseEntity {
 	 */
 	protected $paymentInfo;
 
+	//@entity-generator-code
+
 }

@@ -108,4 +108,6 @@ class Item extends \Entity\BaseEntity {
 	 */
 	protected $packageNameEn;
 
+	//@entity-generator-code
+
 }

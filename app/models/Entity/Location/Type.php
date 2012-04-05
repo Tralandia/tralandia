@@ -23,45 +23,7 @@ class Type extends \Entity\BaseEntityDetails {
 	 */
 	protected $slug;
 
-	/* ----------------------------- Methods ----------------------------- */
 
-
-	public function __construct() {
-		parent::__construct();
-	}
-
-	/**
-	 * @param \Entity\Dictionary\Phrase
-	 * @return \Entity\Location\Type
-	 */
-	public function setName(\Entity\Dictionary\Phrase $name) {
-		$this->name = $name;
-
-		return $this;
-	}
-
-	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Dictionary\Phrase
-	 */
-	public function getName() {
-		return $this->name;
-	}
-
-	/**
-	 * @param slug
-	 * @return \Entity\Location\Type
-	 */
-	public function setSlug($slug) {
-		$this->slug = $slug;
-
-		return $this;
-	}
-
-	/**
-	 * @return slug|NULL
-	 */
-	public function getSlug() {
-		return $this->slug;
-	}
+	//@entity-generator-code
 
 }
