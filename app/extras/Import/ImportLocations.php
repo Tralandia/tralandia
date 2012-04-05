@@ -14,8 +14,8 @@ use Nette\Application as NA,
 	Extras\Models\Service,
 	Extras\Types\Price,
 	Extras\Types\Latlong,
-	Services\Autopilot\Autopilot as AP,
-	Services\Log\Change as ChangeLog;
+	Service\Autopilot\Autopilot as AP,
+	Service\Log\Change as ChangeLog;
 
 class ImportLocations extends BaseImport {
 

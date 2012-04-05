@@ -8,9 +8,9 @@ use Nette\Application as NA,
 	Nette\Utils\Html,
 	Nette\Utils\Strings,
 	Extras\Import as I,
-	Services\Dictionary as D,
-	Services as S,
-	Services\Log\Change as SLog;
+	Service\Dictionary as D,
+	Service as S,
+	Service\Log\Change as SLog;
 
 class RadoPresenter extends BasePresenter {
 
@@ -48,13 +48,11 @@ class RadoPresenter extends BasePresenter {
 			$redirect = TRUE;
 		}
 
-		if (isset($this->params['importHtmlPhrase'])) {
-			$import = new \Extras\Import\ImportHtmlPhrase;
-			$newPhrase = $import->doImport($this->params['importHtmlPhrase']);
+		if (isset($this->params['getPhraseMacro'])) {
+			$import = new \Extras\Import\ImportHtmlPhrases;
+			$newPhrase = \Service\Dictionary\Phrase::getByOldId($this->params['getPhraseMacro']);
 			$newTranslation = \Service\Dictionary\Translation::getByPhraseAndLanguage($newPhrase, \Service\Dictionary\Language::getByIso('en'));
-			\Extras\Models\Service::flush(FALSE);
-
-			$this->flashMessage('Phrase ID '.$this->params['importHtmlPhrase'].' has been done. {_'.$newPhrase->id.'('.$this->params['importHtmlPhrase'].' '.$newTranslation->translation.')}');
+			$this->flashMessage('{_'.$newPhrase->id.', \''.$this->params['getPhraseMacro'].' '.$newTranslation->translation.'\'}');
 			$redirect = TRUE;
 		}
 

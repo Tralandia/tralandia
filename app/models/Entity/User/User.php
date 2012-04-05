@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="user_user")
  */
-class User extends \Entity\BaseEntity {
+class User extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var string
@@ -34,7 +34,7 @@ class User extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Entity\Contact\Contact", mappedBy="user")
+	 * @ORM\OneToMany(targetEntity="Entity\Contact\Contact", mappedBy="user", cascade={"persist"})
 	 */
 	protected $contacts;
 
@@ -82,19 +82,19 @@ class User extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact")
+	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact", cascade={"persist"})
 	 */
 	protected $invoicingEmail;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact")
+	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact", cascade={"persist"})
 	 */
 	protected $invoicingPhone;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact")
+	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact", cascade={"persist"})
 	 */
 	protected $invoicingUrl;
 
@@ -123,20 +123,14 @@ class User extends \Entity\BaseEntity {
 	protected $currentTelmarkOperator;
 
 	/**
-	 * @var json
-	 * @ORM\Column(type="json")
-	 */
-	protected $attributes;
-
-	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Combination", mappedBy="user")
+	 * @ORM\OneToMany(targetEntity="Combination", mappedBy="user", cascade={"persist", "remove"})
 	 */
 	protected $combinations;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Entity\Rental\Rental", mappedBy="user")
+	 * @ORM\OneToMany(targetEntity="Entity\Rental\Rental", mappedBy="user", cascade={"persist"})
 	 */
 	protected $rentals;
 
@@ -682,7 +676,7 @@ class User extends \Entity\BaseEntity {
 		if(!$this->combinations->contains($combination)) {
 			$this->combinations->add($combination);
 		}
-		$combination->addUser($this);
+		$combination->setUser($this);
 
 		return $this;
 	}
