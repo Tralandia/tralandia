@@ -53,8 +53,7 @@ class RadoPresenter extends BasePresenter {
 			$newPhrase = $import->doImport($this->params['importHtmlPhrase']);
 			$newTranslation = \Service\Dictionary\Translation::getByPhraseAndLanguage($newPhrase, \Service\Dictionary\Language::getByIso('en'));
 			\Extras\Models\Service::flush(FALSE);
-
-			$this->flashMessage('Phrase ID '.$this->params['importHtmlPhrase'].' has been done. {_'.$newPhrase->id.'('.$this->params['importHtmlPhrase'].' '.$newTranslation->translation.')}');
+			$this->flashMessage('Phrase ID '.$this->params['importHtmlPhrase'].' has been done. {_'.$newPhrase->id.', \''.$this->params['importHtmlPhrase'].' '.$newTranslation->translation.'\'}');
 			$redirect = TRUE;
 		}
 
