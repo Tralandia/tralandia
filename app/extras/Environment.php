@@ -8,6 +8,10 @@ class Environment extends \Nette\Object {
 	private $country = NULL;
 	private $language = NULL;
 
+	public static function factory() {
+		return new static();
+	}
+
 	public function __construct() {
 	}
 
@@ -18,7 +22,7 @@ class Environment extends \Nette\Object {
 		return $this->location;
 	}
 	
-	public function loadLocation() {
+	protected function loadLocation() {
 		return \Service\Location\Location::get(46);
 	}
 
@@ -38,11 +42,8 @@ class Environment extends \Nette\Object {
 		return $this->language;
 	}
 	
-	public function loadLanguage() {
+	protected function loadLanguage() {
 		return \Service\Dictionary\Language::get(144);
 	}
 	
-	public static function factory() {
-		return new static();
-	}
 }

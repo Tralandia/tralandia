@@ -53,9 +53,7 @@
 
 	<div class="mainFooterCountryLinks">
 		<h2><b>Ubytovanie</b> v dalsich krajinach</h2>
-		{*ulList count=>5*}
-			<li n:foreach="$launchedCountries as $country"><span>&nbsp;</span><a href="#">{_$country->name->id}</a></li>
-		{*/ulList*}
+		{ulList $launchedLanguages, 5, '<li><span>&nbsp;</span>{_$item->name->id}</li>'}
 		<div class="cleaner"></div>
 		<div class="mainFooterSeparator_2"></div>
 	</div>
