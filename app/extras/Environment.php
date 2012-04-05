@@ -8,6 +8,12 @@ class Environment extends \Nette\Object {
 	private $country = NULL;
 	private $language = NULL;
 
+	// @todo
+	private $url = NULL; // Extras\Type\Url
+	private $currency = NULL; // 
+	private $locale = NULL;
+
+
 	public static function factory() {
 		return new static();
 	}
