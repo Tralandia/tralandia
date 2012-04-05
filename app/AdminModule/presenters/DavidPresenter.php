@@ -52,6 +52,10 @@ class DavidPresenter extends BasePresenter {
 			array('name'=>'ze'),
 		);
 		$this->template->data = $data;
+
+		$s = $this->getEnvironment()->getCountry();
+		debug($s);
+		
 	}
 
 
