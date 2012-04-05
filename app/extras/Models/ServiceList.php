@@ -52,33 +52,51 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 		if($nameTemp && $nameBy && $nameIn) {
 			$nameBy = Strings::firstLower($nameBy);
 			$nameIn = Strings::firstLower($nameIn);
-			return static::getByIn($nameBy, $nameIn, array_shift($arguments), array_shift($arguments));
+			return static::getByIn($nameBy, $nameIn, array_shift($arguments), array_shift($arguments), array_shift($arguments), array_shift($arguments), array_shift($arguments), array_shift($arguments));
 		} else if(Strings::startsWith($name, 'getBy')) {
-			$name = str_replace('getBy', '', $name);
-			return static::getBy($name, array_shift($arguments));
+			$name = Strings::firstLower(substr($name, 5));
+			$by = array_shift($arguments);
+			$orderBy = array_shift($arguments);
+			$limit = array_shift($arguments);
+			$offset = array_shift($arguments);
+			$entityName = array_shift($arguments);
+			return static::getBy(array($name => $by), $orderBy, $limit, $offset, $entityName);
 		} else {
 			return parent::__callStatic($name, $arguments);
 		}
 	}
 
-	public static function getBy($name, $by, $entityName = NULL) {
+	public static function getBy(array $criteria, array $orderBy = NULL, $limit = NULL, $offset = NULL, $entityName = NULL) {
+		foreach ($criteria as $key => $value) {
+			if($value instanceof Service || $value instanceof Entity) {
+				$criteria[$key] = $value->id;
+			}
+		}
+
 		if($entityName === NULL) {
 			$entityName = static::getMainEntityName();
 		}
 
 		$serviceList = new static;
 		$repository = $serviceList->getEm()->getRepository($entityName);
-		$method = 'findBy'.Strings::firstUpper($name);
-		$serviceList->setList($repository->{$method}($by));
+		$serviceList->setList($repository->findBy($criteria, $orderBy, $limit, $offset));
 		return $serviceList;
 	}
 
-	public static function getAll($entity = NULL) {
-		return new static($entity ? : static::MAIN_ENTITY_NAME);
+	public static function getAll(array $orderBy = NULL, $limit = NULL, $offset = NULL, $entityName = NULL) {
+		if($entityName === NULL) {
+			$entityName = static::getMainEntityName();
+		}
+
+		$serviceList = new static;
+		$repository = $serviceList->getEm()->getRepository($entityName);
+		$serviceList->setList($repository->findBy(array(), $orderBy, $limit, $offset));
+		return $serviceList;
+
 	}
 
 
-	public static function getByIn($nameBy, $nameIn, $by, array $in, $entityName = NULL) {
+	public static function getByIn($nameBy, $nameIn, $by, array $in, array $orderBy = NULL, $limit = NULL, $offset = NULL, $entityName = NULL) {
 		if($entityName === NULL) {
 			$entityName = static::getMainEntityName();
 		}
@@ -100,6 +118,13 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 			->where('e.'.$nameBy.' = :by')
 			->andWhere($qb->expr()->in('e.'.$nameIn, $parsedIn))
 			->setParameter('by', $by);
+		if($orderBy) {
+			foreach ($orderBy as $key => $value) {
+				$qb->addOrderBy('e.'.$key, $value);
+			}
+		}
+		if($limit) $qb->setMaxResults($limit);
+		if($offset) $qb->setFirstResult($offset);
 		$serviceList->setList($qb->getQuery()->getResult());
 
 		return $serviceList;

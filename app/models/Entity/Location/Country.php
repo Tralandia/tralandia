@@ -158,9 +158,11 @@ class Country extends \Entity\BaseEntityDetails {
 	 */
 	protected $location;
 
-	/* ----------------------------- Methods ----------------------------- */
 
 
+//@entity-generator-code <--- NEMAZAT !!!
+
+	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct() {
 		parent::__construct();
 
@@ -168,7 +170,7 @@ class Country extends \Entity\BaseEntityDetails {
 		$this->languages = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->contacts = new \Doctrine\Common\Collections\ArrayCollection;
 	}
-
+		
 	/**
 	 * @param string
 	 * @return \Entity\Location\Country
@@ -178,7 +180,7 @@ class Country extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Location\Country
 	 */
@@ -187,14 +189,14 @@ class Country extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return string|NULL
 	 */
 	public function getStatus() {
 		return $this->status;
 	}
-
+		
 	/**
 	 * @param string
 	 * @return \Entity\Location\Country
@@ -204,7 +206,7 @@ class Country extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Location\Country
 	 */
@@ -213,14 +215,14 @@ class Country extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return string|NULL
 	 */
 	public function getIso() {
 		return $this->iso;
 	}
-
+		
 	/**
 	 * @param string
 	 * @return \Entity\Location\Country
@@ -230,7 +232,7 @@ class Country extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Location\Country
 	 */
@@ -239,14 +241,14 @@ class Country extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return string|NULL
 	 */
 	public function getIso3() {
 		return $this->iso3;
 	}
-
+		
 	/**
 	 * @param \Entity\Currency
 	 * @return \Entity\Location\Country
@@ -256,7 +258,7 @@ class Country extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Location\Country
 	 */
@@ -265,14 +267,14 @@ class Country extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Currency|NULL
 	 */
 	public function getDefaultCurrency() {
 		return $this->defaultCurrency;
 	}
-
+		
 	/**
 	 * @param \Entity\Currency
 	 * @return \Entity\Location\Country
@@ -285,7 +287,7 @@ class Country extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @param \Entity\Currency
 	 * @return \Entity\Location\Country
@@ -298,14 +300,14 @@ class Country extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Currency
 	 */
 	public function getCurrencies() {
 		return $this->currencies;
 	}
-
+		
 	/**
 	 * @param \Entity\Dictionary\Language
 	 * @return \Entity\Location\Country
@@ -315,7 +317,7 @@ class Country extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Location\Country
 	 */
@@ -324,14 +326,14 @@ class Country extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Dictionary\Language|NULL
 	 */
 	public function getDefaultLanguage() {
 		return $this->defaultLanguage;
 	}
-
+		
 	/**
 	 * @param \Entity\Dictionary\Language
 	 * @return \Entity\Location\Country
@@ -344,7 +346,7 @@ class Country extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @param \Entity\Dictionary\Language
 	 * @return \Entity\Location\Country
@@ -357,14 +359,14 @@ class Country extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Dictionary\Language
 	 */
 	public function getLanguages() {
 		return $this->languages;
 	}
-
+		
 	/**
 	 * @param integer
 	 * @return \Entity\Location\Country
@@ -374,7 +376,7 @@ class Country extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Location\Country
 	 */
@@ -383,14 +385,14 @@ class Country extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return integer|NULL
 	 */
 	public function getPopulation() {
 		return $this->population;
 	}
-
+		
 	/**
 	 * @param string
 	 * @return \Entity\Location\Country
@@ -400,7 +402,7 @@ class Country extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Location\Country
 	 */
@@ -409,14 +411,14 @@ class Country extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return string|NULL
 	 */
 	public function getPhonePrefix() {
 		return $this->phonePrefix;
 	}
-
+		
 	/**
 	 * @param \Entity\Contact\Contact
 	 * @return \Entity\Location\Country
@@ -426,7 +428,7 @@ class Country extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Location\Country
 	 */
@@ -435,14 +437,14 @@ class Country extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Contact\Contact|NULL
 	 */
 	public function getFacebookGroup() {
 		return $this->facebookGroup;
 	}
-
+		
 	/**
 	 * @param string
 	 * @return \Entity\Location\Country
@@ -452,7 +454,7 @@ class Country extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Location\Country
 	 */
@@ -461,14 +463,14 @@ class Country extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return string|NULL
 	 */
 	public function getCapitalCity() {
 		return $this->capitalCity;
 	}
-
+		
 	/**
 	 * @param \Entity\Contact\Contact
 	 * @return \Entity\Location\Country
@@ -478,7 +480,7 @@ class Country extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Location\Country
 	 */
@@ -487,14 +489,14 @@ class Country extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Contact\Contact|NULL
 	 */
 	public function getPhoneNumberEmergency() {
 		return $this->phoneNumberEmergency;
 	}
-
+		
 	/**
 	 * @param \Entity\Contact\Contact
 	 * @return \Entity\Location\Country
@@ -504,7 +506,7 @@ class Country extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Location\Country
 	 */
@@ -513,14 +515,14 @@ class Country extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Contact\Contact|NULL
 	 */
 	public function getPhoneNumberPolice() {
 		return $this->phoneNumberPolice;
 	}
-
+		
 	/**
 	 * @param \Entity\Contact\Contact
 	 * @return \Entity\Location\Country
@@ -530,7 +532,7 @@ class Country extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Location\Country
 	 */
@@ -539,14 +541,14 @@ class Country extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Contact\Contact|NULL
 	 */
 	public function getPhoneNumberMedical() {
 		return $this->phoneNumberMedical;
 	}
-
+		
 	/**
 	 * @param \Entity\Contact\Contact
 	 * @return \Entity\Location\Country
@@ -556,7 +558,7 @@ class Country extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Location\Country
 	 */
@@ -565,14 +567,14 @@ class Country extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Contact\Contact|NULL
 	 */
 	public function getPhoneNumberFire() {
 		return $this->phoneNumberFire;
 	}
-
+		
 	/**
 	 * @param \Entity\Contact\Contact
 	 * @return \Entity\Location\Country
@@ -582,7 +584,7 @@ class Country extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Location\Country
 	 */
@@ -591,136 +593,14 @@ class Country extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Contact\Contact|NULL
 	 */
 	public function getWikipediaLink() {
 		return $this->wikipediaLink;
 	}
-
-	/**
-	 * @param string
-	 * @return \Entity\Location\Country
-	 */
-	public function setDrivingSide($drivingSide) {
-		$this->drivingSide = $drivingSide;
-
-		return $this;
-	}
-
-	/**
-	 * @return \Entity\Location\Country
-	 */
-	public function unsetDrivingSide() {
-		$this->drivingSide = NULL;
-
-		return $this;
-	}
-
-	/**
-	 * @return string|NULL
-	 */
-	public function getDrivingSide() {
-		return $this->drivingSide;
-	}
-
-	/**
-	 * @param \Extras\Types\Price
-	 * @return \Entity\Location\Country
-	 */
-	public function setPricesPizza(\Extras\Types\Price $pricesPizza) {
-		$this->pricesPizza = $pricesPizza;
-
-		return $this;
-	}
-
-	/**
-	 * @return \Entity\Location\Country
-	 */
-	public function unsetPricesPizza() {
-		$this->pricesPizza = NULL;
-
-		return $this;
-	}
-
-	/**
-	 * @return \Extras\Types\Price|NULL
-	 */
-	public function getPricesPizza() {
-		return $this->pricesPizza;
-	}
-
-	/**
-	 * @param \Extras\Types\Price
-	 * @return \Entity\Location\Country
-	 */
-	public function setPricesDinner(\Extras\Types\Price $pricesDinner) {
-		$this->pricesDinner = $pricesDinner;
-
-		return $this;
-	}
-
-	/**
-	 * @return \Entity\Location\Country
-	 */
-	public function unsetPricesDinner() {
-		$this->pricesDinner = NULL;
-
-		return $this;
-	}
-
-	/**
-	 * @return \Extras\Types\Price|NULL
-	 */
-	public function getPricesDinner() {
-		return $this->pricesDinner;
-	}
-
-	/**
-	 * @param string
-	 * @return \Entity\Location\Country
-	 */
-	public function setAirports($airports) {
-		$this->airports = $airports;
-
-		return $this;
-	}
-
-	/**
-	 * @return \Entity\Location\Country
-	 */
-	public function unsetAirports() {
-		$this->airports = NULL;
-
-		return $this;
-	}
-
-	/**
-	 * @return string|NULL
-	 */
-	public function getAirports() {
-		return $this->airports;
-	}
-
-	/**
-	 * @param \Entity\Location\Location
-	 * @return \Entity\Location\Country
-	 */
-	public function setLocation(\Entity\Location\Location $location) {
-		$this->location = $location;
-
-		return $this;
-	}
-
-
-	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Location\Location
-	 */
-	public function getLocation() {
-		return $this->location;
-	}
-
+		
 	/**
 	 * @param \Entity\Contact\Contact
 	 * @return \Entity\Location\Country
@@ -733,7 +613,7 @@ class Country extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @param \Entity\Contact\Contact
 	 * @return \Entity\Location\Country
@@ -746,13 +626,133 @@ class Country extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Contact\Contact
 	 */
 	public function getContacts() {
 		return $this->contacts;
 	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Location\Country
+	 */
+	public function setDrivingSide($drivingSide) {
+		$this->drivingSide = $drivingSide;
 
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Location\Country
+	 */
+	public function unsetDrivingSide() {
+		$this->drivingSide = NULL;
 
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getDrivingSide() {
+		return $this->drivingSide;
+	}
+		
+	/**
+	 * @param \Extras\Types\Price
+	 * @return \Entity\Location\Country
+	 */
+	public function setPricesPizza(\Extras\Types\Price $pricesPizza) {
+		$this->pricesPizza = $pricesPizza;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Location\Country
+	 */
+	public function unsetPricesPizza() {
+		$this->pricesPizza = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Extras\Types\Price|NULL
+	 */
+	public function getPricesPizza() {
+		return $this->pricesPizza;
+	}
+		
+	/**
+	 * @param \Extras\Types\Price
+	 * @return \Entity\Location\Country
+	 */
+	public function setPricesDinner(\Extras\Types\Price $pricesDinner) {
+		$this->pricesDinner = $pricesDinner;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Location\Country
+	 */
+	public function unsetPricesDinner() {
+		$this->pricesDinner = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Extras\Types\Price|NULL
+	 */
+	public function getPricesDinner() {
+		return $this->pricesDinner;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Location\Country
+	 */
+	public function setAirports($airports) {
+		$this->airports = $airports;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Location\Country
+	 */
+	public function unsetAirports() {
+		$this->airports = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getAirports() {
+		return $this->airports;
+	}
+		
+	/**
+	 * @warning Bacha inverzna strana!
+	 * @param \Entity\Location\Location
+	 * @return \Entity\Location\Country
+	 */
+	public function setLocation(\Entity\Location\Location $location) {
+		$this->location = $location;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Location\Location|NULL
+	 */
+	public function getLocation() {
+		return $this->location;
+	}
 }

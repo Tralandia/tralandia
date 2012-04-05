@@ -128,7 +128,7 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\User\User", inversedBy="locations")
+	 * @ORM\ManyToMany(targetEntity="Entity\User\User", inversedBy="locations", cascade={"persist"})
 	 */
 	protected $users;
 

@@ -8,7 +8,7 @@ use Nette\Application as NA,
 	Nette\Utils\Html,
 	Nette\Utils\Strings,
 	Extras\Models\Service,
-	Services\Log\Change as ChangeLog;
+	Service\Log\Change as ChangeLog;
 
 class ImportUsers extends BaseImport {
 
@@ -170,6 +170,55 @@ class ImportUsers extends BaseImport {
 		}
 	}
 
+	private function importOwners() {
+
+		$role = \Service\User\Role::getBySlug('owner');
+		$locationTypeCountry = \Service\Location\Type::getBySlug('country');
+
+		$r = q('select * from members where country_id = 46');
+		while($x = mysql_fetch_array($r)) {
+			$user = \Service\User\User::getByLogin($x['email']);
+
+			if ($user instanceof \Service\User\User && $user->id > 0) {
+				continue;
+			}
+
+			$user = \Service\User\User::get();
+
+			$user->login = $x['email'];
+			$user->password = $x['password'];
+
+			$user->addRole($role);
+
+			$user->invoicingSalutation = '';
+			$user->invoicingFirstName = $x['client_name'];
+			$user->invoicingLastName = '';
+			if($x['client_email']) $user->invoicingEmail = $this->createContact('email', $x['client_email']);
+			if($x['client_phone']) $user->invoicingPhone = $this->createContact('phone', $x['client_phone']);
+			if($x['client_url']) $user->invoicingUrl = $this->createContact('url', $x['client_url']);
+			$user->invoicingAddress = new \Extras\Types\Address(array(
+				'address' => array_filter(array($x['client_address'], $x['client_address2'])),
+				'postcode' => $x['client_postcode'],
+				'locality' => $x['client_locality'],
+				'country' => \Service\Location\Location::getByOldIdAndType($x['client_country_id'], $locationTypeCountry),
+			));
+
+			$user->invoicingCompanyName = $x['client_company_name'];
+			$user->invoicingCompanyId = $x['client_company_id'];
+			$user->invoicingCompanyVatId = $x['client_company_vat_id'];
+
+
+			if($x['email']) $user->addContact($this->createContact('email', $x['email']));
+			if($x['phone']) $user->addContact($this->createContact('phone', $x['phone']));
+			
+			$user->defaultLanguage = $this->languagesByOldId[$x['language_id']];
+			$user->addLocation(\Service\Location\Country::getByOldId($x['country_id'])->location);
+
+			debug($user); return;
+
+			$user->save();
+		}
+	}
 
 	private function import0000() {
 
@@ -197,7 +246,6 @@ class ImportUsers extends BaseImport {
 		$user->invoicingCompanyVatId = '';
 
 		$user->currentTelmarkOperator = '';
-		$user->attributes = '';
 
 		$user->addCombination();
 		$user->save();

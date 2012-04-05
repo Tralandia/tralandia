@@ -37,8 +37,25 @@ class DavidPresenter extends BasePresenter {
 
 	public function actionTest() {
 
-		$s = S\Medium\Medium::createFromUrl('http://www.tralandia.sk/u/01/13220628889049.png');
+		//$s = S\Medium\Medium::createFromUrl('http://www.tralandia.sk/u/01/13220628889049.png');
+		//debug($s);
+		$data = array(
+			array('name'=>'en'),
+			array('name'=>'fi'),
+			array('name'=>'fr'),
+			array('name'=>'hh'),
+			array('name'=>'hr'),
+			array('name'=>'hu'),
+			array('name'=>'rn'),
+			array('name'=>'sd'),
+			array('name'=>'SK'),
+			array('name'=>'ze'),
+		);
+		$this->template->data = $data;
+
+		$s = $this->getEnvironment()->getCountry();
 		debug($s);
+		
 	}
 
 

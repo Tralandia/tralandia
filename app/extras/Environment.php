@@ -8,6 +8,12 @@ class Environment extends \Nette\Object {
 	private $country = NULL;
 	private $language = NULL;
 
+	// @todo
+	private $url = NULL; // Extras\Type\Url
+	private $currency = NULL; // 
+	private $locale = NULL;
+
+
 	public static function factory() {
 		return new static();
 	}
@@ -29,8 +35,9 @@ class Environment extends \Nette\Object {
 
 	public function getCountry() {
 		if($this->country === NULL) {
-			$this->country = $this->getLocation()->country;
-			if(!$this->country) $this->country = FALSE;
+			$country = $this->getLocation()->country;
+			if(!$country) $this->country = FALSE;
+			else $this->country = \Service\Location\Country::get($country);
 		}
 		return $this->country;
 	}
