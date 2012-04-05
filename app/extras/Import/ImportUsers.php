@@ -15,11 +15,11 @@ class ImportUsers extends BaseImport {
 	public function doImport() {
 		$this->savedVariables['importedSections']['users'] = 1;
 
-		$this->importSuperAdmins();
+		//$this->importSuperAdmins();
 		//$this->importAdmins();
-		//$this->importRegionalManagers();
-		//$this->importAssistantsVendors();
-		//$this->importOwners();
+		//$this->importManagers();
+		//$this->importTranslators();
+		$this->importOwners();
 		//$this->importVisitors();
 
 		$this->savedVariables['importedSections']['users'] = 2;
@@ -68,18 +68,121 @@ class ImportUsers extends BaseImport {
 		return TRUE;
 	}
 
-	private function importVisitors() {
+	private function importAdmins() {
 
-		$role = \Service\User\Role::getBySlug('visitor');
+		$role = \Service\User\Role::getBySlug('admin');
+
+		$r = q('select * from members_admins');
+		while($x = mysql_fetch_array($r)) {
+			$user = \Service\User\User::getByLogin($x['email']);
+
+			if ($user instanceof \Service\User\User && $user->id > 0) {
+				continue;
+			}
+
+			$user = \Service\User\User::get();
+
+			$user->login = $x['email'];
+			$user->password = $x['password'];
+			$user->addRole($role);
+
+			$user->addContact($this->createContact('email', $x['email']));
+			
+			$user->defaultLanguage = $this->languagesByIso['en'];
+			$user->save();
+		}
+
+	}
+
+	private function importManagers() {
+
+		$role = \Service\User\Role::getBySlug('manager');
+
+		$r = q('select * from members_managers');
+		while($x = mysql_fetch_array($r)) {
+			$user = \Service\User\User::getByLogin($x['email']);
+
+			if ($user instanceof \Service\User\User && $user->id > 0) {
+				continue;
+			}
+
+			$user = \Service\User\User::get();
+
+			$user->login = $x['email'];
+			$user->password = $x['password'];
+			$user->addRole($role);
+
+			$user->addContact($this->createContact('email', $x['email']));
+			
+			$user->defaultLanguage = $this->languagesByIso['en'];
+
+			$assignedCountries = array_unique(array_filter(explode(',', $x['countries'])));
+			$assignedLanguages = array_unique(array_filter(explode(',', $x['languages'])));
+
+			foreach ($assignedCountries as $key => $value) {
+				foreach ($assignedLanguages as $key2 => $value2) {
+					$combination = \Service\User\Combination::get();
+					$combination->country = \Service\Location\Country::getByOldId($value)->location;
+					$combination->language = $this->languagesByOldId[$value2];
+					$combination->languageLevel = \Entity\Dictionary\Type::TRANSLATION_LEVEL_ACTIVE;
+					$user->addCombination($combination);
+				}
+			}
+			$user->save();
+		}
+	}
+
+	private function importTranslators() {
+
+		$role = \Service\User\Role::getBySlug('translator');
+
+		$r = q('select * from members_translators');
+		while($x = mysql_fetch_array($r)) {
+			$user = \Service\User\User::getByLogin($x['email']);
+
+			if ($user instanceof \Service\User\User && $user->id > 0) {
+				continue;
+			}
+
+			$user = \Service\User\User::get();
+
+			$user->login = $x['email'];
+			$user->password = $x['password'];
+			$user->addRole($role);
+			$user->invoicingLastName = $x['name'];
+
+			$user->addContact($this->createContact('email', $x['email']));
+			
+			$user->defaultLanguage = $this->languagesByIso['en'];
+
+			$details = array(
+				'sourceLanguage' => $this->languagesByOldId[$x['language_from']],
+				'pricePerStandardPage' => $x['price'],
+				'pricePerTicketsStandardPage' => $x['tickets_price'],
+			);
+			$user->details = $details;
+
+			$combination = \Service\User\Combination::get();
+			$combination->language = $this->languagesByOldId[$x['language_to']];
+			$combination->languageLevel = \Entity\Dictionary\Type::TRANSLATION_LEVEL_NATIVE;
+			$user->addCombination($combination);
+			$user->save();
+		}
+	}
+
+
+	private function import0000() {
+
+		$role = \Service\User\Role::getBySlug('admin');
 
 		$user = \Service\User\User::get();
-		$user->login = '';
-		$user->password = '';
+		$user->login = $x['email'];
+		$user->password = $x['password'];
 		$user->addRole($role);
 
-		$user->addContact = '';
+		$user->addContact($this->createContact('email', $x['email']));
 		
-		$user->defaultLanguage = '';
+		$user->defaultLanguage = $this->languagesByIso['en'];
 		$user->addLocation();
 		$user->addRentalType();
 
@@ -97,6 +200,7 @@ class ImportUsers extends BaseImport {
 		$user->attributes = '';
 
 		$user->addCombination();
+		$user->save();
 
 	}
 }
