@@ -15,6 +15,7 @@ class BaseEntity extends \Extras\Models\Entity {
 	 * @ORM\Id
 	 * @ORM\GeneratedValue
 	 * @ORM\Column(type="integer")
+	 * @UIControl(type="hidden")
 	 */
 	protected $id;
 

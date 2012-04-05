@@ -5,7 +5,8 @@ namespace AdminModule;
 use Nette\Application as NA,
 	Nette\Environment,
 	Nette\Diagnostics\Debugger,
-	Nette\Utils\Html;
+	Nette\Utils\Html,
+	Extras\Models\Reflector;
 
 class AdminPresenter extends BasePresenter {
 	
@@ -19,7 +20,7 @@ class AdminPresenter extends BasePresenter {
 		$this->settings = $this->getService('settings');
 		$this->template->settings = $this->settings;
 		$this->serviceName = $this->settings->serviceClass;
-		$this->reflector = new \Extras\Models\Reflector($this->serviceName);
+		$this->reflector = new Reflector($this->serviceName);
 	}
 	
 	public function getMainServiceName() {
@@ -82,14 +83,14 @@ class AdminPresenter extends BasePresenter {
 		}
     }
 	
-	/*
 	protected function createComponentGrid($name) {
+		$mainEntityName = $this->reflector->getMainEntityName();
 		$form = $this->getComponent('gridForm');
 		$grid = new \EditableDataGrid\DataGrid;
 		//$grid->itemsPerPage = 3;
-		
+
 		$grid->setEditForm($form);
-		$grid->setContainer($this->service->getMainEntityName());	
+		$grid->setContainer($this->reflector->getContainerName());	
 		$grid->onDataReceived[] = array($form, 'onDataRecieved');
 		$grid->onInvalidDataRecieved[] = array($form, 'onInvalidDataRecieved');
 		
@@ -100,12 +101,12 @@ class AdminPresenter extends BasePresenter {
 			if (!isset($column->draw) || (isset($column->draw) && $column->draw == true)) {
 				$type = isset($column->type) ? $column->type : 'text';				
 				$property = substr($column->mapper, strrpos($column->mapper, '.')+1);
-				
-				if ($controlAnnotation = $this->service->getReflector()->getAnnotation('Rental', $property, 'ORM\Column')) {
+
+				if ($controlAnnotation = $this->reflector->getAnnotation($mainEntityName, $property, Reflector::COLUMN)) {
 					$type = $controlAnnotation->type;
 				}
 
-				if ($controlAnnotation = $this->service->getReflector()->getAnnotation('Rental', $property, 'UIControl')) {
+				if ($controlAnnotation = $this->reflector->getAnnotation($mainEntityName, $property, Reflector::UI_CONTROL)) {
 					$type = $controlAnnotation->type;
 				}
 				
@@ -131,7 +132,11 @@ class AdminPresenter extends BasePresenter {
 			}
 		}
 
-		$dataSource = new \DataGrid\DataSources\Doctrine\LalaQueryBuilder($this->service->getDataSource());
+		$dataSource = new \DataGrid\DataSources\Doctrine\LalaQueryBuilder(
+			\Service\CurrencyList::getDataSource() //TODO: zdynamizivat to corrency
+		);
+debug($mapper);
+
 		$dataSource->setMapping($mapper);
 		$grid->setDataSource($dataSource);	
 		$grid->addActionColumn('Actions');
@@ -143,9 +148,18 @@ class AdminPresenter extends BasePresenter {
 	}
 	
 	public function createComponentGridForm($name) {
-		$grid = new \Tra\Forms\Grid($this, $name);
-		return $grid;
+		$form = new \Tra\Forms\Form($this, $name);
+		$this->reflector->extend($form);
+
+		$form->ajax(false);
+		$form->addSubmit('save', 'Save');
+		$form->onSuccess[] = callback($this, 'onGridSave');
+		return $form;
 	}
+
+	public function onGridSave($form) {
+		debug($form->getValues());
+    }
 	
 	public function pattern($value, $row, $params = null) {
 		//debug("odpoved=" . $this->user->isAllowed($row->getEntity(), 'show'));
@@ -159,5 +173,4 @@ class AdminPresenter extends BasePresenter {
 		//debug($value, $row, $params);
 		return $value;
 	}
-	*/
 }

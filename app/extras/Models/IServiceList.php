@@ -7,8 +7,4 @@ namespace Extras\Models;
  */
 interface IServiceList {
 	
-	/**
-	 * Priprava zakladneho zoznamu
-	 */
-	public function prepareList();
 }
