@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="dictionary_phrase")
+ * @Primary(key="id", value="ready")
  */
 class Phrase extends \Entity\BaseEntityDetails {
 

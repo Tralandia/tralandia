@@ -20,7 +20,7 @@ abstract class Entity extends \Nette\Object implements IEntity, \Nette\Security\
 	}
 
 	public function getIterator() {
-		return new ArrayIterator($this->toArray());
+		return new \ArrayIterator($this->toArray());
 	}
 
 	public function toArray() {
@@ -61,11 +61,6 @@ abstract class Entity extends \Nette\Object implements IEntity, \Nette\Security\
 			return $this->$name;
 		}
 		return parent::__get($name);
-	}
-
-	public function __isset($name) {
-		// toto uz ide OK
-		return $this->{$name} !== NULL;
 	}
 
 	public function __set($name, $value) {
