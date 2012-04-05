@@ -12,6 +12,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Country extends \Entity\BaseEntityDetails {
 
+	# @todo ake typy este budu?
+	const STATUS_LAUNCHED = 'launched';
+
 	/**
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
