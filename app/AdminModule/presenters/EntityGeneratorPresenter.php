@@ -21,9 +21,9 @@ class EntityGeneratorPresenter extends BasePresenter {
 
 	public function actionDefault($id) {
 		$id = str_replace('-', '\\', $id);
-		$dir = APP_DIR . '/models/Entity/';
+		$entityDir = APP_DIR . '/models/Entity/';
 		$menu = array();
-		foreach (Finder::findFiles('*.php')->from($dir) as $key => $file) {
+		foreach (Finder::findFiles('*.php')->from($entityDir) as $key => $file) {
 			list($x, $entityNameTemp) = explode('/models/', $key, 2);
 			$entityNameTemp = str_replace(array('/', '.php'), array('\\', ''), $entityNameTemp);
 			$menu[] = array('fullname' => str_replace('\\', '-', $entityNameTemp), 'name' => str_replace('Entity\\', '', $entityNameTemp));
@@ -32,7 +32,6 @@ class EntityGeneratorPresenter extends BasePresenter {
 		$mainEntity = $this->getEntityReflection($id);
 		$newClass = new PhpGenerator\ClassType($mainEntity->name);
 
-		$newClass->extends[] = 'BaseEntity';
 		$construct = $newClass->addMethod('__construct');
 		$collections = array();
 
@@ -158,8 +157,40 @@ class EntityGeneratorPresenter extends BasePresenter {
 
 		$this->fillConstruct($construct, $collections);
 
+		$newFileContent = NULL;
+		list($a, $nameTemp) = explode('-', $this->parameter['id'],2);
+		$filename = $entityDir.str_replace('-', '/', $nameTemp).'.php';
+		$fileSource = fopen($filename, "r") or die("Could not open file!");
+		$data = fread($fileSource, filesize($filename)) or die("Could not read file!");
+		fclose($fileSource);
+		if($pos = mb_strpos($data, '//@entity-generator-code')) {
+			$newFileContent = mb_substr($data, 0, $pos);
+			$newFileContent .= "\n//@entity-generator-code <--- NEMAZAT !!!\n\n";
+			$newFileContent .= "\t/* ----------------------------- Methods ----------------------------- */";
+			foreach ($newClass->methods as $method) {
+				$newFileContent .= $this->template->indent("\t\n".$method."\n", 1);
+			}
+			$newFileContent .= '}';
+		} else {
+			$newFileContent = "V subore:\n$filename\nchyba riadok:\n//@entity-generator-code\ndopln to tam a refresni stranku";
+		}
+
+		if(isset($this->parameter['force']) && $this->parameter['force'] == 1) {
+			// open file 
+			$fw = fopen($filename, 'w') or die('Could not open file!');
+			// write to file
+			// added stripslashes to $newdata
+			$fb = fwrite($fw, $newFileContent) or die('Could not write to file');
+			// close file
+			fclose($fw);
+
+			$this->flashMessage('done');
+			$this->redirect('this', array('force' => NULL));
+		}
+
 		$this->template->menu = $menu;
 		$this->template->newClass = $newClass;
+		$this->template->newFileContent = $newFileContent;
 	}
 
 	public function toSingular($name) {
