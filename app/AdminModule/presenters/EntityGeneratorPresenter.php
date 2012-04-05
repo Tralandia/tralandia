@@ -14,10 +14,10 @@ class EntityGeneratorPresenter extends BasePresenter {
 
 	protected $entitiesReflection = array();
 
-	public function beforeRender() {
-		parent::beforeRender();
-		$this->setView('default');
-	}
+	// public function beforeRender() {
+	// 	parent::beforeRender();
+	// 	$this->setView('default');
+	// }
 
 	public function actionDefault($id) {
 		$id = str_replace('-', '\\', $id);
@@ -29,7 +29,52 @@ class EntityGeneratorPresenter extends BasePresenter {
 			$menu[] = array('fullname' => str_replace('\\', '-', $entityNameTemp), 'name' => str_replace('Entity\\', '', $entityNameTemp));
 		}
 
-		$mainEntity = $this->getEntityReflection($id);
+		$mainEntityReflector = $this->getEntityReflection($id);
+		$newClass = $this->generateNewClass($mainEntityReflector);
+
+		list($a, $nameTemp) = explode('-', $this->parameter['id'],2);
+		$filename = $entityDir.str_replace('-', '/', $nameTemp).'.php';
+		$newFileContent = $this->generateNewCode($filename, $newClass);
+
+		if(!$newFileContent) {
+			$newFileContent = "V subore:\n$id\nchyba riadok:\n//@entity-generator-code\ndopln to tam a refresni stranku";
+		}
+
+		if(isset($this->parameter['force']) && $this->parameter['force'] == 1) {
+			$this->writeNewCode($filename, $newFileContent);
+
+			$this->flashMessage('done');
+			$this->redirect('this', array('force' => NULL));
+		}
+
+		$this->template->menu = $menu;
+		$this->template->newClass = $newClass;
+		$this->template->newFileContent = $newFileContent;
+	}
+
+	public function actionForceAll($id) {
+		$id = str_replace(array('Entity', '-'), array('', '/'), $id);
+		$entityDir = APP_DIR . '/models/Entity/'.$id;
+		$menu = array();
+		foreach (Finder::findFiles('*.php')->from($entityDir) as $key => $file) {
+			list($x, $entityNameTemp) = explode('/models/', $key, 2);
+			$entityNameTemp = str_replace(array('//', '/', '.php'), array('\\', '\\', ''), $entityNameTemp);
+			
+			$mainEntityReflector = $this->getEntityReflection($entityNameTemp);
+			$newClass = $this->generateNewClass($mainEntityReflector);
+
+			$newFileContent = $this->generateNewCode($key, $newClass);
+			if($newFileContent) {
+
+			} else {
+				$this->flashMessage("V subore: $entityNameTemp chyba riadok: //@entity-generator-code");
+				debug("V subore: $entityNameTemp chyba riadok: //@entity-generator-code");
+			}
+		}
+
+	}
+
+	public function generateNewClass($mainEntity) {
 		$newClass = new PhpGenerator\ClassType($mainEntity->name);
 
 		$construct = $newClass->addMethod('__construct');
@@ -156,10 +201,10 @@ class EntityGeneratorPresenter extends BasePresenter {
 		}
 
 		$this->fillConstruct($construct, $collections);
+		return $newClass;
+	}
 
-		$newFileContent = NULL;
-		list($a, $nameTemp) = explode('-', $this->parameter['id'],2);
-		$filename = $entityDir.str_replace('-', '/', $nameTemp).'.php';
+	public function generateNewCode($filename, $newClass) {
 		$fileSource = fopen($filename, "r") or die("Could not open file!");
 		$data = fread($fileSource, filesize($filename)) or die("Could not read file!");
 		fclose($fileSource);
@@ -171,26 +216,21 @@ class EntityGeneratorPresenter extends BasePresenter {
 				$newFileContent .= $this->template->indent("\t\n".$method."\n", 1);
 			}
 			$newFileContent .= '}';
+			return $newFileContent;
 		} else {
-			$newFileContent = "V subore:\n$filename\nchyba riadok:\n//@entity-generator-code\ndopln to tam a refresni stranku";
+			return FALSE;
 		}
+	}
 
-		if(isset($this->parameter['force']) && $this->parameter['force'] == 1) {
-			// open file 
-			$fw = fopen($filename, 'w') or die('Could not open file!');
-			// write to file
-			// added stripslashes to $newdata
-			$fb = fwrite($fw, $newFileContent) or die('Could not write to file');
-			// close file
-			fclose($fw);
-
-			$this->flashMessage('done');
-			$this->redirect('this', array('force' => NULL));
-		}
-
-		$this->template->menu = $menu;
-		$this->template->newClass = $newClass;
-		$this->template->newFileContent = $newFileContent;
+	public function writeNewCode($filename, $code) {
+		// open file 
+		$fw = fopen($filename, 'w') or die('Could not open file!');
+		// write to file
+		// added stripslashes to $newdata
+		$fb = fwrite($fw, $code) or die('Could not write to file');
+		// close file
+		fclose($fw);
+		return TRUE;		
 	}
 
 	public function toSingular($name) {
