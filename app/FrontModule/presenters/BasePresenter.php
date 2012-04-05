@@ -15,22 +15,18 @@ abstract class BasePresenter extends \BasePresenter {
 
 		parent::beforeRender();
 
-		$this->template->supportedLanguages = \Services\Dictionary\LanguageList::getBySupported(\Entities\Dictionary\Language::SUPPORTED);
+		$this->template->supportedLanguages = \Service\Dictionary\LanguageList::getBySupported(\Entity\Dictionary\Language::SUPPORTED);
+		$this->template->launchedCountries = \Service\Location\LocationList::getByType(6); // TODO: este vyfiltrovat tie ktore maju status launched
+		$this->template->liveRentalsCount = count(\Service\Rental\RentalList::getByStatus(\Entity\Rental\Rental::STATUS_LIVE));
 
 		/******* Things TODO *****/
-		$this->template->allDomains = $this->getAllDomains(); //\Services\DomainList::getAll();
 		$this->template->mainMenuItems = $this->getMainMenuItems();
-		$this->template->liveRentalsCount = 2569; //count(\Services\Rental\RentalList::getByStatus(\Entities\Rental\Rental::STATUS_LIVE));
 		$this->template->currentLanguage = array("name"=>"Slovensky", "iso"=>"sk");
 		$this->template->currentDomain = array("iso"=>"sk");
 
 	}
 
 	/******* Things TODO *****/
-	public function getAllDomains() {
-		return array("SK", "DE", "HU");
-	}
-
 	public function getMainMenuItems() {
 		return array("Uvod", "Chaty a chalupy", "Apartmany", "Uvod", "Chaty a chalupy", "Apartmany", "Uvod", "Chaty a chalupy", "Apartmany");
 	}

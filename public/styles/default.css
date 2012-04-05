@@ -82,7 +82,11 @@ div.panelGreen div.bottom {
     background: url(../images/matrix_main.png) -210px -862px;
     height: 8px;
 }
+div.panelGreen div.tabContent.active {
+    display: block;
+}
 div.panelGreen div.tabContent {
+    display: none;
     border-top: 1px solid #DFE6B1;
     margin: 30px 0 0;
     padding: 0;

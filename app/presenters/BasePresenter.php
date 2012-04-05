@@ -6,6 +6,8 @@ use Nette\Application\UI\Presenter,
 abstract class BasePresenter extends Presenter {
 
 	public function beforeRender() {
+		parent::beforeRender();
+		$this->template->staticPath = '/';
 		$this->template->setTranslator($this->getService('translator'));
 		$this->template->registerHelper('image', callback('Tools::helperImage'));
 	}
@@ -35,6 +37,10 @@ abstract class BasePresenter extends Presenter {
 		return $this->getEntityManager();
 	}
 
+	public function getEnvironment() {
+		return $this->getService('environment');
+	}
+
 	protected function createComponentHeader() {
 		$header = new HeaderControl;
 
@@ -60,7 +66,7 @@ abstract class BasePresenter extends Presenter {
 		$css = $header['css'];
 		$css->sourcePath = WWW_DIR . '/styles';
 		$css->tempPath = WWW_DIR . '/webtemp';
-		$css->tempUri = '/webtemp';	
+		$css->tempUri = '/webtemp'; 
 
 
 		//JavascriptLoader
@@ -112,5 +118,10 @@ abstract class BasePresenter extends Presenter {
 		return $header;
 	}
 
+	public function templatePrepareFilters($template) {
+		$latte = new \Nette\Latte\Engine;
+		$template->registerFilter($latte);
+		\Extras\MyMacros::install($latte->compiler);
+	}
 
 }

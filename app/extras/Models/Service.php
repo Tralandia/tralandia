@@ -202,6 +202,8 @@ abstract class Service extends Nette\Object implements IService {
 				}
 			}
 		} catch (MemberAccessException $e) {}
+		
+		return ObjectMixin::call($this, $name, $arguments);
 	}
 
 

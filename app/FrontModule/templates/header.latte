@@ -1,0 +1,46 @@
+{block header}
+<div class="mask">
+	<div class="mainHeaderLogo">
+		<table class="holder">
+			<tr>
+				<td><a href="#"><img src="{$staticPath}images/logo.png" alt="" /></a></td>
+				<td><a class="mainHeaderTitle" href="#"><img src="images/{$currentLanguage["iso"]}.domain.png" alt="" /></a><a class="mainHeaderSlogan" href="#"><img src="{$staticPath}images/slogans/{$currentLanguage["iso"]}{$currentDomain["iso"]}.png" alt="" /></a></td>
+			</tr>
+		</table>
+	</div>
+	<div class="mainHeaderCounter">
+		<span>{$liveRentalsCount}</span><br />ubytovaní
+	</div>
+	<div class="headerBarHolder">
+		<div class="headerBar">
+			<table class="holder">
+				<tr>
+					<td><a class="login" href="#">Upravte si ubytovanie</a>|</td>
+					<td><a class="add" href="#"><b class="red">+ {*_1555(1609 Add your property)*}</b></a>|</td>
+					<td><a class="fb" href="#">&nbsp;</a>|</td>
+					<td>
+						<div class="dropdown" n:inner-foreach="$supportedLanguages as $language">
+							<a href="#">{_$language->name->id}</a>
+							<div class="cleaner" n:if="$iterator->last"></div>
+						</div>
+						<a class="language" href="#">{$currentLanguage["name"]}<span class="arrow">&nbsp;</span></a>|
+					</td>
+					<td>
+						<div class="dropdown" n:inner-foreach="$launchedCountries as $country">
+							<a href="#">{_$country->name}</a>
+							<div class="cleaner" n:if="$iterator->last"></div>
+						</div>
+						<a class="country" href="#"><div class="flag" style="background: url({$staticPath}images/flags/{$currentLanguage["iso"]}.gif) 50% top">&nbsp;</div><div class="arrow">&nbsp;</div></a>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div class="mainHeaderMenu">
+		<table class="holder">
+			<tr n:inner-foreach="$mainMenuItems as $item">
+				<td><a href="#">{$item}</a></td>
+			</tr>
+		</table>
+	</div>
+</div>

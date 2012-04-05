@@ -37,18 +37,25 @@ class DavidPresenter extends BasePresenter {
 
 	public function actionTest() {
 
-		//$s = S\Location\LocationService::getBySlug('asia');
-		//$s = S\Location\LocationService::get(3);
-		//$s->setSlug('smola');
-		//$s->slug = 'asia';
-		//$type = S\Location\Type::getBySlug('country');
-		//$s = S\Location\LocationList::getBySlugInType('asia', array($type));
-		//$s = S\Location\LocationService::getBySlugAndType('asia', $type);
-		//$s = S\Company\Company::get(1);
-		//$s->address = new \Extras\Types\Address(array('city' => 'Nesvady', 'country' => 'Slovakia'));
-		//$s->save();
-		$s = S\Location\LocationList::getAll();
+		//$s = S\Medium\Medium::createFromUrl('http://www.tralandia.sk/u/01/13220628889049.png');
+		//debug($s);
+		$data = array(
+			array('name'=>'en'),
+			array('name'=>'fi'),
+			array('name'=>'fr'),
+			array('name'=>'hh'),
+			array('name'=>'hr'),
+			array('name'=>'hu'),
+			array('name'=>'rn'),
+			array('name'=>'sd'),
+			array('name'=>'SK'),
+			array('name'=>'ze'),
+		);
+		$this->template->data = $data;
+
+		$s = $this->getEnvironment()->getCountry();
 		debug($s);
+		
 	}
 
 

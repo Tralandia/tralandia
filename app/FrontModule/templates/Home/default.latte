@@ -1,254 +1,82 @@
-{block header}
-<div class="mask">
-	<div class="mainHeaderLogo">
-		<table class="holder">
-			<tr>
-				<td><a href="#"><img src="images/logo.png" alt="" /></a></td>
-				<td><a class="mainHeaderTitle" href="#"><img src="images/{$currentLanguage["iso"]}.domain.png" alt="" /></a><a class="mainHeaderSlogan" href="#"><img src="images/slogans/{$currentLanguage["iso"]}{$currentDomain["iso"]}.png" alt="" /></a></td>
-			</tr>
-		</table>
-	</div>
-	<div class="mainHeaderCounter">
-		<span>{$liveRentalsCount}</span><br />ubytovaní
-	</div>
-	<div class="headerBarHolder">
-		<div class="headerBar">
-			<table class="holder">
-				<tr>
-					<td><a class="login" href="#">Upravte si ubytovanie</a>|</td>
-					<td><a class="add" href="#"><b class="red">+ Pridajte ubytovanie</b></a>|</td>
-					<td><a class="fb" href="#">&nbsp;</a>|</td>
-					<td>
-						<div class="dropdown" n:inner-foreach="$supportedLanguages as $v">
-							<a href="#">{_$v->name->id}</a>
-							<div class="cleaner" n:if="$iterator->last"></div>
-						</div>
-						<a class="language" href="#">{$currentLanguage["name"]}<span class="arrow">&nbsp;</span></a>|
-					</td>
-					<td>
-						<div class="dropdown" n:inner-foreach="$allDomains as $v">
-							<a href="#">{$v}</a>
-							<div class="cleaner" n:if="$iterator->last"></div>
-						</div>
-						<a class="country" href="#"><div class="flag" style="background: url(images/flags/{$currentLanguage["iso"]}.gif) 50% top">&nbsp;</div><div class="arrow">&nbsp;</div></a>
-					</td>
-				</tr>
-			</table>
-		</div>
-	</div>
-	<div class="mainHeaderMenu">
-		<table class="holder">
-			<tr n:inner-foreach="$mainMenuItems as $v">
-				<td><a href="#">{$v}</a></td>
-			</tr>
-		</table>
-	</div>
-</div>
-{/block}
-
 {block content}
-<div class="clickMap sk">
-	<img class="clickMapTitle" src="images/sk.sk.clickMapTitle.png" />
-
-	<a href="#" class="clickMapBox rid200"><div>Stockholm</div></a>
-	<a href="#" class="clickMapBox rid201"><div>Goteborg</div></a>
-
-	<div class="clickMapCountry">
-		<div class="clickMapRegion rid1"></div>
-		<div class="clickMapRegion rid2"></div>
-		<div class="clickMapRegion rid3"></div>
-		<div class="clickMapRegion rid4"></div>
-		<div class="clickMapRegion rid5 tempShow"></div>
-		<div class="clickMapRegion rid6"></div>
-		<div class="clickMapRegion rid7"></div>
-		<div class="clickMapRegion rid8"></div>
-		<div class="clickMapRegion rid9"></div>
-		<div class="clickMapRegion rid10"></div>
-		<div class="clickMapRegion rid11"></div>
-		<div class="clickMapRegion rid12"></div>
-		<div class="clickMapRegion rid13"></div>
-		<div class="clickMapRegion rid14"></div>
-		<div class="clickMapRegion rid15"></div>
-		<div class="clickMapRegion rid16"></div>
-		<div class="clickMapRegion rid17"></div>
-		<div class="clickMapRegion rid18"></div>
-		<div class="clickMapRegion rid19"></div>
-		<div class="clickMapRegion rid20"></div>
-		<div class="clickMapRegion rid21"></div>
-		<div class="clickMapRegion rid22"></div>
-		<div class="clickMapRegion rid23"></div>
-
-		<div class="clickMapSmallRegion tempShow" style="top: 226px; left: 46px"></div>
-		<table class="clickMapLabel holder tempShow" style="top: 206px; left: 24px">
-			<tr><td>Bratislava</td></tr>
-			<tr><td></td></tr>
-		</table>
-
-		<img class="clickMapImgmap" usemap="#regions" src="images/spacer.gif" width="548" height="275" alt="" />
-		<map name="regions">
-			<area rid="1" shape="poly" coords="59,125,89,163,34,220,12,182" href="#" />
-			<area rid="2" shape="poly" coords="48,210,67,222,59,249,33,222" href="#" />
-			<area rid="3" shape="poly" coords="91,164,108,187,119,179,119,206,66,219,50,205" href="#" />
-			<area rid="4" shape="poly" coords="116,208,167,233,177,260,206,263,194,279,105,278,59,249,66,218" href="#" />
-			<area rid="5" shape="poly" coords="229,191,283,221,244,238,211,225" href="#" />
-			<area rid="6" shape="poly" coords="214,144,266,165,251,179,263,204,229,192,210,225,234,234,206,262,178,262,167,230,186,199,179,176" href="#" />
-			<area rid="7" shape="poly" coords="168,115,210,145,180,178,186,205,164,231,118,210,118,176" href="#" />
-			<area rid="8" shape="poly" coords="237,59,238,96,194,79" href="#" />
-			<area rid="9" shape="poly" coords="237,98,229,146,194,133,208,93" href="#" />
-			<area rid="10" shape="poly" coords="196,80,207,96,193,126,165,110" href="#" />
-			<area rid="11" shape="poly" coords="193,57,200,77,111,187,68,131,132,102,156,60" href="#" />
-			<area rid="12" shape="poly" coords="209,28,238,59,204,72,193,57,157,59,184,33" href="#" />
-			<area rid="13" shape="poly" coords="274,13,307,66,241,86,236,51" href="#" />
-			<area rid="14" shape="poly" coords="304,65,324,119,279,119,233,125,239,83" href="#" />
-			<area rid="15" shape="poly" coords="323,120,344,125,297,161,236,158,226,129" href="#" />
-			<area rid="16" shape="poly" coords="300,158,320,225,281,220,249,182,271,161" href="#" />
-			<area rid="17" shape="poly" coords="353,118,386,150,355,208,318,223,298,156" href="#" />
-			<area rid="18" shape="poly" coords="358,43,371,67,394,67,396,86,344,121,325,118,305,66" href="#" />
-			<area rid="19" shape="poly" coords="384,36,412,47,414,69,369,65,359,44" href="#" />
-			<area rid="20" shape="poly" coords="397,86,427,118,389,149,351,115" href="#" />
-			<area rid="21" shape="poly" coords="462,116,468,169,375,169,426,118" href="#" />
-			<area rid="22" shape="poly" coords="444,25,488,33,484,88,457,89,462,117,427,115,395,85,396,70,414,68,412,46" href="#" />
-			<area rid="23" shape="poly" coords="489,33,568,75,528,182,494,193,468,170,458,90,483,89" href="#" />
-		</map>
-	</div>
-
-	<div class="clickMapNavigator">
-		<div class="holder">
-			<a class="top" href="#">Svet</a>
-			<a class="top" href="#">Europa</a>
-			<div class="iconHolder"><div class="icon"><img src="images/de.clickMapNavigator.png" /></div><a href="#">Tschechische Republik</a></div>
-			<div class="iconHolder"><div class="icon"><img src="images/de.clickMapNavigator.png" /></div><a href="#">Madarsko</a></div>
-			<div class="iconHolder"><div class="icon tempShow"><img src="images/de.clickMapNavigator.png" /></div><a href="#">Rakusko</a></div>
-			<div class="iconHolder"><div class="icon"><img src="images/de.clickMapNavigator.png" /></div><a href="#">Polsko</a></div>
-		</div>
-		<a class="more" href="#">dalsie<span>&nbsp;</span></a>
-	</div>
-
-	<div class="clickMapTabs">
-		<div class="tabBar">
-			<table class="holder">
-				<tr>
-					<td><a href="#"><h3>Lyzovacka</h3><span>&nbsp;</span></a></td>
-					<td><a class="active" href="#"><h3>Kupanie</h3><span>&nbsp;</span></a></td>
-					<td><a href="#"><h3>Silvester 2011</h3><span>&nbsp;</span></a></td>
-				</tr>
-			</table>
-		</div>
-		<!--<div class="tabBar">
-			&nbsp;<br />
-			<a href="#"><h3>Lyzovacka</h3><span>&nbsp;</span></a><a class="active" href="#"><h3>Kupanie</h3><span>&nbsp;</span></a><a href="#"><h3>Silvester 2011</h3><span>&nbsp;</span></a>
-		</div>-->
-		<div class="tabContent">
-			<ul>
-				<li><span>&nbsp;</span><a href="#">Bojnice</a></li>
-				<li><span>&nbsp;</span><a href="#">Bojnice</a></li>
-				<li><span>&nbsp;</span><a href="#">Bojnice</a></li>
-			</ul>
-			<ul>
-				<li><span>&nbsp;</span><a href="#">Bojnice</a></li>
-				<li><span>&nbsp;</span><a href="#">Bojnice</a></li>
-				<li><span>&nbsp;</span><a href="#">Bojnice</a></li>
-			</ul>
-			<ul>
-				<li><span>&nbsp;</span><a href="#">Bojnice</a></li>
-				<li><span>&nbsp;</span><a href="#">Bojnice</a></li>
-				<li><span>&nbsp;</span><a href="#">Bojnice</a></li>
-			</ul>
-			<ul>
-				<li><span>&nbsp;</span><a href="#">Bojnice</a></li>
-				<li><span>&nbsp;</span><a href="#">Bojnice</a></li>
-				<li><span>&nbsp;</span><a href="#">Bojnice</a></li>
-			</ul>
-			<ul>
-				<li><span>&nbsp;</span><a href="#">Bojnice</a></li>
-				<li><span>&nbsp;</span><a href="#">Bojnice</a></li>
-				<li><span>&nbsp;</span><a href="#">Bojnice</a></li>
-			</ul>
-		</div>
-	</div>
-</div>
-
-<div class="panelGreen">
-	<div class="top"></div>
-	<div class="content">
-		<h1>Ubytovanie a dovolenka na Slovensku</h1>
-		<div class="tabBar">
-			<a href="#"><h2>aaa</h2></a>
-			<a class="active" href="#"><h2>bbbb</h2></a>
-			<a href="#"><h2>ccc</h2></a>
-			<div class="cleaner"></div>
-		</div>
-		<div class="tabContent">
-			<div class="homeObjectList">
-				<div class="homeObjectListItem">
-					<div class="top"></div>
-					<div class="title">Titulok</div>
-					<div class="homeObjectListItemDescription">
-						<p class="red"><b>Chata za dobru cenu Chata za dobru cenuy Chata za dobru cenu Chata za dobru cenuy</b></p>
-						<p>Sezona: <b>9,50</b> &euro; osoba/noc</p>
-						<p>Mimosezona: <b>9,50</b> &euro; osoba/noc</p>
-						<p>Spalni:&nbsp;5, Kupelni: 2, Osob: 13</p>
-						<span class="full">&nbsp;</span>
-						<span class="half">&nbsp;</span>
-						<span>&nbsp;</span>
+<div class="mainRight">
+	{control countryMap}
+	<div class="panelGreen">
+		<div class="top"></div>
+		<div class="content">
+			<h1>Ubytovanie a dovolenka na Slovensku</h1>
+			{control tabControl}
+			<div class="tabsContent">
+				<div class="homeObjectList">
+					<div class="homeObjectListItem">
+						<div class="top"></div>
+						<div class="title">Titulok</div>
+						<div class="homeObjectListItemDescription">
+							<p class="red"><b>Chata za dobru cenu Chata za dobru cenuy Chata za dobru cenu Chata za dobru cenuy</b></p>
+							<p>Sezona: <b>9,50</b> &euro; osoba/noc</p>
+							<p>Mimosezona: <b>9,50</b> &euro; osoba/noc</p>
+							<p>Spalni:&nbsp;5, Kupelni: 2, Osob: 13</p>
+							<span class="full">&nbsp;</span>
+							<span class="half">&nbsp;</span>
+							<span>&nbsp;</span>
+						</div>
+						<a href="#"><img src="images/img_1.gif" alt="" title="" /></a>
 					</div>
-					<a href="#"><img src="images/img_1.gif" alt="" title="" /></a>
+					<div class="homeObjectListItem">
+						<div class="title">Titulok</div>
+						<a href="#"><img src="images/img_1.gif" alt="" title="" /></a>
+					</div>
+					<div class="homeObjectListItem">
+						<div class="title">Titulok</div>
+						<a href="#"><img src="images/img_1.gif" alt="" title="" /></a>
+					</div>
+					<div class="homeObjectListItem">
+						<div class="title">Titulok</div>
+						<a href="#"><img src="images/img_1.gif" alt="" title="" /></a>
+					</div>
+					<div class="cleaner"></div>
 				</div>
-				<div class="homeObjectListItem">
-					<div class="title">Titulok</div>
-					<a href="#"><img src="images/img_1.gif" alt="" title="" /></a>
+				<div class="columnListUL">
+					<ul class="col">
+						<li><span>&nbsp;</span><a href="/abov">Abov</a></li>
+						<li><span>&nbsp;</span><a href="/banska-bystrica-okres">Banská Bystrica (Okres)</a></li>
+						<li><span>&nbsp;</span><a href="/banska-stiavnica-okres"><b>Banská Štiavnica (Okres)</b></a></li>
+						<li><span>&nbsp;</span><a href="/bardejov-okres"><b>Bardejov</b></a></li>
+						<li><span>&nbsp;</span><a href="/belianske-tatry">Belianske Tatry</a></li>
+					</ul>
+					<ul class="col">
+						<li><span>&nbsp;</span><a href="/abov">Abov</a></li>
+						<li><span>&nbsp;</span><a href="/banska-bystrica-okres">Banská Bystrica (Okres)</a></li>
+						<li><span>&nbsp;</span><a href="/banska-stiavnica-okres"><b>Banská Štiavnica (Okres)</b></a></li>
+						<li><span>&nbsp;</span><a href="/bardejov-okres"><b>Bardejov</b></a></li>
+						<li><span>&nbsp;</span><a href="/belianske-tatry">Belianske Tatry</a></li>
+					</ul>
+					<ul class="col">
+						<li><span>&nbsp;</span><a href="/abov">Abov</a></li>
+						<li><span>&nbsp;</span><a href="/banska-bystrica-okres">Banská Bystrica (Okres)</a></li>
+						<li><span>&nbsp;</span><a href="/banska-stiavnica-okres"><b>Banská Štiavnica (Okres)</b></a></li>
+						<li><span>&nbsp;</span><a href="/bardejov-okres"><b>Bardejov</b></a></li>
+						<li><span>&nbsp;</span><a href="/belianske-tatry">Belianske Tatry</a></li>
+					</ul>
+					<div class="cleaner"></div>
 				</div>
-				<div class="homeObjectListItem">
-					<div class="title">Titulok</div>
-					<a href="#"><img src="images/img_1.gif" alt="" title="" /></a>
-				</div>
-				<div class="homeObjectListItem">
-					<div class="title">Titulok</div>
-					<a href="#"><img src="images/img_1.gif" alt="" title="" /></a>
-				</div>
-				<div class="cleaner"></div>
-			</div>
-			<div class="columnListUL">
-				<ul class="col">
-					<li><span>&nbsp;</span><a href="/abov">Abov</a></li>
-					<li><span>&nbsp;</span><a href="/banska-bystrica-okres">Banská Bystrica (Okres)</a></li>
-					<li><span>&nbsp;</span><a href="/banska-stiavnica-okres"><b>Banská Štiavnica (Okres)</b></a></li>
-					<li><span>&nbsp;</span><a href="/bardejov-okres"><b>Bardejov</b></a></li>
-					<li><span>&nbsp;</span><a href="/belianske-tatry">Belianske Tatry</a></li>
-				</ul>
-				<ul class="col">
-					<li><span>&nbsp;</span><a href="/abov">Abov</a></li>
-					<li><span>&nbsp;</span><a href="/banska-bystrica-okres">Banská Bystrica (Okres)</a></li>
-					<li><span>&nbsp;</span><a href="/banska-stiavnica-okres"><b>Banská Štiavnica (Okres)</b></a></li>
-					<li><span>&nbsp;</span><a href="/bardejov-okres"><b>Bardejov</b></a></li>
-					<li><span>&nbsp;</span><a href="/belianske-tatry">Belianske Tatry</a></li>
-				</ul>
-				<ul class="col">
-					<li><span>&nbsp;</span><a href="/abov">Abov</a></li>
-					<li><span>&nbsp;</span><a href="/banska-bystrica-okres">Banská Bystrica (Okres)</a></li>
-					<li><span>&nbsp;</span><a href="/banska-stiavnica-okres"><b>Banská Štiavnica (Okres)</b></a></li>
-					<li><span>&nbsp;</span><a href="/bardejov-okres"><b>Bardejov</b></a></li>
-					<li><span>&nbsp;</span><a href="/belianske-tatry">Belianske Tatry</a></li>
-				</ul>
-				<div class="cleaner"></div>
 			</div>
 		</div>
+		<div class="bottom"></div>
 	</div>
-	<div class="bottom"></div>
-</div>
 
-<div class="panelGreen">
-	<div class="top"></div>
-	<div class="content">
-		<h1>Slovensko</h1>
-		<div class="panelGreenSeo">
-			<img align="right" src="images/img_1.gif" width="250" height="170" alt="" />
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-			<p>Ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-			<div class="cleaner"></div>
+	<div class="panelGreen">
+		<div class="top"></div>
+		<div class="content">
+			<h1>Slovensko</h1>
+			<div class="panelGreenSeo">
+				<img align="right" src="images/img_1.gif" width="250" height="170" alt="" />
+				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+				<p>Ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+				<div class="cleaner"></div>
+			</div>
+
 		</div>
-
+		<div class="bottom"></div>
 	</div>
-	<div class="bottom"></div>
 </div>
-{/block}

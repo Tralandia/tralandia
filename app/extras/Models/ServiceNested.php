@@ -18,23 +18,23 @@ abstract class ServiceNested extends Service {
 			$config->setRightFieldName('nestedRight');
 			$config->setRootFieldName('nestedRoot');
 
-			self::$nsm = new NestedSet\Manager($config);
+			static::$nsm = new NestedSet\Manager($config);
 		}
-		return self::$nsm;
+		return static::$nsm;
 	}
 	
 	public static function getNsm() {
-		return self::getNestedSetManager();
+		return static::getNestedSetManager();
 	}
 
 	public function getNestedNode() {
-		$nsm = self::getNsm();
+		$nsm = static::getNsm();
 		return $nsm->wrapNode($this->getMainEntity());
 
 	}
 
 	public function createRoot() {
-		$nsm = self::getNsm();
+		$nsm = static::getNsm();
 		return $nsm->createRoot($this->getMainEntity());
 	}
 
@@ -49,6 +49,11 @@ abstract class ServiceNested extends Service {
 
 		$wrapNode = $this->getNestedNode();
 		return $wrapNode->addChild($child);
+	}
+
+	public function fetchBranchAsArray($depth = NULL) {
+		$nsm = static::getNsm();
+		return $nsm->fetchBranchAsArray($this->id, $depth);
 	}
 
 }
