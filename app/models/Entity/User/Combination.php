@@ -31,7 +31,7 @@ class Combination extends \Entity\BaseEntityDetails {
 	protected $language;
 
 	/**
-	 * @var Collection
+	 * @var integer
 	 * @ORM\Column(type="integer")
 	 */
 	protected $languageLevel;

@@ -7,6 +7,21 @@ class Phrase extends \Service\BaseService {
 	
 	const MAIN_ENTITY_NAME = '\Entity\Dictionary\Phrase';
 
+	public function addTranslation($translation) {
+		if($translation instanceof Translation) {
+			$translation = $translation->getMainEntity();
+		} else if($translation instanceof \Entity\Dictionary\Translation) {
+
+		} else {
+			throw new \Nette\InvalidArgumentException('$translation argument does not match with the expected value');
+		}
+
+		if(!$this->getTranslation($translation->language)) {
+			$this->getMainEntity()->addTranslation($translation);
+		} else {
+			throw new \Extras\Models\Exceptions\TranslationAlreadyExistException('Translation for "'.$translation->language->iso.'" already exist', 1);
+		}
+	}
 
 	public function getTranslation($language) {
 		if($language instanceof Language) {
