@@ -59,6 +59,9 @@ common:
 
 		authorizator: Security\Acl
 
+		environment:
+			factory: Extras\Environment::factory
+
 		translator:
 			factory: Extras\MyTranslator::getTranslator
 			

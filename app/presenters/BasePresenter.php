@@ -35,6 +35,10 @@ abstract class BasePresenter extends Presenter {
 		return $this->getEntityManager();
 	}
 
+	public function getEnvironment() {
+		return $this->getService('environment');
+	}
+
 	protected function createComponentHeader() {
 		$header = new HeaderControl;
 
