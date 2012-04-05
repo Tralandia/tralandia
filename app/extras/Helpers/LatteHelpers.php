@@ -5,7 +5,7 @@ namespace Extras\Helpers;
 class LatteHelpers extends \Nette\Object {
 
 	public static function ulList($data, $columnCount = 3, $li = NULL) {
-		if(!($data instanceof Traversable || is_array($data))) {
+		if(!($data instanceof \Traversable || is_array($data))) {
 			throw new \Nette\InvalidArgumentException('Argument "$data" does not match with the expected value');
 		}
 
@@ -18,7 +18,7 @@ class LatteHelpers extends \Nette\Object {
 		}
 
 		$search = array();
-		foreach (reset($data) as $key => $value) {
+		foreach ($data[0] as $key => $value) {
 			$search[] = "%$key%";
 		}
 
