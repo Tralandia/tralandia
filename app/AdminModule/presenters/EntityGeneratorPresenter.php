@@ -23,10 +23,24 @@ class EntityGeneratorPresenter extends BasePresenter {
 		$id = str_replace('-', '\\', $id);
 		$entityDir = APP_DIR . '/models/Entity/';
 		$menu = array();
+		$lastFolderName = NULL;
 		foreach (Finder::findFiles('*.php')->from($entityDir) as $key => $file) {
 			list($x, $entityNameTemp) = explode('/models/', $key, 2);
 			$entityNameTemp = str_replace(array('/', '.php'), array('\\', ''), $entityNameTemp);
-			$menu[] = array('fullname' => str_replace('\\', '-', $entityNameTemp), 'name' => str_replace('Entity\\', '', $entityNameTemp));
+			$folderNameTemp = explode('\\', $entityNameTemp, 3);
+			array_shift($folderNameTemp);
+			$folderName = array_shift($folderNameTemp);
+			if($lastFolderName != $folderName && array_shift($folderNameTemp)) {
+				$lastFolderName = $folderName;
+				$menu[] = array(
+					'link' => $this->link('EntityGenerator:forceAll', array('id' => 'Entity-'.$folderName)),
+					'name' => str_replace('Entity\\', '', $folderName).' <-- pregenerovat subory'
+				);
+			}
+			$menu[] = array(
+				'link' => $this->link('EntityGenerator:default', array('id' => str_replace('\\', '-', $entityNameTemp))),
+				'name' => str_replace('Entity\\', '', $entityNameTemp)
+			);
 		}
 
 		$mainEntityReflector = $this->getEntityReflection($id);
@@ -56,21 +70,34 @@ class EntityGeneratorPresenter extends BasePresenter {
 		$id = str_replace(array('Entity', '-'), array('', '/'), $id);
 		$entityDir = APP_DIR . '/models/Entity/'.$id;
 		$menu = array();
+		$messageSuccess = array();
 		foreach (Finder::findFiles('*.php')->from($entityDir) as $key => $file) {
 			list($x, $entityNameTemp) = explode('/models/', $key, 2);
 			$entityNameTemp = str_replace(array('//', '/', '.php'), array('\\', '\\', ''), $entityNameTemp);
+
+			$filename = $key;
 			
 			$mainEntityReflector = $this->getEntityReflection($entityNameTemp);
 			$newClass = $this->generateNewClass($mainEntityReflector);
 
-			$newFileContent = $this->generateNewCode($key, $newClass);
+			$newFileContent = $this->generateNewCode($filename, $newClass);
 			if($newFileContent) {
-
+				$this->writeNewCode($filename, $newFileContent);
+				$messageSuccess[] = $entityNameTemp;
 			} else {
-				$this->flashMessage("V subore: $entityNameTemp chyba riadok: //@entity-generator-code");
-				debug("V subore: $entityNameTemp chyba riadok: //@entity-generator-code");
+				$message = "V subore: $entityNameTemp chyba riadok: //@entity-generator-code";
+				$this->flashMessage($message);
+				debug($message);
 			}
 		}
+		if(count($messageSuccess)) {
+			$messageSuccess = "Pregeneroval som: ".implode('; ', $messageSuccess);
+		} else {
+			$messageSuccess = "Pregeneroval som: NIC";
+		}
+		$this->flashMessage($messageSuccess);
+		debug($messageSuccess);
+		$this->redirect('EntityGenerator:default', array('id' => 'Entity-Company-Office'));
 
 	}
 
