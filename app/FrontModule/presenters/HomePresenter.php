@@ -4,6 +4,17 @@ namespace FrontModule;
 
 class HomePresenter extends BasePresenter {
 	
+	public function renderDefault() {
+
+		$vp = new \VisualPaginator($this, 'vp');
+		$vp->templateFile = APP_DIR.'/FrontModule/components/VisualPaginator/paginator.latte';
+
+		$paginator = $vp->getPaginator();
+		$paginator->itemsPerPage = 15;
+		$paginator->itemCount = 568;
+
+	}
+
 	public function createComponentCountryMap($name) {
 
 		return new \FrontModule\CountryMap($this, $name);
