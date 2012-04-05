@@ -17,6 +17,7 @@ class Reflector extends Nette\Object {
 	const MANY_TO_ONE = 'ORM\ManyToOne';
 	const ONE_TO_MANY = 'ORM\OneToMany';
 	const MANY_TO_MANY = 'ORM\ManyToMany';
+	const COLUMN = 'ORM\Column';
 
 	
 	protected $service = null;
@@ -29,6 +30,25 @@ class Reflector extends Nette\Object {
 
 
 		//debug($this->service);
+	}
+
+	/**
+	 * Vrati nazov hlavnej entity
+	 * @return string
+	 */
+	public function getMainEntityName() {
+		$classReflection = $this->getServiceReflection($this->service);
+		return $classReflection->getConstant('MAIN_ENTITY_NAME');
+	}
+
+	/**
+	 * Vrati kratky nazov hlavnej entity
+	 * @return string
+	 */
+	public function getMainEntityShortName() {
+		$classReflection = $this->getServiceReflection($this->service);
+		$classReflection = ClassType::from($classReflection->getConstant('MAIN_ENTITY_NAME'));
+		return $classReflection->getShortName();
 	}
 
 	/**

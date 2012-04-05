@@ -11,6 +11,11 @@ use Nette\Object,
  */
 abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \Iterator, IServiceList {
 
+	/**
+	 * @var string
+	 */
+	const MAIN_ENTITY_NAME = null;
+
 	const RETURN_ENTITIES = 1;
 
 	/**
@@ -44,7 +49,7 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 	 * Ziskanie entity manazera
 	 * @return EntityManager
 	 */
-	protected function getEntityManager() {
+	protected static function getEntityManager() {
 		return self::$em;
 	}
 
@@ -52,10 +57,19 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 	 * Alias na entity manazera
 	 * @return EntityManager
 	 */
-	protected function getEm() {
+	protected static function getEm() {
 		return self::getEntityManager();
 	}
 
+	/**
+	 * Ziskanie DataSource pre datagrid
+	 * @return Doctrine\ORM\QueryBuilder
+	 */
+	public static function getDataSource() {
+		$query = self::getEntityManager()->createQueryBuilder();
+		$query->select('e')->from(static::MAIN_ENTITY_NAME, 'e');
+		return $query;
+	}
 
 	public function returnAs($returnAs) {
 		$this->returnAs = $returnAs;
