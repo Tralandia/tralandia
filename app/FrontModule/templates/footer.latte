@@ -53,7 +53,7 @@
 
 	<div class="mainFooterCountryLinks">
 		<h2><b>Ubytovanie</b> v dalsich krajinach</h2>
-		{*ulList $launchedCountries, 5, '<li><span>&nbsp;</span>{_$item->location->name}</li>'*}
+		{ulList $launchedCountries, 5, '<li><span>&nbsp;</span>{_%location,id%}</li>'}
 		<div class="cleaner"></div>
 		<div class="mainFooterSeparator_2"></div>
 	</div>
