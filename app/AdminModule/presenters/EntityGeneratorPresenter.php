@@ -14,25 +14,96 @@ class EntityGeneratorPresenter extends BasePresenter {
 
 	protected $entitiesReflection = array();
 
-	public function beforeRender() {
-		parent::beforeRender();
-		$this->setView('default');
-	}
+	// public function beforeRender() {
+	// 	parent::beforeRender();
+	// 	$this->setView('default');
+	// }
 
 	public function actionDefault($id) {
 		$id = str_replace('-', '\\', $id);
-		$dir = APP_DIR . '/models/Entity/';
+		$entityDir = APP_DIR . '/models/Entity/';
 		$menu = array();
-		foreach (Finder::findFiles('*.php')->from($dir) as $key => $file) {
+		$lastFolderName = NULL;
+		foreach (Finder::findFiles('*.php')->from($entityDir) as $key => $file) {
 			list($x, $entityNameTemp) = explode('/models/', $key, 2);
 			$entityNameTemp = str_replace(array('/', '.php'), array('\\', ''), $entityNameTemp);
-			$menu[] = array('fullname' => str_replace('\\', '-', $entityNameTemp), 'name' => str_replace('Entity\\', '', $entityNameTemp));
+			$folderNameTemp = explode('\\', $entityNameTemp, 3);
+			array_shift($folderNameTemp);
+			$folderName = array_shift($folderNameTemp);
+			if($lastFolderName != $folderName && array_shift($folderNameTemp)) {
+				$lastFolderName = $folderName;
+				$menu[] = array(
+					'link' => $this->link('EntityGenerator:forceAll', array('id' => 'Entity-'.$folderName)),
+					'name' => str_replace('Entity\\', '', $folderName).' <-- pregenerovat subory'
+				);
+			}
+			$menu[] = array(
+				'link' => $this->link('EntityGenerator:default', array('id' => str_replace('\\', '-', $entityNameTemp))),
+				'name' => str_replace('Entity\\', '', $entityNameTemp)
+			);
 		}
 
-		$mainEntity = $this->getEntityReflection($id);
+		$mainEntityReflector = $this->getEntityReflection($id);
+		$newClass = $this->generateNewClass($mainEntityReflector);
+
+		list($a, $nameTemp) = explode('-', $this->parameter['id'],2);
+		$filename = $entityDir.str_replace('-', '/', $nameTemp).'.php';
+		$newFileContent = $this->generateNewCode($filename, $newClass);
+
+		if(!$newFileContent) {
+			$newFileContent = "V subore:\n$id\nchyba riadok:\n//@entity-generator-code\ndopln to tam a refresni stranku";
+		}
+
+		if(isset($this->parameter['force']) && $this->parameter['force'] == 1) {
+			$this->writeNewCode($filename, $newFileContent);
+
+			$this->flashMessage('done');
+			$this->redirect('this', array('force' => NULL));
+		}
+
+		$this->template->menu = $menu;
+		$this->template->newClass = $newClass;
+		$this->template->newFileContent = $newFileContent;
+	}
+
+	public function actionForceAll($id) {
+		$id = str_replace(array('Entity', '-'), array('', '/'), $id);
+		$entityDir = APP_DIR . '/models/Entity/'.$id;
+		$menu = array();
+		$messageSuccess = array();
+		foreach (Finder::findFiles('*.php')->from($entityDir) as $key => $file) {
+			list($x, $entityNameTemp) = explode('/models/', $key, 2);
+			$entityNameTemp = str_replace(array('//', '/', '.php'), array('\\', '\\', ''), $entityNameTemp);
+
+			$filename = $key;
+			
+			$mainEntityReflector = $this->getEntityReflection($entityNameTemp);
+			$newClass = $this->generateNewClass($mainEntityReflector);
+
+			$newFileContent = $this->generateNewCode($filename, $newClass);
+			if($newFileContent) {
+				$this->writeNewCode($filename, $newFileContent);
+				$messageSuccess[] = $entityNameTemp;
+			} else {
+				$message = "V subore: $entityNameTemp chyba riadok: //@entity-generator-code";
+				$this->flashMessage($message);
+				debug($message);
+			}
+		}
+		if(count($messageSuccess)) {
+			$messageSuccess = "Pregeneroval som: ".implode('; ', $messageSuccess);
+		} else {
+			$messageSuccess = "Pregeneroval som: NIC";
+		}
+		$this->flashMessage($messageSuccess);
+		debug($messageSuccess);
+		$this->redirect('EntityGenerator:default', array('id' => 'Entity-Company-Office'));
+
+	}
+
+	public function generateNewClass($mainEntity) {
 		$newClass = new PhpGenerator\ClassType($mainEntity->name);
 
-		$newClass->extends[] = 'BaseEntity';
 		$construct = $newClass->addMethod('__construct');
 		$collections = array();
 
@@ -157,9 +228,36 @@ class EntityGeneratorPresenter extends BasePresenter {
 		}
 
 		$this->fillConstruct($construct, $collections);
+		return $newClass;
+	}
 
-		$this->template->menu = $menu;
-		$this->template->newClass = $newClass;
+	public function generateNewCode($filename, $newClass) {
+		$fileSource = fopen($filename, "r") or die("Could not open file!");
+		$data = fread($fileSource, filesize($filename)) or die("Could not read file!");
+		fclose($fileSource);
+		if($pos = mb_strpos($data, '//@entity-generator-code')) {
+			$newFileContent = mb_substr($data, 0, $pos);
+			$newFileContent .= "\n//@entity-generator-code <--- NEMAZAT !!!\n\n";
+			$newFileContent .= "\t/* ----------------------------- Methods ----------------------------- */";
+			foreach ($newClass->methods as $method) {
+				$newFileContent .= $this->template->indent("\t\n".$method."\n", 1);
+			}
+			$newFileContent .= '}';
+			return $newFileContent;
+		} else {
+			return FALSE;
+		}
+	}
+
+	public function writeNewCode($filename, $code) {
+		// open file 
+		$fw = fopen($filename, 'w') or die('Could not open file!');
+		// write to file
+		// added stripslashes to $newdata
+		$fb = fwrite($fw, $code) or die('Could not write to file');
+		// close file
+		fclose($fw);
+		return TRUE;		
 	}
 
 	public function toSingular($name) {

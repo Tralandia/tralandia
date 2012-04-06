@@ -34,7 +34,7 @@ class User extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Entity\Contact\Contact", mappedBy="user")
+	 * @ORM\OneToMany(targetEntity="Entity\Contact\Contact", mappedBy="user", cascade={"persist"})
 	 */
 	protected $contacts;
 
@@ -82,19 +82,19 @@ class User extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact")
+	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact", cascade={"persist"})
 	 */
 	protected $invoicingEmail;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact")
+	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact", cascade={"persist"})
 	 */
 	protected $invoicingPhone;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact")
+	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact", cascade={"persist"})
 	 */
 	protected $invoicingUrl;
 

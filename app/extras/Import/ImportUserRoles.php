@@ -8,7 +8,7 @@ use Nette\Application as NA,
 	Nette\Utils\Html,
 	Nette\Utils\Strings,
 	Extras\Models\Service,
-	Services\Log\Change as ChangeLog;
+	Service\Log\Change as ChangeLog;
 
 class ImportUserRoles extends BaseImport {
 

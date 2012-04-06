@@ -17,6 +17,9 @@ class BaseImport {
 		'languages' => array(
 			'\Dictionary\Language' => array(),
 		),
+		'htmlPhrases' => array(
+			'\Dictionary\Phrase' => array(),
+		),
 		'currencies' => array(
 			'\Currency' => array(),
 		),
@@ -220,10 +223,14 @@ class BaseImport {
 	}
 
 	protected function createContact($slug, $value) {
+
+		if (!$value || strlen($value) == 0) {
+			throw new \Nette\UnexpectedValueException('BaseImport::createContact - no value received');
+		}
+
 		$contact = \Service\Contact\Contact::get();
 		$contact->type = \Service\Contact\Type::getBySlug($slug);
 		$contact->value = $value;
-		$contact->save();
 
 		return $contact;
 	}

@@ -9,10 +9,10 @@ class MyTranslator implements \Nette\Localization\ITranslator {
 	protected $language = 144;
 
 	public function __construct() {
-		$this->language = D\Language::get($this->language);
+		//$this->language = D\Language::get($this->language);
 	}
 	
-	public function translate($message, $count = NULL, $note = NULL) {
+	public function translate($message, $node = NULL, $count = NULL, array $variables = NULL) {
 
 		if(!$message instanceof D\Phrase) {
 			$phrase = D\Phrase::get($message);
@@ -24,6 +24,7 @@ class MyTranslator implements \Nette\Localization\ITranslator {
 			$message = current($message);
 
 		$args = func_get_args();
+		// @todo brano tento celi IF by som zrusli, naco tu je ?
 		if (count($args) > 1) {
 			array_shift($args);
 			if (is_array(current($args)) || current($args) === NULL)

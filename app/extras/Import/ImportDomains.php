@@ -8,9 +8,9 @@ use Nette\Application as NA,
 	Nette\Utils\Html,
 	Nette\Utils\Strings,
 	Extras\Models\Service,
-	Services\Dictionary as D,
-	Services as S,
-	Services\Log\Change as SLog;
+	Service\Dictionary as D,
+	Service as S,
+	Service\Log\Change as SLog;
 
 class ImportDomains extends BaseImport {
 
