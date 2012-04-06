@@ -26,6 +26,64 @@ class Domain extends \Entity\BaseEntity {
 
 	
 
-	//@entity-generator-code
+	
 
+//@entity-generator-code <--- NEMAZAT !!!
+
+	/* ----------------------------- Methods ----------------------------- */		
+	public function __construct() {
+		parent::__construct();
+
+		$this->locations = new \Doctrine\Common\Collections\ArrayCollection;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Domain
+	 */
+	public function setDomain($domain) {
+		$this->domain = $domain;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getDomain() {
+		return $this->domain;
+	}
+		
+	/**
+	 * @param \Entity\Location\Location
+	 * @return \Entity\Domain
+	 */
+	public function addLocation(\Entity\Location\Location $location) {
+		if(!$this->locations->contains($location)) {
+			$this->locations->add($location);
+		}
+		$location->addDomain($this);
+
+		return $this;
+	}
+		
+	/**
+	 * @param \Entity\Location\Location
+	 * @return \Entity\Domain
+	 */
+	public function removeLocation(\Entity\Location\Location $location) {
+		if($this->locations->contains($location)) {
+			$this->locations->removeElement($location);
+		}
+		$location->removeDomain($this);
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Location\Location
+	 */
+	public function getLocations() {
+		return $this->locations;
+	}
 }

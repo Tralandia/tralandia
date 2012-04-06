@@ -48,6 +48,145 @@ class Currency extends \Entity\BaseEntity {
 	protected $countries;
 
 
-    //@entity-generator-code
+    
 
+//@entity-generator-code <--- NEMAZAT !!!
+
+	/* ----------------------------- Methods ----------------------------- */		
+	public function __construct() {
+		parent::__construct();
+
+		$this->countries = new \Doctrine\Common\Collections\ArrayCollection;
+	}
+		
+	/**
+	 * @param \Entity\Dictionary\Phrase
+	 * @return \Entity\Currency
+	 */
+	public function setName(\Entity\Dictionary\Phrase $name) {
+		$this->name = $name;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Dictionary\Phrase|NULL
+	 */
+	public function getName() {
+		return $this->name;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Currency
+	 */
+	public function setIso($iso) {
+		$this->iso = $iso;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getIso() {
+		return $this->iso;
+	}
+		
+	/**
+	 * @param decimal
+	 * @return \Entity\Currency
+	 */
+	public function setExchangeRate($exchangeRate) {
+		$this->exchangeRate = $exchangeRate;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Currency
+	 */
+	public function unsetExchangeRate() {
+		$this->exchangeRate = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return decimal|NULL
+	 */
+	public function getExchangeRate() {
+		return $this->exchangeRate;
+	}
+		
+	/**
+	 * @param integer
+	 * @return \Entity\Currency
+	 */
+	public function setDecimalPlaces($decimalPlaces) {
+		$this->decimalPlaces = $decimalPlaces;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Currency
+	 */
+	public function unsetDecimalPlaces() {
+		$this->decimalPlaces = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return integer|NULL
+	 */
+	public function getDecimalPlaces() {
+		return $this->decimalPlaces;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Currency
+	 */
+	public function setRounding($rounding) {
+		$this->rounding = $rounding;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Currency
+	 */
+	public function unsetRounding() {
+		$this->rounding = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getRounding() {
+		return $this->rounding;
+	}
+		
+	/**
+	 * @param \Entity\Location\Country
+	 * @return \Entity\Currency
+	 */
+	public function addCountry(\Entity\Location\Country $country) {
+		if(!$this->countries->contains($country)) {
+			$this->countries->add($country);
+		}
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Location\Country
+	 */
+	public function getCountries() {
+		return $this->countries;
+	}
 }

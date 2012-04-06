@@ -36,6 +36,116 @@ class Phrase extends \Entity\BaseEntityDetails {
 	 */
 	protected $sourceLanguage;
 
-	//@entity-generator-code
+	
 
+//@entity-generator-code <--- NEMAZAT !!!
+
+	/* ----------------------------- Methods ----------------------------- */		
+	public function __construct() {
+		parent::__construct();
+
+		$this->translations = new \Doctrine\Common\Collections\ArrayCollection;
+	}
+		
+	/**
+	 * @param \Entity\Dictionary\Translation
+	 * @return \Entity\Dictionary\Phrase
+	 */
+	public function addTranslation(\Entity\Dictionary\Translation $translation) {
+		if(!$this->translations->contains($translation)) {
+			$this->translations->add($translation);
+		}
+		$translation->addPhrase($this);
+
+		return $this;
+	}
+		
+	/**
+	 * @param \Entity\Dictionary\Translation
+	 * @return \Entity\Dictionary\Phrase
+	 */
+	public function removeTranslation(\Entity\Dictionary\Translation $translation) {
+		if($this->translations->contains($translation)) {
+			$this->translations->removeElement($translation);
+		}
+		$translation->removePhrase($this);
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Dictionary\Translation
+	 */
+	public function getTranslations() {
+		return $this->translations;
+	}
+		
+	/**
+	 * @param boolean
+	 * @return \Entity\Dictionary\Phrase
+	 */
+	public function setReady($ready) {
+		$this->ready = $ready;
+
+		return $this;
+	}
+		
+	/**
+	 * @return boolean|NULL
+	 */
+	public function getReady() {
+		return $this->ready;
+	}
+		
+	/**
+	 * @param \Entity\Dictionary\Type
+	 * @return \Entity\Dictionary\Phrase
+	 */
+	public function setType(\Entity\Dictionary\Type $type) {
+		$this->type = $type;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Dictionary\Phrase
+	 */
+	public function unsetType() {
+		$this->type = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Dictionary\Type|NULL
+	 */
+	public function getType() {
+		return $this->type;
+	}
+		
+	/**
+	 * @param \Entity\Dictionary\Language
+	 * @return \Entity\Dictionary\Phrase
+	 */
+	public function setSourceLanguage(\Entity\Dictionary\Language $sourceLanguage) {
+		$this->sourceLanguage = $sourceLanguage;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Dictionary\Phrase
+	 */
+	public function unsetSourceLanguage() {
+		$this->sourceLanguage = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Dictionary\Language|NULL
+	 */
+	public function getSourceLanguage() {
+		return $this->sourceLanguage;
+	}
 }

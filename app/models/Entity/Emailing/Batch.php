@@ -47,6 +47,114 @@ class Batch extends \Entity\BaseEntityDetails {
 	 */
 	protected $bodyHtml;
 
-	//@entity-generator-code
+	
 
+//@entity-generator-code <--- NEMAZAT !!!
+
+	/* ----------------------------- Methods ----------------------------- */		
+	public function __construct() {
+		parent::__construct();
+	}
+		
+	/**
+	 * @param boolean
+	 * @return \Entity\Emailing\Batch
+	 */
+	public function setConfirmed($confirmed) {
+		$this->confirmed = $confirmed;
+
+		return $this;
+	}
+		
+	/**
+	 * @return boolean|NULL
+	 */
+	public function getConfirmed() {
+		return $this->confirmed;
+	}
+		
+	/**
+	 * @param \Entity\Emailing\Email
+	 * @return \Entity\Emailing\Batch
+	 */
+	public function setEmailTemplate(\Entity\Emailing\Email $emailTemplate) {
+		$this->emailTemplate = $emailTemplate;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Emailing\Email|NULL
+	 */
+	public function getEmailTemplate() {
+		return $this->emailTemplate;
+	}
+		
+	/**
+	 * @param integer
+	 * @return \Entity\Emailing\Batch
+	 */
+	public function setTotalCount($totalCount) {
+		$this->totalCount = $totalCount;
+
+		return $this;
+	}
+		
+	/**
+	 * @return integer|NULL
+	 */
+	public function getTotalCount() {
+		return $this->totalCount;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Emailing\Batch
+	 */
+	public function setSubject($subject) {
+		$this->subject = $subject;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getSubject() {
+		return $this->subject;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Emailing\Batch
+	 */
+	public function setBody($body) {
+		$this->body = $body;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getBody() {
+		return $this->body;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Emailing\Batch
+	 */
+	public function setBodyHtml($bodyHtml) {
+		$this->bodyHtml = $bodyHtml;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getBodyHtml() {
+		return $this->bodyHtml;
+	}
 }
