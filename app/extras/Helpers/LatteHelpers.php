@@ -5,7 +5,8 @@ namespace Extras\Helpers;
 class LatteHelpers extends \Nette\Object {
 
 	public static function ulList($data, $columnCount = 3, $li = NULL) {
-		if(!($data instanceof Traversable || is_array($data))) {
+		
+		if(!($data instanceof \Traversable || is_array($data))) {
 			throw new \Nette\InvalidArgumentException('Argument "$data" does not match with the expected value');
 		}
 
@@ -17,18 +18,32 @@ class LatteHelpers extends \Nette\Object {
 			$li = '<li>%name% - {_123}</li>';
 		}
 
-		$search = array();
-		foreach (reset($data) as $key => $value) {
-			$search[] = "%$key%";
+		preg_match_all('/%[a-zA-Z,]+%/', $li, $matches);
+
+		$replaces = array();
+		foreach ($matches[0] as $match) {
+			if (gettype($data)=='object') {
+				$value = '$item->'.str_replace(',', '->', substr($match, 1, -1));
+			} else {
+				$value = '$item["'.str_replace(',', '"]["', substr($match, 1, -1)).'"]';
+			}
+			$replaces[$match] = $value;
 		}
 
 		$newData = array();
-		$dataTemp = $data;
-		while(count($dataTemp)) {
-			for ($i=0; $i < $columnCount; $i++) {
-				if(!count($dataTemp)) break 2;
-				$liTemp = str_replace($search, array_shift($dataTemp), $li);
+		for ($i=0; $i < $columnCount; $i++) {
+			foreach ($data as $k=>$item) {
+				$search = array();
+				$replace = array();
+				foreach ($replaces as $key => $value) {
+					$search[] = $key;
+					eval('$r = '.$value.';');
+					$replace = $r;
+				}
+				$liTemp = str_replace($search, $replace, $li);
 				$newData[$i][] = $liTemp;
+				unset($data[$k]);
+				break;
 			}
 		}
 
@@ -38,5 +53,7 @@ class LatteHelpers extends \Nette\Object {
 		}
 
 		return implode('', $return);
+
 	}
+
 }
