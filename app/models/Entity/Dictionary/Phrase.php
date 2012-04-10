@@ -38,6 +38,7 @@ class Phrase extends \Entity\BaseEntityDetails {
 
 	
 
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -55,7 +56,7 @@ class Phrase extends \Entity\BaseEntityDetails {
 		if(!$this->translations->contains($translation)) {
 			$this->translations->add($translation);
 		}
-		$translation->addPhrase($this);
+		$translation->setPhrase($this);
 
 		return $this;
 	}
@@ -68,7 +69,7 @@ class Phrase extends \Entity\BaseEntityDetails {
 		if($this->translations->contains($translation)) {
 			$this->translations->removeElement($translation);
 		}
-		$translation->removePhrase($this);
+		$translation->unsetPhrase();
 
 		return $this;
 	}

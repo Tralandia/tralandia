@@ -51,6 +51,7 @@ class Translation extends \Entity\BaseEntity {
 
 	
 
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -64,6 +65,15 @@ class Translation extends \Entity\BaseEntity {
 	 */
 	public function setPhrase(\Entity\Dictionary\Phrase $phrase) {
 		$this->phrase = $phrase;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Dictionary\Translation
+	 */
+	public function unsetPhrase() {
+		$this->phrase = NULL;
 
 		return $this;
 	}

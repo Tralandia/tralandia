@@ -132,6 +132,7 @@ class EntityGeneratorPresenter extends BasePresenter {
 						$this->addMethod('todo', $newClass, $property, $targetedEntityPropery);						
 					} else if(isset($property->inversedBy)) {
 						$this->addMethod('set', $newClass, $property, $targetedEntityPropery);
+						$this->addMethod('unset', $newClass, $property, $targetedEntityPropery);
 						$this->addMethod('get2', $newClass, $property, $targetedEntityPropery);
 					} else {
 						$this->addMethod('set', $newClass, $property, $targetEntity->name);
@@ -173,8 +174,8 @@ class EntityGeneratorPresenter extends BasePresenter {
 
 					if($targetedEntityPropery->association == ORM\ClassMetadataInfo::MANY_TO_ONE) { 	// One To Many Bi
 						if(isset($property->mappedBy)) {
-							$this->addMethod('add', $newClass, $property, $targetedEntityPropery);
-							$this->addMethod('remove', $newClass, $property, $targetedEntityPropery);
+							$this->addMethod('add3', $newClass, $property, $targetedEntityPropery);
+							$this->addMethod('remove3', $newClass, $property, $targetedEntityPropery);
 							$this->addMethod('get', $newClass, $property, $targetedEntityPropery);
 						} else if(isset($property->inversedBy)) {
 							$this->addMethod('add2', $newClass, $property, $targetedEntityPropery);
@@ -374,7 +375,7 @@ class EntityGeneratorPresenter extends BasePresenter {
 			'name' => $property->singularFu,
 		));
 
-		if(in_array($type, array('add', 'add2', 'remove', 'remove2'))) {
+		if(in_array($type, array('add', 'add2', 'add3', 'remove', 'remove2', 'remove3'))) {
 			$snippet->type = 1;
 			$snippet->returnThis = TRUE;
 			if($type == 'add') {
@@ -383,11 +384,19 @@ class EntityGeneratorPresenter extends BasePresenter {
 			} else if ($type == 'add2') {
 				$methodName->prefix = 'add';
 				$snippet->var = 'add';
-				$snippet->var2 = FALSE;
+				$snippet->var2 = NULL;
 			} else if ($type == 'remove') {
 				$snippet->var = 'removeElement';
 				$snippet->var2 = TRUE;
 			} else if ($type == 'remove2') {
+				$methodName->prefix = 'remove';
+				$snippet->var = 'removeElement';
+				$snippet->var2 = NULL;
+			} else if ($type == 'add3') {
+				$methodName->prefix = 'add';
+				$snippet->var = 'add';
+				$snippet->var2 = FALSE;
+			} else if ($type == 'remove3') {
 				$methodName->prefix = 'remove';
 				$snippet->var = 'removeElement';
 				$snippet->var2 = FALSE;
@@ -447,11 +456,11 @@ class EntityGeneratorPresenter extends BasePresenter {
 			if($snippet->var2 === TRUE) {
 				$body[] = sprintf('$%s->%s%s($this);', $parameter, $type, $tagetPropery->singularFu);
 			} else if($snippet->var2 === FALSE){
-				// if($methodName->prefix == 'add') {
-				// 	$body[] = sprintf('$%s->set%s($this);', $parameter, $tagetPropery->nameFu);
-				// } else {
-				// 	$body[] = sprintf('$%s->unset%s();', $parameter, $tagetPropery->nameFu);					
-				// }
+				if($methodName->prefix == 'add') {
+					$body[] = sprintf('$%s->set%s($this);', $parameter, $tagetPropery->nameFu);
+				} else {
+					$body[] = sprintf('$%s->unset%s();', $parameter, $tagetPropery->nameFu);					
+				}
 			}
 		} else if($snippet->type == 2) {
 			if($type == 'setInverse') {
