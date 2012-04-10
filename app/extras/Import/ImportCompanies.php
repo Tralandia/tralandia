@@ -54,6 +54,7 @@ class ImportCompanies extends BaseImport {
 			}
 			$s->save();
 		}
+		\Extras\Models\Service::flush(FALSE);
 	}
 
 	private function importOffices() {
@@ -64,18 +65,19 @@ class ImportCompanies extends BaseImport {
 		while($x = mysql_fetch_array($r)) {
 			$s = S\Company\Office::get();
 			$s->oldId = $x['id'];
-
+			debug($x['countries_id']);return;
 			$s->address = new \Extras\Types\Address(array(
 				'address' => array_filter(array($x['address'], $x['address_2'])),
 				'postcode' => $x['postcode'],
 				'locality' => $x['locality'],
-				'country' => \Service\Location\Country::getByOldId($x['id'])->location->id,
+				'country' => \Service\Location\Country::getByOldId($x['countries_id'])->location->id,
 			)); // @todo - toto este neuklada ok, je na to task v taskee
 
 			$s->company = \Service\Company\Company::get(3);
-			$s->addCountry(\Service\Location\Country::getByOldId($x['id'])->location);
+			$s->addCountry(\Service\Location\Country::getByOldId($x['countries_id'])->location);
 			$s->save();
 		}
+		\Extras\Models\Service::flush(FALSE);
 	}
 
 	private function importBankAccounts() {
@@ -102,6 +104,7 @@ class ImportCompanies extends BaseImport {
 			$s->addCountry(\Service\Location\Country::getByOldId($x['bank_country_id'])->location);
 			$s->save();
 		}
+		\Extras\Models\Service::flush(FALSE);
 	}
 
 }

@@ -15,7 +15,7 @@ class ImportUserRoles extends BaseImport {
 	public function doImport() {
 		$this->savedVariables['importedSections']['userRoles'] = 1;
 
-		$allRoles = array('Guest', 'Visitor', 'Owner', 'Translator', 'Assistant', 'Vendor', 'Manager', 'Admin', 'SuperAdmin');
+		$allRoles = array('Guest', 'Visitor', 'PotentialOwner', 'Owner', 'Translator', 'Assistant', 'Vendor', 'Manager', 'Admin', 'SuperAdmin');
 
 		foreach ($allRoles as $key => $value) {
 			$role = \Service\User\Role::get();

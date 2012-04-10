@@ -15,12 +15,33 @@ class ImportUsers extends BaseImport {
 	public function doImport() {
 		$this->savedVariables['importedSections']['users'] = 1;
 
-		//$this->importSuperAdmins();
-		//$this->importAdmins();
-		//$this->importManagers();
-		//$this->importTranslators();
-		$this->importOwners();
-		//$this->importVisitors();
+		// $user1 = \Service\User\User::get(1);
+		// $user2 = \Service\User\User::get(2);
+		// $user2 = \Service\User\User::get(3);
+		// \Service\User\User::merge($user1, $user2, $user3);
+
+		$allSubsections = array('importSuperAdmins', 'importAdmins', 'importManagers', 'importTranslators', 'importOwners', 'importPotentialOwners', 'importVisitors');
+
+		if (!isset($this->savedVariables['importedSubSections'])) {
+			$this->savedVariables['importedSubSections'] = array();
+		}
+
+		if (!isset($this->savedVariables['importedSubSections']['users'])) {
+			$this->savedVariables['importedSubSections']['users'] = array();
+			foreach ($allSubsections as $key => $value) {
+				$this->savedVariables['importedSubSections']['users'][$value] = 0;
+			}
+		}
+
+		foreach ($allSubsections as $key => $value) {
+			if ($this->savedVariables['importedSubSections']['users'][$value] == 1) {
+				continue;
+			}
+
+			$this->$value(); 
+			$this->savedVariables['importedSubSections']['users'][$value] = 1;
+			return;
+		}
 
 		$this->savedVariables['importedSections']['users'] = 2;
 	}
@@ -215,6 +236,70 @@ class ImportUsers extends BaseImport {
 			$user->addLocation(\Service\Location\Country::getByOldId($x['country_id'])->location);
 
 			// @todo - importovat aj ostatne emails , phones pre kazdeho usera...
+			debug($user); return;
+
+			$user->save();
+		}
+	}
+
+	private function importPotentialOwners() {
+
+		$role = \Service\User\Role::getBySlug('potentialowner');
+		$locationTypeCountry = \Service\Location\Type::getBySlug('country');
+
+		$r = q('select * from contacts where country_id = 46 limit 10000');
+		//$r = q('select * from contacts');
+
+		while($x = mysql_fetch_array($r)) {
+
+			$x['email'] = trim($email); // toto je pre pripad chybnych emailov, aj take su v db
+
+			$user = \Service\User\User::getByLogin($x['email']);
+
+			if ($user instanceof \Service\User\User && $user->id > 0) {
+				// nic sa nedeje, ale nemozem dat continue, lebo nizsie importujem emails a phones naviazane na tento kontakt
+			} else {
+				$user = \Service\User\User::get();
+
+				$user->login = $x['email'];
+				$user->password = NULL;
+
+				$user->addRole($role);
+
+				$user->invoicingSalutation = $x['contact_salutation'];
+				$user->invoicingFirstName = $x['contact_firstname'];
+				$user->invoicingLastName = $x['contact_lastname'];
+
+				$contactParams = array(
+					'subscribed' => !(bool)$x['unsubscribed'],
+					'banned' => (bool)$x['banned'],
+					'full' => (bool)$x['full'],
+					'spam' => (bool)$x['spam'],
+				);
+				if(Validators::isUrl($x['url'])) $user->addContact($this->createContact('url', $x['url'], $contactParams));
+				if(Validators::isEmail($x['email'])) $user->addContact($this->createContact('email', $x['email'], $contactParams));
+
+				$user->invoicingAddress = new \Extras\Types\Address(array(
+					'address' => array_filter(array($x['address1'], $x['address2'])),
+					'postcode' => $x['postcode'],
+					'locality' => $x['city'],
+					'country' => \Service\Location\Location::getByOldIdAndType($x['country_id'], $locationTypeCountry),
+				));
+
+				$user->invoicingCompanyName = $x['contact_company'];
+				
+				$user->defaultLanguage = $this->languagesByOldId[$x['language_id']];
+				$user->addLocation(\Service\Location\Country::getByOldId($x['country_id'])->location);
+			}
+
+
+			$r1 = q('select * from contacts_emails where contact_id = '.$x['id'].' and email != "'.$x['email'].'"');
+			while ($x1 = mysql_fetch_array($r1)) {
+				if(Validators::isEmail($x1['email'])) {
+					$user->addContact($this->createContact('email', $x1['email'], $contactParams));
+				}
+			}
+
 			debug($user); return;
 
 			$user->save();

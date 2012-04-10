@@ -22,7 +22,7 @@ class Company extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Location\Location", mappedBy="companies")
+	 * @ORM\ManyToMany(targetEntity="Entity\Location\Location", mappedBy="companies", cascade={"persist"})
 	 */
 	protected $countries;
 

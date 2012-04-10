@@ -55,7 +55,7 @@ class Phrase extends \Entity\BaseEntityDetails {
 		if(!$this->translations->contains($translation)) {
 			$this->translations->add($translation);
 		}
-		$translation->addPhrase($this);
+		//$translation->addPhrase($this);
 
 		return $this;
 	}

@@ -48,9 +48,9 @@ class ImportLocations extends BaseImport {
 			if ($this->savedVariables['importedSubSections']['locations'][$value] == 1) {
 				continue;
 			}
-			debug($value);
 
-			$this->$value(); 
+			debug($value);
+			$this->$value();
 			$this->savedVariables['importedSubSections']['locations'][$value] = 1;
 			return;
 		}
@@ -157,11 +157,11 @@ class ImportLocations extends BaseImport {
 			if (strlen($x['fb_group'])) $country->facebookGroup = $this->createContact('Url', $x['fb_group']);
 			$country->capitalCity = $x['capital_city'];
 
-			$country->phoneNumberEmergency = $this->createContact('Phone', $x['phone_number_emergency']);
-			$country->phoneNumberPolice = $this->createContact('Phone', $x['phone_number_police']);
-			$country->phoneNumberMedical = $this->createContact('Phone', $x['phone_number_medical']);
-			$country->phoneNumberFire = $this->createContact('Phone', $x['phone_number_fire']);
-			$country->wikipediaLink = $this->createContact('Url', $x['wikipedia_link']);
+			if (strlen($x['phone_number_emergency'])) $country->phoneNumberEmergency = $this->createContact('Phone', $x['phone_number_emergency']);
+			if (strlen($x['phone_number_police'])) $country->phoneNumberPolice = $this->createContact('Phone', $x['phone_number_police']);
+			if (strlen($x['phone_number_medical'])) $country->phoneNumberMedical = $this->createContact('Phone', $x['phone_number_medical']);
+			if (strlen($x['phone_number_fire'])) $country->phoneNumberFire = $this->createContact('Phone', $x['phone_number_fire']);
+			if (strlen($x['wikipedia_link'])) $country->wikipediaLink = $this->createContact('Url', $x['wikipedia_link']);
 
 			$country->drivingSide = $x['driving_side'];
 			$country->pricesPizza = new Price($x['prices_pizza']); // @todo - spravit menu, aby som posielal ako entitu / servicu
@@ -217,6 +217,7 @@ class ImportLocations extends BaseImport {
 						'locative' => $x1['name_locative'],
 					);
 					$value->variations = $variations;
+					debug($value);
 					$value->save();
 				}
 
