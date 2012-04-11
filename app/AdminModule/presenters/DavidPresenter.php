@@ -58,6 +58,33 @@ class DavidPresenter extends BasePresenter {
 		
 	}
 
+	public function createComponentTabControl($name) {
+
+		$tabControl = new \BaseModule\TabControl\TabControl($this, $name);
+
+
+		$t = $tabControl->addTab('tab1');
+		$t->header = 1;
+		$t->active = true;
+		$t->content = 'content 1';
+
+		$t = $tabControl->addTab('tab2');
+		$t->header = 2;
+		$t->content = $tabControl2 = new \BaseModule\TabControl\TabControl($t, 'test');
+
+		
+		$t = $tabControl2->addTab('tab21');
+		$t->header = 1;
+		$t->active = true;
+		$t->content = 'subtab 1';
+
+		$t = $tabControl->addTab('tab3');
+		$t->header = 3;
+		$t->content = new \FrontModule\RegistrationPage\Registration($t, 'registrationPage');
+
+		return $tabControl;
+
+	}
 
 
 	public function actionAddTranslation () {
