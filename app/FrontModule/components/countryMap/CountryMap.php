@@ -1,5 +1,5 @@
 <?php 
-namespace FrontModule\CountryMap;
+namespace FrontModule\Components\CountryMap;
 
 use Nette\Application\UI\Control;
 

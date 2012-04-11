@@ -1,5 +1,5 @@
 <?php 
-namespace FrontModule\RegistrationPage;
+namespace FrontModule\Components\RegistrationPage;
 
 use Nette\Application\UI\Control,
 	FrontModule\BasePage\BasePage;

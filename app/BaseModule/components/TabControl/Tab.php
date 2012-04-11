@@ -1,5 +1,5 @@
 <?php
-namespace BaseModule\TabControl;
+namespace BaseModule\Components\TabControl;
 
 use Nette\Application\UI\Control;
 
@@ -34,7 +34,6 @@ class Tab extends Control {
 	}
 
 	public function isControl() {
-		debug($this->isControl);
 		return $this->isControl;
 	}
 
