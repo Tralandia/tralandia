@@ -1,5 +1,5 @@
 <?php 
-namespace FrontModule\BasePage;
+namespace FrontModule\Components\BasePage;
 
 use Nette\Application\UI\Control;
 

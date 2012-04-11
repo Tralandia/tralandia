@@ -1,5 +1,5 @@
 <?php 
-namespace BaseModule\TabControl;
+namespace BaseModule\Components\TabControl;
 
 use Nette\Application\UI\Control;
 

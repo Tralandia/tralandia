@@ -1,5 +1,5 @@
 <?php 
-namespace FrontModule\Breadcrumb;
+namespace FrontModule\Components\Breadcrumb;
 
 use Nette\Application\UI\Control;
 
