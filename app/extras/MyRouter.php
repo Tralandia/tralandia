@@ -6,13 +6,12 @@ use Nette,
 	Nette\Application,
 	Nette\Utils\Strings;
 
-class MyRouter implements Nette\Application\IRouter {
+class MyRoute implements Nette\Application\IRouter {
 	
 	protected $db;
 	protected $metadata;
 	
-	public function __construct(Nette\Database\Connection $database, $metadata) {
-		$this->db = $database;
+	public function __construct($metadata) {
 		if (is_string($metadata)) {
 			$a = strrpos($metadata, ':');
 			if (!$a) {
@@ -29,6 +28,8 @@ class MyRouter implements Nette\Application\IRouter {
 
 	function match(Nette\Http\IRequest $httpRequest) {
 
+		$presenter = $this->metadata['presenter'];
+		$params = array();
 		return new Application\Request(
 			$presenter,
 			$httpRequest->getMethod(),

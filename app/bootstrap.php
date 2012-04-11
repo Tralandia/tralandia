@@ -2,6 +2,7 @@
 
 use Nette\Diagnostics\Debugger,
 	Nette\Environment,
+	Extras\MyRoute,
 	Nette\Application\Routers\Route,
 	Nette\Application\Routers\RouteList,
 	Nella\Addons\Doctrine\Config\Extension;
@@ -68,6 +69,7 @@ $container->application->onStartup[] = function() use ($container) {
 	));
 
 	$router[] = $frontRouter = new RouteList('Front');
+	$frontRouter[] = new MyRoute('Home:default');
 	$frontRouter[] = new Route('<presenter>/[<action>[/<id>]]', 'Home:default');
 
 };
