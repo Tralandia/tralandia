@@ -6,7 +6,7 @@ use Nette,
 	Nette\Application,
 	Nette\Utils\Strings;
 
-class MyRoute implements Nette\Application\IRouter {
+class Route implements Nette\Application\IRouter {
 	
 	protected $db;
 	protected $metadata;

@@ -124,4 +124,8 @@ abstract class BasePresenter extends Presenter {
 		\Extras\MyMacros::install($latte->compiler);
 	}
 
+	public function getBaseUrl() {
+		return $this->template->baseUrl;
+	}
+
 }

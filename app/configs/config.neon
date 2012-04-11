@@ -1,0 +1,67 @@
+common:
+	php:
+		date.timezone: Europe/Bratislava
+		zlib.output_compression: yes
+		max_execution_time: 60
+
+	nette:
+		session:
+			autoStart: smart
+		
+	parameters:
+		security:
+			salt: '8723lks762ngknl90835bkd'
+			sender: 'noreply@tralandia.sk'
+		
+		
+		envOptions:
+			sendEmail: TRUE
+		
+		editor: 'txmt://open/?url=file://%file&line=%line'
+		
+	services:
+		nette.presenterFactory:
+			class: Extras\DynamicPresenterFactory
+			factory: Extras\DynamicPresenterFactory::factory
+			
+		#authenticator: Security\Authenticator
+
+		authorizator: Security\Acl
+
+		environment: Extras\Environment
+
+		translator: Extras\Translator(@environment, @cacheStorage)
+			
+		settings:
+			factory: Extras\PresenterSettings::factory
+		
+
+production < common:
+		
+console < common:
+
+development < common:
+	php:
+		max_execution_time: 0
+		memory_limit: 1024M
+
+
+	parameters:
+		envOptions:
+			sendEmail: FASLE
+
+		
+vaculciak < development:
+	parameters:
+
+		editor: 'txmt://open/?url=file://%file&line=%line'
+
+durika < development:
+	parameters:
+		editor: 'edit://open/?url=file://%file&line=%line'
+		envOptions:
+			email: tralandia.david@gmail.com
+		
+
+
+test < development:
