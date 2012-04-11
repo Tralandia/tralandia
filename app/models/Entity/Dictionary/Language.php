@@ -74,6 +74,8 @@ class Language extends \Entity\BaseEntityDetails {
 	 */
 	protected $rentals;
 
+	
+
 
 //@entity-generator-code <--- NEMAZAT !!!
 

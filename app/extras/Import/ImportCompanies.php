@@ -17,9 +17,9 @@ class ImportCompanies extends BaseImport {
 	public function doImport() {
 		$this->savedVariables['importedSections']['companies'] = 1;
 	
-		//$this->importCompanies();
-		//$this->importOffices();
-		//$this->importBankAccounts();
+		$this->importCompanies();
+		$this->importOffices();
+		$this->importBankAccounts();
 
 		$this->savedVariables['importedSections']['companies'] = 2;
 

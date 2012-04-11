@@ -36,13 +36,15 @@ class Combination extends \Entity\BaseEntityDetails {
 	 */
 	protected $languageLevel;
 
-	/* ----------------------------- Methods ----------------------------- */
 
+	
+//@entity-generator-code <--- NEMAZAT !!!
 
+	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct() {
 		parent::__construct();
 	}
-
+		
 	/**
 	 * @param \Entity\User\User
 	 * @return \Entity\User\Combination
@@ -52,14 +54,14 @@ class Combination extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\User\User|NULL
 	 */
 	public function getUser() {
 		return $this->user;
 	}
-
+		
 	/**
 	 * @param \Entity\Location\Location
 	 * @return \Entity\User\Combination
@@ -69,7 +71,7 @@ class Combination extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\User\Combination
 	 */
@@ -78,14 +80,14 @@ class Combination extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Location\Location|NULL
 	 */
 	public function getCountry() {
 		return $this->country;
 	}
-
+		
 	/**
 	 * @param \Entity\Dictionary\Language
 	 * @return \Entity\User\Combination
@@ -95,7 +97,7 @@ class Combination extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\User\Combination
 	 */
@@ -104,14 +106,14 @@ class Combination extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Dictionary\Language|NULL
 	 */
 	public function getLanguage() {
 		return $this->language;
 	}
-
+		
 	/**
 	 * @param integer
 	 * @return \Entity\User\Combination
@@ -121,12 +123,11 @@ class Combination extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return integer|NULL
 	 */
 	public function getLanguageLevel() {
 		return $this->languageLevel;
 	}
-
 }

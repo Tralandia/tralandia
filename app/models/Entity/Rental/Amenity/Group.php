@@ -14,7 +14,7 @@ class Group extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Amenity", mappedBy="goup")
+	 * @ORM\OneToMany(targetEntity="Amenity", mappedBy="group")
 	 */
 	protected $amenities;
 
@@ -24,4 +24,63 @@ class Group extends \Entity\BaseEntity {
 	 */
 	protected $name;
 
+	
+//@entity-generator-code <--- NEMAZAT !!!
+
+	/* ----------------------------- Methods ----------------------------- */		
+	public function __construct() {
+		parent::__construct();
+
+		$this->amenities = new \Doctrine\Common\Collections\ArrayCollection;
+	}
+		
+	/**
+	 * @param \Entity\Rental\Amenity\Amenity
+	 * @return \Entity\Rental\Amenity\Group
+	 */
+	public function addAmenity(\Entity\Rental\Amenity\Amenity $amenity) {
+		if(!$this->amenities->contains($amenity)) {
+			$this->amenities->add($amenity);
+		}
+		$amenity->addGroup($this);
+
+		return $this;
+	}
+		
+	/**
+	 * @param \Entity\Rental\Amenity\Amenity
+	 * @return \Entity\Rental\Amenity\Group
+	 */
+	public function removeAmenity(\Entity\Rental\Amenity\Amenity $amenity) {
+		if($this->amenities->contains($amenity)) {
+			$this->amenities->removeElement($amenity);
+		}
+		$amenity->removeGroup($this);
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Rental\Amenity\Amenity
+	 */
+	public function getAmenities() {
+		return $this->amenities;
+	}
+		
+	/**
+	 * @param \Entity\Dictionary\Phrase
+	 * @return \Entity\Rental\Amenity\Group
+	 */
+	public function setName(\Entity\Dictionary\Phrase $name) {
+		$this->name = $name;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Dictionary\Phrase|NULL
+	 */
+	public function getName() {
+		return $this->name;
+	}
 }

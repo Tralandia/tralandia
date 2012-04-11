@@ -61,13 +61,15 @@ class Medium extends \Entity\BaseEntityDetails {
 	protected $sort;
 
 
-	/* ----------------------------- Methods ----------------------------- */
+	
 
+//@entity-generator-code <--- NEMAZAT !!!
 
+	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct() {
 		parent::__construct();
 	}
-
+		
 	/**
 	 * @param \Entity\Medium\Type
 	 * @return \Entity\Medium\Medium
@@ -77,7 +79,7 @@ class Medium extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Medium\Medium
 	 */
@@ -86,14 +88,14 @@ class Medium extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Medium\Type|NULL
 	 */
 	public function getType() {
 		return $this->type;
 	}
-
+		
 	/**
 	 * @param \Entity\Dictionary\Phrase
 	 * @return \Entity\Medium\Medium
@@ -103,14 +105,14 @@ class Medium extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Dictionary\Phrase|NULL
 	 */
 	public function getName() {
 		return $this->name;
 	}
-
+		
 	/**
 	 * @param \Entity\Attraction\Attraction
 	 * @return \Entity\Medium\Medium
@@ -120,14 +122,14 @@ class Medium extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Attraction\Attraction|NULL
 	 */
 	public function getAttraction() {
 		return $this->attraction;
 	}
-
+		
 	/**
 	 * @param \Entity\Rental\Rental
 	 * @return \Entity\Medium\Medium
@@ -137,14 +139,14 @@ class Medium extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Rental\Rental|NULL
 	 */
 	public function getRental() {
 		return $this->rental;
 	}
-
+		
 	/**
 	 * @param \Entity\Seo\SeoUrl
 	 * @return \Entity\Medium\Medium
@@ -154,14 +156,14 @@ class Medium extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Seo\SeoUrl|NULL
 	 */
 	public function getSeoUrl() {
 		return $this->seoUrl;
 	}
-
+		
 	/**
 	 * @param \Entity\Ticket\Message
 	 * @return \Entity\Medium\Medium
@@ -171,14 +173,14 @@ class Medium extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Ticket\Message|NULL
 	 */
 	public function getMessage() {
 		return $this->message;
 	}
-
+		
 	/**
 	 * @param string
 	 * @return \Entity\Medium\Medium
@@ -188,14 +190,14 @@ class Medium extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return string|NULL
 	 */
 	public function getUri() {
 		return $this->uri;
 	}
-
+		
 	/**
 	 * @param integer
 	 * @return \Entity\Medium\Medium
@@ -205,13 +207,11 @@ class Medium extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return integer|NULL
 	 */
 	public function getSort() {
 		return $this->sort;
 	}
-
-
 }

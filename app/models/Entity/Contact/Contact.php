@@ -37,7 +37,7 @@ class Contact extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\User\User", inversedBy="contact", cascade={"persist"})
+	 * @ORM\ManyToOne(targetEntity="Entity\User\User", inversedBy="contacts", cascade={"persist"})
 	 */
 	protected $user;
 
@@ -77,9 +77,11 @@ class Contact extends \Entity\BaseEntity {
 	 */
 	protected $spam = FALSE;
 
-	/* ----------------------------- Methods ----------------------------- */
+	
 
+//@entity-generator-code <--- NEMAZAT !!!
 
+	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct() {
 		parent::__construct();
 
@@ -87,7 +89,7 @@ class Contact extends \Entity\BaseEntity {
 		$this->rentals = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->countries = new \Doctrine\Common\Collections\ArrayCollection;
 	}
-
+		
 	/**
 	 * @param \Entity\Contact\Type
 	 * @return \Entity\Contact\Contact
@@ -97,7 +99,7 @@ class Contact extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Contact\Contact
 	 */
@@ -106,14 +108,14 @@ class Contact extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Contact\Type|NULL
 	 */
 	public function getType() {
 		return $this->type;
 	}
-
+		
 	/**
 	 * @param string
 	 * @return \Entity\Contact\Contact
@@ -123,7 +125,7 @@ class Contact extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Contact\Contact
 	 */
@@ -132,14 +134,14 @@ class Contact extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return string|NULL
 	 */
 	public function getValue() {
 		return $this->value;
 	}
-
+		
 	/**
 	 * @param \Entity\Attraction\Attraction
 	 * @return \Entity\Contact\Contact
@@ -151,14 +153,14 @@ class Contact extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Attraction\Attraction
 	 */
 	public function getAttractions() {
 		return $this->attractions;
 	}
-
+		
 	/**
 	 * @param \Entity\Rental\Rental
 	 * @return \Entity\Contact\Contact
@@ -170,14 +172,14 @@ class Contact extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Rental\Rental
 	 */
 	public function getRentals() {
 		return $this->rentals;
 	}
-
+		
 	/**
 	 * @param \Entity\User\User
 	 * @return \Entity\Contact\Contact
@@ -187,14 +189,14 @@ class Contact extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\User\User
+	 * @return \Entity\User\User|NULL
 	 */
 	public function getUser() {
 		return $this->user;
 	}
-
+		
 	/**
 	 * @param \Entity\Location\Country
 	 * @return \Entity\Contact\Contact
@@ -206,14 +208,14 @@ class Contact extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Location\Country
 	 */
 	public function getCountries() {
 		return $this->countries;
 	}
-
+		
 	/**
 	 * @param json
 	 * @return \Entity\Contact\Contact
@@ -223,7 +225,7 @@ class Contact extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Contact\Contact
 	 */
@@ -232,14 +234,14 @@ class Contact extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return json|NULL
 	 */
 	public function getInfo() {
 		return $this->info;
 	}
-
+		
 	/**
 	 * @param boolean
 	 * @return \Entity\Contact\Contact
@@ -249,14 +251,14 @@ class Contact extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return boolean|NULL
 	 */
 	public function getSubscribed() {
 		return $this->subscribed;
 	}
-
+		
 	/**
 	 * @param boolean
 	 * @return \Entity\Contact\Contact
@@ -266,14 +268,14 @@ class Contact extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return boolean|NULL
 	 */
 	public function getBanned() {
 		return $this->banned;
 	}
-
+		
 	/**
 	 * @param boolean
 	 * @return \Entity\Contact\Contact
@@ -283,14 +285,14 @@ class Contact extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return boolean|NULL
 	 */
 	public function getFull() {
 		return $this->full;
 	}
-
+		
 	/**
 	 * @param boolean
 	 * @return \Entity\Contact\Contact
@@ -300,12 +302,11 @@ class Contact extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return boolean|NULL
 	 */
 	public function getSpam() {
 		return $this->spam;
 	}
-
 }

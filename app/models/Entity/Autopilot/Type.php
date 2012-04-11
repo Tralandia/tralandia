@@ -66,13 +66,16 @@ class Type extends \Entity\BaseEntityDetails {
 	 */
 	protected $actions;
 
-	/* ----------------------------- Methods ----------------------------- */
+	
 
 
+//@entity-generator-code <--- NEMAZAT !!!
+
+	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct() {
 		parent::__construct();
 	}
-
+		
 	/**
 	 * @param string
 	 * @return \Entity\Autopilot\Type
@@ -82,14 +85,14 @@ class Type extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return string|NULL
 	 */
 	public function getName() {
 		return $this->name;
 	}
-
+		
 	/**
 	 * @param string
 	 * @return \Entity\Autopilot\Type
@@ -99,14 +102,14 @@ class Type extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return string|NULL
 	 */
 	public function getTechnicalName() {
 		return $this->technicalName;
 	}
-
+		
 	/**
 	 * @param string
 	 * @return \Entity\Autopilot\Type
@@ -116,16 +119,16 @@ class Type extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return string|NULL
 	 */
 	public function getMission() {
 		return $this->mission;
 	}
-
+		
 	/**
-	 * @param \Extras\Types\Time
+	 * @param float
 	 * @return \Entity\Autopilot\Type
 	 */
 	public function setDurationPaid($durationPaid) {
@@ -133,14 +136,14 @@ class Type extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
-	 * @return \Extras\Types\Time|NULL
+	 * @return float|NULL
 	 */
 	public function getDurationPaid() {
 		return $this->durationPaid;
 	}
-
+		
 	/**
 	 * @param json
 	 * @return \Entity\Autopilot\Type
@@ -150,7 +153,7 @@ class Type extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Autopilot\Type
 	 */
@@ -159,14 +162,14 @@ class Type extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return json|NULL
 	 */
 	public function getValidation() {
 		return $this->validation;
 	}
-
+		
 	/**
 	 * @param integer
 	 * @return \Entity\Autopilot\Type
@@ -176,7 +179,7 @@ class Type extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Autopilot\Type
 	 */
@@ -185,14 +188,14 @@ class Type extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return integer|NULL
 	 */
 	public function getStackable() {
 		return $this->stackable;
 	}
-
+		
 	/**
 	 * @param float
 	 * @return \Entity\Autopilot\Type
@@ -202,14 +205,14 @@ class Type extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return float|NULL
 	 */
 	public function getTimeLimit() {
 		return $this->timeLimit;
 	}
-
+		
 	/**
 	 * @param json
 	 * @return \Entity\Autopilot\Type
@@ -219,7 +222,7 @@ class Type extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Autopilot\Type
 	 */
@@ -228,12 +231,11 @@ class Type extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return json|NULL
 	 */
 	public function getActions() {
 		return $this->actions;
 	}
-
 }

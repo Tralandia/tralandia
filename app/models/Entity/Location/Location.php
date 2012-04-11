@@ -165,9 +165,12 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 	public function __toString() { return (string)$this->slug; }
 
 
-	/* ----------------------------- Methods ----------------------------- */
 
+	
 
+//@entity-generator-code <--- NEMAZAT !!!
+
+	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct() {
 		parent::__construct();
 
@@ -180,7 +183,7 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 		$this->incomingLocations = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->outgoingLocations = new \Doctrine\Common\Collections\ArrayCollection;
 	}
-
+		
 	/**
 	 * @param \Entity\Dictionary\Phrase
 	 * @return \Entity\Location\Location
@@ -190,14 +193,14 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 
 		return $this;
 	}
-
+		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Dictionary\Phrase
+	 * @return \Entity\Dictionary\Phrase|NULL
 	 */
 	public function getName() {
 		return $this->name;
 	}
-
+		
 	/**
 	 * @param \Entity\Dictionary\Phrase
 	 * @return \Entity\Location\Location
@@ -207,14 +210,14 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 
 		return $this;
 	}
-
+		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Dictionary\Phrase
+	 * @return \Entity\Dictionary\Phrase|NULL
 	 */
 	public function getNameOfficial() {
 		return $this->nameOfficial;
 	}
-
+		
 	/**
 	 * @param \Entity\Dictionary\Phrase
 	 * @return \Entity\Location\Location
@@ -224,14 +227,14 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 
 		return $this;
 	}
-
+		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Dictionary\Phrase
+	 * @return \Entity\Dictionary\Phrase|NULL
 	 */
 	public function getNameShort() {
 		return $this->nameShort;
 	}
-
+		
 	/**
 	 * @param slug
 	 * @return \Entity\Location\Location
@@ -241,14 +244,14 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return slug|NULL
 	 */
 	public function getSlug() {
 		return $this->slug;
 	}
-
+		
 	/**
 	 * @param integer
 	 * @return \Entity\Location\Location
@@ -258,7 +261,7 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Location\Location
 	 */
@@ -267,92 +270,14 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return integer|NULL
 	 */
 	public function getParentId() {
 		return $this->parentId;
 	}
-
-	/**
-	 * @param integer
-	 * @return \Entity\Location\Location
-	 */
-	public function setNestedLeft($nestedLeft) {
-		$this->nestedLeft = $nestedLeft;
-
-		return $this;
-	}
-
-	/**
-	 * @return \Entity\Location\Location
-	 */
-	public function unsetNestedLeft() {
-		$this->nestedLeft = NULL;
-
-		return $this;
-	}
-
-	/**
-	 * @return integer|NULL
-	 */
-	public function getNestedLeft() {
-		return $this->nestedLeft;
-	}
-
-	/**
-	 * @param integer
-	 * @return \Entity\Location\Location
-	 */
-	public function setNestedRight($nestedRight) {
-		$this->nestedRight = $nestedRight;
-
-		return $this;
-	}
-
-	/**
-	 * @return \Entity\Location\Location
-	 */
-	public function unsetNestedRight() {
-		$this->nestedRight = NULL;
-
-		return $this;
-	}
-
-	/**
-	 * @return integer|NULL
-	 */
-	public function getNestedRight() {
-		return $this->nestedRight;
-	}
-
-	/**
-	 * @param integer
-	 * @return \Entity\Location\Location
-	 */
-	public function setNestedRoot($nestedRoot) {
-		$this->nestedRoot = $nestedRoot;
-
-		return $this;
-	}
-
-	/**
-	 * @return \Entity\Location\Location
-	 */
-	public function unsetNestedRoot() {
-		$this->nestedRoot = NULL;
-
-		return $this;
-	}
-
-	/**
-	 * @return integer|NULL
-	 */
-	public function getNestedRoot() {
-		return $this->nestedRoot;
-	}
-
+		
 	/**
 	 * @param \Entity\Location\Type
 	 * @return \Entity\Location\Location
@@ -362,7 +287,7 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Location\Location
 	 */
@@ -371,14 +296,14 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Location\Type|NULL
 	 */
 	public function getType() {
 		return $this->type;
 	}
-
+		
 	/**
 	 * @param json
 	 * @return \Entity\Location\Location
@@ -388,7 +313,7 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Location\Location
 	 */
@@ -397,14 +322,14 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return json|NULL
 	 */
 	public function getPolygon() {
 		return $this->polygon;
 	}
-
+		
 	/**
 	 * @param \Extras\Types\Latlong
 	 * @return \Entity\Location\Location
@@ -414,7 +339,7 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Location\Location
 	 */
@@ -423,14 +348,14 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Extras\Types\Latlong|NULL
 	 */
 	public function getLatitude() {
 		return $this->latitude;
 	}
-
+		
 	/**
 	 * @param \Extras\Types\Latlong
 	 * @return \Entity\Location\Location
@@ -440,7 +365,7 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Location\Location
 	 */
@@ -449,14 +374,14 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Extras\Types\Latlong|NULL
 	 */
 	public function getLongitude() {
 		return $this->longitude;
 	}
-
+		
 	/**
 	 * @param integer
 	 * @return \Entity\Location\Location
@@ -466,7 +391,7 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Location\Location
 	 */
@@ -475,14 +400,14 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return integer|NULL
 	 */
 	public function getDefaultZoom() {
 		return $this->defaultZoom;
 	}
-
+		
 	/**
 	 * @param \Entity\Company\BankAccount
 	 * @return \Entity\Location\Location
@@ -494,14 +419,14 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Company\BankAccount
 	 */
 	public function getBankAccounts() {
 		return $this->bankAccounts;
 	}
-
+		
 	/**
 	 * @param \Entity\Company\Company
 	 * @return \Entity\Location\Location
@@ -513,14 +438,14 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Company\Company
 	 */
 	public function getCompanies() {
 		return $this->companies;
 	}
-
+		
 	/**
 	 * @param \Entity\Company\Office
 	 * @return \Entity\Location\Location
@@ -532,14 +457,14 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Company\Office
 	 */
 	public function getOffices() {
 		return $this->offices;
 	}
-
+		
 	/**
 	 * @param \Entity\Domain
 	 * @return \Entity\Location\Location
@@ -549,14 +474,14 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 
 		return $this;
 	}
-
+		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Domain
+	 * @return \Entity\Domain|NULL
 	 */
 	public function getDomain() {
 		return $this->domain;
 	}
-
+		
 	/**
 	 * @param \Entity\Invoicing\Marketing
 	 * @return \Entity\Location\Location
@@ -568,14 +493,14 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Invoicing\Marketing
 	 */
 	public function getMarketings() {
 		return $this->marketings;
 	}
-
+		
 	/**
 	 * @param \Entity\Rental\Rental
 	 * @return \Entity\Location\Location
@@ -587,14 +512,14 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Rental\Rental
 	 */
 	public function getRentals() {
 		return $this->rentals;
 	}
-
+		
 	/**
 	 * @param \Entity\User\User
 	 * @return \Entity\Location\Location
@@ -606,31 +531,42 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\User\User
 	 */
 	public function getUsers() {
 		return $this->users;
 	}
-
+		
 	/**
 	 * @param \Entity\Location\Country
 	 * @return \Entity\Location\Location
 	 */
 	public function setCountry(\Entity\Location\Country $country) {
 		$this->country = $country;
+		$country->setLocation($this);
 
 		return $this;
 	}
-
+		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Location\Country
+	 * @return \Entity\Location\Location
+	 */
+	public function unsetCountry() {
+		$this->country = NULL;
+		$country->setLocation();
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Location\Country|NULL
 	 */
 	public function getCountry() {
 		return $this->country;
 	}
-
+		
 	/**
 	 * @param \Entity\Location\Traveling
 	 * @return \Entity\Location\Location
@@ -639,10 +575,11 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 		if(!$this->incomingLocations->contains($incomingLocation)) {
 			$this->incomingLocations->add($incomingLocation);
 		}
+		$incomingLocation->addDestinationLocation($this);
 
 		return $this;
 	}
-
+		
 	/**
 	 * @param \Entity\Location\Traveling
 	 * @return \Entity\Location\Location
@@ -651,17 +588,18 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 		if($this->incomingLocations->contains($incomingLocation)) {
 			$this->incomingLocations->removeElement($incomingLocation);
 		}
+		$incomingLocation->removeDestinationLocation($this);
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Location\Traveling
 	 */
 	public function getIncomingLocations() {
 		return $this->incomingLocations;
 	}
-
+		
 	/**
 	 * @param \Entity\Location\Traveling
 	 * @return \Entity\Location\Location
@@ -670,10 +608,11 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 		if(!$this->outgoingLocations->contains($outgoingLocation)) {
 			$this->outgoingLocations->add($outgoingLocation);
 		}
+		$outgoingLocation->addSourceLocation($this);
 
 		return $this;
 	}
-
+		
 	/**
 	 * @param \Entity\Location\Traveling
 	 * @return \Entity\Location\Location
@@ -682,15 +621,15 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 		if($this->outgoingLocations->contains($outgoingLocation)) {
 			$this->outgoingLocations->removeElement($outgoingLocation);
 		}
+		$outgoingLocation->removeSourceLocation($this);
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Location\Traveling
 	 */
 	public function getOutgoingLocations() {
 		return $this->outgoingLocations;
 	}
-
 }

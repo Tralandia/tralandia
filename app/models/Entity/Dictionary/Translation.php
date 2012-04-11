@@ -48,13 +48,17 @@ class Translation extends \Entity\BaseEntity {
 	 */
 	protected $checked;
 
-	/* ----------------------------- Methods ----------------------------- */
+
+	
 
 
+//@entity-generator-code <--- NEMAZAT !!!
+
+	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct() {
 		parent::__construct();
 	}
-
+		
 	/**
 	 * @param \Entity\Dictionary\Phrase
 	 * @return \Entity\Dictionary\Translation
@@ -64,14 +68,23 @@ class Translation extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Dictionary\Phrase
+	 * @return \Entity\Dictionary\Translation
+	 */
+	public function unsetPhrase() {
+		$this->phrase = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Dictionary\Phrase|NULL
 	 */
 	public function getPhrase() {
 		return $this->phrase;
 	}
-
+		
 	/**
 	 * @param \Entity\Dictionary\Language
 	 * @return \Entity\Dictionary\Translation
@@ -81,7 +94,7 @@ class Translation extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Dictionary\Translation
 	 */
@@ -90,14 +103,14 @@ class Translation extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Dictionary\Language|NULL
 	 */
 	public function getLanguage() {
 		return $this->language;
 	}
-
+		
 	/**
 	 * @param string
 	 * @return \Entity\Dictionary\Translation
@@ -107,7 +120,7 @@ class Translation extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Dictionary\Translation
 	 */
@@ -116,14 +129,14 @@ class Translation extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return string|NULL
 	 */
 	public function getTranslation() {
 		return $this->translation;
 	}
-
+		
 	/**
 	 * @param json
 	 * @return \Entity\Dictionary\Translation
@@ -133,24 +146,24 @@ class Translation extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return json|NULL
 	 */
 	public function getVariations() {
 		return $this->variations;
 	}
-
+		
 	/**
-	 * @param \Nette\Datetime
+	 * @param \DateTime
 	 * @return \Entity\Dictionary\Translation
 	 */
-	public function setTimeTranslated(\Datetime $timeTranslated) {
+	public function setTimeTranslated(\DateTime $timeTranslated) {
 		$this->timeTranslated = $timeTranslated;
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Dictionary\Translation
 	 */
@@ -159,14 +172,14 @@ class Translation extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
-	 * @return \Nette\Datetime|NULL
+	 * @return \DateTime|NULL
 	 */
 	public function getTimeTranslated() {
 		return $this->timeTranslated;
 	}
-
+		
 	/**
 	 * @param boolean
 	 * @return \Entity\Dictionary\Translation
@@ -176,7 +189,7 @@ class Translation extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Dictionary\Translation
 	 */
@@ -185,12 +198,11 @@ class Translation extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return boolean|NULL
 	 */
 	public function getChecked() {
 		return $this->checked;
 	}
-
 }

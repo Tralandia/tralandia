@@ -30,4 +30,89 @@ class TitleSuffix extends \Entity\BaseEntity {
 	 */
 	protected $suffix;
 
+	
+//@entity-generator-code <--- NEMAZAT !!!
+
+	/* ----------------------------- Methods ----------------------------- */		
+	public function __construct() {
+		parent::__construct();
+	}
+		
+	/**
+	 * @param \Entity\Location\Location
+	 * @return \Entity\Seo\TitleSuffix
+	 */
+	public function setCountry(\Entity\Location\Location $country) {
+		$this->country = $country;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Seo\TitleSuffix
+	 */
+	public function unsetCountry() {
+		$this->country = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Location\Location|NULL
+	 */
+	public function getCountry() {
+		return $this->country;
+	}
+		
+	/**
+	 * @param \Entity\Dictionary\Language
+	 * @return \Entity\Seo\TitleSuffix
+	 */
+	public function setLanguage(\Entity\Dictionary\Language $language) {
+		$this->language = $language;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Seo\TitleSuffix
+	 */
+	public function unsetLanguage() {
+		$this->language = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Dictionary\Language|NULL
+	 */
+	public function getLanguage() {
+		return $this->language;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Seo\TitleSuffix
+	 */
+	public function setSuffix($suffix) {
+		$this->suffix = $suffix;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Seo\TitleSuffix
+	 */
+	public function unsetSuffix() {
+		$this->suffix = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getSuffix() {
+		return $this->suffix;
+	}
 }

@@ -214,6 +214,7 @@ class ImportUsers extends BaseImport {
 			$user->defaultLanguage = $this->languagesByOldId[$x['language_id']];
 			$user->addLocation(\Service\Location\Country::getByOldId($x['country_id'])->location);
 
+			// @todo - importovat aj ostatne emails , phones pre kazdeho usera...
 			debug($user); return;
 
 			$user->save();
