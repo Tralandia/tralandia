@@ -34,15 +34,18 @@ class Office extends \Entity\BaseEntityDetails {
 	 */
 	protected $address;
 
-	/* ----------------------------- Methods ----------------------------- */
+	
 
 
+//@entity-generator-code <--- NEMAZAT !!!
+
+	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct() {
 		parent::__construct();
 
 		$this->countries = new \Doctrine\Common\Collections\ArrayCollection;
 	}
-
+		
 	/**
 	 * @param \Entity\Company\Company
 	 * @return \Entity\Company\Office
@@ -52,14 +55,14 @@ class Office extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Company\Company
+	 * @return \Entity\Company\Company|NULL
 	 */
 	public function getCompany() {
 		return $this->company;
 	}
-
+		
 	/**
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Company\Office
@@ -72,7 +75,7 @@ class Office extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Company\Office
@@ -85,14 +88,14 @@ class Office extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Location\Location
 	 */
 	public function getCountries() {
 		return $this->countries;
 	}
-
+		
 	/**
 	 * @param \Entity\Medium\Medium
 	 * @return \Entity\Company\Office
@@ -102,14 +105,14 @@ class Office extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Medium\Medium|NULL
 	 */
 	public function getSignature() {
 		return $this->signature;
 	}
-
+		
 	/**
 	 * @param \Extras\Types\Address
 	 * @return \Entity\Company\Office
@@ -119,12 +122,11 @@ class Office extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Extras\Types\Address|NULL
 	 */
 	public function getAddress() {
 		return $this->address;
 	}
-
 }

@@ -23,13 +23,16 @@ class Type extends \Entity\BaseEntityDetails {
 	 */
 	protected $slug;
 
-	/* ----------------------------- Methods ----------------------------- */
 
+	
 
+//@entity-generator-code <--- NEMAZAT !!!
+
+	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct() {
 		parent::__construct();
 	}
-
+		
 	/**
 	 * @param \Entity\Dictionary\Phrase
 	 * @return \Entity\Location\Type
@@ -39,14 +42,14 @@ class Type extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Dictionary\Phrase
+	 * @return \Entity\Dictionary\Phrase|NULL
 	 */
 	public function getName() {
 		return $this->name;
 	}
-
+		
 	/**
 	 * @param slug
 	 * @return \Entity\Location\Type
@@ -56,12 +59,11 @@ class Type extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return slug|NULL
 	 */
 	public function getSlug() {
 		return $this->slug;
 	}
-
 }

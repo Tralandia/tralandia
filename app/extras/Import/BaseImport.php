@@ -74,6 +74,7 @@ class BaseImport {
 		foreach ($this->savedVariables['importedSections'] as $key => $value) {
 			$this->savedVariables['importedSections'][$key] = 0;
 		}
+		$this->savedVariables['importedSubSections'] = array();
 		$this->saveVariables();
 	}
 
@@ -87,6 +88,7 @@ class BaseImport {
 		foreach ($this->savedVariables['importedSections'] as $key => $value) {
 			$this->savedVariables['importedSections'][$key] = 0;
 		}
+		$this->savedVariables['importedSubSections'] = array();
 		$this->saveVariables();
 	}
 
@@ -107,6 +109,7 @@ class BaseImport {
 				}
 			}
 			$this->savedVariables['importedSections'][$key]=0;
+			$this->savedVariables['importedSubSections'][$key] = array();
 			if ($key == $section) break;
 		}
 		\Extras\Models\Service\Extras\Models\Service::flush(FALSE);

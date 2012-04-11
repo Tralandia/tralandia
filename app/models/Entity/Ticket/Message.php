@@ -37,4 +37,97 @@ class Message extends \Entity\BaseEntity {
 	 */
 	protected $attachments;
 
+	
+//@entity-generator-code <--- NEMAZAT !!!
+
+	/* ----------------------------- Methods ----------------------------- */		
+	public function __construct() {
+		parent::__construct();
+
+		$this->attachments = new \Doctrine\Common\Collections\ArrayCollection;
+	}
+		
+	/**
+	 * @param \Entity\Ticket\Ticket
+	 * @return \Entity\Ticket\Message
+	 */
+	public function setTicket(\Entity\Ticket\Ticket $ticket) {
+		$this->ticket = $ticket;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Ticket\Ticket|NULL
+	 */
+	public function getTicket() {
+		return $this->ticket;
+	}
+		
+	/**
+	 * @param \Extras\Types\Email
+	 * @return \Entity\Ticket\Message
+	 */
+	public function setSenderEmail(\Extras\Types\Email $senderEmail) {
+		$this->senderEmail = $senderEmail;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Extras\Types\Email|NULL
+	 */
+	public function getSenderEmail() {
+		return $this->senderEmail;
+	}
+		
+	/**
+	 * @param \Entity\Dictionary\Phrase
+	 * @return \Entity\Ticket\Message
+	 */
+	public function setMessage(\Entity\Dictionary\Phrase $message) {
+		$this->message = $message;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Dictionary\Phrase|NULL
+	 */
+	public function getMessage() {
+		return $this->message;
+	}
+		
+	/**
+	 * @param \Entity\Medium\Medium
+	 * @return \Entity\Ticket\Message
+	 */
+	public function addAttachment(\Entity\Medium\Medium $attachment) {
+		if(!$this->attachments->contains($attachment)) {
+			$this->attachments->add($attachment);
+		}
+		$attachment->addMessage($this);
+
+		return $this;
+	}
+		
+	/**
+	 * @param \Entity\Medium\Medium
+	 * @return \Entity\Ticket\Message
+	 */
+	public function removeAttachment(\Entity\Medium\Medium $attachment) {
+		if($this->attachments->contains($attachment)) {
+			$this->attachments->removeElement($attachment);
+		}
+		$attachment->removeMessage($this);
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Medium\Medium
+	 */
+	public function getAttachments() {
+		return $this->attachments;
+	}
 }

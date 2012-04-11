@@ -35,15 +35,17 @@ class Role extends \Entity\BaseEntity {
 	 */
 	protected $users;
 
-	/* ----------------------------- Methods ----------------------------- */
 
+	
+//@entity-generator-code <--- NEMAZAT !!!
 
+	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct() {
 		parent::__construct();
 
 		$this->users = new \Doctrine\Common\Collections\ArrayCollection;
 	}
-
+		
 	/**
 	 * @param string
 	 * @return \Entity\User\Role
@@ -53,14 +55,14 @@ class Role extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return string|NULL
 	 */
 	public function getName() {
 		return $this->name;
 	}
-
+		
 	/**
 	 * @param slug
 	 * @return \Entity\User\Role
@@ -70,14 +72,14 @@ class Role extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return slug|NULL
 	 */
 	public function getSlug() {
 		return $this->slug;
 	}
-
+		
 	/**
 	 * @param \Extras\Types\Url
 	 * @return \Entity\User\Role
@@ -87,14 +89,23 @@ class Role extends \Entity\BaseEntity {
 
 		return $this;
 	}
+		
+	/**
+	 * @return \Entity\User\Role
+	 */
+	public function unsetHomePage() {
+		$this->homePage = NULL;
 
+		return $this;
+	}
+		
 	/**
 	 * @return \Extras\Types\Url|NULL
 	 */
 	public function getHomePage() {
 		return $this->homePage;
 	}
-
+		
 	/**
 	 * @param \Entity\User\User
 	 * @return \Entity\User\Role
@@ -106,12 +117,11 @@ class Role extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\User\User
 	 */
 	public function getUsers() {
 		return $this->users;
 	}
-
 }

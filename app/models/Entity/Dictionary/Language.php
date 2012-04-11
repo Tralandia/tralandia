@@ -74,15 +74,19 @@ class Language extends \Entity\BaseEntityDetails {
 	 */
 	protected $rentals;
 
-	/* ----------------------------- Methods ----------------------------- */
+	
 
 
+//@entity-generator-code <--- NEMAZAT !!!
+
+	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct() {
 		parent::__construct();
 
+		$this->countries = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->rentals = new \Doctrine\Common\Collections\ArrayCollection;
 	}
-
+		
 	/**
 	 * @param \Entity\Dictionary\Phrase
 	 * @return \Entity\Dictionary\Language
@@ -92,14 +96,14 @@ class Language extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Dictionary\Phrase
+	 * @return \Entity\Dictionary\Phrase|NULL
 	 */
 	public function getName() {
 		return $this->name;
 	}
-
+		
 	/**
 	 * @param string
 	 * @return \Entity\Dictionary\Language
@@ -109,7 +113,7 @@ class Language extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Dictionary\Language
 	 */
@@ -118,14 +122,14 @@ class Language extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return string|NULL
 	 */
 	public function getIso() {
 		return $this->iso;
 	}
-
+		
 	/**
 	 * @param boolean
 	 * @return \Entity\Dictionary\Language
@@ -135,14 +139,14 @@ class Language extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return boolean|NULL
 	 */
 	public function getSupported() {
 		return $this->supported;
 	}
-
+		
 	/**
 	 * @param string
 	 * @return \Entity\Dictionary\Language
@@ -152,7 +156,7 @@ class Language extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Dictionary\Language
 	 */
@@ -161,14 +165,14 @@ class Language extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return string|NULL
 	 */
 	public function getDefaultCollation() {
 		return $this->defaultCollation;
 	}
-
+		
 	/**
 	 * @param json
 	 * @return \Entity\Dictionary\Language
@@ -178,7 +182,7 @@ class Language extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Dictionary\Language
 	 */
@@ -187,14 +191,14 @@ class Language extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return json|NULL
 	 */
 	public function getSalutations() {
 		return $this->salutations;
 	}
-
+		
 	/**
 	 * @param json
 	 * @return \Entity\Dictionary\Language
@@ -204,7 +208,7 @@ class Language extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Dictionary\Language
 	 */
@@ -213,14 +217,14 @@ class Language extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return json|NULL
 	 */
 	public function getMultitranslationOptions() {
 		return $this->multitranslationOptions;
 	}
-
+		
 	/**
 	 * @param json
 	 * @return \Entity\Dictionary\Language
@@ -230,7 +234,7 @@ class Language extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Dictionary\Language
 	 */
@@ -239,14 +243,14 @@ class Language extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return json|NULL
 	 */
 	public function getGenderNumberOptions() {
 		return $this->genderNumberOptions;
 	}
-
+		
 	/**
 	 * @param json
 	 * @return \Entity\Dictionary\Language
@@ -256,7 +260,7 @@ class Language extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Dictionary\Language
 	 */
@@ -265,34 +269,33 @@ class Language extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return json|NULL
 	 */
 	public function getPpcPatterns() {
 		return $this->ppcPatterns;
 	}
-
+		
 	/**
-	 * @param \Entity\Location\Location
+	 * @param \Entity\Location\Country
 	 * @return \Entity\Dictionary\Language
 	 */
-	public function addLocation(\Entity\Location\Location $location) {
-		if(!$this->locations->contains($location)) {
-			$this->locations->add($location);
+	public function addCountry(\Entity\Location\Country $country) {
+		if(!$this->countries->contains($country)) {
+			$this->countries->add($country);
 		}
-		$location->addLanguage($this);
 
 		return $this;
 	}
-
+		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Location\Location
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Location\Country
 	 */
-	public function getLocations() {
-		return $this->locations;
+	public function getCountries() {
+		return $this->countries;
 	}
-
+		
 	/**
 	 * @param \Entity\Rental\Rental
 	 * @return \Entity\Dictionary\Language
@@ -301,16 +304,14 @@ class Language extends \Entity\BaseEntityDetails {
 		if(!$this->rentals->contains($rental)) {
 			$this->rentals->add($rental);
 		}
-		$rental->addLanguagesSpoken($this);
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Rental\Rental
 	 */
 	public function getRentals() {
 		return $this->rentals;
 	}
-
 }

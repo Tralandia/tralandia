@@ -11,7 +11,7 @@ class Location extends \Extras\Models\ServiceNested {
 
 	public function setSlug($slug) {
 
-		if(!$this->getType() instanceof \Entities\Location\Type) {
+		if(!$this->getType() instanceof \Entity\Location\Type) {
 			throw new ServiceException('Pred pridanim slagu musis definovat Type locality.');
 		}
 

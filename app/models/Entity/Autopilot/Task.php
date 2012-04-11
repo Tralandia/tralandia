@@ -109,15 +109,18 @@ class Task extends \Entity\BaseEntityDetails {
 	 */
 	protected $actions;
 
-	/* ----------------------------- Methods ----------------------------- */
+	
 
 
+//@entity-generator-code <--- NEMAZAT !!!
+
+	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct() {
 		parent::__construct();
 
 		$this->usersExcluded = new \Doctrine\Common\Collections\ArrayCollection;
 	}
-
+		
 	/**
 	 * @param \Entity\Autopilot\Type
 	 * @return \Entity\Autopilot\Task
@@ -127,7 +130,7 @@ class Task extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Autopilot\Task
 	 */
@@ -136,14 +139,14 @@ class Task extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Autopilot\Type|NULL
 	 */
 	public function getType() {
 		return $this->type;
 	}
-
+		
 	/**
 	 * @param string
 	 * @return \Entity\Autopilot\Task
@@ -153,7 +156,7 @@ class Task extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Autopilot\Task
 	 */
@@ -162,14 +165,14 @@ class Task extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return string|NULL
 	 */
 	public function getSubtype() {
 		return $this->subtype;
 	}
-
+		
 	/**
 	 * @param string
 	 * @return \Entity\Autopilot\Task
@@ -179,7 +182,7 @@ class Task extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Autopilot\Task
 	 */
@@ -188,14 +191,14 @@ class Task extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return string|NULL
 	 */
 	public function getName() {
 		return $this->name;
 	}
-
+		
 	/**
 	 * @param string
 	 * @return \Entity\Autopilot\Task
@@ -205,48 +208,48 @@ class Task extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return string|NULL
 	 */
 	public function getMission() {
 		return $this->mission;
 	}
-
+		
 	/**
-	 * @param \Nette\Datetime
+	 * @param \DateTime
 	 * @return \Entity\Autopilot\Task
 	 */
-	public function setStartTime(\Nette\Datetime $startTime) {
+	public function setStartTime(\DateTime $startTime) {
 		$this->startTime = $startTime;
 
 		return $this;
 	}
-
+		
 	/**
-	 * @return \Nette\Datetime|NULL
+	 * @return \DateTime|NULL
 	 */
 	public function getStartTime() {
 		return $this->startTime;
 	}
-
+		
 	/**
-	 * @param \Nette\Datetime
+	 * @param \DateTime
 	 * @return \Entity\Autopilot\Task
 	 */
-	public function setDue(\Nette\Datetime $due) {
+	public function setDue(\DateTime $due) {
 		$this->due = $due;
 
 		return $this;
 	}
-
+		
 	/**
-	 * @return \Nette\Datetime|NULL
+	 * @return \DateTime|NULL
 	 */
 	public function getDue() {
 		return $this->due;
 	}
-
+		
 	/**
 	 * @param float
 	 * @return \Entity\Autopilot\Task
@@ -256,14 +259,14 @@ class Task extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return float|NULL
 	 */
 	public function getDurationPaid() {
 		return $this->durationPaid;
 	}
-
+		
 	/**
 	 * @param json
 	 * @return \Entity\Autopilot\Task
@@ -273,14 +276,23 @@ class Task extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
+		
+	/**
+	 * @return \Entity\Autopilot\Task
+	 */
+	public function unsetLinks() {
+		$this->links = NULL;
 
+		return $this;
+	}
+		
 	/**
 	 * @return json|NULL
 	 */
 	public function getLinks() {
 		return $this->links;
 	}
-
+		
 	/**
 	 * @param \Entity\User\User
 	 * @return \Entity\Autopilot\Task
@@ -290,7 +302,7 @@ class Task extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Autopilot\Task
 	 */
@@ -299,14 +311,14 @@ class Task extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\User\User|NULL
 	 */
 	public function getUser() {
 		return $this->user;
 	}
-
+		
 	/**
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Autopilot\Task
@@ -316,7 +328,7 @@ class Task extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Autopilot\Task
 	 */
@@ -325,14 +337,14 @@ class Task extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Location\Location|NULL
 	 */
 	public function getUserCountry() {
 		return $this->userCountry;
 	}
-
+		
 	/**
 	 * @param \Entity\Dictionary\Language
 	 * @return \Entity\Autopilot\Task
@@ -342,7 +354,7 @@ class Task extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Autopilot\Task
 	 */
@@ -351,14 +363,14 @@ class Task extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Dictionary\Language|NULL
 	 */
 	public function getUserLanguage() {
 		return $this->userLanguage;
 	}
-
+		
 	/**
 	 * @param integer
 	 * @return \Entity\Autopilot\Task
@@ -368,14 +380,23 @@ class Task extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
+		
+	/**
+	 * @return \Entity\Autopilot\Task
+	 */
+	public function unsetUserLanguageLevel() {
+		$this->userLanguageLevel = NULL;
 
+		return $this;
+	}
+		
 	/**
 	 * @return integer|NULL
 	 */
 	public function getUserLanguageLevel() {
 		return $this->userLanguageLevel;
 	}
-
+		
 	/**
 	 * @param \Entity\User\Role
 	 * @return \Entity\Autopilot\Task
@@ -385,7 +406,7 @@ class Task extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Autopilot\Task
 	 */
@@ -394,14 +415,14 @@ class Task extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\User\Role|NULL
 	 */
 	public function getUserRole() {
 		return $this->userRole;
 	}
-
+		
 	/**
 	 * @param \Entity\User\User
 	 * @return \Entity\Autopilot\Task
@@ -414,7 +435,7 @@ class Task extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @param \Entity\User\User
 	 * @return \Entity\Autopilot\Task
@@ -427,14 +448,14 @@ class Task extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\User\User
 	 */
 	public function getUsersExcluded() {
 		return $this->usersExcluded;
 	}
-
+		
 	/**
 	 * @param json
 	 * @return \Entity\Autopilot\Task
@@ -444,14 +465,23 @@ class Task extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
+		
+	/**
+	 * @return \Entity\Autopilot\Task
+	 */
+	public function unsetValidation() {
+		$this->validation = NULL;
 
+		return $this;
+	}
+		
 	/**
 	 * @return json|NULL
 	 */
 	public function getValidation() {
 		return $this->validation;
 	}
-
+		
 	/**
 	 * @param json
 	 * @return \Entity\Autopilot\Task
@@ -461,12 +491,20 @@ class Task extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
+		
+	/**
+	 * @return \Entity\Autopilot\Task
+	 */
+	public function unsetActions() {
+		$this->actions = NULL;
 
+		return $this;
+	}
+		
 	/**
 	 * @return json|NULL
 	 */
 	public function getActions() {
 		return $this->actions;
 	}
-
 }

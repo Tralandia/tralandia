@@ -33,13 +33,16 @@ class Traveling extends \Entity\BaseEntity {
 	 * @ORM\Column(type="integer", nullable=true)
 	 */
 	protected $year;
-	/* ----------------------------- Methods ----------------------------- */
 
+	
 
+//@entity-generator-code <--- NEMAZAT !!!
+
+	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct() {
 		parent::__construct();
 	}
-
+		
 	/**
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Location\Traveling
@@ -49,14 +52,14 @@ class Traveling extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Location\Location
+	 * @return \Entity\Location\Location|NULL
 	 */
 	public function getSourceLocation() {
 		return $this->sourceLocation;
 	}
-
+		
 	/**
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Location\Traveling
@@ -66,14 +69,14 @@ class Traveling extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Location\Location
+	 * @return \Entity\Location\Location|NULL
 	 */
 	public function getDestinationLocation() {
 		return $this->destinationLocation;
 	}
-
+		
 	/**
 	 * @param integer
 	 * @return \Entity\Location\Traveling
@@ -83,7 +86,7 @@ class Traveling extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Location\Traveling
 	 */
@@ -92,14 +95,14 @@ class Traveling extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return integer|NULL
 	 */
 	public function getPeopleCount() {
 		return $this->peopleCount;
 	}
-
+		
 	/**
 	 * @param integer
 	 * @return \Entity\Location\Traveling
@@ -109,7 +112,7 @@ class Traveling extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Location\Traveling
 	 */
@@ -118,14 +121,11 @@ class Traveling extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return integer|NULL
 	 */
 	public function getYear() {
 		return $this->year;
 	}
-
-
-
 }

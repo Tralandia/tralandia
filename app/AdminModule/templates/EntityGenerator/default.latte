@@ -1,7 +1,9 @@
 {block content}
 
+<a n:href="EntityGenerator:forceAll Entity">Pregeneruj VSETKY subory!</a><br />
+
 <ul n:inner-foreach="$menu as $val">
-	<li><a n:href="EntityGenerator:default $val['fullname']">{$val['name']}</a></li>
+	<li><a href="{$val['link']}">{$val['name']}</a></li>
 </ul>
 <b>POZOR: skontroluj ci sa v texte nenachadza 'todo'!!!</b><span>ak ano kontaktuj svojho administratora</span>
 <pre class="brush: php" n:inner-foreach="$newClass->methods as $method">

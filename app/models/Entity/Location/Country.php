@@ -158,7 +158,7 @@ class Country extends \Entity\BaseEntityDetails {
 	 */
 	protected $location;
 
-
+	
 
 //@entity-generator-code <--- NEMAZAT !!!
 

@@ -17,14 +17,15 @@ class Type extends \Entity\BaseEntityDetails {
 	 */
 	protected $name;
 
+	
 
-	/* ----------------------------- Methods ----------------------------- */
+//@entity-generator-code <--- NEMAZAT !!!
 
-
+	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct() {
 		parent::__construct();
 	}
-
+		
 	/**
 	 * @param \Entity\Dictionary\Phrase
 	 * @return \Entity\Medium\Type
@@ -34,12 +35,11 @@ class Type extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Dictionary\Phrase|NULL
 	 */
 	public function getName() {
 		return $this->name;
 	}
-
 }
