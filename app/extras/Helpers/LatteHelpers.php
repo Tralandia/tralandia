@@ -18,14 +18,14 @@ class LatteHelpers extends \Nette\Object {
 			$li = '<li>%name% - {_123}</li>';
 		}
 
-		preg_match_all('/%[a-zA-Z,]+%/', $li, $matches);
+		preg_match_all('/%[a-zA-Z\.]+%/', $li, $matches);
 
 		$replaces = array();
 		foreach ($matches[0] as $match) {
 			if (gettype($data)=='object') {
-				$value = '$item->'.str_replace(',', '->', substr($match, 1, -1));
+				$value = '$item->'.str_replace('.', '->', substr($match, 1, -1));
 			} else {
-				$value = '$item["'.str_replace(',', '"]["', substr($match, 1, -1)).'"]';
+				$value = '$item["'.str_replace('.', '"]["', substr($match, 1, -1)).'"]';
 			}
 			$replaces[$match] = $value;
 		}

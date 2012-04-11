@@ -13,6 +13,9 @@ class HomePresenter extends BasePresenter {
 		$paginator->itemsPerPage = 15;
 		$paginator->itemCount = 568;
 
+		// TEST: saving file from URL
+		$medium = \Service\Medium\Medium::createFromUrl('http://tralandia.local/temp/12486339913332.jpg');
+
 	}
 
 	public function createComponentCountryMap($name) {
