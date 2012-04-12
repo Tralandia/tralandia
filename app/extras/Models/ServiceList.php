@@ -66,12 +66,24 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 		}
 	}
 
-	public static function getBy(array $criteria, array $orderBy = NULL, $limit = NULL, $offset = NULL, $entityName = NULL) {
+	public static function prepareCriteria($criteria) {
 		foreach ($criteria as $key => $value) {
 			if($value instanceof Service || $value instanceof Entity) {
 				$criteria[$key] = $value->id;
+			} else if(is_array($value)) {
+				$criteria[$key] = static::prepareCriteria($value);
 			}
 		}
+
+		return $criteria;
+	}
+
+	/**
+	 * criteria array('field' => 'value')
+	 * orderBy array('field' => 'ASC')
+	 */
+	public static function getBy(array $criteria, array $orderBy = NULL, $limit = NULL, $offset = NULL, $entityName = NULL) {
+		$criteria = static::prepareCriteria($criteria);
 
 		if($entityName === NULL) {
 			$entityName = static::getMainEntityName();

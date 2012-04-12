@@ -80,7 +80,7 @@ $container->application->onStartup[] = function() use ($container) {
 	));
 
 	$router[] = $frontRouter = new RouteList('Front');
-	$frontRouter[] = new \Extras\Route('Home:default');
+	$frontRouter[] = new \Extras\Route($container->cacheStorage, 'David:default');
 	$frontRouter[] = new Route('<presenter>/[<action>[/<id>]]', 'Home:default');
 
 };
