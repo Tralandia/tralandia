@@ -50,6 +50,7 @@ class Ticket extends \Entity\BaseEntity {
 	protected $messages;
 
 	
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -179,7 +180,7 @@ class Ticket extends \Entity\BaseEntity {
 		if(!$this->messages->contains($message)) {
 			$this->messages->add($message);
 		}
-		$message->addTicket($this);
+		$message->setTicket($this);
 
 		return $this;
 	}
@@ -192,7 +193,7 @@ class Ticket extends \Entity\BaseEntity {
 		if($this->messages->contains($message)) {
 			$this->messages->removeElement($message);
 		}
-		$message->removeTicket($this);
+		$message->unsetTicket();
 
 		return $this;
 	}

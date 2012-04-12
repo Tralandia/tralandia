@@ -79,6 +79,7 @@ class Contact extends \Entity\BaseEntity {
 
 	
 
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -186,6 +187,15 @@ class Contact extends \Entity\BaseEntity {
 	 */
 	public function setUser(\Entity\User\User $user) {
 		$this->user = $user;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Contact\Contact
+	 */
+	public function unsetUser() {
+		$this->user = NULL;
 
 		return $this;
 	}

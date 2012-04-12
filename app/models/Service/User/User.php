@@ -21,7 +21,9 @@ class User extends \Service\BaseService {
 			throw new \Nette\InvalidArgumentException('This function needs at least 2 parameters of \Service\User\User or \Entity\User\User');
 			return FALSE;
 		}
+		
 		usort($users, "self::sortMergedUsers");
+		debug($users); return;
 		for($i = count($users)-1; $i > -1; $i--) {
 			debug($user[$i-1]->id.' merging with '.$user[$i]->id);
 			self::mergeTwoUsers($users[$i-1], $users[$i]);
@@ -32,7 +34,7 @@ class User extends \Service\BaseService {
 		return $user1;
 	} 
 
-	private static function sortMergetUsers($a, $b) {
-		return $a->updated > $b->updated ? -1 : 1;
+	private static function sortMergedUsers($a, $b) {
+		return $a->updated > $b->updated ? -1 : 1; //@todo - upravit tak, aby to bral aj podla ACL - vyzsia rola ma vyzsie priority, rovnaka rola ide podla "updated"
 	}
 }

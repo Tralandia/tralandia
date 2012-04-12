@@ -12,38 +12,26 @@ use Nette\Application as NA,
 
 class ImportUsers extends BaseImport {
 
-	public function doImport() {
-		$this->savedVariables['importedSections']['users'] = 1;
+	public function doImport($subsection = NULL) {
 
-		// $user1 = \Service\User\User::get(1);
-		// $user2 = \Service\User\User::get(2);
-		// $user2 = \Service\User\User::get(3);
-		// \Service\User\User::merge($user1, $user2, $user3);
+		$user1 = \Service\User\User::get(1);
+		$user2 = \Service\User\User::get(2);
+		$user3 = \Service\User\User::get(3);
+		$user4 = \Service\User\User::get(4);
 
-		$allSubsections = array('importSuperAdmins', 'importAdmins', 'importManagers', 'importTranslators', 'importOwners', 'importPotentialOwners', 'importVisitors');
+		\Service\User\User::merge($user1, $user2);
+		return;
 
-		if (!isset($this->savedVariables['importedSubSections'])) {
-			$this->savedVariables['importedSubSections'] = array();
+		$this->setSubsections('users');
+
+		$this->$subsection();
+
+		$this->savedVariables['importedSubSections']['users'][$subsection] = 1;
+
+		if (end($this->sections['users']['subsections']) == $subsection) {
+			$this->savedVariables['importedSections']['users'] = 1;		
 		}
 
-		if (!isset($this->savedVariables['importedSubSections']['users'])) {
-			$this->savedVariables['importedSubSections']['users'] = array();
-			foreach ($allSubsections as $key => $value) {
-				$this->savedVariables['importedSubSections']['users'][$value] = 0;
-			}
-		}
-
-		foreach ($allSubsections as $key => $value) {
-			if ($this->savedVariables['importedSubSections']['users'][$value] == 1) {
-				continue;
-			}
-
-			$this->$value(); 
-			$this->savedVariables['importedSubSections']['users'][$value] = 1;
-			return;
-		}
-
-		$this->savedVariables['importedSections']['users'] = 2;
 	}
 
 	private function importSuperAdmins() {
@@ -56,7 +44,7 @@ class ImportUsers extends BaseImport {
 		$user->password = 'radkos';
 		$user->addRole($role);
 		$user->addContact($this->createContact('email', 'toth@tralandia.com'));
-		$user->defaultLanguage = $this->languagesByIso['en'];
+		$user->defaultLanguage = \Service\Dictionary\Language::getByIso('en');
 		$user->save();
 
 		// David
@@ -65,7 +53,7 @@ class ImportUsers extends BaseImport {
 		$user->password = 'davidheslo';
 		$user->addRole($role);
 		$user->addContact($this->createContact('email', 'durika@tralandia.com'));
-		$user->defaultLanguage = $this->languagesByIso['en'];
+		$user->defaultLanguage = \Service\Dictionary\Language::getByIso('en');
 		$user->save();
 
 		// Cibi
@@ -74,7 +62,7 @@ class ImportUsers extends BaseImport {
 		$user->password = 'kscibiks';
 		$user->addRole($role);
 		$user->addContact($this->createContact('email', 'czibula@tralandia.com'));
-		$user->defaultLanguage = $this->languagesByIso['en'];
+		$user->defaultLanguage = \Service\Dictionary\Language::getByIso('en');
 		$user->save();
 
 		// Brano
@@ -83,7 +71,7 @@ class ImportUsers extends BaseImport {
 		$user->password = 'branoheslo';
 		$user->addRole($role);
 		$user->addContact($this->createContact('email', 'vaculciak@tralandia.com'));
-		$user->defaultLanguage = $this->languagesByIso['en'];
+		$user->defaultLanguage = \Service\Dictionary\Language::getByIso('en');
 		$user->save();
 
 		return TRUE;
@@ -109,7 +97,7 @@ class ImportUsers extends BaseImport {
 
 			$user->addContact($this->createContact('email', $x['email']));
 			
-			$user->defaultLanguage = $this->languagesByIso['en'];
+			$user->defaultLanguage = \Service\Dictionary\Language::getByIso('en');
 			$user->save();
 		}
 
@@ -135,7 +123,7 @@ class ImportUsers extends BaseImport {
 
 			$user->addContact($this->createContact('email', $x['email']));
 			
-			$user->defaultLanguage = $this->languagesByIso['en'];
+			$user->defaultLanguage = \Service\Dictionary\Language::getByIso('en');
 
 			$assignedCountries = array_unique(array_filter(explode(',', $x['countries'])));
 			$assignedLanguages = array_unique(array_filter(explode(',', $x['languages'])));
@@ -144,7 +132,7 @@ class ImportUsers extends BaseImport {
 				foreach ($assignedLanguages as $key2 => $value2) {
 					$combination = \Service\User\Combination::get();
 					$combination->country = \Service\Location\Country::getByOldId($value)->location;
-					$combination->language = $this->languagesByOldId[$value2];
+					$combination->language = \Service\Dictionary\Language::getByOldId($value2);
 					$combination->languageLevel = \Entity\Dictionary\Type::TRANSLATION_LEVEL_ACTIVE;
 					$user->addCombination($combination);
 				}
@@ -174,17 +162,17 @@ class ImportUsers extends BaseImport {
 
 			$user->addContact($this->createContact('email', $x['email']));
 			
-			$user->defaultLanguage = $this->languagesByIso['en'];
+			$user->defaultLanguage = \Service\Dictionary\Language::getByIso('en');
 
 			$details = array(
-				'sourceLanguage' => $this->languagesByOldId[$x['language_from']],
+				'sourceLanguage' => \Service\Dictionary\Language::getByOldId($x['language_from']),
 				'pricePerStandardPage' => $x['price'],
 				'pricePerTicketsStandardPage' => $x['tickets_price'],
 			);
 			$user->details = $details;
 
 			$combination = \Service\User\Combination::get();
-			$combination->language = $this->languagesByOldId[$x['language_to']];
+			$combination->language = \Service\Dictionary\Language::getByOldId($x['language_to']);
 			$combination->languageLevel = \Entity\Dictionary\Type::TRANSLATION_LEVEL_NATIVE;
 			$user->addCombination($combination);
 			$user->save();
@@ -232,11 +220,8 @@ class ImportUsers extends BaseImport {
 			if($x['email']) $user->addContact($this->createContact('email', $x['email']));
 			if($x['phone']) $user->addContact($this->createContact('phone', $x['phone']));
 			
-			$user->defaultLanguage = $this->languagesByOldId[$x['language_id']];
+			$user->defaultLanguage = \Service\Dictionary\Language::getByOldId($x['language_id']);
 			$user->addLocation(\Service\Location\Country::getByOldId($x['country_id'])->location);
-
-			// @todo - importovat aj ostatne emails , phones pre kazdeho usera...
-			debug($user); return;
 
 			$user->save();
 		}
@@ -288,7 +273,7 @@ class ImportUsers extends BaseImport {
 
 				$user->invoicingCompanyName = $x['contact_company'];
 				
-				$user->defaultLanguage = $this->languagesByOldId[$x['language_id']];
+				$user->defaultLanguage = \Service\Dictionary\Language::getByOldId($x['language_id']);
 				$user->addLocation(\Service\Location\Country::getByOldId($x['country_id'])->location);
 			}
 
@@ -317,7 +302,7 @@ class ImportUsers extends BaseImport {
 
 		$user->addContact($this->createContact('email', $x['email']));
 		
-		$user->defaultLanguage = $this->languagesByIso['en'];
+		$user->defaultLanguage = \Service\Dictionary\Language::getByIso('en');
 		$user->addLocation();
 		$user->addRentalType();
 

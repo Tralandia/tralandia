@@ -80,7 +80,7 @@ class Country extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact")
+	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact", cascade={"persist"})
 	 */
 	protected $facebookGroup;
 
@@ -92,31 +92,31 @@ class Country extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact")
+	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact", cascade={"persist"})
 	 */
 	protected $phoneNumberEmergency;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact")
+	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact", cascade={"persist"})
 	 */
 	protected $phoneNumberPolice;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact")
+	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact", cascade={"persist"})
 	 */
 	protected $phoneNumberMedical;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact")
+	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact", cascade={"persist"})
 	 */
 	protected $phoneNumberFire;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact")
+	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact", cascade={"persist"})
 	 */
 	protected $wikipediaLink;
 
@@ -157,6 +157,7 @@ class Country extends \Entity\BaseEntityDetails {
 	protected $location;
 
 	
+
 
 //@entity-generator-code <--- NEMAZAT !!!
 

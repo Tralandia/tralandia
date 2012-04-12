@@ -24,39 +24,22 @@ class ImportLocations extends BaseImport {
 	private $dictionaryTypeNameShort;
 	private $continentsByOldId = array();
 
-	public function doImport() {
-		$this->savedVariables['importedSections']['locations'] = 1;
+	public function doImport($subsection) {
+		
+		$this->setSubsections('locations');
 
 		$this->dictionaryTypeName = $this->createDictionaryType('\Location\Location', 'name', 'supportedLanguages', 'NATIVE', array('locativeRequired' => TRUE));
 		$this->dictionaryTypeNameOfficial = $this->createDictionaryType('\Location\Location', 'nameOfficial', 'supportedLanguages', 'NATIVE', array('locativeRequired' => TRUE));
 		$this->dictionaryTypeNameShort = $this->createDictionaryType('\Location\Location', 'nameShort', 'supportedLanguages', 'NATIVE', array('locativeRequired' => TRUE));
 
-		$allSubsections = array('importContinents', 'importCountries', 'importTravelings', 'importRegions', 'importAdministrativeRegions1', 'importAdministrativeRegions2', 'importLocalities');
+		debug($subsection);
+		$this->$subsection();
 
-		if (!isset($this->savedVariables['importedSubSections'])) {
-			$this->savedVariables['importedSubSections'] = array();
+		$this->savedVariables['importedSubSections']['locations'][$subsection] = 1;
+
+		if (end($this->sections['locations']['subsections']) == $subsection) {
+			$this->savedVariables['importedSections']['locations'] = 1;		
 		}
-
-		if (!isset($this->savedVariables['importedSubSections']['locations'])) {
-			$this->savedVariables['importedSubSections']['locations'] = array();
-			foreach ($allSubsections as $key => $value) {
-				$this->savedVariables['importedSubSections']['locations'][$value] = 0;
-			}
-		}
-
-		foreach ($allSubsections as $key => $value) {
-			if ($this->savedVariables['importedSubSections']['locations'][$value] == 1) {
-				continue;
-			}
-
-			debug($value);
-			$this->$value();
-			$this->savedVariables['importedSubSections']['locations'][$value] = 1;
-			return;
-		}
-
-		$this->savedVariables['importedSections']['locations'] = 2;
-
 	}
 
 	// ----------------------------------------------------------
@@ -192,7 +175,7 @@ class ImportLocations extends BaseImport {
 			$r1 = q('select * from countries_translations where location_id = '.$x['id']);
 			//$r1 = q('select * from countries_translations where location_id = 46');
 			while ($x1 = mysql_fetch_array($r1)) {
-				$t = $namePhrase->getTranslation($this->languagesByOldId[$x1['language_id']]);
+				$t = $namePhrase->getTranslation(\Service\Dictionary\Language::getByOldId($x1['language_id']));
 				$variations = array(
 					'translation' => $x1['name'],
 					'locative' => $x1['name_locative'],
@@ -217,7 +200,7 @@ class ImportLocations extends BaseImport {
 						'locative' => $x1['name_locative'],
 					);
 					$value->variations = $variations;
-					debug($value);
+					//debug($value);
 					$value->save();
 				}
 
@@ -243,8 +226,8 @@ class ImportLocations extends BaseImport {
 			//debug($location->parentId); return;
 			//debug($location); debug($country); return;
 
-			$location->save();
 			$country->save();
+			$location->save();
 		}
 	}
 
@@ -443,13 +426,13 @@ class ImportLocations extends BaseImport {
 			$namePhrase->type = $this->dictionaryTypeName;
 			$namePhrase->ready = TRUE;
 
+			$country = \Service\Location\Country::getByOldId($x['country_id']);
 			$r1 = q('select * from localities_translations where location_id = '.$x['id']);
 			while ($x1 = mysql_fetch_array($r1)) {
-				$country = \Service\Location\Country::getByOldId($x['country_id']);
 				$variations = array(
 					'locative' => $x1['name_locative'],
 				);
-				$t = $this->createTranslation(\Service\Dictionary\Language::getByOldId($country->defaultLanguage), $x['name'], $variations);
+				$t = $this->createTranslation(\Service\Dictionary\Language::getByOldId($x1['language_id']), $x['name'], $variations);
 				$namePhrase->addTranslation($t);
 			}
 

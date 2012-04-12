@@ -168,6 +168,7 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 
 	
 
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -476,6 +477,15 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 	}
 		
 	/**
+	 * @return \Entity\Location\Location
+	 */
+	public function unsetDomain() {
+		$this->domain = NULL;
+
+		return $this;
+	}
+		
+	/**
 	 * @return \Entity\Domain|NULL
 	 */
 	public function getDomain() {
@@ -575,7 +585,7 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 		if(!$this->incomingLocations->contains($incomingLocation)) {
 			$this->incomingLocations->add($incomingLocation);
 		}
-		$incomingLocation->addDestinationLocation($this);
+		$incomingLocation->setDestinationLocation($this);
 
 		return $this;
 	}
@@ -588,7 +598,7 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 		if($this->incomingLocations->contains($incomingLocation)) {
 			$this->incomingLocations->removeElement($incomingLocation);
 		}
-		$incomingLocation->removeDestinationLocation($this);
+		$incomingLocation->unsetDestinationLocation();
 
 		return $this;
 	}
@@ -608,7 +618,7 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 		if(!$this->outgoingLocations->contains($outgoingLocation)) {
 			$this->outgoingLocations->add($outgoingLocation);
 		}
-		$outgoingLocation->addSourceLocation($this);
+		$outgoingLocation->setSourceLocation($this);
 
 		return $this;
 	}
@@ -621,7 +631,7 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 		if($this->outgoingLocations->contains($outgoingLocation)) {
 			$this->outgoingLocations->removeElement($outgoingLocation);
 		}
-		$outgoingLocation->removeSourceLocation($this);
+		$outgoingLocation->unsetSourceLocation();
 
 		return $this;
 	}

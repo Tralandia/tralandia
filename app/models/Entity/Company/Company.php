@@ -77,6 +77,7 @@ class Company extends \Entity\BaseEntityDetails {
 	
 
 
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -97,7 +98,7 @@ class Company extends \Entity\BaseEntityDetails {
 		if(!$this->bankAccounts->contains($bankAccount)) {
 			$this->bankAccounts->add($bankAccount);
 		}
-		$bankAccount->addCompany($this);
+		$bankAccount->setCompany($this);
 
 		return $this;
 	}
@@ -110,7 +111,7 @@ class Company extends \Entity\BaseEntityDetails {
 		if($this->bankAccounts->contains($bankAccount)) {
 			$this->bankAccounts->removeElement($bankAccount);
 		}
-		$bankAccount->removeCompany($this);
+		$bankAccount->unsetCompany();
 
 		return $this;
 	}
@@ -163,7 +164,7 @@ class Company extends \Entity\BaseEntityDetails {
 		if(!$this->offices->contains($office)) {
 			$this->offices->add($office);
 		}
-		$office->addCompany($this);
+		$office->setCompany($this);
 
 		return $this;
 	}
@@ -176,7 +177,7 @@ class Company extends \Entity\BaseEntityDetails {
 		if($this->offices->contains($office)) {
 			$this->offices->removeElement($office);
 		}
-		$office->removeCompany($this);
+		$office->unsetCompany();
 
 		return $this;
 	}
@@ -343,7 +344,7 @@ class Company extends \Entity\BaseEntityDetails {
 		if(!$this->invoices->contains($invoice)) {
 			$this->invoices->add($invoice);
 		}
-		$invoice->addInvoicingCompany($this);
+		$invoice->setInvoicingCompany($this);
 
 		return $this;
 	}
@@ -356,7 +357,7 @@ class Company extends \Entity\BaseEntityDetails {
 		if($this->invoices->contains($invoice)) {
 			$this->invoices->removeElement($invoice);
 		}
-		$invoice->removeInvoicingCompany($this);
+		$invoice->unsetInvoicingCompany();
 
 		return $this;
 	}

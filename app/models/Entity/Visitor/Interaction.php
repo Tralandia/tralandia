@@ -51,6 +51,7 @@ class Interaction extends \Entity\BaseEntityDetails {
 	protected $status;
 
 	
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		

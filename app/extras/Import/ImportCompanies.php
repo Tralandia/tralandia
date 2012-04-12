@@ -14,15 +14,16 @@ use Nette\Application as NA,
 
 class ImportCompanies extends BaseImport {
 
-	public function doImport() {
-		$this->savedVariables['importedSections']['companies'] = 1;
-	
-		$this->importCompanies();
-		$this->importOffices();
-		$this->importBankAccounts();
+	public function doImport($subsection) {	
+		$this->setSubsections('companies');
 
-		$this->savedVariables['importedSections']['companies'] = 2;
+		$this->$subsection();
 
+		$this->savedVariables['importedSubSections']['companies'][$subsection] = 1;
+
+		if (end($this->sections['companies']['subsections']) == $subsection) {
+			$this->savedVariables['importedSections']['companies'] = 1;		
+		}
 	}
 
 	private function importCompanies() {
@@ -65,7 +66,7 @@ class ImportCompanies extends BaseImport {
 		while($x = mysql_fetch_array($r)) {
 			$s = S\Company\Office::get();
 			$s->oldId = $x['id'];
-			debug($x['countries_id']);return;
+
 			$s->address = new \Extras\Types\Address(array(
 				'address' => array_filter(array($x['address'], $x['address_2'])),
 				'postcode' => $x['postcode'],

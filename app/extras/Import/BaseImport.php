@@ -15,59 +15,102 @@ use Nette\Application as NA,
 class BaseImport {
 	public $sections = array(
 		'languages' => array(
-			'\Dictionary\Language' => array(),
+			'entities' => array(
+				'\Dictionary\Language' => array(),
+			),
+			'subsections' => array(),
 		),
 		'htmlPhrases' => array(
-			'\Dictionary\Phrase' => array(),
+			'entities' => array(
+				'\Dictionary\Phrase' => array(),
+			),
+			'subsections' => array(),
 		),
 		'currencies' => array(
-			'\Currency' => array(),
+			'entities' => array(
+				'\Currency' => array(),
+			),
+			'subsections' => array(),
 		),
 		'autopilot' => array(
-			'\Autopilot\Type' => array(),
+			'entities' => array(
+				'\Autopilot\Type' => array(),
+			),
+			'subsections' => array(),
 		),
 		'userRoles' => array(
-			'\User\Role' => array(),
+			'entities' => array(
+				'\User\Role' => array(),
+			),
+			'subsections' => array(),
 		),
 		'domains' => array(
-			'\Domain' => array(),
+			'entities' => array(
+				'\Domain' => array(),
+			),
+			'subsections' => array(),
 		),
 		'contactTypes' => array(
-			'\Contact\Type' => array(),
+			'entities' => array(
+				'\Contact\Type' => array(),
+			),
+			'subsections' => array(),
 		),
 		'locations' => array(
-			'\Location\Type' => array(),
-			'\Location\Location' => array(),
-			'\Location\Country' => array(),
-			'\Location\Traveling' => array(),
+			'entities' => array(
+				'\Location\Type' => array(),
+				'\Location\Location' => array(),
+				'\Location\Country' => array(),
+				'\Location\Traveling' => array(),
+			),
+			'subsections' => array('importContinents', 'importCountries', 'importTravelings', 'importRegions', 'importAdministrativeRegions1', 'importAdministrativeRegions2', 'importLocalities'),
 		),
 		'companies' => array(
-			'\Company\Company' => array(),
+			'entities' => array(
+				'\Company\Company' => array(),
+			),
+			'subsections' => array('importCompanies', 'importOffices', 'importBankAccounts'),
 		),
 		'users' => array(
-			'\User\User' => array(),
-			'\User\Combination' => array(),
+			'entities' => array(
+				'\User\User' => array(),
+				'\User\Combination' => array(),
+			),
+			'subsections' => array('importSuperAdmins', 'importAdmins', 'importManagers', 'importTranslators', 'importOwners', 'importPotentialOwners', 'importVisitors'),
 		),
 	);
 
 	public $savedVariables = array();
-	public $languagesByIso = array();
-	public $languagesByOldId = array();
 
 	public function __construct() {
 		$this->loadVariables();
-		$langs = qNew('select id, iso, oldId from dictionary_language');
-		while($value = mysql_fetch_array($langs)) {
-			$this->languagesByIso[$value['iso']] = \Service\Dictionary\Language::get($value['id']);
-			$this->languagesByOldId[$value['oldId']] = \Service\Dictionary\Language::get($value['id']);
-		}
+
+
 		return;
+	}
+
+	public function setSubsections($section = NULL) {
+		if ($section) {
+			if (!isset($this->savedVariables['importedSubSections'])) {
+				$this->savedVariables['importedSubSections'] = array();
+			}
+			if (!isset($this->savedVariables['importedSubSections'][$section])) {
+				$this->savedVariables['importedsections'][$section] = array();
+			}
+
+			if (count($this->savedVariables['importedSubSections'][$section]) == 0) {
+				foreach ($this->sections[$section]['subsections'] as $key => $value) {
+					$this->savedVariables['importedSubSections'][$section][$value] = 0;
+				}
+			}
+		}
 	}
 
 	public function truncateAllTables() {
 		qNew('SET FOREIGN_KEY_CHECKS = 0;');
 		$allTables = qNew('SHOW tables');
 		while ($table = mysql_fetch_array($allTables)) {
+			if ($table[0] == '__importVariables') continue;
 			qNew('truncate table '.$table[0]);
 		}
 		qNew('SET FOREIGN_KEY_CHECKS = 1;');
@@ -82,6 +125,7 @@ class BaseImport {
 		qNew('SET FOREIGN_KEY_CHECKS = 0;');
 		$allTables = qNew('SHOW tables');
 		while ($table = mysql_fetch_array($allTables)) {
+			if ($table[0] == '__importVariables') continue;
 			qNew('drop table '.$table[0]);
 		}
 		qNew('SET FOREIGN_KEY_CHECKS = 1;');
@@ -95,7 +139,7 @@ class BaseImport {
 	public function undoSection($section) {
 		$tempSections = array_reverse($this->sections);
 		foreach ($tempSections as $key => $value) {
-			$value = array_reverse($value);
+			$value = array_reverse($value['entities']);
 			foreach ($value as $key2 => $value2) {
 				$tableName = str_replace('\\', '_', $key2);
 				$tableName = trim($tableName, '_');
@@ -103,7 +147,7 @@ class BaseImport {
 
 				$r = qNew('select id from '.$tableName.' order by id DESC');
 				while ($x = mysql_fetch_array($r)) {
-					$serviceName = '\Services'.$key2.'Service';
+					$serviceName = '\Service'.$key2;
 					$s = $serviceName::get($x['id']);
 					$s->delete();
 				}
@@ -112,7 +156,13 @@ class BaseImport {
 			$this->savedVariables['importedSubSections'][$key] = array();
 			if ($key == $section) break;
 		}
-		\Extras\Models\Service\Extras\Models\Service::flush(FALSE);
+		\Extras\Models\Service::flush(FALSE);
+		foreach ($value as $key2 => $value2) {
+			$tableName = str_replace('\\', '_', $key2);
+			$tableName = trim($tableName, '_');
+			$tableName = strtolower($tableName);
+			qNew('ALTER TABLE '.$tableName.' AUTO_INCREMENT = 1');
+		}
 		$this->saveVariables();
 	}
 
@@ -247,11 +297,48 @@ class BaseImport {
 	}
 
 	public function loadVariables() {
-		$t = qc('select value from _importVariables where id = 1');
+		$t = qNew('select value from __importVariables where id = 1');
+		$t = mysql_fetch_array($t);
+		$t = $t[0];
 		$this->savedVariables = \Nette\Utils\Json::decode($t, TRUE);
+		foreach ($this->sections as $key => $value) {
+			if (!isset($this->savedVariables['importedSections'][$key])) {
+				$this->savedVariables['importedSections'][$key] = array();
+			}
+		}
 	}
 
 	public function saveVariables() {
-		q('update _importVariables set value ="'.mysql_real_escape_string(\Nette\Utils\Json::encode($this->savedVariables)).'"  where id = 1');
+		qNew('update __importVariables set value ="'.mysql_real_escape_string(\Nette\Utils\Json::encode($this->savedVariables)).'"  where id = 1');
+	}
+
+	public function createNavigation() {
+		$return = array();
+		$nextToImport = TRUE;
+		foreach ($this->sections as $key => $value) {
+			$return[$key] = array(
+				'name' => ucfirst($key),
+				'undo' => (bool)((int)$this->savedVariables['importedSections'][$key] > 0),
+				'import' => (!$this->savedVariables['importedSections'][$key] && $nextToImport == TRUE),
+				'subsections' => array(),
+				'rootImport' => !(bool)count($value['subsections']),
+			);
+			if (count($value['subsections']) && $return[$key]['import']) {
+				$nextSubsectionToImport = TRUE;
+				foreach ($value['subsections'] as $key2 => $value2) {
+					$return[$key]['subsections'][$value2] = array(
+						'name' => ucfirst($value2),
+						'import' => (!@$this->savedVariables['importedSubSections'][$key][$value2] && $nextSubsectionToImport == TRUE),
+					);
+					if ($return[$key]['subsections'][$value2]['import']) {
+						$nextSubsectionToImport = FALSE;
+					}
+				}
+			}
+			if ($return[$key]['import']) {
+				$nextToImport = FALSE;
+			}
+		}
+		return $return;
 	}
 }
