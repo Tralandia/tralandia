@@ -9,7 +9,7 @@ abstract class BasePresenter extends Presenter {
 		parent::beforeRender();
 		$this->template->staticPath = '/';
 		$this->template->setTranslator($this->getService('translator'));
-		$this->template->registerHelper('image', callback($this, 'helperImage'));
+		$this->template->registerHelper('image', callback('Tools::helperImage'));
 	}
 
 	protected function createComponentFlashes($name) {
@@ -124,8 +124,8 @@ abstract class BasePresenter extends Presenter {
 		\Extras\MyMacros::install($latte->compiler);
 	}
 
-	public function helperImage(\Service\Medium\Medium $medium, $size) {
-		return $medium->getThumbnail($size);
+	public function getBaseUrl() {
+		return $this->template->baseUrl;
 	}
 
 }

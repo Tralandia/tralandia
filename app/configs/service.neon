@@ -1,18 +1,5 @@
 common:
-	php:
-		date.timezone: Europe/Bratislava
-		zlib.output_compression: yes
-		max_execution_time: 60
-
-	nette:
-		session:
-			autoStart: smart
-		
-	parameters:
-		security:
-			salt: '8723lks762ngknl90835bkd'
-			sender: 'noreply@tralandia.sk'
-		
+	parameters:		
 		database:
 			user: root
 			password: root
@@ -27,13 +14,9 @@ common:
 		entityDirs: '%appDir%/models/Entities'
 	
 		settingsDir: '%appDir%/configs'
-		
-		envOptions:
-			sendEmail: TRUE
-		
-		editor: 'txmt://open/?url=file://%file&line=%line'
 
-		baseUri: /
+		container: 
+			class: ServiceContainer
 			
 	doctrine:
 		connections:
@@ -47,25 +30,8 @@ common:
 		console:
 			entityManager: default
 		
-	services:
-		nette.presenterFactory:
-			class: Extras\DynamicPresenterFactory
-			factory: Extras\DynamicPresenterFactory::factory
-	
+	services:	
 		console: @doctrine.console
-		
-		#authenticator: Security\Authenticator( @entityManager::getRepository('User') )
-
-		authorizator: Security\Acl
-
-		environment:
-			factory: Extras\Environment::factory
-
-		translator:
-			factory: Extras\MyTranslator::getTranslator
-			
-		settings:
-			factory: Extras\PresenterSettings::factory
 		
 	factories:
 		service: Extras\Models\Service::setEntityManager(@doctrine.entityManagers.default)
@@ -85,10 +51,6 @@ production < common:
 console < common:
 
 development < common:
-	php:
-		max_execution_time: 0
-		memory_limit: 1024M
-
 
 	parameters:
 		database:
@@ -100,26 +62,10 @@ development < common:
 			driver: pdo_mysql
 			debugger: false
 
-		envOptions:
-			sendEmail: FASLE
-
 		
 vaculciak < development:
-	parameters:
-		database:
-			debugger: true
-
-		editor: 'txmt://open/?url=file://%file&line=%line'
 
 durika < development:
-	parameters:
-
-		database:
-			debugger: true
-
-		editor: 'edit://open/?url=file://%file&line=%line'
-		envOptions:
-			email: tralandia.david@gmail.com
 		
 
 

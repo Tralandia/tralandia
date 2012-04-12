@@ -13,12 +13,8 @@ class Environment extends \Nette\Object {
 	private $currency = NULL; // 
 	private $locale = NULL;
 
-
-	public static function factory() {
-		return new static();
-	}
-
 	public function __construct() {
+		debug('Environment::__construct');
 	}
 
 	public function getLocation() {
