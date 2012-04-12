@@ -22,11 +22,22 @@ class Tab extends Control {
 		
 	}
 
+	public function setHeader($header) {
+		$this->header = $header;
+		return $this;
+	}
+
+	public function setActive() {
+		$this->active = true;
+		return $this;
+	}
+
 	public function setContent($content) {
 		if($content instanceof Control) {
 			$this->isControl = true;
 		}
 		$this->content = $content;
+		return $this;
 	}
 
 	public function getContent() {

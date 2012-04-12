@@ -9,7 +9,7 @@ abstract class BasePresenter extends Presenter {
 		parent::beforeRender();
 		$this->template->staticPath = '/';
 		$this->template->setTranslator($this->getService('translator'));
-		$this->template->registerHelper('image', callback('Tools::helperImage'));
+		$this->template->registerHelper('image', callback($this, 'helperImage'));
 	}
 
 	protected function createComponentFlashes($name) {
@@ -122,6 +122,10 @@ abstract class BasePresenter extends Presenter {
 		$latte = new \Nette\Latte\Engine;
 		$template->registerFilter($latte);
 		\Extras\MyMacros::install($latte->compiler);
+	}
+
+	public function helperImage(\Service\Medium\Medium $medium, $size) {
+		return $medium->getThumbnail($size);
 	}
 
 }
