@@ -63,9 +63,8 @@ class Tools {
 		return number_format($price, $digit, ',', ' ');
 	}
 
-	public static function helperImage($file, $type = null) {
-		$config = Environment::getConfig('image');
-		return strtolower(substr($file, 0, strrpos($file, '.'))) . '-' . $config->width . 'x' . $config->height . '.' . \Tools::getExt($file);
+	public static function helperImage(\Service\Medium\Medium $image, $type = null) {
+		return $image->getThumbnail($type);
 	}
 
 	public static function resizeCrop($image, $width, $height) {
