@@ -43,6 +43,7 @@ class PathSegment extends \Entity\BaseEntity {
 	protected $entityId;
 
 	
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		

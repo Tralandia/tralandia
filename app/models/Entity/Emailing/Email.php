@@ -56,6 +56,7 @@ class Email extends \Entity\BaseEntity {
 
 	
 
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -202,7 +203,7 @@ class Email extends \Entity\BaseEntity {
 		if(!$this->batches->contains($batche)) {
 			$this->batches->add($batche);
 		}
-		$batche->addEmailTemplate($this);
+		$batche->setEmailTemplate($this);
 
 		return $this;
 	}
@@ -215,7 +216,7 @@ class Email extends \Entity\BaseEntity {
 		if($this->batches->contains($batche)) {
 			$this->batches->removeElement($batche);
 		}
-		$batche->removeEmailTemplate($this);
+		$batche->unsetEmailTemplate();
 
 		return $this;
 	}

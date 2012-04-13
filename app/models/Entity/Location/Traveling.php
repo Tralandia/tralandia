@@ -36,6 +36,7 @@ class Traveling extends \Entity\BaseEntity {
 
 	
 
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -54,6 +55,15 @@ class Traveling extends \Entity\BaseEntity {
 	}
 		
 	/**
+	 * @return \Entity\Location\Traveling
+	 */
+	public function unsetSourceLocation() {
+		$this->sourceLocation = NULL;
+
+		return $this;
+	}
+		
+	/**
 	 * @return \Entity\Location\Location|NULL
 	 */
 	public function getSourceLocation() {
@@ -66,6 +76,15 @@ class Traveling extends \Entity\BaseEntity {
 	 */
 	public function setDestinationLocation(\Entity\Location\Location $destinationLocation) {
 		$this->destinationLocation = $destinationLocation;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Location\Traveling
+	 */
+	public function unsetDestinationLocation() {
+		$this->destinationLocation = NULL;
 
 		return $this;
 	}

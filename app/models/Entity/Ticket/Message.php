@@ -38,6 +38,7 @@ class Message extends \Entity\BaseEntity {
 	protected $attachments;
 
 	
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -53,6 +54,15 @@ class Message extends \Entity\BaseEntity {
 	 */
 	public function setTicket(\Entity\Ticket\Ticket $ticket) {
 		$this->ticket = $ticket;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Ticket\Message
+	 */
+	public function unsetTicket() {
+		$this->ticket = NULL;
 
 		return $this;
 	}
@@ -106,7 +116,7 @@ class Message extends \Entity\BaseEntity {
 		if(!$this->attachments->contains($attachment)) {
 			$this->attachments->add($attachment);
 		}
-		$attachment->addMessage($this);
+		$attachment->setMessage($this);
 
 		return $this;
 	}
@@ -119,7 +129,7 @@ class Message extends \Entity\BaseEntity {
 		if($this->attachments->contains($attachment)) {
 			$this->attachments->removeElement($attachment);
 		}
-		$attachment->removeMessage($this);
+		$attachment->unsetMessage();
 
 		return $this;
 	}

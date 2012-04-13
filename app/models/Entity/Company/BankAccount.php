@@ -68,6 +68,7 @@ class BankAccount extends \Entity\BaseEntity {
 	
 
 
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -116,6 +117,15 @@ class BankAccount extends \Entity\BaseEntity {
 	 */
 	public function setCompany(\Entity\Company\Company $company) {
 		$this->company = $company;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Company\BankAccount
+	 */
+	public function unsetCompany() {
+		$this->company = NULL;
 
 		return $this;
 	}

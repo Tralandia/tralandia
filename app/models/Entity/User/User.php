@@ -142,6 +142,7 @@ class User extends \Entity\BaseEntityDetails {
 
 
 	
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -250,7 +251,7 @@ class User extends \Entity\BaseEntityDetails {
 		if(!$this->contacts->contains($contact)) {
 			$this->contacts->add($contact);
 		}
-		$contact->addUser($this);
+		$contact->setUser($this);
 
 		return $this;
 	}
@@ -263,7 +264,7 @@ class User extends \Entity\BaseEntityDetails {
 		if($this->contacts->contains($contact)) {
 			$this->contacts->removeElement($contact);
 		}
-		$contact->removeUser($this);
+		$contact->unsetUser();
 
 		return $this;
 	}
@@ -661,7 +662,7 @@ class User extends \Entity\BaseEntityDetails {
 		if(!$this->combinations->contains($combination)) {
 			$this->combinations->add($combination);
 		}
-		$combination->addUser($this);
+		$combination->setUser($this);
 
 		return $this;
 	}
@@ -674,7 +675,7 @@ class User extends \Entity\BaseEntityDetails {
 		if($this->combinations->contains($combination)) {
 			$this->combinations->removeElement($combination);
 		}
-		$combination->removeUser($this);
+		$combination->unsetUser();
 
 		return $this;
 	}
@@ -694,7 +695,7 @@ class User extends \Entity\BaseEntityDetails {
 		if(!$this->rentals->contains($rental)) {
 			$this->rentals->add($rental);
 		}
-		$rental->addUser($this);
+		$rental->setUser($this);
 
 		return $this;
 	}
@@ -707,7 +708,7 @@ class User extends \Entity\BaseEntityDetails {
 		if($this->rentals->contains($rental)) {
 			$this->rentals->removeElement($rental);
 		}
-		$rental->removeUser($this);
+		$rental->unsetUser();
 
 		return $this;
 	}

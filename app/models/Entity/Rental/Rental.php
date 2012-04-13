@@ -201,6 +201,7 @@ class Rental extends \Entity\BaseEntity {
 	protected $invoices;
 
 	
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -223,6 +224,15 @@ class Rental extends \Entity\BaseEntity {
 	 */
 	public function setUser(\Entity\User\User $user) {
 		$this->user = $user;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Rental\Rental
+	 */
+	public function unsetUser() {
+		$this->user = NULL;
 
 		return $this;
 	}
@@ -739,7 +749,7 @@ class Rental extends \Entity\BaseEntity {
 		if(!$this->media->contains($media)) {
 			$this->media->add($media);
 		}
-		$media->addRental($this);
+		$media->setRental($this);
 
 		return $this;
 	}
@@ -752,7 +762,7 @@ class Rental extends \Entity\BaseEntity {
 		if($this->media->contains($media)) {
 			$this->media->removeElement($media);
 		}
-		$media->removeRental($this);
+		$media->unsetRental();
 
 		return $this;
 	}
@@ -806,7 +816,7 @@ class Rental extends \Entity\BaseEntity {
 		if(!$this->fulltexts->contains($fulltext)) {
 			$this->fulltexts->add($fulltext);
 		}
-		$fulltext->addRental($this);
+		$fulltext->setRental($this);
 
 		return $this;
 	}
@@ -819,7 +829,7 @@ class Rental extends \Entity\BaseEntity {
 		if($this->fulltexts->contains($fulltext)) {
 			$this->fulltexts->removeElement($fulltext);
 		}
-		$fulltext->removeRental($this);
+		$fulltext->unsetRental();
 
 		return $this;
 	}
@@ -839,7 +849,7 @@ class Rental extends \Entity\BaseEntity {
 		if(!$this->invoices->contains($invoice)) {
 			$this->invoices->add($invoice);
 		}
-		$invoice->addRental($this);
+		$invoice->setRental($this);
 
 		return $this;
 	}
@@ -852,7 +862,7 @@ class Rental extends \Entity\BaseEntity {
 		if($this->invoices->contains($invoice)) {
 			$this->invoices->removeElement($invoice);
 		}
-		$invoice->removeRental($this);
+		$invoice->unsetRental();
 
 		return $this;
 	}
