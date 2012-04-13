@@ -12,12 +12,12 @@ common:
 		proxyDir: '%tempDir%/proxies'
 
 		entityDirs: '%appDir%/models/Entities'
-	
+
 		settingsDir: '%appDir%/configs'
 
 		container: 
 			class: ServiceContainer
-			
+
 	doctrine:
 		connections:
 			default: %database%
@@ -29,10 +29,10 @@ common:
 
 		console:
 			entityManager: default
-		
+
 	services:	
 		console: @doctrine.console
-		
+
 	factories:
 		service: Extras\Models\Service::setEntityManager(@doctrine.entityManagers.default)
 		list: Extras\Models\ServiceList::setEntityManager(@doctrine.entityManagers.default)
@@ -47,7 +47,7 @@ production < common:
 			charset: utf8
 			driver: pdo_mysql
 			unix_socket: /var/run/mysqld/mysqld.sock
-		
+
 console < common:
 
 development < common:
@@ -62,12 +62,12 @@ development < common:
 			driver: pdo_mysql
 			debugger: false
 
-		
 vaculciak < development:
 
 durika < development:
-		
-
+	parameters:
+		database:
+			debugger: true
 
 test < development:
 	parameters:
