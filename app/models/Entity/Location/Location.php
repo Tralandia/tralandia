@@ -12,6 +12,8 @@ use DoctrineExtensions\NestedSet\MultipleRootNode;
  */
 class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 
+	const STATUS_LAUNCHED = 'launched';
+
 	/**
 	 * @var Collection
 	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
