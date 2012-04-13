@@ -79,7 +79,7 @@ class Route implements Nette\Application\IRouter {
 		list($languageIso, $domainName, $countryIso) = explode('.', $url->getHost(), 3);
 		$pathSegments = array_filter(explode('/', $url->getPath()));
 
-		$country = \Service\Location\Country::getByIso($countryIso);
+		$country = \Service\Location\Location::getByIso($countryIso);
 		if($languageIso === 'www') {
 			$language = \Service\Dictionary\Language::get($country->defaultLanguage);
 		} else {
@@ -110,10 +110,6 @@ class Route implements Nette\Application\IRouter {
 			}
 		}
 
-		if(!isset($params->page)) {
-			$params->page = 'rentalList';
-		}
-
 		if(count($httpRequest->query)) {
 			foreach ($httpRequest->query as $key => $value) {
 				if(!array_key_exists($key, $this->queryParams)) continue;
@@ -121,7 +117,7 @@ class Route implements Nette\Application\IRouter {
 			}
 		}
 
-		$segmentList = $this->getPathSegmentLis($pathSegments, $params);
+		$segmentList = $this->getPathSegmentList($pathSegments, $params);
 		if($segmentList->count() == count($pathSegments)) {
 			$pathSegmentTypesFlip = array_flip($this->pathSegmentTypes);
 			foreach ($segmentList as $key => $value) {
@@ -131,11 +127,16 @@ class Route implements Nette\Application\IRouter {
 			// @todo pocet najdenych pathsegmentov sa nezhoduje
 			// ak nejake chybaju tak ich skus najst v PathSegmentsOld
 		}
+
+		if(!isset($params->page)) {
+			$params->page = 'rentalList';
+		}
+
 		debug($params);
 		return $params;
 	}
 
-	public function getPathSegmentLis($pathSegments, $params) {
+	public function getPathSegmentList($pathSegments, $params) {
 		$criteria = array();
 		$criteria['pathSegment'] = $pathSegments;
 		$criteria['country'] = array($params->country, 0);
