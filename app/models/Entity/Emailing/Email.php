@@ -57,6 +57,7 @@ class Email extends \Entity\BaseEntity {
 	
 
 
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		

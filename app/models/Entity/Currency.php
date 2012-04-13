@@ -43,12 +43,13 @@ class Currency extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Location\Country", inversedBy="currencies")
+	 * @ORM\ManyToMany(targetEntity="Entity\Location\Location", inversedBy="currencies")
 	 */
-	protected $countries;
+	protected $locations;
 
 
     
+
 
 
 //@entity-generator-code <--- NEMAZAT !!!
@@ -57,7 +58,7 @@ class Currency extends \Entity\BaseEntity {
 	public function __construct() {
 		parent::__construct();
 
-		$this->countries = new \Doctrine\Common\Collections\ArrayCollection;
+		$this->locations = new \Doctrine\Common\Collections\ArrayCollection;
 	}
 		
 	/**
@@ -173,21 +174,21 @@ class Currency extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Location\Country
+	 * @param \Entity\Location\Location
 	 * @return \Entity\Currency
 	 */
-	public function addCountry(\Entity\Location\Country $country) {
-		if(!$this->countries->contains($country)) {
-			$this->countries->add($country);
+	public function addLocation(\Entity\Location\Location $location) {
+		if(!$this->locations->contains($location)) {
+			$this->locations->add($location);
 		}
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Location\Country
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Location\Location
 	 */
-	public function getCountries() {
-		return $this->countries;
+	public function getLocations() {
+		return $this->locations;
 	}
 }
