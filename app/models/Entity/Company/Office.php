@@ -37,6 +37,8 @@ class Office extends \Entity\BaseEntityDetails {
 	
 
 
+
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -52,6 +54,15 @@ class Office extends \Entity\BaseEntityDetails {
 	 */
 	public function setCompany(\Entity\Company\Company $company) {
 		$this->company = $company;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Company\Office
+	 */
+	public function unsetCompany() {
+		$this->company = NULL;
 
 		return $this;
 	}

@@ -5,7 +5,6 @@ namespace Extras;
 class Environment extends \Nette\Object {
 
 	private $location = NULL;
-	private $country = NULL;
 	private $language = NULL;
 
 	// @todo
@@ -13,12 +12,8 @@ class Environment extends \Nette\Object {
 	private $currency = NULL; // 
 	private $locale = NULL;
 
-
-	public static function factory() {
-		return new static();
-	}
-
 	public function __construct() {
+		debug('Environment::__construct');
 	}
 
 	public function getLocation() {
@@ -30,16 +25,6 @@ class Environment extends \Nette\Object {
 	
 	protected function loadLocation() {
 		return \Service\Location\Location::get(46);
-	}
-
-
-	public function getCountry() {
-		if($this->country === NULL) {
-			$country = $this->getLocation()->country;
-			if(!$country) $this->country = FALSE;
-			else $this->country = \Service\Location\Country::get($country);
-		}
-		return $this->country;
 	}
 
 	public function getLanguage() {

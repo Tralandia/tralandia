@@ -12,8 +12,10 @@ require_once LIBS_DIR . '/Nette/loader.php';
 require_once LIBS_DIR . '/tools.php';
 require_once LIBS_DIR . '/rado_functions.php';
 
+$section = isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : null;
 // Enable Nette\Debug for error visualisation & logging
 Debugger::enable();
+//Debugger::$strictMode = FALSE;
 
 
 // Configure application
@@ -29,19 +31,29 @@ $robotLoader->addDirectory(APP_DIR)
 	->addDirectory(LIBS_DIR)
 	->register();
 
-// Setup doctrine loader
-Extension::register($configurator);
-
 // Create Dependency Injection container from config.neon file
-$configurator->addConfig(APP_DIR . '/config.neon', isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : null);
+$configurator->addConfig(APP_DIR . '/configs/config.neon', $section);
 $container = $configurator->createContainer();
-$container->createService();
-$container->createList();
 
 // Pridanie sluzby robot loadera
 $container->addService('robotLoader', $robotLoader); // dolezite pre dynamicke presentery
 Debugger::$editor = $container->parameters['editor'];
-//Debugger::$strictMode = FALSE;
+
+
+
+$serviceConfigurator = new Extras\Configurator;
+$serviceConfigurator->setTempDirectory(TEMP_DIR);
+
+Extension::register($serviceConfigurator);
+
+$serviceConfigurator->addConfig(APP_DIR . '/configs/service.neon', $section);
+$serivceContainer = $serviceConfigurator->createContainer();
+
+// Setup doctrine loader
+
+$serivceContainer->createService();
+$serivceContainer->createList();
+
 
 
 // Setup router // TODO: presunut do config.neon
@@ -68,13 +80,14 @@ $container->application->onStartup[] = function() use ($container) {
 	));
 
 	$router[] = $frontRouter = new RouteList('Front');
+	$frontRouter[] = new \Extras\Route('Home:default');
 	$frontRouter[] = new Route('<presenter>/[<action>[/<id>]]', 'Home:default');
 
 };
 
 // Run the application!
 if (PHP_SAPI == 'cli') {
-	$container->console->run();
+	$serivceContainer->console->run();
 } else {
 	$container->application->run();
 }

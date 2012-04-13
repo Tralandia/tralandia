@@ -30,6 +30,8 @@ class Fulltext extends \Entity\BaseEntity {
 	protected $value;
 
 	
+
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -43,6 +45,15 @@ class Fulltext extends \Entity\BaseEntity {
 	 */
 	public function setRental(\Entity\Rental\Rental $rental) {
 		$this->rental = $rental;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Rental\Fulltext
+	 */
+	public function unsetRental() {
+		$this->rental = NULL;
 
 		return $this;
 	}

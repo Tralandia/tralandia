@@ -30,8 +30,8 @@ class Location extends \Extras\Models\ServiceNested {
 		$type = $this->type;
 		if(in_array($type->slug, array('region', 'locality')))  { # @todo
 			$types = array();
-			$types[] = TypeService::getBySlug('region');
-			$types[] = TypeService::getBySlug('locality');
+			$types[] = Type::getBySlug('region');
+			$types[] = Type::getBySlug('locality');
 			$locationList = LocationList::getBySlugInType($slug, $types);
 		} else {
 			$locationList = LocationList::getBySlugInType($slug, array($type));

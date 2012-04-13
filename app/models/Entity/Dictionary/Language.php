@@ -64,9 +64,9 @@ class Language extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Location\Country", inversedBy="languages")
+	 * @ORM\ManyToMany(targetEntity="Entity\Location\Location", inversedBy="languages")
 	 */
-	protected $countries;
+	protected $locations;
 
 	/**
 	 * @var Collection
@@ -77,13 +77,15 @@ class Language extends \Entity\BaseEntityDetails {
 	
 
 
+
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct() {
 		parent::__construct();
 
-		$this->countries = new \Doctrine\Common\Collections\ArrayCollection;
+		$this->locations = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->rentals = new \Doctrine\Common\Collections\ArrayCollection;
 	}
 		
@@ -278,22 +280,22 @@ class Language extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @param \Entity\Location\Country
+	 * @param \Entity\Location\Location
 	 * @return \Entity\Dictionary\Language
 	 */
-	public function addCountry(\Entity\Location\Country $country) {
-		if(!$this->countries->contains($country)) {
-			$this->countries->add($country);
+	public function addLocation(\Entity\Location\Location $location) {
+		if(!$this->locations->contains($location)) {
+			$this->locations->add($location);
 		}
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Location\Country
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Location\Location
 	 */
-	public function getCountries() {
-		return $this->countries;
+	public function getLocations() {
+		return $this->locations;
 	}
 		
 	/**

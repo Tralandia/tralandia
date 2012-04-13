@@ -63,6 +63,8 @@ class Medium extends \Entity\BaseEntityDetails {
 
 	
 
+
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -124,6 +126,15 @@ class Medium extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
+	 * @return \Entity\Medium\Medium
+	 */
+	public function unsetAttraction() {
+		$this->attraction = NULL;
+
+		return $this;
+	}
+		
+	/**
 	 * @return \Entity\Attraction\Attraction|NULL
 	 */
 	public function getAttraction() {
@@ -136,6 +147,15 @@ class Medium extends \Entity\BaseEntityDetails {
 	 */
 	public function setRental(\Entity\Rental\Rental $rental) {
 		$this->rental = $rental;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Medium\Medium
+	 */
+	public function unsetRental() {
+		$this->rental = NULL;
 
 		return $this;
 	}
@@ -158,6 +178,15 @@ class Medium extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
+	 * @return \Entity\Medium\Medium
+	 */
+	public function unsetSeoUrl() {
+		$this->seoUrl = NULL;
+
+		return $this;
+	}
+		
+	/**
 	 * @return \Entity\Seo\SeoUrl|NULL
 	 */
 	public function getSeoUrl() {
@@ -170,6 +199,15 @@ class Medium extends \Entity\BaseEntityDetails {
 	 */
 	public function setMessage(\Entity\Ticket\Message $message) {
 		$this->message = $message;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Medium\Medium
+	 */
+	public function unsetMessage() {
+		$this->message = NULL;
 
 		return $this;
 	}

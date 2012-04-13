@@ -32,6 +32,8 @@ class Amenity extends \Entity\BaseEntity {
 
 	
 
+
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -47,6 +49,15 @@ class Amenity extends \Entity\BaseEntity {
 	 */
 	public function setGroup(\Entity\Rental\Amenity\Group $group) {
 		$this->group = $group;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Rental\Amenity\Amenity
+	 */
+	public function unsetGroup() {
+		$this->group = NULL;
 
 		return $this;
 	}

@@ -88,6 +88,8 @@ class SeoUrl extends \Entity\BaseEntity {
 	protected $ppcKeywords;
 
 	
+
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -252,7 +254,7 @@ class SeoUrl extends \Entity\BaseEntity {
 		if(!$this->media->contains($media)) {
 			$this->media->add($media);
 		}
-		$media->addSeoUrl($this);
+		$media->setSeoUrl($this);
 
 		return $this;
 	}
@@ -265,7 +267,7 @@ class SeoUrl extends \Entity\BaseEntity {
 		if($this->media->contains($media)) {
 			$this->media->removeElement($media);
 		}
-		$media->removeSeoUrl($this);
+		$media->unsetSeoUrl();
 
 		return $this;
 	}

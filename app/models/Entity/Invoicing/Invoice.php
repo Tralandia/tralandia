@@ -154,6 +154,8 @@ class Invoice extends \Entity\BaseEntity {
 
 	
 
+
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -171,7 +173,7 @@ class Invoice extends \Entity\BaseEntity {
 		if(!$this->items->contains($item)) {
 			$this->items->add($item);
 		}
-		$item->addInvoice($this);
+		$item->setInvoice($this);
 
 		return $this;
 	}
@@ -184,7 +186,7 @@ class Invoice extends \Entity\BaseEntity {
 		if($this->items->contains($item)) {
 			$this->items->removeElement($item);
 		}
-		$item->removeInvoice($this);
+		$item->unsetInvoice();
 
 		return $this;
 	}
@@ -241,6 +243,15 @@ class Invoice extends \Entity\BaseEntity {
 	}
 		
 	/**
+	 * @return \Entity\Invoicing\Invoice
+	 */
+	public function unsetInvoicingCompany() {
+		$this->invoicingCompany = NULL;
+
+		return $this;
+	}
+		
+	/**
 	 * @return \Entity\Company\Company|NULL
 	 */
 	public function getInvoicingCompany() {
@@ -253,6 +264,15 @@ class Invoice extends \Entity\BaseEntity {
 	 */
 	public function setRental(\Entity\Rental\Rental $rental) {
 		$this->rental = $rental;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Invoicing\Invoice
+	 */
+	public function unsetRental() {
+		$this->rental = NULL;
 
 		return $this;
 	}

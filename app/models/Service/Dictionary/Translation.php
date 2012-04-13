@@ -2,7 +2,7 @@
 
 namespace Service\Dictionary;
 
-use Entities;
+use Entity;
 use Nette\Utils\Strings;
 use Services\Autopilot\Autopilot;
 
@@ -34,7 +34,7 @@ class Translation extends \Service\BaseService {
 
 	protected function setWebalizedTexts() {
 		$type = $this->phrase->type;
-		if($type instanceof Entities\BaseEntity) {
+		if($type instanceof Entity\BaseEntity) {
 			if($type->webalizedRequired === TRUE) {
 				$multiTranslations = $this->variations['multiTranslations'];
 				$webalized = array();

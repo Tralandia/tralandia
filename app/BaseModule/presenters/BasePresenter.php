@@ -121,7 +121,11 @@ abstract class BasePresenter extends Presenter {
 	public function templatePrepareFilters($template) {
 		$latte = new \Nette\Latte\Engine;
 		$template->registerFilter($latte);
-		\Extras\MyMacros::install($latte->compiler);
+		\Extras\Macros::install($latte->compiler);
+	}
+
+	public function getBaseUrl() {
+		return $this->template->baseUrl;
 	}
 
 }

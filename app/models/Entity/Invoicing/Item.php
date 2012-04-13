@@ -110,6 +110,8 @@ class Item extends \Entity\BaseEntity {
 
 	
 
+
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -123,6 +125,15 @@ class Item extends \Entity\BaseEntity {
 	 */
 	public function setInvoice(\Entity\Invoicing\Invoice $invoice) {
 		$this->invoice = $invoice;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Invoicing\Item
+	 */
+	public function unsetInvoice() {
+		$this->invoice = NULL;
 
 		return $this;
 	}

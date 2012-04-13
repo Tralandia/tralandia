@@ -9,6 +9,9 @@ define('WWW_DIR', dirname(__FILE__));
 // absolute filesystem path to the root directory
 define('ROOT_DIR', WWW_DIR . '/..');
 
+// absolute filesystem path to the files
+define('FILES_DIR', WWW_DIR . '/storage');
+
 // absolute filesystem path to the application root
 define('APP_DIR', ROOT_DIR . '/app');
 

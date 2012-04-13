@@ -134,12 +134,6 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Country", mappedBy="location", cascade={"persist", "remove"})
-	 */
-	protected $country;
-
-	/**
-	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="Traveling", mappedBy="destinationLocation")
 	 */
 	protected $incomingLocations;
@@ -149,6 +143,136 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 	 * @ORM\OneToMany(targetEntity="Traveling", mappedBy="sourceLocation")
 	 */
 	protected $outgoingLocations;
+
+
+	/* ----------------------------- attributes from country ----------------------------- */
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $status;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $iso;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $iso3;
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToOne(targetEntity="Entity\Currency", cascade={"persist"})
+	 */
+	protected $defaultCurrency;
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToMany(targetEntity="Entity\Currency", mappedBy="locations", cascade={"persist"})
+	 */
+	protected $currencies;
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToOne(targetEntity="Entity\Dictionary\Language", cascade={"persist"})
+	 */
+	protected $defaultLanguage;
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToMany(targetEntity="Entity\Dictionary\Language", mappedBy="locations", cascade={"persist"})
+	 */
+	protected $languages;
+
+	/**
+	 * @var integer
+	 * @ORM\Column(type="integer", nullable=true)
+	 */
+	protected $population;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $phonePrefix;
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact", cascade={"persist"})
+	 */
+	protected $facebookGroup;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $capitalCity;
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact", cascade={"persist"})
+	 */
+	protected $phoneNumberEmergency;
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact", cascade={"persist"})
+	 */
+	protected $phoneNumberPolice;
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact", cascade={"persist"})
+	 */
+	protected $phoneNumberMedical;
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact", cascade={"persist"})
+	 */
+	protected $phoneNumberFire;
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact", cascade={"persist"})
+	 */
+	protected $wikipediaLink;
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToMany(targetEntity="Entity\Contact\Contact", mappedBy="locations", cascade={"persist"})
+	 */
+	protected $contacts;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $drivingSide;
+
+	/**
+	 * @var price
+	 * @ORM\Column(type="price", nullable=true)
+	 */
+	protected $pricesPizza;
+
+	/**
+	 * @var price
+	 * @ORM\Column(type="price", nullable=true)
+	 */
+	protected $pricesDinner;
+
+	/**
+	 * @var text
+	 * @ORM\Column(type="text", nullable=true)
+	 */
+	protected $airports;
+
 
 
 	/* ----------------------------- Nested Set Methods - DO NOT DELETE ----------------------------- */
@@ -166,7 +290,8 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 
 
 
-	
+
+
 
 //@entity-generator-code <--- NEMAZAT !!!
 
@@ -182,6 +307,9 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 		$this->users = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->incomingLocations = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->outgoingLocations = new \Doctrine\Common\Collections\ArrayCollection;
+		$this->currencies = new \Doctrine\Common\Collections\ArrayCollection;
+		$this->languages = new \Doctrine\Common\Collections\ArrayCollection;
+		$this->contacts = new \Doctrine\Common\Collections\ArrayCollection;
 	}
 		
 	/**
@@ -476,6 +604,15 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 	}
 		
 	/**
+	 * @return \Entity\Location\Location
+	 */
+	public function unsetDomain() {
+		$this->domain = NULL;
+
+		return $this;
+	}
+		
+	/**
 	 * @return \Entity\Domain|NULL
 	 */
 	public function getDomain() {
@@ -540,34 +677,6 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 	}
 		
 	/**
-	 * @param \Entity\Location\Country
-	 * @return \Entity\Location\Location
-	 */
-	public function setCountry(\Entity\Location\Country $country) {
-		$this->country = $country;
-		$country->setLocation($this);
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Location\Location
-	 */
-	public function unsetCountry() {
-		$this->country = NULL;
-		$country->setLocation();
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Location\Country|NULL
-	 */
-	public function getCountry() {
-		return $this->country;
-	}
-		
-	/**
 	 * @param \Entity\Location\Traveling
 	 * @return \Entity\Location\Location
 	 */
@@ -575,7 +684,7 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 		if(!$this->incomingLocations->contains($incomingLocation)) {
 			$this->incomingLocations->add($incomingLocation);
 		}
-		$incomingLocation->addDestinationLocation($this);
+		$incomingLocation->setDestinationLocation($this);
 
 		return $this;
 	}
@@ -588,7 +697,7 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 		if($this->incomingLocations->contains($incomingLocation)) {
 			$this->incomingLocations->removeElement($incomingLocation);
 		}
-		$incomingLocation->removeDestinationLocation($this);
+		$incomingLocation->unsetDestinationLocation();
 
 		return $this;
 	}
@@ -608,7 +717,7 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 		if(!$this->outgoingLocations->contains($outgoingLocation)) {
 			$this->outgoingLocations->add($outgoingLocation);
 		}
-		$outgoingLocation->addSourceLocation($this);
+		$outgoingLocation->setSourceLocation($this);
 
 		return $this;
 	}
@@ -621,7 +730,7 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 		if($this->outgoingLocations->contains($outgoingLocation)) {
 			$this->outgoingLocations->removeElement($outgoingLocation);
 		}
-		$outgoingLocation->removeSourceLocation($this);
+		$outgoingLocation->unsetSourceLocation();
 
 		return $this;
 	}
@@ -631,5 +740,572 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 	 */
 	public function getOutgoingLocations() {
 		return $this->outgoingLocations;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Location\Location
+	 */
+	public function setStatus($status) {
+		$this->status = $status;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Location\Location
+	 */
+	public function unsetStatus() {
+		$this->status = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getStatus() {
+		return $this->status;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Location\Location
+	 */
+	public function setIso($iso) {
+		$this->iso = $iso;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Location\Location
+	 */
+	public function unsetIso() {
+		$this->iso = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getIso() {
+		return $this->iso;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Location\Location
+	 */
+	public function setIso3($iso3) {
+		$this->iso3 = $iso3;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Location\Location
+	 */
+	public function unsetIso3() {
+		$this->iso3 = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getIso3() {
+		return $this->iso3;
+	}
+		
+	/**
+	 * @param \Entity\Currency
+	 * @return \Entity\Location\Location
+	 */
+	public function setDefaultCurrency(\Entity\Currency $defaultCurrency) {
+		$this->defaultCurrency = $defaultCurrency;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Location\Location
+	 */
+	public function unsetDefaultCurrency() {
+		$this->defaultCurrency = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Currency|NULL
+	 */
+	public function getDefaultCurrency() {
+		return $this->defaultCurrency;
+	}
+		
+	/**
+	 * @param \Entity\Currency
+	 * @return \Entity\Location\Location
+	 */
+	public function addCurrency(\Entity\Currency $currency) {
+		if(!$this->currencies->contains($currency)) {
+			$this->currencies->add($currency);
+		}
+		$currency->addLocation($this);
+
+		return $this;
+	}
+		
+	/**
+	 * @param \Entity\Currency
+	 * @return \Entity\Location\Location
+	 */
+	public function removeCurrency(\Entity\Currency $currency) {
+		if($this->currencies->contains($currency)) {
+			$this->currencies->removeElement($currency);
+		}
+		$currency->removeLocation($this);
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Currency
+	 */
+	public function getCurrencies() {
+		return $this->currencies;
+	}
+		
+	/**
+	 * @param \Entity\Dictionary\Language
+	 * @return \Entity\Location\Location
+	 */
+	public function setDefaultLanguage(\Entity\Dictionary\Language $defaultLanguage) {
+		$this->defaultLanguage = $defaultLanguage;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Location\Location
+	 */
+	public function unsetDefaultLanguage() {
+		$this->defaultLanguage = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Dictionary\Language|NULL
+	 */
+	public function getDefaultLanguage() {
+		return $this->defaultLanguage;
+	}
+		
+	/**
+	 * @param \Entity\Dictionary\Language
+	 * @return \Entity\Location\Location
+	 */
+	public function addLanguage(\Entity\Dictionary\Language $language) {
+		if(!$this->languages->contains($language)) {
+			$this->languages->add($language);
+		}
+		$language->addLocation($this);
+
+		return $this;
+	}
+		
+	/**
+	 * @param \Entity\Dictionary\Language
+	 * @return \Entity\Location\Location
+	 */
+	public function removeLanguage(\Entity\Dictionary\Language $language) {
+		if($this->languages->contains($language)) {
+			$this->languages->removeElement($language);
+		}
+		$language->removeLocation($this);
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Dictionary\Language
+	 */
+	public function getLanguages() {
+		return $this->languages;
+	}
+		
+	/**
+	 * @param integer
+	 * @return \Entity\Location\Location
+	 */
+	public function setPopulation($population) {
+		$this->population = $population;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Location\Location
+	 */
+	public function unsetPopulation() {
+		$this->population = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return integer|NULL
+	 */
+	public function getPopulation() {
+		return $this->population;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Location\Location
+	 */
+	public function setPhonePrefix($phonePrefix) {
+		$this->phonePrefix = $phonePrefix;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Location\Location
+	 */
+	public function unsetPhonePrefix() {
+		$this->phonePrefix = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getPhonePrefix() {
+		return $this->phonePrefix;
+	}
+		
+	/**
+	 * @param \Entity\Contact\Contact
+	 * @return \Entity\Location\Location
+	 */
+	public function setFacebookGroup(\Entity\Contact\Contact $facebookGroup) {
+		$this->facebookGroup = $facebookGroup;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Location\Location
+	 */
+	public function unsetFacebookGroup() {
+		$this->facebookGroup = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Contact\Contact|NULL
+	 */
+	public function getFacebookGroup() {
+		return $this->facebookGroup;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Location\Location
+	 */
+	public function setCapitalCity($capitalCity) {
+		$this->capitalCity = $capitalCity;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Location\Location
+	 */
+	public function unsetCapitalCity() {
+		$this->capitalCity = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getCapitalCity() {
+		return $this->capitalCity;
+	}
+		
+	/**
+	 * @param \Entity\Contact\Contact
+	 * @return \Entity\Location\Location
+	 */
+	public function setPhoneNumberEmergency(\Entity\Contact\Contact $phoneNumberEmergency) {
+		$this->phoneNumberEmergency = $phoneNumberEmergency;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Location\Location
+	 */
+	public function unsetPhoneNumberEmergency() {
+		$this->phoneNumberEmergency = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Contact\Contact|NULL
+	 */
+	public function getPhoneNumberEmergency() {
+		return $this->phoneNumberEmergency;
+	}
+		
+	/**
+	 * @param \Entity\Contact\Contact
+	 * @return \Entity\Location\Location
+	 */
+	public function setPhoneNumberPolice(\Entity\Contact\Contact $phoneNumberPolice) {
+		$this->phoneNumberPolice = $phoneNumberPolice;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Location\Location
+	 */
+	public function unsetPhoneNumberPolice() {
+		$this->phoneNumberPolice = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Contact\Contact|NULL
+	 */
+	public function getPhoneNumberPolice() {
+		return $this->phoneNumberPolice;
+	}
+		
+	/**
+	 * @param \Entity\Contact\Contact
+	 * @return \Entity\Location\Location
+	 */
+	public function setPhoneNumberMedical(\Entity\Contact\Contact $phoneNumberMedical) {
+		$this->phoneNumberMedical = $phoneNumberMedical;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Location\Location
+	 */
+	public function unsetPhoneNumberMedical() {
+		$this->phoneNumberMedical = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Contact\Contact|NULL
+	 */
+	public function getPhoneNumberMedical() {
+		return $this->phoneNumberMedical;
+	}
+		
+	/**
+	 * @param \Entity\Contact\Contact
+	 * @return \Entity\Location\Location
+	 */
+	public function setPhoneNumberFire(\Entity\Contact\Contact $phoneNumberFire) {
+		$this->phoneNumberFire = $phoneNumberFire;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Location\Location
+	 */
+	public function unsetPhoneNumberFire() {
+		$this->phoneNumberFire = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Contact\Contact|NULL
+	 */
+	public function getPhoneNumberFire() {
+		return $this->phoneNumberFire;
+	}
+		
+	/**
+	 * @param \Entity\Contact\Contact
+	 * @return \Entity\Location\Location
+	 */
+	public function setWikipediaLink(\Entity\Contact\Contact $wikipediaLink) {
+		$this->wikipediaLink = $wikipediaLink;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Location\Location
+	 */
+	public function unsetWikipediaLink() {
+		$this->wikipediaLink = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Contact\Contact|NULL
+	 */
+	public function getWikipediaLink() {
+		return $this->wikipediaLink;
+	}
+		
+	/**
+	 * @param \Entity\Contact\Contact
+	 * @return \Entity\Location\Location
+	 */
+	public function addContact(\Entity\Contact\Contact $contact) {
+		if(!$this->contacts->contains($contact)) {
+			$this->contacts->add($contact);
+		}
+		$contact->addLocation($this);
+
+		return $this;
+	}
+		
+	/**
+	 * @param \Entity\Contact\Contact
+	 * @return \Entity\Location\Location
+	 */
+	public function removeContact(\Entity\Contact\Contact $contact) {
+		if($this->contacts->contains($contact)) {
+			$this->contacts->removeElement($contact);
+		}
+		$contact->removeLocation($this);
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Contact\Contact
+	 */
+	public function getContacts() {
+		return $this->contacts;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Location\Location
+	 */
+	public function setDrivingSide($drivingSide) {
+		$this->drivingSide = $drivingSide;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Location\Location
+	 */
+	public function unsetDrivingSide() {
+		$this->drivingSide = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getDrivingSide() {
+		return $this->drivingSide;
+	}
+		
+	/**
+	 * @param \Extras\Types\Price
+	 * @return \Entity\Location\Location
+	 */
+	public function setPricesPizza(\Extras\Types\Price $pricesPizza) {
+		$this->pricesPizza = $pricesPizza;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Location\Location
+	 */
+	public function unsetPricesPizza() {
+		$this->pricesPizza = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Extras\Types\Price|NULL
+	 */
+	public function getPricesPizza() {
+		return $this->pricesPizza;
+	}
+		
+	/**
+	 * @param \Extras\Types\Price
+	 * @return \Entity\Location\Location
+	 */
+	public function setPricesDinner(\Extras\Types\Price $pricesDinner) {
+		$this->pricesDinner = $pricesDinner;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Location\Location
+	 */
+	public function unsetPricesDinner() {
+		$this->pricesDinner = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Extras\Types\Price|NULL
+	 */
+	public function getPricesDinner() {
+		return $this->pricesDinner;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Location\Location
+	 */
+	public function setAirports($airports) {
+		$this->airports = $airports;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Location\Location
+	 */
+	public function unsetAirports() {
+		$this->airports = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getAirports() {
+		return $this->airports;
 	}
 }
