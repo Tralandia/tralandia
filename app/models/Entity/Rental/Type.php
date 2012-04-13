@@ -30,6 +30,8 @@ class Type extends \Entity\BaseEntity {
 	protected $users;
 
 	
+
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		

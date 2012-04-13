@@ -12,10 +12,9 @@ use Nette\Application as NA,
 
 class ImportUserRoles extends BaseImport {
 
-	public function doImport() {
-		$this->savedVariables['importedSections']['userRoles'] = 1;
+	public function doImport($subsection = NULL) {
 
-		$allRoles = array('Guest', 'Visitor', 'Owner', 'Translator', 'Assistant', 'Vendor', 'Manager', 'Admin', 'SuperAdmin');
+		$allRoles = array('Guest', 'Visitor', 'PotentialOwner', 'Owner', 'Translator', 'Assistant', 'Vendor', 'Manager', 'Admin', 'SuperAdmin');
 
 		foreach ($allRoles as $key => $value) {
 			$role = \Service\User\Role::get();
@@ -23,7 +22,7 @@ class ImportUserRoles extends BaseImport {
 			$role->slug = $role->name;
 			$role->save();
 		}
-		$this->savedVariables['importedSections']['userRoles'] = 2;
+		$this->savedVariables['importedSections']['userRoles'] = 1;
 
 	}
 

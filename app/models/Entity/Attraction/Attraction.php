@@ -72,6 +72,8 @@ class Attraction extends \Entity\BaseEntityDetails {
 	
 
 
+
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -269,7 +271,7 @@ class Attraction extends \Entity\BaseEntityDetails {
 		if(!$this->media->contains($media)) {
 			$this->media->add($media);
 		}
-		$media->addAttraction($this);
+		$media->setAttraction($this);
 
 		return $this;
 	}
@@ -282,7 +284,7 @@ class Attraction extends \Entity\BaseEntityDetails {
 		if($this->media->contains($media)) {
 			$this->media->removeElement($media);
 		}
-		$media->removeAttraction($this);
+		$media->unsetAttraction();
 
 		return $this;
 	}

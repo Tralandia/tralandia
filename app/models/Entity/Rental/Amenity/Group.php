@@ -25,6 +25,8 @@ class Group extends \Entity\BaseEntity {
 	protected $name;
 
 	
+
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -42,7 +44,7 @@ class Group extends \Entity\BaseEntity {
 		if(!$this->amenities->contains($amenity)) {
 			$this->amenities->add($amenity);
 		}
-		$amenity->addGroup($this);
+		$amenity->setGroup($this);
 
 		return $this;
 	}
@@ -55,7 +57,7 @@ class Group extends \Entity\BaseEntity {
 		if($this->amenities->contains($amenity)) {
 			$this->amenities->removeElement($amenity);
 		}
-		$amenity->removeGroup($this);
+		$amenity->unsetGroup();
 
 		return $this;
 	}

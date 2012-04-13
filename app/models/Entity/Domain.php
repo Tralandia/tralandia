@@ -28,6 +28,8 @@ class Domain extends \Entity\BaseEntity {
 
 	
 
+
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -62,7 +64,7 @@ class Domain extends \Entity\BaseEntity {
 		if(!$this->locations->contains($location)) {
 			$this->locations->add($location);
 		}
-		$location->addDomain($this);
+		$location->setDomain($this);
 
 		return $this;
 	}
@@ -75,7 +77,7 @@ class Domain extends \Entity\BaseEntity {
 		if($this->locations->contains($location)) {
 			$this->locations->removeElement($location);
 		}
-		$location->removeDomain($this);
+		$location->unsetDomain();
 
 		return $this;
 	}

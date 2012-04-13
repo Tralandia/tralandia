@@ -14,8 +14,7 @@ use Nette\Application as NA,
 
 class ImportContactTypes extends BaseImport {
 
-	public function doImport() {
-		$this->savedVariables['importedSections']['contactTypes'] = 1;
+	public function doImport($subsection = NULL) {
 
 		$language = \Service\Dictionary\Language::getByIso('en');
 
@@ -39,7 +38,12 @@ class ImportContactTypes extends BaseImport {
 		$s->slug = 'Url';
 		$s->save();
 
-		$this->savedVariables['importedSections']['contactTypes'] = 2;
+		$s = S\Contact\Type::get();
+		$s->name = $this->createPhraseFromString('\Location\Location', 'name', 'supportedLanguages', 'NATIVE', 'Skype', $language);;
+		$s->slug = 'Skype';
+		$s->save();
+
+		$this->savedVariables['importedSections']['contactTypes'] = 1;
 
 	}
 }

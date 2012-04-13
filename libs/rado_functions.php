@@ -107,7 +107,7 @@ function getCurrencyByIso($iso) {
 	$id = mysql_fetch_array($id);
 	$id = $id[0];
 
-	return \Services\CurrencyService::get($id);
+	return \Service\Currency::get($id);
 }
 
 function getSupportedLanguages() {

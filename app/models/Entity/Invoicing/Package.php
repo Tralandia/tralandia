@@ -44,6 +44,8 @@ class Package extends \Entity\BaseEntity {
 
 	
 
+
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -155,7 +157,7 @@ class Package extends \Entity\BaseEntity {
 		if(!$this->services->contains($service)) {
 			$this->services->add($service);
 		}
-		$service->addPackage($this);
+		$service->setPackage($this);
 
 		return $this;
 	}
@@ -168,7 +170,7 @@ class Package extends \Entity\BaseEntity {
 		if($this->services->contains($service)) {
 			$this->services->removeElement($service);
 		}
-		$service->removePackage($this);
+		$service->unsetPackage();
 
 		return $this;
 	}

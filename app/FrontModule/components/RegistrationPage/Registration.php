@@ -2,7 +2,7 @@
 namespace FrontModule\Components\RegistrationPage;
 
 use Nette\Application\UI\Control,
-	FrontModule\BasePage\BasePage;
+	FrontModule\Components\BasePage\BasePage;
 
 class Registration extends BasePage {
 

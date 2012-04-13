@@ -12,8 +12,7 @@ use Nette\Application as NA,
 
 class ImportAutopilot extends BaseImport {
 
-	public function doImport() {
-		$this->savedVariables['importedSections']['autopilot'] = 1;
+	public function doImport($subsection = NULL) {
 
 		$type = \Service\Autopilot\Type::get();
 		$type->name = 'Administrative region at level 2 has no parent.';
@@ -26,7 +25,7 @@ class ImportAutopilot extends BaseImport {
 		$type->actions = NULL;
 		$type->save();
 	
-		$this->savedVariables['importedSections']['autopilot'] = 2;
+		$this->savedVariables['importedSections']['autopilot'] = 1;
 
 	}
 

@@ -16,7 +16,7 @@ class RadoPresenter extends BasePresenter {
 
 	public function actionDefault() {
 		ini_set('max_execution_time', 0);
-		Debugger::$maxDepth = 5;
+		Debugger::$maxDepth = 3;
 		$redirect = FALSE;
 		if (isset($this->params['dropAllTables'])) {
 			$import = new I\BaseImport();
@@ -41,7 +41,11 @@ class RadoPresenter extends BasePresenter {
 			\Extras\Models\Service::preventFlush();
 			$className = 'Extras\Import\Import'.ucfirst($this->params['importSection']);
 			$import = new $className();
-			$import->doImport();
+			if (isset($this->params['subsection'])) {
+				$import->doImport($this->params['subsection']);
+			} else {
+				$import->doImport();
+			}
 			$import->saveVariables();
 			\Extras\Models\Service::flush(FALSE);
 			$this->flashMessage('Importing Done');
@@ -67,20 +71,7 @@ class RadoPresenter extends BasePresenter {
 
 		$import = new I\BaseImport();
 
-		$sections = $import->getSections();
-		$temp = array();
-		$nextNoImport = FALSE;
-		foreach ($sections as $key => $value) {
-			if ($nextNoImport == TRUE) {
-				$temp[$key] = NULL;
-			} else {
-				$temp[$key] = (int)@$import->savedVariables['importedSections'][$key];
-			}
-			if ($temp[$key] == FALSE) {
-				$nextNoImport = TRUE;
-			}
-		}
-		$this->template->sections = $temp;
+		$this->template->sections = $import->createNavigation();
 		return;
 	}
 
