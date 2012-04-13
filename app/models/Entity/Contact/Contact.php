@@ -43,9 +43,9 @@ class Contact extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Location\Country", inversedBy="contacts", cascade={"persist"})
+	 * @ORM\ManyToMany(targetEntity="Entity\Location\Location", inversedBy="contacts", cascade={"persist"})
 	 */
-	protected $countries;
+	protected $locations;
 
 	/**
 	 * @var json
@@ -79,6 +79,8 @@ class Contact extends \Entity\BaseEntity {
 
 	
 
+
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -87,7 +89,7 @@ class Contact extends \Entity\BaseEntity {
 
 		$this->attractions = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->rentals = new \Doctrine\Common\Collections\ArrayCollection;
-		$this->countries = new \Doctrine\Common\Collections\ArrayCollection;
+		$this->locations = new \Doctrine\Common\Collections\ArrayCollection;
 	}
 		
 	/**
@@ -191,6 +193,15 @@ class Contact extends \Entity\BaseEntity {
 	}
 		
 	/**
+	 * @return \Entity\Contact\Contact
+	 */
+	public function unsetUser() {
+		$this->user = NULL;
+
+		return $this;
+	}
+		
+	/**
 	 * @return \Entity\User\User|NULL
 	 */
 	public function getUser() {
@@ -198,22 +209,22 @@ class Contact extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Location\Country
+	 * @param \Entity\Location\Location
 	 * @return \Entity\Contact\Contact
 	 */
-	public function addCountry(\Entity\Location\Country $country) {
-		if(!$this->countries->contains($country)) {
-			$this->countries->add($country);
+	public function addLocation(\Entity\Location\Location $location) {
+		if(!$this->locations->contains($location)) {
+			$this->locations->add($location);
 		}
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Location\Country
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Location\Location
 	 */
-	public function getCountries() {
-		return $this->countries;
+	public function getLocations() {
+		return $this->locations;
 	}
 		
 	/**

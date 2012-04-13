@@ -43,6 +43,8 @@ class Service extends \Entity\BaseEntity {
 
 	
 
+
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -56,6 +58,15 @@ class Service extends \Entity\BaseEntity {
 	 */
 	public function setPackage(\Entity\Invoicing\Package $package) {
 		$this->package = $package;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Invoicing\Service\Service
+	 */
+	public function unsetPackage() {
+		$this->package = NULL;
 
 		return $this;
 	}

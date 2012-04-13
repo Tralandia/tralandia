@@ -5,8 +5,19 @@
 <p></p>
 <a href="?dropAllTables=1">Drop All Tables</a>
 <a href="?truncateAllTables=1">Truncate All Tables</a>
-<ul>
+<table>
 {foreach $sections as $key => $value}
-    <li>{$key} {if $value>0}<a href="?undoSection={$key}">UNDO</a>{/if} {if $value===0}<a href="?importSection={$key}">IMPORT</a>{/if}</li>
+    <tr>
+    	<td>{$value['name']}</td>
+    	<td>{if $value['undo']}<a href="?undoSection={$key}">UNDO</a>{/if}</td>
+    	<td>{if $value['import'] && $value['rootImport']}<a href="?importSection={$key}">IMPORT</a>{/if}</td>
+    	<td>
+		{foreach $value['subsections'] as $key2 => $value2}
+	    	{if $value2['import']}<a href="?importSection={$key}&subsection={$key2}">{$value2['name']}</a>
+	    	{else}{$value2['name']}
+	    	{/if}
+		{/foreach}
+		</td>
+    </tr>
 {/foreach}
-</ul>
+</table>

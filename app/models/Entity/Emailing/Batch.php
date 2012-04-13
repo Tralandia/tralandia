@@ -49,6 +49,8 @@ class Batch extends \Entity\BaseEntityDetails {
 
 	
 
+
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -79,6 +81,15 @@ class Batch extends \Entity\BaseEntityDetails {
 	 */
 	public function setEmailTemplate(\Entity\Emailing\Email $emailTemplate) {
 		$this->emailTemplate = $emailTemplate;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Emailing\Batch
+	 */
+	public function unsetEmailTemplate() {
+		$this->emailTemplate = NULL;
 
 		return $this;
 	}

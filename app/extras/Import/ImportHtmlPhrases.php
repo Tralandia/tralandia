@@ -14,8 +14,7 @@ use Nette\Application as NA,
 
 class ImportHtmlPhrases extends BaseImport {
 
-	public function doImport() {
-		$this->savedVariables['importedSections']['htmlPhrases'] = 1;
+	public function doImport($subsection = NULL) {
 
 		$dictionaryType = $this->createDictionaryType('Html', 'Html', 'supportedLanguages', 'MARKETING');
 
@@ -32,7 +31,7 @@ class ImportHtmlPhrases extends BaseImport {
 			$i++;
 		}
 		debug($i);
-		$this->savedVariables['importedSections']['htmlPhrases'] = 2;
+		$this->savedVariables['importedSections']['htmlPhrases'] = 1;
 	}
 
 }

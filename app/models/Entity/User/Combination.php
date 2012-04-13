@@ -38,6 +38,8 @@ class Combination extends \Entity\BaseEntityDetails {
 
 
 	
+
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -51,6 +53,15 @@ class Combination extends \Entity\BaseEntityDetails {
 	 */
 	public function setUser(\Entity\User\User $user) {
 		$this->user = $user;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\User\Combination
+	 */
+	public function unsetUser() {
+		$this->user = NULL;
 
 		return $this;
 	}
