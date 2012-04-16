@@ -41,6 +41,7 @@ class Phrase extends \Entity\BaseEntityDetails {
 
 
 
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		

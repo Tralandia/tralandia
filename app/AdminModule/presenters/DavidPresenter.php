@@ -53,14 +53,19 @@ class DavidPresenter extends BasePresenter {
 		);
 		$this->template->data = $data;
 
-		$s = $this->getEnvironment()->getCountry();
+		$s = D\Phrase::getByIdAndReady(2, true);
+		$s2 = D\Phrase::getByIdAndReady(2, true);
+
 		debug($s);
+		debug($s2);
+		
+		debug($s === $s);
 		
 	}
 
 	public function createComponentTabControl($name) {
 
-		$tabControl = new \BaseModule\TabControl\TabControl($this, $name);
+		$tabControl = new \BaseModule\Components\TabControl\TabControl($this, $name);
 
 
 		$t = $tabControl->addTab('tab1');
@@ -70,7 +75,7 @@ class DavidPresenter extends BasePresenter {
 
 		$t = $tabControl->addTab('tab2');
 		$t->header = 2;
-		$t->content = $tabControl2 = new \BaseModule\TabControl\TabControl($t, 'test');
+		$t->content = $tabControl2 = new \BaseModule\Components\TabControl\TabControl($t, 'test');
 
 		
 		$t = $tabControl2->addTab('tab21');
@@ -80,7 +85,7 @@ class DavidPresenter extends BasePresenter {
 
 		$t = $tabControl->addTab('tab3');
 		$t->header = 3;
-		$t->content = new \FrontModule\RegistrationPage\Registration($t, 'registrationPage');
+		$t->content = new \FrontModule\Components\RegistrationPage\Registration($t, 'registrationPage');
 
 		return $tabControl;
 

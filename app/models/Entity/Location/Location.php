@@ -12,6 +12,8 @@ use DoctrineExtensions\NestedSet\MultipleRootNode;
  */
 class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 
+	const STATUS_LAUNCHED = 'launched';
+
 	/**
 	 * @var Collection
 	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
@@ -287,6 +289,7 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 	public function setRootValue($nestedRoot) { $this->nestedRoot = $nestedRoot; }
 
 	public function __toString() { return (string)$this->slug; }
+
 
 
 

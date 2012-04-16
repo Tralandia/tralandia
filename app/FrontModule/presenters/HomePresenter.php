@@ -14,22 +14,22 @@ class HomePresenter extends BasePresenter {
 		$paginator->itemCount = 568;
 
 		// TEST: saving file from URL
-		//$medium = \Service\Medium\Medium::createFromUrl('http://tralandia.local/temp/12486339913332.jpg');
+		$medium = \Service\Medium\Medium::createFromUrl('http://tralandia.local/temp/Android%20Root.rar');
 
 	}
 
 	public function createComponentCountryMap($name) {
 
-		return new \FrontModule\CountryMap($this, $name);
+		return new \FrontModule\Components\CountryMap\CountryMap($this, $name);
 
 	}
 
 	public function createComponentTabControl($name) {
 
-		$tabBar = new \FrontModule\TabControl\TabControl($this, $name);
+		$tabBar = new \BaseModule\Components\TabControl\TabControl($this, $name);
 
 		$t = $tabBar->addTab('top');
-		$t->setHeader(10)->setActive(true)->setContent('Top Objekty');
+		$t->setHeader(10)->setContent('Top Objekty')->setActive();
 
 		$t = $tabBar->addTab('regions');
 		$t->setHeader(15)->setContent('Regiony');

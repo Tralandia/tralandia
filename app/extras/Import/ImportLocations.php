@@ -104,22 +104,21 @@ class ImportLocations extends BaseImport {
 		//$r = q('select * from countries where id = 46 order by id');
 		while($x = mysql_fetch_array($r)) {
 			$location = \Service\Location\Location::get();
-			$country = \Service\Location\Country::get();
 
-			$country->status = $x['supported'] == 1 ? 'supported' : ($x['status'] == 1 ? 'launched' : '');
-			$country->oldId = $x['id'];
-			$country->iso = $x['iso'];
-			$country->iso3 = $x['iso3'];
-			$country->defaultLanguage = \Service\Dictionary\Language::get(getByOldId('\Dictionary\Language', $x['default_language_id']));
+			$location->status = $x['supported'] == 1 ? 'supported' : ($x['status'] == 1 ? 'launched' : '');
+			$location->oldId = $x['id'];
+			$location->iso = $x['iso'];
+			$location->iso3 = $x['iso3'];
+			$location->defaultLanguage = \Service\Dictionary\Language::get(getByOldId('\Dictionary\Language', $x['default_language_id']));
 			$t = getNewIds('\Dictionary\Language', $x['languages']);
 			foreach ($t as $key => $value) {
 				$t1 = \Service\Dictionary\Language::get($value);
-				$country->addLanguage($t1);
+				$location->addLanguage($t1);
 			}
 
 			$t = \Service\Currency::get(getByOldId('\Currency', $x['default_currency_id']));
 			if ($t->id) {
-				$country->defaultCurrency = $t;
+				$location->defaultCurrency = $t;
 			}
 			
 			$t = str_replace(',', '', $x['currencies']);
@@ -131,37 +130,37 @@ class ImportLocations extends BaseImport {
 			}
 
 			if (isset($t1->id) && $t1->id > 0) {
-				$country->addCurrency($t1);
+				$location->addCurrency($t1);
 			}
 
-			$country->population = $x['population'];
-			$country->phonePrefix = $x['phone_prefix'];
+			$location->population = $x['population'];
+			$location->phonePrefix = $x['phone_prefix'];
 			
-			if (strlen($x['fb_group'])) $country->facebookGroup = $this->createContact('Url', $x['fb_group']);
-			$country->capitalCity = $x['capital_city'];
+			if (strlen($x['fb_group'])) $location->facebookGroup = $this->createContact('Url', $x['fb_group']);
+			$location->capitalCity = $x['capital_city'];
 
-			if (strlen($x['phone_number_emergency'])) $country->phoneNumberEmergency = $this->createContact('Phone', $x['phone_number_emergency']);
-			if (strlen($x['phone_number_police'])) $country->phoneNumberPolice = $this->createContact('Phone', $x['phone_number_police']);
-			if (strlen($x['phone_number_medical'])) $country->phoneNumberMedical = $this->createContact('Phone', $x['phone_number_medical']);
-			if (strlen($x['phone_number_fire'])) $country->phoneNumberFire = $this->createContact('Phone', $x['phone_number_fire']);
-			if (strlen($x['wikipedia_link'])) $country->wikipediaLink = $this->createContact('Url', $x['wikipedia_link']);
+			if (strlen($x['phone_number_emergency'])) $location->phoneNumberEmergency = $this->createContact('Phone', $x['phone_number_emergency']);
+			if (strlen($x['phone_number_police'])) $location->phoneNumberPolice = $this->createContact('Phone', $x['phone_number_police']);
+			if (strlen($x['phone_number_medical'])) $location->phoneNumberMedical = $this->createContact('Phone', $x['phone_number_medical']);
+			if (strlen($x['phone_number_fire'])) $location->phoneNumberFire = $this->createContact('Phone', $x['phone_number_fire']);
+			if (strlen($x['wikipedia_link'])) $location->wikipediaLink = $this->createContact('Url', $x['wikipedia_link']);
 
-			$country->drivingSide = $x['driving_side'];
-			$country->pricesPizza = new Price($x['prices_pizza']); // @todo - spravit menu, aby som posielal ako entitu / servicu
-			$country->pricesDinner = new Price($x['prices_dinner']);
-			$country->airports = $x['airports'];
+			$location->drivingSide = $x['driving_side'];
+			$location->pricesPizza = new Price($x['prices_pizza']); // @todo - spravit menu, aby som posielal ako entitu / servicu
+			$location->pricesDinner = new Price($x['prices_dinner']);
+			$location->airports = $x['airports'];
 
 			$countryDetails = array();
 			$countryDetails['beta'] = $x['beta'];
 			$countryDetails['inEu'] = $x['in_eu'];
 
-			$country->details = $countryDetails;
+			$location->details = $countryDetails;
 
-			if (strlen($x['skype'])) $country->addContact($this->createContact('Skype', $x['skype']));
-			if (strlen($x['phone'])) $country->addContact($this->createContact('Phone', $x['phone']));
+			if (strlen($x['skype'])) $location->addContact($this->createContact('Skype', $x['skype']));
+			if (strlen($x['phone'])) $location->addContact($this->createContact('Phone', $x['phone']));
 
 			if (strlen($x['domain'])) {
-				$country->addContact($this->createContact('Email', 'info@'.$x['domain']));
+				$location->addContact($this->createContact('Email', 'info@'.$x['domain']));
 			}
 
 			/*
@@ -222,11 +221,9 @@ class ImportLocations extends BaseImport {
 
 			if ($x['domain']) $location->domain = \Service\Domain::getByDomain($x['domain']);
 
-			$location->country = $country;
 			//debug($location->parentId); return;
-			//debug($location); debug($country); return;
+			//debug($location); return;
 
-			$country->save();
 			$location->save();
 		}
 	}
@@ -247,14 +244,13 @@ class ImportLocations extends BaseImport {
 	// ------------- COUNTRIES Travelings
 	// ----------------------------------------------------------
 	private function importTravelings() {
-		$countriesByOld = getNewIdsByOld('\Location\Country');
+		$countryLocationType = \Service\Location\Type::getBySlug('country');
+
 		$r = q('select * from countries_traveling order by id');
 		while ($x = mysql_fetch_array($r)) {
-			$sourceCountry = \Service\Location\Country::get($countriesByOld[$x['source_country_id']]);
-			$destinationCountry = \Service\Location\Country::get($countriesByOld[$x['destination_country_id']]);
 			$traveling = \Service\Location\Traveling::get();
-			$traveling->sourceLocation = $sourceCountry->location;
-			$traveling->destinationLocation = $destinationCountry->location;
+			$traveling->sourceLocation = \Service\Location\Location::getByTypeAndOldId($countryLocationType, $x['source_country_id']);
+			$traveling->destinationLocation = \Service\Location\Location::getByTypeAndOldId($countryLocationType, $x['destination_country_id']);
 			$traveling->peopleCount = $x['people_count'];
 			$traveling->year = $x['year'];
 			$traveling->oldId = $x['id'];
@@ -272,6 +268,8 @@ class ImportLocations extends BaseImport {
 		$locationType->slug = 'region';
 		$locationType->save();
 		$this->regionsType = $locationType;
+
+		$countryLocationType = \Service\Location\Type::getBySlug('country');
 
 		//$r = q('select * from regions order by id');
 		$r = q('select * from regions where country_id = 46 and level = 0 order by id');
@@ -298,7 +296,7 @@ class ImportLocations extends BaseImport {
 
 			$location->oldId = $x['id'];
 
-			$location->parentId = \Service\Location\Country::getByOldId($x['country_id'])->location->id;
+			$location->parentId = \Service\Location\Location::getByOldIdAndType($x['country_id'], $countryLocationType)->id;
 			//debug($location); return;
 			$location->save();
 		}
@@ -316,6 +314,8 @@ class ImportLocations extends BaseImport {
 		$locationType->slug = 'administrativeRegionLevelOne';
 		$locationType->save();
 		$this->administrativeRegions1Type = $locationType;
+
+		$countryLocationType = \Service\Location\Type::getBySlug('country');
 
 		//$r = q('select * from regions order by id');
 		$r = q('select * from regions where country_id = 46 and level = 1 order by id');
@@ -342,7 +342,7 @@ class ImportLocations extends BaseImport {
 
 			$location->oldId = $x['id'];
 
-			$location->parentId = \Service\Location\Country::getByOldId($x['country_id'])->location->id;
+			$location->parentId = \Service\Location\Location::getByOldIdAndType($x['country_id'], $countryLocationType)->id;
 			$location->save();
 		}
 
@@ -358,6 +358,8 @@ class ImportLocations extends BaseImport {
 		$this->administrativeRegions2Type = $locationType;
 
 		$this->administrativeRegions1Type = \Service\Location\Type::getBySlug('administrativeregionlevelone');
+
+		$countryLocationType = \Service\Location\Type::getBySlug('country');
 
 		//$r = q('select * from regions order by id');
 		$r = q('select * from regions where country_id = 46 and level = 2 order by id');
@@ -392,7 +394,7 @@ class ImportLocations extends BaseImport {
 			} else {
 				AP::addTask('\Location\Location - Level2HasNoParent', 
 					array(
-						'userCountry' => \Service\Location\Country::getByOldId($x['country_id'])->location->id,
+						'userCountry' => \Service\Location\Location::getByOldIdAndType($x['country_id'], $countryLocationType)->id,
 						'userRole' => \Service\User\Role::getBySlug('manager'),
 					),
 					array(
@@ -416,6 +418,8 @@ class ImportLocations extends BaseImport {
 		$locationType->save();
 		$this->localitiesType = $locationType;
 
+		$countryLocationType = \Service\Location\Type::getBySlug('country');
+
 		//$r = q('select * from localities order by id');
 		$r = q('select * from localities where country_id = 46 order by id');
 		//$r = q('select * from localities where id = 48978 order by id');
@@ -426,7 +430,7 @@ class ImportLocations extends BaseImport {
 			$namePhrase->type = $this->dictionaryTypeName;
 			$namePhrase->ready = TRUE;
 
-			$country = \Service\Location\Country::getByOldId($x['country_id']);
+			$countryLocation = \Service\Location\Location::getByOldIdAndType($x['country_id'], $countryLocationType);
 			$r1 = q('select * from localities_translations where location_id = '.$x['id']);
 			while ($x1 = mysql_fetch_array($r1)) {
 				$variations = array(
@@ -442,7 +446,7 @@ class ImportLocations extends BaseImport {
 
 			$location->oldId = $x['id'];
 
-			$location->parentId = $country->location->id;
+			$location->parentId = $countryLocation->id;
 			$location->save();
 			//debug($location); return;
 		}
