@@ -53,8 +53,13 @@ class DavidPresenter extends BasePresenter {
 		);
 		$this->template->data = $data;
 
-		$s = $this->getEnvironment();
+		$s = D\Phrase::getByIdAndReady(2, true);
+		$s2 = D\Phrase::getByIdAndReady(2, true);
+
 		debug($s);
+		debug($s2);
+		
+		debug($s === $s);
 		
 	}
 

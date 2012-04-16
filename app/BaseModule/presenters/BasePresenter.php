@@ -1,7 +1,9 @@
 <?php
 
 use Nette\Application\UI\Presenter,
-	Nette\Environment;
+	Nette\Environment,
+	Nette\Utils\Finder;
+
 
 abstract class BasePresenter extends Presenter {
 
@@ -62,64 +64,33 @@ abstract class BasePresenter extends Presenter {
 				->setRobots('index,follow')
 				->setAuthor('Tralandia ltd.');
 
-		//CssLoader
-		$css = $header['css'];
-		$css->sourcePath = WWW_DIR . '/styles';
-		$css->tempPath = WWW_DIR . '/webtemp';
-		$css->tempUri = '/webtemp'; 
-
-
-		//JavascriptLoader
-		$js = $header['js'];
-		$js->sourcePath = WWW_DIR . '/scripts';
-		//$js->joinFiles = FALSE; //Environment::isProduction();
-		$js->tempPath = WWW_DIR . '/webtemp';
-		$js->tempUri = '/webtemp';
-
-		$styles = array();
-		$scripts = array();
-		if($modul == 'Front') {
-			$styles[] = 'default.css';
-			$styles[] = 'mainHeader.css';
-			$styles[] = 'mainFooter.css';
-			$styles[] = 'search.css';
-			$styles[] = 'clickMap.css'; 
-			$styles[] = 'home.css';
-			$styles[] = 'forms.css';
-		} else {
-			$styles[] = 'main.css';
-			$styles[] = 'less/_bootstrap.less';
-			$styles[] = 'less/_custom.less';
-			
-			$styles[] = 'syntaxhighlighter/shCore.css';
-			$styles[] = 'syntaxhighlighter/shCoreDefault.css';
-			$styles[] = 'syntaxhighlighter/shThemeDefault.css';
-
-
-
-			$scripts[] = 'jquery.js';
-			$scripts[] = 'jquery/nette.js';
-			$scripts[] = 'jquery/livequery.js';
-			$scripts[] = 'jquery/ui.js';
-			$scripts[] = 'main.js';
-			$scripts[] = 'bootstrap.js';
-			$scripts[] = 'less.js';
-
-			$scripts[] = 'syntaxhighlighter/shCore.js';
-			$scripts[] = 'syntaxhighlighter/shLegacy.js';
-			$scripts[] = 'syntaxhighlighter/shAutoloader.js';
-			$scripts[] = 'syntaxhighlighter/shBrushPhp.js';
-		}
-
-		$css->addFiles($styles);
-		$js->addFiles($scripts);
-
-		
-		if($modul != 'Admin' && Environment::isProduction()) {
-			//$js->addFile('ga.js');
-		}
 
 		return $header;
+	}
+
+	public function createComponentCss() {
+		list($modul, $presenter) = explode(':', $this->name, 2);
+		
+		$files = new \WebLoader\FileCollection(WWW_DIR . '/styles');
+		$files->addFiles(Finder::findFiles('*.css', '*.less')->in(WWW_DIR . '/styles'));
+		$files->addFiles(Finder::findFiles('*.css', '*.less')->in(WWW_DIR . '/styles/'.strtolower($modul)));
+
+		$compiler = \WebLoader\Compiler::createCssCompiler($files, WWW_DIR . '/webtemp');
+		$compiler->addFileFilter(new \Webloader\Filter\LessFilter());
+
+		return new \WebLoader\Nette\CssLoader($compiler, $this->template->basePath . '/webtemp');
+	}
+
+	public function createComponentJs() {
+		list($modul, $presenter) = explode(':', $this->name, 2);
+
+		$files = new \WebLoader\FileCollection(WWW_DIR . '/scripts');
+		$files->addFiles(Finder::findFiles('*.js')->in(WWW_DIR . '/scripts'));
+		$files->addFiles(Finder::findFiles('*.js')->in(WWW_DIR . '/scripts/'.strtolower($modul)));
+
+		$compiler = \WebLoader\Compiler::createJsCompiler($files, WWW_DIR . '/webtemp');
+
+		return new \WebLoader\Nette\JavaScriptLoader($compiler, $this->template->basePath . '/webtemp');
 	}
 
 	public function templatePrepareFilters($template) {
