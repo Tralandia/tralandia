@@ -13,7 +13,6 @@ class Environment extends \Nette\Object {
 	private $locale = NULL;
 
 	public function __construct() {
-		debug('Environment::__construct');
 	}
 
 	public function getLocation() {

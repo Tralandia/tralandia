@@ -3,8 +3,8 @@
 use Nette\Utils\Html;
 use Nette\Environment;
 
-use WebLoader\CssLoader;
-use WebLoader\JavascriptLoader;
+use WebLoader\Nette\CssLoader;
+use WebLoader\Nette\JavascriptLoader;
 
 /**
  * HeaderControl<br />
@@ -97,16 +97,6 @@ class HeaderControl extends RenderableContainer
 		} catch (FileNotFoundException $e) {
 
 		}
-	}
-
-	protected function createComponentCss()
-	{
-		return new CssLoader;
-	}
-
-	protected function createComponentJs()
-	{
-		return new JavaScriptLoader;
 	}
 
 	public function setDocType($docType)
@@ -399,10 +389,7 @@ class HeaderControl extends RenderableContainer
 	{
 		$this->renderBegin();
 		$this->renderRss();
-		$this->renderCss();
-		echo "\n";
-		$this->renderJs();
-		echo "\n";
+
 		$this->renderEnd();
 	}
 

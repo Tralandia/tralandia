@@ -74,6 +74,7 @@ class Attraction extends \Entity\BaseEntityDetails {
 
 
 
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		

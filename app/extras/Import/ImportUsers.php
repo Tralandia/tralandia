@@ -14,13 +14,13 @@ class ImportUsers extends BaseImport {
 
 	public function doImport($subsection = NULL) {
 
-		$user1 = \Service\User\User::get(1);
-		$user2 = \Service\User\User::get(2);
-		$user3 = \Service\User\User::get(3);
-		$user4 = \Service\User\User::get(4);
+		// $user1 = \Service\User\User::get(1);
+		// $user2 = \Service\User\User::get(2);
+		// $user3 = \Service\User\User::get(3);
+		// $user4 = \Service\User\User::get(4);
 
-		\Service\User\User::merge($user1, $user2);
-		return;
+		// \Service\User\User::merge($user1, $user2);
+		// return;
 
 		$this->setSubsections('users');
 
@@ -107,6 +107,8 @@ class ImportUsers extends BaseImport {
 
 		$role = \Service\User\Role::getBySlug('manager');
 
+		$countryLocationType = \Service\Location\Type::getBySlug('country');
+
 		$r = q('select * from members_managers');
 		while($x = mysql_fetch_array($r)) {
 			$user = \Service\User\User::getByLogin($x['email']);
@@ -131,7 +133,7 @@ class ImportUsers extends BaseImport {
 			foreach ($assignedCountries as $key => $value) {
 				foreach ($assignedLanguages as $key2 => $value2) {
 					$combination = \Service\User\Combination::get();
-					$combination->country = \Service\Location\Country::getByOldId($value)->location;
+					$combination->country = \Service\Location\Location::getByOldIdAndType($value, $countryLocationType);
 					$combination->language = \Service\Dictionary\Language::getByOldId($value2);
 					$combination->languageLevel = \Entity\Dictionary\Type::TRANSLATION_LEVEL_ACTIVE;
 					$user->addCombination($combination);
@@ -221,7 +223,7 @@ class ImportUsers extends BaseImport {
 			if($x['phone']) $user->addContact($this->createContact('phone', $x['phone']));
 			
 			$user->defaultLanguage = \Service\Dictionary\Language::getByOldId($x['language_id']);
-			$user->addLocation(\Service\Location\Country::getByOldId($x['country_id'])->location);
+			$user->addLocation(\Service\Location\Location::getByOldIdAndType($x['country_id'], $locationTypeCountry));
 
 			$user->save();
 		}
@@ -274,7 +276,7 @@ class ImportUsers extends BaseImport {
 				$user->invoicingCompanyName = $x['contact_company'];
 				
 				$user->defaultLanguage = \Service\Dictionary\Language::getByOldId($x['language_id']);
-				$user->addLocation(\Service\Location\Country::getByOldId($x['country_id'])->location);
+				$user->addLocation(\Service\Location\Location::getByOldIdAndType($x['country_id'], $locationTypeCountry));
 			}
 
 
