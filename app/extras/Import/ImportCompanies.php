@@ -63,6 +63,8 @@ class ImportCompanies extends BaseImport {
 
 		$dictionaryTypeRegistrator = $this->createDictionaryType('\Company\Company', 'registrator', 'supportedLanguages', 'ACTIVE');
 
+		$countryLocationType = \Service\Location\Type::getBySlug('country');
+
 		while($x = mysql_fetch_array($r)) {
 			$s = S\Company\Office::get();
 			$s->oldId = $x['id'];
@@ -71,11 +73,11 @@ class ImportCompanies extends BaseImport {
 				'address' => array_filter(array($x['address'], $x['address_2'])),
 				'postcode' => $x['postcode'],
 				'locality' => $x['locality'],
-				'country' => \Service\Location\Country::getByOldId($x['countries_id'])->location->id,
+				'country' => \Service\Location\Location::getByOldIdAndType($x['countries_id'], $countryLocationType)->id,
 			)); // @todo - toto este neuklada ok, je na to task v taskee
 
 			$s->company = \Service\Company\Company::get(3);
-			$s->addCountry(\Service\Location\Country::getByOldId($x['countries_id'])->location);
+			$s->addCountry(\Service\Location\Location::getByOldIdAndType($x['countries_id'], $countryLocationType));
 			$s->save();
 		}
 		\Extras\Models\Service::flush(FALSE);
@@ -86,6 +88,8 @@ class ImportCompanies extends BaseImport {
 
 		$dictionaryTypeRegistrator = $this->createDictionaryType('\Company\Company', 'registrator', 'supportedLanguages', 'ACTIVE');
 
+		$countryLocationType = \Service\Location\Type::getBySlug('country');
+
 		while($x = mysql_fetch_array($r)) {
 			$s = S\Company\BankAccount::get();
 			$s->oldId = $x['id'];
@@ -95,14 +99,14 @@ class ImportCompanies extends BaseImport {
 
 			$s->bankAddress = new \Extras\Types\Address(array(
 				'address' => $x['bank_address'],
-				'country' => \Service\Location\Country::getByOldId($x['bank_country_id'])->location->id,
+				'country' => \Service\Location\Location::getByOldIdAndType($x['bank_country_id'], $countryLocationType),
 			)); // @todo - toto este neuklada ok, je na to task v taskee
 			
 			$s->accountNumber = $x['account_number'];
 			$s->accountName = $x['account_name'];
 			$s->accountIban = $x['account_iban'];
 
-			$s->addCountry(\Service\Location\Country::getByOldId($x['bank_country_id'])->location);
+			$s->addCountry(\Service\Location\Location::getByOldIdAndType($x['bank_country_id'], $countryLocationType));
 			$s->save();
 		}
 		\Extras\Models\Service::flush(FALSE);

@@ -60,7 +60,6 @@ class BaseImport {
 			'entities' => array(
 				'\Location\Type' => array(),
 				'\Location\Location' => array(),
-				'\Location\Country' => array(),
 				'\Location\Traveling' => array(),
 			),
 			'subsections' => array('importContinents', 'importCountries', 'importTravelings', 'importRegions', 'importAdministrativeRegions1', 'importAdministrativeRegions2', 'importLocalities'),
@@ -95,7 +94,7 @@ class BaseImport {
 				$this->savedVariables['importedSubSections'] = array();
 			}
 			if (!isset($this->savedVariables['importedSubSections'][$section])) {
-				$this->savedVariables['importedsections'][$section] = array();
+				$this->savedVariables['importedSubSections'][$section] = array();
 			}
 
 			if (count($this->savedVariables['importedSubSections'][$section]) == 0) {
@@ -174,8 +173,8 @@ class BaseImport {
 			if ($x[$oldAttribute]) {
 				$newEntityId = getByOldId($entityName, $x['id']);
 				$phrase = $this->createNewPhrase($dictionaryType, $x[$oldAttribute]);
-				if ($phrase instanceof D\PhraseService) {
-					eval('$s = \Services'.$entityName.'::get('.$newEntityId.');');
+				if ($phrase instanceof \Service\Dictionary\Phrase) {
+					eval('$s = \Service'.$entityName.'::get('.$newEntityId.');');
 					if ($s->id > 0) {
 						$s->{$entityAttribute} = $phrase;
 						$s->save();						
@@ -229,7 +228,7 @@ class BaseImport {
 		$phrase->ready = TRUE;
 		$phrase->type = $dictionaryType;
 
-		if ($phrase instanceof D\PhraseService) {
+		if ($phrase instanceof \Service\Dictionary\Phrase) {
 			$phrase->addTranslation($this->createTranslation($textLanguage, $text));
 		}
 
