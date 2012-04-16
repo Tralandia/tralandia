@@ -32,6 +32,7 @@ class UseType extends \Entity\BaseEntity {
 	
 
 
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		

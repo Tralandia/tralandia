@@ -2,31 +2,46 @@
 
 namespace Extras;
 
-use Service\Dictionary as D;
+use Service\Dictionary as D,
+	Nette\Caching;
 
 class Translator implements \Nette\Localization\ITranslator {
 
 	protected $language = 144;
+	protected $cache;
 
-	public function __construct(Environment $environment, \Nette\Caching\IStorage $sorage) {
+	public function __construct(Environment $environment, Caching\IStorage $cacheStorage) {
 		$this->language = $environment->getLanguage();
+
+		$this->cache = new Caching\Cache($cacheStorage, 'Translator');
 	}
 	
-	public function translate($message, $node = NULL, $count = NULL, array $variables = NULL) {
+	public function translate($phrase, $node = NULL, $count = NULL, array $variables = NULL) {
 
-		if(!$message instanceof D\Phrase) {
-			$phrase = D\Phrase::get($message);
+		$translation = $this->getTranslation($phrase);
+
+		return $translation;
+	}
+	
+	protected function getTranslation($phrase) {
+
+		if($phrase instanceof D\Phrase) {
+			$translationKey = $phrase->id;
+		} else {
+			$translationKey = $phrase;
 		}
+		$translationKey .= '_'.$this->language->id;
 		
-		$message = $phrase->getTranslation($this->language)->translation;
-		
-		if (is_array($message))
-			$message = current($message);
+		if(!$translation = $this->cache->load($translationKey)) {
+			if(!$phrase instanceof D\Phrase) {
+				$phrase = D\Phrase::get($phrase);
+			}
 
-		return $message;
+			$translation = $phrase->getTranslation($this->language)->translation;
+			$this->cache->save($translationKey, $translation);
+		}
+
+		return $translation;
 	}
-	
-	public static function getTranslator() {
-		return new static();
-	}
+
 }

@@ -88,6 +88,8 @@ abstract class BasePresenter extends Presenter {
 			$styles[] = 'forms.css';
 		} else {
 			$styles[] = 'main.css';
+			$styles[] = 'less/_bootstrap.less';
+			$styles[] = 'less/_custom.less';
 			
 			$styles[] = 'syntaxhighlighter/shCore.css';
 			$styles[] = 'syntaxhighlighter/shCoreDefault.css';
@@ -100,6 +102,8 @@ abstract class BasePresenter extends Presenter {
 			$scripts[] = 'jquery/livequery.js';
 			$scripts[] = 'jquery/ui.js';
 			$scripts[] = 'main.js';
+			$scripts[] = 'bootstrap.js';
+			$scripts[] = 'less.js';
 
 			$scripts[] = 'syntaxhighlighter/shCore.js';
 			$scripts[] = 'syntaxhighlighter/shLegacy.js';
@@ -121,7 +125,7 @@ abstract class BasePresenter extends Presenter {
 	public function templatePrepareFilters($template) {
 		$latte = new \Nette\Latte\Engine;
 		$template->registerFilter($latte);
-		\Extras\MyMacros::install($latte->compiler);
+		\Extras\Macros::install($latte->compiler);
 	}
 
 	public function getBaseUrl() {

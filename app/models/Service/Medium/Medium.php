@@ -18,21 +18,26 @@ class Medium extends \Service\BaseService {
 		'original' => array(
 				'width' => 0,
 				'height' => 0,
-				'crop' => false
+				'crop' => FALSE
 			),
 		'large' => array(
-				'width'=>600,
-				'height'=>400,
+				'width'=>960,
+				'height'=>600,
 				'crop'=>FALSE
 			),
+		'medium' => array(
+				'width'=>451, 
+				'height'=>288, 
+				'crop'=>TRUE
+			),
 		'small' => array(
-				'width'=>300, 
-				'height'=>200, 
+				'width'=>235, 
+				'height'=>145, 
 				'crop'=>TRUE
 			),
 		'mini' => array(
-				'width'=>234,
-				'height'=>145,
+				'width'=>100,
+				'height'=>63,
 				'crop'=>TRUE
 			)
 	);
@@ -66,28 +71,70 @@ class Medium extends \Service\BaseService {
 		if (preg_match("/image\//", $medium->details['mime'])) {
 			$medium->saveImageFiles($file);
 		} else {
-			rename($file, $medium->getCurrentDir() . '/original.' . $medium->details['extension']);
+			rename($file, $medium->getMediumDir() . '/original.' . $medium->details['extension']);
 		}
 
 		return $medium;
 
 	}
 
-	private function saveImageFiles($file) {
+	public function getThumbnail($size) {
 
-		$currentDir = $this->getCurrentDir();
-
-		$image = \Nette\Image::fromFile($file);
-
-		foreach ($this::$imgSizes as $size => $options) {
-			$copy = $currentDir . '/' . $size . '.' . $this->details['extension'];
-			if ($options['width'] && $options['height']) $image->resize($options['width'], $options['height']);
-			$image->save($copy);
+		if (!$imgSize = $this::$imgSizes[$size]) {
+			throw new \Nette\UnexpectedValueException('Image size "' . $size . '" not exists');
 		}
+
+		$uri = '/storage/';
+		foreach ($this->getPathStructure() as $level) {
+			$uri .= $level . '/';
+		}
+		$uri .=  $size . '.jpeg';
+
+		return $uri;
 
 	}
 
-	private function getCurrentDir() {
+	public function delete() {
+
+		$mediumDir = $this->getMediumDir();
+
+		debug($mediumDir);
+
+		foreach(glob($mediumDir . '/*') as $file) {
+			if(is_dir($file))
+				rrmdir($file);
+			else
+				unlink($file);
+		}
+		rmdir($mediumDir);
+
+	}
+
+	private function saveImageFiles($file) {
+
+		$currentDir = $this->getMediumDir();
+
+		foreach ($this::$imgSizes as $size => $options) {
+
+			$newCopy = $currentDir . '/' . $size . '.' . $this->details['extension'];
+
+			$image = \Nette\Image::fromFile($file);
+			if ($options['width'] && $options['height']) {
+				if ($options['crop']) {
+					$image->resizeCrop($options['width'], $options['height']);
+				} else {
+					$image->resize($options['width'], $options['height']);
+				}
+			}
+			$image->save($newCopy);
+
+		}
+
+		unlink($file);
+
+	}
+
+	private function getMediumDir() {
 
 		$dir = FILES_DIR;
 		foreach ($this->getPathStructure() as $level) {
@@ -118,22 +165,6 @@ class Medium extends \Service\BaseService {
 		$details['extension'] = ($this::$knownTypes[$details['mime']]?:$extension);
 
 		return $details;
-
-	}
-
-	public function getThumbnail($size) {
-
-		if (!$imgSize = $this::$imgSizes[$size]) {
-			throw new \Nette\UnexpectedValueException('Image size "' . $size . '" not exists');
-		}
-
-		$uri = '/storage/';
-		foreach ($this->getPathStructure() as $level) {
-			$uri .= $level . '/';
-		}
-		$uri .=  $size . '.jpeg';
-
-		return $uri;
 
 	}
 
