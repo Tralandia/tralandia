@@ -13,7 +13,6 @@ class Environment extends \Nette\Object {
 	private $locale = NULL;
 
 	public function __construct() {
-		//debug('Environment::__construct');
 	}
 
 	public function getLocation() {
@@ -35,7 +34,7 @@ class Environment extends \Nette\Object {
 	}
 	
 	protected function loadLanguage() {
-		//return \Service\Dictionary\Language::get(144);
+		return \Service\Dictionary\Language::get(144);
 	}
 	
 }
