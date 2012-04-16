@@ -138,9 +138,9 @@ class Route implements Nette\Application\IRouter {
 
 	public function getPathSegmentList($pathSegments, $params) {
 		$criteria = array();
-		//$criteria['pathSegment'] = $pathSegments;
-		//$criteria['country'] = array($params->country, 0);
-		//$criteria['language'] = array($params->language, 0);
+		if($pathSegments) $criteria['pathSegment'] = $pathSegments;
+		$criteria['country'] = array($params->country, 0);
+		$criteria['language'] = array($params->language, 0);
 
 		$pathSegmentList = \Service\Routing\PathSegmentList::getBy((array) $criteria, $orderBy = array('type' => 'ASC'));
 		debug($pathSegmentList);
