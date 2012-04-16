@@ -1,26 +1,7 @@
-{* <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<link href="{$basePath}/styles/main.css" rel="stylesheet" type="text/css" />
-    <script type="text/javascript" src="{$basePath}/scripts/jquery.js"></script>
-	<script type="text/javascript" src="{$basePath}/scripts/jquery/nette.js"></script>
-	<script type="text/javascript" src="{$basePath}/scripts/jquery/livequery.js"></script>
-	<script type="text/javascript" src="{$basePath}/scripts/jquery/ui.js"></script>
-	<script type="text/javascript" src="{$basePath}/scripts/main.js"></script>
-
-	<script type="text/javascript" src="{$basePath}/syntaxhighlighter/shCore.js"></script>
-	<script type="text/javascript" src="{$basePath}/syntaxhighlighter/shLegacy.js"></script>
-	<script type="text/javascript" src="{$basePath}/syntaxhighlighter/shAutoloader.js"></script>
-	<script type="text/javascript" src="{$basePath}/syntaxhighlighter/shBrushPhp.js"></script>
-	<link rel="stylesheet" type="text/css" href="{$basePath}/syntaxhighlighter/shCore.css" />
-	<link rel="stylesheet" type="text/css" href="{$basePath}/syntaxhighlighter/shCoreDefault.css" />
-	<link rel="stylesheet" type="text/css" href="{$basePath}/syntaxhighlighter/shThemeDefault.css" />
-
-
-	<title>{block #title}Tralandia Admin{/block}</title>
-</head> *}
-{control header}
+{control header:begin}
+	{control css}
+	{control js}
+{control header:end}
 <body>
 	<div id="header"></div>
 	<div class="flashMessage"><div n:foreach="$flashes as $flash" class="msg {$flash->type}">{$flash->message}</div></div>
