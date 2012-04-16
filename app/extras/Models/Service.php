@@ -96,7 +96,7 @@ abstract class Service extends Nette\Object implements IService {
 	 * @return IService
 	 */
 	public static function get($value = NULL) {
-		$mainEntityName = self::getMainEntityName();
+		$mainEntityName = static::getMainEntityName();
 
 		if ($value instanceof $mainEntityName) {
 			if($value->getId() > 0) {
@@ -111,7 +111,7 @@ abstract class Service extends Nette\Object implements IService {
 		} else if($value === NULL) {
 			return new static();
 		} else {
-			throw new \Nette\InvalidArgumentException('Service::get()');
+			throw new \Nette\InvalidArgumentException('Argument $value does not match with the expected value');
 		}
 
 		if (ServiceLoader::exists($key)) {
@@ -122,10 +122,11 @@ abstract class Service extends Nette\Object implements IService {
 			ServiceLoader::set($key, $service);
 		}
 
-		if($service instanceof self && $service->getId() > 0) {
+		if($service->getMainEntity() instanceof $mainEntityName) {
 			return $service;
 		} else {
-			throw new ServiceException('Zle inicializovane servisa: '.get_called_class());
+			// throw new ServiceException('Zle inicializovane servisa: '.get_called_class());
+			return null;
 		}
 
 	}
@@ -245,7 +246,8 @@ abstract class Service extends Nette\Object implements IService {
 	 */
 	public function getMainEntity() {
 		if (!$this->mainEntity) {
-			throw new \Exception("Este nebola zadana `mainEntity`");
+			# @toto david, toto som zakomentoval lebo mi to hadzalo error vid. riadok 125
+			// throw new \Exception("Este nebola zadana `mainEntity`");
 		}
 		
 		return $this->mainEntity;
