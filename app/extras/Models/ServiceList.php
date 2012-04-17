@@ -94,12 +94,8 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 			if($value instanceof Service || $value instanceof Entity) {
 				$value = $value->id;
 			}
-			if(is_array($value)) {
-				$qb->andWhere($qb->expr()->in('e.'.$key, $value));
-			} else {
-				$qb->andWhere('e.'.$key.' = :'.$key)
-					->setParameter($key, $value);
-			}
+			$qb->andWhere('e.'.$key.' = :'.$key)
+				->setParameter($key, $value);
 		}
 
 
