@@ -27,18 +27,18 @@ class Route implements Nette\Application\IRouter {
 			'rentalType' => 8,
 			'tag' => 10,
 		);
+
+	protected $appParams = array(
+		'id' => null,
+		'country' => true,
+		'language' => null,
+		'location' => null,
+		'tag' => null,
+		'type' => null,
+	);
+
 	
-	public function __construct(Caching\IStorage $cacheStorage, $metadata) {
-		if (is_string($metadata)) {
-			$a = strrpos($metadata, ':');
-			if (!$a) {
-				throw new Nette\InvalidArgumentException("Second argument must be array or string in format Presenter:action, '$metadata' given.");
-			}
-			$metadata = array(
-				'presenter' => substr($metadata, 0, $a),
-				'action' => $a === strlen($metadata) - 1 ? Application\UI\Presenter::DEFAULT_ACTION : substr($metadata, $a + 1),
-			);
-		}
+	public function __construct(Caching\IStorage $cacheStorage, array $metadata) {
 		$this->metadata = $metadata;
 
 		$this->cache = new Caching\Cache($cacheStorage, 'Router');
@@ -54,8 +54,8 @@ class Route implements Nette\Application\IRouter {
 
 		$params = $this->getParamsByHttpRequest($httpRequest);
 
-		$presenter = $this->metadata['presenter'];
-		$params = array('page' => $params->page);
+		$presenter = $params['presenter'];
+		$params = $params['params'];
 		return new Application\Request(
 			$presenter,
 			$httpRequest->getMethod(),
@@ -69,6 +69,7 @@ class Route implements Nette\Application\IRouter {
 	public function constructUrl(Nette\Application\Request $appRequest, Nette\Http\Url $refUrl) {
 		debug('$appRequest', $appRequest);
 		debug('$refUrl', $refUrl);
+		$url = $this->getUrlByAppRequest($appRequest);
 		return 'http://www.tra.sk/mala-fatra/chalupy/prazdninovy-pobyt?lfPeople=6&lfFood=6';
 	}
 
@@ -81,37 +82,51 @@ class Route implements Nette\Application\IRouter {
 		list($languageIso, $domainName, $countryIso) = explode('.', $url->getHost(), 3);
 		$pathSegments = array_filter(explode('/', $url->getPath()));
 
+
+		// Params
 		$country = \Service\Location\Location::getByIso($countryIso);
-		if($languageIso === 'www') {
+		if(!$country) {
+			$country = \Service\Location\Location::getByIso($this->getMetadata('country'));
+		}
+
+		$language = \Service\Dictionary\Language::getByIso($languageIso);
+		if(!$language || !$language->supported) {
 			$language = \Service\Dictionary\Language::get($country->defaultLanguage);
-		} else {
-			$language = \Service\Dictionary\Language::getByIso($languageIso);
 		}
-		if(!$language->supported) {
-			// @todo spravit redirect na defaultny TRA jazyk
-		}
-		$params->country = $country;
-		$params->language = $language;
+		$params->country = $country->id;
+		$params->language = $language->id;
 
 
 		if(count($pathSegments) == 0) {
-			$params->page = 'home';
+			$params->presenter = $this->getMetadata('presenter');
+			$params->action = $this->getMetadata('action');
 		} else if(count($pathSegments) == 1) {
 			$pathSegment = reset($pathSegments);
 			debug($pathSegment);
 			if($match = preg_match('~\.*-a([0-9]+)~', $pathSegment)) {
 				if($attraction = \Service\Attraction\Attraction::get($match[1])) {
 					$params->attraction = $attraction;
-					$params->page = 'attraction';
+					$params->presenter = 'Attraction';
+					$params->action = 'show';
 				}
 			} else if($match = Strings::match($pathSegment, '~\.*-r([0-9]+)~')) {
 				if($rental = \Service\Rental\Rental::get($match[1])) {
 					$params->rental = $rental;
-					$params->page = 'rental';
+					$params->presenter = 'Rental';
+					$params->action = 'show';
 				}
 			}
 		}
 
+		if(!isset($params->presenter)) {
+			$params->presenter = $this->getMetadata('presenter');
+		}
+
+		if(!isset($params->action)) {
+			$params->action = $this->getMetadata('action');
+		}
+
+		// Query
 		if(count($httpRequest->query)) {
 			foreach ($httpRequest->query as $key => $value) {
 				if(!array_key_exists($key, $this->queryParams)) continue;
@@ -129,12 +144,25 @@ class Route implements Nette\Application\IRouter {
 			// ak nejake chybaju tak ich skus najst v PathSegmentsOld
 		}
 
-		if(!isset($params->page)) {
-			$params->page = 'rentalList';
-		}
 
-		debug('$params', $params);
-		return $params;
+		$return = array(
+			'params' => array(),
+			'presenter' => $params->presenter,
+		);
+		foreach ($this->appParams as $key => $value) {
+			if($value === true && !isset($params->$key)) {
+				$params->$key = $this->getMetadata($key);
+			} 
+
+			if(isset($params->$key)) {
+
+				$return['params'][$key] = $params->$key;
+			}
+		}
+		$return['params'] = array_merge($return['params'], (array) $params->query);
+
+		debug('$return', $return);
+		return $return;
 	}
 
 	public function getPathSegmentList($pathSegments, $params) {
@@ -147,6 +175,32 @@ class Route implements Nette\Application\IRouter {
 		debug('$pathSegmentList', $pathSegmentList);
 		return $pathSegmentList;
 	}
+
+	public function getUrlByAppRequest($appRequest) {
+		$params = $appRequest->getParameters();
+		$query = array();
+		foreach ($this->queryParams as $key => $value) {
+			if(array_key_exists($key, $params)) {
+				$query[$key] = $params[$key];
+				unset($params[$key]);
+			}
+		}
+		$presenter = $appRequest->getPresenterName();
+		$action = $params['action'];
+		unset($params['action']);
+		debug($params, $query, $presenter, $action);
+	}
+
+	public function getMetadata($key) {
+		return $this->metadata[$key];
+/*		if($key == 'language') {
+			return \Service\Dictionary\Language::getByIso($this->metadata[$key]);
+		} else if($key == 'country') {
+			return \Service\Location\Location::getByIso($this->metadata[$key]);
+		} else {
+			return $this->metadata[$key];
+		}
+*/	}
 
 	public function checkDomain($domain) {
 		if(!is_array($this->cachedDomains)) {
