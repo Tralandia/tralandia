@@ -47,6 +47,12 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 		}
 	}
 
+	public static function getDataSource() {
+		$query = self::getEntityManager()->createQueryBuilder();
+		$query->select('e')->from(static::getMainEntityName(), 'e');
+		return $query;
+	}
+
 	public static function __callStatic($name, $arguments) {
 		list($nameTemp, $nameBy, $nameIn) = Strings::match($name, '~^getBy([A-Za-z]+)In([A-Za-z]+)$~');
 		if($nameTemp && $nameBy && $nameIn) {
@@ -92,7 +98,6 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 		$repository = $serviceList->getEm()->getRepository($entityName);
 		$serviceList->setList($repository->findBy(array(), $orderBy, $limit, $offset));
 		return $serviceList;
-
 	}
 
 
@@ -168,7 +173,7 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 	 * Ziskanie entity manazera
 	 * @return EntityManager
 	 */
-	protected function getEntityManager() {
+	protected static function getEntityManager() {
 		return self::$em;
 	}
 
@@ -176,7 +181,7 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 	 * Alias na entity manazera
 	 * @return EntityManager
 	 */
-	protected function getEm() {
+	protected static function getEm() {
 		return self::getEntityManager();
 	}
 
