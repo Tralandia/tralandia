@@ -10,8 +10,8 @@ use Nette,
 
 class Reflector extends Nette\Object {
 	
-	const ANN_PRIMARY = 'Primary';
-	const UI_CONTROL = 'UIControl';
+	const ANN_PRIMARY = 'UI\Primary';
+	const UI_CONTROL = 'UI\Control';
 
 	const ONE_TO_ONE = 'ORM\OneToOne';
 	const MANY_TO_ONE = 'ORM\ManyToOne';
