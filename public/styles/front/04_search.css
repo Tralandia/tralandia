@@ -1,0 +1,166 @@
+/* ľšč*/
+div.searchHeader {
+    height: 147px;
+    overflow: hidden;
+    background: url(../images/matrix_main.png) 0px -830px;
+}
+div.searchHeader .holder {
+    height: 100px;
+    overflow: hidden;
+    text-align: center;
+}
+div.searchHeader .holder h2 {
+    color: #fff;
+    font-size: 17px;
+    margin: 12px 3px 2px;
+    line-height: 1;
+}
+div.searchHeader .holder a {
+    color: #fff;
+    line-height: 1.6;
+}
+div.searchHeader .holder a:hover {
+    color: #f30808;
+}
+div.searchHeader .holder span span {
+    background: url(../images/matrix_main.png) -240px -1028px;
+    padding-right: 5px;
+}
+div.searchHeader .holder span:hover span {
+    background: url(../images/matrix_main.png) -240px -1148px;
+}
+div.searchHeader input {
+    color: #999;
+    background: none;
+}
+div.searchHeader input.input {
+    width: 152px;
+    margin: 4px 0px 0px 17px;
+    vertical-align: top;
+}
+div.searchHeader input.btn {
+    width: 26px;
+    height: 26px;
+    margin: 0px 0px 0px 1px;
+    vertical-align: top;
+    cursor: pointer;
+}
+div.searchItem {
+    border: 1px solid #a0b325;
+    border-bottom: 0;
+    background: #fdfdf8;
+    padding: 7px 0px 8px 0px;
+}
+div.search div.searchCriteria div.searchItem:first-child {
+    border-top: 0;
+}
+div.searchItem h3 {
+    font-size: 13px;
+    margin: 1px 0px 3px 8px;
+}
+div.searchItem .searchItemFulltext {
+    width: 190px;
+    height: 35px;
+    background: url(../images/matrix_main.png) -210px -875px;
+    margin: 7px 0px 4px 9px;
+}
+.searchItemFulltext input {
+    color: #999;
+    background: none;
+}
+.searchItemFulltext input.input {
+    width: 152px;
+    margin: 8px 0px 0px 7px;
+    vertical-align: top;
+}
+.searchItemFulltext input.btn {
+    width: 26px;
+    height: 26px;
+    margin: 8px 0px 0px 1px;
+    vertical-align: top;
+    cursor: pointer;
+}
+div.searchItem .searchItemDropdown {
+    display: none;
+}
+div.searchItem a {
+    display: block;
+    color: #a0b325;
+    text-decoration: none;
+    padding: 2px 0px 2px 10px;
+}
+div.searchItem a span {
+    background: url(../images/matrix_main.png) -240px -1087px;
+    padding: 0px 7px 0px 0px;
+}
+div.searchItem a:hover {
+    color: #fff;
+    /*background: #a0b325 url(../images/matrix_main.png) -486px -1073px;*/
+    background: #a0b325;
+}
+div.searchItem a.folder span {
+    background: url(../images/matrix_main.png) -240px -1047px;
+}
+div.searchItem a.child {
+    padding-left: 20px;
+}
+
+
+div.searchItem a.showMore {
+    display: block;
+    padding: 2px 7px 2px 0px;
+    text-align: right;
+    font-weight: bold;
+    text-decoration: none;
+    color: #663300;
+}
+div.searchItem a.showMore span {
+    background: url(../images/matrix_main.png) -235px -1126px;
+    padding: 0px 7px 0px 0px;
+}
+
+div.searchItem a.selected {
+    color: #f30808;
+}
+div.searchItem a.selected:hover {
+    background: none;
+}
+div.searchItem a.selected span {
+    background: url(../images/matrix_main.png) -240px -1107px;
+    padding-right: 10px;
+}
+div.searchItem a.selected .reset {
+    background: url(../images/matrix_main.png) -240px -1186px;
+    float: right;
+    padding: 0px 11px 0px 0px;
+}
+div.searchItem a.selected:hover .reset {
+    background-position: -240px -1146px;
+}
+div.searchItem a.selected:hover b {
+    text-decoration: line-through;
+}
+
+/*div.searchCriteria a.searchMore {
+    display: block;
+    border: 1px solid #a0b325;
+    border-bottom: 0;
+    background: #fff;
+    padding: 5px 7px 0px 0px;
+    text-align: right;
+    font-weight: bold;
+    text-decoration: none;
+}
+div.searchCriteria a.searchMore span {
+    background: url(../images/matrix_main.png) -235px -1126px;
+    padding: 0px 7px 0px 0px;
+}*/
+div.searchFooter {
+    height: 7px;
+    background: url(../images/matrix_main.png) 0px -985px;
+}
+
+
+
+
+

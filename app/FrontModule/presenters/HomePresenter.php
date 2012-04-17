@@ -13,8 +13,14 @@ class HomePresenter extends BasePresenter {
 		$paginator->itemsPerPage = 15;
 		$paginator->itemCount = 568;
 
-		// TEST: saving file from URL
-		// $medium = \Service\Medium\Medium::createFromUrl('http://tralandia.local/temp/Android%20Root.rar');
+		// $environment = new \Extras\Environment;
+		// $location = $environment->getLocation();
+
+		// $l = \Service\Location\Location::get($location->id);
+		// $t = $l->fetchBranchAsArray(2);
+		// foreach ($t as $node) {
+		// 	echo($node->getLevel()." - $node");
+		// }
 
 	}
 
@@ -29,19 +35,19 @@ class HomePresenter extends BasePresenter {
 		$tabBar = new \BaseModule\Components\TabControl\TabControl($this, $name);
 
 		$t = $tabBar->addTab('top');
-		$t->setHeader(10)->setContent('Top Objekty')->setActive();
+		$t->setHeader(806)->setContent('Top Objekty')->setActive(); // {_806, '1955 TOP holiday homes'}
 
 		$t = $tabBar->addTab('regions');
-		$t->setHeader(15)->setContent('Regiony');
+		$t->setHeader(678)->setContent('Regiony'); // {_678, '1112 Regions'}
 
 		$t = $tabBar->addTab('localities');
-		$t->setHeader(12)->setContent('Mesta/Obce');
+		$t->setHeader(725)->setContent('Mesta/Obce'); // {_725, '1626 Towns / Villages'}
 
 		$t = $tabBar->addTab('tags');
-		$t->setHeader(13)->setContent('Typy pobytov');
+		$t->setHeader(727)->setContent('Typy pobytov'); // {_727, '1628 Types of stays'}
 
 		$t = $tabBar->addTab('about');
-		$t->setHeader(14)->setContent('O nas');
+		$t->setHeader(1163)->setContent('O nas'); // {_1163, '23011 '}
 
 		return $tabBar;
 

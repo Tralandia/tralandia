@@ -20,24 +20,14 @@ class Medium extends \Service\BaseService {
 				'height' => 0,
 				'crop' => FALSE
 			),
-		'large' => array(
-				'width'=>960,
-				'height'=>600,
+		'full' => array(
+				'width'=>451,
+				'height'=>288,
 				'crop'=>FALSE
 			),
-		'medium' => array(
-				'width'=>451, 
-				'height'=>288, 
-				'crop'=>TRUE
-			),
 		'small' => array(
-				'width'=>235, 
-				'height'=>145, 
-				'crop'=>TRUE
-			),
-		'mini' => array(
-				'width'=>100,
-				'height'=>63,
+				'width'=>271, 
+				'height'=>170, 
 				'crop'=>TRUE
 			)
 	);
