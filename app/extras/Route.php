@@ -55,7 +55,7 @@ class Route implements Nette\Application\IRouter {
 		$params = $this->getParamsByHttpRequest($httpRequest);
 
 		$presenter = $this->metadata['presenter'];
-		$params = array();
+		$params = array('page' => $params->page);
 		return new Application\Request(
 			$presenter,
 			$httpRequest->getMethod(),
@@ -67,7 +67,9 @@ class Route implements Nette\Application\IRouter {
 	}
 
 	public function constructUrl(Nette\Application\Request $appRequest, Nette\Http\Url $refUrl) {
-		return NULL;
+		debug('$appRequest', $appRequest);
+		debug('$refUrl', $refUrl);
+		return 'http://www.tra.sk/mala-fatra/chalupy/prazdninovy-pobyt?lfPeople=6&lfFood=6';
 	}
 
 	public function getParamsByHttpRequest($httpRequest) {
@@ -75,7 +77,7 @@ class Route implements Nette\Application\IRouter {
 				'query' => \Nette\ArrayHash::from(array()),
 			));
 		$url = $httpRequest->url;
-		debug($httpRequest);
+		debug('$httpRequest', $httpRequest);
 		list($languageIso, $domainName, $countryIso) = explode('.', $url->getHost(), 3);
 		$pathSegments = array_filter(explode('/', $url->getPath()));
 
@@ -118,13 +120,12 @@ class Route implements Nette\Application\IRouter {
 		}
 
 		$segmentList = $this->getPathSegmentList($pathSegments, $params);
-		if($segmentList->count() == count($pathSegments)) {
-			$pathSegmentTypesFlip = array_flip($this->pathSegmentTypes);
-			foreach ($segmentList as $key => $value) {
-				$params->{$pathSegmentTypesFlip[$value->type]} = $value->pathSegment;
-			}
-		} else {
-			// @todo pocet najdenych pathsegmentov sa nezhoduje
+		$pathSegmentTypesFlip = array_flip($this->pathSegmentTypes);
+		foreach ($segmentList as $key => $value) {
+			$params->{$pathSegmentTypesFlip[$value->type]} = $value->pathSegment;
+		}
+		if($segmentList->count() != count($pathSegments)) {
+			// @todo pocet najdenych pathsegmentov je mensi
 			// ak nejake chybaju tak ich skus najst v PathSegmentsOld
 		}
 
@@ -132,7 +133,7 @@ class Route implements Nette\Application\IRouter {
 			$params->page = 'rentalList';
 		}
 
-		debug($params);
+		debug('$params', $params);
 		return $params;
 	}
 
@@ -143,7 +144,7 @@ class Route implements Nette\Application\IRouter {
 		$criteria['language'] = array($params->language, 0);
 
 		$pathSegmentList = \Service\Routing\PathSegmentList::getBy((array) $criteria, $orderBy = array('type' => 'ASC'));
-		debug($pathSegmentList);
+		debug('$pathSegmentList', $pathSegmentList);
 		return $pathSegmentList;
 	}
 
