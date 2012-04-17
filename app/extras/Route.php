@@ -1,5 +1,9 @@
 <?php
 
+// $cache['location'][123] = 'liptov'
+// $cache['rentalType'][144][12] = 'chaty'
+// $cache['tag'][144][567] = 'lacne'
+
 namespace Extras;
 
 use Nette,
@@ -148,6 +152,7 @@ class Route implements Nette\Application\IRouter {
 		$return = array(
 			'params' => array(),
 			'presenter' => $params->presenter,
+			'action' => $params->action,
 		);
 		foreach ($this->appParams as $key => $value) {
 			if($value === true && !isset($params->$key)) {
