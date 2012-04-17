@@ -8,21 +8,22 @@ use Nette\Application as NA,
 	Nette\Utils\Html,
 	Nette\Utils\Strings,
 	Extras\Models\Service,
-	Services\Dictionary as D,
-	Services as S,
-	Services\Log\Change as SLog;
+	Service\Dictionary as D,
+	Service as S,
+	Service\Log\Change as SLog;
 
 class ImportCompanies extends BaseImport {
 
-	public function doImport() {
-		$this->savedVariables['importedSections']['companies'] = 1;
-	
-		//$this->importCompanies();
-		//$this->importOffices();
-		//$this->importBankAccounts();
+	public function doImport($subsection) {	
+		$this->setSubsections('companies');
 
-		$this->savedVariables['importedSections']['companies'] = 2;
+		$this->$subsection();
 
+		$this->savedVariables['importedSubSections']['companies'][$subsection] = 1;
+
+		if (end($this->sections['companies']['subsections']) == $subsection) {
+			$this->savedVariables['importedSections']['companies'] = 1;		
+		}
 	}
 
 	private function importCompanies() {
@@ -54,12 +55,15 @@ class ImportCompanies extends BaseImport {
 			}
 			$s->save();
 		}
+		\Extras\Models\Service::flush(FALSE);
 	}
 
 	private function importOffices() {
 		$r = q('select * from virtual_offices order by id');
 
 		$dictionaryTypeRegistrator = $this->createDictionaryType('\Company\Company', 'registrator', 'supportedLanguages', 'ACTIVE');
+
+		$countryLocationType = \Service\Location\Type::getBySlug('country');
 
 		while($x = mysql_fetch_array($r)) {
 			$s = S\Company\Office::get();
@@ -69,19 +73,22 @@ class ImportCompanies extends BaseImport {
 				'address' => array_filter(array($x['address'], $x['address_2'])),
 				'postcode' => $x['postcode'],
 				'locality' => $x['locality'],
-				'country' => \Service\Location\Country::getByOldId($x['id'])->location->id,
+				'country' => \Service\Location\Location::getByOldIdAndType($x['countries_id'], $countryLocationType)->id,
 			)); // @todo - toto este neuklada ok, je na to task v taskee
 
 			$s->company = \Service\Company\Company::get(3);
-			$s->addCountry(\Service\Location\Country::getByOldId($x['id'])->location);
+			$s->addCountry(\Service\Location\Location::getByOldIdAndType($x['countries_id'], $countryLocationType));
 			$s->save();
 		}
+		\Extras\Models\Service::flush(FALSE);
 	}
 
 	private function importBankAccounts() {
 		$r = q('select * from bank_accounts order by id');
 
 		$dictionaryTypeRegistrator = $this->createDictionaryType('\Company\Company', 'registrator', 'supportedLanguages', 'ACTIVE');
+
+		$countryLocationType = \Service\Location\Type::getBySlug('country');
 
 		while($x = mysql_fetch_array($r)) {
 			$s = S\Company\BankAccount::get();
@@ -92,16 +99,17 @@ class ImportCompanies extends BaseImport {
 
 			$s->bankAddress = new \Extras\Types\Address(array(
 				'address' => $x['bank_address'],
-				'country' => \Service\Location\Country::getByOldId($x['bank_country_id'])->location->id,
+				'country' => \Service\Location\Location::getByOldIdAndType($x['bank_country_id'], $countryLocationType),
 			)); // @todo - toto este neuklada ok, je na to task v taskee
 			
 			$s->accountNumber = $x['account_number'];
 			$s->accountName = $x['account_name'];
 			$s->accountIban = $x['account_iban'];
 
-			$s->addCountry(\Service\Location\Country::getByOldId($x['bank_country_id'])->location);
+			$s->addCountry(\Service\Location\Location::getByOldIdAndType($x['bank_country_id'], $countryLocationType));
 			$s->save();
 		}
+		\Extras\Models\Service::flush(FALSE);
 	}
 
 }

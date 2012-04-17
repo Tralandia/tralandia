@@ -8,14 +8,13 @@ use Nette\Application as NA,
 	Nette\Utils\Html,
 	Nette\Utils\Strings,
 	Extras\Models\Service,
-	Services\Dictionary as D,
-	Services as S,
-	Services\Log\Change as SLog;
+	Service\Dictionary as D,
+	Service as S,
+	Service\Log\Change as SLog;
 
 class ImportCurrencies extends BaseImport {
 
-	public function doImport() {
-		$this->savedVariables['importedSections']['currencies'] = 1;
+	public function doImport($subsection = NULL) {
 		$dictionaryType = $this->createDictionaryType('\Currency', 'name', 'supportedLanguages', 'ACTIVE');
 
 		$r = q('select * from currencies order by id');
@@ -29,7 +28,7 @@ class ImportCurrencies extends BaseImport {
 			$s->rounding = $x['decimal_places'];
 			$s->save();
 		}
-		$this->savedVariables['importedSections']['currencies'] = 2;
+		$this->savedVariables['importedSections']['currencies'] = 1;
 
 	}
 

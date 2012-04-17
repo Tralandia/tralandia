@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="user_user")
  */
-class User extends \Entity\BaseEntity {
+class User extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var string
@@ -28,13 +28,13 @@ class User extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Role", mappedBy="users")
+	 * @ORM\ManyToMany(targetEntity="Role", mappedBy="users", cascade={"persist"})
 	 */
 	protected $roles;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Entity\Contact\Contact", mappedBy="user")
+	 * @ORM\OneToMany(targetEntity="Entity\Contact\Contact", mappedBy="user", cascade={"persist"})
 	 */
 	protected $contacts;
 
@@ -82,19 +82,19 @@ class User extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact")
+	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact", cascade={"persist"})
 	 */
 	protected $invoicingEmail;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact")
+	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact", cascade={"persist"})
 	 */
 	protected $invoicingPhone;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact")
+	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact", cascade={"persist"})
 	 */
 	protected $invoicingUrl;
 
@@ -123,20 +123,14 @@ class User extends \Entity\BaseEntity {
 	protected $currentTelmarkOperator;
 
 	/**
-	 * @var json
-	 * @ORM\Column(type="json")
-	 */
-	protected $attributes;
-
-	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Combination", mappedBy="user")
+	 * @ORM\OneToMany(targetEntity="Combination", mappedBy="user", cascade={"persist", "remove"})
 	 */
 	protected $combinations;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Entity\Rental\Rental", mappedBy="user")
+	 * @ORM\OneToMany(targetEntity="Entity\Rental\Rental", mappedBy="user", cascade={"persist"})
 	 */
 	protected $rentals;
 
@@ -146,9 +140,14 @@ class User extends \Entity\BaseEntity {
 	 */
 	protected $tasks;
 
-	/* ----------------------------- Methods ----------------------------- */
+
+	
 
 
+
+//@entity-generator-code <--- NEMAZAT !!!
+
+	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct() {
 		parent::__construct();
 
@@ -160,7 +159,7 @@ class User extends \Entity\BaseEntity {
 		$this->rentals = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->tasks = new \Doctrine\Common\Collections\ArrayCollection;
 	}
-
+		
 	/**
 	 * @param string
 	 * @return \Entity\User\User
@@ -170,7 +169,7 @@ class User extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\User\User
 	 */
@@ -179,14 +178,14 @@ class User extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return string|NULL
 	 */
 	public function getLogin() {
 		return $this->login;
 	}
-
+		
 	/**
 	 * @param string
 	 * @return \Entity\User\User
@@ -196,7 +195,7 @@ class User extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\User\User
 	 */
@@ -205,14 +204,14 @@ class User extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return string|NULL
 	 */
 	public function getPassword() {
 		return $this->password;
 	}
-
+		
 	/**
 	 * @param \Entity\User\Role
 	 * @return \Entity\User\User
@@ -225,7 +224,7 @@ class User extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @param \Entity\User\Role
 	 * @return \Entity\User\User
@@ -238,14 +237,14 @@ class User extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\User\Role
 	 */
 	public function getRoles() {
 		return $this->roles;
 	}
-
+		
 	/**
 	 * @param \Entity\Contact\Contact
 	 * @return \Entity\User\User
@@ -254,11 +253,11 @@ class User extends \Entity\BaseEntity {
 		if(!$this->contacts->contains($contact)) {
 			$this->contacts->add($contact);
 		}
-		$contact->addUser($this);
+		$contact->setUser($this);
 
 		return $this;
 	}
-
+		
 	/**
 	 * @param \Entity\Contact\Contact
 	 * @return \Entity\User\User
@@ -267,18 +266,18 @@ class User extends \Entity\BaseEntity {
 		if($this->contacts->contains($contact)) {
 			$this->contacts->removeElement($contact);
 		}
-		$contact->removeUser($this);
+		$contact->unsetUser();
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Contact\Contact
 	 */
 	public function getContacts() {
 		return $this->contacts;
 	}
-
+		
 	/**
 	 * @param \Entity\Dictionary\Language
 	 * @return \Entity\User\User
@@ -288,7 +287,7 @@ class User extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\User\User
 	 */
@@ -297,14 +296,14 @@ class User extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Dictionary\Language|NULL
 	 */
 	public function getDefaultLanguage() {
 		return $this->defaultLanguage;
 	}
-
+		
 	/**
 	 * @param \Entity\Location\Location
 	 * @return \Entity\User\User
@@ -317,7 +316,7 @@ class User extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @param \Entity\Location\Location
 	 * @return \Entity\User\User
@@ -330,14 +329,14 @@ class User extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Location\Location
 	 */
 	public function getLocations() {
 		return $this->locations;
 	}
-
+		
 	/**
 	 * @param \Entity\Rental\Type
 	 * @return \Entity\User\User
@@ -350,7 +349,7 @@ class User extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @param \Entity\Rental\Type
 	 * @return \Entity\User\User
@@ -363,14 +362,14 @@ class User extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Rental\Type
 	 */
 	public function getRentalTypes() {
 		return $this->rentalTypes;
 	}
-
+		
 	/**
 	 * @param string
 	 * @return \Entity\User\User
@@ -380,7 +379,7 @@ class User extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\User\User
 	 */
@@ -389,14 +388,14 @@ class User extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return string|NULL
 	 */
 	public function getInvoicingSalutation() {
 		return $this->invoicingSalutation;
 	}
-
+		
 	/**
 	 * @param string
 	 * @return \Entity\User\User
@@ -406,7 +405,7 @@ class User extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\User\User
 	 */
@@ -415,14 +414,14 @@ class User extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return string|NULL
 	 */
 	public function getInvoicingFirstName() {
 		return $this->invoicingFirstName;
 	}
-
+		
 	/**
 	 * @param string
 	 * @return \Entity\User\User
@@ -432,7 +431,7 @@ class User extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\User\User
 	 */
@@ -441,14 +440,14 @@ class User extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return string|NULL
 	 */
 	public function getInvoicingLastName() {
 		return $this->invoicingLastName;
 	}
-
+		
 	/**
 	 * @param string
 	 * @return \Entity\User\User
@@ -458,7 +457,7 @@ class User extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\User\User
 	 */
@@ -467,14 +466,14 @@ class User extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return string|NULL
 	 */
 	public function getInvoicingCompanyName() {
 		return $this->invoicingCompanyName;
 	}
-
+		
 	/**
 	 * @param \Entity\Contact\Contact
 	 * @return \Entity\User\User
@@ -484,7 +483,7 @@ class User extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\User\User
 	 */
@@ -493,14 +492,14 @@ class User extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Contact\Contact|NULL
 	 */
 	public function getInvoicingEmail() {
 		return $this->invoicingEmail;
 	}
-
+		
 	/**
 	 * @param \Entity\Contact\Contact
 	 * @return \Entity\User\User
@@ -510,7 +509,7 @@ class User extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\User\User
 	 */
@@ -519,14 +518,14 @@ class User extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Contact\Contact|NULL
 	 */
 	public function getInvoicingPhone() {
 		return $this->invoicingPhone;
 	}
-
+		
 	/**
 	 * @param \Entity\Contact\Contact
 	 * @return \Entity\User\User
@@ -536,7 +535,7 @@ class User extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\User\User
 	 */
@@ -545,14 +544,14 @@ class User extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Contact\Contact|NULL
 	 */
 	public function getInvoicingUrl() {
 		return $this->invoicingUrl;
 	}
-
+		
 	/**
 	 * @param \Extras\Types\Address
 	 * @return \Entity\User\User
@@ -562,7 +561,7 @@ class User extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\User\User
 	 */
@@ -571,14 +570,14 @@ class User extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Extras\Types\Address|NULL
 	 */
 	public function getInvoicingAddress() {
 		return $this->invoicingAddress;
 	}
-
+		
 	/**
 	 * @param string
 	 * @return \Entity\User\User
@@ -588,7 +587,7 @@ class User extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\User\User
 	 */
@@ -597,14 +596,14 @@ class User extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return string|NULL
 	 */
 	public function getInvoicingCompanyId() {
 		return $this->invoicingCompanyId;
 	}
-
+		
 	/**
 	 * @param string
 	 * @return \Entity\User\User
@@ -614,7 +613,7 @@ class User extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\User\User
 	 */
@@ -623,14 +622,14 @@ class User extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return string|NULL
 	 */
 	public function getInvoicingCompanyVatId() {
 		return $this->invoicingCompanyVatId;
 	}
-
+		
 	/**
 	 * @param \Entity\User\User
 	 * @return \Entity\User\User
@@ -640,7 +639,7 @@ class User extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\User\User
 	 */
@@ -649,31 +648,14 @@ class User extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\User\User|NULL
 	 */
 	public function getCurrentTelmarkOperator() {
 		return $this->currentTelmarkOperator;
 	}
-
-	/**
-	 * @param json
-	 * @return \Entity\User\User
-	 */
-	public function setAttributes($attributes) {
-		$this->attributes = $attributes;
-
-		return $this;
-	}
-
-	/**
-	 * @return json|NULL
-	 */
-	public function getAttributes() {
-		return $this->attributes;
-	}
-
+		
 	/**
 	 * @param \Entity\User\Combination
 	 * @return \Entity\User\User
@@ -682,11 +664,11 @@ class User extends \Entity\BaseEntity {
 		if(!$this->combinations->contains($combination)) {
 			$this->combinations->add($combination);
 		}
-		$combination->addUser($this);
+		$combination->setUser($this);
 
 		return $this;
 	}
-
+		
 	/**
 	 * @param \Entity\User\Combination
 	 * @return \Entity\User\User
@@ -695,18 +677,18 @@ class User extends \Entity\BaseEntity {
 		if($this->combinations->contains($combination)) {
 			$this->combinations->removeElement($combination);
 		}
-		$combination->removeUser($this);
+		$combination->unsetUser();
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\User\Combination
 	 */
 	public function getCombinations() {
 		return $this->combinations;
 	}
-
+		
 	/**
 	 * @param \Entity\Rental\Rental
 	 * @return \Entity\User\User
@@ -715,11 +697,11 @@ class User extends \Entity\BaseEntity {
 		if(!$this->rentals->contains($rental)) {
 			$this->rentals->add($rental);
 		}
-		$rental->addUser($this);
+		$rental->setUser($this);
 
 		return $this;
 	}
-
+		
 	/**
 	 * @param \Entity\Rental\Rental
 	 * @return \Entity\User\User
@@ -728,18 +710,18 @@ class User extends \Entity\BaseEntity {
 		if($this->rentals->contains($rental)) {
 			$this->rentals->removeElement($rental);
 		}
-		$rental->removeUser($this);
+		$rental->unsetUser();
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Rental\Rental
 	 */
 	public function getRentals() {
 		return $this->rentals;
 	}
-
+		
 	/**
 	 * @param \Entity\Autopilot\Task
 	 * @return \Entity\User\User
@@ -751,12 +733,11 @@ class User extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Autopilot\Task
 	 */
 	public function getTasks() {
 		return $this->tasks;
 	}
-	
 }

@@ -65,15 +65,21 @@ class BankAccount extends \Entity\BaseEntity {
 	 */
 	protected $notes;
 
-	/* ----------------------------- Methods ----------------------------- */
+	
 
 
+
+
+
+//@entity-generator-code <--- NEMAZAT !!!
+
+	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct() {
 		parent::__construct();
 
 		$this->countries = new \Doctrine\Common\Collections\ArrayCollection;
 	}
-
+		
 	/**
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Company\BankAccount
@@ -86,7 +92,7 @@ class BankAccount extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Company\BankAccount
@@ -99,14 +105,14 @@ class BankAccount extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Location\Location
 	 */
 	public function getCountries() {
 		return $this->countries;
 	}
-
+		
 	/**
 	 * @param \Entity\Company\Company
 	 * @return \Entity\Company\BankAccount
@@ -116,14 +122,23 @@ class BankAccount extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Company\Company
+	 * @return \Entity\Company\BankAccount
+	 */
+	public function unsetCompany() {
+		$this->company = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Company\Company|NULL
 	 */
 	public function getCompany() {
 		return $this->company;
 	}
-
+		
 	/**
 	 * @param string
 	 * @return \Entity\Company\BankAccount
@@ -133,7 +148,7 @@ class BankAccount extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Company\BankAccount
 	 */
@@ -142,14 +157,14 @@ class BankAccount extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return string|NULL
 	 */
 	public function getBankName() {
 		return $this->bankName;
 	}
-
+		
 	/**
 	 * @param \Extras\Types\Address
 	 * @return \Entity\Company\BankAccount
@@ -159,14 +174,14 @@ class BankAccount extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Extras\Types\Address|NULL
 	 */
 	public function getBankAddress() {
 		return $this->bankAddress;
 	}
-
+		
 	/**
 	 * @param string
 	 * @return \Entity\Company\BankAccount
@@ -176,7 +191,7 @@ class BankAccount extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Company\BankAccount
 	 */
@@ -185,14 +200,14 @@ class BankAccount extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return string|NULL
 	 */
 	public function getBankSwift() {
 		return $this->bankSwift;
 	}
-
+		
 	/**
 	 * @param string
 	 * @return \Entity\Company\BankAccount
@@ -202,7 +217,7 @@ class BankAccount extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Company\BankAccount
 	 */
@@ -211,14 +226,14 @@ class BankAccount extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return string|NULL
 	 */
 	public function getAccountNumber() {
 		return $this->accountNumber;
 	}
-
+		
 	/**
 	 * @param string
 	 * @return \Entity\Company\BankAccount
@@ -228,7 +243,7 @@ class BankAccount extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Company\BankAccount
 	 */
@@ -237,14 +252,14 @@ class BankAccount extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return string|NULL
 	 */
 	public function getAccountName() {
 		return $this->accountName;
 	}
-
+		
 	/**
 	 * @param string
 	 * @return \Entity\Company\BankAccount
@@ -254,7 +269,7 @@ class BankAccount extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Company\BankAccount
 	 */
@@ -263,14 +278,14 @@ class BankAccount extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return string|NULL
 	 */
 	public function getAccountIban() {
 		return $this->accountIban;
 	}
-
+		
 	/**
 	 * @param string
 	 * @return \Entity\Company\BankAccount
@@ -280,12 +295,20 @@ class BankAccount extends \Entity\BaseEntity {
 
 		return $this;
 	}
+		
+	/**
+	 * @return \Entity\Company\BankAccount
+	 */
+	public function unsetNotes() {
+		$this->notes = NULL;
 
+		return $this;
+	}
+		
 	/**
 	 * @return string|NULL
 	 */
 	public function getNotes() {
 		return $this->notes;
 	}
-
 }

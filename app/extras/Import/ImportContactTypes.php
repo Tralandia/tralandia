@@ -8,39 +8,42 @@ use Nette\Application as NA,
 	Nette\Utils\Html,
 	Nette\Utils\Strings,
 	Extras\Models\Service,
-	Services\Dictionary as D,
-	Services as S,
-	Services\Log\Change as SLog;
+	Service\Dictionary as D,
+	Service as S,
+	Service\Log\Change as SLog;
 
 class ImportContactTypes extends BaseImport {
 
-	public function doImport() {
-		$this->savedVariables['importedSections']['contactTypes'] = 1;
+	public function doImport($subsection = NULL) {
 
-		$language = getLangByIso('en');
+		$language = \Service\Dictionary\Language::getByIso('en');
 
 		$s = S\Contact\Type::get();
 		$s->name = $this->createPhraseFromString('\Location\Location', 'name', 'supportedLanguages', 'NATIVE', 'Address', $language);;
-		$s->class = 'Address';
+		$s->slug = 'Address';
 		$s->save();
 
 		$s = S\Contact\Type::get();
 		$s->name = $this->createPhraseFromString('\Location\Location', 'name', 'supportedLanguages', 'NATIVE', 'Email', $language);;
-		$s->class = 'Email';
+		$s->slug = 'Email';
 		$s->save();
 
 		$s = S\Contact\Type::get();
 		$s->name = $this->createPhraseFromString('\Location\Location', 'name', 'supportedLanguages', 'NATIVE', 'Phone', $language);;
-		$s->class = 'Phone';
+		$s->slug = 'Phone';
 		$s->save();
 
 		$s = S\Contact\Type::get();
 		$s->name = $this->createPhraseFromString('\Location\Location', 'name', 'supportedLanguages', 'NATIVE', 'Url', $language);;
-		$s->class = 'Url';
+		$s->slug = 'Url';
 		$s->save();
 
-		$this->savedVariables['importedSections']['contactTypes'] = 2;
+		$s = S\Contact\Type::get();
+		$s->name = $this->createPhraseFromString('\Location\Location', 'name', 'supportedLanguages', 'NATIVE', 'Skype', $language);;
+		$s->slug = 'Skype';
+		$s->save();
+
+		$this->savedVariables['importedSections']['contactTypes'] = 1;
 
 	}
-
 }

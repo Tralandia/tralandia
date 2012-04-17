@@ -92,13 +92,20 @@ class Type extends \Entity\BaseEntity {
 	 */
 	protected $checkingRequired;
 	
-	/* ----------------------------- Methods ----------------------------- */
+
+	
 
 
+
+
+
+//@entity-generator-code <--- NEMAZAT !!!
+
+	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct() {
 		parent::__construct();
 	}
-
+		
 	/**
 	 * @param string
 	 * @return \Entity\Dictionary\Type
@@ -108,7 +115,7 @@ class Type extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Dictionary\Type
 	 */
@@ -117,14 +124,14 @@ class Type extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return string|NULL
 	 */
 	public function getName() {
 		return $this->name;
 	}
-
+		
 	/**
 	 * @param string
 	 * @return \Entity\Dictionary\Type
@@ -134,7 +141,7 @@ class Type extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Dictionary\Type
 	 */
@@ -143,14 +150,14 @@ class Type extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return string|NULL
 	 */
 	public function getEntityName() {
 		return $this->entityName;
 	}
-
+		
 	/**
 	 * @param string
 	 * @return \Entity\Dictionary\Type
@@ -160,14 +167,14 @@ class Type extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return string|NULL
 	 */
 	public function getRequiredLanguages() {
 		return $this->requiredLanguages;
 	}
-
+		
 	/**
 	 * @param string
 	 * @return \Entity\Dictionary\Type
@@ -177,7 +184,7 @@ class Type extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Dictionary\Type
 	 */
@@ -186,14 +193,14 @@ class Type extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return string|NULL
 	 */
 	public function getEntityAttribute() {
 		return $this->entityAttribute;
 	}
-
+		
 	/**
 	 * @param integer
 	 * @return \Entity\Dictionary\Type
@@ -203,14 +210,14 @@ class Type extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return integer|NULL
 	 */
 	public function getTranslationLevelRequirement() {
 		return $this->translationLevelRequirement;
 	}
-
+		
 	/**
 	 * @param boolean
 	 * @return \Entity\Dictionary\Type
@@ -220,14 +227,14 @@ class Type extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return boolean|NULL
 	 */
 	public function getMultitranslationRequired() {
 		return $this->multitranslationRequired;
 	}
-
+		
 	/**
 	 * @param boolean
 	 * @return \Entity\Dictionary\Type
@@ -237,14 +244,14 @@ class Type extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return boolean|NULL
 	 */
 	public function getGenderNumberRequired() {
 		return $this->genderNumberRequired;
 	}
-
+		
 	/**
 	 * @param boolean
 	 * @return \Entity\Dictionary\Type
@@ -254,14 +261,14 @@ class Type extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return boolean|NULL
 	 */
 	public function getLocativeRequired() {
 		return $this->locativeRequired;
 	}
-
+		
 	/**
 	 * @param boolean
 	 * @return \Entity\Dictionary\Type
@@ -271,14 +278,14 @@ class Type extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return boolean|NULL
 	 */
 	public function getPositionRequired() {
 		return $this->positionRequired;
 	}
-
+		
 	/**
 	 * @param boolean
 	 * @return \Entity\Dictionary\Type
@@ -288,14 +295,14 @@ class Type extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return boolean|NULL
 	 */
 	public function getWebalizedRequired() {
 		return $this->webalizedRequired;
 	}
-
+		
 	/**
 	 * @param string
 	 * @return \Entity\Dictionary\Type
@@ -305,7 +312,7 @@ class Type extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Dictionary\Type
 	 */
@@ -314,14 +321,14 @@ class Type extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return string|NULL
 	 */
 	public function getHelpForTranslator() {
 		return $this->helpForTranslator;
 	}
-
+		
 	/**
 	 * @param boolean
 	 * @return \Entity\Dictionary\Type
@@ -331,7 +338,7 @@ class Type extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Dictionary\Type
 	 */
@@ -340,12 +347,11 @@ class Type extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return boolean|NULL
 	 */
 	public function getCheckingRequired() {
 		return $this->checkingRequired;
 	}
-
 }

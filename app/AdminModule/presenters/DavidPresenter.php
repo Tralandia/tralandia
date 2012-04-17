@@ -37,24 +37,59 @@ class DavidPresenter extends BasePresenter {
 
 	public function actionTest() {
 
-		$s = S\Dictionary\Phrase::get(3);
-		$t = S\Dictionary\Translation::get(4);
-		$s->addTranslation($t);
-		//$s->blabal('sdf');
-		//$s = S\Location\LocationService::get(3);
-		//$s->setSlug('smola');
-		//$s->slug = 'asia';
-		//$type = S\Location\Type::getBySlug('country');
-		//$s = S\Location\LocationList::getBySlugInType('asia', array($type));
-		//$s = S\Location\LocationService::getBySlugAndType('asia', $type);
-		//$s = S\Company\Company::get(1);
-		//$s->address = new \Extras\Types\Address(array('city' => 'Nesvady', 'country' => 'Slovakia'));
-		//$s->save();
-		//$s = S\Location\LocationList::getAll();
-		debug($t->language->iso);
-		debug($s->translations->toArray());
+		//$s = S\Medium\Medium::createFromUrl('http://www.tralandia.sk/u/01/13220628889049.png');
+		//debug($s);
+		$data = array(
+			array('name'=>'en'),
+			array('name'=>'fi'),
+			array('name'=>'fr'),
+			array('name'=>'hh'),
+			array('name'=>'hr'),
+			array('name'=>'hu'),
+			array('name'=>'rn'),
+			array('name'=>'sd'),
+			array('name'=>'SK'),
+			array('name'=>'ze'),
+		);
+		$this->template->data = $data;
+
+		$s = D\Phrase::getByIdAndReady(2, true);
+		$s2 = D\Phrase::getByIdAndReady(2, true);
+
+		debug($s);
+		debug($s2);
+		
+		debug($s === $s);
+		
 	}
 
+	public function createComponentTabControl($name) {
+
+		$tabControl = new \BaseModule\Components\TabControl\TabControl($this, $name);
+
+
+		$t = $tabControl->addTab('tab1');
+		$t->header = 1;
+		$t->active = true;
+		$t->content = 'content 1';
+
+		$t = $tabControl->addTab('tab2');
+		$t->header = 2;
+		$t->content = $tabControl2 = new \BaseModule\Components\TabControl\TabControl($t, 'test');
+
+		
+		$t = $tabControl2->addTab('tab21');
+		$t->header = 1;
+		$t->active = true;
+		$t->content = 'subtab 1';
+
+		$t = $tabControl->addTab('tab3');
+		$t->header = 3;
+		$t->content = new \FrontModule\Components\RegistrationPage\Registration($t, 'registrationPage');
+
+		return $tabControl;
+
+	}
 
 
 	public function actionAddTranslation () {

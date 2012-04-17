@@ -4,24 +4,21 @@ namespace Extras\Models;
 
 use Nette\Object,
 	Nette\OutOfRangeException,
+	Tra\Utils\Strings,
 	Doctrine\ORM\EntityManager;
 
 /**
  * Abstrakcia zoznamu
  */
-abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \Iterator, IServiceList {
+abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \Iterator {
+
+	const RETURN_ENTITIES = 'Entities';
 
 	/**
 	 * @var string
 	 */
 	const MAIN_ENTITY_NAME = null;
 
-	const RETURN_ENTITIES = 1;
-
-	/**
-	 * @var array
-	 */
-	protected $list = NULL;
 
 	protected $iteratorPosition = 0;
 
@@ -32,9 +29,131 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 	 */
 	private static $em = NULL;
 
+	/**
+	 * @var array
+	 */
+	private $list = array();
 
-	public function __construct() {
+
+	public function __construct($param = NULL) {
+		if(is_array($param)) {
+			$this->setList($param);
+		} else if(is_string($param)) {
+			$this->prepareBaseList($param);
+		} else if($param === NULL) {
+			// create empty list
+		} else {
+			throw new \Nette\InvalidArgumentException('Argument does not match with the expected value');
+		}
+	}
+
+	public static function __callStatic($name, $arguments) {
+		list($nameTemp, $nameBy, $nameIn) = Strings::match($name, '~^getBy([A-Za-z]+)In([A-Za-z]+)$~');
+		if($nameTemp && $nameBy && $nameIn) {
+			$nameBy = Strings::firstLower($nameBy);
+			$nameIn = Strings::firstLower($nameIn);
+			return static::getByIn($nameBy, $nameIn, array_shift($arguments), array_shift($arguments), array_shift($arguments), array_shift($arguments), array_shift($arguments), array_shift($arguments));
+		} else if(Strings::startsWith($name, 'getBy')) {
+			$name = Strings::firstLower(substr($name, 5));
+			$by = array_shift($arguments);
+			$orderBy = array_shift($arguments);
+			$limit = array_shift($arguments);
+			$offset = array_shift($arguments);
+			$entityName = array_shift($arguments);
+			return static::getBy(array($name => $by), $orderBy, $limit, $offset, $entityName);
+		} else {
+			return parent::__callStatic($name, $arguments);
+		}
+	}
+
+	public static function getBy(array $criteria, array $orderBy = NULL, $limit = NULL, $offset = NULL, $entityName = NULL) {
+		foreach ($criteria as $key => $value) {
+			if($value instanceof Service || $value instanceof Entity) {
+				$criteria[$key] = $value->id;
+			}
+		}
+
+		if($entityName === NULL) {
+			$entityName = static::getMainEntityName();
+		}
+
+		$serviceList = new static;
+		$repository = $serviceList->getEm()->getRepository($entityName);
+		$serviceList->setList($repository->findBy($criteria, $orderBy, $limit, $offset));
+		return $serviceList;
+	}
+
+	public static function getAll(array $orderBy = NULL, $limit = NULL, $offset = NULL, $entityName = NULL) {
+		if($entityName === NULL) {
+			$entityName = static::getMainEntityName();
+		}
+
+		$serviceList = new static;
+		$repository = $serviceList->getEm()->getRepository($entityName);
+		$serviceList->setList($repository->findBy(array(), $orderBy, $limit, $offset));
+		return $serviceList;
+
+	}
+
+
+	public static function getByIn($nameBy, $nameIn, $by, array $in, array $orderBy = NULL, $limit = NULL, $offset = NULL, $entityName = NULL) {
+		if($entityName === NULL) {
+			$entityName = static::getMainEntityName();
+		}
+
+		$parsedIn = array();
+		foreach ($in as $key => $value) {
+			if($value instanceof Service || $value instanceof Entity) {
+				$parsedIn[] = $value->id;
+			} else {
+				$parsedIn[] = $value;
+			}
+		}
+
+		$serviceList = new static;
+
+		$qb = $serviceList->getEm()->createQueryBuilder();
+		$qb->select('e')
+			->from($entityName, 'e')
+			->where('e.'.$nameBy.' = :by')
+			->andWhere($qb->expr()->in('e.'.$nameIn, $parsedIn))
+			->setParameter('by', $by);
+		if($orderBy) {
+			foreach ($orderBy as $key => $value) {
+				$qb->addOrderBy('e.'.$key, $value);
+			}
+		}
+		if($limit) $qb->setMaxResults($limit);
+		if($offset) $qb->setFirstResult($offset);
+		$serviceList->setList($qb->getQuery()->getResult());
+
+		return $serviceList;
+
+	}
+
+
+
+	protected function prepareBaseList($entity) {
+		$query = $this->getEm()->createQueryBuilder();
+		$query->select('e')->from($entity, 'e');
+		$this->setList($query->getQuery()->getResult());
+	}
+
+	public function setList($list) {
+		$this->list = $list;
 		$this->iteratorPosition = 0;
+	}
+
+	/**
+	 * Ziskanie nazvu hlavnej entity
+	 * @return string
+	 */
+	public static function getMainEntityName() {
+		if (!static::MAIN_ENTITY_NAME) {
+			throw new \Exception("Este nebola zadana `mainEntity`, preto nemozem ziskat jej nazov");
+		}
+		
+		return static::MAIN_ENTITY_NAME;
 	}
 
 	/**
@@ -49,7 +168,7 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 	 * Ziskanie entity manazera
 	 * @return EntityManager
 	 */
-	protected static function getEntityManager() {
+	protected function getEntityManager() {
 		return self::$em;
 	}
 
@@ -57,19 +176,10 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 	 * Alias na entity manazera
 	 * @return EntityManager
 	 */
-	protected static function getEm() {
+	protected function getEm() {
 		return self::getEntityManager();
 	}
 
-	/**
-	 * Ziskanie DataSource pre datagrid
-	 * @return Doctrine\ORM\QueryBuilder
-	 */
-	public static function getDataSource() {
-		$query = self::getEntityManager()->createQueryBuilder();
-		$query->select('e')->from(static::MAIN_ENTITY_NAME, 'e');
-		return $query;
-	}
 
 	public function returnAs($returnAs) {
 		$this->returnAs = $returnAs;
@@ -172,7 +282,6 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 			throw new OutOfRangeException("Offset invalid or out of range");
 		}
 
-		debug($index);
 		$value = $this->list[$index];
 		if($this->returnAs != self::RETURN_ENTITIES) {
 			if($value instanceof Entity) {

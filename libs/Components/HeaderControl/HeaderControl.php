@@ -3,8 +3,8 @@
 use Nette\Utils\Html;
 use Nette\Environment;
 
-use WebLoader\CssLoader;
-use WebLoader\JavascriptLoader;
+use WebLoader\Nette\CssLoader;
+use WebLoader\Nette\JavascriptLoader;
 
 /**
  * HeaderControl<br />
@@ -97,16 +97,6 @@ class HeaderControl extends RenderableContainer
 		} catch (FileNotFoundException $e) {
 
 		}
-	}
-
-	protected function createComponentCss()
-	{
-		return new CssLoader;
-	}
-
-	protected function createComponentJs()
-	{
-		return new JavaScriptLoader;
 	}
 
 	public function setDocType($docType)
@@ -277,7 +267,7 @@ class HeaderControl extends RenderableContainer
 		if (file_exists(WWW_DIR . '/' . $filename)) {
 			$this->favicon = $filename;
 		} else {
-			throw new FileNotFoundException('Favicon ' . WWW_DIR . Environment::getVariable('baseUri') . $filename . ' not found.');
+			throw new FileNotFoundException('Favicon ' . WWW_DIR . $this->getPresenter()->getBaseUrl() . $filename . ' not found.');
 		}
 
 		return $this; //fluent interface
@@ -399,10 +389,7 @@ class HeaderControl extends RenderableContainer
 	{
 		$this->renderBegin();
 		$this->renderRss();
-		$this->renderCss();
-		echo "\n";
-		$this->renderJs();
-		echo "\n";
+
 		$this->renderEnd();
 	}
 
@@ -450,7 +437,7 @@ class HeaderControl extends RenderableContainer
 
 		if ($this->favicon != '') {
 			echo Html::el('link')->rel('shortcut icon')
-					->href(Environment::getVariable('baseUri') . $this->favicon) . "\n";
+					->href($this->getPresenter()->getBaseUrl() . $this->favicon) . "\n";
 		}
 
 		foreach ($this->metaTags as $name=>$content) {

@@ -25,12 +25,21 @@ class Domain extends \Entity\BaseEntity {
 	protected $locations;
 
 	
+
+	
+
+
+
+
+//@entity-generator-code <--- NEMAZAT !!!
+
+	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct() {
 		parent::__construct();
 
 		$this->locations = new \Doctrine\Common\Collections\ArrayCollection;
 	}
-
+		
 	/**
 	 * @param string
 	 * @return \Entity\Domain
@@ -40,23 +49,14 @@ class Domain extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
-	/**
-	 * @return \Entity\Domain
-	 */
-	public function unsetDomain() {
-		$this->domain = NULL;
-
-		return $this;
-	}
-
+		
 	/**
 	 * @return string|NULL
 	 */
 	public function getDomain() {
 		return $this->domain;
 	}
-
+		
 	/**
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Domain
@@ -65,10 +65,11 @@ class Domain extends \Entity\BaseEntity {
 		if(!$this->locations->contains($location)) {
 			$this->locations->add($location);
 		}
+		$location->setDomain($this);
 
 		return $this;
 	}
-
+		
 	/**
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Domain
@@ -77,15 +78,15 @@ class Domain extends \Entity\BaseEntity {
 		if($this->locations->contains($location)) {
 			$this->locations->removeElement($location);
 		}
+		$location->unsetDomain();
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Location\Location
 	 */
 	public function getLocations() {
 		return $this->locations;
 	}
-
 }

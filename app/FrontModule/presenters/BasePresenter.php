@@ -15,24 +15,29 @@ abstract class BasePresenter extends \BasePresenter {
 
 		parent::beforeRender();
 
-		$this->template->supportedLanguages = \Services\Dictionary\LanguageList::getBySupported(\Entities\Dictionary\Language::SUPPORTED);
+		$this->template->supportedLanguages = \Service\Dictionary\LanguageList::getBySupported(\Entity\Dictionary\Language::SUPPORTED);
+		$this->template->launchedCountries = \Service\Location\LocationList::getByStatus(\Entity\Location\Location::STATUS_LAUNCHED, null, 15);
+		$this->template->liveRentalsCount = count(\Service\Rental\RentalList::getByStatus(\Entity\Rental\Rental::STATUS_LIVE));
 
-		/******* Things TODO *****/
-		$this->template->allDomains = $this->getAllDomains(); //\Services\DomainList::getAll();
+		/******* Things @TODO *****/
 		$this->template->mainMenuItems = $this->getMainMenuItems();
-		$this->template->liveRentalsCount = 2569; //count(\Services\Rental\RentalList::getByStatus(\Entities\Rental\Rental::STATUS_LIVE));
 		$this->template->currentLanguage = array("name"=>"Slovensky", "iso"=>"sk");
 		$this->template->currentDomain = array("iso"=>"sk");
 
 	}
 
-	/******* Things TODO *****/
-	public function getAllDomains() {
-		return array("SK", "DE", "HU");
-	}
-
+	/******* Things @TODO *****/
 	public function getMainMenuItems() {
 		return array("Uvod", "Chaty a chalupy", "Apartmany", "Uvod", "Chaty a chalupy", "Apartmany", "Uvod", "Chaty a chalupy", "Apartmany");
 	}
+
+	public function createComponentMainMenu($name) {
+		return new \FrontModule\MainMenu\MainMenu($this, $name);
+	}
+
+	public function createComponentBreadcrumb($name) {
+		return new \FrontModule\Breadcrumb\Breadcrumb($this, $name);
+	}
+
 
 }

@@ -22,7 +22,7 @@ class Company extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Location\Location", mappedBy="companies")
+	 * @ORM\ManyToMany(targetEntity="Entity\Location\Location", mappedBy="companies", cascade={"persist"})
 	 */
 	protected $countries;
 
@@ -74,9 +74,15 @@ class Company extends \Entity\BaseEntityDetails {
 	 */
 	protected $invoices;
 
-	/* ----------------------------- Methods ----------------------------- */
+	
 
 
+
+
+
+//@entity-generator-code <--- NEMAZAT !!!
+
+	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct() {
 		parent::__construct();
 
@@ -85,7 +91,7 @@ class Company extends \Entity\BaseEntityDetails {
 		$this->offices = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->invoices = new \Doctrine\Common\Collections\ArrayCollection;
 	}
-
+		
 	/**
 	 * @param \Entity\Company\BankAccount
 	 * @return \Entity\Company\Company
@@ -98,7 +104,7 @@ class Company extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @param \Entity\Company\BankAccount
 	 * @return \Entity\Company\Company
@@ -111,14 +117,14 @@ class Company extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Company\BankAccount
 	 */
 	public function getBankAccounts() {
 		return $this->bankAccounts;
 	}
-
+		
 	/**
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Company\Company
@@ -131,7 +137,7 @@ class Company extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Company\Company
@@ -144,14 +150,14 @@ class Company extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Location\Location
 	 */
 	public function getCountries() {
 		return $this->countries;
 	}
-
+		
 	/**
 	 * @param \Entity\Company\Office
 	 * @return \Entity\Company\Company
@@ -164,7 +170,7 @@ class Company extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @param \Entity\Company\Office
 	 * @return \Entity\Company\Company
@@ -177,14 +183,14 @@ class Company extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Company\Office
 	 */
 	public function getOffices() {
 		return $this->offices;
 	}
-
+		
 	/**
 	 * @param string
 	 * @return \Entity\Company\Company
@@ -194,7 +200,7 @@ class Company extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Company\Company
 	 */
@@ -203,14 +209,14 @@ class Company extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return string|NULL
 	 */
 	public function getName() {
 		return $this->name;
 	}
-
+		
 	/**
 	 * @param \Extras\Types\Address
 	 * @return \Entity\Company\Company
@@ -220,7 +226,7 @@ class Company extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Company\Company
 	 */
@@ -229,14 +235,14 @@ class Company extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Extras\Types\Address|NULL
 	 */
 	public function getAddress() {
 		return $this->address;
 	}
-
+		
 	/**
 	 * @param string
 	 * @return \Entity\Company\Company
@@ -246,7 +252,7 @@ class Company extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Company\Company
 	 */
@@ -255,14 +261,14 @@ class Company extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return string|NULL
 	 */
 	public function getCompanyId() {
 		return $this->companyId;
 	}
-
+		
 	/**
 	 * @param string
 	 * @return \Entity\Company\Company
@@ -272,7 +278,7 @@ class Company extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Company\Company
 	 */
@@ -281,16 +287,16 @@ class Company extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return string|NULL
 	 */
 	public function getCompanyVatId() {
 		return $this->companyVatId;
 	}
-
+		
 	/**
-	 * @param \Extras\Types\Float
+	 * @param float
 	 * @return \Entity\Company\Company
 	 */
 	public function setVat($vat) {
@@ -298,7 +304,7 @@ class Company extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Company\Company
 	 */
@@ -307,14 +313,14 @@ class Company extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
-	 * @return \Extras\Types\Float|NULL
+	 * @return float|NULL
 	 */
 	public function getVat() {
 		return $this->vat;
 	}
-
+		
 	/**
 	 * @param \Entity\Dictionary\Phrase
 	 * @return \Entity\Company\Company
@@ -324,14 +330,14 @@ class Company extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Dictionary\Phrase
+	 * @return \Entity\Dictionary\Phrase|NULL
 	 */
 	public function getRegistrator() {
 		return $this->registrator;
 	}
-
+		
 	/**
 	 * @param \Entity\Invoicing\Invoice
 	 * @return \Entity\Company\Company
@@ -344,7 +350,7 @@ class Company extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @param \Entity\Invoicing\Invoice
 	 * @return \Entity\Company\Company
@@ -357,12 +363,11 @@ class Company extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Invoicing\Invoice
 	 */
 	public function getInvoices() {
 		return $this->invoices;
 	}
-
 }

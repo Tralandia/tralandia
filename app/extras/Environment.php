@@ -5,8 +5,12 @@ namespace Extras;
 class Environment extends \Nette\Object {
 
 	private $location = NULL;
-	private $country = NULL;
 	private $language = NULL;
+
+	// @todo
+	private $url = NULL; // Extras\Type\Url
+	private $currency = NULL; // 
+	private $locale = NULL;
 
 	public function __construct() {
 	}
@@ -18,17 +22,8 @@ class Environment extends \Nette\Object {
 		return $this->location;
 	}
 	
-	public function loadLocation() {
+	protected function loadLocation() {
 		return \Service\Location\Location::get(46);
-	}
-
-
-	public function getCountry() {
-		if($this->country === NULL) {
-			$this->country = $this->getLocation()->country;
-			if(!$this->country) $this->country = FALSE;
-		}
-		return $this->country;
 	}
 
 	public function getLanguage() {
@@ -38,11 +33,8 @@ class Environment extends \Nette\Object {
 		return $this->language;
 	}
 	
-	public function loadLanguage() {
+	protected function loadLanguage() {
 		return \Service\Dictionary\Language::get(144);
 	}
 	
-	public static function factory() {
-		return new static();
-	}
 }

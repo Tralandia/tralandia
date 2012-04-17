@@ -8,14 +8,13 @@ use Nette\Application as NA,
 	Nette\Utils\Html,
 	Nette\Utils\Strings,
 	Extras\Models\Service,
-	Services\Dictionary as D,
-	Services as S,
-	Services\Log\Change as SLog;
+	Service\Dictionary as D,
+	Service as S,
+	Service\Log\Change as SLog;
 
 class ImportDomains extends BaseImport {
 
-	public function doImport() {
-		$this->savedVariables['importedSections']['domains'] = 1;
+	public function doImport($subsection = NULL) {
 		$r = q('select domain from countries where length(domain)>0');
 		while($x = mysql_fetch_array($r)) {
 			$s = S\Domain::get();
@@ -27,7 +26,7 @@ class ImportDomains extends BaseImport {
 		$s->domain = 'tralandia.com';
 		$s->save();
 
-		$this->savedVariables['importedSections']['domains'] = 2;
+		$this->savedVariables['importedSections']['domains'] = 1;
 
 	}
 
