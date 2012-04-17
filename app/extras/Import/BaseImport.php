@@ -64,6 +64,11 @@ class BaseImport {
 			),
 			'subsections' => array('importContinents', 'importCountries', 'importTravelings', 'importRegions', 'importAdministrativeRegions1', 'importAdministrativeRegions2', 'importLocalities'),
 		),
+		'locationsPolygons' => array(
+			'entities' => array(
+			),
+			'subsections' => array(),
+		),
 		'companies' => array(
 			'entities' => array(
 				'\Company\Company' => array(),
