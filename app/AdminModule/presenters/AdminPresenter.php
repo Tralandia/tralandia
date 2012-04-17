@@ -5,34 +5,26 @@ namespace AdminModule;
 use Nette\Application as NA,
 	Nette\Environment,
 	Nette\Diagnostics\Debugger,
-	Nette\Utils\Html;
+	Nette\Utils\Html,
+	Extras\Models\Reflector;
 
 class AdminPresenter extends BasePresenter {
 	
 	private $settings;
-	
-	private $service;
+	private $serviceName;
+	private $reflector;
 	
 	public function startup() {
 		parent::startup();
 		
 		$this->settings = $this->getService('settings');
 		$this->template->settings = $this->settings;
-		$this->service = new $this->settings->serviceClass;
-		
-		/*
-		$country = new \Country;
-		$country->iso = 'iso-' . sha1(microtime(true));
-		$country->language = $this->em->find('Language', 1);
-		debug($country);
-		$this->em->getRepository('Country')->persist($country);
-		debug($country);
-		*/
-		//debug($this->em->find('Country', '0000000005755852000000001ef2b9d1'));
+		$this->serviceName = $this->settings->serviceClass;
+		$this->reflector = new Reflector($this->serviceName);
 	}
 	
-	public function getMainService() {
-		return $this->service;
+	public function getMainServiceName() {
+		return $this->serviceName;
 	}
 
 	public function renderList() {
@@ -43,56 +35,62 @@ class AdminPresenter extends BasePresenter {
 		$form = $this->getComponent('form');
 	}
 	
-	public function renderEdit($id = 0) {
+	public function actionEdit($id = 0) {
 		$form = $this->getComponent('form');
-		$row = $this->service->get($id);
+		$service = $this->serviceName;
+		$service = $service::get($id);
 
-		if (!$row) {
-			throw new NA\BadRequestException('Record not found');
-		}
+		//TODO: naslo zaznam? toto treba osetrit lebo servica nehlasi nenajdeny zaznam
+		// ale hlasi @david
+		// if (!$service) {
+		// 	throw new NA\BadRequestException('Record not found');
+		// }
+
+		$service->setCurrentMask($this->reflector->getMask());
 		if (!$form->isSubmitted()) {
-			$form->setDefaults($row);
+			$data = $service->getDataByMask();
+			$this->reflector->getContainer($form)
+				->setDefaults($data);
 		}
 
-		$this->template->record = $row;
-		$this->template->entity = $row->{$this->service->getMainEntity()};
+		$this->template->record = $service;
 		$this->template->form = $form;
 	}
 	
 	protected function createComponentForm($name) {
 		$form = new \Tra\Forms\Form($this, $name);
-
-		$this->service->prepareForm($form);
-		
+		$this->reflector->extend($form);
 		$form->ajax(false);
 		$form->addSubmit('save', 'Save');
 		$form->onSuccess[] = callback($this, 'onSave');
-		
 		return $form;
 	}
 	
 	public function onSave(\Tra\Forms\Form $form) {
-		// TODO: dorobit na nove service
-		$id = (int)$this->getParam()->id;
-		$values = $form->getPrepareValues($this->service);		
-		
-		if ($id > 0) {
+		$id = $this->getParam('id');
+		$values = $this->reflector->getPrepareValues($form);
+
+
+		$service = $this->serviceName;
+		$service = $service::get($id);
+
+		if ($id) {
 			// EDIT
-			$this->service->update($values);
+			$service->updateFormData($values);
 		} else {
 			// ADD
-			$this->service->create($values);
-		}	
+			$service->create($values);
+		}
     }
 	
-	
 	protected function createComponentGrid($name) {
+		$mainEntityName = $this->reflector->getMainEntityName();
 		$form = $this->getComponent('gridForm');
 		$grid = new \EditableDataGrid\DataGrid;
 		//$grid->itemsPerPage = 3;
-		
+
 		$grid->setEditForm($form);
-		$grid->setContainer($this->service->getMainEntityName());	
+		$grid->setContainer($this->reflector->getContainerName());	
 		$grid->onDataReceived[] = array($form, 'onDataRecieved');
 		$grid->onInvalidDataRecieved[] = array($form, 'onInvalidDataRecieved');
 		
@@ -103,12 +101,12 @@ class AdminPresenter extends BasePresenter {
 			if (!isset($column->draw) || (isset($column->draw) && $column->draw == true)) {
 				$type = isset($column->type) ? $column->type : 'text';				
 				$property = substr($column->mapper, strrpos($column->mapper, '.')+1);
-				
-				if ($controlAnnotation = $this->service->getReflector()->getAnnotation('Rental', $property, 'ORM\Column')) {
+
+				if ($controlAnnotation = $this->reflector->getAnnotation($mainEntityName, $property, Reflector::COLUMN)) {
 					$type = $controlAnnotation->type;
 				}
 
-				if ($controlAnnotation = $this->service->getReflector()->getAnnotation('Rental', $property, 'UIControl')) {
+				if ($controlAnnotation = $this->reflector->getAnnotation($mainEntityName, $property, Reflector::UI_CONTROL)) {
 					$type = $controlAnnotation->type;
 				}
 				
@@ -134,7 +132,11 @@ class AdminPresenter extends BasePresenter {
 			}
 		}
 
-		$dataSource = new \DataGrid\DataSources\Doctrine\LalaQueryBuilder($this->service->getDataSource());
+		$dataSource = new \DataGrid\DataSources\Doctrine\LalaQueryBuilder(
+			\Service\CurrencyList::getDataSource() //TODO: zdynamizivat to corrency
+		);
+debug($mapper);
+
 		$dataSource->setMapping($mapper);
 		$grid->setDataSource($dataSource);	
 		$grid->addActionColumn('Actions');
@@ -146,9 +148,18 @@ class AdminPresenter extends BasePresenter {
 	}
 	
 	public function createComponentGridForm($name) {
-		$grid = new \Tra\Forms\Grid($this, $name);
-		return $grid;
+		$form = new \Tra\Forms\Form($this, $name);
+		$this->reflector->extend($form);
+
+		$form->ajax(false);
+		$form->addSubmit('save', 'Save');
+		$form->onSuccess[] = callback($this, 'onGridSave');
+		return $form;
 	}
+
+	public function onGridSave($form) {
+		debug($form->getValues());
+    }
 	
 	public function pattern($value, $row, $params = null) {
 		//debug("odpoved=" . $this->user->isAllowed($row->getEntity(), 'show'));
@@ -161,5 +172,5 @@ class AdminPresenter extends BasePresenter {
 	public function nieco($value, $row, $params = null) {
 		//debug($value, $row, $params);
 		return $value;
-	}	
+	}
 }

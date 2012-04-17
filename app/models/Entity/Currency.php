@@ -14,30 +14,35 @@ class Currency extends \Entity\BaseEntity {
 	/**
 	 * @var Collection
 	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
+     * @UIControl(type="text")
 	 */
 	protected $name;
 
 	/**
 	 * @var string
 	 * @ORM\Column(type="string")
+     * @UIControl(type="text")
 	 */
 	protected $iso;
 
 	/**
 	 * @var decimal
 	 * @ORM\Column(type="decimal", nullable=true)
+     * @UIControl(type="text")
 	 */
 	protected $exchangeRate;
 
 	/**
 	 * @var integer
 	 * @ORM\Column(type="integer", nullable=true)
+     * @UIControl(type="text")
 	 */
 	protected $decimalPlaces;
 
 	/**
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
+     * @UIControl(type="text")
 	 */
 	protected $rounding;
 

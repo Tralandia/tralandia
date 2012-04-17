@@ -37,7 +37,7 @@ class PresenterSettings extends \Nette\Object {
 	}
 	
 	public function getServiceClass() {
-		return '\\Tra\\Services\\' . $this->getName();
+		return '\\Service\\' . $this->getName();
 	}
 	
 	public function getParams() {
