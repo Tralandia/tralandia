@@ -29,12 +29,14 @@ class User extends \Entity\BaseEntityDetails {
 	/**
 	 * @var Collection
 	 * @ORM\ManyToMany(targetEntity="Role", mappedBy="users", cascade={"persist"})
+	 * @singularName role
 	 */
 	protected $roles;
 
 	/**
 	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="Entity\Contact\Contact", mappedBy="user", cascade={"persist"})
+	 * @singularName contact
 	 */
 	protected $contacts;
 
@@ -47,12 +49,14 @@ class User extends \Entity\BaseEntityDetails {
 	/**
 	 * @var Collection
 	 * @ORM\ManyToMany(targetEntity="Entity\Location\Location", mappedBy="users")
+	 * @singularName location
 	 */
 	protected $locations;
 
 	/**
 	 * @var Collection
 	 * @ORM\ManyToMany(targetEntity="Entity\Rental\Type", mappedBy="users")
+	 * @singularName rentalType
 	 */
 	protected $rentalTypes;
 
@@ -125,18 +129,21 @@ class User extends \Entity\BaseEntityDetails {
 	/**
 	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="Combination", mappedBy="user", cascade={"persist", "remove"})
+	 * @singularName combination
 	 */
 	protected $combinations;
 
 	/**
 	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="Entity\Rental\Rental", mappedBy="user", cascade={"persist"})
+	 * @singularName rental
 	 */
 	protected $rentals;
 
 	/**
 	 * @var Collection
 	 * @ORM\ManyToMany(targetEntity="Entity\Autopilot\Task", inversedBy="usersExcluded")
+	 * @singularName task
 	 */
 	protected $tasks;
 

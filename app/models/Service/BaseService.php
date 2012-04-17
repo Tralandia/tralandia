@@ -10,6 +10,8 @@ class BaseService extends \Extras\Models\Service {
 			return $variable;
 		} else if($variable instanceof $entityType) {
 			return $type::get($variable);
+		} else if(is_integer($variable) && $variable > 0) {
+			return $type::get($variable);
 		} else {
 			throw new \Nette\InvalidArgumentException('$variable argument does not match with the expected value');
 		}
