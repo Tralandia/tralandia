@@ -24,7 +24,21 @@ class Group extends \Entity\BaseEntity {
 	 */
 	protected $name;
 
+	/**
+	 * @var Collection
+	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
+	 */
+	protected $namePlural;
+
+	/**
+	 * @var slug
+	 * @ORM\Column(type="slug")
+	 */
+	protected $slug;
 	
+
+
+
 
 
 
@@ -85,5 +99,39 @@ class Group extends \Entity\BaseEntity {
 	 */
 	public function getName() {
 		return $this->name;
+	}
+		
+	/**
+	 * @param \Entity\Dictionary\Phrase
+	 * @return \Entity\Rental\Amenity\Group
+	 */
+	public function setNamePlural(\Entity\Dictionary\Phrase $namePlural) {
+		$this->namePlural = $namePlural;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Dictionary\Phrase|NULL
+	 */
+	public function getNamePlural() {
+		return $this->namePlural;
+	}
+		
+	/**
+	 * @param slug
+	 * @return \Entity\Rental\Amenity\Group
+	 */
+	public function setSlug($slug) {
+		$this->slug = $slug;
+
+		return $this;
+	}
+		
+	/**
+	 * @return slug|NULL
+	 */
+	public function getSlug() {
+		return $this->slug;
 	}
 }

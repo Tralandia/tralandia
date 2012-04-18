@@ -204,6 +204,9 @@ class Rental extends \Entity\BaseEntity {
 
 
 
+
+
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		

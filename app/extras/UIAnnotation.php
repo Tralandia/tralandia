@@ -14,3 +14,8 @@ final class Primary extends Annotation {
 	public $key = 'id';
 	public $value;
 }
+
+/** @Annotation */
+final class SingularName extends Annotation {
+	public $name;
+}
