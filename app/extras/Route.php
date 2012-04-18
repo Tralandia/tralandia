@@ -39,10 +39,10 @@ class Route implements Nette\Application\IRouter {
 	);
 
 	
-	public function __construct(Caching\IStorage $cacheStorage, array $metadata) {
+	public function __construct(Caching\Cache $cache, array $metadata) {
 		$this->metadata = $metadata;
 
-		$this->cache = new Caching\Cache($cacheStorage, 'Router');
+		$this->cache = $cache;
 		$this->loadCache();
 
 	}
@@ -136,7 +136,7 @@ class Route implements Nette\Application\IRouter {
 		}
 
 		$segmentList = $this->getPathSegmentList($pathSegments, $params);
-		$pathSegmentTypesFlip = array_flip($this->pathSegmentTypes);
+		$pathSegmentTypesFlip = array_flip(static::$pathSegmentTypes);
 		foreach ($segmentList as $key => $value) {
 			$params->{$pathSegmentTypesFlip[$value->type]} = $value->pathSegment;
 		}

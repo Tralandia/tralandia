@@ -20,6 +20,17 @@ class RouterCaching extends \Nette\Object {
 		$this->pathSegmentTypes = \Extras\Route::getPathSegmentTypes();
 	}
 
+	public function generateDomain() {
+		$data = qNew('select * from domain');
+		$cache = array();
+		while ($l = mysql_fetch_assoc($data)) {
+			$cache[$l['id']] = $l['domain'];
+		}
+		$this->cache->save('domain', $cache);
+	}
+
+
+	// segments
 	public function generateSegments() {
 		$this->generateLocation();
 		$this->generateRentalType();
@@ -28,48 +39,48 @@ class RouterCaching extends \Nette\Object {
 	}
 
 	public function generatePage() {
-		$locationsData = qNew('select * from routing_pathsegment where type = '.$this->pathSegmentTypes['page']);
-		$locationCache = array();
-		while ($l = mysql_fetch_assoc($locationsData)) {
-			$locationCache[$l['language_id']][$l['entityId']] = $l['pathSegment'];
+		$data = qNew('select * from routing_pathsegment where type = '.$this->pathSegmentTypes['page']);
+		$cache = array();
+		while ($l = mysql_fetch_assoc($data)) {
+			$cache[$l['language_id']][$l['entityId']] = $l['pathSegment'];
 		}
-		$this->cache->save('page_id2pathSegment', $locationCache);
+		$this->cache->save('page_id2pathSegment', $cache);
 	}
 
 	public function generateAttractionType() {
-		$locationsData = qNew('select * from routing_pathsegment where type = '.$this->pathSegmentTypes['attractionType']);
-		$locationCache = array();
-		while ($l = mysql_fetch_assoc($locationsData)) {
-			$locationCache[$l['language_id']][$l['entityId']] = $l['pathSegment'];
+		$data = qNew('select * from routing_pathsegment where type = '.$this->pathSegmentTypes['attractionType']);
+		$cache = array();
+		while ($l = mysql_fetch_assoc($data)) {
+			$cache[$l['language_id']][$l['entityId']] = $l['pathSegment'];
 		}
-		$this->cache->save('attractionType_id2pathSegment', $locationCache);
+		$this->cache->save('attractionType_id2pathSegment', $cache);
 	}
 
 	public function generateLocation() {
-		$locationsData = qNew('select * from routing_pathsegment where type = '.$this->pathSegmentTypes['location']);
-		$locationCache = array();
-		while ($l = mysql_fetch_assoc($locationsData)) {
-			$locationCache[$l['entityId']] = $l['pathSegment'];
+		$data = qNew('select * from routing_pathsegment where type = '.$this->pathSegmentTypes['location']);
+		$cache = array();
+		while ($l = mysql_fetch_assoc($data)) {
+			$cache[$l['entityId']] = $l['pathSegment'];
 		}
-		$this->cache->save('location_id2pathSegment', $locationCache);
+		$this->cache->save('location_id2pathSegment', $cache);
 	}
 
 	public function generateRentalType() {
-		$locationsData = qNew('select * from routing_pathsegment where type = '.$this->pathSegmentTypes['rentalType']);
-		$locationCache = array();
-		while ($l = mysql_fetch_assoc($locationsData)) {
-			$locationCache[$l['language_id']][$l['entityId']] = $l['pathSegment'];
+		$data = qNew('select * from routing_pathsegment where type = '.$this->pathSegmentTypes['rentalType']);
+		$cache = array();
+		while ($l = mysql_fetch_assoc($data)) {
+			$cache[$l['language_id']][$l['entityId']] = $l['pathSegment'];
 		}
-		$this->cache->save('rentalType_id2pathSegment', $locationCache);
+		$this->cache->save('rentalType_id2pathSegment', $cache);
 	}
 
 	public function generateTag() {
-		$locationsData = qNew('select * from routing_pathsegment where type = '.$this->pathSegmentTypes['tag']);
-		$locationCache = array();
-		while ($l = mysql_fetch_assoc($locationsData)) {
-			$locationCache[$l['language_id']][$l['entityId']] = $l['pathSegment'];
+		$data = qNew('select * from routing_pathsegment where type = '.$this->pathSegmentTypes['tag']);
+		$cache = array();
+		while ($l = mysql_fetch_assoc($data)) {
+			$cache[$l['language_id']][$l['entityId']] = $l['pathSegment'];
 		}
-		$this->cache->save('tag_id2pathSegment', $locationCache);
+		$this->cache->save('tag_id2pathSegment', $cache);
 	}
 
 
