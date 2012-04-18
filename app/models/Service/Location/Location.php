@@ -40,5 +40,13 @@ class Location extends \Extras\Models\ServiceNested {
 
 	}
 
+	public function getByLike($param, $value) {
+		debug($this);
+		$qb = $em->createQueryBuilder()
+			->select('l')
+			->from('\Entity\Location\Location', 'l')
+			->where($param.' LIKE "%?%"', $value);
+	}
+
 	
 }
