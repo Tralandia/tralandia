@@ -93,7 +93,10 @@ class Reflector extends Nette\Object {
 		$classReflection = ClassType::from($classReflection->getConstant('MAIN_ENTITY_NAME'));
 
 		foreach ($this->getFields($this->service) as $property) {
-			$mask[] = $this->getPropertyMask($property, $classReflection);
+			if ($pmask = $this->getPropertyMask($property, $classReflection)) {
+				$mask[] = $pmask;
+			}
+			
 			//debug($options);
 		}
 
@@ -105,6 +108,9 @@ class Reflector extends Nette\Object {
 	 * @return array
 	 */
 	public function getPropertyMask(Property $property, ClassType $entity) {
+		if (!$entity->hasMethod('get' .  ucfirst($property->getName()))) {
+			return false;
+		}
 		$options = ArrayHash::from(array(
 			'name' => $property->getName(),
 			'defaultValue' => null,

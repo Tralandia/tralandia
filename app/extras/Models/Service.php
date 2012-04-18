@@ -338,7 +338,7 @@ abstract class Service extends Nette\Object implements IService {
 	 */
 	public function getDataByMask() {
 		$mask = $this->getCurrentMask();
-
+debug($mask);
 		$data = array();
 		foreach ($mask as $key => $value) {
 //debug($value);
