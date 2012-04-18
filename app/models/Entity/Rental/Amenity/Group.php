@@ -25,12 +25,6 @@ class Group extends \Entity\BaseEntity {
 	protected $name;
 
 	/**
-	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
-	 */
-	protected $namePlural;
-
-	/**
 	 * @var slug
 	 * @ORM\Column(type="slug")
 	 */

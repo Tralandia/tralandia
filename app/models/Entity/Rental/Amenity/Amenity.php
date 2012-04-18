@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="rental_amenity_amenity")
  */
-class Amenity extends \Entity\BaseEntity {
+class Amenity extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection

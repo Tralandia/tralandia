@@ -89,6 +89,13 @@ class BaseImport {
 			),
 			'subsections' => array(),
 		),
+		'rentals' => array(
+			'entities' => array(
+				'\Rental\Type' => array(),
+				'\Rental\Rental' => array(),
+			),
+			'subsections' => array(),
+		),
 	);
 
 	public $savedVariables = array();
@@ -201,8 +208,13 @@ class BaseImport {
 
 	protected function createNewPhrase(\Service\Dictionary\Type $type, $oldPhraseId, $oldLocativePhraseId = NULL) {
 		$oldPhraseData = qf('select * from dictionary where id = '.$oldPhraseId);
-		if (!$oldPhraseData) return FALSE;
-
+		if (!$oldPhraseData) {
+			debug('Nenasiel som staru Phrase podla starej ID '.$oldPhraseId);
+			$oldPhraseData = array(
+				'ready' => 1,
+			);
+			//throw new \Nette\UnexpectedValueException('Nenasiel som staru Phrase podla starej ID '.$oldPhraseId);
+		}
 		$phrase = \Service\Dictionary\Phrase::get();
 		$phrase->ready = (bool)$oldPhraseData['ready'];
 		$phrase->type = $type;
@@ -252,7 +264,7 @@ class BaseImport {
 
 		$dictionaryType = D\Type::getByEntityNameAndEntityAttribute($entityName, $entityAttribute);
 		if ($dictionaryType) {
-			debug('iba vraciam premennu '.$dictionaryType->entityName.'->'.$dictionaryType->entityAttribute);
+			//debug('iba vraciam premennu '.$dictionaryType->entityName.'->'.$dictionaryType->entityAttribute);
 			return $dictionaryType;
 		} else {
 			eval('$level = \Entity\Dictionary\Type::TRANSLATION_LEVEL_'.strtoupper($level).';');

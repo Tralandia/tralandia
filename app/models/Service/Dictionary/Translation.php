@@ -21,7 +21,7 @@ class Translation extends \Service\BaseService {
 	}
 
 	public function setTranslation($translation) {
-		$this->getMainEntity()->variations['multiTranslations']['translation'] = $translation;
+		$this->getMainEntity()->variations['translation'] = $translation;
 		$this->getMainEntity()->translation = $translation;
 	}
 
@@ -36,11 +36,7 @@ class Translation extends \Service\BaseService {
 		$type = $this->phrase->type;
 		if($type instanceof Entity\BaseEntity) {
 			if($type->webalizedRequired === TRUE) {
-				$multiTranslations = $this->variations['multiTranslations'];
-				$webalized = array();
-				foreach ($multiTranslations as $key => $value) {
-					$webalized[$key] = $this->webalize($value);
-				}
+				$webalized = $this->webalize($this->getMainEntity()->translation);
 				$this->variations = array_merge($this->variations, array('webalized' => $webalized));
 			}
 		} else {
@@ -51,5 +47,5 @@ class Translation extends \Service\BaseService {
 	protected function webalize($s) {
 		return Strings::webalize($s);
 	}
-
+	
 }
