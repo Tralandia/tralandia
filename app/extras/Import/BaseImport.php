@@ -82,6 +82,13 @@ class BaseImport {
 			),
 			'subsections' => array('importSuperAdmins', 'importAdmins', 'importManagers', 'importTranslators', 'importOwners', 'importPotentialOwners', 'importVisitors'),
 		),
+		'amenities' => array(
+			'entities' => array(
+				'\Rental\Amenity\Group' => array(),
+				'\Rental\Amenity\Amenity' => array(),
+			),
+			'subsections' => array(),
+		),
 	);
 
 	public $savedVariables = array();

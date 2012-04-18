@@ -230,6 +230,8 @@ class ImportUsers extends BaseImport {
 
 	private function importPotentialOwners() {
 
+		return true; //@todo - toto treba opravit este nefunguje
+
 		$role = \Service\User\Role::getBySlug('potentialowner');
 		$locationTypeCountry = \Service\Location\Type::getBySlug('country');
 
@@ -317,6 +319,12 @@ class ImportUsers extends BaseImport {
 
 			$user->save();
 		}
+	}
+
+	private function importVisitors() {
+
+		return true; //@todo - toto treba opravit este nefunguje
+
 	}
 
 	private function import0000() {

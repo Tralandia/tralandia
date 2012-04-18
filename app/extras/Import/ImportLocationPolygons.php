@@ -12,9 +12,11 @@ use Nette\Application as NA,
 	Service as S,
 	Service\Log\Change as SLog;
 
-class ImportLocationPolygons extends BaseImport {
+class ImportLocationsPolygons extends BaseImport {
 
 	public function doImport($subsection = NULL) {
+		$this->savedVariables['importedSections']['locationsPolygons'] = 1;
+
 		// $r = q('select * from languages order by id');
 		// while($x = mysql_fetch_array($r)) {
 		// 	$s = D\Language::get();
