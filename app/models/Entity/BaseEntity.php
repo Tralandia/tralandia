@@ -3,6 +3,7 @@
 namespace Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use	Extras\UI as UI;
 
 /**
  * @ORM\MappedSuperclass()
@@ -15,6 +16,7 @@ class BaseEntity extends \Extras\Models\Entity {
 	 * @ORM\Id
 	 * @ORM\GeneratedValue
 	 * @ORM\Column(type="integer")
+	 * @UI\Control(type="hidden")
 	 */
 	protected $id;
 

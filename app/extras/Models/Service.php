@@ -29,6 +29,11 @@ abstract class Service extends Nette\Object implements IService {
 	protected $reflector = null;
 
 	/**
+	 * @var array
+	 */
+	protected $currentMask = null;
+
+	/**
 	 * @var EntityManager
 	 */
 	private static $em = null;
@@ -361,6 +366,67 @@ abstract class Service extends Nette\Object implements IService {
 		} catch (\PDOException $e) {
 			throw new ServiceException($e->getMessage());
 		}
+	}
+
+	public function setCurrentMask(array $mask) {
+		$this->currentMask = $mask;
+	}
+
+	public function getCurrentMask() {
+		return $this->currentMask;
+	}
+
+	/**
+	 * Ziskanie datasource
+	 * @return Query
+	 */
+	public function getDataByMask() {
+		$mask = $this->getCurrentMask();
+
+		$data = array();
+		foreach ($mask as $key => $value) {
+			$name = $value->name;
+			if($value->type) {
+				$targetEntity = reset($value->targetEntities);
+				if($value->type == Reflector::ONE_TO_ONE) {
+					$property = $targetEntity->value;
+					$data[$name] = $this->{$name}->{$property};
+				} else {
+					$data[$name] = $this->{$name};
+					// @todo method or operation is not implemented
+					//throw new \Nette\NotImplementedException('Requested method or operation is not implemented');
+				}
+
+			} else {
+				$data[$name] = $this->{$name};
+			}
+		}
+		
+		return $data;
+	}
+
+	public function updateFormData($formValues) {
+		$mask = $this->getCurrentMask();
+
+		foreach ($mask as $key => $value) {
+			$name = $value->name;
+			if(array_key_exists($name, $formValues)) {
+				$formValue = $formValues[$name];
+				if($value->type) {
+					$targetEntity = reset($value->targetEntities);
+					if($value->type == Reflector::ONE_TO_ONE) {
+						$property = $targetEntity->value;
+						$this->{$name}->{$property} = $formValue;
+					} else {
+						// @todo method or operation is not implemented
+						throw new \Nette\NotImplementedException('Requested method or operation is not implemented');
+					}
+				} else {
+					$this->{$name} = $formValue;
+				}
+			}
+		}
+		$this->save();
 	}
 
 	/**

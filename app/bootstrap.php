@@ -55,7 +55,6 @@ $serivceContainer->createService();
 $serivceContainer->createList();
 
 
-
 // Setup router // TODO: presunut do config.neon
 $container->application->onStartup[] = function() use ($container) {
 	$router = $container->application->getRouter();

@@ -1,0 +1,38 @@
+common:
+	title: Currency Main Title
+	h1: Currency Main H1
+
+	grid:
+		columns: 
+			id:
+				mapper: e.id
+				draw: false
+			country:
+				label: Country
+				mapper: e.country.iso
+				editable: true
+			nameUrl:
+				label: URL
+				mapper: e.nameUrl
+				editable: true
+			user:
+				label: User
+				mapper: e.user.login
+				editable: true
+			one:
+				label: One
+				mapper: e.id
+				callback: {class: %this%, method: pattern, params: {pattern="%country%-%user%"}}
+			two:
+				label: TWO
+				mapper: e.id
+				callback: {class: %this%, method: nieco}
+			created:
+				label: Dátum vytvorenia
+				mapper: e.created
+
+
+base < common:
+	title: Currency Base
+
+			

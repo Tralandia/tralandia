@@ -18,6 +18,8 @@ common:
 
 		editor: 'txmt://open/?url=file://%file&line=%line'
 
+		settingsDir: %appDir%/configs
+
 	services:
 		nette.presenterFactory:
 			class: Extras\DynamicPresenterFactory
