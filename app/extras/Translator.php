@@ -25,7 +25,7 @@ class Translator implements \Nette\Localization\ITranslator {
 	
 	protected function getTranslation($phrase) {
 
-		if($phrase instanceof D\Phrase) {
+		if($phrase instanceof D\Phrase || $phrase instanceof \Entity\Dictionary\Phrase) {
 			$translationKey = $phrase->id;
 		} else {
 			$translationKey = $phrase;

@@ -15,23 +15,110 @@ use Nette\Application as NA,
 class ImportLocationsPolygons extends BaseImport {
 
 	public function doImport($subsection = NULL) {
-		$this->savedVariables['importedSections']['locationsPolygons'] = 1;
 
-		// $r = q('select * from languages order by id');
-		// while($x = mysql_fetch_array($r)) {
-		// 	$s = D\Language::get();
-		// 	$s->oldId = $x['id'];
-		// 	$s->iso = $x['iso'];
-		// 	$s->supported = (bool)$x['translated'];
-		// 	$s->defaultCollation = $x['default_collation'];
-		// 	$s->details = explode2Levels(';', ':', $x['attributes']);
-		// 	$s->save();
+		$data = json_decode(file_get_contents("http://www.tralandia.sk/trax_maps/_api.php"));
+		
+		$countries = array('success'=>array());
+		$areas = array('success'=>array());
 
-		// }
-		// \Extras\Models\Service::flush(FALSE);
+		$location = \Service\Location\Location::get();
+		foreach ($data->countries as $iso => $country) {
 
-		// $this->createPhrasesByOld('\Dictionary\Language', 'name', 'supportedLanguages', 'ACTIVE', 'languages', 'name_dic_id');		
-		// $this->savedVariables['importedSections']['languages'] = 1;
+
+			// Get data about country
+			$countryName = null;
+			$q = q("SELECT c.id, ct.name FROM countries c LEFT JOIN countries_translations ct ON ct.location_id=c.id WHERE c.iso = '".$iso."' AND ct.language_id = 38 LIMIT 1");
+			while($c = mysql_fetch_assoc($q)) $countryName = $c['name'];
+
+			$countryId = null;
+			$q = qNew("SELECT * FROM location_location WHERE slug LIKE '".\Nette\Utils\Strings::webalize($countryName)."' LIMIT 1");
+			while($c = mysql_fetch_assoc($q)) $countryId = $c['id'];
+
+			if ($countryId) {
+				$countries['success'][] = array(
+					'id' => $countryId,
+					'iso' => $iso,
+					'css' => $country->css,
+					'name' => $countryName
+				);
+			} else {
+				$countries['notFound'][] = array(
+					'iso' => $iso,
+					'css' => $country->css
+				);
+			}
+
+			// Get data about areas
+			foreach ($country->areas as $area) {
+
+				$css = array();
+				foreach ($country->css as $class => $styles) {
+					if ((bool)preg_match("/rid{$area->rid}([^0-9]+|$)/", $class)) {
+						// $newClass = str_replace('rid'.$area->rid, replace, subject);
+						$css[$class] = $styles;
+						unset($country->css->{$class});
+					}
+				}
+
+				if (!$area->name) {
+
+					$areas['nullIdentifier'][] = array(
+						'coords' => $area->coords,
+						'rid' => $area->rid,
+						'country' => $countryName,
+						'css' => $css
+					);
+
+				} else {
+
+					$q = qNew("SELECT id, slug FROM location_location WHERE slug LIKE '".\Nette\Utils\Strings::webalize($area->name)."'");
+					$i = 0;
+
+					while($location = mysql_fetch_assoc($q)) {
+						$areas['success'][] = array(
+							'id' => $location['id'],
+							'slug' => $location['slug'],
+							'name' => $area->name,
+							'coords' => $area->coords,
+							'rid' => $area->rid,
+							'country' => $countryName,
+							'css' => $css
+						);
+						$i++;
+					}
+
+					if (!$i) {
+
+						$areas['notFound'][] = array(
+							'name' => $area->name,
+							'coords' => $area->coords,
+							'rid' => $area->rid,
+							'country' => $countryName,
+							'css' => $css
+						);
+
+					}
+
+				}
+
+			}
+
+		}
+
+		// merge all success data
+		$success = array(
+			'areas' => $areas['success'],
+			'countries' => $countries['success']
+		);
+
+		foreach ($success as $key => $data) {
+			foreach ($data as $location) {
+				$region = \Service\Location\Location::get($location['id']);
+				$region->clickMapData = $location;
+				$region->save();
+			}
+		}
+
 	}
 
 }

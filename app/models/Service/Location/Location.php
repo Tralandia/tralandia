@@ -39,6 +39,5 @@ class Location extends \Extras\Models\ServiceNested {
 		return $locationList->count() ? FALSE : TRUE;
 
 	}
-
 	
 }
