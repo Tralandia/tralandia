@@ -304,6 +304,7 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 
 
 
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -545,6 +546,32 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 	 */
 	public function getDefaultZoom() {
 		return $this->defaultZoom;
+	}
+		
+	/**
+	 * @param json
+	 * @return \Entity\Location\Location
+	 */
+	public function setClickMapData($clickMapData) {
+		$this->clickMapData = $clickMapData;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Location\Location
+	 */
+	public function unsetClickMapData() {
+		$this->clickMapData = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return json|NULL
+	 */
+	public function getClickMapData() {
+		return $this->clickMapData;
 	}
 		
 	/**

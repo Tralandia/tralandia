@@ -118,6 +118,7 @@ class TaskArchived extends \Entity\BaseEntityDetails {
 
 
 
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
