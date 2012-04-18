@@ -5,6 +5,7 @@ namespace Extras\Models;
 use Nette, 
 	Nette\ObjectMixin, 
 	Nette\MemberAccessException,
+	Tra\Utils\Strings,
 	Doctrine\ORM\EntityManager;
 
 /**
@@ -141,7 +142,10 @@ abstract class Service extends Nette\Object implements IService {
 	 * @param mixed
 	 */
 	public function __set($name, $value) {
-		if ($value instanceof Service) {
+		$method = 'set'.Strings::firstUpper($name);
+		if(method_exists($this, $method)){
+			$this->{$method}($value);
+		}else if ($value instanceof Service) {
 			$this->mainEntity->{$name} = $value->getMainEntity();
 		}else {
 			$this->mainEntity->$name = $value;
@@ -155,13 +159,31 @@ abstract class Service extends Nette\Object implements IService {
 	 * @return mixed
 	 */
 	public function &__get($name) {
-		if ($this->mainEntity instanceof Entity) {
+		$method = 'get'.Strings::firstUpper($name);
+		if(method_exists($this, $method)){
+			$return = $this->{$method}();
+			return $return;
+		}else if ($this->mainEntity instanceof Entity) {
 			try {
 				return ObjectMixin::get($this->mainEntity, $name);
 			} catch (MemberAccessException $e) {}
 		}
 
 		return ObjectMixin::get($this, $name);
+	}
+
+
+	# @todo @brano je toto spravne ?
+	# toto iste je aj v Entity.php
+	public function __isset($name) {
+		// toto mi nefungovalo spravne
+		// $isset = ObjectMixin::has($this, $name);
+		// if(!$isset) {
+		// 	$isset = isset($this->getMainEntity()->{$name});
+		// }
+
+		// toto uz ide OK
+		return $this->{$name} !== NULL;
 	}
 
 	/**
@@ -186,7 +208,42 @@ abstract class Service extends Nette\Object implements IService {
 				}
 			}
 		} catch (MemberAccessException $e) {}
+		
+		return ObjectMixin::call($this, $name, $arguments);
 	}
+
+
+	public static function __callStatic($name, $arguments) {
+		list($nameTemp, $name1, $name2) = Strings::match($name, '~^getBy([A-Za-z]+)And([A-Za-z]+)$~');
+		if($nameTemp && $name1 && $name2) {
+			$name1 = Strings::firstLower($name1);
+			$name2 = Strings::firstLower($name2);
+			$params = array(
+				$name1 => array_shift($arguments),
+				$name2 => array_shift($arguments),
+			);
+			return static::getBy($params);
+		} else if(Strings::startsWith($name, 'getBy')) {
+			$name = str_replace('getBy', '', $name);
+			$name = Strings::firstLower($name);
+			return static::getBy(array($name => $arguments));
+		} else {
+			return parent::__callStatic($name, $arguments);
+		}
+	}
+
+
+	public static function getBy($criteria) {
+		foreach ($criteria as $key => $value) {
+			if($value instanceof Service || $value instanceof Entity) {
+				$criteria[$key] = $value->id;
+			}
+		}
+		$repo = static::getEm()->getRepository(static::getMainEntityName());
+		$result = $repo->findOneBy($criteria);
+		return $result ? static::get($result) : NULL;
+	}
+
 
 	/**
 	 * Ziskanie hlavnej entity

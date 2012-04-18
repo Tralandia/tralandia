@@ -4,11 +4,12 @@ namespace Entity\Dictionary;
 
 use Entity\Dictionary;
 use Doctrine\ORM\Mapping as ORM;
+use Extras\UI as UI;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="dictionary_phrase")
- * @Primary(key="id", value="ready")
+ * @UI\Primary(key="id", value="ready")
  */
 class Phrase extends \Entity\BaseEntityDetails {
 

@@ -53,9 +53,9 @@ class DavidPresenter extends BasePresenter {
 		);
 		$this->template->data = $data;
 
-		// $l = \Service\CurrencyList::getByExchangeRate('1');
-		// debug($l);
-		// debug($l->getDataSource());
+		$l = \Service\CurrencyList::getByExchangeRate('1');
+		debug($l);
+		debug($l->getDataSource()->getQuery()->getResult());
 		
 	}
 
