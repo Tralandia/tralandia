@@ -13,8 +13,7 @@ class Route implements Nette\Application\IRouter {
 	protected $db;
 	protected $metadata;
 	protected $cache;
-	protected $cachedUrls;
-	protected $cachedDomains;
+	protected static $cached;
 	protected $queryParams = array(
 			'lfPeople' => array(),
 			'lfFood' => array(),
@@ -35,7 +34,8 @@ class Route implements Nette\Application\IRouter {
 		'language' => null,
 		'location' => null,
 		'tag' => null,
-		'type' => null,
+		'attractionType' => null,
+		'rentalType' => null,
 	);
 
 	
@@ -44,15 +44,10 @@ class Route implements Nette\Application\IRouter {
 
 		$this->cache = $cache;
 		$this->loadCache();
-
 	}
 
 
 	public function match(Nette\Http\IRequest $httpRequest) {
-		if(!$this->checkDomain($httpRequest->url->getHost())) {
-			return NULL;
-		}
-
 		$params = $this->getParamsByHttpRequest($httpRequest);
 
 		$presenter = $params['presenter'];
@@ -70,8 +65,8 @@ class Route implements Nette\Application\IRouter {
 	public function constructUrl(Nette\Application\Request $appRequest, Nette\Http\Url $refUrl) {
 		debug('$appRequest', $appRequest);
 		debug('$refUrl', $refUrl);
-		$url = $this->getUrlByAppRequest($appRequest);
-		return 'http://www.tra.sk/mala-fatra/chalupy/prazdninovy-pobyt?lfPeople=6&lfFood=6';
+		$url = $this->getUrlByAppRequest($appRequest, $refUrl);
+		return 'http://www.tra.sk/nitra-okres/chaty/prazdninovy-pobyt?lfPeople=6&lfFood=6';
 	}
 
 	public function getParamsByHttpRequest($httpRequest) {
@@ -81,6 +76,12 @@ class Route implements Nette\Application\IRouter {
 		$url = $httpRequest->url;
 		debug('$httpRequest', $httpRequest);
 		list($languageIso, $domainName, $countryIso) = explode('.', $url->getHost(), 3);
+
+		if($domainName !== 'tra' && !$this->checkDomain($url->getHost())) {
+			$countryIso = $this->getMetadata('country');
+		}
+
+
 		$pathSegments = array_filter(explode('/', $url->getPath()));
 
 
@@ -138,7 +139,12 @@ class Route implements Nette\Application\IRouter {
 		$segmentList = $this->getPathSegmentList($pathSegments, $params);
 		$pathSegmentTypesFlip = array_flip(static::$pathSegmentTypes);
 		foreach ($segmentList as $key => $value) {
-			$params->{$pathSegmentTypesFlip[$value->type]} = $value->pathSegment;
+			$params->{$pathSegmentTypesFlip[$value->type]} = $value->entityId;
+			if($value->type == static::$pathSegmentTypes['attractionType']) {
+				$params->presenter = 'Attraction';
+			} else if($value->type == static::$pathSegmentTypes['rentalType']) {
+				$params->presenter = 'Rental';
+			}
 		}
 		if($segmentList->count() != count($pathSegments)) {
 			// @todo pocet najdenych pathsegmentov je mensi
@@ -157,7 +163,6 @@ class Route implements Nette\Application\IRouter {
 			} 
 
 			if(isset($params->$key)) {
-
 				$return['params'][$key] = $params->$key;
 			}
 		}
@@ -168,6 +173,7 @@ class Route implements Nette\Application\IRouter {
 	}
 
 	public function getPathSegmentList($pathSegments, $params) {
+
 		$criteria = array();
 		if($pathSegments) $criteria['pathSegment'] = $pathSegments;
 		$criteria['country'] = array($params->country, 0);
@@ -178,7 +184,7 @@ class Route implements Nette\Application\IRouter {
 		return $pathSegmentList;
 	}
 
-	public function getUrlByAppRequest($appRequest) {
+	public function getUrlByAppRequest($appRequest, $refUrl) {
 		$params = $appRequest->getParameters();
 		$query = array();
 		foreach ($this->queryParams as $key => $value) {
@@ -191,6 +197,22 @@ class Route implements Nette\Application\IRouter {
 		$action = $params['action'];
 		unset($params['action']);
 		debug($params, $query, $presenter, $action);
+
+		list($refLanguageIso, $refDomainName, $refCountryIso) = explode('.', $refUrl->getHost(), 3);
+
+		$country = \Service\Location\Location::get($params['country']);
+		$language = \Service\Dictionary\Language::get($params['language']);
+
+		$segments = array();
+		foreach (static::$pathSegmentTypes as $key => $value) {
+			$methodName = 'get'.Strings::firstUpper($key).'ById';
+			$segments[$value] = $this->$methodName();
+		}
+
+		$url = clone $refUrl;
+		$host = ($language->id == $country->defaultLanguage->id ? 'www' : $language->iso) . '.' . $refDomainName . '.' . $country->iso;
+		$url->setHost($host);
+		debug('url', $url);
 	}
 
 	public function getMetadata($key) {
@@ -205,25 +227,26 @@ class Route implements Nette\Application\IRouter {
 */	}
 
 	public function checkDomain($domain) {
-		if(!is_array($this->cachedDomains)) {
-			$this->generateDomainCache();
+		$exists = false;
+		if(is_array(static::$cached['domain'])) {
+			$domainsFlip = array_flip(static::$cached['domain']);
+			if(array_key_exists($domain, $domainsFlip)) {
+				$exists = true;
+			}
+		} else {
+			$exists = (bool) \Service\Domain::getByDomain($domain);
 		}
-		if(!array_key_exists($domain, $this->cachedDomains)) {
-
-		}
-		return true;
+		return $exists;
 	}
-
 
 	protected function loadCache() {
-		$this->cachedUrls = $this->cache->load('urls');
-		$this->cachedDomains = $this->cache->load('domains');
+		static::$cached = array();
+		static::$cached['domain'] = $this->cache->load('domain');
+		foreach (static::$pathSegmentTypes as $key => $value) {
+			static::$cached[$key] = $this->cache->load($key);
+		}
 	}
 
-	protected function generateDomainCache() {
-		$this->cache->save('domains', array());
-		$this->cachedDomains = $this->cache->load('domains');
-	}
 
 	public static function getPathSegmentTypes () {
 		return static::$pathSegmentTypes;

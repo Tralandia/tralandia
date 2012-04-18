@@ -55,6 +55,7 @@ class DavidPresenter extends BasePresenter {
 
 		$t = new \Extras\Cache\RouterCaching($this->context->routerCache);
 		$t->generateSegments();
+		$t->generateDomain();
 		
 	}
 

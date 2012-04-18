@@ -44,7 +44,7 @@ class RouterCaching extends \Nette\Object {
 		while ($l = mysql_fetch_assoc($data)) {
 			$cache[$l['language_id']][$l['entityId']] = $l['pathSegment'];
 		}
-		$this->cache->save('page_id2pathSegment', $cache);
+		$this->cache->save('page', $cache);
 	}
 
 	public function generateAttractionType() {
@@ -53,7 +53,7 @@ class RouterCaching extends \Nette\Object {
 		while ($l = mysql_fetch_assoc($data)) {
 			$cache[$l['language_id']][$l['entityId']] = $l['pathSegment'];
 		}
-		$this->cache->save('attractionType_id2pathSegment', $cache);
+		$this->cache->save('attractionType', $cache);
 	}
 
 	public function generateLocation() {
@@ -62,7 +62,7 @@ class RouterCaching extends \Nette\Object {
 		while ($l = mysql_fetch_assoc($data)) {
 			$cache[$l['entityId']] = $l['pathSegment'];
 		}
-		$this->cache->save('location_id2pathSegment', $cache);
+		$this->cache->save('location', $cache);
 	}
 
 	public function generateRentalType() {
@@ -71,7 +71,7 @@ class RouterCaching extends \Nette\Object {
 		while ($l = mysql_fetch_assoc($data)) {
 			$cache[$l['language_id']][$l['entityId']] = $l['pathSegment'];
 		}
-		$this->cache->save('rentalType_id2pathSegment', $cache);
+		$this->cache->save('rentalType', $cache);
 	}
 
 	public function generateTag() {
@@ -80,7 +80,7 @@ class RouterCaching extends \Nette\Object {
 		while ($l = mysql_fetch_assoc($data)) {
 			$cache[$l['language_id']][$l['entityId']] = $l['pathSegment'];
 		}
-		$this->cache->save('tag_id2pathSegment', $cache);
+		$this->cache->save('tag', $cache);
 	}
 
 
