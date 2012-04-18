@@ -7,6 +7,7 @@ use Entity\Dictionary;
 use Entity\Location;
 use Entity\Rental;
 use Doctrine\ORM\Mapping as ORM;
+use Extras\UI as UI;
 
 /**
  * @ORM\Entity()
@@ -29,14 +30,14 @@ class User extends \Entity\BaseEntityDetails {
 	/**
 	 * @var Collection
 	 * @ORM\ManyToMany(targetEntity="Role", mappedBy="users", cascade={"persist"})
-	 * @singularName role
+	 * @UI\SingularName(name="role")
 	 */
 	protected $roles;
 
 	/**
 	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="Entity\Contact\Contact", mappedBy="user", cascade={"persist"})
-	 * @singularName contact
+	 * @UI\SingularName(name="contact") 
 	 */
 	protected $contacts;
 
@@ -49,14 +50,14 @@ class User extends \Entity\BaseEntityDetails {
 	/**
 	 * @var Collection
 	 * @ORM\ManyToMany(targetEntity="Entity\Location\Location", mappedBy="users")
-	 * @singularName location
+	 * @UI\SingularName(name="location") 
 	 */
 	protected $locations;
 
 	/**
 	 * @var Collection
 	 * @ORM\ManyToMany(targetEntity="Entity\Rental\Type", mappedBy="users")
-	 * @singularName rentalType
+	 * @UI\SingularName(name="rentalType") 
 	 */
 	protected $rentalTypes;
 
@@ -129,26 +130,27 @@ class User extends \Entity\BaseEntityDetails {
 	/**
 	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="Combination", mappedBy="user", cascade={"persist", "remove"})
-	 * @singularName combination
+	 * @UI\SingularName(name="combination") 
 	 */
 	protected $combinations;
 
 	/**
 	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="Entity\Rental\Rental", mappedBy="user", cascade={"persist"})
-	 * @singularName rental
+	 * @UI\SingularName(name="rental") 
 	 */
 	protected $rentals;
 
 	/**
 	 * @var Collection
 	 * @ORM\ManyToMany(targetEntity="Entity\Autopilot\Task", inversedBy="usersExcluded")
-	 * @singularName task
+	 * @UI\SingularName(name="task") 
 	 */
 	protected $tasks;
 
 
 	
+
 
 
 

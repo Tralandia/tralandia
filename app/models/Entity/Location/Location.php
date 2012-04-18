@@ -93,6 +93,12 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 	protected $defaultZoom;
 
 	/**
+	 * @var json
+	 * @ORM\Column(type="json", nullable=true)
+	 */
+	protected $clickMapData;
+
+	/**
 	 * @var Collection
 	 * @ORM\ManyToMany(targetEntity="Entity\Company\BankAccount", inversedBy="countries")
 	 */
@@ -289,6 +295,7 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 	public function setRootValue($nestedRoot) { $this->nestedRoot = $nestedRoot; }
 
 	public function __toString() { return (string)$this->slug; }
+
 
 
 

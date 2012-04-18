@@ -38,7 +38,7 @@ class User extends \Service\BaseService {
 			$propertyType = $value->getAnnotation('var');
 			$propertyName = $value->name;
 			if ($propertyType == 'Collection' && ($value->hasAnnotation('ORM\ManyToMany') || $value->hasAnnotation('ORM\OneToMany'))) {
-				$singularPropertyName = $value->getAnnotation('singularName');
+				$singularPropertyName = $value->getAnnotation('UI\SingularName');
 				$getMethodName = 'get'.ucfirst($propertyName);
 				$addMethodName = 'add'.ucfirst($singularPropertyName);
 				$removeMethodName = 'remove'.ucfirst($singularPropertyName);
