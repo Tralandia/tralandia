@@ -29,6 +29,8 @@ common:
 
 		environment: Extras\Environment
 
+		routerCache: Nette\Caching\Cache(@cacheStorage, 'Router')
+
 		translator: Extras\Translator(@environment, @cacheStorage)
 
 		settings:

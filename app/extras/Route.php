@@ -1,8 +1,5 @@
 <?php
 
-// $cache['location'][123] = 'liptov'
-// $cache['rentalType'][144][12] = 'chaty'
-// $cache['tag'][144][567] = 'lacne'
 
 namespace Extras;
 
@@ -24,7 +21,7 @@ class Route implements Nette\Application\IRouter {
 			'lfDog' => array(),
 		);
 
-	protected $pathSegmentTypes = array(
+	protected static $pathSegmentTypes = array(
 			'page' => 2,
 			'attractionType' => 4,
 			'location' => 6,
@@ -226,6 +223,10 @@ class Route implements Nette\Application\IRouter {
 	protected function generateDomainCache() {
 		$this->cache->save('domains', array());
 		$this->cachedDomains = $this->cache->load('domains');
+	}
+
+	public static function getPathSegmentTypes () {
+		return static::$pathSegmentTypes;
 	}
 
 }
