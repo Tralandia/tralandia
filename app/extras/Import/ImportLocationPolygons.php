@@ -54,7 +54,6 @@ class ImportLocationsPolygons extends BaseImport {
 				$css = array();
 				foreach ($country->css as $class => $styles) {
 					if ((bool)preg_match("/rid{$area->rid}([^0-9]+|$)/", $class)) {
-						// $newClass = str_replace('rid'.$area->rid, replace, subject);
 						$css[$class] = $styles;
 						unset($country->css->{$class});
 					}
@@ -75,14 +74,15 @@ class ImportLocationsPolygons extends BaseImport {
 					$i = 0;
 
 					while($location = mysql_fetch_assoc($q)) {
+						$newCss = array();
+						foreach ($css as $class => $styles) {
+							$newClass = str_replace("rid{$area->rid}", "rid{$location['id']}", $class);
+							$newCss[$newClass] = $styles;
+						}
 						$areas['success'][] = array(
 							'id' => $location['id'],
-							'slug' => $location['slug'],
-							'name' => $area->name,
 							'coords' => $area->coords,
-							'rid' => $area->rid,
-							'country' => $countryName,
-							'css' => $css
+							'css' => $newCss
 						);
 						$i++;
 					}
