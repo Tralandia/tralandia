@@ -258,7 +258,19 @@ class Reflector extends Nette\Object {
 					}
 					$control->setItems($options);
 				} else {
-					throw new \Exception("Callback alebo options v `{$class} - {$property->getName()}` nie sú validné");
+					if ($association = $property->getAnnotation(self::ONE_TO_ONE)) {
+						
+					} elseif ($association = $property->getAnnotation(self::MANY_TO_ONE)) {
+						$primaryValue = $this->getEntityPrimaryData($association->targetEntity);
+						debug($primaryValue);
+
+						$form->onLoad[] = function($service) {
+							debug($service->defaultCurrency);
+
+						};
+					} else {
+						throw new \Exception("Callback alebo options v `{$classReflection->getConstant('MAIN_ENTITY_NAME')} - {$property->getName()}` nie sú validné");
+					}
 				}
 			}
 			

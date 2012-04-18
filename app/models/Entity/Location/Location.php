@@ -178,6 +178,7 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Currency", cascade={"persist"})
+	 * @UI\Control(type="select")
 	 */
 	protected $defaultCurrency;
 

@@ -9,6 +9,7 @@ use	Extras\UI as UI;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="currency")
+ * @UI\Primary(key="id", value="iso")
  */
 class Currency extends \Entity\BaseEntity {
 

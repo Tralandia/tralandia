@@ -11,6 +11,7 @@ use Nette\Application as NA,
 class AdminPresenter extends BasePresenter {
 	
 	private $settings;
+	private $service;
 	private $serviceName;
 	private $serviceListName;
 	private $reflector;
@@ -33,29 +34,34 @@ class AdminPresenter extends BasePresenter {
 		
 	}
 	
-	public function renderAdd() {
+	public function actionAdd() {
 		$form = $this->getComponent('form');
+		// TODO: instancia uplne noveho zaznamu
+		//$this->service = new Service;
+	}
+
+	public function actionEdit($id = 0) {
+		$service = $this->serviceName;
+		$this->service = $service::get($id);
 	}
 	
-	public function actionEdit($id = 0) {
+	public function renderEdit($id = 0) {
 		$form = $this->getComponent('form');
-		$service = $this->serviceName;
-		$service = $service::get($id);
 
 		//TODO: naslo zaznam? toto treba osetrit lebo servica nehlasi nenajdeny zaznam
 		// ale hlasi @david
-		// if (!$service) {
+		// if (!$this->service) {
 		// 	throw new NA\BadRequestException('Record not found');
 		// }
 
-		$service->setCurrentMask($this->reflector->getMask());
+		$this->service->setCurrentMask($this->reflector->getMask());
 		if (!$form->isSubmitted()) {
-			$data = $service->getDataByMask();
+			$data = $this->service->getDataByMask();
 			$this->reflector->getContainer($form)
 				->setDefaults($data);
 		}
 
-		$this->template->record = $service;
+		$this->template->record = $this->service;
 		$this->template->form = $form;
 	}
 	
@@ -64,6 +70,7 @@ class AdminPresenter extends BasePresenter {
 		$this->reflector->extend($form);
 		$form->ajax(false);
 		$form->addSubmit('save', 'Save');
+		$form->onLoad($this->service);
 		$form->onSuccess[] = callback($this, 'onSave');
 		return $form;
 	}
@@ -72,16 +79,13 @@ class AdminPresenter extends BasePresenter {
 		$id = $this->getParam('id');
 		$values = $this->reflector->getPrepareValues($form);
 
-
-		$service = $this->serviceName;
-		$service = $service::get($id);
-
+		//TODO : ainak zistit ze editujem, najlepsie so servisy
 		if ($id) {
 			// EDIT
-			$service->updateFormData($values);
+			$this->service->updateFormData($values);
 		} else {
 			// ADD
-			$service->create($values);
+			$this->service->create($values);
 		}
     }
 	
@@ -94,7 +98,7 @@ class AdminPresenter extends BasePresenter {
 			$mapper[$alias] = $column->mapper;
 			
 			if (!isset($column->draw) || (isset($column->draw) && $column->draw == true)) {
-				$type = isset($column->type) ? $column->type : 'text';				
+				$type = isset($column->type) ? $column->type : 'text';
 				$property = substr($column->mapper, strrpos($column->mapper, '.')+1);
 
 				if ($controlAnnotation = $this->reflector->getAnnotation($mainEntityName, $property, Reflector::COLUMN)) {
