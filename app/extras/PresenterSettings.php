@@ -39,6 +39,10 @@ class PresenterSettings extends \Nette\Object {
 	public function getServiceClass() {
 		return '\\Service\\' . $this->getName();
 	}
+
+	public function getServiceListClass() {
+		return '\\Service\\' . $this->getName() . 'List';
+	}
 	
 	public function getParams() {
 		return $this->params;

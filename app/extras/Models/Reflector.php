@@ -123,9 +123,9 @@ class Reflector extends Nette\Object {
 				: self::MANY_TO_ONE;
 							
 			$class = ClassType::from($toOne->targetEntity);
-			if ($class->hasAnnotation('Primary')) {
+			if ($class->hasAnnotation(self::ANN_PRIMARY)) {
 				$options->targetEntities = array(
-					$toOne->targetEntity => $class->getAnnotation('Primary')
+					$toOne->targetEntity => $class->getAnnotation(self::ANN_PRIMARY)
 				);
 			}
 		} elseif ($property->hasAnnotation(self::ONE_TO_MANY) || $property->hasAnnotation(self::MANY_TO_MANY)) {

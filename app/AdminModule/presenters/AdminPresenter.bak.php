@@ -8,7 +8,7 @@ use Nette\Application as NA,
 	Nette\Utils\Html,
 	Extras\Models\Reflector;
 
-class AdminPresenter extends BasePresenter {
+class AdminPresenter2 extends BasePresenter {
 	
 	private $settings;
 	private $serviceName;
@@ -87,9 +87,16 @@ class AdminPresenter extends BasePresenter {
 	
 	protected function createComponentGrid($name) {
 		$mainEntityName = $this->reflector->getMainEntityName();
+		//$form = $this->getComponent('gridForm');
 		$grid = new \DataGrid\DataGrid;
-		$mapper = array(); $editable = false;
+		//$grid->itemsPerPage = 3;
 
+		//$grid->setEditForm($form);
+		//$grid->setContainer($this->reflector->getContainerName());	
+		//$grid->onDataReceived[] = array($form, 'onDataRecieved');
+		//$grid->onInvalidDataRecieved[] = array($form, 'onInvalidDataRecieved');
+	
+		$mapper = array(); $editable = false;
 		foreach ($this->settings->params->grid->columns as $alias => $column) {
 			$mapper[$alias] = $column->mapper;
 			
@@ -121,6 +128,10 @@ class AdminPresenter extends BasePresenter {
 					);
 				}
 			}
+			if (isset($column->editable) && $column->editable == true) {
+				$editable = true;
+				//$grid->addEditableField($alias);
+			}
 		}
 
 		$list = $this->serviceListName;
@@ -132,13 +143,30 @@ class AdminPresenter extends BasePresenter {
 		$dataSource->setMapping($mapper);
 		$grid->setDataSource($dataSource);	
 		$grid->addActionColumn('Actions');
+		
 		$grid->addAction('Edit', 'edit', Html::el('span')->class('icon edit')->setText('Edit') , false);
 		$grid->addAction('Delete', 'delete', Html::el('span')->class('icon delete')->setText('Delete'), false);
 
 		return $grid;
 	}
+	
+	public function createComponentGridForm($name) {
+		$form = new \Tra\Forms\Form($this, $name);
+		$this->reflector->extend($form);
 
+		$form->ajax(false);
+		$form->addSubmit('save', 'Save');
+		$form->onSuccess[] = callback($this, 'onGridSave');
+		return $form;
+	}
+
+	public function onGridSave($form) {
+		debug($form->getValues());
+    }
+	
 	public function pattern($value, $row, $params = null) {
+		//debug("odpoved=" . $this->user->isAllowed($row->getEntity(), 'show'));
+		
 		return preg_replace_callback('/%([\w]*)%/', function($matches) use ($row) {
 			return isset($row[$matches[1]]) ? $row[$matches[1]] : $matches[0];
 		}, $params->pattern);

@@ -327,11 +327,11 @@ abstract class Service extends Nette\Object implements IService {
 		$mask = $this->getCurrentMask();
 
 		$data = array();
-		foreach ($mask as $key => $value) {
+		foreach ($mask as $key => $value) {debug($value);
 			$name = $value->name;
 			if($value->type) {
 				$targetEntity = reset($value->targetEntities);
-				if($value->type == Reflector::ONE_TO_ONE) {
+				if($value->type == Reflector::ONE_TO_ONE && $targetEntity) {
 					$property = $targetEntity->value;
 					$data[$name] = $this->{$name}->{$property};
 				} else {
@@ -357,7 +357,7 @@ abstract class Service extends Nette\Object implements IService {
 				$formValue = $formValues[$name];
 				if($value->type) {
 					$targetEntity = reset($value->targetEntities);
-					if($value->type == Reflector::ONE_TO_ONE) {
+					if($value->type == Reflector::ONE_TO_ONE && $targetEntity) {
 						$property = $targetEntity->value;
 						$this->{$name}->{$property} = $formValue;
 					} else {

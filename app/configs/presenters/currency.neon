@@ -9,8 +9,8 @@ common:
 				draw: false
 			name:
 				label: Name
-				mapper: e.name.ready
-				editable: true
+				mapper: e.id
+				callback: {class: %this%, method: translateColumn, params: name}
 			iso:
 				label: ISO
 				mapper: e.iso
