@@ -6,6 +6,7 @@ use Nette,
 	Nette\ArrayHash,
 	Nette\Reflection\ClassType,
 	Nette\Reflection\Property,
+	Nette\Utils\Strings,
 	Nette\ComponentModel\IContainer;
 
 class Reflector extends Nette\Object {
@@ -122,7 +123,13 @@ class Reflector extends Nette\Object {
 				? self::ONE_TO_ONE
 				: self::MANY_TO_ONE;
 							
-			$class = ClassType::from($toOne->targetEntity);
+			if (!Strings::startsWith($toOne->targetEntity, 'Entity')) {
+				$targetEntity = $entity->getNamespaceName() . '\\' . $toOne->targetEntity;
+			} else {
+				$targetEntity = $toOne->targetEntity;
+			}
+
+			$class = ClassType::from($targetEntity);
 			if ($class->hasAnnotation(self::ANN_PRIMARY)) {
 				$options->targetEntities = array(
 					$toOne->targetEntity => $class->getAnnotation(self::ANN_PRIMARY)

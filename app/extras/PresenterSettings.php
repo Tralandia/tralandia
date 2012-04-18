@@ -26,6 +26,7 @@ class PresenterSettings extends \Nette\Object {
 		
 		$config = new \Nette\Config\Loader;
 		$this->params = ArrayHash::from($config->load($this->settingsDir . '/presenters/' . strtolower($this->getName()) . '.neon', 'common'));
+		$this->name = $this->params->service;
 	}
 	
 	public function getName() {
@@ -37,11 +38,11 @@ class PresenterSettings extends \Nette\Object {
 	}
 	
 	public function getServiceClass() {
-		return '\\Service\\' . $this->getName();
+		return $this->getName();
 	}
 
 	public function getServiceListClass() {
-		return '\\Service\\' . $this->getName() . 'List';
+		return $this->getName() . 'List';
 	}
 	
 	public function getParams() {

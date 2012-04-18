@@ -48,6 +48,11 @@ abstract class Service extends Nette\Object implements IService {
 	private $isPersist = false;
 
 	/**
+	 * @var object
+	 */
+	public static $translator = null;
+
+	/**
 	 * @param bool
 	 */
 	protected function __construct($new = true) {
@@ -241,6 +246,14 @@ abstract class Service extends Nette\Object implements IService {
 	}
 
 	/**
+	 * Ziskanie translatora
+	 * @return Translator
+	 */
+	public static function getTranslator() {
+		return self::$translator;
+	}
+
+	/**
 	 * Ziskanie zoznamu
 	 * @return array
 	 */
@@ -327,12 +340,22 @@ abstract class Service extends Nette\Object implements IService {
 		$mask = $this->getCurrentMask();
 
 		$data = array();
-		foreach ($mask as $key => $value) {debug($value);
+		foreach ($mask as $key => $value) {
+//debug($value);
 			$name = $value->name;
 			if($value->type) {
 				$targetEntity = reset($value->targetEntities);
-				if($value->type == Reflector::ONE_TO_ONE && $targetEntity) {
+				$targetEntityName = key($value->targetEntities);
+				if ($targetEntityName == 'Entity\\Dictionary\\Phrase') {
+					$data[$name] = $this->getTranslator()->translate($this->{$name});
+				} else if($value->type == Reflector::ONE_TO_ONE && $targetEntity) {
+					
+
 					$property = $targetEntity->value;
+
+
+					debug($this->{$name}->translations, $property);
+
 					$data[$name] = $this->{$name}->{$property};
 				} else {
 					$data[$name] = $this->{$name};
