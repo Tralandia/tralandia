@@ -6,6 +6,7 @@ use Nette,
 	Nette\ArrayHash,
 	Nette\Reflection\ClassType,
 	Nette\Reflection\Property,
+	Nette\Utils\Strings,
 	Nette\ComponentModel\IContainer;
 
 class Reflector extends Nette\Object {
@@ -92,7 +93,10 @@ class Reflector extends Nette\Object {
 		$classReflection = ClassType::from($classReflection->getConstant('MAIN_ENTITY_NAME'));
 
 		foreach ($this->getFields($this->service) as $property) {
-			$mask[] = $this->getPropertyMask($property, $classReflection);
+			if ($pmask = $this->getPropertyMask($property, $classReflection)) {
+				$mask[] = $pmask;
+			}
+			
 			//debug($options);
 		}
 
@@ -104,6 +108,9 @@ class Reflector extends Nette\Object {
 	 * @return array
 	 */
 	public function getPropertyMask(Property $property, ClassType $entity) {
+		if (!$entity->hasMethod('get' .  ucfirst($property->getName()))) {
+			return false;
+		}
 		$options = ArrayHash::from(array(
 			'name' => $property->getName(),
 			'defaultValue' => null,
@@ -122,10 +129,16 @@ class Reflector extends Nette\Object {
 				? self::ONE_TO_ONE
 				: self::MANY_TO_ONE;
 							
-			$class = ClassType::from($toOne->targetEntity);
-			if ($class->hasAnnotation('Primary')) {
+			if (!Strings::startsWith($toOne->targetEntity, 'Entity')) {
+				$targetEntity = $entity->getNamespaceName() . '\\' . $toOne->targetEntity;
+			} else {
+				$targetEntity = $toOne->targetEntity;
+			}
+
+			$class = ClassType::from($targetEntity);
+			if ($class->hasAnnotation(self::ANN_PRIMARY)) {
 				$options->targetEntities = array(
-					$toOne->targetEntity => $class->getAnnotation('Primary')
+					$toOne->targetEntity => $class->getAnnotation(self::ANN_PRIMARY)
 				);
 			}
 		} elseif ($property->hasAnnotation(self::ONE_TO_MANY) || $property->hasAnnotation(self::MANY_TO_MANY)) {
@@ -245,7 +258,19 @@ class Reflector extends Nette\Object {
 					}
 					$control->setItems($options);
 				} else {
-					throw new \Exception("Callback alebo options v `{$class} - {$property->getName()}` nie sú validné");
+					if ($association = $property->getAnnotation(self::ONE_TO_ONE)) {
+						
+					} elseif ($association = $property->getAnnotation(self::MANY_TO_ONE)) {
+						$primaryValue = $this->getEntityPrimaryData($association->targetEntity);
+						debug($primaryValue);
+
+						$form->onLoad[] = function($service) {
+							debug($service->defaultCurrency);
+
+						};
+					} else {
+						throw new \Exception("Callback alebo options v `{$classReflection->getConstant('MAIN_ENTITY_NAME')} - {$property->getName()}` nie sú validné");
+					}
 				}
 			}
 			
