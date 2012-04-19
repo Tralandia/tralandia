@@ -395,10 +395,10 @@ abstract class Service extends Nette\Object implements IService {
 	 */
 	public function getDataByMask() {
 		$mask = $this->getCurrentMask();
-debug($mask);
+
 		$data = array();
 		foreach ($mask as $key => $value) {
-//debug($value);
+			//debug($value);
 			$name = $value->name;
 			if($value->type) {
 				$targetEntity = reset($value->targetEntities);
@@ -411,7 +411,7 @@ debug($mask);
 					$property = $targetEntity->value;
 
 
-					debug($this->{$name}->translations, $property);
+					//debug($this->{$name}->translations, $property);
 
 					$data[$name] = $this->{$name}->{$property};
 				} else {

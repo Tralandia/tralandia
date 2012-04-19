@@ -5,10 +5,13 @@ namespace Entity;
 use Entity\Dictionary;
 use Doctrine\ORM\Mapping as ORM;
 use	Extras\UI as UI;
+use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="currency")
+ * @EA\Service(name="\Service\Currency")
+ * @EA\ServiceList(name="\Service\CurrencyList")
  * @UI\Primary(key="id", value="iso")
  */
 class Currency extends \Entity\BaseEntity {

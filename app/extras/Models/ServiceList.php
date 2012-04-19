@@ -172,9 +172,20 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 
 	}
 
-
+	/** 
+	 * return array
+	 */
+	public static function fetchPairs($key, $value = NULL, array $orderBy = NULL, $limit = NULL, $offset = NULL) {
+		$serviceList = static::getAll($orderBy, $limit, $offset);
+		$return = array();
+		foreach($serviceList as $item) {
+			$return[$item->$key] = ($value ? $item->$value : $item);
+		}
+		return $return;
+	}
 
 	protected function prepareBaseList($entity) {
+		Exception('kde sa toto pouziva?');
 		$query = $this->getEm()->createQueryBuilder();
 		$query->select('e')->from($entity, 'e');
 		$this->setList($query->getQuery()->getResult());

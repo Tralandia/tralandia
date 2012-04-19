@@ -47,7 +47,6 @@ class AdminPresenter extends BasePresenter {
 	
 	public function renderEdit($id = 0) {
 		$form = $this->getComponent('form');
-
 		//TODO: naslo zaznam? toto treba osetrit lebo servica nehlasi nenajdeny zaznam
 		// ale hlasi @david
 		// if (!$this->service) {
@@ -67,10 +66,11 @@ class AdminPresenter extends BasePresenter {
 	
 	protected function createComponentForm($name) {
 		$form = new \Tra\Forms\Form($this, $name);
-		$this->reflector->extend($form);
+		$formMask = $this->reflector->getFormMask($this->settings->params->form);
+		$this->reflector->extend($form, $formMask);
 		$form->ajax(false);
 		$form->addSubmit('save', 'Save');
-		$form->onLoad($this->service);
+		$form->onLoad($form);
 		$form->onSuccess[] = callback($this, 'onSave');
 		return $form;
 	}

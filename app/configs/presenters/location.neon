@@ -8,12 +8,27 @@ common:
 			id:
 				mapper: e.id
 				draw: false
+			name:
+				label: Name
+				mapper: e.id
+				callback: {class: %this%, method: translateColumn, params: name}
+			slug:
+				label: Slug
+				mapper: e.slug
 			created:
 				label: Dátum vytvorenia
 				mapper: e.created
 
+	form:
+		fields:
+			slug:
+				type: text
+				label: Sluuug
+
+			iso:
+				type: text
+
+			defaultCurrency:
 
 base < common:
 	title: Location Base
-
-			
