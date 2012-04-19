@@ -16,14 +16,23 @@ class ImportLocationsPolygons extends BaseImport {
 
 	public function doImport($subsection = NULL) {
 
-		$data = json_decode(file_get_contents("http://www.tralandia.sk/trax_maps/_api.php"));
+		// RESET clickMapData in all Location
+		if (false) {
+			// trva to strasne dlho!!!!
+			foreach (\Service\Location\LocationList::getAll() as $l) {
+				$location = \Service\Location\Location::get($l->id);
+				$location->clickMapData = array();
+				$location->save();
+			}
+		}
+
+		// GET data from API
+		$data = json_decode(file_get_contents("http://www.tralandia.sk/trax_maps/_api.php"), TRUE);
 		
 		$countries = array('success'=>array());
 		$areas = array('success'=>array());
 
-		$location = \Service\Location\Location::get();
-		foreach ($data->countries as $iso => $country) {
-
+		foreach ($data['countries'] as $iso => $country) {
 
 			// Get data about country
 			$countryName = null;
@@ -38,51 +47,51 @@ class ImportLocationsPolygons extends BaseImport {
 				$countries['success'][] = array(
 					'id' => $countryId,
 					'iso' => $iso,
-					'css' => $country->css,
+					'css' => $this->stringifyCss($country['css']),
 					'name' => $countryName
 				);
 			} else {
 				$countries['notFound'][] = array(
 					'iso' => $iso,
-					'css' => $country->css
+					'css' => $this->stringifyCss($country['css'])
 				);
 			}
 
 			// Get data about areas
-			foreach ($country->areas as $area) {
+			foreach ($country['areas'] as $area) {
 
 				$css = array();
-				foreach ($country->css as $class => $styles) {
-					if ((bool)preg_match("/rid{$area->rid}([^0-9]+|$)/", $class)) {
+				foreach ($country['css'] as $class => $styles) {
+					if ((bool)preg_match("/rid{$area['rid']}([^0-9]+|$)/", $class)) {
 						$css[$class] = $styles;
-						unset($country->css->{$class});
+						unset($country['css'][$class]);
 					}
 				}
 
-				if (!$area->name) {
+				if (!$area['name']) {
 
 					$areas['nullIdentifier'][] = array(
-						'coords' => $area->coords,
-						'rid' => $area->rid,
+						'coords' => $area['coords'],
+						'rid' => $area['rid'],
 						'country' => $countryName,
-						'css' => $css
+						'css' => $this->stringifyCss($css)
 					);
 
 				} else {
 
-					$q = qNew("SELECT id, slug FROM location_location WHERE slug LIKE '".\Nette\Utils\Strings::webalize($area->name)."'");
+					$q = qNew("SELECT id, slug FROM location_location WHERE slug LIKE '".\Nette\Utils\Strings::webalize($area['name'])."'");
 					$i = 0;
 
 					while($location = mysql_fetch_assoc($q)) {
 						$newCss = array();
 						foreach ($css as $class => $styles) {
-							$newClass = str_replace("rid{$area->rid}", "rid{$location['id']}", $class);
+							$newClass = str_replace("rid{$area['rid']}", "rid{$location['id']}", $class);
 							$newCss[$newClass] = $styles;
 						}
 						$areas['success'][] = array(
 							'id' => $location['id'],
-							'coords' => $area->coords,
-							'css' => $newCss
+							'coords' => $area['coords'],
+							'css' => $this->stringifyCss($newCss)
 						);
 						$i++;
 					}
@@ -90,11 +99,11 @@ class ImportLocationsPolygons extends BaseImport {
 					if (!$i) {
 
 						$areas['notFound'][] = array(
-							'name' => $area->name,
-							'coords' => $area->coords,
-							'rid' => $area->rid,
+							'name' => $area['name'],
+							'coords' => $area['coords'],
+							'rid' => $area['rid'],
 							'country' => $countryName,
-							'css' => $css
+							'css' => $this->stringifyCss($newCss)
 						);
 
 					}
@@ -105,12 +114,13 @@ class ImportLocationsPolygons extends BaseImport {
 
 		}
 
-		// merge all success data
+		// Merge all success data
 		$success = array(
 			'areas' => $areas['success'],
 			'countries' => $countries['success']
 		);
 
+		// Update all success data
 		foreach ($success as $key => $data) {
 			foreach ($data as $location) {
 				$region = \Service\Location\Location::get($location['id']);
@@ -118,6 +128,21 @@ class ImportLocationsPolygons extends BaseImport {
 				$region->save();
 			}
 		}
+
+	}
+
+	public function stringifyCss($css) {
+		
+		$out = null;
+		foreach ($css as $class=>$params) {
+			$out .= "{$class} { ";
+				foreach ($params as $param=>$value) {
+					$out .= "{$param}:{$value}; ";
+				}
+			$out .= "} ";
+		}
+
+		return $out;
 
 	}
 
