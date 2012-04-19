@@ -18,7 +18,7 @@ define('TESTS_DIR', ROOT_DIR . '/tests');
 
 require TESTS_DIR . '/Test/TestHelpers.php';
 require TESTS_DIR . '/Test/Assert.php';
-require TESTS_DIR . '/extras/MyAssert.php';
+require TESTS_DIR . '/extras/Assert.php';
 require LIBS_DIR . '/Nette/loader.php';
 
 use Nella\Addons\Doctrine\Config\Extension;
@@ -34,14 +34,23 @@ $robotLoader->addDirectory(APP_DIR)
 	->addDirectory(LIBS_DIR)
 	->register();
 
-// Setup doctrine loader
-Extension::register($configurator);
 
 // Create Dependency Injection container from config.neon file
-$configurator->addConfig(APP_DIR . '/config.neon', 'test');
+$configurator->addConfig(APP_DIR . '/configs/config.neon', $section);
 $container = $configurator->createContainer();
-$container->createService();
-$container->createList();
+
+
+$serviceConfigurator = new Extras\Configurator;
+$serviceConfigurator->setTempDirectory(TEMP_DIR);
+
+Extension::register($serviceConfigurator);
+
+$serviceConfigurator->addConfig(APP_DIR . '/configs/service.neon', $section);
+$serivceContainer = $serviceConfigurator->createContainer();
+
+// Setup doctrine loader
+$serivceContainer->createService();
+$serivceContainer->createList();
 
 // configure environment
 error_reporting(E_ALL | E_STRICT);
@@ -57,6 +66,8 @@ set_error_handler(function($severity, $message, $file, $line) {
 	}
 	return FALSE;
 });
+
+function debug() {}
 
 
 $_SERVER = array_intersect_key($_SERVER, array_flip(array('PHP_SELF', 'SCRIPT_NAME', 'SERVER_ADDR', 'SERVER_SOFTWARE', 'HTTP_HOST', 'DOCUMENT_ROOT', 'OS')));

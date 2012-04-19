@@ -6,7 +6,8 @@ namespace Extras;
 use Nette,
 	Nette\Application,
 	Nette\Caching,
-	Nette\Utils\Strings;
+	Nette\Utils\Strings,
+	Nette\Utils\Arrays;
 
 class Route implements Nette\Application\IRouter {
 	
@@ -66,7 +67,7 @@ class Route implements Nette\Application\IRouter {
 		debug('$appRequest', $appRequest);
 		debug('$refUrl', $refUrl);
 		$url = $this->getUrlByAppRequest($appRequest, $refUrl);
-		return 'http://www.tra.sk/nitra-okres/chaty/prazdninovy-pobyt?lfPeople=6&lfFood=6';
+		return $url;
 	}
 
 	public function getParamsByHttpRequest($httpRequest) {
@@ -136,17 +137,22 @@ class Route implements Nette\Application\IRouter {
 			}
 		}
 
-		$segmentList = $this->getPathSegmentList($pathSegments, $params);
-		$pathSegmentTypesFlip = array_flip(static::$pathSegmentTypes);
-		foreach ($segmentList as $key => $value) {
-			$params->{$pathSegmentTypesFlip[$value->type]} = $value->entityId;
-			if($value->type == static::$pathSegmentTypes['attractionType']) {
-				$params->presenter = 'Attraction';
-			} else if($value->type == static::$pathSegmentTypes['rentalType']) {
-				$params->presenter = 'Rental';
+		if(count($pathSegments)) {
+			$segmentList = $this->getPathSegmentList($pathSegments, $params);
+			$pathSegmentTypesFlip = array_flip(static::$pathSegmentTypes);
+			foreach ($segmentList as $key => $value) {
+				$params->{$pathSegmentTypesFlip[$value->type]} = $value->entityId;
+				if($value->type == static::$pathSegmentTypes['attractionType']) {
+					$params->presenter = 'Attraction';
+				} else if($value->type == static::$pathSegmentTypes['rentalType']) {
+					$params->presenter = 'Rental';
+				}
 			}
+		} else {
+			$segmentList = array();
 		}
-		if($segmentList->count() != count($pathSegments)) {
+			
+		if(count($segmentList) != count($pathSegments)) {
 			// @todo pocet najdenych pathsegmentov je mensi
 			// ak nejake chybaju tak ich skus najst v PathSegmentsOld
 		}
@@ -175,7 +181,7 @@ class Route implements Nette\Application\IRouter {
 	public function getPathSegmentList($pathSegments, $params) {
 
 		$criteria = array();
-		if($pathSegments) $criteria['pathSegment'] = $pathSegments;
+		$criteria['pathSegment'] = $pathSegments;
 		$criteria['country'] = array($params->country, 0);
 		$criteria['language'] = array($params->language, 0);
 
@@ -196,7 +202,8 @@ class Route implements Nette\Application\IRouter {
 		$presenter = $appRequest->getPresenterName();
 		$action = $params['action'];
 		unset($params['action']);
-		debug($params, $query, $presenter, $action);
+		
+		//debug($params, $query, $presenter, $action);
 
 		list($refLanguageIso, $refDomainName, $refCountryIso) = explode('.', $refUrl->getHost(), 3);
 
@@ -205,14 +212,50 @@ class Route implements Nette\Application\IRouter {
 
 		$segments = array();
 		foreach (static::$pathSegmentTypes as $key => $value) {
-			$methodName = 'get'.Strings::firstUpper($key).'ById';
-			$segments[$value] = $this->$methodName();
+			if(!isset($params[$key])) continue;
+			$segment = $this->getSegmentById($key, $params);
+			if(!$segment) continue;
+			$segments[$value] = $segment;
 		}
+		ksort($segments);
 
 		$url = clone $refUrl;
 		$host = ($language->id == $country->defaultLanguage->id ? 'www' : $language->iso) . '.' . $refDomainName . '.' . $country->iso;
 		$url->setHost($host);
-		debug('url', $url);
+		$path = '/' . implode('/', $segments);
+		$url->setPath($path);
+		debug('url', "$url");
+		return $url;
+	}
+
+	public function getSegmentById($segmentName, $params) {
+		$segmentId = $params[$segmentName];
+		$language = $params['language'];
+		$segment = NULL;
+		if(is_array(static::$cached[$segmentName])) {
+			if($segmentName == 'location') {
+				$segment = Arrays::get(static::$cached[$segmentName], array($segmentId), NULL);
+			} else {
+				$segment = Arrays::get(static::$cached[$segmentName], array($language, $segmentId), NULL);
+			}
+		} else {
+			if($segmentName == 'location') {
+			$segmentRow = \Service\Routing\PathSegment::getBy(array(
+					'type' => static::$pathSegmentTypes[$segmentName], 
+					'entityId' => $segmentId
+				));
+			} else {
+				$segmentRow = \Service\Routing\PathSegment::getBy(array(
+						'type' => static::$pathSegmentTypes[$segmentName], 
+						'entityId' => $segmentId, 
+						'language' => $language
+					));
+			}
+			if($segmentRow) {
+				$segment = $segmentRow->pathSegment;
+			}
+		}
+		return $segment;
 	}
 
 	public function getMetadata($key) {
