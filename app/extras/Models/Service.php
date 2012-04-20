@@ -381,7 +381,7 @@ abstract class Service extends Nette\Object implements IService {
 		}
 	}
 
-	public function setCurrentMask(array $mask) {
+	public function setCurrentMask($mask) {
 		$this->currentMask = $mask;
 	}
 
@@ -397,32 +397,33 @@ abstract class Service extends Nette\Object implements IService {
 		$mask = $this->getCurrentMask();
 
 		$data = array();
-		foreach ($mask as $key => $value) {
-			debug($value);
-			$name = $value->name;
-			if($value->type) {
-				$targetEntity = reset($value->targetEntities);
-				if(!$targetEntity) {
-					throw new \Nette\InvalidArgumentException('V maske chyba $targetEntity');
-				}
-				$targetEntityName = key($value->targetEntities);
-				if ($targetEntityName == 'Entity\\Dictionary\\Phrase') {
-					$data[$name] = $this->getTranslator()->translate($this->{$name});
-				} else if($value->type == Reflector::MANY_TO_ONE) {
-					$data[$name] = $this->{$name}->{$targetEntity->key};
-				} else if($value->type == Reflector::ONE_TO_ONE) {
-					$property = $targetEntity->value;
-					//debug($this->{$name}->translations, $property);
+		foreach ($mask->fields as $property) {
+			debug($property);
+			$ui = $property->ui;
+			$name = $ui->name;
+			if(!$this->{$name}) {
+				$data[$name] = NULL;
+			} else {
+				if(isset($property->targetEntity)) {
+					$targetEntity = $property->targetEntity;
+					if ($targetEntity->name == 'Entity\\Dictionary\\Phrase') {
+						$data[$name] = $this->getTranslator()->translate($this->{$name});
+					} else if($targetEntity->associationType == Reflector::MANY_TO_ONE) {
+						$data[$name] = $this->{$name}->{$targetEntity->primaryKey};
+					} else if($targetEntity->associationType == Reflector::ONE_TO_ONE) {
+						$property = $targetEntity->primaryValue;
+						//debug($this->{$name}->translations, $property);
 
-					$data[$name] = $this->{$name}->{$property};
+						$data[$name] = $this->{$name}->{$property};
+					} else {
+						$data[$name] = $this->{$name};
+						// @todo method or operation is not implemented
+						//throw new \Nette\NotImplementedException('Requested method or operation is not implemented');
+					}
+
 				} else {
 					$data[$name] = $this->{$name};
-					// @todo method or operation is not implemented
-					//throw new \Nette\NotImplementedException('Requested method or operation is not implemented');
-				}
-
-			} else {
-				$data[$name] = $this->{$name};
+				}				
 			}
 		}
 		
@@ -433,7 +434,7 @@ abstract class Service extends Nette\Object implements IService {
 		$mask = $this->getCurrentMask();
 		debug($formValues, $mask);
 
-		foreach ($mask as $key => $value) {
+		foreach ($mask->fields as $key => $value) {
 			$name = $value->name;
 			if(array_key_exists($name, $formValues)) {
 				$formValue = $formValues[$name];

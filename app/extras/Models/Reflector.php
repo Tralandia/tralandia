@@ -84,7 +84,7 @@ class Reflector extends Nette\Object {
 	 * Vrati data pre servisu
 	 * @return array
 	 */
-	public function getMask() {
+/*	public function getMask() {
 		$mask = array();
 		$assocations = $this->getAssocations();
 		//$collection = $this->getCollections();
@@ -95,6 +95,7 @@ class Reflector extends Nette\Object {
 		foreach ($this->getFields($this->service) as $property) {
 			if ($pmask = $this->getPropertyMask($property, $classReflection)) {
 				$mask[] = $pmask;
+				break;
 			}
 			
 			//debug($options);
@@ -102,12 +103,12 @@ class Reflector extends Nette\Object {
 
 		return $mask;
 	}
-
+*/
 	/**
 	 * Vrati masku pre ziskanie dat pre vsupnu property
 	 * @return array
 	 */
-	public function getPropertyMask(Property $property, ClassType $entity) {
+/*	public function getPropertyMask(Property $property, ClassType $entity) {
 		if (!$entity->hasMethod('get' .  ucfirst($property->getName()))) {
 			return false;
 		}
@@ -120,6 +121,7 @@ class Reflector extends Nette\Object {
 			'targetEntities' => array()
 		));
 
+		$associationType = $this->getAssocationType($property);
 		if ($property->hasAnnotation(self::ONE_TO_ONE) || $property->hasAnnotation(self::MANY_TO_ONE)) {
 			$toOne = $property->hasAnnotation(self::ONE_TO_ONE)
 				? $property->getAnnotation(self::ONE_TO_ONE)
@@ -128,7 +130,7 @@ class Reflector extends Nette\Object {
 			$options->type = $property->hasAnnotation(self::ONE_TO_ONE)
 				? self::ONE_TO_ONE
 				: self::MANY_TO_ONE;
-							
+			
 			if (!Strings::startsWith($toOne->targetEntity, 'Entity')) {
 				$targetEntity = $entity->getNamespaceName() . '\\' . $toOne->targetEntity;
 			} else {
@@ -140,6 +142,10 @@ class Reflector extends Nette\Object {
 				$options->targetEntities = array(
 					$toOne->targetEntity => $class->getAnnotation(self::ANN_PRIMARY)
 				);
+			} else {
+				$options->targetEntities = array(
+					$toOne->targetEntity => array('key' => 'id', 'value' => 'id'),
+				);
 			}
 		} elseif ($property->hasAnnotation(self::ONE_TO_MANY) || $property->hasAnnotation(self::MANY_TO_MANY)) {
 			$options->type = $property->hasAnnotation(self::ONE_TO_MANY)
@@ -150,7 +156,7 @@ class Reflector extends Nette\Object {
 
 		return ArrayHash::from($options);
 	}
-
+*/
 	/**
 	 * Pripravi data
 	 */
@@ -209,7 +215,7 @@ class Reflector extends Nette\Object {
 		$mask['containerName'] = $this->getContainerName();
 
 		$settingsFields = NULL;
-		if(array_key_exists('fields', $settings) && $settings->fields instanceof \Traversable) {
+		if($settings && array_key_exists('fields', $settings) && $settings->fields instanceof \Traversable) {
 			$settingsFields = $settings->fields;
 		}
 
@@ -242,6 +248,7 @@ class Reflector extends Nette\Object {
 			}
 
 			$fieldMask['ui'] = array(
+				'name' => $name,
 				'type' => ucfirst($type),
 				'label' => $label,
 				'callback' => $callback,
@@ -249,17 +256,25 @@ class Reflector extends Nette\Object {
 				'options' => $options,
 			);
 
-			if($type === 'select' && $associationType = $this->getAssocationType($property)) {
+			if($associationType = $this->getAssocationType($property)) {
 				$association = $property->getAnnotation($associationType);
 				$targetEntity = $association->targetEntity;
 				$fieldMask['targetEntity'] = array();
+				if (!Strings::startsWith($targetEntity, 'Entity')) {
+					$targetEntity = $entity->getNamespaceName() . '\\' . $toOne->targetEntity;
+				}
+
+				$fieldMask['targetEntity']['name'] = $targetEntity;
 				$fieldMask['targetEntity']['associationType'] = $associationType;
 				$fieldMask['targetEntity']['primaryKey'] = $this->getEntityPrimaryData($targetEntity)->key;
 				$fieldMask['targetEntity']['primaryValue'] = $this->getEntityPrimaryData($targetEntity)->value ? : $fieldMask['targetEntity']['primaryKey'];
 				$fieldMask['targetEntity']['serviceName'] = $this->getEntityServiceName($targetEntity);
 				$fieldMask['targetEntity']['serviceListName'] = $this->getEntityServiceListName($targetEntity);
 
-				if(!$fieldMask['ui']['callback']) {
+			}
+
+			if($type === 'select') {
+				if(!$fieldMask['ui']['callback'] && !$fieldMask['ui']['options']) {
 					$fieldMask['ui']['callback'] = 'getAllAsPairs';
 				}
 
@@ -272,7 +287,7 @@ class Reflector extends Nette\Object {
 			$mask['fields'][$name] = $fieldMask;
 		}
 		
-		debug($mask['fields']);
+		//debug($mask['fields']);
 		return \Nette\ArrayHash::from($mask);
 	}
 	

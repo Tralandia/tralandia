@@ -15,6 +15,7 @@ class AdminPresenter extends BasePresenter {
 	private $serviceName;
 	private $serviceListName;
 	private $reflector;
+	private $formMask;
 	
 	public function startup() {
 		parent::startup();
@@ -43,7 +44,15 @@ class AdminPresenter extends BasePresenter {
 	public function actionEdit($id = 0) {
 		$service = $this->serviceName;
 		$this->service = $service::get($id);
-		$this->service->setCurrentMask($this->reflector->getMask());
+
+		if(array_key_exists('form', $this->settings->params)) {
+			$formMask = $this->reflector->getFormMask($this->settings->params->form);
+		} else {
+			$formMask = NULL;
+		}
+		$this->formMask = $formMask;
+
+		$this->service->setCurrentMask($this->formMask);
 	}
 	
 	public function renderEdit($id = 0) {
@@ -67,12 +76,7 @@ class AdminPresenter extends BasePresenter {
 	
 	protected function createComponentForm($name) {
 		$form = new \Tra\Forms\Form($this, $name);
-		if(array_key_exists('form', $this->settings->params)) {
-			$formMask = $this->reflector->getFormMask($this->settings->params->form);
-		} else {
-			$formMask = NULL;
-		}
-		$this->reflector->extend($form, $formMask);
+		$this->reflector->extend($form, $this->formMask);
 		$form->ajax(false);
 		$form->addSubmit('save', 'Save');
 		$form->onLoad($form);
