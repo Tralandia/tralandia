@@ -29,6 +29,12 @@ common:
 				type: text
 
 			defaultCurrency:
+				label: Def. Currency
+
+			defaultLanguage:
+				label: Def. Language
+				callback: getBySupportedAsPairs
+				callbackArgs: ['id', 'iso', 1]
 
 base < common:
 	title: Location Base

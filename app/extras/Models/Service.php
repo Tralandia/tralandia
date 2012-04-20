@@ -393,24 +393,25 @@ abstract class Service extends Nette\Object implements IService {
 	 * Ziskanie datasource
 	 * @return Query
 	 */
-	public function getDataByMask() {
+	public function getDefaultsData() {
 		$mask = $this->getCurrentMask();
 
 		$data = array();
 		foreach ($mask as $key => $value) {
-			//debug($value);
+			debug($value);
 			$name = $value->name;
 			if($value->type) {
 				$targetEntity = reset($value->targetEntities);
+				if(!$targetEntity) {
+					throw new \Nette\InvalidArgumentException('V maske chyba $targetEntity');
+				}
 				$targetEntityName = key($value->targetEntities);
 				if ($targetEntityName == 'Entity\\Dictionary\\Phrase') {
 					$data[$name] = $this->getTranslator()->translate($this->{$name});
-				} else if($value->type == Reflector::ONE_TO_ONE && $targetEntity) {
-					
-
+				} else if($value->type == Reflector::MANY_TO_ONE) {
+					$data[$name] = $this->{$name}->{$targetEntity->key};
+				} else if($value->type == Reflector::ONE_TO_ONE) {
 					$property = $targetEntity->value;
-
-
 					//debug($this->{$name}->translations, $property);
 
 					$data[$name] = $this->{$name}->{$property};
@@ -430,6 +431,7 @@ abstract class Service extends Nette\Object implements IService {
 
 	public function updateFormData($formValues) {
 		$mask = $this->getCurrentMask();
+		debug($formValues, $mask);
 
 		foreach ($mask as $key => $value) {
 			$name = $value->name;

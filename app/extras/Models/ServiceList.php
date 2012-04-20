@@ -61,6 +61,13 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 	}
 
 	public static function __callStatic($name, $arguments) {
+		if(Strings::endsWith($name, 'AsPairs')) {
+			$name = substr($name, 0, -7);
+			$key = array_shift($arguments);
+			$value = array_shift($arguments);
+			return static::_fetchPairs(call_user_func_array(array('static', $name), $arguments), $key, $value);
+		}
+
 		list($nameTemp, $nameBy, $nameIn) = Strings::match($name, '~^getBy([A-Za-z]+)In([A-Za-z]+)$~');
 		if($nameTemp && $nameBy && $nameIn) {
 			$nameBy = Strings::firstLower($nameBy);
@@ -169,14 +176,16 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 		$serviceList->setList($qb->getQuery()->getResult());
 
 		return $serviceList;
-
 	}
 
 	/** 
 	 * return array
 	 */
-	public static function fetchPairs($key, $value = NULL, array $orderBy = NULL, $limit = NULL, $offset = NULL) {
-		$serviceList = static::getAll($orderBy, $limit, $offset);
+	public function fetchPairs($key, $value = NULL) {
+		return static::_fetchPairs($this, $key, $value);
+	}
+
+	protected static function _fetchPairs($serviceList, $key, $value) {
 		$return = array();
 		foreach($serviceList as $item) {
 			$return[$item->$key] = ($value ? $item->$value : $item);

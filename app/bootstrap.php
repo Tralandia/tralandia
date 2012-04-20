@@ -52,6 +52,9 @@ $serivceContainer = $serviceConfigurator->createContainer();
 // Setup doctrine loader
 $serivceContainer->createService();
 $serivceContainer->createList();
+// @todo toto niekam schovat
+require_once APP_DIR . '/extras/EntityAnnotation.php';
+require_once APP_DIR . '/extras/UIAnnotation.php';
 Extras\Models\Service::$translator = $container->translator;
 
 // Setup router // TODO: presunut do config.neon

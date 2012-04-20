@@ -43,6 +43,7 @@ class AdminPresenter extends BasePresenter {
 	public function actionEdit($id = 0) {
 		$service = $this->serviceName;
 		$this->service = $service::get($id);
+		$this->service->setCurrentMask($this->reflector->getMask());
 	}
 	
 	public function renderEdit($id = 0) {
@@ -53,9 +54,9 @@ class AdminPresenter extends BasePresenter {
 		// 	throw new NA\BadRequestException('Record not found');
 		// }
 
-		$this->service->setCurrentMask($this->reflector->getMask());
 		if (!$form->isSubmitted()) {
-			$data = $this->service->getDataByMask();
+			$data = $this->service->getDefaultsData();
+			debug($data);
 			$this->reflector->getContainer($form)
 				->setDefaults($data);
 		}
@@ -66,7 +67,11 @@ class AdminPresenter extends BasePresenter {
 	
 	protected function createComponentForm($name) {
 		$form = new \Tra\Forms\Form($this, $name);
-		$formMask = $this->reflector->getFormMask($this->settings->params->form);
+		if(array_key_exists('form', $this->settings->params)) {
+			$formMask = $this->reflector->getFormMask($this->settings->params->form);
+		} else {
+			$formMask = NULL;
+		}
 		$this->reflector->extend($form, $formMask);
 		$form->ajax(false);
 		$form->addSubmit('save', 'Save');

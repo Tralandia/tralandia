@@ -5,10 +5,15 @@ namespace Entity\Location;
 use Entity\Dictionary;
 use Doctrine\ORM\Mapping as ORM;
 use DoctrineExtensions\NestedSet\MultipleRootNode;
+use	Extras\UI as UI;
+use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="location_location")
+ * @EA\Service(name="\Service\Location\Location")
+ * @EA\ServiceList(name="\Service\Location\LocationList")
+ * @UI\Primary(key="id", value="name")
  */
 class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 
@@ -191,6 +196,7 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Dictionary\Language", cascade={"persist"})
+	 * @UI\Control(type="select", callback="getMyCallback")
 	 */
 	protected $defaultLanguage;
 

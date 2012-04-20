@@ -168,7 +168,7 @@ class Reflector extends Nette\Object {
 		return $values;
 	}
 	
-	public function allow($class, $fields = array()) {		
+	protected function allow($class, $fields = array()) {		
 		$classReflection = $this->getServiceReflection($class);
 		$classReflection = ClassType::from($classReflection->getConstant('MAIN_ENTITY_NAME'));
 
@@ -183,7 +183,7 @@ class Reflector extends Nette\Object {
 	/**
 	 * 
 	 */
-	public function except($class, array $fields) {
+	protected function except($class, array $fields) {
 		foreach ($this->getFields($class) as $field) {
 			if(in_array($field->name, $fields)) unset($this->fields[$class][$field->name]);
 		}
@@ -195,9 +195,10 @@ class Reflector extends Nette\Object {
 	 * Vrati zoznam vlastnoti o ktore sa bude rozsirovat
 	 * @param string
 	 */
-	protected function getFields($class) {
-		if(!isset($this->fields[$class])) {
-			$this->allow($class);
+	protected function getFields($class, $allow = NULL, $except = NULL) {
+		if(!isset($this->fields[$class]) || $allow) {
+			$this->fields = array();
+			$this->allow($class, $allow);
 		}
 		return $this->fields[$class];
 	}
@@ -209,11 +210,10 @@ class Reflector extends Nette\Object {
 
 		$settingsFields = NULL;
 		if(array_key_exists('fields', $settings) && $settings->fields instanceof \Traversable) {
-			$this->allow($this->service, $settings->fields);
 			$settingsFields = $settings->fields;
 		}
 
-		foreach ($this->getFields($this->service) as $property) {
+		foreach ($this->getFields($this->service, $settingsFields) as $property) {
 			$fieldMask = array(
 				'ui' => NULL,
 			);
@@ -221,6 +221,7 @@ class Reflector extends Nette\Object {
 			$name = $property->getName();
 			$ui = NULL;
 			$type = NULL;
+			$label = NULL;
 			$callback = NULL;
 			$options = NULL;
 
@@ -229,13 +230,14 @@ class Reflector extends Nette\Object {
 				$type = $ui->type;
 				$label = isset($ui->label) ? $ui->label : ucfirst($name);
 				$callback = isset($ui->callback) ? $ui->callback : NULL;
+				$callbackArgs = isset($ui->callbackArgs) ? $ui->callbackArgs : NULL;
 				$options = isset($ui->options) ? $this->getOptions($classReflection, $ui->options) : NULL;
 			}
-
 			if($settingsFields) {
 				$type = Arrays::get($settingsFields, array($name, 'type'), $type);
 				$label = Arrays::get($settingsFields, array($name, 'label'), $label);
 				$callback = Arrays::get($settingsFields, array($name, 'callback'), $callback);
+				$callbackArgs = Arrays::get($settingsFields, array($name, 'callbackArgs'), $callbackArgs);
 				$options = Arrays::get($settingsFields, array($name, 'options'), $options);
 			}
 
@@ -243,6 +245,7 @@ class Reflector extends Nette\Object {
 				'type' => ucfirst($type),
 				'label' => $label,
 				'callback' => $callback,
+				'callbackArgs' => $callbackArgs,
 				'options' => $options,
 			);
 
@@ -253,13 +256,23 @@ class Reflector extends Nette\Object {
 				$fieldMask['targetEntity']['associationType'] = $associationType;
 				$fieldMask['targetEntity']['primaryKey'] = $this->getEntityPrimaryData($targetEntity)->key;
 				$fieldMask['targetEntity']['primaryValue'] = $this->getEntityPrimaryData($targetEntity)->value ? : $fieldMask['targetEntity']['primaryKey'];
+				$fieldMask['targetEntity']['serviceName'] = $this->getEntityServiceName($targetEntity);
 				$fieldMask['targetEntity']['serviceListName'] = $this->getEntityServiceListName($targetEntity);
+
+				if(!$fieldMask['ui']['callback']) {
+					$fieldMask['ui']['callback'] = 'getAllAsPairs';
+				}
+
+				$fieldMask['ui']['callback'] = $this->getCallback($fieldMask['targetEntity']['serviceListName'], $fieldMask['ui']['callback']);
+				if(!$fieldMask['ui']['callbackArgs']) {
+					$fieldMask['ui']['callbackArgs'] = array($fieldMask['targetEntity']['primaryKey'], $fieldMask['targetEntity']['primaryValue']);
+				}
 			}
 
 			$mask['fields'][$name] = $fieldMask;
 		}
 		
-		//debug($mask['fields']);
+		debug($mask['fields']);
 		return \Nette\ArrayHash::from($mask);
 	}
 	
@@ -290,28 +303,18 @@ class Reflector extends Nette\Object {
 			// ak je control typu selekt a obsahuje definiciu vztahov, pripojim target entitu
 			if ($control instanceof Nette\Forms\Controls\SelectBox) {
 				$targetEntity = $property->targetEntity;
-				if (isset($ui->callback) && $callback = $this->getCallback($classReflection, $ui->callback)) {
+				if (isset($ui->callback)) {
 					// data volane cez callback
 					if ($targetEntity->associationType != self::MANY_TO_ONE) {
 						throw new \Exception("Nedefinoval si `targetEntity` v {$propertyName} - @" . self::MANY_TO_ONE);
 					}
 					
-					$control->setItems($callback($targetEntity, $targetEntity->primaryKey, $targetEntity->primaryValue));
+					$control->setItems(call_user_func_array($ui->callback, (array) $ui->callbackArgs));
 				} elseif (isset($ui->options)) {
 					// data volane cez options
 					$control->setItems($options);
 				} else {
-					if ($targetEntity->associationType == self::ONE_TO_ONE) {
-						
-					} elseif ($targetEntity->associationType == self::MANY_TO_ONE) {
-						$form->onLoad[] = function() use ($targetEntity, $control) {
-							$listName = $targetEntity->serviceListName;
-							$list = $listName::fetchPairs($targetEntity->primaryKey, $targetEntity->primaryValue);
-							$control->setItems($list);
-						};
-					} else {
-						throw new \Exception("Callback alebo options v `{$classReflection->getConstant('MAIN_ENTITY_NAME')} - {$propertyName}` nie sú validné");
-					}
+					throw new \Exception("Callback alebo options v `{$classReflection->getConstant('MAIN_ENTITY_NAME')} - {$propertyName}` nie sú validné");
 				}
 			}
 			
@@ -364,6 +367,11 @@ class Reflector extends Nette\Object {
 		return ClassType::from($class)->getAnnotation(self::ANN_PRIMARY);
 	}
 
+	public static function getEntityServiceName($class) {
+		$ann = ClassType::from($class)->getAnnotation(self::ANN_SERVICE);
+		return $ann->name;
+	}
+
 	public static function getEntityServiceListName($class) {
 		$ann = ClassType::from($class)->getAnnotation(self::ANN_SERVICE_LIST);
 		return $ann->name;
@@ -393,9 +401,8 @@ class Reflector extends Nette\Object {
 		return $return;
 	}
 	
-	private function getCallback($classReflection, $callback) {
-		//list($object, $method) = explode(',', $callback);
-		return callback($this->service, trim($callback));
+	private function getCallback($class, $callback) {
+		return callback($class, trim($callback));
 	}
 	
 	private function getServiceReflection($class) {
