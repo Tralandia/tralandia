@@ -111,7 +111,7 @@ abstract class BasePresenter extends Presenter {
 
 	/* --------------------- Helpers --------------------- */
 
-	public function ulListHelper($data, $columnCount = 3, $li = NULL) {
+	public function ulListHelper($data, $columnCount = 3, $li = NULL, $columnLimit = 0) {
 		if(!($data instanceof \Traversable || is_array($data))) {
 			throw new \Nette\InvalidArgumentException('Argument "$data" does not match with the expected value');
 		}
@@ -131,15 +131,16 @@ abstract class BasePresenter extends Presenter {
 		foreach ($matches[0] as $match) {
 
 			$translate = false;
+			$matchKey = $match;
 			if (strpos($match, '_')) {
 				$translate = true;
-				$matchReplace = str_replace('_', '', $match);
+				$matchKey = str_replace('_', '', $match);
 			}
 
 			if (gettype($data)=='object') {
-				$value = '$item->'.str_replace('.', '->', substr($matchReplace, 1, -1));
+				$value = '$item->'.str_replace('.', '->', substr($matchKey, 1, -1));
 			} else {
-				$value = '$item["'.str_replace('.', '"]["', substr($matchReplace, 1, -1)).'"]';
+				$value = '$item["'.str_replace('.', '"]["', substr($matchKey, 1, -1)).'"]';
 			}
 
 			if ($translate) {
@@ -152,18 +153,21 @@ abstract class BasePresenter extends Presenter {
 		$newData = array();
 
 		$i=1;
+		$counter=0;
 		foreach ($data as $k=>$item) {
 			$search = array();
 			$replace = array();
 			foreach ($replaces as $key => $value) {
 				$search[] = $key;
 				eval('$r = '.$value.';');
-				$replace = $r;
+				$replace[] = $r;
 			}
 			$liTemp = str_replace($search, $replace, $li);
 			$row = ($i<=$columnCount)?$i:$i=1;
 			$newData[$row][] = $liTemp;
 			$i++;
+			$counter++;
+			if ($columnLimit!=0 && ($columnLimit*$columnCount)<=$counter) break;
 		}
 
 		$html = \Nette\Utils\Html::el();

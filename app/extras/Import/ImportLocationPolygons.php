@@ -48,7 +48,8 @@ class ImportLocationsPolygons extends BaseImport {
 					'id' => $countryId,
 					'iso' => $iso,
 					'css' => $this->stringifyCss($country['css']),
-					'name' => $countryName
+					'name' => $countryName,
+					'otherCountries' => array(56,57,58)
 				);
 			} else {
 				$countries['notFound'][] = array(

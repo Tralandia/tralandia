@@ -1,26 +1,21 @@
 <div class="clickMap sk">
 	<img class="clickMapTitle" src="images/sk.sk.clickMapTitle.png" />
 
-	<a href="#" class="clickMapBox rid200"><div>Stockholm</div></a>
-	<a href="#" class="clickMapBox rid201"><div>Goteborg</div></a>
+	<a href="#" class="clickMapBox rid{$box->id}" n:foreach="$mapBox as $box"><div>{_$box->name}</div></a>
 
 	<div class="clickMapCountry">
 		<div n:foreach="$regions as $region" class="clickMapRegion rid{$region->id} tempShow"></div>
 		<img class="clickMapImgmap" usemap="#regions" src="images/spacer.gif" width="548" height="275" alt="" />
 		<map name="regions" n:inner-foreach="$regions as $region">
-			<area rid="{$region->id}" shape="poly" coords="{$region->clickMapData->coords}" href="#" />
+			<area rid="{$region->id}" shape="poly" coords="{$region->clickMapData->coords}" href="{$region->slug}" title="{_$region->name}" />
 		</map>
 		<style type="text/css" n:inner-foreach="$regions as $region">{!$region->clickMapData->css}</style>
 	</div>
 
 	<div class="clickMapNavigator">
 		<div class="holder">
-			<a class="top" href="#">Svet</a>
-			<a class="top" href="#">Europa</a>
-			<div class="iconHolder"><div class="icon"><img src="images/de.clickMapNavigator.png" /></div><a href="#">Tschechische Republik</a></div>
-			<div class="iconHolder"><div class="icon"><img src="images/de.clickMapNavigator.png" /></div><a href="#">Madarsko</a></div>
-			<div class="iconHolder"><div class="icon tempShow"><img src="images/de.clickMapNavigator.png" /></div><a href="#">Rakusko</a></div>
-			<div class="iconHolder"><div class="icon"><img src="images/de.clickMapNavigator.png" /></div><a href="#">Polsko</a></div>
+			<a n:foreach="$navigatorData['top'] as $location" class="top" href="{$location->slug}">{_$location->name->id}</a>
+			<div n:foreach="$navigatorData['otherCountries'] as $location" class="iconHolder"><div class="icon"><img src="images/de.clickMapNavigator.png" /></div><a href="{$location->slug}">{_$location->name->id}</a></div>
 		</div>
 		<a class="more" href="#">dalsie<span>&nbsp;</span></a>
 	</div>
@@ -40,31 +35,8 @@
 			<a href="#"><h3>Lyzovacka</h3><span>&nbsp;</span></a><a class="active" href="#"><h3>Kupanie</h3><span>&nbsp;</span></a><a href="#"><h3>Silvester 2011</h3><span>&nbsp;</span></a>
 		</div>-->
 		<div class="tabContent">
-			<ul>
-				<li><span>&nbsp;</span><a href="#">Bojnice</a></li>
-				<li><span>&nbsp;</span><a href="#">Bojnice</a></li>
-				<li><span>&nbsp;</span><a href="#">Bojnice</a></li>
-			</ul>
-			<ul>
-				<li><span>&nbsp;</span><a href="#">Bojnice</a></li>
-				<li><span>&nbsp;</span><a href="#">Bojnice</a></li>
-				<li><span>&nbsp;</span><a href="#">Bojnice</a></li>
-			</ul>
-			<ul>
-				<li><span>&nbsp;</span><a href="#">Bojnice</a></li>
-				<li><span>&nbsp;</span><a href="#">Bojnice</a></li>
-				<li><span>&nbsp;</span><a href="#">Bojnice</a></li>
-			</ul>
-			<ul>
-				<li><span>&nbsp;</span><a href="#">Bojnice</a></li>
-				<li><span>&nbsp;</span><a href="#">Bojnice</a></li>
-				<li><span>&nbsp;</span><a href="#">Bojnice</a></li>
-			</ul>
-			<ul>
-				<li><span>&nbsp;</span><a href="#">Bojnice</a></li>
-				<li><span>&nbsp;</span><a href="#">Bojnice</a></li>
-				<li><span>&nbsp;</span><a href="#">Bojnice</a></li>
-			</ul>
+			{*@TODO: Zalozky budu platene sekcie, v kazdej zalozke budu tie locations ktore obsahuju najviac platenych objektov*}
+			{$regions|ulList , 5, '<li><span>&nbsp;</span><a href="%slug%" rid="%id%">%_name%</a></li>', 3}
 		</div>
 	</div>
 </div>

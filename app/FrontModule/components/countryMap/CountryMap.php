@@ -3,12 +3,18 @@ namespace FrontModule\Components\CountryMap;
 
 use Nette\Application\UI\Control;
 
-class CountryMap extends Control {
+class CountryMap extends \BaseModule\Components\BaseControl {
 
 	public function render() {
 
-		$country = \Service\Location\Location::get(56);
-		$this->template->regions = $this->getRegions($country);
+		$environment = new \Extras\Environment;
+		$country = $environment->getLocation();
+
+		$clickMapData = $this->getClickMapData($country);
+
+		$this->template->regions = $clickMapData['regions'];
+		$this->template->mapBox = $clickMapData['mapBox'];
+		$this->template->navigatorData = $this->getNavigatorData($country, $clickMapData);
 
 	    $template = $this->template;
 	    $template->setFile(dirname(__FILE__) . '/map.latte');
@@ -17,14 +23,45 @@ class CountryMap extends Control {
 
 	}
 
-	private function getRegions($country) {
-		$list = array();
-		foreach (\Service\Location\LocationList::getBy(array('parentId'=>$country, 'type'=>6)) as $location) {
+	private function getNavigatorData($country, $clickMapData) {
+
+		$navigatorData = array();
+
+		$navigatorData['top'] = array(
+			\Service\Location\Location::getBySlug('world'),
+			$country->getContinent()
+		);
+
+		$navigatorData['otherCountries'] = array();
+		if ($country->clickMapData) {
+			foreach ($country->clickMapData->otherCountries as $countryId) {
+				$navigatorData['otherCountries'][] = \Service\Location\Location::get($countryId);
+			}
+		}
+		return $navigatorData;
+
+	}
+
+	private function getClickMapData($country) {
+
+		$list = \Nette\ArrayHash::from(array(
+			'regions' => array(),
+			'mapBox' => array()
+		));
+
+		$type = \Service\Location\Type::getBySlug('region');
+
+		foreach (\Service\Location\LocationList::getBy(array('parentId'=>$country, 'type'=>$type)) as $key=>$location) {
 			if (isset($location->clickMapData->coords, $location->clickMapData->css)) {
-				$list[] = $location;
+				$list['regions'][$key] = $location;
+			}
+			if (isset($location->clickMapData->mapBox)) {
+				$list['mapBox'][$key] = $location;
 			}
  		}
+
 		return $list;
+
 	}
 
 }

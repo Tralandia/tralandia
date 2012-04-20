@@ -37,7 +37,10 @@ class Translator implements \Nette\Localization\ITranslator {
 				$phrase = D\Phrase::get($phrase);
 			}
 
-			$translation = $phrase->getTranslation($this->language)->translation;
+			$translation = null;
+			if ($translation = $phrase->getTranslation($this->language)) {
+				$translation = $translation->translation;
+			}
 			$this->cache->save($translationKey, $translation);
 		}
 
