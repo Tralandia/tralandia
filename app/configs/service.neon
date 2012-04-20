@@ -63,7 +63,10 @@ development < common:
 			debugger: false
 
 vaculciak < development:
-
+	parameters:
+		database:
+			debugger: true
+			
 durika < development:
 	parameters:
 		database:

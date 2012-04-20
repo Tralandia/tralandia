@@ -45,6 +45,10 @@ abstract class BasePresenter extends Presenter {
 		return $this->getEntityManager();
 	}
 
+	public function translate($phrase, $node = NULL, $count = NULL, array $variables = NULL) {
+		return $this->context->translator->translate($phrase, $node, $count, $variables);
+	}
+
 	public function getEnvironment() {
 		return $this->getService('environment');
 	}

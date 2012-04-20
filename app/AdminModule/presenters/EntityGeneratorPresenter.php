@@ -291,15 +291,15 @@ class EntityGeneratorPresenter extends BasePresenter {
 				$return['association'] = ORM\ClassMetadataInfo::MANY_TO_MANY;
 			} else if(array_key_exists('ORM\ManyToOne', $annotations)) {
 				$association = 'ORM\ManyToOne';
-				$return['association'] = ORM\ClassMetadataInfo::MANY_TO_ONE;			
+				$return['association'] = ORM\ClassMetadataInfo::MANY_TO_ONE;
 			} else if(array_key_exists('ORM\OneToMany', $annotations)) {
 				$association = 'ORM\OneToMany';
-				$return['association'] = ORM\ClassMetadataInfo::ONE_TO_MANY;			
+				$return['association'] = ORM\ClassMetadataInfo::ONE_TO_MANY;
 			} else if(array_key_exists('ORM\OneToOne', $annotations)) {
 				$association = 'ORM\OneToOne';
-				$return['association'] = ORM\ClassMetadataInfo::ONE_TO_ONE;			
+				$return['association'] = ORM\ClassMetadataInfo::ONE_TO_ONE;
 			} else {
-				$return['association'] = 0;			
+				$return['association'] = 0;
 			}
 
 			if(array_key_exists('targetEntity', $annotations[$association][0])) {

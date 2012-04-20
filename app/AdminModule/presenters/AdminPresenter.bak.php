@@ -8,10 +8,9 @@ use Nette\Application as NA,
 	Nette\Utils\Html,
 	Extras\Models\Reflector;
 
-class AdminPresenter extends BasePresenter {
+class AdminPresenter2 extends BasePresenter {
 	
 	private $settings;
-	private $service;
 	private $serviceName;
 	private $serviceListName;
 	private $reflector;
@@ -34,48 +33,37 @@ class AdminPresenter extends BasePresenter {
 		
 	}
 	
-	public function actionAdd() {
+	public function renderAdd() {
 		$form = $this->getComponent('form');
-		// TODO: instancia uplne noveho zaznamu
-		//$this->service = new Service;
-	}
-
-	public function actionEdit($id = 0) {
-		$service = $this->serviceName;
-		$this->service = $service::get($id);
-		$this->service->setCurrentMask($this->reflector->getMask());
 	}
 	
-	public function renderEdit($id = 0) {
+	public function actionEdit($id = 0) {
 		$form = $this->getComponent('form');
+		$service = $this->serviceName;
+		$service = $service::get($id);
+
 		//TODO: naslo zaznam? toto treba osetrit lebo servica nehlasi nenajdeny zaznam
 		// ale hlasi @david
-		// if (!$this->service) {
+		// if (!$service) {
 		// 	throw new NA\BadRequestException('Record not found');
 		// }
 
+		$service->setCurrentMask($this->reflector->getMask());
 		if (!$form->isSubmitted()) {
-			$data = $this->service->getDefaultsData();
-			debug($data);
+			$data = $service->getDataByMask();
 			$this->reflector->getContainer($form)
 				->setDefaults($data);
 		}
 
-		$this->template->record = $this->service;
+		$this->template->record = $service;
 		$this->template->form = $form;
 	}
 	
 	protected function createComponentForm($name) {
 		$form = new \Tra\Forms\Form($this, $name);
-		if(array_key_exists('form', $this->settings->params)) {
-			$formMask = $this->reflector->getFormMask($this->settings->params->form);
-		} else {
-			$formMask = NULL;
-		}
-		$this->reflector->extend($form, $formMask);
+		$this->reflector->extend($form);
 		$form->ajax(false);
 		$form->addSubmit('save', 'Save');
-		$form->onLoad($form);
 		$form->onSuccess[] = callback($this, 'onSave');
 		return $form;
 	}
@@ -84,26 +72,36 @@ class AdminPresenter extends BasePresenter {
 		$id = $this->getParam('id');
 		$values = $this->reflector->getPrepareValues($form);
 
-		//TODO : ainak zistit ze editujem, najlepsie so servisy
+
+		$service = $this->serviceName;
+		$service = $service::get($id);
+
 		if ($id) {
 			// EDIT
-			$this->service->updateFormData($values);
+			$service->updateFormData($values);
 		} else {
 			// ADD
-			$this->service->create($values);
+			$service->create($values);
 		}
     }
 	
 	protected function createComponentGrid($name) {
 		$mainEntityName = $this->reflector->getMainEntityName();
+		//$form = $this->getComponent('gridForm');
 		$grid = new \DataGrid\DataGrid;
-		$mapper = array(); $editable = false;
+		//$grid->itemsPerPage = 3;
 
+		//$grid->setEditForm($form);
+		//$grid->setContainer($this->reflector->getContainerName());	
+		//$grid->onDataReceived[] = array($form, 'onDataRecieved');
+		//$grid->onInvalidDataRecieved[] = array($form, 'onInvalidDataRecieved');
+	
+		$mapper = array(); $editable = false;
 		foreach ($this->settings->params->grid->columns as $alias => $column) {
 			$mapper[$alias] = $column->mapper;
 			
 			if (!isset($column->draw) || (isset($column->draw) && $column->draw == true)) {
-				$type = isset($column->type) ? $column->type : 'text';
+				$type = isset($column->type) ? $column->type : 'text';				
 				$property = substr($column->mapper, strrpos($column->mapper, '.')+1);
 
 				if ($controlAnnotation = $this->reflector->getAnnotation($mainEntityName, $property, Reflector::COLUMN)) {
@@ -130,6 +128,10 @@ class AdminPresenter extends BasePresenter {
 					);
 				}
 			}
+			if (isset($column->editable) && $column->editable == true) {
+				$editable = true;
+				//$grid->addEditableField($alias);
+			}
 		}
 
 		$list = $this->serviceListName;
@@ -141,13 +143,30 @@ class AdminPresenter extends BasePresenter {
 		$dataSource->setMapping($mapper);
 		$grid->setDataSource($dataSource);	
 		$grid->addActionColumn('Actions');
+		
 		$grid->addAction('Edit', 'edit', Html::el('span')->class('icon edit')->setText('Edit') , false);
 		$grid->addAction('Delete', 'delete', Html::el('span')->class('icon delete')->setText('Delete'), false);
 
 		return $grid;
 	}
+	
+	public function createComponentGridForm($name) {
+		$form = new \Tra\Forms\Form($this, $name);
+		$this->reflector->extend($form);
 
+		$form->ajax(false);
+		$form->addSubmit('save', 'Save');
+		$form->onSuccess[] = callback($this, 'onGridSave');
+		return $form;
+	}
+
+	public function onGridSave($form) {
+		debug($form->getValues());
+    }
+	
 	public function pattern($value, $row, $params = null) {
+		//debug("odpoved=" . $this->user->isAllowed($row->getEntity(), 'show'));
+		
 		return preg_replace_callback('/%([\w]*)%/', function($matches) use ($row) {
 			return isset($row[$matches[1]]) ? $row[$matches[1]] : $matches[0];
 		}, $params->pattern);

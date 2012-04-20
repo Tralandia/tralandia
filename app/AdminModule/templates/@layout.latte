@@ -1,5 +1,3 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 {control header:begin}
 	{control css}
 	{control js}
@@ -8,10 +6,6 @@
 	<div id="header"></div>
 	<div class="flashMessage"><div n:foreach="$flashes as $flash" class="msg {$flash->type}">{$flash->message}</div></div>
 	<div id="layout">
-		<ul id="menu">
-			<li><a n:href="Rental:list">Rentals</a>&nbsp;<a n:href="Rental:add">(add)</a></li>
-			<li><a n:href="User:list">Users</a>&nbsp;<a n:href="User:add">(add)</a></li>
-		</ul>
 		<div class="body">
 			{include #content}
 		</div>

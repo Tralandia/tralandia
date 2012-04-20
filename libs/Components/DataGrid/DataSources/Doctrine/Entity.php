@@ -36,6 +36,9 @@ class Entity implements \ArrayAccess, \IteratorAggregate {
 	}
 	
 	public function getEntity() {
+		if ($this->row instanceof \Extras\Models\Entity) {
+			return $this->row;
+		}
 		return isset($this->row[0]) ? $this->row[0] : null;
 	}
 	

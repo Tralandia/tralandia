@@ -9,7 +9,7 @@ use Extras\UI as UI;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="dictionary_phrase")
- * @UI\Primary(key="id", value="ready")
+ * @UI\Primary(key="id", value="translations")
  */
 class Phrase extends \Entity\BaseEntityDetails {
 
