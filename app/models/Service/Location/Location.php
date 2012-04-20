@@ -48,5 +48,21 @@ class Location extends \Extras\Models\ServiceNested {
 		return ($parent->type->slug=='continent') ? $parent : self::getContinent($parent);
 
 	}
+
+	public function getRentalsCount($id) {
+
+		// $serviceList = new static;
+
+		// $qb = $serviceList->getEm()->createQueryBuilder();
+
+		// $qb->select('r')
+		// 	->from('\Entity\Rental\Rental', 'r')
+		// 	->where($qb->expr()->in('r.locations', \Service\Location\Location::get($id)));
+		// 	// ->andWhere($qb->expr()->in('e.'.$nameIn, $parsedIn))
+		// 	// ->setParameter('by', \Service\Location\Location::get($id));
+
+		// return $qb->getQuery()->getResult();
+
+	}
 	
 }

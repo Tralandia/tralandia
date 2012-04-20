@@ -2,8 +2,14 @@
 
 namespace FrontModule;
 
-class HomePresenter extends BasePresenter {
+class CountryPresenter extends BasePresenter {
 	
+	public function actionList() {
+
+debug('ddd');
+
+	}
+
 	public function renderDefault() {
 
 		$vp = new \VisualPaginator($this, 'vp');
@@ -12,9 +18,6 @@ class HomePresenter extends BasePresenter {
 		$paginator = $vp->getPaginator();
 		$paginator->itemsPerPage = 15;
 		$paginator->itemCount = 568;
-
-		// TEST: saving file from URL
-		//$medium = \Service\Medium\Medium::createFromUrl('http://tralandia.local/temp/Android%20Root.rar');
 
 	}
 
@@ -33,11 +36,11 @@ class HomePresenter extends BasePresenter {
 
 		$t = $tabBar->addTab('regions');
 		$content = new \FrontModule\Components\RegionsPage\Regions($this, 'RegionsPage');
-		$t->setHeader(678)->setContent($content); // @PHRASE: {_678, '1112 Regions'}
+		$t->setHeader(678)->setContent($content)->setActive(); // @PHRASE: {_678, '1112 Regions'}
 
 		$t = $tabBar->addTab('localities');
 		$content = new \FrontModule\Components\LocalitiesPage\Localities($this, 'LocalitiesPage');
-		$t->setHeader(725)->setContent($content)->setActive(); // @PHRASE: {_725, '1626 Towns / Villages'}
+		$t->setHeader(725)->setContent($content); // @PHRASE: {_725, '1626 Towns / Villages'}
 
 		$t = $tabBar->addTab('tags');
 		$content = new \FrontModule\Components\TagsPage\Tags($this, 'TagsPage');

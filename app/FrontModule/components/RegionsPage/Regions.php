@@ -14,12 +14,12 @@ class Regions extends \BaseModule\Components\BaseControl {
 
 		$this->template->regions = \Service\Location\LocationList::getBy(array('parentId'=>$country, 'type'=>$type));
 
-		// $regions = \Nette\ArrayHash::from(array());
-		// foreach (\Service\Location\LocationList::getBy(array('parentId'=>$country, 'type'=>$type)) as $key => $location) {
-		// 	$regions[$key] = $location->getRentalsCount();
+		// $rentalsCount = \Nette\ArrayHash::from(array());
+		// foreach ($this->template->regions as $key=>$location) {
+		// 	$service = \Service\Location\Location::get($location);
+		// 	$rentalsCount[$key] = $service->getRentalsCount($location->id);
 		// 	break;
 		// }
-		// debug($regions);
 		
 		$template = $this->template;
 		$template->setFile(dirname(__FILE__) . '/page.latte');
