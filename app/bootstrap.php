@@ -9,7 +9,6 @@ use Nette\Diagnostics\Debugger,
 
 // Load Nette Framework
 require_once LIBS_DIR . '/Nette/loader.php';
-require_once LIBS_DIR . '/tools.php';
 require_once LIBS_DIR . '/rado_functions.php';
 
 $section = isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : null;
@@ -38,6 +37,9 @@ $container = $configurator->createContainer();
 // Pridanie sluzby robot loadera
 $container->addService('robotLoader', $robotLoader); // dolezite pre dynamicke presentery
 Debugger::$editor = $container->parameters['editor'];
+
+
+require_once LIBS_DIR . '/tools.php';
 
 
 

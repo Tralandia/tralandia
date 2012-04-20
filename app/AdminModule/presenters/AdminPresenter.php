@@ -65,7 +65,6 @@ class AdminPresenter extends BasePresenter {
 
 		if (!$form->isSubmitted()) {
 			$data = $this->service->getDefaultsData();
-			debug($data);
 			$this->reflector->getContainer($form)
 				->setDefaults($data);
 		}

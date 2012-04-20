@@ -6,7 +6,7 @@ use Nette,
 	Nette\ArrayHash,
 	Nette\Reflection\ClassType,
 	Nette\Reflection\Property,
-	Nette\Utils\Strings,
+	Tra\Utils\Strings,
 	Tra\Utils\Arrays,
 	Nette\ComponentModel\IContainer;
 
@@ -230,6 +230,8 @@ class Reflector extends Nette\Object {
 			$label = NULL;
 			$callback = NULL;
 			$options = NULL;
+			$inlineEditing = NULL;
+			$inlineCreating = NULL;
 
 			if ($property->hasAnnotation(self::UI_CONTROL)) {
 				$ui = $property->getAnnotation(self::UI_CONTROL);
@@ -238,6 +240,8 @@ class Reflector extends Nette\Object {
 				$callback = isset($ui->callback) ? $ui->callback : NULL;
 				$callbackArgs = isset($ui->callbackArgs) ? $ui->callbackArgs : NULL;
 				$options = isset($ui->options) ? $this->getOptions($classReflection, $ui->options) : NULL;
+				$inlineEditing = isset($ui->inlineEditing) ? $ui->inlineEditing : NULL;
+				$inlineCreating = isset($ui->inlineCreating) ? $ui->inlineCreating : NULL;
 			}
 			if($settingsFields) {
 				$type = Arrays::get($settingsFields, array($name, 'type'), $type);
@@ -245,16 +249,32 @@ class Reflector extends Nette\Object {
 				$callback = Arrays::get($settingsFields, array($name, 'callback'), $callback);
 				$callbackArgs = Arrays::get($settingsFields, array($name, 'callbackArgs'), $callbackArgs);
 				$options = Arrays::get($settingsFields, array($name, 'options'), $options);
+				$inlineEditing = Arrays::get($settingsFields, array($name, 'inlineEditing'), $inlineEditing);
+				$inlineCreating = Arrays::get($settingsFields, array($name, 'inlineCreating'), $inlineCreating);
 			}
+
+
+
 
 			$fieldMask['ui'] = array(
 				'name' => $name,
+				'nameSingular' => Strings::toSingular($name),
 				'type' => ucfirst($type),
 				'label' => $label,
 				'callback' => $callback,
 				'callbackArgs' => $callbackArgs,
 				'options' => $options,
+				'inlineEditing' => $inlineEditing,
+				'inlineCreating' => $inlineCreating,
 			);
+
+			if($type == 'select') {
+				$fieldMask['ui']['type'] = 'AdvancedSelectBox';
+			} else if($type == 'checkboxList') {
+				$fieldMask['ui']['type'] = 'AdvancedCheckboxList';
+			} else if($type == 'bricksList') {
+				$fieldMask['ui']['type'] = 'AdvancedBricksList';
+			}
 
 			if($associationType = $this->getAssocationType($property)) {
 				$association = $property->getAnnotation($associationType);
@@ -273,7 +293,8 @@ class Reflector extends Nette\Object {
 
 			}
 
-			if($type === 'select') {
+			if(in_array($type, array('select', 'checkboxList'))) {
+
 				if(!$fieldMask['ui']['callback'] && !$fieldMask['ui']['options']) {
 					$fieldMask['ui']['callback'] = 'getAllAsPairs';
 				}
@@ -307,7 +328,7 @@ class Reflector extends Nette\Object {
 
 		foreach ($mask->fields as $propertyName => $property) {
 			unset($ui, $control, $validators, $association);
-			// debug($property);
+			//debug($property);
 			$ui = $property->ui;
 			$control = $container->{'add' . $ui->type}(
 				$propertyName,
@@ -316,14 +337,12 @@ class Reflector extends Nette\Object {
 			
 			
 			// ak je control typu selekt a obsahuje definiciu vztahov, pripojim target entitu
-			if ($control instanceof Nette\Forms\Controls\SelectBox) {
+			if ($control instanceof \Extras\Forms\Controls\AdvancedSelectBox 
+				|| $control instanceof \Extras\Forms\Controls\AdvancedCheckboxList) 
+			{
 				$targetEntity = $property->targetEntity;
 				if (isset($ui->callback)) {
 					// data volane cez callback
-					if ($targetEntity->associationType != self::MANY_TO_ONE) {
-						throw new \Exception("Nedefinoval si `targetEntity` v {$propertyName} - @" . self::MANY_TO_ONE);
-					}
-					
 					$control->setItems(call_user_func_array($ui->callback, (array) $ui->callbackArgs));
 				} elseif (isset($ui->options)) {
 					// data volane cez options
@@ -331,6 +350,14 @@ class Reflector extends Nette\Object {
 				} else {
 					throw new \Exception("Callback alebo options v `{$classReflection->getConstant('MAIN_ENTITY_NAME')} - {$propertyName}` nie sú validné");
 				}
+			}
+
+			if ($control instanceof \Extras\Forms\Controls\AdvancedBricksList
+				|| $control instanceof \Extras\Forms\Controls\AdvancedSelectBox
+				|| $control instanceof \Extras\Forms\Controls\AdvancedCheckboxList) 
+			{
+				$control->setInlineEditing($ui->inlineEditing);
+				$control->setInlineCreating($ui->inlineCreating);
 			}
 			
 		}

@@ -28,8 +28,16 @@ common:
 			iso:
 				type: text
 
+			currencies:
+				type: bricksList
+				#type: checkboxList
+				inlineEditing: true
+				inlineCreating: true
+
 			defaultCurrency:
 				label: Def. Currency
+				inlineEditing: true
+				inlineCreating: true
 
 			defaultLanguage:
 				label: Def. Language

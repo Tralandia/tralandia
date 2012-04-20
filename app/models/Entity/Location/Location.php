@@ -190,6 +190,7 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 	/**
 	 * @var Collection
 	 * @ORM\ManyToMany(targetEntity="Entity\Currency", mappedBy="locations", cascade={"persist"})
+	 * @UI\Control(type="checkboxList")
 	 */
 	protected $currencies;
 

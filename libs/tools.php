@@ -15,6 +15,10 @@ FormContainer::extensionMethod('addComboSelect', 'Tools::addComboSelect');
 Selection::extensionMethod('fetchTree', 'Tools::selectionTree');
 Image::extensionMethod('resizeCrop', 'Tools::resizeCrop');
 
+Extras\Forms\Controls\AdvancedBricksList::register();
+Extras\Forms\Controls\AdvancedCheckboxList::register();
+Extras\Forms\Controls\AdvancedSelectBox::register();
+
 function debug() {
 	return Tools::dump(func_get_args());
 }
@@ -115,4 +119,5 @@ class Tools {
 
 		return $a;
 	}
+
 }
