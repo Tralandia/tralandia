@@ -5,6 +5,8 @@ namespace Tra\Forms;
 use Tra;
 
 class Form extends \CoolForm {
+
+	public $onLoad = array();
 /*
 	public function __construct(\Nette\ComponentModel\IContainer $parent = null, $name = null) {
 		parent::__construct($parent, $name);

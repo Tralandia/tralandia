@@ -3,7 +3,7 @@ namespace FrontModule\Components\Breadcrumb;
 
 use Nette\Application\UI\Control;
 
-class Breadcrumb extends Control {
+class Breadcrumb extends \BaseModule\Components\BaseControl {
 
 	public function render() {
 		$template = $this->template;

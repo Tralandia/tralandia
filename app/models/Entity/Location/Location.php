@@ -5,10 +5,15 @@ namespace Entity\Location;
 use Entity\Dictionary;
 use Doctrine\ORM\Mapping as ORM;
 use DoctrineExtensions\NestedSet\MultipleRootNode;
+use	Extras\UI as UI;
+use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="location_location")
+ * @EA\Service(name="\Service\Location\Location")
+ * @EA\ServiceList(name="\Service\Location\LocationList")
+ * @UI\Primary(key="id", value="name")
  */
 class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 
@@ -17,24 +22,28 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 	/**
 	 * @var Collection
 	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
+	 * @UI\Control(type="text")
 	 */
 	protected $name;
 
 	/**
 	 * @var Collection
 	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
+	 * @UI\Control(type="text")
 	 */
 	protected $nameOfficial;
 
 	/**
 	 * @var Collection
 	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
+	 * @UI\Control(type="text")
 	 */
 	protected $nameShort;
 
 	/**
 	 * @var slug
 	 * @ORM\Column(type="slug")
+	 * @UI\Control(type="text")
 	 */
 	protected $slug;
 
@@ -65,6 +74,7 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Type")
+	 * @UI\Control(type="text")
 	 */
 	protected $type;
 
@@ -119,6 +129,7 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Domain", inversedBy="locations")
+	 * @UI\Control(type="text")
 	 */
 	protected $domain;
 
@@ -158,12 +169,14 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 	/**
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
+	 * @UI\Control(type="text")
 	 */
 	protected $status;
 
 	/**
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
+	 * @UI\Control(type="text")
 	 */
 	protected $iso;
 
@@ -176,6 +189,7 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Currency", cascade={"persist"})
+	 * @UI\Control(type="select")
 	 */
 	protected $defaultCurrency;
 
@@ -188,6 +202,7 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Dictionary\Language", cascade={"persist"})
+	 * @UI\Control(type="select", callback="getMyCallback")
 	 */
 	protected $defaultLanguage;
 

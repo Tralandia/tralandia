@@ -39,5 +39,14 @@ class Location extends \Extras\Models\ServiceNested {
 		return $locationList->count() ? FALSE : TRUE;
 
 	}
+
+	public function getContinent() {
+
+		if (!$this->parentId) return null;
+
+		$parent = \Service\Location\Location::get($this->parentId);
+		return ($parent->type->slug=='continent') ? $parent : self::getContinent($parent);
+
+	}
 	
 }

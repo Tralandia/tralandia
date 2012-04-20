@@ -7,6 +7,9 @@ use Doctrine\Common\Annotations\Annotation;
 /** @Annotation */
 final class Control extends Annotation {
 	public $type = 'text';
+	public $callback;
+	public $callbackArgs;
+	public $options;
 }
 
 /** @Annotation */
