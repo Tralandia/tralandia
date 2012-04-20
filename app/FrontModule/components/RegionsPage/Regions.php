@@ -14,6 +14,11 @@ class Regions extends \BaseModule\Components\BaseControl {
 
 		$this->template->regions = \Service\Location\LocationList::getBy(array('parentId'=>$country, 'type'=>$type));
 
+		// $this->template->regions = \Nette\ArrayHash::from(array());
+		// foreach (\Service\Location\LocationList::getBy(array('parentId'=>$country, 'type'=>$type)) as $key => $location) {
+		// 	$this->template->regions[$key] = $location;
+		// }
+		
 		$template = $this->template;
 		$template->setFile(dirname(__FILE__) . '/page.latte');
 		$template->render();
