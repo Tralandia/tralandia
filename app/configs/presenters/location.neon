@@ -21,9 +21,14 @@ common:
 
 	form:
 		fields:
+			name:
+				inlineEditing: true
+				inlineCreating: true
+
 			slug:
 				type: text
 				label: Sluuug
+				disabled: true
 
 			iso:
 				type: text

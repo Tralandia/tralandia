@@ -449,7 +449,7 @@ abstract class Service extends Nette\Object implements IService {
 				if(isset($property->targetEntity)) {
 					$targetEntity = $property->targetEntity;
 					if($targetEntity->name == 'Entity\\Dictionary\\Phrase') {
-						// @todo
+						// fraza sa needituje cez serisu
 					} else if($targetEntity->associationType == Reflector::ONE_TO_ONE) {
 						$this->{$name}->{$targetEntity->primaryValue} = $formValue;
 					} else if($targetEntity->associationType == Reflector::MANY_TO_MANY) {

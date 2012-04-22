@@ -9,6 +9,8 @@ use Extras\UI as UI;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="dictionary_phrase")
+ * @EA\Service(name="\Service\Dictionary\Phrase")
+ * @EA\ServiceList(name="\Service\Dictionary\PhraseList")
  * @UI\Primary(key="id", value="translations")
  */
 class Phrase extends \Entity\BaseEntityDetails {

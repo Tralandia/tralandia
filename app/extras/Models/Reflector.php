@@ -224,51 +224,55 @@ class Reflector extends Nette\Object {
 				'ui' => NULL,
 			);
 
+			$fieldMask['ui'] = array();
 			$name = $property->getName();
 			$ui = NULL;
-			$type = NULL;
-			$label = NULL;
-			$callback = NULL;
 			$options = NULL;
-			$inlineEditing = NULL;
-			$inlineCreating = NULL;
+
+			$fieldOptions = array(
+				'type' => array('default'=> NULL), 
+				'label' => array('default'=> ucfirst($name)), 
+				'callback' => array('default'=> NULL), 
+				'callbackArgs' => array('default'=> NULL), 
+				'inlineEditing' => array('default'=> NULL), 
+				'inlineCreating' => array('default'=> NULL), 
+				'disabled' => array('default'=> NULL),
+			);
+
 
 			if ($property->hasAnnotation(self::UI_CONTROL)) {
 				$ui = $property->getAnnotation(self::UI_CONTROL);
-				$type = $ui->type;
-				$label = isset($ui->label) ? $ui->label : ucfirst($name);
-				$callback = isset($ui->callback) ? $ui->callback : NULL;
-				$callbackArgs = isset($ui->callbackArgs) ? $ui->callbackArgs : NULL;
+				$fieldMask['ui']['type'] = $ui->type;
 				$options = isset($ui->options) ? $this->getOptions($classReflection, $ui->options) : NULL;
-				$inlineEditing = isset($ui->inlineEditing) ? $ui->inlineEditing : NULL;
-				$inlineCreating = isset($ui->inlineCreating) ? $ui->inlineCreating : NULL;
+
+				foreach ($fieldOptions as $key => $value) {
+					$fieldMask['ui'][$key] = isset($ui->$key) ? $ui->$key : $value['default'];
+				}
 			}
+
 			if($settingsFields) {
-				$type = Arrays::get($settingsFields, array($name, 'type'), $type);
-				$label = Arrays::get($settingsFields, array($name, 'label'), $label);
-				$callback = Arrays::get($settingsFields, array($name, 'callback'), $callback);
-				$callbackArgs = Arrays::get($settingsFields, array($name, 'callbackArgs'), $callbackArgs);
 				$options = Arrays::get($settingsFields, array($name, 'options'), $options);
-				$inlineEditing = Arrays::get($settingsFields, array($name, 'inlineEditing'), $inlineEditing);
-				$inlineCreating = Arrays::get($settingsFields, array($name, 'inlineCreating'), $inlineCreating);
+
+				foreach ($fieldOptions as $key => $value) {
+					$fieldMask['ui'][$key] = Arrays::get($settingsFields, array($name, $key), $fieldMask['ui'][$key]);
+				}
 			}
 
+			$type = $fieldMask['ui']['type'];
 
+			if($type == 'phrase') {
+				$type = $fieldMask['ui']['type'] = 'text';
+				if($fieldMask['ui']['disabled'] === NULL) $fieldMask['ui']['disabled'] = true;
+			}
 
+			$fieldMask['ui']['name'] = $name;
+			$fieldMask['ui']['type'] = ucfirst($fieldMask['ui']['type']);
+			$fieldMask['ui']['nameSingular'] = Strings::toSingular(ucfirst($fieldMask['ui']['name']));
+			$fieldMask['ui']['options'] = $options;
 
-			$fieldMask['ui'] = array(
-				'name' => $name,
-				'nameSingular' => Strings::toSingular($name),
-				'type' => ucfirst($type),
-				'label' => $label,
-				'callback' => $callback,
-				'callbackArgs' => $callbackArgs,
-				'options' => $options,
-				'inlineEditing' => $inlineEditing,
-				'inlineCreating' => $inlineCreating,
-			);
-
-			if($type == 'select') {
+			if($type == 'text') {
+				$fieldMask['ui']['type'] = 'AdvancedTextInput';
+			} else if($type == 'select') {
 				$fieldMask['ui']['type'] = 'AdvancedSelectBox';
 			} else if($type == 'checkboxList') {
 				$fieldMask['ui']['type'] = 'AdvancedCheckboxList';
@@ -305,6 +309,8 @@ class Reflector extends Nette\Object {
 				}
 			}
 
+			// @todo vyhadzovat exceptiony ak nieco nieje nastavene OK
+
 			$mask['fields'][$name] = $fieldMask;
 		}
 		
@@ -334,6 +340,8 @@ class Reflector extends Nette\Object {
 				$propertyName,
 				$ui->label
 			);
+
+			if($ui->disabled) $control->setDisabled();
 			
 			
 			// ak je control typu selekt a obsahuje definiciu vztahov, pripojim target entitu
@@ -353,6 +361,7 @@ class Reflector extends Nette\Object {
 			}
 
 			if ($control instanceof \Extras\Forms\Controls\AdvancedBricksList
+				|| $control instanceof \Extras\Forms\Controls\AdvancedTextInput
 				|| $control instanceof \Extras\Forms\Controls\AdvancedSelectBox
 				|| $control instanceof \Extras\Forms\Controls\AdvancedCheckboxList) 
 			{
