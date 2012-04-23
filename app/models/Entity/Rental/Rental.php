@@ -52,7 +52,7 @@ class Rental extends \Entity\BaseEntity {
 
 	/**
 	 * @var decimal
-	 * @ORM\Column(type="decimal")
+	 * @ORM\Column(type="decimal", nullable=true)
 	 */
 	protected $rank;
 
@@ -112,7 +112,7 @@ class Rental extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Contact\Contact", mappedBy="rentals")
+	 * @ORM\ManyToMany(targetEntity="Entity\Contact\Contact", mappedBy="rentals", cascade={"persist", "remove"})
 	 */
 	protected $contacts;
 
@@ -120,7 +120,7 @@ class Rental extends \Entity\BaseEntity {
 	 * @var Collection
 	 * @ORM\ManyToMany(targetEntity="Entity\Dictionary\Language", mappedBy="rentals")
 	 */
-	protected $languagesSpoken;
+	protected $spokenLanguages;
 
 	/**
 	 * @var Collection
@@ -129,28 +129,16 @@ class Rental extends \Entity\BaseEntity {
 	protected $amenities;
 
 	/**
-	 * @var time
-	 * @ORM\Column(type="time")
+	 * @var text
+	 * @ORM\Column(type="text", nullable=true)
 	 */
 	protected $checkIn;
 
 	/**
-	 * @var time
-	 * @ORM\Column(type="time")
+	 * @var text
+	 * @ORM\Column(type="text", nullable=true)
 	 */
 	protected $checkOut;
-
-	/**
-	 * @var integer
-	 * @ORM\Column(type="integer")
-	 */
-	protected $capacityMin;
-
-	/**
-	 * @var integer
-	 * @ORM\Column(type="integer")
-	 */
-	protected $capacityMax;
 
 	/**
 	 * @var json
@@ -159,32 +147,20 @@ class Rental extends \Entity\BaseEntity {
 	protected $pricelist;
 
 	/**
-	 * @var price
-	 * @ORM\Column(type="price")
-	 */
-	protected $priceSeason;
-
-	/**
-	 * @var price
-	 * @ORM\Column(type="price")
-	 */
-	protected $priceOffseason;
-
-	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Entity\Medium\Medium", mappedBy="rental")
+	 * @ORM\OneToMany(targetEntity="Entity\Medium\Medium", mappedBy="rental", cascade={"persist", "remove"})
 	 */
 	protected $media;
 
 	/**
 	 * @var text
-	 * @ORM\Column(type="text")
+	 * @ORM\Column(type="text", nullable=true)
 	 */
 	protected $calendar;
 
 	/**
 	 * @var datetime
-	 * @ORM\Column(type="datetime")
+	 * @ORM\Column(type="datetime", nullable=true)
 	 */
 	protected $calendarUpdated;
 
@@ -200,7 +176,11 @@ class Rental extends \Entity\BaseEntity {
 	 */
 	protected $invoices;
 
-	
+
+
+
+
+
 
 
 
@@ -216,7 +196,7 @@ class Rental extends \Entity\BaseEntity {
 		$this->types = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->locations = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->contacts = new \Doctrine\Common\Collections\ArrayCollection;
-		$this->languagesSpoken = new \Doctrine\Common\Collections\ArrayCollection;
+		$this->spokenLanguages = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->amenities = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->media = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->fulltexts = new \Doctrine\Common\Collections\ArrayCollection;
@@ -348,6 +328,15 @@ class Rental extends \Entity\BaseEntity {
 	 */
 	public function setRank($rank) {
 		$this->rank = $rank;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Rental\Rental
+	 */
+	public function unsetRank() {
+		$this->rank = NULL;
 
 		return $this;
 	}
@@ -565,11 +554,11 @@ class Rental extends \Entity\BaseEntity {
 	 * @param \Entity\Dictionary\Language
 	 * @return \Entity\Rental\Rental
 	 */
-	public function addLanguagesSpoken(\Entity\Dictionary\Language $languagesSpoken) {
-		if(!$this->languagesSpoken->contains($languagesSpoken)) {
-			$this->languagesSpoken->add($languagesSpoken);
+	public function addSpokenLanguage(\Entity\Dictionary\Language $spokenLanguage) {
+		if(!$this->spokenLanguages->contains($spokenLanguage)) {
+			$this->spokenLanguages->add($spokenLanguage);
 		}
-		$languagesSpoken->addRental($this);
+		$spokenLanguage->addRental($this);
 
 		return $this;
 	}
@@ -578,11 +567,11 @@ class Rental extends \Entity\BaseEntity {
 	 * @param \Entity\Dictionary\Language
 	 * @return \Entity\Rental\Rental
 	 */
-	public function removeLanguagesSpoken(\Entity\Dictionary\Language $languagesSpoken) {
-		if($this->languagesSpoken->contains($languagesSpoken)) {
-			$this->languagesSpoken->removeElement($languagesSpoken);
+	public function removeSpokenLanguage(\Entity\Dictionary\Language $spokenLanguage) {
+		if($this->spokenLanguages->contains($spokenLanguage)) {
+			$this->spokenLanguages->removeElement($spokenLanguage);
 		}
-		$languagesSpoken->removeRental($this);
+		$spokenLanguage->removeRental($this);
 
 		return $this;
 	}
@@ -590,8 +579,8 @@ class Rental extends \Entity\BaseEntity {
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Dictionary\Language
 	 */
-	public function getLanguagesSpoken() {
-		return $this->languagesSpoken;
+	public function getSpokenLanguages() {
+		return $this->spokenLanguages;
 	}
 		
 	/**
@@ -628,71 +617,55 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Extras\Types\Time
+	 * @param string
 	 * @return \Entity\Rental\Rental
 	 */
-	public function setCheckIn(\Extras\Types\Time $checkIn) {
+	public function setCheckIn($checkIn) {
 		$this->checkIn = $checkIn;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Extras\Types\Time|NULL
+	 * @return \Entity\Rental\Rental
+	 */
+	public function unsetCheckIn() {
+		$this->checkIn = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
 	 */
 	public function getCheckIn() {
 		return $this->checkIn;
 	}
 		
 	/**
-	 * @param \Extras\Types\Time
+	 * @param string
 	 * @return \Entity\Rental\Rental
 	 */
-	public function setCheckOut(\Extras\Types\Time $checkOut) {
+	public function setCheckOut($checkOut) {
 		$this->checkOut = $checkOut;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Extras\Types\Time|NULL
+	 * @return \Entity\Rental\Rental
+	 */
+	public function unsetCheckOut() {
+		$this->checkOut = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
 	 */
 	public function getCheckOut() {
 		return $this->checkOut;
-	}
-		
-	/**
-	 * @param integer
-	 * @return \Entity\Rental\Rental
-	 */
-	public function setCapacityMin($capacityMin) {
-		$this->capacityMin = $capacityMin;
-
-		return $this;
-	}
-		
-	/**
-	 * @return integer|NULL
-	 */
-	public function getCapacityMin() {
-		return $this->capacityMin;
-	}
-		
-	/**
-	 * @param integer
-	 * @return \Entity\Rental\Rental
-	 */
-	public function setCapacityMax($capacityMax) {
-		$this->capacityMax = $capacityMax;
-
-		return $this;
-	}
-		
-	/**
-	 * @return integer|NULL
-	 */
-	public function getCapacityMax() {
-		return $this->capacityMax;
 	}
 		
 	/**
@@ -713,48 +686,14 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Extras\Types\Price
-	 * @return \Entity\Rental\Rental
-	 */
-	public function setPriceSeason(\Extras\Types\Price $priceSeason) {
-		$this->priceSeason = $priceSeason;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Extras\Types\Price|NULL
-	 */
-	public function getPriceSeason() {
-		return $this->priceSeason;
-	}
-		
-	/**
-	 * @param \Extras\Types\Price
-	 * @return \Entity\Rental\Rental
-	 */
-	public function setPriceOffseason(\Extras\Types\Price $priceOffseason) {
-		$this->priceOffseason = $priceOffseason;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Extras\Types\Price|NULL
-	 */
-	public function getPriceOffseason() {
-		return $this->priceOffseason;
-	}
-		
-	/**
 	 * @param \Entity\Medium\Medium
 	 * @return \Entity\Rental\Rental
 	 */
-	public function addMedia(\Entity\Medium\Medium $media) {
-		if(!$this->media->contains($media)) {
-			$this->media->add($media);
+	public function addMedium(\Entity\Medium\Medium $medium) {
+		if(!$this->media->contains($medium)) {
+			$this->media->add($medium);
 		}
-		$media->setRental($this);
+		$medium->setRental($this);
 
 		return $this;
 	}
@@ -763,11 +702,11 @@ class Rental extends \Entity\BaseEntity {
 	 * @param \Entity\Medium\Medium
 	 * @return \Entity\Rental\Rental
 	 */
-	public function removeMedia(\Entity\Medium\Medium $media) {
-		if($this->media->contains($media)) {
-			$this->media->removeElement($media);
+	public function removeMedium(\Entity\Medium\Medium $medium) {
+		if($this->media->contains($medium)) {
+			$this->media->removeElement($medium);
 		}
-		$media->unsetRental();
+		$medium->unsetRental();
 
 		return $this;
 	}
@@ -790,6 +729,15 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
+	 * @return \Entity\Rental\Rental
+	 */
+	public function unsetCalendar() {
+		$this->calendar = NULL;
+
+		return $this;
+	}
+		
+	/**
 	 * @return string|NULL
 	 */
 	public function getCalendar() {
@@ -802,6 +750,15 @@ class Rental extends \Entity\BaseEntity {
 	 */
 	public function setCalendarUpdated(\DateTime $calendarUpdated) {
 		$this->calendarUpdated = $calendarUpdated;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Rental\Rental
+	 */
+	public function unsetCalendarUpdated() {
+		$this->calendarUpdated = NULL;
 
 		return $this;
 	}

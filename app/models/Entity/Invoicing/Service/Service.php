@@ -13,12 +13,6 @@ class Service extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Invoicing\Package", inversedBy="services")
-	 */
-	protected $package;
-
-	/**
-	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Type")
 	 */
 	protected $type;
@@ -41,7 +35,19 @@ class Service extends \Entity\BaseEntity {
 	 */
 	protected $currentPrice;
 
+	/**
+	 * @var Collection
+	 * @ORM\ManyToOne(targetEntity="Entity\Invoicing\Package", inversedBy="services")
+	 */
+	protected $package;
 	
+
+
+
+
+
+
+
 
 
 

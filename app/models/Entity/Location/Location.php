@@ -305,6 +305,13 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 
 
 
+
+
+
+
+
+
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		

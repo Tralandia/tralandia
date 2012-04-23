@@ -37,6 +37,21 @@ class RadoPresenter extends BasePresenter {
 			$this->flashMessage('Section UNDONE');
 			$redirect = TRUE;
 		}
+
+		if (isset($this->params['removeNewTablesFromOldDb'])) {
+			q('SET FOREIGN_KEY_CHECKS = 0;');
+			$tables = q('show tables');
+			while ($x = mysql_fetch_array($tables)) {
+				$cols = q('show columns from '.$x[0].' like "oldId"');
+				$cols = mysql_fetch_array($cols);
+				if ($cols) {
+					debug($x[0]);
+					q('drop table '.$x[0]);
+				}
+			}
+			q('SET FOREIGN_KEY_CHECKS = 1;');
+		}
+
 		if (isset($this->params['importSection'])) {
 			//\Extras\Models\Service::preventFlush();
 			$className = 'Extras\Import\Import'.ucfirst($this->params['importSection']);

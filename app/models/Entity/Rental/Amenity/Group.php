@@ -36,6 +36,13 @@ class Group extends \Entity\BaseEntity {
 
 
 
+
+
+
+
+
+
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -93,23 +100,6 @@ class Group extends \Entity\BaseEntity {
 	 */
 	public function getName() {
 		return $this->name;
-	}
-		
-	/**
-	 * @param \Entity\Dictionary\Phrase
-	 * @return \Entity\Rental\Amenity\Group
-	 */
-	public function setNamePlural(\Entity\Dictionary\Phrase $namePlural) {
-		$this->namePlural = $namePlural;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Dictionary\Phrase|NULL
-	 */
-	public function getNamePlural() {
-		return $this->namePlural;
 	}
 		
 	/**

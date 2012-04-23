@@ -12,10 +12,10 @@ use Doctrine\ORM\Mapping as ORM;
 class Type extends \Entity\BaseEntity {
 
 	/**
-	 * @var string
-	 * @ORM\Column(type="string", nullable=true)
+	 * @var slug
+	 * @ORM\Column(type="slug")
 	 */
-	protected $nameTechnical;
+	protected $slug;
 
 	/**
 	 * @var Collection
@@ -24,6 +24,13 @@ class Type extends \Entity\BaseEntity {
 	protected $name;
 
 	
+
+
+
+
+
+
+
 
 
 

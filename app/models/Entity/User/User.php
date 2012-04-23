@@ -28,6 +28,12 @@ class User extends \Entity\BaseEntityDetails {
 	protected $password;
 
 	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean", nullable=true)
+	 */
+	protected $isOwner;
+
+	/**
 	 * @var Collection
 	 * @ORM\ManyToMany(targetEntity="Role", mappedBy="users", cascade={"persist"})
 	 * @UI\SingularName(name="role")
@@ -36,7 +42,7 @@ class User extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Entity\Contact\Contact", mappedBy="user", cascade={"persist"})
+	 * @ORM\OneToMany(targetEntity="Entity\Contact\Contact", mappedBy="user", cascade={"persist", "remove"})
 	 * @UI\SingularName(name="contact") 
 	 */
 	protected $contacts;
@@ -87,19 +93,19 @@ class User extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact", cascade={"persist"})
+	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact", cascade={"persist", "remove"})
 	 */
 	protected $invoicingEmail;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact", cascade={"persist"})
+	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact", cascade={"persist", "remove"})
 	 */
 	protected $invoicingPhone;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact", cascade={"persist"})
+	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact", cascade={"persist", "remove"})
 	 */
 	protected $invoicingUrl;
 
@@ -150,6 +156,13 @@ class User extends \Entity\BaseEntityDetails {
 
 
 	
+
+
+
+
+
+
+
 
 
 
@@ -221,6 +234,32 @@ class User extends \Entity\BaseEntityDetails {
 	 */
 	public function getPassword() {
 		return $this->password;
+	}
+		
+	/**
+	 * @param boolean
+	 * @return \Entity\User\User
+	 */
+	public function setIsOwner($isOwner) {
+		$this->isOwner = $isOwner;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\User\User
+	 */
+	public function unsetIsOwner() {
+		$this->isOwner = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return boolean|NULL
+	 */
+	public function getIsOwner() {
+		return $this->isOwner;
 	}
 		
 	/**
