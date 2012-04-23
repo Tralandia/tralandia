@@ -6,10 +6,11 @@
 }
 
 .container .inner {
-	margin: 0 -20px;
+	margin: 10px -20px;
 	padding: 10px;
 	background: @white;
 	border-top: none;
+	border: 1px solid @greenBorder;
 }
 
 .container .inner .content {
@@ -40,9 +41,10 @@ table thead {
 	#gradient > .vertical(@white, #eff3d0);
 }
 
-.well {
+.box {
 	background-color:#f5f5f5;
-	border-color:@greenBorder;
+	box-shadow:0 1px 1px @greenBorder;
+	padding:10px 0;
 }
 
 .nav-list > .active > a, .nav-list > .active > a:hover {
@@ -56,3 +58,16 @@ table thead {
 .content .row {
 	padding:0;
 }
+
+.content .box {
+	background-color:#f5f5f5;
+	border-color:@greenBorder;
+	box-shadow:0 1px 1px @greenBorder;
+	padding:20px 0;
+}
+
+textarea:focus {
+	border-color: rgba(163,196,0,.8);
+	@shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(163,196,0,.6);
+}
+
