@@ -63,6 +63,7 @@ class Medium extends \Service\BaseService {
 		if (!($mediumType instanceof \Service\Medium\Type)) {
 			$mediumType = \Service\Medium\Type::get();
 			$mediumType->name = $medium->details['mime'];
+			debug($mediumType);
 			$mediumType->save();
 		}
 
