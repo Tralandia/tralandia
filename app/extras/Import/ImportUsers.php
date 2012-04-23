@@ -92,6 +92,7 @@ class ImportUsers extends BaseImport {
 
 			$user->login = $x['email'];
 			$user->password = $x['password'];
+			$user->oldId = $x['id'];
 			$user->addRole($role);
 
 			$user->addContact($this->createContact('email', $x['email']));
@@ -120,6 +121,7 @@ class ImportUsers extends BaseImport {
 
 			$user->login = $x['email'];
 			$user->password = $x['password'];
+			$user->oldId = $x['id'];
 			$user->addRole($role);
 
 			$user->addContact($this->createContact('email', $x['email']));
@@ -158,6 +160,7 @@ class ImportUsers extends BaseImport {
 
 			$user->login = $x['email'];
 			$user->password = $x['password'];
+			$user->oldId = $x['id'];
 			$user->addRole($role);
 			$user->invoicingLastName = $x['name'];
 
@@ -197,6 +200,8 @@ class ImportUsers extends BaseImport {
 
 			$user->login = $x['email'];
 			$user->password = $x['password'];
+			$user->oldId = $x['id'];
+			$user->isOwner = TRUE; //@todo toto tu je len temporary parameter pre import, potom zrusit
 
 			$user->addRole($role);
 
@@ -270,6 +275,7 @@ class ImportUsers extends BaseImport {
 
 			if (!$user->login) $user->login = $x['email'];
 			if (!$user->password) $user->password = NULL;
+			//if (!$user->oldId) $user->oldId = $x['id'];
 
 			$user->addRole($role);
 

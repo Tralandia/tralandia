@@ -75,6 +75,13 @@ class Type extends \Entity\BaseEntityDetails {
 
 
 
+
+
+
+
+
+
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		

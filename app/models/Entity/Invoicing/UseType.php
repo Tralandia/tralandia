@@ -18,6 +18,12 @@ class UseType extends \Entity\BaseEntity {
 	protected $name;
 
 	/**
+	 * @var slug
+	 * @ORM\Column(type="slug")
+	 */
+	protected $slug;
+
+	/**
 	 * @var Collection
 	 * @ORM\ManyToMany(targetEntity="Package", inversedBy="uses")
 	 */
@@ -30,6 +36,13 @@ class UseType extends \Entity\BaseEntity {
 	protected $marketings;
 
 	
+
+
+
+
+
+
+
 
 
 

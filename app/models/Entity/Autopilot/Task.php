@@ -118,6 +118,13 @@ class Task extends \Entity\BaseEntityDetails {
 
 
 
+
+
+
+
+
+
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		

@@ -12,6 +12,12 @@ use Doctrine\ORM\Mapping as ORM;
 class Duration extends \Entity\BaseEntity {
 
 	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $durationString;
+
+	/**
 	 * @var Collection
 	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
 	 */
@@ -30,6 +36,13 @@ class Duration extends \Entity\BaseEntity {
 	protected $sort;
 
 	
+
+
+
+
+
+
+
 
 
 

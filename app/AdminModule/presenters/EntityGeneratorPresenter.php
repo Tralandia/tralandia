@@ -263,7 +263,9 @@ class EntityGeneratorPresenter extends BasePresenter {
 
 	public function toSingular($name) {
 		if(in_array($name, array('status', 'address', 'decimalPlaces'))) return $name;
-		if(Strings::endsWith($name, 'ies')) {
+		if ($name == "media") {
+			$name = "medium";
+		} else if(Strings::endsWith($name, 'ies')) {
 			$name = substr($name, 0 , -3).'y';
 		} else if (Strings::endsWith($name, 's')) {
 			$name = substr($name, 0 , -1);

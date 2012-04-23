@@ -90,8 +90,8 @@ class BaseEntity extends \Extras\Models\Entity {
 	 * @ORM\prePersist
 	 * @return \Entity\BaseEntity
 	 */
-	public function setCreated(){
-		$this->created = new \Nette\DateTime;
+	public function setCreated($datetime = NULL){
+		$this->created = new \Nette\DateTime($datetime);
 
 		return $this;
 	}

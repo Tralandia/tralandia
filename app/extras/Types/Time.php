@@ -2,6 +2,6 @@
 
 namespace Extras\Types;
 
-class Time extends BaseType {
+class Time extends \Nette\DateTime {
 
 }

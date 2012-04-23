@@ -94,6 +94,13 @@ class SeoUrl extends \Entity\BaseEntity {
 
 
 
+
+
+
+
+
+
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -254,11 +261,11 @@ class SeoUrl extends \Entity\BaseEntity {
 	 * @param \Entity\Medium\Medium
 	 * @return \Entity\Seo\SeoUrl
 	 */
-	public function addMedia(\Entity\Medium\Medium $media) {
-		if(!$this->media->contains($media)) {
-			$this->media->add($media);
+	public function addMedium(\Entity\Medium\Medium $medium) {
+		if(!$this->media->contains($medium)) {
+			$this->media->add($medium);
 		}
-		$media->setSeoUrl($this);
+		$medium->setSeoUrl($this);
 
 		return $this;
 	}
@@ -267,11 +274,11 @@ class SeoUrl extends \Entity\BaseEntity {
 	 * @param \Entity\Medium\Medium
 	 * @return \Entity\Seo\SeoUrl
 	 */
-	public function removeMedia(\Entity\Medium\Medium $media) {
-		if($this->media->contains($media)) {
-			$this->media->removeElement($media);
+	public function removeMedium(\Entity\Medium\Medium $medium) {
+		if($this->media->contains($medium)) {
+			$this->media->removeElement($medium);
 		}
-		$media->unsetSeoUrl();
+		$medium->unsetSeoUrl();
 
 		return $this;
 	}

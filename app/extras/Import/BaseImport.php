@@ -89,9 +89,14 @@ class BaseImport {
 			),
 			'subsections' => array(),
 		),
-		'rentals' => array(
+		'rentalTypes' => array(
 			'entities' => array(
 				'\Rental\Type' => array(),
+			),
+			'subsections' => array(),
+		),
+		'rentals' => array(
+			'entities' => array(
 				'\Rental\Rental' => array(),
 			),
 			'subsections' => array(),
