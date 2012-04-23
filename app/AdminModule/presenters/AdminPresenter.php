@@ -24,7 +24,7 @@ class AdminPresenter extends BasePresenter {
 		$this->template->settings = $this->settings;
 		$this->serviceName = $this->settings->serviceClass;
 		$this->serviceListName = $this->settings->serviceListClass;
-		$this->reflector = new Reflector($this->serviceName);
+		$this->reflector = new Reflector($this->settings);
 	}
 	
 	public function getMainServiceName() {
@@ -45,12 +45,7 @@ class AdminPresenter extends BasePresenter {
 		$service = $this->serviceName;
 		$this->service = $service::get($id);
 
-		if(array_key_exists('form', $this->settings->params)) {
-			$formMask = $this->reflector->getFormMask($this->settings->params->form);
-		} else {
-			$formMask = NULL;
-		}
-		$this->formMask = $formMask;
+		$this->formMask = $this->reflector->getFormMask();
 
 		$this->service->setCurrentMask($this->formMask);
 	}
@@ -64,9 +59,8 @@ class AdminPresenter extends BasePresenter {
 		// }
 
 		if (!$form->isSubmitted()) {
-			$data = $this->service->getDefaultsData();
-			$this->reflector->getContainer($form)
-				->setDefaults($data);
+			$data = $this->service->getDefaultsData($this->formMask);
+			$this->reflector->getContainer($form)->setDefaults($data);
 		}
 
 		$this->template->record = $this->service;
@@ -74,29 +68,11 @@ class AdminPresenter extends BasePresenter {
 	}
 	
 	protected function createComponentForm($name) {
-		$form = new \Tra\Forms\Form($this, $name);
-		$this->reflector->extend($form, $this->formMask);
-		$form->ajax(false);
-		$form->addSubmit('save', 'Save');
-		$form->onLoad($form);
-		$form->onSuccess[] = callback($this, 'onSave');
+		$form = new \AdminModule\Forms\AdminForm($this, $name, $this->reflector, $this->service);
+
 		return $form;
 	}
-	
-	public function onSave(\Tra\Forms\Form $form) {
-		$id = $this->getParam('id');
-		$values = $this->reflector->getPrepareValues($form);
-
-		//TODO : ainak zistit ze editujem, najlepsie so servisy
-		if ($id) {
-			// EDIT
-			$this->service->updateFormData($values);
-		} else {
-			// ADD
-			$this->service->create($values);
-		}
-    }
-	
+		
 	protected function createComponentGrid($name) {
 		$mainEntityName = $this->reflector->getMainEntityName();
 		$grid = new \DataGrid\DataGrid;

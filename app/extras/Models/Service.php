@@ -394,9 +394,7 @@ abstract class Service extends Nette\Object implements IService {
 	 * Ziskanie datasource
 	 * @return Query
 	 */
-	public function getDefaultsData() {
-		$mask = $this->getCurrentMask();
-
+	public function getDefaultsData($mask) {
 		$data = array();
 		foreach ($mask->fields as $property) {
 			$ui = $property->ui;
@@ -416,6 +414,9 @@ abstract class Service extends Nette\Object implements IService {
 								'value' => $value->{$targetEntity->primaryValue},
 							);
 						}
+					} else if($targetEntity->associationType == Reflector::ONE_TO_MANY) {
+						// @todo method or operation is not implemented
+						throw new \Nette\NotImplementedException('Requested method or operation is not implemented');
 					} else if($targetEntity->associationType == Reflector::MANY_TO_ONE) {
 						$data[$name] = $this->{$name}->{$targetEntity->primaryKey};
 					} else if($targetEntity->associationType == Reflector::ONE_TO_ONE) {
@@ -438,11 +439,11 @@ abstract class Service extends Nette\Object implements IService {
 		return $data;
 	}
 
-	public function updateFormData($formValues) {
-		$mask = $this->getCurrentMask();
-
+	public function updateFormData($mask, $formValues) {
+		debug($formValues);
 		foreach ($mask->fields as $property) {
 			$ui = $property->ui;
+			if($ui->disabled) continue;
 			$name = $ui->name;
 			if(array_key_exists($name, $formValues)) {
 				$formValue = $formValues[$name];
@@ -453,11 +454,13 @@ abstract class Service extends Nette\Object implements IService {
 					} else if($targetEntity->associationType == Reflector::ONE_TO_ONE) {
 						$this->{$name}->{$targetEntity->primaryValue} = $formValue;
 					} else if($targetEntity->associationType == Reflector::MANY_TO_MANY) {
-						foreach ($formValue as $key => $value) {
-							$serviceName = $targetEntity->serviceName;
-							$this->{$name}->clear();
-							if($value = $serviceName::get($value)) {
-								$this->{'add' . ucfirst($ui->nameSingular)}($value->getMainEntity());
+						$this->{$name}->clear();
+						if(is_array($formValue)) {
+							foreach ($formValue as $key => $value) {
+								$serviceName = $targetEntity->serviceName;
+								if($value = $serviceName::get($value)) {
+									$this->{'add' . ucfirst($ui->nameSingular)}($value->getMainEntity());
+								}
 							}
 						}
 					} else if($targetEntity->associationType == Reflector::ONE_TO_MANY) {

@@ -121,15 +121,17 @@ class AdvancedBricksList extends AdvancedControl
 		$values = $this->value === NULL ? NULL : (array) $this->getValue();
 
 		$brickTemplate = Html::el('div')->addClass('brick btn btn-info');
-		foreach ($values as $k => $value) {
-			$brick = clone $brickTemplate;
-			$brick->add(Html::el('span')->setText($value['value']));
+		if($values) {
+			foreach ($values as $k => $value) {
+				$brick = clone $brickTemplate;
+				$brick->add(Html::el('span')->setText($value['value']));
 
-			if($this->inlineEditing) {
-				$brick->add(Html::el('a')->setText('InlineEditing'));
+				if($this->inlineEditing) {
+					$brick->add(Html::el('a')->setText('InlineEditing'));
+				}
+
+				$container->add((string) $brick);
 			}
-
-			$container->add((string) $brick);
 		}
 		if($this->inlineCreating) {
 			$brick = clone $brickTemplate;

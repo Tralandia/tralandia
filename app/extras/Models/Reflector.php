@@ -24,14 +24,14 @@ class Reflector extends Nette\Object {
 	const COLUMN = 'ORM\Column';
 
 	
-	protected $service = null;
+	protected $settings;
+	protected $formMask;
 	protected $reflectedEntities = array();
 	protected $fields = array();
 
 
-	public function __construct($service) {
-		$this->service = $service;
-
+	public function __construct($settings) {
+		$this->settings = $settings;
 
 		//debug($this->service);
 	}
@@ -41,7 +41,7 @@ class Reflector extends Nette\Object {
 	 * @return string
 	 */
 	public function getMainEntityName() {
-		$classReflection = $this->getServiceReflection($this->service);
+		$classReflection = $this->getServiceReflection($this->settings->serviceClass);
 		return $classReflection->getConstant('MAIN_ENTITY_NAME');
 	}
 
@@ -50,7 +50,7 @@ class Reflector extends Nette\Object {
 	 * @return string
 	 */
 	public function getMainEntityShortName() {
-		$classReflection = $this->getServiceReflection($this->service);
+		$classReflection = $this->getServiceReflection($this->settings->serviceClass);
 		$classReflection = ClassType::from($classReflection->getConstant('MAIN_ENTITY_NAME'));
 		return $classReflection->getShortName();
 	}
@@ -60,7 +60,7 @@ class Reflector extends Nette\Object {
 	 * @return string
 	 */
 	public function getContainerName() {
-		$classReflection = $this->getServiceReflection($this->service);
+		$classReflection = $this->getServiceReflection($this->settings->serviceClass);
 		return str_replace('\\', '', $classReflection->getName());
 	}
 
@@ -80,83 +80,6 @@ class Reflector extends Nette\Object {
 		return $form->getComponent($this->getContainerName())->getValues();
 	}
 
-	/**
-	 * Vrati data pre servisu
-	 * @return array
-	 */
-/*	public function getMask() {
-		$mask = array();
-		$assocations = $this->getAssocations();
-		//$collection = $this->getCollections();
-
-		$classReflection = $this->getServiceReflection($this->service);
-		$classReflection = ClassType::from($classReflection->getConstant('MAIN_ENTITY_NAME'));
-
-		foreach ($this->getFields($this->service) as $property) {
-			if ($pmask = $this->getPropertyMask($property, $classReflection)) {
-				$mask[] = $pmask;
-				break;
-			}
-			
-			//debug($options);
-		}
-
-		return $mask;
-	}
-*/
-	/**
-	 * Vrati masku pre ziskanie dat pre vsupnu property
-	 * @return array
-	 */
-/*	public function getPropertyMask(Property $property, ClassType $entity) {
-		if (!$entity->hasMethod('get' .  ucfirst($property->getName()))) {
-			return false;
-		}
-		$options = ArrayHash::from(array(
-			'name' => $property->getName(),
-			'defaultValue' => null,
-			'items' => null,
-			'type' => null,
-			'sourceEntity' => $entity->getName(),
-			'targetEntities' => array()
-		));
-
-		$associationType = $this->getAssocationType($property);
-		if ($property->hasAnnotation(self::ONE_TO_ONE) || $property->hasAnnotation(self::MANY_TO_ONE)) {
-			$toOne = $property->hasAnnotation(self::ONE_TO_ONE)
-				? $property->getAnnotation(self::ONE_TO_ONE)
-				: $property->getAnnotation(self::MANY_TO_ONE);
-
-			$options->type = $property->hasAnnotation(self::ONE_TO_ONE)
-				? self::ONE_TO_ONE
-				: self::MANY_TO_ONE;
-			
-			if (!Strings::startsWith($toOne->targetEntity, 'Entity')) {
-				$targetEntity = $entity->getNamespaceName() . '\\' . $toOne->targetEntity;
-			} else {
-				$targetEntity = $toOne->targetEntity;
-			}
-
-			$class = ClassType::from($targetEntity);
-			if ($class->hasAnnotation(self::ANN_PRIMARY)) {
-				$options->targetEntities = array(
-					$toOne->targetEntity => $class->getAnnotation(self::ANN_PRIMARY)
-				);
-			} else {
-				$options->targetEntities = array(
-					$toOne->targetEntity => array('key' => 'id', 'value' => 'id'),
-				);
-			}
-		} elseif ($property->hasAnnotation(self::ONE_TO_MANY) || $property->hasAnnotation(self::MANY_TO_MANY)) {
-			$options->type = $property->hasAnnotation(self::ONE_TO_MANY)
-				? self::ONE_TO_MANY
-				: self::MANY_TO_MANY;
-			// TODO: dokoncit
-		}
-
-		return ArrayHash::from($options);
-	}
-*/
 	/**
 	 * Pripravi data
 	 */
@@ -209,17 +132,21 @@ class Reflector extends Nette\Object {
 		return $this->fields[$class];
 	}
 
-	public function getFormMask($settings = NULL) {
+	public function getFormMask() {
+		if(!$this->formMask) {
+			$this->formMask = $this->_getFormMask();
+		}
+		return $this->formMask;
+	}
+
+	private function _getFormMask() {
 		$mask = array();
-		$mask['classReflection'] = $this->getServiceReflection($this->service);
+		$mask['classReflection'] = $this->getServiceReflection($this->settings->serviceClass);
 		$mask['containerName'] = $this->getContainerName();
 
-		$settingsFields = NULL;
-		if($settings && array_key_exists('fields', $settings) && $settings->fields instanceof \Traversable) {
-			$settingsFields = $settings->fields;
-		}
+		$settingsFields = $this->settings->params->form->fields;
 
-		foreach ($this->getFields($this->service, $settingsFields) as $property) {
+		foreach ($this->getFields($this->settings->serviceClass, $settingsFields) as $property) {
 			$fieldMask = array(
 				'ui' => NULL,
 			);
@@ -464,6 +391,7 @@ class Reflector extends Nette\Object {
 		if (!in_array($entityReflection->getName(), $this->reflectedEntities)) {
 			array_push($this->reflectedEntities, $entityReflection->getName());
 		}
+
 		return $classReflection;
 	}
 	
