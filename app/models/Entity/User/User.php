@@ -55,10 +55,10 @@ class User extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Location\Location", mappedBy="users")
+	 * @ORM\ManyToOne(targetEntity="Entity\Location\Location", inversedBy="users")
 	 * @UI\SingularName(name="location") 
 	 */
-	protected $locations;
+	protected $location;
 
 	/**
 	 * @var Collection
@@ -169,6 +169,7 @@ class User extends \Entity\BaseEntityDetails {
 
 
 
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -177,7 +178,6 @@ class User extends \Entity\BaseEntityDetails {
 
 		$this->roles = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->contacts = new \Doctrine\Common\Collections\ArrayCollection;
-		$this->locations = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->rentalTypes = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->combinations = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->rentals = new \Doctrine\Common\Collections\ArrayCollection;
@@ -358,33 +358,26 @@ class User extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Location\Location
 	 * @return \Entity\User\User
 	 */
-	public function addLocation(\Entity\Location\Location $location) {
-		if(!$this->locations->contains($location)) {
-			$this->locations->add($location);
-		}
-		$location->addUser($this);
+	public function setLocation(\Entity\Location\Location $location) {
+		$this->location = $location;
 
 		return $this;
 	}
 		
 	/**
-	 * @param \Entity\Location\Location
 	 * @return \Entity\User\User
 	 */
-	public function removeLocation(\Entity\Location\Location $location) {
-		if($this->locations->contains($location)) {
-			$this->locations->removeElement($location);
-		}
-		$location->removeUser($this);
+	public function unsetLocation() {
+		$this->location = NULL;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Location\Location
+	 * @return \Entity\Location\Location|NULL
 	 */
-	public function getLocations() {
-		return $this->locations;
+	public function getLocation() {
+		return $this->location;
 	}
 		
 	/**

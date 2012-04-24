@@ -144,7 +144,7 @@ class Rental extends \Entity\BaseEntity {
 	 * @var json
 	 * @ORM\Column(type="json")
 	 */
-	protected $pricelist;
+	protected $pricelists;
 
 	/**
 	 * @var Collection
@@ -175,6 +175,7 @@ class Rental extends \Entity\BaseEntity {
 	 * @ORM\OneToMany(targetEntity="Entity\Invoicing\Invoice", mappedBy="rental")
 	 */
 	protected $invoices;
+
 
 
 

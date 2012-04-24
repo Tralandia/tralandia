@@ -9,6 +9,7 @@ common:
 				mapper: e.id
 				draw: false
 			name:
+				type: text
 				label: Name
 				mapper: e.id
 				callback: {class: %this%, method: translateColumn, params: name}
@@ -16,6 +17,7 @@ common:
 				label: Slug
 				mapper: e.slug
 			created:
+				type: datetime
 				label: Dátum vytvorenia
 				mapper: e.created
 
@@ -33,6 +35,7 @@ common:
 
 			iso:
 				type: text
+				startNewRow: true
 
 			currencies:
 				type: bricksList
@@ -44,14 +47,17 @@ common:
 				type: select
 				label: 
 					class: 'labelCalss'
+					name: 'Def. Curr.'
+				callback: getAllAsPairs
 				inlineEditing: true
 				inlineCreating: true
 
 			defaultLanguage:
 				type: select
 				label: Def. Language
-				callback: getBySupportedAsPairs
-				callbackArgs: ['id', 'iso', 1]
+				callback: 
+					method: getBySupportedAsPairs
+					arguments: ['id', 'iso', 1]
 
 base < common:
 	title: Location Base
