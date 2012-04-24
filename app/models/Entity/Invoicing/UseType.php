@@ -50,6 +50,7 @@ class UseType extends \Entity\BaseEntity {
 
 
 
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -75,6 +76,23 @@ class UseType extends \Entity\BaseEntity {
 	 */
 	public function getName() {
 		return $this->name;
+	}
+		
+	/**
+	 * @param slug
+	 * @return \Entity\Invoicing\UseType
+	 */
+	public function setSlug($slug) {
+		$this->slug = $slug;
+
+		return $this;
+	}
+		
+	/**
+	 * @return slug|NULL
+	 */
+	public function getSlug() {
+		return $this->slug;
 	}
 		
 	/**

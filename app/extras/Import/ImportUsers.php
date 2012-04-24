@@ -188,7 +188,11 @@ class ImportUsers extends BaseImport {
 		$role = \Service\User\Role::getBySlug('owner');
 		$locationTypeCountry = \Service\Location\Type::getBySlug('country');
 
-		$r = q('select * from members where country_id = 46');
+		if ($this->developmentMode == TRUE) {
+			$r = q('select * from members where country_id = 46');		
+		} else {
+			$r = q('select * from members');		
+		}
 		while($x = mysql_fetch_array($r)) {
 			$user = \Service\User\User::getByLogin($x['email']);
 
@@ -240,8 +244,11 @@ class ImportUsers extends BaseImport {
 		$role = \Service\User\Role::getBySlug('potentialowner');
 		$locationTypeCountry = \Service\Location\Type::getBySlug('country');
 
-		$r = q('select * from contacts where country_id = 46 limit 10000');
-		//$r = q('select * from contacts');
+		if ($this->developmentMode == TRUE) {
+			$r = q('select * from contacts where country_id = 46 limit 10000');	
+		} else {
+			$r = q('select * from contacts');	
+		}
 
 		while($x = mysql_fetch_array($r)) {
 			$contacts = array();
@@ -330,38 +337,6 @@ class ImportUsers extends BaseImport {
 	private function importVisitors() {
 
 		return true; //@todo - toto treba opravit este nefunguje
-
-	}
-
-	private function import0000() {
-
-		$role = \Service\User\Role::getBySlug('admin');
-
-		$user = \Service\User\User::get();
-		$user->login = $x['email'];
-		$user->password = $x['password'];
-		$user->addRole($role);
-
-		$user->addContact($this->createContact('email', $x['email']));
-		
-		$user->defaultLanguage = \Service\Dictionary\Language::getByIso('en');
-		$user->addLocation();
-		$user->addRentalType();
-
-		$user->invoicingSalutation = '';
-		$user->invoicingFirstName = '';
-		$user->invoicingLastName = '';
-		$user->invoicingEmail = '';
-		$user->invoicingPhone = '';
-		$user->invoicingUrl = '';
-		$user->invoicingAddress = '';
-		$user->invoicingCompanyId = '';
-		$user->invoicingCompanyVatId = '';
-
-		$user->currentTelmarkOperator = '';
-
-		$user->addCombination();
-		$user->save();
 
 	}
 }

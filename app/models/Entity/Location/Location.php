@@ -136,7 +136,7 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\User\User", inversedBy="locations", cascade={"persist"})
+	 * @ORM\OneToMany(targetEntity="Entity\User\User", mappedBy="location", cascade={"persist"})
 	 */
 	protected $users;
 
@@ -295,6 +295,7 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 	public function setRootValue($nestedRoot) { $this->nestedRoot = $nestedRoot; }
 
 	public function __toString() { return (string)$this->slug; }
+
 
 
 
@@ -710,6 +711,20 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 		if(!$this->users->contains($user)) {
 			$this->users->add($user);
 		}
+		$user->setLocation($this);
+
+		return $this;
+	}
+		
+	/**
+	 * @param \Entity\User\User
+	 * @return \Entity\Location\Location
+	 */
+	public function removeUser(\Entity\User\User $user) {
+		if($this->users->contains($user)) {
+			$this->users->removeElement($user);
+		}
+		$user->unsetLocation();
 
 		return $this;
 	}

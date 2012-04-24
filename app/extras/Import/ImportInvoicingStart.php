@@ -24,7 +24,7 @@ class ImportInvoicingStart extends BaseImport {
 		while($x = mysql_fetch_array($r)) {
 			$duration = \Service\Invoicing\Service\Duration::get();
 			$duration->oldId = $x['id'];
-			$duration->durationString = $x['strtotime'];
+			$duration->duration = $x['strtotime'];
 			$duration->sort = $x['sort'];
 			$duration->name = $this->createNewPhrase($durationNameType, $x['name_dic_id']);
 			$duration->save();
@@ -124,7 +124,7 @@ class ImportInvoicingStart extends BaseImport {
 		// Coupons
 		// Neimportujeme, lebo sa vobec nepouzivaju...
 		
-		$this->savedVariables['importedSections']['domains'] = 1;
+		$this->savedVariables['importedSections']['invoicingStart'] = 1;
 
 	}
 

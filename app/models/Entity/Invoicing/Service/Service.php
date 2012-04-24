@@ -55,37 +55,12 @@ class Service extends \Entity\BaseEntity {
 
 
 
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct() {
 		parent::__construct();
-	}
-		
-	/**
-	 * @param \Entity\Invoicing\Package
-	 * @return \Entity\Invoicing\Service\Service
-	 */
-	public function setPackage(\Entity\Invoicing\Package $package) {
-		$this->package = $package;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Invoicing\Service\Service
-	 */
-	public function unsetPackage() {
-		$this->package = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Invoicing\Package|NULL
-	 */
-	public function getPackage() {
-		return $this->package;
 	}
 		
 	/**
@@ -172,5 +147,31 @@ class Service extends \Entity\BaseEntity {
 	 */
 	public function getCurrentPrice() {
 		return $this->currentPrice;
+	}
+		
+	/**
+	 * @param \Entity\Invoicing\Package
+	 * @return \Entity\Invoicing\Service\Service
+	 */
+	public function setPackage(\Entity\Invoicing\Package $package) {
+		$this->package = $package;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Invoicing\Service\Service
+	 */
+	public function unsetPackage() {
+		$this->package = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Invoicing\Package|NULL
+	 */
+	public function getPackage() {
+		return $this->package;
 	}
 }

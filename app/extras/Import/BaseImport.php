@@ -104,10 +104,10 @@ class BaseImport {
 	);
 
 	public $savedVariables = array();
+	public $developmentMode = TRUE;
 
 	public function __construct() {
 		$this->loadVariables();
-
 
 		return;
 	}

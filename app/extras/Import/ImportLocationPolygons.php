@@ -16,7 +16,12 @@ class ImportLocationsPolygons extends BaseImport {
 
 	public function doImport($subsection = NULL) {
 
-		$data = json_decode(file_get_contents("http://www.tralandia.sk/trax_maps/_api.php"));
+		if ($this->developmentMode == TRUE) {
+			$data = json_decode(file_get_contents("http://www.tralandia.sk/trax_maps/_api.php?country=sk"));
+		} else {
+			$data = json_decode(file_get_contents("http://www.tralandia.sk/trax_maps/_api.php"));
+		}
+
 		
 		$countries = array('success'=>array());
 		$areas = array('success'=>array());
