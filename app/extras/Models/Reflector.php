@@ -157,7 +157,7 @@ class Reflector extends Nette\Object {
 			$options = NULL;
 
 			$fieldOptions = array(
-				'type' => array('default'=> NULL), 
+				'control' => array('default'=> NULL), 
 				'label' => array('default'=> ucfirst($name)), 
 				'callback' => array('default'=> NULL), 
 				'inlineEditing' => array('default'=> NULL), 
@@ -175,30 +175,37 @@ class Reflector extends Nette\Object {
 				}
 			}
 
-			$type = $fieldMask['ui']['type'];
-
 			if(is_string($fieldMask['ui']['label'])) {
 				$fieldMask['ui']['label'] = array('name' => $fieldMask['ui']['label']);
 			}
 
+			if(is_string($fieldMask['ui']['control'])) {
+				$fieldMask['ui']['control'] = array('type' => $fieldMask['ui']['control']);
+			}
+
+			$type = $fieldMask['ui']['control']['type'];
+
 			if($type == 'phrase') {
-				$type = $fieldMask['ui']['type'] = 'text';
-				if($fieldMask['ui']['disabled'] === NULL) $fieldMask['ui']['disabled'] = true;
+				$type = $fieldMask['ui']['control']['type'] = 'text';
+				if(!isset($fieldMask['ui']['control']['disabled'])) $fieldMask['ui']['control']['disabled'] = true;
+			} else if($type == 'tinymce') {
+				$type = $fieldMask['ui']['control']['type'] = 'textArea';
+				$fieldMask['ui']['control']['addClass'] = (isset($fieldMask['ui']['control']['addClass']) ? $fieldMask['ui']['control']['addClass'].' ' : NULL) . 'tinymce';
 			}
 
 			$fieldMask['ui']['name'] = $name;
-			$fieldMask['ui']['type'] = ucfirst($fieldMask['ui']['type']);
+			$fieldMask['ui']['control']['type'] = ucfirst($fieldMask['ui']['control']['type']);
 			$fieldMask['ui']['nameSingular'] = Strings::toSingular(ucfirst($fieldMask['ui']['name']));
 			$fieldMask['ui']['options'] = $options;
 
 			if($type == 'text') {
-				$fieldMask['ui']['type'] = 'AdvancedTextInput';
+				$fieldMask['ui']['control']['type'] = 'AdvancedTextInput';
 			} else if($type == 'select') {
-				$fieldMask['ui']['type'] = 'AdvancedSelectBox';
+				$fieldMask['ui']['control']['type'] = 'AdvancedSelectBox';
 			} else if($type == 'checkboxList') {
-				$fieldMask['ui']['type'] = 'AdvancedCheckboxList';
+				$fieldMask['ui']['control']['type'] = 'AdvancedCheckboxList';
 			} else if($type == 'bricksList') {
-				$fieldMask['ui']['type'] = 'AdvancedBricksList';
+				$fieldMask['ui']['control']['type'] = 'AdvancedBricksList';
 			}
 
 			if($associationType = $this->getAssocationType($property)) {
@@ -262,21 +269,28 @@ class Reflector extends Nette\Object {
 			unset($ui, $control, $validators, $association);
 			//debug($property);
 			$ui = $property->ui;
-			$control = $container->{'add' . $ui->type}(
+			$control = $container->{'add' . $ui->control->type}(
 				$propertyName,
 				$ui->label->name
 			);
 			if(isset($ui->startNewRow)) {
-				debug($ui);
+				//debug($ui);
 				$control->getControlPrototype()->addClass('clearBefor');
 			}
 
 
-			if(array_key_exists('class', $ui->label)) {
+			if(isset($ui->label->class)) {
 				$control->getLabelPrototype()->addClass($ui->label->class);
 			}
 
-			if($ui->disabled) $control->setDisabled();
+			if(isset($ui->control->class)) {
+				$control->getControlPrototype()->class($ui->control->class);
+			}
+			if(isset($ui->control->addClass)) {
+				$control->getControlPrototype()->addClass($ui->control->addClass);
+			}
+
+			if(isset($ui->control->disabled)) $control->setDisabled();
 			
 			
 			// ak je control typu selekt a obsahuje definiciu vztahov, pripojim target entitu
