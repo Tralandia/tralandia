@@ -102,6 +102,7 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 	 */
 	protected $defaultZoom;
 
+
 	/**
 	 * @var json
 	 * @ORM\Column(type="json", nullable=true)
