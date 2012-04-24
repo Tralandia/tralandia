@@ -1,13 +1,90 @@
 {control header:begin}
 	{control css}
 	{control js}
+	<script type="text/javascript" src="{$baseUrl}/scripts/tinymce/jquery.tinymce.js" ></script>
+	<script type="text/javascript" src="{$baseUrl}/scripts/multiselect/ui.multiselect.js" ></script>
+	<script type="text/javascript">
+	$(function() {
+		$('textarea.tinymce').tinymce({
+			script_url : '{!$baseUrl}/scripts/tinymce/tiny_mce.js',
+      		theme : "advanced",
+			theme_advanced_buttons1 : 'bold,italic,underline,strikethrough,separator,forecolor,formatselect,separator,bullist,numlist,separator,undo,redo,separator,charmap,image',
+			theme_advanced_buttons2 : '',
+			theme_advanced_buttons3 : '',
+			theme_advanced_text_colors : "A0B325,630,000000",
+			theme_advanced_blockformats : "h3,h4,h5,h6"
+		});
+		$.localise('ui-multiselect', { path: '{!$baseUrl}/scripts/multiselect/locale/', language: 'en' });
+		$(".multiselect").multiselect();
+	});
+	</script>
 {control header:end}
-<body>
-	<div id="header"></div>
-	<div class="flashMessage"><div n:foreach="$flashes as $flash" class="msg {$flash->type}">{$flash->message}</div></div>
-	<div id="layout">
-		<div class="body">
+	<div class="container">
+		<div class="inner">
+			<div class="navbar navbar-static">
+				<div class="navbar-inner green">
+					<div class="container" style="width: auto;">
+						<a class="brand" href="#">Tralandia</a>
+						<ul class="nav">
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle green" data-toggle="dropdown">SEO / PPC <b class="caret"></b></a>
+								<ul class="dropdown-menu">
+									<li><a href="#">Action</a></li>
+									<li><a href="#">Another action</a></li>
+									<li><a href="#">Something else here</a></li>
+									<li class="divider"></li>
+									<li><a href="#">Separated link</a></li>
+								</ul>
+							</li>
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Members <b class="caret"></b></a>
+								<ul class="dropdown-menu">
+									<li><a href="#">Action</a></li>
+									<li><a href="#">Another action</a></li>
+									<li><a href="#">Something else here</a></li>
+									<li class="divider"></li>
+									<li><a href="#">Separated link</a></li>
+								</ul>
+							</li>
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Managers <b class="caret"></b></a>
+								<ul class="dropdown-menu">
+									<li><a href="#">Action</a></li>
+									<li><a href="#">Another action</a></li>
+									<li><a href="#">Something else here</a></li>
+									<li class="divider"></li>
+									<li><a href="#">Separated link</a></li>
+								</ul>
+							</li>
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Countries <b class="caret"></b></a>
+								<ul class="dropdown-menu">
+									<li><a href="#">Action</a></li>
+									<li><a href="#">Another action</a></li>
+									<li><a href="#">Something else here</a></li>
+									<li class="divider"></li>
+									<li><a href="#">Separated link</a></li>
+								</ul>
+							</li>
+						</ul>
+						<ul class="nav pull-right">
+							<li id="fat-menu" class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Jan Czibula <b class="caret"></b></a>
+								<ul class="dropdown-menu">
+									<li><a href="#">Action</a></li>
+									<li><a href="#">Another action</a></li>
+									<li><a href="#">Something else here</a></li>
+									<li class="divider"></li>
+									<li><a href="#">Separated link</a></li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="content">
 			{include #content}
+		</div>
 		</div>
 	</div>
 </body>
