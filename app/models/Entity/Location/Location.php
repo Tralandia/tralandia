@@ -22,7 +22,7 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 	/**
 	 * @var Collection
 	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
-	 * @UI\Control(type="text")
+	 * @UI\Control(type="phrase")
 	 */
 	protected $name;
 
@@ -196,6 +196,7 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 	/**
 	 * @var Collection
 	 * @ORM\ManyToMany(targetEntity="Entity\Currency", mappedBy="locations", cascade={"persist"})
+	 * @UI\Control(type="checkboxList")
 	 */
 	protected $currencies;
 

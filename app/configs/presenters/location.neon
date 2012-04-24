@@ -21,15 +21,28 @@ common:
 
 	form:
 		fields:
+			name:
+				inlineEditing: true
+				inlineCreating: true
+
 			slug:
 				type: text
 				label: Sluuug
+				disabled: true
 
 			iso:
 				type: text
 
+			currencies:
+				type: bricksList
+				#type: checkboxList
+				inlineEditing: true
+				inlineCreating: true
+
 			defaultCurrency:
 				label: Def. Currency
+				inlineEditing: true
+				inlineCreating: true
 
 			defaultLanguage:
 				label: Def. Language

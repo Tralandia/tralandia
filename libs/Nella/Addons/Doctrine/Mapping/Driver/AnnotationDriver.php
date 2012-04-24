@@ -14,6 +14,8 @@ namespace Nella\Doctrine\Mapping\Driver;
  */
 class AnnotationDriver extends \Doctrine\ORM\Mapping\Driver\AnnotationDriver
 {
+    const ENTITY_INTERFACE = 'Extras\Models\IEntity';
+
 	/** @var array */
 	private $ignoredDirs = array();
 	
@@ -74,13 +76,12 @@ class AnnotationDriver extends \Doctrine\ORM\Mapping\Driver\AnnotationDriver
         foreach ($declared as $className) {
             $rc = new \ReflectionClass($className);
             $sourceFile = $rc->getFileName();
-            if (in_array($sourceFile, $includedFiles) && ! $this->isTransient($className)) {
+            if (in_array($sourceFile, $includedFiles) && $rc->implementsInterface(self::ENTITY_INTERFACE) && ! $this->isTransient($className)) {
                 $classes[] = $className;
             }
         }
 
         $this->_classNames = $classes;
-
         return $classes;
     }
 }
