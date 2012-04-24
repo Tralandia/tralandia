@@ -63,7 +63,6 @@ class Medium extends \Service\BaseService {
 		if (!($mediumType instanceof \Service\Medium\Type)) {
 			$mediumType = \Service\Medium\Type::get();
 			$mediumType->name = $medium->details['mime'];
-			debug($mediumType);
 			$mediumType->save();
 		}
 
@@ -100,15 +99,16 @@ class Medium extends \Service\BaseService {
 
 		$mediumDir = $this->getMediumDir();
 
-		debug($mediumDir);
-
 		foreach(glob($mediumDir . '/*') as $file) {
-			if(is_dir($file))
+			if(is_dir($file)) {
 				rrmdir($file);
-			else
+			} else {
 				unlink($file);
+			}
 		}
 		rmdir($mediumDir);
+
+		debug(explode('/', $mediumDir));
 
 	}
 
