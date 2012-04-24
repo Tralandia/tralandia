@@ -12,19 +12,16 @@ class Translator implements \Nette\Localization\ITranslator {
 
 	public function __construct(Environment $environment, Caching\IStorage $cacheStorage) {
 		$this->language = $environment->getLanguage();
-
 		$this->cache = new Caching\Cache($cacheStorage, 'Translator');
 	}
 	
 	public function translate($phrase, $node = NULL, $count = NULL, array $variables = NULL) {
-
 		$translation = $this->getTranslation($phrase);
 
 		return $translation;
 	}
 	
 	protected function getTranslation($phrase) {
-
 		if($phrase instanceof D\Phrase || $phrase instanceof \Entity\Dictionary\Phrase) {
 			$translationKey = $phrase->id;
 		} else {
@@ -37,7 +34,10 @@ class Translator implements \Nette\Localization\ITranslator {
 				$phrase = D\Phrase::get($phrase);
 			}
 
-			$translation = $phrase->getTranslation($this->language)->translation;
+			$translation = null;
+			if ($translation = $phrase->getTranslation($this->language)) {
+				$translation = $translation->translation;
+			}
 			$this->cache->save($translationKey, $translation);
 		}
 

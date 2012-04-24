@@ -6,12 +6,16 @@ use Nette,
 	Nette\ArrayHash,
 	Nette\Reflection\ClassType,
 	Nette\Reflection\Property,
+	Tra\Utils\Strings,
+	Tra\Utils\Arrays,
+	Nette\Utils\Html,
 	Nette\ComponentModel\IContainer;
 
 class Reflector extends Nette\Object {
 	
 	const ANN_PRIMARY = 'UI\Primary';
-	const UI_CONTROL = 'UI\Control';
+	const ANN_SERVICE = 'EA\Service';
+	const ANN_SERVICE_LIST = 'EA\ServiceList';
 
 	const ONE_TO_ONE = 'ORM\OneToOne';
 	const MANY_TO_ONE = 'ORM\ManyToOne';
@@ -20,14 +24,14 @@ class Reflector extends Nette\Object {
 	const COLUMN = 'ORM\Column';
 
 	
-	protected $service = null;
+	protected $settings;
+	protected $formMask;
 	protected $reflectedEntities = array();
 	protected $fields = array();
 
 
-	public function __construct($service) {
-		$this->service = $service;
-
+	public function __construct($settings) {
+		$this->settings = $settings;
 
 		//debug($this->service);
 	}
@@ -37,7 +41,7 @@ class Reflector extends Nette\Object {
 	 * @return string
 	 */
 	public function getMainEntityName() {
-		$classReflection = $this->getServiceReflection($this->service);
+		$classReflection = $this->getServiceReflection($this->settings->serviceClass);
 		return $classReflection->getConstant('MAIN_ENTITY_NAME');
 	}
 
@@ -46,7 +50,7 @@ class Reflector extends Nette\Object {
 	 * @return string
 	 */
 	public function getMainEntityShortName() {
-		$classReflection = $this->getServiceReflection($this->service);
+		$classReflection = $this->getServiceReflection($this->settings->serviceClass);
 		$classReflection = ClassType::from($classReflection->getConstant('MAIN_ENTITY_NAME'));
 		return $classReflection->getShortName();
 	}
@@ -56,7 +60,7 @@ class Reflector extends Nette\Object {
 	 * @return string
 	 */
 	public function getContainerName() {
-		$classReflection = $this->getServiceReflection($this->service);
+		$classReflection = $this->getServiceReflection($this->settings->serviceClass);
 		return str_replace('\\', '', $classReflection->getName());
 	}
 
@@ -77,68 +81,6 @@ class Reflector extends Nette\Object {
 	}
 
 	/**
-	 * Vrati data pre servisu
-	 * @return array
-	 */
-	public function getMask() {
-		$mask = array();
-		$assocations = $this->getAssocations();
-		//$collection = $this->getCollections();
-
-		//debug($assocations, $this->getFields($this->service));
-//debug($this->getFields($this->service));
-
-		$classReflection = $this->getServiceReflection($this->service);
-		$classReflection = ClassType::from($classReflection->getConstant('MAIN_ENTITY_NAME'));
-
-		foreach ($this->getFields($this->service) as $property) {
-			$mask[] = $this->getPropertyMask($property, $classReflection);
-			//debug($options);
-		}
-
-		return $mask;
-	}
-
-	/**
-	 * Vrati masku pre ziskanie dat pre vsupnu property
-	 * @return array
-	 */
-	public function getPropertyMask(Property $property, ClassType $entity) {
-		$options = ArrayHash::from(array(
-			'name' => $property->getName(),
-			'defaultValue' => null,
-			'items' => null,
-			'type' => null,
-			'sourceEntity' => $entity->getName(),
-			'targetEntities' => array()
-		));
-
-		if ($property->hasAnnotation(self::ONE_TO_ONE) || $property->hasAnnotation(self::MANY_TO_ONE)) {
-			$toOne = $property->hasAnnotation(self::ONE_TO_ONE)
-				? $property->getAnnotation(self::ONE_TO_ONE)
-				: $property->getAnnotation(self::MANY_TO_ONE);
-
-			$options->type = $property->hasAnnotation(self::ONE_TO_ONE)
-				? self::ONE_TO_ONE
-				: self::MANY_TO_ONE;
-							
-			$class = ClassType::from($toOne->targetEntity);
-			if ($class->hasAnnotation('Primary')) {
-				$options->targetEntities = array(
-					$toOne->targetEntity => $class->getAnnotation('Primary')
-				);
-			}
-		} elseif ($property->hasAnnotation(self::ONE_TO_MANY) || $property->hasAnnotation(self::MANY_TO_MANY)) {
-			$options->type = $property->hasAnnotation(self::ONE_TO_MANY)
-				? self::ONE_TO_MANY
-				: self::MANY_TO_MANY;
-			// TODO: dokoncit
-		}
-
-		return ArrayHash::from($options);
-	}
-
-	/**
 	 * Pripravi data
 	 */
 	public function prepareData(IContainer $form) {
@@ -155,12 +97,12 @@ class Reflector extends Nette\Object {
 		return $values;
 	}
 	
-	public function allow($class, array $fields = array()) {		
+	protected function allow($class, $fields = array()) {		
 		$classReflection = $this->getServiceReflection($class);
 		$classReflection = ClassType::from($classReflection->getConstant('MAIN_ENTITY_NAME'));
 
 		foreach ($classReflection->getProperties() as $property) {
-			if(count($fields) === 0 || in_array($property->name, $fields))
+			if(count($fields) === 0 || array_key_exists($property->name, $fields))
 				$this->fields[$class][$property->name] = $property;
 		}
 		
@@ -170,7 +112,7 @@ class Reflector extends Nette\Object {
 	/**
 	 * 
 	 */
-	public function except($class, array $fields) {
+	protected function except($class, array $fields) {
 		foreach ($this->getFields($class) as $field) {
 			if(in_array($field->name, $fields)) unset($this->fields[$class][$field->name]);
 		}
@@ -182,92 +124,226 @@ class Reflector extends Nette\Object {
 	 * Vrati zoznam vlastnoti o ktore sa bude rozsirovat
 	 * @param string
 	 */
-	protected function getFields($class) {
-		if(!isset($this->fields[$class])) {
-			$this->allow($class);
+	protected function getFields($class, $allow = NULL, $except = NULL) {
+		if(!isset($this->fields[$class]) || $allow) {
+			$this->fields = array();
+			$this->allow($class, $allow);
 		}
 		return $this->fields[$class];
+	}
+
+	public function getFormMask() {
+		if(!$this->formMask) {
+			$this->formMask = $this->_getFormMask();
+		}
+		return $this->formMask;
+	}
+
+	private function _getFormMask() {
+		$mask = array();
+		$mask['classReflection'] = $this->getServiceReflection($this->settings->serviceClass);
+		$mask['containerName'] = $this->getContainerName();
+
+		$settingsFields = $this->settings->params->form->fields;
+
+		foreach ($this->getFields($this->settings->serviceClass, $settingsFields) as $property) {
+			$fieldMask = array(
+				'ui' => NULL,
+			);
+
+			$fieldMask['ui'] = array();
+			$name = $property->getName();
+			$ui = NULL;
+			$options = NULL;
+
+			$fieldOptions = array(
+				'type' => array('default'=> NULL), 
+				'label' => array('default'=> ucfirst($name)), 
+				'callback' => array('default'=> NULL), 
+				'inlineEditing' => array('default'=> NULL), 
+				'inlineCreating' => array('default'=> NULL), 
+				'disabled' => array('default'=> NULL),
+				'startNewRow' => array('default'=> NULL),
+			);
+
+
+			if($settingsFields) {
+				$options = Arrays::get($settingsFields, array($name, 'options'), $options);
+
+				foreach ($fieldOptions as $key => $value) {
+					$fieldMask['ui'][$key] = Arrays::get($settingsFields, array($name, $key), $value['default']);
+				}
+			}
+
+			$type = $fieldMask['ui']['type'];
+
+			if(is_string($fieldMask['ui']['label'])) {
+				$fieldMask['ui']['label'] = array('name' => $fieldMask['ui']['label']);
+			}
+
+			if($type == 'phrase') {
+				$type = $fieldMask['ui']['type'] = 'text';
+				if($fieldMask['ui']['disabled'] === NULL) $fieldMask['ui']['disabled'] = true;
+			}
+
+			$fieldMask['ui']['name'] = $name;
+			$fieldMask['ui']['type'] = ucfirst($fieldMask['ui']['type']);
+			$fieldMask['ui']['nameSingular'] = Strings::toSingular(ucfirst($fieldMask['ui']['name']));
+			$fieldMask['ui']['options'] = $options;
+
+			if($type == 'text') {
+				$fieldMask['ui']['type'] = 'AdvancedTextInput';
+			} else if($type == 'select') {
+				$fieldMask['ui']['type'] = 'AdvancedSelectBox';
+			} else if($type == 'checkboxList') {
+				$fieldMask['ui']['type'] = 'AdvancedCheckboxList';
+			} else if($type == 'bricksList') {
+				$fieldMask['ui']['type'] = 'AdvancedBricksList';
+			}
+
+			if($associationType = $this->getAssocationType($property)) {
+				$association = $property->getAnnotation($associationType);
+				$targetEntity = $association->targetEntity;
+				$fieldMask['targetEntity'] = array();
+				if (!Strings::startsWith($targetEntity, 'Entity')) {
+					$targetEntity = $entity->getNamespaceName() . '\\' . $toOne->targetEntity;
+				}
+
+				$fieldMask['targetEntity']['name'] = $targetEntity;
+				$fieldMask['targetEntity']['associationType'] = $associationType;
+				$fieldMask['targetEntity']['primaryKey'] = $this->getEntityPrimaryData($targetEntity)->key;
+				$fieldMask['targetEntity']['primaryValue'] = $this->getEntityPrimaryData($targetEntity)->value ? : $fieldMask['targetEntity']['primaryKey'];
+				$fieldMask['targetEntity']['serviceName'] = $this->getEntityServiceName($targetEntity);
+				$fieldMask['targetEntity']['serviceListName'] = $this->getEntityServiceListName($targetEntity);
+
+			}
+
+			if(in_array($type, array('select', 'checkboxList'))) {
+
+				if(!$fieldMask['ui']['callback'] && !$fieldMask['ui']['options']) {
+					$fieldMask['ui']['callback'] = 'getAllAsPairs';
+				}
+
+				if(is_string($fieldMask['ui']['callback'])) {
+					$fieldMask['ui']['callback'] = array('method' => $fieldMask['ui']['callback']);
+				}
+
+				$fieldMask['ui']['callback']['method'] = $this->getCallback($fieldMask['targetEntity']['serviceListName'], $fieldMask['ui']['callback']['method']);
+
+				if(!array_key_exists('arguments', $fieldMask['ui']['callback'])) {
+					$fieldMask['ui']['callback']['arguments'] = array($fieldMask['targetEntity']['primaryKey'], $fieldMask['targetEntity']['primaryValue']);
+				}
+			}
+
+			// @todo vyhadzovat exceptiony ak nieco nieje nastavene OK
+
+			$mask['fields'][$name] = $fieldMask;
+		}
+		
+		//debug($mask['fields']);
+		return \Nette\ArrayHash::from($mask);
 	}
 	
 	/**
 	 * Rozsiri formular o UI prvky
 	 * @param IContainer
 	 */
-	public function extend(IContainer $form) {
-		$classReflection = $this->getServiceReflection($this->service);
+	public function extend(IContainer $form, $mask) {
+		$classReflection = $mask->classReflection;
 
-		$container = $this->getContainerName();
+		$container = $mask->containerName;
 		if ($form->getComponent($container, false)) {
 			$container = $form->getComponent($container);
 		} else {
 			$container = $form->addContainer($container);
 		}
 
-		foreach ($this->getFields($this->service) as $property) {
+		foreach ($mask->fields as $propertyName => $property) {
 			unset($ui, $control, $validators, $association);
-
-			// ak najdem anotaciu UIControl, vykreslim UI prvok formualra
-			if ($property->hasAnnotation(self::UI_CONTROL)) {
-				$ui = $property->getAnnotation(self::UI_CONTROL);
-
-				$control = $container->{'add' . ucfirst($ui->type)}(
-					$property->getName(),
-					isset($ui->label) ? $ui->label : ucfirst($property->getName())
-				);
+			//debug($property);
+			$ui = $property->ui;
+			$control = $container->{'add' . $ui->type}(
+				$propertyName,
+				$ui->label->name
+			);
+			if(isset($ui->startNewRow)) {
+				debug($ui);
+				$control->getControlPrototype()->addClass('clearBefor');
 			}
+
+
+			if(array_key_exists('class', $ui->label)) {
+				$control->getLabelPrototype()->addClass($ui->label->class);
+			}
+
+			if($ui->disabled) $control->setDisabled();
 			
-			// ak najdem anotacie validacie
-			if (isset($control) && $property->hasAnnotation('Validator')) {
-				$validators = $property->getAnnotations();
-				$validators = $validators['Validator'];
-				
-				//debug($validators);
-				// tu este budu validatory
-			}
 			
 			// ak je control typu selekt a obsahuje definiciu vztahov, pripojim target entitu
-			if (isset($ui) && $control instanceof Nette\Forms\Controls\SelectBox) {
-				if (isset($ui->callback) && $callback = $this->getCallback($classReflection, $ui->callback)) {
+			if ($control instanceof \Extras\Forms\Controls\AdvancedSelectBox 
+				|| $control instanceof \Extras\Forms\Controls\AdvancedCheckboxList) 
+			{
+				$targetEntity = $property->targetEntity;
+				if (isset($ui->callback)) {
 					// data volane cez callback
-					$association = $property->getAnnotation(self::MANY_TO_ONE);
-					if (!isset($association->targetEntity)) {
-						throw new \Exception("Nedefinoval si `targetEntity` v {$property->getName()} - @" . self::MANY_TO_ONE);
-					}
-
-					$primaryValue = $this->getEntityPrimaryData($association->targetEntity)->value;
-					$primaryKey = $this->getEntityPrimaryData($association->targetEntity)->key;
-					
-					$control->setItems($callback($association->targetEntity, $primaryKey, isset($primaryValue) ? $primaryValue : $primaryKey));
-				} elseif (isset($ui->options) && $options = $this->getOptions($classReflection, $ui->options)) {
+					$control->setItems(call_user_func_array($ui->callback->method, (array) $ui->callback->arguments));
+				} elseif (isset($ui->options)) {
 					// data volane cez options
-					if (!isset($ui->options) && !isset($ui->callback)) {
-						throw new \Exception("Nedefinoval si `options` alebo `callback` v {$property->getName()} - @UIControl");
-					}
 					$control->setItems($options);
 				} else {
-					throw new \Exception("Callback alebo options v `{$class} - {$property->getName()}` nie sú validné");
+					throw new \Exception("Callback alebo options v `{$classReflection->getConstant('MAIN_ENTITY_NAME')} - {$propertyName}` nie sú validné");
 				}
 			}
+
+			if ($control instanceof \Extras\Forms\Controls\AdvancedBricksList
+				|| $control instanceof \Extras\Forms\Controls\AdvancedTextInput
+				|| $control instanceof \Extras\Forms\Controls\AdvancedSelectBox
+				|| $control instanceof \Extras\Forms\Controls\AdvancedCheckboxList) 
+			{
+				$control->setInlineEditing($ui->inlineEditing);
+				$control->setInlineCreating($ui->inlineCreating);
+			}
 			
-			//debug($property->getAnnotation('Validator'));
 		}
 	}
 	
 	/**
-	 * Vrati asociacne vztahy (typu ManyToOne)
+	 * Vrati asociacne vztahy
 	 */
 	public function getAssocations() {
 		$return = array();
 		foreach ($this->reflectedEntities as $class) {
 			$classReflection = ClassType::from($class);
 			foreach ($classReflection->getProperties() as $property) {
-				if ($property->hasAnnotation(self::MANY_TO_ONE)) {
-					$association = $property->getAnnotation(self::MANY_TO_ONE);
-					$return[$class][$property->getName()] = $association->targetEntity;
+
+				$associationType = $this->getAssocationType($property);
+				if(!$associationType) continue;
+				
+				$association = $property->getAnnotation($associationType);
+				if(array_key_exists('inversedBy', $association)) {
+					continue;
 				}
+
+				$return[$class][$property->getName()] = $association->targetEntity;
 			}
 		}
 		return $return;
+	}
+
+	public function getAssocationType($property) {
+		$associationType = NULL;
+
+		if ($property->hasAnnotation(self::MANY_TO_MANY)) {
+			$associationType = self::MANY_TO_MANY;
+		} else if ($property->hasAnnotation(self::MANY_TO_ONE)){
+			$associationType = self::MANY_TO_ONE;
+		} else if ($property->hasAnnotation(self::ONE_TO_MANY)){
+			$associationType = self::ONE_TO_MANY;
+		} else if ($property->hasAnnotation(self::ONE_TO_ONE)){
+			$associationType = self::ONE_TO_ONE;
+		}
+		
+		return $associationType;
 	}
 	
 	/**
@@ -275,6 +351,16 @@ class Reflector extends Nette\Object {
 	 */
 	public static function getEntityPrimaryData($class) {
 		return ClassType::from($class)->getAnnotation(self::ANN_PRIMARY);
+	}
+
+	public static function getEntityServiceName($class) {
+		$ann = ClassType::from($class)->getAnnotation(self::ANN_SERVICE);
+		return $ann->name;
+	}
+
+	public static function getEntityServiceListName($class) {
+		$ann = ClassType::from($class)->getAnnotation(self::ANN_SERVICE_LIST);
+		return $ann->name;
 	}
 	
 	/**
@@ -301,9 +387,8 @@ class Reflector extends Nette\Object {
 		return $return;
 	}
 	
-	private function getCallback($classReflection, $callback) {
-		//list($object, $method) = explode(',', $callback);
-		return callback($this->service, trim($callback));
+	private function getCallback($class, $callback) {
+		return callback($class, trim($callback));
 	}
 	
 	private function getServiceReflection($class) {
@@ -314,6 +399,7 @@ class Reflector extends Nette\Object {
 		if (!in_array($entityReflection->getName(), $this->reflectedEntities)) {
 			array_push($this->reflectedEntities, $entityReflection->getName());
 		}
+
 		return $classReflection;
 	}
 	

@@ -13,15 +13,6 @@ class HomePresenter extends BasePresenter {
 		$paginator->itemsPerPage = 15;
 		$paginator->itemCount = 568;
 
-		// $environment = new \Extras\Environment;
-		// $location = $environment->getLocation();
-
-		// $l = \Service\Location\Location::get($location->id);
-		// $t = $l->fetchBranchAsArray(2);
-		// foreach ($t as $node) {
-		// 	echo($node->getLevel()." - $node");
-		// }
-
 	}
 
 	public function createComponentCountryMap($name) {
@@ -35,21 +26,24 @@ class HomePresenter extends BasePresenter {
 		$tabBar = new \BaseModule\Components\TabControl\TabControl($this, $name);
 
 		$t = $tabBar->addTab('top');
-		$t->setHeader(806)->setContent('Top Objekty')->setActive(); // {_806, '1955 TOP holiday homes'}
+		$t->setHeader(806)->setContent('Top Objekty'); // @PHRASE: {_806, '1955 TOP holiday homes'}
 
 		$t = $tabBar->addTab('regions');
-		$t->setHeader(678)->setContent('Regiony'); // {_678, '1112 Regions'}
+		$content = new \FrontModule\Components\RegionsPage\Regions($this, 'RegionsPage');
+		$t->setHeader(678)->setContent($content); // @PHRASE: {_678, '1112 Regions'}
 
 		$t = $tabBar->addTab('localities');
-		$t->setHeader(725)->setContent('Mesta/Obce'); // {_725, '1626 Towns / Villages'}
+		$content = new \FrontModule\Components\LocalitiesPage\Localities($this, 'LocalitiesPage');
+		$t->setHeader(725)->setContent($content)->setActive(); // @PHRASE: {_725, '1626 Towns / Villages'}
 
 		$t = $tabBar->addTab('tags');
-		$t->setHeader(727)->setContent('Typy pobytov'); // {_727, '1628 Types of stays'}
+		$content = new \FrontModule\Components\TagsPage\Tags($this, 'TagsPage');
+		$t->setHeader(727)->setContent($content); // @PHRASE: {_727, '1628 Types of stays'}
 
 		$t = $tabBar->addTab('about');
-		$t->setHeader(1163)->setContent('O nas'); // {_1163, '23011 '}
-
-		return $tabBar;
+		$content = new \FrontModule\Components\GenericPage\Generic($this, 'GenericPage');
+		$content->slug = 'about';
+		$t->setHeader(1163)->setContent($content); // @PHRASE: {_1163, '23011 '}
 
 	}
 

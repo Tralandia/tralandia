@@ -1,8 +1,6 @@
 <?php
 
-namespace Tra\Forms;
-
-use Tra\Services;
+namespace AdminModule\Forms;
 
 class Rental extends Form {
 

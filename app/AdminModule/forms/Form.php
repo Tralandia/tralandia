@@ -1,10 +1,10 @@
 <?php
 
-namespace Tra\Forms;
-
-use Tra;
+namespace AdminModule\Forms;
 
 class Form extends \CoolForm {
+
+	public $onLoad = array();
 /*
 	public function __construct(\Nette\ComponentModel\IContainer $parent = null, $name = null) {
 		parent::__construct($parent, $name);
@@ -28,11 +28,11 @@ class Form extends \CoolForm {
 		));
 	}
 */
-	public function getPreparedValues(Tra\Services\Iservice $service) {
+/*	public function getPreparedValues(Tra\Services\Iservice $service) {
 		return $service->prepareData($this);
     }
 
    	public function getParentService() {
 		return $this->getPresenter()->getMainService();
-    }
+    }*/
 }

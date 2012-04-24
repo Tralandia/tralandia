@@ -9,7 +9,6 @@ use Nette\Diagnostics\Debugger,
 
 // Load Nette Framework
 require_once LIBS_DIR . '/Nette/loader.php';
-require_once LIBS_DIR . '/tools.php';
 require_once LIBS_DIR . '/rado_functions.php';
 
 $section = isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : null;
@@ -40,6 +39,9 @@ $container->addService('robotLoader', $robotLoader); // dolezite pre dynamicke p
 Debugger::$editor = $container->parameters['editor'];
 
 
+require_once LIBS_DIR . '/tools.php';
+
+
 
 $serviceConfigurator = new Extras\Configurator;
 $serviceConfigurator->setTempDirectory(TEMP_DIR);
@@ -50,10 +52,12 @@ $serviceConfigurator->addConfig(APP_DIR . '/configs/service.neon', $section);
 $serivceContainer = $serviceConfigurator->createContainer();
 
 // Setup doctrine loader
-
 $serivceContainer->createService();
 $serivceContainer->createList();
-
+// @todo toto niekam schovat
+require_once APP_DIR . '/extras/EntityAnnotation.php';
+require_once APP_DIR . '/extras/UIAnnotation.php';
+Extras\Models\Service::$translator = $container->translator;
 
 // Setup router // TODO: presunut do config.neon
 $container->application->onStartup[] = function() use ($container) {
@@ -79,7 +83,7 @@ $container->application->onStartup[] = function() use ($container) {
 	));
 
 	$router[] = $frontRouter = new RouteList('Front');
-	$frontRouter[] = new \Extras\Route('Home:default');
+	// $frontRouter[] = new \Extras\Route('Home:default');
 	$frontRouter[] = new Route('<presenter>/[<action>[/<id>]]', 'Home:default');
 
 };

@@ -11,8 +11,11 @@ use Nette\Application as NA,
 class AdminPresenter extends BasePresenter {
 	
 	private $settings;
+	private $service;
 	private $serviceName;
+	private $serviceListName;
 	private $reflector;
+	private $formMask;
 	
 	public function startup() {
 		parent::startup();
@@ -20,7 +23,8 @@ class AdminPresenter extends BasePresenter {
 		$this->settings = $this->getService('settings');
 		$this->template->settings = $this->settings;
 		$this->serviceName = $this->settings->serviceClass;
-		$this->reflector = new Reflector($this->serviceName);
+		$this->serviceListName = $this->settings->serviceListClass;
+		$this->reflector = new Reflector($this->settings);
 	}
 	
 	public function getMainServiceName() {
@@ -31,82 +35,57 @@ class AdminPresenter extends BasePresenter {
 		
 	}
 	
-	public function renderAdd() {
+	public function actionAdd() {
 		$form = $this->getComponent('form');
+		// TODO: instancia uplne noveho zaznamu
+		//$this->service = new Service;
+	}
+
+	public function actionEdit($id = 0) {
+		$service = $this->serviceName;
+		$this->service = $service::get($id);
+
+		$this->formMask = $this->reflector->getFormMask();
+
+		$this->service->setCurrentMask($this->formMask);
 	}
 	
-	public function actionEdit($id = 0) {
+	public function renderEdit($id = 0) {
 		$form = $this->getComponent('form');
-		$service = $this->serviceName;
-		$service = $service::get($id);
-
 		//TODO: naslo zaznam? toto treba osetrit lebo servica nehlasi nenajdeny zaznam
 		// ale hlasi @david
-		// if (!$service) {
+		// if (!$this->service) {
 		// 	throw new NA\BadRequestException('Record not found');
 		// }
 
-		$service->setCurrentMask($this->reflector->getMask());
 		if (!$form->isSubmitted()) {
-			$data = $service->getDataByMask();
-			$this->reflector->getContainer($form)
-				->setDefaults($data);
+			$data = $this->service->getDefaultsData($this->formMask);
+			$this->reflector->getContainer($form)->setDefaults($data);
 		}
 
-		$this->template->record = $service;
+		$this->template->record = $this->service;
 		$this->template->form = $form;
 	}
 	
 	protected function createComponentForm($name) {
-		$form = new \Tra\Forms\Form($this, $name);
-		$this->reflector->extend($form);
-		$form->ajax(false);
-		$form->addSubmit('save', 'Save');
-		$form->onSuccess[] = callback($this, 'onSave');
+		$form = new \AdminModule\Forms\AdminForm($this, $name, $this->reflector, $this->service);
+
 		return $form;
 	}
-	
-	public function onSave(\Tra\Forms\Form $form) {
-		$id = $this->getParam('id');
-		$values = $this->reflector->getPrepareValues($form);
-
-
-		$service = $this->serviceName;
-		$service = $service::get($id);
-
-		if ($id) {
-			// EDIT
-			$service->updateFormData($values);
-		} else {
-			// ADD
-			$service->create($values);
-		}
-    }
-	
+		
 	protected function createComponentGrid($name) {
 		$mainEntityName = $this->reflector->getMainEntityName();
-		$form = $this->getComponent('gridForm');
-		$grid = new \EditableDataGrid\DataGrid;
-		//$grid->itemsPerPage = 3;
-
-		$grid->setEditForm($form);
-		$grid->setContainer($this->reflector->getContainerName());	
-		$grid->onDataReceived[] = array($form, 'onDataRecieved');
-		$grid->onInvalidDataRecieved[] = array($form, 'onInvalidDataRecieved');
-		
+		$grid = new \DataGrid\DataGrid;
 		$mapper = array(); $editable = false;
+
 		foreach ($this->settings->params->grid->columns as $alias => $column) {
 			$mapper[$alias] = $column->mapper;
 			
 			if (!isset($column->draw) || (isset($column->draw) && $column->draw == true)) {
-				$type = isset($column->type) ? $column->type : 'text';				
+				$type = isset($column->type) ? $column->type : 'text';
 				$property = substr($column->mapper, strrpos($column->mapper, '.')+1);
 
 				if ($controlAnnotation = $this->reflector->getAnnotation($mainEntityName, $property, Reflector::COLUMN)) {
-					$type = $controlAnnotation->type;
-				}
-
-				if ($controlAnnotation = $this->reflector->getAnnotation($mainEntityName, $property, Reflector::UI_CONTROL)) {
 					$type = $controlAnnotation->type;
 				}
 				
@@ -126,51 +105,32 @@ class AdminPresenter extends BasePresenter {
 					);
 				}
 			}
-			if (isset($column->editable) && $column->editable == true) {
-				$editable = true;
-				$grid->addEditableField($alias);
-			}
 		}
 
+		$list = $this->serviceListName;
+		$list = $list::getAll();
 		$dataSource = new \DataGrid\DataSources\Doctrine\LalaQueryBuilder(
-			\Service\CurrencyList::getDataSource() //TODO: zdynamizivat to corrency
+			$list->getDataSource()
 		);
-debug($mapper);
 
 		$dataSource->setMapping($mapper);
 		$grid->setDataSource($dataSource);	
 		$grid->addActionColumn('Actions');
-		
 		$grid->addAction('Edit', 'edit', Html::el('span')->class('icon edit')->setText('Edit') , false);
 		$grid->addAction('Delete', 'delete', Html::el('span')->class('icon delete')->setText('Delete'), false);
 
+		
+
 		return $grid;
 	}
-	
-	public function createComponentGridForm($name) {
-		$form = new \Tra\Forms\Form($this, $name);
-		$this->reflector->extend($form);
 
-		$form->ajax(false);
-		$form->addSubmit('save', 'Save');
-		$form->onSuccess[] = callback($this, 'onGridSave');
-		return $form;
-	}
-
-	public function onGridSave($form) {
-		debug($form->getValues());
-    }
-	
 	public function pattern($value, $row, $params = null) {
-		//debug("odpoved=" . $this->user->isAllowed($row->getEntity(), 'show'));
-		
 		return preg_replace_callback('/%([\w]*)%/', function($matches) use ($row) {
 			return isset($row[$matches[1]]) ? $row[$matches[1]] : $matches[0];
 		}, $params->pattern);
 	}
 
-	public function nieco($value, $row, $params = null) {
-		//debug($value, $row, $params);
-		return $value;
+	public function translateColumn($value, $row, $key) {
+		return $this->translate($row->getEntity()->$key->id);
 	}
 }

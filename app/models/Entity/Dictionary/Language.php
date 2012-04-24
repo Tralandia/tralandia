@@ -4,10 +4,15 @@ namespace Entity\Dictionary;
 
 use Entity\Dictionary;
 use Doctrine\ORM\Mapping as ORM;
+use	Extras\UI as UI;
+use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="dictionary_language")
+ * @EA\Service(name="\Service\Dictionary\Language")
+ * @EA\ServiceList(name="\Service\Dictionary\LanguageList")
+ * @UI\Primary(key="id", value="iso")
  */
 class Language extends \Entity\BaseEntityDetails {
 

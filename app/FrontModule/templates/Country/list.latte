@@ -1,0 +1,18 @@
+{block content}
+<div class="mainRight">
+	<div class="panelGreen">
+		<div class="top"></div>
+		<div class="content">
+			<h1>{_980, '8322 Other countries in the Tralandia system'}</h1>
+			<hr/>
+			{foreach $continents as $key=>$continent}
+			<div class="columnListUL">
+				<h2>{_$continent->name}</h2>
+				{$countries[$key]|ulList, 3, '<li><span>&nbsp;</span><a href="">%_name%</a></li>'}
+			</div>
+			<div class="cleaner"></div>
+			{/foreach}
+		</div>
+		<div class="bottom"></div>
+	</div>
+</div>
