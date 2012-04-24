@@ -119,6 +119,8 @@ class AdminPresenter extends BasePresenter {
 		$grid->addAction('Edit', 'edit', Html::el('span')->class('icon edit')->setText('Edit') , false);
 		$grid->addAction('Delete', 'delete', Html::el('span')->class('icon delete')->setText('Delete'), false);
 
+		
+
 		return $grid;
 	}
 
