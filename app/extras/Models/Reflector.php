@@ -13,7 +13,6 @@ use Nette,
 class Reflector extends Nette\Object {
 	
 	const ANN_PRIMARY = 'UI\Primary';
-	const UI_CONTROL = 'UI\Control';
 	const ANN_SERVICE = 'EA\Service';
 	const ANN_SERVICE_LIST = 'EA\ServiceList';
 
@@ -167,21 +166,11 @@ class Reflector extends Nette\Object {
 			);
 
 
-			if ($property->hasAnnotation(self::UI_CONTROL)) {
-				$ui = $property->getAnnotation(self::UI_CONTROL);
-				$fieldMask['ui']['type'] = $ui->type;
-				$options = isset($ui->options) ? $this->getOptions($classReflection, $ui->options) : NULL;
-
-				foreach ($fieldOptions as $key => $value) {
-					$fieldMask['ui'][$key] = isset($ui->$key) ? $ui->$key : $value['default'];
-				}
-			}
-
 			if($settingsFields) {
 				$options = Arrays::get($settingsFields, array($name, 'options'), $options);
 
 				foreach ($fieldOptions as $key => $value) {
-					$fieldMask['ui'][$key] = Arrays::get($settingsFields, array($name, $key), $fieldMask['ui'][$key]);
+					$fieldMask['ui'][$key] = Arrays::get($settingsFields, array($name, $key), $value['default']);
 				}
 			}
 

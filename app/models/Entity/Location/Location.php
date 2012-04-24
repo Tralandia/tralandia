@@ -102,6 +102,7 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 	 */
 	protected $defaultZoom;
 
+
 	/**
 	 * @var Collection
 	 * @ORM\ManyToMany(targetEntity="Entity\Company\BankAccount", inversedBy="countries")
