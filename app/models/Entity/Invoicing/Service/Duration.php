@@ -15,19 +15,13 @@ class Duration extends \Entity\BaseEntity {
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
 	 */
-	protected $durationString;
+	protected $duration;
 
 	/**
 	 * @var Collection
 	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $name;
-
-	/**
-	 * @var datetime
-	 * @ORM\Column(type="datetime")
-	 */
-	protected $duration;
 
 	/**
 	 * @var integer
@@ -50,11 +44,38 @@ class Duration extends \Entity\BaseEntity {
 
 
 
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct() {
 		parent::__construct();
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Invoicing\Service\Duration
+	 */
+	public function setDuration($duration) {
+		$this->duration = $duration;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Invoicing\Service\Duration
+	 */
+	public function unsetDuration() {
+		$this->duration = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getDuration() {
+		return $this->duration;
 	}
 		
 	/**
@@ -72,23 +93,6 @@ class Duration extends \Entity\BaseEntity {
 	 */
 	public function getName() {
 		return $this->name;
-	}
-		
-	/**
-	 * @param \DateTime
-	 * @return \Entity\Invoicing\Service\Duration
-	 */
-	public function setDuration(\DateTime $duration) {
-		$this->duration = $duration;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \DateTime|NULL
-	 */
-	public function getDuration() {
-		return $this->duration;
 	}
 		
 	/**

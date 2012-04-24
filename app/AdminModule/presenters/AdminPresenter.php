@@ -88,10 +88,6 @@ class AdminPresenter extends BasePresenter {
 				if ($controlAnnotation = $this->reflector->getAnnotation($mainEntityName, $property, Reflector::COLUMN)) {
 					$type = $controlAnnotation->type;
 				}
-
-				if ($controlAnnotation = $this->reflector->getAnnotation($mainEntityName, $property, Reflector::UI_CONTROL)) {
-					$type = $controlAnnotation->type;
-				}
 				
 				switch ($type) {
 					case 'datetime':	
@@ -122,6 +118,8 @@ class AdminPresenter extends BasePresenter {
 		$grid->addActionColumn('Actions');
 		$grid->addAction('Edit', 'edit', Html::el('span')->class('icon edit')->setText('Edit') , false);
 		$grid->addAction('Delete', 'delete', Html::el('span')->class('icon delete')->setText('Delete'), false);
+
+		
 
 		return $grid;
 	}

@@ -8,6 +8,7 @@ use Nette,
 	Nette\Reflection\Property,
 	Tra\Utils\Strings,
 	Tra\Utils\Arrays,
+	Nette\Utils\Html,
 	Nette\ComponentModel\IContainer;
 
 class Reflector extends Nette\Object {
@@ -159,10 +160,10 @@ class Reflector extends Nette\Object {
 				'type' => array('default'=> NULL), 
 				'label' => array('default'=> ucfirst($name)), 
 				'callback' => array('default'=> NULL), 
-				'callbackArgs' => array('default'=> NULL), 
 				'inlineEditing' => array('default'=> NULL), 
 				'inlineCreating' => array('default'=> NULL), 
 				'disabled' => array('default'=> NULL),
+				'startNewRow' => array('default'=> NULL),
 			);
 
 
@@ -175,6 +176,10 @@ class Reflector extends Nette\Object {
 			}
 
 			$type = $fieldMask['ui']['type'];
+
+			if(is_string($fieldMask['ui']['label'])) {
+				$fieldMask['ui']['label'] = array('name' => $fieldMask['ui']['label']);
+			}
 
 			if($type == 'phrase') {
 				$type = $fieldMask['ui']['type'] = 'text';
@@ -219,9 +224,14 @@ class Reflector extends Nette\Object {
 					$fieldMask['ui']['callback'] = 'getAllAsPairs';
 				}
 
-				$fieldMask['ui']['callback'] = $this->getCallback($fieldMask['targetEntity']['serviceListName'], $fieldMask['ui']['callback']);
-				if(!$fieldMask['ui']['callbackArgs']) {
-					$fieldMask['ui']['callbackArgs'] = array($fieldMask['targetEntity']['primaryKey'], $fieldMask['targetEntity']['primaryValue']);
+				if(is_string($fieldMask['ui']['callback'])) {
+					$fieldMask['ui']['callback'] = array('method' => $fieldMask['ui']['callback']);
+				}
+
+				$fieldMask['ui']['callback']['method'] = $this->getCallback($fieldMask['targetEntity']['serviceListName'], $fieldMask['ui']['callback']['method']);
+
+				if(!array_key_exists('arguments', $fieldMask['ui']['callback'])) {
+					$fieldMask['ui']['callback']['arguments'] = array($fieldMask['targetEntity']['primaryKey'], $fieldMask['targetEntity']['primaryValue']);
 				}
 			}
 
@@ -254,8 +264,17 @@ class Reflector extends Nette\Object {
 			$ui = $property->ui;
 			$control = $container->{'add' . $ui->type}(
 				$propertyName,
-				$ui->label
+				$ui->label->name
 			);
+			if(isset($ui->startNewRow)) {
+				debug($ui);
+				$control->getControlPrototype()->addClass('clearBefor');
+			}
+
+
+			if(array_key_exists('class', $ui->label)) {
+				$control->getLabelPrototype()->addClass($ui->label->class);
+			}
 
 			if($ui->disabled) $control->setDisabled();
 			
@@ -267,7 +286,7 @@ class Reflector extends Nette\Object {
 				$targetEntity = $property->targetEntity;
 				if (isset($ui->callback)) {
 					// data volane cez callback
-					$control->setItems(call_user_func_array($ui->callback, (array) $ui->callbackArgs));
+					$control->setItems(call_user_func_array($ui->callback->method, (array) $ui->callback->arguments));
 				} elseif (isset($ui->options)) {
 					// data volane cez options
 					$control->setItems($options);

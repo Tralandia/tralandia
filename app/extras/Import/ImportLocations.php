@@ -271,9 +271,12 @@ class ImportLocations extends BaseImport {
 
 		$countryLocationType = \Service\Location\Type::getBySlug('country');
 
-		//$r = q('select * from regions order by id');
-		$r = q('select * from regions where country_id = 46 and level = 0 order by id');
-		//$r = q('select * from regions where id = 48978 order by id');
+		if ($this->developmentMode == TRUE) {
+			$r = q('select * from regions where country_id = 46 and level = 0 order by id');
+		} else {
+			$r = q('select * from regions where level = 0 order by id');
+		}
+
 		while($x = mysql_fetch_array($r)) {
 			$location = \Service\Location\Location::get();
 
@@ -317,9 +320,12 @@ class ImportLocations extends BaseImport {
 
 		$countryLocationType = \Service\Location\Type::getBySlug('country');
 
-		//$r = q('select * from regions order by id');
-		$r = q('select * from regions where country_id = 46 and level = 1 order by id');
-		//$r = q('select * from regions where id = 48978 order by id');
+		if ($this->developmentMode == TRUE) {
+			$r = q('select * from regions where country_id = 46 and level = 1 order by id');
+		} else {
+			$r = q('select * from regions where level = 1 order by id');
+		}
+
 		while($x = mysql_fetch_array($r)) {
 			$location = \Service\Location\Location::get();
 
@@ -361,9 +367,11 @@ class ImportLocations extends BaseImport {
 
 		$countryLocationType = \Service\Location\Type::getBySlug('country');
 
-		//$r = q('select * from regions order by id');
-		$r = q('select * from regions where country_id = 46 and level = 2 order by id');
-		//$r = q('select * from regions where id = 48978 order by id');
+		if ($this->developmentMode == TRUE) {
+			$r = q('select * from regions where country_id = 46 and level = 2 order by id');
+		} else {
+			$r = q('select * from regions where level = 2 order by id');
+		}
 		while($x = mysql_fetch_array($r)) {
 			$location = \Service\Location\Location::get();
 
@@ -420,9 +428,11 @@ class ImportLocations extends BaseImport {
 
 		$countryLocationType = \Service\Location\Type::getBySlug('country');
 
-		//$r = q('select * from localities order by id');
-		$r = q('select * from localities where country_id = 46 order by id');
-		//$r = q('select * from localities where id = 48978 order by id');
+		if ($this->developmentMode == TRUE) {
+			$r = q('select * from localities where country_id = 46 order by id');
+		} else {
+			$r = q('select * from localities order by id');
+		}
 		while($x = mysql_fetch_array($r)) {
 			$location = \Service\Location\Location::get();
 
