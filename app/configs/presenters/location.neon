@@ -1,0 +1,53 @@
+common:
+	service: Service\Location\Location
+	title: Location Main Title
+	h1: Location Main H1
+
+	grid:
+		columns: 
+			id:
+				mapper: e.id
+				draw: false
+			name:
+				label: Name
+				mapper: e.id
+				callback: {class: %this%, method: translateColumn, params: name}
+			slug:
+				label: Slug
+				mapper: e.slug
+			created:
+				label: Dátum vytvorenia
+				mapper: e.created
+
+	form:
+		fields:
+			name:
+				inlineEditing: true
+				inlineCreating: true
+
+			slug:
+				type: text
+				label: Sluuug
+				disabled: true
+
+			iso:
+				type: text
+
+			currencies:
+				type: bricksList
+				#type: checkboxList
+				inlineEditing: true
+				inlineCreating: true
+
+			defaultCurrency:
+				label: Def. Currency
+				inlineEditing: true
+				inlineCreating: true
+
+			defaultLanguage:
+				label: Def. Language
+				callback: getBySupportedAsPairs
+				callbackArgs: ['id', 'iso', 1]
+
+base < common:
+	title: Location Base
