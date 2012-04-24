@@ -13,9 +13,6 @@ class HomePresenter extends BasePresenter {
 		$paginator->itemsPerPage = 15;
 		$paginator->itemCount = 568;
 
-		// TEST: saving file from URL
-		//$medium = \Service\Medium\Medium::createFromUrl('http://tralandia.local/temp/Android%20Root.rar');
-
 	}
 
 	public function createComponentCountryMap($name) {
