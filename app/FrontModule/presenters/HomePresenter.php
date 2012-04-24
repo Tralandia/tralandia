@@ -13,10 +13,6 @@ class HomePresenter extends BasePresenter {
 		$paginator->itemsPerPage = 15;
 		$paginator->itemCount = 568;
 
-		// TEST: saving file from URL
-		// $medium = \Service\Medium\Medium::get(8);
-		// $medium->delete();
-
 	}
 
 	public function createComponentCountryMap($name) {
