@@ -1,8 +1,6 @@
 <?php
 
-namespace Tra\Forms;
-
-use Tra\Services;
+namespace AdminModule\Forms;
 
 class User extends Form {
 
@@ -11,7 +9,7 @@ class User extends Form {
     public function __construct(\Nette\ComponentModel\IContainer $parent = null, $name = null) {
 		parent::__construct($parent, $name);
 
-		$this->sUser = new Services\User;
+		//$this->sUser = new Services\User;
 		$this->sUser->prepareForm($this);
 			
 		$this->ajax(false);
