@@ -22,6 +22,7 @@ common:
 	form:
 		fields:
 			name:
+				type: phrase
 				inlineEditing: true
 				inlineCreating: true
 
@@ -40,11 +41,14 @@ common:
 				inlineCreating: true
 
 			defaultCurrency:
-				label: Def. Currency
+				type: select
+				label: 
+					class: 'labelCalss'
 				inlineEditing: true
 				inlineCreating: true
 
 			defaultLanguage:
+				type: select
 				label: Def. Language
 				callback: getBySupportedAsPairs
 				callbackArgs: ['id', 'iso', 1]
