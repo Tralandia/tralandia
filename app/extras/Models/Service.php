@@ -178,6 +178,7 @@ abstract class Service extends Nette\Object implements IService {
 	}
 
 
+
 	# @todo @brano je toto spravne ?
 	# toto iste je aj v Entity.php
 	public function __isset($name) {
@@ -381,7 +382,7 @@ abstract class Service extends Nette\Object implements IService {
 		}
 	}
 
-	public function setCurrentMask(array $mask) {
+	public function setCurrentMask($mask) {
 		$this->currentMask = $mask;
 	}
 
@@ -393,55 +394,81 @@ abstract class Service extends Nette\Object implements IService {
 	 * Ziskanie datasource
 	 * @return Query
 	 */
-	public function getDefaultsData() {
-		$mask = $this->getCurrentMask();
-
+	public function getDefaultsData($mask) {
 		$data = array();
-		foreach ($mask as $key => $value) {
-			debug($value);
-			$name = $value->name;
-			if($value->type) {
-				$targetEntity = reset($value->targetEntities);
-				if(!$targetEntity) {
-					throw new \Nette\InvalidArgumentException('V maske chyba $targetEntity');
-				}
-				$targetEntityName = key($value->targetEntities);
-				if ($targetEntityName == 'Entity\\Dictionary\\Phrase') {
-					$data[$name] = $this->getTranslator()->translate($this->{$name});
-				} else if($value->type == Reflector::MANY_TO_ONE) {
-					$data[$name] = $this->{$name}->{$targetEntity->key};
-				} else if($value->type == Reflector::ONE_TO_ONE) {
-					$property = $targetEntity->value;
-					//debug($this->{$name}->translations, $property);
+		foreach ($mask->fields as $property) {
+			$ui = $property->ui;
+			$name = $ui->name;
+			if(!$this->{$name}) {
+				$data[$name] = NULL;
+			} else {
+				if(isset($property->targetEntity)) {
+					$targetEntity = $property->targetEntity;
+					if ($targetEntity->name == 'Entity\\Dictionary\\Phrase') {
+						$data[$name] = $this->getTranslator()->translate($this->{$name});
+					} else if($targetEntity->associationType == Reflector::MANY_TO_MANY) {
+						$data[$name] = array();
+						foreach ($this->{$name}->toArray() as $key => $value) {
+							$data[$name][] = array(
+								'key' => $value->{$targetEntity->primaryKey},
+								'value' => $value->{$targetEntity->primaryValue},
+							);
+						}
+					} else if($targetEntity->associationType == Reflector::ONE_TO_MANY) {
+						// @todo method or operation is not implemented
+						throw new \Nette\NotImplementedException('Requested method or operation is not implemented');
+					} else if($targetEntity->associationType == Reflector::MANY_TO_ONE) {
+						$data[$name] = $this->{$name}->{$targetEntity->primaryKey};
+					} else if($targetEntity->associationType == Reflector::ONE_TO_ONE) {
+						$property = $targetEntity->primaryValue;
+						//debug($this->{$name}->translations, $property);
 
-					$data[$name] = $this->{$name}->{$property};
+						$data[$name] = $this->{$name}->{$property};
+					} else {
+						$data[$name] = $this->{$name};
+						// @todo method or operation is not implemented
+						//throw new \Nette\NotImplementedException('Requested method or operation is not implemented');
+					}
+
 				} else {
 					$data[$name] = $this->{$name};
-					// @todo method or operation is not implemented
-					//throw new \Nette\NotImplementedException('Requested method or operation is not implemented');
-				}
-
-			} else {
-				$data[$name] = $this->{$name};
+				}				
 			}
 		}
-		
+		//debug($data);
 		return $data;
 	}
 
-	public function updateFormData($formValues) {
-		$mask = $this->getCurrentMask();
-		debug($formValues, $mask);
-
-		foreach ($mask as $key => $value) {
-			$name = $value->name;
+	public function updateFormData($mask, $formValues) {
+		debug($formValues);
+		foreach ($mask->fields as $property) {
+			$ui = $property->ui;
+			if($ui->disabled) continue;
+			$name = $ui->name;
 			if(array_key_exists($name, $formValues)) {
 				$formValue = $formValues[$name];
-				if($value->type) {
-					$targetEntity = reset($value->targetEntities);
-					if($value->type == Reflector::ONE_TO_ONE && $targetEntity) {
-						$property = $targetEntity->value;
-						$this->{$name}->{$property} = $formValue;
+				if(isset($property->targetEntity)) {
+					$targetEntity = $property->targetEntity;
+					if($targetEntity->name == 'Entity\\Dictionary\\Phrase') {
+						// fraza sa needituje cez serisu
+					} else if($targetEntity->associationType == Reflector::ONE_TO_ONE) {
+						$this->{$name}->{$targetEntity->primaryValue} = $formValue;
+					} else if($targetEntity->associationType == Reflector::MANY_TO_MANY) {
+						$this->{$name}->clear();
+						if(is_array($formValue)) {
+							foreach ($formValue as $key => $value) {
+								$serviceName = $targetEntity->serviceName;
+								if($value = $serviceName::get($value)) {
+									$this->{'add' . ucfirst($ui->nameSingular)}($value->getMainEntity());
+								}
+							}
+						}
+					} else if($targetEntity->associationType == Reflector::ONE_TO_MANY) {
+						// @todo method or operation is not implemented
+						throw new \Nette\NotImplementedException('Requested method or operation is not implemented');
+					} else if($targetEntity->associationType == Reflector::MANY_TO_ONE) {
+						$serviceName = $targetEntity->serviceName;
+						$this->{$name} = $serviceName::get($formValue);
 					} else {
 						// @todo method or operation is not implemented
 						throw new \Nette\NotImplementedException('Requested method or operation is not implemented');

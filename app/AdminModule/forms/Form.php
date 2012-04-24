@@ -1,8 +1,6 @@
 <?php
 
-namespace Tra\Forms;
-
-use Tra;
+namespace AdminModule\Forms;
 
 class Form extends \CoolForm {
 
@@ -30,11 +28,11 @@ class Form extends \CoolForm {
 		));
 	}
 */
-	public function getPreparedValues(Tra\Services\Iservice $service) {
+/*	public function getPreparedValues(Tra\Services\Iservice $service) {
 		return $service->prepareData($this);
     }
 
    	public function getParentService() {
 		return $this->getPresenter()->getMainService();
-    }
+    }*/
 }
