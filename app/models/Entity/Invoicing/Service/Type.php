@@ -38,6 +38,7 @@ class Type extends \Entity\BaseEntity {
 
 
 
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -46,29 +47,20 @@ class Type extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param string
+	 * @param slug
 	 * @return \Entity\Invoicing\Service\Type
 	 */
-	public function setNameTechnical($nameTechnical) {
-		$this->nameTechnical = $nameTechnical;
+	public function setSlug($slug) {
+		$this->slug = $slug;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Entity\Invoicing\Service\Type
+	 * @return slug|NULL
 	 */
-	public function unsetNameTechnical() {
-		$this->nameTechnical = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return string|NULL
-	 */
-	public function getNameTechnical() {
-		return $this->nameTechnical;
+	public function getSlug() {
+		return $this->slug;
 	}
 		
 	/**

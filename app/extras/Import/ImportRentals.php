@@ -42,8 +42,12 @@ class ImportRentals extends BaseImport {
 		$en = \Service\Dictionary\Language::getByIso('en');
 		$now = time();
 
-		$r = q('select * from objects where country_id = 46 limit 20');
-		//$r = q('select * from objects order by id');
+		if ($this->developmentMode == TRUE) {
+			$r = q('select * from objects where country_id = 46 limit 20');
+		} else {
+			$r = q('select * from objects');
+		}
+
 		while ($x = mysql_fetch_array($r)) {
 			debug($x['id'], $x['member_id']);
 			$rental = \Service\Rental\Rental::get();
@@ -240,7 +244,23 @@ class ImportRentals extends BaseImport {
 
 
 			// Pricelist
-			//@todo - toto treba dorobit podla noveho systemu cennikov po analyze ze ako to bude fungovat
+			$pricelists = array();
+			$temp = unserialize($x['prices_simple']);
+			if (is_array($temp) && count($temp)) {
+				$pricelists['simple'] = $temp;
+			}
+
+			$temp = unserialize($x['prices_advanced']);
+			if (is_array($temp) && count($temp)) {
+				$pricelists['advanced'] = $temp;
+			}
+
+			$temp = unserialize($x['prices_upload']);
+			if (is_array($temp) && count($temp)) {
+				$pricelists['upload'] = $temp;
+			}
+
+			$rental->pricelists = $pricelists;
 
 			// Media
 			$temp = array_unique(array_filter(explode(',', $x['photos'])));

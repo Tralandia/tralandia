@@ -14,12 +14,27 @@ use Nette\Application as NA,
 
 class RadoPresenter extends BasePresenter {
 
+	public $session;
+
+	public function startup() {
+		parent::startup();
+		$this->session = $this->context->session->getSection('importSession');
+	}
+
 	public function actionDefault() {
 		ini_set('max_execution_time', 0);
 		Debugger::$maxDepth = 3;
+
 		$redirect = FALSE;
+		if (isset($this->params['toggleDevelopmentMode'])) {
+			$this->session->developmentMode = !$this->session->developmentMode;
+			$this->flashMessage('Development Mode Toggled');
+			$redirect = TRUE;
+		}
+
 		if (isset($this->params['dropAllTables'])) {
 			$import = new I\BaseImport();
+			$import->developmentMode = (bool)$this->session->developmentMode;
 			$import->dropAllTables();
 
 			$this->flashMessage('Dropping Done');
@@ -27,12 +42,14 @@ class RadoPresenter extends BasePresenter {
 		}
 		if (isset($this->params['truncateAllTables'])) {
 			$import = new I\BaseImport();
+			$import->developmentMode = (bool)$this->session->developmentMode;
 			$import->truncateAllTables();
 			$this->flashMessage('Truncating Done');
 			$redirect = TRUE;
 		}
 		if (isset($this->params['undoSection'])) {
 			$import = new I\BaseImport();
+			$import->developmentMode = (bool)$this->session->developmentMode;
 			$import->undoSection($this->params['undoSection']);
 			$this->flashMessage('Section UNDONE');
 			$redirect = TRUE;
@@ -56,6 +73,7 @@ class RadoPresenter extends BasePresenter {
 			//\Extras\Models\Service::preventFlush();
 			$className = 'Extras\Import\Import'.ucfirst($this->params['importSection']);
 			$import = new $className();
+			$import->developmentMode = (bool)$this->session->developmentMode;
 			if (isset($this->params['subsection'])) {
 				$import->doImport($this->params['subsection']);
 			} else {
@@ -85,8 +103,10 @@ class RadoPresenter extends BasePresenter {
 		// $t = \Services\Location\LocationService::get(848); $t->delete(); return;
 
 		$import = new I\BaseImport();
+		$import->developmentMode = (bool)$this->session->developmentMode;
 
 		$this->template->sections = $import->createNavigation();
+		$this->template->developmentMode = $import->developmentMode == TRUE ? "TRUE" : "FALSE";
 		return;
 	}
 

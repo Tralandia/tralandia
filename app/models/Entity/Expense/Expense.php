@@ -70,6 +70,7 @@ class Expense extends \Entity\BaseEntity {
 
 
 
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		

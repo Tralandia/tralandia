@@ -70,11 +70,12 @@ class Company extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Entity\Invoicing\Invoice", mappedBy="invoicingCompany")
+	 * @ORM\OneToMany(targetEntity="Entity\Invoicing\Invoice", mappedBy="company")
 	 */
 	protected $invoices;
 
 	
+
 
 
 
@@ -356,7 +357,7 @@ class Company extends \Entity\BaseEntityDetails {
 		if(!$this->invoices->contains($invoice)) {
 			$this->invoices->add($invoice);
 		}
-		$invoice->setInvoicingCompany($this);
+		$invoice->setCompany($this);
 
 		return $this;
 	}
@@ -369,7 +370,7 @@ class Company extends \Entity\BaseEntityDetails {
 		if($this->invoices->contains($invoice)) {
 			$this->invoices->removeElement($invoice);
 		}
-		$invoice->unsetInvoicingCompany();
+		$invoice->unsetCompany();
 
 		return $this;
 	}
