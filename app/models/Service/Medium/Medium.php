@@ -108,7 +108,13 @@ class Medium extends \Service\BaseService {
 		}
 		rmdir($mediumDir);
 
-		debug(explode('/', $mediumDir));
+		$pathStructure = $this->getPathStructure();
+		foreach($pathStructure as $level) {
+			if (count($pathStructure)<2) break;
+			$pathStructure = array_splice($pathStructure, 0, -1);
+			$parent = FILES_DIR . '/' . implode('/', $pathStructure);
+			if (!count(glob($parent . '/*'))) rmdir($parent);
+		}
 
 	}
 

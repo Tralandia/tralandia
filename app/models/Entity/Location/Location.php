@@ -102,6 +102,11 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 	 */
 	protected $defaultZoom;
 
+	/**
+	 * @var json
+	 * @ORM\Column(type="json", nullable=true)
+	 */
+	protected $clickMapData;
 
 	/**
 	 * @var Collection
@@ -306,6 +311,16 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 	public function setRootValue($nestedRoot) { $this->nestedRoot = $nestedRoot; }
 
 	public function __toString() { return (string)$this->slug; }
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -554,6 +569,32 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 	 */
 	public function getDefaultZoom() {
 		return $this->defaultZoom;
+	}
+		
+	/**
+	 * @param json
+	 * @return \Entity\Location\Location
+	 */
+	public function setClickMapData($clickMapData) {
+		$this->clickMapData = $clickMapData;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Location\Location
+	 */
+	public function unsetClickMapData() {
+		$this->clickMapData = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return json|NULL
+	 */
+	public function getClickMapData() {
+		return $this->clickMapData;
 	}
 		
 	/**
