@@ -1,0 +1,11 @@
+common:
+	title: Location Main Title
+	h1: Location Main H1
+
+	form:
+
+		buttons:
+			submit:
+				type: submit
+				label: Save
+				addClass: btn-success

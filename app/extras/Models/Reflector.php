@@ -142,11 +142,27 @@ class Reflector extends Nette\Object {
 	private function _getFormMask() {
 		$mask = array();
 		$mask['classReflection'] = $this->getServiceReflection($this->settings->serviceClass);
-		$mask['containerName'] = $this->getContainerName();
 
-		$settingsFields = $this->settings->params->form->fields;
+		$formSettings = $this->settings->params->form;
 
-		foreach ($this->getFields($this->settings->serviceClass, $settingsFields) as $property) {
+		$mask['form'] = array();
+		$mask['form']['containerName'] = $this->getContainerName();
+
+
+		$fieldOptions = array( 
+			'class' => array('default'=> 'row'), 
+			'addClass' => array('default'=> NULL),
+		);
+
+		foreach ($fieldOptions as $key => $value) {
+			$mask['form'][$key] = Arrays::get($formSettings, $key, $value['default']);
+		}
+
+
+
+		$fieldsSettings = $this->settings->params->form->fields;
+
+		foreach ($this->getFields($this->settings->serviceClass, $fieldsSettings) as $property) {
 			$fieldMask = array(
 				'ui' => NULL,
 			);
@@ -159,6 +175,8 @@ class Reflector extends Nette\Object {
 			$fieldOptions = array(
 				'control' => array('default'=> NULL), 
 				'label' => array('default'=> ucfirst($name)), 
+				'class' => array('default'=> NULL), 
+				'addClass' => array('default'=> NULL), 
 				'callback' => array('default'=> NULL), 
 				'inlineEditing' => array('default'=> NULL), 
 				'inlineCreating' => array('default'=> NULL), 
@@ -167,13 +185,12 @@ class Reflector extends Nette\Object {
 			);
 
 
-			if($settingsFields) {
-				$options = Arrays::get($settingsFields, array($name, 'options'), $options);
+			$options = Arrays::get($fieldsSettings, array($name, 'options'), $options);
 
-				foreach ($fieldOptions as $key => $value) {
-					$fieldMask['ui'][$key] = Arrays::get($settingsFields, array($name, $key), $value['default']);
-				}
+			foreach ($fieldOptions as $key => $value) {
+				$fieldMask['ui'][$key] = Arrays::get($fieldsSettings, array($name, $key), $value['default']);
 			}
+
 
 			if(is_string($fieldMask['ui']['label'])) {
 				$fieldMask['ui']['label'] = array('name' => $fieldMask['ui']['label']);
@@ -197,6 +214,11 @@ class Reflector extends Nette\Object {
 			$fieldMask['ui']['control']['type'] = ucfirst($fieldMask['ui']['control']['type']);
 			$fieldMask['ui']['nameSingular'] = Strings::toSingular(ucfirst($fieldMask['ui']['name']));
 			$fieldMask['ui']['options'] = $options;
+			$fieldMask['ui']['class'] = 'span4';
+			
+			if($fieldMask['ui']['startNewRow']) {
+				$fieldMask['ui']['renderBefore'] = Html::el('hr')->addClass('soften');
+			}
 
 			if($type == 'text') {
 				$fieldMask['ui']['control']['type'] = 'AdvancedTextInput';
@@ -246,8 +268,25 @@ class Reflector extends Nette\Object {
 
 			$mask['fields'][$name] = $fieldMask;
 		}
+
+		foreach ($this->settings->params->form->buttons as $name => $options) {
+			$options = (array) $options;
+
+			$button = array();
+			$fieldOptions = array( 
+				'type' => array('default'=> 'button'),
+				'label' => array('default'=> ucfirst($name)),
+				'class' => array('default'=> 'btn btn-large'),
+				'addClass' => array('default'=> NULL),
+			);
+
+			foreach ($fieldOptions as $key => $value) {
+				$button[$key] = Arrays::get($options, $key, $value['default']);
+			}
+			$button['type'] = ucfirst($button['type']);
+			$mask['buttons'][$name] = $button;
+		}
 		
-		//debug($mask['fields']);
 		return \Nette\ArrayHash::from($mask);
 	}
 	
@@ -258,7 +297,16 @@ class Reflector extends Nette\Object {
 	public function extend(IContainer $form, $mask) {
 		$classReflection = $mask->classReflection;
 
-		$container = $mask->containerName;
+		$formUi = $mask->form;
+
+		if(isset($formUi->class)) {
+			$form->getElementPrototype()->class($formUi->class);
+		}
+		if(isset($formUi->addClass)) {
+			$form->getElementPrototype()->addClass($formUi->addClass);
+		}
+
+		$container = $formUi->containerName;
 		if ($form->getComponent($container, false)) {
 			$container = $form->getComponent($container);
 		} else {
@@ -273,11 +321,21 @@ class Reflector extends Nette\Object {
 				$propertyName,
 				$ui->label->name
 			);
-			if(isset($ui->startNewRow)) {
-				//debug($ui);
-				$control->getControlPrototype()->addClass('clearBefor');
+
+			if(isset($ui->renderBefore)) {
+				$control->setOption('renderBefore', $ui->renderBefore);
 			}
 
+			if(isset($ui->renderAfter)) {
+				$control->setOption('renderAfter', $ui->renderAfter);
+			}
+
+			if(isset($ui->class)) {
+				$control->setOption('class', $ui->class);
+			}
+			if(isset($ui->addClass)) {
+				$control->setOption('class', $control->getOption('class') . ' ' . $ui->addClass);
+			}
 
 			if(isset($ui->label->class)) {
 				$control->getLabelPrototype()->addClass($ui->label->class);
@@ -317,7 +375,20 @@ class Reflector extends Nette\Object {
 				$control->setInlineEditing($ui->inlineEditing);
 				$control->setInlineCreating($ui->inlineCreating);
 			}
-			
+		}
+
+		foreach ($mask->buttons as $buttonName => $button) {
+			$control = $container->{'add' . $button->type}(
+				$buttonName,
+				$button->label
+			);
+
+			if(isset($button->class)) {
+				$control->getControlPrototype()->class($button->class);
+			}
+			if(isset($button->addClass)) {
+				$control->getControlPrototype()->addClass($button->addClass);
+			}
 		}
 	}
 	

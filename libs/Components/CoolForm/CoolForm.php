@@ -14,14 +14,14 @@ class CoolForm extends Form {
 
     public function __construct(\Nette\ComponentModel\IContainer $parent = NULL, $name = NULL) {
 		parent::__construct($parent, $name);
-		$this->getElementPrototype()->class(self::AJAX_CLASS);
+
 		$this->addProtection('Validity expired form.');
 		//$this->setTranslator(Environment::getService('translator'));
 		$this->onError[] = callback($this, 'onInvalid');
     }
 
 	public function ajax($flag = true) {
-		$flag ? $this->getElementPrototype()->class(self::AJAX_CLASS) : $this->getElementPrototype()->class(null);
+		$flag ? $this->getElementPrototype()->class(self::AJAX_CLASS) : NULL;
 	}
 
 	public function &__get($name) {

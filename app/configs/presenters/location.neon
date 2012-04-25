@@ -22,16 +22,19 @@ common:
 				mapper: e.created
 
 	form:
+		addClass: haha
 		fields:
 			name:
 				control: 
 					type: phrase
 					class: test
+				addClass: 'myPhraseClass'
 				inlineEditing: true
 				inlineCreating: true
 
 			slug:
 				control: tinymce
+				class: 'mySlugClass'
 				label: Sluuug
 				disabled: true
 
@@ -48,8 +51,8 @@ common:
 			defaultCurrency:
 				control: select
 				label: 
-					class: 'labelCalss'
 					name: 'Def. Curr.'
+					class: 'labelClass'
 				callback: getAllAsPairs
 				inlineEditing: true
 				inlineCreating: true
@@ -60,6 +63,11 @@ common:
 				callback: 
 					method: getBySupportedAsPairs
 					arguments: ['id', 'iso', 1]
+
+		buttons:
+			submit:
+				label: 'tst'
+			cancel:
 
 base < common:
 	title: Location Base
