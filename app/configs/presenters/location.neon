@@ -21,6 +21,7 @@ common:
 				label: Dátum vytvorenia
 				mapper: e.created
 
+
 	form:
 		addClass: haha
 		fields:

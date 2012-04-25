@@ -6,6 +6,7 @@ use Nette\Application as NA,
 	Nette\Environment,
 	Nette\Diagnostics\Debugger,
 	Nette\Utils\Html,
+	Tra\Utils\Arrays,
 	Extras\Models\Reflector;
 
 class AdminPresenter extends BasePresenter {
@@ -105,7 +106,9 @@ class AdminPresenter extends BasePresenter {
 		$grid = new \DataGrid\DataGrid;
 		$mapper = array(); $editable = false;
 
-		foreach ($this->settings->params->grid->columns as $alias => $column) {
+		$gridSettings = $this->settings->params->grid;
+
+		foreach ($gridSettings->columns as $alias => $column) {
 			$mapper[$alias] = $column->mapper;
 			
 			if (!isset($column->draw) || (isset($column->draw) && $column->draw == true)) {
@@ -136,16 +139,37 @@ class AdminPresenter extends BasePresenter {
 
 		$list = $this->serviceListName;
 		$list = $list::getAll();
-		$dataSource = new \DataGrid\DataSources\Doctrine\LalaQueryBuilder(
-			$list->getDataSource()
-		);
+		$dataSource = new \DataGrid\DataSources\Doctrine\LalaQueryBuilder($list->getDataSource());
 
 		$dataSource->setMapping($mapper);
-		$grid->setDataSource($dataSource);	
-		$grid->addActionColumn('Actions');
-		$grid->addAction('Edit', 'edit', Html::el('span')->class('icon edit')->setText('Edit') , false);
-		$grid->addAction('Delete', 'delete', Html::el('span')->class('icon delete')->setText('Delete'), false);
+		$grid->setDataSource($dataSource);
 
+		foreach ($gridSettings->actionColumns as $key => $value) {
+			if($value === FALSE) continue;
+			$grid->addActionColumn($key, Arrays::get($value, 'name', ''));
+			foreach ($value->actions as $actionName => $action) {
+				if($action === FALSE) continue;
+				$title = Arrays::get($action, 'title', ucfirst($actionName));
+				if(is_string($action->title)) {
+					$action->title = \Nette\ArrayHash::from(array(
+							'label' => $action->title
+						));
+				}
+
+				if($action->title instanceof \Nette\ArrayHash) {
+					$title = Html::el('a')->title($title)->add(Arrays::get($action->title, 'label', ucfirst($title)));
+
+					if(isset($action->class)) $title->class($action->class);
+					else $title->class('btn btn-mini');
+					if(isset($action->addClass)) $title->addClass($action->addClass);
+				}
+
+				$grid->addAction($title, $actionName, Arrays::get($action, 'ajax', NULL));
+			}
+			
+		}
+
+		$grid->itemsPerPage = $gridSettings->itemsPerPage;
 		
 
 		return $grid;
