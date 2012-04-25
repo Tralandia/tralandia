@@ -174,6 +174,11 @@ class Invoice extends \Entity\BaseEntity {
 
 
 
+
+
+
+
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -587,7 +592,33 @@ class Invoice extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param decimal
+	 * @param \Entity\Currency
+	 * @return \Entity\Invoicing\Invoice
+	 */
+	public function setCurrency(\Entity\Currency $currency) {
+		$this->currency = $currency;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Invoicing\Invoice
+	 */
+	public function unsetCurrency() {
+		$this->currency = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Currency|NULL
+	 */
+	public function getCurrency() {
+		return $this->currency;
+	}
+		
+	/**
+	 * @param float
 	 * @return \Entity\Invoicing\Invoice
 	 */
 	public function setExchangeRate($exchangeRate) {
@@ -597,7 +628,7 @@ class Invoice extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return decimal|NULL
+	 * @return float|NULL
 	 */
 	public function getExchangeRate() {
 		return $this->exchangeRate;
@@ -656,7 +687,7 @@ class Invoice extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param decimal
+	 * @param float
 	 * @return \Entity\Invoicing\Invoice
 	 */
 	public function setReferrerCommission($referrerCommission) {
@@ -666,7 +697,7 @@ class Invoice extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return decimal|NULL
+	 * @return float|NULL
 	 */
 	public function getReferrerCommission() {
 		return $this->referrerCommission;

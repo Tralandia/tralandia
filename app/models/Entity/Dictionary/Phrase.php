@@ -30,7 +30,7 @@ class Phrase extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Type")
+	 * @ORM\ManyToOne(targetEntity="Type", cascade={"persist"})
 	 */
 	protected $type;
 
@@ -42,6 +42,11 @@ class Phrase extends \Entity\BaseEntityDetails {
 	protected $sourceLanguage;
 
 	
+
+
+
+
+
 
 
 

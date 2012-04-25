@@ -34,6 +34,12 @@ class Medium extends \Service\BaseService {
 
 	public static function createFromUrl($uri) {
 
+		$medium = \Service\Medium\Medium::getByOldUrl($uri);
+		if ($medium) {
+			debug('Nasiel som medium, iba asociujem...');
+			return $medium;
+		}
+
 		if (!$data = @file_get_contents($uri, 'r')) {
 			return FALSE;
 			//throw new \Nette\UnexpectedValueException('File "' . $uri . '" does not exist.');
@@ -54,7 +60,7 @@ class Medium extends \Service\BaseService {
 	public static function createFromFile($file, $uri) {
 
 		$medium = static::get();
-		$medium->uri = $uri;
+		$medium->oldUrl = $uri;
 		$medium->details = $medium->getFileDetails($file);
 		$medium->sort = 1;
 		$medium->save();
@@ -99,8 +105,6 @@ class Medium extends \Service\BaseService {
 
 		$mediumDir = $this->getMediumDir();
 
-		debug($mediumDir);
-
 		foreach(glob($mediumDir . '/*') as $file) {
 			if(is_dir($file))
 				rrmdir($file);
@@ -136,7 +140,6 @@ class Medium extends \Service\BaseService {
 	}
 
 	private function getMediumDir() {
-
 		$dir = FILES_DIR;
 		foreach ($this->getPathStructure() as $level) {
 			$dir .= '/' . $level;

@@ -28,7 +28,7 @@ class Rental extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Dictionary\Language")
+	 * @ORM\ManyToOne(targetEntity="Entity\Dictionary\Language", cascade={"persist"})
 	 */
 	protected $editLanguage;
 
@@ -118,7 +118,7 @@ class Rental extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Dictionary\Language", mappedBy="rentals")
+	 * @ORM\ManyToMany(targetEntity="Entity\Dictionary\Language", mappedBy="rentals", cascade={"persist"})
 	 */
 	protected $spokenLanguages;
 
@@ -148,7 +148,7 @@ class Rental extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Entity\Medium\Medium", mappedBy="rental", cascade={"persist", "remove"})
+	 * @ORM\OneToMany(targetEntity="Entity\Medium\Medium", mappedBy="rental", cascade={"persist"})
 	 */
 	protected $media;
 
@@ -175,6 +175,11 @@ class Rental extends \Entity\BaseEntity {
 	 * @ORM\OneToMany(targetEntity="Entity\Invoicing\Invoice", mappedBy="rental")
 	 */
 	protected $invoices;
+
+
+
+
+
 
 
 
@@ -673,8 +678,8 @@ class Rental extends \Entity\BaseEntity {
 	 * @param json
 	 * @return \Entity\Rental\Rental
 	 */
-	public function setPricelist($pricelist) {
-		$this->pricelist = $pricelist;
+	public function setPricelists($pricelists) {
+		$this->pricelists = $pricelists;
 
 		return $this;
 	}
@@ -682,8 +687,8 @@ class Rental extends \Entity\BaseEntity {
 	/**
 	 * @return json|NULL
 	 */
-	public function getPricelist() {
-		return $this->pricelist;
+	public function getPricelists() {
+		return $this->pricelists;
 	}
 		
 	/**

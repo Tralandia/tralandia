@@ -18,7 +18,11 @@ class ImportHtmlPhrases extends BaseImport {
 
 		$dictionaryType = $this->createDictionaryType('Html', 'Html', 'supportedLanguages', 'MARKETING');
 
-		$r = q('select * from dictionary where text_type = 2');
+		if ($this->developmentMode == TRUE) {
+			$r = q('select * from dictionary where text_type = 2 limit 20');
+		} else {
+			$r = q('select * from dictionary where text_type = 2');
+		}
 		$i = 0;
 		while ($x = mysql_fetch_array($r)) {
 			$newPhrase = $this->createNewPhrase($dictionaryType, $x['id']);

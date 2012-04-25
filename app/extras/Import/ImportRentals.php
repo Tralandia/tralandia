@@ -15,8 +15,12 @@ use Nette\Application as NA,
 class ImportRentals extends BaseImport {
 
 	public function doImport($subsection = NULL) {
+		\Extras\Models\Service::flush(TRUE);
 
 		$import = new \Extras\Import\BaseImport();
+
+		// Detaching all media
+		qNew('update medium_medium set rental_id = NULL where rental_id > 0');
 		$import->undoSection('rentals');
 
 		$r = q('select * from objects_types_new where trax_en_type_id > 0');
@@ -127,7 +131,7 @@ class ImportRentals extends BaseImport {
 				$thisTranslation = $thisPhrase->getTranslation($rental->editLanguage);
 				if ($thisTranslation) {
 					$thisTranslation->checked = TRUE;
-					$thisTranslation->save();
+					//$thisTranslation->save();
 				}
 			}
 			$rental->teaser = $this->createNewPhrase($descriptionDictionaryType, $x['marketing_dic_id']);
@@ -262,10 +266,12 @@ class ImportRentals extends BaseImport {
 
 			$rental->pricelists = $pricelists;
 
+			$rental->save();
+
 			// Media
 			$temp = array_unique(array_filter(explode(',', $x['photos'])));
 			if (is_array($temp) && count($temp)) {
-				$temp = array_slice($temp, 0, 3);
+				if ($this->developmentMode == TRUE) $temp = array_slice($temp, 0, 3);
 				foreach ($temp as $key => $value) {
 					$medium = \Service\Medium\Medium::createFromUrl('http://www.tralandia.com/u/'.$value);
 					if ($medium) $rental->addMedium($medium);
@@ -285,7 +291,6 @@ class ImportRentals extends BaseImport {
 
 			$rental->calendarUpdated = fromStamp($x['calendar_updated']);
 
-			$rental->save();
 			$rental->created = fromStamp($x['date_added']);
 			$rental->save();
 			\Extras\Models\Service::flush(FALSE);

@@ -70,7 +70,7 @@ class RadoPresenter extends BasePresenter {
 		}
 
 		if (isset($this->params['importSection'])) {
-			//\Extras\Models\Service::preventFlush();
+			\Extras\Models\Service::preventFlush();
 			$className = 'Extras\Import\Import'.ucfirst($this->params['importSection']);
 			$import = new $className();
 			$import->developmentMode = (bool)$this->session->developmentMode;

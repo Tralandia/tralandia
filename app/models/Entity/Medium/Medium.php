@@ -50,9 +50,15 @@ class Medium extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var text
-	 * @ORM\Column(type="text")
+	 * @ORM\Column(type="text", nullable=true)
 	 */
 	protected $uri;
+
+	/**
+	 * @var text
+	 * @ORM\Column(type="text", nullable=true)
+	 */
+	protected $oldUrl;
 
 	/**
 	 * @var integer
@@ -62,6 +68,11 @@ class Medium extends \Entity\BaseEntityDetails {
 
 
 	
+
+
+
+
+
 
 
 
@@ -242,10 +253,45 @@ class Medium extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
+	 * @return \Entity\Medium\Medium
+	 */
+	public function unsetUri() {
+		$this->uri = NULL;
+
+		return $this;
+	}
+		
+	/**
 	 * @return string|NULL
 	 */
 	public function getUri() {
 		return $this->uri;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Medium\Medium
+	 */
+	public function setOldUrl($oldUrl) {
+		$this->oldUrl = $oldUrl;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Medium\Medium
+	 */
+	public function unsetOldUrl() {
+		$this->oldUrl = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getOldUrl() {
+		return $this->oldUrl;
 	}
 		
 	/**
