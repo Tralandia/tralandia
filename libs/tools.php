@@ -19,6 +19,7 @@ Extras\Forms\Controls\AdvancedTextInput::register();
 Extras\Forms\Controls\AdvancedBricksList::register();
 Extras\Forms\Controls\AdvancedCheckboxList::register();
 Extras\Forms\Controls\AdvancedSelectBox::register();
+Extras\Forms\Controls\AdvancedFileManager::register();
 
 function debug() {
 	return Tools::dump(func_get_args());

@@ -15,6 +15,8 @@ class AdminForm extends Form {
 
 		$reflector->extend($this, $this->reflector->getFormMask());
 		
+		//$this->addAdvancedFileManager('upload', 'File manager');
+
 		$this->ajax(false);
 		$this->addSubmit('save', 'Save');
 		

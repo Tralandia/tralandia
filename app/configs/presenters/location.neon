@@ -24,27 +24,29 @@ common:
 	form:
 		fields:
 			name:
-				type: phrase
+				control: 
+					type: phrase
+					class: test
 				inlineEditing: true
 				inlineCreating: true
 
 			slug:
-				type: text
+				control: tinymce
 				label: Sluuug
 				disabled: true
 
 			iso:
-				type: text
+				control: text
 				startNewRow: true
 
 			currencies:
-				type: bricksList
-				#type: checkboxList
+				control: bricksList
+				#control: checkboxList
 				inlineEditing: true
 				inlineCreating: true
 
 			defaultCurrency:
-				type: select
+				control: select
 				label: 
 					class: 'labelCalss'
 					name: 'Def. Curr.'
@@ -53,7 +55,7 @@ common:
 				inlineCreating: true
 
 			defaultLanguage:
-				type: select
+				control: select
 				label: Def. Language
 				callback: 
 					method: getBySupportedAsPairs

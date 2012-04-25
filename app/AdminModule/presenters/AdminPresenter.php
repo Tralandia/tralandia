@@ -46,8 +46,6 @@ class AdminPresenter extends BasePresenter {
 		$this->service = $service::get($id);
 
 		$this->formMask = $this->reflector->getFormMask();
-
-		$this->service->setCurrentMask($this->formMask);
 	}
 	
 	public function renderEdit($id = 0) {
@@ -72,7 +70,36 @@ class AdminPresenter extends BasePresenter {
 
 		return $form;
 	}
-		
+
+/*	public function handleImageUpload(\Nette\Http\FileUpload $file) {
+		//debug($file);
+		$this->invalidateControl();
+		try {
+			$file = \Service\Medium\Medium::createFromFile($file->getTemporaryFile(), $file->getName());
+			$this->getPresenter()->getPayload()->success = true;
+		} catch (Exception $e) {
+			$this->getPresenter()->getPayload()->error = $e->getMessage();
+		}
+	}
+
+
+	public function loadState(array $params) {
+		$globals = $this->getPresenter()->getRequest()->getParameters();
+		if (isset($globals['qqfile'])) {
+			list($none, $signal) = $this->getPresenter()->getSignal();
+			$handle = 'handle' . ucfirst($signal);
+			
+			if ($this->getReflection()->hasMethod($handle)) {
+				$parameters = $this->getReflection()->getMethod($handle)->getParameters();
+				$file = new \qqUploadedFileXhr;
+				$file = $file->save();
+				$file = new \Nette\Http\FileUpload($file);
+				$params[$parameters[0]->getName()] = $file;
+			}
+		}
+		parent::loadState($params);
+	}
+*/		
 	protected function createComponentGrid($name) {
 		$mainEntityName = $this->reflector->getMainEntityName();
 		$grid = new \DataGrid\DataGrid;

@@ -2,3 +2,16 @@
 <h1>{$settings->title}</h1>
 
 {control form}
+
+{* <link href="{$baseUrl}/libs/qq/fileuploader.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="{$baseUrl}/libs/qq/fileuploader.js"></script>
+<script type="text/javascript" n:syntax="double">
+var uploader = new qq.FileUploader({
+    element: $("#managerUploader")[0],
+    action: {{link imageUpload!}},
+    allowedExtensions: ['jpg', 'jpeg', 'png', 'gif'],
+    onComplete: function(id, fileName, responseJSON) {
+    	$.nette.success(responseJSON);
+    }
+});
+</script> *}
