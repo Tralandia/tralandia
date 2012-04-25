@@ -17,7 +17,7 @@
 }
 
 .container .inner .content h1 {
-	#gradient > .vertical(@white, @yellow);
+	#gradient > .vertical(@white, @grayMedium);
 	margin:-9px -9px 15px -9px;
 	font-size:22px;
 	border: 1px solid @greenBorder;
@@ -97,7 +97,11 @@ textarea:focus {
 
 .row hr {
 	clear: both;
-	margin-left: @gridGutterWidth;
+	margin: 0 0 15px @gridGutterWidth;
+	padding: 10px 0 0 0;
+	height:1px;
+	border-top:none;
+	border-bottom-color:@grayMedium;
 }
 
 .navbar-fixed-top .navbar-inner {
@@ -126,13 +130,18 @@ label:hover > .btn-group {
 	display:block;
 }
 label.checkbox, label.radio {
-	background: @grayLighter;
 	padding-left:0;
+	text-decoration: underline;
+	cursor: pointer;
+}
+label.checkbox:hover, label.radio:hover, label.checkbox.checked, label.radio.checked {
+	background: @grayLighter;
 	box-shadow: 0px 0px 2px #ccc;
 	.border-radius(5px);
+	color: @greenDark;
 }
 label.checkbox:hover, label.radio:hover {
-	color: @greenDark;
+
 }
 .radio input[type="radio"], .checkbox input[type="checkbox"] {
 	margin:0 5px 0 0;
