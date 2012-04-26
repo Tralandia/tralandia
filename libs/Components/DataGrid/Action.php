@@ -48,7 +48,7 @@ class Action extends Nette\ComponentModel\Component implements IAction
 	 * 				   otherwise variable DataGrid\DataGrid::$keyName will be used and must be defined)
 	 * @return void
 	 */
-	public function __construct($title, $destination, $useAjax = FALSE, $key = self::WITH_KEY)
+	public function __construct($title, $destination, $icon = NULL, $useAjax = FALSE, $key = self::WITH_KEY)
 	{
 		parent::__construct();
 		$this->destination = $destination;
@@ -72,6 +72,7 @@ class Action extends Nette\ComponentModel\Component implements IAction
 		$dataGrid = $this->lookup('DataGrid\DataGrid', TRUE);
 		$control = $dataGrid->lookup('Nette\Application\UI\Control', TRUE);
 
+		debug($this->key);
 		switch ($this->key) {
 		case self::WITHOUT_KEY:
 			$link = $control->link($this->destination); break;

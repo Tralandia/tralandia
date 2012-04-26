@@ -150,7 +150,7 @@ class Reflector extends Nette\Object {
 
 
 		$fieldOptions = array( 
-			'class' => array('default'=> 'row'), 
+			'class' => array('default'=> NULL), 
 			'addClass' => array('default'=> NULL),
 		);
 
@@ -180,6 +180,7 @@ class Reflector extends Nette\Object {
 				'callback' => array('default'=> NULL), 
 				'inlineEditing' => array('default'=> NULL), 
 				'inlineCreating' => array('default'=> NULL), 
+				'inlineDeleting' => array('default'=> NULL), 
 				'disabled' => array('default'=> NULL),
 				'startNewRow' => array('default'=> NULL),
 			);
@@ -216,7 +217,7 @@ class Reflector extends Nette\Object {
 			$fieldMask['ui']['options'] = $options;
 			$fieldMask['ui']['class'] = 'span4';
 			
-			if($fieldMask['ui']['startNewRow']) {
+			if($fieldMask['ui']['startNewRow'] || $type == 'checkboxList') {
 				$fieldMask['ui']['renderBefore'] = Html::el('hr')->addClass('soften');
 			}
 
@@ -319,7 +320,7 @@ class Reflector extends Nette\Object {
 			$ui = $property->ui;
 			$control = $container->{'add' . $ui->control->type}(
 				$propertyName,
-				$ui->label->name
+				Html::el('b')->add($ui->label->name)
 			);
 
 			if(isset($ui->renderBefore)) {
@@ -374,6 +375,7 @@ class Reflector extends Nette\Object {
 			{
 				$control->setInlineEditing($ui->inlineEditing);
 				$control->setInlineCreating($ui->inlineCreating);
+				$control->setInlineDeleting($ui->inlineDeleting);
 			}
 		}
 
@@ -382,6 +384,8 @@ class Reflector extends Nette\Object {
 				$buttonName,
 				$button->label
 			);
+
+			$control->setOption('renderBefore', Html::el('hr')->addClass('soften'));
 
 			if(isset($button->class)) {
 				$control->getControlPrototype()->class($button->class);

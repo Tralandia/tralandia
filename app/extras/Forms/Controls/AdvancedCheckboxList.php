@@ -154,11 +154,15 @@ class AdvancedCheckboxList extends AdvancedControl {
 				$label->setText($this->translate($val));
 			}
 
-			if($this->getInlineEditing()) {
-				$label->add(Html::el('a')->add('Editable'));
-			}
-			if($this->getInlineCreating()) {
-				$label->add(Html::el('a')->add('Creatable'));
+			if($this->getInlineEditing() || $this->getInlineDeleting()) {
+				$buttonGroup = Html::el('div')->addClass('btn-group pull-right');
+				if($this->getInlineEditing()) {
+					$buttonGroup->add(Html::el('a')->addClass('btn btn-nimi')->add(Html::el('i')->addClass('icon-edit')));
+				}
+				if($this->getInlineDeleting()) {
+					$buttonGroup->add(Html::el('a')->addClass('btn btn-nimi')->add(Html::el('i')->addClass('icon-edit')));
+				}
+				$label->add($buttonGroup);
 			}
 
 			$labelHtml = $label->getHtml();
@@ -169,6 +173,9 @@ class AdvancedCheckboxList extends AdvancedControl {
 
 			$container->add((string) $label->setHtml($control.$labelHtml));
 
+		}
+		if($this->getInlineCreating()) {
+			$container->add(Html::el('botton')->add(Html::el('i')->addClass('icon-plus'))->addClass('btn pull-left'));
 		}
 
 		return $container;

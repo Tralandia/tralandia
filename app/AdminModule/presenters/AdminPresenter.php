@@ -26,6 +26,7 @@ class AdminPresenter extends BasePresenter {
 		$this->serviceName = $this->settings->serviceClass;
 		$this->serviceListName = $this->settings->serviceListClass;
 		$this->reflector = new Reflector($this->settings);
+		$this->formMask = $this->reflector->getFormMask();
 	}
 	
 	public function getMainServiceName() {
@@ -45,8 +46,11 @@ class AdminPresenter extends BasePresenter {
 	public function actionEdit($id = 0) {
 		$service = $this->serviceName;
 		$this->service = $service::get($id);
+		if(isset($this->params['display']) && $this->params['display'] == 'modal') {
+			$this->formMask->form->addClass .= ' ajax';
+			$this->setLayout(FALSE);
+		}
 
-		$this->formMask = $this->reflector->getFormMask();
 	}
 	
 	public function renderEdit($id = 0) {

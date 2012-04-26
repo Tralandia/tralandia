@@ -32,5 +32,16 @@ common:
 				label: Dátum vytvorenia
 				mapper: e.created
 
-base < common:
-	title: Currency Base
+	form:
+		fields:
+			name:
+				control: 
+					type: phrase
+					class: test
+				addClass: 'myPhraseClass'
+				inlineEditing: true
+				inlineCreating: true
+
+			iso:
+				control: text
+				startNewRow: true

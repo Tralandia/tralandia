@@ -12,4 +12,8 @@ interface IAdvancedControl {
 
 	public function getInlineCreating();
 
+	public function setInlineDeleting($inlineDeleting);
+
+	public function getInlineDeleting();
+
 }

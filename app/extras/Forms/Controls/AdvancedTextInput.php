@@ -11,6 +11,7 @@ class AdvancedTextInput extends TextInput implements IAdvancedControl {
 
 	protected $inlineEditing;
 	protected $inlineCreating;
+	protected $inlineDeleting;
 
 	public function setInlineEditing($inlineEditing) {
 		$this->inlineEditing = $inlineEditing;
@@ -30,16 +31,29 @@ class AdvancedTextInput extends TextInput implements IAdvancedControl {
 		return $this->inlineCreating;
 	}
 
+	public function setInlineDeleting($inlineDeleting) {
+		$this->inlineDeleting = $inlineDeleting;
+		return $this;		
+	}
+
+	public function getInlineDeleting() {
+		return $this->inlineDeleting;
+	}
+
 
 	public function getControl() {
 		$control = parent::getControl();
-		$wrapper = Html::el('span')->addClass('input-wrapper');
+		$control->addClass('pull-left');
+		$wrapper = Html::el('div')->addClass('input-append input-prepend');
 		$wrapper->add($control);
 		if($this->getInlineEditing()) {
-			$wrapper->add(Html::el('a')->add('Editable'));
+			$wrapper->add(Html::el('a')->add(Html::el('i')->addClass('icon-edit'))->addClass('btn pull-left'));
+		}
+		if($this->getInlineDeleting()) {
+			$wrapper->add(Html::el('a')->add(Html::el('i')->addClass('icon-remove'))->addClass('btn pull-left'));
 		}
 		if($this->getInlineCreating()) {
-			$wrapper->add(Html::el('a')->add('Creatable'));
+			$wrapper->add(Html::el('a')->add(Html::el('i')->addClass('icon-plus'))->addClass('btn pull-left'));
 		}
 		return $wrapper;
 	}

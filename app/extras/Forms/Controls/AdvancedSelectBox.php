@@ -11,6 +11,7 @@ class AdvancedSelectBox extends SelectBox implements IAdvancedControl {
 
 	protected $inlineEditing;
 	protected $inlineCreating;
+	protected $inlineDeleting;
 
 	public function setInlineEditing($inlineEditing) {
 		$this->inlineEditing = $inlineEditing;
@@ -30,16 +31,35 @@ class AdvancedSelectBox extends SelectBox implements IAdvancedControl {
 		return $this->inlineCreating;
 	}
 
+	public function setInlineDeleting($inlineDeleting) {
+		$this->inlineDeleting = $inlineDeleting;
+		return $this;		
+	}
+
+	public function getInlineDeleting() {
+		return $this->inlineDeleting;
+	}
+
 
 	public function getControl() {
 		$control = parent::getControl();
-		$wrapper = Html::el('span')->addClass('select-wrapper');
+		$control->addClass('pull-left');
+		$wrapper = Html::el('div')->addClass('input-append input-prepend');
 		$wrapper->add($control);
+		$controlId = $control->getId();
 		if($this->getInlineEditing()) {
-			$wrapper->add(Html::el('a')->add('Editable'));
+			$editingHtml = Html::el('a')->add(Html::el('i')->addClass('icon-edit'))->addClass('btn pull-left edit');
+			$editingHtml->addAttributes(array(
+				'for-control' => $controlId,
+			));
+			$wrapper->add($editingHtml);
+
+		}
+		if($this->getInlineDeleting()) {
+			$wrapper->add(Html::el('a')->add(Html::el('i')->addClass('icon-remove'))->addClass('btn pull-left delete'));
 		}
 		if($this->getInlineCreating()) {
-			$wrapper->add(Html::el('a')->add('Creatable'));
+			$wrapper->add(Html::el('a')->add(Html::el('i')->addClass('icon-plus'))->addClass('btn pull-left create'));
 		}
 		return $wrapper;
 	}
