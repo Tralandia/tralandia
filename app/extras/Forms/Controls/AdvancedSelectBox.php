@@ -7,39 +7,7 @@ use Nette\Forms\Container,
 	Nette\Utils\Html;
 
 
-class AdvancedSelectBox extends SelectBox implements IAdvancedControl {
-
-	protected $inlineEditing;
-	protected $inlineCreating;
-	protected $inlineDeleting;
-
-	public function setInlineEditing($inlineEditing) {
-		$this->inlineEditing = $inlineEditing;
-		return $this;		
-	}
-
-	public function getInlineEditing() {
-		return $this->inlineEditing;
-	}
-
-	public function setInlineCreating($inlineCreating) {
-		$this->inlineCreating = $inlineCreating;
-		return $this;		
-	}
-
-	public function getInlineCreating() {
-		return $this->inlineCreating;
-	}
-
-	public function setInlineDeleting($inlineDeleting) {
-		$this->inlineDeleting = $inlineDeleting;
-		return $this;		
-	}
-
-	public function getInlineDeleting() {
-		return $this->inlineDeleting;
-	}
-
+class AdvancedSelectBox extends SelectBox {
 
 	public function getControl() {
 		$control = parent::getControl();
@@ -47,19 +15,20 @@ class AdvancedSelectBox extends SelectBox implements IAdvancedControl {
 		$wrapper = Html::el('div')->addClass('input-append input-prepend');
 		$wrapper->add($control);
 		$controlId = $control->getId();
-		if($this->getInlineEditing()) {
-			$editingHtml = Html::el('a')->add(Html::el('i')->addClass('icon-edit'))->addClass('btn pull-left edit');
+		if($this->getOption('inlineEditing')) {
+			$editingHtml = $this->getOption('inlineEditing');
 			$editingHtml->addAttributes(array(
 				'for-control' => $controlId,
 			));
 			$wrapper->add($editingHtml);
 
 		}
-		if($this->getInlineDeleting()) {
-			$wrapper->add(Html::el('a')->add(Html::el('i')->addClass('icon-remove'))->addClass('btn pull-left delete'));
+
+		if($this->getOption('inlineDeleting')) {
+			$wrapper->add($this->getOption('inlineDeleting'));
 		}
-		if($this->getInlineCreating()) {
-			$wrapper->add(Html::el('a')->add(Html::el('i')->addClass('icon-plus'))->addClass('btn pull-left create'));
+		if($this->getOption('inlineCreating')) {
+			$wrapper->add($this->getOption('inlineCreating'));
 		}
 		return $wrapper;
 	}

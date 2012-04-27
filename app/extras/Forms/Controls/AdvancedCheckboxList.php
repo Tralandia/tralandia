@@ -12,7 +12,8 @@
 namespace Extras\Forms\Controls;
 
 use Nette\Utils\Html,
-	Nette\Forms\Container;
+	Nette\Forms\Container,
+	Nette\Forms\Controls\BaseControl;
 
 
 
@@ -25,7 +26,7 @@ use Nette\Utils\Html,
  * @copyright Copyright (c) 2004, 2011 David Grudl
  * @package   Nette\Extras
  */
-class AdvancedCheckboxList extends AdvancedControl {
+class AdvancedCheckboxList extends BaseControl {
 	/** @var Nette\Utils\Html  separator element template */
 	protected $separator;
 
@@ -154,16 +155,14 @@ class AdvancedCheckboxList extends AdvancedControl {
 				$label->setText($this->translate($val));
 			}
 
-			if($this->getInlineEditing() || $this->getInlineDeleting()) {
-				$buttonGroup = Html::el('div')->addClass('btn-group pull-right');
-				if($this->getInlineEditing()) {
-					$buttonGroup->add(Html::el('a')->addClass('btn btn-nimi')->add(Html::el('i')->addClass('icon-edit')));
-				}
-				if($this->getInlineDeleting()) {
-					$buttonGroup->add(Html::el('a')->addClass('btn btn-nimi')->add(Html::el('i')->addClass('icon-edit')));
-				}
-				$label->add($buttonGroup);
+			$buttonGroup = Html::el('div')->addClass('btn-group pull-right');
+			if($this->getOption('inlineEditing')) {
+				$buttonGroup->add($this->getOption('inlineEditing'));
 			}
+			if($this->getOption('inlineDeleting')) {
+				$buttonGroup->add($this->getOption('inlineDeleting'));
+			}
+			$label->add($buttonGroup);
 
 			$labelHtml = $label->getHtml();
 
@@ -174,8 +173,8 @@ class AdvancedCheckboxList extends AdvancedControl {
 			$container->add((string) $label->setHtml($control.$labelHtml));
 
 		}
-		if($this->getInlineCreating()) {
-			$container->add(Html::el('div')->class($this->getOption('columnClass'))->add(Html::el('botton')->add(Html::el('i')->addClass('icon-plus'))->addClass('btn pull-left')));
+		if($this->getOption('inlineCreating')) {
+			$container->add(Html::el('div')->add($this->getOption('inlineCreating'))->addClass($this->getOption('columnClass')));
 		}
 
 		return $container;

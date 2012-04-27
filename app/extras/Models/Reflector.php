@@ -139,6 +139,33 @@ class Reflector extends Nette\Object {
 		return $this->formMask;
 	}
 
+	public function getInlineOptionHtml($type, $value, $controlType) {
+		if(!$value) return NULL;
+		$a = Html::el('a')->addClass('btn');
+		$i = Html::el('i')->addClass('icon-white');
+
+		if($type == 'inlineCreating') {
+			$a->addClass('btn-success');
+			$i->addClass('icon-plus');
+		} else if($type == 'inlineEditing') {
+			$a->addClass('btn-info');
+			$i->addClass('icon-edit');
+		} else if($type == 'inlineDeleting') {
+			$a->addClass('btn-danger');
+			$i->addClass('icon-remove');
+		}
+
+		if(in_array($controlType, array('checkboxList'))) {
+			$a->addClass('btn-mini');
+		} else {
+			$a->addClass('btn-small');
+		}
+
+		return $a->add($i);		
+	}
+
+
+
 	private function _getFormMask() {
 		$mask = array();
 		$mask['classReflection'] = $this->getServiceReflection($this->settings->serviceClass);
@@ -179,9 +206,9 @@ class Reflector extends Nette\Object {
 				'addClass' => array('default'=> NULL), 
 				'columnClass' => array('default'=> 'span4'), 
 				'callback' => array('default'=> NULL), 
-				'inlineEditing' => array('default'=> NULL), 
-				'inlineCreating' => array('default'=> NULL), 
-				'inlineDeleting' => array('default'=> NULL), 
+				'inlineEditing' => array('default' => NULL), 
+				'inlineDeleting' => array('default' => NULL), 
+				'inlineCreating' => array('default' => NULL), 
 				'disabled' => array('default'=> NULL),
 				'startNewRow' => array('default'=> NULL),
 			);
@@ -203,6 +230,10 @@ class Reflector extends Nette\Object {
 			}
 
 			$type = $fieldMask['ui']['control']['type'];
+
+			$fieldMask['ui']['controlOptions']['inlineCreating'] = $this->getInlineOptionHtml('inlineCreating', $fieldMask['ui']['inlineCreating'], $type);
+			$fieldMask['ui']['controlOptions']['inlineEditing'] = $this->getInlineOptionHtml('inlineEditing', $fieldMask['ui']['inlineEditing'], $type);
+			$fieldMask['ui']['controlOptions']['inlineDeleting'] = $this->getInlineOptionHtml('inlineDeleting', $fieldMask['ui']['inlineDeleting'], $type);
 
 			if($type == 'phrase') {
 				$type = $fieldMask['ui']['control']['type'] = 'text';
@@ -371,15 +402,6 @@ class Reflector extends Nette\Object {
 				}
 			}
 
-			if ($control instanceof \Extras\Forms\Controls\AdvancedBricksList
-				|| $control instanceof \Extras\Forms\Controls\AdvancedTextInput
-				|| $control instanceof \Extras\Forms\Controls\AdvancedSelectBox
-				|| $control instanceof \Extras\Forms\Controls\AdvancedCheckboxList) 
-			{
-				$control->setInlineEditing($ui->inlineEditing);
-				$control->setInlineCreating($ui->inlineCreating);
-				$control->setInlineDeleting($ui->inlineDeleting);
-			}
 		}
 
 		foreach ($mask->buttons as $buttonName => $button) {
