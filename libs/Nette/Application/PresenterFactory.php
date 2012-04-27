@@ -89,6 +89,7 @@ class PresenterFactory implements IPresenterFactory
 			}
 
 			if (!class_exists($class)) {
+				debug($class);
 				throw new InvalidPresenterException("Cannot load presenter '$name', class '$class' was not found in '$file'.");
 			}
 		}

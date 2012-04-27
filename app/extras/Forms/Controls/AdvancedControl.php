@@ -9,6 +9,7 @@ class AdvancedControl extends BaseControl implements IAdvancedControl {
 
 	protected $inlineEditing;
 	protected $inlineCreating;
+	protected $inlineDeleting;
 
 	public function setInlineEditing($inlineEditing) {
 		$this->inlineEditing = $inlineEditing;
@@ -26,6 +27,15 @@ class AdvancedControl extends BaseControl implements IAdvancedControl {
 
 	public function getInlineCreating() {
 		return $this->inlineCreating;
+	}
+
+	public function setInlineDeleting($inlineDeleting) {
+		$this->inlineDeleting = $inlineDeleting;
+		return $this;		
+	}
+
+	public function getInlineDeleting() {
+		return $this->inlineDeleting;
 	}
 
 }

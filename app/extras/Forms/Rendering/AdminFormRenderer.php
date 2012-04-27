@@ -19,20 +19,22 @@ class AdminFormRenderer extends DefaultFormRenderer {
 	{
 		$s = array();
 		$addClass = NULL;
+		$renderBefore = NULL;
+		$pair = $this->getWrapper('pair container');
 		foreach ($controls as $control) {
 			if (!$control instanceof Nette\Forms\IControl) {
 				throw new Nette\InvalidArgumentException("Argument must be array of IFormControl instances.");
 			}
-			if($control instanceof Nette\Forms\Controls\Button) {
+			if($renderBefore === NULL && $control instanceof Nette\Forms\Controls\Button) {
+				$renderBefore = $control->getOption('renderBefore');
 				$addClass = 'pull-right';
 			}
 			$s[] = (string) $control->getControl();
 		}
-		$pair = $this->getWrapper('pair container');
 		$pair->add($this->renderLabel($control));
 		$pair->add($this->getWrapper('control container')->setHtml(implode(" ", $s)));
 		$pair->addClass($addClass);
-		return $pair->render(0);
+		return $renderBefore.$pair->render(0);
 	}
 
 

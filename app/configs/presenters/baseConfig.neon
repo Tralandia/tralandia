@@ -18,7 +18,7 @@ common:
 
 
 	form:
-
+		class: row form
 		buttons:
 			submit:
 				type: submit

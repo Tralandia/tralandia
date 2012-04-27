@@ -44,8 +44,8 @@ common:
 				startNewRow: true
 
 			currencies:
-				control: bricksList
-				#control: checkboxList
+				#control: bricksList
+				control: checkboxList
 				inlineEditing: true
 				inlineCreating: true
 
@@ -57,6 +57,7 @@ common:
 				callback: getAllAsPairs
 				inlineEditing: true
 				inlineCreating: true
+				inlineDeleting: true
 
 			defaultLanguage:
 				control: select
