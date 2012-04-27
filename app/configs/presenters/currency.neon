@@ -44,4 +44,3 @@ common:
 
 			iso:
 				control: text
-				startNewRow: true

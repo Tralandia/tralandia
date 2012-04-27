@@ -31,6 +31,12 @@ class AdminForm extends Form {
 			// ADD
 			$this->service->create($this->reflector->getFormMask(), $values);
 		}
+
+		$this->flashMessage('A je to!');
+		if($this->getPresenter()->isAjax()) {
+			$this->getPresenter()->getPayload()->invalidate = array('currency');
+			$this->getPresenter()->sendPayload();
+		}
 	}
 
 }

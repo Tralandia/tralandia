@@ -138,7 +138,7 @@ class AdvancedCheckboxList extends AdvancedControl {
 		$id = $control->id;
 		$counter = -1;
 		$values = $this->value === NULL ? NULL : (array) $this->getValue();
-		$label = Html::el('label')->addClass('checkbox');
+		$label = Html::el('label')->addClass('checkbox '.$this->getOption('columnClass'));
 
 		foreach ($this->items as $k => $val) {
 			$counter++;
@@ -175,7 +175,7 @@ class AdvancedCheckboxList extends AdvancedControl {
 
 		}
 		if($this->getInlineCreating()) {
-			$container->add(Html::el('botton')->add(Html::el('i')->addClass('icon-plus'))->addClass('btn pull-left'));
+			$container->add(Html::el('div')->class($this->getOption('columnClass'))->add(Html::el('botton')->add(Html::el('i')->addClass('icon-plus'))->addClass('btn pull-left')));
 		}
 
 		return $container;
@@ -191,6 +191,7 @@ class AdvancedCheckboxList extends AdvancedControl {
 	public function getLabel($caption = NULL)
 	{
 		$label = parent::getLabel($caption);
+		$label->class = 'span12';
 		$label->for = NULL;
 		return $label;
 	}

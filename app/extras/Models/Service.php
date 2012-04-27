@@ -440,7 +440,7 @@ abstract class Service extends Nette\Object implements IService {
 	}
 
 	public function updateFormData($mask, $formValues) {
-		debug($formValues);
+		//debug($formValues);
 		foreach ($mask->fields as $property) {
 			$ui = $property->ui;
 			if($ui->disabled) continue;
