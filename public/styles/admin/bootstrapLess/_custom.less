@@ -149,6 +149,9 @@ label.checkbox.checked, label.radio.checked {
 	color: @black;
 	text-decoration: none;
 }
+label.checkbox.checked:hover, label.radio.checked:hover {
+	text-decoration: underline;
+}
 .radio input[type="radio"], .checkbox input[type="checkbox"] {
 	margin:0 5px 0 0;
 }
@@ -187,7 +190,7 @@ select[multiple] {
 	color:@white;
 }
 
-.input-bars label {
+.input-bricks label {
 	float: left;
 	margin-right: 10px;
 	box-shadow: 0px 0px 2px @greenDark;
@@ -197,10 +200,28 @@ select[multiple] {
 	line-height: 1.9;
 	#gradient > .vertical(@grayLighter, @grayMedium);
 }
-.input-bars label:hover {
+.input-bricks label:hover {
 	color: @black;
 }
-.input-bars label .btn-group {
+.input-bricks label .btn-group {
 	margin-left: 5px;
 	display:block;
+}
+
+.control-group.error input, .control-group.error select, .control-group.error textarea {
+	box-shadow: 0 0 4px @red;
+}
+.control-group.warning input, .control-group.warning select, .control-group.warning textarea {
+	border-color: @orange;
+	box-shadow: 0 0 4px @orange;
+}
+.control-group.success input, .control-group.success select, .control-group.success textarea {
+	box-shadow: 0 0 4px @green;
+}
+
+.icon-loading {
+	background-image: url("../images/loading.gif");
+	background-position: 0 0;
+	width: 16px;
+	height: 16px;
 }

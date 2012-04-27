@@ -1,5 +1,20 @@
 $(function() {
 
+	$('[type=checkbox], [type=radio]').change(function() {
+		switch($(this).attr('type')) {
+			case 'checkbox':
+				$($(this).parent()).toggleClass('checked');
+				break;
+			case 'radio':
+				radios = $('[name='+$(this).attr('name')+']')
+				$(radios).each(function(k,v) {
+					$(v).parent().removeClass('checked');
+				});
+				$($(this).parent()).addClass('checked');
+				break;
+		}
+	});
+
 	$('textarea.tinymce').tinymce({
 		script_url : baseUrl+'/scripts/tinymce/tiny_mce.js',
 		theme : "advanced",
@@ -12,7 +27,12 @@ $(function() {
 	});
 	$.localise('ui-multiselect', { path: baseUrl+'/scripts/multiselect/locale/', language: 'en' });
 	$(".multiselect").multiselect();
+
 	$('.btn').tooltip();
+	$('.show-tooltip').tooltip({
+		placement: 'left'
+	});
+
 	$('#myModal').modal({
 		show: false
 	});
