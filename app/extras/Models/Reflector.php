@@ -155,7 +155,7 @@ class Reflector extends Nette\Object {
 			$i->addClass('icon-remove');
 		}
 
-		if(in_array($controlType, array('checkboxList'))) {
+		if(in_array($controlType, array('checkboxList', 'bricksList'))) {
 			$a->addClass('btn-mini');
 		} else {
 			$a->addClass('btn-small');
@@ -204,7 +204,7 @@ class Reflector extends Nette\Object {
 				'label' => array('default'=> ucfirst($name)), 
 				'class' => array('default'=> NULL), 
 				'addClass' => array('default'=> NULL), 
-				'columnClass' => array('default'=> 'span4'), 
+				'columnClass' => array('default'=> 'span2'), 
 				'callback' => array('default'=> NULL), 
 				'inlineEditing' => array('default' => NULL), 
 				'inlineDeleting' => array('default' => NULL), 
@@ -239,7 +239,7 @@ class Reflector extends Nette\Object {
 				$type = $fieldMask['ui']['control']['type'] = 'text';
 				if(!isset($fieldMask['ui']['control']['disabled'])) $fieldMask['ui']['control']['disabled'] = true;
 			} else if($type == 'tinymce') {
-				$type = $fieldMask['ui']['control']['type'] = 'textArea';
+				$fieldMask['ui']['control']['type'] = 'textArea';
 				$fieldMask['ui']['control']['addClass'] = (isset($fieldMask['ui']['control']['addClass']) ? $fieldMask['ui']['control']['addClass'].' ' : NULL) . 'tinymce';
 			}
 
@@ -247,16 +247,25 @@ class Reflector extends Nette\Object {
 			$fieldMask['ui']['control']['type'] = ucfirst($fieldMask['ui']['control']['type']);
 			$fieldMask['ui']['nameSingular'] = Strings::toSingular(ucfirst($fieldMask['ui']['name']));
 			$fieldMask['ui']['options'] = $options;
-			if($fieldMask['ui']['class'] === NULL && $type != 'checkboxList') {
-				$fieldMask['ui']['class'] = 'span4';
+
+			if($fieldMask['ui']['class'] === NULL && !in_array($type, array('checkboxList', 'tinymce'))) {
+				if(in_array($type, array('bricksList'))) {
+					$fieldMask['ui']['class'] = 'span12';
+				} else {
+					$fieldMask['ui']['class'] = 'span4';
+				}
 			}
 			
 			if($fieldMask['ui']['columnClass']) {
 				$fieldMask['ui']['controlOptions']['columnClass'] = $fieldMask['ui']['columnClass'];
 			}
 			
-			if($fieldMask['ui']['startNewRow'] || $type == 'checkboxList') {
+			if($fieldMask['ui']['startNewRow'] || in_array($type, array('checkboxList', 'bricksList', 'tinymce'))) {
 				$fieldMask['ui']['controlOptions']['renderBefore'] = Html::el('hr')->addClass('soften');
+			}
+
+			if($type == 'checkboxList') {
+				$fieldMask['ui']['controlOptions']['renderAfter'] = Html::el('hr')->addClass('soften');
 			}
 
 			if($type == 'text') {
@@ -267,6 +276,11 @@ class Reflector extends Nette\Object {
 				$fieldMask['ui']['control']['type'] = 'AdvancedCheckboxList';
 			} else if($type == 'bricksList') {
 				$fieldMask['ui']['control']['type'] = 'AdvancedBricksList';
+			} else if($type == 'tinymce') {
+				if(!isset($fieldMask['ui']['control']['class'])) {
+					$fieldMask['ui']['control']['class'] = 'span12';
+					$fieldMask['ui']['class'] = 'span12';
+				}
 			}
 
 			if($associationType = $this->getAssocationType($property)) {

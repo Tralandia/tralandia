@@ -35,7 +35,6 @@ common:
 
 			slug:
 				control: tinymce
-				class: 'mySlugClass'
 				label: Sluuug
 				disabled: true
 
@@ -60,6 +59,12 @@ common:
 				inlineCreating: true
 				inlineDeleting: true
 
+			languages:
+				control: bricksList
+				inlineEditing: true
+				inlineCreating: true
+				inlineDeleting: true
+
 			defaultLanguage:
 				control: select
 				label: Def. Language
@@ -68,9 +73,9 @@ common:
 					arguments: ['id', 'iso', 1]
 
 		buttons:
+			cancel:
 			submit:
 				label: 'tst'
-			cancel:
 
 base < common:
 	title: Location Base
