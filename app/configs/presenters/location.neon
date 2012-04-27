@@ -48,6 +48,7 @@ common:
 				control: checkboxList
 				inlineEditing: true
 				inlineCreating: true
+				inlineDeleting: true
 
 			defaultCurrency:
 				control: select

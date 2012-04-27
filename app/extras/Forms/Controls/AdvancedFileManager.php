@@ -5,10 +5,10 @@ namespace Extras\Forms\Controls;
 
 use Nette\Utils\Html,
 	Nette\Forms\Container,
-	Extras\Forms\Controls\AdvancedControl;
+	Nette\Forms\Controls\BaseControl;
 
 
-class AdvancedFileManager extends AdvancedControl
+class AdvancedFileManager extends BaseControl
 {
 	/** @var Nette\Utils\Html  separator element template */
 	protected $separator;
@@ -133,7 +133,7 @@ class AdvancedFileManager extends AdvancedControl
 				$container->add((string) $brick);
 			}
 		}
-		if($this->inlineCreating) {
+		if($this->getOption('inlineCreating')) {
 			$brick = clone $brickTemplate;
 			$brick->add(Html::el('a')->setText('InlineCreating'));
 			$container->add($brick);

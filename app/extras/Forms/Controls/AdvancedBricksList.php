@@ -5,10 +5,10 @@ namespace Extras\Forms\Controls;
 
 use Nette\Utils\Html,
 	Nette\Forms\Container,
-	Extras\Forms\Controls\AdvancedControl;
+	Nette\Forms\Controls\BaseControl;
 
 
-class AdvancedBricksList extends AdvancedControl
+class AdvancedBricksList extends BaseControl
 {
 	/** @var Nette\Utils\Html  separator element template */
 	protected $separator;
@@ -126,16 +126,19 @@ class AdvancedBricksList extends AdvancedControl
 				$brick = clone $brickTemplate;
 				$brick->add(Html::el('span')->setText($value['value']));
 
-				if($this->inlineEditing) {
-					$brick->add(Html::el('a')->setText('InlineEditing'));
+				if($this->getOption('inlineEditing')) {
+					$brick->add($this->getOption('inlineEditing'));
+				}
+				if($this->getOption('inlineDeleting')) {
+					$brick->add($this->getOption('inlineDeleting'));
 				}
 
 				$container->add((string) $brick);
 			}
 		}
-		if($this->inlineCreating) {
+		if($this->getOption('inlineCreating')) {
 			$brick = clone $brickTemplate;
-			$brick->add(Html::el('a')->setText('InlineCreating'));
+			$brick->add($this->getOption('inlineCreating'));
 			$container->add($brick);
 		}
 
