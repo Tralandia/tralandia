@@ -136,6 +136,7 @@ label:hover > .btn-group {
 label.checkbox, label.radio {
 	padding-left:0;
 	cursor: pointer;
+	margin-bottom: 10px;
 }
 label.checkbox:hover, label.radio:hover, label.checkbox.checked, label.radio.checked {
 	text-decoration: underline;
@@ -144,7 +145,7 @@ label.checkbox:hover, label.radio:hover, label.checkbox.checked, label.radio.che
 	color: @greenDark;
 }
 label.checkbox.checked, label.radio.checked {
-	#gradient > .vertical(lighten(@green, 30%), lighten(@green, 20%));
+	#gradient > .horizontal(@white, lighten(@green, 20%));
 	color: @black;
 	text-decoration: none;
 }
@@ -172,22 +173,34 @@ select[multiple] {
 .ui-multiselect div.selected {
 	float:right;
 }
+.ui-multiselect div.selected ul, .ui-multiselect div.available ul {
+	background: transparent;
+}
 .ui-widget-header {
 	#gradient > .vertical(@white, @grayMedium);
 	font-weight:normal;
 	border-bottom: 1px solid darken(@grayLighter, 10%);
+	.border-radius(4px 4px 0 0);
 }
 .ui-state-hover {
 	#gradient > .vertical(@green, @greenDark);
 	color:@white;
 }
 
-.input-bars .input-prepend, .input-bars label {
+.input-bars label {
 	float: left;
 	margin-right: 10px;
-	box-shadow: 0px 0px 2px @gray;
+	box-shadow: 0px 0px 2px @greenDark;
 	.border-radius(4px);
+	color: @black;
+	text-shadow: 1px 1px 0 white;
+	line-height: 1.9;
+	#gradient > .vertical(@grayLighter, @grayMedium);
 }
-.input-bars label {
-	#gradient > .vertical(@green, @greenDark);
+.input-bars label:hover {
+	color: @black;
+}
+.input-bars label .btn-group {
+	margin-left: 5px;
+	display:block;
 }

@@ -1,20 +1,5 @@
 $(function() {
 
-	$('[type=checkbox], [type=radio]').change(function() {
-		switch($(this).attr('type')) {
-			case 'checkbox':
-				$($(this).parent()).toggleClass('checked');
-				break;
-			case 'radio':
-				radios = $('[name='+$(this).attr('name')+']')
-				$(radios).each(function(k,v) {
-					$(v).parent().removeClass('checked');
-				});
-				$($(this).parent()).addClass('checked');
-				break;
-		}
-	});
-
 	$('textarea.tinymce').tinymce({
 		script_url : baseUrl+'/scripts/tinymce/tiny_mce.js',
 		theme : "advanced",
@@ -32,7 +17,10 @@ $(function() {
 		show: false
 	});
 
-	$('input:checkbox').checkbox({cls:'jquery-safari-checkbox'});
+	$('input:checkbox').checkbox({
+		cls:'jquery-safari-checkbox',
+		empty: baseUrl+'/images/spacer.gif'
+	});
 
 })
 
