@@ -8,19 +8,19 @@
 .container .inner {}
 
 .container .inner .content {
-	border: 1px solid @greenBorder;
+	border: 1px solid @grayLight;
 	padding: 8px;
 	margin: 100px -13px 100px;
 	.border-radius(10px);
-	box-shadow:0 1px 1px @greenBorder;
+	box-shadow:0 1px 1px @grayLight;
 	background: @white;
 }
 
 .container .inner .content h1 {
-	#gradient > .vertical(@white, @yellow);
+	#gradient > .vertical(@white, @grayMedium);
 	margin:-9px -9px 15px -9px;
 	font-size:22px;
-	border: 1px solid @greenBorder;
+	border: 1px solid @grayLight;
 	padding: 10px (@gridGutterWidth/2);
 	.border-radius(10px 10px 0 0);
 }
@@ -28,6 +28,10 @@
 label b {
 	color:@blueDark;
 	font-size:14px;
+}
+label i {
+	color:@grayLight;
+	font-size:11px;	
 }
 	
 table thead {
@@ -77,7 +81,7 @@ textarea:focus {
 	.border-radius(0 0 5px 5px);
 	padding:5px 10px;
 	#gradient > .vertical(@grayMedium, @white);	
-	box-shadow:0 2px 2px @greenBorder;
+	box-shadow:0 2px 2px @grayLight;
 }
 .subnav .divider-vertical {
 	background-color: @greenBorder;
@@ -97,7 +101,11 @@ textarea:focus {
 
 .row hr {
 	clear: both;
-	margin-left: @gridGutterWidth;
+	margin: 0 0 15px @gridGutterWidth;
+	padding: 10px 0 0 0;
+	height:1px;
+	border-top:none;
+	border-bottom-color:lighten(@grayLight, 25%);
 }
 
 .navbar-fixed-top .navbar-inner {
@@ -126,13 +134,19 @@ label:hover > .btn-group {
 	display:block;
 }
 label.checkbox, label.radio {
-	background: @grayLighter;
 	padding-left:0;
-	box-shadow: 0px 0px 2px #ccc;
-	.border-radius(5px);
+	cursor: pointer;
 }
-label.checkbox:hover, label.radio:hover {
+label.checkbox:hover, label.radio:hover, label.checkbox.checked, label.radio.checked {
+	text-decoration: underline;
+	background: @grayLighter;
+	.border-radius(5px);
 	color: @greenDark;
+}
+label.checkbox.checked, label.radio.checked {
+	#gradient > .vertical(lighten(@green, 30%), lighten(@green, 20%));
+	color: @black;
+	text-decoration: none;
 }
 .radio input[type="radio"], .checkbox input[type="checkbox"] {
 	margin:0 5px 0 0;
@@ -148,14 +162,32 @@ select[multiple] {
 }
 .ui-multiselect {
 	.border-radius(4px);
-	border: 1px solid @greenBorder;
+	border: 1px solid @grayLight;
+}
+.ui-multiselect div.available {
+	float:right;
+	border-left:none;
+	border-right: 1px solid @greenBorder;
+}
+.ui-multiselect div.selected {
+	float:right;
 }
 .ui-widget-header {
-	#gradient > .vertical(@white, @grayLighter);
+	#gradient > .vertical(@white, @grayMedium);
 	font-weight:normal;
 	border-bottom: 1px solid darken(@grayLighter, 10%);
 }
 .ui-state-hover {
 	#gradient > .vertical(@green, @greenDark);
 	color:@white;
+}
+
+.input-bars .input-prepend, .input-bars label {
+	float: left;
+	margin-right: 10px;
+	box-shadow: 0px 0px 2px @gray;
+	.border-radius(4px);
+}
+.input-bars label {
+	#gradient > .vertical(@green, @greenDark);
 }
