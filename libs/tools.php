@@ -25,9 +25,8 @@ function debug() {
 	return Tools::dump(func_get_args());
 }
 
-function debuge() {
-	Tools::dump(func_get_args());
-	exit;
+function d() {
+	return Tools::dump(func_get_args());
 }
 
 class Tools {

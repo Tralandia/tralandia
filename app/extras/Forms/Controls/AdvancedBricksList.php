@@ -120,7 +120,7 @@ class AdvancedBricksList extends BaseControl
 		$counter = -1;
 		$values = $this->value === NULL ? NULL : (array) $this->getValue();
 
-		$brickWrapper = Html::el('div')->addClass('input-bars');
+		$brickWrapper = Html::el('div')->addClass('input-bricks');
 		$brickTemplate = Html::el('label')->addClass('label');
 		if($values) {
 			foreach ($values as $k => $value) {
@@ -134,7 +134,7 @@ class AdvancedBricksList extends BaseControl
 					$btnGroup->add($this->getOption('inlineDeleting'));
 				}
 
-				$brickWrapper->add((string) $brick->add($value['value'].$btnGroup));
+				$brickWrapper->add((string) $brick->add($btnGroup.$value['value']));
 			}
 		}
 		if($this->getOption('inlineCreating')) {

@@ -12,6 +12,7 @@
 		<h3>Modal header</h3>
 	</div>
 	<div class="modal-body">
+		<iframe src="http://www.tra.sk/admin/currency/edit/2?display=modal"></iframe> 
 	</div>
 	<div class="modal-footer">
 		<a href="#" class="btn">Close</a>
@@ -29,7 +30,7 @@
 			};
 
 			$.get({{link Currency:edit}} + '/' + $(control).val(), data, function(data){
-				$('#myModal .modal-body').html(data);
+				//$('#myModal .modal-body').html(data);
 				$('#myModal').modal('show');
 				// jQuery.nette.success(data);
 			}, 'html');

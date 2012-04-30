@@ -145,13 +145,13 @@ class Reflector extends Nette\Object {
 		$i = Html::el('i')->addClass('icon-white');
 
 		if($type == 'inlineCreating') {
-			$a->addClass('btn-success');
+			$a->addClass('btn-success create');
 			$i->addClass('icon-plus');
 		} else if($type == 'inlineEditing') {
-			$a->addClass('btn-info');
+			$a->addClass('btn-info edit');
 			$i->addClass('icon-edit');
 		} else if($type == 'inlineDeleting') {
-			$a->addClass('btn-danger');
+			$a->addClass('btn-danger delete');
 			$i->addClass('icon-remove');
 		}
 
