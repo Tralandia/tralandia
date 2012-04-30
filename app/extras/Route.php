@@ -64,10 +64,10 @@ class Route implements Nette\Application\IRouter {
 	}
 
 	public function constructUrl(Nette\Application\Request $appRequest, Nette\Http\Url $refUrl) {
-		debug('$appRequest', $appRequest);
-		debug('$refUrl', $refUrl);
+		//debug('$appRequest', $appRequest);
+		//debug('$refUrl', $refUrl);
 		$url = $this->getUrlByAppRequest($appRequest, $refUrl);
-		return $url;
+		return "$url";
 	}
 
 	public function getParamsByHttpRequest($httpRequest) {
@@ -75,7 +75,7 @@ class Route implements Nette\Application\IRouter {
 				'query' => \Nette\ArrayHash::from(array()),
 			));
 		$url = $httpRequest->url;
-		debug('$httpRequest', $httpRequest);
+		//debug('$httpRequest', $httpRequest);
 		list($languageIso, $domainName, $countryIso) = explode('.', $url->getHost(), 3);
 
 		if($domainName !== 'tra' && !$this->checkDomain($url->getHost())) {
@@ -105,7 +105,7 @@ class Route implements Nette\Application\IRouter {
 			$params->action = $this->getMetadata('action');
 		} else if(count($pathSegments) == 1) {
 			$pathSegment = reset($pathSegments);
-			debug($pathSegment);
+			// debug($pathSegment);
 			if($match = preg_match('~\.*-a([0-9]+)~', $pathSegment)) {
 				if($attraction = \Service\Attraction\Attraction::get($match[1])) {
 					$params->attraction = $attraction;
@@ -159,9 +159,10 @@ class Route implements Nette\Application\IRouter {
 
 
 		$return = array(
-			'params' => array(),
+			'params' => array(
+				'action' => $params->action
+			),
 			'presenter' => $params->presenter,
-			'action' => $params->action,
 		);
 		foreach ($this->appParams as $key => $value) {
 			if($value === true && !isset($params->$key)) {
@@ -174,7 +175,7 @@ class Route implements Nette\Application\IRouter {
 		}
 		$return['params'] = array_merge($return['params'], (array) $params->query);
 
-		debug('$return', $return);
+		// debug('$return', $return);
 		return $return;
 	}
 
@@ -186,7 +187,7 @@ class Route implements Nette\Application\IRouter {
 		$criteria['language'] = array($params->language, 0);
 
 		$pathSegmentList = \Service\Routing\PathSegmentList::getBy((array) $criteria, $orderBy = array('type' => 'ASC'));
-		debug('$pathSegmentList', $pathSegmentList);
+		// debug('$pathSegmentList', $pathSegmentList);
 		return $pathSegmentList;
 	}
 
@@ -224,7 +225,7 @@ class Route implements Nette\Application\IRouter {
 		$url->setHost($host);
 		$path = '/' . implode('/', $segments);
 		$url->setPath($path);
-		debug('url', "$url");
+		// debug('url', "$url");
 		return $url;
 	}
 
