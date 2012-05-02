@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="ticket_message")
+ * @ORM\Table(name="ticket_message", indexes={@ORM\index(name="senderEmail", columns={"senderEmail"})})
  */
 class Message extends \Entity\BaseEntity {
 

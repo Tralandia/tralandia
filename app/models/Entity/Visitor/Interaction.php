@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="visitor_interaction")
+ * @ORM\Table(name="visitor_interaction", indexes={@ORM\index(name="senderEmail", columns={"senderEmail"}), @ORM\index(name="status", columns={"status"})})
  */
 class Interaction extends \Entity\BaseEntityDetails {
 

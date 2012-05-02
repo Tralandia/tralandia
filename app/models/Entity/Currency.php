@@ -10,7 +10,7 @@ use	Extras\Annotation as EA;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="currency")
- * @EA\Service(name="\Service\Currency")
+ * @EA\Service(name="\Service\Currency", indexes={@ORM\index(name="iso", columns={"iso"})})
  * @EA\ServiceList(name="\Service\CurrencyList")
  * @UI\Primary(key="id", value="iso")
  */

@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="rental_rental")
+ * @ORM\Table(name="rental_rental", indexes={@ORM\index(name="status", columns={"status"}), @ORM\index(name="timeDeleted", columns={"timeDeleted"}), @ORM\index(name="slug", columns={"slug"}), @ORM\index(name="calendarUpdated", columns={"calendarUpdated"})})
  */
 class Rental extends \Entity\BaseEntity {
 

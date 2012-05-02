@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="invoicing_coupon")
+ * @ORM\Table(name="invoicing_coupon", indexes={@ORM\index(name="code", columns={"code"}), @ORM\index(name="countTotal", columns={"countTotal"}), @ORM\index(name="countLeft", columns={"countLeft"}), @ORM\index(name="validFrom", columns={"validFrom"}), @ORM\index(name="validTo", columns={"validTo"})})
  */
 class Coupon extends \Entity\BaseEntity {
 

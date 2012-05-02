@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="rental_amenity_group")
+ * @ORM\Table(name="rental_amenity_group", indexes={@ORM\index(name="slug", columns={"slug"})})
  */
 class Group extends \Entity\BaseEntity {
 

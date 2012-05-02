@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="expense_expense")
+ * @ORM\Table(name="expense_expense", indexes={@ORM\index(name="amount", columns={"amount"})})
  */
 class Expense extends \Entity\BaseEntity {
 
