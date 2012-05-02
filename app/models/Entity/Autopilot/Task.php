@@ -109,6 +109,11 @@ class Task extends \Entity\BaseEntityDetails {
 	 */
 	protected $actions;
 
+	/**
+	 * @var json
+	 * @ORM\Column(type="json", nullable=true)
+	 */
+	protected $recurrenceData;
 	
 
 
