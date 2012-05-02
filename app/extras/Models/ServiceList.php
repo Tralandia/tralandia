@@ -86,6 +86,20 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 		}
 	}
 
+	private static function pripareCriteria($criteria) {
+		$return = array();
+		foreach ($criteria as $key => $value) {
+			if($value instanceof Service || $value instanceof Entity) {
+				$value = $value->id;
+			} else if(is_array($value)) {
+				$value = static::pripareCriteria($value);
+			}
+			$return[$key] = $value;
+			
+		}
+		return $return;
+	}
+
 	public static function getBy(array $criteria, array $orderBy = NULL, $limit = NULL, $offset = NULL, $entityName = NULL) {
 		if($entityName === NULL) {
 			$entityName = static::getMainEntityName();
@@ -97,12 +111,13 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 			->from($entityName, 'e');
 
 
-		foreach ($criteria as $key => $value) {
-			if($value instanceof Service || $value instanceof Entity) {
-				$value = $value->id;
+		foreach (static::pripareCriteria($criteria) as $key => $value) {
+			if(is_array($value)) {
+				$qb->andWhere($qb->expr()->in('e.'.$key, $value));
+			} else {
+				$qb->andWhere('e.'.$key.' = :'.$key)
+					->setParameter($key, $value);
 			}
-			$qb->andWhere('e.'.$key.' = :'.$key)
-				->setParameter($key, $value);
 		}
 
 

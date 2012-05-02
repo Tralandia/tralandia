@@ -15,7 +15,7 @@ class CoolForm extends Form {
     public function __construct(\Nette\ComponentModel\IContainer $parent = NULL, $name = NULL) {
 		parent::__construct($parent, $name);
 
-		$this->addProtection('Validity expired form.');
+		// $this->addProtection('Validity expired form.');
 		//$this->setTranslator(Environment::getService('translator'));
 		$this->onError[] = callback($this, 'onInvalid');
     }
