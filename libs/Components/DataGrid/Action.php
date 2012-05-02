@@ -48,21 +48,18 @@ class Action extends Nette\ComponentModel\Component implements IAction
 	 * 				   otherwise variable DataGrid\DataGrid::$keyName will be used and must be defined)
 	 * @return void
 	 */
-	public function __construct($title, $destination, Nette\Utils\Html $icon = NULL, $useAjax = FALSE, $key = self::WITH_KEY)
+	public function __construct($title, $destination, $icon = NULL, $useAjax = FALSE, $key = self::WITH_KEY)
 	{
 		parent::__construct();
 		$this->destination = $destination;
 		$this->key = $key;
 
-		$a = Nette\Utils\Html::el('a')->title($title);
-		if ($useAjax) $a->addClass(self::$ajaxClass);
-
-		if ($icon !== NULL && $icon instanceof Nette\Utils\Html) {
-			$a->add($icon);
-		} else {
-			$a->setText($title);
+		if(!$title instanceof Nette\Utils\Html) {
+			$title = Nette\Utils\Html::el('a')->title($title)->add($title);
 		}
-		$this->html = $a;
+		if ($useAjax) $title->addClass(self::$ajaxClass);
+
+		$this->html = $title;
 	}
 
 
@@ -75,6 +72,7 @@ class Action extends Nette\ComponentModel\Component implements IAction
 		$dataGrid = $this->lookup('DataGrid\DataGrid', TRUE);
 		$control = $dataGrid->lookup('Nette\Application\UI\Control', TRUE);
 
+		debug($this->key);
 		switch ($this->key) {
 		case self::WITHOUT_KEY:
 			$link = $control->link($this->destination); break;

@@ -31,7 +31,7 @@ class Location extends \Extras\Models\ServiceNested {
 		if(in_array($type->slug, array('region', 'locality')))  { # @todo
 			$types = array();
 			$types[] = Type::getBySlug('region');
-			$types[] = Type::getBySlug('locality');
+			$types[] = Type::g('locality');
 			$locationList = LocationList::getBySlugInType($slug, $types);
 		} else {
 			$locationList = LocationList::getBySlugInType($slug, array($type));
@@ -40,5 +40,29 @@ class Location extends \Extras\Models\ServiceNested {
 
 	}
 
+	public function getContinent() {
+
+		if (!$this->parentId) return null;
+
+		$parent = \Service\Location\Location::get($this->parentId);
+		return ($parent->type->slug=='continent') ? $parent : self::getContinent($parent);
+
+	}
+
+	public function getRentalsCount($id) {
+
+		// $serviceList = new static;
+
+		// $qb = $serviceList->getEm()->createQueryBuilder();
+
+		// $qb->select('r')
+		// 	->from('\Entity\Rental\Rental', 'r')
+		// 	->where($qb->expr()->in('r.locations', \Service\Location\Location::get($id)));
+		// 	// ->andWhere($qb->expr()->in('e.'.$nameIn, $parsedIn))
+		// 	// ->setParameter('by', \Service\Location\Location::get($id));
+
+		// return $qb->getQuery()->getResult();
+
+	}
 	
 }

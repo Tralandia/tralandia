@@ -390,7 +390,9 @@ class DefaultFormRenderer extends Nette\Object implements Nette\Forms\IFormRende
 		$pair->add($this->renderLabel($control));
 		$pair->add($this->renderControl($control));
 		$pair->class($this->getValue($control->isRequired() ? 'pair .required' : 'pair .optional'), TRUE);
+
 		$pair->class($control->getOption('class'), TRUE);
+
 		if (++$this->counter % 2) {
 			$pair->class($this->getValue('pair .odd'), TRUE);
 		}

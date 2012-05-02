@@ -24,7 +24,23 @@ class Group extends \Entity\BaseEntity {
 	 */
 	protected $name;
 
+	/**
+	 * @var slug
+	 * @ORM\Column(type="slug")
+	 */
+	protected $slug;
 	
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -85,5 +101,22 @@ class Group extends \Entity\BaseEntity {
 	 */
 	public function getName() {
 		return $this->name;
+	}
+		
+	/**
+	 * @param slug
+	 * @return \Entity\Rental\Amenity\Group
+	 */
+	public function setSlug($slug) {
+		$this->slug = $slug;
+
+		return $this;
+	}
+		
+	/**
+	 * @return slug|NULL
+	 */
+	public function getSlug() {
+		return $this->slug;
 	}
 }

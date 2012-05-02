@@ -4,40 +4,50 @@ namespace Entity;
 
 use Entity\Dictionary;
 use Doctrine\ORM\Mapping as ORM;
+use	Extras\UI as UI;
+use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="currency")
+ * @EA\Service(name="\Service\Currency")
+ * @EA\ServiceList(name="\Service\CurrencyList")
+ * @UI\Primary(key="id", value="iso")
  */
 class Currency extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
 	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
+     * @UI\Control(type="text")
 	 */
 	protected $name;
 
 	/**
 	 * @var string
 	 * @ORM\Column(type="string")
+     * @UI\Control(type="text")
 	 */
 	protected $iso;
 
 	/**
 	 * @var decimal
 	 * @ORM\Column(type="decimal", nullable=true)
+     * @UI\Control(type="text")
 	 */
 	protected $exchangeRate;
 
 	/**
 	 * @var integer
 	 * @ORM\Column(type="integer", nullable=true)
+     * @UI\Control(type="text")
 	 */
 	protected $decimalPlaces;
 
 	/**
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
+     * @UI\Control(type="text")
 	 */
 	protected $rounding;
 
@@ -49,6 +59,17 @@ class Currency extends \Entity\BaseEntity {
 
 
     
+
+
+
+
+
+
+
+
+
+
+
 
 
 

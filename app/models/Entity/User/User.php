@@ -7,6 +7,7 @@ use Entity\Dictionary;
 use Entity\Location;
 use Entity\Rental;
 use Doctrine\ORM\Mapping as ORM;
+use Extras\UI as UI;
 
 /**
  * @ORM\Entity()
@@ -27,14 +28,22 @@ class User extends \Entity\BaseEntityDetails {
 	protected $password;
 
 	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean", nullable=true)
+	 */
+	protected $isOwner;
+
+	/**
 	 * @var Collection
 	 * @ORM\ManyToMany(targetEntity="Role", mappedBy="users", cascade={"persist"})
+	 * @UI\SingularName(name="role")
 	 */
 	protected $roles;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Entity\Contact\Contact", mappedBy="user", cascade={"persist"})
+	 * @ORM\OneToMany(targetEntity="Entity\Contact\Contact", mappedBy="user", cascade={"persist", "remove"})
+	 * @UI\SingularName(name="contact") 
 	 */
 	protected $contacts;
 
@@ -46,13 +55,15 @@ class User extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Location\Location", mappedBy="users")
+	 * @ORM\ManyToOne(targetEntity="Entity\Location\Location", inversedBy="users")
+	 * @UI\SingularName(name="location") 
 	 */
-	protected $locations;
+	protected $location;
 
 	/**
 	 * @var Collection
 	 * @ORM\ManyToMany(targetEntity="Entity\Rental\Type", mappedBy="users")
+	 * @UI\SingularName(name="rentalType") 
 	 */
 	protected $rentalTypes;
 
@@ -82,19 +93,19 @@ class User extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact", cascade={"persist"})
+	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact", cascade={"persist", "remove"})
 	 */
 	protected $invoicingEmail;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact", cascade={"persist"})
+	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact", cascade={"persist", "remove"})
 	 */
 	protected $invoicingPhone;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact", cascade={"persist"})
+	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact", cascade={"persist", "remove"})
 	 */
 	protected $invoicingUrl;
 
@@ -125,23 +136,37 @@ class User extends \Entity\BaseEntityDetails {
 	/**
 	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="Combination", mappedBy="user", cascade={"persist", "remove"})
+	 * @UI\SingularName(name="combination") 
 	 */
 	protected $combinations;
 
 	/**
 	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="Entity\Rental\Rental", mappedBy="user", cascade={"persist"})
+	 * @UI\SingularName(name="rental") 
 	 */
 	protected $rentals;
 
 	/**
 	 * @var Collection
 	 * @ORM\ManyToMany(targetEntity="Entity\Autopilot\Task", inversedBy="usersExcluded")
+	 * @UI\SingularName(name="task") 
 	 */
 	protected $tasks;
 
 
 	
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -153,7 +178,6 @@ class User extends \Entity\BaseEntityDetails {
 
 		$this->roles = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->contacts = new \Doctrine\Common\Collections\ArrayCollection;
-		$this->locations = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->rentalTypes = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->combinations = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->rentals = new \Doctrine\Common\Collections\ArrayCollection;
@@ -210,6 +234,32 @@ class User extends \Entity\BaseEntityDetails {
 	 */
 	public function getPassword() {
 		return $this->password;
+	}
+		
+	/**
+	 * @param boolean
+	 * @return \Entity\User\User
+	 */
+	public function setIsOwner($isOwner) {
+		$this->isOwner = $isOwner;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\User\User
+	 */
+	public function unsetIsOwner() {
+		$this->isOwner = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return boolean|NULL
+	 */
+	public function getIsOwner() {
+		return $this->isOwner;
 	}
 		
 	/**
@@ -308,33 +358,26 @@ class User extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Location\Location
 	 * @return \Entity\User\User
 	 */
-	public function addLocation(\Entity\Location\Location $location) {
-		if(!$this->locations->contains($location)) {
-			$this->locations->add($location);
-		}
-		$location->addUser($this);
+	public function setLocation(\Entity\Location\Location $location) {
+		$this->location = $location;
 
 		return $this;
 	}
 		
 	/**
-	 * @param \Entity\Location\Location
 	 * @return \Entity\User\User
 	 */
-	public function removeLocation(\Entity\Location\Location $location) {
-		if($this->locations->contains($location)) {
-			$this->locations->removeElement($location);
-		}
-		$location->removeUser($this);
+	public function unsetLocation() {
+		$this->location = NULL;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Location\Location
+	 * @return \Entity\Location\Location|NULL
 	 */
-	public function getLocations() {
-		return $this->locations;
+	public function getLocation() {
+		return $this->location;
 	}
 		
 	/**

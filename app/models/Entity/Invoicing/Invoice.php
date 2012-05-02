@@ -30,13 +30,13 @@ class Invoice extends \Entity\BaseEntity {
 	 * @var integer
 	 * @ORM\Column(type="integer")
 	 */
-	protected $invoiceVariableNumber;
+	protected $paymentReferenceNumber;
 
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Company\Company", inversedBy="invoices")
 	 */
-	protected $invoicingCompany;
+	protected $company;
 
 	/**
 	 * @var Collection
@@ -117,14 +117,20 @@ class Invoice extends \Entity\BaseEntity {
 	protected $clientCompanyVatId;
 
 	/**
-	 * @var decimal
-	 * @ORM\Column(type="decimal")
+	 * @var float
+	 * @ORM\Column(type="float")
 	 */
 	protected $vat;
 
 	/**
-	 * @var decimal
-	 * @ORM\Column(type="decimal")
+	 * @var Collection
+	 * @ORM\ManyToOne(targetEntity="Entity\Currency")
+	 */
+	protected $currency;
+
+	/**
+	 * @var float
+	 * @ORM\Column(type="float")
 	 */
 	protected $exchangeRate;
 
@@ -141,8 +147,8 @@ class Invoice extends \Entity\BaseEntity {
 	protected $referrer;
 
 	/**
-	 * @var decimal
-	 * @ORM\Column(type="decimal")
+	 * @var float
+	 * @ORM\Column(type="float")
 	 */
 	protected $referrerCommission;
 
@@ -153,6 +159,17 @@ class Invoice extends \Entity\BaseEntity {
 	protected $paymentInfo;
 
 	
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -220,8 +237,8 @@ class Invoice extends \Entity\BaseEntity {
 	 * @param integer
 	 * @return \Entity\Invoicing\Invoice
 	 */
-	public function setInvoiceVariableNumber($invoiceVariableNumber) {
-		$this->invoiceVariableNumber = $invoiceVariableNumber;
+	public function setPaymentReferenceNumber($paymentReferenceNumber) {
+		$this->paymentReferenceNumber = $paymentReferenceNumber;
 
 		return $this;
 	}
@@ -229,16 +246,16 @@ class Invoice extends \Entity\BaseEntity {
 	/**
 	 * @return integer|NULL
 	 */
-	public function getInvoiceVariableNumber() {
-		return $this->invoiceVariableNumber;
+	public function getPaymentReferenceNumber() {
+		return $this->paymentReferenceNumber;
 	}
 		
 	/**
 	 * @param \Entity\Company\Company
 	 * @return \Entity\Invoicing\Invoice
 	 */
-	public function setInvoicingCompany(\Entity\Company\Company $invoicingCompany) {
-		$this->invoicingCompany = $invoicingCompany;
+	public function setCompany(\Entity\Company\Company $company) {
+		$this->company = $company;
 
 		return $this;
 	}
@@ -246,8 +263,8 @@ class Invoice extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoicing\Invoice
 	 */
-	public function unsetInvoicingCompany() {
-		$this->invoicingCompany = NULL;
+	public function unsetCompany() {
+		$this->company = NULL;
 
 		return $this;
 	}
@@ -255,8 +272,8 @@ class Invoice extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Company\Company|NULL
 	 */
-	public function getInvoicingCompany() {
-		return $this->invoicingCompany;
+	public function getCompany() {
+		return $this->company;
 	}
 		
 	/**
@@ -553,7 +570,7 @@ class Invoice extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param decimal
+	 * @param float
 	 * @return \Entity\Invoicing\Invoice
 	 */
 	public function setVat($vat) {
@@ -563,7 +580,7 @@ class Invoice extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return decimal|NULL
+	 * @return float|NULL
 	 */
 	public function getVat() {
 		return $this->vat;

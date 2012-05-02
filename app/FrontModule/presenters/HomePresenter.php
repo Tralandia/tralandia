@@ -13,9 +13,6 @@ class HomePresenter extends BasePresenter {
 		$paginator->itemsPerPage = 15;
 		$paginator->itemCount = 568;
 
-		// TEST: saving file from URL
-		//$medium = \Service\Medium\Medium::createFromUrl('http://tralandia.local/temp/Android%20Root.rar');
-
 	}
 
 	public function createComponentCountryMap($name) {
@@ -29,21 +26,24 @@ class HomePresenter extends BasePresenter {
 		$tabBar = new \BaseModule\Components\TabControl\TabControl($this, $name);
 
 		$t = $tabBar->addTab('top');
-		$t->setHeader(10)->setContent('Top Objekty')->setActive();
+		$t->setHeader(806)->setContent('Top Objekty'); // @PHRASE: {_806, '1955 TOP holiday homes'}
 
 		$t = $tabBar->addTab('regions');
-		$t->setHeader(15)->setContent('Regiony');
+		$content = new \FrontModule\Components\RegionsPage\Regions($this, 'RegionsPage');
+		$t->setHeader(678)->setContent($content); // @PHRASE: {_678, '1112 Regions'}
 
 		$t = $tabBar->addTab('localities');
-		$t->setHeader(12)->setContent('Mesta/Obce');
+		$content = new \FrontModule\Components\LocalitiesPage\Localities($this, 'LocalitiesPage');
+		$t->setHeader(725)->setContent($content)->setActive(); // @PHRASE: {_725, '1626 Towns / Villages'}
 
 		$t = $tabBar->addTab('tags');
-		$t->setHeader(13)->setContent('Typy pobytov');
+		$content = new \FrontModule\Components\TagsPage\Tags($this, 'TagsPage');
+		$t->setHeader(727)->setContent($content); // @PHRASE: {_727, '1628 Types of stays'}
 
 		$t = $tabBar->addTab('about');
-		$t->setHeader(14)->setContent('O nas');
-
-		return $tabBar;
+		$content = new \FrontModule\Components\GenericPage\Generic($this, 'GenericPage');
+		$content->slug = 'about';
+		$t->setHeader(1163)->setContent($content); // @PHRASE: {_1163, '23011 '}
 
 	}
 

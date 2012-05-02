@@ -4,10 +4,15 @@ namespace Entity\Location;
 
 use Entity\Dictionary;
 use Doctrine\ORM\Mapping as ORM;
+use	Extras\UI as UI;
+use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="location_type")
+ * @EA\Service(name="\Service\Location\Type")
+ * @EA\ServiceList(name="\Service\Location\TypeList")
+ * @UI\Primary(key="id", value="slug")
  */
 class Type extends \Entity\BaseEntityDetails {
 
@@ -25,6 +30,17 @@ class Type extends \Entity\BaseEntityDetails {
 
 
 	
+
+
+
+
+
+
+
+
+
+
+
 
 
 

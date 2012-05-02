@@ -1,15 +1,17 @@
 Otazky / ulohy
 
-Rado
-
-- doriesit moznost kuskovat import este na mensie casti
-  - potom by som mohol kliknut, co mam importovat
-  - tiez by mala byt moznost dat UNDO na hociktoru podsekciu
-
-David
-
-Brano
-- 
 
 Exception:
 throw new \Nette\UnexpectedValueException('toto mi nesedi');
+
+Rental - este dorobit:
+- batch_id
+- batch_info
+
+
+Current status:
+- rental sa spusta na prvych 20-tich kusoch, iba 3 fotky
+- pre User som pridal atribut isOwner
+- dal som undo pre Users a nejde to, su tam zle vztahy, je to v FF
+- problem s chybajucimi indexami asi v phpmyadmin vidiet
+

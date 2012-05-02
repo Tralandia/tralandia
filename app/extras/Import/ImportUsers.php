@@ -15,9 +15,9 @@ class ImportUsers extends BaseImport {
 	public function doImport($subsection = NULL) {
 
 		// $user1 = \Service\User\User::get(1);
-		// $user2 = \Service\User\User::get(2);
-		// $user3 = \Service\User\User::get(3);
-		// $user4 = \Service\User\User::get(4);
+		// $user2 = \Service\User\User::get(4);
+		// // $user3 = \Service\User\User::get(3);
+		// // $user4 = \Service\User\User::get(4);
 
 		// \Service\User\User::merge($user1, $user2);
 		// return;
@@ -31,7 +31,6 @@ class ImportUsers extends BaseImport {
 		if (end($this->sections['users']['subsections']) == $subsection) {
 			$this->savedVariables['importedSections']['users'] = 1;		
 		}
-
 	}
 
 	private function importSuperAdmins() {
@@ -93,6 +92,7 @@ class ImportUsers extends BaseImport {
 
 			$user->login = $x['email'];
 			$user->password = $x['password'];
+			$user->oldId = $x['id'];
 			$user->addRole($role);
 
 			$user->addContact($this->createContact('email', $x['email']));
@@ -121,6 +121,7 @@ class ImportUsers extends BaseImport {
 
 			$user->login = $x['email'];
 			$user->password = $x['password'];
+			$user->oldId = $x['id'];
 			$user->addRole($role);
 
 			$user->addContact($this->createContact('email', $x['email']));
@@ -159,6 +160,7 @@ class ImportUsers extends BaseImport {
 
 			$user->login = $x['email'];
 			$user->password = $x['password'];
+			$user->oldId = $x['id'];
 			$user->addRole($role);
 			$user->invoicingLastName = $x['name'];
 
@@ -186,7 +188,11 @@ class ImportUsers extends BaseImport {
 		$role = \Service\User\Role::getBySlug('owner');
 		$locationTypeCountry = \Service\Location\Type::getBySlug('country');
 
-		$r = q('select * from members where country_id = 46');
+		if ($this->developmentMode == TRUE) {
+			$r = q('select * from members where country_id = 46');		
+		} else {
+			$r = q('select * from members');		
+		}
 		while($x = mysql_fetch_array($r)) {
 			$user = \Service\User\User::getByLogin($x['email']);
 
@@ -198,6 +204,8 @@ class ImportUsers extends BaseImport {
 
 			$user->login = $x['email'];
 			$user->password = $x['password'];
+			$user->oldId = $x['id'];
+			$user->isOwner = TRUE; //@todo toto tu je len temporary parameter pre import, potom zrusit
 
 			$user->addRole($role);
 
@@ -231,97 +239,104 @@ class ImportUsers extends BaseImport {
 
 	private function importPotentialOwners() {
 
+		return true; //@todo - toto treba opravit este nefunguje
+
 		$role = \Service\User\Role::getBySlug('potentialowner');
 		$locationTypeCountry = \Service\Location\Type::getBySlug('country');
 
-		$r = q('select * from contacts where country_id = 46 limit 10000');
-		//$r = q('select * from contacts');
+		if ($this->developmentMode == TRUE) {
+			$r = q('select * from contacts where country_id = 46 limit 10000');	
+		} else {
+			$r = q('select * from contacts');	
+		}
 
 		while($x = mysql_fetch_array($r)) {
+			$contacts = array();
+			$r1 = q('select email from contacts_emails where contact_id = '.$x['id']);
+			while($x1 = mysql_fetch_array($r1)) {
+				$contacts[] = '"'.$x1['email'].'"';
+			}
 
-			$x['email'] = trim($email); // toto je pre pripad chybnych emailov, aj take su v db
+			$r1 = q('select phone from contacts_phones where contact_id = '.$x['id']);
+			while($x1 = mysql_fetch_array($r1)) {
+				$contacts[] = '"'.$x1['phone'].'"';
+			}
 
-			$user = \Service\User\User::getByLogin($x['email']);
+			$existingUsers = array();
+			if (count($contacts)) {
+				$query = 'select user_id from contact_contact where user_id is not null and value in ('.implode(', ', $contacts).')';
+				$r1 = qNew($query);
+				while($x1 = mysql_fetch_array($r1)) {
+					$existingUsers[] = $x1['user_id'];
+				}				
+			}
 
-			if ($user instanceof \Service\User\User && $user->id > 0) {
-				// nic sa nedeje, ale nemozem dat continue, lebo nizsie importujem emails a phones naviazane na tento kontakt
-			} else {
+			if (count($existingUsers) == 0) {
 				$user = \Service\User\User::get();
-
-				$user->login = $x['email'];
-				$user->password = NULL;
-
-				$user->addRole($role);
-
-				$user->invoicingSalutation = $x['contact_salutation'];
-				$user->invoicingFirstName = $x['contact_firstname'];
-				$user->invoicingLastName = $x['contact_lastname'];
-
-				$contactParams = array(
-					'subscribed' => !(bool)$x['unsubscribed'],
-					'banned' => (bool)$x['banned'],
-					'full' => (bool)$x['full'],
-					'spam' => (bool)$x['spam'],
-				);
-				if(Validators::isUrl($x['url'])) $user->addContact($this->createContact('url', $x['url'], $contactParams));
-				if(Validators::isEmail($x['email'])) $user->addContact($this->createContact('email', $x['email'], $contactParams));
-
-				$user->invoicingAddress = new \Extras\Types\Address(array(
-					'address' => array_filter(array($x['address1'], $x['address2'])),
-					'postcode' => $x['postcode'],
-					'locality' => $x['city'],
-					'country' => \Service\Location\Location::getByOldIdAndType($x['country_id'], $locationTypeCountry),
-				));
-
-				$user->invoicingCompanyName = $x['contact_company'];
-				
-				$user->defaultLanguage = \Service\Dictionary\Language::getByOldId($x['language_id']);
-				$user->addLocation(\Service\Location\Location::getByOldIdAndType($x['country_id'], $locationTypeCountry));
+			} else if (count($existingUsers) == 1) {
+				$user = \Service\User\User::get($existingUsers[0]);
+			} else {
+				eval('$user = \Service\User\User::merge('.implode(', ', $existingUsers).');');
 			}
 
 
-			$r1 = q('select * from contacts_emails where contact_id = '.$x['id'].' and email != "'.$x['email'].'"');
-			while ($x1 = mysql_fetch_array($r1)) {
-				if(Validators::isEmail($x1['email'])) {
-					$user->addContact($this->createContact('email', $x1['email'], $contactParams));
+			if (!$user->login) $user->login = $x['email'];
+			if (!$user->password) $user->password = NULL;
+			//if (!$user->oldId) $user->oldId = $x['id'];
+
+			$user->addRole($role);
+
+			if (!$user->invoicingSalutation) $user->invoicingSalutation = $x['contact_salutation'];
+			if (!$user->invoicingFirstName) $user->invoicingFirstName = $x['contact_firstname'];
+			if (!$user->invoicingLastName) $user->invoicingLastName = $x['contact_lastname'];
+
+			if (!$user->invoicingAddress) $user->invoicingAddress = new \Extras\Types\Address(array(
+				'address' => array_filter(array($x['address1'], $x['address2'])),
+				'postcode' => $x['postcode'],
+				'locality' => $x['locality'],
+				'country' => \Service\Location\Location::getByOldIdAndType($x['country_id'], $locationTypeCountry),
+			));
+
+			$contactParams = array(
+				'subscribed' => !(bool)$x['unsubscribed'],
+				'banned' => (bool)$x['banned'],
+				'full' => (bool)$x['full'],
+				'spam' => (bool)$x['spam'],
+			);
+			if(Validators::isUrl($x['url'])) $user->addContact($this->createContact('url', $x['url'], $contactParams));
+
+			foreach ($contacts as $key => $value) {
+				if(Validators::isEmail($x['email'])) {
+					$user->addContact($this->createContact('email', $value, $contactParams));
+				} else {
+					$user->addContact($this->createContact('phone', $value, $contactParams));
 				}
 			}
 
+			
+			$user->defaultLanguage = \Service\Dictionary\Language::getByOldId($x['language_id']);
+			$user->addLocation(\Service\Location\Location::getByOldIdAndType($x['country_id'], $locationTypeCountry));
+
+			$user->currentTelmarkOperator = $x['telmark_operator_id'];
+
+			$details = array(
+				'counter' => $x['counter'],
+				'done' => $x['done'],
+				'done_stamp' => $x['done_stamp'],
+				'status' => $x['status'],
+				'call_count' => $x['call_count'],
+			);
+			$user->details = $details;
+			
 			debug($user); return;
 
 			$user->save();
 		}
 	}
 
-	private function import0000() {
+	private function importVisitors() {
 
-		$role = \Service\User\Role::getBySlug('admin');
-
-		$user = \Service\User\User::get();
-		$user->login = $x['email'];
-		$user->password = $x['password'];
-		$user->addRole($role);
-
-		$user->addContact($this->createContact('email', $x['email']));
-		
-		$user->defaultLanguage = \Service\Dictionary\Language::getByIso('en');
-		$user->addLocation();
-		$user->addRentalType();
-
-		$user->invoicingSalutation = '';
-		$user->invoicingFirstName = '';
-		$user->invoicingLastName = '';
-		$user->invoicingEmail = '';
-		$user->invoicingPhone = '';
-		$user->invoicingUrl = '';
-		$user->invoicingAddress = '';
-		$user->invoicingCompanyId = '';
-		$user->invoicingCompanyVatId = '';
-
-		$user->currentTelmarkOperator = '';
-
-		$user->addCombination();
-		$user->save();
+		return true; //@todo - toto treba opravit este nefunguje
 
 	}
 }

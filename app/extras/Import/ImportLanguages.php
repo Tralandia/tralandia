@@ -15,7 +15,6 @@ use Nette\Application as NA,
 class ImportLanguages extends BaseImport {
 
 	public function doImport($subsection = NULL) {
-		\Extras\Models\Service::preventFlush();
 		$r = q('select * from languages order by id');
 		while($x = mysql_fetch_array($r)) {
 			$s = D\Language::get();

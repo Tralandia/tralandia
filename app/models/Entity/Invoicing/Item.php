@@ -20,7 +20,7 @@ class Item extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Attraction\Type")
+	 * @ORM\ManyToOne(targetEntity="Entity\Invoicing\Service\Type")
 	 */
 	protected $serviceType;
 
@@ -61,16 +61,10 @@ class Item extends \Entity\BaseEntity {
 	protected $durationNameEn;
 
 	/**
-	 * @var price
-	 * @ORM\Column(type="price")
+	 * @var float
+	 * @ORM\Column(type="float")
 	 */
 	protected $price;
-
-	/**
-	 * @var price
-	 * @ORM\Column(type="price")
-	 */
-	protected $priceEur;
 
 	/**
 	 * @var string
@@ -113,6 +107,17 @@ class Item extends \Entity\BaseEntity {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -147,10 +152,10 @@ class Item extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Attraction\Type
+	 * @param \Entity\Invoicing\Service\Type
 	 * @return \Entity\Invoicing\Item
 	 */
-	public function setServiceType(\Entity\Attraction\Type $serviceType) {
+	public function setServiceType(\Entity\Invoicing\Service\Type $serviceType) {
 		$this->serviceType = $serviceType;
 
 		return $this;
@@ -166,7 +171,7 @@ class Item extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Attraction\Type|NULL
+	 * @return \Entity\Invoicing\Service\Type|NULL
 	 */
 	public function getServiceType() {
 		return $this->serviceType;

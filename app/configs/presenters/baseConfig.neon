@@ -1,0 +1,26 @@
+common:
+	title: Location Main Title
+	h1: Location Main H1
+
+	grid:
+		itemsPerPage: 13
+
+		actionColumns:
+			base:
+				name: Akcia
+				actions:
+					edit:
+						title: Edituj
+						addClass: btn-warning
+					delete:
+						title: Deletuj
+						addClass: btn-danger
+
+
+	form:
+		class: row form
+		buttons:
+			submit:
+				type: submit
+				label: Save
+				addClass: btn-success

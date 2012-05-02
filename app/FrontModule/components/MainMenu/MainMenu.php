@@ -3,7 +3,8 @@ namespace FrontModule\Components\MainMenu;
 
 use Nette\Application\UI\Control;
 
-class MainMenu extends Control {
+class MainMenu extends \BaseModule\Components\BaseControl
+ {
 
 	public function render() {
 		$template = $this->template;

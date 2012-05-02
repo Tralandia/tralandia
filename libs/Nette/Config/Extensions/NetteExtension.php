@@ -42,7 +42,7 @@ class NetteExtension extends Nette\Config\CompilerExtension
 		),
 		'security' => array(
 			'debugger' => TRUE,
-			'frames' => 'DENY', // X-Frame-Options
+			'frames' => 'SAMEORIGIN', // X-Frame-Options
 			'users' => array(), // of [user => password]
 			'roles' => array(), // of [role => parents]
 			'resources' => array(), // of [resource => parents]
@@ -83,7 +83,6 @@ class NetteExtension extends Nette\Config\CompilerExtension
 	{
 		$container = $this->getContainerBuilder();
 		$config = $this->getConfig($this->defaults);
-
 
 		// cache
 		$container->addDefinition($this->prefix('cacheJournal'))
@@ -330,8 +329,14 @@ class NetteExtension extends Nette\Config\CompilerExtension
 			$initialize->addBody('Nette\Utils\Html::$xhtml = ?;', array((bool) $config['xhtml']));
 		}
 
-		if (isset($config['security']['frames'])) {
-			$initialize->addBody('header(?);', array('X-Frame-Options: ' . $config['security']['frames']));
+		if (isset($config['security']['frames']) && $config['security']['frames'] !== TRUE) {
+			$frames = $config['security']['frames'];
+			if ($frames === FALSE) {
+				$frames = 'DENY';
+			} elseif (preg_match('#^https?:#', $frames)) {
+				$frames = "ALLOW-FROM $frames";
+			}
+			$initialize->addBody('header(?);', array("X-Frame-Options: $frames"));
 		}
 
 		foreach ($container->findByTag('run') as $name => $on) {

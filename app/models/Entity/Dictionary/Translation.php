@@ -32,7 +32,7 @@ class Translation extends \Entity\BaseEntity {
 	/**
 	 * @var json
 	 * @ORM\Column(type="json")
-	 * contains keys: translation, multiTranslations, webalized, locative. Even contains the $translation original version
+	 * contains keys: translation, multiTranslations, webalized, locative, genderNumberOptions, position. Even contains the $translation original version
 	 */
 	protected $variations;
 
@@ -50,6 +50,17 @@ class Translation extends \Entity\BaseEntity {
 
 
 	
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -19,7 +19,7 @@ class Type extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Rental", inversedBy="types")
+	 * @ORM\ManyToMany(targetEntity="Rental", inversedBy="types", cascade={"persist"})
 	 */
 	protected $rentals;
 
@@ -29,7 +29,13 @@ class Type extends \Entity\BaseEntity {
 	 */
 	protected $users;
 
-	
+
+
+
+
+
+
+
 
 
 

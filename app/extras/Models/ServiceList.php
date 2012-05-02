@@ -34,6 +34,11 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 	 */
 	private $list = array();
 
+	/**
+	 * @var \Doctrine\ORM\QueryBuilder
+	 */
+	private $dataSource;
+
 
 	public function __construct($param = NULL) {
 		if(is_array($param)) {
@@ -47,7 +52,22 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 		}
 	}
 
+	public function getDataSource() {
+		return $this->dataSource;
+	}
+
+	protected function setDataSource(\Doctrine\ORM\QueryBuilder $queryBuilder) {
+		$this->dataSource = $queryBuilder;
+	}
+
 	public static function __callStatic($name, $arguments) {
+		if(Strings::endsWith($name, 'AsPairs')) {
+			$name = substr($name, 0, -7);
+			$key = array_shift($arguments);
+			$value = array_shift($arguments);
+			return static::_fetchPairs(call_user_func_array(array('static', $name), $arguments), $key, $value);
+		}
+		
 		list($nameTemp, $nameBy, $nameIn) = Strings::match($name, '~^getBy([A-Za-z]+)In([A-Za-z]+)$~');
 		if($nameTemp && $nameBy && $nameIn) {
 			$nameBy = Strings::firstLower($nameBy);
@@ -66,32 +86,37 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 		}
 	}
 
-	public static function prepareCriteria($criteria) {
-		foreach ($criteria as $key => $value) {
-			if($value instanceof Service || $value instanceof Entity) {
-				$criteria[$key] = $value->id;
-			} else if(is_array($value)) {
-				$criteria[$key] = static::prepareCriteria($value);
-			}
-		}
-
-		return $criteria;
-	}
-
-	/**
-	 * criteria array('field' => 'value')
-	 * orderBy array('field' => 'ASC')
-	 */
 	public static function getBy(array $criteria, array $orderBy = NULL, $limit = NULL, $offset = NULL, $entityName = NULL) {
-		$criteria = static::prepareCriteria($criteria);
-
 		if($entityName === NULL) {
 			$entityName = static::getMainEntityName();
 		}
 
 		$serviceList = new static;
-		$repository = $serviceList->getEm()->getRepository($entityName);
-		$serviceList->setList($repository->findBy($criteria, $orderBy, $limit, $offset));
+		$qb = $serviceList->getEntityManager()->createQueryBuilder();
+		$qb->select('e')
+			->from($entityName, 'e');
+
+
+		foreach ($criteria as $key => $value) {
+			if($value instanceof Service || $value instanceof Entity) {
+				$value = $value->id;
+			}
+			$qb->andWhere('e.'.$key.' = :'.$key)
+				->setParameter($key, $value);
+		}
+
+
+		if($orderBy) {
+			foreach ($orderBy as $key => $value) {
+				$qb->addOrderBy('e.'.$key, $value);
+			}
+		}
+		if($limit) $qb->setMaxResults($limit);
+		if($offset) $qb->setFirstResult($offset);
+
+
+		$serviceList->setDataSource($qb);
+		$serviceList->setList($qb->getQuery()->getResult());
 		return $serviceList;
 	}
 
@@ -101,10 +126,21 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 		}
 
 		$serviceList = new static;
-		$repository = $serviceList->getEm()->getRepository($entityName);
-		$serviceList->setList($repository->findBy(array(), $orderBy, $limit, $offset));
-		return $serviceList;
+		$qb = $serviceList->getEntityManager()->createQueryBuilder();
+		$qb->select('e')
+			->from($entityName, 'e');
+		if($orderBy) {
+			foreach ($orderBy as $key => $value) {
+				$qb->addOrderBy('e.'.$key, $value);
+			}
+		}
+		if($limit) $qb->setMaxResults($limit);
+		if($offset) $qb->setFirstResult($offset);
 
+
+		$serviceList->setDataSource($qb);
+		$serviceList->setList($qb->getQuery()->getResult());
+		return $serviceList;
 	}
 
 
@@ -143,7 +179,20 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 
 	}
 
-
+	/** 
+	 * return array
+	 */
+	public function fetchPairs($key, $value = NULL) {
+		return static::_fetchPairs($this, $key, $value);
+	}
+ 
+	protected static function _fetchPairs($serviceList, $key, $value) {
+		$return = array();
+		foreach($serviceList as $item) {
+			$return[$item->$key] = ($value ? $item->$value : $item);
+		}
+		return $return;
+	}
 
 	protected function prepareBaseList($entity) {
 		$query = $this->getEm()->createQueryBuilder();
@@ -151,7 +200,7 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 		$this->setList($query->getQuery()->getResult());
 	}
 
-	public function setList($list) {
+	protected function setList($list) {
 		$this->list = $list;
 		$this->iteratorPosition = 0;
 	}
@@ -180,7 +229,7 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 	 * Ziskanie entity manazera
 	 * @return EntityManager
 	 */
-	protected function getEntityManager() {
+	protected static function getEntityManager() {
 		return self::$em;
 	}
 
@@ -188,7 +237,7 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 	 * Alias na entity manazera
 	 * @return EntityManager
 	 */
-	protected function getEm() {
+	protected static function getEm() {
 		return self::getEntityManager();
 	}
 

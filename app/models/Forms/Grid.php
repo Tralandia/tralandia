@@ -1,8 +1,6 @@
 <?php
 
-namespace Tra\Forms;
-
-use Tra\Services;
+namespace AdminModule\Forms;
 
 class Grid extends Form {
 
@@ -12,8 +10,8 @@ class Grid extends Form {
 		parent::__construct($parent, $name);
 
 		
-		$this->service = $this->getParentService();
-		$this->service->prepareForm($this);
+		//$this->service = $this->getParentService();
+		//$this->service->prepareForm($this);
 		
 		$this->ajax(false);
 		$this->addHidden('id');

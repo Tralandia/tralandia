@@ -5,110 +5,122 @@ namespace AdminModule;
 use Nette\Application as NA,
 	Nette\Environment,
 	Nette\Diagnostics\Debugger,
-	Nette\Utils\Html;
+	Nette\Utils\Html,
+	Tra\Utils\Arrays,
+	Extras\Models\Reflector;
 
 class AdminPresenter extends BasePresenter {
 	
 	private $settings;
-	
 	private $service;
+	private $serviceName;
+	private $serviceListName;
+	private $reflector;
+	private $formMask;
 	
 	public function startup() {
 		parent::startup();
 		
 		$this->settings = $this->getService('settings');
 		$this->template->settings = $this->settings;
-		$this->service = new $this->settings->serviceClass;
-		
-		/*
-		$country = new \Country;
-		$country->iso = 'iso-' . sha1(microtime(true));
-		$country->language = $this->em->find('Language', 1);
-		debug($country);
-		$this->em->getRepository('Country')->persist($country);
-		debug($country);
-		*/
-		//debug($this->em->find('Country', '0000000005755852000000001ef2b9d1'));
+		$this->serviceName = $this->settings->serviceClass;
+		$this->serviceListName = $this->settings->serviceListClass;
+		$this->reflector = new Reflector($this->settings);
+		$this->formMask = $this->reflector->getFormMask();
 	}
 	
-	public function getMainService() {
-		return $this->service;
+	public function getMainServiceName() {
+		return $this->serviceName;
 	}
 
 	public function renderList() {
 		
 	}
 	
-	public function renderAdd() {
+	public function actionAdd() {
 		$form = $this->getComponent('form');
+		// TODO: instancia uplne noveho zaznamu
+		//$this->service = new Service;
+	}
+
+	public function actionEdit($id = 0) {
+		$service = $this->serviceName;
+		$this->service = $service::get($id);
+		if(isset($this->params['display']) && $this->params['display'] == 'modal') {
+			$this->formMask->form->addClass .= ' ajax';
+			$this->setLayout(FALSE);
+			$this->template->display = 'modal';
+		}
+
 	}
 	
 	public function renderEdit($id = 0) {
 		$form = $this->getComponent('form');
-		$row = $this->service->get($id);
+		//TODO: naslo zaznam? toto treba osetrit lebo servica nehlasi nenajdeny zaznam
+		// ale hlasi @david
+		// if (!$this->service) {
+		// 	throw new NA\BadRequestException('Record not found');
+		// }
 
-		if (!$row) {
-			throw new NA\BadRequestException('Record not found');
-		}
 		if (!$form->isSubmitted()) {
-			$form->setDefaults($row);
+			$data = $this->service->getDefaultsData($this->formMask);
+			$this->reflector->getContainer($form)->setDefaults($data);
 		}
 
-		$this->template->record = $row;
-		$this->template->entity = $row->{$this->service->getMainEntity()};
+		$this->template->record = $this->service;
 		$this->template->form = $form;
 	}
 	
 	protected function createComponentForm($name) {
-		$form = new \Tra\Forms\Form($this, $name);
+		$form = new \AdminModule\Forms\AdminForm($this, $name, $this->reflector, $this->service);
 
-		$this->service->prepareForm($form);
-		
-		$form->ajax(false);
-		$form->addSubmit('save', 'Save');
-		$form->onSuccess[] = callback($this, 'onSave');
-		
 		return $form;
 	}
-	
-	public function onSave(\Tra\Forms\Form $form) {
-		// TODO: dorobit na nove service
-		$id = (int)$this->getParam()->id;
-		$values = $form->getPrepareValues($this->service);		
-		
-		if ($id > 0) {
-			// EDIT
-			$this->service->update($values);
-		} else {
-			// ADD
-			$this->service->create($values);
-		}	
-    }
-	
-	
+
+/*	public function handleImageUpload(\Nette\Http\FileUpload $file) {
+		//debug($file);
+		$this->invalidateControl();
+		try {
+			$file = \Service\Medium\Medium::createFromFile($file->getTemporaryFile(), $file->getName());
+			$this->getPresenter()->getPayload()->success = true;
+		} catch (Exception $e) {
+			$this->getPresenter()->getPayload()->error = $e->getMessage();
+		}
+	}
+
+
+	public function loadState(array $params) {
+		$globals = $this->getPresenter()->getRequest()->getParameters();
+		if (isset($globals['qqfile'])) {
+			list($none, $signal) = $this->getPresenter()->getSignal();
+			$handle = 'handle' . ucfirst($signal);
+			
+			if ($this->getReflection()->hasMethod($handle)) {
+				$parameters = $this->getReflection()->getMethod($handle)->getParameters();
+				$file = new \qqUploadedFileXhr;
+				$file = $file->save();
+				$file = new \Nette\Http\FileUpload($file);
+				$params[$parameters[0]->getName()] = $file;
+			}
+		}
+		parent::loadState($params);
+	}
+*/		
 	protected function createComponentGrid($name) {
-		$form = $this->getComponent('gridForm');
-		$grid = new \EditableDataGrid\DataGrid;
-		//$grid->itemsPerPage = 3;
-		
-		$grid->setEditForm($form);
-		$grid->setContainer($this->service->getMainEntityName());	
-		$grid->onDataReceived[] = array($form, 'onDataRecieved');
-		$grid->onInvalidDataRecieved[] = array($form, 'onInvalidDataRecieved');
-		
+		$mainEntityName = $this->reflector->getMainEntityName();
+		$grid = new \DataGrid\DataGrid;
 		$mapper = array(); $editable = false;
-		foreach ($this->settings->params->grid->columns as $alias => $column) {
+
+		$gridSettings = $this->settings->params->grid;
+
+		foreach ($gridSettings->columns as $alias => $column) {
 			$mapper[$alias] = $column->mapper;
 			
 			if (!isset($column->draw) || (isset($column->draw) && $column->draw == true)) {
-				$type = isset($column->type) ? $column->type : 'text';				
+				$type = isset($column->type) ? $column->type : 'text';
 				$property = substr($column->mapper, strrpos($column->mapper, '.')+1);
-				
-				if ($controlAnnotation = $this->service->getReflector()->getAnnotation('Rental', $property, 'ORM\Column')) {
-					$type = $controlAnnotation->type;
-				}
 
-				if ($controlAnnotation = $this->service->getReflector()->getAnnotation('Rental', $property, 'UIControl')) {
+				if ($controlAnnotation = $this->reflector->getAnnotation($mainEntityName, $property, Reflector::COLUMN)) {
 					$type = $controlAnnotation->type;
 				}
 				
@@ -128,38 +140,53 @@ class AdminPresenter extends BasePresenter {
 					);
 				}
 			}
-			if (isset($column->editable) && $column->editable == true) {
-				$editable = true;
-				$grid->addEditableField($alias);
-			}
 		}
 
-		$dataSource = new \DataGrid\DataSources\Doctrine\LalaQueryBuilder($this->service->getDataSource());
+		$list = $this->serviceListName;
+		$list = $list::getAll();
+		$dataSource = new \DataGrid\DataSources\Doctrine\LalaQueryBuilder($list->getDataSource());
+
 		$dataSource->setMapping($mapper);
-		$grid->setDataSource($dataSource);	
-		$grid->addActionColumn('Actions');
+		$grid->setDataSource($dataSource);
+
+		foreach ($gridSettings->actionColumns as $key => $value) {
+			if($value === FALSE) continue;
+			$grid->addActionColumn($key, Arrays::get($value, 'name', ''));
+			foreach ($value->actions as $actionName => $action) {
+				if($action === FALSE) continue;
+				$title = Arrays::get($action, 'title', ucfirst($actionName));
+				if(is_string($action->title)) {
+					$action->title = \Nette\ArrayHash::from(array(
+							'label' => $action->title
+						));
+				}
+
+				if($action->title instanceof \Nette\ArrayHash) {
+					$title = Html::el('a')->title($title)->add(Arrays::get($action->title, 'label', ucfirst($title)));
+
+					if(isset($action->class)) $title->class($action->class);
+					else $title->class('btn btn-mini');
+					if(isset($action->addClass)) $title->addClass($action->addClass);
+				}
+
+				$grid->addAction($title, $actionName, Arrays::get($action, 'ajax', NULL));
+			}
+			
+		}
+
+		$grid->itemsPerPage = $gridSettings->itemsPerPage;
 		
-		$grid->addAction('Edit', 'edit', Html::el('span')->class('icon edit')->setText('Edit') , false);
-		$grid->addAction('Delete', 'delete', Html::el('span')->class('icon delete')->setText('Delete'), false);
 
 		return $grid;
 	}
-	
-	public function createComponentGridForm($name) {
-		$grid = new \Tra\Forms\Grid($this, $name);
-		return $grid;
-	}
-	
+
 	public function pattern($value, $row, $params = null) {
-		//debug("odpoved=" . $this->user->isAllowed($row->getEntity(), 'show'));
-		
 		return preg_replace_callback('/%([\w]*)%/', function($matches) use ($row) {
 			return isset($row[$matches[1]]) ? $row[$matches[1]] : $matches[0];
 		}, $params->pattern);
 	}
 
-	public function nieco($value, $row, $params = null) {
-		//debug($value, $row, $params);
-		return $value;
-	}	
+	public function translateColumn($value, $row, $key) {
+		return $this->translate($row->getEntity()->$key->id);
+	}
 }

@@ -13,6 +13,12 @@ else
 	chmod 777 ./temp/sessions
 fi
 
+if [ ! -d ./temp/proxies ]; then
+    mkdir -m 777 ./temp/proxies
+else
+	chmod 777 ./temp/proxies
+fi
+
 if [ ! -d ./log ]; then
     mkdir -m 777 ./log
 else
@@ -41,7 +47,7 @@ fi
 #@toto toto je tu len docasne!
 rm -rf ./log/*
 
-#cd ../../bin/php/php5.3.8/
-#php.exe -f "C:/wamp/www/trax/public/index.php" orm:generate-proxies
-#php.exe -f "C:/wamp/www/trax/public/index.php" orm:schema-tool:create
-#php.exe -f "C:/wamp/www/trax/public/index.php" orm:schema-tool:update --force
+cd ../../bin/php/php5.3.8/
+./php.exe -f "C:/wamp/www/trax/public/index.php" orm:generate-proxies
+# ./php.exe -f "C:/wamp/www/trax/public/index.php" orm:schema-tool:create
+./php.exe -f "C:/wamp/www/trax/public/index.php" orm:schema-tool:update --force
