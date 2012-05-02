@@ -13,6 +13,7 @@ common:
 	link3:
 		from: 'http://www.tra.sk/mala-fatra/chalupy/prazdninovy-pobyt?lfPeople=6&lfFood=6'
 		to: 'http://www.tra.sk/mala-fatra/chalupy/'
+
 	example: #toto je identifikator pre test
 		from: 'http://www.tra.sk/chaty/nitra-okres/prazdninovy-pobyt?lfPeople=6&lfFood=6' # kam chce ist navstevnik
 		to: 'http://www.tra.sk/nitra-okres/chaty/prazdninovy-pobyt?lfPeople=6&lfFood=6' # kde skonci nastevnik
