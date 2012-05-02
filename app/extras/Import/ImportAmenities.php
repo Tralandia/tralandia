@@ -40,6 +40,12 @@ class ImportAmenities extends BaseImport {
 
 		$en = \Service\Dictionary\Language::getByIso('en');
 
+		$nameDictionaryType = $this->createDictionaryType('\Rental\Amenity\Amenity', 'name', 'supportedLanguages', 'ACTIVE', array('multitranslationRequired' => TRUE));
+		$tagNameDictionaryType = $this->createDictionaryType('\Rental\Amenity\Amenity', 'name-tag', 'supportedLanguages', 'ACTIVE', array('genderNumberRequired' => TRUE, 'positionRequired' => TRUE, 'webalizedRequired' => TRUE));
+		$this->createDictionaryType('\Rental\Amenity\Group', 'name', 'supportedLanguages', 'ACTIVE');
+		\Extras\Models\Service::flush(FALSE);
+
+
 		foreach ($groups as $key => $value) {
 			$g = \Service\Rental\Amenity\Group::get();
 			$g->name = $this->createPhraseFromString('\Rental\Amenity\Group', 'name', 'supportedLanguages', 'ACTIVE', $value[0], $en);
@@ -49,8 +55,6 @@ class ImportAmenities extends BaseImport {
 
 		\Extras\Models\Service::flush(FALSE);
 
-		$nameDictionaryType = $this->createDictionaryType('\Rental\Amenity\Amenity', 'name', 'supportedLanguages', 'ACTIVE', array('multitranslationRequired' => TRUE));
-		$tagNameDictionaryType = $this->createDictionaryType('\Rental\Amenity\Amenity', 'name-tag', 'supportedLanguages', 'ACTIVE', array('genderNumberRequired' => TRUE, 'positionRequired' => TRUE, 'webalizedRequired' => TRUE));
 
 		// Activities
 		$amenityGroup = \Service\Rental\Amenity\Group::getBySlug('activity');

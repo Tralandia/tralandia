@@ -278,7 +278,7 @@ class BaseImport {
 			$phrase->addTranslation($this->createTranslation($textLanguage, $text));
 		}
 
-		//$phrase->save();
+		$phrase->save();
 		return $phrase;
 	}
 
@@ -286,7 +286,7 @@ class BaseImport {
 
 		$dictionaryType = D\Type::getByEntityNameAndEntityAttribute($entityName, $entityAttribute);
 		if ($dictionaryType) {
-			//debug('iba vraciam premennu '.$dictionaryType->entityName.'->'.$dictionaryType->entityAttribute);
+			debug('iba vraciam premennu '.$dictionaryType->entityName.'->'.$dictionaryType->entityAttribute);
 			return $dictionaryType;
 		} else {
 			eval('$level = \Entity\Dictionary\Type::TRANSLATION_LEVEL_'.strtoupper($level).';');
@@ -300,7 +300,7 @@ class BaseImport {
 					$dictionaryType->$key = $value;
 				}
 			}
-			//$dictionaryType->save();			
+			$dictionaryType->save();			
 			return $dictionaryType;
 		}
 	}

@@ -19,6 +19,9 @@ class ImportRentalTypes extends BaseImport {
 		$import = new \Extras\Import\BaseImport();
 		$import->undoSection('rentalTypes');
 
+		$this->createDictionaryType('\Rental\Type', 'name', 'supportedLanguages', 'ACTIVE');
+		\Extras\Models\Service::flush(FALSE);
+
 		$r = qf('select * from objects_types_new limit 1');
 		if (!isset($r['trax_en_type_id'])) {
 			q('ALTER TABLE `objects_types_new` ADD `trax_en_type_id` INT(10)  UNSIGNED  NULL  DEFAULT NULL  AFTER `ppc_enabled`');
@@ -48,7 +51,7 @@ class ImportRentalTypes extends BaseImport {
 		$r = q('select * from objects_types_new where language_id = 38');
 		while($x = mysql_fetch_array($r)) {
 			$rentalType = \Service\Rental\Type::get();
-			$rentalType->name = $this->createPhraseFromString('\Service\Rental\Type', 'name', 'supportedLanguages', 'ACTIVE', $x['name'], \Service\Dictionary\Language::getByOldId(38));
+			$rentalType->name = $this->createPhraseFromString('\Rental\Type', 'name', 'supportedLanguages', 'ACTIVE', $x['name'], \Service\Dictionary\Language::getByOldId(38));
 			$rentalType->oldId = $x['id'];
 			$thisPhrase = \Service\Dictionary\Phrase::get($rentalType->name);
 			$thisTranslation = $thisPhrase->getTranslation(\Service\Dictionary\Language::getByOldId(38));

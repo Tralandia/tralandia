@@ -18,6 +18,10 @@ class ImportInvoicingStart extends BaseImport {
 
 		$en = \Service\Dictionary\Language::getByIso('en');
 
+		$this->createDictionaryType('\Invoicing\UseType', 'name', 'supportedLanguages', 'ACTIVE');
+		\Extras\Models\Service::flush(FALSE);
+
+
 		$currenciesByOldId = getNewIdsByOld('\Currency');
 
 		// Durations
