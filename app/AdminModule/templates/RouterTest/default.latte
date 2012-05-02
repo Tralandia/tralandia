@@ -15,14 +15,20 @@
 			{if $result->bugs}<span class="badge badge-important">{$result->bugs}</span>{/if}
 			{$testName}
 		</h3>
-		<div class="offset3 span3">{$result->to}</div>
+		<div class="span">
+			F : <a href="{$result->from}">{$result->from}</a><br />
+			T : <a href="{$result->to}">{$result->to}</a>
+		</div>
 	</div>
-	<div class="row">
-		{if is_string($result->presenter)}
-			<div class="span3">{$result->presenter}</div>
-		{else}
-			<div class="span3"><span class="color-red">{$result->presenter->value}</span> <span class="color-gray">({$result->presenter->expected})</span></div>
-		{/if}
-	</div>
+	{foreach $result->params as $paramName => $param}
+		<div class="row">
+			<div class="span1">{$paramName}</div>
+			{if is_scalar($param)}
+				<div class="span3">{$param}</div>
+			{else}
+				<div class="span2 color-red">{$param->value}</div> <div class="span2 color-gray">{$param->expected}</div>
+			{/if}
+		</div>
+	{/foreach}
 	<hr />
 {/foreach}

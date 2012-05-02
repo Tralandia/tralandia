@@ -20,7 +20,7 @@ use Nette;
  *
  * @author     David Grudl
  */
-final class Arrays
+class Arrays
 {
 
 	/**
@@ -41,7 +41,7 @@ final class Arrays
 	 * @param  mixed  default value
 	 * @return mixed
 	 */
-	public static function get(array $arr, $key, $default = NULL)
+	public static function get($arr, $key, $default = NULL)
 	{
 		foreach (is_array($key) ? $key : array($key) as $k) {
 			if (is_array($arr) && array_key_exists($k, $arr)) {

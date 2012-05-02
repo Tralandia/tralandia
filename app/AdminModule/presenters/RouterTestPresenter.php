@@ -19,7 +19,10 @@ class RouterTestPresenter extends BasePresenter {
 		$testResults = ArrayHash::from(array());
 		foreach ($this->getUrlsForTest() as $testName => $test) {
 			$bugs = 0;
-			$testResult = ArrayHash::from(array());
+			$testResult = ArrayHash::from(array(
+				'from' => $test->from,
+				'params' => array(),
+			));
 
 			$scriptUrl = new \Nette\Http\UrlScript($test->from);
 			$httpRequest = new \Nette\Http\Request($scriptUrl, $scriptUrl->getQuery(), $post = NULL, $files = NULL, $cookies = NULL, $headers = NULL, $method = 'GET', $remoteAddress = NULL, $remoteHost = NULL);
@@ -34,10 +37,10 @@ class RouterTestPresenter extends BasePresenter {
 			$constructedUrl = $router->constructUrl($appRequest, $refUrl);
 
 			if(array_key_exists('presenter', $test) && $test->presenter !== $appRequest->getPresenterName()) {
-				$testResult->presenter = ArrayHash::from(array('expected' => $test->presenter, 'value' => $appRequest->getPresenterName()));
+				$testResult->params->presenter = ArrayHash::from(array('expected' => $test->presenter, 'value' => $appRequest->getPresenterName()));
 				$bugs++;
 			} else {
-				$testResult->presenter = $appRequest->getPresenterName();
+				$testResult->params->presenter = $appRequest->getPresenterName();
 			}
 
 			if(array_key_exists('to', $test) && $test->to != $constructedUrl) {
@@ -48,14 +51,26 @@ class RouterTestPresenter extends BasePresenter {
 			}
 
 			if(array_key_exists('params', $test)) {
-				foreach ($test->params as $name => $value) {
-					$appValue = Arrays::get($appRequest, $key, NULL);
+				$appParams = $appRequest->getParameters();
+				$testParams = $test->params;
+				foreach ($appParams as $name => $appValue) {
+					$value = Arrays::get($testParams, $name, NULL);
+					unset($testParams[$name]);
 					if($value != $appValue) {
-						$testResult->$key = ArrayHash::from(array('expected' => $value, 'value' => $appValue));
+						if($appValue === NULL) $appValue = 'NULL';
+						if($appValue === FALSE) $appValue = 'FALSE';
+						if($appValue === TRUE) $appValue = 'TRUE';
+						if($value === NULL) $value = 'NULL';
+						if($value === FALSE) $value = 'FALSE';
+						if($value === TRUE) $value = 'TRUE';
+						$testResult->params->$name = ArrayHash::from(array('expected' => $value, 'value' => $appValue));
 						$bugs++;
 					} else {
-						$testResult->$key = $appValue;
+						$testResult->params->$name = $appValue;
 					}
+				}
+				foreach ($testParams as $name => $value) {
+					$testResult->params->$name = ArrayHash::from(array('expected' => $value, 'value' => 'NULL'));
 				}
 			}
 
