@@ -16,7 +16,7 @@
 	{input clear class => 'btn'}
 {/form}
 {snippet testResults}
-	<div>
+	<div n:if="$wrongUrlsCount > 0">
 		<h2 class="color-red">{$wrongUrlsCount} wrong urls</h2>
 	</div>
 	{foreach $testResults as $testName => $result}
