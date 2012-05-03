@@ -101,7 +101,7 @@ class Medium extends \Service\BaseService {
 
 		foreach(glob($mediumDir . '/*') as $file) {
 			if(is_dir($file)) {
-				rrmdir($file);
+				rmdir($file);
 			} else {
 				unlink($file);
 			}

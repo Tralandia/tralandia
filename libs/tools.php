@@ -29,6 +29,24 @@ function d() {
 	return Tools::dump(func_get_args());
 }
 
+function rrmdir($dir) {
+	$fp = opendir($dir);
+	if ( $fp ) {
+		while ($f = readdir($fp)) {
+			$file = $dir . "/" . $f;
+			if ($f == "." || $f == "..") {
+				continue;
+			} else if (is_dir($file) && !is_link($file)) {
+				rrmdir($file);
+			} else {
+				unlink($file);
+			}
+		}
+		closedir($fp);
+		rmdir($dir);
+	}
+}
+
 class Tools {
 
 	public static $dateFormat = '%d.%m.%Y';
@@ -91,7 +109,7 @@ class Tools {
 			$image->crop($offset, 0, $width, $height);
 		}
 
-	    return $image;
+		return $image;
 	}
 
 	public static function getExt($name) {
