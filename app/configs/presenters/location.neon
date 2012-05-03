@@ -60,7 +60,8 @@ common:
 				inlineDeleting: true
 
 			languages:
-				control: bricksList
+				#control: bricksList
+				control: multiSelect
 				inlineEditing: true
 				inlineCreating: true
 				inlineDeleting: true

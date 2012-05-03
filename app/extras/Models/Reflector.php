@@ -241,6 +241,9 @@ class Reflector extends Nette\Object {
 			} else if($type == 'tinymce') {
 				$fieldMask['ui']['control']['type'] = 'textArea';
 				$fieldMask['ui']['control']['addClass'] = (isset($fieldMask['ui']['control']['addClass']) ? $fieldMask['ui']['control']['addClass'].' ' : NULL) . 'tinymce';
+			} else if($type == 'multiSelect') {
+				$fieldMask['ui']['control']['addClass'] = (isset($fieldMask['ui']['control']['addClass']) ? $fieldMask['ui']['control']['addClass'].' ' : NULL) . 'multiselect';
+
 			}
 
 			$fieldMask['ui']['name'] = $name;
@@ -300,7 +303,7 @@ class Reflector extends Nette\Object {
 
 			}
 
-			if(in_array($type, array('select', 'checkboxList'))) {
+			if(in_array($type, array('select', 'checkboxList', 'multiSelect'))) {
 
 				if(!$fieldMask['ui']['callback'] && !$fieldMask['ui']['options']) {
 					$fieldMask['ui']['callback'] = 'getAllAsPairs';
@@ -399,10 +402,9 @@ class Reflector extends Nette\Object {
 
 			if(isset($ui->control->disabled)) $control->setDisabled();
 			
-			
-			// ak je control typu selekt a obsahuje definiciu vztahov, pripojim target entitu
 			if ($control instanceof \Extras\Forms\Controls\AdvancedSelectBox 
-				|| $control instanceof \Extras\Forms\Controls\AdvancedCheckboxList) 
+				|| $control instanceof \Extras\Forms\Controls\AdvancedCheckboxList
+				|| $control instanceof \Nette\Forms\Controls\MultiSelectBox) 
 			{
 				$targetEntity = $property->targetEntity;
 				if (isset($ui->callback)) {
