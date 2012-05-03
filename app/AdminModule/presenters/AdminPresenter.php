@@ -59,7 +59,7 @@ class AdminPresenter extends BasePresenter {
 		//TODO: naslo zaznam? toto treba osetrit lebo servica nehlasi nenajdeny zaznam
 		// ale hlasi @david
 		// if (!$this->service) {
-		// 	throw new NA\BadRequestException('Record not found');
+			// throw new NA\BadRequestException('Record not found');
 		// }
 
 		if (!$form->isSubmitted()) {

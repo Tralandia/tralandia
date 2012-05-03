@@ -66,8 +66,7 @@ $container->application->onStartup[] = function() use ($container) {
 	$adminRouter[] = new Route('index.php', 'Admin:Rental:list', Route::ONE_WAY);
 	$adminRouter[] = new Route('admin/<presenter>/<id [0-9]+>', array(
 		'presenter' => NULL,
-		'action' =>  'edit',
-		'id' => NULL
+		'action' =>  'edit'
 	));
 	$adminRouter[] = new Route('admin/<presenter>/[<action>[/<id>]]', array(
 		'presenter' => NULL,
