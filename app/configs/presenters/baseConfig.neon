@@ -10,17 +10,18 @@ common:
 				name: Akcia
 				actions:
 					edit:
-						title: Edituj
+						title: Edit
 						addClass: btn-warning
 					delete:
-						title: Deletuj
+						title: Delete
 						addClass: btn-danger
 
 
 	form:
 		class: row form
 		buttons:
+			cancel: Cancel (return)
 			submit:
 				type: submit
-				label: Save
+				label: Save Changes
 				addClass: btn-success

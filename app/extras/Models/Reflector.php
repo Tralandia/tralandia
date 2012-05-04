@@ -291,7 +291,8 @@ class Reflector extends Nette\Object {
 				$targetEntity = $association->targetEntity;
 				$fieldMask['targetEntity'] = array();
 				if (!Strings::startsWith($targetEntity, 'Entity')) {
-					$targetEntity = $entity->getNamespaceName() . '\\' . $toOne->targetEntity;
+					$entity = new \Nette\Reflection\ClassType('\Entity\Dictionary\Language'); //@todo - opravit
+					$targetEntity = $entity->getNamespaceName() . '\\' . $targetEntity;
 				}
 
 				$fieldMask['targetEntity']['name'] = $targetEntity;
