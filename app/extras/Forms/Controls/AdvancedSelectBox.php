@@ -7,39 +7,28 @@ use Nette\Forms\Container,
 	Nette\Utils\Html;
 
 
-class AdvancedSelectBox extends SelectBox implements IAdvancedControl {
-
-	protected $inlineEditing;
-	protected $inlineCreating;
-
-	public function setInlineEditing($inlineEditing) {
-		$this->inlineEditing = $inlineEditing;
-		return $this;		
-	}
-
-	public function getInlineEditing() {
-		return $this->inlineEditing;
-	}
-
-	public function setInlineCreating($inlineCreating) {
-		$this->inlineCreating = $inlineCreating;
-		return $this;		
-	}
-
-	public function getInlineCreating() {
-		return $this->inlineCreating;
-	}
-
+class AdvancedSelectBox extends SelectBox {
 
 	public function getControl() {
 		$control = parent::getControl();
-		$wrapper = Html::el('span')->addClass('select-wrapper');
+		$control->addClass('pull-left');
+		$wrapper = Html::el('div')->addClass('input-append input-prepend');
 		$wrapper->add($control);
-		if($this->getInlineEditing()) {
-			$wrapper->add(Html::el('a')->add('Editable'));
+		$controlId = $control->getId();
+		if($this->getOption('inlineEditing')) {
+			$editingHtml = $this->getOption('inlineEditing');
+			$editingHtml->addAttributes(array(
+				'for-control' => $controlId,
+			));
+			$wrapper->add($editingHtml);
+
 		}
-		if($this->getInlineCreating()) {
-			$wrapper->add(Html::el('a')->add('Creatable'));
+
+		if($this->getOption('inlineDeleting')) {
+			$wrapper->add($this->getOption('inlineDeleting'));
+		}
+		if($this->getOption('inlineCreating')) {
+			$wrapper->add($this->getOption('inlineCreating'));
 		}
 		return $wrapper;
 	}

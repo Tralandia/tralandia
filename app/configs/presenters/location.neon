@@ -21,43 +21,62 @@ common:
 				label: Dátum vytvorenia
 				mapper: e.created
 
+
 	form:
+		addClass: haha
 		fields:
 			name:
-				type: phrase
+				control: 
+					type: phrase
+					class: test
+				addClass: 'myPhraseClass'
 				inlineEditing: true
 				inlineCreating: true
 
 			slug:
-				type: text
+				control: tinymce
 				label: Sluuug
 				disabled: true
 
 			iso:
-				type: text
+				control: text
 				startNewRow: true
 
 			currencies:
-				type: bricksList
-				#type: checkboxList
+				#control: bricksList
+				control: checkboxList
 				inlineEditing: true
 				inlineCreating: true
+				inlineDeleting: true
 
 			defaultCurrency:
-				type: select
+				control: select
 				label: 
-					class: 'labelCalss'
 					name: 'Def. Curr.'
+					class: 'labelClass'
 				callback: getAllAsPairs
 				inlineEditing: true
 				inlineCreating: true
+				inlineDeleting: true
+
+			languages:
+				#control: bricksList
+				control: multiSelect
+				inlineEditing: true
+				inlineCreating: true
+				inlineDeleting: true
 
 			defaultLanguage:
-				type: select
+				control: select
 				label: Def. Language
 				callback: 
 					method: getBySupportedAsPairs
 					arguments: ['id', 'iso', 1]
+
+		buttons:
+			cancel:
+			submit:
+				label: 'tst'
 
 base < common:
 	title: Location Base

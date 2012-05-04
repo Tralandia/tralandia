@@ -28,20 +28,19 @@ $configurator->enableDebugger(ROOT_DIR . '/log');
 $robotLoader = $configurator->createRobotLoader();
 $robotLoader->addDirectory(APP_DIR)
 	->addDirectory(LIBS_DIR)
+	->addDirectory(TEMP_DIR . '/presenters')
 	->register();
 
+//var_dump($robotLoader);
+require_once LIBS_DIR . '/tools.php';
 // Create Dependency Injection container from config.neon file
 $configurator->addConfig(APP_DIR . '/configs/config.neon', $section);
+$configurator->onCompile[] = callback('Extras\PresenterGenerator', 'generate');
 $container = $configurator->createContainer();
 
 // Pridanie sluzby robot loadera
-$container->addService('robotLoader', $robotLoader); // dolezite pre dynamicke presentery
+# $container->addService('robotLoader', $robotLoader); // dolezite pre dynamicke presentery
 Debugger::$editor = $container->parameters['editor'];
-
-
-require_once LIBS_DIR . '/tools.php';
-
-
 
 $serviceConfigurator = new Extras\Configurator;
 $serviceConfigurator->setTempDirectory(TEMP_DIR);
@@ -65,13 +64,13 @@ $container->application->onStartup[] = function() use ($container) {
 
 	$router[] = $adminRouter = new RouteList('Admin');
 	$adminRouter[] = new Route('index.php', 'Admin:Rental:list', Route::ONE_WAY);
+	$adminRouter[] = new Route('admin/<presenter>/<id [0-9]+>', array(
+		'presenter' => NULL,
+		'action' =>  'edit'
+	));
 	$adminRouter[] = new Route('admin/<presenter>/[<action>[/<id>]]', array(
 		'presenter' => NULL,
 		'action' =>  'list'
-	));
-	$adminRouter[] = new Route('admin/<presenter>/<id [0-9]+>', array(
-		'presenter' => 'Rental',
-		'action' =>  'edit'
 	));
 /*	$adminRouter[] = new Route('admin/<presenter>/[<action list|add|registration>]', array(
 		'presenter' => 'Admin',
@@ -83,7 +82,11 @@ $container->application->onStartup[] = function() use ($container) {
 	));
 
 	$router[] = $frontRouter = new RouteList('Front');
-	// $frontRouter[] = new \Extras\Route('Home:default');
+	$frontRouter[] = new \Extras\Route($container->routerCache, array(
+								'presenter' => 'David',
+								'action' => 'default',
+								'country' => 'SK',
+							));
 	$frontRouter[] = new Route('<presenter>/[<action>[/<id>]]', 'Home:default');
 
 };

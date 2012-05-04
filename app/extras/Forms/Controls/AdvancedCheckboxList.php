@@ -12,7 +12,8 @@
 namespace Extras\Forms\Controls;
 
 use Nette\Utils\Html,
-	Nette\Forms\Container;
+	Nette\Forms\Container,
+	Nette\Forms\Controls\BaseControl;
 
 
 
@@ -25,7 +26,7 @@ use Nette\Utils\Html,
  * @copyright Copyright (c) 2004, 2011 David Grudl
  * @package   Nette\Extras
  */
-class AdvancedCheckboxList extends AdvancedControl {
+class AdvancedCheckboxList extends BaseControl {
 	/** @var Nette\Utils\Html  separator element template */
 	protected $separator;
 
@@ -138,14 +139,14 @@ class AdvancedCheckboxList extends AdvancedControl {
 		$id = $control->id;
 		$counter = -1;
 		$values = $this->value === NULL ? NULL : (array) $this->getValue();
-		$label = Html::el('label')->addClass('checkbox');
+		$label = Html::el('label')->addClass('checkbox '.$this->getOption('columnClass'));
 
 		foreach ($this->items as $k => $val) {
 			$counter++;
 			if ($key !== NULL && $key != $k) continue; // intentionally ==
 
 			$control->id = $label->for = $id . '-' . $counter;
-			$control->checked = (count($values) > 0) ? in_array($k, $values) : false;
+			$control->checked = (count($values) > 0) ? array_key_exists($k, $values) : false;
 			$control->value = $k;
 
 			if ($val instanceof Html) {
@@ -154,12 +155,14 @@ class AdvancedCheckboxList extends AdvancedControl {
 				$label->setText($this->translate($val));
 			}
 
-			if($this->getInlineEditing()) {
-				$label->add(Html::el('a')->add('Editable'));
+			$buttonGroup = Html::el('div')->addClass('btn-group pull-right');
+			if($this->getOption('inlineEditing')) {
+				$buttonGroup->add($this->getOption('inlineEditing'));
 			}
-			if($this->getInlineCreating()) {
-				$label->add(Html::el('a')->add('Creatable'));
+			if($this->getOption('inlineDeleting')) {
+				$buttonGroup->add($this->getOption('inlineDeleting'));
 			}
+			$label->add($buttonGroup);
 
 			$labelHtml = $label->getHtml();
 
@@ -169,6 +172,9 @@ class AdvancedCheckboxList extends AdvancedControl {
 
 			$container->add((string) $label->setHtml($control.$labelHtml));
 
+		}
+		if($this->getOption('inlineCreating')) {
+			$container->add(Html::el('div')->add($this->getOption('inlineCreating'))->addClass($this->getOption('columnClass')));
 		}
 
 		return $container;
@@ -184,6 +190,7 @@ class AdvancedCheckboxList extends AdvancedControl {
 	public function getLabel($caption = NULL)
 	{
 		$label = parent::getLabel($caption);
+		$label->class = 'span12';
 		$label->for = NULL;
 		return $label;
 	}

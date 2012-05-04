@@ -14,6 +14,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Invoice extends \Entity\BaseEntity {
 
+	const STATUS_PENDING = 2;
+	const STATUS_PAID_NOT_CHECKED = 4;
+	const STATUS_PAID = 8;
+
 	/**
 	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="Item", mappedBy="invoice")
@@ -57,10 +61,10 @@ class Invoice extends \Entity\BaseEntity {
 	protected $paid;
 
 	/**
-	 * @var boolean
-	 * @ORM\Column(type="boolean")
+	 * @var integer
+	 * @ORM\Column(type="integer")
 	 */
-	protected $checked;
+	protected $status;
 
 	/**
 	 * @var string
@@ -342,20 +346,20 @@ class Invoice extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param boolean
+	 * @param integer
 	 * @return \Entity\Invoicing\Invoice
 	 */
-	public function setChecked($checked) {
-		$this->checked = $checked;
+	public function setStatus($status) {
+		$this->status = $status;
 
 		return $this;
 	}
 		
 	/**
-	 * @return boolean|NULL
+	 * @return integer|NULL
 	 */
-	public function getChecked() {
-		return $this->checked;
+	public function getStatus() {
+		return $this->status;
 	}
 		
 	/**

@@ -15,9 +15,7 @@ class AdminForm extends Form {
 
 		$reflector->extend($this, $this->reflector->getFormMask());
 		
-		$this->ajax(false);
-		$this->addSubmit('save', 'Save');
-		
+		//$this->addAdvancedFileManager('upload', 'File manager');		
 		$this->onSuccess[] = callback($this, 'onSuccess');
 	}
 
@@ -32,6 +30,12 @@ class AdminForm extends Form {
 		} else {
 			// ADD
 			$this->service->create($this->reflector->getFormMask(), $values);
+		}
+
+		$this->flashMessage('A je to!');
+		if($this->getPresenter()->isAjax()) {
+			$this->getPresenter()->getPayload()->invalidate = array('currency');
+			$this->getPresenter()->sendPayload();
 		}
 	}
 

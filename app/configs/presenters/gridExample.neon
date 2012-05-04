@@ -1,0 +1,81 @@
+common:
+	service: Service\Dictionary\Language
+	title: Dictionary Languages
+
+	grid:
+		columns: 
+			id:
+				mapper: e.id #
+				draw: false
+			name:
+				type: text
+				label: Name
+				mapper: e.id
+				callback: {class: %this%, method: translateColumn, params: name}
+			slug:
+				label: Slug
+				mapper: e.slug
+			created:
+				type: datetime
+				label: Dátum vytvorenia
+				mapper: e.created
+
+
+	form:
+		addClass: haha
+		fields:
+			name:
+				control: 
+					type: phrase
+					class: test
+				addClass: 'myPhraseClass'
+				inlineEditing: true
+				inlineCreating: true
+
+			slug:
+				control: tinymce
+				label: Sluuug
+				disabled: true
+
+			iso:
+				control: text
+				startNewRow: true
+
+			currencies:
+				#control: bricksList
+				control: checkboxList
+				inlineEditing: true
+				inlineCreating: true
+				inlineDeleting: true
+
+			defaultCurrency:
+				control: select
+				label: 
+					name: 'Def. Curr.'
+					class: 'labelClass'
+				callback: getAllAsPairs
+				inlineEditing: true
+				inlineCreating: true
+				inlineDeleting: true
+
+			languages:
+				#control: bricksList
+				control: multiSelect
+				inlineEditing: true
+				inlineCreating: true
+				inlineDeleting: true
+
+			defaultLanguage:
+				control: select
+				label: Def. Language
+				callback: 
+					method: getBySupportedAsPairs
+					arguments: ['id', 'iso', 1]
+
+		buttons:
+			cancel:
+			submit:
+				label: 'tst'
+
+base < common:
+	title: Location Base

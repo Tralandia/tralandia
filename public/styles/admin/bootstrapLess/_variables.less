@@ -10,14 +10,15 @@
 
 // Grays
 // -------------------------
-@black:                 #000;
+@black:                 #111;
 @grayDarker:            #222;
 @grayDark:              #333;
 @gray:                  #555;
 @grayLight:             #999;
-@grayLighter:           #eee;
-@white:                 #fff;
-@greenBorder:           #c7cdb3;
+@grayMedium:            #ddd;
+@grayLighter:           #f2f2f2;
+@white:                 #fefefe;
+@greenBorder:           #aaa;
 
 
 // Accent colors
@@ -25,23 +26,23 @@
 @blue:                  #996c40;
 @blueDark:              #630;
 @green:                 #b0c03c;
-@greenDark:             #7d9317;
-@red:                   #ff4900;
-@yellow:                #ffc40d;
-@orange:                #f89406;
+@greenDark:             darken(@green, 15%);
+@red:                   #b33624;
+@yellow:                @white;
+@orange:                #f39a00;
 @pink:                  #c3325f;
 @purple:                #7a43b6;
 
 
 // Scaffolding
 // -------------------------
-@bodyBackground:        whiteSmoke;
+@bodyBackground:        @white;
 @textColor:             @grayDark;
 
 
 // Links
 // -------------------------
-@linkColor:             #630;
+@linkColor:             @greenDark;
 @linkColorHover:        darken(@linkColor, 15%);
 
 
@@ -54,7 +55,7 @@
 
 @headingsFontFamily:    inherit; // empty to use BS default, @baseFontFamily
 @headingsFontWeight:    normal;    // instead of browser default, bold
-@headingsColor:         @green; // empty to use BS default, @textColor
+@headingsColor:         @greenDark; // empty to use BS default, @textColor
 
 
 // Tables
@@ -74,8 +75,8 @@
 @btnPrimaryBackground:              @linkColor;
 @btnPrimaryBackgroundHighlight:     spin(@btnPrimaryBackground, 15%);
 
-@btnInfoBackground:                 #5bc0de;
-@btnInfoBackgroundHighlight:        #2f96b4;
+@btnInfoBackground:                 lighten(@blue, 10%);
+@btnInfoBackgroundHighlight:        @blue;
 
 @btnSuccessBackground:              #b0c03c;
 @btnSuccessBackgroundHighlight:     #738134;
@@ -125,8 +126,8 @@
 
 // Sprite icons path
 // -------------------------
-@iconSpritePath:          "../img/glyphicons-halflings.png";
-@iconWhiteSpritePath:     "../img/glyphicons-halflings-white.png";
+@iconSpritePath:          "../images/glyphicons-halflings.png";
+@iconWhiteSpritePath:     "../images/glyphicons-halflings-white.png";
 
 
 // Input placeholder text color
@@ -136,7 +137,7 @@
 
 // Hr border color
 // -------------------------
-@hrBorder:                #ddd;
+@hrBorder:                #eee;
 
 
 // Navbar
@@ -175,7 +176,7 @@
 @errorBackground:         #fff5f3;
 @errorBorder:             darken(spin(#d54403, -10), 3%);
 
-@successText:             #666;
+@successText:             @greenDark;
 @successBackground:       #e9edc7;
 @successBorder:           darken(spin(@successBackground, -10), 5%);
 
@@ -192,9 +193,10 @@
 // Default 940px grid
 // -------------------------
 @gridColumns:             12;
-@gridColumnWidth:         70px;
-@gridGutterWidth:         20px;
+@gridColumnWidth:         75px;
+@gridGutterWidth:         25px;
 @gridRowWidth:            (@gridColumns * @gridColumnWidth) + (@gridGutterWidth * (@gridColumns - 1));
+@gridFullWidth:            (@gridColumns * @gridColumnWidth) + (@gridGutterWidth * @gridColumns);
 
 
 // Fluid grid

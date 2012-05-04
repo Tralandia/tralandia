@@ -256,7 +256,6 @@ class RobotLoader extends AutoLoader
 		} else {
 			$iterator = new \ArrayIterator(array(new \SplFileInfo($dir)));
 		}
-
 		foreach ($iterator as $entry) {
 			$path = $entry->getPathname();
 			if (!isset($this->files[$path]) || $this->files[$path] !== $entry->getMTime()) {

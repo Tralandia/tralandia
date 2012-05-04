@@ -1,0 +1,90 @@
+common:
+	service: Service\Dictionary\Language
+	title: Dictionary Languages
+	h1: Dictionary Languages
+
+	grid:
+		columns: 
+			id:
+				mapper: e.id
+				draw: false
+			iso:
+				label: ISO
+				mapper: e.iso
+				#callback: {class: \Nette\Utils\Strings, method: upper, params: iso}
+			name:
+				type: text
+				label: Name
+				mapper: e.id
+				callback: {class: %this%, method: translateColumn, params: name}
+			supported:
+				type: boolean
+				label: Supported
+				mapper: e.supported
+			defaultCollation:
+				type: text
+				label: Collation
+				mapper: e.defaultCollation
+			created:
+				type: datetime
+				label: Dátum vytvorenia
+				mapper: e.created
+
+
+		actionColumns:
+			base:
+				actions:
+					setSupported:
+						title: Set supported
+						addClass: btn-warning
+						#draw: (e.supported == TRUE)
+
+	form:
+		addClass: haha
+		fields:
+			iso:
+				control: text
+				startNewRow: true
+
+			name:
+				control: 
+					type: phrase
+					class: test
+				addClass: 'myPhraseClass'
+				inlineEditing: true
+				inlineCreating: true
+
+			supported:
+				control: checkbox
+				label: Supported
+
+			defaultCollation:
+				control: text
+				label: Collation
+
+			salutations:
+				label: Salutations
+				control: 
+					type: json
+					columns: [Salutation]
+					rows: 10
+
+			multitranslationOptions:
+				label: Multitranslations
+				control: 
+					type: json
+					columns: [Condition]
+					rows: 10
+					disabled: TRUE
+
+			genderNumberOptions:
+				control: 
+					type: json
+					columns: [GenderNumber]
+					rows: 10
+
+			ppcPatterns:
+				control: 
+					type: json
+					columns: [Pattern]
+					rows: 30

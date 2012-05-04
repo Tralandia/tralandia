@@ -106,12 +106,21 @@ class Medium extends \Service\BaseService {
 		$mediumDir = $this->getMediumDir();
 
 		foreach(glob($mediumDir . '/*') as $file) {
-			if(is_dir($file))
-				rrmdir($file);
-			else
+			if(is_dir($file)) {
+				rmdir($file);
+			} else {
 				unlink($file);
+			}
 		}
 		rmdir($mediumDir);
+
+		$pathStructure = $this->getPathStructure();
+		foreach($pathStructure as $level) {
+			if (count($pathStructure)<2) break;
+			$pathStructure = array_splice($pathStructure, 0, -1);
+			$parent = FILES_DIR . '/' . implode('/', $pathStructure);
+			if (!count(glob($parent . '/*'))) rmdir($parent);
+		}
 
 	}
 
@@ -165,7 +174,7 @@ class Medium extends \Service\BaseService {
 		}
 
 		preg_match("/\.([^\.]+)$/", $file, $matches);
-		$extension = $matches[1];
+		$extension = isset($matches[1]) ? $matches[1] : NULL;
 		$details['extension'] = ($this::$knownTypes[$details['mime']]?:$extension);
 
 		return $details;

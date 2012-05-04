@@ -1,13 +1,16 @@
 {control header:begin}
 	{control css}
+	<script type="text/javascript"> var baseUrl = '{!$baseUrl}'; </script>
 	{control js}
+	<script type="text/javascript" src="{$baseUrl}/scripts/tinymce/jquery.tinymce.js" ></script>
+	<script type="text/javascript" src="{$baseUrl}/scripts/multiselect/ui.multiselect.js" ></script>
 {control header:end}
-<body>
-	<div id="header"></div>
-	<div class="flashMessage"><div n:foreach="$flashes as $flash" class="msg {$flash->type}">{$flash->message}</div></div>
-	<div id="layout">
-		<div class="body">
-			{include #content}
+	<div class="container">
+		<div class="inner">
+			{control navigation}
+			<div class="content">
+				{include #content}
+			</div>
 		</div>
 	</div>
 </body>

@@ -7,39 +7,21 @@ use Nette\Forms\Container,
 	Nette\Utils\Html;
 
 
-class AdvancedTextInput extends TextInput implements IAdvancedControl {
-
-	protected $inlineEditing;
-	protected $inlineCreating;
-
-	public function setInlineEditing($inlineEditing) {
-		$this->inlineEditing = $inlineEditing;
-		return $this;		
-	}
-
-	public function getInlineEditing() {
-		return $this->inlineEditing;
-	}
-
-	public function setInlineCreating($inlineCreating) {
-		$this->inlineCreating = $inlineCreating;
-		return $this;		
-	}
-
-	public function getInlineCreating() {
-		return $this->inlineCreating;
-	}
-
+class AdvancedTextInput extends TextInput {
 
 	public function getControl() {
 		$control = parent::getControl();
-		$wrapper = Html::el('span')->addClass('input-wrapper');
+		$control->addClass('pull-left');
+		$wrapper = Html::el('div')->addClass('input-append input-prepend');
 		$wrapper->add($control);
-		if($this->getInlineEditing()) {
-			$wrapper->add(Html::el('a')->add('Editable'));
+		if($this->getOption('inlineEditing')) {
+			$wrapper->add($this->getOption('inlineEditing'));
 		}
-		if($this->getInlineCreating()) {
-			$wrapper->add(Html::el('a')->add('Creatable'));
+		if($this->getOption('inlineDeleting')) {
+			$wrapper->add($this->getOption('inlineDeleting'));
+		}
+		if($this->getOption('inlineCreating')) {
+			$wrapper->add($this->getOption('inlineCreating'));
 		}
 		return $wrapper;
 	}

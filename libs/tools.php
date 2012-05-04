@@ -19,14 +19,32 @@ Extras\Forms\Controls\AdvancedTextInput::register();
 Extras\Forms\Controls\AdvancedBricksList::register();
 Extras\Forms\Controls\AdvancedCheckboxList::register();
 Extras\Forms\Controls\AdvancedSelectBox::register();
+Extras\Forms\Controls\AdvancedFileManager::register();
 
 function debug() {
 	return Tools::dump(func_get_args());
 }
 
-function debuge() {
-	Tools::dump(func_get_args());
-	exit;
+function d() {
+	return Tools::dump(func_get_args());
+}
+
+function rrmdir($dir) {
+	$fp = opendir($dir);
+	if ( $fp ) {
+		while ($f = readdir($fp)) {
+			$file = $dir . "/" . $f;
+			if ($f == "." || $f == "..") {
+				continue;
+			} else if (is_dir($file) && !is_link($file)) {
+				rrmdir($file);
+			} else {
+				unlink($file);
+			}
+		}
+		closedir($fp);
+		rmdir($dir);
+	}
 }
 
 class Tools {
@@ -91,7 +109,7 @@ class Tools {
 			$image->crop($offset, 0, $width, $height);
 		}
 
-	    return $image;
+		return $image;
 	}
 
 	public static function getExt($name) {

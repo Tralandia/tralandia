@@ -6,6 +6,7 @@ use Nette\Application as NA,
 	Nette\Environment,
 	Nette\Diagnostics\Debugger,
 	Nette\Utils\Html,
+	Tra\Utils\Arrays,
 	Extras\Models\Reflector;
 
 class AdminPresenter extends BasePresenter {
@@ -25,6 +26,7 @@ class AdminPresenter extends BasePresenter {
 		$this->serviceName = $this->settings->serviceClass;
 		$this->serviceListName = $this->settings->serviceListClass;
 		$this->reflector = new Reflector($this->settings);
+		$this->formMask = $this->reflector->getFormMask();
 	}
 	
 	public function getMainServiceName() {
@@ -44,10 +46,12 @@ class AdminPresenter extends BasePresenter {
 	public function actionEdit($id = 0) {
 		$service = $this->serviceName;
 		$this->service = $service::get($id);
+		if(isset($this->params['display']) && $this->params['display'] == 'modal') {
+			$this->formMask->form->addClass .= ' ajax';
+			$this->setLayout(FALSE);
+			$this->template->display = 'modal';
+		}
 
-		$this->formMask = $this->reflector->getFormMask();
-
-		$this->service->setCurrentMask($this->formMask);
 	}
 	
 	public function renderEdit($id = 0) {
@@ -55,7 +59,7 @@ class AdminPresenter extends BasePresenter {
 		//TODO: naslo zaznam? toto treba osetrit lebo servica nehlasi nenajdeny zaznam
 		// ale hlasi @david
 		// if (!$this->service) {
-		// 	throw new NA\BadRequestException('Record not found');
+			// throw new NA\BadRequestException('Record not found');
 		// }
 
 		if (!$form->isSubmitted()) {
@@ -72,13 +76,44 @@ class AdminPresenter extends BasePresenter {
 
 		return $form;
 	}
-		
+
+/*	public function handleImageUpload(\Nette\Http\FileUpload $file) {
+		//debug($file);
+		$this->invalidateControl();
+		try {
+			$file = \Service\Medium\Medium::createFromFile($file->getTemporaryFile(), $file->getName());
+			$this->getPresenter()->getPayload()->success = true;
+		} catch (Exception $e) {
+			$this->getPresenter()->getPayload()->error = $e->getMessage();
+		}
+	}
+
+
+	public function loadState(array $params) {
+		$globals = $this->getPresenter()->getRequest()->getParameters();
+		if (isset($globals['qqfile'])) {
+			list($none, $signal) = $this->getPresenter()->getSignal();
+			$handle = 'handle' . ucfirst($signal);
+			
+			if ($this->getReflection()->hasMethod($handle)) {
+				$parameters = $this->getReflection()->getMethod($handle)->getParameters();
+				$file = new \qqUploadedFileXhr;
+				$file = $file->save();
+				$file = new \Nette\Http\FileUpload($file);
+				$params[$parameters[0]->getName()] = $file;
+			}
+		}
+		parent::loadState($params);
+	}
+*/		
 	protected function createComponentGrid($name) {
 		$mainEntityName = $this->reflector->getMainEntityName();
 		$grid = new \DataGrid\DataGrid;
 		$mapper = array(); $editable = false;
 
-		foreach ($this->settings->params->grid->columns as $alias => $column) {
+		$gridSettings = $this->settings->params->grid;
+
+		foreach ($gridSettings->columns as $alias => $column) {
 			$mapper[$alias] = $column->mapper;
 			
 			if (!isset($column->draw) || (isset($column->draw) && $column->draw == true)) {
@@ -109,16 +144,37 @@ class AdminPresenter extends BasePresenter {
 
 		$list = $this->serviceListName;
 		$list = $list::getAll();
-		$dataSource = new \DataGrid\DataSources\Doctrine\LalaQueryBuilder(
-			$list->getDataSource()
-		);
+		$dataSource = new \DataGrid\DataSources\Doctrine\LalaQueryBuilder($list->getDataSource());
 
 		$dataSource->setMapping($mapper);
-		$grid->setDataSource($dataSource);	
-		$grid->addActionColumn('Actions');
-		$grid->addAction('Edit', 'edit', Html::el('span')->class('icon edit')->setText('Edit') , false);
-		$grid->addAction('Delete', 'delete', Html::el('span')->class('icon delete')->setText('Delete'), false);
+		$grid->setDataSource($dataSource);
 
+		foreach ($gridSettings->actionColumns as $key => $value) {
+			if($value === FALSE) continue;
+			$grid->addActionColumn($key, Arrays::get($value, 'name', ''));
+			foreach ($value->actions as $actionName => $action) {
+				if($action === FALSE) continue;
+				$title = Arrays::get($action, 'title', ucfirst($actionName));
+				if(is_string($action->title)) {
+					$action->title = \Nette\ArrayHash::from(array(
+							'label' => $action->title
+						));
+				}
+
+				if($action->title instanceof \Nette\ArrayHash) {
+					$title = Html::el('a')->title($title)->add(Arrays::get($action->title, 'label', ucfirst($title)));
+
+					if(isset($action->class)) $title->class($action->class);
+					else $title->class('btn btn-mini');
+					if(isset($action->addClass)) $title->addClass($action->addClass);
+				}
+
+				$grid->addAction($title, $actionName, Arrays::get($action, 'ajax', NULL));
+			}
+			
+		}
+
+		$grid->itemsPerPage = $gridSettings->itemsPerPage;
 		
 
 		return $grid;

@@ -1,0 +1,46 @@
+common:
+	left: # lava starana
+		location: # 1. uroven
+			label: Location bal # nepovinny
+			items: # ak ma potomkov
+				list: # 2. uroven
+					link: ':Admin:Location:list'
+				add: # 2. uroven
+					link: ':Admin:Location:add' # link http://api.nette.org/2.0/Nette.Application.UI.PresenterComponent.html#_link
+					items: 
+						subAdd: # 3. uroven
+							label: Sub Add
+				edit:
+					label: Edit
+					link: ':Admin:Location:edit'
+					linkArgs: # parametre pre link
+						id: 13
+		dictionary: # 1. uroven
+			items: 
+				add:
+					link: ':Admin:Phrase:add'
+		users:
+			label: Currencies
+			link: ':Admin:Currency:'
+
+	right: # parave strana
+		account:
+			items:
+				wtt:
+					icon: icon-time
+				autopilot:
+					separator: true
+					icon: icon-plane
+				taskee:
+					icon: icon-ok
+				wiki:
+					icon: icon-book
+				docs:
+					icon: icon-file
+				gmail:
+					separator: true
+					icon: icon-inbox
+				settings:
+					icon: icon-cog
+				logout:
+					icon: icon-off

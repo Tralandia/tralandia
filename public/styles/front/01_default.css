@@ -27,14 +27,6 @@ h1 {
     font-weight: normal;
     padding: 10px 20px 13px;
 }
-h2 {
-    padding: 0 0 15px 0;
-    color: #A0B326;
-    font-weight:bold;
-    margin: 0;
-    line-height: 18px;
-    font-size: 18px;
-}
 
 /*********/
 body {
@@ -250,6 +242,14 @@ a.FBshareButton:hover .space {
 
 div.columnListUL {
     padding: 10px 0px 10px 20px;
+}
+div.columnListUL h2 {
+    padding: 0 0 15px 0;
+    color: #A0B326;
+    font-weight:bold;
+    margin: 0;
+    line-height: 18px;
+    font-size: 18px;
 }
 div.columnListUL ul {
     padding-right: 20px;

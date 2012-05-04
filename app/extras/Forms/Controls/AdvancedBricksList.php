@@ -5,10 +5,10 @@ namespace Extras\Forms\Controls;
 
 use Nette\Utils\Html,
 	Nette\Forms\Container,
-	Extras\Forms\Controls\AdvancedControl;
+	Nette\Forms\Controls\BaseControl;
 
 
-class AdvancedBricksList extends AdvancedControl
+class AdvancedBricksList extends BaseControl
 {
 	/** @var Nette\Utils\Html  separator element template */
 	protected $separator;
@@ -120,26 +120,28 @@ class AdvancedBricksList extends AdvancedControl
 		$counter = -1;
 		$values = $this->value === NULL ? NULL : (array) $this->getValue();
 
-		$brickTemplate = Html::el('div')->addClass('brick btn btn-info');
+		$brickWrapper = Html::el('div')->addClass('input-bricks');
+		$brickTemplate = Html::el('label')->addClass('label');
 		if($values) {
 			foreach ($values as $k => $value) {
 				$brick = clone $brickTemplate;
-				$brick->add(Html::el('span')->setText($value['value']));
 
-				if($this->inlineEditing) {
-					$brick->add(Html::el('a')->setText('InlineEditing'));
+				$btnGroup = Html::el('div')->addClass('btn-group pull-right');
+				if($this->getOption('inlineEditing')) {
+					$btnGroup->add($this->getOption('inlineEditing'));
+				}
+				if($this->getOption('inlineDeleting')) {
+					$btnGroup->add($this->getOption('inlineDeleting'));
 				}
 
-				$container->add((string) $brick);
+				$brickWrapper->add((string) $brick->add($btnGroup.$value['value']));
 			}
 		}
-		if($this->inlineCreating) {
-			$brick = clone $brickTemplate;
-			$brick->add(Html::el('a')->setText('InlineCreating'));
-			$container->add($brick);
+		if($this->getOption('inlineCreating')) {
+			$brickWrapper->add($this->getOption('inlineCreating'));
 		}
 
-		return $container;
+		return $container->add($brickWrapper);
 	}
 
 

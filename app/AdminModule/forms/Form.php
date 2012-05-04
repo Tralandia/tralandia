@@ -2,9 +2,40 @@
 
 namespace AdminModule\Forms;
 
+use Nette\Utils\Arrays;
+
 class Form extends \CoolForm {
 
 	public $onLoad = array();
+
+
+	public $wrappers = array(
+		'controls' => array(
+			'container' => NULL,
+		),
+		'pair' => array(
+			'container' => 'div class=control-group',
+		),
+		'control' => array(
+			'container' => NULL,
+
+			'description' => 'p class=help-block',
+		),
+		'label' => array(
+			'container' => NULL,
+		),
+	);
+
+	public function __construct(\Nette\ComponentModel\IContainer $parent = NULL, $name = NULL) {
+		parent::__construct($parent, $name);
+		
+		$this->ajax(FALSE);
+		$this->setRenderer(new \Extras\Forms\Rendering\AdminFormRenderer);
+		$renderer = $this->getRenderer();
+		$renderer->wrappers = Arrays::mergeTree($this->wrappers, $renderer->wrappers);
+	}
+
+
 /*
 	public function __construct(\Nette\ComponentModel\IContainer $parent = null, $name = null) {
 		parent::__construct($parent, $name);
