@@ -673,8 +673,8 @@ class Rental extends \Entity\BaseEntity {
 	 * @param json
 	 * @return \Entity\Rental\Rental
 	 */
-	public function setPricelist($pricelist) {
-		$this->pricelist = $pricelist;
+	public function setPricelists($pricelists) {
+		$this->pricelists = $pricelists;
 
 		return $this;
 	}
@@ -682,8 +682,8 @@ class Rental extends \Entity\BaseEntity {
 	/**
 	 * @return json|NULL
 	 */
-	public function getPricelist() {
-		return $this->pricelist;
+	public function getPricelists() {
+		return $this->pricelists;
 	}
 		
 	/**
