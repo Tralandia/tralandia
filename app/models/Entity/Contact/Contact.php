@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="contact_contact")
+ * @ORM\Table(name="contact_contact", indexes={@ORM\index(name="value", columns={"value"}), @ORM\index(name="subscribed", columns={"subscribed"}), @ORM\index(name="banned", columns={"banned"}), @ORM\index(name="full", columns={"full"}), @ORM\index(name="spam", columns={"spam"})})
  */
 class Contact extends \Entity\BaseEntity {
 
@@ -78,6 +78,11 @@ class Contact extends \Entity\BaseEntity {
 	protected $spam = FALSE;
 
 	
+
+
+
+
+
 
 
 

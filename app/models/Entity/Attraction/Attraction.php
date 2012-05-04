@@ -59,17 +59,16 @@ class Attraction extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\User\User")
-	 */
-	protected $managingUser;
-
-	/**
-	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="Entity\Medium\Medium", mappedBy="attraction")
 	 */
 	protected $media;
 
 	
+
+
+
+
+
 
 
 
@@ -247,32 +246,6 @@ class Attraction extends \Entity\BaseEntityDetails {
 	 */
 	public function getContacts() {
 		return $this->contacts;
-	}
-		
-	/**
-	 * @param \Entity\User\User
-	 * @return \Entity\Attraction\Attraction
-	 */
-	public function setManagingUser(\Entity\User\User $managingUser) {
-		$this->managingUser = $managingUser;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Attraction\Attraction
-	 */
-	public function unsetManagingUser() {
-		$this->managingUser = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\User\User|NULL
-	 */
-	public function getManagingUser() {
-		return $this->managingUser;
 	}
 		
 	/**

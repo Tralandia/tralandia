@@ -231,7 +231,7 @@ class ImportUsers extends BaseImport {
 			if($x['phone']) $user->addContact($this->createContact('phone', $x['phone']));
 			
 			$user->defaultLanguage = \Service\Dictionary\Language::getByOldId($x['language_id']);
-			$user->addLocation(\Service\Location\Location::getByOldIdAndType($x['country_id'], $locationTypeCountry));
+			$user->location = \Service\Location\Location::getByOldIdAndType($x['country_id'], $locationTypeCountry);
 
 			$user->save();
 		}

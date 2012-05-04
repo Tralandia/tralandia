@@ -18,6 +18,12 @@ class ImportInvoicingStart extends BaseImport {
 
 		$en = \Service\Dictionary\Language::getByIso('en');
 
+		$this->createDictionaryType('\Invoicing\UseType', 'name', 'supportedLanguages', 'ACTIVE');
+		\Extras\Models\Service::flush(FALSE);
+
+
+		$currenciesByOldId = getNewIdsByOld('\Currency');
+
 		// Durations
 		$durationNameType = $this->createDictionaryType('\Invoicing\Service\Duration', 'name', 'supportedLanguages', 'ACTIVE');
 		$r = q('select * from invoicing_durations order by id');
@@ -34,7 +40,7 @@ class ImportInvoicingStart extends BaseImport {
 		$serviceTypeNameType = $this->createDictionaryType('\Invoicing\Service\Type', 'name', 'supportedLanguages', 'ACTIVE');
 		$r = q('select * from invoicing_services_types order by id');
 		while($x = mysql_fetch_array($r)) {
-			$serviceType = \Service\Invoicing\Service\Duration::get();
+			$serviceType = \Service\Invoicing\Service\Type::get();
 			$serviceType->oldId = $x['id'];
 			$serviceType->slug = $x['name'];
 			$serviceType->name = $this->createNewPhrase($serviceTypeNameType, $x['name_dic_id']);
@@ -72,10 +78,13 @@ class ImportInvoicingStart extends BaseImport {
 			$package = \Service\Invoicing\Package::get();
 			$package->name = $this->createNewPhrase($packageNameType, $x['name_dic_id']);
 			$package->teaser = $this->createNewPhrase($packageTeaserType, $x['teaser_dic_id']);
-			$package->country = \Service\Location\Location::getByTypeAndOldId($countryType, $x['countries_id']);
+			
+			$temp = \Service\Location\Location::getByTypeAndOldId($countryType, $x['countries_id']);
+			if ($temp) $package->country = $temp;
+
 			$temp = array_unique(array_filter(explode(',', $x['package_type'])));
 			foreach ($temp as $key => $value) {
-				$use = \Invoicing\UseType::getBySlug($value);
+				$use = \Service\Invoicing\UseType::getBySlug($value);
 				if ($use) {
 					$package->addUse($use);
 				}
@@ -85,15 +94,16 @@ class ImportInvoicingStart extends BaseImport {
 			while($x1 = mysql_fetch_array($r1)) {
 				$packageService = \Service\Invoicing\Service\Service::get();
 				$packageService->type = \Service\Invoicing\Service\Type::getByOldId($x1['services_types_id']);
-				$packageService->duration = \Invoicing\Service\Duration::getByOldId($x1['duration']);
-				$packageService->defaultPrice = new \Extras\Types\Price(); //@todo - ako toto ? currency je pri package
-				$packageService->currentPrice = new \Extras\Types\Price(); //@todo - ako toto ? currency je pri package
+				$packageService->duration = \Service\Invoicing\Service\Duration::getByOldId($x1['duration']);
+				$packageService->defaultPrice = new \Extras\Types\Price($x1['price_default'], $currenciesByOldId[(int)$x['currencies_id']]); 
+				$packageService->currentPrice = new \Extras\Types\Price($x1['price_current'], $currenciesByOldId[(int)$x['currencies_id']]);
 				$packageService->save();
 				$package->addService($packageService);
 			}
+
 			$package->save();
-			\Extras\Models\Service::flush(FALSE);
 		}
+		\Extras\Models\Service::flush(FALSE);
 
 		// Marketings
 		$marketingNameType = $this->createDictionaryType('\Invoicing\Marketing', 'name', 'supportedLanguages', 'ACTIVE');
@@ -118,6 +128,7 @@ class ImportInvoicingStart extends BaseImport {
 			$marketing->validFrom = fromStamp($x['time_from']);
 			$marketing->validTo = fromStamp($x['time_to']);
 			$marketing->addUse(\Service\Invoicing\UseType::getBySlug($x['marketing_type']));
+			debug($marketing); return;
 			$marketing->save();
 		}
 

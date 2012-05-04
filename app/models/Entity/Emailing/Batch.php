@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="emailing_batch")
+ * @ORM\Table(name="emailing_batch", indexes={@ORM\index(name="confirmed", columns={"confirmed"}), @ORM\index(name="totalCount", columns={"totalCount"})})
  */
 class Batch extends \Entity\BaseEntityDetails {
 
@@ -48,6 +48,11 @@ class Batch extends \Entity\BaseEntityDetails {
 	protected $bodyHtml;
 
 	
+
+
+
+
+
 
 
 

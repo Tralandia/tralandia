@@ -16,6 +16,10 @@ class ImportContactTypes extends BaseImport {
 
 	public function doImport($subsection = NULL) {
 
+		$this->createDictionaryType('\Contact\Type', 'name', 'supportedLanguages', 'NATIVE');
+		\Extras\Models\Service::flush(FALSE);
+
+
 		$language = \Service\Dictionary\Language::getByIso('en');
 
 		$s = S\Contact\Type::get();

@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="location_traveling")
+ * @ORM\Table(name="location_traveling", indexes={@ORM\index(name="peopleCount", columns={"peopleCount"}), @ORM\index(name="year", columns={"year"})})
  */
 class Traveling extends \Entity\BaseEntity {
 
@@ -35,6 +35,11 @@ class Traveling extends \Entity\BaseEntity {
 	protected $year;
 
 	
+
+
+
+
+
 
 
 

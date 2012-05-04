@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="rental_rental")
+ * @ORM\Table(name="rental_rental", indexes={@ORM\index(name="status", columns={"status"}), @ORM\index(name="timeDeleted", columns={"timeDeleted"}), @ORM\index(name="slug", columns={"slug"}), @ORM\index(name="calendarUpdated", columns={"calendarUpdated"})})
  */
 class Rental extends \Entity\BaseEntity {
 
@@ -28,7 +28,7 @@ class Rental extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Dictionary\Language")
+	 * @ORM\ManyToOne(targetEntity="Entity\Dictionary\Language", cascade={"persist"})
 	 */
 	protected $editLanguage;
 
@@ -118,7 +118,7 @@ class Rental extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Dictionary\Language", mappedBy="rentals")
+	 * @ORM\ManyToMany(targetEntity="Entity\Dictionary\Language", mappedBy="rentals", cascade={"persist"})
 	 */
 	protected $spokenLanguages;
 
@@ -148,7 +148,7 @@ class Rental extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Entity\Medium\Medium", mappedBy="rental", cascade={"persist", "remove"})
+	 * @ORM\OneToMany(targetEntity="Entity\Medium\Medium", mappedBy="rental", cascade={"persist"})
 	 */
 	protected $media;
 
@@ -175,6 +175,11 @@ class Rental extends \Entity\BaseEntity {
 	 * @ORM\OneToMany(targetEntity="Entity\Invoicing\Invoice", mappedBy="rental")
 	 */
 	protected $invoices;
+
+
+
+
+
 
 
 
