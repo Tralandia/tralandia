@@ -41,7 +41,6 @@ TRAX Hlavne Menu
 		- Pending
 		- Paid
 		- Overdue
-	- Export
 	- Expenses
 		- Expense Types
 	- Packages
@@ -50,6 +49,7 @@ TRAX Hlavne Menu
 	- Service Types
 	- Durations
 	- Use Types
+	- Export
 - Dictionary
 	- Add Phrase
 	- List of Phases
