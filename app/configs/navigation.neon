@@ -57,7 +57,7 @@ common:
 					label: All Users
 					link: ':Admin:UserUser:list'
 				testimonial: 
-					label: Testimonials (by owners)
+					label: 'Testimonials (by owners)'
 					link: ':Admin:UserTestimonial:list'
 				role: 
 					label: Roles
