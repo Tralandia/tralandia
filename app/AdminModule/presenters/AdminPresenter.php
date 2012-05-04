@@ -109,9 +109,11 @@ class AdminPresenter extends BasePresenter {
 	protected function createComponentGrid($name) {
 		$mainEntityName = $this->reflector->getMainEntityName();
 		$grid = new \DataGrid\DataGrid;
+
 		$mapper = array(); $editable = false;
 
 		$gridSettings = $this->settings->params->grid;
+		$grid->itemsPerPage = $gridSettings->itemsPerPage;
 
 		foreach ($gridSettings->columns as $alias => $column) {
 			$mapper[$alias] = $column->mapper;
@@ -173,10 +175,7 @@ class AdminPresenter extends BasePresenter {
 			}
 			
 		}
-
-		$grid->itemsPerPage = $gridSettings->itemsPerPage;
 		
-
 		return $grid;
 	}
 

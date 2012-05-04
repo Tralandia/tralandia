@@ -708,7 +708,6 @@ class DataGrid extends Nette\Application\UI\Control implements \ArrayAccess
 	protected function applyItems()
 	{
 		$value = (int) $this->itemsPerPage;
-
 		if ($value == 0) {
 			$this->itemsPerPage = $this->paginator->itemsPerPage = count($this->dataSource);
 		} else {

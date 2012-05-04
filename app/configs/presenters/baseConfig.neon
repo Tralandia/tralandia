@@ -3,7 +3,7 @@ common:
 	h1: Location Main H1
 
 	grid:
-		itemsPerPage: 13
+		itemsPerPage: 20
 
 		actionColumns:
 			base:
