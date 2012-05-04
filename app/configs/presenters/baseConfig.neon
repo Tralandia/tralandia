@@ -20,7 +20,9 @@ common:
 	form:
 		class: row form
 		buttons:
-			cancel: Cancel (return)
+			cancel: 
+				type: button
+				label: Cancel (return)
 			submit:
 				type: submit
 				label: Save Changes

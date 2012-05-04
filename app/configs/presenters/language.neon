@@ -65,7 +65,7 @@ common:
 			salutations:
 				label: Salutations
 				control: 
-					type:json
+					type: json
 					columns: [Salutation]
 					rows: 10
 
