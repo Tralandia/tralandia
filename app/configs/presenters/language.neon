@@ -1,7 +1,6 @@
 common:
 	service: Service\Dictionary\Language
 	title: Dictionary Languages
-	h1: Dictionary Languages
 
 	grid:
 		columns: 
@@ -11,24 +10,32 @@ common:
 			iso:
 				label: ISO
 				mapper: e.iso
-				#callback: {class: \Nette\Utils\Strings, method: upper, params: iso}
+				callback: {class: \Nette\Utils\Strings, method: upper, params: iso}
+				headerStyle: 'width: 30px;'
 			name:
 				type: text
 				label: Name
 				mapper: e.id
 				callback: {class: %this%, method: translateColumn, params: name}
+				cellStyle: 'text-align: center'
 			supported:
 				type: boolean
 				label: Supported
 				mapper: e.supported
+				# filter: checkbox
+				filter:
+					type: selectbox
+					options: {'0': "Nemá objednávky", '1': "Má objednávky"}
 			defaultCollation:
 				type: text
 				label: Collation
 				mapper: e.defaultCollation
+				filter: text
 			created:
 				type: datetime
 				label: Dátum vytvorenia
 				mapper: e.created
+				filter: date
 
 
 		actionColumns:
@@ -65,9 +72,9 @@ common:
 			salutations:
 				label: Salutations
 				control: 
-					type:json
-					columns: [Salutation]
+					type: json
 					rows: 10
+					columns: [Salutation]
 
 			multitranslationOptions:
 				label: Multitranslations

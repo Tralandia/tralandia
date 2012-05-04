@@ -7,6 +7,7 @@ use Nette\Application as NA,
 	Nette\Diagnostics\Debugger,
 	Nette\Utils\Html,
 	Tra\Utils\Arrays,
+	Nette\ArrayHash,
 	Extras\Models\Reflector;
 
 class AdminPresenter extends BasePresenter {
@@ -115,8 +116,8 @@ class AdminPresenter extends BasePresenter {
 		$gridSettings = $this->settings->params->grid;
 		$grid->itemsPerPage = $gridSettings->itemsPerPage;
 
-		foreach ($gridSettings->columns as $alias => $column) {
-			$mapper[$alias] = $column->mapper;
+		foreach ($gridSettings->columns as $aliasName => $column) {
+			$mapper[$aliasName] = $column->mapper;
 			
 			if (!isset($column->draw) || (isset($column->draw) && $column->draw == true)) {
 				$type = isset($column->type) ? $column->type : 'text';
@@ -127,15 +128,50 @@ class AdminPresenter extends BasePresenter {
 				}
 				
 				switch ($type) {
-					case 'datetime':	
-					case 'date':	$grid->addDateColumn($alias, $column->label, '%d.%m.%Y'); break; // TODO: poriesit formatovanie datumov
-					default:		$grid->addColumn($alias, $column->label);
+					case 'datetime':	$grid->addDateColumn($aliasName, $column->label, '%d.%b.%Y %T (%p)'); break;
+					case 'date':		$grid->addDateColumn($aliasName, $column->label, '%d.%b.%Y'); break; // TODO: poriesit formatovanie datumov
+					case 'time':		$grid->addDateColumn($aliasName, $column->label, '%T'); break;
+					case 'boolean':		$grid->addCheckboxColumn($aliasName, $column->label); break;
+					default:			$grid->addColumn($aliasName, $column->label);
 				}
+
+				$alias = $grid->getComponent($aliasName);
+
+				if(isset($column->headerStyle)) {
+					$alias->getHeaderPrototype()->style($column->headerStyle);
+				}
+
+				if(isset($column->cellStyle)) {
+					$alias->getCellPrototype()->style($column->cellStyle);
+				}
+				if(isset($column->filter)) {
+					if(is_scalar($column->filter)) {
+						$column->filter = ArrayHash::from(array('type' => $column->filter));
+					}
+					if($column->filter->type == 'selectbox') {
+						$options = NULL;
+						if(isset($column->filter->options)) {
+							$options = $column->filter->options;
+						} else if(isset($column->filter->callback)) {
+							$options = callback($this->filter->callback->class, $this->filter->callback->arguments);
+						}
+
+						$alias->addSelectboxFilter((array) $options);
+					} else if($column->filter->type == 'checkbox') {
+						$alias->addCheckboxFilter();
+					} else if($column->filter->type == 'date') {
+						$alias->addDateFilter();
+					} else {
+						$alias->addFilter();
+					}
+				}
+
+
 				
 				if (isset($column->callback)) {
 					$column->callback->class == '%this%' ? $column->callback->class = $this : $column->callback->class;
 					
-					$grid->getComponent($alias)->formatCallback[] = new \DataGrid\Callback(
+					$alias->formatCallback[] = new \DataGrid\Callback(
 						$column->callback->class,
 						$column->callback->method,
 						isset($column->callback->params) ? $column->callback->params : null
@@ -151,9 +187,18 @@ class AdminPresenter extends BasePresenter {
 		$dataSource->setMapping($mapper);
 		$grid->setDataSource($dataSource);
 
-		foreach ($gridSettings->actionColumns as $key => $value) {
+		foreach ($gridSettings->actionColumns as $alias => $value) {
 			if($value === FALSE) continue;
-			$grid->addActionColumn($key, Arrays::get($value, 'name', ''));
+			$grid->addActionColumn($alias, Arrays::get($value, 'name', ''));
+			
+			if(isset($value->headerStyle)) {
+				$grid->getComponent($alias)->getHeaderPrototype()->style($value->headerStyle);
+			}
+
+			if(isset($value->cellStyle)) {
+				$grid->getComponent($alias)->getCellPrototype()->style($value->cellStyle);
+			}
+			
 			foreach ($value->actions as $actionName => $action) {
 				if($action === FALSE) continue;
 				$title = Arrays::get($action, 'title', ucfirst($actionName));
@@ -173,6 +218,7 @@ class AdminPresenter extends BasePresenter {
 
 				$grid->addAction($title, $actionName, Arrays::get($action, 'ajax', NULL));
 			}
+
 			
 		}
 		

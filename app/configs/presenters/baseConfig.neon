@@ -1,13 +1,13 @@
 common:
-	title: Location Main Title
-	h1: Location Main H1
+	title: Title
 
 	grid:
-		itemsPerPage: 20
+		itemsPerPage: 50
 
 		actionColumns:
 			base:
 				name: Akcia
+				cellStyle: 'text-align: right'
 				actions:
 					edit:
 						title: Edit
