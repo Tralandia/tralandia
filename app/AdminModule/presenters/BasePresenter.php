@@ -49,4 +49,9 @@ abstract class BasePresenter extends \BasePresenter {
 		} while ($dir && ($name = substr($name, 0, strrpos($name, ':'))));
 		return $list;
 	}
+
+	public function createComponentNavigation($name){
+		$navigation = new \AdminModule\Components\Navigation($this, $name);
+		return $navigation;
+	}
 }

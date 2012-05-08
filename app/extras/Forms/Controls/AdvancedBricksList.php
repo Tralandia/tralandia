@@ -120,29 +120,28 @@ class AdvancedBricksList extends BaseControl
 		$counter = -1;
 		$values = $this->value === NULL ? NULL : (array) $this->getValue();
 
-		$brickTemplate = Html::el('div')->addClass('brick btn btn-info');
+		$brickWrapper = Html::el('div')->addClass('input-bricks');
+		$brickTemplate = Html::el('label')->addClass('label');
 		if($values) {
 			foreach ($values as $k => $value) {
 				$brick = clone $brickTemplate;
-				$brick->add(Html::el('span')->setText($value['value']));
 
+				$btnGroup = Html::el('div')->addClass('btn-group pull-right');
 				if($this->getOption('inlineEditing')) {
-					$brick->add($this->getOption('inlineEditing'));
+					$btnGroup->add($this->getOption('inlineEditing'));
 				}
 				if($this->getOption('inlineDeleting')) {
-					$brick->add($this->getOption('inlineDeleting'));
+					$btnGroup->add($this->getOption('inlineDeleting'));
 				}
 
-				$container->add((string) $brick);
+				$brickWrapper->add((string) $brick->add($btnGroup.$value['value']));
 			}
 		}
 		if($this->getOption('inlineCreating')) {
-			$brick = clone $brickTemplate;
-			$brick->add($this->getOption('inlineCreating'));
-			$container->add($brick);
+			$brickWrapper->add($this->getOption('inlineCreating'));
 		}
 
-		return $container;
+		return $container->add($brickWrapper);
 	}
 
 

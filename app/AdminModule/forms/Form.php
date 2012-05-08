@@ -14,7 +14,7 @@ class Form extends \CoolForm {
 			'container' => NULL,
 		),
 		'pair' => array(
-			'container' => 'div',
+			'container' => 'div class=control-group',
 		),
 		'control' => array(
 			'container' => NULL,

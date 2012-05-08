@@ -145,17 +145,17 @@ class Reflector extends Nette\Object {
 		$i = Html::el('i')->addClass('icon-white');
 
 		if($type == 'inlineCreating') {
-			$a->addClass('btn-success');
+			$a->addClass('btn-success create');
 			$i->addClass('icon-plus');
 		} else if($type == 'inlineEditing') {
-			$a->addClass('btn-info');
+			$a->addClass('btn-info edit');
 			$i->addClass('icon-edit');
 		} else if($type == 'inlineDeleting') {
-			$a->addClass('btn-danger');
+			$a->addClass('btn-danger delete');
 			$i->addClass('icon-remove');
 		}
 
-		if(in_array($controlType, array('checkboxList'))) {
+		if(in_array($controlType, array('checkboxList', 'bricksList'))) {
 			$a->addClass('btn-mini');
 		} else {
 			$a->addClass('btn-small');
@@ -204,7 +204,7 @@ class Reflector extends Nette\Object {
 				'label' => array('default'=> ucfirst($name)), 
 				'class' => array('default'=> NULL), 
 				'addClass' => array('default'=> NULL), 
-				'columnClass' => array('default'=> 'span4'), 
+				'columnClass' => array('default'=> 'span2'), 
 				'callback' => array('default'=> NULL), 
 				'inlineEditing' => array('default' => NULL), 
 				'inlineDeleting' => array('default' => NULL), 
@@ -239,24 +239,36 @@ class Reflector extends Nette\Object {
 				$type = $fieldMask['ui']['control']['type'] = 'text';
 				if(!isset($fieldMask['ui']['control']['disabled'])) $fieldMask['ui']['control']['disabled'] = true;
 			} else if($type == 'tinymce') {
-				$type = $fieldMask['ui']['control']['type'] = 'textArea';
+				$fieldMask['ui']['control']['type'] = 'textArea';
 				$fieldMask['ui']['control']['addClass'] = (isset($fieldMask['ui']['control']['addClass']) ? $fieldMask['ui']['control']['addClass'].' ' : NULL) . 'tinymce';
+			} else if($type == 'multiSelect') {
+				$fieldMask['ui']['control']['addClass'] = (isset($fieldMask['ui']['control']['addClass']) ? $fieldMask['ui']['control']['addClass'].' ' : NULL) . 'multiselect';
+
 			}
 
 			$fieldMask['ui']['name'] = $name;
 			$fieldMask['ui']['control']['type'] = ucfirst($fieldMask['ui']['control']['type']);
 			$fieldMask['ui']['nameSingular'] = Strings::toSingular(ucfirst($fieldMask['ui']['name']));
 			$fieldMask['ui']['options'] = $options;
-			if($fieldMask['ui']['class'] === NULL && $type != 'checkboxList') {
-				$fieldMask['ui']['class'] = 'span4';
+
+			if($fieldMask['ui']['class'] === NULL && !in_array($type, array('checkboxList', 'tinymce'))) {
+				if(in_array($type, array('bricksList'))) {
+					$fieldMask['ui']['class'] = 'span12';
+				} else {
+					$fieldMask['ui']['class'] = 'span4';
+				}
 			}
 			
 			if($fieldMask['ui']['columnClass']) {
 				$fieldMask['ui']['controlOptions']['columnClass'] = $fieldMask['ui']['columnClass'];
 			}
 			
-			if($fieldMask['ui']['startNewRow'] || $type == 'checkboxList') {
+			if($fieldMask['ui']['startNewRow'] || in_array($type, array('checkboxList', 'bricksList', 'tinymce'))) {
 				$fieldMask['ui']['controlOptions']['renderBefore'] = Html::el('hr')->addClass('soften');
+			}
+
+			if($type == 'checkboxList') {
+				$fieldMask['ui']['controlOptions']['renderAfter'] = Html::el('hr')->addClass('soften');
 			}
 
 			if($type == 'text') {
@@ -267,6 +279,11 @@ class Reflector extends Nette\Object {
 				$fieldMask['ui']['control']['type'] = 'AdvancedCheckboxList';
 			} else if($type == 'bricksList') {
 				$fieldMask['ui']['control']['type'] = 'AdvancedBricksList';
+			} else if($type == 'tinymce') {
+				if(!isset($fieldMask['ui']['control']['class'])) {
+					$fieldMask['ui']['control']['class'] = 'span12';
+					$fieldMask['ui']['class'] = 'span12';
+				}
 			}
 
 			if($associationType = $this->getAssocationType($property)) {
@@ -274,7 +291,8 @@ class Reflector extends Nette\Object {
 				$targetEntity = $association->targetEntity;
 				$fieldMask['targetEntity'] = array();
 				if (!Strings::startsWith($targetEntity, 'Entity')) {
-					$targetEntity = $entity->getNamespaceName() . '\\' . $toOne->targetEntity;
+					$entity = new \Nette\Reflection\ClassType('\Entity\Dictionary\Language'); //@todo - opravit
+					$targetEntity = $entity->getNamespaceName() . '\\' . $targetEntity;
 				}
 
 				$fieldMask['targetEntity']['name'] = $targetEntity;
@@ -286,7 +304,7 @@ class Reflector extends Nette\Object {
 
 			}
 
-			if(in_array($type, array('select', 'checkboxList'))) {
+			if(in_array($type, array('select', 'checkboxList', 'multiSelect'))) {
 
 				if(!$fieldMask['ui']['callback'] && !$fieldMask['ui']['options']) {
 					$fieldMask['ui']['callback'] = 'getAllAsPairs';
@@ -385,10 +403,9 @@ class Reflector extends Nette\Object {
 
 			if(isset($ui->control->disabled)) $control->setDisabled();
 			
-			
-			// ak je control typu selekt a obsahuje definiciu vztahov, pripojim target entitu
 			if ($control instanceof \Extras\Forms\Controls\AdvancedSelectBox 
-				|| $control instanceof \Extras\Forms\Controls\AdvancedCheckboxList) 
+				|| $control instanceof \Extras\Forms\Controls\AdvancedCheckboxList
+				|| $control instanceof \Nette\Forms\Controls\MultiSelectBox) 
 			{
 				$targetEntity = $property->targetEntity;
 				if (isset($ui->callback)) {

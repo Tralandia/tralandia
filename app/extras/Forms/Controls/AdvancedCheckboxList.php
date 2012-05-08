@@ -146,7 +146,7 @@ class AdvancedCheckboxList extends BaseControl {
 			if ($key !== NULL && $key != $k) continue; // intentionally ==
 
 			$control->id = $label->for = $id . '-' . $counter;
-			$control->checked = (count($values) > 0) ? in_array($k, $values) : false;
+			$control->checked = (count($values) > 0) ? array_key_exists($k, $values) : false;
 			$control->value = $k;
 
 			if ($val instanceof Html) {

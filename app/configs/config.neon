@@ -21,15 +21,17 @@ common:
 		settingsDir: %appDir%/configs
 
 	services:
-		nette.presenterFactory:
-			class: Extras\DynamicPresenterFactory
-			factory: Extras\DynamicPresenterFactory::factory
+		# nette.presenterFactory:
+			# class: Extras\DynamicPresenterFactory
+			# factory: Extras\DynamicPresenterFactory::factory
 
 		#authenticator: Security\Authenticator
 
 		authorizator: Security\Acl
 
 		environment: Extras\Environment
+
+		routerCache: Nette\Caching\Cache(@cacheStorage, 'Router')
 
 		translator: Extras\Translator(@environment, @cacheStorage)
 

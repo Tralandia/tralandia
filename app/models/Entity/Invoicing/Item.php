@@ -118,6 +118,11 @@ class Item extends \Entity\BaseEntity {
 
 
 
+
+
+
+
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -316,37 +321,20 @@ class Item extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Extras\Types\Price
+	 * @param float
 	 * @return \Entity\Invoicing\Item
 	 */
-	public function setPrice(\Extras\Types\Price $price) {
+	public function setPrice($price) {
 		$this->price = $price;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Extras\Types\Price|NULL
+	 * @return float|NULL
 	 */
 	public function getPrice() {
 		return $this->price;
-	}
-		
-	/**
-	 * @param \Extras\Types\Price
-	 * @return \Entity\Invoicing\Item
-	 */
-	public function setPriceEur(\Extras\Types\Price $priceEur) {
-		$this->priceEur = $priceEur;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Extras\Types\Price|NULL
-	 */
-	public function getPriceEur() {
-		return $this->priceEur;
 	}
 		
 	/**

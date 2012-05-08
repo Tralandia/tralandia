@@ -9,7 +9,7 @@ use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="dictionary_phrase")
+ * @ORM\Table(name="dictionary_phrase", indexes={@ORM\index(name="ready", columns={"ready"})})
  * @EA\Service(name="\Service\Dictionary\Phrase")
  * @EA\ServiceList(name="\Service\Dictionary\PhraseList")
  * @UI\Primary(key="id", value="translations")
@@ -30,7 +30,7 @@ class Phrase extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Type")
+	 * @ORM\ManyToOne(targetEntity="Type", cascade={"persist"})
 	 */
 	protected $type;
 
@@ -42,6 +42,11 @@ class Phrase extends \Entity\BaseEntityDetails {
 	protected $sourceLanguage;
 
 	
+
+
+
+
+
 
 
 

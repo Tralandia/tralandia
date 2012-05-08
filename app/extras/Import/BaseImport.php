@@ -101,6 +101,24 @@ class BaseImport {
 			),
 			'subsections' => array(),
 		),
+		'invoicingStart' => array(
+			'entities' => array(
+				'\Invoicing\Service\Duration' => array(),
+				'\Invoicing\Service\Type' => array(),
+				'\Invoicing\UseType' => array(),
+				'\Invoicing\Package' => array(),
+				'\Invoicing\Service\Service' => array(),
+				'\Invoicing\Marketing' => array(),
+			),
+			'subsections' => array(),
+		),
+		'invoicing' => array(
+			'entities' => array(
+				'\Invoicing\Invoice' => array(),
+				'\Invoicing\Item' => array(),
+			),
+			'subsections' => array(),
+		),
 	);
 
 	public $savedVariables = array();
@@ -167,7 +185,6 @@ class BaseImport {
 				$tableName = str_replace('\\', '_', $key2);
 				$tableName = trim($tableName, '_');
 				$tableName = strtolower($tableName);
-
 				$r = qNew('select id from '.$tableName.' order by id DESC');
 				while ($x = mysql_fetch_array($r)) {
 					$serviceName = '\Service'.$key2;
@@ -246,7 +263,7 @@ class BaseImport {
 			$translation->timeTranslated = fromStamp($oldTranslation['updated']);
 			$phrase->addTranslation($translation);
 		}
-		$phrase->save();
+		//$phrase->save();
 		return $phrase;
 	}
 
@@ -269,7 +286,7 @@ class BaseImport {
 
 		$dictionaryType = D\Type::getByEntityNameAndEntityAttribute($entityName, $entityAttribute);
 		if ($dictionaryType) {
-			//debug('iba vraciam premennu '.$dictionaryType->entityName.'->'.$dictionaryType->entityAttribute);
+			debug('iba vraciam premennu '.$dictionaryType->entityName.'->'.$dictionaryType->entityAttribute);
 			return $dictionaryType;
 		} else {
 			eval('$level = \Entity\Dictionary\Type::TRANSLATION_LEVEL_'.strtoupper($level).';');

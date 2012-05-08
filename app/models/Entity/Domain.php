@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="domain")
+ * @ORM\Table(name="domain", indexes={@ORM\index(name="domain", columns={"domain"})})
  */
 class Domain extends \Entity\BaseEntity {
 
@@ -27,6 +27,11 @@ class Domain extends \Entity\BaseEntity {
 	
 
 	
+
+
+
+
+
 
 
 

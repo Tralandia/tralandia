@@ -10,9 +10,13 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="invoicing_invoice")
+ * @ORM\Table(name="invoicing_invoice", indexes={@ORM\index(name="invoiceNumber", columns={"invoiceNumber"}), @ORM\index(name="paymentReferenceNumber", columns={"paymentReferenceNumber"}), @ORM\index(name="due", columns={"due"}), @ORM\index(name="paid", columns={"paid"}), @ORM\index(name="checked", columns={"checked"}), @ORM\index(name="clientEmail", columns={"clientEmail"}), @ORM\index(name="referrer", columns={"referrer"}), @ORM\index(name="referrerCommission", columns={"referrerCommission"})})
  */
 class Invoice extends \Entity\BaseEntity {
+
+	const STATUS_PENDING = 2;
+	const STATUS_PAID_NOT_CHECKED = 4;
+	const STATUS_PAID = 8;
 
 	/**
 	 * @var Collection
@@ -57,10 +61,10 @@ class Invoice extends \Entity\BaseEntity {
 	protected $paid;
 
 	/**
-	 * @var boolean
-	 * @ORM\Column(type="boolean")
+	 * @var integer
+	 * @ORM\Column(type="integer")
 	 */
-	protected $checked;
+	protected $status;
 
 	/**
 	 * @var string
@@ -159,6 +163,11 @@ class Invoice extends \Entity\BaseEntity {
 	protected $paymentInfo;
 
 	
+
+
+
+
+
 
 
 
@@ -337,20 +346,20 @@ class Invoice extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param boolean
+	 * @param integer
 	 * @return \Entity\Invoicing\Invoice
 	 */
-	public function setChecked($checked) {
-		$this->checked = $checked;
+	public function setStatus($status) {
+		$this->status = $status;
 
 		return $this;
 	}
 		
 	/**
-	 * @return boolean|NULL
+	 * @return integer|NULL
 	 */
-	public function getChecked() {
-		return $this->checked;
+	public function getStatus() {
+		return $this->status;
 	}
 		
 	/**
@@ -587,7 +596,33 @@ class Invoice extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param decimal
+	 * @param \Entity\Currency
+	 * @return \Entity\Invoicing\Invoice
+	 */
+	public function setCurrency(\Entity\Currency $currency) {
+		$this->currency = $currency;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Invoicing\Invoice
+	 */
+	public function unsetCurrency() {
+		$this->currency = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Currency|NULL
+	 */
+	public function getCurrency() {
+		return $this->currency;
+	}
+		
+	/**
+	 * @param float
 	 * @return \Entity\Invoicing\Invoice
 	 */
 	public function setExchangeRate($exchangeRate) {
@@ -597,7 +632,7 @@ class Invoice extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return decimal|NULL
+	 * @return float|NULL
 	 */
 	public function getExchangeRate() {
 		return $this->exchangeRate;
@@ -656,7 +691,7 @@ class Invoice extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param decimal
+	 * @param float
 	 * @return \Entity\Invoicing\Invoice
 	 */
 	public function setReferrerCommission($referrerCommission) {
@@ -666,7 +701,7 @@ class Invoice extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return decimal|NULL
+	 * @return float|NULL
 	 */
 	public function getReferrerCommission() {
 		return $this->referrerCommission;

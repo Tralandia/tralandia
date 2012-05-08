@@ -21,6 +21,27 @@ class RadoPresenter extends BasePresenter {
 		$this->session = $this->context->session->getSection('importSession');
 	}
 
+	public function actionHelper() {
+		if (isset($this->params['indexes'])) {
+			$return = '';
+			$indexes = array();
+			$temp = explode(',', $this->params['indexes']);
+			foreach ($temp as $key => $value) {
+				$value = trim($value);
+				if (strlen($value) == 0) continue;
+				$indexes[] = '@ORM\index(name="'.$value.'", columns={"'.$value.'"})';
+			}
+
+			$return .= ', indexes={'.implode(', ', $indexes).'}';
+
+			$this->template->output = $return;
+		}
+	}
+
+	public function renderHelper() {
+
+	}
+
 	public function actionDefault() {
 		ini_set('max_execution_time', 0);
 		Debugger::$maxDepth = 3;
@@ -70,7 +91,7 @@ class RadoPresenter extends BasePresenter {
 		}
 
 		if (isset($this->params['importSection'])) {
-			//\Extras\Models\Service::preventFlush();
+			\Extras\Models\Service::preventFlush();
 			$className = 'Extras\Import\Import'.ucfirst($this->params['importSection']);
 			$import = new $className();
 			$import->developmentMode = (bool)$this->session->developmentMode;

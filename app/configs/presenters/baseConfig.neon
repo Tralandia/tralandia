@@ -1,26 +1,29 @@
 common:
-	title: Location Main Title
-	h1: Location Main H1
+	title: Title
 
 	grid:
-		itemsPerPage: 13
+		itemsPerPage: 50
 
 		actionColumns:
 			base:
 				name: Akcia
+				cellStyle: 'text-align: right'
 				actions:
 					edit:
-						title: Edituj
+						title: Edit
 						addClass: btn-warning
 					delete:
-						title: Deletuj
+						title: Delete
 						addClass: btn-danger
 
 
 	form:
 		class: row form
 		buttons:
+			cancel: 
+				type: button
+				label: Cancel (return)
 			submit:
 				type: submit
-				label: Save
+				label: Save Changes
 				addClass: btn-success

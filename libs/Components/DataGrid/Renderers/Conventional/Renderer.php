@@ -291,7 +291,6 @@ class Conventional extends Nette\Object implements IRenderer
 		$page = $paginator->page;
 		if ($paginator->pageCount < 2) {
 			$steps = array($page);
-
 		} else {
 			$arr = range(max($paginator->firstPage, $page - 3), min($paginator->lastPage, $page + 3));
 			$count = 3;

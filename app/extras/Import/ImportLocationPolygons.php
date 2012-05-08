@@ -28,9 +28,9 @@ class ImportLocationsPolygons extends BaseImport {
 
 		// GET data from API
 		if ($this->developmentMode == TRUE) {
-			$data = json_decode(file_get_contents("http://www.tralandia.sk/trax_maps/_api.php?country=sk"));
+			$data = json_decode(file_get_contents("http://www.tralandia.sk/trax_maps/_api.php?country=sk"), TRUE);
 		} else {
-			$data = json_decode(file_get_contents("http://www.tralandia.sk/trax_maps/_api.php"));
+			$data = json_decode(file_get_contents("http://www.tralandia.sk/trax_maps/_api.php"), TRUE);
 		}
 		
 		$countries = array('success'=>array());
@@ -133,6 +133,7 @@ class ImportLocationsPolygons extends BaseImport {
 				$region->save();
 			}
 		}
+		$this->savedVariables['importedSections']['locationsPolygons'] = 1;		
 
 	}
 

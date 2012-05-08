@@ -1,45 +1,51 @@
 #!/bin/bash
 
 if [ ! -d ./temp ]; then
-    mkdir -m 777 ./temp
+	mkdir -m 777 ./temp
 else
 	chmod 777 ./temp
 	rm -rf ./temp/*
 fi
 
 if [ ! -d ./temp/sessions ]; then
-    mkdir -m 777 ./temp/sessions
+	mkdir -m 777 ./temp/sessions
 else
 	chmod 777 ./temp/sessions
 fi
 
 if [ ! -d ./temp/proxies ]; then
-    mkdir -m 777 ./temp/proxies
+	mkdir -m 777 ./temp/proxies
 else
 	chmod 777 ./temp/proxies
 fi
 
+if [ ! -d ./temp/presenters ]; then
+	mkdir -m 777 ./temp/presenters
+else
+	chmod 777 ./temp/presenters
+fi
+
 if [ ! -d ./log ]; then
-    mkdir -m 777 ./log
+	mkdir -m 777 ./log
 else
 	chmod 777 ./log
 fi
 
 if [ ! -d ./public/webtemp ]; then
-    mkdir -m 777 ./public/webtemp
+	mkdir -m 777 ./public/webtemp
 else
 	chmod 777 ./public/webtemp
 	rm -rf ./public/webtemp/*
 fi
 
 if [ ! -d ./app/locale ]; then
-    mkdir -m 777 ./app/locale
+	mkdir -m 777 ./app/locale
 else
 	chmod -R 777 ./app/locale
 fi
 
 if [ ! -d ./public/storage ]; then
-    mkdir -m 777 ./public/storage
+	mkdir -m 777 ./public/storage
 else
 	chmod -R 777 ./public/storage
 fi

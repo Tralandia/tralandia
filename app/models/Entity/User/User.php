@@ -11,7 +11,7 @@ use Extras\UI as UI;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="user_user")
+ * @ORM\Table(name="user_user", indexes={@ORM\index(name="login", columns={"login"}), @ORM\index(name="password", columns={"password"}), @ORM\index(name="isOwner", columns={"isOwner"})})
  */
 class User extends \Entity\BaseEntityDetails {
 
@@ -156,6 +156,11 @@ class User extends \Entity\BaseEntityDetails {
 
 
 	
+
+
+
+
+
 
 
 

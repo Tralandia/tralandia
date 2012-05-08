@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="user_combination")
+ * @ORM\Table(name="user_combination", indexes={@ORM\index(name="languageLevel", columns={"languageLevel"})})
  */
 class Combination extends \Entity\BaseEntityDetails {
 
@@ -38,6 +38,11 @@ class Combination extends \Entity\BaseEntityDetails {
 
 
 	
+
+
+
+
+
 
 
 

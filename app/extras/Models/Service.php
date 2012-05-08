@@ -409,10 +409,8 @@ abstract class Service extends Nette\Object implements IService {
 					} else if($targetEntity->associationType == Reflector::MANY_TO_MANY) {
 						$data[$name] = array();
 						foreach ($this->{$name}->toArray() as $key => $value) {
-							$data[$name][] = array(
-								'key' => $value->{$targetEntity->primaryKey},
-								'value' => $value->{$targetEntity->primaryValue},
-							);
+							// $data[$name][$value->{$targetEntity->primaryKey}] = $value->{$targetEntity->primaryValue};
+							$data[$name][] = $value->{$targetEntity->primaryKey};
 						}
 					} else if($targetEntity->associationType == Reflector::ONE_TO_MANY) {
 						// @todo method or operation is not implemented

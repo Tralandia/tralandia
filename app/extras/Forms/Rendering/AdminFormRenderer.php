@@ -18,22 +18,25 @@ class AdminFormRenderer extends DefaultFormRenderer {
 	public function renderPairMulti(array $controls)
 	{
 		$s = array();
-		$addClass = NULL;
 		$renderBefore = NULL;
-		$pair = $this->getWrapper('pair container');
+		$isButtonsPair = NULL;
 		foreach ($controls as $control) {
 			if (!$control instanceof Nette\Forms\IControl) {
 				throw new Nette\InvalidArgumentException("Argument must be array of IFormControl instances.");
 			}
-			if($renderBefore === NULL && $control instanceof Nette\Forms\Controls\Button) {
+			if($isButtonsPair === NULL && $control instanceof Nette\Forms\Controls\Button) {
+				$isButtonsPair = TRUE;
 				$renderBefore = $control->getOption('renderBefore');
-				$addClass = 'pull-right';
 			}
 			$s[] = (string) $control->getControl();
 		}
+		$pair = $this->getWrapper('pair container');
 		$pair->add($this->renderLabel($control));
-		$pair->add($this->getWrapper('control container')->setHtml(implode(" ", $s)));
-		$pair->addClass($addClass);
+		if($isButtonsPair) {
+			$pair->add(Html::el('div')->addClass('form-actions')->add($this->getWrapper('control container')->setHtml(implode(" ", $s))))->addClass('span12');
+		} else {
+			$pair->add($this->getWrapper('control container')->setHtml(implode(" ", $s)));
+		}
 		return $renderBefore.$pair->render(0);
 	}
 

@@ -1,7 +1,8 @@
 <?php
 
+namespace Extras;
 
-class MyAssert extends Assert {
+class Assert extends \Assert {
 
 
 

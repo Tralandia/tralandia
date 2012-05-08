@@ -72,7 +72,6 @@ class Action extends Nette\ComponentModel\Component implements IAction
 		$dataGrid = $this->lookup('DataGrid\DataGrid', TRUE);
 		$control = $dataGrid->lookup('Nette\Application\UI\Control', TRUE);
 
-		debug($this->key);
 		switch ($this->key) {
 		case self::WITHOUT_KEY:
 			$link = $control->link($this->destination); break;

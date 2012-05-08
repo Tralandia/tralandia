@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="contact_type")
+ * @ORM\Table(name="contact_type", indexes={@ORM\index(name="slug", columns={"slug"})})
  */
 class Type extends \Entity\BaseEntity {
 
@@ -24,6 +24,11 @@ class Type extends \Entity\BaseEntity {
 	protected $slug;
 
 	
+
+
+
+
+
 
 
 

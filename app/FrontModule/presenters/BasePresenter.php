@@ -5,10 +5,7 @@ namespace FrontModule;
 abstract class BasePresenter extends \BasePresenter {
 	
 	protected function startup() {
-		
-		$this->autoCanonicalize = FALSE;
 		parent::startup();
-
 	}
 
 	public function beforeRender() {
