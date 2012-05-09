@@ -44,10 +44,10 @@ common:
 				completedTask: 
 					label: Completed Tasks
 					link: ':Admin:AutopilotTaskArchived:list'
+					separator: true
 				taskType: 
 					label: Task Types
 					link: ':Admin:AutopilotTaskType:list'
-					separator: true
 
 
 		user:
@@ -57,12 +57,12 @@ common:
 					label: All Users
 					link: ':Admin:UserUser:list'
 				testimonial: 
-					label: Testimonials (by owners)
+					label: "Testimonials (by owners)"
 					link: ':Admin:UserTestimonial:list'
+					separator: true
 				role: 
 					label: Roles
 					link: ':Admin:UserRole:list'
-					separator: true
 
 
 		rental:
@@ -86,10 +86,10 @@ common:
 					link: ':Admin:VisitorInteraction:list'
 					linkArgs:
 						filter: review
+					separator: true
 				rentalType: 
 					label: Rental Types
 					link: ':Admin:RentalType:list'
-					separator: true
 				interactionType: 
 					label: Interaction Types
 					link: ':Admin:VisitorType:list'
@@ -141,10 +141,10 @@ common:
 				use: 
 					label: Use Types
 					link: ':Admin:InvoicingUseType:list'
+					separator: true
 				export: 
 					label: Export
 					link: ':Admin:InvoicingExport:'
-					separator: true
 
 
 		dictionary:

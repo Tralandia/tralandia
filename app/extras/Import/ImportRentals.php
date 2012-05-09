@@ -15,13 +15,20 @@ use Nette\Application as NA,
 class ImportRentals extends BaseImport {
 
 	public function doImport($subsection = NULL) {
-		\Extras\Models\Service::flush(TRUE);
+		//\Extras\Models\Service::flush(TRUE);
 
 		$import = new \Extras\Import\BaseImport();
 
 		// Detaching all media
 		qNew('update medium_medium set rental_id = NULL where rental_id > 0');
 		$import->undoSection('rentals');
+
+		$nameDictionaryType = $this->createDictionaryType('\Rental\Rental', 'name', 'incomingLanguages', 'NATIVE', array('checkingRequired' => TRUE));
+		$briefDescriptionDictionaryType = $this->createDictionaryType('\Rental\Rental', 'briefDescription', 'incomingLanguages', 'NATIVE', array('checkingRequired' => TRUE));
+		$descriptionDictionaryType = $this->createDictionaryType('\Rental\Rental', 'description', 'incomingLanguages', 'NATIVE', array('checkingRequired' => TRUE));
+		$teaserDictionaryType = $this->createDictionaryType('\Rental\Rental', 'teaser', 'incomingLanguages', 'NATIVE', array('checkingRequired' => TRUE));
+		\Extras\Models\Service::flush(FALSE);
+
 
 		$r = q('select * from objects_types_new where trax_en_type_id > 0');
 		while($x = mysql_fetch_array($r)) {
@@ -35,11 +42,6 @@ class ImportRentals extends BaseImport {
 		$locationTypes['administrativeregionlevelone'] = \Service\Location\Type::getBySlug('administrativeregionlevelone');
 		$locationTypes['administrativeregionleveltwo'] = \Service\Location\Type::getBySlug('administrativeregionleveltwo');
 		$locationTypes['locality'] = \Service\Location\Type::getBySlug('locality');
-
-		$nameDictionaryType = $this->createDictionaryType('\Rental\Rental', 'name', 'incomingLanguages', 'NATIVE', array('checkingRequired' => TRUE));
-		$briefDescriptionDictionaryType = $this->createDictionaryType('\Rental\Rental', 'briefDescription', 'incomingLanguages', 'NATIVE', array('checkingRequired' => TRUE));
-		$descriptionDictionaryType = $this->createDictionaryType('\Rental\Rental', 'description', 'incomingLanguages', 'NATIVE', array('checkingRequired' => TRUE));
-		$teaserDictionaryType = $this->createDictionaryType('\Rental\Rental', 'teaser', 'incomingLanguages', 'NATIVE', array('checkingRequired' => TRUE));
 
 		$ownerRole = \Service\User\Role::getBySlug('owner');
 

@@ -114,11 +114,12 @@ class ImportInvoicingStart extends BaseImport {
 			$marketing->oldId = $x['id'];
 			$marketing->name = $this->createNewPhrase($marketingNameType, $x['name_dic_id']);
 			$marketing->description = $this->createNewPhrase($marketingDescriptionType, $x['description_dic_id']);
-			$marketing->package = \Services\Invoicing\Package::getByOldId($x['packages_id']);
+			$temp = \Service\Invoicing\Package::getByOldId($x['packages_id']);
+			if ($temp) $marketing->package = $temp;
 			
 			$temp = array_unique(array_filter(explode(',', $x['countries_ids_included'])));
 			foreach ($temp as $key => $value) {
-				$country = \Service\Location\Location::getByTypeAndOldId($countryType, $x['countries_id']);;
+				$country = \Service\Location\Location::getByTypeAndOldId($countryType, $value);;
 				if ($country) {
 					$marketing->addLocation($country);
 				}
@@ -127,8 +128,8 @@ class ImportInvoicingStart extends BaseImport {
 			$marketing->countLeft = $x['count_left'];
 			$marketing->validFrom = fromStamp($x['time_from']);
 			$marketing->validTo = fromStamp($x['time_to']);
-			$marketing->addUse(\Service\Invoicing\UseType::getBySlug($x['marketing_type']));
-			debug($marketing); return;
+			$temp = \Service\Invoicing\UseType::getBySlug($x['marketing_type']);
+			if ($temp) $marketing->addUse($temp);
 			$marketing->save();
 		}
 
