@@ -61,7 +61,7 @@ class PresenterSettings extends \Nette\Object {
 	}
 
 	public function getH1() {
-		return isset($this->getParams()->h1) ? $this->getParams()->h1 : $this->title;
+		return isset($this->getParams()->h1) ? $this->getParams()->h1 : $this->getTitle();
 	}
 
 	protected function getConfig() {

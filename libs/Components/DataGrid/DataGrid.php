@@ -101,7 +101,7 @@ class DataGrid extends Nette\Application\UI\Control implements \ArrayAccess
 		$this->paginator = new Nette\Utils\Paginator;
 
 		$session = $this->getSession();
-		if (!$session->isStarted()) {
+		if (!$session->isStarted() && !headers_sent()) {
 			$session->start();
 		}
 	}
@@ -708,7 +708,6 @@ class DataGrid extends Nette\Application\UI\Control implements \ArrayAccess
 	protected function applyItems()
 	{
 		$value = (int) $this->itemsPerPage;
-
 		if ($value == 0) {
 			$this->itemsPerPage = $this->paginator->itemsPerPage = count($this->dataSource);
 		} else {

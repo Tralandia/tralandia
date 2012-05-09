@@ -7,6 +7,17 @@ use Nette\Application\UI\Presenter,
 
 abstract class BasePresenter extends Presenter {
 
+
+	protected function startup() {
+		parent::startup();
+
+		// odstranuje neplatne _fid s url
+		if (!$this->hasFlashSession() && !empty($this->params[self::FLASH_KEY])) {
+			unset($this->params[self::FLASH_KEY]);
+			$this->redirect(301, 'this');
+		}
+	}
+
 	public function beforeRender() {
 		parent::beforeRender();
 		$this->template->staticPath = '/';

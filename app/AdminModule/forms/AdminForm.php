@@ -36,6 +36,8 @@ class AdminForm extends Form {
 		if($this->getPresenter()->isAjax()) {
 			$this->getPresenter()->getPayload()->invalidate = array('currency');
 			$this->getPresenter()->sendPayload();
+		} else {
+			$this->presenter->redirect('this');
 		}
 	}
 

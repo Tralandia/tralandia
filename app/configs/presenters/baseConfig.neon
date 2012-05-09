@@ -1,17 +1,23 @@
 common:
-	title: Location Main Title
-	h1: Location Main H1
+	title: Title
+	addNewButton: true
 
 	grid:
-		itemsPerPage: 13
+		addClass: table table-striped table-condensed
+		dataSourceMethod: getAll
+		dataSourceArguments: NULL
+		drawRowNumber: true
+		itemsPerPage: 50
 
 		actionColumns:
 			base:
 				name: Akcia
+				cellStyle: 'text-align: right'
 				actions:
 					edit:
 						title: Edit
 						addClass: btn-warning
+						target: _blank
 					delete:
 						title: Delete
 						addClass: btn-danger
@@ -22,7 +28,7 @@ common:
 		buttons:
 			cancel: 
 				type: button
-				label: Cancel (return)
+				label: 'Cancel (return)'
 			submit:
 				type: submit
 				label: Save Changes

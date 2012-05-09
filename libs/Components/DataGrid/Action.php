@@ -34,7 +34,6 @@ class Action extends Nette\ComponentModel\Component implements IAction
 	/** @var Nette\Callback|Closure */
 	public $ifDisableCallback;
 
-
 	/**
 	 * Data grid action constructor.
 	 * @note   for full ajax support, destination should not change module,

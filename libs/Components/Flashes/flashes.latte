@@ -1,8 +1,8 @@
 {snippet}
 {foreach $flashes as $flash}
-<ul class="{$flash->type}">
-	<li>{_($flash->message)}</li>
-</ul>
+<div class="alert alert-{$flash->type}">
+	<button class="close" data-dismiss="alert">×</button>
+	{$flash->message}
+</div>
 {/foreach}
-<script type="text/javascript"></script>
 {/snippet}
