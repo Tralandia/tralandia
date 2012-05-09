@@ -3,6 +3,7 @@ common:
 	title: Dictionary Languages
 
 	grid:
+		dataSourceMethod: getGridList
 		columns: 
 			id:
 				mapper: e.id
@@ -17,6 +18,11 @@ common:
 				label: Name
 				mapper: e.id
 				callback: {class: %this%, method: translateColumn, params: name}
+				cellStyle: 'text-align: center'
+			test:
+				label: Test
+				mapper: test
+				headerStyle: 'width: 30px;'
 				cellStyle: 'text-align: center'
 			supported:
 				type: boolean
@@ -36,15 +42,11 @@ common:
 				label: Dátum vytvorenia
 				mapper: e.created
 				filter: date
-
-
-		actionColumns:
-			base:
-				actions:
-					setSupported:
-						title: Set supported
-						addClass: btn-warning
-						#draw: (e.supported == TRUE)
+			setSupported:
+				type: text
+				label: ''
+				mapper: e.id
+				callback: {class: %this%, method: setSupported}
 
 	form:
 		addClass: haha
@@ -69,29 +71,17 @@ common:
 				control: text
 				label: Collation
 
-			salutations:
-				label: Salutations
-				control: 
-					type: json
-					rows: 10
-					columns: [Salutation]
-
 			multitranslationOptions:
 				label: Multitranslations
 				control: 
-					type: json
-					columns: [Condition]
-					rows: 10
-					disabled: TRUE
+					type: table
+					rows: 3
+					columns: [Pes, Macka]
 
 			genderNumberOptions:
 				control: 
 					type: json
-					columns: [GenderNumber]
-					rows: 10
+					disabled: TRUE
 
 			ppcPatterns:
-				control: 
-					type: json
-					columns: [Pattern]
-					rows: 30
+				control: json

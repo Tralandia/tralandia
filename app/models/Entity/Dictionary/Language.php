@@ -47,12 +47,6 @@ class Language extends \Entity\BaseEntityDetails {
 	 * @var json
 	 * @ORM\Column(type="json", nullable=true)
 	 */
-	protected $salutations;
-
-	/**
-	 * @var json
-	 * @ORM\Column(type="json", nullable=true)
-	 */
 	protected $multitranslationOptions;
 
 	/**
@@ -78,28 +72,6 @@ class Language extends \Entity\BaseEntityDetails {
 	 * @ORM\ManyToMany(targetEntity="Entity\Rental\Rental", inversedBy="spokenLanguages")
 	 */
 	protected $rentals;
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //@entity-generator-code <--- NEMAZAT !!!
 
@@ -195,32 +167,6 @@ class Language extends \Entity\BaseEntityDetails {
 	 */
 	public function getDefaultCollation() {
 		return $this->defaultCollation;
-	}
-		
-	/**
-	 * @param json
-	 * @return \Entity\Dictionary\Language
-	 */
-	public function setSalutations($salutations) {
-		$this->salutations = $salutations;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Dictionary\Language
-	 */
-	public function unsetSalutations() {
-		$this->salutations = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return json|NULL
-	 */
-	public function getSalutations() {
-		return $this->salutations;
 	}
 		
 	/**

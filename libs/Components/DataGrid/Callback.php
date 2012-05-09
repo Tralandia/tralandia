@@ -21,6 +21,9 @@ final class Callback extends Nette\Object
 	 */
 	public function __construct($t, $m = NULL, $params = NULL)
 	{
+		$params = func_get_args();
+		array_shift($params);
+		array_shift($params);
 		$this->params = $params;
 		if ($m === NULL) {
 			if (is_string($t)) {
@@ -64,7 +67,7 @@ final class Callback extends Nette\Object
 	 * @return mixed
 	 */
 	public function invoke()
-	{debug($this->params);
+	{
 		if (!is_callable($this->cb)) {
 			throw new InvalidStateException("Callback '$this' is not callable.");
 		}

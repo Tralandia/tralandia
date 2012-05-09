@@ -23,6 +23,7 @@ class PresenterGenerator extends \Nette\Object {
 			$name = substr($filename, 0, strrpos($filename, '.'));
 			if($name == 'baseConfig') continue;
 			$presenterName = ucfirst($name) . 'Presenter';
+			if(class_exists('\AdminModule\\'.$presenterName)) continue;
 			$extension = strtolower(substr($filename, strrpos($filename, '.') + 1));
 
 			$content = "<?php\nnamespace AdminModule;\nclass $presenterName extends AdminPresenter {\n}";

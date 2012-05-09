@@ -35,7 +35,7 @@ class AdminPresenter extends BasePresenter {
 	}
 
 	public function renderList() {
-		
+		$this->template->showAddNewButton = $this->settings->params->addNewButton;
 	}
 	
 	public function actionAdd() {
@@ -128,9 +128,9 @@ class AdminPresenter extends BasePresenter {
 				}
 				
 				switch ($type) {
-					case 'datetime':	$grid->addDateColumn($aliasName, $column->label, '%d.%b.%Y %T (%p)'); break;
-					case 'date':		$grid->addDateColumn($aliasName, $column->label, '%d.%b.%Y'); break; // TODO: poriesit formatovanie datumov
-					case 'time':		$grid->addDateColumn($aliasName, $column->label, '%T'); break;
+					case 'datetime':	$grid->addDateColumn($aliasName, $column->label, '%d %b %Y %R (%p)'); break;
+					case 'date':		$grid->addDateColumn($aliasName, $column->label, '%d %b %Y'); break; // TODO: poriesit formatovanie datumov
+					case 'time':		$grid->addDateColumn($aliasName, $column->label, '%R'); break;
 					case 'boolean':		$grid->addCheckboxColumn($aliasName, $column->label); break;
 					default:			$grid->addColumn($aliasName, $column->label);
 				}
@@ -170,18 +170,23 @@ class AdminPresenter extends BasePresenter {
 				
 				if (isset($column->callback)) {
 					$column->callback->class == '%this%' ? $column->callback->class = $this : $column->callback->class;
-					
+
 					$alias->formatCallback[] = new \DataGrid\Callback(
 						$column->callback->class,
 						$column->callback->method,
-						isset($column->callback->params) ? $column->callback->params : null
+						$this,
+						isset($column->callback->params) ? $column->callback->params : NULL
 					);
 				}
 			}
 		}
 
 		$list = $this->serviceListName;
-		$list = $list::getAll();
+		$dsMethod = $gridSettings->dataSourceMethod;
+		$dsArguments = $gridSettings->dataSourceArguments;
+		if($dsArguments instanceof ArrayHash) $dsArguments = (array) $dsArguments;
+		$list = $list::$dsMethod($dsArguments);
+
 		$dataSource = new \DataGrid\DataSources\Doctrine\LalaQueryBuilder($list->getDataSource());
 
 		$dataSource->setMapping($mapper);
@@ -214,24 +219,28 @@ class AdminPresenter extends BasePresenter {
 					if(isset($action->class)) $title->class($action->class);
 					else $title->class('btn btn-mini');
 					if(isset($action->addClass)) $title->addClass($action->addClass);
+					if(isset($action->target)) $title->target($action->target);
 				}
 
-				$grid->addAction($title, $actionName, Arrays::get($action, 'ajax', NULL));
+				$actionComponent = $grid->addAction($title, $actionName, Arrays::get($action, 'ajax', NULL));
 			}
-
-			
 		}
+
+		$renderer = $grid->getRenderer();
+		$renderer->wrappers['datagrid']['container'] = 'table class="datagrid '.$gridSettings->addClass.'"';
 		
 		return $grid;
 	}
 
 	public function pattern($value, $row, $params = null) {
+		$params = $params[1];
 		return preg_replace_callback('/%([\w]*)%/', function($matches) use ($row) {
 			return isset($row[$matches[1]]) ? $row[$matches[1]] : $matches[0];
 		}, $params->pattern);
 	}
 
-	public function translateColumn($value, $row, $key) {
+	public function translateColumn($value, $row, $params) {
+		$key = $params[1];
 		return $this->translate($row->getEntity()->$key->id);
 	}
 }
