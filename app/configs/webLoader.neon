@@ -1,0 +1,27 @@
+parameters:
+	webloader:
+		packages:
+			admin:
+				css:
+					- admin.css
+					- main.css
+				js:
+					- admin.js
+					- main.js
+
+			bootstrap:
+				css: _bootstrap.less
+
+			jQuery:
+				css: 1_jquery-ui-1.8.19.custom.css
+				js: 1_jquery.js
+
+		sets:
+			'Admin:Autopilot':
+				- %webloader.packages.jQuery%
+
+			Admin: 
+				- %webloader.packages.bootstrap%
+				- %webloader.packages.jQuery%
+				- %webloader.packages.admin%
+
