@@ -2,7 +2,8 @@
 
 use Nette\Application\UI\Presenter,
 	Nette\Environment,
-	Nette\Utils\Finder;
+	Nette\Utils\Finder,
+	Nette\Security\User;
 
 
 abstract class BasePresenter extends Presenter {
@@ -10,7 +11,21 @@ abstract class BasePresenter extends Presenter {
 
 	protected function startup() {
 		parent::startup();
+		
+		// if (false /*!$this->user->isLoggedIn()*/) {
+		// 	if ($this->user->getLogoutReason() === User::INACTIVITY) {
+		// 		$this->flashMessage('Session timeout, you have been logged out', 'warning');
+		// 	}
 
+		// 	$backlink = $this->getApplication()->storeRequest();
+		// 	$this->redirect('Auth:login', array('backlink' => $backlink));
+		// } else {
+		// 	if (!$this->user->isAllowed($this->name, $this->action)) {
+		// 		$this->flashMessage('Access diened. You don\'t have permissions to view that page.', 'warning');
+		// 		// $this->redirect('Auth:login');
+		// 		throw new \Nette\MemberAccessException('co tu chces?!');
+		// 	}
+		// }
 		// odstranuje neplatne _fid s url
 		if (!$this->hasFlashSession() && !empty($this->params[self::FLASH_KEY])) {
 			unset($this->params[self::FLASH_KEY]);
