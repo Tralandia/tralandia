@@ -44,4 +44,8 @@ $(function() {
 
 })
 
+function toggleEdit(obj) {
+	$($(obj).parent()).next('form').toggleClass('edit-mode');
+}
+
 function debug(val) { console.log(val); }

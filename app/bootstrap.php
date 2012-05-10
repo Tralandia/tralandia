@@ -82,12 +82,12 @@ $container->application->onStartup[] = function() use ($container) {
 	));
 
 	$router[] = $frontRouter = new RouteList('Front');
-	$frontRouter[] = new \Extras\Route($container->routerCache, array(
+/*	$frontRouter[] = new \Extras\Route($container->routerCache, array(
 								'presenter' => 'David',
 								'action' => 'default',
 								'country' => 'SK',
 							));
-	$frontRouter[] = new Route('<presenter>/[<action>[/<id>]]', 'Home:default');
+*/	$frontRouter[] = new Route('<presenter>/[<action>[/<id>]]', 'Home:default');
 
 };
 
