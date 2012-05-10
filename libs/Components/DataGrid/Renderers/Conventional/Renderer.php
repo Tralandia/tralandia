@@ -243,7 +243,7 @@ class Conventional extends Nette\Object implements IRenderer
 			$cell = $this->getWrapper('row.content cell container');
 			$cell->colspan = $size;
 			$cell->style = 'text-align:center';
-			$cell->add(Html::el('div')->setText($this->dataGrid->translate('No data were found')));
+			$cell->add(Html::el('div')->setText($this->dataGrid->translate('Nenašiel sa žiadny záznam.')));
 			$row->add($cell);
 			$body->add($row);
 		}

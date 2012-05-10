@@ -101,7 +101,7 @@ class DataGrid extends Nette\Application\UI\Control implements \ArrayAccess
 		$this->paginator = new Nette\Utils\Paginator;
 
 		$session = $this->getSession();
-		if (!$session->isStarted()) {
+		if (!$session->isStarted() && !headers_sent()) {
 			$session->start();
 		}
 	}

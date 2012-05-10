@@ -28,6 +28,7 @@ class Reflector extends Nette\Object {
 	protected $formMask;
 	protected $reflectedEntities = array();
 	protected $fields = array();
+	protected $jsonStructures;
 
 
 	public function __construct($settings) {
@@ -169,6 +170,7 @@ class Reflector extends Nette\Object {
 	private function _getFormMask() {
 		$mask = array();
 		$mask['classReflection'] = $this->getServiceReflection($this->settings->serviceClass);
+		$mask['entityReflection'] = $this->getSerivcesEntityReflection($mask['classReflection']);
 
 		$formSettings = $this->settings->params->form;
 
@@ -209,7 +211,6 @@ class Reflector extends Nette\Object {
 				'inlineEditing' => array('default' => NULL), 
 				'inlineDeleting' => array('default' => NULL), 
 				'inlineCreating' => array('default' => NULL), 
-				'disabled' => array('default'=> NULL),
 				'startNewRow' => array('default'=> NULL),
 			);
 
@@ -263,7 +264,7 @@ class Reflector extends Nette\Object {
 				$fieldMask['ui']['controlOptions']['columnClass'] = $fieldMask['ui']['columnClass'];
 			}
 			
-			if($fieldMask['ui']['startNewRow'] || in_array($type, array('checkboxList', 'bricksList', 'tinymce'))) {
+			if($fieldMask['ui']['startNewRow'] || in_array($type, array('checkboxList', 'bricksList', 'tinymce', 'table', 'json'))) {
 				$fieldMask['ui']['controlOptions']['renderBefore'] = Html::el('hr')->addClass('soften');
 			}
 
@@ -277,6 +278,10 @@ class Reflector extends Nette\Object {
 				$fieldMask['ui']['control']['type'] = 'AdvancedSelectBox';
 			} else if($type == 'checkboxList') {
 				$fieldMask['ui']['control']['type'] = 'AdvancedCheckboxList';
+			} else if($type == 'table') {
+				$fieldMask['ui']['control']['type'] = 'AdvancedTable';
+			} else if($type == 'json') {
+				$fieldMask['ui']['control']['type'] = 'AdvancedJson';
 			} else if($type == 'bricksList') {
 				$fieldMask['ui']['control']['type'] = 'AdvancedBricksList';
 			} else if($type == 'tinymce') {
@@ -401,7 +406,7 @@ class Reflector extends Nette\Object {
 				$control->getControlPrototype()->addClass($ui->control->addClass);
 			}
 
-			if(isset($ui->control->disabled)) $control->setDisabled();
+			if(isset($ui->control->disabled)) $control->setDisabled($ui->control->disabled);
 			
 			if ($control instanceof \Extras\Forms\Controls\AdvancedSelectBox 
 				|| $control instanceof \Extras\Forms\Controls\AdvancedCheckboxList
@@ -417,6 +422,16 @@ class Reflector extends Nette\Object {
 				} else {
 					throw new \Exception("Callback alebo options v `{$classReflection->getConstant('MAIN_ENTITY_NAME')} - {$propertyName}` nie sú validné");
 				}
+			}
+
+			if($control instanceof \Extras\Forms\Controls\AdvancedJson) {
+				$structure = $this->getJsonStructure($mask->entityReflection);
+				$control->setStructure((array) $structure[$ui->name]);
+			}
+
+			if($control instanceof \Extras\Forms\Controls\AdvancedTable) {
+				$control->setColumns($ui->control->columns);
+				$control->setRows($ui->control->rows);
 			}
 
 		}
@@ -436,6 +451,16 @@ class Reflector extends Nette\Object {
 				$control->getControlPrototype()->addClass($button->addClass);
 			}
 		}
+	}
+
+	public function getJsonStructure($entityReflection) {
+		list(, $name) = explode('\\', $entityReflection->getName(), 2);
+		if(!$this->jsonStructures) {
+			$config = new \Nette\Config\Loader;
+			
+			$this->jsonStructures = $config->load(APP_DIR . '/configs/entities/jsonStructures.neon');
+		}
+		return $this->jsonStructures[$name];
 	}
 	
 	/**
@@ -524,7 +549,7 @@ class Reflector extends Nette\Object {
 	
 	private function getServiceReflection($class) {
 		$classReflection = ClassType::from($class);
-		$entityReflection = ClassType::from($classReflection->getConstant('MAIN_ENTITY_NAME'));
+		$entityReflection = $this->getSerivcesEntityReflection($classReflection);
 		
 		// poznacim si, ktore entity som v tejto service uz reflektoval
 		if (!in_array($entityReflection->getName(), $this->reflectedEntities)) {
@@ -532,6 +557,10 @@ class Reflector extends Nette\Object {
 		}
 
 		return $classReflection;
+	}
+
+	private function getSerivcesEntityReflection($serviceReflection){
+		return ClassType::from($serviceReflection->getConstant('MAIN_ENTITY_NAME'));
 	}
 	
 }

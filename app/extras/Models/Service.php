@@ -433,7 +433,7 @@ abstract class Service extends Nette\Object implements IService {
 				}				
 			}
 		}
-		//debug($data);
+		debug($data);
 		return $data;
 	}
 
@@ -441,7 +441,8 @@ abstract class Service extends Nette\Object implements IService {
 		//debug($formValues);
 		foreach ($mask->fields as $property) {
 			$ui = $property->ui;
-			if($ui->disabled) continue;
+			debug($ui);
+			if(isset($ui->control->disabled) && $ui->control->disabled) continue;
 			$name = $ui->name;
 			if(array_key_exists($name, $formValues)) {
 				$formValue = $formValues[$name];
