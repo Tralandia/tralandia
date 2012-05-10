@@ -1,0 +1,53 @@
+.hidden { display:none; }
+
+.container .inner .content { margin-top:0; margin-bottom:30px; }
+.container .inner .headspace { height:60px; }
+
+/* Without details */
+.navbar-fixed-top { width:1280px; border:1px solid @green; .border-radius(0 0 5px 5px); box-shadow:0 2px 3px @grayLight; }
+.navbar-fixed-top .navbar-inner { position:relative; }
+.navbar-fixed-top .row hr { margin-left:0; }
+.navbar-fixed-top .details { display:none; }
+.navbar-fixed-top .btn-overlay .btn { position: absolute; right:0; top:-1px; bottom: 0; margin-top: 0; }
+.navbar-fixed-top .btn-overlay .btn[data-toggle="button"] { .border-radius(0 4px 4px 0); }
+.navbar-fixed-top .btn-overlay .btn.btn-repeat { right:110px; top:5px; bottom:7px; }
+.navbar-fixed-top .btn-overlay .btn.btn-done { right:29px; top:-1px; bottom:0; .border-radius(0); }
+
+/* With details */
+.navbar-fixed-top.details .navbar-inner { .border-radius(0); }
+.navbar-fixed-top.details .details { display:block; margin-bottom:0; }
+.navbar-fixed-top.details .btn-overlay .btn.btn-done { display:none; }
+.navbar-fixed-top.details .btn-overlay .btn.btn-repeat { right:35px; }
+
+.navbar .brand { text-shadow: 1px 1px 2px @grayDarker; }
+.navbar .task-id { margin-right:10px; font-size:14px; }
+
+
+.subnav .well { #gradient > .vertical(#fff, @grayLighter); color:@black; padding:5px 10px 0 10px; }
+.subnav .well h2 { font-size:17px; }
+.subnav .well .row { padding:0; }
+.subnav .well .row .span3 { margin-top:10px; }
+.subnav .well .well { padding:10px; font-size:14px; box-shadow:none; border:1px solid @grayMedium; .border-radius(4px); }
+.subnav .well .well table { margin-bottom:0; }
+.subnav .well .well table thead { background:none; color:@green; }
+.subnav .well .well.span3 { width: 262px; margin: 10px 0 0 20px; }
+
+.subnav .comments {  }
+.subnav .comments .comment { padding:3px 0; margin:0 0 5px 0; font-size:11px; }
+.subnav .comments .comment span { font-weight:bold; font-size:11px; color:@grayDark; }
+.subnav .comments .comment:hover > span { text-decoration:underline; }
+.subnav .comments textarea { margin: 10px 0 5px 0; }
+
+.subnav .options { margin: 10px -11px 0 -11px; background: white; border-radius: 0 0 5px 5px; border-top: 1px solid #DDD; padding: 10px; }
+.subnav .options .btn { margin-left:15px; }
+.subnav .options .btn-medium { margin:10px 0 0 5px; }
+
+hr { border-top: 1px solid @grayMedium; margin:10px 0; }
+
+.container .inner .content { padding:0; }
+.container .inner .content h1 { margin:-1px -1px 1px -1px; padding:2px 10px; font-size:18px; }
+.container .inner .content h1 .btn { margin:6px 0 0 5px; }
+.container .inner .content iframe { border:none; display: block; width: 100%; height: 500px; padding-bottom:10px; }
+
+.info { font-size:11px; }
+.info span { color:@blueDark; }

@@ -8,319 +8,262 @@
 	<script type="text/javascript" src="js/bootstrap.js"></script>
 	<link rel="stylesheet/less" type="text/css" href="less/_bootstrap.less">
 	<script type="text/javascript" src="js/less.js"></script>
-</head>
+</head> 
 <body>
 	<div class="container">
 		<div class="inner">
-			<div class="navbar navbar-static">
-				<div class="navbar-inner green">
-					<div class="container" style="width: auto;">
-						<a class="brand" href="#">Tralandia</a>
-						<ul class="nav">
- 							<li class="dropdown">
-								<a href="#" class="dropdown-toggle green" data-toggle="dropdown">Support <b class="caret"></b></a>
-							</li>
- 							<li class="dropdown">
-								<a href="#" class="dropdown-toggle green" data-toggle="dropdown">Statistics <b class="caret"></b></a>
-							</li>
- 							<li class="dropdown">
-								<a href="#" class="dropdown-toggle green" data-toggle="dropdown">Autopilot <b class="caret"></b></a>
-							</li>
- 							<li class="dropdown">
-								<a href="#" class="dropdown-toggle green" data-toggle="dropdown">Users <b class="caret"></b></a>
-							</li>
- 							<li class="dropdown">
-								<a href="#" class="dropdown-toggle green" data-toggle="dropdown">Rentals <b class="caret"></b></a>
-							</li>
- 							<li class="dropdown">
-								<a href="#" class="dropdown-toggle green" data-toggle="dropdown">Invoicing <b class="caret"></b></a>
-							</li>
- 							<li class="dropdown">
-								<a href="#" class="dropdown-toggle green" data-toggle="dropdown">Dictionary <b class="caret"></b></a>
-							</li>
- 							<li class="dropdown">
-								<a href="#" class="dropdown-toggle green" data-toggle="dropdown">Site <b class="caret"></b></a>
-							</li>
- 							<li class="dropdown">
-								<a href="#" class="dropdown-toggle green" data-toggle="dropdown">Emailing <b class="caret"></b></a>
-							</li>
- 							<li class="dropdown">
-								<a href="#" class="dropdown-toggle green" data-toggle="dropdown">Company <b class="caret"></b></a>
-							</li>
+			<div class="content">
+			<h1>Cibi presenter <button class="btn btn-warning pull-right" data-toggle="button" onclick="toggleEdit(this);">Edit mode</button></h1>
+<form class="row form">
 
-<!--
- 							<li class="dropdown">
-								<a href="#" class="dropdown-toggle green" data-toggle="dropdown">SEO / PPC <b class="caret"></b></a>
-								<ul class="dropdown-menu">
-									<li><a href="#">Action</a></li>
-									<li><a href="#">Another action</a></li>
-									<li><a href="#">Something else here</a></li>
-									<li class="divider"></li>
-									<li><a href="#">Separated link</a></li>
-								</ul>
-							</li>
-							<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Members <b class="caret"></b></a>
-								<ul class="dropdown-menu">
-									<li><a href="#">Action</a></li>
-									<li><a href="#">Another action</a></li>
-									<li><a href="#">Something else here</a></li>
-									<li class="divider"></li>
-									<li><a href="#">Separated link</a></li>
-								</ul>
-							</li>
-							<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Managers <b class="caret"></b></a>
-								<ul class="dropdown-menu">
-									<li><a href="#">Action</a></li>
-									<li><a href="#">Another action</a></li>
-									<li><a href="#">Something else here</a></li>
-									<li class="divider"></li>
-									<li><a href="#">Separated link</a></li>
-								</ul>
-							</li>
-							<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Countries <b class="caret"></b></a>
-								<ul class="dropdown-menu">
-									<li><a href="#">Action</a></li>
-									<li><a href="#">Another action</a></li>
-									<li><a href="#">Something else here</a></li>
-									<li class="divider"></li>
-									<li><a href="#">Separated link</a></li>
-								</ul>
-							</li>
- -->
- 						</ul>
-						<ul class="nav pull-right">
-							<li id="fat-menu" class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Jan Czibula <b class="caret"></b></a>
-								<ul class="dropdown-menu">
-									<li><a href="#">Action</a></li>
-									<li><a href="#">Another action</a></li>
-									<li><a href="#">Something else here</a></li>
-									<li class="divider"></li>
-									<li><a href="#">Separated link</a></li>
-								</ul>
-							</li>
-						</ul>
-					</div>
+	<!-- Inputs -->
+	<div class="span3">
+		<label>
+			<b>Mesto</b>
+			<i>(some comment)</i>
+			<i class="icon-loading pull-right"></i>
+		</label>
+		<div class="input-prepend input-append">
+			<span class="add-on pull-left">EN:</span>
+			<input placeholder="napiste nazov mesta" class="pull-left input-medium" />
+			<a href="" class="btn edit-hidden btn-info pull-left" type="button" title="Add region"><i class="icon-globe icon-white"></i></a>
+		</div>
+	</div>
+	<div class="span3 control-group error">
+		<label>
+			<b>Mesto</b>
+			<i>(some comment)</i>
+			<div class="pull-right show-tooltip label label-important" title="Error message"><i class="icon-ban-circle icon-white"></i></div>
+		</label>
+		<input placeholder="napiste nazov mesta" class="span3" />
+	</div>
+	<div class="span3 control-group success">
+		<label>
+			<b>Mesto</b>
+			<i>(some comment)</i>
+			<div class="pull-right show-tooltip label label-success" title="Ok message"><i class="icon-ok icon-white"></i></div>
+		</label>
+		<input placeholder="napiste nazov mesta" class="span3" />
+	</div>
+	<div class="span3 control-group warning">
+		<label>
+			<b>Select</b>
+			<i>(some comment)</i>
+			<div class="pull-right show-tooltip label label-warning" title="Warning message"><i class="icon-warning-sign icon-white"></i></div>
+		</label>
+		<input placeholder="napiste nazov mesta" class="span3" />
+	</div>
+
+	<!-- Selects -->
+	<div class="span3">
+		<label><b>Select region</b> <i>(some comment)</i></label>
+		<div class="input-append input-prepend">
+			<select class="pull-left input-medium">
+				<option>Nitriansky kraj</option>
+				<option>Bratislavsky kraj</option>
+				<option>Kosicky kraj</option>
+			</select>
+			<button class="btn edit-hidden btn-info pull-left" type="button" title="Edit regions"><i class="icon-edit icon-white"></i></button>
+			<button class="btn edit-hidden btn-success pull-left" type="button" title="Add region"><i class="icon-plus icon-white"></i></button>
+		</div>
+	</div>
+	<div class="span3">
+		<label><b>Select region</b> <i>(some comment)</i></label>
+		<div class="input-append input-prepend">
+			<select class="pull-left input-medium">
+				<option>Nitriansky kraj</option>
+				<option>Bratislavsky kraj</option>
+				<option>Kosicky kraj</option>
+			</select>
+			<button class="btn edit-hidden btn-info pull-left" type="button" title="Edit regions"><i class="icon-edit icon-white"></i></button>
+			<button class="btn edit-hidden btn-success pull-left" type="button" title="Add region"><i class="icon-plus icon-white"></i></button>
+		</div>
+	</div>
+	<hr class="soften">
+
+	<!-- Checkboxes -->
+	<div class="span12">
+		<label><b>Mesto</b> <i>(some comment)</i></label>
+	</div>
+	<label class="span3 checkbox">
+		<input type="checkbox" />input for checkbox
+		<div class="btn-group pull-right"><a href="" class="btn edit-hidden btn-info btn-mini" title="Edit"><i class="icon-white icon-edit"></i></a><a href="" class="btn edit-hidden btn-danger btn-mini" title="Remove"><i class="icon-white icon-remove"></i></a></div>
+	</label>
+	<label class="span3 checkbox checked">
+		<input type="checkbox" checked="checked" />input for checkbox
+		<div class="btn-group pull-right"><a href="" class="btn edit-hidden btn-info btn-mini" title="Edit"><i class="icon-white icon-edit"></i></a><a href="" class="btn edit-hidden btn-danger btn-mini" title="Remove"><i class="icon-white icon-remove"></i></a></div>
+	</label>
+	<label class="span3 checkbox checked">
+		<input type="checkbox" checked="checked" />input for checkbox
+		<div class="btn-group pull-right"><a href="" class="btn edit-hidden btn-info btn-mini" title="Edit"><i class="icon-white icon-edit"></i></a><a href="" class="btn edit-hidden btn-danger btn-mini" title="Remove"><i class="icon-white icon-remove"></i></a></div>
+	</label>
+	<label class="span3 checkbox checked">
+		<input type="checkbox" checked="checked" />input for checkbox
+		<div class="btn-group pull-right"><a href="" class="btn edit-hidden btn-info btn-mini" title="Edit"><i class="icon-white icon-edit"></i></a><a href="" class="btn edit-hidden btn-danger btn-mini" title="Remove"><i class="icon-white icon-remove"></i></a></div>
+	</label>
+	<label class="span3 checkbox">
+		<input type="checkbox" />input for checkbox
+		<div class="btn-group pull-right"><a href="" class="btn edit-hidden btn-info btn-mini" title="Edit"><i class="icon-white icon-edit"></i></a><a href="" class="btn edit-hidden btn-danger btn-mini" title="Remove"><i class="icon-white icon-remove"></i></a></div>
+	</label>
+	<label class="span3 checkbox">
+		<input type="checkbox" />input for checkbox
+		<div class="btn-group pull-right"><a href="" class="btn edit-hidden btn-info btn-mini" title="Edit"><i class="icon-white icon-edit"></i></a><a href="" class="btn edit-hidden btn-danger btn-mini" title="Remove"><i class="icon-white icon-remove"></i></a></div>
+	</label>
+	<label class="span3 checkbox checked">
+		<input type="checkbox" checked="checked" />input for checkbox
+		<div class="btn-group pull-right"><a href="" class="btn edit-hidden btn-info btn-mini" title="Edit"><i class="icon-white icon-edit"></i></a><a href="" class="btn edit-hidden btn-danger btn-mini" title="Remove"><i class="icon-white icon-remove"></i></a></div>
+	</label>
+	<div class="span3">
+		<a class="btn edit-hidden btn-success btn-mini" title="Add new" data-toggle="modal" href="#myModal"><i class="icon-plus icon-white"></i> Add city</a>
+	</div>
+	<hr class="soften" />
+
+	<!-- Radio Buttons -->
+	<div class="span12">
+		<label><b>Mesto</b> <i>(some comment)</i></label>
+	</div>
+	<label class="span3 radio">
+		<input type="radio" name="optionsRadios" /> input for radio
+		<div class="btn-group pull-right"><a href="" class="btn edit-hidden btn-info btn-mini" title="Edit"><i class="icon-white icon-edit"></i></a><a href="" class="btn edit-hidden btn-danger btn-mini" title="Remove"><i class="icon-white icon-remove"></i></a></div>
+	</label>
+	<label class="span3 radio checked">
+		<input type="radio" name="optionsRadios" checked="checked" /> input for radio
+		<div class="btn-group pull-right"><a href="" class="btn edit-hidden btn-info btn-mini" title="Edit"><i class="icon-white icon-edit"></i></a><a href="" class="btn edit-hidden btn-danger btn-mini" title="Remove"><i class="icon-white icon-remove"></i></a></div>
+	</label>
+	<label class="span3 radio">
+		<input type="radio" name="optionsRadios" /> input for radio
+		<div class="btn-group pull-right"><a href="" class="btn edit-hidden btn-info btn-mini" title="Edit"><i class="icon-white icon-edit"></i></a><a href="" class="btn edit-hidden btn-danger btn-mini" title="Remove"><i class="icon-white icon-remove"></i></a></div>
+	</label>
+	<div class="span3">
+		<a class="btn edit-hidden btn-success btn-mini" title="Add new" data-toggle="modal" href="#myModal"><i class="icon-plus icon-white"></i> Add</a>
+	</div>
+	<hr class="soften" />
+
+	<!-- Multiselect -->
+	<div class="span12">
+		<label><b>Multiselect</b> <i>(some comment)</i></label>
+	</div>
+	<div class="span12">
+		<select multiple="multiple" class="span6 multiselect">
+			<option>Option value 1</option>
+			<option selected="selected">Option value 1</option>
+			<option selected="selected">Option value 2</option>
+			<option selected="selected">Option value 3</option>
+			<option selected="selected">Option value 4</option>
+			<option>Option value 2</option>
+			<option>Option value 3</option>
+			<option>Option value 4</option>
+			<option>Option value 5</option>
+			<option>Option value 6</option>
+		</select>	
+	</div>
+	<hr class="soften" />
+
+	<!-- Textarea -->
+	<div class="span12">
+		<label><b>Textarea with tinyMCE</b> <i>(some comment)</i></label>
+	</div>
+	<div class="span12">
+		<textarea class="span12 tinymce" rows="10"></textarea>
+	</div>
+	<hr class="soften" />
+
+	<!-- bricks -->
+	<div class="span12">
+		<label><b>bricks</b> <i>(some comment)</i></label>
+	</div>
+	<div class="input-bricks span12">
+		<label class="label">
+			<div class="btn-group pull-right">
+				<a href="" class="btn btn-info btn-mini"><i class="icon-edit icon-white"></i></a>
+				<a href="" class="btn btn-danger btn-mini"><i class="icon-remove icon-white"></i></a>
+			</div>
+			Item name one
+			<input type="hidden" name="box[]" value="value" />
+		</label>
+		<label class="label">
+			<div class="btn-group pull-right">
+				<a href="" class="btn btn-info btn-mini"><i class="icon-edit icon-white"></i></a>
+				<a href="" class="btn btn-danger btn-mini"><i class="icon-remove icon-white"></i></a>
+			</div>
+			Item name two
+			<input type="hidden" name="box[]" value="value" />
+		</label>
+		<label class="label">
+			<div class="btn-group pull-right">
+				<a href="" class="btn btn-info btn-mini"><i class="icon-edit icon-white"></i></a>
+				<a href="" class="btn btn-danger btn-mini"><i class="icon-remove icon-white"></i></a>
+			</div>
+			Item name tree
+			<input type="hidden" name="box[]" value="value" />
+		</label>
+		<label class="label">
+			<div class="btn-group pull-right">
+				<a href="" class="btn btn-info btn-mini"><i class="icon-edit icon-white"></i></a>
+				<a href="" class="btn btn-danger btn-mini"><i class="icon-remove icon-white"></i></a>
+			</div>
+			Item name four
+			<input type="hidden" name="box[]" value="value" />
+		</label>
+		<label class="label">
+			<div class="btn-group pull-right">
+				<a href="" class="btn btn-info btn-mini"><i class="icon-edit icon-white"></i></a>
+				<a href="" class="btn btn-danger btn-mini"><i class="icon-remove icon-white"></i></a>
+			</div>
+			Item name five
+			<input type="hidden" name="box[]" value="value" />
+		</label>
+		<a href="" class="btn edit-hidden btn-success btn-small pull-left" title="Add bar"><i class="icon-plus icon-white"></i> Add bar</a>
+	</div>
+	<hr class="soften" />
+
+	<!-- Submit/Cancel -->
+	<div class="span12">
+		<div class="form-actions">
+				<button class="btn btn-large">Cancel</button>
+			<div class="pull-right">
+				<select class="input-medium">
+					<option>Client Iniciative</option>
+					<option>My Iniciative</option>
+					<option>Other</option>
+				</select>
+				<input type="submit" class="btn btn-large btn-success" value="Submit form" />
+			</div>
+		</div>
+	</div>
+</form>
+<div class="modal" id="myModal" style="display:none;">
+	<div class="modal-header">
+		<button class="close" data-dismiss="modal">×</button>
+		<h3>Modal header</h3>
+	</div>
+	<div class="modal-body">
+		<form class="row">
+			<label class="span3 checkbox">
+				<input type="checkbox" /> input for checkbox
+				<div class="btn-group pull-right">
+					<a href="" class="btn edit-hidden btn-mini" title="Edit"><i class="icon-edit"></i></a>
+					<a href="" class="btn edit-hidden btn-mini" title="Remove"><i class="icon-remove"></i></a>
 				</div>
-			</div>
-			<div class="alert alert-error">
-				<a class="close" data-dismiss="alert">×</a>
-				<strong>Oh snap!</strong> Change a few things up and try submitting again.
-			</div>
-			<div class="alert">
-				<a class="close" data-dismiss="alert">×</a>
-				<strong>Warning!</strong> Best check yo self, you're not looking too good.
-			</div>
-			<div class="alert alert-success">
-				<a class="close" data-dismiss="alert">×</a>
-				<strong>Success!</strong> Best check yo self, you're not looking too good.
-			</div>
-			<div class="content">
-				<h1 class="breadcrumb">List component <small>lorem ipsum</small></h1>
-				<table class="table table-striped">
-					<thead>
-						<tr>
-							<th>mID</th>
-							<th>oID</th>
-							<th>Name</th>
-							<th>Quality</th>
-							<th>Created</th>
-							<th>Updated</th>
-							<th>&nbsp;</th>
-						</tr>
-					</thead>
-					<tr>
-						<td><b>3130</b></td>
-						<td><b>3895</b></td>
-						<td>(<a href="#">cz</a>) Apartmany Magicka zahrada</td>
-						<td>34.66%</td>
-						<td>13.1.2011</td>
-						<td>3 min.</td>
-						<td>
-							<a class="btn btn-mini" href="">View</a>
-							<a class="btn btn-mini btn-warning" href="">Edit</a>
-							<a class="btn btn-mini btn-success" href="">Login</a>
-							<a class="btn btn-mini btn-danger" href="">Delete</a>
-							<button class="btn btn-mini btn-info active" data-toggle="button">Checked</button>
-							<a class="btn btn-mini btn-primary" href="">Updated</a>
-						</td>
-					</tr>
-					<tr>
-						<td><b>3130</b></td>
-						<td><b>3895</b></td>
-						<td>(<a href="#">cz</a>) Apartmany Magicka zahrada</td>
-						<td>34.66%</td>
-						<td>13.1.2011</td>
-						<td>1182 min.</td>
-						<td>
-							<a class="btn btn-mini" href="">View</a>
-							<a class="btn btn-mini btn-warning" href="">Edit</a>
-							<a class="btn btn-mini btn-success" href="">Login</a>
-							<a class="btn btn-mini btn-danger" href="">Delete</a>
-							<button class="btn btn-mini btn-info" data-toggle="button">Checked</button>
-							<a class="btn btn-mini btn-primary" href="">Updated</a>
-						</td>
-					</tr>
-					<tr>
-						<td><b>3130</b></td>
-						<td><b>3895</b></td>
-						<td>(<a href="#">cz</a>) Apartmany Magicka zahrada</td>
-						<td>34.66%</td>
-						<td>13.1.2011</td>
-						<td>davno</td>
-						<td>
-							<a class="btn btn-mini" href="">View</a>
-							<a class="btn btn-mini btn-warning" href="">Edit</a>
-							<a class="btn btn-mini btn-success" href="">Login</a>
-							<a class="btn btn-mini btn-danger" href="">Delete</a>
-							<button class="btn btn-mini btn-info" data-toggle="button">Checked</button>
-							<a class="btn btn-mini btn-primary" href="">Updated</a>
-						</td>
-					</tr>
-					<tr>
-						<td><b>3130</b></td>
-						<td><b>3895</b></td>
-						<td>(<a href="#">cz</a>) Apartmany Magicka zahrada</td>
-						<td>34.66%</td>
-						<td>13.1.2011</td>
-						<td>3 min.</td>
-						<td>
-							<a class="btn btn-mini" href="">View</a>
-							<a class="btn btn-mini btn-warning" href="">Edit</a>
-							<a class="btn btn-mini btn-success" href="">Login</a>
-							<a class="btn btn-mini disabled" href="">Delete</a>
-							<button class="btn btn-mini btn-info" data-toggle="button">Checked</button>
-							<a class="btn btn-mini btn-primary" href="">Updated</a>
-						</td>
-					</tr>
-				</table>
-				<div class="pagination pull-right">
-					<ul>
-						<li><a href="#">Prev</a></li>
-						<li class="active"><a href="#">1</a></li>
-						<li><a href="#">2</a></li>
-						<li><a href="#">3</a></li>
-						<li><a href="#">4</a></li>
-						<li><a href="#">Next</a></li>
-					</ul>
+			</label>
+			<label class="span3 checkbox">
+				<input type="checkbox" /> input for checkbox
+				<div class="btn-group pull-right">
+					<a href="" class="btn edit-hidden btn-mini" title="Edit"><i class="icon-edit"></i></a>
+					<a href="" class="btn edit-hidden btn-mini" title="Remove"><i class="icon-remove"></i></a>
 				</div>
-				<div class="clearfix"></div>
+			</label>
+			<div class="span3">
+				<a class="btn edit-hidden btn-mini" title="Add new"><i class="icon-plus"></i> Add</a>
 			</div>
-			<div class="content">
-				<h1 class="breadcrumb">Form component <small>Country</small></h1>
-				<form>
-					<div class="alert alert-success">
-						<a class="close" data-dismiss="alert">×</a>
-						<strong>Success!</strong> Form has been saved
-					</div>
-					<hr class="soften">
-					<div class="row">
-						<div class="span3">
-							<label><b>City / Town</b> (some comment) sadf as saf as dfa fs fas</label>
-							<input type="text" class="span3 new-row" placeholder="Type something…">
-						</div>
-						<div class="span3">
-							<label><b>City / Town</b> (some comment)</label>
-							<select class="span3">
-								<option>Option one</option>
-								<option>Option two</option>
-								<option>Option tree</option>
-								<option>Option four</option>
-							</select>
-						</div>
-						<div class="span3">							
-							<label><b>City / Town</b> (some comment)</label>
-							<input type="text" class="span3" placeholder="Type something…">
-						</div>
-					</div>
-					<hr class="soften">
-					<div class="row">
-						<div class="span3">
-							<label><b>City / Town</b> (some comment)</label>
-							<select class="span3">
-								<option>Option one</option>
-								<option>Option two</option>
-								<option>Option tree</option>
-								<option>Option four</option>
-							</select>
-						</div>
-						<div class="span3">
-							<label><b>City / Town</b> (some comment)</label>
-							<select class="span3">
-								<option>Option one</option>
-								<option>Option two</option>
-								<option>Option tree</option>
-								<option>Option four</option>
-							</select>
-						</div>
-						<div class="span3">
-							<label><b>City / Town</b> (some comment)</label>
-							<select class="span3">
-								<option>Option one</option>
-								<option>Option two</option>
-								<option>Option tree</option>
-								<option>Option four</option>
-							</select>
-						</div>
-					</div>
-					<hr class="soften">
-					<div class="row">
-						<div class="span12"><label><b>Checkboxes</b> test</label></div>
-						<div class="span3"><label class="checkbox"><input type="checkbox" /> label of this item</label></div>
-						<div class="span3"><label class="checkbox"><input type="checkbox" /> label of this item</label></div>
-						<div class="span3"><label class="checkbox"><input type="checkbox" /> label of this item</label></div>
-						<div class="span3"><label class="checkbox"><input type="checkbox" /> label of this item</label></div>
-						<div class="span3"><label class="checkbox"><input type="checkbox" /> label of this item</label></div>
-						<div class="span3"><label class="checkbox"><input type="checkbox" /> label of this item</label></div>
-						<div class="span3"><label class="checkbox"><input type="checkbox" /> label of this item</label></div>
-						<div class="span3"><label class="checkbox"><input type="checkbox" /> label of this item</label></div>
-					</div>
-					<hr class="soften">
-					<div class="row">
-						<div class="span9">
-							<select id="weapons" class="multiselect" multiple="multiple" name="weapons[]">
-								<option value="boomerang">Boomerang</option>
-								<option value="medieval_knive">Medieval Knive</option>
-								<option selected="selected" value="ninja_star">Ninja Star</option>
-								<option value="dragon_blades">Dragon Blades</option>
-								<option selected="selected" value="warrior_sword">Warrior Sword</option>
-								<option value="machine_gun">Machine Gun</option>
-								<option selected="selected" value="tomato">Tomato</option>
-								<option value="axe">Axe</option>
-								<option value="jedi_sword">Jedi Sword</option>
-							</select>
-						</div>
-					</div>
-					<hr class="soften">
-					<div class="row">
-						<div class="span9">
-							<label><b>Textarea</b> (some comment)</label>
-							<textarea class="span12" rows="8"></textarea>
-						</div>
-					</div>
-					<hr class="soften">
-					<div class="row">
-						<div class="span9">
-							<label><b>City / Town</b> (some comment)</label>
-							<select>
-								<option>Option one</option>
-								<option>Option two</option>
-								<option>Option tree</option>
-								<option>Option four</option>
-							</select>
-						</div>
-					</div>
-					<hr class="soften">
-					<div class="pull-right">
-						<input type="submit" value="Cancel" class="btn btn-large" />
-						<input type="submit" value="Save and continue" class="btn btn-success btn-large" />
-					</div>
-					<div class="clearfix"></div>
-				</form>
-			</div>
+		</form>
+	</div>
+	<div class="modal-footer"> 
+		<a href="#" class="btn edit-hidden">Close</a>
+		<a href="#" class="btn edit-hidden btn-primary">Save changes</a>
+	</div>
+</div>
+		</div>
 		</div>
 	</div>
 </body>
