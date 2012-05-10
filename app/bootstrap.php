@@ -14,7 +14,7 @@ require_once LIBS_DIR . '/rado_functions.php';
 $section = isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : null;
 // Enable Nette\Debug for error visualisation & logging
 Debugger::enable();
-Debugger::$strictMode = FALSE;
+//Debugger::$strictMode = FALSE;
 
 
 // Configure application
@@ -86,8 +86,8 @@ $container->application->onStartup[] = function() use ($container) {
 								'presenter' => 'David',
 								'action' => 'default',
 								'country' => 'SK',
-							));*/
-	$frontRouter[] = new Route('<presenter>/[<action>[/<id>]]', 'Home:default');
+							));
+*/	$frontRouter[] = new Route('<presenter>/[<action>[/<id>]]', 'Home:default');
 
 };
 

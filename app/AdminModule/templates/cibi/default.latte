@@ -1,67 +1,68 @@
 {block content}
-<h1>Cibi presenter</h1>
+<h1>Cibi presenter <button class="btn btn-warning pull-right" data-toggle="button" onclick="toggleEdit(this);">Edit mode</button></h1>
 <form class="row form">
 
 	<!-- Inputs -->
-	<div class="span4 control-group input-append">
+	<div class="span3">
 		<label>
 			<b>Mesto</b>
 			<i>(some comment)</i>
 			<i class="icon-loading pull-right"></i>
 		</label>
-		<input placeholder="napiste nazov mesta" class="pull-left" />
-		<button class="btn btn-info pull-left" type="button" title="Add region"><i class="icon-globe icon-white"></i></button>
+		<div class="input-prepend input-append">
+			<span class="add-on pull-left">EN:</span>
+			<input placeholder="napiste nazov mesta" class="pull-left input-medium" />
+			<a href="" class="btn edit-hidden btn-info pull-left" type="button" title="Add region"><i class="icon-globe icon-white"></i></a>
+		</div>
 	</div>
-	<hr class="soften"/>
-	<div class="span4 control-group error">
+	<div class="span3 control-group error">
 		<label>
 			<b>Mesto</b>
 			<i>(some comment)</i>
 			<div class="pull-right show-tooltip label label-important" title="Error message"><i class="icon-ban-circle icon-white"></i></div>
 		</label>
-		<input placeholder="napiste nazov mesta" class="span4" />
+		<input placeholder="napiste nazov mesta" class="span3" />
 	</div>
-	<div class="span4 control-group success">
+	<div class="span3 control-group success">
 		<label>
 			<b>Mesto</b>
 			<i>(some comment)</i>
 			<div class="pull-right show-tooltip label label-success" title="Ok message"><i class="icon-ok icon-white"></i></div>
 		</label>
-		<input placeholder="napiste nazov mesta" class="span4" />
+		<input placeholder="napiste nazov mesta" class="span3" />
 	</div>
-	<div class="span4 control-group warning">
+	<div class="span3 control-group warning">
 		<label>
 			<b>Select</b>
 			<i>(some comment)</i>
 			<div class="pull-right show-tooltip label label-warning" title="Warning message"><i class="icon-warning-sign icon-white"></i></div>
 		</label>
-		<input placeholder="napiste nazov mesta" class="span4" />
+		<input placeholder="napiste nazov mesta" class="span3" />
 	</div>
-	<hr class="soften" />
 
 	<!-- Selects -->
-	<div class="span4">
+	<div class="span3">
 		<label><b>Select region</b> <i>(some comment)</i></label>
 		<div class="input-append input-prepend">
-			<select class="pull-left">
+			<select class="pull-left input-medium">
 				<option>Nitriansky kraj</option>
 				<option>Bratislavsky kraj</option>
 				<option>Kosicky kraj</option>
 			</select>
-			<button class="btn btn-info pull-left" type="button" title="Edit regions"><i class="icon-edit icon-white"></i></button>
-			<button class="btn btn-success pull-left" type="button" title="Add region"><i class="icon-plus icon-white"></i></button>
+			<button class="btn edit-hidden btn-info pull-left" type="button" title="Edit regions"><i class="icon-edit icon-white"></i></button>
+			<button class="btn edit-hidden btn-success pull-left" type="button" title="Add region"><i class="icon-plus icon-white"></i></button>
 		</div>
 	</div>
-	<div class="span4">
+	<div class="span3">
 		<label><b>Select region</b> <i>(some comment)</i></label>
 		<div class="input-append input-prepend">
-			<select class="pull-left">
+			<select class="pull-left input-medium">
 				<option>Nitriansky kraj</option>
 				<option>Bratislavsky kraj</option>
 				<option>Kosicky kraj</option>
 			</select>
-			<button class="btn btn-info pull-left" type="button" title="Edit regions"><i class="icon-edit icon-white"></i></button>
-			<button class="btn btn-success pull-left" type="button" title="Add region"><i class="icon-plus icon-white"></i></button>
+			<button class="btn edit-hidden btn-info pull-left" type="button" title="Edit regions"><i class="icon-edit icon-white"></i></button>
+			<button class="btn edit-hidden btn-success pull-left" type="button" title="Add region"><i class="icon-plus icon-white"></i></button>
 		</div>
 	</div>
 	<hr class="soften">
@@ -72,34 +73,34 @@
 	</div>
 	<label class="span3 checkbox">
 		<input type="checkbox" />input for checkbox
-		<div class="btn-group pull-right"><a href="" class="btn btn-info btn-mini" title="Edit"><i class="icon-white icon-edit"></i></a><a href="" class="btn btn-danger btn-mini" title="Remove"><i class="icon-white icon-remove"></i></a></div>
+		<div class="btn-group pull-right"><a href="" class="btn edit-hidden btn-info btn-mini" title="Edit"><i class="icon-white icon-edit"></i></a><a href="" class="btn edit-hidden btn-danger btn-mini" title="Remove"><i class="icon-white icon-remove"></i></a></div>
 	</label>
 	<label class="span3 checkbox checked">
 		<input type="checkbox" checked="checked" />input for checkbox
-		<div class="btn-group pull-right"><a href="" class="btn btn-info btn-mini" title="Edit"><i class="icon-white icon-edit"></i></a><a href="" class="btn btn-danger btn-mini" title="Remove"><i class="icon-white icon-remove"></i></a></div>
+		<div class="btn-group pull-right"><a href="" class="btn edit-hidden btn-info btn-mini" title="Edit"><i class="icon-white icon-edit"></i></a><a href="" class="btn edit-hidden btn-danger btn-mini" title="Remove"><i class="icon-white icon-remove"></i></a></div>
 	</label>
 	<label class="span3 checkbox checked">
 		<input type="checkbox" checked="checked" />input for checkbox
-		<div class="btn-group pull-right"><a href="" class="btn btn-info btn-mini" title="Edit"><i class="icon-white icon-edit"></i></a><a href="" class="btn btn-danger btn-mini" title="Remove"><i class="icon-white icon-remove"></i></a></div>
+		<div class="btn-group pull-right"><a href="" class="btn edit-hidden btn-info btn-mini" title="Edit"><i class="icon-white icon-edit"></i></a><a href="" class="btn edit-hidden btn-danger btn-mini" title="Remove"><i class="icon-white icon-remove"></i></a></div>
 	</label>
 	<label class="span3 checkbox checked">
 		<input type="checkbox" checked="checked" />input for checkbox
-		<div class="btn-group pull-right"><a href="" class="btn btn-info btn-mini" title="Edit"><i class="icon-white icon-edit"></i></a><a href="" class="btn btn-danger btn-mini" title="Remove"><i class="icon-white icon-remove"></i></a></div>
+		<div class="btn-group pull-right"><a href="" class="btn edit-hidden btn-info btn-mini" title="Edit"><i class="icon-white icon-edit"></i></a><a href="" class="btn edit-hidden btn-danger btn-mini" title="Remove"><i class="icon-white icon-remove"></i></a></div>
 	</label>
 	<label class="span3 checkbox">
 		<input type="checkbox" />input for checkbox
-		<div class="btn-group pull-right"><a href="" class="btn btn-info btn-mini" title="Edit"><i class="icon-white icon-edit"></i></a><a href="" class="btn btn-danger btn-mini" title="Remove"><i class="icon-white icon-remove"></i></a></div>
+		<div class="btn-group pull-right"><a href="" class="btn edit-hidden btn-info btn-mini" title="Edit"><i class="icon-white icon-edit"></i></a><a href="" class="btn edit-hidden btn-danger btn-mini" title="Remove"><i class="icon-white icon-remove"></i></a></div>
 	</label>
 	<label class="span3 checkbox">
 		<input type="checkbox" />input for checkbox
-		<div class="btn-group pull-right"><a href="" class="btn btn-info btn-mini" title="Edit"><i class="icon-white icon-edit"></i></a><a href="" class="btn btn-danger btn-mini" title="Remove"><i class="icon-white icon-remove"></i></a></div>
+		<div class="btn-group pull-right"><a href="" class="btn edit-hidden btn-info btn-mini" title="Edit"><i class="icon-white icon-edit"></i></a><a href="" class="btn edit-hidden btn-danger btn-mini" title="Remove"><i class="icon-white icon-remove"></i></a></div>
 	</label>
 	<label class="span3 checkbox checked">
 		<input type="checkbox" checked="checked" />input for checkbox
-		<div class="btn-group pull-right"><a href="" class="btn btn-info btn-mini" title="Edit"><i class="icon-white icon-edit"></i></a><a href="" class="btn btn-danger btn-mini" title="Remove"><i class="icon-white icon-remove"></i></a></div>
+		<div class="btn-group pull-right"><a href="" class="btn edit-hidden btn-info btn-mini" title="Edit"><i class="icon-white icon-edit"></i></a><a href="" class="btn edit-hidden btn-danger btn-mini" title="Remove"><i class="icon-white icon-remove"></i></a></div>
 	</label>
 	<div class="span3">
-		<a class="btn btn-success btn-mini" title="Add new" data-toggle="modal" href="#myModal"><i class="icon-plus icon-white"></i> Add city</a>
+		<a class="btn edit-hidden btn-success btn-mini" title="Add new" data-toggle="modal" href="#myModal"><i class="icon-plus icon-white"></i> Add city</a>
 	</div>
 	<hr class="soften" />
 
@@ -107,20 +108,20 @@
 	<div class="span12">
 		<label><b>Mesto</b> <i>(some comment)</i></label>
 	</div>
-	<label class="span4 radio">
+	<label class="span3 radio">
 		<input type="radio" name="optionsRadios" /> input for radio
-		<div class="btn-group pull-right"><a href="" class="btn btn-info btn-mini" title="Edit"><i class="icon-white icon-edit"></i></a><a href="" class="btn btn-danger btn-mini" title="Remove"><i class="icon-white icon-remove"></i></a></div>
+		<div class="btn-group pull-right"><a href="" class="btn edit-hidden btn-info btn-mini" title="Edit"><i class="icon-white icon-edit"></i></a><a href="" class="btn edit-hidden btn-danger btn-mini" title="Remove"><i class="icon-white icon-remove"></i></a></div>
 	</label>
-	<label class="span4 radio checked">
+	<label class="span3 radio checked">
 		<input type="radio" name="optionsRadios" checked="checked" /> input for radio
-		<div class="btn-group pull-right"><a href="" class="btn btn-info btn-mini" title="Edit"><i class="icon-white icon-edit"></i></a><a href="" class="btn btn-danger btn-mini" title="Remove"><i class="icon-white icon-remove"></i></a></div>
+		<div class="btn-group pull-right"><a href="" class="btn edit-hidden btn-info btn-mini" title="Edit"><i class="icon-white icon-edit"></i></a><a href="" class="btn edit-hidden btn-danger btn-mini" title="Remove"><i class="icon-white icon-remove"></i></a></div>
 	</label>
-	<label class="span4 radio">
+	<label class="span3 radio">
 		<input type="radio" name="optionsRadios" /> input for radio
-		<div class="btn-group pull-right"><a href="" class="btn btn-info btn-mini" title="Edit"><i class="icon-white icon-edit"></i></a><a href="" class="btn btn-danger btn-mini" title="Remove"><i class="icon-white icon-remove"></i></a></div>
+		<div class="btn-group pull-right"><a href="" class="btn edit-hidden btn-info btn-mini" title="Edit"><i class="icon-white icon-edit"></i></a><a href="" class="btn edit-hidden btn-danger btn-mini" title="Remove"><i class="icon-white icon-remove"></i></a></div>
 	</label>
 	<div class="span3">
-		<a class="btn btn-success btn-mini" title="Add new" data-toggle="modal" href="#myModal"><i class="icon-plus icon-white"></i> Add</a>
+		<a class="btn edit-hidden btn-success btn-mini" title="Add new" data-toggle="modal" href="#myModal"><i class="icon-plus icon-white"></i> Add</a>
 	</div>
 	<hr class="soften" />
 
@@ -198,7 +199,7 @@
 			Item name five
 			<input type="hidden" name="box[]" value="value" />
 		</label>
-		<a href="" class="btn btn-success btn-small pull-left" title="Add bar"><i class="icon-plus icon-white"></i> Add bar</a>
+		<a href="" class="btn edit-hidden btn-success btn-small pull-left" title="Add bar"><i class="icon-plus icon-white"></i> Add bar</a>
 	</div>
 	<hr class="soften" />
 
@@ -227,24 +228,24 @@
 			<label class="span3 checkbox">
 				<input type="checkbox" /> input for checkbox
 				<div class="btn-group pull-right">
-					<a href="" class="btn btn-mini" title="Edit"><i class="icon-edit"></i></a>
-					<a href="" class="btn btn-mini" title="Remove"><i class="icon-remove"></i></a>
+					<a href="" class="btn edit-hidden btn-mini" title="Edit"><i class="icon-edit"></i></a>
+					<a href="" class="btn edit-hidden btn-mini" title="Remove"><i class="icon-remove"></i></a>
 				</div>
 			</label>
 			<label class="span3 checkbox">
 				<input type="checkbox" /> input for checkbox
 				<div class="btn-group pull-right">
-					<a href="" class="btn btn-mini" title="Edit"><i class="icon-edit"></i></a>
-					<a href="" class="btn btn-mini" title="Remove"><i class="icon-remove"></i></a>
+					<a href="" class="btn edit-hidden btn-mini" title="Edit"><i class="icon-edit"></i></a>
+					<a href="" class="btn edit-hidden btn-mini" title="Remove"><i class="icon-remove"></i></a>
 				</div>
 			</label>
 			<div class="span3">
-				<a class="btn btn-mini" title="Add new"><i class="icon-plus"></i> Add</a>
+				<a class="btn edit-hidden btn-mini" title="Add new"><i class="icon-plus"></i> Add</a>
 			</div>
 		</form>
 	</div>
 	<div class="modal-footer">
-		<a href="#" class="btn">Close</a>
-		<a href="#" class="btn btn-primary">Save changes</a>
+		<a href="#" class="btn edit-hidden">Close</a>
+		<a href="#" class="btn edit-hidden btn-primary">Save changes</a>
 	</div>
 </div>

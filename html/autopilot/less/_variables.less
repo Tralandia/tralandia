@@ -23,10 +23,10 @@
 
 // Accent colors
 // -------------------------
-@blue:                  #996c40;
-@blueDark:              #630;
-@green:                 #b0c03c;
-@greenDark:             darken(@green, 15%);
+@blue:                  #b0c03c;
+@blueDark:              darken(@blue, 10%);
+@green:                 #3382bf;
+@greenDark:             darken(@green, 10%);
 @red:                   #b33624;
 @yellow:                @white;
 @orange:                #f39a00;
@@ -78,8 +78,8 @@
 @btnInfoBackground:                 lighten(@blue, 10%);
 @btnInfoBackgroundHighlight:        @blue;
 
-@btnSuccessBackground:              #b0c03c;
-@btnSuccessBackgroundHighlight:     #738134;
+@btnSuccessBackground:              @green;
+@btnSuccessBackgroundHighlight:     darken(@btnSuccessBackground, 15%);
 
 @btnWarningBackground:              lighten(@orange, 15%);
 @btnWarningBackgroundHighlight:     @orange;
@@ -193,10 +193,10 @@
 // Default 940px grid
 // -------------------------
 @gridColumns:             12;
-@gridColumnWidth:         75px;
+@gridColumnWidth:         80px;
 @gridGutterWidth:         25px;
 @gridRowWidth:            (@gridColumns * @gridColumnWidth) + (@gridGutterWidth * (@gridColumns - 1));
-@gridFullWidth:            (@gridColumns * @gridColumnWidth) + (@gridGutterWidth * @gridColumns);
+@gridFullWidth:           (@gridColumns * @gridColumnWidth) + (@gridGutterWidth * @gridColumns);
 
 
 // Fluid grid
