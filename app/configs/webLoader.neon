@@ -12,13 +12,17 @@ parameters:
 			bootstrap:
 				css: _bootstrap.less
 
+			autopilotBootstrap:
+				css: autopilot/_bootstrap.less
+				js: autopilot.js
+
 			jQuery:
-				css: 1_jquery-ui-1.8.19.custom.css
 				js: 1_jquery.js
 
 		sets:
 			'Admin:Autopilot':
 				- %webloader.packages.jQuery%
+				- %webloader.packages.autopilotBootstrap%
 
 			Admin: 
 				- %webloader.packages.bootstrap%
