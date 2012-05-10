@@ -23,7 +23,7 @@ common:
 
 
 	form:
-		addClass: haha
+		addClass: ajax
 		fields:
 			name:
 				control: 

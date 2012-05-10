@@ -387,7 +387,7 @@ class Reflector extends Nette\Object {
 			foreach ($ui->controlOptions as $optionKey => $option) {
 				$control->setOption($optionKey, $option);
 			}
-
+			
 			if(isset($ui->class)) {
 				$control->setOption('class', $ui->class);
 			}
