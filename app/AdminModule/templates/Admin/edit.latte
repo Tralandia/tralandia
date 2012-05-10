@@ -1,7 +1,11 @@
 {block content}
 <h1>{$settings->title}</h1>
 
+
+{snippet form}
 {control form}
+{/snippet}
+<a onclick="ivalidateForm({$form->getHtmlId()})" class="btn btn-danger btn-big">Invalidate Form</a>
 
 
 {if !isset($display) || $display != 'modal'}
@@ -12,7 +16,7 @@
 		<h3>Modal header</h3>
 	</div>
 	<div class="modal-body">
-		<iframe src="http://www.tra.sk/admin/currency/edit/2?display=modal"></iframe> 
+		<iframe src="{$baseUrl}/admin/currency/edit/2?display=modal"></iframe> 
 	</div>
 	<div class="modal-footer">
 		<a href="#" class="btn">Close</a>
@@ -38,6 +42,11 @@
 			return false;
 		});
 	});
+	function ivalidateForm(elementId) {
+		var form = $('#' + elementId);
+		form.attr("action", form.attr("action") + '&invalidate=1');
+		form.submit();
+	}
 </script>
 {/if}
 

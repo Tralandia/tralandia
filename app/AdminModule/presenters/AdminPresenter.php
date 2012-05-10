@@ -49,7 +49,7 @@ class AdminPresenter extends BasePresenter {
 		$this->service = $service::get($id);
 		if(isset($this->params['display']) && $this->params['display'] == 'modal') {
 			$this->formMask->form->addClass .= ' ajax';
-			$this->setLayout(FALSE);
+			//$this->setLayout(FALSE);
 			$this->template->display = 'modal';
 		}
 
