@@ -25,7 +25,6 @@ $(function() {
 		theme_advanced_toolbar_location: "top",
 		theme_advanced_blockformats : "h3,h4,h5,h6"
 	});
-	$.localise('ui-multiselect', { path: baseUrl+'/scripts/multiselect/locale/', language: 'en' });
 	$(".multiselect").multiselect();
 
 	$('.btn').tooltip();

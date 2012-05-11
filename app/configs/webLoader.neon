@@ -23,8 +23,6 @@ parameters:
 				js: 
 					- jQueryUI/jquery.ui.js
 					- jQueryUI/multiselect/ui.multiselect.js
-					- jQueryUI/multiselect/plugins/localisation/jquery.localisation-min.js
-					- jQueryUI/multiselect/locale/ui-multiselect-en.js
 					- jQueryUI/jquery.checkbox.js
 				css: 
 					- jQueryUI/jquery.ui.css
