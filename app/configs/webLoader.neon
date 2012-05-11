@@ -1,0 +1,31 @@
+parameters:
+	webloader:
+		packages:
+			admin:
+				css:
+					- admin.css
+					- main.css
+				js:
+					- admin.js
+					- main.js
+
+			bootstrap:
+				css: _bootstrap.less
+
+			autopilotBootstrap:
+				css: autopilot/_bootstrap.less
+				js: autopilot.js
+
+			jQuery:
+				js: 1_jquery.js
+
+		sets:
+			'Admin:Autopilot':
+				- %webloader.packages.jQuery%
+				- %webloader.packages.autopilotBootstrap%
+
+			Admin: 
+				- %webloader.packages.bootstrap%
+				- %webloader.packages.jQuery%
+				- %webloader.packages.admin%
+

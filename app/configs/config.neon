@@ -20,6 +20,9 @@ common:
 
 		settingsDir: %appDir%/configs
 
+	includes:
+		- webLoader.neon
+
 	services:
 		# nette.presenterFactory:
 			# class: Extras\DynamicPresenterFactory

@@ -8,6 +8,8 @@ use Nette\Application\UI\Presenter,
 
 abstract class BasePresenter extends Presenter {
 
+	public $cssFiles;
+	public $jsFiles;
 
 	protected function startup() {
 		parent::startup();
@@ -80,9 +82,41 @@ abstract class BasePresenter extends Presenter {
 	}
 
 	protected function createComponentHeader() {
+		list($modul, $presenter) = explode(':', $this->name, 2);
+
+		$wlSets = $this->context->parameters['webloader']['sets'];
+
+		$wlSet = NULL;
+		if(isset($wlSets[$this->name])) {
+			$wlSet = $wlSets[$this->name];
+		} else if(isset($wlSets[$modul])) {
+			$wlSet = $wlSets[$modul];
+		}
+
+		$cssFiles = array();
+		$jsFiles = array();
+		foreach ($wlSet as $key => $value) {
+			if(isset($value['css'])) {
+				if(is_array($value['css'])) {
+					$cssFiles = array_merge($cssFiles, $value['css']);
+				} else {
+					$cssFiles[] = $value['css'];
+				}
+			}
+			if(isset($value['js'])) {
+				if(is_array($value['js'])) {
+					$jsFiles = array_merge($jsFiles, $value['js']);
+				} else {
+					$jsFiles[] = $value['js'];
+				}
+			}
+		}
+		$this->cssFiles = $cssFiles;
+		$this->jsFiles = $jsFiles;
+		
+
 		$header = new HeaderControl;
 
-		list($modul, $presenter) = explode(':', $this->name, 2);
 
 		$header->setDocType(HeaderControl::HTML_5);
 		$header->setLanguage(HeaderControl::SLOVAK);
@@ -104,12 +138,9 @@ abstract class BasePresenter extends Presenter {
 		return $header;
 	}
 
-	public function createComponentCss() {
-		list($modul, $presenter) = explode(':', $this->name, 2);
-		
+	public function createComponentCss() {		
 		$files = new \WebLoader\FileCollection(WWW_DIR . '/styles');
-		$files->addFiles(Finder::findFiles('*.css', '*.less')->in(WWW_DIR . '/styles'));
-		$files->addFiles(Finder::findFiles('*.css', '*.less')->in(WWW_DIR . '/styles/'.strtolower($modul)));
+		$files->addFiles($this->cssFiles);
 
 		$compiler = \WebLoader\Compiler::createCssCompiler($files, WWW_DIR . '/webtemp');
 		$compiler->addFileFilter(new \Webloader\Filter\LessFilter());
@@ -118,11 +149,8 @@ abstract class BasePresenter extends Presenter {
 	}
 
 	public function createComponentJs() {
-		list($modul, $presenter) = explode(':', $this->name, 2);
-
 		$files = new \WebLoader\FileCollection(WWW_DIR . '/scripts');
-		$files->addFiles(Finder::findFiles('*.js')->in(WWW_DIR . '/scripts'));
-		$files->addFiles(Finder::findFiles('*.js')->in(WWW_DIR . '/scripts/'.strtolower($modul)));
+		$files->addFiles($this->jsFiles);
 
 		$compiler = \WebLoader\Compiler::createJsCompiler($files, WWW_DIR . '/webtemp');
 

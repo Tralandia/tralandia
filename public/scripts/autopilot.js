@@ -1,6 +1,6 @@
 
 var Navbar = function() {
-	this.navbar = $('.navbar-fixed-top');
+	this.navbar = {}
 }
 Navbar.prototype = {
 	toggleDetails: function() {
@@ -34,3 +34,7 @@ iFrame.prototype = {
 
 var iframe = new iFrame;
 var navbar = new Navbar;
+
+$(function() {
+	navbar.navbar = $('.navbar-fixed-top');
+});

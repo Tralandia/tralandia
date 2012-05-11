@@ -1,4 +1,20 @@
 {block title}{include #parent} | Autopilot{/block}
 
 {block content}
-<h1>Autopilot List</h1>
+<div class="headspace"></div>
+<div class="content" iframe-id="1">
+	<h1>
+		Admin
+		<button class="btn btn-mini btn-danger pull-right" title="Close" onclick="iframe.close(1);"><i class="icon-remove icon-white"></i></button>
+		<button class="btn btn-mini pull-right" title="Minimize" onclick="iframe.toggleMinimize(1);"><i class="icon-minus"></i></button>
+	</h1>
+	<iframe src=""></iframe>
+</div>
+<div class="content" iframe-id="2">
+	<h1>
+		Chata Liptovska Mara
+		<button class="btn btn-mini btn-danger pull-right" title="Close" onclick="iframe.close(2);"><i class="icon-remove icon-white"></i></button>
+		<button class="btn btn-mini pull-right" title="Minimize" onclick="iframe.toggleMinimize(2);"><i class="icon-minus"></i></button>
+	</h1>
+	<iframe src=""></iframe>
+</div>
