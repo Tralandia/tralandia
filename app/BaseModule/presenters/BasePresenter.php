@@ -157,6 +157,7 @@ abstract class BasePresenter extends Presenter {
 		$files->addFiles($this->jsFiles);
 
 		$compiler = \WebLoader\Compiler::createJsCompiler($files, WWW_DIR . '/webtemp');
+		$compiler->setJoinFiles(FALSE);
 
 		return new \WebLoader\Nette\JavaScriptLoader($compiler, $this->template->basePath . '/webtemp');
 	}
