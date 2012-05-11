@@ -98,6 +98,8 @@ abstract class BasePresenter extends Presenter {
 		}
 		$this->cssFiles = $cssFiles;
 		$this->jsFiles = $jsFiles;
+
+		debug($this->cssFiles, $this->jsFiles);
 		
 
 		$header = new HeaderControl;
