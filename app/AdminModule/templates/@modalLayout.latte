@@ -1,0 +1,16 @@
+{control header:begin}
+	{control css}
+	<script type="text/javascript"> var baseUrl = '{!$baseUrl}'; </script>
+	{control js}
+	<script type="text/javascript" src="{$baseUrl}/scripts/tinymce/jquery.tinymce.js" ></script>
+{control header:end}
+	<div class="container">
+		<div class="inner">
+			<div class="content">
+				{control flashes}
+				{include #content}
+			</div>
+		</div>
+	</div>
+</body>
+</html>
