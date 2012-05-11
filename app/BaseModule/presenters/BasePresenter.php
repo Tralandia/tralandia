@@ -95,19 +95,21 @@ abstract class BasePresenter extends Presenter {
 
 		$cssFiles = array();
 		$jsFiles = array();
-		foreach ($wlSet as $key => $value) {
-			if(isset($value['css'])) {
-				if(is_array($value['css'])) {
-					$cssFiles = array_merge($cssFiles, $value['css']);
-				} else {
-					$cssFiles[] = $value['css'];
+		if(is_array($wlSet)) {
+			foreach ($wlSet as $key => $value) {
+				if(isset($value['css'])) {
+					if(is_array($value['css'])) {
+						$cssFiles = array_merge($cssFiles, $value['css']);
+					} else {
+						$cssFiles[] = $value['css'];
+					}
 				}
-			}
-			if(isset($value['js'])) {
-				if(is_array($value['js'])) {
-					$jsFiles = array_merge($jsFiles, $value['js']);
-				} else {
-					$jsFiles[] = $value['js'];
+				if(isset($value['js'])) {
+					if(is_array($value['js'])) {
+						$jsFiles = array_merge($jsFiles, $value['js']);
+					} else {
+						$jsFiles[] = $value['js'];
+					}
 				}
 			}
 		}
