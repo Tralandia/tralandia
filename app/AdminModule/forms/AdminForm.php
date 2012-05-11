@@ -33,6 +33,9 @@ class AdminForm extends Form {
 		}
 
 		$this->flashMessage('A je to!');
+		if($this->getPresenter()->isAjax()) {
+			$this->getPresenter()->payload->invalidateParent = true;
+		}
 	}
 
 }
