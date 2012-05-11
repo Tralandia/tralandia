@@ -22,7 +22,6 @@ common:
 						title: Delete
 						addClass: btn-danger
 
-
 	form:
 		class: row form
 		buttons:

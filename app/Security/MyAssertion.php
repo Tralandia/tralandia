@@ -8,13 +8,9 @@ use Nette\Environment,
 class MyAssertion {
 	
 	public function test(Permission $acl, $role, $resource, $privilege) {
-
-		//debug($role);
-		//debug($acl->getQueriedResource());
-		//debug($acl, $role, $resource, $privilege);
+		debug(func_get_args());
+		debug($acl->getQueriedRole()->getUser());
 		
-		
-		return false;
-		return $acl->getQueriedRole()->ownerId === $acl->getQueriedResource()->ownerId;
+		return $acl->getQueriedResource()->supported;
 	}
 }

@@ -3,9 +3,9 @@ parameters:
 		packages:
 			admin:
 				js:
-					- admin.js
 					- main.js
-
+			nette:
+				js: 2_nette.js
 			bootstrap:
 				js: bootstrap.min.js
 				css: _bootstrap.less
@@ -13,7 +13,8 @@ parameters:
 			autopilotBootstrap:
 				css: autopilot/_bootstrap.less
 				js: autopilot.js
-
+			liveQuery:
+				js: 4_livequery.js
 			jQuery:
 				js: jquery.js
 			jQueryUI:
@@ -33,6 +34,8 @@ parameters:
 			Admin: 
 				- %webloader.packages.jQuery%
 				- %webloader.packages.jQueryUI%
+				- %webloader.packages.nette%
+				- %webloader.packages.liveQuery%
 				- %webloader.packages.bootstrap%
 				- %webloader.packages.admin%
 

@@ -28,6 +28,9 @@ common:
 			# class: Extras\DynamicPresenterFactory
 			# factory: Extras\DynamicPresenterFactory::factory
 
+		user:
+			class: Security\User
+
 		#authenticator: Security\Authenticator
 
 		authorizator: Security\Acl

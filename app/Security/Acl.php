@@ -15,11 +15,15 @@ class Acl extends Permission {
 		$this->addRole('admin', 'member');
 		
 		// definovanie vsetkych zdrojov
-		$this->addResource('Rental');
+		$this->addResource('Admin:Location');
+		$this->addResource('Admin:Language');
+		$this->addResource('Entity\Dictionary\Language');
 		
 		// definovanie prav pre uzivatela
-//		$this->allow('guest', 'Rental', 'show', array($assertion, 'test'));
-		$this->allow('admin', 'Rental', 'show', array($assertion, 'test'));
+		$this->allow('guest', array('Admin:Location'), array('list', 'edit'));
+		$this->allow('guest', array('Admin:Language'), array('list', 'edit'));
+		$this->allow('guest', 'Entity\Dictionary\Language', 'supported', array($assertion, 'test'));
+		// $this->allow('admin', 'Rental', 'show', array($assertion, 'test'));
 		
 		// definovanie prav pre admina
 		//$this->allow('admin', Permission::ALL, Permission::ALL);

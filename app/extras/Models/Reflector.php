@@ -98,6 +98,7 @@ class Reflector extends Nette\Object {
 		return $values;
 	}
 	
+
 	protected function allow($class, $fields = array()) {		
 		$classReflection = $this->getServiceReflection($class);
 		$classReflection = ClassType::from($classReflection->getConstant('MAIN_ENTITY_NAME'));
