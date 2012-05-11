@@ -5,17 +5,16 @@ parameters:
 				js:
 					- admin/admin.js
 					- admin/main.js
+				css:
+					- admin/_bootstrap.less
+			autopilot:
+				js: 
+					- autopilot/autopilot.js
+				css: autopilot/_bootstrap.less
 			nette:
 				js: nette/nette.js
 			bootstrap:
 				js: bootstrap/bootstrap.min.js
-				css: bootstrap/_bootstrap.less
-
-			autopilotBootstrap:
-				css: autopilotBootstrap/_bootstrap.less
-				js: 
-					- autopilotBootstrap/autopilot.js
-					- bootstrap/bootstrap.min.js
 			liveQuery:
 				js: liveQuery/livequery.js
 			jQuery:
@@ -35,7 +34,7 @@ parameters:
 		sets:
 			'Admin:Autopilot':
 				- %webloader.packages.jQuery%
-				- %webloader.packages.autopilotBootstrap%
+				- %webloader.packages.autopilot%
 
 			Admin: 
 				- %webloader.packages.jQuery%

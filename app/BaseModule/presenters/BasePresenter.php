@@ -56,7 +56,7 @@ abstract class BasePresenter extends Presenter {
 		return (object)$this->getParam();
 	}
 
-	public function flashMessage($message, $type = 'info') {
+	public function flashMessage($message, $type = 'warning') {
 		parent::flashMessage($message, $type);
 		$this->getComponent('flashes')->invalidateControl();
 	}
