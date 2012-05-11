@@ -2,14 +2,12 @@ parameters:
 	webloader:
 		packages:
 			admin:
-				css:
-					- admin.css
-					- main.css
 				js:
 					- admin.js
 					- main.js
 
 			bootstrap:
+				js: bootstrap.min.js
 				css: _bootstrap.less
 
 			autopilotBootstrap:
@@ -17,7 +15,15 @@ parameters:
 				js: autopilot.js
 
 			jQuery:
-				js: 1_jquery.js
+				js: jquery.js
+			jQueryUI:
+				js: 
+					- 2_jquery-ui.js
+					- multiselect/ui.multiselect.js
+					- multiselect/plugins/localisation/jquery.localisation-min.js
+					- multiselect/locale/ui-multiselect-en.js
+				css: 
+					- 1_jquery-ui-1.8.19.custom.css
 
 		sets:
 			'Admin:Autopilot':
@@ -25,7 +31,8 @@ parameters:
 				- %webloader.packages.autopilotBootstrap%
 
 			Admin: 
-				- %webloader.packages.bootstrap%
 				- %webloader.packages.jQuery%
+				- %webloader.packages.jQueryUI%
+				- %webloader.packages.bootstrap%
 				- %webloader.packages.admin%
 
