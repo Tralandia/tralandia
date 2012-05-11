@@ -25,14 +25,16 @@ class Reflector extends Nette\Object {
 
 	
 	protected $settings;
+	protected $presenter;
 	protected $formMask;
 	protected $reflectedEntities = array();
 	protected $fields = array();
 	protected $jsonStructures;
 
 
-	public function __construct($settings) {
+	public function __construct($settings, $presenter) {
 		$this->settings = $settings;
+		$this->presenter = $presenter;
 
 		//debug($this->service);
 	}
@@ -143,7 +145,9 @@ class Reflector extends Nette\Object {
 
 	public function getInlineOptionHtml($type, $value, $controlType) {
 		if(!$value) return NULL;
-		$a = Html::el('a')->addClass('btn');
+		$a = Html::el('a')
+			->addClass('btn')
+			->setHref(call_user_func_array(array($this->presenter, 'lazyLink'),(array) $value));
 		$i = Html::el('i')->addClass('icon-white');
 
 		if($type == 'inlineCreating') {
@@ -326,7 +330,7 @@ class Reflector extends Nette\Object {
 					$fieldMask['ui']['callback']['arguments'] = array($fieldMask['targetEntity']['primaryKey'], $fieldMask['targetEntity']['primaryValue']);
 				}
 			}
-
+			// debug($fieldMask['ui']);
 			// @todo vyhadzovat exceptiony ak nieco nieje nastavene OK
 
 			$mask['fields'][$name] = $fieldMask;
@@ -416,13 +420,31 @@ class Reflector extends Nette\Object {
 				$targetEntity = $property->targetEntity;
 				if (isset($ui->callback)) {
 					// data volane cez callback
-					$control->setItems(call_user_func_array($ui->callback->method, (array) $ui->callback->arguments));
+					$items = call_user_func_array($ui->callback->method, (array) $ui->callback->arguments);
 				} elseif (isset($ui->options)) {
 					// data volane cez options
-					$control->setItems($options);
+					$items = $ui->options;
 				} else {
 					throw new \Exception("Callback alebo options v `{$classReflection->getConstant('MAIN_ENTITY_NAME')} - {$propertyName}` nie sú validné");
 				}
+				if($control instanceof \Extras\Forms\Controls\AdvancedSelectBox) {
+					foreach ($items as $key => $value) {
+						$item = Html::el('option')->setText($value);
+						$attributes = array();
+						if($control->getOption('inlineEditing')) {
+							$inlineEditingHref = $control->getOption('inlineEditing')->href;
+							$attributes['data-editLink'] = $inlineEditingHref->setParameter('id', $key);
+						}
+						if($control->getOption('inlineDeleting')) {
+							$inlineDeletingHref = $control->getOption('inlineDeleting')->href;
+							$attributes['data-deleteLink'] = $inlineDeletingHref->setParameter('id', $key);
+						}
+						if(count($attributes)) $item->addAttributes($attributes);
+						$items[$key] = $item;
+					}
+				}
+				$control->setItems($items);
+
 			}
 
 			if($control instanceof \Extras\Forms\Controls\AdvancedJson) {

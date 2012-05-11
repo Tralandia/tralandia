@@ -157,10 +157,12 @@ class AdvancedCheckboxList extends BaseControl {
 
 			$buttonGroup = Html::el('div')->addClass('btn-group pull-right');
 			if($this->getOption('inlineEditing')) {
-				$buttonGroup->add($this->getOption('inlineEditing'));
+				$inlineEditing = $this->getOption('inlineEditing');
+				$buttonGroup->add($inlineEditing->href($inlineEditing->href->setParameter('id', $k)));
 			}
 			if($this->getOption('inlineDeleting')) {
-				$buttonGroup->add($this->getOption('inlineDeleting'));
+				$inlineDeleting = $this->getOption('inlineDeleting');
+				$buttonGroup->add($inlineDeleting->href($inlineDeleting->href->setParameter('id', $k)));
 			}
 			$label->add($buttonGroup);
 

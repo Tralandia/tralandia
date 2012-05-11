@@ -29,8 +29,8 @@ common:
 					type: phrase
 					class: test
 				addClass: 'myPhraseClass'
-				inlineEditing: true
-				inlineCreating: true
+				inlineEditing: [Phrase:edit]
+				inlineCreating: [Phrase:add]
 
 			slug:
 				control: tinymce
@@ -44,9 +44,9 @@ common:
 			currencies:
 				#control: bricksList
 				control: checkboxList
-				inlineEditing: true
-				inlineCreating: true
-				inlineDeleting: true
+				inlineEditing: [Currency:edit]
+				inlineCreating: [Currency:add]
+				inlineDeleting: [Currency:delete]
 
 			defaultCurrency:
 				control: select
@@ -54,16 +54,16 @@ common:
 					name: 'Def. Curr.'
 					class: 'labelClass'
 				callback: getAllAsPairs
-				inlineEditing: true
-				inlineCreating: true
-				inlineDeleting: true
+				inlineEditing: [Currency:edit]
+				inlineCreating: [Currency:add]
+				inlineDeleting: [Currency:delete]
 
 			languages:
 				#control: bricksList
 				control: multiSelect
-				inlineEditing: true
-				inlineCreating: true
-				inlineDeleting: true
+				inlineEditing: [Language:edit]
+				inlineCreating: [Language:add]
+				inlineDeleting: [Language:delete]
 
 			defaultLanguage:
 				control: select

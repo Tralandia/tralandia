@@ -22,11 +22,11 @@ abstract class BasePresenter extends Presenter {
 		// 	$backlink = $this->getApplication()->storeRequest();
 		// 	$this->redirect('Auth:login', array('backlink' => $backlink));
 		// } else {
-		// 	if (!$this->user->isAllowed($this->name, $this->action)) {
-		// 		$this->flashMessage('Access diened. You don\'t have permissions to view that page.', 'warning');
-		// 		// $this->redirect('Auth:login');
-		// 		throw new \Nette\MemberAccessException('co tu chces?!');
-		// 	}
+			if (!$this->user->isAllowed($this->name, $this->action)) {
+				$this->flashMessage('Access diened. You don\'t have permissions to view that page.', 'warning');
+				// $this->redirect('Auth:login');
+				throw new \Nette\MemberAccessException('co tu chces?!');
+			}
 		// }
 		// odstranuje neplatne _fid s url
 		if (!$this->hasFlashSession() && !empty($this->params[self::FLASH_KEY])) {
