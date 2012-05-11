@@ -51,7 +51,6 @@ label.checkbox.checked, label.radio.checked { #gradient > .horizontal(@white, li
 label.checkbox.checked:hover, label.radio.checked:hover { text-decoration: underline; }
 .radio input[type="radio"], .checkbox input[type="checkbox"] { margin:0 5px 0 0; }
 
-.modal { width: ((@gridFullWidth+30)-(1)); margin: -250px 0 0 -((@gridFullWidth+30)/2); }
 
 select[multiple] { height:250px; }
 .ui-multiselect { .border-radius(4px); border: 1px solid @grayLight; }
@@ -80,5 +79,6 @@ a[href^="error:"] { background: red; color: white; }
 .edit-hidden { display:none; }
 .edit-mode .edit-hidden { display:inline; }
 
-.modal-body { padding:0; }
-.modal-body iframe { border:none; width:100%; height:auto; }
+.modal { width: ((@gridFullWidth+20)-(1)); margin: -250px 0 0 -((@gridFullWidth+20)/2); position:absolute; }
+.modal .modal-body { padding:0; max-height:none; }
+.modal .modal-body iframe { border:none; width:100%; }
