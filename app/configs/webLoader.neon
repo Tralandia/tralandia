@@ -3,28 +3,34 @@ parameters:
 		packages:
 			admin:
 				js:
-					- main.js
+					- admin/admin.js
+					- admin/main.js
 			nette:
-				js: 2_nette.js
+				js: nette/nette.js
 			bootstrap:
-				js: bootstrap.min.js
-				css: _bootstrap.less
+				js: bootstrap/bootstrap.min.js
+				css: bootstrap/_bootstrap.less
 
 			autopilotBootstrap:
-				css: autopilot/_bootstrap.less
-				js: autopilot.js
+				css: autopilotBootstrap/_bootstrap.less
+				js: 
+					- autopilotBootstrap/autopilot.js
+					- bootstrap/bootstrap.min.js
 			liveQuery:
-				js: 4_livequery.js
+				js: liveQuery/livequery.js
 			jQuery:
-				js: jquery.js
+				js: jQuery/jquery.js
 			jQueryUI:
 				js: 
-					- 2_jquery-ui.js
-					- multiselect/ui.multiselect.js
-					- multiselect/plugins/localisation/jquery.localisation-min.js
-					- multiselect/locale/ui-multiselect-en.js
+					- jQueryUI/jquery.ui.js
+					- jQueryUI/multiselect/ui.multiselect.js
+					- jQueryUI/multiselect/plugins/localisation/jquery.localisation-min.js
+					- jQueryUI/multiselect/locale/ui-multiselect-en.js
+					- jQueryUI/jquery.checkbox.js
 				css: 
-					- 1_jquery-ui-1.8.19.custom.css
+					- jQueryUI/jquery.ui.css
+					- jQueryUI/ui.multiselect.css
+					- jQueryUI/jquery.checkbox.css
 
 		sets:
 			'Admin:Autopilot':
@@ -36,6 +42,6 @@ parameters:
 				- %webloader.packages.jQueryUI%
 				- %webloader.packages.nette%
 				- %webloader.packages.liveQuery%
-				- %webloader.packages.bootstrap%
 				- %webloader.packages.admin%
+				- %webloader.packages.bootstrap%
 
