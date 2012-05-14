@@ -9,7 +9,7 @@ class CibiPresenter extends BasePresenter {
 
 	public function actionDefault() {
 
-		
+		// $this->flashMessage('text flash message', 'warning');
 
 	}
 

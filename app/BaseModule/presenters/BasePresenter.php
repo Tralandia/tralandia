@@ -56,7 +56,7 @@ abstract class BasePresenter extends Presenter {
 		return (object)$this->getParam();
 	}
 
-	public function flashMessage($message, $type = 'info') {
+	public function flashMessage($message, $type = 'warning') {
 		parent::flashMessage($message, $type);
 		$this->getComponent('flashes')->invalidateControl();
 	}
@@ -140,7 +140,7 @@ abstract class BasePresenter extends Presenter {
 	}
 
 	public function createComponentCss() {		
-		$files = new \WebLoader\FileCollection(WWW_DIR . '/styles');
+		$files = new \WebLoader\FileCollection(WWW_DIR . '/packages');
 		$files->addFiles($this->cssFiles);
 
 		$compiler = \WebLoader\Compiler::createCssCompiler($files, WWW_DIR . '/webtemp');
@@ -150,7 +150,7 @@ abstract class BasePresenter extends Presenter {
 	}
 
 	public function createComponentJs() {
-		$files = new \WebLoader\FileCollection(WWW_DIR . '/scripts');
+		$files = new \WebLoader\FileCollection(WWW_DIR . '/packages');
 		$files->addFiles($this->jsFiles);
 
 		$compiler = \WebLoader\Compiler::createJsCompiler($files, WWW_DIR . '/webtemp');

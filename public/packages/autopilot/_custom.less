@@ -11,7 +11,7 @@
 	border: 1px solid @grayLight;
 	padding: 8px;
 	margin: 100px -13px 100px;
-	.border-radius(10px);
+	.border-radius(4px);
 	box-shadow:0 1px 1px @grayLight;
 	background: @white;
 }
@@ -22,7 +22,7 @@
 	font-size:22px;
 	border: 1px solid @grayLight;
 	padding: 10px (@gridGutterWidth/2);
-	.border-radius(10px 10px 0 0);
+	.border-radius(4px 4px 0 0);
 }
 
 label b {
@@ -80,8 +80,7 @@ textarea:focus {
 .subnav .well {
 	.border-radius(0 0 5px 5px);
 	padding:5px 10px;
-	#gradient > .vertical(@grayMedium, @white);	
-	box-shadow:0 2px 2px @grayLight;
+	#gradient > .vertical(@grayMedium, @white);
 }
 .subnav .divider-vertical {
 	background-color: @greenBorder;
@@ -156,11 +155,6 @@ label.checkbox.checked:hover, label.radio.checked:hover {
 	margin:0 5px 0 0;
 }
 
-.modal {
-	width: ((@gridFullWidth)-(1));
-	margin: -250px 0 0 -(@gridFullWidth/2);
-}
-
 select[multiple] {
 	height:250px;
 }
@@ -231,6 +225,3 @@ a[href^="error:"] {
 	color: white;
 }
 
-#snippet-flashes- { position:fixed; top: 90px; width: 1182px; }
-#snippet-flashes- .alert { .box-shadow(0 1px 2px #666); padding:5px; margin-bottom:5px; }
-#snippet-flashes- .alert .close { top:-4px; right:-4px; }
