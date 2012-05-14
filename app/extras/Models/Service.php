@@ -403,29 +403,45 @@ abstract class Service extends Nette\Object implements IService {
 				$data[$name] = NULL;
 			} else {
 				if(isset($property->targetEntity)) {
+
 					$targetEntity = $property->targetEntity;
+
 					if ($targetEntity->name == 'Entity\\Dictionary\\Phrase') {
-						$data[$name] = $this->{$name}->id;
+
+						$phrase = \Service\Dictionary\Phrase::get($this->{$name});
+						$translator = static::getTranslator();
+						$translation = $phrase->getTranslation(\Service\Dictionary\Language::get($translator::DEFAULT_LANGUAGE));
+						$data[$name] = new \Extras\Forms\DefaultValues\TranslationDefaultValue($translation);
+
 					} else if($targetEntity->associationType == Reflector::MANY_TO_MANY) {
-						$data[$name] = array();
+
+						$dataTemp = array();
 						foreach ($this->{$name}->toArray() as $key => $value) {
-							// $data[$name][$value->{$targetEntity->primaryKey}] = $value->{$targetEntity->primaryValue};
-							$data[$name][] = $value->{$targetEntity->primaryKey};
+							$dataTemp[$value->{$targetEntity->primaryKey}] = $value->{$targetEntity->primaryValue};
+							// $dataTemp[] = $value->{$targetEntity->primaryKey};
 						}
+						$data[$name] = new \Extras\Forms\DefaultValues\BricksDefaultValue($dataTemp);
+						
 					} else if($targetEntity->associationType == Reflector::ONE_TO_MANY) {
+
 						// @todo method or operation is not implemented
 						throw new \Nette\NotImplementedException('Requested method or operation is not implemented');
+
 					} else if($targetEntity->associationType == Reflector::MANY_TO_ONE) {
+
 						$data[$name] = $this->{$name}->{$targetEntity->primaryKey};
+
 					} else if($targetEntity->associationType == Reflector::ONE_TO_ONE) {
+						
 						$property = $targetEntity->primaryValue;
 						//debug($this->{$name}->translations, $property);
 
 						$data[$name] = $this->{$name}->{$property};
+
 					} else {
+						
 						$data[$name] = $this->{$name};
-						// @todo method or operation is not implemented
-						//throw new \Nette\NotImplementedException('Requested method or operation is not implemented');
+
 					}
 
 				} else {

@@ -30,7 +30,6 @@ common:
 					class: test
 				addClass: 'myPhraseClass'
 				inlineEditing: [Phrase:edit]
-				inlineCreating: [Phrase:add]
 
 			slug:
 				control: tinymce
@@ -59,8 +58,8 @@ common:
 				inlineDeleting: [Currency:delete]
 
 			languages:
-				#control: bricksList
-				control: multiSelect
+				control: bricksList
+				#control: multiSelect
 				inlineEditing: [Language:edit]
 				inlineCreating: [Language:add]
 				inlineDeleting: [Language:delete]

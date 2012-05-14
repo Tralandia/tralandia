@@ -117,25 +117,24 @@ class AdvancedBricksList extends BaseControl
 		$control = parent::getControl();
 		$control->name .= '[]';
 		$id = $control->id;
-		$counter = -1;
-		$values = $this->value === NULL ? NULL : (array) $this->getValue();
 
 		$brickWrapper = Html::el('div')->addClass('input-bricks');
 		$brickTemplate = Html::el('label')->addClass('label');
-		if($values) {
-			foreach ($values as $k => $value) {
-				$brick = clone $brickTemplate;
 
-				$btnGroup = Html::el('div')->addClass('btn-group pull-right');
-				if($this->getOption('inlineEditing')) {
-					$btnGroup->add($this->getOption('inlineEditing'));
-				}
-				if($this->getOption('inlineDeleting')) {
-					$btnGroup->add($this->getOption('inlineDeleting'));
-				}
+		foreach ($this->value->getValues() as $k => $value) {
+			$brick = clone $brickTemplate;
 
-				$brickWrapper->add((string) $brick->add($btnGroup.$value['value']));
+			$buttonGroup = Html::el('div')->addClass('btn-group pull-right');
+			if($this->getOption('inlineEditing')) {
+				$inlineEditing = $this->getOption('inlineEditing');
+				$buttonGroup->add($inlineEditing->href($inlineEditing->href->setParameter('id', $k)));
 			}
+			if($this->getOption('inlineDeleting')) {
+				$inlineDeleting = $this->getOption('inlineDeleting');
+				$buttonGroup->add($inlineDeleting->href($inlineDeleting->href->setParameter('id', $k)));
+			}
+
+			$brickWrapper->add((string) $brick->add($buttonGroup.$value));
 		}
 		if($this->getOption('inlineCreating')) {
 			$brickWrapper->add($this->getOption('inlineCreating'));

@@ -9,6 +9,13 @@ use Nette\Forms\Container,
 
 class AdvancedTextInput extends TextInput {
 
+	public $originalValue;
+
+	public function setValue($value) {
+		$this->originalValue = $value;
+		return parent::setValue($value);
+	}
+
 	public function getControl() {
 
 		$value = $this->getValue();
@@ -16,13 +23,13 @@ class AdvancedTextInput extends TextInput {
 		$inlineEditing = NULL;
 		if($this->getOption('inlineEditing')) {
 			$inlineEditing = $this->getOption('inlineEditing');
-			$inlineEditing->href($inlineEditing->href->setParameter('id', $value));
+			$inlineEditing->href($inlineEditing->href->setParameter('id', $this->originalValue->getPhraseId()));
 		}
 		
 		$inlineDeleting = NULL;
 		if($this->getOption('inlineDeleting')) {
 			$inlineDeleting = $this->getOption('inlineDeleting');
-			$inlineDeleting->href($inlineDeleting->href->setParameter('id', $value));
+			$inlineDeleting->href($inlineDeleting->href->setParameter('id', $this->originalValue->getPhraseId()));
 		}
 		
 		$inlineCreating = NULL;

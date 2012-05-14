@@ -1,11 +1,8 @@
 <?php
 
 
-namespace Extras\Forms;
+namespace Extras\Forms\DefaultValues;
 
-/**
-* 
-*/
 abstract class BaseDefaultValue extends \Nette\Object {
 
 	abstract public function getStringValue();
