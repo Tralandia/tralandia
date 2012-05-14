@@ -12,7 +12,7 @@ class PhrasePresenter extends BasePresenter {
 	/**
 	 * @return Forms\Phrase\Edit
 	 */
-	protected function createComponentEdtiForm($name)
+	protected function createComponentEditForm($name)
 	{
 		$comp = new Forms\Phrase\Edit($this, $name);
 	

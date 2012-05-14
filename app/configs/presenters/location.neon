@@ -52,7 +52,7 @@ common:
 				label: 
 					name: 'Def. Curr.'
 					class: 'labelClass'
-				callback: getAllAsPairs
+				callback: getPairs
 				inlineEditing: [Currency:edit]
 				inlineCreating: [Currency:add]
 				inlineDeleting: [Currency:delete]
@@ -68,7 +68,7 @@ common:
 				control: select
 				label: Def. Language
 				callback: 
-					method: getBySupportedAsPairs
+					method: getPairsBySupported
 					arguments: ['id', 'iso', 1]
 
 		buttons:
