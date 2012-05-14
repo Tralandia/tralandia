@@ -93,28 +93,6 @@ class Type extends \Entity\BaseEntity {
 	protected $checkingRequired;
 	
 
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		

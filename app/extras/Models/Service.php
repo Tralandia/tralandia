@@ -405,7 +405,7 @@ abstract class Service extends Nette\Object implements IService {
 				if(isset($property->targetEntity)) {
 					$targetEntity = $property->targetEntity;
 					if ($targetEntity->name == 'Entity\\Dictionary\\Phrase') {
-						$data[$name] = $this->getTranslator()->translate($this->{$name});
+						$data[$name] = $this->{$name}->id;
 					} else if($targetEntity->associationType == Reflector::MANY_TO_MANY) {
 						$data[$name] = array();
 						foreach ($this->{$name}->toArray() as $key => $value) {
