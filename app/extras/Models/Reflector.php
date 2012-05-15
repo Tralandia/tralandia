@@ -211,7 +211,6 @@ class Reflector extends Nette\Object {
 				'label' => array('default'=> ucfirst($name)), 
 				'class' => array('default'=> NULL), 
 				'addClass' => array('default'=> NULL), 
-				'columnClass' => array('default'=> 'span2'), 
 				'callback' => array('default'=> NULL), 
 				'inlineEditing' => array('default' => NULL), 
 				'inlineDeleting' => array('default' => NULL), 
@@ -261,12 +260,13 @@ class Reflector extends Nette\Object {
 				if(in_array($type, array('bricksList'))) {
 					$fieldMask['ui']['class'] = 'span12';
 				} else {
-					$fieldMask['ui']['class'] = 'span4';
+					$fieldMask['ui']['class'] = 'span3';
 				}
 			}
 			
-			if($fieldMask['ui']['columnClass']) {
-				$fieldMask['ui']['controlOptions']['columnClass'] = $fieldMask['ui']['columnClass'];
+			if(isset($fieldMask['ui']['control']['columnClass'])) {
+				$fieldMask['ui']['controlOptions']['columnClass'] = $fieldMask['ui']['control']['columnClass'];
+				unset($fieldMask['ui']['control']);
 			}
 			
 			if($fieldMask['ui']['startNewRow'] || in_array($type, array('checkboxList', 'bricksList', 'tinymce', 'table', 'json'))) {
@@ -317,7 +317,7 @@ class Reflector extends Nette\Object {
 			if(in_array($type, array('select', 'checkboxList', 'multiSelect'))) {
 
 				if(!$fieldMask['ui']['callback'] && !$fieldMask['ui']['options']) {
-					$fieldMask['ui']['callback'] = 'getAllAsPairs';
+					$fieldMask['ui']['callback'] = 'getPairs';
 				}
 
 				if(is_string($fieldMask['ui']['callback'])) {

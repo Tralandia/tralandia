@@ -42,13 +42,17 @@ common:
 
 			currencies:
 				#control: bricksList
-				control: checkboxList
+				control: 
+					type: checkboxList
+					columnClass: span3
 				inlineEditing: [Currency:edit]
 				inlineCreating: [Currency:add]
 				inlineDeleting: [Currency:delete]
 
 			defaultCurrency:
-				control: select
+				control: 
+					type: select
+					addClass: input-medium
 				label: 
 					name: 'Def. Curr.'
 					class: 'labelClass'
@@ -65,7 +69,9 @@ common:
 				inlineDeleting: [Language:delete]
 
 			defaultLanguage:
-				control: select
+				control: 
+					type: select
+					addClass: input-medium
 				label: Def. Language
 				callback: 
 					method: getPairsBySupported

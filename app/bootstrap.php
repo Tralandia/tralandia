@@ -31,7 +31,7 @@ $robotLoader->addDirectory(APP_DIR)
 	->addDirectory(TEMP_DIR . '/presenters')
 	->register();
 
-//var_dump($robotLoader);
+// var_dump($robotLoader);
 require_once LIBS_DIR . '/tools.php';
 // Create Dependency Injection container from config.neon file
 $configurator->addConfig(APP_DIR . '/configs/config.neon', $section);
