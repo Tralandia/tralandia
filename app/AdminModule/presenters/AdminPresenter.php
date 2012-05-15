@@ -26,7 +26,7 @@ class AdminPresenter extends BasePresenter {
 		$this->template->settings = $this->settings;
 		$this->serviceName = $this->settings->serviceClass;
 		$this->serviceListName = $this->settings->serviceListClass;
-		$this->reflector = new Reflector($this->settings);
+		$this->reflector = new Reflector($this->settings, $this);
 		$this->formMask = $this->reflector->getFormMask();
 	}
 	
@@ -47,6 +47,11 @@ class AdminPresenter extends BasePresenter {
 	public function actionEdit($id = 0) {
 		$service = $this->serviceName;
 		$this->service = $service::get($id);
+		if (!$this->user->isAllowed($this->service->getMainEntity(), 'edit')) {
+			$this->flashMessage('Access diened. You don\'t have permissions to view that page.', 'warning');
+			// $this->redirect('Auth:login');
+			throw new \Nette\MemberAccessException('co tu chces?!');
+		}
 		if(isset($this->params['display']) && $this->params['display'] == 'modal') {
 			$this->formMask->form->addClass .= ' ajax';
 			$this->setLayout('modalLayout');
@@ -234,7 +239,7 @@ class AdminPresenter extends BasePresenter {
 	}
 
 	public function onActionRender() {
-		debug(func_get_args());
+		//debug(func_get_args());
 	}
 
 	public function pattern($value, $row, $params = null) {

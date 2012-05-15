@@ -22,6 +22,7 @@ common:
 
 	includes:
 		- webLoader.neon
+		- acl.neon
 
 	services:
 		# nette.presenterFactory:
@@ -33,7 +34,10 @@ common:
 
 		#authenticator: Security\Authenticator
 
-		authorizator: Security\Acl
+		authorizator: 
+			class: Security\Acl
+			setup:
+				- setup(%acl.roles%, %acl.resources%, %acl.rules%)
 
 		environment: Extras\Environment
 

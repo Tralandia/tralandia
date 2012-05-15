@@ -7,6 +7,8 @@ use Service\Dictionary as D,
 
 class Translator implements \Nette\Localization\ITranslator {
 
+	const DEFAULT_LANGUAGE = 38;
+
 	protected $language = 144;
 	protected $cache;
 

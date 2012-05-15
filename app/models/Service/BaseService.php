@@ -6,7 +6,7 @@ class BaseService extends \Extras\Models\Service {
 
 	public static function getAsService($variable, $type) {
 		$entityType = $type::MAIN_ENTITY_NAME;
-		debug($variable);
+
 		if($variable instanceof $type) {
 			return $variable;
 		} else if($variable instanceof $entityType) {

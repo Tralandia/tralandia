@@ -11,6 +11,7 @@ class AdvancedSelectBox extends SelectBox {
 
 	public function getControl() {
 		$control = parent::getControl();
+		
 		$control->addClass('pull-left');
 		$wrapper = Html::el('div')->addClass('input-append input-prepend');
 		$wrapper->add($control);
