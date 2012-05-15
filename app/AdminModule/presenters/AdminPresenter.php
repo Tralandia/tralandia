@@ -49,7 +49,7 @@ class AdminPresenter extends BasePresenter {
 		$this->service = $service::get($id);
 		if(isset($this->params['display']) && $this->params['display'] == 'modal') {
 			$this->formMask->form->addClass .= ' ajax';
-			$this->setLayout(FALSE);
+			//$this->setLayout(FALSE);
 			$this->template->display = 'modal';
 		}
 
@@ -228,8 +228,13 @@ class AdminPresenter extends BasePresenter {
 
 		$renderer = $grid->getRenderer();
 		$renderer->wrappers['datagrid']['container'] = 'table class="datagrid '.$gridSettings->addClass.'"';
+		$renderer->onActionRender[] = callback($this, 'onActionRender');
 		
 		return $grid;
+	}
+
+	public function onActionRender() {
+		debug(func_get_args());
 	}
 
 	public function pattern($value, $row, $params = null) {

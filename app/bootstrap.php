@@ -76,19 +76,18 @@ $container->application->onStartup[] = function() use ($container) {
 		'presenter' => 'Admin',
 		'action' =>  'list'
 	));
-*/
-	$adminRouter[] = new Route('admin/<presenter>/[<action>[/<id>]]', array(
+*/	$adminRouter[] = new Route('admin/<presenter>/[<action>[/<id>]]', array(
 		'presenter' => 'Admin',
 		'action' =>  'list'
 	));
 
 	$router[] = $frontRouter = new RouteList('Front');
-	// $frontRouter[] = new \Extras\Route($container->routerCache, array(
-	// 	'presenter' => 'David',
-	// 	'action' => 'default',
-	// 	'country' => 'SK',
-	// ));
-	$frontRouter[] = new Route('<presenter>/[<action>[/<id>]]', 'Home:default');
+/*	$frontRouter[] = new \Extras\Route($container->routerCache, array(
+								'presenter' => 'David',
+								'action' => 'default',
+								'country' => 'SK',
+							));
+*/	$frontRouter[] = new Route('<presenter>/[<action>[/<id>]]', 'Home:default');
 
 };
 

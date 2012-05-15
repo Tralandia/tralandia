@@ -2,15 +2,32 @@
 
 use Nette\Application\UI\Presenter,
 	Nette\Environment,
-	Nette\Utils\Finder;
+	Nette\Utils\Finder,
+	Nette\Security\User;
 
 
 abstract class BasePresenter extends Presenter {
 
+	public $cssFiles;
+	public $jsFiles;
 
 	protected function startup() {
 		parent::startup();
+		
+		// if (false /*!$this->user->isLoggedIn()*/) {
+		// 	if ($this->user->getLogoutReason() === User::INACTIVITY) {
+		// 		$this->flashMessage('Session timeout, you have been logged out', 'warning');
+		// 	}
 
+		// 	$backlink = $this->getApplication()->storeRequest();
+		// 	$this->redirect('Auth:login', array('backlink' => $backlink));
+		// } else {
+		// 	if (!$this->user->isAllowed($this->name, $this->action)) {
+		// 		$this->flashMessage('Access diened. You don\'t have permissions to view that page.', 'warning');
+		// 		// $this->redirect('Auth:login');
+		// 		throw new \Nette\MemberAccessException('co tu chces?!');
+		// 	}
+		// }
 		// odstranuje neplatne _fid s url
 		if (!$this->hasFlashSession() && !empty($this->params[self::FLASH_KEY])) {
 			unset($this->params[self::FLASH_KEY]);
@@ -39,7 +56,7 @@ abstract class BasePresenter extends Presenter {
 		return (object)$this->getParam();
 	}
 
-	public function flashMessage($message, $type = 'info') {
+	public function flashMessage($message, $type = 'warning') {
 		parent::flashMessage($message, $type);
 		$this->getComponent('flashes')->invalidateControl();
 	}
@@ -65,9 +82,45 @@ abstract class BasePresenter extends Presenter {
 	}
 
 	protected function createComponentHeader() {
+		list($modul, $presenter) = explode(':', $this->name, 2);
+
+		$wlSets = $this->context->parameters['webloader']['sets'];
+
+		$wlSet = NULL;
+		if(isset($wlSets[$this->name])) {
+			$wlSet = $wlSets[$this->name];
+		} else if(isset($wlSets[$modul])) {
+			$wlSet = $wlSets[$modul];
+		}
+
+		$cssFiles = array();
+		$jsFiles = array();
+		if(is_array($wlSet)) {
+			foreach ($wlSet as $key => $value) {
+				if(isset($value['css'])) {
+					if(is_array($value['css'])) {
+						$cssFiles = array_merge($cssFiles, $value['css']);
+					} else {
+						$cssFiles[] = $value['css'];
+					}
+				}
+				if(isset($value['js'])) {
+					if(is_array($value['js'])) {
+						$jsFiles = array_merge($jsFiles, $value['js']);
+					} else {
+						$jsFiles[] = $value['js'];
+					}
+				}
+			}
+		}
+		$this->cssFiles = $cssFiles;
+		$this->jsFiles = $jsFiles;
+
+		debug($this->cssFiles, $this->jsFiles);
+		
+
 		$header = new HeaderControl;
 
-		list($modul, $presenter) = explode(':', $this->name, 2);
 
 		$header->setDocType(HeaderControl::HTML_5);
 		$header->setLanguage(HeaderControl::SLOVAK);
@@ -89,12 +142,9 @@ abstract class BasePresenter extends Presenter {
 		return $header;
 	}
 
-	public function createComponentCss() {
-		list($modul, $presenter) = explode(':', $this->name, 2);
-		
-		$files = new \WebLoader\FileCollection(WWW_DIR . '/styles');
-		$files->addFiles(Finder::findFiles('*.css', '*.less')->in(WWW_DIR . '/styles'));
-		$files->addFiles(Finder::findFiles('*.css', '*.less')->in(WWW_DIR . '/styles/'.strtolower($modul)));
+	public function createComponentCss() {		
+		$files = new \WebLoader\FileCollection(WWW_DIR . '/packages');
+		$files->addFiles($this->cssFiles);
 
 		$compiler = \WebLoader\Compiler::createCssCompiler($files, WWW_DIR . '/webtemp');
 		$compiler->addFileFilter(new \Webloader\Filter\LessFilter());
@@ -103,13 +153,11 @@ abstract class BasePresenter extends Presenter {
 	}
 
 	public function createComponentJs() {
-		list($modul, $presenter) = explode(':', $this->name, 2);
-
-		$files = new \WebLoader\FileCollection(WWW_DIR . '/scripts');
-		$files->addFiles(Finder::findFiles('*.js')->in(WWW_DIR . '/scripts'));
-		$files->addFiles(Finder::findFiles('*.js')->in(WWW_DIR . '/scripts/'.strtolower($modul)));
+		$files = new \WebLoader\FileCollection(WWW_DIR . '/packages');
+		$files->addFiles($this->jsFiles);
 
 		$compiler = \WebLoader\Compiler::createJsCompiler($files, WWW_DIR . '/webtemp');
+		$compiler->setJoinFiles(FALSE);
 
 		return new \WebLoader\Nette\JavaScriptLoader($compiler, $this->template->basePath . '/webtemp');
 	}

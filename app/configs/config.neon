@@ -20,10 +20,16 @@ common:
 
 		settingsDir: %appDir%/configs
 
+	includes:
+		- webLoader.neon
+
 	services:
 		# nette.presenterFactory:
 			# class: Extras\DynamicPresenterFactory
 			# factory: Extras\DynamicPresenterFactory::factory
+
+		user:
+			class: Security\User
 
 		#authenticator: Security\Authenticator
 

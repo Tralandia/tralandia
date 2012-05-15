@@ -98,6 +98,7 @@ class Reflector extends Nette\Object {
 		return $values;
 	}
 	
+
 	protected function allow($class, $fields = array()) {		
 		$classReflection = $this->getServiceReflection($class);
 		$classReflection = ClassType::from($classReflection->getConstant('MAIN_ENTITY_NAME'));
@@ -387,7 +388,7 @@ class Reflector extends Nette\Object {
 			foreach ($ui->controlOptions as $optionKey => $option) {
 				$control->setOption($optionKey, $option);
 			}
-
+			
 			if(isset($ui->class)) {
 				$control->setOption('class', $ui->class);
 			}

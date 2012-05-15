@@ -1,7 +1,6 @@
 common:
 	service: Service\Location\Location
 	title: Location Main Title
-	h1: Location Main H1
 
 	grid:
 		columns: 
@@ -23,7 +22,7 @@ common:
 
 
 	form:
-		addClass: haha
+		addClass: ajax
 		fields:
 			name:
 				control: 

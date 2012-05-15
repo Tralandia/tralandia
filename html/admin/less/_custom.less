@@ -5,42 +5,38 @@
 	text-shadow: 1px 1px 2px @grayDarker;
 }
 
-.container .inner {
-	margin: 0 -20px;
-	padding: 10px;
-	background: @white;
-	border-top: none;
-	border: 1px solid @greenBorder;
-	border-top:none;
-	border-bottom:none;
-}
+.container .inner {}
 
 .container .inner .content {
-	border: 1px solid @greenBorder;
+	border: 1px solid @grayLight;
 	padding: 8px;
-	margin-bottom: 15px;
-	border-radius: 10px;
-	box-shadow:0 1px 1px @greenBorder;
+	margin: 100px -13px 100px;
+	.border-radius(10px);
+	box-shadow:0 1px 1px @grayLight;
+	background: @white;
 }
 
 .container .inner .content h1 {
+	#gradient > .vertical(@white, @grayMedium);
 	margin:-9px -9px 15px -9px;
-	font-size:18px;
-	border-color:@greenBorder;
+	font-size:22px;
+	border: 1px solid @grayLight;
+	padding: 10px (@gridGutterWidth/2);
+	.border-radius(10px 10px 0 0);
 }
 
 label b {
 	color:@blueDark;
 	font-size:14px;
 }
-
+label i {
+	color:@grayLight;
+	font-size:11px;	
+}
+	
 table thead {
 	background:@green;
 	color:@white;
-}
-
-.breadcrumb {
-	#gradient > .vertical(@white, #eff3d0);
 }
 
 .box {
@@ -76,3 +72,162 @@ textarea:focus {
 .new-row:before {
 	clear:both;
 }
+
+.pagination ul {
+	box-shadow:0 1px 1px @greenBorder;
+}
+
+.subnav .well {
+	.border-radius(0 0 5px 5px);
+	padding:5px 10px;
+	#gradient > .vertical(@grayMedium, @white);	
+	box-shadow:0 2px 2px @grayLight;
+}
+.subnav .divider-vertical {
+	background-color: @greenBorder;
+	border-right-color: @white;
+	height:36px;
+	margin:-5px (@gridGutterWidth/3) -5px 0;
+}
+.subnav input, .subnav button.btn {
+	margin:0 (@gridGutterWidth/3) 0 0;
+}
+.subnav .input-append input {
+	margin:0;
+}
+.subnav form {
+	margin:0;
+}
+
+.row hr {
+	clear: both;
+	margin: 0 0 15px @gridGutterWidth;
+	padding: 10px 0 0 0;
+	height:1px;
+	border-top:none;
+	border-bottom-color:lighten(@grayLight, 25%);
+}
+
+.navbar-fixed-top .navbar-inner {
+	padding: 0 (@gridGutterWidth/2);
+}
+
+.navbar-fixed-top .container {
+	width:auto;
+}
+
+.navbar-fixed-top {
+	width:1200px;
+}
+
+select {
+	height:26px;
+}
+
+label {
+	height:20px;
+}
+label .btn-group {
+	display:none;
+}
+label:hover > .btn-group {
+	display:block;
+}
+label.checkbox, label.radio {
+	padding-left:0;
+	cursor: pointer;
+	margin-bottom: 10px;
+}
+label.checkbox:hover, label.radio:hover, label.checkbox.checked, label.radio.checked {
+	text-decoration: underline;
+	background: @grayLighter;
+	.border-radius(5px);
+	color: @greenDark;
+}
+label.checkbox.checked, label.radio.checked {
+	#gradient > .horizontal(@white, lighten(@green, 20%));
+	color: @black;
+	text-decoration: none;
+}
+label.checkbox.checked:hover, label.radio.checked:hover {
+	text-decoration: underline;
+}
+.radio input[type="radio"], .checkbox input[type="checkbox"] {
+	margin:0 5px 0 0;
+}
+
+.modal {
+	width: ((@gridFullWidth)-(1));
+	margin: -250px 0 0 -(@gridFullWidth/2);
+}
+
+select[multiple] {
+	height:250px;
+}
+.ui-multiselect {
+	.border-radius(4px);
+	border: 1px solid @grayLight;
+}
+.ui-multiselect div.available {
+	float:right;
+	border-left:none;
+	border-right: 1px solid @greenBorder;
+}
+.ui-multiselect div.selected {
+	float:right;
+}
+.ui-multiselect div.selected ul, .ui-multiselect div.available ul {
+	background: transparent;
+}
+.ui-widget-header {
+	#gradient > .vertical(@white, @grayMedium);
+	font-weight:normal;
+	border-bottom: 1px solid darken(@grayLighter, 10%);
+	.border-radius(4px 4px 0 0);
+}
+.ui-state-hover {
+	#gradient > .vertical(@green, @greenDark);
+	color:@white;
+}
+
+.input-bricks label {
+	float: left;
+	margin-right: 10px;
+	box-shadow: 0px 0px 2px @greenDark;
+	.border-radius(4px);
+	color: @black;
+	text-shadow: 1px 1px 0 white;
+	line-height: 1.9;
+	#gradient > .vertical(@grayLighter, @grayMedium);
+}
+.input-bricks label:hover {
+	color: @black;
+}
+.input-bricks label .btn-group {
+	margin-left: 5px;
+	display:block;
+}
+
+.control-group.error input, .control-group.error select, .control-group.error textarea {
+	box-shadow: 0 0 4px @red;
+}
+.control-group.warning input, .control-group.warning select, .control-group.warning textarea {
+	border-color: @orange;
+	box-shadow: 0 0 4px @orange;
+}
+.control-group.success input, .control-group.success select, .control-group.success textarea {
+	box-shadow: 0 0 4px @green;
+}
+
+.icon-loading {
+	background-image: url("../images/loading.gif");
+	background-position: 0 0;
+	width: 16px;
+	height: 16px;
+}
+
+a[href^="error:"] {
+	background: red;
+	color: white;
+}
+
