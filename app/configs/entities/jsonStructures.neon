@@ -12,4 +12,16 @@ Dictionary\Language:
 		ha:
 
 	ppcPatterns:
-		co:
+		Translations:
+			Translation 1:
+				Version 1:
+				Version 2:
+				Version 3:
+				T2:
+					V1:
+					V2:
+					V3:
+			Translation 3:
+				ver. 1:
+				ver. 2:
+				ver. 3:
