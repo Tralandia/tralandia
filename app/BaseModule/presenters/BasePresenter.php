@@ -14,6 +14,7 @@ abstract class BasePresenter extends Presenter {
 	protected function startup() {
 		parent::startup();
 		
+		$backlink = $this->storeRequest();
 		// if (false /*!$this->user->isLoggedIn()*/) {
 		// 	if ($this->user->getLogoutReason() === User::INACTIVITY) {
 		// 		$this->flashMessage('Session timeout, you have been logged out', 'warning');
@@ -22,16 +23,21 @@ abstract class BasePresenter extends Presenter {
 		// 	$backlink = $this->getApplication()->storeRequest();
 		// 	$this->redirect('Auth:login', array('backlink' => $backlink));
 		// } else {
-		// 	if (!$this->user->isAllowed($this->name, $this->action)) {
-		// 		$this->flashMessage('Access diened. You don\'t have permissions to view that page.', 'warning');
-		// 		// $this->redirect('Auth:login');
-		// 		throw new \Nette\MemberAccessException('co tu chces?!');
-		// 	}
+			if (!$this->user->isAllowed($this->name, $this->action)) {
+				$this->flashMessage('Access diened. You don\'t have permissions to view that page.', 'warning');
+				// $this->redirect('Auth:login');
+				throw new \Nette\MemberAccessException('co tu chces?!');
+			}
 		// }
 		// odstranuje neplatne _fid s url
 		if (!$this->hasFlashSession() && !empty($this->params[self::FLASH_KEY])) {
 			unset($this->params[self::FLASH_KEY]);
 			$this->redirect(301, 'this');
+		}
+		
+		if(!$this->getHttpRequest()->isPost()) {
+			$environmentSection = $this->context->session->getSection('environment');
+			$environmentSection->previousLink = $backlink;
 		}
 	}
 
@@ -114,10 +120,7 @@ abstract class BasePresenter extends Presenter {
 			}
 		}
 		$this->cssFiles = $cssFiles;
-		$this->jsFiles = $jsFiles;
-
-		debug($this->cssFiles, $this->jsFiles);
-		
+		$this->jsFiles = $jsFiles;		
 
 		$header = new HeaderControl;
 
@@ -157,7 +160,7 @@ abstract class BasePresenter extends Presenter {
 		$files->addFiles($this->jsFiles);
 
 		$compiler = \WebLoader\Compiler::createJsCompiler($files, WWW_DIR . '/webtemp');
-		$compiler->setJoinFiles(FALSE);
+		$compiler->setJoinFiles(TRUE);
 
 		return new \WebLoader\Nette\JavaScriptLoader($compiler, $this->template->basePath . '/webtemp');
 	}

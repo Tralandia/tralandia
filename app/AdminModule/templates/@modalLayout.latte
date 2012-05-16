@@ -2,13 +2,14 @@
 	{control css}
 	<script type="text/javascript"> var baseUrl = '{!$baseUrl}'; </script>
 	{control js}
+	<script type="text/javascript" src="{$baseUrl}/scripts/tinymce/jquery.tinymce.js" ></script>
 {control header:end}
 	<div class="container">
-		{control navigation}
 		<div class="inner">
-			{control autopilot}
-			{control flashes}
-			{include #content}
+			<div class="content content-modal">
+				{control flashes}
+				{include #content}
+			</div>
 		</div>
 	</div>
 </body>

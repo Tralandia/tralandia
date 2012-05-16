@@ -64,7 +64,7 @@ class Invoice extends \Entity\BaseEntity {
 	 * @var integer
 	 * @ORM\Column(type="integer")
 	 */
-	protected $status;
+	protected $status = self::STATUS_PENDING;
 
 	/**
 	 * @var string

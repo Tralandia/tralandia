@@ -28,7 +28,7 @@ class Location extends \Extras\Models\ServiceNested {
 
 	public function slugIsAvailable($slug) {
 		$type = $this->type;
-		if(in_array($type->slug, array('region', 'locality')))  { # @todo
+		if(in_array($type->slug, array('region', 'locality')))  {
 			$types = array();
 			$types[] = Type::getBySlug('region');
 			$types[] = Type::getBySlug('locality');
@@ -36,7 +36,7 @@ class Location extends \Extras\Models\ServiceNested {
 		} else {
 			$locationList = LocationList::getBySlugInType($slug, array($type));
 		}
-		return $locationList->count() ? FALSE : TRUE;
+		return $locationList->count() > 1 ? FALSE : TRUE; # @fix vracia false lebo najde seba sameho
 
 	}
 

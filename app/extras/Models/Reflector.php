@@ -25,14 +25,16 @@ class Reflector extends Nette\Object {
 
 	
 	protected $settings;
+	protected $presenter;
 	protected $formMask;
 	protected $reflectedEntities = array();
 	protected $fields = array();
 	protected $jsonStructures;
 
 
-	public function __construct($settings) {
+	public function __construct($settings, $presenter) {
 		$this->settings = $settings;
+		$this->presenter = $presenter;
 
 		//debug($this->service);
 	}
@@ -103,7 +105,8 @@ class Reflector extends Nette\Object {
 		$classReflection = $this->getServiceReflection($class);
 		$classReflection = ClassType::from($classReflection->getConstant('MAIN_ENTITY_NAME'));
 
-		foreach ($classReflection->getProperties() as $property) {
+		foreach ($fields as $key => $value) {
+			$property = $classReflection->getProperty($key);
 			if(count($fields) === 0 || array_key_exists($property->name, $fields))
 				$this->fields[$class][$property->name] = $property;
 		}
@@ -143,7 +146,9 @@ class Reflector extends Nette\Object {
 
 	public function getInlineOptionHtml($type, $value, $controlType) {
 		if(!$value) return NULL;
-		$a = Html::el('a')->addClass('btn');
+		$a = Html::el('a')
+			->addClass('btn btn-hidden')
+			->setHref(call_user_func_array(array($this->presenter, 'lazyLink'),(array) $value));
 		$i = Html::el('i')->addClass('icon-white');
 
 		if($type == 'inlineCreating') {
@@ -205,14 +210,15 @@ class Reflector extends Nette\Object {
 			$fieldOptions = array(
 				'control' => array('default'=> NULL), 
 				'label' => array('default'=> ucfirst($name)), 
+				'description' => array('default'=> NULL), 
 				'class' => array('default'=> NULL), 
 				'addClass' => array('default'=> NULL), 
-				'columnClass' => array('default'=> 'span2'), 
 				'callback' => array('default'=> NULL), 
 				'inlineEditing' => array('default' => NULL), 
 				'inlineDeleting' => array('default' => NULL), 
 				'inlineCreating' => array('default' => NULL), 
 				'startNewRow' => array('default'=> NULL),
+				'validation' => array('default'=> NULL),
 			);
 
 
@@ -254,18 +260,25 @@ class Reflector extends Nette\Object {
 			$fieldMask['ui']['options'] = $options;
 
 			if($fieldMask['ui']['class'] === NULL && !in_array($type, array('checkboxList', 'tinymce'))) {
-				if(in_array($type, array('bricksList'))) {
+				if(in_array($type, array('json'))) {
+					$fieldMask['ui']['class'] = 'span12 json-list';
+				} else if(in_array($type, array('bricksList'))) {
 					$fieldMask['ui']['class'] = 'span12';
 				} else {
-					$fieldMask['ui']['class'] = 'span4';
+					$fieldMask['ui']['class'] = 'span3';
 				}
 			}
 			
-			if($fieldMask['ui']['columnClass']) {
-				$fieldMask['ui']['controlOptions']['columnClass'] = $fieldMask['ui']['columnClass'];
+			if(isset($fieldMask['ui']['control']['columnClass'])) {
+				$fieldMask['ui']['controlOptions']['columnClass'] = $fieldMask['ui']['control']['columnClass'];
+				unset($fieldMask['ui']['control']['columnClass']);
+			}
+
+			if(isset($fieldMask['ui']['control']['label'])) {
+				$fieldMask['ui']['controlOptions']['label'] = $fieldMask['ui']['control']['label'];
 			}
 			
-			if($fieldMask['ui']['startNewRow'] || in_array($type, array('checkboxList', 'bricksList', 'tinymce', 'table', 'json'))) {
+			if($fieldMask['ui']['startNewRow'] || (in_array($type, array('checkboxList', 'bricksList', 'tinymce', 'table', 'json')) && $fieldMask['ui']['startNewRow'] !== false)) {
 				$fieldMask['ui']['controlOptions']['renderBefore'] = Html::el('hr')->addClass('soften');
 			}
 
@@ -273,12 +286,18 @@ class Reflector extends Nette\Object {
 				$fieldMask['ui']['controlOptions']['renderAfter'] = Html::el('hr')->addClass('soften');
 			}
 
+			if($fieldMask['ui']['description']) {
+				$fieldMask['ui']['controlOptions']['description'] = $fieldMask['ui']['description'];
+			}
+
 			if($type == 'text') {
 				$fieldMask['ui']['control']['type'] = 'AdvancedTextInput';
+			} else if($type == 'checkbox') {
+				$fieldMask['ui']['control']['type'] = 'AdvancedCheckBox';
 			} else if($type == 'select') {
 				$fieldMask['ui']['control']['type'] = 'AdvancedSelectBox';
 			} else if($type == 'checkboxList') {
-				$fieldMask['ui']['control']['type'] = 'AdvancedCheckboxList';
+				$fieldMask['ui']['control']['type'] = 'AdvancedCheckBoxList';
 			} else if($type == 'table') {
 				$fieldMask['ui']['control']['type'] = 'AdvancedTable';
 			} else if($type == 'json') {
@@ -313,7 +332,7 @@ class Reflector extends Nette\Object {
 			if(in_array($type, array('select', 'checkboxList', 'multiSelect'))) {
 
 				if(!$fieldMask['ui']['callback'] && !$fieldMask['ui']['options']) {
-					$fieldMask['ui']['callback'] = 'getAllAsPairs';
+					$fieldMask['ui']['callback'] = 'getPairs';
 				}
 
 				if(is_string($fieldMask['ui']['callback'])) {
@@ -326,9 +345,8 @@ class Reflector extends Nette\Object {
 					$fieldMask['ui']['callback']['arguments'] = array($fieldMask['targetEntity']['primaryKey'], $fieldMask['targetEntity']['primaryValue']);
 				}
 			}
-
+			// debug($fieldMask['ui']);
 			// @todo vyhadzovat exceptiony ak nieco nieje nastavene OK
-
 			$mask['fields'][$name] = $fieldMask;
 		}
 
@@ -346,10 +364,17 @@ class Reflector extends Nette\Object {
 			foreach ($fieldOptions as $key => $value) {
 				$button[$key] = Arrays::get($options, $key, $value['default']);
 			}
+
+			if($button['type'] == 'backlink') {
+				$button['type'] = 'button';
+				$backlinkCode = $this->presenter->context->session->getSection('environment')->previousLink;
+				$backlink = $this->presenter->link('//this', array('backlink' => $backlinkCode));
+				$button['prototype']['onClick'] = 'window.location=\''.$backlink.'\'';
+			}
 			$button['type'] = ucfirst($button['type']);
 			$mask['buttons'][$name] = $button;
 		}
-		
+
 		return \Nette\ArrayHash::from($mask);
 	}
 	
@@ -378,12 +403,24 @@ class Reflector extends Nette\Object {
 
 		foreach ($mask->fields as $propertyName => $property) {
 			unset($ui, $control, $validators, $association);
-			//debug($property);
+			// debug($property);
 			$ui = $property->ui;
 			$control = $container->{'add' . $ui->control->type}(
 				$propertyName,
-				Html::el('b')->add($ui->label->name)
+				Html::el('b')->add($ui->label->name.':')
 			);
+
+
+			if(isset($ui->validation)) {
+				foreach ($ui->validation as $key => $value) {
+					$value = iterator_to_array($value);
+					$method = array_shift($value);
+					if(in_array($value[0], array('PATTERN', 'EQUAL', 'IS_IN', 'VALID', 'MAX_FILE_SIZE', 'MIME_TYPE', 'IMAGE'))) {
+						$value[0] = constant('\Nette\Application\UI\Form::'.$value[0]);
+					}
+					$t = call_user_func_array(array($control, $method), $value);
+				}
+			}
 
 			foreach ($ui->controlOptions as $optionKey => $option) {
 				$control->setOption($optionKey, $option);
@@ -410,19 +447,37 @@ class Reflector extends Nette\Object {
 			if(isset($ui->control->disabled)) $control->setDisabled($ui->control->disabled);
 			
 			if ($control instanceof \Extras\Forms\Controls\AdvancedSelectBox 
-				|| $control instanceof \Extras\Forms\Controls\AdvancedCheckboxList
+				|| $control instanceof \Extras\Forms\Controls\AdvancedCheckBoxList
 				|| $control instanceof \Nette\Forms\Controls\MultiSelectBox) 
 			{
 				$targetEntity = $property->targetEntity;
 				if (isset($ui->callback)) {
 					// data volane cez callback
-					$control->setItems(call_user_func_array($ui->callback->method, (array) $ui->callback->arguments));
+					$items = call_user_func_array($ui->callback->method, (array) $ui->callback->arguments);
 				} elseif (isset($ui->options)) {
 					// data volane cez options
-					$control->setItems($options);
+					$items = $ui->options;
 				} else {
 					throw new \Exception("Callback alebo options v `{$classReflection->getConstant('MAIN_ENTITY_NAME')} - {$propertyName}` nie sú validné");
 				}
+				if($control instanceof \Extras\Forms\Controls\AdvancedSelectBox) {
+					foreach ($items as $key => $value) {
+						$item = Html::el('option')->setText($value)->setValue($key);
+						$attributes = array();
+						if($control->getOption('inlineEditing')) {
+							$inlineEditingHref = $control->getOption('inlineEditing')->href;
+							$attributes['data-editLink'] = $inlineEditingHref->setParameter('id', $key);
+						}
+						if($control->getOption('inlineDeleting')) {
+							$inlineDeletingHref = $control->getOption('inlineDeleting')->href;
+							$attributes['data-deleteLink'] = $inlineDeletingHref->setParameter('id', $key);
+						}
+						if(count($attributes)) $item->addAttributes($attributes);
+						$items[$key] = $item;
+					}
+				}
+				$control->setItems($items);
+
 			}
 
 			if($control instanceof \Extras\Forms\Controls\AdvancedJson) {
@@ -444,6 +499,12 @@ class Reflector extends Nette\Object {
 			);
 
 			$control->setOption('renderBefore', Html::el('hr')->addClass('soften'));
+
+			if(isset($button->prototype)) {
+				foreach ($button->prototype as $key => $value) {
+					$control->getControlPrototype()->{$key}($value);
+				}
+			}
 
 			if(isset($button->class)) {
 				$control->getControlPrototype()->class($button->class);

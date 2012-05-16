@@ -1,0 +1,27 @@
+parameters:
+	acl:
+		roles:
+			- guest
+			- [member, guest]
+			- [admin, member]
+
+		resources:
+			# presenters
+			- Admin:Location
+			- Admin:Language
+			- Admin:Phrase
+			- Admin:Cibi
+			- Admin:Autopilot
+			- Admin:DictionaryLanguage
+
+			# entities
+			- Entity\Dictionary\Language
+			- Entity\Location\Location
+
+		rules:
+			allow:
+				- [guest, [Admin:Location, Admin:Language, Admin:Phrase, Admin:Cibi], [list, show, edit, default]]
+				- [guest, null, null]
+				- [guest, Entity\Dictionary\Language, edit, [Security\MyAssertion, test]]
+				- [guest, Entity\Location\Location, edit]
+			deny:

@@ -394,7 +394,7 @@ abstract class Service extends Nette\Object implements IService {
 	 * Ziskanie datasource
 	 * @return Query
 	 */
-	public function getDefaultsData($mask) {
+	public function setDefaultsFormData($form, $mask) {
 		$data = array();
 		foreach ($mask->fields as $property) {
 			$ui = $property->ui;
@@ -403,33 +403,55 @@ abstract class Service extends Nette\Object implements IService {
 				$data[$name] = NULL;
 			} else {
 				if(isset($property->targetEntity)) {
+
 					$targetEntity = $property->targetEntity;
+
 					if ($targetEntity->name == 'Entity\\Dictionary\\Phrase') {
-						$data[$name] = $this->getTranslator()->translate($this->{$name});
+
+						$phrase = \Service\Dictionary\Phrase::get($this->{$name});
+						$translator = static::getTranslator();
+						$translation = $phrase->getTranslation(\Service\Dictionary\Language::get($translator::DEFAULT_LANGUAGE));
+						$form[$name]->setDefaultValue($translation->translation);
+						$form[$name]->setDefaultParam($translation->phrase->id);
+
 					} else if($targetEntity->associationType == Reflector::MANY_TO_MANY) {
-						$data[$name] = array();
+
+						$dataTemp = array();
 						foreach ($this->{$name}->toArray() as $key => $value) {
-							// $data[$name][$value->{$targetEntity->primaryKey}] = $value->{$targetEntity->primaryValue};
-							$data[$name][] = $value->{$targetEntity->primaryKey};
+							$dataTemp[$value->{$targetEntity->primaryKey}] = $value->{$targetEntity->primaryValue};
+							// $dataTemp[] = $value->{$targetEntity->primaryKey};
 						}
+						$form[$name]->setDefaultValue(array_keys($dataTemp));
+						$form[$name]->setDefaultParam($dataTemp);
+						
 					} else if($targetEntity->associationType == Reflector::ONE_TO_MANY) {
+
 						// @todo method or operation is not implemented
 						throw new \Nette\NotImplementedException('Requested method or operation is not implemented');
+
 					} else if($targetEntity->associationType == Reflector::MANY_TO_ONE) {
+
 						$data[$name] = $this->{$name}->{$targetEntity->primaryKey};
+						$form[$name]->setDefaultValue($data[$name]);
+
 					} else if($targetEntity->associationType == Reflector::ONE_TO_ONE) {
+						
 						$property = $targetEntity->primaryValue;
 						//debug($this->{$name}->translations, $property);
 
 						$data[$name] = $this->{$name}->{$property};
+						$form[$name]->setDefaultValue($data[$name]);
+
 					} else {
+						
 						$data[$name] = $this->{$name};
-						// @todo method or operation is not implemented
-						//throw new \Nette\NotImplementedException('Requested method or operation is not implemented');
+						$form[$name]->setDefaultValue($data[$name]);
+
 					}
 
 				} else {
 					$data[$name] = $this->{$name};
+					$form[$name]->setDefaultValue($data[$name]);
 				}				
 			}
 		}
@@ -438,7 +460,7 @@ abstract class Service extends Nette\Object implements IService {
 	}
 
 	public function updateFormData($mask, $formValues) {
-		//debug($formValues);
+		// debug($formValues);
 		foreach ($mask->fields as $property) {
 			$ui = $property->ui;
 			// debug($ui);
@@ -449,7 +471,7 @@ abstract class Service extends Nette\Object implements IService {
 				if(isset($property->targetEntity)) {
 					$targetEntity = $property->targetEntity;
 					if($targetEntity->name == 'Entity\\Dictionary\\Phrase') {
-						// fraza sa needituje cez serisu
+						// fraza sa needituje cez servisu
 					} else if($targetEntity->associationType == Reflector::ONE_TO_ONE) {
 						$this->{$name}->{$targetEntity->primaryValue} = $formValue;
 					} else if($targetEntity->associationType == Reflector::MANY_TO_MANY) {
@@ -477,6 +499,7 @@ abstract class Service extends Nette\Object implements IService {
 				}
 			}
 		}
+		// debug($this->getMainEntity());
 		$this->save();
 	}
 

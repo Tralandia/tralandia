@@ -26,7 +26,7 @@ class AdminPresenter extends BasePresenter {
 		$this->template->settings = $this->settings;
 		$this->serviceName = $this->settings->serviceClass;
 		$this->serviceListName = $this->settings->serviceListClass;
-		$this->reflector = new Reflector($this->settings);
+		$this->reflector = new Reflector($this->settings, $this);
 		$this->formMask = $this->reflector->getFormMask();
 	}
 	
@@ -47,9 +47,14 @@ class AdminPresenter extends BasePresenter {
 	public function actionEdit($id = 0) {
 		$service = $this->serviceName;
 		$this->service = $service::get($id);
+		if (!$this->user->isAllowed($this->service->getMainEntity(), 'edit')) {
+			$this->flashMessage('Access diened. You don\'t have permissions to view that page.', 'warning');
+			// $this->redirect('Auth:login');
+			throw new \Nette\MemberAccessException('co tu chces?!');
+		}
 		if(isset($this->params['display']) && $this->params['display'] == 'modal') {
 			$this->formMask->form->addClass .= ' ajax';
-			//$this->setLayout(FALSE);
+			$this->setLayout('modalLayout');
 			$this->template->display = 'modal';
 		}
 
@@ -63,10 +68,7 @@ class AdminPresenter extends BasePresenter {
 			// throw new NA\BadRequestException('Record not found');
 		// }
 
-		if (!$form->isSubmitted()) {
-			$data = $this->service->getDefaultsData($this->formMask);
-			$this->reflector->getContainer($form)->setDefaults($data);
-		}
+		$this->service->setDefaultsFormData($this->reflector->getContainer($form), $this->formMask);
 
 		$this->template->record = $this->service;
 		$this->template->form = $form;
@@ -234,7 +236,7 @@ class AdminPresenter extends BasePresenter {
 	}
 
 	public function onActionRender() {
-		debug(func_get_args());
+		//debug(func_get_args());
 	}
 
 	public function pattern($value, $row, $params = null) {

@@ -14,7 +14,7 @@ class AdminForm extends Form {
 		$this->service = $service;
 
 		$reflector->extend($this, $this->reflector->getFormMask());
-		
+
 		//$this->addAdvancedFileManager('upload', 'File manager');		
 		$this->onSuccess[] = callback($this, 'onSuccess');
 	}
@@ -33,6 +33,9 @@ class AdminForm extends Form {
 		}
 
 		$this->flashMessage('A je to!');
+		if($this->getPresenter()->isAjax()) {
+			$this->getPresenter()->payload->invalidateParent = true;
+		}
 	}
 
 }

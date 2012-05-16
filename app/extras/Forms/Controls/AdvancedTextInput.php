@@ -9,20 +9,42 @@ use Nette\Forms\Container,
 
 class AdvancedTextInput extends TextInput {
 
+	public $defaultParam;
+
+	public function setDefaultParam($value) {
+		$this->defaultParam = $value;
+	}
+
 	public function getControl() {
+		$value = $this->getValue();
+
+		$inlineEditing = NULL;
+		if($this->getOption('inlineEditing')) {
+			$inlineEditing = $this->getOption('inlineEditing');
+			$inlineEditing->href($inlineEditing->href->setParameter('id', $this->defaultParam));
+		}
+		
+		$inlineDeleting = NULL;
+		if($this->getOption('inlineDeleting')) {
+			$inlineDeleting = $this->getOption('inlineDeleting');
+			$inlineDeleting->href($inlineDeleting->href->setParameter('id', $this->defaultParam));
+		}
+		
+		$inlineCreating = NULL;
+		if($this->getOption('inlineCreating')) {
+			$inlineCreating = $this->getOption('inlineCreating');
+		}
+
 		$control = parent::getControl();
+
 		$control->addClass('pull-left');
 		$wrapper = Html::el('div')->addClass('input-append input-prepend');
 		$wrapper->add($control);
-		if($this->getOption('inlineEditing')) {
-			$wrapper->add($this->getOption('inlineEditing'));
-		}
-		if($this->getOption('inlineDeleting')) {
-			$wrapper->add($this->getOption('inlineDeleting'));
-		}
-		if($this->getOption('inlineCreating')) {
-			$wrapper->add($this->getOption('inlineCreating'));
-		}
+
+		$inlineEditing ? $wrapper->add($inlineEditing) : NULL;
+		$inlineDeleting ? $wrapper->add($inlineDeleting) : NULL;
+		$inlineCreating ? $wrapper->add($inlineCreating) : NULL;
+
 		return $wrapper;
 	}
 

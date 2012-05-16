@@ -26,9 +26,9 @@ common:
 		class: row form
 		buttons:
 			cancel: 
-				type: button
+				type: backlink
 				label: 'Cancel (return)'
 			submit:
 				type: submit
 				label: Save Changes
-				addClass: btn-success
+				addClass: btn-success pull-right

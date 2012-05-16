@@ -26,7 +26,7 @@ use Nette\Utils\Html,
  * @copyright Copyright (c) 2004, 2011 David Grudl
  * @package   Nette\Extras
  */
-class AdvancedCheckboxList extends BaseControl {
+class AdvancedCheckBoxList extends BaseControl {
 	/** @var Nette\Utils\Html  separator element template */
 	protected $separator;
 
@@ -36,6 +36,11 @@ class AdvancedCheckboxList extends BaseControl {
 	/** @var array */
 	protected $items = array();
 
+	public $defaultParam;
+
+	public function setDefaultParam($value) {
+		$this->defaultParam = $value;
+	}
 
 
 	/**
@@ -137,7 +142,7 @@ class AdvancedCheckboxList extends BaseControl {
 		$control = parent::getControl();
 		$control->name .= '[]';
 		$id = $control->id;
-		$counter = -1;
+		$counter = 0;
 		$values = $this->value === NULL ? NULL : (array) $this->getValue();
 		$label = Html::el('label')->addClass('checkbox '.$this->getOption('columnClass'));
 
@@ -146,7 +151,7 @@ class AdvancedCheckboxList extends BaseControl {
 			if ($key !== NULL && $key != $k) continue; // intentionally ==
 
 			$control->id = $label->for = $id . '-' . $counter;
-			$control->checked = (count($values) > 0) ? array_key_exists($k, $values) : false;
+			$control->checked = (count($values) > 0) ? in_array($k, $values) : false;
 			$control->value = $k;
 
 			if ($val instanceof Html) {
@@ -157,10 +162,12 @@ class AdvancedCheckboxList extends BaseControl {
 
 			$buttonGroup = Html::el('div')->addClass('btn-group pull-right');
 			if($this->getOption('inlineEditing')) {
-				$buttonGroup->add($this->getOption('inlineEditing'));
+				$inlineEditing = $this->getOption('inlineEditing');
+				$buttonGroup->add($inlineEditing->href($inlineEditing->href->setParameter('id', $k)));
 			}
 			if($this->getOption('inlineDeleting')) {
-				$buttonGroup->add($this->getOption('inlineDeleting'));
+				$inlineDeleting = $this->getOption('inlineDeleting');
+				$buttonGroup->add($inlineDeleting->href($inlineDeleting->href->setParameter('id', $k)));
 			}
 			$label->add($buttonGroup);
 
@@ -215,8 +222,8 @@ class AdvancedCheckboxList extends BaseControl {
 	 */
 	public static function register()
 	{
-		Container::extensionMethod('addAdvancedCheckboxList', function (Container $_this, $name, $label, array $items = NULL) {
-			return $_this[$name] = new AdvancedCheckboxList($label, $items);
+		Container::extensionMethod('addAdvancedCheckBoxList', function (Container $_this, $name, $label, array $items = NULL) {
+			return $_this[$name] = new AdvancedCheckBoxList($label, $items);
 		});
 	}
 

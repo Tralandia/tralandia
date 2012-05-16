@@ -60,8 +60,10 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 	}
 
 	public static function __callStatic($name, $arguments) {
-		if(Strings::endsWith($name, 'AsPairs')) {
-			$name = substr($name, 0, -7);
+		if(Strings::startsWith($name, 'getPairs')) {
+			$name = substr($name, 8);
+			if($name == '') $name = 'All';
+			$name = 'get' . $name;
 			$key = array_shift($arguments);
 			$value = array_shift($arguments);
 			return static::_fetchPairs(call_user_func_array(array('static', $name), $arguments), $key, $value);

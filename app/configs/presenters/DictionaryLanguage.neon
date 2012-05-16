@@ -49,39 +49,50 @@ common:
 				callback: {class: %this%, method: setSupported}
 
 	form:
-		addClass: haha
+		addClass: ajax
 		fields:
 			iso:
 				control: text
 				startNewRow: true
+				validation:
+					- [addRule, PATTERN, 'Musí obsahovat číslici', '.*[0-9].*']
 
 			name:
 				control: 
 					type: phrase
 					class: test
 				addClass: 'myPhraseClass'
-				inlineEditing: true
-				inlineCreating: true
+				inlineEditing: Phrase:edit
 
 			supported:
-				control: checkbox
+				control: 
+					type: checkbox
+					label: ano ? ne ?
 				label: Supported
+				description: 'tak si vyber!'
 
 			defaultCollation:
 				control: text
 				label: Collation
+				description: 'asdfasdf'
 
 			multitranslationOptions:
 				label: Multitranslations
 				control: 
 					type: table
-					rows: 3
-					columns: [Pes, Macka]
+					rows: 5
+					columns: [Formula]
 
 			genderNumberOptions:
 				control: 
-					type: json
-					disabled: TRUE
+					type: table
+					rows: 5
+					columns: ['Gender / Number shortcut']
+				startNewRow: false
 
 			ppcPatterns:
-				control: json
+				control: 
+					type: table
+					rows: '+5'
+					columns: ['Patern']
+				startNewRow: false

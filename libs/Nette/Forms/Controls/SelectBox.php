@@ -227,6 +227,7 @@ class SelectBox extends BaseControl
 		$selected = $this->getValue();
 		$selected = is_array($selected) ? array_flip($selected) : array($selected => TRUE);
 		$option = Nette\Utils\Html::el('option');
+
 		foreach ($this->items as $key => $value) {
 			if (!is_array($value)) {
 				$value = array($key => $value);
