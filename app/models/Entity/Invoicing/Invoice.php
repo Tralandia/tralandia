@@ -26,13 +26,13 @@ class Invoice extends \Entity\BaseEntity {
 
 	/**
 	 * @var integer
-	 * @ORM\Column(type="integer")
+	 * @ORM\Column(type="integer", nullable=true)
 	 */
 	protected $invoiceNumber;
 
 	/**
 	 * @var integer
-	 * @ORM\Column(type="integer")
+	 * @ORM\Column(type="integer", nullable=true)
 	 */
 	protected $paymentReferenceNumber;
 
@@ -122,7 +122,7 @@ class Invoice extends \Entity\BaseEntity {
 
 	/**
 	 * @var float
-	 * @ORM\Column(type="float")
+	 * @ORM\Column(type="float", nullable=true)
 	 */
 	protected $vat;
 
@@ -134,7 +134,7 @@ class Invoice extends \Entity\BaseEntity {
 
 	/**
 	 * @var float
-	 * @ORM\Column(type="float")
+	 * @ORM\Column(type="float", nullable=true)
 	 */
 	protected $exchangeRate;
 
@@ -152,7 +152,7 @@ class Invoice extends \Entity\BaseEntity {
 
 	/**
 	 * @var float
-	 * @ORM\Column(type="float")
+	 * @ORM\Column(type="float", nullable=true)
 	 */
 	protected $referrerCommission;
 
