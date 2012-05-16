@@ -42,7 +42,7 @@ class AdvancedTable extends BaseControl {
 		$control = parent::getControl();
 		$values = $this->getValue();
 
-		$table = Html::el('table')->class('table table-striped table-bordered table-condensed');
+		$table = Html::el('table')->class('table table-striped table-bordered table-condensed advanced-table');
 		$tr = Html::el('tr');
 		foreach ($this->columns as $key => $value) {
 			$th = Html::el('th')->add($value);

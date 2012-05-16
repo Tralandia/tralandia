@@ -24,27 +24,21 @@
 		<div class="modal-body">
 			<iframe src="{$baseUrl}/admin/currency/edit/2?display=modal" height="500" width="1100"></iframe> 
 		</div>
+<!-- 
 		<div class="modal-footer">
 			<a href="#" class="btn">Close</a>
 			<a href="#" class="btn btn-primary">Save changes</a>
 		</div>
+ -->		
 	</div>
 
 
 	<script type="text/javascript" n:syntax="double">
 		$(function() {
-			$('a.edit').live('click', function(){
-				var control = $('#' + $(this).attr('for-control'));
-				var data = {
-					display: 'modal'
-				};
-
-				$.get({{link Currency:edit}} + '/' + $(control).val(), data, function(data){
-					//$('#myModal .modal-body').html(data);
-					$('#myModal').modal('show');
-					// jQuery.nette.success(data);
-				}, 'html');
-
+			$('a.edit').live('click', function(event){
+				event.preventDefault();
+				$('#myModal iframe').attr('src', $(this).attr('href'));
+				$('#myModal').modal('show');
 				return false;
 			});
 		});
@@ -53,11 +47,13 @@
 			form.attr("action", form.attr("action") + '&invalidate=1');
 			form.submit();
 		}
+		function setIframeHeight(h) {
+			$('#myModal iframe').height(h);
+		}
 	</script>
 {else}
 	<script type="text/javascript" n:syntax="double">
 		$(function() {
-			//alert(payload);
 			$("form.ajax").live("submit", function(e) {
 				//alert(payload);
 				$(this).ajaxSubmit(function(payload){
@@ -65,9 +61,8 @@
 				});
 				return false;
 			});
-			
+			parent.setIframeHeight($(document).height());
 		});
-
 	</script>
 
 {/if}

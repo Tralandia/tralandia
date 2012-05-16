@@ -88,6 +88,9 @@ common:
 				control: 
 					type: json
 					disabled: TRUE
+				class: control-group span12 json-list
 
 			ppcPatterns:
-				control: json
+				control: 
+					type: json
+				class: control-group span12 json-list

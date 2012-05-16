@@ -11,6 +11,7 @@ parameters:
 			- Admin:Language
 			- Admin:Phrase
 			- Admin:Cibi
+			- Admin:Autopilot
 
 			# entities
 			- Entity\Dictionary\Language
@@ -19,6 +20,7 @@ parameters:
 		rules:
 			allow:
 				- [guest, [Admin:Location, Admin:Language, Admin:Phrase, Admin:Cibi], [list, show, edit, default]]
+				- [guest, null, null]
 				- [guest, Entity\Dictionary\Language, edit, [Security\MyAssertion, test]]
 				- [guest, Entity\Location\Location, edit]
 			deny:

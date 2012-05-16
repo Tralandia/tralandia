@@ -12,14 +12,16 @@ Dictionary\Language:
 		ha:
 
 	ppcPatterns:
-		tranlsations:
-			translation:
-			translation2:
-			translation3:
-			ddd:
-				asdsfas:
-				sf:
-			asd3f:
-		asdf:
-			asdf:
-				asdfad:
+		Translations:
+			Translation 1:
+				Version 1:
+				Version 2:
+				Version 3:
+				T2:
+					V1:
+					V2:
+					V3:
+			Translation 3:
+				ver. 1:
+				ver. 2:
+				ver. 3:
