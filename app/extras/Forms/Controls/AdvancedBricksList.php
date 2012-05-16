@@ -19,6 +19,13 @@ class AdvancedBricksList extends BaseControl
 	/** @var array */
 	protected $items = array();
 
+
+	public $defaultParam;
+
+	public function setDefaultParam($value) {
+		$this->defaultParam = $value;
+	}
+
 	/**
 	 * @param string $label
 	 * @param array $items  Options from which to choose
@@ -26,7 +33,7 @@ class AdvancedBricksList extends BaseControl
 	public function __construct($label, array $items = NULL)
 	{
 		parent::__construct($label);
-		$this->control->type = 'checkbox';
+		$this->control->type = 'text';
 		$this->container = Html::el();
 		$this->separator = Html::el('br');
 		if ($items !== NULL) {
@@ -115,14 +122,18 @@ class AdvancedBricksList extends BaseControl
 		}
 
 		$control = parent::getControl();
+		$control->addClass('hide');
 		$control->name .= '[]';
 		$id = $control->id;
 
 		$brickWrapper = Html::el('div')->addClass('input-bricks');
 		$brickTemplate = Html::el('label')->addClass('label');
 
-		foreach ($this->value->getValues() as $k => $value) {
+		foreach ($this->defaultParam as $k => $value) {
 			$brick = clone $brickTemplate;
+
+			$control->id = $id . '-' . $k;
+			$control->value = $k;
 
 			$buttonGroup = Html::el('div')->addClass('btn-group pull-right');
 			if($this->getOption('inlineEditing')) {
@@ -134,7 +145,7 @@ class AdvancedBricksList extends BaseControl
 				$buttonGroup->add($inlineDeleting->href($inlineDeleting->href->setParameter('id', $k)));
 			}
 
-			$brickWrapper->add((string) $brick->add($buttonGroup.$value));
+			$brickWrapper->add((string) $brick->add($buttonGroup.$value.$control));
 		}
 		if($this->getOption('inlineCreating')) {
 			$brickWrapper->add($this->getOption('inlineCreating'));

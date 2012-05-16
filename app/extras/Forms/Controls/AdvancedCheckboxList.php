@@ -36,6 +36,11 @@ class AdvancedCheckboxList extends BaseControl {
 	/** @var array */
 	protected $items = array();
 
+	public $defaultParam;
+
+	public function setDefaultParam($value) {
+		$this->defaultParam = $value;
+	}
 
 
 	/**
@@ -137,7 +142,7 @@ class AdvancedCheckboxList extends BaseControl {
 		$control = parent::getControl();
 		$control->name .= '[]';
 		$id = $control->id;
-		$counter = -1;
+		$counter = 0;
 		$values = $this->value === NULL ? NULL : (array) $this->getValue();
 		$label = Html::el('label')->addClass('checkbox '.$this->getOption('columnClass'));
 
@@ -146,7 +151,7 @@ class AdvancedCheckboxList extends BaseControl {
 			if ($key !== NULL && $key != $k) continue; // intentionally ==
 
 			$control->id = $label->for = $id . '-' . $counter;
-			$control->checked = (count($values) > 0) ? array_key_exists($k, $values) : false;
+			$control->checked = (count($values) > 0) ? in_array($k, $values) : false;
 			$control->value = $k;
 
 			if ($val instanceof Html) {

@@ -16,7 +16,8 @@ Selection::extensionMethod('fetchTree', 'Tools::selectionTree');
 Image::extensionMethod('resizeCrop', 'Tools::resizeCrop');
 
 Extras\Forms\Controls\AdvancedBricksList::register();
-Extras\Forms\Controls\AdvancedCheckboxList::register();
+Extras\Forms\Controls\AdvancedCheckBox::register();
+Extras\Forms\Controls\AdvancedCheckBoxList::register();
 Extras\Forms\Controls\AdvancedFileManager::register();
 Extras\Forms\Controls\AdvancedJson::register();
 Extras\Forms\Controls\AdvancedSelectBox::register();

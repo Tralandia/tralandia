@@ -68,10 +68,7 @@ class AdminPresenter extends BasePresenter {
 			// throw new NA\BadRequestException('Record not found');
 		// }
 
-		if (!$form->isSubmitted()) {
-			$data = $this->service->getDefaultsData($this->formMask);
-			$this->reflector->getContainer($form)->setDefaults($data);
-		}
+		$this->service->setDefaultsFormData($this->reflector->getContainer($form), $this->formMask);
 
 		$this->template->record = $this->service;
 		$this->template->form = $form;

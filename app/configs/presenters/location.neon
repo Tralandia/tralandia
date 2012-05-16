@@ -63,7 +63,9 @@ common:
 
 			languages:
 				control: bricksList
-				#control: multiSelect
+				#control: 
+				#	type: multiSelect
+				#	addClass: span6
 				inlineEditing: [Language:edit]
 				inlineCreating: [Language:add]
 				inlineDeleting: [Language:delete]
@@ -76,11 +78,6 @@ common:
 				callback: 
 					method: getPairsBySupported
 					arguments: ['id', 'iso', 1]
-
-		buttons:
-			cancel:
-			submit:
-				label: 'tst'
 
 base < common:
 	title: Location Base

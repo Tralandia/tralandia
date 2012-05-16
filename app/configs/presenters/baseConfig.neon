@@ -31,4 +31,4 @@ common:
 			submit:
 				type: submit
 				label: Save Changes
-				addClass: btn-success
+				addClass: btn-success pull-right

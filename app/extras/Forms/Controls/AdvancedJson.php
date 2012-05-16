@@ -40,7 +40,7 @@ class AdvancedJson extends BaseControl {
 	protected function generateCildren($control, $parent, $values = NULL) {
 		$container = Html::el('ul');
 		foreach ($parent as $key => $value) {
-			$itemContainer = Html::el('li')->add($key);
+			$itemContainer = Html::el('li')->add($key.':');
 			$controlCloned = clone $control;
 			$controlCloned->name .= "[$key]";
 			if(is_array($value)) {

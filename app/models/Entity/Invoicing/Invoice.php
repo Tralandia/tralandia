@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="invoicing_invoice", indexes={@ORM\index(name="invoiceNumber", columns={"invoiceNumber"}), @ORM\index(name="paymentReferenceNumber", columns={"paymentReferenceNumber"}), @ORM\index(name="due", columns={"due"}), @ORM\index(name="paid", columns={"paid"}), @ORM\index(name="checked", columns={"checked"}), @ORM\index(name="clientEmail", columns={"clientEmail"}), @ORM\index(name="referrer", columns={"referrer"}), @ORM\index(name="referrerCommission", columns={"referrerCommission"})})
+ * @ORM\Table(name="invoicing_invoice", indexes={@ORM\index(name="invoiceNumber", columns={"invoiceNumber"}), @ORM\index(name="paymentReferenceNumber", columns={"paymentReferenceNumber"}), @ORM\index(name="due", columns={"due"}), @ORM\index(name="paid", columns={"paid"}), @ORM\index(name="status", columns={"status"}), @ORM\index(name="clientEmail", columns={"clientEmail"}), @ORM\index(name="referrer", columns={"referrer"}), @ORM\index(name="referrerCommission", columns={"referrerCommission"})})
  */
 class Invoice extends \Entity\BaseEntity {
 
@@ -64,7 +64,7 @@ class Invoice extends \Entity\BaseEntity {
 	 * @var integer
 	 * @ORM\Column(type="integer")
 	 */
-	protected $status;
+	protected $status = self::STATUS_PENDING;
 
 	/**
 	 * @var string

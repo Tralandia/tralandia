@@ -209,6 +209,7 @@ class Reflector extends Nette\Object {
 			$fieldOptions = array(
 				'control' => array('default'=> NULL), 
 				'label' => array('default'=> ucfirst($name)), 
+				'description' => array('default'=> NULL), 
 				'class' => array('default'=> NULL), 
 				'addClass' => array('default'=> NULL), 
 				'callback' => array('default'=> NULL), 
@@ -216,6 +217,7 @@ class Reflector extends Nette\Object {
 				'inlineDeleting' => array('default' => NULL), 
 				'inlineCreating' => array('default' => NULL), 
 				'startNewRow' => array('default'=> NULL),
+				'validation' => array('default'=> NULL),
 			);
 
 
@@ -266,7 +268,11 @@ class Reflector extends Nette\Object {
 			
 			if(isset($fieldMask['ui']['control']['columnClass'])) {
 				$fieldMask['ui']['controlOptions']['columnClass'] = $fieldMask['ui']['control']['columnClass'];
-				unset($fieldMask['ui']['control']);
+				unset($fieldMask['ui']['control']['columnClass']);
+			}
+
+			if(isset($fieldMask['ui']['control']['label'])) {
+				$fieldMask['ui']['controlOptions']['label'] = $fieldMask['ui']['control']['label'];
 			}
 			
 			if($fieldMask['ui']['startNewRow'] || in_array($type, array('checkboxList', 'bricksList', 'tinymce', 'table', 'json'))) {
@@ -277,12 +283,18 @@ class Reflector extends Nette\Object {
 				$fieldMask['ui']['controlOptions']['renderAfter'] = Html::el('hr')->addClass('soften');
 			}
 
+			if($fieldMask['ui']['description']) {
+				$fieldMask['ui']['controlOptions']['description'] = $fieldMask['ui']['description'];
+			}
+
 			if($type == 'text') {
 				$fieldMask['ui']['control']['type'] = 'AdvancedTextInput';
+			} else if($type == 'checkbox') {
+				$fieldMask['ui']['control']['type'] = 'AdvancedCheckBox';
 			} else if($type == 'select') {
 				$fieldMask['ui']['control']['type'] = 'AdvancedSelectBox';
 			} else if($type == 'checkboxList') {
-				$fieldMask['ui']['control']['type'] = 'AdvancedCheckboxList';
+				$fieldMask['ui']['control']['type'] = 'AdvancedCheckBoxList';
 			} else if($type == 'table') {
 				$fieldMask['ui']['control']['type'] = 'AdvancedTable';
 			} else if($type == 'json') {
@@ -386,8 +398,20 @@ class Reflector extends Nette\Object {
 			$ui = $property->ui;
 			$control = $container->{'add' . $ui->control->type}(
 				$propertyName,
-				Html::el('b')->add($ui->label->name)
+				Html::el('b')->add($ui->label->name.':')
 			);
+
+
+			if(isset($ui->validation)) {
+				foreach ($ui->validation as $key => $value) {
+					$value = iterator_to_array($value);
+					$method = array_shift($value);
+					if(in_array($value[0], array('PATTERN', 'EQUAL', 'IS_IN', 'VALID', 'MAX_FILE_SIZE', 'MIME_TYPE', 'IMAGE'))) {
+						$value[0] = constant('\Nette\Application\UI\Form::'.$value[0]);
+					}
+					$t = call_user_func_array(array($control, $method), $value);
+				}
+			}
 
 			foreach ($ui->controlOptions as $optionKey => $option) {
 				$control->setOption($optionKey, $option);
@@ -414,7 +438,7 @@ class Reflector extends Nette\Object {
 			if(isset($ui->control->disabled)) $control->setDisabled($ui->control->disabled);
 			
 			if ($control instanceof \Extras\Forms\Controls\AdvancedSelectBox 
-				|| $control instanceof \Extras\Forms\Controls\AdvancedCheckboxList
+				|| $control instanceof \Extras\Forms\Controls\AdvancedCheckBoxList
 				|| $control instanceof \Nette\Forms\Controls\MultiSelectBox) 
 			{
 				$targetEntity = $property->targetEntity;
@@ -429,7 +453,7 @@ class Reflector extends Nette\Object {
 				}
 				if($control instanceof \Extras\Forms\Controls\AdvancedSelectBox) {
 					foreach ($items as $key => $value) {
-						$item = Html::el('option')->setText($value);
+						$item = Html::el('option')->setText($value)->setValue($key);
 						$attributes = array();
 						if($control->getOption('inlineEditing')) {
 							$inlineEditingHref = $control->getOption('inlineEditing')->href;

@@ -9,6 +9,34 @@ use Nette\Forms\Container,
 
 class AdvancedSelectBox extends SelectBox {
 
+	/**
+	 * Sets items from which to choose.
+	 * @param  array
+	 * @return SelectBox  provides a fluent interface
+	 */
+	public function setItems(array $items, $useKeys = TRUE)
+	{
+		parent::setItems($items, $useKeys);
+		$this->allowed = array();
+
+		foreach ($items as $key => $value) {
+			if (!is_array($value)) {
+				$value = array($key => $value);
+			}
+
+			foreach ($value as $key2 => $value2) {
+				if($value2 instanceof Html) {
+					$this->allowed[$key2] = $value2->getText();
+				} else {
+					$this->allowed[$key2] = $value2;
+				}
+			}
+		}
+
+		return $this;
+	}
+
+
 	public function getControl() {
 		$control = parent::getControl();
 		

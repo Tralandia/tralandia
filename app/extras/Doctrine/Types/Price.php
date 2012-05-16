@@ -14,7 +14,7 @@ class Price extends Type {
 	}
 
 	public function getSqlDeclaration(array $fieldDeclaration, AbstractPlatform $platform) {
-		return 'text';
+		return 'varchar(255)';
 	}
 
 	public function convertToPHPValue($value, AbstractPlatform $platform) {

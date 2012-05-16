@@ -50,13 +50,13 @@ class Medium extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var text
-	 * @ORM\Column(type="text", nullable=true)
+	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $uri;
 
 	/**
 	 * @var text
-	 * @ORM\Column(type="text", nullable=true)
+	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $oldUrl;
 

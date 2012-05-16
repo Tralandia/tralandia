@@ -54,6 +54,8 @@ common:
 			iso:
 				control: text
 				startNewRow: true
+				validation:
+					- [addRule, PATTERN, 'Musí obsahovat číslici', '.*[0-9].*']
 
 			name:
 				control: 
@@ -64,12 +66,16 @@ common:
 				inlineCreating: true
 
 			supported:
-				control: checkbox
+				control: 
+					type: checkbox
+					label: ano ? ne ?
 				label: Supported
+				description: 'tak si vyber!'
 
 			defaultCollation:
 				control: text
 				label: Collation
+				description: 'asdfasdf'
 
 			multitranslationOptions:
 				label: Multitranslations

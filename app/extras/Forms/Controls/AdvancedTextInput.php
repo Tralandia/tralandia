@@ -9,27 +9,25 @@ use Nette\Forms\Container,
 
 class AdvancedTextInput extends TextInput {
 
-	public $originalValue;
+	public $defaultParam;
 
-	public function setValue($value) {
-		$this->originalValue = $value;
-		return parent::setValue($value);
+	public function setDefaultParam($value) {
+		$this->defaultParam = $value;
 	}
 
 	public function getControl() {
-
 		$value = $this->getValue();
 
 		$inlineEditing = NULL;
 		if($this->getOption('inlineEditing')) {
 			$inlineEditing = $this->getOption('inlineEditing');
-			$inlineEditing->href($inlineEditing->href->setParameter('id', $this->originalValue->getPhraseId()));
+			$inlineEditing->href($inlineEditing->href->setParameter('id', $this->defaultParam));
 		}
 		
 		$inlineDeleting = NULL;
 		if($this->getOption('inlineDeleting')) {
 			$inlineDeleting = $this->getOption('inlineDeleting');
-			$inlineDeleting->href($inlineDeleting->href->setParameter('id', $this->originalValue->getPhraseId()));
+			$inlineDeleting->href($inlineDeleting->href->setParameter('id', $this->defaultParam));
 		}
 		
 		$inlineCreating = NULL;

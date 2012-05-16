@@ -14,6 +14,7 @@ abstract class BasePresenter extends Presenter {
 	protected function startup() {
 		parent::startup();
 		
+		$backlink = $this->storeRequest();
 		// if (false /*!$this->user->isLoggedIn()*/) {
 		// 	if ($this->user->getLogoutReason() === User::INACTIVITY) {
 		// 		$this->flashMessage('Session timeout, you have been logged out', 'warning');
@@ -32,6 +33,11 @@ abstract class BasePresenter extends Presenter {
 		if (!$this->hasFlashSession() && !empty($this->params[self::FLASH_KEY])) {
 			unset($this->params[self::FLASH_KEY]);
 			$this->redirect(301, 'this');
+		}
+		
+		if(!$this->getHttpRequest()->isPost()) {
+			$environmentSection = $this->context->session->getSection('environment');
+			$environmentSection->previousLink = $backlink;
 		}
 	}
 
