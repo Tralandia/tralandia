@@ -38,7 +38,7 @@ class CoolForm extends Form {
 
 	public function onInvalid(Form $form) {
 		if ($this->getParam('invalidate', false)) {
-			$form->cleanErrors();
+			//$form->cleanErrors();
 			$this->parent->invalidateControl($this->getName());
 		} else {
 			foreach ($form->getErrors() AS $error) {

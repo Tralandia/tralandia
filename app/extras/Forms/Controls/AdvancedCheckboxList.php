@@ -26,7 +26,7 @@ use Nette\Utils\Html,
  * @copyright Copyright (c) 2004, 2011 David Grudl
  * @package   Nette\Extras
  */
-class AdvancedCheckboxList extends BaseControl {
+class AdvancedCheckBoxList extends BaseControl {
 	/** @var Nette\Utils\Html  separator element template */
 	protected $separator;
 
@@ -222,8 +222,8 @@ class AdvancedCheckboxList extends BaseControl {
 	 */
 	public static function register()
 	{
-		Container::extensionMethod('addAdvancedCheckboxList', function (Container $_this, $name, $label, array $items = NULL) {
-			return $_this[$name] = new AdvancedCheckboxList($label, $items);
+		Container::extensionMethod('addAdvancedCheckBoxList', function (Container $_this, $name, $label, array $items = NULL) {
+			return $_this[$name] = new AdvancedCheckBoxList($label, $items);
 		});
 	}
 

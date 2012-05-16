@@ -4,7 +4,7 @@ namespace AdminModule;
 
 use Nette\Utils\Html;
 
-class LanguagePresenter extends AdminPresenter {
+class DictionaryLanguagePresenter extends AdminPresenter {
 
 
 	public static function setSupported($id, $row, $params) {

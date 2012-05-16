@@ -4,6 +4,7 @@ namespace Extras\Forms\Controls;
 
 
 use Nette\Utils\Html,
+	Tra\Utils\Arrays,
 	Nette\Forms\Container,
 	Nette\Forms\Controls\BaseControl;
 
@@ -44,7 +45,7 @@ class AdvancedJson extends BaseControl {
 			$controlCloned = clone $control;
 			$controlCloned->name .= "[$key]";
 			if(is_array($value)) {
-				$children = $this->generateCildren($controlCloned, $value, $values[$key]);
+				$children = $this->generateCildren($controlCloned, $value, $values ? Arrays::get($values, $key, NULL) : NULL);
 				$container->add($itemContainer->add($children));
 			} else {
 				$id = $controlCloned->id;

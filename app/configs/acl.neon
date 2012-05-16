@@ -12,6 +12,7 @@ parameters:
 			- Admin:Phrase
 			- Admin:Cibi
 			- Admin:Autopilot
+			- Admin:DictionaryLanguage
 
 			# entities
 			- Entity\Dictionary\Language

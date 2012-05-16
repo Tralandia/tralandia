@@ -34,6 +34,14 @@ class AdvancedTable extends BaseControl {
 	}
 
 	public function getValue() {
+		if(!is_array($this->value)) return NULL;
+		$values = array_reverse($this->value);
+		foreach ($values as $key => $value) {
+			$value = array_filter($value);
+			if(count($value)) break;
+			array_shift($values);
+		}
+		$this->value = array_reverse($values);
 		return is_array($this->value) ? $this->value : NULL;
 	}
 
@@ -41,7 +49,7 @@ class AdvancedTable extends BaseControl {
 	public function getControl() {
 		$control = parent::getControl();
 		$values = $this->getValue();
-
+		debug($values);
 		$table = Html::el('table')->class('table table-striped table-bordered table-condensed advanced-table');
 		$tr = Html::el('tr');
 		foreach ($this->columns as $key => $value) {
@@ -50,8 +58,13 @@ class AdvancedTable extends BaseControl {
 		}
 		$table->add($tr);
 
-		if($this->rows > 0) {
-			for($i = 0; $i < $this->rows; $i++) {
+		if(strpos($this->rows, '+') === 0) {
+			$rows = count($values) + $this->rows;
+		} else {
+			$rows = $this->rows;
+		}
+		if($rows > 0) {
+			for($i = 0; $i < $rows; $i++) {
 				$tr = Html::el('tr');
 				foreach ($this->columns as $key => $value) {
 					$clonedControl = clone($control);

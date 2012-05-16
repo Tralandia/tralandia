@@ -105,7 +105,8 @@ class Reflector extends Nette\Object {
 		$classReflection = $this->getServiceReflection($class);
 		$classReflection = ClassType::from($classReflection->getConstant('MAIN_ENTITY_NAME'));
 
-		foreach ($classReflection->getProperties() as $property) {
+		foreach ($fields as $key => $value) {
+			$property = $classReflection->getProperty($key);
 			if(count($fields) === 0 || array_key_exists($property->name, $fields))
 				$this->fields[$class][$property->name] = $property;
 		}
@@ -146,7 +147,7 @@ class Reflector extends Nette\Object {
 	public function getInlineOptionHtml($type, $value, $controlType) {
 		if(!$value) return NULL;
 		$a = Html::el('a')
-			->addClass('btn')
+			->addClass('btn btn-hidden')
 			->setHref(call_user_func_array(array($this->presenter, 'lazyLink'),(array) $value));
 		$i = Html::el('i')->addClass('icon-white');
 
@@ -259,7 +260,9 @@ class Reflector extends Nette\Object {
 			$fieldMask['ui']['options'] = $options;
 
 			if($fieldMask['ui']['class'] === NULL && !in_array($type, array('checkboxList', 'tinymce'))) {
-				if(in_array($type, array('bricksList'))) {
+				if(in_array($type, array('json'))) {
+					$fieldMask['ui']['class'] = 'span12 json-list';
+				} else if(in_array($type, array('bricksList'))) {
 					$fieldMask['ui']['class'] = 'span12';
 				} else {
 					$fieldMask['ui']['class'] = 'span3';
@@ -275,7 +278,7 @@ class Reflector extends Nette\Object {
 				$fieldMask['ui']['controlOptions']['label'] = $fieldMask['ui']['control']['label'];
 			}
 			
-			if($fieldMask['ui']['startNewRow'] || in_array($type, array('checkboxList', 'bricksList', 'tinymce', 'table', 'json'))) {
+			if($fieldMask['ui']['startNewRow'] || (in_array($type, array('checkboxList', 'bricksList', 'tinymce', 'table', 'json')) && $fieldMask['ui']['startNewRow'] !== false)) {
 				$fieldMask['ui']['controlOptions']['renderBefore'] = Html::el('hr')->addClass('soften');
 			}
 
@@ -344,7 +347,6 @@ class Reflector extends Nette\Object {
 			}
 			// debug($fieldMask['ui']);
 			// @todo vyhadzovat exceptiony ak nieco nieje nastavene OK
-
 			$mask['fields'][$name] = $fieldMask;
 		}
 
@@ -372,7 +374,7 @@ class Reflector extends Nette\Object {
 			$button['type'] = ucfirst($button['type']);
 			$mask['buttons'][$name] = $button;
 		}
-		
+
 		return \Nette\ArrayHash::from($mask);
 	}
 	
@@ -401,7 +403,7 @@ class Reflector extends Nette\Object {
 
 		foreach ($mask->fields as $propertyName => $property) {
 			unset($ui, $control, $validators, $association);
-			//debug($property);
+			// debug($property);
 			$ui = $property->ui;
 			$control = $container->{'add' . $ui->control->type}(
 				$propertyName,

@@ -49,7 +49,7 @@ common:
 				callback: {class: %this%, method: setSupported}
 
 	form:
-		addClass: haha
+		addClass: ajax
 		fields:
 			iso:
 				control: text
@@ -62,8 +62,7 @@ common:
 					type: phrase
 					class: test
 				addClass: 'myPhraseClass'
-				inlineEditing: true
-				inlineCreating: true
+				inlineEditing: Phrase:edit
 
 			supported:
 				control: 
@@ -81,16 +80,19 @@ common:
 				label: Multitranslations
 				control: 
 					type: table
-					rows: 3
-					columns: [Pes, Macka]
+					rows: 5
+					columns: [Formula]
 
 			genderNumberOptions:
 				control: 
-					type: json
-					disabled: TRUE
-				class: control-group span12 json-list
+					type: table
+					rows: 5
+					columns: ['Gender / Number shortcut']
+				startNewRow: false
 
 			ppcPatterns:
 				control: 
-					type: json
-				class: control-group span12 json-list
+					type: table
+					rows: '+5'
+					columns: ['Patern']
+				startNewRow: false
