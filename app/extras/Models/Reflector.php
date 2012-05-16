@@ -137,9 +137,9 @@ class Reflector extends Nette\Object {
 		return $this->fields[$class];
 	}
 
-	public function getFormMask() {
+	public function getFormMask($service) {
 		if(!$this->formMask) {
-			$this->formMask = $this->_getFormMask();
+			$this->formMask = $this->_getFormMask($service);
 		}
 		return $this->formMask;
 	}
@@ -173,7 +173,7 @@ class Reflector extends Nette\Object {
 
 
 
-	private function _getFormMask() {
+	private function _getFormMask($service) {
 		$mask = array();
 		$mask['classReflection'] = $this->getServiceReflection($this->settings->serviceClass);
 		$mask['entityReflection'] = $this->getSerivcesEntityReflection($mask['classReflection']);
@@ -196,8 +196,13 @@ class Reflector extends Nette\Object {
 
 
 		$fieldsSettings = $this->settings->params->form->fields;
-
+		$user = $this->presenter->user;
 		foreach ($this->getFields($this->settings->serviceClass, $fieldsSettings) as $property) {
+
+			if($user->isAllowed($service->getMainEntity(), 'edit.'.$property->name)) {
+				
+			}
+
 			$fieldMask = array(
 				'ui' => NULL,
 			);
