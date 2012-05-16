@@ -119,6 +119,13 @@ class BaseImport {
 			),
 			'subsections' => array(),
 		),
+		'attractions' => array(
+			'entities' => array(
+				'\Attraction\Type' => array(),
+				'\Attraction\Attraction' => array(),
+			),
+			'subsections' => array(),
+		),
 	);
 
 	public $savedVariables = array();

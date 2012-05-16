@@ -25,13 +25,13 @@ class Contact extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Attraction\Attraction", inversedBy="contacts", cascade={"persist"})
+	 * @ORM\ManyToOne(targetEntity="Entity\Attraction\Attraction", inversedBy="contacts", cascade={"persist"})
 	 */
 	protected $attractions;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Rental\Rental", inversedBy="contacts", cascade={"persist"})
+	 * @ORM\ManyToOne(targetEntity="Entity\Rental\Rental", inversedBy="contacts", cascade={"persist"})
 	 */
 	protected $rentals;
 
@@ -104,8 +104,6 @@ class Contact extends \Entity\BaseEntity {
 	public function __construct() {
 		parent::__construct();
 
-		$this->attractions = new \Doctrine\Common\Collections\ArrayCollection;
-		$this->rentals = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->locations = new \Doctrine\Common\Collections\ArrayCollection;
 	}
 		
@@ -165,16 +163,23 @@ class Contact extends \Entity\BaseEntity {
 	 * @param \Entity\Attraction\Attraction
 	 * @return \Entity\Contact\Contact
 	 */
-	public function addAttraction(\Entity\Attraction\Attraction $attraction) {
-		if(!$this->attractions->contains($attraction)) {
-			$this->attractions->add($attraction);
-		}
+	public function setAttraction(\Entity\Attraction\Attraction $attraction) {
+		$this->attractions = $attractions;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Attraction\Attraction
+	 * @return \Entity\Contact\Contact
+	 */
+	public function unsetAttraction() {
+		$this->attractions = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Attraction\Attraction|NULL
 	 */
 	public function getAttractions() {
 		return $this->attractions;
@@ -184,16 +189,23 @@ class Contact extends \Entity\BaseEntity {
 	 * @param \Entity\Rental\Rental
 	 * @return \Entity\Contact\Contact
 	 */
-	public function addRental(\Entity\Rental\Rental $rental) {
-		if(!$this->rentals->contains($rental)) {
-			$this->rentals->add($rental);
-		}
+	public function setRental(\Entity\Rental\Rental $rental) {
+		$this->rentals = $rentals;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Rental\Rental
+	 * @return \Entity\Contact\Contact
+	 */
+	public function unsetRental() {
+		$this->rentals = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Rental\Rental|NULL
 	 */
 	public function getRentals() {
 		return $this->rentals;

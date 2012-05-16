@@ -245,6 +245,15 @@ class Item extends \Entity\BaseEntity {
 	}
 		
 	/**
+	 * @return \Entity\Invoicing\Item
+	 */
+	public function unsetServiceFrom() {
+		$this->serviceFrom = NULL;
+
+		return $this;
+	}
+		
+	/**
 	 * @return \DateTime|NULL
 	 */
 	public function getServiceFrom() {
@@ -257,6 +266,15 @@ class Item extends \Entity\BaseEntity {
 	 */
 	public function setServiceTo(\DateTime $serviceTo) {
 		$this->serviceTo = $serviceTo;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Invoicing\Item
+	 */
+	public function unsetServiceTo() {
+		$this->serviceTo = NULL;
 
 		return $this;
 	}
