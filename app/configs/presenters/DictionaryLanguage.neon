@@ -49,7 +49,7 @@ common:
 				callback: {class: %this%, method: setSupported}
 
 	form:
-		addClass: ajax
+		addClass: nic
 		fields:
 			iso:
 				control: text
@@ -69,19 +69,19 @@ common:
 					type: checkbox
 					label: ano ? ne ?
 				label: Supported
-				description: 'tak si vyber!'
 
 			defaultCollation:
 				control: text
 				label: Collation
-				description: 'asdfasdf'
+				description: 'Description text'
 
 			multitranslationOptions:
+				class: control-group span6
 				label: Multitranslations
 				control: 
 					type: table
 					rows: 5
-					columns: [Formula]
+					columns: [Formula, Pes]
 
 			genderNumberOptions:
 				control: 

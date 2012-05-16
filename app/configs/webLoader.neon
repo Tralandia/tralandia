@@ -12,13 +12,17 @@ parameters:
 					- autopilot/autopilot.js
 				css: autopilot/_bootstrap.less
 			nette:
-				js: nette/nette.js
+				js: 
+					- nette/nette.js
+					- nette/netteForms.js
 			bootstrap:
 				js: bootstrap/bootstrap.min.js
 			liveQuery:
 				js: liveQuery/livequery.js
 			jQuery:
-				js: jQuery/jquery.js
+				js: 
+					- jQuery/jquery.js
+					- jQuery/jquery.livequery.js
 			jQueryUI:
 				js: 
 					- jQueryUI/jquery.ui.js

@@ -147,7 +147,7 @@ class Reflector extends Nette\Object {
 	public function getInlineOptionHtml($type, $value, $controlType) {
 		if(!$value) return NULL;
 		$a = Html::el('a')
-			->addClass('btn btn-hidden')
+			->addClass('btn btn-hidden pull-left')
 			->setHref(call_user_func_array(array($this->presenter, 'lazyLink'),(array) $value));
 		$i = Html::el('i')->addClass('icon-white');
 

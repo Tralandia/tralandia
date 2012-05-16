@@ -27,10 +27,11 @@ $(function() {
 	});
 	$(".multiselect").multiselect();
 
-	$('.btn').tooltip();
-	$('.show-tooltip').tooltip({
-		placement: 'left'
-	});
+	$('.content').livequery(function() {
+		$('.tooltip').tooltip({
+			placement: 'left'
+		});
+	})
 
 	$('#myModal').modal({
 		show: false
@@ -44,7 +45,7 @@ $(function() {
 })
 
 function toggleEdit(obj) {
-	$($(obj).parent()).next('form').toggleClass('edit-mode');
+	$($(obj).parent()).next().children('form').toggleClass('edit-mode');
 }
 
 function debug(val) { console.log(val); }
