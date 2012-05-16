@@ -362,6 +362,13 @@ class Reflector extends Nette\Object {
 			foreach ($fieldOptions as $key => $value) {
 				$button[$key] = Arrays::get($options, $key, $value['default']);
 			}
+
+			if($button['type'] == 'backlink') {
+				$button['type'] = 'button';
+				$backlinkCode = $this->presenter->context->session->getSection('environment')->previousLink;
+				$backlink = $this->presenter->link('//this', array('backlink' => $backlinkCode));
+				$button['prototype']['onClick'] = 'window.location=\''.$backlink.'\'';
+			}
 			$button['type'] = ucfirst($button['type']);
 			$mask['buttons'][$name] = $button;
 		}
@@ -490,6 +497,12 @@ class Reflector extends Nette\Object {
 			);
 
 			$control->setOption('renderBefore', Html::el('hr')->addClass('soften'));
+
+			if(isset($button->prototype)) {
+				foreach ($button->prototype as $key => $value) {
+					$control->getControlPrototype()->{$key}($value);
+				}
+			}
 
 			if(isset($button->class)) {
 				$control->getControlPrototype()->class($button->class);

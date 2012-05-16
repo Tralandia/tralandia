@@ -14,7 +14,7 @@ class AdminForm extends Form {
 		$this->service = $service;
 
 		$reflector->extend($this, $this->reflector->getFormMask());
-		
+
 		//$this->addAdvancedFileManager('upload', 'File manager');		
 		$this->onSuccess[] = callback($this, 'onSuccess');
 	}
