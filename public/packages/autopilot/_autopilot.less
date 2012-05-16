@@ -57,3 +57,17 @@ hr { border-top: 1px solid @grayMedium; margin:10px 0; }
 
 .info { font-size:11px; }
 .info span { color:@blueDark; }
+
+.tabs { position:absolute; left:0; top:150px; right:0; bottom:0; }
+.tabs ul.nav { width:@gridFullWidth + 22; margin:0 auto; z-index: 999; position: relative; }
+.tabs ul.nav li { position:relative; float:left; #gradient > .vertical(@grayMedium, @white); padding:8px 15px 7px; border:1px solid @grayMedium; margin:1px 5px 0 0; .border-radius(4px 4px 0 0); cursor:pointer; font-size:16px; color:lighten(@gray, 5%); border-bottom:none; }
+.tabs ul.nav li button { position:absolute; right:-8px; top:-8px; padding:1px; display:none; z-index:999; }
+.tabs ul.nav li button.btn-success { top:11px; }
+.tabs ul.nav li:hover > button { display:block; }
+.tabs ul.nav li:hover, .tabs ul.nav li.active { #gradient > .vertical(@white, @grayMedium); }
+.tabs ul.nav li.active { color:@black; border-color:@greenBorder; padding:8px 15px; }
+.tabs .tab-content { display:none; border-top:1px solid @greenBorder; margin-top:33px; position:relative; z-index:1; background:@grayMedium; }
+.tabs .tab-content.active { display: block; }
+.tabs .tab-content .buttons { width:@gridFullWidth + 22; margin:0 auto; }
+.tabs .tab-content .buttons .btn { margin:5px 5px 5px 0; float:right; }
+.tabs .tab-content iframe { border:none; position:absolute; left:0; top:5px; right:0; bottom:0; width:100%; }
