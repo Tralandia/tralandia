@@ -8,6 +8,7 @@ use Nette,
 
 class AdminFormRenderer extends DefaultFormRenderer {
 
+
 	public function renderPair(Nette\Forms\IControl $control)
 	{
 		$pair = parent::renderPair($control);

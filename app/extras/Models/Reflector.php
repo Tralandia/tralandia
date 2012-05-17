@@ -242,6 +242,13 @@ class Reflector extends Nette\Object {
 				$fieldMask['ui']['control'] = array('type' => $fieldMask['ui']['control']);
 			}
 
+			if(is_string($fieldMask['ui']['description'])) {
+				$fieldMask['ui']['description'] = array(
+					'title' => $fieldMask['ui']['description'],
+					'content' => $fieldMask['ui']['description']
+				);
+			}
+
 			$type = $fieldMask['ui']['control']['type'];
 
 			$fieldMask['ui']['controlOptions']['inlineCreating'] = $this->getInlineOptionHtml('inlineCreating', $fieldMask['ui']['inlineCreating'], $type);
@@ -289,10 +296,6 @@ class Reflector extends Nette\Object {
 
 			if($type == 'checkboxList') {
 				$fieldMask['ui']['controlOptions']['renderAfter'] = Html::el('hr')->addClass('soften');
-			}
-
-			if($fieldMask['ui']['description']) {
-				$fieldMask['ui']['controlOptions']['description'] = $fieldMask['ui']['description'];
 			}
 
 			if($type == 'text') {
@@ -440,6 +443,14 @@ class Reflector extends Nette\Object {
 
 			if(isset($ui->label->class)) {
 				$control->getLabelPrototype()->addClass($ui->label->class);
+			}
+
+			if(isset($ui->description)) {
+				$control->getLabelPrototype()->addAttributes(array(
+					'data-title' => $ui->description->title,
+					'data-content' => $ui->description->content,
+					'rel' => 'popover',
+				));
 			}
 
 			if(isset($ui->control->class)) {
