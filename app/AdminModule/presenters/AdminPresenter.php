@@ -27,7 +27,6 @@ class AdminPresenter extends BasePresenter {
 		$this->serviceName = $this->settings->serviceClass;
 		$this->serviceListName = $this->settings->serviceListClass;
 		$this->reflector = new Reflector($this->settings, $this);
-		$this->formMask = $this->reflector->getFormMask();
 	}
 	
 	public function getMainServiceName() {
@@ -47,11 +46,13 @@ class AdminPresenter extends BasePresenter {
 	public function actionEdit($id = 0) {
 		$service = $this->serviceName;
 		$this->service = $service::get($id);
+		// @todo toto niekam premiestnit
 		if (!$this->user->isAllowed($this->service->getMainEntity(), 'edit')) {
 			$this->flashMessage('Access diened. You don\'t have permissions to view that page.', 'warning');
 			// $this->redirect('Auth:login');
 			throw new \Nette\MemberAccessException('co tu chces?!');
 		}
+		$this->formMask = $this->reflector->getFormMask($this->service);
 		if(isset($this->params['display']) && $this->params['display'] == 'modal') {
 			$this->formMask->form->addClass .= ' ajax';
 			$this->setLayout('modalLayout');
@@ -117,6 +118,15 @@ class AdminPresenter extends BasePresenter {
 
 		$gridSettings = $this->settings->params->grid;
 		$grid->itemsPerPage = $gridSettings->itemsPerPage;
+
+		if($gridSettings->drawRowNumber) {
+			$mapper['rowNumber'] = 'e.id';
+			$grid->addColumn('rowNumber', '#');
+			$grid['rowNumber']->formatCallback[] = function() {
+				static $c = 1;
+				return $c++.'.';
+			};
+		}
 
 		foreach ($gridSettings->columns as $aliasName => $column) {
 			$mapper[$aliasName] = $column->mapper;

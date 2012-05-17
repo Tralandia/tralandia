@@ -4,6 +4,7 @@ common:
 
 	grid:
 		dataSourceMethod: getGridList
+		drawRowNumber: true
 		columns: 
 			id:
 				mapper: e.id
@@ -49,13 +50,13 @@ common:
 				callback: {class: %this%, method: setSupported}
 
 	form:
-		addClass: nic
+		addClass: ajax
 		fields:
 			iso:
 				control: text
 				startNewRow: true
 				validation:
-					- [addRule, PATTERN, 'Musí obsahovat číslici', '.*[0-9].*']
+					- [addRule, PATTERN, 'Musí obsahovat číslici', '[a-zA-Z]{2}']
 
 			name:
 				control: 
@@ -69,6 +70,9 @@ common:
 					type: checkbox
 					label: ano ? ne ?
 				label: Supported
+				description: 
+					title: 'Description text'
+					content: 'Toto je super popis!'
 
 			defaultCollation:
 				control: text
@@ -76,7 +80,7 @@ common:
 				description: 'Description text'
 
 			multitranslationOptions:
-				class: control-group span6
+				class: span6
 				label: Multitranslations
 				control: 
 					type: table

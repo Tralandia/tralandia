@@ -137,9 +137,9 @@ class Reflector extends Nette\Object {
 		return $this->fields[$class];
 	}
 
-	public function getFormMask() {
+	public function getFormMask($service) {
 		if(!$this->formMask) {
-			$this->formMask = $this->_getFormMask();
+			$this->formMask = $this->_getFormMask($service);
 		}
 		return $this->formMask;
 	}
@@ -173,7 +173,7 @@ class Reflector extends Nette\Object {
 
 
 
-	private function _getFormMask() {
+	private function _getFormMask($service) {
 		$mask = array();
 		$mask['classReflection'] = $this->getServiceReflection($this->settings->serviceClass);
 		$mask['entityReflection'] = $this->getSerivcesEntityReflection($mask['classReflection']);
@@ -196,8 +196,13 @@ class Reflector extends Nette\Object {
 
 
 		$fieldsSettings = $this->settings->params->form->fields;
-
+		$user = $this->presenter->user;
 		foreach ($this->getFields($this->settings->serviceClass, $fieldsSettings) as $property) {
+
+			if($user->isAllowed($service->getMainEntity(), 'edit.'.$property->name)) {
+				
+			}
+
 			$fieldMask = array(
 				'ui' => NULL,
 			);
@@ -235,6 +240,13 @@ class Reflector extends Nette\Object {
 
 			if(is_string($fieldMask['ui']['control'])) {
 				$fieldMask['ui']['control'] = array('type' => $fieldMask['ui']['control']);
+			}
+
+			if(is_string($fieldMask['ui']['description'])) {
+				$fieldMask['ui']['description'] = array(
+					'title' => $fieldMask['ui']['description'],
+					'content' => $fieldMask['ui']['description']
+				);
 			}
 
 			$type = $fieldMask['ui']['control']['type'];
@@ -284,10 +296,6 @@ class Reflector extends Nette\Object {
 
 			if($type == 'checkboxList') {
 				$fieldMask['ui']['controlOptions']['renderAfter'] = Html::el('hr')->addClass('soften');
-			}
-
-			if($fieldMask['ui']['description']) {
-				$fieldMask['ui']['controlOptions']['description'] = $fieldMask['ui']['description'];
 			}
 
 			if($type == 'text') {
@@ -435,6 +443,14 @@ class Reflector extends Nette\Object {
 
 			if(isset($ui->label->class)) {
 				$control->getLabelPrototype()->addClass($ui->label->class);
+			}
+
+			if(isset($ui->description)) {
+				$control->getLabelPrototype()->addAttributes(array(
+					'data-title' => $ui->description->title,
+					'data-content' => $ui->description->content,
+					'rel' => 'popover',
+				));
 			}
 
 			if(isset($ui->control->class)) {

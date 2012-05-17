@@ -49,7 +49,7 @@ class AdvancedTable extends BaseControl {
 	public function getControl() {
 		$control = parent::getControl();
 		$values = $this->getValue();
-		debug($values);
+
 		$table = Html::el('table')->class('table table-bordered table-condensed advanced-table');
 		$tr = Html::el('tr');
 		foreach ($this->columns as $key => $value) {
