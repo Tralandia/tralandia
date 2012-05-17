@@ -6,7 +6,7 @@ common:
 		addClass: table table-striped table-condensed
 		dataSourceMethod: getAll
 		dataSourceArguments: NULL
-		drawRowNumber: true
+		drawRowNumber: false
 		itemsPerPage: 50
 
 		actionColumns:

@@ -119,6 +119,15 @@ class AdminPresenter extends BasePresenter {
 		$gridSettings = $this->settings->params->grid;
 		$grid->itemsPerPage = $gridSettings->itemsPerPage;
 
+		if($gridSettings->drawRowNumber) {
+			$mapper['rowNumber'] = 'e.id';
+			$grid->addColumn('rowNumber', '#');
+			$grid['rowNumber']->formatCallback[] = function() {
+				static $c = 1;
+				return $c++.'.';
+			};
+		}
+
 		foreach ($gridSettings->columns as $aliasName => $column) {
 			$mapper[$aliasName] = $column->mapper;
 			

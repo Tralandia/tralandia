@@ -4,6 +4,7 @@ common:
 
 	grid:
 		dataSourceMethod: getGridList
+		drawRowNumber: true
 		columns: 
 			id:
 				mapper: e.id
