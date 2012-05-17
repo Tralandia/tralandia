@@ -8,10 +8,26 @@ use Nette,
 
 class AdminFormRenderer extends DefaultFormRenderer {
 
+	const ERROR_CLASS = 'error';
 
 	public function renderPair(Nette\Forms\IControl $control)
 	{
-		$pair = parent::renderPair($control);
+		$pair = $this->getWrapper('pair container');
+		$pair->add($this->renderLabel($control));
+		$pair->add($this->renderControl($control));
+		$pair->class($this->getValue($control->isRequired() ? 'pair .required' : 'pair .optional'), TRUE);
+		$pair->class($control->getOption('class'), TRUE);
+
+		if ($control->hasErrors()) {
+			$pair->addClass(self::ERROR_CLASS);
+		}
+
+		if (++$this->counter % 2) {
+			$pair->class($this->getValue('pair .odd'), TRUE);
+		}
+		$pair->id = $control->getOption('id');
+		$pair = $pair->render(0);
+
 		return $control->getOption('renderBefore').$pair.$control->getOption('renderAfter');
 	}
 
@@ -40,6 +56,4 @@ class AdminFormRenderer extends DefaultFormRenderer {
 		}
 		return $renderBefore.$pair->render(0);
 	}
-
-
 }
