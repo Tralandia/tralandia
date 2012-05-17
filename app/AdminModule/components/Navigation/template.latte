@@ -6,7 +6,7 @@
 				{foreach $leftItems as $itemL1}
 					{if isset($itemL1->items) && count($itemL1->items)}
 						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">{$itemL1->label}<b class="caret"></b></a>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">{$itemL1->label}</a>
 							<ul class="dropdown-menu" n:inner-foreach="$itemL1->items as $itemL2">
 								<li><a href="{$itemL2->href}">{ifset $itemL2->icon}<i class="icon {$itemL2->icon}"></i>{/ifset}{$itemL2->label}</a></li>
 								{if isset($itemL2->items) && count($itemL2->items)}
@@ -29,15 +29,18 @@
 				{/foreach}
 			</ul>
 			<ul class="nav pull-right">
+				<form class="navbar-search pull-left" action="">
+					<input type="text" class="search-query span2" placeholder="Search...">
+				</form>
 				{foreach $rightItems as $itemL1}
 					{if isset($itemL1->items) && count($itemL1->items)}
 						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">{$itemL1->label}<b class="caret"></b></a>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">{$itemL1->label}</a>
 							<ul class="dropdown-menu" n:inner-foreach="$itemL1->items as $itemL2">
-								<li><a href="{$itemL2->href}">{ifset $itemL2->icon}<i class="icon {$itemL2->icon}"></i>{/ifset}{$itemL2->label}</a></li>
+								<li><a href="{$itemL2->href}">{ifset $itemL2->icon}<i class="icon {$itemL2->icon}"></i> {/ifset}{$itemL2->label}</a></li>
 								{if isset($itemL2->items) && count($itemL2->items)}
 									<ul n:inner-foreach="$itemL2->items as $itemL3">
-										<li><a href="{$itemL3->href}">{ifset $itemL3->icon}<i class="icon {$itemL3->icon}"></i>{/ifset}{$itemL3->label}</a></li>
+										<li><a href="{$itemL3->href}">{ifset $itemL3->icon}<i class="icon {$itemL3->icon}"></i> {/ifset}{$itemL3->label}</a></li>
 										{ifset $itemL2->separator}
 											<li class="divider"></li>
 										{/ifset}
@@ -56,6 +59,7 @@
 			</ul>
 		</div>
 	</div>
+<!-- 
 	<div class="subnav subnav-fixed">
 		<div class="well container">
 			<form class="pull-left">
@@ -74,4 +78,5 @@
 			</form>
 		</div>
   </div>
+ -->
 </div>

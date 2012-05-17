@@ -12,7 +12,7 @@ Navbar.prototype = {
 var Tab = function() {
 	this.options = {
 		selectedClass: 'active',
-		topSpace: 195
+		topSpace: 145
 	};
 	this.el = { 
 		id: null,
