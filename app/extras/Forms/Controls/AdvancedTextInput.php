@@ -37,7 +37,7 @@ class AdvancedTextInput extends TextInput {
 
 		$control = parent::getControl();
 
-		$control->addClass('pull-left');
+		$control->addClass('pull-left input-large');
 		$wrapper = Html::el('div')->addClass('input-append input-prepend');
 		$wrapper->add($control);
 
