@@ -39,10 +39,15 @@ common:
 					type: phrase
 					class: test
 				addClass: 'myPhraseClass'
-				inlineEditing: true
-				inlineCreating: true
+				inlineEditing: Phrase:edit
+				inlineCreating: Phrase:add
 
 			iso:
 				control: text
-			locations:
-				control: bricksList
+
+			exchangeRate:
+				control: 
+					type: text
+					disabled: true
+			rounding:
+				control: text

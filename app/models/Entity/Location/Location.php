@@ -13,7 +13,7 @@ use	Extras\Annotation as EA;
  * @ORM\Table(name="location_location", indexes={@ORM\index(name="slug", columns={"slug"}), @ORM\index(name="parentId", columns={"parentId"}), @ORM\index(name="nestedLeft", columns={"nestedLeft"}), @ORM\index(name="nestedRight", columns={"nestedRight"}), @ORM\index(name="nestedRoot", columns={"nestedRoot"}), @ORM\index(name="latitude", columns={"latitude"}), @ORM\index(name="longitude", columns={"longitude"})})
  * @EA\Service(name="\Service\Location\Location")
  * @EA\ServiceList(name="\Service\Location\LocationList")
- * @UI\Primary(key="id", value="name")
+ * @UI\Primary(key="id", value="slug")
  */
 class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 
