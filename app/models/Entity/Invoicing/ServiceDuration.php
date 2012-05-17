@@ -1,6 +1,6 @@
 <?php
 
-namespace Entity\Invoicing\Service;
+namespace Entity\Invoicing;
 
 use Entity\Dictionary;
 use Doctrine\ORM\Mapping as ORM;
@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="invoicing_service_duration")
  */
-class Duration extends \Entity\BaseEntity {
+class ServiceDuration extends \Entity\BaseEntity {
 
 	/**
 	 * @var string

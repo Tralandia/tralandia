@@ -1,6 +1,6 @@
 <?php
 
-namespace Entity\Log\Change;
+namespace Entity\Log;
 
 use Entity\Log;
 use Doctrine\ORM\Mapping as ORM;
@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="log_change_changelog")
  */
-class ChangeLog extends \Entity\BaseEntityDetails {
+class Change extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
@@ -35,27 +35,6 @@ class ChangeLog extends \Entity\BaseEntityDetails {
 	 */
 	protected $entityId;
 
- 
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //@entity-generator-code <--- NEMAZAT !!!
@@ -67,7 +46,7 @@ class ChangeLog extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param \Entity\Log\Change\ChangeType
-	 * @return \Entity\Log\Change\ChangeLog
+	 * @return \Entity\Log\Change
 	 */
 	public function setType(\Entity\Log\Change\ChangeType $type) {
 		$this->type = $type;
@@ -76,7 +55,7 @@ class ChangeLog extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Log\Change\ChangeLog
+	 * @return \Entity\Log\Change
 	 */
 	public function unsetType() {
 		$this->type = NULL;
@@ -93,7 +72,7 @@ class ChangeLog extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param string
-	 * @return \Entity\Log\Change\ChangeLog
+	 * @return \Entity\Log\Change
 	 */
 	public function setEntityName($entityName) {
 		$this->entityName = $entityName;
@@ -102,7 +81,7 @@ class ChangeLog extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Log\Change\ChangeLog
+	 * @return \Entity\Log\Change
 	 */
 	public function unsetEntityName() {
 		$this->entityName = NULL;
@@ -119,7 +98,7 @@ class ChangeLog extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param \Extras\Types\Email
-	 * @return \Entity\Log\Change\ChangeLog
+	 * @return \Entity\Log\Change
 	 */
 	public function setUserEmail(\Extras\Types\Email $userEmail) {
 		$this->userEmail = $userEmail;
@@ -136,7 +115,7 @@ class ChangeLog extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param integer
-	 * @return \Entity\Log\Change\ChangeLog
+	 * @return \Entity\Log\Change
 	 */
 	public function setEntityId($entityId) {
 		$this->entityId = $entityId;

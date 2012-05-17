@@ -1,6 +1,6 @@
 <?php
 
-namespace Entity\Invoicing\Service;
+namespace Entity\Invoicing;
 
 use Entity\Invoicing;
 use Doctrine\ORM\Mapping as ORM;

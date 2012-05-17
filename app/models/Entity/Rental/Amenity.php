@@ -1,6 +1,6 @@
 <?php
 
-namespace Entity\Rental\Amenity;
+namespace Entity\Rental;
 
 use Entity\Dictionary;
 use Entity\Rental;

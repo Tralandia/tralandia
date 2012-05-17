@@ -1,6 +1,6 @@
 <?php
 
-namespace Entity\Rental\Amenity;
+namespace Entity\Rental;
 
 use Entity\Dictionary;
 use Entity\Rental;
@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="rental_amenity_group", indexes={@ORM\index(name="slug", columns={"slug"})})
  */
-class Group extends \Entity\BaseEntity {
+class AmenityType extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection

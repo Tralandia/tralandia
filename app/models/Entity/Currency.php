@@ -38,13 +38,6 @@ class Currency extends \Entity\BaseEntity {
 	protected $exchangeRate;
 
 	/**
-	 * @var integer
-	 * @ORM\Column(type="integer", nullable=true)
-     * @UI\Control(type="text")
-	 */
-	protected $decimalPlaces;
-
-	/**
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
      * @UI\Control(type="text")
@@ -56,28 +49,6 @@ class Currency extends \Entity\BaseEntity {
 	 * @ORM\ManyToMany(targetEntity="Entity\Location\Location", inversedBy="currencies")
 	 */
 	protected $locations;
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //@entity-generator-code <--- NEMAZAT !!!
 

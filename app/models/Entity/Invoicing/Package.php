@@ -42,26 +42,6 @@ class Package extends \Entity\BaseEntity {
 	 */
 	protected $services;
 
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //@entity-generator-code <--- NEMAZAT !!!
 

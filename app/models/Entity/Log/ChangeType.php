@@ -1,6 +1,6 @@
 <?php
 
-namespace Entity\Log\Change;
+namespace Entity\Log;
 
 use Doctrine\ORM\Mapping as ORM;
 

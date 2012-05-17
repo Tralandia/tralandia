@@ -10,7 +10,7 @@ use Nette\Application as NA,
 	Extras\Models\Service,
 	Service\Dictionary as D,
 	Service as S,
-	Service\Log\Change as SLog;
+	Service\Log as SLog;
 
 class ImportInvoicingStart extends BaseImport {
 
@@ -25,10 +25,10 @@ class ImportInvoicingStart extends BaseImport {
 		$currenciesByOldId = getNewIdsByOld('\Currency');
 
 		// Durations
-		$durationNameType = $this->createDictionaryType('\Invoicing\Service\Duration', 'name', 'supportedLanguages', 'ACTIVE');
+		$durationNameType = $this->createDictionaryType('\Invoicing\ServiceDuration', 'name', 'supportedLanguages', 'ACTIVE');
 		$r = q('select * from invoicing_durations order by id');
 		while($x = mysql_fetch_array($r)) {
-			$duration = \Service\Invoicing\Service\Duration::get();
+			$duration = \Service\Invoicing\ServiceDuration::get();
 			$duration->oldId = $x['id'];
 			$duration->duration = $x['strtotime'];
 			$duration->sort = $x['sort'];
@@ -37,10 +37,10 @@ class ImportInvoicingStart extends BaseImport {
 		}
 
 		// Service Types
-		$serviceTypeNameType = $this->createDictionaryType('\Invoicing\Service\Type', 'name', 'supportedLanguages', 'ACTIVE');
+		$serviceTypeNameType = $this->createDictionaryType('\Invoicing\ServiceType', 'name', 'supportedLanguages', 'ACTIVE');
 		$r = q('select * from invoicing_services_types order by id');
 		while($x = mysql_fetch_array($r)) {
-			$serviceType = \Service\Invoicing\Service\Type::get();
+			$serviceType = \Service\Invoicing\ServiceType::get();
 			$serviceType->oldId = $x['id'];
 			$serviceType->slug = $x['name'];
 			$serviceType->name = $this->createNewPhrase($serviceTypeNameType, $x['name_dic_id']);
@@ -92,9 +92,9 @@ class ImportInvoicingStart extends BaseImport {
 
 			$r1 = q('select * from invoicing_packages_services where packages_id = '.$x['id'].' order by id');
 			while($x1 = mysql_fetch_array($r1)) {
-				$packageService = \Service\Invoicing\Service\Service::get();
-				$packageService->type = \Service\Invoicing\Service\Type::getByOldId($x1['services_types_id']);
-				$packageService->duration = \Service\Invoicing\Service\Duration::getByOldId($x1['duration']);
+				$packageService = \Service\Invoicing\Service::get();
+				$packageService->type = \Service\Invoicing\ServiceType::getByOldId($x1['services_types_id']);
+				$packageService->duration = \Service\Invoicing\ServiceDuration::getByOldId($x1['duration']);
 				$packageService->defaultPrice = new \Extras\Types\Price($x1['price_default'], $currenciesByOldId[(int)$x['currencies_id']]); 
 				$packageService->currentPrice = new \Extras\Types\Price($x1['price_current'], $currenciesByOldId[(int)$x['currencies_id']]);
 				$packageService->save();

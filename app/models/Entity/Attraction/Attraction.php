@@ -53,13 +53,13 @@ class Attraction extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Entity\Contact\Contact", mappedBy="attractions")
+	 * @ORM\OneToMany(targetEntity="Entity\Contact\Contact", mappedBy="attraction", cascade={"persist", "remove"})
 	 */
 	protected $contacts;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Entity\Medium\Medium", mappedBy="attraction", cascade={"persist"})
+	 * @ORM\OneToMany(targetEntity="Entity\Medium\Medium", mappedBy="attraction", cascade={"persist", "remove"})
 	 */
 	protected $media;
 
@@ -202,7 +202,7 @@ class Attraction extends \Entity\BaseEntityDetails {
 		if(!$this->contacts->contains($contact)) {
 			$this->contacts->add($contact);
 		}
-		$contact->setAttractions($this);
+		$contact->setAttraction($this);
 
 		return $this;
 	}
@@ -215,7 +215,7 @@ class Attraction extends \Entity\BaseEntityDetails {
 		if($this->contacts->contains($contact)) {
 			$this->contacts->removeElement($contact);
 		}
-		$contact->unsetAttractions();
+		$contact->unsetAttraction();
 
 		return $this;
 	}

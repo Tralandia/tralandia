@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="emailing_email")
  */
-class Email extends \Entity\BaseEntity {
+class EmailTemplate extends \Entity\BaseEntity {
 
 	/**
 	 * @var string
@@ -27,14 +27,9 @@ class Email extends \Entity\BaseEntity {
 	/**
 	 * @var Collection
 	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
+	 * this is in HTML format
 	 */
 	protected $body;
-
-	/**
-	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
-	 */
-	protected $bodyHtml;
 
 	/**
 	 * @var Collection
@@ -44,36 +39,9 @@ class Email extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Type")
-	 */
-	protected $type;
-
-	/**
-	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="Batch", mappedBy="emailTemplate")
 	 */
 	protected $batches;
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //@entity-generator-code <--- NEMAZAT !!!
 

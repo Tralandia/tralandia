@@ -112,7 +112,7 @@ class Rental extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Entity\Contact\Contact", mappedBy="rentals", cascade={"persist", "remove"})
+	 * @ORM\OneToMany(targetEntity="Entity\Contact\Contact", mappedBy="rental", cascade={"persist", "remove"})
 	 */
 	protected $contacts;
 
@@ -531,7 +531,7 @@ class Rental extends \Entity\BaseEntity {
 		if(!$this->contacts->contains($contact)) {
 			$this->contacts->add($contact);
 		}
-		$contact->setRentals($this);
+		$contact->setRental($this);
 
 		return $this;
 	}
@@ -544,7 +544,7 @@ class Rental extends \Entity\BaseEntity {
 		if($this->contacts->contains($contact)) {
 			$this->contacts->removeElement($contact);
 		}
-		$contact->unsetRentals();
+		$contact->unsetRental();
 
 		return $this;
 	}

@@ -1,7 +1,6 @@
 <?php
 
-namespace Service\Log\Change;
-
+namespace Service\Log;
 
 class ChangeType extends \Service\BaseService {
 	

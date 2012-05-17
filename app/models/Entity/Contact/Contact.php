@@ -27,13 +27,13 @@ class Contact extends \Entity\BaseEntity {
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Attraction\Attraction", inversedBy="contacts", cascade={"persist"})
 	 */
-	protected $attractions;
+	protected $attraction;
 
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Rental\Rental", inversedBy="contacts", cascade={"persist"})
 	 */
-	protected $rentals;
+	protected $rental;
 
 	/**
 	 * @var Collection
@@ -76,25 +76,6 @@ class Contact extends \Entity\BaseEntity {
 	 * @ORM\Column(type="boolean")
 	 */
 	protected $spam = FALSE;
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -164,7 +145,7 @@ class Contact extends \Entity\BaseEntity {
 	 * @return \Entity\Contact\Contact
 	 */
 	public function setAttraction(\Entity\Attraction\Attraction $attraction) {
-		$this->attractions = $attractions;
+		$this->attraction = $attraction;
 
 		return $this;
 	}
@@ -173,7 +154,7 @@ class Contact extends \Entity\BaseEntity {
 	 * @return \Entity\Contact\Contact
 	 */
 	public function unsetAttraction() {
-		$this->attractions = NULL;
+		$this->attraction = NULL;
 
 		return $this;
 	}
@@ -181,8 +162,8 @@ class Contact extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Attraction\Attraction|NULL
 	 */
-	public function getAttractions() {
-		return $this->attractions;
+	public function getAttraction() {
+		return $this->attraction;
 	}
 		
 	/**
@@ -190,7 +171,7 @@ class Contact extends \Entity\BaseEntity {
 	 * @return \Entity\Contact\Contact
 	 */
 	public function setRental(\Entity\Rental\Rental $rental) {
-		$this->rentals = $rentals;
+		$this->rental = $rental;
 
 		return $this;
 	}
@@ -199,7 +180,7 @@ class Contact extends \Entity\BaseEntity {
 	 * @return \Entity\Contact\Contact
 	 */
 	public function unsetRental() {
-		$this->rentals = NULL;
+		$this->rental = NULL;
 
 		return $this;
 	}
@@ -207,8 +188,8 @@ class Contact extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Rental\Rental|NULL
 	 */
-	public function getRentals() {
-		return $this->rentals;
+	public function getRental() {
+		return $this->rental;
 	}
 		
 	/**

@@ -62,7 +62,7 @@ class Medium extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var integer
-	 * @ORM\Column(type="integer")
+	 * @ORM\Column(type="integer", nullable=true)
 	 */
 	protected $sort;
 

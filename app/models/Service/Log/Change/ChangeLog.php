@@ -1,10 +1,10 @@
 <?php
 
-namespace Service\Log\Change;
+namespace Service\Log;
 
 
 class ChangeLog extends \Service\BaseService {
 	
-	const MAIN_ENTITY_NAME = '\Entity\Log\Change\ChangeLog';
+	const MAIN_ENTITY_NAME = '\Entity\Log\Change';
 	
 }
