@@ -116,4 +116,8 @@ $(function() {
 		tab.open(name, src);
 	});
 
+	$('.calendar').livequery(function() {
+		$(".calendar").calendar();
+	});
+
 });
