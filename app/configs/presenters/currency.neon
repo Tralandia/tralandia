@@ -44,3 +44,5 @@ common:
 
 			iso:
 				control: text
+			locations:
+				control: bricksList

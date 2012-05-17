@@ -15,11 +15,13 @@ parameters:
 			- Admin:Cibi
 			- Admin:Autopilot
 			- Admin:DictionaryLanguage
+			- Admin:Currency
 
 			# entities
 			- Entity\Dictionary\Language
 			- Entity\Location\Location
 			- Entity\Rental\Rental
+			- Entity\Currency
 
 		rules:
 			allow:
