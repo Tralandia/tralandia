@@ -41,10 +41,8 @@ common:
 				addClass: 'myPhraseClass'
 				inlineEditing: Phrase:edit
 				inlineCreating: Phrase:add
-
 			iso:
 				control: text
-
 			exchangeRate:
 				control: 
 					type: text
