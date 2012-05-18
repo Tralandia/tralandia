@@ -11,21 +11,65 @@ class NeonGeneratorPresenter extends EntityGeneratorPresenter {
 
 	private static $destinationFolder = 'configs/presenters/tmp/';
 
+	protected $generate = array(
+		'Entity\Attraction\Attraction',
+		'Entity\Attraction\Type',
+		'Entity\Autopilot\Task',
+		'Entity\Autopilot\TaskArchived',
+		'Entity\Autopilot\Type',
+		'Entity\BaseEntity',
+		'Entity\BaseEntityDetails',
+		'Entity\Company\BankAccount',
+		'Entity\Company\Company',
+		'Entity\Company\Office',
+		'Entity\Contact\Contact',
+		'Entity\Contact\Type',
+		'Entity\Currency',
+		'Entity\Dictionary\Language',
+		'Entity\Dictionary\Type',
+		'Entity\Domain',
+		'Entity\Emailing\Batch',
+		'Entity\Emailing\Template',
+		'Entity\Expense\Expense',
+		'Entity\Expense\Type',
+		'Entity\Invoicing\Coupon',
+		'Entity\Invoicing\Marketing',
+		'Entity\Invoicing\Package',
+		'Entity\Invoicing\Service',
+		'Entity\Invoicing\ServiceDuration',
+		'Entity\Invoicing\ServiceType',
+		'Entity\Invoicing\UseType',
+		'Entity\Location\Location',
+		'Entity\Location\Type',
+		'Entity\Medium\Type',
+		'Entity\Rental\Amenity',
+		'Entity\Rental\AmenityType',
+		'Entity\Rental\Rental',
+		'Entity\Rental\Type',
+		'Entity\Seo\SeoUrl',
+		'Entity\Seo\TitleSuffix',
+		'Entity\User\Combination',
+		'Entity\User\Interaction',
+		'Entity\User\InteractionType',
+		'Entity\User\Role',
+		'Entity\User\User',
+	);
+
 	protected $controlTypes = array(
-		'\Extras\Types\Latlong' => 'text',
-		'json' => 'json',
-		'integer' => 'text',
-		'\DateTime' => 'datePicker',
-		'string' => 'text',
-		'float' => 'float',
-		'\Extras\Types\Time' => 'text',
-		'\Extras\Types\Address' => 'text',
-		'boolean' => 'checkbox',
-		'slug' => 'text',
-		'decimal' => 'text',
-		'\Extras\Types\Price' => 'text',
-		'\Extras\Types\Url' => 'text',
-		'\Extras\Types\Email' => 'text',
+		'boolean' 					=> 'checkbox',
+		'json' 						=> 'json',
+		'\DateTime' 				=> 'datePicker',
+		'float' 					=> 'float',
+		'\Extras\Types\Latlong' 	=> 'text',
+		'integer' 					=> 'text',
+		'string' 					=> 'text',
+		'\Extras\Types\Time' 		=> 'text',
+		'\Extras\Types\Address'		=> 'text',
+		'slug' 						=> 'text',
+		'decimal' 					=> 'text',
+		'\Extras\Types\Price' 		=> 'text',
+		'\Extras\Types\Url' 		=> 'text',
+		'\Extras\Types\Email' 		=> 'text',
 	);
 
 	protected $collectionTypes = array(
@@ -40,9 +84,9 @@ class NeonGeneratorPresenter extends EntityGeneratorPresenter {
 		$this->template->presenters = NULL;
 		$this->template->entities = NULL;
 
-		return false;
-
 		$this->generateNeonFiles();
+		
+		return false;
 
 		$presenters = array();
 		$entities = array();
