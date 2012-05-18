@@ -11,6 +11,14 @@ class AclPresenter extends BasePresenter {
 	protected $entityList;
 	
 	protected $presenterActions;
+	protected $entityActions;
+
+	protected $roles;
+
+	protected function startup() {
+		parent::startup();
+		$this->roles = \Service\User\RoleList::getPairs('id', 'slug', Null, 9);
+	}
 
 	public function renderList() {
 		$list = $this->getPresenterList();
@@ -20,14 +28,21 @@ class AclPresenter extends BasePresenter {
 	}
 
 	protected function getPresenterList() {
-		return $this->context->properties['acl']['presenters'];
+		return $this->context->parameters['acl']['presenters'];
 	}
 
 	protected function getPresenterAclConfig($name) {
 		$filename = $this->context->parameters['acl']['presentersDir'] . '/' . $name . '.neon';
 		if(!is_file($filename)) return array();
 		$config = new \Nette\Config\Loader;
-		return $this->presenterList = $config->load($filename);
+		return $config->load($filename);
+	}
+
+	protected function getEntityAclConfig($name) {
+		$filename = $this->context->parameters['acl']['entitiesDir'] . '/' . $name . '.neon';
+		if(!is_file($filename)) return array();
+		$config = new \Nette\Config\Loader;
+		return $config->load($filename);
 	}
 
 	protected function getEntityList() {
@@ -43,26 +58,56 @@ class AclPresenter extends BasePresenter {
 		return $this->entityList;
 	}
 
+	protected function getEntityProperties($entityName) {
+		$reflection = \Nette\Reflection\ClassType::from('\Entity\\'.$entityName);
+		return $reflection->getProperties();
+	}
+
 	public function actionPresenterEdit($presenterName) {
 		$list = $this->getPresenterList();
-		$this->presenterActions = $list[$this->params['presenterName']];
+		$this->presenterActions = $list[$presenterName];
 
 		$form = $this->getComponent('presenterForm');
-		$form->setDefaults($this->getPresenterAclConfig($this->params['presenterName']));
+		$form->setDefaults($this->getPresenterAclConfig($presenterName));
 
 		$this->template->resource = $presenterName;
 		$this->template->presenterActions = $this->presenterActions;
-		$this->template->roles = $roles = \Service\User\RoleList::getPairs('id', 'name');;
+		$this->template->roles = $this->roles;
 	}
 
 	/**
 	 * @return Forms\Acl\PresenterEdit
 	 */
 	protected function createComponentPresenterForm($name) {
-		$comp = new Forms\Acl\PresenterEdit($this, $name, $this->presenterActions);
+		$comp = new Forms\Acl\PresenterEdit($this, $name, $this->presenterActions, $this->roles);
 		$comp->destinationDir = $this->context->parameters['acl']['presentersDir'];
 		$comp->presenterName = $this->params['presenterName'];
 	
 		return $comp;
 	}
+
+	public function actionEntityEdit($entityName) {
+		$list = $this->getEntityList();
+		$this->entityActions = $this->getEntityProperties($entityName);
+		debug($this->entityActions);
+		$form = $this->getComponent('entityForm');
+		$form->setDefaults($this->getEntityAclConfig($entityName));
+
+		$this->template->resource = $entityName;
+		$this->template->entityActions = $this->entityActions;
+		$this->template->roles = $this->roles;
+	}
+
+	/**
+	 * @return Forms\Acl\EntityEdit
+	 */
+	protected function createComponentEntityForm($name) {
+		$comp = new Forms\Acl\EntityEdit($this, $name, $this->entityActions, $this->roles);
+		$comp->destinationDir = $this->context->parameters['acl']['entitiesDir'];
+		$comp->entityName = $this->params['entityName'];
+	
+		return $comp;
+	}
+
+
 }

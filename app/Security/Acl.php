@@ -23,7 +23,7 @@ class Acl extends Permission {
 		// debug(func_get_args());
 
 		$data = $this->getData();
-		debug($data);
+		// debug($data['rules']);
 		# roles
 		foreach ($data['roles'] as $role) {
 			call_user_func_array(array($this, 'addRole'), (array) $role);
@@ -35,11 +35,8 @@ class Acl extends Permission {
 		}
 
 		# rules
-		foreach ($data['rules'] as $type => $ruleSet) {
-			if(!is_array($ruleSet)) continue;
-			foreach ($ruleSet as $rule) {
-				call_user_func_array(array($this, $type), $rule);
-			}
+		foreach ($data['rules'] as $type => $rule) {
+			call_user_func_array(array($this, 'setRule'),(array) $rule);
 		}
 	}
 
@@ -61,7 +58,7 @@ class Acl extends Permission {
 		$files = array_merge($presenters, $entities);
 
 		$data = array();
-		$data['roles'] = \Service\User\RoleList::getPairs('id', 'slug');
+		$data['roles'] = \Service\User\RoleList::getPairs('id', 'slug', NULL, 9);
 		foreach ($files as $filepath => $file) {
 			$resource = $file->getBasename('.neon');
 			$data['resources'][] = $resource;
@@ -70,19 +67,20 @@ class Acl extends Permission {
 			foreach ($content as $action => $permission) {
 				foreach ($data['roles'] as $role) {
 					$permissionType = $permission[$role];
-					if($permissionType == self::DENY) continue;
-					if($permissionType != self::ALLOW) {
+					if($permissionType == 'deny') continue;
+					if($permissionType != 'allow') {
 						$assertion = $this->config['assertions'][$permissionType]['callback'];
-						$permissionType = self::ALLOW;
 					} else {
 						$assertion = NULL;
 					}
+					$permissionType = self::ALLOW;
 					$data['rules'][] = array(TRUE, $permissionType, $role, $resource, $action, $assertion);
 				}
 			}
 		}
 		// @todo porusuje to DI!
 		debug($data);
+		return $data;
 	}
 
 	public function getConfigFromFile($filename) {

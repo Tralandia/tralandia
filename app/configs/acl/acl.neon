@@ -18,3 +18,7 @@ parameters:
 				adsf:
 			Admin:EntityGenerator:
 				list:
+			Admin:Acl:
+				list:
+				entityEdit:
+				presenterEdit:

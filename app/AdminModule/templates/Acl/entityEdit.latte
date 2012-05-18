@@ -1,0 +1,52 @@
+{block content}
+
+<h1>Edit {$resource}</h1>
+
+{form entityForm}
+
+	<table class="table">
+		<tr>
+			<th>Actions</th>
+			{foreach $roles as $roleId => $role}
+				<th>{$role}</th>
+			{/foreach}
+		</tr>
+		<tr n:foreach="$entityActions as $property">
+			<th>{$property->name}</th>
+			{foreach $roles as $role}
+				<td>
+					{$form[$property->name.'_show']->getComponent($role)->control}
+					{$form[$property->name.'_edit']->getComponent($role)->control}
+				</td>
+			{/foreach}
+		</tr>
+	</table>
+
+	{input submit, class=> 'btn btn-success'}
+{/form}
+
+<script type="text/javascript" n:syntax="double">
+	$(function() {
+		$('select').each(function(){
+			setSelectboxBgColor(this);
+		});
+
+		$('select').change(function(){
+			setSelectboxBgColor(this);
+		});
+	});
+
+	function setSelectboxBgColor(select) {
+		var value = $(':selected', select).val();
+		var color;
+		if(value == 'deny') {
+			color = '#F4A7AE';
+		} else if(value == 'allow') {
+			color = '#84D295';
+		} else {
+			color = '#BFBFBF';
+		}
+		$(select).parents('td').css('background-color', color);
+	}
+</script>
+

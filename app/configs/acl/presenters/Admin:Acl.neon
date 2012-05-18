@@ -1,5 +1,5 @@
 list:
-	guest: deny
+	guest: allow
 	visitor: deny
 	potentialowner: deny
 	owner: deny
@@ -10,25 +10,25 @@ list:
 	admin: deny
 	superadmin: deny
 	
-edit:
-	guest: deny
+entityEdit:
+	guest: allow
 	visitor: deny
 	potentialowner: deny
-	owner: allow
+	owner: deny
 	translator: deny
-	assistant: assert1
+	assistant: deny
 	vendor: deny
 	manager: deny
 	admin: deny
 	superadmin: deny
 	
-adsf:
-	guest: deny
+presenterEdit:
+	guest: allow
 	visitor: deny
 	potentialowner: deny
 	owner: deny
-	translator: allow
-	assistant: assert1
+	translator: deny
+	assistant: deny
 	vendor: deny
 	manager: deny
 	admin: deny
