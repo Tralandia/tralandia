@@ -24,7 +24,6 @@ class ImportCurrencies extends BaseImport {
 			$s->iso = $x['iso'];
 			$s->name = $this->createNewPhrase($dictionaryType, $x['name_dic_id']);
 			$s->exchangeRate = $x['exchange_rate'];
-			$s->decimalPlaces = $x['decimal_places'];
 			$s->rounding = $x['decimal_places'];
 			$s->save();
 		}

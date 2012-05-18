@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="rental_amenity_type", indexes={@ORM\index(name="slug", columns={"slug"})})
+ * @ORM\Table(name="rental_amenitytype", indexes={@ORM\index(name="slug", columns={"slug"})})
  */
 class AmenityType extends \Entity\BaseEntity {
 

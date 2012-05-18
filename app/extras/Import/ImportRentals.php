@@ -179,7 +179,7 @@ class ImportRentals extends BaseImport {
 
 			// Amenities
 			$allAmenities = array();
-			$r1 = qNew('select * from rental_amenity_amenity');
+			$r1 = qNew('select * from rental_amenity');
 			while ($x1 = mysql_fetch_array($r1)) {
 				$allAmenities[$x1['oldId']] = \Service\Rental\Amenity::get($x1['id']);
 			}
@@ -275,8 +275,16 @@ class ImportRentals extends BaseImport {
 			if (is_array($temp) && count($temp)) {
 				if ($this->developmentMode == TRUE) $temp = array_slice($temp, 0, 3);
 				foreach ($temp as $key => $value) {
-					$medium = \Service\Medium\Medium::createFromUrl('http://www.tralandia.com/u/'.$value);
-					if ($medium) $rental->addMedium($medium);
+					$medium = \Service\Medium\Medium::getByOldUrl('http://www.tralandia.com/u/'.$value);
+					if (!$medium) {
+						$medium = \Service\Medium\Medium::get();
+						if ($medium) {
+							$rental->addMedium($medium);
+							$medium->setContentFromUrl('http://www.tralandia.com/u/'.$value);
+						}
+					} else {
+						$rental->addMedium($medium);
+					}
 				}
 			}
 		

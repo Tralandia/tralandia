@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="invoicing_service_duration")
+ * @ORM\Table(name="invoicing_serviceduration")
  */
 class ServiceDuration extends \Entity\BaseEntity {
 

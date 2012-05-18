@@ -103,11 +103,11 @@ class BaseImport {
 		),
 		'invoicingStart' => array(
 			'entities' => array(
-				'\Invoicing\Service\Duration' => array(),
-				'\Invoicing\Service\Type' => array(),
+				'\Invoicing\ServiceDuration' => array(),
+				'\Invoicing\ServiceType' => array(),
 				'\Invoicing\UseType' => array(),
 				'\Invoicing\Package' => array(),
-				'\Invoicing\Service\Service' => array(),
+				'\Invoicing\Service' => array(),
 				'\Invoicing\Marketing' => array(),
 			),
 			'subsections' => array(),
