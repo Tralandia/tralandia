@@ -155,19 +155,19 @@ common:
 	form:
 		fields:
 			name:
-				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:,UIControl:type:phrase"
+				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:"
 				label: Name
 				control: phrase
 			nameOfficial:
-				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:,UIControl:type:text"
+				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:"
 				label: NameOfficial
 				control: phrase
 			nameShort:
-				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:,UIControl:type:text"
+				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:"
 				label: NameShort
 				control: phrase
 			slug:
-				# anotations: "var:slug,ORMColumn:type:slug,UIControl:type:text"
+				# anotations: "var:slug,ORMColumn:type:slug"
 				label: Slug
 				control: text
 			parentId:
@@ -187,7 +187,7 @@ common:
 				label: NestedRoot
 				control: text
 			type:
-				# anotations: "var:Collection,ORMManyToOne:targetEntity:Type,UIControl:type:text"
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:Type"
 				label: Type
 				control: selectBox
 			polygon:
@@ -223,7 +223,7 @@ common:
 				label: Offices
 				control: bricksList
 			domain:
-				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityDomain,inversedBy:locations,UIControl:type:text"
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityDomain,inversedBy:locations"
 				label: Domain
 				control: selectBox
 			marketings:
@@ -247,11 +247,11 @@ common:
 				label: OutgoingLocations
 				control: checkBoxList
 			status:
-				# anotations: "var:string,ORMColumn:type:string,nullable:true,UIControl:type:text"
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
 				label: Status
 				control: text
 			iso:
-				# anotations: "var:string,ORMColumn:type:string,nullable:true,UIControl:type:text"
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
 				label: Iso
 				control: text
 			iso3:
@@ -259,15 +259,15 @@ common:
 				label: Iso3
 				control: text
 			defaultCurrency:
-				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityCurrency,cascade:,UIControl:type:select"
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityCurrency,cascade:"
 				label: DefaultCurrency
 				control: selectBox
 			currencies:
-				# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityCurrency,mappedBy:locations,cascade:,UIControl:type:checkboxList"
+				# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityCurrency,mappedBy:locations,cascade:"
 				label: Currencies
 				control: bricksList
 			defaultLanguage:
-				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityDictionaryLanguage,cascade:,UIControl:type:select,callback:getMyCallback"
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityDictionaryLanguage,cascade:"
 				label: DefaultLanguage
 				control: selectBox
 			languages:

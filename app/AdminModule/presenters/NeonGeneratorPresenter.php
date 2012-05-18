@@ -36,8 +36,13 @@ class NeonGeneratorPresenter extends EntityGeneratorPresenter {
 	);
 
 	public function actionDefault($id) {
+		
+		$this->template->presenters = NULL;
+		$this->template->entities = NULL;
 
-		// $this->generateNeonFiles();
+		return false;
+
+		$this->generateNeonFiles();
 
 		$presenters = array();
 		$entities = array();
@@ -62,7 +67,7 @@ class NeonGeneratorPresenter extends EntityGeneratorPresenter {
 
 	}
 
-	public function generateNeonFiles($id) {
+	public function generateNeonFiles() {
 
 		$lastFolderName = NULL;
 

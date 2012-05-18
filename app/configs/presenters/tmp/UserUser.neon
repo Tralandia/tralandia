@@ -101,11 +101,11 @@ common:
 				label: IsOwner
 				control: checkbox
 			roles:
-				# anotations: "var:Collection,ORMManyToMany:targetEntity:Role,mappedBy:users,cascade:,UISingularName:name:role"
+				# anotations: "var:Collection,ORMManyToMany:targetEntity:Role,mappedBy:users,cascade:,EASingularName:name:role"
 				label: Roles
 				control: bricksList
 			contacts:
-				# anotations: "var:Collection,ORMOneToMany:targetEntity:EntityContactContact,mappedBy:user,cascade:,UISingularName:name:contact"
+				# anotations: "var:Collection,ORMOneToMany:targetEntity:EntityContactContact,mappedBy:user,cascade:,EASingularName:name:contact"
 				label: Contacts
 				control: checkBoxList
 			defaultLanguage:
@@ -113,11 +113,11 @@ common:
 				label: DefaultLanguage
 				control: selectBox
 			location:
-				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityLocationLocation,inversedBy:users,UISingularName:name:location"
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityLocationLocation,inversedBy:users,EASingularName:name:location"
 				label: Location
 				control: selectBox
 			rentalTypes:
-				# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityRentalType,mappedBy:users,UISingularName:name:rentalType"
+				# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityRentalType,mappedBy:users,EASingularName:name:rentalType"
 				label: RentalTypes
 				control: bricksList
 			invoicingSalutation:
@@ -165,15 +165,15 @@ common:
 				label: CurrentTelmarkOperator
 				control: selectBox
 			combinations:
-				# anotations: "var:Collection,ORMOneToMany:targetEntity:Combination,mappedBy:user,cascade:,UISingularName:name:combination"
+				# anotations: "var:Collection,ORMOneToMany:targetEntity:Combination,mappedBy:user,cascade:,EASingularName:name:combination"
 				label: Combinations
 				control: checkBoxList
 			rentals:
-				# anotations: "var:Collection,ORMOneToMany:targetEntity:EntityRentalRental,mappedBy:user,cascade:,UISingularName:name:rental"
+				# anotations: "var:Collection,ORMOneToMany:targetEntity:EntityRentalRental,mappedBy:user,cascade:,EASingularName:name:rental"
 				label: Rentals
 				control: checkBoxList
 			tasks:
-				# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityAutopilotTask,inversedBy:usersExcluded,UISingularName:name:task"
+				# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityAutopilotTask,inversedBy:usersExcluded,EASingularName:name:task"
 				label: Tasks
 				control: bricksList
 			details:

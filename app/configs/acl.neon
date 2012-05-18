@@ -47,7 +47,7 @@ parameters:
 			- Admin:InvoicingUseType
 			- Admin:LocationLocation
 			- Admin:LocationTraveling
-			- Admin:LocationType
+			- Admin:Location
 			- Admin:LogChange
 			- Admin:LogChangeType
 			- Admin:LogSystem
@@ -129,9 +129,5 @@ parameters:
 
 		rules:
 			allow:
-				- [guest, %acl.const.permissionAll%, %acl.const.permissionAll%]
-				- [guest, [Admin:Location, Admin:Language, Admin:Phrase, Admin:Cibi], [list, show, edit, default]]
-				- [guest, Entity\Dictionary\Language, edit, [Security\MyAssertion, test]]
-				- [owner, Entity\Rental\Rental, edit, [Security\MyAssertion, test]]
-				- [guest, Entity\Location\Location, edit]
+				- [guest, NULL, NULL]
 			deny:
