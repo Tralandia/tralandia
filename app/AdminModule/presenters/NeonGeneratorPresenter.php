@@ -15,7 +15,7 @@ class NeonGeneratorPresenter extends EntityGeneratorPresenter {
 		'\Extras\Types\Latlong' => 'text',
 		'json' => 'json',
 		'integer' => 'text',
-		'\DateTime' => 'dateTime',
+		'\DateTime' => 'datePicker',
 		'string' => 'text',
 		'float' => 'float',
 		'\Extras\Types\Time' => 'text',
@@ -36,6 +36,33 @@ class NeonGeneratorPresenter extends EntityGeneratorPresenter {
 	);
 
 	public function actionDefault($id) {
+
+		// $this->generateNeonFiles();
+
+		$presenters = array();
+		$entities = array();
+
+		$entityDir = APP_DIR . '/models/Entity/';
+		foreach (Finder::findFiles('*.php')->from($entityDir) as $key => $file) {
+
+			list($x, $entityNameTemp) = explode('/models/', $key, 2);
+			$prensenter = '- Admin:' . str_replace(array('Entity\\', '\\', '.php'), array('', '', ''), $entityNameTemp);
+			$entity = '- ' . str_replace('.php', '', $entityNameTemp);
+
+			$presenters[] = $prensenter;
+			$entities[] = $entity;
+
+		}
+
+		$presenters = implode('<br/>', $presenters);
+		$this->template->presenters = $presenters;
+
+		$entities = implode('<br/>', $entities);
+		$this->template->entities = $entities;
+
+	}
+
+	public function generateNeonFiles($id) {
 
 		$lastFolderName = NULL;
 
@@ -73,15 +100,7 @@ class NeonGeneratorPresenter extends EntityGeneratorPresenter {
 					'label' => $propertyInfo->nameFu,
 					'control' => $this->getControlType($propertyInfo),
 				);
-/*
-				$comments = array('type', 'isNullable');
-				foreach ($propertyInfo as $key => $value) {
 
-					if (!in_array($key, $comments)) continue;
-					$fields[$property->name]['\# ' . $key] = $value;
-
-				}
-*/
 			}
 
 			$title = str_replace(array('Entity\\', '\\'), array('', ' / '), $entityNameTemp);

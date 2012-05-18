@@ -9,19 +9,123 @@ parameters:
 
 		resources:
 			# presenters
-			- Admin:Location
-			- Admin:Language
-			- Admin:Phrase
 			- Admin:Cibi
 			- Admin:Autopilot
-			- Admin:DictionaryLanguage
 			- Admin:Rado
 			- Admin:EntityGenerator
+			- Admin:NeonGenerator
+			- Admin:AttractionAttraction
+			- Admin:AttractionType
+			- Admin:AutopilotTask
+			- Admin:AutopilotTaskArchived
+			- Admin:AutopilotType
+			- Admin:BaseEntity
+			- Admin:BaseEntityDetails
+			- Admin:CompanyBankAccount
+			- Admin:CompanyCompany
+			- Admin:CompanyOffice
+			- Admin:ContactContact
+			- Admin:ContactType
+			- Admin:Currency
+			- Admin:DictionaryLanguage
+			- Admin:DictionaryPhrase
+			- Admin:DictionaryTranslation
+			- Admin:DictionaryType
+			- Admin:Domain
+			- Admin:EmailingBatch
+			- Admin:EmailingTemplate
+			- Admin:ExpenseExpense
+			- Admin:ExpenseType
+			- Admin:InvoicingCoupon
+			- Admin:InvoicingInvoice
+			- Admin:InvoicingItem
+			- Admin:InvoicingMarketing
+			- Admin:InvoicingPackage
+			- Admin:InvoicingService
+			- Admin:InvoicingServiceDuration
+			- Admin:InvoicingServiceType
+			- Admin:InvoicingUseType
+			- Admin:LocationLocation
+			- Admin:LocationTraveling
+			- Admin:LocationType
+			- Admin:LogChange
+			- Admin:LogChangeType
+			- Admin:LogSystem
+			- Admin:MediumMedium
+			- Admin:MediumType
+			- Admin:RentalAmenity
+			- Admin:RentalAmenityType
+			- Admin:RentalFulltext
+			- Admin:RentalRental
+			- Admin:RentalType
+			- Admin:RoutingPathSegment
+			- Admin:RoutingPathSegmentOld
+			- Admin:SeoSeoUrl
+			- Admin:SeoTitleSuffix
+			- Admin:TicketMessage
+			- Admin:TicketTicket
+			- Admin:UserCombination
+			- Admin:UserInteraction
+			- Admin:UserInteractionType
+			- Admin:UserRole
+			- Admin:UserUser
 
 			# entities
+			- Entity\Attraction\Attraction
+			- Entity\Attraction\Type
+			- Entity\Autopilot\Task
+			- Entity\Autopilot\TaskArchived
+			- Entity\Autopilot\Type
+			- Entity\BaseEntity
+			- Entity\BaseEntityDetails
+			- Entity\Company\BankAccount
+			- Entity\Company\Company
+			- Entity\Company\Office
+			- Entity\Contact\Contact
+			- Entity\Contact\Type
+			- Entity\Currency
 			- Entity\Dictionary\Language
+			- Entity\Dictionary\Phrase
+			- Entity\Dictionary\Translation
+			- Entity\Dictionary\Type
+			- Entity\Domain
+			- Entity\Emailing\Batch
+			- Entity\Emailing\Template
+			- Entity\Expense\Expense
+			- Entity\Expense\Type
+			- Entity\Invoicing\Coupon
+			- Entity\Invoicing\Invoice
+			- Entity\Invoicing\Item
+			- Entity\Invoicing\Marketing
+			- Entity\Invoicing\Package
+			- Entity\Invoicing\Service
+			- Entity\Invoicing\ServiceDuration
+			- Entity\Invoicing\ServiceType
+			- Entity\Invoicing\UseType
 			- Entity\Location\Location
+			- Entity\Location\Traveling
+			- Entity\Location\Type
+			- Entity\Log\Change
+			- Entity\Log\ChangeType
+			- Entity\Log\System
+			- Entity\Medium\Medium
+			- Entity\Medium\Type
+			- Entity\Rental\Amenity
+			- Entity\Rental\AmenityType
+			- Entity\Rental\Fulltext
 			- Entity\Rental\Rental
+			- Entity\Rental\Type
+			- Entity\Routing\PathSegment
+			- Entity\Routing\PathSegmentOld
+			- Entity\Seo\SeoUrl
+			- Entity\Seo\TitleSuffix
+			- Entity\Ticket\Message
+			- Entity\Ticket\Ticket
+			- Entity\User\Combination
+			- Entity\User\Interaction
+			- Entity\User\InteractionType
+			- Entity\User\Role
+			- Entity\User\User
 
 		rules:
 			allow:

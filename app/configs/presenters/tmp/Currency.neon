@@ -64,8 +64,8 @@ common:
 			created:
 				# anotations: "var:datetime,ORMColumn:type:datetime"
 				label: Created
-				control: dateTime
+				control: datePicker
 			updated:
 				# anotations: "var:datetime,ORMColumn:type:datetime"
 				label: Updated
-				control: dateTime
+				control: datePicker

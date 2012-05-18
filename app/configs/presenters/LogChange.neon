@@ -1,0 +1,64 @@
+common:
+	service: Service\Log\Change
+	title: Log / Change
+	h1: Log / Change
+	grid:
+		columns:
+			type:
+				label: Type
+				mapper: e.type
+			entityName:
+				label: EntityName
+				mapper: e.entityName
+			userEmail:
+				label: UserEmail
+				mapper: e.userEmail
+			entityId:
+				label: EntityId
+				mapper: e.entityId
+			details:
+				label: Details
+				mapper: e.details
+			id:
+				label: Id
+				mapper: e.id
+			oldId:
+				label: OldId
+				mapper: e.oldId
+			created:
+				label: Created
+				mapper: e.created
+			updated:
+				label: Updated
+				mapper: e.updated
+			
+	form:
+		fields:
+			type:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:ChangeType"
+				label: Type
+				control: selectBox
+			entityName:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: EntityName
+				control: text
+			userEmail:
+				# anotations: "var:email,ORMColumn:type:email"
+				label: UserEmail
+				control: text
+			entityId:
+				# anotations: "var:integer,ORMColumn:type:integer"
+				label: EntityId
+				control: text
+			details:
+				# anotations: "var:json,ORMColumn:type:json,nullable:true"
+				label: Details
+				control: json
+			created:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Created
+				control: datePicker
+			updated:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Updated
+				control: datePicker
