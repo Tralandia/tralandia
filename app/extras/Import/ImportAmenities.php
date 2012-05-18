@@ -8,7 +8,7 @@ use Nette\Application as NA,
 	Nette\Utils\Html,
 	Nette\Utils\Strings,
 	Extras\Models\Service,
-	Service\Log\Change as ChangeLog;
+	Service\Log as SLog;
 
 class ImportAmenities extends BaseImport {
 
@@ -40,15 +40,15 @@ class ImportAmenities extends BaseImport {
 
 		$en = \Service\Dictionary\Language::getByIso('en');
 
-		$nameDictionaryType = $this->createDictionaryType('\Rental\Amenity\Amenity', 'name', 'supportedLanguages', 'ACTIVE', array('multitranslationRequired' => TRUE));
-		$tagNameDictionaryType = $this->createDictionaryType('\Rental\Amenity\Amenity', 'name-tag', 'supportedLanguages', 'ACTIVE', array('genderNumberRequired' => TRUE, 'positionRequired' => TRUE, 'webalizedRequired' => TRUE));
-		$this->createDictionaryType('\Rental\Amenity\Group', 'name', 'supportedLanguages', 'ACTIVE');
+		$nameDictionaryType = $this->createDictionaryType('\Rental\Amenity', 'name', 'supportedLanguages', 'ACTIVE', array('multitranslationRequired' => TRUE));
+		$tagNameDictionaryType = $this->createDictionaryType('\Rental\Amenity', 'name-tag', 'supportedLanguages', 'ACTIVE', array('genderNumberRequired' => TRUE, 'positionRequired' => TRUE, 'webalizedRequired' => TRUE));
+		$this->createDictionaryType('\Rental\AmenityGroup', 'name', 'supportedLanguages', 'ACTIVE');
 		\Extras\Models\Service::flush(FALSE);
 
 
 		foreach ($groups as $key => $value) {
-			$g = \Service\Rental\Amenity\Group::get();
-			$g->name = $this->createPhraseFromString('\Rental\Amenity\Group', 'name', 'supportedLanguages', 'ACTIVE', $value[0], $en);
+			$g = \Service\Rental\AmenityGroup::get();
+			$g->name = $this->createPhraseFromString('\Rental\AmenityGroup', 'name', 'supportedLanguages', 'ACTIVE', $value[0], $en);
 			$g->slug = $value[2];
 			$g->save();
 		}
@@ -57,10 +57,10 @@ class ImportAmenities extends BaseImport {
 
 
 		// Activities
-		$amenityGroup = \Service\Rental\Amenity\Group::getBySlug('activity');
+		$amenityGroup = \Service\Rental\AmenityGroup::getBySlug('activity');
 		$r = q('select * from activities');
 		while ($x = mysql_fetch_array($r)) {
-			$amenity = \Service\Rental\Amenity\Amenity::get();
+			$amenity = \Service\Rental\Amenity::get();
 			$amenity->group = $amenityGroup;
 			$amenity->name = $this->createNewPhrase($nameDictionaryType, $x['name_dic_id']);
 			$amenity->oldId = $x['id'];
@@ -70,10 +70,10 @@ class ImportAmenities extends BaseImport {
 		// General Amenities
 		$subGroups = explode(',', 'other,important,children,room,kitchen,bathroom,heating,parking,relax,service');
 		foreach ($subGroups as $key => $value) {
-			$amenityGroup = \Service\Rental\Amenity\Group::getBySlug($value);
+			$amenityGroup = \Service\Rental\AmenityGroup::getBySlug($value);
 			$r = q('select * from amenities_general where type_id = '.$key);
 			while ($x = mysql_fetch_array($r)) {
-				$amenity = \Service\Rental\Amenity\Amenity::get();
+				$amenity = \Service\Rental\Amenity::get();
 				$amenity->group = $amenityGroup;
 				$amenity->name = $this->createNewPhrase($nameDictionaryType, $x['name_dic_id']);
 				$amenity->oldId = $x['id'];
@@ -82,10 +82,10 @@ class ImportAmenities extends BaseImport {
 		}
 
 		// Wellness Options
-		$amenityGroup = \Service\Rental\Amenity\Group::getBySlug('wellness');
+		$amenityGroup = \Service\Rental\AmenityGroup::getBySlug('wellness');
 		$r = q('select * from amenities_wellness');
 		while ($x = mysql_fetch_array($r)) {
-			$amenity = \Service\Rental\Amenity\Amenity::get();
+			$amenity = \Service\Rental\Amenity::get();
 			$amenity->group = $amenityGroup;
 			$amenity->name = $this->createNewPhrase($nameDictionaryType, $x['name_dic_id']);
 			$amenity->oldId = $x['id'];
@@ -93,10 +93,10 @@ class ImportAmenities extends BaseImport {
 		}
 
 		// Congress Options
-		$amenityGroup = \Service\Rental\Amenity\Group::getBySlug('congress');
+		$amenityGroup = \Service\Rental\AmenityGroup::getBySlug('congress');
 		$r = q('select * from amenities_congress');
 		while ($x = mysql_fetch_array($r)) {
-			$amenity = \Service\Rental\Amenity\Amenity::get();
+			$amenity = \Service\Rental\Amenity::get();
 			$amenity->group = $amenityGroup;
 			$amenity->name = $this->createNewPhrase($nameDictionaryType, $x['name_dic_id']);
 			$amenity->oldId = $x['id'];
@@ -104,10 +104,10 @@ class ImportAmenities extends BaseImport {
 		}
 
 		// Tags
-		$amenityGroup = \Service\Rental\Amenity\Group::getBySlug('tag');
+		$amenityGroup = \Service\Rental\AmenityGroup::getBySlug('tag');
 		$r = q('select * from tags where id = 15');
 		while ($x = mysql_fetch_array($r)) {
-			$amenity = \Service\Rental\Amenity\Amenity::get();
+			$amenity = \Service\Rental\Amenity::get();
 			$amenity->group = $amenityGroup;
 			$amenity->name = $this->createNewPhrase($tagNameDictionaryType, $x['name_dic_id']);
 
@@ -144,10 +144,10 @@ class ImportAmenities extends BaseImport {
 
 
 		// Room Types
-		$amenityGroup = \Service\Rental\Amenity\Group::getBySlug('room-type');
+		$amenityGroup = \Service\Rental\AmenityGroup::getBySlug('room-type');
 		$r = q('select * from room_types');
 		while ($x = mysql_fetch_array($r)) {
-			$amenity = \Service\Rental\Amenity\Amenity::get();
+			$amenity = \Service\Rental\Amenity::get();
 			$amenity->group = $amenityGroup;
 			$amenity->name = $this->createNewPhrase($nameDictionaryType, $x['name_dic_id']);
 			$amenity->oldId = $x['id'];
@@ -155,10 +155,10 @@ class ImportAmenities extends BaseImport {
 		}
 
 		// Owner availabilities
-		$amenityGroup = \Service\Rental\Amenity\Group::getBySlug('owner-availability');
+		$amenityGroup = \Service\Rental\AmenityGroup::getBySlug('owner-availability');
 		$r = q('select * from owner');
 		while ($x = mysql_fetch_array($r)) {
-			$amenity = \Service\Rental\Amenity\Amenity::get();
+			$amenity = \Service\Rental\Amenity::get();
 			$amenity->group = $amenityGroup;
 			$amenity->name = $this->createNewPhrase($nameDictionaryType, $x['name_dic_id']);
 			$amenity->oldId = $x['id'];
@@ -166,10 +166,10 @@ class ImportAmenities extends BaseImport {
 		}
 
 		// Board
-		$amenityGroup = \Service\Rental\Amenity\Group::getBySlug('board');
+		$amenityGroup = \Service\Rental\AmenityGroup::getBySlug('board');
 		$r = q('select * from food');
 		while ($x = mysql_fetch_array($r)) {
-			$amenity = \Service\Rental\Amenity\Amenity::get();
+			$amenity = \Service\Rental\Amenity::get();
 			$amenity->group = $amenityGroup;
 			$amenity->name = $this->createNewPhrase($nameDictionaryType, $x['name_dic_id']);
 			$amenity->oldId = $x['id'];

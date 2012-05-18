@@ -31,18 +31,11 @@ class Currency extends \Entity\BaseEntity {
 	protected $iso;
 
 	/**
-	 * @var decimal
-	 * @ORM\Column(type="decimal", nullable=true)
+	 * @var float
+	 * @ORM\Column(type="float", nullable=true)
      * @UI\Control(type="text")
 	 */
 	protected $exchangeRate;
-
-	/**
-	 * @var integer
-	 * @ORM\Column(type="integer", nullable=true)
-     * @UI\Control(type="text")
-	 */
-	protected $decimalPlaces;
 
 	/**
 	 * @var string
@@ -56,28 +49,6 @@ class Currency extends \Entity\BaseEntity {
 	 * @ORM\ManyToMany(targetEntity="Entity\Location\Location", inversedBy="currencies")
 	 */
 	protected $locations;
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //@entity-generator-code <--- NEMAZAT !!!
 
@@ -123,7 +94,7 @@ class Currency extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param decimal
+	 * @param float
 	 * @return \Entity\Currency
 	 */
 	public function setExchangeRate($exchangeRate) {
@@ -142,36 +113,10 @@ class Currency extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return decimal|NULL
+	 * @return float|NULL
 	 */
 	public function getExchangeRate() {
 		return $this->exchangeRate;
-	}
-		
-	/**
-	 * @param integer
-	 * @return \Entity\Currency
-	 */
-	public function setDecimalPlaces($decimalPlaces) {
-		$this->decimalPlaces = $decimalPlaces;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Currency
-	 */
-	public function unsetDecimalPlaces() {
-		$this->decimalPlaces = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return integer|NULL
-	 */
-	public function getDecimalPlaces() {
-		return $this->decimalPlaces;
 	}
 		
 	/**

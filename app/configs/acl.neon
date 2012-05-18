@@ -15,6 +15,8 @@ parameters:
 			- Admin:Cibi
 			- Admin:Autopilot
 			- Admin:DictionaryLanguage
+			- Admin:Rado
+			- Admin:EntityGenerator
 
 			# entities
 			- Entity\Dictionary\Language

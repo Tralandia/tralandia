@@ -53,36 +53,15 @@ class Attraction extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Contact\Contact", mappedBy="attractions")
+	 * @ORM\OneToMany(targetEntity="Entity\Contact\Contact", mappedBy="attraction", cascade={"persist", "remove"})
 	 */
 	protected $contacts;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Entity\Medium\Medium", mappedBy="attraction")
+	 * @ORM\OneToMany(targetEntity="Entity\Medium\Medium", mappedBy="attraction", cascade={"persist", "remove"})
 	 */
 	protected $media;
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //@entity-generator-code <--- NEMAZAT !!!
@@ -223,7 +202,7 @@ class Attraction extends \Entity\BaseEntityDetails {
 		if(!$this->contacts->contains($contact)) {
 			$this->contacts->add($contact);
 		}
-		$contact->addAttraction($this);
+		$contact->setAttraction($this);
 
 		return $this;
 	}
@@ -236,7 +215,7 @@ class Attraction extends \Entity\BaseEntityDetails {
 		if($this->contacts->contains($contact)) {
 			$this->contacts->removeElement($contact);
 		}
-		$contact->removeAttraction($this);
+		$contact->unsetAttraction();
 
 		return $this;
 	}

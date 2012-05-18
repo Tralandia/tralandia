@@ -26,13 +26,13 @@ class Invoice extends \Entity\BaseEntity {
 
 	/**
 	 * @var integer
-	 * @ORM\Column(type="integer")
+	 * @ORM\Column(type="integer", nullable=true)
 	 */
 	protected $invoiceNumber;
 
 	/**
 	 * @var integer
-	 * @ORM\Column(type="integer")
+	 * @ORM\Column(type="integer", nullable=true)
 	 */
 	protected $paymentReferenceNumber;
 
@@ -122,7 +122,7 @@ class Invoice extends \Entity\BaseEntity {
 
 	/**
 	 * @var float
-	 * @ORM\Column(type="float")
+	 * @ORM\Column(type="float", nullable=true)
 	 */
 	protected $vat;
 
@@ -134,7 +134,7 @@ class Invoice extends \Entity\BaseEntity {
 
 	/**
 	 * @var float
-	 * @ORM\Column(type="float")
+	 * @ORM\Column(type="float", nullable=true)
 	 */
 	protected $exchangeRate;
 
@@ -152,7 +152,7 @@ class Invoice extends \Entity\BaseEntity {
 
 	/**
 	 * @var float
-	 * @ORM\Column(type="float")
+	 * @ORM\Column(type="float", nullable=true)
 	 */
 	protected $referrerCommission;
 
@@ -236,6 +236,15 @@ class Invoice extends \Entity\BaseEntity {
 	}
 		
 	/**
+	 * @return \Entity\Invoicing\Invoice
+	 */
+	public function unsetInvoiceNumber() {
+		$this->invoiceNumber = NULL;
+
+		return $this;
+	}
+		
+	/**
 	 * @return integer|NULL
 	 */
 	public function getInvoiceNumber() {
@@ -248,6 +257,15 @@ class Invoice extends \Entity\BaseEntity {
 	 */
 	public function setPaymentReferenceNumber($paymentReferenceNumber) {
 		$this->paymentReferenceNumber = $paymentReferenceNumber;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Invoicing\Invoice
+	 */
+	public function unsetPaymentReferenceNumber() {
+		$this->paymentReferenceNumber = NULL;
 
 		return $this;
 	}
@@ -589,6 +607,15 @@ class Invoice extends \Entity\BaseEntity {
 	}
 		
 	/**
+	 * @return \Entity\Invoicing\Invoice
+	 */
+	public function unsetVat() {
+		$this->vat = NULL;
+
+		return $this;
+	}
+		
+	/**
 	 * @return float|NULL
 	 */
 	public function getVat() {
@@ -627,6 +654,15 @@ class Invoice extends \Entity\BaseEntity {
 	 */
 	public function setExchangeRate($exchangeRate) {
 		$this->exchangeRate = $exchangeRate;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Invoicing\Invoice
+	 */
+	public function unsetExchangeRate() {
+		$this->exchangeRate = NULL;
 
 		return $this;
 	}
@@ -696,6 +732,15 @@ class Invoice extends \Entity\BaseEntity {
 	 */
 	public function setReferrerCommission($referrerCommission) {
 		$this->referrerCommission = $referrerCommission;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Invoicing\Invoice
+	 */
+	public function unsetReferrerCommission() {
+		$this->referrerCommission = NULL;
 
 		return $this;
 	}

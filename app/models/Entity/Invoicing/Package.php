@@ -38,29 +38,9 @@ class Package extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Entity\Invoicing\Service\Service", mappedBy="package")
+	 * @ORM\OneToMany(targetEntity="Entity\Invoicing\Service", mappedBy="package")
 	 */
 	protected $services;
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //@entity-generator-code <--- NEMAZAT !!!
@@ -167,10 +147,10 @@ class Package extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Invoicing\Service\Service
+	 * @param \Entity\Invoicing\Service
 	 * @return \Entity\Invoicing\Package
 	 */
-	public function addService(\Entity\Invoicing\Service\Service $service) {
+	public function addService(\Entity\Invoicing\Service $service) {
 		if(!$this->services->contains($service)) {
 			$this->services->add($service);
 		}
@@ -180,10 +160,10 @@ class Package extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Invoicing\Service\Service
+	 * @param \Entity\Invoicing\Service
 	 * @return \Entity\Invoicing\Package
 	 */
-	public function removeService(\Entity\Invoicing\Service\Service $service) {
+	public function removeService(\Entity\Invoicing\Service $service) {
 		if($this->services->contains($service)) {
 			$this->services->removeElement($service);
 		}
@@ -193,7 +173,7 @@ class Package extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Invoicing\Service\Service
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Invoicing\Service
 	 */
 	public function getServices() {
 		return $this->services;

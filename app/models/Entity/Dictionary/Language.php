@@ -137,6 +137,15 @@ class Language extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
+	 * @return \Entity\Dictionary\Language
+	 */
+	public function unsetSupported() {
+		$this->supported = NULL;
+
+		return $this;
+	}
+		
+	/**
 	 * @return boolean|NULL
 	 */
 	public function getSupported() {
