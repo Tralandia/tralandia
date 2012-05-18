@@ -531,4 +531,30 @@ class Task extends \Entity\BaseEntityDetails {
 	public function getActions() {
 		return $this->actions;
 	}
+		
+	/**
+	 * @param json
+	 * @return \Entity\Autopilot\Task
+	 */
+	public function setRecurrenceData($recurrenceData) {
+		$this->recurrenceData = $recurrenceData;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Autopilot\Task
+	 */
+	public function unsetRecurrenceData() {
+		$this->recurrenceData = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return json|NULL
+	 */
+	public function getRecurrenceData() {
+		return $this->recurrenceData;
+	}
 }

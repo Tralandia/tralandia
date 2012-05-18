@@ -86,7 +86,6 @@ function getNewIdsByOld($entityName, $extraWhere = NULL) {
 	$tableName = str_replace('\\', '_', $entityName);
 	$tableName = trim($tableName, '_');
 	$tableName = strtolower($tableName);
-
 	$r = qNew('select id, oldId from '.$tableName.($extraWhere ? ' where '.$extraWhere : ''));
 	$ids = array();
 	while ($x = mysql_fetch_array($r)) {

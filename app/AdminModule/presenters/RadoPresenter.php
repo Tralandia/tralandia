@@ -10,7 +10,7 @@ use Nette\Application as NA,
 	Extras\Import as I,
 	Service\Dictionary as D,
 	Service as S,
-	Service\Log\Change as SLog;
+	Service\Log as SLog;
 
 class RadoPresenter extends BasePresenter {
 

@@ -19,9 +19,9 @@ class Batch extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Email", inversedBy="batches")
+	 * @ORM\ManyToOne(targetEntity="Template", inversedBy="batches")
 	 */
-	protected $emailTemplate;
+	protected $template;
 
 	/**
 	 * @var integer
@@ -93,11 +93,11 @@ class Batch extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @param \Entity\Emailing\Email
+	 * @param \Entity\Emailing\Template
 	 * @return \Entity\Emailing\Batch
 	 */
-	public function setEmailTemplate(\Entity\Emailing\Email $emailTemplate) {
-		$this->emailTemplate = $emailTemplate;
+	public function setTemplate(\Entity\Emailing\Template $template) {
+		$this->template = $template;
 
 		return $this;
 	}
@@ -105,17 +105,17 @@ class Batch extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Emailing\Batch
 	 */
-	public function unsetEmailTemplate() {
-		$this->emailTemplate = NULL;
+	public function unsetTemplate() {
+		$this->template = NULL;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Entity\Emailing\Email|NULL
+	 * @return \Entity\Emailing\Template|NULL
 	 */
-	public function getEmailTemplate() {
-		return $this->emailTemplate;
+	public function getTemplate() {
+		return $this->template;
 	}
 		
 	/**

@@ -41,28 +41,6 @@ class Phrase extends \Entity\BaseEntityDetails {
 	 */
 	protected $sourceLanguage;
 
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		

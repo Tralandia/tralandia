@@ -62,7 +62,7 @@ class Medium extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var integer
-	 * @ORM\Column(type="integer")
+	 * @ORM\Column(type="integer", nullable=true)
 	 */
 	protected $sort;
 
@@ -300,6 +300,15 @@ class Medium extends \Entity\BaseEntityDetails {
 	 */
 	public function setSort($sort) {
 		$this->sort = $sort;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Medium\Medium
+	 */
+	public function unsetSort() {
+		$this->sort = NULL;
 
 		return $this;
 	}

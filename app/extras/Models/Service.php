@@ -203,7 +203,7 @@ abstract class Service extends Nette\Object implements IService {
 				if(count($arguments) == 1) {
 					$first = reset($arguments);
 					if($first instanceof Service) {
-						$this->mainEntity->{$name}($first->mainEntity);
+						$t = $this->mainEntity->{$name}($first->mainEntity);
 						return $this;
 					} else {
 						$this->mainEntity->{$name}($first);
