@@ -7,6 +7,8 @@ use Entity\Dictionary;
 use Entity\Location;
 use Entity\Rental;
 use Doctrine\ORM\Mapping as ORM;
+use	Extras\Annotation as EA;
+
 
 /**
  * @ORM\Entity()

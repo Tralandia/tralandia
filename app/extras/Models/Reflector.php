@@ -13,7 +13,7 @@ use Nette,
 
 class Reflector extends Nette\Object {
 	
-	const ANN_PRIMARY = 'UI\Primary';
+	const ANN_PRIMARY = 'EA\Primary';
 	const ANN_SERVICE = 'EA\Service';
 	const ANN_SERVICE_LIST = 'EA\ServiceList';
 
@@ -23,6 +23,7 @@ class Reflector extends Nette\Object {
 	const MANY_TO_MANY = 'ORM\ManyToMany';
 	const COLUMN = 'ORM\Column';
 
+	
 	
 	protected $settings;
 	protected $presenter;
@@ -324,8 +325,8 @@ class Reflector extends Nette\Object {
 				$targetEntity = $association->targetEntity;
 				$fieldMask['targetEntity'] = array();
 				if (!Strings::startsWith($targetEntity, 'Entity')) {
-					$entity = new \Nette\Reflection\ClassType('\Entity\Dictionary\Language'); //@todo - opravit
-					$targetEntity = $entity->getNamespaceName() . '\\' . $targetEntity;
+					// $entity = new \Nette\Reflection\ClassType('\Entity\Dictionary\Language'); //@todo - opravit
+					$targetEntity = $property->getDeclaringClass()->getNamespaceName() . '\\' . $targetEntity;
 				}
 
 				$fieldMask['targetEntity']['name'] = $targetEntity;
@@ -584,16 +585,26 @@ class Reflector extends Nette\Object {
 	 * Pripravi data
 	 */
 	public static function getEntityPrimaryData($class) {
-		return ClassType::from($class)->getAnnotation(self::ANN_PRIMARY);
+		$primaryAnn = ClassType::from($class)->getAnnotation(self::ANN_PRIMARY);
+		if(!$primaryAnn) {
+			throw new \Exception("V $class nie je zadefinovane @".self::ANN_PRIMARY);
+		}
+		return $primaryAnn;
 	}
 
 	public static function getEntityServiceName($class) {
 		$ann = ClassType::from($class)->getAnnotation(self::ANN_SERVICE);
+		if(!$ann->name) {
+			throw new \Exception("V $class nie je zadefinovane @".self::ANN_SERVICE);
+		}
 		return $ann->name;
 	}
 
 	public static function getEntityServiceListName($class) {
 		$ann = ClassType::from($class)->getAnnotation(self::ANN_SERVICE_LIST);
+		if(!$ann->name) {
+			throw new \Exception("V $class nie je zadefinovane @".self::ANN_SERVICE_LIST);
+		}
 		return $ann->name;
 	}
 	
