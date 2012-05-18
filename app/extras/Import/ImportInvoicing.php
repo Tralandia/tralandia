@@ -21,11 +21,11 @@ class ImportInvoicing extends BaseImport {
 		$en = \Service\Dictionary\Language::getByIso('en');
 
 		// Invoices
-		//$invoiceNameType = $this->createDictionaryType('\Invoicing\Service\Duration', 'name', 'supportedLanguages', 'ACTIVE');
+		//$invoiceNameType = $this->createDictionaryType('\Invoicing\ServiceDuration', 'name', 'supportedLanguages', 'ACTIVE');
 
 		$this->companiesByOldId = getNewIdsByOld('\Company\Company');
 		$this->rentalsByOldId = getNewIdsByOld('\Rental\Rental');
-		$this->serviceTypesByOldId = getNewIdsByOld('\Invoicing\Service\Type');
+		$this->serviceTypesByOldId = getNewIdsByOld('\Invoicing\ServiceType');
 
 		$this->countryTypeId = qNew('select id from location_type where slug = "country"');
 		$this->countryTypeId = mysql_fetch_array($this->countryTypeId);
@@ -125,7 +125,7 @@ class ImportInvoicing extends BaseImport {
 			$invoiceItem = \Service\Invoicing\Item::get();
 			$invoiceItem->oldId = $x['id'];
 
-			$invoiceItem->serviceType = \Service\Invoicing\Service\Type::get($this->serviceTypesByOldId[$x1['services_types_id']]);
+			$invoiceItem->serviceType = \Service\Invoicing\ServiceType::get($this->serviceTypesByOldId[$x1['services_types_id']]);
 			$invoiceItem->name = $x1['service_name'];
 			$invoiceItem->nameEn = $x1['service_name_en'];
 			if (isset($x1['time_from'])) {
