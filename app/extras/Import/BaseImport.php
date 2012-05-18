@@ -84,8 +84,8 @@ class BaseImport {
 		),
 		'amenities' => array(
 			'entities' => array(
-				'\Rental\Amenity\Group' => array(),
-				'\Rental\Amenity\Amenity' => array(),
+				'\Rental\AmenityType' => array(),
+				'\Rental\Amenity' => array(),
 			),
 			'subsections' => array(),
 		),

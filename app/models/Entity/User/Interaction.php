@@ -1,22 +1,20 @@
 <?php
 
-namespace Entity\Visitor;
+namespace Entity\User;
 
 use Entity\Dictionary;
 use Entity\Rental;
-use Entity\User;
-use Entity\Visitor;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="visitor_interaction", indexes={@ORM\index(name="senderEmail", columns={"senderEmail"}), @ORM\index(name="status", columns={"status"})})
+ * @ORM\Table(name="user_interaction", indexes={@ORM\index(name="senderEmail", columns={"senderEmail"}), @ORM\index(name="status", columns={"status"})})
  */
 class Interaction extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Type")
+	 * @ORM\ManyToOne(targetEntity="InteractionType")
 	 */
 	protected $type;
 
@@ -58,17 +56,17 @@ class Interaction extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @param \Entity\Visitor\Type
-	 * @return \Entity\Visitor\Interaction
+	 * @param \Entity\User\InteractionType
+	 * @return \Entity\User\Interaction
 	 */
-	public function setType(\Entity\Visitor\Type $type) {
+	public function setType(\Entity\User\InteractionType $type) {
 		$this->type = $type;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Entity\Visitor\Interaction
+	 * @return \Entity\User\Interaction
 	 */
 	public function unsetType() {
 		$this->type = NULL;
@@ -77,7 +75,7 @@ class Interaction extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Visitor\Type|NULL
+	 * @return \Entity\User\InteractionType|NULL
 	 */
 	public function getType() {
 		return $this->type;
@@ -85,7 +83,7 @@ class Interaction extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param \Entity\User\Role
-	 * @return \Entity\Visitor\Interaction
+	 * @return \Entity\User\Interaction
 	 */
 	public function setRole(\Entity\User\Role $role) {
 		$this->role = $role;
@@ -94,7 +92,7 @@ class Interaction extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Visitor\Interaction
+	 * @return \Entity\User\Interaction
 	 */
 	public function unsetRole() {
 		$this->role = NULL;
@@ -111,7 +109,7 @@ class Interaction extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param \Extras\Types\Email
-	 * @return \Entity\Visitor\Interaction
+	 * @return \Entity\User\Interaction
 	 */
 	public function setSenderEmail(\Extras\Types\Email $senderEmail) {
 		$this->senderEmail = $senderEmail;
@@ -128,7 +126,7 @@ class Interaction extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param \Entity\Dictionary\Language
-	 * @return \Entity\Visitor\Interaction
+	 * @return \Entity\User\Interaction
 	 */
 	public function setLanguage(\Entity\Dictionary\Language $language) {
 		$this->language = $language;
@@ -137,7 +135,7 @@ class Interaction extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Visitor\Interaction
+	 * @return \Entity\User\Interaction
 	 */
 	public function unsetLanguage() {
 		$this->language = NULL;
@@ -154,7 +152,7 @@ class Interaction extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param \Entity\Rental\Rental
-	 * @return \Entity\Visitor\Interaction
+	 * @return \Entity\User\Interaction
 	 */
 	public function setRental(\Entity\Rental\Rental $rental) {
 		$this->rental = $rental;
@@ -163,7 +161,7 @@ class Interaction extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Visitor\Interaction
+	 * @return \Entity\User\Interaction
 	 */
 	public function unsetRental() {
 		$this->rental = NULL;
@@ -180,7 +178,7 @@ class Interaction extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param integer
-	 * @return \Entity\Visitor\Interaction
+	 * @return \Entity\User\Interaction
 	 */
 	public function setStatus($status) {
 		$this->status = $status;

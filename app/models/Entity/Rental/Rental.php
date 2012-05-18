@@ -124,7 +124,7 @@ class Rental extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Rental\Amenity\Amenity", mappedBy="rentals")
+	 * @ORM\ManyToMany(targetEntity="Entity\Rental\Amenity", mappedBy="rentals")
 	 */
 	protected $amenities;
 
@@ -590,10 +590,10 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Rental\Amenity\Amenity
+	 * @param \Entity\Rental\Amenity
 	 * @return \Entity\Rental\Rental
 	 */
-	public function addAmenity(\Entity\Rental\Amenity\Amenity $amenity) {
+	public function addAmenity(\Entity\Rental\Amenity $amenity) {
 		if(!$this->amenities->contains($amenity)) {
 			$this->amenities->add($amenity);
 		}
@@ -603,10 +603,10 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Rental\Amenity\Amenity
+	 * @param \Entity\Rental\Amenity
 	 * @return \Entity\Rental\Rental
 	 */
-	public function removeAmenity(\Entity\Rental\Amenity\Amenity $amenity) {
+	public function removeAmenity(\Entity\Rental\Amenity $amenity) {
 		if($this->amenities->contains($amenity)) {
 			$this->amenities->removeElement($amenity);
 		}
@@ -616,7 +616,7 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Rental\Amenity\Amenity
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Rental\Amenity
 	 */
 	public function getAmenities() {
 		return $this->amenities;

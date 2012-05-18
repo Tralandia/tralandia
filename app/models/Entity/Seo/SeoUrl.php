@@ -41,7 +41,7 @@ class SeoUrl extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Rental\Amenity\Amenity")
+	 * @ORM\ManyToOne(targetEntity="Entity\Rental\Amenity")
 	 */
 	protected $tag;
 
@@ -212,10 +212,10 @@ class SeoUrl extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Rental\Amenity\Amenity
+	 * @param \Entity\Rental\Amenity
 	 * @return \Entity\Seo\SeoUrl
 	 */
-	public function setTag(\Entity\Rental\Amenity\Amenity $tag) {
+	public function setTag(\Entity\Rental\Amenity $tag) {
 		$this->tag = $tag;
 
 		return $this;
@@ -231,7 +231,7 @@ class SeoUrl extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Rental\Amenity\Amenity|NULL
+	 * @return \Entity\Rental\Amenity|NULL
 	 */
 	public function getTag() {
 		return $this->tag;

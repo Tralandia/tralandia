@@ -1,15 +1,15 @@
 <?php
 
-namespace Entity\Visitor;
+namespace Entity\User;
 
 use Entity\Dictionary;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="visitor_type")
+ * @ORM\Table(name="user_interaction_type")
  */
-class Type extends \Entity\BaseEntity {
+class InteractionType extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
@@ -27,7 +27,7 @@ class Type extends \Entity\BaseEntity {
 		
 	/**
 	 * @param \Entity\Dictionary\Phrase
-	 * @return \Entity\Visitor\Type
+	 * @return \Entity\User\InteractionType
 	 */
 	public function setName(\Entity\Dictionary\Phrase $name) {
 		$this->name = $name;

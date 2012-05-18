@@ -3,7 +3,7 @@
 namespace Service\Log;
 
 
-class ChangeLog extends \Service\BaseService {
+class Change extends \Service\BaseService {
 	
 	const MAIN_ENTITY_NAME = '\Entity\Log\Change';
 	

@@ -181,7 +181,7 @@ class ImportRentals extends BaseImport {
 			$allAmenities = array();
 			$r1 = qNew('select * from rental_amenity_amenity');
 			while ($x1 = mysql_fetch_array($r1)) {
-				$allAmenities[$x1['oldId']] = \Service\Rental\Amenity\Amenity::get($x1['id']);
+				$allAmenities[$x1['oldId']] = \Service\Rental\Amenity::get($x1['id']);
 			}
 
 			// Activities

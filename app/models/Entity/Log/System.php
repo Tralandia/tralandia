@@ -1,14 +1,14 @@
 <?php
 
-namespace Entity\Log\System;
+namespace Entity\Log;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="log_system_systemlog")
+ * @ORM\Table(name="log_system")
  */
-class SystemLog extends \Entity\BaseEntityDetails {
+class System extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var string
@@ -23,28 +23,6 @@ class SystemLog extends \Entity\BaseEntityDetails {
 	protected $comment;
 
 
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -54,7 +32,7 @@ class SystemLog extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param string
-	 * @return \Entity\Log\System\SystemLog
+	 * @return \Entity\Log\System
 	 */
 	public function setName($name) {
 		$this->name = $name;
@@ -63,7 +41,7 @@ class SystemLog extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Log\System\SystemLog
+	 * @return \Entity\Log\System
 	 */
 	public function unsetName() {
 		$this->name = NULL;
@@ -80,7 +58,7 @@ class SystemLog extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param string
-	 * @return \Entity\Log\System\SystemLog
+	 * @return \Entity\Log\System
 	 */
 	public function setComment($comment) {
 		$this->comment = $comment;
@@ -89,7 +67,7 @@ class SystemLog extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Log\System\SystemLog
+	 * @return \Entity\Log\System
 	 */
 	public function unsetComment() {
 		$this->comment = NULL;

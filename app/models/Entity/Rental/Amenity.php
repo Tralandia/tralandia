@@ -3,20 +3,19 @@
 namespace Entity\Rental;
 
 use Entity\Dictionary;
-use Entity\Rental;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="rental_amenity_amenity")
+ * @ORM\Table(name="rental_amenity")
  */
 class Amenity extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Group", inversedBy="amenities")
+	 * @ORM\ManyToOne(targetEntity="AmenityType", inversedBy="amenities")
 	 */
-	protected $group;
+	protected $type;
 
 	/**
 	 * @var Collection
@@ -59,34 +58,34 @@ class Amenity extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @param \Entity\Rental\Amenity\Group
-	 * @return \Entity\Rental\Amenity\Amenity
+	 * @param \Entity\Rental\AmenityType
+	 * @return \Entity\Rental\Amenity
 	 */
-	public function setGroup(\Entity\Rental\Amenity\Group $group) {
-		$this->group = $group;
+	public function setType(\Entity\Rental\AmenityType $type) {
+		$this->type = $type;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Entity\Rental\Amenity\Amenity
+	 * @return \Entity\Rental\Amenity
 	 */
-	public function unsetGroup() {
-		$this->group = NULL;
+	public function unsetType() {
+		$this->type = NULL;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Entity\Rental\Amenity\Group|NULL
+	 * @return \Entity\Rental\AmenityType|NULL
 	 */
-	public function getGroup() {
-		return $this->group;
+	public function getType() {
+		return $this->type;
 	}
 		
 	/**
 	 * @param \Entity\Rental\Rental
-	 * @return \Entity\Rental\Amenity\Amenity
+	 * @return \Entity\Rental\Amenity
 	 */
 	public function addRental(\Entity\Rental\Rental $rental) {
 		if(!$this->rentals->contains($rental)) {
@@ -105,7 +104,7 @@ class Amenity extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param \Entity\Dictionary\Phrase
-	 * @return \Entity\Rental\Amenity\Amenity
+	 * @return \Entity\Rental\Amenity
 	 */
 	public function setName(\Entity\Dictionary\Phrase $name) {
 		$this->name = $name;

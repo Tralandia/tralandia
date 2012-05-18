@@ -6,6 +6,6 @@ use Extras\Models\ServiceList;
 
 class EmailList extends ServiceList {
 
-	const MAIN_ENTITY_NAME = '\Entity\Emailing\Email';
+	const MAIN_ENTITY_NAME = '\Entity\Emailing\Template';
 
 }

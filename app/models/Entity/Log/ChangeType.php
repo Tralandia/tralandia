@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="log_change_changetype")
+ * @ORM\Table(name="log_changetype")
  */
 class ChangeType extends \Entity\BaseEntity {
 
@@ -54,7 +54,7 @@ class ChangeType extends \Entity\BaseEntity {
 		
 	/**
 	 * @param string
-	 * @return \Entity\Log\Change\ChangeType
+	 * @return \Entity\Log\ChangeType
 	 */
 	public function setName($name) {
 		$this->name = $name;
@@ -63,7 +63,7 @@ class ChangeType extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Log\Change\ChangeType
+	 * @return \Entity\Log\ChangeType
 	 */
 	public function unsetName() {
 		$this->name = NULL;
@@ -80,7 +80,7 @@ class ChangeType extends \Entity\BaseEntity {
 		
 	/**
 	 * @param boolean
-	 * @return \Entity\Log\Change\ChangeType
+	 * @return \Entity\Log\ChangeType
 	 */
 	public function setImportant($important) {
 		$this->important = $important;

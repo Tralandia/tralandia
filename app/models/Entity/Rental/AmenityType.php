@@ -3,18 +3,17 @@
 namespace Entity\Rental;
 
 use Entity\Dictionary;
-use Entity\Rental;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="rental_amenity_group", indexes={@ORM\index(name="slug", columns={"slug"})})
+ * @ORM\Table(name="rental_amenity_type", indexes={@ORM\index(name="slug", columns={"slug"})})
  */
 class AmenityType extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Amenity", mappedBy="group")
+	 * @ORM\OneToMany(targetEntity="Amenity", mappedBy="type")
 	 */
 	protected $amenities;
 
@@ -59,33 +58,33 @@ class AmenityType extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Rental\Amenity\Amenity
-	 * @return \Entity\Rental\Amenity\Group
+	 * @param \Entity\Rental\Amenity
+	 * @return \Entity\Rental\AmenityType
 	 */
-	public function addAmenity(\Entity\Rental\Amenity\Amenity $amenity) {
+	public function addAmenity(\Entity\Rental\Amenity $amenity) {
 		if(!$this->amenities->contains($amenity)) {
 			$this->amenities->add($amenity);
 		}
-		$amenity->setGroup($this);
+		$amenity->setType($this);
 
 		return $this;
 	}
 		
 	/**
-	 * @param \Entity\Rental\Amenity\Amenity
-	 * @return \Entity\Rental\Amenity\Group
+	 * @param \Entity\Rental\Amenity
+	 * @return \Entity\Rental\AmenityType
 	 */
-	public function removeAmenity(\Entity\Rental\Amenity\Amenity $amenity) {
+	public function removeAmenity(\Entity\Rental\Amenity $amenity) {
 		if($this->amenities->contains($amenity)) {
 			$this->amenities->removeElement($amenity);
 		}
-		$amenity->unsetGroup();
+		$amenity->unsetType();
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Rental\Amenity\Amenity
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Rental\Amenity
 	 */
 	public function getAmenities() {
 		return $this->amenities;
@@ -93,7 +92,7 @@ class AmenityType extends \Entity\BaseEntity {
 		
 	/**
 	 * @param \Entity\Dictionary\Phrase
-	 * @return \Entity\Rental\Amenity\Group
+	 * @return \Entity\Rental\AmenityType
 	 */
 	public function setName(\Entity\Dictionary\Phrase $name) {
 		$this->name = $name;
@@ -110,7 +109,7 @@ class AmenityType extends \Entity\BaseEntity {
 		
 	/**
 	 * @param slug
-	 * @return \Entity\Rental\Amenity\Group
+	 * @return \Entity\Rental\AmenityType
 	 */
 	public function setSlug($slug) {
 		$this->slug = $slug;

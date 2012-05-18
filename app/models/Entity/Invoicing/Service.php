@@ -7,19 +7,19 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="invoicing_service_service")
+ * @ORM\Table(name="invoicing_service")
  */
 class Service extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Type")
+	 * @ORM\ManyToOne(targetEntity="ServiceType")
 	 */
 	protected $type;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Duration")
+	 * @ORM\ManyToOne(targetEntity="ServiceDuration")
 	 */
 	protected $duration;
 
@@ -69,17 +69,17 @@ class Service extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Invoicing\Service\Type
-	 * @return \Entity\Invoicing\Service\Service
+	 * @param \Entity\Invoicing\ServiceType
+	 * @return \Entity\Invoicing\Service
 	 */
-	public function setType(\Entity\Invoicing\Service\Type $type) {
+	public function setType(\Entity\Invoicing\ServiceType $type) {
 		$this->type = $type;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Entity\Invoicing\Service\Service
+	 * @return \Entity\Invoicing\Service
 	 */
 	public function unsetType() {
 		$this->type = NULL;
@@ -88,24 +88,24 @@ class Service extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Invoicing\Service\Type|NULL
+	 * @return \Entity\Invoicing\ServiceType|NULL
 	 */
 	public function getType() {
 		return $this->type;
 	}
 		
 	/**
-	 * @param \Entity\Invoicing\Service\Duration
-	 * @return \Entity\Invoicing\Service\Service
+	 * @param \Entity\Invoicing\ServiceDuration
+	 * @return \Entity\Invoicing\Service
 	 */
-	public function setDuration(\Entity\Invoicing\Service\Duration $duration) {
+	public function setDuration(\Entity\Invoicing\ServiceDuration $duration) {
 		$this->duration = $duration;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Entity\Invoicing\Service\Service
+	 * @return \Entity\Invoicing\Service
 	 */
 	public function unsetDuration() {
 		$this->duration = NULL;
@@ -114,7 +114,7 @@ class Service extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Invoicing\Service\Duration|NULL
+	 * @return \Entity\Invoicing\ServiceDuration|NULL
 	 */
 	public function getDuration() {
 		return $this->duration;
@@ -122,7 +122,7 @@ class Service extends \Entity\BaseEntity {
 		
 	/**
 	 * @param \Extras\Types\Price
-	 * @return \Entity\Invoicing\Service\Service
+	 * @return \Entity\Invoicing\Service
 	 */
 	public function setDefaultPrice(\Extras\Types\Price $defaultPrice) {
 		$this->defaultPrice = $defaultPrice;
@@ -139,7 +139,7 @@ class Service extends \Entity\BaseEntity {
 		
 	/**
 	 * @param \Extras\Types\Price
-	 * @return \Entity\Invoicing\Service\Service
+	 * @return \Entity\Invoicing\Service
 	 */
 	public function setCurrentPrice(\Extras\Types\Price $currentPrice) {
 		$this->currentPrice = $currentPrice;
@@ -156,7 +156,7 @@ class Service extends \Entity\BaseEntity {
 		
 	/**
 	 * @param \Entity\Invoicing\Package
-	 * @return \Entity\Invoicing\Service\Service
+	 * @return \Entity\Invoicing\Service
 	 */
 	public function setPackage(\Entity\Invoicing\Package $package) {
 		$this->package = $package;
@@ -165,7 +165,7 @@ class Service extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Invoicing\Service\Service
+	 * @return \Entity\Invoicing\Service
 	 */
 	public function unsetPackage() {
 		$this->package = NULL;

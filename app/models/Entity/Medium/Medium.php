@@ -305,6 +305,15 @@ class Medium extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
+	 * @return \Entity\Medium\Medium
+	 */
+	public function unsetSort() {
+		$this->sort = NULL;
+
+		return $this;
+	}
+		
+	/**
 	 * @return integer|NULL
 	 */
 	public function getSort() {

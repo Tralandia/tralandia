@@ -59,7 +59,7 @@ class ServiceDuration extends \Entity\BaseEntity {
 		
 	/**
 	 * @param string
-	 * @return \Entity\Invoicing\Service\Duration
+	 * @return \Entity\Invoicing\ServiceDuration
 	 */
 	public function setDuration($duration) {
 		$this->duration = $duration;
@@ -68,7 +68,7 @@ class ServiceDuration extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Invoicing\Service\Duration
+	 * @return \Entity\Invoicing\ServiceDuration
 	 */
 	public function unsetDuration() {
 		$this->duration = NULL;
@@ -85,7 +85,7 @@ class ServiceDuration extends \Entity\BaseEntity {
 		
 	/**
 	 * @param \Entity\Dictionary\Phrase
-	 * @return \Entity\Invoicing\Service\Duration
+	 * @return \Entity\Invoicing\ServiceDuration
 	 */
 	public function setName(\Entity\Dictionary\Phrase $name) {
 		$this->name = $name;
@@ -102,7 +102,7 @@ class ServiceDuration extends \Entity\BaseEntity {
 		
 	/**
 	 * @param integer
-	 * @return \Entity\Invoicing\Service\Duration
+	 * @return \Entity\Invoicing\ServiceDuration
 	 */
 	public function setSort($sort) {
 		$this->sort = $sort;

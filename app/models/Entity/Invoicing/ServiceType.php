@@ -23,27 +23,6 @@ class ServiceType extends \Entity\BaseEntity {
 	 */
 	protected $name;
 
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -53,7 +32,7 @@ class ServiceType extends \Entity\BaseEntity {
 		
 	/**
 	 * @param slug
-	 * @return \Entity\Invoicing\Service\Type
+	 * @return \Entity\Invoicing\ServiceType
 	 */
 	public function setSlug($slug) {
 		$this->slug = $slug;
@@ -70,7 +49,7 @@ class ServiceType extends \Entity\BaseEntity {
 		
 	/**
 	 * @param \Entity\Dictionary\Phrase
-	 * @return \Entity\Invoicing\Service\Type
+	 * @return \Entity\Invoicing\ServiceType
 	 */
 	public function setName(\Entity\Dictionary\Phrase $name) {
 		$this->name = $name;

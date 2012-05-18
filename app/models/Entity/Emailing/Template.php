@@ -8,9 +8,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="emailing_email")
+ * @ORM\Table(name="emailing_template")
  */
-class EmailTemplate extends \Entity\BaseEntity {
+class Template extends \Entity\BaseEntity {
 
 	/**
 	 * @var string
@@ -39,7 +39,7 @@ class EmailTemplate extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Batch", mappedBy="emailTemplate")
+	 * @ORM\OneToMany(targetEntity="Batch", mappedBy="template")
 	 */
 	protected $batches;
 
@@ -54,7 +54,7 @@ class EmailTemplate extends \Entity\BaseEntity {
 		
 	/**
 	 * @param string
-	 * @return \Entity\Emailing\Email
+	 * @return \Entity\Emailing\Template
 	 */
 	public function setName($name) {
 		$this->name = $name;
@@ -63,7 +63,7 @@ class EmailTemplate extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Emailing\Email
+	 * @return \Entity\Emailing\Template
 	 */
 	public function unsetName() {
 		$this->name = NULL;
@@ -80,7 +80,7 @@ class EmailTemplate extends \Entity\BaseEntity {
 		
 	/**
 	 * @param \Entity\Dictionary\Phrase
-	 * @return \Entity\Emailing\Email
+	 * @return \Entity\Emailing\Template
 	 */
 	public function setSubject(\Entity\Dictionary\Phrase $subject) {
 		$this->subject = $subject;
@@ -97,7 +97,7 @@ class EmailTemplate extends \Entity\BaseEntity {
 		
 	/**
 	 * @param \Entity\Dictionary\Phrase
-	 * @return \Entity\Emailing\Email
+	 * @return \Entity\Emailing\Template
 	 */
 	public function setBody(\Entity\Dictionary\Phrase $body) {
 		$this->body = $body;
@@ -113,25 +113,8 @@ class EmailTemplate extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Phrase
-	 * @return \Entity\Emailing\Email
-	 */
-	public function setBodyHtml(\Entity\Dictionary\Phrase $bodyHtml) {
-		$this->bodyHtml = $bodyHtml;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Dictionary\Phrase|NULL
-	 */
-	public function getBodyHtml() {
-		return $this->bodyHtml;
-	}
-		
-	/**
 	 * @param \Entity\Dictionary\Language
-	 * @return \Entity\Emailing\Email
+	 * @return \Entity\Emailing\Template
 	 */
 	public function setLanguage(\Entity\Dictionary\Language $language) {
 		$this->language = $language;
@@ -140,7 +123,7 @@ class EmailTemplate extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Emailing\Email
+	 * @return \Entity\Emailing\Template
 	 */
 	public function unsetLanguage() {
 		$this->language = NULL;
@@ -156,53 +139,27 @@ class EmailTemplate extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Emailing\Type
-	 * @return \Entity\Emailing\Email
-	 */
-	public function setType(\Entity\Emailing\Type $type) {
-		$this->type = $type;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Emailing\Email
-	 */
-	public function unsetType() {
-		$this->type = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Emailing\Type|NULL
-	 */
-	public function getType() {
-		return $this->type;
-	}
-		
-	/**
 	 * @param \Entity\Emailing\Batch
-	 * @return \Entity\Emailing\Email
+	 * @return \Entity\Emailing\Template
 	 */
 	public function addBatche(\Entity\Emailing\Batch $batche) {
 		if(!$this->batches->contains($batche)) {
 			$this->batches->add($batche);
 		}
-		$batche->setEmailTemplate($this);
+		$batche->setTemplate($this);
 
 		return $this;
 	}
 		
 	/**
 	 * @param \Entity\Emailing\Batch
-	 * @return \Entity\Emailing\Email
+	 * @return \Entity\Emailing\Template
 	 */
 	public function removeBatche(\Entity\Emailing\Batch $batche) {
 		if($this->batches->contains($batche)) {
 			$this->batches->removeElement($batche);
 		}
-		$batche->unsetEmailTemplate();
+		$batche->unsetTemplate();
 
 		return $this;
 	}
