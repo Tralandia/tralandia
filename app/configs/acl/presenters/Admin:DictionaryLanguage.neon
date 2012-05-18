@@ -1,0 +1,35 @@
+list:
+	guest: deny
+	visitor: deny
+	potentialowner: deny
+	owner: deny
+	translator: deny
+	assistant: deny
+	vendor: deny
+	manager: deny
+	admin: deny
+	superadmin: deny
+
+edit:
+	guest: deny
+	visitor: deny
+	potentialowner: allow
+	owner: allow
+	translator: deny
+	assistant: assert1
+	vendor: deny
+	manager: deny
+	admin: deny
+	superadmin: deny
+
+adsf:
+	guest: deny
+	visitor: deny
+	potentialowner: deny
+	owner: deny
+	translator: deny
+	assistant: assert1
+	vendor: deny
+	manager: deny
+	admin: deny
+	superadmin: deny

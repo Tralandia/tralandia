@@ -1,0 +1,20 @@
+parameters:
+	acl:
+		dir: %settingsDir%/acl
+		presentersDir: %settingsDir%/acl/presenters
+		entitiesDir: %settingsDir%/acl/entities
+
+		assertions:
+			assert1:
+				callback: ['\\Security\\MyAssertion', 'test']
+
+		presenters:
+			Admin:Location:
+				list:
+				edit:
+			Admin:DictionaryLanguage:
+				list:
+				edit:
+				adsf:
+			Admin:EntityGenerator:
+				list:
