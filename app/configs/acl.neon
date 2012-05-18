@@ -16,12 +16,14 @@ parameters:
 			- Admin:Autopilot
 			- Admin:DictionaryLanguage
 			- Admin:Currency
+			- Admin:NeonGenerator
 
 			# entities
 			- Entity\Dictionary\Language
 			- Entity\Location\Location
 			- Entity\Rental\Rental
 			- Entity\Currency
+			- Entity\NeonGenerator
 
 		rules:
 			allow:

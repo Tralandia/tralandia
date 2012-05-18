@@ -1,0 +1,50 @@
+common:
+	service: Service\Seo\TitleSuffix
+	title: Seo / TitleSuffix
+	h1: Seo / TitleSuffix
+	grid:
+		columns:
+			country:
+				label: Country
+				mapper: e.country
+			language:
+				label: Language
+				mapper: e.language
+			suffix:
+				label: Suffix
+				mapper: e.suffix
+			id:
+				label: Id
+				mapper: e.id
+			oldId:
+				label: OldId
+				mapper: e.oldId
+			created:
+				label: Created
+				mapper: e.created
+			updated:
+				label: Updated
+				mapper: e.updated
+			
+	form:
+		fields:
+			country:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityLocationLocation"
+				label: Country
+				control: selectBox
+			language:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityDictionaryLanguage"
+				label: Language
+				control: selectBox
+			suffix:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: Suffix
+				control: text
+			created:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Created
+				control: dateTime
+			updated:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Updated
+				control: dateTime

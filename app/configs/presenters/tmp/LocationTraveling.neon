@@ -1,0 +1,57 @@
+common:
+	service: Service\Location\Traveling
+	title: Location / Traveling
+	h1: Location / Traveling
+	grid:
+		columns:
+			sourceLocation:
+				label: SourceLocation
+				mapper: e.sourceLocation
+			destinationLocation:
+				label: DestinationLocation
+				mapper: e.destinationLocation
+			peopleCount:
+				label: PeopleCount
+				mapper: e.peopleCount
+			year:
+				label: Year
+				mapper: e.year
+			id:
+				label: Id
+				mapper: e.id
+			oldId:
+				label: OldId
+				mapper: e.oldId
+			created:
+				label: Created
+				mapper: e.created
+			updated:
+				label: Updated
+				mapper: e.updated
+			
+	form:
+		fields:
+			sourceLocation:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:Location,inversedBy:outgoingLocations"
+				label: SourceLocation
+				control: selectBox
+			destinationLocation:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:Location,inversedBy:incomingLocations"
+				label: DestinationLocation
+				control: selectBox
+			peopleCount:
+				# anotations: "var:integer,ORMColumn:type:integer,nullable:true"
+				label: PeopleCount
+				control: text
+			year:
+				# anotations: "var:integer,ORMColumn:type:integer,nullable:true"
+				label: Year
+				control: text
+			created:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Created
+				control: dateTime
+			updated:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Updated
+				control: dateTime

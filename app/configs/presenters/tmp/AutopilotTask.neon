@@ -1,0 +1,155 @@
+common:
+	service: Service\Autopilot\Task
+	title: Autopilot / Task
+	h1: Autopilot / Task
+	grid:
+		columns:
+			type:
+				label: Type
+				mapper: e.type
+			subtype:
+				label: Subtype
+				mapper: e.subtype
+			name:
+				label: Name
+				mapper: e.name
+			mission:
+				label: Mission
+				mapper: e.mission
+			startTime:
+				label: StartTime
+				mapper: e.startTime
+			due:
+				label: Due
+				mapper: e.due
+			durationPaid:
+				label: DurationPaid
+				mapper: e.durationPaid
+			links:
+				label: Links
+				mapper: e.links
+			user:
+				label: User
+				mapper: e.user
+			userCountry:
+				label: UserCountry
+				mapper: e.userCountry
+			userLanguage:
+				label: UserLanguage
+				mapper: e.userLanguage
+			userLanguageLevel:
+				label: UserLanguageLevel
+				mapper: e.userLanguageLevel
+			userRole:
+				label: UserRole
+				mapper: e.userRole
+			usersExcluded:
+				label: UsersExcluded
+				mapper: e.usersExcluded
+			validation:
+				label: Validation
+				mapper: e.validation
+			actions:
+				label: Actions
+				mapper: e.actions
+			recurrenceData:
+				label: RecurrenceData
+				mapper: e.recurrenceData
+			details:
+				label: Details
+				mapper: e.details
+			id:
+				label: Id
+				mapper: e.id
+			oldId:
+				label: OldId
+				mapper: e.oldId
+			created:
+				label: Created
+				mapper: e.created
+			updated:
+				label: Updated
+				mapper: e.updated
+			
+	form:
+		fields:
+			type:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:Type"
+				label: Type
+				control: selectBox
+			subtype:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: Subtype
+				control: text
+			name:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: Name
+				control: text
+			mission:
+				# anotations: "var:text,ORMColumn:type:text"
+				label: Mission
+				control: text
+			startTime:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: StartTime
+				control: dateTime
+			due:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Due
+				control: dateTime
+			durationPaid:
+				# anotations: "var:float,ORMColumn:type:float"
+				label: DurationPaid
+				control: float
+			links:
+				# anotations: "var:json,ORMColumn:type:json,nullable:true"
+				label: Links
+				control: json
+			user:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityUserUser"
+				label: User
+				control: selectBox
+			userCountry:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityLocationLocation"
+				label: UserCountry
+				control: selectBox
+			userLanguage:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityDictionaryLanguage"
+				label: UserLanguage
+				control: selectBox
+			userLanguageLevel:
+				# anotations: "var:integer,ORMColumn:type:integer,nullable:true"
+				label: UserLanguageLevel
+				control: text
+			userRole:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityUserRole"
+				label: UserRole
+				control: selectBox
+			usersExcluded:
+				# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityUserUser,mappedBy:tasks"
+				label: UsersExcluded
+				control: bricksList
+			validation:
+				# anotations: "var:json,ORMColumn:type:json,nullable:true"
+				label: Validation
+				control: json
+			actions:
+				# anotations: "var:json,ORMColumn:type:json,nullable:true"
+				label: Actions
+				control: json
+			recurrenceData:
+				# anotations: "var:json,ORMColumn:type:json,nullable:true"
+				label: RecurrenceData
+				control: json
+			details:
+				# anotations: "var:json,ORMColumn:type:json,nullable:true"
+				label: Details
+				control: json
+			created:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Created
+				control: dateTime
+			updated:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Updated
+				control: dateTime

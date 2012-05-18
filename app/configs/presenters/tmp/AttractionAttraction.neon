@@ -1,0 +1,92 @@
+common:
+	service: Service\Attraction\Attraction
+	title: Attraction / Attraction
+	h1: Attraction / Attraction
+	grid:
+		columns:
+			type:
+				label: Type
+				mapper: e.type
+			name:
+				label: Name
+				mapper: e.name
+			description:
+				label: Description
+				mapper: e.description
+			country:
+				label: Country
+				mapper: e.country
+			latitude:
+				label: Latitude
+				mapper: e.latitude
+			longitude:
+				label: Longitude
+				mapper: e.longitude
+			contacts:
+				label: Contacts
+				mapper: e.contacts
+			media:
+				label: Media
+				mapper: e.media
+			details:
+				label: Details
+				mapper: e.details
+			id:
+				label: Id
+				mapper: e.id
+			oldId:
+				label: OldId
+				mapper: e.oldId
+			created:
+				label: Created
+				mapper: e.created
+			updated:
+				label: Updated
+				mapper: e.updated
+			
+	form:
+		fields:
+			type:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:Type"
+				label: Type
+				control: selectBox
+			name:
+				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:"
+				label: Name
+				control: phrase
+			description:
+				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:"
+				label: Description
+				control: phrase
+			country:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityLocationLocation"
+				label: Country
+				control: selectBox
+			latitude:
+				# anotations: "var:latlong,ORMColumn:type:latlong"
+				label: Latitude
+				control: text
+			longitude:
+				# anotations: "var:latlong,ORMColumn:type:latlong"
+				label: Longitude
+				control: text
+			contacts:
+				# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityContactContact,mappedBy:attractions"
+				label: Contacts
+				control: bricksList
+			media:
+				# anotations: "var:Collection,ORMOneToMany:targetEntity:EntityMediumMedium,mappedBy:attraction"
+				label: Media
+				control: checkBoxList
+			details:
+				# anotations: "var:json,ORMColumn:type:json,nullable:true"
+				label: Details
+				control: json
+			created:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Created
+				control: dateTime
+			updated:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Updated
+				control: dateTime

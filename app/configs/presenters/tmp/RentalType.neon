@@ -1,0 +1,50 @@
+common:
+	service: Service\Rental\Type
+	title: Rental / Type
+	h1: Rental / Type
+	grid:
+		columns:
+			name:
+				label: Name
+				mapper: e.name
+			rentals:
+				label: Rentals
+				mapper: e.rentals
+			users:
+				label: Users
+				mapper: e.users
+			id:
+				label: Id
+				mapper: e.id
+			oldId:
+				label: OldId
+				mapper: e.oldId
+			created:
+				label: Created
+				mapper: e.created
+			updated:
+				label: Updated
+				mapper: e.updated
+			
+	form:
+		fields:
+			name:
+				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:"
+				label: Name
+				control: phrase
+			rentals:
+				# anotations: "var:Collection,ORMManyToMany:targetEntity:Rental,inversedBy:types,cascade:"
+				label: Rentals
+				control: bricksList
+			users:
+				# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityUserUser,inversedBy:rentalTypes"
+				label: Users
+				control: bricksList
+			created:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Created
+				control: dateTime
+			updated:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Updated
+				control: dateTime

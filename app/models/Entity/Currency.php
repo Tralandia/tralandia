@@ -5,6 +5,7 @@ namespace Entity;
 use Entity\Dictionary;
 use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
+use	Extras\UI as UI;
 
 /**
  * @ORM\Entity()

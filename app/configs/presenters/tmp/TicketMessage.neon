@@ -1,0 +1,57 @@
+common:
+	service: Service\Ticket\Message
+	title: Ticket / Message
+	h1: Ticket / Message
+	grid:
+		columns:
+			ticket:
+				label: Ticket
+				mapper: e.ticket
+			senderEmail:
+				label: SenderEmail
+				mapper: e.senderEmail
+			message:
+				label: Message
+				mapper: e.message
+			attachments:
+				label: Attachments
+				mapper: e.attachments
+			id:
+				label: Id
+				mapper: e.id
+			oldId:
+				label: OldId
+				mapper: e.oldId
+			created:
+				label: Created
+				mapper: e.created
+			updated:
+				label: Updated
+				mapper: e.updated
+			
+	form:
+		fields:
+			ticket:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:Ticket,inversedBy:messages"
+				label: Ticket
+				control: selectBox
+			senderEmail:
+				# anotations: "var:email,ORMColumn:type:email"
+				label: SenderEmail
+				control: text
+			message:
+				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:"
+				label: Message
+				control: phrase
+			attachments:
+				# anotations: "var:Collection,ORMOneToMany:targetEntity:EntityMediumMedium,mappedBy:message"
+				label: Attachments
+				control: checkBoxList
+			created:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Created
+				control: dateTime
+			updated:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Updated
+				control: dateTime

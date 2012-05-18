@@ -1,0 +1,71 @@
+common:
+	service: Service\Ticket\Ticket
+	title: Ticket / Ticket
+	h1: Ticket / Ticket
+	grid:
+		columns:
+			client:
+				label: Client
+				mapper: e.client
+			staff:
+				label: Staff
+				mapper: e.staff
+			country:
+				label: Country
+				mapper: e.country
+			language:
+				label: Language
+				mapper: e.language
+			status:
+				label: Status
+				mapper: e.status
+			messages:
+				label: Messages
+				mapper: e.messages
+			id:
+				label: Id
+				mapper: e.id
+			oldId:
+				label: OldId
+				mapper: e.oldId
+			created:
+				label: Created
+				mapper: e.created
+			updated:
+				label: Updated
+				mapper: e.updated
+			
+	form:
+		fields:
+			client:
+				# anotations: "var:email,ORMColumn:type:email"
+				label: Client
+				control: text
+			staff:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityUserUser"
+				label: Staff
+				control: selectBox
+			country:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityLocationLocation"
+				label: Country
+				control: selectBox
+			language:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityDictionaryLanguage"
+				label: Language
+				control: selectBox
+			status:
+				# anotations: "var:integer,ORMColumn:type:integer"
+				label: Status
+				control: text
+			messages:
+				# anotations: "var:Collection,ORMOneToMany:targetEntity:Message,mappedBy:ticket"
+				label: Messages
+				control: checkBoxList
+			created:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Created
+				control: dateTime
+			updated:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Updated
+				control: dateTime

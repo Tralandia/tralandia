@@ -1,0 +1,85 @@
+common:
+	service: Service\Invoicing\Coupon
+	title: Invoicing / Coupon
+	h1: Invoicing / Coupon
+	grid:
+		columns:
+			name:
+				label: Name
+				mapper: e.name
+			code:
+				label: Code
+				mapper: e.code
+			countTotal:
+				label: CountTotal
+				mapper: e.countTotal
+			countLeft:
+				label: CountLeft
+				mapper: e.countLeft
+			validFrom:
+				label: ValidFrom
+				mapper: e.validFrom
+			validTo:
+				label: ValidTo
+				mapper: e.validTo
+			recommenderPackage:
+				label: RecommenderPackage
+				mapper: e.recommenderPackage
+			recommendeePackage:
+				label: RecommendeePackage
+				mapper: e.recommendeePackage
+			id:
+				label: Id
+				mapper: e.id
+			oldId:
+				label: OldId
+				mapper: e.oldId
+			created:
+				label: Created
+				mapper: e.created
+			updated:
+				label: Updated
+				mapper: e.updated
+			
+	form:
+		fields:
+			name:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: Name
+				control: text
+			code:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: Code
+				control: text
+			countTotal:
+				# anotations: "var:integer,ORMColumn:type:integer"
+				label: CountTotal
+				control: text
+			countLeft:
+				# anotations: "var:integer,ORMColumn:type:integer"
+				label: CountLeft
+				control: text
+			validFrom:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: ValidFrom
+				control: dateTime
+			validTo:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: ValidTo
+				control: dateTime
+			recommenderPackage:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:Package"
+				label: RecommenderPackage
+				control: selectBox
+			recommendeePackage:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:Package"
+				label: RecommendeePackage
+				control: selectBox
+			created:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Created
+				control: dateTime
+			updated:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Updated
+				control: dateTime
