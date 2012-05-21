@@ -199,8 +199,8 @@ class Reflector extends Nette\Object {
 		$user = $this->presenter->user;
 		foreach ($this->getFields($this->settings->serviceClass, $fieldsSettings) as $property) {
 
-			if($user->isAllowed($service->getMainEntity(), 'edit.'.$property->name)) {
-				
+			if(!$user->isAllowed($service->getMainEntity(), $property->name . '_show')) {
+				continue;
 			}
 
 			$fieldMask = array(

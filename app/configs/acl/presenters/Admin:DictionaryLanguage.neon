@@ -1,5 +1,5 @@
 list:
-	guest: deny
+	guest: allow
 	visitor: deny
 	potentialowner: deny
 	owner: deny
@@ -8,10 +8,9 @@ list:
 	vendor: deny
 	manager: deny
 	admin: deny
-	superadmin: deny
 	
 edit:
-	guest: deny
+	guest: allow
 	visitor: deny
 	potentialowner: deny
 	owner: allow
@@ -20,10 +19,9 @@ edit:
 	vendor: deny
 	manager: deny
 	admin: deny
-	superadmin: deny
 	
 adsf:
-	guest: deny
+	guest: allow
 	visitor: deny
 	potentialowner: deny
 	owner: deny
@@ -32,4 +30,3 @@ adsf:
 	vendor: deny
 	manager: deny
 	admin: deny
-	superadmin: deny

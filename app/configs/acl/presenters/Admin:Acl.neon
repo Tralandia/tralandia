@@ -8,7 +8,6 @@ list:
 	vendor: deny
 	manager: deny
 	admin: deny
-	superadmin: deny
 	
 entityEdit:
 	guest: allow
@@ -20,7 +19,6 @@ entityEdit:
 	vendor: deny
 	manager: deny
 	admin: deny
-	superadmin: deny
 	
 presenterEdit:
 	guest: allow
@@ -32,4 +30,3 @@ presenterEdit:
 	vendor: deny
 	manager: deny
 	admin: deny
-	superadmin: deny

@@ -51,7 +51,7 @@ class AclPresenter extends BasePresenter {
 			foreach (Finder::findFiles('*.php')->from(APP_DIR . '/models/Entity/') as $key => $file) {
 				list($x, $nameTemp) = explode('/models/', $key, 2);
 				$nameTemp = str_replace(array('/', '.php'), array('\\', ''), $nameTemp);
-				list(, $nameTemp) = explode('\\', $nameTemp, 2);
+				// list(, $nameTemp) = explode('\\', $nameTemp, 2);
 				$this->entityList[$nameTemp] = $nameTemp; 
 			}
 		}
@@ -59,7 +59,7 @@ class AclPresenter extends BasePresenter {
 	}
 
 	protected function getEntityProperties($entityName) {
-		$reflection = \Nette\Reflection\ClassType::from('\Entity\\'.$entityName);
+		$reflection = \Nette\Reflection\ClassType::from($entityName);
 		return $reflection->getProperties();
 	}
 
@@ -89,7 +89,7 @@ class AclPresenter extends BasePresenter {
 	public function actionEntityEdit($entityName) {
 		$list = $this->getEntityList();
 		$this->entityActions = $this->getEntityProperties($entityName);
-		debug($this->entityActions);
+
 		$form = $this->getComponent('entityForm');
 		$form->setDefaults($this->getEntityAclConfig($entityName));
 

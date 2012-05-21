@@ -20,10 +20,8 @@ class Acl extends Permission {
 	}
 
 	public function setup() {
-		// debug(func_get_args());
-
 		$data = $this->getData();
-		// debug($data['rules']);
+
 		# roles
 		foreach ($data['roles'] as $role) {
 			call_user_func_array(array($this, 'addRole'), (array) $role);
@@ -44,7 +42,7 @@ class Acl extends Permission {
 		if(isset($this->cache)) {
 			if(!$data = $this->cache->load('data')) {
 				$data = $this->buildData();
-				$cache->save('data', $data);
+				$this->cache->save('data', $data);
 			}
 		} else {
 			$data = $this->buildData();
@@ -58,12 +56,14 @@ class Acl extends Permission {
 		$files = array_merge($presenters, $entities);
 
 		$data = array();
+		// @todo porusuje to DI!
 		$data['roles'] = \Service\User\RoleList::getPairs('id', 'slug', NULL, 9);
 		foreach ($files as $filepath => $file) {
+			//debug($file);
 			$resource = $file->getBasename('.neon');
 			$data['resources'][] = $resource;
 			$content = $this->getConfigFromFile($filepath);
-			debug($content);
+
 			foreach ($content as $action => $permission) {
 				foreach ($data['roles'] as $role) {
 					$permissionType = $permission[$role];
@@ -78,8 +78,6 @@ class Acl extends Permission {
 				}
 			}
 		}
-		// @todo porusuje to DI!
-		debug($data);
 		return $data;
 	}
 
