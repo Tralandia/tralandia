@@ -1,0 +1,71 @@
+common:
+	service: Service\Dictionary\Translation
+	title: Dictionary / Translation
+	h1: Dictionary / Translation
+	grid:
+		columns:
+			phrase:
+				label: Phrase
+				mapper: e.phrase
+			language:
+				label: Language
+				mapper: e.language
+			translation:
+				label: Translation
+				mapper: e.translation
+			variations:
+				label: Variations
+				mapper: e.variations
+			timeTranslated:
+				label: TimeTranslated
+				mapper: e.timeTranslated
+			checked:
+				label: Checked
+				mapper: e.checked
+			id:
+				label: Id
+				mapper: e.id
+			oldId:
+				label: OldId
+				mapper: e.oldId
+			created:
+				label: Created
+				mapper: e.created
+			updated:
+				label: Updated
+				mapper: e.updated
+			
+	form:
+		fields:
+			phrase:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:Phrase,inversedBy:translations,cascade:"
+				label: Phrase
+				control: selectBox
+			language:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:Language,cascade:"
+				label: Language
+				control: selectBox
+			translation:
+				# anotations: "var:text,ORMColumn:type:text,nullable:true"
+				label: Translation
+				control: text
+			variations:
+				# anotations: "var:json,ORMColumn:type:json"
+				label: Variations
+				control: json
+			timeTranslated:
+				# anotations: "var:datetime,ORMColumn:type:datetime,nullable:true"
+				label: TimeTranslated
+				control: datePicker
+			checked:
+				# anotations: "var:boolean,ORMColumn:type:boolean,nullable:true"
+				label: Checked
+				control: checkbox
+			created:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Created
+				control: datePicker
+			updated:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Updated
+				control: datePicker

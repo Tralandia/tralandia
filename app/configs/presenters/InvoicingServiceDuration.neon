@@ -1,0 +1,50 @@
+common:
+	service: Service\Invoicing\ServiceDuration
+	title: Invoicing / ServiceDuration
+	h1: Invoicing / ServiceDuration
+	grid:
+		columns:
+			duration:
+				label: Duration
+				mapper: e.duration
+			name:
+				label: Name
+				mapper: e.name
+			sort:
+				label: Sort
+				mapper: e.sort
+			id:
+				label: Id
+				mapper: e.id
+			oldId:
+				label: OldId
+				mapper: e.oldId
+			created:
+				label: Created
+				mapper: e.created
+			updated:
+				label: Updated
+				mapper: e.updated
+			
+	form:
+		fields:
+			duration:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: Duration
+				control: text
+			name:
+				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:"
+				label: Name
+				control: phrase
+			sort:
+				# anotations: "var:integer,ORMColumn:type:integer"
+				label: Sort
+				control: text
+			created:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Created
+				control: datePicker
+			updated:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Updated
+				control: datePicker

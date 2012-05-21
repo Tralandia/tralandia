@@ -8,7 +8,8 @@ class Invoice extends \Service\BaseService {
 	const MAIN_ENTITY_NAME = '\Entity\Invoicing\Invoice';
 
 	public function setExchangeRate($exchangeRate) {
-		if($this->getMainEntity()->status >= MAIN_ENTITY_NAME::STATUS_PAID_NOT_CHECKED) {
+		$t = self::MAIN_ENTITY_NAME;
+		if($this->getMainEntity()->status >= $t::STATUS_PAID_NOT_CHECKED) {
 			return false;
 		}
 		return $this->getMainEntity()->setExchangeRate($exchangeRate);

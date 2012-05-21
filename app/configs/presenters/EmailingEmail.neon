@@ -1,0 +1,78 @@
+common:
+	service: Service\Emailing\Email
+	title: Emailing / Email
+	h1: Emailing / Email
+	grid:
+		columns:
+			name:
+				label: Name
+				mapper: e.name
+			subject:
+				label: Subject
+				mapper: e.subject
+			body:
+				label: Body
+				mapper: e.body
+			bodyHtml:
+				label: BodyHtml
+				mapper: e.bodyHtml
+			language:
+				label: Language
+				mapper: e.language
+			type:
+				label: Type
+				mapper: e.type
+			batches:
+				label: Batches
+				mapper: e.batches
+			id:
+				label: Id
+				mapper: e.id
+			oldId:
+				label: OldId
+				mapper: e.oldId
+			created:
+				label: Created
+				mapper: e.created
+			updated:
+				label: Updated
+				mapper: e.updated
+			
+	form:
+		fields:
+			name:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: Name
+				control: text
+			subject:
+				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:"
+				label: Subject
+				control: phrase
+			body:
+				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:"
+				label: Body
+				control: phrase
+			bodyHtml:
+				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:"
+				label: BodyHtml
+				control: phrase
+			language:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityDictionaryLanguage"
+				label: Language
+				control: selectBox
+			type:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:Type"
+				label: Type
+				control: selectBox
+			batches:
+				# anotations: "var:Collection,ORMOneToMany:targetEntity:Batch,mappedBy:emailTemplate"
+				label: Batches
+				control: checkBoxList
+			created:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Created
+				control: dateTime
+			updated:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Updated
+				control: dateTime

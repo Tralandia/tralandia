@@ -1,0 +1,57 @@
+common:
+	service: Service\Rental\Amenity
+	title: Rental / Amenity
+	h1: Rental / Amenity
+	grid:
+		columns:
+			type:
+				label: Type
+				mapper: e.type
+			rentals:
+				label: Rentals
+				mapper: e.rentals
+			name:
+				label: Name
+				mapper: e.name
+			details:
+				label: Details
+				mapper: e.details
+			id:
+				label: Id
+				mapper: e.id
+			oldId:
+				label: OldId
+				mapper: e.oldId
+			created:
+				label: Created
+				mapper: e.created
+			updated:
+				label: Updated
+				mapper: e.updated
+			
+	form:
+		fields:
+			type:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:AmenityType,inversedBy:amenities"
+				label: Type
+				control: selectBox
+			rentals:
+				# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityRentalRental,inversedBy:amenities"
+				label: Rentals
+				control: bricksList
+			name:
+				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:"
+				label: Name
+				control: phrase
+			details:
+				# anotations: "var:json,ORMColumn:type:json,nullable:true"
+				label: Details
+				control: json
+			created:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Created
+				control: datePicker
+			updated:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Updated
+				control: datePicker

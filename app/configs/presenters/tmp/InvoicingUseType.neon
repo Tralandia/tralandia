@@ -1,0 +1,57 @@
+common:
+	service: Service\Invoicing\UseType
+	title: Invoicing / UseType
+	h1: Invoicing / UseType
+	grid:
+		columns:
+			name:
+				label: Name
+				mapper: e.name
+			slug:
+				label: Slug
+				mapper: e.slug
+			packages:
+				label: Packages
+				mapper: e.packages
+			marketings:
+				label: Marketings
+				mapper: e.marketings
+			id:
+				label: Id
+				mapper: e.id
+			oldId:
+				label: OldId
+				mapper: e.oldId
+			created:
+				label: Created
+				mapper: e.created
+			updated:
+				label: Updated
+				mapper: e.updated
+			
+	form:
+		fields:
+			name:
+				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:"
+				label: Name
+				control: phrase
+			slug:
+				# anotations: "var:slug,ORMColumn:type:slug"
+				label: Slug
+				control: text
+			packages:
+				# anotations: "var:Collection,ORMManyToMany:targetEntity:Package,inversedBy:uses"
+				label: Packages
+				control: bricksList
+			marketings:
+				# anotations: "var:Collection,ORMManyToMany:targetEntity:Marketing,inversedBy:uses"
+				label: Marketings
+				control: bricksList
+			created:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Created
+				control: datePicker
+			updated:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Updated
+				control: datePicker

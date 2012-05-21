@@ -6,13 +6,14 @@ use Entity\Dictionary;
 use Doctrine\ORM\Mapping as ORM;
 use	Extras\UI as UI;
 use	Extras\Annotation as EA;
+use	Extras\UI as UI;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="currency", indexes={@ORM\index(name="iso", columns={"iso"})})
  * @EA\Service(name="\Service\Currency")
  * @EA\ServiceList(name="\Service\CurrencyList")
- * @UI\Primary(key="id", value="iso")
+ * @EA\Primary(key="id", value="iso")
  */
 class Currency extends \Entity\BaseEntity {
 

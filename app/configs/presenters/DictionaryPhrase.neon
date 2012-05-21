@@ -1,0 +1,64 @@
+common:
+	service: Service\Dictionary\Phrase
+	title: Dictionary / Phrase
+	h1: Dictionary / Phrase
+	grid:
+		columns:
+			translations:
+				label: Translations
+				mapper: e.translations
+			ready:
+				label: Ready
+				mapper: e.ready
+			type:
+				label: Type
+				mapper: e.type
+			sourceLanguage:
+				label: SourceLanguage
+				mapper: e.sourceLanguage
+			details:
+				label: Details
+				mapper: e.details
+			id:
+				label: Id
+				mapper: e.id
+			oldId:
+				label: OldId
+				mapper: e.oldId
+			created:
+				label: Created
+				mapper: e.created
+			updated:
+				label: Updated
+				mapper: e.updated
+			
+	form:
+		fields:
+			translations:
+				# anotations: "var:Collection,ORMOneToMany:targetEntity:Translation,mappedBy:phrase,cascade:"
+				label: Translations
+				control: checkBoxList
+			ready:
+				# anotations: "var:boolean,ORMColumn:type:boolean"
+				label: Ready
+				control: checkbox
+			type:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:Type,cascade:"
+				label: Type
+				control: selectBox
+			sourceLanguage:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:Language,cascade:"
+				label: SourceLanguage
+				control: selectBox
+			details:
+				# anotations: "var:json,ORMColumn:type:json,nullable:true"
+				label: Details
+				control: json
+			created:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Created
+				control: datePicker
+			updated:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Updated
+				control: datePicker

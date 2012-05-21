@@ -32,7 +32,7 @@ class Medium extends \Service\BaseService {
 			)
 	);
 
-	public static function createFromUrl($uri) {
+/*	public static function createFromUrl($uri) {
 
 		$medium = \Service\Medium\Medium::getByOldUrl($uri);
 		if ($medium) {
@@ -56,31 +56,44 @@ class Medium extends \Service\BaseService {
 		return static::createFromFile($tmpCopy, $uri);
 
 	}
+*/	
 
-	public static function createFromFile($file, $uri) {
+	public function setContentFromUrl($uri) {
 
-		$medium = static::get();
-		$medium->oldUrl = $uri;
-		$medium->details = $medium->getFileDetails($file);
-		$medium->sort = 1;
-		$medium->save();
+		if (!$data = @file_get_contents($uri, 'r')) {
+			return FALSE;
+			//throw new \Nette\UnexpectedValueException('File "' . $uri . '" does not exist.');
+		}
 
-		$mediumType = \Service\Medium\Type::getByName($medium->details['mime']);
+		preg_match("/\.([^\.]+)$/", basename($uri), $matches);
+		$extension = $matches[1];
+
+		$file = TEMP_DIR . '/' . \Nette\Utils\Strings::random() . '.' . $extension;
+		$handle = fopen($file, 'wb');
+		fputs($handle, $data);
+		fclose($handle);
+
+		$this->oldUrl = $uri;
+		$this->details = $this->getFileDetails($file);
+		$this->sort = 1;
+		$this->save();
+
+		$mediumType = \Service\Medium\Type::getByName($this->details['mime']);
 		if (!($mediumType instanceof \Service\Medium\Type)) {
 			$mediumType = \Service\Medium\Type::get();
-			$mediumType->name = $medium->details['mime'];
+			$mediumType->name = $this->details['mime'];
 			$mediumType->save();
 		}
 
-		if (preg_match("/image\//", $medium->details['mime'])) {
-			$medium->saveImageFiles($file);
+		if (preg_match("/image\//", $this->details['mime'])) {
+			$this->saveImageFiles($file);
 		} else {
-			rename($file, $medium->getMediumDir() . '/original.' . $medium->details['extension']);
+			rename($file, $this->getMediumDir() . '/original.' . $this->details['extension']);
 		}
-		$medium->type = $mediumType;
-		$medium->save();
+		$this->type = $mediumType;
+		$this->save();
 
-		return $medium;
+		return $this;
 
 	}
 

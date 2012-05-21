@@ -1,0 +1,78 @@
+common:
+	service: Service\Emailing\Batch
+	title: Emailing / Batch
+	h1: Emailing / Batch
+	grid:
+		columns:
+			confirmed:
+				label: Confirmed
+				mapper: e.confirmed
+			template:
+				label: Template
+				mapper: e.template
+			totalCount:
+				label: TotalCount
+				mapper: e.totalCount
+			subject:
+				label: Subject
+				mapper: e.subject
+			body:
+				label: Body
+				mapper: e.body
+			bodyHtml:
+				label: BodyHtml
+				mapper: e.bodyHtml
+			details:
+				label: Details
+				mapper: e.details
+			id:
+				label: Id
+				mapper: e.id
+			oldId:
+				label: OldId
+				mapper: e.oldId
+			created:
+				label: Created
+				mapper: e.created
+			updated:
+				label: Updated
+				mapper: e.updated
+			
+	form:
+		fields:
+			confirmed:
+				# anotations: "var:boolean,ORMColumn:type:boolean"
+				label: Confirmed
+				control: checkbox
+			template:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:Template,inversedBy:batches"
+				label: Template
+				control: selectBox
+			totalCount:
+				# anotations: "var:integer,ORMColumn:type:integer"
+				label: TotalCount
+				control: text
+			subject:
+				# anotations: "var:text,ORMColumn:type:text"
+				label: Subject
+				control: text
+			body:
+				# anotations: "var:text,ORMColumn:type:text"
+				label: Body
+				control: text
+			bodyHtml:
+				# anotations: "var:text,ORMColumn:type:text"
+				label: BodyHtml
+				control: text
+			details:
+				# anotations: "var:json,ORMColumn:type:json,nullable:true"
+				label: Details
+				control: json
+			created:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Created
+				control: datePicker
+			updated:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Updated
+				control: datePicker

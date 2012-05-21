@@ -1,0 +1,134 @@
+common:
+	service: Service\Invoicing\Item
+	title: Invoicing / Item
+	h1: Invoicing / Item
+	grid:
+		columns:
+			invoice:
+				label: Invoice
+				mapper: e.invoice
+			serviceType:
+				label: ServiceType
+				mapper: e.serviceType
+			name:
+				label: Name
+				mapper: e.name
+			nameEn:
+				label: NameEn
+				mapper: e.nameEn
+			serviceFrom:
+				label: ServiceFrom
+				mapper: e.serviceFrom
+			serviceTo:
+				label: ServiceTo
+				mapper: e.serviceTo
+			durationName:
+				label: DurationName
+				mapper: e.durationName
+			durationNameEn:
+				label: DurationNameEn
+				mapper: e.durationNameEn
+			price:
+				label: Price
+				mapper: e.price
+			marketingName:
+				label: MarketingName
+				mapper: e.marketingName
+			marketingNameEn:
+				label: MarketingNameEn
+				mapper: e.marketingNameEn
+			couponName:
+				label: CouponName
+				mapper: e.couponName
+			couponNameEn:
+				label: CouponNameEn
+				mapper: e.couponNameEn
+			packageName:
+				label: PackageName
+				mapper: e.packageName
+			packageNameEn:
+				label: PackageNameEn
+				mapper: e.packageNameEn
+			id:
+				label: Id
+				mapper: e.id
+			oldId:
+				label: OldId
+				mapper: e.oldId
+			created:
+				label: Created
+				mapper: e.created
+			updated:
+				label: Updated
+				mapper: e.updated
+			
+	form:
+		fields:
+			invoice:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:Invoice,inversedBy:items"
+				label: Invoice
+				control: selectBox
+			serviceType:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityInvoicingServiceType"
+				label: ServiceType
+				control: selectBox
+			name:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: Name
+				control: text
+			nameEn:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: NameEn
+				control: text
+			serviceFrom:
+				# anotations: "var:datetime,ORMColumn:type:datetime,nullable:true"
+				label: ServiceFrom
+				control: datePicker
+			serviceTo:
+				# anotations: "var:datetime,ORMColumn:type:datetime,nullable:true"
+				label: ServiceTo
+				control: datePicker
+			durationName:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: DurationName
+				control: text
+			durationNameEn:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: DurationNameEn
+				control: text
+			price:
+				# anotations: "var:float,ORMColumn:type:float"
+				label: Price
+				control: float
+			marketingName:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: MarketingName
+				control: text
+			marketingNameEn:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: MarketingNameEn
+				control: text
+			couponName:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: CouponName
+				control: text
+			couponNameEn:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: CouponNameEn
+				control: text
+			packageName:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: PackageName
+				control: text
+			packageNameEn:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: PackageNameEn
+				control: text
+			created:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Created
+				control: datePicker
+			updated:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Updated
+				control: datePicker

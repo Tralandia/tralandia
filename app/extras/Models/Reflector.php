@@ -24,6 +24,7 @@ class Reflector extends Nette\Object {
 	const COLUMN = 'ORM\Column';
 
 	
+	
 	protected $settings;
 	protected $presenter;
 	protected $formMask;

@@ -1,0 +1,71 @@
+common:
+	service: Service\Routing\PathSegmentOld
+	title: Routing / PathSegmentOld
+	h1: Routing / PathSegmentOld
+	grid:
+		columns:
+			pathSegmentNew:
+				label: PathSegmentNew
+				mapper: e.pathSegmentNew
+			country:
+				label: Country
+				mapper: e.country
+			language:
+				label: Language
+				mapper: e.language
+			pathSegment:
+				label: PathSegment
+				mapper: e.pathSegment
+			type:
+				label: Type
+				mapper: e.type
+			entityId:
+				label: EntityId
+				mapper: e.entityId
+			id:
+				label: Id
+				mapper: e.id
+			oldId:
+				label: OldId
+				mapper: e.oldId
+			created:
+				label: Created
+				mapper: e.created
+			updated:
+				label: Updated
+				mapper: e.updated
+			
+	form:
+		fields:
+			pathSegmentNew:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:PathSegment"
+				label: PathSegmentNew
+				control: selectBox
+			country:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityLocationLocation"
+				label: Country
+				control: selectBox
+			language:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityDictionaryLanguage"
+				label: Language
+				control: selectBox
+			pathSegment:
+				# anotations: "var:string,ORMColumn:type:string"
+				label: PathSegment
+				control: text
+			type:
+				# anotations: "var:Integer,ORMColumn:type:integer"
+				label: Type
+				control: text
+			entityId:
+				# anotations: "var:integer,ORMColumn:type:integer"
+				label: EntityId
+				control: text
+			created:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Created
+				control: datePicker
+			updated:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Updated
+				control: datePicker

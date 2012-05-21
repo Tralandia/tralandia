@@ -12,7 +12,7 @@ use	Extras\Annotation as EA;
  * @ORM\Table(name="dictionary_language", indexes={@ORM\index(name="iso", columns={"iso"}), @ORM\index(name="supported", columns={"supported"})})
  * @EA\Service(name="\Service\Dictionary\Language")
  * @EA\ServiceList(name="\Service\Dictionary\LanguageList")
- * @UI\Primary(key="id", value="iso")
+ * @EA\Primary(key="id", value="iso")
  */
 class Language extends \Entity\BaseEntityDetails {
 
@@ -132,6 +132,15 @@ class Language extends \Entity\BaseEntityDetails {
 	 */
 	public function setSupported($supported) {
 		$this->supported = $supported;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Dictionary\Language
+	 */
+	public function unsetSupported() {
+		$this->supported = NULL;
 
 		return $this;
 	}

@@ -1,0 +1,106 @@
+common:
+	service: Service\Company\Company
+	title: Company / Company
+	h1: Company / Company
+	grid:
+		columns:
+			bankAccounts:
+				label: BankAccounts
+				mapper: e.bankAccounts
+			countries:
+				label: Countries
+				mapper: e.countries
+			offices:
+				label: Offices
+				mapper: e.offices
+			name:
+				label: Name
+				mapper: e.name
+			address:
+				label: Address
+				mapper: e.address
+			companyId:
+				label: CompanyId
+				mapper: e.companyId
+			companyVatId:
+				label: CompanyVatId
+				mapper: e.companyVatId
+			vat:
+				label: Vat
+				mapper: e.vat
+			registrator:
+				label: Registrator
+				mapper: e.registrator
+			invoices:
+				label: Invoices
+				mapper: e.invoices
+			details:
+				label: Details
+				mapper: e.details
+			id:
+				label: Id
+				mapper: e.id
+			oldId:
+				label: OldId
+				mapper: e.oldId
+			created:
+				label: Created
+				mapper: e.created
+			updated:
+				label: Updated
+				mapper: e.updated
+			
+	form:
+		fields:
+			bankAccounts:
+				# anotations: "var:Collection,ORMOneToMany:targetEntity:BankAccount,mappedBy:company,cascade:"
+				label: BankAccounts
+				control: checkBoxList
+			countries:
+				# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityLocationLocation,mappedBy:companies,cascade:"
+				label: Countries
+				control: bricksList
+			offices:
+				# anotations: "var:Collection,ORMOneToMany:targetEntity:Office,mappedBy:company,cascade:"
+				label: Offices
+				control: checkBoxList
+			name:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: Name
+				control: text
+			address:
+				# anotations: "var:address,ORMColumn:type:address,nullable:true"
+				label: Address
+				control: text
+			companyId:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: CompanyId
+				control: text
+			companyVatId:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: CompanyVatId
+				control: text
+			vat:
+				# anotations: "var:float,ORMColumn:type:float,nullable:true"
+				label: Vat
+				control: float
+			registrator:
+				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:"
+				label: Registrator
+				control: phrase
+			invoices:
+				# anotations: "var:Collection,ORMOneToMany:targetEntity:EntityInvoicingInvoice,mappedBy:company"
+				label: Invoices
+				control: checkBoxList
+			details:
+				# anotations: "var:json,ORMColumn:type:json,nullable:true"
+				label: Details
+				control: json
+			created:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Created
+				control: datePicker
+			updated:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Updated
+				control: datePicker

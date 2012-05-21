@@ -1,0 +1,190 @@
+common:
+	service: Service\User\User
+	title: User / User
+	h1: User / User
+	grid:
+		columns:
+			login:
+				label: Login
+				mapper: e.login
+			password:
+				label: Password
+				mapper: e.password
+			isOwner:
+				label: IsOwner
+				mapper: e.isOwner
+			roles:
+				label: Roles
+				mapper: e.roles
+			contacts:
+				label: Contacts
+				mapper: e.contacts
+			defaultLanguage:
+				label: DefaultLanguage
+				mapper: e.defaultLanguage
+			location:
+				label: Location
+				mapper: e.location
+			rentalTypes:
+				label: RentalTypes
+				mapper: e.rentalTypes
+			invoicingSalutation:
+				label: InvoicingSalutation
+				mapper: e.invoicingSalutation
+			invoicingFirstName:
+				label: InvoicingFirstName
+				mapper: e.invoicingFirstName
+			invoicingLastName:
+				label: InvoicingLastName
+				mapper: e.invoicingLastName
+			invoicingCompanyName:
+				label: InvoicingCompanyName
+				mapper: e.invoicingCompanyName
+			invoicingEmail:
+				label: InvoicingEmail
+				mapper: e.invoicingEmail
+			invoicingPhone:
+				label: InvoicingPhone
+				mapper: e.invoicingPhone
+			invoicingUrl:
+				label: InvoicingUrl
+				mapper: e.invoicingUrl
+			invoicingAddress:
+				label: InvoicingAddress
+				mapper: e.invoicingAddress
+			invoicingCompanyId:
+				label: InvoicingCompanyId
+				mapper: e.invoicingCompanyId
+			invoicingCompanyVatId:
+				label: InvoicingCompanyVatId
+				mapper: e.invoicingCompanyVatId
+			currentTelmarkOperator:
+				label: CurrentTelmarkOperator
+				mapper: e.currentTelmarkOperator
+			combinations:
+				label: Combinations
+				mapper: e.combinations
+			rentals:
+				label: Rentals
+				mapper: e.rentals
+			tasks:
+				label: Tasks
+				mapper: e.tasks
+			details:
+				label: Details
+				mapper: e.details
+			id:
+				label: Id
+				mapper: e.id
+			oldId:
+				label: OldId
+				mapper: e.oldId
+			created:
+				label: Created
+				mapper: e.created
+			updated:
+				label: Updated
+				mapper: e.updated
+			
+	form:
+		fields:
+			login:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: Login
+				control: text
+			password:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: Password
+				control: text
+			isOwner:
+				# anotations: "var:boolean,ORMColumn:type:boolean,nullable:true"
+				label: IsOwner
+				control: checkbox
+			roles:
+				# anotations: "var:Collection,ORMManyToMany:targetEntity:Role,mappedBy:users,cascade:,EASingularName:name:role"
+				label: Roles
+				control: bricksList
+			contacts:
+				# anotations: "var:Collection,ORMOneToMany:targetEntity:EntityContactContact,mappedBy:user,cascade:,EASingularName:name:contact"
+				label: Contacts
+				control: checkBoxList
+			defaultLanguage:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityDictionaryLanguage"
+				label: DefaultLanguage
+				control: selectBox
+			location:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityLocationLocation,inversedBy:users,EASingularName:name:location"
+				label: Location
+				control: selectBox
+			rentalTypes:
+				# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityRentalType,mappedBy:users,EASingularName:name:rentalType"
+				label: RentalTypes
+				control: bricksList
+			invoicingSalutation:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: InvoicingSalutation
+				control: text
+			invoicingFirstName:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: InvoicingFirstName
+				control: text
+			invoicingLastName:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: InvoicingLastName
+				control: text
+			invoicingCompanyName:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: InvoicingCompanyName
+				control: text
+			invoicingEmail:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityContactContact,cascade:"
+				label: InvoicingEmail
+				control: selectBox
+			invoicingPhone:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityContactContact,cascade:"
+				label: InvoicingPhone
+				control: selectBox
+			invoicingUrl:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityContactContact,cascade:"
+				label: InvoicingUrl
+				control: selectBox
+			invoicingAddress:
+				# anotations: "var:address,ORMColumn:type:address,nullable:true"
+				label: InvoicingAddress
+				control: text
+			invoicingCompanyId:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: InvoicingCompanyId
+				control: text
+			invoicingCompanyVatId:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: InvoicingCompanyVatId
+				control: text
+			currentTelmarkOperator:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:User"
+				label: CurrentTelmarkOperator
+				control: selectBox
+			combinations:
+				# anotations: "var:Collection,ORMOneToMany:targetEntity:Combination,mappedBy:user,cascade:,EASingularName:name:combination"
+				label: Combinations
+				control: checkBoxList
+			rentals:
+				# anotations: "var:Collection,ORMOneToMany:targetEntity:EntityRentalRental,mappedBy:user,cascade:,EASingularName:name:rental"
+				label: Rentals
+				control: checkBoxList
+			tasks:
+				# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityAutopilotTask,inversedBy:usersExcluded,EASingularName:name:task"
+				label: Tasks
+				control: bricksList
+			details:
+				# anotations: "var:json,ORMColumn:type:json,nullable:true"
+				label: Details
+				control: json
+			created:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Created
+				control: datePicker
+			updated:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Updated
+				control: datePicker

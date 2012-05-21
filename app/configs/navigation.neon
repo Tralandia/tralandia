@@ -197,10 +197,16 @@ common:
 					items:
 						amenity: 
 							label: All Amenities
-							link: ':Admin:RentalAmenityAmenity:list'
+							link: ':Admin:RentalAmenity:list'
 						type: 
 							label: Amenity Types
 							link: ':Admin:RentalAmenityType:list'
+				currency: 
+					label: Currencies
+					link: ':Admin:Currency:list'
+				domain: 
+					label: Domains
+					link: ':Admin:Domain:list'
 		emailing:
 			label: Emailing
 			items:

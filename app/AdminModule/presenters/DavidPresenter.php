@@ -11,7 +11,7 @@ use Nette\Application as NA,
 	Extras\Models\Service,
 	Service\Dictionary as D,
 	Service as S,
-	Service\Log\Change as SLog;
+	Service\Log as SLog;
 
 class DavidPresenter extends BasePresenter {
 
@@ -26,7 +26,7 @@ class DavidPresenter extends BasePresenter {
 			'new' => array(),
 		);
 
-		$log = new S\Log\Change\ChangeLog;
+		$log = new S\Log\Change;
 		$log->setType(new S\Log\Change\ChangeType(2));
 		
 		SLog\ChangeLog::bla($email, $service, $logType, $details);

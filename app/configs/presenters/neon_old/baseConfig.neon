@@ -1,0 +1,34 @@
+common:
+	title: Title
+	addNewButton: true
+
+	grid:
+		addClass: table table-striped table-condensed
+		dataSourceMethod: getAll
+		dataSourceArguments: NULL
+		drawRowNumber: false
+		itemsPerPage: 50
+
+		actionColumns:
+			base:
+				name: Akcia
+				cellStyle: 'text-align: right'
+				actions:
+					edit:
+						title: Edit
+						addClass: btn-warning
+						target: _blank
+					delete:
+						title: Delete
+						addClass: btn-danger
+
+	form:
+		class: row form
+		buttons:
+			cancel: 
+				type: backlink
+				label: 'Cancel (return)'
+			submit:
+				type: submit
+				label: Save Changes
+				addClass: btn-success pull-right

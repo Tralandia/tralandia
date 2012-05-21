@@ -1,0 +1,50 @@
+common:
+	service: Service\Location\Type
+	title: Location / Type
+	h1: Location / Type
+	grid:
+		columns:
+			name:
+				label: Name
+				mapper: e.name
+			slug:
+				label: Slug
+				mapper: e.slug
+			details:
+				label: Details
+				mapper: e.details
+			id:
+				label: Id
+				mapper: e.id
+			oldId:
+				label: OldId
+				mapper: e.oldId
+			created:
+				label: Created
+				mapper: e.created
+			updated:
+				label: Updated
+				mapper: e.updated
+			
+	form:
+		fields:
+			name:
+				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:"
+				label: Name
+				control: phrase
+			slug:
+				# anotations: "var:slug,ORMColumn:type:slug"
+				label: Slug
+				control: text
+			details:
+				# anotations: "var:json,ORMColumn:type:json,nullable:true"
+				label: Details
+				control: json
+			created:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Created
+				control: datePicker
+			updated:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Updated
+				control: datePicker

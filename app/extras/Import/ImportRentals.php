@@ -10,18 +10,25 @@ use Nette\Application as NA,
 	Extras\Models\Service,
 	Service\Dictionary as D,
 	Service as S,
-	Service\Log\Change as SLog;
+	Service\Log as SLog;
 
 class ImportRentals extends BaseImport {
 
 	public function doImport($subsection = NULL) {
-		\Extras\Models\Service::flush(TRUE);
+		//\Extras\Models\Service::flush(TRUE);
 
 		$import = new \Extras\Import\BaseImport();
 
 		// Detaching all media
 		qNew('update medium_medium set rental_id = NULL where rental_id > 0');
 		$import->undoSection('rentals');
+
+		$nameDictionaryType = $this->createDictionaryType('\Rental\Rental', 'name', 'incomingLanguages', 'NATIVE', array('checkingRequired' => TRUE));
+		$briefDescriptionDictionaryType = $this->createDictionaryType('\Rental\Rental', 'briefDescription', 'incomingLanguages', 'NATIVE', array('checkingRequired' => TRUE));
+		$descriptionDictionaryType = $this->createDictionaryType('\Rental\Rental', 'description', 'incomingLanguages', 'NATIVE', array('checkingRequired' => TRUE));
+		$teaserDictionaryType = $this->createDictionaryType('\Rental\Rental', 'teaser', 'incomingLanguages', 'NATIVE', array('checkingRequired' => TRUE));
+		\Extras\Models\Service::flush(FALSE);
+
 
 		$r = q('select * from objects_types_new where trax_en_type_id > 0');
 		while($x = mysql_fetch_array($r)) {
@@ -35,11 +42,6 @@ class ImportRentals extends BaseImport {
 		$locationTypes['administrativeregionlevelone'] = \Service\Location\Type::getBySlug('administrativeregionlevelone');
 		$locationTypes['administrativeregionleveltwo'] = \Service\Location\Type::getBySlug('administrativeregionleveltwo');
 		$locationTypes['locality'] = \Service\Location\Type::getBySlug('locality');
-
-		$nameDictionaryType = $this->createDictionaryType('\Rental\Rental', 'name', 'incomingLanguages', 'NATIVE', array('checkingRequired' => TRUE));
-		$briefDescriptionDictionaryType = $this->createDictionaryType('\Rental\Rental', 'briefDescription', 'incomingLanguages', 'NATIVE', array('checkingRequired' => TRUE));
-		$descriptionDictionaryType = $this->createDictionaryType('\Rental\Rental', 'description', 'incomingLanguages', 'NATIVE', array('checkingRequired' => TRUE));
-		$teaserDictionaryType = $this->createDictionaryType('\Rental\Rental', 'teaser', 'incomingLanguages', 'NATIVE', array('checkingRequired' => TRUE));
 
 		$ownerRole = \Service\User\Role::getBySlug('owner');
 
@@ -177,9 +179,9 @@ class ImportRentals extends BaseImport {
 
 			// Amenities
 			$allAmenities = array();
-			$r1 = qNew('select * from rental_amenity_amenity');
+			$r1 = qNew('select * from rental_amenity');
 			while ($x1 = mysql_fetch_array($r1)) {
-				$allAmenities[$x1['oldId']] = \Service\Rental\Amenity\Amenity::get($x1['id']);
+				$allAmenities[$x1['oldId']] = \Service\Rental\Amenity::get($x1['id']);
 			}
 
 			// Activities
@@ -273,8 +275,16 @@ class ImportRentals extends BaseImport {
 			if (is_array($temp) && count($temp)) {
 				if ($this->developmentMode == TRUE) $temp = array_slice($temp, 0, 3);
 				foreach ($temp as $key => $value) {
-					$medium = \Service\Medium\Medium::createFromUrl('http://www.tralandia.com/u/'.$value);
-					if ($medium) $rental->addMedium($medium);
+					$medium = \Service\Medium\Medium::getByOldUrl('http://www.tralandia.com/u/'.$value);
+					if (!$medium) {
+						$medium = \Service\Medium\Medium::get();
+						if ($medium) {
+							$rental->addMedium($medium);
+							$medium->setContentFromUrl('http://www.tralandia.com/u/'.$value);
+						}
+					} else {
+						$rental->addMedium($medium);
+					}
 				}
 			}
 		

@@ -1,0 +1,197 @@
+common:
+	service: Service\Invoicing\Invoice
+	title: Invoicing / Invoice
+	h1: Invoicing / Invoice
+	grid:
+		columns:
+			items:
+				label: Items
+				mapper: e.items
+			invoiceNumber:
+				label: InvoiceNumber
+				mapper: e.invoiceNumber
+			paymentReferenceNumber:
+				label: PaymentReferenceNumber
+				mapper: e.paymentReferenceNumber
+			company:
+				label: Company
+				mapper: e.company
+			rental:
+				label: Rental
+				mapper: e.rental
+			due:
+				label: Due
+				mapper: e.due
+			paid:
+				label: Paid
+				mapper: e.paid
+			status:
+				label: Status
+				mapper: e.status
+			clientName:
+				label: ClientName
+				mapper: e.clientName
+			clientPhone:
+				label: ClientPhone
+				mapper: e.clientPhone
+			clientEmail:
+				label: ClientEmail
+				mapper: e.clientEmail
+			clientUrl:
+				label: ClientUrl
+				mapper: e.clientUrl
+			clientAddress:
+				label: ClientAddress
+				mapper: e.clientAddress
+			clientLanguage:
+				label: ClientLanguage
+				mapper: e.clientLanguage
+			clientCompanyName:
+				label: ClientCompanyName
+				mapper: e.clientCompanyName
+			clientCompanyId:
+				label: ClientCompanyId
+				mapper: e.clientCompanyId
+			clientCompanyVatId:
+				label: ClientCompanyVatId
+				mapper: e.clientCompanyVatId
+			vat:
+				label: Vat
+				mapper: e.vat
+			currency:
+				label: Currency
+				mapper: e.currency
+			exchangeRate:
+				label: ExchangeRate
+				mapper: e.exchangeRate
+			createdBy:
+				label: CreatedBy
+				mapper: e.createdBy
+			referrer:
+				label: Referrer
+				mapper: e.referrer
+			referrerCommission:
+				label: ReferrerCommission
+				mapper: e.referrerCommission
+			paymentInfo:
+				label: PaymentInfo
+				mapper: e.paymentInfo
+			id:
+				label: Id
+				mapper: e.id
+			oldId:
+				label: OldId
+				mapper: e.oldId
+			created:
+				label: Created
+				mapper: e.created
+			updated:
+				label: Updated
+				mapper: e.updated
+			
+	form:
+		fields:
+			items:
+				# anotations: "var:Collection,ORMOneToMany:targetEntity:Item,mappedBy:invoice"
+				label: Items
+				control: checkBoxList
+			invoiceNumber:
+				# anotations: "var:integer,ORMColumn:type:integer,nullable:true"
+				label: InvoiceNumber
+				control: text
+			paymentReferenceNumber:
+				# anotations: "var:integer,ORMColumn:type:integer,nullable:true"
+				label: PaymentReferenceNumber
+				control: text
+			company:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityCompanyCompany,inversedBy:invoices"
+				label: Company
+				control: selectBox
+			rental:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityRentalRental,inversedBy:invoices"
+				label: Rental
+				control: selectBox
+			due:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Due
+				control: datePicker
+			paid:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Paid
+				control: datePicker
+			status:
+				# anotations: "var:integer,ORMColumn:type:integer"
+				label: Status
+				control: text
+			clientName:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: ClientName
+				control: text
+			clientPhone:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: ClientPhone
+				control: text
+			clientEmail:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: ClientEmail
+				control: text
+			clientUrl:
+				# anotations: "var:url,ORMColumn:type:url"
+				label: ClientUrl
+				control: text
+			clientAddress:
+				# anotations: "var:address,ORMColumn:type:address"
+				label: ClientAddress
+				control: text
+			clientLanguage:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityDictionaryLanguage"
+				label: ClientLanguage
+				control: selectBox
+			clientCompanyName:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: ClientCompanyName
+				control: text
+			clientCompanyId:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: ClientCompanyId
+				control: text
+			clientCompanyVatId:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: ClientCompanyVatId
+				control: text
+			vat:
+				# anotations: "var:float,ORMColumn:type:float,nullable:true"
+				label: Vat
+				control: float
+			currency:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityCurrency"
+				label: Currency
+				control: selectBox
+			exchangeRate:
+				# anotations: "var:float,ORMColumn:type:float,nullable:true"
+				label: ExchangeRate
+				control: float
+			createdBy:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: CreatedBy
+				control: text
+			referrer:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: Referrer
+				control: text
+			referrerCommission:
+				# anotations: "var:float,ORMColumn:type:float,nullable:true"
+				label: ReferrerCommission
+				control: float
+			paymentInfo:
+				# anotations: "var:json,ORMColumn:type:json"
+				label: PaymentInfo
+				control: json
+			created:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Created
+				control: datePicker
+			updated:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Updated
+				control: datePicker

@@ -10,7 +10,7 @@ use Nette\Application as NA,
 	Extras\Models\Service,
 	Service\Dictionary as D,
 	Service as S,
-	Service\Log\Change as SLog;
+	Service\Log as SLog;
 
 class ImportCurrencies extends BaseImport {
 
@@ -24,7 +24,6 @@ class ImportCurrencies extends BaseImport {
 			$s->iso = $x['iso'];
 			$s->name = $this->createNewPhrase($dictionaryType, $x['name_dic_id']);
 			$s->exchangeRate = $x['exchange_rate'];
-			$s->decimalPlaces = $x['decimal_places'];
 			$s->rounding = $x['decimal_places'];
 			$s->save();
 		}

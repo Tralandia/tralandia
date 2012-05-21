@@ -20,7 +20,7 @@ class Item extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Invoicing\Service\Type")
+	 * @ORM\ManyToOne(targetEntity="Entity\Invoicing\ServiceType")
 	 */
 	protected $serviceType;
 
@@ -38,13 +38,13 @@ class Item extends \Entity\BaseEntity {
 
 	/**
 	 * @var datetime
-	 * @ORM\Column(type="datetime")
+	 * @ORM\Column(type="datetime", nullable=true)
 	 */
 	protected $serviceFrom;
 
 	/**
 	 * @var datetime
-	 * @ORM\Column(type="datetime")
+	 * @ORM\Column(type="datetime", nullable=true)
 	 */
 	protected $serviceTo;
 
@@ -157,10 +157,10 @@ class Item extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Invoicing\Service\Type
+	 * @param \Entity\Invoicing\ServiceType
 	 * @return \Entity\Invoicing\Item
 	 */
-	public function setServiceType(\Entity\Invoicing\Service\Type $serviceType) {
+	public function setServiceType(\Entity\Invoicing\ServiceType $serviceType) {
 		$this->serviceType = $serviceType;
 
 		return $this;
@@ -176,7 +176,7 @@ class Item extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Invoicing\Service\Type|NULL
+	 * @return \Entity\Invoicing\ServiceType|NULL
 	 */
 	public function getServiceType() {
 		return $this->serviceType;
@@ -245,6 +245,15 @@ class Item extends \Entity\BaseEntity {
 	}
 		
 	/**
+	 * @return \Entity\Invoicing\Item
+	 */
+	public function unsetServiceFrom() {
+		$this->serviceFrom = NULL;
+
+		return $this;
+	}
+		
+	/**
 	 * @return \DateTime|NULL
 	 */
 	public function getServiceFrom() {
@@ -257,6 +266,15 @@ class Item extends \Entity\BaseEntity {
 	 */
 	public function setServiceTo(\DateTime $serviceTo) {
 		$this->serviceTo = $serviceTo;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Invoicing\Item
+	 */
+	public function unsetServiceTo() {
+		$this->serviceTo = NULL;
 
 		return $this;
 	}

@@ -10,7 +10,7 @@ use Nette\Application as NA,
 	Extras\Models\Service,
 	Service\Dictionary as D,
 	Service as S,
-	Service\Log\Change as SLog;
+	Service\Log as SLog;
 
 class BaseImport {
 	public $sections = array(
@@ -84,8 +84,8 @@ class BaseImport {
 		),
 		'amenities' => array(
 			'entities' => array(
-				'\Rental\Amenity\Group' => array(),
-				'\Rental\Amenity\Amenity' => array(),
+				'\Rental\AmenityType' => array(),
+				'\Rental\Amenity' => array(),
 			),
 			'subsections' => array(),
 		),
@@ -103,11 +103,11 @@ class BaseImport {
 		),
 		'invoicingStart' => array(
 			'entities' => array(
-				'\Invoicing\Service\Duration' => array(),
-				'\Invoicing\Service\Type' => array(),
+				'\Invoicing\ServiceDuration' => array(),
+				'\Invoicing\ServiceType' => array(),
 				'\Invoicing\UseType' => array(),
 				'\Invoicing\Package' => array(),
-				'\Invoicing\Service\Service' => array(),
+				'\Invoicing\Service' => array(),
 				'\Invoicing\Marketing' => array(),
 			),
 			'subsections' => array(),
@@ -116,6 +116,13 @@ class BaseImport {
 			'entities' => array(
 				'\Invoicing\Invoice' => array(),
 				'\Invoicing\Item' => array(),
+			),
+			'subsections' => array(),
+		),
+		'attractions' => array(
+			'entities' => array(
+				'\Attraction\Type' => array(),
+				'\Attraction\Attraction' => array(),
 			),
 			'subsections' => array(),
 		),

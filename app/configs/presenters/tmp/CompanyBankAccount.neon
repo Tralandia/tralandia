@@ -1,0 +1,92 @@
+common:
+	service: Service\Company\BankAccount
+	title: Company / BankAccount
+	h1: Company / BankAccount
+	grid:
+		columns:
+			countries:
+				label: Countries
+				mapper: e.countries
+			company:
+				label: Company
+				mapper: e.company
+			bankName:
+				label: BankName
+				mapper: e.bankName
+			bankAddress:
+				label: BankAddress
+				mapper: e.bankAddress
+			bankSwift:
+				label: BankSwift
+				mapper: e.bankSwift
+			accountNumber:
+				label: AccountNumber
+				mapper: e.accountNumber
+			accountName:
+				label: AccountName
+				mapper: e.accountName
+			accountIban:
+				label: AccountIban
+				mapper: e.accountIban
+			notes:
+				label: Notes
+				mapper: e.notes
+			id:
+				label: Id
+				mapper: e.id
+			oldId:
+				label: OldId
+				mapper: e.oldId
+			created:
+				label: Created
+				mapper: e.created
+			updated:
+				label: Updated
+				mapper: e.updated
+			
+	form:
+		fields:
+			countries:
+				# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityLocationLocation,mappedBy:bankAccounts"
+				label: Countries
+				control: bricksList
+			company:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:Company,inversedBy:bankAccounts"
+				label: Company
+				control: selectBox
+			bankName:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: BankName
+				control: text
+			bankAddress:
+				# anotations: "var:address,ORMColumn:type:address"
+				label: BankAddress
+				control: text
+			bankSwift:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: BankSwift
+				control: text
+			accountNumber:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: AccountNumber
+				control: text
+			accountName:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: AccountName
+				control: text
+			accountIban:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: AccountIban
+				control: text
+			notes:
+				# anotations: "var:text,ORMColumn:type:text,nullable:true"
+				label: Notes
+				control: text
+			created:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Created
+				control: datePicker
+			updated:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Updated
+				control: datePicker

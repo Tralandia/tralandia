@@ -10,7 +10,7 @@ use Nette\Application as NA,
 	Extras\Models\Service,
 	Service\Dictionary as D,
 	Service as S,
-	Service\Log\Change as SLog;
+	Service\Log as SLog;
 
 class ImportHtmlPhrases extends BaseImport {
 
