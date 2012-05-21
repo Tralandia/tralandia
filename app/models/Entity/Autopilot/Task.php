@@ -6,10 +6,15 @@ use Entity\Dictionary;
 use Entity\Location;
 use Entity\User;
 use Doctrine\ORM\Mapping as ORM;
+use	Extras\Annotation as EA;
+
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="autopilot_task", indexes={@ORM\index(name="subtype", columns={"subtype"}), @ORM\index(name="startTime", columns={"startTime"}), @ORM\index(name="due", columns={"due"}), @ORM\index(name="durationPaid", columns={"durationPaid"}), @ORM\index(name="userLanguageLevel", columns={"userLanguageLevel"})})
+ * @EA\Service(name="\Service\Autopilot\Task")
+ * @EA\ServiceList(name="\Service\Autopilot\TaskList")
+ * @EA\Primary(key="id", value="name")
  */
 class Task extends \Entity\BaseEntityDetails {
 

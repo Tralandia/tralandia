@@ -4,10 +4,14 @@ namespace Entity\Rental;
 
 use Entity\Dictionary;
 use Doctrine\ORM\Mapping as ORM;
+use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="rental_amenitytype", indexes={@ORM\index(name="slug", columns={"slug"})})
+ * @EA\Service(name="\Service\Rental\AmenityType")
+ * @EA\ServiceList(name="\Service\Rental\AmenityTypeList")
+ * @EA\Primary(key="id", value="slug")
  */
 class AmenityType extends \Entity\BaseEntity {
 

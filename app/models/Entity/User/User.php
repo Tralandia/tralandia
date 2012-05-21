@@ -13,6 +13,9 @@ use	Extras\Annotation as EA;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="user_user", indexes={@ORM\index(name="login", columns={"login"}), @ORM\index(name="password", columns={"password"}), @ORM\index(name="isOwner", columns={"isOwner"})})
+ * @EA\Service(name="\Service\User\User")
+ * @EA\ServiceList(name="\Service\User\UserList")
+ * @EA\Primary(key="id", value="login")
  */
 class User extends \Entity\BaseEntityDetails {
 

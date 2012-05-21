@@ -13,18 +13,22 @@ common:
 			defaultPrice:
 				label: DefaultPrice
 				mapper: e.defaultPrice
+				cellStyle: text-align:right;
 			currentPrice:
 				label: CurrentPrice
 				mapper: e.currentPrice
+				cellStyle: text-align:right;
 			package:
 				label: Package
 				mapper: e.package
 			id:
 				label: Id
 				mapper: e.id
+				cellStyle: text-align:right;
 			oldId:
 				label: OldId
 				mapper: e.oldId
+				cellStyle: text-align:right;
 			created:
 				label: Created
 				mapper: e.created

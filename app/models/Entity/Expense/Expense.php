@@ -6,10 +6,14 @@ use Entity\Location;
 use Entity\Company;
 use Entity\User;
 use Doctrine\ORM\Mapping as ORM;
+use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="expense_expense")
+ * @EA\Service(name="\Service\Expense\Expense")
+ * @EA\ServiceList(name="\Service\Expense\ExpenseList")
+ * @EA\Primary(key="id", value="name")
  */
 class Expense extends \Entity\BaseEntity {
 

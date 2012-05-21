@@ -13,6 +13,7 @@ common:
 			status:
 				label: Status
 				mapper: e.status
+				cellStyle: text-align:right;
 			types:
 				label: Types
 				mapper: e.types
@@ -22,6 +23,7 @@ common:
 			rank:
 				label: Rank
 				mapper: e.rank
+				cellStyle: text-align:right;
 			locations:
 				label: Locations
 				mapper: e.locations
@@ -85,9 +87,11 @@ common:
 			id:
 				label: Id
 				mapper: e.id
+				cellStyle: text-align:right;
 			oldId:
 				label: OldId
 				mapper: e.oldId
+				cellStyle: text-align:right;
 			created:
 				label: Created
 				mapper: e.created

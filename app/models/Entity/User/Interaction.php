@@ -5,10 +5,14 @@ namespace Entity\User;
 use Entity\Dictionary;
 use Entity\Rental;
 use Doctrine\ORM\Mapping as ORM;
+use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="user_interaction", indexes={@ORM\index(name="senderEmail", columns={"senderEmail"}), @ORM\index(name="status", columns={"status"})})
+ * @EA\Service(name="\Service\User\Interaction")
+ * @EA\ServiceList(name="\Service\User\InteractionList")
+ * @EA\Primary(key="id", value="senderEmail")
  */
 class Interaction extends \Entity\BaseEntityDetails {
 

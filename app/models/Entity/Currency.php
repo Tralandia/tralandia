@@ -34,12 +34,6 @@ class Currency extends \Entity\BaseEntity {
 	protected $exchangeRate;
 
 	/**
-	 * @var integer
-	 * @ORM\Column(type="integer", nullable=true)
-	 */
-	protected $decimalPlaces;
-
-	/**
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
 	 */
