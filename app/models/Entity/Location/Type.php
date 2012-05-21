@@ -4,7 +4,6 @@ namespace Entity\Location;
 
 use Entity\Dictionary;
 use Doctrine\ORM\Mapping as ORM;
-use	Extras\UI as UI;
 use	Extras\Annotation as EA;
 
 /**
@@ -27,27 +26,6 @@ class Type extends \Entity\BaseEntityDetails {
 	 * @ORM\Column(type="slug")
 	 */
 	protected $slug;
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //@entity-generator-code <--- NEMAZAT !!!

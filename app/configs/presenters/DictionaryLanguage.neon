@@ -4,49 +4,21 @@ common:
 	h1: Dictionary / Language
 	grid:
 		columns:
-			name:
-				label: Name
-				mapper: e.name
-			iso:
-				label: Iso
-				mapper: e.iso
-			supported:
-				label: Supported
-				mapper: e.supported
-			defaultCollation:
-				label: DefaultCollation
-				mapper: e.defaultCollation
-			multitranslationOptions:
-				label: MultitranslationOptions
-				mapper: e.multitranslationOptions
-			genderNumberOptions:
-				label: GenderNumberOptions
-				mapper: e.genderNumberOptions
-			ppcPatterns:
-				label: PpcPatterns
-				mapper: e.ppcPatterns
-			locations:
-				label: Locations
-				mapper: e.locations
-			rentals:
-				label: Rentals
-				mapper: e.rentals
-			details:
-				label: Details
-				mapper: e.details
 			id:
-				label: Id
 				mapper: e.id
-			oldId:
-				label: OldId
-				mapper: e.oldId
-			created:
-				label: Created
-				mapper: e.created
-			updated:
-				label: Updated
-				mapper: e.updated
-			
+				draw: false
+			iso:
+				label: ISO
+				mapper: e.iso
+				callback: {class: \Nette\Utils\Strings, method: upper, params: iso}
+				headerStyle: 'width: 30px;'
+			name:
+				type: text
+				label: Name
+				mapper: e.id
+				callback: {class: %this%, method: translateColumn, params: name}
+				cellStyle: 'text-align: center'
+
 	form:
 		fields:
 			name:

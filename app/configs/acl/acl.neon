@@ -15,9 +15,15 @@ parameters:
 			Admin:DictionaryLanguage:
 				list:
 				edit:
-				adsf:
+				add:
 			Admin:EntityGenerator:
 				list:
+			Admin:Ap:
+				task:
+			Admin:Autopilot:
+				default:
+				list:
+				edit:
 			Admin:Acl:
 				list:
 				entityEdit:

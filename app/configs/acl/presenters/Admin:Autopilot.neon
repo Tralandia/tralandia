@@ -1,3 +1,14 @@
+default:
+	guest: allow
+	visitor: deny
+	potentialowner: deny
+	owner: deny
+	translator: deny
+	assistant: deny
+	vendor: deny
+	manager: deny
+	admin: deny
+	
 list:
 	guest: allow
 	visitor: deny
@@ -13,14 +24,14 @@ edit:
 	guest: allow
 	visitor: deny
 	potentialowner: deny
-	owner: allow
+	owner: deny
 	translator: deny
-	assistant: assert1
+	assistant: deny
 	vendor: deny
 	manager: deny
 	admin: deny
 	
-add:
+task:
 	guest: allow
 	visitor: deny
 	potentialowner: deny
