@@ -28,7 +28,12 @@ class AclPresenter extends BasePresenter {
 	}
 
 	protected function getPresenterList() {
-		return $this->context->parameters['acl']['presenters'];
+		$list = $this->context->parameters['acl']['presenters'];
+		$newList = array();
+		foreach ($list as $key => $value) {
+			$newList[str_replace(':', '-', $key)] = $value;
+		}
+		return $newList;
 	}
 
 	protected function getPresenterAclConfig($name) {
@@ -50,7 +55,7 @@ class AclPresenter extends BasePresenter {
 			$this->entityList = array();
 			foreach (Finder::findFiles('*.php')->from(APP_DIR . '/models/Entity/') as $key => $file) {
 				list($x, $nameTemp) = explode('/models/', $key, 2);
-				$nameTemp = str_replace(array('/', '.php'), array('\\', ''), $nameTemp);
+				$nameTemp = str_replace(array('/', '.php'), array('_', ''), $nameTemp);
 				// list(, $nameTemp) = explode('\\', $nameTemp, 2);
 				$this->entityList[$nameTemp] = $nameTemp; 
 			}
@@ -87,6 +92,7 @@ class AclPresenter extends BasePresenter {
 	}
 
 	public function actionEntityEdit($entityName) {
+		$entityName = str_replace('_', '\\', $entityName);
 		$list = $this->getEntityList();
 		$this->entityActions = $this->getEntityProperties($entityName);
 
