@@ -4,10 +4,14 @@ namespace Entity\Invoicing;
 
 use Entity\Dictionary;
 use Doctrine\ORM\Mapping as ORM;
+use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="invoicing_usetype", indexes={@ORM\index(name="slug", columns={"slug"})})
+ * @EA\Service(name="\Service\Invoicing\UseType")
+ * @EA\ServiceList(name="\Service\Invoicing\UseTypeList")
+ * @EA\Primary(key="id", value="slug")
  */
 class UseType extends \Entity\BaseEntity {
 

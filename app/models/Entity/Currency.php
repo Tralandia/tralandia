@@ -5,7 +5,6 @@ namespace Entity;
 use Entity\Dictionary;
 use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
-use	Extras\UI as UI;
 
 /**
  * @ORM\Entity()
@@ -33,12 +32,6 @@ class Currency extends \Entity\BaseEntity {
 	 * @ORM\Column(type="decimal", nullable=true)
 	 */
 	protected $exchangeRate;
-
-	/**
-	 * @var integer
-	 * @ORM\Column(type="integer", nullable=true)
-	 */
-	protected $decimalPlaces;
 
 	/**
 	 * @var string

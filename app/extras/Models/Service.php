@@ -485,6 +485,7 @@ abstract class Service extends Nette\Object implements IService {
 							}
 						}
 					} else if($targetEntity->associationType == Reflector::ONE_TO_MANY) {
+						// asi tu bude to iste co je v MTM
 						// @todo method or operation is not implemented
 						throw new \Nette\NotImplementedException('Requested method or operation is not implemented');
 					} else if($targetEntity->associationType == Reflector::MANY_TO_ONE) {
@@ -501,6 +502,13 @@ abstract class Service extends Nette\Object implements IService {
 		}
 		// debug($this->getMainEntity());
 		$this->save();
+	}
+
+	public function create($mask, $formValues) {
+		if($this->id > 0) {
+			throw new \Exception("Servisa uz exisuje, nemozes ju znova vytvorit!");
+		}
+
 	}
 
 	/**

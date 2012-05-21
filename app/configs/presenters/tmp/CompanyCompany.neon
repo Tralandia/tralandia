@@ -28,6 +28,7 @@ common:
 			vat:
 				label: Vat
 				mapper: e.vat
+				cellStyle: text-align:right;
 			registrator:
 				label: Registrator
 				mapper: e.registrator
@@ -40,9 +41,11 @@ common:
 			id:
 				label: Id
 				mapper: e.id
+				cellStyle: text-align:right;
 			oldId:
 				label: OldId
 				mapper: e.oldId
+				cellStyle: text-align:right;
 			created:
 				label: Created
 				mapper: e.created
@@ -83,7 +86,7 @@ common:
 			vat:
 				# anotations: "var:float,ORMColumn:type:float,nullable:true"
 				label: Vat
-				control: float
+				control: text
 			registrator:
 				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:"
 				label: Registrator

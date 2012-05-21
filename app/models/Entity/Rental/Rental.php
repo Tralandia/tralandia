@@ -9,10 +9,14 @@ use Entity\Location;
 use Entity\Medium;
 use Entity\User;
 use Doctrine\ORM\Mapping as ORM;
+use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="rental_rental", indexes={@ORM\index(name="status", columns={"status"}), @ORM\index(name="timeDeleted", columns={"timeDeleted"}), @ORM\index(name="slug", columns={"slug"}), @ORM\index(name="calendarUpdated", columns={"calendarUpdated"})})
+ * @EA\Service(name="\Service\Rental\Rental")
+ * @EA\ServiceList(name="\Service\Rental\RentalList")
+ * @EA\Primary(key="id", value="slug")
  */
 class Rental extends \Entity\BaseEntity {
 

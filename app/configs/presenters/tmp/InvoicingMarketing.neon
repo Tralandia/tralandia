@@ -19,9 +19,11 @@ common:
 			countTotal:
 				label: CountTotal
 				mapper: e.countTotal
+				cellStyle: text-align:right;
 			countLeft:
 				label: CountLeft
 				mapper: e.countLeft
+				cellStyle: text-align:right;
 			validFrom:
 				label: ValidFrom
 				mapper: e.validFrom
@@ -34,9 +36,11 @@ common:
 			id:
 				label: Id
 				mapper: e.id
+				cellStyle: text-align:right;
 			oldId:
 				label: OldId
 				mapper: e.oldId
+				cellStyle: text-align:right;
 			created:
 				label: Created
 				mapper: e.created

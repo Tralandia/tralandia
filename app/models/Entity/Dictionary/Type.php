@@ -4,10 +4,14 @@ namespace Entity\Dictionary;
 
 use Entity\Dictionary;
 use Doctrine\ORM\Mapping as ORM;
+use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="dictionary_type", indexes={@ORM\index(name="entityName", columns={"entityName"}), @ORM\index(name="entityAttribute", columns={"entityAttribute"}), @ORM\index(name="translationLevelRequirement", columns={"translationLevelRequirement"}), @ORM\index(name="multitranslationRequired", columns={"multitranslationRequired"}), @ORM\index(name="genderNumberRequired", columns={"genderNumberRequired"}), @ORM\index(name="locativeRequired", columns={"locativeRequired"}), @ORM\index(name="positionRequired", columns={"positionRequired"}), @ORM\index(name="webalizedRequired", columns={"webalizedRequired"}), @ORM\index(name="checkingRequired", columns={"checkingRequired"})})
+ * @EA\Service(name="\Service\Dictionary\Type")
+ * @EA\ServiceList(name="\Service\Dictionary\TypeList")
+ * @EA\Primary(key="id", value="name")
  */
 class Type extends \Entity\BaseEntity {
 

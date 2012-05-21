@@ -4,11 +4,14 @@ namespace Entity;
 
 use Entity\Location;
 use Doctrine\ORM\Mapping as ORM;
-
+use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="domain", indexes={@ORM\index(name="domain", columns={"domain"})})
+ * @EA\Service(name="\Service\Company\Domain")
+ * @EA\ServiceList(name="\Service\Company\DomainList")
+ * @EA\Primary(key="id", value="domain")
  */
 class Domain extends \Entity\BaseEntity {
 

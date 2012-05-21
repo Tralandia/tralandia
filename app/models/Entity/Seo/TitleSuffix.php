@@ -5,10 +5,14 @@ namespace Entity\Seo;
 use Entity\Dictionary;
 use Entity\Location;
 use Doctrine\ORM\Mapping as ORM;
+use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="seo_titlesuffix")
+ * @EA\Service(name="\Service\Seo\TitleSuffix")
+ * @EA\ServiceList(name="\Service\Seo\TitleSuffixList")
+ * @EA\Primary(key="id", value="suffix")
  */
 class TitleSuffix extends \Entity\BaseEntity {
 

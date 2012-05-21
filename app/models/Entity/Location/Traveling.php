@@ -3,10 +3,14 @@
 namespace Entity\Location;
 
 use Doctrine\ORM\Mapping as ORM;
+use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="location_traveling", indexes={@ORM\index(name="peopleCount", columns={"peopleCount"}), @ORM\index(name="year", columns={"year"})})
+ * @EA\Service(name="\Service\Location\Traveling")
+ * @EA\ServiceList(name="\Service\Location\TravelingList")
+ * @EA\Primary(key="id", value="slug")
  */
 class Traveling extends \Entity\BaseEntity {
 

@@ -134,4 +134,8 @@
 }  
 
 
-
+/* Acl */
+.permissionTable select { font-weight: bold; }
+.permissionTable select opction:eq(0) {color: #A01A23;}
+.permissionTable select opction:eq(1) {color: #228B19;}
+.permissionTable select opction:gt(1) {color: #228BBB;}
