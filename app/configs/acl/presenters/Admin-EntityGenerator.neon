@@ -1,4 +1,4 @@
-task:
+list:
 	guest: allow
 	visitor: deny
 	potentialowner: deny

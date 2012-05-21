@@ -41,7 +41,7 @@ class EntityEdit extends \AdminModule\Forms\Form {
 
 		$resource = $this->entityName;
 		@mkdir($this->destinationDir, 0777);
-		file_put_contents($this->destinationDir . '/' . $resource . '.neon', trim($acl));
+		file_put_contents($this->destinationDir . '/' . str_replace('\\', '_', $resource) . '.neon', trim($acl));
 	}
 
 }

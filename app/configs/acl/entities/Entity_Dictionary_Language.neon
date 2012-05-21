@@ -10,7 +10,7 @@ name_show:
 	admin: deny
 	
 name_edit:
-	guest: allow
+	guest: deny
 	visitor: deny
 	potentialowner: deny
 	owner: deny
@@ -32,7 +32,7 @@ iso_show:
 	admin: deny
 	
 iso_edit:
-	guest: deny
+	guest: allow
 	visitor: deny
 	potentialowner: deny
 	owner: deny
