@@ -19,15 +19,19 @@ common:
 			parentId:
 				label: ParentId
 				mapper: e.parentId
+				cellStyle: text-align:right;
 			nestedLeft:
 				label: NestedLeft
 				mapper: e.nestedLeft
+				cellStyle: text-align:right;
 			nestedRight:
 				label: NestedRight
 				mapper: e.nestedRight
+				cellStyle: text-align:right;
 			nestedRoot:
 				label: NestedRoot
 				mapper: e.nestedRoot
+				cellStyle: text-align:right;
 			type:
 				label: Type
 				mapper: e.type
@@ -43,6 +47,7 @@ common:
 			defaultZoom:
 				label: DefaultZoom
 				mapper: e.defaultZoom
+				cellStyle: text-align:right;
 			clickMapData:
 				label: ClickMapData
 				mapper: e.clickMapData
@@ -97,6 +102,7 @@ common:
 			population:
 				label: Population
 				mapper: e.population
+				cellStyle: text-align:right;
 			phonePrefix:
 				label: PhonePrefix
 				mapper: e.phonePrefix
@@ -130,9 +136,11 @@ common:
 			pricesPizza:
 				label: PricesPizza
 				mapper: e.pricesPizza
+				cellStyle: text-align:right;
 			pricesDinner:
 				label: PricesDinner
 				mapper: e.pricesDinner
+				cellStyle: text-align:right;
 			airports:
 				label: Airports
 				mapper: e.airports
@@ -142,9 +150,11 @@ common:
 			id:
 				label: Id
 				mapper: e.id
+				cellStyle: text-align:right;
 			oldId:
 				label: OldId
 				mapper: e.oldId
+				cellStyle: text-align:right;
 			created:
 				label: Created
 				mapper: e.created

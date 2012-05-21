@@ -1,13 +1,16 @@
 <?php
-
 namespace Entity\Invoicing;
 
 use Entity\Dictionary;
 use Doctrine\ORM\Mapping as ORM;
+use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="invoicing_servicetype")
+ * @EA\Service(name="\Service\Invoicing\ServiceType")
+ * @EA\ServiceList(name="\Service\Invoicing\ServiceTypeList")
+ * @EA\Primary(key="id", value="slug")
  */
 class ServiceType extends \Entity\BaseEntity {
 

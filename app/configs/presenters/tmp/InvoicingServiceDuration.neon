@@ -13,12 +13,15 @@ common:
 			sort:
 				label: Sort
 				mapper: e.sort
+				cellStyle: text-align:right;
 			id:
 				label: Id
 				mapper: e.id
+				cellStyle: text-align:right;
 			oldId:
 				label: OldId
 				mapper: e.oldId
+				cellStyle: text-align:right;
 			created:
 				label: Created
 				mapper: e.created

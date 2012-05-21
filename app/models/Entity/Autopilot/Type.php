@@ -3,10 +3,15 @@
 namespace Entity\Autopilot;
 
 use Doctrine\ORM\Mapping as ORM;
+use	Extras\Annotation as EA;
+
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="autopilot_type")
+ * @EA\Service(name="\Service\Autopilot\Type")
+ * @EA\ServiceList(name="\Service\Autopilot\TypeList")
+ * @EA\Primary(key="id", value="name")
  */
 class Type extends \Entity\BaseEntityDetails {
 

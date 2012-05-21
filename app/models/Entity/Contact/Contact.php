@@ -4,10 +4,14 @@ namespace Entity\Contact;
 
 use Entity\Attraction;
 use Doctrine\ORM\Mapping as ORM;
+use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="contact_contact", indexes={@ORM\index(name="value", columns={"value"}), @ORM\index(name="subscribed", columns={"subscribed"}), @ORM\index(name="banned", columns={"banned"}), @ORM\index(name="full", columns={"full"}), @ORM\index(name="spam", columns={"spam"})})
+ * @EA\Service(name="\Service\Contact\Contact")
+ * @EA\ServiceList(name="\Service\Contact\ContactList")
+ * @EA\Primary(key="id", value="value")
  */
 class Contact extends \Entity\BaseEntity {
 

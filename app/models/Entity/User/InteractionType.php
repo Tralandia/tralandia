@@ -4,10 +4,14 @@ namespace Entity\User;
 
 use Entity\Dictionary;
 use Doctrine\ORM\Mapping as ORM;
+use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="user_interaction_type")
+ * @EA\Service(name="\Service\User\InteractionType")
+ * @EA\ServiceList(name="\Service\User\InteractionTypeList")
+ * @EA\Primary(key="id", value="id")
  */
 class InteractionType extends \Entity\BaseEntity {
 

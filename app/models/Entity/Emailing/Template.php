@@ -5,10 +5,14 @@ namespace Entity\Emailing;
 use Entity\Dictionary;
 use Entity\Emailing;
 use Doctrine\ORM\Mapping as ORM;
+use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="emailing_template")
+ * @EA\Service(name="\Service\Emailing\Template")
+ * @EA\ServiceList(name="\Service\Emailing\TemplateList")
+ * @EA\Primary(key="id", value="domain")
  */
 class Template extends \Entity\BaseEntity {
 

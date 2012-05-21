@@ -11,63 +11,36 @@ class NeonGeneratorPresenter extends EntityGeneratorPresenter {
 
 	private static $destinationFolder = 'configs/presenters/tmp/';
 
-	protected $generate = array(
-		'Entity\Attraction\Attraction',
-		'Entity\Attraction\Type',
-		'Entity\Autopilot\Task',
-		'Entity\Autopilot\TaskArchived',
-		'Entity\Autopilot\Type',
-		'Entity\BaseEntity',
-		'Entity\BaseEntityDetails',
-		'Entity\Company\BankAccount',
-		'Entity\Company\Company',
-		'Entity\Company\Office',
-		'Entity\Contact\Contact',
-		'Entity\Contact\Type',
-		'Entity\Currency',
-		'Entity\Dictionary\Language',
-		'Entity\Dictionary\Type',
-		'Entity\Domain',
-		'Entity\Emailing\Batch',
-		'Entity\Emailing\Template',
-		'Entity\Expense\Expense',
-		'Entity\Expense\Type',
-		'Entity\Invoicing\Coupon',
-		'Entity\Invoicing\Marketing',
-		'Entity\Invoicing\Package',
-		'Entity\Invoicing\Service',
-		'Entity\Invoicing\ServiceDuration',
-		'Entity\Invoicing\ServiceType',
-		'Entity\Invoicing\UseType',
-		'Entity\Location\Location',
-		'Entity\Location\Type',
-		'Entity\Medium\Type',
-		'Entity\Rental\Amenity',
-		'Entity\Rental\AmenityType',
-		'Entity\Rental\Rental',
-		'Entity\Rental\Type',
-		'Entity\Seo\SeoUrl',
-		'Entity\Seo\TitleSuffix',
-		'Entity\User\Combination',
-		'Entity\User\Interaction',
-		'Entity\User\InteractionType',
-		'Entity\User\Role',
-		'Entity\User\User',
+	protected $skipEntities = array(
+		'Entity\Dictionary\Phrase',
+		'Entity\Dictionary\Translation',
+		'Entity\Invoicing\Invoice',
+		'Entity\Invoicing\Item',
+		'Entity\Location\Traveling',
+		'Entity\Log\Change',
+		'Entity\Log\ChangeType',
+		'Entity\Log\System',
+		'Entity\Medium\Medium',
+		'Entity\Rental\Fulltext',
+		'Entity\Routing\PathSegment',
+		'Entity\Routing\PathSegmentOld',
+		'Entity\Ticket\Message',
+		'Entity\Ticket\Ticket',
 	);
 
 	protected $controlTypes = array(
-		'boolean' 					=> 'checkbox',
-		'json' 						=> 'json',
 		'\DateTime' 				=> 'datePicker',
-		'float' 					=> 'float',
+		'boolean' 					=> 'checkbox',
+		'float' 					=> 'numeric',
+		'integer' 					=> 'numeric',
+		'decimal' 					=> 'numeric',
+		'\Extras\Types\Price' 		=> 'numeric',
+		'json' 						=> 'json',
 		'\Extras\Types\Latlong' 	=> 'text',
-		'integer' 					=> 'text',
 		'string' 					=> 'text',
 		'\Extras\Types\Time' 		=> 'text',
 		'\Extras\Types\Address'		=> 'text',
 		'slug' 						=> 'text',
-		'decimal' 					=> 'text',
-		'\Extras\Types\Price' 		=> 'text',
 		'\Extras\Types\Url' 		=> 'text',
 		'\Extras\Types\Email' 		=> 'text',
 	);
@@ -84,10 +57,6 @@ class NeonGeneratorPresenter extends EntityGeneratorPresenter {
 		$this->template->presenters = NULL;
 		$this->template->entities = NULL;
 
-		$this->generateNeonFiles();
-		
-		return false;
-
 		$presenters = array();
 		$entities = array();
 
@@ -95,8 +64,11 @@ class NeonGeneratorPresenter extends EntityGeneratorPresenter {
 		foreach (Finder::findFiles('*.php')->from($entityDir) as $key => $file) {
 
 			list($x, $entityNameTemp) = explode('/models/', $key, 2);
+			if (in_array(str_replace('.php', '', $entityNameTemp), $this->skipEntities)) continue;
+
 			$prensenter = '- Admin:' . str_replace(array('Entity\\', '\\', '.php'), array('', '', ''), $entityNameTemp);
 			$entity = '- ' . str_replace('.php', '', $entityNameTemp);
+
 
 			$presenters[] = $prensenter;
 			$entities[] = $entity;
@@ -109,6 +81,8 @@ class NeonGeneratorPresenter extends EntityGeneratorPresenter {
 		$entities = implode('<br/>', $entities);
 		$this->template->entities = $entities;
 
+		$this->generateNeonFiles();
+
 	}
 
 	public function generateNeonFiles() {
@@ -118,12 +92,21 @@ class NeonGeneratorPresenter extends EntityGeneratorPresenter {
 		$neon = new Utils\Neon;
 		$entityDir = APP_DIR . '/models/Entity/';
 		$messageSuccess = array();
-		foreach (Finder::findFiles('*.php')->from($entityDir) as $key => $file) {
+		foreach (Finder::findFiles('*.php')->from($entityDir) as $key => $value) {
 
 			$neonOutput = array();
 
 			list($x, $entityNameTemp) = explode('/models/', $key, 2);
 			$entityNameTemp = str_replace(array('/', '.php'), array('\\', ''), $entityNameTemp);
+
+			$neonFile = str_replace(array('Entity\\', '\\'), '', $entityNameTemp) . '.neon';
+
+			// skip if neon is exists in parent folder
+			if (file_exists(APP_DIR . '/' . self::$destinationFolder . '../' . $neonFile)) continue;
+
+			// SKIP ENTITIES
+			if (in_array($entityNameTemp, $this->skipEntities)) continue;
+
 			$folderNameTemp = explode('\\', $entityNameTemp, 3);
 			array_shift($folderNameTemp);
 			$folderName = array_shift($folderNameTemp);
@@ -136,19 +119,20 @@ class NeonGeneratorPresenter extends EntityGeneratorPresenter {
 			foreach ($mainEntityReflector->getProperties() as $property) {
 
 				$propertyInfo = $this->getPropertyInfo($property);
+				$controlType = $this->getControlType($propertyInfo);
 
-				$grid[$property->name] = array(
-					'label' => $propertyInfo->nameFu,
-					'mapper' => 'e.' . $propertyInfo->name,
-				);
+				$grid[$property->name]['label'] = $propertyInfo->nameFu;
+				$grid[$property->name]['mapper'] = 'e.' . $propertyInfo->name;
+				if ($controlType == 'numeric') {
+					$controlType = 'text';
+					$grid[$property->name]['cellStyle'] = 'text-align:right;';
+				}
 
 				if (in_array($property->name, array('oldId', 'id'))) continue;
 
-				$fields[$property->name] = array(
-					'\# anotations' => str_replace(array('"','[', ']','{', '}','\\'), '', json_encode($anotations[$property->name])),
-					'label' => $propertyInfo->nameFu,
-					'control' => $this->getControlType($propertyInfo),
-				);
+				$fields[$property->name]['\# anotations'] = str_replace(array('"','[', ']','{', '}','\\'), '', json_encode($anotations[$property->name]));
+				$fields[$property->name]['label'] = $propertyInfo->nameFu;
+				$fields[$property->name]['control'] = $controlType;
 
 			}
 
@@ -167,7 +151,7 @@ class NeonGeneratorPresenter extends EntityGeneratorPresenter {
 			$neonOutput = $neon->encode($neonOutput, $neon::BLOCK);
 			$neonOutput = str_replace('\# ', '# ', $neonOutput);
 
-			$file = APP_DIR . '/' . self::$destinationFolder . str_replace(array('Entity\\', '\\'), '', $entityNameTemp) . '.neon';
+			$file = APP_DIR . '/' . self::$destinationFolder . $neonFile;
 			fopen($file, 'c');
 			file_put_contents($file, preg_replace("/[\n\r]{1}\t{2,4}[\n\r]{1}/","\n", trim($neonOutput)));
 

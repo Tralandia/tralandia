@@ -4,10 +4,14 @@ namespace Entity\Invoicing;
 
 use Entity\Dictionary;
 use Doctrine\ORM\Mapping as ORM;
+use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="invoicing_serviceduration")
+ * @EA\Service(name="\Service\Invoicing\ServiceDuration")
+ * @EA\ServiceList(name="\Service\Invoicing\ServiceDurationList")
+ * @EA\Primary(key="id", value="duration")
  */
 class ServiceDuration extends \Entity\BaseEntity {
 
