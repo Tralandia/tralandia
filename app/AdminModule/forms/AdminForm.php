@@ -13,6 +13,8 @@ class AdminForm extends Form {
 		$this->reflector = $reflector;
 		$this->service = $service;
 
+		$reflector->getPhraseAssociations();
+
 		$reflector->extend($this, $this->reflector->getFormMask($this->service));
 
 		//$this->addAdvancedFileManager('upload', 'File manager');		
@@ -23,13 +25,13 @@ class AdminForm extends Form {
 		$id = $this->presenter->getParam('id');
 		$values = $this->reflector->getPrepareValues($form);
 
-		//TODO : ainak zistit ze editujem, najlepsie so servisy
-		if ($id) {
+		if ($this->service->id) {
 			// EDIT
 			$this->service->updateFormData($this->reflector->getFormMask($this->service), $values);
 		} else {
 			// ADD
-			$this->service->create($this->reflector->getFormMask($this->service), $values);
+			$this->service->create($this->reflector);
+			$this->service->updateFormData($this->reflector->getFormMask($this->service), $values);
 		}
 
 		$this->flashMessage('A je to!');

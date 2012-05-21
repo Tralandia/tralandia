@@ -1,5 +1,3 @@
-{block title}{include #parent} | {$settings->title}{/block}
-
 {block content}
 <h1>{$settings->title}</h1>
 <a n:if="$showAddNewButton" class="btn" href="{link :{$presenter->getName()}:add}" >Add New</a>

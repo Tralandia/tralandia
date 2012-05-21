@@ -22,12 +22,16 @@ common:
 
 	includes:
 		- webLoader.neon
-		- acl.neon
+		- acl/acl.neon
 
 	services:
 		# nette.presenterFactory:
 			# class: Extras\DynamicPresenterFactory
 			# factory: Extras\DynamicPresenterFactory::factory
+
+		# CACHE
+		aclCache: Nette\Caching\Cache(@cacheStorage, 'Acl')
+		routerCache: Nette\Caching\Cache(@cacheStorage, 'Router')
 
 		user:
 			class: Security\User
@@ -37,11 +41,12 @@ common:
 		authorizator: 
 			class: Security\Acl
 			setup:
-				- setup(%acl.roles%, %acl.resources%, %acl.rules%)
+				# - $cache(@aclCache)
+				- $config(%acl%)
+				- setup()
 
 		environment: Extras\Environment
 
-		routerCache: Nette\Caching\Cache(@cacheStorage, 'Router')
 
 		translator: Extras\Translator(@environment, @cacheStorage)
 
