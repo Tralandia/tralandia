@@ -1,4 +1,4 @@
 {block content}
 <h1>{$settings->title}</h1>
-<a n:if="$showAddNewButton" class="btn" href="{link :{$presenter->getName()}:add}" >Add New</a>
+<a n:if="$showAddNewButton" class="btn add-new pull-left" href="{link :{$presenter->getName()}:add}" ><i class="icon-plus"></i> Add New</a>
 {control grid}

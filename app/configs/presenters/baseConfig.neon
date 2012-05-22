@@ -11,7 +11,7 @@ common:
 
 		actionColumns:
 			base:
-				name: Akcia
+				name: ''
 				cellStyle: 'text-align: right'
 				actions:
 					edit:

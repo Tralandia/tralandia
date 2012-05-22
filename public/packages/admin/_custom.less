@@ -2,13 +2,17 @@
 
 .container .inner {  }
 .container .inner .content { border: 1px solid @grayLight; padding: 8px; margin: 70px -13px 100px; .border-radius(10px); box-shadow:0 1px 1px @grayLight; background: @white; }
+.container .inner .content .btn.add-new { margin-top:20px; }
 .container .inner .content.content-modal { margin:0 -13px; .border-radius(0); box-shadow:none; border:none; }
 
 .container .inner .content h1 { #gradient > .vertical(@white, @grayMedium); margin:-9px -9px 15px -9px; font-size:22px; border: 1px solid @grayLight; padding: 10px (@gridGutterWidth/2); .border-radius(10px 10px 0 0); }
 
 label b { color:@blueDark; font-size:14px; }
 label i { color:@grayLight; font-size:11px; }
-table thead { background:@green; color:@white; }
+table thead { #gradient > .vertical(@green, @greenDark); color:@white; }
+table thead a { color:@white; }
+table thead .positioner .datagrid-ajax span.up { .icon(); .icon-chevron-up(); }
+table thead .positioner .datagrid-ajax span.down { .icon(); .icon-chevron-down(); }
 .align-right { text-align:right; }
 .align-left { text-align:left; }
 

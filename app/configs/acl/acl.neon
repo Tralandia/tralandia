@@ -16,6 +16,14 @@ parameters:
 				list:
 				edit:
 				add:
+			Admin:Domain:
+				list:
+				edit:
+				add:
+			Admin:Currency:
+				list:
+				edit:
+				add:
 			Admin:EntityGenerator:
 				list:
 			Admin:Ap:

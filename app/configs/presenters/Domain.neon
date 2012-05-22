@@ -4,16 +4,13 @@ common:
 	h1: Domain
 	grid:
 		columns:
-			domain:
-				label: Domain
-				mapper: e.domain
-			locations:
-				label: Locations
-				mapper: e.locations
 			id:
 				label: Id
 				mapper: e.id
 				cellStyle: text-align:right;
+			domain:
+				label: Domain
+				mapper: e.domain
 			oldId:
 				label: OldId
 				mapper: e.oldId
@@ -34,7 +31,7 @@ common:
 			locations:
 				# anotations: "var:Collection,ORMOneToMany:targetEntity:EntityLocationLocation,mappedBy:domain"
 				label: Locations
-				control: checkBoxList
+				control: bricksList
 			created:
 				# anotations: "var:datetime,ORMColumn:type:datetime"
 				label: Created
