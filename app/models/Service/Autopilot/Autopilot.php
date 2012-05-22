@@ -7,26 +7,26 @@ use Nette\Utils\Arrays;
 class Autopilot extends \Nette\Object {
 
 	public static function addTask($typeName, array $attributes = array(), array $params = array()) {
-		$type = TypeService::getByTechnicalName($typeName);
+		$type = Type::getByTechnicalName($typeName);
 		if(!$type instanceof \Extras\Models\Service) {
 			throw new \Nette\InvalidArgumentException('Argument $typeName does not match with the expected value');
 		}
 
-		$task = TaskService::get();
+		$task = Task::get();
 		$task->type = $type;
 		$task->name = $type->name;
 		$task->mission = $type->mission;
 
 		if($type->technicalName == 'improveRental') {
 			$links = Arrays::get($attributes, 'links', array());
-			if(array_key_exists('rental', $params) && ($params['rental'] instanceof \Services\Rental\RentalService || $params['rental'] instanceof \Entities\Rental\Rental)) {
+			if(array_key_exists('rental', $params) && ($params['rental'] instanceof \Service\Rental\Rental || $params['rental'] instanceof \Entity\Rental\Rental)) {
 				$links['rental'] = $params['rental'];
 			} else {
 				throw new \Nette\InvalidArgumentException('Argument $params["rental"] does not match with the expected value');
 			}
 		} else if($type->technicalName == '\Location\Location - Level2HasNoParent') {
 			$links = Arrays::get($attributes, 'links', array());
-			if(array_key_exists('location', $params) && ($params['location'] instanceof \Services\Location\LocationService || $params['location'] instanceof \Entities\Location\Location)) {
+			if(array_key_exists('location', $params) && ($params['location'] instanceof \Service\Location\Location || $params['location'] instanceof \Entity\Location\Location)) {
 				$links['location'] = $params['location'];
 			} else {
 				throw new \Nette\InvalidArgumentException('Argument $params["location"] does not match with the expected value');
