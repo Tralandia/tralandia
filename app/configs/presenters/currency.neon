@@ -32,12 +32,12 @@ common:
 	form:
 		fields:
 			name:
-				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:"
+				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,casca	:"
 				label: Name
 				control: phrase
 				addClass: 'myPhraseClass'
-				inlineEditing: Phrase:edit
-				inlineCreating: Phrase:add
+				inlineEditing: DictionaryPhrase:edit
+				inlineCreating: DictionaryPhrase:add
 			iso:
 				# anotations: "var:string,ORMColumn:type:string"
 				label: Iso

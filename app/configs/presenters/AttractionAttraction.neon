@@ -1,0 +1,97 @@
+common:
+	service: Service\Attraction\Attraction
+	title: Attraction / Attraction
+	h1: Attraction / Attraction
+	grid:
+		columns:
+			id:
+				label: ID
+				mapper: e.id
+			type:
+				label: Type
+				mapper: e.id
+				callback: {class: %this%, method: translateColumn, params: name}
+			name:
+				label: Name
+				mapper: e.id
+				callback: {class: %this%, method: translateColumn, params: name}
+			description:
+				label: Description
+				mapper: e.id
+				callback: {class: %this%, method: translateColumn, params: name}
+			country:
+				label: Country
+				mapper: e.country
+			latitude:
+				label: Latitude
+				mapper: e.latitude
+			longitude:
+				label: Longitude
+				mapper: e.longitude
+			details:
+				label: Details
+				mapper: e.details
+			oldId:
+				label: OldId
+				mapper: e.oldId
+				cellStyle: text-align:right;
+			created:
+				label: Created
+				mapper: e.created
+			updated:
+				label: Updated
+				mapper: e.updated
+			
+	form:
+		fields:
+			type:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:Type"
+				label: Type
+				control: 
+					type: select
+			name:
+				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:"
+				label: Name
+				control: phrase
+				inlineEditing: DictionaryPhrase:edit
+			description:
+				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:"
+				label: Description
+				control: phrase
+				inlineEditing: DictionaryPhrase:edit
+			country:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityLocationLocation"
+				class: span6
+				label: Country
+				control:  
+					type: multiSelect
+					addClass: span6
+				startNewRow: true
+			# latitude:
+			# 	# anotations: "var:latlong,ORMColumn:type:latlong"
+			# 	label: Latitude
+			# 	control: text
+			# longitude:
+			# 	# anotations: "var:latlong,ORMColumn:type:latlong"
+			# 	label: Longitude
+			# 	control: text
+			# contacts:
+			# 	# anotations: "var:Collection,ORMOneToMany:targetEntity:EntityContactContact,mappedBy:attraction,cascade:"
+			# 	label: Contacts
+			# 	control: checkboxList
+			# media:
+			# 	# anotations: "var:Collection,ORMOneToMany:targetEntity:EntityMediumMedium,mappedBy:attraction,cascade:"
+			# 	label: Media
+			# 	control: checkboxList
+			# details:
+			# 	# anotations: "var:json,ORMColumn:type:json,nullable:true"
+			# 	label: Details
+			# 	control: json
+			created:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Created
+				control: datePicker
+			updated:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Updated
+				control: datePicker

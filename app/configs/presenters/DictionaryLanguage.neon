@@ -1,0 +1,94 @@
+common:
+	service: Service\Dictionary\Language
+	title: Dictionary / Language
+	h1: Dictionary / Language
+	grid:
+		columns:
+			id:
+				label: ID
+				mapper: e.id
+			name:
+				label: Name
+				mapper: e.id
+				callback: {class: %this%, method: translateColumn, params: name}
+			iso:
+				label: Iso
+				mapper: e.iso
+			supported:
+				label: Supported
+				mapper: e.supported
+			# defaultCollation:
+			# 	label: DefaultCollation
+			# 	mapper: e.defaultCollation
+			# multitranslationOptions:
+			# 	label: MultitranslationOptions
+			# 	mapper: e.multitranslationOptions
+			# genderNumberOptions:
+			# 	label: GenderNumberOptions
+			# 	mapper: e.genderNumberOptions
+			# ppcPatterns:
+			# 	label: PpcPatterns
+			# 	mapper: e.ppcPatterns
+			# oldId:
+			# 	label: OldId
+			# 	mapper: e.oldId
+			# 	cellStyle: text-align:right;
+			created:
+				label: Created
+				mapper: e.created
+			updated:
+				label: Updated
+				mapper: e.updated
+			
+	form:
+		fields:
+			name:
+				# anotations: "var:Collection,ORMOneToOne:targetEntity:Phrase,cascade:"
+				label: Name
+				control: phrase
+				inlineEditing: Phrase:edit
+				inlineCreating: Phrase:add
+			iso:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: Iso
+				control: text
+			supported:
+				# anotations: "var:boolean,ORMColumn:type:boolean,nullable:true"
+				label: Supported
+				control: 
+					type: checkbox
+					label: is supported
+			defaultCollation:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: DefaultCollation
+				control: text
+			multitranslationOptions:
+				# anotations: "var:json,ORMColumn:type:json,nullable:true"
+				label: MultitranslationOptions
+				control: json
+			genderNumberOptions:
+				# anotations: "var:json,ORMColumn:type:json,nullable:true"
+				label: GenderNumberOptions
+				control: json
+			ppcPatterns:
+				# anotations: "var:json,ORMColumn:type:json,nullable:true"
+				label: PpcPatterns
+				control: json
+			locations:
+				# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityLocationLocation,inversedBy:languages"
+				label: Locations
+				control: bricksList
+			rentals:
+				# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityRentalRental,inversedBy:spokenLanguages"
+				label: Rentals
+				control: bricksList
+				inlineEditing: Rental:edit
+				inlineCreating: Rental:add
+			created:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Created
+				control: datePicker
+			updated:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Updated
+				control: datePicker

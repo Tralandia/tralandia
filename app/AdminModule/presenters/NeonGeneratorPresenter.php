@@ -47,8 +47,8 @@ class NeonGeneratorPresenter extends EntityGeneratorPresenter {
 
 	protected $collectionTypes = array(
 		1 => 'phrase', // OneToOne
-		2 => 'selectBox', // ManyToOne
-		4 => 'checkBoxList', // OneToMany
+		2 => 'select', // ManyToOne
+		4 => 'multiSelect', // OneToMany
 		8 => 'bricksList', // ManyToMany
 	);
 
@@ -99,11 +99,48 @@ class NeonGeneratorPresenter extends EntityGeneratorPresenter {
 		foreach (Finder::findFiles('*.php')->from($entityDir) as $key => $value) {
 
 			$neonOutput = array();
-
+/*
+			$neonPresenter = array(
+				'list' => array(
+					'guest' => 'allow',
+					'visitor' => 'deny',
+					'potentialowner' => 'deny',
+					'owner' => 'deny',
+					'translator' => 'deny',
+					'assistant' => 'deny',
+					'vendor' => 'deny',
+					'manager' => 'deny',
+					'admin' => 'deny',
+				),
+				'edit' => array(
+					'guest' => 'allow',
+					'visitor' => 'deny',
+					'potentialowner' => 'deny',
+					'owner' => 'deny',
+					'translator' => 'deny',
+					'assistant' => 'deny',
+					'vendor' => 'deny',
+					'manager' => 'deny',
+					'admin' => 'deny',
+				),
+				'add' => array(
+					'guest' => 'allow',
+					'visitor' => 'deny',
+					'potentialowner' => 'deny',
+					'owner' => 'deny',
+					'translator' => 'deny',
+					'assistant' => 'deny',
+					'vendor' => 'deny',
+					'manager' => 'deny',
+					'admin' => 'deny',
+				)
+			);
+*/
 			list($x, $entityNameTemp) = explode('/models/', $key, 2);
 			$entityNameTemp = str_replace(array('/', '.php'), array('\\', ''), $entityNameTemp);
 
 			$neonFile = str_replace(array('Entity\\', '\\'), '', $entityNameTemp) . '.neon';
+			// $neonPresenterFile = 'Admin-' . str_replace(array('Entity\\', '\\'), '', $entityNameTemp) . '.neon';
 
 			// skip if neon is exists in parent folder
 			if (file_exists(APP_DIR . '/' . self::$destinationFolder . '../' . $neonFile)) continue;
@@ -167,11 +204,18 @@ class NeonGeneratorPresenter extends EntityGeneratorPresenter {
 			$neonOutput = $neon->encode($neonOutput, $neon::BLOCK);
 			$neonOutput = str_replace('\# ', '# ', $neonOutput);
 
+			$neonPresenter = $neon->encode($neonPresenter, $neon::BLOCK);
+
 			$file = APP_DIR . '/' . self::$destinationFolder . $neonFile;
-			$generatedFiles[] = $neonFile;
 			fopen($file, 'c');
 			file_put_contents($file, preg_replace("/[\n\r]{1}\t{2,4}[\n\r]{1}/","\n", trim($neonOutput)));
 
+			// $file2 = APP_DIR . '/' . self::$destinationFolder . 'presenters/' . $neonPresenterFile;
+			// fopen($file2, 'c');
+			// file_put_contents($file2, preg_replace("/[\n\r]{1}\t{2,4}[\n\r]{1}/","\n", trim($neonPresenter)));
+			
+			$generatedFiles[] = $neonFile;
+			
 		}
 
 		return $generatedFiles;

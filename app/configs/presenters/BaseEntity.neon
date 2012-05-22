@@ -1,0 +1,30 @@
+common:
+	service: Service\BaseEntity
+	title: BaseEntity
+	h1: BaseEntity
+	grid:
+		columns:
+			id:
+				label: ID
+				mapper: e.id
+			oldId:
+				label: OldId
+				mapper: e.oldId
+				cellStyle: text-align:right;
+			created:
+				label: Created
+				mapper: e.created
+			updated:
+				label: Updated
+				mapper: e.updated
+			
+	form:
+		fields:
+			created:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Created
+				control: datePicker
+			updated:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Updated
+				control: datePicker

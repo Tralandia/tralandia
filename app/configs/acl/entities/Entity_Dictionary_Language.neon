@@ -10,7 +10,7 @@ name_show:
 	admin: deny
 	
 name_edit:
-	guest: deny
+	guest: allow
 	visitor: deny
 	potentialowner: deny
 	owner: deny
@@ -54,7 +54,7 @@ supported_show:
 	admin: deny
 	
 supported_edit:
-	guest: deny
+	guest: allow
 	visitor: deny
 	potentialowner: deny
 	owner: deny
@@ -65,7 +65,7 @@ supported_edit:
 	admin: deny
 	
 defaultCollation_show:
-	guest: deny
+	guest: allow
 	visitor: deny
 	potentialowner: deny
 	owner: deny
@@ -76,7 +76,7 @@ defaultCollation_show:
 	admin: deny
 	
 defaultCollation_edit:
-	guest: deny
+	guest: allow
 	visitor: deny
 	potentialowner: deny
 	owner: deny
@@ -87,7 +87,7 @@ defaultCollation_edit:
 	admin: deny
 	
 multitranslationOptions_show:
-	guest: deny
+	guest: allow
 	visitor: deny
 	potentialowner: deny
 	owner: deny
@@ -98,7 +98,7 @@ multitranslationOptions_show:
 	admin: deny
 	
 multitranslationOptions_edit:
-	guest: deny
+	guest: allow
 	visitor: deny
 	potentialowner: deny
 	owner: deny
@@ -109,7 +109,7 @@ multitranslationOptions_edit:
 	admin: deny
 	
 genderNumberOptions_show:
-	guest: deny
+	guest: allow
 	visitor: deny
 	potentialowner: deny
 	owner: deny
@@ -120,7 +120,7 @@ genderNumberOptions_show:
 	admin: deny
 	
 genderNumberOptions_edit:
-	guest: deny
+	guest: allow
 	visitor: deny
 	potentialowner: deny
 	owner: deny
@@ -131,7 +131,7 @@ genderNumberOptions_edit:
 	admin: deny
 	
 ppcPatterns_show:
-	guest: deny
+	guest: allow
 	visitor: deny
 	potentialowner: deny
 	owner: deny
@@ -142,7 +142,7 @@ ppcPatterns_show:
 	admin: deny
 	
 ppcPatterns_edit:
-	guest: deny
+	guest: allow
 	visitor: deny
 	potentialowner: deny
 	owner: deny
@@ -153,7 +153,7 @@ ppcPatterns_edit:
 	admin: deny
 	
 locations_show:
-	guest: deny
+	guest: allow
 	visitor: deny
 	potentialowner: deny
 	owner: deny
@@ -164,7 +164,7 @@ locations_show:
 	admin: deny
 	
 locations_edit:
-	guest: deny
+	guest: allow
 	visitor: deny
 	potentialowner: deny
 	owner: deny
@@ -175,7 +175,7 @@ locations_edit:
 	admin: deny
 	
 rentals_show:
-	guest: deny
+	guest: allow
 	visitor: deny
 	potentialowner: deny
 	owner: deny
@@ -186,7 +186,7 @@ rentals_show:
 	admin: deny
 	
 rentals_edit:
-	guest: deny
+	guest: allow
 	visitor: deny
 	potentialowner: deny
 	owner: deny
@@ -197,7 +197,7 @@ rentals_edit:
 	admin: deny
 	
 details_show:
-	guest: deny
+	guest: allow
 	visitor: deny
 	potentialowner: deny
 	owner: deny
@@ -208,7 +208,7 @@ details_show:
 	admin: deny
 	
 details_edit:
-	guest: deny
+	guest: allow
 	visitor: deny
 	potentialowner: deny
 	owner: deny
@@ -219,7 +219,7 @@ details_edit:
 	admin: deny
 	
 id_show:
-	guest: deny
+	guest: allow
 	visitor: deny
 	potentialowner: deny
 	owner: deny
@@ -230,7 +230,7 @@ id_show:
 	admin: deny
 	
 id_edit:
-	guest: deny
+	guest: allow
 	visitor: deny
 	potentialowner: deny
 	owner: deny
@@ -241,7 +241,7 @@ id_edit:
 	admin: deny
 	
 oldId_show:
-	guest: deny
+	guest: allow
 	visitor: deny
 	potentialowner: deny
 	owner: deny
@@ -252,7 +252,7 @@ oldId_show:
 	admin: deny
 	
 oldId_edit:
-	guest: deny
+	guest: allow
 	visitor: deny
 	potentialowner: deny
 	owner: deny
@@ -263,7 +263,7 @@ oldId_edit:
 	admin: deny
 	
 created_show:
-	guest: deny
+	guest: allow
 	visitor: deny
 	potentialowner: deny
 	owner: deny
@@ -274,7 +274,7 @@ created_show:
 	admin: deny
 	
 created_edit:
-	guest: deny
+	guest: allow
 	visitor: deny
 	potentialowner: deny
 	owner: deny
@@ -285,7 +285,7 @@ created_edit:
 	admin: deny
 	
 updated_show:
-	guest: deny
+	guest: allow
 	visitor: deny
 	potentialowner: deny
 	owner: deny
@@ -296,7 +296,7 @@ updated_show:
 	admin: deny
 	
 updated_edit:
-	guest: deny
+	guest: allow
 	visitor: deny
 	potentialowner: deny
 	owner: deny
