@@ -411,8 +411,10 @@ abstract class Service extends Nette\Object implements IService {
 						$phrase = \Service\Dictionary\Phrase::get($this->{$name});
 						$translator = static::getTranslator();
 						$translation = $phrase->getTranslation(\Service\Dictionary\Language::get($translator::DEFAULT_LANGUAGE));
-						$form[$name]->setDefaultValue($translation->translation);
-						$form[$name]->setDefaultParam($translation->phrase->id);
+						if ($translation) {
+							$form[$name]->setDefaultValue($translation->translation);
+							$form[$name]->setDefaultParam($translation->phrase->id);
+						}
 
 					} else if($targetEntity->associationType == Reflector::MANY_TO_MANY || $targetEntity->associationType == Reflector::ONE_TO_MANY) {
 

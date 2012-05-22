@@ -47,8 +47,8 @@ class NeonGeneratorPresenter extends EntityGeneratorPresenter {
 
 	protected $collectionTypes = array(
 		1 => 'phrase', // OneToOne
-		2 => 'selectBox', // ManyToOne
-		4 => 'checkBoxList', // OneToMany
+		2 => 'select', // ManyToOne
+		4 => 'multiSelect', // OneToMany
 		8 => 'bricksList', // ManyToMany
 	);
 
@@ -69,7 +69,6 @@ class NeonGeneratorPresenter extends EntityGeneratorPresenter {
 			$prensenter = '- Admin:' . str_replace(array('Entity\\', '\\', '.php'), array('', '', ''), $entityNameTemp);
 			$entity = '- ' . str_replace('.php', '', $entityNameTemp);
 
-
 			$presenters[] = $prensenter;
 			$entities[] = $entity;
 
@@ -81,10 +80,14 @@ class NeonGeneratorPresenter extends EntityGeneratorPresenter {
 		$entities = implode('<br/>', $entities);
 		$this->template->entities = $entities;
 
-		$this->generateNeonFiles();
+		$this->template->generatedFiles = implode('<br/>', $this->generateNeonFiles());
 
 	}
 
+	/**
+	 * Generates .neon files by entities
+	 * @return array of generated neon files
+	 */
 	public function generateNeonFiles() {
 
 		$lastFolderName = NULL;
@@ -92,14 +95,52 @@ class NeonGeneratorPresenter extends EntityGeneratorPresenter {
 		$neon = new Utils\Neon;
 		$entityDir = APP_DIR . '/models/Entity/';
 		$messageSuccess = array();
+		$generatedFiles = array();
 		foreach (Finder::findFiles('*.php')->from($entityDir) as $key => $value) {
 
 			$neonOutput = array();
-
+/*
+			$neonPresenter = array(
+				'list' => array(
+					'guest' => 'allow',
+					'visitor' => 'deny',
+					'potentialowner' => 'deny',
+					'owner' => 'deny',
+					'translator' => 'deny',
+					'assistant' => 'deny',
+					'vendor' => 'deny',
+					'manager' => 'deny',
+					'admin' => 'deny',
+				),
+				'edit' => array(
+					'guest' => 'allow',
+					'visitor' => 'deny',
+					'potentialowner' => 'deny',
+					'owner' => 'deny',
+					'translator' => 'deny',
+					'assistant' => 'deny',
+					'vendor' => 'deny',
+					'manager' => 'deny',
+					'admin' => 'deny',
+				),
+				'add' => array(
+					'guest' => 'allow',
+					'visitor' => 'deny',
+					'potentialowner' => 'deny',
+					'owner' => 'deny',
+					'translator' => 'deny',
+					'assistant' => 'deny',
+					'vendor' => 'deny',
+					'manager' => 'deny',
+					'admin' => 'deny',
+				)
+			);
+*/
 			list($x, $entityNameTemp) = explode('/models/', $key, 2);
 			$entityNameTemp = str_replace(array('/', '.php'), array('\\', ''), $entityNameTemp);
 
 			$neonFile = str_replace(array('Entity\\', '\\'), '', $entityNameTemp) . '.neon';
+			// $neonPresenterFile = 'Admin-' . str_replace(array('Entity\\', '\\'), '', $entityNameTemp) . '.neon';
 
 			// skip if neon is exists in parent folder
 			if (file_exists(APP_DIR . '/' . self::$destinationFolder . '../' . $neonFile)) continue;
@@ -117,6 +158,8 @@ class NeonGeneratorPresenter extends EntityGeneratorPresenter {
 			$fields = array();
 			$mainEntityReflector = $this->getEntityReflection($entityNameTemp);
 			foreach ($mainEntityReflector->getProperties() as $property) {
+
+				if ($property->name == 'id') continue;
 
 				$propertyInfo = $this->getPropertyInfo($property);
 				$controlType = $this->getControlType($propertyInfo);
@@ -136,6 +179,16 @@ class NeonGeneratorPresenter extends EntityGeneratorPresenter {
 
 			}
 
+			// add ID column at the start
+			$grid = array_merge(array(
+				'id'=>array(
+					'label' => 'ID',
+					'mapper' => 'e.id'
+					)
+				)
+			, $grid);
+
+
 			$title = str_replace(array('Entity\\', '\\'), array('', ' / '), $entityNameTemp);
 
 			$neonOutput['common'] = array(
@@ -151,11 +204,21 @@ class NeonGeneratorPresenter extends EntityGeneratorPresenter {
 			$neonOutput = $neon->encode($neonOutput, $neon::BLOCK);
 			$neonOutput = str_replace('\# ', '# ', $neonOutput);
 
+			$neonPresenter = $neon->encode($neonPresenter, $neon::BLOCK);
+
 			$file = APP_DIR . '/' . self::$destinationFolder . $neonFile;
 			fopen($file, 'c');
 			file_put_contents($file, preg_replace("/[\n\r]{1}\t{2,4}[\n\r]{1}/","\n", trim($neonOutput)));
 
+			// $file2 = APP_DIR . '/' . self::$destinationFolder . 'presenters/' . $neonPresenterFile;
+			// fopen($file2, 'c');
+			// file_put_contents($file2, preg_replace("/[\n\r]{1}\t{2,4}[\n\r]{1}/","\n", trim($neonPresenter)));
+			
+			$generatedFiles[] = $neonFile;
+			
 		}
+
+		return $generatedFiles;
 
 	}
 

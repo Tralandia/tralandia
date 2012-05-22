@@ -5,10 +5,14 @@ namespace Entity\Medium;
 use Entity\Dictionary;
 use Entity\Attraction;
 use Doctrine\ORM\Mapping as ORM;
+use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="medium_medium", indexes={@ORM\index(name="uri", columns={"uri"}), @ORM\index(name="oldUrl", columns={"oldUrl"}), @ORM\index(name="sort", columns={"sort"})})
+ * @EA\Service(name="\Service\Medium\Medium")
+ * @EA\ServiceList(name="\Service\Medium\MediumList")
+ * @EA\Primary(key="id", value="name")
  */
 class Medium extends \Entity\BaseEntityDetails {
 

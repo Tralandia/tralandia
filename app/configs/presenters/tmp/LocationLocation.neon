@@ -4,6 +4,9 @@ common:
 	h1: Location / Location
 	grid:
 		columns:
+			id:
+				label: ID
+				mapper: e.id
 			name:
 				label: Name
 				mapper: e.name
@@ -147,10 +150,6 @@ common:
 			details:
 				label: Details
 				mapper: e.details
-			id:
-				label: Id
-				mapper: e.id
-				cellStyle: text-align:right;
 			oldId:
 				label: OldId
 				mapper: e.oldId
@@ -199,7 +198,7 @@ common:
 			type:
 				# anotations: "var:Collection,ORMManyToOne:targetEntity:Type"
 				label: Type
-				control: selectBox
+				control: select
 			polygon:
 				# anotations: "var:json,ORMColumn:type:json,nullable:true"
 				label: Polygon
@@ -235,7 +234,7 @@ common:
 			domain:
 				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityDomain,inversedBy:locations"
 				label: Domain
-				control: selectBox
+				control: select
 			marketings:
 				# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityInvoicingMarketing,inversedBy:locations"
 				label: Marketings
@@ -247,15 +246,15 @@ common:
 			users:
 				# anotations: "var:Collection,ORMOneToMany:targetEntity:EntityUserUser,mappedBy:location,cascade:"
 				label: Users
-				control: checkBoxList
+				control: multiSelect
 			incomingLocations:
 				# anotations: "var:Collection,ORMOneToMany:targetEntity:Traveling,mappedBy:destinationLocation"
 				label: IncomingLocations
-				control: checkBoxList
+				control: multiSelect
 			outgoingLocations:
 				# anotations: "var:Collection,ORMOneToMany:targetEntity:Traveling,mappedBy:sourceLocation"
 				label: OutgoingLocations
-				control: checkBoxList
+				control: multiSelect
 			status:
 				# anotations: "var:string,ORMColumn:type:string,nullable:true"
 				label: Status
@@ -271,7 +270,7 @@ common:
 			defaultCurrency:
 				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityCurrency,cascade:"
 				label: DefaultCurrency
-				control: selectBox
+				control: select
 			currencies:
 				# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityCurrency,mappedBy:locations,cascade:"
 				label: Currencies
@@ -279,7 +278,7 @@ common:
 			defaultLanguage:
 				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityDictionaryLanguage,cascade:"
 				label: DefaultLanguage
-				control: selectBox
+				control: select
 			languages:
 				# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityDictionaryLanguage,mappedBy:locations,cascade:"
 				label: Languages
@@ -295,7 +294,7 @@ common:
 			facebookGroup:
 				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityContactContact,cascade:"
 				label: FacebookGroup
-				control: selectBox
+				control: select
 			capitalCity:
 				# anotations: "var:string,ORMColumn:type:string,nullable:true"
 				label: CapitalCity
@@ -303,23 +302,23 @@ common:
 			phoneNumberEmergency:
 				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityContactContact,cascade:"
 				label: PhoneNumberEmergency
-				control: selectBox
+				control: select
 			phoneNumberPolice:
 				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityContactContact,cascade:"
 				label: PhoneNumberPolice
-				control: selectBox
+				control: select
 			phoneNumberMedical:
 				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityContactContact,cascade:"
 				label: PhoneNumberMedical
-				control: selectBox
+				control: select
 			phoneNumberFire:
 				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityContactContact,cascade:"
 				label: PhoneNumberFire
-				control: selectBox
+				control: select
 			wikipediaLink:
 				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityContactContact,cascade:"
 				label: WikipediaLink
-				control: selectBox
+				control: select
 			contacts:
 				# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityContactContact,mappedBy:locations,cascade:"
 				label: Contacts
