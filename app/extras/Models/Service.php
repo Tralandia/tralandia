@@ -414,7 +414,7 @@ abstract class Service extends Nette\Object implements IService {
 						$form[$name]->setDefaultValue($translation->translation);
 						$form[$name]->setDefaultParam($translation->phrase->id);
 
-					} else if($targetEntity->associationType == Reflector::MANY_TO_MANY) {
+					} else if($targetEntity->associationType == Reflector::MANY_TO_MANY || $targetEntity->associationType == Reflector::ONE_TO_MANY) {
 
 						$dataTemp = array();
 						foreach ($this->{$name}->toArray() as $key => $value) {
@@ -424,11 +424,6 @@ abstract class Service extends Nette\Object implements IService {
 						$form[$name]->setDefaultValue(array_keys($dataTemp));
 						$form[$name]->setDefaultParam($dataTemp);
 						
-					} else if($targetEntity->associationType == Reflector::ONE_TO_MANY) {
-
-						// @todo method or operation is not implemented
-						throw new \Nette\NotImplementedException('Requested method or operation is not implemented');
-
 					} else if($targetEntity->associationType == Reflector::MANY_TO_ONE) {
 
 						$data[$name] = $this->{$name}->{$targetEntity->primaryKey};
@@ -474,7 +469,7 @@ abstract class Service extends Nette\Object implements IService {
 						// fraza sa needituje cez servisu
 					} else if($targetEntity->associationType == Reflector::ONE_TO_ONE) {
 						$this->{$name}->{$targetEntity->primaryValue} = $formValue;
-					} else if($targetEntity->associationType == Reflector::MANY_TO_MANY) {
+					} else if($targetEntity->associationType == Reflector::MANY_TO_MANY || $targetEntity->associationType == Reflector::ONE_TO_MANY) {
 						$this->{$name}->clear();
 						if(is_array($formValue)) {
 							foreach ($formValue as $key => $value) {
@@ -484,10 +479,6 @@ abstract class Service extends Nette\Object implements IService {
 								}
 							}
 						}
-					} else if($targetEntity->associationType == Reflector::ONE_TO_MANY) {
-						// asi tu bude to iste co je v MTM
-						// @todo method or operation is not implemented
-						throw new \Nette\NotImplementedException('Requested method or operation is not implemented');
 					} else if($targetEntity->associationType == Reflector::MANY_TO_ONE) {
 						$serviceName = $targetEntity->serviceName;
 						$this->{$name} = $serviceName::get($formValue);

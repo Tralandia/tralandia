@@ -565,7 +565,7 @@ class Reflector extends Nette\Object {
 			foreach ($classReflection->getProperties() as $property) {
 
 				$associationType = $this->getAssociationType($property);
-				debug($associationType);
+				// debug($associationType);
 				if(!$associationType || ($filter !== NULL && $filter != $associationType) ) continue;
 				
 				$association = $property->getAnnotation($associationType);
