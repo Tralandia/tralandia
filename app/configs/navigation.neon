@@ -47,8 +47,6 @@ common:
 				taskType: 
 					label: Task Types
 					link: ':Admin:AutopilotTaskType:list'
-					separator: true
-
 
 		user:
 			label: Users
@@ -62,7 +60,9 @@ common:
 				role: 
 					label: Roles
 					link: ':Admin:UserRole:list'
-					separator: true
+				acl: 
+					label: Acl
+					link: ':Admin:Acl:list'
 
 
 		rental:
@@ -146,7 +146,6 @@ common:
 					link: ':Admin:InvoicingExport:'
 					separator: true
 
-
 		dictionary:
 			label: Dictionary
 			items:
@@ -162,6 +161,7 @@ common:
 				language: 
 					label: Languages
 					link: ':Admin:DictionaryLanguage:list'
+
 		siteContent:
 			label: Site Content
 			items:
@@ -231,7 +231,6 @@ common:
 				bankAccount: 
 					label: Bank Accounts
 					link: ':Admin:CompanyBankAccount:list'
-
 
 	right: # parave strana
 		account:

@@ -4,10 +4,14 @@ namespace Entity\Contact;
 
 use Entity\Dictionary;
 use Doctrine\ORM\Mapping as ORM;
+use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="contact_type", indexes={@ORM\index(name="slug", columns={"slug"})})
+ * @EA\Service(name="\Service\Contact\Type")
+ * @EA\ServiceList(name="\Service\Contact\TypeList")
+ * @EA\Primary(key="id", value="value")
  */
 class Type extends \Entity\BaseEntity {
 

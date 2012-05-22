@@ -38,41 +38,45 @@ class AdminPresenter extends BasePresenter {
 	}
 	
 	public function actionAdd() {
-		$form = $this->getComponent('form');
-		// TODO: instancia uplne noveho zaznamu
-		//$this->service = new Service;
-	}
-
-	public function actionEdit($id = 0) {
 		$service = $this->serviceName;
-		$this->service = $service::get($id);
-		// @todo toto niekam premiestnit
-		if (!$this->user->isAllowed($this->service->getMainEntity(), 'edit')) {
-			$this->flashMessage('Access diened. You don\'t have permissions to view that page.', 'warning');
-			// $this->redirect('Auth:login');
-			throw new \Nette\MemberAccessException('co tu chces?!');
-		}
+		$this->service = $service::get();
 		$this->formMask = $this->reflector->getFormMask($this->service);
-		if(isset($this->params['display']) && $this->params['display'] == 'modal') {
-			$this->formMask->form->addClass .= ' ajax';
-			$this->setLayout('modalLayout');
-			$this->template->display = 'modal';
-		}
-
 	}
-	
-	public function renderEdit($id = 0) {
+
+	public function renderAdd() {		
 		$form = $this->getComponent('form');
-		//TODO: naslo zaznam? toto treba osetrit lebo servica nehlasi nenajdeny zaznam
-		// ale hlasi @david
-		// if (!$this->service) {
-			// throw new NA\BadRequestException('Record not found');
-		// }
 
 		$this->service->setDefaultsFormData($this->reflector->getContainer($form), $this->formMask);
 
 		$this->template->record = $this->service;
 		$this->template->form = $form;
+		$this->template->setFile(APP_DIR . '/AdminModule/templates/Admin/edit.latte');
+		$this->setRenderMode();
+	}
+
+	public function actionEdit($id = 0) {
+		$service = $this->serviceName;
+		$this->service = $service::get($id);
+		$this->formMask = $this->reflector->getFormMask($this->service);
+
+	}
+	
+	public function renderEdit($id = 0) {
+		$form = $this->getComponent('form');
+
+		$this->service->setDefaultsFormData($this->reflector->getContainer($form), $this->formMask);
+
+		$this->template->record = $this->service;
+		$this->template->form = $form;
+		$this->setRenderMode();
+	}
+
+	public function setRenderMode() {
+		if(isset($this->params['display']) && $this->params['display'] == 'modal') {
+			$this->formMask->form->addClass .= ' ajax';
+			$this->setLayout('modalLayout');
+			$this->template->display = 'modal';
+		}
 	}
 	
 	protected function createComponentForm($name) {

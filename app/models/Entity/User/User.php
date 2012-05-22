@@ -7,11 +7,15 @@ use Entity\Dictionary;
 use Entity\Location;
 use Entity\Rental;
 use Doctrine\ORM\Mapping as ORM;
-use Extras\UI as UI;
+use	Extras\Annotation as EA;
+
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="user_user", indexes={@ORM\index(name="login", columns={"login"}), @ORM\index(name="password", columns={"password"}), @ORM\index(name="isOwner", columns={"isOwner"})})
+ * @EA\Service(name="\Service\User\User")
+ * @EA\ServiceList(name="\Service\User\UserList")
+ * @EA\Primary(key="id", value="login")
  */
 class User extends \Entity\BaseEntityDetails {
 
@@ -36,14 +40,14 @@ class User extends \Entity\BaseEntityDetails {
 	/**
 	 * @var Collection
 	 * @ORM\ManyToMany(targetEntity="Role", mappedBy="users", cascade={"persist"})
-	 * @UI\SingularName(name="role")
+	 * @EA\SingularName(name="role")
 	 */
 	protected $roles;
 
 	/**
 	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="Entity\Contact\Contact", mappedBy="user", cascade={"persist", "remove"})
-	 * @UI\SingularName(name="contact") 
+	 * @EA\SingularName(name="contact") 
 	 */
 	protected $contacts;
 
@@ -56,14 +60,14 @@ class User extends \Entity\BaseEntityDetails {
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Location\Location", inversedBy="users")
-	 * @UI\SingularName(name="location") 
+	 * @EA\SingularName(name="location") 
 	 */
 	protected $location;
 
 	/**
 	 * @var Collection
 	 * @ORM\ManyToMany(targetEntity="Entity\Rental\Type", mappedBy="users")
-	 * @UI\SingularName(name="rentalType") 
+	 * @EA\SingularName(name="rentalType") 
 	 */
 	protected $rentalTypes;
 
@@ -136,21 +140,21 @@ class User extends \Entity\BaseEntityDetails {
 	/**
 	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="Combination", mappedBy="user", cascade={"persist", "remove"})
-	 * @UI\SingularName(name="combination") 
+	 * @EA\SingularName(name="combination") 
 	 */
 	protected $combinations;
 
 	/**
 	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="Entity\Rental\Rental", mappedBy="user", cascade={"persist"})
-	 * @UI\SingularName(name="rental") 
+	 * @EA\SingularName(name="rental") 
 	 */
 	protected $rentals;
 
 	/**
 	 * @var Collection
 	 * @ORM\ManyToMany(targetEntity="Entity\Autopilot\Task", inversedBy="usersExcluded")
-	 * @UI\SingularName(name="task") 
+	 * @EA\SingularName(name="task") 
 	 */
 	protected $tasks;
 

@@ -23,6 +23,9 @@ parameters:
 				js: 
 					- jQuery/jquery.js
 					- jQuery/jquery.livequery.js
+			jQueryCalendar:
+				js: jQueryCalendar/jquery.calendar.js
+				css: jQueryCalendar/jquery.calendar.css
 			jQueryUI:
 				js: 
 					- jQueryUI/jquery.ui.js
@@ -36,6 +39,7 @@ parameters:
 		sets:
 			'Admin:Autopilot':
 				- %webloader.packages.jQuery%
+				- %webloader.packages.jQueryCalendar%
 				- %webloader.packages.bootstrap%
 				- %webloader.packages.autopilot%
 

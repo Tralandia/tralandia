@@ -1,15 +1,16 @@
 .navbar .brand { text-shadow: 1px 1px 2px @grayDarker; }
 
 .container .inner {  }
-.container .inner .content { border: 1px solid @grayLight; padding: 8px; margin: 100px -13px 100px; .border-radius(10px); box-shadow:0 1px 1px @grayLight; background: @white; }
+.container .inner .content { border: 1px solid @grayLight; padding: 8px; margin: 70px -13px 100px; .border-radius(10px); box-shadow:0 1px 1px @grayLight; background: @white; }
 .container .inner .content.content-modal { margin:0 -13px; .border-radius(0); box-shadow:none; border:none; }
 
 .container .inner .content h1 { #gradient > .vertical(@white, @grayMedium); margin:-9px -9px 15px -9px; font-size:22px; border: 1px solid @grayLight; padding: 10px (@gridGutterWidth/2); .border-radius(10px 10px 0 0); }
 
 label b { color:@blueDark; font-size:14px; }
 label i { color:@grayLight; font-size:11px; }
- 
 table thead { background:@green; color:@white; }
+.align-right { text-align:right; }
+.align-left { text-align:left; }
 
 .box { background-color:#f5f5f5; box-shadow:0 1px 1px @greenBorder; padding:10px 0; }
 .nav-list > .active > a, .nav-list > .active > a:hover { background:@green; }
@@ -31,7 +32,8 @@ textarea:focus { border-color: rgba(163,196,0,.8); @shadow: inset 0 1px 1px rgba
 
 .row hr { clear: both; margin: 0 0 15px @gridGutterWidth; padding: 10px 0 0 0; height:1px; border-top:none; border-bottom-color:lighten(@grayLight, 25%); }
 
-.navbar-fixed-top .navbar-inner { padding: 0 (@gridGutterWidth/2); }
+.navbar-fixed-top .navbar-inner { padding: 0 (@gridGutterWidth/2); .border-radius(0 0 5px 5px); }
+.autopilot .navbar-fixed-top .navbar-inner { .border-radius(0); }
 
 .navbar-fixed-top .container { width:auto; }
 
@@ -103,3 +105,6 @@ table.advanced-table tr td input { margin-bottom:0; width:100%; box-sizing: bord
 table.advanced-table tr th { #gradient > .vertical(@green, @greenDark); color:@white; }
 
 .help-block { font-size:11px; clear:left; }
+
+.navbar-search .search-query::-webkit-input-placeholder { color:lighten(@green, 30%); }
+.navbar-search .search-query:-moz-placeholder { color:lighten(@green, 30%); }

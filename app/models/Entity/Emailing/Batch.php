@@ -4,10 +4,14 @@ namespace Entity\Emailing;
 
 use Entity\Emailing;
 use Doctrine\ORM\Mapping as ORM;
+use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="emailing_batch", indexes={@ORM\index(name="confirmed", columns={"confirmed"}), @ORM\index(name="totalCount", columns={"totalCount"})})
+ * @EA\Service(name="\Service\Emailing\Batch")
+ * @EA\ServiceList(name="\Service\Emailing\BatchList")
+ * @EA\Primary(key="id", value="domain")
  */
 class Batch extends \Entity\BaseEntityDetails {
 

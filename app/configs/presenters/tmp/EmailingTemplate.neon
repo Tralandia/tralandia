@@ -1,0 +1,66 @@
+common:
+	service: Service\Emailing\Template
+	title: Emailing / Template
+	h1: Emailing / Template
+	grid:
+		columns:
+			name:
+				label: Name
+				mapper: e.name
+			subject:
+				label: Subject
+				mapper: e.subject
+			body:
+				label: Body
+				mapper: e.body
+			language:
+				label: Language
+				mapper: e.language
+			batches:
+				label: Batches
+				mapper: e.batches
+			id:
+				label: Id
+				mapper: e.id
+				cellStyle: text-align:right;
+			oldId:
+				label: OldId
+				mapper: e.oldId
+				cellStyle: text-align:right;
+			created:
+				label: Created
+				mapper: e.created
+			updated:
+				label: Updated
+				mapper: e.updated
+			
+	form:
+		fields:
+			name:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: Name
+				control: text
+			subject:
+				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:"
+				label: Subject
+				control: phrase
+			body:
+				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:"
+				label: Body
+				control: phrase
+			language:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityDictionaryLanguage"
+				label: Language
+				control: selectBox
+			batches:
+				# anotations: "var:Collection,ORMOneToMany:targetEntity:Batch,mappedBy:template"
+				label: Batches
+				control: checkBoxList
+			created:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Created
+				control: datePicker
+			updated:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Updated
+				control: datePicker

@@ -10,7 +10,7 @@ common:
 			name:
 				type: text
 				label: Name
-				mapper: e.id
+				mapper: e.name
 				callback: {class: %this%, method: translateColumn, params: name}
 			slug:
 				label: Slug

@@ -4,10 +4,14 @@ namespace Entity\Attraction;
 
 use Entity\Dictionary;
 use Doctrine\ORM\Mapping as ORM;
+use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="attraction_type")
+ * @EA\Service(name="\Service\Attraction\Type")
+ * @EA\ServiceList(name="\Service\Attraction\TypeList")
+ * @EA\Primary(key="id", value="id")
  */
 class Type extends \Entity\BaseEntity {
 

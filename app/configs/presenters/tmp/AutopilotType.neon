@@ -1,0 +1,97 @@
+common:
+	service: Service\Autopilot\Type
+	title: Autopilot / Type
+	h1: Autopilot / Type
+	grid:
+		columns:
+			name:
+				label: Name
+				mapper: e.name
+			technicalName:
+				label: TechnicalName
+				mapper: e.technicalName
+			mission:
+				label: Mission
+				mapper: e.mission
+			durationPaid:
+				label: DurationPaid
+				mapper: e.durationPaid
+				cellStyle: text-align:right;
+			validation:
+				label: Validation
+				mapper: e.validation
+			stackable:
+				label: Stackable
+				mapper: e.stackable
+				cellStyle: text-align:right;
+			timeLimit:
+				label: TimeLimit
+				mapper: e.timeLimit
+				cellStyle: text-align:right;
+			actions:
+				label: Actions
+				mapper: e.actions
+			details:
+				label: Details
+				mapper: e.details
+			id:
+				label: Id
+				mapper: e.id
+				cellStyle: text-align:right;
+			oldId:
+				label: OldId
+				mapper: e.oldId
+				cellStyle: text-align:right;
+			created:
+				label: Created
+				mapper: e.created
+			updated:
+				label: Updated
+				mapper: e.updated
+			
+	form:
+		fields:
+			name:
+				# anotations: "var:string,ORMColumn:type:string"
+				label: Name
+				control: text
+			technicalName:
+				# anotations: "var:string,ORMColumn:type:string"
+				label: TechnicalName
+				control: text
+			mission:
+				# anotations: "var:text,ORMColumn:type:text"
+				label: Mission
+				control: text
+			durationPaid:
+				# anotations: "var:float,ORMColumn:type:float"
+				label: DurationPaid
+				control: text
+			validation:
+				# anotations: "var:json,ORMColumn:type:json,nullable:true"
+				label: Validation
+				control: json
+			stackable:
+				# anotations: "var:integer,ORMColumn:type:integer,nullable:true"
+				label: Stackable
+				control: text
+			timeLimit:
+				# anotations: "var:float,ORMColumn:type:float"
+				label: TimeLimit
+				control: text
+			actions:
+				# anotations: "var:json,ORMColumn:type:json,nullable:true"
+				label: Actions
+				control: json
+			details:
+				# anotations: "var:json,ORMColumn:type:json,nullable:true"
+				label: Details
+				control: json
+			created:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Created
+				control: datePicker
+			updated:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Updated
+				control: datePicker

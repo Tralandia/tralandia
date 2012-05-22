@@ -4,10 +4,14 @@ namespace Entity\Medium;
 
 use Entity\Dictionary;
 use Doctrine\ORM\Mapping as ORM;
+use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="medium_type")
+ * @EA\Service(name="\Service\Medium\Type")
+ * @EA\ServiceList(name="\Service\Medium\TypeList")
+ * @EA\Primary(key="id", value="name")
  */
 class Type extends \Entity\BaseEntityDetails {
 
@@ -16,19 +20,6 @@ class Type extends \Entity\BaseEntityDetails {
 	 * @ORM\Column(type="text")
 	 */
 	protected $name;
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //@entity-generator-code <--- NEMAZAT !!!
 

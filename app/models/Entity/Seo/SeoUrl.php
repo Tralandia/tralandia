@@ -8,10 +8,14 @@ use Entity\Location;
 use Entity\Medium;
 use Entity\Rental;
 use Doctrine\ORM\Mapping as ORM;
+use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="seo_seourl")
+ * @EA\Service(name="\Service\Seo\SeoUrl")
+ * @EA\ServiceList(name="\Service\Seo\SeoUrlList")
+ * @EA\Primary(key="id", value="id")
  */
 class SeoUrl extends \Entity\BaseEntity {
 

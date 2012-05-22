@@ -1,0 +1,59 @@
+common:
+	service: Service\User\Role
+	title: User / Role
+	h1: User / Role
+	grid:
+		columns:
+			name:
+				label: Name
+				mapper: e.name
+			slug:
+				label: Slug
+				mapper: e.slug
+			homePage:
+				label: HomePage
+				mapper: e.homePage
+			users:
+				label: Users
+				mapper: e.users
+			id:
+				label: Id
+				mapper: e.id
+				cellStyle: text-align:right;
+			oldId:
+				label: OldId
+				mapper: e.oldId
+				cellStyle: text-align:right;
+			created:
+				label: Created
+				mapper: e.created
+			updated:
+				label: Updated
+				mapper: e.updated
+			
+	form:
+		fields:
+			name:
+				# anotations: "var:string,ORMColumn:type:string"
+				label: Name
+				control: text
+			slug:
+				# anotations: "var:slug,ORMColumn:type:slug"
+				label: Slug
+				control: text
+			homePage:
+				# anotations: "var:url,ORMColumn:type:url,nullable:true"
+				label: HomePage
+				control: text
+			users:
+				# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityUserUser,inversedBy:roles,cascade:"
+				label: Users
+				control: bricksList
+			created:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Created
+				control: datePicker
+			updated:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Updated
+				control: datePicker

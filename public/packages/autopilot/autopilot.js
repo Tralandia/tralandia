@@ -12,7 +12,7 @@ Navbar.prototype = {
 var Tab = function() {
 	this.options = {
 		selectedClass: 'active',
-		topSpace: 195
+		topSpace: 145
 	};
 	this.el = { 
 		id: null,
@@ -114,6 +114,10 @@ $(function() {
 		name = $(this).text();
 		src = $(this).attr('href');
 		tab.open(name, src);
+	});
+
+	$('.calendar').livequery(function() {
+		$(".calendar").calendar();
 	});
 
 });

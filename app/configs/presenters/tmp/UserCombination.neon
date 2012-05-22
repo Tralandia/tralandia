@@ -1,0 +1,67 @@
+common:
+	service: Service\User\Combination
+	title: User / Combination
+	h1: User / Combination
+	grid:
+		columns:
+			user:
+				label: User
+				mapper: e.user
+			country:
+				label: Country
+				mapper: e.country
+			language:
+				label: Language
+				mapper: e.language
+			languageLevel:
+				label: LanguageLevel
+				mapper: e.languageLevel
+				cellStyle: text-align:right;
+			details:
+				label: Details
+				mapper: e.details
+			id:
+				label: Id
+				mapper: e.id
+				cellStyle: text-align:right;
+			oldId:
+				label: OldId
+				mapper: e.oldId
+				cellStyle: text-align:right;
+			created:
+				label: Created
+				mapper: e.created
+			updated:
+				label: Updated
+				mapper: e.updated
+			
+	form:
+		fields:
+			user:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:User,inversedBy:combinations"
+				label: User
+				control: selectBox
+			country:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityLocationLocation"
+				label: Country
+				control: selectBox
+			language:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityDictionaryLanguage"
+				label: Language
+				control: selectBox
+			languageLevel:
+				# anotations: "var:integer,ORMColumn:type:integer"
+				label: LanguageLevel
+				control: text
+			details:
+				# anotations: "var:json,ORMColumn:type:json,nullable:true"
+				label: Details
+				control: json
+			created:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Created
+				control: datePicker
+			updated:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Updated
+				control: datePicker

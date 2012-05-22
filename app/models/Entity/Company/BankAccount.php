@@ -4,10 +4,14 @@ namespace Entity\Company;
 
 use Entity\Location;
 use Doctrine\ORM\Mapping as ORM;
+use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="company_bankaccount")
+ * @EA\Service(name="\Service\Company\BankAccount")
+ * @EA\ServiceList(name="\Service\Company\BankAccountList")
+ * @EA\Primary(key="id", value="bankName")
  */
 class BankAccount extends \Entity\BaseEntity {
 

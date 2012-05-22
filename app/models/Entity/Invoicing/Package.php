@@ -5,10 +5,14 @@ namespace Entity\Invoicing;
 use Entity\Dictionary;
 use Entity\Location;
 use Doctrine\ORM\Mapping as ORM;
+use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="invoicing_package")
+ * @EA\Service(name="\Service\Invoicing\Package")
+ * @EA\ServiceList(name="\Service\Invoicing\PackageList")
+ * @EA\Primary(key="id", value="id")
  */
 class Package extends \Entity\BaseEntity {
 

@@ -1,0 +1,81 @@
+common:
+	service: Service\Expense\Expense
+	title: Expense / Expense
+	h1: Expense / Expense
+	grid:
+		columns:
+			name:
+				label: Name
+				mapper: e.name
+			amount:
+				label: Amount
+				mapper: e.amount
+				cellStyle: text-align:right;
+			type:
+				label: Type
+				mapper: e.type
+			country:
+				label: Country
+				mapper: e.country
+			company:
+				label: Company
+				mapper: e.company
+			bankAccount:
+				label: BankAccount
+				mapper: e.bankAccount
+			user:
+				label: User
+				mapper: e.user
+			id:
+				label: Id
+				mapper: e.id
+				cellStyle: text-align:right;
+			oldId:
+				label: OldId
+				mapper: e.oldId
+				cellStyle: text-align:right;
+			created:
+				label: Created
+				mapper: e.created
+			updated:
+				label: Updated
+				mapper: e.updated
+			
+	form:
+		fields:
+			name:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: Name
+				control: text
+			amount:
+				# anotations: "var:price,ORMColumn:type:price"
+				label: Amount
+				control: text
+			type:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:Type"
+				label: Type
+				control: selectBox
+			country:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityLocationLocation"
+				label: Country
+				control: selectBox
+			company:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityCompanyCompany"
+				label: Company
+				control: selectBox
+			bankAccount:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityCompanyBankAccount"
+				label: BankAccount
+				control: selectBox
+			user:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityUserUser"
+				label: User
+				control: selectBox
+			created:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Created
+				control: datePicker
+			updated:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Updated
+				control: datePicker

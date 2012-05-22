@@ -1,0 +1,45 @@
+common:
+	service: Service\Invoicing\ServiceType
+	title: Invoicing / ServiceType
+	h1: Invoicing / ServiceType
+	grid:
+		columns:
+			slug:
+				label: Slug
+				mapper: e.slug
+			name:
+				label: Name
+				mapper: e.name
+			id:
+				label: Id
+				mapper: e.id
+				cellStyle: text-align:right;
+			oldId:
+				label: OldId
+				mapper: e.oldId
+				cellStyle: text-align:right;
+			created:
+				label: Created
+				mapper: e.created
+			updated:
+				label: Updated
+				mapper: e.updated
+			
+	form:
+		fields:
+			slug:
+				# anotations: "var:slug,ORMColumn:type:slug"
+				label: Slug
+				control: text
+			name:
+				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:"
+				label: Name
+				control: phrase
+			created:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Created
+				control: datePicker
+			updated:
+				# anotations: "var:datetime,ORMColumn:type:datetime"
+				label: Updated
+				control: datePicker
