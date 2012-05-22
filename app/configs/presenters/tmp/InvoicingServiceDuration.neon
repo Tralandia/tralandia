@@ -4,6 +4,9 @@ common:
 	h1: Invoicing / ServiceDuration
 	grid:
 		columns:
+			id:
+				label: ID
+				mapper: e.id
 			duration:
 				label: Duration
 				mapper: e.duration
@@ -13,10 +16,6 @@ common:
 			sort:
 				label: Sort
 				mapper: e.sort
-				cellStyle: text-align:right;
-			id:
-				label: Id
-				mapper: e.id
 				cellStyle: text-align:right;
 			oldId:
 				label: OldId

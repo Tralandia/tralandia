@@ -4,13 +4,12 @@ common:
 	h1: Attraction / Type
 	grid:
 		columns:
+			id:
+				label: ID
+				mapper: e.id
 			name:
 				label: Name
 				mapper: e.name
-			id:
-				label: Id
-				mapper: e.id
-				cellStyle: text-align:right;
 			oldId:
 				label: OldId
 				mapper: e.oldId

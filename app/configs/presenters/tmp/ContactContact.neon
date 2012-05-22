@@ -4,6 +4,9 @@ common:
 	h1: Contact / Contact
 	grid:
 		columns:
+			id:
+				label: ID
+				mapper: e.id
 			type:
 				label: Type
 				mapper: e.type
@@ -37,10 +40,6 @@ common:
 			spam:
 				label: Spam
 				mapper: e.spam
-			id:
-				label: Id
-				mapper: e.id
-				cellStyle: text-align:right;
 			oldId:
 				label: OldId
 				mapper: e.oldId

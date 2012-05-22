@@ -4,6 +4,9 @@ common:
 	h1: Invoicing / Marketing
 	grid:
 		columns:
+			id:
+				label: ID
+				mapper: e.id
 			name:
 				label: Name
 				mapper: e.name
@@ -33,10 +36,6 @@ common:
 			uses:
 				label: Uses
 				mapper: e.uses
-			id:
-				label: Id
-				mapper: e.id
-				cellStyle: text-align:right;
 			oldId:
 				label: OldId
 				mapper: e.oldId

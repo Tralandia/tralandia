@@ -4,6 +4,9 @@ common:
 	h1: Rental / Rental
 	grid:
 		columns:
+			id:
+				label: ID
+				mapper: e.id
 			user:
 				label: User
 				mapper: e.user
@@ -84,10 +87,6 @@ common:
 			invoices:
 				label: Invoices
 				mapper: e.invoices
-			id:
-				label: Id
-				mapper: e.id
-				cellStyle: text-align:right;
 			oldId:
 				label: OldId
 				mapper: e.oldId

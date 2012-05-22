@@ -4,6 +4,9 @@ common:
 	h1: User / User
 	grid:
 		columns:
+			id:
+				label: ID
+				mapper: e.id
 			login:
 				label: Login
 				mapper: e.login
@@ -73,10 +76,6 @@ common:
 			details:
 				label: Details
 				mapper: e.details
-			id:
-				label: Id
-				mapper: e.id
-				cellStyle: text-align:right;
 			oldId:
 				label: OldId
 				mapper: e.oldId

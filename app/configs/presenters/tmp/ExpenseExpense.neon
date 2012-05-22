@@ -4,6 +4,9 @@ common:
 	h1: Expense / Expense
 	grid:
 		columns:
+			id:
+				label: ID
+				mapper: e.id
 			name:
 				label: Name
 				mapper: e.name
@@ -26,10 +29,6 @@ common:
 			user:
 				label: User
 				mapper: e.user
-			id:
-				label: Id
-				mapper: e.id
-				cellStyle: text-align:right;
 			oldId:
 				label: OldId
 				mapper: e.oldId

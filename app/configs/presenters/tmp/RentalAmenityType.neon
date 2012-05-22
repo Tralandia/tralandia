@@ -4,6 +4,9 @@ common:
 	h1: Rental / AmenityType
 	grid:
 		columns:
+			id:
+				label: ID
+				mapper: e.id
 			amenities:
 				label: Amenities
 				mapper: e.amenities
@@ -13,10 +16,6 @@ common:
 			slug:
 				label: Slug
 				mapper: e.slug
-			id:
-				label: Id
-				mapper: e.id
-				cellStyle: text-align:right;
 			oldId:
 				label: OldId
 				mapper: e.oldId

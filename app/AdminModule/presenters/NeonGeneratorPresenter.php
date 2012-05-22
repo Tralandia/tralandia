@@ -69,7 +69,6 @@ class NeonGeneratorPresenter extends EntityGeneratorPresenter {
 			$prensenter = '- Admin:' . str_replace(array('Entity\\', '\\', '.php'), array('', '', ''), $entityNameTemp);
 			$entity = '- ' . str_replace('.php', '', $entityNameTemp);
 
-
 			$presenters[] = $prensenter;
 			$entities[] = $entity;
 
@@ -81,10 +80,14 @@ class NeonGeneratorPresenter extends EntityGeneratorPresenter {
 		$entities = implode('<br/>', $entities);
 		$this->template->entities = $entities;
 
-		$this->generateNeonFiles();
+		$this->template->generatedFiles = implode('<br/>', $this->generateNeonFiles());
 
 	}
 
+	/**
+	 * Generates .neon files by entities
+	 * @return array of generated neon files
+	 */
 	public function generateNeonFiles() {
 
 		$lastFolderName = NULL;
@@ -92,6 +95,7 @@ class NeonGeneratorPresenter extends EntityGeneratorPresenter {
 		$neon = new Utils\Neon;
 		$entityDir = APP_DIR . '/models/Entity/';
 		$messageSuccess = array();
+		$generatedFiles = array();
 		foreach (Finder::findFiles('*.php')->from($entityDir) as $key => $value) {
 
 			$neonOutput = array();
@@ -118,6 +122,8 @@ class NeonGeneratorPresenter extends EntityGeneratorPresenter {
 			$mainEntityReflector = $this->getEntityReflection($entityNameTemp);
 			foreach ($mainEntityReflector->getProperties() as $property) {
 
+				if ($property->name == 'id') continue;
+
 				$propertyInfo = $this->getPropertyInfo($property);
 				$controlType = $this->getControlType($propertyInfo);
 
@@ -136,6 +142,16 @@ class NeonGeneratorPresenter extends EntityGeneratorPresenter {
 
 			}
 
+			// add ID column at the start
+			$grid = array_merge(array(
+				'id'=>array(
+					'label' => 'ID',
+					'mapper' => 'e.id'
+					)
+				)
+			, $grid);
+
+
 			$title = str_replace(array('Entity\\', '\\'), array('', ' / '), $entityNameTemp);
 
 			$neonOutput['common'] = array(
@@ -152,10 +168,13 @@ class NeonGeneratorPresenter extends EntityGeneratorPresenter {
 			$neonOutput = str_replace('\# ', '# ', $neonOutput);
 
 			$file = APP_DIR . '/' . self::$destinationFolder . $neonFile;
+			$generatedFiles[] = $neonFile;
 			fopen($file, 'c');
 			file_put_contents($file, preg_replace("/[\n\r]{1}\t{2,4}[\n\r]{1}/","\n", trim($neonOutput)));
 
 		}
+
+		return $generatedFiles;
 
 	}
 

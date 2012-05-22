@@ -4,6 +4,9 @@ common:
 	h1: Seo / TitleSuffix
 	grid:
 		columns:
+			id:
+				label: ID
+				mapper: e.id
 			country:
 				label: Country
 				mapper: e.country
@@ -13,10 +16,6 @@ common:
 			suffix:
 				label: Suffix
 				mapper: e.suffix
-			id:
-				label: Id
-				mapper: e.id
-				cellStyle: text-align:right;
 			oldId:
 				label: OldId
 				mapper: e.oldId

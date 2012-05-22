@@ -4,6 +4,9 @@ common:
 	h1: Seo / SeoUrl
 	grid:
 		columns:
+			id:
+				label: ID
+				mapper: e.id
 			country:
 				label: Country
 				mapper: e.country
@@ -41,10 +44,6 @@ common:
 			ppcKeywords:
 				label: PpcKeywords
 				mapper: e.ppcKeywords
-			id:
-				label: Id
-				mapper: e.id
-				cellStyle: text-align:right;
 			oldId:
 				label: OldId
 				mapper: e.oldId

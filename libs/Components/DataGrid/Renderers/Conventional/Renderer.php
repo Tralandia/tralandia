@@ -428,9 +428,9 @@ class Conventional extends Nette\Object implements IRenderer
 
 				$up = clone $down = Html::el('a')->addClass(Columns\Column::$ajaxClass);
 				$up->addClass($a ? 'active' : '')->href($column->getOrderLink('a'))
-					->add(Html::el('span')->class('up'));
+					->add(Html::el('span')->class('icon-chevron-up icon-white'));
 				$down->addClass($d ? 'active' : '')->href($column->getOrderLink('d'))
-					->add(Html::el('span')->class('down'));
+					->add(Html::el('span')->class('icon-chevron-down icon-white'));
 				$positioner = Html::el('span')->class('positioner')->add($up)->add($down);
 				$active = $a || $d;
 

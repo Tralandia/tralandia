@@ -4,6 +4,9 @@ common:
 	h1: Invoicing / Service
 	grid:
 		columns:
+			id:
+				label: ID
+				mapper: e.id
 			type:
 				label: Type
 				mapper: e.type
@@ -21,10 +24,6 @@ common:
 			package:
 				label: Package
 				mapper: e.package
-			id:
-				label: Id
-				mapper: e.id
-				cellStyle: text-align:right;
 			oldId:
 				label: OldId
 				mapper: e.oldId

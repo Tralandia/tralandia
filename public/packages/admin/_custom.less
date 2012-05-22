@@ -11,8 +11,8 @@ label b { color:@blueDark; font-size:14px; }
 label i { color:@grayLight; font-size:11px; }
 table thead { #gradient > .vertical(@green, @greenDark); color:@white; }
 table thead a { color:@white; }
-table thead .positioner .datagrid-ajax span.up { .icon(); .icon-chevron-up(); }
-table thead .positioner .datagrid-ajax span.down { .icon(); .icon-chevron-down(); }
+table thead .positioner { float:left; }
+table thead .positioner .active span { background-image: url("@{iconSpritePath}"); }
 .align-right { text-align:right; }
 .align-left { text-align:left; }
 

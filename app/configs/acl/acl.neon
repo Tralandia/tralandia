@@ -32,6 +32,8 @@ parameters:
 				default:
 				list:
 				edit:
+			Admin:NeonGenerator:
+				default:
 			Admin:Acl:
 				list:
 				entityEdit:

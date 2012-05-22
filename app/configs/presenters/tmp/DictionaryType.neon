@@ -4,6 +4,9 @@ common:
 	h1: Dictionary / Type
 	grid:
 		columns:
+			id:
+				label: ID
+				mapper: e.id
 			name:
 				label: Name
 				mapper: e.name
@@ -41,10 +44,6 @@ common:
 			checkingRequired:
 				label: CheckingRequired
 				mapper: e.checkingRequired
-			id:
-				label: Id
-				mapper: e.id
-				cellStyle: text-align:right;
 			oldId:
 				label: OldId
 				mapper: e.oldId

@@ -5,9 +5,8 @@ common:
 	grid:
 		columns:
 			id:
-				label: Id
+				label: ID
 				mapper: e.id
-				cellStyle: text-align:right;
 			oldId:
 				label: OldId
 				mapper: e.oldId
