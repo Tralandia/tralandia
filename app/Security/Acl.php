@@ -60,7 +60,7 @@ class Acl extends Permission {
 		$data['roles'] = \Service\User\RoleList::getPairs('id', 'slug', NULL, 9);
 		foreach ($files as $filepath => $file) {
 			//debug($file);
-			$resource = $file->getBasename('.neon');
+			$resource = str_replace(array('_', '-'), array('\\', ':'), $file->getBasename('.neon'));
 			$data['resources'][] = $resource;
 			$content = $this->getConfigFromFile($filepath);
 
