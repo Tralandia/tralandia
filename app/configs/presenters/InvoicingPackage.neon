@@ -13,10 +13,12 @@ common:
 				callback: {class: %this%, method: translateColumn, params: name}
 			teaser:
 				label: Teaser
-				mapper: e.teaser
+				mapper: e.id
+				callback: {class: %this%, method: translateColumn, params: name}
 			uses:
 				label: Uses
-				mapper: e.uses
+				mapper: e.id
+				callback: {class: %this%, method: translateColumn, params: name}
 			country:
 				label: Country
 				mapper: e.country

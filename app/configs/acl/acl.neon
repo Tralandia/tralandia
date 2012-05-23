@@ -9,6 +9,8 @@ parameters:
 				callback: ['\\Security\\MyAssertion', 'test']
 
 		presenters:
+			Admin:Cibi:
+				default:
 			Admin:EntityGenerator:
 				list:
 				default:

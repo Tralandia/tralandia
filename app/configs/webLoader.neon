@@ -23,6 +23,7 @@ parameters:
 				js: 
 					- jQuery/jquery.js
 					- jQuery/jquery.livequery.js
+					- jQuery/jquery.textarea.js
 			jQueryCalendar:
 				js: jQueryCalendar/jquery.calendar.js
 				css: jQueryCalendar/jquery.calendar.css
@@ -42,6 +43,7 @@ parameters:
 				- %webloader.packages.jQueryCalendar%
 				- %webloader.packages.bootstrap%
 				- %webloader.packages.autopilot%
+				- %webloader.packages.admin%
 
 			Admin: 
 				- %webloader.packages.jQuery%
