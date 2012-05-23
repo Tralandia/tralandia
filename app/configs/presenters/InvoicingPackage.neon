@@ -9,7 +9,8 @@ common:
 				mapper: e.id
 			name:
 				label: Name
-				mapper: e.name
+				mapper: e.id
+				callback: {class: %this%, method: translateColumn, params: name}
 			teaser:
 				label: Teaser
 				mapper: e.teaser
@@ -19,9 +20,9 @@ common:
 			country:
 				label: Country
 				mapper: e.country
-			services:
-				label: Services
-				mapper: e.services
+			# services:
+			# 	label: Services
+			# 	mapper: e.services
 			oldId:
 				label: OldId
 				mapper: e.oldId

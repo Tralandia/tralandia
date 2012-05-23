@@ -7,21 +7,21 @@ common:
 			id:
 				label: ID
 				mapper: e.id
-			bankAccounts:
-				label: BankAccounts
-				mapper: e.bankAccounts
-			countries:
-				label: Countries
-				mapper: e.countries
-			offices:
-				label: Offices
-				mapper: e.offices
+			# bankAccounts:
+			# 	label: BankAccounts
+			# 	mapper: e.bankAccounts
+			# countries:
+			# 	label: Countries
+			# 	mapper: e.countries
+			# offices:
+			# 	label: Offices
+			# 	mapper: e.offices
 			name:
 				label: Name
 				mapper: e.name
-			address:
-				label: Address
-				mapper: e.address
+			# address:
+			# 	label: Address
+			# 	mapper: e.address
 			companyId:
 				label: CompanyId
 				mapper: e.companyId
@@ -32,15 +32,15 @@ common:
 				label: Vat
 				mapper: e.vat
 				cellStyle: text-align:right;
-			registrator:
-				label: Registrator
-				mapper: e.registrator
-			invoices:
-				label: Invoices
-				mapper: e.invoices
-			details:
-				label: Details
-				mapper: e.details
+			# registrator:
+			# 	label: Registrator
+			# 	mapper: e.registrator
+			# invoices:
+			# 	label: Invoices
+			# 	mapper: e.invoices
+			# details:
+			# 	label: Details
+			# 	mapper: e.details
 			oldId:
 				label: OldId
 				mapper: e.oldId

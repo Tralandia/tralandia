@@ -15,7 +15,8 @@ common:
 				mapper: e.subtype
 			name:
 				label: Name
-				mapper: e.name
+				mapper: e.id
+				callback: {class: %this%, method: translateColumn, params: name}
 			mission:
 				label: Mission
 				mapper: e.mission

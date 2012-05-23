@@ -12,7 +12,8 @@ common:
 				mapper: e.duration
 			name:
 				label: Name
-				mapper: e.name
+				mapper: e.id
+				callback: {class: %this%, method: translateColumn, params: name}
 			sort:
 				label: Sort
 				mapper: e.sort

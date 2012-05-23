@@ -9,16 +9,16 @@ common:
 				mapper: e.id
 			company:
 				label: Company
-				mapper: e.company
-			countries:
-				label: Countries
-				mapper: e.countries
+				mapper: e.id
+			# countries:
+			# 	label: Countries
+			# 	mapper: e.countries
 			signature:
 				label: Signature
 				mapper: e.signature
-			address:
-				label: Address
-				mapper: e.address
+			# address:
+			# 	label: Address
+			# 	mapper: e.address
 			details:
 				label: Details
 				mapper: e.details
@@ -32,7 +32,7 @@ common:
 			updated:
 				label: Updated
 				mapper: e.updated
-			
+
 	form:
 		fields:
 			company:
