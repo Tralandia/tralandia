@@ -12,8 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class SiteOwnerReview extends \Entity\BaseEntity {
 
-	// static const STATUS_PENDING = 0;
-	// static const STATUS_APROVED = 1;
+	const STATUS_PENDING = 0;
+	const STATUS_APROVED = 1;
 
 	/**
 	 * @var Collection
@@ -23,9 +23,9 @@ class SiteOwnerReview extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Rental\Rental")
+	 * @ORM\ManyToOne(targetEntity="Entity\Location\Location")
 	 */
-	protected $rental;
+	protected $location;
 
 	/**
 	 * @var email
@@ -40,36 +40,16 @@ class SiteOwnerReview extends \Entity\BaseEntity {
 	protected $senderName;
 
 	/**
-	 * @var phone
-	 * @ORM\Column(type="phone")
+	 * @var text
+	 * @ORM\Column(type="text")
 	 */
-	protected $senderPhone;
+	protected $testimonial;
 
 	/**
-	 * @var datetime
-	 * @ORM\Column(type="datetime", nullable=true)
+	 * @var integer
+	 * @ORM\Column(type="integer")
 	 */
-	protected $arrivalDate;
-
-	/**
-	 * @var datetime
-	 * @ORM\Column(type="datetime", nullable=true)
-	 */
-	protected $departureDate;
-
-	/**
-	 * @var json
-	 * @ORM\Column(type="json")
-	 * all details about people / children / rooms will be here
-	 */
-	protected $capacity;
-
-	/**
-	 * @var string
-	 * @ORM\Column(type="string")
-	 */
-	protected $message;
-
+	protected $status = self::STATUS_PENDING;
 
 //@entity-generator-code <--- NEMAZAT !!!
 
@@ -105,11 +85,11 @@ class SiteOwnerReview extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Rental\Rental
+	 * @param \Entity\Location\Location
 	 * @return \Entity\User\SiteOwnerReview
 	 */
-	public function setRental(\Entity\Rental\Rental $rental) {
-		$this->rental = $rental;
+	public function setLocation(\Entity\Location\Location $location) {
+		$this->location = $location;
 
 		return $this;
 	}
@@ -117,17 +97,17 @@ class SiteOwnerReview extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\User\SiteOwnerReview
 	 */
-	public function unsetRental() {
-		$this->rental = NULL;
+	public function unsetLocation() {
+		$this->location = NULL;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Entity\Rental\Rental|NULL
+	 * @return \Entity\Location\Location|NULL
 	 */
-	public function getRental() {
-		return $this->rental;
+	public function getLocation() {
+		return $this->location;
 	}
 		
 	/**
@@ -165,97 +145,11 @@ class SiteOwnerReview extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Extras\Types\Phone
-	 * @return \Entity\User\SiteOwnerReview
-	 */
-	public function setSenderPhone(\Extras\Types\Phone $senderPhone) {
-		$this->senderPhone = $senderPhone;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Extras\Types\Phone|NULL
-	 */
-	public function getSenderPhone() {
-		return $this->senderPhone;
-	}
-		
-	/**
-	 * @param \DateTime
-	 * @return \Entity\User\SiteOwnerReview
-	 */
-	public function setArrivalDate(\DateTime $arrivalDate) {
-		$this->arrivalDate = $arrivalDate;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\User\SiteOwnerReview
-	 */
-	public function unsetArrivalDate() {
-		$this->arrivalDate = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \DateTime|NULL
-	 */
-	public function getArrivalDate() {
-		return $this->arrivalDate;
-	}
-		
-	/**
-	 * @param \DateTime
-	 * @return \Entity\User\SiteOwnerReview
-	 */
-	public function setDepartureDate(\DateTime $departureDate) {
-		$this->departureDate = $departureDate;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\User\SiteOwnerReview
-	 */
-	public function unsetDepartureDate() {
-		$this->departureDate = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \DateTime|NULL
-	 */
-	public function getDepartureDate() {
-		return $this->departureDate;
-	}
-		
-	/**
-	 * @param json
-	 * @return \Entity\User\SiteOwnerReview
-	 */
-	public function setCapacity($capacity) {
-		$this->capacity = $capacity;
-
-		return $this;
-	}
-		
-	/**
-	 * @return json|NULL
-	 */
-	public function getCapacity() {
-		return $this->capacity;
-	}
-		
-	/**
 	 * @param string
 	 * @return \Entity\User\SiteOwnerReview
 	 */
-	public function setMessage($message) {
-		$this->message = $message;
+	public function setTestimonial($testimonial) {
+		$this->testimonial = $testimonial;
 
 		return $this;
 	}
@@ -263,7 +157,24 @@ class SiteOwnerReview extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getMessage() {
-		return $this->message;
+	public function getTestimonial() {
+		return $this->testimonial;
+	}
+		
+	/**
+	 * @param integer
+	 * @return \Entity\User\SiteOwnerReview
+	 */
+	public function setStatus($status) {
+		$this->status = $status;
+
+		return $this;
+	}
+		
+	/**
+	 * @return integer|NULL
+	 */
+	public function getStatus() {
+		return $this->status;
 	}
 }

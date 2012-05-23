@@ -1,14 +1,3 @@
-list:
-	guest: allow
-	visitor: deny
-	potentialowner: deny
-	owner: deny
-	translator: deny
-	assistant: deny
-	vendor: deny
-	manager: deny
-	admin: deny
-	
 default:
 	guest: allow
 	visitor: deny
@@ -20,7 +9,29 @@ default:
 	manager: deny
 	admin: deny
 	
-forceAll:
+list:
+	guest: allow
+	visitor: deny
+	potentialowner: deny
+	owner: deny
+	translator: deny
+	assistant: deny
+	vendor: deny
+	manager: deny
+	admin: deny
+	
+edit:
+	guest: allow
+	visitor: deny
+	potentialowner: deny
+	owner: deny
+	translator: deny
+	assistant: deny
+	vendor: deny
+	manager: deny
+	admin: deny
+	
+add:
 	guest: allow
 	visitor: deny
 	potentialowner: deny
