@@ -56,15 +56,15 @@ common:
 			# invoicingAddress:
 			# 	label: InvoicingAddress
 			# 	mapper: e.invoicingAddress
-			# invoicingCompanyId:
-			# 	label: InvoicingCompanyId
-			# 	mapper: e.invoicingCompanyId
-			# invoicingCompanyVatId:
-			# 	label: InvoicingCompanyVatId
-			# 	mapper: e.invoicingCompanyVatId
-			# currentTelmarkOperator:
-			# 	label: CurrentTelmarkOperator
-			# 	mapper: e.currentTelmarkOperator
+			invoicingCompanyId:
+				label: InvoicingCompanyId
+				mapper: e.invoicingCompanyId
+			invoicingCompanyVatId:
+				label: InvoicingCompanyVatId
+				mapper: e.invoicingCompanyVatId
+			currentTelmarkOperator:
+				label: CurrentTelmarkOperator
+				mapper: e.currentTelmarkOperator
 			# combinations:
 			# 	label: Combinations
 			# 	mapper: e.combinations
@@ -77,16 +77,16 @@ common:
 			# details:
 			# 	label: Details
 			# 	mapper: e.details
-			# oldId:
-			# 	label: OldId
-			# 	mapper: e.oldId
-			# 	cellStyle: text-align:right;
-			# created:
-			# 	label: Created
-			# 	mapper: e.created
-			# updated:
-			# 	label: Updated
-			# 	mapper: e.updated
+			oldId:
+				label: OldId
+				mapper: e.oldId
+				cellStyle: text-align:right;
+			created:
+				label: Created
+				mapper: e.created
+			updated:
+				label: Updated
+				mapper: e.updated
 			
 	form:
 		fields:
