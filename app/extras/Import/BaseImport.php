@@ -126,6 +126,17 @@ class BaseImport {
 			),
 			'subsections' => array(),
 		),
+		'interactions' => array(
+			'entities' => array(
+				'\User\RentalReservation' => array(),
+				'\User\RentalQuestion' => array(),
+				'\User\RentalReview' => array(),
+				'\User\RentalToFriend' => array(),
+				'\User\SiteOwnerReview' => array(),
+				'\User\SiteVisitorReview' => array(),
+			),
+			'subsections' => array(),
+		),
 	);
 
 	public $savedVariables = array();
