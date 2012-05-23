@@ -7,18 +7,18 @@ common:
 			id:
 				label: ID
 				mapper: e.id
-			countries:
-				label: Countries
-				mapper: e.countries
-			company:
-				label: Company
-				mapper: e.company
+			# countries:
+			# 	label: Countries
+			# 	mapper: e.countries
+			# company:
+			# 	label: Company
+			# 	mapper: e.company
 			bankName:
 				label: BankName
 				mapper: e.bankName
-			bankAddress:
-				label: BankAddress
-				mapper: e.bankAddress
+			# bankAddress:
+			# 	label: BankAddress
+			# 	mapper: e.bankAddress
 			bankSwift:
 				label: BankSwift
 				mapper: e.bankSwift

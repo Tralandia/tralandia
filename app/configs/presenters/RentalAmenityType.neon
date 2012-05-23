@@ -7,12 +7,13 @@ common:
 			id:
 				label: ID
 				mapper: e.id
-			amenities:
-				label: Amenities
-				mapper: e.amenities
+			# amenities:
+			# 	label: Amenities
+			# 	mapper: e.amenities
 			name:
 				label: Name
-				mapper: e.name
+				mapper: e.id
+				callback: {class: %this%, method: translateColumn, params: name}
 			slug:
 				label: Slug
 				mapper: e.slug

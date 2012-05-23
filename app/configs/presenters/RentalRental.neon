@@ -44,7 +44,8 @@ common:
 				mapper: e.slug
 			name:
 				label: Name
-				mapper: e.name
+				mapper: e.id
+				callback: {class: %this%, method: translateColumn, params: name}
 			briefDescription:
 				label: BriefDescription
 				mapper: e.briefDescription

@@ -7,9 +7,10 @@ common:
 			id:
 				label: ID
 				mapper: e.id
-			name:
-				label: Name
-				mapper: e.name
+			# name:
+			# 	label: Name
+			# 	mapper: e.id
+			# 	callback: {class: %this%, method: translateColumn, params: name}
 			entityName:
 				label: EntityName
 				mapper: e.entityName
@@ -32,28 +33,28 @@ common:
 			locativeRequired:
 				label: LocativeRequired
 				mapper: e.locativeRequired
-			positionRequired:
-				label: PositionRequired
-				mapper: e.positionRequired
-			webalizedRequired:
-				label: WebalizedRequired
-				mapper: e.webalizedRequired
-			helpForTranslator:
-				label: HelpForTranslator
-				mapper: e.helpForTranslator
-			checkingRequired:
-				label: CheckingRequired
-				mapper: e.checkingRequired
-			oldId:
-				label: OldId
-				mapper: e.oldId
-				cellStyle: text-align:right;
-			created:
-				label: Created
-				mapper: e.created
-			updated:
-				label: Updated
-				mapper: e.updated
+			# positionRequired:
+			# 	label: PositionRequired
+			# 	mapper: e.positionRequired
+			# webalizedRequired:
+			# 	label: WebalizedRequired
+			# 	mapper: e.webalizedRequired
+			# helpForTranslator:
+			# 	label: HelpForTranslator
+			# 	mapper: e.helpForTranslator
+			# checkingRequired:
+			# 	label: CheckingRequired
+			# 	mapper: e.checkingRequired
+			# oldId:
+			# 	label: OldId
+			# 	mapper: e.oldId
+			# 	cellStyle: text-align:right;
+			# created:
+			# 	label: Created
+			# 	mapper: e.created
+			# updated:
+			# 	label: Updated
+			# 	mapper: e.updated
 			
 	form:
 		fields:
