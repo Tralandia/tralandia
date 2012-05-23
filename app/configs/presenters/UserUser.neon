@@ -16,21 +16,22 @@ common:
 			isOwner:
 				label: IsOwner
 				mapper: e.isOwner
-			roles:
-				label: Roles
-				mapper: e.roles
-			contacts:
-				label: Contacts
-				mapper: e.contacts
+			# roles:
+			# 	label: Roles
+			# 	mapper: e.roles
+			# contacts:
+			# 	label: Contacts
+			# 	mapper: e.contacts
 			defaultLanguage:
 				label: DefaultLanguage
-				mapper: e.defaultLanguage
+				mapper: e.id
+				callback: {class: %this%, method: translateColumn, params: defaultLanguage}
 			location:
 				label: Location
 				mapper: e.location
-			rentalTypes:
-				label: RentalTypes
-				mapper: e.rentalTypes
+			# rentalTypes:
+			# 	label: RentalTypes
+			# 	mapper: e.rentalTypes
 			invoicingSalutation:
 				label: InvoicingSalutation
 				mapper: e.invoicingSalutation
@@ -43,49 +44,49 @@ common:
 			invoicingCompanyName:
 				label: InvoicingCompanyName
 				mapper: e.invoicingCompanyName
-			invoicingEmail:
-				label: InvoicingEmail
-				mapper: e.invoicingEmail
+			# invoicingEmail:
+			# 	label: InvoicingEmail
+			# 	mapper: e.invoicingEmail
 			invoicingPhone:
 				label: InvoicingPhone
 				mapper: e.invoicingPhone
 			invoicingUrl:
 				label: InvoicingUrl
 				mapper: e.invoicingUrl
-			invoicingAddress:
-				label: InvoicingAddress
-				mapper: e.invoicingAddress
-			invoicingCompanyId:
-				label: InvoicingCompanyId
-				mapper: e.invoicingCompanyId
-			invoicingCompanyVatId:
-				label: InvoicingCompanyVatId
-				mapper: e.invoicingCompanyVatId
-			currentTelmarkOperator:
-				label: CurrentTelmarkOperator
-				mapper: e.currentTelmarkOperator
-			combinations:
-				label: Combinations
-				mapper: e.combinations
-			rentals:
-				label: Rentals
-				mapper: e.rentals
-			tasks:
-				label: Tasks
-				mapper: e.tasks
-			details:
-				label: Details
-				mapper: e.details
-			oldId:
-				label: OldId
-				mapper: e.oldId
-				cellStyle: text-align:right;
-			created:
-				label: Created
-				mapper: e.created
-			updated:
-				label: Updated
-				mapper: e.updated
+			# invoicingAddress:
+			# 	label: InvoicingAddress
+			# 	mapper: e.invoicingAddress
+			# invoicingCompanyId:
+			# 	label: InvoicingCompanyId
+			# 	mapper: e.invoicingCompanyId
+			# invoicingCompanyVatId:
+			# 	label: InvoicingCompanyVatId
+			# 	mapper: e.invoicingCompanyVatId
+			# currentTelmarkOperator:
+			# 	label: CurrentTelmarkOperator
+			# 	mapper: e.currentTelmarkOperator
+			# combinations:
+			# 	label: Combinations
+			# 	mapper: e.combinations
+			# rentals:
+			# 	label: Rentals
+			# 	mapper: e.rentals
+			# tasks:
+			# 	label: Tasks
+			# 	mapper: e.tasks
+			# details:
+			# 	label: Details
+			# 	mapper: e.details
+			# oldId:
+			# 	label: OldId
+			# 	mapper: e.oldId
+			# 	cellStyle: text-align:right;
+			# created:
+			# 	label: Created
+			# 	mapper: e.created
+			# updated:
+			# 	label: Updated
+			# 	mapper: e.updated
 			
 	form:
 		fields:

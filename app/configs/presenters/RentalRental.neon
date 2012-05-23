@@ -9,17 +9,19 @@ common:
 				mapper: e.id
 			user:
 				label: User
-				mapper: e.user
+				mapper: e.id
+				callback: {class: %this%, method: translateColumn, params: user}
 			editLanguage:
 				label: EditLanguage
-				mapper: e.editLanguage
+				mapper: e.id
+				callback: {class: %this%, method: translateColumn, params: editLanguage}
 			status:
 				label: Status
 				mapper: e.status
 				cellStyle: text-align:right;
-			types:
-				label: Types
-				mapper: e.types
+			# types:
+			# 	label: Types
+			# 	mapper: e.types
 			timeDeleted:
 				label: TimeDeleted
 				mapper: e.timeDeleted
@@ -27,12 +29,12 @@ common:
 				label: Rank
 				mapper: e.rank
 				cellStyle: text-align:right;
-			locations:
-				label: Locations
-				mapper: e.locations
-			address:
-				label: Address
-				mapper: e.address
+			# locations:
+			# 	label: Locations
+			# 	mapper: e.locations
+			# address:
+			# 	label: Address
+			# 	mapper: e.address
 			latitude:
 				label: Latitude
 				mapper: e.latitude
@@ -51,43 +53,45 @@ common:
 				mapper: e.briefDescription
 			description:
 				label: Description
-				mapper: e.description
+				mapper: e.id
+				callback: {class: %this%, method: translateColumn, params: description}
 			teaser:
 				label: Teaser
-				mapper: e.teaser
-			contacts:
-				label: Contacts
-				mapper: e.contacts
-			spokenLanguages:
-				label: SpokenLanguages
-				mapper: e.spokenLanguages
-			amenities:
-				label: Amenities
-				mapper: e.amenities
+				mapper: e.id
+				callback: {class: %this%, method: translateColumn, params: teaser}
+			# contacts:
+			# 	label: Contacts
+			# 	mapper: e.contacts
+			# spokenLanguages:
+			# 	label: SpokenLanguages
+			# 	mapper: e.spokenLanguages
+			# amenities:
+			# 	label: Amenities
+			# 	mapper: e.amenities
 			checkIn:
 				label: CheckIn
 				mapper: e.checkIn
 			checkOut:
 				label: CheckOut
 				mapper: e.checkOut
-			pricelists:
-				label: Pricelists
-				mapper: e.pricelists
-			media:
-				label: Media
-				mapper: e.media
-			calendar:
-				label: Calendar
-				mapper: e.calendar
+			# pricelists:
+			# 	label: Pricelists
+			# 	mapper: e.pricelists
+			# media:
+			# 	label: Media
+			# 	mapper: e.media
+			# calendar:
+			# 	label: Calendar
+			# 	mapper: e.calendar
 			calendarUpdated:
 				label: CalendarUpdated
 				mapper: e.calendarUpdated
-			fulltexts:
-				label: Fulltexts
-				mapper: e.fulltexts
-			invoices:
-				label: Invoices
-				mapper: e.invoices
+			# fulltexts:
+			# 	label: Fulltexts
+			# 	mapper: e.fulltexts
+			# invoices:
+			# 	label: Invoices
+			# 	mapper: e.invoices
 			oldId:
 				label: OldId
 				mapper: e.oldId

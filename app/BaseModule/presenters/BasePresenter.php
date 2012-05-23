@@ -23,7 +23,8 @@ abstract class BasePresenter extends Presenter {
 		// 	$backlink = $this->getApplication()->storeRequest();
 		// 	$this->redirect('Auth:login', array('backlink' => $backlink));
 		// } else {
-			if (!$this->user->isAllowed($this->name, $this->action)) {
+			list($model, ) = explode(':', $this->name, 2);
+			if (!$this->user->isAllowed($this->name, $this->action) && !$this->user->isAllowed($model.':Base', $this->action)) {
 				$this->flashMessage('Access diened. You don\'t have permissions to view that page.', 'warning');
 				// $this->redirect('Auth:login');
 				throw new \Nette\MemberAccessException('co tu chces?!');

@@ -38,7 +38,7 @@ parameters:
 					- jQueryUI/jquery.checkbox.css
 
 		sets:
-			'Admin:Autopilot':
+			'Admin:Ap':
 				- %webloader.packages.jQuery%
 				- %webloader.packages.jQueryCalendar%
 				- %webloader.packages.bootstrap%

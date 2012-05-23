@@ -70,7 +70,7 @@ common:
 			validation:
 				# anotations: "var:json,ORMColumn:type:json,nullable:true"
 				label: Validation
-				control: json
+				control: neon
 			stackable:
 				# anotations: "var:integer,ORMColumn:type:integer,nullable:true"
 				label: Stackable
@@ -82,11 +82,11 @@ common:
 			actions:
 				# anotations: "var:json,ORMColumn:type:json,nullable:true"
 				label: Actions
-				control: json
+				control: neon
 			details:
 				# anotations: "var:json,ORMColumn:type:json,nullable:true"
 				label: Details
-				control: json
+				control: neon
 			created:
 				# anotations: "var:datetime,ORMColumn:type:datetime"
 				label: Created

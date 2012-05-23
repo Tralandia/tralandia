@@ -121,26 +121,6 @@ class Task extends \Entity\BaseEntityDetails {
 	protected $recurrenceData;
 	
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		

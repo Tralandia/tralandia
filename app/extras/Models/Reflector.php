@@ -313,6 +313,10 @@ class Reflector extends Nette\Object {
 				$fieldMask['ui']['control']['type'] = 'AdvancedJson';
 			} else if($type == 'neon') {
 				$fieldMask['ui']['control']['type'] = 'AdvancedNeon';
+				if(!isset($fieldMask['ui']['control']['class'])) {
+					$fieldMask['ui']['control']['class'] = 'neon span6';
+					$fieldMask['ui']['class'] = 'span12';
+				}
 			} else if($type == 'bricksList') {
 				$fieldMask['ui']['control']['type'] = 'AdvancedBricksList';
 			} else if($type == 'tinymce') {
