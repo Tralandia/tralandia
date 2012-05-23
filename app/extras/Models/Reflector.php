@@ -291,7 +291,7 @@ class Reflector extends Nette\Object {
 				$fieldMask['ui']['controlOptions']['label'] = $fieldMask['ui']['control']['label'];
 			}
 			
-			if($fieldMask['ui']['startNewRow'] || (in_array($type, array('checkboxList', 'bricksList', 'tinymce', 'table', 'json')) && $fieldMask['ui']['startNewRow'] !== false)) {
+			if($fieldMask['ui']['startNewRow'] || (in_array($type, array('checkboxList', 'bricksList', 'tinymce', 'table', 'json', 'neon')) && $fieldMask['ui']['startNewRow'] !== false)) {
 				$fieldMask['ui']['controlOptions']['renderBefore'] = Html::el('hr')->addClass('soften');
 			}
 
@@ -311,6 +311,8 @@ class Reflector extends Nette\Object {
 				$fieldMask['ui']['control']['type'] = 'AdvancedTable';
 			} else if($type == 'json') {
 				$fieldMask['ui']['control']['type'] = 'AdvancedJson';
+			} else if($type == 'neon') {
+				$fieldMask['ui']['control']['type'] = 'AdvancedNeon';
 			} else if($type == 'bricksList') {
 				$fieldMask['ui']['control']['type'] = 'AdvancedBricksList';
 			} else if($type == 'tinymce') {

@@ -5,9 +5,17 @@ namespace AdminModule;
 
 class ApPresenter extends BasePresenter {
 
+	public $task;
+
 	public function actionTask($id){
-		$this->task = \Service\Autopilot\Task::get($id);
-		if(!$this->task->id) {
+		// $this->task = \Service\Autopilot\Task::get($id);
+		$typeName = '\Location\Location - Level2HasNoParent';
+		$attributes = array();
+		$params = array();
+		$task = \Service\Autopilot\Autopilot::addTask($typeName, $attributes, $params);
+		debug($task->getMainEntity());
+
+		if(!$this->task) {
 			// @todo method or operation is not implemented
 			throw new \Nette\NotImplementedException('Requested method or operation is not implemented');
 		}
