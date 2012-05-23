@@ -42,6 +42,8 @@ $(function() {
 		empty: baseUrl+'/images/spacer.gif'
 	});
 
+	$("textarea.neon").tabby();
+
 })
 
 function toggleEdit(obj) {
