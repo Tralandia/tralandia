@@ -17,6 +17,8 @@ class Autopilot extends \Nette\Object {
 		$task->name = $type->name;
 		$task->mission = $type->mission;
 
+		$links = array();
+
 		if($type->technicalName == 'improveRental') {
 			$links = Arrays::get($attributes, 'links', array());
 			if(array_key_exists('rental', $params) && ($params['rental'] instanceof \Service\Rental\Rental || $params['rental'] instanceof \Entity\Rental\Rental)) {
@@ -46,6 +48,10 @@ class Autopilot extends \Nette\Object {
 
 		$task->save();
 		return $task;
+	}
+
+	public static function getNextTask($user) {
+		return Task::get(2);
 	}
 
 }

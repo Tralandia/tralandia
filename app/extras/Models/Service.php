@@ -147,13 +147,18 @@ abstract class Service extends Nette\Object implements IService {
 	 * @param mixed
 	 */
 	public function __set($name, $value) {
-		$method = 'set'.Strings::firstUpper($name);
+		if($value === NULL) {
+			$method = 'unset';
+		} else {
+			$method = 'set';
+		}
+		$method .= Strings::firstUpper($name);
 		if(method_exists($this, $method)){
 			$this->{$method}($value);
 		}else if ($value instanceof Service) {
 			$this->mainEntity->{$name} = $value->getMainEntity();
 		}else {
-			$this->mainEntity->$name = $value;
+			$this->mainEntity->{$name} = $value;
 		}
 	}
 
@@ -448,16 +453,17 @@ abstract class Service extends Nette\Object implements IService {
 
 				} else {
 					$data[$name] = $this->{$name};
+					// debug($data[$name]);
 					$form[$name]->setDefaultValue($data[$name]);
 				}				
 			}
 		}
-		// debug($data);
+		debug($data);
 		return $data;
 	}
 
 	public function updateFormData($mask, $formValues) {
-		// debug($formValues);
+		debug($formValues);
 		foreach ($mask->fields as $property) {
 			$ui = $property->ui;
 			// debug($ui);
@@ -482,13 +488,18 @@ abstract class Service extends Nette\Object implements IService {
 							}
 						}
 					} else if($targetEntity->associationType == Reflector::MANY_TO_ONE) {
-						$serviceName = $targetEntity->serviceName;
-						$this->{$name} = $serviceName::get($formValue);
+						if($formValue === NULL) {
+							$this->{$name} = NULL;
+						} else {
+							$serviceName = $targetEntity->serviceName;
+							$this->{$name} = $serviceName::get($formValue);
+						}
 					} else {
 						// @todo method or operation is not implemented
 						throw new \Nette\NotImplementedException('Requested method or operation is not implemented');
 					}
 				} else {
+					// debug($formValue);
 					$this->{$name} = $formValue;
 				}
 			}
