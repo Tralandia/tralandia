@@ -115,32 +115,6 @@ class Currency extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param integer
-	 * @return \Entity\Currency
-	 */
-	public function setDecimalPlaces($decimalPlaces) {
-		$this->decimalPlaces = $decimalPlaces;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Currency
-	 */
-	public function unsetDecimalPlaces() {
-		$this->decimalPlaces = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return integer|NULL
-	 */
-	public function getDecimalPlaces() {
-		return $this->decimalPlaces;
-	}
-		
-	/**
 	 * @param string
 	 * @return \Entity\Currency
 	 */

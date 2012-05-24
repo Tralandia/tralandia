@@ -34,39 +34,14 @@ class RentalToFriend extends \Entity\BaseEntity {
 	protected $senderEmail;
 
 	/**
-	 * @var string
-	 * @ORM\Column(type="string")
+	 * @var email
+	 * @ORM\Column(type="email")
 	 */
-	protected $senderName;
+	protected $receiverEmail;
 
 	/**
-	 * @var phone
-	 * @ORM\Column(type="phone")
-	 */
-	protected $senderPhone;
-
-	/**
-	 * @var datetime
-	 * @ORM\Column(type="datetime", nullable=true)
-	 */
-	protected $arrivalDate;
-
-	/**
-	 * @var datetime
-	 * @ORM\Column(type="datetime", nullable=true)
-	 */
-	protected $departureDate;
-
-	/**
-	 * @var json
-	 * @ORM\Column(type="json")
-	 * all details about people / children / rooms will be here
-	 */
-	protected $capacity;
-
-	/**
-	 * @var string
-	 * @ORM\Column(type="string")
+	 * @var text
+	 * @ORM\Column(type="text")
 	 */
 	protected $message;
 
@@ -148,106 +123,20 @@ class RentalToFriend extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param string
+	 * @param \Extras\Types\Email
 	 * @return \Entity\User\RentalToFriend
 	 */
-	public function setSenderName($senderName) {
-		$this->senderName = $senderName;
+	public function setReceiverEmail(\Extras\Types\Email $receiverEmail) {
+		$this->receiverEmail = $receiverEmail;
 
 		return $this;
 	}
 		
 	/**
-	 * @return string|NULL
+	 * @return \Extras\Types\Email|NULL
 	 */
-	public function getSenderName() {
-		return $this->senderName;
-	}
-		
-	/**
-	 * @param \Extras\Types\Phone
-	 * @return \Entity\User\RentalToFriend
-	 */
-	public function setSenderPhone(\Extras\Types\Phone $senderPhone) {
-		$this->senderPhone = $senderPhone;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Extras\Types\Phone|NULL
-	 */
-	public function getSenderPhone() {
-		return $this->senderPhone;
-	}
-		
-	/**
-	 * @param \DateTime
-	 * @return \Entity\User\RentalToFriend
-	 */
-	public function setArrivalDate(\DateTime $arrivalDate) {
-		$this->arrivalDate = $arrivalDate;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\User\RentalToFriend
-	 */
-	public function unsetArrivalDate() {
-		$this->arrivalDate = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \DateTime|NULL
-	 */
-	public function getArrivalDate() {
-		return $this->arrivalDate;
-	}
-		
-	/**
-	 * @param \DateTime
-	 * @return \Entity\User\RentalToFriend
-	 */
-	public function setDepartureDate(\DateTime $departureDate) {
-		$this->departureDate = $departureDate;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\User\RentalToFriend
-	 */
-	public function unsetDepartureDate() {
-		$this->departureDate = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \DateTime|NULL
-	 */
-	public function getDepartureDate() {
-		return $this->departureDate;
-	}
-		
-	/**
-	 * @param json
-	 * @return \Entity\User\RentalToFriend
-	 */
-	public function setCapacity($capacity) {
-		$this->capacity = $capacity;
-
-		return $this;
-	}
-		
-	/**
-	 * @return json|NULL
-	 */
-	public function getCapacity() {
-		return $this->capacity;
+	public function getReceiverEmail() {
+		return $this->receiverEmail;
 	}
 		
 	/**
