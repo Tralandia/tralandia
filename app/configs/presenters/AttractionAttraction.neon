@@ -57,31 +57,28 @@ common:
 				label: Description
 				control: phrase
 				inlineEditing: DictionaryPhrase:edit
-			country:
-				class: span6
-				label: Country
-				control:  
-					type: multiSelect
-					addClass: span6
-				startNewRow: true
+			# country:
+			# 	class: span6
+			# 	label: Country
+			# 	control:  
+			# 		type: multiSelect
+			# 		addClass: span6
+			# 	startNewRow: true
 			latitude:
 				label: Latitude
 				control: text
 			longitude:
 				label: Longitude
 				control: text
-			# contacts:
-			# 	# anotations: "var:Collection,ORMOneToMany:targetEntity:EntityContactContact,mappedBy:attraction,cascade:"
-			# 	label: Contacts
-			# 	control: multiSelect
-			# media:
-			# 	# anotations: "var:Collection,ORMOneToMany:targetEntity:EntityMediumMedium,mappedBy:attraction,cascade:"
-			# 	label: Media
-			# 	control: multiSelect
-			# details:
-			# 	# anotations: "var:json,ORMColumn:type:json,nullable:true"
-			# 	label: Details
-			# 	control: json
+			contacts:
+				label: Contacts
+				control: multiSelect
+			media:
+				label: Media
+				control: multiSelect
+			details:
+				label: Details
+				control: json
 			created:
 				label: Created
 				control: datePicker

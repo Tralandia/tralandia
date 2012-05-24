@@ -52,10 +52,9 @@ common:
 			address:
 				label: Address
 				control: text
-			# details:
-			# 	# anotations: "var:json,ORMColumn:type:json,nullable:true"
-			# 	label: Details
-			# 	control: json
+			details:
+				label: Details
+				control: json
 			created:
 				label: Created
 				control: datePicker

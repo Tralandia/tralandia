@@ -9,8 +9,7 @@ common:
 				mapper: e.id
 			name:
 				label: Name
-				mapper: e.id
-				callback: {class: %this%, method: translateColumn, params: name}
+				mapper: e.name
 			technicalName:
 				label: TechnicalName
 				mapper: e.technicalName
@@ -52,46 +51,35 @@ common:
 	form:
 		fields:
 			name:
-				# anotations: "var:string,ORMColumn:type:string"
 				label: Name
 				control: text
 			technicalName:
-				# anotations: "var:string,ORMColumn:type:string"
 				label: TechnicalName
 				control: text
 			mission:
-				# anotations: "var:text,ORMColumn:type:text"
 				label: Mission
 				control: text
 			durationPaid:
-				# anotations: "var:float,ORMColumn:type:float"
 				label: DurationPaid
 				control: text
 			validation:
-				# anotations: "var:json,ORMColumn:type:json,nullable:true"
 				label: Validation
 				control: neon
 			stackable:
-				# anotations: "var:integer,ORMColumn:type:integer,nullable:true"
 				label: Stackable
 				control: text
 			timeLimit:
-				# anotations: "var:float,ORMColumn:type:float"
 				label: TimeLimit
 				control: text
 			actions:
-				# anotations: "var:json,ORMColumn:type:json,nullable:true"
 				label: Actions
 				control: neon
 			details:
-				# anotations: "var:json,ORMColumn:type:json,nullable:true"
 				label: Details
 				control: neon
 			created:
-				# anotations: "var:datetime,ORMColumn:type:datetime"
 				label: Created
 				control: datePicker
 			updated:
-				# anotations: "var:datetime,ORMColumn:type:datetime"
 				label: Updated
 				control: datePicker

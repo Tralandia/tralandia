@@ -13,6 +13,8 @@ parameters:
 				decodeNeon:
 			Admin:EntityGenerator:
 				list:
+				default:
+				forceAll:
 			Admin:Ap:
 				task:
 			Admin:Autopilot:
@@ -187,6 +189,11 @@ parameters:
 				edit:
 				add:
 			Admin:UserUser:
+				list:
+				edit:
+				add:
+			Admin:Rado:
+				default:
 				list:
 				edit:
 				add:

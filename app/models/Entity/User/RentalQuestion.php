@@ -31,41 +31,16 @@ class RentalQuestion extends \Entity\BaseEntity {
 	protected $senderEmail;
 
 	/**
-	 * @var string
-	 * @ORM\Column(type="string")
-	 */
-	protected $senderName;
-
-	/**
 	 * @var phone
 	 * @ORM\Column(type="phone")
 	 */
 	protected $senderPhone;
 
 	/**
-	 * @var datetime
-	 * @ORM\Column(type="datetime", nullable=true)
+	 * @var text
+	 * @ORM\Column(type="text")
 	 */
-	protected $arrivalDate;
-
-	/**
-	 * @var datetime
-	 * @ORM\Column(type="datetime", nullable=true)
-	 */
-	protected $departureDate;
-
-	/**
-	 * @var json
-	 * @ORM\Column(type="json")
-	 * all details about people / children / rooms will be here
-	 */
-	protected $capacity;
-
-	/**
-	 * @var string
-	 * @ORM\Column(type="string")
-	 */
-	protected $message;
+	protected $question;
 
 
 //@entity-generator-code <--- NEMAZAT !!!
@@ -145,23 +120,6 @@ class RentalQuestion extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param string
-	 * @return \Entity\User\RentalQuestion
-	 */
-	public function setSenderName($senderName) {
-		$this->senderName = $senderName;
-
-		return $this;
-	}
-		
-	/**
-	 * @return string|NULL
-	 */
-	public function getSenderName() {
-		return $this->senderName;
-	}
-		
-	/**
 	 * @param \Extras\Types\Phone
 	 * @return \Entity\User\RentalQuestion
 	 */
@@ -179,80 +137,11 @@ class RentalQuestion extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \DateTime
-	 * @return \Entity\User\RentalQuestion
-	 */
-	public function setArrivalDate(\DateTime $arrivalDate) {
-		$this->arrivalDate = $arrivalDate;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\User\RentalQuestion
-	 */
-	public function unsetArrivalDate() {
-		$this->arrivalDate = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \DateTime|NULL
-	 */
-	public function getArrivalDate() {
-		return $this->arrivalDate;
-	}
-		
-	/**
-	 * @param \DateTime
-	 * @return \Entity\User\RentalQuestion
-	 */
-	public function setDepartureDate(\DateTime $departureDate) {
-		$this->departureDate = $departureDate;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\User\RentalQuestion
-	 */
-	public function unsetDepartureDate() {
-		$this->departureDate = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \DateTime|NULL
-	 */
-	public function getDepartureDate() {
-		return $this->departureDate;
-	}
-		
-	/**
-	 * @param json
-	 * @return \Entity\User\RentalQuestion
-	 */
-	public function setCapacity($capacity) {
-		$this->capacity = $capacity;
-
-		return $this;
-	}
-		
-	/**
-	 * @return json|NULL
-	 */
-	public function getCapacity() {
-		return $this->capacity;
-	}
-		
-	/**
 	 * @param string
 	 * @return \Entity\User\RentalQuestion
 	 */
-	public function setMessage($message) {
-		$this->message = $message;
+	public function setQuestion($question) {
+		$this->question = $question;
 
 		return $this;
 	}
@@ -260,7 +149,7 @@ class RentalQuestion extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getMessage() {
-		return $this->message;
+	public function getQuestion() {
+		return $this->question;
 	}
 }

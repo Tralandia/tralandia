@@ -54,10 +54,11 @@ common:
 			
 	form:
 		fields:
-			# bankAccounts:
-			# 	# anotations: "var:Collection,ORMOneToMany:targetEntity:BankAccount,mappedBy:company,cascade:"
-			# 	label: BankAccounts
-			# 	control: multiSelect
+			bankAccounts:
+				label: BankAccounts
+				control: multiSelect
+				inlineEditing: BankAccount:edit
+				inlineCreating: BankAccount:add
 			countries:
 				label: Countries
 				control: bricksList
@@ -67,6 +68,8 @@ common:
 			# 	# anotations: "var:Collection,ORMOneToMany:targetEntity:Office,mappedBy:company,cascade:"
 			# 	label: Offices
 			# 	control: multiSelect
+			# 	inlineEditing: CompanyOffice:edit
+			# 	inlineCreating: CompanyOffice:add
 			name:
 				label: Name
 				control: text
@@ -90,10 +93,11 @@ common:
 			# 	# anotations: "var:Collection,ORMOneToMany:targetEntity:EntityInvoicingInvoice,mappedBy:company"
 			# 	label: Invoices
 			# 	control: multiSelect
-			# details:
-			# 	# anotations: "var:json,ORMColumn:type:json,nullable:true"
-			# 	label: Details
-			# 	control: json
+			# 	inlineEditing: InvoicingInvoice:edit
+			# 	inlineCreating: InvoicingInvoice:add
+			details:
+				label: Details
+				control: json
 			created:
 				label: Created
 				control: datePicker

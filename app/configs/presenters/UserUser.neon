@@ -104,10 +104,11 @@ common:
 				control: bricksList
 				inlineEditing: UserRole:edit
 				inlineCreating: UserRole:add
-			# contacts:
-			# 	# anotations: "var:Collection,ORMOneToMany:targetEntity:EntityContactContact,mappedBy:user,cascade:,EASingularName:name:contact"
-			# 	label: Contacts
-			# 	control: multiSelect
+			contacts:
+				label: Contacts
+				control: multiSelect
+				inlineEditing: ContactContact:edit
+				inlineCreating: ContactContact:add
 			defaultLanguage:
 				label: DefaultLanguage
 				control: select
@@ -165,22 +166,23 @@ common:
 				inlineEditing: UserUser:edit
 				inlineCreating: UserUser:add
 			# combinations:
-			# 	# anotations: "var:Collection,ORMOneToMany:targetEntity:Combination,mappedBy:user,cascade:,EASingularName:name:combination"
 			# 	label: Combinations
 			# 	control: multiSelect
-			# rentals:
-			# 	# anotations: "var:Collection,ORMOneToMany:targetEntity:EntityRentalRental,mappedBy:user,cascade:,EASingularName:name:rental"
-			# 	label: Rentals
-			# 	control: multiSelect
+			# 	inlineEditing: UserCombination:edit
+			# 	inlineCreating: UserCombination:add
+			rentals:
+				label: Rentals
+				control: multiSelect
+				inlineEditing: RentalRental:edit
+				inlineCreating: RentalRental:add
 			tasks:
 				label: Tasks
 				control: bricksList
 				inlineEditing: AutopilotTask:edit
 				inlineCreating: AutopilotTask:add
-			# details:
-			# 	# anotations: "var:json,ORMColumn:type:json,nullable:true"
-			# 	label: Details
-			# 	control: json
+			details:
+				label: Details
+				control: json
 			created:
 				label: Created
 				control: datePicker

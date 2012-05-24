@@ -55,10 +55,10 @@ common:
 				label: Country
 				control: select
 				inlineEditing: LocationLocation:edit
-			# services:
-			# 	# anotations: "var:Collection,ORMOneToMany:targetEntity:EntityInvoicingService,mappedBy:package"
-			# 	label: Services
-			# 	control: multiSelect
+			services:
+				# anotations: "var:Collection,ORMOneToMany:targetEntity:EntityInvoicingService,mappedBy:package"
+				label: Services
+				control: multiSelect
 			created:
 				label: Created
 				control: datePicker
