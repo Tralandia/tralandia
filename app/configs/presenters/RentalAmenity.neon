@@ -48,10 +48,9 @@ common:
 				label: Name
 				control: phrase
 				inlineEditing: DictionaryPhrase:edit
-			# details:
-			# 	# anotations: "var:json,ORMColumn:type:json,nullable:true"
-			# 	label: Details
-			# 	control: json
+			details:
+				label: Details
+				control: json
 			created:
 				label: Created
 				control: datePicker

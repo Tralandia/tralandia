@@ -33,26 +33,22 @@ common:
 	form:
 		fields:
 			name:
-				# anotations: "var:string,ORMColumn:type:string"
 				label: Name
 				control: text
 			slug:
-				# anotations: "var:slug,ORMColumn:type:slug"
 				label: Slug
 				control: text
 			homePage:
-				# anotations: "var:url,ORMColumn:type:url,nullable:true"
 				label: HomePage
 				control: text
 			users:
-				# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityUserUser,inversedBy:roles,cascade:"
 				label: Users
 				control: bricksList
+				inlineEditing: UserUser:edit
+				inlineCreating: UserUser:add
 			created:
-				# anotations: "var:datetime,ORMColumn:type:datetime"
 				label: Created
 				control: datePicker
 			updated:
-				# anotations: "var:datetime,ORMColumn:type:datetime"
 				label: Updated
 				control: datePicker

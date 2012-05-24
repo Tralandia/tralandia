@@ -183,9 +183,9 @@ common:
 			checkOut:
 				label: CheckOut
 				control: text
-			# pricelists:
-			# 	label: Pricelists
-			# 	control: json
+			pricelists:
+				label: Pricelists
+				control: json
 			# media:
 			# 	label: Media
 			# 	control: multiSelect
