@@ -9,8 +9,8 @@ parameters:
 				callback: ['\\Security\\MyAssertion', 'test']
 
 		presenters:
-			Admin:Cibi:
-				default:
+			Admin:Base:
+				decodeNeon:
 			Admin:EntityGenerator:
 				list:
 				default:

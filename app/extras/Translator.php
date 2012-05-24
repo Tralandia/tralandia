@@ -25,11 +25,11 @@ class Translator implements \Nette\Localization\ITranslator {
 	
 	protected function getTranslation($phrase) {
 		if($phrase instanceof D\Phrase || $phrase instanceof \Entity\Dictionary\Phrase) {
-			$translationKey = $phrase->id;
+			$phraseId = $phrase->id;
 		} else {
-			$translationKey = $phrase;
+			$phraseId = $phrase;
 		}
-		$translationKey .= '_'.$this->language->id;
+		$translationKey = $phraseId.'_'.$this->language->id;
 		
 		if(!$translation = $this->cache->load($translationKey)) {
 			if(!$phrase instanceof D\Phrase) {
@@ -42,7 +42,7 @@ class Translator implements \Nette\Localization\ITranslator {
 			}
 			$this->cache->save($translationKey, $translation);
 		}
-
+		if($translation === NULL) $translation = '{'.$phraseId.'|'.$this->language->iso.'}';
 		return $translation;
 	}
 

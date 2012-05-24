@@ -53,46 +53,43 @@ common:
 	form:
 		fields:
 			name:
-				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:"
 				label: Name
 				control: phrase
+				inlineEditing: DictionaryPhrase:edit
 			description:
-				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:"
 				label: Description
 				control: phrase
+				inlineEditing: DictionaryPhrase:edit
 			package:
-				# anotations: "var:Collection,ORMManyToOne:targetEntity:Package"
 				label: Package
 				control: select
+				inlineEditing: InvoicingPackage:edit
+				inlineCreating: InvoicingPackage:add
 			locations:
-				# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityLocationLocation,mappedBy:marketings"
 				label: Locations
 				control: bricksList
+				inlineEditing: LocationLocation:edit
+				inlineCreating: LocationLocation:add
 			countTotal:
-				# anotations: "var:integer,ORMColumn:type:integer"
 				label: CountTotal
 				control: text
 			countLeft:
-				# anotations: "var:integer,ORMColumn:type:integer"
 				label: CountLeft
 				control: text
 			validFrom:
-				# anotations: "var:datetime,ORMColumn:type:datetime"
 				label: ValidFrom
 				control: datePicker
 			validTo:
-				# anotations: "var:datetime,ORMColumn:type:datetime"
 				label: ValidTo
 				control: datePicker
 			uses:
-				# anotations: "var:Collection,ORMManyToMany:targetEntity:UseType,mappedBy:marketings"
 				label: Uses
 				control: bricksList
+				inlineEditing: InvoicingUseType:edit
+				inlineCreating: InvoicingUseType:add
 			created:
-				# anotations: "var:datetime,ORMColumn:type:datetime"
 				label: Created
 				control: datePicker
 			updated:
-				# anotations: "var:datetime,ORMColumn:type:datetime"
 				label: Updated
 				control: datePicker

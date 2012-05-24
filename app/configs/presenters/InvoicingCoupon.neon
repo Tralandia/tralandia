@@ -48,42 +48,36 @@ common:
 	form:
 		fields:
 			name:
-				# anotations: "var:string,ORMColumn:type:string,nullable:true"
 				label: Name
 				control: text
 			code:
-				# anotations: "var:string,ORMColumn:type:string,nullable:true"
 				label: Code
 				control: text
 			countTotal:
-				# anotations: "var:integer,ORMColumn:type:integer"
 				label: CountTotal
 				control: text
 			countLeft:
-				# anotations: "var:integer,ORMColumn:type:integer"
 				label: CountLeft
 				control: text
 			validFrom:
-				# anotations: "var:datetime,ORMColumn:type:datetime"
 				label: ValidFrom
 				control: datePicker
 			validTo:
-				# anotations: "var:datetime,ORMColumn:type:datetime"
 				label: ValidTo
 				control: datePicker
 			recommenderPackage:
-				# anotations: "var:Collection,ORMManyToOne:targetEntity:Package"
 				label: RecommenderPackage
 				control: select
+				inlineEditing: InvoicingPackage:edit
+				inlineCreating: InvoicingPackage:add
 			recommendeePackage:
-				# anotations: "var:Collection,ORMManyToOne:targetEntity:Package"
 				label: RecommendeePackage
 				control: select
+				inlineEditing: InvoicingPackage:edit
+				inlineCreating: InvoicingPackage:add
 			created:
-				# anotations: "var:datetime,ORMColumn:type:datetime"
 				label: Created
 				control: datePicker
 			updated:
-				# anotations: "var:datetime,ORMColumn:type:datetime"
 				label: Updated
 				control: datePicker

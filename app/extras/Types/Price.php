@@ -22,7 +22,7 @@ class Price extends BaseType {
 		} else if ($currency instanceof \Extras\Models\Entity || $currency instanceof \Extras\Models\Service) {
 			$currencyId = $currency->id;
 		} else {
-			debug(1, $currency);
+			// debug(1, $currency);
 			throw new \Nette\UnexpectedValueException('$currency is not an ID or Entity or Service');
 		}
 		$this->sourceAmount = $amount;
@@ -68,4 +68,9 @@ class Price extends BaseType {
 		$this->amounts[$currencyId] = $value;
 		return $value;
 	}
+
+	public function __toString() {
+		return $this->sourceAmount . $this->sourceCurrency;
+	}
+
 }

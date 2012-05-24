@@ -9,8 +9,8 @@ use	Extras\Annotation as EA;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="domain", indexes={@ORM\index(name="domain", columns={"domain"})})
- * @EA\Service(name="\Service\Company\Domain")
- * @EA\ServiceList(name="\Service\Company\DomainList")
+ * @EA\Service(name="\Service\Domain")
+ * @EA\ServiceList(name="\Service\DomainList")
  * @EA\Primary(key="id", value="domain")
  */
 class Domain extends \Entity\BaseEntity {
@@ -26,28 +26,6 @@ class Domain extends \Entity\BaseEntity {
 	 * @ORM\OneToMany(targetEntity="Entity\Location\Location", mappedBy="domain")
 	 */
 	protected $locations;
-
-	
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //@entity-generator-code <--- NEMAZAT !!!

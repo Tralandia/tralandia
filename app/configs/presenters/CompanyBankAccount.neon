@@ -48,46 +48,39 @@ common:
 	form:
 		fields:
 			countries:
-				# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityLocationLocation,mappedBy:bankAccounts"
 				label: Countries
 				control: bricksList
+				inlineEditing: LocationLocation:edit
+				inlineCreating: LocationLocation:add
 			company:
-				# anotations: "var:Collection,ORMManyToOne:targetEntity:Company,inversedBy:bankAccounts"
 				label: Company
 				control: select
+				inlineEditing: CompanyCompany:edit
+				inlineCreating: CompanyCompany:add
 			bankName:
-				# anotations: "var:string,ORMColumn:type:string,nullable:true"
 				label: BankName
 				control: text
 			bankAddress:
-				# anotations: "var:address,ORMColumn:type:address"
 				label: BankAddress
 				control: text
 			bankSwift:
-				# anotations: "var:string,ORMColumn:type:string,nullable:true"
 				label: BankSwift
 				control: text
 			accountNumber:
-				# anotations: "var:string,ORMColumn:type:string,nullable:true"
 				label: AccountNumber
 				control: text
 			accountName:
-				# anotations: "var:string,ORMColumn:type:string,nullable:true"
 				label: AccountName
 				control: text
 			accountIban:
-				# anotations: "var:string,ORMColumn:type:string,nullable:true"
 				label: AccountIban
 				control: text
 			notes:
-				# anotations: "var:text,ORMColumn:type:text,nullable:true"
 				label: Notes
 				control: text
 			created:
-				# anotations: "var:datetime,ORMColumn:type:datetime"
 				label: Created
 				control: datePicker
 			updated:
-				# anotations: "var:datetime,ORMColumn:type:datetime"
 				label: Updated
 				control: datePicker

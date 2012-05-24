@@ -44,38 +44,39 @@ common:
 	form:
 		fields:
 			name:
-				# anotations: "var:string,ORMColumn:type:string,nullable:true"
 				label: Name
 				control: text
 			amount:
-				# anotations: "var:price,ORMColumn:type:price"
 				label: Amount
 				control: text
 			type:
-				# anotations: "var:Collection,ORMManyToOne:targetEntity:Type"
 				label: Type
 				control: select
+				inlineEditing: ExpenseType:edit
+				inlineCreating: ExpenseType:add
 			country:
-				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityLocationLocation"
 				label: Country
 				control: select
+				inlineEditing: LocationLocation:edit
+				inlineCreating: LocationLocation:add
 			company:
-				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityCompanyCompany"
 				label: Company
 				control: select
+				inlineEditing: CompanyCompany:edit
+				inlineCreating: CompanyCompany:add
 			bankAccount:
-				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityCompanyBankAccount"
 				label: BankAccount
 				control: select
+				inlineEditing: CompanyBankAccount:edit
+				inlineCreating: CompanyBankAccount:add
 			user:
-				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityUserUser"
 				label: User
 				control: select
+				inlineEditing: UserUser:edit
+				inlineCreating: UserUser:add
 			created:
-				# anotations: "var:datetime,ORMColumn:type:datetime"
 				label: Created
 				control: datePicker
 			updated:
-				# anotations: "var:datetime,ORMColumn:type:datetime"
 				label: Updated
 				control: datePicker

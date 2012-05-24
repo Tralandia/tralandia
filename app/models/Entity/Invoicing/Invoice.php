@@ -7,10 +7,14 @@ use Entity\Dictionary;
 use Entity\Invoicing;
 use Entity\Rental;
 use Doctrine\ORM\Mapping as ORM;
+use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="invoicing_invoice", indexes={@ORM\index(name="invoiceNumber", columns={"invoiceNumber"}), @ORM\index(name="paymentReferenceNumber", columns={"paymentReferenceNumber"}), @ORM\index(name="due", columns={"due"}), @ORM\index(name="paid", columns={"paid"}), @ORM\index(name="status", columns={"status"}), @ORM\index(name="clientEmail", columns={"clientEmail"}), @ORM\index(name="referrer", columns={"referrer"}), @ORM\index(name="referrerCommission", columns={"referrerCommission"})})
+ * @EA\Service(name="\Service\Invoicing\Service")
+ * @EA\ServiceList(name="\Service\Invoicing\ServiceList")
+ * @EA\Primary(key="id", value="clientName")
  */
 class Invoice extends \Entity\BaseEntity {
 

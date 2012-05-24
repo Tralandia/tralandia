@@ -11,7 +11,7 @@ use	Extras\Annotation as EA;
  * @ORM\Table(name="location_type", indexes={@ORM\index(name="slug", columns={"slug"})})
  * @EA\Service(name="\Service\Location\Type")
  * @EA\ServiceList(name="\Service\Location\TypeList")
- * @EA\Primary(key="id", value="slug")
+ * @EA\Primary(key="id", value="name")
  */
 class Type extends \Entity\BaseEntityDetails {
 

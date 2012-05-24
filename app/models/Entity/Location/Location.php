@@ -16,6 +16,7 @@ use	Extras\Annotation as EA;
  */
 class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 
+	const STATUS_DRAFT = 'draft';
 	const STATUS_LAUNCHED = 'launched';
 
 	/**
