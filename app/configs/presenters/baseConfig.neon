@@ -22,8 +22,20 @@ common:
 						title: Delete
 						addClass: btn-danger
 
+	addForm:
+		class: row form
+		buttons:
+			cancel: 
+				type: backlink
+				label: 'Cancel (return)'
+			submit:
+				type: submit
+				label: Save Changes
+				addClass: btn-success pull-right
+
 	form:
 		class: row form
+		defaultFieldClass: span3
 		buttons:
 			cancel: 
 				type: backlink

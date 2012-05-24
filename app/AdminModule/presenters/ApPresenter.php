@@ -30,6 +30,8 @@ class ApPresenter extends BasePresenter {
 			$links->{$linkName}->link->setParameter('display', 'modal');
 		}
 
+		$this->task->executeActions('onDone');
+
 		$this->template->task = $this->task;
 		$this->template->links = $links;
 		
