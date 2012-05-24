@@ -30,22 +30,17 @@ common:
 	form:
 		fields:
 			country:
-				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityLocationLocation"
 				label: Country
 				control: select
 			language:
-				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityDictionaryLanguage"
 				label: Language
 				control: select
 			suffix:
-				# anotations: "var:string,ORMColumn:type:string,nullable:true"
 				label: Suffix
 				control: text
 			created:
-				# anotations: "var:datetime,ORMColumn:type:datetime"
 				label: Created
 				control: datePicker
 			updated:
-				# anotations: "var:datetime,ORMColumn:type:datetime"
 				label: Updated
 				control: datePicker

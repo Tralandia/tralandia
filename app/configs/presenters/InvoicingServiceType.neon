@@ -28,18 +28,15 @@ common:
 	form:
 		fields:
 			slug:
-				# anotations: "var:slug,ORMColumn:type:slug"
 				label: Slug
 				control: text
 			name:
-				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:"
 				label: Name
 				control: phrase
+				inlineEditing: DictionaryPhrase:edit
 			created:
-				# anotations: "var:datetime,ORMColumn:type:datetime"
 				label: Created
 				control: datePicker
 			updated:
-				# anotations: "var:datetime,ORMColumn:type:datetime"
 				label: Updated
 				control: datePicker

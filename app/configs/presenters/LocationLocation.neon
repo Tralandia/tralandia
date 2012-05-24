@@ -11,21 +11,21 @@ common:
 				label: Name
 				mapper: e.id
 				callback: {class: %this%, method: translateColumn, params: name}
-			nameOfficial:
-				label: NameOfficial
-				mapper: e.id
-				callback: {class: %this%, method: translateColumn, params: name}
-			nameShort:
-				label: NameShort
-				mapper: e.id
-				callback: {class: %this%, method: translateColumn, params: name}
-			# slug:
-			# 	label: Slug
-			# 	mapper: e.slug
-			# parentId:
-			# 	label: ParentId
-			# 	mapper: e.parentId
-			# 	cellStyle: text-align:right;
+			# nameOfficial:
+			# 	label: NameOfficial
+			# 	mapper: e.id
+			# 	callback: {class: %this%, method: translateColumn, params: nameOfficial}
+			# nameShort:
+			# 	label: NameShort
+			# 	mapper: e.id
+			# 	callback: {class: %this%, method: translateColumn, params: nameShort}
+			slug:
+				label: Slug
+				mapper: e.slug
+			parentId:
+				label: ParentId
+				mapper: e.parentId
+				cellStyle: text-align:right;
 			# nestedLeft:
 			# 	label: NestedLeft
 			# 	mapper: e.nestedLeft
@@ -170,14 +170,14 @@ common:
 				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:"
 				label: Name
 				control: phrase
-			nameOfficial:
-				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:"
-				label: NameOfficial
-				control: phrase
-			nameShort:
-				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:"
-				label: NameShort
-				control: phrase
+			# nameOfficial:
+			# 	# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:"
+			# 	label: NameOfficial
+			# 	control: phrase
+			# nameShort:
+			# 	# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:"
+			# 	label: NameShort
+			# 	control: phrase
 			slug:
 				# anotations: "var:slug,ORMColumn:type:slug"
 				label: Slug
@@ -186,26 +186,26 @@ common:
 				# anotations: "var:integer,ORMColumn:type:integer,nullable:true"
 				label: ParentId
 				control: text
-			nestedLeft:
-				# anotations: "var:integer,ORMColumn:type:integer,nullable:true"
-				label: NestedLeft
-				control: text
-			nestedRight:
-				# anotations: "var:integer,ORMColumn:type:integer,nullable:true"
-				label: NestedRight
-				control: text
-			nestedRoot:
-				# anotations: "var:integer,ORMColumn:type:integer,nullable:true"
-				label: NestedRoot
-				control: text
+			# nestedLeft:
+			# 	# anotations: "var:integer,ORMColumn:type:integer,nullable:true"
+			# 	label: NestedLeft
+			# 	control: text
+			# nestedRight:
+			# 	# anotations: "var:integer,ORMColumn:type:integer,nullable:true"
+			# 	label: NestedRight
+			# 	control: text
+			# nestedRoot:
+			# 	# anotations: "var:integer,ORMColumn:type:integer,nullable:true"
+			# 	label: NestedRoot
+			# 	control: text
 			type:
 				# anotations: "var:Collection,ORMManyToOne:targetEntity:Type"
 				label: Type
 				control: select
-			polygon:
-				# anotations: "var:json,ORMColumn:type:json,nullable:true"
-				label: Polygon
-				control: json
+			# polygon:
+			# 	# anotations: "var:json,ORMColumn:type:json,nullable:true"
+			# 	label: Polygon
+			# 	control: json
 			latitude:
 				# anotations: "var:latlong,ORMColumn:type:latlong,nullable:true"
 				label: Latitude
@@ -218,10 +218,10 @@ common:
 				# anotations: "var:integer,ORMColumn:type:integer,nullable:true"
 				label: DefaultZoom
 				control: text
-			clickMapData:
-				# anotations: "var:json,ORMColumn:type:json,nullable:true"
-				label: ClickMapData
-				control: json
+			# clickMapData:
+			# 	# anotations: "var:json,ORMColumn:type:json,nullable:true"
+			# 	label: ClickMapData
+			# 	control: json
 			bankAccounts:
 				# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityCompanyBankAccount,inversedBy:countries"
 				label: BankAccounts
@@ -234,10 +234,10 @@ common:
 				# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityCompanyOffice,inversedBy:countries"
 				label: Offices
 				control: bricksList
-			domain:
-				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityDomain,inversedBy:locations"
-				label: Domain
-				control: select
+			# domain:
+			# 	# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityDomain,inversedBy:locations"
+			# 	label: Domain
+			# 	control: select
 			marketings:
 				# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityInvoicingMarketing,inversedBy:locations"
 				label: Marketings
@@ -246,18 +246,18 @@ common:
 				# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityRentalRental,inversedBy:locations"
 				label: Rentals
 				control: bricksList
-			users:
-				# anotations: "var:Collection,ORMOneToMany:targetEntity:EntityUserUser,mappedBy:location,cascade:"
-				label: Users
-				control: multiSelect
-			incomingLocations:
-				# anotations: "var:Collection,ORMOneToMany:targetEntity:Traveling,mappedBy:destinationLocation"
-				label: IncomingLocations
-				control: multiSelect
-			outgoingLocations:
-				# anotations: "var:Collection,ORMOneToMany:targetEntity:Traveling,mappedBy:sourceLocation"
-				label: OutgoingLocations
-				control: multiSelect
+			# users:
+			# 	# anotations: "var:Collection,ORMOneToMany:targetEntity:EntityUserUser,mappedBy:location,cascade:"
+			# 	label: Users
+			# 	control: multiSelect
+			# incomingLocations:
+			# 	# anotations: "var:Collection,ORMOneToMany:targetEntity:Traveling,mappedBy:destinationLocation"
+			# 	label: IncomingLocations
+			# 	control: multiSelect
+			# outgoingLocations:
+			# 	# anotations: "var:Collection,ORMOneToMany:targetEntity:Traveling,mappedBy:sourceLocation"
+			# 	label: OutgoingLocations
+			# 	control: multiSelect
 			status:
 				# anotations: "var:string,ORMColumn:type:string,nullable:true"
 				label: Status
@@ -270,22 +270,22 @@ common:
 				# anotations: "var:string,ORMColumn:type:string,nullable:true"
 				label: Iso3
 				control: text
-			defaultCurrency:
-				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityCurrency,cascade:"
-				label: DefaultCurrency
-				control: select
-			currencies:
-				# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityCurrency,mappedBy:locations,cascade:"
-				label: Currencies
-				control: bricksList
-			defaultLanguage:
-				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityDictionaryLanguage,cascade:"
-				label: DefaultLanguage
-				control: select
-			languages:
-				# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityDictionaryLanguage,mappedBy:locations,cascade:"
-				label: Languages
-				control: bricksList
+			# defaultCurrency:
+			# 	# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityCurrency,cascade:"
+			# 	label: DefaultCurrency
+			# 	control: select
+			# currencies:
+			# 	# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityCurrency,mappedBy:locations,cascade:"
+			# 	label: Currencies
+			# 	control: bricksList
+			# defaultLanguage:
+			# 	# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityDictionaryLanguage,cascade:"
+			# 	label: DefaultLanguage
+			# 	control: select
+			# languages:
+			# 	# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityDictionaryLanguage,mappedBy:locations,cascade:"
+			# 	label: Languages
+			# 	control: bricksList
 			population:
 				# anotations: "var:integer,ORMColumn:type:integer,nullable:true"
 				label: Population
@@ -294,63 +294,63 @@ common:
 				# anotations: "var:string,ORMColumn:type:string,nullable:true"
 				label: PhonePrefix
 				control: text
-			facebookGroup:
-				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityContactContact,cascade:"
-				label: FacebookGroup
-				control: select
+			# facebookGroup:
+			# 	# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityContactContact,cascade:"
+			# 	label: FacebookGroup
+			# 	control: select
 			capitalCity:
 				# anotations: "var:string,ORMColumn:type:string,nullable:true"
 				label: CapitalCity
 				control: text
-			phoneNumberEmergency:
-				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityContactContact,cascade:"
-				label: PhoneNumberEmergency
-				control: select
-			phoneNumberPolice:
-				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityContactContact,cascade:"
-				label: PhoneNumberPolice
-				control: select
-			phoneNumberMedical:
-				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityContactContact,cascade:"
-				label: PhoneNumberMedical
-				control: select
-			phoneNumberFire:
-				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityContactContact,cascade:"
-				label: PhoneNumberFire
-				control: select
-			wikipediaLink:
-				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityContactContact,cascade:"
-				label: WikipediaLink
-				control: select
-			contacts:
-				# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityContactContact,mappedBy:locations,cascade:"
-				label: Contacts
-				control: bricksList
+			# phoneNumberEmergency:
+			# 	# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityContactContact,cascade:"
+			# 	label: PhoneNumberEmergency
+			# 	control: select
+			# phoneNumberPolice:
+			# 	# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityContactContact,cascade:"
+			# 	label: PhoneNumberPolice
+			# 	control: select
+			# phoneNumberMedical:
+			# 	# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityContactContact,cascade:"
+			# 	label: PhoneNumberMedical
+			# 	control: select
+			# phoneNumberFire:
+			# 	# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityContactContact,cascade:"
+			# 	label: PhoneNumberFire
+			# 	control: select
+			# wikipediaLink:
+			# 	# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityContactContact,cascade:"
+			# 	label: WikipediaLink
+			# 	control: select
+			# contacts:
+			# 	# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityContactContact,mappedBy:locations,cascade:"
+			# 	label: Contacts
+			# 	control: bricksList
 			drivingSide:
 				# anotations: "var:string,ORMColumn:type:string,nullable:true"
 				label: DrivingSide
 				control: text
-			pricesPizza:
-				# anotations: "var:price,ORMColumn:type:price,nullable:true"
-				label: PricesPizza
-				control: text
-			pricesDinner:
-				# anotations: "var:price,ORMColumn:type:price,nullable:true"
-				label: PricesDinner
-				control: text
+			# pricesPizza:
+			# 	# anotations: "var:price,ORMColumn:type:price,nullable:true"
+			# 	label: PricesPizza
+			# 	control: text
+			# pricesDinner:
+			# 	# anotations: "var:price,ORMColumn:type:price,nullable:true"
+			# 	label: PricesDinner
+			# 	control: text
 			airports:
 				# anotations: "var:text,ORMColumn:type:text,nullable:true"
 				label: Airports
 				control: text
-			details:
-				# anotations: "var:json,ORMColumn:type:json,nullable:true"
-				label: Details
-				control: json
-			created:
-				# anotations: "var:datetime,ORMColumn:type:datetime"
-				label: Created
-				control: datePicker
-			updated:
-				# anotations: "var:datetime,ORMColumn:type:datetime"
-				label: Updated
-				control: datePicker
+			# details:
+			# 	# anotations: "var:json,ORMColumn:type:json,nullable:true"
+			# 	label: Details
+			# 	control: json
+			# created:
+			# 	# anotations: "var:datetime,ORMColumn:type:datetime"
+			# 	label: Created
+			# 	control: datePicker
+			# updated:
+			# 	# anotations: "var:datetime,ORMColumn:type:datetime"
+			# 	label: Updated
+			# 	control: datePicker

@@ -31,22 +31,22 @@ common:
 	form:
 		fields:
 			name:
-				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:"
 				label: Name
 				control: phrase
+				inlineEditing: DictionaryPhrase:edit
 			rentals:
-				# anotations: "var:Collection,ORMManyToMany:targetEntity:Rental,inversedBy:types,cascade:"
 				label: Rentals
 				control: bricksList
+				inlineEditing: RentalRental:edit
+				inlineCreating: RentalRental:add
 			users:
-				# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityUserUser,inversedBy:rentalTypes"
 				label: Users
 				control: bricksList
+				inlineEditing: UserUser:edit
+				inlineCreating: UserUser:add
 			created:
-				# anotations: "var:datetime,ORMColumn:type:datetime"
 				label: Created
 				control: datePicker
 			updated:
-				# anotations: "var:datetime,ORMColumn:type:datetime"
 				label: Updated
 				control: datePicker

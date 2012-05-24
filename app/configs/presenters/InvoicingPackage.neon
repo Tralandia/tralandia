@@ -39,30 +39,29 @@ common:
 	form:
 		fields:
 			name:
-				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:"
 				label: Name
 				control: phrase
+				inlineEditing: DictionaryPhrase:edit
 			teaser:
-				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:"
 				label: Teaser
 				control: phrase
+				inlineEditing: DictionaryPhrase:edit
 			uses:
-				# anotations: "var:Collection,ORMManyToMany:targetEntity:UseType,mappedBy:packages"
 				label: Uses
 				control: bricksList
+				inlineEditing: InvoicingUseType:edit
+				inlineCreating: InvoicingUseType:add
 			country:
-				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityLocationLocation"
 				label: Country
 				control: select
-			services:
-				# anotations: "var:Collection,ORMOneToMany:targetEntity:EntityInvoicingService,mappedBy:package"
-				label: Services
-				control: multiSelect
+				inlineEditing: LocationLocation:edit
+			# services:
+			# 	# anotations: "var:Collection,ORMOneToMany:targetEntity:EntityInvoicingService,mappedBy:package"
+			# 	label: Services
+			# 	control: multiSelect
 			created:
-				# anotations: "var:datetime,ORMColumn:type:datetime"
 				label: Created
 				control: datePicker
 			updated:
-				# anotations: "var:datetime,ORMColumn:type:datetime"
 				label: Updated
 				control: datePicker

@@ -32,22 +32,18 @@ common:
 	form:
 		fields:
 			duration:
-				# anotations: "var:string,ORMColumn:type:string,nullable:true"
 				label: Duration
 				control: text
 			name:
-				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:"
 				label: Name
 				control: phrase
+				inlineEditing: DictionaryPhrase:edit
 			sort:
-				# anotations: "var:integer,ORMColumn:type:integer"
 				label: Sort
 				control: text
 			created:
-				# anotations: "var:datetime,ORMColumn:type:datetime"
 				label: Created
 				control: datePicker
 			updated:
-				# anotations: "var:datetime,ORMColumn:type:datetime"
 				label: Updated
 				control: datePicker

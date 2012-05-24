@@ -4,10 +4,14 @@ namespace Entity\Rental;
 
 use Entity\Dictionary;
 use Doctrine\ORM\Mapping as ORM;
+use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="rental_fulltext")
+ * @EA\Service(name="\Service\Rental\Fulltext")
+ * @EA\ServiceList(name="\Service\Rental\FulltextList")
+ * @EA\Primary(key="id", value="value")
  */
 class Fulltext extends \Entity\BaseEntity {
 
