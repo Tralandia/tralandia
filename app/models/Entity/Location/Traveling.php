@@ -10,7 +10,7 @@ use	Extras\Annotation as EA;
  * @ORM\Table(name="location_traveling", indexes={@ORM\index(name="peopleCount", columns={"peopleCount"}), @ORM\index(name="year", columns={"year"})})
  * @EA\Service(name="\Service\Location\Traveling")
  * @EA\ServiceList(name="\Service\Location\TravelingList")
- * @EA\Primary(key="id", value="slug")
+ * @EA\Primary(key="id", value="id")
  */
 class Traveling extends \Entity\BaseEntity {
 

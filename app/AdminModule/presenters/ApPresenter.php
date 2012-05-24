@@ -2,6 +2,7 @@
 
 namespace AdminModule;
 
+use Nette\ArrayHash;
 
 class ApPresenter extends BasePresenter {
 
@@ -19,6 +20,18 @@ class ApPresenter extends BasePresenter {
 			// @todo method or operation is not implemented
 			throw new \Nette\NotImplementedException('Requested method or operation is not implemented');
 		}
+
+		$links = new ArrayHash;
+		foreach ($this->task->links as $linkName => $link) {
+			$links->{$linkName} = ArrayHash::from(array(
+				'title' => $link['title'],
+				'link' => $this->lazyLink($link['link']['destination'], $link['link']['arguments']),
+			));
+			$links->{$linkName}->link->setParameter('display', 'modal');
+		}
+
+		$this->template->task = $this->task;
+		$this->template->links = $links;
 		
 	}
 

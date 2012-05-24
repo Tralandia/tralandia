@@ -15,7 +15,7 @@
 			<div class="row">
 				<div class="span6">
 					<h2>{$task->subtype}</h2>
-					<p class="desc">{$task->mission}</p>
+					<div class="desc">{!$task->mission}</div>
 					<p class="info">
 						<label><span>Created:</span> {$task->created|date}</label>
 						<label><span>Due:</span> {$task->due|date}</label>

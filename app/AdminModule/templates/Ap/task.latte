@@ -1,26 +1,16 @@
 {block content}
 <div class="headspace"></div>
 <div class="tabs">
-	<ul class="nav">
-		<li onclick="tab.focus(1);" tab="1">
-			Tab jedna
+	<ul class="nav" n:inner-foreach="$links as $link">
+		<li onclick="tab.focus({$iterator->counter});" tab="{$iterator->counter}">
+			{$link->title}
 			<button class="btn btn-mini btn-danger" onclick="tab.close(1);"><i class="icon-remove icon-white"></i></button>
 			<button class="btn btn-mini btn-success" onclick="tab.refresh(1);"><i class="icon-refresh icon-white"></i></button>
 		</li>
-		<li onclick="tab.focus(2);" tab="2">
-			Tab dva
-			<button class="btn btn-mini btn-danger" onclick="tab.close(2);"><i class="icon-remove icon-white"></i></button>
-			<button class="btn btn-mini btn-success" onclick="tab.refresh(2);"><i class="icon-refresh icon-white"></i></button>
-		</li>
-		<li onclick="tab.focus(3);" tab="3">
-			Tab tri
-			<button class="btn btn-mini btn-danger" onclick="tab.close(3);"><i class="icon-remove icon-white"></i></button>
-			<button class="btn btn-mini btn-success" onclick="tab.refresh(3);"><i class="icon-refresh icon-white"></i></button>
-		</li>
 	</ul>
-	<div class="tab-content" tab="1"><iframe src="http://cnn.com/"></iframe></div>
-	<div class="tab-content" tab="2"><iframe src="http://uns.sk/"></iframe></div>
-	<div class="tab-content" tab="3"><iframe src="http://dsl.sk/"></iframe></div>
+	{foreach $links as $link}
+		<div class="tab-content" tab="{$iterator->counter}"><iframe src="{$link->link}"></iframe></div>
+	{/foreach}
 </div>
 
 <!-- MODALS -->

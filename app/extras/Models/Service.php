@@ -429,7 +429,7 @@ abstract class Service extends Nette\Object implements IService {
 							// $dataTemp[] = $value->{$targetEntity->primaryKey};
 						}
 						$form[$name]->setDefaultValue(array_keys($dataTemp));
-						$form[$name]->setDefaultParam($dataTemp);
+						if($targetEntity->associationType == Reflector::MANY_TO_MANY) $form[$name]->setDefaultParam($dataTemp);
 						
 					} else if($targetEntity->associationType == Reflector::MANY_TO_ONE) {
 
@@ -458,12 +458,12 @@ abstract class Service extends Nette\Object implements IService {
 				}				
 			}
 		}
-		debug($data);
+		// debug($data);
 		return $data;
 	}
 
 	public function updateFormData($mask, $formValues) {
-		debug($formValues);
+		// debug($formValues);
 		foreach ($mask->fields as $property) {
 			$ui = $property->ui;
 			// debug($ui);
