@@ -30,23 +30,20 @@ common:
 			
 	form:
 		fields:
-			amenities:
-				# anotations: "var:Collection,ORMOneToMany:targetEntity:Amenity,mappedBy:type"
-				label: Amenities
-				control: multiSelect
+			# amenities:
+			# 	# anotations: "var:Collection,ORMOneToMany:targetEntity:Amenity,mappedBy:type"
+			# 	label: Amenities
+			# 	control: multiSelect
 			name:
-				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:"
 				label: Name
 				control: phrase
+				inlineEditing: DictionaryPhrase:edit
 			slug:
-				# anotations: "var:slug,ORMColumn:type:slug"
 				label: Slug
 				control: text
 			created:
-				# anotations: "var:datetime,ORMColumn:type:datetime"
 				label: Created
 				control: datePicker
 			updated:
-				# anotations: "var:datetime,ORMColumn:type:datetime"
 				label: Updated
 				control: datePicker

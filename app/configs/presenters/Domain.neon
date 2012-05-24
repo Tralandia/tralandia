@@ -25,18 +25,16 @@ common:
 	form:
 		fields:
 			domain:
-				# anotations: "var:string,ORMColumn:type:string"
 				label: Domain
 				control: text
 			locations:
-				# anotations: "var:Collection,ORMOneToMany:targetEntity:EntityLocationLocation,mappedBy:domain"
 				label: Locations
 				control: bricksList
+				inlineEditing: LocationLocation:edit
+				inlineCreating: LocationLocation:add
 			created:
-				# anotations: "var:datetime,ORMColumn:type:datetime"
 				label: Created
 				control: datePicker
 			updated:
-				# anotations: "var:datetime,ORMColumn:type:datetime"
 				label: Updated
 				control: datePicker

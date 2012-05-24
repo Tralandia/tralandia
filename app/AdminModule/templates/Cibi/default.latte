@@ -1,0 +1,20 @@
+{block content}
+<textarea class="neon span12" rows="50">
+parameters:
+	acl:
+		dir: %settingsDir%/acl
+		presentersDir: %settingsDir%/acl/presenters
+		entitiesDir: %settingsDir%/acl/entities
+
+		assertions:
+			assert1:
+				callback: ['\\Security\\MyAssertion', 'test']
+
+		presenters:
+			Admin:Cibi:
+				default:
+			Admin:EntityGenerator:
+				list:
+			Admin:Ap:
+				task:
+</textarea>

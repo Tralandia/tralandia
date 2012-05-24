@@ -9,17 +9,16 @@ common:
 				mapper: e.id
 			name:
 				label: Name
-				mapper: e.id
-				callback: {class: %this%, method: translateColumn, params: name}
+				mapper: e.name
 			slug:
 				label: Slug
 				mapper: e.slug
 			homePage:
 				label: HomePage
 				mapper: e.homePage
-			users:
-				label: Users
-				mapper: e.users
+			# users:
+			# 	label: Users
+			# 	mapper: e.users
 			oldId:
 				label: OldId
 				mapper: e.oldId

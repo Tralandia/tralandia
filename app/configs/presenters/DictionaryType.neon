@@ -58,59 +58,64 @@ common:
 			
 	form:
 		fields:
-			name:
-				# anotations: "var:string,ORMColumn:type:string,nullable:true"
-				label: Name
-				control: text
-			entityName:
-				# anotations: "var:string,ORMColumn:type:string,nullable:true"
-				label: EntityName
-				control: text
-			requiredLanguages:
-				# anotations: "var:string,ORMColumn:type:string"
-				label: RequiredLanguages
-				control: text
-			entityAttribute:
-				# anotations: "var:string,ORMColumn:type:string,nullable:true"
-				label: EntityAttribute
-				control: text
-			translationLevelRequirement:
-				# anotations: "var:integer,ORMColumn:type:integer"
-				label: TranslationLevelRequirement
-				control: text
-			multitranslationRequired:
-				# anotations: "var:boolean,ORMColumn:type:boolean"
-				label: MultitranslationRequired
-				control: checkbox
-			genderNumberRequired:
-				# anotations: "var:boolean,ORMColumn:type:boolean"
-				label: GenderNumberRequired
-				control: checkbox
-			locativeRequired:
-				# anotations: "var:boolean,ORMColumn:type:boolean"
-				label: LocativeRequired
-				control: checkbox
-			positionRequired:
-				# anotations: "var:boolean,ORMColumn:type:boolean"
-				label: PositionRequired
-				control: checkbox
-			webalizedRequired:
-				# anotations: "var:boolean,ORMColumn:type:boolean"
-				label: WebalizedRequired
-				control: checkbox
-			helpForTranslator:
-				# anotations: "var:string,ORMColumn:type:string,nullable:true"
-				label: HelpForTranslator
-				control: text
-			checkingRequired:
-				# anotations: "var:boolean,ORMColumn:type:boolean,nullable:true"
-				label: CheckingRequired
-				control: checkbox
-			created:
-				# anotations: "var:datetime,ORMColumn:type:datetime"
-				label: Created
-				control: datePicker
-			updated:
-				# anotations: "var:datetime,ORMColumn:type:datetime"
-				label: Updated
-				control: datePicker
+			#
+			# ********************************************************************************
+			# @DAVID: TU MI TO PRI EDITE PISE VZDY CHYBU
+			# ********************************************************************************
+			#
+			# name:
+			# 	# anotations: "var:string,ORMColumn:type:string,nullable:true"
+			# 	label: Name
+			# 	control: text
+			# entityName:
+			# 	# anotations: "var:string,ORMColumn:type:string,nullable:true"
+			# 	label: EntityName
+			# 	control: text
+			# requiredLanguages:
+			# 	# anotations: "var:string,ORMColumn:type:string"
+			# 	label: RequiredLanguages
+			# 	control: text
+			# entityAttribute:
+			# 	# anotations: "var:string,ORMColumn:type:string,nullable:true"
+			# 	label: EntityAttribute
+			# 	control: text
+			# translationLevelRequirement:
+			# 	# anotations: "var:integer,ORMColumn:type:integer"
+			# 	label: TranslationLevelRequirement
+			# 	control: text
+			# multitranslationRequired:
+			# 	# anotations: "var:boolean,ORMColumn:type:boolean"
+			# 	label: MultitranslationRequired
+			# 	control: checkbox
+			# genderNumberRequired:
+			# 	# anotations: "var:boolean,ORMColumn:type:boolean"
+			# 	label: GenderNumberRequired
+			# 	control: checkbox
+			# locativeRequired:
+			# 	# anotations: "var:boolean,ORMColumn:type:boolean"
+			# 	label: LocativeRequired
+			# 	control: checkbox
+			# positionRequired:
+			# 	# anotations: "var:boolean,ORMColumn:type:boolean"
+			# 	label: PositionRequired
+			# 	control: checkbox
+			# webalizedRequired:
+			# 	# anotations: "var:boolean,ORMColumn:type:boolean"
+			# 	label: WebalizedRequired
+			# 	control: checkbox
+			# helpForTranslator:
+			# 	# anotations: "var:string,ORMColumn:type:string,nullable:true"
+			# 	label: HelpForTranslator
+			# 	control: text
+			# checkingRequired:
+			# 	# anotations: "var:boolean,ORMColumn:type:boolean,nullable:true"
+			# 	label: CheckingRequired
+			# 	control: checkbox
+			# created:
+			# 	# anotations: "var:datetime,ORMColumn:type:datetime"
+			# 	label: Created
+			# 	control: datePicker
+			# updated:
+			# 	# anotations: "var:datetime,ORMColumn:type:datetime"
+			# 	label: Updated
+			# 	control: datePicker

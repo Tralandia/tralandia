@@ -5,7 +5,7 @@ namespace Extras\Types;
 class Email extends BaseType {
 
 	public function __toString() {
-		return $this->email;
+		return $this->data;
 	}
 
 }

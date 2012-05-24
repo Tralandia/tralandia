@@ -35,26 +35,26 @@ common:
 	form:
 		fields:
 			type:
-				# anotations: "var:Collection,ORMManyToOne:targetEntity:AmenityType,inversedBy:amenities"
 				label: Type
 				control: select
+				inlineEditing: AmenityType:edit
+				inlineCreating: AmenityType:add
 			rentals:
-				# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityRentalRental,inversedBy:amenities"
 				label: Rentals
 				control: bricksList
+				inlineEditing: RentalRental:edit
+				inlineCreating: RentalRental:add
 			name:
-				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:"
 				label: Name
 				control: phrase
-			details:
-				# anotations: "var:json,ORMColumn:type:json,nullable:true"
-				label: Details
-				control: json
+				inlineEditing: DictionaryPhrase:edit
+			# details:
+			# 	# anotations: "var:json,ORMColumn:type:json,nullable:true"
+			# 	label: Details
+			# 	control: json
 			created:
-				# anotations: "var:datetime,ORMColumn:type:datetime"
 				label: Created
 				control: datePicker
 			updated:
-				# anotations: "var:datetime,ORMColumn:type:datetime"
 				label: Updated
 				control: datePicker
