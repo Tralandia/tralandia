@@ -137,6 +137,12 @@ class BaseImport {
 			),
 			'subsections' => array('importRentalReservations', 'importRentalQuestions', 'importRentalToFriend', 'importSiteOwnerReviews', 'importSiteVisitorReviews'),
 		),
+		'emailing' => array(
+			'entities' => array(
+				'\Emailing\Template' => array(),
+			),
+			'subsections' => array(),
+		),
 	);
 
 	public $savedVariables = array();
