@@ -57,13 +57,13 @@ common:
 				label: Description
 				control: phrase
 				inlineEditing: DictionaryPhrase:edit
-			# country:
-			# 	class: span6
-			# 	label: Country
-			# 	control:  
-			# 		type: multiSelect
-			# 		addClass: span6
-			# 	startNewRow: true
+			country:
+				class: span6
+				label: Country
+				control:  
+					type: multiSelect
+					addClass: span6
+				startNewRow: true
 			latitude:
 				label: Latitude
 				control: text
