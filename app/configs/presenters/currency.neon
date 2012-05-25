@@ -28,7 +28,13 @@ common:
 			updated:
 				label: Updated
 				mapper: e.updated
-			
+
+	addForm:
+		fields:
+			iso:
+				label: Iso
+				control: text
+
 	form:
 		fields:
 			name:

@@ -512,7 +512,7 @@ abstract class Service extends Nette\Object implements IService {
 		if($this->id > 0) {
 			throw new \Exception("Servisa uz exisuje, nemozes ju znova vytvorit!");
 		}
-
+		$this->updateFormData($mask, $formValues);
 	}
 
 	/**
