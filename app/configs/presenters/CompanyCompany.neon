@@ -64,12 +64,12 @@ common:
 				control: bricksList
 				inlineEditing: LocationLocation:edit
 				inlineCreating: LocationLocation:add
-			# offices:
-			# 	# anotations: "var:Collection,ORMOneToMany:targetEntity:Office,mappedBy:company,cascade:"
-			# 	label: Offices
-			# 	control: multiSelect
-			# 	inlineEditing: CompanyOffice:edit
-			# 	inlineCreating: CompanyOffice:add
+			offices:
+				# anotations: "var:Collection,ORMOneToMany:targetEntity:Office,mappedBy:company,cascade:"
+				label: Offices
+				control: multiSelect
+				inlineEditing: CompanyOffice:edit
+				inlineCreating: CompanyOffice:add
 			name:
 				label: Name
 				control: text
@@ -89,12 +89,12 @@ common:
 				label: Registrator
 				control: phrase
 				inlineEditing: DictionaryPhrase:edit
-			# invoices:
-			# 	# anotations: "var:Collection,ORMOneToMany:targetEntity:EntityInvoicingInvoice,mappedBy:company"
-			# 	label: Invoices
-			# 	control: multiSelect
-			# 	inlineEditing: InvoicingInvoice:edit
-			# 	inlineCreating: InvoicingInvoice:add
+			invoices:
+				# anotations: "var:Collection,ORMOneToMany:targetEntity:EntityInvoicingInvoice,mappedBy:company"
+				label: Invoices
+				control: multiSelect
+				inlineEditing: InvoicingInvoice:edit
+				inlineCreating: InvoicingInvoice:add
 			details:
 				label: Details
 				control: json

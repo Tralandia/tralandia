@@ -279,12 +279,12 @@ class Reflector extends Nette\Object {
 					$fieldMask['ui']['class'] = 'span12 json-list';
 				} else if(in_array($type, array('multiSelect'))) {
 					$fieldMask['ui']['class'] = 'span6';
-				} else if(in_array($type, array('tinymce'))) {
+				} else if(in_array($type, array('tinymce', 'neon'))) {
 					$fieldMask['ui']['class'] = 'span12';
 				} else if(in_array($type, array('bricksList'))) {
 					$fieldMask['ui']['class'] = 'span12';
 				} else {
-					$fieldMask['ui']['class'] = 'span6';
+					$fieldMask['ui']['class'] = $formSettings->defaultFieldClass;
 				}
 			}
 
@@ -300,7 +300,7 @@ class Reflector extends Nette\Object {
 				} else if(in_array($type, array('bricksList'))) {
 					$fieldMask['ui']['control']['class'] = 'span12';
 				} else {
-					$fieldMask['ui']['control']['class'] = 'span6';
+					$fieldMask['ui']['control']['class'] = $formSettings->defaultFieldClass;
 				}
 			}
 
@@ -510,10 +510,10 @@ class Reflector extends Nette\Object {
 				}
 				if($control instanceof \Nette\Forms\Controls\SelectBox) {
 					foreach ($items as $key => $value) {
-						if($value instanceof \Entity\Dictionary\Phrase) {
+						if($value instanceof \Entity\Dictionary\Phrase || $value instanceof \Service\Dictionary\Phrase) {
 							$value = $this->presenter->translate($value);
 						}
-						$item = Html::el('option')->setText($value)->setValue($key);
+						$item = Html::el('option')->setText((string) $value)->setValue($key);
 						$attributes = array();
 						if($control->getOption('inlineEditing')) {
 							$inlineEditingHref = $control->getOption('inlineEditing')->href;
