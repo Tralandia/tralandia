@@ -24,14 +24,11 @@ common:
 	form:
 		fields:
 			details:
-				# anotations: "var:json,ORMColumn:type:json,nullable:true"
 				label: Details
 				control: json
 			created:
-				# anotations: "var:datetime,ORMColumn:type:datetime"
 				label: Created
 				control: datePicker
 			updated:
-				# anotations: "var:datetime,ORMColumn:type:datetime"
 				label: Updated
 				control: datePicker

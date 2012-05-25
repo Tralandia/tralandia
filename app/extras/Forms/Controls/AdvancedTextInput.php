@@ -37,15 +37,17 @@ class AdvancedTextInput extends TextInput {
 
 		$control = parent::getControl();
 
-		$control->addClass('pull-left input-large');
-		$wrapper = Html::el('div')->addClass('input-append input-prepend');
+		$control->addClass('input-large');
+		$wrapper = Html::el('div')->addClass('input-wrapper');
 		$wrapper->add($control);
 
-		$inlineEditing ? $wrapper->add($inlineEditing) : NULL;
-		$inlineDeleting ? $wrapper->add($inlineDeleting) : NULL;
-		$inlineCreating ? $wrapper->add($inlineCreating) : NULL;
+		$buttonsWrapper = Html::el('div')->addClass('input-buttons btn-group');
 
-		return $wrapper;
+		$inlineEditing ? $buttonsWrapper->add($inlineEditing) : NULL;
+		$inlineDeleting ? $buttonsWrapper->add($inlineDeleting) : NULL;
+		$inlineCreating ? $buttonsWrapper->add($inlineCreating) : NULL;
+
+		return $wrapper->add($buttonsWrapper);
 	}
 
 	/**

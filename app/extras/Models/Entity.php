@@ -2,6 +2,8 @@
 
 namespace Extras\Models;
 
+use Nette\Utils\Strings;
+
 abstract class Entity extends \Nette\Object implements IEntity, \Nette\Security\IResource, \IteratorAggregate {
 	
 	public function __construct($data = array()) {
@@ -68,6 +70,12 @@ abstract class Entity extends \Nette\Object implements IEntity, \Nette\Security\
 		// 	$this->{$name} = $value;
 		// 	return;
 		// }
+		if($value === NULL) {
+			$method = 'unset' . Strings::firstUpper($name);
+			$this->{$method}();
+			return NULL;
+		}
+
 		parent::__set($name, $value);
 	}
 	

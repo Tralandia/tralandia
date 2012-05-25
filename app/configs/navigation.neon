@@ -46,7 +46,7 @@ common:
 					link: ':Admin:AutopilotTaskArchived:list'
 				taskType: 
 					label: Task Types
-					link: ':Admin:AutopilotTaskType:list'
+					link: ':Admin:AutopilotType:list'
 
 		user:
 			label: Users

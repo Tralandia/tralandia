@@ -28,39 +28,37 @@ common:
 			updated:
 				label: Updated
 				mapper: e.updated
-			
+
+	addForm:
+		fields:
+			iso:
+				label: Iso
+				control: text
+
 	form:
 		fields:
 			name:
-				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,casca	:"
 				label: Name
 				control: phrase
 				addClass: 'myPhraseClass'
 				inlineEditing: DictionaryPhrase:edit
-				inlineCreating: DictionaryPhrase:add
 			iso:
-				# anotations: "var:string,ORMColumn:type:string"
 				label: Iso
 				control: text
 			exchangeRate:
-				# anotations: "var:decimal,ORMColumn:type:decimal,nullable:true"
 				label: ExchangeRate
 				control: text
 			rounding:
-				# anotations: "var:string,ORMColumn:type:string,nullable:true"
 				label: Rounding
 				control: text
 			locations:
-				# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityLocationLocation,inversedBy:currencies"
 				label: Locations
 				control: bricksList
 				inlineEditing: LocationLocation:edit
 				inlineCreating: LocationLocation:add
 			created:
-				# anotations: "var:datetime,ORMColumn:type:datetime"
 				label: Created
 				control: datePicker
 			updated:
-				# anotations: "var:datetime,ORMColumn:type:datetime"
 				label: Updated
 				control: datePicker

@@ -138,9 +138,9 @@ class Reflector extends Nette\Object {
 		return $this->fields[$class];
 	}
 
-	public function getFormMask($service) {
+	public function getFormMask($service, $formSettings) {
 		if(!$this->formMask) {
-			$this->formMask = $this->_getFormMask($service);
+			$this->formMask = $this->_getFormMask($service, $formSettings);
 		}
 		return $this->formMask;
 	}
@@ -148,7 +148,7 @@ class Reflector extends Nette\Object {
 	public function getInlineOptionHtml($type, $value, $controlType) {
 		if(!$value) return NULL;
 		$a = Html::el('a')
-			->addClass('btn btn-hidden pull-left')
+			->addClass('btn btn-hidden')
 			->setHref(call_user_func_array(array($this->presenter, 'lazyLink'),(array) $value));
 		$i = Html::el('i')->addClass('icon-white');
 
@@ -174,12 +174,10 @@ class Reflector extends Nette\Object {
 
 
 
-	private function _getFormMask($service) {
+	private function _getFormMask($service, $formSettings) {
 		$mask = array();
 		$mask['classReflection'] = $this->getServiceReflection($this->settings->serviceClass);
 		$mask['entityReflection'] = $this->getSerivcesEntityReflection($mask['classReflection']);
-
-		$formSettings = $this->settings->params->form;
 
 		$mask['form'] = array();
 		$mask['form']['containerName'] = $this->getContainerName();
@@ -194,9 +192,7 @@ class Reflector extends Nette\Object {
 			$mask['form'][$key] = Arrays::get($formSettings, $key, $value['default']);
 		}
 
-
-
-		$fieldsSettings = $this->settings->params->form->fields;
+		$fieldsSettings = $formSettings->fields;
 		$user = $this->presenter->user;
 		foreach ($this->getFields($this->settings->serviceClass, $fieldsSettings) as $property) {
 
@@ -211,7 +207,6 @@ class Reflector extends Nette\Object {
 			$fieldMask['ui'] = array();
 			$name = $property->getName();
 			$ui = NULL;
-			$options = NULL;
 
 			$fieldOptions = array(
 				'control' => array('default'=> NULL), 
@@ -219,7 +214,6 @@ class Reflector extends Nette\Object {
 				'description' => array('default'=> NULL), 
 				'class' => array('default'=> NULL), 
 				'addClass' => array('default'=> NULL), 
-				'callback' => array('default'=> NULL), 
 				'inlineEditing' => array('default' => NULL), 
 				'inlineDeleting' => array('default' => NULL), 
 				'inlineCreating' => array('default' => NULL), 
@@ -228,7 +222,6 @@ class Reflector extends Nette\Object {
 			);
 
 
-			$options = Arrays::get($fieldsSettings, array($name, 'options'), $options);
 
 			foreach ($fieldOptions as $key => $value) {
 				$fieldMask['ui'][$key] = Arrays::get($fieldsSettings, array($name, $key), $value['default']);
@@ -270,17 +263,47 @@ class Reflector extends Nette\Object {
 			$fieldMask['ui']['name'] = $name;
 			$fieldMask['ui']['control']['type'] = ucfirst($fieldMask['ui']['control']['type']);
 			$fieldMask['ui']['nameSingular'] = Strings::toSingular(ucfirst($fieldMask['ui']['name']));
-			$fieldMask['ui']['options'] = $options;
+			
+			if (isset($fieldMask['ui']['control']['options']) && is_string($fieldMask['ui']['control']['options'])) {
+				$constList = $mask['entityReflection']->getConstants();
+				$optionsTemp = array();
+				foreach ($constList as $key => $value) {
+					if(!Strings::match($key, '~'.$fieldMask['ui']['control']['options'].'~')) continue;
+					$optionsTemp[$value] = ucfirst($value);
+				}
+				$fieldMask['ui']['control']['options'] = $optionsTemp;
+			}
 
-			if($fieldMask['ui']['class'] === NULL && !in_array($type, array('checkboxList', 'tinymce'))) {
+			if($fieldMask['ui']['class'] === NULL) {
 				if(in_array($type, array('json'))) {
 					$fieldMask['ui']['class'] = 'span12 json-list';
+				} else if(in_array($type, array('multiSelect'))) {
+					$fieldMask['ui']['class'] = 'span6';
+				} else if(in_array($type, array('tinymce', 'neon'))) {
+					$fieldMask['ui']['class'] = 'span12';
 				} else if(in_array($type, array('bricksList'))) {
 					$fieldMask['ui']['class'] = 'span12';
 				} else {
-					$fieldMask['ui']['class'] = 'span3';
+					$fieldMask['ui']['class'] = $formSettings->defaultFieldClass;
 				}
 			}
+
+			if(!array_key_exists('class', $fieldMask['ui']['control']) || $fieldMask['ui']['control']['class'] === NULL) {
+				if(in_array($type, array('json'))) {
+					$fieldMask['ui']['control']['class'] = 'span12 json-list';
+				} else if(in_array($type, array('multiSelect'))) {
+					$fieldMask['ui']['control']['class'] = 'span6';
+				} else if(in_array($type, array('tinymce'))) {
+					$fieldMask['ui']['control']['class'] = 'span12';
+				} else if(in_array($type, array('neon'))) {
+					$fieldMask['ui']['control']['class'] = 'neon span6';
+				} else if(in_array($type, array('bricksList'))) {
+					$fieldMask['ui']['control']['class'] = 'span12';
+				} else {
+					$fieldMask['ui']['control']['class'] = $formSettings->defaultFieldClass;
+				}
+			}
+
 			
 			if(isset($fieldMask['ui']['control']['columnClass'])) {
 				$fieldMask['ui']['controlOptions']['columnClass'] = $fieldMask['ui']['control']['columnClass'];
@@ -305,6 +328,8 @@ class Reflector extends Nette\Object {
 				$fieldMask['ui']['control']['type'] = 'AdvancedCheckBox';
 			} else if($type == 'select') {
 				$fieldMask['ui']['control']['type'] = 'AdvancedSelectBox';
+			} else if($type == 'multiSelect') {
+				$fieldMask['ui']['control']['type'] = 'MultiSelect';
 			} else if($type == 'checkboxList') {
 				$fieldMask['ui']['control']['type'] = 'AdvancedCheckBoxList';
 			} else if($type == 'table') {
@@ -315,11 +340,6 @@ class Reflector extends Nette\Object {
 				$fieldMask['ui']['control']['type'] = 'AdvancedNeon';
 			} else if($type == 'bricksList') {
 				$fieldMask['ui']['control']['type'] = 'AdvancedBricksList';
-			} else if($type == 'tinymce') {
-				if(!isset($fieldMask['ui']['control']['class'])) {
-					$fieldMask['ui']['control']['class'] = 'span12';
-					$fieldMask['ui']['class'] = 'span12';
-				}
 			}
 
 			if($associationType = $this->getAssociationType($property)) {
@@ -340,20 +360,25 @@ class Reflector extends Nette\Object {
 
 			}
 
-			if(in_array($type, array('select', 'checkboxList', 'multiSelect'))) {
+			if(in_array($type, array('select', 'checkboxList', 'multiSelect')) && (!isset($fieldMask['ui']['control']['options']) || !is_array($fieldMask['ui']['control']['options']))) {
 
-				if(!$fieldMask['ui']['callback'] && !$fieldMask['ui']['options']) {
-					$fieldMask['ui']['callback'] = 'getPairs';
+				if(!isset($fieldMask['ui']['control']['callback'])) {
+					$fieldMask['ui']['control']['callback'] = 'getPairs';
 				}
 
-				if(is_string($fieldMask['ui']['callback'])) {
-					$fieldMask['ui']['callback'] = array('method' => $fieldMask['ui']['callback']);
+				if(is_string($fieldMask['ui']['control']['callback'])) {
+					$fieldMask['ui']['control']['callback'] = array('method' => $fieldMask['ui']['control']['callback']);
 				}
 
-				$fieldMask['ui']['callback']['method'] = $this->getCallback($fieldMask['targetEntity']['serviceListName'], $fieldMask['ui']['callback']['method']);
+				if(isset($fieldMask['ui']['control']['callback']['class'])) {
+					$fieldMask['ui']['control']['callback']['cb'] = callback($fieldMask['ui']['control']['callback']['class'], $fieldMask['ui']['control']['callback']['method']);
+				} else {
+					$fieldMask['ui']['control']['callback']['cb'] = $this->getCallback($fieldMask['targetEntity']['serviceListName'], $fieldMask['ui']['control']['callback']['method']);
+					
+				}
 
-				if(!array_key_exists('arguments', $fieldMask['ui']['callback'])) {
-					$fieldMask['ui']['callback']['arguments'] = array($fieldMask['targetEntity']['primaryKey'], $fieldMask['targetEntity']['primaryValue']);
+				if(!array_key_exists('arguments', $fieldMask['ui']['control']['callback'])) {
+					$fieldMask['ui']['control']['callback']['arguments'] = array($fieldMask['targetEntity']['primaryKey'], $fieldMask['targetEntity']['primaryValue']);
 				}
 			}
 
@@ -473,19 +498,22 @@ class Reflector extends Nette\Object {
 				|| $control instanceof \Extras\Forms\Controls\AdvancedCheckBoxList
 				|| $control instanceof \Nette\Forms\Controls\MultiSelectBox) 
 			{
-				$targetEntity = $property->targetEntity;
-				if (isset($ui->callback)) {
+				// $targetEntity = $property->targetEntity;
+				if (isset($ui->control->callback)) {
 					// data volane cez callback
-					$items = call_user_func_array($ui->callback->method, (array) $ui->callback->arguments);
-				} elseif (isset($ui->options)) {
+					$items = call_user_func_array($ui->control->callback->cb, (array) $ui->control->callback->arguments);
+				} elseif (isset($ui->control->options)) {
 					// data volane cez options
-					$items = $ui->options;
+					$items = $ui->control->options;
 				} else {
 					throw new \Exception("Callback alebo options v `{$classReflection->getConstant('MAIN_ENTITY_NAME')} - {$propertyName}` nie sú validné");
 				}
-				if($control instanceof \Extras\Forms\Controls\AdvancedSelectBox) {
+				if($control instanceof \Nette\Forms\Controls\SelectBox) {
 					foreach ($items as $key => $value) {
-						$item = Html::el('option')->setText($value)->setValue($key);
+						if($value instanceof \Entity\Dictionary\Phrase || $value instanceof \Service\Dictionary\Phrase) {
+							$value = $this->presenter->translate($value);
+						}
+						$item = Html::el('option')->setText((string) $value)->setValue($key);
 						$attributes = array();
 						if($control->getOption('inlineEditing')) {
 							$inlineEditingHref = $control->getOption('inlineEditing')->href;
@@ -499,7 +527,11 @@ class Reflector extends Nette\Object {
 						$items[$key] = $item;
 					}
 				}
-				$control->setItems($items);
+				$control->setItems($items instanceof \Traversable ? iterator_to_array($items) : $items);
+
+				if(isset($ui->control->prompt)) {
+					$control->setPrompt($ui->control->prompt);
+				}
 
 			}
 
@@ -545,6 +577,10 @@ class Reflector extends Nette\Object {
 			
 			$this->jsonStructures = $config->load(APP_DIR . '/configs/entities/jsonStructures.neon');
 		}
+		if(!isset($this->jsonStructures[$name])) {
+			throw new \Exception("Nezadefinoval si json strukturu pre $name.");
+			
+		}
 		return $this->jsonStructures[$name];
 	}
 	
@@ -553,7 +589,7 @@ class Reflector extends Nette\Object {
 		
 		foreach ($a as $key => $value) {
 
-			debug($value);
+			// debug($value);
 		}
 	}
 	

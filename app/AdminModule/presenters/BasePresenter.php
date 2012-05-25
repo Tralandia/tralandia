@@ -54,4 +54,16 @@ abstract class BasePresenter extends \BasePresenter {
 		$navigation = new \AdminModule\Components\Navigation($this, $name);
 		return $navigation;
 	}
+
+	public function actionDecodeNeon() {
+		$input = $this->getHttpRequest()->getPost('input', '');
+		try {
+			$decoded = \Nette\Utils\Neon::decode($input);
+			$output = \Nette\Diagnostics\Debugger::dump($decoded, true);
+		} catch(\Nette\Utils\NeonException $e) {
+			$output = $e->getMessage();
+		}
+		$this->payload->output = $output;
+		$this->sendPayload();
+	}
 }

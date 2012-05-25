@@ -9,11 +9,12 @@ use BaseModule\Components\BaseControl,
 class Autopilot extends BaseControl {
 
 	protected $autopilot;
+	public $task;
 
 	public function render() {
 		$template = $this->template;
 		$template->setFile(dirname(__FILE__) . '/template.latte');
-		
+		$template->task = $this->task;
 		$template->render();
 	}
 

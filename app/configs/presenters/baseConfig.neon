@@ -17,13 +17,25 @@ common:
 					edit:
 						title: Edit
 						addClass: btn-warning
-						target: _blank
+						# target: _blank
 					delete:
 						title: Delete
 						addClass: btn-danger
 
+	addForm:
+		class: row form
+		buttons:
+			cancel: 
+				type: backlink
+				label: 'Cancel (return)'
+			submit:
+				type: submit
+				label: Save Changes
+				addClass: btn-success pull-right
+
 	form:
 		class: row form
+		defaultFieldClass: span3
 		buttons:
 			cancel: 
 				type: backlink

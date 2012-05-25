@@ -40,7 +40,7 @@ class AdminPresenter extends BasePresenter {
 	public function actionAdd() {
 		$service = $this->serviceName;
 		$this->service = $service::get();
-		$this->formMask = $this->reflector->getFormMask($this->service);
+		$this->formMask = $this->reflector->getFormMask($this->service, $this->settings->params->addForm);
 	}
 
 	public function renderAdd() {		
@@ -57,7 +57,7 @@ class AdminPresenter extends BasePresenter {
 	public function actionEdit($id = 0) {
 		$service = $this->serviceName;
 		$this->service = $service::get($id);
-		$this->formMask = $this->reflector->getFormMask($this->service);
+		$this->formMask = $this->reflector->getFormMask($this->service, $this->settings->params->form);
 
 	}
 	
@@ -80,10 +80,36 @@ class AdminPresenter extends BasePresenter {
 	}
 	
 	protected function createComponentForm($name) {
-		$form = new \AdminModule\Forms\AdminForm($this, $name, $this->reflector, $this->service);
+		$form = new \AdminModule\Forms\AdminForm($this, $name);
+
+		$this->reflector->extend($form, $this->formMask);
+
+		//$this->addAdvancedFileManager('upload', 'File manager');
+		$form->onSuccess[] = callback($this, 'formOnSuccess');
 
 		return $form;
 	}
+
+	public function formOnSuccess(\AdminModule\Forms\AdminForm $form) {
+		$id = $this->presenter->getParam('id');
+		$values = $this->reflector->getPrepareValues($form);
+
+		if ($this->service->id) {
+			// EDIT
+			$this->service->updateFormData($this->formMask, $values);
+		} else {
+			// ADD
+			$this->service->create($this->formMask, $values);
+			$this->redirect('edit', array('id' => $this->service->id));
+		}
+
+		$this->flashMessage('A je to!');
+		if($this->getPresenter()->isAjax()) {
+			$this->getPresenter()->payload->invalidateParent = true;
+		}
+	}
+
+
 
 /*	public function handleImageUpload(\Nette\Http\FileUpload $file) {
 		//debug($file);

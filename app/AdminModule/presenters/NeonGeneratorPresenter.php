@@ -56,7 +56,11 @@ class NeonGeneratorPresenter extends EntityGeneratorPresenter {
 		
 		$this->template->presenters = NULL;
 		$this->template->entities = NULL;
+		$this->template->generatedFiles = NULL;
 
+		$this->generateJsonStructoresFile();
+
+/*
 		$presenters = array();
 		$entities = array();
 
@@ -81,6 +85,42 @@ class NeonGeneratorPresenter extends EntityGeneratorPresenter {
 		$this->template->entities = $entities;
 
 		$this->template->generatedFiles = implode('<br/>', $this->generateNeonFiles());
+*/
+
+	}
+
+	private function generateJsonStructoresFile() {
+
+		$jsonStructures = array();
+		$entityDir = APP_DIR . '/models/Entity/';
+		foreach (Finder::findFiles('*.php')->from($entityDir) as $key => $file) {
+
+			list($x, $entityNameTemp) = explode('/models/', $key, 2);
+			$entityNameTemp = str_replace(array('/', '.php'), array('\\', ''), $entityNameTemp);
+
+			$mainEntityReflector = $this->getEntityReflection($entityNameTemp);
+			foreach ($mainEntityReflector->getProperties() as $property) {
+
+				$propertyInfo = $this->getPropertyInfo($property);
+				$controlType = $this->getControlType($propertyInfo);
+
+				if ($controlType != 'json') continue;
+
+				$jsonStructures[str_replace('Entity\\', '', $entityNameTemp)][$propertyInfo->name] = array(
+					'item1'=>NULL,
+					'item2'=>NULL
+				);
+
+			}
+
+		}
+
+		$neon = new Utils\Neon;
+		$neonOutput = $neon->encode($jsonStructures, $neon::BLOCK);
+
+		$file = APP_DIR . '/' . self::$destinationFolder . 'jsonStructures.neon';
+		fopen($file, 'c');
+		file_put_contents($file, preg_replace("/[\n\r]{1}\t{1,4}[\n\r]{1}/","\n", trim($neonOutput)));	
 
 	}
 
