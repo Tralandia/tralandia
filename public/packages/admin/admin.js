@@ -42,9 +42,9 @@ $(function() {
 		empty: baseUrl+'/images/spacer.gif'
 	});
 
-	$("textarea.neon").tabby();
+	$("textarea.neon").tabby().neon({ajaxTimeout: 500});
 
-})
+});
 
 function toggleEdit(obj) {
 	$($(obj).parent()).next().children('form').toggleClass('edit-mode');
