@@ -31,10 +31,21 @@ $(function() {
 		$('.tooltip').tooltip({
 			placement: 'left'
 		});
-	})
+	});
 
-	$('#myModal').modal({
-		show: false
+	// Modals for Add New buttons
+	$('a.add-new').on('click', function(event) {
+		link = $(this).attr('data-link');
+		modal = $($(this).attr('href'));
+		modalBody = $('.modal-body', modal);
+		$(modal).modal();
+		$.ajax({
+			url: link,
+			error: function(e) { modalBody.html('Error ' + e.status + ': ' + e.statusText); },
+			beforeSend: function() { modalBody.html('loading...'); },
+			success: function(data) { modalBody.html(data); }
+		});
+		event.preventDefault();
 	});
 
 	$('input:checkbox').checkbox({
