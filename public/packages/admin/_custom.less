@@ -79,22 +79,20 @@ select[multiple] { height:250px; }
 
 a[href^="error:"] { background: red; color: white; }
 
-.btn-hidden { display:none; }
-.edit-mode .btn-hidden { display:inline; }
-.edit-mode .input-prepend.input-append input, .edit-mode .input-prepend.input-append select, .edit-mode .input-prepend.input-append .uneditable-input { .input-prepend.input-append input }
-.input-prepend.input-append input, .input-prepend.input-append select, .input-prepend.input-append .uneditable-input { .border-radius(3px); }
 
 .modal { width: ((@gridFullWidth+20)-(1)); margin: -250px 0 0 -((@gridFullWidth+20)/2); position:absolute; }
 .modal .modal-body { padding:0; max-height:none; }
 .modal .modal-body iframe { border:none; width:100%; }
 
-form.form .input-small { width:80%; }
-form.form.edit-mode .input-small { width:80%; }
-
-form.form .input-medium { width:90%; }
-form.form.edit-mode .input-medium { width:70%; }
-form.form .input-large { width:100%; }
-form.form.edit-mode .input-large { width:60%; }
+form.form .input-small { width:80%; margin-bottom:0; }
+form.form .input-medium { width:90%; margin-bottom:0; }
+form.form .input-large { width:100%; margin-bottom:0; }
+.input-wrapper, .select-wrapper { position:relative; }
+.input-buttons { position:absolute; right:-10px; top:0; }
+.select-buttons { position:absolute; right:30px; top:0; }
+.btn-hidden { display:none; }
+.btn-hidden.create { position:static; }
+.edit-mode .btn-hidden { display:inline; }
 
 .json-list ul { list-style:none; margin-left:0; border-left:1px solid @grayMedium; }
 .json-list ul li { list-style:none; padding:0 0 0 10px; }
