@@ -37,8 +37,24 @@ parameters:
 					- jQueryUI/jquery.ui.css
 					- jQueryUI/ui.multiselect.css
 					- jQueryUI/jquery.checkbox.css
+			fileUpload:
+				js:
+					- FileUpload/js/jquery.fileupload.js
+					- FileUpload/js/jquery.fileupload-ui.js
+					- FileUpload/js/jquery.fileupload-fp.js
+					- FileUpload/js/locale.js
+					- FileUpload/js/main.js
+				css:
+					- FileUpload/css/jquery.fileupload-ui.css
 
 		sets:
+			'Admin:Test':
+				- %webloader.packages.jQuery%
+				- %webloader.packages.jQueryUI%
+				- %webloader.packages.fileUpload%
+				- %webloader.packages.admin%
+				- %webloader.packages.bootstrap%
+
 			'Admin:Ap':
 				- %webloader.packages.jQuery%
 				- %webloader.packages.jQueryCalendar%
