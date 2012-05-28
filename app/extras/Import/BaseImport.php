@@ -148,7 +148,7 @@ class BaseImport {
 				'\Seo\TitleSuffix' => array(),
 				'\Seo\SeoUrl' => array(),
 			),
-			'subsections' => array('importSeoUrls', 'importTitleSuffixes'),
+			'subsections' => array('importSeoUrls'),
 		),
 		'pathsegments' => array(
 			'entities' => array(

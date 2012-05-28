@@ -26,6 +26,11 @@ class ImportSeo extends BaseImport {
 	}
 
 	private function importSeoUrls() {
+		$import = new \Extras\Import\BaseImport();
+		// Detaching all media
+		qNew('update medium_medium set seoUrl_id = NULL where seoUrl_id > 0');
+		$import->undoSection('seo');
+
 		$this->countryTypeId = qNew('select id from location_type where slug = "country"');
 		$this->countryTypeId = mysql_fetch_array($this->countryTypeId);
 		$countriesByOldId = getNewIdsByOld('\Location\Location', 'type_id = '.$this->countryTypeId[0]);
@@ -46,7 +51,7 @@ class ImportSeo extends BaseImport {
 		$locationCountryType = \Service\Location\Type::getBySlug('country');
 
 		$tagType = \Service\Rental\AmenityType::getBySlug('tag');
-
+		debug(mysql_num_rows($r));
 		while($x = mysql_fetch_array($r)) {
 			$seoUrl = \Service\Seo\SeoUrl::get();
 			$seoUrl->oldId = $x['id'];
@@ -99,19 +104,27 @@ class ImportSeo extends BaseImport {
 
 			$titlePhrase = \Service\Dictionary\Phrase::get();
 			$titlePhrase->type = $dictionaryTypeTitle;
-			$titlePhrase->sourceLanguage = \Service\Dictionary\Language::get($languagesByOldId[$x['source_language_id']]);
+			if (isset($languagesByOldId[$x['source_language_id']])) {
+				$titlePhrase->sourceLanguage = \Service\Dictionary\Language::get($languagesByOldId[$x['source_language_id']]);
+			}
 
 			$headingPhrase = \Service\Dictionary\Phrase::get();
 			$headingPhrase->type = $dictionaryTypeHeading;
-			$headingPhrase->sourceLanguage = \Service\Dictionary\Language::get($languagesByOldId[$x['source_language_id']]);
+			if (isset($languagesByOldId[$x['source_language_id']])) {
+				$headingPhrase->sourceLanguage = \Service\Dictionary\Language::get($languagesByOldId[$x['source_language_id']]);
+			}
 
 			$tabNamePhrase = \Service\Dictionary\Phrase::get();
 			$tabNamePhrase->type = $dictionaryTypeTabName;
-			$tabNamePhrase->sourceLanguage = \Service\Dictionary\Language::get($languagesByOldId[$x['source_language_id']]);
+			if (isset($languagesByOldId[$x['source_language_id']])) {
+				$tabNamePhrase->sourceLanguage = \Service\Dictionary\Language::get($languagesByOldId[$x['source_language_id']]);
+			}
 
 			$descriptionPhrase = \Service\Dictionary\Phrase::get();
 			$descriptionPhrase->type = $dictionaryTypeDescription;
-			$descriptionPhrase->sourceLanguage = \Service\Dictionary\Language::get($languagesByOldId[$x['source_language_id']]);
+			if (isset($languagesByOldId[$x['source_language_id']])) {
+				$descriptionPhrase->sourceLanguage = \Service\Dictionary\Language::get($languagesByOldId[$x['source_language_id']]);
+			}
 
 			$r1 = q('select * from seo_urls_texts where seo_url_id = '.$x['id'].' and length(description)>0');
 			while ($x1 = mysql_fetch_array($r1)) {
@@ -124,6 +137,7 @@ class ImportSeo extends BaseImport {
 					'translation' => $x1['title'],
 				);
 				$t->variations = $variations;
+				$t->setPhrase($titlePhrase);
 				$t->save();
 				$titlePhrase->addTranslation($t);
 
@@ -135,6 +149,7 @@ class ImportSeo extends BaseImport {
 					'translation' => $x1['h1'],
 				);
 				$t->variations = $variations;
+				$t->setPhrase($headingPhrase);
 				$t->save();
 				$headingPhrase->addTranslation($t);
 
@@ -146,6 +161,7 @@ class ImportSeo extends BaseImport {
 					'translation' => $x1['tab_name'],
 				);
 				$t->variations = $variations;
+				$t->setPhrase($tabNamePhrase);
 				$t->save();
 				$tabNamePhrase->addTranslation($t);
 
@@ -157,6 +173,7 @@ class ImportSeo extends BaseImport {
 					'translation' => $x1['description'],
 				);
 				$t->variations = $variations;
+				$t->setPhrase($descriptionPhrase);
 				$t->save();
 				$descriptionPhrase->addTranslation($t);
 			}
@@ -165,7 +182,8 @@ class ImportSeo extends BaseImport {
 			$seoUrl->heading = $headingPhrase;
 			$seoUrl->tabName = $tabNamePhrase;
 			$seoUrl->description = $descriptionPhrase;
-			debug($seoUrl); return;
+			//debug($titlePhrase->getMainEntity()->translations);
+			//debug($descriptionPhrase->getMainEntity()->translations); return;
 			$seoUrl->save();
 		}
 		\Extras\Models\Service::flush(FALSE);
