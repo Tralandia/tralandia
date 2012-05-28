@@ -41,7 +41,7 @@ common:
 		authorizator: 
 			class: Security\Acl
 			setup:
-				- $cache(@aclCache)
+				# - $cache(@aclCache)
 				- $config(%acl%)
 				- setup()
 

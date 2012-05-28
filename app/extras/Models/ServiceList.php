@@ -227,7 +227,7 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 
 
 		$serviceList->setDataSource($qb);
-		debug($serviceList);
+		// debug($serviceList);
 		return self::_getPairs($serviceList, $keyName, $valuePropertyName ? : $valueName);
 	}
  
