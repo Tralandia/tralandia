@@ -54,28 +54,6 @@ class Translation extends \Entity\BaseEntity {
 	protected $checked;
 
 
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		

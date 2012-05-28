@@ -3,8 +3,8 @@
 namespace Service\Seo;
 
 
-class SoeUrl extends \Service\BaseService {
+class SeoUrl extends \Service\BaseService {
 	
-	const MAIN_ENTITY_NAME = '\Entity\Seo\SoeUrl';
+	const MAIN_ENTITY_NAME = '\Entity\Seo\SeoUrl';
 	
 }

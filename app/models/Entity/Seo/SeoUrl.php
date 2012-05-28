@@ -23,7 +23,7 @@ class SeoUrl extends \Entity\BaseEntity {
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Location\Location")
 	 */
-	protected $country;
+	protected $location;
 
 	/**
 	 * @var Collection
@@ -32,14 +32,8 @@ class SeoUrl extends \Entity\BaseEntity {
 	protected $rentalType;
 
 	/**
-	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Location\Location")
-	 */
-	protected $location;
-
-	/**
 	 * @var integer
-	 * @ORM\Column(type="integer")
+	 * @ORM\Column(type="integer", nullable=true)
 	 */
 	protected $page;
 
@@ -71,7 +65,7 @@ class SeoUrl extends \Entity\BaseEntity {
 	 * @var Collection
 	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
 	 */
-	protected $h1;
+	protected $heading;
 
 	/**
 	 * @var Collection
@@ -124,8 +118,8 @@ class SeoUrl extends \Entity\BaseEntity {
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Seo\SeoUrl
 	 */
-	public function setCountry(\Entity\Location\Location $country) {
-		$this->country = $country;
+	public function setLocation(\Entity\Location\Location $location) {
+		$this->location = $location;
 
 		return $this;
 	}
@@ -133,8 +127,8 @@ class SeoUrl extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Seo\SeoUrl
 	 */
-	public function unsetCountry() {
-		$this->country = NULL;
+	public function unsetLocation() {
+		$this->location = NULL;
 
 		return $this;
 	}
@@ -142,8 +136,8 @@ class SeoUrl extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Location\Location|NULL
 	 */
-	public function getCountry() {
-		return $this->country;
+	public function getLocation() {
+		return $this->location;
 	}
 		
 	/**
@@ -170,32 +164,6 @@ class SeoUrl extends \Entity\BaseEntity {
 	 */
 	public function getRentalType() {
 		return $this->rentalType;
-	}
-		
-	/**
-	 * @param \Entity\Location\Location
-	 * @return \Entity\Seo\SeoUrl
-	 */
-	public function setLocation(\Entity\Location\Location $location) {
-		$this->location = $location;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Seo\SeoUrl
-	 */
-	public function unsetLocation() {
-		$this->location = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Location\Location|NULL
-	 */
-	public function getLocation() {
-		return $this->location;
 	}
 		
 	/**
@@ -321,8 +289,8 @@ class SeoUrl extends \Entity\BaseEntity {
 	 * @param \Entity\Dictionary\Phrase
 	 * @return \Entity\Seo\SeoUrl
 	 */
-	public function setH1(\Entity\Dictionary\Phrase $h1) {
-		$this->h1 = $h1;
+	public function setHeading(\Entity\Dictionary\Phrase $heading) {
+		$this->heading = $heading;
 
 		return $this;
 	}
@@ -330,8 +298,8 @@ class SeoUrl extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Dictionary\Phrase|NULL
 	 */
-	public function getH1() {
-		return $this->h1;
+	public function getHeading() {
+		return $this->heading;
 	}
 		
 	/**

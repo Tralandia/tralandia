@@ -137,6 +137,25 @@ class BaseImport {
 			),
 			'subsections' => array('importRentalReservations', 'importRentalQuestions', 'importRentalToFriend', 'importSiteOwnerReviews', 'importSiteVisitorReviews'),
 		),
+		'emailing' => array(
+			'entities' => array(
+				'\Emailing\Template' => array(),
+			),
+			'subsections' => array(),
+		),
+		'seo' => array(
+			'entities' => array(
+				'\Seo\TitleSuffix' => array(),
+				'\Seo\SeoUrl' => array(),
+			),
+			'subsections' => array('importSeoUrls'),
+		),
+		'pathsegments' => array(
+			'entities' => array(
+				'\Routing\PathSegment' => array(),
+			),
+			'subsections' => array(),
+		),
 	);
 
 	public $savedVariables = array();
