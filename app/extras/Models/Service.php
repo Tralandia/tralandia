@@ -296,7 +296,7 @@ abstract class Service extends Nette\Object implements IService {
 	 * Ziskanie entity manazera
 	 * @return EntityManager
 	 */
-	protected static function getEntityManager() {
+	public static function getEntityManager() {
 		return self::$em;
 	}
 
@@ -304,7 +304,7 @@ abstract class Service extends Nette\Object implements IService {
 	 * Alias na entity manazera
 	 * @return EntityManager
 	 */
-	protected static function getEm() {
+	public static function getEm() {
 		return self::getEntityManager();
 	}
 
@@ -492,15 +492,25 @@ abstract class Service extends Nette\Object implements IService {
 							$this->{$name} = NULL;
 						} else {
 							$serviceName = $targetEntity->serviceName;
-							$this->{$name} = $serviceName::get($formValue);
+							try{
+								$this->{$name} = $serviceName::get($formValue);
+							} catch(\Nette\InvalidArgumentException $e) {
+								throw new \Exception("Nevedel inicializovat servisu z '$formValue', bud si zle nastavil formular pre property $name ({$targetEntity->name}), alebo je chyba vo formulary samotnom...");
+							}
 						}
 					} else {
 						// @todo method or operation is not implemented
 						throw new \Nette\NotImplementedException('Requested method or operation is not implemented');
 					}
 				} else {
-					// debug($formValue);
+					$columnType = $property->column->type;
+					if($columnType == 'latlong') {
+						$formValue = new \Extras\Types\Latlong($formValue);
+					} else if($columnType == 'price') {
+						$formValue = new \Extras\Types\Price($formValue);
+					}
 					$this->{$name} = $formValue;
+					debug($ui);
 				}
 			}
 		}

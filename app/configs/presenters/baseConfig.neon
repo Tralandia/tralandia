@@ -24,6 +24,7 @@ common:
 
 	addForm:
 		class: row form
+		defaultFieldClass: span3
 		buttons:
 			cancel: 
 				type: backlink

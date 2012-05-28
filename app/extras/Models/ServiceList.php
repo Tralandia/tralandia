@@ -60,13 +60,18 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 	}
 
 	public static function __callStatic($name, $arguments) {
+
 		if(Strings::startsWith($name, 'getPairs')) {
 			$name = substr($name, 8);
 			if($name == '') $name = 'All';
 			$name = 'get' . $name;
 			$key = array_shift($arguments);
 			$value = array_shift($arguments);
-			return static::_fetchPairs(call_user_func_array(array('static', $name), $arguments), $key, $value);
+
+			$list = call_user_func_array(array('static', $name), $arguments);
+			$pairs = static::_getPairs($list, $key, $value);
+
+			return $pairs;
 		}
 		
 		list($nameTemp, $nameBy, $nameIn) = Strings::match($name, '~^getBy([A-Za-z]+)In([A-Za-z]+)$~');
@@ -153,7 +158,6 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 		return $serviceList;
 	}
 
-
 	public static function getByIn($nameBy, $nameIn, $by, array $in, array $orderBy = NULL, $limit = NULL, $offset = NULL) {
 		$entityName = static::getMainEntityName();
 
@@ -191,14 +195,48 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 	/** 
 	 * return array
 	 */
-	public function fetchPairs($key, $value = NULL) {
-		return static::_fetchPairs($this, $key, $value);
+	public static function getPairs($keyName, $valueName = NULL, array $orderBy = NULL, $limit = NULL, $offset = NULL) {
+		$valuePropertyName = NULL;
+		if(is_array($valueName) || $valueName instanceof \Traversable) {
+			$valueNameTemp = $valueName;
+			$valueName = next($valueNameTemp);
+			$valuePropertyName = next($valueNameTemp);
+		}
+
+		$entityName = static::getMainEntityName();
+
+		$serviceList = new static;
+		$qb = $serviceList->getEntityManager()->createQueryBuilder();
+
+		if($valuePropertyName) {
+			$select = array('e.'.$keyName, 'p.'.$valuePropertyName);
+			$qb->join('e.'.$valueName, 'p');
+		} else {
+			$select = array('e.'.$keyName, 'e.'.$valueName);
+		}
+
+		$qb->select($select)
+			->from($entityName, 'e');
+		if($orderBy) {
+			foreach ($orderBy as $key => $value) {
+				$qb->addOrderBy('e.'.$key, $value);
+			}
+		}
+		if($limit) $qb->setMaxResults($limit);
+		if($offset) $qb->setFirstResult($offset);
+
+
+		$serviceList->setDataSource($qb);
+		debug($serviceList);
+		return self::_getPairs($serviceList, $keyName, $valuePropertyName ? : $valueName);
 	}
  
-	protected static function _fetchPairs($serviceList, $key, $value) {
+	protected static function _getPairs($serviceList, $key, $value) {
 		$return = array();
-		foreach($serviceList as $item) {
-			$return[$item->$key] = ($value ? $item->$value : $item);
+		// $t = true;
+		foreach($serviceList as $itemKey => $item) {
+			// if($t) {debug($item);$t = false;}
+			$return[(isset($item->$key) ? $item->$key : $itemKey)] = ($value ? $item[$value] : $item);
 		}
 		return $return;
 	}

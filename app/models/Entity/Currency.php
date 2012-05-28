@@ -8,7 +8,7 @@ use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="currency", indexes={@ORM\index(name="iso", columns={"iso"})})
+ * @ORM\Table(name="currency", indexes={@ORM\index(name="name", columns={"name_id"}), @ORM\index(name="iso", columns={"iso"})})
  * @EA\Service(name="\Service\Currency")
  * @EA\ServiceList(name="\Service\CurrencyList")
  * @EA\Primary(key="id", value="iso")
@@ -17,7 +17,7 @@ class Currency extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
+	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"}, fetch="EAGER")
 	 */
 	protected $name;
 

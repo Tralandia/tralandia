@@ -70,7 +70,7 @@ vaculciak < development:
 durika < development:
 	parameters:
 		database:
-			debugger: true
+			debugger: false
 
 test < development:
 	parameters:

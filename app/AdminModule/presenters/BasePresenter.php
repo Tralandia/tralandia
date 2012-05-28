@@ -63,6 +63,7 @@ abstract class BasePresenter extends \BasePresenter {
 		} catch(\Nette\Utils\NeonException $e) {
 			$output = $e->getMessage();
 		}
+
 		$this->payload->output = $output;
 		$this->sendPayload();
 	}

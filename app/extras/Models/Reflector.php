@@ -16,6 +16,7 @@ class Reflector extends Nette\Object {
 	const ANN_PRIMARY = 'EA\Primary';
 	const ANN_SERVICE = 'EA\Service';
 	const ANN_SERVICE_LIST = 'EA\ServiceList';
+	const ANN_COLUMN = 'ORM\Column';
 
 	const ONE_TO_ONE = 'ORM\OneToOne';
 	const MANY_TO_ONE = 'ORM\ManyToOne';
@@ -234,6 +235,8 @@ class Reflector extends Nette\Object {
 
 			if(is_string($fieldMask['ui']['control'])) {
 				$fieldMask['ui']['control'] = array('type' => $fieldMask['ui']['control']);
+			} else if($fieldMask['ui']['control'] instanceof ArrayHash) {
+				$fieldMask['ui']['control'] = iterator_to_array($fieldMask['ui']['control']);
 			}
 
 			if(is_string($fieldMask['ui']['description'])) {
@@ -264,14 +267,18 @@ class Reflector extends Nette\Object {
 			$fieldMask['ui']['control']['type'] = ucfirst($fieldMask['ui']['control']['type']);
 			$fieldMask['ui']['nameSingular'] = Strings::toSingular(ucfirst($fieldMask['ui']['name']));
 			
-			if (isset($fieldMask['ui']['control']['options']) && is_string($fieldMask['ui']['control']['options'])) {
-				$constList = $mask['entityReflection']->getConstants();
-				$optionsTemp = array();
-				foreach ($constList as $key => $value) {
-					if(!Strings::match($key, '~'.$fieldMask['ui']['control']['options'].'~')) continue;
-					$optionsTemp[$value] = ucfirst($value);
+			if (isset($fieldMask['ui']['control']['options'])) {
+				if(is_string($fieldMask['ui']['control']['options'])) {
+					$constList = $mask['entityReflection']->getConstants();
+					$optionsTemp = array();
+					foreach ($constList as $key => $value) {
+						if(!Strings::match($key, '~'.$fieldMask['ui']['control']['options'].'~')) continue;
+						$optionsTemp[$value] = ucfirst($value);
+					}
+					$fieldMask['ui']['control']['options'] = $optionsTemp;
+				} else if($fieldMask['ui']['control']['options'] instanceof \Traversable) {
+					$fieldMask['ui']['control']['options'] = iterator_to_array($fieldMask['ui']['control']['options']);
 				}
-				$fieldMask['ui']['control']['options'] = $optionsTemp;
 			}
 
 			if($fieldMask['ui']['class'] === NULL) {
@@ -358,10 +365,11 @@ class Reflector extends Nette\Object {
 				$fieldMask['targetEntity']['serviceName'] = $this->getEntityServiceName($targetEntity);
 				$fieldMask['targetEntity']['serviceListName'] = $this->getEntityServiceListName($targetEntity);
 
+			} else {
+				$fieldMask['column']['type'] = $property->getAnnotation(self::ANN_COLUMN)->type;
 			}
 
 			if(in_array($type, array('select', 'checkboxList', 'multiSelect')) && (!isset($fieldMask['ui']['control']['options']) || !is_array($fieldMask['ui']['control']['options']))) {
-
 				if(!isset($fieldMask['ui']['control']['callback'])) {
 					$fieldMask['ui']['control']['callback'] = 'getPairs';
 				}
@@ -424,6 +432,7 @@ class Reflector extends Nette\Object {
 	 */
 	public function extend(IContainer $form, $mask) {
 		$classReflection = $mask->classReflection;
+		// \Nette\Diagnostics\Debugger::timer('FORM');
 
 		$formUi = $mask->form;
 
@@ -443,7 +452,8 @@ class Reflector extends Nette\Object {
 
 		foreach ($mask->fields as $propertyName => $property) {
 			unset($ui, $control, $validators, $association);
-			// debug($property);
+			// \Nette\Diagnostics\Debugger::timer($propertyName);
+
 			$ui = $property->ui;
 			$control = $container->{'add' . $ui->control->type}(
 				$propertyName,
@@ -501,6 +511,7 @@ class Reflector extends Nette\Object {
 				// $targetEntity = $property->targetEntity;
 				if (isset($ui->control->callback)) {
 					// data volane cez callback
+					// debug($ui->control->callback);
 					$items = call_user_func_array($ui->control->callback->cb, (array) $ui->control->callback->arguments);
 				} elseif (isset($ui->control->options)) {
 					// data volane cez options
@@ -544,7 +555,7 @@ class Reflector extends Nette\Object {
 				$control->setColumns($ui->control->columns);
 				$control->setRows($ui->control->rows);
 			}
-
+			// debug($propertyName, \Nette\Diagnostics\Debugger::timer($propertyName));
 		}
 
 		foreach ($mask->buttons as $buttonName => $button) {
@@ -568,6 +579,7 @@ class Reflector extends Nette\Object {
 				$control->getControlPrototype()->addClass($button->addClass);
 			}
 		}
+		// debug('FORM', \Nette\Diagnostics\Debugger::timer('FORM')); 
 	}
 
 	public function getJsonStructure($entityReflection) {
