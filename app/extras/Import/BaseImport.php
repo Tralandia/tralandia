@@ -143,6 +143,12 @@ class BaseImport {
 			),
 			'subsections' => array(),
 		),
+		'pathsegments' => array(
+			'entities' => array(
+				'\Routing\PathSegment' => array(),
+			),
+			'subsections' => array(),
+		),
 	);
 
 	public $savedVariables = array();

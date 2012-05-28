@@ -18,7 +18,7 @@ class ImportEmailing extends BaseImport {
 
 		$import = new \Extras\Import\BaseImport();
 
-		$import->undoSection('attractions');
+		$import->undoSection('emailing');
 		//return;
 
 		$this->countryTypeId = qNew('select id from location_type where slug = "country"');
@@ -42,5 +42,6 @@ class ImportEmailing extends BaseImport {
 			//debug($template); return;
 			$template->save();
 		}
+		$this->savedVariables['importedSections']['emailing'] = 1;		
 	}
 }
