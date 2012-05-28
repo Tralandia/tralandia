@@ -24,6 +24,7 @@ parameters:
 					- jQuery/jquery.js
 					- jQuery/jquery.livequery.js
 					- jQuery/jquery.textarea.js
+					- jQuery/jquery.neon.js
 			jQueryCalendar:
 				js: jQueryCalendar/jquery.calendar.js
 				css: jQueryCalendar/jquery.calendar.css

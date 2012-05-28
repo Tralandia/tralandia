@@ -40,26 +40,28 @@ class AdvancedSelectBox extends SelectBox {
 	public function getControl() {
 		$control = parent::getControl();
 		
-		$control->addClass('pull-left');
-		$wrapper = Html::el('div')->addClass('input-append input-prepend');
+		$wrapper = Html::el('div')->addClass('select-wrapper');
 		$wrapper->add($control);
 		$controlId = $control->getId();
+
+		$buttonsWrapper = Html::el('div')->addClass('select-buttons btn-group');
+
 		if($this->getOption('inlineEditing')) {
 			$editingHtml = $this->getOption('inlineEditing');
 			$editingHtml->addAttributes(array(
 				'for-control' => $controlId,
 			));
-			$wrapper->add($editingHtml);
+			$buttonsWrapper->add($editingHtml);
 
 		}
 
 		if($this->getOption('inlineDeleting')) {
-			$wrapper->add($this->getOption('inlineDeleting'));
+			$buttonsWrapper->add($this->getOption('inlineDeleting'));
 		}
 		if($this->getOption('inlineCreating')) {
-			$wrapper->add($this->getOption('inlineCreating'));
+			$buttonsWrapper->add($this->getOption('inlineCreating'));
 		}
-		return $wrapper;
+		return $wrapper->add($buttonsWrapper);
 	}
 
 	/**

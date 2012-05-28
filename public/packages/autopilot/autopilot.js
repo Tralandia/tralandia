@@ -109,7 +109,7 @@ $(function() {
 		tab.setHeight();
 	});
 
-	$('a').live('click', function(event) {
+	$('a.inIframe').live('click', function(event) {
 		event.preventDefault();
 		name = $(this).text();
 		src = $(this).attr('href');
