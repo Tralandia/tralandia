@@ -23,19 +23,13 @@ class SeoUrl extends \Entity\BaseEntity {
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Location\Location")
 	 */
-	protected $country;
+	protected $location;
 
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Rental\Type")
 	 */
 	protected $rentalType;
-
-	/**
-	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Location\Location")
-	 */
-	protected $location;
 
 	/**
 	 * @var integer
@@ -71,7 +65,7 @@ class SeoUrl extends \Entity\BaseEntity {
 	 * @var Collection
 	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
 	 */
-	protected $h1;
+	protected $heading;
 
 	/**
 	 * @var Collection

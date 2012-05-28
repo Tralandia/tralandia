@@ -143,6 +143,13 @@ class BaseImport {
 			),
 			'subsections' => array(),
 		),
+		'seo' => array(
+			'entities' => array(
+				'\Seo\TitleSuffix' => array(),
+				'\Seo\SeoUrl' => array(),
+			),
+			'subsections' => array('importSeoUrls', 'importTitleSuffixes'),
+		),
 		'pathsegments' => array(
 			'entities' => array(
 				'\Routing\PathSegment' => array(),
