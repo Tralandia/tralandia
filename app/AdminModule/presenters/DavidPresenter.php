@@ -36,8 +36,8 @@ class DavidPresenter extends BasePresenter {
 	}
 
 	public function actionHaha() {
-		$ps = new \Extras\Cron\PathSegments;
-		$ps->updatePathsegments();
+		$p = new \Extras\Types\Phone('234234', \Service\Location\Location::get(3)->getMainEntity());
+		debug($p->encode());
 	}
 
 	public function actionTest() {
