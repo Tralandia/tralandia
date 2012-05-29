@@ -26,18 +26,6 @@ common:
 			# 	label: ParentId
 			# 	mapper: e.parentId
 			# 	cellStyle: text-align:right;
-			# nestedLeft:
-			# 	label: NestedLeft
-			# 	mapper: e.nestedLeft
-			# 	cellStyle: text-align:right;
-			# nestedRight:
-			# 	label: NestedRight
-			# 	mapper: e.nestedRight
-			# 	cellStyle: text-align:right;
-			# nestedRoot:
-			# 	label: NestedRoot
-			# 	mapper: e.nestedRoot
-			# 	cellStyle: text-align:right;
 			# type:
 			# 	label: Type
 			# 	mapper: e.type
@@ -196,18 +184,6 @@ common:
 			# parentId:
 			# 	# anotations: "var:integer,ORMColumn:type:integer,nullable:true"
 			# 	label: ParentId
-			# 	control: text
-			# nestedLeft:
-			# 	# anotations: "var:integer,ORMColumn:type:integer,nullable:true"
-			# 	label: NestedLeft
-			# 	control: text
-			# nestedRight:
-			# 	# anotations: "var:integer,ORMColumn:type:integer,nullable:true"
-			# 	label: NestedRight
-			# 	control: text
-			# nestedRoot:
-			# 	# anotations: "var:integer,ORMColumn:type:integer,nullable:true"
-			# 	label: NestedRoot
 			# 	control: text
 			latitude:
 				# anotations: "var:latlong,ORMColumn:type:latlong,nullable:true"

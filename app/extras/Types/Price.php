@@ -34,7 +34,7 @@ class Price extends BaseType {
 	public function getIn($currency) {
 		if ($currency instanceof \Extras\Models\Entity || $currency instanceof \Extras\Models\Service) {
 		} else {
-			debug(2, $currency);
+			// debug(2, $currency);
 			throw new \Nette\UnexpectedValueException('$currency is not an ID or Entity or Service');
 		}
 

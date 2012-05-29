@@ -4,17 +4,16 @@ namespace Entity\Location;
 
 use Entity\Dictionary;
 use Doctrine\ORM\Mapping as ORM;
-use DoctrineExtensions\NestedSet\MultipleRootNode;
 use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="location_location", indexes={@ORM\index(name="name", columns={"name_id"}), @ORM\index(name="slug", columns={"slug"}), @ORM\index(name="parentId", columns={"parentId"}), @ORM\index(name="nestedLeft", columns={"nestedLeft"}), @ORM\index(name="nestedRight", columns={"nestedRight"}), @ORM\index(name="nestedRoot", columns={"nestedRoot"}), @ORM\index(name="latitude", columns={"latitude"}), @ORM\index(name="longitude", columns={"longitude"})})
+ * @ORM\Table(name="location_location", indexes={@ORM\index(name="name", columns={"name_id"}), @ORM\index(name="slug", columns={"slug"}), @ORM\index(name="parentId", columns={"parentId"}), @ORM\index(name="latitude", columns={"latitude"}), @ORM\index(name="longitude", columns={"longitude"})})
  * @EA\Service(name="\Service\Location\Location")
  * @EA\ServiceList(name="\Service\Location\LocationList")
  * @EA\Primary(key="id", value="slug")
  */
-class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
+class Location extends \Entity\BaseEntityDetails {
 
 	const STATUS_DRAFT = 'draft';
 	const STATUS_LAUNCHED = 'launched';
@@ -285,22 +284,6 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 	 * @ORM\Column(type="text", nullable=true)
 	 */
 	protected $airports;
-
-
-
-	/* ----------------------------- Nested Set Methods - DO NOT DELETE ----------------------------- */
-
-	public function getLeftValue() { return $this->nestedLeft; }
-	public function setLeftValue($nestedLeft) { $this->nestedLeft = $nestedLeft; }
-
-	public function getRightValue() { return $this->nestedRight; }
-	public function setRightValue($nestedRight) { $this->nestedRight = $nestedRight; }
-
-	public function getRootValue() { return $this->nestedRoot; }
-	public function setRootValue($nestedRoot) { $this->nestedRoot = $nestedRoot; }
-
-	public function __toString() { return (string)$this->slug; }
-
 
 //@entity-generator-code <--- NEMAZAT !!!
 

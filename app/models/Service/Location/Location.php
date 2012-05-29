@@ -5,7 +5,7 @@ namespace Service\Location;
 use Nette\Utils\Strings,
 	Extras\Models\ServiceException;
 
-class Location extends \Extras\Models\ServiceNested {
+class Location extends \Extras\Models\Service {
 	
 	const MAIN_ENTITY_NAME = '\Entity\Location\Location';
 
@@ -36,33 +36,7 @@ class Location extends \Extras\Models\ServiceNested {
 		} else {
 			$locationList = LocationList::getBySlugInType($slug, array($type));
 		}
-		return $locationList->count() > 1 ? FALSE : TRUE; # @fix vracia false lebo najde seba sameho
+		return $locationList->count() > 1 ? FALSE : TRUE; # @todo @fix vracia false lebo najde seba sameho
 
 	}
-
-	public function getContinent() {
-
-		if (!$this->parentId) return null;
-
-		$parent = \Service\Location\Location::get($this->parentId);
-		return ($parent->type->slug=='continent') ? $parent : self::getContinent($parent);
-
-	}
-
-	public function getRentalsCount($id) {
-
-		// $serviceList = new static;
-
-		// $qb = $serviceList->getEm()->createQueryBuilder();
-
-		// $qb->select('r')
-		// 	->from('\Entity\Rental\Rental', 'r')
-		// 	->where($qb->expr()->in('r.locations', \Service\Location\Location::get($id)));
-		// 	// ->andWhere($qb->expr()->in('e.'.$nameIn, $parsedIn))
-		// 	// ->setParameter('by', \Service\Location\Location::get($id));
-
-		// return $qb->getQuery()->getResult();
-
-	}
-	
 }

@@ -7,7 +7,6 @@ use Nette\Application as NA,
 	Nette\Diagnostics\Debugger,
 	Nette\Utils\Html,
 	Nette\Utils\Strings,
-	DoctrineExtensions\NestedSet,
 	Extras\Models\Service,
 	Service\Dictionary as D,
 	Service as S,
@@ -33,6 +32,11 @@ class DavidPresenter extends BasePresenter {
 		
 		debug($log);
 		debug($type);
+	}
+
+	public function actionHaha() {
+		$p = new \Extras\Types\Phone('234234', \Service\Location\Location::get(3)->getMainEntity());
+		debug($p->encode());
 	}
 
 	public function actionTest() {
