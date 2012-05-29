@@ -151,6 +151,14 @@ class User extends \Entity\BaseEntityDetails {
 	 */
 	protected $rentals;
 
+	/**
+	 * @var Collection
+	 * @ORM\ManyToMany(targetEntity="Entity\Autopilot\Task", inversedBy="usersExcluded")
+	 * @EA\SingularName(name="task") 
+	 */
+	protected $tasks;
+
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
