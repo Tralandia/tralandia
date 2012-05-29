@@ -39,9 +39,14 @@ parameters:
 					- jQueryUI/jquery.checkbox.css
 			fileUpload:
 				js:
+					- FileUpload/js/vendor/jquery.ui.widget.js
+					- FileUpload/js/tmpl.min.js
+					- FileUpload/js/load-image.min.js
+					- FileUpload/js/canvas-to-blob.min.js
+					- FileUpload/js/jquery.iframe-transport.js
 					- FileUpload/js/jquery.fileupload.js
-					- FileUpload/js/jquery.fileupload-ui.js
 					- FileUpload/js/jquery.fileupload-fp.js
+					- FileUpload/js/jquery.fileupload-ui.js
 					- FileUpload/js/locale.js
 					- FileUpload/js/main.js
 				css:

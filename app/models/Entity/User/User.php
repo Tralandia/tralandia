@@ -159,26 +159,6 @@ class User extends \Entity\BaseEntityDetails {
 	protected $tasks;
 
 
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		

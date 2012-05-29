@@ -70,6 +70,12 @@ class Task extends \Entity\BaseEntityDetails {
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\User\User")
 	 */
+	protected $reservedFor;
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToOne(targetEntity="Entity\User\User")
+	 */
 	protected $user;
 
 	/**
@@ -300,6 +306,32 @@ class Task extends \Entity\BaseEntityDetails {
 	 */
 	public function getLinks() {
 		return $this->links;
+	}
+		
+	/**
+	 * @param \Entity\User\User
+	 * @return \Entity\Autopilot\Task
+	 */
+	public function setReservedFor(\Entity\User\User $reservedFor) {
+		$this->reservedFor = $reservedFor;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Autopilot\Task
+	 */
+	public function unsetReservedFor() {
+		$this->reservedFor = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\User\User|NULL
+	 */
+	public function getReservedFor() {
+		return $this->reservedFor;
 	}
 		
 	/**
