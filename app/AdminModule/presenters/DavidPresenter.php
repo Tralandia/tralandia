@@ -35,6 +35,11 @@ class DavidPresenter extends BasePresenter {
 		debug($type);
 	}
 
+	public function actionHaha() {
+		$ps = new \Extras\Cron\PathSegments;
+		$ps->updatePathsegments();
+	}
+
 	public function actionTest() {
 
 		//$s = S\Medium\Medium::createFromUrl('http://www.tralandia.sk/u/01/13220628889049.png');
