@@ -4,15 +4,19 @@ namespace AdminModule\Components;
 
 use BaseModule\Components\BaseControl,
 	Nette\ArrayHash,
-	Tra\Utils\Arrays;
+	Tra\Utils\Arrays,
+	Tra\Utils\Strings;
 
 class Navigation extends BaseControl {
 
 	protected $navigation;
+	protected $autopilotRegime;
 
 	public function render() {
 		$template = $this->template;
 		$template->setFile(dirname(__FILE__) . '/template.latte');
+
+		$this->autopilotRegime = Strings::endsWith($this->getPresenter()->name, ':Ap');
 
 		$template->leftItems = $this->prepareNavigation($this->getNavigation()->left);
 		$template->rightItems = $this->prepareNavigation($this->getNavigation()->right);
@@ -24,6 +28,10 @@ class Navigation extends BaseControl {
 			if($value === NULL) {
 				$navigation->$key = $value = new ArrayHash;
 			}
+			if($this->autopilotRegime) {
+				$value->class .= 'inIframe';
+			}
+
 			if(!isset($value->label)) {
 				$value->label = ucfirst($key);
 			}
