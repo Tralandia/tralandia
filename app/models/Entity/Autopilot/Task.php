@@ -70,6 +70,12 @@ class Task extends \Entity\BaseEntityDetails {
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\User\User")
 	 */
+	protected $reservedFor;
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToOne(targetEntity="Entity\User\User")
+	 */
 	protected $user;
 
 	/**
