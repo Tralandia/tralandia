@@ -28,6 +28,9 @@ class Navigation extends BaseControl {
 			if($value === NULL) {
 				$navigation->$key = $value = new ArrayHash;
 			}
+			if(!isset($value->class)) {
+				$value->class = '';
+			}
 			if($this->autopilotRegime) {
 				$value->class .= 'inIframe';
 			}
