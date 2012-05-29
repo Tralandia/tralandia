@@ -150,12 +150,19 @@ class BaseImport {
 			),
 			'subsections' => array('importSeoUrls'),
 		),
-		'pathsegments' => array(
+		'tickets' => array(
 			'entities' => array(
-				'\Routing\PathSegment' => array(),
+				'\Ticket\Ticket' => array(),
+				'\Ticket\Message' => array(),
 			),
 			'subsections' => array(),
 		),
+		// 'pathsegments' => array(
+		// 	'entities' => array(
+		// 		'\Routing\PathSegment' => array(),
+		// 	),
+		// 	'subsections' => array(),
+		// ),
 	);
 
 	public $savedVariables = array();
@@ -226,7 +233,7 @@ class BaseImport {
 				while ($x = mysql_fetch_array($r)) {
 					$serviceName = '\Service'.$key2;
 					$s = $serviceName::get($x['id']);
-					$s->delete();
+					if ($s) $s->delete();
 				}
 			}
 			$this->savedVariables['importedSections'][$key]=0;

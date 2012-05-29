@@ -38,7 +38,11 @@ class ImportSeo extends BaseImport {
 		$languagesByOldId = getNewIdsByOld('\Dictionary\Language');
 
 		// Note: we don't import those 40 texts written for object_type pages, becuase we can't pair them properly...
-		$r = q('select seo_urls.* from seo_urls left join seo_urls_texts on seo_urls_texts.seo_url_id = seo_urls.id where length(seo_urls_texts.description) > 0 and object_type_id = 0 group by seo_urls.id');
+		// Note: attraction_id - tiez neimportujeme, musi sa to spravit zvlast tym, ze sa tie descriptions naimportuju uz do entity atraction...
+		$r = q('SELECT seo_urls.* 
+			FROM seo_urls LEFT JOIN seo_urls_texts ON seo_urls_texts.seo_url_id = seo_urls.id 
+			WHERE length(seo_urls_texts.description) > 0 AND object_type_id = 0 AND attraction_id = 0
+			GROUP BY seo_urls.id');
 
 		$dictionaryTypeTitle = $this->createDictionaryType('\Seo\SeoUrl', 'title', 'incomingLanguages', 'ACTIVE');
 		$dictionaryTypeHeading = $this->createDictionaryType('\Seo\SeoUrl', 'heading', 'incomingLanguages', 'ACTIVE');
