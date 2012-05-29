@@ -51,12 +51,16 @@ parameters:
 					- FileUpload/js/main.js
 				css:
 					- FileUpload/css/jquery.fileupload-ui.css
+			phraseControl:
+				js:
+					- PhraseControl/jquery.phraseControl.js
 
 		sets:
 			'Admin:Test':
 				- %webloader.packages.jQuery%
 				- %webloader.packages.jQueryUI%
 				- %webloader.packages.fileUpload%
+				- %webloader.packages.phraseControl%
 				- %webloader.packages.admin%
 				- %webloader.packages.bootstrap%
 

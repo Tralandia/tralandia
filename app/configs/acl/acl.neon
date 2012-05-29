@@ -19,6 +19,7 @@ parameters:
 				haha:
 			Admin:Test:
 				fileUpload:
+				phraseControl:
 			Admin:Ap:
 				task:
 			Admin:Autopilot:
