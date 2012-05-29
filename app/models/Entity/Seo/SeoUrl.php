@@ -177,6 +177,15 @@ class SeoUrl extends \Entity\BaseEntity {
 	}
 		
 	/**
+	 * @return \Entity\Seo\SeoUrl
+	 */
+	public function unsetPage() {
+		$this->page = NULL;
+
+		return $this;
+	}
+		
+	/**
 	 * @return integer|NULL
 	 */
 	public function getPage() {

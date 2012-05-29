@@ -312,6 +312,32 @@ class Task extends \Entity\BaseEntityDetails {
 	 * @param \Entity\User\User
 	 * @return \Entity\Autopilot\Task
 	 */
+	public function setReservedFor(\Entity\User\User $reservedFor) {
+		$this->reservedFor = $reservedFor;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Autopilot\Task
+	 */
+	public function unsetReservedFor() {
+		$this->reservedFor = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\User\User|NULL
+	 */
+	public function getReservedFor() {
+		return $this->reservedFor;
+	}
+		
+	/**
+	 * @param \Entity\User\User
+	 * @return \Entity\Autopilot\Task
+	 */
 	public function setUser(\Entity\User\User $user) {
 		$this->user = $user;
 
