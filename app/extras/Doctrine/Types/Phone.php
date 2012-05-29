@@ -18,16 +18,11 @@ class Phone extends Type {
 	}
 
 	public function convertToPHPValue($value, AbstractPlatform $platform) {
-		return new \Extras\Types\Phone($value);
+		return \Extras\Types\Phone::fromJson($value);
 	}
 
-	public function convertToDatabaseValue($value, AbstractPlatform $platform) {
-		if (!is_string($value)) {
-			$value = $value->encode();
-			if (!$value) debug($value);
-			// @todo - tu vyhadzovalo chybu "invalid UTF-8 sequence"
-		}
-		return $value;
+	public function convertToDatabaseValue(Extras\Types\Phone $value, AbstractPlatform $platform) {
+		return $value->encode();
 	}
 /*
 	public function canRequireSQLConversion() {

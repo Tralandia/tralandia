@@ -17,7 +17,7 @@ class AclPresenter extends BasePresenter {
 
 	protected function startup() {
 		parent::startup();
-		$this->roles = \Service\User\RoleList::getPairs('id', 'slug', array('id' => 'ASC'), 9);
+		$this->roles = \Service\User\RoleList::forAcl();
 	}
 
 	public function renderList() {

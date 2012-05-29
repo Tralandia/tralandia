@@ -18,6 +18,9 @@ class Autopilot extends \Nette\Object {
 		$task->mission = $type->mission;
 
 		$links = array();
+		if(isset($params['links'])) {
+			$links = (array) $params['links'];
+		}
 
 		if($type->technicalName == 'improveRental') {
 			$links = Arrays::get($attributes, 'links', array());
@@ -29,7 +32,7 @@ class Autopilot extends \Nette\Object {
 		} else if($type->technicalName == '\Location\Location - Level2HasNoParent') {
 			$links = Arrays::get($attributes, 'links', array());
 			if(array_key_exists('location', $params) && ($params['location'] instanceof \Service\Location\Location || $params['location'] instanceof \Entity\Location\Location)) {
-				$links['location'] = $params['location'];
+				$links['location'] = array('destination' => 'LocationLocation:edit', 'arguments' => array('id' => $params['location']->id));
 			} else {
 				throw new \Nette\InvalidArgumentException('Argument $params["location"] does not match with the expected value');
 			}

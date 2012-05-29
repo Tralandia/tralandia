@@ -106,6 +106,26 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 		return $return;
 	}
 
+	public static function getAll(array $orderBy = NULL, $limit = NULL, $offset = NULL) {
+		$entityName = static::getMainEntityName();
+
+		$serviceList = new static;
+		$qb = $serviceList->getEntityManager()->createQueryBuilder();
+		$qb->select('e')
+			->from($entityName, 'e');
+		if($orderBy) {
+			foreach ($orderBy as $key => $value) {
+				$qb->addOrderBy('e.'.$key, $value);
+			}
+		}
+		if($limit) $qb->setMaxResults($limit);
+		if($offset) $qb->setFirstResult($offset);
+
+
+		$serviceList->setDataSource($qb);
+		return $serviceList;
+	}
+
 	public static function getBy(array $criteria, array $orderBy = NULL, $limit = NULL, $offset = NULL) {
 		$entityName = static::getMainEntityName();
 
@@ -125,26 +145,6 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 		}
 
 
-		if($orderBy) {
-			foreach ($orderBy as $key => $value) {
-				$qb->addOrderBy('e.'.$key, $value);
-			}
-		}
-		if($limit) $qb->setMaxResults($limit);
-		if($offset) $qb->setFirstResult($offset);
-
-
-		$serviceList->setDataSource($qb);
-		return $serviceList;
-	}
-
-	public static function getAll(array $orderBy = NULL, $limit = NULL, $offset = NULL) {
-		$entityName = static::getMainEntityName();
-
-		$serviceList = new static;
-		$qb = $serviceList->getEntityManager()->createQueryBuilder();
-		$qb->select('e')
-			->from($entityName, 'e');
 		if($orderBy) {
 			foreach ($orderBy as $key => $value) {
 				$qb->addOrderBy('e.'.$key, $value);
@@ -195,7 +195,7 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 	/** 
 	 * return array
 	 */
-	public static function getPairs($keyName, $valueName = NULL, array $orderBy = NULL, $limit = NULL, $offset = NULL) {
+	public static function getPairs($keyName, $valueName = NULL, array $criteria = NULL, array $orderBy = NULL, $limit = NULL, $offset = NULL) {
 		$valuePropertyName = NULL;
 		if(is_array($valueName) || $valueName instanceof \Traversable) {
 			$valueNameTemp = $valueName;
@@ -217,6 +217,19 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 
 		$qb->select($select)
 			->from($entityName, 'e');
+
+		if(is_array($criteria)) {
+			foreach (static::pripareCriteria($criteria) as $key => $value) {
+				if(is_array($value)) {
+					$qb->andWhere($qb->expr()->in('e.'.$key, $value));
+				} else {
+					$qb->andWhere('e.'.$key.' = :'.$key)
+						->setParameter($key, $value);
+				}
+			}
+		}
+
+
 		if($orderBy) {
 			foreach ($orderBy as $key => $value) {
 				$qb->addOrderBy('e.'.$key, $value);

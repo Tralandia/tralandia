@@ -35,6 +35,11 @@ class DavidPresenter extends BasePresenter {
 		debug($type);
 	}
 
+	public function actionHaha() {
+		$p = new \Extras\Types\Phone('234234', \Service\Location\Location::get(3)->getMainEntity());
+		debug($p->encode());
+	}
+
 	public function actionTest() {
 
 		//$s = S\Medium\Medium::createFromUrl('http://www.tralandia.sk/u/01/13220628889049.png');

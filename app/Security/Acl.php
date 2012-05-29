@@ -57,7 +57,7 @@ class Acl extends Permission {
 
 		$data = array();
 		// @todo porusuje to DI!
-		$data['roles'] = \Service\User\RoleList::getPairs('id', 'slug', array('id' => 'ASC'), 9);
+		$data['roles'] = \Service\User\RoleList::forAcl();
 		foreach ($files as $filepath => $file) {
 			//debug($file);
 			$resource = str_replace(array('_', '-'), array('\\', ':'), $file->getBasename('.neon'));
