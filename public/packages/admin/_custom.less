@@ -118,7 +118,7 @@ table.advanced-table tr th { #gradient > .vertical(@green, @greenDark); color:@w
 textarea.neon, div.neonOutput { float: left; height:300px; }
 div.neonOutput pre {  }
 
-.gallery-control { .well; }
+.gallery-control { .well; position:relative; }
 .gallery-control .thumbnail-wrapper { float:left; width:190px; height:160px; }
 .gallery-control .thumbnail-wrapper.last { width:185px; }
 .gallery-control .thumbnail-wrapper.last .thumbnail { margin-right:10px; }
@@ -136,3 +136,6 @@ div.neonOutput pre {  }
 .gallery-control .thumbnail-wrapper .upload { padding:34px 61px 42px 58px; font-size:60px; font-weight:bold; line-height: 60px; }
 .gallery-control .thumbnail-wrapper .upload input { height:138px; }
 .gallery-control .thumbnail-wrapper .error { background:@red; height:90px; color:white; padding:10px; }
+
+.gallery-control .background { position:absolute; top:45%; width:100%; text-align:center; font-size:28px; color:black; opacity:0.2; }
+.gallery-control .background i { zoom:2; margin-top:2px; }
