@@ -28,7 +28,8 @@ common:
 				mapper: e.status
 			# languages:
 			# 	label: Languages
-			# 	mapper: e.languages
+			# 	mapper: e.id
+			# 	callback: {class: %this%, method: translateColumn, params: [type, name]}
 
 
 
@@ -244,13 +245,9 @@ common:
 				class: span2
 				startNewRow: true
 				label: Default Currency
-				control:
+				control: 
 					type: select
 					class: span2
-					callback: 
-						class: \Service\CurrencyList
-						method: getPairs
-						arguments: [id, [name, id]]
 			currencies:
 				# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityCurrency,mappedBy:locations,cascade:"
 				label: Currencies

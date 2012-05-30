@@ -115,5 +115,11 @@ function getSupportedLanguages() {
 	return explode(',', $id[0]);
 }
 
+function getAllLanguages() {
+	$id = qNew('select group_concat(id separator ",") from dictionary_language');
+	$id = mysql_fetch_array($id);
+	return explode(',', $id[0]);
+}
+
 
 

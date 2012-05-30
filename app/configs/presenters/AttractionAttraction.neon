@@ -7,6 +7,10 @@ common:
 			id:
 				label: ID
 				mapper: e.id
+			country:
+				label: Country
+				mapper: e.id
+				callback: {class: %this%, method: translateColumn, params: [country, name]}
 			type:
 				label: Type
 				mapper: e.id
@@ -15,14 +19,6 @@ common:
 				label: Name
 				mapper: e.id
 				callback: {class: %this%, method: translateColumn, params: name}
-			description:
-				label: Description
-				mapper: e.id
-				callback: {class: %this%, method: translateColumn, params: description}
-			country:
-				label: Country
-				mapper: e.id
-				callback: {class: %this%, method: translateColumn, params: [country, name]}
 			# latitude:
 			# 	label: Latitude
 			# 	mapper: e.latitude
@@ -33,10 +29,13 @@ common:
 	form:
 		fields:
 			type:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:Type"
 				label: Type
-				control: select
-				inlineEditing: AttractionType:edit
-				inlineCreating: AttractionType:add
+				control: 
+					type: select
+					callback:
+						method: getPairs
+						arguments: [id, [name, id]]
 			name:
 				label: Name
 				control: phrase
@@ -45,31 +44,31 @@ common:
 				label: Description
 				control: phrase
 				inlineEditing: DictionaryPhrase:edit
+				class: span6
 			country:
 				class: span6
 				label: Country
 				control:  
 					type: multiSelect
 					addClass: span6
+					callback: {class: \Service\Location\LocationList, method: getPairs, params: [id, [name, id], [type: 3]]}
 				startNewRow: true
+			contacts:
+				# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityCurrency,mappedBy:locations,cascade:"
+				label: Contacts
+				class: span6
+				control: bricksList
+				inlineEditing: ContactContact:edit
+				inlineDeleting: ContactContact:delete
+				inlineCreating: ContactContact:add
+				startNewRow: false
 			latitude:
 				label: Latitude
 				control: text
 			longitude:
 				label: Longitude
 				control: text
-			contacts:
-				label: Contacts
-				control: multiSelect
+
 			# media:
 			# 	label: Media
 			# 	control: multiSelect
-			details:
-				label: Details
-				control: json
-			created:
-				label: Created
-				control: datePicker
-			updated:
-				label: Updated
-				control: datePicker

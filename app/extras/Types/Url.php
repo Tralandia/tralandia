@@ -16,4 +16,13 @@ class Url extends \Nette\Http\Url {
 		return $this->getAuthority() . $this->getBasePath() . $this->getRelativeUrl();
 	}
 
+	public function __toString() {
+		$t = parent::__toString();
+		if ($t == 'http://') {
+			return NULL;
+		} else {
+			return $t;			
+		}
+	}
+
 }

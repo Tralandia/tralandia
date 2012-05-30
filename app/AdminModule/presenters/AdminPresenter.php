@@ -289,7 +289,7 @@ class AdminPresenter extends BasePresenter {
 
 	public function translateColumn($value, $row, $params) {
 		$key = $params[1];
-		debug(func_get_args());
+		//debug(func_get_args());
 		$entity = $row->getEntity();
 		if($key instanceof \Traversable) {
 			foreach ($key as $key => $value) {
@@ -298,7 +298,7 @@ class AdminPresenter extends BasePresenter {
 		} else {
 			$entity = $entity->{$key};
 		}
-		debug($entity);
+		//debug($entity);
 		return $this->translate($entity->id);
 	}
 }

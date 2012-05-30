@@ -385,8 +385,8 @@ class Reflector extends Nette\Object {
 					
 				}
 
-				if(!array_key_exists('arguments', $fieldMask['ui']['control']['callback'])) {
-					$fieldMask['ui']['control']['callback']['arguments'] = array($fieldMask['targetEntity']['primaryKey'], $fieldMask['targetEntity']['primaryValue']);
+				if(!array_key_exists('params', $fieldMask['ui']['control']['callback'])) {
+					$fieldMask['ui']['control']['callback']['params'] = array($fieldMask['targetEntity']['primaryKey'], $fieldMask['targetEntity']['primaryValue']);
 				}
 			}
 
@@ -514,7 +514,9 @@ class Reflector extends Nette\Object {
 					if (isset($ui->control->callback)) {
 						// data volane cez callback
 						// debug($ui->control->callback);
-						$items = call_user_func_array($ui->control->callback->cb, (array) $ui->control->callback->arguments);
+						$items = call_user_func_array($ui->control->callback->cb, ($ui->control->callback->params instanceof \Traversable ? iterator_to_array($ui->control->callback->params) : $ui->control->callback->params));
+
+
 					} elseif (isset($ui->control->options)) {
 						// data volane cez options
 						$items = $ui->control->options;

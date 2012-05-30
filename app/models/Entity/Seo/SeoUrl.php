@@ -51,7 +51,7 @@ class SeoUrl extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Entity\Medium\Medium", mappedBy="seoUrl")
+	 * @ORM\OneToMany(targetEntity="Entity\Medium\Medium", mappedBy="seoUrl", cascade={"persist", "remove"})
 	 */
 	protected $media;
 

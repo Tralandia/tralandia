@@ -195,7 +195,7 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 	/** 
 	 * return array
 	 */
-	public static function getPairs($keyName, $valueName = NULL, array $criteria = NULL, array $orderBy = NULL, $limit = NULL, $offset = NULL) {
+	public static function getPairs($keyName, $valueName = NULL, $criteria = NULL, $orderBy = NULL, $limit = NULL, $offset = NULL) {
 		$valuePropertyName = NULL;
 		if(is_array($valueName) || $valueName instanceof \Traversable) {
 			$valueNameTemp = $valueName;
@@ -218,9 +218,9 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 		$qb->select($select)
 			->from($entityName, 'e');
 
-		if(is_array($criteria)) {
+		if(is_array($criteria) || $criteria instanceof \Traversable) {
 			foreach (static::pripareCriteria($criteria) as $key => $value) {
-				if(is_array($value)) {
+				if(is_array($value) || $value instanceof \Traversable) {
 					$qb->andWhere($qb->expr()->in('e.'.$key, $value));
 				} else {
 					$qb->andWhere('e.'.$key.' = :'.$key)

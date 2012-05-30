@@ -47,9 +47,9 @@ class Contact extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Location\Location", inversedBy="contacts", cascade={"persist"})
+	 * @ORM\ManyToOne(targetEntity="Entity\Location\Location", inversedBy="contacts", cascade={"persist"})
 	 */
-	protected $locations;
+	protected $location;
 
 	/**
 	 * @var json
@@ -88,8 +88,6 @@ class Contact extends \Entity\BaseEntity {
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct() {
 		parent::__construct();
-
-		$this->locations = new \Doctrine\Common\Collections\ArrayCollection;
 	}
 		
 	/**
@@ -226,19 +224,26 @@ class Contact extends \Entity\BaseEntity {
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Contact\Contact
 	 */
-	public function addLocation(\Entity\Location\Location $location) {
-		if(!$this->locations->contains($location)) {
-			$this->locations->add($location);
-		}
+	public function setLocation(\Entity\Location\Location $location) {
+		$this->location = $location;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Location\Location
+	 * @return \Entity\Contact\Contact
 	 */
-	public function getLocations() {
-		return $this->locations;
+	public function unsetLocation() {
+		$this->location = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Location\Location|NULL
+	 */
+	public function getLocation() {
+		return $this->location;
 	}
 		
 	/**

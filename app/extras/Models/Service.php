@@ -430,7 +430,7 @@ abstract class Service extends Nette\Object implements IService {
 							// $dataTemp[] = $value->{$targetEntity->primaryKey};
 						}
 						$form[$name]->setDefaultValue(array_keys($dataTemp));
-						if($targetEntity->associationType == Reflector::MANY_TO_MANY) $form[$name]->setDefaultParam($dataTemp);
+						$form[$name]->setDefaultParam($dataTemp);
 						
 					} else if($targetEntity->associationType == Reflector::MANY_TO_ONE) {
 

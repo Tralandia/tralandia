@@ -7,73 +7,45 @@ common:
 			id:
 				label: ID
 				mapper: e.id
-			type:
-				label: Type
-				mapper: e.type
-			subtype:
-				label: Subtype
-				mapper: e.subtype
+			# type:
+			# 	label: Type
+			# 	mapper: e.id
+			# 	callback: {class: %this%, method: translateColumn, params: name}
+			# subtype:
+			# 	label: Subtype
+			# 	mapper: e.subtype
 			name:
 				label: Name
-				mapper: e.id
-				callback: {class: %this%, method: translateColumn, params: name}
-			mission:
-				label: Mission
-				mapper: e.mission
+				mapper: e.name
 			startTime:
-				label: StartTime
+				label: Start Time
 				mapper: e.startTime
 			due:
 				label: Due
 				mapper: e.due
-			durationPaid:
-				label: DurationPaid
-				mapper: e.durationPaid
-				cellStyle: text-align:right;
-			links:
-				label: Links
-				mapper: e.links
 			user:
 				label: User
 				mapper: e.user
 			userCountry:
-				label: UserCountry
+				label: User Country
 				mapper: e.userCountry
 			userLanguage:
 				label: UserLanguage
 				mapper: e.userLanguage
-			userLanguageLevel:
-				label: UserLanguageLevel
-				mapper: e.userLanguageLevel
-				cellStyle: text-align:right;
-			userRole:
-				label: UserRole
-				mapper: e.userRole
-			usersExcluded:
-				label: UsersExcluded
-				mapper: e.usersExcluded
-			validation:
-				label: Validation
-				mapper: e.validation
-			actions:
-				label: Actions
-				mapper: e.actions
-			recurrenceData:
-				label: RecurrenceData
-				mapper: e.recurrenceData
-			details:
-				label: Details
-				mapper: e.details
-			oldId:
-				label: OldId
-				mapper: e.oldId
-				cellStyle: text-align:right;
-			created:
-				label: Created
-				mapper: e.created
-			updated:
-				label: Updated
-				mapper: e.updated
+			# userLanguageLevel:
+			# 	label: UserLanguageLevel
+			# 	mapper: e.userLanguageLevel
+			# 	cellStyle: text-align:right;
+			# userRole:
+			# 	label: UserRole
+			# 	mapper: e.userRole
+			# usersExcluded:
+			# 	label: UsersExcluded
+			# 	mapper: e.usersExcluded
+			# recurrenceData:
+			# 	label: RecurrenceData
+			# 	mapper: e.recurrenceData
+
 			
 	form:
 		fields:
@@ -88,9 +60,51 @@ common:
 			name:
 				label: Name
 				control: text
+				class: span6
 			mission:
 				label: Mission
 				control: tinymce
+				startNewRow: false
+			user:
+				label: User
+				class: span2
+				control: 
+					type: select
+					callback: {class: \Service\User\UserList, method: getPairs, params: [id, login, [role: [6, 7, 8, 9, 10, 11]], [login: ASC]]}
+					prompt: None
+					class: span2
+			userCountry:
+				label: User Country
+				class: span2
+				control: 
+					type: select
+					callback: {class: \Service\Location\LocationList, method: getPairs, params: [id, [name, id], [type: 3]]}
+					class: span2
+			userLanguage:
+				label: UserLanguage
+				class: span2
+				control: 
+					type: select
+					class: span2
+			userLanguageLevel:
+				label: UserLanguageLevel
+				class: span2
+				control: 
+					type: text
+					class: span2
+			userRole:
+				label: UserRole
+				class: span2
+				control: 
+					type: select
+					class: span2
+			usersExcluded:
+				label: UsersExcluded
+				class: span2
+				control: bricksList
+				inlineEditing: UserUser:edit
+				inlineCreating: UserUser:add
+				startNewRow: false
 			startTime:
 				label: StartTime
 				control: datePicker
@@ -98,39 +112,11 @@ common:
 				label: Due
 				control: datePicker
 			durationPaid:
-				label: DurationPaid
+				label: Duration Paid
 				control: text
 			links:
 				label: Links
 				control: neon
-			user:
-				label: User
-				control: select
-				inlineEditing: UserUser:edit
-				inlineCreating: UserUser:add
-			userCountry:
-				label: UserCountry
-				control: select
-				inlineEditing: LocationLocation:edit
-				inlineCreating: LocationLocation:add
-			userLanguage:
-				label: UserLanguage
-				control: select
-				inlineEditing: DictionaryLanguage:edit
-				inlineCreating: DictionaryLanguage:add
-			userLanguageLevel:
-				label: UserLanguageLevel
-				control: text
-			userRole:
-				label: UserRole
-				control: select
-				inlineEditing: UserRole:edit
-				inlineCreating: UserRole:add
-			usersExcluded:
-				label: UsersExcluded
-				control: bricksList
-				inlineEditing: UserUser:edit
-				inlineCreating: UserUser:add
 			validation:
 				label: Validation
 				control: neon
@@ -143,9 +129,3 @@ common:
 			details:
 				label: Details
 				control: neon
-			created:
-				label: Created
-				control: datePicker
-			updated:
-				label: Updated
-				control: datePicker

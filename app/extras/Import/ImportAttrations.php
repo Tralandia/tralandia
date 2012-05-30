@@ -100,7 +100,6 @@ class ImportAttractions extends BaseImport {
 
 				}
 			}
-
 			$attraction->save();
 		}
 

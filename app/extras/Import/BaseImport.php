@@ -288,13 +288,17 @@ class BaseImport {
 
 		if ($phrase->type->requiredLanguages == 'supportedLanguages') {
 			$allLanguages = getSupportedLanguages();
+			$skipEmptyTranslations = FALSE;
 		} else {
-			$allLanguages = array(); // @todo - dorobit incomingLanguages, konkretne jazyky alebo "nic"
+			$allLanguages = getAllLanguages();
+			$skipEmptyTranslations = TRUE;
 		}
 
 		foreach ($allLanguages as $key => $value) {
 			$language = \Service\Dictionary\Language::get($value);
 			$oldTranslation = qf('select * from z_'.$language->iso.' where id = '.$oldPhraseId);
+			if ($skipEmptyTranslations && strlen($oldTranslation['text']) == 0) continue;
+
 			$params = NULL;
 			if ($oldLocativePhraseId > 0) {
 				$oldTranslationLocative = qf('select * from z_'.$language->iso.' where id = '.$oldLocativePhraseId);
@@ -302,8 +306,7 @@ class BaseImport {
 					'locative' => $oldTranslationLocative['text'],
 				);
 			}
-
-			$translation = $this->createTranslation($language, (string)$oldTranslation['text'], $params);				
+			$translation = $this->createTranslation($language, (string)$oldTranslation['text'], $params);
 			$translation->timeTranslated = fromStamp($oldTranslation['updated']);
 			$phrase->addTranslation($translation);
 		}

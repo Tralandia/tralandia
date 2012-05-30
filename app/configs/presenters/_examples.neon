@@ -6,3 +6,10 @@
 			created:
 				label: Created
 				control: datePicker
+
+
+				validation:
+					- [addRule, PATTERN, 'Must be exactly 2 characters long.', '[a-z]{2}']
+					#- [addRule, [\Service\Dictionary\Language, validateUniqueIso], 'ISO code must be unique.']
+
+
