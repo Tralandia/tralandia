@@ -1,0 +1,68 @@
+{block content}
+<h1>Phrase control</h1>
+
+<div id="snippet--form">
+	<form action="/admin/attraction-type/2?do=form-submit" method="post" id="frm-form" class="row form" novalidate="">
+		<div class="control-group span3">
+			<label for="frmform-ServiceAttractionType-name"><b>Plain Text Simple:</b></label>
+			<div class="input-wrapper phrase-control plain-text-simple">
+				<div class="input-prepend">
+					<span class="add-on">EN:</span>
+					<input name="name[en]" type="text" class="span3 text input-large" value="Cottage Orava">
+				</div>
+				<div class="input-prepend">
+					<span class="add-on">SK:</span>
+					<input name="name[sk]" type="text" class="span3 text input-large" value="Chata Orava">
+				</div>
+				<div class="input-prepend">
+					<div class="btn-group">
+						<button class="btn btn-success dropdown-toggle" data-toggle="dropdown">DE: <span class="caret"></span></button>
+						<ul class="dropdown-menu">
+							<li><a href="#" lang="de">DE: <span>Chaten Oraven</span></a></li>
+							<li><a href="#" lang="cz">CZ: <span>Cháta Oráva</span></a></li>
+							<li><a href="#" lang="pl">PL: <span>Chaté Oravé</span></a></li>
+						</ul>
+					</div>
+					<input name="name[de]" type="text" class="span3 text input-large" value="Chaten Oraven" lang="de">
+					<input name="name[cz]" type="text" class="span3 text input-large hide" disabled="disabled" value="Cháta Oráva" lang="cz">
+					<input name="name[pl]" type="text" class="span3 text input-large hide" value="Chaté Oravé" lang="pl">
+				</div>
+			</div>
+		</div>
+		<div class="control-group span3">
+			<label for="frmform-ServiceAttractionType-name"><b>Plain Text Complex:</b></label>
+			<div class="btn-group phrase-control plain-text-complex">
+				<button class="btn btn-success dropdown-toggle" data-toggle="dropdown"><b>EN:</b> Beautiful Cottage Orava <span class="caret pull-right"></span></button>
+				<ul class="dropdown-menu">
+					<li><a href="#" lang="de"><b>EN:</b> <span>Beautiful Cottage Oraven</span></a></li>
+					<li><a href="#" lang="de"><b>DE:</b> <span>Shonen Chaten Oraven</span></a></li>
+					<li><a href="#" lang="cz"><b>CZ:</b> <span>Hezka Cháta Oráva</span></a></li>
+					<li><a href="#" lang="pl"><b>PL:</b> <span>Pekno Chaté Oravé</span></a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="control-group span3">
+			<label for="frmform-ServiceAttractionType-name"><b>Plain Text Complex:</b></label>
+			<div class="btn-group phrase-control html-text">
+				<button class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+					<div class="wrap"><b>EN:</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean massa velit, imperdiet sed aliquet et, pharetra nec nisl. Fusce nec placerat risus.</div>
+					<span class="caret pull-right"></span>
+				</button>
+				<ul class="dropdown-menu">
+					<li><a href="#" lang="de"><b>EN:</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean massa velit, imperdiet sed aliquet et, pharetra nec nisl. Fusce nec placerat risus.</a></li>
+					<li class="divider"></li>
+					<li><a href="#" lang="de"><b>DE:</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean massa velit, imperdiet sed aliquet et, pharetra nec nisl. Fusce nec placerat risus.</a></li>
+					<li class="divider"></li>
+					<li><a href="#" lang="de"><b>CZ:</b> Duis posuere tempor quam nec vehicula. Nunc rhoncus tristique diam ut fringilla.</a></li>
+					<li class="divider"></li>
+					<li><a href="#" lang="de"><b>SK:</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean massa velit, imperdiet sed aliquet et, pharetra nec nisl. Fusce nec placerat risus.</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="control-group span12">
+			<div class="form-actions">
+				<input type="button" onclick="window.location='http://www.tra.sk/admin/attraction-type/2?backlink=3gw4p'" class="btn btn-large button" name="ServiceAttractionType[cancel]" id="frmform-ServiceAttractionType-cancel" value="Cancel (return)"> <input type="submit" class="btn btn-large btn-success pull-right button" name="ServiceAttractionType[submit]" id="frmform-ServiceAttractionType-submit" value="Save Changes">
+			</div>
+		</div>
+	</form>
+</div>

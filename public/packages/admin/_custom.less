@@ -128,14 +128,24 @@ div.neonOutput pre {  }
 .gallery-control .thumbnail-wrapper .thumbnail input { margin-bottom:0; }
 .gallery-control .thumbnail-wrapper .thumbnail:hover { .box-shadow(0 0 3px @greenBorder); }
 .gallery-control .thumbnail-wrapper .thumbnail:hover .btn.delete { display:inline; }
-
 .gallery-control .thumbnail-wrapper .thumbnail .overlay { position:absolute; left:0; right:0; top:0; bottom:0; background:@black; .opacity(50); }
 .gallery-control .thumbnail-wrapper .thumbnail .overlay.waiting { background:url(../images/loading.gif) center center no-repeat @black; }
 .gallery-control .thumbnail-wrapper .thumbnail .progress { position: absolute; left:10%; top:43%; width:80%; z-index:999; overflow:hidden; border:1px solid @gray; height:15px; }
-
 .gallery-control .thumbnail-wrapper .upload { padding:34px 61px 42px 58px; font-size:60px; font-weight:bold; line-height: 60px; }
 .gallery-control .thumbnail-wrapper .upload input { height:138px; }
 .gallery-control .thumbnail-wrapper .error { background:@red; height:90px; color:white; padding:10px; }
-
 .gallery-control .background { position:absolute; top:45%; width:100%; text-align:center; font-size:28px; color:black; opacity:0.2; }
 .gallery-control .background i { zoom:2; margin-top:2px; }
+
+.phrase-control { padding-bottom: 1px; }
+.phrase-control.plain-text-simple .input-prepend { margin-bottom:-1px; }
+.phrase-control.plain-text-simple .input-prepend .add-on { width:42px; margin: 0 -5px 0 0; }
+.phrase-control.plain-text-simple .input-prepend .input-large { width:210px; }
+.phrase-control.plain-text-simple .input-prepend .btn-group { display:inline; }
+.phrase-control.plain-text-simple .input-prepend .btn-group .btn { width: 54px; margin: 0 -5px 0 0; border-right: 0; .border-radius(4px 0 0 4px); }
+
+.phrase-control.plain-text-complex .dropdown-toggle { width:100%; text-align:left; }
+
+.phrase-control.html-text .dropdown-toggle { width:100%; text-align:left; }
+.phrase-control.html-text .dropdown-toggle .wrap { height:40px; overflow:hidden; }
+.phrase-control.html-text .dropdown-menu li a { width:200px; white-space:normal; }

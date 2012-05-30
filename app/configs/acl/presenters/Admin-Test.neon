@@ -8,3 +8,14 @@ fileUpload:
 	vendor: deny
 	manager: deny
 	admin: deny
+	
+phraseControl:
+	guest: allow
+	visitor: deny
+	potentialowner: deny
+	owner: deny
+	translator: deny
+	assistant: deny
+	vendor: deny
+	manager: deny
+	admin: deny

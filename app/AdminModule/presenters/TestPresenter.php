@@ -9,6 +9,10 @@ class TestPresenter extends BasePresenter {
 
 	}
 
+	public function actionPhraseControl() {
+		
+	}
+
 	/**
 	 * @return \AdminModule\Components\GaleryManager
 	 */
