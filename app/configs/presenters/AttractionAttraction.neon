@@ -10,15 +10,15 @@ common:
 			country:
 				label: Country
 				mapper: e.id
-				callback: {class: %this%, method: translateColumn, params: [country, name]}
+				callback: {Entity\Log\Systemmethod: translateColumn, params: [country, name]}
 			type:
 				label: Type
 				mapper: e.id
-				callback: {class: %this%, method: translateColumn, params: [type, name]}
+				callback: {Entity\Log\Systemmethod: translateColumn, params: [type, name]}
 			name:
 				label: Name
 				mapper: e.id
-				callback: {class: %this%, method: translateColumn, params: name}
+				callback: {Entity\Log\Systemmethod: translateColumn, params: name}
 			# latitude:
 			# 	label: Latitude
 			# 	mapper: e.latitude

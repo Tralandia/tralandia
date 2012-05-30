@@ -10,7 +10,7 @@ common:
 			# type:
 			# 	label: Type
 			# 	mapper: e.id
-			# 	callback: {class: %this%, method: translateColumn, params: name}
+			# 	callback: {Entity\Log\Systemmethod: translateColumn, params: name}
 			# subtype:
 			# 	label: Subtype
 			# 	mapper: e.subtype

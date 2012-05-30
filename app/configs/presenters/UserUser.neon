@@ -25,7 +25,7 @@ common:
 			defaultLanguage:
 				label: DefaultLanguage
 				mapper: e.id
-				callback: {class: %this%, method: translateColumn, params: defaultLanguage}
+				callback: {Entity\Log\Systemmethod: translateColumn, params: defaultLanguage}
 			location:
 				label: Location
 				mapper: e.location

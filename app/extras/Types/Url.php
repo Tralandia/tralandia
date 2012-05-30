@@ -19,7 +19,7 @@ class Url extends \Nette\Http\Url {
 	public function __toString() {
 		$t = parent::__toString();
 		if ($t == 'http://') {
-			return NULL;
+			return "";
 		} else {
 			return $t;			
 		}
