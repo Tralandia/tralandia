@@ -149,7 +149,8 @@ class Reflector extends Nette\Object {
 	public function getInlineOptionHtml($type, $value, $controlType) {
 		if(!$value) return NULL;
 		$a = Html::el('a')
-			->addClass('btn btn-hidden')
+			->addClass('btn')
+			// ->addClass('btn-hidden')
 			->setHref(call_user_func_array(array($this->presenter, 'lazyLink'),(array) $value));
 		$i = Html::el('i')->addClass('icon-white');
 
@@ -464,13 +465,18 @@ class Reflector extends Nette\Object {
 
 
 				if(isset($ui->validation)) {
+					$lastCondition = $control;
 					foreach ($ui->validation as $key => $value) {
 						$value = iterator_to_array($value);
 						$method = array_shift($value);
 						if(in_array($value[0], array('PATTERN', 'EQUAL', 'IS_IN', 'VALID', 'MAX_FILE_SIZE', 'MIME_TYPE', 'IMAGE', 'URL', 'MIN_LENGTH', 'MAX_LENGTH', 'LENGTH', 'EMAIL', 'INTEGER', 'FLOAT', 'RANGE', 'FILLED'))) {
 							$value[0] = constant('\Nette\Application\UI\Form::'.$value[0]);
 						}
-						$t = call_user_func_array(array($control, $method), $value);
+						if(in_array($method, array('addCondition', 'addConditionOn'))) {
+							$lastCondition = call_user_func_array(array($control, $method), $value);
+						} else {
+							call_user_func_array(array($lastCondition, $method), $value);
+						}
 					}
 				}
 

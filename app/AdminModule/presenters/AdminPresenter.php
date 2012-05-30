@@ -68,6 +68,8 @@ class AdminPresenter extends BasePresenter {
 
 		$this->template->record = $this->service;
 		$this->template->form = $form;
+		$this->template->created = $this->service->created;
+		$this->template->updated = $this->service->updated;
 		$this->setRenderMode();
 	}
 
@@ -148,6 +150,10 @@ class AdminPresenter extends BasePresenter {
 
 		$gridSettings = $this->settings->params->grid;
 		$grid->itemsPerPage = $gridSettings->itemsPerPage;
+
+		if(!$gridSettings->enableOrder) {
+			$grid->disableOrder = true;
+		}
 
 		if($gridSettings->drawRowNumber) {
 			$mapper['rowNumber'] = 'e.id';
@@ -289,7 +295,7 @@ class AdminPresenter extends BasePresenter {
 
 	public function translateColumn($value, $row, $params) {
 		$key = $params[1];
-		//debug(func_get_args());
+		// debug(func_get_args());
 		$entity = $row->getEntity();
 		if($key instanceof \Traversable) {
 			foreach ($key as $key => $value) {
@@ -298,7 +304,7 @@ class AdminPresenter extends BasePresenter {
 		} else {
 			$entity = $entity->{$key};
 		}
-		//debug($entity);
+		// debug($entity);
 		return $this->translate($entity->id);
 	}
 }

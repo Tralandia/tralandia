@@ -2,13 +2,17 @@
 {if !isset($display) || $display != 'modal'}
 	<h1>
 		{$settings->title}
-		<button onclick="toggleEdit(this);" data-toggle="button" class="btn btn-warning pull-right">Edit mode</button>
+		<!-- <button onclick="toggleEdit(this);" data-toggle="button" class="btn btn-warning pull-right">Edit mode</button> -->
 	</h1>
 {/if}
 
 
 {snippet form}
 	{control form}
+	<p>
+		<span n:ifset="$created">Created: {$created|date}</span>
+		<span n:ifset="$updated">Updated: {$updated|date}</span>
+	</p>
 {/snippet}
 
 <a onclick="ivalidateForm({$form->getHtmlId()})" class="btn btn-danger btn-big">Invalidate Form</a>
