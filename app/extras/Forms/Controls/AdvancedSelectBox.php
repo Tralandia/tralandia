@@ -51,15 +51,20 @@ class AdvancedSelectBox extends SelectBox {
 			$editingHtml->addAttributes(array(
 				'for-control' => $controlId,
 			));
+			$editingHtml->addClass('btn-hidden');
 			$buttonsWrapper->add($editingHtml);
 
 		}
 
 		if($this->getOption('inlineDeleting')) {
-			$buttonsWrapper->add($this->getOption('inlineDeleting'));
+			$deletingHtml = $this->getOption('inlineDeleting');
+			$deletingHtml->addClass('btn-hidden');
+			$buttonsWrapper->add($deletingHtml);
 		}
 		if($this->getOption('inlineCreating')) {
-			$buttonsWrapper->add($this->getOption('inlineCreating'));
+			$creatingHtml = $this->getOption('inlineCreating');
+			$creatingHtml->addClass('btn-hidden');
+			$buttonsWrapper->add($creatingHtml);
 		}
 		return $wrapper->add($buttonsWrapper);
 	}

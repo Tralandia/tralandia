@@ -38,10 +38,11 @@ common:
 		class: row form
 		defaultFieldClass: span3
 		buttons:
-			cancel: 
-				type: backlink
-				label: 'Cancel (return)'
 			submit:
 				type: submit
 				label: Save Changes
 				addClass: btn-success pull-right
+			cancel: 
+				type: backlink
+				label: 'Cancel (return)'
+				addClass: pull-right

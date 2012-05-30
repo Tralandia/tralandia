@@ -55,8 +55,6 @@ $(function() {
 
 	$("textarea.neon").tabby().neon({ajaxTimeout: 500});
 
-	$(".phrase-control").phraseControl();
-
 });
 
 function toggleEdit(obj) {
