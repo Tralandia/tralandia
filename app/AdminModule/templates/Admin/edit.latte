@@ -9,6 +9,10 @@
 
 {snippet form}
 	{control form}
+	<p>
+		<span n:ifset="$created">Created: {$created|date}</span>
+		<span n:ifset="$updated">Updated: {$updated|date}</span>
+	</p>
 {/snippet}
 
 <a onclick="ivalidateForm({$form->getHtmlId()})" class="btn btn-danger btn-big">Invalidate Form</a>

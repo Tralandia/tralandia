@@ -68,6 +68,8 @@ class AdminPresenter extends BasePresenter {
 
 		$this->template->record = $this->service;
 		$this->template->form = $form;
+		$this->template->created = $this->service->created;
+		$this->template->updated = $this->service->updated;
 		$this->setRenderMode();
 	}
 
