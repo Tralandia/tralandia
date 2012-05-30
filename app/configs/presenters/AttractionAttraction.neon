@@ -22,25 +22,19 @@ common:
 			country:
 				label: Country
 				mapper: e.country
-			latitude:
-				label: Latitude
-				mapper: e.latitude
-			longitude:
-				label: Longitude
-				mapper: e.longitude
-			details:
-				label: Details
-				mapper: e.details
-			oldId:
-				label: OldId
-				mapper: e.oldId
-				cellStyle: text-align:right;
-			created:
-				label: Created
-				mapper: e.created
-			updated:
-				label: Updated
-				mapper: e.updated
+			# latitude:
+			# 	label: Latitude
+			# 	mapper: e.latitude
+			# longitude:
+			# 	label: Longitude
+			# 	mapper: e.longitude
+			# details:
+			# 	label: Details
+			# 	mapper: e.details
+			# oldId:
+			# 	label: OldId
+			# 	mapper: e.oldId
+			# 	cellStyle: text-align:right;
 			
 	form:
 		fields:

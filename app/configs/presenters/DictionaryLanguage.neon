@@ -3,10 +3,14 @@ common:
 	title: Dictionary / Language
 	h1: Dictionary / Language
 	grid:
+		itemsPerPage: 200
 		columns:
 			id:
 				label: ID
 				mapper: e.id
+			supported:
+				label: Supported
+				mapper: e.supported
 			name:
 				label: Name
 				mapper: e.id
@@ -14,25 +18,7 @@ common:
 			iso:
 				label: Iso
 				mapper: e.iso
-			supported:
-				label: Supported
-				mapper: e.supported
-			# defaultCollation:
-			# 	label: DefaultCollation
-			# 	mapper: e.defaultCollation
-			# multitranslationOptions:
-			# 	label: MultitranslationOptions
-			# 	mapper: e.multitranslationOptions
-			# genderNumberOptions:
-			# 	label: GenderNumberOptions
-			# 	mapper: e.genderNumberOptions
-			# ppcPatterns:
-			# 	label: PpcPatterns
-			# 	mapper: e.ppcPatterns
-			# oldId:
-			# 	label: OldId
-			# 	mapper: e.oldId
-			# 	cellStyle: text-align:right;
+				#callback: {method: strtoupper}
 			created:
 				label: Created
 				mapper: e.created
@@ -49,37 +35,38 @@ common:
 				inlineCreating: Phrase:add
 			iso:
 				label: Iso
+				validation:
+					- [addRule, PATTERN, 'Must be exactly 2 characters long.', '[a-z]{2}']
+					#- [addRule, [\Service\Dictionary\Language, validateUniqueIso], 'ISO code must be unique.']
+				control: 
+					type: text
+			defaultCollation:
+				label: DefaultCollation
 				control: text
 			supported:
 				label: Supported
 				control: 
 					type: checkbox
-					label: is supported
-			defaultCollation:
-				label: DefaultCollation
-				control: text
+					label: Supported / Translated
 			multitranslationOptions:
+				class: span3 json-list
 				label: MultitranslationOptions
-				control: json
+				control:
+					type: json
+					class: span3
 			genderNumberOptions:
+				class: span3 json-list
 				label: GenderNumberOptions
-				control: json
+				startNewRow: FALSE
+				control:
+					type: json
+					class: span3
 			ppcPatterns:
+				class: span6 json-list
 				label: PpcPatterns
-				control: json
-			locations:
-				label: Locations
-				control: bricksList
-				inlineEditing: LocationLocation:edit
-				inlineCreating: LocationLocation:add
-			rentals:
-				label: Rentals
-				control: bricksList
-				inlineEditing: RentalRental:edit
-				inlineCreating: RentalRental:add
-			created:
-				label: Created
-				control: datePicker
-			updated:
-				label: Updated
-				control: datePicker
+				startNewRow: FALSE
+				control:
+					type: table
+					class: span6
+					columns: [Pattern]
+					rows: "+5"
