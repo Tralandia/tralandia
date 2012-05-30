@@ -7,6 +7,7 @@ common:
 		dataSourceMethod: getAll
 		dataSourceArguments: NULL
 		drawRowNumber: false
+		enableOrder: false
 		itemsPerPage: 50
 
 		actionColumns:

@@ -151,6 +151,10 @@ class AdminPresenter extends BasePresenter {
 		$gridSettings = $this->settings->params->grid;
 		$grid->itemsPerPage = $gridSettings->itemsPerPage;
 
+		if(!$gridSettings->enableOrder) {
+			$grid->disableOrder = true;
+		}
+
 		if($gridSettings->drawRowNumber) {
 			$mapper['rowNumber'] = 'e.id';
 			$grid->addColumn('rowNumber', '#');
