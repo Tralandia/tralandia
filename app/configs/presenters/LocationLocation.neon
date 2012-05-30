@@ -311,7 +311,7 @@ common:
 				class: span6
 				startNewRow: TRUE
 				validation:
-					- [addCondition, MAX_LENGTH, 5]
+					- [addCondition, FILLED]
 					- [addRule, URL, 'Must be a valid URL or leave empty.']
 			contacts:
 				# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityContactContact,mappedBy:locations,cascade:"
