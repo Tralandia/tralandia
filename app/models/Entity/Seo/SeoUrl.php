@@ -45,7 +45,7 @@ class SeoUrl extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Attraction\Attraction")
+	 * @ORM\ManyToOne(targetEntity="Entity\Attraction\Type")
 	 */
 	protected $attractionType;
 
@@ -219,10 +219,10 @@ class SeoUrl extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Attraction\Attraction
+	 * @param \Entity\Attraction\Type
 	 * @return \Entity\Seo\SeoUrl
 	 */
-	public function setAttractionType(\Entity\Attraction\Attraction $attractionType) {
+	public function setAttractionType(\Entity\Attraction\Type $attractionType) {
 		$this->attractionType = $attractionType;
 
 		return $this;
@@ -238,7 +238,7 @@ class SeoUrl extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Attraction\Attraction|NULL
+	 * @return \Entity\Attraction\Type|NULL
 	 */
 	public function getAttractionType() {
 		return $this->attractionType;

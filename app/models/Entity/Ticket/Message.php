@@ -4,7 +4,6 @@ namespace Entity\Ticket;
 
 use Entity\Dictionary;
 use Entity\Medium;
-use Entity\Ticket;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -15,7 +14,7 @@ class Message extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Ticket", inversedBy="messages")
+	 * @ORM\ManyToOne(targetEntity="Ticket", inversedBy="messages", cascade={"persist", "remove"})
 	 */
 	protected $ticket;
 
@@ -26,16 +25,23 @@ class Message extends \Entity\BaseEntity {
 	protected $senderEmail;
 
 	/**
-	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
+	 * @var text
+	 * @ORM\Column(type="text", nullable=true)
 	 */
 	protected $message;
+
+	/**
+	 * @var text
+	 * @ORM\Column(type="text", nullable=true)
+	 */
+	protected $messageEn;
 
 	/**
 	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="Entity\Medium\Medium", mappedBy="message")
 	 */
 	protected $attachments;
+
 
 //@entity-generator-code <--- NEMAZAT !!!
 
@@ -90,20 +96,55 @@ class Message extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Phrase
+	 * @param string
 	 * @return \Entity\Ticket\Message
 	 */
-	public function setMessage(\Entity\Dictionary\Phrase $message) {
+	public function setMessage($message) {
 		$this->message = $message;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Phrase|NULL
+	 * @return \Entity\Ticket\Message
+	 */
+	public function unsetMessage() {
+		$this->message = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
 	 */
 	public function getMessage() {
 		return $this->message;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Ticket\Message
+	 */
+	public function setMessageEn($messageEn) {
+		$this->messageEn = $messageEn;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Ticket\Message
+	 */
+	public function unsetMessageEn() {
+		$this->messageEn = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getMessageEn() {
+		return $this->messageEn;
 	}
 		
 	/**

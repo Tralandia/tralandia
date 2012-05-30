@@ -67,17 +67,27 @@ Contact\Contact:
 	
 Dictionary\Language:
 	multitranslationOptions:
-		item1: null
-		item2: null
+		1:
+		2:
+		3:
+		4:
+		5:
+		6:
+		7:
+		8:
+		9:
+		10:
 	genderNumberOptions:
-		item1: null
-		item2: null
-	ppcPatterns:
-		item1: null
-		item2: null
-	details:
-		item1: null
-		item2: null
+		1:
+		2:
+		3:
+		4:
+		5:
+		6:
+		7:
+		8:
+		9:
+		10:
 	
 Dictionary\Phrase:
 	details:

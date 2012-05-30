@@ -1,0 +1,8 @@
+			locations:
+				label: Locations
+				control: bricksList
+				inlineEditing: LocationLocation:edit
+				inlineCreating: LocationLocation:add
+			created:
+				label: Created
+				control: datePicker

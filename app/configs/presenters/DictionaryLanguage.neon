@@ -3,42 +3,22 @@ common:
 	title: Dictionary / Language
 	h1: Dictionary / Language
 	grid:
+		itemsPerPage: 200
 		columns:
 			id:
 				label: ID
 				mapper: e.id
+			supported:
+				label: Supported
+				mapper: e.supported
+			iso:
+				label: Iso
+				mapper: e.iso
+				callback: {class: \Nette\Utils\Strings, method: upper, params: e.iso}
 			name:
 				label: Name
 				mapper: e.id
 				callback: {class: %this%, method: translateColumn, params: name}
-			iso:
-				label: Iso
-				mapper: e.iso
-			supported:
-				label: Supported
-				mapper: e.supported
-			# defaultCollation:
-			# 	label: DefaultCollation
-			# 	mapper: e.defaultCollation
-			# multitranslationOptions:
-			# 	label: MultitranslationOptions
-			# 	mapper: e.multitranslationOptions
-			# genderNumberOptions:
-			# 	label: GenderNumberOptions
-			# 	mapper: e.genderNumberOptions
-			# ppcPatterns:
-			# 	label: PpcPatterns
-			# 	mapper: e.ppcPatterns
-			# oldId:
-			# 	label: OldId
-			# 	mapper: e.oldId
-			# 	cellStyle: text-align:right;
-			created:
-				label: Created
-				mapper: e.created
-			updated:
-				label: Updated
-				mapper: e.updated
 			
 	form:
 		fields:
@@ -49,37 +29,38 @@ common:
 				inlineCreating: Phrase:add
 			iso:
 				label: Iso
+				validation:
+					- [addRule, PATTERN, 'Must be exactly 2 characters long.', '[a-z]{2}']
+					#- [addRule, [\Service\Dictionary\Language, validateUniqueIso], 'ISO code must be unique.']
+				control: 
+					type: text
+			defaultCollation:
+				label: Default Collation
 				control: text
 			supported:
 				label: Supported
 				control: 
 					type: checkbox
-					label: is supported
-			defaultCollation:
-				label: DefaultCollation
-				control: text
+					label: Supported / Translated
 			multitranslationOptions:
-				label: MultitranslationOptions
-				control: json
+				class: span3 json-list
+				label: Multitranslation Options
+				control:
+					type: json
+					class: span3
 			genderNumberOptions:
-				label: GenderNumberOptions
-				control: json
+				class: span3 json-list
+				label: Gender / Number Options
+				startNewRow: FALSE
+				control:
+					type: json
+					class: span3
 			ppcPatterns:
-				label: PpcPatterns
-				control: json
-			locations:
-				label: Locations
-				control: bricksList
-				inlineEditing: LocationLocation:edit
-				inlineCreating: LocationLocation:add
-			rentals:
-				label: Rentals
-				control: bricksList
-				inlineEditing: RentalRental:edit
-				inlineCreating: RentalRental:add
-			created:
-				label: Created
-				control: datePicker
-			updated:
-				label: Updated
-				control: datePicker
+				class: span6 json-list
+				label: Ppc Patterns
+				startNewRow: FALSE
+				control:
+					type: table
+					class: span6
+					columns: [Pattern]
+					rows: "+5"

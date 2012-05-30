@@ -509,6 +509,10 @@ abstract class Service extends Nette\Object implements IService {
 						$formValue = new \Extras\Types\Latlong($formValue);
 					} else if($columnType == 'price') {
 						$formValue = new \Extras\Types\Price($formValue);
+					} else if($columnType == 'phone') {
+						$formValue = new \Extras\Types\Phone($formValue);
+					} else if($columnType == 'url') {
+						$formValue = new \Extras\Types\Url($formValue);
 					}
 					$this->{$name} = $formValue;
 					debug($ui);

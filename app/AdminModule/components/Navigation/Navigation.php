@@ -64,7 +64,7 @@ class Navigation extends BaseControl {
 		$navigation = $this->getNavigation();
 		if($this->user->isLoggedIn()) {
 			$identity = $this->user->getIdentity();
-			$navigation->right->account->label = $identity->login;
+			// $navigation->right->account->label = $identity->login;
 		} 
 	}
 

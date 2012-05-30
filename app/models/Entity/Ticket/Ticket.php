@@ -9,9 +9,13 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="ticket_ticket", indexes={@ORM\index(name="client", columns={"client"}), @ORM\index(name="status", columns={"status"})})
+ * @ORM\Table(name="ticket_ticket", indexes={@ORM\index(name="client", columns={"client"}), @ORM\index(name="staff", columns={"staff_id"}), @ORM\index(name="status", columns={"status"})})
  */
 class Ticket extends \Entity\BaseEntity {
+
+	const STATUS_OPEN = 2;
+	const STATUS_REPLIED = 4;
+	const STATUS_CLOSED = 0;
 
 	/**
 	 * @var email
@@ -39,13 +43,13 @@ class Ticket extends \Entity\BaseEntity {
 
 	/**
 	 * @var integer
-	 * @ORM\Column(type="integer")
+	 * @ORM\Column(type="integer", nullable=true)
 	 */
 	protected $status;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Message", mappedBy="ticket")
+	 * @ORM\OneToMany(targetEntity="Message", mappedBy="ticket", cascade={"persist", "remove"})
 	 */
 	protected $messages;
 
@@ -160,6 +164,15 @@ class Ticket extends \Entity\BaseEntity {
 	 */
 	public function setStatus($status) {
 		$this->status = $status;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Ticket\Ticket
+	 */
+	public function unsetStatus() {
+		$this->status = NULL;
 
 		return $this;
 	}

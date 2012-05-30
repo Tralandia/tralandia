@@ -214,8 +214,8 @@ class Location extends \Entity\BaseEntityDetails {
 	protected $phonePrefix;
 
 	/**
-	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact", cascade={"persist"})
+	 * @var url
+	 * @ORM\Column(type="url", nullable=true)
 	 */
 	protected $facebookGroup;
 
@@ -226,32 +226,32 @@ class Location extends \Entity\BaseEntityDetails {
 	protected $capitalCity;
 
 	/**
-	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact", cascade={"persist"})
+	 * @var phone
+	 * @ORM\Column(type="phone", nullable=true)
 	 */
 	protected $phoneNumberEmergency;
 
 	/**
-	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact", cascade={"persist"})
+	 * @var phone
+	 * @ORM\Column(type="phone", nullable=true)
 	 */
 	protected $phoneNumberPolice;
 
 	/**
-	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact", cascade={"persist"})
+	 * @var phone
+	 * @ORM\Column(type="phone", nullable=true)
 	 */
 	protected $phoneNumberMedical;
 
 	/**
-	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact", cascade={"persist"})
+	 * @var phone
+	 * @ORM\Column(type="phone", nullable=true)
 	 */
 	protected $phoneNumberFire;
 
 	/**
-	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact", cascade={"persist"})
+	 * @var url
+	 * @ORM\Column(type="url", nullable=true)
 	 */
 	protected $wikipediaLink;
 
@@ -1023,10 +1023,10 @@ class Location extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @param \Entity\Contact\Contact
+	 * @param \Extras\Types\Url
 	 * @return \Entity\Location\Location
 	 */
-	public function setFacebookGroup(\Entity\Contact\Contact $facebookGroup) {
+	public function setFacebookGroup(\Extras\Types\Url $facebookGroup) {
 		$this->facebookGroup = $facebookGroup;
 
 		return $this;
@@ -1042,7 +1042,7 @@ class Location extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Contact\Contact|NULL
+	 * @return \Extras\Types\Url|NULL
 	 */
 	public function getFacebookGroup() {
 		return $this->facebookGroup;
@@ -1075,10 +1075,10 @@ class Location extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @param \Entity\Contact\Contact
+	 * @param \Extras\Types\Phone
 	 * @return \Entity\Location\Location
 	 */
-	public function setPhoneNumberEmergency(\Entity\Contact\Contact $phoneNumberEmergency) {
+	public function setPhoneNumberEmergency(\Extras\Types\Phone $phoneNumberEmergency) {
 		$this->phoneNumberEmergency = $phoneNumberEmergency;
 
 		return $this;
@@ -1094,17 +1094,17 @@ class Location extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Contact\Contact|NULL
+	 * @return \Extras\Types\Phone|NULL
 	 */
 	public function getPhoneNumberEmergency() {
 		return $this->phoneNumberEmergency;
 	}
 		
 	/**
-	 * @param \Entity\Contact\Contact
+	 * @param \Extras\Types\Phone
 	 * @return \Entity\Location\Location
 	 */
-	public function setPhoneNumberPolice(\Entity\Contact\Contact $phoneNumberPolice) {
+	public function setPhoneNumberPolice(\Extras\Types\Phone $phoneNumberPolice) {
 		$this->phoneNumberPolice = $phoneNumberPolice;
 
 		return $this;
@@ -1120,17 +1120,17 @@ class Location extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Contact\Contact|NULL
+	 * @return \Extras\Types\Phone|NULL
 	 */
 	public function getPhoneNumberPolice() {
 		return $this->phoneNumberPolice;
 	}
 		
 	/**
-	 * @param \Entity\Contact\Contact
+	 * @param \Extras\Types\Phone
 	 * @return \Entity\Location\Location
 	 */
-	public function setPhoneNumberMedical(\Entity\Contact\Contact $phoneNumberMedical) {
+	public function setPhoneNumberMedical(\Extras\Types\Phone $phoneNumberMedical) {
 		$this->phoneNumberMedical = $phoneNumberMedical;
 
 		return $this;
@@ -1146,17 +1146,17 @@ class Location extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Contact\Contact|NULL
+	 * @return \Extras\Types\Phone|NULL
 	 */
 	public function getPhoneNumberMedical() {
 		return $this->phoneNumberMedical;
 	}
 		
 	/**
-	 * @param \Entity\Contact\Contact
+	 * @param \Extras\Types\Phone
 	 * @return \Entity\Location\Location
 	 */
-	public function setPhoneNumberFire(\Entity\Contact\Contact $phoneNumberFire) {
+	public function setPhoneNumberFire(\Extras\Types\Phone $phoneNumberFire) {
 		$this->phoneNumberFire = $phoneNumberFire;
 
 		return $this;
@@ -1172,17 +1172,17 @@ class Location extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Contact\Contact|NULL
+	 * @return \Extras\Types\Phone|NULL
 	 */
 	public function getPhoneNumberFire() {
 		return $this->phoneNumberFire;
 	}
 		
 	/**
-	 * @param \Entity\Contact\Contact
+	 * @param \Extras\Types\Url
 	 * @return \Entity\Location\Location
 	 */
-	public function setWikipediaLink(\Entity\Contact\Contact $wikipediaLink) {
+	public function setWikipediaLink(\Extras\Types\Url $wikipediaLink) {
 		$this->wikipediaLink = $wikipediaLink;
 
 		return $this;
@@ -1198,7 +1198,7 @@ class Location extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Contact\Contact|NULL
+	 * @return \Extras\Types\Url|NULL
 	 */
 	public function getWikipediaLink() {
 		return $this->wikipediaLink;
