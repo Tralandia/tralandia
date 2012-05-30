@@ -515,7 +515,6 @@ abstract class Service extends Nette\Object implements IService {
 						$formValue = new \Extras\Types\Url($formValue);
 					}
 					$this->{$name} = $formValue;
-					debug($ui);
 				}
 			}
 		}

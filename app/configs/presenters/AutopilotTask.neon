@@ -80,40 +80,53 @@ common:
 					type: select
 					callback: {class: \Service\Location\LocationList, method: getPairs, params: [id, [name, id], [type: 3]]}
 					class: span2
+					prompt: None
 			userLanguage:
-				label: UserLanguage
+				label: User Language
 				class: span2
 				control: 
 					type: select
 					class: span2
+					prompt: None
 			userLanguageLevel:
-				label: UserLanguageLevel
+				label: User Language Level
 				class: span2
 				control: 
-					type: text
 					class: span2
+					type: select
+					options: STATUS_.+
 			userRole:
-				label: UserRole
+				label: User Role
 				class: span2
 				control: 
 					type: select
 					class: span2
 			usersExcluded:
-				label: UsersExcluded
+				label: Users Excluded
 				class: span2
 				control: bricksList
 				inlineEditing: UserUser:edit
 				inlineCreating: UserUser:add
 				startNewRow: false
 			startTime:
+				startNewRow: true
 				label: StartTime
-				control: datePicker
+				class: span2
+				control: 
+					type: datePicker
+					class: span2
 			due:
 				label: Due
-				control: datePicker
+				class: span2
+				control: 
+					type: datePicker
+					class: span2
 			durationPaid:
 				label: Duration Paid
-				control: text
+				class: span2
+				control: 
+					type: text
+					class: span2
 			links:
 				label: Links
 				control: neon

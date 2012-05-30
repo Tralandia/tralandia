@@ -10,19 +10,10 @@ common:
 			name:
 				label: Name
 				mapper: e.name
-			technicalName:
-				label: TechnicalName
-				mapper: e.technicalName
-			mission:
-				label: Mission
-				mapper: e.mission
 			durationPaid:
 				label: DurationPaid
 				mapper: e.durationPaid
 				cellStyle: text-align:right;
-			validation:
-				label: Validation
-				mapper: e.validation
 			stackable:
 				label: Stackable
 				mapper: e.stackable
@@ -31,55 +22,44 @@ common:
 				label: TimeLimit
 				mapper: e.timeLimit
 				cellStyle: text-align:right;
-			actions:
-				label: Actions
-				mapper: e.actions
-			details:
-				label: Details
-				mapper: e.details
-			oldId:
-				label: OldId
-				mapper: e.oldId
-				cellStyle: text-align:right;
-			created:
-				label: Created
-				mapper: e.created
-			updated:
-				label: Updated
-				mapper: e.updated
 			
 	form:
 		fields:
 			name:
 				label: Name
-				control: text
+				class: span6
+				control: 
+					type: text
+					class: span6
 			technicalName:
-				label: TechnicalName
-				control: text
+				label: Technical Name
+				class: span4
+				control: 
+					type: text
+					class: span4
+			durationPaid:
+				label: Duration Paid
+				class: span2
+				control: 
+					type: text
+					class: span2
 			mission:
 				label: Mission
-				control: text
-			durationPaid:
-				label: DurationPaid
-				control: text
-			validation:
-				label: Validation
-				control: neon
+				control: tinymce
+				startNewRow: false
 			stackable:
 				label: Stackable
 				control: text
+				startNewRow: true
 			timeLimit:
-				label: TimeLimit
+				label: Time Limit
 				control: text
+				description: "In minutes."
+			validation:
+				label: Validation
+				control: neon
+				startNewRow: true
 			actions:
 				label: Actions
 				control: neon
-			details:
-				label: Details
-				control: neon
-			created:
-				label: Created
-				control: datePicker
-			updated:
-				label: Updated
-				control: datePicker
+				startNewRow: false

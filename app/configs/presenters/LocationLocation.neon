@@ -214,7 +214,7 @@ common:
 				control: 
 					type: select
 					prompt: '-- Vyber ! --'
-					options: STATUS_.+
+					options: [class: \Entity\Dictionary\Type, pattern: TRANSLATION_LEVEL_.+]
 			defaultZoom:
 				# anotations: "var:integer,ORMColumn:type:integer,nullable:true"
 				label: Default Zoom
