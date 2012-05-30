@@ -21,26 +21,14 @@ common:
 				callback: {class: %this%, method: translateColumn, params: name}
 			country:
 				label: Country
-				mapper: e.country
-			latitude:
-				label: Latitude
-				mapper: e.latitude
-			longitude:
-				label: Longitude
-				mapper: e.longitude
-			details:
-				label: Details
-				mapper: e.details
-			oldId:
-				label: OldId
-				mapper: e.oldId
-				cellStyle: text-align:right;
-			created:
-				label: Created
-				mapper: e.created
-			updated:
-				label: Updated
-				mapper: e.updated
+				mapper: e.id
+				callback: {class: %this%, method: translateColumn, params: [country, name]}
+			# latitude:
+			# 	label: Latitude
+			# 	mapper: e.latitude
+			# longitude:
+			# 	label: Longitude
+			# 	mapper: e.longitude
 			
 	form:
 		fields:

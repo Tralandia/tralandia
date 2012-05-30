@@ -32,6 +32,7 @@ class User extends \Entity\BaseEntityDetails {
 	protected $password;
 
 	/**
+	 * @todo navrhujem toto vyhodit, je to duplicitna informacia (da sa vypocitat)
 	 * @var boolean
 	 * @ORM\Column(type="boolean", nullable=true)
 	 */

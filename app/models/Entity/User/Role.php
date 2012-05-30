@@ -28,8 +28,8 @@ class Role extends \Entity\BaseEntity {
 	protected $slug;
 
 	/**
-	 * @var url
-	 * @ORM\Column(type="url", nullable=true)
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $homePage;
 

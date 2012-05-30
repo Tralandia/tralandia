@@ -9,6 +9,12 @@ parameters:
 				callback: ['\\Security\\MyAssertion', 'test']
 
 		presenters:
+			Front:Base:
+				nic:
+			Front:Sign:
+				in:
+				out:
+				up:
 			Admin:Base:
 				decodeNeon:
 			Admin:EntityGenerator:

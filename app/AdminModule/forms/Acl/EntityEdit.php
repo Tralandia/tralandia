@@ -42,6 +42,7 @@ class EntityEdit extends \AdminModule\Forms\Form {
 		$resource = $this->entityName;
 		@mkdir($this->destinationDir, 0777);
 		file_put_contents($this->destinationDir . '/' . str_replace('\\', '_', $resource) . '.neon', trim($acl));
+		$this->presenter->getService('aclCache')->clean(array(\Nette\Caching\Cache::TAGS => 'acl'));
 	}
 
 }

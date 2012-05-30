@@ -36,7 +36,7 @@ common:
 		user:
 			class: Security\User
 
-		#authenticator: Security\Authenticator
+		authenticator: Security\Authenticator
 
 		authorizator: 
 			class: Security\Acl
