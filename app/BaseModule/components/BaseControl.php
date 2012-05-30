@@ -12,4 +12,5 @@ abstract class BaseControl extends Control {
 		return $template;
 	}
 
+
 }

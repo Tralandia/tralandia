@@ -39,6 +39,8 @@ class PresenterEdit extends \AdminModule\Forms\Form {
 		$resource = $this->presenterName;
 		@mkdir($this->destinationDir, 0777);
 		file_put_contents($this->destinationDir . '/' .str_replace(':', '-', $resource) . '.neon', trim($acl));
+
+		$this->presenter->getService('aclCache')->clean(array(\Nette\Caching\Cache::TAGS => 'acl'));
 	}
 
 }

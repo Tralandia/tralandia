@@ -18,13 +18,16 @@ class Role extends \Nette\Object implements IRole {
 		return $this->role;
 	}
 
-	public function getUser() {
-		return $this->user;
+	public function getRoleId() {
+		if($this->role instanceof \Entity\User\Role) {
+			return $this->role->slug;
+		} else {
+			return $this->role;
+		}
 	}
 
-	
-	public function getRoleId() {
-		return $this->role;
-	}
+	public function getUser() {
+		return $this->user;
+	}	
 
 }

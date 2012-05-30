@@ -42,7 +42,9 @@ class Acl extends Permission {
 		if(isset($this->cache)) {
 			if(!$data = $this->cache->load('data')) {
 				$data = $this->buildData();
-				$this->cache->save('data', $data);
+				$this->cache->save('data', $data, array(
+					Cache::TAGS => 'acl'
+				));
 			}
 		} else {
 			$data = $this->buildData();
@@ -78,6 +80,8 @@ class Acl extends Permission {
 				}
 			}
 		}
+		$data['roles'][] = 'superadmin';
+		$data['rules'][] = array(TRUE, self::ALLOW, 'superadmin', self::ALL, self::ALL);
 		return $data;
 	}
 

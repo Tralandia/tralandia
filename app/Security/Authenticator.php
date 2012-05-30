@@ -10,13 +10,6 @@ use Nette\Object,
  * Users authenticator.
  */
 class Authenticator extends Object implements NS\IAuthenticator {
-	
-	/** @var Nette\Database\Table\Selection */
-	private $users;
-	
-	public function __construct(\Doctrine\ORM\EntityRepository $users) {
-		$this->users = $users;
-	}
 
 	/**
 	 * Performs an authentication
@@ -26,18 +19,19 @@ class Authenticator extends Object implements NS\IAuthenticator {
 	 */
 	public function authenticate(array $credentials) {
 		list($email, $password) = $credentials;
-		$row = $this->users->findOneBy(array('email' => $email));
 
-		if (!$row) {
+		// $row = $this->users->findOneBy(array('email' => $email));
+		$user = \Service\User\User::getByLogin($email);
+
+		if (!$user) {
 			throw new NS\AuthenticationException("User '$email' not found.", self::IDENTITY_NOT_FOUND);
 		}
 
-		if ($row->password !== self::calculateHash($password)) {
+		if ($user->password !== $this->calculateHash($password)) {
 			throw new NS\AuthenticationException("Invalid password.", self::INVALID_CREDENTIAL);
 		}
 		
-		//unset($row->password);
-		return new NS\Identity($row->id, $row->role, $row);
+		return new NS\Identity($user->id, $user->roles->toArray(), $user->getIdentity());
 	}
 
 	/**
@@ -45,7 +39,9 @@ class Authenticator extends Object implements NS\IAuthenticator {
 	 * @param  string
 	 * @return string
 	 */
-	public static function calculateHash($password) {
-		return sha1($password . str_repeat(Environment::getConfig('security')->salt, 10));
+	public function calculateHash($password) {
+		return md5($password);
 	}
 }
+
+

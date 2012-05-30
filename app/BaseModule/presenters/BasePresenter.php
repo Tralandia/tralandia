@@ -11,35 +11,26 @@ abstract class BasePresenter extends Presenter {
 	public $cssFiles;
 	public $jsFiles;
 
+
 	protected function startup() {
 		parent::startup();
-		
-		$backlink = $this->storeRequest();
-		// if (false /*!$this->user->isLoggedIn()*/) {
-		// 	if ($this->user->getLogoutReason() === User::INACTIVITY) {
-		// 		$this->flashMessage('Session timeout, you have been logged out', 'warning');
-		// 	}
-
-		// 	$backlink = $this->getApplication()->storeRequest();
-		// 	$this->redirect('Auth:login', array('backlink' => $backlink));
-		// } else {
-			list($model, ) = explode(':', $this->name, 2);
-			if (!$this->user->isAllowed($this->name, $this->action) && !$this->user->isAllowed($model.':Base', $this->action)) {
-				$this->flashMessage('Access diened. You don\'t have permissions to view that page.', 'warning');
-				// $this->redirect('Auth:login');
-				throw new \Nette\MemberAccessException('co tu chces?!');
-			}
-		// }
 		// odstranuje neplatne _fid s url
 		if (!$this->hasFlashSession() && !empty($this->params[self::FLASH_KEY])) {
 			unset($this->params[self::FLASH_KEY]);
 			$this->redirect(301, 'this');
 		}
-		
+
+		$backlink = $this->storeRequest();
 		if(!$this->getHttpRequest()->isPost()) {
 			$environmentSection = $this->context->session->getSection('environment');
-			$environmentSection->previousLink = $backlink;
+			$environmentSection->previousLink = $environmentSection->actualLink;
+			$environmentSection->actualLink = $backlink;
 		}
+	}
+
+	public function getPreviousBackLink() {
+		$environmentSection = $this->context->session->getSection('environment');
+		return $environmentSection->previousLink;
 	}
 
 	public function beforeRender() {

@@ -212,6 +212,7 @@ class AdminPresenter extends BasePresenter {
 				
 				if (isset($column->callback)) {
 					$column->callback->class == '%this%' ? $column->callback->class = $this : $column->callback->class;
+					// debug($column->callback);
 
 					$alias->formatCallback[] = new \DataGrid\Callback(
 						$column->callback->class,
@@ -288,6 +289,12 @@ class AdminPresenter extends BasePresenter {
 
 	public function translateColumn($value, $row, $params) {
 		$key = $params[1];
-		return $this->translate($row->getEntity()->$key->id);
+		$entity = $row->getEntity();
+		if($key instanceof \Traversable) {
+			foreach ($key as $key => $value) {
+				$entity = $entity->{$value};
+			}
+		}
+		return $this->translate($entity->id);
 	}
 }
