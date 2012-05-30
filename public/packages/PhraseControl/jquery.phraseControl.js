@@ -38,12 +38,16 @@
                         .html(value);
 
                 });
+
+                return true;
                     
             } else if (base.hasClass($.fn.phraseControl.options.classComplex)) {
                 // Plain Text Complex
+                return true;
 
             } else if (base.hasClass($.fn.phraseControl.options.classHtmlText)) {
                 // HTML text
+                return true;
 
             }
 

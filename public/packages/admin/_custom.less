@@ -137,9 +137,15 @@ div.neonOutput pre {  }
 .gallery-control .background { position:absolute; top:45%; width:100%; text-align:center; font-size:28px; color:black; opacity:0.2; }
 .gallery-control .background i { zoom:2; margin-top:2px; }
 
-.phrase-control { border: 1px solid @green; border-radius: 4px; padding-bottom: 1px; }
-.phrase-control .input-prepend { margin-bottom:-1px; }
-.phrase-control .input-prepend .add-on { width:42px; margin: 0 -5px 0 0; }
-.phrase-control .input-prepend .input-large { width:210px; }
-.phrase-control .input-prepend .btn-group { display:inline; }
-.phrase-control .input-prepend .btn-group .btn { width: 54px; margin: 0 -5px 0 0; border-right: 0; border-radius: 4px 0 0 4px; }
+.phrase-control { padding-bottom: 1px; }
+.phrase-control.plain-text-simple .input-prepend { margin-bottom:-1px; }
+.phrase-control.plain-text-simple .input-prepend .add-on { width:42px; margin: 0 -5px 0 0; }
+.phrase-control.plain-text-simple .input-prepend .input-large { width:210px; }
+.phrase-control.plain-text-simple .input-prepend .btn-group { display:inline; }
+.phrase-control.plain-text-simple .input-prepend .btn-group .btn { width: 54px; margin: 0 -5px 0 0; border-right: 0; .border-radius(4px 0 0 4px); }
+
+.phrase-control.plain-text-complex .dropdown-toggle { width:100%; text-align:left; }
+
+.phrase-control.html-text .dropdown-toggle { width:100%; text-align:left; }
+.phrase-control.html-text .dropdown-toggle .wrap { height:40px; overflow:hidden; }
+.phrase-control.html-text .dropdown-menu li a { width:200px; white-space:normal; }
