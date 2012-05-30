@@ -11,20 +11,14 @@ common:
 			supported:
 				label: Supported
 				mapper: e.supported
+			iso:
+				label: Iso
+				mapper: e.iso
+				callback: {class: \Nette\Utils\Strings, method: upper, params: e.iso}
 			name:
 				label: Name
 				mapper: e.id
 				callback: {class: %this%, method: translateColumn, params: name}
-			iso:
-				label: Iso
-				mapper: e.iso
-				#callback: {method: strtoupper}
-			created:
-				label: Created
-				mapper: e.created
-			updated:
-				label: Updated
-				mapper: e.updated
 			
 	form:
 		fields:
@@ -41,7 +35,7 @@ common:
 				control: 
 					type: text
 			defaultCollation:
-				label: DefaultCollation
+				label: Default Collation
 				control: text
 			supported:
 				label: Supported
@@ -50,20 +44,20 @@ common:
 					label: Supported / Translated
 			multitranslationOptions:
 				class: span3 json-list
-				label: MultitranslationOptions
+				label: Multitranslation Options
 				control:
 					type: json
 					class: span3
 			genderNumberOptions:
 				class: span3 json-list
-				label: GenderNumberOptions
+				label: Gender / Number Options
 				startNewRow: FALSE
 				control:
 					type: json
 					class: span3
 			ppcPatterns:
 				class: span6 json-list
-				label: PpcPatterns
+				label: Ppc Patterns
 				startNewRow: FALSE
 				control:
 					type: table

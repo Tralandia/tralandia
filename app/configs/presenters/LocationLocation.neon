@@ -167,7 +167,7 @@ common:
 				inlineEditing: Phrase:edit
 			nameShort:
 				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:"
-				label: NameShort
+				label: Short Name
 				control: phrase
 			slug:
 				# anotations: "var:slug,ORMColumn:type:slug"
@@ -183,7 +183,7 @@ common:
 						arguments: [id, [name, id]]
 			nameOfficial:
 				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:"
-				label: NameOfficial
+				label: Official Name
 				control: phrase
 				class: span6
 			# parentId:
@@ -216,34 +216,34 @@ common:
 					options: STATUS_.+
 			defaultZoom:
 				# anotations: "var:integer,ORMColumn:type:integer,nullable:true"
-				label: DefaultZoom
+				label: Default Zoom
 				control: 
 					type: select
 					options: [1: asdf,2,3,4,5,6,7,8]
-			incomingLocations:
-				# anotations: "var:Collection,ORMOneToMany:targetEntity:Traveling,mappedBy:destinationLocation"
-				label: IncomingLocations
-				control: 
-					type: multiSelect
-					callback: 
-						class: \Service\Location\LocationList
-						method: getPairs
-						arguments: [id, [name, id]]
-				startNewRow: true
-			outgoingLocations:
-				# anotations: "var:Collection,ORMOneToMany:targetEntity:Traveling,mappedBy:sourceLocation"
-				label: OutgoingLocations
-				control: 
-					type: multiSelect
-					callback: 
-						class: \Service\Location\LocationList
-						method: getPairs
-						arguments: [id, [name, id]]
+			# incomingLocations:
+			# 	# anotations: "var:Collection,ORMOneToMany:targetEntity:Traveling,mappedBy:destinationLocation"
+			# 	label: Incoming Locations
+			# 	control: 
+			# 		type: multiSelect
+			# 		callback: 
+			# 			class: \Service\Location\LocationList
+			# 			method: getPairs
+			# 			arguments: [id, [name, id]]
+			# 	startNewRow: true
+			# outgoingLocations:
+			# 	# anotations: "var:Collection,ORMOneToMany:targetEntity:Traveling,mappedBy:sourceLocation"
+			# 	label: Outgoing Locations
+			# 	control: 
+			# 		type: multiSelect
+			# 		callback: 
+			# 			class: \Service\Location\LocationList
+			# 			method: getPairs
+			# 			arguments: [id, [name, id]]
 			defaultCurrency:
 				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityCurrency,cascade:"
 				class: span2
 				startNewRow: true
-				label: DefaultCurrency
+				label: Default Currency
 				control:
 					type: select
 					class: span2
@@ -263,7 +263,7 @@ common:
 			defaultLanguage:
 				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityDictionaryLanguage,cascade:"
 				class: span2
-				label: DefaultLanguage
+				label: Default Language
 				control: 
 					type: select
 					class: span2
@@ -284,7 +284,7 @@ common:
 				class: span2
 			capitalCity:
 				# anotations: "var:string,ORMColumn:type:string,nullable:true"
-				label: CapitalCity
+				label: Capital City
 				control: text
 				class: span2
 			airports:
@@ -294,54 +294,60 @@ common:
 				class: span2
 			drivingSide:
 				# anotations: "var:string,ORMColumn:type:string,nullable:true"
-				label: DrivingSide
-				control: text
+				label: Driving Side
+				control: 
+					type: select
+					options: [left: Left,right: Right]
+					class: span2
 				class: span2
 			pricesPizza:
 				# anotations: "var:price,ORMColumn:type:price,nullable:true"
-				label: PricesPizza
+				label: "Pizza (average price)"
+				control: text
+				class: span2
+			pricesDinner:
+				# anotations: "var:price,ORMColumn:type:price,nullable:true"
+				label: "Dinner (average price)"
 				control: text
 				class: span2
 			phonePrefix:
 				# anotations: "var:string,ORMColumn:type:string,nullable:true"
-				label: PhonePrefix
+				label: Phone Prefix
 				control: text
 				class: span2
 				startNewRow: TRUE
-			pricesDinner:
-				# anotations: "var:price,ORMColumn:type:price,nullable:true"
-				label: PricesDinner
-				control: text
-				class: span2
 			phoneNumberEmergency:
 				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityContactContact,cascade:"
-				label: PhoneNumberEmergency
+				label: Phone - Emergency
 				control: text
 				class: span2
 			phoneNumberPolice:
 				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityContactContact,cascade:"
-				label: PhoneNumberPolice
+				label: Phone - Police
 				control: text
 				class: span2
 			phoneNumberMedical:
 				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityContactContact,cascade:"
-				label: PhoneNumberMedical
+				label: Phone - Medical
 				control: text
 				class: span2
 			phoneNumberFire:
 				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityContactContact,cascade:"
-				label: PhoneNumberFire
+				label: Phone - Fire
 				control: text
 				class: span2
 			wikipediaLink:
 				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityContactContact,cascade:"
-				label: WikipediaLink
+				label: Wikipedia Link
 				control: text
 				class: span6
 				startNewRow: TRUE
+				validation:
+					- [addCondition, MAX_LENGTH, 5]
+					- [addRule, URL, 'Must be a valid URL or leave empty.']
 			facebookGroup:
 				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityContactContact,cascade:"
-				label: FacebookGroup
+				label: Facebook Group
 				control: text
 				class: span6
 			contacts:
@@ -361,5 +367,5 @@ common:
 				control: neon
 			clickMapData:
 				# anotations: "var:json,ORMColumn:type:json,nullable:true"
-				label: ClickMapData
+				label: Click Map Data
 				control: neon

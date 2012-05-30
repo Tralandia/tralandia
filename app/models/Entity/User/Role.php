@@ -104,10 +104,10 @@ class Role extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Extras\Types\Url
+	 * @param string
 	 * @return \Entity\User\Role
 	 */
-	public function setHomePage(\Extras\Types\Url $homePage) {
+	public function setHomePage($homePage) {
 		$this->homePage = $homePage;
 
 		return $this;
@@ -123,7 +123,7 @@ class Role extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Extras\Types\Url|NULL
+	 * @return string|NULL
 	 */
 	public function getHomePage() {
 		return $this->homePage;

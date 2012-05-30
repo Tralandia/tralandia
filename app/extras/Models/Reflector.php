@@ -467,7 +467,7 @@ class Reflector extends Nette\Object {
 					foreach ($ui->validation as $key => $value) {
 						$value = iterator_to_array($value);
 						$method = array_shift($value);
-						if(in_array($value[0], array('PATTERN', 'EQUAL', 'IS_IN', 'VALID', 'MAX_FILE_SIZE', 'MIME_TYPE', 'IMAGE'))) {
+						if(in_array($value[0], array('PATTERN', 'EQUAL', 'IS_IN', 'VALID', 'MAX_FILE_SIZE', 'MIME_TYPE', 'IMAGE', 'URL', 'MIN_LENGTH', 'MAX_LENGTH', 'LENGTH', 'EMAIL', 'INTEGER', 'FLOAT', 'RANGE', 'FILLED'))) {
 							$value[0] = constant('\Nette\Application\UI\Form::'.$value[0]);
 						}
 						$t = call_user_func_array(array($control, $method), $value);

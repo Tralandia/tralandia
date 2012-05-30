@@ -18,10 +18,10 @@ class Phone extends Type {
 	}
 
 	public function convertToPHPValue($value, AbstractPlatform $platform) {
-		return \Extras\Types\Phone::fromJson($value);
+		return \Extras\Types\Phone::decode($value);
 	}
 
-	public function convertToDatabaseValue(Extras\Types\Phone $value, AbstractPlatform $platform) {
+	public function convertToDatabaseValue($value, AbstractPlatform $platform) {
 		return $value->encode();
 	}
 /*

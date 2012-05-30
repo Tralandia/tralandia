@@ -25,4 +25,8 @@ class Phone extends BaseType {
 		return new self($data[self::ORIGINAL], isset($data[self::COUNTRY]) ? $data[self::COUNTRY] : NULL);
 	}
 
+	public function __toString() {
+		return (string)$this->data[self::ORIGINAL];
+	}
+
 }
