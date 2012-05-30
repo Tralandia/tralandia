@@ -331,3 +331,7 @@ $.widget("ui.multiselect", {
 
 
 })(jQuery);
+
+$(function() {
+	$(".multiselect").multiselect();
+});

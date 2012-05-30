@@ -9,6 +9,8 @@ parameters:
 					- admin/_bootstrap.less
 			autopilot:
 				js: 
+					- admin/admin.js
+					- admin/main.js
 					- autopilot/autopilot.js
 				css: autopilot/_bootstrap.less
 			nette:
@@ -67,10 +69,8 @@ parameters:
 			'Admin:Ap':
 				- %webloader.packages.jQuery%
 				- %webloader.packages.jQueryCalendar%
-				- %webloader.packages.bootstrap%
 				- %webloader.packages.autopilot%
-				- %webloader.packages.phraseControl%
-				- %webloader.packages.admin%
+				- %webloader.packages.bootstrap%
 
 			Admin: 
 				- %webloader.packages.jQuery%
