@@ -22,7 +22,7 @@ common:
 			type:
 				label: Type
 				mapper: e.id
-				callback: {class: %this%, method: translateColumn, params: type}
+				callback: {class: %this%, method: translateColumn, params: [type, name]}
 			status:
 				label: Status
 				mapper: e.status
