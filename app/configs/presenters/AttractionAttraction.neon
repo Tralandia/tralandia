@@ -10,7 +10,7 @@ common:
 			type:
 				label: Type
 				mapper: e.id
-				callback: {class: %this%, method: translateColumn, params: name}
+				callback: {class: %this%, method: translateColumn, params: [type, name]}
 			name:
 				label: Name
 				mapper: e.id
@@ -18,7 +18,7 @@ common:
 			description:
 				label: Description
 				mapper: e.id
-				callback: {class: %this%, method: translateColumn, params: name}
+				callback: {class: %this%, method: translateColumn, params: description}
 			country:
 				label: Country
 				mapper: e.id
