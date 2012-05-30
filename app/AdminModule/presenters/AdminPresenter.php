@@ -217,14 +217,23 @@ class AdminPresenter extends BasePresenter {
 
 				
 				if (isset($column->callback)) {
-					$column->callback->class == '%this%' ? $column->callback->class = $this : $column->callback->class;
-					// debug($column->callback);
 
+					if(!isset($column->callback->class)) $column->callback->class = $this;
+					if(isset($column->callback->params)) {
+						if(is_string($column->callback->params)) {
+							if($column->callback->params == '%this%') $column->callback->params = $this;
+						} else {
+							$column->callback->params = iterator_to_array($column->callback->params);
+							if(reset($column->callback->params) == '%this%') {
+								$t = array_shift($column->callback->params);
+								$column->callback->params = array($this) + $column->callback->params;
+							}
+						}
+					}
 					$alias->formatCallback[] = new \DataGrid\Callback(
 						$column->callback->class,
 						$column->callback->method,
-						$this,
-						isset($column->callback->params) ? $column->callback->params : NULL
+						$column->callback->params
 					);
 				}
 			}
@@ -277,28 +286,56 @@ class AdminPresenter extends BasePresenter {
 
 		$renderer = $grid->getRenderer();
 		$renderer->wrappers['datagrid']['container'] = 'table class="datagrid '.$gridSettings->addClass.'"';
-		$renderer->onActionRender[] = callback($this, 'onActionRender');
+		// $renderer->onActionRender[] = callback($this, 'onActionRender');
 		
 		return $grid;
 	}
 
-	public function onActionRender() {
-		//debug(func_get_args());
+	public function toMany($value, $row, $params) {
+		list($propertyName, $targetPropertyName, $separator) = $params[0];
+		if(!$separator) $separator = ', ';
+		$entity = $row->getEntity();
+		$return = array();
+		foreach ($entity->$propertyName as $key => $value) {
+			if($targetPropertyName instanceof \Traversable) {
+				$return[] = $value->{$targetPropertyName[0]}->{$targetPropertyName[1]};
+			} else {
+				$return[] = $value->{$targetPropertyName};
+			}
+		}
+
+		return implode($return, $separator);
+	}
+
+	public function translateToMany($value, $row, $params) {
+		list($propertyName, $targetPropertyName, $separator) = $params[0];
+		if(!$separator) $separator = ', ';
+		$entity = $row->getEntity();
+		$return = array();
+		foreach ($entity->$propertyName as $key => $value) {
+			if($targetPropertyName instanceof \Traversable) {
+				$return[] = $this->translate($value->{$targetPropertyName[0]}->{$targetPropertyName[1]});
+			} else {
+				$return[] = $this->translate($value->{$targetPropertyName});
+			}
+		}
+
+		return implode($return, $separator);
 	}
 
 	public function pattern($value, $row, $params = null) {
-		$params = $params[1];
+		$params = $params[0];
 		return preg_replace_callback('/%([\w]*)%/', function($matches) use ($row) {
 			return isset($row[$matches[1]]) ? $row[$matches[1]] : $matches[0];
 		}, $params->pattern);
 	}
 
-	public function translateColumn($value, $row, $params) {
-		$key = $params[1];
+	public function translateColumn($value, $row, $key) {
 		// debug(func_get_args());
+		$key = $key[0];
 		$entity = $row->getEntity();
-		if($key instanceof \Traversable) {
-			foreach ($key as $key => $value) {
+		if(is_array($key) || $key instanceof \Traversable) {
+			foreach ($key as $value) {
 				$entity = $entity->{$value};
 			}
 		} else {
