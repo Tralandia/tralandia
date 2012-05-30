@@ -69,6 +69,7 @@ parameters:
 				- %webloader.packages.jQueryCalendar%
 				- %webloader.packages.bootstrap%
 				- %webloader.packages.autopilot%
+				- %webloader.packages.phraseControl%
 				- %webloader.packages.admin%
 
 			Admin: 
