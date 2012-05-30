@@ -15,32 +15,32 @@ common:
 			name:
 				label: Name
 				mapper: e.id
-				callback: {Entity\Log\Systemmethod: translateColumn, params: name}
+				callback: {method: translateColumn, params: name}
 			slug:
 				label: Slug
 				mapper: e.slug
 			type:
 				label: Type
 				mapper: e.id
-				callback: {Entity\Log\Systemmethod: translateColumn, params: [type, name]}
+				callback: {method: translateColumn, params: [type, name]}
 			status:
 				label: Status
 				mapper: e.status
-			# languages:
-			# 	label: Languages
-			# 	mapper: e.id
-			# 	callback: {Entity\Log\Systemmethod: translateColumn, params: [type, name]}
+			languages:
+				label: Languages
+				mapper: e.id
+				callback: {method: translateToMany, params: [languages, [name, id], ', ']}
 
 
 
 			# nameOfficial:
 			# 	label: NameOfficial
 			# 	mapper: e.id
-			# 	callback: {Entity\Log\Systemmethod: translateColumn, params: name}
+			# 	callback: {class: %this%, method: translateColumn, params: name}
 			# nameShort:
 			# 	label: NameShort
 			# 	mapper: e.id
-			# 	callback: {Entity\Log\Systemmethod: translateColumn, params: name}
+			# 	callback: {class: %this%, method: translateColumn, params: name}
 			# parentId:
 			# 	label: ParentId
 			# 	mapper: e.parentId
@@ -181,7 +181,7 @@ common:
 					type: select
 					callback:
 						method: getPairs
-						params: [id, [name, id]]
+						arguments: [id, [name, id]]
 			nameOfficial:
 				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:"
 				label: Official Name
@@ -340,7 +340,7 @@ common:
 				class: span6
 				startNewRow: TRUE
 				validation:
-					- [addCondition, FILLED]
+					- [addCondition, MAX_LENGTH, 5]
 					- [addRule, URL, 'Must be a valid URL or leave empty.']
 			facebookGroup:
 				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityContactContact,cascade:"
