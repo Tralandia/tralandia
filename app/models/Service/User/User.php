@@ -10,6 +10,22 @@ class User extends \Service\BaseService {
 	public function setPassword($password) {
 		$this->getMainEntity()->password = md5($password);
 	}
+
+	public function getIdentity() {
+		$identity = array();
+
+		$identity = iterator_to_array($this->getMainEntity());
+		$identity['homePage'] = NULL;
+		foreach ($this->roles as $role) {
+			if($role->homePage) {
+				$identity['homePage'] = $role->homePage;
+				continue;
+			}
+		}
+		unset($identity['password']);
+
+		return $identity;
+	}
 	
 	public static function merge() {
 		$users = func_get_args();

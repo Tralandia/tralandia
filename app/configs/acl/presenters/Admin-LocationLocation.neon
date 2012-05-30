@@ -1,5 +1,5 @@
 list:
-	guest: allow
+	guest: deny
 	visitor: deny
 	potentialowner: deny
 	owner: deny
@@ -10,7 +10,7 @@ list:
 	admin: deny
 	
 edit:
-	guest: allow
+	guest: deny
 	visitor: deny
 	potentialowner: deny
 	owner: deny
@@ -21,7 +21,7 @@ edit:
 	admin: deny
 	
 add:
-	guest: allow
+	guest: deny
 	visitor: deny
 	potentialowner: deny
 	owner: deny

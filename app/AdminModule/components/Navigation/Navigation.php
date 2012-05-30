@@ -11,6 +11,7 @@ class Navigation extends BaseControl {
 
 	protected $navigation;
 	protected $autopilotRegime;
+	public $user;
 
 	public function render() {
 		$template = $this->template;
@@ -61,7 +62,10 @@ class Navigation extends BaseControl {
 
 	public function extendNavigation() {
 		$navigation = $this->getNavigation();
-		$navigation->right->account->label = 'User Name';
+		if($this->user->isLoggedIn()) {
+			$identity = $this->user->getIdentity();
+			$navigation->right->account->label = $identity->login;
+		} 
 	}
 
 	private function loadNavigation() {

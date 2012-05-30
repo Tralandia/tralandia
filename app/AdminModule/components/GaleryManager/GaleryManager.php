@@ -6,6 +6,12 @@ use BaseModule\Components\BaseControl;
 class GaleryManager extends BaseControl {
 
 	public $page;
+	protected $upledHendler;
+
+	public function __construct() {
+		parent::__construct();
+		$this->upledHendler = new \FileUpload\Handler;
+	}
 
 	/**
 	 * Renders manager.
@@ -40,8 +46,12 @@ class GaleryManager extends BaseControl {
 		}
 	}
 
-	public function handleImageUpload($file) {
+	public function handleUploadImage($file) {
 		$this->invalidateControl();
+		debug($this->upledHendler->getFilesInfo());
+		//debug($this->presenter->getRequest()->getFiles());
+		$upload_handler = new \UploadHandler();
+		$upload_handler->post();
 		try {
 			$this->getModel('image')->save($file, $this->page);
 			$this->getPresenter()->getPayload()->success = true;

@@ -450,112 +450,115 @@ class Reflector extends Nette\Object {
 			$container = $form->addContainer($container);
 		}
 
-		foreach ($mask->fields as $propertyName => $property) {
-			unset($ui, $control, $validators, $association);
-			// \Nette\Diagnostics\Debugger::timer($propertyName);
+		if(isset($mask->fields)) {
 
-			$ui = $property->ui;
-			$control = $container->{'add' . $ui->control->type}(
-				$propertyName,
-				Html::el('b')->add($ui->label->name.':')
-			);
+			foreach ($mask->fields as $propertyName => $property) {
+				unset($ui, $control, $validators, $association);
+				// \Nette\Diagnostics\Debugger::timer($propertyName);
+
+				$ui = $property->ui;
+				$control = $container->{'add' . $ui->control->type}(
+					$propertyName,
+					Html::el('b')->add($ui->label->name.':')
+				);
 
 
-			if(isset($ui->validation)) {
-				foreach ($ui->validation as $key => $value) {
-					$value = iterator_to_array($value);
-					$method = array_shift($value);
-					if(in_array($value[0], array('PATTERN', 'EQUAL', 'IS_IN', 'VALID', 'MAX_FILE_SIZE', 'MIME_TYPE', 'IMAGE'))) {
-						$value[0] = constant('\Nette\Application\UI\Form::'.$value[0]);
-					}
-					$t = call_user_func_array(array($control, $method), $value);
-				}
-			}
-
-			foreach ($ui->controlOptions as $optionKey => $option) {
-				$control->setOption($optionKey, $option);
-			}
-			
-			if(isset($ui->class)) {
-				$control->setOption('class', $ui->class);
-			}
-			if(isset($ui->addClass)) {
-				$control->setOption('class', $control->getOption('class') . ' ' . $ui->addClass);
-			}
-
-			if(isset($ui->label->class)) {
-				$control->getLabelPrototype()->addClass($ui->label->class);
-			}
-
-			if(isset($ui->description)) {
-				$control->getLabelPrototype()->addAttributes(array(
-					'data-title' => $ui->description->title,
-					'data-content' => $ui->description->content,
-					'rel' => 'popover',
-				));
-			}
-
-			if(isset($ui->control->class)) {
-				$control->getControlPrototype()->class($ui->control->class);
-			}
-			if(isset($ui->control->addClass)) {
-				$control->getControlPrototype()->addClass($ui->control->addClass);
-			}
-
-			if(isset($ui->control->disabled)) $control->setDisabled($ui->control->disabled);
-			
-			if ($control instanceof \Extras\Forms\Controls\AdvancedSelectBox 
-				|| $control instanceof \Extras\Forms\Controls\AdvancedCheckBoxList
-				|| $control instanceof \Nette\Forms\Controls\MultiSelectBox) 
-			{
-				// $targetEntity = $property->targetEntity;
-				if (isset($ui->control->callback)) {
-					// data volane cez callback
-					// debug($ui->control->callback);
-					$items = call_user_func_array($ui->control->callback->cb, (array) $ui->control->callback->arguments);
-				} elseif (isset($ui->control->options)) {
-					// data volane cez options
-					$items = $ui->control->options;
-				} else {
-					throw new \Exception("Callback alebo options v `{$classReflection->getConstant('MAIN_ENTITY_NAME')} - {$propertyName}` nie sú validné");
-				}
-				if($control instanceof \Nette\Forms\Controls\SelectBox) {
-					foreach ($items as $key => $value) {
-						if($value instanceof \Entity\Dictionary\Phrase || $value instanceof \Service\Dictionary\Phrase) {
-							$value = $this->presenter->translate($value);
+				if(isset($ui->validation)) {
+					foreach ($ui->validation as $key => $value) {
+						$value = iterator_to_array($value);
+						$method = array_shift($value);
+						if(in_array($value[0], array('PATTERN', 'EQUAL', 'IS_IN', 'VALID', 'MAX_FILE_SIZE', 'MIME_TYPE', 'IMAGE'))) {
+							$value[0] = constant('\Nette\Application\UI\Form::'.$value[0]);
 						}
-						$item = Html::el('option')->setText((string) $value)->setValue($key);
-						$attributes = array();
-						if($control->getOption('inlineEditing')) {
-							$inlineEditingHref = $control->getOption('inlineEditing')->href;
-							$attributes['data-editLink'] = $inlineEditingHref->setParameter('id', $key);
-						}
-						if($control->getOption('inlineDeleting')) {
-							$inlineDeletingHref = $control->getOption('inlineDeleting')->href;
-							$attributes['data-deleteLink'] = $inlineDeletingHref->setParameter('id', $key);
-						}
-						if(count($attributes)) $item->addAttributes($attributes);
-						$items[$key] = $item;
+						$t = call_user_func_array(array($control, $method), $value);
 					}
 				}
-				$control->setItems($items instanceof \Traversable ? iterator_to_array($items) : $items);
 
-				if(isset($ui->control->prompt)) {
-					$control->setPrompt($ui->control->prompt);
+				foreach ($ui->controlOptions as $optionKey => $option) {
+					$control->setOption($optionKey, $option);
+				}
+				
+				if(isset($ui->class)) {
+					$control->setOption('class', $ui->class);
+				}
+				if(isset($ui->addClass)) {
+					$control->setOption('class', $control->getOption('class') . ' ' . $ui->addClass);
 				}
 
-			}
+				if(isset($ui->label->class)) {
+					$control->getLabelPrototype()->addClass($ui->label->class);
+				}
 
-			if($control instanceof \Extras\Forms\Controls\AdvancedJson) {
-				$structure = $this->getJsonStructure($mask->entityReflection);
-				$control->setStructure((array) $structure[$ui->name]);
-			}
+				if(isset($ui->description)) {
+					$control->getLabelPrototype()->addAttributes(array(
+						'data-title' => $ui->description->title,
+						'data-content' => $ui->description->content,
+						'rel' => 'popover',
+					));
+				}
 
-			if($control instanceof \Extras\Forms\Controls\AdvancedTable) {
-				$control->setColumns($ui->control->columns);
-				$control->setRows($ui->control->rows);
+				if(isset($ui->control->class)) {
+					$control->getControlPrototype()->class($ui->control->class);
+				}
+				if(isset($ui->control->addClass)) {
+					$control->getControlPrototype()->addClass($ui->control->addClass);
+				}
+
+				if(isset($ui->control->disabled)) $control->setDisabled($ui->control->disabled);
+				
+				if ($control instanceof \Extras\Forms\Controls\AdvancedSelectBox 
+					|| $control instanceof \Extras\Forms\Controls\AdvancedCheckBoxList
+					|| $control instanceof \Nette\Forms\Controls\MultiSelectBox) 
+				{
+					// $targetEntity = $property->targetEntity;
+					if (isset($ui->control->callback)) {
+						// data volane cez callback
+						// debug($ui->control->callback);
+						$items = call_user_func_array($ui->control->callback->cb, (array) $ui->control->callback->arguments);
+					} elseif (isset($ui->control->options)) {
+						// data volane cez options
+						$items = $ui->control->options;
+					} else {
+						throw new \Exception("Callback alebo options v `{$classReflection->getConstant('MAIN_ENTITY_NAME')} - {$propertyName}` nie sú validné");
+					}
+					if($control instanceof \Nette\Forms\Controls\SelectBox) {
+						foreach ($items as $key => $value) {
+							if($value instanceof \Entity\Dictionary\Phrase || $value instanceof \Service\Dictionary\Phrase) {
+								$value = $this->presenter->translate($value);
+							}
+							$item = Html::el('option')->setText((string) $value)->setValue($key);
+							$attributes = array();
+							if($control->getOption('inlineEditing')) {
+								$inlineEditingHref = $control->getOption('inlineEditing')->href;
+								$attributes['data-editLink'] = $inlineEditingHref->setParameter('id', $key);
+							}
+							if($control->getOption('inlineDeleting')) {
+								$inlineDeletingHref = $control->getOption('inlineDeleting')->href;
+								$attributes['data-deleteLink'] = $inlineDeletingHref->setParameter('id', $key);
+							}
+							if(count($attributes)) $item->addAttributes($attributes);
+							$items[$key] = $item;
+						}
+					}
+					$control->setItems($items instanceof \Traversable ? iterator_to_array($items) : $items);
+
+					if(isset($ui->control->prompt)) {
+						$control->setPrompt($ui->control->prompt);
+					}
+
+				}
+
+				if($control instanceof \Extras\Forms\Controls\AdvancedJson) {
+					$structure = $this->getJsonStructure($mask->entityReflection);
+					$control->setStructure((array) $structure[$ui->name]);
+				}
+
+				if($control instanceof \Extras\Forms\Controls\AdvancedTable) {
+					$control->setColumns($ui->control->columns);
+					$control->setRows($ui->control->rows);
+				}
+				// debug($propertyName, \Nette\Diagnostics\Debugger::timer($propertyName));
 			}
-			// debug($propertyName, \Nette\Diagnostics\Debugger::timer($propertyName));
 		}
 
 		foreach ($mask->buttons as $buttonName => $button) {

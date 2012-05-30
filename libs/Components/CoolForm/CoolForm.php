@@ -47,9 +47,9 @@ class CoolForm extends Form {
 		}
 	}
 
-	public function getUser() {
-		return $this->em->find('User', $this->parent->user->id);
-	}
+	// public function getUser() {
+	// 	return $this->em->find('User', $this->parent->user->id);
+	// }
 
 	public function getHtmlId() {
 		return $this->getElementPrototype()->getId();

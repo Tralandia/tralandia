@@ -401,6 +401,7 @@ abstract class Service extends Nette\Object implements IService {
 	 */
 	public function setDefaultsFormData($form, $mask) {
 		$data = array();
+		if(!isset($mask->fields)) return $data;
 		foreach ($mask->fields as $property) {
 			$ui = $property->ui;
 			$name = $ui->name;
