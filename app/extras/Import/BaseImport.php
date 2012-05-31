@@ -367,23 +367,6 @@ class BaseImport {
 		return $translation;
 	}
 
-	protected function createContact($slug, $value, $params = array()) {
-
-		if (!$value || strlen($value) == 0) {
-			throw new \Nette\UnexpectedValueException('BaseImport::createContact - no value received');
-		}
-
-		$contact = \Service\Contact\Contact::get();
-		$contact->type = \Service\Contact\Type::getBySlug($slug);
-		$contact->value = $value;
-
-		foreach ($params as $key => $value) {
-			$contact->$key = $value;
-		}
-
-		return $contact;
-	}
-
 	public function getSections() {
 		return $this->sections;
 	}

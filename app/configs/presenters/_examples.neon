@@ -13,6 +13,15 @@
 					#- [addRule, [\Service\Dictionary\Language, validateUniqueIso], 'ISO code must be unique.']
 
 
+
+			languages:
+				label: Languages
+				mapper: e.id
+				callback: {method: translateToMany, params: [languages, [name, id], ', ']}
+
+
+
+
 			country:
 				class: span6
 				label: Country

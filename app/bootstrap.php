@@ -55,7 +55,7 @@ $serivceContainer->createService();
 $serivceContainer->createList();
 // @todo toto niekam schovat
 require_once APP_DIR . '/extras/EntityAnnotation.php';
-Extras\Models\Service::$translator = $container->translator;
+#Extras\Models\Service::$translator = $container->translator;
 
 // Setup router // TODO: presunut do config.neon
 $container->application->onStartup[] = function() use ($container) {

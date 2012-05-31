@@ -256,8 +256,8 @@ class Location extends \Entity\BaseEntityDetails {
 	protected $wikipediaLink;
 
 	/**
-	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Entity\Contact\Contact", mappedBy="location", cascade={"persist", "remove"})
+	 * @var contacts
+	 * @ORM\Column(type="contacts", nullable=true)
 	 */
 	protected $contacts;
 
@@ -301,7 +301,6 @@ class Location extends \Entity\BaseEntityDetails {
 		$this->outgoingLocations = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->currencies = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->languages = new \Doctrine\Common\Collections\ArrayCollection;
-		$this->contacts = new \Doctrine\Common\Collections\ArrayCollection;
 	}
 		
 	/**
@@ -1205,33 +1204,26 @@ class Location extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @param \Entity\Contact\Contact
+	 * @param \Extras\Types\Contacts
 	 * @return \Entity\Location\Location
 	 */
-	public function addContact(\Entity\Contact\Contact $contact) {
-		if(!$this->contacts->contains($contact)) {
-			$this->contacts->add($contact);
-		}
-		$contact->setLocation($this);
+	public function setContacts(\Extras\Types\Contacts $contacts) {
+		$this->contacts = $contacts;
 
 		return $this;
 	}
 		
 	/**
-	 * @param \Entity\Contact\Contact
 	 * @return \Entity\Location\Location
 	 */
-	public function removeContact(\Entity\Contact\Contact $contact) {
-		if($this->contacts->contains($contact)) {
-			$this->contacts->removeElement($contact);
-		}
-		$contact->unsetLocation();
+	public function unsetContacts() {
+		$this->contacts = NULL;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Contact\Contact
+	 * @return \Extras\Types\Contacts|NULL
 	 */
 	public function getContacts() {
 		return $this->contacts;

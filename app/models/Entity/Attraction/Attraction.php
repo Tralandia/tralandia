@@ -2,7 +2,6 @@
 
 namespace Entity\Attraction;
 
-use Entity\Contact;
 use Entity\Dictionary;
 use Entity\Location;
 use Entity\Medium;
@@ -56,8 +55,8 @@ class Attraction extends \Entity\BaseEntityDetails {
 	protected $longitude;
 
 	/**
-	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Entity\Contact\Contact", mappedBy="attraction", cascade={"persist", "remove"})
+	 * @var contacts
+	 * @ORM\Column(type="contacts")
 	 */
 	protected $contacts;
 
@@ -74,7 +73,6 @@ class Attraction extends \Entity\BaseEntityDetails {
 	public function __construct() {
 		parent::__construct();
 
-		$this->contacts = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->media = new \Doctrine\Common\Collections\ArrayCollection;
 	}
 		
@@ -199,33 +197,17 @@ class Attraction extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @param \Entity\Contact\Contact
+	 * @param \Extras\Types\Contacts
 	 * @return \Entity\Attraction\Attraction
 	 */
-	public function addContact(\Entity\Contact\Contact $contact) {
-		if(!$this->contacts->contains($contact)) {
-			$this->contacts->add($contact);
-		}
-		$contact->setAttraction($this);
+	public function setContacts(\Extras\Types\Contacts $contacts) {
+		$this->contacts = $contacts;
 
 		return $this;
 	}
 		
 	/**
-	 * @param \Entity\Contact\Contact
-	 * @return \Entity\Attraction\Attraction
-	 */
-	public function removeContact(\Entity\Contact\Contact $contact) {
-		if($this->contacts->contains($contact)) {
-			$this->contacts->removeElement($contact);
-		}
-		$contact->unsetAttraction();
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Contact\Contact
+	 * @return \Extras\Types\Contacts|NULL
 	 */
 	public function getContacts() {
 		return $this->contacts;

@@ -137,10 +137,10 @@ class ImportLocations extends BaseImport {
 			$location->population = $x['population'];
 			$location->phonePrefix = $x['phone_prefix'];
 			
-			if (strlen($x['fb_group'])) $location->facebookGroup = $this->createContact('Url', $x['fb_group']);
+			if (strlen($x['fb_group'])) $location->facebookGroup = new \Extras\Types\Url($x['fb_group']);
 			$location->capitalCity = $x['capital_city'];
 
-			if (strlen($x['phone_number_emergency'])) $location->phoneNumberEmergency = $this->createContact('Phone', $x['phone_number_emergency']);
+			if (strlen($x['phone_number_emergency'])) $location->phoneNumberEmergency = ew \Extras\Types\Phone($x['phone_number_emergency']);
 			if (strlen($x['phone_number_police'])) $location->phoneNumberPolice = $this->createContact('Phone', $x['phone_number_police']);
 			if (strlen($x['phone_number_medical'])) $location->phoneNumberMedical = $this->createContact('Phone', $x['phone_number_medical']);
 			if (strlen($x['phone_number_fire'])) $location->phoneNumberFire = $this->createContact('Phone', $x['phone_number_fire']);
