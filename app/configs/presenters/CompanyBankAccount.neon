@@ -14,7 +14,6 @@ common:
 			company:
 				label: Company
 				mapper: e.id
-				# callback: {Entity\Log\Systemmethod: translateColumn, params: name} # zle zapisane
 				callback: {class: %this%, method: getAttributeForGrid, params: [company, name]}
 			bankName:
 				label: BankName
