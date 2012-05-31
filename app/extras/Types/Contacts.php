@@ -13,23 +13,30 @@ class Contacts extends \Nette\Object {
 
 	public function encode() {
 		$contacts = array();
-		foreach ($this->contacts as $contact) {
-			$contactClassName = get_class($contact);
-			$contacts[] = array(
-				'className' => $contactClassName,
-				'data' => $contact->encode(),
-			);
+		if (is_array($this->contacts)) {
+			foreach ($this->contacts as $contact) {
+				$contactClassName = get_class($contact);
+				$contacts[] = array(
+					'className' => $contactClassName,
+					'data' => $contact->encode(),
+				);
+			}
+			return \Nette\Utils\Json::encode($contacts);			
+		} else {
+			return NULL;
 		}
-		return \Nette\Utils\Json::encode($contacts);
 	}
 
 	public static function decode($data) {
 		$data = \Nette\Utils\Json::decode($data, TRUE);
 		$contacts = new self();
-		foreach ($data as $contact) {
-			$contacts->add(new {$contact['className']}($contact['data']));
+		if (is_array($contacts)) {
+			foreach ($data as $contact) {
+				$className = $contact['className'];
+				$contacts->add(new $className($contact['data']));
+			}
 		}
-		return new self($data);
+		return $contacts;
 	}
 
 	public function __toString() {

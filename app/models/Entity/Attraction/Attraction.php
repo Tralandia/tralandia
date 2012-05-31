@@ -44,19 +44,19 @@ class Attraction extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var latlong
-	 * @ORM\Column(type="latlong")
+	 * @ORM\Column(type="latlong", nullable=true)
 	 */
 	protected $latitude;
 
 	/**
 	 * @var latlong
-	 * @ORM\Column(type="latlong")
+	 * @ORM\Column(type="latlong", nullable=true)
 	 */
 	protected $longitude;
 
 	/**
 	 * @var contacts
-	 * @ORM\Column(type="contacts")
+	 * @ORM\Column(type="contacts", nullable=true)
 	 */
 	protected $contacts;
 

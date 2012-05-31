@@ -96,25 +96,25 @@ class User extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var email
-	 * @ORM\Column(type="email")
+	 * @ORM\Column(type="email", nullable=true)
 	 */
 	protected $invoicingEmail;
 
 	/**
 	 * @var phone
-	 * @ORM\Column(type="phone")
+	 * @ORM\Column(type="phone", nullable=true)
 	 */
 	protected $invoicingPhone;
 
 	/**
 	 * @var url
-	 * @ORM\Column(type="url")
+	 * @ORM\Column(type="url", nullable=true)
 	 */
 	protected $invoicingUrl;
 
 	/**
 	 * @var address
-	 * @ORM\Column(type="address")
+	 * @ORM\Column(type="address", nullable=true)
 	 */
 	protected $invoicingAddress;
 
@@ -741,5 +741,109 @@ class User extends \Entity\BaseEntityDetails {
 	 */
 	public function getTasks() {
 		return $this->tasks;
+	}
+		
+	/**
+	 * @param boolean
+	 * @return \Entity\User\User
+	 */
+	public function setSubscribed($subscribed) {
+		$this->subscribed = $subscribed;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\User\User
+	 */
+	public function unsetSubscribed() {
+		$this->subscribed = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return boolean|NULL
+	 */
+	public function getSubscribed() {
+		return $this->subscribed;
+	}
+		
+	/**
+	 * @param boolean
+	 * @return \Entity\User\User
+	 */
+	public function setBanned($banned) {
+		$this->banned = $banned;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\User\User
+	 */
+	public function unsetBanned() {
+		$this->banned = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return boolean|NULL
+	 */
+	public function getBanned() {
+		return $this->banned;
+	}
+		
+	/**
+	 * @param boolean
+	 * @return \Entity\User\User
+	 */
+	public function setFull($full) {
+		$this->full = $full;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\User\User
+	 */
+	public function unsetFull() {
+		$this->full = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return boolean|NULL
+	 */
+	public function getFull() {
+		return $this->full;
+	}
+		
+	/**
+	 * @param boolean
+	 * @return \Entity\User\User
+	 */
+	public function setSpam($spam) {
+		$this->spam = $spam;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\User\User
+	 */
+	public function unsetSpam() {
+		$this->spam = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return boolean|NULL
+	 */
+	public function getSpam() {
+		return $this->spam;
 	}
 }

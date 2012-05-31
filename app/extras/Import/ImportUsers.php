@@ -235,9 +235,9 @@ class ImportUsers extends BaseImport {
 			$user->invoicingFirstName = $x['client_name'];
 			$user->invoicingLastName = '';
 
-			if($x['client_email']) $user->invoicingEmail = \Extras\Types\Email($x['client_email']);
-			if($x['client_phone']) $user->invoicingPhone = \Extras\Types\Phone($x['client_phone']);
-			if($x['client_url']) $user->invoicingUrl = \Extras\Types\Url($x['client_url']);
+			if($x['client_email']) $user->invoicingEmail = new \Extras\Types\Email($x['client_email']);
+			if($x['client_phone']) $user->invoicingPhone = new \Extras\Types\Phone($x['client_phone']);
+			if($x['client_url']) $user->invoicingUrl = new \Extras\Types\Url($x['client_url']);
 
 			$user->invoicingAddress = new \Extras\Types\Address(array(
 				'address' => array_filter(array($x['client_address'], $x['client_address2'])),

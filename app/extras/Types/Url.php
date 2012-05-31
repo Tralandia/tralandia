@@ -25,4 +25,8 @@ class Url extends \Nette\Http\Url implements IContact {
 		}
 	}
 
+	public function encode() {
+		return \Nette\Utils\Json::encode(array('url' => $this->__toString()));
+	}
+
 }

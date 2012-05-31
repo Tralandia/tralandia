@@ -147,7 +147,7 @@ class ImportRentals extends BaseImport {
 			$x['contact_phone'] = @unserialize($x['contact_phone']);
 			if (is_array($x['contact_phone'])) {
 				foreach ($x['contact_phone'] as $key => $value) {
-					$contacts->add(new \Extras\Types\Phone(implode('', $value);));
+					$contacts->add(new \Extras\Types\Phone(implode('', $value)));
 				}
 			}
 
