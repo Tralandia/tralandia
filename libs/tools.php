@@ -51,6 +51,37 @@ function rrmdir($dir) {
 	}
 }
 
+/**
+ * PHP workaround for direct usage of created class
+ *
+ * <code>
+ *  // echo new Person()->name; // does not work in PHP
+ *  echo c(new Person)->name;
+ * </code>
+ *
+ * @author   Jan Tvrdík
+ * @param    object
+ * @return   object
+ */
+function c($instance) {
+	return $instance;
+}
+
+/**
+ * PHP workaround for direct usage of cloned instances
+ *
+ * <code>
+ *  echo cl($startTime)->modify('+1 day')->format('Y-m-d');
+ * </code>
+ *
+ * @author   Jan Tvrdík
+ * @param    object
+ * @return   object
+ */
+function cl($instance) {
+	return clone $instance;
+}
+
 class Tools {
 
 	public static $dateFormat = '%d.%m.%Y';

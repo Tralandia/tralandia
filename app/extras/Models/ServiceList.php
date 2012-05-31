@@ -196,11 +196,42 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 	 * return array
 	 */
 	public static function getPairs($keyName, $valueName = NULL, $criteria = NULL, $orderBy = NULL, $limit = NULL, $offset = NULL) {
+		$serviceList = self::_getPairs($keyName, $valueName, $criteria, $orderBy, $limit, $offset);
+		$return = array();
+		// debug($serviceList);
+		foreach($serviceList as $item) {
+			$key = array_shift($item);
+			$value = array_shift($item);
+
+			$return[$key] = $value;
+		}
+
+		return $return;
+	}
+
+	/** 
+	 * return array
+	 */
+	public static function getTranslatedPairs($keyName, $valueName, $criteria = NULL, $orderBy = NULL, $limit = NULL, $offset = NULL) {
+		$valueName = array($valueName, 'id');
+		$serviceList = self::_getPairs($keyName, $valueName, $criteria, $orderBy, $limit, $offset);
+
+		$translator = Service::getTranslator();
+		$return = array();
+
+		foreach($serviceList as $item) {
+			$return[$item['key']] = $translator->translate($item['value']);
+		}
+
+		return $return;
+	}
+ 
+	protected static function _getPairs($keyName, $valueName = NULL, $criteria = NULL, $orderBy = NULL, $limit = NULL, $offset = NULL) {
 		$valuePropertyName = NULL;
 		if(is_array($valueName) || $valueName instanceof \Traversable) {
-			$valueNameTemp = $valueName;
-			$valueName = next($valueNameTemp);
-			$valuePropertyName = next($valueNameTemp);
+			$valueNameTemp = (array) $valueName;
+			$valueName = array_shift($valueNameTemp);
+			$valuePropertyName = array_shift($valueNameTemp);
 		}
 
 		$entityName = static::getMainEntityName();
@@ -208,15 +239,10 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 		$serviceList = new static;
 		$qb = $serviceList->getEntityManager()->createQueryBuilder();
 
-		if($valuePropertyName) {
-			$select = array('e.'.$keyName, 'p.'.$valuePropertyName);
-			$qb->join('e.'.$valueName, 'p');
-		} else {
-			$select = array('e.'.$keyName, 'e.'.$valueName);
-		}
-
-		$qb->select($select)
+		$qb->select($valuePropertyName ? array('e.'.$keyName.' AS key', 'p.'.$valuePropertyName.' AS value') : array('e.'.$keyName.' AS key', 'e.'.$valueName.' AS value'))
 			->from($entityName, 'e');
+
+		if($valuePropertyName) $qb->join('e.'.$valueName, 'p');
 
 		if(is_array($criteria) || $criteria instanceof \Traversable) {
 			foreach (static::pripareCriteria($criteria) as $key => $value) {
@@ -240,18 +266,8 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 
 
 		$serviceList->setDataSource($qb);
-		// debug($serviceList);
-		return self::_getPairs($serviceList, $keyName, $valuePropertyName ? : $valueName);
-	}
- 
-	protected static function _getPairs($serviceList, $key, $value) {
-		$return = array();
-		// $t = true;
-		foreach($serviceList as $itemKey => $item) {
-			// if($t) {debug($item);$t = false;}
-			$return[(isset($item->$key) ? $item->$key : $itemKey)] = ($value ? $item[$value] : $item);
-		}
-		return $return;
+
+		return $serviceList;
 	}
 
 	protected function setList($list) {

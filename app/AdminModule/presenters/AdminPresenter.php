@@ -6,6 +6,7 @@ use Nette\Application as NA,
 	Nette\Environment,
 	Nette\Diagnostics\Debugger,
 	Nette\Utils\Html,
+	Nette\Utils\Strings,
 	Tra\Utils\Arrays,
 	Nette\ArrayHash,
 	Extras\Models\Reflector;
@@ -70,6 +71,7 @@ class AdminPresenter extends BasePresenter {
 		$this->template->form = $form;
 		$this->template->created = $this->service->created;
 		$this->template->updated = $this->service->updated;
+		$this->template->fomatedH1 = $this->formatText($this->settings->h1, $this->service);
 		$this->setRenderMode();
 	}
 
@@ -109,6 +111,13 @@ class AdminPresenter extends BasePresenter {
 		if($this->getPresenter()->isAjax()) {
 			$this->getPresenter()->payload->invalidateParent = true;
 		}
+	}
+
+	public function formatText($text, $serice) {
+		foreach (Strings::matchAll($text, '~%[a-zA-Z]+%~') as $key => $value) {
+
+		}
+		return '';
 	}
 
 
@@ -220,7 +229,7 @@ class AdminPresenter extends BasePresenter {
 					if(isset($column->callback->class)) {
 						if($column->callback->class == '%this%') $column->callback->class = $this;
 					} else {
-						throw new \Exception("Callback pre stlpec $aliasName nema zadefinovany 'class' atribut.");
+						throw new \Exception("Callback pre stlpec '$aliasName' nema zadefinovany 'class' atribut.");
 					}
 					if(isset($column->callback->params)) {
 						if(is_string($column->callback->params)) {
