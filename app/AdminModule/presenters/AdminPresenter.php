@@ -217,8 +217,11 @@ class AdminPresenter extends BasePresenter {
 
 				
 				if (isset($column->callback)) {
-
-					if(!isset($column->callback->class)) $column->callback->class = $this;
+					if(isset($column->callback->class)) {
+						if($column->callback->class == '%this%') $column->callback->class = $this;
+					} else {
+						throw new \Exception("Callback pre stlpec $aliasName nema zadefinovany 'class' atribut.");
+					}
 					if(isset($column->callback->params)) {
 						if(is_string($column->callback->params)) {
 							if($column->callback->params == '%this%') $column->callback->params = $this;
@@ -291,57 +294,38 @@ class AdminPresenter extends BasePresenter {
 		return $grid;
 	}
 
-	public function toMany($value, $row, $params) {
-		list($propertyName, $targetPropertyName, $separator) = $params[0];
+	// public function pattern($value, $row, $params = null) {
+	// 	$params = $params[0];
+	// 	return preg_replace_callback('/%([\w]*)%/', function($matches) use ($row) {
+	// 		return isset($row[$matches[1]]) ? $row[$matches[1]] : $matches[0];
+	// 	}, $params->pattern);
+	// }
+
+
+	public function getAttributeForGrid($value, $row, $params) {
+		$params = $params[0];
+		$propertyName = array_shift($params);
+		$targetPropertyName = array_shift($params);
+		$separator = array_shift($params);
 		if(!$separator) $separator = ', ';
+
 		$entity = $row->getEntity();
 		$return = array();
-		foreach ($entity->$propertyName as $key => $value) {
-			if($targetPropertyName instanceof \Traversable) {
-				$return[] = $value->{$targetPropertyName[0]}->{$targetPropertyName[1]};
-			} else {
+		if($entity->{$propertyName} instanceof \Doctrine\ORM\PersistentCollection) {
+			foreach ($entity->{$propertyName} as $key => $value) {
 				$return[] = $value->{$targetPropertyName};
 			}
-		}
-
-		return implode($return, $separator);
-	}
-
-	public function translateToMany($value, $row, $params) {
-		list($propertyName, $targetPropertyName, $separator) = $params[0];
-		if(!$separator) $separator = ', ';
-		$entity = $row->getEntity();
-		$return = array();
-		foreach ($entity->$propertyName as $key => $value) {
-			if($targetPropertyName instanceof \Traversable) {
-				$return[] = $this->translate($value->{$targetPropertyName[0]}->{$targetPropertyName[1]});
-			} else {
-				$return[] = $this->translate($value->{$targetPropertyName});
-			}
-		}
-
-		return implode($return, $separator);
-	}
-
-	public function pattern($value, $row, $params = null) {
-		$params = $params[0];
-		return preg_replace_callback('/%([\w]*)%/', function($matches) use ($row) {
-			return isset($row[$matches[1]]) ? $row[$matches[1]] : $matches[0];
-		}, $params->pattern);
-	}
-
-	public function translateColumn($value, $row, $key) {
-		// debug(func_get_args());
-		$key = $key[0];
-		$entity = $row->getEntity();
-		if(is_array($key) || $key instanceof \Traversable) {
-			foreach ($key as $value) {
-				$entity = $entity->{$value};
-			}
 		} else {
-			$entity = $entity->{$key};
+			$return[] = $entity->{$propertyName}->{$targetPropertyName};
 		}
-		// debug($entity);
-		return $this->translate($entity->id);
+
+		foreach ($return as $key => $value) {
+			if($value instanceof \Entity\Dictionary\Phrase) {
+				$return[$key] = $this->translate($value);
+			}
+		}
+
+		return implode($separator, $return);
 	}
+
 }
