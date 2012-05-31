@@ -10,15 +10,15 @@ common:
 			country:
 				label: Country
 				mapper: e.id
-				callback: {Entity\Log\Systemmethod: translateColumn, params: [country, name]}
+				callback: {class: %this%, method: getAttributeForGrid, params: [country, name]}
 			type:
 				label: Type
 				mapper: e.id
-				callback: {Entity\Log\Systemmethod: translateColumn, params: [type, name]}
+				callback: {class: %this%, method: getAttributeForGrid, params: [type, name]}
 			name:
 				label: Name
 				mapper: e.id
-				callback: {Entity\Log\Systemmethod: translateColumn, params: name}
+				callback: {class: %this%, method: getAttributeForGrid, params: [name]}
 			# latitude:
 			# 	label: Latitude
 			# 	mapper: e.latitude
@@ -28,14 +28,12 @@ common:
 			
 	form:
 		fields:
-			type:
-				# anotations: "var:Collection,ORMManyToOne:targetEntity:Type"
-				label: Type
-				control: 
-					type: select
-					callback:
-						method: getPairs
-						arguments: [id, [name, id]]
+			# type:
+			# 	# anotations: "var:Collection,ORMManyToOne:targetEntity:Type"
+			# 	label: Type
+			# 	control: 
+			# 		type: select
+			# 		callback: {class: \Service\Attraction\AttractionList, method: translatePairs, params: [id, [name, id]]}
 			name:
 				label: Name
 				control: phrase
@@ -53,15 +51,15 @@ common:
 					addClass: span6
 					callback: {class: \Service\Location\LocationList, method: getPairs, params: [id, [name, id], [type: 3]]}
 				startNewRow: true
-			contacts:
-				# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityCurrency,mappedBy:locations,cascade:"
-				label: Contacts
-				class: span6
-				control: bricksList
-				inlineEditing: ContactContact:edit
-				inlineDeleting: ContactContact:delete
-				inlineCreating: ContactContact:add
-				startNewRow: false
+			# contacts:
+			# 	# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityCurrency,mappedBy:locations,cascade:"
+			# 	label: Contacts
+			# 	class: span6
+			# 	control: bricksList
+			# 	inlineEditing: ContactContact:edit
+			# 	inlineDeleting: ContactContact:delete
+			# 	inlineCreating: ContactContact:add
+			# 	startNewRow: false
 			latitude:
 				label: Latitude
 				control: text

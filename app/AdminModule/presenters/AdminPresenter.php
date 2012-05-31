@@ -313,10 +313,18 @@ class AdminPresenter extends BasePresenter {
 		$return = array();
 		if($entity->{$propertyName} instanceof \Doctrine\ORM\PersistentCollection) {
 			foreach ($entity->{$propertyName} as $key => $value) {
-				$return[] = $value->{$targetPropertyName};
+				if ($targetPropertyName) {
+					$return[] = $value->{$targetPropertyName};
+				} else {
+					$return[] = $value;
+				}
 			}
 		} else {
-			$return[] = $entity->{$propertyName}->{$targetPropertyName};
+			if ($targetPropertyName) {
+				$return[] = $entity->{$propertyName}->{$targetPropertyName};
+			} else {
+				$return[] = $entity->{$propertyName};
+			}
 		}
 
 		foreach ($return as $key => $value) {
