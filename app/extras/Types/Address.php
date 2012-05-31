@@ -2,6 +2,6 @@
 
 namespace Extras\Types;
 
-class Address extends BaseType {
+class Address extends BaseType implements IContact {
 
 }

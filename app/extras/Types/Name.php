@@ -2,7 +2,7 @@
 
 namespace Extras\Types;
 
-class Email extends BaseType implements IContact {
+class Name extends BaseType implements IContact {
 
 	public function __toString() {
 		return $this->data;
