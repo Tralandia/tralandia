@@ -140,35 +140,25 @@ class ImportRentals extends BaseImport {
 
 
 			// Contacts
-			if (strlen($x['contact_name'])) {
-				$rental->addContact($this->createContact('name', $x['contact_name']));
-			}
+			$contacts = new \Extras\Types\Contacts();
+
+			$contacts->add(new \Extras\Types\Name('', '', $x['contact_name']));
 
 			$x['contact_phone'] = @unserialize($x['contact_phone']);
 			if (is_array($x['contact_phone'])) {
 				foreach ($x['contact_phone'] as $key => $value) {
-					$value = implode('', $value);
-					if (strlen($value)) {
-						$rental->addContact($this->createContact('phone', $value));					
-					}
+					$contacts->add(new \Extras\Types\Phone(implode('', $value)));
 				}
 			}
 
-			if(\Nette\Utils\Validators::isEmail($x['contact_email'])) {
-				$rental->addContact($this->createContact('email', $x['contact_email']));
-			}
+			$contacts->add(new \Extras\Types\Email($x['contact_email']));
 
-			if (strlen($x['contact_skype'])) {
-				$rental->addContact($this->createContact('skype', $x['contact_skype']));
-			}
+			$contacts->add(new \Extras\Types\Skype($x['contact_skype']));
 
-			if(\Nette\Utils\Validators::isUrl($x['contact_url'])) {
-				$rental->addContact($this->createContact('url', $x['contact_url']));
-			}
+			$contacts->add(new \Extras\Types\Url($x['contact_url']));
+			$contacts->add(new \Extras\Types\Url($x['url']));
 
-			if(\Nette\Utils\Validators::isUrl($x['url'])) {
-				$rental->addContact($this->createContact('url', $x['url']));
-			}
+			$rental->contacts = $contacts;
 
 			$spokenLanguages = array_unique(array_filter(explode(',', $x['languages_spoken'])));
 			if (is_array($spokenLanguages) && count($spokenLanguages)) {

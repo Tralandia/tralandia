@@ -50,12 +50,6 @@ class BaseImport {
 			),
 			'subsections' => array(),
 		),
-		'contactTypes' => array(
-			'entities' => array(
-				'\Contact\Type' => array(),
-			),
-			'subsections' => array(),
-		),
 		'locations' => array(
 			'entities' => array(
 				'\Location\Type' => array(),
@@ -230,6 +224,7 @@ class BaseImport {
 				$tableName = trim($tableName, '_');
 				$tableName = strtolower($tableName);
 				$r = qNew('select id from '.$tableName.' order by id DESC');
+				debug('select id from '.$tableName.' order by id DESC');
 				while ($x = mysql_fetch_array($r)) {
 					$serviceName = '\Service'.$key2;
 					$s = $serviceName::get($x['id']);
@@ -365,23 +360,6 @@ class BaseImport {
 		$translation->variations = $variations;
 
 		return $translation;
-	}
-
-	protected function createContact($slug, $value, $params = array()) {
-
-		if (!$value || strlen($value) == 0) {
-			throw new \Nette\UnexpectedValueException('BaseImport::createContact - no value received');
-		}
-
-		$contact = \Service\Contact\Contact::get();
-		$contact->type = \Service\Contact\Type::getBySlug($slug);
-		$contact->value = $value;
-
-		foreach ($params as $key => $value) {
-			$contact->$key = $value;
-		}
-
-		return $contact;
 	}
 
 	public function getSections() {

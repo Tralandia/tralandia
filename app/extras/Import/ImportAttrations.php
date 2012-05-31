@@ -66,18 +66,21 @@ class ImportAttractions extends BaseImport {
 			$attraction->longitude = new \Extras\Types\Latlong($x['longitude']);
 			$attraction->oldId = $x['id'];
 
+			$contacts = new \Extras\Types\Contacts();
+
 			if(\Nette\Utils\Validators::isEmail($x['email'])) {
-				$t = $this->createContact('email', $x['email']);
-				$attraction->addContact($t);
+				$contacts->add(new \Extras\Types\Email($x['email']));
 			}
 
 			if (strlen($x['phone'])) {
-				$attraction->addContact($this->createContact('phone', $x['phone']));
+				$contacts->add(new \Extras\Types\Phone($x['phone']));
 			}
 
 			if(\Nette\Utils\Validators::isUrl($x['url'])) {
-				$attraction->addContact($this->createContact('url', $x['url']));
+				$contacts->add(new \Extras\Types\Url($x['url']));
 			}
+
+			$attraction->contacts = $contacts;
 
 			// Media
 			$temp = array_unique(array_filter(explode(',', $x['photos'])));

@@ -2,7 +2,7 @@
 
 namespace Extras\Types;
 
-class Url extends \Nette\Http\Url {
+class Url extends \Nette\Http\Url implements IContact {
 
 	public function __construct($url = NULL) {
 		parent::__construct($url);
@@ -23,6 +23,10 @@ class Url extends \Nette\Http\Url {
 		} else {
 			return $t;			
 		}
+	}
+
+	public function encode() {
+		return \Nette\Utils\Json::encode(array('url' => $this->__toString()));
 	}
 
 }

@@ -15,21 +15,21 @@ common:
 			name:
 				label: Name
 				mapper: e.id
-				callback: {method: translateColumn, params: name}
+				callback: {class: %this%, method: getAttributeForGrid, params: [name]}
 			slug:
 				label: Slug
 				mapper: e.slug
 			type:
 				label: Type
 				mapper: e.id
-				callback: {method: translateColumn, params: [type, name]}
+				callback: {class: %this%, method: getAttributeForGrid, params: [type, name]}
 			status:
 				label: Status
 				mapper: e.status
 			languages:
 				label: Languages
 				mapper: e.id
-				callback: {method: translateToMany, params: [languages, [name, id], ', ']}
+				callback: {class: %this%, method: getAttributeForGrid, params: [languages, name, ', ']}
 			
 	form:
 		fields:

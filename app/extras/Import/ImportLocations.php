@@ -83,8 +83,6 @@ class ImportLocations extends BaseImport {
 			$s->slug = qc('select text from z_en where id = '.$x['name_dic_id']);
 			$s->oldId = $x['id'];
 			$s->save();
-
-			$s->createRoot();
 			//debug($s);
 		}
 	}
@@ -137,14 +135,14 @@ class ImportLocations extends BaseImport {
 			$location->population = $x['population'];
 			$location->phonePrefix = $x['phone_prefix'];
 			
-			if (strlen($x['fb_group'])) $location->facebookGroup = $this->createContact('Url', $x['fb_group']);
+			if (strlen($x['fb_group'])) $location->facebookGroup = new \Extras\Types\Url($x['fb_group']);
 			$location->capitalCity = $x['capital_city'];
 
-			if (strlen($x['phone_number_emergency'])) $location->phoneNumberEmergency = $this->createContact('Phone', $x['phone_number_emergency']);
-			if (strlen($x['phone_number_police'])) $location->phoneNumberPolice = $this->createContact('Phone', $x['phone_number_police']);
-			if (strlen($x['phone_number_medical'])) $location->phoneNumberMedical = $this->createContact('Phone', $x['phone_number_medical']);
-			if (strlen($x['phone_number_fire'])) $location->phoneNumberFire = $this->createContact('Phone', $x['phone_number_fire']);
-			if (strlen($x['wikipedia_link'])) $location->wikipediaLink = $this->createContact('Url', $x['wikipedia_link']);
+			if (strlen($x['phone_number_emergency'])) $location->phoneNumberEmergency = new \Extras\Types\Phone($x['phone_number_emergency']);
+			if (strlen($x['phone_number_police'])) $location->phoneNumberPolice = new \Extras\Types\Phone($x['phone_number_police']);
+			if (strlen($x['phone_number_medical'])) $location->phoneNumberMedical = new \Extras\Types\Phone($x['phone_number_medical']);
+			if (strlen($x['phone_number_fire'])) $location->phoneNumberFire = new \Extras\Types\Phone($x['phone_number_fire']);
+			if (strlen($x['wikipedia_link'])) $location->wikipediaLink = new \Extras\Types\Url($x['wikipedia_link']);
 
 			$location->drivingSide = $x['driving_side'];
 			$location->pricesPizza = new Price($x['prices_pizza']); // @todo - spravit menu, aby som posielal ako entitu / servicu
@@ -157,12 +155,18 @@ class ImportLocations extends BaseImport {
 
 			$location->details = $countryDetails;
 
-			if (strlen($x['skype'])) $location->addContact($this->createContact('Skype', $x['skype']));
-			if (strlen($x['phone'])) $location->addContact($this->createContact('Phone', $x['phone']));
+			$contacts = new \Extras\Types\Contacts();
+
+
+			if (strlen($x['skype'])) $contacts->add(new \Extras\Types\Skype($x['skype']));
+
+			if (strlen($x['phone'])) $contacts->add(new \Extras\Types\Phone($x['phone']));
 
 			if (strlen($x['domain'])) {
-				$location->addContact($this->createContact('Email', 'info@'.$x['domain']));
+				$contacts->add(new \Extras\Types\Email('info@'.$x['domain']));
 			}
+
+			$location->contacts = $contacts;
 
 			/*
 				name - importujem z countries.name, a locative hladam v countries_translations, kde name = '' a name_locative mame, ak je done = 1 hned aj dame activated

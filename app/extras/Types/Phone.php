@@ -2,7 +2,7 @@
 
 namespace Extras\Types;
 
-class Phone extends BaseType {
+class Phone extends BaseType implements IContact {
 
 	const ORIGINAL = 'original';
 	const COUNTRY = 'country';

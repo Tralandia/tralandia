@@ -1,7 +1,6 @@
 common:
 	service: Service\Autopilot\Task
-	title: Autopilot / Task
-	h1: Autopilot / Task
+	title: 'Autopilot / Task -> %name% (id: %id%)'
 	grid:
 		columns:
 			id:
@@ -36,7 +35,6 @@ common:
 			# 	label: UserLanguageLevel
 			# 	mapper: e.userLanguageLevel
 			# 	cellStyle: text-align:right;
-			#	headerStyle: text-align:right;
 			# userRole:
 			# 	label: UserRole
 			# 	mapper: e.userRole
@@ -52,19 +50,23 @@ common:
 		fields:
 			type:
 				label: Type
-				control: select
+				control:
+					type: select
 				inlineEditing: AutopilotType:edit
 				inlineCreating: AutopilotType:add
 			subtype:
 				label: Subtype
-				control: text
+				control:
+					type: text
 			name:
 				label: Name
-				control: text
+				control: 
+					type: text
 				class: span6
 			mission:
 				label: Mission
-				control: tinymce
+				control:
+					type: tinymce
 				startNewRow: false
 			user:
 				label: User
@@ -73,34 +75,40 @@ common:
 					type: select
 					callback: {class: \Service\User\UserList, method: getPairs, params: [id, login, [role: [6, 7, 8, 9, 10, 11]], [login: ASC]]}
 					prompt: None
+					class: span2
 			userCountry:
 				label: User Country
 				class: span2
 				control: 
 					type: select
-					callback: {class: \Service\Location\LocationList, method: getPairs, params: [id, [name, id], [type: 3]]}
+					callback: {class: \Service\Location\LocationList, method: getTranslatedPairs, params: [id, name]}
+					class: span2
 					prompt: None
 			userLanguage:
 				label: User Language
 				class: span2
 				control: 
 					type: select
+					class: span2
 					prompt: None
 			userLanguageLevel:
 				label: User Language Level
 				class: span2
 				control: 
+					class: span2
 					type: select
-					options: STATUS_.+
+					options: [class: \Entity\Dictionary\Type, pattern: TRANSLATION_LEVEL_.+]
 			userRole:
 				label: User Role
 				class: span2
 				control: 
 					type: select
+					class: span2
 			usersExcluded:
 				label: Users Excluded
 				class: span2
-				control: bricksList
+				control:
+					type: bricksList
 				inlineEditing: UserUser:edit
 				inlineCreating: UserUser:add
 				startNewRow: false
@@ -110,28 +118,36 @@ common:
 				class: span2
 				control: 
 					type: datePicker
+					class: span2
 			due:
 				label: Due
 				class: span2
 				control: 
 					type: datePicker
+					class: span2
 			durationPaid:
 				label: Duration Paid
 				class: span2
 				control: 
 					type: text
+					class: span2
 			links:
 				label: Links
-				control: neon
+				control:
+					type: neon
 			validation:
 				label: Validation
-				control: neon
+				control:
+					type: neon
 			actions:
 				label: Actions
-				control: neon
+				control:
+					type: neon
 			recurrenceData:
 				label: RecurrenceData
-				control: neon
+				control:
+					type: neon
 			details:
 				label: Details
-				control: neon
+				control:
+					type: neon

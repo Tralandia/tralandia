@@ -2,7 +2,6 @@
 
 namespace Entity\Rental;
 
-use Entity\Contact;
 use Entity\Dictionary;
 use Entity\Invoicing;
 use Entity\Location;
@@ -115,8 +114,8 @@ class Rental extends \Entity\BaseEntity {
 	protected $teaser;
 
 	/**
-	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Entity\Contact\Contact", mappedBy="rental", cascade={"persist", "remove"})
+	 * @var contacts
+	 * @ORM\Column(type="contacts", nullable=true)
 	 */
 	protected $contacts;
 
@@ -181,22 +180,6 @@ class Rental extends \Entity\BaseEntity {
 	protected $invoices;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -205,7 +188,6 @@ class Rental extends \Entity\BaseEntity {
 
 		$this->types = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->locations = new \Doctrine\Common\Collections\ArrayCollection;
-		$this->contacts = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->spokenLanguages = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->amenities = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->media = new \Doctrine\Common\Collections\ArrayCollection;
@@ -528,33 +510,26 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Contact\Contact
+	 * @param \Extras\Types\Contacts
 	 * @return \Entity\Rental\Rental
 	 */
-	public function addContact(\Entity\Contact\Contact $contact) {
-		if(!$this->contacts->contains($contact)) {
-			$this->contacts->add($contact);
-		}
-		$contact->setRental($this);
+	public function setContacts(\Extras\Types\Contacts $contacts) {
+		$this->contacts = $contacts;
 
 		return $this;
 	}
 		
 	/**
-	 * @param \Entity\Contact\Contact
 	 * @return \Entity\Rental\Rental
 	 */
-	public function removeContact(\Entity\Contact\Contact $contact) {
-		if($this->contacts->contains($contact)) {
-			$this->contacts->removeElement($contact);
-		}
-		$contact->unsetRental();
+	public function unsetContacts() {
+		$this->contacts = NULL;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Contact\Contact
+	 * @return \Extras\Types\Contacts|NULL
 	 */
 	public function getContacts() {
 		return $this->contacts;
