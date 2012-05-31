@@ -13,25 +13,13 @@ common:
 			# countries:
 			# 	label: Countries
 			# 	mapper: e.countries
-			signature:
-				label: Signature
-				mapper: e.signature
+			# 	callback: {method: translateToMany, params: [countries, [name, id], ', ']}
+			# signature:
+			# 	label: Signature
+			# 	mapper: e.signature
 			# address:
 			# 	label: Address
 			# 	mapper: e.address
-			details:
-				label: Details
-				mapper: e.details
-			oldId:
-				label: OldId
-				mapper: e.oldId
-				cellStyle: text-align:right;
-			created:
-				label: Created
-				mapper: e.created
-			updated:
-				label: Updated
-				mapper: e.updated
 
 	form:
 		fields:
@@ -40,24 +28,22 @@ common:
 				control: select
 				inlineEditing: CompanyCompany:edit
 				inlineCreating: CompanyCompany:add
+			address:
+				label: Address
+				control: text
+				class: span9
+			signature:
+				startNewRow: true
+				label: Signature
+				control: phrase
+				class: span6
 			countries:
 				label: Countries
 				control: bricksList
 				inlineEditing: LocationLocation:edit
 				inlineCreating: LocationLocation:add
-			signature:
-				label: Signature
-				control: phrase
-				inlineEditing: DictionaryPhrase:edit
-			address:
-				label: Address
-				control: text
-			details:
-				label: Details
-				control: json
-			created:
-				label: Created
-				control: datePicker
-			updated:
-				label: Updated
-				control: datePicker
+				startNewRow: false
+				class: span6
+			# details:
+			# 	label: Details
+			# 	control: json

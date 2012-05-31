@@ -11,16 +11,6 @@ common:
 			domain:
 				label: Domain
 				mapper: e.domain
-			oldId:
-				label: OldId
-				mapper: e.oldId
-				cellStyle: text-align:right;
-			created:
-				label: Created
-				mapper: e.created
-			updated:
-				label: Updated
-				mapper: e.updated
 			
 	form:
 		fields:
@@ -32,9 +22,3 @@ common:
 			# 	control: bricksList
 			# 	inlineEditing: LocationLocation:edit
 			# 	inlineCreating: LocationLocation:add
-			created:
-				label: Created
-				control: datePicker
-			updated:
-				label: Updated
-				control: datePicker

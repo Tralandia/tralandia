@@ -10,7 +10,7 @@ common:
 			name:
 				label: Name
 				mapper: e.id
-				callback: {Entity\Log\Systemmethod: translateColumn, params: name}
+				callback: {method: translateColumn, params: name}
 			iso:
 				label: Iso
 				mapper: e.iso
@@ -22,12 +22,6 @@ common:
 				label: Rounding
 				mapper: e.rounding
 				cellStyle: text-align:right;
-			created:
-				label: Created
-				mapper: e.created
-			updated:
-				label: Updated
-				mapper: e.updated
 
 	addForm:
 		fields:
@@ -51,14 +45,3 @@ common:
 			rounding:
 				label: Rounding
 				control: text
-			locations:
-				label: Locations
-				control: bricksList
-				inlineEditing: LocationLocation:edit
-				inlineCreating: LocationLocation:add
-			created:
-				label: Created
-				control: datePicker
-			updated:
-				label: Updated
-				control: datePicker

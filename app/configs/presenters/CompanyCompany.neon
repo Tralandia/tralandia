@@ -7,21 +7,9 @@ common:
 			id:
 				label: ID
 				mapper: e.id
-			# bankAccounts:
-			# 	label: BankAccounts
-			# 	mapper: e.bankAccounts
-			# countries:
-			# 	label: Countries
-			# 	mapper: e.countries
-			# offices:
-			# 	label: Offices
-			# 	mapper: e.offices
 			name:
 				label: Name
 				mapper: e.name
-			# address:
-			# 	label: Address
-			# 	mapper: e.address
 			companyId:
 				label: CompanyId
 				mapper: e.companyId
@@ -32,50 +20,22 @@ common:
 				label: Vat
 				mapper: e.vat
 				cellStyle: text-align:right;
-			# registrator:
-			# 	label: Registrator
-			# 	mapper: e.registrator
-			# invoices:
-			# 	label: Invoices
-			# 	mapper: e.invoices
-			# details:
-			# 	label: Details
-			# 	mapper: e.details
-			oldId:
-				label: OldId
-				mapper: e.oldId
-				cellStyle: text-align:right;
-			created:
-				label: Created
-				mapper: e.created
-			updated:
-				label: Updated
-				mapper: e.updated
-			
+
 	form:
 		fields:
-			bankAccounts:
-				label: BankAccounts
-				control: multiSelect
-				inlineEditing: BankAccount:edit
-				inlineCreating: BankAccount:add
-			countries:
-				label: Countries
-				control: bricksList
-				inlineEditing: LocationLocation:edit
-				inlineCreating: LocationLocation:add
-			offices:
-				label: Offices
-				control: multiSelect
-				inlineEditing: CompanyOffice:edit
-				inlineCreating: CompanyOffice:add
 			name:
 				label: Name
 				control: text
 			address:
 				label: Address
 				control: text
+			registrator:
+				class: span6
+				label: Registrator
+				control: phrase
+				inlineEditing: DictionaryPhrase:edit
 			companyId:
+				startNewRow: true
 				label: CompanyId
 				control: text
 			companyVatId:
@@ -84,21 +44,28 @@ common:
 			vat:
 				label: Vat
 				control: text
-			registrator:
-				label: Registrator
-				control: phrase
-				inlineEditing: DictionaryPhrase:edit
-			invoices:
-				label: Invoices
-				control: multiSelect
-				inlineEditing: InvoicingInvoice:edit
-				inlineCreating: InvoicingInvoice:add
+			bankAccounts:
+				startNewRow: true
+				label: BankAccounts
+				control: checkboxList
+				class: span6
+			countries:
+				label: Countries
+				control: bricksList
+				inlineEditing: LocationLocation:edit
+				inlineCreating: LocationLocation:add
+				class: span6
+				startNewRow: false
+			# offices:
+			# 	label: Offices
+			# 	control: 
+			# 		type: multiSelect
+			# 		callback: 
+			# 			class: \Service\Company\OfficeList
+			# 			method: getPairs
+			# 			arguments: [id, [name, id]]
+			# 	inlineEditing: CompanyOffice:edit
+			# 	inlineCreating: CompanyOffice:add
 			details:
 				label: Details
 				control: json
-			created:
-				label: Created
-				control: datePicker
-			updated:
-				label: Updated
-				control: datePicker

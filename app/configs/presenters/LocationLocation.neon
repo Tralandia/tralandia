@@ -30,134 +30,6 @@ common:
 				label: Languages
 				mapper: e.id
 				callback: {method: translateToMany, params: [languages, [name, id], ', ']}
-
-
-
-			# nameOfficial:
-			# 	label: NameOfficial
-			# 	mapper: e.id
-			# 	callback: {class: %this%, method: translateColumn, params: name}
-			# nameShort:
-			# 	label: NameShort
-			# 	mapper: e.id
-			# 	callback: {class: %this%, method: translateColumn, params: name}
-			# parentId:
-			# 	label: ParentId
-			# 	mapper: e.parentId
-			# 	cellStyle: text-align:right;
-			# polygon:
-			# 	label: Polygon
-			# 	mapper: e.polygon
-			# latitude:
-			# 	label: Latitude
-			# 	mapper: e.latitude
-			# longitude:
-			# 	label: Longitude
-			# 	mapper: e.longitude
-			# defaultZoom:
-			# 	label: DefaultZoom
-			# 	mapper: e.defaultZoom
-			# 	cellStyle: text-align:right;
-			# clickMapData:
-			# 	label: ClickMapData
-			# 	mapper: e.clickMapData
-			# bankAccounts:
-			# 	label: BankAccounts
-			# 	mapper: e.bankAccounts
-			# companies:
-			# 	label: Companies
-			# 	mapper: e.companies
-			# offices:
-			# 	label: Offices
-			# 	mapper: e.offices
-			# domain:
-			# 	label: Domain
-			# 	mapper: e.domain
-			# marketings:
-			# 	label: Marketings
-			# 	mapper: e.marketings
-			# rentals:
-			# 	label: Rentals
-			# 	mapper: e.rentals
-			# users:
-			# 	label: Users
-			# 	mapper: e.users
-			# incomingLocations:
-			# 	label: IncomingLocations
-			# 	mapper: e.incomingLocations
-			# outgoingLocations:
-			# 	label: OutgoingLocations
-			# 	mapper: e.outgoingLocations
-			# iso3:
-			# 	label: Iso3
-			# 	mapper: e.iso3
-			# defaultCurrency:
-			# 	label: DefaultCurrency
-			# 	mapper: e.defaultCurrency
-			# currencies:
-			# 	label: Currencies
-			# 	mapper: e.currencies
-			# defaultLanguage:
-			# 	label: DefaultLanguage
-			# 	mapper: e.defaultLanguage
-			# population:
-			# 	label: Population
-			# 	mapper: e.population
-			# 	cellStyle: text-align:right;
-			# phonePrefix:
-			# 	label: PhonePrefix
-			# 	mapper: e.phonePrefix
-			# facebookGroup:
-			# 	label: FacebookGroup
-			# 	mapper: e.facebookGroup
-			# capitalCity:
-			# 	label: CapitalCity
-			# 	mapper: e.capitalCity
-			# phoneNumberEmergency:
-			# 	label: PhoneNumberEmergency
-			# 	mapper: e.phoneNumberEmergency
-			# phoneNumberPolice:
-			# 	label: PhoneNumberPolice
-			# 	mapper: e.phoneNumberPolice
-			# phoneNumberMedical:
-			# 	label: PhoneNumberMedical
-			# 	mapper: e.phoneNumberMedical
-			# phoneNumberFire:
-			# 	label: PhoneNumberFire
-			# 	mapper: e.phoneNumberFire
-			# wikipediaLink:
-			# 	label: WikipediaLink
-			# 	mapper: e.wikipediaLink
-			# contacts:
-			# 	label: Contacts
-			# 	mapper: e.contacts
-			# drivingSide:
-			# 	label: DrivingSide
-			# 	mapper: e.drivingSide
-			# pricesPizza:
-			# 	label: PricesPizza
-			# 	mapper: e.pricesPizza
-			# 	cellStyle: text-align:right;
-			# pricesDinner:
-			# 	label: PricesDinner
-			# 	mapper: e.pricesDinner
-			# 	cellStyle: text-align:right;
-			# airports:
-			# 	label: Airports
-			# 	mapper: e.airports
-			# details:
-			# 	label: Details
-			# 	mapper: e.details
-			# oldId:
-			# 	label: OldId
-			# 	mapper: e.oldId
-			# 	cellStyle: text-align:right;
-			# created:
-			# 	label: Created
-			# 	mapper: e.created
-			# updated:
-			# 	label: Updated
-			# 	mapper: e.updated
 			
 	form:
 		fields:
@@ -181,7 +53,7 @@ common:
 					type: select
 					callback:
 						method: getPairs
-						arguments: [id, [name, id]]
+						params: [id, [name, id]]
 			nameOfficial:
 				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:"
 				label: Official Name
@@ -213,7 +85,7 @@ common:
 				label: Status
 				control: 
 					type: select
-					prompt: '-- Vyber ! --'
+					prompt: 'None'
 					options: [class: \Entity\Dictionary\Type, pattern: TRANSLATION_LEVEL_.+]
 			defaultZoom:
 				# anotations: "var:integer,ORMColumn:type:integer,nullable:true"
@@ -340,7 +212,7 @@ common:
 				class: span6
 				startNewRow: TRUE
 				validation:
-					- [addCondition, MAX_LENGTH, 5]
+					- [addCondition, FILLED]
 					- [addRule, URL, 'Must be a valid URL or leave empty.']
 			facebookGroup:
 				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityContactContact,cascade:"
