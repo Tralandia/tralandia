@@ -9,9 +9,10 @@
 
 {snippet form}
 	{control form}
-	<p>
-		<span n:ifset="$created"><b>Created</b>: {$created|date}</span>
-		<span n:ifset="$updated"><b>Updated</b>: {$updated|date}</span>
+	<p class="edit-info">
+		<span n:ifset="$created"><b>Created</b>:{$created|date}</span>
+		|
+		<span n:ifset="$updated"><b>Updated</b>:{$updated|date}</span>
 	</p>
 {/snippet}
 

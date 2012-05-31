@@ -17,10 +17,12 @@ common:
 				label: DefaultPrice
 				mapper: e.defaultPrice
 				cellStyle: text-align:right;
+				headerStyle: text-align:right;
 			currentPrice:
 				label: CurrentPrice
 				mapper: e.currentPrice
 				cellStyle: text-align:right;
+				headerStyle: text-align:right;
 			package:
 				label: Package
 				mapper: e.package
@@ -28,6 +30,7 @@ common:
 				label: OldId
 				mapper: e.oldId
 				cellStyle: text-align:right;
+				headerStyle: text-align:right;
 			created:
 				label: Created
 				mapper: e.created

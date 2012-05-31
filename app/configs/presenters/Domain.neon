@@ -8,6 +8,7 @@ common:
 				label: Id
 				mapper: e.id
 				cellStyle: text-align:right;
+				headerStyle: text-align:right;
 			domain:
 				label: Domain
 				mapper: e.domain

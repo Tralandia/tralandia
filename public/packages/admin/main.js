@@ -36,7 +36,13 @@ $(document).ready(function() {
 	});
 
 	$("input.datepicker").livequery(function() {
-		$(this).datepicker({duration: 'fast'});
+		$(this).datepicker({
+			duration: 'fast',
+			dateFormat: 'dd.mm.yy',
+			changeMonth: true,
+			changeYear: true,
+			firstDay: 1
+		});
 	});
 	$("input.datetimepicker").livequery(function() {
 		$(this).datetimepicker();

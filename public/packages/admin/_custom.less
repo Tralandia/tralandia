@@ -52,7 +52,7 @@ label .btn-group { display:none; }
 label:hover > .btn-group { display:block; }
 label.checkbox, label.radio { padding-left:0; cursor: pointer; margin-bottom: 10px; }
 label.checkbox:hover, label.radio:hover, label.checkbox.checked, label.radio.checked { text-decoration: underline; background: @grayLighter; .border-radius(5px); color: @greenDark; }
-label.checkbox.checked, label.radio.checked { #gradient > .horizontal(@white, lighten(@green, 20%)); color: @black; text-decoration: none; }
+label.checkbox.checked, label.radio.checked { color: @black; text-decoration: none; }
 label.checkbox.checked:hover, label.radio.checked:hover { text-decoration: underline; }
 .radio input[type="radio"], .checkbox input[type="checkbox"] { margin:0 5px 0 0; }
 
@@ -83,13 +83,13 @@ a[href^="error:"] { background: red; color: white; }
 
 
 .modal { width: ((@gridFullWidth+20)-(1)); margin: -250px 0 0 -((@gridFullWidth+20)/2); position:absolute; }
-.modal .modal-body { padding:0; max-height:none; }
+.modal .modal-body { padding:0; max-height:none; min-height:150px; position:relative; }
 .modal .modal-body iframe { border:none; width:100%; }
 
-form.form .input-small { width:80%; margin-bottom:0; }
-form.form .input-medium { width:90%; margin-bottom:0; }
-form.form .input-large { width:100%; margin-bottom:0; }
-form.form .form-actions .btn { margin-left:10px; }
+form.form .control-group { display:table; }
+form.form input[type='text'], form.form select { display:table-cell; width:100%; margin-bottom:5px; }
+form.form .form-actions .btn { margin-left:10px; display: inline; width:auto; }
+form.form .form-actions .btn-medium { margin:5px 8px 0 0; }
 .input-wrapper, .select-wrapper { position:relative; }
 .input-buttons { position:absolute; right:-10px; top:0; }
 .select-buttons { position:absolute; right:30px; top:0; }
@@ -112,7 +112,10 @@ table.advanced-table tr th { #gradient > .vertical(@green, @greenDark); color:@w
 .pagination a.active { background:@grayMedium; box-shadow: inset 0 0px 8px #DDD; }
 
 textarea.neon, div.neonOutput { float: left; height:300px; }
-div.neonOutput pre {  }
+div.neonOutput { position: relative; }
+div.neonOutput pre { overflow:auto; }
+
+.loading-frame { position:absolute; top:0; right:0; bottom:0; left:0; background:url(../images/loading.gif) center center no-repeat @black; .opacity(50); }
 
 .gallery-control { .well; position:relative; }
 .gallery-control .thumbnail-wrapper { float:left; width:190px; height:160px; }
@@ -149,4 +152,6 @@ div.neonOutput pre {  }
 .live-wysi {  }
 .live-wysi button { margin-top:5px; }
 .live-wysi .output { border:1px solid @greenBorder; padding:10px; overflow:auto; position:relative; }
-.live-wysi .output span { position:absolute; top:0; right:0; bottom:0; left:0; background:url(../images/loading.gif) center center no-repeat @black; .opacity(50); }
+
+.edit-info { text-align:center; color:@grayLight; }
+.edit-info span { font-family:Menlo, Monaco, "Courier New", monospace; margin:0 5px; color:@gray; }

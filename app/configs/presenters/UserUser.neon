@@ -81,6 +81,7 @@ common:
 				label: OldId
 				mapper: e.oldId
 				cellStyle: text-align:right;
+				headerStyle: text-align:right;
 			created:
 				label: Created
 				mapper: e.created

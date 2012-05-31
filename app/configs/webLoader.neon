@@ -27,9 +27,9 @@ parameters:
 					- jQuery/jquery.livequery.js
 					- jQuery/jquery.textarea.js
 					- jQuery/jquery.neon.js
-			jQueryCalendar:
-				js: jQueryCalendar/jquery.calendar.js
-				css: jQueryCalendar/jquery.calendar.css
+			# jQueryCalendar:
+			# 	js: jQueryCalendar/jquery.calendar.js
+			# 	css: jQueryCalendar/jquery.calendar.css
 			jQueryUI:
 				js: 
 					- jQueryUI/jquery.ui.js
@@ -39,6 +39,7 @@ parameters:
 					- jQueryUI/jquery.ui.css
 					- jQueryUI/ui.multiselect.css
 					- jQueryUI/jquery.checkbox.css
+					- jQueryUI/jquery-ui-1.8.20.custom.css
 			fileUpload:
 				js:
 					- FileUpload/js/vendor/jquery.ui.widget.js
@@ -68,7 +69,7 @@ parameters:
 
 			'Admin:Ap':
 				- %webloader.packages.jQuery%
-				- %webloader.packages.jQueryCalendar%
+				# - %webloader.packages.jQueryCalendar%
 				- %webloader.packages.autopilot%
 				- %webloader.packages.bootstrap%
 

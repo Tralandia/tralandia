@@ -31,7 +31,7 @@ class Authenticator extends Object implements NS\IAuthenticator {
 			throw new NS\AuthenticationException("Invalid password.", self::INVALID_CREDENTIAL);
 		}
 		
-		return new NS\Identity($user->id, $user->roles->toArray(), $user->getIdentity());
+		return new NS\Identity($user->id, array($user->role->slug), $user->getIdentity());
 	}
 
 	/**

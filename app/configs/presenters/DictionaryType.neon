@@ -20,6 +20,7 @@ common:
 				label: Level
 				mapper: e.translationLevelRequirement
 				cellStyle: text-align:right;
+				headerStyle: text-align:right;
 			multitranslationRequired:
 				label: Multitranslations
 				mapper: e.multitranslationRequired
