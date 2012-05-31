@@ -269,9 +269,9 @@ class Reflector extends Nette\Object {
 			$fieldMask['ui']['nameSingular'] = Strings::toSingular(ucfirst($fieldMask['ui']['name']));
 			
 			if (isset($fieldMask['ui']['control']['options'])) {
-				if(!isset($fieldMask['ui']['control']['options']['class'])) {
-					throw new \Exception("V {$property->name} - options si zabudol nastavit parameter 'class'");
-				}
+				// if(!isset($fieldMask['ui']['control']['options']['class'])) {
+				// 	throw new \Exception("V {$property->name} - options si zabudol nastavit parameter 'class'");
+				// }
 				if(isset($fieldMask['ui']['control']['options']['pattern'])) {
 					$constList = c(new \Nette\Reflection\ClassType($fieldMask['ui']['control']['options']['class']))->getConstants();
 					$optionsTemp = array();

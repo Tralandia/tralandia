@@ -28,7 +28,7 @@
 				control:  
 					type: multiSelect
 					addClass: span6
-					callback: {class: \Service\Location\LocationList, method: getPairs, params: [id, [name, id], [type: 3]]}
+					callback: {class: \Service\Location\LocationList, method: getTranslatedPairs, params: [id, name]}
 					prompt: None
 				startNewRow: true
 
@@ -42,3 +42,11 @@
 					class: span2
 
 				headerStyle: text-align: right
+
+			userLanguageLevel:
+				label: User Language Level
+				class: span2
+				control: 
+					class: span2
+					type: select
+					options: [class: \Entity\Dictionary\Type, pattern: TRANSLATION_LEVEL_.+]
