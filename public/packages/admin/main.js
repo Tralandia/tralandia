@@ -38,7 +38,9 @@ $(document).ready(function() {
 	$("input.datepicker").livequery(function() {
 		$(this).datepicker({
 			duration: 'fast',
-			dateFormat: 'dd.mm.yy'
+			dateFormat: 'dd.mm.yy',
+			changeMonth: true,
+			changeYear: true
 		});
 	});
 	$("input.datetimepicker").livequery(function() {

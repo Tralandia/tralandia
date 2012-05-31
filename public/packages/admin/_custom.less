@@ -86,10 +86,9 @@ a[href^="error:"] { background: red; color: white; }
 .modal .modal-body { padding:0; max-height:none; min-height:150px; position:relative; }
 .modal .modal-body iframe { border:none; width:100%; }
 
-form.form .input-small { width:80%; margin-bottom:0; }
-form.form .input-medium { width:90%; margin-bottom:0; }
-form.form .input-large { width:100%; margin-bottom:0; }
-form.form .form-actions .btn { margin-left:10px; }
+form.form .control-group { display:table; }
+form.form input, form.form select { display:table-cell; width:100%; margin-bottom:0; }
+form.form .form-actions .btn { margin-left:10px; display: inline; width:auto; }
 .input-wrapper, .select-wrapper { position:relative; }
 .input-buttons { position:absolute; right:-10px; top:0; }
 .select-buttons { position:absolute; right:30px; top:0; }

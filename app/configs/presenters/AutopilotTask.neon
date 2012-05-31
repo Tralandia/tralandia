@@ -72,27 +72,23 @@ common:
 					type: select
 					callback: {class: \Service\User\UserList, method: getPairs, params: [id, login, [role: [6, 7, 8, 9, 10, 11]], [login: ASC]]}
 					prompt: None
-					class: span2
 			userCountry:
 				label: User Country
 				class: span2
 				control: 
 					type: select
 					callback: {class: \Service\Location\LocationList, method: getPairs, params: [id, [name, id], [type: 3]]}
-					class: span2
 					prompt: None
 			userLanguage:
 				label: User Language
 				class: span2
 				control: 
 					type: select
-					class: span2
 					prompt: None
 			userLanguageLevel:
 				label: User Language Level
 				class: span2
 				control: 
-					class: span2
 					type: select
 					options: STATUS_.+
 			userRole:
@@ -100,7 +96,6 @@ common:
 				class: span2
 				control: 
 					type: select
-					class: span2
 			usersExcluded:
 				label: Users Excluded
 				class: span2
@@ -114,19 +109,16 @@ common:
 				class: span2
 				control: 
 					type: datePicker
-					class: span2
 			due:
 				label: Due
 				class: span2
 				control: 
 					type: datePicker
-					class: span2
 			durationPaid:
 				label: Duration Paid
 				class: span2
 				control: 
 					type: text
-					class: span2
 			links:
 				label: Links
 				control: neon
