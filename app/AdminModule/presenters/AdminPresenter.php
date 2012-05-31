@@ -115,7 +115,12 @@ class AdminPresenter extends BasePresenter {
 
 	public function formatText($text, $service) {
 		foreach (Strings::matchAll($text, '~%([a-zA-Z]+)%~') as $key => $value) {
-			$text = str_replace($value[0], $service->{$value[1]}, $text);
+			if($service->{$value[1]} instanceof \Entity\Dictionary\Phrase) {
+				$v = $this->translate($service->{$value[1]});
+			} else {
+				$v = $service->{$value[1]};
+			}
+			$text = str_replace($value[0], $v, $text);
 		}
 		return $text;
 	}
