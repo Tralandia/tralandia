@@ -80,6 +80,8 @@ class ImportAttractions extends BaseImport {
 				$contacts->add(new \Extras\Types\Url($x['url']));
 			}
 
+			$attraction->conctacts = $contacts;
+
 			// Media
 			$temp = array_unique(array_filter(explode(',', $x['photos'])));
 			if (is_array($temp) && count($temp)) {

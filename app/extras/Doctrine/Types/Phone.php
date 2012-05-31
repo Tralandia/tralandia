@@ -22,7 +22,11 @@ class Phone extends Type {
 	}
 
 	public function convertToDatabaseValue($value, AbstractPlatform $platform) {
-		return $value->encode();
+		if ($value) {
+			return $value->encode();
+		} else {
+			return NULL;
+		}
 	}
 /*
 	public function canRequireSQLConversion() {

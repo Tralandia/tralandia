@@ -42,7 +42,11 @@ class ImportUsers extends BaseImport {
 		$user->login = 'toth@tralandia.com';
 		$user->password = 'radkos';
 		$user->role = $role;
-		$user->addContact($this->createContact('email', 'toth@tralandia.com'));
+
+		$contacts = new \Extras\Types\Contacts();
+		$contacts->add(new \Extras\Types\Email('toth@tralandia.com'));
+		$user->contacts = $contacts;
+
 		$user->defaultLanguage = \Service\Dictionary\Language::getByIso('en');
 		$user->save();
 
@@ -51,7 +55,11 @@ class ImportUsers extends BaseImport {
 		$user->login = 'durika@tralandia.com';
 		$user->password = 'davidheslo';
 		$user->role = $role;
-		$user->addContact($this->createContact('email', 'durika@tralandia.com'));
+
+		$contacts = new \Extras\Types\Contacts();
+		$contacts->add(new \Extras\Types\Email('durika@tralandia.com'));
+		$user->contacts = $contacts;
+
 		$user->defaultLanguage = \Service\Dictionary\Language::getByIso('en');
 		$user->save();
 
@@ -60,7 +68,11 @@ class ImportUsers extends BaseImport {
 		$user->login = 'czibula@tralandia.com';
 		$user->password = 'kscibiks';
 		$user->role = $role;
-		$user->addContact($this->createContact('email', 'czibula@tralandia.com'));
+
+		$contacts = new \Extras\Types\Contacts();
+		$contacts->add(new \Extras\Types\Email('czibula@tralandia.com'));
+		$user->contacts = $contacts;
+
 		$user->defaultLanguage = \Service\Dictionary\Language::getByIso('en');
 		$user->save();
 
@@ -69,7 +81,11 @@ class ImportUsers extends BaseImport {
 		$user->login = 'vaculciak@tralandia.com';
 		$user->password = 'branoheslo';
 		$user->role = $role;
-		$user->addContact($this->createContact('email', 'vaculciak@tralandia.com'));
+
+		$contacts = new \Extras\Types\Contacts();
+		$contacts->add(new \Extras\Types\Email('vaculciak@tralandia.com'));
+		$user->contacts = $contacts;
+
 		$user->defaultLanguage = \Service\Dictionary\Language::getByIso('en');
 		$user->save();
 
@@ -95,7 +111,9 @@ class ImportUsers extends BaseImport {
 			$user->oldId = $x['id'];
 			$user->role = $role;
 
-			$user->addContact($this->createContact('email', $x['email']));
+			$contacts = new \Extras\Types\Contacts();
+			$contacts->add(new \Extras\Types\Email($x['email']));
+			$user->contacts = $contacts;
 			
 			$user->defaultLanguage = \Service\Dictionary\Language::getByIso('en');
 			$user->save();
@@ -124,7 +142,9 @@ class ImportUsers extends BaseImport {
 			$user->oldId = $x['id'];
 			$user->role = $role;
 
-			$user->addContact($this->createContact('email', $x['email']));
+			$contacts = new \Extras\Types\Contacts();
+			$contacts->add(new \Extras\Types\Email($x['email']));
+			$user->contacts = $contacts;
 			
 			$user->defaultLanguage = \Service\Dictionary\Language::getByIso('en');
 
@@ -164,7 +184,9 @@ class ImportUsers extends BaseImport {
 			$user->role = $role;
 			$user->invoicingLastName = $x['name'];
 
-			$user->addContact($this->createContact('email', $x['email']));
+			$contacts = new \Extras\Types\Contacts();
+			$contacts->add(new \Extras\Types\Email($x['email']));
+			$user->contacts = $contacts;
 			
 			$user->defaultLanguage = \Service\Dictionary\Language::getByIso('en');
 
@@ -212,9 +234,11 @@ class ImportUsers extends BaseImport {
 			$user->invoicingSalutation = '';
 			$user->invoicingFirstName = $x['client_name'];
 			$user->invoicingLastName = '';
-			if($x['client_email']) $user->invoicingEmail = $this->createContact('email', $x['client_email']);
-			if($x['client_phone']) $user->invoicingPhone = $this->createContact('phone', $x['client_phone']);
-			if($x['client_url']) $user->invoicingUrl = $this->createContact('url', $x['client_url']);
+
+			if($x['client_email']) $user->invoicingEmail = \Extras\Types\Email($x['client_email']);
+			if($x['client_phone']) $user->invoicingPhone = \Extras\Types\Phone($x['client_phone']);
+			if($x['client_url']) $user->invoicingUrl = \Extras\Types\Url($x['client_url']);
+
 			$user->invoicingAddress = new \Extras\Types\Address(array(
 				'address' => array_filter(array($x['client_address'], $x['client_address2'])),
 				'postcode' => $x['client_postcode'],
@@ -227,8 +251,10 @@ class ImportUsers extends BaseImport {
 			$user->invoicingCompanyVatId = $x['client_company_vat_id'];
 
 
-			if($x['email']) $user->addContact($this->createContact('email', $x['email']));
-			if($x['phone']) $user->addContact($this->createContact('phone', $x['phone']));
+			$contacts = new \Extras\Types\Contacts();
+			$contacts->add(new \Extras\Types\Email($x['email']));
+			$contacts->add(new \Extras\Types\Phone($x['phone']));
+			$user->contacts = $contacts;
 			
 			$user->defaultLanguage = \Service\Dictionary\Language::getByOldId($x['language_id']);
 			$user->location = \Service\Location\Location::getByOldIdAndType($x['country_id'], $locationTypeCountry);
@@ -297,23 +323,25 @@ class ImportUsers extends BaseImport {
 				'country' => \Service\Location\Location::getByOldIdAndType($x['country_id'], $locationTypeCountry),
 			));
 
-			$contactParams = array(
-				'subscribed' => !(bool)$x['unsubscribed'],
-				'banned' => (bool)$x['banned'],
-				'full' => (bool)$x['full'],
-				'spam' => (bool)$x['spam'],
-			);
-			if(Validators::isUrl($x['url'])) $user->addContact($this->createContact('url', $x['url'], $contactParams));
+			$user->subscribed = !(bool)$x['unsubscribed'];
+			$user->banned = (bool)$x['banned'];
+			$user->full = (bool)$x['full'];
+			$user->spam = (bool)$x['spam'];
+
+			$contacts = new \Extras\Types\Contacts();
+
+			$contacts->add(new \Extras\Types\Url($x['url']));
 
 			foreach ($contacts as $key => $value) {
 				if(Validators::isEmail($x['email'])) {
-					$user->addContact($this->createContact('email', $value, $contactParams));
+					$contacts->add(new \Extras\Types\Email($value));
 				} else {
-					$user->addContact($this->createContact('phone', $value, $contactParams));
+					$contacts->add(new \Extras\Types\Phone($value));
 				}
 			}
-
 			
+			$attraction->conctacts = $contacts;
+
 			$user->defaultLanguage = \Service\Dictionary\Language::getByOldId($x['language_id']);
 			$user->addLocation(\Service\Location\Location::getByOldIdAndType($x['country_id'], $locationTypeCountry));
 

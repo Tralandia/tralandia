@@ -45,10 +45,10 @@ common:
 				- $config(%acl%)
 				- setup()
 
-		#environment: Extras\Environment
+		environment: Extras\Environment
 
 
-		#translator: Extras\Translator(@environment, @cacheStorage)
+		translator: Extras\Translator(@environment, @cacheStorage)
 
 		settings:
 			factory: Extras\PresenterSettings::factory

@@ -157,6 +157,29 @@ class User extends \Entity\BaseEntityDetails {
 	 */
 	protected $tasks;
 
+	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean", nullable=true)
+	 */
+	protected $subscribed;
+
+	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean", nullable=true)
+	 */
+	protected $banned;
+
+	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean", nullable=true)
+	 */
+	protected $full;
+
+	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean", nullable=true)
+	 */
+	protected $spam;
 
 //@entity-generator-code <--- NEMAZAT !!!
 
