@@ -40,7 +40,8 @@ $(document).ready(function() {
 			duration: 'fast',
 			dateFormat: 'dd.mm.yy',
 			changeMonth: true,
-			changeYear: true
+			changeYear: true,
+			firstDay: 1
 		});
 	});
 	$("input.datetimepicker").livequery(function() {

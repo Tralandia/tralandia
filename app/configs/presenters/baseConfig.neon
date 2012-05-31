@@ -46,4 +46,4 @@ common:
 			cancel: 
 				type: backlink
 				label: 'Cancel (return)'
-				addClass: pull-right
+				class: btn btn-medium pull-right
