@@ -89,6 +89,8 @@ abstract class BasePresenter extends \BasePresenter {
 
 		$content = $this->getHttpRequest()->getPost('content', '');
 
+		// @todo dorobit replace premennych
+
 		$this->payload->content = $content;
 		$this->sendPayload();
 

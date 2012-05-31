@@ -234,8 +234,8 @@ class Reflector extends Nette\Object {
 				$fieldMask['ui']['label'] = array('name' => $fieldMask['ui']['label']);
 			}
 
-			if(is_string($fieldMask['ui']['control'])) {
-				$fieldMask['ui']['control'] = array('type' => $fieldMask['ui']['control']);
+			if(is_string($fieldMask['ui']['control']) || !isset($fieldMask['ui']['control']['type'])) {
+				throw new \Exception("Control '{$property->name}' neobsahuje atribut 'type'", 1);
 			} else if($fieldMask['ui']['control'] instanceof ArrayHash) {
 				$fieldMask['ui']['control'] = iterator_to_array($fieldMask['ui']['control']);
 			}
@@ -269,11 +269,14 @@ class Reflector extends Nette\Object {
 			$fieldMask['ui']['nameSingular'] = Strings::toSingular(ucfirst($fieldMask['ui']['name']));
 			
 			if (isset($fieldMask['ui']['control']['options'])) {
-				if(is_string($fieldMask['ui']['control']['options'])) {
-					$constList = $mask['entityReflection']->getConstants();
+				if(!isset($fieldMask['ui']['control']['options']['class'])) {
+					throw new \Exception("V {$property->name} - options si zabudol nastavit parameter 'class'");
+				}
+				if(isset($fieldMask['ui']['control']['options']['pattern'])) {
+					$constList = c(new \Nette\Reflection\ClassType($fieldMask['ui']['control']['options']['class']))->getConstants();
 					$optionsTemp = array();
 					foreach ($constList as $key => $value) {
-						if(!Strings::match($key, '~'.$fieldMask['ui']['control']['options'].'~')) continue;
+						if(!Strings::match($key, '~'.$fieldMask['ui']['control']['options']['pattern'].'~')) continue;
 						$optionsTemp[$value] = ucfirst($value);
 					}
 					$fieldMask['ui']['control']['options'] = $optionsTemp;
@@ -322,7 +325,7 @@ class Reflector extends Nette\Object {
 				$fieldMask['ui']['controlOptions']['label'] = $fieldMask['ui']['control']['label'];
 			}
 			
-			if($fieldMask['ui']['startNewRow'] || (in_array($type, array('checkboxList', 'bricksList', 'tinymce', 'table', 'json', 'neon')) && $fieldMask['ui']['startNewRow'] !== false)) {
+			if($fieldMask['ui']['startNewRow']){
 				$fieldMask['ui']['controlOptions']['renderBefore'] = Html::el('hr')->addClass('soften');
 			}
 
