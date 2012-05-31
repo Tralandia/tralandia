@@ -19,6 +19,7 @@ common:
 				label: Status
 				mapper: e.status
 				cellStyle: text-align:right;
+				headerStyle: text-align:right;
 			# types:
 			# 	label: Types
 			# 	mapper: e.types
@@ -29,6 +30,7 @@ common:
 				label: Rank
 				mapper: e.rank
 				cellStyle: text-align:right;
+				headerStyle: text-align:right;
 			# locations:
 			# 	label: Locations
 			# 	mapper: e.locations
@@ -96,6 +98,7 @@ common:
 				label: OldId
 				mapper: e.oldId
 				cellStyle: text-align:right;
+				headerStyle: text-align:right;
 			created:
 				label: Created
 				mapper: e.created
@@ -174,7 +177,7 @@ common:
 				inlineCreating: DictionaryLanguage:add
 			amenities:
 				label: Amenities
-				control: bricksList
+				control: checkboxList
 				inlineEditing: RentalAmenity:edit
 				inlineCreating: RentalAmenity:add
 			checkIn:

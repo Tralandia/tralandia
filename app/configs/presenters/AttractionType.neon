@@ -15,6 +15,7 @@ common:
 				label: Old Id
 				mapper: e.oldId
 				cellStyle: text-align:right;
+				headerStyle: text-align:right;
 			
 	form:
 		fields:

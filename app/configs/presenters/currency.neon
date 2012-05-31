@@ -18,10 +18,12 @@ common:
 				label: ExchangeRate
 				mapper: e.exchangeRate
 				cellStyle: text-align:right;
+				headerStyle: text-align:right;
 			rounding:
 				label: Rounding
 				mapper: e.rounding
 				cellStyle: text-align:right;
+				headerStyle: text-align:right;
 
 	addForm:
 		fields:

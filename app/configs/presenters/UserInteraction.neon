@@ -26,6 +26,7 @@ common:
 				label: Status
 				mapper: e.status
 				cellStyle: text-align:right;
+				headerStyle: text-align:right;
 			details:
 				label: Details
 				mapper: e.details
@@ -33,6 +34,7 @@ common:
 				label: OldId
 				mapper: e.oldId
 				cellStyle: text-align:right;
+				headerStyle: text-align:right;
 			created:
 				label: Created
 				mapper: e.created

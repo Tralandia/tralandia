@@ -36,6 +36,7 @@ common:
 			# 	label: UserLanguageLevel
 			# 	mapper: e.userLanguageLevel
 			# 	cellStyle: text-align:right;
+			#	headerStyle: text-align:right;
 			# userRole:
 			# 	label: UserRole
 			# 	mapper: e.userRole

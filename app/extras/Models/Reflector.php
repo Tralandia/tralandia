@@ -496,11 +496,15 @@ class Reflector extends Nette\Object {
 				}
 
 				if(isset($ui->description)) {
-					$control->getLabelPrototype()->addAttributes(array(
-						'data-title' => $ui->description->title,
-						'data-content' => $ui->description->content,
-						'rel' => 'popover',
-					));
+					$popover = Html::el('span')
+						->class('label label-warning pull-right')
+						->setText('?')
+						->addAttributes(array(
+							'data-title' => $ui->description->title,
+							'data-content' => $ui->description->content,
+							'rel' => 'popover',
+						));
+					$control->getLabelPrototype()->add($popover);
 				}
 
 				if(isset($ui->control->class)) {

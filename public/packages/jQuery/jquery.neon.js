@@ -6,23 +6,26 @@
 		$.fn.neon.options = {
 			spanSize: 'span6',
 			ajaxTimeout: 2000,
+			initOnLoad: true,
 			decoderUrl: '/admin/ap/decode-neon'
 		};
 
 		return this.each(function() {
 
-			$(this)
+			var $base = $(this);
+
+			$base
 				.addClass($.fn.neon.options.spanSize)
-				.next('neonOutput')
+				.next('.neonOutput')
 				.addClass($.fn.neon.options.spanSize);
 
-			$.fn.neon.getOutput(this);
+			if ($.fn.neon.options.initOnLoad) $.fn.neon.getOutput($base);
 
 			// Onchange events
-			$(this).bind('keyup',function (e) {
+			$base.bind('keyup',function (e) {
 
 				clearTimeout($.fn.neon.neonOutputTimeout);
-				$.fn.neon.getOutput(this);
+				$.fn.neon.getOutput($base);
 				
 			});
 
@@ -30,11 +33,11 @@
 
 	}
 
-	$.fn.neon.getOutput = function(obj) {
+	$.fn.neon.getOutput = function($base) {
 
-		var input = $(obj).val();
+		var input = $base.val();
 		var ajaxTimeout = $.fn.neon.options.ajaxTimeout;
-		var neonOutput = $(obj).next('.neonOutput');
+		var $neonOutput = $base.next('.neonOutput');
 
 		$.fn.neon.neonOutputTimeout = setTimeout(function() {
 
@@ -44,8 +47,15 @@
 				url: decoderUrl,
 				type: 'POST',
 				data: {input: input},
+				beforeSend: function() {
+					$neonOutput
+						.height($base.height())
+						.html('<div class="loading-frame"></div>');
+				},
 				success: function(data) {
-					$(neonOutput).html(data.output);
+					el = $(data.output);
+					el.height($base.height());
+					$neonOutput.html(el);
 				}
 			});
 

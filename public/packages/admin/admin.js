@@ -16,9 +16,7 @@ $(function() {
 	});
 
 	$('.content').livequery(function() {
-		$('.tooltip').tooltip({
-			placement: 'left'
-		});
+		$('[rel="popover"]').popover();
 	});
 
 	// Modals for Add New buttons

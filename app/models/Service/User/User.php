@@ -15,12 +15,10 @@ class User extends \Service\BaseService {
 		$identity = array();
 
 		$identity = iterator_to_array($this->getMainEntity());
-		$identity['homePage'] = NULL;
-		foreach ($this->roles as $role) {
-			if($role->homePage) {
-				$identity['homePage'] = $role->homePage;
-				continue;
-			}
+		if ($this->role) {
+			$identity['homePage'] = $this->role->homePage;
+		} else {
+			$identity['homePage'] = NULL;
 		}
 		unset($identity['password']);
 

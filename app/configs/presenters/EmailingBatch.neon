@@ -17,6 +17,7 @@ common:
 				label: TotalCount
 				mapper: e.totalCount
 				cellStyle: text-align:right;
+				headerStyle: text-align:right;
 			subject:
 				label: Subject
 				mapper: e.subject
@@ -33,6 +34,7 @@ common:
 				label: OldId
 				mapper: e.oldId
 				cellStyle: text-align:right;
+				headerStyle: text-align:right;
 			created:
 				label: Created
 				mapper: e.created
