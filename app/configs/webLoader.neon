@@ -54,15 +54,15 @@ parameters:
 				css:
 					- FileUpload/css/jquery.fileupload-ui.css
 			phraseControl:
-				js:
-					- PhraseControl/jquery.phraseControl.js
+				js: PhraseControl/jquery.phraseControl.js
+			liveWysi:
+				js: LiveWysi/jquery.liveWysi.js
 
 		sets:
 			'Admin:Test':
 				- %webloader.packages.jQuery%
 				- %webloader.packages.jQueryUI%
 				- %webloader.packages.fileUpload%
-				- %webloader.packages.phraseControl%
 				- %webloader.packages.admin%
 				- %webloader.packages.bootstrap%
 
@@ -74,9 +74,11 @@ parameters:
 
 			Admin: 
 				- %webloader.packages.jQuery%
+				- %webloader.packages.liveQuery%
 				- %webloader.packages.jQueryUI%
 				- %webloader.packages.nette%
-				- %webloader.packages.liveQuery%
+				- %webloader.packages.phraseControl%
+				- %webloader.packages.liveWysi%
 				- %webloader.packages.admin%
 				- %webloader.packages.bootstrap%
 

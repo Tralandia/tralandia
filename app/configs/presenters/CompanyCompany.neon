@@ -48,7 +48,6 @@ common:
 				startNewRow: true
 				label: BankAccounts
 				control: checkboxList
-				class: span6
 			countries:
 				label: Countries
 				control: bricksList

@@ -84,4 +84,14 @@ abstract class BasePresenter extends \BasePresenter {
 		$this->payload->output = $output;
 		$this->sendPayload();
 	}
+
+	public function actionLiveWysi() {
+
+		$content = $this->getHttpRequest()->getPost('content', '');
+
+		$this->payload->content = $content;
+		$this->sendPayload();
+
+	}
+
 }
