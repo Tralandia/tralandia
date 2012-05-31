@@ -113,11 +113,11 @@ class AdminPresenter extends BasePresenter {
 		}
 	}
 
-	public function formatText($text, $serice) {
-		foreach (Strings::matchAll($text, '~%[a-zA-Z]+%~') as $key => $value) {
-
+	public function formatText($text, $service) {
+		foreach (Strings::matchAll($text, '~%([a-zA-Z]+)%~') as $key => $value) {
+			$text = str_replace($value[0], $service->{$value[1]}, $text);
 		}
-		return '';
+		return $text;
 	}
 
 
