@@ -35,7 +35,7 @@ class Role extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\User\User", inversedBy="roles", cascade={"persist"})
+	 * @ORM\OneToMany(targetEntity="Entity\User\User", mappedBy="role", cascade={"persist"})
 	 */
 	protected $users;
 
@@ -137,6 +137,20 @@ class Role extends \Entity\BaseEntity {
 		if(!$this->users->contains($user)) {
 			$this->users->add($user);
 		}
+		$user->setRole($this);
+
+		return $this;
+	}
+		
+	/**
+	 * @param \Entity\User\User
+	 * @return \Entity\User\Role
+	 */
+	public function removeUser(\Entity\User\User $user) {
+		if($this->users->contains($user)) {
+			$this->users->removeElement($user);
+		}
+		$user->unsetRole();
 
 		return $this;
 	}

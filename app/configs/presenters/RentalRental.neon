@@ -10,11 +10,11 @@ common:
 			user:
 				label: User
 				mapper: e.id
-				callback: {class: %this%, method: translateColumn, params: user}
+				callback: {Entity\Log\Systemmethod: translateColumn, params: user}
 			editLanguage:
 				label: EditLanguage
 				mapper: e.id
-				callback: {class: %this%, method: translateColumn, params: editLanguage}
+				callback: {Entity\Log\Systemmethod: translateColumn, params: editLanguage}
 			status:
 				label: Status
 				mapper: e.status
@@ -47,18 +47,18 @@ common:
 			name:
 				label: Name
 				mapper: e.id
-				callback: {class: %this%, method: translateColumn, params: name}
+				callback: {Entity\Log\Systemmethod: translateColumn, params: name}
 			briefDescription:
 				label: BriefDescription
 				mapper: e.briefDescription
 			description:
 				label: Description
 				mapper: e.id
-				callback: {class: %this%, method: translateColumn, params: description}
+				callback: {Entity\Log\Systemmethod: translateColumn, params: description}
 			teaser:
 				label: Teaser
 				mapper: e.id
-				callback: {class: %this%, method: translateColumn, params: teaser}
+				callback: {Entity\Log\Systemmethod: translateColumn, params: teaser}
 			# contacts:
 			# 	label: Contacts
 			# 	mapper: e.contacts

@@ -40,7 +40,7 @@ final class Callback extends Nette\Object
 		}
 
 		if (!is_callable($this->cb, TRUE)) {
-			throw new InvalidArgumentException("Invalid callback.");
+			throw new \InvalidArgumentException("Invalid callback.");
 		}
 	}
 
@@ -53,7 +53,7 @@ final class Callback extends Nette\Object
 	public function __invoke()
 	{
 		if (!is_callable($this->cb)) {
-			throw new InvalidStateException("Callback '$this' is not callable.");
+			throw new \InvalidStateException("Callback '$this' is not callable.");
 		}
 		$args = func_get_args();
 		array_push($args, $this->params);
@@ -69,7 +69,7 @@ final class Callback extends Nette\Object
 	public function invoke()
 	{
 		if (!is_callable($this->cb)) {
-			throw new InvalidStateException("Callback '$this' is not callable.");
+			throw new \InvalidStateException("Callback '$this' is not callable.");
 		}
 		$args = func_get_args();
 		array_push($args, $this->params);
@@ -86,7 +86,7 @@ final class Callback extends Nette\Object
 	public function invokeArgs(array $args)
 	{
 		if (!is_callable($this->cb)) {
-			throw new InvalidStateException("Callback '$this' is not callable.");
+			throw new \InvalidStateException("Callback '$this' is not callable.");
 		}
 		array_push($args, $this->params);
 		return call_user_func_array($this->cb, $args);

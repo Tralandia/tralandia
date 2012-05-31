@@ -21,7 +21,7 @@ class Phone extends BaseType {
 
 
 	public static function decode($data) {
-		$data = \Nette\Utils\Json::decode($data);
+		$data = \Nette\Utils\Json::decode($data, TRUE);
 		return new self($data[self::ORIGINAL], isset($data[self::COUNTRY]) ? $data[self::COUNTRY] : NULL);
 	}
 

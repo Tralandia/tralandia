@@ -7,74 +7,46 @@ common:
 			id:
 				label: ID
 				mapper: e.id
-			type:
-				label: Type
-				mapper: e.type
-			subtype:
-				label: Subtype
-				mapper: e.subtype
+			# type:
+			# 	label: Type
+			# 	mapper: e.id
+			# 	callback: {Entity\Log\Systemmethod: translateColumn, params: name}
+			# subtype:
+			# 	label: Subtype
+			# 	mapper: e.subtype
 			name:
 				label: Name
-				mapper: e.id
-				callback: {class: %this%, method: translateColumn, params: name}
-			mission:
-				label: Mission
-				mapper: e.mission
+				mapper: e.name
 			startTime:
-				label: StartTime
+				label: Start Time
 				mapper: e.startTime
 			due:
 				label: Due
 				mapper: e.due
-			durationPaid:
-				label: DurationPaid
-				mapper: e.durationPaid
-				cellStyle: text-align:right;
-			links:
-				label: Links
-				mapper: e.links
 			user:
 				label: User
 				mapper: e.user
 			userCountry:
-				label: UserCountry
+				label: User Country
 				mapper: e.userCountry
 			userLanguage:
 				label: UserLanguage
 				mapper: e.userLanguage
-			userLanguageLevel:
-				label: UserLanguageLevel
-				mapper: e.userLanguageLevel
-				cellStyle: text-align:right;
-			userRole:
-				label: UserRole
-				mapper: e.userRole
-			usersExcluded:
-				label: UsersExcluded
-				mapper: e.usersExcluded
-			validation:
-				label: Validation
-				mapper: e.validation
-			actions:
-				label: Actions
-				mapper: e.actions
-			recurrenceData:
-				label: RecurrenceData
-				mapper: e.recurrenceData
-			details:
-				label: Details
-				mapper: e.details
-			oldId:
-				label: OldId
-				mapper: e.oldId
-				cellStyle: text-align:right;
-			created:
-				label: Created
-				mapper: e.created
-			updated:
-				label: Updated
-				mapper: e.updated
+			# userLanguageLevel:
+			# 	label: UserLanguageLevel
+			# 	mapper: e.userLanguageLevel
+			# 	cellStyle: text-align:right;
+			# userRole:
+			# 	label: UserRole
+			# 	mapper: e.userRole
+			# usersExcluded:
+			# 	label: UsersExcluded
+			# 	mapper: e.usersExcluded
+			# recurrenceData:
+			# 	label: RecurrenceData
+			# 	mapper: e.recurrenceData
 
+			
 	form:
 		fields:
 			type:
@@ -88,49 +60,76 @@ common:
 			name:
 				label: Name
 				control: text
+				class: span6
 			mission:
 				label: Mission
 				control: tinymce
-			startTime:
-				label: StartTime
-				control: datePicker
-			due:
-				label: Due
-				control: datePicker
-			durationPaid:
-				label: DurationPaid
-				control: text
-			links:
-				label: Links
-				control: neon
+				startNewRow: false
 			user:
 				label: User
-				control: select
-				inlineEditing: UserUser:edit
-				inlineCreating: UserUser:add
+				class: span2
+				control: 
+					type: select
+					callback: {class: \Service\User\UserList, method: getPairs, params: [id, login, [role: [6, 7, 8, 9, 10, 11]], [login: ASC]]}
+					prompt: None
+					class: span2
 			userCountry:
-				label: UserCountry
-				control: select
-				inlineEditing: LocationLocation:edit
-				inlineCreating: LocationLocation:add
+				label: User Country
+				class: span2
+				control: 
+					type: select
+					callback: {class: \Service\Location\LocationList, method: getPairs, params: [id, [name, id], [type: 3]]}
+					class: span2
+					prompt: None
 			userLanguage:
-				label: UserLanguage
-				control: select
-				inlineEditing: DictionaryLanguage:edit
-				inlineCreating: DictionaryLanguage:add
+				label: User Language
+				class: span2
+				control: 
+					type: select
+					class: span2
+					prompt: None
 			userLanguageLevel:
-				label: UserLanguageLevel
-				control: text
+				label: User Language Level
+				class: span2
+				control: 
+					class: span2
+					type: select
+					options: STATUS_.+
 			userRole:
-				label: UserRole
-				control: select
-				inlineEditing: UserRole:edit
-				inlineCreating: UserRole:add
+				label: User Role
+				class: span2
+				control: 
+					type: select
+					class: span2
 			usersExcluded:
-				label: UsersExcluded
+				label: Users Excluded
+				class: span2
 				control: bricksList
 				inlineEditing: UserUser:edit
 				inlineCreating: UserUser:add
+				startNewRow: false
+			startTime:
+				startNewRow: true
+				label: StartTime
+				class: span2
+				control: 
+					type: datePicker
+					class: span2
+			due:
+				label: Due
+				class: span2
+				control: 
+					type: datePicker
+					class: span2
+			durationPaid:
+				label: Duration Paid
+				class: span2
+				control: 
+					type: text
+					class: span2
+			links:
+				label: Links
+				control: neon
 			validation:
 				label: Validation
 				control: neon
@@ -143,9 +142,3 @@ common:
 			details:
 				label: Details
 				control: neon
-			created:
-				label: Created
-				control: datePicker
-			updated:
-				label: Updated
-				control: datePicker

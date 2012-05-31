@@ -7,80 +7,62 @@ common:
 			id:
 				label: ID
 				mapper: e.id
-			# countries:
-			# 	label: Countries
-			# 	mapper: e.countries
-			# company:
-			# 	label: Company
-			# 	mapper: e.company
+			countries:
+				label: Countries
+				mapper: e.id
+				callback: {method: translateToMany, params: [countries, [name, id], ', ']}
+			company:
+				label: Company
+				mapper: e.id
+				#callback: {Entity\Log\Systemmethod: translateColumn, params: name}
 			bankName:
 				label: BankName
 				mapper: e.bankName
-			# bankAddress:
-			# 	label: BankAddress
-			# 	mapper: e.bankAddress
 			bankSwift:
 				label: BankSwift
 				mapper: e.bankSwift
 			accountNumber:
 				label: AccountNumber
 				mapper: e.accountNumber
-			accountName:
-				label: AccountName
-				mapper: e.accountName
 			accountIban:
 				label: AccountIban
 				mapper: e.accountIban
-			notes:
-				label: Notes
-				mapper: e.notes
-			oldId:
-				label: OldId
-				mapper: e.oldId
-				cellStyle: text-align:right;
-			created:
-				label: Created
-				mapper: e.created
-			updated:
-				label: Updated
-				mapper: e.updated
+
 			
 	form:
 		fields:
-			countries:
-				label: Countries
-				control: bricksList
-				inlineEditing: LocationLocation:edit
-				inlineCreating: LocationLocation:add
 			company:
 				label: Company
 				control: select
-				inlineEditing: CompanyCompany:edit
-				inlineCreating: CompanyCompany:add
+			countries:
+				label: Countries using this bank account
+				class: span9
+				control: bricksList
+				inlineEditing: LocationLocation:edit
+				inlineCreating: LocationLocation:add
+				startNewRow: false
 			bankName:
 				label: BankName
 				control: text
+				startNewRow: true
 			bankAddress:
 				label: BankAddress
 				control: text
 			bankSwift:
 				label: BankSwift
 				control: text
-			accountNumber:
-				label: AccountNumber
-				control: text
 			accountName:
 				label: AccountName
 				control: text
+			accountNumber:
+				label: AccountNumber
+				control: text
+				startNewRow: true
 			accountIban:
 				label: AccountIban
 				control: text
 			notes:
+				startNewRow: true
 				label: Notes
 				control: text
-			created:
-				label: Created
-				control: datePicker
-			updated:
-				label: Updated
-				control: datePicker
+				class: span12

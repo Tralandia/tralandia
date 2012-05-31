@@ -6,3 +6,29 @@
 			created:
 				label: Created
 				control: datePicker
+
+
+				validation:
+					- [addRule, PATTERN, 'Must be exactly 2 characters long.', '[a-z]{2}']
+					#- [addRule, [\Service\Dictionary\Language, validateUniqueIso], 'ISO code must be unique.']
+
+
+			country:
+				class: span6
+				label: Country
+				control:  
+					type: multiSelect
+					addClass: span6
+					callback: {class: \Service\Location\LocationList, method: getPairs, params: [id, [name, id], [type: 3]]}
+					prompt: None
+				startNewRow: true
+
+			user:
+				label: User
+				class: span2
+				control: 
+					type: select
+					callback: {class: \Service\User\UserList, method: getPairs, params: [id, login, [role: [6, 7, 8, 9, 10, 11]], [login: ASC]]}
+					prompt: None
+					class: span2
+

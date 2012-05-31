@@ -257,7 +257,7 @@ class Location extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Contact\Contact", mappedBy="locations", cascade={"persist"})
+	 * @ORM\OneToMany(targetEntity="Entity\Contact\Contact", mappedBy="location", cascade={"persist", "remove"})
 	 */
 	protected $contacts;
 
@@ -1212,7 +1212,7 @@ class Location extends \Entity\BaseEntityDetails {
 		if(!$this->contacts->contains($contact)) {
 			$this->contacts->add($contact);
 		}
-		$contact->addLocation($this);
+		$contact->setLocation($this);
 
 		return $this;
 	}
@@ -1225,7 +1225,7 @@ class Location extends \Entity\BaseEntityDetails {
 		if($this->contacts->contains($contact)) {
 			$this->contacts->removeElement($contact);
 		}
-		$contact->removeLocation($this);
+		$contact->unsetLocation();
 
 		return $this;
 	}

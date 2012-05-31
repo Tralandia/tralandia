@@ -10,15 +10,15 @@ common:
 			name:
 				label: Name
 				mapper: e.id
-				callback: {class: %this%, method: translateColumn, params: name}
+				callback: {Entity\Log\Systemmethod: translateColumn, params: name}
 			description:
 				label: Description
 				mapper: e.id
-				callback: {class: %this%, method: translateColumn, params: name}
+				callback: {Entity\Log\Systemmethod: translateColumn, params: name}
 			package:
 				label: Package
 				mapper: e.id
-				callback: {class: %this%, method: translateColumn, params: name}
+				callback: {Entity\Log\Systemmethod: translateColumn, params: name}
 			# locations:
 			# 	label: Locations
 			# 	mapper: e.locations

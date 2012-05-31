@@ -10,14 +10,14 @@ common:
 			# type:
 			# 	label: Type
 			# 	mapper: e.id
-			# 	callback: {class: %this%, method: translateColumn, params:name}
+			# 	callback: {Entity\Log\Systemmethod: translateColumn, params:name}
 			# rentals:
 			# 	label: Rentals
 			# 	mapper: e.rentals
 			# name:
 			# 	label: Name
 			# 	mapper: e.id
-			# 	callback: {class: %this%, method: translateColumn, params:name}
+			# 	callback: {Entity\Log\Systemmethod: translateColumn, params:name}
 			# details:
 			# 	label: Details
 			# 	mapper: e.details

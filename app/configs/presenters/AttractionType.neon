@@ -10,17 +10,11 @@ common:
 			name:
 				label: Name
 				mapper: e.id
-				callback: {class: %this%, method: translateColumn, params: name}
+				callback: {Entity\Log\Systemmethod: translateColumn, params: name}
 			oldId:
-				label: OldId
+				label: Old Id
 				mapper: e.oldId
 				cellStyle: text-align:right;
-			created:
-				label: Created
-				mapper: e.created
-			updated:
-				label: Updated
-				mapper: e.updated
 			
 	form:
 		fields:
@@ -28,9 +22,3 @@ common:
 				label: Name
 				control: phrase
 				inlineEditing: DictionaryPhrase:edit
-			created:
-				label: Created
-				control: datePicker
-			updated:
-				label: Updated
-				control: datePicker

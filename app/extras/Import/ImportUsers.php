@@ -41,7 +41,7 @@ class ImportUsers extends BaseImport {
 		$user = \Service\User\User::get();
 		$user->login = 'toth@tralandia.com';
 		$user->password = 'radkos';
-		$user->addRole($role);
+		$user->role = $role;
 		$user->addContact($this->createContact('email', 'toth@tralandia.com'));
 		$user->defaultLanguage = \Service\Dictionary\Language::getByIso('en');
 		$user->save();
@@ -50,7 +50,7 @@ class ImportUsers extends BaseImport {
 		$user = \Service\User\User::get();
 		$user->login = 'durika@tralandia.com';
 		$user->password = 'davidheslo';
-		$user->addRole($role);
+		$user->role = $role;
 		$user->addContact($this->createContact('email', 'durika@tralandia.com'));
 		$user->defaultLanguage = \Service\Dictionary\Language::getByIso('en');
 		$user->save();
@@ -59,7 +59,7 @@ class ImportUsers extends BaseImport {
 		$user = \Service\User\User::get();
 		$user->login = 'czibula@tralandia.com';
 		$user->password = 'kscibiks';
-		$user->addRole($role);
+		$user->role = $role;
 		$user->addContact($this->createContact('email', 'czibula@tralandia.com'));
 		$user->defaultLanguage = \Service\Dictionary\Language::getByIso('en');
 		$user->save();
@@ -68,7 +68,7 @@ class ImportUsers extends BaseImport {
 		$user = \Service\User\User::get();
 		$user->login = 'vaculciak@tralandia.com';
 		$user->password = 'branoheslo';
-		$user->addRole($role);
+		$user->role = $role;
 		$user->addContact($this->createContact('email', 'vaculciak@tralandia.com'));
 		$user->defaultLanguage = \Service\Dictionary\Language::getByIso('en');
 		$user->save();
@@ -93,7 +93,7 @@ class ImportUsers extends BaseImport {
 			$user->login = $x['email'];
 			$user->password = $x['password'];
 			$user->oldId = $x['id'];
-			$user->addRole($role);
+			$user->role = $role;
 
 			$user->addContact($this->createContact('email', $x['email']));
 			
@@ -122,7 +122,7 @@ class ImportUsers extends BaseImport {
 			$user->login = $x['email'];
 			$user->password = $x['password'];
 			$user->oldId = $x['id'];
-			$user->addRole($role);
+			$user->role = $role;
 
 			$user->addContact($this->createContact('email', $x['email']));
 			
@@ -161,7 +161,7 @@ class ImportUsers extends BaseImport {
 			$user->login = $x['email'];
 			$user->password = $x['password'];
 			$user->oldId = $x['id'];
-			$user->addRole($role);
+			$user->role = $role;
 			$user->invoicingLastName = $x['name'];
 
 			$user->addContact($this->createContact('email', $x['email']));
@@ -207,7 +207,7 @@ class ImportUsers extends BaseImport {
 			$user->oldId = $x['id'];
 			$user->isOwner = TRUE; //@todo toto tu je len temporary parameter pre import, potom zrusit
 
-			$user->addRole($role);
+			$user->role = $role;
 
 			$user->invoicingSalutation = '';
 			$user->invoicingFirstName = $x['client_name'];
@@ -284,7 +284,7 @@ class ImportUsers extends BaseImport {
 			if (!$user->password) $user->password = NULL;
 			//if (!$user->oldId) $user->oldId = $x['id'];
 
-			$user->addRole($role);
+			$user->role = $role;
 
 			if (!$user->invoicingSalutation) $user->invoicingSalutation = $x['contact_salutation'];
 			if (!$user->invoicingFirstName) $user->invoicingFirstName = $x['contact_firstname'];

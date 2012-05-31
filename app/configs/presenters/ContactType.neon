@@ -10,21 +10,10 @@ common:
 			name:
 				label: Name
 				mapper: e.id
-				callback: {class: %this%, method: translateColumn, params: name}
+				callback: {method: translateColumn, params: name}
 			slug:
 				label: Slug
 				mapper: e.slug
-			oldId:
-				label: OldId
-				mapper: e.oldId
-				cellStyle: text-align:right;
-			created:
-				label: Created
-				mapper: e.created
-			updated:
-				label: Updated
-				mapper: e.updated
-			
 	form:
 		fields:
 			name:
@@ -35,11 +24,3 @@ common:
 				# anotations: "var:slug,ORMColumn:type:slug"
 				label: Slug
 				control: text
-			created:
-				# anotations: "var:datetime,ORMColumn:type:datetime"
-				label: Created
-				control: datePicker
-			updated:
-				# anotations: "var:datetime,ORMColumn:type:datetime"
-				label: Updated
-				control: datePicker

@@ -40,10 +40,10 @@ class User extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Role", mappedBy="users", cascade={"persist"})
+	 * @ORM\ManyToOne(targetEntity="Role", inversedBy="users", cascade={"persist"})
 	 * @EA\SingularName(name="role")
 	 */
-	protected $roles;
+	protected $role;
 
 	/**
 	 * @var Collection
@@ -166,7 +166,6 @@ class User extends \Entity\BaseEntityDetails {
 	public function __construct() {
 		parent::__construct();
 
-		$this->roles = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->contacts = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->rentalTypes = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->combinations = new \Doctrine\Common\Collections\ArrayCollection;
@@ -256,33 +255,26 @@ class User extends \Entity\BaseEntityDetails {
 	 * @param \Entity\User\Role
 	 * @return \Entity\User\User
 	 */
-	public function addRole(\Entity\User\Role $role) {
-		if(!$this->roles->contains($role)) {
-			$this->roles->add($role);
-		}
-		$role->addUser($this);
+	public function setRole(\Entity\User\Role $role) {
+		$this->role = $role;
 
 		return $this;
 	}
 		
 	/**
-	 * @param \Entity\User\Role
 	 * @return \Entity\User\User
 	 */
-	public function removeRole(\Entity\User\Role $role) {
-		if($this->roles->contains($role)) {
-			$this->roles->removeElement($role);
-		}
-		$role->removeUser($this);
+	public function unsetRole() {
+		$this->role = NULL;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\User\Role
+	 * @return \Entity\User\Role|NULL
 	 */
-	public function getRoles() {
-		return $this->roles;
+	public function getRole() {
+		return $this->role;
 	}
 		
 	/**

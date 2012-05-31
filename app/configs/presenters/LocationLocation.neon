@@ -3,176 +3,49 @@ common:
 	title: Location / Location
 	h1: Location / Location
 	grid:
+		itemsPerPage: 100
 		columns:
 			id:
 				label: ID
 				mapper: e.id
+			iso:
+				label: Iso
+				mapper: e.iso
+				callback: {class: \Nette\Utils\Strings, method: upper, params: e.iso}
 			name:
 				label: Name
 				mapper: e.id
-				callback: {class: %this%, method: translateColumn, params: name}
-			nameOfficial:
-				label: NameOfficial
+				callback: {method: translateColumn, params: name}
+			slug:
+				label: Slug
+				mapper: e.slug
+			type:
+				label: Type
 				mapper: e.id
-				callback: {class: %this%, method: translateColumn, params: name}
-			nameShort:
-				label: NameShort
+				callback: {method: translateColumn, params: [type, name]}
+			status:
+				label: Status
+				mapper: e.status
+			languages:
+				label: Languages
 				mapper: e.id
-				callback: {class: %this%, method: translateColumn, params: name}
-			# slug:
-			# 	label: Slug
-			# 	mapper: e.slug
-			# parentId:
-			# 	label: ParentId
-			# 	mapper: e.parentId
-			# 	cellStyle: text-align:right;
-			# type:
-			# 	label: Type
-			# 	mapper: e.type
-			# polygon:
-			# 	label: Polygon
-			# 	mapper: e.polygon
-			# latitude:
-			# 	label: Latitude
-			# 	mapper: e.latitude
-			# longitude:
-			# 	label: Longitude
-			# 	mapper: e.longitude
-			# defaultZoom:
-			# 	label: DefaultZoom
-			# 	mapper: e.defaultZoom
-			# 	cellStyle: text-align:right;
-			# clickMapData:
-			# 	label: ClickMapData
-			# 	mapper: e.clickMapData
-			# bankAccounts:
-			# 	label: BankAccounts
-			# 	mapper: e.bankAccounts
-			# companies:
-			# 	label: Companies
-			# 	mapper: e.companies
-			# offices:
-			# 	label: Offices
-			# 	mapper: e.offices
-			# domain:
-			# 	label: Domain
-			# 	mapper: e.domain
-			# marketings:
-			# 	label: Marketings
-			# 	mapper: e.marketings
-			# rentals:
-			# 	label: Rentals
-			# 	mapper: e.rentals
-			# users:
-			# 	label: Users
-			# 	mapper: e.users
-			# incomingLocations:
-			# 	label: IncomingLocations
-			# 	mapper: e.incomingLocations
-			# outgoingLocations:
-			# 	label: OutgoingLocations
-			# 	mapper: e.outgoingLocations
-			# status:
-			# 	label: Status
-			# 	mapper: e.status
-			# iso:
-			# 	label: Iso
-			# 	mapper: e.iso
-			# iso3:
-			# 	label: Iso3
-			# 	mapper: e.iso3
-			# defaultCurrency:
-			# 	label: DefaultCurrency
-			# 	mapper: e.defaultCurrency
-			# currencies:
-			# 	label: Currencies
-			# 	mapper: e.currencies
-			# defaultLanguage:
-			# 	label: DefaultLanguage
-			# 	mapper: e.defaultLanguage
-			# languages:
-			# 	label: Languages
-			# 	mapper: e.languages
-			# population:
-			# 	label: Population
-			# 	mapper: e.population
-			# 	cellStyle: text-align:right;
-			# phonePrefix:
-			# 	label: PhonePrefix
-			# 	mapper: e.phonePrefix
-			# facebookGroup:
-			# 	label: FacebookGroup
-			# 	mapper: e.facebookGroup
-			# capitalCity:
-			# 	label: CapitalCity
-			# 	mapper: e.capitalCity
-			# phoneNumberEmergency:
-			# 	label: PhoneNumberEmergency
-			# 	mapper: e.phoneNumberEmergency
-			# phoneNumberPolice:
-			# 	label: PhoneNumberPolice
-			# 	mapper: e.phoneNumberPolice
-			# phoneNumberMedical:
-			# 	label: PhoneNumberMedical
-			# 	mapper: e.phoneNumberMedical
-			# phoneNumberFire:
-			# 	label: PhoneNumberFire
-			# 	mapper: e.phoneNumberFire
-			# wikipediaLink:
-			# 	label: WikipediaLink
-			# 	mapper: e.wikipediaLink
-			# contacts:
-			# 	label: Contacts
-			# 	mapper: e.contacts
-			# drivingSide:
-			# 	label: DrivingSide
-			# 	mapper: e.drivingSide
-			# pricesPizza:
-			# 	label: PricesPizza
-			# 	mapper: e.pricesPizza
-			# 	cellStyle: text-align:right;
-			# pricesDinner:
-			# 	label: PricesDinner
-			# 	mapper: e.pricesDinner
-			# 	cellStyle: text-align:right;
-			# airports:
-			# 	label: Airports
-			# 	mapper: e.airports
-			# details:
-			# 	label: Details
-			# 	mapper: e.details
-			# oldId:
-			# 	label: OldId
-			# 	mapper: e.oldId
-			# 	cellStyle: text-align:right;
-			created:
-				label: Created
-				mapper: e.created
-			updated:
-				label: Updated
-				mapper: e.updated
+				callback: {method: translateToMany, params: [languages, [name, id], ', ']}
 			
 	form:
 		fields:
 			name:
 				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:"
-				class: span6
 				label: Name
 				control: phrase
 				inlineEditing: Phrase:edit
-			slug:
-				# anotations: "var:slug,ORMColumn:type:slug"
-				class: span6
-				label: Slug
-				control: text
-			nameOfficial:
-				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:"
-				label: NameOfficial
-				control: phrase
 			nameShort:
 				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:"
-				label: NameShort
+				label: Short Name
 				control: phrase
+			slug:
+				# anotations: "var:slug,ORMColumn:type:slug"
+				label: Slug
+				control: text
 			type:
 				# anotations: "var:Collection,ORMManyToOne:targetEntity:Type"
 				label: Type
@@ -180,7 +53,12 @@ common:
 					type: select
 					callback:
 						method: getPairs
-						arguments: [id, [name, id]]
+						params: [id, [name, id]]
+			nameOfficial:
+				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:"
+				label: Official Name
+				control: phrase
+				class: span6
 			# parentId:
 			# 	# anotations: "var:integer,ORMColumn:type:integer,nullable:true"
 			# 	label: ParentId
@@ -189,51 +67,10 @@ common:
 				# anotations: "var:latlong,ORMColumn:type:latlong,nullable:true"
 				label: Latitude
 				control: text
-				startNewRow: true
 			longitude:
 				# anotations: "var:latlong,ORMColumn:type:latlong,nullable:true"
 				label: Longitude
 				control: text
-			polygon:
-				# anotations: "var:json,ORMColumn:type:json,nullable:true"
-				label: Polygon
-				control: neon
-			clickMapData:
-				# anotations: "var:json,ORMColumn:type:json,nullable:true"
-				label: ClickMapData
-				control: neon
-			defaultZoom:
-				# anotations: "var:integer,ORMColumn:type:integer,nullable:true"
-				label: DefaultZoom
-				control: 
-					type: select
-					options: [1: asdf,2,3,4,5,6,7,8]
-			incomingLocations:
-				# anotations: "var:Collection,ORMOneToMany:targetEntity:Traveling,mappedBy:destinationLocation"
-				label: IncomingLocations
-				control: 
-					type: multiSelect
-					callback: 
-						class: \Service\Location\LocationList
-						method: getPairs
-						arguments: [id, [name, id]]
-				startNewRow: true
-			outgoingLocations:
-				# anotations: "var:Collection,ORMOneToMany:targetEntity:Traveling,mappedBy:sourceLocation"
-				label: OutgoingLocations
-				control: 
-					type: multiSelect
-					callback: 
-						class: \Service\Location\LocationList
-						method: getPairs
-						arguments: [id, [name, id]]
-			status:
-				# anotations: "var:string,ORMColumn:type:string,nullable:true"
-				label: Status
-				control: 
-					type: select
-					prompt: '-- Vyber ! --'
-					options: STATUS_.+
 			iso:
 				# anotations: "var:string,ORMColumn:type:string,nullable:true"
 				label: Iso
@@ -243,67 +80,131 @@ common:
 				# anotations: "var:string,ORMColumn:type:string,nullable:true"
 				label: Iso3
 				control: text
+			status:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: Status
+				control: 
+					type: select
+					prompt: 'None'
+					options: [class: \Entity\Dictionary\Type, pattern: TRANSLATION_LEVEL_.+]
+			defaultZoom:
+				# anotations: "var:integer,ORMColumn:type:integer,nullable:true"
+				label: Default Zoom
+				control: 
+					type: select
+					options: [1: asdf,2,3,4,5,6,7,8]
+			# incomingLocations:
+			# 	# anotations: "var:Collection,ORMOneToMany:targetEntity:Traveling,mappedBy:destinationLocation"
+			# 	label: Incoming Locations
+			# 	control: 
+			# 		type: multiSelect
+			# 		callback: 
+			# 			class: \Service\Location\LocationList
+			# 			method: getPairs
+			# 			arguments: [id, [name, id]]
+			# 	startNewRow: true
+			# outgoingLocations:
+			# 	# anotations: "var:Collection,ORMOneToMany:targetEntity:Traveling,mappedBy:sourceLocation"
+			# 	label: Outgoing Locations
+			# 	control: 
+			# 		type: multiSelect
+			# 		callback: 
+			# 			class: \Service\Location\LocationList
+			# 			method: getPairs
+			# 			arguments: [id, [name, id]]
+			defaultCurrency:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityCurrency,cascade:"
+				class: span2
+				startNewRow: true
+				label: Default Currency
+				control: 
+					type: select
+					class: span2
 			currencies:
 				# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityCurrency,mappedBy:locations,cascade:"
 				label: Currencies
+				class: span4
 				control: bricksList
 				inlineEditing: Currency:edit
 				inlineDeleting: Currency:delete
 				inlineCreating: Currency:add
-			defaultCurrency:
-				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityCurrency,cascade:"
-				label: DefaultCurrency
-				control:
+				startNewRow: FALSE
+			defaultLanguage:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityDictionaryLanguage,cascade:"
+				class: span2
+				label: Default Language
+				control: 
 					type: select
-					callback: 
-						class: \Service\CurrencyList
-						method: getPairs
-						arguments: [id, [name, id]]
+					class: span2
 			languages:
 				# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityDictionaryLanguage,mappedBy:locations,cascade:"
+				class: span4
 				label: Languages
 				control: bricksList
 				inlineEditing: DictionaryLanguage:edit
 				inlineDeleting: DictionaryLanguage:delete
 				inlineCreating: DictionaryLanguage:add
-			defaultLanguage:
-				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityDictionaryLanguage,cascade:"
-				label: DefaultLanguage
-				control: 
-					type: select
+				startNewRow: FALSE
 			population:
 				# anotations: "var:integer,ORMColumn:type:integer,nullable:true"
+				startNewRow: true
 				label: Population
 				control: text
-				startNewRow: true
-			phonePrefix:
-				# anotations: "var:string,ORMColumn:type:string,nullable:true"
-				label: PhonePrefix
-				control: text
-			facebookGroup:
-				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityContactContact,cascade:"
-				label: FacebookGroup
-				control: text
+				class: span2
 			capitalCity:
 				# anotations: "var:string,ORMColumn:type:string,nullable:true"
-				label: CapitalCity
+				label: Capital City
 				control: text
+				class: span2
+			airports:
+				# anotations: "var:text,ORMColumn:type:text,nullable:true"
+				label: Airports
+				control: text
+				class: span2
+			drivingSide:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: Driving Side
+				control: 
+					type: select
+					options: [left: Left,right: Right]
+					class: span2
+				class: span2
+			pricesPizza:
+				# anotations: "var:price,ORMColumn:type:price,nullable:true"
+				label: "Pizza (average price)"
+				control: text
+				class: span2
+			pricesDinner:
+				# anotations: "var:price,ORMColumn:type:price,nullable:true"
+				label: "Dinner (average price)"
+				control: text
+				class: span2
+			phonePrefix:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: Phone Prefix
+				control: text
+				class: span2
+				startNewRow: TRUE
 			phoneNumberEmergency:
 				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityContactContact,cascade:"
-				label: PhoneNumberEmergency
+				label: Phone - Emergency
 				control: text
+				class: span2
 			phoneNumberPolice:
 				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityContactContact,cascade:"
-				label: PhoneNumberPolice
+				label: Phone - Police
 				control: text
+				class: span2
 			phoneNumberMedical:
 				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityContactContact,cascade:"
-				label: PhoneNumberMedical
+				label: Phone - Medical
 				control: text
+				class: span2
 			phoneNumberFire:
 				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityContactContact,cascade:"
-				label: PhoneNumberFire
+				label: Phone - Fire
 				control: text
+				class: span2
 			wikipediaLink:
 				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityContactContact,cascade:"
 				label: Wikipedia Link
@@ -313,6 +214,11 @@ common:
 				validation:
 					- [addCondition, FILLED]
 					- [addRule, URL, 'Must be a valid URL or leave empty.']
+			facebookGroup:
+				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityContactContact,cascade:"
+				label: Facebook Group
+				control: text
+				class: span6
 			contacts:
 				# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityContactContact,mappedBy:locations,cascade:"
 				label: Contacts
@@ -320,31 +226,15 @@ common:
 				inlineEditing: ContactContact:edit
 				inlineDeleting: ContactContact:delete
 				inlineCreating: ContactContact:add
-			drivingSide:
-				# anotations: "var:string,ORMColumn:type:string,nullable:true"
-				label: DrivingSide
-				control: text
-			pricesPizza:
-				# anotations: "var:price,ORMColumn:type:price,nullable:true"
-				label: PricesPizza
-				control: text
-			pricesDinner:
-				# anotations: "var:price,ORMColumn:type:price,nullable:true"
-				label: PricesDinner
-				control: text
-			airports:
-				# anotations: "var:text,ORMColumn:type:text,nullable:true"
-				label: Airports
-				control: text
 			details:
 				# anotations: "var:json,ORMColumn:type:json,nullable:true"
 				label: Details
 				control: neon
-			created:
-				# anotations: "var:datetime,ORMColumn:type:datetime"
-				label: Created
-				control: datePicker
-			updated:
-				# anotations: "var:datetime,ORMColumn:type:datetime"
-				label: Updated
-				control: datePicker
+			polygon:
+				# anotations: "var:json,ORMColumn:type:json,nullable:true"
+				label: Polygon
+				control: neon
+			clickMapData:
+				# anotations: "var:json,ORMColumn:type:json,nullable:true"
+				label: Click Map Data
+				control: neon
