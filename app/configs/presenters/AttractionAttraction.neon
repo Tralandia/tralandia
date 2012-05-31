@@ -36,7 +36,8 @@ common:
 			# 		callback: {class: \Service\Attraction\AttractionList, method: translatePairs, params: [id, [name, id]]}
 			name:
 				label: Name
-				control: phrase
+				control: 
+					type: phrase
 				inlineEditing: DictionaryPhrase:edit
 			description:
 				label: Description
