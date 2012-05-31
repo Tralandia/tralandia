@@ -302,7 +302,7 @@ class Reflector extends Nette\Object {
 				} else if(in_array($type, array('multiSelect'))) {
 					$fieldMask['ui']['control']['class'] = 'span6';
 				} else if(in_array($type, array('tinymce'))) {
-					$fieldMask['ui']['control']['class'] = 'span12';
+					$fieldMask['ui']['control']['class'] = 'span6';
 				} else if(in_array($type, array('neon'))) {
 					$fieldMask['ui']['control']['class'] = 'neon span6';
 				} else if(in_array($type, array('bricksList'))) {
