@@ -23,16 +23,28 @@ $(function() {
 
 	// Modals for Add New buttons
 	$('a.add-new').on('click', function(event) {
+
 		link = $(this).attr('data-link');
 		modal = $($(this).attr('href'));
 		modalBody = $('.modal-body', modal);
+		loading = $('<div class="loading-frame"></div>');
+
 		$(modal).modal();
+
 		$.ajax({
 			url: link,
-			error: function(e) { modalBody.html('Error ' + e.status + ': ' + e.statusText); },
-			beforeSend: function() { modalBody.html('loading...'); },
-			success: function(data) { modalBody.html(data); }
+			dataType: 'html',
+			error: function(e) {
+				modalBody.html('Error ' + e.status + ': ' + e.statusText);
+			},
+			beforeSend: function() {
+				modalBody.html(loading);
+			},
+			success: function(html) {
+				modalBody.html(html);
+			}
 		});
+
 		event.preventDefault();
 	});
 

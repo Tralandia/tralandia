@@ -13,7 +13,7 @@
             var template = $('<div class="span6 live-wysi">' +
                     '<div class="output">' +
                         '<div></div>' +
-                        '<span class="hide"></span>' +
+                        '<span class="loading-frame hide"></span>' +
                     '</div>' +
                     '<button class="btn btn-mini">Preview</button>' +
                 '</div>');

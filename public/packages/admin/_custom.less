@@ -83,7 +83,7 @@ a[href^="error:"] { background: red; color: white; }
 
 
 .modal { width: ((@gridFullWidth+20)-(1)); margin: -250px 0 0 -((@gridFullWidth+20)/2); position:absolute; }
-.modal .modal-body { padding:0; max-height:none; }
+.modal .modal-body { padding:0; max-height:none; min-height:150px; position: relative; }
 .modal .modal-body iframe { border:none; width:100%; }
 
 form.form .input-small { width:80%; margin-bottom:0; }
@@ -113,6 +113,8 @@ table.advanced-table tr th { #gradient > .vertical(@green, @greenDark); color:@w
 
 textarea.neon, div.neonOutput { float: left; height:300px; }
 div.neonOutput pre {  }
+
+.loading-frame { position:absolute; top:0; right:0; bottom:0; left:0; background:url(../images/loading.gif) center center no-repeat @black; .opacity(50); }
 
 .gallery-control { .well; position:relative; }
 .gallery-control .thumbnail-wrapper { float:left; width:190px; height:160px; }
@@ -149,7 +151,6 @@ div.neonOutput pre {  }
 .live-wysi {  }
 .live-wysi button { margin-top:5px; }
 .live-wysi .output { border:1px solid @greenBorder; padding:10px; overflow:auto; position:relative; }
-.live-wysi .output span { position:absolute; top:0; right:0; bottom:0; left:0; background:url(../images/loading.gif) center center no-repeat @black; .opacity(50); }
 
 .edit-info { text-align:center; color:@grayLight; }
 .edit-info span { font-family:Menlo, Monaco, "Courier New", monospace; margin:0 5px; color:@gray; }
