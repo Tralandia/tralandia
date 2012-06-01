@@ -8,7 +8,7 @@ use Nette\Security\User;
 abstract class BasePresenter extends \BasePresenter {
 	
 	protected function startup() {
-		$this->autoCanonicalize = FALSE;
+		// $this->autoCanonicalize = FALSE;
 		parent::startup();
 
 		if (!$this->user->isLoggedIn()) {
