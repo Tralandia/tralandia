@@ -6,7 +6,7 @@ $(function() {
 		mode: "textareas",
 		script_url : baseUrl+'/scripts/tinymce/tiny_mce.js',
 		theme : "advanced",
-		theme_advanced_buttons1 : 'bold,italic,underline,strikethrough,separator,forecolor,formatselect,separator,bullist,numlist,separator,undo,redo,separator,charmap,image',
+		theme_advanced_buttons1 : 'bold,italic,underline,strikethrough,link,separator,forecolor,formatselect,separator,bullist,numlist,separator,undo,redo,separator,charmap,image',
 		theme_advanced_buttons2 : '',
 		theme_advanced_buttons3 : '',
 		theme_advanced_text_colors : "A0B325,630,000000",
