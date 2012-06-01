@@ -501,7 +501,7 @@ abstract class Service extends Nette\Object implements IService {
 							try{
 								$this->{$name} = $serviceName::get($formValue);
 							} catch(\Nette\InvalidArgumentException $e) {
-								debug($formValue);
+								// debug($formValue);
 								throw new \Exception("Nevedel inicializovat servisu z '$formValue', bud si zle nastavil formular pre property '$name' ({$targetEntity->name}), alebo je chyba vo formulary samotnom...");
 							}
 						}
@@ -530,7 +530,7 @@ abstract class Service extends Nette\Object implements IService {
 				}
 			}
 		}
-		debug($this->getMainEntity());
+		// debug($this->getMainEntity());
 		$this->save();
 	}
 

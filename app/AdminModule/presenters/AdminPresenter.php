@@ -62,7 +62,7 @@ class AdminPresenter extends BasePresenter {
 		$service = $this->serviceName;
 		$this->service = $service::get($id);
 		$this->formMask = $this->reflector->getFormMask($this->service, $this->settings->params->form);
-		debug($this->service);
+		// debug($this->service);
 
 	}
 	
