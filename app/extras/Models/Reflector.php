@@ -296,12 +296,10 @@ class Reflector extends Nette\Object {
 			
 			if(isset($fieldMask['ui']['control']['columnClass'])) {
 				$fieldMask['ui']['controlOptions']['columnClass'] = $fieldMask['ui']['control']['columnClass'];
-				unset($fieldMask['ui']['control']['columnClass']);
 			}
 
 			if(isset($fieldMask['ui']['control']['columns'])) {
 				$fieldMask['ui']['controlOptions']['columns'] = $fieldMask['ui']['control']['columns'];
-				unset($fieldMask['ui']['control']['columns']);
 			}
 
 			if(isset($fieldMask['ui']['control']['label'])) {

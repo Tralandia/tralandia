@@ -45,28 +45,34 @@ common:
 			name:
 				# anotations: "var:string,ORMColumn:type:string,nullable:true"
 				label: Name
-				control: text
+				control:
+					type: text
 				class: span6
 			entityName:
 				# anotations: "var:string,ORMColumn:type:string,nullable:true"
 				label: Entity Name
-				control: text
+				control:
+					type: text
 			entityAttribute:
 				# anotations: "var:string,ORMColumn:type:string,nullable:true"
 				label: Entity Attribute
-				control: text
+				control:
+					type: text
 			requiredLanguages:
 				# anotations: "var:string,ORMColumn:type:string"
 				label: Required Languages
-				control: text
+				control:
+					type: text
 			translationLevelRequirement:
 				# anotations: "var:integer,ORMColumn:type:integer"
 				label: Translation Level Requirement
-				control: text
+				control:
+					type: text
 			helpForTranslator:
 				# anotations: "var:string,ORMColumn:type:string,nullable:true"
 				label: HelpForTranslator
-				control: text
+				control:
+					type: text
 				class: span6
 			multitranslationRequired:
 				# anotations: "var:boolean,ORMColumn:type:boolean"

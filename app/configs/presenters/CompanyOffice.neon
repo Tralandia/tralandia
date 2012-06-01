@@ -10,10 +10,10 @@ common:
 			company:
 				label: Company
 				mapper: e.id
-			# countries:
-			# 	label: Countries
-			# 	mapper: e.countries
-			# 	callback: {method: translateToMany, params: [countries, [name, id], ', ']}
+			countries:
+				label: Countries
+				mapper: e.id
+				callback: {class: %this%, method: getAttributeForGrid, params: [countries, name, ', ']}
 			# signature:
 			# 	label: Signature
 			# 	mapper: e.signature
