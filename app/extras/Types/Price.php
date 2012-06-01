@@ -15,15 +15,16 @@ class Price extends \Nette\Object {
 		if(is_array($amount)) {
 			$data = $amount;
 			$amount = array_shift($data);
+			if ($amount === NULL) $amount = 0;
 			$currency = array_shift($data);
 		}
 
-		if($amount) {
-			$this->setAmount($amount, $currency);
-		}
+		$this->setAmount($amount, $currency);
 	}
 
-	public function setAmount($amount, $currency = 1) {
+	public function setAmount($amount = 0, $currency = 1) {
+		if ($amount === NULL) $amount = 0;
+
 		$this->amounts = array();
 		if (is_numeric($currency) && $currency > 0) {
 			$currencyId = (int)$currency;
@@ -67,8 +68,12 @@ class Price extends \Nette\Object {
 	}
 
 	public static function decode($value) {
-		$value = \Nette\Utils\Json::decode($value, true);
-		return new static($value);
+		if(!$value) {
+			$value = \Nette\Utils\Json::decode($value, true);
+			return new static($value);
+		} else {
+			return new static();
+		}
 	}
 
 	private function convertTo($currency) {

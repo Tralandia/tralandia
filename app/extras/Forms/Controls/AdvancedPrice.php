@@ -45,8 +45,7 @@ class AdvancedPrice extends SelectBox {
 		return $this;
 	}
 
-	public function getValue()
-	{
+	public function getValue() {
 		return is_array($this->value) ? $this->value : NULL;
 	}
 
