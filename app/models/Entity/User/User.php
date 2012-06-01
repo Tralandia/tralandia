@@ -523,6 +523,15 @@ class User extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
+	 * @return \Entity\User\User
+	 */
+	public function unsetInvoicingEmail() {
+		$this->invoicingEmail = NULL;
+
+		return $this;
+	}
+		
+	/**
 	 * @return \Extras\Types\Email|NULL
 	 */
 	public function getInvoicingEmail() {
@@ -535,6 +544,15 @@ class User extends \Entity\BaseEntityDetails {
 	 */
 	public function setInvoicingPhone(\Extras\Types\Phone $invoicingPhone) {
 		$this->invoicingPhone = $invoicingPhone;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\User\User
+	 */
+	public function unsetInvoicingPhone() {
+		$this->invoicingPhone = NULL;
 
 		return $this;
 	}
@@ -557,6 +575,15 @@ class User extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
+	 * @return \Entity\User\User
+	 */
+	public function unsetInvoicingUrl() {
+		$this->invoicingUrl = NULL;
+
+		return $this;
+	}
+		
+	/**
 	 * @return \Extras\Types\Url|NULL
 	 */
 	public function getInvoicingUrl() {
@@ -569,6 +596,15 @@ class User extends \Entity\BaseEntityDetails {
 	 */
 	public function setInvoicingAddress(\Extras\Types\Address $invoicingAddress) {
 		$this->invoicingAddress = $invoicingAddress;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\User\User
+	 */
+	public function unsetInvoicingAddress() {
+		$this->invoicingAddress = NULL;
 
 		return $this;
 	}

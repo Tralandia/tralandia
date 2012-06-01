@@ -179,6 +179,10 @@ parameters:
 				list:
 				edit:
 				add:
+			Admin:SeoBackLink:
+				list:
+				edit:
+				add:
 			Admin:SeoTitleSuffix:
 				list:
 				edit:

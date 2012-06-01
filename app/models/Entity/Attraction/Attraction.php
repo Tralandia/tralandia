@@ -173,6 +173,15 @@ class Attraction extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
+	 * @return \Entity\Attraction\Attraction
+	 */
+	public function unsetLatitude() {
+		$this->latitude = NULL;
+
+		return $this;
+	}
+		
+	/**
 	 * @return \Extras\Types\Latlong|NULL
 	 */
 	public function getLatitude() {
@@ -190,6 +199,15 @@ class Attraction extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
+	 * @return \Entity\Attraction\Attraction
+	 */
+	public function unsetLongitude() {
+		$this->longitude = NULL;
+
+		return $this;
+	}
+		
+	/**
 	 * @return \Extras\Types\Latlong|NULL
 	 */
 	public function getLongitude() {
@@ -202,6 +220,15 @@ class Attraction extends \Entity\BaseEntityDetails {
 	 */
 	public function setContacts(\Extras\Types\Contacts $contacts) {
 		$this->contacts = $contacts;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Attraction\Attraction
+	 */
+	public function unsetContacts() {
+		$this->contacts = NULL;
 
 		return $this;
 	}
