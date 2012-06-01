@@ -454,7 +454,6 @@ abstract class Service extends Nette\Object implements IService {
 
 				} else {
 					$data[$name] = $this->{$name};
-					// debug($data[$name]);
 					$form[$name]->setDefaultValue($data[$name]);
 				}				
 			}
@@ -505,6 +504,7 @@ abstract class Service extends Nette\Object implements IService {
 					}
 				} else {
 					$columnType = $property->column->type;
+
 					if($columnType == 'latlong') {
 						$formValue = new \Extras\Types\Latlong($formValue);
 					} else if($columnType == 'price') {
@@ -513,6 +513,8 @@ abstract class Service extends Nette\Object implements IService {
 						$formValue = new \Extras\Types\Phone($formValue);
 					} else if($columnType == 'url') {
 						$formValue = new \Extras\Types\Url($formValue);
+					} else if($columnType == 'address') {
+						$formValue = new \Extras\Types\Address($formValue);
 					}
 					$this->{$name} = $formValue;
 				}
