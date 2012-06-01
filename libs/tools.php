@@ -177,36 +177,40 @@ class Tools {
 
 
 	public static function reorganizeArray(array $list, $columnCount = 3) {
-		$i=1;
-		$counter=0;
-		$tempList = array();
-		$arrayKeys = array_keys($list);
-		debug($arrayKeys);
-		$rows = ceil(count($arrayKeys) / $columnCount);
-		for ($i = 0; $i < $rows; $i++) {
-			$counter = $i;
-			for ($c = 0; $c < $columnCount; $c++) {
-				$index = $c + pow(2, $i);
-				debug($c, $i, pow(2,$i), $index);
-				if(!isset($arrayKeys[$index])) continue;
-				$tempList[] = $arrayKeys[$index];
-			}
-		}
-		// foreach ($list as $key => $item) {
-		// 	$row = $i <= $columnCount ? $i : $i=1;
-		// 	$tempList[$row][$key] = $item;
-		// 	$i++;
-		// 	$counter++;
+		# @todo tot treba dorobit
+		// $i=1;
+		// $counter=0;
+		// $tempList = array();
+		// $arrayKeys = array_keys($list);
+		// debug($arrayKeys);
+		// $rows = ceil(count($arrayKeys) / $columnCount);
+		// for ($i=0; $i < $rows; $i++) { 
+		// 	$index = $i;
+		// 	for ($j=0; $j < $columnCount; $j++) { 
+		// 		// debug($index);
+		// 		if(!isset($arrayKeys[$index])) break 2;
+		// 		$tempList[$i][] = $arrayKeys[$index];
+		// 		//unset($arrayKeys[$index]);
+		// 		$index += $columnCount;
+		// 	}
+		// 	//$arrayKeys = array_values($arrayKeys);
+		// 	//debug($arrayKeys);
 		// }
-		debug($tempList);
-		$finalList = array();
-		foreach ($tempList as $items) {
-			foreach ($items as $itemKey => $item) {
-				$finalList[$itemKey] = array_shift($items);
-				break;
-			}
-		}
-		return $finalList;
+		// // foreach ($list as $key => $item) {
+		// // 	$row = $i <= $columnCount ? $i : $i=1;
+		// // 	$tempList[$row][$key] = $item;
+		// // 	$i++;
+		// // 	$counter++;
+		// // }
+		// debug($tempList);
+		// $finalList = array();
+		// foreach ($tempList as $items) {
+		// 	foreach ($items as $itemKey => $item) {
+		// 		$finalList[$itemKey] = array_shift($items);
+		// 		break;
+		// 	}
+		// }
+		return $list;
 	}
 
 }
