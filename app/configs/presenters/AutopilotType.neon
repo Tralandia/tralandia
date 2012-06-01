@@ -46,23 +46,28 @@ common:
 				control: 
 					type: text
 					class: span2
-			mission:
-				label: Mission
-				control: tinymce
-				startNewRow: false
 			stackable:
 				label: Stackable
-				control: text
+				control: 
+					type: text
 				startNewRow: true
 			timeLimit:
 				label: Time Limit
-				control: text
+				control: 
+					type: text
 				description: "In minutes."
+			mission:
+				label: Mission
+				control: 
+					type: tinymce
+				startNewRow: true
 			validation:
 				label: Validation
-				control: neon
+				control: 
+					type: neon
 				startNewRow: true
 			actions:
 				label: Actions
-				control: neon
+				control: 
+					type: neon
 				startNewRow: false

@@ -7,6 +7,8 @@ common:
 			id:
 				label: ID
 				mapper: e.id
+				cellStyle: "text-align:right; padding-right:20px;"
+				headerStyle: "text-align:right; padding-right:20px; width: 50px;"
 			name:
 				label: Name
 				mapper: e.id
@@ -14,12 +16,14 @@ common:
 			oldId:
 				label: Old Id
 				mapper: e.oldId
-				cellStyle: text-align:right;
+				cellStyle: "text-align:right;"
 				headerStyle: text-align:right;
 			
 	form:
 		fields:
 			name:
 				label: Name
-				control: phrase
+				class: span6
+				control: 
+					type: phrase
 				inlineEditing: DictionaryPhrase:edit

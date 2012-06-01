@@ -224,7 +224,7 @@ class BaseImport {
 				$tableName = trim($tableName, '_');
 				$tableName = strtolower($tableName);
 				$r = qNew('select id from '.$tableName.' order by id DESC');
-				debug('select id from '.$tableName.' order by id DESC');
+				//debug('select id from '.$tableName.' order by id DESC');
 				while ($x = mysql_fetch_array($r)) {
 					$serviceName = '\Service'.$key2;
 					$s = $serviceName::get($x['id']);
@@ -328,7 +328,7 @@ class BaseImport {
 
 		$dictionaryType = D\Type::getByEntityNameAndEntityAttribute($entityName, $entityAttribute);
 		if ($dictionaryType) {
-			debug('iba vraciam premennu '.$dictionaryType->entityName.'->'.$dictionaryType->entityAttribute);
+			//debug('iba vraciam premennu '.$dictionaryType->entityName.'->'.$dictionaryType->entityAttribute);
 			return $dictionaryType;
 		} else {
 			eval('$level = \Entity\Dictionary\Type::TRANSLATION_LEVEL_'.strtoupper($level).';');

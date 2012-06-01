@@ -26,32 +26,40 @@ common:
 		fields:
 			name:
 				label: Name
-				control: text
+				control: 
+					type: text
 			address:
 				label: Address
-				control: text
+				control: 
+					type: text
 			registrator:
 				class: span6
 				label: Registrator
-				control: phrase
+				control: 
+					type: phrase
 				inlineEditing: DictionaryPhrase:edit
 			companyId:
 				startNewRow: true
 				label: CompanyId
-				control: text
+				control: 
+					type: text
 			companyVatId:
 				label: CompanyVatId
-				control: text
+				control: 
+					type: text
 			vat:
 				label: Vat
-				control: text
+				control: 
+					type: text
 			bankAccounts:
 				startNewRow: true
 				label: BankAccounts
-				control: checkboxList
+				control: 
+					type: checkboxList
 			countries:
 				label: Countries
-				control: bricksList
+				control: 
+					type: bricksList
 				inlineEditing: LocationLocation:edit
 				inlineCreating: LocationLocation:add
 				class: span6
@@ -66,6 +74,7 @@ common:
 			# 			arguments: [id, [name, id]]
 			# 	inlineEditing: CompanyOffice:edit
 			# 	inlineCreating: CompanyOffice:add
-			details:
-				label: Details
-				control: json
+			# details:
+			# 	label: Details
+			# 	control: 
+			# 		type: json

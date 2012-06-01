@@ -95,7 +95,6 @@ class ImportAttractions extends BaseImport {
 							$attraction->addMedium($medium);
 							$medium->setContentFromUrl('http://www.tralandia.com/u/'.$value);
 							debug($medium);
-							//$medium = \Service\Medium\Medium::createFromUrl('http://www.tralandia.com/u/'.$value);
 						}
 					} else {
 						$attraction->addMedium($medium);

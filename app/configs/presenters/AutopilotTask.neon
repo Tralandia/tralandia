@@ -63,12 +63,8 @@ common:
 				control: 
 					type: text
 				class: span6
-			mission:
-				label: Mission
-				control:
-					type: tinymce
-				startNewRow: false
 			user:
+				startNewRow: true
 				label: User
 				class: span2
 				control: 
@@ -81,7 +77,7 @@ common:
 				class: span2
 				control: 
 					type: select
-					callback: {class: \Service\Location\LocationList, method: getTranslatedPairs, params: [id, name]}
+					callback: {class: \Service\Location\LocationList, method: getTranslatedPairs, params: [id, name, [type: 8], [slug: ASC]]}
 					class: span2
 					prompt: None
 			userLanguage:
@@ -91,6 +87,7 @@ common:
 					type: select
 					class: span2
 					prompt: None
+					callback: {class: \Service\Dictionary\LanguageList, method: getTranslatedPairs, params: [id, name, [supported: 1], [iso: ASC]]}
 			userLanguageLevel:
 				label: User Language Level
 				class: span2
@@ -104,6 +101,7 @@ common:
 				control: 
 					type: select
 					class: span2
+					callback: {class: \Service\User\RoleList, method: getPairs, params: [id, name, NULL, [name: ASC]]}
 			usersExcluded:
 				label: Users Excluded
 				class: span2
@@ -128,10 +126,17 @@ common:
 			durationPaid:
 				label: Duration Paid
 				class: span2
+				description: "In minutes."
 				control: 
 					type: text
 					class: span2
+			mission:
+				startNewRow: true
+				label: Mission
+				control:
+					type: tinymce
 			links:
+				startNewRow: true
 				label: Links
 				control:
 					type: neon

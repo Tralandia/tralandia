@@ -33,36 +33,45 @@ common:
 		fields:
 			company:
 				label: Company
-				control: select
+				control: 
+					type: select
 			countries:
 				label: Countries using this bank account
 				class: span9
-				control: bricksList
+				control: 
+					type: bricksList
 				inlineEditing: LocationLocation:edit
 				inlineCreating: LocationLocation:add
 				startNewRow: false
 			bankName:
 				label: BankName
-				control: text
+				control: 
+					type: text
 				startNewRow: true
 			bankAddress:
 				label: BankAddress
-				control: text
+				control: 
+					type: text
 			bankSwift:
 				label: BankSwift
-				control: text
+				control: 
+					type: text
 			accountName:
 				label: AccountName
-				control: text
+				control: 
+					type: text
 			accountNumber:
 				label: AccountNumber
-				control: text
+				control: 
+					type: text
 				startNewRow: true
 			accountIban:
 				label: AccountIban
-				control: text
+				control: 
+					type: text
 			notes:
 				startNewRow: true
 				label: Notes
-				control: text
+				control: 
+					type: text
 				class: span12

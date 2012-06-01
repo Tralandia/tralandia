@@ -1,13 +1,3 @@
-			locations:
-				label: Locations
-				control: bricksList
-				inlineEditing: LocationLocation:edit
-				inlineCreating: LocationLocation:add
-			created:
-				label: Created
-				control: datePicker
-
-
 				validation:
 					- [addRule, PATTERN, 'Must be exactly 2 characters long.', '[a-z]{2}']
 					#- [addRule, [\Service\Dictionary\Language, validateUniqueIso], 'ISO code must be unique.']
@@ -50,3 +40,5 @@
 					class: span2
 					type: select
 					options: [class: \Entity\Dictionary\Type, pattern: TRANSLATION_LEVEL_.+]
+
+				description: "In minutes."

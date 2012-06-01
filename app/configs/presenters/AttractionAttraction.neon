@@ -19,21 +19,14 @@ common:
 				label: Name
 				mapper: e.id
 				callback: {class: %this%, method: getAttributeForGrid, params: [name]}
-			# latitude:
-			# 	label: Latitude
-			# 	mapper: e.latitude
-			# longitude:
-			# 	label: Longitude
-			# 	mapper: e.longitude
 			
 	form:
 		fields:
-			# type:
-			# 	# anotations: "var:Collection,ORMManyToOne:targetEntity:Type"
-			# 	label: Type
-			# 	control: 
-			# 		type: select
-			# 		callback: {class: \Service\Attraction\AttractionList, method: translatePairs, params: [id, [name, id]]}
+			type:
+				label: Type
+				control: 
+					type: select
+					callback: {class: \Service\Attraction\TypeList, method: getTranslatedPairs, params: [id, name, NULL, [name: ASC]]}
 			name:
 				label: Name
 				control: 
@@ -41,17 +34,24 @@ common:
 				inlineEditing: DictionaryPhrase:edit
 			description:
 				label: Description
-				control: phrase
+				control: 
+					type: phrase
 				inlineEditing: DictionaryPhrase:edit
 				class: span6
 			country:
-				class: span6
 				label: Country
 				control:  
 					type: multiSelect
-					addClass: span6
-					callback: {class: \Service\Location\LocationList, method: getPairs, params: [id, [name, id], [type: 3]]}
+					callback: {class: \Service\Location\LocationList, method: getTranslatedPairs, params: [id, name, [type: 8], [name: ASC]]}
 				startNewRow: true
+			latitude:
+				label: Latitude
+				control: 
+					type: text
+			longitude:
+				label: Longitude
+				control: 
+					type: text
 			# contacts:
 			# 	# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityCurrency,mappedBy:locations,cascade:"
 			# 	label: Contacts
@@ -61,12 +61,6 @@ common:
 			# 	inlineDeleting: ContactContact:delete
 			# 	inlineCreating: ContactContact:add
 			# 	startNewRow: false
-			latitude:
-				label: Latitude
-				control: text
-			longitude:
-				label: Longitude
-				control: text
 
 			# media:
 			# 	label: Media

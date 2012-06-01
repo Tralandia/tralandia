@@ -24,7 +24,8 @@ common:
 		fields:
 			name:
 				label: Name
-				control: phrase
+				control: 
+					type: phrase
 				inlineEditing: Phrase:edit
 				inlineCreating: Phrase:add
 			iso:
@@ -36,13 +37,15 @@ common:
 					type: text
 			defaultCollation:
 				label: Default Collation
-				control: text
+				control: 
+					type: text
 			supported:
 				label: Supported
 				control: 
 					type: checkbox
 					label: Supported / Translated
 			multitranslationOptions:
+				startNewRow: true
 				class: span3 json-list
 				label: Multitranslation Options
 				control:
@@ -51,14 +54,12 @@ common:
 			genderNumberOptions:
 				class: span3 json-list
 				label: Gender / Number Options
-				startNewRow: FALSE
 				control:
 					type: json
 					class: span3
 			ppcPatterns:
 				class: span6 json-list
 				label: Ppc Patterns
-				startNewRow: FALSE
 				control:
 					type: table
 					class: span6
