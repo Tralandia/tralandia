@@ -331,6 +331,8 @@ class Reflector extends Nette\Object {
 				$fieldMask['ui']['control']['type'] = 'AdvancedNeon';
 			} else if($type == 'bricksList') {
 				$fieldMask['ui']['control']['type'] = 'AdvancedBricksList';
+			} else if($type == 'gmap') {
+				$fieldMask['ui']['control']['type'] = 'AdvancedGmap';
 			}
 
 			if($associationType = $this->getAssociationType($property)) {
@@ -553,6 +555,7 @@ class Reflector extends Nette\Object {
 					$control->setColumns($ui->control->columns);
 					$control->setRows($ui->control->rows);
 				}
+				// debug($ui->control->type, $control);
 				// debug($propertyName, \Nette\Diagnostics\Debugger::timer($propertyName));
 			}
 		}

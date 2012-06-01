@@ -20,6 +20,7 @@ Extras\Forms\Controls\AdvancedBricksList::register();
 Extras\Forms\Controls\AdvancedCheckBox::register();
 Extras\Forms\Controls\AdvancedCheckBoxList::register();
 Extras\Forms\Controls\AdvancedFileManager::register();
+Extras\Forms\Controls\AdvancedGmap::register();
 Extras\Forms\Controls\AdvancedJson::register();
 Extras\Forms\Controls\AdvancedNeon::register();
 Extras\Forms\Controls\AdvancedSelectBox::register();

@@ -41,17 +41,15 @@ common:
 			country:
 				label: Country
 				control:  
-					type: multiSelect
+					type: select
 					callback: {class: \Service\Location\LocationList, method: getTranslatedPairs, params: [id, name, [type: 8], [name: ASC]]}
 				startNewRow: true
 			latitude:
-				label: Latitude
+				label: Position
 				control: 
-					type: text
-			longitude:
-				label: Longitude
-				control: 
-					type: text
+					type: gmap
+					latitude: latitude
+					longitude: longitude
 			# contacts:
 			# 	# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityCurrency,mappedBy:locations,cascade:"
 			# 	label: Contacts

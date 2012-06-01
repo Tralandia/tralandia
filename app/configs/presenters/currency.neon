@@ -1,7 +1,6 @@
 common:
 	service: Service\Currency
 	title: Currency
-	h1: Currency
 	grid:
 		columns:
 			id:
@@ -10,7 +9,7 @@ common:
 			name:
 				label: Name
 				mapper: e.id
-				callback: {method: translateColumn, params: name}
+				callback: {class: %this%, method: getAttributeForGrid, params: [name]}
 			iso:
 				label: Iso
 				mapper: e.iso
