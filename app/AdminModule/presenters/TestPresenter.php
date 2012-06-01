@@ -13,6 +13,10 @@ class TestPresenter extends BasePresenter {
 		
 	}
 
+	public function actionContactsControl() {
+		
+	}
+
 	/**
 	 * @return \AdminModule\Components\GaleryManager
 	 */

@@ -58,14 +58,10 @@ parameters:
 				js: PhraseControl/jquery.phraseControl.js
 			liveWysi:
 				js: LiveWysi/jquery.liveWysi.js
+			contactsControl:
+				js: ContactsControl/jquery.contactsControl.js
 
 		sets:
-			'Admin:Test':
-				- %webloader.packages.jQuery%
-				- %webloader.packages.jQueryUI%
-				- %webloader.packages.fileUpload%
-				- %webloader.packages.admin%
-				- %webloader.packages.bootstrap%
 
 			'Admin:Ap':
 				- %webloader.packages.jQuery%
@@ -78,6 +74,7 @@ parameters:
 				- %webloader.packages.liveQuery%
 				- %webloader.packages.jQueryUI%
 				- %webloader.packages.nette%
+				- %webloader.packages.contactsControl%
 				- %webloader.packages.phraseControl%
 				- %webloader.packages.liveWysi%
 				- %webloader.packages.admin%
