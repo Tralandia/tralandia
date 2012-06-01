@@ -76,6 +76,7 @@ class Medium extends \Service\BaseService {
 		$this->oldUrl = $uri;
 		$this->details = $this->getFileDetails($file);
 		$this->sort = 1;
+		debug($this);
 		$this->save();
 
 		$mediumType = \Service\Medium\Type::getByName($this->details['mime']);

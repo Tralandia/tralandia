@@ -94,7 +94,6 @@ class ImportAttractions extends BaseImport {
 						if ($medium) {
 							$attraction->addMedium($medium);
 							$medium->setContentFromUrl('http://www.tralandia.com/u/'.$value);
-							debug($medium);
 						}
 					} else {
 						$attraction->addMedium($medium);
