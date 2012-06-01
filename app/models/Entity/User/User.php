@@ -77,16 +77,10 @@ class User extends \Entity\BaseEntityDetails {
 	protected $invoicingSalutation;
 
 	/**
-	 * @var string
-	 * @ORM\Column(type="string", nullable=true)
+	 * @var name
+	 * @ORM\Column(type="name", nullable=true)
 	 */
-	protected $invoicingFirstName;
-
-	/**
-	 * @var string
-	 * @ORM\Column(type="string", nullable=true)
-	 */
-	protected $invoicingLastName;
+	protected $invoicingName;
 
 	/**
 	 * @var string
