@@ -333,6 +333,8 @@ class Reflector extends Nette\Object {
 				$fieldMask['ui']['control']['type'] = 'AdvancedBricksList';
 			} else if($type == 'gmap') {
 				$fieldMask['ui']['control']['type'] = 'AdvancedGmap';
+			} else if($type == 'price') {
+				$fieldMask['ui']['control']['type'] = 'AdvancedPrice';
 			}
 
 			if($associationType = $this->getAssociationType($property)) {
@@ -355,7 +357,7 @@ class Reflector extends Nette\Object {
 				$fieldMask['column']['type'] = $property->getAnnotation(self::ANN_COLUMN)->type;
 			}
 
-			if(in_array($type, array('select', 'checkboxList', 'multiSelect', 'bricksList')) && (!isset($fieldMask['ui']['control']['options']) || !is_array($fieldMask['ui']['control']['options']))) {
+			if(in_array($type, array('select', 'checkboxList', 'multiSelect', 'bricksList', 'price')) && (!isset($fieldMask['ui']['control']['options']) || !is_array($fieldMask['ui']['control']['options']))) {
 				if(!isset($fieldMask['ui']['control']['callback'])) {
 					$fieldMask['ui']['control']['callback'] = 'getPairs';
 				}
@@ -501,7 +503,7 @@ class Reflector extends Nette\Object {
 
 				if(isset($ui->control->disabled)) $control->setDisabled($ui->control->disabled);
 				
-				if ($control instanceof \Extras\Forms\Controls\AdvancedSelectBox 
+				if ($control instanceof \Nette\Forms\Controls\SelectBox 
 					|| $control instanceof \Extras\Forms\Controls\AdvancedCheckBoxList
 					|| $control instanceof \Extras\Forms\Controls\AdvancedBricksList
 					|| $control instanceof \Nette\Forms\Controls\MultiSelectBox) 

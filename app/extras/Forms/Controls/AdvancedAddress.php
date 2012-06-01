@@ -13,7 +13,7 @@ use Nette\Utils\Html,
 class AdvancedAddress extends BaseControl {
 
 	public function setValue($value) {
-		if(!is_array($value)) $value = (array) $value;
+		if(!is_array($value)) $value = $value->toArray();
 		$this->value = $value;
 		return $this;
 	}
@@ -45,8 +45,8 @@ class AdvancedAddress extends BaseControl {
 	 */
 	public static function register()
 	{
-		Container::extensionMethod('addAdvancedAddress', function (Container $_this, $name, $label, array $structure = NULL) {
-			return $_this[$name] = new AdvancedAddress($label, $structure);
+		Container::extensionMethod('addAdvancedAddress', function (Container $_this, $name, $label) {
+			return $_this[$name] = new AdvancedAddress($label);
 		});
 	}
 

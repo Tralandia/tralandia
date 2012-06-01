@@ -182,7 +182,11 @@ common:
 				# anotations: "var:price,ORMColumn:type:price,nullable:true"
 				label: "Pizza (average price)"
 				control: 
-					type: text
+					type: price
+					callback:
+						class: \Service\CurrencyList
+						method: getPairs
+						params: [id, iso]
 				class: span2
 			pricesDinner:
 				# anotations: "var:price,ORMColumn:type:price,nullable:true"
@@ -190,6 +194,7 @@ common:
 				control: 
 					type: text
 				class: span2
+				startNewRow: TRUE
 			phonePrefix:
 				# anotations: "var:string,ORMColumn:type:string,nullable:true"
 				label: Phone Prefix

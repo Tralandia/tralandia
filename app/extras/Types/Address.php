@@ -41,7 +41,7 @@ class Address extends \Nette\Object implements IContact {
 		$this->country = $country;
 	}
 
-	public function _toArray() {
+	public function toArray() {
 		return array(
 			self::ADDRESS => $this->address,
 			self::ADDRESS2 => $this->address2,
@@ -52,7 +52,7 @@ class Address extends \Nette\Object implements IContact {
 	}
 
 	public function encode() {
-		return \Nette\Utils\Json::encode((array) $this);
+		return \Nette\Utils\Json::encode($this->toArray());
 	}
 
 	public static function decode($data) {

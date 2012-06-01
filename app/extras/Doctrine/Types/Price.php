@@ -22,11 +22,11 @@ class Price extends Type {
 	}
 
 	public function convertToDatabaseValue($value, AbstractPlatform $platform) {
-		if (!is_string($value) && $value !== NULL) {
-			debug($value);
-			$value = $value->encode();
+		if ($value) {
+			return $value->encode();
+		} else {
+			return NULL;
 		}
-		return $value;
 	}
 /*
 	public function canRequireSQLConversion() {
