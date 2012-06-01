@@ -28,8 +28,8 @@ class Currency extends \Entity\BaseEntity {
 	protected $iso;
 
 	/**
-	 * @var decimal
-	 * @ORM\Column(type="decimal", nullable=true)
+	 * @var float
+	 * @ORM\Column(type="float", nullable=true)
 	 */
 	protected $exchangeRate;
 

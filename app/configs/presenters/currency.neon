@@ -29,21 +29,26 @@ common:
 		fields:
 			iso:
 				label: Iso
-				control: text
+				control:
+					type: text
 
 	form:
 		fields:
 			name:
 				label: Name
-				control: phrase
+				control:
+					type: phrase
 				addClass: 'myPhraseClass'
 				inlineEditing: DictionaryPhrase:edit
 			iso:
 				label: Iso
-				control: text
+				control:
+					type: text
 			exchangeRate:
 				label: ExchangeRate
-				control: text
+				control:
+					type: text
 			rounding:
 				label: Rounding
-				control: text
+				control:
+					type: text
