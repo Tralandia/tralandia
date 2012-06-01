@@ -23,6 +23,7 @@ Extras\Forms\Controls\AdvancedFileManager::register();
 Extras\Forms\Controls\AdvancedGmap::register();
 Extras\Forms\Controls\AdvancedJson::register();
 Extras\Forms\Controls\AdvancedNeon::register();
+Extras\Forms\Controls\AdvancedPrice::register();
 Extras\Forms\Controls\AdvancedSelectBox::register();
 Extras\Forms\Controls\AdvancedTable::register();
 Extras\Forms\Controls\AdvancedTextInput::register();

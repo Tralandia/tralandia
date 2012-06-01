@@ -460,6 +460,7 @@ abstract class Service extends Nette\Object implements IService {
 					));					
 				} else {
 					$data[$name] = $this->{$name};
+					// debug($data[$name]);
 					$form[$name]->setDefaultValue($data[$name]);
 				}				
 			}
@@ -525,12 +526,13 @@ abstract class Service extends Nette\Object implements IService {
 						$formValue = new \Extras\Types\Url($formValue);
 					} else if($columnType == 'address') {
 						$formValue = new \Extras\Types\Address($formValue);
+						debug((array) $formValue);
 					}
 					$this->{$name} = $formValue;
 				}
 			}
 		}
-		// debug($this->getMainEntity());
+		debug($this->getMainEntity());
 		$this->save();
 	}
 
