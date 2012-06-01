@@ -45,23 +45,25 @@ common:
 					type: checkbox
 					label: Supported / Translated
 			multitranslationOptions:
-				startNewRow: true
-				class: span3 json-list
+				class: span8 json-list
 				label: Multitranslation Options
 				control:
-					type: json
-					class: span3
-			genderNumberOptions:
-				class: span3 json-list
-				label: Gender / Number Options
-				control:
-					type: json
-					class: span3
+					type: table
+					class: span8
+					columns: [Technical Name, Translator Hint, Criteria PHP, Primary Plural]
+					rows: "+5"
 			ppcPatterns:
-				class: span6 json-list
+				class: span4 json-list
 				label: Ppc Patterns
 				control:
 					type: table
-					class: span6
+					class: span4
 					columns: [Pattern]
 					rows: "+5"
+			genderNumberOptions:
+				startNewRow: true
+				class: span2 json-list
+				label: Gender / Number
+				control:
+					type: json
+					class: span2
