@@ -1,3 +1,4 @@
+
 (function($) {
 
     $.fn.phraseControl = function(options) {

@@ -1,3 +1,4 @@
+
 (function($) {
 
     $.fn.liveWysi = function(options) {
