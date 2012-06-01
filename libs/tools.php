@@ -177,21 +177,23 @@ class Tools {
 
 
 	public static function reorganizeArray(array $list, $columnCount = 3) {
+		//$list = array(1, 2, 3, 4, 5, 6, 7, 8, 9);
+		//$columnCount = 4;
+		
 		$newList = array();
 		foreach ($list as $key => $value) {
-			$newList[] = array($key => $value);
+			$newList[] = array($key, $value);
 		}
 
-		$list = array(1, 2, 3, 4, 5, 6, 7, 8, 9);
-		$columnCount = 4;
 
 		$count = count($list);
-		debug('count', $count);
-		debug('columnCount', $columnCount);
+		#debug('count', $count);
+		#debug('columnCount', $columnCount);
+		$totalRowCount = ceil($count / $columnCount);
 		$fullRowCount = floor($count / $columnCount);
-		debug($fullRowCount);
+		#debug($fullRowCount);
 		$lastRowRemainder = $count - $fullRowCount*$columnCount;
-		debug($lastRowRemainder);
+		#debug($lastRowRemainder);
 
 		$columns = array();
 		for ($i=0; $i < $columnCount ; $i++) {
@@ -202,44 +204,30 @@ class Tools {
 				$columns[] = $fullRowCount;
 			}
 		}
-		debug($columns);
+		#debug($columns);
 
+		$organizedList = array();
+		$row = 0;
+		for ($row=0; $row < $totalRowCount; $row++) { 
+			$index = 0;
+			$organizedList[] = $newList[$row];
+			for ($ii=0; $ii < ($columnCount-1); $ii++) { 
+				$index = ($index + $columns[$ii]);
+				if (isset($newList[$row + $index])) {
+					$organizedList[] = $newList[$row + $index];
+				} else {
+					break 2;
+				}
+			}
+		}
 
+		$finalList = array();
+		foreach ($organizedList as $key => $value) {
+			$finalList[$value[0]] = $value[1];
+		}
+		//debug($finalList);
 
-		# @todo tot treba dorobit
-		// $i=1;
-		// $counter=0;
-		// $tempList = array();
-		// $arrayKeys = array_keys($list);
-		// debug($arrayKeys);
-		// $rows = ceil(count($arrayKeys) / $columnCount);
-		// for ($i=0; $i < $rows; $i++) { 
-		// 	$index = $i;
-		// 	for ($j=0; $j < $columnCount; $j++) { 
-		// 		// debug($index);
-		// 		if(!isset($arrayKeys[$index])) break 2;
-		// 		$tempList[$i][] = $arrayKeys[$index];
-		// 		//unset($arrayKeys[$index]);
-		// 		$index += $columnCount;
-		// 	}
-		// 	//$arrayKeys = array_values($arrayKeys);
-		// 	//debug($arrayKeys);
-		// }
-		// // foreach ($list as $key => $item) {
-		// // 	$row = $i <= $columnCount ? $i : $i=1;
-		// // 	$tempList[$row][$key] = $item;
-		// // 	$i++;
-		// // 	$counter++;
-		// // }
-		// debug($tempList);
-		// $finalList = array();
-		// foreach ($tempList as $items) {
-		// 	foreach ($items as $itemKey => $item) {
-		// 		$finalList[$itemKey] = array_shift($items);
-		// 		break;
-		// 	}
-		// }
-		return $list;
+		return $finalList;
 	}
 
 }
