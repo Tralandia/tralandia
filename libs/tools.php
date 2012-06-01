@@ -15,6 +15,7 @@ FormContainer::extensionMethod('addComboSelect', 'Tools::addComboSelect');
 Selection::extensionMethod('fetchTree', 'Tools::selectionTree');
 Image::extensionMethod('resizeCrop', 'Tools::resizeCrop');
 
+Extras\Forms\Controls\AdvancedAddress::register();
 Extras\Forms\Controls\AdvancedBricksList::register();
 Extras\Forms\Controls\AdvancedCheckBox::register();
 Extras\Forms\Controls\AdvancedCheckBoxList::register();
@@ -172,6 +173,40 @@ class Tools {
 		isset($params['title']) ? $a->title($params['title']) : $a->title($params['text']);
 
 		return $a;
+	}
+
+
+	public static function reorganizeArray(array $list, $columnCount = 3) {
+		$i=1;
+		$counter=0;
+		$tempList = array();
+		$arrayKeys = array_keys($list);
+		debug($arrayKeys);
+		$rows = ceil(count($arrayKeys) / $columnCount);
+		for ($i = 0; $i < $rows; $i++) {
+			$counter = $i;
+			for ($c = 0; $c < $columnCount; $c++) {
+				$index = $c + pow(2, $i);
+				debug($c, $i, pow(2,$i), $index);
+				if(!isset($arrayKeys[$index])) continue;
+				$tempList[] = $arrayKeys[$index];
+			}
+		}
+		// foreach ($list as $key => $item) {
+		// 	$row = $i <= $columnCount ? $i : $i=1;
+		// 	$tempList[$row][$key] = $item;
+		// 	$i++;
+		// 	$counter++;
+		// }
+		debug($tempList);
+		$finalList = array();
+		foreach ($tempList as $items) {
+			foreach ($items as $itemKey => $item) {
+				$finalList[$itemKey] = array_shift($items);
+				break;
+			}
+		}
+		return $finalList;
 	}
 
 }

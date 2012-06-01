@@ -213,6 +213,8 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 	 * return array
 	 */
 	public static function getTranslatedPairs($keyName, $valueName, $criteria = NULL, $orderBy = NULL, $limit = NULL, $offset = NULL) {
+		if(isset($orderBy[$valueName])) $orderByName = true;
+		else $orderByName = false;
 		$valueName = array($valueName, 'id');
 		$serviceList = self::_getPairs($keyName, $valueName, $criteria, $orderBy, $limit, $offset);
 
@@ -222,6 +224,8 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 		foreach($serviceList as $item) {
 			$return[$item['key']] = $translator->translate($item['value']);
 		}
+
+		if($orderByName) sort($return);
 
 		return $return;
 	}
@@ -239,7 +243,12 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 		$serviceList = new static;
 		$qb = $serviceList->getEntityManager()->createQueryBuilder();
 
-		$qb->select($valuePropertyName ? array('e.'.$keyName.' AS key', 'p.'.$valuePropertyName.' AS value') : array('e.'.$keyName.' AS key', 'e.'.$valueName.' AS value'))
+		if($valuePropertyName) {
+			$select = array('e.'.$keyName.' AS key', 'p.'.$valuePropertyName.' AS value');
+		} else {
+			$select = array('e.'.$keyName.' AS key', 'e.'.$valueName.' AS value');
+		}
+		$qb->select($select)
 			->from($entityName, 'e');
 
 		if($valuePropertyName) $qb->join('e.'.$valueName, 'p');
