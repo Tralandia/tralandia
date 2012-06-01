@@ -30,7 +30,7 @@ class AdvancedAddress extends BaseControl {
 		$name = $control->name;
 		$id = $control->id;
 
-		foreach (array(Address::ADDRESS, Address::ADDRESS2, Address::ZIPCODE, Address::COUNTRY) as $value) {
+		foreach (array(Address::ADDRESS, Address::ADDRESS2, Address::POSTCODE, Address::COUNTRY) as $value) {
 			$control->id = $id . '-'.$value;
 			$control->name = $name . "[$value]";
 			$control->value = $this->value[$value];

@@ -177,6 +177,35 @@ class Tools {
 
 
 	public static function reorganizeArray(array $list, $columnCount = 3) {
+		$newList = array();
+		foreach ($list as $key => $value) {
+			$newList[] = array($key => $value);
+		}
+
+		$list = array(1, 2, 3, 4, 5, 6, 7, 8, 9);
+		$columnCount = 4;
+
+		$count = count($list);
+		debug('count', $count);
+		debug('columnCount', $columnCount);
+		$fullRowCount = floor($count / $columnCount);
+		debug($fullRowCount);
+		$lastRowRemainder = $count - $fullRowCount*$columnCount;
+		debug($lastRowRemainder);
+
+		$columns = array();
+		for ($i=0; $i < $columnCount ; $i++) {
+			if ($lastRowRemainder > 0) {
+				$columns[] = $fullRowCount + 1;
+				$lastRowRemainder--;
+			} else {
+				$columns[] = $fullRowCount;
+			}
+		}
+		debug($columns);
+
+
+
 		# @todo tot treba dorobit
 		// $i=1;
 		// $counter=0;

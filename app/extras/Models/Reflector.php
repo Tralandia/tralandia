@@ -355,7 +355,7 @@ class Reflector extends Nette\Object {
 				$fieldMask['column']['type'] = $property->getAnnotation(self::ANN_COLUMN)->type;
 			}
 
-			if(in_array($type, array('select', 'checkboxList', 'multiSelect')) && (!isset($fieldMask['ui']['control']['options']) || !is_array($fieldMask['ui']['control']['options']))) {
+			if(in_array($type, array('select', 'checkboxList', 'multiSelect', 'bricksList')) && (!isset($fieldMask['ui']['control']['options']) || !is_array($fieldMask['ui']['control']['options']))) {
 				if(!isset($fieldMask['ui']['control']['callback'])) {
 					$fieldMask['ui']['control']['callback'] = 'getPairs';
 				}
@@ -503,6 +503,7 @@ class Reflector extends Nette\Object {
 				
 				if ($control instanceof \Extras\Forms\Controls\AdvancedSelectBox 
 					|| $control instanceof \Extras\Forms\Controls\AdvancedCheckBoxList
+					|| $control instanceof \Extras\Forms\Controls\AdvancedBricksList
 					|| $control instanceof \Nette\Forms\Controls\MultiSelectBox) 
 				{
 					// $targetEntity = $property->targetEntity;

@@ -62,8 +62,8 @@ common:
 					callback: 
 						class: \Service\Company\BankAccountList
 						method: getPairs
-						params: [id, bankName]
-						# params: [id, bankName, NULL, [bankName: ASC]]
+						#params: [id, bankName]
+						params: [id, bankName, NULL, [bankName: ASC]]
 			countries:
 				label: Countries
 				control: 

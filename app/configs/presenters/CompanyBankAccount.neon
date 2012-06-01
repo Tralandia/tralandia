@@ -27,37 +27,15 @@ common:
 			accountIban:
 				label: AccountIban
 				mapper: e.accountIban
-
 			
 	form:
 		fields:
 			company:
+				startNewRow: true
 				label: Company
 				control: 
 					type: select
-			countries:
-				label: Countries using this bank account
-				class: span9
-				control: 
-					type: bricksList
-				inlineEditing: LocationLocation:edit
-				inlineCreating: LocationLocation:add
-				startNewRow: false
-			bankName:
-				label: BankName
-				control: 
-					type: text
-				startNewRow: true
-			bankAddress:
-				label: BankAddress
-				control: 
-					type: text
-			bankSwift:
-				label: BankSwift
-				control: 
-					type: text
 			accountName:
-				startNewRow: true
 				label: AccountName
 				control: 
 					type: text
@@ -69,6 +47,27 @@ common:
 				label: AccountIban
 				control: 
 					type: text
+			bankName:
+				label: BankName
+				control: 
+					type: text
+				startNewRow: true
+			bankSwift:
+				label: BankSwift
+				control: 
+					type: text
+			bankAddress:
+				label: BankAddress
+				control: 
+					type: address
+			countries:
+				label: Countries using this bank account
+				class: span3
+				inlineEditing: LocationLocation:edit
+				inlineCreating: LocationLocation:add
+				control: 
+					type: bricksList
+					callback: {class: \Service\Location\LocationList, method: getTranslatedPairs, params: [id, name]}
 			notes:
 				startNewRow: true
 				label: Notes
