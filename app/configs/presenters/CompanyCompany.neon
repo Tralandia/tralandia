@@ -26,12 +26,12 @@ common:
 		fields:
 			name:
 				label: Name
-				control: 
+				control:
 					type: text
 			address:
 				label: Address
 				control: 
-					type: text
+					type: address
 			registrator:
 				class: span6
 				label: Registrator
@@ -54,8 +54,16 @@ common:
 			bankAccounts:
 				startNewRow: true
 				label: BankAccounts
+				class: span6
 				control: 
 					type: checkboxList
+					columns: 2
+					columnClass: span3
+					callback: 
+						class: \Service\Company\BankAccountList
+						method: getPairs
+						params: [id, bankName]
+						# params: [id, bankName, NULL, [bankName: ASC]]
 			countries:
 				label: Countries
 				control: 
@@ -71,10 +79,10 @@ common:
 			# 		callback: 
 			# 			class: \Service\Company\OfficeList
 			# 			method: getPairs
-			# 			arguments: [id, [name, id]]
+			# 			params: [id, [name, id]]
 			# 	inlineEditing: CompanyOffice:edit
 			# 	inlineCreating: CompanyOffice:add
-			# details:
-			# 	label: Details
-			# 	control: 
-			# 		type: json
+			details:
+				label: Details
+				control: 
+					type: json
