@@ -72,6 +72,13 @@ class Language extends \Entity\BaseEntityDetails {
 	 */
 	protected $rentals;
 
+	/**
+	 * @var Collection
+	 * @ORM\OneToMany(targetEntity="Entity\Seo\BackLink", mappedBy="language")
+	 */
+	protected $backLinks;
+
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -80,6 +87,7 @@ class Language extends \Entity\BaseEntityDetails {
 
 		$this->locations = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->rentals = new \Doctrine\Common\Collections\ArrayCollection;
+		$this->backLinks = new \Doctrine\Common\Collections\ArrayCollection;
 	}
 		
 	/**
@@ -291,5 +299,38 @@ class Language extends \Entity\BaseEntityDetails {
 	 */
 	public function getRentals() {
 		return $this->rentals;
+	}
+		
+	/**
+	 * @param \Entity\Seo\BackLink
+	 * @return \Entity\Dictionary\Language
+	 */
+	public function addBackLink(\Entity\Seo\BackLink $backLink) {
+		if(!$this->backLinks->contains($backLink)) {
+			$this->backLinks->add($backLink);
+		}
+		$backLink->setLanguage($this);
+
+		return $this;
+	}
+		
+	/**
+	 * @param \Entity\Seo\BackLink
+	 * @return \Entity\Dictionary\Language
+	 */
+	public function removeBackLink(\Entity\Seo\BackLink $backLink) {
+		if($this->backLinks->contains($backLink)) {
+			$this->backLinks->removeElement($backLink);
+		}
+		$backLink->unsetLanguage();
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Seo\BackLink
+	 */
+	public function getBackLinks() {
+		return $this->backLinks;
 	}
 }

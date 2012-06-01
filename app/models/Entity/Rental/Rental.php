@@ -179,6 +179,12 @@ class Rental extends \Entity\BaseEntity {
 	 */
 	protected $invoices;
 
+	/**
+	 * @var Collection
+	 * @ORM\OneToMany(targetEntity="Entity\Seo\BackLink", mappedBy="rental")
+	 */
+	protected $backLinks;
+
 
 //@entity-generator-code <--- NEMAZAT !!!
 
@@ -193,6 +199,7 @@ class Rental extends \Entity\BaseEntity {
 		$this->media = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->fulltexts = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->invoices = new \Doctrine\Common\Collections\ArrayCollection;
+		$this->backLinks = new \Doctrine\Common\Collections\ArrayCollection;
 	}
 		
 	/**
@@ -819,5 +826,38 @@ class Rental extends \Entity\BaseEntity {
 	 */
 	public function getInvoices() {
 		return $this->invoices;
+	}
+		
+	/**
+	 * @param \Entity\Seo\BackLink
+	 * @return \Entity\Rental\Rental
+	 */
+	public function addBackLink(\Entity\Seo\BackLink $backLink) {
+		if(!$this->backLinks->contains($backLink)) {
+			$this->backLinks->add($backLink);
+		}
+		$backLink->setRental($this);
+
+		return $this;
+	}
+		
+	/**
+	 * @param \Entity\Seo\BackLink
+	 * @return \Entity\Rental\Rental
+	 */
+	public function removeBackLink(\Entity\Seo\BackLink $backLink) {
+		if($this->backLinks->contains($backLink)) {
+			$this->backLinks->removeElement($backLink);
+		}
+		$backLink->unsetRental();
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Seo\BackLink
+	 */
+	public function getBackLinks() {
+		return $this->backLinks;
 	}
 }

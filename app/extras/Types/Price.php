@@ -2,17 +2,25 @@
 
 namespace Extras\Types;
 
-class Price extends BaseType {
+class Price extends \Nette\Object {
+
+	const AMOUNT = 'amount';
+	const CURRENCY = 'currency';
 
 	private $amounts = array();
 	private $sourceAmount;
 	private $sourceCurrency;
 
 	public function __construct($amount, $currency = 1) {
-		if ($currency == NULL) {
-			$currency = 1;
+		if(is_array($amount)) {
+			$data = $amount;
+			$amount = array_shift($data);
+			$currency = array_shift($data);
 		}
-		$this->setAmount($amount, $currency);
+
+		if($amount) {
+			$this->setAmount($amount, $currency);
+		}
 	}
 
 	public function setAmount($amount, $currency = 1) {
@@ -47,13 +55,20 @@ class Price extends BaseType {
 		}
 	}
 
+	public function toArray() {
+		return array(
+			self::AMOUNT => $this->sourceAmount, 
+			self::CURRENCY => $this->sourceCurrency
+		);
+	}
+
 	public function encode() {
-		return \Nette\Utils\Json::encode(array($this->sourceAmount, $this->sourceCurrency));
+		return \Nette\Utils\Json::encode($this->toArray());
 	}
 
 	public static function decode($value) {
-		$value = \Nette\Utils\Json::decode($value);
-		return new static($value[0], $value[1]);
+		$value = \Nette\Utils\Json::decode($value, true);
+		return new static($value);
 	}
 
 	private function convertTo($currency) {
@@ -70,6 +85,7 @@ class Price extends BaseType {
 	}
 
 	public function __toString() {
+		return '';
 		return $this->sourceAmount . $this->sourceCurrency;
 	}
 

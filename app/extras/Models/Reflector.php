@@ -286,39 +286,20 @@ class Reflector extends Nette\Object {
 			}
 
 			if($fieldMask['ui']['class'] === NULL) {
-				if(in_array($type, array('json'))) {
-					$fieldMask['ui']['class'] = 'span12 json-list';
-				} else if(in_array($type, array('multiSelect'))) {
-					$fieldMask['ui']['class'] = 'span6';
-				} else if(in_array($type, array('tinymce', 'neon'))) {
-					$fieldMask['ui']['class'] = 'span12';
-				} else if(in_array($type, array('bricksList'))) {
-					$fieldMask['ui']['class'] = 'span12';
-				} else {
-					$fieldMask['ui']['class'] = $formSettings->defaultFieldClass;
-				}
+				$fieldMask['ui']['class'] = $formSettings->defaultFieldClass;
 			}
 
 			if(!array_key_exists('class', $fieldMask['ui']['control']) || $fieldMask['ui']['control']['class'] === NULL) {
-				if(in_array($type, array('json'))) {
-					$fieldMask['ui']['control']['class'] = 'span12 json-list';
-				} else if(in_array($type, array('multiSelect'))) {
-					$fieldMask['ui']['control']['class'] = 'span6';
-				} else if(in_array($type, array('tinymce'))) {
-					$fieldMask['ui']['control']['class'] = 'span6';
-				} else if(in_array($type, array('neon'))) {
-					$fieldMask['ui']['control']['class'] = 'neon span6';
-				} else if(in_array($type, array('bricksList'))) {
-					$fieldMask['ui']['control']['class'] = 'span12';
-				} else {
-					$fieldMask['ui']['control']['class'] = $formSettings->defaultFieldClass;
-				}
+				$fieldMask['ui']['control']['class'] = $formSettings->defaultFieldClass;
 			}
 
 			
 			if(isset($fieldMask['ui']['control']['columnClass'])) {
 				$fieldMask['ui']['controlOptions']['columnClass'] = $fieldMask['ui']['control']['columnClass'];
-				unset($fieldMask['ui']['control']['columnClass']);
+			}
+
+			if(isset($fieldMask['ui']['control']['columns'])) {
+				$fieldMask['ui']['controlOptions']['columns'] = $fieldMask['ui']['control']['columns'];
 			}
 
 			if(isset($fieldMask['ui']['control']['label'])) {
@@ -329,12 +310,11 @@ class Reflector extends Nette\Object {
 				$fieldMask['ui']['controlOptions']['renderBefore'] = Html::el('hr')->addClass('soften');
 			}
 
-			if($type == 'checkboxList') {
-				$fieldMask['ui']['controlOptions']['renderAfter'] = Html::el('hr')->addClass('soften');
-			}
 
 			if($type == 'text') {
 				$fieldMask['ui']['control']['type'] = 'AdvancedTextInput';
+			} else if($type == 'address') {
+				$fieldMask['ui']['control']['type'] = 'AdvancedAddress';
 			} else if($type == 'checkbox') {
 				$fieldMask['ui']['control']['type'] = 'AdvancedCheckBox';
 			} else if($type == 'select') {
@@ -351,6 +331,10 @@ class Reflector extends Nette\Object {
 				$fieldMask['ui']['control']['type'] = 'AdvancedNeon';
 			} else if($type == 'bricksList') {
 				$fieldMask['ui']['control']['type'] = 'AdvancedBricksList';
+			} else if($type == 'gmap') {
+				$fieldMask['ui']['control']['type'] = 'AdvancedGmap';
+			} else if($type == 'price') {
+				$fieldMask['ui']['control']['type'] = 'AdvancedPrice';
 			}
 
 			if($associationType = $this->getAssociationType($property)) {
@@ -373,7 +357,7 @@ class Reflector extends Nette\Object {
 				$fieldMask['column']['type'] = $property->getAnnotation(self::ANN_COLUMN)->type;
 			}
 
-			if(in_array($type, array('select', 'checkboxList', 'multiSelect')) && (!isset($fieldMask['ui']['control']['options']) || !is_array($fieldMask['ui']['control']['options']))) {
+			if(in_array($type, array('select', 'checkboxList', 'multiSelect', 'bricksList', 'price')) && (!isset($fieldMask['ui']['control']['options']) || !is_array($fieldMask['ui']['control']['options']))) {
 				if(!isset($fieldMask['ui']['control']['callback'])) {
 					$fieldMask['ui']['control']['callback'] = 'getPairs';
 				}
@@ -519,8 +503,9 @@ class Reflector extends Nette\Object {
 
 				if(isset($ui->control->disabled)) $control->setDisabled($ui->control->disabled);
 				
-				if ($control instanceof \Extras\Forms\Controls\AdvancedSelectBox 
+				if ($control instanceof \Nette\Forms\Controls\SelectBox 
 					|| $control instanceof \Extras\Forms\Controls\AdvancedCheckBoxList
+					|| $control instanceof \Extras\Forms\Controls\AdvancedBricksList
 					|| $control instanceof \Nette\Forms\Controls\MultiSelectBox) 
 				{
 					// $targetEntity = $property->targetEntity;
@@ -572,6 +557,7 @@ class Reflector extends Nette\Object {
 					$control->setColumns($ui->control->columns);
 					$control->setRows($ui->control->rows);
 				}
+				// debug($ui->control->type, $control);
 				// debug($propertyName, \Nette\Diagnostics\Debugger::timer($propertyName));
 			}
 		}

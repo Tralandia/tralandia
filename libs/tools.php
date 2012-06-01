@@ -15,12 +15,15 @@ FormContainer::extensionMethod('addComboSelect', 'Tools::addComboSelect');
 Selection::extensionMethod('fetchTree', 'Tools::selectionTree');
 Image::extensionMethod('resizeCrop', 'Tools::resizeCrop');
 
+Extras\Forms\Controls\AdvancedAddress::register();
 Extras\Forms\Controls\AdvancedBricksList::register();
 Extras\Forms\Controls\AdvancedCheckBox::register();
 Extras\Forms\Controls\AdvancedCheckBoxList::register();
 Extras\Forms\Controls\AdvancedFileManager::register();
+Extras\Forms\Controls\AdvancedGmap::register();
 Extras\Forms\Controls\AdvancedJson::register();
 Extras\Forms\Controls\AdvancedNeon::register();
+Extras\Forms\Controls\AdvancedPrice::register();
 Extras\Forms\Controls\AdvancedSelectBox::register();
 Extras\Forms\Controls\AdvancedTable::register();
 Extras\Forms\Controls\AdvancedTextInput::register();
@@ -172,6 +175,61 @@ class Tools {
 		isset($params['title']) ? $a->title($params['title']) : $a->title($params['text']);
 
 		return $a;
+	}
+
+
+	public static function reorganizeArray(array $list, $columnCount = 3) {
+		//$list = array(1, 2, 3, 4, 5, 6, 7, 8, 9);
+		//$columnCount = 4;
+		
+		$newList = array();
+		foreach ($list as $key => $value) {
+			$newList[] = array($key, $value);
+		}
+
+
+		$count = count($list);
+		#debug('count', $count);
+		#debug('columnCount', $columnCount);
+		$totalRowCount = ceil($count / $columnCount);
+		$fullRowCount = floor($count / $columnCount);
+		#debug($fullRowCount);
+		$lastRowRemainder = $count - $fullRowCount*$columnCount;
+		#debug($lastRowRemainder);
+
+		$columns = array();
+		for ($i=0; $i < $columnCount ; $i++) {
+			if ($lastRowRemainder > 0) {
+				$columns[] = $fullRowCount + 1;
+				$lastRowRemainder--;
+			} else {
+				$columns[] = $fullRowCount;
+			}
+		}
+		#debug($columns);
+
+		$organizedList = array();
+		$row = 0;
+		for ($row=0; $row < $totalRowCount; $row++) { 
+			$index = 0;
+			$organizedList[] = $newList[$row];
+			for ($ii=0; $ii < ($columnCount-1); $ii++) { 
+				$index = ($index + $columns[$ii]);
+				if (isset($newList[$row + $index])) {
+					$organizedList[] = $newList[$row + $index];
+				} else {
+					break 2;
+				}
+			}
+		}
+
+		$finalList = array();
+		foreach ($organizedList as $key => $value) {
+			$finalList[$value[0]] = $value[1];
+		}
+		//debug($finalList);
+
+		return $finalList;
 	}
 
 }

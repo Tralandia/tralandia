@@ -156,6 +156,11 @@ class Location extends \Entity\BaseEntityDetails {
 	 */
 	protected $outgoingLocations;
 
+	/**
+	 * @var Collection
+	 * @ORM\OneToMany(targetEntity="Entity\Seo\BackLink", mappedBy="location")
+	 */
+	protected $backLinks;
 
 	/* ----------------------------- attributes from country ----------------------------- */
 
@@ -299,6 +304,7 @@ class Location extends \Entity\BaseEntityDetails {
 		$this->users = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->incomingLocations = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->outgoingLocations = new \Doctrine\Common\Collections\ArrayCollection;
+		$this->backLinks = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->currencies = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->languages = new \Doctrine\Common\Collections\ArrayCollection;
 	}
@@ -771,6 +777,39 @@ class Location extends \Entity\BaseEntityDetails {
 	 */
 	public function getOutgoingLocations() {
 		return $this->outgoingLocations;
+	}
+		
+	/**
+	 * @param \Entity\Seo\BackLink
+	 * @return \Entity\Location\Location
+	 */
+	public function addBackLink(\Entity\Seo\BackLink $backLink) {
+		if(!$this->backLinks->contains($backLink)) {
+			$this->backLinks->add($backLink);
+		}
+		$backLink->setLocation($this);
+
+		return $this;
+	}
+		
+	/**
+	 * @param \Entity\Seo\BackLink
+	 * @return \Entity\Location\Location
+	 */
+	public function removeBackLink(\Entity\Seo\BackLink $backLink) {
+		if($this->backLinks->contains($backLink)) {
+			$this->backLinks->removeElement($backLink);
+		}
+		$backLink->unsetLocation();
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Seo\BackLink
+	 */
+	public function getBackLinks() {
+		return $this->backLinks;
 	}
 		
 	/**

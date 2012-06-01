@@ -18,29 +18,14 @@ class Address extends Type {
 	}
 
 	public function convertToPHPValue($value, AbstractPlatform $platform) {
-		return NU\Json::decode($value, NU\Json::FORCE_ARRAY);
+		return \Extras\Types\Address::decode($value);
 	}
 
 	public function convertToDatabaseValue($value, AbstractPlatform $platform) {
-		if (is_string($value)) {
-			$value = NU\Json::encode($value);
-		} else if ($value instanceof \Extras\Types\BaseType) {
-			$value = $value->encode();
+		if ($value) {
+			return $value->encode();
+		} else {
+			return NULL;
 		}
-
-		return $value;
 	}
-/*
-	public function canRequireSQLConversion() {
-		return true;
-	}
-
-	public function convertToPHPValueSQL($sqlExpr, AbstractPlatform $platform) {
-		return sprintf('AsText(%s)', $sqlExpr);
-	}
-
-	public function convertToDatabaseValueSQL($sqlExpr, AbstractPlatform $platform) {
-		return sprintf('PointFromText(%s)', $sqlExpr);
-	}
-*/
 }

@@ -51,6 +51,9 @@ class AdminPresenter extends BasePresenter {
 
 		$this->template->record = $this->service;
 		$this->template->form = $form;
+		$this->template->fomatedH1 = trim(str_replace(array('Entity', '\\'), array('', ' '), $this->formMask->entityReflection->name));
+		$this->template->service = $this->service;
+
 		$this->template->setFile(APP_DIR . '/AdminModule/templates/Admin/edit.latte');
 		$this->setRenderMode();
 	}
@@ -59,6 +62,7 @@ class AdminPresenter extends BasePresenter {
 		$service = $this->serviceName;
 		$this->service = $service::get($id);
 		$this->formMask = $this->reflector->getFormMask($this->service, $this->settings->params->form);
+		// debug($this->service);
 
 	}
 	
@@ -72,6 +76,7 @@ class AdminPresenter extends BasePresenter {
 		$this->template->created = $this->service->created;
 		$this->template->updated = $this->service->updated;
 		$this->template->fomatedH1 = $this->formatText($this->settings->h1, $this->service);
+		$this->template->service = $this->service;
 		$this->setRenderMode();
 	}
 

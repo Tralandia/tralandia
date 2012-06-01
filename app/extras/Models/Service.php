@@ -452,6 +452,12 @@ abstract class Service extends Nette\Object implements IService {
 
 					}
 
+				} else if($ui->control->type == 'AdvancedGmap') {
+					$data[$name] = $this->{$name};
+					$form[$name]->setDefaultValue(array(
+						'latitude' => $this->{$ui->control->latitude},
+						'longitude' => $this->{$ui->control->longitude}
+					));					
 				} else {
 					$data[$name] = $this->{$name};
 					// debug($data[$name]);
@@ -496,7 +502,8 @@ abstract class Service extends Nette\Object implements IService {
 							try{
 								$this->{$name} = $serviceName::get($formValue);
 							} catch(\Nette\InvalidArgumentException $e) {
-								throw new \Exception("Nevedel inicializovat servisu z '$formValue', bud si zle nastavil formular pre property $name ({$targetEntity->name}), alebo je chyba vo formulary samotnom...");
+								// debug($formValue);
+								throw new \Exception("Nevedel inicializovat servisu z '$formValue', bud si zle nastavil formular pre property '$name' ({$targetEntity->name}), alebo je chyba vo formulary samotnom...");
 							}
 						}
 					} else {
@@ -505,7 +512,11 @@ abstract class Service extends Nette\Object implements IService {
 					}
 				} else {
 					$columnType = $property->column->type;
-					if($columnType == 'latlong') {
+
+					if($ui->control->type == 'AdvancedGmap') {
+						$this->{$ui->control->longitude} = new \Extras\Types\Latlong($formValue[$ui->control->longitude]);
+						$formValue = new \Extras\Types\Latlong($formValue[$ui->control->latitude]);										
+					} else if($columnType == 'latlong') {
 						$formValue = new \Extras\Types\Latlong($formValue);
 					} else if($columnType == 'price') {
 						$formValue = new \Extras\Types\Price($formValue);
@@ -513,12 +524,15 @@ abstract class Service extends Nette\Object implements IService {
 						$formValue = new \Extras\Types\Phone($formValue);
 					} else if($columnType == 'url') {
 						$formValue = new \Extras\Types\Url($formValue);
+					} else if($columnType == 'address') {
+						$formValue = new \Extras\Types\Address($formValue);
+						debug((array) $formValue);
 					}
 					$this->{$name} = $formValue;
 				}
 			}
 		}
-		// debug($this->getMainEntity());
+		debug($this->getMainEntity());
 		$this->save();
 	}
 

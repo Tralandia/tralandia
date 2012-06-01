@@ -32,12 +32,16 @@ class Translator implements \Nette\Localization\ITranslator {
 		$translationKey = $phraseId.'_'.$this->language->id;
 		
 		if(!$translation = $this->cache->load($translationKey)) {
+			$translation = null;
+			
 			if(!$phrase instanceof D\Phrase) {
 				$phrase = D\Phrase::get($phrase);
+				if(!$phrase) {
+					$translation = '{!'.$phraseId.'!}';
+				}
 			}
 
-			$translation = null;
-			if ($translation = $phrase->getTranslation($this->language)) {
+			if (!$translation && $translation = $phrase->getTranslation($this->language)) {
 				$translation = $translation->translation;
 			}
 			$this->cache->save($translationKey, $translation);

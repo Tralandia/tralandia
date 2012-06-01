@@ -1,7 +1,6 @@
 common:
 	service: Service\Currency
 	title: Currency
-	h1: Currency
 	grid:
 		columns:
 			id:
@@ -10,7 +9,7 @@ common:
 			name:
 				label: Name
 				mapper: e.id
-				callback: {method: translateColumn, params: name}
+				callback: {class: %this%, method: getAttributeForGrid, params: [name]}
 			iso:
 				label: Iso
 				mapper: e.iso
@@ -29,21 +28,26 @@ common:
 		fields:
 			iso:
 				label: Iso
-				control: text
+				control:
+					type: text
 
 	form:
 		fields:
 			name:
 				label: Name
-				control: phrase
+				control:
+					type: phrase
 				addClass: 'myPhraseClass'
 				inlineEditing: DictionaryPhrase:edit
 			iso:
 				label: Iso
-				control: text
+				control:
+					type: text
 			exchangeRate:
 				label: ExchangeRate
-				control: text
+				control:
+					type: text
 			rounding:
 				label: Rounding
-				control: text
+				control:
+					type: text

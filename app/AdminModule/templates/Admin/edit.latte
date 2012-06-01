@@ -4,6 +4,9 @@
 		{$fomatedH1}
 		<!-- <button onclick="toggleEdit(this);" data-toggle="button" class="btn btn-warning pull-right">Edit mode</button> -->
 	</h1>
+	<span>
+		{ifset $service->id}[#{$service->id}]{/ifset}
+	</span>
 {/if}
 
 
@@ -16,7 +19,7 @@
 	</p>
 {/snippet}
 
-<a onclick="ivalidateForm({$form->getHtmlId()})" class="btn btn-danger btn-big">Invalidate Form</a>
+{* <a onclick="ivalidateForm({$form->getHtmlId()})" class="btn btn-danger btn-big">Invalidate Form</a> *}
 
 
 {if !isset($display) || $display != 'modal'}
