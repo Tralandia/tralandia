@@ -21,6 +21,13 @@ class RadoPresenter extends BasePresenter {
 		$this->session = $this->context->session->getSection('importSession');
 	}
 
+	public function actionLocale() {
+		phpinfo(); exit;
+		$locale = \Locale::acceptFromHttp($_SERVER['HTTP_ACCEPT_LANGUAGE']);
+		$this->template->output = $locale;	
+	}
+
+
 	public function actionHelper() {
 		if (isset($this->params['indexes'])) {
 			$return = '';

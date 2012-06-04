@@ -432,7 +432,7 @@ class User extends \Entity\BaseEntityDetails {
 	 * @param string
 	 * @return \Entity\User\User
 	 */
-	public function setInvoicingFirstName($invoicingFirstName) {
+	public function setInvoicingName($invoicingFirstName) {
 		$this->invoicingFirstName = $invoicingFirstName;
 
 		return $this;
@@ -441,7 +441,7 @@ class User extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\User\User
 	 */
-	public function unsetInvoicingFirstName() {
+	public function unsetInvoicingName() {
 		$this->invoicingFirstName = NULL;
 
 		return $this;
@@ -450,36 +450,10 @@ class User extends \Entity\BaseEntityDetails {
 	/**
 	 * @return string|NULL
 	 */
-	public function getInvoicingFirstName() {
+	public function getInvoicingName() {
 		return $this->invoicingFirstName;
 	}
-		
-	/**
-	 * @param string
-	 * @return \Entity\User\User
-	 */
-	public function setInvoicingLastName($invoicingLastName) {
-		$this->invoicingLastName = $invoicingLastName;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\User\User
-	 */
-	public function unsetInvoicingLastName() {
-		$this->invoicingLastName = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return string|NULL
-	 */
-	public function getInvoicingLastName() {
-		return $this->invoicingLastName;
-	}
-		
+				
 	/**
 	 * @param string
 	 * @return \Entity\User\User

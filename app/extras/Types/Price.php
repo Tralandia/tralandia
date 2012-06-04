@@ -11,7 +11,7 @@ class Price extends \Nette\Object {
 	private $sourceAmount;
 	private $sourceCurrency;
 
-	public function __construct($amount, $currency = 1) {
+	public function __construct($amount = 0, $currency = 1) {
 		if(is_array($amount)) {
 			$data = $amount;
 			$amount = array_shift($data);
