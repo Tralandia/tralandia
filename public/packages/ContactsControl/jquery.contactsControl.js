@@ -17,7 +17,7 @@
 				phone: [null, /^[0-9\-+ ]+$/],
 				address: [/.{2,}/, null, null, null, null],
 				url: [/.{5,}/],
-				name: [null, null, null],
+				name: [/.{2,}/, null, null],
 			}
 		};
 
@@ -93,7 +93,7 @@
 			$(this).removeClass('invalid');
 			if (!$.fn.contactsControl.isValid(type, v, i)) {
 				$(this).addClass('invalid').focus();
-				alert('Invalid ' + $(this).attr('placeholder'))
+				// alert('Invalid ' + $(this).attr('placeholder'))
 				isInvalid = true;
 			}
 			value[i] = v;
