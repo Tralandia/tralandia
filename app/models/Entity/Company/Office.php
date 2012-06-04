@@ -29,6 +29,7 @@ class Office extends \Entity\BaseEntityDetails {
 	/**
 	 * @var Collection
 	 * @ORM\OneToOne(targetEntity="Entity\Medium\Medium")
+	 * @ORM\JoinColumn(onDelete="SET NULL")
 	 */
 	protected $signature;
 	
