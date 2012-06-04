@@ -36,7 +36,7 @@ class ImportCompanies extends BaseImport {
 			$s->oldId = $x['id'];
 			$s->name = $x['name'];
 
-			$s->address = new \Extras\Types\Address($x['address'], $x['address2'], $x['locality'], $x['postcode'], getByOldId('\Location\Location', $x['countries_id']);
+			// $s->address = new \Extras\Types\Address($x['address'], $x['address2'], $x['locality'], $x['postcode'], getByOldId('\Location\Location', $x['countries_id']);
 
 			$s->companyId = $x['company_id'];
 			$s->companyVatId = $x['company_vat_id'];

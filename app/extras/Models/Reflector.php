@@ -253,10 +253,7 @@ class Reflector extends Nette\Object {
 			$fieldMask['ui']['controlOptions']['inlineEditing'] = $this->getInlineOptionHtml('inlineEditing', $fieldMask['ui']['inlineEditing'], $type);
 			$fieldMask['ui']['controlOptions']['inlineDeleting'] = $this->getInlineOptionHtml('inlineDeleting', $fieldMask['ui']['inlineDeleting'], $type);
 
-			if($type == 'phrase') {
-				$type = $fieldMask['ui']['control']['type'] = 'text';
-				if(!isset($fieldMask['ui']['control']['disabled'])) $fieldMask['ui']['control']['disabled'] = true;
-			} else if($type == 'tinymce') {
+			if($type == 'tinymce') {
 				$fieldMask['ui']['control']['type'] = 'textArea';
 				$fieldMask['ui']['control']['addClass'] = (isset($fieldMask['ui']['control']['addClass']) ? $fieldMask['ui']['control']['addClass'].' ' : NULL) . 'tinymce';
 			} else if($type == 'multiSelect') {
@@ -313,6 +310,8 @@ class Reflector extends Nette\Object {
 
 			if($type == 'text') {
 				$fieldMask['ui']['control']['type'] = 'AdvancedTextInput';
+			} else if($type == 'phrase') {
+				$fieldMask['ui']['control']['type'] = 'AdvancedPhrase';
 			} else if($type == 'address') {
 				$fieldMask['ui']['control']['type'] = 'AdvancedAddress';
 			} else if($type == 'checkbox') {
