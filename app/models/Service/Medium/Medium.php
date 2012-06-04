@@ -2,6 +2,7 @@
 
 namespace Service\Medium;
 
+use Nette\Http\FileUpload;
 
 class Medium extends \Service\BaseService {
 	
@@ -58,6 +59,29 @@ class Medium extends \Service\BaseService {
 	}
 */	
 
+	public static function saveUploadedFile(FileUpload $file) {
+		$medium = new self;
+		$medium->save();
+		$medium->details = $medium->getFileDetails($file->getTemporaryFile());
+		
+		if($file->isImage()) {
+			$medium->saveImageFiles($file->getTemporaryFile());
+		} else {
+			rename($file->getTemporaryFile(), $medium->getMediumDir() . '/original.' . $medium->details['extension']);
+		}
+
+		$mediumType = \Service\Medium\Type::getByName($medium->details['mime']);
+		if (!($mediumType instanceof \Service\Medium\Type)) {
+			$mediumType = \Service\Medium\Type::get();
+			$mediumType->name = $medium->details['mime'];
+			$mediumType->save();
+		}
+		$medium->type = $mediumType;
+		$medium->save();
+
+		return $medium;
+	}
+
 	public function setContentFromUrl($uri) {
 
 		if (!$data = @file_get_contents($uri, 'r')) {
@@ -76,7 +100,7 @@ class Medium extends \Service\BaseService {
 		$this->oldUrl = $uri;
 		$this->details = $this->getFileDetails($file);
 		$this->sort = 1;
-		debug($this);
+		// debug($this);
 		$this->save();
 
 		$mediumType = \Service\Medium\Type::getByName($this->details['mime']);
@@ -116,6 +140,8 @@ class Medium extends \Service\BaseService {
 	}
 
 	public function delete() {
+
+		parent::delete();
 
 		$mediumDir = $this->getMediumDir();
 

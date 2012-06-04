@@ -419,7 +419,7 @@ abstract class Service extends Nette\Object implements IService {
 						$translation = $phrase->getTranslation(\Service\Dictionary\Language::get($translator::DEFAULT_LANGUAGE));
 						if ($translation) {
 							$form[$name]->setDefaultValue($translation->translation);
-							$form[$name]->setDefaultParam($translation->phrase->id);
+							$form[$name]->setDefaultParam($phrase);
 						}
 
 					} else if($targetEntity->associationType == Reflector::MANY_TO_MANY || $targetEntity->associationType == Reflector::ONE_TO_MANY) {
@@ -438,11 +438,15 @@ abstract class Service extends Nette\Object implements IService {
 						$form[$name]->setDefaultValue($data[$name]);
 
 					} else if($targetEntity->associationType == Reflector::ONE_TO_ONE) {
-						
-						$property = $targetEntity->primaryValue;
-						//debug($this->{$name}->translations, $property);
+						if(Strings::endsWith($targetEntity->name, '\\Medium')) {
+							$data[$name] = NULL;
+							$form[$name]->setDefaultParam($this->{$name});
+						} else {
+							$property = $targetEntity->primaryValue;
 
-						$data[$name] = $this->{$name}->{$property};
+							$data[$name] = $this->{$name}->{$property};
+						}
+
 						$form[$name]->setDefaultValue($data[$name]);
 
 					} else {
@@ -483,7 +487,25 @@ abstract class Service extends Nette\Object implements IService {
 					if($targetEntity->name == 'Entity\\Dictionary\\Phrase') {
 						// fraza sa needituje cez servisu
 					} else if($targetEntity->associationType == Reflector::ONE_TO_ONE) {
-						$this->{$name}->{$targetEntity->primaryValue} = $formValue;
+
+						if(Strings::endsWith($targetEntity->name, '\\Medium')) {
+							debug($formValue);
+							if($formValue === false) {
+								if($this->{$name}) {
+									debug(\Service\Medium\Medium::get($this->{$name}));
+									\Service\Medium\Medium::get($this->{$name})->delete();
+								}
+							} else if($formValue->isOk()) {
+								if($this->{$name}) {
+									\Service\Medium\Medium::get($this->{$name})->delete();
+								}
+								$medium = \Service\Medium\Medium::saveUploadedFile($formValue);
+								$this->{$name} = $medium;
+							}
+						} else {
+							$this->{$name}->{$targetEntity->primaryValue} = $formValue;
+						}
+
 					} else if($targetEntity->associationType == Reflector::MANY_TO_MANY || $targetEntity->associationType == Reflector::ONE_TO_MANY) {
 						$this->{$name}->clear();
 						if(is_array($formValue)) {
@@ -532,7 +554,7 @@ abstract class Service extends Nette\Object implements IService {
 				}
 			}
 		}
-		debug($this->getMainEntity());
+		// debug($this->getMainEntity());
 		$this->save();
 	}
 

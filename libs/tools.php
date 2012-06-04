@@ -23,10 +23,12 @@ Extras\Forms\Controls\AdvancedFileManager::register();
 Extras\Forms\Controls\AdvancedGmap::register();
 Extras\Forms\Controls\AdvancedJson::register();
 Extras\Forms\Controls\AdvancedNeon::register();
+Extras\Forms\Controls\AdvancedPhrase::register();
 Extras\Forms\Controls\AdvancedPrice::register();
 Extras\Forms\Controls\AdvancedSelectBox::register();
 Extras\Forms\Controls\AdvancedTable::register();
 Extras\Forms\Controls\AdvancedTextInput::register();
+Extras\Forms\Controls\AdvancedUpload::register();
 
 function debug() {
 	return Tools::dump(func_get_args());

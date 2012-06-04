@@ -49,6 +49,15 @@
 			});
 
 
+			$inputs.find('input, select').bind('keypress', function(e) {
+				if (e.keyCode == 13) {
+					e.preventDefault();
+
+					type = $base.find('button.types').attr('selected-type');
+					$.fn.contactsControl.addBrick($base, type);
+				}
+			});
+
 			$base.find('button.submit').bind('click', function(e) {
 				e.preventDefault();
 
@@ -66,11 +75,11 @@
 		isValid = true;
 
 		if ($.fn.contactsControl.options.conditions[type]) {
-			if ($.fn.contactsControl.options.conditions[type][i-1] !== null) {
+			if ($.fn.contactsControl.options.conditions[type][i] !== null) {
 				if (!value) {
 					isValid = false;
 				} else {
-					isValid = $.fn.contactsControl.options.conditions[type][i-1].test(value);
+					isValid = $.fn.contactsControl.options.conditions[type][i].test(value);
 				}
 			}
 		}
@@ -87,21 +96,20 @@
 		var value = new Array(type);
 
 		var i=1;
-		var isInvalid = false;
+		var isValid = true;
 		$inputs.find('select, input').each(function() {
 			v = $(this).val();
 			$(this).removeClass('invalid');
-			if (!$.fn.contactsControl.isValid(type, v, i)) {
+			if (!$.fn.contactsControl.isValid(type, v, (i-1))) {
 				$(this).addClass('invalid').focus();
-				// alert('Invalid ' + $(this).attr('placeholder'))
-				isInvalid = true;
+				isValid = false;
 			}
 			value[i] = v;
 			i++;
 		});
 
 		// If NOT valid return false
-		if (isInvalid) {
+		if (!isValid) {
 			return false;
 		} else {
 			$inputs.find('select, input').each(function() {

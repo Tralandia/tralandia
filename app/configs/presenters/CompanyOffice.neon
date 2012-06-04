@@ -25,21 +25,25 @@ common:
 		fields:
 			company:
 				label: Company
-				control: select
+				control:
+					type: select
 				inlineEditing: CompanyCompany:edit
 				inlineCreating: CompanyCompany:add
 			address:
 				label: Address
-				control: text
+				control:
+					type: address
 				class: span9
 			signature:
 				startNewRow: true
 				label: Signature
-				control: phrase
+				control:
+					type: upload
 				class: span6
 			countries:
 				label: Countries
-				control: bricksList
+				control:
+					type: bricksList
 				inlineEditing: LocationLocation:edit
 				inlineCreating: LocationLocation:add
 				startNewRow: false

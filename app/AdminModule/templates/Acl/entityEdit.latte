@@ -11,6 +11,21 @@
 				<th>{$role}</th>
 			{/foreach}
 		</tr>
+		<tr>
+			<th>Change all</th>
+			{foreach $roles as $roleId => $role}
+				<td>
+					<select class="input-small change-col" type="show" role="{$role}">
+						<option value="deny">No way!</option>
+						<option value="allow">Yes</option>
+					</select>
+					<select class="input-small change-col" type="edit" role="{$role}">
+						<option value="deny">No way!</option>
+						<option value="allow">Yes</option>
+					</select>
+				</td>
+			{/foreach}
+		</tr>
 		<tr n:foreach="$entityActions as $property">
 			<th>{$property->name}</th>
 			{foreach $roles as $role}
@@ -26,27 +41,78 @@
 {/form}
 
 <script type="text/javascript" n:syntax="double">
-	$(function() {
-		$('select').each(function(){
-			setSelectboxBgColor(this);
+
+(function($) {
+
+	$.fn.permissionTable = function(options) {
+		
+		$.fn.permissionTable.options = {
+			statusColors: {
+				deny: 	'#b33624',
+				allow: '#b0c03c'
+			}
+		};
+
+		return this.each(function() {
+
+			var $base = $(this);
+
+			$base.find('select').each(function() {
+
+				var $select = $(this);
+
+				if ($select.hasClass('change-col')) {
+
+					$select.bind('change', function() {
+
+						var type = $(this).attr('type');
+						var role = $(this).attr('role');
+						var selected = $(this).val();
+
+						$('select[name$="'+ type +'['+ role +']"]', $base).each(function() {
+							$this = $(this);
+							$this.val(selected)
+							$.fn.permissionTable.setBgColor($this);
+						});
+
+					});
+
+				} else {
+
+					// set Bg color on load
+					$.fn.permissionTable.setBgColor($select);
+
+					// set Bg color on change
+					$select.bind('change', function() {
+
+						$.fn.permissionTable.setBgColor($(this));
+
+					});
+
+				}
+
+			});
+
 		});
 
-		$('select').change(function(){
-			setSelectboxBgColor(this);
-		});
-	});
-
-	function setSelectboxBgColor(select) {
-		var value = $(':selected', select).val();
-		var color;
-		if(value == 'deny') {
-			color = '#F4A7AE';
-		} else if(value == 'allow') {
-			color = '#84D295';
-		} else {
-			color = '#BFBFBF';
-		}
-		$(select).parents('td').css('background-color', color);
 	}
+
+	$.fn.permissionTable.setBgColor = function($select) {
+
+		status = $(':selected', $select).val();
+		color = $.fn.permissionTable.options.statusColors[status];
+
+		$select.parent().css('background-color', color);
+
+		return color;
+
+	}
+
+})(jQuery);
+
+$(function() {
+	$('.permissionTable').permissionTable();
+});
+
 </script>
 
