@@ -335,6 +335,8 @@ class Reflector extends Nette\Object {
 				$fieldMask['ui']['control']['type'] = 'AdvancedGmap';
 			} else if($type == 'price') {
 				$fieldMask['ui']['control']['type'] = 'AdvancedPrice';
+			} else if($type == 'upload') {
+				$fieldMask['ui']['control']['type'] = 'AdvancedUpload';
 			}
 
 			if($associationType = $this->getAssociationType($property)) {
