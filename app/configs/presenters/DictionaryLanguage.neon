@@ -18,7 +18,7 @@ common:
 			name:
 				label: Name
 				mapper: e.id
-				callback: {Entity\Log\Systemmethod: translateColumn, params: name}
+				callback: {class: %this%, method: getAttributeForGrid, params: [name]}
 			
 	form:
 		fields:
