@@ -50,8 +50,8 @@ select { height:26px; }
 label { height:20px; } 
 label .btn-group { display:none; }
 label:hover > .btn-group { display:block; }
-label.checkbox, label.radio { padding-left:0; cursor: pointer; margin-bottom: 10px; }
-label.checkbox:hover, label.radio:hover, label.checkbox.checked, label.radio.checked { text-decoration: underline; background: @grayLighter; .border-radius(5px); color: @greenDark; }
+label.checkbox, label.radio { padding-left:0; cursor: pointer; margin-bottom: 10px; margin-left:0; }
+label.checkbox:hover, label.radio:hover, label.checkbox.checked, label.radio.checked { text-decoration: underline; color: @greenDark; }
 label.checkbox.checked, label.radio.checked { color: @black; text-decoration: none; }
 label.checkbox.checked:hover, label.radio.checked:hover { text-decoration: underline; }
 .radio input[type="radio"], .checkbox input[type="checkbox"] { margin:0 5px 0 0; }
@@ -161,3 +161,4 @@ div.neonOutput pre { overflow:auto; }
 .contacts-control .type-phone select { width:100px; .border-radius(0); margin-right:-5px; }
 .contacts-control .type-address input, .contacts-control .type-url input, .contacts-control .type-name input, .contacts-control .type-email input { .border-radius(0); margin-right:-5px; }
 .contacts-control .types { .border-radius(4px 0 0 4px); }
+.contacts-control input.invalid { color:@red; border-color:@red; }

@@ -13,11 +13,11 @@
 				'</label>',
 			dataSeparator: '~',
 			conditions: {
-				// email: [/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/],
-				phone: [null, /^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/],
-				// address: [],
-				// url: [],
-				// name: [],
+				email: [/\b[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}\b/],
+				phone: [null, /^[0-9\-+ ]+$/],
+				address: [/.{2,}/, null, null, null, null],
+				url: [/.{5,}/],
+				name: [/.{2,}/, null, null],
 			}
 		};
 
@@ -66,11 +66,15 @@
 		isValid = true;
 
 		if ($.fn.contactsControl.options.conditions[type]) {
-			if ($.fn.contactsControl.options.conditions[type][i-1] !== null && value) {
-				isValid = $.fn.contactsControl.options.conditions[type][i-1].test(value);
+			if ($.fn.contactsControl.options.conditions[type][i-1] !== null) {
+				if (!value) {
+					isValid = false;
+				} else {
+					isValid = $.fn.contactsControl.options.conditions[type][i-1].test(value);
+				}
 			}
 		}
-debug(isValid);
+
 		return isValid;
 
 	}
@@ -83,12 +87,28 @@ debug(isValid);
 		var value = new Array(type);
 
 		var i=1;
+		var isInvalid = false;
 		$inputs.find('select, input').each(function() {
 			v = $(this).val();
-			$.fn.contactsControl.isValid(type, v, i);
+			$(this).removeClass('invalid');
+			if (!$.fn.contactsControl.isValid(type, v, i)) {
+				$(this).addClass('invalid').focus();
+				// alert('Invalid ' + $(this).attr('placeholder'))
+				isInvalid = true;
+			}
 			value[i] = v;
 			i++;
 		});
+
+		// If NOT valid return false
+		if (isInvalid) {
+			return false;
+		} else {
+			$inputs.find('select, input').each(function() {
+				$(this).val('').focus();
+			});
+		}
+
 
 		$span = $brick.find('span');
 
