@@ -1,7 +1,7 @@
 common:
 	service: Service\Location\Location
 	title: Location / Location
-	h1: Location / Location
+	h1: 'Autopilot / Task -> %name%'
 	grid:
 		itemsPerPage: 100
 		columns:
