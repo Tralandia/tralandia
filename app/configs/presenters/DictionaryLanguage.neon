@@ -1,7 +1,7 @@
 common:
 	service: Service\Dictionary\Language
 	title: Dictionary / Language
-	h1: Dictionary / Language
+	h1: 'Dictionary / Language -> %name%'
 	grid:
 		itemsPerPage: 200
 		columns:

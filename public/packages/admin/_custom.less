@@ -8,6 +8,8 @@
 .container .inner .content h1 { #gradient > .vertical(@white, @grayMedium); margin:-9px -9px 15px -9px; font-size:22px; border: 1px solid @grayLight; padding: 10px (@gridGutterWidth/2); .border-radius(10px 10px 0 0); }
 .container .inner .content h1 .entity-id { float:right; color:@blue; }
 
+input.numeric { text-align:right; }
+
 label b { color:@blueDark; font-size:14px; }
 label i { color:@grayLight; font-size:11px; }
 table thead { #gradient > .vertical(@green, @greenDark); color:@white; }
@@ -73,7 +75,8 @@ select[multiple] { height:250px; }
 .control-group.error input, .control-group.error select, .control-group.error textarea { box-shadow: 0 0 4px @red; }
 .control-group.warning input, .control-group.warning select, .control-group.warning textarea { border-color: @orange; box-shadow: 0 0 4px @orange; }
 .control-group.success input, .control-group.success select, .control-group.success textarea { box-shadow: 0 0 4px @green; }
-/*.control-group .GMapFormControl .map-data.active input { display:none; }*/
+
+.control-group .address-wrapper .span8, .control-group .address-wrapper .span11 { margin-left:0; }
 
 .icon-loading { background-image: url("../images/loading.gif"); background-position: 0 0; width: 16px; height: 16px; }
 

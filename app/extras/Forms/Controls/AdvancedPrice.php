@@ -60,10 +60,11 @@ class AdvancedPrice extends SelectBox {
 		$control->name .= '[currency]';
 		$control->id .= '-currency';
 		$control->value = $this->value['currency'];
+		$control->class = 'span4';
 
-		$wrapper = Html::el('div')->addClass('select-wrapper');
+		$wrapper = Html::el('div')->addClass('select-wrapper row-fluid');
 
-		$priceInput = Html::el('input')->name($name.'[amount]')->id($id.'-amount');
+		$priceInput = Html::el('input')->name($name.'[amount]')->id($id.'-amount')->class('numeric span7');
 		// debug($this->value);
 		$priceInput->value = $this->value['amount'];
 

@@ -25,15 +25,31 @@ class AdvancedAddress extends BaseControl {
 
 
 	public function getControl() {
-		$wrapper = Html::el('div')->class('address-wrapper');
+		$wrapper = Html::el('div')->class('address-wrapper row-fluid');
 		$control = parent::getControl();
 		$name = $control->name;
 		$id = $control->id;
 
-		foreach (array(Address::ADDRESS, Address::ADDRESS2, Address::POSTCODE, Address::COUNTRY) as $value) {
-			$control->id = $id . '-'.$value;
-			$control->name = $name . "[$value]";
-			$control->value = $this->value[$value];
+		$fields = array(
+			Address::ADDRESS => array(
+				'class' => 'span8'),
+			Address::ADDRESS2 => array(
+				'class' => 'span3'),
+			Address::LOCALITY => array(
+				'class' => 'span8'),
+			Address::POSTCODE => array(
+				'class' => 'span3'),
+			Address::COUNTRY => array(
+				'class' => 'span11'),
+		);
+
+		foreach ($fields as $field => $params) {
+			debug($field);
+			$control->id = $id . '-'.$field;
+			$control->name = $name . "[$field]";
+			$control->value = $this->value[$field];
+			$control->class = $params['class'];
+			$control->placeholder = $field;
 			$wrapper->add((string) $control);
 		}
 
