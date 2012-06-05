@@ -28,7 +28,7 @@ class Office extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Medium\Medium")
+	 * @ORM\OneToOne(targetEntity="Entity\Medium\Medium", cascade={"persist", "remove"})
 	 * @ORM\JoinColumn(onDelete="SET NULL")
 	 */
 	protected $signature;

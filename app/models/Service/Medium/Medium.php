@@ -141,8 +141,6 @@ class Medium extends \Service\BaseService {
 
 	public function delete() {
 
-		parent::delete();
-
 		$mediumDir = $this->getMediumDir();
 
 		foreach(glob($mediumDir . '/*') as $file) {
@@ -161,6 +159,8 @@ class Medium extends \Service\BaseService {
 			$parent = FILES_DIR . '/' . implode('/', $pathStructure);
 			if (!count(glob($parent . '/*'))) rmdir($parent);
 		}
+
+		parent::delete();
 
 	}
 

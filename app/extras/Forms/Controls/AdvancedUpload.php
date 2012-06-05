@@ -44,7 +44,9 @@ class AdvancedUpload extends UploadControl {
 
 		$wrapper->add($control);
 		if($this->defaultParam) {
-			$wrapper->add(Html::el('div')->class('uploaded-file')->add($this->defaultParam->id));
+			if($this->defaultParam->id) {
+				$wrapper->add(Html::el('div')->class('uploaded-file')->add($this->defaultParam->id));
+			}
 		}
 		$delete = Html::el('input')->type('checkbox')->value(1)->id($id . '-delete')->name($name . '[delete]');
 		$wrapper->add($delete . ' Delete');

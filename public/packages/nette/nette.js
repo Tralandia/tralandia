@@ -31,16 +31,18 @@ jQuery.extend({
 		},
 
 		success: function (payload) {
-			// redirect
-			if (payload.redirect) {
-				window.location.href = payload.redirect;
-				return;
-			}
-
-			// snippets
-			if (payload.snippets) {
-				for (var i in payload.snippets) {
-					jQuery.nette.updateSnippet(i, payload.snippets[i]);
+			if (payload) {
+				// redirect
+				if (payload.redirect) {
+					window.location.href = payload.redirect;
+					return;
+				}
+	
+				// snippets
+				if (payload.snippets) {
+					for (var i in payload.snippets) {
+						jQuery.nette.updateSnippet(i, payload.snippets[i]);
+					}
 				}
 			}
 		}
