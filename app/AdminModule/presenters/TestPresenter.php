@@ -5,6 +5,10 @@ namespace AdminModule;
 
 class TestPresenter extends BasePresenter {
 
+	public function actionUserDashboard() {
+
+	}
+
 	public function actionFileUpload() {
 
 	}
