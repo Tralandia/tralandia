@@ -56,4 +56,4 @@ rm -rf ./log/*
 cd ../../bin/php/php5.3.8/
 ./php.exe -f "C:/wamp/www/trax/public/index.php" orm:generate-proxies
 # ./php.exe -f "C:/wamp/www/trax/public/index.php" orm:schema-tool:create
-./php.exe -f "C:/wamp/www/trax/public/index.php" orm:schema-tool:update --force
+# ./php.exe -f "C:/wamp/www/trax/public/index.php" orm:schema-tool:update --force

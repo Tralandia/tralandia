@@ -253,13 +253,13 @@ div.columnListUL h2 {
 }
 div.columnListUL ul {
     padding-right: 20px;
-    width: 220px;
-    float: left;
 }
 div.columnListUL li {
     display: block;
     padding: 0 0 4px 0;
     text-decoration: none;
+    float:left;
+    width:230px;
 }
 div.columnListUL li span {
     position: absolute;

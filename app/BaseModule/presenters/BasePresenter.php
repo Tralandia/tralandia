@@ -43,6 +43,7 @@ abstract class BasePresenter extends Presenter {
 	protected function createTemplate($class = NULL) {
 		$template = parent::createTemplate($class);
 		$template->registerHelper('ulList', callback($this, 'ulListHelper'));
+		$template->registerHelper('cnt', callback($this, 'countHelper'));
 		return $template;
 	}
 
@@ -236,6 +237,10 @@ abstract class BasePresenter extends Presenter {
 		}
 
 		return $html;
+	}
+
+	public function countHelper($data) {
+		return count($data);
 	}
 
 }

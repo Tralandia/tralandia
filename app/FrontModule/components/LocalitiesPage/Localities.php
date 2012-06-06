@@ -12,7 +12,23 @@ class Localities extends \BaseModule\Components\BaseControl {
 		$country = $environment->getLocation();
 		$type = \Service\Location\Type::getBySlug('locality');
 
-		$this->template->localities = \Service\Location\LocationList::getBy(array('parentId'=>$country, 'type'=>$type));
+		$localities = \Service\Location\LocationList::getBy(
+			array(
+				'parentId' => $country,
+				'type' => $type,
+			)
+		);
+
+		$l = array();
+		foreach ($localities as $key => $locality) {
+			$l[$key] = \Nette\ArrayHash::from(array(
+				'name' => $locality->name,
+				'slug' => $locality->slug,
+				'rentalsCount' => count($locality->rentals),
+			));
+		}
+
+		$this->template->localities = \Tools::reorganizeArray($l, 3);
 
 		$template = $this->template;
 		$template->setFile(dirname(__FILE__) . '/page.latte');
