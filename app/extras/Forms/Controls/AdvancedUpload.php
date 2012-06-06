@@ -17,8 +17,8 @@ class AdvancedUpload extends UploadControl {
 	public function setDefaultParam($value) {
 		$this->defaultParam = $value;
 	}
+
 	public function setValue($value) {
-		debug('set', $value);
 		if(is_array($value)) {
 			if(isset($value['delete'])) {
 				$this->value = FALSE;
@@ -43,13 +43,13 @@ class AdvancedUpload extends UploadControl {
 		$wrapper = Html::el('div')->class('upload-wrapper');
 
 		$wrapper->add($control);
-		if($this->defaultParam) {
-			if($this->defaultParam->id) {
-				$wrapper->add(Html::el('div')->class('uploaded-file')->add($this->defaultParam->id));
-			}
+		if($this->defaultParam && $this->defaultParam->id) {
+			$imageName = $this->defaultParam->id . ' ' . $this->defaultParam->name;
+			$wrapper->add(Html::el('div')->class('uploaded-file')->add($imageName));
 		}
-		$delete = Html::el('input')->type('checkbox')->value(1)->id($id . '-delete')->name($name . '[delete]');
-		$wrapper->add($delete . ' Delete');
+		// delete checkbox
+		// $delete = Html::el('input')->type('checkbox')->value(1)->id($id . '-delete')->name($name . '[delete]');
+		// $wrapper->add($delete . ' Delete');
 		return $wrapper;
 	}
 

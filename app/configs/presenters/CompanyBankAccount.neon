@@ -60,6 +60,8 @@ common:
 				label: BankAddress
 				control: 
 					type: address
+					callback: {class: \Service\Location\LocationList, method: getTranslatedPairs, params: [id, name]}
+					prompt: Country
 			countries:
 				label: Countries using this bank account
 				class: span3

@@ -457,13 +457,14 @@ abstract class Service extends Nette\Object implements IService {
 
 					}
 
-				} else if($ui->control->type == 'AdvancedGmap') {
-					$data[$name] = $this->{$name};
-					$form[$name]->setDefaultValue(array(
-						'latitude' => $this->{$ui->control->latitude},
-						'longitude' => $this->{$ui->control->longitude}
-					));					
 				} else {
+					if($ui->control->type == 'AdvancedGmap') {
+						$data[$name] = array(
+							'latitude' => $this->{$ui->control->latitude},
+							'longitude' => $this->{$ui->control->longitude}
+						);
+					}
+
 					$data[$name] = $this->{$name};
 					// debug($data[$name]);
 					$form[$name]->setDefaultValue($data[$name]);
@@ -490,10 +491,8 @@ abstract class Service extends Nette\Object implements IService {
 					} else if($targetEntity->associationType == Reflector::ONE_TO_ONE) {
 
 						if(Strings::endsWith($targetEntity->name, '\\Medium')) {
-							debug($formValue);
 							if($formValue === false) {
 								if($this->{$name}) {
-									debug(\Service\Medium\Medium::get($this->{$name}));
 									\Service\Medium\Medium::get($this->{$name})->delete();
 								}
 							} else if($formValue->isOk()) {
@@ -549,7 +548,6 @@ abstract class Service extends Nette\Object implements IService {
 						$formValue = new \Extras\Types\Url($formValue);
 					} else if($columnType == 'address') {
 						$formValue = new \Extras\Types\Address($formValue);
-						debug((array) $formValue);
 					}
 					$this->{$name} = $formValue;
 				}
