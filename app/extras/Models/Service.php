@@ -269,6 +269,10 @@ abstract class Service extends Nette\Object implements IService {
 		return $this->mainEntity;
 	}
 
+	public function getEntity() {
+		return $this->getMainEntity();
+	}
+
 	/**
 	 * Ziskanie nazvu hlavnej entity
 	 * @return string
@@ -415,11 +419,8 @@ abstract class Service extends Nette\Object implements IService {
 					if ($targetEntity->name == 'Entity\\Dictionary\\Phrase') {
 
 						$phrase = \Service\Dictionary\Phrase::get($this->{$name});
-						$translator = static::getTranslator();
-						$translation = $phrase->getTranslation(\Service\Dictionary\Language::get($translator::DEFAULT_LANGUAGE));
-						if ($translation) {
-							$form[$name]->setDefaultValue($translation->translation);
-							$form[$name]->setDefaultParam($phrase);
+						if ($phrase) {
+							$form[$name]->setPhrase($phrase);
 						}
 
 					} else if($targetEntity->associationType == Reflector::MANY_TO_MANY || $targetEntity->associationType == Reflector::ONE_TO_MANY) {

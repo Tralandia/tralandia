@@ -53,6 +53,9 @@ class Translation extends \Entity\BaseEntity {
 	 */
 	protected $checked;
 
+	public function __toString() {
+		return $this->translation;
+	}
 
 //@entity-generator-code <--- NEMAZAT !!!
 

@@ -22,6 +22,12 @@ class Translator implements \Nette\Localization\ITranslator {
 
 		return $translation;
 	}
+
+	public function getDefaultLanguage() {
+
+		return D\Language::get(self::DEFAULT_LANGUAGE);
+	}
+
 	
 	protected function getTranslation($phrase) {
 		if($phrase instanceof D\Phrase || $phrase instanceof \Entity\Dictionary\Phrase) {
