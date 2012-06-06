@@ -12,10 +12,10 @@ use Nette\Utils\Html,
 
 class AdvancedPhrase extends BaseControl {
 
-	public $defaultParam;
+	public $phrase;
 
-	public function setDefaultParam($value) {
-		$this->defaultParam = $value;
+	public function setPhrase($phrase) {
+		$this->phrase = $phrase;
 	}
 
 
@@ -31,22 +31,37 @@ class AdvancedPhrase extends BaseControl {
 	// }
 
 
-	// public function getControl() {
-	// 	$wrapper = Html::el('div')->class('address-wrapper');
-	// 	$control = parent::getControl();
-	// 	$name = $control->name;
-	// 	$id = $control->id;
+	public function getControl() {
+		$wrapper = Html::el('div')->class('btn-group phrase-control html-text');
+		$control = parent::getControl();
+		$colne = clone $control;
+		$name = $control->name;
+		$id = $control->id;
 
-	// 	foreach (array(Address::ADDRESS, Address::ADDRESS2, Address::POSTCODE, Address::COUNTRY) as $value) {
-	// 		$control->id = $id . '-'.$value;
-	// 		$control->name = $name . "[$value]";
-	// 		$control->value = $this->value[$value];
-	// 		$wrapper->add((string) $control);
-	// 	}
+		$phrase = $this->phrase;
+		$defaultLanguage = $this->getForm()->getDefaultLanguage();
+		$sourceLanguage = $this->phrase->getSourceLanguage();
 
-	// 	// $values = $this->getValue();
-	// 	return $wrapper;
-	// }
+		$button = Html::el('button')
+					->class('btn btn-success dropdown-toggle')
+					->addAttributes(array('data-toggle' => 'dropdown'));
+		$wrapper->add($button);
+		$ul = Html::el('ul')->class('dropdown-menu');
+		$isFirst = TRUE;
+		foreach ($phrase->translations as $translation) {
+			if($isFirst) {
+				$button->add('<div class="wrap"><b>'.strtoupper($translation->language->iso) . ': </b>'.$translation->translation.'</div><span class="caret pull-right"></span>');
+				$isFirst = false;
+			}
+			// debug($translation);
+			$a = Html::el('a')->lang($translation->language->iso)->add('<b>'.strtoupper($translation->language->iso).': </b><span>'.$translation->translation.'</span>');
+			$li = Html::el('li')->add($a);
+			$ul->add($li . '<li class="divider"></li>');
+		}
+		$wrapper->add($ul);
+		
+		return $wrapper;
+	}
 
 	/**
 	 */

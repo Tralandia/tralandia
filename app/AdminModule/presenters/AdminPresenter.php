@@ -92,6 +92,8 @@ class AdminPresenter extends BasePresenter {
 		$form = new \AdminModule\Forms\AdminForm($this, $name);
 
 		$this->reflector->extend($form, $this->formMask);
+		$form->setEnvironment($this->environment);
+		$form->setDefaultLanguage($this->context->translator->getDefaultLanguage());
 
 		//$this->addAdvancedFileManager('upload', 'File manager');
 		$form->onSuccess[] = callback($this, 'formOnSuccess');

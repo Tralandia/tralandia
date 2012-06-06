@@ -95,6 +95,11 @@ class Type extends \Entity\BaseEntity {
 	 * @ORM\Column(type="boolean", nullable=true)
 	 */
 	protected $checkingRequired;
+
+
+	public function isSimple() {
+		return !$this->multitranslationRequired && !$this->genderNumberRequired && !$this->locativeRequired && !$this->positionRequired;
+	}
 	
 
 //@entity-generator-code <--- NEMAZAT !!!

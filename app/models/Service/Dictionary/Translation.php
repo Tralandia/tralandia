@@ -47,5 +47,9 @@ class Translation extends \Service\BaseService {
 	protected function webalize($s) {
 		return Strings::webalize($s);
 	}
+
+	public function __toString() {
+		return $this->translation;
+	}
 	
 }
