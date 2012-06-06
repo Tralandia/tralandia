@@ -50,7 +50,7 @@ class AdvancedPhrase extends BaseControl {
 		$isFirst = TRUE;
 		foreach ($phrase->translations as $translation) {
 			if($isFirst) {
-				$button->add('<div class="wrap"><b>'.strtoupper($translation->language->iso) . ': </b>'.$translation->translation.'</div><span class="caret pull-right"></span>');
+				$button->add('<span class="caret pull-right"></span><div class="wrap"><b>'.strtoupper($translation->language->iso) . ': </b>'.$translation->translation.'</div>');
 				$isFirst = false;
 			}
 			// debug($translation);
