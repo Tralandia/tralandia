@@ -12,7 +12,7 @@ class Location extends \Extras\Models\Service {
 	public function setSlug($slug) {
 
 		if(!$this->getType() instanceof \Entity\Location\Type) {
-			throw new ServiceException('Pred pridanim slagu musis definovat Type locality.');
+			throw new ServiceException('Pred pridanim slugu musis definovat Type locality.');
 		}
 
 		$slug = Strings::webalize(Strings::trim($slug));
@@ -39,4 +39,31 @@ class Location extends \Extras\Models\Service {
 		return $locationList->count() > 1 ? FALSE : TRUE; # @todo @fix vracia false lebo najde seba sameho
 
 	}
+
+	public function findParentByType($slug = 'continent', $location = null) {
+
+		if (!$location) $location = $this;
+
+		if ($location->parentId) {
+
+			$parentLocation = \Service\Location\Location::get($location->parentId);
+
+			if ($parentLocation->type->slug == $slug) {
+
+				return $parentLocation;
+
+			} else {
+
+				return $this->findParentByType($slug, $parentLocation);
+
+			}
+			
+		} else {
+
+			return $location;
+
+		}
+
+	}
+
 }
