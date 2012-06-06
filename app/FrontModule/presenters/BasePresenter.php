@@ -18,8 +18,8 @@ abstract class BasePresenter extends \BasePresenter {
 
 		/******* Things @TODO *****/
 		$this->template->mainMenuItems = $this->getMainMenuItems();
-		$this->template->currentLanguage = array("name"=>"Slovensky", "iso"=>"sk");
-		$this->template->currentDomain = array("iso"=>"sk");
+		$this->template->currentLanguage = $this->context->environment->getLanguage();
+		$this->template->currentLocation = $this->context->environment->getLocation();
 
 	}
 

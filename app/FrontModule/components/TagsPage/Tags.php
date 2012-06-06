@@ -9,7 +9,7 @@ class Tags extends \BaseModule\Components\BaseControl {
 	public function render() {
 
 		$group = \Service\Rental\AmenityType::getBySlug('tag');
-		$this->template->tags = \Service\Rental\AmenityList::getByGroup($group);
+		$this->template->tags = \Service\Rental\AmenityList::getByType($group);
 
 		$template = $this->template;
 		$template->setFile(dirname(__FILE__) . '/page.latte');

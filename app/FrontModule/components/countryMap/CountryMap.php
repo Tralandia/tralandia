@@ -29,12 +29,13 @@ class CountryMap extends \BaseModule\Components\BaseControl {
 
 		$navigatorData['top'] = array(
 			\Service\Location\Location::getBySlug('world'),
-			$country->getContinent()
+			$this->presenter->context->environment->getLocation()
 		);
 
 		$navigatorData['otherCountries'] = array();
 		if ($country->clickMapData) {
-			foreach ($country->clickMapData->otherCountries as $countryId) {
+			debug($country->clickMapData);
+			foreach ($country->clickMapData['otherCountries'] as $countryId) {
 				$navigatorData['otherCountries'][] = \Service\Location\Location::get($countryId);
 			}
 		}
@@ -52,10 +53,10 @@ class CountryMap extends \BaseModule\Components\BaseControl {
 		$type = \Service\Location\Type::getBySlug('region');
 
 		foreach (\Service\Location\LocationList::getBy(array('parentId'=>$country, 'type'=>$type)) as $key=>$location) {
-			if (isset($location->clickMapData->coords, $location->clickMapData->css)) {
+			if (isset($location->clickMapData['coords'], $location->clickMapData['css'])) {
 				$list['regions'][$key] = $location;
 			}
-			if (isset($location->clickMapData->mapBox)) {
+			if (isset($location->clickMapData['mapBox'])) {
 				$list['mapBox'][$key] = $location;
 			}
  		}

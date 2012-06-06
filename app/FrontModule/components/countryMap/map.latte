@@ -7,9 +7,9 @@
 		<div n:foreach="$regions as $region" class="clickMapRegion rid{$region->id} tempShow"></div>
 		<img class="clickMapImgmap" usemap="#regions" src="images/spacer.gif" width="548" height="275" alt="" />
 		<map name="regions" n:inner-foreach="$regions as $region">
-			<area rid="{$region->id}" shape="poly" coords="{$region->clickMapData->coords}" href="{$region->slug}" title="{_$region->name}" />
+			<area rid="{$region->id}" shape="poly" coords="{$region->clickMapData['coords']}" href="{$region->slug}" title="{_$region->name}" />
 		</map>
-		<style type="text/css" n:inner-foreach="$regions as $region">{!$region->clickMapData->css}</style>
+		<style type="text/css" n:inner-foreach="$regions as $region">{!$region->clickMapData['css']}</style>
 	</div>
 
 	<div class="clickMapNavigator">

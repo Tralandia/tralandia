@@ -7,6 +7,15 @@ parameters:
 					- admin/main.js
 				css:
 					- admin/_bootstrap.less
+			front:
+				css:
+					- front/default.css
+					- front/mainHeader.css
+					- front/mainFooter.css
+					- front/search.css
+					- front/clickMap.css
+					- front/home.css
+					- front/forms.css
 			autopilot:
 				js: 
 					- admin/admin.js
@@ -78,4 +87,7 @@ parameters:
 				- %webloader.packages.liveWysi%
 				- %webloader.packages.admin%
 				- %webloader.packages.bootstrap%
+
+			Front: 
+				- %webloader.packages.front%
 
