@@ -273,7 +273,7 @@ class ImportUsers extends BaseImport {
 		if ($this->developmentMode == TRUE) {
 			$r = q('select * from contacts where country_id = 46 limit 10000');	
 		} else {
-			$r = q('select * from contacts');	
+			$r = q('select * from contacts');
 		}
 
 		while($x = mysql_fetch_array($r)) {

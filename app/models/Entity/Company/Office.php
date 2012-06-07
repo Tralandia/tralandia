@@ -29,7 +29,7 @@ class Office extends \Entity\BaseEntityDetails {
 	/**
 	 * @var Collection
 	 * @ORM\OneToOne(targetEntity="Entity\Medium\Medium", cascade={"persist", "remove"})
-	 * @ORM\JoinColumn(onDelete="SET NULL")
+	 * @ORM\JoinColumn(onDelete="CASCADE")
 	 */
 	protected $signature;
 	
@@ -38,28 +38,6 @@ class Office extends \Entity\BaseEntityDetails {
 	 * @ORM\Column(type="address")
 	 */
 	protected $address;
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //@entity-generator-code <--- NEMAZAT !!!
 

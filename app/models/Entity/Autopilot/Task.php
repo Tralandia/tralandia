@@ -21,6 +21,7 @@ class Task extends \Entity\BaseEntityDetails {
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Type")
+	 * @ORM\JoinColumn(onDelete="SET NULL")
 	 */
 	protected $type;
 
@@ -35,6 +36,25 @@ class Task extends \Entity\BaseEntityDetails {
 	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $name;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string")
+	 */
+	protected $technicalName;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)§
+	 * example: \Rental\Rental
+	 */
+	protected $entityName;
+
+	/**
+	 * @var int
+	 * @ORM\Column(type="integer", nullable=true)
+	 */
+	protected $entityId;
 
 	/**
 	 * @var text
@@ -212,6 +232,75 @@ class Task extends \Entity\BaseEntityDetails {
 	 */
 	public function getName() {
 		return $this->name;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Autopilot\Task
+	 */
+	public function setTechnicalName($technicalName) {
+		$this->technicalName = $technicalName;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getTechnicalName() {
+		return $this->technicalName;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Autopilot\Task
+	 */
+	public function setEntityName($entityName) {
+		$this->entityName = $entityName;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Autopilot\Task
+	 */
+	public function unsetEntityName() {
+		$this->entityName = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getEntityName() {
+		return $this->entityName;
+	}
+		
+	/**
+	 * @param integer
+	 * @return \Entity\Autopilot\Task
+	 */
+	public function setEntityId($entityId) {
+		$this->entityId = $entityId;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Autopilot\Task
+	 */
+	public function unsetEntityId() {
+		$this->entityId = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return integer|NULL
+	 */
+	public function getEntityId() {
+		return $this->entityId;
 	}
 		
 	/**

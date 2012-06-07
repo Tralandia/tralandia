@@ -22,18 +22,21 @@ class BackLink extends \Entity\BaseEntity {
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Rental\Rental")
+	 * @ORM\JoinColumn(onDelete="SET NULL")
 	 */
 	protected $rental;
 
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Location\Location")
+	 * @ORM\JoinColumn(onDelete="SET NULL")
 	 */
 	protected $location;
 
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Dictionary\Language")
+	 * @ORM\JoinColumn(onDelete="SET NULL")
 	 */
 	protected $language;
 

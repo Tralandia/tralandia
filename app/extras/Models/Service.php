@@ -387,6 +387,7 @@ abstract class Service extends Nette\Object implements IService {
 				self::flush();
 			}
 		} catch (\PDOException $e) {
+			debug($this);
 			throw new ServiceException($e->getMessage());
 		}
 	}

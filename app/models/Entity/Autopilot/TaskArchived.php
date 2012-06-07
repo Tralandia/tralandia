@@ -12,7 +12,7 @@ use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="autopilot_taskarchived", indexes={@ORM\index(name="subtype", columns={"subtype"}), @ORM\index(name="startTime", columns={"startTime"}), @ORM\index(name="due", columns={"due"}), @ORM\index(name="durationPaid", columns={"durationPaid"}), @ORM\index(name="userLanguageLevel", columns={"userLanguageLevel"})})
+ * @ORM\Table(name="autopilot_taskarchived", indexes={@ORM\index(name="subtype", columns={"subtype"}), @ORM\index(name="startTime", columns={"startTime"}), @ORM\index(name="due", columns={"due"}), @ORM\index(name="userLanguageLevel", columns={"userLanguageLevel"})})
  * @EA\Service(name="\Service\Autopilot\TaskArchived")
  * @EA\ServiceList(name="\Service\Autopilot\TaskArchivedList")
  * @EA\Primary(key="id", value="name")
@@ -56,10 +56,11 @@ class TaskArchived extends \Entity\BaseEntityDetails {
 	protected $due;
 
 	/**
-	 * @var time
-	 * @ORM\Column(type="time")
+	 * @var price
+	 * @ORM\Column(type="price")
+	 * this will be calculated based on durationPaid and the hourly_rate of person who completed the task
 	 */
-	protected $durationPaid;
+	protected $price;
 
 	/**
 	 * @var json
@@ -114,27 +115,6 @@ class TaskArchived extends \Entity\BaseEntityDetails {
 	 * @ORM\Column(type="datetime")
 	 */
 	protected $completed;
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //@entity-generator-code <--- NEMAZAT !!!
@@ -274,20 +254,20 @@ class TaskArchived extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @param \Extras\Types\Time
+	 * @param \Extras\Types\Price
 	 * @return \Entity\Autopilot\TaskArchived
 	 */
-	public function setDurationPaid(\Extras\Types\Time $durationPaid) {
-		$this->durationPaid = $durationPaid;
+	public function setPrice(\Extras\Types\Price $price) {
+		$this->price = $price;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Extras\Types\Time|NULL
+	 * @return \Extras\Types\Price|NULL
 	 */
-	public function getDurationPaid() {
-		return $this->durationPaid;
+	public function getPrice() {
+		return $this->price;
 	}
 		
 	/**

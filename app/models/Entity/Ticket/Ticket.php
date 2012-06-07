@@ -9,43 +9,13 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="ticket_ticket", indexes={@ORM\index(name="client", columns={"client"}), @ORM\index(name="staff", columns={"staff_id"}), @ORM\index(name="status", columns={"status"})})
+ * @ORM\Table(name="ticket_ticket")
  */
 class Ticket extends \Entity\BaseEntity {
 
 	const STATUS_OPEN = 2;
 	const STATUS_REPLIED = 4;
 	const STATUS_CLOSED = 0;
-
-	/**
-	 * @var email
-	 * @ORM\Column(type="email")
-	 */
-	protected $client;
-
-	/**
-	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\User\User")
-	 */
-	protected $staff;
-
-	/**
-	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Location\Location")
-	 */
-	protected $country;
-
-	/**
-	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Dictionary\Language")
-	 */
-	protected $language;
-
-	/**
-	 * @var integer
-	 * @ORM\Column(type="integer", nullable=true)
-	 */
-	protected $status;
 
 	/**
 	 * @var Collection
@@ -61,127 +31,6 @@ class Ticket extends \Entity\BaseEntity {
 		parent::__construct();
 
 		$this->messages = new \Doctrine\Common\Collections\ArrayCollection;
-	}
-		
-	/**
-	 * @param \Extras\Types\Email
-	 * @return \Entity\Ticket\Ticket
-	 */
-	public function setClient(\Extras\Types\Email $client) {
-		$this->client = $client;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Extras\Types\Email|NULL
-	 */
-	public function getClient() {
-		return $this->client;
-	}
-		
-	/**
-	 * @param \Entity\User\User
-	 * @return \Entity\Ticket\Ticket
-	 */
-	public function setStaff(\Entity\User\User $staff) {
-		$this->staff = $staff;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Ticket\Ticket
-	 */
-	public function unsetStaff() {
-		$this->staff = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\User\User|NULL
-	 */
-	public function getStaff() {
-		return $this->staff;
-	}
-		
-	/**
-	 * @param \Entity\Location\Location
-	 * @return \Entity\Ticket\Ticket
-	 */
-	public function setCountry(\Entity\Location\Location $country) {
-		$this->country = $country;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Ticket\Ticket
-	 */
-	public function unsetCountry() {
-		$this->country = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Location\Location|NULL
-	 */
-	public function getCountry() {
-		return $this->country;
-	}
-		
-	/**
-	 * @param \Entity\Dictionary\Language
-	 * @return \Entity\Ticket\Ticket
-	 */
-	public function setLanguage(\Entity\Dictionary\Language $language) {
-		$this->language = $language;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Ticket\Ticket
-	 */
-	public function unsetLanguage() {
-		$this->language = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Dictionary\Language|NULL
-	 */
-	public function getLanguage() {
-		return $this->language;
-	}
-		
-	/**
-	 * @param integer
-	 * @return \Entity\Ticket\Ticket
-	 */
-	public function setStatus($status) {
-		$this->status = $status;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Ticket\Ticket
-	 */
-	public function unsetStatus() {
-		$this->status = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return integer|NULL
-	 */
-	public function getStatus() {
-		return $this->status;
 	}
 		
 	/**

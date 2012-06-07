@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="ticket_message", indexes={@ORM\index(name="senderEmail", columns={"senderEmail"})})
+ * @ORM\Table(name="ticket_message")
  */
 class Message extends \Entity\BaseEntity {
 
@@ -19,10 +19,34 @@ class Message extends \Entity\BaseEntity {
 	protected $ticket;
 
 	/**
-	 * @var email
-	 * @ORM\Column(type="email")
+	 * @var Collection
+	 * @ORM\ManyToOne(targetEntity="Entity\User\User")
 	 */
-	protected $senderEmail;
+	protected $from;
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToOne(targetEntity="Entity\User\User")
+	 */
+	protected $to;
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToMany(targetEntity="Entity\User\User", inversedBy="ticketMessages")
+	 */
+	protected $toCC;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $subject;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $subjectEn;
 
 	/**
 	 * @var text
@@ -49,6 +73,7 @@ class Message extends \Entity\BaseEntity {
 	public function __construct() {
 		parent::__construct();
 
+		$this->toCC = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->attachments = new \Doctrine\Common\Collections\ArrayCollection;
 	}
 		
@@ -79,20 +104,126 @@ class Message extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Extras\Types\Email
+	 * @param \Entity\User\User
 	 * @return \Entity\Ticket\Message
 	 */
-	public function setSenderEmail(\Extras\Types\Email $senderEmail) {
-		$this->senderEmail = $senderEmail;
+	public function setFrom(\Entity\User\User $from) {
+		$this->from = $from;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Extras\Types\Email|NULL
+	 * @return \Entity\Ticket\Message
 	 */
-	public function getSenderEmail() {
-		return $this->senderEmail;
+	public function unsetFrom() {
+		$this->from = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\User\User|NULL
+	 */
+	public function getFrom() {
+		return $this->from;
+	}
+		
+	/**
+	 * @param \Entity\User\User
+	 * @return \Entity\Ticket\Message
+	 */
+	public function setTo(\Entity\User\User $to) {
+		$this->to = $to;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Ticket\Message
+	 */
+	public function unsetTo() {
+		$this->to = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\User\User|NULL
+	 */
+	public function getTo() {
+		return $this->to;
+	}
+		
+	/**
+	 * @param \Entity\User\User
+	 * @return \Entity\Ticket\Message
+	 */
+	public function addToCC(\Entity\User\User $toCC) {
+		if(!$this->toCC->contains($toCC)) {
+			$this->toCC->add($toCC);
+		}
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\User\User
+	 */
+	public function getToCC() {
+		return $this->toCC;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Ticket\Message
+	 */
+	public function setSubject($subject) {
+		$this->subject = $subject;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Ticket\Message
+	 */
+	public function unsetSubject() {
+		$this->subject = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getSubject() {
+		return $this->subject;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Ticket\Message
+	 */
+	public function setSubjectEn($subjectEn) {
+		$this->subjectEn = $subjectEn;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Ticket\Message
+	 */
+	public function unsetSubjectEn() {
+		$this->subjectEn = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getSubjectEn() {
+		return $this->subjectEn;
 	}
 		
 	/**
