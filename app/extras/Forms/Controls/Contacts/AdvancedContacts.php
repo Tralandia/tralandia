@@ -54,6 +54,7 @@ class AdvancedContacts extends TextBase {
 	 */
 	public function getControl() {
 		$original = parent::getControl();
+		$original->addClass('hide');
 		$id = $original->id;
 
 		$template = new FileTemplate($this->template);

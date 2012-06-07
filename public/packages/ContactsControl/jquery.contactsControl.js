@@ -9,7 +9,6 @@
 						'<a class="btn btn-danger delete btn-mini"><i class="icon-white icon-remove"></i></a>' +
 					'</div>' +
 					'<span></span>' +
-					'<input type="text" class="span12 text hide" />' +
 				'</label>',
 			dataSeparator: '~',
 			conditions: {
@@ -27,6 +26,7 @@
 			var $types = $base.find('ul.contacts-types li a[contacts-type*=]');
 			var $inputs = $base.find('div.contacts-types');
 
+			$.fn.contactsControl.initTextareaData($base);
 
 			$types.bind('click',function (e) {
 				e.preventDefault();
@@ -54,7 +54,7 @@
 					e.preventDefault();
 
 					type = $base.find('button.types').attr('selected-type');
-					$.fn.contactsControl.addBrick($base, type);
+					$.fn.contactsControl.createBrick($base, type);
 				}
 			});
 
@@ -62,7 +62,7 @@
 				e.preventDefault();
 
 				type = $base.find('button.types').attr('selected-type');
-				$.fn.contactsControl.addBrick($base, type);
+				$.fn.contactsControl.createBrick($base, type);
 
 			});
 
@@ -70,27 +70,34 @@
 
 	}
 
-	$.fn.contactsControl.isValid = function(type, value, i) {
+	$.fn.contactsControl.setTextareaData = function($base) {
 
-		isValid = true;
+		var r = [];
+		var i = 0;
+		$base.find('.input-bricks label.label').each(function() {
+			r[i] = $(this).attr('value');
+			i++;
+		});
 
-		if ($.fn.contactsControl.options.conditions[type]) {
-			if ($.fn.contactsControl.options.conditions[type][i] !== null) {
-				if (!value) {
-					isValid = false;
-				} else {
-					isValid = $.fn.contactsControl.options.conditions[type][i].test(value);
-				}
-			}
-		}
-
-		return isValid;
+		$base.find('.input-bricks textarea').val(r.join("\n"));
 
 	}
 
-	$.fn.contactsControl.addBrick = function($base, type) {
+	$.fn.contactsControl.initTextareaData = function($base) {
 
-		$brick = $($.fn.contactsControl.options.brickHtml);
+		$textarea = $base.find('.input-bricks textarea');
+		lines = $textarea.val().split("\n");
+
+		bricks = this.linesToArray(lines);
+		for(i in bricks) {
+			if (typeof bricks[i] !== 'object') continue;
+			this.addBrick($base, bricks[i]);
+		}
+
+	}
+
+	$.fn.contactsControl.createBrick = function($base, type) {
+
 		$inputs = $base.find('div.contacts-types .type-' + type);
 
 		var value = new Array(type);
@@ -117,8 +124,16 @@
 			});
 		}
 
+		this.addBrick($base, value);
 
+	}
+
+	$.fn.contactsControl.addBrick = function($base, value) {
+
+		$brick = $(this.options.brickHtml);
 		$span = $brick.find('span');
+
+		type = value[0];
 
 		icon = '<i class="' + $base.find('.contacts-types a[contacts-type="'+ type +'"] i').attr('class') + '"></i> ';
 
@@ -143,18 +158,58 @@
 			$span.html(html);
 		}
 
-		$brick
-			.find('input')
-			.attr('name', 'contacts[]')
-			.attr('value', value.join($.fn.contactsControl.options.dataSeparator));
+		$brick.attr('value', this.arrayToLines(value));
 
-		$base.before($brick);
+		$textarea = $base.find('.input-bricks textarea');
+		$textarea
+			.after($brick);
 
 		// DELETE button trigger
 		$brick.find('a.delete').bind('click', function(e) {
 			e.preventDefault();
 			$(this).parents('label.label').detach();
+			$.fn.contactsControl.setTextareaData($base);
 		});
+
+		this.setTextareaData($base);
+
+	}
+
+
+	// hepl methods
+	$.fn.contactsControl.arrayToLines = function(value) {
+
+		return value.join(this.options.dataSeparator);
+
+	}
+
+	$.fn.contactsControl.linesToArray = function(lines) {
+
+		r = [];
+		for(i in lines) {
+			line = lines[i];
+			if (typeof line == 'string') r[i] = line.split(this.options.dataSeparator);
+		}
+
+		return r;
+
+	}
+
+	$.fn.contactsControl.isValid = function(type, value, i) {
+
+		isValid = true;
+
+		if (this.options.conditions[type]) {
+			if (this.options.conditions[type][i] !== null) {
+				if (!value) {
+					isValid = false;
+				} else {
+					isValid = this.options.conditions[type][i].test(value);
+				}
+			}
+		}
+
+		return isValid;
 
 	}
 
