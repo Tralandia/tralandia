@@ -198,7 +198,7 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 	public static function getPairs($keyName, $valueName = NULL, $criteria = NULL, $orderBy = NULL, $limit = NULL, $offset = NULL) {
 		$serviceList = self::_getPairs($keyName, $valueName, $criteria, $orderBy, $limit, $offset);
 		$return = array();
-		// debug($serviceList);
+
 		foreach($serviceList as $item) {
 			$key = array_shift($item);
 			$value = array_shift($item);

@@ -39,8 +39,16 @@ class AdvancedPhrase extends BaseControl {
 		$id = $control->id;
 
 		$phrase = $this->phrase;
+		if(!$phrase) {
+			throw new \Exception("Chyba preklad! Asi nieje v DB kukni sa tam...");
+		}
+		if(!$this->getOption('inlineEditing')) {
+			throw new \Exception("Nenastavil si InlineEditing pre frazu");
+		}
+		$inlineEditing = $this->getOption('inlineEditing');
+		$inlineEditing->href->setParameter('id', $phrase->id);
 		$defaultLanguage = $this->getForm()->getDefaultLanguage();
-		$sourceLanguage = $this->phrase->getSourceLanguage();
+		$sourceLanguage = $phrase->getSourceLanguage();
 
 		$button = Html::el('button')
 					->class('btn btn-success dropdown-toggle')
@@ -54,7 +62,11 @@ class AdvancedPhrase extends BaseControl {
 				$isFirst = false;
 			}
 			// debug($translation);
-			$a = Html::el('a')->lang($translation->language->iso)->add('<b>'.strtoupper($translation->language->iso).': </b><span>'.$translation->translation.'</span>');
+			$a = Html::el('a')
+				->lang($translation->language->iso)
+				->add('<b>'.strtoupper($translation->language->iso).': </b><span>'.$translation->translation.'</span>')
+				->href($inlineEditing->href->setParameter('languageIso', $translation->language->iso)->setParameter('display', 'modal'))
+				->class('modal');
 			$li = Html::el('li')->add($a);
 			$ul->add($li . '<li class="divider"></li>');
 		}

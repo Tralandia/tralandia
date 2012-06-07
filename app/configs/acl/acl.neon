@@ -26,6 +26,10 @@ parameters:
 			Admin:Test:
 				fileUpload:
 				phraseControl:
+			Admin:DictionaryPhrase:
+				list:
+				edit:
+				add:
 			Admin:Ap:
 				task:
 			Admin:Autopilot:

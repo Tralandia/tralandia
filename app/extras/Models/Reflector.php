@@ -307,36 +307,7 @@ class Reflector extends Nette\Object {
 				$fieldMask['ui']['controlOptions']['renderBefore'] = Html::el('hr')->addClass('soften');
 			}
 
-
-			if($type == 'text') {
-				$fieldMask['ui']['control']['type'] = 'AdvancedTextInput';
-			} else if($type == 'phrase') {
-				$fieldMask['ui']['control']['type'] = 'AdvancedPhrase';
-			} else if($type == 'address') {
-				$fieldMask['ui']['control']['type'] = 'AdvancedAddress';
-			} else if($type == 'checkbox') {
-				$fieldMask['ui']['control']['type'] = 'AdvancedCheckBox';
-			} else if($type == 'select') {
-				$fieldMask['ui']['control']['type'] = 'AdvancedSelectBox';
-			} else if($type == 'multiSelect') {
-				$fieldMask['ui']['control']['type'] = 'MultiSelect';
-			} else if($type == 'checkboxList') {
-				$fieldMask['ui']['control']['type'] = 'AdvancedCheckBoxList';
-			} else if($type == 'table') {
-				$fieldMask['ui']['control']['type'] = 'AdvancedTable';
-			} else if($type == 'json') {
-				$fieldMask['ui']['control']['type'] = 'AdvancedJson';
-			} else if($type == 'neon') {
-				$fieldMask['ui']['control']['type'] = 'AdvancedNeon';
-			} else if($type == 'bricksList') {
-				$fieldMask['ui']['control']['type'] = 'AdvancedBricksList';
-			} else if($type == 'gmap') {
-				$fieldMask['ui']['control']['type'] = 'AdvancedGmap';
-			} else if($type == 'price') {
-				$fieldMask['ui']['control']['type'] = 'AdvancedPrice';
-			} else if($type == 'upload') {
-				$fieldMask['ui']['control']['type'] = 'AdvancedUpload';
-			}
+			$fieldMask['ui']['control']['type'] = 'Advanced' . ucfirst($type);
 
 			if($associationType = $this->getAssociationType($property)) {
 				$association = $property->getAnnotation($associationType);
