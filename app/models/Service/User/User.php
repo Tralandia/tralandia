@@ -80,4 +80,8 @@ class User extends \Service\BaseService {
 	private static function sortMergedUsers($a, $b) {
 		return $a->updated > $b->updated ? -1 : 1; //@todo - upravit tak, aby to bral aj podla ACL - vyzsia rola ma vyzsie priority, rovnaka rola ide podla "updated"
 	}
+
+	protected function postSave() {
+		\Service\ContactCacheList::syncContacts($this->contacts, $this->getMainEntityName(), $this->id);
+	}
 }

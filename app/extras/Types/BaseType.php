@@ -22,4 +22,7 @@ class BaseType extends \Nette\Object {
 		return \Nette\Utils\Json::encode($this->data);
 	}
 
+	public function getUnifiedFormat() {
+		return $this->__toString();
+	}
 }
