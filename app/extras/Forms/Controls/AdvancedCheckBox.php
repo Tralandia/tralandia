@@ -7,7 +7,7 @@ use Nette\Forms\Container,
 	Nette\Utils\Html;
 
 
-class AdvancedCheckBox extends BaseControl {
+class AdvancedCheckbox extends BaseControl {
 
 	/**
 	 * @param  string  label
@@ -48,12 +48,12 @@ class AdvancedCheckBox extends BaseControl {
 	}
 
 	/**
-	 * Adds AdvancedCheckBox() method to Nette\Forms\Container
+	 * Adds AdvancedCheckbox() method to Nette\Forms\Container
 	 */
 	public static function register()
 	{
-		Container::extensionMethod('addAdvancedCheckBox', function (Container $_this, $name, $label = NULL) {
-			return $_this[$name] = new AdvancedCheckBox($label);
+		Container::extensionMethod('addAdvancedCheckbox', function (Container $_this, $name, $label = NULL) {
+			return $_this[$name] = new AdvancedCheckbox($label);
 		});
 	}
 

@@ -15,19 +15,21 @@ FormContainer::extensionMethod('addComboSelect', 'Tools::addComboSelect');
 Selection::extensionMethod('fetchTree', 'Tools::selectionTree');
 Image::extensionMethod('resizeCrop', 'Tools::resizeCrop');
 
+Extras\Forms\Controls\AdvancedGmap::register();
+Extras\Forms\Controls\AdvancedContacts::register();
 Extras\Forms\Controls\AdvancedAddress::register();
 Extras\Forms\Controls\AdvancedBricksList::register();
-Extras\Forms\Controls\AdvancedCheckBox::register();
-Extras\Forms\Controls\AdvancedCheckBoxList::register();
+Extras\Forms\Controls\AdvancedCheckbox::register();
+Extras\Forms\Controls\AdvancedCheckboxList::register();
 Extras\Forms\Controls\AdvancedFileManager::register();
-Extras\Forms\Controls\AdvancedGmap::register();
 Extras\Forms\Controls\AdvancedJson::register();
+Extras\Forms\Controls\AdvancedMultiSelect::register();
 Extras\Forms\Controls\AdvancedNeon::register();
 Extras\Forms\Controls\AdvancedPhrase::register();
 Extras\Forms\Controls\AdvancedPrice::register();
-Extras\Forms\Controls\AdvancedSelectBox::register();
+Extras\Forms\Controls\AdvancedSelect::register();
 Extras\Forms\Controls\AdvancedTable::register();
-Extras\Forms\Controls\AdvancedTextInput::register();
+Extras\Forms\Controls\AdvancedText::register();
 Extras\Forms\Controls\AdvancedUpload::register();
 
 function debug() {

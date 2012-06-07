@@ -50,15 +50,13 @@ common:
 					type: gmap
 					latitude: latitude
 					longitude: longitude
-			# contacts:
-			# 	# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityCurrency,mappedBy:locations,cascade:"
-			# 	label: Contacts
-			# 	class: span6
-			# 	control: bricksList
-			# 	inlineEditing: ContactContact:edit
-			# 	inlineDeleting: ContactContact:delete
-			# 	inlineCreating: ContactContact:add
-			# 	startNewRow: false
+			contacts:
+				# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityCurrency,mappedBy:locations,cascade:"
+				label: Contacts
+				class: span6
+				control: 
+					type: contacts
+				startNewRow: false
 
 			# media:
 			# 	label: Media

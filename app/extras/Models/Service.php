@@ -409,6 +409,7 @@ abstract class Service extends Nette\Object implements IService {
 		foreach ($mask->fields as $property) {
 			$ui = $property->ui;
 			$name = $ui->name;
+			// debug($name, $this->{$name}, $ui, $property->targetEntity);
 			if(!$this->{$name}) {
 				$data[$name] = NULL;
 			} else {
@@ -417,7 +418,6 @@ abstract class Service extends Nette\Object implements IService {
 					$targetEntity = $property->targetEntity;
 
 					if ($targetEntity->name == 'Entity\\Dictionary\\Phrase') {
-
 						$phrase = \Service\Dictionary\Phrase::get($this->{$name});
 						if ($phrase) {
 							$form[$name]->setPhrase($phrase);

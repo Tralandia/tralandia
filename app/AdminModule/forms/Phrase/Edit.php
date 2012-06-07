@@ -7,7 +7,7 @@ class Edit extends \AdminModule\Forms\Form {
 	public function __construct($parent, $name) {
 		parent::__construct($parent, $name);
 
-		$languages = \Service\Dictionary\LanguageList::getBySupportedAsPairs('id', 'iso', true);
+		$languages = \Service\Dictionary\LanguageList::getPairs('id', 'iso', array('supported' => true));
 		debug($languages);
 		$this->addSelect('source_languages', 'Source Language', $languages);
 		

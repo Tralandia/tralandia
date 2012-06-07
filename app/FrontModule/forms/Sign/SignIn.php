@@ -19,7 +19,8 @@ class In extends \BaseModule\Forms\BaseForm {
 	public function onSuccess(In $form) {
 		$values = $form->getValues();
 		try {
-			$this->presenter->user->login($values->login, $values->password);
+			$this->getPresenter()->getUser()->setExpiration('+ 30 days', FALSE);
+			$this->getPresenter()->getUser()->login($values->login, $values->password);
 			if($values->backlink) {
 				$this->presenter->restoreRequest($values->backlink);
 			} else if(isset($this->presenter->user->identity->homePage)) {
