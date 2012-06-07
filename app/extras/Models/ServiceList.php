@@ -330,7 +330,7 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 	public function toArray($keyName = NULL, $valueName = NULL) {
 		$array = array();
 		foreach ($this as $key => $value) {
-			$array[$keyName] = $valueName ? $value[$valueName] : $value; 
+			$array[$keyName?:$key] = $valueName ? $value[$valueName] : $value; 
 		}
 		return $array;
 	}

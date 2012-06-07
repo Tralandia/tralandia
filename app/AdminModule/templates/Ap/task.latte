@@ -14,63 +14,64 @@
 </div>
 
 <!-- MODALS -->
-<div class="modal" id="defer">
-	<div class="modal-header">
-		<button class="close" data-dismiss="modal">×</button>
-		<h3>Defer</h3>
+	<!-- MODAL DEFER -->
+	<div class="modal" id="defer">
+		<div class="modal-header">
+			<button class="close" data-dismiss="modal">×</button>
+			<h3>Defer</h3>
+		</div>
+		<div class="modal-body">
+			<label>jQuery Calendar:</label>
+			<input class="calendar" />
+		</div>	
+		<div class="modal-footer">
+			<a href="#" class="btn" data-dismiss="modal">Close</a>
+			<a href="#" class="btn btn-primary">Save changes</a>
+		</div>
 	</div>
-	<div class="modal-body">
-		<label>jQuery Calendar:</label>
-		<input class="calendar" />
-	</div>	
-	<div class="modal-footer">
-		<a href="#" class="btn" data-dismiss="modal">Close</a>
-		<a href="#" class="btn btn-primary">Save changes</a>
-	</div>
-</div>
 
-<div class="modal" id="delegate">
-	<div class="modal-header">
-		<button class="close" data-dismiss="modal">×</button>
-		<h3>Delegate to:</h3>
+	<!-- MODAL DELEGATE -->
+	<div class="modal" id="delegate">
+		<div class="modal-header">
+			<button class="close" data-dismiss="modal">×</button>
+			<h3>Delegate to:</h3>
+		</div>
+		<div class="modal-body">
+			<select n:inner-foreach="$users as $user">
+				<option value="{$user->id}">{$user->login}</option>
+			</select>
+		</div>	
+		<div class="modal-footer">
+			<a href="#" class="btn" data-dismiss="modal">Cancel</a>
+			<a href="#" class="btn btn-primary">Delegate</a>
+		</div>
 	</div>
-	<div class="modal-body">
-		<select n:inner-foreach="$users as $user">
-			<optgroup label="Swedish Cars">
-				<option>{$user->login}</option>
-			</optgroup>
-		</select>
-	</div>	
-	<div class="modal-footer">
-		<a href="#" class="btn" data-dismiss="modal">Cancel</a>
-		<a href="#" class="btn btn-primary">Delegate</a>
-	</div>
-</div>
 
-<div class="modal" id="repeat">
-	<div class="modal-header">
-		<button class="close" data-dismiss="modal">×</button>
-		<h3>Repeat task every:</h3>
+	<!-- MODAL REPEAT TASK -->
+	<div class="modal" id="repeat">
+		<div class="modal-header">
+			<button class="close" data-dismiss="modal">×</button>
+			<h3>Repeat task every:</h3>
+		</div>
+		<div class="modal-body">
+			<select class="input-small">
+				<option>1</option>
+				<option>2</option>
+				<option>3</option>
+				<option>4</option>
+				<option>5</option>
+				<option>6</option>
+			</select>
+			<select class="input-small">
+				<option>hour</option>
+				<option>day</option>
+				<option>month</option>
+				<option>year</option>
+			</select>
+		</div>	
+		<div class="modal-footer">
+			<a href="#" class="btn" data-dismiss="modal">Cancel</a>
+			<a href="#" class="btn btn-primary">Save</a>
+		</div>
 	</div>
-	<div class="modal-body">
-		<select class="input-small">
-			<option>1</option>
-			<option>2</option>
-			<option>3</option>
-			<option>4</option>
-			<option>5</option>
-			<option>6</option>
-		</select>
-		<select class="input-small">
-			<option>hour</option>
-			<option>day</option>
-			<option>month</option>
-			<option>year</option>
-		</select>
-	</div>	
-	<div class="modal-footer">
-		<a href="#" class="btn" data-dismiss="modal">Cancel</a>
-		<a href="#" class="btn btn-primary">Save</a>
-	</div>
-</div>
 <!-- /MODALS -->
