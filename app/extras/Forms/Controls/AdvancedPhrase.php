@@ -66,7 +66,7 @@ class AdvancedPhrase extends BaseControl {
 				->lang($translation->language->iso)
 				->add('<b>'.strtoupper($translation->language->iso).': </b><span>'.$translation->translation.'</span>')
 				->href($inlineEditing->href->setParameter('languageIso', $translation->language->iso)->setParameter('display', 'modal'))
-				->class('modal');
+				->addAttributes(array('data-toggle'=>'ajax-modal'));
 			$li = Html::el('li')->add($a);
 			$ul->add($li . '<li class="divider"></li>');
 		}

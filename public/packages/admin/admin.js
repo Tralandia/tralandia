@@ -22,30 +22,31 @@ $(function() {
 	});
 
 	// Modals for Add New buttons
-	$('a.add-new').on('click', function(event) {
+	$('a[data-toggle="ajax-modal"]').on('click', function(event) {
 
-		link = $(this).attr('data-link');
-		modal = $($(this).attr('href'));
-		modalBody = $('.modal-body', modal);
-		loading = $('<div class="loading-frame"></div>');
+		event.preventDefault();
 
-		$(modal).modal();
+		link = $(this).attr('href');
+		$modal = $('#modal');
+		$modalBody = $('.modal-body', $modal);
+		loading = '<div class="loading-frame"></div>';
+
+		$modal.modal();
 
 		$.ajax({
 			url: link,
 			dataType: 'html',
 			error: function(e) {
-				modalBody.html('Error ' + e.status + ': ' + e.statusText);
+				$modalBody.html('Error ' + e.status + ': ' + e.statusText);
 			},
 			beforeSend: function() {
-				modalBody.html(loading);
+				$modalBody.html(loading);
 			},
 			success: function(html) {
-				modalBody.html(html);
+				$modalBody.html(html);
 			}
 		});
 
-		event.preventDefault();
 	});
 
 	$("textarea.neon")
