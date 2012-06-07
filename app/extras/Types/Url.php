@@ -29,4 +29,7 @@ class Url extends \Nette\Http\Url implements IContact {
 		return \Nette\Utils\Json::encode(array('url' => $this->__toString()));
 	}
 
+	public function getUnifiedFormat() {
+		return $this->__toString();
+	}
 }

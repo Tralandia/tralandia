@@ -60,6 +60,10 @@ class Address extends \Nette\Object implements IContact {
 		return $t;
 	}
 
+	public function getUnifiedFormat() {
+		return $this->__toString();
+	}
+
 	public static function decode($data) {
 		$data = \Nette\Utils\Json::decode($data, TRUE);
 		return new self($data);

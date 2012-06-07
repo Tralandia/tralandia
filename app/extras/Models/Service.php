@@ -46,7 +46,7 @@ abstract class Service extends Nette\Object implements IService {
 	/**
 	 * @var bool
 	 */
-	private $isPersist = false;
+	private $isPersisted = false;
 
 	/**
 	 * @var object
@@ -344,15 +344,23 @@ abstract class Service extends Nette\Object implements IService {
 	 */
 	protected function load($value) {
 		if ($value instanceof Entity) {
-			$this->isPersist = true;
+			$this->isPersisted = true;
 			$this->mainEntity = $value;
 			return;
 		}
 
 		if ($entity = $this->getEm()->find($this->getMainEntityName(), $value)) {
-			$this->isPersist = true;
+			$this->isPersisted = true;
 			$this->mainEntity = $entity;
 		}
+	}
+
+	/**
+	 * Zavola sa pred ulozenim do db
+	 * @return void
+	 */
+	protected function preSave() {
+
 	}
 
 	/**
@@ -361,11 +369,13 @@ abstract class Service extends Nette\Object implements IService {
 	public function save() {
 		try {
 			if ($this->mainEntity instanceof Entity) {
-				if (!$this->isPersist) {
+				if (!$this->isPersisted) {
 					$this->getEm()->persist($this->mainEntity);
 				}
 				if ($this->isFlushable()) {
+					$this->preSave();
 					self::flush();
+					$this->postSave();
 					ServiceLoader::set(get_class($this) . '#' . $this->getId(), $this);
 				} else {
 					ServiceLoader::addToStack($this);
@@ -374,6 +384,14 @@ abstract class Service extends Nette\Object implements IService {
 		} catch (\PDOException $e) {
 			throw new ServiceException($e->getMessage());
 		}
+	}
+
+	/**
+	 * Zavola sa po ulozeni
+	 * @return [type] [description]
+	 */
+	protected function postSave() {
+
 	}
 
 	/**
