@@ -35,6 +35,14 @@ class ApPresenter extends BasePresenter {
 
 		$this->template->task = $this->task;
 		$this->template->links = $links;
+
+		$roles = \Service\User\RoleList::getByEmployee(TRUE);
+		$users = array();
+		foreach ($roles as $role) {
+			$users[$role->name][] = \Service\User\UserList::getByRole($role->id);
+		}
+
+		$this->template->users = $users;
 		
 	}
 

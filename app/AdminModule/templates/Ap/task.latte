@@ -35,10 +35,10 @@
 		<h3>Delegate to:</h3>
 	</div>
 	<div class="modal-body">
-		<select>
-			<option>User 1</option>
-			<option>User 2</option>
-			<option>User 3</option>
+		<select n:inner-foreach="$users as $user">
+			<optgroup label="Swedish Cars">
+				<option>{$user->login}</option>
+			</optgroup>
 		</select>
 	</div>	
 	<div class="modal-footer">
