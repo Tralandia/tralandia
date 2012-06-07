@@ -16,7 +16,6 @@ class Address extends \Nette\Object implements IContact {
 	public $postcode;
 	public $country;
 
-
 	/**
 	 * @param string|array $address
 	 * @param string $address2
@@ -24,7 +23,7 @@ class Address extends \Nette\Object implements IContact {
 	 * @param string $postcode
 	 * @param string $country
 	 */
-	public function __construct($address = NULL, $address2 = NULL, $locality= NULL, $postcode = NULL, $country = NULL) {
+	public function __construct($address = NULL, $address2 = NULL, $locality = NULL, $postcode = NULL, $country = NULL) {
 		if(is_array($address)) {
 			$data = $address;
 			$address = array_shift($data);
@@ -55,15 +54,15 @@ class Address extends \Nette\Object implements IContact {
 		return \Nette\Utils\Json::encode($this->toArray());
 	}
 
-	public static function decode($data) {
-		$data = \Nette\Utils\Json::decode($data, TRUE);
-		return new self($data);
-	}
-
 	public function __toString() {
 		$t = array($this->address, $this->address2, $this->locality, $this->postcode, $this->country);
 		$t = implode(', ', array_filter($t));
 		return $t;
+	}
+
+	public static function decode($data) {
+		$data = \Nette\Utils\Json::decode($data, TRUE);
+		return new self($data);
 	}
 
 }
