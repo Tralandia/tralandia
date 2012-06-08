@@ -145,7 +145,7 @@ class AdvancedBricksList extends BaseControl
 				$buttonGroup->add($inlineDeleting->href($inlineDeleting->href->setParameter('id', $k)));
 			}
 
-			$brickWrapper->add((string) $brick->add($buttonGroup.$value.$control));
+			$brickWrapper->add((string) $brick->add($buttonGroup.$this->items[$k].$control));
 		}
 		if($this->getOption('inlineCreating')) {
 			$brickWrapper->add($this->getOption('inlineCreating'));

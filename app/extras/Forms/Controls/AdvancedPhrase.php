@@ -5,6 +5,7 @@ namespace Extras\Forms\Controls;
 
 use Nette\Utils\Html,
 	Tra\Utils\Arrays,
+	Tra\Utils\Strings,
 	Nette\Forms\Container,
 	Nette\Forms\Controls\BaseControl,
 	Extras\Types\Address;
@@ -39,8 +40,16 @@ class AdvancedPhrase extends BaseControl {
 		$id = $control->id;
 
 		$phrase = $this->phrase;
+		if(!$phrase) {
+			throw new \Exception("Chyba preklad! Asi nieje v DB kukni sa tam...");
+		}
+		if(!$this->getOption('inlineEditing')) {
+			throw new \Exception("Nenastavil si InlineEditing pre frazu");
+		}
+		$inlineEditing = $this->getOption('inlineEditing');
+		$inlineEditing->href->setParameter('id', $phrase->id);
 		$defaultLanguage = $this->getForm()->getDefaultLanguage();
-		$sourceLanguage = $this->phrase->getSourceLanguage();
+		$sourceLanguage = $phrase->getSourceLanguage();
 
 		$button = Html::el('button')
 					->class('btn btn-success dropdown-toggle')
@@ -49,12 +58,17 @@ class AdvancedPhrase extends BaseControl {
 		$ul = Html::el('ul')->class('dropdown-menu');
 		$isFirst = TRUE;
 		foreach ($phrase->translations as $translation) {
+			$truncatedTranslation = Strings::truncate($translation->translation, 75);
 			if($isFirst) {
-				$button->add('<span class="caret pull-right"></span><div class="wrap"><b>'.strtoupper($translation->language->iso) . ': </b>'.$translation->translation.'</div>');
+				$button->add('<span class="caret pull-right"></span><div class="wrap"><b>'.strtoupper($translation->language->iso) . ': </b>'.$truncatedTranslation.'</div>');
 				$isFirst = false;
 			}
 			// debug($translation);
-			$a = Html::el('a')->lang($translation->language->iso)->add('<b>'.strtoupper($translation->language->iso).': </b><span>'.$translation->translation.'</span>');
+			$a = Html::el('a')
+				->lang($translation->language->iso)
+				->add('<b>'.strtoupper($translation->language->iso).': </b><span>'.$truncatedTranslation.'</span>')
+				->href($inlineEditing->href->setParameter('languageIso', $translation->language->iso)->setParameter('display', 'modal'))
+				->addAttributes(array('data-toggle'=>'ajax-modal'));
 			$li = Html::el('li')->add($a);
 			$ul->add($li . '<li class="divider"></li>');
 		}

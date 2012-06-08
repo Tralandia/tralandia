@@ -2,13 +2,21 @@
 
 namespace Extras\Types;
 
-class Phone extends BaseType implements IContact {
+class Phone extends \Nette\Object implements IContact {
 
 	const ORIGINAL = 'original';
 	const COUNTRY = 'country';
 
+	public $original;
+	public $country;
+
 	public function __construct($original, $country = NULL) {
-		$this->data[self::ORIGINAL] = $original;
+		if(is_array($original)) {
+			$data = $original;
+			$original = array_shift($data);
+			$country = array_shift($data);
+		}
+		$this->original = $original;
 		if($country !== NULL && $country instanceof \Entity\Location\Location) {
 			$coutnry = \Service\Location\Location::get($country);
 			// @todo dorobit $location->isCountry()
@@ -16,7 +24,18 @@ class Phone extends BaseType implements IContact {
 				throw new \Nette\InvalidArgumentException('Argument does not match with the expected value');
 			}
 		}
-		$this->data[self::COUNTRY] = $country;
+		$this->country = $country;
+	}
+
+	public function toArray() {
+		return array(
+			self::ORIGINAL => $this->original,
+			self::COUNTRY => $this->country,
+		);
+	}
+
+	public function encode() {
+		return \Nette\Utils\Json::encode($this->toArray());
 	}
 
 
@@ -25,8 +44,17 @@ class Phone extends BaseType implements IContact {
 		return new self($data[self::ORIGINAL], isset($data[self::COUNTRY]) ? $data[self::COUNTRY] : NULL);
 	}
 
+	public function toFormValue() {
+		$s = (string) $this;
+		return 'phone~' . substr($s, 0, 3) . '~' . substr($s, 3);
+	}
+
 	public function __toString() {
-		return (string)$this->data[self::ORIGINAL];
+		return (string) $this->original;
+	}
+
+	public function getUnifiedFormat() {
+		return (string) $this;
 	}
 
 }

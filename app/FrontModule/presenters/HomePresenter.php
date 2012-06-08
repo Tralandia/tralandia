@@ -26,24 +26,25 @@ class HomePresenter extends BasePresenter {
 		$tabBar = new \BaseModule\Components\TabControl\TabControl($this, $name);
 
 		$t = $tabBar->addTab('top');
-		$t->setHeader(806)->setContent('Top Objekty'); // @PHRASE: {_806, '1955 TOP holiday homes'}
+		$content = new \FrontModule\Components\Rentals\TopRentals($this, 'TopRentals');
+		$t->setHeader(806)->setContent($content)->setActive();
 
 		$t = $tabBar->addTab('regions');
 		$content = new \FrontModule\Components\RegionsPage\Regions($this, 'RegionsPage');
-		$t->setHeader(678)->setContent($content); // @PHRASE: {_678, '1112 Regions'}
+		$t->setHeader(678)->setContent($content);
 
 		$t = $tabBar->addTab('localities');
 		$content = new \FrontModule\Components\LocalitiesPage\Localities($this, 'LocalitiesPage');
-		$t->setHeader(725)->setContent($content)->setActive(); // @PHRASE: {_725, '1626 Towns / Villages'}
+		$t->setHeader(725)->setContent($content);
 
 		$t = $tabBar->addTab('tags');
 		$content = new \FrontModule\Components\TagsPage\Tags($this, 'TagsPage');
-		$t->setHeader(727)->setContent($content); // @PHRASE: {_727, '1628 Types of stays'}
+		$t->setHeader(727)->setContent($content);
 
 		$t = $tabBar->addTab('about');
 		$content = new \FrontModule\Components\GenericPage\Generic($this, 'GenericPage');
 		$content->slug = 'about';
-		$t->setHeader(1163)->setContent($content); // @PHRASE: {_1163, '23011 '}
+		$t->setHeader(1163)->setContent($content);
 
 	}
 

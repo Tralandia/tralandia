@@ -3,7 +3,7 @@
 namespace AdminModule;
 
 
-class PhrasePresenter extends BasePresenter {
+class DictionaryPhrasePresenter extends BasePresenter {
 
 	public function actionEdit() {
 

@@ -20,7 +20,7 @@ class Location extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"}, fetch="EAGER")
+	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $name;
 

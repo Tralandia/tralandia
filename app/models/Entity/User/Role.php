@@ -39,6 +39,12 @@ class Role extends \Entity\BaseEntity {
 	 */
 	protected $users;
 
+	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean")
+	 */
+	protected $employee = FALSE;
+
 
 	
 
@@ -160,5 +166,22 @@ class Role extends \Entity\BaseEntity {
 	 */
 	public function getUsers() {
 		return $this->users;
+	}
+		
+	/**
+	 * @param boolean
+	 * @return \Entity\User\Role
+	 */
+	public function setEmployee($employee) {
+		$this->employee = $employee;
+
+		return $this;
+	}
+		
+	/**
+	 * @return boolean|NULL
+	 */
+	public function getEmployee() {
+		return $this->employee;
 	}
 }

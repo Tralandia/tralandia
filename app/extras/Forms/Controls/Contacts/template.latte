@@ -1,0 +1,44 @@
+{block #contacts}
+<div class="contacts-control">
+	<div class="input-bricks">
+		{$control}
+		<div class="clearfix"></div>
+	</div>
+	<div class="btn-group">
+		<button class="btn dropdown-toggle types" data-toggle="dropdown" selected-type="email"><i class="icon-envelope"></i> Email: <span class="caret"></span></button>
+		<ul class="dropdown-menu contacts-types">
+			<li><a href="#" contacts-type="email"><i class="icon-envelope"></i> Email:</a></li>
+			<li><a href="#" contacts-type="phone"><i class="icon-comment"></i> Phone:</a></li>
+			<li><a href="#" contacts-type="address"><i class="icon-home"></i> Address:</a></li>
+			<li><a href="#" contacts-type="url"><i class="icon-globe"></i> URL:</a></li>
+			<li><a href="#" contacts-type="name"><i class="icon-user"></i> Name:</a></li>
+		</ul>
+		<div class="contacts-types pull-left">
+			<div class="type-email"><input contact-type="email-email" placeholder="Email" /></div>
+			<div class="type-phone hide">
+				<select>
+					<option value="421">Sk (+421)</option>
+					<option value="422">Ru (+422)</option>
+					<option value="423">Pl (+423)</option>
+				</select>
+				<input placeholder="phone number" />
+			</div>
+			<div class="type-address hide">
+				<input placeholder="Address 1" class="input-medium" />
+				<input placeholder="Address 2" class="input-small" />
+				<input placeholder="Locality" class="input-small" />
+				<input placeholder="Postcode" class="input-small" />
+				<select class="input-small" n:inner-foreach="$addressLocations as $key => $location">
+					<option value="{$key}">{$location}</option>
+				</select>
+			</div>
+			<div class="type-url hide"><input placeholder="URL address" /></div>
+			<div class="type-name hide">
+				<input placeholder="First" class="input-medium" />
+				<input placeholder="Middle" class="input-small" />
+				<input placeholder="Last" class="input-medium" />
+			</div>
+		</div>
+		<button class="btn btn-success submit"><i class="icon-plus icon-white"></i> Add</button>
+	</div>
+</div>

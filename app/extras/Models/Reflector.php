@@ -307,36 +307,7 @@ class Reflector extends Nette\Object {
 				$fieldMask['ui']['controlOptions']['renderBefore'] = Html::el('hr')->addClass('soften');
 			}
 
-
-			if($type == 'text') {
-				$fieldMask['ui']['control']['type'] = 'AdvancedTextInput';
-			} else if($type == 'phrase') {
-				$fieldMask['ui']['control']['type'] = 'AdvancedPhrase';
-			} else if($type == 'address') {
-				$fieldMask['ui']['control']['type'] = 'AdvancedAddress';
-			} else if($type == 'checkbox') {
-				$fieldMask['ui']['control']['type'] = 'AdvancedCheckBox';
-			} else if($type == 'select') {
-				$fieldMask['ui']['control']['type'] = 'AdvancedSelectBox';
-			} else if($type == 'multiSelect') {
-				$fieldMask['ui']['control']['type'] = 'MultiSelect';
-			} else if($type == 'checkboxList') {
-				$fieldMask['ui']['control']['type'] = 'AdvancedCheckBoxList';
-			} else if($type == 'table') {
-				$fieldMask['ui']['control']['type'] = 'AdvancedTable';
-			} else if($type == 'json') {
-				$fieldMask['ui']['control']['type'] = 'AdvancedJson';
-			} else if($type == 'neon') {
-				$fieldMask['ui']['control']['type'] = 'AdvancedNeon';
-			} else if($type == 'bricksList') {
-				$fieldMask['ui']['control']['type'] = 'AdvancedBricksList';
-			} else if($type == 'gmap') {
-				$fieldMask['ui']['control']['type'] = 'AdvancedGmap';
-			} else if($type == 'price') {
-				$fieldMask['ui']['control']['type'] = 'AdvancedPrice';
-			} else if($type == 'upload') {
-				$fieldMask['ui']['control']['type'] = 'AdvancedUpload';
-			}
+			$fieldMask['ui']['control']['type'] = 'Advanced' . ucfirst($type);
 
 			if($associationType = $this->getAssociationType($property)) {
 				$association = $property->getAnnotation($associationType);
@@ -359,24 +330,18 @@ class Reflector extends Nette\Object {
 			}
 
 			if(in_array($type, array('select', 'checkboxList', 'multiSelect', 'bricksList', 'price', 'address')) && (!isset($fieldMask['ui']['control']['options']) || !is_array($fieldMask['ui']['control']['options']))) {
-				if(!isset($fieldMask['ui']['control']['callback'])) {
-					$fieldMask['ui']['control']['callback'] = 'getPairs';
+
+				if(!array_key_exists('callback', $fieldMask['ui']['control'])) {
+					throw new \Exception("Nezadefinoval si callback ani options pre '{$fieldMask['ui']['name']}'");	
 				}
 
-				if(is_string($fieldMask['ui']['control']['callback'])) {
-					$fieldMask['ui']['control']['callback'] = array('method' => $fieldMask['ui']['control']['callback']);
-				}
+				$fieldMask['ui']['control']['callback']['cb'] = callback($fieldMask['ui']['control']['callback']['class'], $fieldMask['ui']['control']['callback']['method']);
+			}
 
-				if(isset($fieldMask['ui']['control']['callback']['class'])) {
-					$fieldMask['ui']['control']['callback']['cb'] = callback($fieldMask['ui']['control']['callback']['class'], $fieldMask['ui']['control']['callback']['method']);
-				} else {
-					$fieldMask['ui']['control']['callback']['cb'] = $this->getCallback($fieldMask['targetEntity']['serviceListName'], $fieldMask['ui']['control']['callback']['method']);
-					
-				}
-
-				if(!array_key_exists('params', $fieldMask['ui']['control']['callback'])) {
-					$fieldMask['ui']['control']['callback']['params'] = array($fieldMask['targetEntity']['primaryKey'], $fieldMask['targetEntity']['primaryValue']);
-				}
+			if(array_key_exists('addressLocations', $fieldMask['ui']['control'])) {
+				$fieldMask['ui']['control']['addressLocations']['cb'] = callback($fieldMask['ui']['control']['addressLocations']['class'], $fieldMask['ui']['control']['addressLocations']['method']);
+			} else if($type == 'address') {
+				throw new \Exception("Nezadefinoval si addressLocations pre '{$fieldMask['ui']['name']}'");	
 			}
 
 			if(!$user->isAllowed($service->getMainEntity(), $property->name . '_edit')) {
@@ -505,9 +470,8 @@ class Reflector extends Nette\Object {
 				if(isset($ui->control->disabled)) $control->setDisabled($ui->control->disabled);
 				
 				if ($control instanceof \Nette\Forms\Controls\SelectBox 
-					|| $control instanceof \Extras\Forms\Controls\AdvancedCheckBoxList
-					|| $control instanceof \Extras\Forms\Controls\AdvancedBricksList
-					|| $control instanceof \Nette\Forms\Controls\MultiSelectBox) 
+					|| $control instanceof \Extras\Forms\Controls\AdvancedCheckboxList
+					|| $control instanceof \Extras\Forms\Controls\AdvancedBricksList) 
 				{
 					// $targetEntity = $property->targetEntity;
 					if (isset($ui->control->callback)) {
@@ -557,6 +521,10 @@ class Reflector extends Nette\Object {
 				if($control instanceof \Extras\Forms\Controls\AdvancedTable) {
 					$control->setColumns($ui->control->columns);
 					$control->setRows($ui->control->rows);
+				}
+
+				if($control instanceof \Extras\Forms\Controls\AdvancedContacts) {
+					$control->setOption('addressLocations', $ui->control->addressLocations->cb->invokeArgs(iterator_to_array($ui->control->addressLocations->params)));
 				}
 				// debug($ui->control->type, $control);
 				// debug($propertyName, \Nette\Diagnostics\Debugger::timer($propertyName));
@@ -702,9 +670,6 @@ class Reflector extends Nette\Object {
 		return $return;
 	}
 	
-	private function getCallback($class, $callback) {
-		return callback($class, trim($callback));
-	}
 	
 	private function getServiceReflection($class) {
 		$classReflection = ClassType::from($class);

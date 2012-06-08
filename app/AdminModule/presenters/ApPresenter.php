@@ -26,7 +26,7 @@ class ApPresenter extends BasePresenter {
 		foreach ($this->task->links as $linkName => $link) {
 			$links->{$linkName} = ArrayHash::from(array(
 				'title' => isset($link['title']) ? $link['title'] : $linkName,
-				'link' => $this->lazyLink($link['destination'], $link['arguments']),
+				'link' => $this->lazyLink($link['destination'], isset($link['arguments'])?($link['arguments']):(NULL)),
 			));
 			$links->{$linkName}->link->setParameter('display', 'modal');
 		}
@@ -35,6 +35,14 @@ class ApPresenter extends BasePresenter {
 
 		$this->template->task = $this->task;
 		$this->template->links = $links;
+
+		$roles = \Service\User\RoleList::getByEmployee(TRUE);
+		debug($roles->toArray());
+		$users = \Service\User\UserList::getByRole($roles->toArray());
+
+		$this->template->users = $users;
+
+		// \Service\Autopilot\Autopilot::getNextTask();
 		
 	}
 

@@ -7,7 +7,7 @@ use Nette\Forms\Container,
 	Nette\Utils\Html;
 
 
-class AdvancedSelectBox extends SelectBox {
+class AdvancedSelect extends SelectBox {
 
 	/**
 	 * Sets items from which to choose.
@@ -74,8 +74,8 @@ class AdvancedSelectBox extends SelectBox {
 	 */
 	public static function register()
 	{
-		Container::extensionMethod('addAdvancedSelectBox', function (Container $_this, $name, $label = NULL, array $items = NULL, $size = NULL) {
-			return $_this[$name] = new AdvancedSelectBox($label, $items, $size);
+		Container::extensionMethod('addAdvancedSelect', function (Container $_this, $name, $label = NULL, array $items = NULL, $size = NULL) {
+			return $_this[$name] = new AdvancedSelect($label, $items, $size);
 		});
 	}
 

@@ -7,7 +7,7 @@ use Nette\Forms\Container,
 	Nette\Utils\Html;
 
 
-class AdvancedTextInput extends TextInput {
+class AdvancedText extends TextInput {
 
 	// public $defaultParam;
 
@@ -55,8 +55,8 @@ class AdvancedTextInput extends TextInput {
 	 */
 	public static function register()
 	{
-		Container::extensionMethod('addAdvancedTextInput', function (Container $_this, $name, $label = NULL, $cols = NULL, $maxLength = NULL) {
-			return $_this[$name] = new AdvancedTextInput($label, $cols, $maxLength);
+		Container::extensionMethod('addAdvancedText', function (Container $_this, $name, $label = NULL, $cols = NULL, $maxLength = NULL) {
+			return $_this[$name] = new AdvancedText($label, $cols, $maxLength);
 		});
 	}
 
