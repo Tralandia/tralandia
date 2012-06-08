@@ -28,12 +28,8 @@
 				<input placeholder="Address 2" class="input-small" />
 				<input placeholder="Locality" class="input-small" />
 				<input placeholder="Postcode" class="input-small" />
-				<select class="input-small">
-					<option value="1">Slovakia</option>
-					<option value="2">Czech republik</option>
-					<option value="3">Polland</option>
-					<option value="4">Russia</option>
-					<option value="5">...</option>
+				<select class="input-small" n:inner-foreach="$addressLocations as $key => $location">
+					<option value="{$key}">{$location}</option>
 				</select>
 			</div>
 			<div class="type-url hide"><input placeholder="URL address" /></div>
