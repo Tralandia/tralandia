@@ -53,16 +53,39 @@ class Autopilot extends \Nette\Object {
 		return $task;
 	}
 
-	public static function getNextTask($user) {
+	public static function getNextTask($user = null) {
+
+		if ($user instanceof \Security\User) {
+			$user = \Service\User\User::get($user->getIdentity()->id);
+		} else if (!$user instanceof \Entity\User\User) {
+			throw new \Nette\Exception('Argument $user must be instance of \Entity\User\User');
+		}
 
 		$qb = \Extras\Models\Service::getEm()->createQueryBuilder();
-		$qb->select('*')
-			->from(\Entity\User\User, 'u')
-			->limit(10)
-			->getQuery();
-		debug($qb);
+		$qb
+			->select('t')
+			->from('\Entity\Autopilot\Task', 't')
 
-		return $task;
+			// JOINS
+			->leftJoin('t.usersExcluded', 'u')
+			->leftJoin('t.userRole', 'r')
+			->leftJoin('t.userCountry', 'c')
+			->leftJoin('t.userLanguage', 'l')
+
+			// CONDITIONS
+			->where('t.user = :userId AND u.id != :userId')
+			->orWhere('t.user IS NULL AND r.id = :userRole AND c.id = :userCountry AND l.id = :userLanguage')
+			->andwhere('t.startTime < :now')
+
+			// PARAMS
+			->setParameter('now', new \Extras\Types\DateTime)
+			->setParameter('userId', $user->id)
+			->setParameter('userRole', $user->role)
+			->setParameter('userCountry', $user->location)
+			->setParameter('userLanguage', $user->defaultLanguage->id)
+			->orderBy('t.due', 'ASC');
+
+		return $qb->getQuery()->getResult();
 
 	}
 

@@ -34,7 +34,7 @@ fi
 if [ ! -d ./public/webtemp ]; then
 	mkdir -m 777 ./public/webtemp
 else
-	chmod 777 ./public/webtemp
+	chmod 777 ./public/webtemp	
 	rm -rf ./public/webtemp/*
 fi
 
