@@ -6,10 +6,23 @@ class Contacts extends \Nette\Object {
 
 	private $contacts;
 
+
 	public function add(IContact $contact) {
 		$this->contacts[] = $contact;
 	}
 
+	public function addFromString($contacts) {
+		$contacts = explode("\n", $contacts);
+		foreach ($contacts as $contact) {
+			$contact = explode('~', trim($contact));
+			// debug($contact);
+			$className = '\Extras\Types\\'.ucfirst(array_shift($contact));
+			$contact = count($contact) > 1 ? $contact : array_shift($contact);
+			$contact = new $className($contact);
+			$this->add($contact);
+		}
+		return $this;
+	}
 
 	public function encode() {
 		$contacts = array();
@@ -29,7 +42,7 @@ class Contacts extends \Nette\Object {
 
 	public static function decode($data) {
 		$data = \Nette\Utils\Json::decode($data, TRUE);
-		$contacts = new self();
+		$contacts = new self;
 		if (is_array($contacts)) {
 			foreach ($data as $contact) {
 				$className = $contact['className'];
@@ -38,6 +51,7 @@ class Contacts extends \Nette\Object {
 		}
 		return $contacts;
 	}
+
 
 	public function __toString() {
 		return '';

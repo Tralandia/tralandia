@@ -566,12 +566,14 @@ abstract class Service extends Nette\Object implements IService {
 						$formValue = new \Extras\Types\Url($formValue);
 					} else if($columnType == 'address') {
 						$formValue = new \Extras\Types\Address($formValue);
+					} else if($columnType == 'contacts') {
+						$formValue = c(new \Extras\Types\Contacts())->addFromString($formValue);
 					}
 					$this->{$name} = $formValue;
 				}
 			}
 		}
-		// debug($this->getMainEntity());
+		// debug($this->getMainEntity()->contacts);
 		$this->save();
 	}
 
