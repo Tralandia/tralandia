@@ -55,11 +55,13 @@ class AdvancedContacts extends TextBase {
 	public function getControl() {
 		$original = parent::getControl();
 		$original->addClass('hide');
+		$original->add($this->value);
 		$id = $original->id;
 
 		$template = new FileTemplate($this->template);
 		$template->registerFilter(new Engine);
 
+		$template->addressLocations = $this->getOption('addressLocations');
 		$template->control = $original;
 
 		return $template;

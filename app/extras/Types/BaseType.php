@@ -23,6 +23,6 @@ class BaseType extends \Nette\Object {
 	}
 
 	public function getUnifiedFormat() {
-		return $this->__toString();
+		return (string) $this;
 	}
 }

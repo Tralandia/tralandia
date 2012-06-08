@@ -54,14 +54,16 @@ class Address extends \Nette\Object implements IContact {
 		return \Nette\Utils\Json::encode($this->toArray());
 	}
 
+	public function toFormValue() {
+		return 'address~'.implode('~', $this->toArray());
+	}
+
 	public function __toString() {
-		$t = array($this->address, $this->address2, $this->locality, $this->postcode, $this->country);
-		$t = implode(', ', array_filter($t));
-		return $t;
+		return implode(', ', $this->toArray());
 	}
 
 	public function getUnifiedFormat() {
-		return $this->__toString();
+		return (string) $this;
 	}
 
 	public static function decode($data) {
