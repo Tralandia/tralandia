@@ -54,7 +54,16 @@ class Autopilot extends \Nette\Object {
 	}
 
 	public static function getNextTask($user) {
-		return Task::get(2);
+
+		$qb = \Extras\Models\Service::getEm()->createQueryBuilder();
+		$qb->select('*')
+			->from(\Entity\User\User, 'u')
+			->limit(10)
+			->getQuery();
+		debug($qb);
+
+		return $task;
+
 	}
 
 }

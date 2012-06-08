@@ -187,6 +187,7 @@
 
 		r = [];
 		for(i in lines) {
+			if (!lines[i]) continue;
 			line = lines[i];
 			if (typeof line == 'string') r[i] = line.split(this.options.dataSeparator);
 		}

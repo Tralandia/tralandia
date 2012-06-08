@@ -7,6 +7,7 @@ common:
 	nette:
 		session:
 			autoStart: smart
+			expiration: '+1 year'
 
 	parameters:
 		security:

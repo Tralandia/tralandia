@@ -41,6 +41,8 @@ class ApPresenter extends BasePresenter {
 		$users = \Service\User\UserList::getByRole($roles->toArray());
 
 		$this->template->users = $users;
+
+		// \Service\Autopilot\Autopilot::getNextTask();
 		
 	}
 
