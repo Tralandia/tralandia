@@ -91,7 +91,30 @@
 		bricks = this.linesToArray(lines);
 		for(i in bricks) {
 			if (typeof bricks[i] !== 'object') continue;
-			this.addBrick($base, bricks[i]);
+
+			value = [];
+			inputs = $base.find('div.contacts-types .type-' + bricks[i][0]).find('select, input');
+
+			for(n in bricks[i]) {
+
+				if (typeof bricks[i][n] !== 'string') continue;
+
+				s = parseInt(n)-1;
+				v = bricks[i][n];
+				
+				if (typeof inputs[s] == 'object') {
+					if (inputs[s].nodeName == 'SELECT') {
+						if (opt = $('option[value="'+ bricks[i][n] +'"]', $(inputs[s])).html()) v = opt;
+					}
+				}
+
+				value[n] = {
+					key: bricks[i][n],
+					value: v
+				};
+			}
+			this.addBrick($base, value);
+
 		}
 
 	}
@@ -100,7 +123,10 @@
 
 		$inputs = $base.find('div.contacts-types .type-' + type);
 
-		var value = new Array(type);
+		var value = [{
+			key: type,
+			value: type
+		}];
 
 		var i=1;
 		var isValid = true;
@@ -111,13 +137,16 @@
 				$(this).addClass('invalid').focus();
 				isValid = false;
 			}
-			value[i] = v;
+			option = $('option:selected', this).html();
+			value[i] = {
+				key: v,
+				value: option?option:v
+			};
 			i++;
 		});
 
-		// If NOT valid return false
 		if (!isValid) {
-			return false;
+			return false; // If NOT valid return false
 		} else {
 			$inputs.find('select, input').each(function() {
 				$(this).val('').focus();
@@ -133,32 +162,32 @@
 		$brick = $(this.options.brickHtml);
 		$span = $brick.find('span');
 
-		type = value[0];
+		type = value[0].value;
 
 		icon = '<i class="' + $base.find('.contacts-types a[contacts-type="'+ type +'"] i').attr('class') + '"></i> ';
 
 		if (type == 'email') {
-			html = icon + value[1];
+			html = icon + value[1].value;
 			$span.html(html);
 
 		} else if (type == 'phone') {
-			html = icon + '+'+ value[1] +' '+ value[2];
+			html = icon + '+'+ value[1].value +' '+ value[2].value;
 			$span.html(html);
 
 		} else if (type == 'address') {
-			html = icon + value[1] +' '+ value[2] +', '+ value[3] +', '+ value[4] +', '+ value[5];
+			html = icon + value[1].value +' '+ value[2].value +', '+ value[3].value +', '+ value[4].value +', '+ value[5].value;
 			$span.html(html);
 
 		} else if (type == 'url') {
-			html = icon + value[1];
+			html = icon + value[1].value;
 			$span.html(html);
 
 		} else if (type == 'name') {
-			html = icon + value[1] +' '+ value[2] +' '+ value[3];
+			html = icon + value[1].value +' '+ value[2].value +' '+ value[3].value;
 			$span.html(html);
 		}
 
-		$brick.attr('value', this.arrayToLines(value));
+		$brick.attr('value', this.arrayToLines(value, 'key'));
 
 		$textarea = $base.find('.input-bricks textarea');
 		$textarea
@@ -177,9 +206,17 @@
 
 
 	// hepl methods
-	$.fn.contactsControl.arrayToLines = function(value) {
+	$.fn.contactsControl.arrayToLines = function(value, index) {
 
-		return value.join(this.options.dataSeparator);
+		if (!index) index = 'value';
+
+		keys = [];
+		for(i in value) {
+			if (typeof value[i][index] !== 'string') continue;
+			keys[i] = value[i][index];
+		}
+
+		return keys.join(this.options.dataSeparator);
 
 	}
 
