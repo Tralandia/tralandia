@@ -29,39 +29,46 @@ class ImportTickets extends BaseImport {
 		$languagesByOldId = getNewIdsByOld('\Dictionary\Language');
 
 		if ($this->developmentMode == TRUE) {
-			$r = q('select * from tickets where stamp > 1325372400 and status <> "closed" order by stamp limit 20');
+			$r = q('select * from tickets where stamp > 1325372400 and status <> "closed" order by stamp limit 100');
 		} else {
 			$r = q('select * from tickets where stamp > 1325372400 and status <> "closed" order by stamp');
 		}
 
 		while($x = mysql_fetch_array($r)) {
 			$ticket = \Service\Ticket\Ticket::get();
-			$ticket->client = new \Extras\Types\Email($x['email']);
-			$ticket->staff = $defaultStaffUser;
 			$ticket->oldId = $x['id'];
-			if (isset($locationsByOldId[$x['country_id']])) {
-				$ticket->country = \Service\Location\Location::get($locationsByOldId[$x['country_id']]);
-			}
-			if (isset($languagesByOldId[$x['language_id']])) {
-				$ticket->language = \Service\Dictionary\Language::get($languagesByOldId[$x['language_id']]);
-			}
 
-			if ($x['status'] == 'replied') {
-				$ticket->status = \Entity\Ticket\Ticket::STATUS_REPLIED;
-			} else if ($x['status'] == 'open') {
-				$ticket->status = \Entity\Ticket\Ticket::STATUS_OPEN;
-			} else {
-				$ticket->status = \Entity\Ticket\Ticket::STATUS_CLOSED;
-			}
+			// if (isset($locationsByOldId[$x['country_id']])) {
+			// 	$ticket->country = \Service\Location\Location::get($locationsByOldId[$x['country_id']]);
+			// }
+			// if (isset($languagesByOldId[$x['language_id']])) {
+			// 	$ticket->language = \Service\Dictionary\Language::get($languagesByOldId[$x['language_id']]);
+			// }
 
+			// if ($x['status'] == 'replied') {
+			// 	$ticket->status = \Entity\Ticket\Ticket::STATUS_REPLIED;
+			// } else if ($x['status'] == 'open') {
+			// 	$ticket->status = \Entity\Ticket\Ticket::STATUS_OPEN;
+			// } else {
+			// 	$ticket->status = \Entity\Ticket\Ticket::STATUS_CLOSED;
+			// }
+
+			$currentUser = \Service\User\User::getOrCreate(new \Extras\Types\Email($x['email']));
+			
 			$r1 = q('select * from tickets_messages where ticket_id = '.$x['id']);
 			while ($x1 = mysql_fetch_array($r1)) {
 				$message = \Service\Ticket\Message::get();
 				if ($x1['sender'] == 'admin') {
-					$message->senderEmail = new \Extras\Types\Email($defaultStaffUser->login);
+					$message->from = $defaultStaffUser;
+					$message->to = $currentUser;
 				} else {
-					$message->senderEmail = new \Extras\Types\Email($x['email']);
+					$message->from = $currentUser;
+					$message->to = $defaultStaffUser;
 				}
+				
+				// Suject not needed (nullable)
+				//$message->subject = 'Not available [import from old system]';
+
 				$message->message = $x1['message'];
 				$message->messageEn = $x1['message_translated'];
 

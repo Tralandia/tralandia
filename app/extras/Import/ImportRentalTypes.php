@@ -19,7 +19,7 @@ class ImportRentalTypes extends BaseImport {
 		$import = new \Extras\Import\BaseImport();
 		$import->undoSection('rentalTypes');
 
-		$this->createDictionaryType('\Rental\Type', 'name', 'supportedLanguages', 'ACTIVE');
+		$this->createDictionaryType('\Rental\Type', 'name', 'ACTIVE');
 		\Extras\Models\Service::flush(FALSE);
 
 		$r = qf('select * from objects_types_new limit 1');
@@ -51,11 +51,9 @@ class ImportRentalTypes extends BaseImport {
 		$r = q('select * from objects_types_new where language_id = 38');
 		while($x = mysql_fetch_array($r)) {
 			$rentalType = \Service\Rental\Type::get();
-			$rentalType->name = $this->createPhraseFromString('\Rental\Type', 'name', 'supportedLanguages', 'ACTIVE', $x['name'], \Service\Dictionary\Language::getByOldId(38));
+			$rentalType->name = $this->createPhraseFromString('\Rental\Type', 'name', 'ACTIVE', $x['name'], \Service\Dictionary\Language::getByOldId(38));
 			$rentalType->oldId = $x['id'];
 			$thisPhrase = \Service\Dictionary\Phrase::get($rentalType->name);
-			$thisTranslation = $thisPhrase->getTranslation(\Service\Dictionary\Language::getByOldId(38));
-			$thisTranslation->variations = array_merge($thisTranslation->variations, array('locative' => $x['name_locative']));
 			$rentalType->save();
 
 		}
@@ -69,7 +67,7 @@ class ImportRentalTypes extends BaseImport {
 			if (!$thisLanguage) continue;
 			$thisPhrase = \Service\Dictionary\Phrase::get($rentalType->name);
 			if (!$thisPhrase->hasTranslation($thisLanguage)) {
-				$thisTranslation = $this->createTranslation($thisLanguage, $x['name'], array('locative' => $x['name_locative']));
+				$thisTranslation = $this->createTranslation($thisLanguage, $x['name']);
 				$thisPhrase->addTranslation($thisTranslation);
 			}
 			$rentalType->save();

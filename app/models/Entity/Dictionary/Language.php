@@ -46,19 +46,44 @@ class Language extends \Entity\BaseEntityDetails {
 	 * @var json
 	 * @ORM\Column(type="json", nullable=true)
 	 */
-	protected $multitranslationOptions;
+	protected $genders;
 
 	/**
 	 * @var json
 	 * @ORM\Column(type="json", nullable=true)
 	 */
-	protected $genderNumberOptions;
+	protected $plurals;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $primarySingular;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $primaryPlural;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $primaryGender;
 
 	/**
 	 * @var json
 	 * @ORM\Column(type="json", nullable=true)
 	 */
 	protected $ppcPatterns;
+
+	/**
+	 * @var json
+	 * @ORM\Column(type="json", nullable=true)
+	 * this defines rules for autogenerating some variations, which will be done in JS. For example, locative in EN is always "in ".$singularNominative
+	 */
+	protected $variationDetails;
 
 	/**
 	 * @var Collection

@@ -32,7 +32,7 @@ class ImportLanguages extends BaseImport {
 		}
 		\Extras\Models\Service::flush(FALSE);
 
-		$this->createPhrasesByOld('\Dictionary\Language', 'name', 'supportedLanguages', 'ACTIVE', 'languages', 'name_dic_id');		
+		$this->createPhrasesByOld('\Dictionary\Language', 'name', 'ACTIVE', 'languages', 'name_dic_id');		
 		$this->savedVariables['importedSections']['languages'] = 1;
 	}
 

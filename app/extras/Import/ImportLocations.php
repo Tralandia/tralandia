@@ -28,9 +28,9 @@ class ImportLocations extends BaseImport {
 		
 		$this->setSubsections('locations');
 
-		$this->dictionaryTypeName = $this->createDictionaryType('\Location\Location', 'name', 'supportedLanguages', 'NATIVE', array('locativeRequired' => TRUE));
-		$this->dictionaryTypeNameOfficial = $this->createDictionaryType('\Location\Location', 'nameOfficial', 'supportedLanguages', 'NATIVE', array('locativeRequired' => TRUE));
-		$this->dictionaryTypeNameShort = $this->createDictionaryType('\Location\Location', 'nameShort', 'supportedLanguages', 'NATIVE', array('locativeRequired' => TRUE));
+		$this->dictionaryTypeName = $this->createDictionaryType('\Location\Location', 'name', 'NATIVE', array('locativesRequired' => TRUE));
+		$this->dictionaryTypeNameOfficial = $this->createDictionaryType('\Location\Location', 'nameOfficial', 'NATIVE', array('locativesRequired' => TRUE));
+		$this->dictionaryTypeNameShort = $this->createDictionaryType('\Location\Location', 'nameShort', 'NATIVE', array('locativesRequired' => TRUE));
 		\Extras\Models\Service::flush(FALSE);
 
 		debug($subsection);
@@ -51,7 +51,7 @@ class ImportLocations extends BaseImport {
 
 		// Create location type for world
 		$locationType = \Service\Location\Type::get();
-		$locationType->name = $this->createPhraseFromString('\Location\Location', 'name', 'supportedLanguages', 'NATIVE', 'world', $language);
+		$locationType->name = $this->createPhraseFromString('\Location\Location', 'name', 'NATIVE', 'world', $language);
 		$locationType->slug = 'world';
 		$locationType->save();
 		$this->worldType = $locationType;
@@ -70,7 +70,7 @@ class ImportLocations extends BaseImport {
 
 
 		$locationType = \Service\Location\Type::get();
-		$locationType->name = $this->createPhraseFromString('\Location\Location', 'name', 'supportedLanguages', 'NATIVE', 'continent', $language);
+		$locationType->name = $this->createPhraseFromString('\Location\Location', 'name', 'NATIVE', 'continent', $language);
 		$locationType->slug = 'continent';
 		$locationType->save();
 		$this->continentsType = $locationType;
@@ -92,7 +92,7 @@ class ImportLocations extends BaseImport {
 	// ----------------------------------------------------------
 	private function importCountries() {
 
-		$dictionaryType = $this->createDictionaryType('\Location\TypeService', 'name', 'supportedLanguages', 'ACTIVE');
+		$dictionaryType = $this->createDictionaryType('\Location\TypeService', 'name', 'ACTIVE');
 
 		$locationType = \Service\Location\Type::get();
 		$locationType->name = $this->createNewPhrase($dictionaryType, 865);
@@ -269,7 +269,7 @@ class ImportLocations extends BaseImport {
 	// ----------------------------------------------------------
 	private function importRegions() {
 		$locationType = \Service\Location\Type::get();
-		$locationType->name = $this->createPhraseFromString('\Location\Location', 'name', 'supportedLanguages', 'NATIVE', 'region', \Service\Dictionary\Language::getByIso('en'));
+		$locationType->name = $this->createPhraseFromString('\Location\Location', 'name', 'NATIVE', 'region', \Service\Dictionary\Language::getByIso('en'));
 		$locationType->slug = 'region';
 		$locationType->save();
 		$this->regionsType = $locationType;
@@ -318,7 +318,7 @@ class ImportLocations extends BaseImport {
 		// Level 1
 
 		$locationType = \Service\Location\Type::get();
-		$locationType->name = $this->createPhraseFromString('\Location\Location', 'name', 'supportedLanguages', 'NATIVE', 'administrativeRegionLevelOne', \Service\Dictionary\Language::getByIso('en'));
+		$locationType->name = $this->createPhraseFromString('\Location\Location', 'name', 'NATIVE', 'administrativeRegionLevelOne', \Service\Dictionary\Language::getByIso('en'));
 		$locationType->slug = 'administrativeRegionLevelOne';
 		$locationType->save();
 		$this->administrativeRegions1Type = $locationType;
@@ -363,7 +363,7 @@ class ImportLocations extends BaseImport {
 		// Level 2
 
 		$locationType = \Service\Location\Type::get();
-		$locationType->name = $this->createPhraseFromString('\Location\Location', 'name', 'supportedLanguages', 'NATIVE', 'administrativeRegionLevelTwo', \Service\Dictionary\Language::getByIso('en'));
+		$locationType->name = $this->createPhraseFromString('\Location\Location', 'name', 'NATIVE', 'administrativeRegionLevelTwo', \Service\Dictionary\Language::getByIso('en'));
 		$locationType->slug = 'administrativeRegionLevelTwo';
 		$locationType->save();
 		$this->administrativeRegions2Type = $locationType;
@@ -426,7 +426,7 @@ class ImportLocations extends BaseImport {
 	private function importLocalities() {
 
 		$locationType = \Service\Location\Type::get();
-		$locationType->name = $this->createPhraseFromString('\Location\Location', 'name', 'supportedLanguages', 'NATIVE', 'locality', \Service\Dictionary\Language::getByIso('en'));
+		$locationType->name = $this->createPhraseFromString('\Location\Location', 'name', 'NATIVE', 'locality', \Service\Dictionary\Language::getByIso('en'));
 		$locationType->slug = 'locality';
 		$locationType->save();
 		$this->localitiesType = $locationType;

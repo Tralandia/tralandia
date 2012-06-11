@@ -19,6 +19,11 @@ use	Extras\Annotation as EA;
  */
 class BackLink extends \Entity\BaseEntity {
 
+	const STATUS_OK = 'OK';
+	const STATUS_NOT_FOUND = 'Not Found';
+	const STATUS_PENDING = 'Pending';
+	const STATUS_INCORRECT = 'Incorrect';
+
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Rental\Rental")
@@ -45,6 +50,12 @@ class BackLink extends \Entity\BaseEntity {
 	 * @ORM\Column(type="datetime")
 	 */
 	protected $lastChecked;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $status;
 
 	/**
 	 * @var url

@@ -8,7 +8,7 @@ use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="dictionary_type", indexes={@ORM\index(name="entityName", columns={"entityName"}), @ORM\index(name="entityAttribute", columns={"entityAttribute"}), @ORM\index(name="translationLevelRequirement", columns={"translationLevelRequirement"}), @ORM\index(name="multitranslationRequired", columns={"multitranslationRequired"}), @ORM\index(name="genderNumberRequired", columns={"genderNumberRequired"}), @ORM\index(name="locativeRequired", columns={"locativeRequired"}), @ORM\index(name="positionRequired", columns={"positionRequired"}), @ORM\index(name="webalizedRequired", columns={"webalizedRequired"}), @ORM\index(name="checkingRequired", columns={"checkingRequired"})})
+ * @ORM\Table(name="dictionary_type", indexes={@ORM\index(name="entityName", columns={"entityName"}), @ORM\index(name="entityAttribute", columns={"entityAttribute"}), @ORM\index(name="translationLevelRequirement", columns={"translationLevelRequirement"}), @ORM\index(name="pluralsRequired", columns={"pluralsRequired"}), @ORM\index(name="genderVariationsRequired", columns={"genderVariationsRequired"}), @ORM\index(name="locativesRequired", columns={"locativesRequired"}), @ORM\index(name="positionRequired", columns={"positionRequired"}), @ORM\index(name="checkingRequired", columns={"checkingRequired"})})
  * @EA\Service(name="\Service\Dictionary\Type")
  * @EA\ServiceList(name="\Service\Dictionary\TypeList")
  * @EA\Primary(key="id", value="name")
@@ -19,9 +19,6 @@ class Type extends \Entity\BaseEntity {
 	const TRANSLATION_LEVEL_ACTIVE = 2;
 	const TRANSLATION_LEVEL_NATIVE = 4;
 	const TRANSLATION_LEVEL_MARKETING = 6;
-
-	const REQUIRED_LANGUAGES_SUPPORTED = 'supportedLanguages';
-	const REQUIRED_LANGUAGES_INCOMING = 'incomingLanguages';
 
 	/**
 	 * @var string
@@ -34,13 +31,6 @@ class Type extends \Entity\BaseEntity {
 	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $entityName;
-
-	/**
-	 * @var string
-	 * @ORM\Column(type="string")
-	 * "supportedLanguages", "incomingLanguages" or list of IDs separated by ",": ",1,2,3,4,"
-	 */
-	protected $requiredLanguages;
 	
 	/**
 	 * @var string
@@ -58,31 +48,33 @@ class Type extends \Entity\BaseEntity {
 	 * @var boolean
 	 * @ORM\Column(type="boolean")
 	 */
-	protected $multitranslationRequired = FALSE;
+	protected $pluralsRequired = FALSE;
+
+	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean")
+	 * whether we need to know the gender of this word / translation, for example "chata" is feminine
+	 */
+	protected $genderRequired = FALSE;
+
+	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean")
+	 * whether we need the variations of expression based on gender, for example "lacny" could be "lacne" etc.
+	 */
+	protected $genderVariationsRequired = FALSE;
 
 	/**
 	 * @var boolean
 	 * @ORM\Column(type="boolean")
 	 */
-	protected $genderNumberRequired = FALSE;
-
-	/**
-	 * @var boolean
-	 * @ORM\Column(type="boolean")
-	 */
-	protected $locativeRequired = FALSE;
+	protected $locativesRequired = FALSE;
 
 	/**
 	 * @var boolean
 	 * @ORM\Column(type="boolean")
 	 */
 	protected $positionRequired = FALSE;
-
-	/**
-	 * @var boolean
-	 * @ORM\Column(type="boolean")
-	 */
-	protected $webalizedRequired = FALSE;
 
 	/**
 	 * @var string
@@ -96,9 +88,16 @@ class Type extends \Entity\BaseEntity {
 	 */
 	protected $checkingRequired;
 
+	/**
+	 * @var integer
+	 * @ORM\Column(type="integer")
+	 * in EUR
+	 */
+	protected $monthlyBudget = 0;
+
 
 	public function isSimple() {
-		return !$this->multitranslationRequired && !$this->genderNumberRequired && !$this->locativeRequired && !$this->positionRequired;
+		return !$this->pluralsRequired && !$this->genderVariationsRequired && !$this->locativesRequired && !$this->positionRequired;
 	}
 	
 

@@ -29,7 +29,7 @@ class ImportAttractions extends BaseImport {
 			'multitranslationRequired' => TRUE,
 			'webalizedRequired' => TRUE,
 		);
-		$typeNameType = $this->createDictionaryType('\Attraction\Type', 'name', 'supportedLanguages', 'ACTIVE', $temp);
+		$typeNameType = $this->createDictionaryType('\Attraction\Type', 'name', 'ACTIVE', $temp);
 
 		$r = q('select * from attractions_types order by id');
 		while($x = mysql_fetch_array($r)) {

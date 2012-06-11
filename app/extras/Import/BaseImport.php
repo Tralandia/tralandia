@@ -245,8 +245,8 @@ class BaseImport {
 		$this->saveVariables();
 	}
 
-	protected function createPhrasesByOld($entityName, $entityAttribute, $requiredLanguages, $level, $oldTableName, $oldAttribute) {
-		$dictionaryType = $this->createDictionaryType($entityName, $entityAttribute, $requiredLanguages, $level);
+	protected function createPhrasesByOld($entityName, $entityAttribute, $level, $oldTableName, $oldAttribute) {
+		$dictionaryType = $this->createDictionaryType($entityName, $entityAttribute, $level);
 
 		$r = q('select * from '.$oldTableName.' order by id');
 		while($x = mysql_fetch_array($r)) {
@@ -267,7 +267,7 @@ class BaseImport {
 		}
 	}
 
-	protected function createNewPhrase(\Service\Dictionary\Type $type, $oldPhraseId, $oldLocativePhraseId = NULL) {
+	protected function createNewPhrase(\Service\Dictionary\Type $type, $oldPhraseId, $oldLocativePhraseId = NULL, $locativeKeys = NULL) {
 		$oldPhraseData = qf('select * from dictionary where id = '.$oldPhraseId);
 		if (!$oldPhraseData) {
 			debug('Nenasiel som staru Phrase podla starej ID '.$oldPhraseId);
@@ -281,27 +281,21 @@ class BaseImport {
 		$phrase->type = $type;
 		$phrase->oldId = $oldPhraseId;
 
-		if ($phrase->type->requiredLanguages == 'supportedLanguages') {
-			$allLanguages = getSupportedLanguages();
-			$skipEmptyTranslations = FALSE;
-		} else {
-			$allLanguages = getAllLanguages();
-			$skipEmptyTranslations = TRUE;
-		}
-
+		$allLanguages = getSupportedLanguages();
 		foreach ($allLanguages as $key => $value) {
 			$language = \Service\Dictionary\Language::get($value);
 			$oldTranslation = qf('select * from z_'.$language->iso.' where id = '.$oldPhraseId);
-			if ($skipEmptyTranslations && strlen($oldTranslation['text']) == 0) continue;
+			if (strlen($oldTranslation['text']) == 0) continue;
 
-			$params = NULL;
+			$variations = NULL;
 			if ($oldLocativePhraseId > 0) {
 				$oldTranslationLocative = qf('select * from z_'.$language->iso.' where id = '.$oldLocativePhraseId);
-				$params = array(
-					'locative' => $oldTranslationLocative['text'],
-				);
+				if (strlen($oldTranslationLocative)) {
+					$variations = array();
+					$variations[$locativeKeys[0]][$locativeKeys[1]]['locative'] = $oldTranslationLocative['text'];
+				}
 			}
-			$translation = $this->createTranslation($language, (string)$oldTranslation['text'], $params);
+			$translation = $this->createTranslation($language, (string)$oldTranslation['text'], $variations);
 			$translation->timeTranslated = fromStamp($oldTranslation['updated']);
 			$phrase->addTranslation($translation);
 		}
@@ -309,8 +303,8 @@ class BaseImport {
 		return $phrase;
 	}
 
-	protected function createPhraseFromString($entityName, $entityAttribute, $requiredLanguages, $level, $text, $textLanguage) {
-		$dictionaryType = $this->createDictionaryType($entityName, $entityAttribute, $requiredLanguages, $level);
+	protected function createPhraseFromString($entityName, $entityAttribute, $level, $text, $textLanguage) {
+		$dictionaryType = $this->createDictionaryType($entityName, $entityAttribute, $level);
 
 		$phrase = \Service\Dictionary\Phrase::get();
 		$phrase->ready = TRUE;
@@ -324,7 +318,7 @@ class BaseImport {
 		return $phrase;
 	}
 
-	protected function createDictionaryType($entityName, $entityAttribute, $requiredLanguages, $level, $params = NULL) {
+	protected function createDictionaryType($entityName, $entityAttribute, $level, $params = NULL) {
 
 		$dictionaryType = D\Type::getByEntityNameAndEntityAttribute($entityName, $entityAttribute);
 		if ($dictionaryType) {
@@ -335,7 +329,6 @@ class BaseImport {
 			$dictionaryType = D\Type::get();
 			$dictionaryType->entityName = $entityName;
 			$dictionaryType->entityAttribute = $entityAttribute;
-			$dictionaryType->requiredLanguages = $requiredLanguages;
 			$dictionaryType->translationLevelRequirement = $level;
 			if (isset($params) && count($params) > 0) {
 				foreach ($params as $key => $value) {
@@ -356,7 +349,6 @@ class BaseImport {
 		if ($variations == NULL) {
 			$variations = array();
 		}
-		$variations['translation'] = $text;
 		$translation->variations = $variations;
 
 		return $translation;

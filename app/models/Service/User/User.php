@@ -45,6 +45,19 @@ class User extends \Service\BaseService {
 		return $users[0];
 	}
 
+	public static function getOrCreate(\Extras\Types\Email $email) {
+		#@todo - dorobit, aby to hladalo na tej cache tabulke, kde su vsetky kontakty userov
+		$user = self::getByLogin($email);
+
+		if (!$user) {
+			$user = \Service\User\User::get();
+			$user->login = $email;
+			$user->save();
+		}
+
+		return $user;
+	}
+
 	private static function mergeTwoUsers($user1, $user2) {
 		$t = \Nette\Reflection\ClassType::from('\Entity\User\User');
 		$t = $t->getProperties();
@@ -80,6 +93,8 @@ class User extends \Service\BaseService {
 	private static function sortMergedUsers($a, $b) {
 		return $a->updated > $b->updated ? -1 : 1; //@todo - upravit tak, aby to bral aj podla ACL - vyzsia rola ma vyzsie priority, rovnaka rola ide podla "updated"
 	}
+
+
 
 	protected function postSave() {
 		\Service\ContactCacheList::syncContacts($this->contacts, $this->getMainEntityName(), $this->id);

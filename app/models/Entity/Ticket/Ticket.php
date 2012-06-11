@@ -13,10 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Ticket extends \Entity\BaseEntity {
 
-	const STATUS_OPEN = 2;
-	const STATUS_REPLIED = 4;
-	const STATUS_CLOSED = 0;
-
 	/**
 	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="Message", mappedBy="ticket", cascade={"persist", "remove"})

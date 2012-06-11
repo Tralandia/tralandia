@@ -27,8 +27,8 @@ class ImportEmailing extends BaseImport {
 
 		$this->languagesByOldId = getNewIdsByOld('\Dictionary\Language');
 
-		$subjectType = $this->createDictionaryType('\Emailing\Template', 'subject', 'supportedLanguages', 'ACTIVE');
-		$bodyType = $this->createDictionaryType('\Emailing\Template', 'body', 'supportedLanguages', 'ACTIVE');
+		$subjectType = $this->createDictionaryType('\Emailing\Template', 'subject', 'ACTIVE');
+		$bodyType = $this->createDictionaryType('\Emailing\Template', 'body', 'ACTIVE');
 
 
 		$r = q('select * from emails');
