@@ -55,6 +55,7 @@ common:
 				control: 
 					type: select
 					callback:
+						class: Service\Location\TypeList
 						method: getPairs
 						params: [id, [name, id]]
 			nameOfficial:
@@ -120,88 +121,88 @@ common:
 			# 			class: \Service\Location\LocationList
 			# 			method: getPairs
 			# 			arguments: [id, [name, id]]
-			defaultCurrency:
-				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityCurrency,cascade:"
-				class: span2
-				startNewRow: true
-				label: Default Currency
-				control: 
-					type: select
-					class: span2
-			currencies:
-				# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityCurrency,mappedBy:locations,cascade:"
-				label: Currencies
-				class: span4
-				control: 
-					type: bricksList
-				inlineDeleting: Currency:delete
-				inlineCreating: Currency:add
-			defaultLanguage:
-				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityDictionaryLanguage,cascade:"
-				class: span2
-				label: Default Language
-				control: 
-					type: select
-					class: span2
-			languages:
-				# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityDictionaryLanguage,mappedBy:locations,cascade:"
-				class: span4
-				label: Languages
-				control: 
-					type: bricksList
-				inlineDeleting: DictionaryLanguage:delete
-				inlineCreating: DictionaryLanguage:add
-			population:
-				# anotations: "var:integer,ORMColumn:type:integer,nullable:true"
-				startNewRow: true
-				label: Population
-				control: 
-					type: text
-				class: span2
-			capitalCity:
-				# anotations: "var:string,ORMColumn:type:string,nullable:true"
-				label: Capital City
-				control: 
-					type: text
-				class: span2
-			airports:
-				# anotations: "var:text,ORMColumn:type:text,nullable:true"
-				label: Airports
-				control: 
-					type: text
-				class: span2
-			drivingSide:
-				# anotations: "var:string,ORMColumn:type:string,nullable:true"
-				label: Driving Side
-				control: 
-					type: select
-					options: [left: Left,right: Right]
-					class: span2
-				class: span2
-			pricesPizza:
-				# anotations: "var:price,ORMColumn:type:price,nullable:true"
-				label: "Pizza (average price)"
-				control: 
-					type: price
-					callback:
-						class: \Service\CurrencyList
-						method: getPairs
-						params: [id, iso]
-				class: span2
-			pricesDinner:
-				# anotations: "var:price,ORMColumn:type:price,nullable:true"
-				label: "Dinner (average price)"
-				control: 
-					type: text
-				class: span2
-				startNewRow: TRUE
-			phonePrefix:
-				# anotations: "var:string,ORMColumn:type:string,nullable:true"
-				label: Phone Prefix
-				control: 
-					type: text
-				class: span2
-				startNewRow: TRUE
+			# defaultCurrency:
+			# 	# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityCurrency,cascade:"
+			# 	class: span2
+			# 	startNewRow: true
+			# 	label: Default Currency
+			# 	control: 
+			# 		type: select
+			# 		class: span2
+			# currencies:
+			# 	# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityCurrency,mappedBy:locations,cascade:"
+			# 	label: Currencies
+			# 	class: span4
+			# 	control: 
+			# 		type: bricksList
+			# 	inlineDeleting: Currency:delete
+			# 	inlineCreating: Currency:add
+			# defaultLanguage:
+			# 	# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityDictionaryLanguage,cascade:"
+			# 	class: span2
+			# 	label: Default Language
+			# 	control: 
+			# 		type: select
+			# 		class: span2
+			# languages:
+			# 	# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityDictionaryLanguage,mappedBy:locations,cascade:"
+			# 	class: span4
+			# 	label: Languages
+			# 	control: 
+			# 		type: bricksList
+			# 	inlineDeleting: DictionaryLanguage:delete
+			# 	inlineCreating: DictionaryLanguage:add
+			# population:
+			# 	# anotations: "var:integer,ORMColumn:type:integer,nullable:true"
+			# 	startNewRow: true
+			# 	label: Population
+			# 	control: 
+			# 		type: text
+			# 	class: span2
+			# capitalCity:
+			# 	# anotations: "var:string,ORMColumn:type:string,nullable:true"
+			# 	label: Capital City
+			# 	control: 
+			# 		type: text
+			# 	class: span2
+			# airports:
+			# 	# anotations: "var:text,ORMColumn:type:text,nullable:true"
+			# 	label: Airports
+			# 	control: 
+			# 		type: text
+			# 	class: span2
+			# drivingSide:
+			# 	# anotations: "var:string,ORMColumn:type:string,nullable:true"
+			# 	label: Driving Side
+			# 	control: 
+			# 		type: select
+			# 		options: [left: Left,right: Right]
+			# 		class: span2
+			# 	class: span2
+			# pricesPizza:
+			# 	# anotations: "var:price,ORMColumn:type:price,nullable:true"
+			# 	label: "Pizza (average price)"
+			# 	control: 
+			# 		type: price
+			# 		callback:
+			# 			class: \Service\CurrencyList
+			# 			method: getPairs
+			# 			params: [id, iso]
+			# 	class: span2
+			# pricesDinner:
+			# 	# anotations: "var:price,ORMColumn:type:price,nullable:true"
+			# 	label: "Dinner (average price)"
+			# 	control: 
+			# 		type: text
+			# 	class: span2
+			# 	startNewRow: TRUE
+			# phonePrefix:
+			# 	# anotations: "var:string,ORMColumn:type:string,nullable:true"
+			# 	label: Phone Prefix
+			# 	control: 
+			# 		type: text
+			# 	class: span2
+			# 	startNewRow: TRUE
 			phoneNumberEmergency:
 				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityContactContact,cascade:"
 				label: Phone - Emergency

@@ -11,13 +11,14 @@ class ContactCacheList extends ServiceList {
 	public static function syncContacts(\Extras\Types\Contacts $contacts, $entityName, $entityId) {
 		static::deleteByEntity($entityName, $entityId);
 		\Extras\Models\Service::preventFlush();
-		foreach ($contacts as $contact) {
+		foreach ($contacts->getList() as $contact) {
 			$contactService = ContactCache::get();
 			$contactService->entityName = $entityName;
 			$contactService->entityId = $entityId;
 			$contactService->type = static::getContactType($contact);
 			$contactService->value = $contact->getUnifiedFormat();
 			$contactService->save();
+			debug($contactService);
 		}
 		\Extras\Models\Service::flush();
 	}
@@ -27,7 +28,7 @@ class ContactCacheList extends ServiceList {
 		$qb->delete(static::MAIN_ENTITY_NAME, 'e')
 			->where('e.entityName = :entityName')
 			->andWhere('e.entityId = :entityId')
-			->addParameters(array(
+			->setParameters(array(
 				'entityName' => $entityName,
 				'entityId' => $entityId,
 			));

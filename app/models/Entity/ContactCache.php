@@ -18,6 +18,7 @@ use	Extras\Annotation as EA;
  * 		)
  * @EA\Service(name="\Service\ContactCache")
  * @EA\ServiceList(name="\Service\ContactCacheList")
+ * @EA\Primary(key="id", value="entityName")
  */
 class ContactCache extends \Entity\BaseEntity {
 

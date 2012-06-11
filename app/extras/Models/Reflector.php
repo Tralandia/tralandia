@@ -333,6 +333,8 @@ class Reflector extends Nette\Object {
 
 				if(!array_key_exists('callback', $fieldMask['ui']['control'])) {
 					throw new \Exception("Nezadefinoval si callback ani options pre '{$fieldMask['ui']['name']}'");	
+				} else if(!array_key_exists('class', $fieldMask['ui']['control']['callback']) || !array_key_exists('method', $fieldMask['ui']['control']['callback']) || !array_key_exists('params', $fieldMask['ui']['control']['callback'])) {
+						throw new \Exception("Nezadefinoval si spravne callback pre '{$fieldMask['ui']['name']}'. Skontroluj ci ma tieto atributy: class, method, params");	
 				}
 
 				$fieldMask['ui']['control']['callback']['cb'] = callback($fieldMask['ui']['control']['callback']['class'], $fieldMask['ui']['control']['callback']['method']);
