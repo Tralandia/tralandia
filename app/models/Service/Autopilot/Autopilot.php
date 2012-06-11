@@ -62,27 +62,37 @@ class Autopilot extends \Nette\Object {
 		}
 
 		$qb = \Extras\Models\Service::getEm()->createQueryBuilder();
-		$qb
-			->select('t')
+		$qb->select('t')
 			->from('\Entity\Autopilot\Task', 't')
+			->leftJoin('t.usersExcluded', 'excluded', \Doctrine\ORM\Query\Expr\Join::WITH, 'excluded.id != :userId')
+			->leftJoin('t.userRole', 'role')
+			->leftJoin('t.userCountry', 'country')
+			->leftJoin('t.userLanguage', 'language')
+			->where('t.user = :userId');
 
-			// JOINS
-			->leftJoin('t.usersExcluded', 'u')
-			->leftJoin('t.userRole', 'r')
-			->leftJoin('t.userCountry', 'c')
-			->leftJoin('t.userLanguage', 'l')
+		$i=0;
+		foreach($user->combinations as $combination) {
+			$qb->orWhere('(
+					t.user IS NULL 
+					AND role.id = :userRoleId 
+					AND country.id IN (:userCountry'. $i .', :NULL)
+					AND language.id IN (:userLanguage'. $i .', :NULL)
+					AND (
+						t.userLanguageLevel >= :userLanguageLevel'. $i .'
+						OR t.userLanguageLevel IS NULL
+					)
+				)')
+				->setParameter('userCountry'. $i, $combination->country->id)
+				->setParameter('userLanguage'. $i, $combination->language->id)
+				->setParameter('userLanguageLevel'. $i, $combination->country->id);
+			$i++;
+		}
 
-			// CONDITIONS
-			->where('t.user = :userId AND u.id != :userId')
-			->orWhere('t.user IS NULL AND r.id = :userRole AND c.id = :userCountry AND l.id = :userLanguage')
-			->andwhere('t.startTime < :now')
-
-			// PARAMS
+		$qb->andwhere('t.startTime < :now')
 			->setParameter('now', new \Extras\Types\DateTime)
 			->setParameter('userId', $user->id)
-			->setParameter('userRole', $user->role)
-			->setParameter('userCountry', $user->location)
-			->setParameter('userLanguage', $user->defaultLanguage->id)
+			->setParameter('userRoleId', $user->role->id)
+			->setParameter('NULL', NULL)
 			->orderBy('t.due', 'ASC');
 
 		return $qb->getQuery()->getResult();
