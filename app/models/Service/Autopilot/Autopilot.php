@@ -99,4 +99,52 @@ class Autopilot extends \Nette\Object {
 
 	}
 
+	/**
+	 * @param  \Entity\Autopilot\Task 	$task
+	 * @param  string 					$recurrenceDelay
+	 * @return \Entity\Autopilot\Task
+	 */
+	public static function createRecurrence($task, $recurrenceDelay) {
+
+		if (!$task instanceof \Entity\Autopilot\Task) {
+			// throw new \Nette\Exception('Argument $task must be instance of \Entity\Autopilot\Task');
+		}
+
+		$newTask = \Service\Autopilot\Task::get();
+
+		// modify
+		$newTask->setStartTime(
+			$task->startTime->modify($recurrenceDelay)
+		);
+
+		// copy
+		$newTask->type = $task->type;
+		$newTask->subtype = $task->subtype;
+		$newTask->name = $task->name;
+		$newTask->mission = $task->mission;
+		$newTask->due = $task->due;
+		$newTask->durationPaid = $task->durationPaid;
+		$newTask->links = $task->links;
+		$newTask->reservedFor = $task->reservedFor;
+		$newTask->user = $task->user;
+		$newTask->userCountry = $task->userCountry;
+		$newTask->userLanguage = $task->userLanguage;
+		$newTask->userLanguageLevel = $task->userLanguageLevel;
+		$newTask->userRole = $task->userRole;
+
+		foreach ($task->usersExcluded as $key => $user) {
+			$newTask->addUsersExcluded($user);
+		}
+
+		$newTask->validation = $task->validation;
+		$newTask->actions = $task->actions;
+		$newTask->recurrenceData = $task->recurrenceData;
+		
+		// save
+		$newTask->save();
+
+		return $newTask;
+
+	}
+
 }
