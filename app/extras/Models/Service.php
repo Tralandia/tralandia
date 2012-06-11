@@ -359,7 +359,7 @@ abstract class Service extends Nette\Object implements IService {
 	 * Zavola sa pred ulozenim do db
 	 * @return void
 	 */
-	protected function preSave() {
+	protected function beforeSave() {
 
 	}
 
@@ -373,9 +373,9 @@ abstract class Service extends Nette\Object implements IService {
 					$this->getEm()->persist($this->mainEntity);
 				}
 				if ($this->isFlushable()) {
-					$this->preSave();
+					$this->beforeSave();
 					self::flush();
-					$this->postSave();
+					$this->afterSave();
 					ServiceLoader::set(get_class($this) . '#' . $this->getId(), $this);
 				} else {
 					ServiceLoader::addToStack($this);
@@ -390,8 +390,9 @@ abstract class Service extends Nette\Object implements IService {
 	 * Zavola sa po ulozeni
 	 * @return [type] [description]
 	 */
-	protected function postSave() {
-
+	protected function afterSave() {
+		# @todo dokoncit #12321
+		// \Service\ContactCacheList::syncContacts($this->contacts, $this->getMainEntityName(), $this->id);
 	}
 
 	/**

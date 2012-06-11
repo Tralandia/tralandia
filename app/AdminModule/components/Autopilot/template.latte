@@ -21,7 +21,7 @@
 						<label><span>Due:</span> {$task->due|date}</label>
 						<label><span>Start:</span> {$task->startTime|date}</label>
 						<label n:ifset="$task->userRole"><span>Role:</span> {$task->userRole->name}</label>
-						<label n:ifset="$task->user"><span>Exc. user:</span> {$task->user->name}</label>
+						<label n:ifset="$task->user"><span>Exc. user:</span> {$task->user->login}</label>
 					</p>
 				</div>
 				<div class="span6">

@@ -53,16 +53,49 @@ class Autopilot extends \Nette\Object {
 		return $task;
 	}
 
-	public static function getNextTask($user) {
+	public static function getNextTask($user = null) {
+
+		if ($user instanceof \Security\User) {
+			$user = \Service\User\User::get($user->getIdentity()->id);
+		} else if (!$user instanceof \Entity\User\User) {
+			throw new \Nette\Exception('Argument $user must be instance of \Entity\User\User');
+		}
 
 		$qb = \Extras\Models\Service::getEm()->createQueryBuilder();
-		$qb->select('*')
-			->from(\Entity\User\User, 'u')
-			->limit(10)
-			->getQuery();
-		debug($qb);
+		$qb->select('t')
+			->from('\Entity\Autopilot\Task', 't')
+			->leftJoin('t.usersExcluded', 'excluded', \Doctrine\ORM\Query\Expr\Join::WITH, 'excluded.id != :userId')
+			->leftJoin('t.userRole', 'role')
+			->leftJoin('t.userCountry', 'country')
+			->leftJoin('t.userLanguage', 'language')
+			->where('t.user = :userId');
 
-		return $task;
+		$i=0;
+		foreach($user->combinations as $combination) {
+			$qb->orWhere('(
+					t.user IS NULL 
+					AND role.id = :userRoleId 
+					AND country.id IN (:userCountry'. $i .', :NULL)
+					AND language.id IN (:userLanguage'. $i .', :NULL)
+					AND (
+						t.userLanguageLevel >= :userLanguageLevel'. $i .'
+						OR t.userLanguageLevel IS NULL
+					)
+				)')
+				->setParameter('userCountry'. $i, $combination->country->id)
+				->setParameter('userLanguage'. $i, $combination->language->id)
+				->setParameter('userLanguageLevel'. $i, $combination->country->id);
+			$i++;
+		}
+
+		$qb->andwhere('t.startTime < :now')
+			->setParameter('now', new \Extras\Types\DateTime)
+			->setParameter('userId', $user->id)
+			->setParameter('userRoleId', $user->role->id)
+			->setParameter('NULL', NULL)
+			->orderBy('t.due', 'ASC');
+
+		return $qb->getQuery()->getResult();
 
 	}
 

@@ -52,9 +52,6 @@ class Contacts extends \Nette\Object {
 				$contacts->add(new $className($contact['data']));
 			}
 		}
-		foreach ($contacts->list as $contact) {
-			$return[] = $contact->toFormValue();
-		}
 		return $contacts;
 	}
 

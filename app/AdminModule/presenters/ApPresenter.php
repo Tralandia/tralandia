@@ -37,12 +37,12 @@ class ApPresenter extends BasePresenter {
 		$this->template->links = $links;
 
 		$roles = \Service\User\RoleList::getByEmployee(TRUE);
-		debug($roles->toArray());
 		$users = \Service\User\UserList::getByRole($roles->toArray());
 
 		$this->template->users = $users;
 
-		// \Service\Autopilot\Autopilot::getNextTask();
+		$nextTask = \Service\Autopilot\Autopilot::getNextTask($this->user);
+		debug($nextTask);
 		
 	}
 
