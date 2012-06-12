@@ -47,6 +47,8 @@ class Autopilot extends \Nette\Object {
 		if(!$task->durationPaid) $task->durationPaid = $type->durationPaid;
 		if(!$task->validation) $task->validation = $type->validation;
 		if(!$task->actions) $task->actions = $type->actions;
+
+		//if(!$task->technicalName) $task->technicalName = $type->technicalName;
 		if(is_array($links) && count($links)) $task->links = $links;
 
 		$task->save();

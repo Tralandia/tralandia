@@ -171,6 +171,32 @@ class Translation extends \Entity\BaseEntity {
 	}
 		
 	/**
+	 * @param string
+	 * @return \Entity\Dictionary\Translation
+	 */
+	public function setGender($gender) {
+		$this->gender = $gender;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Dictionary\Translation
+	 */
+	public function unsetGender() {
+		$this->gender = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getGender() {
+		return $this->gender;
+	}
+		
+	/**
 	 * @param integer
 	 * @return \Entity\Dictionary\Translation
 	 */

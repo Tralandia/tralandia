@@ -64,6 +64,8 @@ class ImportLocations extends BaseImport {
 
 		$s = \Service\Location\Location::get();
 		$s->name = $namePhrase;
+		$s->nameShort = \Service\Dictionary\Phrase::get();
+		$s->nameOfficial = \Service\Dictionary\Phrase::get();
 		$s->type = $this->worldType;
 		$s->slug = 'world';
 		$s->save();
@@ -79,6 +81,8 @@ class ImportLocations extends BaseImport {
 		while($x = mysql_fetch_array($r)) {
 			$s = \Service\Location\Location::get();
 			$s->name = $this->createNewPhrase($this->dictionaryTypeName, $x['name_dic_id']);
+			$s->nameShort = \Service\Dictionary\Phrase::get();
+			$s->nameOfficial = \Service\Dictionary\Phrase::get();
 			$s->type = $locationType;
 			$s->slug = qc('select text from z_en where id = '.$x['name_dic_id']);
 			$s->oldId = $x['id'];
@@ -209,9 +213,11 @@ class ImportLocations extends BaseImport {
 				}
 
 				$location->nameOfficial = $nameOfficialPhrase;
+			} else {
+				$location->nameOfficial = \Service\Dictionary\Phrase::get();				
 			}
 
-			//$location->nameShort = NULL;
+			$location->nameShort = \Service\Dictionary\Phrase::get();
 
 			$location->type = $locationType;
 			$location->slug = $namePhrase->getTranslation(\Service\Dictionary\Language::getByIso('en'))->translation;
@@ -299,6 +305,8 @@ class ImportLocations extends BaseImport {
 			}
 
 			$location->name = $namePhrase;
+			$location->nameOfficial = $namePhrase;
+			$location->nameShort = $namePhrase;
 			$location->type = $locationType;
 			$location->slug = $x['name_url'];			
 
@@ -348,6 +356,8 @@ class ImportLocations extends BaseImport {
 			}
 
 			$location->name = $namePhrase;
+			$location->nameOfficial = $namePhrase;
+			$location->nameShort = $namePhrase;
 			$location->type = $locationType;
 			$location->slug = $x['name_url'];			
 
@@ -394,6 +404,8 @@ class ImportLocations extends BaseImport {
 			}
 
 			$location->name = $namePhrase;
+			$location->nameOfficial = $namePhrase;
+			$location->nameShort = $namePhrase;
 			$location->type = $locationType;
 			$location->slug = $x['name_url'];			
 
@@ -456,6 +468,8 @@ class ImportLocations extends BaseImport {
 			}
 
 			$location->name = $namePhrase;
+			$location->nameOfficial = $namePhrase;
+			$location->nameShort = $namePhrase;
 			$location->type = $locationType;
 			$location->slug = $x['name_url'];			
 

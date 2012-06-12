@@ -21,7 +21,7 @@ class Template extends \Entity\BaseEntity {
 	 * @ORM\ManyToOne(targetEntity="Entity\Emailing\TemplateType")
 	 * @ORM\JoinColumn(onDelete="SET NULL")
 	 */
-	protected $templateType;
+	protected $type;
 
 	/**
 	 * @var string
@@ -67,8 +67,8 @@ class Template extends \Entity\BaseEntity {
 	 * @param \Entity\Emailing\TemplateType
 	 * @return \Entity\Emailing\Template
 	 */
-	public function setTemplateType(\Entity\Emailing\TemplateType $templateType) {
-		$this->templateType = $templateType;
+	public function setType(\Entity\Emailing\TemplateType $type) {
+		$this->type = $type;
 
 		return $this;
 	}
@@ -76,8 +76,8 @@ class Template extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Emailing\Template
 	 */
-	public function unsetTemplateType() {
-		$this->templateType = NULL;
+	public function unsetType() {
+		$this->type = NULL;
 
 		return $this;
 	}
@@ -85,8 +85,8 @@ class Template extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Emailing\TemplateType|NULL
 	 */
-	public function getTemplateType() {
-		return $this->templateType;
+	public function getType() {
+		return $this->type;
 	}
 		
 	/**

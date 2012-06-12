@@ -1,18 +1,19 @@
 common:
 	service: Service\Autopilot\Task
-	title: 'Autopilot / Task -> %name% (id: %id%)'
+	title: 'Autopilot / Task'
+	h1: 'Attraction / Type -> %name%'
 	grid:
 		columns:
 			id:
 				label: ID
 				mapper: e.id
-			# type:
-			# 	label: Type
-			# 	mapper: e.id
-			# 	callback: {Entity\Log\Systemmethod: translateColumn, params: name}
-			# subtype:
-			# 	label: Subtype
-			# 	mapper: e.subtype
+			type:
+				label: Type
+				mapper: e.id
+				callback: {class: %this%, method: getAttributeForGrid, params: [type, name]}
+			subtype:
+				label: Subtype
+				mapper: e.subtype
 			name:
 				label: Name
 				mapper: e.name

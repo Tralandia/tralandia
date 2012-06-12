@@ -1,7 +1,7 @@
 common:
 	service: Service\Attraction\Type
 	title: Attraction / Type
-	h1: Attraction / Type
+	h1: 'Attraction / Type -> %name%'
 	grid:
 		columns:
 			id:
@@ -13,12 +13,6 @@ common:
 				label: Name
 				mapper: e.id
 				callback: {class: %this%, method: getAttributeForGrid, params: [name]}
-			oldId:
-				label: Old Id
-				mapper: e.oldId
-				cellStyle: "text-align:right;"
-				headerStyle: text-align:right;
-			
 	form:
 		fields:
 			name:
