@@ -215,7 +215,7 @@ class Medium extends \Service\BaseService {
 
 		preg_match("/\.([^\.]+)$/", $file, $matches);
 		$extension = isset($matches[1]) ? $matches[1] : NULL;
-		$details['extension'] = ($this::$knownTypes[$details['mime']]?:$extension);
+		$details['extension'] = (isset($this::$knownTypes[$details['mime']])?$this::$knownTypes[$details['mime']]:$extension);
 
 		return $details;
 

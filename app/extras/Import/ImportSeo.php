@@ -44,11 +44,11 @@ class ImportSeo extends BaseImport {
 			WHERE length(seo_urls_texts.description) > 0 AND object_type_id = 0 AND attraction_id = 0
 			GROUP BY seo_urls.id');
 
-		$dictionaryTypeTitle = $this->createDictionaryType('\Seo\SeoUrl', 'title', 'incomingLanguages', 'ACTIVE');
-		$dictionaryTypeHeading = $this->createDictionaryType('\Seo\SeoUrl', 'heading', 'incomingLanguages', 'ACTIVE');
-		$dictionaryTypeTabName = $this->createDictionaryType('\Seo\SeoUrl', 'tabName', 'incomingLanguages', 'ACTIVE');
-		$dictionaryTypeDescription = $this->createDictionaryType('\Seo\SeoUrl', 'description', 'incomingLanguages', 'ACTIVE');
-		$dictionaryTypePpcKeywords = $this->createDictionaryType('\Seo\SeoUrl', 'ppcKeywords', 'incomingLanguages', 'ACTIVE');
+		$dictionaryTypeTitle = $this->createDictionaryType('\Seo\SeoUrl', 'title', 'ACTIVE');
+		$dictionaryTypeHeading = $this->createDictionaryType('\Seo\SeoUrl', 'heading', 'ACTIVE');
+		$dictionaryTypeTabName = $this->createDictionaryType('\Seo\SeoUrl', 'tabName', 'ACTIVE');
+		$dictionaryTypeDescription = $this->createDictionaryType('\Seo\SeoUrl', 'description', 'ACTIVE');
+		$dictionaryTypePpcKeywords = $this->createDictionaryType('\Seo\SeoUrl', 'ppcKeywords', 'ACTIVE');
 
 		$locationLocalityType = \Service\Location\Type::getBySlug('locality');
 		$locationRegionType = \Service\Location\Type::getBySlug('region');
@@ -137,10 +137,6 @@ class ImportSeo extends BaseImport {
 				$t = \Service\Dictionary\Translation::get();
 				$t->language = \Service\Dictionary\Language::getByOldId($x1['language_id']);
 				$t->translation = $x1['title'];
-				$variations = array(
-					'translation' => $x1['title'],
-				);
-				$t->variations = $variations;
 				$t->setPhrase($titlePhrase);
 				$t->save();
 				$titlePhrase->addTranslation($t);
@@ -149,10 +145,6 @@ class ImportSeo extends BaseImport {
 				$t = \Service\Dictionary\Translation::get();
 				$t->language = \Service\Dictionary\Language::getByOldId($x1['language_id']);
 				$t->translation = $x1['h1'];
-				$variations = array(
-					'translation' => $x1['h1'],
-				);
-				$t->variations = $variations;
 				$t->setPhrase($headingPhrase);
 				$t->save();
 				$headingPhrase->addTranslation($t);
@@ -161,10 +153,6 @@ class ImportSeo extends BaseImport {
 				$t = \Service\Dictionary\Translation::get();
 				$t->language = \Service\Dictionary\Language::getByOldId($x1['language_id']);
 				$t->translation = $x1['tab_name'];
-				$variations = array(
-					'translation' => $x1['tab_name'],
-				);
-				$t->variations = $variations;
 				$t->setPhrase($tabNamePhrase);
 				$t->save();
 				$tabNamePhrase->addTranslation($t);
@@ -173,10 +161,6 @@ class ImportSeo extends BaseImport {
 				$t = \Service\Dictionary\Translation::get();
 				$t->language = \Service\Dictionary\Language::getByOldId($x1['language_id']);
 				$t->translation = $x1['description'];
-				$variations = array(
-					'translation' => $x1['description'],
-				);
-				$t->variations = $variations;
 				$t->setPhrase($descriptionPhrase);
 				$t->save();
 				$descriptionPhrase->addTranslation($t);

@@ -37,9 +37,15 @@ class Translation extends \Entity\BaseEntity {
 	/**
 	 * @var json
 	 * @ORM\Column(type="json")
-	 * contains keys: translation, multiTranslations, webalized, locative, genderNumberOptions, position. Even contains the $translation original version
+	 * contains keys: translation, plurals, locatives, gender variations. Even contains the $translation original version
 	 */
 	protected $variations;
+
+	/**
+	 * @var integer
+	 * @ORM\Column(type="integer")
+	 */
+	protected $position = 0;
 
 	/**
 	 * @var datetime
@@ -157,6 +163,23 @@ class Translation extends \Entity\BaseEntity {
 	 */
 	public function getVariations() {
 		return $this->variations;
+	}
+		
+	/**
+	 * @param integer
+	 * @return \Entity\Dictionary\Translation
+	 */
+	public function setPosition($position) {
+		$this->position = $position;
+
+		return $this;
+	}
+		
+	/**
+	 * @return integer|NULL
+	 */
+	public function getPosition() {
+		return $this->position;
 	}
 		
 	/**

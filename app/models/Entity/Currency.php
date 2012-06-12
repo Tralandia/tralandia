@@ -89,7 +89,7 @@ class Currency extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param decimal
+	 * @param float
 	 * @return \Entity\Currency
 	 */
 	public function setExchangeRate($exchangeRate) {
@@ -108,7 +108,7 @@ class Currency extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return decimal|NULL
+	 * @return float|NULL
 	 */
 	public function getExchangeRate() {
 		return $this->exchangeRate;

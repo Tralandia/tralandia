@@ -18,14 +18,14 @@ class ImportInvoicingStart extends BaseImport {
 
 		$en = \Service\Dictionary\Language::getByIso('en');
 
-		$this->createDictionaryType('\Invoicing\UseType', 'name', 'supportedLanguages', 'ACTIVE');
+		$this->createDictionaryType('\Invoicing\UseType', 'name', 'ACTIVE');
 		\Extras\Models\Service::flush(FALSE);
 
 
 		$currenciesByOldId = getNewIdsByOld('\Currency');
 
 		// Durations
-		$durationNameType = $this->createDictionaryType('\Invoicing\ServiceDuration', 'name', 'supportedLanguages', 'ACTIVE');
+		$durationNameType = $this->createDictionaryType('\Invoicing\ServiceDuration', 'name', 'ACTIVE');
 		$r = q('select * from invoicing_durations order by id');
 		while($x = mysql_fetch_array($r)) {
 			$duration = \Service\Invoicing\ServiceDuration::get();
@@ -37,7 +37,7 @@ class ImportInvoicingStart extends BaseImport {
 		}
 
 		// Service Types
-		$serviceTypeNameType = $this->createDictionaryType('\Invoicing\ServiceType', 'name', 'supportedLanguages', 'ACTIVE');
+		$serviceTypeNameType = $this->createDictionaryType('\Invoicing\ServiceType', 'name', 'ACTIVE');
 		$r = q('select * from invoicing_services_types order by id');
 		while($x = mysql_fetch_array($r)) {
 			$serviceType = \Service\Invoicing\ServiceType::get();
@@ -60,7 +60,7 @@ class ImportInvoicingStart extends BaseImport {
 
 		foreach ($useTypes as $key => $value) {
 			$useType = \Service\Invoicing\UseType::get();
-			$useType->name = $this->createPhraseFromString('\Invoicing\UseType', 'name', 'supportedLanguages', 'ACTIVE', $value, $en);
+			$useType->name = $this->createPhraseFromString('\Invoicing\UseType', 'name', 'ACTIVE', $value, $en);
 			$useType->slug = $key;
 			$useType->save();
 		}
@@ -69,8 +69,8 @@ class ImportInvoicingStart extends BaseImport {
 
 		// Packages
 		// Service Types
-		$packageNameType = $this->createDictionaryType('\Invoicing\Package', 'name', 'supportedLanguages', 'ACTIVE');
-		$packageTeaserType = $this->createDictionaryType('\Invoicing\Package', 'teaser', 'supportedLanguages', 'ACTIVE');
+		$packageNameType = $this->createDictionaryType('\Invoicing\Package', 'name', 'ACTIVE');
+		$packageTeaserType = $this->createDictionaryType('\Invoicing\Package', 'teaser', 'ACTIVE');
 		$countryType = \Service\Location\Type::getBySlug('country');
 
 		$r = q('select * from invoicing_packages order by id');
@@ -106,8 +106,8 @@ class ImportInvoicingStart extends BaseImport {
 		\Extras\Models\Service::flush(FALSE);
 
 		// Marketings
-		$marketingNameType = $this->createDictionaryType('\Invoicing\Marketing', 'name', 'supportedLanguages', 'ACTIVE');
-		$marketingDescriptionType = $this->createDictionaryType('\Invoicing\Marketing', 'description', 'supportedLanguages', 'ACTIVE');
+		$marketingNameType = $this->createDictionaryType('\Invoicing\Marketing', 'name', 'ACTIVE');
+		$marketingDescriptionType = $this->createDictionaryType('\Invoicing\Marketing', 'description', 'ACTIVE');
 		$r = q('select * from invoicing_marketings order by id');
 		while($x = mysql_fetch_array($r)) {
 			$marketing = \Service\Invoicing\Marketing::get();

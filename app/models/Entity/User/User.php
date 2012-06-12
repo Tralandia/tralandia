@@ -175,6 +175,13 @@ class User extends \Entity\BaseEntityDetails {
 	 */
 	protected $spam;
 
+	/**
+	 * @var Collection
+	 * @ORM\ManyToMany(targetEntity="Entity\Ticket\Message", inversedBy="toCC")
+	 */
+	protected $ticketMessages;
+
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -185,6 +192,7 @@ class User extends \Entity\BaseEntityDetails {
 		$this->combinations = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->rentals = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->tasks = new \Doctrine\Common\Collections\ArrayCollection;
+		$this->ticketMessages = new \Doctrine\Common\Collections\ArrayCollection;
 	}
 		
 	/**
@@ -429,11 +437,11 @@ class User extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @param string
+	 * @param \Extras\Types\Name
 	 * @return \Entity\User\User
 	 */
-	public function setInvoicingName($invoicingFirstName) {
-		$this->invoicingFirstName = $invoicingFirstName;
+	public function setInvoicingName(\Extras\Types\Name $invoicingName) {
+		$this->invoicingName = $invoicingName;
 
 		return $this;
 	}
@@ -442,18 +450,18 @@ class User extends \Entity\BaseEntityDetails {
 	 * @return \Entity\User\User
 	 */
 	public function unsetInvoicingName() {
-		$this->invoicingFirstName = NULL;
+		$this->invoicingName = NULL;
 
 		return $this;
 	}
 		
 	/**
-	 * @return string|NULL
+	 * @return \Extras\Types\Name|NULL
 	 */
 	public function getInvoicingName() {
-		return $this->invoicingFirstName;
+		return $this->invoicingName;
 	}
-				
+		
 	/**
 	 * @param string
 	 * @return \Entity\User\User
@@ -849,5 +857,24 @@ class User extends \Entity\BaseEntityDetails {
 	 */
 	public function getSpam() {
 		return $this->spam;
+	}
+		
+	/**
+	 * @param \Entity\Ticket\Message
+	 * @return \Entity\User\User
+	 */
+	public function addTicketMessage(\Entity\Ticket\Message $ticketMessage) {
+		if(!$this->ticketMessages->contains($ticketMessage)) {
+			$this->ticketMessages->add($ticketMessage);
+		}
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Ticket\Message
+	 */
+	public function getTicketMessages() {
+		return $this->ticketMessages;
 	}
 }

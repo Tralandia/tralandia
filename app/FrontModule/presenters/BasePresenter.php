@@ -19,7 +19,7 @@ abstract class BasePresenter extends \BasePresenter {
 		$this->template->launchedCountries = \Service\Location\LocationList::getBy(
 			array(
 				'status'=>\Entity\Location\Location::STATUS_LAUNCHED,
-				'parentId'=>$currentLocation->findParentByType('continent')->id, // @NOTE: where parent is the current continent
+				//'parentId'=>$currentLocation->findParentByType('continent')->id, // @NOTE: where parent is the current continent
 			),
 			null,
 			15

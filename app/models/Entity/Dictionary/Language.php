@@ -46,19 +46,44 @@ class Language extends \Entity\BaseEntityDetails {
 	 * @var json
 	 * @ORM\Column(type="json", nullable=true)
 	 */
-	protected $multitranslationOptions;
+	protected $genders;
 
 	/**
 	 * @var json
 	 * @ORM\Column(type="json", nullable=true)
 	 */
-	protected $genderNumberOptions;
+	protected $plurals;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $primarySingular;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $primaryPlural;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $primaryGender;
 
 	/**
 	 * @var json
 	 * @ORM\Column(type="json", nullable=true)
 	 */
 	protected $ppcPatterns;
+
+	/**
+	 * @var json
+	 * @ORM\Column(type="json", nullable=true)
+	 * this defines rules for autogenerating some variations, which will be done in JS. For example, locative in EN is always "in ".$singularNominative
+	 */
+	protected $variationDetails;
 
 	/**
 	 * @var Collection
@@ -189,8 +214,8 @@ class Language extends \Entity\BaseEntityDetails {
 	 * @param json
 	 * @return \Entity\Dictionary\Language
 	 */
-	public function setMultitranslationOptions($multitranslationOptions) {
-		$this->multitranslationOptions = $multitranslationOptions;
+	public function setGenders($genders) {
+		$this->genders = $genders;
 
 		return $this;
 	}
@@ -198,8 +223,8 @@ class Language extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Dictionary\Language
 	 */
-	public function unsetMultitranslationOptions() {
-		$this->multitranslationOptions = NULL;
+	public function unsetGenders() {
+		$this->genders = NULL;
 
 		return $this;
 	}
@@ -207,16 +232,16 @@ class Language extends \Entity\BaseEntityDetails {
 	/**
 	 * @return json|NULL
 	 */
-	public function getMultitranslationOptions() {
-		return $this->multitranslationOptions;
+	public function getGenders() {
+		return $this->genders;
 	}
 		
 	/**
 	 * @param json
 	 * @return \Entity\Dictionary\Language
 	 */
-	public function setGenderNumberOptions($genderNumberOptions) {
-		$this->genderNumberOptions = $genderNumberOptions;
+	public function setPlurals($plurals) {
+		$this->plurals = $plurals;
 
 		return $this;
 	}
@@ -224,8 +249,8 @@ class Language extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Dictionary\Language
 	 */
-	public function unsetGenderNumberOptions() {
-		$this->genderNumberOptions = NULL;
+	public function unsetPlurals() {
+		$this->plurals = NULL;
 
 		return $this;
 	}
@@ -233,8 +258,86 @@ class Language extends \Entity\BaseEntityDetails {
 	/**
 	 * @return json|NULL
 	 */
-	public function getGenderNumberOptions() {
-		return $this->genderNumberOptions;
+	public function getPlurals() {
+		return $this->plurals;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Dictionary\Language
+	 */
+	public function setPrimarySingular($primarySingular) {
+		$this->primarySingular = $primarySingular;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Dictionary\Language
+	 */
+	public function unsetPrimarySingular() {
+		$this->primarySingular = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getPrimarySingular() {
+		return $this->primarySingular;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Dictionary\Language
+	 */
+	public function setPrimaryPlural($primaryPlural) {
+		$this->primaryPlural = $primaryPlural;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Dictionary\Language
+	 */
+	public function unsetPrimaryPlural() {
+		$this->primaryPlural = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getPrimaryPlural() {
+		return $this->primaryPlural;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Dictionary\Language
+	 */
+	public function setPrimaryGender($primaryGender) {
+		$this->primaryGender = $primaryGender;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Dictionary\Language
+	 */
+	public function unsetPrimaryGender() {
+		$this->primaryGender = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getPrimaryGender() {
+		return $this->primaryGender;
 	}
 		
 	/**
@@ -261,6 +364,32 @@ class Language extends \Entity\BaseEntityDetails {
 	 */
 	public function getPpcPatterns() {
 		return $this->ppcPatterns;
+	}
+		
+	/**
+	 * @param json
+	 * @return \Entity\Dictionary\Language
+	 */
+	public function setVariationDetails($variationDetails) {
+		$this->variationDetails = $variationDetails;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Dictionary\Language
+	 */
+	public function unsetVariationDetails() {
+		$this->variationDetails = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return json|NULL
+	 */
+	public function getVariationDetails() {
+		return $this->variationDetails;
 	}
 		
 	/**

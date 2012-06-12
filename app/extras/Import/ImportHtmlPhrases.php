@@ -16,7 +16,7 @@ class ImportHtmlPhrases extends BaseImport {
 
 	public function doImport($subsection = NULL) {
 
-		$dictionaryType = $this->createDictionaryType('Html', 'Html', 'supportedLanguages', 'MARKETING');
+		$dictionaryType = $this->createDictionaryType('Html', 'Html', 'MARKETING');
 
 		if ($this->developmentMode == TRUE) {
 			$r = q('select * from dictionary where text_type = 2 limit 20');

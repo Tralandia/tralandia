@@ -31,24 +31,28 @@ class Medium extends \Entity\BaseEntityDetails {
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Attraction\Attraction", inversedBy="media")
+	 * @ORM\JoinColumn(onDelete="CASCADE")
 	 */
 	protected $attraction;
 
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Rental\Rental", inversedBy="media")
+	 * @ORM\JoinColumn(onDelete="CASCADE")
 	 */
 	protected $rental;
 
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Seo\SeoUrl", inversedBy="media")
+	 * @ORM\JoinColumn(onDelete="CASCADE")
 	 */
 	protected $seoUrl;
 
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Ticket\Message", inversedBy="attachments")
+	 * @ORM\JoinColumn(onDelete="CASCADE")
 	 */
 	protected $message;
 
@@ -69,28 +73,6 @@ class Medium extends \Entity\BaseEntityDetails {
 	 * @ORM\Column(type="integer", nullable=true)
 	 */
 	protected $sort;
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //@entity-generator-code <--- NEMAZAT !!!
 

@@ -40,15 +40,15 @@ class ImportAmenities extends BaseImport {
 
 		$en = \Service\Dictionary\Language::getByIso('en');
 
-		$nameDictionaryType = $this->createDictionaryType('\Rental\Amenity', 'name', 'supportedLanguages', 'ACTIVE', array('multitranslationRequired' => TRUE));
-		$tagNameDictionaryType = $this->createDictionaryType('\Rental\Amenity', 'name-tag', 'supportedLanguages', 'ACTIVE', array('genderNumberRequired' => TRUE, 'positionRequired' => TRUE, 'webalizedRequired' => TRUE));
-		$this->createDictionaryType('\Rental\AmenityType', 'name', 'supportedLanguages', 'ACTIVE');
+		$nameDictionaryType = $this->createDictionaryType('\Rental\Amenity', 'name', 'ACTIVE', array('pluralsRequired' => TRUE));
+		$tagNameDictionaryType = $this->createDictionaryType('\Rental\Amenity', 'name-tag', 'ACTIVE', array('genderVariationsRequired' => TRUE, 'positionRequired' => TRUE));
+		$this->createDictionaryType('\Rental\AmenityType', 'name', 'ACTIVE');
 		\Extras\Models\Service::flush(FALSE);
 
 
 		foreach ($groups as $key => $value) {
 			$g = \Service\Rental\AmenityType::get();
-			$g->name = $this->createPhraseFromString('\Rental\AmenityType', 'name', 'supportedLanguages', 'ACTIVE', $value[0], $en);
+			$g->name = $this->createPhraseFromString('\Rental\AmenityType', 'name', 'ACTIVE', $value[0], $en);
 			$g->slug = $value[2];
 			$g->save();
 		}
@@ -111,29 +111,6 @@ class ImportAmenities extends BaseImport {
 			$amenity->type = $amenityType;
 			$amenity->name = $this->createNewPhrase($tagNameDictionaryType, $x['name_dic_id']);
 
-			$r1 = q('select * from tags_positions where tag_id = '.$x['id']);
-			$namePhraseService = \Service\Dictionary\Phrase::get($amenity->name);
-			while ($x1 = mysql_fetch_array($r1)) {
-				$thisTranslation = $namePhraseService->getTranslation(\Service\Dictionary\Language::getByOldId($x1['language_id']));
-				if (!($thisTranslation instanceof \Service\Dictionary\Translation)) {
-					$thisTranslation = \Service\Dictionary\Translation::get();
-					$thisTranslation->language = \Service\Dictionary\Language::getByOldId($x1['language_id']);
-					$namePhraseService->addTranslation($thisTranslation);
-				}
-				$variations = $thisTranslation->variations;
-				$variations['position'] = $x1['position'];
-				$genderNumberOptions = explode2Levels("\n", ':', $x1['variations']);
-				$t = array();
-				foreach ($genderNumberOptions as $key => $value) {
-					if (strlen(trim($value))) {
-						$t[trim($key)] = trim($value);
-					}
-				}
-				$variations['genderNumberOptions'] = $t;
-				$thisTranslation->variations = $variations;
-
-				$thisTranslation->save();
-			}
 			$details = array(
 				'objectOriented' => $x['object_oriented'],
 			);

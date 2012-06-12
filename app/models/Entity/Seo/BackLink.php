@@ -19,21 +19,29 @@ use	Extras\Annotation as EA;
  */
 class BackLink extends \Entity\BaseEntity {
 
+	const STATUS_OK = 'OK';
+	const STATUS_NOT_FOUND = 'Not Found';
+	const STATUS_PENDING = 'Pending';
+	const STATUS_INCORRECT = 'Incorrect';
+
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Rental\Rental")
+	 * @ORM\JoinColumn(onDelete="SET NULL")
 	 */
 	protected $rental;
 
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Location\Location")
+	 * @ORM\JoinColumn(onDelete="SET NULL")
 	 */
 	protected $location;
 
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Dictionary\Language")
+	 * @ORM\JoinColumn(onDelete="SET NULL")
 	 */
 	protected $language;
 
@@ -42,6 +50,12 @@ class BackLink extends \Entity\BaseEntity {
 	 * @ORM\Column(type="datetime")
 	 */
 	protected $lastChecked;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $status;
 
 	/**
 	 * @var url
@@ -174,6 +188,32 @@ class BackLink extends \Entity\BaseEntity {
 	 */
 	public function getLastChecked() {
 		return $this->lastChecked;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Seo\BackLink
+	 */
+	public function setStatus($status) {
+		$this->status = $status;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Seo\BackLink
+	 */
+	public function unsetStatus() {
+		$this->status = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getStatus() {
+		return $this->status;
 	}
 		
 	/**

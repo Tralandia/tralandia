@@ -29,7 +29,7 @@ class ImportCompanies extends BaseImport {
 	private function importCompanies() {
 		$r = q('select * from companies order by id');
 
-		$dictionaryTypeRegistrator = $this->createDictionaryType('\Company\Company', 'registrator', 'supportedLanguages', 'ACTIVE');
+		$dictionaryTypeRegistrator = $this->createDictionaryType('\Company\Company', 'registrator', 'ACTIVE');
 
 		while($x = mysql_fetch_array($r)) {
 			$s = S\Company\Company::get();
@@ -57,7 +57,7 @@ class ImportCompanies extends BaseImport {
 	private function importOffices() {
 		$r = q('select * from virtual_offices order by id');
 
-		$dictionaryTypeRegistrator = $this->createDictionaryType('\Company\Company', 'registrator', 'supportedLanguages', 'ACTIVE');
+		$dictionaryTypeRegistrator = $this->createDictionaryType('\Company\Company', 'registrator', 'ACTIVE');
 
 		$countryLocationType = \Service\Location\Type::getBySlug('country');
 
@@ -82,7 +82,7 @@ class ImportCompanies extends BaseImport {
 	private function importBankAccounts() {
 		$r = q('select * from bank_accounts order by id');
 
-		$dictionaryTypeRegistrator = $this->createDictionaryType('\Company\Company', 'registrator', 'supportedLanguages', 'ACTIVE');
+		$dictionaryTypeRegistrator = $this->createDictionaryType('\Company\Company', 'registrator', 'ACTIVE');
 
 		$countryLocationType = \Service\Location\Type::getBySlug('country');
 

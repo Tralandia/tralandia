@@ -71,27 +71,6 @@ class Type extends \Entity\BaseEntityDetails {
 	 */
 	protected $actions;
 
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //@entity-generator-code <--- NEMAZAT !!!
 

@@ -23,10 +23,10 @@ class ImportRentals extends BaseImport {
 		qNew('update medium_medium set rental_id = NULL where rental_id > 0');
 		$import->undoSection('rentals');
 
-		$nameDictionaryType = $this->createDictionaryType('\Rental\Rental', 'name', 'incomingLanguages', 'NATIVE', array('checkingRequired' => TRUE));
-		$briefDescriptionDictionaryType = $this->createDictionaryType('\Rental\Rental', 'briefDescription', 'incomingLanguages', 'NATIVE', array('checkingRequired' => TRUE));
-		$descriptionDictionaryType = $this->createDictionaryType('\Rental\Rental', 'description', 'incomingLanguages', 'NATIVE', array('checkingRequired' => TRUE));
-		$teaserDictionaryType = $this->createDictionaryType('\Rental\Rental', 'teaser', 'incomingLanguages', 'NATIVE', array('checkingRequired' => TRUE));
+		$nameDictionaryType = $this->createDictionaryType('\Rental\Rental', 'name', 'NATIVE', array('checkingRequired' => TRUE));
+		$briefDescriptionDictionaryType = $this->createDictionaryType('\Rental\Rental', 'briefDescription', 'NATIVE', array('checkingRequired' => TRUE));
+		$descriptionDictionaryType = $this->createDictionaryType('\Rental\Rental', 'description', 'NATIVE', array('checkingRequired' => TRUE));
+		$teaserDictionaryType = $this->createDictionaryType('\Rental\Rental', 'teaser', 'NATIVE', array('checkingRequired' => TRUE));
 		\Extras\Models\Service::flush(FALSE);
 
 
@@ -124,7 +124,7 @@ class ImportRentals extends BaseImport {
 
 			$rental->slug = $x['name_url'];
 			$temp = \Service\Dictionary\Language::get($rental->editLanguage);
-			$rental->name = $this->createPhraseFromString('\Rental\Rental', 'name', 'incomingLanguages', 'NATIVE', $x['name'], $temp);
+			$rental->name = $this->createPhraseFromString('\Rental\Rental', 'name', 'NATIVE', $x['name'], $temp);
 			
 			//$rental->briefDescription = '';
 			$rental->description = $this->createNewPhrase($descriptionDictionaryType, $x['description_dic_id']);

@@ -182,7 +182,7 @@ class ImportUsers extends BaseImport {
 			$user->password = $x['password'];
 			$user->oldId = $x['id'];
 			$user->role = $role;
-			$user->invoicingLastName = $x['name'];
+			$user->invoicingName = new \Extras\Types\Name('', '', $x['name']);
 
 			$contacts = new \Extras\Types\Contacts();
 			$contacts->add(new \Extras\Types\Email($x['email']));
@@ -232,8 +232,7 @@ class ImportUsers extends BaseImport {
 			$user->role = $role;
 
 			$user->invoicingSalutation = '';
-			$user->invoicingFirstName = $x['client_name'];
-			$user->invoicingLastName = '';
+			$user->invoicingName = new \Extras\Types\Name($x['client_name']);
 
 			if($x['client_email']) $user->invoicingEmail = new \Extras\Types\Email($x['client_email']);
 			if($x['client_phone']) $user->invoicingPhone = new \Extras\Types\Phone($x['client_phone']);
@@ -273,7 +272,7 @@ class ImportUsers extends BaseImport {
 		if ($this->developmentMode == TRUE) {
 			$r = q('select * from contacts where country_id = 46 limit 10000');	
 		} else {
-			$r = q('select * from contacts');	
+			$r = q('select * from contacts');
 		}
 
 		while($x = mysql_fetch_array($r)) {
@@ -313,8 +312,7 @@ class ImportUsers extends BaseImport {
 			$user->role = $role;
 
 			if (!$user->invoicingSalutation) $user->invoicingSalutation = $x['contact_salutation'];
-			if (!$user->invoicingFirstName) $user->invoicingFirstName = $x['contact_firstname'];
-			if (!$user->invoicingLastName) $user->invoicingLastName = $x['contact_lastname'];
+			if (!$user->invoicingName) $user->invoicingName = new \Extras\Types\Name($x['contact_firstname'], '', $x['contact_lastname']);
 
 			if (!$user->invoicingAddress) $user->invoicingAddress = new \Extras\Types\Address(array(
 				'address' => array_filter(array($x['address1'], $x['address2'])),

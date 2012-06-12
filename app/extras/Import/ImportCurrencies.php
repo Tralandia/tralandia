@@ -15,7 +15,7 @@ use Nette\Application as NA,
 class ImportCurrencies extends BaseImport {
 
 	public function doImport($subsection = NULL) {
-		$dictionaryType = $this->createDictionaryType('\Currency', 'name', 'supportedLanguages', 'ACTIVE');
+		$dictionaryType = $this->createDictionaryType('\Currency', 'name', 'ACTIVE');
 
 		$r = q('select * from currencies order by id');
 		while($x = mysql_fetch_array($r)) {
