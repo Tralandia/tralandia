@@ -20,7 +20,7 @@ class Task extends \Service\BaseService {
 
 	public function reserve(\Entity\User\User $user) {
 		$this->executeActions('onReserve');
-		$this->user = $user;
+		$this->reservedFor = $user;
 		return $this;
 	}
 

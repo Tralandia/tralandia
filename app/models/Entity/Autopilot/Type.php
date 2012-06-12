@@ -15,10 +15,10 @@ use	Extras\Annotation as EA;
  */
 class Type extends \Entity\BaseEntityDetails {
 
-	const ACTION_ON_SAVE = 'onSave';
-	const ACTION_ON_DELEGATE = 'onDelegate';
-	const ACTION_ON_COMPLETED = 'onCompleted';
-	const ACTION_ON_DEFER = 'onDefer';
+	const ON_SAVE = 'onSave';
+	const ON_DELEGATE = 'onDelegate';
+	const ON_COMPLETED = 'onCompleted';
+	const ON_DEFER = 'onDefer';
 
 	/**
 	 * @var string

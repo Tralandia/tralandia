@@ -38,6 +38,25 @@ class TaskArchived extends \Entity\BaseEntityDetails {
 	protected $name;
 
 	/**
+	 * @var string
+	 * @ORM\Column(type="string")
+	 */
+	protected $technicalName;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)§
+	 * example: \Rental\Rental
+	 */
+	protected $entityName;
+
+	/**
+	 * @var int
+	 * @ORM\Column(type="integer", nullable=true)
+	 */
+	protected $entityId;
+
+	/**
 	 * @var text
 	 * @ORM\Column(type="text")
 	 */
@@ -234,6 +253,75 @@ class TaskArchived extends \Entity\BaseEntityDetails {
 	 */
 	public function getName() {
 		return $this->name;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Autopilot\TaskArchived
+	 */
+	public function setTechnicalName($technicalName) {
+		$this->technicalName = $technicalName;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getTechnicalName() {
+		return $this->technicalName;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Autopilot\TaskArchived
+	 */
+	public function setEntityName($entityName) {
+		$this->entityName = $entityName;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Autopilot\TaskArchived
+	 */
+	public function unsetEntityName() {
+		$this->entityName = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getEntityName() {
+		return $this->entityName;
+	}
+		
+	/**
+	 * @param integer
+	 * @return \Entity\Autopilot\TaskArchived
+	 */
+	public function setEntityId($entityId) {
+		$this->entityId = $entityId;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Autopilot\TaskArchived
+	 */
+	public function unsetEntityId() {
+		$this->entityId = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return integer|NULL
+	 */
+	public function getEntityId() {
+		return $this->entityId;
 	}
 		
 	/**
