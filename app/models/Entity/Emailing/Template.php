@@ -17,6 +17,13 @@ use	Extras\Annotation as EA;
 class Template extends \Entity\BaseEntity {
 
 	/**
+	 * @var Collection
+	 * @ORM\ManyToOne(targetEntity="Entity\Emailing\TemplateType")
+	 * @ORM\JoinColumn(onDelete="SET NULL")
+	 */
+	protected $templateType;
+
+	/**
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
 	 */
@@ -54,6 +61,32 @@ class Template extends \Entity\BaseEntity {
 		parent::__construct();
 
 		$this->batches = new \Doctrine\Common\Collections\ArrayCollection;
+	}
+		
+	/**
+	 * @param \Entity\Emailing\TemplateType
+	 * @return \Entity\Emailing\Template
+	 */
+	public function setTemplateType(\Entity\Emailing\TemplateType $templateType) {
+		$this->templateType = $templateType;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Emailing\Template
+	 */
+	public function unsetTemplateType() {
+		$this->templateType = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Emailing\TemplateType|NULL
+	 */
+	public function getTemplateType() {
+		return $this->templateType;
 	}
 		
 	/**

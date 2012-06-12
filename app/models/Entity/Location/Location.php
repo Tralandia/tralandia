@@ -49,24 +49,6 @@ class Location extends \Entity\BaseEntityDetails {
 	protected $parentId;
 
 	/**
-	 * @var integer
-	 * @ORM\Column(type="integer", nullable=true)
-	 */
-	protected $nestedLeft;
-
-	/**
-	 * @var integer
-	 * @ORM\Column(type="integer", nullable=true)
-	 */
-	protected $nestedRight;
-
-	/**
-	 * @var integer
-	 * @ORM\Column(type="integer", nullable=true)
-	 */
-	private $nestedRoot;
-
-	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Type")
 	 */

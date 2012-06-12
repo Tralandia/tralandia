@@ -27,6 +27,19 @@ class RadoPresenter extends BasePresenter {
 		$this->template->output = $locale;	
 	}
 
+	public function actionAddPhrases() {
+		$entities = \Service\Location\LocationList::getAll();
+		foreach ($entities as $key => $entity) {
+			$service = \Service\Location\Location::get($entity);
+			if (!$service->nameShort) {
+				$service->nameShort = \Service\Dictionary\Phrase::get()->getMainEntity();
+			}
+			if (!$service->nameOfficial) {
+				$service->nameOfficial = \Service\Dictionary\Phrase::get()->getMainEntity();
+			}
+			$service->save();
+		}
+	}
 
 	public function actionHelper() {
 		if (isset($this->params['indexes'])) {
