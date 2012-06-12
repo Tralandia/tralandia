@@ -23,12 +23,14 @@ class ApPresenter extends BasePresenter {
 		}
 
 		$links = new ArrayHash;
-		foreach ($this->task->links as $linkName => $link) {
-			$links->{$linkName} = ArrayHash::from(array(
-				'title' => isset($link['title']) ? $link['title'] : $linkName,
-				'link' => $this->lazyLink($link['destination'], isset($link['arguments'])?($link['arguments']):(NULL)),
-			));
-			$links->{$linkName}->link->setParameter('display', 'modal');
+		if ($this->task->links) {
+			foreach ($this->task->links as $linkName => $link) {
+				$links->{$linkName} = ArrayHash::from(array(
+					'title' => isset($link['title']) ? $link['title'] : $linkName,
+					'link' => $this->lazyLink($link['destination'], isset($link['arguments'])?($link['arguments']):(NULL)),
+				));
+				$links->{$linkName}->link->setParameter('display', 'modal');
+			}
 		}
 
 		$this->template->task = $this->task;
@@ -39,14 +41,14 @@ class ApPresenter extends BasePresenter {
 
 		$this->template->users = $users;
 
-		// // Get next task
-		// $nextTask = \Service\Autopilot\Autopilot::getNextTask($this->user);
+		// Get next task
+		$nextTask = \Service\Autopilot\Autopilot::getNextTask($this->user);
 
 		// // Set task done
 		// \Service\Autopilot\Autopilot::setTaskDone($nextTask);
 
 		// Set task not done
-		\Service\Autopilot\Autopilot::setTaskNotDone(\Service\Autopilot\TaskArchived::get(1)->getEntity());
+		// \Service\Autopilot\Autopilot::setTaskNotDone(\Service\Autopilot\TaskArchived::get(1)->getEntity());
 		
 	}
 

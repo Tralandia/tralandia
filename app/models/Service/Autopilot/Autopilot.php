@@ -55,7 +55,7 @@ class Autopilot extends \Nette\Object {
 
 	/**
 	 * Get the next relevant task for user
-	 * @param  \Service\User\User 		$user
+	 * @param  \Entity\User\User 		$user
 	 * @return \Service\Autopilot\Task
 	 */
 	public static function getNextTask($user = null) {
@@ -77,31 +77,41 @@ class Autopilot extends \Nette\Object {
 			->where('t.user = :userId');
 
 		$i=0;
-		foreach($user->combinations as $combination) {
-			$qb->orWhere('(
-					t.user IS NULL 
-					AND role.id = :userRoleId 
-					AND country.id IN (:userCountry'. $i .', :NULL)
-					AND language.id IN (:userLanguage'. $i .', :NULL)
-					AND (
-						t.userLanguageLevel >= :userLanguageLevel'. $i .'
-						OR t.userLanguageLevel IS NULL
-					)
-				)')
-				->setParameter('userCountry'. $i, $combination->country->id)
-				->setParameter('userLanguage'. $i, $combination->language->id)
-				->setParameter('userLanguageLevel'. $i, $combination->country->id);
-			$i++;
+		if (count($user->combinations)) {
+			foreach($user->combinations as $combination) {
+				$qb->orWhere('(
+						t.user IS NULL 
+						AND role.id = :userRoleId 
+						AND country.id IN (:userCountry'. $i .', :NULL)
+						AND language.id IN (:userLanguage'. $i .', :NULL)
+						AND (
+							t.userLanguageLevel >= :userLanguageLevel'. $i .'
+							OR t.userLanguageLevel IS NULL
+						)
+					)')
+					->setParameter('userCountry'. $i, $combination->country->id)
+					->setParameter('userLanguage'. $i, $combination->language->id)
+					->setParameter('userLanguageLevel'. $i, $combination->country->id);
+				$i++;
+			}
+			$qb->setParameter('NULL', NULL)
+				->setParameter('userRoleId', $user->role->id);
 		}
 
 		$qb->andwhere('t.startTime < :now')
 			->setParameter('now', new \Extras\Types\DateTime)
 			->setParameter('userId', $user->id)
-			->setParameter('userRoleId', $user->role->id)
-			->setParameter('NULL', NULL)
 			->orderBy('t.due', 'ASC');
 
-		return $qb->getQuery()->getSingleResult();
+		$task = $qb->getQuery()->getSingleResult();
+
+		if ($task) {
+			$task = \Service\Autopilot\Task::get($task);
+			$task->reserve($user->getEntity());
+			$task->save();
+		}
+
+		return $task;
 
 	}
 
@@ -209,7 +219,7 @@ class Autopilot extends \Nette\Object {
 	 * @return \Entity\Autopilot\Task
 	 */
 	public static function setTaskNotDone($taskArchived) {
-debug($taskArchived);
+
 		if (!$taskArchived instanceof \Entity\Autopilot\TaskArchived) {
 			throw new ServiceException('Argument $taskArchived must be instance of \Entity\Autopilot\TaskArchived');
 		}

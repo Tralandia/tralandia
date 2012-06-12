@@ -86,13 +86,15 @@ class Task extends \Entity\BaseEntityDetails {
 	 */
 	protected $links;
 
-	/**
+	/**  
+	 * This is the last user working on this task or the one delegated to.
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\User\User")
 	 */
 	protected $reservedFor;
 
 	/**
+	 * The original user this task has been created for / assigned to.
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\User\User")
 	 */

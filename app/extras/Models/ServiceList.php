@@ -137,7 +137,9 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 
 		foreach (static::pripareCriteria($criteria) as $key => $value) {
 			if(is_array($value)) {
-				$qb->andWhere($qb->expr()->in('e.'.$key, $value));
+				if (count($value)) {
+					$qb->andWhere($qb->expr()->in('e.'.$key, $value));
+				}
 			} else {
 				$qb->andWhere('e.'.$key.' = :'.$key)
 					->setParameter($key, $value);
