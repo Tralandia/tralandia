@@ -48,7 +48,7 @@ class ApPresenter extends BasePresenter {
 		// \Service\Autopilot\Autopilot::setTaskDone($nextTask->getEntity());
 
 		// Set task NotDone
-		\Service\Autopilot\Autopilot::setTaskNotDone(\Service\Autopilot\TaskArchived::get(1)->getEntity());
+		//\Service\Autopilot\Autopilot::setTaskNotDone(\Service\Autopilot\TaskArchived::get(1)->getEntity());
 		
 	}
 

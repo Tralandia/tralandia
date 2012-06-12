@@ -145,10 +145,10 @@ class AdvancedCheckboxList extends BaseControl {
 		$counter = 0;
 		$values = $this->value === NULL ? NULL : (array) $this->getValue();
 		$label = Html::el('label')->addClass('checkbox '.$this->getOption('columnClass'));
-		debug($this->getOption('columns'), $this->items);
+		//debug($this->getOption('columns'), $this->items);
 		
 		$sortedItems = \Tools::reorganizeArray($this->items, $this->getOption('columns'));
-		debug($sortedItems);
+		//debug($sortedItems);
 		foreach ($sortedItems as $k => $val) {
 			$counter++;
 			if ($key !== NULL && $key != $k) continue; // intentionally ==

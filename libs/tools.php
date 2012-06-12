@@ -9,8 +9,6 @@ use Nette\Templating\Helpers,
 	Nette\Image;
 
 Helpers::$dateFormat = Tools::$datetimeFormat;
-FormContainer::extensionMethod('addDatePicker', 'Tools::addDatePicker');
-FormContainer::extensionMethod('addDateTimePicker', 'Tools::addDateTimePicker');
 FormContainer::extensionMethod('addComboSelect', 'Tools::addComboSelect');
 Selection::extensionMethod('fetchTree', 'Tools::selectionTree');
 Image::extensionMethod('resizeCrop', 'Tools::resizeCrop');
@@ -21,6 +19,8 @@ Extras\Forms\Controls\AdvancedAddress::register();
 Extras\Forms\Controls\AdvancedBricksList::register();
 Extras\Forms\Controls\AdvancedCheckbox::register();
 Extras\Forms\Controls\AdvancedCheckboxList::register();
+Extras\Forms\Controls\AdvancedDatePicker::register();
+Extras\Forms\Controls\AdvancedDateTimePicker::register();
 Extras\Forms\Controls\AdvancedFileManager::register();
 Extras\Forms\Controls\AdvancedJson::register();
 Extras\Forms\Controls\AdvancedMultiSelect::register();
@@ -30,6 +30,7 @@ Extras\Forms\Controls\AdvancedPrice::register();
 Extras\Forms\Controls\AdvancedSelect::register();
 Extras\Forms\Controls\AdvancedTable::register();
 Extras\Forms\Controls\AdvancedText::register();
+Extras\Forms\Controls\AdvancedTinymce::register();
 Extras\Forms\Controls\AdvancedUpload::register();
 
 function debug() {
@@ -110,14 +111,6 @@ class Tools {
 			return $params[0][0];
 		}
 		return NULL;
-	}
-
-	public static function addDatePicker(FormContainer $_this, $name, $label, $cols = NULL, $maxLength = NULL) {
-		return $_this[$name] = new DatePicker($label, $cols, $maxLength);
-	}
-
-	public static function addDateTimePicker(FormContainer $_this, $name, $label, $cols = NULL, $maxLength = NULL) {
-		return $_this[$name] = new DateTimePicker($label, $cols, $maxLength);
 	}
 
 	public static function addComboSelect(FormContainer $_this, $name, $label, array $items = NULL, $size = NULL) {

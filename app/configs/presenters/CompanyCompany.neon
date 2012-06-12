@@ -1,7 +1,7 @@
 common:
 	service: Service\Company\Company
 	title: Company / Company
-	h1: Company / Company
+	h1: 'Company / Company -> %name%'
 	grid:
 		columns:
 			id:
@@ -11,10 +11,10 @@ common:
 				label: Name
 				mapper: e.name
 			companyId:
-				label: CompanyId
+				label: Company Id
 				mapper: e.companyId
 			companyVatId:
-				label: CompanyVatId
+				label: Company Vat Id
 				mapper: e.companyVatId
 			vat:
 				label: Vat
@@ -28,18 +28,7 @@ common:
 				label: Name
 				control:
 					type: text
-			address:
-				label: Address
-				control: 
-					type: address
-			registrator:
-				class: span6
-				label: Registrator
-				control: 
-					type: phrase
-				inlineEditing: DictionaryPhrase:edit
 			companyId:
-				startNewRow: true
 				label: CompanyId
 				control: 
 					type: text
@@ -64,26 +53,35 @@ common:
 						method: getPairs
 						#params: [id, bankName]
 						params: [id, bankName, NULL, [bankName: ASC]]
+			address:
+				label: Address
+				control: 
+					type: address
+					callback: {class: \Service\Location\LocationList, method: getTranslatedPairs, params: [id, name, [type: 3], [name: ASC]]}
 			countries:
 				label: Countries
-				class: span6
+				class: span3
 				startNewRow: false
 				control: 
 					type: bricksList
 					callback: {class: \Service\Location\LocationList, method: getTranslatedPairs, params: [id, name]}
 				inlineEditing: LocationLocation:edit
 				inlineCreating: LocationLocation:add
-			# offices:
-			# 	label: Offices
-			# 	control: 
-			# 		type: multiSelect
-			# 		callback: 
-			# 			class: \Service\Company\OfficeList
-			# 			method: getPairs
-			# 			params: [id, [name, id]]
-			# 	inlineEditing: CompanyOffice:edit
-			# 	inlineCreating: CompanyOffice:add
-			# details:
-			# 	label: Details
-			# 	control: 
-			# 		type: json
+			offices:
+				startNewRow: true
+				label: Offices
+				class: span6
+				control: 
+					type: checkboxList
+					columns: 2
+					columnClass: span3
+					callback: 
+						class: \Service\Company\OfficeList
+						method: getPairs
+						params: [id, name, NULL, [name: ASC]]
+			registrator:
+				class: span6
+				label: Registrator
+				control: 
+					type: phrase
+				inlineEditing: DictionaryPhrase:edit

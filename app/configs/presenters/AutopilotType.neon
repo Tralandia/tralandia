@@ -58,16 +58,20 @@ common:
 				description: "In minutes."
 			mission:
 				label: Mission
+				class: span6
 				control: 
 					type: tinymce
-				startNewRow: true
+					class: span6
 			validation:
 				label: Validation
+				class: span12
 				control: 
 					type: neon
+					class: neon
 				startNewRow: true
 			actions:
 				label: Actions
+				class: span12
 				control: 
 					type: neon
-				startNewRow: false
+					class: neon

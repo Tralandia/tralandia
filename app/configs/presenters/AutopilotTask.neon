@@ -1,7 +1,7 @@
 common:
 	service: Service\Autopilot\Task
 	title: 'Autopilot / Task'
-	h1: 'Attraction / Type -> %name%'
+	h1: 'Autopilot / Task -> %name%'
 	grid:
 		columns:
 			id:
@@ -11,12 +11,12 @@ common:
 				label: Type
 				mapper: e.id
 				callback: {class: %this%, method: getAttributeForGrid, params: [type, name]}
-			subtype:
-				label: Subtype
-				mapper: e.subtype
-			name:
-				label: Name
-				mapper: e.name
+			entityName:
+				label: Entity
+				mapper: e.entityName
+			entityId:
+				label: Entity ID
+				mapper: e.entityId
 			startTime:
 				label: Start Time
 				mapper: e.startTime
@@ -25,40 +25,26 @@ common:
 				mapper: e.due
 			user:
 				label: User
-				mapper: e.user
+				mapper: e.id
+				callback: {class: %this%, method: getAttributeForGrid, params: [user, login]}
 			userCountry:
 				label: User Country
-				mapper: e.userCountry
+				mapper: e.id
+				callback: {class: %this%, method: getAttributeForGrid, params: [userCountry, name]}
 			userLanguage:
 				label: UserLanguage
-				mapper: e.userLanguage
-			# userLanguageLevel:
-			# 	label: UserLanguageLevel
-			# 	mapper: e.userLanguageLevel
-			# 	cellStyle: text-align:right;
-			# userRole:
-			# 	label: UserRole
-			# 	mapper: e.userRole
-			# usersExcluded:
-			# 	label: UsersExcluded
-			# 	mapper: e.usersExcluded
-			# recurrenceData:
-			# 	label: RecurrenceData
-			# 	mapper: e.recurrenceData
-
-			
+				mapper: e.id
+				callback: {class: %this%, method: getAttributeForGrid, params: [userLanguage, name]}
 	form:
 		fields:
 			type:
 				label: Type
 				control:
 					type: select
+					callback: {class: \Service\Autopilot\TypeList, method: getPairs, params: [id, name, NULL, [name: ASC]]}
+					prompt: " - Select -"
 				inlineEditing: AutopilotType:edit
 				inlineCreating: AutopilotType:add
-			subtype:
-				label: Subtype
-				control:
-					type: text
 			name:
 				label: Name
 				control: 
@@ -78,9 +64,9 @@ common:
 				class: span2
 				control: 
 					type: select
-					callback: {class: \Service\Location\LocationList, method: getTranslatedPairs, params: [id, name, [type: 8], [slug: ASC]]}
+					callback: {class: \Service\Location\LocationList, method: getTranslatedPairs, params: [id, name, [type: 3], [name: ASC]]}
 					class: span2
-					prompt: None
+					prompt: " - Select -"
 			userLanguage:
 				label: User Language
 				class: span2
@@ -88,7 +74,7 @@ common:
 					type: select
 					class: span2
 					prompt: None
-					callback: {class: \Service\Dictionary\LanguageList, method: getTranslatedPairs, params: [id, name, [supported: 1], [iso: ASC]]}
+					callback: {class: \Service\Dictionary\LanguageList, method: getTranslatedPairs, params: [id, name, [supported: 1], [name: ASC]]}
 			userLanguageLevel:
 				label: User Language Level
 				class: span2
@@ -108,6 +94,7 @@ common:
 				class: span2
 				control:
 					type: bricksList
+					callback: {class: \Service\User\UserList, method: getPairs, params: [id, login, NULL, [login: ASC]]}
 				inlineEditing: UserUser:edit
 				inlineCreating: UserUser:add
 				startNewRow: false
@@ -116,13 +103,13 @@ common:
 				label: StartTime
 				class: span2
 				control: 
-					type: datePicker
+					type: dateTimePicker
 					class: span2
 			due:
 				label: Due
 				class: span2
 				control: 
-					type: datePicker
+					type: dateTimePicker
 					class: span2
 			durationPaid:
 				label: Duration Paid
@@ -131,29 +118,51 @@ common:
 				control: 
 					type: text
 					class: span2
+			entityName:
+				label: Entity Name
+				control: 
+					type: text
+				class: span2
+			entityId:
+				label: Entity ID
+				control: 
+					type: text
+				class: span2
 			mission:
 				startNewRow: true
 				label: Mission
+				class: span12
 				control:
 					type: tinymce
+					class: span12
 			links:
 				startNewRow: true
 				label: Links
+				class: span12
 				control:
 					type: neon
+					class: neon
 			validation:
 				label: Validation
+				class: span12
 				control:
 					type: neon
+					class: neon
 			actions:
 				label: Actions
+				class: span12
 				control:
 					type: neon
+					class: neon
 			recurrenceData:
 				label: RecurrenceData
+				class: span12
 				control:
 					type: neon
+					class: neon
 			details:
 				label: Details
+				class: span12
 				control:
 					type: neon
+					class: neon

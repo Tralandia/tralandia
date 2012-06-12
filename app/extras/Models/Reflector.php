@@ -329,7 +329,7 @@ class Reflector extends Nette\Object {
 				$fieldMask['column']['type'] = $property->getAnnotation(self::ANN_COLUMN)->type;
 			}
 
-			if(in_array($type, array('select', 'checkboxList', 'multiSelect', 'bricksList', 'price', 'address')) && (!isset($fieldMask['ui']['control']['options']) || !is_array($fieldMask['ui']['control']['options']))) {
+			if(in_array($type, array('select', 'checkboxList', 'multiSelect', 'bricksList', 'price', 'address', 'contacts')) && (!isset($fieldMask['ui']['control']['options']) || !is_array($fieldMask['ui']['control']['options']))) {
 
 				if(!array_key_exists('callback', $fieldMask['ui']['control'])) {
 					throw new \Exception("Nezadefinoval si callback ani options pre '{$fieldMask['ui']['name']}'");	
@@ -342,9 +342,9 @@ class Reflector extends Nette\Object {
 
 			if(array_key_exists('addressLocations', $fieldMask['ui']['control'])) {
 				$fieldMask['ui']['control']['addressLocations']['cb'] = callback($fieldMask['ui']['control']['addressLocations']['class'], $fieldMask['ui']['control']['addressLocations']['method']);
-			} else if($type == 'address') {
+			} else if($type == 'contacts') {
 				throw new \Exception("Nezadefinoval si addressLocations pre '{$fieldMask['ui']['name']}'");	
-			}
+			}				
 
 			if(!$user->isAllowed($service->getMainEntity(), $property->name . '_edit')) {
 				$fieldMask['ui']['control']['disabled'] = true;

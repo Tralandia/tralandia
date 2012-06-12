@@ -227,7 +227,7 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 			$return[$item['key']] = $translator->translate($item['value']);
 		}
 
-		if($orderByName) sort($return);
+		if($orderByName) asort($return);
 
 		return $return;
 	}

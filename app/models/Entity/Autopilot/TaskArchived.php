@@ -12,7 +12,7 @@ use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="autopilot_taskarchived", indexes={@ORM\index(name="subtype", columns={"subtype"}), @ORM\index(name="startTime", columns={"startTime"}), @ORM\index(name="due", columns={"due"}), @ORM\index(name="durationPaid", columns={"durationPaid"}), @ORM\index(name="userLanguageLevel", columns={"userLanguageLevel"})})
+ * @ORM\Table(name="autopilot_taskarchived", indexes={@ORM\index(name="startTime", columns={"startTime"}), @ORM\index(name="due", columns={"due"}), @ORM\index(name="durationPaid", columns={"durationPaid"}), @ORM\index(name="userLanguageLevel", columns={"userLanguageLevel"})})
  * @EA\Service(name="\Service\Autopilot\TaskArchived")
  * @EA\ServiceList(name="\Service\Autopilot\TaskArchivedList")
  * @EA\Primary(key="id", value="name")
@@ -29,19 +29,7 @@ class TaskArchived extends \Entity\BaseEntityDetails {
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
 	 */
-	protected $subtype;
-
-	/**
-	 * @var string
-	 * @ORM\Column(type="string", nullable=true)
-	 */
 	protected $name;
-
-	/**
-	 * @var string
-	 * @ORM\Column(type="string")
-	 */
-	protected $technicalName;
 
 	/**
 	 * @var string
@@ -207,32 +195,6 @@ class TaskArchived extends \Entity\BaseEntityDetails {
 	 * @param string
 	 * @return \Entity\Autopilot\TaskArchived
 	 */
-	public function setSubtype($subtype) {
-		$this->subtype = $subtype;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Autopilot\TaskArchived
-	 */
-	public function unsetSubtype() {
-		$this->subtype = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return string|NULL
-	 */
-	public function getSubtype() {
-		return $this->subtype;
-	}
-		
-	/**
-	 * @param string
-	 * @return \Entity\Autopilot\TaskArchived
-	 */
 	public function setName($name) {
 		$this->name = $name;
 
@@ -253,23 +215,6 @@ class TaskArchived extends \Entity\BaseEntityDetails {
 	 */
 	public function getName() {
 		return $this->name;
-	}
-		
-	/**
-	 * @param string
-	 * @return \Entity\Autopilot\TaskArchived
-	 */
-	public function setTechnicalName($technicalName) {
-		$this->technicalName = $technicalName;
-
-		return $this;
-	}
-		
-	/**
-	 * @return string|NULL
-	 */
-	public function getTechnicalName() {
-		return $this->technicalName;
 	}
 		
 	/**

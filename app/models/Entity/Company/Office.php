@@ -15,6 +15,12 @@ use	Extras\Annotation as EA;
 class Office extends \Entity\BaseEntityDetails {
 
 	/**
+	 * @var string
+	 * @ORM\Column(type="string")
+	 */
+	protected $name;
+
+	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Company", inversedBy="offices")
 	 */
@@ -46,6 +52,23 @@ class Office extends \Entity\BaseEntityDetails {
 		parent::__construct();
 
 		$this->countries = new \Doctrine\Common\Collections\ArrayCollection;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Company\Office
+	 */
+	public function setName($name) {
+		$this->name = $name;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getName() {
+		return $this->name;
 	}
 		
 	/**

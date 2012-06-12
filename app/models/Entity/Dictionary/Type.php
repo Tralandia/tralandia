@@ -15,10 +15,10 @@ use	Extras\Annotation as EA;
  */
 class Type extends \Entity\BaseEntity {
 
-	const TRANSLATION_LEVEL_PASSIVE = 0;
-	const TRANSLATION_LEVEL_ACTIVE = 2;
-	const TRANSLATION_LEVEL_NATIVE = 4;
-	const TRANSLATION_LEVEL_MARKETING = 6;
+	const TRANSLATION_LEVEL_PASSIVE = 'passive';
+	const TRANSLATION_LEVEL_ACTIVE = 'active';
+	const TRANSLATION_LEVEL_NATIVE = 'native';
+	const TRANSLATION_LEVEL_MARKETING = 'marketing';
 
 	/**
 	 * @var string

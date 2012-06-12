@@ -35,33 +35,34 @@ common:
 				label: Company
 				control: 
 					type: select
+					callback: {class: \Service\Company\CompanyList, method: getPairs, params: [id, name, NULL, [name: ASC]]}
+					prompt: " - Select -"
 			accountName:
-				label: AccountName
+				label: Account Name
 				control: 
 					type: text
 			accountNumber:
-				label: AccountNumber
+				label: Account Number
 				control: 
 					type: text
 			accountIban:
-				label: AccountIban
+				label: Account IBAN
 				control: 
 					type: text
 			bankName:
-				label: BankName
+				label: Bank Name
 				control: 
 					type: text
 				startNewRow: true
 			bankSwift:
-				label: BankSwift
+				label: Bank Swift
 				control: 
 					type: text
 			bankAddress:
-				label: BankAddress
+				label: Bank Address
 				control: 
 					type: address
-					callback: {class: \Service\Location\LocationList, method: getTranslatedPairs, params: [id, name]}
-					prompt: Country
+					callback: {class: \Service\Location\LocationList, method: getTranslatedPairs, params: [id, name, [type: 3], [name: ASC]]}
 			countries:
 				label: Countries using this bank account
 				class: span3
