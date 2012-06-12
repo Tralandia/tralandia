@@ -12,7 +12,7 @@ use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="autopilot_taskarchived", indexes={@ORM\index(name="subtype", columns={"subtype"}), @ORM\index(name="startTime", columns={"startTime"}), @ORM\index(name="due", columns={"due"}), @ORM\index(name="userLanguageLevel", columns={"userLanguageLevel"})})
+ * @ORM\Table(name="autopilot_taskarchived", indexes={@ORM\index(name="subtype", columns={"subtype"}), @ORM\index(name="startTime", columns={"startTime"}), @ORM\index(name="due", columns={"due"}), @ORM\index(name="durationPaid", columns={"durationPaid"}), @ORM\index(name="userLanguageLevel", columns={"userLanguageLevel"})})
  * @EA\Service(name="\Service\Autopilot\TaskArchived")
  * @EA\ServiceList(name="\Service\Autopilot\TaskArchivedList")
  * @EA\Primary(key="id", value="name")
@@ -56,17 +56,22 @@ class TaskArchived extends \Entity\BaseEntityDetails {
 	protected $due;
 
 	/**
-	 * @var price
-	 * @ORM\Column(type="price")
-	 * this will be calculated based on durationPaid and the hourly_rate of person who completed the task
+	 * @var float
+	 * @ORM\Column(type="float")
 	 */
-	protected $price;
+	protected $durationPaid;
 
 	/**
 	 * @var json
-	 * @ORM\Column(type="json")
+	 * @ORM\Column(type="json", nullable=true)
 	 */
 	protected $links;
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToOne(targetEntity="Entity\User\User")
+	 */
+	protected $reservedFor;
 
 	/**
 	 * @var Collection
@@ -88,7 +93,7 @@ class TaskArchived extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var integer
-	 * @ORM\Column(type="integer")
+	 * @ORM\Column(type="integer", nullable=true)
 	 */
 	protected $userLanguageLevel;
 
@@ -99,14 +104,20 @@ class TaskArchived extends \Entity\BaseEntityDetails {
 	protected $userRole;
 
 	/**
+	 * @var Collection
+	 * @ORM\ManyToMany(targetEntity="Entity\User\User", mappedBy="tasks")
+	 */
+	protected $usersExcluded;
+
+	/**
 	 * @var json
-	 * @ORM\Column(type="json")
+	 * @ORM\Column(type="json", nullable=true)
 	 */
 	protected $validation;
 
 	/**
 	 * @var json
-	 * @ORM\Column(type="json")
+	 * @ORM\Column(type="json", nullable=true)
 	 */
 	protected $actions;
 
@@ -116,12 +127,35 @@ class TaskArchived extends \Entity\BaseEntityDetails {
 	 */
 	protected $completed;
 
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct() {
 		parent::__construct();
+
+		$this->usersExcluded = new \Doctrine\Common\Collections\ArrayCollection;
 	}
 		
 	/**
@@ -254,20 +288,20 @@ class TaskArchived extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @param \Extras\Types\Price
+	 * @param float
 	 * @return \Entity\Autopilot\TaskArchived
 	 */
-	public function setPrice(\Extras\Types\Price $price) {
-		$this->price = $price;
+	public function setDurationPaid($durationPaid) {
+		$this->durationPaid = $durationPaid;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Extras\Types\Price|NULL
+	 * @return float|NULL
 	 */
-	public function getPrice() {
-		return $this->price;
+	public function getDurationPaid() {
+		return $this->durationPaid;
 	}
 		
 	/**
@@ -281,10 +315,45 @@ class TaskArchived extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
+	 * @return \Entity\Autopilot\TaskArchived
+	 */
+	public function unsetLinks() {
+		$this->links = NULL;
+
+		return $this;
+	}
+		
+	/**
 	 * @return json|NULL
 	 */
 	public function getLinks() {
 		return $this->links;
+	}
+		
+	/**
+	 * @param \Entity\User\User
+	 * @return \Entity\Autopilot\TaskArchived
+	 */
+	public function setReservedFor(\Entity\User\User $reservedFor) {
+		$this->reservedFor = $reservedFor;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Autopilot\TaskArchived
+	 */
+	public function unsetReservedFor() {
+		$this->reservedFor = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\User\User|NULL
+	 */
+	public function getReservedFor() {
+		return $this->reservedFor;
 	}
 		
 	/**
@@ -376,6 +445,15 @@ class TaskArchived extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
+	 * @return \Entity\Autopilot\TaskArchived
+	 */
+	public function unsetUserLanguageLevel() {
+		$this->userLanguageLevel = NULL;
+
+		return $this;
+	}
+		
+	/**
 	 * @return integer|NULL
 	 */
 	public function getUserLanguageLevel() {
@@ -409,11 +487,53 @@ class TaskArchived extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
+	 * @param \Entity\User\User
+	 * @return \Entity\Autopilot\TaskArchived
+	 */
+	public function addUsersExcluded(\Entity\User\User $usersExcluded) {
+		if(!$this->usersExcluded->contains($usersExcluded)) {
+			$this->usersExcluded->add($usersExcluded);
+		}
+		$usersExcluded->addTask($this);
+
+		return $this;
+	}
+		
+	/**
+	 * @param \Entity\User\User
+	 * @return \Entity\Autopilot\TaskArchived
+	 */
+	public function removeUsersExcluded(\Entity\User\User $usersExcluded) {
+		if($this->usersExcluded->contains($usersExcluded)) {
+			$this->usersExcluded->removeElement($usersExcluded);
+		}
+		$usersExcluded->removeTask($this);
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\User\User
+	 */
+	public function getUsersExcluded() {
+		return $this->usersExcluded;
+	}
+		
+	/**
 	 * @param json
 	 * @return \Entity\Autopilot\TaskArchived
 	 */
 	public function setValidation($validation) {
 		$this->validation = $validation;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Autopilot\TaskArchived
+	 */
+	public function unsetValidation() {
+		$this->validation = NULL;
 
 		return $this;
 	}
@@ -431,6 +551,15 @@ class TaskArchived extends \Entity\BaseEntityDetails {
 	 */
 	public function setActions($actions) {
 		$this->actions = $actions;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Autopilot\TaskArchived
+	 */
+	public function unsetActions() {
+		$this->actions = NULL;
 
 		return $this;
 	}
