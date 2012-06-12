@@ -31,8 +31,6 @@ class ApPresenter extends BasePresenter {
 			$links->{$linkName}->link->setParameter('display', 'modal');
 		}
 
-		$this->task->done();
-
 		$this->template->task = $this->task;
 		$this->template->links = $links;
 
@@ -41,8 +39,14 @@ class ApPresenter extends BasePresenter {
 
 		$this->template->users = $users;
 
-		$nextTask = \Service\Autopilot\Autopilot::getNextTask($this->user);
-		debug($nextTask);
+		// // Get next task
+		// $nextTask = \Service\Autopilot\Autopilot::getNextTask($this->user);
+
+		// // Set task done
+		// \Service\Autopilot\Autopilot::setTaskDone($nextTask);
+
+		// Set task not done
+		\Service\Autopilot\Autopilot::setTaskNotDone(\Service\Autopilot\TaskArchived::get(1)->getEntity());
 		
 	}
 

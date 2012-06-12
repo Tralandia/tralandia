@@ -53,6 +53,11 @@ class Autopilot extends \Nette\Object {
 		return $task;
 	}
 
+	/**
+	 * Get the next relevant task for user
+	 * @param  \Service\User\User 		$user
+	 * @return \Service\Autopilot\Task
+	 */
 	public static function getNextTask($user = null) {
 
 		if ($user instanceof \Security\User) {
@@ -62,7 +67,8 @@ class Autopilot extends \Nette\Object {
 		}
 
 		$qb = \Extras\Models\Service::getEm()->createQueryBuilder();
-		$qb->select('t')
+		$qb->setMaxResults(1)
+			->select('t')
 			->from('\Entity\Autopilot\Task', 't')
 			->leftJoin('t.usersExcluded', 'excluded', \Doctrine\ORM\Query\Expr\Join::WITH, 'excluded.id != :userId')
 			->leftJoin('t.userRole', 'role')
@@ -95,7 +101,7 @@ class Autopilot extends \Nette\Object {
 			->setParameter('NULL', NULL)
 			->orderBy('t.due', 'ASC');
 
-		return $qb->getQuery()->getResult();
+		return $qb->getQuery()->getSingleResult();
 
 	}
 
@@ -104,20 +110,25 @@ class Autopilot extends \Nette\Object {
 	 * @param  string 					$recurrenceDelay
 	 * @return \Entity\Autopilot\Task
 	 */
-	public static function createRecurrence($task, $recurrenceDelay) {
+	public static function createRecurrenceTask($task, $recurrenceDelay = NULL) {
 
 		if (!$task instanceof \Entity\Autopilot\Task) {
-			// throw new \Nette\Exception('Argument $task must be instance of \Entity\Autopilot\Task');
+			throw new ServiceException('Argument $task must be instance of \Entity\Autopilot\Task');
+		}
+
+		if (!$recurrenceDelay) {
+			if ($task->recurrenceData) {
+				$recurrenceDelay = $task->recurrenceData;
+			} else {
+				return false;
+			}
 		}
 
 		$newTask = \Service\Autopilot\Task::get();
-
-		// modify
 		$newTask->setStartTime(
 			$task->startTime->modify($recurrenceDelay)
 		);
 
-		// copy
 		$newTask->type = $task->type;
 		$newTask->subtype = $task->subtype;
 		$newTask->name = $task->name;
@@ -140,10 +151,93 @@ class Autopilot extends \Nette\Object {
 		$newTask->actions = $task->actions;
 		$newTask->recurrenceData = $task->recurrenceData;
 		
-		// save
 		$newTask->save();
 
 		return $newTask;
+
+	}
+
+	/**
+	 * Set task done and move it from \Service\Autopilot\Task to \Service\Autopilot\TaskArchived
+	 * @param  \Entity\Autopilot\Task $task
+	 * @return \Entity\Autopilot\TaskArchived
+	 */
+	public static function setTaskDone($task) {
+
+		if (!$task instanceof \Entity\Autopilot\Task) {
+			throw new ServiceException('Argument $task must be instance of \Entity\Autopilot\Task');
+		}
+		\Service\Autopilot\Task::get($task)->executeActions('onDone');
+
+		// create recurrence task if current task has recurrence data
+		self::createRecurrenceTask($task);
+
+		$taskArchived = \Service\Autopilot\TaskArchived::get();
+		$taskArchived->type				= $task->type;
+		$taskArchived->subtype			= $task->subtype;
+		$taskArchived->name				= $task->name;
+		$taskArchived->mission			= $task->mission;
+		$taskArchived->startTime		= $task->startTime;
+		$taskArchived->due				= $task->due;
+		$taskArchived->durationPaid		= $task->durationPaid;
+		$taskArchived->links			= $task->links;
+		$taskArchived->user				= $task->user;
+		$taskArchived->userCountry		= $task->userCountry;
+		$taskArchived->userLanguage		= $task->userLanguage;
+		$taskArchived->userLanguageLevel = $task->userLanguageLevel;
+		$taskArchived->userRole			= $task->userRole;
+
+		foreach ($task->usersExcluded as $user) {
+			$taskArchived->addUsersExcluded($user);
+		}
+
+		$taskArchived->validation		= $task->validation;
+		$taskArchived->actions			= $task->actions;
+		$taskArchived->completed		= new \Nette\DateTime;
+		$taskArchived->save();
+
+		// delete old task
+		\Service\Autopilot\Task::get($task)->delete();
+
+		return $taskArchived;
+
+	}
+
+	/**
+	 * Move task from \Service\Autopilot\TaskArchived to \Service\Autopilot\Task
+	 * @param \Entity\Autopilot\TaskArchived $taskArchived
+	 * @return \Entity\Autopilot\Task
+	 */
+	public static function setTaskNotDone($taskArchived) {
+debug($taskArchived);
+		if (!$taskArchived instanceof \Entity\Autopilot\TaskArchived) {
+			throw new ServiceException('Argument $taskArchived must be instance of \Entity\Autopilot\TaskArchived');
+		}
+		$task->executeActions('onNotDone');
+
+		$task = \Service\Autopilot\Task::get();
+		$task->type				= $taskArchived->type;
+		$task->subtype			= $taskArchived->subtype;
+		$task->name				= $taskArchived->name;
+		$task->mission			= $taskArchived->mission;
+		$task->startTime		= $taskArchived->startTime;
+		$task->due				= $taskArchived->due;
+		$task->durationPaid		= $taskArchived->durationPaid;
+		$task->links			= $taskArchived->links;
+		$task->user				= $taskArchived->user;
+		$task->userCountry		= $taskArchived->userCountry;
+		$task->userLanguage		= $taskArchived->userLanguage;
+		$task->userLanguageLevel= $taskArchived->userLanguageLevel;
+		$task->userRole			= $taskArchived->userRole;
+		$task->usersExcluded	= $taskArchived->usersExcluded;
+		$task->validation		= $taskArchived->validation;
+		$task->actions			= $taskArchived->actions;
+		$task->save();
+
+		// delete old archived task
+		\Service\Autopilot\TaskArchived::get($taskArchived)->delete();
+
+		return $task;
 
 	}
 

@@ -30,11 +30,6 @@ class Task extends \Service\BaseService {
 		return $this;
 	}
 
-	public function done() {
-		$this->executeActions('onDone');
-
-	}
-
 	public function executeActions($actions) {
 		if(!isset($this->actions[$actions]) || !is_array($this->actions[$actions])) return TRUE;
 
