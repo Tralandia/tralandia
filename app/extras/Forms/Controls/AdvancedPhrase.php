@@ -41,7 +41,7 @@ class AdvancedPhrase extends BaseControl {
 
 		$phrase = $this->phrase;
 		if(!$phrase) {
-			throw new \Exception("Chyba preklad! Asi nieje v DB kukni sa tam...");
+			throw new \Exception("Chyba preklad: ".$name."! Asi nieje v DB kukni sa tam...");
 		}
 		if(!$this->getOption('inlineEditing')) {
 			throw new \Exception("Nenastavil si InlineEditing pre frazu");

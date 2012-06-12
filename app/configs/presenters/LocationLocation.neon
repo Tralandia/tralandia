@@ -42,6 +42,7 @@ common:
 			nameShort:
 				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:"
 				label: Short Name
+				inlineEditing: Phrase:edit
 				control: 
 					type: phrase
 			slug:
@@ -61,6 +62,7 @@ common:
 			nameOfficial:
 				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:"
 				label: Official Name
+				inlineEditing: Phrase:edit
 				control: 
 					type: phrase
 				class: span6
@@ -254,15 +256,21 @@ common:
 			details:
 				# anotations: "var:json,ORMColumn:type:json,nullable:true"
 				label: Details
+				class: span12
 				control: 
 					type: neon
+					class: neon
 			polygon:
 				# anotations: "var:json,ORMColumn:type:json,nullable:true"
 				label: Polygon
+				class: span12
 				control: 
 					type: neon
+					class: neon
 			clickMapData:
 				# anotations: "var:json,ORMColumn:type:json,nullable:true"
 				label: Click Map Data
+				class: span12
 				control: 
 					type: neon
+					class: neon

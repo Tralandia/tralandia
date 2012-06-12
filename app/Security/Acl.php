@@ -68,6 +68,9 @@ class Acl extends Permission {
 
 			foreach ($content as $action => $permission) {
 				foreach ($data['roles'] as $role) {
+					if (!isset($permission[$role])) {
+						continue;
+					}
 					$permissionType = $permission[$role];
 					if($permissionType == 'deny') continue;
 					if($permissionType != 'allow') {
