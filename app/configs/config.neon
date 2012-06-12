@@ -10,6 +10,14 @@ common:
 			expiration: '+1 year'
 
 	parameters:
+		ticketFetcherApi:
+			email: tralandia.test@gmail.com
+			password: tralandia1
+			host: imap.gmail.com
+			port: 993
+			tls: imap/ssl
+			maxEmails: 10
+
 		security:
 			salt: '8723lks762ngknl90835bkd'
 			sender: 'noreply@tralandia.sk'
@@ -54,6 +62,12 @@ common:
 		settings:
 			factory: Extras\PresenterSettings::factory
 
+		ticketFetcherApi:
+			class: Horo\Api( %ticketFetcherApi.host%, %ticketFetcherApi.email%, %ticketFetcherApi.password%, 'INBOX', %ticketFetcherApi.port%, %ticketFetcherApi.tls% )
+			setup:
+				- setMaxEmails(%ticketFetcherApi.maxEmails%)
+
+		ticketFetcher: Extras\TicketFetcher( @ticketFetcherApi )
 
 production < common:
 

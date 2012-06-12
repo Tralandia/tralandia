@@ -96,4 +96,16 @@ abstract class BasePresenter extends \BasePresenter {
 
 	}
 
+	public function actionSuggestion($entity, $property, $search, $translate) {
+
+		$entity = '\Service\Location\Location';
+		$entity::getSuggestions($property, $search, $translate);
+
+		// @todo dorobit replace premennych
+
+		$this->payload->suggestion = '';
+		$this->sendPayload();
+
+	}
+
 }

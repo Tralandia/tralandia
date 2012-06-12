@@ -57,10 +57,13 @@ class DavidPresenter extends BasePresenter {
 		);
 		$this->template->data = $data;
 
-		$t = new \Extras\Cache\RouterCaching($this->context->routerCache);
-		$t->generateSegments();
-		$t->generateDomain();
-		
+		// $t = new \Extras\Cache\RouterCaching($this->context->routerCache);
+		// $t->generateSegments();
+		// $t->generateDomain();
+
+
+		$f = $this->context->ticketFetcher;
+		debug($f->getMessages('unseen', '', true));		
 	}
 
 	public function createComponentTabControl($name) {

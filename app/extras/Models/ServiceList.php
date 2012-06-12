@@ -222,12 +222,11 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 
 		$translator = Service::getTranslator();
 		$return = array();
-
 		foreach($serviceList as $item) {
 			$return[$item['key']] = $translator->translate($item['value']);
 		}
 
-		if($orderByName) sort($return);
+		if($orderByName) asort($return);
 
 		return $return;
 	}

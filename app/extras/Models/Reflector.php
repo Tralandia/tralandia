@@ -146,6 +146,7 @@ class Reflector extends Nette\Object {
 		return $this->formMask;
 	}
 
+
 	public function getInlineOptionHtml($type, $value, $controlType) {
 		if(!$value) return NULL;
 		$a = Html::el('a')
