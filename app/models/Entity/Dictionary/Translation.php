@@ -37,9 +37,14 @@ class Translation extends \Entity\BaseEntity {
 	/**
 	 * @var json
 	 * @ORM\Column(type="json")
-	 * contains keys: translation, plurals, locatives, gender variations. Even contains the $translation original version
 	 */
 	protected $variations;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $gender;
 
 	/**
 	 * @var integer
