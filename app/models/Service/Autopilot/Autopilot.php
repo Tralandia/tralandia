@@ -63,7 +63,7 @@ class Autopilot extends \Nette\Object {
 		if ($user instanceof \Security\User) {
 			$user = \Service\User\User::get($user->getIdentity()->id);
 		} else if (!$user instanceof \Entity\User\User) {
-			throw new \Nette\Exception('Argument $user must be instance of \Entity\User\User');
+			throw new \Exception('Argument $user must be instance of \Entity\User\User');
 		}
 
 		$qb = \Extras\Models\Service::getEm()->createQueryBuilder();
@@ -123,7 +123,7 @@ class Autopilot extends \Nette\Object {
 	public static function createRecurrenceTask($task, $recurrenceDelay = NULL) {
 
 		if (!$task instanceof \Entity\Autopilot\Task) {
-			throw new ServiceException('Argument $task must be instance of \Entity\Autopilot\Task');
+			throw new \Exception('Argument $task must be instance of \Entity\Autopilot\Task');
 		}
 
 		if (!$recurrenceDelay) {
@@ -175,7 +175,7 @@ class Autopilot extends \Nette\Object {
 	public static function setTaskDone($task) {
 
 		if (!$task instanceof \Entity\Autopilot\Task) {
-			throw new ServiceException('Argument $task must be instance of \Entity\Autopilot\Task');
+			throw new \Exception('Argument $task must be instance of \Entity\Autopilot\Task');
 		}
 		\Service\Autopilot\Task::get($task)->executeActions('onDone');
 
@@ -186,6 +186,9 @@ class Autopilot extends \Nette\Object {
 		$taskArchived->type				= $task->type;
 		$taskArchived->subtype			= $task->subtype;
 		$taskArchived->name				= $task->name;
+		$taskArchived->technicalName	= $task->technicalName;
+		$taskArchived->entityName		= $task->entityName;
+		$taskArchived->entityId			= $task->entityId;
 		$taskArchived->mission			= $task->mission;
 		$taskArchived->startTime		= $task->startTime;
 		$taskArchived->due				= $task->due;
@@ -194,16 +197,14 @@ class Autopilot extends \Nette\Object {
 		$taskArchived->user				= $task->user;
 		$taskArchived->userCountry		= $task->userCountry;
 		$taskArchived->userLanguage		= $task->userLanguage;
-		$taskArchived->userLanguageLevel = $task->userLanguageLevel;
+		$taskArchived->userLanguageLevel= $task->userLanguageLevel;
 		$taskArchived->userRole			= $task->userRole;
-
-		foreach ($task->usersExcluded as $user) {
-			$taskArchived->addUsersExcluded($user);
-		}
-
 		$taskArchived->validation		= $task->validation;
 		$taskArchived->actions			= $task->actions;
 		$taskArchived->completed		= new \Nette\DateTime;
+		// add excluded users
+		foreach ($task->usersExcluded as $user) $taskArchived->addUsersExcluded($user);
+
 		$taskArchived->save();
 
 		// delete old task
@@ -223,12 +224,14 @@ class Autopilot extends \Nette\Object {
 		if (!$taskArchived instanceof \Entity\Autopilot\TaskArchived) {
 			throw new ServiceException('Argument $taskArchived must be instance of \Entity\Autopilot\TaskArchived');
 		}
-		$task->executeActions('onNotDone');
 
 		$task = \Service\Autopilot\Task::get();
 		$task->type				= $taskArchived->type;
 		$task->subtype			= $taskArchived->subtype;
 		$task->name				= $taskArchived->name;
+		$task->technicalName	= $taskArchived->technicalName;
+		$task->entityName		= $taskArchived->entityName;
+		$task->entityId			= $taskArchived->entityId;
 		$task->mission			= $taskArchived->mission;
 		$task->startTime		= $taskArchived->startTime;
 		$task->due				= $taskArchived->due;
@@ -239,11 +242,12 @@ class Autopilot extends \Nette\Object {
 		$task->userLanguage		= $taskArchived->userLanguage;
 		$task->userLanguageLevel= $taskArchived->userLanguageLevel;
 		$task->userRole			= $taskArchived->userRole;
-		$task->usersExcluded	= $taskArchived->usersExcluded;
 		$task->validation		= $taskArchived->validation;
 		$task->actions			= $taskArchived->actions;
+		// add excluded users
+		foreach ($task->usersExcluded as $user) $task->addUsersExcluded($user);
 		$task->save();
-
+		
 		// delete old archived task
 		\Service\Autopilot\TaskArchived::get($taskArchived)->delete();
 

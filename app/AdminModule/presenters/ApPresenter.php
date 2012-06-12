@@ -42,13 +42,13 @@ class ApPresenter extends BasePresenter {
 		$this->template->users = $users;
 
 		// Get next task
-		$nextTask = \Service\Autopilot\Autopilot::getNextTask($this->user);
+		// $nextTask = \db2_server_info(connection)ice\Autopilot\Autopilot::getNextTask($this->user);
 
 		// // Set task done
-		// \Service\Autopilot\Autopilot::setTaskDone($nextTask);
+		// \Service\Autopilot\Autopilot::setTaskDone($nextTask->getEntity());
 
-		// Set task not done
-		// \Service\Autopilot\Autopilot::setTaskNotDone(\Service\Autopilot\TaskArchived::get(1)->getEntity());
+		// Set task NotDone
+		\Service\Autopilot\Autopilot::setTaskNotDone(\Service\Autopilot\TaskArchived::get(1)->getEntity());
 		
 	}
 
