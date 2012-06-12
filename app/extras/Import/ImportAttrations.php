@@ -26,8 +26,7 @@ class ImportAttractions extends BaseImport {
 		$en = \Service\Dictionary\Language::getByIso('en');
 
 		$temp = array(
-			'multitranslationRequired' => TRUE,
-			'webalizedRequired' => TRUE,
+			'pluralsRequired' => TRUE,
 		);
 		$typeNameType = $this->createDictionaryType('\Attraction\Type', 'name', 'ACTIVE', $temp);
 
@@ -41,8 +40,8 @@ class ImportAttractions extends BaseImport {
 
 		\Extras\Models\Service::flush(FALSE);
 
-		$attractionNameType = $this->createDictionaryType('\Attraction\Attraction', 'name', 'incomingLanguages', 'ACTIVE');
-		$attractionDescriptionType = $this->createDictionaryType('\Attraction\Attraction', 'descrition', 'incomingLanguages', 'ACTIVE');
+		$attractionNameType = $this->createDictionaryType('\Attraction\Attraction', 'name', 'ACTIVE');
+		$attractionDescriptionType = $this->createDictionaryType('\Attraction\Attraction', 'descrition', 'ACTIVE');
 
 		$this->countryTypeId = qNew('select id from location_type where slug = "country"');
 		$this->countryTypeId = mysql_fetch_array($this->countryTypeId);

@@ -191,6 +191,32 @@ class BackLink extends \Entity\BaseEntity {
 	}
 		
 	/**
+	 * @param string
+	 * @return \Entity\Seo\BackLink
+	 */
+	public function setStatus($status) {
+		$this->status = $status;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Seo\BackLink
+	 */
+	public function unsetStatus() {
+		$this->status = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getStatus() {
+		return $this->status;
+	}
+		
+	/**
 	 * @param \Extras\Types\Url
 	 * @return \Entity\Seo\BackLink
 	 */

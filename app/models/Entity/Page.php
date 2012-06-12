@@ -48,4 +48,120 @@ class Page extends \Entity\BaseEntity {
 
 //@entity-generator-code <--- NEMAZAT !!!
 
+	/* ----------------------------- Methods ----------------------------- */		
+	public function __construct() {
+		parent::__construct();
+	}
+		
+	/**
+	 * @param \Entity\Dictionary\Phrase
+	 * @return \Entity\Page
+	 */
+	public function setName(\Entity\Dictionary\Phrase $name) {
+		$this->name = $name;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Dictionary\Phrase|NULL
+	 */
+	public function getName() {
+		return $this->name;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Page
+	 */
+	public function setType($type) {
+		$this->type = $type;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Page
+	 */
+	public function unsetType() {
+		$this->type = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getType() {
+		return $this->type;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Page
+	 */
+	public function setDestination($destination) {
+		$this->destination = $destination;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Page
+	 */
+	public function unsetDestination() {
+		$this->destination = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getDestination() {
+		return $this->destination;
+	}
+		
+	/**
+	 * @param json
+	 * @return \Entity\Page
+	 */
+	public function setParameters($parameters) {
+		$this->parameters = $parameters;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Page
+	 */
+	public function unsetParameters() {
+		$this->parameters = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return json|NULL
+	 */
+	public function getParameters() {
+		return $this->parameters;
+	}
+		
+	/**
+	 * @param \Entity\Dictionary\Phrase
+	 * @return \Entity\Page
+	 */
+	public function setGenericContent(\Entity\Dictionary\Phrase $genericContent) {
+		$this->genericContent = $genericContent;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Dictionary\Phrase|NULL
+	 */
+	public function getGenericContent() {
+		return $this->genericContent;
+	}
 }

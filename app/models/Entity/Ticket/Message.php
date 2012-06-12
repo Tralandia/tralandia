@@ -62,7 +62,7 @@ class Message extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Entity\Medium\Medium", mappedBy="message")
+	 * @ORM\OneToMany(targetEntity="Entity\Medium\Medium", mappedBy="message", cascade={"persist", "remove"})
 	 */
 	protected $attachments;
 

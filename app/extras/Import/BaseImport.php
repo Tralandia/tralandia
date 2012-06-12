@@ -263,18 +263,23 @@ class BaseImport {
 						debug($newEntityId); return;	
 					}
 				}
+			} else {
+				$phrase = $this->createNewPhrase($dictionaryType);
 			}
 		}
 	}
 
-	protected function createNewPhrase(\Service\Dictionary\Type $type, $oldPhraseId, $oldLocativePhraseId = NULL, $locativeKeys = NULL) {
-		$oldPhraseData = qf('select * from dictionary where id = '.$oldPhraseId);
-		if (!$oldPhraseData) {
-			debug('Nenasiel som staru Phrase podla starej ID '.$oldPhraseId);
-			$oldPhraseData = array(
-				'ready' => 1,
-			);
-			//throw new \Nette\UnexpectedValueException('Nenasiel som staru Phrase podla starej ID '.$oldPhraseId);
+	protected function createNewPhrase(\Service\Dictionary\Type $type, $oldPhraseId = NULL, $oldLocativePhraseId = NULL, $locativeKeys = NULL) {
+
+		if ($oldPhraseId) {
+			$oldPhraseData = qf('select * from dictionary where id = '.$oldPhraseId);
+			if (!$oldPhraseData) {
+				debug('Nenasiel som staru Phrase podla starej ID '.$oldPhraseId);
+				$oldPhraseData = array(
+					'ready' => 1,
+				);
+				//throw new \Nette\UnexpectedValueException('Nenasiel som staru Phrase podla starej ID '.$oldPhraseId);
+			}			
 		}
 		$phrase = \Service\Dictionary\Phrase::get();
 		$phrase->ready = (bool)$oldPhraseData['ready'];

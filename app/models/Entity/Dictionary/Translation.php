@@ -166,6 +166,23 @@ class Translation extends \Entity\BaseEntity {
 	}
 		
 	/**
+	 * @param integer
+	 * @return \Entity\Dictionary\Translation
+	 */
+	public function setPosition($position) {
+		$this->position = $position;
+
+		return $this;
+	}
+		
+	/**
+	 * @return integer|NULL
+	 */
+	public function getPosition() {
+		return $this->position;
+	}
+		
+	/**
 	 * @param \DateTime
 	 * @return \Entity\Dictionary\Translation
 	 */

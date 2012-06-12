@@ -164,23 +164,6 @@ class Type extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Dictionary\Type
 	 */
-	public function setRequiredLanguages($requiredLanguages) {
-		$this->requiredLanguages = $requiredLanguages;
-
-		return $this;
-	}
-		
-	/**
-	 * @return string|NULL
-	 */
-	public function getRequiredLanguages() {
-		return $this->requiredLanguages;
-	}
-		
-	/**
-	 * @param string
-	 * @return \Entity\Dictionary\Type
-	 */
 	public function setEntityAttribute($entityAttribute) {
 		$this->entityAttribute = $entityAttribute;
 
@@ -224,8 +207,8 @@ class Type extends \Entity\BaseEntity {
 	 * @param boolean
 	 * @return \Entity\Dictionary\Type
 	 */
-	public function setMultitranslationRequired($multitranslationRequired) {
-		$this->multitranslationRequired = $multitranslationRequired;
+	public function setPluralsRequired($pluralsRequired) {
+		$this->pluralsRequired = $pluralsRequired;
 
 		return $this;
 	}
@@ -233,16 +216,16 @@ class Type extends \Entity\BaseEntity {
 	/**
 	 * @return boolean|NULL
 	 */
-	public function getMultitranslationRequired() {
-		return $this->multitranslationRequired;
+	public function getPluralsRequired() {
+		return $this->pluralsRequired;
 	}
 		
 	/**
 	 * @param boolean
 	 * @return \Entity\Dictionary\Type
 	 */
-	public function setGenderNumberRequired($genderNumberRequired) {
-		$this->genderNumberRequired = $genderNumberRequired;
+	public function setGenderRequired($genderRequired) {
+		$this->genderRequired = $genderRequired;
 
 		return $this;
 	}
@@ -250,16 +233,16 @@ class Type extends \Entity\BaseEntity {
 	/**
 	 * @return boolean|NULL
 	 */
-	public function getGenderNumberRequired() {
-		return $this->genderNumberRequired;
+	public function getGenderRequired() {
+		return $this->genderRequired;
 	}
 		
 	/**
 	 * @param boolean
 	 * @return \Entity\Dictionary\Type
 	 */
-	public function setLocativeRequired($locativeRequired) {
-		$this->locativeRequired = $locativeRequired;
+	public function setGenderVariationsRequired($genderVariationsRequired) {
+		$this->genderVariationsRequired = $genderVariationsRequired;
 
 		return $this;
 	}
@@ -267,8 +250,25 @@ class Type extends \Entity\BaseEntity {
 	/**
 	 * @return boolean|NULL
 	 */
-	public function getLocativeRequired() {
-		return $this->locativeRequired;
+	public function getGenderVariationsRequired() {
+		return $this->genderVariationsRequired;
+	}
+		
+	/**
+	 * @param boolean
+	 * @return \Entity\Dictionary\Type
+	 */
+	public function setLocativesRequired($locativesRequired) {
+		$this->locativesRequired = $locativesRequired;
+
+		return $this;
+	}
+		
+	/**
+	 * @return boolean|NULL
+	 */
+	public function getLocativesRequired() {
+		return $this->locativesRequired;
 	}
 		
 	/**
@@ -286,23 +286,6 @@ class Type extends \Entity\BaseEntity {
 	 */
 	public function getPositionRequired() {
 		return $this->positionRequired;
-	}
-		
-	/**
-	 * @param boolean
-	 * @return \Entity\Dictionary\Type
-	 */
-	public function setWebalizedRequired($webalizedRequired) {
-		$this->webalizedRequired = $webalizedRequired;
-
-		return $this;
-	}
-		
-	/**
-	 * @return boolean|NULL
-	 */
-	public function getWebalizedRequired() {
-		return $this->webalizedRequired;
 	}
 		
 	/**
@@ -355,5 +338,22 @@ class Type extends \Entity\BaseEntity {
 	 */
 	public function getCheckingRequired() {
 		return $this->checkingRequired;
+	}
+		
+	/**
+	 * @param integer
+	 * @return \Entity\Dictionary\Type
+	 */
+	public function setMonthlyBudget($monthlyBudget) {
+		$this->monthlyBudget = $monthlyBudget;
+
+		return $this;
+	}
+		
+	/**
+	 * @return integer|NULL
+	 */
+	public function getMonthlyBudget() {
+		return $this->monthlyBudget;
 	}
 }
