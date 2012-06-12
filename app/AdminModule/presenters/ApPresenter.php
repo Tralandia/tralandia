@@ -9,7 +9,12 @@ class ApPresenter extends BasePresenter {
 	public $task;
 
 	public function actionTask($id){
-		$this->task = \Service\Autopilot\Task::get($id);
+		// $this->task = \Service\Autopilot\Task::get($id);
+		$this->task = \Service\Autopilot\Autopilot::getNextTask($this->user);
+
+		// Stack
+		$taskEntity = $this->task->getEntity();
+		$stack = \Service\Autopilot\Autopilot::getStackableTasks($taskEntity, $this->user);
 
 		if(!$this->task) {
 			$typeName = '\Location\Location - Level2HasNoParent';
@@ -41,14 +46,12 @@ class ApPresenter extends BasePresenter {
 
 		$this->template->users = $users;
 
-		// Get next task
-		// $nextTask = \db2_server_info(connection)ice\Autopilot\Autopilot::getNextTask($this->user);
 
-		// // Set task done
+		// Set task done
 		// \Service\Autopilot\Autopilot::setTaskDone($nextTask->getEntity());
 
 		// Set task NotDone
-		\Service\Autopilot\Autopilot::setTaskNotDone(\Service\Autopilot\TaskArchived::get(1)->getEntity());
+		// \Service\Autopilot\Autopilot::setTaskNotDone(\Service\Autopilot\TaskArchived::get($id)->getEntity());
 		
 	}
 

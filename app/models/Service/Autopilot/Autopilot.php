@@ -55,7 +55,7 @@ class Autopilot extends \Nette\Object {
 
 	/**
 	 * Get the next relevant task for user
-	 * @param  \Entity\User\User 		$user
+	 * @param  \Entity\User\User|\Security\User $user
 	 * @return \Service\Autopilot\Task
 	 */
 	public static function getNextTask($user = null) {
@@ -116,6 +116,55 @@ class Autopilot extends \Nette\Object {
 	}
 
 	/**
+	 * Get all stackable tasks to given $task
+	 * @param  	\Entity\Autopilot\Task 				&$task
+	 * @param  	\Entity\User\User|\Security\User 	$user
+	 * @return 	array|NULL							tasks id's
+	 */
+	public static function getStackableTasks(&$task, $user) {
+
+		if (!$task instanceof \Entity\Autopilot\Task) {
+			throw new \Exception('Argument $task must be instance of \Entity\Autopilot\Task');
+		}
+		if ($user instanceof \Security\User) {
+			$user = \Service\User\User::get($user->getIdentity()->id);
+		}
+
+		if (!$task->type->stackable) { // If the task type is't stackable, return null
+			return NULL;
+		}
+
+		$qb = \Extras\Models\Service::getEm()->createQueryBuilder();
+		$qb->select('t.id')
+			->from('\Entity\Autopilot\Task', 't')
+			->leftJoin('t.usersExcluded', 'excluded', \Doctrine\ORM\Query\Expr\Join::WITH, 'excluded.id != :userId')
+			->where('t.type = :taskType')
+			->andWhere('t.subtype = :taskSubtype')
+			->andWhere('t.id != :stackerId')
+			->setParameter('stackerId', $task->id)
+			->setParameter('userId', $user->id)
+			->setParameter('taskType', $task->type->id)
+			->setParameter('taskSubtype', $task->subtype)
+			->setMaxResults($task->type->stackable)
+			->orderBy('t.due', 'ASC');
+
+		$stack = $qb->getQuery()->getResult();
+
+		if ($task->links) {
+			foreach ($task->links as $linkName => $link) {
+				$ids = array();
+				foreach ($stack as $t) $ids[] = $t->id;
+
+				$task->links[$linkName]['arguments']['stack'] = $ids;
+				break;
+			}
+		}
+
+		return $stack;
+
+	}
+
+	/**
 	 * @param  \Entity\Autopilot\Task 	$task
 	 * @param  string 					$recurrenceDelay
 	 * @return \Entity\Autopilot\Task
@@ -139,28 +188,28 @@ class Autopilot extends \Nette\Object {
 			$task->startTime->modify($recurrenceDelay)
 		);
 
-		$newTask->type = $task->type;
-		$newTask->subtype = $task->subtype;
-		$newTask->name = $task->name;
-		$newTask->mission = $task->mission;
-		$newTask->due = $task->due;
-		$newTask->durationPaid = $task->durationPaid;
-		$newTask->links = $task->links;
-		$newTask->reservedFor = $task->reservedFor;
-		$newTask->user = $task->user;
-		$newTask->userCountry = $task->userCountry;
-		$newTask->userLanguage = $task->userLanguage;
+		$newTask->type 				= $task->type;
+		$newTask->subtype 			= $task->subtype;
+		$newTask->name 				= $task->name;
+		$newTask->technicalName		= $task->technicalName;
+		$newTask->entityName		= $task->entityName;
+		$newTask->entityId			= $task->entityId;
+		$newTask->mission 			= $task->mission;
+		$newTask->due 				= $task->due;
+		$newTask->durationPaid 		= $task->durationPaid;
+		$newTask->links 			= $task->links;
+		$newTask->reservedFor 		= $task->reservedFor;
+		$newTask->user 				= $task->user;
+		$newTask->userCountry 		= $task->userCountry;
+		$newTask->userLanguage 		= $task->userLanguage;
 		$newTask->userLanguageLevel = $task->userLanguageLevel;
-		$newTask->userRole = $task->userRole;
+		$newTask->userRole 			= $task->userRole;
+		$newTask->validation 		= $task->validation;
+		$newTask->actions 			= $task->actions;
+		$newTask->recurrenceData 	= $task->recurrenceData;
+		// add excluded users
+		foreach ($task->usersExcluded as $key => $user) $newTask->addUsersExcluded($user);
 
-		foreach ($task->usersExcluded as $key => $user) {
-			$newTask->addUsersExcluded($user);
-		}
-
-		$newTask->validation = $task->validation;
-		$newTask->actions = $task->actions;
-		$newTask->recurrenceData = $task->recurrenceData;
-		
 		$newTask->save();
 
 		return $newTask;
