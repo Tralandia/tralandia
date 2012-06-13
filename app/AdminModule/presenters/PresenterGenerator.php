@@ -10,6 +10,7 @@ class PresenterGenerator extends \Nette\Object {
 	public static $dirName = '/presenters';
 
 	public static function generate() {
+		# @todo volanie konstanty TEMP_DIR porusuje DI !
 		$dirName = TEMP_DIR . self::$dirName;
 		//var_dump($dirName);
 		if(is_dir($dirName)){

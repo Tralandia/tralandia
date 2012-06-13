@@ -28,6 +28,7 @@ Extras\Forms\Controls\AdvancedNeon::register();
 Extras\Forms\Controls\AdvancedPhrase::register();
 Extras\Forms\Controls\AdvancedPrice::register();
 Extras\Forms\Controls\AdvancedSelect::register();
+Extras\Forms\Controls\AdvancedSuggestion::register();
 Extras\Forms\Controls\AdvancedTable::register();
 Extras\Forms\Controls\AdvancedText::register();
 Extras\Forms\Controls\AdvancedUpload::register();

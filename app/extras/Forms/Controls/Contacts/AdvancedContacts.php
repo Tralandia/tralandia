@@ -61,6 +61,7 @@ class AdvancedContacts extends TextBase {
 		$template = new FileTemplate($this->template);
 		$template->registerFilter(new Engine);
 
+		// @todo toto treba dorobit $template->phonePrefixes = $this->getOption('phonePrefixes');
 		$template->addressLocations = $this->getOption('addressLocations');
 		$template->control = $original;
 
