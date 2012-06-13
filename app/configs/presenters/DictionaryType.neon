@@ -1,7 +1,7 @@
 common:
 	service: Service\Dictionary\Type
-	title: Dictionary / Type
-	h1: Dictionary / Type
+	title: Phrase Type
+	h1: 'Phrase Type -> %entityName% (%entityAttribute%)'
 	grid:
 		columns:
 			id:
@@ -13,33 +13,29 @@ common:
 			entityAttribute:
 				label: Attribute
 				mapper: e.entityAttribute
-			requiredLanguages:
-				label: Languages
-				mapper: e.requiredLanguages
 			translationLevelRequirement:
 				label: Level
 				mapper: e.translationLevelRequirement
 				cellStyle: text-align:right;
 				headerStyle: text-align:right;
-			multitranslationRequired:
-				label: Multitranslations
-				mapper: e.multitranslationRequired
-			genderNumberRequired:
-				label: Gender / Number
-				mapper: e.genderNumberRequired
-			locativeRequired:
+			pluralsRequired:
+				label: Plurals
+				mapper: e.pluralsRequired
+			genderVariationsRequired:
+				label: Gender Variations
+				mapper: e.genderVariationsRequired
+			locativesRequired:
 				label: Locative
-				mapper: e.locativeRequired
+				mapper: e.locativesRequired
+			genderRequired:
+				label: Gender
+				mapper: e.genderRequired
 			positionRequired:
 				label: Position
 				mapper: e.positionRequired
-			webalizedRequired:
-				label: Webalized
-				mapper: e.webalizedRequired
 			checkingRequired:
 				label: Checking
 				mapper: e.checkingRequired
-			
 	form:
 		fields:
 			name:
@@ -58,53 +54,49 @@ common:
 				label: Entity Attribute
 				control:
 					type: text
-			requiredLanguages:
-				# anotations: "var:string,ORMColumn:type:string"
-				label: Required Languages
-				control:
-					type: text
 			translationLevelRequirement:
 				# anotations: "var:integer,ORMColumn:type:integer"
 				label: Translation Level Requirement
 				control:
-					type: text
+					type: select
+					options: [class: \Entity\Dictionary\Type, pattern: TRANSLATION_LEVEL_.+]
 			helpForTranslator:
 				# anotations: "var:string,ORMColumn:type:string,nullable:true"
 				label: HelpForTranslator
 				control:
 					type: text
 				class: span6
-			multitranslationRequired:
+			pluralsRequired:
 				# anotations: "var:boolean,ORMColumn:type:boolean"
 				startNewRow: true
-				label: Multitranslation
+				label: Plurals
 				control: 
 					type: checkbox
 					label: Translations for plurals required
-			genderNumberRequired:
+			genderVariationsRequired:
 				# anotations: "var:boolean,ORMColumn:type:boolean"
-				label: Gender / Number
+				label: Gender Variations
 				control: 
 					type: checkbox
-					label: Gender and number options needed
-			locativeRequired:
+					label: Gender variations needed
+			genderRequired:
 				# anotations: "var:boolean,ORMColumn:type:boolean"
-				label: Locative
+				label: Gender
 				control: 
 					type: checkbox
-					label: Needed in locative
+					label: Gender of the word needed
+			locativesRequired:
+				# anotations: "var:boolean,ORMColumn:type:boolean"
+				label: Locatives
+				control: 
+					type: checkbox
+					label: Locative variations needed
 			positionRequired:
 				# anotations: "var:boolean,ORMColumn:type:boolean"
 				label: Position
 				control: 
 					type: checkbox
 					label: Position required
-			webalizedRequired:
-				# anotations: "var:boolean,ORMColumn:type:boolean"
-				label: Webalized 
-				control: 
-					type: checkbox
-					label: Webalized version needed
 			checkingRequired:
 				# anotations: "var:boolean,ORMColumn:type:boolean,nullable:true"
 				label: Checking

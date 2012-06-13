@@ -30,6 +30,7 @@ Extras\Forms\Controls\AdvancedPrice::register();
 Extras\Forms\Controls\AdvancedSelect::register();
 Extras\Forms\Controls\AdvancedTable::register();
 Extras\Forms\Controls\AdvancedText::register();
+Extras\Forms\Controls\AdvancedTextarea::register();
 Extras\Forms\Controls\AdvancedTinymce::register();
 Extras\Forms\Controls\AdvancedUpload::register();
 

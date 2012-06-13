@@ -19,7 +19,6 @@ common:
 				label: Name
 				mapper: e.id
 				callback: {class: %this%, method: getAttributeForGrid, params: [name]}
-			
 	form:
 		fields:
 			type:

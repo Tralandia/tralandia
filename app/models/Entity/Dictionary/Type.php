@@ -39,8 +39,8 @@ class Type extends \Entity\BaseEntity {
 	protected $entityAttribute;
 
 	/**
-	 * @var integer
-	 * @ORM\Column(type="integer")
+	 * @var string
+	 * @ORM\Column(type="string")
 	 */
 	protected $translationLevelRequirement = FALSE;
 
@@ -77,16 +77,17 @@ class Type extends \Entity\BaseEntity {
 	protected $positionRequired = FALSE;
 
 	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean", nullable=true)
+	 */
+	protected $checkingRequired;
+
+	/**
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $helpForTranslator;
 
-	/**
-	 * @var boolean
-	 * @ORM\Column(type="boolean", nullable=true)
-	 */
-	protected $checkingRequired;
 
 	/**
 	 * @var integer
@@ -187,7 +188,7 @@ class Type extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param integer
+	 * @param string
 	 * @return \Entity\Dictionary\Type
 	 */
 	public function setTranslationLevelRequirement($translationLevelRequirement) {
@@ -197,7 +198,7 @@ class Type extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return integer|NULL
+	 * @return string|NULL
 	 */
 	public function getTranslationLevelRequirement() {
 		return $this->translationLevelRequirement;
@@ -289,32 +290,6 @@ class Type extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param string
-	 * @return \Entity\Dictionary\Type
-	 */
-	public function setHelpForTranslator($helpForTranslator) {
-		$this->helpForTranslator = $helpForTranslator;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Dictionary\Type
-	 */
-	public function unsetHelpForTranslator() {
-		$this->helpForTranslator = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return string|NULL
-	 */
-	public function getHelpForTranslator() {
-		return $this->helpForTranslator;
-	}
-		
-	/**
 	 * @param boolean
 	 * @return \Entity\Dictionary\Type
 	 */
@@ -338,6 +313,32 @@ class Type extends \Entity\BaseEntity {
 	 */
 	public function getCheckingRequired() {
 		return $this->checkingRequired;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Dictionary\Type
+	 */
+	public function setHelpForTranslator($helpForTranslator) {
+		$this->helpForTranslator = $helpForTranslator;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Dictionary\Type
+	 */
+	public function unsetHelpForTranslator() {
+		$this->helpForTranslator = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getHelpForTranslator() {
+		return $this->helpForTranslator;
 	}
 		
 	/**

@@ -12,63 +12,51 @@ common:
 				mapper: e.confirmed
 			template:
 				label: Template
-				mapper: e.template
-			totalCount:
-				label: TotalCount
-				mapper: e.totalCount
-				cellStyle: text-align:right;
-				headerStyle: text-align:right;
+				mapper: e.id
+				callback: {class: %this%, method: getAttributeForGrid, params: [template, name]}
 			subject:
 				label: Subject
-				mapper: e.subject
-			body:
-				label: Body
-				mapper: e.body
-			bodyHtml:
-				label: BodyHtml
-				mapper: e.bodyHtml
-			details:
-				label: Details
-				mapper: e.details
-			oldId:
-				label: OldId
-				mapper: e.oldId
+				mapper: e.id
+				callback: {class: %this%, method: getAttributeForGrid, params: [subject]}
+			totalCount:
+				label: Count
+				mapper: e.totalCount
 				cellStyle: text-align:right;
 				headerStyle: text-align:right;
 			created:
 				label: Created
 				mapper: e.created
-			updated:
-				label: Updated
-				mapper: e.updated
-			
 	form:
 		fields:
 			confirmed:
 				label: Confirmed
-				control: checkbox
-			# template:
-			# 	# anotations: "var:Collection,ORMManyToOne:targetEntity:Template,inversedBy:batches"
-			# 	label: Template
-			# 	control: select
+				control: 
+					type: checkbox
+					label: Is Confirmed
+			template:
+				label: Type
+				control: 
+					type: select
+					callback: {class: \Service\Emailing\TemplateList, method: getPairs, params: [id, name, NULL, [name: ASC]]}
+					prompt: " - Select -"
 			totalCount:
 				label: TotalCount
-				control: text
+				control: 
+					type: text
 			subject:
 				label: Subject
-				control: text
+				control: 
+					type: text
 			body:
+				startNewRow: true
 				label: Body
-				control: text
+				class: span6
+				control: 
+					type: textarea
+					class: span6
 			bodyHtml:
 				label: BodyHtml
-				control: text
-			details:
-				label: Details
-				control: json
-			created:
-				label: Created
-				control: datePicker
-			updated:
-				label: Updated
-				control: datePicker
+				class: span6
+				control: 
+					type: textarea
+					class: span6

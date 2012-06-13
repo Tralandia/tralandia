@@ -1,0 +1,26 @@
+common:
+	service: Service\Emailing\TemplateType
+	title: 'Email Template Types'
+	h1: 'Email Template Type -> %name%'
+	grid:
+		columns:
+			id:
+				label: ID
+				mapper: e.id
+			name:
+				label: Name
+				mapper: e.id
+				callback: {class: %this%, method: getAttributeForGrid, params: [name]}
+	form:
+		fields:
+			name:
+				label: Name
+				control: 
+					type: text
+			availableVariables:
+				startNewRow: true
+				label: Available Variables
+				class: span12
+				control:
+					type: neon
+					class: neon

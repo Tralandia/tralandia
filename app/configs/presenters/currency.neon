@@ -1,6 +1,7 @@
 common:
 	service: Service\Currency
-	title: Currency
+	title: Currencies
+	h1: 'Currency -> %name%'
 	grid:
 		columns:
 			id:
@@ -14,7 +15,7 @@ common:
 				label: Iso
 				mapper: e.iso
 			exchangeRate:
-				label: ExchangeRate
+				label: Exchange Rate / EUR
 				mapper: e.exchangeRate
 				cellStyle: text-align:right;
 				headerStyle: text-align:right;
@@ -44,9 +45,10 @@ common:
 				control:
 					type: text
 			exchangeRate:
-				label: ExchangeRate
+				label: Exchange Rate / EUR
 				control:
 					type: text
+				description: "How much of this currency would you get for one Euro?"
 			rounding:
 				label: Rounding
 				control:

@@ -6,11 +6,11 @@ namespace Extras\Forms\Controls;
 use Nette\Utils\Html,
 	Tra\Utils\Arrays,
 	Nette\Forms\Container,
-	Nette\Forms\Controls\TextBase,
+	Nette\Forms\Controls\TextArea,
 	Extras\Types\Address;
 
 
-class AdvancedTinymce extends TextBase {
+class AdvancedTinymce extends TextArea {
 
 	public function __construct($label = NULL, $cols = NULL, $rows = NULL) {
 		parent::__construct($label);

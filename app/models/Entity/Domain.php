@@ -22,6 +22,18 @@ class Domain extends \Entity\BaseEntity {
 	protected $domain;
 
 	/**
+	 * @var datetime
+	 * @ORM\Column(type="datetime")
+	 */
+	protected $expires;
+
+	/**
+	 * @var text
+	 * @ORM\Column(type="text")
+	 */
+	protected $registratorDetails;
+
+	/**
 	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="Entity\Location\Location", mappedBy="domain")
 	 */
@@ -52,6 +64,40 @@ class Domain extends \Entity\BaseEntity {
 	 */
 	public function getDomain() {
 		return $this->domain;
+	}
+		
+	/**
+	 * @param \DateTime
+	 * @return \Entity\Domain
+	 */
+	public function setExpires(\DateTime $expires) {
+		$this->expires = $expires;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \DateTime|NULL
+	 */
+	public function getExpires() {
+		return $this->expires;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Domain
+	 */
+	public function setRegistratorDetails($registratorDetails) {
+		$this->registratorDetails = $registratorDetails;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getRegistratorDetails() {
+		return $this->registratorDetails;
 	}
 		
 	/**

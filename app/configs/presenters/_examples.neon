@@ -1,15 +1,28 @@
+	grid:
+		columns:
+			id:
+				label: ID
+				mapper: e.id
+			country:
+				label: Country
+				mapper: e.id
+				callback: {class: %this%, method: getAttributeForGrid, params: [country, name]}
+			type:
+				label: Type
+				mapper: e.id
+				callback: {class: %this%, method: getAttributeForGrid, params: [type, name]}
+			name:
+				label: Name
+				mapper: e.id
+				callback: {class: %this%, method: getAttributeForGrid, params: [name]}
+
+
+
+
+
 				validation:
 					- [addRule, PATTERN, 'Must be exactly 2 characters long.', '[a-z]{2}']
 					#- [addRule, [\Service\Dictionary\Language, validateUniqueIso], 'ISO code must be unique.']
-
-
-
-			languages:
-				label: Languages
-				mapper: e.id
-				callback: {method: translateToMany, params: [languages, [name, id], ', ']}
-
-
 
 
 			country:
@@ -42,3 +55,12 @@
 					options: [class: \Entity\Dictionary\Type, pattern: TRANSLATION_LEVEL_.+]
 
 				description: "In minutes."
+
+			variationDetails:
+				startNewRow: true
+				label: Variation Definition Details
+				class: span12
+				description: 'Will be used later on to define automatic generating of some variations. For example, locative in EN is always "in ".$singularNominative. This will be defined in JS.'
+				control:
+					type: neon
+					class: neon
