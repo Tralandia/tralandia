@@ -342,7 +342,11 @@ class AdminPresenter extends BasePresenter {
 			}
 		} else {
 			if ($targetPropertyName) {
-				$return[] = $entity->{$propertyName}->{$targetPropertyName};
+				if ($entity->{$propertyName}) {
+					$return[] = $entity->{$propertyName}->{$targetPropertyName};
+				} else {
+					$return[] = NULL;
+				}
 			} else {
 				$return[] = $entity->{$propertyName};
 			}

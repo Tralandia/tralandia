@@ -1,7 +1,7 @@
 common:
 	service: Service\Attraction\Attraction
 	title: Attraction / Attraction
-	h1: Attraction / Attraction
+	h1: 'Attraction / Attraction -> %name%'
 	grid:
 		columns:
 			id:
@@ -19,7 +19,6 @@ common:
 				label: Name
 				mapper: e.id
 				callback: {class: %this%, method: getAttributeForGrid, params: [name]}
-			
 	form:
 		fields:
 			type:
@@ -27,6 +26,7 @@ common:
 				control: 
 					type: select
 					callback: {class: \Service\Attraction\TypeList, method: getTranslatedPairs, params: [id, name, NULL, [name: ASC]]}
+					prompt: " - Select -"
 			name:
 				label: Name
 				control: 
@@ -40,28 +40,26 @@ common:
 				class: span6
 			country:
 				label: Country
-				control:
-					type: suggestion
-					suggestion: {serivceList: \Service\Location\LocationList, property: name}
+				control:  
+					type: select
+					callback: {class: \Service\Location\LocationList, method: getTranslatedPairs, params: [id, name, [type: 3], [name: ASC]]}
+					prompt: " - Select -"
 				startNewRow: true
+			contacts:
+				# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityCurrency,mappedBy:locations,cascade:"
+				label: Contacts
+				class: span9
+				control: 
+					type: contacts
+					addressLocations: {class: \Service\Location\LocationList, method: getTranslatedPairs, params: [id, name, [type: 3], [name: ASC]]}
 			latitude:
 				label: Position
+				class: span12
 				control: 
 					type: gmap
 					latitude: latitude
 					longitude: longitude
-			contacts:
-				# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityCurrency,mappedBy:locations,cascade:"
-				label: Contacts
-				class: span6
-				control: 
-					type: contacts
-					addressLocations: {class: \Service\Location\LocationList, method: getTranslatedPairs, params: [id, name, [type: 3], [name: ASC]]}
-				startNewRow: false
-			created: 
-				label: Created
-				control: 
-					type: datePicker
+				startNewRow: true
 			# media:
 			# 	label: Media
 			# 	control: multiSelect

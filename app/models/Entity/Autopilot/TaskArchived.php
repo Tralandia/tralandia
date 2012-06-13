@@ -33,12 +33,6 @@ class TaskArchived extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var string
-	 * @ORM\Column(type="string")
-	 */
-	protected $technicalName;
-
-	/**
-	 * @var string
 	 * @ORM\Column(type="string", nullable=true)§
 	 * example: \Rental\Rental
 	 */
@@ -221,23 +215,6 @@ class TaskArchived extends \Entity\BaseEntityDetails {
 	 */
 	public function getName() {
 		return $this->name;
-	}
-		
-	/**
-	 * @param string
-	 * @return \Entity\Autopilot\TaskArchived
-	 */
-	public function setTechnicalName($technicalName) {
-		$this->technicalName = $technicalName;
-
-		return $this;
-	}
-		
-	/**
-	 * @return string|NULL
-	 */
-	public function getTechnicalName() {
-		return $this->technicalName;
 	}
 		
 	/**

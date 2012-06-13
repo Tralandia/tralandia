@@ -11,6 +11,7 @@ common:
 			supported:
 				label: Supported
 				mapper: e.supported
+				cellStyle: 'text-align: left;'
 			iso:
 				label: Iso
 				mapper: e.iso
@@ -19,7 +20,15 @@ common:
 				label: Name
 				mapper: e.id
 				callback: {class: %this%, method: getAttributeForGrid, params: [name]}
-			
+			primarySingular:
+				label: Primary Singular
+				mapper: e.primarySingular
+			primaryPlural:
+				label: Primary Plural
+				mapper: e.primaryPlural
+			primaryGender:
+				label: Primary Gender
+				mapper: e.primaryGender		
 	form:
 		fields:
 			name:
@@ -33,7 +42,7 @@ common:
 				validation:
 					- [addRule, PATTERN, 'Must be exactly 2 characters long.', '[a-z]{2}']
 					#- [addRule, [\Service\Dictionary\Language, validateUniqueIso], 'ISO code must be unique.']
-				control: 
+				control:
 					type: text
 			defaultCollation:
 				label: Default Collation
@@ -44,15 +53,42 @@ common:
 				control: 
 					type: checkbox
 					label: Supported / Translated
-			multitranslationOptions:
-				class: span8 json-list
-				label: Multitranslation Options
+			genders:
+				startNewRow: true
+				label: Genders
+				class: span12
 				control:
-					type: table
-					class: span8
-					columns: [Technical Name, Translator Hint, Criteria PHP, Primary Plural]
-					rows: "+5"
+					type: neon
+					class: neon
+			plurals:
+				startNewRow: true
+				label: Plurals
+				class: span12
+				control:
+					type: neon
+					class: neon
+			variationDetails:
+				startNewRow: true
+				label: Variation Definition Details
+				class: span12
+				description: 'Will be used later on to define automatic generating of some variations. For example, locative in EN is always "in ".$singularNominative. This will be defined in JS.'
+				control:
+					type: neon
+					class: neon
+			primarySingular:
+				label: Primary Singular
+				control:
+					type: text
+			primaryPlural:
+				label: Primary Plural
+				control:
+					type: text
+			primaryGender:
+				label: Primary Gender
+				control:
+					type: text
 			ppcPatterns:
+				startNewRow: true
 				class: span4 json-list
 				label: Ppc Patterns
 				control:
@@ -60,10 +96,9 @@ common:
 					class: span4
 					columns: [Pattern]
 					rows: "+5"
-			genderNumberOptions:
-				startNewRow: true
-				class: span2 json-list
-				label: Gender / Number
-				control:
-					type: json
-					class: span2
+
+
+
+
+
+

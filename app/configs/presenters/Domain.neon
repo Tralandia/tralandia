@@ -12,14 +12,22 @@ common:
 			domain:
 				label: Domain
 				mapper: e.domain
-			
+			expires:
+				label: Expiring Date
+				mapper: e.expires
 	form:
 		fields:
 			domain:
 				label: Domain
-				control: text
-			# locations:
-			# 	label: Locations
-			# 	control: bricksList
-			# 	inlineEditing: LocationLocation:edit
-			# 	inlineCreating: LocationLocation:add
+				control: 
+					type: text
+			expires:
+				label: Expiring Date
+				control: 
+					type: datepicker
+			registratorDetails:
+				label: Registrator details
+				class: span6
+				control: 
+					type: text
+					class: span6

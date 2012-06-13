@@ -1,67 +1,56 @@
 common:
 	service: Service\Emailing\Template
-	title: Emailing / Template
-	h1: Emailing / Template
+	title: 'Email Templates'
+	h1: 'Email Template -> %name%'
 	grid:
 		columns:
 			id:
 				label: ID
 				mapper: e.id
+			type:
+				label: Type
+				mapper: e.id
+				callback: {class: %this%, method: getAttributeForGrid, params: [type, name]}
+			language:
+				label: Language
+				mapper: e.id
+				callback: {class: %this%, method: getAttributeForGrid, params: [language, name]}
 			name:
 				label: Name
 				mapper: e.id
-				callback: {Entity\Log\Systemmethod: translateColumn, params: name}
+				callback: {class: %this%, method: getAttributeForGrid, params: [name]}
 			subject:
 				label: Subject
-				mapper: e.subject
-			body:
-				label: Body
-				mapper: e.body
-			language:
-				label: Language
-				mapper: e.language
-			batches:
-				label: Batches
-				mapper: e.batches
-			oldId:
-				label: OldId
-				mapper: e.oldId
-				cellStyle: text-align:right;
-				headerStyle: text-align:right;
-			created:
-				label: Created
-				mapper: e.created
-			updated:
-				label: Updated
-				mapper: e.updated
-			
+				mapper: e.id
+				callback: {class: %this%, method: getAttributeForGrid, params: [subject]}
 	form:
 		fields:
-			name:
-				# anotations: "var:string,ORMColumn:type:string,nullable:true"
-				label: Name
-				control: text
-			subject:
-				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:"
-				label: Subject
-				control: phrase
-			body:
-				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:"
-				label: Body
-				control: phrase
+			type:
+				label: Type
+				control: 
+					type: select
+					callback: {class: \Service\Emailing\TemplateTypeList, method: getPairs, params: [id, name, NULL, [name: ASC]]}
+					prompt: " - Select -"
 			language:
-				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityDictionaryLanguage"
 				label: Language
-				control: select
-			batches:
-				# anotations: "var:Collection,ORMOneToMany:targetEntity:Batch,mappedBy:template"
-				label: Batches
-				control: multiSelect
-			created:
-				# anotations: "var:datetime,ORMColumn:type:datetime"
-				label: Created
-				control: datePicker
-			updated:
-				# anotations: "var:datetime,ORMColumn:type:datetime"
-				label: Updated
-				control: datePicker
+				control:  
+					type: select
+					callback: {class: \Service\Dictionary\LanguageList, method: getTranslatedPairs, params: [id, name, [supported: 1], [name: ASC]]}
+					prompt: " - Select -"
+			name:
+				label: Name
+				control: 
+					type: text
+			subject:
+				startNewRow: true
+				label: Subject
+				control: 
+					type: phrase
+				inlineEditing: DictionaryPhrase:edit
+				class: span6
+			body:
+				label: Body
+				control: 
+					type: phrase
+				inlineEditing: DictionaryPhrase:edit
+				class: span6

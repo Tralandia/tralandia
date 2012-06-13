@@ -30,10 +30,14 @@ class ImportEmailing extends BaseImport {
 		$subjectType = $this->createDictionaryType('\Emailing\Template', 'subject', 'ACTIVE');
 		$bodyType = $this->createDictionaryType('\Emailing\Template', 'body', 'ACTIVE');
 
+		$templateType = \Service\Emailing\TemplateType::get();
+		$templateType->name = 'default';
+		$templateType->save();
 
 		$r = q('select * from emails');
 		while($x = mysql_fetch_array($r)) {
 			$template = \Service\Emailing\Template::get();
+			$template->type = $templateType;
 			$template->name = $x['name'];
 			$template->subject = $this->createNewPhrase($subjectType, $x['subject_dic_id']);
 			$template->body = $this->createNewPhrase($bodyType, $x['body_html_dic_id']);
