@@ -347,6 +347,12 @@ class Reflector extends Nette\Object {
 				throw new \Exception("Nezadefinoval si addressLocations pre '{$fieldMask['ui']['name']}'");	
 			}
 
+			if($type == 'suggestion') {
+				$fieldMask['ui']['controlOptions']['serviceName'] = $fieldMask['targetEntity']['serviceName'];
+				$fieldMask['ui']['controlOptions']['serivceList'] = $fieldMask['ui']['control']['suggestion']['serivceList'];
+				$fieldMask['ui']['controlOptions']['property'] = $fieldMask['ui']['control']['suggestion']['property'];
+			}
+
 			if(!$user->isAllowed($service->getMainEntity(), $property->name . '_edit')) {
 				$fieldMask['ui']['control']['disabled'] = true;
 			}

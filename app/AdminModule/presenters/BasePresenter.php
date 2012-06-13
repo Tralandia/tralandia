@@ -109,14 +109,15 @@ abstract class BasePresenter extends \BasePresenter {
 	/**
 	 * @acl(forPresenter=BasePresenter)
 	 */
-	public function actionSuggestion($entity, $property, $search, $translate) {
+	public function actionSuggestion($serviceList, $property, $search, $language) {
 
-		$entity = '\Service\Location\Location';
-		$entity::getSuggestions($property, $search, $translate);
+		$serviceList = '\Service\Location\LocationList';
+		$language = \Service\Dictionary\Language::get($language);
+		$suggestion = $serviceList::getSuggestions($property, $search, $language);
 
 		// @todo dorobit replace premennych
 
-		$this->payload->suggestion = '';
+		$this->payload->suggestion = $suggestion;
 		$this->sendPayload();
 
 	}

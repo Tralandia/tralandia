@@ -19,21 +19,4 @@ class BaseService extends \Extras\Models\Service {
 
 	}
 
-	public static function getSuggestions($property, $srerch, $translate) {
-		$entityName = static::getMainEntityName();
-
-		$serviceList = new static;
-		$qb = $serviceList->getEntityManager()->createQueryBuilder();
-
-		if($translate) {
-			$select = array('e.id', 'p.id AS value');
-		} else {
-			$select = array('e.id', 'e.'.$property.' AS value');
-		}
-		$qb->select($select)
-			->from($entityName, 'e');
-
-		if($translate) $qb->join('e.'.$property, 'p');
-
-	}
 }
