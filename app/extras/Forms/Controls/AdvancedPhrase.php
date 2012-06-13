@@ -48,6 +48,7 @@ class AdvancedPhrase extends BaseControl {
 		}
 		$inlineEditing = $this->getOption('inlineEditing');
 		$inlineEditing->href->setParameter('id', $phrase->id);
+		
 		$defaultLanguage = $this->getForm()->getDefaultLanguage();
 		$sourceLanguage = $phrase->getSourceLanguage();
 

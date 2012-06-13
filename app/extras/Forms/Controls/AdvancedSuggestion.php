@@ -26,13 +26,32 @@ class AdvancedSuggestion extends BaseControl {
 
 
 	public function getControl() {
-		$fakeInput = Html::el('input')->class('fake');
 		$control = parent::getControl();
+		$fakeInput = Html::el('input')
+						->class($control->class)
+						->addAttributes(array(
+							'data-serivceList' => $this->getOption('serivceList'),
+							'data-property' => $this->getOption('property'),
+							'data-language' => 0,
+						));
+		$value = $this->value;
+		if($value > 0) {
+			$serviceName = $this->getOption('serviceName');
+			$value = $serviceName::get($this->value);
+			if($value) {
+				$value = $value->{$this->getOption('property')};
+				$language = $this->getForm()->getEnvironment()->getLanguage();
+				if($value instanceof \Entity\Dictionary\Phrase) {
+					$value = \Service\Dictionary\Phrase::get($value)->getTranslation($language, true);
+					$control->value = $value;
+					$fakeInput->addAttributes(array('data-language' => $language->id));
+				}
+			}
+		}
+
 		return $fakeInput.$control;
 	}
 
-	/**
-	 */
 	public static function register()
 	{
 		Container::extensionMethod('addAdvancedSuggestion', function (Container $_this, $name, $label) {
