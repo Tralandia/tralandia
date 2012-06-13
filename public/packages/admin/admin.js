@@ -16,7 +16,7 @@ $(function() {
 	});
 
 	$('.content').livequery(function() {
-		$('[rel="popover"]').popover({
+		$('[rel="tooltip"]').tooltip({
 			placement: 'top'
 		});
 	});

@@ -462,9 +462,9 @@ class Reflector extends Nette\Object {
 						->class('label label-warning pull-right')
 						->setText('?')
 						->addAttributes(array(
-							'data-title' => $ui->description->title,
-							'data-content' => $ui->description->content,
-							'rel' => 'popover',
+							// 'data-title' => $ui->description->title,
+							'title' => $ui->description->content,
+							'rel' => 'tooltip',
 						));
 					$control->getLabelPrototype()->add($popover);
 				}
