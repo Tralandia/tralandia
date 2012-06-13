@@ -6,8 +6,8 @@
 	<div class="span6">
 		<h3>Presenters</h3>
 		<table>
-			<tr n:foreach="$list as $presenter => $actions">
-				<td><a n:href="presenterEdit, presenterName => $presenter">{$presenter}</a></td>
+			<tr n:foreach="$list as $resource => $presenterName">
+				<td><a n:href="presenterEdit, presenterName => $presenterName">{$resource}</a></td>
 			</tr>
 		</table>
 	</div>

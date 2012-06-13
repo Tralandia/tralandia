@@ -4,6 +4,7 @@ namespace Security;
 
 use Nette\Caching\Cache,
 	Nette\Utils\Finder,
+	Nette\Utils\Strings,
 	Nette\Security\Permission;
 
 class Acl extends Permission {
@@ -62,7 +63,10 @@ class Acl extends Permission {
 		$data['roles'] = \Service\User\RoleList::forAcl();
 		foreach ($files as $filepath => $file) {
 			//debug($file);
-			$resource = str_replace(array('_', '-'), array('\\', ':'), $file->getBasename('.neon'));
+			$baseName = $file->getBasename('.neon');
+			$baseName = Strings::endsWith($baseName, 'Presenter') ? substr($baseName, 0, -9) : $baseName;
+			$resource = str_replace(array('_', 'Module-'), array('\\', ':'), $baseName);
+
 			$data['resources'][] = $resource;
 			$content = $this->getConfigFromFile($filepath);
 

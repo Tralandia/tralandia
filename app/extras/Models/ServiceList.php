@@ -5,7 +5,8 @@ namespace Extras\Models;
 use Nette\Object,
 	Nette\OutOfRangeException,
 	Tra\Utils\Strings,
-	Doctrine\ORM\EntityManager;
+	Doctrine\ORM\EntityManager,
+	Doctrine\ORM\Query\Expr;
 
 /**
  * Abstrakcia zoznamu
@@ -222,7 +223,6 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 
 		$translator = Service::getTranslator();
 		$return = array();
-
 		foreach($serviceList as $item) {
 			$return[$item['key']] = $translator->translate($item['value']);
 		}
@@ -281,6 +281,29 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 		return $serviceList;
 	}
 
+	public static function getSuggestions($property, $search, $language) {
+		$entityName = static::getMainEntityName();
+
+		if($language) {
+			$phraseList = new \Service\Dictionary\PhraseList;
+			$qb = $phraseList->getEntityManager()->createQueryBuilder();
+
+			$qb->select('p.id')
+				->from('\\Entity\\Dictionary\\Phrase', 'p')
+				->join('p.translations', 't', Expr\Join::ON, 't.language = ' . $language->id)
+				->where('t.translation LIKE :search')
+				// ->setParameter(':language', $language->id)
+				->setParameter(':search', "%$search%");
+
+			$phraseList->setDataSource($qb);
+		}
+		debug($phraseList->toArray('id', 'id'));
+		throw new \Exception("Error Processing Request", 1);
+		
+		return $phraseList;
+	}
+
+
 	protected function setList($list) {
 		$this->list = $list;
 		$this->iteratorPosition = 0;
@@ -332,7 +355,7 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 	public function toArray($keyName = NULL, $valueName = NULL) {
 		$array = array();
 		foreach ($this as $key => $value) {
-			$array[$keyName?:$key] = $valueName ? $value[$valueName] : $value; 
+			$array[$keyName? $value[$keyName] :$key] = $valueName ? $value[$valueName] : $value; 
 		}
 		return $array;
 	}

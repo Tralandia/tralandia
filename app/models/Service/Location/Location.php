@@ -5,7 +5,7 @@ namespace Service\Location;
 use Nette\Utils\Strings,
 	Extras\Models\ServiceException;
 
-class Location extends \Extras\Models\Service {
+class Location extends \Service\BaseService {
 	
 	const MAIN_ENTITY_NAME = '\Entity\Location\Location';
 

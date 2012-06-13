@@ -72,6 +72,9 @@ abstract class BasePresenter extends \BasePresenter {
 		return $navigation;
 	}
 
+	/**
+	 * @acl(forPresenter=BasePresenter)
+	 */
 	public function actionDecodeNeon() {
 		$input = $this->getHttpRequest()->getPost('input', '');
 		try {
@@ -85,13 +88,36 @@ abstract class BasePresenter extends \BasePresenter {
 		$this->sendPayload();
 	}
 
+	/**
+	 * @acl(forPresenter=BasePresenter)
+	 */
 	public function actionLiveWysi() {
 
 		$content = $this->getHttpRequest()->getPost('content', '');
 
-		// @todo dorobit replace premennych
+		$type = \Service\Emailing\TemplateType::get(1);
+
+		foreach ($this->availableVariables as $variable => $variableData) {
+			$content = str_replace('[' . $variable . ']', $variableData['example'], $content);
+		}
 
 		$this->payload->content = $content;
+		$this->sendPayload();
+
+	}
+
+	/**
+	 * @acl(forPresenter=BasePresenter)
+	 */
+	public function actionSuggestion($serviceList, $property, $search, $language) {
+
+		$serviceList = '\Service\Location\LocationList';
+		$language = \Service\Dictionary\Language::get($language);
+		$suggestion = $serviceList::getSuggestions($property, $search, $language);
+
+		// @todo dorobit replace premennych
+
+		$this->payload->suggestion = $suggestion;
 		$this->sendPayload();
 
 	}

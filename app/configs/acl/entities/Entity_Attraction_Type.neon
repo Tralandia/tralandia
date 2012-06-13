@@ -1,109 +1,109 @@
 name_show:
 	guest: allow
-	visitor: deny
 	potentialowner: deny
 	owner: deny
 	translator: deny
 	assistant: deny
-	vendor: deny
+	telmarkmanager: deny
+	telmarkoperator: deny
 	manager: deny
 	admin: deny
 	
 name_edit:
-	guest: allow
-	visitor: deny
-	potentialowner: deny
+	guest: deny
+	potentialowner: allow
 	owner: deny
 	translator: deny
 	assistant: deny
-	vendor: deny
+	telmarkmanager: deny
+	telmarkoperator: deny
 	manager: deny
 	admin: deny
 	
 id_show:
 	guest: allow
-	visitor: deny
 	potentialowner: deny
 	owner: deny
 	translator: deny
 	assistant: deny
-	vendor: deny
+	telmarkmanager: deny
+	telmarkoperator: deny
 	manager: deny
 	admin: deny
 	
 id_edit:
-	guest: allow
-	visitor: deny
-	potentialowner: deny
+	guest: deny
+	potentialowner: allow
 	owner: deny
 	translator: deny
 	assistant: deny
-	vendor: deny
+	telmarkmanager: deny
+	telmarkoperator: deny
 	manager: deny
 	admin: deny
 	
 oldId_show:
 	guest: allow
-	visitor: deny
 	potentialowner: deny
 	owner: deny
 	translator: deny
 	assistant: deny
-	vendor: deny
+	telmarkmanager: deny
+	telmarkoperator: deny
 	manager: deny
 	admin: deny
 	
 oldId_edit:
-	guest: allow
-	visitor: deny
-	potentialowner: deny
+	guest: deny
+	potentialowner: allow
 	owner: deny
 	translator: deny
 	assistant: deny
-	vendor: deny
+	telmarkmanager: deny
+	telmarkoperator: deny
 	manager: deny
 	admin: deny
 	
 created_show:
 	guest: allow
-	visitor: deny
 	potentialowner: deny
 	owner: deny
 	translator: deny
 	assistant: deny
-	vendor: deny
+	telmarkmanager: deny
+	telmarkoperator: deny
 	manager: deny
 	admin: deny
 	
 created_edit:
-	guest: allow
-	visitor: deny
-	potentialowner: deny
+	guest: deny
+	potentialowner: allow
 	owner: deny
 	translator: deny
 	assistant: deny
-	vendor: deny
+	telmarkmanager: deny
+	telmarkoperator: deny
 	manager: deny
 	admin: deny
 	
 updated_show:
 	guest: allow
-	visitor: deny
 	potentialowner: deny
 	owner: deny
 	translator: deny
 	assistant: deny
-	vendor: deny
+	telmarkmanager: deny
+	telmarkoperator: deny
 	manager: deny
 	admin: deny
 	
 updated_edit:
-	guest: allow
-	visitor: deny
-	potentialowner: deny
+	guest: deny
+	potentialowner: allow
 	owner: deny
 	translator: deny
 	assistant: deny
-	vendor: deny
+	telmarkmanager: deny
+	telmarkoperator: deny
 	manager: deny
 	admin: deny
