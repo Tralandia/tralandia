@@ -324,6 +324,9 @@ class BaseImport {
 	}
 
 	protected function createDictionaryType($entityName, $entityAttribute, $level, $params = NULL) {
+		if (substr($entityName, 0, 7) != '\Entity') {
+			$entityName = '\Entity'.$entityName;
+		}
 
 		$dictionaryType = D\Type::getByEntityNameAndEntityAttribute($entityName, $entityAttribute);
 		if ($dictionaryType) {

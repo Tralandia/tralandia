@@ -16,9 +16,6 @@ common:
 				label: Name
 				mapper: e.id
 				callback: {class: %this%, method: getAttributeForGrid, params: [name]}
-			slug:
-				label: Slug
-				mapper: e.slug
 			type:
 				label: Type
 				mapper: e.id
@@ -30,28 +27,23 @@ common:
 				label: Languages
 				mapper: e.id
 				callback: {class: %this%, method: getAttributeForGrid, params: [languages, name, ', ']}
-			
 	form:
 		fields:
 			name:
-				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:"
 				label: Name
 				control: 
 					type: phrase
 				inlineEditing: Phrase:edit
 			nameShort:
-				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:"
 				label: Short Name
 				inlineEditing: Phrase:edit
 				control: 
 					type: phrase
 			slug:
-				# anotations: "var:slug,ORMColumn:type:slug"
 				label: Slug
 				control: 
 					type: text
 			type:
-				# anotations: "var:Collection,ORMManyToOne:targetEntity:Type"
 				label: Type
 				control: 
 					type: select
@@ -60,52 +52,49 @@ common:
 						method: getPairs
 						params: [id, [name, id]]
 			nameOfficial:
-				# anotations: "var:Collection,ORMOneToOne:targetEntity:EntityDictionaryPhrase,cascade:"
 				label: Official Name
 				inlineEditing: Phrase:edit
 				control: 
 					type: phrase
 				class: span6
 			# parentId:
-			# 	# anotations: "var:integer,ORMColumn:type:integer,nullable:true"
 			# 	label: ParentId
 			# 	control: text
 			latitude:
-				# anotations: "var:latlong,ORMColumn:type:latlong,nullable:true"
 				label: Latitude
 				control: 
 					type: text
 			longitude:
-				# anotations: "var:latlong,ORMColumn:type:latlong,nullable:true"
 				label: Longitude
 				control: 
 					type: text
 			iso:
-				# anotations: "var:string,ORMColumn:type:string,nullable:true"
 				label: Iso
 				control: 
 					type: text
 				startNewRow: true
 			iso3:
-				# anotations: "var:string,ORMColumn:type:string,nullable:true"
 				label: Iso3
 				control: 
 					type: text
 			status:
-				# anotations: "var:string,ORMColumn:type:string,nullable:true"
 				label: Status
 				control: 
 					type: select
 					prompt: 'None'
 					options: [class: \Entity\Dictionary\Type, pattern: TRANSLATION_LEVEL_.+]
+			domain:
+				label: Domain
+				control: 
+					type: select
+					prompt: ' - None - '
+					callback: {class: \Service\DomainList, method: getPairs, params: [id, domain, NULL, [domain: ASC]]}
 			defaultZoom:
-				# anotations: "var:integer,ORMColumn:type:integer,nullable:true"
 				label: Default Zoom
 				control: 
 					type: select
 					options: [1: asdf,2,3,4,5,6,7,8]
 			# incomingLocations:
-			# 	# anotations: "var:Collection,ORMOneToMany:targetEntity:Traveling,mappedBy:destinationLocation"
 			# 	label: Incoming Locations
 			# 	control: 
 			# 		type: multiSelect
@@ -115,7 +104,6 @@ common:
 			# 			arguments: [id, [name, id]]
 			# 	startNewRow: true
 			# outgoingLocations:
-			# 	# anotations: "var:Collection,ORMOneToMany:targetEntity:Traveling,mappedBy:sourceLocation"
 			# 	label: Outgoing Locations
 			# 	control: 
 			# 		type: multiSelect
@@ -124,7 +112,6 @@ common:
 			# 			method: getPairs
 			# 			arguments: [id, [name, id]]
 			# defaultCurrency:
-			# 	# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityCurrency,cascade:"
 			# 	class: span2
 			# 	startNewRow: true
 			# 	label: Default Currency
@@ -132,7 +119,6 @@ common:
 			# 		type: select
 			# 		class: span2
 			# currencies:
-			# 	# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityCurrency,mappedBy:locations,cascade:"
 			# 	label: Currencies
 			# 	class: span4
 			# 	control: 
@@ -140,14 +126,12 @@ common:
 			# 	inlineDeleting: Currency:delete
 			# 	inlineCreating: Currency:add
 			# defaultLanguage:
-			# 	# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityDictionaryLanguage,cascade:"
 			# 	class: span2
 			# 	label: Default Language
 			# 	control: 
 			# 		type: select
 			# 		class: span2
 			# languages:
-			# 	# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityDictionaryLanguage,mappedBy:locations,cascade:"
 			# 	class: span4
 			# 	label: Languages
 			# 	control: 
@@ -155,26 +139,22 @@ common:
 			# 	inlineDeleting: DictionaryLanguage:delete
 			# 	inlineCreating: DictionaryLanguage:add
 			# population:
-			# 	# anotations: "var:integer,ORMColumn:type:integer,nullable:true"
 			# 	startNewRow: true
 			# 	label: Population
 			# 	control: 
 			# 		type: text
 			# 	class: span2
 			# capitalCity:
-			# 	# anotations: "var:string,ORMColumn:type:string,nullable:true"
 			# 	label: Capital City
 			# 	control: 
 			# 		type: text
 			# 	class: span2
 			# airports:
-			# 	# anotations: "var:text,ORMColumn:type:text,nullable:true"
 			# 	label: Airports
 			# 	control: 
 			# 		type: text
 			# 	class: span2
 			# drivingSide:
-			# 	# anotations: "var:string,ORMColumn:type:string,nullable:true"
 			# 	label: Driving Side
 			# 	control: 
 			# 		type: select
@@ -182,7 +162,6 @@ common:
 			# 		class: span2
 			# 	class: span2
 			# pricesPizza:
-			# 	# anotations: "var:price,ORMColumn:type:price,nullable:true"
 			# 	label: "Pizza (average price)"
 			# 	control: 
 			# 		type: price
@@ -192,45 +171,38 @@ common:
 			# 			params: [id, iso]
 			# 	class: span2
 			# pricesDinner:
-			# 	# anotations: "var:price,ORMColumn:type:price,nullable:true"
 			# 	label: "Dinner (average price)"
 			# 	control: 
 			# 		type: text
 			# 	class: span2
 			# 	startNewRow: TRUE
 			# phonePrefix:
-			# 	# anotations: "var:string,ORMColumn:type:string,nullable:true"
 			# 	label: Phone Prefix
 			# 	control: 
 			# 		type: text
 			# 	class: span2
 			# 	startNewRow: TRUE
 			phoneNumberEmergency:
-				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityContactContact,cascade:"
 				label: Phone - Emergency
 				control: 
 					type: text
 				class: span2
 			phoneNumberPolice:
-				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityContactContact,cascade:"
 				label: Phone - Police
 				control: 
 					type: text
 				class: span2
 			phoneNumberMedical:
-				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityContactContact,cascade:"
 				label: Phone - Medical
 				control: 
 					type: text
 				class: span2
 			phoneNumberFire:
-				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityContactContact,cascade:"
 				label: Phone - Fire
 				control: 
 					type: text
 				class: span2
 			wikipediaLink:
-				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityContactContact,cascade:"
 				label: Wikipedia Link
 				control: 
 					type: text
@@ -240,13 +212,11 @@ common:
 					- [addCondition, FILLED]
 					- [addRule, URL, 'Must be a valid URL or leave empty.']
 			facebookGroup:
-				# anotations: "var:Collection,ORMManyToOne:targetEntity:EntityContactContact,cascade:"
 				label: Facebook Group
 				control: 
 					type: text
 				class: span6
 			# contacts:
-			# 	# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityContactContact,mappedBy:locations,cascade:"
 			# 	label: Contacts
 			# 	control: 
 			# 		type: bricksList
@@ -254,21 +224,18 @@ common:
 			# 	inlineDeleting: ContactContact:delete
 			# 	inlineCreating: ContactContact:add
 			details:
-				# anotations: "var:json,ORMColumn:type:json,nullable:true"
 				label: Details
 				class: span12
 				control: 
 					type: neon
 					class: neon
 			polygon:
-				# anotations: "var:json,ORMColumn:type:json,nullable:true"
 				label: Polygon
 				class: span12
 				control: 
 					type: neon
 					class: neon
 			clickMapData:
-				# anotations: "var:json,ORMColumn:type:json,nullable:true"
 				label: Click Map Data
 				class: span12
 				control: 

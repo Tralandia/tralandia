@@ -15,6 +15,7 @@ common:
 		fields:
 			name:
 				label: Name
+				class: span6
 				control: 
 					type: text
 			availableVariables:
