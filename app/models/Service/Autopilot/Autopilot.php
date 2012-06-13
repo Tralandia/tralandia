@@ -139,12 +139,10 @@ class Autopilot extends \Nette\Object {
 			->from('\Entity\Autopilot\Task', 't')
 			->leftJoin('t.usersExcluded', 'excluded', \Doctrine\ORM\Query\Expr\Join::WITH, 'excluded.id != :userId')
 			->where('t.type = :taskType')
-			->andWhere('t.subtype = :taskSubtype')
 			->andWhere('t.id != :stackerId')
 			->setParameter('stackerId', $task->id)
 			->setParameter('userId', $user->id)
 			->setParameter('taskType', $task->type->id)
-			->setParameter('taskSubtype', $task->subtype)
 			->setMaxResults($task->type->stackable)
 			->orderBy('t.due', 'ASC');
 
@@ -189,7 +187,6 @@ class Autopilot extends \Nette\Object {
 		);
 
 		$newTask->type 				= $task->type;
-		$newTask->subtype 			= $task->subtype;
 		$newTask->name 				= $task->name;
 		$newTask->technicalName		= $task->technicalName;
 		$newTask->entityName		= $task->entityName;
@@ -233,7 +230,6 @@ class Autopilot extends \Nette\Object {
 
 		$taskArchived = \Service\Autopilot\TaskArchived::get();
 		$taskArchived->type				= $task->type;
-		$taskArchived->subtype			= $task->subtype;
 		$taskArchived->name				= $task->name;
 		$taskArchived->technicalName	= $task->technicalName;
 		$taskArchived->entityName		= $task->entityName;
@@ -276,7 +272,6 @@ class Autopilot extends \Nette\Object {
 
 		$task = \Service\Autopilot\Task::get();
 		$task->type				= $taskArchived->type;
-		$task->subtype			= $taskArchived->subtype;
 		$task->name				= $taskArchived->name;
 		$task->technicalName	= $taskArchived->technicalName;
 		$task->entityName		= $taskArchived->entityName;

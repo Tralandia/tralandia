@@ -12,7 +12,7 @@ use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="autopilot_taskarchived", indexes={@ORM\index(name="subtype", columns={"subtype"}), @ORM\index(name="startTime", columns={"startTime"}), @ORM\index(name="due", columns={"due"}), @ORM\index(name="durationPaid", columns={"durationPaid"}), @ORM\index(name="userLanguageLevel", columns={"userLanguageLevel"})})
+ * @ORM\Table(name="autopilot_taskarchived", indexes={@ORM\index(name="startTime", columns={"startTime"}), @ORM\index(name="due", columns={"due"}), @ORM\index(name="durationPaid", columns={"durationPaid"}), @ORM\index(name="userLanguageLevel", columns={"userLanguageLevel"})})
  * @EA\Service(name="\Service\Autopilot\TaskArchived")
  * @EA\ServiceList(name="\Service\Autopilot\TaskArchivedList")
  * @EA\Primary(key="id", value="name")
@@ -24,12 +24,6 @@ class TaskArchived extends \Entity\BaseEntityDetails {
 	 * @ORM\ManyToOne(targetEntity="Type")
 	 */
 	protected $type;
-
-	/**
-	 * @var string
-	 * @ORM\Column(type="string", nullable=true)
-	 */
-	protected $subtype;
 
 	/**
 	 * @var string
