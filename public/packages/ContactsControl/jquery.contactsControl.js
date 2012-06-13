@@ -171,11 +171,11 @@
 			$span.html(html);
 
 		} else if (type == 'phone') {
-			html = icon + '+'+ value[1].value +' '+ value[2].value;
+			html = icon + value[1].value +' '+ value[2].value;
 			$span.html(html);
 
 		} else if (type == 'address') {
-			html = icon + value[1].value +' '+ value[2].value +', '+ value[3].value +', '+ value[4].value +', '+ value[5].value;
+			html = icon + value[1].value +', '+ value[2].value +', '+ value[3].value +', '+ value[4].value +', '+ value[5].value;
 			$span.html(html);
 
 		} else if (type == 'url') {
@@ -189,9 +189,8 @@
 
 		$brick.attr('value', this.arrayToLines(value, 'key'));
 
-		$textarea = $base.find('.input-bricks textarea');
-		$textarea
-			.after($brick);
+		// Add brick HTML
+		$base.find('.input-bricks .clearfix').before($brick);
 
 		// DELETE button trigger
 		$brick.find('a.delete').bind('click', function(e) {
