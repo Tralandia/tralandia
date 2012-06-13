@@ -58,7 +58,10 @@ common:
 					type: contacts
 					addressLocations: {class: \Service\Location\LocationList, method: getTranslatedPairs, params: [id, name, [type: 3], [name: ASC]]}
 				startNewRow: false
-
+			created: 
+				label: Created
+				control: 
+					type: datePicker
 			# media:
 			# 	label: Media
 			# 	control: multiSelect

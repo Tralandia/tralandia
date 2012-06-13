@@ -54,10 +54,6 @@ common:
 					type: select
 				inlineEditing: AutopilotType:edit
 				inlineCreating: AutopilotType:add
-			subtype:
-				label: Subtype
-				control:
-					type: text
 			name:
 				label: Name
 				control: 
