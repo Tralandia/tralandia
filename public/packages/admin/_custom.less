@@ -2,7 +2,7 @@
 
 .container .inner {  }
 .container .inner .content { border: 1px solid @grayLight; padding: 8px; margin: 70px -13px 100px; .border-radius(10px); box-shadow:0 1px 1px @grayLight; background: @white; }
-.container .inner .content .btn.add-new { margin-top:20px; }
+.container .inner .content .btn.add-new { margin:0 0 15px; }
 .container .inner .content.content-modal { margin:0 -13px; .border-radius(0); box-shadow:none; border:none; }
 
 .container .inner .content h1 { #gradient > .vertical(@white, @grayMedium); margin:-9px -9px 15px -9px; font-size:22px; border: 1px solid @grayLight; padding: 10px (@gridGutterWidth/2); .border-radius(10px 10px 0 0); }
@@ -29,6 +29,7 @@ textarea:focus { border-color: rgba(163,196,0,.8); @shadow: inset 0 1px 1px rgba
 
 .new-row:before { clear:both; }
 
+.pagination { margin:4px 0 15px; }
 .pagination ul { box-shadow:0 1px 1px @greenBorder; }
 
 .subnav .well { .border-radius(0 0 5px 5px); padding:5px 10px; #gradient > .vertical(@grayMedium, @white);  box-shadow:0 2px 2px @grayLight; }
@@ -154,6 +155,8 @@ div.neonOutput pre { overflow:auto; }
 .phrase-control.html-text .dropdown-toggle { width:100%; text-align:left; }
 .phrase-control.html-text .dropdown-toggle .wrap { display:inline; }
 .phrase-control.html-text .dropdown-menu li a { white-space:normal; }
+.phrase-control.html-text .dropdown-menu li.disabled a { color:@grayLight; }
+.phrase-control.html-text .dropdown-menu li.disabled a:hover { color:@grayLight; background:@white; }
 
 .live-wysi {  }
 .live-wysi button { margin-top:5px; }

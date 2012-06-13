@@ -1,60 +1,70 @@
 
 (function($) {
 
-    $.fn.phraseControl = function(options) {
-        
-        $.fn.phraseControl.options = {
-            classSimple: 'plain-text-simple',
-            classComplex: 'plain-text-complex',
-            classHtmlText: 'html-text'
-        };
+	$.fn.phraseControl = function(options) {
+		
+		$.fn.phraseControl.options = {
+			// classSimple: 'plain-text-simple',
+			// classComplex: 'plain-text-complex',
+			// classHtmlText: 'html-text'
+		};
 
-        return this.each(function() {
-            
-            var base = $(this);
-            
-            if (base.hasClass($.fn.phraseControl.options.classSimple)) {
-                // Plain Text Simple
+		return this.each(function() {
+			
+			var $base = $(this);
+			
+			var $dropdown = $base.find('button[data-toggle="dropdown"]');
+			$dropdown.next('ul.dropdown-menu').width($dropdown.width() + 16);
 
-                base.find('.dropdown-menu li a').bind('click', function(e) {
+			/* deprecated
+			if ($base.hasClass($.fn.phraseControl.options.classSimple)) {
+				
 
-                    lang = $(this).attr('lang');
-                    options = base.find('input[lang*=]');
+				// Plain Text Simple
+				$base.find('.dropdown-menu li a').bind('click', function(e) {
 
-                    options
-                        .addClass('hide');
-                    base
-                        .find('input[lang="'+ lang +'"]')
-                        .removeClass('hide');
+					lang = $(this).attr('lang');
+					options = $base.find('input[lang*=]');
 
-                    e.preventDefault();
-                });
+					options
+						.addClass('hide');
+					$base
+						.find('input[lang="'+ lang +'"]')
+						.removeClass('hide');
 
-                base.find('input[lang*=]').bind('blur', function() {
+					e.preventDefault();
+				});
 
-                    lang = $(this).attr('lang');
-                    value = $(this).val();
-                    base
-                        .find('.dropdown-menu li a[lang="'+ lang +'"] span')
-                        .html(value);
+				$base.find('input[lang*=]').bind('blur', function() {
 
-                });
+					lang = $(this).attr('lang');
+					value = $(this).val();
+					$base
+						.find('.dropdown-menu li a[lang="'+ lang +'"] span')
+						.html(value);
 
-                    
-            } else if (base.hasClass($.fn.phraseControl.options.classComplex)) {
-                // Plain Text Complex
+				});
 
-            } else if (base.hasClass($.fn.phraseControl.options.classHtmlText)) {
-                // HTML text
+					
+			} else if ($base.hasClass($.fn.phraseControl.options.classComplex)) {
+				// Plain Text Complex
 
-            }
+			} else if ($base.hasClass($.fn.phraseControl.options.classHtmlText)) {
+				// HTML text
 
-        });
+			}
+			 */
 
-    }
+
+			/**
+			 * END OF .each
+			 */
+		});
+
+	}
 
 })(jQuery);
 
 $(function() {
-    $(".phrase-control").phraseControl();
+	$(".phrase-control").phraseControl();
 });
