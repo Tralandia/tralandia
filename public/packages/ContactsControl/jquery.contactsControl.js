@@ -175,7 +175,7 @@
 			$span.html(html);
 
 		} else if (type == 'address') {
-			html = icon + value[1].value +' '+ value[2].value +', '+ value[3].value +', '+ value[4].value +', '+ value[5].value;
+			html = icon + value[1].value +', '+ value[2].value +', '+ value[3].value +', '+ value[4].value +', '+ value[5].value;
 			$span.html(html);
 
 		} else if (type == 'url') {
