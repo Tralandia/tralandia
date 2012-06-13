@@ -61,6 +61,7 @@ common:
 				class: span6
 				control: 
 					type: tinymce
+					showPreview: false
 					class: span6
 			validation:
 				label: Validation
