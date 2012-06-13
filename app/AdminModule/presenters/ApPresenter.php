@@ -9,8 +9,12 @@ class ApPresenter extends BasePresenter {
 	public $task;
 
 	public function actionTask($id){
-		// $this->task = \Service\Autopilot\Task::get($id);
-		$this->task = \Service\Autopilot\Autopilot::getNextTask($this->user);
+
+		if ($id) {
+			$this->task = \Service\Autopilot\Task::get($id);
+		} else {
+			$this->task = \Service\Autopilot\Autopilot::getNextTask($this->user);
+		}
 
 		// Stack
 		$taskEntity = $this->task->getEntity();

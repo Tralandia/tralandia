@@ -182,32 +182,6 @@ class Task extends \Entity\BaseEntityDetails {
 	 * @param string
 	 * @return \Entity\Autopilot\Task
 	 */
-	public function setSubtype($subtype) {
-		$this->subtype = $subtype;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Autopilot\Task
-	 */
-	public function unsetSubtype() {
-		$this->subtype = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return string|NULL
-	 */
-	public function getSubtype() {
-		return $this->subtype;
-	}
-		
-	/**
-	 * @param string
-	 * @return \Entity\Autopilot\Task
-	 */
 	public function setName($name) {
 		$this->name = $name;
 
