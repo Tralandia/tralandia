@@ -246,9 +246,9 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 		$qb = $serviceList->getEntityManager()->createQueryBuilder();
 
 		if($valuePropertyName) {
-			$select = array('e.'.$keyName.' AS key', 'p.'.$valuePropertyName.' AS value');
+			$select = array("e.$keyName AS key", "p.$valuePropertyName AS value");
 		} else {
-			$select = array('e.'.$keyName.' AS key', 'e.'.$valueName.' AS value');
+			$select = array("e.$keyName AS key", "e.$valueName AS value");
 		}
 		$qb->select($select)
 			->from($entityName, 'e');
@@ -284,23 +284,26 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 	public static function getSuggestions($property, $search, $language) {
 		$entityName = static::getMainEntityName();
 
+		$suggestoin = array();
 		if($language) {
 			$phraseList = new \Service\Dictionary\PhraseList;
 			$qb = $phraseList->getEntityManager()->createQueryBuilder();
 
-			$qb->select('p.id')
-				->from('\\Entity\\Dictionary\\Phrase', 'p')
-				->join('p.translations', 't', Expr\Join::ON, 't.language = ' . $language->id)
+			$qb->select('e.id', 't.translation')
+				->from($entityName, 'e')
+				->join('e.name', 'p')
+				->join('p.translations', 't', Expr\Join::WITH, 't.language = :language')
+				->join('p.type', 'ty', Expr\Join::WITH, 'ty.entityName = :entityName')
 				->where('t.translation LIKE :search')
-				// ->setParameter(':language', $language->id)
+				->setParameter(':language', $language->id)
+				->setParameter(':entityName', $entityName)
 				->setParameter(':search', "%$search%");
 
 			$phraseList->setDataSource($qb);
+			$suggestoin = $phraseList->toArray('id', 'translation');
 		}
-		debug($phraseList->toArray('id', 'id'));
-		throw new \Exception("Error Processing Request", 1);
 		
-		return $phraseList;
+		return $suggestoin;
 	}
 
 

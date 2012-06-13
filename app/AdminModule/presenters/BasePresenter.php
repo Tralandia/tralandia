@@ -112,7 +112,7 @@ abstract class BasePresenter extends \BasePresenter {
 	public function actionSuggestion($serviceList, $property, $search, $language) {
 
 		$serviceList = '\Service\Location\LocationList';
-		$language = \Service\Dictionary\Language::get($language);
+		$language = \Service\Dictionary\Language::get($language = 144);
 		$suggestion = $serviceList::getSuggestions($property, $search, $language);
 
 		// @todo dorobit replace premennych
