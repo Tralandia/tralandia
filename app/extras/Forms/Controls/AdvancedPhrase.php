@@ -49,8 +49,8 @@ class AdvancedPhrase extends BaseControl {
 		$inlineEditing = $this->getOption('inlineEditing');
 		$inlineEditing->href->setParameter('id', $phrase->id);
 		
-		$defaultLanguage = $this->getForm()->getDefaultLanguage();
-		$sourceLanguage = $phrase->getSourceLanguage();
+		//$defaultLanguage = $this->getForm()->getDefaultLanguage();
+		//$sourceLanguage = $phrase->getSourceLanguage();
 
 		$button = Html::el('button')
 					->class('btn btn-success dropdown-toggle')
@@ -64,13 +64,17 @@ class AdvancedPhrase extends BaseControl {
 				$button->add('<span class="caret pull-right"></span><div class="wrap"><b>'.strtoupper($translation->language->iso) . ': </b>'.$truncatedTranslation.'</div>');
 				$isFirst = false;
 			}
-			// debug($translation);
+
 			$a = Html::el('a')
 				->lang($translation->language->iso)
 				->add('<b>'.strtoupper($translation->language->iso).': </b><span>'.$truncatedTranslation.'</span>')
 				->href($inlineEditing->href->setParameter('languageIso', $translation->language->iso)->setParameter('display', 'modal'))
 				->addAttributes(array('data-toggle'=>'ajax-modal'));
-			$li = Html::el('li')->add($a); //->addClass('disabled');
+			$li = Html::el('li')->add($a);
+			// @todo dorobit task #12649
+			// if(!$this->getUser()->isAllowed()){
+			// 	$li->addClass('disabled');
+			// }
 			$ul->add($li);
 		}
 		$wrapper->add($ul);
