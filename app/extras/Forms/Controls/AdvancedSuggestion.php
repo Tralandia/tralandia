@@ -30,8 +30,9 @@ class AdvancedSuggestion extends BaseControl {
 		$control = parent::getControl();
 		$fakeInput = Html::el('input')
 						->class($control->class)
+						->addClass('typeahead')
 						->addAttributes(array(
-							'data-serivceList' => $this->getOption('serivceList'),
+							'data-serviceList' => $this->getOption('serviceList'),
 							'data-property' => $this->getOption('property'),
 							'data-language' => 0,
 							'data-default-id' => $value,
@@ -56,7 +57,7 @@ class AdvancedSuggestion extends BaseControl {
 			}
 		}
 
-		return $fakeInput.$control;
+		return $fakeInput.$control->addClass('hide');
 	}
 
 	public static function register()

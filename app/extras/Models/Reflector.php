@@ -353,7 +353,7 @@ class Reflector extends Nette\Object {
 
 			if($type == 'suggestion') {
 				$fieldMask['ui']['controlOptions']['serviceName'] = $fieldMask['targetEntity']['serviceName'];
-				$fieldMask['ui']['controlOptions']['serivceList'] = $fieldMask['ui']['control']['suggestion']['serivceList'];
+				$fieldMask['ui']['controlOptions']['serviceList'] = $fieldMask['ui']['control']['suggestion']['serviceList'];
 				$fieldMask['ui']['controlOptions']['property'] = $fieldMask['ui']['control']['suggestion']['property'];
 			}
 

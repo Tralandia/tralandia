@@ -27,7 +27,19 @@ parameters:
 					- nette/nette.js
 					- nette/netteForms.js
 			bootstrap:
-				js: bootstrap/bootstrap.min.js
+				js: 
+					- bootstrap/bootstrap-alert.js
+					- bootstrap/bootstrap-button.js
+					# - bootstrap/bootstrap-carousel.js
+					- bootstrap/bootstrap-collapse.js
+					- bootstrap/bootstrap-dropdown.js
+					- bootstrap/bootstrap-modal.js
+					- bootstrap/bootstrap-tooltip.js
+					- bootstrap/bootstrap-popover.js
+					# - bootstrap/bootstrap-scrollspy.js
+					- bootstrap/bootstrap-tab.js
+					- bootstrap/bootstrap-transition.js
+					- bootstrap/bootstrap-typeahead.js
 			liveQuery:
 				js: liveQuery/livequery.js
 			jQuery:

@@ -41,8 +41,8 @@ common:
 			country:
 				label: Country
 				control:  
-					type: select
-					callback: {class: \Service\Location\LocationList, method: getTranslatedPairs, params: [id, name, [type: 3], [name: ASC]]}
+					type: suggestion
+					suggestion: {serviceList: \Service\Location\LocationList, property: name}
 					prompt: " - Select -"
 				startNewRow: true
 			# contacts:
