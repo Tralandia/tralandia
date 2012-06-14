@@ -20,7 +20,7 @@ class AdvancedTinymce extends TextArea {
 	public function getControl() {
 		$control = parent::getControl();
 		$control->addAttributes(array('data-preview' => (int)$this->getOption('showPreview')));
-		debug($control);
+		// debug($control);
 		return $control;
 	}
 
