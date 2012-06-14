@@ -37,24 +37,30 @@ common:
 		fields:
 			type:
 				label: Type
-				control: select
+				control: 
+					type: select
 				inlineEditing: AmenityType:edit
 				inlineCreating: AmenityType:add
 			rentals:
 				label: Rentals
-				control: bricksList
+				control: 
+					type: bricksList
 				inlineEditing: RentalRental:edit
 				inlineCreating: RentalRental:add
 			name:
 				label: Name
-				control: phrase
+				control: 
+					type: phrase
 				inlineEditing: DictionaryPhrase:edit
 			details:
 				label: Details
-				control: json
+				control: 
+					type: json
 			created:
 				label: Created
-				control: datePicker
+				control: 
+					type: datePicker
 			updated:
 				label: Updated
-				control: datePicker
+				control: 
+					type: datePicker

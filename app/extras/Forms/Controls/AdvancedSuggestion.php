@@ -26,6 +26,7 @@ class AdvancedSuggestion extends BaseControl {
 
 
 	public function getControl() {
+		$value = $this->value;
 		$control = parent::getControl();
 		$fakeInput = Html::el('input')
 						->class($control->class)
@@ -33,9 +34,12 @@ class AdvancedSuggestion extends BaseControl {
 							'data-serivceList' => $this->getOption('serivceList'),
 							'data-property' => $this->getOption('property'),
 							'data-language' => 0,
+							'data-default-id' => $value,
+							'data-default-value' => $value,
+							'value' => $value,
 						));
-		$value = $this->value;
 		if($value > 0) {
+			$control->value = $value;
 			$serviceName = $this->getOption('serviceName');
 			$value = $serviceName::get($this->value);
 			if($value) {
@@ -43,8 +47,11 @@ class AdvancedSuggestion extends BaseControl {
 				$language = $this->getForm()->getEnvironment()->getLanguage();
 				if($value instanceof \Entity\Dictionary\Phrase) {
 					$value = \Service\Dictionary\Phrase::get($value)->getTranslation($language, true);
-					$control->value = $value;
-					$fakeInput->addAttributes(array('data-language' => $language->id));
+					$fakeInput->addAttributes(array(
+						'data-language' => $language->id,
+						'data-default-value' => $value,
+						'value' => $value,
+					));
 				}
 			}
 		}

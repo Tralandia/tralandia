@@ -94,6 +94,7 @@ class AdminPresenter extends BasePresenter {
 		$this->reflector->extend($form, $this->formMask);
 		$form->setEnvironment($this->environment);
 		$form->setDefaultLanguage($this->context->translator->getDefaultLanguage());
+		$form->setUser($this->getUser());
 
 		//$this->addAdvancedFileManager('upload', 'File manager');
 		$form->onSuccess[] = callback($this, 'formOnSuccess');

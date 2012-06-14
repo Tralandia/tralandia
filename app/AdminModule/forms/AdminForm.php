@@ -8,6 +8,7 @@ class AdminForm extends Form {
 
 	protected $defaultLanguage;
 
+	protected $user;
 	
 	public function setEnvironment($environment) {
 		$this->environment = $environment;
@@ -26,6 +27,15 @@ class AdminForm extends Form {
 
 	public function getDefaultLanguage() {
 		return $this->defaultLanguage;
+	}
+
+	public function setUser($user) {
+		$this->user = $user;
+		return $this;
+	}
+
+	public function getUser() {
+		return $this->user;
 	}
 
 }

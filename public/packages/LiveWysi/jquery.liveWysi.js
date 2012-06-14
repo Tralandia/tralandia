@@ -18,6 +18,9 @@
         return this.each(function() {
 
             var $base = $(this);
+
+            if (!$base.attr('data-preview') == 0) return false;
+
             var $template = $($.fn.liveWysi.options.template);
 
             $template.find('.output')

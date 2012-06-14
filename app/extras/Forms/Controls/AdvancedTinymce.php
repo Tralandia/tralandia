@@ -17,6 +17,13 @@ class AdvancedTinymce extends TextArea {
 		$this->control->addClass('tinymce');
 	}
 
+	public function getControl() {
+		$control = parent::getControl();
+		$control->addAttributes(array('data-preview' => (int)$this->getOption('showPreview')));
+		debug($control);
+		return $control;
+	}
+
 
 	public static function register() {
 		Container::extensionMethod('addAdvancedTinymce', function (Container $_this, $name, $label, $cols = NULL, $rows = NULL) {

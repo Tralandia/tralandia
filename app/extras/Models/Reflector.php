@@ -304,6 +304,10 @@ class Reflector extends Nette\Object {
 				$fieldMask['ui']['controlOptions']['label'] = $fieldMask['ui']['control']['label'];
 			}
 			
+			if($type == 'tinymce') {
+				$fieldMask['ui']['controlOptions']['showPreview'] = isset($fieldMask['ui']['control']['showPreview']) ? $fieldMask['ui']['control']['showPreview'] : TRUE;
+			}
+			
 			if($fieldMask['ui']['startNewRow']){
 				$fieldMask['ui']['controlOptions']['renderBefore'] = Html::el('hr')->addClass('soften');
 			}
@@ -462,9 +466,9 @@ class Reflector extends Nette\Object {
 						->class('label label-warning pull-right')
 						->setText('?')
 						->addAttributes(array(
-							'data-title' => $ui->description->title,
-							'data-content' => $ui->description->content,
-							'rel' => 'popover',
+							// 'data-title' => $ui->description->title,
+							'title' => $ui->description->content,
+							'rel' => 'tooltip',
 						));
 					$control->getLabelPrototype()->add($popover);
 				}
