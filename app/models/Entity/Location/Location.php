@@ -55,6 +55,12 @@ class Location extends \Entity\BaseEntityDetails {
 	protected $type;
 
 	/**
+	 * @var Collection
+	 * @ORM\ManyToOne(targetEntity="Entity\Location\RegionType", inversedBy="locations")
+	 */
+	protected $regionType;
+
+	/**
 	 * @var json
 	 * @ORM\Column(type="json", nullable=true)
 	 */
@@ -409,6 +415,32 @@ class Location extends \Entity\BaseEntityDetails {
 	 */
 	public function getType() {
 		return $this->type;
+	}
+		
+	/**
+	 * @param \Entity\Location\RegionType
+	 * @return \Entity\Location\Location
+	 */
+	public function setRegionType(\Entity\Location\RegionType $regionType) {
+		$this->regionType = $regionType;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Location\Location
+	 */
+	public function unsetRegionType() {
+		$this->regionType = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Location\RegionType|NULL
+	 */
+	public function getRegionType() {
+		return $this->regionType;
 	}
 		
 	/**

@@ -90,19 +90,17 @@ common:
 					prompt: ' - None - '
 					callback: {class: \Service\DomainList, method: getPairs, params: [id, domain, NULL, [domain: ASC]]}
 			defaultZoom:
+				startNewRow: TRUE
 				label: Default Zoom
 				control: 
 					type: select
 					options: [1: asdf,2,3,4,5,6,7,8]
-			# incomingLocations:
-			# 	label: Incoming Locations
-			# 	control: 
-			# 		type: multiSelect
-			# 		callback: 
-			# 			class: \Service\Location\LocationList
-			# 			method: getPairs
-			# 			arguments: [id, [name, id]]
-			# 	startNewRow: true
+			incomingLocations:
+				label: Incoming Locations
+				control: 
+					type: multiSelect
+					callback: {class: \Service\Location\LocationList, method: getTranslatedPairs, params: [id, domain, [type: 3], [domain: ASC]]}
+				startNewRow: true
 			# outgoingLocations:
 			# 	label: Outgoing Locations
 			# 	control: 
@@ -216,13 +214,6 @@ common:
 				control: 
 					type: text
 				class: span6
-			# contacts:
-			# 	label: Contacts
-			# 	control: 
-			# 		type: bricksList
-			# 	inlineEditing: ContactContact:edit
-			# 	inlineDeleting: ContactContact:delete
-			# 	inlineCreating: ContactContact:add
 			details:
 				label: Details
 				class: span12

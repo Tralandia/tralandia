@@ -27,6 +27,12 @@ class Type extends \Entity\BaseEntityDetails {
 	 */
 	protected $slug;
 
+	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean")
+	 * primary types can have their own domain (easily) and can be parent to other types
+	 */
+	protected $primary;
 
 //@entity-generator-code <--- NEMAZAT !!!
 
@@ -67,5 +73,22 @@ class Type extends \Entity\BaseEntityDetails {
 	 */
 	public function getSlug() {
 		return $this->slug;
+	}
+		
+	/**
+	 * @param boolean
+	 * @return \Entity\Location\Type
+	 */
+	public function setPrimary($primary) {
+		$this->primary = $primary;
+
+		return $this;
+	}
+		
+	/**
+	 * @return boolean|NULL
+	 */
+	public function getPrimary() {
+		return $this->primary;
 	}
 }
