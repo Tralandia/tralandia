@@ -216,13 +216,12 @@ common:
 				control: 
 					type: text
 				class: span6
-			# contacts:
-			# 	label: Contacts
-			# 	control: 
-			# 		type: bricksList
-			# 	inlineEditing: ContactContact:edit
-			# 	inlineDeleting: ContactContact:delete
-			# 	inlineCreating: ContactContact:add
+			contacts:
+				label: Contacts
+				class: span12
+				control: 
+					type: contacts
+					addressLocations: {class: \Service\Location\LocationList, method: getTranslatedPairs, params: [id, name, [type: 3], [name: ASC]]}
 			details:
 				label: Details
 				class: span12

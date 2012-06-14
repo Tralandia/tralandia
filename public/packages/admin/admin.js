@@ -53,6 +53,30 @@ $(function() {
 		.tabby()
 		.neon({ajaxTimeout: 500});
 
+
+	$('input[data-dateinput-type]').dateinput({
+		datetime: {
+			dateFormat: 'd.m.yy',
+			timeFormat: 'h:mm'
+		},
+		'datetime-local': {
+			dateFormat: 'd.m.yy',
+			timeFormat: 'h:mm'
+		},
+		date: {
+			dateFormat: 'd.m.yy'
+		},
+		month: {
+			dateFormat: 'MM yy'
+		},
+		week: {
+			dateFormat: "w. 'týden' yy"
+		},
+		time: {
+			timeFormat: 'h:mm'
+		}
+	});
+
 });
 
 function toggleEdit(obj) {

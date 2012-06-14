@@ -20,7 +20,6 @@ Extras\Forms\Controls\AdvancedBricksList::register();
 Extras\Forms\Controls\AdvancedCheckbox::register();
 Extras\Forms\Controls\AdvancedCheckboxList::register();
 Extras\Forms\Controls\AdvancedDatePicker::register();
-Extras\Forms\Controls\AdvancedDateTimePicker::register();
 Extras\Forms\Controls\AdvancedFileManager::register();
 Extras\Forms\Controls\AdvancedJson::register();
 Extras\Forms\Controls\AdvancedMultiSelect::register();

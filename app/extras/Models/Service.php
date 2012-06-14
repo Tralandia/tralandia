@@ -391,8 +391,24 @@ abstract class Service extends Nette\Object implements IService {
 	 * @return [type] [description]
 	 */
 	protected function afterSave() {
-		# @todo dokoncit #12321
-		// \Service\ContactCacheList::syncContacts($this->contacts, $this->getMainEntityName(), $this->id);
+
+		$contacts = new \Extras\Types\Contacts;
+		$entityReflection = new \Extras\Reflection\Entity($this->getEntity());
+		$properties = $entityReflection->getPropertiesByType($entityReflection::GROUP_CONTACTS);
+		foreach ($properties as $property) {
+			$propertyValue = $this->{$property->getName()};
+			if($propertyValue instanceof \Extras\Types\IContact) {
+				$contacts->add($propertyValue);
+			} else {
+				foreach ($propertyValue->getList() as $key => $value) {
+					$contacts->add($value);
+				}
+			}
+		}
+		// debug($contacts);
+		\Service\ContactCacheList::syncContacts($contacts, $this->getMainEntityName(), $this->id);
+		// throw new \Exception("Error Processing Request", 1);
+		
 	}
 
 	/**

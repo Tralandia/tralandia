@@ -69,12 +69,18 @@ parameters:
 				js: LiveWysi/jquery.liveWysi.js
 			contactsControl:
 				js: ContactsControl/jquery.contactsControl.js
+			dateInput:
+				css: DateInput/dateInput.css
+				js: 
+					- DateInput/timepicker.js
+					- DateInput/dateInput.js
 
 		sets:
 
 			'Admin:Ap':
 				- %webloader.packages.jQuery%
 				- %webloader.packages.jQueryCalendar%
+				- %webloader.packages.dateInput%
 				- %webloader.packages.autopilot%
 				- %webloader.packages.bootstrap%
 
@@ -82,6 +88,7 @@ parameters:
 				- %webloader.packages.jQuery%
 				- %webloader.packages.liveQuery%
 				- %webloader.packages.jQueryUI%
+				- %webloader.packages.dateInput%
 				- %webloader.packages.nette%
 				- %webloader.packages.contactsControl%
 				- %webloader.packages.phraseControl%

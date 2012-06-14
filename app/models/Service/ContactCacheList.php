@@ -12,13 +12,16 @@ class ContactCacheList extends ServiceList {
 		static::deleteByEntity($entityName, $entityId);
 		\Extras\Models\Service::preventFlush();
 		foreach ($contacts->getList() as $contact) {
-			$contactService = ContactCache::get();
-			$contactService->entityName = $entityName;
-			$contactService->entityId = $entityId;
-			$contactService->type = static::getContactType($contact);
-			$contactService->value = $contact->getUnifiedFormat();
-			$contactService->save();
-			debug($contactService);
+			$value = $contact->getUnifiedFormat();
+			if($value) {
+				$contactService = ContactCache::get();
+				$contactService->entityName = $entityName;
+				$contactService->entityId = $entityId;
+				$contactService->type = static::getContactType($contact);
+				$contactService->value = $contact->getUnifiedFormat();
+				$contactService->save();
+				// debug($contactService);
+			}
 		}
 		\Extras\Models\Service::flush();
 	}
@@ -31,7 +34,7 @@ class ContactCacheList extends ServiceList {
 			->setParameters(array(
 				'entityName' => $entityName,
 				'entityId' => $entityId,
-			));
+			))->getQuery()->execute();
 	}
 
 	private static function getContactType($contact) {

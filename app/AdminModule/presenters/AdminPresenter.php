@@ -55,7 +55,6 @@ class AdminPresenter extends BasePresenter {
 		$this->template->service = $this->service;
 
 		$this->template->setFile(APP_DIR . '/AdminModule/templates/Admin/edit.latte');
-		$this->setRenderMode();
 	}
 
 	public function actionEdit($id = 0) {
@@ -77,15 +76,6 @@ class AdminPresenter extends BasePresenter {
 		$this->template->updated = $this->service->updated;
 		$this->template->fomatedH1 = $this->formatText($this->settings->h1, $this->service);
 		$this->template->service = $this->service;
-		$this->setRenderMode();
-	}
-
-	public function setRenderMode() {
-		if(isset($this->params['display']) && $this->params['display'] == 'modal') {
-			$this->formMask->form->addClass .= ' ajax';
-			$this->setLayout('modalLayout');
-			$this->template->display = 'modal';
-		}
 	}
 	
 	protected function createComponentForm($name) {

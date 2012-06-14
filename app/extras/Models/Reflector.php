@@ -312,7 +312,15 @@ class Reflector extends Nette\Object {
 				$fieldMask['ui']['controlOptions']['renderBefore'] = Html::el('hr')->addClass('soften');
 			}
 
-			$fieldMask['ui']['control']['type'] = 'Advanced' . ucfirst($type);
+			if($type == 'datePicker') {
+				$fieldMask['ui']['control']['type'] = 'AdvancedDatePicker';
+				$fieldMask['ui']['control']['dateType'] = 'date';
+			} else if($type == 'dateTimePicker') {
+				$fieldMask['ui']['control']['type'] = 'AdvancedDatePicker';
+				$fieldMask['ui']['control']['dateType'] = 'datetime';
+			} else {
+				$fieldMask['ui']['control']['type'] = 'Advanced' . ucfirst($type);
+			}
 
 			if($associationType = $this->getAssociationType($property)) {
 				$association = $property->getAnnotation($associationType);
@@ -334,7 +342,7 @@ class Reflector extends Nette\Object {
 				$fieldMask['column']['type'] = $property->getAnnotation(self::ANN_COLUMN)->type;
 			}
 
-			if(in_array($type, array('select', 'checkboxList', 'multiSelect', 'bricksList', 'price', 'address', 'contacts')) && (!isset($fieldMask['ui']['control']['options']) || !is_array($fieldMask['ui']['control']['options']))) {
+			if(in_array($type, array('select', 'checkboxList', 'multiSelect', 'bricksList', 'price', 'address')) && (!isset($fieldMask['ui']['control']['options']) || !is_array($fieldMask['ui']['control']['options']))) {
 
 				if(!array_key_exists('callback', $fieldMask['ui']['control'])) {
 					throw new \Exception("Nezadefinoval si callback ani options pre '{$fieldMask['ui']['name']}'");	
@@ -360,6 +368,7 @@ class Reflector extends Nette\Object {
 			if(!$user->isAllowed($service->getMainEntity(), $property->name . '_edit')) {
 				$fieldMask['ui']['control']['disabled'] = true;
 			}
+
 			// debug($fieldMask['ui']);
 			// @todo vyhadzovat exceptiony ak nieco nieje nastavene OK
 			$mask['fields'][$name] = $fieldMask;
@@ -529,6 +538,10 @@ class Reflector extends Nette\Object {
 				if($control instanceof \Extras\Forms\Controls\AdvancedJson) {
 					$structure = $this->getJsonStructure($mask->entityReflection);
 					$control->setStructure((array) $structure[$ui->name]);
+				}
+
+				if($control instanceof \Extras\Forms\Controls\AdvancedDatePicker) {
+					$control->setDateType($ui->control->dateType);
 				}
 
 				if($control instanceof \Extras\Forms\Controls\AdvancedTable) {
