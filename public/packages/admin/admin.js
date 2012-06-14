@@ -53,6 +53,7 @@ $(function() {
 		.tabby()
 		.neon({ajaxTimeout: 500});
 
+
 	var typeaheadAjaxDelay = null;
 	$('.typeahead').typeahead({
 		source: function (typeahead, query) {
@@ -98,6 +99,27 @@ $(function() {
 			myJSONtext = $(this.$menu).find('li.active').attr('data-value');
 			myObject = eval('(' + myJSONtext + ')');
 			$(this.$element).next('input').val(myObject.id);
+
+	$('input[data-dateinput-type]').dateinput({
+		datetime: {
+			dateFormat: 'd.m.yy',
+			timeFormat: 'h:mm'
+		},
+		'datetime-local': {
+			dateFormat: 'd.m.yy',
+			timeFormat: 'h:mm'
+		},
+		date: {
+			dateFormat: 'd.m.yy'
+		},
+		month: {
+			dateFormat: 'MM yy'
+		},
+		week: {
+			dateFormat: "w. 'týden' yy"
+		},
+		time: {
+			timeFormat: 'h:mm'
 		}
 	});
 
