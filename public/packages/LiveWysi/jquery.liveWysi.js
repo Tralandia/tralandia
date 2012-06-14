@@ -19,7 +19,7 @@
 
             var $base = $(this);
 
-            if (!$base.attr('data-preview')) return false;
+            if (!$base.attr('data-preview') == 0) return false;
 
             var $template = $($.fn.liveWysi.options.template);
 
