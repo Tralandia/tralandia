@@ -7,7 +7,7 @@ list:
 	assistant: deny
 	vendor: deny
 	manager: deny
-	admin: deny
+	admin: allow
 	
 edit:
 	guest: allow
@@ -18,7 +18,7 @@ edit:
 	assistant: deny
 	vendor: deny
 	manager: deny
-	admin: deny
+	admin: allow
 	
 add:
 	guest: allow
@@ -29,4 +29,4 @@ add:
 	assistant: deny
 	vendor: deny
 	manager: deny
-	admin: deny
+	admin: allow

@@ -84,6 +84,7 @@ parameters:
 				- %webloader.packages.jQueryUI%
 				- %webloader.packages.nette%
 				- %webloader.packages.contactsControl%
+				- %webloader.packages.jQueryCalendar%
 				- %webloader.packages.phraseControl%
 				- %webloader.packages.liveWysi%
 				- %webloader.packages.admin%
