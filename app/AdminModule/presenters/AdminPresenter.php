@@ -36,6 +36,15 @@ class AdminPresenter extends BasePresenter {
 
 	public function renderList() {
 		$this->template->showAddNewButton = $this->settings->params->addNewButton;
+		$this->template->directCreating = !isset($this->settings->params->fields);
+	}
+
+	public function actionCreate() {
+
+		$r = \Extras\Reflection\Entity\ClassType::from('\Entity\Location\Location')->getPropertiesByType(\Extras\Reflection\Entity\ClassType::COLUMN_PHRASE);
+		d($r);
+		// $this->service->create($this->formMask, $values);
+		//$this->redirect('edit', array('id' => $this->service->id));
 	}
 	
 	public function actionAdd() {
