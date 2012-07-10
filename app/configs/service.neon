@@ -70,6 +70,10 @@ durika < development:
 	parameters:
 		database:
 			debugger: false
+toth < development:
+	parameters:
+		database:
+			debugger: false
 
 test < development:
 	parameters:
