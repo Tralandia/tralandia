@@ -82,7 +82,9 @@ parameters:
 			contactsControl:
 				js: ContactsControl/jquery.contactsControl.js
 			dateInput:
-				css: DateInput/dateInput.css
+				css: 
+					- DateInput/dateInput.css
+					- DateInput/jquery-ui-timepicker-addon.css
 				js: 
 					- DateInput/timepicker.js
 					- DateInput/dateInput.js
