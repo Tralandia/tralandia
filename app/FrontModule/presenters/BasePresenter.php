@@ -33,6 +33,25 @@ abstract class BasePresenter extends \BasePresenter {
 
 	/******* Things @TODO *****/
 	public function getMainMenuItems() {
+		
+		// foreach (\Service\Rental\TypeList::getAll() as $type) {
+
+		// 	$qb = \Extras\Models\Service::getEm()->createQueryBuilder();
+		// 	$qb
+		// 		->select('r')
+		// 		->from('\Entity\Rental\Rental', 'r')
+		// 		->leftJoin('r.types', 't') //, \Doctrine\ORM\Query\Expr\Join::ON, 'r.type = :type')
+		// 		->where('r.status = :live')
+		// 		->setParameter('live', \Entity\Rental\Rental::STATUS_LIVE)
+		// 		// ->setParameter('type', $type->id)
+		// 		;
+
+		// 	$result = $qb->getQuery()->getResult();
+		// 	// debug($result[0]->types[0]->name);
+		// 	break;
+
+		// }
+
 		return array("Uvod", "Chaty a chalupy", "Apartmany", "Uvod", "Chaty a chalupy", "Apartmany", "Uvod", "Chaty a chalupy", "Apartmany");
 	}
 
