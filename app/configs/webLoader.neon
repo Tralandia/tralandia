@@ -109,6 +109,7 @@ parameters:
 				- %webloader.packages.phraseControl%
 				- %webloader.packages.liveWysi%
 				- %webloader.packages.admin%
+				- %webloader.packages.fileUpload%
 				- %webloader.packages.bootstrap%
 
 			Front: 
