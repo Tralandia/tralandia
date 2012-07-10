@@ -221,6 +221,7 @@ class Reflector extends Nette\Object {
 				'inlineDeleting' => array('default' => NULL), 
 				'inlineCreating' => array('default' => NULL), 
 				'startNewRow' => array('default'=> NULL),
+				'header' => array('default'=> NULL),
 				'validation' => array('default'=> NULL),
 			);
 
@@ -308,9 +309,15 @@ class Reflector extends Nette\Object {
 				$fieldMask['ui']['controlOptions']['showPreview'] = isset($fieldMask['ui']['control']['showPreview']) ? $fieldMask['ui']['control']['showPreview'] : TRUE;
 			}
 			
-			if($fieldMask['ui']['startNewRow']){
-				$fieldMask['ui']['controlOptions']['renderBefore'] = Html::el('hr')->addClass('soften');
+			$fieldMask['ui']['controlOptions']['renderBefore'] = NULL;
+			if($fieldMask['ui']['header']){
+				$fieldMask['ui']['controlOptions']['renderBefore'] .= Html::el('h2')->addClass('span12')->setText($fieldMask['ui']['header']);
 			}
+
+			if($fieldMask['ui']['startNewRow']){
+				$fieldMask['ui']['controlOptions']['renderBefore'] .= Html::el('hr')->addClass('soften');
+			}
+
 
 			if($type == 'datePicker') {
 				$fieldMask['ui']['control']['type'] = 'AdvancedDatePicker';

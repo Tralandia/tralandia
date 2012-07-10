@@ -36,8 +36,19 @@ class Location extends \Service\BaseService {
 		} else {
 			$locationList = LocationList::getBySlugInType($slug, array($type));
 		}
-		return $locationList->count() > 1 ? FALSE : TRUE; # @todo @fix vracia false lebo najde seba sameho
 
+		if($locationList->count() > 1) {
+			return false;
+		} else if($locationList->count() == 1) {
+			$locationTemp = $locationList->fetch();
+			if($locationTemp->id == $this->id) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return true;
+		}
 	}
 
 	public function findParentByType($slug = 'continent', $location = null) {
