@@ -1,0 +1,59 @@
+<?php
+
+namespace Extras\Reflection;
+
+use Nette\Reflection\ClassType as NClassType;
+
+abstract class ClassType extends NClassType {
+
+	protected $annotationsParserClass = '\Nette\Reflection\AnnotationsParser';
+	protected $propertyClass = '\Nette\Reflection\Property';
+	protected $methodClass = '\Nette\Reflection\Method';
+
+
+	// public function getAnnotation($name)
+	// {
+	// 	$res = call_user_func_array(array($this->annotationsParserClass, 'getAll'), array($this));
+	// 	return isset($res[$name]) ? end($res[$name]) : NULL;
+	// }
+
+
+	// public function getAnnotations()
+	// {
+	// 	return call_user_func_array(array($this->annotationsParserClass, 'getAll'), array($this));
+	// }
+
+
+	public function getMethods($filter = -1)
+	{
+		$methodClass = $this->methodClass;
+		foreach ($res = parent::getMethods($filter) as $key => $val) {
+			$res[$key] = new $methodClass($this->getName(), $val->getName());
+		}
+		return $res;
+	}
+
+
+	public function getMethod($name)
+	{
+		$methodClass = $this->methodClass;
+		return new $methodClass($this->getName(), $name);
+	}
+
+
+	public function getProperties($filter = -1)
+	{
+		$propertyClass = $this->propertyClass;
+		foreach ($res = parent::getProperties($filter) as $key => $val) {
+			$res[$key] = new $propertyClass($this->getName(), $val->getName());
+		}
+		return $res;
+	}
+	
+
+	public function getProperty($name) {
+		$propertyClass = $this->propertyClass;
+		return new $propertyClass($this->getName(), $name);
+	}
+
+}
