@@ -53,6 +53,7 @@ Tab.prototype = {
 		}
 		if (this.el.id) this.blur();
 		this.el = this.getObj(id);
+		if (!this.el.tabContent) return false;
 		this.el.tabContent.addClass(this.options.selectedClass);
 		this.el.tabNav.addClass(this.options.selectedClass);
 		return this;

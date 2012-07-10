@@ -41,17 +41,17 @@ common:
 			country:
 				label: Country
 				control:  
-					type: select
-					callback: {class: \Service\Location\LocationList, method: getTranslatedPairs, params: [id, name, [type: 3], [name: ASC]]}
+					type: suggestion
+					suggestion: {serviceList: \Service\Location\LocationList, property: name}
 					prompt: " - Select -"
 				startNewRow: true
-			contacts:
-				# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityCurrency,mappedBy:locations,cascade:"
-				label: Contacts
-				class: span9
-				control: 
-					type: contacts
-					addressLocations: {class: \Service\Location\LocationList, method: getTranslatedPairs, params: [id, name, [type: 3], [name: ASC]]}
+			# contacts:
+			# 	# anotations: "var:Collection,ORMManyToMany:targetEntity:EntityCurrency,mappedBy:locations,cascade:"
+			# 	label: Contacts
+			# 	class: span9
+			# 	control: 
+			# 		type: contacts
+			# 		addressLocations: {class: \Service\Location\LocationList, method: getTranslatedPairs, params: [id, name, [type: 3], [name: ASC]]}
 			latitude:
 				label: Position
 				class: span12
@@ -60,6 +60,7 @@ common:
 					latitude: latitude
 					longitude: longitude
 				startNewRow: true
+				header: 'Bla Bla'
 			# media:
-			# 	label: Media
+			# 	label: 
 			# 	control: multiSelect

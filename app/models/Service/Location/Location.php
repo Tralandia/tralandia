@@ -9,13 +9,14 @@ class Location extends \Service\BaseService {
 	
 	const MAIN_ENTITY_NAME = '\Entity\Location\Location';
 
-	public function setSlug($slug) {
+	public function generateSlug() {
 
 		if(!$this->getType() instanceof \Entity\Location\Type) {
 			throw new ServiceException('Pred pridanim slugu musis definovat Type locality.');
 		}
 
-		$slug = Strings::webalize(Strings::trim($slug));
+		$slug = Strings::webalize(Strings::trim($this->name));
+		//if($this->getType()) @todo upravit generovanie slug-ov, ze ak jeho parentom je state, tak slug state-u pojde pred slug podriadeneho (alabama-birmingham) 
 		$available = $this->slugIsAvailable($slug);
 		$i = 0;
 		while (!$available) {
@@ -36,8 +37,19 @@ class Location extends \Service\BaseService {
 		} else {
 			$locationList = LocationList::getBySlugInType($slug, array($type));
 		}
-		return $locationList->count() > 1 ? FALSE : TRUE; # @todo @fix vracia false lebo najde seba sameho
 
+		if($locationList->count() > 1) {
+			return false;
+		} else if($locationList->count() == 1) {
+			$locationTemp = $locationList->fetch();
+			if($locationTemp->id == $this->id) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return true;
+		}
 	}
 
 	public function findParentByType($slug = 'continent', $location = null) {

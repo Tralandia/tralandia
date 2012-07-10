@@ -393,6 +393,14 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 		return $newIterator;
 	}
 
+
+	public function fetch() {
+		$return = current($this->list);
+		next($this->list);
+		return $return;
+	}
+
+
 	/* --------------------- Inherited methods from Countable --------------------- */
 	/**
 	 * Vracia pocet poloziek

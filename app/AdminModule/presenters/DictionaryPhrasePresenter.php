@@ -5,8 +5,7 @@ namespace AdminModule;
 
 class DictionaryPhrasePresenter extends BasePresenter {
 
-	public function actionEdit() {
-
+	public function renderEdit() {
 	}
 
 	/**

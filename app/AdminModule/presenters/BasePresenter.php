@@ -34,6 +34,20 @@ abstract class BasePresenter extends \BasePresenter {
 		$set->addMacro('url', 'echo \Tools::link($control, %node.array);');
 	}
 */
+
+	public function beforeRender() {
+		parent::beforeRender();
+		$this->setRenderMode();
+	}
+
+	public function setRenderMode() {
+		if(isset($this->params['display']) && $this->params['display'] == 'modal') {
+			// $this->formMask->form->addClass .= ' ajax';
+			$this->setLayout(false);
+			$this->template->display = 'modal';
+		}
+	}
+
 	
 	public function formatTemplateFiles() {
 		$name = $this->getName();
@@ -111,8 +125,7 @@ abstract class BasePresenter extends \BasePresenter {
 	 */
 	public function actionSuggestion($serviceList, $property, $search, $language) {
 
-		$serviceList = '\Service\Location\LocationList';
-		$language = \Service\Dictionary\Language::get($language = 144);
+		$language = \Service\Dictionary\Language::get($language);
 		$suggestion = $serviceList::getSuggestions($property, $search, $language);
 
 		// @todo dorobit replace premennych

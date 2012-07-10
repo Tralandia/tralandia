@@ -221,6 +221,7 @@ class Reflector extends Nette\Object {
 				'inlineDeleting' => array('default' => NULL), 
 				'inlineCreating' => array('default' => NULL), 
 				'startNewRow' => array('default'=> NULL),
+				'subheading' => array('default'=> NULL),
 				'validation' => array('default'=> NULL),
 			);
 
@@ -308,11 +309,25 @@ class Reflector extends Nette\Object {
 				$fieldMask['ui']['controlOptions']['showPreview'] = isset($fieldMask['ui']['control']['showPreview']) ? $fieldMask['ui']['control']['showPreview'] : TRUE;
 			}
 			
-			if($fieldMask['ui']['startNewRow']){
-				$fieldMask['ui']['controlOptions']['renderBefore'] = Html::el('hr')->addClass('soften');
+			$fieldMask['ui']['controlOptions']['renderBefore'] = NULL;
+			if($fieldMask['ui']['subheading']){
+				$fieldMask['ui']['controlOptions']['renderBefore'] .= Html::el('h2')->addClass('span12')->setText($fieldMask['ui']['subheading']);
 			}
 
-			$fieldMask['ui']['control']['type'] = 'Advanced' . ucfirst($type);
+			if($fieldMask['ui']['startNewRow']){
+				$fieldMask['ui']['controlOptions']['renderBefore'] .= Html::el('hr')->addClass('soften');
+			}
+
+
+			if($type == 'datePicker') {
+				$fieldMask['ui']['control']['type'] = 'AdvancedDatePicker';
+				$fieldMask['ui']['control']['dateType'] = 'date';
+			} else if($type == 'dateTimePicker') {
+				$fieldMask['ui']['control']['type'] = 'AdvancedDatePicker';
+				$fieldMask['ui']['control']['dateType'] = 'datetime';
+			} else {
+				$fieldMask['ui']['control']['type'] = 'Advanced' . ucfirst($type);
+			}
 
 			if($associationType = $this->getAssociationType($property)) {
 				$association = $property->getAnnotation($associationType);
@@ -334,7 +349,7 @@ class Reflector extends Nette\Object {
 				$fieldMask['column']['type'] = $property->getAnnotation(self::ANN_COLUMN)->type;
 			}
 
-			if(in_array($type, array('select', 'checkboxList', 'multiSelect', 'bricksList', 'price', 'address', 'contacts')) && (!isset($fieldMask['ui']['control']['options']) || !is_array($fieldMask['ui']['control']['options']))) {
+			if(in_array($type, array('select', 'checkboxList', 'multiSelect', 'bricksList', 'price', 'address')) && (!isset($fieldMask['ui']['control']['options']) || !is_array($fieldMask['ui']['control']['options']))) {
 
 				if(!array_key_exists('callback', $fieldMask['ui']['control'])) {
 					throw new \Exception("Nezadefinoval si callback ani options pre '{$fieldMask['ui']['name']}'");	
@@ -353,13 +368,14 @@ class Reflector extends Nette\Object {
 
 			if($type == 'suggestion') {
 				$fieldMask['ui']['controlOptions']['serviceName'] = $fieldMask['targetEntity']['serviceName'];
-				$fieldMask['ui']['controlOptions']['serivceList'] = $fieldMask['ui']['control']['suggestion']['serivceList'];
+				$fieldMask['ui']['controlOptions']['serviceList'] = $fieldMask['ui']['control']['suggestion']['serviceList'];
 				$fieldMask['ui']['controlOptions']['property'] = $fieldMask['ui']['control']['suggestion']['property'];
 			}
 
 			if(!$user->isAllowed($service->getMainEntity(), $property->name . '_edit')) {
 				$fieldMask['ui']['control']['disabled'] = true;
 			}
+
 			// debug($fieldMask['ui']);
 			// @todo vyhadzovat exceptiony ak nieco nieje nastavene OK
 			$mask['fields'][$name] = $fieldMask;
@@ -529,6 +545,10 @@ class Reflector extends Nette\Object {
 				if($control instanceof \Extras\Forms\Controls\AdvancedJson) {
 					$structure = $this->getJsonStructure($mask->entityReflection);
 					$control->setStructure((array) $structure[$ui->name]);
+				}
+
+				if($control instanceof \Extras\Forms\Controls\AdvancedDatePicker) {
+					$control->setDateType($ui->control->dateType);
 				}
 
 				if($control instanceof \Extras\Forms\Controls\AdvancedTable) {
