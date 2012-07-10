@@ -11,17 +11,19 @@ abstract class ClassType extends NClassType {
 	protected $methodClass = '\Nette\Reflection\Method';
 
 
-	// public function getAnnotation($name)
-	// {
-	// 	$res = call_user_func_array(array($this->annotationsParserClass, 'getAll'), array($this));
-	// 	return isset($res[$name]) ? end($res[$name]) : NULL;
-	// }
+	public function getAnnotation($name)
+	{
+		$annotationsParserClass = $this->annotationsParserClass;
+		$res = $annotationsParserClass::getAll($this);
+		return isset($res[$name]) ? end($res[$name]) : NULL;
+	}
 
 
-	// public function getAnnotations()
-	// {
-	// 	return call_user_func_array(array($this->annotationsParserClass, 'getAll'), array($this));
-	// }
+	public function getAnnotations()
+	{
+		$annotationsParserClass = $this->annotationsParserClass;
+		return $annotationsParserClass::getAll($this);
+	}
 
 
 	public function getMethods($filter = -1)
