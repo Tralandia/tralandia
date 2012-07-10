@@ -1,3 +1,4 @@
+
 .navbar .brand { text-shadow: 1px 1px 2px @grayDarker; }
 
 .container .inner {  }
@@ -7,6 +8,7 @@
 
 .container .inner .content h1 { #gradient > .vertical(@white, @grayMedium); margin:-9px -9px 15px -9px; font-size:22px; border: 1px solid @grayLight; padding: 10px (@gridGutterWidth/2); .border-radius(10px 10px 0 0); }
 .container .inner .content h1 .entity-id { float:right; color:@blue; }
+.container .inner .content h2 { margin-top:20px; font-size:22px; line-height:28px; }
 
 input.numeric { text-align:right; }
 input.loading { background:url('../images/loading-small.gif') no-repeat right center; }
@@ -92,6 +94,15 @@ a[href^="error:"] { background: red; color: white; }
 .modal { width: ((@gridFullWidth+20)-(1)); margin: -250px 0 0 -((@gridFullWidth+20)/2); position:absolute; }
 .modal .modal-body { padding:0; max-height:none; min-height:150px; position:relative; }
 .modal .modal-body iframe { border:none; width:100%; }
+.modal form { margin:20px 0 0; }
+.modal form.row { padding:0; }
+.modal form.row hr { margin:0 0 15px; border-bottom: 4px solid lighten(@grayLight, 20%); }
+.modal form.row table.table { border:1px solid lighten(@grayLight, 20%); }
+.modal form.row table.table th, .modal form.row table.table td { border-top:none; }
+.modal form.row table.table td:first-child { font-size:14px; color:@greenDark; vertical-align:middle; text-align:center; }
+/*.modal form.row table.table tbody tr:hover td { background:@green; }*/
+.modal form.row table input { width:95%; font-size: 11px; padding:2px; margin-bottom:2px; }
+.modal form.row table input:last-child { margin-bottom:0; }
 
 form.form .control-group { }
 form.form input[type='text'] { display:table-cell; width:100%; margin-bottom:5px; }
