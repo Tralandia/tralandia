@@ -66,7 +66,7 @@ vaculciak < development:
 	parameters:
 		database:
 			debugger: true
-			
+
 durika < development:
 	parameters:
 		database:
@@ -82,3 +82,5 @@ test < development:
 			charset: utf8
 			driver: pdo_mysql
 			unix_socket: /var/run/mysqld/mysqld.sock
+
+toth < development:
