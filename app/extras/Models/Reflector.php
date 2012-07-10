@@ -221,7 +221,7 @@ class Reflector extends Nette\Object {
 				'inlineDeleting' => array('default' => NULL), 
 				'inlineCreating' => array('default' => NULL), 
 				'startNewRow' => array('default'=> NULL),
-				'header' => array('default'=> NULL),
+				'subheading' => array('default'=> NULL),
 				'validation' => array('default'=> NULL),
 			);
 
@@ -310,8 +310,8 @@ class Reflector extends Nette\Object {
 			}
 			
 			$fieldMask['ui']['controlOptions']['renderBefore'] = NULL;
-			if($fieldMask['ui']['header']){
-				$fieldMask['ui']['controlOptions']['renderBefore'] .= Html::el('h2')->addClass('span12')->setText($fieldMask['ui']['header']);
+			if($fieldMask['ui']['subheading']){
+				$fieldMask['ui']['controlOptions']['renderBefore'] .= Html::el('h2')->addClass('span12')->setText($fieldMask['ui']['subheading']);
 			}
 
 			if($fieldMask['ui']['startNewRow']){

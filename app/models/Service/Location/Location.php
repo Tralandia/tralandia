@@ -9,13 +9,14 @@ class Location extends \Service\BaseService {
 	
 	const MAIN_ENTITY_NAME = '\Entity\Location\Location';
 
-	public function setSlug($slug) {
+	public function generateSlug() {
 
 		if(!$this->getType() instanceof \Entity\Location\Type) {
 			throw new ServiceException('Pred pridanim slugu musis definovat Type locality.');
 		}
 
-		$slug = Strings::webalize(Strings::trim($slug));
+		$slug = Strings::webalize(Strings::trim($this->name));
+		//if($this->getType()) @todo upravit generovanie slug-ov, ze ak jeho parentom je state, tak slug state-u pojde pred slug podriadeneho (alabama-birmingham) 
 		$available = $this->slugIsAvailable($slug);
 		$i = 0;
 		while (!$available) {
