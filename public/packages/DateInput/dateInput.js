@@ -381,3 +381,29 @@
 	// 	return Nette.isArray(arg) ? ((arg[0] === null || val >= arg[0]) && (arg[1] === null || val <= arg[1])) : null;
 	// };
 })(jQuery);
+
+
+$(function() {
+	$('input[data-dateinput-type="datetime"]').dateinput({
+    datetime: {
+        dateFormat: 'd.m.yy',
+        timeFormat: 'h:mm'
+    },
+    'datetime-local': {
+        dateFormat: 'd.m.yy',
+        timeFormat: 'h:mm'
+    },
+    date: {
+        dateFormat: 'd.m.yy'
+    },
+    month: {
+        dateFormat: 'MM yy'
+    },
+    week: {
+        dateFormat: "w. 'týden' yy"
+    },
+    time: {
+        timeFormat: 'h:mm'
+    }
+});
+});

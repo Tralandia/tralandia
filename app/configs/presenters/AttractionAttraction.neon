@@ -61,5 +61,5 @@ common:
 					longitude: longitude
 				startNewRow: true
 			# media:
-			# 	label: Media
+			# 	label: 
 			# 	control: multiSelect
