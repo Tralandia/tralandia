@@ -25,8 +25,6 @@ abstract class BasePresenter extends \BasePresenter {
 			15
 		);
 		$this->template->liveRentalsCount = count(\Service\Rental\RentalList::getByStatus(\Entity\Rental\Rental::STATUS_LIVE));
-
-		/******* Things @TODO *****/
 		$this->template->mainMenuItems = $this->getMainMenuItems();
 
 	}

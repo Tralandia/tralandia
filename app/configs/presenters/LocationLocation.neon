@@ -40,7 +40,8 @@ common:
 				control: 
 					type: phrase
 			slug:
-				subheading: hoho
+				subheading: Subheading One
+				startNewRow: true
 				label: Slug
 				control: 
 					type: text
@@ -73,7 +74,7 @@ common:
 				label: Iso
 				control: 
 					type: text
-				subheading: haha
+				subheading: Another subheading
 				startNewRow: true
 			iso3:
 				label: Iso3
