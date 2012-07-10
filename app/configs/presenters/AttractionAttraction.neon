@@ -60,6 +60,7 @@ common:
 					latitude: latitude
 					longitude: longitude
 				startNewRow: true
+				header: 'Bla Bla'
 			# media:
 			# 	label: 
 			# 	control: multiSelect
