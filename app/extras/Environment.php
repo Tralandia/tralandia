@@ -32,9 +32,9 @@ class Environment extends \Nette\Object {
 		}
 		return $this->language;
 	}
-	
+
 	protected function loadLanguage() {
-		return \Service\Dictionary\Language::get(38);
+		return \Service\Dictionary\Language::get(144);
 	}
 	
 }

@@ -194,6 +194,7 @@ div.formSubmitWrapper.block {
     width: 170px;
     margin: 6px 0px 0px 0px;
     padding: 6px 5px 8px 5px;
+    border:none;
 }
 .smallForm input.w105 {
     display: block;
