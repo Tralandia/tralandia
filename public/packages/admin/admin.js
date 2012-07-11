@@ -32,7 +32,10 @@ $(function() {
 		$modalBody = $('.modal-body', $modal);
 		loading = '<div class="loading-frame"></div>';
 
-		$modal.modal();
+		$modal.modal({
+			keyboard: false,
+			backdrop: 'static'
+		});
 
 		$.ajax({
 			url: link,
