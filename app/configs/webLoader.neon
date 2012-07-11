@@ -15,7 +15,15 @@ parameters:
 					- front/search.css
 					- front/clickMap.css
 					- front/home.css
+					- front/objectsList.css
+					- front/objectDetails.css
+					- front/calendar.css
 					- front/forms.css
+					- front/listPanel.css
+					- skinnedcombo/skin.css
+				js:
+					- jQuery/jquery.js
+					- skinnedcombo/jquery.skinned-combo.pack.js
 			autopilot:
 				js: 
 					- admin/admin.js
@@ -88,7 +96,6 @@ parameters:
 				js: 
 					- DateInput/timepicker.js
 					- DateInput/dateInput.js
-
 		sets:
 
 			'Admin:Ap':
