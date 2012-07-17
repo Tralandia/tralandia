@@ -378,7 +378,7 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 	// }
 
 	public function getIteratorAsServices($serviceName) {
-		$iterator = $this->getIterator();
+		$iterator = $this->list;
 		$newIterator = array();
 		foreach ($iterator as $key => $val) {
 			if($val instanceof Entity) {
