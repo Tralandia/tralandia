@@ -9,10 +9,8 @@
 				<table class="holder fbBtns">
 					<tbody><tr><td>FB coming soon</td></tr>
 				</tbody></table>
-				<a class="link" href="#">{_$rental->types[0]->name} {_$rental->locations[1]->name}</a>
-				<div class="regions" n:inner-foreach="$rental->locations as $location">
-					{if $iterator->counter > 1},{/if} <a class="region" href="#">{_$location->name}</a>
-				</div>
+				<a class="link" href="#">{_$rental->types[0]->name}</a>
+				<div class="regions" n:inner-foreach="$rental->locations as $location">{if $iterator->counter > 1},{/if} <a class="region" href="#">{_$location->name}</a></div>
 				<p class="slogan red"><b>{_$rental->teaser}</b></p>
 				<p class="description">{_$rental->description}</p>
 <!-- 
@@ -78,30 +76,33 @@
 					<div class="panelHomeTop"><h3>Kontaktujte ubytovatela</h3></div>
 					<div class="panelHomeContent">
 
-						{if $contacts['phones']}
+						{ifset $contacts->phone}
 							<div class="icon phone"></div>
 							<p>
-								{foreach $contacts['phones'] as $number}
+								{foreach $contacts->phone as $phone}
 									{if $iterator->counter==1}
-									<span class="red">{$number}</span>
+										<span class="red">{$phone}</span>
 									{else}
-									<br>{$number}
+										<br>{$phone}
 									{/if}
 								{/foreach}
 							</p>
 							<div class="cleaner"></div>
-						{/if}
+						{/ifset}
 
-						{if $contacts['url']}
+						{ifset $contacts->url}
 							<div class="icon web"></div>
 							<p>
-								<a href="{$contacts['url'][0]}" target="_blank">pozrite si WWW</a>
+								{foreach $contacts->url as $url}
+									<a href="{$url}" target="_blank">pozrite si WWW</a>
+									{breakIf $iterator->counter==1}
+								{/foreach}
 							</p>
-						{/if}
+						{/ifset}
 						<div class="cleaner"></div>
 
 						<div class="icon person"></div>
-						<p>{$contacts['names'][0]}<br><b>hovori nasledovnymi jazykmi:</b><br>CZ, HU, DE</p>
+						<p>{*$contacts['names'][0]*}<br><b>hovori nasledovnymi jazykmi:</b><br>CZ, HU, DE</p>
 						<div class="cleaner"></div>
 
 						<div class="icon more"></div>
@@ -180,7 +181,7 @@
 		</div>
 		<div class="cleaner"></div>
 
-		{control tabControl}
+		{control tabControl, $rental}
 <!--
 		<div class="tabContent">
 

@@ -27,6 +27,36 @@ class Contacts extends \Nette\Object {
 		return $this;
 	}
 
+	public function getByType($type = NULL, $limit = 15) {
+
+		if ($type!=NULL && !is_array($type)) {
+			$type = array($type);
+		}
+
+		$contacts = array();
+		foreach ($this->list as $contact) {
+			
+			$class = explode('\\', get_class($contact));
+			$class = strtolower(end($class));
+
+			if (!isset($contacts[$class])) $contacts[$class] = array();
+
+			if (
+					(is_array($type) && in_array($class, $type))
+					|| ($type && $class==$type)
+					|| (!$type)
+				)
+			{
+				$contacts[$class][] = $contact;
+			}
+
+		}
+
+		return \Nette\ArrayHash::from($contacts);
+
+	}
+
+
 	public function encode() {
 		$contacts = array();
 		if (is_array($this->list)) {

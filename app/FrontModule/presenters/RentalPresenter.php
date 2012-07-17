@@ -4,22 +4,28 @@ namespace FrontModule;
 
 class RentalPresenter extends BasePresenter {
 
-	private $rental;
+	protected $rental;
 
-	public function actionDefault($slug) {
+	public function actionDetail($rental) {
 
-		if (!$slug) {
-			throw new \Nette\InvalidArgumentException('$slug argument does not match with the expected value');
+		if (!$rental) {
+			throw new \Nette\InvalidArgumentException('$rental argument does not match with the expected value');
 		}
-		$this->rental = \Service\Rental\Rental::getBySlug($slug);
-debug($this->rental->pricelists);
+		$this->rental = \Service\Rental\Rental::get($rental);
+
 		$this->template->rental = $this->rental;
-		$this->template->amenities = $this->getAmenities();
-		$this->template->contacts = $this->separateContacts();
+		$this->template->amenities = $this->getAmenities($this->rental);
+		$this->template->contacts = $this->separateContacts($this->rental);
 
 	}
 
-	private function getAmenities($limit = 15) {
+	public function actionList() {
+
+		
+
+	}
+
+	private function getAmenities($rental, $limit = 15) {
 
 		$i=1;
 		$amenities = array();
@@ -33,34 +39,27 @@ debug($this->rental->pricelists);
 
 	}
 
-	private function separateContacts($limit = 15) {
+	private function separateContacts($rental) {
 
-		$contacts = array(
-			'phones' => array(),
-			'url' => array(),
-			'names' => array(),
-			'emails' => array()
-		);
-
-		foreach ($this->rental->contacts->list as $contact) {
-			if ($contact instanceof \Extras\Types\Phone) {
-				if ($contact->original) {
-					$contacts['phones'][] = $contact->original;
-				}
-			} else if ($contact instanceof \Extras\Types\Email) {
-				$contacts['emails'][] = $contact->data;
-			} else if ($contact instanceof \Extras\Types\Url) {
-				if ($contact->host) {
-					$contacts['url'][] = $contact->scheme . '://' . $contact->host;
-				}
-			} else if ($contact instanceof \Extras\Types\Name) {
-				if ($contact->first || $contact->middle || $contact->last) {
-					$contacts['names'][] = $contact->first .' '. $contact->middle .' '. $contact->last;
-				}
-			}
-		}
-
+		$contacts = $rental->contacts->getByType();
+		debug($contacts);
 		return $contacts;
+
+	}
+
+	// COMPONENTS
+	
+	public function createComponentListControl($name) {
+
+		$tabBar = new \BaseModule\Components\TabControl\TabControl($this, $name);
+
+		$t = $tabBar->addTab('rentals');
+		$content = new \FrontModule\Components\Rentals\RentalsList($this, 'RentalsList');
+		$t->setHeading(806)->setContent($content)->setActive();
+
+		// $t = $tabBar->addTab('about');
+		// $content = new \FrontModule\Components\RegionsPage\Regions($this, 'RegionsPage');
+		// $t->setHeading(678)->setContent($content);
 
 	}
 
