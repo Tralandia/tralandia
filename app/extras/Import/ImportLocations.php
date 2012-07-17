@@ -121,7 +121,7 @@ class ImportLocations extends BaseImport {
 		$s->nameShort = \Service\Dictionary\Phrase::get();
 		$s->nameOfficial = \Service\Dictionary\Phrase::get();
 		$s->type = $locationTypeCountry;
-		$s->parentId = 5; // north america
+		$s->parent = 5; // north america
 		$s->slug = 'usa';
 		$s->save();
 
@@ -138,7 +138,7 @@ class ImportLocations extends BaseImport {
 		$s->nameShort = \Service\Dictionary\Phrase::get();
 		$s->nameOfficial = \Service\Dictionary\Phrase::get();
 		$s->type = $locationTypeCountry;
-		$s->parentId = 5; // north america
+		$s->parent = 5; // north america
 		$s->slug = 'canada';
 		$s->save();
 
@@ -271,18 +271,18 @@ class ImportLocations extends BaseImport {
 
 			if (strlen($x['iso']) == 4) {
 				if (substr($x['iso'], 0, 2) == 'us') {
-					$location->parentId = $usa->id;
+					$location->parent = $usa->id;
 				} else if (substr($x['iso'], 0, 2) == 'ca') {
-					$location->parentId = $canada->id;
+					$location->parent = $canada->id;
 				}
 			} else {
 				$t = mysql_fetch_array(qNew('select id from location_location where oldId = '.$x['continent']));
-				$location->parentId = $t[0];
+				$location->parent = $t[0];
 			}
 
 			if ($x['domain']) $location->domain = \Service\Domain::getByDomain($x['domain']);
 
-			//debug($location->parentId); return;
+			//debug($location->parent); return;
 			//debug($location); return;
 
 			$location->save();
@@ -362,7 +362,7 @@ class ImportLocations extends BaseImport {
 
 			$location->oldId = $x['id'];
 
-			$location->parentId = \Service\Location\Location::getByOldIdAndType($x['country_id'], $countryLocationType)->id;
+			$location->parent = \Service\Location\Location::getByOldIdAndType($x['country_id'], $countryLocationType)->id;
 			//debug($location); return;
 			$location->save();
 		}
@@ -410,7 +410,7 @@ class ImportLocations extends BaseImport {
 
 			$location->oldId = $x['id'];
 
-			$location->parentId = \Service\Location\Location::getByOldIdAndType($x['country_id'], $countryLocationType)->id;
+			$location->parent = \Service\Location\Location::getByOldIdAndType($x['country_id'], $countryLocationType)->id;
 			$location->save();
 		}
 
@@ -456,7 +456,7 @@ class ImportLocations extends BaseImport {
 
 			$t = \Service\Location\Location::getByOldIdAndType($x['country_id'], $locationType);
 			if ($t) {
-				$location->parentId = $t->id;
+				$location->parent = $t->id;
 			}
 			$location->save();
 		}
@@ -506,7 +506,7 @@ class ImportLocations extends BaseImport {
 
 			$location->oldId = $x['id'];
 
-			$location->parentId = $countryLocation->id;
+			$location->parent = $countryLocation->id;
 			$location->save();
 			//debug($location); return;
 		}

@@ -109,7 +109,7 @@ class ImportRentals extends BaseImport {
 			$thisLocality = \Service\Location\Location::getByOldIdAndType($x['locality_id'], $locationTypes['locality']);
 
 			$thisNamePhrase = \Service\Dictionary\Phrase::get($thisLocality->name);
-			$thisCountry = \Service\Location\Location::get($thisLocality->parentId);
+			$thisCountry = \Service\Location\Location::get($thisLocality->parent);
 			$thisCountryNamePhrase = \Service\Dictionary\Phrase::get($thisCountry->name);
 			$rental->address = new \Extras\Types\Address(array(
 				'address' => array_filter(array($x['address'])),

@@ -12,7 +12,7 @@ class CountryPresenter extends BasePresenter {
 		$continents = \Nette\ArrayHash::from(array());
 		foreach (\Service\Location\LocationList::getByType($continentsType) as $key=>$continent) {
 			$countries[$key] = \Nette\ArrayHash::from(array());
-			foreach (\Service\Location\LocationList::getBy(array('type'=>$countriesType, 'parentId'=>$continent)) as $key2=>$country) {
+			foreach (\Service\Location\LocationList::getBy(array('type'=>$countriesType, 'parent'=>$continent)) as $key2=>$country) {
 				$countries[$key][$key2] = $country;
 			}
 			if (count($countries[$key])) $continents[$key] = $continent;

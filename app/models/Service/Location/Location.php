@@ -56,9 +56,9 @@ class Location extends \Service\BaseService {
 
 		if (!$location) $location = $this;
 
-		if ($location->parentId) {
+		if ($location->parent) {
 
-			$parentLocation = \Service\Location\Location::get($location->parentId);
+			$parentLocation = \Service\Location\Location::get($location->parent);
 
 			if ($parentLocation->type->slug == $slug) {
 

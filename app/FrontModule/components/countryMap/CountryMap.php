@@ -52,7 +52,7 @@ class CountryMap extends \BaseModule\Components\BaseControl {
 
 		$type = \Service\Location\Type::getBySlug('region');
 
-		foreach (\Service\Location\LocationList::getBy(array('parentId'=>$country, 'type'=>$type)) as $key=>$location) {
+		foreach (\Service\Location\LocationList::getBy(array('parent'=>$country, 'type'=>$type)) as $key=>$location) {
 			if (isset($location->clickMapData['coords'], $location->clickMapData['css'])) {
 				$list['regions'][$key] = $location;
 			}

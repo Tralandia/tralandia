@@ -12,7 +12,7 @@ class Regions extends \BaseModule\Components\BaseControl {
 		$country = $environment->getLocation();
 		$type = \Service\Location\Type::getBySlug('region');
 
-		$this->template->regions = \Service\Location\LocationList::getBy(array('parentId'=>$country, 'type'=>$type));
+		$this->template->regions = \Service\Location\LocationList::getBy(array('parent'=>$country, 'type'=>$type));
 
 		// $rentalsCount = \Nette\ArrayHash::from(array());
 		// foreach ($this->template->regions as $key=>$location) {

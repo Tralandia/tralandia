@@ -86,7 +86,7 @@ slug_edit:
 	manager: deny
 	admin: deny
 	
-parentId_show:
+parent_show:
 	guest: deny
 	potentialowner: deny
 	owner: deny
@@ -97,7 +97,7 @@ parentId_show:
 	manager: deny
 	admin: deny
 	
-parentId_edit:
+parent_edit:
 	guest: deny
 	potentialowner: deny
 	owner: deny

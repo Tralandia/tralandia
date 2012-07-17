@@ -14,7 +14,7 @@ class Localities extends \BaseModule\Components\BaseControl {
 
 		$localities = \Service\Location\LocationList::getBy(
 			array(
-				'parentId' => $country,
+				'parent' => $country,
 				'type' => $type,
 			)
 		);

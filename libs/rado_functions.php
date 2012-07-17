@@ -23,7 +23,7 @@ function qNew($query, $show = 0) {
 	static $link1;
 
 	if (!$link1) {
-		$link1=mysql_connect('localhost', 'root', 'root');
+		$link1=mysql_connect('127.0.0.1', 'root', 'root');
 	}
 	mysql_select_db('tralandia', $link1);
 

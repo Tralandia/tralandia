@@ -59,8 +59,8 @@ common:
 				control: 
 					type: phrase
 				class: span6
-			# parentId:
-			# 	label: ParentId
+			# parent:
+			# 	label: parent
 			# 	control: text
 			latitude:
 				label: Latitude
