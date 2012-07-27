@@ -7,11 +7,10 @@ use Nette\Application as NA,
 	Nette\Diagnostics\Debugger,
 	Nette\Utils\Html,
 	Nette\Utils\Strings,
-	DoctrineExtensions\NestedSet,
 	Extras\Models\Service,
 	Service\Dictionary as D,
 	Service as S,
-	Service\Log\Change as SLog;
+	Service\Log as SLog;
 
 class DavidPresenter extends BasePresenter {
 
@@ -26,13 +25,18 @@ class DavidPresenter extends BasePresenter {
 			'new' => array(),
 		);
 
-		$log = new S\Log\Change\ChangeLog;
+		$log = new S\Log\Change;
 		$log->setType(new S\Log\Change\ChangeType(2));
 		
 		SLog\ChangeLog::bla($email, $service, $logType, $details);
 		
 		debug($log);
 		debug($type);
+	}
+
+	public function actionHaha() {
+		$p = new \Extras\Types\Phone('234234', \Service\Location\Location::get(3)->getMainEntity());
+		debug($p->encode());
 	}
 
 	public function actionTest() {
@@ -53,10 +57,13 @@ class DavidPresenter extends BasePresenter {
 		);
 		$this->template->data = $data;
 
-		// $l = \Service\CurrencyList::getByExchangeRate('1');
-		// debug($l);
-		// debug($l->getDataSource());
-		
+		// $t = new \Extras\Cache\RouterCaching($this->context->routerCache);
+		// $t->generateSegments();
+		// $t->generateDomain();
+
+
+		$f = $this->context->ticketFetcher;
+		debug($f->getMessages('unseen', '', true));		
 	}
 
 	public function createComponentTabControl($name) {

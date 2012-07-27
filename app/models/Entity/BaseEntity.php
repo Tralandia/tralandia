@@ -3,7 +3,6 @@
 namespace Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use	Extras\UI as UI;
 
 /**
  * @ORM\MappedSuperclass()
@@ -16,7 +15,6 @@ class BaseEntity extends \Extras\Models\Entity {
 	 * @ORM\Id
 	 * @ORM\GeneratedValue
 	 * @ORM\Column(type="integer")
-	 * @UI\Control(type="hidden")
 	 */
 	protected $id;
 
@@ -91,7 +89,7 @@ class BaseEntity extends \Extras\Models\Entity {
 	 * @return \Entity\BaseEntity
 	 */
 	public function setCreated(){
-		$this->created = new \Nette\DateTime;
+		$this->created = new \Nette\DateTime();
 
 		return $this;
 	}

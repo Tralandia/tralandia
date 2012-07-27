@@ -5,7 +5,8 @@ namespace Extras\Models;
 use Nette\Object,
 	Nette\OutOfRangeException,
 	Tra\Utils\Strings,
-	Doctrine\ORM\EntityManager;
+	Doctrine\ORM\EntityManager,
+	Doctrine\ORM\Query\Expr;
 
 /**
  * Abstrakcia zoznamu
@@ -34,12 +35,15 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 	 */
 	private $list = array();
 
+	/**
+	 * @var \Doctrine\ORM\QueryBuilder
+	 */
+	private $dataSource;
 
-	public function __construct($param = NULL) {
+
+	protected function __construct($param = NULL) {
 		if(is_array($param)) {
 			$this->setList($param);
-		} else if(is_string($param)) {
-			$this->prepareBaseList($param);
 		} else if($param === NULL) {
 			// create empty list
 		} else {
@@ -47,13 +51,30 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 		}
 	}
 
-	public static function getDataSource() {
-		$query = self::getEntityManager()->createQueryBuilder();
-		$query->select('e')->from(static::getMainEntityName(), 'e');
-		return $query;
+	public function getDataSource() {
+		return $this->dataSource;
+	}
+
+	protected function setDataSource(\Doctrine\ORM\QueryBuilder $queryBuilder) {
+		$this->setList($queryBuilder->getQuery()->getResult());
+		$this->dataSource = $queryBuilder;
 	}
 
 	public static function __callStatic($name, $arguments) {
+
+		if(Strings::startsWith($name, 'getPairs')) {
+			$name = substr($name, 8);
+			if($name == '') $name = 'All';
+			$name = 'get' . $name;
+			$key = array_shift($arguments);
+			$value = array_shift($arguments);
+
+			$list = call_user_func_array(array('static', $name), $arguments);
+			$pairs = static::_getPairs($list, $key, $value);
+
+			return $pairs;
+		}
+		
 		list($nameTemp, $nameBy, $nameIn) = Strings::match($name, '~^getBy([A-Za-z]+)In([A-Za-z]+)$~');
 		if($nameTemp && $nameBy && $nameIn) {
 			$nameBy = Strings::firstLower($nameBy);
@@ -72,39 +93,76 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 		}
 	}
 
-	public static function getBy(array $criteria, array $orderBy = NULL, $limit = NULL, $offset = NULL, $entityName = NULL) {
+	private static function pripareCriteria($criteria) {
+		$return = array();
 		foreach ($criteria as $key => $value) {
 			if($value instanceof Service || $value instanceof Entity) {
-				$criteria[$key] = $value->id;
+				$value = $value->id;
+			} else if(is_array($value)) {
+				$value = static::pripareCriteria($value);
+			}
+			$return[$key] = $value;
+			
+		}
+		return $return;
+	}
+
+	public static function getAll(array $orderBy = NULL, $limit = NULL, $offset = NULL) {
+		$entityName = static::getMainEntityName();
+
+		$serviceList = new static;
+		$qb = $serviceList->getEntityManager()->createQueryBuilder();
+		$qb->select('e')
+			->from($entityName, 'e');
+		if($orderBy) {
+			foreach ($orderBy as $key => $value) {
+				$qb->addOrderBy('e.'.$key, $value);
+			}
+		}
+		if($limit) $qb->setMaxResults($limit);
+		if($offset) $qb->setFirstResult($offset);
+
+
+		$serviceList->setDataSource($qb);
+		return $serviceList;
+	}
+
+	public static function getBy(array $criteria, array $orderBy = NULL, $limit = NULL, $offset = NULL) {
+		$entityName = static::getMainEntityName();
+
+		$serviceList = new static;
+		$qb = $serviceList->getEntityManager()->createQueryBuilder();
+		$qb->select('e')
+			->from($entityName, 'e');
+
+
+		foreach (static::pripareCriteria($criteria) as $key => $value) {
+			if(is_array($value)) {
+				if (count($value)) {
+					$qb->andWhere($qb->expr()->in('e.'.$key, $value));
+				}
+			} else {
+				$qb->andWhere('e.'.$key.' = :'.$key)
+					->setParameter($key, $value);
 			}
 		}
 
-		if($entityName === NULL) {
-			$entityName = static::getMainEntityName();
-		}
 
-		$serviceList = new static;
-		$repository = $serviceList->getEm()->getRepository($entityName);
-		$serviceList->setList($repository->findBy($criteria, $orderBy, $limit, $offset));
+		if($orderBy) {
+			foreach ($orderBy as $key => $value) {
+				$qb->addOrderBy('e.'.$key, $value);
+			}
+		}
+		if($limit) $qb->setMaxResults($limit);
+		if($offset) $qb->setFirstResult($offset);
+
+
+		$serviceList->setDataSource($qb);
 		return $serviceList;
 	}
 
-	public static function getAll(array $orderBy = NULL, $limit = NULL, $offset = NULL, $entityName = NULL) {
-		if($entityName === NULL) {
-			$entityName = static::getMainEntityName();
-		}
-
-		$serviceList = new static;
-		$repository = $serviceList->getEm()->getRepository($entityName);
-		$serviceList->setList($repository->findBy(array(), $orderBy, $limit, $offset));
-		return $serviceList;
-	}
-
-
-	public static function getByIn($nameBy, $nameIn, $by, array $in, array $orderBy = NULL, $limit = NULL, $offset = NULL, $entityName = NULL) {
-		if($entityName === NULL) {
-			$entityName = static::getMainEntityName();
-		}
+	public static function getByIn($nameBy, $nameIn, $by, array $in, array $orderBy = NULL, $limit = NULL, $offset = NULL) {
+		$entityName = static::getMainEntityName();
 
 		$parsedIn = array();
 		foreach ($in as $key => $value) {
@@ -130,21 +188,126 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 		}
 		if($limit) $qb->setMaxResults($limit);
 		if($offset) $qb->setFirstResult($offset);
-		$serviceList->setList($qb->getQuery()->getResult());
+		$serviceList->setDataSource($qb);
 
 		return $serviceList;
 
 	}
 
 
+	/** 
+	 * return array
+	 */
+	public static function getPairs($keyName, $valueName = NULL, $criteria = NULL, $orderBy = NULL, $limit = NULL, $offset = NULL) {
+		$serviceList = self::_getPairs($keyName, $valueName, $criteria, $orderBy, $limit, $offset);
+		$return = array();
 
-	protected function prepareBaseList($entity) {
-		$query = $this->getEm()->createQueryBuilder();
-		$query->select('e')->from($entity, 'e');
-		$this->setList($query->getQuery()->getResult());
+		foreach($serviceList as $item) {
+			$key = array_shift($item);
+			$value = array_shift($item);
+
+			$return[$key] = $value;
+		}
+
+		return $return;
 	}
 
-	public function setList($list) {
+	/** 
+	 * return array
+	 */
+	public static function getTranslatedPairs($keyName, $valueName, $criteria = NULL, $orderBy = NULL, $limit = NULL, $offset = NULL) {
+		if(isset($orderBy[$valueName])) $orderByName = true;
+		else $orderByName = false;
+		$valueName = array($valueName, 'id');
+		$serviceList = self::_getPairs($keyName, $valueName, $criteria, $orderBy, $limit, $offset);
+
+		$translator = Service::getTranslator();
+		$return = array();
+		foreach($serviceList as $item) {
+			$return[$item['key']] = $translator->translate($item['value']);
+		}
+
+		if($orderByName) asort($return);
+
+		return $return;
+	}
+ 
+	protected static function _getPairs($keyName, $valueName = NULL, $criteria = NULL, $orderBy = NULL, $limit = NULL, $offset = NULL) {
+		$valuePropertyName = NULL;
+		if(is_array($valueName) || $valueName instanceof \Traversable) {
+			$valueNameTemp = (array) $valueName;
+			$valueName = array_shift($valueNameTemp);
+			$valuePropertyName = array_shift($valueNameTemp);
+		}
+
+		$entityName = static::getMainEntityName();
+
+		$serviceList = new static;
+		$qb = $serviceList->getEntityManager()->createQueryBuilder();
+
+		if($valuePropertyName) {
+			$select = array("e.$keyName AS key", "p.$valuePropertyName AS value");
+		} else {
+			$select = array("e.$keyName AS key", "e.$valueName AS value");
+		}
+		$qb->select($select)
+			->from($entityName, 'e');
+
+		if($valuePropertyName) $qb->join('e.'.$valueName, 'p');
+
+		if(is_array($criteria) || $criteria instanceof \Traversable) {
+			foreach (static::pripareCriteria($criteria) as $key => $value) {
+				if(is_array($value) || $value instanceof \Traversable) {
+					$qb->andWhere($qb->expr()->in('e.'.$key, $value));
+				} else {
+					$qb->andWhere('e.'.$key.' = :'.$key)
+						->setParameter($key, $value);
+				}
+			}
+		}
+
+
+		if($orderBy) {
+			foreach ($orderBy as $key => $value) {
+				$qb->addOrderBy('e.'.$key, $value);
+			}
+		}
+		if($limit) $qb->setMaxResults($limit);
+		if($offset) $qb->setFirstResult($offset);
+
+
+		$serviceList->setDataSource($qb);
+
+		return $serviceList;
+	}
+
+	public static function getSuggestions($property, $search, $language) {
+		$entityName = static::getMainEntityName();
+
+		$suggestoin = array();
+		if($language) {
+			$phraseList = new \Service\Dictionary\PhraseList;
+			$qb = $phraseList->getEntityManager()->createQueryBuilder();
+
+			$qb->select('e.id', 't.translation')
+				->from($entityName, 'e')
+				->join('e.name', 'p')
+				->join('p.translations', 't', Expr\Join::WITH, 't.language = :language')
+				->join('p.type', 'ty', Expr\Join::WITH, 'ty.entityName = :entityName')
+				->where('t.translation LIKE :search')
+				->setParameter(':language', $language->id)
+				->setParameter(':entityName', $entityName)
+				->setParameter(':search', "%$search%");
+
+			$phraseList->setDataSource($qb);
+			$suggestoin = $phraseList->toArray('id', 'translation');
+		}
+		
+		return $suggestoin;
+	}
+
+
+	protected function setList($list) {
 		$this->list = $list;
 		$this->iteratorPosition = 0;
 	}
@@ -192,6 +355,14 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 		return $this;
 	}
 
+	public function toArray($keyName = NULL, $valueName = NULL) {
+		$array = array();
+		foreach ($this as $key => $value) {
+			$array[$keyName? $value[$keyName] :$key] = $valueName ? $value[$valueName] : $value; 
+		}
+		return $array;
+	}
+
 	// /**
 	//  * Vracia iterator nad vsetkymi polozkami
 	//  * @return \ArrayIterator
@@ -207,7 +378,7 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 	// }
 
 	public function getIteratorAsServices($serviceName) {
-		$iterator = $this->getIterator();
+		$iterator = $this->list;
 		$newIterator = array();
 		foreach ($iterator as $key => $val) {
 			if($val instanceof Entity) {
@@ -221,6 +392,14 @@ abstract class ServiceList extends Object implements \ArrayAccess, \Countable, \
 		}
 		return $newIterator;
 	}
+
+
+	public function fetch() {
+		$return = current($this->list);
+		next($this->list);
+		return $return;
+	}
+
 
 	/* --------------------- Inherited methods from Countable --------------------- */
 	/**

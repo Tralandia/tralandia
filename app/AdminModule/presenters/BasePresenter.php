@@ -3,12 +3,28 @@
 namespace AdminModule;
 
 use Nette\Environment;
+use Nette\Security\User;
 
 abstract class BasePresenter extends \BasePresenter {
 	
 	protected function startup() {
-		$this->autoCanonicalize = FALSE;
+		// $this->autoCanonicalize = FALSE;
 		parent::startup();
+
+		if (!$this->user->isLoggedIn()) {
+			if ($this->user->getLogoutReason() === User::INACTIVITY) {
+				$this->flashMessage('Session timeout, you have been logged out', 'warning');
+			}
+			$backlink = $this->storeRequest();
+			$this->redirect(':Front:Sign:in', array('backlink' => $backlink));
+		} else {
+			list($model, ) = explode(':', $this->name, 2);
+			if (!$this->user->isAllowed($this->name, $this->action) && !$this->user->isAllowed($model.':Base', $this->action)) {
+				$this->flashMessage('Hey dude! You don\'t have permissions to view that page.', 'warning');
+				$this->restoreRequest($this->getPreviousBackLink());
+			}
+		}
+
 	}
 
 /*
@@ -18,6 +34,20 @@ abstract class BasePresenter extends \BasePresenter {
 		$set->addMacro('url', 'echo \Tools::link($control, %node.array);');
 	}
 */
+
+	public function beforeRender() {
+		parent::beforeRender();
+		$this->setRenderMode();
+	}
+
+	public function setRenderMode() {
+		if(isset($this->params['display']) && $this->params['display'] == 'modal') {
+			// $this->formMask->form->addClass .= ' ajax';
+			$this->setLayout(false);
+			$this->template->display = 'modal';
+		}
+	}
+
 	
 	public function formatTemplateFiles() {
 		$name = $this->getName();
@@ -49,4 +79,60 @@ abstract class BasePresenter extends \BasePresenter {
 		} while ($dir && ($name = substr($name, 0, strrpos($name, ':'))));
 		return $list;
 	}
+
+	public function createComponentNavigation($name){
+		$navigation = new \AdminModule\Components\Navigation($this, $name);
+		$navigation->user = $this->user;
+		return $navigation;
+	}
+
+	/**
+	 * @acl(forPresenter=BasePresenter)
+	 */
+	public function actionDecodeNeon() {
+		$input = $this->getHttpRequest()->getPost('input', '');
+		try {
+			$decoded = \Nette\Utils\Neon::decode($input);
+			$output = \Nette\Diagnostics\Debugger::dump($decoded, true);
+		} catch(\Nette\Utils\NeonException $e) {
+			$output = $e->getMessage();
+		}
+
+		$this->payload->output = $output;
+		$this->sendPayload();
+	}
+
+	/**
+	 * @acl(forPresenter=BasePresenter)
+	 */
+	public function actionLiveWysi() {
+
+		$content = $this->getHttpRequest()->getPost('content', '');
+
+		$type = \Service\Emailing\TemplateType::get(1);
+
+		foreach ($this->availableVariables as $variable => $variableData) {
+			$content = str_replace('[' . $variable . ']', $variableData['example'], $content);
+		}
+
+		$this->payload->content = $content;
+		$this->sendPayload();
+
+	}
+
+	/**
+	 * @acl(forPresenter=BasePresenter)
+	 */
+	public function actionSuggestion($serviceList, $property, $search, $language) {
+
+		$language = \Service\Dictionary\Language::get($language);
+		$suggestion = $serviceList::getSuggestions($property, $search, $language);
+
+		// @todo dorobit replace premennych
+
+		$this->payload->suggestion = $suggestion;
+		$this->sendPayload();
+
+	}
+
 }

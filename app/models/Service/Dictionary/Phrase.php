@@ -23,7 +23,7 @@ class Phrase extends \Service\BaseService {
 		}
 	}
 
-	public function getTranslation($language) {
+	public function getTranslation($language, $returnTranslationAsString = FALSE) {
 		if($language instanceof Language) {
 			$language = $language->getMainEntity();
 		} else if($language instanceof \Entity\Dictionary\Language) {
@@ -42,7 +42,19 @@ class Phrase extends \Service\BaseService {
 			}
 		}
 
-		return $data ? Translation::get($data) : NULL;
+		return $data ? ($returnTranslationAsString ? Translation::get($data)->translation : Translation::get($data)) : NULL;
+	}
+
+	public function hasTranslation($language) {
+		if($language instanceof Language) {
+			$language = $language->getMainEntity();
+		} else if($language instanceof \Entity\Dictionary\Language) {
+
+		} else {
+			throw new \Nette\InvalidArgumentException('$language argument does not match with the expected value');
+		}
+
+		return (bool) $this->getTranslation($language);
 	}
 
 	public function duplicate($save = FALSE) {

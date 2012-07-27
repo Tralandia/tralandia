@@ -12,16 +12,19 @@ class CoolForm extends Form {
 
 	const AJAX_CLASS = 'ajax';
 
-    public function __construct(\Nette\ComponentModel\IContainer $parent = NULL, $name = NULL) {
+	public function __construct(\Nette\ComponentModel\IContainer $parent = NULL, $name = NULL) {
 		parent::__construct($parent, $name);
-		$this->getElementPrototype()->class(self::AJAX_CLASS);
-		$this->addProtection('Validity expired form.');
+
+		// $this->addProtection('Validity expired form.');
 		//$this->setTranslator(Environment::getService('translator'));
 		$this->onError[] = callback($this, 'onInvalid');
-    }
+		if ($this->getParam('invalidate', false)) {
+			$this->valid = FALSE;
+		}
+	}
 
 	public function ajax($flag = true) {
-		$flag ? $this->getElementPrototype()->class(self::AJAX_CLASS) : $this->getElementPrototype()->class(null);
+		$flag ? $this->getElementPrototype()->class(self::AJAX_CLASS) : NULL;
 	}
 
 	public function &__get($name) {
@@ -34,17 +37,26 @@ class CoolForm extends Form {
 	}
 
 	public function onInvalid(Form $form) {
-		foreach ($form->getErrors() AS $error) {
-			$this->parent->flashMessage($error, 'error');
+		if ($this->getParam('invalidate', false)) {
+			//$form->cleanErrors();
+			$this->parent->invalidateControl($this->getName());
+		} else {
+			foreach ($form->getErrors() AS $error) {
+				$this->parent->flashMessage($error, 'error');
+			}
 		}
 	}
 
-	public function getUser() {
-		return $this->em->find('User', $this->parent->user->id);
+	// public function getUser() {
+	// 	return $this->em->find('User', $this->parent->user->id);
+	// }
+
+	public function getHtmlId() {
+		return $this->getElementPrototype()->getId();
 	}
 
-	public function getParam($key) {
-		return $this->parent->getParam($key);
+	public function getParam($key, $default = null) {
+		return $this->parent->getParam($key, $default);
 	}
 
 	public function flashMessage($message, $type = 'info') {

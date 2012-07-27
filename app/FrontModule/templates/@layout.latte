@@ -10,7 +10,7 @@
 			{include search.latte}
 			{include footer.latte}
 		</div>
-		<div class="mainHeader" style="background-image: url({$staticPath}images/sk.country.png);">
+		<div class="mainHeader" style="background-image: url({!$staticPath}images/{$currentLocation->iso}.country.png);">
 			{include header.latte}
 		</div>
 	</div>

@@ -7,7 +7,9 @@ use Service\Dictionary as D,
 
 class Translator implements \Nette\Localization\ITranslator {
 
-	protected $language = 144;
+	const DEFAULT_LANGUAGE = 38;
+
+	protected $language = 38;
 	protected $cache;
 
 	public function __construct(Environment $environment, Caching\IStorage $cacheStorage) {
@@ -20,27 +22,37 @@ class Translator implements \Nette\Localization\ITranslator {
 
 		return $translation;
 	}
+
+	public function getDefaultLanguage() {
+
+		return D\Language::get(self::DEFAULT_LANGUAGE);
+	}
+
 	
 	protected function getTranslation($phrase) {
 		if($phrase instanceof D\Phrase || $phrase instanceof \Entity\Dictionary\Phrase) {
-			$translationKey = $phrase->id;
+			$phraseId = $phrase->id;
 		} else {
-			$translationKey = $phrase;
+			$phraseId = $phrase;
 		}
-		$translationKey .= '_'.$this->language->id;
+		$translationKey = $phraseId.'_'.$this->language->id;
 		
 		if(!$translation = $this->cache->load($translationKey)) {
+			$translation = null;
+			
 			if(!$phrase instanceof D\Phrase) {
 				$phrase = D\Phrase::get($phrase);
+				if(!$phrase) {
+					$translation = '{!'.$phraseId.'!}';
+				}
 			}
 
-			$translation = null;
-			if ($translation = $phrase->getTranslation($this->language)) {
+			if (!$translation && $translation = $phrase->getTranslation($this->language)) {
 				$translation = $translation->translation;
 			}
 			$this->cache->save($translationKey, $translation);
 		}
-
+		if($translation === NULL) $translation = '{'.$phraseId.'|'.$this->language->iso.'}';
 		return $translation;
 	}
 

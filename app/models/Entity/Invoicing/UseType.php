@@ -4,10 +4,14 @@ namespace Entity\Invoicing;
 
 use Entity\Dictionary;
 use Doctrine\ORM\Mapping as ORM;
+use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="invoicing_use")
+ * @ORM\Table(name="invoicing_usetype", indexes={@ORM\index(name="slug", columns={"slug"})})
+ * @EA\Service(name="\Service\Invoicing\UseType")
+ * @EA\ServiceList(name="\Service\Invoicing\UseTypeList")
+ * @EA\Primary(key="id", value="slug")
  */
 class UseType extends \Entity\BaseEntity {
 
@@ -16,6 +20,12 @@ class UseType extends \Entity\BaseEntity {
 	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $name;
+
+	/**
+	 * @var slug
+	 * @ORM\Column(type="slug")
+	 */
+	protected $slug;
 
 	/**
 	 * @var Collection
@@ -30,6 +40,22 @@ class UseType extends \Entity\BaseEntity {
 	protected $marketings;
 
 	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -59,6 +85,23 @@ class UseType extends \Entity\BaseEntity {
 	 */
 	public function getName() {
 		return $this->name;
+	}
+		
+	/**
+	 * @param slug
+	 * @return \Entity\Invoicing\UseType
+	 */
+	public function setSlug($slug) {
+		$this->slug = $slug;
+
+		return $this;
+	}
+		
+	/**
+	 * @return slug|NULL
+	 */
+	public function getSlug() {
+		return $this->slug;
 	}
 		
 	/**

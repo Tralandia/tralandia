@@ -4,20 +4,21 @@ namespace Entity\Dictionary;
 
 use Entity\Dictionary;
 use Doctrine\ORM\Mapping as ORM;
+use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="dictionary_type")
+ * @ORM\Table(name="dictionary_type", indexes={@ORM\index(name="entityName", columns={"entityName"}), @ORM\index(name="entityAttribute", columns={"entityAttribute"}), @ORM\index(name="translationLevelRequirement", columns={"translationLevelRequirement"}), @ORM\index(name="pluralsRequired", columns={"pluralsRequired"}), @ORM\index(name="genderVariationsRequired", columns={"genderVariationsRequired"}), @ORM\index(name="locativesRequired", columns={"locativesRequired"}), @ORM\index(name="positionRequired", columns={"positionRequired"}), @ORM\index(name="checkingRequired", columns={"checkingRequired"})})
+ * @EA\Service(name="\Service\Dictionary\Type")
+ * @EA\ServiceList(name="\Service\Dictionary\TypeList")
+ * @EA\Primary(key="id", value="name")
  */
 class Type extends \Entity\BaseEntity {
 
-	const TRANSLATION_LEVEL_PASSIVE = 0;
-	const TRANSLATION_LEVEL_ACTIVE = 2;
-	const TRANSLATION_LEVEL_NATIVE = 4;
-	const TRANSLATION_LEVEL_MARKETING = 6;
-
-	const REQUIRED_LANGUAGES_SUPPORTED = 'supportedLanguages';
-	const REQUIRED_LANGUAGES_INCOMING = 'incomingLanguages';
+	const TRANSLATION_LEVEL_PASSIVE = 'passive';
+	const TRANSLATION_LEVEL_ACTIVE = 'active';
+	const TRANSLATION_LEVEL_NATIVE = 'native';
+	const TRANSLATION_LEVEL_MARKETING = 'marketing';
 
 	/**
 	 * @var string
@@ -30,13 +31,6 @@ class Type extends \Entity\BaseEntity {
 	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $entityName;
-
-	/**
-	 * @var string
-	 * @ORM\Column(type="string")
-	 * "supportedLanguages", "incomingLanguages" or list of IDs separated by ",": ",1,2,3,4,"
-	 */
-	protected $requiredLanguages;
 	
 	/**
 	 * @var string
@@ -45,8 +39,8 @@ class Type extends \Entity\BaseEntity {
 	protected $entityAttribute;
 
 	/**
-	 * @var integer
-	 * @ORM\Column(type="integer")
+	 * @var string
+	 * @ORM\Column(type="string")
 	 */
 	protected $translationLevelRequirement = FALSE;
 
@@ -54,19 +48,27 @@ class Type extends \Entity\BaseEntity {
 	 * @var boolean
 	 * @ORM\Column(type="boolean")
 	 */
-	protected $multitranslationRequired = FALSE;
+	protected $pluralsRequired = FALSE;
+
+	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean")
+	 * whether we need to know the gender of this word / translation, for example "chata" is feminine
+	 */
+	protected $genderRequired = FALSE;
+
+	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean")
+	 * whether we need the variations of expression based on gender, for example "lacny" could be "lacne" etc.
+	 */
+	protected $genderVariationsRequired = FALSE;
 
 	/**
 	 * @var boolean
 	 * @ORM\Column(type="boolean")
 	 */
-	protected $genderNumberRequired = FALSE;
-
-	/**
-	 * @var boolean
-	 * @ORM\Column(type="boolean")
-	 */
-	protected $locativeRequired = FALSE;
+	protected $locativesRequired = FALSE;
 
 	/**
 	 * @var boolean
@@ -76,9 +78,9 @@ class Type extends \Entity\BaseEntity {
 
 	/**
 	 * @var boolean
-	 * @ORM\Column(type="boolean")
+	 * @ORM\Column(type="boolean", nullable=true)
 	 */
-	protected $webalizedRequired = FALSE;
+	protected $checkingRequired;
 
 	/**
 	 * @var string
@@ -86,18 +88,19 @@ class Type extends \Entity\BaseEntity {
 	 */
 	protected $helpForTranslator;
 
+
 	/**
-	 * @var boolean
-	 * @ORM\Column(type="boolean", nullable=true)
+	 * @var integer
+	 * @ORM\Column(type="integer")
+	 * in EUR
 	 */
-	protected $checkingRequired;
+	protected $monthlyBudget = 0;
+
+
+	public function isSimple() {
+		return !$this->pluralsRequired && !$this->genderVariationsRequired && !$this->locativesRequired && !$this->positionRequired;
+	}
 	
-
-	
-
-
-
-
 
 //@entity-generator-code <--- NEMAZAT !!!
 
@@ -162,23 +165,6 @@ class Type extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Dictionary\Type
 	 */
-	public function setRequiredLanguages($requiredLanguages) {
-		$this->requiredLanguages = $requiredLanguages;
-
-		return $this;
-	}
-		
-	/**
-	 * @return string|NULL
-	 */
-	public function getRequiredLanguages() {
-		return $this->requiredLanguages;
-	}
-		
-	/**
-	 * @param string
-	 * @return \Entity\Dictionary\Type
-	 */
 	public function setEntityAttribute($entityAttribute) {
 		$this->entityAttribute = $entityAttribute;
 
@@ -202,7 +188,7 @@ class Type extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param integer
+	 * @param string
 	 * @return \Entity\Dictionary\Type
 	 */
 	public function setTranslationLevelRequirement($translationLevelRequirement) {
@@ -212,7 +198,7 @@ class Type extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return integer|NULL
+	 * @return string|NULL
 	 */
 	public function getTranslationLevelRequirement() {
 		return $this->translationLevelRequirement;
@@ -222,8 +208,8 @@ class Type extends \Entity\BaseEntity {
 	 * @param boolean
 	 * @return \Entity\Dictionary\Type
 	 */
-	public function setMultitranslationRequired($multitranslationRequired) {
-		$this->multitranslationRequired = $multitranslationRequired;
+	public function setPluralsRequired($pluralsRequired) {
+		$this->pluralsRequired = $pluralsRequired;
 
 		return $this;
 	}
@@ -231,16 +217,16 @@ class Type extends \Entity\BaseEntity {
 	/**
 	 * @return boolean|NULL
 	 */
-	public function getMultitranslationRequired() {
-		return $this->multitranslationRequired;
+	public function getPluralsRequired() {
+		return $this->pluralsRequired;
 	}
 		
 	/**
 	 * @param boolean
 	 * @return \Entity\Dictionary\Type
 	 */
-	public function setGenderNumberRequired($genderNumberRequired) {
-		$this->genderNumberRequired = $genderNumberRequired;
+	public function setGenderRequired($genderRequired) {
+		$this->genderRequired = $genderRequired;
 
 		return $this;
 	}
@@ -248,16 +234,16 @@ class Type extends \Entity\BaseEntity {
 	/**
 	 * @return boolean|NULL
 	 */
-	public function getGenderNumberRequired() {
-		return $this->genderNumberRequired;
+	public function getGenderRequired() {
+		return $this->genderRequired;
 	}
 		
 	/**
 	 * @param boolean
 	 * @return \Entity\Dictionary\Type
 	 */
-	public function setLocativeRequired($locativeRequired) {
-		$this->locativeRequired = $locativeRequired;
+	public function setGenderVariationsRequired($genderVariationsRequired) {
+		$this->genderVariationsRequired = $genderVariationsRequired;
 
 		return $this;
 	}
@@ -265,8 +251,25 @@ class Type extends \Entity\BaseEntity {
 	/**
 	 * @return boolean|NULL
 	 */
-	public function getLocativeRequired() {
-		return $this->locativeRequired;
+	public function getGenderVariationsRequired() {
+		return $this->genderVariationsRequired;
+	}
+		
+	/**
+	 * @param boolean
+	 * @return \Entity\Dictionary\Type
+	 */
+	public function setLocativesRequired($locativesRequired) {
+		$this->locativesRequired = $locativesRequired;
+
+		return $this;
+	}
+		
+	/**
+	 * @return boolean|NULL
+	 */
+	public function getLocativesRequired() {
+		return $this->locativesRequired;
 	}
 		
 	/**
@@ -290,8 +293,17 @@ class Type extends \Entity\BaseEntity {
 	 * @param boolean
 	 * @return \Entity\Dictionary\Type
 	 */
-	public function setWebalizedRequired($webalizedRequired) {
-		$this->webalizedRequired = $webalizedRequired;
+	public function setCheckingRequired($checkingRequired) {
+		$this->checkingRequired = $checkingRequired;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Dictionary\Type
+	 */
+	public function unsetCheckingRequired() {
+		$this->checkingRequired = NULL;
 
 		return $this;
 	}
@@ -299,8 +311,8 @@ class Type extends \Entity\BaseEntity {
 	/**
 	 * @return boolean|NULL
 	 */
-	public function getWebalizedRequired() {
-		return $this->webalizedRequired;
+	public function getCheckingRequired() {
+		return $this->checkingRequired;
 	}
 		
 	/**
@@ -330,28 +342,19 @@ class Type extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param boolean
+	 * @param integer
 	 * @return \Entity\Dictionary\Type
 	 */
-	public function setCheckingRequired($checkingRequired) {
-		$this->checkingRequired = $checkingRequired;
+	public function setMonthlyBudget($monthlyBudget) {
+		$this->monthlyBudget = $monthlyBudget;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Type
+	 * @return integer|NULL
 	 */
-	public function unsetCheckingRequired() {
-		$this->checkingRequired = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return boolean|NULL
-	 */
-	public function getCheckingRequired() {
-		return $this->checkingRequired;
+	public function getMonthlyBudget() {
+		return $this->monthlyBudget;
 	}
 }

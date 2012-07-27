@@ -10,7 +10,7 @@ use Nette\Application as NA,
 	Extras\Models\Service,
 	Service\Dictionary as D,
 	Service as S,
-	Service\Log\Change as SLog;
+	Service\Log as SLog;
 
 class ImportCompanies extends BaseImport {
 
@@ -29,19 +29,15 @@ class ImportCompanies extends BaseImport {
 	private function importCompanies() {
 		$r = q('select * from companies order by id');
 
-		$dictionaryTypeRegistrator = $this->createDictionaryType('\Company\Company', 'registrator', 'supportedLanguages', 'ACTIVE');
+		$dictionaryTypeRegistrator = $this->createDictionaryType('\Company\Company', 'registrator', 'ACTIVE');
 
 		while($x = mysql_fetch_array($r)) {
 			$s = S\Company\Company::get();
 			$s->oldId = $x['id'];
 			$s->name = $x['name'];
 
-			$s->address = new \Extras\Types\Address(array(
-				'address' => array_filter(array($x['address'], $x['address2'])),
-				'postcode' => $x['postcode'],
-				'locality' => $x['locality'],
-				'country' => getByOldId('\Location\Location', $x['countries_id']),
-			));
+			// $s->address = new \Extras\Types\Address($x['address'], $x['address2'], $x['locality'], $x['postcode'], getByOldId('\Location\Location', $x['countries_id']);
+
 			$s->companyId = $x['company_id'];
 			$s->companyVatId = $x['company_vat_id'];
 			$s->vat = $x['vat'];
@@ -61,7 +57,7 @@ class ImportCompanies extends BaseImport {
 	private function importOffices() {
 		$r = q('select * from virtual_offices order by id');
 
-		$dictionaryTypeRegistrator = $this->createDictionaryType('\Company\Company', 'registrator', 'supportedLanguages', 'ACTIVE');
+		$dictionaryTypeRegistrator = $this->createDictionaryType('\Company\Company', 'registrator', 'ACTIVE');
 
 		$countryLocationType = \Service\Location\Type::getBySlug('country');
 
@@ -86,7 +82,7 @@ class ImportCompanies extends BaseImport {
 	private function importBankAccounts() {
 		$r = q('select * from bank_accounts order by id');
 
-		$dictionaryTypeRegistrator = $this->createDictionaryType('\Company\Company', 'registrator', 'supportedLanguages', 'ACTIVE');
+		$dictionaryTypeRegistrator = $this->createDictionaryType('\Company\Company', 'registrator', 'ACTIVE');
 
 		$countryLocationType = \Service\Location\Type::getBySlug('country');
 

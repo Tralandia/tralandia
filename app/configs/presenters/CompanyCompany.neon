@@ -1,0 +1,87 @@
+common:
+	service: Service\Company\Company
+	title: Company / Company
+	h1: 'Company / Company -> %name%'
+	grid:
+		columns:
+			id:
+				label: ID
+				mapper: e.id
+			name:
+				label: Name
+				mapper: e.name
+			companyId:
+				label: Company Id
+				mapper: e.companyId
+			companyVatId:
+				label: Company Vat Id
+				mapper: e.companyVatId
+			vat:
+				label: Vat
+				mapper: e.vat
+				cellStyle: text-align:right;
+				headerStyle: text-align:right;
+
+	form:
+		fields:
+			name:
+				label: Name
+				control:
+					type: text
+			companyId:
+				label: CompanyId
+				control: 
+					type: text
+			companyVatId:
+				label: CompanyVatId
+				control: 
+					type: text
+			vat:
+				label: Vat
+				control: 
+					type: text
+			bankAccounts:
+				startNewRow: true
+				label: BankAccounts
+				class: span6
+				control: 
+					type: checkboxList
+					columns: 2
+					columnClass: span3
+					callback: 
+						class: \Service\Company\BankAccountList
+						method: getPairs
+						#params: [id, bankName]
+						params: [id, bankName, NULL, [bankName: ASC]]
+			address:
+				label: Address
+				control: 
+					type: address
+					callback: {class: \Service\Location\LocationList, method: getTranslatedPairs, params: [id, name, [type: 3], [name: ASC]]}
+			countries:
+				label: Countries
+				class: span3
+				startNewRow: false
+				control: 
+					type: bricksList
+					callback: {class: \Service\Location\LocationList, method: getTranslatedPairs, params: [id, name]}
+				inlineEditing: LocationLocation:edit
+				inlineCreating: LocationLocation:add
+			offices:
+				startNewRow: true
+				label: Offices
+				class: span6
+				control: 
+					type: checkboxList
+					columns: 2
+					columnClass: span3
+					callback: 
+						class: \Service\Company\OfficeList
+						method: getPairs
+						params: [id, name, NULL, [name: ASC]]
+			registrator:
+				class: span6
+				label: Registrator
+				control: 
+					type: phrase
+				inlineEditing: DictionaryPhrase:edit

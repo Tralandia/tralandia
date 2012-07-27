@@ -9,19 +9,86 @@ use Nette\Templating\Helpers,
 	Nette\Image;
 
 Helpers::$dateFormat = Tools::$datetimeFormat;
-FormContainer::extensionMethod('addDatePicker', 'Tools::addDatePicker');
-FormContainer::extensionMethod('addDateTimePicker', 'Tools::addDateTimePicker');
 FormContainer::extensionMethod('addComboSelect', 'Tools::addComboSelect');
 Selection::extensionMethod('fetchTree', 'Tools::selectionTree');
 Image::extensionMethod('resizeCrop', 'Tools::resizeCrop');
+
+Extras\Forms\Controls\AdvancedGmap::register();
+Extras\Forms\Controls\AdvancedContacts::register();
+Extras\Forms\Controls\AdvancedAddress::register();
+Extras\Forms\Controls\AdvancedBricksList::register();
+Extras\Forms\Controls\AdvancedCheckbox::register();
+Extras\Forms\Controls\AdvancedCheckboxList::register();
+Extras\Forms\Controls\AdvancedDatePicker::register();
+Extras\Forms\Controls\AdvancedFileManager::register();
+Extras\Forms\Controls\AdvancedJson::register();
+Extras\Forms\Controls\AdvancedMultiSelect::register();
+Extras\Forms\Controls\AdvancedNeon::register();
+Extras\Forms\Controls\AdvancedPhrase::register();
+Extras\Forms\Controls\AdvancedPrice::register();
+Extras\Forms\Controls\AdvancedSelect::register();
+Extras\Forms\Controls\AdvancedSuggestion::register();
+Extras\Forms\Controls\AdvancedTable::register();
+Extras\Forms\Controls\AdvancedText::register();
+Extras\Forms\Controls\AdvancedTextarea::register();
+Extras\Forms\Controls\AdvancedTinymce::register();
+Extras\Forms\Controls\AdvancedUpload::register();
 
 function debug() {
 	return Tools::dump(func_get_args());
 }
 
-function debuge() {
-	Tools::dump(func_get_args());
-	exit;
+function d() {
+	return Tools::dump(func_get_args());
+}
+
+function rrmdir($dir) {
+	$fp = opendir($dir);
+	if ( $fp ) {
+		while ($f = readdir($fp)) {
+			$file = $dir . "/" . $f;
+			if ($f == "." || $f == "..") {
+				continue;
+			} else if (is_dir($file) && !is_link($file)) {
+				rrmdir($file);
+			} else {
+				unlink($file);
+			}
+		}
+		closedir($fp);
+		rmdir($dir);
+	}
+}
+
+/**
+ * PHP workaround for direct usage of created class
+ *
+ * <code>
+ *  // echo new Person()->name; // does not work in PHP
+ *  echo c(new Person)->name;
+ * </code>
+ *
+ * @author   Jan Tvrdík
+ * @param    object
+ * @return   object
+ */
+function c($instance) {
+	return $instance;
+}
+
+/**
+ * PHP workaround for direct usage of cloned instances
+ *
+ * <code>
+ *  echo cl($startTime)->modify('+1 day')->format('Y-m-d');
+ * </code>
+ *
+ * @author   Jan Tvrdík
+ * @param    object
+ * @return   object
+ */
+function cl($instance) {
+	return clone $instance;
 }
 
 class Tools {
@@ -45,14 +112,6 @@ class Tools {
 			return $params[0][0];
 		}
 		return NULL;
-	}
-
-	public static function addDatePicker(FormContainer $_this, $name, $label, $cols = NULL, $maxLength = NULL) {
-		return $_this[$name] = new DatePicker($label, $cols, $maxLength);
-	}
-
-	public static function addDateTimePicker(FormContainer $_this, $name, $label, $cols = NULL, $maxLength = NULL) {
-		return $_this[$name] = new DateTimePicker($label, $cols, $maxLength);
 	}
 
 	public static function addComboSelect(FormContainer $_this, $name, $label, array $items = NULL, $size = NULL) {
@@ -86,7 +145,7 @@ class Tools {
 			$image->crop($offset, 0, $width, $height);
 		}
 
-	    return $image;
+		return $image;
 	}
 
 	public static function getExt($name) {
@@ -115,4 +174,60 @@ class Tools {
 
 		return $a;
 	}
+
+
+	public static function reorganizeArray($list, $columnCount = 3) {
+		//$list = array(1, 2, 3, 4, 5, 6, 7, 8, 9);
+		//$columnCount = 4;
+		
+		$newList = array();
+		foreach ($list as $key => $value) {
+			$newList[] = array($key, $value);
+		}
+
+
+		$count = count($list);
+		#debug('count', $count);
+		#debug('columnCount', $columnCount);
+		$totalRowCount = ceil($count / $columnCount);
+		$fullRowCount = floor($count / $columnCount);
+		#debug($fullRowCount);
+		$lastRowRemainder = $count - $fullRowCount*$columnCount;
+		#debug($lastRowRemainder);
+
+		$columns = array();
+		for ($i=0; $i < $columnCount ; $i++) {
+			if ($lastRowRemainder > 0) {
+				$columns[] = $fullRowCount + 1;
+				$lastRowRemainder--;
+			} else {
+				$columns[] = $fullRowCount;
+			}
+		}
+		#debug($columns);
+
+		$organizedList = array();
+		$row = 0;
+		for ($row=0; $row < $totalRowCount; $row++) { 
+			$index = 0;
+			$organizedList[] = $newList[$row];
+			for ($ii=0; $ii < ($columnCount-1); $ii++) { 
+				$index = ($index + $columns[$ii]);
+				if (isset($newList[$row + $index])) {
+					$organizedList[] = $newList[$row + $index];
+				} else {
+					break 2;
+				}
+			}
+		}
+
+		$finalList = array();
+		foreach ($organizedList as $key => $value) {
+			$finalList[$value[0]] = $value[1];
+		}
+		//debug($finalList);
+
+		return $finalList;
+	}
+
 }

@@ -4,10 +4,15 @@ namespace Entity\Dictionary;
 
 use Entity\Dictionary;
 use Doctrine\ORM\Mapping as ORM;
+use	Extras\Annotation as EA;
+
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="dictionary_translation")
+ * @ORM\Table(name="dictionary_translation", indexes={@ORM\index(name="timeTranslated", columns={"timeTranslated"}), @ORM\index(name="checked", columns={"checked"})})
+ * @EA\Service(name="\Service\Dictionary\Translation")
+ * @EA\ServiceList(name="\Service\Dictionary\TranslationList")
+ * @EA\Primary(key="id", value="translation")
  */
 class Translation extends \Entity\BaseEntity {
 
@@ -32,9 +37,20 @@ class Translation extends \Entity\BaseEntity {
 	/**
 	 * @var json
 	 * @ORM\Column(type="json")
-	 * contains keys: translation, multiTranslations, webalized, locative. Even contains the $translation original version
 	 */
 	protected $variations;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $gender;
+
+	/**
+	 * @var integer
+	 * @ORM\Column(type="integer")
+	 */
+	protected $position = 0;
 
 	/**
 	 * @var datetime
@@ -48,12 +64,9 @@ class Translation extends \Entity\BaseEntity {
 	 */
 	protected $checked;
 
-
-	
-
-
-
-
+	public function __toString() {
+		return $this->translation;
+	}
 
 //@entity-generator-code <--- NEMAZAT !!!
 
@@ -155,6 +168,49 @@ class Translation extends \Entity\BaseEntity {
 	 */
 	public function getVariations() {
 		return $this->variations;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Dictionary\Translation
+	 */
+	public function setGender($gender) {
+		$this->gender = $gender;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Dictionary\Translation
+	 */
+	public function unsetGender() {
+		$this->gender = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getGender() {
+		return $this->gender;
+	}
+		
+	/**
+	 * @param integer
+	 * @return \Entity\Dictionary\Translation
+	 */
+	public function setPosition($position) {
+		$this->position = $position;
+
+		return $this;
+	}
+		
+	/**
+	 * @return integer|NULL
+	 */
+	public function getPosition() {
+		return $this->position;
 	}
 		
 	/**

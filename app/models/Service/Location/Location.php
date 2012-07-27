@@ -5,17 +5,18 @@ namespace Service\Location;
 use Nette\Utils\Strings,
 	Extras\Models\ServiceException;
 
-class Location extends \Extras\Models\ServiceNested {
+class Location extends \Service\BaseService {
 	
 	const MAIN_ENTITY_NAME = '\Entity\Location\Location';
 
-	public function setSlug($slug) {
+	public function generateSlug() {
 
 		if(!$this->getType() instanceof \Entity\Location\Type) {
-			throw new ServiceException('Pred pridanim slagu musis definovat Type locality.');
+			throw new ServiceException('Pred pridanim slugu musis definovat Type locality.');
 		}
 
-		$slug = Strings::webalize(Strings::trim($slug));
+		$slug = Strings::webalize(Strings::trim($this->name));
+		//if($this->getType()) @todo upravit generovanie slug-ov, ze ak jeho parentom je state, tak slug state-u pojde pred slug podriadeneho (alabama-birmingham) 
 		$available = $this->slugIsAvailable($slug);
 		$i = 0;
 		while (!$available) {
@@ -28,7 +29,7 @@ class Location extends \Extras\Models\ServiceNested {
 
 	public function slugIsAvailable($slug) {
 		$type = $this->type;
-		if(in_array($type->slug, array('region', 'locality')))  { # @todo
+		if(in_array($type->slug, array('region', 'locality')))  {
 			$types = array();
 			$types[] = Type::getBySlug('region');
 			$types[] = Type::getBySlug('locality');
@@ -36,9 +37,45 @@ class Location extends \Extras\Models\ServiceNested {
 		} else {
 			$locationList = LocationList::getBySlugInType($slug, array($type));
 		}
-		return $locationList->count() ? FALSE : TRUE;
+
+		if($locationList->count() > 1) {
+			return false;
+		} else if($locationList->count() == 1) {
+			$locationTemp = $locationList->fetch();
+			if($locationTemp->id == $this->id) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return true;
+		}
+	}
+
+	public function findParentByType($slug = 'continent', $location = null) {
+
+		if (!$location) $location = $this;
+
+		if ($location->parent) {
+
+			$parentLocation = \Service\Location\Location::get($location->parent);
+
+			if ($parentLocation->type->slug == $slug) {
+
+				return $parentLocation;
+
+			} else {
+
+				return $this->findParentByType($slug, $parentLocation);
+
+			}
+			
+		} else {
+
+			return $location;
+
+		}
 
 	}
 
-	
 }

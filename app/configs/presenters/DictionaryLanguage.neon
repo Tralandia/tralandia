@@ -1,0 +1,104 @@
+common:
+	service: Service\Dictionary\Language
+	title: Dictionary / Language
+	h1: 'Dictionary / Language -> %name%'
+	grid:
+		itemsPerPage: 200
+		columns:
+			id:
+				label: ID
+				mapper: e.id
+			supported:
+				label: Supported
+				mapper: e.supported
+				cellStyle: 'text-align: left;'
+			iso:
+				label: Iso
+				mapper: e.iso
+				callback: {class: \Nette\Utils\Strings, method: upper, params: e.iso}
+			name:
+				label: Name
+				mapper: e.id
+				callback: {class: %this%, method: getAttributeForGrid, params: [name]}
+			primarySingular:
+				label: Primary Singular
+				mapper: e.primarySingular
+			primaryPlural:
+				label: Primary Plural
+				mapper: e.primaryPlural
+			primaryGender:
+				label: Primary Gender
+				mapper: e.primaryGender		
+	form:
+		fields:
+			name:
+				label: Name
+				control: 
+					type: phrase
+				inlineEditing: Phrase:edit
+				inlineCreating: Phrase:add
+			iso:
+				label: Iso
+				validation:
+					- [addRule, PATTERN, 'Must be exactly 2 characters long.', '[a-z]{2}']
+					#- [addRule, [\Service\Dictionary\Language, validateUniqueIso], 'ISO code must be unique.']
+				control:
+					type: text
+			defaultCollation:
+				label: Default Collation
+				control: 
+					type: text
+			supported:
+				label: Supported
+				control: 
+					type: checkbox
+					label: Supported / Translated
+			genders:
+				startNewRow: true
+				label: Genders
+				class: span12
+				control:
+					type: neon
+					class: neon
+			plurals:
+				startNewRow: true
+				label: Plurals
+				class: span12
+				control:
+					type: neon
+					class: neon
+			variationDetails:
+				startNewRow: true
+				label: Variation Definition Details
+				class: span12
+				description: 'Will be used later on to define automatic generating of some variations. For example, locative in EN is always "in ".$singularNominative. This will be defined in JS.'
+				control:
+					type: neon
+					class: neon
+			primarySingular:
+				label: Primary Singular
+				control:
+					type: text
+			primaryPlural:
+				label: Primary Plural
+				control:
+					type: text
+			primaryGender:
+				label: Primary Gender
+				control:
+					type: text
+			ppcPatterns:
+				startNewRow: true
+				class: span4 json-list
+				label: Ppc Patterns
+				control:
+					type: table
+					class: span4
+					columns: [Pattern]
+					rows: "+5"
+
+
+
+
+
+

@@ -1,0 +1,309 @@
+/* ľšč*/
+div.objectDetailsText {
+    float: right;
+    width: 651px;
+    margin: 0px 10px 0px 0px;
+}
+div.objectDetailsPhotos {
+    float: left;
+    width: 271px;
+    margin: 0px 0px 0px 10px;
+}
+div.objectDetailsInfo {
+    float: left;
+    width: 441px;
+}
+div.objectDetailsForms {
+    float: right;
+    width: 200px;
+}
+div.objectDetailsInfo h1 {
+    padding: 0px 0px 0px 0px;
+}
+.objectDetailsInfo .link {
+    display: block;
+    color: #a0b325;
+    font-weight: bold;
+    font-size: 13px;
+    margin: 0px 0px 5px 0px;
+}
+.objectDetailsInfo .regions, .objectDetailsInfo .regions a {
+    color: #a0b325;
+}
+.objectDetailsInfo .regions {
+    margin: 0px 0px 10px 0px;
+}
+.objectDetailsInfo .slogan {
+    font-size: 13px;
+    margin: 0px 0px 10px 0px;
+}
+.objectDetailsInfo .description {
+    margin: 0px 0px 15px 0px;
+}
+.objectDetailsInfo .pictograms, .objectDetailsInfo .properties {
+    margin: 0px 0px 10px 10px;
+
+}
+.objectDetailsInfo .pictograms .item, .objectDetailsInfo .properties .item {
+    float: left;
+    width: 204px;
+    margin: 0px 10px 10px 0px;
+}
+.objectDetailsInfo .pictograms .icon {
+    float: left;
+    width: 50px;
+    height: 25px;
+    background: url(../images/matrix_main.png);
+    margin: 3px 0px 0px 0px;
+}
+.objectDetailsInfo .dog .icon {
+    background-position: -650px -920px;
+}
+.objectDetailsInfo .airplane .icon {
+    background-position: -710px -920px;
+}
+.objectDetailsInfo .rail .icon {
+    background-position: -650px -980px;
+}
+.objectDetailsInfo .bus .icon {
+    background-position: -710px -950px;
+}
+.objectDetailsInfo .shopping .icon {
+    background-position: -830px -920px;
+}
+.objectDetailsInfo .food .icon {
+    background-position: -710px -980px;
+}
+.objectDetailsInfo .ski .icon {
+    background-position: -830px -950px;
+}
+.objectDetailsInfo .pool .icon {
+    background-position: -830px -980px;
+}
+.objectDetailsInfo .pictograms p {
+    float: right;
+    width: 145px;
+}
+.objectDetailsInfo .properties .icon {
+    float: left;
+    width: 12px;
+    height: 12px;
+    background: url(../images/matrix_main.png) -320px -1050px;
+    margin: 2px 0px 0px 0px;
+}
+.objectDetailsInfo .properties p {
+    float: right;
+    width: 185px;
+}
+
+.objectDetailsForms .compare {
+    display: block;
+    height: 24px;
+    background: url(../images/matrix_main.png) 0 -1000px;
+    color: #fff;
+    font-size: 13px;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 6px 0px 0px 10px;
+    margin: 0px 0px 10px 0px;
+}
+.objectDetailsForms .compare:hover {
+    background-position: 0 -1035px;
+}
+.objectDetailsForms .compare.selected {
+    background-position: 0 -1075px;
+}
+.objectDetailsForms .compare.selected:hover {
+    background-position: 0 -1110px;
+}
+
+div.panelHomeTop {
+    width: 200px;
+    height: 35px;
+    background: url(../images/matrix_main.png) 0 -1365px;
+}
+div.panelHomeTop h3 {
+    color: #fff;
+    font-size: 13px;
+    padding: 6px 0px 0px 10px;
+}
+div.panelHomeContent {
+    background: #f4f9e1;
+    padding: 3px 10px 0px 10px;
+}
+div.panelHomeBottom {
+    height: 6px;
+    background: url(../images/matrix_main.png) 0 -1419px;
+}
+div.panelHome .icon {
+    background: url(../images/matrix_main.png);
+    width: 20px;
+    height: 20px;
+    float: left;
+}
+div.panelHome .icon.phone {
+    background-position: -280px -1030px;
+}
+div.panelHome .icon.web {
+    background-position: -278px -1050px;
+}
+div.panelHome .icon.person {
+    background-position: -277px -1070px;
+}
+div.panelHome .icon.more {
+    background-position: -275px -1087px;
+}
+div.panelHome p {
+    float: right;
+    width: 153px;
+    font-weight: bold;
+    margin: 0px 0px 6px 0px;
+}
+div.panelHome p b {
+    font-weight: normal;
+}
+div.panelHome .moreInfos {
+    display: none;
+}
+
+div.objectDetailsPhotos a {
+    display: block;
+    margin: 0px 0px 10px 0px;
+}
+div.objectDetailsPhotos img {
+    display: block;
+    width: 271px;
+    height: 170px;
+}
+div.objectDetailsPhotos img {
+    display: block;
+}
+div.objectDetailsPhotos .smallMapCanvas {
+    width: 271px;
+    height: 170px;
+    background: #ddd;
+    margin: 0px 0px 10px 0px;
+}
+
+.objectDetailsPhotosTab {
+    margin: 10px 0px 0px 20px;
+}
+.objectDetailsPhotosTab .item {
+    float: left;
+    width: 451px;
+    margin: 0px 20px 16px 0px;
+}
+.objectDetailsPhotosTab img {
+    width: 451px;
+    height: 288px;
+    display: block;
+}
+.objectDetailsPhotosTab p {
+    text-align: center;
+    background: url(../images/matrix_main.png) 0 -1560px;
+    padding: 5px 5px 0;
+    height: 15px;
+    overflow: hidden;
+}
+
+.objectDetailsPricesTab {
+    margin: 10px 0px 0px 20px;
+}
+.objectDetailsPricesTab div.pricesTop {
+    background: url(../images/matrix_main.png) 0 -1590px;
+    width: 922px;
+    color: #fff;
+    font-size: 13px;
+    padding: 7px 0px 0px 20px;
+    height: 25px;
+}
+.objectDetailsPricesTab .item {
+    border: 1px solid #C7D29B;
+    border-bottom: 0;
+    width: 920px;
+}
+.objectDetailsPricesTab .description {
+    float: left;
+    width: 632px;
+    padding: 8px 0px 8px 18px;
+}
+.objectDetailsPricesTab .price {
+    float: right;
+    width: 247px;
+    text-align: right;
+    padding: 8px 18px 8px 0px;
+}
+.objectDetailsPricesTab div.pricesBottom {
+    background: url(../images/matrix_main.png) 0 -1635px;
+    height: 8px;
+}
+
+.objectDetailsFeaturesTab {
+    margin: 10px 0px 0px 0px;
+}
+.featuresPanel {
+    float: left;
+    width: 451px;
+    margin: 0px 0px 0px 20px;
+}
+.featuresPanel div.featuresTop {
+    background: url(../images/matrix_main.png) 0 -1500px;
+    color: #fff;
+    font-size: 13px;
+    padding: 7px 0px 0px 20px;
+    height: 25px;
+}
+.featuresPanel .body {
+    border: 1px solid #C7D29B;
+    border-bottom: 0;
+    border-top: 0;
+    padding: 15px 15px 8px;
+}
+.featuresPanel p {
+    margin: 0px 0px 5px 0px;
+}
+.featuresPanel b {
+    font-size: 13px;
+}
+.featuresPanel div.featuresBottom {
+    background: url(../images/matrix_main.png) 0 -1544px;
+    height: 8px;
+}
+
+.objectDetailsMapTab {
+    margin: 10px 20px 0px;
+}
+.objectDetailsMapTab .largeMapCanvas {
+    height: 500px;
+    background: #ddd;
+    margin: 0px 0px 10px 0px;
+}
+.objectDetailsMapTab table {
+    width: 922px;
+}
+.objectDetailsMapTab tr {
+    border-bottom: 1px solid #C7D29B;
+}
+.objectDetailsMapTab table td {
+    padding: 2px;
+}
+.objectDetailsMapTab tr.th td {
+    font-weight: bold;
+    padding-top: 8px;
+}
+.objectDetailsMapTab .distance {
+    width: 65px;
+    text-align: right;
+    padding-right: 50px;
+}
+.objectDetailsMapTab .locality {
+    width: 260px;
+}
+
+.objectDetailsOccupancyTab {
+    margin: 10px 0px 0px 36px;
+}
+
+
+
+

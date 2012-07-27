@@ -1,0 +1,32 @@
+list:
+	guest: deny
+	visitor: deny
+	potentialowner: deny
+	owner: deny
+	translator: deny
+	assistant: deny
+	vendor: deny
+	manager: allow
+	admin: allow
+	
+edit:
+	guest: deny
+	visitor: deny
+	potentialowner: deny
+	owner: deny
+	translator: deny
+	assistant: deny
+	vendor: deny
+	manager: allow
+	admin: allow
+	
+add:
+	guest: deny
+	visitor: deny
+	potentialowner: deny
+	owner: deny
+	translator: deny
+	assistant: deny
+	vendor: deny
+	manager: allow
+	admin: allow

@@ -4,41 +4,41 @@ namespace Entity\Location;
 
 use Entity\Dictionary;
 use Doctrine\ORM\Mapping as ORM;
-use DoctrineExtensions\NestedSet\MultipleRootNode;
+use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="location_location")
+ * @ORM\Table(name="location_location", indexes={@ORM\index(name="name", columns={"name_id"}), @ORM\index(name="slug", columns={"slug"}), @ORM\index(name="parentId", columns={"parentId"}), @ORM\index(name="latitude", columns={"latitude"}), @ORM\index(name="longitude", columns={"longitude"})})
+ * @EA\Service(name="\Service\Location\Location")
+ * @EA\ServiceList(name="\Service\Location\LocationList")
+ * @EA\Primary(key="id", value="slug")
  */
-class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
+class Location extends \Entity\BaseEntityDetails {
 
+	const STATUS_DRAFT = 'draft';
 	const STATUS_LAUNCHED = 'launched';
 
 	/**
 	 * @var Collection
 	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
-	 * @UI\Control(type="text")
 	 */
 	protected $name;
 
 	/**
 	 * @var Collection
 	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
-	 * @UI\Control(type="text")
 	 */
 	protected $nameOfficial;
 
 	/**
 	 * @var Collection
 	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
-	 * @UI\Control(type="text")
 	 */
 	protected $nameShort;
 
 	/**
 	 * @var slug
 	 * @ORM\Column(type="slug")
-	 * @UI\Control(type="text")
 	 */
 	protected $slug;
 
@@ -48,30 +48,18 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 	 */
 	protected $parentId;
 
-	/**
-	 * @var integer
-	 * @ORM\Column(type="integer", nullable=true)
-	 */
-	protected $nestedLeft;
-
-	/**
-	 * @var integer
-	 * @ORM\Column(type="integer", nullable=true)
-	 */
-	protected $nestedRight;
-
-	/**
-	 * @var integer
-	 * @ORM\Column(type="integer", nullable=true)
-	 */
-	private $nestedRoot;
 
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Type")
-	 * @UI\Control(type="text")
 	 */
 	protected $type;
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToOne(targetEntity="Entity\Location\RegionType", inversedBy="locations")
+	 */
+	protected $regionType;
 
 	/**
 	 * @var json
@@ -98,6 +86,12 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 	protected $defaultZoom;
 
 	/**
+	 * @var json
+	 * @ORM\Column(type="json", nullable=true)
+	 */
+	protected $clickMapData;
+
+	/**
 	 * @var Collection
 	 * @ORM\ManyToMany(targetEntity="Entity\Company\BankAccount", inversedBy="countries")
 	 */
@@ -118,7 +112,6 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Domain", inversedBy="locations")
-	 * @UI\Control(type="text")
 	 */
 	protected $domain;
 
@@ -136,7 +129,7 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\User\User", inversedBy="locations", cascade={"persist"})
+	 * @ORM\OneToMany(targetEntity="Entity\User\User", mappedBy="location", cascade={"persist"})
 	 */
 	protected $users;
 
@@ -152,20 +145,23 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 	 */
 	protected $outgoingLocations;
 
+	/**
+	 * @var Collection
+	 * @ORM\OneToMany(targetEntity="Entity\Seo\BackLink", mappedBy="location")
+	 */
+	protected $backLinks;
 
 	/* ----------------------------- attributes from country ----------------------------- */
 
 	/**
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
-	 * @UI\Control(type="text")
 	 */
 	protected $status;
 
 	/**
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
-	 * @UI\Control(type="text")
 	 */
 	protected $iso;
 
@@ -178,7 +174,6 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Currency", cascade={"persist"})
-	 * @UI\Control(type="select")
 	 */
 	protected $defaultCurrency;
 
@@ -213,8 +208,8 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 	protected $phonePrefix;
 
 	/**
-	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact", cascade={"persist"})
+	 * @var url
+	 * @ORM\Column(type="url", nullable=true)
 	 */
 	protected $facebookGroup;
 
@@ -225,38 +220,38 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 	protected $capitalCity;
 
 	/**
-	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact", cascade={"persist"})
+	 * @var phone
+	 * @ORM\Column(type="phone", nullable=true)
 	 */
 	protected $phoneNumberEmergency;
 
 	/**
-	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact", cascade={"persist"})
+	 * @var phone
+	 * @ORM\Column(type="phone", nullable=true)
 	 */
 	protected $phoneNumberPolice;
 
 	/**
-	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact", cascade={"persist"})
+	 * @var phone
+	 * @ORM\Column(type="phone", nullable=true)
 	 */
 	protected $phoneNumberMedical;
 
 	/**
-	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact", cascade={"persist"})
+	 * @var phone
+	 * @ORM\Column(type="phone", nullable=true)
 	 */
 	protected $phoneNumberFire;
 
 	/**
-	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Contact", cascade={"persist"})
+	 * @var url
+	 * @ORM\Column(type="url", nullable=true)
 	 */
 	protected $wikipediaLink;
 
 	/**
-	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Contact\Contact", mappedBy="locations", cascade={"persist"})
+	 * @var contacts
+	 * @ORM\Column(type="contacts", nullable=true)
 	 */
 	protected $contacts;
 
@@ -284,27 +279,6 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 	 */
 	protected $airports;
 
-
-
-	/* ----------------------------- Nested Set Methods - DO NOT DELETE ----------------------------- */
-
-	public function getLeftValue() { return $this->nestedLeft; }
-	public function setLeftValue($nestedLeft) { $this->nestedLeft = $nestedLeft; }
-
-	public function getRightValue() { return $this->nestedRight; }
-	public function setRightValue($nestedRight) { $this->nestedRight = $nestedRight; }
-
-	public function getRootValue() { return $this->nestedRoot; }
-	public function setRootValue($nestedRoot) { $this->nestedRoot = $nestedRoot; }
-
-	public function __toString() { return (string)$this->slug; }
-
-
-
-
-
-
-
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -319,9 +293,9 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 		$this->users = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->incomingLocations = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->outgoingLocations = new \Doctrine\Common\Collections\ArrayCollection;
+		$this->backLinks = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->currencies = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->languages = new \Doctrine\Common\Collections\ArrayCollection;
-		$this->contacts = new \Doctrine\Common\Collections\ArrayCollection;
 	}
 		
 	/**
@@ -445,6 +419,32 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 	}
 		
 	/**
+	 * @param \Entity\Location\RegionType
+	 * @return \Entity\Location\Location
+	 */
+	public function setRegionType(\Entity\Location\RegionType $regionType) {
+		$this->regionType = $regionType;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Location\Location
+	 */
+	public function unsetRegionType() {
+		$this->regionType = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Location\RegionType|NULL
+	 */
+	public function getRegionType() {
+		return $this->regionType;
+	}
+		
+	/**
 	 * @param json
 	 * @return \Entity\Location\Location
 	 */
@@ -546,6 +546,32 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 	 */
 	public function getDefaultZoom() {
 		return $this->defaultZoom;
+	}
+		
+	/**
+	 * @param json
+	 * @return \Entity\Location\Location
+	 */
+	public function setClickMapData($clickMapData) {
+		$this->clickMapData = $clickMapData;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Location\Location
+	 */
+	public function unsetClickMapData() {
+		$this->clickMapData = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return json|NULL
+	 */
+	public function getClickMapData() {
+		return $this->clickMapData;
 	}
 		
 	/**
@@ -677,6 +703,20 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 		if(!$this->users->contains($user)) {
 			$this->users->add($user);
 		}
+		$user->setLocation($this);
+
+		return $this;
+	}
+		
+	/**
+	 * @param \Entity\User\User
+	 * @return \Entity\Location\Location
+	 */
+	public function removeUser(\Entity\User\User $user) {
+		if($this->users->contains($user)) {
+			$this->users->removeElement($user);
+		}
+		$user->unsetLocation();
 
 		return $this;
 	}
@@ -752,6 +792,39 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 	 */
 	public function getOutgoingLocations() {
 		return $this->outgoingLocations;
+	}
+		
+	/**
+	 * @param \Entity\Seo\BackLink
+	 * @return \Entity\Location\Location
+	 */
+	public function addBackLink(\Entity\Seo\BackLink $backLink) {
+		if(!$this->backLinks->contains($backLink)) {
+			$this->backLinks->add($backLink);
+		}
+		$backLink->setLocation($this);
+
+		return $this;
+	}
+		
+	/**
+	 * @param \Entity\Seo\BackLink
+	 * @return \Entity\Location\Location
+	 */
+	public function removeBackLink(\Entity\Seo\BackLink $backLink) {
+		if($this->backLinks->contains($backLink)) {
+			$this->backLinks->removeElement($backLink);
+		}
+		$backLink->unsetLocation();
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Seo\BackLink
+	 */
+	public function getBackLinks() {
+		return $this->backLinks;
 	}
 		
 	/**
@@ -1003,10 +1076,10 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 	}
 		
 	/**
-	 * @param \Entity\Contact\Contact
+	 * @param \Extras\Types\Url
 	 * @return \Entity\Location\Location
 	 */
-	public function setFacebookGroup(\Entity\Contact\Contact $facebookGroup) {
+	public function setFacebookGroup(\Extras\Types\Url $facebookGroup) {
 		$this->facebookGroup = $facebookGroup;
 
 		return $this;
@@ -1022,7 +1095,7 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 	}
 		
 	/**
-	 * @return \Entity\Contact\Contact|NULL
+	 * @return \Extras\Types\Url|NULL
 	 */
 	public function getFacebookGroup() {
 		return $this->facebookGroup;
@@ -1055,10 +1128,10 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 	}
 		
 	/**
-	 * @param \Entity\Contact\Contact
+	 * @param \Extras\Types\Phone
 	 * @return \Entity\Location\Location
 	 */
-	public function setPhoneNumberEmergency(\Entity\Contact\Contact $phoneNumberEmergency) {
+	public function setPhoneNumberEmergency(\Extras\Types\Phone $phoneNumberEmergency) {
 		$this->phoneNumberEmergency = $phoneNumberEmergency;
 
 		return $this;
@@ -1074,17 +1147,17 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 	}
 		
 	/**
-	 * @return \Entity\Contact\Contact|NULL
+	 * @return \Extras\Types\Phone|NULL
 	 */
 	public function getPhoneNumberEmergency() {
 		return $this->phoneNumberEmergency;
 	}
 		
 	/**
-	 * @param \Entity\Contact\Contact
+	 * @param \Extras\Types\Phone
 	 * @return \Entity\Location\Location
 	 */
-	public function setPhoneNumberPolice(\Entity\Contact\Contact $phoneNumberPolice) {
+	public function setPhoneNumberPolice(\Extras\Types\Phone $phoneNumberPolice) {
 		$this->phoneNumberPolice = $phoneNumberPolice;
 
 		return $this;
@@ -1100,17 +1173,17 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 	}
 		
 	/**
-	 * @return \Entity\Contact\Contact|NULL
+	 * @return \Extras\Types\Phone|NULL
 	 */
 	public function getPhoneNumberPolice() {
 		return $this->phoneNumberPolice;
 	}
 		
 	/**
-	 * @param \Entity\Contact\Contact
+	 * @param \Extras\Types\Phone
 	 * @return \Entity\Location\Location
 	 */
-	public function setPhoneNumberMedical(\Entity\Contact\Contact $phoneNumberMedical) {
+	public function setPhoneNumberMedical(\Extras\Types\Phone $phoneNumberMedical) {
 		$this->phoneNumberMedical = $phoneNumberMedical;
 
 		return $this;
@@ -1126,17 +1199,17 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 	}
 		
 	/**
-	 * @return \Entity\Contact\Contact|NULL
+	 * @return \Extras\Types\Phone|NULL
 	 */
 	public function getPhoneNumberMedical() {
 		return $this->phoneNumberMedical;
 	}
 		
 	/**
-	 * @param \Entity\Contact\Contact
+	 * @param \Extras\Types\Phone
 	 * @return \Entity\Location\Location
 	 */
-	public function setPhoneNumberFire(\Entity\Contact\Contact $phoneNumberFire) {
+	public function setPhoneNumberFire(\Extras\Types\Phone $phoneNumberFire) {
 		$this->phoneNumberFire = $phoneNumberFire;
 
 		return $this;
@@ -1152,17 +1225,17 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 	}
 		
 	/**
-	 * @return \Entity\Contact\Contact|NULL
+	 * @return \Extras\Types\Phone|NULL
 	 */
 	public function getPhoneNumberFire() {
 		return $this->phoneNumberFire;
 	}
 		
 	/**
-	 * @param \Entity\Contact\Contact
+	 * @param \Extras\Types\Url
 	 * @return \Entity\Location\Location
 	 */
-	public function setWikipediaLink(\Entity\Contact\Contact $wikipediaLink) {
+	public function setWikipediaLink(\Extras\Types\Url $wikipediaLink) {
 		$this->wikipediaLink = $wikipediaLink;
 
 		return $this;
@@ -1178,40 +1251,33 @@ class Location extends \Entity\BaseEntityDetails implements MultipleRootNode {
 	}
 		
 	/**
-	 * @return \Entity\Contact\Contact|NULL
+	 * @return \Extras\Types\Url|NULL
 	 */
 	public function getWikipediaLink() {
 		return $this->wikipediaLink;
 	}
 		
 	/**
-	 * @param \Entity\Contact\Contact
+	 * @param \Extras\Types\Contacts
 	 * @return \Entity\Location\Location
 	 */
-	public function addContact(\Entity\Contact\Contact $contact) {
-		if(!$this->contacts->contains($contact)) {
-			$this->contacts->add($contact);
-		}
-		$contact->addLocation($this);
+	public function setContacts(\Extras\Types\Contacts $contacts) {
+		$this->contacts = $contacts;
 
 		return $this;
 	}
 		
 	/**
-	 * @param \Entity\Contact\Contact
 	 * @return \Entity\Location\Location
 	 */
-	public function removeContact(\Entity\Contact\Contact $contact) {
-		if($this->contacts->contains($contact)) {
-			$this->contacts->removeElement($contact);
-		}
-		$contact->removeLocation($this);
+	public function unsetContacts() {
+		$this->contacts = NULL;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Contact\Contact
+	 * @return \Extras\Types\Contacts|NULL
 	 */
 	public function getContacts() {
 		return $this->contacts;

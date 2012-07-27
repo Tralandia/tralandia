@@ -4,10 +4,14 @@ namespace Entity\Dictionary;
 
 use Entity\Dictionary;
 use Doctrine\ORM\Mapping as ORM;
+use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="dictionary_language")
+ * @ORM\Table(name="dictionary_language", indexes={@ORM\index(name="iso", columns={"iso"}), @ORM\index(name="supported", columns={"supported"})})
+ * @EA\Service(name="\Service\Dictionary\Language")
+ * @EA\ServiceList(name="\Service\Dictionary\LanguageList")
+ * @EA\Primary(key="id", value="iso")
  */
 class Language extends \Entity\BaseEntityDetails {
 
@@ -28,7 +32,7 @@ class Language extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var boolean
-	 * @ORM\Column(type="boolean")
+	 * @ORM\Column(type="boolean", nullable=true)
 	 */
 	protected $supported;
 
@@ -42,25 +46,44 @@ class Language extends \Entity\BaseEntityDetails {
 	 * @var json
 	 * @ORM\Column(type="json", nullable=true)
 	 */
-	protected $salutations;
+	protected $genders;
 
 	/**
 	 * @var json
 	 * @ORM\Column(type="json", nullable=true)
 	 */
-	protected $multitranslationOptions;
+	protected $plurals;
 
 	/**
-	 * @var json
-	 * @ORM\Column(type="json", nullable=true)
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
 	 */
-	protected $genderNumberOptions;
+	protected $primarySingular;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $primaryPlural;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $primaryGender;
 
 	/**
 	 * @var json
 	 * @ORM\Column(type="json", nullable=true)
 	 */
 	protected $ppcPatterns;
+
+	/**
+	 * @var json
+	 * @ORM\Column(type="json", nullable=true)
+	 * this defines rules for autogenerating some variations, which will be done in JS. For example, locative in EN is always "in ".$singularNominative
+	 */
+	protected $variationDetails;
 
 	/**
 	 * @var Collection
@@ -70,14 +93,15 @@ class Language extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Rental\Rental", inversedBy="languagesSpoken")
+	 * @ORM\ManyToMany(targetEntity="Entity\Rental\Rental", inversedBy="spokenLanguages")
 	 */
 	protected $rentals;
 
-	
-
-
-
+	/**
+	 * @var Collection
+	 * @ORM\OneToMany(targetEntity="Entity\Seo\BackLink", mappedBy="language")
+	 */
+	protected $backLinks;
 
 
 //@entity-generator-code <--- NEMAZAT !!!
@@ -88,6 +112,7 @@ class Language extends \Entity\BaseEntityDetails {
 
 		$this->locations = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->rentals = new \Doctrine\Common\Collections\ArrayCollection;
+		$this->backLinks = new \Doctrine\Common\Collections\ArrayCollection;
 	}
 		
 	/**
@@ -144,6 +169,15 @@ class Language extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
+	 * @return \Entity\Dictionary\Language
+	 */
+	public function unsetSupported() {
+		$this->supported = NULL;
+
+		return $this;
+	}
+		
+	/**
 	 * @return boolean|NULL
 	 */
 	public function getSupported() {
@@ -180,8 +214,8 @@ class Language extends \Entity\BaseEntityDetails {
 	 * @param json
 	 * @return \Entity\Dictionary\Language
 	 */
-	public function setSalutations($salutations) {
-		$this->salutations = $salutations;
+	public function setGenders($genders) {
+		$this->genders = $genders;
 
 		return $this;
 	}
@@ -189,8 +223,8 @@ class Language extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Dictionary\Language
 	 */
-	public function unsetSalutations() {
-		$this->salutations = NULL;
+	public function unsetGenders() {
+		$this->genders = NULL;
 
 		return $this;
 	}
@@ -198,16 +232,16 @@ class Language extends \Entity\BaseEntityDetails {
 	/**
 	 * @return json|NULL
 	 */
-	public function getSalutations() {
-		return $this->salutations;
+	public function getGenders() {
+		return $this->genders;
 	}
 		
 	/**
 	 * @param json
 	 * @return \Entity\Dictionary\Language
 	 */
-	public function setMultitranslationOptions($multitranslationOptions) {
-		$this->multitranslationOptions = $multitranslationOptions;
+	public function setPlurals($plurals) {
+		$this->plurals = $plurals;
 
 		return $this;
 	}
@@ -215,8 +249,8 @@ class Language extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Dictionary\Language
 	 */
-	public function unsetMultitranslationOptions() {
-		$this->multitranslationOptions = NULL;
+	public function unsetPlurals() {
+		$this->plurals = NULL;
 
 		return $this;
 	}
@@ -224,16 +258,16 @@ class Language extends \Entity\BaseEntityDetails {
 	/**
 	 * @return json|NULL
 	 */
-	public function getMultitranslationOptions() {
-		return $this->multitranslationOptions;
+	public function getPlurals() {
+		return $this->plurals;
 	}
 		
 	/**
-	 * @param json
+	 * @param string
 	 * @return \Entity\Dictionary\Language
 	 */
-	public function setGenderNumberOptions($genderNumberOptions) {
-		$this->genderNumberOptions = $genderNumberOptions;
+	public function setPrimarySingular($primarySingular) {
+		$this->primarySingular = $primarySingular;
 
 		return $this;
 	}
@@ -241,17 +275,69 @@ class Language extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Dictionary\Language
 	 */
-	public function unsetGenderNumberOptions() {
-		$this->genderNumberOptions = NULL;
+	public function unsetPrimarySingular() {
+		$this->primarySingular = NULL;
 
 		return $this;
 	}
 		
 	/**
-	 * @return json|NULL
+	 * @return string|NULL
 	 */
-	public function getGenderNumberOptions() {
-		return $this->genderNumberOptions;
+	public function getPrimarySingular() {
+		return $this->primarySingular;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Dictionary\Language
+	 */
+	public function setPrimaryPlural($primaryPlural) {
+		$this->primaryPlural = $primaryPlural;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Dictionary\Language
+	 */
+	public function unsetPrimaryPlural() {
+		$this->primaryPlural = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getPrimaryPlural() {
+		return $this->primaryPlural;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Dictionary\Language
+	 */
+	public function setPrimaryGender($primaryGender) {
+		$this->primaryGender = $primaryGender;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Dictionary\Language
+	 */
+	public function unsetPrimaryGender() {
+		$this->primaryGender = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getPrimaryGender() {
+		return $this->primaryGender;
 	}
 		
 	/**
@@ -278,6 +364,32 @@ class Language extends \Entity\BaseEntityDetails {
 	 */
 	public function getPpcPatterns() {
 		return $this->ppcPatterns;
+	}
+		
+	/**
+	 * @param json
+	 * @return \Entity\Dictionary\Language
+	 */
+	public function setVariationDetails($variationDetails) {
+		$this->variationDetails = $variationDetails;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Dictionary\Language
+	 */
+	public function unsetVariationDetails() {
+		$this->variationDetails = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return json|NULL
+	 */
+	public function getVariationDetails() {
+		return $this->variationDetails;
 	}
 		
 	/**
@@ -316,5 +428,38 @@ class Language extends \Entity\BaseEntityDetails {
 	 */
 	public function getRentals() {
 		return $this->rentals;
+	}
+		
+	/**
+	 * @param \Entity\Seo\BackLink
+	 * @return \Entity\Dictionary\Language
+	 */
+	public function addBackLink(\Entity\Seo\BackLink $backLink) {
+		if(!$this->backLinks->contains($backLink)) {
+			$this->backLinks->add($backLink);
+		}
+		$backLink->setLanguage($this);
+
+		return $this;
+	}
+		
+	/**
+	 * @param \Entity\Seo\BackLink
+	 * @return \Entity\Dictionary\Language
+	 */
+	public function removeBackLink(\Entity\Seo\BackLink $backLink) {
+		if($this->backLinks->contains($backLink)) {
+			$this->backLinks->removeElement($backLink);
+		}
+		$backLink->unsetLanguage();
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Seo\BackLink
+	 */
+	public function getBackLinks() {
+		return $this->backLinks;
 	}
 }

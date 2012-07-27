@@ -3,17 +3,22 @@
 namespace Entity\Autopilot;
 
 use Doctrine\ORM\Mapping as ORM;
+use	Extras\Annotation as EA;
+
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="autopilot_type")
+ * @EA\Service(name="\Service\Autopilot\Type")
+ * @EA\ServiceList(name="\Service\Autopilot\TypeList")
+ * @EA\Primary(key="id", value="name")
  */
 class Type extends \Entity\BaseEntityDetails {
 
-	const ACTION_ON_SAVE = 'onSave';
-	const ACTION_ON_DELEGATE = 'onDelegate';
-	const ACTION_ON_COMPLETED = 'onCompleted';
-	const ACTION_ON_DEFER = 'onDefer';
+	const ON_SAVE = 'onSave';
+	const ON_DELEGATE = 'onDelegate';
+	const ON_COMPLETED = 'onCompleted';
+	const ON_DEFER = 'onDefer';
 
 	/**
 	 * @var string
@@ -65,11 +70,6 @@ class Type extends \Entity\BaseEntityDetails {
 	 * @ORM\Column(type="json", nullable=true)
 	 */
 	protected $actions;
-
-	
-
-
-
 
 
 //@entity-generator-code <--- NEMAZAT !!!

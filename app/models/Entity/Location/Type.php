@@ -4,10 +4,14 @@ namespace Entity\Location;
 
 use Entity\Dictionary;
 use Doctrine\ORM\Mapping as ORM;
+use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="location_type")
+ * @ORM\Table(name="location_type", indexes={@ORM\index(name="slug", columns={"slug"})})
+ * @EA\Service(name="\Service\Location\Type")
+ * @EA\ServiceList(name="\Service\Location\TypeList")
+ * @EA\Primary(key="id", value="name")
  */
 class Type extends \Entity\BaseEntityDetails {
 
@@ -23,11 +27,12 @@ class Type extends \Entity\BaseEntityDetails {
 	 */
 	protected $slug;
 
-
-	
-
-
-
+	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean")
+	 * primary types can have their own domain (easily) and can be parent to other types
+	 */
+	protected $primary;
 
 //@entity-generator-code <--- NEMAZAT !!!
 
@@ -68,5 +73,22 @@ class Type extends \Entity\BaseEntityDetails {
 	 */
 	public function getSlug() {
 		return $this->slug;
+	}
+		
+	/**
+	 * @param boolean
+	 * @return \Entity\Location\Type
+	 */
+	public function setPrimary($primary) {
+		$this->primary = $primary;
+
+		return $this;
+	}
+		
+	/**
+	 * @return boolean|NULL
+	 */
+	public function getPrimary() {
+		return $this->primary;
 	}
 }

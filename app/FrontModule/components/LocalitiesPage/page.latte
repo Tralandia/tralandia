@@ -1,0 +1,13 @@
+<div class="columnListUL">
+	<ul>
+	{foreach $localities as $locality}
+		<li>
+			<span>&nbsp;</span><a href="{$locality->slug}">
+				{if $locality->rentalsCount > 10}<b>{/if}
+					{_$locality->name} ({$locality->rentalsCount})
+				{if $locality->rentalsCount>1}</b>{/if}
+			</a>
+		</li>
+	{/foreach}
+	</ul>
+</div>

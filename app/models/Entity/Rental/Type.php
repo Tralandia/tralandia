@@ -4,10 +4,14 @@ namespace Entity\Rental;
 
 use Entity\Dictionary;
 use Doctrine\ORM\Mapping as ORM;
+use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="rental_type")
+ * @EA\Service(name="\Service\Rental\Type")
+ * @EA\ServiceList(name="\Service\Rental\TypeList")
+ * @EA\Primary(key="id", value="id")
  */
 class Type extends \Entity\BaseEntity {
 
@@ -19,7 +23,7 @@ class Type extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Rental", inversedBy="types")
+	 * @ORM\ManyToMany(targetEntity="Rental", inversedBy="types", cascade={"persist"})
 	 */
 	protected $rentals;
 
@@ -29,7 +33,18 @@ class Type extends \Entity\BaseEntity {
 	 */
 	protected $users;
 
-	
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

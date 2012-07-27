@@ -10,16 +10,72 @@ use Nette\Application as NA,
 	Extras\Import as I,
 	Service\Dictionary as D,
 	Service as S,
-	Service\Log\Change as SLog;
+	Service\Log as SLog;
 
 class RadoPresenter extends BasePresenter {
+
+	public $session;
+
+	public function startup() {
+		parent::startup();
+		$this->session = $this->context->session->getSection('importSession');
+	}
+
+	public function actionLocale() {
+		phpinfo(); exit;
+		$locale = \Locale::acceptFromHttp($_SERVER['HTTP_ACCEPT_LANGUAGE']);
+		$this->template->output = $locale;	
+	}
+
+	public function actionAddPhrases() {
+		$entities = \Service\Location\LocationList::getAll();
+		foreach ($entities as $key => $entity) {
+			$service = \Service\Location\Location::get($entity);
+			if (!$service->nameShort) {
+				$service->nameShort = \Service\Dictionary\Phrase::get()->getMainEntity();
+			}
+			if (!$service->nameOfficial) {
+				$service->nameOfficial = \Service\Dictionary\Phrase::get()->getMainEntity();
+			}
+			$service->save();
+		}
+	}
+
+	public function actionHelper() {
+		if (isset($this->params['indexes'])) {
+			$return = '';
+			$indexes = array();
+			$temp = explode(',', $this->params['indexes']);
+			foreach ($temp as $key => $value) {
+				$value = trim($value);
+				if (strlen($value) == 0) continue;
+				$indexes[] = '@ORM\index(name="'.$value.'", columns={"'.$value.'"})';
+			}
+
+			$return .= ', indexes={'.implode(', ', $indexes).'}';
+
+			$this->template->output = $return;
+		}
+	}
+
+	public function renderHelper() {
+
+	}
 
 	public function actionDefault() {
 		ini_set('max_execution_time', 0);
 		Debugger::$maxDepth = 3;
+
 		$redirect = FALSE;
+		if (isset($this->params['toggleDevelopmentMode'])) {
+			$this->session->developmentMode = !$this->session->developmentMode;
+			$this->flashMessage('Development Mode Toggled');
+			$redirect = TRUE;
+		}
+
 		if (isset($this->params['dropAllTables'])) {
 			$import = new I\BaseImport();
+			$import->developmentMode = (bool)$this->session->developmentMode;
 			$import->dropAllTables();
 
 			$this->flashMessage('Dropping Done');
@@ -27,20 +83,38 @@ class RadoPresenter extends BasePresenter {
 		}
 		if (isset($this->params['truncateAllTables'])) {
 			$import = new I\BaseImport();
+			$import->developmentMode = (bool)$this->session->developmentMode;
 			$import->truncateAllTables();
 			$this->flashMessage('Truncating Done');
 			$redirect = TRUE;
 		}
 		if (isset($this->params['undoSection'])) {
 			$import = new I\BaseImport();
+			$import->developmentMode = (bool)$this->session->developmentMode;
 			$import->undoSection($this->params['undoSection']);
 			$this->flashMessage('Section UNDONE');
 			$redirect = TRUE;
 		}
+
+		if (isset($this->params['removeNewTablesFromOldDb'])) {
+			q('SET FOREIGN_KEY_CHECKS = 0;');
+			$tables = q('show tables');
+			while ($x = mysql_fetch_array($tables)) {
+				$cols = q('show columns from '.$x[0].' like "oldId"');
+				$cols = mysql_fetch_array($cols);
+				if ($cols) {
+					debug($x[0]);
+					q('drop table '.$x[0]);
+				}
+			}
+			q('SET FOREIGN_KEY_CHECKS = 1;');
+		}
+
 		if (isset($this->params['importSection'])) {
 			\Extras\Models\Service::preventFlush();
 			$className = 'Extras\Import\Import'.ucfirst($this->params['importSection']);
 			$import = new $className();
+			$import->developmentMode = (bool)$this->session->developmentMode;
 			if (isset($this->params['subsection'])) {
 				$import->doImport($this->params['subsection']);
 			} else {
@@ -70,8 +144,10 @@ class RadoPresenter extends BasePresenter {
 		// $t = \Services\Location\LocationService::get(848); $t->delete(); return;
 
 		$import = new I\BaseImport();
+		$import->developmentMode = (bool)$this->session->developmentMode;
 
 		$this->template->sections = $import->createNavigation();
+		$this->template->developmentMode = $import->developmentMode == TRUE ? "TRUE" : "FALSE";
 		return;
 	}
 

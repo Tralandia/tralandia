@@ -7,12 +7,20 @@ use Entity\Dictionary;
 use Entity\Invoicing;
 use Entity\Rental;
 use Doctrine\ORM\Mapping as ORM;
+use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="invoicing_invoice")
+ * @ORM\Table(name="invoicing_invoice", indexes={@ORM\index(name="invoiceNumber", columns={"invoiceNumber"}), @ORM\index(name="paymentReferenceNumber", columns={"paymentReferenceNumber"}), @ORM\index(name="due", columns={"due"}), @ORM\index(name="paid", columns={"paid"}), @ORM\index(name="status", columns={"status"}), @ORM\index(name="clientEmail", columns={"clientEmail"}), @ORM\index(name="referrer", columns={"referrer"}), @ORM\index(name="referrerCommission", columns={"referrerCommission"})})
+ * @EA\Service(name="\Service\Invoicing\Service")
+ * @EA\ServiceList(name="\Service\Invoicing\ServiceList")
+ * @EA\Primary(key="id", value="clientName")
  */
 class Invoice extends \Entity\BaseEntity {
+
+	const STATUS_PENDING = 2;
+	const STATUS_PAID_NOT_CHECKED = 4;
+	const STATUS_PAID = 8;
 
 	/**
 	 * @var Collection
@@ -22,21 +30,21 @@ class Invoice extends \Entity\BaseEntity {
 
 	/**
 	 * @var integer
-	 * @ORM\Column(type="integer")
+	 * @ORM\Column(type="integer", nullable=true)
 	 */
 	protected $invoiceNumber;
 
 	/**
 	 * @var integer
-	 * @ORM\Column(type="integer")
+	 * @ORM\Column(type="integer", nullable=true)
 	 */
-	protected $invoiceVariableNumber;
+	protected $paymentReferenceNumber;
 
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Company\Company", inversedBy="invoices")
 	 */
-	protected $invoicingCompany;
+	protected $company;
 
 	/**
 	 * @var Collection
@@ -57,10 +65,10 @@ class Invoice extends \Entity\BaseEntity {
 	protected $paid;
 
 	/**
-	 * @var boolean
-	 * @ORM\Column(type="boolean")
+	 * @var integer
+	 * @ORM\Column(type="integer")
 	 */
-	protected $checked;
+	protected $status = self::STATUS_PENDING;
 
 	/**
 	 * @var string
@@ -117,14 +125,20 @@ class Invoice extends \Entity\BaseEntity {
 	protected $clientCompanyVatId;
 
 	/**
-	 * @var decimal
-	 * @ORM\Column(type="decimal")
+	 * @var float
+	 * @ORM\Column(type="float", nullable=true)
 	 */
 	protected $vat;
 
 	/**
-	 * @var decimal
-	 * @ORM\Column(type="decimal")
+	 * @var Collection
+	 * @ORM\ManyToOne(targetEntity="Entity\Currency")
+	 */
+	protected $currency;
+
+	/**
+	 * @var float
+	 * @ORM\Column(type="float", nullable=true)
 	 */
 	protected $exchangeRate;
 
@@ -141,8 +155,8 @@ class Invoice extends \Entity\BaseEntity {
 	protected $referrer;
 
 	/**
-	 * @var decimal
-	 * @ORM\Column(type="decimal")
+	 * @var float
+	 * @ORM\Column(type="float", nullable=true)
 	 */
 	protected $referrerCommission;
 
@@ -153,6 +167,22 @@ class Invoice extends \Entity\BaseEntity {
 	protected $paymentInfo;
 
 	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -210,6 +240,15 @@ class Invoice extends \Entity\BaseEntity {
 	}
 		
 	/**
+	 * @return \Entity\Invoicing\Invoice
+	 */
+	public function unsetInvoiceNumber() {
+		$this->invoiceNumber = NULL;
+
+		return $this;
+	}
+		
+	/**
 	 * @return integer|NULL
 	 */
 	public function getInvoiceNumber() {
@@ -220,8 +259,17 @@ class Invoice extends \Entity\BaseEntity {
 	 * @param integer
 	 * @return \Entity\Invoicing\Invoice
 	 */
-	public function setInvoiceVariableNumber($invoiceVariableNumber) {
-		$this->invoiceVariableNumber = $invoiceVariableNumber;
+	public function setPaymentReferenceNumber($paymentReferenceNumber) {
+		$this->paymentReferenceNumber = $paymentReferenceNumber;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Invoicing\Invoice
+	 */
+	public function unsetPaymentReferenceNumber() {
+		$this->paymentReferenceNumber = NULL;
 
 		return $this;
 	}
@@ -229,16 +277,16 @@ class Invoice extends \Entity\BaseEntity {
 	/**
 	 * @return integer|NULL
 	 */
-	public function getInvoiceVariableNumber() {
-		return $this->invoiceVariableNumber;
+	public function getPaymentReferenceNumber() {
+		return $this->paymentReferenceNumber;
 	}
 		
 	/**
 	 * @param \Entity\Company\Company
 	 * @return \Entity\Invoicing\Invoice
 	 */
-	public function setInvoicingCompany(\Entity\Company\Company $invoicingCompany) {
-		$this->invoicingCompany = $invoicingCompany;
+	public function setCompany(\Entity\Company\Company $company) {
+		$this->company = $company;
 
 		return $this;
 	}
@@ -246,8 +294,8 @@ class Invoice extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoicing\Invoice
 	 */
-	public function unsetInvoicingCompany() {
-		$this->invoicingCompany = NULL;
+	public function unsetCompany() {
+		$this->company = NULL;
 
 		return $this;
 	}
@@ -255,8 +303,8 @@ class Invoice extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Company\Company|NULL
 	 */
-	public function getInvoicingCompany() {
-		return $this->invoicingCompany;
+	public function getCompany() {
+		return $this->company;
 	}
 		
 	/**
@@ -320,20 +368,20 @@ class Invoice extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param boolean
+	 * @param integer
 	 * @return \Entity\Invoicing\Invoice
 	 */
-	public function setChecked($checked) {
-		$this->checked = $checked;
+	public function setStatus($status) {
+		$this->status = $status;
 
 		return $this;
 	}
 		
 	/**
-	 * @return boolean|NULL
+	 * @return integer|NULL
 	 */
-	public function getChecked() {
-		return $this->checked;
+	public function getStatus() {
+		return $this->status;
 	}
 		
 	/**
@@ -553,7 +601,7 @@ class Invoice extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param decimal
+	 * @param float
 	 * @return \Entity\Invoicing\Invoice
 	 */
 	public function setVat($vat) {
@@ -563,14 +611,49 @@ class Invoice extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return decimal|NULL
+	 * @return \Entity\Invoicing\Invoice
+	 */
+	public function unsetVat() {
+		$this->vat = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return float|NULL
 	 */
 	public function getVat() {
 		return $this->vat;
 	}
 		
 	/**
-	 * @param decimal
+	 * @param \Entity\Currency
+	 * @return \Entity\Invoicing\Invoice
+	 */
+	public function setCurrency(\Entity\Currency $currency) {
+		$this->currency = $currency;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Invoicing\Invoice
+	 */
+	public function unsetCurrency() {
+		$this->currency = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Currency|NULL
+	 */
+	public function getCurrency() {
+		return $this->currency;
+	}
+		
+	/**
+	 * @param float
 	 * @return \Entity\Invoicing\Invoice
 	 */
 	public function setExchangeRate($exchangeRate) {
@@ -580,7 +663,16 @@ class Invoice extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return decimal|NULL
+	 * @return \Entity\Invoicing\Invoice
+	 */
+	public function unsetExchangeRate() {
+		$this->exchangeRate = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return float|NULL
 	 */
 	public function getExchangeRate() {
 		return $this->exchangeRate;
@@ -639,7 +731,7 @@ class Invoice extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param decimal
+	 * @param float
 	 * @return \Entity\Invoicing\Invoice
 	 */
 	public function setReferrerCommission($referrerCommission) {
@@ -649,7 +741,16 @@ class Invoice extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return decimal|NULL
+	 * @return \Entity\Invoicing\Invoice
+	 */
+	public function unsetReferrerCommission() {
+		$this->referrerCommission = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return float|NULL
 	 */
 	public function getReferrerCommission() {
 		return $this->referrerCommission;

@@ -6,16 +6,22 @@ use Entity\Dictionary;
 use Entity\Location;
 use Entity\User;
 use Doctrine\ORM\Mapping as ORM;
+use	Extras\Annotation as EA;
+
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="autopilot_task")
+ * @ORM\Table(name="autopilot_task", indexes={@ORM\index(name="startTime", columns={"startTime"}), @ORM\index(name="due", columns={"due"}), @ORM\index(name="durationPaid", columns={"durationPaid"}), @ORM\index(name="userLanguageLevel", columns={"userLanguageLevel"})})
+ * @EA\Service(name="\Service\Autopilot\Task")
+ * @EA\ServiceList(name="\Service\Autopilot\TaskList")
+ * @EA\Primary(key="id", value="name")
  */
 class Task extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Type")
+	 * @ORM\JoinColumn(onDelete="SET NULL")
 	 */
 	protected $type;
 
@@ -23,13 +29,20 @@ class Task extends \Entity\BaseEntityDetails {
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
 	 */
-	protected $subtype;
+	protected $name;
 
 	/**
 	 * @var string
-	 * @ORM\Column(type="string", nullable=true)
+	 * @ORM\Column(type="string", nullable=true)§
+	 * example: \Rental\Rental
 	 */
-	protected $name;
+	protected $entityName;
+
+	/**
+	 * @var int
+	 * @ORM\Column(type="integer", nullable=true)
+	 */
+	protected $entityId;
 
 	/**
 	 * @var text
@@ -61,7 +74,15 @@ class Task extends \Entity\BaseEntityDetails {
 	 */
 	protected $links;
 
+	/**  
+	 * This is the last user working on this task or the one delegated to.
+	 * @var Collection
+	 * @ORM\ManyToOne(targetEntity="Entity\User\User")
+	 */
+	protected $reservedFor;
+
 	/**
+	 * The original user this task has been created for / assigned to.
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\User\User")
 	 */
@@ -109,11 +130,12 @@ class Task extends \Entity\BaseEntityDetails {
 	 */
 	protected $actions;
 
+	/**
+	 * @var json
+	 * @ORM\Column(type="json", nullable=true)
+	 */
+	protected $recurrenceData;
 	
-
-
-
-
 
 //@entity-generator-code <--- NEMAZAT !!!
 
@@ -154,32 +176,6 @@ class Task extends \Entity\BaseEntityDetails {
 	 * @param string
 	 * @return \Entity\Autopilot\Task
 	 */
-	public function setSubtype($subtype) {
-		$this->subtype = $subtype;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Autopilot\Task
-	 */
-	public function unsetSubtype() {
-		$this->subtype = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return string|NULL
-	 */
-	public function getSubtype() {
-		return $this->subtype;
-	}
-		
-	/**
-	 * @param string
-	 * @return \Entity\Autopilot\Task
-	 */
 	public function setName($name) {
 		$this->name = $name;
 
@@ -200,6 +196,58 @@ class Task extends \Entity\BaseEntityDetails {
 	 */
 	public function getName() {
 		return $this->name;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Autopilot\Task
+	 */
+	public function setEntityName($entityName) {
+		$this->entityName = $entityName;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Autopilot\Task
+	 */
+	public function unsetEntityName() {
+		$this->entityName = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getEntityName() {
+		return $this->entityName;
+	}
+		
+	/**
+	 * @param integer
+	 * @return \Entity\Autopilot\Task
+	 */
+	public function setEntityId($entityId) {
+		$this->entityId = $entityId;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Autopilot\Task
+	 */
+	public function unsetEntityId() {
+		$this->entityId = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return integer|NULL
+	 */
+	public function getEntityId() {
+		return $this->entityId;
 	}
 		
 	/**
@@ -294,6 +342,32 @@ class Task extends \Entity\BaseEntityDetails {
 	 */
 	public function getLinks() {
 		return $this->links;
+	}
+		
+	/**
+	 * @param \Entity\User\User
+	 * @return \Entity\Autopilot\Task
+	 */
+	public function setReservedFor(\Entity\User\User $reservedFor) {
+		$this->reservedFor = $reservedFor;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Autopilot\Task
+	 */
+	public function unsetReservedFor() {
+		$this->reservedFor = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\User\User|NULL
+	 */
+	public function getReservedFor() {
+		return $this->reservedFor;
 	}
 		
 	/**
@@ -509,5 +583,31 @@ class Task extends \Entity\BaseEntityDetails {
 	 */
 	public function getActions() {
 		return $this->actions;
+	}
+		
+	/**
+	 * @param json
+	 * @return \Entity\Autopilot\Task
+	 */
+	public function setRecurrenceData($recurrenceData) {
+		$this->recurrenceData = $recurrenceData;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Autopilot\Task
+	 */
+	public function unsetRecurrenceData() {
+		$this->recurrenceData = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return json|NULL
+	 */
+	public function getRecurrenceData() {
+		return $this->recurrenceData;
 	}
 }

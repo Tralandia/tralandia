@@ -238,7 +238,7 @@ class EntityGeneratorPresenter extends BasePresenter {
 		fclose($fileSource);
 		if($pos = mb_strpos($data, '//@entity-generator-code')) {
 			$newFileContent = mb_substr($data, 0, $pos);
-			$newFileContent .= "\n//@entity-generator-code <--- NEMAZAT !!!\n\n";
+			$newFileContent .= "//@entity-generator-code <--- NEMAZAT !!!\n\n";
 			$newFileContent .= "\t/* ----------------------------- Methods ----------------------------- */";
 			foreach ($newClass->methods as $method) {
 				$newFileContent .= $this->template->indent("\t\n".$method."\n", 1);
@@ -263,7 +263,9 @@ class EntityGeneratorPresenter extends BasePresenter {
 
 	public function toSingular($name) {
 		if(in_array($name, array('status', 'address', 'decimalPlaces'))) return $name;
-		if(Strings::endsWith($name, 'ies')) {
+		if ($name == "media") {
+			$name = "medium";
+		} else if(Strings::endsWith($name, 'ies')) {
 			$name = substr($name, 0 , -3).'y';
 		} else if (Strings::endsWith($name, 's')) {
 			$name = substr($name, 0 , -1);
@@ -291,15 +293,15 @@ class EntityGeneratorPresenter extends BasePresenter {
 				$return['association'] = ORM\ClassMetadataInfo::MANY_TO_MANY;
 			} else if(array_key_exists('ORM\ManyToOne', $annotations)) {
 				$association = 'ORM\ManyToOne';
-				$return['association'] = ORM\ClassMetadataInfo::MANY_TO_ONE;			
+				$return['association'] = ORM\ClassMetadataInfo::MANY_TO_ONE;
 			} else if(array_key_exists('ORM\OneToMany', $annotations)) {
 				$association = 'ORM\OneToMany';
-				$return['association'] = ORM\ClassMetadataInfo::ONE_TO_MANY;			
+				$return['association'] = ORM\ClassMetadataInfo::ONE_TO_MANY;
 			} else if(array_key_exists('ORM\OneToOne', $annotations)) {
 				$association = 'ORM\OneToOne';
-				$return['association'] = ORM\ClassMetadataInfo::ONE_TO_ONE;			
+				$return['association'] = ORM\ClassMetadataInfo::ONE_TO_ONE;
 			} else {
-				$return['association'] = 0;			
+				$return['association'] = 0;
 			}
 
 			if(array_key_exists('targetEntity', $annotations[$association][0])) {

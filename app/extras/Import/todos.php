@@ -1,15 +1,50 @@
 Otazky / ulohy
 
-Rado
-
-- doriesit moznost kuskovat import este na mensie casti
-  - potom by som mohol kliknut, co mam importovat
-  - tiez by mala byt moznost dat UNDO na hociktoru podsekciu
-
-David
-
-Brano
-- 
 
 Exception:
 throw new \Nette\UnexpectedValueException('toto mi nesedi');
+
+Rental - este dorobit:
+
+Otazky:
+- 
+
+Current status:
+
+
+
+	/**
+	 * @var email
+	 * @ORM\Column(type="email")
+	 */
+	protected $email;
+
+	/**
+	 * @var phone
+	 * @ORM\Column(type="phone")
+	 */
+	protected $phone;
+
+	/**
+	 * @var url
+	 * @ORM\Column(type="url")
+	 */
+	protected $url;
+
+	/**
+	 * @var address
+	 * @ORM\Column(type="address")
+	 */
+	protected $address;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string")
+	 */
+	protected $skype;
+
+	/**
+	 * @var contacts
+	 * @ORM\Column(type="contacts", nullable=true)
+	 */
+	protected $contacts;

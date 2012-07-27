@@ -1,0 +1,119 @@
+{block content}
+
+{*control editForm*}
+
+<form action="/admin/dictionary-phrase/edit?do=editForm-submit" method="post" class="row">
+	<div class="control-group span3">
+		<label for="frmeditForm-source_languages"><b>Type</b></label>
+		<select name="source_languages" id="frmeditForm-source_languages"><option value="28">cs</option><option value="33">de</option><option value="37">el</option><option value="38">en</option><option value="40">es</option><option value="48">fr</option><option value="60">hr</option><option value="62">hu</option><option value="73">it</option><option value="116">nl</option><option value="129">pl</option><option value="131">pt</option><option value="144">sk</option><option value="185">us</option><option value="186">ea</option></select>
+	</div>
+	<div class="control-group span3">
+		<label for="frmeditForm-source_languages"><b>Source Language</b></label>
+		<select name="source_languages" id="frmeditForm-source_languages"><option value="28">cs</option><option value="33">de</option><option value="37">el</option><option value="38">en</option><option value="40">es</option><option value="48">fr</option><option value="60">hr</option><option value="62">hu</option><option value="73">it</option><option value="116">nl</option><option value="129">pl</option><option value="131">pt</option><option value="144">sk</option><option value="185">us</option><option value="186">ea</option></select>
+	</div>
+	<div class="control-group span3">
+		<label for="frmeditForm-source_languages"><b>Translation status</b></label>
+		<label class="checkbox span3" for="checkbox-1"><input type="checkbox" class="span3" name="ready" id="checkbox-1" checked value="1"> Ready<div class="btn-group pull-right"></div></label>
+	</div>
+	<hr class="soften" />
+	<div class="control-group span6">
+		<label><b>ENGLISH:</b></label>
+		<table class="table">
+			<tr>
+				<th>Count</th>
+				<th>Translation</th>
+			</tr>
+			<tr>
+				<td>0,5</td>
+				<td>
+					<input type="text" placeholder="translation..." value="Jablka" disabled="disabled" />
+				</td>
+			</tr>
+			<tr>
+				<td>1</td>
+				<td>
+					<input type="text" placeholder="translation..." value="Jablk" disabled="disabled" />
+				</td>
+			</tr>
+			<tr>
+				<td>2-4</td>
+				<td>
+					<input type="text" placeholder="translation..." value="Jablka" disabled="disabled" />
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="control-group span6">
+		<label>
+			<select class="input-small pull-right">
+				<option>test</option>
+				<option>eeee</option>
+				<option>test</option>
+			</select>
+			<b>TRANSLATION | SLOVAK:</b>
+		</label>
+		<table class="table">
+			<tr>
+				<th>Count</th>
+				<th>Translation 1</th>
+				<th>Translation 2</th>
+				<th>Translation 3</th>
+			</tr>
+			<tr>
+				<td>0,5</td>
+				<td>
+					<input type="text" placeholder="translation..." value="Jablka" />
+					<input type="text" placeholder="translation..." value="Jablka" />
+				</td>
+				<td>
+					<input type="text" placeholder="translation..." value="Jablka" />
+					<input type="text" placeholder="translation..." value="Jablka" />
+				</td>
+				<td>
+					<input type="text" placeholder="translation..." value="Jablka" />
+					<input type="text" placeholder="translation..." value="Jablka" />
+				</td>
+			</tr>
+			<tr>
+				<td>1</td>
+				<td>
+					<input type="text" placeholder="translation..." value="Jablka" />
+					<input type="text" placeholder="translation..." value="Jablka" />
+				</td>
+				<td>
+					<input type="text" placeholder="translation..." value="Jablka" />
+					<input type="text" placeholder="translation..." value="Jablka" />
+				</td>
+				<td>
+					<input type="text" placeholder="translation..." value="Jablka" />
+					<input type="text" placeholder="translation..." value="Jablka" />
+				</td>
+			</tr>
+			<tr>
+				<td>2-4</td>
+				<td>
+					<input type="text" placeholder="translation..." value="Jablka" />
+					<input type="text" placeholder="translation..." value="Jablka" />
+				</td>
+				<td>
+					<input type="text" placeholder="translation..." value="Jablka" />
+					<input type="text" placeholder="translation..." value="Jablka" />
+				</td>
+				<td>
+					<input type="text" placeholder="translation..." value="Jablka" />
+					<input type="text" placeholder="translation..." value="Jablka" />
+				</td>
+			</tr>
+		</table>
+		<div class="row">
+			<div class="control-group span3">
+				<label for="frmeditForm-source_languages"><b>Type</b></label>
+				<select name="source_languages" id="frmeditForm-source_languages"><option value="28">cs</option><option value="33">de</option><option value="37">el</option><option value="38">en</option><option value="40">es</option><option value="48">fr</option><option value="60">hr</option><option value="62">hu</option><option value="73">it</option><option value="116">nl</option><option value="129">pl</option><option value="131">pt</option><option value="144">sk</option><option value="185">us</option><option value="186">ea</option></select>
+			</div>
+			<div class="control-group span2">
+				<label for="frmeditForm-source_languages"><b>Source Language</b></label>
+				<select name="source_languages" id="frmeditForm-source_languages"><option value="28">cs</option><option value="33">de</option><option value="37">el</option><option value="38">en</option><option value="40">es</option><option value="48">fr</option><option value="60">hr</option><option value="62">hu</option><option value="73">it</option><option value="116">nl</option><option value="129">pl</option><option value="131">pt</option><option value="144">sk</option><option value="185">us</option><option value="186">ea</option></select>
+			</div>
+		</div>
+	</div>
+</form>

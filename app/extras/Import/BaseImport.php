@@ -10,7 +10,7 @@ use Nette\Application as NA,
 	Extras\Models\Service,
 	Service\Dictionary as D,
 	Service as S,
-	Service\Log\Change as SLog;
+	Service\Log as SLog;
 
 class BaseImport {
 	public $sections = array(
@@ -50,12 +50,6 @@ class BaseImport {
 			),
 			'subsections' => array(),
 		),
-		'contactTypes' => array(
-			'entities' => array(
-				'\Contact\Type' => array(),
-			),
-			'subsections' => array(),
-		),
 		'locations' => array(
 			'entities' => array(
 				'\Location\Type' => array(),
@@ -63,6 +57,11 @@ class BaseImport {
 				'\Location\Traveling' => array(),
 			),
 			'subsections' => array('importContinents', 'importCountries', 'importTravelings', 'importRegions', 'importAdministrativeRegions1', 'importAdministrativeRegions2', 'importLocalities'),
+		),
+		'locationsPolygons' => array(
+			'entities' => array(
+			),
+			'subsections' => array(),
 		),
 		'companies' => array(
 			'entities' => array(
@@ -77,13 +76,94 @@ class BaseImport {
 			),
 			'subsections' => array('importSuperAdmins', 'importAdmins', 'importManagers', 'importTranslators', 'importOwners', 'importPotentialOwners', 'importVisitors'),
 		),
+		'amenities' => array(
+			'entities' => array(
+				'\Rental\AmenityType' => array(),
+				'\Rental\Amenity' => array(),
+			),
+			'subsections' => array(),
+		),
+		'rentalTypes' => array(
+			'entities' => array(
+				'\Rental\Type' => array(),
+			),
+			'subsections' => array(),
+		),
+		'rentals' => array(
+			'entities' => array(
+				'\Rental\Rental' => array(),
+			),
+			'subsections' => array(),
+		),
+		'invoicingStart' => array(
+			'entities' => array(
+				'\Invoicing\ServiceDuration' => array(),
+				'\Invoicing\ServiceType' => array(),
+				'\Invoicing\UseType' => array(),
+				'\Invoicing\Package' => array(),
+				'\Invoicing\Service' => array(),
+				'\Invoicing\Marketing' => array(),
+			),
+			'subsections' => array(),
+		),
+		'invoicing' => array(
+			'entities' => array(
+				'\Invoicing\Invoice' => array(),
+				'\Invoicing\Item' => array(),
+			),
+			'subsections' => array(),
+		),
+		'attractions' => array(
+			'entities' => array(
+				'\Attraction\Type' => array(),
+				'\Attraction\Attraction' => array(),
+			),
+			'subsections' => array(),
+		),
+		'interactions' => array(
+			'entities' => array(
+				'\User\RentalReservation' => array(),
+				'\User\RentalQuestion' => array(),
+				'\User\RentalReview' => array(),
+				'\User\RentalToFriend' => array(),
+				'\User\SiteOwnerReview' => array(),
+				'\User\SiteVisitorReview' => array(),
+			),
+			'subsections' => array('importRentalReservations', 'importRentalQuestions', 'importRentalToFriend', 'importSiteOwnerReviews', 'importSiteVisitorReviews'),
+		),
+		'emailing' => array(
+			'entities' => array(
+				'\Emailing\Template' => array(),
+			),
+			'subsections' => array(),
+		),
+		'seo' => array(
+			'entities' => array(
+				'\Seo\TitleSuffix' => array(),
+				'\Seo\SeoUrl' => array(),
+			),
+			'subsections' => array('importSeoUrls'),
+		),
+		'tickets' => array(
+			'entities' => array(
+				'\Ticket\Ticket' => array(),
+				'\Ticket\Message' => array(),
+			),
+			'subsections' => array(),
+		),
+		// 'pathsegments' => array(
+		// 	'entities' => array(
+		// 		'\Routing\PathSegment' => array(),
+		// 	),
+		// 	'subsections' => array(),
+		// ),
 	);
 
 	public $savedVariables = array();
+	public $developmentMode = TRUE;
 
 	public function __construct() {
 		$this->loadVariables();
-
 
 		return;
 	}
@@ -143,12 +223,12 @@ class BaseImport {
 				$tableName = str_replace('\\', '_', $key2);
 				$tableName = trim($tableName, '_');
 				$tableName = strtolower($tableName);
-
 				$r = qNew('select id from '.$tableName.' order by id DESC');
+				//debug('select id from '.$tableName.' order by id DESC');
 				while ($x = mysql_fetch_array($r)) {
 					$serviceName = '\Service'.$key2;
 					$s = $serviceName::get($x['id']);
-					$s->delete();
+					if ($s) $s->delete();
 				}
 			}
 			$this->savedVariables['importedSections'][$key]=0;
@@ -165,8 +245,8 @@ class BaseImport {
 		$this->saveVariables();
 	}
 
-	protected function createPhrasesByOld($entityName, $entityAttribute, $requiredLanguages, $level, $oldTableName, $oldAttribute) {
-		$dictionaryType = $this->createDictionaryType($entityName, $entityAttribute, $requiredLanguages, $level);
+	protected function createPhrasesByOld($entityName, $entityAttribute, $level, $oldTableName, $oldAttribute) {
+		$dictionaryType = $this->createDictionaryType($entityName, $entityAttribute, $level);
 
 		$r = q('select * from '.$oldTableName.' order by id');
 		while($x = mysql_fetch_array($r)) {
@@ -183,46 +263,53 @@ class BaseImport {
 						debug($newEntityId); return;	
 					}
 				}
+			} else {
+				$phrase = $this->createNewPhrase($dictionaryType);
 			}
 		}
 	}
 
-	protected function createNewPhrase(\Service\Dictionary\Type $type, $oldPhraseId, $oldLocativePhraseId = NULL) {
-		$oldPhraseData = qf('select * from dictionary where id = '.$oldPhraseId);
-		if (!$oldPhraseData) return FALSE;
+	protected function createNewPhrase(\Service\Dictionary\Type $type, $oldPhraseId = NULL, $oldLocativePhraseId = NULL, $locativeKeys = NULL) {
 
+		if ($oldPhraseId) {
+			$oldPhraseData = qf('select * from dictionary where id = '.$oldPhraseId);
+			if (!$oldPhraseData) {
+				debug('Nenasiel som staru Phrase podla starej ID '.$oldPhraseId);
+				$oldPhraseData = array(
+					'ready' => 1,
+				);
+				//throw new \Nette\UnexpectedValueException('Nenasiel som staru Phrase podla starej ID '.$oldPhraseId);
+			}			
+		}
 		$phrase = \Service\Dictionary\Phrase::get();
 		$phrase->ready = (bool)$oldPhraseData['ready'];
 		$phrase->type = $type;
 		$phrase->oldId = $oldPhraseId;
 
-		if ($phrase->type->requiredLanguages == 'supportedLanguages') {
-			$allLanguages = getSupportedLanguages();
-		} else {
-			$allLanguages = array(); // @todo - dorobit incomingLanguages, konkretne jazyky alebo "nic"
-		}
-
+		$allLanguages = getSupportedLanguages();
 		foreach ($allLanguages as $key => $value) {
 			$language = \Service\Dictionary\Language::get($value);
 			$oldTranslation = qf('select * from z_'.$language->iso.' where id = '.$oldPhraseId);
-			$params = NULL;
+			if (strlen($oldTranslation['text']) == 0) continue;
+
+			$variations = NULL;
 			if ($oldLocativePhraseId > 0) {
 				$oldTranslationLocative = qf('select * from z_'.$language->iso.' where id = '.$oldLocativePhraseId);
-				$params = array(
-					'locative' => $oldTranslationLocative['text'],
-				);
+				if (strlen($oldTranslationLocative)) {
+					$variations = array();
+					$variations[$locativeKeys[0]][$locativeKeys[1]]['locative'] = $oldTranslationLocative['text'];
+				}
 			}
-
-			$translation = $this->createTranslation($language, (string)$oldTranslation['text'], $params);				
+			$translation = $this->createTranslation($language, (string)$oldTranslation['text'], $variations);
 			$translation->timeTranslated = fromStamp($oldTranslation['updated']);
 			$phrase->addTranslation($translation);
 		}
-		$phrase->save();
+		//$phrase->save();
 		return $phrase;
 	}
 
-	protected function createPhraseFromString($entityName, $entityAttribute, $requiredLanguages, $level, $text, $textLanguage) {
-		$dictionaryType = $this->createDictionaryType($entityName, $entityAttribute, $requiredLanguages, $level);
+	protected function createPhraseFromString($entityName, $entityAttribute, $level, $text, $textLanguage) {
+		$dictionaryType = $this->createDictionaryType($entityName, $entityAttribute, $level);
 
 		$phrase = \Service\Dictionary\Phrase::get();
 		$phrase->ready = TRUE;
@@ -236,18 +323,20 @@ class BaseImport {
 		return $phrase;
 	}
 
-	protected function createDictionaryType($entityName, $entityAttribute, $requiredLanguages, $level, $params = NULL) {
+	protected function createDictionaryType($entityName, $entityAttribute, $level, $params = NULL) {
+		if (substr($entityName, 0, 7) != '\Entity') {
+			$entityName = '\Entity'.$entityName;
+		}
 
 		$dictionaryType = D\Type::getByEntityNameAndEntityAttribute($entityName, $entityAttribute);
 		if ($dictionaryType) {
-			debug('iba vraciam premennu '.$dictionaryType->entityName.'->'.$dictionaryType->entityAttribute);
+			//debug('iba vraciam premennu '.$dictionaryType->entityName.'->'.$dictionaryType->entityAttribute);
 			return $dictionaryType;
 		} else {
 			eval('$level = \Entity\Dictionary\Type::TRANSLATION_LEVEL_'.strtoupper($level).';');
 			$dictionaryType = D\Type::get();
 			$dictionaryType->entityName = $entityName;
 			$dictionaryType->entityAttribute = $entityAttribute;
-			$dictionaryType->requiredLanguages = $requiredLanguages;
 			$dictionaryType->translationLevelRequirement = $level;
 			if (isset($params) && count($params) > 0) {
 				foreach ($params as $key => $value) {
@@ -268,27 +357,9 @@ class BaseImport {
 		if ($variations == NULL) {
 			$variations = array();
 		}
-		$variations['translation'] = $text;
 		$translation->variations = $variations;
 
 		return $translation;
-	}
-
-	protected function createContact($slug, $value, $params = array()) {
-
-		if (!$value || strlen($value) == 0) {
-			throw new \Nette\UnexpectedValueException('BaseImport::createContact - no value received');
-		}
-
-		$contact = \Service\Contact\Contact::get();
-		$contact->type = \Service\Contact\Type::getBySlug($slug);
-		$contact->value = $value;
-
-		foreach ($params as $key => $value) {
-			$contact->$key = $value;
-		}
-
-		return $contact;
 	}
 
 	public function getSections() {

@@ -46,7 +46,6 @@ production < common:
 			dbname: tralandia
 			charset: utf8
 			driver: pdo_mysql
-			unix_socket: /var/run/mysqld/mysqld.sock
 
 console < common:
 
@@ -60,7 +59,7 @@ development < common:
 			dbname: tralandia
 			charset: utf8
 			driver: pdo_mysql
-			debugger: false
+			debugger: true
 
 vaculciak < development:
 	parameters:
@@ -70,7 +69,11 @@ vaculciak < development:
 durika < development:
 	parameters:
 		database:
-			debugger: true
+			debugger: false
+toth < development:
+	parameters:
+		database:
+			debugger: false
 
 test < development:
 	parameters:
@@ -81,4 +84,3 @@ test < development:
 			dbname: tralandia
 			charset: utf8
 			driver: pdo_mysql
-			unix_socket: /var/run/mysqld/mysqld.sock

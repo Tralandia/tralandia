@@ -1,0 +1,47 @@
+common:
+	service: Service\Seo\TitleSuffix
+	title: Seo / TitleSuffix
+	h1: Seo / TitleSuffix
+	grid:
+		columns:
+			id:
+				label: ID
+				mapper: e.id
+			country:
+				label: Country
+				mapper: e.country
+			language:
+				label: Language
+				mapper: e.language
+			suffix:
+				label: Suffix
+				mapper: e.suffix
+			oldId:
+				label: OldId
+				mapper: e.oldId
+				cellStyle: text-align:right;
+				headerStyle: text-align:right;
+			created:
+				label: Created
+				mapper: e.created
+			updated:
+				label: Updated
+				mapper: e.updated
+			
+	form:
+		fields:
+			country:
+				label: Country
+				control: select
+			language:
+				label: Language
+				control: select
+			suffix:
+				label: Suffix
+				control: text
+			created:
+				label: Created
+				control: datePicker
+			updated:
+				label: Updated
+				control: datePicker

@@ -10,15 +10,19 @@ use Nette\Application as NA,
 	Extras\Models\Service,
 	Service\Dictionary as D,
 	Service as S,
-	Service\Log\Change as SLog;
+	Service\Log as SLog;
 
 class ImportHtmlPhrases extends BaseImport {
 
 	public function doImport($subsection = NULL) {
 
-		$dictionaryType = $this->createDictionaryType('Html', 'Html', 'supportedLanguages', 'MARKETING');
+		$dictionaryType = $this->createDictionaryType('Html', 'Html', 'MARKETING');
 
-		$r = q('select * from dictionary where text_type = 2');
+		if ($this->developmentMode == TRUE) {
+			$r = q('select * from dictionary where text_type = 2 limit 20');
+		} else {
+			$r = q('select * from dictionary where text_type = 2');
+		}
 		$i = 0;
 		while ($x = mysql_fetch_array($r)) {
 			$newPhrase = $this->createNewPhrase($dictionaryType, $x['id']);

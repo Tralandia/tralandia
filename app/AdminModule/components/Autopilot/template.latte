@@ -1,0 +1,51 @@
+<div class="navbar navbar-fixed-top container autopilot">
+	<div class="navbar-inner green">
+		<div class="container">
+			<div class="btn btn-success pull-left task-id">#10562</div>
+			<a class="brand" href="#">{$task->name}</a>
+			<div class="btn-overlay pull-right">
+				<button class="btn btn-info" data-toggle="button" onclick="navbar.toggleDetails();"><span class="caret"></span></button>
+				<button class="btn btn-success btn-done">DONE <i class="icon-ok icon-white"></i></button>
+				<button class="btn btn-repeat" data-toggle="modal" data-target="#repeat"><i class="icon-repeat"></i> Every 2 weeks</button>
+			</div>	
+		</div>
+	</div>
+	<div class="subnav subnav-fixed">
+		<div class="well container details">
+			<div class="row">
+				<div class="span6">
+					<h2>H2 Title</h2>
+					<div class="desc">{!$task->mission}</div>
+					<p class="info">
+						<label><span>Created:</span> {$task->created|date}</label>
+						<label><span>Due:</span> {$task->due|date}</label>
+						<label><span>Start:</span> {$task->startTime|date}</label>
+						<label n:ifset="$task->userRole"><span>Role:</span> {$task->userRole->name}</label>
+						<label n:ifset="$task->user"><span>Exc. user:</span> {$task->user->login}</label>
+					</p>
+				</div>
+				<div class="span6">
+					<h2>Comments</h2>
+					<div class="comments">
+						<div class="comment">
+							<span>Jan Czibula | IT (28.02.2012 15:45):</span> Maecenas posuere, mi eget suscipit molestie.
+						</div>
+						<div class="comment">
+							<span>Jan Czibula | IT (28.02.2012 15:45):</span> Proin volutpat blandit nisi
+						</div>
+						<form>
+							<textarea placeholder="Type Your Text Here..." class="span6"></textarea><br />
+							<button class="btn btn-success btn-small">Add comment</button>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="options">
+				<a href="" class="btn btn-success btn-large pull-right">DONE <i class="icon-ok icon-white"></i></a>
+				<a href="" class="btn btn-medium pull-right" data-toggle="modal" data-target="#defer">Defer <i class="icon-time"></i></a>
+				<a href="" class="btn btn-medium pull-right" data-toggle="modal" data-target="#delegate">Delegate <i class="icon-share-alt"></i></a>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+	</div>
+</div>

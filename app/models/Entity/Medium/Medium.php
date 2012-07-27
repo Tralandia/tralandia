@@ -5,10 +5,14 @@ namespace Entity\Medium;
 use Entity\Dictionary;
 use Entity\Attraction;
 use Doctrine\ORM\Mapping as ORM;
+use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="medium_medium")
+ * @ORM\Table(name="medium_medium", indexes={@ORM\index(name="uri", columns={"uri"}), @ORM\index(name="oldUrl", columns={"oldUrl"}), @ORM\index(name="sort", columns={"sort"})})
+ * @EA\Service(name="\Service\Medium\Medium")
+ * @EA\ServiceList(name="\Service\Medium\MediumList")
+ * @EA\Primary(key="id", value="name")
  */
 class Medium extends \Entity\BaseEntityDetails {
 
@@ -27,44 +31,48 @@ class Medium extends \Entity\BaseEntityDetails {
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Attraction\Attraction", inversedBy="media")
+	 * @ORM\JoinColumn(onDelete="CASCADE")
 	 */
 	protected $attraction;
 
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Rental\Rental", inversedBy="media")
+	 * @ORM\JoinColumn(onDelete="CASCADE")
 	 */
 	protected $rental;
 
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Seo\SeoUrl", inversedBy="media")
+	 * @ORM\JoinColumn(onDelete="CASCADE")
 	 */
 	protected $seoUrl;
 
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Ticket\Message", inversedBy="attachments")
+	 * @ORM\JoinColumn(onDelete="CASCADE")
 	 */
 	protected $message;
 
 	/**
 	 * @var text
-	 * @ORM\Column(type="text")
+	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $uri;
 
 	/**
+	 * @var text
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $oldUrl;
+
+	/**
 	 * @var integer
-	 * @ORM\Column(type="integer")
+	 * @ORM\Column(type="integer", nullable=true)
 	 */
 	protected $sort;
-
-
-	
-
-
-
 
 //@entity-generator-code <--- NEMAZAT !!!
 
@@ -231,10 +239,45 @@ class Medium extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
+	 * @return \Entity\Medium\Medium
+	 */
+	public function unsetUri() {
+		$this->uri = NULL;
+
+		return $this;
+	}
+		
+	/**
 	 * @return string|NULL
 	 */
 	public function getUri() {
 		return $this->uri;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Medium\Medium
+	 */
+	public function setOldUrl($oldUrl) {
+		$this->oldUrl = $oldUrl;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Medium\Medium
+	 */
+	public function unsetOldUrl() {
+		$this->oldUrl = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getOldUrl() {
+		return $this->oldUrl;
 	}
 		
 	/**
@@ -243,6 +286,15 @@ class Medium extends \Entity\BaseEntityDetails {
 	 */
 	public function setSort($sort) {
 		$this->sort = $sort;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Medium\Medium
+	 */
+	public function unsetSort() {
+		$this->sort = NULL;
 
 		return $this;
 	}

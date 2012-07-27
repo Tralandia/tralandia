@@ -14,18 +14,19 @@ class Price extends Type {
 	}
 
 	public function getSqlDeclaration(array $fieldDeclaration, AbstractPlatform $platform) {
-		return 'decimal';
+		return 'varchar(255)';
 	}
 
 	public function convertToPHPValue($value, AbstractPlatform $platform) {
-		return NU\Json::decode($value);
+		return \Extras\Types\Price::decode($value);
 	}
 
 	public function convertToDatabaseValue($value, AbstractPlatform $platform) {
-		if (!is_string($value)) {
-			$value = NU\Json::encode($value);
+		if ($value) {
+			return $value->encode();
+		} else {
+			return NULL;
 		}
-		return $value;
 	}
 /*
 	public function canRequireSQLConversion() {

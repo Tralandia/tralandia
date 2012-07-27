@@ -1,0 +1,58 @@
+common:
+	service: Service\Invoicing\UseType
+	title: Invoicing / UseType
+	h1: Invoicing / UseType
+	grid:
+		columns:
+			id:
+				label: ID
+				mapper: e.id
+			name:
+				label: Name
+				mapper: e.id
+				callback: {Entity\Log\Systemmethod: translateColumn, params: name}
+			slug:
+				label: Slug
+				mapper: e.slug
+			# packages:
+			# 	label: Packages
+			# 	mapper: e.packages
+			# marketings:
+			# 	label: Marketings
+			# 	mapper: e.marketings
+			oldId:
+				label: OldId
+				mapper: e.oldId
+				cellStyle: text-align:right;
+				headerStyle: text-align:right;
+			created:
+				label: Created
+				mapper: e.created
+			updated:
+				label: Updated
+				mapper: e.updated
+			
+	form:
+		fields:
+			name:
+				label: Name
+				control: phrase
+				inlineEditing: DictionaryPhrase:edit
+			slug:
+				label: Slug
+				control: text
+			packages:
+				label: Packages
+				control: bricksList
+				inlineEditing: InvoicingPackage:edit
+				inlineCreating: InvoicingPackage:add
+			marketings:
+				label: Marketings
+				control: bricksList
+				inlineCreating: InvoicingMarketing:add
+			created:
+				label: Created
+				control: datePicker
+			updated:
+				label: Updated
+				control: datePicker

@@ -4,10 +4,14 @@ namespace Entity\User;
 
 use Entity\Dictionary;
 use Doctrine\ORM\Mapping as ORM;
+use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="user_role")
+ * @ORM\Table(name="user_role", indexes={@ORM\index(name="slug", columns={"slug"})})
+ * @EA\Service(name="\Service\User\Role")
+ * @EA\ServiceList(name="\Service\User\RoleList")
+ * @EA\Primary(key="id", value="name")
  */
 class Role extends \Entity\BaseEntity {
 
@@ -24,19 +28,41 @@ class Role extends \Entity\BaseEntity {
 	protected $slug;
 
 	/**
-	 * @var url
-	 * @ORM\Column(type="url", nullable=true)
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $homePage;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\User\User", inversedBy="roles", cascade={"persist"})
+	 * @ORM\OneToMany(targetEntity="Entity\User\User", mappedBy="role", cascade={"persist"})
 	 */
 	protected $users;
 
+	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean")
+	 */
+	protected $employee = FALSE;
+
 
 	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -84,10 +110,10 @@ class Role extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Extras\Types\Url
+	 * @param string
 	 * @return \Entity\User\Role
 	 */
-	public function setHomePage(\Extras\Types\Url $homePage) {
+	public function setHomePage($homePage) {
 		$this->homePage = $homePage;
 
 		return $this;
@@ -103,7 +129,7 @@ class Role extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Extras\Types\Url|NULL
+	 * @return string|NULL
 	 */
 	public function getHomePage() {
 		return $this->homePage;
@@ -117,6 +143,20 @@ class Role extends \Entity\BaseEntity {
 		if(!$this->users->contains($user)) {
 			$this->users->add($user);
 		}
+		$user->setRole($this);
+
+		return $this;
+	}
+		
+	/**
+	 * @param \Entity\User\User
+	 * @return \Entity\User\Role
+	 */
+	public function removeUser(\Entity\User\User $user) {
+		if($this->users->contains($user)) {
+			$this->users->removeElement($user);
+		}
+		$user->unsetRole();
 
 		return $this;
 	}
@@ -126,5 +166,22 @@ class Role extends \Entity\BaseEntity {
 	 */
 	public function getUsers() {
 		return $this->users;
+	}
+		
+	/**
+	 * @param boolean
+	 * @return \Entity\User\Role
+	 */
+	public function setEmployee($employee) {
+		$this->employee = $employee;
+
+		return $this;
+	}
+		
+	/**
+	 * @return boolean|NULL
+	 */
+	public function getEmployee() {
+		return $this->employee;
 	}
 }

@@ -23,7 +23,7 @@ function qNew($query, $show = 0) {
 	static $link1;
 
 	if (!$link1) {
-		$link1=mysql_connect('localhost', 'root', 'root');
+		$link1=mysql_connect('127.0.0.1', 'root', 'root');
 	}
 	mysql_select_db('tralandia', $link1);
 
@@ -86,7 +86,6 @@ function getNewIdsByOld($entityName, $extraWhere = NULL) {
 	$tableName = str_replace('\\', '_', $entityName);
 	$tableName = trim($tableName, '_');
 	$tableName = strtolower($tableName);
-
 	$r = qNew('select id, oldId from '.$tableName.($extraWhere ? ' where '.$extraWhere : ''));
 	$ids = array();
 	while ($x = mysql_fetch_array($r)) {
@@ -112,6 +111,12 @@ function getCurrencyByIso($iso) {
 
 function getSupportedLanguages() {
 	$id = qNew('select group_concat(id separator ",") from dictionary_language where supported = 1');
+	$id = mysql_fetch_array($id);
+	return explode(',', $id[0]);
+}
+
+function getAllLanguages() {
+	$id = qNew('select group_concat(id separator ",") from dictionary_language');
 	$id = mysql_fetch_array($id);
 	return explode(',', $id[0]);
 }

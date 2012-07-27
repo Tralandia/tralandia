@@ -6,10 +6,14 @@ use Entity\Dictionary;
 use Entity\Invoicing;
 use Entity\Location;
 use Doctrine\ORM\Mapping as ORM;
+use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="invoicing_marketing")
+ * @ORM\Table(name="invoicing_marketing", indexes={@ORM\index(name="countTotal", columns={"countTotal"}), @ORM\index(name="countLeft", columns={"countLeft"}), @ORM\index(name="validFrom", columns={"validFrom"}), @ORM\index(name="validTo", columns={"validTo"})})
+ * @EA\Service(name="\Service\Invoicing\Marketing")
+ * @EA\ServiceList(name="\Service\Invoicing\MarketingList")
+ * @EA\Primary(key="id", value="id")
  */
 class Marketing extends \Entity\BaseEntity {
 
@@ -68,6 +72,22 @@ class Marketing extends \Entity\BaseEntity {
 	protected $uses;
 
 	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

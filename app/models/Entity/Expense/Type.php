@@ -4,10 +4,14 @@ namespace Entity\Expense;
 
 use Entity\Dictionary;
 use Doctrine\ORM\Mapping as ORM;
+use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="expense_type")
+ * @EA\Service(name="\Service\Expense\Type")
+ * @EA\ServiceList(name="\Service\Expense\TypeList")
+ * @EA\Primary(key="id", value="id")
  */
 class Type extends \Entity\BaseEntity {
 
@@ -16,11 +20,6 @@ class Type extends \Entity\BaseEntity {
 	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $name;
-
-	
-
-
-
 
 //@entity-generator-code <--- NEMAZAT !!!
 

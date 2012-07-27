@@ -68,12 +68,13 @@ class Conventional extends Nette\Object implements IRenderer
 		),
 
 		'paginator' => array(
-			'container' => 'span class=paginator',
+			'container' => 'ul',
+			'itemWrapper' => 'li',
 			'button' => array(
-				'first' => 'span class="paginator-first"',
-				'prev' => 'span class="paginator-prev"',
-				'next' => 'span class="paginator-next"',
-				'last' => 'span class="paginator-last"',
+				'first' => 'a class="paginator-first"',
+				'prev' => 'a class="paginator-prev"',
+				'next' => 'a class="paginator-next"',
+				'last' => 'a class="paginator-last"',
 			),
 			'controls' => array(
 				'container' => 'span class=paginator-controls',
@@ -90,7 +91,8 @@ class Conventional extends Nette\Object implements IRenderer
 	);
 
 	/** @var string */
-	public $footerFormat = '%operations% %paginator% %info%';
+	//public $footerFormat = '%operations% %paginator% %info%';
+	public $footerFormat = '%paginator%';
 
 	/** @var string */
 	public $paginatorFormat = '%label% %input% of %count%';
@@ -241,7 +243,7 @@ class Conventional extends Nette\Object implements IRenderer
 			$cell = $this->getWrapper('row.content cell container');
 			$cell->colspan = $size;
 			$cell->style = 'text-align:center';
-			$cell->add(Html::el('div')->setText($this->dataGrid->translate('No data were found')));
+			$cell->add(Html::el('div')->setText($this->dataGrid->translate('Nenašiel sa žiadny záznam.')));
 			$row->add($cell);
 			$body->add($row);
 		}
@@ -268,7 +270,9 @@ class Conventional extends Nette\Object implements IRenderer
 	public function renderPaginator()
 	{
 		$paginator = $this->dataGrid->paginator;
+
 		if ($paginator->pageCount <= 1) return '';
+
 
 		$container = $this->getWrapper('paginator container');
 		$translator = $this->dataGrid->getTranslator();
@@ -276,80 +280,52 @@ class Conventional extends Nette\Object implements IRenderer
 		$a = Html::el('a');
 		$a->addClass(Action::$ajaxClass);
 
-		// to-first button
-		$first = $this->getWrapper('paginator button first');
-		$title = $this->dataGrid->translate('First');
-		$link = clone $a->href($this->dataGrid->link('page', 1));
-		$first->setText($title);
-		if ($first instanceof Html) {
-			if ($paginator->isFirst()) $first->addClass('inactive');
-			else $first = $link->add($first);
-			$first->title($title);
-		} else {
-			$first = $link->setText($title);
-		}
-		$container->add($first);
-
 		// previous button
-		$prev = $this->getWrapper('paginator button prev');
-		$title = $this->dataGrid->translate('Previous');
+		$title = $this->dataGrid->translate('« Predošlá');
 		$link = clone $a->href($this->dataGrid->link('page', $paginator->page - 1));
-		$prev->setText($title);
-		if ($prev instanceof Html) {
-			if ($paginator->isFirst()) $prev->addClass('inactive');
-			else $prev = $link->add($prev);
-			$prev->title($title);
-		} else {
-			$prev = $link->setText($title);
-		}
-		$container->add($prev);
+		$link->setText($title)->title($title);
+		if ($paginator->isFirst()) $link->addClass('active');
 
-		// page input
-		$controls = $this->getWrapper('paginator controls container');
-		$form = $this->dataGrid->getForm(TRUE);
-		$format = $this->dataGrid->translate($this->paginatorFormat);
-		$html = str_replace(
-			array('%label%', '%input%', '%count%'),
-			array($form['page']->label, $form['page']->control, $paginator->pageCount),
-			$format
-		);
-		$controls->add(Html::el()->setHtml($html));
-		$container->add($controls);
+		$container->add($this->getWrapper('paginator itemWrapper')->add($link));
+
+		$page = $paginator->page;
+		if ($paginator->pageCount < 2) {
+			$steps = array($page);
+		} else {
+			$arr = range(max($paginator->firstPage, $page - 3), min($paginator->lastPage, $page + 3));
+			$count = 3;
+			$quotient = ($paginator->pageCount - 1) / $count;
+			for ($i = 0; $i <= $count; $i++) {
+				$arr[] = round($quotient * $i) + $paginator->firstPage;
+			}
+			sort($arr);
+			$steps = array_values(array_unique($arr));
+		}
+		$i = 0;
+		foreach($steps as $step) {
+			$link = clone $a->href($this->dataGrid->link('page', $step));
+			$link->setText($step);
+			if($step == $paginator->page) {
+				$link->addClass('active');
+			}
+			if($i + 1 > $step + 1) $stepHtml->setTect('…');
+			$container->add($this->getWrapper('paginator itemWrapper')->add($link));
+			$i++;
+		}
+
 
 		// next button
-		$next = $this->getWrapper('paginator button next');
-		$title = $this->dataGrid->translate('Next');
+		$title = $this->dataGrid->translate('Ďalšia »');
 		$link = clone $a->href($this->dataGrid->link('page', $paginator->page + 1));
-		$next->setText($title);
-		if ($next instanceof Html) {
-			if ($paginator->isLast()) $next->addClass('inactive');
-			else $next = $link->add($next);
-			$next->title($title);
-		} else {
-			$next = $link->setText($title);
-		}
-		$container->add($next);
+		$link->setText($title)->title($title);
+		if ($paginator->isLast()) $link->addClass('active');
 
-		// to-last button
-		$last = $this->getWrapper('paginator button last');
-		$title = $this->dataGrid->translate('Last');
-		$link = clone $a->href($this->dataGrid->link('page', $paginator->pageCount));
-		$last->setText($title);
-		if ($last instanceof Html) {
-			if ($paginator->isLast()) $last->addClass('inactive');
-			else $last = $link->add($last);
-			$last->title($title);
-		} else {
-			$last = $link->setText($title);
-		}
-		$container->add($last);
-
-		// page change submit
-		$control = $form['pageSubmit']->control;
-		$control->title = $control->value;
-		$container->add($control);
+		$container->add($this->getWrapper('paginator itemWrapper')->add($link));
 
 		unset($first, $prev, $next, $last, $button, $paginator, $link, $a, $form);
+
+		$container = Html::el('div')->addClass('pagination pull-right')->setHtml($container);
+
 		return $container->render();
 	}
 
@@ -452,9 +428,9 @@ class Conventional extends Nette\Object implements IRenderer
 
 				$up = clone $down = Html::el('a')->addClass(Columns\Column::$ajaxClass);
 				$up->addClass($a ? 'active' : '')->href($column->getOrderLink('a'))
-					->add(Html::el('span')->class('up'));
+					->add(Html::el('span')->class('icon-chevron-up icon-white'));
 				$down->addClass($d ? 'active' : '')->href($column->getOrderLink('d'))
-					->add(Html::el('span')->class('down'));
+					->add(Html::el('span')->class('icon-chevron-down icon-white'));
 				$positioner = Html::el('span')->class('positioner')->add($up)->add($down);
 				$active = $a || $d;
 

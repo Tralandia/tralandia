@@ -5,6 +5,7 @@ namespace Extras\Models;
 use Nette, 
 	Nette\ObjectMixin, 
 	Nette\MemberAccessException,
+	Tra\Utils\Strings,
 	Doctrine\ORM\EntityManager;
 
 /**
@@ -45,7 +46,7 @@ abstract class Service extends Nette\Object implements IService {
 	/**
 	 * @var bool
 	 */
-	private $isPersist = false;
+	private $isPersisted = false;
 
 	/**
 	 * @var object
@@ -146,10 +147,18 @@ abstract class Service extends Nette\Object implements IService {
 	 * @param mixed
 	 */
 	public function __set($name, $value) {
-		if ($value instanceof Service) {
+		if($value === NULL) {
+			$method = 'unset';
+		} else {
+			$method = 'set';
+		}
+		$method .= Strings::firstUpper($name);
+		if(method_exists($this, $method)){
+			$this->{$method}($value);
+		}else if ($value instanceof Service) {
 			$this->mainEntity->{$name} = $value->getMainEntity();
 		}else {
-			$this->mainEntity->$name = $value;
+			$this->mainEntity->{$name} = $value;
 		}
 	}
 
@@ -160,13 +169,32 @@ abstract class Service extends Nette\Object implements IService {
 	 * @return mixed
 	 */
 	public function &__get($name) {
-		if ($this->mainEntity instanceof Entity) {
+		$method = 'get'.Strings::firstUpper($name);
+		if(method_exists($this, $method)){
+			$return = $this->{$method}();
+			return $return;
+		}else if ($this->mainEntity instanceof Entity) {
 			try {
 				return ObjectMixin::get($this->mainEntity, $name);
 			} catch (MemberAccessException $e) {}
 		}
 
 		return ObjectMixin::get($this, $name);
+	}
+
+
+
+	# @todo @brano je toto spravne ?
+	# toto iste je aj v Entity.php
+	public function __isset($name) {
+		// toto mi nefungovalo spravne
+		// $isset = ObjectMixin::has($this, $name);
+		// if(!$isset) {
+		// 	$isset = isset($this->getMainEntity()->{$name});
+		// }
+
+		// toto uz ide OK
+		return $this->{$name} !== NULL;
 	}
 
 	/**
@@ -180,7 +208,7 @@ abstract class Service extends Nette\Object implements IService {
 				if(count($arguments) == 1) {
 					$first = reset($arguments);
 					if($first instanceof Service) {
-						$this->mainEntity->{$name}($first->mainEntity);
+						$t = $this->mainEntity->{$name}($first->mainEntity);
 						return $this;
 					} else {
 						$this->mainEntity->{$name}($first);
@@ -191,7 +219,42 @@ abstract class Service extends Nette\Object implements IService {
 				}
 			}
 		} catch (MemberAccessException $e) {}
+		
+		return ObjectMixin::call($this, $name, $arguments);
 	}
+
+
+	public static function __callStatic($name, $arguments) {
+		list($nameTemp, $name1, $name2) = Strings::match($name, '~^getBy([A-Za-z]+)And([A-Za-z]+)$~');
+		if($nameTemp && $name1 && $name2) {
+			$name1 = Strings::firstLower($name1);
+			$name2 = Strings::firstLower($name2);
+			$params = array(
+				$name1 => array_shift($arguments),
+				$name2 => array_shift($arguments),
+			);
+			return static::getBy($params);
+		} else if(Strings::startsWith($name, 'getBy')) {
+			$name = str_replace('getBy', '', $name);
+			$name = Strings::firstLower($name);
+			return static::getBy(array($name => $arguments));
+		} else {
+			return parent::__callStatic($name, $arguments);
+		}
+	}
+
+
+	public static function getBy($criteria) {
+		foreach ($criteria as $key => $value) {
+			if($value instanceof Service || $value instanceof Entity) {
+				$criteria[$key] = $value->id;
+			}
+		}
+		$repo = static::getEm()->getRepository(static::getMainEntityName());
+		$result = $repo->findOneBy($criteria);
+		return $result ? static::get($result) : NULL;
+	}
+
 
 	/**
 	 * Ziskanie hlavnej entity
@@ -204,6 +267,10 @@ abstract class Service extends Nette\Object implements IService {
 		}
 		
 		return $this->mainEntity;
+	}
+
+	public function getEntity() {
+		return $this->getMainEntity();
 	}
 
 	/**
@@ -233,7 +300,7 @@ abstract class Service extends Nette\Object implements IService {
 	 * Ziskanie entity manazera
 	 * @return EntityManager
 	 */
-	protected static function getEntityManager() {
+	public static function getEntityManager() {
 		return self::$em;
 	}
 
@@ -241,7 +308,7 @@ abstract class Service extends Nette\Object implements IService {
 	 * Alias na entity manazera
 	 * @return EntityManager
 	 */
-	protected static function getEm() {
+	public static function getEm() {
 		return self::getEntityManager();
 	}
 
@@ -277,15 +344,23 @@ abstract class Service extends Nette\Object implements IService {
 	 */
 	protected function load($value) {
 		if ($value instanceof Entity) {
-			$this->isPersist = true;
+			$this->isPersisted = true;
 			$this->mainEntity = $value;
 			return;
 		}
 
 		if ($entity = $this->getEm()->find($this->getMainEntityName(), $value)) {
-			$this->isPersist = true;
+			$this->isPersisted = true;
 			$this->mainEntity = $entity;
 		}
+	}
+
+	/**
+	 * Zavola sa pred ulozenim do db
+	 * @return void
+	 */
+	protected function beforeSave() {
+
 	}
 
 	/**
@@ -294,11 +369,13 @@ abstract class Service extends Nette\Object implements IService {
 	public function save() {
 		try {
 			if ($this->mainEntity instanceof Entity) {
-				if (!$this->isPersist) {
+				if (!$this->isPersisted) {
 					$this->getEm()->persist($this->mainEntity);
 				}
 				if ($this->isFlushable()) {
+					$this->beforeSave();
 					self::flush();
+					$this->afterSave();
 					ServiceLoader::set(get_class($this) . '#' . $this->getId(), $this);
 				} else {
 					ServiceLoader::addToStack($this);
@@ -307,6 +384,31 @@ abstract class Service extends Nette\Object implements IService {
 		} catch (\PDOException $e) {
 			throw new ServiceException($e->getMessage());
 		}
+	}
+
+	/**
+	 * Zavola sa po ulozeni
+	 * @return [type] [description]
+	 */
+	protected function afterSave() {
+
+		$contacts = new \Extras\Types\Contacts;
+		$entityReflection = new \Extras\Reflection\Entity($this->getEntity());
+		$properties = $entityReflection->getPropertiesByType($entityReflection::GROUP_CONTACTS);
+		foreach ($properties as $property) {
+			$propertyValue = $this->{$property->getName()};
+			if($propertyValue instanceof \Extras\Types\IContact) {
+				$contacts->add($propertyValue);
+			} else {
+				foreach ($propertyValue->getList() as $key => $value) {
+					$contacts->add($value);
+				}
+			}
+		}
+		// debug($contacts);
+		\Service\ContactCacheList::syncContacts($contacts, $this->getMainEntityName(), $this->id);
+		// throw new \Exception("Error Processing Request", 1);
+		
 	}
 
 	/**
@@ -320,11 +422,12 @@ abstract class Service extends Nette\Object implements IService {
 				self::flush();
 			}
 		} catch (\PDOException $e) {
+			debug($this);
 			throw new ServiceException($e->getMessage());
 		}
 	}
 
-	public function setCurrentMask(array $mask) {
+	public function setCurrentMask($mask) {
 		$this->currentMask = $mask;
 	}
 
@@ -336,63 +439,167 @@ abstract class Service extends Nette\Object implements IService {
 	 * Ziskanie datasource
 	 * @return Query
 	 */
-	public function getDataByMask() {
-		$mask = $this->getCurrentMask();
-debug($mask);
+	public function setDefaultsFormData($form, $mask) {
 		$data = array();
-		foreach ($mask as $key => $value) {
-//debug($value);
-			$name = $value->name;
-			if($value->type) {
-				$targetEntity = reset($value->targetEntities);
-				$targetEntityName = key($value->targetEntities);
-				if ($targetEntityName == 'Entity\\Dictionary\\Phrase') {
-					$data[$name] = $this->getTranslator()->translate($this->{$name});
-				} else if($value->type == Reflector::ONE_TO_ONE && $targetEntity) {
-					
-
-					$property = $targetEntity->value;
-
-
-					debug($this->{$name}->translations, $property);
-
-					$data[$name] = $this->{$name}->{$property};
-				} else {
-					$data[$name] = $this->{$name};
-					// @todo method or operation is not implemented
-					//throw new \Nette\NotImplementedException('Requested method or operation is not implemented');
-				}
-
+		if(!isset($mask->fields)) return $data;
+		foreach ($mask->fields as $property) {
+			$ui = $property->ui;
+			$name = $ui->name;
+			// debug($name, $this->{$name}, $ui, $property->targetEntity);
+			if(!$this->{$name}) {
+				$data[$name] = NULL;
 			} else {
-				$data[$name] = $this->{$name};
+				if(isset($property->targetEntity)) {
+
+					$targetEntity = $property->targetEntity;
+
+					if ($targetEntity->name == 'Entity\\Dictionary\\Phrase') {
+						$phrase = \Service\Dictionary\Phrase::get($this->{$name});
+						if ($phrase) {
+							$form[$name]->setPhrase($phrase);
+						}
+
+					} else if($targetEntity->associationType == Reflector::MANY_TO_MANY || $targetEntity->associationType == Reflector::ONE_TO_MANY) {
+
+						$dataTemp = array();
+						foreach ($this->{$name}->toArray() as $key => $value) {
+							$dataTemp[$value->{$targetEntity->primaryKey}] = $value->{$targetEntity->primaryValue};
+							// $dataTemp[] = $value->{$targetEntity->primaryKey};
+						}
+						$form[$name]->setDefaultValue(array_keys($dataTemp));
+						$form[$name]->setDefaultParam($dataTemp);
+						
+					} else if($targetEntity->associationType == Reflector::MANY_TO_ONE) {
+
+						$data[$name] = $this->{$name}->{$targetEntity->primaryKey};
+						$form[$name]->setDefaultValue($data[$name]);
+
+					} else if($targetEntity->associationType == Reflector::ONE_TO_ONE) {
+						if(Strings::endsWith($targetEntity->name, '\\Medium')) {
+							$data[$name] = NULL;
+							$form[$name]->setDefaultParam($this->{$name});
+						} else {
+							$property = $targetEntity->primaryValue;
+
+							$data[$name] = $this->{$name}->{$property};
+						}
+
+						$form[$name]->setDefaultValue($data[$name]);
+
+					} else {
+						
+						$data[$name] = $this->{$name};
+						$form[$name]->setDefaultValue($data[$name]);
+
+					}
+
+				} else {
+					if($ui->control->type == 'AdvancedGmap') {
+						$data[$name] = array(
+							'latitude' => $this->{$ui->control->latitude},
+							'longitude' => $this->{$ui->control->longitude}
+						);
+					}
+
+					$data[$name] = $this->{$name};
+					// debug($data[$name]);
+					$form[$name]->setDefaultValue($data[$name]);
+				}				
 			}
 		}
-		
+		// debug($data);
 		return $data;
 	}
 
-	public function updateFormData($formValues) {
-		$mask = $this->getCurrentMask();
-
-		foreach ($mask as $key => $value) {
-			$name = $value->name;
+	public function updateFormData($mask, $formValues) {
+		// debug($formValues);
+		foreach ($mask->fields as $property) {
+			$ui = $property->ui;
+			// debug($ui);
+			if(isset($ui->control->disabled) && $ui->control->disabled) continue;
+			$name = $ui->name;
 			if(array_key_exists($name, $formValues)) {
 				$formValue = $formValues[$name];
-				if($value->type) {
-					$targetEntity = reset($value->targetEntities);
-					if($value->type == Reflector::ONE_TO_ONE && $targetEntity) {
-						$property = $targetEntity->value;
-						$this->{$name}->{$property} = $formValue;
+				if(isset($property->targetEntity)) {
+					$targetEntity = $property->targetEntity;
+					if($targetEntity->name == 'Entity\\Dictionary\\Phrase') {
+						// fraza sa needituje cez servisu
+					} else if($targetEntity->associationType == Reflector::ONE_TO_ONE) {
+
+						if(Strings::endsWith($targetEntity->name, '\\Medium')) {
+							if($formValue === false) {
+								if($this->{$name}) {
+									\Service\Medium\Medium::get($this->{$name})->delete();
+								}
+							} else if($formValue->isOk()) {
+								if($this->{$name}) {
+									\Service\Medium\Medium::get($this->{$name})->delete();
+								}
+								$medium = \Service\Medium\Medium::saveUploadedFile($formValue);
+								$this->{$name} = $medium;
+							}
+						} else {
+							$this->{$name}->{$targetEntity->primaryValue} = $formValue;
+						}
+
+					} else if($targetEntity->associationType == Reflector::MANY_TO_MANY || $targetEntity->associationType == Reflector::ONE_TO_MANY) {
+						$this->{$name}->clear();
+						if(is_array($formValue)) {
+							foreach ($formValue as $key => $value) {
+								$serviceName = $targetEntity->serviceName;
+								if($value = $serviceName::get($value)) {
+									$this->{'add' . ucfirst($ui->nameSingular)}($value->getMainEntity());
+								}
+							}
+						}
+					} else if($targetEntity->associationType == Reflector::MANY_TO_ONE) {
+						if($formValue === NULL) {
+							$this->{$name} = NULL;
+						} else {
+							$serviceName = $targetEntity->serviceName;
+							try{
+								$this->{$name} = $serviceName::get($formValue);
+							} catch(\Nette\InvalidArgumentException $e) {
+								// debug($formValue);
+								throw new \Exception("Nevedel inicializovat servisu z '$formValue', bud si zle nastavil formular pre property '$name' ({$targetEntity->name}), alebo je chyba vo formulary samotnom...");
+							}
+						}
 					} else {
 						// @todo method or operation is not implemented
 						throw new \Nette\NotImplementedException('Requested method or operation is not implemented');
 					}
 				} else {
+					$columnType = $property->column->type;
+
+					if($ui->control->type == 'AdvancedGmap') {
+						$this->{$ui->control->longitude} = new \Extras\Types\Latlong($formValue[$ui->control->longitude]);
+						$formValue = new \Extras\Types\Latlong($formValue[$ui->control->latitude]);										
+					} else if($columnType == 'latlong') {
+						$formValue = new \Extras\Types\Latlong($formValue);
+					} else if($columnType == 'price') {
+						$formValue = new \Extras\Types\Price($formValue);
+					} else if($columnType == 'phone') {
+						$formValue = new \Extras\Types\Phone($formValue);
+					} else if($columnType == 'url') {
+						$formValue = new \Extras\Types\Url($formValue);
+					} else if($columnType == 'address') {
+						$formValue = new \Extras\Types\Address($formValue);
+					} else if($columnType == 'contacts') {
+						$formValue = c(new \Extras\Types\Contacts())->addFromString($formValue);
+					}
 					$this->{$name} = $formValue;
 				}
 			}
 		}
+		// debug($this->getMainEntity()->contacts);
 		$this->save();
+	}
+
+	public function create($mask, $formValues) {
+		if($this->id > 0) {
+			throw new \Exception("Servisa uz exisuje, nemozes ju znova vytvorit!");
+		}
+		$this->updateFormData($mask, $formValues);
 	}
 
 	/**

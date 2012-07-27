@@ -1,0 +1,84 @@
+common:
+	service: Service\Expense\Expense
+	title: Expense / Expense
+	h1: Expense / Expense
+	grid:
+		columns:
+			id:
+				label: ID
+				mapper: e.id
+			name:
+				label: Name
+				mapper: e.id
+				callback: {Entity\Log\Systemmethod: translateColumn, params: name}
+			amount:
+				label: Amount
+				mapper: e.amount
+				cellStyle: text-align:right;
+				headerStyle: text-align:right;
+			type:
+				label: Type
+				mapper: e.type
+			country:
+				label: Country
+				mapper: e.country
+			company:
+				label: Company
+				mapper: e.company
+			bankAccount:
+				label: BankAccount
+				mapper: e.bankAccount
+			user:
+				label: User
+				mapper: e.user
+			oldId:
+				label: OldId
+				mapper: e.oldId
+				cellStyle: text-align:right;
+				headerStyle: text-align:right;
+			created:
+				label: Created
+				mapper: e.created
+			updated:
+				label: Updated
+				mapper: e.updated
+			
+	form:
+		fields:
+			name:
+				label: Name
+				control: text
+			amount:
+				label: Amount
+				control: text
+			type:
+				label: Type
+				control: select
+				inlineEditing: ExpenseType:edit
+				inlineCreating: ExpenseType:add
+			country:
+				label: Country
+				control: select
+				inlineEditing: LocationLocation:edit
+				inlineCreating: LocationLocation:add
+			company:
+				label: Company
+				control: select
+				inlineEditing: CompanyCompany:edit
+				inlineCreating: CompanyCompany:add
+			bankAccount:
+				label: BankAccount
+				control: select
+				inlineEditing: CompanyBankAccount:edit
+				inlineCreating: CompanyBankAccount:add
+			user:
+				label: User
+				control: select
+				inlineEditing: UserUser:edit
+				inlineCreating: UserUser:add
+			created:
+				label: Created
+				control: datePicker
+			updated:
+				label: Updated
+				control: datePicker

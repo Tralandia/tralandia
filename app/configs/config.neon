@@ -7,8 +7,17 @@ common:
 	nette:
 		session:
 			autoStart: smart
+			expiration: '+1 year'
 
 	parameters:
+		ticketFetcherApi:
+			email: tralandia.test@gmail.com
+			password: tralandia1
+			host: imap.gmail.com
+			port: 993
+			tls: imap/ssl
+			maxEmails: 10
+
 		security:
 			salt: '8723lks762ngknl90835bkd'
 			sender: 'noreply@tralandia.sk'
@@ -20,22 +29,45 @@ common:
 
 		settingsDir: %appDir%/configs
 
+	includes:
+		- webLoader.neon
+		- acl/acl.neon
+
 	services:
-		nette.presenterFactory:
-			class: Extras\DynamicPresenterFactory
-			factory: Extras\DynamicPresenterFactory::factory
+		# nette.presenterFactory:
+			# class: Extras\DynamicPresenterFactory
+			# factory: Extras\DynamicPresenterFactory::factory
 
-		#authenticator: Security\Authenticator
+		# CACHE
+		aclCache: Nette\Caching\Cache(@cacheStorage, 'Acl')
+		routerCache: Nette\Caching\Cache(@cacheStorage, 'Router')
 
-		authorizator: Security\Acl
+		user:
+			class: Security\User
+
+		authenticator: Security\Authenticator
+
+		authorizator: 
+			class: Security\Acl
+			setup:
+				# - $cache(@aclCache)
+				- $config(%acl%)
+				- setup()
 
 		environment: Extras\Environment
+
 
 		translator: Extras\Translator(@environment, @cacheStorage)
 
 		settings:
 			factory: Extras\PresenterSettings::factory
 
+		ticketFetcherApi:
+			class: Horo\Api( %ticketFetcherApi.host%, %ticketFetcherApi.email%, %ticketFetcherApi.password%, 'INBOX', %ticketFetcherApi.port%, %ticketFetcherApi.tls% )
+			setup:
+				- setMaxEmails(%ticketFetcherApi.maxEmails%)
+
+		ticketFetcher: Extras\TicketFetcher( @ticketFetcherApi )
 
 production < common:
 
@@ -62,5 +94,5 @@ durika < development:
 		envOptions:
 			email: tralandia.david@gmail.com
 
-
+toth < development:
 test < development:

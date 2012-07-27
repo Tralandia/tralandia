@@ -20,7 +20,7 @@ class Item extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Attraction\Type")
+	 * @ORM\ManyToOne(targetEntity="Entity\Invoicing\ServiceType")
 	 */
 	protected $serviceType;
 
@@ -38,13 +38,13 @@ class Item extends \Entity\BaseEntity {
 
 	/**
 	 * @var datetime
-	 * @ORM\Column(type="datetime")
+	 * @ORM\Column(type="datetime", nullable=true)
 	 */
 	protected $serviceFrom;
 
 	/**
 	 * @var datetime
-	 * @ORM\Column(type="datetime")
+	 * @ORM\Column(type="datetime", nullable=true)
 	 */
 	protected $serviceTo;
 
@@ -61,16 +61,10 @@ class Item extends \Entity\BaseEntity {
 	protected $durationNameEn;
 
 	/**
-	 * @var price
-	 * @ORM\Column(type="price")
+	 * @var float
+	 * @ORM\Column(type="float")
 	 */
 	protected $price;
-
-	/**
-	 * @var price
-	 * @ORM\Column(type="price")
-	 */
-	protected $priceEur;
 
 	/**
 	 * @var string
@@ -113,6 +107,22 @@ class Item extends \Entity\BaseEntity {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -147,10 +157,10 @@ class Item extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Attraction\Type
+	 * @param \Entity\Invoicing\ServiceType
 	 * @return \Entity\Invoicing\Item
 	 */
-	public function setServiceType(\Entity\Attraction\Type $serviceType) {
+	public function setServiceType(\Entity\Invoicing\ServiceType $serviceType) {
 		$this->serviceType = $serviceType;
 
 		return $this;
@@ -166,7 +176,7 @@ class Item extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Attraction\Type|NULL
+	 * @return \Entity\Invoicing\ServiceType|NULL
 	 */
 	public function getServiceType() {
 		return $this->serviceType;
@@ -235,6 +245,15 @@ class Item extends \Entity\BaseEntity {
 	}
 		
 	/**
+	 * @return \Entity\Invoicing\Item
+	 */
+	public function unsetServiceFrom() {
+		$this->serviceFrom = NULL;
+
+		return $this;
+	}
+		
+	/**
 	 * @return \DateTime|NULL
 	 */
 	public function getServiceFrom() {
@@ -247,6 +266,15 @@ class Item extends \Entity\BaseEntity {
 	 */
 	public function setServiceTo(\DateTime $serviceTo) {
 		$this->serviceTo = $serviceTo;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Invoicing\Item
+	 */
+	public function unsetServiceTo() {
+		$this->serviceTo = NULL;
 
 		return $this;
 	}
@@ -311,37 +339,20 @@ class Item extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Extras\Types\Price
+	 * @param float
 	 * @return \Entity\Invoicing\Item
 	 */
-	public function setPrice(\Extras\Types\Price $price) {
+	public function setPrice($price) {
 		$this->price = $price;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Extras\Types\Price|NULL
+	 * @return float|NULL
 	 */
 	public function getPrice() {
 		return $this->price;
-	}
-		
-	/**
-	 * @param \Extras\Types\Price
-	 * @return \Entity\Invoicing\Item
-	 */
-	public function setPriceEur(\Extras\Types\Price $priceEur) {
-		$this->priceEur = $priceEur;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Extras\Types\Price|NULL
-	 */
-	public function getPriceEur() {
-		return $this->priceEur;
 	}
 		
 	/**

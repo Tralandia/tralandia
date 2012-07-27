@@ -1,6 +1,90 @@
-{block title}{include #parent} | {$settings->title}{/block}
-
 {block content}
-<h1>{$settings->title}</h1>
+{if !isset($display) || $display != 'modal'}
+	<h1>
+		{$fomatedH1}
+		<!-- <button onclick="toggleEdit(this);" data-toggle="button" class="btn btn-warning pull-right">Edit mode</button> -->
+		<span class="entity-id">{ifset $service->id}[#{$service->id}]{/ifset}</span>
+	</h1>
+{/if}
 
-{control form}
+
+{snippet form}
+	{control form}
+	<p class="edit-info">
+		<span n:ifset="$created"><b>Created</b>:{$created|date}</span>
+		|
+		<span n:ifset="$updated"><b>Updated</b>:{$updated|date}</span>
+	</p>
+{/snippet}
+
+{* <a onclick="ivalidateForm({$form->getHtmlId()})" class="btn btn-danger btn-big">Invalidate Form</a> *}
+
+
+{if !isset($display) || $display != 'modal'}
+
+	<div class="modal" id="myModal" style="display:none;">
+		<div class="modal-header">
+			<button class="close" data-dismiss="modal">×</button>
+			<h3>Modal header</h3>
+		</div>
+		<div class="modal-body">
+			<iframe src="" height="500" width="1100"></iframe> 
+		</div>
+<!-- 
+		<div class="modal-footer">
+			<a href="#" class="btn">Close</a>
+			<a href="#" class="btn btn-primary">Save changes</a>
+		</div>
+ -->		
+	</div>
+
+
+	<script type="text/javascript" n:syntax="double">
+		$(function() {
+			$('a.edit').live('click', function(event){
+				event.preventDefault();
+				$('#myModal iframe').attr('src', $(this).attr('href'));
+				$('#myModal').modal('show');
+				return false;
+			});
+		});
+		function ivalidateForm() {
+			var form = $('#' + {{$form->getHtmlId()}});
+			form.attr("action", form.attr("action") + '&invalidate=1');
+			form.submit();
+		}
+		function setIframeHeight(h) {
+			$('#myModal iframe').height(h);
+		}
+	</script>
+{else}
+	<script type="text/javascript" n:syntax="double">
+		$(function() {
+			$("form.ajax").live("submit", function(e) {
+				//alert(payload);
+				$(this).ajaxSubmit(function(payload){
+					alert(payload);
+				});
+				return false;
+			});
+			parent.setIframeHeight($(document).height());
+		});
+	</script>
+
+{/if}
+
+
+
+
+{* <link href="{$baseUrl}/libs/qq/fileuploader.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="{$baseUrl}/libs/qq/fileuploader.js"></script>
+<script type="text/javascript" n:syntax="double">
+var uploader = new qq.FileUploader({
+    element: $("#managerUploader")[0],
+    action: {{link imageUpload!}},
+    allowedExtensions: ['jpg', 'jpeg', 'png', 'gif'],
+    onComplete: function(id, fileName, responseJSON) {
+    	$.nette.success(responseJSON);
+    }
+});
+</script> *}

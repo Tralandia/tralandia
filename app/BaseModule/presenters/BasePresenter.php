@@ -2,10 +2,36 @@
 
 use Nette\Application\UI\Presenter,
 	Nette\Environment,
-	Nette\Utils\Finder;
+	Nette\Utils\Finder,
+	Nette\Security\User;
 
 
 abstract class BasePresenter extends Presenter {
+
+	public $cssFiles;
+	public $jsFiles;
+
+
+	protected function startup() {
+		parent::startup();
+		// odstranuje neplatne _fid s url
+		if (!$this->hasFlashSession() && !empty($this->params[self::FLASH_KEY])) {
+			unset($this->params[self::FLASH_KEY]);
+			$this->redirect(301, 'this');
+		}
+
+		$backlink = $this->storeRequest();
+		if(!$this->getHttpRequest()->isPost()) {
+			$environmentSection = $this->context->session->getSection('environment');
+			$environmentSection->previousLink = $environmentSection->actualLink;
+			$environmentSection->actualLink = $backlink;
+		}
+	}
+
+	public function getPreviousBackLink() {
+		$environmentSection = $this->context->session->getSection('environment');
+		return $environmentSection->previousLink;
+	}
 
 	public function beforeRender() {
 		parent::beforeRender();
@@ -17,6 +43,7 @@ abstract class BasePresenter extends Presenter {
 	protected function createTemplate($class = NULL) {
 		$template = parent::createTemplate($class);
 		$template->registerHelper('ulList', callback($this, 'ulListHelper'));
+		$template->registerHelper('cnt', callback($this, 'countHelper'));
 		return $template;
 	}
 
@@ -28,7 +55,7 @@ abstract class BasePresenter extends Presenter {
 		return (object)$this->getParam();
 	}
 
-	public function flashMessage($message, $type = 'info') {
+	public function flashMessage($message, $type = 'warning') {
 		parent::flashMessage($message, $type);
 		$this->getComponent('flashes')->invalidateControl();
 	}
@@ -54,9 +81,42 @@ abstract class BasePresenter extends Presenter {
 	}
 
 	protected function createComponentHeader() {
+		list($modul, $presenter) = explode(':', $this->name, 2);
+
+		$wlSets = $this->context->parameters['webloader']['sets'];
+
+		$wlSet = NULL;
+		if(isset($wlSets[$this->name])) {
+			$wlSet = $wlSets[$this->name];
+		} else if(isset($wlSets[$modul])) {
+			$wlSet = $wlSets[$modul];
+		}
+
+		$cssFiles = array();
+		$jsFiles = array();
+		if(is_array($wlSet)) {
+			foreach ($wlSet as $key => $value) {
+				if(isset($value['css'])) {
+					if(is_array($value['css'])) {
+						$cssFiles = array_merge($cssFiles, $value['css']);
+					} else {
+						$cssFiles[] = $value['css'];
+					}
+				}
+				if(isset($value['js'])) {
+					if(is_array($value['js'])) {
+						$jsFiles = array_merge($jsFiles, $value['js']);
+					} else {
+						$jsFiles[] = $value['js'];
+					}
+				}
+			}
+		}
+		$this->cssFiles = $cssFiles;
+		$this->jsFiles = $jsFiles;		
+
 		$header = new HeaderControl;
 
-		list($modul, $presenter) = explode(':', $this->name, 2);
 
 		$header->setDocType(HeaderControl::HTML_5);
 		$header->setLanguage(HeaderControl::SLOVAK);
@@ -78,12 +138,9 @@ abstract class BasePresenter extends Presenter {
 		return $header;
 	}
 
-	public function createComponentCss() {
-		list($modul, $presenter) = explode(':', $this->name, 2);
-		
-		$files = new \WebLoader\FileCollection(WWW_DIR . '/styles');
-		$files->addFiles(Finder::findFiles('*.css', '*.less')->in(WWW_DIR . '/styles'));
-		$files->addFiles(Finder::findFiles('*.css', '*.less')->in(WWW_DIR . '/styles/'.strtolower($modul)));
+	public function createComponentCss() {		
+		$files = new \WebLoader\FileCollection(WWW_DIR . '/packages');
+		$files->addFiles($this->cssFiles);
 
 		$compiler = \WebLoader\Compiler::createCssCompiler($files, WWW_DIR . '/webtemp');
 		$compiler->addFileFilter(new \Webloader\Filter\LessFilter());
@@ -92,13 +149,11 @@ abstract class BasePresenter extends Presenter {
 	}
 
 	public function createComponentJs() {
-		list($modul, $presenter) = explode(':', $this->name, 2);
-
-		$files = new \WebLoader\FileCollection(WWW_DIR . '/scripts');
-		$files->addFiles(Finder::findFiles('*.js')->in(WWW_DIR . '/scripts'));
-		$files->addFiles(Finder::findFiles('*.js')->in(WWW_DIR . '/scripts/'.strtolower($modul)));
+		$files = new \WebLoader\FileCollection(WWW_DIR . '/packages');
+		$files->addFiles($this->jsFiles);
 
 		$compiler = \WebLoader\Compiler::createJsCompiler($files, WWW_DIR . '/webtemp');
+		$compiler->setJoinFiles(TRUE);
 
 		return new \WebLoader\Nette\JavaScriptLoader($compiler, $this->template->basePath . '/webtemp');
 	}
@@ -115,7 +170,7 @@ abstract class BasePresenter extends Presenter {
 
 	/* --------------------- Helpers --------------------- */
 
-	public function ulListHelper($data, $columnCount = 3, $li = NULL) {
+	public function ulListHelper($data, $columnCount = 3, $li = NULL, $columnLimit = 0) {
 		if(!($data instanceof \Traversable || is_array($data))) {
 			throw new \Nette\InvalidArgumentException('Argument "$data" does not match with the expected value');
 		}
@@ -123,47 +178,69 @@ abstract class BasePresenter extends Presenter {
 		if(!is_numeric($columnCount) || $columnCount <= 0) {
 			throw new \Nette\InvalidArgumentException('Argument "$columnCount" does not match with the expected value');
 		}
-		// @cibi ked chces nieco prelozit tak to zapis takto:
-		// $text = $this->template->translate(123);
+
 		if($li === NULL) {
 			$li = '<li>%name% - {_123}</li>';
 		}
 
-		preg_match_all('/%[a-zA-Z\.]+%/', $li, $matches);
+		preg_match_all('/%[a-zA-Z\._]+%/', $li, $matches);
 
 		$replaces = array();
+
 		foreach ($matches[0] as $match) {
-			if (gettype($data)=='object') {
-				$value = '$item->'.str_replace('.', '->', substr($match, 1, -1));
-			} else {
-				$value = '$item["'.str_replace('.', '"]["', substr($match, 1, -1)).'"]';
+
+			$translate = false;
+			$matchKey = $match;
+			if (strpos($match, '_')) {
+				$translate = true;
+				$matchKey = str_replace('_', '', $match);
 			}
+
+			if (gettype($data)=='object') {
+				$value = '$item->'.str_replace('.', '->', substr($matchKey, 1, -1));
+			} else {
+				$value = '$item["'.str_replace('.', '"]["', substr($matchKey, 1, -1)).'"]';
+			}
+
+			if ($translate) {
+				$value = '$this->template->translate('.$value.')';
+			}
+
 			$replaces[$match] = $value;
 		}
 
 		$newData = array();
-		for ($i=0; $i < $columnCount; $i++) {
-			foreach ($data as $k=>$item) {
-				$search = array();
-				$replace = array();
-				foreach ($replaces as $key => $value) {
-					$search[] = $key;
-					eval('$r = '.$value.';');
-					$replace = $r;
-				}
-				$liTemp = str_replace($search, $replace, $li);
-				$newData[$i][] = $liTemp;
-				unset($data[$k]);
-				break;
+
+		$i=1;
+		$counter=0;
+		foreach ($data as $k=>$item) {
+			$search = array();
+			$replace = array();
+			foreach ($replaces as $key => $value) {
+				$search[] = $key;
+				eval('$r = '.$value.';');
+				$replace[] = $r;
 			}
+			$liTemp = str_replace($search, $replace, $li);
+			$row = ($i<=$columnCount)?$i:$i=1;
+			$newData[$row][] = $liTemp;
+			$i++;
+			$counter++;
+			if ($columnLimit!=0 && ($columnLimit*$columnCount)<=$counter) break;
 		}
 
-		$return = array();
+		$html = \Nette\Utils\Html::el();
 		foreach ($newData as $key => $value) {
-			$return[] = '<ul>'.implode('', $value).'</ul>';
+			$ul = \Nette\Utils\Html::el('ul');
+			$ul->add(implode('', $value));
+			$html->add($ul);
 		}
 
-		return implode('', $return);
+		return $html;
+	}
+
+	public function countHelper($data) {
+		return count($data);
 	}
 
 }

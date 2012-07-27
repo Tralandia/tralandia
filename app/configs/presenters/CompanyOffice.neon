@@ -1,0 +1,56 @@
+common:
+	service: Service\Company\Office
+	title: Company / Office
+	h1: 'Company / Office -> %name%'
+	grid:
+		columns:
+			id:
+				label: ID
+				mapper: e.id
+			name:
+				label: Name
+				mapper: e.name
+			company:
+				label: Company
+				mapper: e.id
+				callback: {class: %this%, method: getAttributeForGrid, params: [company, name]}
+			countries:
+				label: Countries
+				mapper: e.id
+				callback: {class: %this%, method: getAttributeForGrid, params: [countries, name, ', ']}
+	form:
+		fields:
+			name:
+				label: Name
+				class: span2
+				control:
+					type: text
+			company:
+				label: Company
+				class: span2
+				control:
+					type: select
+					callback: {class: \Service\Company\CompanyList, method: getPairs, params: [id, name, NULL, [name: ASC]]}
+					class: span2
+				inlineEditing: CompanyCompany:edit
+				inlineCreating: CompanyCompany:add
+			address:
+				label: Address
+				class: span4
+				control:
+					type: address
+					callback: {class: \Service\Location\LocationList, method: getTranslatedPairs, params: [id, name, [type: 3], [name: ASC]]}
+			countries:
+				label: Used for
+				control:
+					type: bricksList
+					callback: {class: \Service\Location\LocationList, method: getTranslatedPairs, params: [id, name, [type: 3], [name: ASC]]}
+				inlineEditing: LocationLocation:edit
+				inlineCreating: LocationLocation:add
+				startNewRow: false
+				class: span2
+			signature:
+				label: Signature
+				control:
+					type: upload
+				class: span2

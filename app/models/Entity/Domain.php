@@ -4,11 +4,14 @@ namespace Entity;
 
 use Entity\Location;
 use Doctrine\ORM\Mapping as ORM;
-
+use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="domain")
+ * @ORM\Table(name="domain", indexes={@ORM\index(name="domain", columns={"domain"})})
+ * @EA\Service(name="\Service\Domain")
+ * @EA\ServiceList(name="\Service\DomainList")
+ * @EA\Primary(key="id", value="domain")
  */
 class Domain extends \Entity\BaseEntity {
 
@@ -19,16 +22,22 @@ class Domain extends \Entity\BaseEntity {
 	protected $domain;
 
 	/**
+	 * @var datetime
+	 * @ORM\Column(type="datetime")
+	 */
+	protected $expires;
+
+	/**
+	 * @var text
+	 * @ORM\Column(type="text")
+	 */
+	protected $registratorDetails;
+
+	/**
 	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="Entity\Location\Location", mappedBy="domain")
 	 */
 	protected $locations;
-
-	
-
-	
-
-
 
 
 //@entity-generator-code <--- NEMAZAT !!!
@@ -55,6 +64,40 @@ class Domain extends \Entity\BaseEntity {
 	 */
 	public function getDomain() {
 		return $this->domain;
+	}
+		
+	/**
+	 * @param \DateTime
+	 * @return \Entity\Domain
+	 */
+	public function setExpires(\DateTime $expires) {
+		$this->expires = $expires;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \DateTime|NULL
+	 */
+	public function getExpires() {
+		return $this->expires;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Domain
+	 */
+	public function setRegistratorDetails($registratorDetails) {
+		$this->registratorDetails = $registratorDetails;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getRegistratorDetails() {
+		return $this->registratorDetails;
 	}
 		
 	/**

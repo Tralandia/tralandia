@@ -18,7 +18,7 @@ class Json extends Type {
 	}
 
 	public function convertToPHPValue($value, AbstractPlatform $platform) {
-		return NU\Json::decode($value);
+		return NU\Json::decode($value, NU\Json::FORCE_ARRAY);
 	}
 
 	public function convertToDatabaseValue($value, AbstractPlatform $platform) {

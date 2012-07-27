@@ -1,6 +1,10 @@
-{block title}{include #parent} | {$settings->title}{/block}
-
 {block content}
 <h1>{$settings->title}</h1>
-
+{if $showAddNewButton}
+	{if $directCreating}
+		<a class="btn btn-large add-new pull-left" href="{link create}"><i class="icon-plus"></i> Add New</a>
+	{else}
+		<a class="btn btn-large add-new pull-left" href="{link add}" data-toggle="ajax-modal"><i class="icon-plus"></i> Add New</a>
+	{/if}
+{/if}
 {control grid}

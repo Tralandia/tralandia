@@ -23,7 +23,7 @@ class Environment extends \Nette\Object {
 	}
 	
 	protected function loadLocation() {
-		return \Service\Location\Location::get(46);
+		return \Service\Location\Location::get(56);
 	}
 
 	public function getLanguage() {
@@ -32,7 +32,7 @@ class Environment extends \Nette\Object {
 		}
 		return $this->language;
 	}
-	
+
 	protected function loadLanguage() {
 		return \Service\Dictionary\Language::get(144);
 	}

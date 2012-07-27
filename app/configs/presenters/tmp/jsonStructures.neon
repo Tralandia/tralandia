@@ -1,0 +1,186 @@
+Attraction\Attraction:
+	details:
+		item1: null
+		item2: null
+	
+Autopilot\Task:
+	links:
+		item1: null
+		item2: null
+	validation:
+		item1: null
+		item2: null
+	actions:
+		item1: null
+		item2: null
+	recurrenceData:
+		item1: null
+		item2: null
+	details:
+		item1: null
+		item2: null
+	
+Autopilot\TaskArchived:
+	links:
+		item1: null
+		item2: null
+	validation:
+		item1: null
+		item2: null
+	actions:
+		item1: null
+		item2: null
+	details:
+		item1: null
+		item2: null
+	
+Autopilot\Type:
+	validation:
+		item1: null
+		item2: null
+	actions:
+		item1: null
+		item2: null
+	details:
+		item1: null
+		item2: null
+	
+BaseEntityDetails:
+	details:
+		item1: null
+		item2: null
+	
+Company\Company:
+	details:
+		item1: null
+		item2: null
+	
+Company\Office:
+	details:
+		item1: null
+		item2: null
+	
+Contact\Contact:
+	info:
+		item1: null
+		item2: null
+	
+Dictionary\Language:
+	multitranslationOptions:
+		item1: null
+		item2: null
+	genderNumberOptions:
+		item1: null
+		item2: null
+	ppcPatterns:
+		item1: null
+		item2: null
+	details:
+		item1: null
+		item2: null
+	
+Dictionary\Phrase:
+	details:
+		item1: null
+		item2: null
+	
+Dictionary\Translation:
+	variations:
+		item1: null
+		item2: null
+	
+Emailing\Batch:
+	details:
+		item1: null
+		item2: null
+	
+Invoicing\Invoice:
+	paymentInfo:
+		item1: null
+		item2: null
+	
+Location\Location:
+	polygon:
+		item1: null
+		item2: null
+	clickMapData:
+		item1: null
+		item2: null
+	details:
+		item1: null
+		item2: null
+	
+Location\Type:
+	details:
+		item1: null
+		item2: null
+	
+Log\Change:
+	details:
+		item1: null
+		item2: null
+	
+Log\System:
+	details:
+		item1: null
+		item2: null
+	
+Medium\Medium:
+	details:
+		item1: null
+		item2: null
+	
+Medium\Type:
+	details:
+		item1: null
+		item2: null
+	
+Rental\Amenity:
+	details:
+		item1: null
+		item2: null
+	
+Rental\Rental:
+	pricelists:
+		item1: null
+		item2: null
+	
+User\Combination:
+	details:
+		item1: null
+		item2: null
+	
+User\RentalQuestion:
+	capacity:
+		item1: null
+		item2: null
+	
+User\RentalReservation:
+	capacity:
+		item1: null
+		item2: null
+	
+User\RentalReview:
+	capacity:
+		item1: null
+		item2: null
+	
+User\RentalToFriend:
+	capacity:
+		item1: null
+		item2: null
+	
+User\SiteOwnerReview:
+	capacity:
+		item1: null
+		item2: null
+	
+User\SiteVisitorReview:
+	capacity:
+		item1: null
+		item2: null
+	
+User\User:
+	details:
+		item1: null
+		item2: null

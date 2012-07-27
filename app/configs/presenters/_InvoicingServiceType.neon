@@ -1,0 +1,43 @@
+common:
+	service: Service\Invoicing\ServiceType
+	title: Invoicing / ServiceType
+	h1: Invoicing / ServiceType
+	grid:
+		columns:
+			id:
+				label: ID
+				mapper: e.id
+			slug:
+				label: Slug
+				mapper: e.slug
+			name:
+				label: Name
+				mapper: e.id
+				callback: {Entity\Log\Systemmethod: translateColumn, params: name}
+			oldId:
+				label: OldId
+				mapper: e.oldId
+				cellStyle: text-align:right;
+				headerStyle: text-align:right;
+			created:
+				label: Created
+				mapper: e.created
+			updated:
+				label: Updated
+				mapper: e.updated
+			
+	form:
+		fields:
+			slug:
+				label: Slug
+				control: text
+			name:
+				label: Name
+				control: phrase
+				inlineEditing: DictionaryPhrase:edit
+			created:
+				label: Created
+				control: datePicker
+			updated:
+				label: Updated
+				control: datePicker

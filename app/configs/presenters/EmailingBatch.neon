@@ -1,0 +1,62 @@
+common:
+	service: Service\Emailing\Batch
+	title: Emailing / Batch
+	h1: Emailing / Batch
+	grid:
+		columns:
+			id:
+				label: ID
+				mapper: e.id
+			confirmed:
+				label: Confirmed
+				mapper: e.confirmed
+			template:
+				label: Template
+				mapper: e.id
+				callback: {class: %this%, method: getAttributeForGrid, params: [template, name]}
+			subject:
+				label: Subject
+				mapper: e.id
+				callback: {class: %this%, method: getAttributeForGrid, params: [subject]}
+			totalCount:
+				label: Count
+				mapper: e.totalCount
+				cellStyle: text-align:right;
+				headerStyle: text-align:right;
+			created:
+				label: Created
+				mapper: e.created
+	form:
+		fields:
+			confirmed:
+				label: Confirmed
+				control: 
+					type: checkbox
+					label: Is Confirmed
+			template:
+				label: Type
+				control: 
+					type: select
+					callback: {class: \Service\Emailing\TemplateList, method: getPairs, params: [id, name, NULL, [name: ASC]]}
+					prompt: " - Select -"
+			totalCount:
+				label: TotalCount
+				control: 
+					type: text
+			subject:
+				label: Subject
+				control: 
+					type: text
+			body:
+				startNewRow: true
+				label: Body
+				class: span6
+				control: 
+					type: textarea
+					class: span6
+			bodyHtml:
+				label: BodyHtml
+				class: span6
+				control: 
+					type: textarea
+					class: span6

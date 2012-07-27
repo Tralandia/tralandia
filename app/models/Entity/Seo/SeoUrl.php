@@ -8,24 +8,16 @@ use Entity\Location;
 use Entity\Medium;
 use Entity\Rental;
 use Doctrine\ORM\Mapping as ORM;
+use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="seo_seourl")
+ * @EA\Service(name="\Service\Seo\SeoUrl")
+ * @EA\ServiceList(name="\Service\Seo\SeoUrlList")
+ * @EA\Primary(key="id", value="id")
  */
 class SeoUrl extends \Entity\BaseEntity {
-
-	/**
-	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Location\Location")
-	 */
-	protected $country;
-
-	/**
-	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Rental\Type")
-	 */
-	protected $rentalType;
 
 	/**
 	 * @var Collection
@@ -34,26 +26,32 @@ class SeoUrl extends \Entity\BaseEntity {
 	protected $location;
 
 	/**
+	 * @var Collection
+	 * @ORM\ManyToOne(targetEntity="Entity\Rental\Type")
+	 */
+	protected $rentalType;
+
+	/**
 	 * @var integer
-	 * @ORM\Column(type="integer")
+	 * @ORM\Column(type="integer", nullable=true)
 	 */
 	protected $page;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Rental\Amenity\Amenity")
+	 * @ORM\ManyToOne(targetEntity="Entity\Rental\Amenity")
 	 */
 	protected $tag;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Attraction\Attraction")
+	 * @ORM\ManyToOne(targetEntity="Entity\Attraction\Type")
 	 */
 	protected $attractionType;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Entity\Medium\Medium", mappedBy="seoUrl")
+	 * @ORM\OneToMany(targetEntity="Entity\Medium\Medium", mappedBy="seoUrl", cascade={"persist", "remove"})
 	 */
 	protected $media;
 
@@ -67,7 +65,7 @@ class SeoUrl extends \Entity\BaseEntity {
 	 * @var Collection
 	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
 	 */
-	protected $h1;
+	protected $heading;
 
 	/**
 	 * @var Collection
@@ -91,6 +89,22 @@ class SeoUrl extends \Entity\BaseEntity {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -98,58 +112,6 @@ class SeoUrl extends \Entity\BaseEntity {
 		parent::__construct();
 
 		$this->media = new \Doctrine\Common\Collections\ArrayCollection;
-	}
-		
-	/**
-	 * @param \Entity\Location\Location
-	 * @return \Entity\Seo\SeoUrl
-	 */
-	public function setCountry(\Entity\Location\Location $country) {
-		$this->country = $country;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Seo\SeoUrl
-	 */
-	public function unsetCountry() {
-		$this->country = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Location\Location|NULL
-	 */
-	public function getCountry() {
-		return $this->country;
-	}
-		
-	/**
-	 * @param \Entity\Rental\Type
-	 * @return \Entity\Seo\SeoUrl
-	 */
-	public function setRentalType(\Entity\Rental\Type $rentalType) {
-		$this->rentalType = $rentalType;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Seo\SeoUrl
-	 */
-	public function unsetRentalType() {
-		$this->rentalType = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Rental\Type|NULL
-	 */
-	public function getRentalType() {
-		return $this->rentalType;
 	}
 		
 	/**
@@ -179,11 +141,46 @@ class SeoUrl extends \Entity\BaseEntity {
 	}
 		
 	/**
+	 * @param \Entity\Rental\Type
+	 * @return \Entity\Seo\SeoUrl
+	 */
+	public function setRentalType(\Entity\Rental\Type $rentalType) {
+		$this->rentalType = $rentalType;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Seo\SeoUrl
+	 */
+	public function unsetRentalType() {
+		$this->rentalType = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Rental\Type|NULL
+	 */
+	public function getRentalType() {
+		return $this->rentalType;
+	}
+		
+	/**
 	 * @param integer
 	 * @return \Entity\Seo\SeoUrl
 	 */
 	public function setPage($page) {
 		$this->page = $page;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Seo\SeoUrl
+	 */
+	public function unsetPage() {
+		$this->page = NULL;
 
 		return $this;
 	}
@@ -196,10 +193,10 @@ class SeoUrl extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Rental\Amenity\Amenity
+	 * @param \Entity\Rental\Amenity
 	 * @return \Entity\Seo\SeoUrl
 	 */
-	public function setTag(\Entity\Rental\Amenity\Amenity $tag) {
+	public function setTag(\Entity\Rental\Amenity $tag) {
 		$this->tag = $tag;
 
 		return $this;
@@ -215,17 +212,17 @@ class SeoUrl extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Rental\Amenity\Amenity|NULL
+	 * @return \Entity\Rental\Amenity|NULL
 	 */
 	public function getTag() {
 		return $this->tag;
 	}
 		
 	/**
-	 * @param \Entity\Attraction\Attraction
+	 * @param \Entity\Attraction\Type
 	 * @return \Entity\Seo\SeoUrl
 	 */
-	public function setAttractionType(\Entity\Attraction\Attraction $attractionType) {
+	public function setAttractionType(\Entity\Attraction\Type $attractionType) {
 		$this->attractionType = $attractionType;
 
 		return $this;
@@ -241,7 +238,7 @@ class SeoUrl extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Attraction\Attraction|NULL
+	 * @return \Entity\Attraction\Type|NULL
 	 */
 	public function getAttractionType() {
 		return $this->attractionType;
@@ -251,11 +248,11 @@ class SeoUrl extends \Entity\BaseEntity {
 	 * @param \Entity\Medium\Medium
 	 * @return \Entity\Seo\SeoUrl
 	 */
-	public function addMedia(\Entity\Medium\Medium $media) {
-		if(!$this->media->contains($media)) {
-			$this->media->add($media);
+	public function addMedium(\Entity\Medium\Medium $medium) {
+		if(!$this->media->contains($medium)) {
+			$this->media->add($medium);
 		}
-		$media->setSeoUrl($this);
+		$medium->setSeoUrl($this);
 
 		return $this;
 	}
@@ -264,11 +261,11 @@ class SeoUrl extends \Entity\BaseEntity {
 	 * @param \Entity\Medium\Medium
 	 * @return \Entity\Seo\SeoUrl
 	 */
-	public function removeMedia(\Entity\Medium\Medium $media) {
-		if($this->media->contains($media)) {
-			$this->media->removeElement($media);
+	public function removeMedium(\Entity\Medium\Medium $medium) {
+		if($this->media->contains($medium)) {
+			$this->media->removeElement($medium);
 		}
-		$media->unsetSeoUrl();
+		$medium->unsetSeoUrl();
 
 		return $this;
 	}
@@ -301,8 +298,8 @@ class SeoUrl extends \Entity\BaseEntity {
 	 * @param \Entity\Dictionary\Phrase
 	 * @return \Entity\Seo\SeoUrl
 	 */
-	public function setH1(\Entity\Dictionary\Phrase $h1) {
-		$this->h1 = $h1;
+	public function setHeading(\Entity\Dictionary\Phrase $heading) {
+		$this->heading = $heading;
 
 		return $this;
 	}
@@ -310,8 +307,8 @@ class SeoUrl extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Dictionary\Phrase|NULL
 	 */
-	public function getH1() {
-		return $this->h1;
+	public function getHeading() {
+		return $this->heading;
 	}
 		
 	/**

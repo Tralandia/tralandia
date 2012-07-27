@@ -1,0 +1,56 @@
+common:
+	service: Service\Emailing\Template
+	title: 'Email Templates'
+	h1: 'Email Template -> %name%'
+	grid:
+		columns:
+			id:
+				label: ID
+				mapper: e.id
+			type:
+				label: Type
+				mapper: e.id
+				callback: {class: %this%, method: getAttributeForGrid, params: [type, name]}
+			language:
+				label: Language
+				mapper: e.id
+				callback: {class: %this%, method: getAttributeForGrid, params: [language, name]}
+			name:
+				label: Name
+				mapper: e.id
+				callback: {class: %this%, method: getAttributeForGrid, params: [name]}
+			subject:
+				label: Subject
+				mapper: e.id
+				callback: {class: %this%, method: getAttributeForGrid, params: [subject]}
+	form:
+		fields:
+			type:
+				label: Type
+				control: 
+					type: select
+					callback: {class: \Service\Emailing\TemplateTypeList, method: getPairs, params: [id, name, NULL, [name: ASC]]}
+					prompt: " - Select -"
+			language:
+				label: Language
+				control:  
+					type: select
+					callback: {class: \Service\Dictionary\LanguageList, method: getTranslatedPairs, params: [id, name, [supported: 1], [name: ASC]]}
+					prompt: " - Select -"
+			name:
+				label: Name
+				control: 
+					type: text
+			subject:
+				startNewRow: true
+				label: Subject
+				control: 
+					type: phrase
+				inlineEditing: DictionaryPhrase:edit
+				class: span6
+			body:
+				label: Body
+				control: 
+					type: phrase
+				inlineEditing: DictionaryPhrase:edit
+				class: span6

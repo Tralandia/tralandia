@@ -4,23 +4,22 @@ namespace Entity\Medium;
 
 use Entity\Dictionary;
 use Doctrine\ORM\Mapping as ORM;
+use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="medium_type")
+ * @EA\Service(name="\Service\Medium\Type")
+ * @EA\ServiceList(name="\Service\Medium\TypeList")
+ * @EA\Primary(key="id", value="name")
  */
 class Type extends \Entity\BaseEntityDetails {
 
 	/**
-	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
+	 * @var text
+	 * @ORM\Column(type="text")
 	 */
 	protected $name;
-
-	
-
-
-
 
 //@entity-generator-code <--- NEMAZAT !!!
 
@@ -30,17 +29,17 @@ class Type extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Phrase
+	 * @param string
 	 * @return \Entity\Medium\Type
 	 */
-	public function setName(\Entity\Dictionary\Phrase $name) {
+	public function setName($name) {
 		$this->name = $name;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Phrase|NULL
+	 * @return string|NULL
 	 */
 	public function getName() {
 		return $this->name;

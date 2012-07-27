@@ -446,6 +446,9 @@ class Extension extends \Nette\Config\CompilerExtension
 		\Doctrine\DBAL\Types\Type::addType('price', 'Doctrine\Types\Price');
 		\Doctrine\DBAL\Types\Type::addType('url', 'Doctrine\Types\Url');
 		\Doctrine\DBAL\Types\Type::addType('email', 'Doctrine\Types\Email');
+		\Doctrine\DBAL\Types\Type::addType('phone', 'Doctrine\Types\Phone');
+		\Doctrine\DBAL\Types\Type::addType('contacts', 'Doctrine\Types\Contacts');
+		\Doctrine\DBAL\Types\Type::addType('name', 'Doctrine\Types\Name');
 
 		$class = get_called_class();
 		$configurator->onCompile[] = function(Configurator $configurator, \Nette\Config\Compiler $compiler) use($class, $name) {

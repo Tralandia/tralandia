@@ -22,7 +22,7 @@ class Tab extends Control {
 		
 	}
 
-	public function setHeader($header) {
+	public function setHeading($header) {
 		$this->header = $header;
 		return $this;
 	}

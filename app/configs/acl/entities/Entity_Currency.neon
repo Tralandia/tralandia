@@ -1,0 +1,197 @@
+name_show:
+	guest: allow
+	visitor: deny
+	potentialowner: deny
+	owner: deny
+	translator: deny
+	assistant: deny
+	vendor: deny
+	manager: deny
+	admin: deny
+	
+name_edit:
+	guest: allow
+	visitor: deny
+	potentialowner: deny
+	owner: deny
+	translator: deny
+	assistant: deny
+	vendor: deny
+	manager: deny
+	admin: deny
+	
+iso_show:
+	guest: allow
+	visitor: deny
+	potentialowner: deny
+	owner: deny
+	translator: deny
+	assistant: deny
+	vendor: deny
+	manager: deny
+	admin: deny
+	
+iso_edit:
+	guest: allow
+	visitor: deny
+	potentialowner: deny
+	owner: deny
+	translator: deny
+	assistant: deny
+	vendor: deny
+	manager: deny
+	admin: deny
+	
+exchangeRate_show:
+	guest: allow
+	visitor: deny
+	potentialowner: deny
+	owner: deny
+	translator: deny
+	assistant: deny
+	vendor: deny
+	manager: deny
+	admin: deny
+	
+exchangeRate_edit:
+	guest: allow
+	visitor: deny
+	potentialowner: deny
+	owner: deny
+	translator: deny
+	assistant: deny
+	vendor: deny
+	manager: deny
+	admin: deny
+	
+rounding_show:
+	guest: allow
+	visitor: deny
+	potentialowner: deny
+	owner: deny
+	translator: deny
+	assistant: deny
+	vendor: deny
+	manager: deny
+	admin: deny
+	
+rounding_edit:
+	guest: allow
+	visitor: deny
+	potentialowner: deny
+	owner: deny
+	translator: deny
+	assistant: deny
+	vendor: deny
+	manager: deny
+	admin: deny
+	
+locations_show:
+	guest: allow
+	visitor: deny
+	potentialowner: deny
+	owner: deny
+	translator: deny
+	assistant: deny
+	vendor: deny
+	manager: deny
+	admin: deny
+	
+locations_edit:
+	guest: allow
+	visitor: deny
+	potentialowner: deny
+	owner: deny
+	translator: deny
+	assistant: deny
+	vendor: deny
+	manager: deny
+	admin: deny
+	
+id_show:
+	guest: allow
+	visitor: deny
+	potentialowner: deny
+	owner: deny
+	translator: deny
+	assistant: deny
+	vendor: deny
+	manager: deny
+	admin: deny
+	
+id_edit:
+	guest: allow
+	visitor: deny
+	potentialowner: deny
+	owner: deny
+	translator: deny
+	assistant: deny
+	vendor: deny
+	manager: deny
+	admin: deny
+	
+oldId_show:
+	guest: allow
+	visitor: deny
+	potentialowner: deny
+	owner: deny
+	translator: deny
+	assistant: deny
+	vendor: deny
+	manager: deny
+	admin: deny
+	
+oldId_edit:
+	guest: allow
+	visitor: deny
+	potentialowner: deny
+	owner: deny
+	translator: deny
+	assistant: deny
+	vendor: deny
+	manager: deny
+	admin: deny
+	
+created_show:
+	guest: allow
+	visitor: deny
+	potentialowner: deny
+	owner: deny
+	translator: deny
+	assistant: deny
+	vendor: deny
+	manager: deny
+	admin: deny
+	
+created_edit:
+	guest: allow
+	visitor: deny
+	potentialowner: deny
+	owner: deny
+	translator: deny
+	assistant: deny
+	vendor: deny
+	manager: deny
+	admin: deny
+	
+updated_show:
+	guest: allow
+	visitor: deny
+	potentialowner: deny
+	owner: deny
+	translator: deny
+	assistant: deny
+	vendor: deny
+	manager: deny
+	admin: deny
+	
+updated_edit:
+	guest: allow
+	visitor: deny
+	potentialowner: deny
+	owner: deny
+	translator: deny
+	assistant: deny
+	vendor: deny
+	manager: deny
+	admin: deny

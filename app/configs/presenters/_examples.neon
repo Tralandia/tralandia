@@ -1,0 +1,66 @@
+	grid:
+		columns:
+			id:
+				label: ID
+				mapper: e.id
+			country:
+				label: Country
+				mapper: e.id
+				callback: {class: %this%, method: getAttributeForGrid, params: [country, name]}
+			type:
+				label: Type
+				mapper: e.id
+				callback: {class: %this%, method: getAttributeForGrid, params: [type, name]}
+			name:
+				label: Name
+				mapper: e.id
+				callback: {class: %this%, method: getAttributeForGrid, params: [name]}
+
+
+
+
+
+				validation:
+					- [addRule, PATTERN, 'Must be exactly 2 characters long.', '[a-z]{2}']
+					#- [addRule, [\Service\Dictionary\Language, validateUniqueIso], 'ISO code must be unique.']
+
+
+			country:
+				class: span6
+				label: Country
+				control:  
+					type: multiSelect
+					addClass: span6
+					callback: {class: \Service\Location\LocationList, method: getTranslatedPairs, params: [id, name]}
+					prompt: None
+				startNewRow: true
+
+			user:
+				label: User
+				class: span2
+				control: 
+					type: select
+					callback: {class: \Service\User\UserList, method: getPairs, params: [id, login, [role: [6, 7, 8, 9, 10, 11]], [login: ASC]]}
+					prompt: None
+					class: span2
+
+				headerStyle: text-align: right
+
+			userLanguageLevel:
+				label: User Language Level
+				class: span2
+				control: 
+					class: span2
+					type: select
+					options: [class: \Entity\Dictionary\Type, pattern: TRANSLATION_LEVEL_.+]
+
+				description: "In minutes."
+
+			variationDetails:
+				startNewRow: true
+				label: Variation Definition Details
+				class: span12
+				description: 'Will be used later on to define automatic generating of some variations. For example, locative in EN is always "in ".$singularNominative. This will be defined in JS.'
+				control:
+					type: neon
+					class: neon

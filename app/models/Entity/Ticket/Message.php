@@ -4,7 +4,6 @@ namespace Entity\Ticket;
 
 use Entity\Dictionary;
 use Entity\Medium;
-use Entity\Ticket;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -15,30 +14,57 @@ class Message extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Ticket", inversedBy="messages")
+	 * @ORM\ManyToOne(targetEntity="Ticket", inversedBy="messages", cascade={"persist", "remove"})
 	 */
 	protected $ticket;
 
 	/**
-	 * @var email
-	 * @ORM\Column(type="email")
+	 * @var Collection
+	 * @ORM\ManyToOne(targetEntity="Entity\User\User")
 	 */
-	protected $senderEmail;
+	protected $from;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
+	 * @ORM\ManyToOne(targetEntity="Entity\User\User")
+	 */
+	protected $to;
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToMany(targetEntity="Entity\User\User", inversedBy="ticketMessages")
+	 */
+	protected $toCC;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $subject;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $subjectEn;
+
+	/**
+	 * @var text
+	 * @ORM\Column(type="text", nullable=true)
 	 */
 	protected $message;
 
 	/**
+	 * @var text
+	 * @ORM\Column(type="text", nullable=true)
+	 */
+	protected $messageEn;
+
+	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Entity\Medium\Medium", mappedBy="message")
+	 * @ORM\OneToMany(targetEntity="Entity\Medium\Medium", mappedBy="message", cascade={"persist", "remove"})
 	 */
 	protected $attachments;
-
-	
-
 
 
 //@entity-generator-code <--- NEMAZAT !!!
@@ -47,6 +73,7 @@ class Message extends \Entity\BaseEntity {
 	public function __construct() {
 		parent::__construct();
 
+		$this->toCC = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->attachments = new \Doctrine\Common\Collections\ArrayCollection;
 	}
 		
@@ -77,37 +104,178 @@ class Message extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Extras\Types\Email
+	 * @param \Entity\User\User
 	 * @return \Entity\Ticket\Message
 	 */
-	public function setSenderEmail(\Extras\Types\Email $senderEmail) {
-		$this->senderEmail = $senderEmail;
+	public function setFrom(\Entity\User\User $from) {
+		$this->from = $from;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Extras\Types\Email|NULL
+	 * @return \Entity\Ticket\Message
 	 */
-	public function getSenderEmail() {
-		return $this->senderEmail;
+	public function unsetFrom() {
+		$this->from = NULL;
+
+		return $this;
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Phrase
+	 * @return \Entity\User\User|NULL
+	 */
+	public function getFrom() {
+		return $this->from;
+	}
+		
+	/**
+	 * @param \Entity\User\User
 	 * @return \Entity\Ticket\Message
 	 */
-	public function setMessage(\Entity\Dictionary\Phrase $message) {
+	public function setTo(\Entity\User\User $to) {
+		$this->to = $to;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Ticket\Message
+	 */
+	public function unsetTo() {
+		$this->to = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\User\User|NULL
+	 */
+	public function getTo() {
+		return $this->to;
+	}
+		
+	/**
+	 * @param \Entity\User\User
+	 * @return \Entity\Ticket\Message
+	 */
+	public function addToCC(\Entity\User\User $toCC) {
+		if(!$this->toCC->contains($toCC)) {
+			$this->toCC->add($toCC);
+		}
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\User\User
+	 */
+	public function getToCC() {
+		return $this->toCC;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Ticket\Message
+	 */
+	public function setSubject($subject) {
+		$this->subject = $subject;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Ticket\Message
+	 */
+	public function unsetSubject() {
+		$this->subject = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getSubject() {
+		return $this->subject;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Ticket\Message
+	 */
+	public function setSubjectEn($subjectEn) {
+		$this->subjectEn = $subjectEn;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Ticket\Message
+	 */
+	public function unsetSubjectEn() {
+		$this->subjectEn = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getSubjectEn() {
+		return $this->subjectEn;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Ticket\Message
+	 */
+	public function setMessage($message) {
 		$this->message = $message;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Phrase|NULL
+	 * @return \Entity\Ticket\Message
+	 */
+	public function unsetMessage() {
+		$this->message = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
 	 */
 	public function getMessage() {
 		return $this->message;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Ticket\Message
+	 */
+	public function setMessageEn($messageEn) {
+		$this->messageEn = $messageEn;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Ticket\Message
+	 */
+	public function unsetMessageEn() {
+		$this->messageEn = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getMessageEn() {
+		return $this->messageEn;
 	}
 		
 	/**

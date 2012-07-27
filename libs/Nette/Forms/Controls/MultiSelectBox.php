@@ -34,6 +34,7 @@ class MultiSelectBox extends SelectBox
 		if ($this->getPrompt()) {
 			unset($allowed[0]);
 		}
+		
 		return array_intersect($this->getRawValue(), $allowed);
 	}
 

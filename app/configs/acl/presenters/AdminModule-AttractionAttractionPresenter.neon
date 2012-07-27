@@ -1,0 +1,32 @@
+List:
+	guest: allow
+	potentialowner: deny
+	owner: deny
+	translator: deny
+	assistant: deny
+	telmarkmanager: deny
+	telmarkoperator: deny
+	manager: deny
+	admin: deny
+	
+Add:
+	guest: allow
+	potentialowner: deny
+	owner: deny
+	translator: deny
+	assistant: deny
+	telmarkmanager: deny
+	telmarkoperator: deny
+	manager: deny
+	admin: deny
+	
+Edit:
+	guest: deny
+	potentialowner: deny
+	owner: deny
+	translator: deny
+	assistant: deny
+	telmarkmanager: deny
+	telmarkoperator: deny
+	manager: deny
+	admin: deny

@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="routing_pathsegment")
+ * @ORM\Table(name="routing_pathsegment", indexes={@ORM\index(name="pathSegment", columns={"pathSegment"}), @ORM\index(name="type", columns={"type"}), @ORM\index(name="entityId", columns={"entityId"})})
  */
 class PathSegment extends \Entity\BaseEntity {
 
@@ -43,6 +43,22 @@ class PathSegment extends \Entity\BaseEntity {
 	protected $entityId;
 
 	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

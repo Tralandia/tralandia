@@ -1,0 +1,124 @@
+parameters:
+	webloader:
+		packages:
+			admin:
+				js:
+					- admin/admin.js
+					- admin/main.js
+				css:
+					- admin/_bootstrap.less
+			front:
+				css:
+					- front/default.css
+					- front/mainHeader.css
+					- front/mainFooter.css
+					- front/search.css
+					- front/clickMap.css
+					- front/home.css
+					- front/objectsList.css
+					- front/objectDetails.css
+					- front/calendar.css
+					- front/forms.css
+					- front/listPanel.css
+					- skinnedcombo/skin.css
+				js:
+					- jQuery/jquery.js
+					- skinnedcombo/jquery.skinned-combo.pack.js
+			autopilot:
+				js: 
+					- admin/admin.js
+					- admin/main.js
+					- autopilot/autopilot.js
+				css: autopilot/_bootstrap.less
+			nette:
+				js: 
+					- nette/nette.js
+					- nette/netteForms.js
+			bootstrap:
+				js: 
+					- bootstrap/bootstrap-alert.js
+					- bootstrap/bootstrap-button.js
+					# - bootstrap/bootstrap-carousel.js
+					- bootstrap/bootstrap-collapse.js
+					- bootstrap/bootstrap-dropdown.js
+					- bootstrap/bootstrap-modal.js
+					- bootstrap/bootstrap-tooltip.js
+					- bootstrap/bootstrap-popover.js
+					# - bootstrap/bootstrap-scrollspy.js
+					- bootstrap/bootstrap-tab.js
+					- bootstrap/bootstrap-transition.js
+					- bootstrap/bootstrap-typeahead.js
+			liveQuery:
+				js: liveQuery/livequery.js
+			jQuery:
+				js: 
+					- jQuery/jquery.js
+					- jQuery/jquery.livequery.js
+					- jQuery/jquery.textarea.js
+					- jQuery/jquery.neon.js
+			jQueryCalendar:
+				js: jQueryCalendar/jquery.calendar.js
+				css: jQueryCalendar/jquery.calendar.css
+			jQueryUI:
+				js: 
+					- jQueryUI/jquery.ui.js
+					- jQueryUI/multiselect/ui.multiselect.js
+					- jQueryUI/jquery.checkbox.js
+				css: 
+					- jQueryUI/jquery.ui.css
+					- jQueryUI/ui.multiselect.css
+					- jQueryUI/jquery.checkbox.css
+					- jQueryUI/jquery-ui-1.8.20.custom.css
+			fileUpload:
+				js:
+					- FileUpload/js/vendor/jquery.ui.widget.js
+					- FileUpload/js/tmpl.min.js
+					- FileUpload/js/load-image.min.js
+					- FileUpload/js/canvas-to-blob.min.js
+					- FileUpload/js/jquery.iframe-transport.js
+					- FileUpload/js/jquery.fileupload.js
+					- FileUpload/js/jquery.fileupload-fp.js
+					- FileUpload/js/jquery.fileupload-ui.js
+					- FileUpload/js/locale.js
+					- FileUpload/js/main.js
+				css:
+					- FileUpload/css/jquery.fileupload-ui.css
+			phraseControl:
+				js: PhraseControl/jquery.phraseControl.js
+			liveWysi:
+				js: LiveWysi/jquery.liveWysi.js
+			contactsControl:
+				js: ContactsControl/jquery.contactsControl.js
+			dateInput:
+				css: 
+					- DateInput/dateInput.css
+					- DateInput/jquery-ui-timepicker-addon.css
+				js: 
+					- DateInput/timepicker.js
+					- DateInput/dateInput.js
+		sets:
+
+			'Admin:Ap':
+				- %webloader.packages.jQuery%
+				- %webloader.packages.jQueryCalendar%
+				- %webloader.packages.dateInput%
+				- %webloader.packages.autopilot%
+				- %webloader.packages.bootstrap%
+
+			Admin: 
+				- %webloader.packages.jQuery%
+				- %webloader.packages.liveQuery%
+				- %webloader.packages.jQueryUI%
+				- %webloader.packages.dateInput%
+				- %webloader.packages.nette%
+				- %webloader.packages.contactsControl%
+				- %webloader.packages.jQueryCalendar%
+				- %webloader.packages.phraseControl%
+				- %webloader.packages.liveWysi%
+				- %webloader.packages.admin%
+				- %webloader.packages.fileUpload%
+				- %webloader.packages.bootstrap%
+
+			Front: 
+				- %webloader.packages.front%
+

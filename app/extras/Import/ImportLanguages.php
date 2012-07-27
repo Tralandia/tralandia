@@ -10,12 +10,15 @@ use Nette\Application as NA,
 	Extras\Models\Service,
 	Service\Dictionary as D,
 	Service as S,
-	Service\Log\Change as SLog;
+	Service\Log as SLog;
 
 class ImportLanguages extends BaseImport {
 
 	public function doImport($subsection = NULL) {
-		\Extras\Models\Service::preventFlush();
+
+		$import = new \Extras\Import\BaseImport();
+		$import->undoSection('languages');
+
 		$r = q('select * from languages order by id');
 		while($x = mysql_fetch_array($r)) {
 			$s = D\Language::get();
@@ -29,7 +32,7 @@ class ImportLanguages extends BaseImport {
 		}
 		\Extras\Models\Service::flush(FALSE);
 
-		$this->createPhrasesByOld('\Dictionary\Language', 'name', 'supportedLanguages', 'ACTIVE', 'languages', 'name_dic_id');		
+		$this->createPhrasesByOld('\Dictionary\Language', 'name', 'ACTIVE', 'languages', 'name_dic_id');		
 		$this->savedVariables['importedSections']['languages'] = 1;
 	}
 

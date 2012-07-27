@@ -5,10 +5,14 @@ namespace Entity\User;
 use Entity\Dictionary;
 use Entity\Location;
 use Doctrine\ORM\Mapping as ORM;
+use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="user_combination")
+ * @ORM\Table(name="user_combination", indexes={@ORM\index(name="languageLevel", columns={"languageLevel"})})
+ * @EA\Service(name="\Service\User\Combination")
+ * @EA\ServiceList(name="\Service\User\CombinationList")
+ * @EA\Primary(key="id", value="id")
  */
 class Combination extends \Entity\BaseEntityDetails {
 
@@ -38,6 +42,22 @@ class Combination extends \Entity\BaseEntityDetails {
 
 
 	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -2,16 +2,19 @@
 
 namespace Entity\Attraction;
 
-use Entity\Contact;
 use Entity\Dictionary;
 use Entity\Location;
 use Entity\Medium;
 use Entity\User;
 use Doctrine\ORM\Mapping as ORM;
+use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="attraction_attraction")
+ * @EA\Service(name="\Service\Attraction\Attraction")
+ * @EA\ServiceList(name="\Service\Attraction\AttractionList")
+ * @EA\Primary(key="id", value="id")
  */
 class Attraction extends \Entity\BaseEntityDetails {
 
@@ -41,38 +44,27 @@ class Attraction extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var latlong
-	 * @ORM\Column(type="latlong")
+	 * @ORM\Column(type="latlong", nullable=true)
 	 */
 	protected $latitude;
 
 	/**
 	 * @var latlong
-	 * @ORM\Column(type="latlong")
+	 * @ORM\Column(type="latlong", nullable=true)
 	 */
 	protected $longitude;
 
 	/**
-	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Contact\Contact", mappedBy="attractions")
+	 * @var contacts
+	 * @ORM\Column(type="contacts", nullable=true)
 	 */
 	protected $contacts;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\User\User")
-	 */
-	protected $managingUser;
-
-	/**
-	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Entity\Medium\Medium", mappedBy="attraction")
+	 * @ORM\OneToMany(targetEntity="Entity\Medium\Medium", mappedBy="attraction", cascade={"persist", "remove"})
 	 */
 	protected $media;
-
-	
-
-
-
 
 
 //@entity-generator-code <--- NEMAZAT !!!
@@ -81,7 +73,6 @@ class Attraction extends \Entity\BaseEntityDetails {
 	public function __construct() {
 		parent::__construct();
 
-		$this->contacts = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->media = new \Doctrine\Common\Collections\ArrayCollection;
 	}
 		
@@ -182,6 +173,15 @@ class Attraction extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
+	 * @return \Entity\Attraction\Attraction
+	 */
+	public function unsetLatitude() {
+		$this->latitude = NULL;
+
+		return $this;
+	}
+		
+	/**
 	 * @return \Extras\Types\Latlong|NULL
 	 */
 	public function getLatitude() {
@@ -199,6 +199,15 @@ class Attraction extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
+	 * @return \Entity\Attraction\Attraction
+	 */
+	public function unsetLongitude() {
+		$this->longitude = NULL;
+
+		return $this;
+	}
+		
+	/**
 	 * @return \Extras\Types\Latlong|NULL
 	 */
 	public function getLongitude() {
@@ -206,73 +215,40 @@ class Attraction extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @param \Entity\Contact\Contact
+	 * @param \Extras\Types\Contacts
 	 * @return \Entity\Attraction\Attraction
 	 */
-	public function addContact(\Entity\Contact\Contact $contact) {
-		if(!$this->contacts->contains($contact)) {
-			$this->contacts->add($contact);
-		}
-		$contact->addAttraction($this);
+	public function setContacts(\Extras\Types\Contacts $contacts) {
+		$this->contacts = $contacts;
 
 		return $this;
 	}
 		
 	/**
-	 * @param \Entity\Contact\Contact
 	 * @return \Entity\Attraction\Attraction
 	 */
-	public function removeContact(\Entity\Contact\Contact $contact) {
-		if($this->contacts->contains($contact)) {
-			$this->contacts->removeElement($contact);
-		}
-		$contact->removeAttraction($this);
+	public function unsetContacts() {
+		$this->contacts = NULL;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Contact\Contact
+	 * @return \Extras\Types\Contacts|NULL
 	 */
 	public function getContacts() {
 		return $this->contacts;
 	}
 		
 	/**
-	 * @param \Entity\User\User
-	 * @return \Entity\Attraction\Attraction
-	 */
-	public function setManagingUser(\Entity\User\User $managingUser) {
-		$this->managingUser = $managingUser;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Attraction\Attraction
-	 */
-	public function unsetManagingUser() {
-		$this->managingUser = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\User\User|NULL
-	 */
-	public function getManagingUser() {
-		return $this->managingUser;
-	}
-		
-	/**
 	 * @param \Entity\Medium\Medium
 	 * @return \Entity\Attraction\Attraction
 	 */
-	public function addMedia(\Entity\Medium\Medium $media) {
-		if(!$this->media->contains($media)) {
-			$this->media->add($media);
+	public function addMedium(\Entity\Medium\Medium $medium) {
+		if(!$this->media->contains($medium)) {
+			$this->media->add($medium);
 		}
-		$media->setAttraction($this);
+		$medium->setAttraction($this);
 
 		return $this;
 	}
@@ -281,11 +257,11 @@ class Attraction extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Medium\Medium
 	 * @return \Entity\Attraction\Attraction
 	 */
-	public function removeMedia(\Entity\Medium\Medium $media) {
-		if($this->media->contains($media)) {
-			$this->media->removeElement($media);
+	public function removeMedium(\Entity\Medium\Medium $medium) {
+		if($this->media->contains($medium)) {
+			$this->media->removeElement($medium);
 		}
-		$media->unsetAttraction();
+		$medium->unsetAttraction();
 
 		return $this;
 	}

@@ -2,13 +2,14 @@
 
 namespace Service\Medium;
 
+use Nette\Http\FileUpload;
 
 class Medium extends \Service\BaseService {
 	
 	const MAIN_ENTITY_NAME = '\Entity\Medium\Medium';
 
 	private static $knownTypes = array(
-		'image/jpeg' => 'jpeg',
+		'image/jpeg' => 'jpg',
 		'image/png' => 'png',
 		'image/gif' => 'gif',
 		'application/pdf' => 'pdf'
@@ -20,32 +21,29 @@ class Medium extends \Service\BaseService {
 				'height' => 0,
 				'crop' => FALSE
 			),
-		'large' => array(
-				'width'=>960,
-				'height'=>600,
+		'full' => array(
+				'width'=>451,
+				'height'=>288,
 				'crop'=>FALSE
 			),
-		'medium' => array(
-				'width'=>451, 
-				'height'=>288, 
-				'crop'=>TRUE
-			),
 		'small' => array(
-				'width'=>235, 
-				'height'=>145, 
-				'crop'=>TRUE
-			),
-		'mini' => array(
-				'width'=>100,
-				'height'=>63,
+				'width'=>271, 
+				'height'=>170, 
 				'crop'=>TRUE
 			)
 	);
 
-	public static function createFromUrl($uri) {
+/*	public static function createFromUrl($uri) {
+
+		$medium = \Service\Medium\Medium::getByOldUrl($uri);
+		if ($medium) {
+			debug('Nasiel som medium, iba asociujem...');
+			return $medium;
+		}
 
 		if (!$data = @file_get_contents($uri, 'r')) {
-			throw new \Nette\UnexpectedValueException('File "' . $uri . '" not exists');
+			return FALSE;
+			//throw new \Nette\UnexpectedValueException('File "' . $uri . '" does not exist.');
 		}
 
 		preg_match("/\.([^\.]+)$/", basename($uri), $matches);
@@ -59,36 +57,83 @@ class Medium extends \Service\BaseService {
 		return static::createFromFile($tmpCopy, $uri);
 
 	}
+*/	
 
-	public static function createFromFile($file, $uri) {
-
-		$medium = static::get();
-		$medium->uri = $uri;
-		$medium->details = $medium->getFileDetails($file);
-		$medium->sort = 1;
+	public static function saveUploadedFile(FileUpload $file) {
+		$medium = new self;
 		$medium->save();
-
-		if (preg_match("/image\//", $medium->details['mime'])) {
-			$medium->saveImageFiles($file);
+		$medium->details = $medium->getFileDetails($file->getTemporaryFile());
+		
+		if($file->isImage()) {
+			$medium->saveImageFiles($file->getTemporaryFile());
 		} else {
-			rename($file, $medium->getMediumDir() . '/original.' . $medium->details['extension']);
+			rename($file->getTemporaryFile(), $medium->getMediumDir() . '/original.' . $medium->details['extension']);
 		}
 
+		$mediumType = \Service\Medium\Type::getByName($medium->details['mime']);
+		if (!($mediumType instanceof \Service\Medium\Type)) {
+			$mediumType = \Service\Medium\Type::get();
+			$mediumType->name = $medium->details['mime'];
+			$mediumType->save();
+		}
+		$medium->type = $mediumType;
+		$medium->save();
+
 		return $medium;
+	}
+
+	public function setContentFromUrl($uri) {
+
+		if (!$data = @file_get_contents($uri, 'r')) {
+			return FALSE;
+			//throw new \Nette\UnexpectedValueException('File "' . $uri . '" does not exist.');
+		}
+
+		preg_match("/\.([^\.]+)$/", basename($uri), $matches);
+		$extension = $matches[1];
+
+		$file = TEMP_DIR . '/' . \Nette\Utils\Strings::random() . '.' . $extension;
+		$handle = fopen($file, 'wb');
+		fputs($handle, $data);
+		fclose($handle);
+
+		$this->oldUrl = $uri;
+		$this->details = $this->getFileDetails($file);
+		$this->sort = 1;
+		// debug($this);
+		$this->save();
+
+		$mediumType = \Service\Medium\Type::getByName($this->details['mime']);
+		if (!($mediumType instanceof \Service\Medium\Type)) {
+			$mediumType = \Service\Medium\Type::get();
+			$mediumType->name = $this->details['mime'];
+			$mediumType->save();
+		}
+
+		if (preg_match("/image\//", $this->details['mime'])) {
+			$this->saveImageFiles($file);
+		} else {
+			rename($file, $this->getMediumDir() . '/original.' . $this->details['extension']);
+		}
+		$this->type = $mediumType;
+		$this->save();
+
+		return $this;
 
 	}
 
+	//@TODO - cela tato fcia je este todo :)
 	public function getThumbnail($size) {
 
 		if (!$imgSize = $this::$imgSizes[$size]) {
-			throw new \Nette\UnexpectedValueException('Image size "' . $size . '" not exists');
+			throw new \Nette\UnexpectedValueException('Image size "' . $size . '" does not exist.');
 		}
 
 		$uri = '/storage/';
 		foreach ($this->getPathStructure() as $level) {
 			$uri .= $level . '/';
 		}
-		$uri .=  $size . '.jpeg';
+		$uri .=  $size . '.jpg'; //@todo - upravit aby to bolo KONSTANTA
 
 		return $uri;
 
@@ -98,15 +143,24 @@ class Medium extends \Service\BaseService {
 
 		$mediumDir = $this->getMediumDir();
 
-		debug($mediumDir);
-
 		foreach(glob($mediumDir . '/*') as $file) {
-			if(is_dir($file))
-				rrmdir($file);
-			else
+			if(is_dir($file)) {
+				rmdir($file);
+			} else {
 				unlink($file);
+			}
 		}
 		rmdir($mediumDir);
+
+		$pathStructure = $this->getPathStructure();
+		foreach($pathStructure as $level) {
+			if (count($pathStructure)<2) break;
+			$pathStructure = array_splice($pathStructure, 0, -1);
+			$parent = FILES_DIR . '/' . implode('/', $pathStructure);
+			if (!count(glob($parent . '/*'))) rmdir($parent);
+		}
+
+		parent::delete();
 
 	}
 
@@ -135,7 +189,6 @@ class Medium extends \Service\BaseService {
 	}
 
 	private function getMediumDir() {
-
 		$dir = FILES_DIR;
 		foreach ($this->getPathStructure() as $level) {
 			$dir .= '/' . $level;
@@ -161,8 +214,8 @@ class Medium extends \Service\BaseService {
 		}
 
 		preg_match("/\.([^\.]+)$/", $file, $matches);
-		$extension = $matches[1];
-		$details['extension'] = ($this::$knownTypes[$details['mime']]?:$extension);
+		$extension = isset($matches[1]) ? $matches[1] : NULL;
+		$details['extension'] = (isset($this::$knownTypes[$details['mime']])?$this::$knownTypes[$details['mime']]:$extension);
 
 		return $details;
 

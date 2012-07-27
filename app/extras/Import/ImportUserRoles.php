@@ -8,13 +8,13 @@ use Nette\Application as NA,
 	Nette\Utils\Html,
 	Nette\Utils\Strings,
 	Extras\Models\Service,
-	Service\Log\Change as ChangeLog;
+	Service\Log as SLog;
 
 class ImportUserRoles extends BaseImport {
 
 	public function doImport($subsection = NULL) {
 
-		$allRoles = array('Guest', 'Visitor', 'PotentialOwner', 'Owner', 'Translator', 'Assistant', 'Vendor', 'Manager', 'Admin', 'SuperAdmin');
+		$allRoles = array('Guest', 'PotentialOwner', 'Owner', 'Translator', 'Assistant', 'TelmarkManager', 'TelmarkOperator', 'Manager', 'Admin', 'SuperAdmin');
 
 		foreach ($allRoles as $key => $value) {
 			$role = \Service\User\Role::get();

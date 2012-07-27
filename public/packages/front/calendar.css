@@ -1,0 +1,59 @@
+/* ľšč*/
+div.calendar {
+    float: left;
+    font-size: 11px;
+    height: 210px;
+    margin: 0 20px 10px 0;
+    text-align: center;
+    width: 161px;
+}
+div.calendar div.day {
+    border: 1px solid #CBD2A0;
+    float: left;
+    height: 18px;
+    margin-bottom: 1px;
+    margin-right: 1px;
+    padding-top: 3px;
+    text-align: center;
+    width: 20px;
+}
+div.calendar .active {
+    background-color: #FBFBF3;
+    color: #663300 !important;
+    cursor: pointer;
+}
+div.calendar .ro {
+    cursor: default !important;
+}
+div.calendar .inactive {
+    border: 1px solid #EEEEEE !important;
+    color: #EEEEEE;
+    cursor: default !important;
+}
+div.calendar .dayName {
+    border: 1px solid #F9F7F5 !important;
+    color: #91A136;
+}
+div.calendar .monthName {
+    color: #663300;
+    font-size: 12px;
+    font-weight: bold;
+}
+div.calendar .selected {
+    background-color: #C5D279;
+}
+div.calendar .status01 {
+    background-image:  url(../images/matrix_main.png);
+    background-position: -370px -1311px;
+    background-repeat: no-repeat;
+}
+div.calendar .status10 {
+    background-image: url(../images/matrix_main.png);
+    background-position: -340px -1311px;
+    background-repeat: no-repeat;
+}
+div.calendar .status11 {
+    background-image: url(../images/matrix_main.png);
+    background-position: -340px -1341px;
+    background-repeat: no-repeat;
+}

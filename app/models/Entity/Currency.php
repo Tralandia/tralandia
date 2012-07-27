@@ -4,47 +4,38 @@ namespace Entity;
 
 use Entity\Dictionary;
 use Doctrine\ORM\Mapping as ORM;
-use	Extras\UI as UI;
+use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="currency")
- * @UI\Primary(key="id", value="iso")
+ * @ORM\Table(name="currency", indexes={@ORM\index(name="name", columns={"name_id"}), @ORM\index(name="iso", columns={"iso"})})
+ * @EA\Service(name="\Service\Currency")
+ * @EA\ServiceList(name="\Service\CurrencyList")
+ * @EA\Primary(key="id", value="iso")
  */
 class Currency extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
-     * @UI\Control(type="text")
+	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"}, fetch="EAGER")
 	 */
 	protected $name;
 
 	/**
 	 * @var string
 	 * @ORM\Column(type="string")
-     * @UI\Control(type="text")
 	 */
 	protected $iso;
 
 	/**
-	 * @var decimal
-	 * @ORM\Column(type="decimal", nullable=true)
-     * @UI\Control(type="text")
+	 * @var float
+	 * @ORM\Column(type="float", nullable=true)
 	 */
 	protected $exchangeRate;
 
 	/**
-	 * @var integer
-	 * @ORM\Column(type="integer", nullable=true)
-     * @UI\Control(type="text")
-	 */
-	protected $decimalPlaces;
-
-	/**
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
-     * @UI\Control(type="text")
 	 */
 	protected $rounding;
 
@@ -53,12 +44,6 @@ class Currency extends \Entity\BaseEntity {
 	 * @ORM\ManyToMany(targetEntity="Entity\Location\Location", inversedBy="currencies")
 	 */
 	protected $locations;
-
-
-    
-
-
-
 
 //@entity-generator-code <--- NEMAZAT !!!
 
@@ -104,7 +89,7 @@ class Currency extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param decimal
+	 * @param float
 	 * @return \Entity\Currency
 	 */
 	public function setExchangeRate($exchangeRate) {
@@ -123,36 +108,10 @@ class Currency extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return decimal|NULL
+	 * @return float|NULL
 	 */
 	public function getExchangeRate() {
 		return $this->exchangeRate;
-	}
-		
-	/**
-	 * @param integer
-	 * @return \Entity\Currency
-	 */
-	public function setDecimalPlaces($decimalPlaces) {
-		$this->decimalPlaces = $decimalPlaces;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Currency
-	 */
-	public function unsetDecimalPlaces() {
-		$this->decimalPlaces = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return integer|NULL
-	 */
-	public function getDecimalPlaces() {
-		return $this->decimalPlaces;
 	}
 		
 	/**

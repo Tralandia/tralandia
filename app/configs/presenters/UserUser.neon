@@ -1,0 +1,192 @@
+common:
+	service: Service\User\User
+	title: User / User
+	h1: User / User
+	grid:
+		columns:
+			id:
+				label: ID
+				mapper: e.id
+			login:
+				label: Login
+				mapper: e.login
+			password:
+				label: Password
+				mapper: e.password
+			isOwner:
+				label: IsOwner
+				mapper: e.isOwner
+			# roles:
+			# 	label: Roles
+			# 	mapper: e.roles
+			# contacts:
+			# 	label: Contacts
+			# 	mapper: e.contacts
+			defaultLanguage:
+				label: DefaultLanguage
+				mapper: e.id
+				callback: {Entity\Log\Systemmethod: translateColumn, params: defaultLanguage}
+			location:
+				label: Location
+				mapper: e.location
+			# rentalTypes:
+			# 	label: RentalTypes
+			# 	mapper: e.rentalTypes
+			invoicingSalutation:
+				label: InvoicingSalutation
+				mapper: e.invoicingSalutation
+			invoicingFirstName:
+				label: InvoicingFirstName
+				mapper: e.invoicingFirstName
+			invoicingLastName:
+				label: InvoicingLastName
+				mapper: e.invoicingLastName
+			invoicingCompanyName:
+				label: InvoicingCompanyName
+				mapper: e.invoicingCompanyName
+			# invoicingEmail:
+			# 	label: InvoicingEmail
+			# 	mapper: e.invoicingEmail
+			invoicingPhone:
+				label: InvoicingPhone
+				mapper: e.invoicingPhone
+			invoicingUrl:
+				label: InvoicingUrl
+				mapper: e.invoicingUrl
+			# invoicingAddress:
+			# 	label: InvoicingAddress
+			# 	mapper: e.invoicingAddress
+			invoicingCompanyId:
+				label: InvoicingCompanyId
+				mapper: e.invoicingCompanyId
+			invoicingCompanyVatId:
+				label: InvoicingCompanyVatId
+				mapper: e.invoicingCompanyVatId
+			currentTelmarkOperator:
+				label: CurrentTelmarkOperator
+				mapper: e.currentTelmarkOperator
+			# combinations:
+			# 	label: Combinations
+			# 	mapper: e.combinations
+			# rentals:
+			# 	label: Rentals
+			# 	mapper: e.rentals
+			# tasks:
+			# 	label: Tasks
+			# 	mapper: e.tasks
+			# details:
+			# 	label: Details
+			# 	mapper: e.details
+			oldId:
+				label: OldId
+				mapper: e.oldId
+				cellStyle: text-align:right;
+				headerStyle: text-align:right;
+			created:
+				label: Created
+				mapper: e.created
+			updated:
+				label: Updated
+				mapper: e.updated
+			
+	form:
+		fields:
+			login:
+				label: Login
+				control: text
+			password:
+				label: Password
+				control: text
+			isOwner:
+				label: IsOwner
+				control: checkbox
+			roles:
+				label: Roles
+				control: bricksList
+				inlineEditing: UserRole:edit
+				inlineCreating: UserRole:add
+			contacts:
+				label: Contacts
+				control: multiSelect
+				inlineEditing: ContactContact:edit
+				inlineCreating: ContactContact:add
+			defaultLanguage:
+				label: DefaultLanguage
+				control: select
+				inlineEditing: DictionaryLanguage:edit
+				inlineCreating: DictionaryLanguage:add
+			location:
+				label: Location
+				control: select
+				inlineEditing: LocationLocation:edit
+				inlineCreating: LocationLocation:add
+			rentalTypes:
+				label: RentalTypes
+				control: bricksList
+				inlineEditing: RentalType:edit
+				inlineCreating: RentalType:add
+			invoicingSalutation:
+				label: InvoicingSalutation
+				control: text
+			invoicingFirstName:
+				label: InvoicingFirstName
+				control: text
+			invoicingLastName:
+				label: InvoicingLastName
+				control: text
+			invoicingCompanyName:
+				label: InvoicingCompanyName
+				control: text
+			invoicingEmail:
+				label: InvoicingEmail
+				control: select
+				inlineEditing: ContactContact:edit
+				inlineCreating: ContactContact:add
+			invoicingPhone:
+				label: InvoicingPhone
+				control: select
+				inlineEditing: ContactContact:edit
+				inlineCreating: ContactContact:add
+			invoicingUrl:
+				label: InvoicingUrl
+				control: select
+				inlineEditing: ContactContact:edit
+				inlineCreating: ContactContact:add
+			invoicingAddress:
+				label: InvoicingAddress
+				control: text
+			invoicingCompanyId:
+				label: InvoicingCompanyId
+				control: text
+			invoicingCompanyVatId:
+				label: InvoicingCompanyVatId
+				control: text
+			currentTelmarkOperator:
+				label: CurrentTelmarkOperator
+				control: select
+				inlineEditing: UserUser:edit
+				inlineCreating: UserUser:add
+			# combinations:
+			# 	label: Combinations
+			# 	control: multiSelect
+			# 	inlineEditing: UserCombination:edit
+			# 	inlineCreating: UserCombination:add
+			rentals:
+				label: Rentals
+				control: multiSelect
+				inlineEditing: RentalRental:edit
+				inlineCreating: RentalRental:add
+			tasks:
+				label: Tasks
+				control: bricksList
+				inlineEditing: AutopilotTask:edit
+				inlineCreating: AutopilotTask:add
+			details:
+				label: Details
+				control: json
+			created:
+				label: Created
+				control: datePicker
+			updated:
+				label: Updated
+				control: datePicker

@@ -4,12 +4,14 @@ namespace Entity\Dictionary;
 
 use Entity\Dictionary;
 use Doctrine\ORM\Mapping as ORM;
-use Extras\UI as UI;
+use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="dictionary_phrase")
- * @UI\Primary(key="id", value="translations")
+ * @ORM\Table(name="dictionary_phrase", indexes={@ORM\index(name="ready", columns={"ready"})})
+ * @EA\Service(name="\Service\Dictionary\Phrase")
+ * @EA\ServiceList(name="\Service\Dictionary\PhraseList")
+ * @EA\Primary(key="id", value="translations")
  */
 class Phrase extends \Entity\BaseEntityDetails {
 
@@ -27,7 +29,7 @@ class Phrase extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Type")
+	 * @ORM\ManyToOne(targetEntity="Type", cascade={"persist"})
 	 */
 	protected $type;
 
@@ -37,12 +39,6 @@ class Phrase extends \Entity\BaseEntityDetails {
 	 * This will be used by Locations (localities) to make sure we know the original language of the name of the locality to translate from
 	 */
 	protected $sourceLanguage;
-
-	
-
-
-
-
 
 //@entity-generator-code <--- NEMAZAT !!!
 

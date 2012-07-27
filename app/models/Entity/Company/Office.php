@@ -3,12 +3,22 @@
 namespace Entity\Company;
 
 use Doctrine\ORM\Mapping as ORM;
+use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="company_office")
+ * @EA\Service(name="\Service\Company\Office")
+ * @EA\ServiceList(name="\Service\Company\OfficeList")
+ * @EA\Primary(key="id", value="address")
  */
 class Office extends \Entity\BaseEntityDetails {
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string")
+	 */
+	protected $name;
 
 	/**
 	 * @var Collection
@@ -24,7 +34,8 @@ class Office extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Medium\Medium")
+	 * @ORM\OneToOne(targetEntity="Entity\Medium\Medium", cascade={"persist", "remove"})
+	 * @ORM\JoinColumn(onDelete="CASCADE")
 	 */
 	protected $signature;
 	
@@ -34,12 +45,6 @@ class Office extends \Entity\BaseEntityDetails {
 	 */
 	protected $address;
 
-	
-
-
-
-
-
 //@entity-generator-code <--- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -47,6 +52,23 @@ class Office extends \Entity\BaseEntityDetails {
 		parent::__construct();
 
 		$this->countries = new \Doctrine\Common\Collections\ArrayCollection;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Company\Office
+	 */
+	public function setName($name) {
+		$this->name = $name;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getName() {
+		return $this->name;
 	}
 		
 	/**

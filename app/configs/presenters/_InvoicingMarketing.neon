@@ -1,0 +1,98 @@
+common:
+	service: Service\Invoicing\Marketing
+	title: Invoicing / Marketing
+	h1: Invoicing / Marketing
+	grid:
+		columns:
+			id:
+				label: ID
+				mapper: e.id
+			name:
+				label: Name
+				mapper: e.id
+				callback: {Entity\Log\Systemmethod: translateColumn, params: name}
+			description:
+				label: Description
+				mapper: e.id
+				callback: {Entity\Log\Systemmethod: translateColumn, params: name}
+			package:
+				label: Package
+				mapper: e.id
+				callback: {Entity\Log\Systemmethod: translateColumn, params: name}
+			# locations:
+			# 	label: Locations
+			# 	mapper: e.locations
+			countTotal:
+				label: CountTotal
+				mapper: e.countTotal
+				cellStyle: text-align:right;
+				headerStyle: text-align:right;
+			countLeft:
+				label: CountLeft
+				mapper: e.countLeft
+				cellStyle: text-align:right;
+				headerStyle: text-align:right;
+			validFrom:
+				label: ValidFrom
+				mapper: e.validFrom
+			validTo:
+				label: ValidTo
+				mapper: e.validTo
+			# uses:
+			# 	label: Uses
+			# 	mapper: e.uses
+			oldId:
+				label: OldId
+				mapper: e.oldId
+				cellStyle: text-align:right;
+				headerStyle: text-align:right;
+			created:
+				label: Created
+				mapper: e.created
+			updated:
+				label: Updated
+				mapper: e.updated
+			
+	form:
+		fields:
+			name:
+				label: Name
+				control: phrase
+				inlineEditing: DictionaryPhrase:edit
+			description:
+				label: Description
+				control: phrase
+				inlineEditing: DictionaryPhrase:edit
+			package:
+				label: Package
+				control: select
+				inlineEditing: InvoicingPackage:edit
+				inlineCreating: InvoicingPackage:add
+			locations:
+				label: Locations
+				control: bricksList
+				inlineEditing: LocationLocation:edit
+				inlineCreating: LocationLocation:add
+			countTotal:
+				label: CountTotal
+				control: text
+			countLeft:
+				label: CountLeft
+				control: text
+			validFrom:
+				label: ValidFrom
+				control: datePicker
+			validTo:
+				label: ValidTo
+				control: datePicker
+			uses:
+				label: Uses
+				control: bricksList
+				inlineEditing: InvoicingUseType:edit
+				inlineCreating: InvoicingUseType:add
+			created:
+				label: Created
+				control: datePicker
+			updated:
+				label: Updated
+				control: datePicker

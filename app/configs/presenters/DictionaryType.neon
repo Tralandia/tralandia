@@ -1,0 +1,105 @@
+common:
+	service: Service\Dictionary\Type
+	title: Phrase Type
+	h1: 'Phrase Type -> %entityName% (%entityAttribute%)'
+	grid:
+		columns:
+			id:
+				label: ID
+				mapper: e.id
+			entityName:
+				label: Entity Name
+				mapper: e.entityName
+			entityAttribute:
+				label: Attribute
+				mapper: e.entityAttribute
+			translationLevelRequirement:
+				label: Level
+				mapper: e.translationLevelRequirement
+				cellStyle: text-align:right;
+				headerStyle: text-align:right;
+			pluralsRequired:
+				label: Plurals
+				mapper: e.pluralsRequired
+			genderVariationsRequired:
+				label: Gender Variations
+				mapper: e.genderVariationsRequired
+			locativesRequired:
+				label: Locative
+				mapper: e.locativesRequired
+			genderRequired:
+				label: Gender
+				mapper: e.genderRequired
+			positionRequired:
+				label: Position
+				mapper: e.positionRequired
+			checkingRequired:
+				label: Checking
+				mapper: e.checkingRequired
+	form:
+		fields:
+			name:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: Name
+				control:
+					type: text
+				class: span6
+			entityName:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: Entity Name
+				control:
+					type: text
+			entityAttribute:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: Entity Attribute
+				control:
+					type: text
+			translationLevelRequirement:
+				# anotations: "var:integer,ORMColumn:type:integer"
+				label: Translation Level Requirement
+				control:
+					type: select
+					options: [class: \Entity\Dictionary\Type, pattern: TRANSLATION_LEVEL_.+]
+			helpForTranslator:
+				# anotations: "var:string,ORMColumn:type:string,nullable:true"
+				label: HelpForTranslator
+				control:
+					type: text
+				class: span6
+			pluralsRequired:
+				# anotations: "var:boolean,ORMColumn:type:boolean"
+				startNewRow: true
+				label: Plurals
+				control: 
+					type: checkbox
+					label: Translations for plurals required
+			genderVariationsRequired:
+				# anotations: "var:boolean,ORMColumn:type:boolean"
+				label: Gender Variations
+				control: 
+					type: checkbox
+					label: Gender variations needed
+			genderRequired:
+				# anotations: "var:boolean,ORMColumn:type:boolean"
+				label: Gender
+				control: 
+					type: checkbox
+					label: Gender of the word needed
+			locativesRequired:
+				# anotations: "var:boolean,ORMColumn:type:boolean"
+				label: Locatives
+				control: 
+					type: checkbox
+					label: Locative variations needed
+			positionRequired:
+				# anotations: "var:boolean,ORMColumn:type:boolean"
+				label: Position
+				control: 
+					type: checkbox
+					label: Position required
+			checkingRequired:
+				# anotations: "var:boolean,ORMColumn:type:boolean,nullable:true"
+				label: Checking
+				control: 
+					type: checkbox
+					label: Needs to be checked
