@@ -3,12 +3,13 @@
 namespace Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Extras;
 
 /**
  * @ORM\MappedSuperclass()
  * @ORM\HasLifecycleCallbacks
  */
-class BaseEntity extends \Extras\Models\Entity {
+class BaseEntity extends \Extras\Models\Entity implements Extras\IEntity {
 
 	/**
 	 * @var integer

@@ -29,11 +29,34 @@ common:
 
 		settingsDir: %appDir%/configs
 
+		database:
+			user: root
+			password: root
+			host: 127.0.0.1
+			dbname: tralandia
+			charset: utf8
+			driver: pdo_mysql
+			debugger: false
+
+	doctrine:
+		connections:
+			default: %database%
+
+		entityManagers:
+			default:
+				connection: default
+
+		console:
+			entityManager: default
+
 	includes:
 		- webLoader.neon
 		- acl/acl.neon
 
 	services:
+		console: @doctrine.console
+		model: @doctrine.entityManagers.default
+
 		# nette.presenterFactory:
 			# class: Extras\DynamicPresenterFactory
 			# factory: Extras\DynamicPresenterFactory::factory
@@ -78,10 +101,17 @@ development < common:
 		max_execution_time: 0
 		memory_limit: 1024M
 
-
 	parameters:
 		envOptions:
 			sendEmail: FASLE
+
+		database:
+			user: root
+			password: root
+			host: 127.0.0.1
+			dbname: tralandia
+			charset: utf8
+			driver: pdo_mysql
 
 vaculciak < development:
 	parameters:

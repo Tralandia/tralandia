@@ -11,51 +11,32 @@ use Nette\Diagnostics\Debugger,
 require_once LIBS_DIR . '/Nette/loader.php';
 require_once LIBS_DIR . '/rado_functions.php';
 
-$section = isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : null;
 // Enable Nette\Debug for error visualisation & logging
 Debugger::enable();
-//Debugger::$strictMode = FALSE;
-
+Debugger::$strictMode = TRUE;
+$section = isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : null;
 
 // Configure application
 $configurator = new Nette\Config\Configurator;
 $configurator->setTempDirectory(TEMP_DIR);
 $configurator->enableDebugger(ROOT_DIR . '/log');
-
-
-
-// Enable RobotLoader - this will load all classes automatically
 $robotLoader = $configurator->createRobotLoader();
 $robotLoader->addDirectory(APP_DIR)
 	->addDirectory(LIBS_DIR)
 	->addDirectory(TEMP_DIR . '/presenters')
 	->register();
 
-// var_dump($robotLoader);
 require_once LIBS_DIR . '/tools.php';
-// Create Dependency Injection container from config.neon file
+Extension::register($configurator);
 $configurator->addConfig(APP_DIR . '/configs/config.neon', $section);
 $configurator->onCompile[] = callback('Extras\PresenterGenerator', 'generate');
 $container = $configurator->createContainer();
 
-// Pridanie sluzby robot loadera
-# $container->addService('robotLoader', $robotLoader); // dolezite pre dynamicke presentery
-Debugger::$editor = $container->parameters['editor'];
 
-$serviceConfigurator = new Extras\Configurator;
-$serviceConfigurator->setTempDirectory(TEMP_DIR);
 
-Extension::register($serviceConfigurator);
-
-$serviceConfigurator->addConfig(APP_DIR . '/configs/service.neon', $section);
-$serivceContainer = $serviceConfigurator->createContainer();
-
-// Setup doctrine loader
-$serivceContainer->createService();
-$serivceContainer->createList();
 // @todo toto niekam schovat
 require_once APP_DIR . '/extras/EntityAnnotation.php';
-Extras\Models\Service::$translator = $container->translator;
+//Extras\Models\Service::$translator = $container->translator;
 
 // Setup router // TODO: presunut do config.neon
 $container->application->onStartup[] = function() use ($container) {
@@ -92,7 +73,7 @@ $container->application->onStartup[] = function() use ($container) {
 
 // Run the application!
 if (PHP_SAPI == 'cli') {
-	$serivceContainer->console->run();
+	$container->console->run();
 } else {
 	$container->application->run();
 }
