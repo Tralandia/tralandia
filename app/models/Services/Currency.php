@@ -14,6 +14,7 @@ class Currency extends Base {
 	public function save() {
 		$this->getEntityManager()->persist($this->entity);
 		$this->getEntityManager()->flush();
+		return true; // TODO: stale vracia true
 	}
 
 	/**
@@ -22,5 +23,6 @@ class Currency extends Base {
 	public function delete() {
 		$this->getEntityManager()->remove($this->entity);
 		$this->getEntityManager()->flush();
+		return true; // TODO: stale vracia true
 	}
 }

@@ -56,7 +56,6 @@ common:
 	services:
 		console: @doctrine.console
 		model: @doctrine.entityManagers.default
-		model: Extras\DoctrineService::factory(@container, %database%, %entityDirs%, %proxyDir%)
 
 		# nette.presenterFactory:
 			# class: Extras\DynamicPresenterFactory
