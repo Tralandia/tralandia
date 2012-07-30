@@ -9,6 +9,13 @@ namespace Services;
 class Currency extends Base {
 
 	/**
+	 * Ukazkovy proces
+	 */
+	public function process($a, $b) {
+		return $a + $b;
+	}
+
+	/**
 	 * Ulozenie meny
 	 */
 	public function save() {
