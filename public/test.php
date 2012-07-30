@@ -54,6 +54,8 @@ $configurator->addConfig(APP_DIR . '/configs/config.neon', $section);
 $configurator->onCompile[] = callback('Extras\PresenterGenerator', 'generate');
 $container = $configurator->createContainer();
 
+//---------------------------------------------------------------------------------//
+
 
 $service = new Services\Currency($container->model, new Entity\Currency);
 $service->setIso('EUR');
@@ -61,11 +63,10 @@ $service->setExchangeRate(44.66);
 $service->setRounding(2);
 $service->save();
 
-/*
-$service = new Services\Currency($currencyRepo, $container->model->getRepository('Entity\Currency')->find(99));
+$entity = $container->model->getRepository('Entity\Currency')->find($service->getId());
+$service = new Services\Currency($container->model, $entity);
 $service->setIso('CZK');
 $service->setRounding(14);
 $service->save();
 
 $service->delete();
-*/

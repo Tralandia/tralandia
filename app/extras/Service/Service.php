@@ -16,7 +16,7 @@ class Service extends Nette\Object implements IService, IteratorAggregate {
 	protected $entityManager = null;
 
 	/**
-	 * @var IEntity
+	 * @var Extras\IEntity
 	 */
 	protected $entity = null;
 
@@ -63,7 +63,7 @@ class Service extends Nette\Object implements IService, IteratorAggregate {
 	}
 
 	/**
-	 * Returns property value. Do not call directly.
+	 * Getter nad entitou
 	 * @param  string  property name
 	 * @return mixed   property value
 	 * @throws MemberAccessException if the property is not defined.
@@ -73,7 +73,7 @@ class Service extends Nette\Object implements IService, IteratorAggregate {
 	}
 
 	/**
-	 * Sets value of a property. Do not call directly.
+	 * Setter nad entitou
 	 * @param  string  property name
 	 * @param  mixed   property value
 	 * @return void
@@ -84,7 +84,7 @@ class Service extends Nette\Object implements IService, IteratorAggregate {
 	}
 
 	/**
-	 * Is property defined?
+	 * Je vlastnost definovana?
 	 * @param  string  property name
 	 * @return bool
 	 */
@@ -93,7 +93,7 @@ class Service extends Nette\Object implements IService, IteratorAggregate {
 	}
 
 	/**
-	 * Access to undeclared property.
+	 * Uvolnenie vlastnosti
 	 * @param  string  property name
 	 * @return void
 	 * @throws MemberAccessException
@@ -102,7 +102,27 @@ class Service extends Nette\Object implements IService, IteratorAggregate {
 		Nette\ObjectMixin::remove($this->entity, $name);
 	}
 
+	/**
+	 * Vrati iterator entity
+	 * @return ArrayIterator
+	 */
 	public function getIterator() {
 		return $this->entity->getIterator();
+	}
+
+	/**
+	 * Vrati entity manazera
+	 * @return Doctrine\ORM\EntityManager
+	 */
+	public function getEntityManager() {
+		return $this->entityManager;
+	}
+
+	/**
+	 * Vrati repozitar pre entitu
+	 * @return Doctrine\ORM\EntityRepository
+	 */
+	public function getRepository() {
+		return $this->entityManager->getRepository(get_class($this->entity));
 	}
 }

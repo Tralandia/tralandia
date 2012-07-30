@@ -2,20 +2,25 @@
 
 namespace Services;
 
+/**
+ * Sluzba meny
+ * @author Branislav Vaculčiak
+ */
 class Currency extends Base {
 
-/*
-	public function __constructor(Doctrine\ORM\EntityManager $entityManager, Entity\BaseEntity $entity) {
-		parent::__construct($entityManager, $entity);
-	}
-*/
-
 	/**
-	 * Ulozenie clanku
-	 * @return Article
+	 * Ulozenie meny
 	 */
 	public function save() {
-		debug($this);
-		//$this->repository->save($this->entity);
+		$this->getEntityManager()->persist($this->entity);
+		$this->getEntityManager()->flush();
+	}
+
+	/**
+	 * Vymazanie meny
+	 */
+	public function delete() {
+		$this->getEntityManager()->remove($this->entity);
+		$this->getEntityManager()->flush();
 	}
 }

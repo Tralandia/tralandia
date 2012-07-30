@@ -1,8 +1,7 @@
 <?php
 
 use Nette\Diagnostics\Debugger,
-	Nette\Environment,
-	Nette\Application\Routers\Route;
+	Nella\Addons\Doctrine\Config\Extension;
 
 // Absolute filesystem path to the web root
 define('ROOT_DIR', __DIR__ . '/..');
@@ -16,20 +15,24 @@ $_SERVER['HTTP_HOST'] = 'localhost';
 require LIBS_DIR . '/Nette/loader.php';
 
 // Enable Nette\Debug for error visualisation & logging
+Debugger::enable(FALSE);
+Debugger::$strictMode = FALSE;
 $section = isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : null;
-Debugger::enable(false);
-Debugger::$strictMode = false;
 
 // Load configuration from config.neon
 $configurator = new Nette\Config\Configurator;
 $configurator->setTempDirectory(TEMP_DIR);
-$configurator->addConfig(APP_DIR . '/configs/config.neon', $section);
-$configurator->createRobotLoader()
-	->addDirectory(APP_DIR)
+$configurator->enableDebugger(ROOT_DIR . '/log');
+$robotLoader = $configurator->createRobotLoader();
+$robotLoader->addDirectory(APP_DIR)
 	->addDirectory(LIBS_DIR)
+	->addDirectory(TEMP_DIR . '/presenters')
 	->register();
-$container = $configurator->createContainer();
-require LIBS_DIR . '/tools.php';
 
-//debug($container);
+require_once LIBS_DIR . '/tools.php';
+Extension::register($configurator);
+$configurator->addConfig(APP_DIR . '/configs/config.neon', $section);
+$configurator->onCompile[] = callback('Extras\PresenterGenerator', 'generate');
+$container = $configurator->createContainer();
+
 ob_start();

@@ -2,7 +2,7 @@
 
 require_once 'bootstrap.php';
 
-class MyClassTest extends PHPUnit_Framework_TestCase
+class CurrencyServiceTest extends PHPUnit_Framework_TestCase
 {
 	public $context;
 	public $presenter;
@@ -10,7 +10,7 @@ class MyClassTest extends PHPUnit_Framework_TestCase
 	public $user;
 
 	protected function setUp() {
-		$this->context = Nette\Environment::getContext();
+		//$this->context = Nette\Environment::getContext();
 
 		/*
 		$this->presenter = new FrontModule\HomePresenter($this->context);
@@ -31,8 +31,6 @@ class MyClassTest extends PHPUnit_Framework_TestCase
 
 		//$this->assertInternalType('integer', $this->presenter->template->totalCount);
 		//$this->assertInternalType('array', $this->presenter->template->listing);
-
-
-		$this->assertInternalType('array', array());
+		//$this->assertInternalType('array', array());
 	}
 }
