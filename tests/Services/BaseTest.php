@@ -16,53 +16,55 @@ class BaseTest extends PHPUnit_Framework_TestCase
 	}
 
 	public function testConstruct() {
-		$service = new Services\Currency($this->model, new Entity\Currency);
-		$this->assertInstanceOf('Services\Currency', $service);
+		$service = new Service\Currency($this->model, new Entity\Currency);
+		$this->assertInstanceOf('Service\Currency', $service);
 	}
 
 	public function testSetterAndGetter() {
-		$service = new Services\Currency($this->model, new Entity\Currency);
+		$entity = new Entity\Currency;
+		$service = new Service\Currency($this->model, $entity);
 
-		$service->setIso('EUR');
-		$this->assertSame('EUR', $service->getIso());
+		$entity->setIso('EUR');
+		$this->assertSame('EUR', $entity->getIso());
 
-		$service->setExchangeRate(44.66);
-		$this->assertSame(44.66, $service->getExchangeRate());
+		$entity->setExchangeRate(44.66);
+		$this->assertSame(44.66, $entity->getExchangeRate());
 
-		$service->setRounding(2);
-		$this->assertSame(2, $service->getRounding());
+		$entity->setRounding(2);
+		$this->assertSame(2, $entity->getRounding());
 	}
 
 	public function testSaveAndFindAndDelete() {
-		$service = new Services\Currency($this->model, new Entity\Currency);
-		$service->setIso('EUR');
-		$service->setExchangeRate(44.66);
-		$service->setRounding(2);
+		$entity = new Entity\Currency;
+		$service = new Service\Currency($this->model, $entity);
+		$entity->setIso('EUR');
+		$entity->setExchangeRate(44.66);
+		$entity->setRounding(2);
 
 		$this->assertTrue($service->save());
-		$this->assertInternalType('integer', $service->getId());
-		$this->assertInstanceOf('DateTime', $service->getCreated());
-		$this->assertInstanceOf('DateTime', $service->getUpdated());
+		$this->assertInternalType('integer', $entity->getId());
+		$this->assertInstanceOf('DateTime', $entity->getCreated());
+		$this->assertInstanceOf('DateTime', $entity->getUpdated());
 		
-		$entity = $this->model->getRepository('Entity\Currency')->find($service->getId());
+		$entity = $this->model->getRepository('Entity\Currency')->find($entity->getId());
 		$this->assertInstanceOf('Entity\Currency', $entity);
 
-		$service = new Services\Currency($this->model, $entity);
+		$service = new Service\Currency($this->model, $entity);
 
-		$this->assertSame('EUR', $service->getIso());
-		$this->assertSame(44.66, $service->getExchangeRate());
-		$this->assertSame(2, $service->getRounding());
+		$this->assertSame('EUR', $entity->getIso());
+		$this->assertSame(44.66, $entity->getExchangeRate());
+		$this->assertSame(2, $entity->getRounding());
 
-		$service->setIso('CZK');
-		$this->assertSame('CZK', $service->getIso());
+		$entity->setIso('CZK');
+		$this->assertSame('CZK', $entity->getIso());
 
-		$service->setRounding(14);
-		$this->assertSame(14, $service->getRounding());
+		$entity->setRounding(14);
+		$this->assertSame(14, $entity->getRounding());
 
 		$this->assertTrue($service->save());
 		$this->assertTrue($service->delete());
 
 		$this->setExpectedException('Doctrine\ORM\ORMException');
-		$entity = $this->model->getRepository('Entity\Currency')->find($service->getId());
+		$entity = $this->model->getRepository('Entity\Currency')->find($entity->getId());
 	}
 }

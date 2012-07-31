@@ -27,12 +27,13 @@ use Nette\Diagnostics\Debugger,
 	Nette\Application\Routers\RouteList,
 	Nella\Addons\Doctrine\Config\Extension;
 
+
 // Load Nette Framework
 require_once LIBS_DIR . '/Nette/loader.php';
 require_once LIBS_DIR . '/rado_functions.php';
 
 // Enable Nette\Debug for error visualisation & logging
-Debugger::enable();
+Debugger::enable(FALSE);
 Debugger::$strictMode = TRUE;
 $section = isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : null;
 
@@ -40,8 +41,6 @@ $section = isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : null;
 $configurator = new Nette\Config\Configurator;
 $configurator->setTempDirectory(TEMP_DIR);
 $configurator->enableDebugger(ROOT_DIR . '/log');
-
-// Enable RobotLoader - this will load all classes automatically
 $robotLoader = $configurator->createRobotLoader();
 $robotLoader->addDirectory(APP_DIR)
 	->addDirectory(LIBS_DIR)
@@ -57,20 +56,21 @@ $container = $configurator->createContainer();
 //---------------------------------------------------------------------------------//
 
 
-$service = new Services\Currency($container->model, new Entity\Currency);
-$service->setIso('EUR');
-$service->setExchangeRate(44.66);
-$service->setRounding(2);
+
+$entity = new Entity\Currency;
+$entity->setIso('EUR')
+	->setExchangeRate(44.66)
+	->setRounding(2);
+
+$container->createServiceCurrency($entity)->save();
+
+$entity = $container->model->getRepository('Entity\Currency')->find($entity->getId());
+$entity->setIso('CZK')
+	->setRounding(14)
+	->setRounding(987);
+
+$service = $container->createServiceCurrency($entity);
 $service->save();
-
-debug($service);
-
-$entity = $container->model->getRepository('Entity\Currency')->find($service->getId());
-$service = new Services\Currency($container->model, $entity);
-$service->setIso('CZK');
-$service->setRounding(14);
-$service->save();
-
 $service->delete();
 
 

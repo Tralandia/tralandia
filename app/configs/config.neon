@@ -92,6 +92,11 @@ common:
 
 		ticketFetcher: Extras\TicketFetcher( @ticketFetcherApi )
 
+	factories:
+		serviceCurrency:
+			parameters: [entity]
+			class: Service\Currency(@model, %entity%)
+
 production < common:
 
 console < common:

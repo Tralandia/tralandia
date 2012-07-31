@@ -2,9 +2,26 @@
 
 namespace Service;
 
+use Doctrine, Entity;
 
-class Currency extends \Service\BaseService {
-	
-	const MAIN_ENTITY_NAME = '\Entity\Currency';
-	
+/**
+ * Sluzba meny
+ * @author Branislav Vaculčiak
+ */
+class Currency extends Base {
+
+	/**
+	 * @param Doctrine\ORM\EntityManager
+	 * @param IEntity
+	 */
+	public function __construct(Doctrine\ORM\EntityManager $entityManager, Entity\Currency $entity) {
+		parent::__construct($entityManager, $entity);
+	}
+
+	/**
+	 * Ukazkovy proces
+	 */
+	public function process($a, $b) {
+		return $a + $b;
+	}
 }
