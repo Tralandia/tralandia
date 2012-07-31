@@ -63,6 +63,8 @@ $service->setExchangeRate(44.66);
 $service->setRounding(2);
 $service->save();
 
+debug($service);
+
 $entity = $container->model->getRepository('Entity\Currency')->find($service->getId());
 $service = new Services\Currency($container->model, $entity);
 $service->setIso('CZK');
@@ -70,3 +72,7 @@ $service->setRounding(14);
 $service->save();
 
 $service->delete();
+
+
+
+

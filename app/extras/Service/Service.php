@@ -8,7 +8,7 @@ use Nette, Doctrine, Extras, IteratorAggregate;
  * Vrstva sluzieb
  * @author Branislav Vaculčiak
  */
-class Service extends Nette\Object implements IService, IteratorAggregate {
+abstract class Service extends Nette\Object implements IService, IteratorAggregate {
 
 	/**
 	 * @var Doctrine\ORM\EntityManager

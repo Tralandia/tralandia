@@ -14,7 +14,7 @@ class CurrencyServiceTest extends PHPUnit_Framework_TestCase
 		$this->context = Nette\Environment::getContext();
 		$this->model = $this->context->model;
 	}
-
+/*
 	public function testCRUD() {
 		$service = new Services\Currency($this->model, new Entity\Currency);
 		$this->assertInstanceOf('Services\Currency', $service);
@@ -54,7 +54,7 @@ class CurrencyServiceTest extends PHPUnit_Framework_TestCase
 		$this->setExpectedException('Doctrine\ORM\ORMException');
 		$entity = $this->model->getRepository('Entity\Currency')->find($service->getId());
 	}
-
+*/
 	public function testProcess() {
 		$service = new Services\Currency($this->model, new Entity\Currency);
 		$this->assertSame(99, $service->process(44, 55));
