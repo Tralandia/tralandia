@@ -34,7 +34,7 @@ class EntityGeneratorPresenter extends BasePresenter {
 				$lastFolderName = $folderName;
 				$menu[] = array(
 					'link' => $this->link('EntityGenerator:forceAll', array('id' => 'Entity-'.$folderName)),
-					'name' => str_replace('Entity\\', '', $folderName).' <-- pregenerovat subory'
+					'name' => str_replace('Entity\\', '', $folderName).' &lt;-- pregenerovat subory'
 				);
 			}
 			$menu[] = array(
