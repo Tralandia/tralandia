@@ -8,7 +8,7 @@ use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="location_location", indexes={@ORM\index(name="name", columns={"name_id"}), @ORM\index(name="slug", columns={"slug"}), @ORM\index(name="parentId", columns={"parentId"}), @ORM\index(name="latitude", columns={"latitude"}), @ORM\index(name="longitude", columns={"longitude"})})
+ * @ORM\Table(name="location_location", indexes={@ORM\index(name="name", columns={"name_id"}), @ORM\index(name="slug", columns={"slug"}), @ORM\index(name="latitude", columns={"latitude"}), @ORM\index(name="longitude", columns={"longitude"})})
  * @EA\Service(name="\Service\Location\Location")
  * @EA\ServiceList(name="\Service\Location\LocationList")
  * @EA\Primary(key="id", value="slug")
@@ -43,10 +43,10 @@ class Location extends \Entity\BaseEntityDetails {
 	protected $slug;
 
 	/**
-	 * @var integer
-	 * @ORM\Column(type="integer", nullable=true)
+	 * @var Collection
+	 * @ORM\ManyToOne(targetEntity="Entity\Location\Location", cascade={"persist"})
 	 */
-	protected $parentId;
+	protected $parent;
 
 
 	/**

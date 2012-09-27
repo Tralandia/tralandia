@@ -77,7 +77,7 @@ common:
 				- $config(%acl%)
 				- setup()
 
-		environment: Extras\Environment
+		environment: Extras\Environment(@languageRepository, @locationRepository)
 
 
 		translator: Extras\Translator(@environment, @cacheStorage)
@@ -91,6 +91,10 @@ common:
 				- setMaxEmails(%ticketFetcherApi.maxEmails%)
 
 		ticketFetcher: Extras\TicketFetcher( @ticketFetcherApi )
+
+		# repositories
+		languageRepository: @model::getRepository('Entity\Dictionary\Language')
+		locationRepository: @model::getRepository('Entity\Location\Location')
 
 	factories:
 		serviceCurrency:

@@ -18,9 +18,9 @@ class Translator implements \Nette\Localization\ITranslator {
 	}
 	
 	public function translate($phrase, $node = NULL, $count = NULL, array $variables = NULL) {
-		$translation = $this->getTranslation($phrase);
+		//$translation = $this->getTranslation($phrase);
 
-		return $translation;
+		return $phrase;
 	}
 
 	public function getDefaultLanguage() {

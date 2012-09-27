@@ -222,11 +222,11 @@ class DavidPresenter extends BasePresenter {
 		debug($c);
 */
 
-		$a = \Services\CurrencyService::get(12);
-		$b = \Services\CurrencyService::get(12);
+		// $a = \Services\CurrencyService::get(12);
+		// $b = \Services\CurrencyService::get(12);
 
-		if($a === $b) debug('$a === $b', $a);
-		else debug('$a !== $b', $a, $b);
+		// if($a === $b) debug('$a === $b', $a);
+		// else debug('$a !== $b', $a, $b);
 
 
 /*		$list = new \Services\CurrencyList;
