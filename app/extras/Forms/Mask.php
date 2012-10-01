@@ -12,6 +12,43 @@ class Mask extends Nette\Object {
 	/** @var array */
 	protected $items = array();
 
+	/** type */
+	const TEXT = 'Extras\Forms\Items\Text';
+	
+	/** type */
+	const TEXTAREA = 'Extras\Forms\Items\TextArea';
+	
+	/** type */
+	const BUTTON = 'Extras\Forms\Items\Button';
+	
+	/** type */
+	const SUBMIT = 'Extras\Forms\Items\Submit';
+	
+	/** type */
+	const HIDDDEN = 'Extras\Forms\Items\Hidden';
+	
+	/** type */
+	const CHECKBOX = 'Extras\Forms\Items\Checkbox';
+	
+	/** type */
+	const RADIOLIST = 'Extras\Forms\Items\RadioList';
+	
+	/** type */
+	const SELECT = 'Extras\Forms\Items\Select';
+
+	/**
+	 * Pridanie polozky do masky
+	 * @param param
+	 * @param param
+	 * @param param
+	 * @return Mask
+	 */
+	public function add($type, $name, $label) {
+		$item = new $type($name, $label);
+		$this->addItem($item);
+		return $item;
+	}
+
 	/**
 	 * Pridanie polozky do masky
 	 * @param Items\Base

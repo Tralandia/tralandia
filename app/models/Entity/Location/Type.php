@@ -8,6 +8,7 @@ use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="\BaseRepository")
  * @ORM\Table(name="location_type", indexes={@ORM\index(name="slug", columns={"slug"})})
  * @EA\Service(name="\Service\Location\Type")
  * @EA\ServiceList(name="\Service\Location\TypeList")

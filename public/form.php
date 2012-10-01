@@ -4,22 +4,19 @@ require_once __DIR__ . '/bootstrap.php';
 
 
 $entity = new TestEntity;
-
-
-$item1 = new Extras\Forms\Items\Text('text', 'Text');
-$item1->setValueGetter(array($entity, 'getName'))
-	->setValueSetter(array($entity, 'setName'));
-
-$item2 = new Extras\Forms\Items\Select('selekt', 'Selektik');
-$item2->setValueGetter(array($entity, 'getCountry'))
-	->setValueSetter(array($entity, 'setCountry'))
-	->setItemsGetter(array($entity, 'getAllPaired'));
-
-$item3 = new Extras\Forms\Items\Submit('submit', 'Submit');
-
 $form = new Nette\Forms\Form;
 $mask = new Extras\Forms\Mask;
-$mask->addItems($item1, $item2, $item3);
+
+$mask->add(Extras\Forms\Mask::TEXT, 'text', 'Text')
+	->setValueGetter(array($entity, 'getName'))
+	->setValueSetter(array($entity, 'setName'))
+$mask->add(Extras\Forms\Mask::SELECT, 'selektik', 'Selekt')
+	->setValueGetter(array($entity, 'getCountry'))
+	->setValueSetter(array($entity, 'setCountry'))
+	->setItemsGetter(array($entity, 'getAllPaired'));
+$mask->add(Extras\Forms\Mask::SUBMIT, 'submit', 'Odoslať');
+
+
 $mask->extend($form);
 
 
