@@ -1,6 +1,6 @@
 <?php
 
-namespace Extras\Forms;
+namespace Extras\FormMask;
 
 use Nette;
 
@@ -13,28 +13,28 @@ class Mask extends Nette\Object {
 	protected $items = array();
 
 	/** type */
-	const TEXT = 'Extras\Forms\Items\Text';
+	const TEXT = 'Extras\FormMask\Items\Text';
 	
 	/** type */
-	const TEXTAREA = 'Extras\Forms\Items\TextArea';
+	const TEXTAREA = 'Extras\FormMask\Items\TextArea';
 	
 	/** type */
-	const BUTTON = 'Extras\Forms\Items\Button';
+	const BUTTON = 'Extras\FormMask\Items\Button';
 	
 	/** type */
-	const SUBMIT = 'Extras\Forms\Items\Submit';
+	const SUBMIT = 'Extras\FormMask\Items\Submit';
 	
 	/** type */
-	const HIDDDEN = 'Extras\Forms\Items\Hidden';
+	const HIDDDEN = 'Extras\FormMask\Items\Hidden';
 	
 	/** type */
-	const CHECKBOX = 'Extras\Forms\Items\Checkbox';
+	const CHECKBOX = 'Extras\FormMask\Items\Checkbox';
 	
 	/** type */
-	const RADIOLIST = 'Extras\Forms\Items\RadioList';
+	const RADIOLIST = 'Extras\FormMask\Items\RadioList';
 	
 	/** type */
-	const SELECT = 'Extras\Forms\Items\Select';
+	const SELECT = 'Extras\FormMask\Items\Select';
 
 	/**
 	 * Pridanie polozky do masky

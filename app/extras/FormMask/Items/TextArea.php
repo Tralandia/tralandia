@@ -1,13 +1,13 @@
 <?php
 
-namespace Extras\Forms\Items;
+namespace Extras\FormMask\Items;
 
 use Nette;
 
 /**
- * RadioList polozka masky
+ * TextArea polozka masky
  */
-class RadioList extends Select {
+class TextArea extends Base {
 
 	/**
 	 * Prida polozku do formulara
@@ -15,7 +15,7 @@ class RadioList extends Select {
 	 * @return Nette\Forms\IControl
 	 */
 	public function extend(Nette\Forms\Form $form) {
-		return $form->addRadioList($this->getName(), $this->getLabel(), $this->getItems())
+		return $form->addTextArea($this->getName(), $this->getLabel())
 			->setDefaultValue($this->getValue());
 	}
 }

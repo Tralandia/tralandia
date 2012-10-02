@@ -1,13 +1,13 @@
 <?php
 
-namespace Extras\Forms\Items;
+namespace Extras\FormMask\Items;
 
 use Nette;
 
 /**
- * Checkbox polozka masky
+ * RadioList polozka masky
  */
-class Checkbox extends Base {
+class RadioList extends Select {
 
 	/**
 	 * Prida polozku do formulara
@@ -15,7 +15,7 @@ class Checkbox extends Base {
 	 * @return Nette\Forms\IControl
 	 */
 	public function extend(Nette\Forms\Form $form) {
-		return $form->addCheckbox($this->getName(), $this->getLabel())
+		return $form->addRadioList($this->getName(), $this->getLabel(), $this->getItems())
 			->setDefaultValue($this->getValue());
 	}
 }

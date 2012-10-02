@@ -1,13 +1,13 @@
 <?php
 
-namespace Extras\Forms\Items;
+namespace Extras\FormMask\Items;
 
 use Nette;
 
 /**
- * TextArea polozka masky
+ * Checkbox polozka masky
  */
-class TextArea extends Base {
+class Checkbox extends Base {
 
 	/**
 	 * Prida polozku do formulara
@@ -15,7 +15,7 @@ class TextArea extends Base {
 	 * @return Nette\Forms\IControl
 	 */
 	public function extend(Nette\Forms\Form $form) {
-		return $form->addTextArea($this->getName(), $this->getLabel())
+		return $form->addCheckbox($this->getName(), $this->getLabel())
 			->setDefaultValue($this->getValue());
 	}
 }

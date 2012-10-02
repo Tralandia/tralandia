@@ -18,22 +18,22 @@ class WaccoPresenter extends BasePresenter {
 
 		$entity = $locationLocationRepo->find(2);
 		$form = new Nette\Application\UI\Form($this, 'form');
-		$mask = new Extras\Forms\Mask;
+		$mask = new Extras\FormMask\Mask;
 		$form->onSuccess[] = array($mask, 'process');
 
-		$mask->add(Extras\Forms\Mask::TEXT, 'text', 'Text')
-			->setValueGetter(array($this, 'getPhrase'), array($entity))
-			->setValueSetter(array($entity, 'setName'), array($entity);
-		$mask->add(Extras\Forms\Mask::SELECT, 'selektik', 'Selekt')
+		$mask->add(Extras\FormMask\Mask::TEXT, 'text', 'Text')
+			->setValueGetter(new Extras\Callback(array($this, 'getPhrase'), array($entity)))
+			->setValueSetter(array($entity, 'setName'), array($entity));
+		$mask->add(Extras\FormMask\Mask::SELECT, 'selektik', 'Selekt')
 			->setValueGetter(array($entity, 'getCountry'))
 			->setValueSetter(array($entity, 'setCountry'))
 			->setItemsGetter(array($locationTypeRepo, 'fetchPairs'), array('id', 'slug'));
-		$mask->add(Extras\Forms\Mask::SUBMIT, 'submit', 'Odoslať');
+		$mask->add(Extras\FormMask\Mask::SUBMIT, 'submit', 'Odoslať');
 
 		$mask->extend($form);
 	}
 
-	public function getPhrase() {
+	public function getPhrase($a) {
 		debug($a);
 		return "b";
 	}

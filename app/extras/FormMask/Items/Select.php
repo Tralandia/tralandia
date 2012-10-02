@@ -1,6 +1,6 @@
 <?php
 
-namespace Extras\Forms\Items;
+namespace Extras\FormMask\Items;
 
 use Nette;
 
@@ -10,15 +10,19 @@ use Nette;
 class Select extends Base {
 
 	/** @var array */
-	protected $items;
+	protected $itemsGetter;
+
+	/** @var array */
+	protected $itemsParams;
 
 	/**
 	 * Setter gettera poloziek
 	 * @param array
 	 * @return Select
 	 */
-	public function setItemsGetter($items) {
-		$this->items = $items;
+	public function setItemsGetter(array $items, array $params = null) {
+		$this->itemsGetter = $items;
+		$this->itemsParams = $params;
 		return $this;
 	}
 
@@ -27,7 +31,7 @@ class Select extends Base {
 	 * @return Select
 	 */
 	public function getItemsGetter() {
-		return $this->items;
+		return $this->itemsGetter;
 	}
 
 	/**

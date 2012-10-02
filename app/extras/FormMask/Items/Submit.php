@@ -1,6 +1,6 @@
 <?php
 
-namespace Extras\Forms\Items;
+namespace Extras\FormMask\Items;
 
 use Nette;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Extras\Forms\Items;
+namespace Extras\FormMask\Items;
 
 use Nette;
 
@@ -20,6 +20,12 @@ abstract class Base {
 
 	/** @var array */
 	protected $valueSetter;
+
+	/** @var array */
+	protected $valueGetterParams;
+
+	/** @var array */
+	protected $valueSetterParams;
 
 	/**
 	 * @param string
@@ -49,16 +55,18 @@ abstract class Base {
 	 * @return mixed
 	 */
 	public function getValue() {
-		return call_user_func($this->getValueGetter());
+		return call_user_func_array($this->getValueGetter(), $this->valueGetterParams);
 	}
 
 	/**
 	 * Setter gettera hodnost
 	 * @param array
+	 * @param array
 	 * @return Base
 	 */
-	public function setValueGetter(array $valueGetter) {
+	public function setValueGetter(array $valueGetter, array $params = null) {
 		$this->valueGetter = $valueGetter;
+		$this->valueGetterParams = $params;
 		return $this;
 	}
 
@@ -73,10 +81,12 @@ abstract class Base {
 	/**
 	 * Setter settera hodnost
 	 * @param array
+	 * @param array
 	 * @return Base
 	 */
-	public function setValueSetter(array $valueSetter) {
+	public function setValueSetter(array $valueSetter, array $params = null) {
 		$this->valueSetter = $valueSetter;
+		$this->valueSetterParams = $params;
 		return $this;
 	}
 
