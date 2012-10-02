@@ -4,6 +4,7 @@ namespace Extras\Forms;
 
 use Nette;
 use Extras;
+use Nette\Utils\Arrays;
 
 class MaskGenerator extends \Nette\Object {
 
@@ -18,8 +19,10 @@ class MaskGenerator extends \Nette\Object {
 
 	public function fillMask(Mask $mask) {
 		$fields = $this->config['form']['fields'];
+		d($fields);
 		foreach ($fields as $fieldName => $field) {
-			d($field);
+			$type = $this->getControlType($field);
+			//$mask->add(constant())
 		}
 
 		return $mask;
@@ -29,6 +32,14 @@ class MaskGenerator extends \Nette\Object {
 		$generator = new static($entityReflection, $config);
 		$mask = $generator->fillMask($mask);
 		return $mask;
+	}
+
+	protected function getControlType($field) {
+		$type = Arrays::get($field, array('control', 'type'), NULL);
+		if(!$type) {
+			throw new \Nette\InvalidArgumentException('Pre ' . $field['label'] . ' si nenastavil "control:type"');
+		}
+		return $type;
 	}
 
 }
