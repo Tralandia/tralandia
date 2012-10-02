@@ -22,7 +22,8 @@ class MaskGenerator extends \Nette\Object {
 		d($fields);
 		foreach ($fields as $fieldName => $field) {
 			$type = $this->getControlType($field);
-			//$mask->add(constant())
+			$itemType = $this->getMaskItemType($type);
+			//$mask->add(constant('Mask::'.))
 		}
 
 		return $mask;
@@ -40,6 +41,10 @@ class MaskGenerator extends \Nette\Object {
 			throw new \Nette\InvalidArgumentException('Pre ' . $field['label'] . ' si nenastavil "control:type"');
 		}
 		return $type;
+	}
+
+	protected function getMaskItemType($type) {
+
 	}
 
 }
