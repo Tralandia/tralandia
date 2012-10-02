@@ -101,6 +101,14 @@ common:
 			parameters: [entity]
 			class: Service\Currency(@model, %entity%)
 
+		formMaskGenerator:
+			parameters: [entityReflection, config]
+			factory: \Extras\Forms\MaskGenerator::factory(@formMask, %entityReflection%, %config%)
+
+		formMask:
+			class: \Extras\Forms\Mask
+
+
 production < common:
 
 console < common:

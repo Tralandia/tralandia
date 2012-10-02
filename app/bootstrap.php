@@ -44,6 +44,11 @@ $params = \Nette\Utils\Arrays::mergeTree(
 	$config->load($container->parameters['settingsDir'] . '/presenters/baseConfig.neon', 'common')
 );
 
+$c = $container->createFormMaskGenerator($reflection, $params);
+
+d($c);
+
+die();
 /* ---------------------------------------------------- */
 
 // @todo toto niekam schovat
