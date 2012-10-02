@@ -48,7 +48,7 @@ $c = $container->createFormMaskGenerator($reflection, $params);
 
 d($c);
 
-die();
+//die();
 /* ---------------------------------------------------- */
 
 // @todo toto niekam schovat

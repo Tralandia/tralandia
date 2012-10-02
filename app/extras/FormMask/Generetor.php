@@ -1,12 +1,12 @@
 <?php
 
-namespace Extras\Forms;
+namespace Extras\FormMask;
 
 use Nette;
 use Extras;
 use Nette\Utils\Arrays;
 
-class MaskGenerator extends \Nette\Object {
+class Generator extends Nette\Object {
 
 	protected $entityReflection;
 

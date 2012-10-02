@@ -103,10 +103,10 @@ common:
 
 		formMaskGenerator:
 			parameters: [entityReflection, config]
-			factory: \Extras\Forms\MaskGenerator::factory(@formMask, %entityReflection%, %config%)
+			factory: Extras\FormMask\Generator::factory(@formMask, %entityReflection%, %config%)
 
 		formMask:
-			class: \Extras\Forms\Mask
+			class: Extras\FormMask\Mask
 
 
 production < common:
