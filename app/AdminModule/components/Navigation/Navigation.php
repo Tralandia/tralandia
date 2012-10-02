@@ -4,7 +4,7 @@ namespace AdminModule\Components;
 
 use BaseModule\Components\BaseControl,
 	Nette\ArrayHash,
-	Tra\Utils\Arrays,
+	Nette\Utils\Arrays,
 	Tra\Utils\Strings;
 
 class Navigation extends BaseControl {
@@ -40,7 +40,8 @@ class Navigation extends BaseControl {
 				$value->label = ucfirst($key);
 			}
 			if(isset($value->link)) {
-				$value->href = $this->presenter->link($value->link,(array) Arrays::get($value, 'linkArgs', NULL));
+				//$value->href = $this->presenter->link($value->link,(array) Arrays::get($value, 'linkArgs', NULL));
+				$value->href = '#'; //TODO: upravit generovanie liniek
 			} else {
 				$value->href = '#';
 			}

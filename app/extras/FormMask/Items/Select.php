@@ -2,33 +2,29 @@
 
 namespace Extras\FormMask\Items;
 
-use Nette;
+use Nette, Extras;
 
 /**
  * Select polozka masky
  */
 class Select extends Base {
 
-	/** @var array */
+	/** @var Extras\Callback */
 	protected $itemsGetter;
-
-	/** @var array */
-	protected $itemsParams;
 
 	/**
 	 * Setter gettera poloziek
-	 * @param array
+	 * @param Extras\Callback
 	 * @return Select
 	 */
-	public function setItemsGetter(array $items, array $params = null) {
+	public function setItemsGetter(Extras\Callback $items) {
 		$this->itemsGetter = $items;
-		$this->itemsParams = $params;
 		return $this;
 	}
 
 	/**
 	 * Getter gettera poloziek
-	 * @return Select
+	 * @return Extras\Callback
 	 */
 	public function getItemsGetter() {
 		return $this->itemsGetter;
@@ -36,10 +32,13 @@ class Select extends Base {
 
 	/**
 	 * Vrati vsetky polozky
-	 * @return array
+	 * @return mixed
 	 */
 	public function getItems() {
-		return call_user_func($this->getItemsGetter());
+		if (!is_callable($this->getItemsGetter())) {
+			throw new InvalidStateException("Nebol zadaný callback gettera poloziek.");
+		}
+		return $this->getItemsGetter()->invoke();
 	}
 
 	/**
@@ -47,7 +46,7 @@ class Select extends Base {
 	 * @param Nette\Forms\Form
 	 * @return Nette\Forms\IControl
 	 */
-	public function extend(Nette\Forms\Form $form) {
+	public function extend(Nette\Forms\Form $form) {debug($this->getValue());
 		return $form->addSelect($this->getName(), $this->getLabel(), $this->getItems())
 			->setDefaultValue($this->getValue());
 	}

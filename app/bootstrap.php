@@ -35,6 +35,7 @@ $container = $configurator->createContainer();
 
 /* ---------------------------------------------------- */
 
+/*
 $reflection = new Extras\Reflection\Entity\ClassType('\Entity\Location\Location');
 
 $config = new \Nette\Config\Loader;
@@ -48,7 +49,8 @@ $c = $container->createFormMaskGenerator($reflection, $params);
 
 d($c);
 
-//die();
+die();
+*/
 /* ---------------------------------------------------- */
 
 // @todo toto niekam schovat

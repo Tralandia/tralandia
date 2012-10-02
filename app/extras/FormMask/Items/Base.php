@@ -2,7 +2,7 @@
 
 namespace Extras\FormMask\Items;
 
-use Nette;
+use Nette, Extras;
 
 /**
  * Abstraktna trieda poloziek masky
@@ -15,17 +15,11 @@ abstract class Base {
 	/** @var string */
 	protected $label = null;
 
-	/** @var array */
+	/** @var Extras\Callback */
 	protected $valueGetter;
 
-	/** @var array */
+	/** @var Extras\Callback */
 	protected $valueSetter;
-
-	/** @var array */
-	protected $valueGetterParams;
-
-	/** @var array */
-	protected $valueSetterParams;
 
 	/**
 	 * @param string
@@ -55,24 +49,25 @@ abstract class Base {
 	 * @return mixed
 	 */
 	public function getValue() {
-		return call_user_func_array($this->getValueGetter(), $this->valueGetterParams);
+		if (!is_callable($this->getValueGetter())) {
+			throw new InvalidStateException("Nebol zadaný callback gettera hodnot.");
+		}
+		return $this->getValueGetter()->invoke();
 	}
 
 	/**
 	 * Setter gettera hodnost
-	 * @param array
-	 * @param array
+	 * @param Extras\Callback
 	 * @return Base
 	 */
-	public function setValueGetter(array $valueGetter, array $params = null) {
+	public function setValueGetter(Extras\Callback $valueGetter) {
 		$this->valueGetter = $valueGetter;
-		$this->valueGetterParams = $params;
 		return $this;
 	}
 
 	/**
 	 * Getter gettera hodnot
-	 * @return array
+	 * @return Extras\Callback
 	 */
 	public function getValueGetter() {
 		return $this->valueGetter;
@@ -80,19 +75,17 @@ abstract class Base {
 
 	/**
 	 * Setter settera hodnost
-	 * @param array
-	 * @param array
+	 * @param Extras\Callback
 	 * @return Base
 	 */
-	public function setValueSetter(array $valueSetter, array $params = null) {
+	public function setValueSetter(Extras\Callback $valueSetter) {
 		$this->valueSetter = $valueSetter;
-		$this->valueSetterParams = $params;
 		return $this;
 	}
 
 	/**
 	 * Getter settera hodnot
-	 * @return array
+	 * @return Extras\Callback
 	 */
 	public function getValueSetter() {
 		return $this->valueSetter;
