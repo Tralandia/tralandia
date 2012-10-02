@@ -2,7 +2,7 @@
 
 namespace AdminModule;
 
-use Nette, Extras;
+use Nette, Extras, Service;
 
 class WaccoPresenter extends BasePresenter {
 
@@ -32,9 +32,14 @@ class WaccoPresenter extends BasePresenter {
 		$mask->extend($form);
 		$this->template->form = $form;
 	}
-
-	public function getPhrase($entity) {
+/*
+	public function fetchPairs($entity) {
 		return $entity->name->translations->first()->translation;
+	}
+*/
+	public function getPhrase($entity) {
+		$sPhrase = new Service\Dictionary\Phrase($this->context->model, $entity->name);
+		return $sPhrase->getTranslate($this->context->environment->getLanguage());
 	}
 
 	public function getType($entity) {
