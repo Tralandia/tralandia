@@ -8,7 +8,7 @@ use Nette\Diagnostics\Debugger,
 
 
 // Load Nette Framework
-require_once LIBS_DIR . '/Nette/loader.php';
+require_once LIBS_DIR . '/Nette/nette.min.php';
 require_once LIBS_DIR . '/rado_functions.php';
 
 // Enable Nette\Debug for error visualisation & logging
@@ -40,10 +40,15 @@ $reflection = new Extras\Reflection\Entity\ClassType('\Entity\Location\Location'
 $config = new \Nette\Config\Loader;
 
 $params = \Nette\Utils\Arrays::mergeTree(
-	$config->load($container->parameters['settingsDir'] . '/presenters/LocationLocation.neon', 'common'),
+	$config->load($container->parameters['settingsDir'] . '/presenters/Currency.neon', 'common'),
 	$config->load($container->parameters['settingsDir'] . '/presenters/baseConfig.neon', 'common')
 );
 
+$c = $container->createFormMaskGenerator($reflection, $params);
+
+d($c);
+
+die();
 /* ---------------------------------------------------- */
 
 // @todo toto niekam schovat

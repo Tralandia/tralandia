@@ -36,6 +36,9 @@ class Mask extends Nette\Object {
 	/** type */
 	const SELECT = 'Extras\FormMask\Items\Select';
 
+	/** type */
+	const PRICE = 'Extras\Forms\Items\Price';
+
 	/**
 	 * Pridanie polozky do masky
 	 * @param param

@@ -34,12 +34,12 @@ common:
 
 	form:
 		fields:
-			name:
-				label: Name
-				control:
-					type: phrase
-				addClass: 'myPhraseClass'
-				inlineEditing: DictionaryPhrase:edit
+			# name:
+				# label: Name
+				# control:
+				# 	type: phrase
+				# addClass: 'myPhraseClass'
+				# inlineEditing: DictionaryPhrase:edit
 			iso:
 				label: Iso
 				control:
