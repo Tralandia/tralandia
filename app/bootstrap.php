@@ -33,26 +33,6 @@ $configurator->onCompile[] = callback('Extras\PresenterGenerator', 'generate');
 $container = $configurator->createContainer();
 
 
-/* ---------------------------------------------------- */
-
-/*
-$reflection = new Extras\Reflection\Entity\ClassType('\Entity\Location\Location');
-
-$config = new \Nette\Config\Loader;
-
-$params = \Nette\Utils\Arrays::mergeTree(
-	$config->load($container->parameters['settingsDir'] . '/presenters/Currency.neon', 'common'),
-	$config->load($container->parameters['settingsDir'] . '/presenters/baseConfig.neon', 'common')
-);
-
-$c = $container->createFormMaskGenerator($reflection, $params);
-
-d($c);
-
-die();
-*/
-/* ---------------------------------------------------- */
-
 // @todo toto niekam schovat
 require_once APP_DIR . '/extras/EntityAnnotation.php';
 //Extras\Models\Service::$translator = $container->translator;
