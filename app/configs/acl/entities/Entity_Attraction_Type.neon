@@ -8,9 +8,10 @@ name_show:
 	telmarkoperator: deny
 	manager: deny
 	admin: deny
+	superadmin: deny
 	
 name_edit:
-	guest: deny
+	guest: allow
 	potentialowner: allow
 	owner: deny
 	translator: deny
@@ -19,28 +20,31 @@ name_edit:
 	telmarkoperator: deny
 	manager: deny
 	admin: deny
+	superadmin: deny
 	
 id_show:
 	guest: allow
 	potentialowner: deny
-	owner: deny
+	owner: allow
 	translator: deny
 	assistant: deny
 	telmarkmanager: deny
 	telmarkoperator: deny
 	manager: deny
 	admin: deny
+	superadmin: deny
 	
 id_edit:
-	guest: deny
+	guest: allow
 	potentialowner: allow
 	owner: deny
-	translator: deny
-	assistant: deny
-	telmarkmanager: deny
+	translator: allow
+	assistant: allow
+	telmarkmanager: allow
 	telmarkoperator: deny
 	manager: deny
 	admin: deny
+	superadmin: deny
 	
 oldId_show:
 	guest: allow
@@ -52,9 +56,10 @@ oldId_show:
 	telmarkoperator: deny
 	manager: deny
 	admin: deny
+	superadmin: deny
 	
 oldId_edit:
-	guest: deny
+	guest: allow
 	potentialowner: allow
 	owner: deny
 	translator: deny
@@ -63,6 +68,7 @@ oldId_edit:
 	telmarkoperator: deny
 	manager: deny
 	admin: deny
+	superadmin: deny
 	
 created_show:
 	guest: allow
@@ -74,9 +80,10 @@ created_show:
 	telmarkoperator: deny
 	manager: deny
 	admin: deny
+	superadmin: deny
 	
 created_edit:
-	guest: deny
+	guest: allow
 	potentialowner: allow
 	owner: deny
 	translator: deny
@@ -85,6 +92,7 @@ created_edit:
 	telmarkoperator: deny
 	manager: deny
 	admin: deny
+	superadmin: deny
 	
 updated_show:
 	guest: allow
@@ -96,9 +104,10 @@ updated_show:
 	telmarkoperator: deny
 	manager: deny
 	admin: deny
+	superadmin: deny
 	
 updated_edit:
-	guest: deny
+	guest: allow
 	potentialowner: allow
 	owner: deny
 	translator: deny
@@ -107,3 +116,4 @@ updated_edit:
 	telmarkoperator: deny
 	manager: deny
 	admin: deny
+	superadmin: deny

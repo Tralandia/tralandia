@@ -1,6 +1,9 @@
 <?php
 
-class ArticleRepository extends \BaseRepository {
+namespace Repository;
+
+
+class ArticleRepository extends BaseRepository {
 
 	public function getDataSource() {
 		$query = $this->_em->createQueryBuilder();

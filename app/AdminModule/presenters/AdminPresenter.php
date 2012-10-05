@@ -35,6 +35,7 @@ class AdminPresenter extends BasePresenter {
 	}
 
 	public function renderList() {
+		$this->template->settings = $this->settings;
 		$this->template->showAddNewButton = $this->settings->params->addNewButton;
 		$this->template->directCreating = !isset($this->settings->params->fields);
 	}

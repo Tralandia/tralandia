@@ -12,6 +12,8 @@ class Acl extends Permission {
 	protected $cache;
 	protected $config;
 
+	public $roleRepository;
+
 	public function setCache(Cache $cache) {
 		$this->cache = $cache;
 	}
@@ -60,7 +62,7 @@ class Acl extends Permission {
 
 		$data = array();
 		// @todo porusuje to DI!
-		$data['roles'] = \Service\User\RoleList::forAcl();
+		$data['roles'] = $this->roleRepository->forAcl();
 		foreach ($files as $filepath => $file) {
 			//debug($file);
 			$baseName = $file->getBasename('.neon');

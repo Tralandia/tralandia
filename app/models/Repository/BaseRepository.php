@@ -1,6 +1,10 @@
 <?php
 
-class BaseRepository extends Doctrine\ORM\EntityRepository {
+namespace Repository;
+
+use Doctrine\ORM\EntityRepository;
+
+class BaseRepository extends EntityRepository {
 	
 	public function persist($entity) {
 		$this->_em->persist($entity);

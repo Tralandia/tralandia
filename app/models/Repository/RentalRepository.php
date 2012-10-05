@@ -1,6 +1,7 @@
 <?php
+namespace Repository;
 
-class RentalRepository extends \BaseRepository {
+class RentalRepository extends BaseRepository {
 
 	public function getDataSource() {
 		$query = $this->_em->createQueryBuilder();

@@ -74,6 +74,7 @@ common:
 			class: Security\Acl
 			setup:
 				# - $cache(@aclCache)
+				- $roleRepository(@roleRepository)
 				- $config(%acl%)
 				- setup()
 
@@ -95,6 +96,7 @@ common:
 		# repositories
 		languageRepository: @model::getRepository('Entity\Dictionary\Language')
 		locationRepository: @model::getRepository('Entity\Location\Location')
+		roleRepository: @model::getRepository('Entity\User\Role')
 
 	factories:
 		serviceCurrency:

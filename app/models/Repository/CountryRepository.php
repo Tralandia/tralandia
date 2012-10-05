@@ -1,5 +1,7 @@
 <?php
 
-class CountryRepository extends \BaseRepository {
+namespace Repository;
+
+class CountryRepository extends BaseRepository {
 
 }

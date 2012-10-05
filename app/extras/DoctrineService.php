@@ -19,6 +19,7 @@ class DoctrineService {
 		} else {
 			$cache = new \Doctrine\Common\Cache\ApcCache;
 		}
+		$cache->deleteAll();
 
 		$config = new Doctrine\ORM\Configuration;
 		$config->setMetadataCacheImpl($cache);

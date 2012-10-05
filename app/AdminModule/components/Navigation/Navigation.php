@@ -40,8 +40,8 @@ class Navigation extends BaseControl {
 				$value->label = ucfirst($key);
 			}
 			if(isset($value->link)) {
-				//$value->href = $this->presenter->link($value->link,(array) Arrays::get($value, 'linkArgs', NULL));
-				$value->href = '#'; //TODO: upravit generovanie liniek
+				$linkArgs = (isset($value->linkArgs) ? $value->linkArgs : array());
+				$value->href = $this->presenter->link($value->link, $linkArgs);
 			} else {
 				$value->href = '#';
 			}

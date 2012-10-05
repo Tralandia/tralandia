@@ -6,19 +6,28 @@
 
 	<table class="table permissionTable">
 		<tr>
+			<th>Property</th>
 			<th>Actions</th>
 			{foreach $roles as $roleId => $role}
 				<th>{$role}</th>
 			{/foreach}
 		</tr>
 		<tr>
-			<th>Change all</th>
+			<th rowspan="2">Change all</th>
+			<td>show</td>
 			{foreach $roles as $roleId => $role}
 				<td>
 					<select class="input-small change-col" type="show" role="{$role}">
 						<option value="deny">No way!</option>
 						<option value="allow">Yes</option>
 					</select>
+				</td>
+			{/foreach}
+		</tr>
+		<tr>
+			<td>edit</td>
+			{foreach $roles as $roleId => $role}
+				<td>
 					<select class="input-small change-col" type="edit" role="{$role}">
 						<option value="deny">No way!</option>
 						<option value="allow">Yes</option>
@@ -26,15 +35,25 @@
 				</td>
 			{/foreach}
 		</tr>
-		<tr n:foreach="$entityActions as $property">
-			<th>{$property->name}</th>
-			{foreach $roles as $role}
-				<td>
-					{$form[$property->name.'_show']->getComponent($role)->control}
-					{$form[$property->name.'_edit']->getComponent($role)->control}
-				</td>
-			{/foreach}
-		</tr>
+		{foreach $entityActions as $property}
+			<tr>
+				<th rowspan="2">{$property->name}</th>
+				<td>show</td>
+				{foreach $roles as $role}
+					<td>
+						{$form[$property->name.'_show']->getComponent($role)->control}
+					</td>
+				{/foreach}
+			</tr>
+			<tr>
+				<td>edit</td>
+				{foreach $roles as $role}
+					<td>
+						{$form[$property->name.'_edit']->getComponent($role)->control}
+					</td>
+				{/foreach}
+			</tr>
+		{/foreach}
 	</table>
 
 	{input submit, class=> 'btn btn-success'}

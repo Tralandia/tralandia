@@ -6,6 +6,7 @@ use Nette\ArrayHash;
 use Nette\Utils\Finder;
 use Nette\Utils\Strings;
 use Nette\Reflection\ClassType;
+use Repository as R;
 
 class AclPresenter extends BasePresenter {
 
@@ -17,9 +18,19 @@ class AclPresenter extends BasePresenter {
 
 	protected $roles;
 
+	protected $roleRepository;
+
+	// public function injectRepositories(R\RoleRepository $r) {
+	// 	if ($this->roleRepository) {
+	// 		throw new Nette\InvalidStateException('Repositry has already been set');
+	// 	}
+	// 	$this->roleRepository = $r;
+	// }
+
 	protected function startup() {
 		parent::startup();
-		$this->roles = \Service\User\RoleList::forAcl();
+		$this->roleRepository = $this->context->roleRepository;
+		$this->roles = $this->roleRepository->forAcl();
 	}
 
 	protected function getPresenterList() {
@@ -89,7 +100,6 @@ class AclPresenter extends BasePresenter {
 	}
 
 	protected function getEntityAclConfig($name) {
-		debug($name);
 		$filename = $this->context->parameters['acl']['entitiesDir'] . '/' . $name . '.neon';
 		if(!is_file($filename)) return array();
 		$config = new \Nette\Config\Loader;
