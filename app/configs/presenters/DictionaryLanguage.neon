@@ -1,34 +1,10 @@
 common:
-	service: Service\Dictionary\Language
+	repository: languageRepository
 	title: Dictionary / Language
 	h1: 'Dictionary / Language -> %name%'
 	grid:
-		itemsPerPage: 200
-		columns:
-			id:
-				label: ID
-				mapper: e.id
-			supported:
-				label: Supported
-				mapper: e.supported
-				cellStyle: 'text-align: left;'
-			iso:
-				label: Iso
-				mapper: e.iso
-				callback: {class: \Nette\Utils\Strings, method: upper, params: e.iso}
-			name:
-				label: Name
-				mapper: e.id
-				callback: {class: %this%, method: getAttributeForGrid, params: [name]}
-			primarySingular:
-				label: Primary Singular
-				mapper: e.primarySingular
-			primaryPlural:
-				label: Primary Plural
-				mapper: e.primaryPlural
-			primaryGender:
-				label: Primary Gender
-				mapper: e.primaryGender		
+		class: LanguagesGrid
+
 	form:
 		fields:
 			name:

@@ -1,13 +1,13 @@
 <?php
 
-namespace Repository;
+namespace Repository\User;
 
 /**
  * RoleRepository class
  *
  * @author Dávid Ďurika
  */
-class RoleRepository extends BaseRepository {
+class RoleRepository extends \Repository\BaseRepository {
 
 	public function forAcl() {
 		return $this->fetchPairs('id', 'slug');

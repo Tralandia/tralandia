@@ -95,6 +95,7 @@ common:
 
 		# repositories
 		languageRepository: @model::getRepository('Entity\Dictionary\Language')
+		phraseTypeRepository: @model::getRepository('Entity\Dictionary\Type')
 		locationRepository: @model::getRepository('Entity\Location\Location')
 		roleRepository: @model::getRepository('Entity\User\Role')
 

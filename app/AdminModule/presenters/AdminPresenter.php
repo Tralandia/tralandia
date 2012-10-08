@@ -25,9 +25,9 @@ class AdminPresenter extends BasePresenter {
 		
 		$this->settings = $this->getService('settings');
 		$this->template->settings = $this->settings;
-		$this->serviceName = $this->settings->serviceClass;
-		$this->serviceListName = $this->settings->serviceListClass;
-		$this->reflector = new Reflector($this->settings, $this);
+		//$this->serviceName = $this->settings->serviceClass;
+		//$this->serviceListName = $this->settings->serviceListClass;
+		//$this->reflector = new Reflector($this->settings, $this);
 	}
 	
 	public function getMainServiceName() {
@@ -133,7 +133,13 @@ class AdminPresenter extends BasePresenter {
 		return $text;
 	}
 
-
+	protected function createComponentDataGrid() {
+		$repositoryName = $this->settings->params->repository;
+		$reposiory = $this->context->{$repositoryName};
+		d($reposiory);
+		$gridClass = '\\AdminModule\\Grids\\'.$this->settings->params->grid->class;
+		return new $gridClass($reposiory, $this->settings);
+	}
 
 /*	public function handleImageUpload(\Nette\Http\FileUpload $file) {
 		//debug($file);

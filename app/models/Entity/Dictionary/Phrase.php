@@ -28,6 +28,12 @@ class Phrase extends \Entity\BaseEntityDetails {
 	protected $ready = FALSE; 
 
 	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean")
+	 */
+	protected $corrected = FALSE; 
+
+	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Type", cascade={"persist"})
 	 */

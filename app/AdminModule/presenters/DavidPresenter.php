@@ -198,43 +198,9 @@ class DavidPresenter extends BasePresenter {
 
 	public function actionList() {
 
+		
 
-		//\Services\CurrencyService::preventFlush();
-/*
-		for ($i = 0; $i < 2; $i++) {
-			$service = \Services\CurrencyService::get();
-			$service->iso = \Nette\Utils\Strings::random(5, 'A-Z');
-			$service->exchangeRate = 1;
-			$service->decimalPlaces = 1;
-			$service->rounding = 'r';
-			$service->created = new \Nette\DateTime;
-			$service->updated = new \Nette\DateTime;
-			$service->save();
-		}
-*/
-		//\Services\CurrencyService::flush();
-
-
-/*		$n = new \Services\CurrencyService;
-		foreach ($n->getDataSource()->getQuery()->getResult() as $row) {
-			$c = \Services\CurrencyService::get($row);
-		}
-		debug($c);
-*/
-
-		// $a = \Services\CurrencyService::get(12);
-		// $b = \Services\CurrencyService::get(12);
-
-		// if($a === $b) debug('$a === $b', $a);
-		// else debug('$a !== $b', $a, $b);
-
-
-/*		$list = new \Services\CurrencyList;
-		foreach ($list as $entity) {
-			$c = \Services\CurrencyService::get($entity);
-			//debug($entity, $c);
-		}
-*/	}
+	}
 	
 	public function renderAdd() {
 		$this->template->form = $this->getComponent('form');

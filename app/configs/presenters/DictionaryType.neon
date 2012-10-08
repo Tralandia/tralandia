@@ -1,41 +1,10 @@
 common:
-	service: Service\Dictionary\Type
+	repository: phraseTypeRepository
 	title: Phrase Type
 	h1: 'Phrase Type -> %entityName% (%entityAttribute%)'
 	grid:
-		columns:
-			id:
-				label: ID
-				mapper: e.id
-			entityName:
-				label: Entity Name
-				mapper: e.entityName
-			entityAttribute:
-				label: Attribute
-				mapper: e.entityAttribute
-			translationLevelRequirement:
-				label: Level
-				mapper: e.translationLevelRequirement
-				cellStyle: text-align:right;
-				headerStyle: text-align:right;
-			pluralsRequired:
-				label: Plurals
-				mapper: e.pluralsRequired
-			genderVariationsRequired:
-				label: Gender Variations
-				mapper: e.genderVariationsRequired
-			locativesRequired:
-				label: Locative
-				mapper: e.locativesRequired
-			genderRequired:
-				label: Gender
-				mapper: e.genderRequired
-			positionRequired:
-				label: Position
-				mapper: e.positionRequired
-			checkingRequired:
-				label: Checking
-				mapper: e.checkingRequired
+		class: PhrasesTypesGrid
+
 	form:
 		fields:
 			name:

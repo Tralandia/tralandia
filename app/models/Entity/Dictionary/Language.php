@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Repository\Dictionary\LanguageRepository")
  * @ORM\Table(name="dictionary_language", indexes={@ORM\index(name="iso", columns={"iso"}), @ORM\index(name="supported", columns={"supported"})})
  * @EA\Service(name="\Service\Dictionary\Language")
  * @EA\ServiceList(name="\Service\Dictionary\LanguageList")

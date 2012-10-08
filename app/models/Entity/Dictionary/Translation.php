@@ -32,6 +32,7 @@ class Translation extends \Entity\BaseEntity {
 	 * @var text
 	 * @ORM\Column(type="text", nullable=true)
 	 */
+	# @todo toto vyhodit!
 	protected $translation;
 
 	/**
