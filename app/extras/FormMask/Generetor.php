@@ -20,6 +20,7 @@ class Generator extends Nette\Object {
 		$this->configurator = $configurator;
 		$this->mask = $mask;
 		
+
 		//debug($this->entityReflection);	
 	}
 
@@ -33,6 +34,7 @@ class Generator extends Nette\Object {
 				->setValueGetter(new Extras\Callback($this->entity, $this->getterMethodName($field->getName()), array($this->entity)))
 				->setValueSetter(new Extras\Callback($this->entity, $this->setterMethodName($field->getName()), array($this->entity)));
 		}
+		$this->mask->add(Extras\FormMask\Mask::SUBMIT, 'submit', 'Odoslať');
 	}
 
 	private function setterMethodName($name) {

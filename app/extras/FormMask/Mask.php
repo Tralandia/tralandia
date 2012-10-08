@@ -12,6 +12,12 @@ class Mask extends Nette\Object {
 	/** @var array */
 	protected $items = array();
 
+	/** @var array */
+	public $onBeforeProcess = array();
+
+	/** @var array */
+	public $onAfterProcess = array();
+
 	/** type */
 	const TEXT = 'Extras\FormMask\Items\Text';
 	
@@ -96,11 +102,13 @@ class Mask extends Nette\Object {
 	 * @param Nette\Forms\Form
 	 */
 	public function process(Nette\Forms\Form $form) {
+		$this->onBeforeProcess($form);
 		foreach ($this->items as $item) {
 			if ($item->getValueSetter()) {
 				$value = $form->getComponent($item->getName())->getValue();
 				$item->getValueSetter()->invokeArgs(array($value));
 			}
 		}
+		$this->onAfterProcess($form);
 	}
 }
