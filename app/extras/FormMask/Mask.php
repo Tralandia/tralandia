@@ -99,7 +99,7 @@ class Mask extends Nette\Object {
 		foreach ($this->items as $item) {
 			if ($item->getValueSetter()) {
 				$value = $form->getComponent($item->getName())->getValue();
-				call_user_func($item->getValueSetter(), $value);
+				$item->getValueSetter()->invokeArgs(array($value));
 			}
 		}
 	}

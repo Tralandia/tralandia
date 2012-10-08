@@ -46,13 +46,13 @@ abstract class Field extends Nette\Object {
 	 * @return string
 	 */
 	public function getDescription() {
-		return null;
+		return "";
 	}
 
 	/**
 	 * @return string
 	 */
 	public function getClass() {
-		return null;
+		return "";
 	}
 }

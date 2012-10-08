@@ -36,8 +36,6 @@ class Configurator extends Nette\Object {
 	public function __construct($file, $section = 'common') {
 		$loader = new \Nette\Config\Loader;
 		$this->config = Nette\ArrayHash::from($loader->load($file, $section));
-
-
 		$this->buildForm();
 	}
 

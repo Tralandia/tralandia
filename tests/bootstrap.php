@@ -9,10 +9,11 @@ define('TEMP_DIR', ROOT_DIR . '/temp');
 define('LIBS_DIR', ROOT_DIR . '/libs');
 define('APP_DIR', ROOT_DIR . '/app');
 define('TESTS_DIR', ROOT_DIR . '/tests');
+define('INCLUDE_DIR', TESTS_DIR . '/include');
 $_SERVER['HTTP_HOST'] = 'localhost';
 
 // Load Nette Framework
-require LIBS_DIR . '/Nette/loader.php';
+require LIBS_DIR . '/Nette/nette.min.php';
 
 // Enable Nette\Debug for error visualisation & logging
 Debugger::enable(FALSE);
