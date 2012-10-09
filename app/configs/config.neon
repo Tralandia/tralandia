@@ -52,6 +52,7 @@ common:
 	includes:
 		- webLoader.neon
 		- acl/acl.neon
+		- repositories.neon
 
 	services:
 		console: @doctrine.console
@@ -74,11 +75,11 @@ common:
 			class: Security\Acl
 			setup:
 				# - $cache(@aclCache)
-				- $roleRepository(@roleRepository)
+				- $roleRepository(@userRoleRepository)
 				- $config(%acl%)
 				- setup()
 
-		environment: Extras\Environment(@languageRepository, @locationRepository)
+		environment: Extras\Environment(@dictionaryLanguageRepository, @locationRepository)
 
 
 		translator: Extras\Translator(@environment, @cacheStorage)
@@ -92,12 +93,6 @@ common:
 				- setMaxEmails(%ticketFetcherApi.maxEmails%)
 
 		ticketFetcher: Extras\TicketFetcher( @ticketFetcherApi )
-
-		# repositories
-		languageRepository: @model::getRepository('Entity\Dictionary\Language')
-		phraseTypeRepository: @model::getRepository('Entity\Dictionary\Type')
-		locationRepository: @model::getRepository('Entity\Location\Location')
-		roleRepository: @model::getRepository('Entity\User\Role')
 
 	factories:
 		serviceCurrency:

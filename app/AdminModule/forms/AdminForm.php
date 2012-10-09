@@ -15,6 +15,11 @@ class AdminForm extends Form {
 		return $this;
 	}
 
+	protected function buildForm() {
+
+	}
+
+
 	public function getEnvironment() {
 		return $this->environment;
 	}

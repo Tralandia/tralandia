@@ -2,6 +2,7 @@
 
 namespace BaseModule\Forms;
 
-class BaseForm extends \CoolForm {
+abstract class BaseForm extends \CoolForm {
+
 
 }

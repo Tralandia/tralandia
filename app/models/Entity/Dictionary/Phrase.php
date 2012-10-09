@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Repository\Dictionary\PhraseRepository")
  * @ORM\Table(name="dictionary_phrase", indexes={@ORM\index(name="ready", columns={"ready"})})
  * @EA\Service(name="\Service\Dictionary\Phrase")
  * @EA\ServiceList(name="\Service\Dictionary\PhraseList")
