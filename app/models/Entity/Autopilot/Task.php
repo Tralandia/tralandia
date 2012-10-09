@@ -131,6 +131,12 @@ class Task extends \Entity\BaseEntityDetails {
 	protected $actions;
 
 	/**
+	 * @var datetime
+	 * @ORM\Column(type="datetime")
+	 */
+	protected $completed;
+
+	/**
 	 * @var json
 	 * @ORM\Column(type="json", nullable=true)
 	 */

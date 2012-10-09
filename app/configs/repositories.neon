@@ -11,10 +11,6 @@ services:
 		class: Repository\Autopilot\TaskRepository
 		factory: @model::getRepository('Entity\Autopilot\Task')
 
-	autopilotTaskArchivedRepository:
-		class: Repository\Autopilot\TaskArchivedRepository
-		factory: @model::getRepository('Entity\Autopilot\TaskArchived')
-
 	autopilotTypeRepository:
 		class: Repository\Autopilot\TypeRepository
 		factory: @model::getRepository('Entity\Autopilot\Type')

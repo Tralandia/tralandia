@@ -53,12 +53,6 @@ class Type extends \Entity\BaseEntityDetails {
 	protected $validation;
 
 	/**
-	 * @var integer
-	 * @ORM\Column(type="integer", nullable=true)
-	 */
-	protected $stackable;
-
-	/**
 	 * @var float
 	 * @ORM\Column(type="float")
 	 * defined in minutes
