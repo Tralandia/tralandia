@@ -104,6 +104,7 @@ class Tools {
 		if (isset($params) && is_array($params)) {
 			foreach ($params as $array) {
 				if (PHP_SAPI == 'cli') {
+					Debugger::$maxDepth = 1;
 					echo "\n{$trace[1]['file']} ({$trace[1]['line']})\n";
 					foreach ($array as $value) {
 						echo Debugger::dump($value, true);

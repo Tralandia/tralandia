@@ -1,11 +1,15 @@
 <?php
 
-require_once __DIR__ . '/../bootstrap.php';
+namespace FormMask;
+
+use PHPUnit_Framework_TestCase, Nette, Extras;
+
+require_once __DIR__ . '/../../bootstrap.php';
 
 /**
  * @backupGlobals disabled
  */
-class FormMaskTest extends PHPUnit_Framework_TestCase
+class MaskTest extends PHPUnit_Framework_TestCase
 {
 	public $context;
 	public $value = 'Hodnota 9786325';

@@ -1,6 +1,10 @@
 <?php
 
-require_once __DIR__ . '/../bootstrap.php';
+namespace Config;
+
+use PHPUnit_Framework_TestCase, Nette, Extras;
+
+require_once __DIR__ . '/../../bootstrap.php';
 
 /**
  * @backupGlobals disabled

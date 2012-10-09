@@ -34,6 +34,10 @@ common:
 
 	form:
 		fields:
+			name:
+				label: Name
+				control:
+					type: phrase
 			# name:
 				# label: Name
 				# control:

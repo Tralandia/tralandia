@@ -11,9 +11,22 @@ use Service, Doctrine, Entity;
 class Phrase extends Service\Base {
 
 	/**
-	 * Ukazkovy proces
+	 * Vrati spravny preklad na zaklade jazyka
+	 * @param Entity\Dictionary\Language
+	 * @return Entity\Dictionary\Translation
 	 */
 	public function getTranslate(Entity\Dictionary\Language $language) {
+		return $this->entity->getTranslations()->filter(function($entity) use ($language) {
+			return $entity->language == $language;
+		})->current();
+	}
+
+	/**
+	 * Vrati spravny preklad na zaklade jazyka
+	 * @param Entity\Dictionary\Language
+	 * @return Entity\Dictionary\Translation
+	 */
+	public function getTranslate22(Entity\Dictionary\Language $language) {
 		return $this->entity->getTranslations()->filter(function($entity) use ($language) {
 			return $entity->language == $language;
 		})->current();

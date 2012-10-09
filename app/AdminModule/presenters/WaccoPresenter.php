@@ -33,6 +33,10 @@ class WaccoPresenter extends BasePresenter {
 		$configurator = new Extras\Config\Configurator($this->context->params['settingsDir'] . '/presenters/currency.neon');
 		$mask = new Extras\FormMask\Mask;
 		$form = new Nette\Application\UI\Form($this, 'form');
+		$form->onSuccess[] = array($mask, 'process');
+		$form->onSuccess[] = function($form) {
+			debug($form->getValues());
+		};
 
 		$generator = new Extras\FormMask\Generator($mask, $configurator, $entity);
 		$generator->build();

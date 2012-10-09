@@ -1,11 +1,15 @@
 <?php
 
-require_once __DIR__ . '/../bootstrap.php';
+namespace FormMask;
+
+use PHPUnit_Framework_TestCase, Nette;
+
+require_once __DIR__ . '/../../bootstrap.php';
 
 /**
  * @backupGlobals disabled
  */
-class FormMaskGeneratorTest extends PHPUnit_Framework_TestCase
+class GeneratorTest extends PHPUnit_Framework_TestCase
 {
 	public $context;
 
