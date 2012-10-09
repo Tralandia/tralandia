@@ -35,7 +35,7 @@ Extras\Forms\Controls\AdvancedTinymce::register();
 Extras\Forms\Controls\AdvancedUpload::register();
 
 function debug() {
-	return Tools::dump(func_get_args());
+	Tools::dump(func_get_args());
 }
 
 function d() {
@@ -103,7 +103,10 @@ class Tools {
 
 		if (isset($params) && is_array($params)) {
 			foreach ($params as $array) {
-				if (!Environment::getHttpRequest()->isAjax()) {
+				if (PHP_SAPI == 'cli') {
+					echo "\n{$trace[1]['file']} ({$trace[1]['line']})\n";
+					echo Debugger::dump(func_get_args(), true);
+				} elseif (!Environment::getHttpRequest()->isAjax()) {
 					Debugger::barDump($array, "{$trace[1]['file']} ({$trace[1]['line']})");
 				} else {
 					Debugger::fireLog($array);
@@ -112,6 +115,18 @@ class Tools {
 			return $params[0][0];
 		}
 		return NULL;
+	}
+
+	public static function dumpToCli() {
+		$params = func_get_args();
+		$trace = debug_backtrace();
+
+		if (isset($params) && is_array($params)) {	
+			foreach ($params as $array) {
+				echo "\n{$trace[1]['file']} ({$trace[1]['line']})\n";
+				print_r($array);
+			}
+		}
 	}
 
 	public static function addComboSelect(FormContainer $_this, $name, $label, array $items = NULL, $size = NULL) {
