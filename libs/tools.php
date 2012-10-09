@@ -105,7 +105,9 @@ class Tools {
 			foreach ($params as $array) {
 				if (PHP_SAPI == 'cli') {
 					echo "\n{$trace[1]['file']} ({$trace[1]['line']})\n";
-					echo Debugger::dump(func_get_args(), true);
+					foreach ($array as $value) {
+						echo Debugger::dump($value, true);
+					}
 				} elseif (!Environment::getHttpRequest()->isAjax()) {
 					Debugger::barDump($array, "{$trace[1]['file']} ({$trace[1]['line']})");
 				} else {
