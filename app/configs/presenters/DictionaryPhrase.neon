@@ -1,0 +1,6 @@
+common:
+	repository: dictionaryPhraseRepository
+	title: Phrase Type
+	h1: 'Phrase Type -> %entityName% (%entityAttribute%)'
+	grid:
+		class: PhrasesGrid

@@ -146,7 +146,7 @@ class User extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Autopilot\Task", inversedBy="usersExcluded")
+	 * @ORM\ManyToMany(targetEntity="Entity\Task\Task", inversedBy="usersExcluded")
 	 * @EA\SingularName(name="task") 
 	 */
 	protected $tasks;
@@ -737,10 +737,10 @@ class User extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @param \Entity\Autopilot\Task
+	 * @param \Entity\Task\Task
 	 * @return \Entity\User\User
 	 */
-	public function addTask(\Entity\Autopilot\Task $task) {
+	public function addTask(\Entity\Task\Task $task) {
 		if(!$this->tasks->contains($task)) {
 			$this->tasks->add($task);
 		}
@@ -749,7 +749,7 @@ class User extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Autopilot\Task
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Task\Task
 	 */
 	public function getTasks() {
 		return $this->tasks;

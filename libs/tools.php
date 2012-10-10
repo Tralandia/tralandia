@@ -13,6 +13,7 @@ FormContainer::extensionMethod('addComboSelect', 'Tools::addComboSelect');
 Selection::extensionMethod('fetchTree', 'Tools::selectionTree');
 Image::extensionMethod('resizeCrop', 'Tools::resizeCrop');
 
+
 Extras\Forms\Controls\AdvancedGmap::register();
 Extras\Forms\Controls\AdvancedContacts::register();
 Extras\Forms\Controls\AdvancedAddress::register();

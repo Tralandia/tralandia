@@ -4,27 +4,46 @@ use Nette\Environment,
 	Nette\Application\UI\Form,
 	Nette\ObjectMixin;
 
+use Kdyby\Extension\Forms\BootstrapRenderer\BootstrapRenderer;
+
 /**
  * @author Branislav Vaculčiak
  */
 
-class CoolForm extends Form {
+abstract class CoolForm extends Form {
 
 	const AJAX_CLASS = 'ajax';
 
 	public function __construct(\Nette\ComponentModel\IContainer $parent = NULL, $name = NULL) {
 		parent::__construct($parent, $name);
 
-		// $this->addProtection('Validity expired form.');
-		//$this->setTranslator(Environment::getService('translator'));
+		$this->setRenderer(new BootstrapRenderer);
+
+		//$this->setTranslator($translator);
+
+		$this->getElementPrototype()->novalidate = 'novalidate';
+
 		$this->onError[] = callback($this, 'onInvalid');
-		if ($this->getParam('invalidate', false)) {
-			$this->valid = FALSE;
-		}
+
+		# @todo brano toto je tu naco? ja som zrusil tu metodu getParam 
+		// if ($this->getParam('invalidate', false)) {
+		// 	$this->valid = FALSE;
+		// }
+
+		$this->buildForm();
 	}
 
-	public function ajax($flag = true) {
-		$flag ? $this->getElementPrototype()->class(self::AJAX_CLASS) : NULL;
+
+	/**
+	 * Abstract function which handles the form creation.
+	 * @abstract
+	 * @return void
+	 */
+	protected abstract function buildForm();
+
+
+	public function ajax() {
+		$this->getElementPrototype()->addClass(self::AJAX_CLASS);
 	}
 
 	public function &__get($name) {
@@ -47,19 +66,27 @@ class CoolForm extends Form {
 		}
 	}
 
-	// public function getUser() {
-	// 	return $this->em->find('User', $this->parent->user->id);
-	// }
+	public function addSubmit($name, $caption = NULL, $nospam = TRUE) {
+		if ($nospam && !isset($this['nospam'])) {
+			$noSpam = $this->addHidden('nospam', 'Fill in „nospam“')
+					->addRule(Form::FILLED, 'You are a spambot!')
+					->addRule(Form::EQUAL, 'You are a spambot!', 'nospam');
+
+			$noSpam->getLabelPrototype()->class('nospam');
+			$noSpam->getControlPrototype()->class('nospam');
+		}
+
+		return parent::addSubmit($name, $caption);
+	}
+
+	public function getValues($asArray = FALSE) {
+		$values = parent::getValues($asArray);
+		unset($values['nospam']);
+		return $values;
+	}
 
 	public function getHtmlId() {
 		return $this->getElementPrototype()->getId();
 	}
 
-	public function getParam($key, $default = null) {
-		return $this->parent->getParam($key, $default);
-	}
-
-	public function flashMessage($message, $type = 'info') {
-		$this->parent->flashMessage($message, $type);
-	}
 }

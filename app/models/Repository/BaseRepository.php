@@ -20,15 +20,15 @@ class BaseRepository extends EntityRepository {
 		return $query;
 	}
 	
-	public function findAll() {
-		$query = $this->_em->createQueryBuilder();
-		$query->select('e')->from($this->_entityName, 'e');
-		$query = $query->getQuery();
+	// public function findAll() {
+	// 	$query = $this->_em->createQueryBuilder();
+	// 	$query->select('e')->from($this->_entityName, 'e');
+	// 	$query = $query->getQuery();
 		
-		//$query->setResultCacheDriver(new \Doctrine\Common\Cache\ApcCache());
-		//$query->useResultCache(true, 5, 'ooo');
-		return $query->getResult();
-	}
+	// 	//$query->setResultCacheDriver(new \Doctrine\Common\Cache\ApcCache());
+	// 	//$query->useResultCache(true, 5, 'ooo');
+	// 	return $query->getResult();
+	// }
 
 	public function fetchPairs($key, $value = null) {
 		$collection = array();
@@ -38,11 +38,11 @@ class BaseRepository extends EntityRepository {
 			//debug($entity);
 			
 			
-			if (isset($entity->country))
-				debug($entity->country);
+			// if (isset($entity->country))
+			// 	debug($entity->country);
 		
-			if (isset($entity->rentals))
-				debug($entity->rentals);
+			// if (isset($entity->rentals))
+			// 	debug($entity->rentals);
 			
 			if ($value instanceof Closure) {
 				$collection[$entity->$key] = $value($entity);

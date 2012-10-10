@@ -16,6 +16,11 @@ class In extends \BaseModule\Forms\BaseForm {
 		$this->onSuccess[] = callback($this, 'onSuccess');
 	}
 
+	protected function buildForm() {
+		
+	}
+
+
 	public function onSuccess(In $form) {
 		$values = $form->getValues();
 		try {

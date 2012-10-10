@@ -31,6 +31,11 @@ class PresenterEdit extends \AdminModule\Forms\Form {
 		$this->onSuccess[] = callback($this, 'onSuccess');
 	}
 
+	protected function buildForm() {
+		
+	}
+
+
 	public function onSuccess(PresenterEdit $form) {
 		$values = $this->getValues(TRUE);
 

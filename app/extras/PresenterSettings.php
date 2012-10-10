@@ -51,7 +51,9 @@ class PresenterSettings extends \Nette\Object {
 	
 	public function getParams() {
 		if(!$this->params) {
-			$this->params = $this->getConfig();
+			$config = $this->getConfig();
+			$this->checkConfig($config);
+			$this->params = $config;
 		}
 		return $this->params;
 	}
@@ -73,5 +75,15 @@ class PresenterSettings extends \Nette\Object {
 		);
 
 		return ArrayHash::from($params);
+	}
+
+	protected function checkConfig($config) {
+		if(!isset($config->repository)) {
+			throw new \Nette\InvalidArgumentException('v configu si nezadal "repository"');
+		}
+		if(!isset($config->grid->class)) {
+			throw new \Nette\InvalidArgumentException('v configu si nezadal "grid:class"');
+		}
+		return true;
 	}
 }

@@ -1,0 +1,238 @@
+services:
+	attractionRepository:
+		class: Repository\Attraction\AttractionRepository
+		factory: @model::getRepository('Entity\Attraction\Attraction')
+
+	attractionTypeRepository:
+		class: Repository\Attraction\TypeRepository
+		factory: @model::getRepository('Entity\Attraction\Type')
+
+	taskRepository:
+		class: Repository\Task\TaskRepository
+		factory: @model::getRepository('Entity\Task\Task')
+
+	taskTypeRepository:
+		class: Repository\Task\TypeRepository
+		factory: @model::getRepository('Entity\Task\Type')
+
+	companyBankAccountRepository:
+		class: Repository\Company\BankAccountRepository
+		factory: @model::getRepository('Entity\Company\BankAccount')
+
+	companyRepository:
+		class: Repository\Company\CompanyRepository
+		factory: @model::getRepository('Entity\Company\Company')
+
+	companyOfficeRepository:
+		class: Repository\Company\OfficeRepository
+		factory: @model::getRepository('Entity\Company\Office')
+
+	contactCacheRepository:
+		class: Repository\ContactCacheRepository
+		factory: @model::getRepository('Entity\ContactCache')
+
+	currencyRepository:
+		class: Repository\CurrencyRepository
+		factory: @model::getRepository('Entity\Currency')
+
+	dictionaryLanguageRepository:
+		class: Repository\Dictionary\LanguageRepository
+		factory: @model::getRepository('Entity\Dictionary\Language')
+
+	dictionaryPhraseRepository:
+		class: Repository\Dictionary\PhraseRepository
+		factory: @model::getRepository('Entity\Dictionary\Phrase')
+
+	dictionaryTranslationRepository:
+		class: Repository\Dictionary\TranslationRepository
+		factory: @model::getRepository('Entity\Dictionary\Translation')
+
+	dictionaryTypeRepository:
+		class: Repository\Dictionary\TypeRepository
+		factory: @model::getRepository('Entity\Dictionary\Type')
+
+	domainRepository:
+		class: Repository\DomainRepository
+		factory: @model::getRepository('Entity\Domain')
+
+	emailingBatchRepository:
+		class: Repository\Emailing\BatchRepository
+		factory: @model::getRepository('Entity\Emailing\Batch')
+
+	emailingTemplateRepository:
+		class: Repository\Emailing\TemplateRepository
+		factory: @model::getRepository('Entity\Emailing\Template')
+
+	emailingTemplateTypeRepository:
+		class: Repository\Emailing\TemplateTypeRepository
+		factory: @model::getRepository('Entity\Emailing\TemplateType')
+
+	expenseRepository:
+		class: Repository\Expense\ExpenseRepository
+		factory: @model::getRepository('Entity\Expense\Expense')
+
+	expenseTypeRepository:
+		class: Repository\Expense\TypeRepository
+		factory: @model::getRepository('Entity\Expense\Type')
+
+	invoicingCouponRepository:
+		class: Repository\Invoicing\CouponRepository
+		factory: @model::getRepository('Entity\Invoicing\Coupon')
+
+	invoicingInvoiceRepository:
+		class: Repository\Invoicing\InvoiceRepository
+		factory: @model::getRepository('Entity\Invoicing\Invoice')
+
+	invoicingItemRepository:
+		class: Repository\Invoicing\ItemRepository
+		factory: @model::getRepository('Entity\Invoicing\Item')
+
+	invoicingMarketingRepository:
+		class: Repository\Invoicing\MarketingRepository
+		factory: @model::getRepository('Entity\Invoicing\Marketing')
+
+	invoicingPackageRepository:
+		class: Repository\Invoicing\PackageRepository
+		factory: @model::getRepository('Entity\Invoicing\Package')
+
+	invoicingServiceRepository:
+		class: Repository\Invoicing\ServiceRepository
+		factory: @model::getRepository('Entity\Invoicing\Service')
+
+	invoicingServiceDurationRepository:
+		class: Repository\Invoicing\ServiceDurationRepository
+		factory: @model::getRepository('Entity\Invoicing\ServiceDuration')
+
+	invoicingServiceTypeRepository:
+		class: Repository\Invoicing\ServiceTypeRepository
+		factory: @model::getRepository('Entity\Invoicing\ServiceType')
+
+	invoicingUseTypeRepository:
+		class: Repository\Invoicing\UseTypeRepository
+		factory: @model::getRepository('Entity\Invoicing\UseType')
+
+	locationRepository:
+		class: Repository\Location\LocationRepository
+		factory: @model::getRepository('Entity\Location\Location')
+
+	locationRegionTypeRepository:
+		class: Repository\Location\RegionTypeRepository
+		factory: @model::getRepository('Entity\Location\RegionType')
+
+	locationTravelingRepository:
+		class: Repository\Location\TravelingRepository
+		factory: @model::getRepository('Entity\Location\Traveling')
+
+	locationTypeRepository:
+		class: Repository\Location\TypeRepository
+		factory: @model::getRepository('Entity\Location\Type')
+
+	logChangeRepository:
+		class: Repository\Log\ChangeRepository
+		factory: @model::getRepository('Entity\Log\Change')
+
+	logChangeTypeRepository:
+		class: Repository\Log\ChangeTypeRepository
+		factory: @model::getRepository('Entity\Log\ChangeType')
+
+	logSystemRepository:
+		class: Repository\Log\SystemRepository
+		factory: @model::getRepository('Entity\Log\System')
+
+	mediumRepository:
+		class: Repository\Medium\MediumRepository
+		factory: @model::getRepository('Entity\Medium\Medium')
+
+	mediumTypeRepository:
+		class: Repository\Medium\TypeRepository
+		factory: @model::getRepository('Entity\Medium\Type')
+
+	pageRepository:
+		class: Repository\PageRepository
+		factory: @model::getRepository('Entity\Page')
+
+	rentalAmenityRepository:
+		class: Repository\Rental\AmenityRepository
+		factory: @model::getRepository('Entity\Rental\Amenity')
+
+	rentalAmenityTypeRepository:
+		class: Repository\Rental\AmenityTypeRepository
+		factory: @model::getRepository('Entity\Rental\AmenityType')
+
+	rentalFulltextRepository:
+		class: Repository\Rental\FulltextRepository
+		factory: @model::getRepository('Entity\Rental\Fulltext')
+
+	rentalRepository:
+		class: Repository\Rental\RentalRepository
+		factory: @model::getRepository('Entity\Rental\Rental')
+
+	rentalTypeRepository:
+		class: Repository\Rental\TypeRepository
+		factory: @model::getRepository('Entity\Rental\Type')
+
+	routingPathSegmentRepository:
+		class: Repository\Routing\PathSegmentRepository
+		factory: @model::getRepository('Entity\Routing\PathSegment')
+
+	routingPathSegmentOldRepository:
+		class: Repository\Routing\PathSegmentOldRepository
+		factory: @model::getRepository('Entity\Routing\PathSegmentOld')
+
+	seoBackLinkRepository:
+		class: Repository\Seo\BackLinkRepository
+		factory: @model::getRepository('Entity\Seo\BackLink')
+
+	seoSeoUrlRepository:
+		class: Repository\Seo\SeoUrlRepository
+		factory: @model::getRepository('Entity\Seo\SeoUrl')
+
+	seoTitleSuffixRepository:
+		class: Repository\Seo\TitleSuffixRepository
+		factory: @model::getRepository('Entity\Seo\TitleSuffix')
+
+	ticketMessageRepository:
+		class: Repository\Ticket\MessageRepository
+		factory: @model::getRepository('Entity\Ticket\Message')
+
+	ticketRepository:
+		class: Repository\Ticket\TicketRepository
+		factory: @model::getRepository('Entity\Ticket\Ticket')
+
+	userCombinationRepository:
+		class: Repository\User\CombinationRepository
+		factory: @model::getRepository('Entity\User\Combination')
+
+	userRentalQuestionRepository:
+		class: Repository\User\RentalQuestionRepository
+		factory: @model::getRepository('Entity\User\RentalQuestion')
+
+	userRentalReservationRepository:
+		class: Repository\User\RentalReservationRepository
+		factory: @model::getRepository('Entity\User\RentalReservation')
+
+	userRentalReviewRepository:
+		class: Repository\User\RentalReviewRepository
+		factory: @model::getRepository('Entity\User\RentalReview')
+
+	userRentalToFriendRepository:
+		class: Repository\User\RentalToFriendRepository
+		factory: @model::getRepository('Entity\User\RentalToFriend')
+
+	userRoleRepository:
+		class: Repository\User\RoleRepository
+		factory: @model::getRepository('Entity\User\Role')
+
+	userSiteOwnerReviewRepository:
+		class: Repository\User\SiteOwnerReviewRepository
+		factory: @model::getRepository('Entity\User\SiteOwnerReview')
+
+	userSiteVisitorReviewRepository:
+		class: Repository\User\SiteVisitorReviewRepository
+		factory: @model::getRepository('Entity\User\SiteVisitorReview')
+
+	userRepository:
+		class: Repository\User\UserRepository
+		factory: @model::getRepository('Entity\User\User')
+
+
