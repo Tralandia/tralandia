@@ -22,13 +22,26 @@ class Phrase extends Service\Base {
 	}
 
 	/**
-	 * Vrati spravny preklad na zaklade jazyka
+	 * Vrati hodnotu prekladu na zaklade jazyka
 	 * @param Entity\Dictionary\Language
-	 * @return Entity\Dictionary\Translation
+	 * @return string
 	 */
-	public function getTranslate22(Entity\Dictionary\Language $language) {
+	public function getTranslateValue(Entity\Dictionary\Language $language) {
 		return $this->entity->getTranslations()->filter(function($entity) use ($language) {
 			return $entity->language == $language;
-		})->current();
+		})->current()->translation;
+	}
+
+	/**
+	 * Ulozi hodnotu prekladu na zaklade jazyka
+	 * @param Entity\Dictionary\Language
+	 * @param string
+	 * @return Phrase
+	 */
+	public function setTranslateValue(Entity\Dictionary\Language $language, $value) {
+		$this->entity->getTranslations()->filter(function($entity) use ($language) {
+			return $entity->language == $language;
+		})->current()->translation = $value;
+		return $this;
 	}
 }

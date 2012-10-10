@@ -33,13 +33,37 @@ class PhraseServiceTest extends PHPUnit_Framework_TestCase
 		$entity = $this->model->getRepository('Entity\Currency')->find(2);
 		$service = new Service\Dictionary\Phrase($this->model, $entity->name);
 		
-		// overujem ci sa zmena preniesla do D
+		// overujem ci sa zmena preniesla do DB
 		$this->assertInstanceOf('Entity\Dictionary\Translation', $translate = $service->getTranslate($this->language));
 		$this->assertInternalType('string', $translate->translation);
 		$this->assertSame('nová hodnota 9875', $translate->translation);
 
 		// znova zmenit preklad na povodnu hodnotu a ulozim
 		$translate->translation = $oldTranslation;
+		$this->model->flush();
+	}
+
+	public function testChangeTranslationValue() {
+		$entity = $this->model->getRepository('Entity\Currency')->find(2);
+		$service = new Service\Dictionary\Phrase($this->model, $entity->name);
+		
+		// vytiahnem preklad, ulozim si jeho aktualnu hodnotu
+		$this->assertInternalType('string', $oldTranslation = $service->getTranslateValue($this->language));
+
+		// zmenim preklad a ulozim zmenu
+		$service->setTranslateValue($this->language, 'nová hodnota 9875');
+		$this->model->flush();
+
+		// vytiahnem zmeneny preklad
+		$entity = $this->model->getRepository('Entity\Currency')->find(2);
+		$service = new Service\Dictionary\Phrase($this->model, $entity->name);
+		
+		// overujem ci sa zmena preniesla do DB
+		$this->assertInternalType('string', $translation = $service->getTranslateValue($this->language));
+		$this->assertSame('nová hodnota 9875', $translation);
+
+		// znova zmenit preklad na povodnu hodnotu a ulozim
+		$service->setTranslateValue($this->language, $oldTranslation);
 		$this->model->flush();
 	}
 

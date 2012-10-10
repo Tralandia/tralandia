@@ -50,9 +50,21 @@ abstract class Base {
 	 */
 	public function getValue() {
 		if (!is_callable($this->getValueGetter())) {
-			throw new InvalidStateException("Nebol zadaný callback gettera hodnot.");
+			throw new Nette\InvalidStateException("Nebol zadaný callback gettera hodnot.");
 		}
 		return $this->getValueGetter()->invoke();
+	}
+
+	/**
+	 * Nastavi hodnotu itemu
+	 * @param mixed
+	 * @return mixed
+	 */
+	public function setValue($value) {
+		if (!is_callable($this->getValueSetter())) {
+			throw new Nette\InvalidStateException("Nebol zadaný callback settera hodnot.");
+		}
+		return $this->getValueSetter()->invoke($value);
 	}
 
 	/**

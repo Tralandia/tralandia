@@ -65,7 +65,7 @@ class WaccoPresenter extends BasePresenter {
 */
 	public function getPhrase($entity, $property = 'name') {
 		$sPhrase = new Service\Dictionary\Phrase($this->context->model, $entity->$property);
-		return $sPhrase->getTranslate($this->context->environment->getLanguage());
+		return $sPhrase->getTranslateValue($this->context->environment->getLanguage());
 	}
 
 	public function setPhrase($entity, $property = 'name') {

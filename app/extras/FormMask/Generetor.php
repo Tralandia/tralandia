@@ -29,7 +29,7 @@ class Generator extends Nette\Object {
 		foreach ($this->configurator->getForm() as $field) {
 
 			$item = $this->mask->add(constant('Extras\\FormMask\\Mask::' . $field->getType()), $field->getName(), $field->getLabel());
-			
+
 			$item->setValueGetter(new Extras\Callback($this->entity, $this->getterMethodName($field->getName()), array($this->entity)));
 			$item->setValueSetter(new Extras\Callback($this->entity, $this->setterMethodName($field->getName()), array($this->entity)));
 		}
