@@ -1,6 +1,6 @@
 <?php
 
-namespace Entity\Autopilot;
+namespace Entity\Task;
 
 use Entity\Dictionary;
 use Entity\Location;
@@ -10,10 +10,10 @@ use	Extras\Annotation as EA;
 
 
 /**
- * @ORM\Entity()
- * @ORM\Table(name="autopilot_task", indexes={@ORM\index(name="startTime", columns={"startTime"}), @ORM\index(name="due", columns={"due"}), @ORM\index(name="durationPaid", columns={"durationPaid"}), @ORM\index(name="userLanguageLevel", columns={"userLanguageLevel"})})
- * @EA\Service(name="\Service\Autopilot\Task")
- * @EA\ServiceList(name="\Service\Autopilot\TaskList")
+ * @ORM\Entity(repositoryClass="Repository\Task\TaskRepository")
+ * @ORM\Table(name="Task_task", indexes={@ORM\index(name="startTime", columns={"startTime"}), @ORM\index(name="due", columns={"due"}), @ORM\index(name="durationPaid", columns={"durationPaid"}), @ORM\index(name="userLanguageLevel", columns={"userLanguageLevel"})})
+ * @EA\Service(name="\Service\Task\Task")
+ * @EA\ServiceList(name="\Service\Task\TaskList")
  * @EA\Primary(key="id", value="name")
  */
 class Task extends \Entity\BaseEntityDetails {
@@ -153,17 +153,17 @@ class Task extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @param \Entity\Autopilot\Type
-	 * @return \Entity\Autopilot\Task
+	 * @param \Entity\Task\Type
+	 * @return \Entity\Task\Task
 	 */
-	public function setType(\Entity\Autopilot\Type $type) {
+	public function setType(\Entity\Task\Type $type) {
 		$this->type = $type;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Entity\Autopilot\Task
+	 * @return \Entity\Task\Task
 	 */
 	public function unsetType() {
 		$this->type = NULL;
@@ -172,7 +172,7 @@ class Task extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Autopilot\Type|NULL
+	 * @return \Entity\Task\Type|NULL
 	 */
 	public function getType() {
 		return $this->type;
@@ -180,7 +180,7 @@ class Task extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param string
-	 * @return \Entity\Autopilot\Task
+	 * @return \Entity\Task\Task
 	 */
 	public function setName($name) {
 		$this->name = $name;
@@ -189,7 +189,7 @@ class Task extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Autopilot\Task
+	 * @return \Entity\Task\Task
 	 */
 	public function unsetName() {
 		$this->name = NULL;
@@ -206,7 +206,7 @@ class Task extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param string
-	 * @return \Entity\Autopilot\Task
+	 * @return \Entity\Task\Task
 	 */
 	public function setEntityName($entityName) {
 		$this->entityName = $entityName;
@@ -215,7 +215,7 @@ class Task extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Autopilot\Task
+	 * @return \Entity\Task\Task
 	 */
 	public function unsetEntityName() {
 		$this->entityName = NULL;
@@ -232,7 +232,7 @@ class Task extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param integer
-	 * @return \Entity\Autopilot\Task
+	 * @return \Entity\Task\Task
 	 */
 	public function setEntityId($entityId) {
 		$this->entityId = $entityId;
@@ -241,7 +241,7 @@ class Task extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Autopilot\Task
+	 * @return \Entity\Task\Task
 	 */
 	public function unsetEntityId() {
 		$this->entityId = NULL;
@@ -258,7 +258,7 @@ class Task extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param string
-	 * @return \Entity\Autopilot\Task
+	 * @return \Entity\Task\Task
 	 */
 	public function setMission($mission) {
 		$this->mission = $mission;
@@ -275,7 +275,7 @@ class Task extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param \DateTime
-	 * @return \Entity\Autopilot\Task
+	 * @return \Entity\Task\Task
 	 */
 	public function setStartTime(\DateTime $startTime) {
 		$this->startTime = $startTime;
@@ -292,7 +292,7 @@ class Task extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param \DateTime
-	 * @return \Entity\Autopilot\Task
+	 * @return \Entity\Task\Task
 	 */
 	public function setDue(\DateTime $due) {
 		$this->due = $due;
@@ -309,7 +309,7 @@ class Task extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param float
-	 * @return \Entity\Autopilot\Task
+	 * @return \Entity\Task\Task
 	 */
 	public function setDurationPaid($durationPaid) {
 		$this->durationPaid = $durationPaid;
@@ -326,7 +326,7 @@ class Task extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param json
-	 * @return \Entity\Autopilot\Task
+	 * @return \Entity\Task\Task
 	 */
 	public function setLinks($links) {
 		$this->links = $links;
@@ -335,7 +335,7 @@ class Task extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Autopilot\Task
+	 * @return \Entity\Task\Task
 	 */
 	public function unsetLinks() {
 		$this->links = NULL;
@@ -352,7 +352,7 @@ class Task extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param \Entity\User\User
-	 * @return \Entity\Autopilot\Task
+	 * @return \Entity\Task\Task
 	 */
 	public function setReservedFor(\Entity\User\User $reservedFor) {
 		$this->reservedFor = $reservedFor;
@@ -361,7 +361,7 @@ class Task extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Autopilot\Task
+	 * @return \Entity\Task\Task
 	 */
 	public function unsetReservedFor() {
 		$this->reservedFor = NULL;
@@ -378,7 +378,7 @@ class Task extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param \Entity\User\User
-	 * @return \Entity\Autopilot\Task
+	 * @return \Entity\Task\Task
 	 */
 	public function setUser(\Entity\User\User $user) {
 		$this->user = $user;
@@ -387,7 +387,7 @@ class Task extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Autopilot\Task
+	 * @return \Entity\Task\Task
 	 */
 	public function unsetUser() {
 		$this->user = NULL;
@@ -404,7 +404,7 @@ class Task extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param \Entity\Location\Location
-	 * @return \Entity\Autopilot\Task
+	 * @return \Entity\Task\Task
 	 */
 	public function setUserCountry(\Entity\Location\Location $userCountry) {
 		$this->userCountry = $userCountry;
@@ -413,7 +413,7 @@ class Task extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Autopilot\Task
+	 * @return \Entity\Task\Task
 	 */
 	public function unsetUserCountry() {
 		$this->userCountry = NULL;
@@ -430,7 +430,7 @@ class Task extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param \Entity\Dictionary\Language
-	 * @return \Entity\Autopilot\Task
+	 * @return \Entity\Task\Task
 	 */
 	public function setUserLanguage(\Entity\Dictionary\Language $userLanguage) {
 		$this->userLanguage = $userLanguage;
@@ -439,7 +439,7 @@ class Task extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Autopilot\Task
+	 * @return \Entity\Task\Task
 	 */
 	public function unsetUserLanguage() {
 		$this->userLanguage = NULL;
@@ -456,7 +456,7 @@ class Task extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param integer
-	 * @return \Entity\Autopilot\Task
+	 * @return \Entity\Task\Task
 	 */
 	public function setUserLanguageLevel($userLanguageLevel) {
 		$this->userLanguageLevel = $userLanguageLevel;
@@ -465,7 +465,7 @@ class Task extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Autopilot\Task
+	 * @return \Entity\Task\Task
 	 */
 	public function unsetUserLanguageLevel() {
 		$this->userLanguageLevel = NULL;
@@ -482,7 +482,7 @@ class Task extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param \Entity\User\Role
-	 * @return \Entity\Autopilot\Task
+	 * @return \Entity\Task\Task
 	 */
 	public function setUserRole(\Entity\User\Role $userRole) {
 		$this->userRole = $userRole;
@@ -491,7 +491,7 @@ class Task extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Autopilot\Task
+	 * @return \Entity\Task\Task
 	 */
 	public function unsetUserRole() {
 		$this->userRole = NULL;
@@ -508,7 +508,7 @@ class Task extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param \Entity\User\User
-	 * @return \Entity\Autopilot\Task
+	 * @return \Entity\Task\Task
 	 */
 	public function addUsersExcluded(\Entity\User\User $usersExcluded) {
 		if(!$this->usersExcluded->contains($usersExcluded)) {
@@ -521,7 +521,7 @@ class Task extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param \Entity\User\User
-	 * @return \Entity\Autopilot\Task
+	 * @return \Entity\Task\Task
 	 */
 	public function removeUsersExcluded(\Entity\User\User $usersExcluded) {
 		if($this->usersExcluded->contains($usersExcluded)) {
@@ -541,7 +541,7 @@ class Task extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param json
-	 * @return \Entity\Autopilot\Task
+	 * @return \Entity\Task\Task
 	 */
 	public function setValidation($validation) {
 		$this->validation = $validation;
@@ -550,7 +550,7 @@ class Task extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Autopilot\Task
+	 * @return \Entity\Task\Task
 	 */
 	public function unsetValidation() {
 		$this->validation = NULL;
@@ -567,7 +567,7 @@ class Task extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param json
-	 * @return \Entity\Autopilot\Task
+	 * @return \Entity\Task\Task
 	 */
 	public function setActions($actions) {
 		$this->actions = $actions;
@@ -576,7 +576,7 @@ class Task extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Autopilot\Task
+	 * @return \Entity\Task\Task
 	 */
 	public function unsetActions() {
 		$this->actions = NULL;
@@ -593,7 +593,7 @@ class Task extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param json
-	 * @return \Entity\Autopilot\Task
+	 * @return \Entity\Task\Task
 	 */
 	public function setRecurrenceData($recurrenceData) {
 		$this->recurrenceData = $recurrenceData;
@@ -602,7 +602,7 @@ class Task extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Autopilot\Task
+	 * @return \Entity\Task\Task
 	 */
 	public function unsetRecurrenceData() {
 		$this->recurrenceData = NULL;

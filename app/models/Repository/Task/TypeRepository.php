@@ -1,4 +1,4 @@
 <?php
-namespace Repository\Autopilot;
+namespace Repository\Task;
 class TypeRepository extends \Repository\BaseRepository {
 }

@@ -7,13 +7,13 @@ services:
 		class: Repository\Attraction\TypeRepository
 		factory: @model::getRepository('Entity\Attraction\Type')
 
-	autopilotTaskRepository:
-		class: Repository\Autopilot\TaskRepository
-		factory: @model::getRepository('Entity\Autopilot\Task')
+	taskRepository:
+		class: Repository\Task\TaskRepository
+		factory: @model::getRepository('Entity\Task\Task')
 
-	autopilotTypeRepository:
-		class: Repository\Autopilot\TypeRepository
-		factory: @model::getRepository('Entity\Autopilot\Type')
+	taskTypeRepository:
+		class: Repository\Task\TypeRepository
+		factory: @model::getRepository('Entity\Task\Type')
 
 	companyBankAccountRepository:
 		class: Repository\Company\BankAccountRepository

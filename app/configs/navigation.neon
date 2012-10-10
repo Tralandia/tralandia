@@ -36,17 +36,15 @@ common:
 					link: ':Admin:Ticket:list'
 
 
-		autopilot:
+		task:
+			label: Tasks
 			items:
 				pendingTask: 
-					label: Pending Tasks
-					link: ':Admin:AutopilotTask:list'
-				completedTask: 
-					label: Completed Tasks
-					link: ':Admin:AutopilotTaskArchived:list'
+					label: All Tasks
+					link: ':Admin:TaskTask:list'
 				taskType: 
 					label: Task Types
-					link: ':Admin:AutopilotType:list'
+					link: ':Admin:TaskType:list'
 
 		user:
 			label: Users

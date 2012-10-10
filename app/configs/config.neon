@@ -94,6 +94,12 @@ common:
 
 		ticketFetcher: Extras\TicketFetcher( @ticketFetcherApi )
 
+		autopilot:
+			class: Service\Autopilot\Autopilot
+			setup:
+				- $taskRepository(@taskRepository)
+				- $taskTypeRepository(@taskTypeRepository)
+
 	factories:
 		serviceCurrency:
 			parameters: [entity]

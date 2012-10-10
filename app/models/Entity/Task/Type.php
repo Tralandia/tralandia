@@ -1,16 +1,16 @@
 <?php
 
-namespace Entity\Autopilot;
+namespace Entity\Task;
 
 use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
 
 
 /**
- * @ORM\Entity()
- * @ORM\Table(name="autopilot_type")
- * @EA\Service(name="\Service\Autopilot\Type")
- * @EA\ServiceList(name="\Service\Autopilot\TypeList")
+ * @ORM\Entity(repositoryClass="Repository\Task\TypeRepository")
+ * @ORM\Table(name="Task_type")
+ * @EA\Service(name="\Service\Task\Type")
+ * @EA\ServiceList(name="\Service\Task\TypeList")
  * @EA\Primary(key="id", value="name")
  */
 class Type extends \Entity\BaseEntityDetails {
@@ -75,7 +75,7 @@ class Type extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param string
-	 * @return \Entity\Autopilot\Type
+	 * @return \Entity\Task\Type
 	 */
 	public function setName($name) {
 		$this->name = $name;
@@ -92,7 +92,7 @@ class Type extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param string
-	 * @return \Entity\Autopilot\Type
+	 * @return \Entity\Task\Type
 	 */
 	public function setTechnicalName($technicalName) {
 		$this->technicalName = $technicalName;
@@ -109,7 +109,7 @@ class Type extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param string
-	 * @return \Entity\Autopilot\Type
+	 * @return \Entity\Task\Type
 	 */
 	public function setMission($mission) {
 		$this->mission = $mission;
@@ -126,7 +126,7 @@ class Type extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param float
-	 * @return \Entity\Autopilot\Type
+	 * @return \Entity\Task\Type
 	 */
 	public function setDurationPaid($durationPaid) {
 		$this->durationPaid = $durationPaid;
@@ -143,7 +143,7 @@ class Type extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param json
-	 * @return \Entity\Autopilot\Type
+	 * @return \Entity\Task\Type
 	 */
 	public function setValidation($validation) {
 		$this->validation = $validation;
@@ -152,7 +152,7 @@ class Type extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Autopilot\Type
+	 * @return \Entity\Task\Type
 	 */
 	public function unsetValidation() {
 		$this->validation = NULL;
@@ -169,7 +169,7 @@ class Type extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param integer
-	 * @return \Entity\Autopilot\Type
+	 * @return \Entity\Task\Type
 	 */
 	public function setStackable($stackable) {
 		$this->stackable = $stackable;
@@ -178,7 +178,7 @@ class Type extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Autopilot\Type
+	 * @return \Entity\Task\Type
 	 */
 	public function unsetStackable() {
 		$this->stackable = NULL;
@@ -195,7 +195,7 @@ class Type extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param float
-	 * @return \Entity\Autopilot\Type
+	 * @return \Entity\Task\Type
 	 */
 	public function setTimeLimit($timeLimit) {
 		$this->timeLimit = $timeLimit;
@@ -212,7 +212,7 @@ class Type extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param json
-	 * @return \Entity\Autopilot\Type
+	 * @return \Entity\Task\Type
 	 */
 	public function setActions($actions) {
 		$this->actions = $actions;
@@ -221,7 +221,7 @@ class Type extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Autopilot\Type
+	 * @return \Entity\Task\Type
 	 */
 	public function unsetActions() {
 		$this->actions = NULL;

@@ -3,6 +3,7 @@
 namespace Service\Autopilot;
 
 use Nette\Utils\Arrays;
+use Repository\Autopilot as RA;
 
 class Autopilot extends \Nette\Object {
 
