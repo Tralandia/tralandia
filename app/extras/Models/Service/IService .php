@@ -1,6 +1,6 @@
 <?php
 
-namespace Extras\Service;
+namespace Extras\Models\Service;
 
 use Doctrine, Extras;
 
