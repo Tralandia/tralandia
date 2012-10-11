@@ -28,8 +28,9 @@ class WaccoPresenter extends BasePresenter {
 		$entity = $repo->find(2);
 
 
-		debug($this->context->itemPhrase($entity, 'a', 'b'));
+		debug($this->context->createItemPhrase($entity, 'a', 'b'));
 
+return;
 		$configurator = new Extras\Config\Configurator($this->context->params['settingsDir'] . '/presenters/currency.neon');
 		$mask = new Extras\FormMask\Mask;
 		$form = new Nette\Application\UI\Form($this, 'form');

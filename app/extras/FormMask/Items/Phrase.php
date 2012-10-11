@@ -17,7 +17,7 @@ class Phrase extends Base {
 	 * @param Service\Dictionary\Phrase
 	 */
 	public function __construct($name, $label, Service\Dictionary\Phrase $phraseService) {
-		parent::__constructor($name, $label);
+		parent::__construct($name, $label);
 		$this->phraseService = $phraseService;
 	}
 
