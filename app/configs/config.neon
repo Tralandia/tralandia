@@ -100,8 +100,16 @@ common:
 			setup:
 				- $taskRepository(@taskRepository)
 				- $taskTypeRepository(@taskTypeRepository)
+				- $model(@model)
+
+		taskServiceFactory: Extras\Service\ServiceFactory(@model, 'Service\Task\TaskService')
+
 
 	factories:
+		# taskService:
+		# 	parameters: [entity]
+		# 	class: Service\Task\TaskService(@model, %entity%)
+
 		serviceCurrency:
 			parameters: [entity]
 			class: Service\Currency(@model, %entity%)
@@ -150,4 +158,16 @@ durika < development:
 			email: tralandia.david@gmail.com
 
 toth < development:
+
 test < development:
+	parameters:
+		envOptions:
+			sendEmail: FASLE
+
+		database:
+			user: root
+			password: root
+			host: 127.0.0.1
+			dbname: tralandia_test
+			charset: utf8
+			driver: pdo_mysql
