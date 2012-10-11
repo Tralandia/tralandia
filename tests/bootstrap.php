@@ -17,9 +17,9 @@ require LIBS_DIR . '/Nette/nette.min.php';
 
 // Enable Nette\Debug for error visualisation & logging
 Debugger::enable(FALSE);
-Debugger::$strictMode = FALSE;
-$section = isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : null;
-
+//Debugger::$strictMode = FALSE;
+// $section = isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : null;
+$section = 'test';
 // Load configuration from config.neon
 $configurator = new Nette\Config\Configurator;
 $configurator->setTempDirectory(TEMP_DIR);

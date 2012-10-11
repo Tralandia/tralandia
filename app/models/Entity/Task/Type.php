@@ -8,7 +8,7 @@ use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity(repositoryClass="Repository\Task\TypeRepository")
- * @ORM\Table(name="Task_type")
+ * @ORM\Table(name="task_type")
  * @EA\Service(name="\Service\Task\Type")
  * @EA\ServiceList(name="\Service\Task\TypeList")
  * @EA\Primary(key="id", value="name")
@@ -28,7 +28,7 @@ class Type extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var string
-	 * @ORM\Column(type="string")
+	 * @ORM\Column(type="string", unique=true, nullable=false)
 	 * This is for internal use and quick
 	 */
 	protected $technicalName;
@@ -42,7 +42,7 @@ class Type extends \Entity\BaseEntityDetails {
 	/**
 	 * @var float
 	 * @ORM\Column(type="float")
-	 * defined in minutes
+	 * defined in sec
 	 */
 	protected $durationPaid;
 
@@ -55,9 +55,9 @@ class Type extends \Entity\BaseEntityDetails {
 	/**
 	 * @var float
 	 * @ORM\Column(type="float")
-	 * defined in minutes
+	 * defined in sec
 	 */
-	protected $timeLimit = 2;
+	protected $timeLimit = 120;
 
 	/**
 	 * @var json
