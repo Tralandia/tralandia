@@ -14,7 +14,7 @@ namespace Nella\Doctrine\Mapping\Driver;
  */
 class AnnotationDriver extends \Doctrine\ORM\Mapping\Driver\AnnotationDriver
 {
-    const ENTITY_INTERFACE = 'Extras\Models\IEntity';
+    const ENTITY_INTERFACE = 'Extras\Models\Entity\IEntity';
 
 	/** @var array */
 	private $ignoredDirs = array();

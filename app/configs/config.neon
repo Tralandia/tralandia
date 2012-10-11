@@ -99,20 +99,13 @@ common:
 			setup:
 				- $taskRepository(@taskRepository)
 				- $taskTypeRepository(@taskTypeRepository)
-				- $model(@model)
+				- $taskServiceFactory(@taskServiceFactory)
 
-		taskServiceFactory: Extras\Service\ServiceFactory(@model, 'Service\Task\TaskService')
+		taskServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\Task\TaskService')
+		taskEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Task\Task')
 
 
 	factories:
-		# taskService:
-		# 	parameters: [entity]
-		# 	class: Service\Task\TaskService(@model, %entity%)
-
-		serviceCurrency:
-			parameters: [entity]
-			class: Service\Currency(@model, %entity%)
-
 		formMaskGenerator:
 			parameters: [entityReflection, config]
 			factory: Extras\FormMask\Generator::factory(@formMask, %entityReflection%, %config%)

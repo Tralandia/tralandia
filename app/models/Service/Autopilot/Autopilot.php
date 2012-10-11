@@ -9,7 +9,7 @@ class Autopilot extends \Nette\Object {
 
 	public $taskRepository;
 	public $taskTypeRepository;
-	public $model;
+	public $taskServiceFactory;
 
 	public function createTask($typeName) {
 		$type = $this->taskTypeRepository->findOneBy(array('technicalName' => $typeName));
@@ -28,7 +28,7 @@ class Autopilot extends \Nette\Object {
 
 		$task->startTime = new \Nette\DateTime;
 
-		$taskService = new \Service\Task\TaskService($this->model, $task);
+		$taskService = $this->taskServiceFactory->create($task);
 
 		return $taskService;
 	}

@@ -1,6 +1,6 @@
 <?php
 
-namespace Extras\Models;
+namespace Extras\Models\Entity;
 
 /**
  * Vrstva entita

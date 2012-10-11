@@ -9,7 +9,7 @@ use Extras;
  * @ORM\MappedSuperclass()
  * @ORM\HasLifecycleCallbacks
  */
-class BaseEntity extends \Extras\Models\Entity implements Extras\IEntity {
+class BaseEntity extends \Extras\Models\Entity\Entity {
 
 	/**
 	 * @var integer

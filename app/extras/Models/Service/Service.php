@@ -1,6 +1,6 @@
 <?php
 
-namespace Extras\Service;
+namespace Extras\Models\Service;
 
 use Nette, Doctrine, Extras;
 
@@ -24,7 +24,7 @@ abstract class Service extends Nette\Object implements IService {
 	 * @param Doctrine\ORM\EntityManager
 	 * @param IEntity
 	 */
-	public function __construct(Doctrine\ORM\EntityManager $entityManager, Extras\IEntity $entity) {
+	public function __construct(Doctrine\ORM\EntityManager $entityManager, Extras\Models\Entity\IEntity $entity) {
 		$this->entityManager = $entityManager;
 		$this->entity = $entity;
 	}

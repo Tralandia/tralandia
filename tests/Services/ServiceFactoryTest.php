@@ -20,7 +20,7 @@ class ServiceFactoryTest extends PHPUnit_Framework_TestCase
 	public function testBase() {
 		$entity = $this->taskRepository->find(1);
 		$service = $this->taskServiceFactory->create($entity);
-		//d($service);
+
 		$this->assertInstanceOf('\Service\Task\TaskService', $service);
 	}
 

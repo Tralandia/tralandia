@@ -1,5 +1,5 @@
 <?php
-namespace Extras\Service;
+namespace Extras\Models\Service;
 
 /**
  * ServiceFactory class
