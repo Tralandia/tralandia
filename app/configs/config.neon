@@ -104,6 +104,9 @@ common:
 		taskServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\Task\TaskService')
 		taskEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Task\Task')
 
+		taskFactory: Extras\Models\ModelFactory(@model, 'Task\Task')
+
+
 
 	factories:
 		formMaskGenerator:

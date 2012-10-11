@@ -46,6 +46,14 @@ abstract class Service extends Nette\Object implements IService {
 	}
 
 	/**
+	 * Vrati entitu
+	 * @return IEntity
+	 */
+	public function getEntity() {
+		return $this->entity;
+	}
+
+	/**
 	 * Ulozenie meny
 	 * @return bool
 	 */
