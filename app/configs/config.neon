@@ -106,18 +106,22 @@ common:
 		taskServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\Task\TaskService', @taskEntityFactory)
 
 
+		phraseEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Dictionary\Phrase')
+		phraseServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\Dictionary\Phrase', @phraseEntityFactory)
+
+#		formMaskGenerator:
+#			parameters: [mask, config, entity]
+#			class: Extras\FormMask\Generator(%mask%, %config%, %entity%)
+#			setup:
+#				- setItemPhrase(@itemPhraseFactory)
+
+		formMask: Extras\FormMask\Mask
+
+		itemPhraseFactory: Extras\FormMask\Items\Foctories\PhraseFactory(@phraseServiceFactory, @environment::getLanguage())
+		itemTextFactory: Extras\FormMask\Items\Foctories\TextFactory
+
 
 	factories:
-		formMaskGenerator:
-			parameters: [mask, config, entity]
-			class: Extras\FormMask\Generator(%mask%, %config%, %entity%)
-
-		formMask:
-			class: Extras\FormMask\Mask
-
-		itemPhrase:
-			parameters: [entity, name, label]
-			class: Extras\FormMask\Items\Phrase(%name%, %label%, @phraseService(%entity%))
 
 production < common:
 
@@ -142,7 +146,6 @@ development < common:
 
 vaculciak < development:
 	parameters:
-
 		editor: 'txmt://open/?url=file://%file&line=%line'
 
 durika < development:

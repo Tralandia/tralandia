@@ -14,27 +14,23 @@ class Generator extends Nette\Object {
 
 	protected $configurator;
 
-	public function __construct(Extras\FormMask\Mask $mask, Extras\Config\Configurator $configurator, Extras\IEntity $entity) {
+	protected $factories = array();
+
+	public function __construct(Extras\FormMask\Mask $mask, Extras\Config\Configurator $configurator, Extras\Models\Entity\IEntity $entity) {
 		$this->entity = $entity;
 		$this->entityReflection = Extras\Reflection\Entity\ClassType::from($entity);
 		$this->configurator = $configurator;
-		$this->mask = $mask;
-		
-
-		//debug($this->entityReflection);	
+		$this->mask = $mask;	
 	}
 
 
 	public function build() {
 
-
-
 		foreach ($this->configurator->getForm() as $field) {
-
-			$item = $this->mask->add(constant('Extras\\FormMask\\Mask::' . $field->getType()), $field->getName(), $field->getLabel());
-
+			$item = $this->factories[$field->getType()]->create($field->getName(), $field->getLabel(), $this->entity->name);
 			$item->setValueGetter(new Extras\Callback($this->entity, $this->getterMethodName($field->getName()), array($this->entity)));
 			$item->setValueSetter(new Extras\Callback($this->entity, $this->setterMethodName($field->getName()), array($this->entity)));
+			$this->mask->addItem($item);
 		}
 		$this->mask->add(Extras\FormMask\Mask::SUBMIT, 'submit', 'Odoslať');
 	}
@@ -48,7 +44,11 @@ class Generator extends Nette\Object {
 	}
 
 
-	public function setPhraseItem($entity, $name, $label) {
-		return 'set' . ucfirst($name);
+	public function setItemPhrase(Extras\FormMask\Items\Foctories\PhraseFactory $factory) {
+		$this->factories['phrase'] = $factory;
+	}
+
+	public function setItemText(Extras\FormMask\Items\Foctories\TextFactory $factory) {
+		$this->factories['text'] = $factory;
 	}
 }
