@@ -102,10 +102,8 @@ common:
 				- $taskTypeRepository(@taskTypeRepository)
 				- $taskServiceFactory(@taskServiceFactory)
 
-		taskServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\Task\TaskService')
 		taskEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Task\Task')
-
-		taskFactory: Extras\Models\ModelFactory(@model, 'Task\Task')
+		taskServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\Task\TaskService', @taskEntityFactory)
 
 
 
