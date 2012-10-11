@@ -13,7 +13,7 @@ abstract class Base {
 	protected $name;
 
 	/** @var string */
-	protected $label = null;
+	protected $label;
 
 	/** @var Extras\Callback */
 	protected $valueGetter;
@@ -25,7 +25,7 @@ abstract class Base {
 	 * @param string
 	 * @param string
 	 */
-	public function __construct($name, $label = null) {
+	public function __construct($name, $label) {
 		$this->name = $name;
 		$this->label = $label;
 	}

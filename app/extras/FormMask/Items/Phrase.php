@@ -2,12 +2,24 @@
 
 namespace Extras\FormMask\Items;
 
-use Nette;
+use Nette, Service;
 
 /**
  * Phrase polozka masky
  */
 class Phrase extends Base {
+
+	protected $phraseService;
+
+	/**
+	 * @param string
+	 * @param string
+	 * @param Service\Dictionary\Phrase
+	 */
+	public function __construct($name, $label, Service\Dictionary\Phrase $phraseService) {
+		parent::__constructor($name, $label);
+		$this->phraseService = $phraseService;
+	}
 
 	/**
 	 * Prida polozku do formulara

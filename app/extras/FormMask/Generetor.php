@@ -26,6 +26,9 @@ class Generator extends Nette\Object {
 
 
 	public function build() {
+
+
+
 		foreach ($this->configurator->getForm() as $field) {
 
 			$item = $this->mask->add(constant('Extras\\FormMask\\Mask::' . $field->getType()), $field->getName(), $field->getLabel());
@@ -42,5 +45,10 @@ class Generator extends Nette\Object {
 
 	private function getterMethodName($name) {
 		return 'get' . ucfirst($name);
+	}
+
+
+	public function setPhraseItem($entity, $name, $label) {
+		return 'set' . ucfirst($name);
 	}
 }

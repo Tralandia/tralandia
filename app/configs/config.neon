@@ -53,6 +53,7 @@ common:
 		- webLoader.neon
 		- acl/acl.neon
 		- repositories.neon
+		- services.neon
 
 	services:
 		console: @doctrine.console
@@ -106,12 +107,15 @@ common:
 			class: Service\Currency(@model, %entity%)
 
 		formMaskGenerator:
-			parameters: [entityReflection, config]
-			factory: Extras\FormMask\Generator::factory(@formMask, %entityReflection%, %config%)
+			parameters: [mask, config, entity]
+			class: Extras\FormMask\Generator(%mask%, %config%, %entity%)
 
 		formMask:
 			class: Extras\FormMask\Mask
 
+		itemPhrase:
+			parameters: [entity, name, label]
+			class: Extras\FormMask\Items\Phrase(%name%, %label%, @phraseService(%entity%))
 
 production < common:
 
