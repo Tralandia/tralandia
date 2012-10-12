@@ -9,8 +9,6 @@ use	Extras\Annotation as EA;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="company_bankaccount")
- * @EA\Service(name="\Service\Company\BankAccount")
- * @EA\ServiceList(name="\Service\Company\BankAccountList")
  * @EA\Primary(key="id", value="bankName")
  */
 class BankAccount extends \Entity\BaseEntity {
@@ -68,28 +66,6 @@ class BankAccount extends \Entity\BaseEntity {
 	 * @ORM\Column(type="text", nullable=true)
 	 */
 	protected $notes;
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	//@entity-generator-code --- NEMAZAT !!!
 

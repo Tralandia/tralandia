@@ -12,8 +12,6 @@ use	Extras\Annotation as EA;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="company_company")
- * @EA\Service(name="\Service\Company\Company")
- * @EA\ServiceList(name="\Service\Company\CompanyList")
  * @EA\Primary(key="id", value="name")
  */
 class Company extends \Entity\BaseEntityDetails {
@@ -77,28 +75,6 @@ class Company extends \Entity\BaseEntityDetails {
 	 * @ORM\OneToMany(targetEntity="Entity\Invoicing\Invoice", mappedBy="company")
 	 */
 	protected $invoices;
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	//@entity-generator-code --- NEMAZAT !!!
 

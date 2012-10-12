@@ -11,8 +11,6 @@ use	Extras\Annotation as EA;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="expense_expense")
- * @EA\Service(name="\Service\Expense\Expense")
- * @EA\ServiceList(name="\Service\Expense\ExpenseList")
  * @EA\Primary(key="id", value="name")
  */
 class Expense extends \Entity\BaseEntity {
@@ -58,27 +56,6 @@ class Expense extends \Entity\BaseEntity {
 	 * @ORM\ManyToOne(targetEntity="Entity\User\User")
 	 */
 	protected $user;
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	//@entity-generator-code --- NEMAZAT !!!
 

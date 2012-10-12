@@ -10,7 +10,7 @@ use	Extras\Annotation as EA;
 
 
 /**
- * @ORM\Entity(repositoryClass="Repository\Task\TaskRepository")
+ * @ORM\Entity()
  * @ORM\Table(name="task_task", indexes={@ORM\index(name="startTime", columns={"startTime"}), @ORM\index(name="due", columns={"due"}), @ORM\index(name="durationPaid", columns={"durationPaid"}), @ORM\index(name="userLanguageLevel", columns={"userLanguageLevel"})})
  * @EA\Primary(key="id", value="name")
  */

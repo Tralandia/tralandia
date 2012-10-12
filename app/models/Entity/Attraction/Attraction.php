@@ -12,8 +12,6 @@ use	Extras\Annotation as EA;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="attraction_attraction")
- * @EA\Service(name="\Service\Attraction\Attraction")
- * @EA\ServiceList(name="\Service\Attraction\AttractionList")
  * @EA\Primary(key="id", value="id")
  */
 class Attraction extends \Entity\BaseEntityDetails {

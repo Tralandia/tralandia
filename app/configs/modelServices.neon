@@ -6,9 +6,7 @@ services:
 
 	attractionServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @attractionEntityFactory)
 
-	attractionRepository:
-		class: Repository\Attraction\AttractionRepository
-		factory: @model::getRepository('Entity\Attraction\Attraction')
+	attractionRepository: @model::getRepository('Entity\Attraction\Attraction')
 
 
 
@@ -17,9 +15,7 @@ services:
 
 	attractionTypeServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @attractionTypeEntityFactory)
 
-	attractionTypeRepository:
-		class: Repository\Attraction\TypeRepository
-		factory: @model::getRepository('Entity\Attraction\Type')
+	attractionTypeRepository: @model::getRepository('Entity\Attraction\Type')
 
 
 	#company
@@ -28,9 +24,7 @@ services:
 
 	companyBankAccountServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @companyBankAccountEntityFactory)
 
-	companyBankAccountRepository:
-		class: Repository\Company\BankAccountRepository
-		factory: @model::getRepository('Entity\Company\BankAccount')
+	companyBankAccountRepository: @model::getRepository('Entity\Company\BankAccount')
 
 
 	#----------
@@ -38,9 +32,7 @@ services:
 
 	companyServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @companyEntityFactory)
 
-	companyRepository:
-		class: Repository\Company\CompanyRepository
-		factory: @model::getRepository('Entity\Company\Company')
+	companyRepository: @model::getRepository('Entity\Company\Company')
 
 
 	#----------
@@ -48,9 +40,7 @@ services:
 
 	companyOfficeServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @companyOfficeEntityFactory)
 
-	companyOfficeRepository:
-		class: Repository\Company\OfficeRepository
-		factory: @model::getRepository('Entity\Company\Office')
+	companyOfficeRepository: @model::getRepository('Entity\Company\Office')
 
 
 	#contact
@@ -59,9 +49,7 @@ services:
 
 	contactCacheServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @contactCacheEntityFactory)
 
-	contactCacheRepository:
-		class: Repository\ContactCacheRepository
-		factory: @model::getRepository('Entity\ContactCache')
+	contactCacheRepository: @model::getRepository('Entity\ContactCache')
 
 
 	#----------
@@ -69,9 +57,7 @@ services:
 
 	currencyServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @currencyEntityFactory)
 
-	currencyRepository:
-		class: Repository\CurrencyRepository
-		factory: @model::getRepository('Entity\Currency')
+	currencyRepository: @model::getRepository('Entity\Currency')
 
 
 	#dictionary
@@ -80,9 +66,7 @@ services:
 
 	dictionaryLanguageServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @dictionaryLanguageEntityFactory)
 
-	dictionaryLanguageRepository:
-		class: Repository\Dictionary\LanguageRepository
-		factory: @model::getRepository('Entity\Dictionary\Language')
+	dictionaryLanguageRepository: @model::getRepository('Entity\Dictionary\Language')
 
 
 	#----------
@@ -90,9 +74,7 @@ services:
 
 	dictionaryPhraseServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @dictionaryPhraseEntityFactory)
 
-	dictionaryPhraseRepository:
-		class: Repository\Dictionary\PhraseRepository
-		factory: @model::getRepository('Entity\Dictionary\Phrase')
+	dictionaryPhraseRepository: @model::getRepository('Entity\Dictionary\Phrase')
 
 
 	#----------
@@ -100,9 +82,7 @@ services:
 
 	dictionaryTranslationServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @dictionaryTranslationEntityFactory)
 
-	dictionaryTranslationRepository:
-		class: Repository\Dictionary\TranslationRepository
-		factory: @model::getRepository('Entity\Dictionary\Translation')
+	dictionaryTranslationRepository: @model::getRepository('Entity\Dictionary\Translation')
 
 
 	#----------
@@ -110,9 +90,7 @@ services:
 
 	dictionaryTypeServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @dictionaryTypeEntityFactory)
 
-	dictionaryTypeRepository:
-		class: Repository\Dictionary\TypeRepository
-		factory: @model::getRepository('Entity\Dictionary\Type')
+	dictionaryTypeRepository: @model::getRepository('Entity\Dictionary\Type')
 
 
 	#domain
@@ -121,9 +99,7 @@ services:
 
 	domainServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @domainEntityFactory)
 
-	domainRepository:
-		class: Repository\DomainRepository
-		factory: @model::getRepository('Entity\Domain')
+	domainRepository: @model::getRepository('Entity\Domain')
 
 
 	#emailing
@@ -132,9 +108,7 @@ services:
 
 	emailingBatchServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @emailingBatchEntityFactory)
 
-	emailingBatchRepository:
-		class: Repository\Emailing\BatchRepository
-		factory: @model::getRepository('Entity\Emailing\Batch')
+	emailingBatchRepository: @model::getRepository('Entity\Emailing\Batch')
 
 
 	#----------
@@ -142,9 +116,7 @@ services:
 
 	emailingTemplateServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @emailingTemplateEntityFactory)
 
-	emailingTemplateRepository:
-		class: Repository\Emailing\TemplateRepository
-		factory: @model::getRepository('Entity\Emailing\Template')
+	emailingTemplateRepository: @model::getRepository('Entity\Emailing\Template')
 
 
 	#----------
@@ -152,9 +124,7 @@ services:
 
 	emailingTemplateTypeServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @emailingTemplateTypeEntityFactory)
 
-	emailingTemplateTypeRepository:
-		class: Repository\Emailing\TemplateTypeRepository
-		factory: @model::getRepository('Entity\Emailing\TemplateType')
+	emailingTemplateTypeRepository: @model::getRepository('Entity\Emailing\TemplateType')
 
 
 	#expense
@@ -163,9 +133,7 @@ services:
 
 	expenseServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @expenseEntityFactory)
 
-	expenseRepository:
-		class: Repository\Expense\ExpenseRepository
-		factory: @model::getRepository('Entity\Expense\Expense')
+	expenseRepository: @model::getRepository('Entity\Expense\Expense')
 
 
 	#----------
@@ -173,9 +141,7 @@ services:
 
 	expenseTypeServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @expenseTypeEntityFactory)
 
-	expenseTypeRepository:
-		class: Repository\Expense\TypeRepository
-		factory: @model::getRepository('Entity\Expense\Type')
+	expenseTypeRepository: @model::getRepository('Entity\Expense\Type')
 
 
 	#invoicing
@@ -184,9 +150,7 @@ services:
 
 	invoicingCouponServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoicingCouponEntityFactory)
 
-	invoicingCouponRepository:
-		class: Repository\Invoicing\CouponRepository
-		factory: @model::getRepository('Entity\Invoicing\Coupon')
+	invoicingCouponRepository: @model::getRepository('Entity\Invoicing\Coupon')
 
 
 	#----------
@@ -194,9 +158,7 @@ services:
 
 	invoicingInvoiceServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoicingInvoiceEntityFactory)
 
-	invoicingInvoiceRepository:
-		class: Repository\Invoicing\InvoiceRepository
-		factory: @model::getRepository('Entity\Invoicing\Invoice')
+	invoicingInvoiceRepository: @model::getRepository('Entity\Invoicing\Invoice')
 
 
 	#----------
@@ -204,9 +166,7 @@ services:
 
 	invoicingItemServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoicingItemEntityFactory)
 
-	invoicingItemRepository:
-		class: Repository\Invoicing\ItemRepository
-		factory: @model::getRepository('Entity\Invoicing\Item')
+	invoicingItemRepository: @model::getRepository('Entity\Invoicing\Item')
 
 
 	#----------
@@ -214,9 +174,7 @@ services:
 
 	invoicingMarketingServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoicingMarketingEntityFactory)
 
-	invoicingMarketingRepository:
-		class: Repository\Invoicing\MarketingRepository
-		factory: @model::getRepository('Entity\Invoicing\Marketing')
+	invoicingMarketingRepository: @model::getRepository('Entity\Invoicing\Marketing')
 
 
 	#----------
@@ -224,9 +182,7 @@ services:
 
 	invoicingPackageServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoicingPackageEntityFactory)
 
-	invoicingPackageRepository:
-		class: Repository\Invoicing\PackageRepository
-		factory: @model::getRepository('Entity\Invoicing\Package')
+	invoicingPackageRepository: @model::getRepository('Entity\Invoicing\Package')
 
 
 	#----------
@@ -234,9 +190,7 @@ services:
 
 	invoicingServiceServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoicingServiceEntityFactory)
 
-	invoicingServiceRepository:
-		class: Repository\Invoicing\ServiceRepository
-		factory: @model::getRepository('Entity\Invoicing\Service')
+	invoicingServiceRepository: @model::getRepository('Entity\Invoicing\Service')
 
 
 	#----------
@@ -244,9 +198,7 @@ services:
 
 	invoicingServiceDurationServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoicingServiceDurationEntityFactory)
 
-	invoicingServiceDurationRepository:
-		class: Repository\Invoicing\ServiceDurationRepository
-		factory: @model::getRepository('Entity\Invoicing\ServiceDuration')
+	invoicingServiceDurationRepository: @model::getRepository('Entity\Invoicing\ServiceDuration')
 
 
 	#----------
@@ -254,9 +206,7 @@ services:
 
 	invoicingServiceTypeServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoicingServiceTypeEntityFactory)
 
-	invoicingServiceTypeRepository:
-		class: Repository\Invoicing\ServiceTypeRepository
-		factory: @model::getRepository('Entity\Invoicing\ServiceType')
+	invoicingServiceTypeRepository: @model::getRepository('Entity\Invoicing\ServiceType')
 
 
 	#----------
@@ -264,9 +214,7 @@ services:
 
 	invoicingUseTypeServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoicingUseTypeEntityFactory)
 
-	invoicingUseTypeRepository:
-		class: Repository\Invoicing\UseTypeRepository
-		factory: @model::getRepository('Entity\Invoicing\UseType')
+	invoicingUseTypeRepository: @model::getRepository('Entity\Invoicing\UseType')
 
 
 	#locatoin
@@ -275,9 +223,7 @@ services:
 
 	locationServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @locationEntityFactory)
 
-	locationRepository:
-		class: Repository\Location\LocationRepository
-		factory: @model::getRepository('Entity\Location\Location')
+	locationRepository: @model::getRepository('Entity\Location\Location')
 
 
 	#----------
@@ -285,9 +231,7 @@ services:
 
 	locationTravelingServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @locationTravelingEntityFactory)
 
-	locationTravelingRepository:
-		class: Repository\Location\TravelingRepository
-		factory: @model::getRepository('Entity\Location\Traveling')
+	locationTravelingRepository: @model::getRepository('Entity\Location\Traveling')
 
 
 	#----------
@@ -295,9 +239,7 @@ services:
 
 	locationTypeServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @locationTypeEntityFactory)
 
-	locationTypeRepository:
-		class: Repository\Location\TypeRepository
-		factory: @model::getRepository('Entity\Location\Type')
+	locationTypeRepository: @model::getRepository('Entity\Location\Type')
 
 
 	#log
@@ -306,9 +248,7 @@ services:
 
 	logChangeServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @logChangeEntityFactory)
 
-	logChangeRepository:
-		class: Repository\Log\ChangeRepository
-		factory: @model::getRepository('Entity\Log\Change')
+	logChangeRepository: @model::getRepository('Entity\Log\Change')
 
 
 	#----------
@@ -316,9 +256,7 @@ services:
 
 	logChangeTypeServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @logChangeTypeEntityFactory)
 
-	logChangeTypeRepository:
-		class: Repository\Log\ChangeTypeRepository
-		factory: @model::getRepository('Entity\Log\ChangeType')
+	logChangeTypeRepository: @model::getRepository('Entity\Log\ChangeType')
 
 
 	#----------
@@ -326,9 +264,7 @@ services:
 
 	logSystemServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @logSystemEntityFactory)
 
-	logSystemRepository:
-		class: Repository\Log\SystemRepository
-		factory: @model::getRepository('Entity\Log\System')
+	logSystemRepository: @model::getRepository('Entity\Log\System')
 
 
 	#medium
@@ -337,9 +273,7 @@ services:
 
 	mediumServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @mediumEntityFactory)
 
-	mediumRepository:
-		class: Repository\Medium\MediumRepository
-		factory: @model::getRepository('Entity\Medium\Medium')
+	mediumRepository: @model::getRepository('Entity\Medium\Medium')
 
 
 	#----------
@@ -347,9 +281,7 @@ services:
 
 	mediumTypeServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @mediumTypeEntityFactory)
 
-	mediumTypeRepository:
-		class: Repository\Medium\TypeRepository
-		factory: @model::getRepository('Entity\Medium\Type')
+	mediumTypeRepository: @model::getRepository('Entity\Medium\Type')
 
 
 	#page
@@ -358,9 +290,7 @@ services:
 
 	pageServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @pageEntityFactory)
 
-	pageRepository:
-		class: Repository\PageRepository
-		factory: @model::getRepository('Entity\Page')
+	pageRepository: @model::getRepository('Entity\Page')
 
 
 	#rental
@@ -369,9 +299,7 @@ services:
 
 	rentalAmenityServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @rentalAmenityEntityFactory)
 
-	rentalAmenityRepository:
-		class: Repository\Rental\AmenityRepository
-		factory: @model::getRepository('Entity\Rental\Amenity')
+	rentalAmenityRepository: @model::getRepository('Entity\Rental\Amenity')
 
 
 	#----------
@@ -379,9 +307,7 @@ services:
 
 	rentalAmenityTypeServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @rentalAmenityTypeEntityFactory)
 
-	rentalAmenityTypeRepository:
-		class: Repository\Rental\AmenityTypeRepository
-		factory: @model::getRepository('Entity\Rental\AmenityType')
+	rentalAmenityTypeRepository: @model::getRepository('Entity\Rental\AmenityType')
 
 
 	#----------
@@ -389,9 +315,7 @@ services:
 
 	rentalInformationServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @rentalInformationEntityFactory)
 
-	rentalInformationRepository:
-		class: Repository\Rental\InformationRepository
-		factory: @model::getRepository('Entity\Rental\Information')
+	rentalInformationRepository: @model::getRepository('Entity\Rental\Information')
 
 
 	#----------
@@ -399,9 +323,7 @@ services:
 
 	rentalFulltextServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @rentalFulltextEntityFactory)
 
-	rentalFulltextRepository:
-		class: Repository\Rental\FulltextRepository
-		factory: @model::getRepository('Entity\Rental\Fulltext')
+	rentalFulltextRepository: @model::getRepository('Entity\Rental\Fulltext')
 
 
 	#----------
@@ -409,9 +331,7 @@ services:
 
 	rentalServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @rentalEntityFactory)
 
-	rentalRepository:
-		class: Repository\Rental\RentalRepository
-		factory: @model::getRepository('Entity\Rental\Rental')
+	rentalRepository: @model::getRepository('Entity\Rental\Rental')
 
 
 	#----------
@@ -419,9 +339,7 @@ services:
 
 	rentalTypeServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @rentalTypeEntityFactory)
 
-	rentalTypeRepository:
-		class: Repository\Rental\TypeRepository
-		factory: @model::getRepository('Entity\Rental\Type')
+	rentalTypeRepository: @model::getRepository('Entity\Rental\Type')
 
 
 	#routing
@@ -430,9 +348,7 @@ services:
 
 	routingPathSegmentServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @routingPathSegmentEntityFactory)
 
-	routingPathSegmentRepository:
-		class: Repository\Routing\PathSegmentRepository
-		factory: @model::getRepository('Entity\Routing\PathSegment')
+	routingPathSegmentRepository: @model::getRepository('Entity\Routing\PathSegment')
 
 
 	#----------
@@ -440,9 +356,7 @@ services:
 
 	routingPathSegmentOldServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @routingPathSegmentOldEntityFactory)
 
-	routingPathSegmentOldRepository:
-		class: Repository\Routing\PathSegmentOldRepository
-		factory: @model::getRepository('Entity\Routing\PathSegmentOld')
+	routingPathSegmentOldRepository: @model::getRepository('Entity\Routing\PathSegmentOld')
 
 
 	#seo
@@ -451,9 +365,7 @@ services:
 
 	seoBackLinkServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @seoBackLinkEntityFactory)
 
-	seoBackLinkRepository:
-		class: Repository\Seo\BackLinkRepository
-		factory: @model::getRepository('Entity\Seo\BackLink')
+	seoBackLinkRepository: @model::getRepository('Entity\Seo\BackLink')
 
 
 	#----------
@@ -461,9 +373,7 @@ services:
 
 	seoSeoUrlServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @seoSeoUrlEntityFactory)
 
-	seoSeoUrlRepository:
-		class: Repository\Seo\SeoUrlRepository
-		factory: @model::getRepository('Entity\Seo\SeoUrl')
+	seoSeoUrlRepository: @model::getRepository('Entity\Seo\SeoUrl')
 
 
 	#----------
@@ -471,9 +381,7 @@ services:
 
 	seoTitleSuffixServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @seoTitleSuffixEntityFactory)
 
-	seoTitleSuffixRepository:
-		class: Repository\Seo\TitleSuffixRepository
-		factory: @model::getRepository('Entity\Seo\TitleSuffix')
+	seoTitleSuffixRepository: @model::getRepository('Entity\Seo\TitleSuffix')
 
 
 	#task
@@ -482,9 +390,7 @@ services:
 
 	taskServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\Task\TaskService', @taskEntityFactory)
 
-	taskRepository:
-		class: Repository\Task\TaskRepository
-		factory: @model::getRepository('Entity\Task\Task')
+	taskRepository: @model::getRepository('Entity\Task\Task')
 
 
 	#----------
@@ -492,9 +398,7 @@ services:
 
 	taskTypeServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @taskTypeEntityFactory)
 
-	taskTypeRepository:
-		class: Repository\Task\TypeRepository
-		factory: @model::getRepository('Entity\Task\Type')
+	taskTypeRepository: @model::getRepository('Entity\Task\Type')
 
 
 	#ticket
@@ -503,9 +407,7 @@ services:
 
 	ticketMessageServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @ticketMessageEntityFactory)
 
-	ticketMessageRepository:
-		class: Repository\Ticket\MessageRepository
-		factory: @model::getRepository('Entity\Ticket\Message')
+	ticketMessageRepository: @model::getRepository('Entity\Ticket\Message')
 
 
 	#----------
@@ -513,9 +415,7 @@ services:
 
 	ticketServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @ticketEntityFactory)
 
-	ticketRepository:
-		class: Repository\Ticket\TicketRepository
-		factory: @model::getRepository('Entity\Ticket\Ticket')
+	ticketRepository: @model::getRepository('Entity\Ticket\Ticket')
 
 
 	#user
@@ -524,9 +424,7 @@ services:
 
 	userCombinationServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @userCombinationEntityFactory)
 
-	userCombinationRepository:
-		class: Repository\User\CombinationRepository
-		factory: @model::getRepository('Entity\User\Combination')
+	userCombinationRepository: @model::getRepository('Entity\User\Combination')
 
 
 	#----------
@@ -534,9 +432,7 @@ services:
 
 	userRentalQuestionServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @userRentalQuestionEntityFactory)
 
-	userRentalQuestionRepository:
-		class: Repository\User\RentalQuestionRepository
-		factory: @model::getRepository('Entity\User\RentalQuestion')
+	userRentalQuestionRepository: @model::getRepository('Entity\User\RentalQuestion')
 
 
 	#----------
@@ -544,9 +440,7 @@ services:
 
 	userRentalReservationServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @userRentalReservationEntityFactory)
 
-	userRentalReservationRepository:
-		class: Repository\User\RentalReservationRepository
-		factory: @model::getRepository('Entity\User\RentalReservation')
+	userRentalReservationRepository: @model::getRepository('Entity\User\RentalReservation')
 
 
 	#----------
@@ -554,9 +448,7 @@ services:
 
 	userRentalReviewServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @userRentalReviewEntityFactory)
 
-	userRentalReviewRepository:
-		class: Repository\User\RentalReviewRepository
-		factory: @model::getRepository('Entity\User\RentalReview')
+	userRentalReviewRepository: @model::getRepository('Entity\User\RentalReview')
 
 
 	#----------
@@ -564,9 +456,7 @@ services:
 
 	userRentalToFriendServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @userRentalToFriendEntityFactory)
 
-	userRentalToFriendRepository:
-		class: Repository\User\RentalToFriendRepository
-		factory: @model::getRepository('Entity\User\RentalToFriend')
+	userRentalToFriendRepository: @model::getRepository('Entity\User\RentalToFriend')
 
 
 	#----------
@@ -574,9 +464,7 @@ services:
 
 	userRoleServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @userRoleEntityFactory)
 
-	userRoleRepository:
-		class: Repository\User\RoleRepository
-		factory: @model::getRepository('Entity\User\Role')
+	userRoleRepository: @model::getRepository('Entity\User\Role')
 
 
 	#----------
@@ -584,9 +472,7 @@ services:
 
 	userSiteOwnerReviewServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @userSiteOwnerReviewEntityFactory)
 
-	userSiteOwnerReviewRepository:
-		class: Repository\User\SiteOwnerReviewRepository
-		factory: @model::getRepository('Entity\User\SiteOwnerReview')
+	userSiteOwnerReviewRepository: @model::getRepository('Entity\User\SiteOwnerReview')
 
 
 	#----------
@@ -594,9 +480,7 @@ services:
 
 	userSiteVisitorReviewServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @userSiteVisitorReviewEntityFactory)
 
-	userSiteVisitorReviewRepository:
-		class: Repository\User\SiteVisitorReviewRepository
-		factory: @model::getRepository('Entity\User\SiteVisitorReview')
+	userSiteVisitorReviewRepository: @model::getRepository('Entity\User\SiteVisitorReview')
 
 
 	#----------
@@ -604,8 +488,6 @@ services:
 
 	userServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @userEntityFactory)
 
-	userRepository:
-		class: Repository\User\UserRepository
-		factory: @model::getRepository('Entity\User\User')
+	userRepository: @model::getRepository('Entity\User\User')
 
 

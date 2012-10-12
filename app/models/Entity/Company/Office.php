@@ -8,8 +8,6 @@ use	Extras\Annotation as EA;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="company_office")
- * @EA\Service(name="\Service\Company\Office")
- * @EA\ServiceList(name="\Service\Company\OfficeList")
  * @EA\Primary(key="id", value="address")
  */
 class Office extends \Entity\BaseEntityDetails {

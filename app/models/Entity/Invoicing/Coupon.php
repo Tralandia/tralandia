@@ -9,8 +9,6 @@ use	Extras\Annotation as EA;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="invoicing_coupon", indexes={@ORM\index(name="code", columns={"code"}), @ORM\index(name="countTotal", columns={"countTotal"}), @ORM\index(name="countLeft", columns={"countLeft"}), @ORM\index(name="validFrom", columns={"validFrom"}), @ORM\index(name="validTo", columns={"validTo"})})
- * @EA\Service(name="\Service\Invoicing\Coupon")
- * @EA\ServiceList(name="\Service\Invoicing\CouponList")
  * @EA\Primary(key="id", value="name")
  */
 class Coupon extends \Entity\BaseEntity {
@@ -62,26 +60,6 @@ class Coupon extends \Entity\BaseEntity {
 	 * @ORM\ManyToOne(targetEntity="Package")
 	 */
 	protected $recommendeePackage;
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 	//@entity-generator-code --- NEMAZAT !!!

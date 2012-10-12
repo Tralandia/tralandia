@@ -7,7 +7,7 @@ use	Extras\Annotation as EA;
 
 
 /**
- * @ORM\Entity(repositoryClass="Repository\Task\TypeRepository")
+ * @ORM\Entity()
  * @ORM\Table(name="task_type")
  * @EA\Service(name="\Service\Task\Type")
  * @EA\ServiceList(name="\Service\Task\TypeList")

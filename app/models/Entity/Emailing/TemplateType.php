@@ -9,8 +9,6 @@ use	Extras\Annotation as EA;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="emailing_templatetype")
- * @EA\Service(name="\Service\Emailing\TemplateType")
- * @EA\ServiceList(name="\Service\Emailing\TemplateTypeList")
  * @EA\Primary(key="id", value="name")
  */
 class TemplateType extends \Entity\BaseEntity {

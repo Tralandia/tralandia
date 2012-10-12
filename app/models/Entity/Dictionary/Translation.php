@@ -10,8 +10,6 @@ use	Extras\Annotation as EA;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="dictionary_translation", indexes={@ORM\index(name="timeTranslated", columns={"timeTranslated"}), @ORM\index(name="checked", columns={"checked"})})
- * @EA\Service(name="\Service\Dictionary\Translation")
- * @EA\ServiceList(name="\Service\Dictionary\TranslationList")
  * @EA\Primary(key="id", value="translation")
  */
 class Translation extends \Entity\BaseEntity {
