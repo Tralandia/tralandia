@@ -34,28 +34,11 @@ class Amenity extends \Entity\BaseEntityDetails {
 	protected $name;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//@entity-generator-code <--- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 
 		$this->rentals = new \Doctrine\Common\Collections\ArrayCollection;
@@ -65,7 +48,8 @@ class Amenity extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Rental\AmenityType
 	 * @return \Entity\Rental\Amenity
 	 */
-	public function setType(\Entity\Rental\AmenityType $type) {
+	public function setType(\Entity\Rental\AmenityType $type)
+	{
 		$this->type = $type;
 
 		return $this;
@@ -74,7 +58,8 @@ class Amenity extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Rental\Amenity
 	 */
-	public function unsetType() {
+	public function unsetType()
+	{
 		$this->type = NULL;
 
 		return $this;
@@ -83,7 +68,8 @@ class Amenity extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Rental\AmenityType|NULL
 	 */
-	public function getType() {
+	public function getType()
+	{
 		return $this->type;
 	}
 		
@@ -91,7 +77,8 @@ class Amenity extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Rental\Rental
 	 * @return \Entity\Rental\Amenity
 	 */
-	public function addRental(\Entity\Rental\Rental $rental) {
+	public function addRental(\Entity\Rental\Rental $rental)
+	{
 		if(!$this->rentals->contains($rental)) {
 			$this->rentals->add($rental);
 		}
@@ -102,7 +89,8 @@ class Amenity extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Rental\Rental
 	 */
-	public function getRentals() {
+	public function getRentals()
+	{
 		return $this->rentals;
 	}
 		
@@ -110,7 +98,8 @@ class Amenity extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Dictionary\Phrase
 	 * @return \Entity\Rental\Amenity
 	 */
-	public function setName(\Entity\Dictionary\Phrase $name) {
+	public function setName(\Entity\Dictionary\Phrase $name)
+	{
 		$this->name = $name;
 
 		return $this;
@@ -119,7 +108,8 @@ class Amenity extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Dictionary\Phrase|NULL
 	 */
-	public function getName() {
+	public function getName()
+	{
 		return $this->name;
 	}
 }

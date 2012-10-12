@@ -46,10 +46,11 @@ class Phrase extends \Entity\BaseEntityDetails {
 	 */
 	protected $sourceLanguage;
 
-//@entity-generator-code <--- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 
 		$this->translations = new \Doctrine\Common\Collections\ArrayCollection;
@@ -59,7 +60,8 @@ class Phrase extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Dictionary\Translation
 	 * @return \Entity\Dictionary\Phrase
 	 */
-	public function addTranslation(\Entity\Dictionary\Translation $translation) {
+	public function addTranslation(\Entity\Dictionary\Translation $translation)
+	{
 		if(!$this->translations->contains($translation)) {
 			$this->translations->add($translation);
 		}
@@ -72,7 +74,8 @@ class Phrase extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Dictionary\Translation
 	 * @return \Entity\Dictionary\Phrase
 	 */
-	public function removeTranslation(\Entity\Dictionary\Translation $translation) {
+	public function removeTranslation(\Entity\Dictionary\Translation $translation)
+	{
 		if($this->translations->contains($translation)) {
 			$this->translations->removeElement($translation);
 		}
@@ -84,7 +87,8 @@ class Phrase extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Dictionary\Translation
 	 */
-	public function getTranslations() {
+	public function getTranslations()
+	{
 		return $this->translations;
 	}
 		
@@ -92,7 +96,8 @@ class Phrase extends \Entity\BaseEntityDetails {
 	 * @param boolean
 	 * @return \Entity\Dictionary\Phrase
 	 */
-	public function setReady($ready) {
+	public function setReady($ready)
+	{
 		$this->ready = $ready;
 
 		return $this;
@@ -101,15 +106,36 @@ class Phrase extends \Entity\BaseEntityDetails {
 	/**
 	 * @return boolean|NULL
 	 */
-	public function getReady() {
+	public function getReady()
+	{
 		return $this->ready;
+	}
+		
+	/**
+	 * @param boolean
+	 * @return \Entity\Dictionary\Phrase
+	 */
+	public function setCorrected($corrected)
+	{
+		$this->corrected = $corrected;
+
+		return $this;
+	}
+		
+	/**
+	 * @return boolean|NULL
+	 */
+	public function getCorrected()
+	{
+		return $this->corrected;
 	}
 		
 	/**
 	 * @param \Entity\Dictionary\Type
 	 * @return \Entity\Dictionary\Phrase
 	 */
-	public function setType(\Entity\Dictionary\Type $type) {
+	public function setType(\Entity\Dictionary\Type $type)
+	{
 		$this->type = $type;
 
 		return $this;
@@ -118,7 +144,8 @@ class Phrase extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Dictionary\Phrase
 	 */
-	public function unsetType() {
+	public function unsetType()
+	{
 		$this->type = NULL;
 
 		return $this;
@@ -127,7 +154,8 @@ class Phrase extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Dictionary\Type|NULL
 	 */
-	public function getType() {
+	public function getType()
+	{
 		return $this->type;
 	}
 		
@@ -135,7 +163,8 @@ class Phrase extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Dictionary\Language
 	 * @return \Entity\Dictionary\Phrase
 	 */
-	public function setSourceLanguage(\Entity\Dictionary\Language $sourceLanguage) {
+	public function setSourceLanguage(\Entity\Dictionary\Language $sourceLanguage)
+	{
 		$this->sourceLanguage = $sourceLanguage;
 
 		return $this;
@@ -144,7 +173,8 @@ class Phrase extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Dictionary\Phrase
 	 */
-	public function unsetSourceLanguage() {
+	public function unsetSourceLanguage()
+	{
 		$this->sourceLanguage = NULL;
 
 		return $this;
@@ -153,7 +183,8 @@ class Phrase extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Dictionary\Language|NULL
 	 */
-	public function getSourceLanguage() {
+	public function getSourceLanguage()
+	{
 		return $this->sourceLanguage;
 	}
 }

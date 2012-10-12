@@ -53,10 +53,11 @@ class Fulltext extends \Entity\BaseEntity {
 
 
 
-//@entity-generator-code <--- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 	}
 		
@@ -64,7 +65,8 @@ class Fulltext extends \Entity\BaseEntity {
 	 * @param \Entity\Rental\Rental
 	 * @return \Entity\Rental\Fulltext
 	 */
-	public function setRental(\Entity\Rental\Rental $rental) {
+	public function setRental(\Entity\Rental\Rental $rental)
+	{
 		$this->rental = $rental;
 
 		return $this;
@@ -73,7 +75,8 @@ class Fulltext extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Rental\Fulltext
 	 */
-	public function unsetRental() {
+	public function unsetRental()
+	{
 		$this->rental = NULL;
 
 		return $this;
@@ -82,7 +85,8 @@ class Fulltext extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Rental\Rental|NULL
 	 */
-	public function getRental() {
+	public function getRental()
+	{
 		return $this->rental;
 	}
 		
@@ -90,7 +94,8 @@ class Fulltext extends \Entity\BaseEntity {
 	 * @param \Entity\Dictionary\Language
 	 * @return \Entity\Rental\Fulltext
 	 */
-	public function setLanguage(\Entity\Dictionary\Language $language) {
+	public function setLanguage(\Entity\Dictionary\Language $language)
+	{
 		$this->language = $language;
 
 		return $this;
@@ -99,7 +104,8 @@ class Fulltext extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Rental\Fulltext
 	 */
-	public function unsetLanguage() {
+	public function unsetLanguage()
+	{
 		$this->language = NULL;
 
 		return $this;
@@ -108,7 +114,8 @@ class Fulltext extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Dictionary\Language|NULL
 	 */
-	public function getLanguage() {
+	public function getLanguage()
+	{
 		return $this->language;
 	}
 		
@@ -116,7 +123,8 @@ class Fulltext extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Rental\Fulltext
 	 */
-	public function setValue($value) {
+	public function setValue($value)
+	{
 		$this->value = $value;
 
 		return $this;
@@ -125,7 +133,8 @@ class Fulltext extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getValue() {
+	public function getValue()
+	{
 		return $this->value;
 	}
 }

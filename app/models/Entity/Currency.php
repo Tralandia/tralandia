@@ -45,10 +45,11 @@ class Currency extends \Entity\BaseEntity {
 	 */
 	protected $locations;
 
-//@entity-generator-code <--- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 
 		$this->locations = new \Doctrine\Common\Collections\ArrayCollection;
@@ -58,7 +59,8 @@ class Currency extends \Entity\BaseEntity {
 	 * @param \Entity\Dictionary\Phrase
 	 * @return \Entity\Currency
 	 */
-	public function setName(\Entity\Dictionary\Phrase $name) {
+	public function setName(\Entity\Dictionary\Phrase $name)
+	{
 		$this->name = $name;
 
 		return $this;
@@ -67,7 +69,8 @@ class Currency extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Dictionary\Phrase|NULL
 	 */
-	public function getName() {
+	public function getName()
+	{
 		return $this->name;
 	}
 		
@@ -75,7 +78,8 @@ class Currency extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Currency
 	 */
-	public function setIso($iso) {
+	public function setIso($iso)
+	{
 		$this->iso = $iso;
 
 		return $this;
@@ -84,7 +88,8 @@ class Currency extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getIso() {
+	public function getIso()
+	{
 		return $this->iso;
 	}
 		
@@ -92,7 +97,8 @@ class Currency extends \Entity\BaseEntity {
 	 * @param float
 	 * @return \Entity\Currency
 	 */
-	public function setExchangeRate($exchangeRate) {
+	public function setExchangeRate($exchangeRate)
+	{
 		$this->exchangeRate = $exchangeRate;
 
 		return $this;
@@ -101,7 +107,8 @@ class Currency extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Currency
 	 */
-	public function unsetExchangeRate() {
+	public function unsetExchangeRate()
+	{
 		$this->exchangeRate = NULL;
 
 		return $this;
@@ -110,7 +117,8 @@ class Currency extends \Entity\BaseEntity {
 	/**
 	 * @return float|NULL
 	 */
-	public function getExchangeRate() {
+	public function getExchangeRate()
+	{
 		return $this->exchangeRate;
 	}
 		
@@ -118,7 +126,8 @@ class Currency extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Currency
 	 */
-	public function setRounding($rounding) {
+	public function setRounding($rounding)
+	{
 		$this->rounding = $rounding;
 
 		return $this;
@@ -127,7 +136,8 @@ class Currency extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Currency
 	 */
-	public function unsetRounding() {
+	public function unsetRounding()
+	{
 		$this->rounding = NULL;
 
 		return $this;
@@ -136,7 +146,8 @@ class Currency extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getRounding() {
+	public function getRounding()
+	{
 		return $this->rounding;
 	}
 		
@@ -144,7 +155,8 @@ class Currency extends \Entity\BaseEntity {
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Currency
 	 */
-	public function addLocation(\Entity\Location\Location $location) {
+	public function addLocation(\Entity\Location\Location $location)
+	{
 		if(!$this->locations->contains($location)) {
 			$this->locations->add($location);
 		}
@@ -155,7 +167,8 @@ class Currency extends \Entity\BaseEntity {
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Location\Location
 	 */
-	public function getLocations() {
+	public function getLocations()
+	{
 		return $this->locations;
 	}
 }

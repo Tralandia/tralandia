@@ -60,10 +60,11 @@ class UseType extends \Entity\BaseEntity {
 
 
 
-//@entity-generator-code <--- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 
 		$this->packages = new \Doctrine\Common\Collections\ArrayCollection;
@@ -74,7 +75,8 @@ class UseType extends \Entity\BaseEntity {
 	 * @param \Entity\Dictionary\Phrase
 	 * @return \Entity\Invoicing\UseType
 	 */
-	public function setName(\Entity\Dictionary\Phrase $name) {
+	public function setName(\Entity\Dictionary\Phrase $name)
+	{
 		$this->name = $name;
 
 		return $this;
@@ -83,7 +85,8 @@ class UseType extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Dictionary\Phrase|NULL
 	 */
-	public function getName() {
+	public function getName()
+	{
 		return $this->name;
 	}
 		
@@ -91,7 +94,8 @@ class UseType extends \Entity\BaseEntity {
 	 * @param slug
 	 * @return \Entity\Invoicing\UseType
 	 */
-	public function setSlug($slug) {
+	public function setSlug($slug)
+	{
 		$this->slug = $slug;
 
 		return $this;
@@ -100,7 +104,8 @@ class UseType extends \Entity\BaseEntity {
 	/**
 	 * @return slug|NULL
 	 */
-	public function getSlug() {
+	public function getSlug()
+	{
 		return $this->slug;
 	}
 		
@@ -108,7 +113,8 @@ class UseType extends \Entity\BaseEntity {
 	 * @param \Entity\Invoicing\Package
 	 * @return \Entity\Invoicing\UseType
 	 */
-	public function addPackage(\Entity\Invoicing\Package $package) {
+	public function addPackage(\Entity\Invoicing\Package $package)
+	{
 		if(!$this->packages->contains($package)) {
 			$this->packages->add($package);
 		}
@@ -119,7 +125,8 @@ class UseType extends \Entity\BaseEntity {
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Invoicing\Package
 	 */
-	public function getPackages() {
+	public function getPackages()
+	{
 		return $this->packages;
 	}
 		
@@ -127,7 +134,8 @@ class UseType extends \Entity\BaseEntity {
 	 * @param \Entity\Invoicing\Marketing
 	 * @return \Entity\Invoicing\UseType
 	 */
-	public function addMarketing(\Entity\Invoicing\Marketing $marketing) {
+	public function addMarketing(\Entity\Invoicing\Marketing $marketing)
+	{
 		if(!$this->marketings->contains($marketing)) {
 			$this->marketings->add($marketing);
 		}
@@ -138,7 +146,8 @@ class UseType extends \Entity\BaseEntity {
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Invoicing\Marketing
 	 */
-	public function getMarketings() {
+	public function getMarketings()
+	{
 		return $this->marketings;
 	}
 }

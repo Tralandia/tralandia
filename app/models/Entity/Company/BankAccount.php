@@ -91,10 +91,11 @@ class BankAccount extends \Entity\BaseEntity {
 
 
 
-//@entity-generator-code <--- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 
 		$this->countries = new \Doctrine\Common\Collections\ArrayCollection;
@@ -104,7 +105,8 @@ class BankAccount extends \Entity\BaseEntity {
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Company\BankAccount
 	 */
-	public function addCountry(\Entity\Location\Location $country) {
+	public function addCountry(\Entity\Location\Location $country)
+	{
 		if(!$this->countries->contains($country)) {
 			$this->countries->add($country);
 		}
@@ -117,7 +119,8 @@ class BankAccount extends \Entity\BaseEntity {
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Company\BankAccount
 	 */
-	public function removeCountry(\Entity\Location\Location $country) {
+	public function removeCountry(\Entity\Location\Location $country)
+	{
 		if($this->countries->contains($country)) {
 			$this->countries->removeElement($country);
 		}
@@ -129,7 +132,8 @@ class BankAccount extends \Entity\BaseEntity {
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Location\Location
 	 */
-	public function getCountries() {
+	public function getCountries()
+	{
 		return $this->countries;
 	}
 		
@@ -137,7 +141,8 @@ class BankAccount extends \Entity\BaseEntity {
 	 * @param \Entity\Company\Company
 	 * @return \Entity\Company\BankAccount
 	 */
-	public function setCompany(\Entity\Company\Company $company) {
+	public function setCompany(\Entity\Company\Company $company)
+	{
 		$this->company = $company;
 
 		return $this;
@@ -146,7 +151,8 @@ class BankAccount extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Company\BankAccount
 	 */
-	public function unsetCompany() {
+	public function unsetCompany()
+	{
 		$this->company = NULL;
 
 		return $this;
@@ -155,7 +161,8 @@ class BankAccount extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Company\Company|NULL
 	 */
-	public function getCompany() {
+	public function getCompany()
+	{
 		return $this->company;
 	}
 		
@@ -163,7 +170,8 @@ class BankAccount extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Company\BankAccount
 	 */
-	public function setBankName($bankName) {
+	public function setBankName($bankName)
+	{
 		$this->bankName = $bankName;
 
 		return $this;
@@ -172,7 +180,8 @@ class BankAccount extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Company\BankAccount
 	 */
-	public function unsetBankName() {
+	public function unsetBankName()
+	{
 		$this->bankName = NULL;
 
 		return $this;
@@ -181,7 +190,8 @@ class BankAccount extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getBankName() {
+	public function getBankName()
+	{
 		return $this->bankName;
 	}
 		
@@ -189,7 +199,8 @@ class BankAccount extends \Entity\BaseEntity {
 	 * @param \Extras\Types\Address
 	 * @return \Entity\Company\BankAccount
 	 */
-	public function setBankAddress(\Extras\Types\Address $bankAddress) {
+	public function setBankAddress(\Extras\Types\Address $bankAddress)
+	{
 		$this->bankAddress = $bankAddress;
 
 		return $this;
@@ -198,7 +209,8 @@ class BankAccount extends \Entity\BaseEntity {
 	/**
 	 * @return \Extras\Types\Address|NULL
 	 */
-	public function getBankAddress() {
+	public function getBankAddress()
+	{
 		return $this->bankAddress;
 	}
 		
@@ -206,7 +218,8 @@ class BankAccount extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Company\BankAccount
 	 */
-	public function setBankSwift($bankSwift) {
+	public function setBankSwift($bankSwift)
+	{
 		$this->bankSwift = $bankSwift;
 
 		return $this;
@@ -215,7 +228,8 @@ class BankAccount extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Company\BankAccount
 	 */
-	public function unsetBankSwift() {
+	public function unsetBankSwift()
+	{
 		$this->bankSwift = NULL;
 
 		return $this;
@@ -224,7 +238,8 @@ class BankAccount extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getBankSwift() {
+	public function getBankSwift()
+	{
 		return $this->bankSwift;
 	}
 		
@@ -232,7 +247,8 @@ class BankAccount extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Company\BankAccount
 	 */
-	public function setAccountNumber($accountNumber) {
+	public function setAccountNumber($accountNumber)
+	{
 		$this->accountNumber = $accountNumber;
 
 		return $this;
@@ -241,7 +257,8 @@ class BankAccount extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Company\BankAccount
 	 */
-	public function unsetAccountNumber() {
+	public function unsetAccountNumber()
+	{
 		$this->accountNumber = NULL;
 
 		return $this;
@@ -250,7 +267,8 @@ class BankAccount extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getAccountNumber() {
+	public function getAccountNumber()
+	{
 		return $this->accountNumber;
 	}
 		
@@ -258,7 +276,8 @@ class BankAccount extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Company\BankAccount
 	 */
-	public function setAccountName($accountName) {
+	public function setAccountName($accountName)
+	{
 		$this->accountName = $accountName;
 
 		return $this;
@@ -267,7 +286,8 @@ class BankAccount extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Company\BankAccount
 	 */
-	public function unsetAccountName() {
+	public function unsetAccountName()
+	{
 		$this->accountName = NULL;
 
 		return $this;
@@ -276,7 +296,8 @@ class BankAccount extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getAccountName() {
+	public function getAccountName()
+	{
 		return $this->accountName;
 	}
 		
@@ -284,7 +305,8 @@ class BankAccount extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Company\BankAccount
 	 */
-	public function setAccountIban($accountIban) {
+	public function setAccountIban($accountIban)
+	{
 		$this->accountIban = $accountIban;
 
 		return $this;
@@ -293,7 +315,8 @@ class BankAccount extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Company\BankAccount
 	 */
-	public function unsetAccountIban() {
+	public function unsetAccountIban()
+	{
 		$this->accountIban = NULL;
 
 		return $this;
@@ -302,7 +325,8 @@ class BankAccount extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getAccountIban() {
+	public function getAccountIban()
+	{
 		return $this->accountIban;
 	}
 		
@@ -310,7 +334,8 @@ class BankAccount extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Company\BankAccount
 	 */
-	public function setNotes($notes) {
+	public function setNotes($notes)
+	{
 		$this->notes = $notes;
 
 		return $this;
@@ -319,7 +344,8 @@ class BankAccount extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Company\BankAccount
 	 */
-	public function unsetNotes() {
+	public function unsetNotes()
+	{
 		$this->notes = NULL;
 
 		return $this;
@@ -328,7 +354,8 @@ class BankAccount extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getNotes() {
+	public function getNotes()
+	{
 		return $this->notes;
 	}
 }

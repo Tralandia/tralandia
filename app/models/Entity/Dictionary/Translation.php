@@ -69,10 +69,11 @@ class Translation extends \Entity\BaseEntity {
 		return $this->translation;
 	}
 
-//@entity-generator-code <--- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 	}
 		
@@ -80,7 +81,8 @@ class Translation extends \Entity\BaseEntity {
 	 * @param \Entity\Dictionary\Phrase
 	 * @return \Entity\Dictionary\Translation
 	 */
-	public function setPhrase(\Entity\Dictionary\Phrase $phrase) {
+	public function setPhrase(\Entity\Dictionary\Phrase $phrase)
+	{
 		$this->phrase = $phrase;
 
 		return $this;
@@ -89,7 +91,8 @@ class Translation extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Dictionary\Translation
 	 */
-	public function unsetPhrase() {
+	public function unsetPhrase()
+	{
 		$this->phrase = NULL;
 
 		return $this;
@@ -98,7 +101,8 @@ class Translation extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Dictionary\Phrase|NULL
 	 */
-	public function getPhrase() {
+	public function getPhrase()
+	{
 		return $this->phrase;
 	}
 		
@@ -106,7 +110,8 @@ class Translation extends \Entity\BaseEntity {
 	 * @param \Entity\Dictionary\Language
 	 * @return \Entity\Dictionary\Translation
 	 */
-	public function setLanguage(\Entity\Dictionary\Language $language) {
+	public function setLanguage(\Entity\Dictionary\Language $language)
+	{
 		$this->language = $language;
 
 		return $this;
@@ -115,7 +120,8 @@ class Translation extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Dictionary\Translation
 	 */
-	public function unsetLanguage() {
+	public function unsetLanguage()
+	{
 		$this->language = NULL;
 
 		return $this;
@@ -124,7 +130,8 @@ class Translation extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Dictionary\Language|NULL
 	 */
-	public function getLanguage() {
+	public function getLanguage()
+	{
 		return $this->language;
 	}
 		
@@ -132,7 +139,8 @@ class Translation extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Dictionary\Translation
 	 */
-	public function setTranslation($translation) {
+	public function setTranslation($translation)
+	{
 		$this->translation = $translation;
 
 		return $this;
@@ -141,7 +149,8 @@ class Translation extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Dictionary\Translation
 	 */
-	public function unsetTranslation() {
+	public function unsetTranslation()
+	{
 		$this->translation = NULL;
 
 		return $this;
@@ -150,7 +159,8 @@ class Translation extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getTranslation() {
+	public function getTranslation()
+	{
 		return $this->translation;
 	}
 		
@@ -158,7 +168,8 @@ class Translation extends \Entity\BaseEntity {
 	 * @param json
 	 * @return \Entity\Dictionary\Translation
 	 */
-	public function setVariations($variations) {
+	public function setVariations($variations)
+	{
 		$this->variations = $variations;
 
 		return $this;
@@ -167,7 +178,8 @@ class Translation extends \Entity\BaseEntity {
 	/**
 	 * @return json|NULL
 	 */
-	public function getVariations() {
+	public function getVariations()
+	{
 		return $this->variations;
 	}
 		
@@ -175,7 +187,8 @@ class Translation extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Dictionary\Translation
 	 */
-	public function setGender($gender) {
+	public function setGender($gender)
+	{
 		$this->gender = $gender;
 
 		return $this;
@@ -184,7 +197,8 @@ class Translation extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Dictionary\Translation
 	 */
-	public function unsetGender() {
+	public function unsetGender()
+	{
 		$this->gender = NULL;
 
 		return $this;
@@ -193,7 +207,8 @@ class Translation extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getGender() {
+	public function getGender()
+	{
 		return $this->gender;
 	}
 		
@@ -201,7 +216,8 @@ class Translation extends \Entity\BaseEntity {
 	 * @param integer
 	 * @return \Entity\Dictionary\Translation
 	 */
-	public function setPosition($position) {
+	public function setPosition($position)
+	{
 		$this->position = $position;
 
 		return $this;
@@ -210,7 +226,8 @@ class Translation extends \Entity\BaseEntity {
 	/**
 	 * @return integer|NULL
 	 */
-	public function getPosition() {
+	public function getPosition()
+	{
 		return $this->position;
 	}
 		
@@ -218,7 +235,8 @@ class Translation extends \Entity\BaseEntity {
 	 * @param \DateTime
 	 * @return \Entity\Dictionary\Translation
 	 */
-	public function setTimeTranslated(\DateTime $timeTranslated) {
+	public function setTimeTranslated(\DateTime $timeTranslated)
+	{
 		$this->timeTranslated = $timeTranslated;
 
 		return $this;
@@ -227,7 +245,8 @@ class Translation extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Dictionary\Translation
 	 */
-	public function unsetTimeTranslated() {
+	public function unsetTimeTranslated()
+	{
 		$this->timeTranslated = NULL;
 
 		return $this;
@@ -236,7 +255,8 @@ class Translation extends \Entity\BaseEntity {
 	/**
 	 * @return \DateTime|NULL
 	 */
-	public function getTimeTranslated() {
+	public function getTimeTranslated()
+	{
 		return $this->timeTranslated;
 	}
 		
@@ -244,7 +264,8 @@ class Translation extends \Entity\BaseEntity {
 	 * @param boolean
 	 * @return \Entity\Dictionary\Translation
 	 */
-	public function setChecked($checked) {
+	public function setChecked($checked)
+	{
 		$this->checked = $checked;
 
 		return $this;
@@ -253,7 +274,8 @@ class Translation extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Dictionary\Translation
 	 */
-	public function unsetChecked() {
+	public function unsetChecked()
+	{
 		$this->checked = NULL;
 
 		return $this;
@@ -262,7 +284,8 @@ class Translation extends \Entity\BaseEntity {
 	/**
 	 * @return boolean|NULL
 	 */
-	public function getChecked() {
+	public function getChecked()
+	{
 		return $this->checked;
 	}
 }

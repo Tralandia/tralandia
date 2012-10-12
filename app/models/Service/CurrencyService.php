@@ -8,7 +8,7 @@ use Doctrine, Entity;
  * Sluzba meny
  * @author Branislav Vaculčiak
  */
-class CurrencyService extends Base {
+class CurrencyService extends BaseService {
 
 	/**
 	 * @param Doctrine\ORM\EntityManager

@@ -102,10 +102,11 @@ class Type extends \Entity\BaseEntity {
 	}
 	
 
-//@entity-generator-code <--- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 	}
 		
@@ -113,7 +114,8 @@ class Type extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Dictionary\Type
 	 */
-	public function setName($name) {
+	public function setName($name)
+	{
 		$this->name = $name;
 
 		return $this;
@@ -122,7 +124,8 @@ class Type extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Dictionary\Type
 	 */
-	public function unsetName() {
+	public function unsetName()
+	{
 		$this->name = NULL;
 
 		return $this;
@@ -131,7 +134,8 @@ class Type extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getName() {
+	public function getName()
+	{
 		return $this->name;
 	}
 		
@@ -139,7 +143,8 @@ class Type extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Dictionary\Type
 	 */
-	public function setEntityName($entityName) {
+	public function setEntityName($entityName)
+	{
 		$this->entityName = $entityName;
 
 		return $this;
@@ -148,7 +153,8 @@ class Type extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Dictionary\Type
 	 */
-	public function unsetEntityName() {
+	public function unsetEntityName()
+	{
 		$this->entityName = NULL;
 
 		return $this;
@@ -157,7 +163,8 @@ class Type extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getEntityName() {
+	public function getEntityName()
+	{
 		return $this->entityName;
 	}
 		
@@ -165,7 +172,8 @@ class Type extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Dictionary\Type
 	 */
-	public function setEntityAttribute($entityAttribute) {
+	public function setEntityAttribute($entityAttribute)
+	{
 		$this->entityAttribute = $entityAttribute;
 
 		return $this;
@@ -174,7 +182,8 @@ class Type extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Dictionary\Type
 	 */
-	public function unsetEntityAttribute() {
+	public function unsetEntityAttribute()
+	{
 		$this->entityAttribute = NULL;
 
 		return $this;
@@ -183,7 +192,8 @@ class Type extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getEntityAttribute() {
+	public function getEntityAttribute()
+	{
 		return $this->entityAttribute;
 	}
 		
@@ -191,7 +201,8 @@ class Type extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Dictionary\Type
 	 */
-	public function setTranslationLevelRequirement($translationLevelRequirement) {
+	public function setTranslationLevelRequirement($translationLevelRequirement)
+	{
 		$this->translationLevelRequirement = $translationLevelRequirement;
 
 		return $this;
@@ -200,7 +211,8 @@ class Type extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getTranslationLevelRequirement() {
+	public function getTranslationLevelRequirement()
+	{
 		return $this->translationLevelRequirement;
 	}
 		
@@ -208,7 +220,8 @@ class Type extends \Entity\BaseEntity {
 	 * @param boolean
 	 * @return \Entity\Dictionary\Type
 	 */
-	public function setPluralsRequired($pluralsRequired) {
+	public function setPluralsRequired($pluralsRequired)
+	{
 		$this->pluralsRequired = $pluralsRequired;
 
 		return $this;
@@ -217,7 +230,8 @@ class Type extends \Entity\BaseEntity {
 	/**
 	 * @return boolean|NULL
 	 */
-	public function getPluralsRequired() {
+	public function getPluralsRequired()
+	{
 		return $this->pluralsRequired;
 	}
 		
@@ -225,7 +239,8 @@ class Type extends \Entity\BaseEntity {
 	 * @param boolean
 	 * @return \Entity\Dictionary\Type
 	 */
-	public function setGenderRequired($genderRequired) {
+	public function setGenderRequired($genderRequired)
+	{
 		$this->genderRequired = $genderRequired;
 
 		return $this;
@@ -234,7 +249,8 @@ class Type extends \Entity\BaseEntity {
 	/**
 	 * @return boolean|NULL
 	 */
-	public function getGenderRequired() {
+	public function getGenderRequired()
+	{
 		return $this->genderRequired;
 	}
 		
@@ -242,7 +258,8 @@ class Type extends \Entity\BaseEntity {
 	 * @param boolean
 	 * @return \Entity\Dictionary\Type
 	 */
-	public function setGenderVariationsRequired($genderVariationsRequired) {
+	public function setGenderVariationsRequired($genderVariationsRequired)
+	{
 		$this->genderVariationsRequired = $genderVariationsRequired;
 
 		return $this;
@@ -251,7 +268,8 @@ class Type extends \Entity\BaseEntity {
 	/**
 	 * @return boolean|NULL
 	 */
-	public function getGenderVariationsRequired() {
+	public function getGenderVariationsRequired()
+	{
 		return $this->genderVariationsRequired;
 	}
 		
@@ -259,7 +277,8 @@ class Type extends \Entity\BaseEntity {
 	 * @param boolean
 	 * @return \Entity\Dictionary\Type
 	 */
-	public function setLocativesRequired($locativesRequired) {
+	public function setLocativesRequired($locativesRequired)
+	{
 		$this->locativesRequired = $locativesRequired;
 
 		return $this;
@@ -268,7 +287,8 @@ class Type extends \Entity\BaseEntity {
 	/**
 	 * @return boolean|NULL
 	 */
-	public function getLocativesRequired() {
+	public function getLocativesRequired()
+	{
 		return $this->locativesRequired;
 	}
 		
@@ -276,7 +296,8 @@ class Type extends \Entity\BaseEntity {
 	 * @param boolean
 	 * @return \Entity\Dictionary\Type
 	 */
-	public function setPositionRequired($positionRequired) {
+	public function setPositionRequired($positionRequired)
+	{
 		$this->positionRequired = $positionRequired;
 
 		return $this;
@@ -285,7 +306,8 @@ class Type extends \Entity\BaseEntity {
 	/**
 	 * @return boolean|NULL
 	 */
-	public function getPositionRequired() {
+	public function getPositionRequired()
+	{
 		return $this->positionRequired;
 	}
 		
@@ -293,7 +315,8 @@ class Type extends \Entity\BaseEntity {
 	 * @param boolean
 	 * @return \Entity\Dictionary\Type
 	 */
-	public function setCheckingRequired($checkingRequired) {
+	public function setCheckingRequired($checkingRequired)
+	{
 		$this->checkingRequired = $checkingRequired;
 
 		return $this;
@@ -302,7 +325,8 @@ class Type extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Dictionary\Type
 	 */
-	public function unsetCheckingRequired() {
+	public function unsetCheckingRequired()
+	{
 		$this->checkingRequired = NULL;
 
 		return $this;
@@ -311,7 +335,8 @@ class Type extends \Entity\BaseEntity {
 	/**
 	 * @return boolean|NULL
 	 */
-	public function getCheckingRequired() {
+	public function getCheckingRequired()
+	{
 		return $this->checkingRequired;
 	}
 		
@@ -319,7 +344,8 @@ class Type extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Dictionary\Type
 	 */
-	public function setHelpForTranslator($helpForTranslator) {
+	public function setHelpForTranslator($helpForTranslator)
+	{
 		$this->helpForTranslator = $helpForTranslator;
 
 		return $this;
@@ -328,7 +354,8 @@ class Type extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Dictionary\Type
 	 */
-	public function unsetHelpForTranslator() {
+	public function unsetHelpForTranslator()
+	{
 		$this->helpForTranslator = NULL;
 
 		return $this;
@@ -337,7 +364,8 @@ class Type extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getHelpForTranslator() {
+	public function getHelpForTranslator()
+	{
 		return $this->helpForTranslator;
 	}
 		
@@ -345,7 +373,8 @@ class Type extends \Entity\BaseEntity {
 	 * @param integer
 	 * @return \Entity\Dictionary\Type
 	 */
-	public function setMonthlyBudget($monthlyBudget) {
+	public function setMonthlyBudget($monthlyBudget)
+	{
 		$this->monthlyBudget = $monthlyBudget;
 
 		return $this;
@@ -354,7 +383,8 @@ class Type extends \Entity\BaseEntity {
 	/**
 	 * @return integer|NULL
 	 */
-	public function getMonthlyBudget() {
+	public function getMonthlyBudget()
+	{
 		return $this->monthlyBudget;
 	}
 }

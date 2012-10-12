@@ -59,10 +59,11 @@ class Traveling extends \Entity\BaseEntity {
 
 
 
-//@entity-generator-code <--- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 	}
 		
@@ -70,7 +71,8 @@ class Traveling extends \Entity\BaseEntity {
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Location\Traveling
 	 */
-	public function setSourceLocation(\Entity\Location\Location $sourceLocation) {
+	public function setSourceLocation(\Entity\Location\Location $sourceLocation)
+	{
 		$this->sourceLocation = $sourceLocation;
 
 		return $this;
@@ -79,7 +81,8 @@ class Traveling extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Location\Traveling
 	 */
-	public function unsetSourceLocation() {
+	public function unsetSourceLocation()
+	{
 		$this->sourceLocation = NULL;
 
 		return $this;
@@ -88,7 +91,8 @@ class Traveling extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Location\Location|NULL
 	 */
-	public function getSourceLocation() {
+	public function getSourceLocation()
+	{
 		return $this->sourceLocation;
 	}
 		
@@ -96,7 +100,8 @@ class Traveling extends \Entity\BaseEntity {
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Location\Traveling
 	 */
-	public function setDestinationLocation(\Entity\Location\Location $destinationLocation) {
+	public function setDestinationLocation(\Entity\Location\Location $destinationLocation)
+	{
 		$this->destinationLocation = $destinationLocation;
 
 		return $this;
@@ -105,7 +110,8 @@ class Traveling extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Location\Traveling
 	 */
-	public function unsetDestinationLocation() {
+	public function unsetDestinationLocation()
+	{
 		$this->destinationLocation = NULL;
 
 		return $this;
@@ -114,7 +120,8 @@ class Traveling extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Location\Location|NULL
 	 */
-	public function getDestinationLocation() {
+	public function getDestinationLocation()
+	{
 		return $this->destinationLocation;
 	}
 		
@@ -122,7 +129,8 @@ class Traveling extends \Entity\BaseEntity {
 	 * @param integer
 	 * @return \Entity\Location\Traveling
 	 */
-	public function setPeopleCount($peopleCount) {
+	public function setPeopleCount($peopleCount)
+	{
 		$this->peopleCount = $peopleCount;
 
 		return $this;
@@ -131,7 +139,8 @@ class Traveling extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Location\Traveling
 	 */
-	public function unsetPeopleCount() {
+	public function unsetPeopleCount()
+	{
 		$this->peopleCount = NULL;
 
 		return $this;
@@ -140,7 +149,8 @@ class Traveling extends \Entity\BaseEntity {
 	/**
 	 * @return integer|NULL
 	 */
-	public function getPeopleCount() {
+	public function getPeopleCount()
+	{
 		return $this->peopleCount;
 	}
 		
@@ -148,7 +158,8 @@ class Traveling extends \Entity\BaseEntity {
 	 * @param integer
 	 * @return \Entity\Location\Traveling
 	 */
-	public function setYear($year) {
+	public function setYear($year)
+	{
 		$this->year = $year;
 
 		return $this;
@@ -157,7 +168,8 @@ class Traveling extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Location\Traveling
 	 */
-	public function unsetYear() {
+	public function unsetYear()
+	{
 		$this->year = NULL;
 
 		return $this;
@@ -166,7 +178,8 @@ class Traveling extends \Entity\BaseEntity {
 	/**
 	 * @return integer|NULL
 	 */
-	public function getYear() {
+	public function getYear()
+	{
 		return $this->year;
 	}
 }

@@ -74,10 +74,11 @@ class Medium extends \Entity\BaseEntityDetails {
 	 */
 	protected $sort;
 
-//@entity-generator-code <--- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 	}
 		
@@ -85,7 +86,8 @@ class Medium extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Medium\Type
 	 * @return \Entity\Medium\Medium
 	 */
-	public function setType(\Entity\Medium\Type $type) {
+	public function setType(\Entity\Medium\Type $type)
+	{
 		$this->type = $type;
 
 		return $this;
@@ -94,7 +96,8 @@ class Medium extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Medium\Medium
 	 */
-	public function unsetType() {
+	public function unsetType()
+	{
 		$this->type = NULL;
 
 		return $this;
@@ -103,7 +106,8 @@ class Medium extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Medium\Type|NULL
 	 */
-	public function getType() {
+	public function getType()
+	{
 		return $this->type;
 	}
 		
@@ -111,7 +115,8 @@ class Medium extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Dictionary\Phrase
 	 * @return \Entity\Medium\Medium
 	 */
-	public function setName(\Entity\Dictionary\Phrase $name) {
+	public function setName(\Entity\Dictionary\Phrase $name)
+	{
 		$this->name = $name;
 
 		return $this;
@@ -120,7 +125,8 @@ class Medium extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Dictionary\Phrase|NULL
 	 */
-	public function getName() {
+	public function getName()
+	{
 		return $this->name;
 	}
 		
@@ -128,7 +134,8 @@ class Medium extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Attraction\Attraction
 	 * @return \Entity\Medium\Medium
 	 */
-	public function setAttraction(\Entity\Attraction\Attraction $attraction) {
+	public function setAttraction(\Entity\Attraction\Attraction $attraction)
+	{
 		$this->attraction = $attraction;
 
 		return $this;
@@ -137,7 +144,8 @@ class Medium extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Medium\Medium
 	 */
-	public function unsetAttraction() {
+	public function unsetAttraction()
+	{
 		$this->attraction = NULL;
 
 		return $this;
@@ -146,7 +154,8 @@ class Medium extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Attraction\Attraction|NULL
 	 */
-	public function getAttraction() {
+	public function getAttraction()
+	{
 		return $this->attraction;
 	}
 		
@@ -154,7 +163,8 @@ class Medium extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Rental\Rental
 	 * @return \Entity\Medium\Medium
 	 */
-	public function setRental(\Entity\Rental\Rental $rental) {
+	public function setRental(\Entity\Rental\Rental $rental)
+	{
 		$this->rental = $rental;
 
 		return $this;
@@ -163,7 +173,8 @@ class Medium extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Medium\Medium
 	 */
-	public function unsetRental() {
+	public function unsetRental()
+	{
 		$this->rental = NULL;
 
 		return $this;
@@ -172,7 +183,8 @@ class Medium extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Rental\Rental|NULL
 	 */
-	public function getRental() {
+	public function getRental()
+	{
 		return $this->rental;
 	}
 		
@@ -180,7 +192,8 @@ class Medium extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Seo\SeoUrl
 	 * @return \Entity\Medium\Medium
 	 */
-	public function setSeoUrl(\Entity\Seo\SeoUrl $seoUrl) {
+	public function setSeoUrl(\Entity\Seo\SeoUrl $seoUrl)
+	{
 		$this->seoUrl = $seoUrl;
 
 		return $this;
@@ -189,7 +202,8 @@ class Medium extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Medium\Medium
 	 */
-	public function unsetSeoUrl() {
+	public function unsetSeoUrl()
+	{
 		$this->seoUrl = NULL;
 
 		return $this;
@@ -198,7 +212,8 @@ class Medium extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Seo\SeoUrl|NULL
 	 */
-	public function getSeoUrl() {
+	public function getSeoUrl()
+	{
 		return $this->seoUrl;
 	}
 		
@@ -206,7 +221,8 @@ class Medium extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Ticket\Message
 	 * @return \Entity\Medium\Medium
 	 */
-	public function setMessage(\Entity\Ticket\Message $message) {
+	public function setMessage(\Entity\Ticket\Message $message)
+	{
 		$this->message = $message;
 
 		return $this;
@@ -215,7 +231,8 @@ class Medium extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Medium\Medium
 	 */
-	public function unsetMessage() {
+	public function unsetMessage()
+	{
 		$this->message = NULL;
 
 		return $this;
@@ -224,7 +241,8 @@ class Medium extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Ticket\Message|NULL
 	 */
-	public function getMessage() {
+	public function getMessage()
+	{
 		return $this->message;
 	}
 		
@@ -232,7 +250,8 @@ class Medium extends \Entity\BaseEntityDetails {
 	 * @param string
 	 * @return \Entity\Medium\Medium
 	 */
-	public function setUri($uri) {
+	public function setUri($uri)
+	{
 		$this->uri = $uri;
 
 		return $this;
@@ -241,7 +260,8 @@ class Medium extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Medium\Medium
 	 */
-	public function unsetUri() {
+	public function unsetUri()
+	{
 		$this->uri = NULL;
 
 		return $this;
@@ -250,7 +270,8 @@ class Medium extends \Entity\BaseEntityDetails {
 	/**
 	 * @return string|NULL
 	 */
-	public function getUri() {
+	public function getUri()
+	{
 		return $this->uri;
 	}
 		
@@ -258,7 +279,8 @@ class Medium extends \Entity\BaseEntityDetails {
 	 * @param string
 	 * @return \Entity\Medium\Medium
 	 */
-	public function setOldUrl($oldUrl) {
+	public function setOldUrl($oldUrl)
+	{
 		$this->oldUrl = $oldUrl;
 
 		return $this;
@@ -267,7 +289,8 @@ class Medium extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Medium\Medium
 	 */
-	public function unsetOldUrl() {
+	public function unsetOldUrl()
+	{
 		$this->oldUrl = NULL;
 
 		return $this;
@@ -276,7 +299,8 @@ class Medium extends \Entity\BaseEntityDetails {
 	/**
 	 * @return string|NULL
 	 */
-	public function getOldUrl() {
+	public function getOldUrl()
+	{
 		return $this->oldUrl;
 	}
 		
@@ -284,7 +308,8 @@ class Medium extends \Entity\BaseEntityDetails {
 	 * @param integer
 	 * @return \Entity\Medium\Medium
 	 */
-	public function setSort($sort) {
+	public function setSort($sort)
+	{
 		$this->sort = $sort;
 
 		return $this;
@@ -293,7 +318,8 @@ class Medium extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Medium\Medium
 	 */
-	public function unsetSort() {
+	public function unsetSort()
+	{
 		$this->sort = NULL;
 
 		return $this;
@@ -302,7 +328,8 @@ class Medium extends \Entity\BaseEntityDetails {
 	/**
 	 * @return integer|NULL
 	 */
-	public function getSort() {
+	public function getSort()
+	{
 		return $this->sort;
 	}
 }

@@ -39,37 +39,12 @@ class Role extends \Entity\BaseEntity {
 	 */
 	protected $users;
 
-	/**
-	 * @var boolean
-	 * @ORM\Column(type="boolean")
-	 */
-	protected $employee = FALSE;
 
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//@entity-generator-code <--- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 
 		$this->users = new \Doctrine\Common\Collections\ArrayCollection;
@@ -79,7 +54,8 @@ class Role extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\User\Role
 	 */
-	public function setName($name) {
+	public function setName($name)
+	{
 		$this->name = $name;
 
 		return $this;
@@ -88,7 +64,8 @@ class Role extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getName() {
+	public function getName()
+	{
 		return $this->name;
 	}
 		
@@ -96,7 +73,8 @@ class Role extends \Entity\BaseEntity {
 	 * @param slug
 	 * @return \Entity\User\Role
 	 */
-	public function setSlug($slug) {
+	public function setSlug($slug)
+	{
 		$this->slug = $slug;
 
 		return $this;
@@ -105,7 +83,8 @@ class Role extends \Entity\BaseEntity {
 	/**
 	 * @return slug|NULL
 	 */
-	public function getSlug() {
+	public function getSlug()
+	{
 		return $this->slug;
 	}
 		
@@ -113,7 +92,8 @@ class Role extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\User\Role
 	 */
-	public function setHomePage($homePage) {
+	public function setHomePage($homePage)
+	{
 		$this->homePage = $homePage;
 
 		return $this;
@@ -122,7 +102,8 @@ class Role extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\User\Role
 	 */
-	public function unsetHomePage() {
+	public function unsetHomePage()
+	{
 		$this->homePage = NULL;
 
 		return $this;
@@ -131,7 +112,8 @@ class Role extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getHomePage() {
+	public function getHomePage()
+	{
 		return $this->homePage;
 	}
 		
@@ -139,7 +121,8 @@ class Role extends \Entity\BaseEntity {
 	 * @param \Entity\User\User
 	 * @return \Entity\User\Role
 	 */
-	public function addUser(\Entity\User\User $user) {
+	public function addUser(\Entity\User\User $user)
+	{
 		if(!$this->users->contains($user)) {
 			$this->users->add($user);
 		}
@@ -152,7 +135,8 @@ class Role extends \Entity\BaseEntity {
 	 * @param \Entity\User\User
 	 * @return \Entity\User\Role
 	 */
-	public function removeUser(\Entity\User\User $user) {
+	public function removeUser(\Entity\User\User $user)
+	{
 		if($this->users->contains($user)) {
 			$this->users->removeElement($user);
 		}
@@ -164,24 +148,8 @@ class Role extends \Entity\BaseEntity {
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\User\User
 	 */
-	public function getUsers() {
+	public function getUsers()
+	{
 		return $this->users;
-	}
-		
-	/**
-	 * @param boolean
-	 * @return \Entity\User\Role
-	 */
-	public function setEmployee($employee) {
-		$this->employee = $employee;
-
-		return $this;
-	}
-		
-	/**
-	 * @return boolean|NULL
-	 */
-	public function getEmployee() {
-		return $this->employee;
 	}
 }

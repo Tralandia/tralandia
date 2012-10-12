@@ -47,10 +47,11 @@ class ContactCache extends \Entity\BaseEntity {
 	protected $value;
 
 
-//@entity-generator-code <--- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 	}
 		
@@ -58,7 +59,8 @@ class ContactCache extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\ContactCache
 	 */
-	public function setEntityName($entityName) {
+	public function setEntityName($entityName)
+	{
 		$this->entityName = $entityName;
 
 		return $this;
@@ -67,7 +69,8 @@ class ContactCache extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getEntityName() {
+	public function getEntityName()
+	{
 		return $this->entityName;
 	}
 		
@@ -75,7 +78,8 @@ class ContactCache extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\ContactCache
 	 */
-	public function setEntityId($entityId) {
+	public function setEntityId($entityId)
+	{
 		$this->entityId = $entityId;
 
 		return $this;
@@ -84,7 +88,8 @@ class ContactCache extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getEntityId() {
+	public function getEntityId()
+	{
 		return $this->entityId;
 	}
 		
@@ -92,7 +97,8 @@ class ContactCache extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\ContactCache
 	 */
-	public function setType($type) {
+	public function setType($type)
+	{
 		$this->type = $type;
 
 		return $this;
@@ -101,7 +107,8 @@ class ContactCache extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getType() {
+	public function getType()
+	{
 		return $this->type;
 	}
 		
@@ -109,7 +116,8 @@ class ContactCache extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\ContactCache
 	 */
-	public function setValue($value) {
+	public function setValue($value)
+	{
 		$this->value = $value;
 
 		return $this;
@@ -118,7 +126,8 @@ class ContactCache extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getValue() {
+	public function getValue()
+	{
 		return $this->value;
 	}
 }

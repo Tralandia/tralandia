@@ -123,10 +123,11 @@ class Item extends \Entity\BaseEntity {
 
 
 
-//@entity-generator-code <--- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 	}
 		
@@ -134,7 +135,8 @@ class Item extends \Entity\BaseEntity {
 	 * @param \Entity\Invoicing\Invoice
 	 * @return \Entity\Invoicing\Item
 	 */
-	public function setInvoice(\Entity\Invoicing\Invoice $invoice) {
+	public function setInvoice(\Entity\Invoicing\Invoice $invoice)
+	{
 		$this->invoice = $invoice;
 
 		return $this;
@@ -143,7 +145,8 @@ class Item extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoicing\Item
 	 */
-	public function unsetInvoice() {
+	public function unsetInvoice()
+	{
 		$this->invoice = NULL;
 
 		return $this;
@@ -152,7 +155,8 @@ class Item extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoicing\Invoice|NULL
 	 */
-	public function getInvoice() {
+	public function getInvoice()
+	{
 		return $this->invoice;
 	}
 		
@@ -160,7 +164,8 @@ class Item extends \Entity\BaseEntity {
 	 * @param \Entity\Invoicing\ServiceType
 	 * @return \Entity\Invoicing\Item
 	 */
-	public function setServiceType(\Entity\Invoicing\ServiceType $serviceType) {
+	public function setServiceType(\Entity\Invoicing\ServiceType $serviceType)
+	{
 		$this->serviceType = $serviceType;
 
 		return $this;
@@ -169,7 +174,8 @@ class Item extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoicing\Item
 	 */
-	public function unsetServiceType() {
+	public function unsetServiceType()
+	{
 		$this->serviceType = NULL;
 
 		return $this;
@@ -178,7 +184,8 @@ class Item extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoicing\ServiceType|NULL
 	 */
-	public function getServiceType() {
+	public function getServiceType()
+	{
 		return $this->serviceType;
 	}
 		
@@ -186,7 +193,8 @@ class Item extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Invoicing\Item
 	 */
-	public function setName($name) {
+	public function setName($name)
+	{
 		$this->name = $name;
 
 		return $this;
@@ -195,7 +203,8 @@ class Item extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoicing\Item
 	 */
-	public function unsetName() {
+	public function unsetName()
+	{
 		$this->name = NULL;
 
 		return $this;
@@ -204,7 +213,8 @@ class Item extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getName() {
+	public function getName()
+	{
 		return $this->name;
 	}
 		
@@ -212,7 +222,8 @@ class Item extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Invoicing\Item
 	 */
-	public function setNameEn($nameEn) {
+	public function setNameEn($nameEn)
+	{
 		$this->nameEn = $nameEn;
 
 		return $this;
@@ -221,7 +232,8 @@ class Item extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoicing\Item
 	 */
-	public function unsetNameEn() {
+	public function unsetNameEn()
+	{
 		$this->nameEn = NULL;
 
 		return $this;
@@ -230,7 +242,8 @@ class Item extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getNameEn() {
+	public function getNameEn()
+	{
 		return $this->nameEn;
 	}
 		
@@ -238,7 +251,8 @@ class Item extends \Entity\BaseEntity {
 	 * @param \DateTime
 	 * @return \Entity\Invoicing\Item
 	 */
-	public function setServiceFrom(\DateTime $serviceFrom) {
+	public function setServiceFrom(\DateTime $serviceFrom)
+	{
 		$this->serviceFrom = $serviceFrom;
 
 		return $this;
@@ -247,7 +261,8 @@ class Item extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoicing\Item
 	 */
-	public function unsetServiceFrom() {
+	public function unsetServiceFrom()
+	{
 		$this->serviceFrom = NULL;
 
 		return $this;
@@ -256,7 +271,8 @@ class Item extends \Entity\BaseEntity {
 	/**
 	 * @return \DateTime|NULL
 	 */
-	public function getServiceFrom() {
+	public function getServiceFrom()
+	{
 		return $this->serviceFrom;
 	}
 		
@@ -264,7 +280,8 @@ class Item extends \Entity\BaseEntity {
 	 * @param \DateTime
 	 * @return \Entity\Invoicing\Item
 	 */
-	public function setServiceTo(\DateTime $serviceTo) {
+	public function setServiceTo(\DateTime $serviceTo)
+	{
 		$this->serviceTo = $serviceTo;
 
 		return $this;
@@ -273,7 +290,8 @@ class Item extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoicing\Item
 	 */
-	public function unsetServiceTo() {
+	public function unsetServiceTo()
+	{
 		$this->serviceTo = NULL;
 
 		return $this;
@@ -282,7 +300,8 @@ class Item extends \Entity\BaseEntity {
 	/**
 	 * @return \DateTime|NULL
 	 */
-	public function getServiceTo() {
+	public function getServiceTo()
+	{
 		return $this->serviceTo;
 	}
 		
@@ -290,7 +309,8 @@ class Item extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Invoicing\Item
 	 */
-	public function setDurationName($durationName) {
+	public function setDurationName($durationName)
+	{
 		$this->durationName = $durationName;
 
 		return $this;
@@ -299,7 +319,8 @@ class Item extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoicing\Item
 	 */
-	public function unsetDurationName() {
+	public function unsetDurationName()
+	{
 		$this->durationName = NULL;
 
 		return $this;
@@ -308,7 +329,8 @@ class Item extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getDurationName() {
+	public function getDurationName()
+	{
 		return $this->durationName;
 	}
 		
@@ -316,7 +338,8 @@ class Item extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Invoicing\Item
 	 */
-	public function setDurationNameEn($durationNameEn) {
+	public function setDurationNameEn($durationNameEn)
+	{
 		$this->durationNameEn = $durationNameEn;
 
 		return $this;
@@ -325,7 +348,8 @@ class Item extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoicing\Item
 	 */
-	public function unsetDurationNameEn() {
+	public function unsetDurationNameEn()
+	{
 		$this->durationNameEn = NULL;
 
 		return $this;
@@ -334,7 +358,8 @@ class Item extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getDurationNameEn() {
+	public function getDurationNameEn()
+	{
 		return $this->durationNameEn;
 	}
 		
@@ -342,7 +367,8 @@ class Item extends \Entity\BaseEntity {
 	 * @param float
 	 * @return \Entity\Invoicing\Item
 	 */
-	public function setPrice($price) {
+	public function setPrice($price)
+	{
 		$this->price = $price;
 
 		return $this;
@@ -351,7 +377,8 @@ class Item extends \Entity\BaseEntity {
 	/**
 	 * @return float|NULL
 	 */
-	public function getPrice() {
+	public function getPrice()
+	{
 		return $this->price;
 	}
 		
@@ -359,7 +386,8 @@ class Item extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Invoicing\Item
 	 */
-	public function setMarketingName($marketingName) {
+	public function setMarketingName($marketingName)
+	{
 		$this->marketingName = $marketingName;
 
 		return $this;
@@ -368,7 +396,8 @@ class Item extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoicing\Item
 	 */
-	public function unsetMarketingName() {
+	public function unsetMarketingName()
+	{
 		$this->marketingName = NULL;
 
 		return $this;
@@ -377,7 +406,8 @@ class Item extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getMarketingName() {
+	public function getMarketingName()
+	{
 		return $this->marketingName;
 	}
 		
@@ -385,7 +415,8 @@ class Item extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Invoicing\Item
 	 */
-	public function setMarketingNameEn($marketingNameEn) {
+	public function setMarketingNameEn($marketingNameEn)
+	{
 		$this->marketingNameEn = $marketingNameEn;
 
 		return $this;
@@ -394,7 +425,8 @@ class Item extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoicing\Item
 	 */
-	public function unsetMarketingNameEn() {
+	public function unsetMarketingNameEn()
+	{
 		$this->marketingNameEn = NULL;
 
 		return $this;
@@ -403,7 +435,8 @@ class Item extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getMarketingNameEn() {
+	public function getMarketingNameEn()
+	{
 		return $this->marketingNameEn;
 	}
 		
@@ -411,7 +444,8 @@ class Item extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Invoicing\Item
 	 */
-	public function setCouponName($couponName) {
+	public function setCouponName($couponName)
+	{
 		$this->couponName = $couponName;
 
 		return $this;
@@ -420,7 +454,8 @@ class Item extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoicing\Item
 	 */
-	public function unsetCouponName() {
+	public function unsetCouponName()
+	{
 		$this->couponName = NULL;
 
 		return $this;
@@ -429,7 +464,8 @@ class Item extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getCouponName() {
+	public function getCouponName()
+	{
 		return $this->couponName;
 	}
 		
@@ -437,7 +473,8 @@ class Item extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Invoicing\Item
 	 */
-	public function setCouponNameEn($couponNameEn) {
+	public function setCouponNameEn($couponNameEn)
+	{
 		$this->couponNameEn = $couponNameEn;
 
 		return $this;
@@ -446,7 +483,8 @@ class Item extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoicing\Item
 	 */
-	public function unsetCouponNameEn() {
+	public function unsetCouponNameEn()
+	{
 		$this->couponNameEn = NULL;
 
 		return $this;
@@ -455,7 +493,8 @@ class Item extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getCouponNameEn() {
+	public function getCouponNameEn()
+	{
 		return $this->couponNameEn;
 	}
 		
@@ -463,7 +502,8 @@ class Item extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Invoicing\Item
 	 */
-	public function setPackageName($packageName) {
+	public function setPackageName($packageName)
+	{
 		$this->packageName = $packageName;
 
 		return $this;
@@ -472,7 +512,8 @@ class Item extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoicing\Item
 	 */
-	public function unsetPackageName() {
+	public function unsetPackageName()
+	{
 		$this->packageName = NULL;
 
 		return $this;
@@ -481,7 +522,8 @@ class Item extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getPackageName() {
+	public function getPackageName()
+	{
 		return $this->packageName;
 	}
 		
@@ -489,7 +531,8 @@ class Item extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Invoicing\Item
 	 */
-	public function setPackageNameEn($packageNameEn) {
+	public function setPackageNameEn($packageNameEn)
+	{
 		$this->packageNameEn = $packageNameEn;
 
 		return $this;
@@ -498,7 +541,8 @@ class Item extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoicing\Item
 	 */
-	public function unsetPackageNameEn() {
+	public function unsetPackageNameEn()
+	{
 		$this->packageNameEn = NULL;
 
 		return $this;
@@ -507,7 +551,8 @@ class Item extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getPackageNameEn() {
+	public function getPackageNameEn()
+	{
 		return $this->packageNameEn;
 	}
 }

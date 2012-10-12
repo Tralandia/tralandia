@@ -72,10 +72,11 @@ class Batch extends \Entity\BaseEntityDetails {
 
 
 
-//@entity-generator-code <--- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 	}
 		
@@ -83,7 +84,8 @@ class Batch extends \Entity\BaseEntityDetails {
 	 * @param boolean
 	 * @return \Entity\Emailing\Batch
 	 */
-	public function setConfirmed($confirmed) {
+	public function setConfirmed($confirmed)
+	{
 		$this->confirmed = $confirmed;
 
 		return $this;
@@ -92,7 +94,8 @@ class Batch extends \Entity\BaseEntityDetails {
 	/**
 	 * @return boolean|NULL
 	 */
-	public function getConfirmed() {
+	public function getConfirmed()
+	{
 		return $this->confirmed;
 	}
 		
@@ -100,7 +103,8 @@ class Batch extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Emailing\Template
 	 * @return \Entity\Emailing\Batch
 	 */
-	public function setTemplate(\Entity\Emailing\Template $template) {
+	public function setTemplate(\Entity\Emailing\Template $template)
+	{
 		$this->template = $template;
 
 		return $this;
@@ -109,7 +113,8 @@ class Batch extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Emailing\Batch
 	 */
-	public function unsetTemplate() {
+	public function unsetTemplate()
+	{
 		$this->template = NULL;
 
 		return $this;
@@ -118,7 +123,8 @@ class Batch extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Emailing\Template|NULL
 	 */
-	public function getTemplate() {
+	public function getTemplate()
+	{
 		return $this->template;
 	}
 		
@@ -126,7 +132,8 @@ class Batch extends \Entity\BaseEntityDetails {
 	 * @param integer
 	 * @return \Entity\Emailing\Batch
 	 */
-	public function setTotalCount($totalCount) {
+	public function setTotalCount($totalCount)
+	{
 		$this->totalCount = $totalCount;
 
 		return $this;
@@ -135,7 +142,8 @@ class Batch extends \Entity\BaseEntityDetails {
 	/**
 	 * @return integer|NULL
 	 */
-	public function getTotalCount() {
+	public function getTotalCount()
+	{
 		return $this->totalCount;
 	}
 		
@@ -143,7 +151,8 @@ class Batch extends \Entity\BaseEntityDetails {
 	 * @param string
 	 * @return \Entity\Emailing\Batch
 	 */
-	public function setSubject($subject) {
+	public function setSubject($subject)
+	{
 		$this->subject = $subject;
 
 		return $this;
@@ -152,7 +161,8 @@ class Batch extends \Entity\BaseEntityDetails {
 	/**
 	 * @return string|NULL
 	 */
-	public function getSubject() {
+	public function getSubject()
+	{
 		return $this->subject;
 	}
 		
@@ -160,7 +170,8 @@ class Batch extends \Entity\BaseEntityDetails {
 	 * @param string
 	 * @return \Entity\Emailing\Batch
 	 */
-	public function setBody($body) {
+	public function setBody($body)
+	{
 		$this->body = $body;
 
 		return $this;
@@ -169,7 +180,8 @@ class Batch extends \Entity\BaseEntityDetails {
 	/**
 	 * @return string|NULL
 	 */
-	public function getBody() {
+	public function getBody()
+	{
 		return $this->body;
 	}
 		
@@ -177,7 +189,8 @@ class Batch extends \Entity\BaseEntityDetails {
 	 * @param string
 	 * @return \Entity\Emailing\Batch
 	 */
-	public function setBodyHtml($bodyHtml) {
+	public function setBodyHtml($bodyHtml)
+	{
 		$this->bodyHtml = $bodyHtml;
 
 		return $this;
@@ -186,7 +199,8 @@ class Batch extends \Entity\BaseEntityDetails {
 	/**
 	 * @return string|NULL
 	 */
-	public function getBodyHtml() {
+	public function getBodyHtml()
+	{
 		return $this->bodyHtml;
 	}
 }

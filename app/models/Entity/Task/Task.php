@@ -31,16 +31,10 @@ class Task extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var string
-	 * @ORM\Column(type="string", nullable=true)§
-	 * example: \Rental\Rental
+	 * @ORM\Column(type="string", nullable=true)
+	 * example: \Rental\Rental~33
 	 */
-	protected $entityName;
-
-	/**
-	 * @var int
-	 * @ORM\Column(type="integer", nullable=true)
-	 */
-	protected $entityId;
+	protected $identifier;
 
 	/**
 	 * @var text
@@ -52,19 +46,13 @@ class Task extends \Entity\BaseEntityDetails {
 	 * @var datetime
 	 * @ORM\Column(type="datetime")
 	 */
-	protected $startTime;
-
-	/**
-	 * @var datetime
-	 * @ORM\Column(type="datetime")
-	 */
 	protected $due;
 
 	/**
 	 * @var float
-	 * @ORM\Column(type="float")
+	 * @ORM\Column(type="json")
 	 */
-	protected $durationPaid;
+	protected $value;
 
 	/**
 	 * @var json
@@ -133,18 +121,13 @@ class Task extends \Entity\BaseEntityDetails {
 	 * @ORM\Column(type="datetime", nullable=true)
 	 */
 	protected $completed;
-
-	/**
-	 * @var json
-	 * @ORM\Column(type="json", nullable=true)
-	 */
-	protected $recurrenceData;
 	
 
-//@entity-generator-code <--- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 
 		$this->usersExcluded = new \Doctrine\Common\Collections\ArrayCollection;
@@ -154,7 +137,8 @@ class Task extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Task\Type
 	 * @return \Entity\Task\Task
 	 */
-	public function setType(\Entity\Task\Type $type) {
+	public function setType(\Entity\Task\Type $type)
+	{
 		$this->type = $type;
 
 		return $this;
@@ -163,7 +147,8 @@ class Task extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Task\Task
 	 */
-	public function unsetType() {
+	public function unsetType()
+	{
 		$this->type = NULL;
 
 		return $this;
@@ -172,7 +157,8 @@ class Task extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Task\Type|NULL
 	 */
-	public function getType() {
+	public function getType()
+	{
 		return $this->type;
 	}
 		
@@ -180,7 +166,8 @@ class Task extends \Entity\BaseEntityDetails {
 	 * @param string
 	 * @return \Entity\Task\Task
 	 */
-	public function setName($name) {
+	public function setName($name)
+	{
 		$this->name = $name;
 
 		return $this;
@@ -189,7 +176,8 @@ class Task extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Task\Task
 	 */
-	public function unsetName() {
+	public function unsetName()
+	{
 		$this->name = NULL;
 
 		return $this;
@@ -198,7 +186,8 @@ class Task extends \Entity\BaseEntityDetails {
 	/**
 	 * @return string|NULL
 	 */
-	public function getName() {
+	public function getName()
+	{
 		return $this->name;
 	}
 		
@@ -206,8 +195,9 @@ class Task extends \Entity\BaseEntityDetails {
 	 * @param string
 	 * @return \Entity\Task\Task
 	 */
-	public function setEntityName($entityName) {
-		$this->entityName = $entityName;
+	public function setIdentifier($identifier)
+	{
+		$this->identifier = $identifier;
 
 		return $this;
 	}
@@ -215,8 +205,9 @@ class Task extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Task\Task
 	 */
-	public function unsetEntityName() {
-		$this->entityName = NULL;
+	public function unsetIdentifier()
+	{
+		$this->identifier = NULL;
 
 		return $this;
 	}
@@ -224,41 +215,17 @@ class Task extends \Entity\BaseEntityDetails {
 	/**
 	 * @return string|NULL
 	 */
-	public function getEntityName() {
-		return $this->entityName;
-	}
-		
-	/**
-	 * @param integer
-	 * @return \Entity\Task\Task
-	 */
-	public function setEntityId($entityId) {
-		$this->entityId = $entityId;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Task\Task
-	 */
-	public function unsetEntityId() {
-		$this->entityId = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return integer|NULL
-	 */
-	public function getEntityId() {
-		return $this->entityId;
+	public function getIdentifier()
+	{
+		return $this->identifier;
 	}
 		
 	/**
 	 * @param string
 	 * @return \Entity\Task\Task
 	 */
-	public function setMission($mission) {
+	public function setMission($mission)
+	{
 		$this->mission = $mission;
 
 		return $this;
@@ -267,7 +234,8 @@ class Task extends \Entity\BaseEntityDetails {
 	/**
 	 * @return string|NULL
 	 */
-	public function getMission() {
+	public function getMission()
+	{
 		return $this->mission;
 	}
 		
@@ -275,24 +243,8 @@ class Task extends \Entity\BaseEntityDetails {
 	 * @param \DateTime
 	 * @return \Entity\Task\Task
 	 */
-	public function setStartTime(\DateTime $startTime) {
-		$this->startTime = $startTime;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \DateTime|NULL
-	 */
-	public function getStartTime() {
-		return $this->startTime;
-	}
-		
-	/**
-	 * @param \DateTime
-	 * @return \Entity\Task\Task
-	 */
-	public function setDue(\DateTime $due) {
+	public function setDue(\DateTime $due)
+	{
 		$this->due = $due;
 
 		return $this;
@@ -301,32 +253,36 @@ class Task extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \DateTime|NULL
 	 */
-	public function getDue() {
+	public function getDue()
+	{
 		return $this->due;
-	}
-		
-	/**
-	 * @param float
-	 * @return \Entity\Task\Task
-	 */
-	public function setDurationPaid($durationPaid) {
-		$this->durationPaid = $durationPaid;
-
-		return $this;
-	}
-		
-	/**
-	 * @return float|NULL
-	 */
-	public function getDurationPaid() {
-		return $this->durationPaid;
 	}
 		
 	/**
 	 * @param json
 	 * @return \Entity\Task\Task
 	 */
-	public function setLinks($links) {
+	public function setValue($value)
+	{
+		$this->value = $value;
+
+		return $this;
+	}
+		
+	/**
+	 * @return json|NULL
+	 */
+	public function getValue()
+	{
+		return $this->value;
+	}
+		
+	/**
+	 * @param json
+	 * @return \Entity\Task\Task
+	 */
+	public function setLinks($links)
+	{
 		$this->links = $links;
 
 		return $this;
@@ -335,7 +291,8 @@ class Task extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Task\Task
 	 */
-	public function unsetLinks() {
+	public function unsetLinks()
+	{
 		$this->links = NULL;
 
 		return $this;
@@ -344,7 +301,8 @@ class Task extends \Entity\BaseEntityDetails {
 	/**
 	 * @return json|NULL
 	 */
-	public function getLinks() {
+	public function getLinks()
+	{
 		return $this->links;
 	}
 		
@@ -352,7 +310,8 @@ class Task extends \Entity\BaseEntityDetails {
 	 * @param \Entity\User\User
 	 * @return \Entity\Task\Task
 	 */
-	public function setReservedFor(\Entity\User\User $reservedFor) {
+	public function setReservedFor(\Entity\User\User $reservedFor)
+	{
 		$this->reservedFor = $reservedFor;
 
 		return $this;
@@ -361,7 +320,8 @@ class Task extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Task\Task
 	 */
-	public function unsetReservedFor() {
+	public function unsetReservedFor()
+	{
 		$this->reservedFor = NULL;
 
 		return $this;
@@ -370,7 +330,8 @@ class Task extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\User\User|NULL
 	 */
-	public function getReservedFor() {
+	public function getReservedFor()
+	{
 		return $this->reservedFor;
 	}
 		
@@ -378,7 +339,8 @@ class Task extends \Entity\BaseEntityDetails {
 	 * @param \Entity\User\User
 	 * @return \Entity\Task\Task
 	 */
-	public function setUser(\Entity\User\User $user) {
+	public function setUser(\Entity\User\User $user)
+	{
 		$this->user = $user;
 
 		return $this;
@@ -387,7 +349,8 @@ class Task extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Task\Task
 	 */
-	public function unsetUser() {
+	public function unsetUser()
+	{
 		$this->user = NULL;
 
 		return $this;
@@ -396,7 +359,8 @@ class Task extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\User\User|NULL
 	 */
-	public function getUser() {
+	public function getUser()
+	{
 		return $this->user;
 	}
 		
@@ -404,7 +368,8 @@ class Task extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Task\Task
 	 */
-	public function setUserCountry(\Entity\Location\Location $userCountry) {
+	public function setUserCountry(\Entity\Location\Location $userCountry)
+	{
 		$this->userCountry = $userCountry;
 
 		return $this;
@@ -413,7 +378,8 @@ class Task extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Task\Task
 	 */
-	public function unsetUserCountry() {
+	public function unsetUserCountry()
+	{
 		$this->userCountry = NULL;
 
 		return $this;
@@ -422,7 +388,8 @@ class Task extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Location\Location|NULL
 	 */
-	public function getUserCountry() {
+	public function getUserCountry()
+	{
 		return $this->userCountry;
 	}
 		
@@ -430,7 +397,8 @@ class Task extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Dictionary\Language
 	 * @return \Entity\Task\Task
 	 */
-	public function setUserLanguage(\Entity\Dictionary\Language $userLanguage) {
+	public function setUserLanguage(\Entity\Dictionary\Language $userLanguage)
+	{
 		$this->userLanguage = $userLanguage;
 
 		return $this;
@@ -439,7 +407,8 @@ class Task extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Task\Task
 	 */
-	public function unsetUserLanguage() {
+	public function unsetUserLanguage()
+	{
 		$this->userLanguage = NULL;
 
 		return $this;
@@ -448,7 +417,8 @@ class Task extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Dictionary\Language|NULL
 	 */
-	public function getUserLanguage() {
+	public function getUserLanguage()
+	{
 		return $this->userLanguage;
 	}
 		
@@ -456,7 +426,8 @@ class Task extends \Entity\BaseEntityDetails {
 	 * @param integer
 	 * @return \Entity\Task\Task
 	 */
-	public function setUserLanguageLevel($userLanguageLevel) {
+	public function setUserLanguageLevel($userLanguageLevel)
+	{
 		$this->userLanguageLevel = $userLanguageLevel;
 
 		return $this;
@@ -465,7 +436,8 @@ class Task extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Task\Task
 	 */
-	public function unsetUserLanguageLevel() {
+	public function unsetUserLanguageLevel()
+	{
 		$this->userLanguageLevel = NULL;
 
 		return $this;
@@ -474,7 +446,8 @@ class Task extends \Entity\BaseEntityDetails {
 	/**
 	 * @return integer|NULL
 	 */
-	public function getUserLanguageLevel() {
+	public function getUserLanguageLevel()
+	{
 		return $this->userLanguageLevel;
 	}
 		
@@ -482,7 +455,8 @@ class Task extends \Entity\BaseEntityDetails {
 	 * @param \Entity\User\Role
 	 * @return \Entity\Task\Task
 	 */
-	public function setUserRole(\Entity\User\Role $userRole) {
+	public function setUserRole(\Entity\User\Role $userRole)
+	{
 		$this->userRole = $userRole;
 
 		return $this;
@@ -491,7 +465,8 @@ class Task extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Task\Task
 	 */
-	public function unsetUserRole() {
+	public function unsetUserRole()
+	{
 		$this->userRole = NULL;
 
 		return $this;
@@ -500,7 +475,8 @@ class Task extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\User\Role|NULL
 	 */
-	public function getUserRole() {
+	public function getUserRole()
+	{
 		return $this->userRole;
 	}
 		
@@ -508,7 +484,8 @@ class Task extends \Entity\BaseEntityDetails {
 	 * @param \Entity\User\User
 	 * @return \Entity\Task\Task
 	 */
-	public function addUsersExcluded(\Entity\User\User $usersExcluded) {
+	public function addUsersExcluded(\Entity\User\User $usersExcluded)
+	{
 		if(!$this->usersExcluded->contains($usersExcluded)) {
 			$this->usersExcluded->add($usersExcluded);
 		}
@@ -521,7 +498,8 @@ class Task extends \Entity\BaseEntityDetails {
 	 * @param \Entity\User\User
 	 * @return \Entity\Task\Task
 	 */
-	public function removeUsersExcluded(\Entity\User\User $usersExcluded) {
+	public function removeUsersExcluded(\Entity\User\User $usersExcluded)
+	{
 		if($this->usersExcluded->contains($usersExcluded)) {
 			$this->usersExcluded->removeElement($usersExcluded);
 		}
@@ -533,7 +511,8 @@ class Task extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\User\User
 	 */
-	public function getUsersExcluded() {
+	public function getUsersExcluded()
+	{
 		return $this->usersExcluded;
 	}
 		
@@ -541,7 +520,8 @@ class Task extends \Entity\BaseEntityDetails {
 	 * @param json
 	 * @return \Entity\Task\Task
 	 */
-	public function setValidation($validation) {
+	public function setValidation($validation)
+	{
 		$this->validation = $validation;
 
 		return $this;
@@ -550,7 +530,8 @@ class Task extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Task\Task
 	 */
-	public function unsetValidation() {
+	public function unsetValidation()
+	{
 		$this->validation = NULL;
 
 		return $this;
@@ -559,7 +540,8 @@ class Task extends \Entity\BaseEntityDetails {
 	/**
 	 * @return json|NULL
 	 */
-	public function getValidation() {
+	public function getValidation()
+	{
 		return $this->validation;
 	}
 		
@@ -567,7 +549,8 @@ class Task extends \Entity\BaseEntityDetails {
 	 * @param json
 	 * @return \Entity\Task\Task
 	 */
-	public function setActions($actions) {
+	public function setActions($actions)
+	{
 		$this->actions = $actions;
 
 		return $this;
@@ -576,7 +559,8 @@ class Task extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Task\Task
 	 */
-	public function unsetActions() {
+	public function unsetActions()
+	{
 		$this->actions = NULL;
 
 		return $this;
@@ -585,16 +569,18 @@ class Task extends \Entity\BaseEntityDetails {
 	/**
 	 * @return json|NULL
 	 */
-	public function getActions() {
+	public function getActions()
+	{
 		return $this->actions;
 	}
 		
 	/**
-	 * @param json
+	 * @param \DateTime
 	 * @return \Entity\Task\Task
 	 */
-	public function setRecurrenceData($recurrenceData) {
-		$this->recurrenceData = $recurrenceData;
+	public function setCompleted(\DateTime $completed)
+	{
+		$this->completed = $completed;
 
 		return $this;
 	}
@@ -602,16 +588,18 @@ class Task extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Task\Task
 	 */
-	public function unsetRecurrenceData() {
-		$this->recurrenceData = NULL;
+	public function unsetCompleted()
+	{
+		$this->completed = NULL;
 
 		return $this;
 	}
 		
 	/**
-	 * @return json|NULL
+	 * @return \DateTime|NULL
 	 */
-	public function getRecurrenceData() {
-		return $this->recurrenceData;
+	public function getCompleted()
+	{
+		return $this->completed;
 	}
 }

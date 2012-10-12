@@ -47,10 +47,11 @@ class Package extends \Entity\BaseEntity {
 	protected $services;
 
 
-//@entity-generator-code <--- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 
 		$this->uses = new \Doctrine\Common\Collections\ArrayCollection;
@@ -61,7 +62,8 @@ class Package extends \Entity\BaseEntity {
 	 * @param \Entity\Dictionary\Phrase
 	 * @return \Entity\Invoicing\Package
 	 */
-	public function setName(\Entity\Dictionary\Phrase $name) {
+	public function setName(\Entity\Dictionary\Phrase $name)
+	{
 		$this->name = $name;
 
 		return $this;
@@ -70,7 +72,8 @@ class Package extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Dictionary\Phrase|NULL
 	 */
-	public function getName() {
+	public function getName()
+	{
 		return $this->name;
 	}
 		
@@ -78,7 +81,8 @@ class Package extends \Entity\BaseEntity {
 	 * @param \Entity\Dictionary\Phrase
 	 * @return \Entity\Invoicing\Package
 	 */
-	public function setTeaser(\Entity\Dictionary\Phrase $teaser) {
+	public function setTeaser(\Entity\Dictionary\Phrase $teaser)
+	{
 		$this->teaser = $teaser;
 
 		return $this;
@@ -87,7 +91,8 @@ class Package extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Dictionary\Phrase|NULL
 	 */
-	public function getTeaser() {
+	public function getTeaser()
+	{
 		return $this->teaser;
 	}
 		
@@ -95,7 +100,8 @@ class Package extends \Entity\BaseEntity {
 	 * @param \Entity\Invoicing\UseType
 	 * @return \Entity\Invoicing\Package
 	 */
-	public function addUse(\Entity\Invoicing\UseType $use) {
+	public function addUse(\Entity\Invoicing\UseType $use)
+	{
 		if(!$this->uses->contains($use)) {
 			$this->uses->add($use);
 		}
@@ -108,7 +114,8 @@ class Package extends \Entity\BaseEntity {
 	 * @param \Entity\Invoicing\UseType
 	 * @return \Entity\Invoicing\Package
 	 */
-	public function removeUse(\Entity\Invoicing\UseType $use) {
+	public function removeUse(\Entity\Invoicing\UseType $use)
+	{
 		if($this->uses->contains($use)) {
 			$this->uses->removeElement($use);
 		}
@@ -120,7 +127,8 @@ class Package extends \Entity\BaseEntity {
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Invoicing\UseType
 	 */
-	public function getUses() {
+	public function getUses()
+	{
 		return $this->uses;
 	}
 		
@@ -128,7 +136,8 @@ class Package extends \Entity\BaseEntity {
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Invoicing\Package
 	 */
-	public function setCountry(\Entity\Location\Location $country) {
+	public function setCountry(\Entity\Location\Location $country)
+	{
 		$this->country = $country;
 
 		return $this;
@@ -137,7 +146,8 @@ class Package extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoicing\Package
 	 */
-	public function unsetCountry() {
+	public function unsetCountry()
+	{
 		$this->country = NULL;
 
 		return $this;
@@ -146,7 +156,8 @@ class Package extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Location\Location|NULL
 	 */
-	public function getCountry() {
+	public function getCountry()
+	{
 		return $this->country;
 	}
 		
@@ -154,7 +165,8 @@ class Package extends \Entity\BaseEntity {
 	 * @param \Entity\Invoicing\Service
 	 * @return \Entity\Invoicing\Package
 	 */
-	public function addService(\Entity\Invoicing\Service $service) {
+	public function addService(\Entity\Invoicing\Service $service)
+	{
 		if(!$this->services->contains($service)) {
 			$this->services->add($service);
 		}
@@ -167,7 +179,8 @@ class Package extends \Entity\BaseEntity {
 	 * @param \Entity\Invoicing\Service
 	 * @return \Entity\Invoicing\Package
 	 */
-	public function removeService(\Entity\Invoicing\Service $service) {
+	public function removeService(\Entity\Invoicing\Service $service)
+	{
 		if($this->services->contains($service)) {
 			$this->services->removeElement($service);
 		}
@@ -179,7 +192,8 @@ class Package extends \Entity\BaseEntity {
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Invoicing\Service
 	 */
-	public function getServices() {
+	public function getServices()
+	{
 		return $this->services;
 	}
 }

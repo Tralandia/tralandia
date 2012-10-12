@@ -34,28 +34,11 @@ class AmenityType extends \Entity\BaseEntity {
 	protected $slug;
 	
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//@entity-generator-code <--- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 
 		$this->amenities = new \Doctrine\Common\Collections\ArrayCollection;
@@ -65,7 +48,8 @@ class AmenityType extends \Entity\BaseEntity {
 	 * @param \Entity\Rental\Amenity
 	 * @return \Entity\Rental\AmenityType
 	 */
-	public function addAmenity(\Entity\Rental\Amenity $amenity) {
+	public function addAmenity(\Entity\Rental\Amenity $amenity)
+	{
 		if(!$this->amenities->contains($amenity)) {
 			$this->amenities->add($amenity);
 		}
@@ -78,7 +62,8 @@ class AmenityType extends \Entity\BaseEntity {
 	 * @param \Entity\Rental\Amenity
 	 * @return \Entity\Rental\AmenityType
 	 */
-	public function removeAmenity(\Entity\Rental\Amenity $amenity) {
+	public function removeAmenity(\Entity\Rental\Amenity $amenity)
+	{
 		if($this->amenities->contains($amenity)) {
 			$this->amenities->removeElement($amenity);
 		}
@@ -90,7 +75,8 @@ class AmenityType extends \Entity\BaseEntity {
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Rental\Amenity
 	 */
-	public function getAmenities() {
+	public function getAmenities()
+	{
 		return $this->amenities;
 	}
 		
@@ -98,7 +84,8 @@ class AmenityType extends \Entity\BaseEntity {
 	 * @param \Entity\Dictionary\Phrase
 	 * @return \Entity\Rental\AmenityType
 	 */
-	public function setName(\Entity\Dictionary\Phrase $name) {
+	public function setName(\Entity\Dictionary\Phrase $name)
+	{
 		$this->name = $name;
 
 		return $this;
@@ -107,7 +94,8 @@ class AmenityType extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Dictionary\Phrase|NULL
 	 */
-	public function getName() {
+	public function getName()
+	{
 		return $this->name;
 	}
 		
@@ -115,7 +103,8 @@ class AmenityType extends \Entity\BaseEntity {
 	 * @param slug
 	 * @return \Entity\Rental\AmenityType
 	 */
-	public function setSlug($slug) {
+	public function setSlug($slug)
+	{
 		$this->slug = $slug;
 
 		return $this;
@@ -124,7 +113,8 @@ class AmenityType extends \Entity\BaseEntity {
 	/**
 	 * @return slug|NULL
 	 */
-	public function getSlug() {
+	public function getSlug()
+	{
 		return $this->slug;
 	}
 }

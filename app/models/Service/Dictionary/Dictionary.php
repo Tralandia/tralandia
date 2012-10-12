@@ -8,7 +8,7 @@ use Nette;
  *
  * @author Dávid Ďurika
  */
-class DictionaryService extends Nette\Object {
+class Dictionary extends Nette\Object {
 
 	public function createPhrase() {
 		

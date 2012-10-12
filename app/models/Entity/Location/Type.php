@@ -35,10 +35,11 @@ class Type extends \Entity\BaseEntityDetails {
 	 */
 	protected $primary;
 
-//@entity-generator-code <--- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 	}
 		
@@ -46,7 +47,8 @@ class Type extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Dictionary\Phrase
 	 * @return \Entity\Location\Type
 	 */
-	public function setName(\Entity\Dictionary\Phrase $name) {
+	public function setName(\Entity\Dictionary\Phrase $name)
+	{
 		$this->name = $name;
 
 		return $this;
@@ -55,7 +57,8 @@ class Type extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Dictionary\Phrase|NULL
 	 */
-	public function getName() {
+	public function getName()
+	{
 		return $this->name;
 	}
 		
@@ -63,7 +66,8 @@ class Type extends \Entity\BaseEntityDetails {
 	 * @param slug
 	 * @return \Entity\Location\Type
 	 */
-	public function setSlug($slug) {
+	public function setSlug($slug)
+	{
 		$this->slug = $slug;
 
 		return $this;
@@ -72,7 +76,8 @@ class Type extends \Entity\BaseEntityDetails {
 	/**
 	 * @return slug|NULL
 	 */
-	public function getSlug() {
+	public function getSlug()
+	{
 		return $this->slug;
 	}
 		
@@ -80,7 +85,8 @@ class Type extends \Entity\BaseEntityDetails {
 	 * @param boolean
 	 * @return \Entity\Location\Type
 	 */
-	public function setPrimary($primary) {
+	public function setPrimary($primary)
+	{
 		$this->primary = $primary;
 
 		return $this;
@@ -89,7 +95,8 @@ class Type extends \Entity\BaseEntityDetails {
 	/**
 	 * @return boolean|NULL
 	 */
-	public function getPrimary() {
+	public function getPrimary()
+	{
 		return $this->primary;
 	}
 }

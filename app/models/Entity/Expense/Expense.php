@@ -80,10 +80,11 @@ class Expense extends \Entity\BaseEntity {
 
 
 
-//@entity-generator-code <--- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 	}
 		
@@ -91,7 +92,8 @@ class Expense extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Expense\Expense
 	 */
-	public function setName($name) {
+	public function setName($name)
+	{
 		$this->name = $name;
 
 		return $this;
@@ -100,7 +102,8 @@ class Expense extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Expense\Expense
 	 */
-	public function unsetName() {
+	public function unsetName()
+	{
 		$this->name = NULL;
 
 		return $this;
@@ -109,7 +112,8 @@ class Expense extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getName() {
+	public function getName()
+	{
 		return $this->name;
 	}
 		
@@ -117,7 +121,8 @@ class Expense extends \Entity\BaseEntity {
 	 * @param \Extras\Types\Price
 	 * @return \Entity\Expense\Expense
 	 */
-	public function setAmount(\Extras\Types\Price $amount) {
+	public function setAmount(\Extras\Types\Price $amount)
+	{
 		$this->amount = $amount;
 
 		return $this;
@@ -126,7 +131,8 @@ class Expense extends \Entity\BaseEntity {
 	/**
 	 * @return \Extras\Types\Price|NULL
 	 */
-	public function getAmount() {
+	public function getAmount()
+	{
 		return $this->amount;
 	}
 		
@@ -134,7 +140,8 @@ class Expense extends \Entity\BaseEntity {
 	 * @param \Entity\Expense\Type
 	 * @return \Entity\Expense\Expense
 	 */
-	public function setType(\Entity\Expense\Type $type) {
+	public function setType(\Entity\Expense\Type $type)
+	{
 		$this->type = $type;
 
 		return $this;
@@ -143,7 +150,8 @@ class Expense extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Expense\Expense
 	 */
-	public function unsetType() {
+	public function unsetType()
+	{
 		$this->type = NULL;
 
 		return $this;
@@ -152,7 +160,8 @@ class Expense extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Expense\Type|NULL
 	 */
-	public function getType() {
+	public function getType()
+	{
 		return $this->type;
 	}
 		
@@ -160,7 +169,8 @@ class Expense extends \Entity\BaseEntity {
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Expense\Expense
 	 */
-	public function setCountry(\Entity\Location\Location $country) {
+	public function setCountry(\Entity\Location\Location $country)
+	{
 		$this->country = $country;
 
 		return $this;
@@ -169,7 +179,8 @@ class Expense extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Expense\Expense
 	 */
-	public function unsetCountry() {
+	public function unsetCountry()
+	{
 		$this->country = NULL;
 
 		return $this;
@@ -178,7 +189,8 @@ class Expense extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Location\Location|NULL
 	 */
-	public function getCountry() {
+	public function getCountry()
+	{
 		return $this->country;
 	}
 		
@@ -186,7 +198,8 @@ class Expense extends \Entity\BaseEntity {
 	 * @param \Entity\Company\Company
 	 * @return \Entity\Expense\Expense
 	 */
-	public function setCompany(\Entity\Company\Company $company) {
+	public function setCompany(\Entity\Company\Company $company)
+	{
 		$this->company = $company;
 
 		return $this;
@@ -195,7 +208,8 @@ class Expense extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Expense\Expense
 	 */
-	public function unsetCompany() {
+	public function unsetCompany()
+	{
 		$this->company = NULL;
 
 		return $this;
@@ -204,7 +218,8 @@ class Expense extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Company\Company|NULL
 	 */
-	public function getCompany() {
+	public function getCompany()
+	{
 		return $this->company;
 	}
 		
@@ -212,7 +227,8 @@ class Expense extends \Entity\BaseEntity {
 	 * @param \Entity\Company\BankAccount
 	 * @return \Entity\Expense\Expense
 	 */
-	public function setBankAccount(\Entity\Company\BankAccount $bankAccount) {
+	public function setBankAccount(\Entity\Company\BankAccount $bankAccount)
+	{
 		$this->bankAccount = $bankAccount;
 
 		return $this;
@@ -221,7 +237,8 @@ class Expense extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Expense\Expense
 	 */
-	public function unsetBankAccount() {
+	public function unsetBankAccount()
+	{
 		$this->bankAccount = NULL;
 
 		return $this;
@@ -230,7 +247,8 @@ class Expense extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Company\BankAccount|NULL
 	 */
-	public function getBankAccount() {
+	public function getBankAccount()
+	{
 		return $this->bankAccount;
 	}
 		
@@ -238,7 +256,8 @@ class Expense extends \Entity\BaseEntity {
 	 * @param \Entity\User\User
 	 * @return \Entity\Expense\Expense
 	 */
-	public function setUser(\Entity\User\User $user) {
+	public function setUser(\Entity\User\User $user)
+	{
 		$this->user = $user;
 
 		return $this;
@@ -247,7 +266,8 @@ class Expense extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Expense\Expense
 	 */
-	public function unsetUser() {
+	public function unsetUser()
+	{
 		$this->user = NULL;
 
 		return $this;
@@ -256,7 +276,8 @@ class Expense extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\User\User|NULL
 	 */
-	public function getUser() {
+	public function getUser()
+	{
 		return $this->user;
 	}
 }

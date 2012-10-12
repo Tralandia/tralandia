@@ -104,10 +104,11 @@ class Language extends \Entity\BaseEntityDetails {
 	protected $backLinks;
 
 
-//@entity-generator-code <--- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 
 		$this->locations = new \Doctrine\Common\Collections\ArrayCollection;
@@ -119,7 +120,8 @@ class Language extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Dictionary\Phrase
 	 * @return \Entity\Dictionary\Language
 	 */
-	public function setName(\Entity\Dictionary\Phrase $name) {
+	public function setName(\Entity\Dictionary\Phrase $name)
+	{
 		$this->name = $name;
 
 		return $this;
@@ -128,7 +130,8 @@ class Language extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Dictionary\Phrase|NULL
 	 */
-	public function getName() {
+	public function getName()
+	{
 		return $this->name;
 	}
 		
@@ -136,7 +139,8 @@ class Language extends \Entity\BaseEntityDetails {
 	 * @param string
 	 * @return \Entity\Dictionary\Language
 	 */
-	public function setIso($iso) {
+	public function setIso($iso)
+	{
 		$this->iso = $iso;
 
 		return $this;
@@ -145,7 +149,8 @@ class Language extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Dictionary\Language
 	 */
-	public function unsetIso() {
+	public function unsetIso()
+	{
 		$this->iso = NULL;
 
 		return $this;
@@ -154,7 +159,8 @@ class Language extends \Entity\BaseEntityDetails {
 	/**
 	 * @return string|NULL
 	 */
-	public function getIso() {
+	public function getIso()
+	{
 		return $this->iso;
 	}
 		
@@ -162,7 +168,8 @@ class Language extends \Entity\BaseEntityDetails {
 	 * @param boolean
 	 * @return \Entity\Dictionary\Language
 	 */
-	public function setSupported($supported) {
+	public function setSupported($supported)
+	{
 		$this->supported = $supported;
 
 		return $this;
@@ -171,7 +178,8 @@ class Language extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Dictionary\Language
 	 */
-	public function unsetSupported() {
+	public function unsetSupported()
+	{
 		$this->supported = NULL;
 
 		return $this;
@@ -180,7 +188,8 @@ class Language extends \Entity\BaseEntityDetails {
 	/**
 	 * @return boolean|NULL
 	 */
-	public function getSupported() {
+	public function getSupported()
+	{
 		return $this->supported;
 	}
 		
@@ -188,7 +197,8 @@ class Language extends \Entity\BaseEntityDetails {
 	 * @param string
 	 * @return \Entity\Dictionary\Language
 	 */
-	public function setDefaultCollation($defaultCollation) {
+	public function setDefaultCollation($defaultCollation)
+	{
 		$this->defaultCollation = $defaultCollation;
 
 		return $this;
@@ -197,7 +207,8 @@ class Language extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Dictionary\Language
 	 */
-	public function unsetDefaultCollation() {
+	public function unsetDefaultCollation()
+	{
 		$this->defaultCollation = NULL;
 
 		return $this;
@@ -206,7 +217,8 @@ class Language extends \Entity\BaseEntityDetails {
 	/**
 	 * @return string|NULL
 	 */
-	public function getDefaultCollation() {
+	public function getDefaultCollation()
+	{
 		return $this->defaultCollation;
 	}
 		
@@ -214,7 +226,8 @@ class Language extends \Entity\BaseEntityDetails {
 	 * @param json
 	 * @return \Entity\Dictionary\Language
 	 */
-	public function setGenders($genders) {
+	public function setGenders($genders)
+	{
 		$this->genders = $genders;
 
 		return $this;
@@ -223,7 +236,8 @@ class Language extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Dictionary\Language
 	 */
-	public function unsetGenders() {
+	public function unsetGenders()
+	{
 		$this->genders = NULL;
 
 		return $this;
@@ -232,7 +246,8 @@ class Language extends \Entity\BaseEntityDetails {
 	/**
 	 * @return json|NULL
 	 */
-	public function getGenders() {
+	public function getGenders()
+	{
 		return $this->genders;
 	}
 		
@@ -240,7 +255,8 @@ class Language extends \Entity\BaseEntityDetails {
 	 * @param json
 	 * @return \Entity\Dictionary\Language
 	 */
-	public function setPlurals($plurals) {
+	public function setPlurals($plurals)
+	{
 		$this->plurals = $plurals;
 
 		return $this;
@@ -249,7 +265,8 @@ class Language extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Dictionary\Language
 	 */
-	public function unsetPlurals() {
+	public function unsetPlurals()
+	{
 		$this->plurals = NULL;
 
 		return $this;
@@ -258,7 +275,8 @@ class Language extends \Entity\BaseEntityDetails {
 	/**
 	 * @return json|NULL
 	 */
-	public function getPlurals() {
+	public function getPlurals()
+	{
 		return $this->plurals;
 	}
 		
@@ -266,7 +284,8 @@ class Language extends \Entity\BaseEntityDetails {
 	 * @param string
 	 * @return \Entity\Dictionary\Language
 	 */
-	public function setPrimarySingular($primarySingular) {
+	public function setPrimarySingular($primarySingular)
+	{
 		$this->primarySingular = $primarySingular;
 
 		return $this;
@@ -275,7 +294,8 @@ class Language extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Dictionary\Language
 	 */
-	public function unsetPrimarySingular() {
+	public function unsetPrimarySingular()
+	{
 		$this->primarySingular = NULL;
 
 		return $this;
@@ -284,7 +304,8 @@ class Language extends \Entity\BaseEntityDetails {
 	/**
 	 * @return string|NULL
 	 */
-	public function getPrimarySingular() {
+	public function getPrimarySingular()
+	{
 		return $this->primarySingular;
 	}
 		
@@ -292,7 +313,8 @@ class Language extends \Entity\BaseEntityDetails {
 	 * @param string
 	 * @return \Entity\Dictionary\Language
 	 */
-	public function setPrimaryPlural($primaryPlural) {
+	public function setPrimaryPlural($primaryPlural)
+	{
 		$this->primaryPlural = $primaryPlural;
 
 		return $this;
@@ -301,7 +323,8 @@ class Language extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Dictionary\Language
 	 */
-	public function unsetPrimaryPlural() {
+	public function unsetPrimaryPlural()
+	{
 		$this->primaryPlural = NULL;
 
 		return $this;
@@ -310,7 +333,8 @@ class Language extends \Entity\BaseEntityDetails {
 	/**
 	 * @return string|NULL
 	 */
-	public function getPrimaryPlural() {
+	public function getPrimaryPlural()
+	{
 		return $this->primaryPlural;
 	}
 		
@@ -318,7 +342,8 @@ class Language extends \Entity\BaseEntityDetails {
 	 * @param string
 	 * @return \Entity\Dictionary\Language
 	 */
-	public function setPrimaryGender($primaryGender) {
+	public function setPrimaryGender($primaryGender)
+	{
 		$this->primaryGender = $primaryGender;
 
 		return $this;
@@ -327,7 +352,8 @@ class Language extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Dictionary\Language
 	 */
-	public function unsetPrimaryGender() {
+	public function unsetPrimaryGender()
+	{
 		$this->primaryGender = NULL;
 
 		return $this;
@@ -336,7 +362,8 @@ class Language extends \Entity\BaseEntityDetails {
 	/**
 	 * @return string|NULL
 	 */
-	public function getPrimaryGender() {
+	public function getPrimaryGender()
+	{
 		return $this->primaryGender;
 	}
 		
@@ -344,7 +371,8 @@ class Language extends \Entity\BaseEntityDetails {
 	 * @param json
 	 * @return \Entity\Dictionary\Language
 	 */
-	public function setPpcPatterns($ppcPatterns) {
+	public function setPpcPatterns($ppcPatterns)
+	{
 		$this->ppcPatterns = $ppcPatterns;
 
 		return $this;
@@ -353,7 +381,8 @@ class Language extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Dictionary\Language
 	 */
-	public function unsetPpcPatterns() {
+	public function unsetPpcPatterns()
+	{
 		$this->ppcPatterns = NULL;
 
 		return $this;
@@ -362,7 +391,8 @@ class Language extends \Entity\BaseEntityDetails {
 	/**
 	 * @return json|NULL
 	 */
-	public function getPpcPatterns() {
+	public function getPpcPatterns()
+	{
 		return $this->ppcPatterns;
 	}
 		
@@ -370,7 +400,8 @@ class Language extends \Entity\BaseEntityDetails {
 	 * @param json
 	 * @return \Entity\Dictionary\Language
 	 */
-	public function setVariationDetails($variationDetails) {
+	public function setVariationDetails($variationDetails)
+	{
 		$this->variationDetails = $variationDetails;
 
 		return $this;
@@ -379,7 +410,8 @@ class Language extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Dictionary\Language
 	 */
-	public function unsetVariationDetails() {
+	public function unsetVariationDetails()
+	{
 		$this->variationDetails = NULL;
 
 		return $this;
@@ -388,7 +420,8 @@ class Language extends \Entity\BaseEntityDetails {
 	/**
 	 * @return json|NULL
 	 */
-	public function getVariationDetails() {
+	public function getVariationDetails()
+	{
 		return $this->variationDetails;
 	}
 		
@@ -396,7 +429,8 @@ class Language extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Dictionary\Language
 	 */
-	public function addLocation(\Entity\Location\Location $location) {
+	public function addLocation(\Entity\Location\Location $location)
+	{
 		if(!$this->locations->contains($location)) {
 			$this->locations->add($location);
 		}
@@ -407,7 +441,8 @@ class Language extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Location\Location
 	 */
-	public function getLocations() {
+	public function getLocations()
+	{
 		return $this->locations;
 	}
 		
@@ -415,7 +450,8 @@ class Language extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Rental\Rental
 	 * @return \Entity\Dictionary\Language
 	 */
-	public function addRental(\Entity\Rental\Rental $rental) {
+	public function addRental(\Entity\Rental\Rental $rental)
+	{
 		if(!$this->rentals->contains($rental)) {
 			$this->rentals->add($rental);
 		}
@@ -426,7 +462,8 @@ class Language extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Rental\Rental
 	 */
-	public function getRentals() {
+	public function getRentals()
+	{
 		return $this->rentals;
 	}
 		
@@ -434,7 +471,8 @@ class Language extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Seo\BackLink
 	 * @return \Entity\Dictionary\Language
 	 */
-	public function addBackLink(\Entity\Seo\BackLink $backLink) {
+	public function addBackLink(\Entity\Seo\BackLink $backLink)
+	{
 		if(!$this->backLinks->contains($backLink)) {
 			$this->backLinks->add($backLink);
 		}
@@ -447,7 +485,8 @@ class Language extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Seo\BackLink
 	 * @return \Entity\Dictionary\Language
 	 */
-	public function removeBackLink(\Entity\Seo\BackLink $backLink) {
+	public function removeBackLink(\Entity\Seo\BackLink $backLink)
+	{
 		if($this->backLinks->contains($backLink)) {
 			$this->backLinks->removeElement($backLink);
 		}
@@ -459,7 +498,8 @@ class Language extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Seo\BackLink
 	 */
-	public function getBackLinks() {
+	public function getBackLinks()
+	{
 		return $this->backLinks;
 	}
 }

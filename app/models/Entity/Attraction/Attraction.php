@@ -67,10 +67,11 @@ class Attraction extends \Entity\BaseEntityDetails {
 	protected $media;
 
 
-//@entity-generator-code <--- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 
 		$this->media = new \Doctrine\Common\Collections\ArrayCollection;
@@ -80,7 +81,8 @@ class Attraction extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Attraction\Type
 	 * @return \Entity\Attraction\Attraction
 	 */
-	public function setType(\Entity\Attraction\Type $type) {
+	public function setType(\Entity\Attraction\Type $type)
+	{
 		$this->type = $type;
 
 		return $this;
@@ -89,7 +91,8 @@ class Attraction extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Attraction\Attraction
 	 */
-	public function unsetType() {
+	public function unsetType()
+	{
 		$this->type = NULL;
 
 		return $this;
@@ -98,7 +101,8 @@ class Attraction extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Attraction\Type|NULL
 	 */
-	public function getType() {
+	public function getType()
+	{
 		return $this->type;
 	}
 		
@@ -106,7 +110,8 @@ class Attraction extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Dictionary\Phrase
 	 * @return \Entity\Attraction\Attraction
 	 */
-	public function setName(\Entity\Dictionary\Phrase $name) {
+	public function setName(\Entity\Dictionary\Phrase $name)
+	{
 		$this->name = $name;
 
 		return $this;
@@ -115,7 +120,8 @@ class Attraction extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Dictionary\Phrase|NULL
 	 */
-	public function getName() {
+	public function getName()
+	{
 		return $this->name;
 	}
 		
@@ -123,7 +129,8 @@ class Attraction extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Dictionary\Phrase
 	 * @return \Entity\Attraction\Attraction
 	 */
-	public function setDescription(\Entity\Dictionary\Phrase $description) {
+	public function setDescription(\Entity\Dictionary\Phrase $description)
+	{
 		$this->description = $description;
 
 		return $this;
@@ -132,7 +139,8 @@ class Attraction extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Dictionary\Phrase|NULL
 	 */
-	public function getDescription() {
+	public function getDescription()
+	{
 		return $this->description;
 	}
 		
@@ -140,7 +148,8 @@ class Attraction extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Attraction\Attraction
 	 */
-	public function setCountry(\Entity\Location\Location $country) {
+	public function setCountry(\Entity\Location\Location $country)
+	{
 		$this->country = $country;
 
 		return $this;
@@ -149,7 +158,8 @@ class Attraction extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Attraction\Attraction
 	 */
-	public function unsetCountry() {
+	public function unsetCountry()
+	{
 		$this->country = NULL;
 
 		return $this;
@@ -158,7 +168,8 @@ class Attraction extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Location\Location|NULL
 	 */
-	public function getCountry() {
+	public function getCountry()
+	{
 		return $this->country;
 	}
 		
@@ -166,7 +177,8 @@ class Attraction extends \Entity\BaseEntityDetails {
 	 * @param \Extras\Types\Latlong
 	 * @return \Entity\Attraction\Attraction
 	 */
-	public function setLatitude(\Extras\Types\Latlong $latitude) {
+	public function setLatitude(\Extras\Types\Latlong $latitude)
+	{
 		$this->latitude = $latitude;
 
 		return $this;
@@ -175,7 +187,8 @@ class Attraction extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Attraction\Attraction
 	 */
-	public function unsetLatitude() {
+	public function unsetLatitude()
+	{
 		$this->latitude = NULL;
 
 		return $this;
@@ -184,7 +197,8 @@ class Attraction extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Extras\Types\Latlong|NULL
 	 */
-	public function getLatitude() {
+	public function getLatitude()
+	{
 		return $this->latitude;
 	}
 		
@@ -192,7 +206,8 @@ class Attraction extends \Entity\BaseEntityDetails {
 	 * @param \Extras\Types\Latlong
 	 * @return \Entity\Attraction\Attraction
 	 */
-	public function setLongitude(\Extras\Types\Latlong $longitude) {
+	public function setLongitude(\Extras\Types\Latlong $longitude)
+	{
 		$this->longitude = $longitude;
 
 		return $this;
@@ -201,7 +216,8 @@ class Attraction extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Attraction\Attraction
 	 */
-	public function unsetLongitude() {
+	public function unsetLongitude()
+	{
 		$this->longitude = NULL;
 
 		return $this;
@@ -210,7 +226,8 @@ class Attraction extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Extras\Types\Latlong|NULL
 	 */
-	public function getLongitude() {
+	public function getLongitude()
+	{
 		return $this->longitude;
 	}
 		
@@ -218,7 +235,8 @@ class Attraction extends \Entity\BaseEntityDetails {
 	 * @param \Extras\Types\Contacts
 	 * @return \Entity\Attraction\Attraction
 	 */
-	public function setContacts(\Extras\Types\Contacts $contacts) {
+	public function setContacts(\Extras\Types\Contacts $contacts)
+	{
 		$this->contacts = $contacts;
 
 		return $this;
@@ -227,7 +245,8 @@ class Attraction extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Attraction\Attraction
 	 */
-	public function unsetContacts() {
+	public function unsetContacts()
+	{
 		$this->contacts = NULL;
 
 		return $this;
@@ -236,7 +255,8 @@ class Attraction extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Extras\Types\Contacts|NULL
 	 */
-	public function getContacts() {
+	public function getContacts()
+	{
 		return $this->contacts;
 	}
 		
@@ -244,7 +264,8 @@ class Attraction extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Medium\Medium
 	 * @return \Entity\Attraction\Attraction
 	 */
-	public function addMedium(\Entity\Medium\Medium $medium) {
+	public function addMedium(\Entity\Medium\Medium $medium)
+	{
 		if(!$this->media->contains($medium)) {
 			$this->media->add($medium);
 		}
@@ -257,7 +278,8 @@ class Attraction extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Medium\Medium
 	 * @return \Entity\Attraction\Attraction
 	 */
-	public function removeMedium(\Entity\Medium\Medium $medium) {
+	public function removeMedium(\Entity\Medium\Medium $medium)
+	{
 		if($this->media->contains($medium)) {
 			$this->media->removeElement($medium);
 		}
@@ -269,7 +291,8 @@ class Attraction extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Medium\Medium
 	 */
-	public function getMedia() {
+	public function getMedia()
+	{
 		return $this->media;
 	}
 }

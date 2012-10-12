@@ -23,10 +23,11 @@ class System extends \Entity\BaseEntityDetails {
 	protected $comment;
 
 
-//@entity-generator-code <--- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 	}
 		
@@ -34,7 +35,8 @@ class System extends \Entity\BaseEntityDetails {
 	 * @param string
 	 * @return \Entity\Log\System
 	 */
-	public function setName($name) {
+	public function setName($name)
+	{
 		$this->name = $name;
 
 		return $this;
@@ -43,7 +45,8 @@ class System extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Log\System
 	 */
-	public function unsetName() {
+	public function unsetName()
+	{
 		$this->name = NULL;
 
 		return $this;
@@ -52,7 +55,8 @@ class System extends \Entity\BaseEntityDetails {
 	/**
 	 * @return string|NULL
 	 */
-	public function getName() {
+	public function getName()
+	{
 		return $this->name;
 	}
 		
@@ -60,7 +64,8 @@ class System extends \Entity\BaseEntityDetails {
 	 * @param string
 	 * @return \Entity\Log\System
 	 */
-	public function setComment($comment) {
+	public function setComment($comment)
+	{
 		$this->comment = $comment;
 
 		return $this;
@@ -69,7 +74,8 @@ class System extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Log\System
 	 */
-	public function unsetComment() {
+	public function unsetComment()
+	{
 		$this->comment = NULL;
 
 		return $this;
@@ -78,7 +84,8 @@ class System extends \Entity\BaseEntityDetails {
 	/**
 	 * @return string|NULL
 	 */
-	public function getComment() {
+	public function getComment()
+	{
 		return $this->comment;
 	}
 }

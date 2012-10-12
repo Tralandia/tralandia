@@ -162,10 +162,12 @@ class BaseImport {
 	public $savedVariables = array();
 	public $developmentMode = TRUE;
 
-	public function __construct() {
-		$this->loadVariables();
+	public $context;
 
-		return;
+	public function __construct($context) {
+		$this->loadVariables();
+		$this->context = $context;
+
 	}
 
 	public function setSubsections($section = NULL) {
@@ -248,19 +250,20 @@ class BaseImport {
 	protected function createPhrasesByOld($entityName, $entityAttribute, $level, $oldTableName, $oldAttribute) {
 		$dictionaryType = $this->createDictionaryType($entityName, $entityAttribute, $level);
 
-		$r = q('select * from '.$oldTableName.' order by id');
+		$r = q('select id, '.$oldAttribute.' from '.$oldTableName.' order by id');
 		while($x = mysql_fetch_array($r)) {
 			if ($x[$oldAttribute]) {
 				$newEntityId = getByOldId($entityName, $x['id']);
 				$phrase = $this->createNewPhrase($dictionaryType, $x[$oldAttribute]);
-				if ($phrase instanceof \Service\Dictionary\Phrase) {
+				if ($phrase instanceof \Service\BaseService) {
 					eval('$s = \Service'.$entityName.'::get('.$newEntityId.');');
 					if ($s->id > 0) {
 						$s->{$entityAttribute} = $phrase;
-						$s->save();						
+						$s->save(FALSE);						
 					} else {
 						debug($s);
-						debug($newEntityId); return;	
+						debug($newEntityId); 
+						return;	
 					}
 				}
 			} else {
@@ -328,13 +331,15 @@ class BaseImport {
 			$entityName = '\Entity'.$entityName;
 		}
 
-		$dictionaryType = D\Type::getByEntityNameAndEntityAttribute($entityName, $entityAttribute);
+		$dictionaryTypeRepository = $this->context->dictionaryTypeRepository;
+		$dictionaryType = $dictionaryTypeRepository->findOneBy(array('entityName' => $entityName, 'entityAttribute' => $entityAttribute));
+
 		if ($dictionaryType) {
 			//debug('iba vraciam premennu '.$dictionaryType->entityName.'->'.$dictionaryType->entityAttribute);
 			return $dictionaryType;
 		} else {
-			eval('$level = \Entity\Dictionary\Type::TRANSLATION_LEVEL_'.strtoupper($level).';');
-			$dictionaryType = D\Type::get();
+			$level = constant('\Entity\Dictionary\Type::TRANSLATION_LEVEL_'.strtoupper($level));
+			$dictionaryType = $this->context->dictionaryTypeServiceFactory->create();
 			$dictionaryType->entityName = $entityName;
 			$dictionaryType->entityAttribute = $entityAttribute;
 			$dictionaryType->translationLevelRequirement = $level;
@@ -343,7 +348,7 @@ class BaseImport {
 					$dictionaryType->$key = $value;
 				}
 			}
-			$dictionaryType->save();			
+			$dictionaryType->save(FALSE);			
 			return $dictionaryType;
 		}
 	}

@@ -46,10 +46,11 @@ class Page extends \Entity\BaseEntity {
 	 */
 	protected $genericContent;
 
-//@entity-generator-code <--- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 	}
 		
@@ -57,7 +58,8 @@ class Page extends \Entity\BaseEntity {
 	 * @param \Entity\Dictionary\Phrase
 	 * @return \Entity\Page
 	 */
-	public function setName(\Entity\Dictionary\Phrase $name) {
+	public function setName(\Entity\Dictionary\Phrase $name)
+	{
 		$this->name = $name;
 
 		return $this;
@@ -66,7 +68,8 @@ class Page extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Dictionary\Phrase|NULL
 	 */
-	public function getName() {
+	public function getName()
+	{
 		return $this->name;
 	}
 		
@@ -74,7 +77,8 @@ class Page extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Page
 	 */
-	public function setType($type) {
+	public function setType($type)
+	{
 		$this->type = $type;
 
 		return $this;
@@ -83,7 +87,8 @@ class Page extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Page
 	 */
-	public function unsetType() {
+	public function unsetType()
+	{
 		$this->type = NULL;
 
 		return $this;
@@ -92,7 +97,8 @@ class Page extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getType() {
+	public function getType()
+	{
 		return $this->type;
 	}
 		
@@ -100,7 +106,8 @@ class Page extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Page
 	 */
-	public function setDestination($destination) {
+	public function setDestination($destination)
+	{
 		$this->destination = $destination;
 
 		return $this;
@@ -109,7 +116,8 @@ class Page extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Page
 	 */
-	public function unsetDestination() {
+	public function unsetDestination()
+	{
 		$this->destination = NULL;
 
 		return $this;
@@ -118,7 +126,8 @@ class Page extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getDestination() {
+	public function getDestination()
+	{
 		return $this->destination;
 	}
 		
@@ -126,7 +135,8 @@ class Page extends \Entity\BaseEntity {
 	 * @param json
 	 * @return \Entity\Page
 	 */
-	public function setParameters($parameters) {
+	public function setParameters($parameters)
+	{
 		$this->parameters = $parameters;
 
 		return $this;
@@ -135,7 +145,8 @@ class Page extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Page
 	 */
-	public function unsetParameters() {
+	public function unsetParameters()
+	{
 		$this->parameters = NULL;
 
 		return $this;
@@ -144,7 +155,8 @@ class Page extends \Entity\BaseEntity {
 	/**
 	 * @return json|NULL
 	 */
-	public function getParameters() {
+	public function getParameters()
+	{
 		return $this->parameters;
 	}
 		
@@ -152,7 +164,8 @@ class Page extends \Entity\BaseEntity {
 	 * @param \Entity\Dictionary\Phrase
 	 * @return \Entity\Page
 	 */
-	public function setGenericContent(\Entity\Dictionary\Phrase $genericContent) {
+	public function setGenericContent(\Entity\Dictionary\Phrase $genericContent)
+	{
 		$this->genericContent = $genericContent;
 
 		return $this;
@@ -161,7 +174,8 @@ class Page extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Dictionary\Phrase|NULL
 	 */
-	public function getGenericContent() {
+	public function getGenericContent()
+	{
 		return $this->genericContent;
 	}
 }

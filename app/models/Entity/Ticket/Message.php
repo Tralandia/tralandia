@@ -34,7 +34,7 @@ class Message extends \Entity\BaseEntity {
 	 * @var Collection
 	 * @ORM\ManyToMany(targetEntity="Entity\User\User", inversedBy="ticketMessages")
 	 */
-	protected $toCC;
+	protected $toCc;
 
 	/**
 	 * @var string
@@ -67,13 +67,14 @@ class Message extends \Entity\BaseEntity {
 	protected $attachments;
 
 
-//@entity-generator-code <--- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 
-		$this->toCC = new \Doctrine\Common\Collections\ArrayCollection;
+		$this->toCc = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->attachments = new \Doctrine\Common\Collections\ArrayCollection;
 	}
 		
@@ -81,7 +82,8 @@ class Message extends \Entity\BaseEntity {
 	 * @param \Entity\Ticket\Ticket
 	 * @return \Entity\Ticket\Message
 	 */
-	public function setTicket(\Entity\Ticket\Ticket $ticket) {
+	public function setTicket(\Entity\Ticket\Ticket $ticket)
+	{
 		$this->ticket = $ticket;
 
 		return $this;
@@ -90,7 +92,8 @@ class Message extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Ticket\Message
 	 */
-	public function unsetTicket() {
+	public function unsetTicket()
+	{
 		$this->ticket = NULL;
 
 		return $this;
@@ -99,7 +102,8 @@ class Message extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Ticket\Ticket|NULL
 	 */
-	public function getTicket() {
+	public function getTicket()
+	{
 		return $this->ticket;
 	}
 		
@@ -107,7 +111,8 @@ class Message extends \Entity\BaseEntity {
 	 * @param \Entity\User\User
 	 * @return \Entity\Ticket\Message
 	 */
-	public function setFrom(\Entity\User\User $from) {
+	public function setFrom(\Entity\User\User $from)
+	{
 		$this->from = $from;
 
 		return $this;
@@ -116,7 +121,8 @@ class Message extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Ticket\Message
 	 */
-	public function unsetFrom() {
+	public function unsetFrom()
+	{
 		$this->from = NULL;
 
 		return $this;
@@ -125,7 +131,8 @@ class Message extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\User\User|NULL
 	 */
-	public function getFrom() {
+	public function getFrom()
+	{
 		return $this->from;
 	}
 		
@@ -133,7 +140,8 @@ class Message extends \Entity\BaseEntity {
 	 * @param \Entity\User\User
 	 * @return \Entity\Ticket\Message
 	 */
-	public function setTo(\Entity\User\User $to) {
+	public function setTo(\Entity\User\User $to)
+	{
 		$this->to = $to;
 
 		return $this;
@@ -142,7 +150,8 @@ class Message extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Ticket\Message
 	 */
-	public function unsetTo() {
+	public function unsetTo()
+	{
 		$this->to = NULL;
 
 		return $this;
@@ -151,7 +160,8 @@ class Message extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\User\User|NULL
 	 */
-	public function getTo() {
+	public function getTo()
+	{
 		return $this->to;
 	}
 		
@@ -159,9 +169,10 @@ class Message extends \Entity\BaseEntity {
 	 * @param \Entity\User\User
 	 * @return \Entity\Ticket\Message
 	 */
-	public function addToCC(\Entity\User\User $toCC) {
-		if(!$this->toCC->contains($toCC)) {
-			$this->toCC->add($toCC);
+	public function addToCc(\Entity\User\User $toCc)
+	{
+		if(!$this->toCc->contains($toCc)) {
+			$this->toCc->add($toCc);
 		}
 
 		return $this;
@@ -170,15 +181,17 @@ class Message extends \Entity\BaseEntity {
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\User\User
 	 */
-	public function getToCC() {
-		return $this->toCC;
+	public function getToCc()
+	{
+		return $this->toCc;
 	}
 		
 	/**
 	 * @param string
 	 * @return \Entity\Ticket\Message
 	 */
-	public function setSubject($subject) {
+	public function setSubject($subject)
+	{
 		$this->subject = $subject;
 
 		return $this;
@@ -187,7 +200,8 @@ class Message extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Ticket\Message
 	 */
-	public function unsetSubject() {
+	public function unsetSubject()
+	{
 		$this->subject = NULL;
 
 		return $this;
@@ -196,7 +210,8 @@ class Message extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getSubject() {
+	public function getSubject()
+	{
 		return $this->subject;
 	}
 		
@@ -204,7 +219,8 @@ class Message extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Ticket\Message
 	 */
-	public function setSubjectEn($subjectEn) {
+	public function setSubjectEn($subjectEn)
+	{
 		$this->subjectEn = $subjectEn;
 
 		return $this;
@@ -213,7 +229,8 @@ class Message extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Ticket\Message
 	 */
-	public function unsetSubjectEn() {
+	public function unsetSubjectEn()
+	{
 		$this->subjectEn = NULL;
 
 		return $this;
@@ -222,7 +239,8 @@ class Message extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getSubjectEn() {
+	public function getSubjectEn()
+	{
 		return $this->subjectEn;
 	}
 		
@@ -230,7 +248,8 @@ class Message extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Ticket\Message
 	 */
-	public function setMessage($message) {
+	public function setMessage($message)
+	{
 		$this->message = $message;
 
 		return $this;
@@ -239,7 +258,8 @@ class Message extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Ticket\Message
 	 */
-	public function unsetMessage() {
+	public function unsetMessage()
+	{
 		$this->message = NULL;
 
 		return $this;
@@ -248,7 +268,8 @@ class Message extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getMessage() {
+	public function getMessage()
+	{
 		return $this->message;
 	}
 		
@@ -256,7 +277,8 @@ class Message extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Ticket\Message
 	 */
-	public function setMessageEn($messageEn) {
+	public function setMessageEn($messageEn)
+	{
 		$this->messageEn = $messageEn;
 
 		return $this;
@@ -265,7 +287,8 @@ class Message extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Ticket\Message
 	 */
-	public function unsetMessageEn() {
+	public function unsetMessageEn()
+	{
 		$this->messageEn = NULL;
 
 		return $this;
@@ -274,7 +297,8 @@ class Message extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getMessageEn() {
+	public function getMessageEn()
+	{
 		return $this->messageEn;
 	}
 		
@@ -282,7 +306,8 @@ class Message extends \Entity\BaseEntity {
 	 * @param \Entity\Medium\Medium
 	 * @return \Entity\Ticket\Message
 	 */
-	public function addAttachment(\Entity\Medium\Medium $attachment) {
+	public function addAttachment(\Entity\Medium\Medium $attachment)
+	{
 		if(!$this->attachments->contains($attachment)) {
 			$this->attachments->add($attachment);
 		}
@@ -295,7 +320,8 @@ class Message extends \Entity\BaseEntity {
 	 * @param \Entity\Medium\Medium
 	 * @return \Entity\Ticket\Message
 	 */
-	public function removeAttachment(\Entity\Medium\Medium $attachment) {
+	public function removeAttachment(\Entity\Medium\Medium $attachment)
+	{
 		if($this->attachments->contains($attachment)) {
 			$this->attachments->removeElement($attachment);
 		}
@@ -307,7 +333,8 @@ class Message extends \Entity\BaseEntity {
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Medium\Medium
 	 */
-	public function getAttachments() {
+	public function getAttachments()
+	{
 		return $this->attachments;
 	}
 }

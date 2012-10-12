@@ -46,10 +46,11 @@ class RentalToFriend extends \Entity\BaseEntity {
 	protected $message;
 
 
-//@entity-generator-code <--- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 	}
 		
@@ -57,7 +58,8 @@ class RentalToFriend extends \Entity\BaseEntity {
 	 * @param \Entity\Dictionary\Language
 	 * @return \Entity\User\RentalToFriend
 	 */
-	public function setLanguage(\Entity\Dictionary\Language $language) {
+	public function setLanguage(\Entity\Dictionary\Language $language)
+	{
 		$this->language = $language;
 
 		return $this;
@@ -66,7 +68,8 @@ class RentalToFriend extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\User\RentalToFriend
 	 */
-	public function unsetLanguage() {
+	public function unsetLanguage()
+	{
 		$this->language = NULL;
 
 		return $this;
@@ -75,7 +78,8 @@ class RentalToFriend extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Dictionary\Language|NULL
 	 */
-	public function getLanguage() {
+	public function getLanguage()
+	{
 		return $this->language;
 	}
 		
@@ -83,7 +87,8 @@ class RentalToFriend extends \Entity\BaseEntity {
 	 * @param \Entity\Rental\Rental
 	 * @return \Entity\User\RentalToFriend
 	 */
-	public function setRental(\Entity\Rental\Rental $rental) {
+	public function setRental(\Entity\Rental\Rental $rental)
+	{
 		$this->rental = $rental;
 
 		return $this;
@@ -92,7 +97,8 @@ class RentalToFriend extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\User\RentalToFriend
 	 */
-	public function unsetRental() {
+	public function unsetRental()
+	{
 		$this->rental = NULL;
 
 		return $this;
@@ -101,7 +107,8 @@ class RentalToFriend extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Rental\Rental|NULL
 	 */
-	public function getRental() {
+	public function getRental()
+	{
 		return $this->rental;
 	}
 		
@@ -109,7 +116,8 @@ class RentalToFriend extends \Entity\BaseEntity {
 	 * @param \Extras\Types\Email
 	 * @return \Entity\User\RentalToFriend
 	 */
-	public function setSenderEmail(\Extras\Types\Email $senderEmail) {
+	public function setSenderEmail(\Extras\Types\Email $senderEmail)
+	{
 		$this->senderEmail = $senderEmail;
 
 		return $this;
@@ -118,7 +126,8 @@ class RentalToFriend extends \Entity\BaseEntity {
 	/**
 	 * @return \Extras\Types\Email|NULL
 	 */
-	public function getSenderEmail() {
+	public function getSenderEmail()
+	{
 		return $this->senderEmail;
 	}
 		
@@ -126,7 +135,8 @@ class RentalToFriend extends \Entity\BaseEntity {
 	 * @param \Extras\Types\Email
 	 * @return \Entity\User\RentalToFriend
 	 */
-	public function setReceiverEmail(\Extras\Types\Email $receiverEmail) {
+	public function setReceiverEmail(\Extras\Types\Email $receiverEmail)
+	{
 		$this->receiverEmail = $receiverEmail;
 
 		return $this;
@@ -135,7 +145,8 @@ class RentalToFriend extends \Entity\BaseEntity {
 	/**
 	 * @return \Extras\Types\Email|NULL
 	 */
-	public function getReceiverEmail() {
+	public function getReceiverEmail()
+	{
 		return $this->receiverEmail;
 	}
 		
@@ -143,7 +154,8 @@ class RentalToFriend extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\User\RentalToFriend
 	 */
-	public function setMessage($message) {
+	public function setMessage($message)
+	{
 		$this->message = $message;
 
 		return $this;
@@ -152,7 +164,8 @@ class RentalToFriend extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getMessage() {
+	public function getMessage()
+	{
 		return $this->message;
 	}
 }

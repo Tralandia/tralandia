@@ -27,10 +27,11 @@ class TemplateType extends \Entity\BaseEntity {
 	 */
 	protected $availableVariables;
 
-//@entity-generator-code <--- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 	}
 		
@@ -38,7 +39,8 @@ class TemplateType extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Emailing\TemplateType
 	 */
-	public function setName($name) {
+	public function setName($name)
+	{
 		$this->name = $name;
 
 		return $this;
@@ -47,7 +49,8 @@ class TemplateType extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getName() {
+	public function getName()
+	{
 		return $this->name;
 	}
 		
@@ -55,7 +58,8 @@ class TemplateType extends \Entity\BaseEntity {
 	 * @param json
 	 * @return \Entity\Emailing\TemplateType
 	 */
-	public function setAvailableVariables($availableVariables) {
+	public function setAvailableVariables($availableVariables)
+	{
 		$this->availableVariables = $availableVariables;
 
 		return $this;
@@ -64,7 +68,8 @@ class TemplateType extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Emailing\TemplateType
 	 */
-	public function unsetAvailableVariables() {
+	public function unsetAvailableVariables()
+	{
 		$this->availableVariables = NULL;
 
 		return $this;
@@ -73,7 +78,8 @@ class TemplateType extends \Entity\BaseEntity {
 	/**
 	 * @return json|NULL
 	 */
-	public function getAvailableVariables() {
+	public function getAvailableVariables()
+	{
 		return $this->availableVariables;
 	}
 }

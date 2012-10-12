@@ -61,6 +61,12 @@ class Rental extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
+	 * @ORM\ManyToMany(targetEntity="Information", mappedBy="rentals")
+	 */
+	protected $missingInformations;
+
+	/**
+	 * @var Collection
 	 * @ORM\ManyToMany(targetEntity="Entity\Location\Location", mappedBy="rentals")
 	 */
 	protected $locations;
@@ -96,16 +102,10 @@ class Rental extends \Entity\BaseEntity {
 	protected $name;
 
 	/**
-	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
+	 * @var json
+	 * @ORM\Column(type="json")
 	 */
-	protected $briefDescription;
-
-	/**
-	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
-	 */
-	protected $description;
+	protected $interview;
 
 	/**
 	 * @var Collection
@@ -186,13 +186,15 @@ class Rental extends \Entity\BaseEntity {
 	protected $backLinks;
 
 
-//@entity-generator-code <--- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 
 		$this->types = new \Doctrine\Common\Collections\ArrayCollection;
+		$this->missingInformations = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->locations = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->spokenLanguages = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->amenities = new \Doctrine\Common\Collections\ArrayCollection;
@@ -206,7 +208,8 @@ class Rental extends \Entity\BaseEntity {
 	 * @param \Entity\User\User
 	 * @return \Entity\Rental\Rental
 	 */
-	public function setUser(\Entity\User\User $user) {
+	public function setUser(\Entity\User\User $user)
+	{
 		$this->user = $user;
 
 		return $this;
@@ -215,7 +218,8 @@ class Rental extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Rental\Rental
 	 */
-	public function unsetUser() {
+	public function unsetUser()
+	{
 		$this->user = NULL;
 
 		return $this;
@@ -224,7 +228,8 @@ class Rental extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\User\User|NULL
 	 */
-	public function getUser() {
+	public function getUser()
+	{
 		return $this->user;
 	}
 		
@@ -232,7 +237,8 @@ class Rental extends \Entity\BaseEntity {
 	 * @param \Entity\Dictionary\Language
 	 * @return \Entity\Rental\Rental
 	 */
-	public function setEditLanguage(\Entity\Dictionary\Language $editLanguage) {
+	public function setEditLanguage(\Entity\Dictionary\Language $editLanguage)
+	{
 		$this->editLanguage = $editLanguage;
 
 		return $this;
@@ -241,7 +247,8 @@ class Rental extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Rental\Rental
 	 */
-	public function unsetEditLanguage() {
+	public function unsetEditLanguage()
+	{
 		$this->editLanguage = NULL;
 
 		return $this;
@@ -250,7 +257,8 @@ class Rental extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Dictionary\Language|NULL
 	 */
-	public function getEditLanguage() {
+	public function getEditLanguage()
+	{
 		return $this->editLanguage;
 	}
 		
@@ -258,7 +266,8 @@ class Rental extends \Entity\BaseEntity {
 	 * @param integer
 	 * @return \Entity\Rental\Rental
 	 */
-	public function setStatus($status) {
+	public function setStatus($status)
+	{
 		$this->status = $status;
 
 		return $this;
@@ -267,7 +276,8 @@ class Rental extends \Entity\BaseEntity {
 	/**
 	 * @return integer|NULL
 	 */
-	public function getStatus() {
+	public function getStatus()
+	{
 		return $this->status;
 	}
 		
@@ -275,7 +285,8 @@ class Rental extends \Entity\BaseEntity {
 	 * @param \Entity\Rental\Type
 	 * @return \Entity\Rental\Rental
 	 */
-	public function addType(\Entity\Rental\Type $type) {
+	public function addType(\Entity\Rental\Type $type)
+	{
 		if(!$this->types->contains($type)) {
 			$this->types->add($type);
 		}
@@ -288,7 +299,8 @@ class Rental extends \Entity\BaseEntity {
 	 * @param \Entity\Rental\Type
 	 * @return \Entity\Rental\Rental
 	 */
-	public function removeType(\Entity\Rental\Type $type) {
+	public function removeType(\Entity\Rental\Type $type)
+	{
 		if($this->types->contains($type)) {
 			$this->types->removeElement($type);
 		}
@@ -300,7 +312,8 @@ class Rental extends \Entity\BaseEntity {
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Rental\Type
 	 */
-	public function getTypes() {
+	public function getTypes()
+	{
 		return $this->types;
 	}
 		
@@ -308,7 +321,8 @@ class Rental extends \Entity\BaseEntity {
 	 * @param \DateTime
 	 * @return \Entity\Rental\Rental
 	 */
-	public function setTimeDeleted(\DateTime $timeDeleted) {
+	public function setTimeDeleted(\DateTime $timeDeleted)
+	{
 		$this->timeDeleted = $timeDeleted;
 
 		return $this;
@@ -317,7 +331,8 @@ class Rental extends \Entity\BaseEntity {
 	/**
 	 * @return \DateTime|NULL
 	 */
-	public function getTimeDeleted() {
+	public function getTimeDeleted()
+	{
 		return $this->timeDeleted;
 	}
 		
@@ -325,7 +340,8 @@ class Rental extends \Entity\BaseEntity {
 	 * @param decimal
 	 * @return \Entity\Rental\Rental
 	 */
-	public function setRank($rank) {
+	public function setRank($rank)
+	{
 		$this->rank = $rank;
 
 		return $this;
@@ -334,7 +350,8 @@ class Rental extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Rental\Rental
 	 */
-	public function unsetRank() {
+	public function unsetRank()
+	{
 		$this->rank = NULL;
 
 		return $this;
@@ -343,15 +360,53 @@ class Rental extends \Entity\BaseEntity {
 	/**
 	 * @return decimal|NULL
 	 */
-	public function getRank() {
+	public function getRank()
+	{
 		return $this->rank;
+	}
+		
+	/**
+	 * @param \Entity\Rental\Information
+	 * @return \Entity\Rental\Rental
+	 */
+	public function addMissingInformation(\Entity\Rental\Information $missingInformation)
+	{
+		if(!$this->missingInformations->contains($missingInformation)) {
+			$this->missingInformations->add($missingInformation);
+		}
+		$missingInformation->addRental($this);
+
+		return $this;
+	}
+		
+	/**
+	 * @param \Entity\Rental\Information
+	 * @return \Entity\Rental\Rental
+	 */
+	public function removeMissingInformation(\Entity\Rental\Information $missingInformation)
+	{
+		if($this->missingInformations->contains($missingInformation)) {
+			$this->missingInformations->removeElement($missingInformation);
+		}
+		$missingInformation->removeRental($this);
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Rental\Information
+	 */
+	public function getMissingInformations()
+	{
+		return $this->missingInformations;
 	}
 		
 	/**
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Rental\Rental
 	 */
-	public function addLocation(\Entity\Location\Location $location) {
+	public function addLocation(\Entity\Location\Location $location)
+	{
 		if(!$this->locations->contains($location)) {
 			$this->locations->add($location);
 		}
@@ -364,7 +419,8 @@ class Rental extends \Entity\BaseEntity {
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Rental\Rental
 	 */
-	public function removeLocation(\Entity\Location\Location $location) {
+	public function removeLocation(\Entity\Location\Location $location)
+	{
 		if($this->locations->contains($location)) {
 			$this->locations->removeElement($location);
 		}
@@ -376,7 +432,8 @@ class Rental extends \Entity\BaseEntity {
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Location\Location
 	 */
-	public function getLocations() {
+	public function getLocations()
+	{
 		return $this->locations;
 	}
 		
@@ -384,7 +441,8 @@ class Rental extends \Entity\BaseEntity {
 	 * @param \Extras\Types\Address
 	 * @return \Entity\Rental\Rental
 	 */
-	public function setAddress(\Extras\Types\Address $address) {
+	public function setAddress(\Extras\Types\Address $address)
+	{
 		$this->address = $address;
 
 		return $this;
@@ -393,7 +451,8 @@ class Rental extends \Entity\BaseEntity {
 	/**
 	 * @return \Extras\Types\Address|NULL
 	 */
-	public function getAddress() {
+	public function getAddress()
+	{
 		return $this->address;
 	}
 		
@@ -401,7 +460,8 @@ class Rental extends \Entity\BaseEntity {
 	 * @param \Extras\Types\Latlong
 	 * @return \Entity\Rental\Rental
 	 */
-	public function setLatitude(\Extras\Types\Latlong $latitude) {
+	public function setLatitude(\Extras\Types\Latlong $latitude)
+	{
 		$this->latitude = $latitude;
 
 		return $this;
@@ -410,7 +470,8 @@ class Rental extends \Entity\BaseEntity {
 	/**
 	 * @return \Extras\Types\Latlong|NULL
 	 */
-	public function getLatitude() {
+	public function getLatitude()
+	{
 		return $this->latitude;
 	}
 		
@@ -418,7 +479,8 @@ class Rental extends \Entity\BaseEntity {
 	 * @param \Extras\Types\Latlong
 	 * @return \Entity\Rental\Rental
 	 */
-	public function setLongitude(\Extras\Types\Latlong $longitude) {
+	public function setLongitude(\Extras\Types\Latlong $longitude)
+	{
 		$this->longitude = $longitude;
 
 		return $this;
@@ -427,7 +489,8 @@ class Rental extends \Entity\BaseEntity {
 	/**
 	 * @return \Extras\Types\Latlong|NULL
 	 */
-	public function getLongitude() {
+	public function getLongitude()
+	{
 		return $this->longitude;
 	}
 		
@@ -435,7 +498,8 @@ class Rental extends \Entity\BaseEntity {
 	 * @param slug
 	 * @return \Entity\Rental\Rental
 	 */
-	public function setSlug($slug) {
+	public function setSlug($slug)
+	{
 		$this->slug = $slug;
 
 		return $this;
@@ -444,7 +508,8 @@ class Rental extends \Entity\BaseEntity {
 	/**
 	 * @return slug|NULL
 	 */
-	public function getSlug() {
+	public function getSlug()
+	{
 		return $this->slug;
 	}
 		
@@ -452,7 +517,8 @@ class Rental extends \Entity\BaseEntity {
 	 * @param \Entity\Dictionary\Phrase
 	 * @return \Entity\Rental\Rental
 	 */
-	public function setName(\Entity\Dictionary\Phrase $name) {
+	public function setName(\Entity\Dictionary\Phrase $name)
+	{
 		$this->name = $name;
 
 		return $this;
@@ -461,49 +527,36 @@ class Rental extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Dictionary\Phrase|NULL
 	 */
-	public function getName() {
+	public function getName()
+	{
 		return $this->name;
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Phrase
+	 * @param json
 	 * @return \Entity\Rental\Rental
 	 */
-	public function setBriefDescription(\Entity\Dictionary\Phrase $briefDescription) {
-		$this->briefDescription = $briefDescription;
+	public function setInterview($interview)
+	{
+		$this->interview = $interview;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Phrase|NULL
+	 * @return json|NULL
 	 */
-	public function getBriefDescription() {
-		return $this->briefDescription;
+	public function getInterview()
+	{
+		return $this->interview;
 	}
 		
 	/**
 	 * @param \Entity\Dictionary\Phrase
 	 * @return \Entity\Rental\Rental
 	 */
-	public function setDescription(\Entity\Dictionary\Phrase $description) {
-		$this->description = $description;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Dictionary\Phrase|NULL
-	 */
-	public function getDescription() {
-		return $this->description;
-	}
-		
-	/**
-	 * @param \Entity\Dictionary\Phrase
-	 * @return \Entity\Rental\Rental
-	 */
-	public function setTeaser(\Entity\Dictionary\Phrase $teaser) {
+	public function setTeaser(\Entity\Dictionary\Phrase $teaser)
+	{
 		$this->teaser = $teaser;
 
 		return $this;
@@ -512,7 +565,8 @@ class Rental extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Dictionary\Phrase|NULL
 	 */
-	public function getTeaser() {
+	public function getTeaser()
+	{
 		return $this->teaser;
 	}
 		
@@ -520,7 +574,8 @@ class Rental extends \Entity\BaseEntity {
 	 * @param \Extras\Types\Contacts
 	 * @return \Entity\Rental\Rental
 	 */
-	public function setContacts(\Extras\Types\Contacts $contacts) {
+	public function setContacts(\Extras\Types\Contacts $contacts)
+	{
 		$this->contacts = $contacts;
 
 		return $this;
@@ -529,7 +584,8 @@ class Rental extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Rental\Rental
 	 */
-	public function unsetContacts() {
+	public function unsetContacts()
+	{
 		$this->contacts = NULL;
 
 		return $this;
@@ -538,7 +594,8 @@ class Rental extends \Entity\BaseEntity {
 	/**
 	 * @return \Extras\Types\Contacts|NULL
 	 */
-	public function getContacts() {
+	public function getContacts()
+	{
 		return $this->contacts;
 	}
 		
@@ -546,7 +603,8 @@ class Rental extends \Entity\BaseEntity {
 	 * @param \Entity\Dictionary\Language
 	 * @return \Entity\Rental\Rental
 	 */
-	public function addSpokenLanguage(\Entity\Dictionary\Language $spokenLanguage) {
+	public function addSpokenLanguage(\Entity\Dictionary\Language $spokenLanguage)
+	{
 		if(!$this->spokenLanguages->contains($spokenLanguage)) {
 			$this->spokenLanguages->add($spokenLanguage);
 		}
@@ -559,7 +617,8 @@ class Rental extends \Entity\BaseEntity {
 	 * @param \Entity\Dictionary\Language
 	 * @return \Entity\Rental\Rental
 	 */
-	public function removeSpokenLanguage(\Entity\Dictionary\Language $spokenLanguage) {
+	public function removeSpokenLanguage(\Entity\Dictionary\Language $spokenLanguage)
+	{
 		if($this->spokenLanguages->contains($spokenLanguage)) {
 			$this->spokenLanguages->removeElement($spokenLanguage);
 		}
@@ -571,7 +630,8 @@ class Rental extends \Entity\BaseEntity {
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Dictionary\Language
 	 */
-	public function getSpokenLanguages() {
+	public function getSpokenLanguages()
+	{
 		return $this->spokenLanguages;
 	}
 		
@@ -579,7 +639,8 @@ class Rental extends \Entity\BaseEntity {
 	 * @param \Entity\Rental\Amenity
 	 * @return \Entity\Rental\Rental
 	 */
-	public function addAmenity(\Entity\Rental\Amenity $amenity) {
+	public function addAmenity(\Entity\Rental\Amenity $amenity)
+	{
 		if(!$this->amenities->contains($amenity)) {
 			$this->amenities->add($amenity);
 		}
@@ -592,7 +653,8 @@ class Rental extends \Entity\BaseEntity {
 	 * @param \Entity\Rental\Amenity
 	 * @return \Entity\Rental\Rental
 	 */
-	public function removeAmenity(\Entity\Rental\Amenity $amenity) {
+	public function removeAmenity(\Entity\Rental\Amenity $amenity)
+	{
 		if($this->amenities->contains($amenity)) {
 			$this->amenities->removeElement($amenity);
 		}
@@ -604,7 +666,8 @@ class Rental extends \Entity\BaseEntity {
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Rental\Amenity
 	 */
-	public function getAmenities() {
+	public function getAmenities()
+	{
 		return $this->amenities;
 	}
 		
@@ -612,7 +675,8 @@ class Rental extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Rental\Rental
 	 */
-	public function setCheckIn($checkIn) {
+	public function setCheckIn($checkIn)
+	{
 		$this->checkIn = $checkIn;
 
 		return $this;
@@ -621,7 +685,8 @@ class Rental extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Rental\Rental
 	 */
-	public function unsetCheckIn() {
+	public function unsetCheckIn()
+	{
 		$this->checkIn = NULL;
 
 		return $this;
@@ -630,7 +695,8 @@ class Rental extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getCheckIn() {
+	public function getCheckIn()
+	{
 		return $this->checkIn;
 	}
 		
@@ -638,7 +704,8 @@ class Rental extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Rental\Rental
 	 */
-	public function setCheckOut($checkOut) {
+	public function setCheckOut($checkOut)
+	{
 		$this->checkOut = $checkOut;
 
 		return $this;
@@ -647,7 +714,8 @@ class Rental extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Rental\Rental
 	 */
-	public function unsetCheckOut() {
+	public function unsetCheckOut()
+	{
 		$this->checkOut = NULL;
 
 		return $this;
@@ -656,7 +724,8 @@ class Rental extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getCheckOut() {
+	public function getCheckOut()
+	{
 		return $this->checkOut;
 	}
 		
@@ -664,7 +733,8 @@ class Rental extends \Entity\BaseEntity {
 	 * @param json
 	 * @return \Entity\Rental\Rental
 	 */
-	public function setPricelists($pricelists) {
+	public function setPricelists($pricelists)
+	{
 		$this->pricelists = $pricelists;
 
 		return $this;
@@ -673,7 +743,8 @@ class Rental extends \Entity\BaseEntity {
 	/**
 	 * @return json|NULL
 	 */
-	public function getPricelists() {
+	public function getPricelists()
+	{
 		return $this->pricelists;
 	}
 		
@@ -681,7 +752,8 @@ class Rental extends \Entity\BaseEntity {
 	 * @param \Entity\Medium\Medium
 	 * @return \Entity\Rental\Rental
 	 */
-	public function addMedium(\Entity\Medium\Medium $medium) {
+	public function addMedium(\Entity\Medium\Medium $medium)
+	{
 		if(!$this->media->contains($medium)) {
 			$this->media->add($medium);
 		}
@@ -694,7 +766,8 @@ class Rental extends \Entity\BaseEntity {
 	 * @param \Entity\Medium\Medium
 	 * @return \Entity\Rental\Rental
 	 */
-	public function removeMedium(\Entity\Medium\Medium $medium) {
+	public function removeMedium(\Entity\Medium\Medium $medium)
+	{
 		if($this->media->contains($medium)) {
 			$this->media->removeElement($medium);
 		}
@@ -706,7 +779,8 @@ class Rental extends \Entity\BaseEntity {
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Medium\Medium
 	 */
-	public function getMedia() {
+	public function getMedia()
+	{
 		return $this->media;
 	}
 		
@@ -714,7 +788,8 @@ class Rental extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Rental\Rental
 	 */
-	public function setCalendar($calendar) {
+	public function setCalendar($calendar)
+	{
 		$this->calendar = $calendar;
 
 		return $this;
@@ -723,7 +798,8 @@ class Rental extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Rental\Rental
 	 */
-	public function unsetCalendar() {
+	public function unsetCalendar()
+	{
 		$this->calendar = NULL;
 
 		return $this;
@@ -732,7 +808,8 @@ class Rental extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getCalendar() {
+	public function getCalendar()
+	{
 		return $this->calendar;
 	}
 		
@@ -740,7 +817,8 @@ class Rental extends \Entity\BaseEntity {
 	 * @param \DateTime
 	 * @return \Entity\Rental\Rental
 	 */
-	public function setCalendarUpdated(\DateTime $calendarUpdated) {
+	public function setCalendarUpdated(\DateTime $calendarUpdated)
+	{
 		$this->calendarUpdated = $calendarUpdated;
 
 		return $this;
@@ -749,7 +827,8 @@ class Rental extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Rental\Rental
 	 */
-	public function unsetCalendarUpdated() {
+	public function unsetCalendarUpdated()
+	{
 		$this->calendarUpdated = NULL;
 
 		return $this;
@@ -758,7 +837,8 @@ class Rental extends \Entity\BaseEntity {
 	/**
 	 * @return \DateTime|NULL
 	 */
-	public function getCalendarUpdated() {
+	public function getCalendarUpdated()
+	{
 		return $this->calendarUpdated;
 	}
 		
@@ -766,7 +846,8 @@ class Rental extends \Entity\BaseEntity {
 	 * @param \Entity\Rental\Fulltext
 	 * @return \Entity\Rental\Rental
 	 */
-	public function addFulltext(\Entity\Rental\Fulltext $fulltext) {
+	public function addFulltext(\Entity\Rental\Fulltext $fulltext)
+	{
 		if(!$this->fulltexts->contains($fulltext)) {
 			$this->fulltexts->add($fulltext);
 		}
@@ -779,7 +860,8 @@ class Rental extends \Entity\BaseEntity {
 	 * @param \Entity\Rental\Fulltext
 	 * @return \Entity\Rental\Rental
 	 */
-	public function removeFulltext(\Entity\Rental\Fulltext $fulltext) {
+	public function removeFulltext(\Entity\Rental\Fulltext $fulltext)
+	{
 		if($this->fulltexts->contains($fulltext)) {
 			$this->fulltexts->removeElement($fulltext);
 		}
@@ -791,7 +873,8 @@ class Rental extends \Entity\BaseEntity {
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Rental\Fulltext
 	 */
-	public function getFulltexts() {
+	public function getFulltexts()
+	{
 		return $this->fulltexts;
 	}
 		
@@ -799,7 +882,8 @@ class Rental extends \Entity\BaseEntity {
 	 * @param \Entity\Invoicing\Invoice
 	 * @return \Entity\Rental\Rental
 	 */
-	public function addInvoice(\Entity\Invoicing\Invoice $invoice) {
+	public function addInvoice(\Entity\Invoicing\Invoice $invoice)
+	{
 		if(!$this->invoices->contains($invoice)) {
 			$this->invoices->add($invoice);
 		}
@@ -812,7 +896,8 @@ class Rental extends \Entity\BaseEntity {
 	 * @param \Entity\Invoicing\Invoice
 	 * @return \Entity\Rental\Rental
 	 */
-	public function removeInvoice(\Entity\Invoicing\Invoice $invoice) {
+	public function removeInvoice(\Entity\Invoicing\Invoice $invoice)
+	{
 		if($this->invoices->contains($invoice)) {
 			$this->invoices->removeElement($invoice);
 		}
@@ -824,7 +909,8 @@ class Rental extends \Entity\BaseEntity {
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Invoicing\Invoice
 	 */
-	public function getInvoices() {
+	public function getInvoices()
+	{
 		return $this->invoices;
 	}
 		
@@ -832,7 +918,8 @@ class Rental extends \Entity\BaseEntity {
 	 * @param \Entity\Seo\BackLink
 	 * @return \Entity\Rental\Rental
 	 */
-	public function addBackLink(\Entity\Seo\BackLink $backLink) {
+	public function addBackLink(\Entity\Seo\BackLink $backLink)
+	{
 		if(!$this->backLinks->contains($backLink)) {
 			$this->backLinks->add($backLink);
 		}
@@ -845,7 +932,8 @@ class Rental extends \Entity\BaseEntity {
 	 * @param \Entity\Seo\BackLink
 	 * @return \Entity\Rental\Rental
 	 */
-	public function removeBackLink(\Entity\Seo\BackLink $backLink) {
+	public function removeBackLink(\Entity\Seo\BackLink $backLink)
+	{
 		if($this->backLinks->contains($backLink)) {
 			$this->backLinks->removeElement($backLink);
 		}
@@ -857,7 +945,8 @@ class Rental extends \Entity\BaseEntity {
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Seo\BackLink
 	 */
-	public function getBackLinks() {
+	public function getBackLinks()
+	{
 		return $this->backLinks;
 	}
 }

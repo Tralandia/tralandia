@@ -54,10 +54,11 @@ class ServiceDuration extends \Entity\BaseEntity {
 
 
 
-//@entity-generator-code <--- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 	}
 		
@@ -65,7 +66,8 @@ class ServiceDuration extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Invoicing\ServiceDuration
 	 */
-	public function setDuration($duration) {
+	public function setDuration($duration)
+	{
 		$this->duration = $duration;
 
 		return $this;
@@ -74,7 +76,8 @@ class ServiceDuration extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoicing\ServiceDuration
 	 */
-	public function unsetDuration() {
+	public function unsetDuration()
+	{
 		$this->duration = NULL;
 
 		return $this;
@@ -83,7 +86,8 @@ class ServiceDuration extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getDuration() {
+	public function getDuration()
+	{
 		return $this->duration;
 	}
 		
@@ -91,7 +95,8 @@ class ServiceDuration extends \Entity\BaseEntity {
 	 * @param \Entity\Dictionary\Phrase
 	 * @return \Entity\Invoicing\ServiceDuration
 	 */
-	public function setName(\Entity\Dictionary\Phrase $name) {
+	public function setName(\Entity\Dictionary\Phrase $name)
+	{
 		$this->name = $name;
 
 		return $this;
@@ -100,7 +105,8 @@ class ServiceDuration extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Dictionary\Phrase|NULL
 	 */
-	public function getName() {
+	public function getName()
+	{
 		return $this->name;
 	}
 		
@@ -108,7 +114,8 @@ class ServiceDuration extends \Entity\BaseEntity {
 	 * @param integer
 	 * @return \Entity\Invoicing\ServiceDuration
 	 */
-	public function setSort($sort) {
+	public function setSort($sort)
+	{
 		$this->sort = $sort;
 
 		return $this;
@@ -117,7 +124,8 @@ class ServiceDuration extends \Entity\BaseEntity {
 	/**
 	 * @return integer|NULL
 	 */
-	public function getSort() {
+	public function getSort()
+	{
 		return $this->sort;
 	}
 }

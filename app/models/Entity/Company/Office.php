@@ -45,10 +45,11 @@ class Office extends \Entity\BaseEntityDetails {
 	 */
 	protected $address;
 
-//@entity-generator-code <--- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 
 		$this->countries = new \Doctrine\Common\Collections\ArrayCollection;
@@ -58,7 +59,8 @@ class Office extends \Entity\BaseEntityDetails {
 	 * @param string
 	 * @return \Entity\Company\Office
 	 */
-	public function setName($name) {
+	public function setName($name)
+	{
 		$this->name = $name;
 
 		return $this;
@@ -67,7 +69,8 @@ class Office extends \Entity\BaseEntityDetails {
 	/**
 	 * @return string|NULL
 	 */
-	public function getName() {
+	public function getName()
+	{
 		return $this->name;
 	}
 		
@@ -75,7 +78,8 @@ class Office extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Company\Company
 	 * @return \Entity\Company\Office
 	 */
-	public function setCompany(\Entity\Company\Company $company) {
+	public function setCompany(\Entity\Company\Company $company)
+	{
 		$this->company = $company;
 
 		return $this;
@@ -84,7 +88,8 @@ class Office extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Company\Office
 	 */
-	public function unsetCompany() {
+	public function unsetCompany()
+	{
 		$this->company = NULL;
 
 		return $this;
@@ -93,7 +98,8 @@ class Office extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Company\Company|NULL
 	 */
-	public function getCompany() {
+	public function getCompany()
+	{
 		return $this->company;
 	}
 		
@@ -101,7 +107,8 @@ class Office extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Company\Office
 	 */
-	public function addCountry(\Entity\Location\Location $country) {
+	public function addCountry(\Entity\Location\Location $country)
+	{
 		if(!$this->countries->contains($country)) {
 			$this->countries->add($country);
 		}
@@ -114,7 +121,8 @@ class Office extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Company\Office
 	 */
-	public function removeCountry(\Entity\Location\Location $country) {
+	public function removeCountry(\Entity\Location\Location $country)
+	{
 		if($this->countries->contains($country)) {
 			$this->countries->removeElement($country);
 		}
@@ -126,7 +134,8 @@ class Office extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Location\Location
 	 */
-	public function getCountries() {
+	public function getCountries()
+	{
 		return $this->countries;
 	}
 		
@@ -134,7 +143,8 @@ class Office extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Medium\Medium
 	 * @return \Entity\Company\Office
 	 */
-	public function setSignature(\Entity\Medium\Medium $signature) {
+	public function setSignature(\Entity\Medium\Medium $signature)
+	{
 		$this->signature = $signature;
 
 		return $this;
@@ -143,7 +153,8 @@ class Office extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Medium\Medium|NULL
 	 */
-	public function getSignature() {
+	public function getSignature()
+	{
 		return $this->signature;
 	}
 		
@@ -151,7 +162,8 @@ class Office extends \Entity\BaseEntityDetails {
 	 * @param \Extras\Types\Address
 	 * @return \Entity\Company\Office
 	 */
-	public function setAddress(\Extras\Types\Address $address) {
+	public function setAddress(\Extras\Types\Address $address)
+	{
 		$this->address = $address;
 
 		return $this;
@@ -160,7 +172,8 @@ class Office extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Extras\Types\Address|NULL
 	 */
-	public function getAddress() {
+	public function getAddress()
+	{
 		return $this->address;
 	}
 }

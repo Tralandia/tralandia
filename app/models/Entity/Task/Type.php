@@ -41,10 +41,10 @@ class Type extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var float
-	 * @ORM\Column(type="float")
-	 * defined in sec
+	 * @ORM\Column(type="json")
+	 * defined in sec or amount
 	 */
-	protected $durationPaid;
+	protected $value;
 
 	/**
 	 * @var json
@@ -66,10 +66,11 @@ class Type extends \Entity\BaseEntityDetails {
 	protected $actions;
 
 
-//@entity-generator-code <--- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 	}
 		
@@ -77,7 +78,8 @@ class Type extends \Entity\BaseEntityDetails {
 	 * @param string
 	 * @return \Entity\Task\Type
 	 */
-	public function setName($name) {
+	public function setName($name)
+	{
 		$this->name = $name;
 
 		return $this;
@@ -86,7 +88,8 @@ class Type extends \Entity\BaseEntityDetails {
 	/**
 	 * @return string|NULL
 	 */
-	public function getName() {
+	public function getName()
+	{
 		return $this->name;
 	}
 		
@@ -94,7 +97,8 @@ class Type extends \Entity\BaseEntityDetails {
 	 * @param string
 	 * @return \Entity\Task\Type
 	 */
-	public function setTechnicalName($technicalName) {
+	public function setTechnicalName($technicalName)
+	{
 		$this->technicalName = $technicalName;
 
 		return $this;
@@ -103,7 +107,8 @@ class Type extends \Entity\BaseEntityDetails {
 	/**
 	 * @return string|NULL
 	 */
-	public function getTechnicalName() {
+	public function getTechnicalName()
+	{
 		return $this->technicalName;
 	}
 		
@@ -111,7 +116,8 @@ class Type extends \Entity\BaseEntityDetails {
 	 * @param string
 	 * @return \Entity\Task\Type
 	 */
-	public function setMission($mission) {
+	public function setMission($mission)
+	{
 		$this->mission = $mission;
 
 		return $this;
@@ -120,32 +126,36 @@ class Type extends \Entity\BaseEntityDetails {
 	/**
 	 * @return string|NULL
 	 */
-	public function getMission() {
+	public function getMission()
+	{
 		return $this->mission;
-	}
-		
-	/**
-	 * @param float
-	 * @return \Entity\Task\Type
-	 */
-	public function setDurationPaid($durationPaid) {
-		$this->durationPaid = $durationPaid;
-
-		return $this;
-	}
-		
-	/**
-	 * @return float|NULL
-	 */
-	public function getDurationPaid() {
-		return $this->durationPaid;
 	}
 		
 	/**
 	 * @param json
 	 * @return \Entity\Task\Type
 	 */
-	public function setValidation($validation) {
+	public function setValue($value)
+	{
+		$this->value = $value;
+
+		return $this;
+	}
+		
+	/**
+	 * @return json|NULL
+	 */
+	public function getValue()
+	{
+		return $this->value;
+	}
+		
+	/**
+	 * @param json
+	 * @return \Entity\Task\Type
+	 */
+	public function setValidation($validation)
+	{
 		$this->validation = $validation;
 
 		return $this;
@@ -154,7 +164,8 @@ class Type extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Task\Type
 	 */
-	public function unsetValidation() {
+	public function unsetValidation()
+	{
 		$this->validation = NULL;
 
 		return $this;
@@ -163,41 +174,17 @@ class Type extends \Entity\BaseEntityDetails {
 	/**
 	 * @return json|NULL
 	 */
-	public function getValidation() {
+	public function getValidation()
+	{
 		return $this->validation;
-	}
-		
-	/**
-	 * @param integer
-	 * @return \Entity\Task\Type
-	 */
-	public function setStackable($stackable) {
-		$this->stackable = $stackable;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Task\Type
-	 */
-	public function unsetStackable() {
-		$this->stackable = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return integer|NULL
-	 */
-	public function getStackable() {
-		return $this->stackable;
 	}
 		
 	/**
 	 * @param float
 	 * @return \Entity\Task\Type
 	 */
-	public function setTimeLimit($timeLimit) {
+	public function setTimeLimit($timeLimit)
+	{
 		$this->timeLimit = $timeLimit;
 
 		return $this;
@@ -206,7 +193,8 @@ class Type extends \Entity\BaseEntityDetails {
 	/**
 	 * @return float|NULL
 	 */
-	public function getTimeLimit() {
+	public function getTimeLimit()
+	{
 		return $this->timeLimit;
 	}
 		
@@ -214,7 +202,8 @@ class Type extends \Entity\BaseEntityDetails {
 	 * @param json
 	 * @return \Entity\Task\Type
 	 */
-	public function setActions($actions) {
+	public function setActions($actions)
+	{
 		$this->actions = $actions;
 
 		return $this;
@@ -223,7 +212,8 @@ class Type extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Task\Type
 	 */
-	public function unsetActions() {
+	public function unsetActions()
+	{
 		$this->actions = NULL;
 
 		return $this;
@@ -232,7 +222,8 @@ class Type extends \Entity\BaseEntityDetails {
 	/**
 	 * @return json|NULL
 	 */
-	public function getActions() {
+	public function getActions()
+	{
 		return $this->actions;
 	}
 }

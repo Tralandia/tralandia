@@ -8,7 +8,7 @@ use Service, Doctrine, Entity;
  * Sluzba frazy
  * @author Branislav Vaculčiak
  */
-class Phrase extends Service\Base {
+class PhraseService extends Service\BaseService {
 
 	/**
 	 * Vrati spravny preklad na zaklade jazyka

@@ -16,21 +16,19 @@ class ImportLanguages extends BaseImport {
 
 	public function doImport($subsection = NULL) {
 
-		// $import = new \Extras\Import\BaseImport();
 		$this->undoSection('languages');
 
 		$r = q('select * from languages order by id');
 		while($x = mysql_fetch_array($r)) {
-			$s = D\Language::get();
+			$s = $this->context->languageServiceFactory->create();
 			$s->oldId = $x['id'];
 			$s->iso = $x['iso'];
 			$s->supported = (bool)$x['translated'];
 			$s->defaultCollation = $x['default_collation'];
 			$s->details = explode2Levels(';', ':', $x['attributes']);
-			$s->save();
-
+			$s->save(FALSE); // prevent flush
 		}
-		\Extras\Models\Service::flush(FALSE);
+		$s->save(); //flush
 
 		$this->createPhrasesByOld('\Dictionary\Language', 'name', 'ACTIVE', 'languages', 'name_dic_id');		
 		$this->savedVariables['importedSections']['languages'] = 1;

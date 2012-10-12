@@ -34,7 +34,7 @@ class EntityGeneratorPresenter extends BasePresenter {
 				$lastFolderName = $folderName;
 				$menu[] = array(
 					'link' => $this->link('EntityGenerator:forceAll', array('id' => 'Entity-'.$folderName)),
-					'name' => str_replace('Entity\\', '', $folderName).' &lt;-- pregenerovat subory'
+					'name' => str_replace('Entity\\', '', $folderName).' < -- pregenerovat subory'
 				);
 			}
 			$menu[] = array(
@@ -238,7 +238,7 @@ class EntityGeneratorPresenter extends BasePresenter {
 		fclose($fileSource);
 		if($pos = mb_strpos($data, '//@entity-generator-code')) {
 			$newFileContent = mb_substr($data, 0, $pos);
-			$newFileContent .= "//@entity-generator-code <--- NEMAZAT !!!\n\n";
+			$newFileContent .= "\t//@entity-generator-code --- NEMAZAT !!!\n\n";
 			$newFileContent .= "\t/* ----------------------------- Methods ----------------------------- */";
 			foreach ($newClass->methods as $method) {
 				$newFileContent .= $this->template->indent("\t\n".$method."\n", 1);

@@ -54,10 +54,11 @@ class Template extends \Entity\BaseEntity {
 	 */
 	protected $batches;
 
-//@entity-generator-code <--- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 
 		$this->batches = new \Doctrine\Common\Collections\ArrayCollection;
@@ -67,7 +68,8 @@ class Template extends \Entity\BaseEntity {
 	 * @param \Entity\Emailing\TemplateType
 	 * @return \Entity\Emailing\Template
 	 */
-	public function setType(\Entity\Emailing\TemplateType $type) {
+	public function setType(\Entity\Emailing\TemplateType $type)
+	{
 		$this->type = $type;
 
 		return $this;
@@ -76,7 +78,8 @@ class Template extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Emailing\Template
 	 */
-	public function unsetType() {
+	public function unsetType()
+	{
 		$this->type = NULL;
 
 		return $this;
@@ -85,7 +88,8 @@ class Template extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Emailing\TemplateType|NULL
 	 */
-	public function getType() {
+	public function getType()
+	{
 		return $this->type;
 	}
 		
@@ -93,7 +97,8 @@ class Template extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Emailing\Template
 	 */
-	public function setName($name) {
+	public function setName($name)
+	{
 		$this->name = $name;
 
 		return $this;
@@ -102,7 +107,8 @@ class Template extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Emailing\Template
 	 */
-	public function unsetName() {
+	public function unsetName()
+	{
 		$this->name = NULL;
 
 		return $this;
@@ -111,7 +117,8 @@ class Template extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getName() {
+	public function getName()
+	{
 		return $this->name;
 	}
 		
@@ -119,7 +126,8 @@ class Template extends \Entity\BaseEntity {
 	 * @param \Entity\Dictionary\Phrase
 	 * @return \Entity\Emailing\Template
 	 */
-	public function setSubject(\Entity\Dictionary\Phrase $subject) {
+	public function setSubject(\Entity\Dictionary\Phrase $subject)
+	{
 		$this->subject = $subject;
 
 		return $this;
@@ -128,7 +136,8 @@ class Template extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Dictionary\Phrase|NULL
 	 */
-	public function getSubject() {
+	public function getSubject()
+	{
 		return $this->subject;
 	}
 		
@@ -136,7 +145,8 @@ class Template extends \Entity\BaseEntity {
 	 * @param \Entity\Dictionary\Phrase
 	 * @return \Entity\Emailing\Template
 	 */
-	public function setBody(\Entity\Dictionary\Phrase $body) {
+	public function setBody(\Entity\Dictionary\Phrase $body)
+	{
 		$this->body = $body;
 
 		return $this;
@@ -145,7 +155,8 @@ class Template extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Dictionary\Phrase|NULL
 	 */
-	public function getBody() {
+	public function getBody()
+	{
 		return $this->body;
 	}
 		
@@ -153,7 +164,8 @@ class Template extends \Entity\BaseEntity {
 	 * @param \Entity\Dictionary\Language
 	 * @return \Entity\Emailing\Template
 	 */
-	public function setLanguage(\Entity\Dictionary\Language $language) {
+	public function setLanguage(\Entity\Dictionary\Language $language)
+	{
 		$this->language = $language;
 
 		return $this;
@@ -162,7 +174,8 @@ class Template extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Emailing\Template
 	 */
-	public function unsetLanguage() {
+	public function unsetLanguage()
+	{
 		$this->language = NULL;
 
 		return $this;
@@ -171,7 +184,8 @@ class Template extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Dictionary\Language|NULL
 	 */
-	public function getLanguage() {
+	public function getLanguage()
+	{
 		return $this->language;
 	}
 		
@@ -179,7 +193,8 @@ class Template extends \Entity\BaseEntity {
 	 * @param \Entity\Emailing\Batch
 	 * @return \Entity\Emailing\Template
 	 */
-	public function addBatche(\Entity\Emailing\Batch $batche) {
+	public function addBatche(\Entity\Emailing\Batch $batche)
+	{
 		if(!$this->batches->contains($batche)) {
 			$this->batches->add($batche);
 		}
@@ -192,7 +207,8 @@ class Template extends \Entity\BaseEntity {
 	 * @param \Entity\Emailing\Batch
 	 * @return \Entity\Emailing\Template
 	 */
-	public function removeBatche(\Entity\Emailing\Batch $batche) {
+	public function removeBatche(\Entity\Emailing\Batch $batche)
+	{
 		if($this->batches->contains($batche)) {
 			$this->batches->removeElement($batche);
 		}
@@ -204,7 +220,8 @@ class Template extends \Entity\BaseEntity {
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Emailing\Batch
 	 */
-	public function getBatches() {
+	public function getBatches()
+	{
 		return $this->batches;
 	}
 }

@@ -58,10 +58,11 @@ class Change extends \Entity\BaseEntityDetails {
 
 
 
-//@entity-generator-code <--- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 	}
 		
@@ -69,7 +70,8 @@ class Change extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Log\ChangeType
 	 * @return \Entity\Log\Change
 	 */
-	public function setType(\Entity\Log\ChangeType $type) {
+	public function setType(\Entity\Log\ChangeType $type)
+	{
 		$this->type = $type;
 
 		return $this;
@@ -78,7 +80,8 @@ class Change extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Log\Change
 	 */
-	public function unsetType() {
+	public function unsetType()
+	{
 		$this->type = NULL;
 
 		return $this;
@@ -87,7 +90,8 @@ class Change extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Log\ChangeType|NULL
 	 */
-	public function getType() {
+	public function getType()
+	{
 		return $this->type;
 	}
 		
@@ -95,7 +99,8 @@ class Change extends \Entity\BaseEntityDetails {
 	 * @param string
 	 * @return \Entity\Log\Change
 	 */
-	public function setEntityName($entityName) {
+	public function setEntityName($entityName)
+	{
 		$this->entityName = $entityName;
 
 		return $this;
@@ -104,7 +109,8 @@ class Change extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Log\Change
 	 */
-	public function unsetEntityName() {
+	public function unsetEntityName()
+	{
 		$this->entityName = NULL;
 
 		return $this;
@@ -113,7 +119,8 @@ class Change extends \Entity\BaseEntityDetails {
 	/**
 	 * @return string|NULL
 	 */
-	public function getEntityName() {
+	public function getEntityName()
+	{
 		return $this->entityName;
 	}
 		
@@ -121,7 +128,8 @@ class Change extends \Entity\BaseEntityDetails {
 	 * @param \Extras\Types\Email
 	 * @return \Entity\Log\Change
 	 */
-	public function setUserEmail(\Extras\Types\Email $userEmail) {
+	public function setUserEmail(\Extras\Types\Email $userEmail)
+	{
 		$this->userEmail = $userEmail;
 
 		return $this;
@@ -130,7 +138,8 @@ class Change extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Extras\Types\Email|NULL
 	 */
-	public function getUserEmail() {
+	public function getUserEmail()
+	{
 		return $this->userEmail;
 	}
 		
@@ -138,7 +147,8 @@ class Change extends \Entity\BaseEntityDetails {
 	 * @param integer
 	 * @return \Entity\Log\Change
 	 */
-	public function setEntityId($entityId) {
+	public function setEntityId($entityId)
+	{
 		$this->entityId = $entityId;
 
 		return $this;
@@ -147,7 +157,8 @@ class Change extends \Entity\BaseEntityDetails {
 	/**
 	 * @return integer|NULL
 	 */
-	public function getEntityId() {
+	public function getEntityId()
+	{
 		return $this->entityId;
 	}
 }
