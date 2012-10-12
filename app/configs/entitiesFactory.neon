@@ -5,12 +5,6 @@ services:
 	attractionTypeEntityFactory:
 		class: Extras\Models\Entity\EntityFactory('Entity\Attraction\Type')
 
-	baseEntityEntityFactory:
-		class: Extras\Models\Entity\EntityFactory('Entity\BaseEntity')
-
-	baseEntityDetailsEntityFactory:
-		class: Extras\Models\Entity\EntityFactory('Entity\BaseEntityDetails')
-
 	companyBankAccountEntityFactory:
 		class: Extras\Models\Entity\EntityFactory('Entity\Company\BankAccount')
 

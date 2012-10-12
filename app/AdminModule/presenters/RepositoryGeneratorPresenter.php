@@ -63,10 +63,11 @@ class RepositoryGeneratorPresenter extends BasePresenter {
 
 			$entityNameArray = explode("\\", $entityNameTemp);
 			array_shift($entityNameArray);
-			$serviceName = array_unique($entityNameArray);
-			$serviceName = lcfirst(implode('', $serviceName) . 'Factory');
+			$entityNameArray = array_unique($entityNameArray);
+			$serviceName = lcfirst(implode('', $entityNameArray) . 'ServiceFactory');
+			$entityFactoryName = lcfirst(implode('', $entityNameArray) . 'EntityFactory');
 
-			$configList[$serviceName] = "Extras\Models\Entity\EntityFactory('$entityNameTemp')";
+			$configList[$serviceName] = "Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @$entityFactoryName)";
 
 		}
 		//d($configList);

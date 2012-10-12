@@ -1,0 +1,177 @@
+services:
+	attractionServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @attractionEntityFactory)
+
+	attractionTypeServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @attractionTypeEntityFactory)
+
+	companyBankAccountServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @companyBankAccountEntityFactory)
+
+	companyServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @companyEntityFactory)
+
+	companyOfficeServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @companyOfficeEntityFactory)
+
+	contactCacheServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @contactCacheEntityFactory)
+
+	currencyServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @currencyEntityFactory)
+
+	dictionaryLanguageServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @dictionaryLanguageEntityFactory)
+
+	dictionaryPhraseServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @dictionaryPhraseEntityFactory)
+
+	dictionaryTranslationServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @dictionaryTranslationEntityFactory)
+
+	dictionaryTypeServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @dictionaryTypeEntityFactory)
+
+	domainServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @domainEntityFactory)
+
+	emailingBatchServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @emailingBatchEntityFactory)
+
+	emailingTemplateServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @emailingTemplateEntityFactory)
+
+	emailingTemplateTypeServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @emailingTemplateTypeEntityFactory)
+
+	expenseServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @expenseEntityFactory)
+
+	expenseTypeServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @expenseTypeEntityFactory)
+
+	invoicingCouponServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoicingCouponEntityFactory)
+
+	invoicingInvoiceServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoicingInvoiceEntityFactory)
+
+	invoicingItemServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoicingItemEntityFactory)
+
+	invoicingMarketingServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoicingMarketingEntityFactory)
+
+	invoicingPackageServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoicingPackageEntityFactory)
+
+	invoicingServiceServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoicingServiceEntityFactory)
+
+	invoicingServiceDurationServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoicingServiceDurationEntityFactory)
+
+	invoicingServiceTypeServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoicingServiceTypeEntityFactory)
+
+	invoicingUseTypeServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoicingUseTypeEntityFactory)
+
+	locationServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @locationEntityFactory)
+
+	locationRegionTypeServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @locationRegionTypeEntityFactory)
+
+	locationTravelingServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @locationTravelingEntityFactory)
+
+	locationTypeServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @locationTypeEntityFactory)
+
+	logChangeServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @logChangeEntityFactory)
+
+	logChangeTypeServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @logChangeTypeEntityFactory)
+
+	logSystemServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @logSystemEntityFactory)
+
+	mediumServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @mediumEntityFactory)
+
+	mediumTypeServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @mediumTypeEntityFactory)
+
+	pageServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @pageEntityFactory)
+
+	rentalAmenityServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @rentalAmenityEntityFactory)
+
+	rentalAmenityTypeServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @rentalAmenityTypeEntityFactory)
+
+	rentalFulltextServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @rentalFulltextEntityFactory)
+
+	rentalServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @rentalEntityFactory)
+
+	rentalTypeServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @rentalTypeEntityFactory)
+
+	routingPathSegmentServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @routingPathSegmentEntityFactory)
+
+	routingPathSegmentOldServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @routingPathSegmentOldEntityFactory)
+
+	seoBackLinkServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @seoBackLinkEntityFactory)
+
+	seoSeoUrlServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @seoSeoUrlEntityFactory)
+
+	seoTitleSuffixServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @seoTitleSuffixEntityFactory)
+
+	taskServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\Task\TaskService', @taskEntityFactory)
+
+	taskTypeServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @taskTypeEntityFactory)
+
+	ticketMessageServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @ticketMessageEntityFactory)
+
+	ticketServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @ticketEntityFactory)
+
+	userCombinationServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @userCombinationEntityFactory)
+
+	userRentalQuestionServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @userRentalQuestionEntityFactory)
+
+	userRentalReservationServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @userRentalReservationEntityFactory)
+
+	userRentalReviewServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @userRentalReviewEntityFactory)
+
+	userRentalToFriendServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @userRentalToFriendEntityFactory)
+
+	userRoleServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @userRoleEntityFactory)
+
+	userSiteOwnerReviewServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @userSiteOwnerReviewEntityFactory)
+
+	userSiteVisitorReviewServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @userSiteVisitorReviewEntityFactory)
+
+	userServiceFactory:
+		calss: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @userEntityFactory)

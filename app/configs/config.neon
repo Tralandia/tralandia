@@ -53,6 +53,7 @@ common:
 		- webLoader.neon
 		- acl/acl.neon
 		- entitiesFactory.neon
+		- servicesFactory.neon
 		- repositories.neon
 
 	services:
@@ -101,8 +102,6 @@ common:
 				- $taskRepository(@taskRepository)
 				- $taskTypeRepository(@taskTypeRepository)
 				- $taskServiceFactory(@taskServiceFactory)
-
-		taskServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\Task\TaskService', @taskEntityFactory)
 
 
 

@@ -8,7 +8,7 @@ use Extras;
  * Rodic sluzieb
  * @author Branislav Vaculčiak
  */
-class Base extends Extras\Models\Service\Service {
+class BaseService extends Extras\Models\Service\Service {
 
 	/**
 	 * @return int
