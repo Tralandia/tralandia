@@ -2,16 +2,14 @@
 
 namespace Entity\Medium;
 
-use Entity\Dictionary;
+use Entity\Phrase;
 use Entity\Attraction;
 use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="medium_medium", indexes={@ORM\index(name="uri", columns={"uri"}), @ORM\index(name="oldUrl", columns={"oldUrl"}), @ORM\index(name="sort", columns={"sort"})})
- * @EA\Service(name="\Service\Medium\Medium")
- * @EA\ServiceList(name="\Service\Medium\MediumList")
+ * @ORM\Table(name="medium", indexes={@ORM\index(name="uri", columns={"uri"}), @ORM\index(name="oldUrl", columns={"oldUrl"}), @ORM\index(name="sort", columns={"sort"})})
  * @EA\Primary(key="id", value="name")
  */
 class Medium extends \Entity\BaseEntityDetails {
@@ -24,7 +22,7 @@ class Medium extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
+	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $name;
 
@@ -112,10 +110,10 @@ class Medium extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Phrase
+	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Medium\Medium
 	 */
-	public function setName(\Entity\Dictionary\Phrase $name)
+	public function setName(\Entity\Phrase\Phrase $name)
 	{
 		$this->name = $name;
 
@@ -123,7 +121,7 @@ class Medium extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Phrase|NULL
+	 * @return \Entity\Phrase\Phrase|NULL
 	 */
 	public function getName()
 	{

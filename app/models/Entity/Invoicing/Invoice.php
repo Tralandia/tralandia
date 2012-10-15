@@ -3,7 +3,7 @@
 namespace Entity\Invoicing;
 
 use Entity\Company;
-use Entity\Dictionary;
+use Entity\Phrase;
 use Entity\Invoicing;
 use Entity\Rental;
 use Doctrine\ORM\Mapping as ORM;
@@ -12,8 +12,6 @@ use	Extras\Annotation as EA;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="invoicing_invoice", indexes={@ORM\index(name="invoiceNumber", columns={"invoiceNumber"}), @ORM\index(name="paymentReferenceNumber", columns={"paymentReferenceNumber"}), @ORM\index(name="due", columns={"due"}), @ORM\index(name="paid", columns={"paid"}), @ORM\index(name="status", columns={"status"}), @ORM\index(name="clientEmail", columns={"clientEmail"}), @ORM\index(name="referrer", columns={"referrer"}), @ORM\index(name="referrerCommission", columns={"referrerCommission"})})
- * @EA\Service(name="\Service\Invoicing\Service")
- * @EA\ServiceList(name="\Service\Invoicing\ServiceList")
  * @EA\Primary(key="id", value="clientName")
  */
 class Invoice extends \Entity\BaseEntity {
@@ -102,7 +100,7 @@ class Invoice extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Dictionary\Language")
+	 * @ORM\ManyToOne(targetEntity="Entity\Language")
 	 */
 	protected $clientLanguage;
 
@@ -532,10 +530,10 @@ class Invoice extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Language
+	 * @param \Entity\Language
 	 * @return \Entity\Invoicing\Invoice
 	 */
-	public function setClientLanguage(\Entity\Dictionary\Language $clientLanguage)
+	public function setClientLanguage(\Entity\Language $clientLanguage)
 	{
 		$this->clientLanguage = $clientLanguage;
 
@@ -553,7 +551,7 @@ class Invoice extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Language|NULL
+	 * @return \Entity\Language|NULL
 	 */
 	public function getClientLanguage()
 	{

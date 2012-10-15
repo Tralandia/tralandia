@@ -1,14 +1,13 @@
 <?php
 
-namespace Entity\Dictionary;
+namespace Entity\Phrase;
 
-use Entity\Dictionary;
 use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="dictionary_phrase", indexes={@ORM\index(name="ready", columns={"ready"})})
+ * @ORM\Table(name="phrase", indexes={@ORM\index(name="ready", columns={"ready"})})
  * @EA\Primary(key="id", value="translations")
  */
 class Phrase extends \Entity\BaseEntityDetails {
@@ -39,7 +38,7 @@ class Phrase extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Language", cascade={"persist"})
+	 * @ORM\ManyToOne(targetEntity="\Entity\Language", cascade={"persist"})
 	 * This will be used by Locations (localities) to make sure we know the original language of the name of the locality to translate from
 	 */
 	protected $sourceLanguage;
@@ -55,10 +54,10 @@ class Phrase extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Translation
-	 * @return \Entity\Dictionary\Phrase
+	 * @param \Entity\Phrase\Translation
+	 * @return \Entity\Phrase\Phrase
 	 */
-	public function addTranslation(\Entity\Dictionary\Translation $translation)
+	public function addTranslation(\Entity\Phrase\Translation $translation)
 	{
 		if(!$this->translations->contains($translation)) {
 			$this->translations->add($translation);
@@ -69,10 +68,10 @@ class Phrase extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Translation
-	 * @return \Entity\Dictionary\Phrase
+	 * @param \Entity\Phrase\Translation
+	 * @return \Entity\Phrase\Phrase
 	 */
-	public function removeTranslation(\Entity\Dictionary\Translation $translation)
+	public function removeTranslation(\Entity\Phrase\Translation $translation)
 	{
 		if($this->translations->contains($translation)) {
 			$this->translations->removeElement($translation);
@@ -83,7 +82,7 @@ class Phrase extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Dictionary\Translation
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Phrase\Translation
 	 */
 	public function getTranslations()
 	{
@@ -92,7 +91,7 @@ class Phrase extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param boolean
-	 * @return \Entity\Dictionary\Phrase
+	 * @return \Entity\Phrase\Phrase
 	 */
 	public function setReady($ready)
 	{
@@ -111,7 +110,7 @@ class Phrase extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param boolean
-	 * @return \Entity\Dictionary\Phrase
+	 * @return \Entity\Phrase\Phrase
 	 */
 	public function setCorrected($corrected)
 	{
@@ -129,10 +128,10 @@ class Phrase extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Type
-	 * @return \Entity\Dictionary\Phrase
+	 * @param \Entity\Phrase\Type
+	 * @return \Entity\Phrase\Phrase
 	 */
-	public function setType(\Entity\Dictionary\Type $type)
+	public function setType(\Entity\Phrase\Type $type)
 	{
 		$this->type = $type;
 
@@ -140,7 +139,7 @@ class Phrase extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Phrase
+	 * @return \Entity\Phrase\Phrase
 	 */
 	public function unsetType()
 	{
@@ -150,7 +149,7 @@ class Phrase extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Type|NULL
+	 * @return \Entity\Phrase\Type|NULL
 	 */
 	public function getType()
 	{
@@ -158,10 +157,10 @@ class Phrase extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Language
-	 * @return \Entity\Dictionary\Phrase
+	 * @param \Entity\Language
+	 * @return \Entity\Phrase\Phrase
 	 */
-	public function setSourceLanguage(\Entity\Dictionary\Language $sourceLanguage)
+	public function setSourceLanguage(\Entity\Language $sourceLanguage)
 	{
 		$this->sourceLanguage = $sourceLanguage;
 
@@ -169,7 +168,7 @@ class Phrase extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Phrase
+	 * @return \Entity\Phrase\Phrase
 	 */
 	public function unsetSourceLanguage()
 	{
@@ -179,7 +178,7 @@ class Phrase extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Language|NULL
+	 * @return \Entity\Language|NULL
 	 */
 	public function getSourceLanguage()
 	{

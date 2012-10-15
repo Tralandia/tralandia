@@ -3,7 +3,7 @@
 namespace Entity\Seo;
 
 use Entity\Attraction;
-use Entity\Dictionary;
+use Entity\Phrase;
 use Entity\Location;
 use Entity\Medium;
 use Entity\Rental;
@@ -13,8 +13,6 @@ use	Extras\Annotation as EA;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="seo_seourl")
- * @EA\Service(name="\Service\Seo\SeoUrl")
- * @EA\ServiceList(name="\Service\Seo\SeoUrlList")
  * @EA\Primary(key="id", value="id")
  */
 class SeoUrl extends \Entity\BaseEntity {
@@ -57,31 +55,31 @@ class SeoUrl extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
+	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $title;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
+	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $heading;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
+	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $tabName;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
+	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $description;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
+	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $ppcKeywords;
 
@@ -297,10 +295,10 @@ class SeoUrl extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Phrase
+	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Seo\SeoUrl
 	 */
-	public function setTitle(\Entity\Dictionary\Phrase $title)
+	public function setTitle(\Entity\Phrase\Phrase $title)
 	{
 		$this->title = $title;
 
@@ -308,7 +306,7 @@ class SeoUrl extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Phrase|NULL
+	 * @return \Entity\Phrase\Phrase|NULL
 	 */
 	public function getTitle()
 	{
@@ -316,10 +314,10 @@ class SeoUrl extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Phrase
+	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Seo\SeoUrl
 	 */
-	public function setHeading(\Entity\Dictionary\Phrase $heading)
+	public function setHeading(\Entity\Phrase\Phrase $heading)
 	{
 		$this->heading = $heading;
 
@@ -327,7 +325,7 @@ class SeoUrl extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Phrase|NULL
+	 * @return \Entity\Phrase\Phrase|NULL
 	 */
 	public function getHeading()
 	{
@@ -335,10 +333,10 @@ class SeoUrl extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Phrase
+	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Seo\SeoUrl
 	 */
-	public function setTabName(\Entity\Dictionary\Phrase $tabName)
+	public function setTabName(\Entity\Phrase\Phrase $tabName)
 	{
 		$this->tabName = $tabName;
 
@@ -346,7 +344,7 @@ class SeoUrl extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Phrase|NULL
+	 * @return \Entity\Phrase\Phrase|NULL
 	 */
 	public function getTabName()
 	{
@@ -354,10 +352,10 @@ class SeoUrl extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Phrase
+	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Seo\SeoUrl
 	 */
-	public function setDescription(\Entity\Dictionary\Phrase $description)
+	public function setDescription(\Entity\Phrase\Phrase $description)
 	{
 		$this->description = $description;
 
@@ -365,7 +363,7 @@ class SeoUrl extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Phrase|NULL
+	 * @return \Entity\Phrase\Phrase|NULL
 	 */
 	public function getDescription()
 	{
@@ -373,10 +371,10 @@ class SeoUrl extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Phrase
+	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Seo\SeoUrl
 	 */
-	public function setPpcKeyword(\Entity\Dictionary\Phrase $ppcKeyword)
+	public function setPpcKeyword(\Entity\Phrase\Phrase $ppcKeyword)
 	{
 		$this->ppcKeywords = $ppcKeyword;
 
@@ -384,7 +382,7 @@ class SeoUrl extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Phrase|NULL
+	 * @return \Entity\Phrase\Phrase|NULL
 	 */
 	public function getPpcKeywords()
 	{

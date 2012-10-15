@@ -4,7 +4,7 @@ function q($query, $show = 0) {
 	static $link;
 
 	if (!$link) {
-		$link=mysql_connect('localhost', 'root', 'root');
+		$link=mysql_connect('127.0.0.1', 'root', 'root');
 		q("SET character_set_client = binary;"); q("SET character_set_connection = binary;"); q("SET character_set_results = binary;"); 
 		q("SET character_set_database = binary;"); q("SET character_set_server = binary;");
 	}
@@ -57,9 +57,7 @@ function explode2Levels($delimiterLevel1, $delimiterLevel2, $a) {
 }
 
 function getByOldId($entityName, $oldId) {
-	$tableName = str_replace('\\', '_', $entityName);
-	$tableName = trim($tableName, '_');
-	$tableName = strtolower($tableName);
+	$tableName = getTableName($entityName);
 
 	$r = qNew('select id from '.$tableName.' where oldId = '.$oldId);
 	$id = mysql_fetch_array($r);
@@ -68,9 +66,7 @@ function getByOldId($entityName, $oldId) {
 }
 
 function getNewIds($entityName, $oldIds) {
-	$tableName = str_replace('\\', '_', $entityName);
-	$tableName = trim($tableName, '_');
-	$tableName = strtolower($tableName);
+	$tableName = getTableName($entityName);
 
 	$oldIds = array_filter(array_unique(explode(',', $oldIds)));
 	$newIds = array();
@@ -83,9 +79,7 @@ function getNewIds($entityName, $oldIds) {
 }
 
 function getNewIdsByOld($entityName, $extraWhere = NULL) {
-	$tableName = str_replace('\\', '_', $entityName);
-	$tableName = trim($tableName, '_');
-	$tableName = strtolower($tableName);
+	$tableName = getTableName($entityName);
 	$r = qNew('select id, oldId from '.$tableName.($extraWhere ? ' where '.$extraWhere : ''));
 	$ids = array();
 	while ($x = mysql_fetch_array($r)) {
@@ -110,16 +104,20 @@ function getCurrencyByIso($iso) {
 }
 
 function getSupportedLanguages() {
-	$id = qNew('select group_concat(id separator ",") from dictionary_language where supported = 1');
+	$id = qNew('select group_concat(id separator ",") from language where supported = 1');
 	$id = mysql_fetch_array($id);
-	return explode(',', $id[0]);
+	return array_filter(explode(',', $id[0]));
 }
 
 function getAllLanguages() {
-	$id = qNew('select group_concat(id separator ",") from dictionary_language');
+	$id = qNew('select group_concat(id separator ",") from language');
 	$id = mysql_fetch_array($id);
-	return explode(',', $id[0]);
+	return array_filter(explode(',', $id[0]));
 }
 
-
+function getTableName($namespace) {
+	$tableName = array_filter(array_unique(explode('\\', $namespace)));
+	$tableName = strtolower(implode('_', $tableName));
+	return $tableName;
+}
 

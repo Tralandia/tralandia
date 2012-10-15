@@ -44,11 +44,11 @@ class ImportSeo extends BaseImport {
 			WHERE length(seo_urls_texts.description) > 0 AND object_type_id = 0 AND attraction_id = 0
 			GROUP BY seo_urls.id');
 
-		$dictionaryTypeTitle = $this->createDictionaryType('\Seo\SeoUrl', 'title', 'ACTIVE');
-		$dictionaryTypeHeading = $this->createDictionaryType('\Seo\SeoUrl', 'heading', 'ACTIVE');
-		$dictionaryTypeTabName = $this->createDictionaryType('\Seo\SeoUrl', 'tabName', 'ACTIVE');
-		$dictionaryTypeDescription = $this->createDictionaryType('\Seo\SeoUrl', 'description', 'ACTIVE');
-		$dictionaryTypePpcKeywords = $this->createDictionaryType('\Seo\SeoUrl', 'ppcKeywords', 'ACTIVE');
+		$dictionaryTypeTitle = $this->createPhraseType('\Seo\SeoUrl', 'title', 'ACTIVE');
+		$dictionaryTypeHeading = $this->createPhraseType('\Seo\SeoUrl', 'heading', 'ACTIVE');
+		$dictionaryTypeTabName = $this->createPhraseType('\Seo\SeoUrl', 'tabName', 'ACTIVE');
+		$dictionaryTypeDescription = $this->createPhraseType('\Seo\SeoUrl', 'description', 'ACTIVE');
+		$dictionaryTypePpcKeywords = $this->createPhraseType('\Seo\SeoUrl', 'ppcKeywords', 'ACTIVE');
 
 		$locationLocalityType = \Service\Location\Type::getBySlug('locality');
 		$locationRegionType = \Service\Location\Type::getBySlug('region');

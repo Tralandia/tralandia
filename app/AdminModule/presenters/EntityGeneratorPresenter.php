@@ -20,7 +20,7 @@ class EntityGeneratorPresenter extends BasePresenter {
 	// }
 
 	public function actionDefault($id) {
-		d($this->context->taskRepository);
+		//d($this->context->taskRepository);
 		$id = str_replace('-', '\\', $id);
 		$entityDir = APP_DIR . '/models/Entity/';
 		$menu = array();

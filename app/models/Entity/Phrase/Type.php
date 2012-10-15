@@ -1,14 +1,13 @@
 <?php
 
-namespace Entity\Dictionary;
+namespace Entity\Phrase;
 
-use Entity\Dictionary;
 use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="dictionary_type", indexes={@ORM\index(name="entityName", columns={"entityName"}), @ORM\index(name="entityAttribute", columns={"entityAttribute"}), @ORM\index(name="translationLevelRequirement", columns={"translationLevelRequirement"}), @ORM\index(name="pluralsRequired", columns={"pluralsRequired"}), @ORM\index(name="genderVariationsRequired", columns={"genderVariationsRequired"}), @ORM\index(name="locativesRequired", columns={"locativesRequired"}), @ORM\index(name="positionRequired", columns={"positionRequired"}), @ORM\index(name="checkingRequired", columns={"checkingRequired"})})
+ * @ORM\Table(name="phrase_type", indexes={@ORM\index(name="entityName", columns={"entityName"}), @ORM\index(name="entityAttribute", columns={"entityAttribute"}), @ORM\index(name="translationLevelRequirement", columns={"translationLevelRequirement"}), @ORM\index(name="pluralsRequired", columns={"pluralsRequired"}), @ORM\index(name="genderVariationsRequired", columns={"genderVariationsRequired"}), @ORM\index(name="locativesRequired", columns={"locativesRequired"}), @ORM\index(name="positionRequired", columns={"positionRequired"}), @ORM\index(name="checkingRequired", columns={"checkingRequired"})})
  * @EA\Primary(key="id", value="name")
  */
 class Type extends \Entity\BaseEntity {
@@ -110,7 +109,7 @@ class Type extends \Entity\BaseEntity {
 		
 	/**
 	 * @param string
-	 * @return \Entity\Dictionary\Type
+	 * @return \Entity\Phrase\Type
 	 */
 	public function setName($name)
 	{
@@ -120,7 +119,7 @@ class Type extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Type
+	 * @return \Entity\Phrase\Type
 	 */
 	public function unsetName()
 	{
@@ -139,7 +138,7 @@ class Type extends \Entity\BaseEntity {
 		
 	/**
 	 * @param string
-	 * @return \Entity\Dictionary\Type
+	 * @return \Entity\Phrase\Type
 	 */
 	public function setEntityName($entityName)
 	{
@@ -149,7 +148,7 @@ class Type extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Type
+	 * @return \Entity\Phrase\Type
 	 */
 	public function unsetEntityName()
 	{
@@ -168,7 +167,7 @@ class Type extends \Entity\BaseEntity {
 		
 	/**
 	 * @param string
-	 * @return \Entity\Dictionary\Type
+	 * @return \Entity\Phrase\Type
 	 */
 	public function setEntityAttribute($entityAttribute)
 	{
@@ -178,7 +177,7 @@ class Type extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Type
+	 * @return \Entity\Phrase\Type
 	 */
 	public function unsetEntityAttribute()
 	{
@@ -197,7 +196,7 @@ class Type extends \Entity\BaseEntity {
 		
 	/**
 	 * @param string
-	 * @return \Entity\Dictionary\Type
+	 * @return \Entity\Phrase\Type
 	 */
 	public function setTranslationLevelRequirement($translationLevelRequirement)
 	{
@@ -216,7 +215,7 @@ class Type extends \Entity\BaseEntity {
 		
 	/**
 	 * @param boolean
-	 * @return \Entity\Dictionary\Type
+	 * @return \Entity\Phrase\Type
 	 */
 	public function setPluralsRequired($pluralsRequired)
 	{
@@ -235,7 +234,7 @@ class Type extends \Entity\BaseEntity {
 		
 	/**
 	 * @param boolean
-	 * @return \Entity\Dictionary\Type
+	 * @return \Entity\Phrase\Type
 	 */
 	public function setGenderRequired($genderRequired)
 	{
@@ -254,7 +253,7 @@ class Type extends \Entity\BaseEntity {
 		
 	/**
 	 * @param boolean
-	 * @return \Entity\Dictionary\Type
+	 * @return \Entity\Phrase\Type
 	 */
 	public function setGenderVariationsRequired($genderVariationsRequired)
 	{
@@ -273,7 +272,7 @@ class Type extends \Entity\BaseEntity {
 		
 	/**
 	 * @param boolean
-	 * @return \Entity\Dictionary\Type
+	 * @return \Entity\Phrase\Type
 	 */
 	public function setLocativesRequired($locativesRequired)
 	{
@@ -292,7 +291,7 @@ class Type extends \Entity\BaseEntity {
 		
 	/**
 	 * @param boolean
-	 * @return \Entity\Dictionary\Type
+	 * @return \Entity\Phrase\Type
 	 */
 	public function setPositionRequired($positionRequired)
 	{
@@ -311,7 +310,7 @@ class Type extends \Entity\BaseEntity {
 		
 	/**
 	 * @param boolean
-	 * @return \Entity\Dictionary\Type
+	 * @return \Entity\Phrase\Type
 	 */
 	public function setCheckingRequired($checkingRequired)
 	{
@@ -321,7 +320,7 @@ class Type extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Type
+	 * @return \Entity\Phrase\Type
 	 */
 	public function unsetCheckingRequired()
 	{
@@ -340,7 +339,7 @@ class Type extends \Entity\BaseEntity {
 		
 	/**
 	 * @param string
-	 * @return \Entity\Dictionary\Type
+	 * @return \Entity\Phrase\Type
 	 */
 	public function setHelpForTranslator($helpForTranslator)
 	{
@@ -350,7 +349,7 @@ class Type extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Type
+	 * @return \Entity\Phrase\Type
 	 */
 	public function unsetHelpForTranslator()
 	{
@@ -369,7 +368,7 @@ class Type extends \Entity\BaseEntity {
 		
 	/**
 	 * @param integer
-	 * @return \Entity\Dictionary\Type
+	 * @return \Entity\Phrase\Type
 	 */
 	public function setMonthlyBudget($monthlyBudget)
 	{

@@ -2,7 +2,7 @@
 
 namespace Entity\Attraction;
 
-use Entity\Dictionary;
+use Entity\Phrase;
 use Entity\Location;
 use Entity\Medium;
 use Entity\User;
@@ -11,7 +11,7 @@ use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="attraction_attraction")
+ * @ORM\Table(name="attraction")
  * @EA\Primary(key="id", value="id")
  */
 class Attraction extends \Entity\BaseEntityDetails {
@@ -24,13 +24,13 @@ class Attraction extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
+	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $name;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
+	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $description;
 
@@ -105,10 +105,10 @@ class Attraction extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Phrase
+	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Attraction\Attraction
 	 */
-	public function setName(\Entity\Dictionary\Phrase $name)
+	public function setName(\Entity\Phrase\Phrase $name)
 	{
 		$this->name = $name;
 
@@ -116,7 +116,7 @@ class Attraction extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Phrase|NULL
+	 * @return \Entity\Phrase\Phrase|NULL
 	 */
 	public function getName()
 	{
@@ -124,10 +124,10 @@ class Attraction extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Phrase
+	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Attraction\Attraction
 	 */
-	public function setDescription(\Entity\Dictionary\Phrase $description)
+	public function setDescription(\Entity\Phrase\Phrase $description)
 	{
 		$this->description = $description;
 
@@ -135,7 +135,7 @@ class Attraction extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Phrase|NULL
+	 * @return \Entity\Phrase\Phrase|NULL
 	 */
 	public function getDescription()
 	{

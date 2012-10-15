@@ -2,7 +2,7 @@
 
 namespace Entity\Company;
 
-use Entity\Dictionary;
+use Entity\Phrase;
 use Entity\Invoicing;
 use Entity\Location;
 use Entity\Medium;
@@ -11,7 +11,7 @@ use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="company_company")
+ * @ORM\Table(name="company")
  * @EA\Primary(key="id", value="name")
  */
 class Company extends \Entity\BaseEntityDetails {
@@ -66,7 +66,7 @@ class Company extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
+	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $registrator;
 
@@ -343,10 +343,10 @@ class Company extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Phrase
+	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Company\Company
 	 */
-	public function setRegistrator(\Entity\Dictionary\Phrase $registrator)
+	public function setRegistrator(\Entity\Phrase\Phrase $registrator)
 	{
 		$this->registrator = $registrator;
 
@@ -354,7 +354,7 @@ class Company extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Phrase|NULL
+	 * @return \Entity\Phrase\Phrase|NULL
 	 */
 	public function getRegistrator()
 	{

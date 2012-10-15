@@ -1,15 +1,13 @@
 <?php
 namespace Entity\Invoicing;
 
-use Entity\Dictionary;
+use Entity\Phrase;
 use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="invoicing_servicetype")
- * @EA\Service(name="\Service\Invoicing\ServiceType")
- * @EA\ServiceList(name="\Service\Invoicing\ServiceTypeList")
  * @EA\Primary(key="id", value="slug")
  */
 class ServiceType extends \Entity\BaseEntity {
@@ -22,7 +20,7 @@ class ServiceType extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
+	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $name;
 
@@ -54,10 +52,10 @@ class ServiceType extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Phrase
+	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Invoicing\ServiceType
 	 */
-	public function setName(\Entity\Dictionary\Phrase $name)
+	public function setName(\Entity\Phrase\Phrase $name)
 	{
 		$this->name = $name;
 
@@ -65,7 +63,7 @@ class ServiceType extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Phrase|NULL
+	 * @return \Entity\Phrase\Phrase|NULL
 	 */
 	public function getName()
 	{

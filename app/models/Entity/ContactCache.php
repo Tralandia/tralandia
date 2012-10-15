@@ -2,7 +2,7 @@
 
 namespace Entity;
 
-use Entity\Dictionary;
+use Entity\Phrase;
 use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
 
@@ -16,8 +16,6 @@ use	Extras\Annotation as EA;
  * 				@ORM\index(name="value", columns={"value"}),
  * 		  	}
  * 		)
- * @EA\Service(name="\Service\ContactCache")
- * @EA\ServiceList(name="\Service\ContactCacheList")
  * @EA\Primary(key="id", value="entityName")
  */
 class ContactCache extends \Entity\BaseEntity {

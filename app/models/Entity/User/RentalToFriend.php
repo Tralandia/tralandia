@@ -2,7 +2,7 @@
 
 namespace Entity\User;
 
-use Entity\Dictionary;
+use Entity\Phrase;
 use Entity\Rental;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -17,7 +17,7 @@ class RentalToFriend extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Dictionary\Language")
+	 * @ORM\ManyToOne(targetEntity="Entity\Language")
 	 */
 	protected $language;
 
@@ -55,10 +55,10 @@ class RentalToFriend extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Language
+	 * @param \Entity\Language
 	 * @return \Entity\User\RentalToFriend
 	 */
-	public function setLanguage(\Entity\Dictionary\Language $language)
+	public function setLanguage(\Entity\Language $language)
 	{
 		$this->language = $language;
 
@@ -76,7 +76,7 @@ class RentalToFriend extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Language|NULL
+	 * @return \Entity\Language|NULL
 	 */
 	public function getLanguage()
 	{

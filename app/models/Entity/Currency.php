@@ -2,22 +2,20 @@
 
 namespace Entity;
 
-use Entity\Dictionary;
+use Entity\Phrase;
 use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="currency", indexes={@ORM\index(name="name", columns={"name_id"}), @ORM\index(name="iso", columns={"iso"})})
- * @EA\Service(name="\Service\Currency")
- * @EA\ServiceList(name="\Service\CurrencyList")
  * @EA\Primary(key="id", value="iso")
  */
 class Currency extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"}, fetch="EAGER")
+	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"}, fetch="EAGER")
 	 */
 	protected $name;
 
@@ -56,10 +54,10 @@ class Currency extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Phrase
+	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Currency
 	 */
-	public function setName(\Entity\Dictionary\Phrase $name)
+	public function setName(\Entity\Phrase\Phrase $name)
 	{
 		$this->name = $name;
 
@@ -67,7 +65,7 @@ class Currency extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Phrase|NULL
+	 * @return \Entity\Phrase\Phrase|NULL
 	 */
 	public function getName()
 	{

@@ -74,7 +74,7 @@ class RadoPresenter extends BasePresenter {
 		}
 
 		if (isset($this->params['dropAllTables'])) {
-			$import = new I\BaseImport();
+			$import = new I\BaseImport($this->context);
 			$import->developmentMode = (bool)$this->session->developmentMode;
 			$import->dropAllTables();
 
@@ -82,14 +82,14 @@ class RadoPresenter extends BasePresenter {
 			$redirect = TRUE;
 		}
 		if (isset($this->params['truncateAllTables'])) {
-			$import = new I\BaseImport();
+			$import = new I\BaseImport($this->context);
 			$import->developmentMode = (bool)$this->session->developmentMode;
 			$import->truncateAllTables();
 			$this->flashMessage('Truncating Done');
 			$redirect = TRUE;
 		}
 		if (isset($this->params['undoSection'])) {
-			$import = new I\BaseImport();
+			$import = new I\BaseImport($this->context);
 			$import->developmentMode = (bool)$this->session->developmentMode;
 			$import->undoSection($this->params['undoSection']);
 			$this->flashMessage('Section UNDONE');
@@ -111,9 +111,8 @@ class RadoPresenter extends BasePresenter {
 		}
 
 		if (isset($this->params['importSection'])) {
-			\Extras\Models\Service::preventFlush();
 			$className = 'Extras\Import\Import'.ucfirst($this->params['importSection']);
-			$import = new $className();
+			$import = new $className($this->context);
 			$import->developmentMode = (bool)$this->session->developmentMode;
 			if (isset($this->params['subsection'])) {
 				$import->doImport($this->params['subsection']);
@@ -121,7 +120,6 @@ class RadoPresenter extends BasePresenter {
 				$import->doImport();
 			}
 			$import->saveVariables();
-			\Extras\Models\Service::flush(FALSE);
 			$this->flashMessage('Importing Done');
 			$redirect = TRUE;
 		}
@@ -135,7 +133,7 @@ class RadoPresenter extends BasePresenter {
 		}
 
 		if ($redirect) {
-			//$this->redirect('Rado:default');
+			$this->redirect('Rado:default');
 		}
 	}
 
@@ -143,12 +141,11 @@ class RadoPresenter extends BasePresenter {
 		// $this->template->sections = '';
 		// $t = \Services\Location\LocationService::get(848); $t->delete(); return;
 
-		$import = new I\BaseImport();
+		$import = new I\BaseImport($this->context);
 		$import->developmentMode = (bool)$this->session->developmentMode;
 
 		$this->template->sections = $import->createNavigation();
 		$this->template->developmentMode = $import->developmentMode == TRUE ? "TRUE" : "FALSE";
-		return;
 	}
 
 }

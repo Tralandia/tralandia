@@ -9,15 +9,13 @@ use	Extras\Annotation as EA;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="page", indexes={@ORM\index(name="destination", columns={"destination"})})
- * @EA\Service(name="\Service\Page")
- * @EA\ServiceList(name="\Service\PageList")
  * @EA\Primary(key="id", value="destination")
  */
 class Page extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
+	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $name;
 
@@ -42,7 +40,7 @@ class Page extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
+	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $genericContent;
 
@@ -55,10 +53,10 @@ class Page extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Phrase
+	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Page
 	 */
-	public function setName(\Entity\Dictionary\Phrase $name)
+	public function setName(\Entity\Phrase\Phrase $name)
 	{
 		$this->name = $name;
 
@@ -66,7 +64,7 @@ class Page extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Phrase|NULL
+	 * @return \Entity\Phrase\Phrase|NULL
 	 */
 	public function getName()
 	{
@@ -161,10 +159,10 @@ class Page extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Phrase
+	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Page
 	 */
-	public function setGenericContent(\Entity\Dictionary\Phrase $genericContent)
+	public function setGenericContent(\Entity\Phrase\Phrase $genericContent)
 	{
 		$this->genericContent = $genericContent;
 
@@ -172,7 +170,7 @@ class Page extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Phrase|NULL
+	 * @return \Entity\Phrase\Phrase|NULL
 	 */
 	public function getGenericContent()
 	{

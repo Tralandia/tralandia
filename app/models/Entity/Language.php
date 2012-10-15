@@ -1,14 +1,14 @@
 <?php
 
-namespace Entity\Dictionary;
+namespace Entity;
 
-use Entity\Dictionary;
+use Entity\Phrase;
 use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="dictionary_language", indexes={@ORM\index(name="iso", columns={"iso"}), @ORM\index(name="supported", columns={"supported"})})
+ * @ORM\Table(name="language", indexes={@ORM\index(name="iso", columns={"iso"}), @ORM\index(name="supported", columns={"supported"})})
  * @EA\Primary(key="id", value="iso")
  */
 class Language extends \Entity\BaseEntityDetails {
@@ -18,7 +18,7 @@ class Language extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Phrase", cascade={"persist", "remove"})
+	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $name;
 
@@ -115,10 +115,10 @@ class Language extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Phrase
-	 * @return \Entity\Dictionary\Language
+	 * @param \Entity\Phrase\Phrase
+	 * @return \Entity\Language
 	 */
-	public function setName(\Entity\Dictionary\Phrase $name)
+	public function setName(\Entity\Phrase\Phrase $name)
 	{
 		$this->name = $name;
 
@@ -126,7 +126,7 @@ class Language extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Phrase|NULL
+	 * @return \Entity\Phrase\Phrase|NULL
 	 */
 	public function getName()
 	{
@@ -135,7 +135,7 @@ class Language extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param string
-	 * @return \Entity\Dictionary\Language
+	 * @return \Entity\Language
 	 */
 	public function setIso($iso)
 	{
@@ -145,7 +145,7 @@ class Language extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Language
+	 * @return \Entity\Language
 	 */
 	public function unsetIso()
 	{
@@ -164,7 +164,7 @@ class Language extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param boolean
-	 * @return \Entity\Dictionary\Language
+	 * @return \Entity\Language
 	 */
 	public function setSupported($supported)
 	{
@@ -174,7 +174,7 @@ class Language extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Language
+	 * @return \Entity\Language
 	 */
 	public function unsetSupported()
 	{
@@ -193,7 +193,7 @@ class Language extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param string
-	 * @return \Entity\Dictionary\Language
+	 * @return \Entity\Language
 	 */
 	public function setDefaultCollation($defaultCollation)
 	{
@@ -203,7 +203,7 @@ class Language extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Language
+	 * @return \Entity\Language
 	 */
 	public function unsetDefaultCollation()
 	{
@@ -222,7 +222,7 @@ class Language extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param json
-	 * @return \Entity\Dictionary\Language
+	 * @return \Entity\Language
 	 */
 	public function setGenders($genders)
 	{
@@ -232,7 +232,7 @@ class Language extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Language
+	 * @return \Entity\Language
 	 */
 	public function unsetGenders()
 	{
@@ -251,7 +251,7 @@ class Language extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param json
-	 * @return \Entity\Dictionary\Language
+	 * @return \Entity\Language
 	 */
 	public function setPlurals($plurals)
 	{
@@ -261,7 +261,7 @@ class Language extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Language
+	 * @return \Entity\Language
 	 */
 	public function unsetPlurals()
 	{
@@ -280,7 +280,7 @@ class Language extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param string
-	 * @return \Entity\Dictionary\Language
+	 * @return \Entity\Language
 	 */
 	public function setPrimarySingular($primarySingular)
 	{
@@ -290,7 +290,7 @@ class Language extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Language
+	 * @return \Entity\Language
 	 */
 	public function unsetPrimarySingular()
 	{
@@ -309,7 +309,7 @@ class Language extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param string
-	 * @return \Entity\Dictionary\Language
+	 * @return \Entity\Language
 	 */
 	public function setPrimaryPlural($primaryPlural)
 	{
@@ -319,7 +319,7 @@ class Language extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Language
+	 * @return \Entity\Language
 	 */
 	public function unsetPrimaryPlural()
 	{
@@ -338,7 +338,7 @@ class Language extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param string
-	 * @return \Entity\Dictionary\Language
+	 * @return \Entity\Language
 	 */
 	public function setPrimaryGender($primaryGender)
 	{
@@ -348,7 +348,7 @@ class Language extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Language
+	 * @return \Entity\Language
 	 */
 	public function unsetPrimaryGender()
 	{
@@ -367,7 +367,7 @@ class Language extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param json
-	 * @return \Entity\Dictionary\Language
+	 * @return \Entity\Language
 	 */
 	public function setPpcPatterns($ppcPatterns)
 	{
@@ -377,7 +377,7 @@ class Language extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Language
+	 * @return \Entity\Language
 	 */
 	public function unsetPpcPatterns()
 	{
@@ -396,7 +396,7 @@ class Language extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param json
-	 * @return \Entity\Dictionary\Language
+	 * @return \Entity\Language
 	 */
 	public function setVariationDetails($variationDetails)
 	{
@@ -406,7 +406,7 @@ class Language extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Language
+	 * @return \Entity\Language
 	 */
 	public function unsetVariationDetails()
 	{
@@ -425,7 +425,7 @@ class Language extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param \Entity\Location\Location
-	 * @return \Entity\Dictionary\Language
+	 * @return \Entity\Language
 	 */
 	public function addLocation(\Entity\Location\Location $location)
 	{
@@ -446,7 +446,7 @@ class Language extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param \Entity\Rental\Rental
-	 * @return \Entity\Dictionary\Language
+	 * @return \Entity\Language
 	 */
 	public function addRental(\Entity\Rental\Rental $rental)
 	{
@@ -467,7 +467,7 @@ class Language extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param \Entity\Seo\BackLink
-	 * @return \Entity\Dictionary\Language
+	 * @return \Entity\Language
 	 */
 	public function addBackLink(\Entity\Seo\BackLink $backLink)
 	{
@@ -481,7 +481,7 @@ class Language extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param \Entity\Seo\BackLink
-	 * @return \Entity\Dictionary\Language
+	 * @return \Entity\Language
 	 */
 	public function removeBackLink(\Entity\Seo\BackLink $backLink)
 	{

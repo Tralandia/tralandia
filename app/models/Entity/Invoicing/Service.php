@@ -9,8 +9,6 @@ use	Extras\Annotation as EA;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="invoicing_service")
- * @EA\Service(name="\Service\Invoicing\Service")
- * @EA\ServiceList(name="\Service\Invoicing\ServiceList")
  * @EA\Primary(key="id", value="id")
  */
 class Service extends \Entity\BaseEntity {

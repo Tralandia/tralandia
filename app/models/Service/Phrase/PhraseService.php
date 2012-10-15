@@ -31,4 +31,8 @@ class PhraseService extends Service\BaseService {
 			return $entity->language == $language;
 		})->current();
 	}
+
+	public function addTranslation($translation) {
+		return $this->getEntity()->addTranslation($translation);
+	}
 }

@@ -28,9 +28,9 @@ class ImportLocations extends BaseImport {
 		
 		$this->setSubsections('locations');
 
-		$this->dictionaryTypeName = $this->createDictionaryType('\Location\Location', 'name', 'NATIVE', array('locativesRequired' => TRUE));
-		$this->dictionaryTypeNameOfficial = $this->createDictionaryType('\Location\Location', 'nameOfficial', 'NATIVE', array('locativesRequired' => TRUE));
-		$this->dictionaryTypeNameShort = $this->createDictionaryType('\Location\Location', 'nameShort', 'NATIVE', array('locativesRequired' => TRUE));
+		$this->dictionaryTypeName = $this->createPhraseType('\Location\Location', 'name', 'NATIVE', array('locativesRequired' => TRUE));
+		$this->dictionaryTypeNameOfficial = $this->createPhraseType('\Location\Location', 'nameOfficial', 'NATIVE', array('locativesRequired' => TRUE));
+		$this->dictionaryTypeNameShort = $this->createPhraseType('\Location\Location', 'nameShort', 'NATIVE', array('locativesRequired' => TRUE));
 		\Extras\Models\Service::flush(FALSE);
 
 		debug($subsection);
@@ -98,7 +98,7 @@ class ImportLocations extends BaseImport {
 	// ----------------------------------------------------------
 	private function importCountries() {
 
-		$dictionaryType = $this->createDictionaryType('\Location\TypeService', 'name', 'ACTIVE');
+		$dictionaryType = $this->createPhraseType('\Location\TypeService', 'name', 'ACTIVE');
 
 		$locationTypeCountry = \Service\Location\Type::get();
 		$locationTypeCountry->name = $this->createNewPhrase($dictionaryType, 865);

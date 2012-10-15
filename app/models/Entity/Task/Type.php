@@ -9,8 +9,6 @@ use	Extras\Annotation as EA;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="task_type")
- * @EA\Service(name="\Service\Task\Type")
- * @EA\ServiceList(name="\Service\Task\TypeList")
  * @EA\Primary(key="id", value="name")
  */
 class Type extends \Entity\BaseEntityDetails {

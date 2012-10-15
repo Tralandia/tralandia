@@ -2,15 +2,13 @@
 
 namespace Entity\Location;
 
-use Entity\Dictionary;
+use Entity\Phrase;
 use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="location_location", indexes={@ORM\index(name="name", columns={"name_id"}), @ORM\index(name="slug", columns={"slug"}), @ORM\index(name="latitude", columns={"latitude"}), @ORM\index(name="longitude", columns={"longitude"})})
- * @EA\Service(name="\Service\Location\Location")
- * @EA\ServiceList(name="\Service\Location\LocationList")
+ * @ORM\Table(name="location", indexes={@ORM\index(name="name", columns={"name_id"}), @ORM\index(name="slug", columns={"slug"}), @ORM\index(name="latitude", columns={"latitude"}), @ORM\index(name="longitude", columns={"longitude"})})
  * @EA\Primary(key="id", value="slug")
  */
 class Location extends \Entity\BaseEntityDetails {
@@ -20,19 +18,19 @@ class Location extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
+	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $name;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
+	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $nameOfficial;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
+	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $nameShort;
 
@@ -179,13 +177,13 @@ class Location extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Dictionary\Language", cascade={"persist"})
+	 * @ORM\ManyToOne(targetEntity="Entity\Language", cascade={"persist"})
 	 */
 	protected $defaultLanguage;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Dictionary\Language", mappedBy="locations", cascade={"persist"})
+	 * @ORM\ManyToMany(targetEntity="Entity\Language", mappedBy="locations", cascade={"persist"})
 	 */
 	protected $languages;
 
@@ -294,10 +292,10 @@ class Location extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Phrase
+	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Location\Location
 	 */
-	public function setName(\Entity\Dictionary\Phrase $name)
+	public function setName(\Entity\Phrase\Phrase $name)
 	{
 		$this->name = $name;
 
@@ -305,7 +303,7 @@ class Location extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Phrase|NULL
+	 * @return \Entity\Phrase\Phrase|NULL
 	 */
 	public function getName()
 	{
@@ -313,10 +311,10 @@ class Location extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Phrase
+	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Location\Location
 	 */
-	public function setNameOfficial(\Entity\Dictionary\Phrase $nameOfficial)
+	public function setNameOfficial(\Entity\Phrase\Phrase $nameOfficial)
 	{
 		$this->nameOfficial = $nameOfficial;
 
@@ -324,7 +322,7 @@ class Location extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Phrase|NULL
+	 * @return \Entity\Phrase\Phrase|NULL
 	 */
 	public function getNameOfficial()
 	{
@@ -332,10 +330,10 @@ class Location extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Phrase
+	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Location\Location
 	 */
-	public function setNameShort(\Entity\Dictionary\Phrase $nameShort)
+	public function setNameShort(\Entity\Phrase\Phrase $nameShort)
 	{
 		$this->nameShort = $nameShort;
 
@@ -343,7 +341,7 @@ class Location extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Phrase|NULL
+	 * @return \Entity\Phrase\Phrase|NULL
 	 */
 	public function getNameShort()
 	{
@@ -1003,10 +1001,10 @@ class Location extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Language
+	 * @param \Entity\Language
 	 * @return \Entity\Location\Location
 	 */
-	public function setDefaultLanguage(\Entity\Dictionary\Language $defaultLanguage)
+	public function setDefaultLanguage(\Entity\Language $defaultLanguage)
 	{
 		$this->defaultLanguage = $defaultLanguage;
 
@@ -1024,7 +1022,7 @@ class Location extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Language|NULL
+	 * @return \Entity\Language|NULL
 	 */
 	public function getDefaultLanguage()
 	{
@@ -1032,10 +1030,10 @@ class Location extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Language
+	 * @param \Entity\Language
 	 * @return \Entity\Location\Location
 	 */
-	public function addLanguage(\Entity\Dictionary\Language $language)
+	public function addLanguage(\Entity\Language $language)
 	{
 		if(!$this->languages->contains($language)) {
 			$this->languages->add($language);
@@ -1046,10 +1044,10 @@ class Location extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Language
+	 * @param \Entity\Language
 	 * @return \Entity\Location\Location
 	 */
-	public function removeLanguage(\Entity\Dictionary\Language $language)
+	public function removeLanguage(\Entity\Language $language)
 	{
 		if($this->languages->contains($language)) {
 			$this->languages->removeElement($language);
@@ -1060,7 +1058,7 @@ class Location extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Dictionary\Language
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Language
 	 */
 	public function getLanguages()
 	{

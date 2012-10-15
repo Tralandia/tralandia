@@ -2,7 +2,7 @@
 
 namespace Entity\Invoicing;
 
-use Entity\Dictionary;
+use Entity\Phrase;
 use Entity\Invoicing;
 use Entity\Location;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,21 +11,19 @@ use	Extras\Annotation as EA;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="invoicing_marketing", indexes={@ORM\index(name="countTotal", columns={"countTotal"}), @ORM\index(name="countLeft", columns={"countLeft"}), @ORM\index(name="validFrom", columns={"validFrom"}), @ORM\index(name="validTo", columns={"validTo"})})
- * @EA\Service(name="\Service\Invoicing\Marketing")
- * @EA\ServiceList(name="\Service\Invoicing\MarketingList")
  * @EA\Primary(key="id", value="id")
  */
 class Marketing extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
+	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $name;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
+	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $description;
 
@@ -104,10 +102,10 @@ class Marketing extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Phrase
+	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Invoicing\Marketing
 	 */
-	public function setName(\Entity\Dictionary\Phrase $name)
+	public function setName(\Entity\Phrase\Phrase $name)
 	{
 		$this->name = $name;
 
@@ -115,7 +113,7 @@ class Marketing extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Phrase|NULL
+	 * @return \Entity\Phrase\Phrase|NULL
 	 */
 	public function getName()
 	{
@@ -123,10 +121,10 @@ class Marketing extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Phrase
+	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Invoicing\Marketing
 	 */
-	public function setDescription(\Entity\Dictionary\Phrase $description)
+	public function setDescription(\Entity\Phrase\Phrase $description)
 	{
 		$this->description = $description;
 
@@ -134,7 +132,7 @@ class Marketing extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Phrase|NULL
+	 * @return \Entity\Phrase\Phrase|NULL
 	 */
 	public function getDescription()
 	{

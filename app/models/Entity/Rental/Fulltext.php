@@ -2,15 +2,13 @@
 
 namespace Entity\Rental;
 
-use Entity\Dictionary;
+use Entity\Phrase;
 use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="rental_fulltext")
- * @EA\Service(name="\Service\Rental\Fulltext")
- * @EA\ServiceList(name="\Service\Rental\FulltextList")
  * @EA\Primary(key="id", value="value")
  */
 class Fulltext extends \Entity\BaseEntity {
@@ -23,7 +21,7 @@ class Fulltext extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Dictionary\Language")
+	 * @ORM\ManyToOne(targetEntity="Entity\Language")
 	 */
 	protected $language;
 
@@ -32,25 +30,6 @@ class Fulltext extends \Entity\BaseEntity {
 	 * @ORM\Column(type="text")
 	 */
 	protected $value;
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 	//@entity-generator-code --- NEMAZAT !!!
@@ -91,10 +70,10 @@ class Fulltext extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Language
+	 * @param \Entity\Language
 	 * @return \Entity\Rental\Fulltext
 	 */
-	public function setLanguage(\Entity\Dictionary\Language $language)
+	public function setLanguage(\Entity\Language $language)
 	{
 		$this->language = $language;
 
@@ -112,7 +91,7 @@ class Fulltext extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Language|NULL
+	 * @return \Entity\Language|NULL
 	 */
 	public function getLanguage()
 	{

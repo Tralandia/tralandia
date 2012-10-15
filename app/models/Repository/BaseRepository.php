@@ -53,4 +53,10 @@ class BaseRepository extends EntityRepository {
 		
 		return $collection;
 	}
+
+	public function deleteAll() {
+		$query = $this->_em->createQueryBuilder();
+		$query->delete($this->_entityName, 'e');
+		return $query->getQuery()->execute();
+	}
 }

@@ -2,14 +2,14 @@
 
 namespace Entity\Ticket;
 
-use Entity\Dictionary;
+use Entity\Phrase;
 use Entity\Location;
 use Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="ticket_ticket")
+ * @ORM\Table(name="ticket")
  */
 class Ticket extends \Entity\BaseEntity {
 

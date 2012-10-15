@@ -9,8 +9,6 @@ use	Extras\Annotation as EA;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="domain", indexes={@ORM\index(name="domain", columns={"domain"})})
- * @EA\Service(name="\Service\Domain")
- * @EA\ServiceList(name="\Service\DomainList")
  * @EA\Primary(key="id", value="domain")
  */
 class Domain extends \Entity\BaseEntity {

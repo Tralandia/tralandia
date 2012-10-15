@@ -60,39 +60,6 @@ services:
 	currencyRepository: @model::getRepository('Entity\Currency')
 
 
-	#dictionary
-	#----------
-	dictionaryLanguageEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Dictionary\Language')
-
-	dictionaryLanguageServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @dictionaryLanguageEntityFactory)
-
-	dictionaryLanguageRepository: @model::getRepository('Entity\Dictionary\Language')
-
-
-	#----------
-	dictionaryPhraseEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Dictionary\Phrase')
-
-	dictionaryPhraseServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @dictionaryPhraseEntityFactory)
-
-	dictionaryPhraseRepository: @model::getRepository('Entity\Dictionary\Phrase')
-
-
-	#----------
-	dictionaryTranslationEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Dictionary\Translation')
-
-	dictionaryTranslationServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @dictionaryTranslationEntityFactory)
-
-	dictionaryTranslationRepository: @model::getRepository('Entity\Dictionary\Translation')
-
-
-	#----------
-	dictionaryTypeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Dictionary\Type')
-
-	dictionaryTypeServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @dictionaryTypeEntityFactory)
-
-	dictionaryTypeRepository: @model::getRepository('Entity\Dictionary\Type')
-
-
 	#domain
 	#----------
 	domainEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Domain')
@@ -217,6 +184,15 @@ services:
 	invoicingUseTypeRepository: @model::getRepository('Entity\Invoicing\UseType')
 
 
+	#language
+	#----------
+	languageEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Language')
+
+	languageServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @languageEntityFactory)
+
+	languageRepository: @model::getRepository('Entity\Language')
+
+
 	#locatoin
 	#----------
 	locationEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Location\Location')
@@ -291,6 +267,31 @@ services:
 	pageServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @pageEntityFactory)
 
 	pageRepository: @model::getRepository('Entity\Page')
+
+
+	#phrase
+	#----------
+	phraseEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Phrase\Phrase')
+
+	phraseServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @phraseEntityFactory)
+
+	phraseRepository: @model::getRepository('Entity\Phrase\Phrase')
+
+
+	#----------
+	phraseTranslationEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Phrase\Translation')
+
+	phraseTranslationServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @phraseTranslationEntityFactory)
+
+	phraseTranslationRepository: @model::getRepository('Entity\Phrase\Translation')
+
+
+	#----------
+	phraseTypeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Phrase\Type')
+
+	phraseTypeServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @phraseTypeEntityFactory)
+
+	phraseTypeRepository: @model::getRepository('Entity\Phrase\Type')
 
 
 	#rental

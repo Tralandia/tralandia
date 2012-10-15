@@ -2,7 +2,7 @@
 
 namespace Entity\Routing;
 
-use Entity\Dictionary;
+use Entity\Phrase;
 use Entity\Location;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -20,7 +20,7 @@ class PathSegment extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Dictionary\Language")
+	 * @ORM\ManyToOne(targetEntity="Entity\Language")
 	 */
 	protected $language;
 
@@ -100,10 +100,10 @@ class PathSegment extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Language
+	 * @param \Entity\Language
 	 * @return \Entity\Routing\PathSegment
 	 */
-	public function setLanguage(\Entity\Dictionary\Language $language)
+	public function setLanguage(\Entity\Language $language)
 	{
 		$this->language = $language;
 
@@ -121,7 +121,7 @@ class PathSegment extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Language|NULL
+	 * @return \Entity\Language|NULL
 	 */
 	public function getLanguage()
 	{

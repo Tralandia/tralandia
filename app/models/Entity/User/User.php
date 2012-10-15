@@ -2,7 +2,7 @@
 
 namespace Entity\User;
 
-use Entity\Dictionary;
+use Entity\Phrase;
 use Entity\Location;
 use Entity\Rental;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,9 +11,7 @@ use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="user_user", indexes={@ORM\index(name="login", columns={"login"}), @ORM\index(name="password", columns={"password"}), @ORM\index(name="isOwner", columns={"isOwner"})})
- * @EA\Service(name="\Service\User\User")
- * @EA\ServiceList(name="\Service\User\UserList")
+ * @ORM\Table(name="user", indexes={@ORM\index(name="login", columns={"login"}), @ORM\index(name="password", columns={"password"})})
  * @EA\Primary(key="id", value="login")
  */
 class User extends \Entity\BaseEntityDetails {
@@ -45,7 +43,7 @@ class User extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Dictionary\Language")
+	 * @ORM\ManyToOne(targetEntity="Entity\Language")
 	 */
 	protected $defaultLanguage;
 
@@ -258,10 +256,10 @@ class User extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Language
+	 * @param \Entity\Language
 	 * @return \Entity\User\User
 	 */
-	public function setDefaultLanguage(\Entity\Dictionary\Language $defaultLanguage)
+	public function setDefaultLanguage(\Entity\Language $defaultLanguage)
 	{
 		$this->defaultLanguage = $defaultLanguage;
 
@@ -279,7 +277,7 @@ class User extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Language|NULL
+	 * @return \Entity\Language|NULL
 	 */
 	public function getDefaultLanguage()
 	{

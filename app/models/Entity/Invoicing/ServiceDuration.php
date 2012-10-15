@@ -2,15 +2,13 @@
 
 namespace Entity\Invoicing;
 
-use Entity\Dictionary;
+use Entity\Phrase;
 use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="invoicing_serviceduration")
- * @EA\Service(name="\Service\Invoicing\ServiceDuration")
- * @EA\ServiceList(name="\Service\Invoicing\ServiceDurationList")
  * @EA\Primary(key="id", value="duration")
  */
 class ServiceDuration extends \Entity\BaseEntity {
@@ -23,7 +21,7 @@ class ServiceDuration extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
+	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $name;
 
@@ -32,27 +30,6 @@ class ServiceDuration extends \Entity\BaseEntity {
 	 * @ORM\Column(type="integer")
 	 */
 	protected $sort;
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	//@entity-generator-code --- NEMAZAT !!!
 
@@ -92,10 +69,10 @@ class ServiceDuration extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Phrase
+	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Invoicing\ServiceDuration
 	 */
-	public function setName(\Entity\Dictionary\Phrase $name)
+	public function setName(\Entity\Phrase\Phrase $name)
 	{
 		$this->name = $name;
 
@@ -103,7 +80,7 @@ class ServiceDuration extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Phrase|NULL
+	 * @return \Entity\Phrase\Phrase|NULL
 	 */
 	public function getName()
 	{

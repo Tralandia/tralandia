@@ -3,7 +3,7 @@
 namespace Entity\Seo;
 
 use Entity\Attraction;
-use Entity\Dictionary;
+use Entity\Phrase;
 use Entity\Location;
 use Entity\Medium;
 use Entity\Rental;
@@ -13,8 +13,6 @@ use	Extras\Annotation as EA;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="seo_backlink", indexes={@ORM\index(name="rental", columns={"rental_id"}), @ORM\index(name="location", columns={"location_id"}), @ORM\index(name="language", columns={"language_id"}), @ORM\index(name="linkUrl", columns={"linkUrl"})})
- * @EA\Service(name="\Service\Seo\BackLink")
- * @EA\ServiceList(name="\Service\Seo\BackLinkList")
  * @EA\Primary(key="id", value="id")
  */
 class BackLink extends \Entity\BaseEntity {
@@ -40,7 +38,7 @@ class BackLink extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Dictionary\Language")
+	 * @ORM\ManyToOne(targetEntity="Entity\Language")
 	 * @ORM\JoinColumn(onDelete="SET NULL")
 	 */
 	protected $language;
@@ -155,10 +153,10 @@ class BackLink extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Language
+	 * @param \Entity\Language
 	 * @return \Entity\Seo\BackLink
 	 */
-	public function setLanguage(\Entity\Dictionary\Language $language)
+	public function setLanguage(\Entity\Language $language)
 	{
 		$this->language = $language;
 
@@ -176,7 +174,7 @@ class BackLink extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Language|NULL
+	 * @return \Entity\Language|NULL
 	 */
 	public function getLanguage()
 	{

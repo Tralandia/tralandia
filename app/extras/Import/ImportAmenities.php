@@ -40,9 +40,9 @@ class ImportAmenities extends BaseImport {
 
 		$en = \Service\Dictionary\Language::getByIso('en');
 
-		$nameDictionaryType = $this->createDictionaryType('\Rental\Amenity', 'name', 'ACTIVE', array('pluralsRequired' => TRUE));
-		$tagNameDictionaryType = $this->createDictionaryType('\Rental\Amenity', 'name-tag', 'ACTIVE', array('genderVariationsRequired' => TRUE, 'positionRequired' => TRUE));
-		$this->createDictionaryType('\Rental\AmenityType', 'name', 'ACTIVE');
+		$nameDictionaryType = $this->createPhraseType('\Rental\Amenity', 'name', 'ACTIVE', array('pluralsRequired' => TRUE));
+		$tagNameDictionaryType = $this->createPhraseType('\Rental\Amenity', 'name-tag', 'ACTIVE', array('genderVariationsRequired' => TRUE, 'positionRequired' => TRUE));
+		$this->createPhraseType('\Rental\AmenityType', 'name', 'ACTIVE');
 		\Extras\Models\Service::flush(FALSE);
 
 

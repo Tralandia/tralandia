@@ -21,7 +21,7 @@ class ImportInvoicing extends BaseImport {
 		$en = \Service\Dictionary\Language::getByIso('en');
 
 		// Invoices
-		//$invoiceNameType = $this->createDictionaryType('\Invoicing\ServiceDuration', 'name', 'supportedLanguages', 'ACTIVE');
+		//$invoiceNameType = $this->createPhraseType('\Invoicing\ServiceDuration', 'name', 'supportedLanguages', 'ACTIVE');
 
 		$this->companiesByOldId = getNewIdsByOld('\Company\Company');
 		$this->rentalsByOldId = getNewIdsByOld('\Rental\Rental');

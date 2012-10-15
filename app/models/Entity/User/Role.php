@@ -2,15 +2,13 @@
 
 namespace Entity\User;
 
-use Entity\Dictionary;
+use Entity\Phrase;
 use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="user_role", indexes={@ORM\index(name="slug", columns={"slug"})})
- * @EA\Service(name="\Service\User\Role")
- * @EA\ServiceList(name="\Service\User\RoleList")
  * @EA\Primary(key="id", value="name")
  */
 class Role extends \Entity\BaseEntity {

@@ -19,18 +19,25 @@ class ImportLanguages extends BaseImport {
 		$this->undoSection('languages');
 
 		$r = q('select * from languages order by id');
+
+		$phraseType = $this->createPhraseType('\Language', 'name', 'ACTIVE');
+		
 		while($x = mysql_fetch_array($r)) {
 			$s = $this->context->languageServiceFactory->create();
-			$s->oldId = $x['id'];
-			$s->iso = $x['iso'];
-			$s->supported = (bool)$x['translated'];
-			$s->defaultCollation = $x['default_collation'];
-			$s->details = explode2Levels(';', ':', $x['attributes']);
+			$e = $s->getEntity();
+			$e->oldId = $x['id'];
+			$e->iso = $x['iso'];
+
+			# @todo tu sa vytvoria prazdne frazy (nemaju ziadne Translation)
+			$e->name = $this->createNewPhrase($phraseType, $x['name_dic_id']);
+			
+			$e->supported = (bool)$x['translated'];
+			$e->defaultCollation = $x['default_collation'];
+			$e->details = explode2Levels(';', ':', $x['attributes']);
 			$s->save(FALSE); // prevent flush
 		}
 		$s->save(); //flush
 
-		$this->createPhrasesByOld('\Dictionary\Language', 'name', 'ACTIVE', 'languages', 'name_dic_id');		
 		$this->savedVariables['importedSections']['languages'] = 1;
 	}
 

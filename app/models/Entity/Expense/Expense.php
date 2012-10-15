@@ -10,7 +10,7 @@ use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="expense_expense")
+ * @ORM\Table(name="expense")
  * @EA\Primary(key="id", value="name")
  */
 class Expense extends \Entity\BaseEntity {

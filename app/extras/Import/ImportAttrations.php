@@ -28,7 +28,7 @@ class ImportAttractions extends BaseImport {
 		$temp = array(
 			'pluralsRequired' => TRUE,
 		);
-		$typeNameType = $this->createDictionaryType('\Attraction\Type', 'name', 'ACTIVE', $temp);
+		$typeNameType = $this->createPhraseType('\Attraction\Type', 'name', 'ACTIVE', $temp);
 
 		$r = q('select * from attractions_types order by id');
 		while($x = mysql_fetch_array($r)) {
@@ -40,8 +40,8 @@ class ImportAttractions extends BaseImport {
 
 		\Extras\Models\Service::flush(FALSE);
 
-		$attractionNameType = $this->createDictionaryType('\Attraction\Attraction', 'name', 'ACTIVE');
-		$attractionDescriptionType = $this->createDictionaryType('\Attraction\Attraction', 'descrition', 'ACTIVE');
+		$attractionNameType = $this->createPhraseType('\Attraction\Attraction', 'name', 'ACTIVE');
+		$attractionDescriptionType = $this->createPhraseType('\Attraction\Attraction', 'descrition', 'ACTIVE');
 
 		$this->countryTypeId = qNew('select id from location_type where slug = "country"');
 		$this->countryTypeId = mysql_fetch_array($this->countryTypeId);

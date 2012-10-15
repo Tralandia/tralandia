@@ -2,7 +2,7 @@
 
 namespace Entity\Emailing;
 
-use Entity\Dictionary;
+use Entity\Phrase;
 use Entity\Emailing;
 use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
@@ -29,20 +29,20 @@ class Template extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
+	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $subject;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
+	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
 	 * this is in HTML format
 	 */
 	protected $body;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Dictionary\Language")
+	 * @ORM\ManyToOne(targetEntity="Entity\Language")
 	 */
 	protected $language;
 
@@ -121,10 +121,10 @@ class Template extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Phrase
+	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Emailing\Template
 	 */
-	public function setSubject(\Entity\Dictionary\Phrase $subject)
+	public function setSubject(\Entity\Phrase\Phrase $subject)
 	{
 		$this->subject = $subject;
 
@@ -132,7 +132,7 @@ class Template extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Phrase|NULL
+	 * @return \Entity\Phrase\Phrase|NULL
 	 */
 	public function getSubject()
 	{
@@ -140,10 +140,10 @@ class Template extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Phrase
+	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Emailing\Template
 	 */
-	public function setBody(\Entity\Dictionary\Phrase $body)
+	public function setBody(\Entity\Phrase\Phrase $body)
 	{
 		$this->body = $body;
 
@@ -151,7 +151,7 @@ class Template extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Phrase|NULL
+	 * @return \Entity\Phrase\Phrase|NULL
 	 */
 	public function getBody()
 	{
@@ -159,10 +159,10 @@ class Template extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Language
+	 * @param \Entity\Language
 	 * @return \Entity\Emailing\Template
 	 */
-	public function setLanguage(\Entity\Dictionary\Language $language)
+	public function setLanguage(\Entity\Language $language)
 	{
 		$this->language = $language;
 
@@ -180,7 +180,7 @@ class Template extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Language|NULL
+	 * @return \Entity\Language|NULL
 	 */
 	public function getLanguage()
 	{

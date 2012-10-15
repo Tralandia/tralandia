@@ -2,7 +2,7 @@
 
 namespace Entity\Seo;
 
-use Entity\Dictionary;
+use Entity\Phrase;
 use Entity\Location;
 use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
@@ -10,8 +10,6 @@ use	Extras\Annotation as EA;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="seo_titlesuffix")
- * @EA\Service(name="\Service\Seo\TitleSuffix")
- * @EA\ServiceList(name="\Service\Seo\TitleSuffixList")
  * @EA\Primary(key="id", value="suffix")
  */
 class TitleSuffix extends \Entity\BaseEntity {
@@ -24,7 +22,7 @@ class TitleSuffix extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Dictionary\Language")
+	 * @ORM\ManyToOne(targetEntity="Entity\Language")
 	 */
 	protected $language;
 
@@ -33,26 +31,6 @@ class TitleSuffix extends \Entity\BaseEntity {
 	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $suffix;
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	//@entity-generator-code --- NEMAZAT !!!
 
@@ -92,10 +70,10 @@ class TitleSuffix extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Language
+	 * @param \Entity\Language
 	 * @return \Entity\Seo\TitleSuffix
 	 */
-	public function setLanguage(\Entity\Dictionary\Language $language)
+	public function setLanguage(\Entity\Language $language)
 	{
 		$this->language = $language;
 
@@ -113,7 +91,7 @@ class TitleSuffix extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Language|NULL
+	 * @return \Entity\Language|NULL
 	 */
 	public function getLanguage()
 	{

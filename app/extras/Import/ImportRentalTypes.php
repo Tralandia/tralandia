@@ -19,7 +19,7 @@ class ImportRentalTypes extends BaseImport {
 		$import = new \Extras\Import\BaseImport();
 		$import->undoSection('rentalTypes');
 
-		$this->createDictionaryType('\Rental\Type', 'name', 'ACTIVE');
+		$this->createPhraseType('\Rental\Type', 'name', 'ACTIVE');
 		\Extras\Models\Service::flush(FALSE);
 
 		$r = qf('select * from objects_types_new limit 1');

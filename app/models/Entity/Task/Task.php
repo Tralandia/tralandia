@@ -2,7 +2,7 @@
 
 namespace Entity\Task;
 
-use Entity\Dictionary;
+use Entity\Phrase;
 use Entity\Location;
 use Entity\User;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,7 +11,7 @@ use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="task_task", indexes={@ORM\index(name="startTime", columns={"startTime"}), @ORM\index(name="due", columns={"due"}), @ORM\index(name="durationPaid", columns={"durationPaid"}), @ORM\index(name="userLanguageLevel", columns={"userLanguageLevel"})})
+ * @ORM\Table(name="task", indexes={@ORM\index(name="due", columns={"due"}), @ORM\index(name="userLanguageLevel", columns={"userLanguageLevel"})})
  * @EA\Primary(key="id", value="name")
  */
 class Task extends \Entity\BaseEntityDetails {
@@ -82,7 +82,7 @@ class Task extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Dictionary\Language")
+	 * @ORM\ManyToOne(targetEntity="Entity\Language")
 	 */
 	protected $userLanguage;
 
@@ -394,10 +394,10 @@ class Task extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Language
+	 * @param \Entity\Language
 	 * @return \Entity\Task\Task
 	 */
-	public function setUserLanguage(\Entity\Dictionary\Language $userLanguage)
+	public function setUserLanguage(\Entity\Language $userLanguage)
 	{
 		$this->userLanguage = $userLanguage;
 
@@ -415,7 +415,7 @@ class Task extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Language|NULL
+	 * @return \Entity\Language|NULL
 	 */
 	public function getUserLanguage()
 	{

@@ -2,7 +2,7 @@
 
 namespace Entity\Rental;
 
-use Entity\Dictionary;
+use Entity\Phrase;
 use Entity\Invoicing;
 use Entity\Location;
 use Entity\Medium;
@@ -12,9 +12,7 @@ use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="rental_rental", indexes={@ORM\index(name="status", columns={"status"}), @ORM\index(name="timeDeleted", columns={"timeDeleted"}), @ORM\index(name="slug", columns={"slug"}), @ORM\index(name="calendarUpdated", columns={"calendarUpdated"})})
- * @EA\Service(name="\Service\Rental\Rental")
- * @EA\ServiceList(name="\Service\Rental\RentalList")
+ * @ORM\Table(name="rental", indexes={@ORM\index(name="status", columns={"status"}), @ORM\index(name="timeDeleted", columns={"timeDeleted"}), @ORM\index(name="slug", columns={"slug"}), @ORM\index(name="calendarUpdated", columns={"calendarUpdated"})})
  * @EA\Primary(key="id", value="slug")
  */
 class Rental extends \Entity\BaseEntity {
@@ -31,7 +29,7 @@ class Rental extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Dictionary\Language", cascade={"persist"})
+	 * @ORM\ManyToOne(targetEntity="Entity\Language", cascade={"persist"})
 	 */
 	protected $editLanguage;
 
@@ -97,7 +95,7 @@ class Rental extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
+	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $name;
 
@@ -109,7 +107,7 @@ class Rental extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
+	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $teaser;
 
@@ -121,7 +119,7 @@ class Rental extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Dictionary\Language", mappedBy="rentals", cascade={"persist"})
+	 * @ORM\ManyToMany(targetEntity="Entity\Language", mappedBy="rentals", cascade={"persist"})
 	 */
 	protected $spokenLanguages;
 
@@ -234,10 +232,10 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Language
+	 * @param \Entity\Language
 	 * @return \Entity\Rental\Rental
 	 */
-	public function setEditLanguage(\Entity\Dictionary\Language $editLanguage)
+	public function setEditLanguage(\Entity\Language $editLanguage)
 	{
 		$this->editLanguage = $editLanguage;
 
@@ -255,7 +253,7 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Language|NULL
+	 * @return \Entity\Language|NULL
 	 */
 	public function getEditLanguage()
 	{
@@ -514,10 +512,10 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Phrase
+	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Rental\Rental
 	 */
-	public function setName(\Entity\Dictionary\Phrase $name)
+	public function setName(\Entity\Phrase\Phrase $name)
 	{
 		$this->name = $name;
 
@@ -525,7 +523,7 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Phrase|NULL
+	 * @return \Entity\Phrase\Phrase|NULL
 	 */
 	public function getName()
 	{
@@ -552,10 +550,10 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Phrase
+	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Rental\Rental
 	 */
-	public function setTeaser(\Entity\Dictionary\Phrase $teaser)
+	public function setTeaser(\Entity\Phrase\Phrase $teaser)
 	{
 		$this->teaser = $teaser;
 
@@ -563,7 +561,7 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Phrase|NULL
+	 * @return \Entity\Phrase\Phrase|NULL
 	 */
 	public function getTeaser()
 	{
@@ -600,10 +598,10 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Language
+	 * @param \Entity\Language
 	 * @return \Entity\Rental\Rental
 	 */
-	public function addSpokenLanguage(\Entity\Dictionary\Language $spokenLanguage)
+	public function addSpokenLanguage(\Entity\Language $spokenLanguage)
 	{
 		if(!$this->spokenLanguages->contains($spokenLanguage)) {
 			$this->spokenLanguages->add($spokenLanguage);
@@ -614,10 +612,10 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Language
+	 * @param \Entity\Language
 	 * @return \Entity\Rental\Rental
 	 */
-	public function removeSpokenLanguage(\Entity\Dictionary\Language $spokenLanguage)
+	public function removeSpokenLanguage(\Entity\Language $spokenLanguage)
 	{
 		if($this->spokenLanguages->contains($spokenLanguage)) {
 			$this->spokenLanguages->removeElement($spokenLanguage);
@@ -628,7 +626,7 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Dictionary\Language
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Language
 	 */
 	public function getSpokenLanguages()
 	{

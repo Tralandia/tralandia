@@ -27,8 +27,8 @@ class ImportEmailing extends BaseImport {
 
 		$this->languagesByOldId = getNewIdsByOld('\Dictionary\Language');
 
-		$subjectType = $this->createDictionaryType('\Emailing\Template', 'subject', 'ACTIVE');
-		$bodyType = $this->createDictionaryType('\Emailing\Template', 'body', 'ACTIVE');
+		$subjectType = $this->createPhraseType('\Emailing\Template', 'subject', 'ACTIVE');
+		$bodyType = $this->createPhraseType('\Emailing\Template', 'body', 'ACTIVE');
 
 		$templateType = \Service\Emailing\TemplateType::get();
 		$templateType->name = 'default';

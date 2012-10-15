@@ -2,7 +2,7 @@
 
 namespace Entity\User;
 
-use Entity\Dictionary;
+use Entity\Phrase;
 use Entity\Location;
 use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
@@ -10,8 +10,6 @@ use	Extras\Annotation as EA;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="user_combination", indexes={@ORM\index(name="languageLevel", columns={"languageLevel"})})
- * @EA\Service(name="\Service\User\Combination")
- * @EA\ServiceList(name="\Service\User\CombinationList")
  * @EA\Primary(key="id", value="id")
  */
 class Combination extends \Entity\BaseEntityDetails {
@@ -30,7 +28,7 @@ class Combination extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Dictionary\Language")
+	 * @ORM\ManyToOne(targetEntity="Entity\Language")
 	 */
 	protected $language;
 
@@ -39,26 +37,6 @@ class Combination extends \Entity\BaseEntityDetails {
 	 * @ORM\Column(type="integer")
 	 */
 	protected $languageLevel;
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 	//@entity-generator-code --- NEMAZAT !!!
@@ -128,10 +106,10 @@ class Combination extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Language
+	 * @param \Entity\Language
 	 * @return \Entity\User\Combination
 	 */
-	public function setLanguage(\Entity\Dictionary\Language $language)
+	public function setLanguage(\Entity\Language $language)
 	{
 		$this->language = $language;
 
@@ -149,7 +127,7 @@ class Combination extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Language|NULL
+	 * @return \Entity\Language|NULL
 	 */
 	public function getLanguage()
 	{

@@ -1,15 +1,14 @@
 <?php
 
-namespace Entity\Dictionary;
+namespace Entity\Phrase;
 
-use Entity\Dictionary;
 use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
 
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="dictionary_translation", indexes={@ORM\index(name="timeTranslated", columns={"timeTranslated"}), @ORM\index(name="checked", columns={"checked"})})
+ * @ORM\Table(name="phrase_translation", indexes={@ORM\index(name="timeTranslated", columns={"timeTranslated"}), @ORM\index(name="checked", columns={"checked"})})
  * @EA\Primary(key="id", value="translation")
  */
 class Translation extends \Entity\BaseEntity {
@@ -22,7 +21,7 @@ class Translation extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Language", cascade={"persist"})
+	 * @ORM\ManyToOne(targetEntity="\Entity\Language", cascade={"persist"})
 	 */
 	protected $language;
 
@@ -76,10 +75,10 @@ class Translation extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Phrase
-	 * @return \Entity\Dictionary\Translation
+	 * @param \Entity\Phrase\Phrase
+	 * @return \Entity\Phrase\Translation
 	 */
-	public function setPhrase(\Entity\Dictionary\Phrase $phrase)
+	public function setPhrase(\Entity\Phrase\Phrase $phrase)
 	{
 		$this->phrase = $phrase;
 
@@ -87,7 +86,7 @@ class Translation extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Translation
+	 * @return \Entity\Phrase\Translation
 	 */
 	public function unsetPhrase()
 	{
@@ -97,7 +96,7 @@ class Translation extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Phrase|NULL
+	 * @return \Entity\Phrase\Phrase|NULL
 	 */
 	public function getPhrase()
 	{
@@ -105,10 +104,10 @@ class Translation extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Language
-	 * @return \Entity\Dictionary\Translation
+	 * @param \Entity\Language
+	 * @return \Entity\Phrase\Translation
 	 */
-	public function setLanguage(\Entity\Dictionary\Language $language)
+	public function setLanguage(\Entity\Language $language)
 	{
 		$this->language = $language;
 
@@ -116,7 +115,7 @@ class Translation extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Translation
+	 * @return \Entity\Phrase\Translation
 	 */
 	public function unsetLanguage()
 	{
@@ -126,7 +125,7 @@ class Translation extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Language|NULL
+	 * @return \Entity\Language|NULL
 	 */
 	public function getLanguage()
 	{
@@ -135,7 +134,7 @@ class Translation extends \Entity\BaseEntity {
 		
 	/**
 	 * @param string
-	 * @return \Entity\Dictionary\Translation
+	 * @return \Entity\Phrase\Translation
 	 */
 	public function setTranslation($translation)
 	{
@@ -145,7 +144,7 @@ class Translation extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Translation
+	 * @return \Entity\Phrase\Translation
 	 */
 	public function unsetTranslation()
 	{
@@ -164,7 +163,7 @@ class Translation extends \Entity\BaseEntity {
 		
 	/**
 	 * @param json
-	 * @return \Entity\Dictionary\Translation
+	 * @return \Entity\Phrase\Translation
 	 */
 	public function setVariations($variations)
 	{
@@ -183,7 +182,7 @@ class Translation extends \Entity\BaseEntity {
 		
 	/**
 	 * @param string
-	 * @return \Entity\Dictionary\Translation
+	 * @return \Entity\Phrase\Translation
 	 */
 	public function setGender($gender)
 	{
@@ -193,7 +192,7 @@ class Translation extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Translation
+	 * @return \Entity\Phrase\Translation
 	 */
 	public function unsetGender()
 	{
@@ -212,7 +211,7 @@ class Translation extends \Entity\BaseEntity {
 		
 	/**
 	 * @param integer
-	 * @return \Entity\Dictionary\Translation
+	 * @return \Entity\Phrase\Translation
 	 */
 	public function setPosition($position)
 	{
@@ -231,7 +230,7 @@ class Translation extends \Entity\BaseEntity {
 		
 	/**
 	 * @param \DateTime
-	 * @return \Entity\Dictionary\Translation
+	 * @return \Entity\Phrase\Translation
 	 */
 	public function setTimeTranslated(\DateTime $timeTranslated)
 	{
@@ -241,7 +240,7 @@ class Translation extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Translation
+	 * @return \Entity\Phrase\Translation
 	 */
 	public function unsetTimeTranslated()
 	{
@@ -260,7 +259,7 @@ class Translation extends \Entity\BaseEntity {
 		
 	/**
 	 * @param boolean
-	 * @return \Entity\Dictionary\Translation
+	 * @return \Entity\Phrase\Translation
 	 */
 	public function setChecked($checked)
 	{
@@ -270,7 +269,7 @@ class Translation extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Translation
+	 * @return \Entity\Phrase\Translation
 	 */
 	public function unsetChecked()
 	{

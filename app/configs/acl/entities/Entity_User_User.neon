@@ -42,28 +42,6 @@ password_edit:
 	manager: deny
 	admin: deny
 	
-isOwner_show:
-	guest: allow
-	visitor: deny
-	potentialowner: deny
-	owner: deny
-	translator: deny
-	assistant: deny
-	vendor: deny
-	manager: deny
-	admin: deny
-	
-isOwner_edit:
-	guest: allow
-	visitor: deny
-	potentialowner: deny
-	owner: deny
-	translator: deny
-	assistant: deny
-	vendor: deny
-	manager: deny
-	admin: deny
-	
 roles_show:
 	guest: allow
 	visitor: deny

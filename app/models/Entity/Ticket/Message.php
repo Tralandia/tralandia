@@ -2,7 +2,7 @@
 
 namespace Entity\Ticket;
 
-use Entity\Dictionary;
+use Entity\Phrase;
 use Entity\Medium;
 use Doctrine\ORM\Mapping as ORM;
 
