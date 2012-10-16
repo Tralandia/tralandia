@@ -36,7 +36,7 @@ common:
 			dbname: tralandia
 			charset: utf8
 			driver: pdo_mysql
-			debugger: true
+			debugger: false
 
 	doctrine:
 		connections:

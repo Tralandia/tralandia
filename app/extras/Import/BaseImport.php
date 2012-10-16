@@ -31,7 +31,7 @@ class BaseImport {
 			),
 			'subsections' => array(),
 		),
-		'task' => array(
+		'taskTypes' => array(
 			'entities' => array(
 				'\Task\Type' => array(),
 			),
@@ -165,6 +165,7 @@ class BaseImport {
 
 	public function __construct($context) {
 		$this->context = $context;
+		$this->model = $context->model;
 		$this->loadVariables();
 
 	}
@@ -314,21 +315,39 @@ class BaseImport {
 		return $phrase;
 	}
 
+	/**
+	 * Vytvory novu Phrase entitu
+	 * @param  text $entityName
+	 * @param  text $entityAttribute
+	 * @param  text $level
+	 * @param  text $text
+	 * @param  \Entity\Language $textLanguage | string $textLanguage
+	 * @return \Entity\Phrase\Phrase
+	 */
 	protected function createPhraseFromString($entityName, $entityAttribute, $level, $text, $textLanguage) {
 		$phraseType = $this->createPhraseType($entityName, $entityAttribute, $level);
 
-		$phrase = \Service\Dictionary\Phrase::get();
+		$phrase = $this->context->phraseEntityFactory->create();
 		$phrase->ready = TRUE;
 		$phrase->type = $phraseType;
 
-		if ($phrase instanceof \Service\Dictionary\Phrase) {
-			$phrase->addTranslation($this->createTranslation($textLanguage, $text));
+		if(is_string($textLanguage)) {
+			$textLanguage = $this->context->languageRepository->findOneBy(array('iso' => $textLanguage));
 		}
+		$phrase->addTranslation($this->createTranslation($textLanguage, $text));
 
-		$phrase->save();
 		return $phrase;
 	}
 
+
+	/**
+	 * Vytvory novy typ frazy ak neexistuje, inak vracia existujuci
+	 * @param  string $entityName
+	 * @param  string $entityAttribute
+	 * @param  string $level
+	 * @param  [type] $params
+	 * @return \Entity\Phrase\Type
+	 */
 	protected function createPhraseType($entityName, $entityAttribute, $level, $params = NULL) {
 		if (substr($entityName, 0, 7) != '\Entity') {
 			$entityName = '\Entity'.$entityName;
@@ -351,13 +370,13 @@ class BaseImport {
 					$phraseType->$key = $value;
 				}
 			}
-			$phraseTypeRepository->persist($phraseType);	
+			$this->context->model->persist($phraseType);	
 			return $phraseType;
 		}
 	}
 
 	protected function createTranslation(\Entity\BaseEntity $language, $text, $variations = NULL) {
-		$translation = $this->context->translationEntityFactory->create();
+		$translation = $this->context->phraseTranslationEntityFactory->create();
 		$translation->language = $language;
 		$translation->translation = $text;
 		$translation->timeTranslated = new \Nette\DateTime();

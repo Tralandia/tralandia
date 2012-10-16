@@ -111,16 +111,33 @@ class RadoPresenter extends BasePresenter {
 		}
 
 		if (isset($this->params['importSection'])) {
-			$className = 'Extras\Import\Import'.ucfirst($this->params['importSection']);
+			$section = $this->params['importSection'];
+			$className = 'Extras\Import\Import'.ucfirst($section);
 			$import = new $className($this->context);
-			$import->developmentMode = (bool)$this->session->developmentMode;
-			if (isset($this->params['subsection'])) {
-				$import->doImport($this->params['subsection']);
+			if(!$import->savedVariables['importedSections'][$section]) {
+				$import->developmentMode = (bool)$this->session->developmentMode;
+
+				
+				if (isset($this->params['subsection'])) {
+					$subsection = $this->params['subsection'];
+					$import->setSubsections('locations');
+					$import->savedVariables['importedSubSections'][$section][$subsection] = 1;
+					if (end($import->sections[$section]['subsections']) == $subsection) {
+						$import->savedVariables['importedSections'][$section] = 1;		
+					}
+					$import->saveVariables();
+					$import->doImport($subsection);
+				} else {
+					$import->savedVariables['importedSections'][$section] = 1;
+					$import->saveVariables();
+					$import->doImport();
+				}
+				$import->saveVariables();
+				
+				$this->flashMessage('Import "'.$section.'" prebehol spravne!', 'success');				
 			} else {
-				$import->doImport();
+				$this->flashMessage('Import "'.$section.'" uz bol spreaveny!');
 			}
-			$import->saveVariables();
-			$this->flashMessage('Importing Done');
 			$redirect = TRUE;
 		}
 
@@ -133,7 +150,7 @@ class RadoPresenter extends BasePresenter {
 		}
 
 		if ($redirect) {
-			$this->redirect('Rado:default');
+			//$this->redirect('Rado:default');
 		}
 	}
 

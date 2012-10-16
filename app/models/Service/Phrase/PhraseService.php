@@ -1,6 +1,6 @@
 <?php
 
-namespace Service\Dictionary;
+namespace Service\Phrase;
 
 use Service, Doctrine, Entity;
 
@@ -12,10 +12,10 @@ class PhraseService extends Service\BaseService {
 
 	/**
 	 * Vrati spravny preklad na zaklade jazyka
-	 * @param Entity\Dictionary\Language
-	 * @return Entity\Dictionary\Translation
+	 * @param Entity\Language
+	 * @return Entity\Phrase\Translation
 	 */
-	public function getTranslate(Entity\Dictionary\Language $language) {
+	public function getTranslation(Entity\Language $language) {
 		return $this->entity->getTranslations()->filter(function($entity) use ($language) {
 			return $entity->language == $language;
 		})->current();
@@ -23,10 +23,10 @@ class PhraseService extends Service\BaseService {
 
 	/**
 	 * Vrati spravny preklad na zaklade jazyka
-	 * @param Entity\Dictionary\Language
-	 * @return Entity\Dictionary\Translation
+	 * @param Entity\Language
+	 * @return Entity\Phrase\Translation
 	 */
-	public function getTranslate22(Entity\Dictionary\Language $language) {
+	public function getTranslate22(Entity\Language $language) {
 		return $this->entity->getTranslations()->filter(function($entity) use ($language) {
 			return $entity->language == $language;
 		})->current();

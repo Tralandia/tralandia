@@ -95,13 +95,6 @@ function fromStamp($stamp) {
 	return $t;
 }
 
-function getCurrencyByIso($iso) {
-	$id = qNew('select id from currency where iso = "'.$iso.'"');
-	$id = mysql_fetch_array($id);
-	$id = $id[0];
-
-	return \Service\Currency::get($id);
-}
 
 function getSupportedLanguages() {
 	$id = qNew('select group_concat(id separator ",") from language where supported = 1');

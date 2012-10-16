@@ -19,14 +19,15 @@ class ImportCurrencies extends BaseImport {
 
 		$r = q('select * from currencies order by id');
 		while($x = mysql_fetch_array($r)) {
-			$s = S\Currency::get();
-			$s->oldId = $x['id'];
-			$s->iso = $x['iso'];
-			$s->name = $this->createNewPhrase($dictionaryType, $x['name_dic_id']);
-			$s->exchangeRate = $x['exchange_rate'];
-			$s->rounding = $x['decimal_places'];
-			$s->save();
+			$e = $this->context->currencyEntityFactory->create();
+			$e->oldId = $x['id'];
+			$e->iso = $x['iso'];
+			$e->name = $this->createNewPhrase($dictionaryType, $x['name_dic_id']);
+			$e->exchangeRate = $x['exchange_rate'];
+			$e->rounding = $x['decimal_places'];
+			$this->model->persist($e);
 		}
+		$this->model->flush();
 		$this->savedVariables['importedSections']['currencies'] = 1;
 
 	}

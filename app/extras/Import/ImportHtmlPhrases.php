@@ -31,10 +31,11 @@ class ImportHtmlPhrases extends BaseImport {
 				'translationHelp' => $x['help'],
 			);
 			$newPhrase->details = $details;
-			$newPhrase->save();
+			$this->context->model->persist($newPhrase);
 			$i++;
 		}
-		debug($i);
+		$this->context->model->flush();
+
 		$this->savedVariables['importedSections']['htmlPhrases'] = 1;
 	}
 

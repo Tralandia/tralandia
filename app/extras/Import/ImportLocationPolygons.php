@@ -16,15 +16,15 @@ class ImportLocationsPolygons extends BaseImport {
 
 	public function doImport($subsection = NULL) {
 
-		// RESET clickMapData in all Location
-		if (false) {
-			// trva to strasne dlho!!!!
-			foreach (\Service\Location\LocationList::getAll() as $l) {
-				$location = \Service\Location\Location::get($l->id);
-				$location->clickMapData = array();
-				$location->save();
-			}
-		}
+		// // RESET clickMapData in all Location
+		// if (false) {
+		// 	// trva to strasne dlho!!!!
+		// 	foreach (\Service\Location\LocationList::getAll() as $l) {
+		// 		$location = \Service\Location\Location::get($l->id);
+		// 		$location->clickMapData = array();
+		// 		$location->save();
+		// 	}
+		// }
 
 		// GET data from API
 		if ($this->developmentMode == TRUE) {
@@ -44,7 +44,7 @@ class ImportLocationsPolygons extends BaseImport {
 			while($c = mysql_fetch_assoc($q)) $countryName = $c['name'];
 
 			$countryId = null;
-			$q = qNew("SELECT * FROM location_location WHERE slug LIKE '".\Nette\Utils\Strings::webalize($countryName)."' LIMIT 1");
+			$q = qNew("SELECT * FROM location WHERE slug LIKE '".\Nette\Utils\Strings::webalize($countryName)."' LIMIT 1");
 			while($c = mysql_fetch_assoc($q)) $countryId = $c['id'];
 
 			if ($countryId) {
@@ -84,7 +84,7 @@ class ImportLocationsPolygons extends BaseImport {
 
 				} else {
 
-					$q = qNew("SELECT id, slug FROM location_location WHERE slug LIKE '".\Nette\Utils\Strings::webalize($area['name'])."'");
+					$q = qNew("SELECT id, slug FROM location WHERE slug LIKE '".\Nette\Utils\Strings::webalize($area['name'])."'");
 					$i = 0;
 
 					while($location = mysql_fetch_assoc($q)) {
@@ -128,13 +128,12 @@ class ImportLocationsPolygons extends BaseImport {
 		// Update all success data
 		foreach ($success as $key => $data) {
 			foreach ($data as $location) {
-				$region = \Service\Location\Location::get($location['id']);
+				$region = $this->context->locationRepository->find($location['id']);
 				$region->clickMapData = $location;
-				$region->save();
+				$this->model->persist($region);
 			}
 		}
-		$this->savedVariables['importedSections']['locationsPolygons'] = 1;		
-
+		$this->model->flush();
 	}
 
 	public function stringifyCss($css) {

@@ -35,7 +35,7 @@ class ImportSeo extends BaseImport {
 		$this->countryTypeId = mysql_fetch_array($this->countryTypeId);
 		$countriesByOldId = getNewIdsByOld('\Location\Location', 'type_id = '.$this->countryTypeId[0]);
 
-		$languagesByOldId = getNewIdsByOld('\Dictionary\Language');
+		$languagesByOldId = getNewIdsByOld('\Language');
 
 		// Note: we don't import those 40 texts written for object_type pages, becuase we can't pair them properly...
 		// Note: attraction_id - tiez neimportujeme, musi sa to spravit zvlast tym, ze sa tie descriptions naimportuju uz do entity atraction...
@@ -106,25 +106,25 @@ class ImportSeo extends BaseImport {
 				}
 			}
 
-			$titlePhrase = \Service\Dictionary\Phrase::get();
+			$titlePhrase = $this->context->phraseEntityFactory->create();
 			$titlePhrase->type = $dictionaryTypeTitle;
 			if (isset($languagesByOldId[$x['source_language_id']])) {
 				$titlePhrase->sourceLanguage = \Service\Dictionary\Language::get($languagesByOldId[$x['source_language_id']]);
 			}
 
-			$headingPhrase = \Service\Dictionary\Phrase::get();
+			$headingPhrase = $this->context->phraseEntityFactory->create();
 			$headingPhrase->type = $dictionaryTypeHeading;
 			if (isset($languagesByOldId[$x['source_language_id']])) {
 				$headingPhrase->sourceLanguage = \Service\Dictionary\Language::get($languagesByOldId[$x['source_language_id']]);
 			}
 
-			$tabNamePhrase = \Service\Dictionary\Phrase::get();
+			$tabNamePhrase = $this->context->phraseEntityFactory->create();
 			$tabNamePhrase->type = $dictionaryTypeTabName;
 			if (isset($languagesByOldId[$x['source_language_id']])) {
 				$tabNamePhrase->sourceLanguage = \Service\Dictionary\Language::get($languagesByOldId[$x['source_language_id']]);
 			}
 
-			$descriptionPhrase = \Service\Dictionary\Phrase::get();
+			$descriptionPhrase = $this->context->phraseEntityFactory->create();
 			$descriptionPhrase->type = $dictionaryTypeDescription;
 			if (isset($languagesByOldId[$x['source_language_id']])) {
 				$descriptionPhrase->sourceLanguage = \Service\Dictionary\Language::get($languagesByOldId[$x['source_language_id']]);

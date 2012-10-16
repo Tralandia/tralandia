@@ -26,11 +26,11 @@ class Type extends \Entity\BaseEntityDetails {
 	protected $slug;
 
 	/**
-	 * @var boolean
-	 * @ORM\Column(type="boolean")
 	 * primary types can have their own domain (easily) and can be parent to other types
+	 * @var boolean
+	 * @ORM\Column(name="`primary`", type="boolean")
 	 */
-	protected $primary;
+	protected $primary = FALSE;
 
 	//@entity-generator-code --- NEMAZAT !!!
 

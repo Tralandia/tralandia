@@ -17,11 +17,12 @@ class ImportUserRoles extends BaseImport {
 		$allRoles = array('Guest', 'PotentialOwner', 'Owner', 'Translator', 'Assistant', 'TelmarkManager', 'TelmarkOperator', 'Manager', 'Admin', 'SuperAdmin');
 
 		foreach ($allRoles as $key => $value) {
-			$role = \Service\User\Role::get();
+			$role = $this->context->userRoleEntityFactory->create();
 			$role->name = $value;
 			$role->slug = $role->name;
-			$role->save();
+			$this->model->persist($role);
 		}
+		$this->model->flush();
 		$this->savedVariables['importedSections']['userRoles'] = 1;
 
 	}

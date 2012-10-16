@@ -30,7 +30,7 @@ class ImportInvoicing extends BaseImport {
 		$this->countryTypeId = qNew('select id from location_type where slug = "country"');
 		$this->countryTypeId = mysql_fetch_array($this->countryTypeId);
 		$this->locationsByOldId = getNewIdsByOld('\Location\Location', 'type_id = '.$this->countryTypeId[0]);
-		$this->languagesByOldId = getNewIdsByOld('\Dictionary\Language');
+		$this->languagesByOldId = getNewIdsByOld('\Language');
 
 		// Import paid invoices
 		if ($this->developmentMode == TRUE) {

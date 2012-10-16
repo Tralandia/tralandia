@@ -25,7 +25,7 @@ class ImportEmailing extends BaseImport {
 		$this->countryTypeId = mysql_fetch_array($this->countryTypeId);
 		$this->locationsByOldId = getNewIdsByOld('\Location\Location', 'type_id = '.$this->countryTypeId[0]);
 
-		$this->languagesByOldId = getNewIdsByOld('\Dictionary\Language');
+		$this->languagesByOldId = getNewIdsByOld('\Language');
 
 		$subjectType = $this->createPhraseType('\Emailing\Template', 'subject', 'ACTIVE');
 		$bodyType = $this->createPhraseType('\Emailing\Template', 'body', 'ACTIVE');

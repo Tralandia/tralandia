@@ -16,18 +16,20 @@ class ImportDomains extends BaseImport {
 
 	public function doImport($subsection = NULL) {
 		$r = q('select domain from countries where length(domain)>0');
+		$expire = new \Nette\DateTime;
 		while($x = mysql_fetch_array($r)) {
-			$s = S\Domain::get();
-			$s->domain = $x['domain'];
-			$s->save();
+			$e = $this->context->domainEntityFactory->create();
+			$e->domain = $x['domain'];
+			$e->expires = $expire;
+			$this->model->persist($e);
 		}
 
-		$s = S\Domain::get();
-		$s->domain = 'tralandia.com';
-		$s->save();
+		$e = $this->context->domainEntityFactory->create();
+		$e->domain = 'tralandia.com';
+		$e->expires = $expire;
+		$this->model->persist($e);
 
-		$this->savedVariables['importedSections']['domains'] = 1;
-
+		$this->model->flush();
 	}
 
 }

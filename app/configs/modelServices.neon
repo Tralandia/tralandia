@@ -273,7 +273,7 @@ services:
 	#----------
 	phraseEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Phrase\Phrase')
 
-	phraseServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @phraseEntityFactory)
+	phraseServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\Phrase\PhraseService', @phraseEntityFactory)
 
 	phraseRepository: @model::getRepository('Entity\Phrase\Phrase')
 

@@ -20,23 +20,26 @@ class ImportLanguages extends BaseImport {
 
 		$r = q('select * from languages order by id');
 
-		$phraseType = $this->createPhraseType('\Language', 'name', 'ACTIVE');
-		
+		$nameDicIds = array();
 		while($x = mysql_fetch_array($r)) {
-			$s = $this->context->languageServiceFactory->create();
-			$e = $s->getEntity();
+			$e = $this->context->languageEntityFactory->create();
 			$e->oldId = $x['id'];
 			$e->iso = $x['iso'];
-
-			# @todo tu sa vytvoria prazdne frazy (nemaju ziadne Translation)
-			$e->name = $this->createNewPhrase($phraseType, $x['name_dic_id']);
-			
 			$e->supported = (bool)$x['translated'];
 			$e->defaultCollation = $x['default_collation'];
 			$e->details = explode2Levels(';', ':', $x['attributes']);
-			$s->save(FALSE); // prevent flush
+			$this->model->persist($e);
+			
+			$nameDicIds[$x['id']] = $x['name_dic_id'];
 		}
-		$s->save(); //flush
+		$this->model->flush();
+
+		$phraseType = $this->createPhraseType('\Language', 'name', 'ACTIVE');
+		$allLanguages = $this->context->languageRepository->findAll();
+		foreach ($allLanguages as $language) {
+			$language->name = $this->createNewPhrase($phraseType, $nameDicIds[$language->oldId]);
+		}
+		$this->model->flush();
 
 		$this->savedVariables['importedSections']['languages'] = 1;
 	}

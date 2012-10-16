@@ -5,10 +5,11 @@ namespace Repository;
 use Doctrine\ORM\EntityRepository;
 
 class BaseRepository extends EntityRepository {
-	
-	public function persist($entity) {
-		$this->_em->persist($entity);
-	}
+
+	// # toto by tu podla mne nemalo bit... @david	
+	// public function persist($entity) {
+	// 	$this->_em->persist($entity);
+	// }
 	
 	public function remove($entity) {
 		$this->_em->remove($entity);

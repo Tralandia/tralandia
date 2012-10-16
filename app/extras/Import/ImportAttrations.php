@@ -47,7 +47,7 @@ class ImportAttractions extends BaseImport {
 		$this->countryTypeId = mysql_fetch_array($this->countryTypeId);
 		$locationsByOldId = getNewIdsByOld('\Location\Location', 'type_id = '.$this->countryTypeId[0]);
 		//$locationsByOldId = getNewIdsByOld('\Location\Location', 'type_id = '.$countryTypeId);
-		$languagesByOldId = getNewIdsByOld('\Dictionary\Language');
+		$languagesByOldId = getNewIdsByOld('\Language');
 
 		if ($this->developmentMode == TRUE) {
 			$r = q('select * from attractions limit 4');
