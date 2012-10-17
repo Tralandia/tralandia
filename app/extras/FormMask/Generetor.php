@@ -44,6 +44,7 @@ class Generator extends Nette\Object {
 			$item = $this->factories[$field->getType()]->create($field->getName(), $field->getLabel(), $this->entity);
 			$this->mask->addItem($item);
 		}
+		//TODO: toto nejako zautomatizovat, alebo minimalne prelozit
 		$this->mask->add(Extras\FormMask\Mask::SUBMIT, 'submit', 'Odoslať');
 	}
 

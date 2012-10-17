@@ -81,7 +81,6 @@ common:
 
 		environment: Extras\Environment(@languageRepository, @locationRepository)
 
-
 		translator: Extras\Translator(@environment, @cacheStorage)
 
 		settings:
@@ -102,25 +101,22 @@ common:
 				- $taskServiceFactory(@taskServiceFactory)
 
 
-		phraseEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Dictionary\Phrase')
-		phraseServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\Dictionary\Phrase', @phraseEntityFactory)
-
+#		phraseEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Phrase\Phrase')
+#		phraseServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\Phrase\Phrase', @phraseEntityFactory)
 #		formMaskGenerator:
 #			parameters: [mask, config, entity]
 #			class: Extras\FormMask\Generator(%mask%, %config%, %entity%)
 #			setup:
 #				- setItemPhrase(@itemPhraseFactory)
 
-		formMask: Extras\FormMask\Mask
-
 		itemPhraseFactory: Extras\FormMask\Items\Foctories\PhraseFactory(@phraseServiceFactory, @environment::getLanguage())
 		itemTextFactory: Extras\FormMask\Items\Foctories\TextFactory
-
 
 	factories:
 		phraseService:
 			parameters: [entity]
-			class: Service\Dictionary\Phrase(@model, %entity%)
+			class: Service\Phrase\PhraseService(@model, %entity%)
+
 
 production < common:
 

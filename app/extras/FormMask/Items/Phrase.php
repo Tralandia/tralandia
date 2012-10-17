@@ -9,18 +9,18 @@ use Nette, Service, Entity, Extras;
  */
 class Phrase extends Base {
 
-	/** @var Service\Dictionary\Phrase */
+	/** @var Service\Phrase\PhraseService */
 	protected $phraseService;
 
-	/** @var Entity\Dictionary\Language */
+	/** @var Entity\Language */
 	protected $language;
 
 	/**
 	 * @param string
 	 * @param string
-	 * @param Service\Dictionary\Phrase
+	 * @param Service\Phrase\PhraseService
 	 */
-	public function __construct($name, $label, Service\Dictionary\Phrase $phraseService, Entity\Dictionary\Language $language) {
+	public function __construct($name, $label, Service\Phrase\PhraseService $phraseService, Entity\Language $language) {
 		parent::__construct($name, $label);
 		$this->phraseService = $phraseService;
 		$this->language = $language;

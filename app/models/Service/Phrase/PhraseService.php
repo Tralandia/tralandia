@@ -42,7 +42,6 @@ class PhraseService extends Service\BaseService {
 		$this->entity->getTranslations()->filter(function($entity) use ($language) {
 			return $entity->language == $language;
 		})->current()->translation = $value;
-		$this->save(); // TODO: ma byt save tunaka?
 		return $this;
 	}
 

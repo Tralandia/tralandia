@@ -12,8 +12,7 @@ class Configurator extends Nette\Object {
 	private $formFields = array(
 		'text' => 'Extras\Config\Form\Text',
 		'select' => 'Extras\Config\Form\Select',
-		'phrase' => 'Extras\Config\Form\Phrase',
-		'text2' => 'Extras\Config\Form\Text'
+		'phrase' => 'Extras\Config\Form\Phrase'
 	);
 
 	/** @var Nette\ArrayHash */

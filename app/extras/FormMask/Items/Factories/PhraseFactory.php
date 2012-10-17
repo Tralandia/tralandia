@@ -12,15 +12,14 @@ class PhraseFactory {
 	/** @var Extras\Models\Service\ServiceFactory */
 	protected $serviceFactory;
 
-	/** @var Entity\Dictionary\Language */
+	/** @var Entity\Language */
 	protected $language;
 
 	/**
-	 * @param string
-	 * @param string
-	 * @param Extras\Models\Service\ServiceFactory
+	 * @param Extras\Models\Service\ServiceFactory
+	 * @param Entity\Language
 	 */
-	public function __construct(Extras\Models\Service\ServiceFactory $serviceFactory, Entity\Dictionary\Language $language) {
+	public function __construct(Extras\Models\Service\ServiceFactory $serviceFactory, Entity\Language $language) {
 		$this->serviceFactory = $serviceFactory;
 		$this->language = $language;
 	}
