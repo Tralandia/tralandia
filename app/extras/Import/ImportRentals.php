@@ -17,17 +17,22 @@ class ImportRentals extends BaseImport {
 	public function doImport($subsection = NULL) {
 		//\Extras\Models\Service::flush(TRUE);
 
-		$import = new \Extras\Import\BaseImport();
+		$context = $this->context;
+		$model = $this->model;
 
 		// Detaching all media
 		qNew('update medium_medium set rental_id = NULL where rental_id > 0');
-		$import->undoSection('rentals');
 
 		$nameDictionaryType = $this->createPhraseType('\Rental\Rental', 'name', 'NATIVE', array('checkingRequired' => TRUE));
+		$model->persist($nameDictionaryType);
 		$briefDescriptionDictionaryType = $this->createPhraseType('\Rental\Rental', 'briefDescription', 'NATIVE', array('checkingRequired' => TRUE));
+		$model->persist($briefDescriptionDictionaryType);
 		$descriptionDictionaryType = $this->createPhraseType('\Rental\Rental', 'description', 'NATIVE', array('checkingRequired' => TRUE));
+		$model->persist($descriptionDictionaryType);
 		$teaserDictionaryType = $this->createPhraseType('\Rental\Rental', 'teaser', 'NATIVE', array('checkingRequired' => TRUE));
-		\Extras\Models\Service::flush(FALSE);
+		$model->persist($teaserDictionaryType);
+
+		$model->flush();
 
 
 		$r = q('select * from objects_types_new where trax_en_type_id > 0');
@@ -36,16 +41,16 @@ class ImportRentals extends BaseImport {
 		}
 
 		$locationTypes = array();
-		$locationTypes['country'] = \Service\Location\Type::getBySlug('country');
-		$locationTypes['continent'] = \Service\Location\Type::getBySlug('continent');
-		$locationTypes['region'] = \Service\Location\Type::getBySlug('region');
-		$locationTypes['administrativeregionlevelone'] = \Service\Location\Type::getBySlug('administrativeregionlevelone');
-		$locationTypes['administrativeregionleveltwo'] = \Service\Location\Type::getBySlug('administrativeregionleveltwo');
-		$locationTypes['locality'] = \Service\Location\Type::getBySlug('locality');
+		$locationTypes['country'] = $context->locationTypeRepository->findOneBySlug('country');
+		$locationTypes['continent'] = $context->locationTypeRepository->findOneBySlug('continent');
+		$locationTypes['region'] = $context->locationTypeRepository->findOneBySlug('region');
+		$locationTypes['administrativeregionlevelone'] = $context->locationTypeRepository->findOneBySlug('administrativeregionlevelone');
+		$locationTypes['administrativeregionleveltwo'] = $context->locationTypeRepository->findOneBySlug('administrativeregionleveltwo');
+		$locationTypes['locality'] = $context->locationTypeRepository->findOneBySlug('locality');
 
-		$ownerRole = \Service\User\Role::getBySlug('owner');
+		$ownerRole = $context->userRepository->findOneBySlug('owner');
 
-		$en = \Service\Dictionary\Language::getByIso('en');
+		$en = $context->languageRepository->findOneByIso('en');
 		$now = time();
 
 		if ($this->developmentMode == TRUE) {
@@ -56,7 +61,7 @@ class ImportRentals extends BaseImport {
 
 		while ($x = mysql_fetch_array($r)) {
 			debug($x['id'], $x['member_id']);
-			$rental = \Service\Rental\Rental::get();
+			$rental = $context->rentalEntityFactory->create();
 			$rental->oldId = $x['id'];
 
 			$user = \Service\User\User::getByLogin(qc('select email from members where id = '.$x['member_id']));
@@ -64,8 +69,7 @@ class ImportRentals extends BaseImport {
 				$user = qNew('select id from user_user where isOwner = 1 and oldId = '.$x['member_id']);
 				$user = mysql_fetch_array($user);
 				if ($user['id'] > 0) {
-					$user = \Service\User\User::get($user['id']);
-					if (!$user) continue; //@todo - toto je dalsia chyba, treba to dat do logov
+					$user = $context->userRepository->find($user['id']);
 				} else {
 					//@todo - treba zapisat do logov, ze sa nenasiel user, ktory sa hladal, docasne sa to ignoruje...
 					continue;
@@ -73,23 +77,23 @@ class ImportRentals extends BaseImport {
 			}
 			$rental->user = $user;
 
-			$rental->editLanguage = \Service\Dictionary\Language::getByOldId($x['edit_language_id']);
+			$rental->editLanguage = $context->languageRepository->findOneByOldId($x['edit_language_id']);
 
-			$rental->status = $x['live'] == 1 ? \Entity\Rental\Rental::STATUS_LIVE : \Entity\Rental\Rental::STATUS_DRAFT;
+			$rental->status = $x['live'] == 1 ? $rental::STATUS_LIVE : $rental::STATUS_DRAFT;
 
 			$oldRentalTypes = array_unique(array_filter(explode(',', $x['objects_types_new'])));
 			foreach ($oldRentalTypes as $key => $value) {
-				$rental->addType(\Service\Rental\Type::getByOldId($oldRentalTypesEn[$value]));
+				$rental->addType($context->rentalTypeRepository->findOneByOldId($oldRentalTypesEn[$value]));
 			}
 
 			$rental->timeDeleted = fromStamp($x['time_deleted']);
 
 			// Locations
-			$rental->addLocation(\Service\Location\Location::getByOldIdAndType($x['country_id'], $locationTypes['country']));
+			$rental->addLocation($context->locationRepository->findOneBy(array('oldId' => $x['country_id'], 'type' => $locationTypes['country'])));
 
-			$administrativeRegion = \Service\Location\Location::getByOldIdAndType($x['region_admin_id'], $locationTypes['administrativeregionlevelone']);
+			$administrativeRegion = $context->locationRepository->findOneBy(array('oldId' => $x['region_admin_id'], 'type' => $locationTypes[)'administrativeregionlevelone']);
 			if (!$administrativeRegion) {
-				$administrativeRegion = \Service\Location\Location::getByOldIdAndType($x['region_admin_id'], $locationTypes['administrativeregionleveltwo']);
+				$administrativeRegion = $context->locationRepository->findOneBy(array('oldId' => $x['region_admin_id'], 'type' => $locationTypes['administrativeregionleveltwo']));
 			}
 
 			if ($administrativeRegion) {
@@ -99,18 +103,18 @@ class ImportRentals extends BaseImport {
 			$regions = array_unique(array_filter(explode(',', $x['regions'])));
 			if (is_array($regions) && count($regions)) {
 				foreach ($regions as $key => $value) {
-					$temp = \Service\Location\Location::getByOldIdAndType($value, $locationTypes['region']);
+					$temp = $context->locationRepository->findOneBy(array('oldId' => $value, 'type' => $locationTypes['region']));
 					if ($temp) $rental->addLocation($temp);
 				}
 			}
 
-			$rental->addLocation(\Service\Location\Location::getByOldIdAndType($x['locality_id'], $locationTypes['locality']));
+			$rental->addLocation($context->locationRepository->findOneBy(array('oldId' => $x['locality_id'], 'type' => $locationTypes['locality'])));
 
-			$thisLocality = \Service\Location\Location::getByOldIdAndType($x['locality_id'], $locationTypes['locality']);
+			$thisLocality = $context->locationRepository->findOneBy(array('oldId' => $x['locality_id'], 'type' => $locationTypes['locality']));
 
-			$thisNamePhrase = \Service\Dictionary\Phrase::get($thisLocality->name);
-			$thisCountry = \Service\Location\Location::get($thisLocality->parent);
-			$thisCountryNamePhrase = \Service\Dictionary\Phrase::get($thisCountry->name);
+			$thisNamePhrase = $contxt->phraseServiceFactory->create($thisLocality->name);
+			$thisCountry = $thisLocality->parent;
+			$thisCountryNamePhrase = $contxt->phraseServiceFactory->create($thisCountry->name);
 			$rental->address = new \Extras\Types\Address(array(
 				'address' => array_filter(array($x['address'])),
 				'postcode' => $x['post_code'],
@@ -123,20 +127,9 @@ class ImportRentals extends BaseImport {
 			$rental->longitude = new \Extras\Types\Latlong($x['longitude']);
 
 			$rental->slug = $x['name_url'];
-			$temp = \Service\Dictionary\Language::get($rental->editLanguage);
-			$rental->name = $this->createPhraseFromString('\Rental\Rental', 'name', 'NATIVE', $x['name'], $temp);
+			$rental->name = $this->createPhraseFromString('\Rental\Rental', 'name', 'NATIVE', $x['name'], $rental->editLanguage);
 			
-			//$rental->briefDescription = '';
-			$rental->description = $this->createNewPhrase($descriptionDictionaryType, $x['description_dic_id']);
-			if ($x['description_checked'] == 1) {
-				$thisPhrase = \Service\Dictionary\Phrase::get($rental->description);
-				$thisTranslation = $thisPhrase->getTranslation($rental->editLanguage);
-				if ($thisTranslation) {
-					$thisTranslation->checked = TRUE;
-					//$thisTranslation->save();
-				}
-			}
-			$rental->teaser = $this->createNewPhrase($descriptionDictionaryType, $x['marketing_dic_id']);
+			$rental->teaser = $this->createNewPhrase($teaserDictionaryType, $x['marketing_dic_id']);
 
 
 			// Contacts
@@ -163,7 +156,7 @@ class ImportRentals extends BaseImport {
 			$spokenLanguages = array_unique(array_filter(explode(',', $x['languages_spoken'])));
 			if (is_array($spokenLanguages) && count($spokenLanguages)) {
 				foreach ($spokenLanguages as $key => $value) {
-					$rental->addSpokenLanguage(\Service\Dictionary\Language::getByOldId($value));
+					$rental->addSpokenLanguage($context->languageRepository->findOneByOldId($value));
 				}
 			}
 
@@ -171,7 +164,7 @@ class ImportRentals extends BaseImport {
 			$allAmenities = array();
 			$r1 = qNew('select * from rental_amenity');
 			while ($x1 = mysql_fetch_array($r1)) {
-				$allAmenities[$x1['oldId']] = \Service\Rental\Amenity::get($x1['id']);
+				$allAmenities[$x1['oldId']] = $context->rentalAmenityRepository->find($x1['id']);
 			}
 
 			// Activities

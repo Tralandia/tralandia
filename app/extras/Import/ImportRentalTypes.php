@@ -16,11 +16,9 @@ class ImportRentalTypes extends BaseImport {
 
 	public function doImport($subsection = NULL) {
 
-		$import = new \Extras\Import\BaseImport();
-		$import->undoSection('rentalTypes');
-
-		$this->createPhraseType('\Rental\Type', 'name', 'ACTIVE');
-		\Extras\Models\Service::flush(FALSE);
+		$phrase = $this->createPhraseType('\Rental\Type', 'name', 'ACTIVE');
+		$this->model->persist($phrase);
+		$this->model->flush();
 
 		$r = qf('select * from objects_types_new limit 1');
 		if (!isset($r['trax_en_type_id'])) {
@@ -50,30 +48,30 @@ class ImportRentalTypes extends BaseImport {
 
 		$r = q('select * from objects_types_new where language_id = 38');
 		while($x = mysql_fetch_array($r)) {
-			$rentalType = \Service\Rental\Type::get();
-			$rentalType->name = $this->createPhraseFromString('\Rental\Type', 'name', 'ACTIVE', $x['name'], \Service\Dictionary\Language::getByOldId(38));
+			$rentalType = $this->context->rentalTypeEntityFactory->create();
+			$rentalType->name = $this->createPhraseFromString('\Rental\Type', 'name', 'ACTIVE', $x['name'], 'en');
 			$rentalType->oldId = $x['id'];
-			$thisPhrase = \Service\Dictionary\Phrase::get($rentalType->name);
-			$rentalType->save();
-
+			$this->model->persist($rentalType);
 		}
-		\Extras\Models\Service::flush(FALSE);
+		$this->model->flush();
 
 		$r = q('select * from objects_types_new where language_id <> 38 && trax_en_type_id > 0');
 		while($x = mysql_fetch_array($r)) {
-			$rentalType = \Service\Rental\Type::getByOldId($x['trax_en_type_id']);
+			$rentalType = $this->context->rentalTypeRepository->findOneByOdlId($x['trax_en_type_id']);
+			
 			if (!$rentalType) throw new \Nette\UnexpectedValueException('nenasiel som EN rental Type oldID: '.$x['trax_en_type_id']); 
-			$thisLanguage = \Service\Dictionary\Language::getByOldId($x['language_id']);
+			
+			$thisLanguage = $this->context->languageRepository->findOneByOdlId($x['language_id']);
 			if (!$thisLanguage) continue;
-			$thisPhrase = \Service\Dictionary\Phrase::get($rentalType->name);
+			
+			$thisPhrase = $this->context->phraseServiceFactory->create($rentalType->name);
 			if (!$thisPhrase->hasTranslation($thisLanguage)) {
 				$thisTranslation = $this->createTranslation($thisLanguage, $x['name']);
 				$thisPhrase->addTranslation($thisTranslation);
 			}
-			$rentalType->save();
+			$this->model->update($rentalType);
 		}
-
-		$this->savedVariables['importedSections']['rentalTypes'] = 1;
+		$this->model->flush();
 
 	}
 
