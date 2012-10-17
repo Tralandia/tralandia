@@ -110,4 +110,32 @@ abstract class Base {
 	public function getFormControl() {
 		return $this->form->getComponent($this->getName());
 	}
+
+	/**
+	 * Vrati nazov setter metody
+	 * @param string
+	 * @return string
+	 */
+	protected function setterMethodName($name) {
+		return 'set' . ucfirst($name);
+	}
+
+	/**
+	 * Vrati nazov getter metody
+	 * @param string
+	 * @return string
+	 */
+	protected function getterMethodName($name) {
+		return 'get' . ucfirst($name);
+	}
+
+	/**
+	 * Prida polozku do formulara
+	 * @param Nette\Forms\Form
+	 * @return Nette\Forms\IControl
+	 */
+	public function extend(Nette\Forms\Form $form) {
+		return $form->addText($this->getName(), $this->getLabel())
+			->setDefaultValue($this->getValue());
+	}
 }

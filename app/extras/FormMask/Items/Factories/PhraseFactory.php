@@ -9,7 +9,7 @@ use Extras, Entity;
  */
 class PhraseFactory {
 
-	/** @var */
+	/** @var Extras\Models\Service\ServiceFactory */
 	protected $serviceFactory;
 
 	/** @var Entity\Dictionary\Language */
@@ -25,7 +25,13 @@ class PhraseFactory {
 		$this->language = $language;
 	}
 
-	public function create($name, $label, $entity) {
-		return new Extras\FormMask\Items\Phrase($name, $label, $this->serviceFactory->create($entity), $this->language);
+	/**
+	 * @param string
+	 * @param string
+	 * @param Extras\Models\Entity\IEntity
+	 * @return Extras\FormMask\Items\Phrase
+	 */
+	public function create($name, $label, Extras\Models\Entity\IEntity $entity) {
+		return new Extras\FormMask\Items\Phrase($name, $label, $this->serviceFactory->create($entity->$name), $this->language);
 	}
 }
