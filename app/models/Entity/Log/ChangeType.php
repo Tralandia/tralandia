@@ -45,10 +45,11 @@ class ChangeType extends \Entity\BaseEntity {
 
 
 
-//@entity-generator-code <--- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 	}
 		
@@ -56,7 +57,8 @@ class ChangeType extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Log\ChangeType
 	 */
-	public function setName($name) {
+	public function setName($name)
+	{
 		$this->name = $name;
 
 		return $this;
@@ -65,7 +67,8 @@ class ChangeType extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Log\ChangeType
 	 */
-	public function unsetName() {
+	public function unsetName()
+	{
 		$this->name = NULL;
 
 		return $this;
@@ -74,7 +77,8 @@ class ChangeType extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getName() {
+	public function getName()
+	{
 		return $this->name;
 	}
 		
@@ -82,7 +86,8 @@ class ChangeType extends \Entity\BaseEntity {
 	 * @param boolean
 	 * @return \Entity\Log\ChangeType
 	 */
-	public function setImportant($important) {
+	public function setImportant($important)
+	{
 		$this->important = $important;
 
 		return $this;
@@ -91,7 +96,8 @@ class ChangeType extends \Entity\BaseEntity {
 	/**
 	 * @return boolean|NULL
 	 */
-	public function getImportant() {
+	public function getImportant()
+	{
 		return $this->important;
 	}
 }

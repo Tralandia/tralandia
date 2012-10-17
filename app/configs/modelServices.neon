@@ -1,0 +1,494 @@
+services:
+
+	#attraction
+	#----------
+	attractionEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Attraction\Attraction')
+
+	attractionServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @attractionEntityFactory)
+
+	attractionRepository: @model::getRepository('Entity\Attraction\Attraction')
+
+
+
+	#----------
+	attractionTypeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Attraction\Type')
+
+	attractionTypeServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @attractionTypeEntityFactory)
+
+	attractionTypeRepository: @model::getRepository('Entity\Attraction\Type')
+
+
+	#company
+	#----------
+	companyBankAccountEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Company\BankAccount')
+
+	companyBankAccountServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @companyBankAccountEntityFactory)
+
+	companyBankAccountRepository: @model::getRepository('Entity\Company\BankAccount')
+
+
+	#----------
+	companyEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Company\Company')
+
+	companyServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @companyEntityFactory)
+
+	companyRepository: @model::getRepository('Entity\Company\Company')
+
+
+	#----------
+	companyOfficeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Company\Office')
+
+	companyOfficeServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @companyOfficeEntityFactory)
+
+	companyOfficeRepository: @model::getRepository('Entity\Company\Office')
+
+
+	#contact
+	#----------
+	contactCacheEntityFactory: Extras\Models\Entity\EntityFactory('Entity\ContactCache')
+
+	contactCacheServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @contactCacheEntityFactory)
+
+	contactCacheRepository: @model::getRepository('Entity\ContactCache')
+
+
+	#----------
+	currencyEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Currency')
+
+	currencyServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @currencyEntityFactory)
+
+	currencyRepository: @model::getRepository('Entity\Currency')
+
+
+	#domain
+	#----------
+	domainEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Domain')
+
+	domainServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @domainEntityFactory)
+
+	domainRepository: @model::getRepository('Entity\Domain')
+
+
+	#emailing
+	#----------
+	emailingBatchEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Emailing\Batch')
+
+	emailingBatchServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @emailingBatchEntityFactory)
+
+	emailingBatchRepository: @model::getRepository('Entity\Emailing\Batch')
+
+
+	#----------
+	emailingTemplateEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Emailing\Template')
+
+	emailingTemplateServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @emailingTemplateEntityFactory)
+
+	emailingTemplateRepository: @model::getRepository('Entity\Emailing\Template')
+
+
+	#----------
+	emailingTemplateTypeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Emailing\TemplateType')
+
+	emailingTemplateTypeServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @emailingTemplateTypeEntityFactory)
+
+	emailingTemplateTypeRepository: @model::getRepository('Entity\Emailing\TemplateType')
+
+
+	#expense
+	#----------
+	expenseEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Expense\Expense')
+
+	expenseServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @expenseEntityFactory)
+
+	expenseRepository: @model::getRepository('Entity\Expense\Expense')
+
+
+	#----------
+	expenseTypeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Expense\Type')
+
+	expenseTypeServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @expenseTypeEntityFactory)
+
+	expenseTypeRepository: @model::getRepository('Entity\Expense\Type')
+
+
+	#invoicing
+	#----------
+	invoicingCouponEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoicing\Coupon')
+
+	invoicingCouponServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoicingCouponEntityFactory)
+
+	invoicingCouponRepository: @model::getRepository('Entity\Invoicing\Coupon')
+
+
+	#----------
+	invoicingInvoiceEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoicing\Invoice')
+
+	invoicingInvoiceServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoicingInvoiceEntityFactory)
+
+	invoicingInvoiceRepository: @model::getRepository('Entity\Invoicing\Invoice')
+
+
+	#----------
+	invoicingItemEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoicing\Item')
+
+	invoicingItemServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoicingItemEntityFactory)
+
+	invoicingItemRepository: @model::getRepository('Entity\Invoicing\Item')
+
+
+	#----------
+	invoicingMarketingEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoicing\Marketing')
+
+	invoicingMarketingServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoicingMarketingEntityFactory)
+
+	invoicingMarketingRepository: @model::getRepository('Entity\Invoicing\Marketing')
+
+
+	#----------
+	invoicingPackageEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoicing\Package')
+
+	invoicingPackageServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoicingPackageEntityFactory)
+
+	invoicingPackageRepository: @model::getRepository('Entity\Invoicing\Package')
+
+
+	#----------
+	invoicingServiceEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoicing\Service')
+
+	invoicingServiceServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoicingServiceEntityFactory)
+
+	invoicingServiceRepository: @model::getRepository('Entity\Invoicing\Service')
+
+
+	#----------
+	invoicingServiceDurationEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoicing\ServiceDuration')
+
+	invoicingServiceDurationServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoicingServiceDurationEntityFactory)
+
+	invoicingServiceDurationRepository: @model::getRepository('Entity\Invoicing\ServiceDuration')
+
+
+	#----------
+	invoicingServiceTypeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoicing\ServiceType')
+
+	invoicingServiceTypeServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoicingServiceTypeEntityFactory)
+
+	invoicingServiceTypeRepository: @model::getRepository('Entity\Invoicing\ServiceType')
+
+
+	#----------
+	invoicingUseTypeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoicing\UseType')
+
+	invoicingUseTypeServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoicingUseTypeEntityFactory)
+
+	invoicingUseTypeRepository: @model::getRepository('Entity\Invoicing\UseType')
+
+
+	#language
+	#----------
+	languageEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Language')
+
+	languageServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @languageEntityFactory)
+
+	languageRepository: @model::getRepository('Entity\Language')
+
+
+	#locatoin
+	#----------
+	locationEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Location\Location')
+
+	locationServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @locationEntityFactory)
+
+	locationRepository: @model::getRepository('Entity\Location\Location')
+
+
+	#----------
+	locationTravelingEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Location\Traveling')
+
+	locationTravelingServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @locationTravelingEntityFactory)
+
+	locationTravelingRepository: @model::getRepository('Entity\Location\Traveling')
+
+
+	#----------
+	locationTypeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Location\Type')
+
+	locationTypeServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @locationTypeEntityFactory)
+
+	locationTypeRepository: @model::getRepository('Entity\Location\Type')
+
+
+	#log
+	#----------
+	logChangeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Log\Change')
+
+	logChangeServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @logChangeEntityFactory)
+
+	logChangeRepository: @model::getRepository('Entity\Log\Change')
+
+
+	#----------
+	logChangeTypeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Log\ChangeType')
+
+	logChangeTypeServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @logChangeTypeEntityFactory)
+
+	logChangeTypeRepository: @model::getRepository('Entity\Log\ChangeType')
+
+
+	#----------
+	logSystemEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Log\System')
+
+	logSystemServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @logSystemEntityFactory)
+
+	logSystemRepository: @model::getRepository('Entity\Log\System')
+
+
+	#medium
+	#----------
+	mediumEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Medium\Medium')
+
+	mediumServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @mediumEntityFactory)
+
+	mediumRepository: @model::getRepository('Entity\Medium\Medium')
+
+
+	#----------
+	mediumTypeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Medium\Type')
+
+	mediumTypeServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @mediumTypeEntityFactory)
+
+	mediumTypeRepository: @model::getRepository('Entity\Medium\Type')
+
+
+	#page
+	#----------
+	pageEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Page')
+
+	pageServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @pageEntityFactory)
+
+	pageRepository: @model::getRepository('Entity\Page')
+
+
+	#phrase
+	#----------
+	phraseEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Phrase\Phrase')
+
+	phraseServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\Phrase\PhraseService', @phraseEntityFactory)
+
+	phraseRepository: @model::getRepository('Entity\Phrase\Phrase')
+
+
+	#----------
+	phraseTranslationEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Phrase\Translation')
+
+	phraseTranslationServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @phraseTranslationEntityFactory)
+
+	phraseTranslationRepository: @model::getRepository('Entity\Phrase\Translation')
+
+
+	#----------
+	phraseTypeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Phrase\Type')
+
+	phraseTypeServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @phraseTypeEntityFactory)
+
+	phraseTypeRepository: @model::getRepository('Entity\Phrase\Type')
+
+
+	#rental
+	#----------
+	rentalAmenityEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Rental\Amenity')
+
+	rentalAmenityServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @rentalAmenityEntityFactory)
+
+	rentalAmenityRepository: @model::getRepository('Entity\Rental\Amenity')
+
+
+	#----------
+	rentalAmenityTypeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Rental\AmenityType')
+
+	rentalAmenityTypeServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @rentalAmenityTypeEntityFactory)
+
+	rentalAmenityTypeRepository: @model::getRepository('Entity\Rental\AmenityType')
+
+
+	#----------
+	rentalInformationEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Rental\Information')
+
+	rentalInformationServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @rentalInformationEntityFactory)
+
+	rentalInformationRepository: @model::getRepository('Entity\Rental\Information')
+
+
+	#----------
+	rentalFulltextEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Rental\Fulltext')
+
+	rentalFulltextServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @rentalFulltextEntityFactory)
+
+	rentalFulltextRepository: @model::getRepository('Entity\Rental\Fulltext')
+
+
+	#----------
+	rentalEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Rental\Rental')
+
+	rentalServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @rentalEntityFactory)
+
+	rentalRepository: @model::getRepository('Entity\Rental\Rental')
+
+
+	#----------
+	rentalTypeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Rental\Type')
+
+	rentalTypeServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @rentalTypeEntityFactory)
+
+	rentalTypeRepository: @model::getRepository('Entity\Rental\Type')
+
+
+	#routing
+	#----------
+	routingPathSegmentEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Routing\PathSegment')
+
+	routingPathSegmentServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @routingPathSegmentEntityFactory)
+
+	routingPathSegmentRepository: @model::getRepository('Entity\Routing\PathSegment')
+
+
+	#----------
+	routingPathSegmentOldEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Routing\PathSegmentOld')
+
+	routingPathSegmentOldServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @routingPathSegmentOldEntityFactory)
+
+	routingPathSegmentOldRepository: @model::getRepository('Entity\Routing\PathSegmentOld')
+
+
+	#seo
+	#----------
+	seoBackLinkEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Seo\BackLink')
+
+	seoBackLinkServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @seoBackLinkEntityFactory)
+
+	seoBackLinkRepository: @model::getRepository('Entity\Seo\BackLink')
+
+
+	#----------
+	seoSeoUrlEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Seo\SeoUrl')
+
+	seoSeoUrlServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @seoSeoUrlEntityFactory)
+
+	seoSeoUrlRepository: @model::getRepository('Entity\Seo\SeoUrl')
+
+
+	#----------
+	seoTitleSuffixEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Seo\TitleSuffix')
+
+	seoTitleSuffixServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @seoTitleSuffixEntityFactory)
+
+	seoTitleSuffixRepository: @model::getRepository('Entity\Seo\TitleSuffix')
+
+
+	#task
+	#----------
+	taskEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Task\Task')
+
+	taskServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\Task\TaskService', @taskEntityFactory)
+
+	taskRepository: @model::getRepository('Entity\Task\Task')
+
+
+	#----------
+	taskTypeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Task\Type')
+
+	taskTypeServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @taskTypeEntityFactory)
+
+	taskTypeRepository: @model::getRepository('Entity\Task\Type')
+
+
+	#ticket
+	#----------
+	ticketMessageEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Ticket\Message')
+
+	ticketMessageServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @ticketMessageEntityFactory)
+
+	ticketMessageRepository: @model::getRepository('Entity\Ticket\Message')
+
+
+	#----------
+	ticketEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Ticket\Ticket')
+
+	ticketServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @ticketEntityFactory)
+
+	ticketRepository: @model::getRepository('Entity\Ticket\Ticket')
+
+
+	#user
+	#----------
+	userCombinationEntityFactory: Extras\Models\Entity\EntityFactory('Entity\User\Combination')
+
+	userCombinationServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @userCombinationEntityFactory)
+
+	userCombinationRepository: @model::getRepository('Entity\User\Combination')
+
+
+	#----------
+	userRentalQuestionEntityFactory: Extras\Models\Entity\EntityFactory('Entity\User\RentalQuestion')
+
+	userRentalQuestionServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @userRentalQuestionEntityFactory)
+
+	userRentalQuestionRepository: @model::getRepository('Entity\User\RentalQuestion')
+
+
+	#----------
+	userRentalReservationEntityFactory: Extras\Models\Entity\EntityFactory('Entity\User\RentalReservation')
+
+	userRentalReservationServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @userRentalReservationEntityFactory)
+
+	userRentalReservationRepository: @model::getRepository('Entity\User\RentalReservation')
+
+
+	#----------
+	userRentalReviewEntityFactory: Extras\Models\Entity\EntityFactory('Entity\User\RentalReview')
+
+	userRentalReviewServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @userRentalReviewEntityFactory)
+
+	userRentalReviewRepository: @model::getRepository('Entity\User\RentalReview')
+
+
+	#----------
+	userRentalToFriendEntityFactory: Extras\Models\Entity\EntityFactory('Entity\User\RentalToFriend')
+
+	userRentalToFriendServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @userRentalToFriendEntityFactory)
+
+	userRentalToFriendRepository: @model::getRepository('Entity\User\RentalToFriend')
+
+
+	#----------
+	userRoleEntityFactory: Extras\Models\Entity\EntityFactory('Entity\User\Role')
+
+	userRoleServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @userRoleEntityFactory)
+
+	userRoleRepository: @model::getRepository('Entity\User\Role')
+
+
+	#----------
+	userSiteOwnerReviewEntityFactory: Extras\Models\Entity\EntityFactory('Entity\User\SiteOwnerReview')
+
+	userSiteOwnerReviewServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @userSiteOwnerReviewEntityFactory)
+
+	userSiteOwnerReviewRepository: @model::getRepository('Entity\User\SiteOwnerReview')
+
+
+	#----------
+	userSiteVisitorReviewEntityFactory: Extras\Models\Entity\EntityFactory('Entity\User\SiteVisitorReview')
+
+	userSiteVisitorReviewServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @userSiteVisitorReviewEntityFactory)
+
+	userSiteVisitorReviewRepository: @model::getRepository('Entity\User\SiteVisitorReview')
+
+
+	#----------
+	userEntityFactory: Extras\Models\Entity\EntityFactory('Entity\User\User')
+
+	userServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @userEntityFactory)
+
+	userRepository: @model::getRepository('Entity\User\User')
+
+

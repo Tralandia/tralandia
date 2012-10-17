@@ -22,73 +22,37 @@ class ImportUsers extends BaseImport {
 		// \Service\User\User::merge($user1, $user2);
 		// return;
 
-		$this->setSubsections('users');
-
-		$this->$subsection();
-
-		$this->savedVariables['importedSubSections']['users'][$subsection] = 1;
-
-		if (end($this->sections['users']['subsections']) == $subsection) {
-			$this->savedVariables['importedSections']['users'] = 1;		
-		}
+		$this->{$subsection}();
 	}
 
 	private function importSuperAdmins() {
 
-		$role = \Service\User\Role::getBySlug('superadmin');
+		$role = $this->context->userRoleRepository->findOneBySlug('superadmin');
 
-		// Rado
-		$user = \Service\User\User::get();
-		$user->login = 'toth@tralandia.com';
-		$user->password = 'radkos';
-		$user->role = $role;
+		$admins = array(
+			array('toth@tralandia.com', 'radkos'),
+			array('durika@tralandia.com', 'davidheslo'),
+			array('czibula@tralandia.com', 'kscibiks'),
+			array('vaculciak@tralandia.com', 'branoheslo'),
+		);
 
-		$contacts = new \Extras\Types\Contacts();
-		$contacts->add(new \Extras\Types\Email('toth@tralandia.com'));
-		$user->contacts = $contacts;
+		$en = $this->context->languageRepository->findOneByIso('en');
+		foreach ($admins as $key => $value) {
+			// Rado
+			$user = $this->context->userEntityFactory->create();
+			$user->login = $value[0];
+			$user->password = $value[1];
+			$user->role = $role;
 
-		$user->defaultLanguage = \Service\Dictionary\Language::getByIso('en');
-		$user->save();
+			$contacts = new \Extras\Types\Contacts();
+			$contacts->add(new \Extras\Types\Email($value[0]));
+			$user->contacts = $contacts;
 
-		// David
-		$user = \Service\User\User::get();
-		$user->login = 'durika@tralandia.com';
-		$user->password = 'davidheslo';
-		$user->role = $role;
+			$user->defaultLanguage = $en;
+			$this->model->persist($user);
+		}
 
-		$contacts = new \Extras\Types\Contacts();
-		$contacts->add(new \Extras\Types\Email('durika@tralandia.com'));
-		$user->contacts = $contacts;
-
-		$user->defaultLanguage = \Service\Dictionary\Language::getByIso('en');
-		$user->save();
-
-		// Cibi
-		$user = \Service\User\User::get();
-		$user->login = 'czibula@tralandia.com';
-		$user->password = 'kscibiks';
-		$user->role = $role;
-
-		$contacts = new \Extras\Types\Contacts();
-		$contacts->add(new \Extras\Types\Email('czibula@tralandia.com'));
-		$user->contacts = $contacts;
-
-		$user->defaultLanguage = \Service\Dictionary\Language::getByIso('en');
-		$user->save();
-
-		// Brano
-		$user = \Service\User\User::get();
-		$user->login = 'vaculciak@tralandia.com';
-		$user->password = 'branoheslo';
-		$user->role = $role;
-
-		$contacts = new \Extras\Types\Contacts();
-		$contacts->add(new \Extras\Types\Email('vaculciak@tralandia.com'));
-		$user->contacts = $contacts;
-
-		$user->defaultLanguage = \Service\Dictionary\Language::getByIso('en');
-		$user->save();
-
+		$this->model->flush();
 		return TRUE;
 	}
 

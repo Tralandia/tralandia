@@ -16,23 +16,31 @@ class ImportLanguages extends BaseImport {
 
 	public function doImport($subsection = NULL) {
 
-		$import = new \Extras\Import\BaseImport();
-		$import->undoSection('languages');
+		$this->undoSection('languages');
 
 		$r = q('select * from languages order by id');
+
+		$nameDicIds = array();
 		while($x = mysql_fetch_array($r)) {
-			$s = D\Language::get();
-			$s->oldId = $x['id'];
-			$s->iso = $x['iso'];
-			$s->supported = (bool)$x['translated'];
-			$s->defaultCollation = $x['default_collation'];
-			$s->details = explode2Levels(';', ':', $x['attributes']);
-			$s->save();
-
+			$e = $this->context->languageEntityFactory->create();
+			$e->oldId = $x['id'];
+			$e->iso = $x['iso'];
+			$e->supported = (bool)$x['translated'];
+			$e->defaultCollation = $x['default_collation'];
+			$e->details = explode2Levels(';', ':', $x['attributes']);
+			$this->model->persist($e);
+			
+			$nameDicIds[$x['id']] = $x['name_dic_id'];
 		}
-		\Extras\Models\Service::flush(FALSE);
+		$this->model->flush();
 
-		$this->createPhrasesByOld('\Dictionary\Language', 'name', 'ACTIVE', 'languages', 'name_dic_id');		
+		$phraseType = $this->createPhraseType('\Language', 'name', 'ACTIVE');
+		$allLanguages = $this->context->languageRepository->findAll();
+		foreach ($allLanguages as $language) {
+			$language->name = $this->createNewPhrase($phraseType, $nameDicIds[$language->oldId]);
+		}
+		$this->model->flush();
+
 		$this->savedVariables['importedSections']['languages'] = 1;
 	}
 

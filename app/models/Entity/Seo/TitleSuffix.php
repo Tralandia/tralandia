@@ -2,7 +2,7 @@
 
 namespace Entity\Seo;
 
-use Entity\Dictionary;
+use Entity\Phrase;
 use Entity\Location;
 use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
@@ -10,8 +10,6 @@ use	Extras\Annotation as EA;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="seo_titlesuffix")
- * @EA\Service(name="\Service\Seo\TitleSuffix")
- * @EA\ServiceList(name="\Service\Seo\TitleSuffixList")
  * @EA\Primary(key="id", value="suffix")
  */
 class TitleSuffix extends \Entity\BaseEntity {
@@ -24,7 +22,7 @@ class TitleSuffix extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Dictionary\Language")
+	 * @ORM\ManyToOne(targetEntity="Entity\Language")
 	 */
 	protected $language;
 
@@ -34,30 +32,11 @@ class TitleSuffix extends \Entity\BaseEntity {
 	 */
 	protected $suffix;
 
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//@entity-generator-code <--- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 	}
 		
@@ -65,7 +44,8 @@ class TitleSuffix extends \Entity\BaseEntity {
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Seo\TitleSuffix
 	 */
-	public function setCountry(\Entity\Location\Location $country) {
+	public function setCountry(\Entity\Location\Location $country)
+	{
 		$this->country = $country;
 
 		return $this;
@@ -74,7 +54,8 @@ class TitleSuffix extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Seo\TitleSuffix
 	 */
-	public function unsetCountry() {
+	public function unsetCountry()
+	{
 		$this->country = NULL;
 
 		return $this;
@@ -83,15 +64,17 @@ class TitleSuffix extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Location\Location|NULL
 	 */
-	public function getCountry() {
+	public function getCountry()
+	{
 		return $this->country;
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Language
+	 * @param \Entity\Language
 	 * @return \Entity\Seo\TitleSuffix
 	 */
-	public function setLanguage(\Entity\Dictionary\Language $language) {
+	public function setLanguage(\Entity\Language $language)
+	{
 		$this->language = $language;
 
 		return $this;
@@ -100,16 +83,18 @@ class TitleSuffix extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Seo\TitleSuffix
 	 */
-	public function unsetLanguage() {
+	public function unsetLanguage()
+	{
 		$this->language = NULL;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Language|NULL
+	 * @return \Entity\Language|NULL
 	 */
-	public function getLanguage() {
+	public function getLanguage()
+	{
 		return $this->language;
 	}
 		
@@ -117,7 +102,8 @@ class TitleSuffix extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Seo\TitleSuffix
 	 */
-	public function setSuffix($suffix) {
+	public function setSuffix($suffix)
+	{
 		$this->suffix = $suffix;
 
 		return $this;
@@ -126,7 +112,8 @@ class TitleSuffix extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Seo\TitleSuffix
 	 */
-	public function unsetSuffix() {
+	public function unsetSuffix()
+	{
 		$this->suffix = NULL;
 
 		return $this;
@@ -135,7 +122,8 @@ class TitleSuffix extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getSuffix() {
+	public function getSuffix()
+	{
 		return $this->suffix;
 	}
 }

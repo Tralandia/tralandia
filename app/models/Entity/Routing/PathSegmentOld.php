@@ -2,7 +2,7 @@
 
 namespace Entity\Routing;
 
-use Entity\Dictionary;
+use Entity\Phrase;
 use Entity\Location;
 use Entity\Routing;
 use Doctrine\ORM\Mapping as ORM;
@@ -27,7 +27,7 @@ class PathSegmentOld extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Dictionary\Language")
+	 * @ORM\ManyToOne(targetEntity="Entity\Language")
 	 */
 	protected $language;
 
@@ -69,10 +69,11 @@ class PathSegmentOld extends \Entity\BaseEntity {
 
 
 
-//@entity-generator-code <--- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 	}
 		
@@ -80,7 +81,8 @@ class PathSegmentOld extends \Entity\BaseEntity {
 	 * @param \Entity\Routing\PathSegment
 	 * @return \Entity\Routing\PathSegmentOld
 	 */
-	public function setPathSegmentNew(\Entity\Routing\PathSegment $pathSegmentNew) {
+	public function setPathSegmentNew(\Entity\Routing\PathSegment $pathSegmentNew)
+	{
 		$this->pathSegmentNew = $pathSegmentNew;
 
 		return $this;
@@ -89,7 +91,8 @@ class PathSegmentOld extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Routing\PathSegmentOld
 	 */
-	public function unsetPathSegmentNew() {
+	public function unsetPathSegmentNew()
+	{
 		$this->pathSegmentNew = NULL;
 
 		return $this;
@@ -98,7 +101,8 @@ class PathSegmentOld extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Routing\PathSegment|NULL
 	 */
-	public function getPathSegmentNew() {
+	public function getPathSegmentNew()
+	{
 		return $this->pathSegmentNew;
 	}
 		
@@ -106,7 +110,8 @@ class PathSegmentOld extends \Entity\BaseEntity {
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Routing\PathSegmentOld
 	 */
-	public function setCountry(\Entity\Location\Location $country) {
+	public function setCountry(\Entity\Location\Location $country)
+	{
 		$this->country = $country;
 
 		return $this;
@@ -115,7 +120,8 @@ class PathSegmentOld extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Routing\PathSegmentOld
 	 */
-	public function unsetCountry() {
+	public function unsetCountry()
+	{
 		$this->country = NULL;
 
 		return $this;
@@ -124,15 +130,17 @@ class PathSegmentOld extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Location\Location|NULL
 	 */
-	public function getCountry() {
+	public function getCountry()
+	{
 		return $this->country;
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Language
+	 * @param \Entity\Language
 	 * @return \Entity\Routing\PathSegmentOld
 	 */
-	public function setLanguage(\Entity\Dictionary\Language $language) {
+	public function setLanguage(\Entity\Language $language)
+	{
 		$this->language = $language;
 
 		return $this;
@@ -141,16 +149,18 @@ class PathSegmentOld extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Routing\PathSegmentOld
 	 */
-	public function unsetLanguage() {
+	public function unsetLanguage()
+	{
 		$this->language = NULL;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Language|NULL
+	 * @return \Entity\Language|NULL
 	 */
-	public function getLanguage() {
+	public function getLanguage()
+	{
 		return $this->language;
 	}
 		
@@ -158,7 +168,8 @@ class PathSegmentOld extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Routing\PathSegmentOld
 	 */
-	public function setPathSegment($pathSegment) {
+	public function setPathSegment($pathSegment)
+	{
 		$this->pathSegment = $pathSegment;
 
 		return $this;
@@ -167,7 +178,8 @@ class PathSegmentOld extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getPathSegment() {
+	public function getPathSegment()
+	{
 		return $this->pathSegment;
 	}
 		
@@ -175,7 +187,8 @@ class PathSegmentOld extends \Entity\BaseEntity {
 	 * @param integer
 	 * @return \Entity\Routing\PathSegmentOld
 	 */
-	public function setType($type) {
+	public function setType($type)
+	{
 		$this->type = $type;
 
 		return $this;
@@ -184,7 +197,8 @@ class PathSegmentOld extends \Entity\BaseEntity {
 	/**
 	 * @return integer|NULL
 	 */
-	public function getType() {
+	public function getType()
+	{
 		return $this->type;
 	}
 		
@@ -192,7 +206,8 @@ class PathSegmentOld extends \Entity\BaseEntity {
 	 * @param integer
 	 * @return \Entity\Routing\PathSegmentOld
 	 */
-	public function setEntityId($entityId) {
+	public function setEntityId($entityId)
+	{
 		$this->entityId = $entityId;
 
 		return $this;
@@ -201,7 +216,8 @@ class PathSegmentOld extends \Entity\BaseEntity {
 	/**
 	 * @return integer|NULL
 	 */
-	public function getEntityId() {
+	public function getEntityId()
+	{
 		return $this->entityId;
 	}
 }

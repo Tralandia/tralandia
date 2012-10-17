@@ -9,8 +9,6 @@ use	Extras\Annotation as EA;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="invoicing_coupon", indexes={@ORM\index(name="code", columns={"code"}), @ORM\index(name="countTotal", columns={"countTotal"}), @ORM\index(name="countLeft", columns={"countLeft"}), @ORM\index(name="validFrom", columns={"validFrom"}), @ORM\index(name="validTo", columns={"validTo"})})
- * @EA\Service(name="\Service\Invoicing\Coupon")
- * @EA\ServiceList(name="\Service\Invoicing\CouponList")
  * @EA\Primary(key="id", value="name")
  */
 class Coupon extends \Entity\BaseEntity {
@@ -63,31 +61,12 @@ class Coupon extends \Entity\BaseEntity {
 	 */
 	protected $recommendeePackage;
 
-	
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//@entity-generator-code <--- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 	}
 		
@@ -95,7 +74,8 @@ class Coupon extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Invoicing\Coupon
 	 */
-	public function setName($name) {
+	public function setName($name)
+	{
 		$this->name = $name;
 
 		return $this;
@@ -104,7 +84,8 @@ class Coupon extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoicing\Coupon
 	 */
-	public function unsetName() {
+	public function unsetName()
+	{
 		$this->name = NULL;
 
 		return $this;
@@ -113,7 +94,8 @@ class Coupon extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getName() {
+	public function getName()
+	{
 		return $this->name;
 	}
 		
@@ -121,7 +103,8 @@ class Coupon extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Invoicing\Coupon
 	 */
-	public function setCode($code) {
+	public function setCode($code)
+	{
 		$this->code = $code;
 
 		return $this;
@@ -130,7 +113,8 @@ class Coupon extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoicing\Coupon
 	 */
-	public function unsetCode() {
+	public function unsetCode()
+	{
 		$this->code = NULL;
 
 		return $this;
@@ -139,7 +123,8 @@ class Coupon extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getCode() {
+	public function getCode()
+	{
 		return $this->code;
 	}
 		
@@ -147,7 +132,8 @@ class Coupon extends \Entity\BaseEntity {
 	 * @param integer
 	 * @return \Entity\Invoicing\Coupon
 	 */
-	public function setCountTotal($countTotal) {
+	public function setCountTotal($countTotal)
+	{
 		$this->countTotal = $countTotal;
 
 		return $this;
@@ -156,7 +142,8 @@ class Coupon extends \Entity\BaseEntity {
 	/**
 	 * @return integer|NULL
 	 */
-	public function getCountTotal() {
+	public function getCountTotal()
+	{
 		return $this->countTotal;
 	}
 		
@@ -164,7 +151,8 @@ class Coupon extends \Entity\BaseEntity {
 	 * @param integer
 	 * @return \Entity\Invoicing\Coupon
 	 */
-	public function setCountLeft($countLeft) {
+	public function setCountLeft($countLeft)
+	{
 		$this->countLeft = $countLeft;
 
 		return $this;
@@ -173,7 +161,8 @@ class Coupon extends \Entity\BaseEntity {
 	/**
 	 * @return integer|NULL
 	 */
-	public function getCountLeft() {
+	public function getCountLeft()
+	{
 		return $this->countLeft;
 	}
 		
@@ -181,7 +170,8 @@ class Coupon extends \Entity\BaseEntity {
 	 * @param \DateTime
 	 * @return \Entity\Invoicing\Coupon
 	 */
-	public function setValidFrom(\DateTime $validFrom) {
+	public function setValidFrom(\DateTime $validFrom)
+	{
 		$this->validFrom = $validFrom;
 
 		return $this;
@@ -190,7 +180,8 @@ class Coupon extends \Entity\BaseEntity {
 	/**
 	 * @return \DateTime|NULL
 	 */
-	public function getValidFrom() {
+	public function getValidFrom()
+	{
 		return $this->validFrom;
 	}
 		
@@ -198,7 +189,8 @@ class Coupon extends \Entity\BaseEntity {
 	 * @param \DateTime
 	 * @return \Entity\Invoicing\Coupon
 	 */
-	public function setValidTo(\DateTime $validTo) {
+	public function setValidTo(\DateTime $validTo)
+	{
 		$this->validTo = $validTo;
 
 		return $this;
@@ -207,7 +199,8 @@ class Coupon extends \Entity\BaseEntity {
 	/**
 	 * @return \DateTime|NULL
 	 */
-	public function getValidTo() {
+	public function getValidTo()
+	{
 		return $this->validTo;
 	}
 		
@@ -215,7 +208,8 @@ class Coupon extends \Entity\BaseEntity {
 	 * @param \Entity\Invoicing\Package
 	 * @return \Entity\Invoicing\Coupon
 	 */
-	public function setRecommenderPackage(\Entity\Invoicing\Package $recommenderPackage) {
+	public function setRecommenderPackage(\Entity\Invoicing\Package $recommenderPackage)
+	{
 		$this->recommenderPackage = $recommenderPackage;
 
 		return $this;
@@ -224,7 +218,8 @@ class Coupon extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoicing\Coupon
 	 */
-	public function unsetRecommenderPackage() {
+	public function unsetRecommenderPackage()
+	{
 		$this->recommenderPackage = NULL;
 
 		return $this;
@@ -233,7 +228,8 @@ class Coupon extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoicing\Package|NULL
 	 */
-	public function getRecommenderPackage() {
+	public function getRecommenderPackage()
+	{
 		return $this->recommenderPackage;
 	}
 		
@@ -241,7 +237,8 @@ class Coupon extends \Entity\BaseEntity {
 	 * @param \Entity\Invoicing\Package
 	 * @return \Entity\Invoicing\Coupon
 	 */
-	public function setRecommendeePackage(\Entity\Invoicing\Package $recommendeePackage) {
+	public function setRecommendeePackage(\Entity\Invoicing\Package $recommendeePackage)
+	{
 		$this->recommendeePackage = $recommendeePackage;
 
 		return $this;
@@ -250,7 +247,8 @@ class Coupon extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoicing\Coupon
 	 */
-	public function unsetRecommendeePackage() {
+	public function unsetRecommendeePackage()
+	{
 		$this->recommendeePackage = NULL;
 
 		return $this;
@@ -259,7 +257,8 @@ class Coupon extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoicing\Package|NULL
 	 */
-	public function getRecommendeePackage() {
+	public function getRecommendeePackage()
+	{
 		return $this->recommendeePackage;
 	}
 }

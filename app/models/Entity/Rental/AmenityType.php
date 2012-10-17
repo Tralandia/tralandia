@@ -2,15 +2,13 @@
 
 namespace Entity\Rental;
 
-use Entity\Dictionary;
+use Entity\Phrase;
 use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="rental_amenitytype", indexes={@ORM\index(name="slug", columns={"slug"})})
- * @EA\Service(name="\Service\Rental\AmenityType")
- * @EA\ServiceList(name="\Service\Rental\AmenityTypeList")
  * @EA\Primary(key="id", value="slug")
  */
 class AmenityType extends \Entity\BaseEntity {
@@ -23,7 +21,7 @@ class AmenityType extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
+	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $name;
 
@@ -34,28 +32,11 @@ class AmenityType extends \Entity\BaseEntity {
 	protected $slug;
 	
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//@entity-generator-code <--- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 
 		$this->amenities = new \Doctrine\Common\Collections\ArrayCollection;
@@ -65,7 +46,8 @@ class AmenityType extends \Entity\BaseEntity {
 	 * @param \Entity\Rental\Amenity
 	 * @return \Entity\Rental\AmenityType
 	 */
-	public function addAmenity(\Entity\Rental\Amenity $amenity) {
+	public function addAmenity(\Entity\Rental\Amenity $amenity)
+	{
 		if(!$this->amenities->contains($amenity)) {
 			$this->amenities->add($amenity);
 		}
@@ -78,7 +60,8 @@ class AmenityType extends \Entity\BaseEntity {
 	 * @param \Entity\Rental\Amenity
 	 * @return \Entity\Rental\AmenityType
 	 */
-	public function removeAmenity(\Entity\Rental\Amenity $amenity) {
+	public function removeAmenity(\Entity\Rental\Amenity $amenity)
+	{
 		if($this->amenities->contains($amenity)) {
 			$this->amenities->removeElement($amenity);
 		}
@@ -90,24 +73,27 @@ class AmenityType extends \Entity\BaseEntity {
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Rental\Amenity
 	 */
-	public function getAmenities() {
+	public function getAmenities()
+	{
 		return $this->amenities;
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Phrase
+	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Rental\AmenityType
 	 */
-	public function setName(\Entity\Dictionary\Phrase $name) {
+	public function setName(\Entity\Phrase\Phrase $name)
+	{
 		$this->name = $name;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Phrase|NULL
+	 * @return \Entity\Phrase\Phrase|NULL
 	 */
-	public function getName() {
+	public function getName()
+	{
 		return $this->name;
 	}
 		
@@ -115,7 +101,8 @@ class AmenityType extends \Entity\BaseEntity {
 	 * @param slug
 	 * @return \Entity\Rental\AmenityType
 	 */
-	public function setSlug($slug) {
+	public function setSlug($slug)
+	{
 		$this->slug = $slug;
 
 		return $this;
@@ -124,7 +111,8 @@ class AmenityType extends \Entity\BaseEntity {
 	/**
 	 * @return slug|NULL
 	 */
-	public function getSlug() {
+	public function getSlug()
+	{
 		return $this->slug;
 	}
 }

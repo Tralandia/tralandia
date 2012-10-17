@@ -26,7 +26,7 @@ class ImportTickets extends BaseImport {
 		$this->countryTypeId = qNew('select id from location_type where slug = "country"');
 		$this->countryTypeId = mysql_fetch_array($this->countryTypeId);
 		$locationsByOldId = getNewIdsByOld('\Location\Location', 'type_id = '.$this->countryTypeId[0]);
-		$languagesByOldId = getNewIdsByOld('\Dictionary\Language');
+		$languagesByOldId = getNewIdsByOld('\Language');
 
 		if ($this->developmentMode == TRUE) {
 			$r = q('select * from tickets where stamp > 1325372400 and status <> "closed" order by stamp limit 100');

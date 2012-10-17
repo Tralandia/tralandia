@@ -16,7 +16,7 @@ class ImportHtmlPhrases extends BaseImport {
 
 	public function doImport($subsection = NULL) {
 
-		$dictionaryType = $this->createDictionaryType('Html', 'Html', 'MARKETING');
+		$dictionaryType = $this->createPhraseType('Html', 'Html', 'MARKETING');
 
 		if ($this->developmentMode == TRUE) {
 			$r = q('select * from dictionary where text_type = 2 limit 20');
@@ -31,10 +31,11 @@ class ImportHtmlPhrases extends BaseImport {
 				'translationHelp' => $x['help'],
 			);
 			$newPhrase->details = $details;
-			$newPhrase->save();
+			$this->context->model->persist($newPhrase);
 			$i++;
 		}
-		debug($i);
+		$this->context->model->flush();
+
 		$this->savedVariables['importedSections']['htmlPhrases'] = 1;
 	}
 

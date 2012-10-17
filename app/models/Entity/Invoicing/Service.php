@@ -9,8 +9,6 @@ use	Extras\Annotation as EA;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="invoicing_service")
- * @EA\Service(name="\Service\Invoicing\Service")
- * @EA\ServiceList(name="\Service\Invoicing\ServiceList")
  * @EA\Primary(key="id", value="id")
  */
 class Service extends \Entity\BaseEntity {
@@ -65,10 +63,11 @@ class Service extends \Entity\BaseEntity {
 
 
 
-//@entity-generator-code <--- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 	}
 		
@@ -76,7 +75,8 @@ class Service extends \Entity\BaseEntity {
 	 * @param \Entity\Invoicing\ServiceType
 	 * @return \Entity\Invoicing\Service
 	 */
-	public function setType(\Entity\Invoicing\ServiceType $type) {
+	public function setType(\Entity\Invoicing\ServiceType $type)
+	{
 		$this->type = $type;
 
 		return $this;
@@ -85,7 +85,8 @@ class Service extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoicing\Service
 	 */
-	public function unsetType() {
+	public function unsetType()
+	{
 		$this->type = NULL;
 
 		return $this;
@@ -94,7 +95,8 @@ class Service extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoicing\ServiceType|NULL
 	 */
-	public function getType() {
+	public function getType()
+	{
 		return $this->type;
 	}
 		
@@ -102,7 +104,8 @@ class Service extends \Entity\BaseEntity {
 	 * @param \Entity\Invoicing\ServiceDuration
 	 * @return \Entity\Invoicing\Service
 	 */
-	public function setDuration(\Entity\Invoicing\ServiceDuration $duration) {
+	public function setDuration(\Entity\Invoicing\ServiceDuration $duration)
+	{
 		$this->duration = $duration;
 
 		return $this;
@@ -111,7 +114,8 @@ class Service extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoicing\Service
 	 */
-	public function unsetDuration() {
+	public function unsetDuration()
+	{
 		$this->duration = NULL;
 
 		return $this;
@@ -120,7 +124,8 @@ class Service extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoicing\ServiceDuration|NULL
 	 */
-	public function getDuration() {
+	public function getDuration()
+	{
 		return $this->duration;
 	}
 		
@@ -128,7 +133,8 @@ class Service extends \Entity\BaseEntity {
 	 * @param \Extras\Types\Price
 	 * @return \Entity\Invoicing\Service
 	 */
-	public function setDefaultPrice(\Extras\Types\Price $defaultPrice) {
+	public function setDefaultPrice(\Extras\Types\Price $defaultPrice)
+	{
 		$this->defaultPrice = $defaultPrice;
 
 		return $this;
@@ -137,7 +143,8 @@ class Service extends \Entity\BaseEntity {
 	/**
 	 * @return \Extras\Types\Price|NULL
 	 */
-	public function getDefaultPrice() {
+	public function getDefaultPrice()
+	{
 		return $this->defaultPrice;
 	}
 		
@@ -145,7 +152,8 @@ class Service extends \Entity\BaseEntity {
 	 * @param \Extras\Types\Price
 	 * @return \Entity\Invoicing\Service
 	 */
-	public function setCurrentPrice(\Extras\Types\Price $currentPrice) {
+	public function setCurrentPrice(\Extras\Types\Price $currentPrice)
+	{
 		$this->currentPrice = $currentPrice;
 
 		return $this;
@@ -154,7 +162,8 @@ class Service extends \Entity\BaseEntity {
 	/**
 	 * @return \Extras\Types\Price|NULL
 	 */
-	public function getCurrentPrice() {
+	public function getCurrentPrice()
+	{
 		return $this->currentPrice;
 	}
 		
@@ -162,7 +171,8 @@ class Service extends \Entity\BaseEntity {
 	 * @param \Entity\Invoicing\Package
 	 * @return \Entity\Invoicing\Service
 	 */
-	public function setPackage(\Entity\Invoicing\Package $package) {
+	public function setPackage(\Entity\Invoicing\Package $package)
+	{
 		$this->package = $package;
 
 		return $this;
@@ -171,7 +181,8 @@ class Service extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoicing\Service
 	 */
-	public function unsetPackage() {
+	public function unsetPackage()
+	{
 		$this->package = NULL;
 
 		return $this;
@@ -180,7 +191,8 @@ class Service extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoicing\Package|NULL
 	 */
-	public function getPackage() {
+	public function getPackage()
+	{
 		return $this->package;
 	}
 }

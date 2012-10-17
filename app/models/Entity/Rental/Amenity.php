@@ -2,15 +2,13 @@
 
 namespace Entity\Rental;
 
-use Entity\Dictionary;
+use Entity\Phrase;
 use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="rental_amenity")
- * @EA\Service(name="\Service\Rental\Amenity")
- * @EA\ServiceList(name="\Service\Rental\AmenityList")
  * @EA\Primary(key="id", value="id")
  */
 class Amenity extends \Entity\BaseEntityDetails {
@@ -29,33 +27,16 @@ class Amenity extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
+	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $name;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//@entity-generator-code <--- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 
 		$this->rentals = new \Doctrine\Common\Collections\ArrayCollection;
@@ -65,7 +46,8 @@ class Amenity extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Rental\AmenityType
 	 * @return \Entity\Rental\Amenity
 	 */
-	public function setType(\Entity\Rental\AmenityType $type) {
+	public function setType(\Entity\Rental\AmenityType $type)
+	{
 		$this->type = $type;
 
 		return $this;
@@ -74,7 +56,8 @@ class Amenity extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Rental\Amenity
 	 */
-	public function unsetType() {
+	public function unsetType()
+	{
 		$this->type = NULL;
 
 		return $this;
@@ -83,7 +66,8 @@ class Amenity extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Rental\AmenityType|NULL
 	 */
-	public function getType() {
+	public function getType()
+	{
 		return $this->type;
 	}
 		
@@ -91,7 +75,8 @@ class Amenity extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Rental\Rental
 	 * @return \Entity\Rental\Amenity
 	 */
-	public function addRental(\Entity\Rental\Rental $rental) {
+	public function addRental(\Entity\Rental\Rental $rental)
+	{
 		if(!$this->rentals->contains($rental)) {
 			$this->rentals->add($rental);
 		}
@@ -102,24 +87,27 @@ class Amenity extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Rental\Rental
 	 */
-	public function getRentals() {
+	public function getRentals()
+	{
 		return $this->rentals;
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Phrase
+	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Rental\Amenity
 	 */
-	public function setName(\Entity\Dictionary\Phrase $name) {
+	public function setName(\Entity\Phrase\Phrase $name)
+	{
 		$this->name = $name;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Phrase|NULL
+	 * @return \Entity\Phrase\Phrase|NULL
 	 */
-	public function getName() {
+	public function getName()
+	{
 		return $this->name;
 	}
 }

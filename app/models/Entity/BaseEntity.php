@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Extras;
 
 /**
- * @ORM\MappedSuperclass()
+ * @ORM\MappedSuperclass(repositoryClass="\Repository\BaseRepository")
  * @ORM\HasLifecycleCallbacks
  */
 class BaseEntity extends \Extras\Models\Entity\Entity {

@@ -2,7 +2,7 @@
 
 namespace Entity\User;
 
-use Entity\Dictionary;
+use Entity\Phrase;
 use Entity\Rental;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -17,7 +17,7 @@ class RentalReview extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Dictionary\Language")
+	 * @ORM\ManyToOne(targetEntity="Entity\Language")
 	 */
 	protected $language;
 
@@ -71,18 +71,20 @@ class RentalReview extends \Entity\BaseEntity {
 	protected $message;
 
 
-//@entity-generator-code <--- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Language
+	 * @param \Entity\Language
 	 * @return \Entity\User\RentalReview
 	 */
-	public function setLanguage(\Entity\Dictionary\Language $language) {
+	public function setLanguage(\Entity\Language $language)
+	{
 		$this->language = $language;
 
 		return $this;
@@ -91,16 +93,18 @@ class RentalReview extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\User\RentalReview
 	 */
-	public function unsetLanguage() {
+	public function unsetLanguage()
+	{
 		$this->language = NULL;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Language|NULL
+	 * @return \Entity\Language|NULL
 	 */
-	public function getLanguage() {
+	public function getLanguage()
+	{
 		return $this->language;
 	}
 		
@@ -108,7 +112,8 @@ class RentalReview extends \Entity\BaseEntity {
 	 * @param \Entity\Rental\Rental
 	 * @return \Entity\User\RentalReview
 	 */
-	public function setRental(\Entity\Rental\Rental $rental) {
+	public function setRental(\Entity\Rental\Rental $rental)
+	{
 		$this->rental = $rental;
 
 		return $this;
@@ -117,7 +122,8 @@ class RentalReview extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\User\RentalReview
 	 */
-	public function unsetRental() {
+	public function unsetRental()
+	{
 		$this->rental = NULL;
 
 		return $this;
@@ -126,7 +132,8 @@ class RentalReview extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Rental\Rental|NULL
 	 */
-	public function getRental() {
+	public function getRental()
+	{
 		return $this->rental;
 	}
 		
@@ -134,7 +141,8 @@ class RentalReview extends \Entity\BaseEntity {
 	 * @param \Extras\Types\Email
 	 * @return \Entity\User\RentalReview
 	 */
-	public function setSenderEmail(\Extras\Types\Email $senderEmail) {
+	public function setSenderEmail(\Extras\Types\Email $senderEmail)
+	{
 		$this->senderEmail = $senderEmail;
 
 		return $this;
@@ -143,7 +151,8 @@ class RentalReview extends \Entity\BaseEntity {
 	/**
 	 * @return \Extras\Types\Email|NULL
 	 */
-	public function getSenderEmail() {
+	public function getSenderEmail()
+	{
 		return $this->senderEmail;
 	}
 		
@@ -151,7 +160,8 @@ class RentalReview extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\User\RentalReview
 	 */
-	public function setSenderName($senderName) {
+	public function setSenderName($senderName)
+	{
 		$this->senderName = $senderName;
 
 		return $this;
@@ -160,7 +170,8 @@ class RentalReview extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getSenderName() {
+	public function getSenderName()
+	{
 		return $this->senderName;
 	}
 		
@@ -168,7 +179,8 @@ class RentalReview extends \Entity\BaseEntity {
 	 * @param \Extras\Types\Phone
 	 * @return \Entity\User\RentalReview
 	 */
-	public function setSenderPhone(\Extras\Types\Phone $senderPhone) {
+	public function setSenderPhone(\Extras\Types\Phone $senderPhone)
+	{
 		$this->senderPhone = $senderPhone;
 
 		return $this;
@@ -177,7 +189,8 @@ class RentalReview extends \Entity\BaseEntity {
 	/**
 	 * @return \Extras\Types\Phone|NULL
 	 */
-	public function getSenderPhone() {
+	public function getSenderPhone()
+	{
 		return $this->senderPhone;
 	}
 		
@@ -185,7 +198,8 @@ class RentalReview extends \Entity\BaseEntity {
 	 * @param \DateTime
 	 * @return \Entity\User\RentalReview
 	 */
-	public function setArrivalDate(\DateTime $arrivalDate) {
+	public function setArrivalDate(\DateTime $arrivalDate)
+	{
 		$this->arrivalDate = $arrivalDate;
 
 		return $this;
@@ -194,7 +208,8 @@ class RentalReview extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\User\RentalReview
 	 */
-	public function unsetArrivalDate() {
+	public function unsetArrivalDate()
+	{
 		$this->arrivalDate = NULL;
 
 		return $this;
@@ -203,7 +218,8 @@ class RentalReview extends \Entity\BaseEntity {
 	/**
 	 * @return \DateTime|NULL
 	 */
-	public function getArrivalDate() {
+	public function getArrivalDate()
+	{
 		return $this->arrivalDate;
 	}
 		
@@ -211,7 +227,8 @@ class RentalReview extends \Entity\BaseEntity {
 	 * @param \DateTime
 	 * @return \Entity\User\RentalReview
 	 */
-	public function setDepartureDate(\DateTime $departureDate) {
+	public function setDepartureDate(\DateTime $departureDate)
+	{
 		$this->departureDate = $departureDate;
 
 		return $this;
@@ -220,7 +237,8 @@ class RentalReview extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\User\RentalReview
 	 */
-	public function unsetDepartureDate() {
+	public function unsetDepartureDate()
+	{
 		$this->departureDate = NULL;
 
 		return $this;
@@ -229,7 +247,8 @@ class RentalReview extends \Entity\BaseEntity {
 	/**
 	 * @return \DateTime|NULL
 	 */
-	public function getDepartureDate() {
+	public function getDepartureDate()
+	{
 		return $this->departureDate;
 	}
 		
@@ -237,7 +256,8 @@ class RentalReview extends \Entity\BaseEntity {
 	 * @param json
 	 * @return \Entity\User\RentalReview
 	 */
-	public function setCapacity($capacity) {
+	public function setCapacity($capacity)
+	{
 		$this->capacity = $capacity;
 
 		return $this;
@@ -246,7 +266,8 @@ class RentalReview extends \Entity\BaseEntity {
 	/**
 	 * @return json|NULL
 	 */
-	public function getCapacity() {
+	public function getCapacity()
+	{
 		return $this->capacity;
 	}
 		
@@ -254,7 +275,8 @@ class RentalReview extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\User\RentalReview
 	 */
-	public function setMessage($message) {
+	public function setMessage($message)
+	{
 		$this->message = $message;
 
 		return $this;
@@ -263,7 +285,8 @@ class RentalReview extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getMessage() {
+	public function getMessage()
+	{
 		return $this->message;
 	}
 }

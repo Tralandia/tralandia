@@ -2,14 +2,14 @@
 
 namespace Entity\Ticket;
 
-use Entity\Dictionary;
+use Entity\Phrase;
 use Entity\Location;
 use Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="ticket_ticket")
+ * @ORM\Table(name="ticket")
  */
 class Ticket extends \Entity\BaseEntity {
 
@@ -20,10 +20,11 @@ class Ticket extends \Entity\BaseEntity {
 	protected $messages;
 
 
-//@entity-generator-code <--- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 
 		$this->messages = new \Doctrine\Common\Collections\ArrayCollection;
@@ -33,7 +34,8 @@ class Ticket extends \Entity\BaseEntity {
 	 * @param \Entity\Ticket\Message
 	 * @return \Entity\Ticket\Ticket
 	 */
-	public function addMessage(\Entity\Ticket\Message $message) {
+	public function addMessage(\Entity\Ticket\Message $message)
+	{
 		if(!$this->messages->contains($message)) {
 			$this->messages->add($message);
 		}
@@ -46,7 +48,8 @@ class Ticket extends \Entity\BaseEntity {
 	 * @param \Entity\Ticket\Message
 	 * @return \Entity\Ticket\Ticket
 	 */
-	public function removeMessage(\Entity\Ticket\Message $message) {
+	public function removeMessage(\Entity\Ticket\Message $message)
+	{
 		if($this->messages->contains($message)) {
 			$this->messages->removeElement($message);
 		}
@@ -58,7 +61,8 @@ class Ticket extends \Entity\BaseEntity {
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Ticket\Message
 	 */
-	public function getMessages() {
+	public function getMessages()
+	{
 		return $this->messages;
 	}
 }

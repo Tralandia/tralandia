@@ -21,7 +21,7 @@ class ImportInvoicing extends BaseImport {
 		$en = \Service\Dictionary\Language::getByIso('en');
 
 		// Invoices
-		//$invoiceNameType = $this->createDictionaryType('\Invoicing\ServiceDuration', 'name', 'supportedLanguages', 'ACTIVE');
+		//$invoiceNameType = $this->createPhraseType('\Invoicing\ServiceDuration', 'name', 'supportedLanguages', 'ACTIVE');
 
 		$this->companiesByOldId = getNewIdsByOld('\Company\Company');
 		$this->rentalsByOldId = getNewIdsByOld('\Rental\Rental');
@@ -30,7 +30,7 @@ class ImportInvoicing extends BaseImport {
 		$this->countryTypeId = qNew('select id from location_type where slug = "country"');
 		$this->countryTypeId = mysql_fetch_array($this->countryTypeId);
 		$this->locationsByOldId = getNewIdsByOld('\Location\Location', 'type_id = '.$this->countryTypeId[0]);
-		$this->languagesByOldId = getNewIdsByOld('\Dictionary\Language');
+		$this->languagesByOldId = getNewIdsByOld('\Language');
 
 		// Import paid invoices
 		if ($this->developmentMode == TRUE) {

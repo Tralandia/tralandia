@@ -9,8 +9,6 @@ use	Extras\Annotation as EA;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="domain", indexes={@ORM\index(name="domain", columns={"domain"})})
- * @EA\Service(name="\Service\Domain")
- * @EA\ServiceList(name="\Service\DomainList")
  * @EA\Primary(key="id", value="domain")
  */
 class Domain extends \Entity\BaseEntity {
@@ -29,7 +27,7 @@ class Domain extends \Entity\BaseEntity {
 
 	/**
 	 * @var text
-	 * @ORM\Column(type="text")
+	 * @ORM\Column(type="text", nullable=true)
 	 */
 	protected $registratorDetails;
 
@@ -40,10 +38,11 @@ class Domain extends \Entity\BaseEntity {
 	protected $locations;
 
 
-//@entity-generator-code <--- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 
 		$this->locations = new \Doctrine\Common\Collections\ArrayCollection;
@@ -53,7 +52,8 @@ class Domain extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Domain
 	 */
-	public function setDomain($domain) {
+	public function setDomain($domain)
+	{
 		$this->domain = $domain;
 
 		return $this;
@@ -62,7 +62,8 @@ class Domain extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getDomain() {
+	public function getDomain()
+	{
 		return $this->domain;
 	}
 		
@@ -70,7 +71,8 @@ class Domain extends \Entity\BaseEntity {
 	 * @param \DateTime
 	 * @return \Entity\Domain
 	 */
-	public function setExpires(\DateTime $expires) {
+	public function setExpires(\DateTime $expires)
+	{
 		$this->expires = $expires;
 
 		return $this;
@@ -79,7 +81,8 @@ class Domain extends \Entity\BaseEntity {
 	/**
 	 * @return \DateTime|NULL
 	 */
-	public function getExpires() {
+	public function getExpires()
+	{
 		return $this->expires;
 	}
 		
@@ -87,7 +90,8 @@ class Domain extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Domain
 	 */
-	public function setRegistratorDetails($registratorDetails) {
+	public function setRegistratorDetails($registratorDetails)
+	{
 		$this->registratorDetails = $registratorDetails;
 
 		return $this;
@@ -96,7 +100,8 @@ class Domain extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getRegistratorDetails() {
+	public function getRegistratorDetails()
+	{
 		return $this->registratorDetails;
 	}
 		
@@ -104,7 +109,8 @@ class Domain extends \Entity\BaseEntity {
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Domain
 	 */
-	public function addLocation(\Entity\Location\Location $location) {
+	public function addLocation(\Entity\Location\Location $location)
+	{
 		if(!$this->locations->contains($location)) {
 			$this->locations->add($location);
 		}
@@ -117,7 +123,8 @@ class Domain extends \Entity\BaseEntity {
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Domain
 	 */
-	public function removeLocation(\Entity\Location\Location $location) {
+	public function removeLocation(\Entity\Location\Location $location)
+	{
 		if($this->locations->contains($location)) {
 			$this->locations->removeElement($location);
 		}
@@ -129,7 +136,8 @@ class Domain extends \Entity\BaseEntity {
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Location\Location
 	 */
-	public function getLocations() {
+	public function getLocations()
+	{
 		return $this->locations;
 	}
 }

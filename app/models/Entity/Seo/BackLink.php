@@ -3,7 +3,7 @@
 namespace Entity\Seo;
 
 use Entity\Attraction;
-use Entity\Dictionary;
+use Entity\Phrase;
 use Entity\Location;
 use Entity\Medium;
 use Entity\Rental;
@@ -13,8 +13,6 @@ use	Extras\Annotation as EA;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="seo_backlink", indexes={@ORM\index(name="rental", columns={"rental_id"}), @ORM\index(name="location", columns={"location_id"}), @ORM\index(name="language", columns={"language_id"}), @ORM\index(name="linkUrl", columns={"linkUrl"})})
- * @EA\Service(name="\Service\Seo\BackLink")
- * @EA\ServiceList(name="\Service\Seo\BackLinkList")
  * @EA\Primary(key="id", value="id")
  */
 class BackLink extends \Entity\BaseEntity {
@@ -40,7 +38,7 @@ class BackLink extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Dictionary\Language")
+	 * @ORM\ManyToOne(targetEntity="Entity\Language")
 	 * @ORM\JoinColumn(onDelete="SET NULL")
 	 */
 	protected $language;
@@ -88,10 +86,11 @@ class BackLink extends \Entity\BaseEntity {
 	protected $notes;
 
 
-//@entity-generator-code <--- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 	}
 		
@@ -99,7 +98,8 @@ class BackLink extends \Entity\BaseEntity {
 	 * @param \Entity\Rental\Rental
 	 * @return \Entity\Seo\BackLink
 	 */
-	public function setRental(\Entity\Rental\Rental $rental) {
+	public function setRental(\Entity\Rental\Rental $rental)
+	{
 		$this->rental = $rental;
 
 		return $this;
@@ -108,7 +108,8 @@ class BackLink extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Seo\BackLink
 	 */
-	public function unsetRental() {
+	public function unsetRental()
+	{
 		$this->rental = NULL;
 
 		return $this;
@@ -117,7 +118,8 @@ class BackLink extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Rental\Rental|NULL
 	 */
-	public function getRental() {
+	public function getRental()
+	{
 		return $this->rental;
 	}
 		
@@ -125,7 +127,8 @@ class BackLink extends \Entity\BaseEntity {
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Seo\BackLink
 	 */
-	public function setLocation(\Entity\Location\Location $location) {
+	public function setLocation(\Entity\Location\Location $location)
+	{
 		$this->location = $location;
 
 		return $this;
@@ -134,7 +137,8 @@ class BackLink extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Seo\BackLink
 	 */
-	public function unsetLocation() {
+	public function unsetLocation()
+	{
 		$this->location = NULL;
 
 		return $this;
@@ -143,15 +147,17 @@ class BackLink extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Location\Location|NULL
 	 */
-	public function getLocation() {
+	public function getLocation()
+	{
 		return $this->location;
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Language
+	 * @param \Entity\Language
 	 * @return \Entity\Seo\BackLink
 	 */
-	public function setLanguage(\Entity\Dictionary\Language $language) {
+	public function setLanguage(\Entity\Language $language)
+	{
 		$this->language = $language;
 
 		return $this;
@@ -160,16 +166,18 @@ class BackLink extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Seo\BackLink
 	 */
-	public function unsetLanguage() {
+	public function unsetLanguage()
+	{
 		$this->language = NULL;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Language|NULL
+	 * @return \Entity\Language|NULL
 	 */
-	public function getLanguage() {
+	public function getLanguage()
+	{
 		return $this->language;
 	}
 		
@@ -177,7 +185,8 @@ class BackLink extends \Entity\BaseEntity {
 	 * @param \DateTime
 	 * @return \Entity\Seo\BackLink
 	 */
-	public function setLastChecked(\DateTime $lastChecked) {
+	public function setLastChecked(\DateTime $lastChecked)
+	{
 		$this->lastChecked = $lastChecked;
 
 		return $this;
@@ -186,7 +195,8 @@ class BackLink extends \Entity\BaseEntity {
 	/**
 	 * @return \DateTime|NULL
 	 */
-	public function getLastChecked() {
+	public function getLastChecked()
+	{
 		return $this->lastChecked;
 	}
 		
@@ -194,7 +204,8 @@ class BackLink extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Seo\BackLink
 	 */
-	public function setStatus($status) {
+	public function setStatus($status)
+	{
 		$this->status = $status;
 
 		return $this;
@@ -203,7 +214,8 @@ class BackLink extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Seo\BackLink
 	 */
-	public function unsetStatus() {
+	public function unsetStatus()
+	{
 		$this->status = NULL;
 
 		return $this;
@@ -212,7 +224,8 @@ class BackLink extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getStatus() {
+	public function getStatus()
+	{
 		return $this->status;
 	}
 		
@@ -220,7 +233,8 @@ class BackLink extends \Entity\BaseEntity {
 	 * @param \Extras\Types\Url
 	 * @return \Entity\Seo\BackLink
 	 */
-	public function setLinkUrl(\Extras\Types\Url $linkUrl) {
+	public function setLinkUrl(\Extras\Types\Url $linkUrl)
+	{
 		$this->linkUrl = $linkUrl;
 
 		return $this;
@@ -229,7 +243,8 @@ class BackLink extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Seo\BackLink
 	 */
-	public function unsetLinkUrl() {
+	public function unsetLinkUrl()
+	{
 		$this->linkUrl = NULL;
 
 		return $this;
@@ -238,7 +253,8 @@ class BackLink extends \Entity\BaseEntity {
 	/**
 	 * @return \Extras\Types\Url|NULL
 	 */
-	public function getLinkUrl() {
+	public function getLinkUrl()
+	{
 		return $this->linkUrl;
 	}
 		
@@ -246,7 +262,8 @@ class BackLink extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Seo\BackLink
 	 */
-	public function setLinkAnchor($linkAnchor) {
+	public function setLinkAnchor($linkAnchor)
+	{
 		$this->linkAnchor = $linkAnchor;
 
 		return $this;
@@ -255,7 +272,8 @@ class BackLink extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Seo\BackLink
 	 */
-	public function unsetLinkAnchor() {
+	public function unsetLinkAnchor()
+	{
 		$this->linkAnchor = NULL;
 
 		return $this;
@@ -264,7 +282,8 @@ class BackLink extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getLinkAnchor() {
+	public function getLinkAnchor()
+	{
 		return $this->linkAnchor;
 	}
 		
@@ -272,7 +291,8 @@ class BackLink extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Seo\BackLink
 	 */
-	public function setLinkTitle($linkTitle) {
+	public function setLinkTitle($linkTitle)
+	{
 		$this->linkTitle = $linkTitle;
 
 		return $this;
@@ -281,7 +301,8 @@ class BackLink extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Seo\BackLink
 	 */
-	public function unsetLinkTitle() {
+	public function unsetLinkTitle()
+	{
 		$this->linkTitle = NULL;
 
 		return $this;
@@ -290,7 +311,8 @@ class BackLink extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getLinkTitle() {
+	public function getLinkTitle()
+	{
 		return $this->linkTitle;
 	}
 		
@@ -298,7 +320,8 @@ class BackLink extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Seo\BackLink
 	 */
-	public function setHtmlCode($htmlCode) {
+	public function setHtmlCode($htmlCode)
+	{
 		$this->htmlCode = $htmlCode;
 
 		return $this;
@@ -307,7 +330,8 @@ class BackLink extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getHtmlCode() {
+	public function getHtmlCode()
+	{
 		return $this->htmlCode;
 	}
 		
@@ -315,7 +339,8 @@ class BackLink extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Seo\BackLink
 	 */
-	public function setNotes($notes) {
+	public function setNotes($notes)
+	{
 		$this->notes = $notes;
 
 		return $this;
@@ -324,7 +349,8 @@ class BackLink extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getNotes() {
+	public function getNotes()
+	{
 		return $this->notes;
 	}
 }

@@ -63,6 +63,7 @@ abstract class Service extends Nette\Object implements IService {
 			if ($flush) $this->getEntityManager()->flush();
 			return true; 
 		} catch (Exception $e) {
+			// @todo brano tu by som normalne vyhodil vynimku, ci ?
 			return false;
 		}
 	}
@@ -77,6 +78,7 @@ abstract class Service extends Nette\Object implements IService {
 			if ($flush) $this->getEntityManager()->flush();
 			return true; 
 		} catch (Exception $e) {
+			// @todo brano tu by som normalne vyhodil vynimku, ci ?
 			return false;
 		}
 	}

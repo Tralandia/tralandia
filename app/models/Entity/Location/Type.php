@@ -2,23 +2,20 @@
 
 namespace Entity\Location;
 
-use Entity\Dictionary;
+use Entity\Phrase;
 use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Entity(repositoryClass="\BaseRepository")
  * @ORM\Table(name="location_type", indexes={@ORM\index(name="slug", columns={"slug"})})
- * @EA\Service(name="\Service\Location\Type")
- * @EA\ServiceList(name="\Service\Location\TypeList")
  * @EA\Primary(key="id", value="name")
  */
 class Type extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
+	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $name;
 	
@@ -29,33 +26,36 @@ class Type extends \Entity\BaseEntityDetails {
 	protected $slug;
 
 	/**
-	 * @var boolean
-	 * @ORM\Column(type="boolean")
 	 * primary types can have their own domain (easily) and can be parent to other types
+	 * @var boolean
+	 * @ORM\Column(name="`primary`", type="boolean")
 	 */
-	protected $primary;
+	protected $primary = FALSE;
 
-//@entity-generator-code <--- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Phrase
+	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Location\Type
 	 */
-	public function setName(\Entity\Dictionary\Phrase $name) {
+	public function setName(\Entity\Phrase\Phrase $name)
+	{
 		$this->name = $name;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Phrase|NULL
+	 * @return \Entity\Phrase\Phrase|NULL
 	 */
-	public function getName() {
+	public function getName()
+	{
 		return $this->name;
 	}
 		
@@ -63,7 +63,8 @@ class Type extends \Entity\BaseEntityDetails {
 	 * @param slug
 	 * @return \Entity\Location\Type
 	 */
-	public function setSlug($slug) {
+	public function setSlug($slug)
+	{
 		$this->slug = $slug;
 
 		return $this;
@@ -72,7 +73,8 @@ class Type extends \Entity\BaseEntityDetails {
 	/**
 	 * @return slug|NULL
 	 */
-	public function getSlug() {
+	public function getSlug()
+	{
 		return $this->slug;
 	}
 		
@@ -80,7 +82,8 @@ class Type extends \Entity\BaseEntityDetails {
 	 * @param boolean
 	 * @return \Entity\Location\Type
 	 */
-	public function setPrimary($primary) {
+	public function setPrimary($primary)
+	{
 		$this->primary = $primary;
 
 		return $this;
@@ -89,7 +92,8 @@ class Type extends \Entity\BaseEntityDetails {
 	/**
 	 * @return boolean|NULL
 	 */
-	public function getPrimary() {
+	public function getPrimary()
+	{
 		return $this->primary;
 	}
 }

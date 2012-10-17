@@ -2,15 +2,13 @@
 
 namespace Entity\Invoicing;
 
-use Entity\Dictionary;
+use Entity\Phrase;
 use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="invoicing_serviceduration")
- * @EA\Service(name="\Service\Invoicing\ServiceDuration")
- * @EA\ServiceList(name="\Service\Invoicing\ServiceDurationList")
  * @EA\Primary(key="id", value="duration")
  */
 class ServiceDuration extends \Entity\BaseEntity {
@@ -23,7 +21,7 @@ class ServiceDuration extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
+	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $name;
 
@@ -33,31 +31,11 @@ class ServiceDuration extends \Entity\BaseEntity {
 	 */
 	protected $sort;
 
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//@entity-generator-code <--- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 	}
 		
@@ -65,7 +43,8 @@ class ServiceDuration extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Invoicing\ServiceDuration
 	 */
-	public function setDuration($duration) {
+	public function setDuration($duration)
+	{
 		$this->duration = $duration;
 
 		return $this;
@@ -74,7 +53,8 @@ class ServiceDuration extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoicing\ServiceDuration
 	 */
-	public function unsetDuration() {
+	public function unsetDuration()
+	{
 		$this->duration = NULL;
 
 		return $this;
@@ -83,24 +63,27 @@ class ServiceDuration extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getDuration() {
+	public function getDuration()
+	{
 		return $this->duration;
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Phrase
+	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Invoicing\ServiceDuration
 	 */
-	public function setName(\Entity\Dictionary\Phrase $name) {
+	public function setName(\Entity\Phrase\Phrase $name)
+	{
 		$this->name = $name;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Phrase|NULL
+	 * @return \Entity\Phrase\Phrase|NULL
 	 */
-	public function getName() {
+	public function getName()
+	{
 		return $this->name;
 	}
 		
@@ -108,7 +91,8 @@ class ServiceDuration extends \Entity\BaseEntity {
 	 * @param integer
 	 * @return \Entity\Invoicing\ServiceDuration
 	 */
-	public function setSort($sort) {
+	public function setSort($sort)
+	{
 		$this->sort = $sort;
 
 		return $this;
@@ -117,7 +101,8 @@ class ServiceDuration extends \Entity\BaseEntity {
 	/**
 	 * @return integer|NULL
 	 */
-	public function getSort() {
+	public function getSort()
+	{
 		return $this->sort;
 	}
 }

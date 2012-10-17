@@ -26,71 +26,73 @@ class ImportLocations extends BaseImport {
 
 	public function doImport($subsection) {
 		
-		$this->setSubsections('locations');
 
-		$this->dictionaryTypeName = $this->createDictionaryType('\Location\Location', 'name', 'NATIVE', array('locativesRequired' => TRUE));
-		$this->dictionaryTypeNameOfficial = $this->createDictionaryType('\Location\Location', 'nameOfficial', 'NATIVE', array('locativesRequired' => TRUE));
-		$this->dictionaryTypeNameShort = $this->createDictionaryType('\Location\Location', 'nameShort', 'NATIVE', array('locativesRequired' => TRUE));
-		\Extras\Models\Service::flush(FALSE);
+		$this->dictionaryTypeName = $this->createPhraseType('\Location\Location', 'name', 'NATIVE', array('locativesRequired' => TRUE));
+		$this->model->persist($this->dictionaryTypeName);
+		$this->dictionaryTypeNameOfficial = $this->createPhraseType('\Location\Location', 'nameOfficial', 'NATIVE', array('locativesRequired' => TRUE));
+		$this->model->persist($this->dictionaryTypeNameOfficial);
+		$this->dictionaryTypeNameShort = $this->createPhraseType('\Location\Location', 'nameShort', 'NATIVE', array('locativesRequired' => TRUE));
+		$this->model->persist($this->dictionaryTypeNameShort);
+		
+		$this->model->flush();
 
-		debug($subsection);
-		$this->$subsection();
+		$this->{$subsection}();
 
-		$this->savedVariables['importedSubSections']['locations'][$subsection] = 1;
-
-		if (end($this->sections['locations']['subsections']) == $subsection) {
-			$this->savedVariables['importedSections']['locations'] = 1;		
-		}
 	}
 
 	// ----------------------------------------------------------
 	// ------------- CONTINENTS
 	// ----------------------------------------------------------
 	private function importContinents() {
-		$language = \Service\Dictionary\Language::getByIso('en');
+		$language = $this->context->languageRepository->findOneBy(array('iso' => 'en'));
 
 		// Create location type for world
-		$locationType = \Service\Location\Type::get();
+		$locationType = $this->context->locationTypeEntityFactory->create();
 		$locationType->name = $this->createPhraseFromString('\Location\Location', 'name', 'NATIVE', 'world', $language);
 		$locationType->slug = 'world';
 		$locationType->primary = TRUE;
-		$locationType->save();
-		$this->worldType = $locationType;
+		
+		$this->model->persist($locationType);
+		$this->model->flush();
 
-		// Create location World
-		$namePhrase = \Service\Dictionary\Phrase::get();
+		$worldType = $locationType;
+
+		$namePhrase = $this->context->phraseEntityFactory->create();
 		$namePhrase->type = $this->dictionaryTypeName;
 		$namePhrase->addTranslation($this->createTranslation($language, 'World'));
-		$namePhrase->save();
+		$this->model->persist($namePhrase);
+		$this->model->flush();
 
-		$s = \Service\Location\Location::get();
+		// Create location World
+		$s = $this->context->locationEntityFactory->create();
 		$s->name = $namePhrase;
-		$s->nameShort = \Service\Dictionary\Phrase::get();
-		$s->nameOfficial = \Service\Dictionary\Phrase::get();
-		$s->type = $this->worldType;
-		$s->slug = 'world';
-		$s->save();
+		$s->nameShort = $this->context->phraseEntityFactory->create();
+		$s->nameOfficial = $this->context->phraseEntityFactory->create();
+		$s->type = $worldType;
+		$this->model->persist($s);
+		$this->model->flush();
 
 
-		$locationType = \Service\Location\Type::get();
+		$locationType = $this->context->locationTypeEntityFactory->create();
 		$locationType->name = $this->createPhraseFromString('\Location\Location', 'name', 'NATIVE', 'continent', $language);
 		$locationType->slug = 'continent';
 		$locationType->primary = TRUE;
-		$locationType->save();
-		$this->continentsType = $locationType;
+		$this->model->persist($locationType);
+		$this->model->flush();
 
 		$r = q('select * from continents order by id');
 		while($x = mysql_fetch_array($r)) {
-			$s = \Service\Location\Location::get();
+			$s = $this->context->locationEntityFactory->create();
 			$s->name = $this->createNewPhrase($this->dictionaryTypeName, $x['name_dic_id']);
-			$s->nameShort = \Service\Dictionary\Phrase::get();
-			$s->nameOfficial = \Service\Dictionary\Phrase::get();
+			$s->nameShort = $this->context->phraseEntityFactory->create();
+			$s->nameOfficial = $this->context->phraseEntityFactory->create();
 			$s->type = $locationType;
 			$s->slug = qc('select text from z_en where id = '.$x['name_dic_id']);
 			$s->oldId = $x['id'];
-			$s->save();
+			$this->model->persist($s);
 			//debug($s);
 		}
+		$this->model->flush();
 	}
 
 	// ----------------------------------------------------------
@@ -98,80 +100,82 @@ class ImportLocations extends BaseImport {
 	// ----------------------------------------------------------
 	private function importCountries() {
 
-		$dictionaryType = $this->createDictionaryType('\Location\TypeService', 'name', 'ACTIVE');
+		$language = $this->context->languageRepository->findOneBy(array('iso' => 'en'));
+		$dictionaryType = $this->createPhraseType('\Location\TypeService', 'name', 'ACTIVE');
 
-		$locationTypeCountry = \Service\Location\Type::get();
+		$locationTypeCountry = $this->context->locationTypeEntityFactory->create();
 		$locationTypeCountry->name = $this->createNewPhrase($dictionaryType, 865);
 		$locationTypeCountry->slug = 'country';
-		$locationTypeCountry->save();
+		$this->model->persist($locationTypeCountry);
 
-		$locationTypeState = \Service\Location\Type::get();
+		$locationTypeState = $this->context->locationTypeEntityFactory->create();
 		$locationTypeState->name = $this->createNewPhrase($dictionaryType, 865);
 		$locationTypeState->slug = 'state';
-		$locationTypeState->save();
+		$this->model->persist($locationTypeState);
 
 		// Create USA
-		$namePhrase = \Service\Dictionary\Phrase::get();
+		$namePhrase = $this->context->phraseEntityFactory->create();
 		$namePhrase->type = $this->dictionaryTypeName;
 		$namePhrase->addTranslation($this->createTranslation($language, 'USA'));
-		$namePhrase->save();
+		$this->model->persist($namePhrase);
 
-		$s = \Service\Location\Location::get();
+		$s = $this->context->locationEntityFactory->create();
 		$s->name = $namePhrase;
-		$s->nameShort = \Service\Dictionary\Phrase::get();
-		$s->nameOfficial = \Service\Dictionary\Phrase::get();
+		$s->nameShort = $this->context->phraseEntityFactory->create();
+		$s->nameOfficial = $this->context->phraseEntityFactory->create();
 		$s->type = $locationTypeCountry;
-		$s->parent = 5; // north america
+		$s->parent = $this->context->locationRepository->find(5); // north america
 		$s->slug = 'usa';
-		$s->save();
+		$this->model->persist($s);
 
 		$usa = $s;
 
 		// Create Canada
-		$namePhrase = \Service\Dictionary\Phrase::get();
+		$namePhrase = $this->context->phraseEntityFactory->create();
 		$namePhrase->type = $this->dictionaryTypeName;
 		$namePhrase->addTranslation($this->createTranslation($language, 'Canada'));
-		$namePhrase->save();
+		$this->model->persist($namePhrase);
 
-		$s = \Service\Location\Location::get();
+		$s = $this->context->locationEntityFactory->create();
 		$s->name = $namePhrase;
-		$s->nameShort = \Service\Dictionary\Phrase::get();
-		$s->nameOfficial = \Service\Dictionary\Phrase::get();
+		$s->nameShort = $this->context->phraseEntityFactory->create();
+		$s->nameOfficial = $this->context->phraseEntityFactory->create();
 		$s->type = $locationTypeCountry;
-		$s->parent = 5; // north america
+		$s->parent = $this->context->locationRepository->find(5); // north america
 		$s->slug = 'canada';
-		$s->save();
+		$this->model->persist($s);
 
 		$canada = $s;
 
+		$this->model->flush();
 
 		$r = q('select * from countries order by id');
 		//$r = q('select * from countries where id = 46 order by id');
 		while($x = mysql_fetch_array($r)) {
-			$location = \Service\Location\Location::get();
+			$location = $this->context->locationEntityFactory->create();
 
 			$location->status = $x['supported'] == 1 ? 'supported' : ($x['status'] == 1 ? 'launched' : '');
 			$location->oldId = $x['id'];
 			$location->iso = $x['iso'];
 			$location->iso3 = $x['iso3'];
-			$location->defaultLanguage = \Service\Dictionary\Language::get(getByOldId('\Dictionary\Language', $x['default_language_id']));
-			$t = getNewIds('\Dictionary\Language', $x['languages']);
+			$location->defaultLanguage = $this->context->languageRepository->find(getByOldId('\Language', $x['default_language_id']));
+			$t = getNewIds('\Language', $x['languages']);
 			foreach ($t as $key => $value) {
-				$t1 = \Service\Dictionary\Language::get($value);
+				$t1 = $this->context->languageRepository->find($value);
 				$location->addLanguage($t1);
 			}
 
-			$t = \Service\Currency::get(getByOldId('\Currency', $x['default_currency_id']));
-			if ($t->id) {
+			$t = $this->context->currencyRepository->findOneBy(array('oldId' => $x['default_currency_id']));
+			if ($t) {
 				$location->defaultCurrency = $t;
 			}
 			
 			$t = str_replace(',', '', $x['currencies']);
 			$t1 = NULL;
 			if (((int)$t) > 0) {
-				$t1 = \Service\Currency::get(getByOldId('\Currency', (int)$t));
+				$t1 = $this->context->currencyRepository->findOneBy(array('oldId' => (int)$t));
 			} else if (strlen($t) == 3) {
-				$t1 = getCurrencyByIso($t);
+				$t1 = $this->context->currencyRepository->findOneBy(array('iso' => $t));
 			}
 
 			if (isset($t1->id) && $t1->id > 0) {
@@ -222,10 +226,12 @@ class ImportLocations extends BaseImport {
 			*/
 
 			$namePhrase = $this->createNewPhrase($this->dictionaryTypeName, $x['name_dic_id']);
+			$namePhraseService = $this->context->phraseServiceFactory->create($namePhrase);
 			$r1 = q('select * from countries_translations where location_id = '.$x['id']);
 			//$r1 = q('select * from countries_translations where location_id = 46');
 			while ($x1 = mysql_fetch_array($r1)) {
-				$t = $namePhrase->getTranslation(\Service\Dictionary\Language::getByOldId($x1['language_id']));
+				$languageTemp = $this->context->languageRepository->findOneBy(array('oldId' => $x1['language_id']));
+				$t = $namePhraseService->getTranslation($languageTemp);
 				$variations = array(
 					'translation' => $x1['name'],
 					'locative' => $x1['name_locative'],
@@ -241,8 +247,7 @@ class ImportLocations extends BaseImport {
 				
 				$t = $nameOfficialPhrase->getTranslations();
 				foreach ($t as $key => $value) {
-					$value = \Service\Dictionary\Translation::get($value);
-					$language = \Service\Dictionary\Language::get($value->language);
+					$language = $value->language;
 					$x1 = qf('select * from countries_synonyms where country_id = '.$x['id'].' and language_id = '.$language->oldId.' order by length(name) DESC limit 1');
 					$value->translation = $x1['name'];
 					$variations = array(
@@ -251,18 +256,19 @@ class ImportLocations extends BaseImport {
 					);
 					$value->variations = $variations;
 					//debug($value);
-					$value->save();
+					$this->model->persist($value);
 				}
 
 				$location->nameOfficial = $nameOfficialPhrase;
 			} else {
-				$location->nameOfficial = \Service\Dictionary\Phrase::get();				
+				$location->nameOfficial = $this->context->phraseEntityFactory->create();				
 			}
 
-			$location->nameShort = \Service\Dictionary\Phrase::get();
+			$location->nameShort = $this->context->phraseEntityFactory->create();
 
-			$location->type = $locationType;
-			$location->slug = $namePhrase->getTranslation(\Service\Dictionary\Language::getByIso('en'))->translation;
+			$location->type = $locationTypeCountry;
+			$languageTemp = $this->context->languageRepository->findOneBy(array('iso' => 'en'));
+			$location->slug = $namePhraseService->getTranslation($languageTemp)->translation;
 			
 			$location->polygon = NULL;
 			$location->latitude = new Latlong($x['latitude']);
@@ -271,52 +277,44 @@ class ImportLocations extends BaseImport {
 
 			if (strlen($x['iso']) == 4) {
 				if (substr($x['iso'], 0, 2) == 'us') {
-					$location->parent = $usa->id;
+					$location->parent = $usa;
+					$location->type = $locationTypeState;
 				} else if (substr($x['iso'], 0, 2) == 'ca') {
-					$location->parent = $canada->id;
+					$location->parent = $canada;
 				}
 			} else {
-				$t = mysql_fetch_array(qNew('select id from location_location where oldId = '.$x['continent']));
-				$location->parent = $t[0];
+				$location = $this->context->locationRepository->findOneBy(array('oldId' => $x['continent']));
+				$location->parent = $location;
 			}
 
-			if ($x['domain']) $location->domain = \Service\Domain::getByDomain($x['domain']);
+			if ($x['domain']) $location->domain = $this->context->domainRepository->findOneBy(array('domain' => $x['domain']));
 
 			//debug($location->parent); return;
 			//debug($location); return;
 
-			$location->save();
+			$this->model->persist($location);
 		}
+		$this->model->flush();
 	}
 
-	// ----------------------------------------------------------
-	// ------------- COUNTRIES Update Nested Set
-	// ----------------------------------------------------------
-	private function updateNestedSetCountries() {
-/*		$continents = new \Service\Location\LocationList::getByType();
-		if(array_key_exists($x['continent'], $this->continentsByOldId)) {
-			$continent = $this->continentsByOldId[$x['continent']];
-			$continent->addChild($location);
-		}
-*/
-	}
 
 	// ----------------------------------------------------------
 	// ------------- COUNTRIES Travelings
 	// ----------------------------------------------------------
 	private function importTravelings() {
-		$countryLocationType = \Service\Location\Type::getBySlug('country');
+		$countryLocationType = $this->context->locationTypeRepository->findOneBy(array('slug' => 'country'));
 
 		$r = q('select * from countries_traveling order by id');
 		while ($x = mysql_fetch_array($r)) {
-			$traveling = \Service\Location\Traveling::get();
-			$traveling->sourceLocation = \Service\Location\Location::getByTypeAndOldId($countryLocationType, $x['source_country_id']);
-			$traveling->destinationLocation = \Service\Location\Location::getByTypeAndOldId($countryLocationType, $x['destination_country_id']);
+			$traveling = $this->context->locationTravelingEntityFactory->create();
+			$traveling->sourceLocation = $this->context->locationRepository->findOneBy(array('type' => $countryLocationType, 'oldId' => $x['source_country_id']));
+			$traveling->destinationLocation = $this->context->locationRepository->findOneBy(array('type' => $countryLocationType, 'oldId' => $x['destination_country_id']));
 			$traveling->peopleCount = $x['people_count'];
 			$traveling->year = $x['year'];
 			$traveling->oldId = $x['id'];
-			$traveling->save();
+			$this->model->persist($traveling);
 		}
+		$this->model->flush();
 		return false;
 	}
 
@@ -324,13 +322,12 @@ class ImportLocations extends BaseImport {
 	// ------------- Regions Level 0
 	// ----------------------------------------------------------
 	private function importRegions() {
-		$locationType = \Service\Location\Type::get();
-		$locationType->name = $this->createPhraseFromString('\Location\Location', 'name', 'NATIVE', 'region', \Service\Dictionary\Language::getByIso('en'));
+		$locationType = $this->context->locationTypeEntityFactory->create();
+		$locationType->name = $this->createPhraseFromString('\Location\Location', 'name', 'NATIVE', 'region', 'en');
 		$locationType->slug = 'region';
-		$locationType->save();
-		$this->regionsType = $locationType;
+		$this->model->persist($locationType);
 
-		$countryLocationType = \Service\Location\Type::getBySlug('country');
+		$countryLocationType = $this->context->locationTypeRepository->findOneBy(array('slug' => 'country'));
 
 		if ($this->developmentMode == TRUE) {
 			$r = q('select * from regions where country_id = 46 and level = 0 order by id');
@@ -339,9 +336,9 @@ class ImportLocations extends BaseImport {
 		}
 
 		while($x = mysql_fetch_array($r)) {
-			$location = \Service\Location\Location::get();
+			$location = $this->context->locationEntityFactory->create();
 
-			$namePhrase = \Service\Dictionary\Phrase::get();
+			$namePhrase = $this->context->phraseEntityFactory->create();
 			$namePhrase->type = $this->dictionaryTypeName;
 			$namePhrase->ready = TRUE;
 
@@ -350,7 +347,8 @@ class ImportLocations extends BaseImport {
 				$variations = array(
 					'locative' => $x1['name_locative'],
 				);
-				$t = $this->createTranslation(\Service\Dictionary\Language::getByOldId($x1['language_id']), $x['name'], $variations);
+				$languageTemp = $this->context->languageRepository->findOneBy(array('oldId' => $x1['language_id']));
+				$t = $this->createTranslation($languageTemp, $x['name'], $variations);
 				$namePhrase->addTranslation($t);
 			}
 
@@ -362,10 +360,12 @@ class ImportLocations extends BaseImport {
 
 			$location->oldId = $x['id'];
 
-			$location->parent = \Service\Location\Location::getByOldIdAndType($x['country_id'], $countryLocationType)->id;
+
+			$location->parent = $this->context->locationRepository->findOneBy(array('oldId'=>$x['country_id'], 'type'=>$countryLocationType));
 			//debug($location); return;
-			$location->save();
+			$this->model->persist($location);
 		}
+		$this->model->flush();
 	}
 
 	// ----------------------------------------------------------
@@ -375,10 +375,10 @@ class ImportLocations extends BaseImport {
 
 		// Level 1
 
-		$locationType = \Service\Location\Type::getBySlug('region');
+		$locationType = $this->context->locationTypeRepository->findOneBy(array('slug'=> 'region'));
 
 
-		$countryLocationType = \Service\Location\Type::getBySlug('country');
+		$countryLocationType = $this->context->locationTypeRepository->findOneBy(array('slug' => 'country'));
 
 		if ($this->developmentMode == TRUE) {
 			$r = q('select * from regions where country_id = 46 and level = 1 order by id');
@@ -387,9 +387,9 @@ class ImportLocations extends BaseImport {
 		}
 
 		while($x = mysql_fetch_array($r)) {
-			$location = \Service\Location\Location::get();
+			$location = $this->context->locationEntityFactory->create();
 
-			$namePhrase = \Service\Dictionary\Phrase::get();
+			$namePhrase = $this->context->phraseEntityFactory->create();
 			$namePhrase->type = $this->dictionaryTypeName;
 			$namePhrase->ready = TRUE;
 
@@ -398,7 +398,8 @@ class ImportLocations extends BaseImport {
 				$variations = array(
 					'locative' => $x1['name_locative'],
 				);
-				$t = $this->createTranslation(\Service\Dictionary\Language::getByOldId($x1['language_id']), $x['name'], $variations);
+				$languageTemp = $this->context->languageRepository->findOneBy(array('oldId' => $x1['language_id']));
+				$t = $this->createTranslation($languageTemp, $x['name'], $variations);
 				$namePhrase->addTranslation($t);
 			}
 
@@ -410,18 +411,19 @@ class ImportLocations extends BaseImport {
 
 			$location->oldId = $x['id'];
 
-			$location->parent = \Service\Location\Location::getByOldIdAndType($x['country_id'], $countryLocationType)->id;
-			$location->save();
+			$location->parent = $this->context->locationRepository->findOneBy(array('oldId'=>$x['country_id'], 'type'=>$countryLocationType));
+			$this->model->persist($location);
 		}
+		$this->model->flush();
 
 	}
 
 	private function importAdministrativeRegions2() {
 		// Level 2
 
-		$locationType = \Service\Location\Type::getBySlug('region');
+		$locationType = $this->context->locationTypeRepository->findOneBy(array('slug'=> 'region'));
 
-		$countryLocationType = \Service\Location\Type::getBySlug('country');
+		$countryLocationType = $this->context->locationTypeRepository->findOneBy(array('slug' => 'country'));
 
 		if ($this->developmentMode == TRUE) {
 			$r = q('select * from regions where country_id = 46 and level = 2 order by id');
@@ -429,9 +431,9 @@ class ImportLocations extends BaseImport {
 			$r = q('select * from regions where level = 2 order by id');
 		}
 		while($x = mysql_fetch_array($r)) {
-			$location = \Service\Location\Location::get();
+			$location = $this->context->locationEntityFactory->create();
 
-			$namePhrase = \Service\Dictionary\Phrase::get();
+			$namePhrase = $this->context->phraseEntityFactory->create();
 			$namePhrase->type = $this->dictionaryTypeName;
 			$namePhrase->ready = TRUE;
 
@@ -440,7 +442,8 @@ class ImportLocations extends BaseImport {
 				$variations = array(
 					'locative' => $x1['name_locative'],
 				);
-				$t = $this->createTranslation(\Service\Dictionary\Language::getByOldId($x1['language_id']), $x['name'], $variations);
+				$languageTemp = $this->context->languageRepository->findOneBy(array('oldId' => $x1['language_id']));
+				$t = $this->createTranslation($languageTemp, $x['name'], $variations);
 				$namePhrase->addTranslation($t);
 			}
 
@@ -454,12 +457,13 @@ class ImportLocations extends BaseImport {
 
 			//debug($x['parent_id']); debug($this->administrativeRegions1Type); return;
 
-			$t = \Service\Location\Location::getByOldIdAndType($x['country_id'], $locationType);
+			$t = $this->context->locationRepository->findOneBy(array('oldId'=>$x['country_id'], 'type'=>$countryLocationType));
 			if ($t) {
-				$location->parent = $t->id;
+				$location->parent = $t;
 			}
-			$location->save();
+			$this->model->persist($location);
 		}
+		$this->model->flush();
 
 	}
 
@@ -468,13 +472,13 @@ class ImportLocations extends BaseImport {
 	// ----------------------------------------------------------
 	private function importLocalities() {
 
-		$locationType = \Service\Location\Type::get();
-		$locationType->name = $this->createPhraseFromString('\Location\Location', 'name', 'NATIVE', 'locality', \Service\Dictionary\Language::getByIso('en'));
+		$locationType = $this->context->locationTypeEntityFactory->create();
+		$locationType->name = $this->createPhraseFromString('\Location\Location', 'name', 'NATIVE', 'locality', 'en');
 		$locationType->slug = 'locality';
-		$locationType->save();
-		$this->localitiesType = $locationType;
+		
+		$this->model->persist($locationType);
 
-		$countryLocationType = \Service\Location\Type::getBySlug('country');
+		$countryLocationType = $this->context->locationTypeRepository->findOneBy(array('slug' => 'country'));
 
 		if ($this->developmentMode == TRUE) {
 			$r = q('select * from localities where country_id = 46 order by id');
@@ -482,19 +486,20 @@ class ImportLocations extends BaseImport {
 			$r = q('select * from localities order by id');
 		}
 		while($x = mysql_fetch_array($r)) {
-			$location = \Service\Location\Location::get();
+			$location = $this->context->locationEntityFactory->create();
 
-			$namePhrase = \Service\Dictionary\Phrase::get();
+			$namePhrase = $this->context->phraseEntityFactory->create();
 			$namePhrase->type = $this->dictionaryTypeName;
 			$namePhrase->ready = TRUE;
 
-			$countryLocation = \Service\Location\Location::getByOldIdAndType($x['country_id'], $countryLocationType);
+			$countryLocation = $this->context->locationRepository->findOneBy(array('oldId'=>$x['country_id'], 'type'=>$countryLocationType));
 			$r1 = q('select * from localities_translations where location_id = '.$x['id']);
 			while ($x1 = mysql_fetch_array($r1)) {
 				$variations = array(
 					'locative' => $x1['name_locative'],
 				);
-				$t = $this->createTranslation(\Service\Dictionary\Language::getByOldId($x1['language_id']), $x['name'], $variations);
+				$languageTemp = $this->context->languageRepository->findOneBy(array('oldId' => $x1['language_id']));
+				$t = $this->createTranslation($languageTemp, $x['name'], $variations);
 				$namePhrase->addTranslation($t);
 			}
 
@@ -506,10 +511,10 @@ class ImportLocations extends BaseImport {
 
 			$location->oldId = $x['id'];
 
-			$location->parent = $countryLocation->id;
-			$location->save();
-			//debug($location); return;
+			$location->parent = $countryLocation;
+			$this->model->persist($location);
 		}
+		$this->model->flush();
 	}
 
 }

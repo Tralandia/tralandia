@@ -6,7 +6,7 @@ namespace Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\MappedSuperclass()
+ * @ORM\MappedSuperclass(repositoryClass="\Repository\BaseRepository")
  */
 class BaseEntityDetails extends \Entity\BaseEntity {
 

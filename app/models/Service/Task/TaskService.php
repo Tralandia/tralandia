@@ -7,6 +7,6 @@ use Service, Doctrine, Entity;
 /**
  * @author Dávid Ďurika
  */
-class TaskService extends Service\Base {
+class TaskService extends Service\BaseService {
 
 }

@@ -8,7 +8,6 @@ use Nette\Application as NA,
 	Nette\Utils\Html,
 	Nette\Utils\Strings,
 	Extras\Models\Service,
-	Service\Dictionary as D,
 	Service as S,
 	Service\Log as SLog;
 
@@ -16,13 +15,13 @@ class BaseImport {
 	public $sections = array(
 		'languages' => array(
 			'entities' => array(
-				'\Dictionary\Language' => array(),
+				'\Language' => array(),
 			),
 			'subsections' => array(),
 		),
 		'htmlPhrases' => array(
 			'entities' => array(
-				'\Dictionary\Phrase' => array(),
+				'\Phrase\Phrase' => array(),
 			),
 			'subsections' => array(),
 		),
@@ -32,9 +31,9 @@ class BaseImport {
 			),
 			'subsections' => array(),
 		),
-		'autopilot' => array(
+		'taskTypes' => array(
 			'entities' => array(
-				'\Autopilot\Type' => array(),
+				'\Task\Type' => array(),
 			),
 			'subsections' => array(),
 		),
@@ -162,10 +161,13 @@ class BaseImport {
 	public $savedVariables = array();
 	public $developmentMode = TRUE;
 
-	public function __construct() {
+	public $context;
+
+	public function __construct($context) {
+		$this->context = $context;
+		$this->model = $context->model;
 		$this->loadVariables();
 
-		return;
 	}
 
 	public function setSubsections($section = NULL) {
@@ -220,22 +222,25 @@ class BaseImport {
 		foreach ($tempSections as $key => $value) {
 			$value = array_reverse($value['entities']);
 			foreach ($value as $key2 => $value2) {
-				$tableName = str_replace('\\', '_', $key2);
-				$tableName = trim($tableName, '_');
-				$tableName = strtolower($tableName);
-				$r = qNew('select id from '.$tableName.' order by id DESC');
-				//debug('select id from '.$tableName.' order by id DESC');
-				while ($x = mysql_fetch_array($r)) {
-					$serviceName = '\Service'.$key2;
-					$s = $serviceName::get($x['id']);
-					if ($s) $s->delete();
-				}
+				// $tableName = str_replace('\\', '_', $key2);
+				// $tableName = trim($tableName, '_');
+				// $tableName = strtolower($tableName);
+				// $r = qNew('select id from '.$tableName.' order by id DESC');
+				// //debug('select id from '.$tableName.' order by id DESC');
+				// while ($x = mysql_fetch_array($r)) {
+				// 	$serviceName = $this->getServiceFactoryName($key2);
+				// 	$s = $this->context->{$serviceName}->create($x['id']);
+				// 	if ($s) $s->delete();
+				// }
+				$repositoryName = $this->getRepositoryName($key2);
+				//d($this->context->{$repositoryName});
+				$allRows = $this->context->{$repositoryName}->deleteAll();
 			}
 			$this->savedVariables['importedSections'][$key]=0;
 			$this->savedVariables['importedSubSections'][$key] = array();
 			if ($key == $section) break;
 		}
-		\Extras\Models\Service::flush(FALSE);
+
 		foreach ($value as $key2 => $value2) {
 			$tableName = str_replace('\\', '_', $key2);
 			$tableName = trim($tableName, '_');
@@ -245,50 +250,52 @@ class BaseImport {
 		$this->saveVariables();
 	}
 
-	protected function createPhrasesByOld($entityName, $entityAttribute, $level, $oldTableName, $oldAttribute) {
-		$dictionaryType = $this->createDictionaryType($entityName, $entityAttribute, $level);
+	// protected function createPhrasesByOld($entityName, $entityAttribute, $level, $oldTableName, $oldAttribute) {
+	// 	$phraseType = $this->createPhraseType($entityName, $entityAttribute, $level);
 
-		$r = q('select * from '.$oldTableName.' order by id');
-		while($x = mysql_fetch_array($r)) {
-			if ($x[$oldAttribute]) {
-				$newEntityId = getByOldId($entityName, $x['id']);
-				$phrase = $this->createNewPhrase($dictionaryType, $x[$oldAttribute]);
-				if ($phrase instanceof \Service\Dictionary\Phrase) {
-					eval('$s = \Service'.$entityName.'::get('.$newEntityId.');');
-					if ($s->id > 0) {
-						$s->{$entityAttribute} = $phrase;
-						$s->save();						
-					} else {
-						debug($s);
-						debug($newEntityId); return;	
-					}
-				}
-			} else {
-				$phrase = $this->createNewPhrase($dictionaryType);
-			}
-		}
-	}
+	// 	$r = q('select id, '.$oldAttribute.' from '.$oldTableName.' order by id');
+	// 	while($x = mysql_fetch_array($r)) {
+	// 		if ($x[$oldAttribute]) {
+	// 			$newEntityId = getByOldId($entityName, $x['id']);
+	// 			$phrase = $this->createNewPhrase($phraseType, $x[$oldAttribute]);
+	// 			if ($phrase instanceof \Service\BaseService) {
+	// 				$serviceName = $this->getServiceFactoryName($entityName);
+	// 				$s = $this->context->{$serviceName}->create($newEntityId);
+	// 				if ($s->id > 0) {
+	// 					$s->{$entityAttribute} = $phrase;
+	// 					$s->save(FALSE);						
+	// 				} else {
+	// 					debug($s);
+	// 					debug($newEntityId); 
+	// 					return;	
+	// 				}
+	// 			}
+	// 		} else {
+	// 			$phrase = $this->createNewPhrase($phraseType);
+	// 		}
+	// 	}
+	// }
 
-	protected function createNewPhrase(\Service\Dictionary\Type $type, $oldPhraseId = NULL, $oldLocativePhraseId = NULL, $locativeKeys = NULL) {
+	protected function createNewPhrase(\Entity\BaseEntity $type, $oldPhraseId = NULL, $oldLocativePhraseId = NULL, $locativeKeys = NULL) {
 
 		if ($oldPhraseId) {
 			$oldPhraseData = qf('select * from dictionary where id = '.$oldPhraseId);
 			if (!$oldPhraseData) {
-				debug('Nenasiel som staru Phrase podla starej ID '.$oldPhraseId);
+				debug('Nenasiel som staru Phrase podla stareho ID '.$oldPhraseId);
 				$oldPhraseData = array(
 					'ready' => 1,
 				);
 				//throw new \Nette\UnexpectedValueException('Nenasiel som staru Phrase podla starej ID '.$oldPhraseId);
 			}			
 		}
-		$phrase = \Service\Dictionary\Phrase::get();
+		$phrase = $this->context->phraseEntityFactory->create();
 		$phrase->ready = (bool)$oldPhraseData['ready'];
 		$phrase->type = $type;
 		$phrase->oldId = $oldPhraseId;
 
 		$allLanguages = getSupportedLanguages();
 		foreach ($allLanguages as $key => $value) {
-			$language = \Service\Dictionary\Language::get($value);
+			$language = $this->context->languageRepository->find($value);
 			$oldTranslation = qf('select * from z_'.$language->iso.' where id = '.$oldPhraseId);
 			if (strlen($oldTranslation['text']) == 0) continue;
 
@@ -308,48 +315,68 @@ class BaseImport {
 		return $phrase;
 	}
 
+	/**
+	 * Vytvory novu Phrase entitu
+	 * @param  text $entityName
+	 * @param  text $entityAttribute
+	 * @param  text $level
+	 * @param  text $text
+	 * @param  \Entity\Language $textLanguage | string $textLanguage
+	 * @return \Entity\Phrase\Phrase
+	 */
 	protected function createPhraseFromString($entityName, $entityAttribute, $level, $text, $textLanguage) {
-		$dictionaryType = $this->createDictionaryType($entityName, $entityAttribute, $level);
+		$phraseType = $this->createPhraseType($entityName, $entityAttribute, $level);
 
-		$phrase = \Service\Dictionary\Phrase::get();
+		$phrase = $this->context->phraseEntityFactory->create();
 		$phrase->ready = TRUE;
-		$phrase->type = $dictionaryType;
+		$phrase->type = $phraseType;
 
-		if ($phrase instanceof \Service\Dictionary\Phrase) {
-			$phrase->addTranslation($this->createTranslation($textLanguage, $text));
+		if(is_string($textLanguage)) {
+			$textLanguage = $this->context->languageRepository->findOneBy(array('iso' => $textLanguage));
 		}
+		$phrase->addTranslation($this->createTranslation($textLanguage, $text));
 
-		$phrase->save();
 		return $phrase;
 	}
 
-	protected function createDictionaryType($entityName, $entityAttribute, $level, $params = NULL) {
+
+	/**
+	 * Vytvory novy typ frazy ak neexistuje, inak vracia existujuci
+	 * @param  string $entityName
+	 * @param  string $entityAttribute
+	 * @param  string $level
+	 * @param  [type] $params
+	 * @return \Entity\Phrase\Type
+	 */
+	protected function createPhraseType($entityName, $entityAttribute, $level, $params = NULL) {
 		if (substr($entityName, 0, 7) != '\Entity') {
 			$entityName = '\Entity'.$entityName;
 		}
 
-		$dictionaryType = D\Type::getByEntityNameAndEntityAttribute($entityName, $entityAttribute);
-		if ($dictionaryType) {
-			//debug('iba vraciam premennu '.$dictionaryType->entityName.'->'.$dictionaryType->entityAttribute);
-			return $dictionaryType;
+		$phraseTypeRepository = $this->context->phraseTypeRepository;
+		$phraseType = $phraseTypeRepository->findOneBy(array('entityName' => $entityName, 'entityAttribute' => $entityAttribute));
+
+		if ($phraseType) {
+			//debug('iba vraciam premennu '.$phraseType->entityName.'->'.$phraseType->entityAttribute);
+			return $phraseType;
 		} else {
-			eval('$level = \Entity\Dictionary\Type::TRANSLATION_LEVEL_'.strtoupper($level).';');
-			$dictionaryType = D\Type::get();
-			$dictionaryType->entityName = $entityName;
-			$dictionaryType->entityAttribute = $entityAttribute;
-			$dictionaryType->translationLevelRequirement = $level;
+			$level = constant('\Entity\Phrase\Type::TRANSLATION_LEVEL_'.strtoupper($level));
+			$phraseType = $this->context->phraseTypeEntityFactory->create();
+			$phraseType->entityName = $entityName;
+			$phraseType->entityAttribute = $entityAttribute;
+			$phraseType->translationLevelRequirement = $level;
 			if (isset($params) && count($params) > 0) {
 				foreach ($params as $key => $value) {
-					$dictionaryType->$key = $value;
+					$phraseType->$key = $value;
 				}
 			}
-			$dictionaryType->save();			
-			return $dictionaryType;
+			$this->context->model->persist($phraseType);	
+			return $phraseType;
 		}
 	}
 
-	protected function createTranslation(\Service\Dictionary\Language $language, $text, $variations = NULL) {
-		$translation = \Service\Dictionary\Translation::get();
+	protected function createTranslation(\Entity\BaseEntity $language, $text, $variations = NULL) {
+		$translation = $this->context->phraseTranslationEntityFactory->create();
 		$translation->language = $language;
 		$translation->translation = $text;
 		$translation->timeTranslated = new \Nette\DateTime();
@@ -410,5 +437,17 @@ class BaseImport {
 			}
 		}
 		return $return;
+	}
+
+	public function getServiceFactoryName($namespace) {
+		$serviceName = array_filter(array_unique(explode('\\', $namespace)));
+		$serviceName = lcfirst(implode('', $serviceName)) . 'ServiceFactory';
+		return $serviceName;
+	}
+
+	public function getRepositoryName($namespace) {
+		$serviceName = $this->getServiceFactoryName($namespace);
+		$repositoryName = str_replace('ServiceFactory', '', $serviceName);
+		return $repositoryName . 'Repository';
 	}
 }

@@ -3,7 +3,7 @@
 namespace Entity\Invoicing;
 
 use Entity\Company;
-use Entity\Dictionary;
+use Entity\Phrase;
 use Entity\Invoicing;
 use Entity\Rental;
 use Doctrine\ORM\Mapping as ORM;
@@ -12,8 +12,6 @@ use	Extras\Annotation as EA;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="invoicing_invoice", indexes={@ORM\index(name="invoiceNumber", columns={"invoiceNumber"}), @ORM\index(name="paymentReferenceNumber", columns={"paymentReferenceNumber"}), @ORM\index(name="due", columns={"due"}), @ORM\index(name="paid", columns={"paid"}), @ORM\index(name="status", columns={"status"}), @ORM\index(name="clientEmail", columns={"clientEmail"}), @ORM\index(name="referrer", columns={"referrer"}), @ORM\index(name="referrerCommission", columns={"referrerCommission"})})
- * @EA\Service(name="\Service\Invoicing\Service")
- * @EA\ServiceList(name="\Service\Invoicing\ServiceList")
  * @EA\Primary(key="id", value="clientName")
  */
 class Invoice extends \Entity\BaseEntity {
@@ -102,7 +100,7 @@ class Invoice extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Dictionary\Language")
+	 * @ORM\ManyToOne(targetEntity="Entity\Language")
 	 */
 	protected $clientLanguage;
 
@@ -187,10 +185,11 @@ class Invoice extends \Entity\BaseEntity {
 
 
 
-//@entity-generator-code <--- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 
 		$this->items = new \Doctrine\Common\Collections\ArrayCollection;
@@ -200,7 +199,8 @@ class Invoice extends \Entity\BaseEntity {
 	 * @param \Entity\Invoicing\Item
 	 * @return \Entity\Invoicing\Invoice
 	 */
-	public function addItem(\Entity\Invoicing\Item $item) {
+	public function addItem(\Entity\Invoicing\Item $item)
+	{
 		if(!$this->items->contains($item)) {
 			$this->items->add($item);
 		}
@@ -213,7 +213,8 @@ class Invoice extends \Entity\BaseEntity {
 	 * @param \Entity\Invoicing\Item
 	 * @return \Entity\Invoicing\Invoice
 	 */
-	public function removeItem(\Entity\Invoicing\Item $item) {
+	public function removeItem(\Entity\Invoicing\Item $item)
+	{
 		if($this->items->contains($item)) {
 			$this->items->removeElement($item);
 		}
@@ -225,7 +226,8 @@ class Invoice extends \Entity\BaseEntity {
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Invoicing\Item
 	 */
-	public function getItems() {
+	public function getItems()
+	{
 		return $this->items;
 	}
 		
@@ -233,7 +235,8 @@ class Invoice extends \Entity\BaseEntity {
 	 * @param integer
 	 * @return \Entity\Invoicing\Invoice
 	 */
-	public function setInvoiceNumber($invoiceNumber) {
+	public function setInvoiceNumber($invoiceNumber)
+	{
 		$this->invoiceNumber = $invoiceNumber;
 
 		return $this;
@@ -242,7 +245,8 @@ class Invoice extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoicing\Invoice
 	 */
-	public function unsetInvoiceNumber() {
+	public function unsetInvoiceNumber()
+	{
 		$this->invoiceNumber = NULL;
 
 		return $this;
@@ -251,7 +255,8 @@ class Invoice extends \Entity\BaseEntity {
 	/**
 	 * @return integer|NULL
 	 */
-	public function getInvoiceNumber() {
+	public function getInvoiceNumber()
+	{
 		return $this->invoiceNumber;
 	}
 		
@@ -259,7 +264,8 @@ class Invoice extends \Entity\BaseEntity {
 	 * @param integer
 	 * @return \Entity\Invoicing\Invoice
 	 */
-	public function setPaymentReferenceNumber($paymentReferenceNumber) {
+	public function setPaymentReferenceNumber($paymentReferenceNumber)
+	{
 		$this->paymentReferenceNumber = $paymentReferenceNumber;
 
 		return $this;
@@ -268,7 +274,8 @@ class Invoice extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoicing\Invoice
 	 */
-	public function unsetPaymentReferenceNumber() {
+	public function unsetPaymentReferenceNumber()
+	{
 		$this->paymentReferenceNumber = NULL;
 
 		return $this;
@@ -277,7 +284,8 @@ class Invoice extends \Entity\BaseEntity {
 	/**
 	 * @return integer|NULL
 	 */
-	public function getPaymentReferenceNumber() {
+	public function getPaymentReferenceNumber()
+	{
 		return $this->paymentReferenceNumber;
 	}
 		
@@ -285,7 +293,8 @@ class Invoice extends \Entity\BaseEntity {
 	 * @param \Entity\Company\Company
 	 * @return \Entity\Invoicing\Invoice
 	 */
-	public function setCompany(\Entity\Company\Company $company) {
+	public function setCompany(\Entity\Company\Company $company)
+	{
 		$this->company = $company;
 
 		return $this;
@@ -294,7 +303,8 @@ class Invoice extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoicing\Invoice
 	 */
-	public function unsetCompany() {
+	public function unsetCompany()
+	{
 		$this->company = NULL;
 
 		return $this;
@@ -303,7 +313,8 @@ class Invoice extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Company\Company|NULL
 	 */
-	public function getCompany() {
+	public function getCompany()
+	{
 		return $this->company;
 	}
 		
@@ -311,7 +322,8 @@ class Invoice extends \Entity\BaseEntity {
 	 * @param \Entity\Rental\Rental
 	 * @return \Entity\Invoicing\Invoice
 	 */
-	public function setRental(\Entity\Rental\Rental $rental) {
+	public function setRental(\Entity\Rental\Rental $rental)
+	{
 		$this->rental = $rental;
 
 		return $this;
@@ -320,7 +332,8 @@ class Invoice extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoicing\Invoice
 	 */
-	public function unsetRental() {
+	public function unsetRental()
+	{
 		$this->rental = NULL;
 
 		return $this;
@@ -329,7 +342,8 @@ class Invoice extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Rental\Rental|NULL
 	 */
-	public function getRental() {
+	public function getRental()
+	{
 		return $this->rental;
 	}
 		
@@ -337,7 +351,8 @@ class Invoice extends \Entity\BaseEntity {
 	 * @param \DateTime
 	 * @return \Entity\Invoicing\Invoice
 	 */
-	public function setDue(\DateTime $due) {
+	public function setDue(\DateTime $due)
+	{
 		$this->due = $due;
 
 		return $this;
@@ -346,7 +361,8 @@ class Invoice extends \Entity\BaseEntity {
 	/**
 	 * @return \DateTime|NULL
 	 */
-	public function getDue() {
+	public function getDue()
+	{
 		return $this->due;
 	}
 		
@@ -354,7 +370,8 @@ class Invoice extends \Entity\BaseEntity {
 	 * @param \DateTime
 	 * @return \Entity\Invoicing\Invoice
 	 */
-	public function setPaid(\DateTime $paid) {
+	public function setPaid(\DateTime $paid)
+	{
 		$this->paid = $paid;
 
 		return $this;
@@ -363,7 +380,8 @@ class Invoice extends \Entity\BaseEntity {
 	/**
 	 * @return \DateTime|NULL
 	 */
-	public function getPaid() {
+	public function getPaid()
+	{
 		return $this->paid;
 	}
 		
@@ -371,7 +389,8 @@ class Invoice extends \Entity\BaseEntity {
 	 * @param integer
 	 * @return \Entity\Invoicing\Invoice
 	 */
-	public function setStatus($status) {
+	public function setStatus($status)
+	{
 		$this->status = $status;
 
 		return $this;
@@ -380,7 +399,8 @@ class Invoice extends \Entity\BaseEntity {
 	/**
 	 * @return integer|NULL
 	 */
-	public function getStatus() {
+	public function getStatus()
+	{
 		return $this->status;
 	}
 		
@@ -388,7 +408,8 @@ class Invoice extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Invoicing\Invoice
 	 */
-	public function setClientName($clientName) {
+	public function setClientName($clientName)
+	{
 		$this->clientName = $clientName;
 
 		return $this;
@@ -397,7 +418,8 @@ class Invoice extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoicing\Invoice
 	 */
-	public function unsetClientName() {
+	public function unsetClientName()
+	{
 		$this->clientName = NULL;
 
 		return $this;
@@ -406,7 +428,8 @@ class Invoice extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getClientName() {
+	public function getClientName()
+	{
 		return $this->clientName;
 	}
 		
@@ -414,7 +437,8 @@ class Invoice extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Invoicing\Invoice
 	 */
-	public function setClientPhone($clientPhone) {
+	public function setClientPhone($clientPhone)
+	{
 		$this->clientPhone = $clientPhone;
 
 		return $this;
@@ -423,7 +447,8 @@ class Invoice extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoicing\Invoice
 	 */
-	public function unsetClientPhone() {
+	public function unsetClientPhone()
+	{
 		$this->clientPhone = NULL;
 
 		return $this;
@@ -432,7 +457,8 @@ class Invoice extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getClientPhone() {
+	public function getClientPhone()
+	{
 		return $this->clientPhone;
 	}
 		
@@ -440,7 +466,8 @@ class Invoice extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Invoicing\Invoice
 	 */
-	public function setClientEmail($clientEmail) {
+	public function setClientEmail($clientEmail)
+	{
 		$this->clientEmail = $clientEmail;
 
 		return $this;
@@ -449,7 +476,8 @@ class Invoice extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoicing\Invoice
 	 */
-	public function unsetClientEmail() {
+	public function unsetClientEmail()
+	{
 		$this->clientEmail = NULL;
 
 		return $this;
@@ -458,7 +486,8 @@ class Invoice extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getClientEmail() {
+	public function getClientEmail()
+	{
 		return $this->clientEmail;
 	}
 		
@@ -466,7 +495,8 @@ class Invoice extends \Entity\BaseEntity {
 	 * @param \Extras\Types\Url
 	 * @return \Entity\Invoicing\Invoice
 	 */
-	public function setClientUrl(\Extras\Types\Url $clientUrl) {
+	public function setClientUrl(\Extras\Types\Url $clientUrl)
+	{
 		$this->clientUrl = $clientUrl;
 
 		return $this;
@@ -475,7 +505,8 @@ class Invoice extends \Entity\BaseEntity {
 	/**
 	 * @return \Extras\Types\Url|NULL
 	 */
-	public function getClientUrl() {
+	public function getClientUrl()
+	{
 		return $this->clientUrl;
 	}
 		
@@ -483,7 +514,8 @@ class Invoice extends \Entity\BaseEntity {
 	 * @param \Extras\Types\Address
 	 * @return \Entity\Invoicing\Invoice
 	 */
-	public function setClientAddress(\Extras\Types\Address $clientAddress) {
+	public function setClientAddress(\Extras\Types\Address $clientAddress)
+	{
 		$this->clientAddress = $clientAddress;
 
 		return $this;
@@ -492,15 +524,17 @@ class Invoice extends \Entity\BaseEntity {
 	/**
 	 * @return \Extras\Types\Address|NULL
 	 */
-	public function getClientAddress() {
+	public function getClientAddress()
+	{
 		return $this->clientAddress;
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Language
+	 * @param \Entity\Language
 	 * @return \Entity\Invoicing\Invoice
 	 */
-	public function setClientLanguage(\Entity\Dictionary\Language $clientLanguage) {
+	public function setClientLanguage(\Entity\Language $clientLanguage)
+	{
 		$this->clientLanguage = $clientLanguage;
 
 		return $this;
@@ -509,16 +543,18 @@ class Invoice extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoicing\Invoice
 	 */
-	public function unsetClientLanguage() {
+	public function unsetClientLanguage()
+	{
 		$this->clientLanguage = NULL;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Language|NULL
+	 * @return \Entity\Language|NULL
 	 */
-	public function getClientLanguage() {
+	public function getClientLanguage()
+	{
 		return $this->clientLanguage;
 	}
 		
@@ -526,7 +562,8 @@ class Invoice extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Invoicing\Invoice
 	 */
-	public function setClientCompanyName($clientCompanyName) {
+	public function setClientCompanyName($clientCompanyName)
+	{
 		$this->clientCompanyName = $clientCompanyName;
 
 		return $this;
@@ -535,7 +572,8 @@ class Invoice extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoicing\Invoice
 	 */
-	public function unsetClientCompanyName() {
+	public function unsetClientCompanyName()
+	{
 		$this->clientCompanyName = NULL;
 
 		return $this;
@@ -544,7 +582,8 @@ class Invoice extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getClientCompanyName() {
+	public function getClientCompanyName()
+	{
 		return $this->clientCompanyName;
 	}
 		
@@ -552,7 +591,8 @@ class Invoice extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Invoicing\Invoice
 	 */
-	public function setClientCompanyId($clientCompanyId) {
+	public function setClientCompanyId($clientCompanyId)
+	{
 		$this->clientCompanyId = $clientCompanyId;
 
 		return $this;
@@ -561,7 +601,8 @@ class Invoice extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoicing\Invoice
 	 */
-	public function unsetClientCompanyId() {
+	public function unsetClientCompanyId()
+	{
 		$this->clientCompanyId = NULL;
 
 		return $this;
@@ -570,7 +611,8 @@ class Invoice extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getClientCompanyId() {
+	public function getClientCompanyId()
+	{
 		return $this->clientCompanyId;
 	}
 		
@@ -578,7 +620,8 @@ class Invoice extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Invoicing\Invoice
 	 */
-	public function setClientCompanyVatId($clientCompanyVatId) {
+	public function setClientCompanyVatId($clientCompanyVatId)
+	{
 		$this->clientCompanyVatId = $clientCompanyVatId;
 
 		return $this;
@@ -587,7 +630,8 @@ class Invoice extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoicing\Invoice
 	 */
-	public function unsetClientCompanyVatId() {
+	public function unsetClientCompanyVatId()
+	{
 		$this->clientCompanyVatId = NULL;
 
 		return $this;
@@ -596,7 +640,8 @@ class Invoice extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getClientCompanyVatId() {
+	public function getClientCompanyVatId()
+	{
 		return $this->clientCompanyVatId;
 	}
 		
@@ -604,7 +649,8 @@ class Invoice extends \Entity\BaseEntity {
 	 * @param float
 	 * @return \Entity\Invoicing\Invoice
 	 */
-	public function setVat($vat) {
+	public function setVat($vat)
+	{
 		$this->vat = $vat;
 
 		return $this;
@@ -613,7 +659,8 @@ class Invoice extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoicing\Invoice
 	 */
-	public function unsetVat() {
+	public function unsetVat()
+	{
 		$this->vat = NULL;
 
 		return $this;
@@ -622,7 +669,8 @@ class Invoice extends \Entity\BaseEntity {
 	/**
 	 * @return float|NULL
 	 */
-	public function getVat() {
+	public function getVat()
+	{
 		return $this->vat;
 	}
 		
@@ -630,7 +678,8 @@ class Invoice extends \Entity\BaseEntity {
 	 * @param \Entity\Currency
 	 * @return \Entity\Invoicing\Invoice
 	 */
-	public function setCurrency(\Entity\Currency $currency) {
+	public function setCurrency(\Entity\Currency $currency)
+	{
 		$this->currency = $currency;
 
 		return $this;
@@ -639,7 +688,8 @@ class Invoice extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoicing\Invoice
 	 */
-	public function unsetCurrency() {
+	public function unsetCurrency()
+	{
 		$this->currency = NULL;
 
 		return $this;
@@ -648,7 +698,8 @@ class Invoice extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Currency|NULL
 	 */
-	public function getCurrency() {
+	public function getCurrency()
+	{
 		return $this->currency;
 	}
 		
@@ -656,7 +707,8 @@ class Invoice extends \Entity\BaseEntity {
 	 * @param float
 	 * @return \Entity\Invoicing\Invoice
 	 */
-	public function setExchangeRate($exchangeRate) {
+	public function setExchangeRate($exchangeRate)
+	{
 		$this->exchangeRate = $exchangeRate;
 
 		return $this;
@@ -665,7 +717,8 @@ class Invoice extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoicing\Invoice
 	 */
-	public function unsetExchangeRate() {
+	public function unsetExchangeRate()
+	{
 		$this->exchangeRate = NULL;
 
 		return $this;
@@ -674,7 +727,8 @@ class Invoice extends \Entity\BaseEntity {
 	/**
 	 * @return float|NULL
 	 */
-	public function getExchangeRate() {
+	public function getExchangeRate()
+	{
 		return $this->exchangeRate;
 	}
 		
@@ -682,7 +736,8 @@ class Invoice extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Invoicing\Invoice
 	 */
-	public function setCreatedBy($createdBy) {
+	public function setCreatedBy($createdBy)
+	{
 		$this->createdBy = $createdBy;
 
 		return $this;
@@ -691,7 +746,8 @@ class Invoice extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoicing\Invoice
 	 */
-	public function unsetCreatedBy() {
+	public function unsetCreatedBy()
+	{
 		$this->createdBy = NULL;
 
 		return $this;
@@ -700,7 +756,8 @@ class Invoice extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getCreatedBy() {
+	public function getCreatedBy()
+	{
 		return $this->createdBy;
 	}
 		
@@ -708,7 +765,8 @@ class Invoice extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Invoicing\Invoice
 	 */
-	public function setReferrer($referrer) {
+	public function setReferrer($referrer)
+	{
 		$this->referrer = $referrer;
 
 		return $this;
@@ -717,7 +775,8 @@ class Invoice extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoicing\Invoice
 	 */
-	public function unsetReferrer() {
+	public function unsetReferrer()
+	{
 		$this->referrer = NULL;
 
 		return $this;
@@ -726,7 +785,8 @@ class Invoice extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getReferrer() {
+	public function getReferrer()
+	{
 		return $this->referrer;
 	}
 		
@@ -734,7 +794,8 @@ class Invoice extends \Entity\BaseEntity {
 	 * @param float
 	 * @return \Entity\Invoicing\Invoice
 	 */
-	public function setReferrerCommission($referrerCommission) {
+	public function setReferrerCommission($referrerCommission)
+	{
 		$this->referrerCommission = $referrerCommission;
 
 		return $this;
@@ -743,7 +804,8 @@ class Invoice extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoicing\Invoice
 	 */
-	public function unsetReferrerCommission() {
+	public function unsetReferrerCommission()
+	{
 		$this->referrerCommission = NULL;
 
 		return $this;
@@ -752,7 +814,8 @@ class Invoice extends \Entity\BaseEntity {
 	/**
 	 * @return float|NULL
 	 */
-	public function getReferrerCommission() {
+	public function getReferrerCommission()
+	{
 		return $this->referrerCommission;
 	}
 		
@@ -760,7 +823,8 @@ class Invoice extends \Entity\BaseEntity {
 	 * @param json
 	 * @return \Entity\Invoicing\Invoice
 	 */
-	public function setPaymentInfo($paymentInfo) {
+	public function setPaymentInfo($paymentInfo)
+	{
 		$this->paymentInfo = $paymentInfo;
 
 		return $this;
@@ -769,7 +833,8 @@ class Invoice extends \Entity\BaseEntity {
 	/**
 	 * @return json|NULL
 	 */
-	public function getPaymentInfo() {
+	public function getPaymentInfo()
+	{
 		return $this->paymentInfo;
 	}
 }

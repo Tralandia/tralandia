@@ -2,15 +2,13 @@
 
 namespace Entity\Location;
 
-use Entity\Dictionary;
+use Entity\Phrase;
 use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
 
 /**
- * @ORM\Entity(repositoryClass="Repository\Location\LocationRepository")
- * @ORM\Table(name="location_location", indexes={@ORM\index(name="name", columns={"name_id"}), @ORM\index(name="slug", columns={"slug"}), @ORM\index(name="latitude", columns={"latitude"}), @ORM\index(name="longitude", columns={"longitude"})})
- * @EA\Service(name="\Service\Location\Location")
- * @EA\ServiceList(name="\Service\Location\LocationList")
+ * @ORM\Entity()
+ * @ORM\Table(name="location", indexes={@ORM\index(name="name", columns={"name_id"}), @ORM\index(name="slug", columns={"slug"}), @ORM\index(name="latitude", columns={"latitude"}), @ORM\index(name="longitude", columns={"longitude"})})
  * @EA\Primary(key="id", value="slug")
  */
 class Location extends \Entity\BaseEntityDetails {
@@ -20,19 +18,19 @@ class Location extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
+	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $name;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
+	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $nameOfficial;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
+	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $nameShort;
 
@@ -54,12 +52,6 @@ class Location extends \Entity\BaseEntityDetails {
 	 * @ORM\ManyToOne(targetEntity="Type")
 	 */
 	protected $type;
-
-	/**
-	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Location\RegionType", inversedBy="locations")
-	 */
-	protected $regionType;
 
 	/**
 	 * @var json
@@ -185,13 +177,13 @@ class Location extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Dictionary\Language", cascade={"persist"})
+	 * @ORM\ManyToOne(targetEntity="Entity\Language", cascade={"persist"})
 	 */
 	protected $defaultLanguage;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Dictionary\Language", mappedBy="locations", cascade={"persist"})
+	 * @ORM\ManyToMany(targetEntity="Entity\Language", mappedBy="locations", cascade={"persist"})
 	 */
 	protected $languages;
 
@@ -279,10 +271,11 @@ class Location extends \Entity\BaseEntityDetails {
 	 */
 	protected $airports;
 
-//@entity-generator-code <--- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 
 		$this->bankAccounts = new \Doctrine\Common\Collections\ArrayCollection;
@@ -299,53 +292,59 @@ class Location extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Phrase
+	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Location\Location
 	 */
-	public function setName(\Entity\Dictionary\Phrase $name) {
+	public function setName(\Entity\Phrase\Phrase $name)
+	{
 		$this->name = $name;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Phrase|NULL
+	 * @return \Entity\Phrase\Phrase|NULL
 	 */
-	public function getName() {
+	public function getName()
+	{
 		return $this->name;
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Phrase
+	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Location\Location
 	 */
-	public function setNameOfficial(\Entity\Dictionary\Phrase $nameOfficial) {
+	public function setNameOfficial(\Entity\Phrase\Phrase $nameOfficial)
+	{
 		$this->nameOfficial = $nameOfficial;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Phrase|NULL
+	 * @return \Entity\Phrase\Phrase|NULL
 	 */
-	public function getNameOfficial() {
+	public function getNameOfficial()
+	{
 		return $this->nameOfficial;
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Phrase
+	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Location\Location
 	 */
-	public function setNameShort(\Entity\Dictionary\Phrase $nameShort) {
+	public function setNameShort(\Entity\Phrase\Phrase $nameShort)
+	{
 		$this->nameShort = $nameShort;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Phrase|NULL
+	 * @return \Entity\Phrase\Phrase|NULL
 	 */
-	public function getNameShort() {
+	public function getNameShort()
+	{
 		return $this->nameShort;
 	}
 		
@@ -353,7 +352,8 @@ class Location extends \Entity\BaseEntityDetails {
 	 * @param slug
 	 * @return \Entity\Location\Location
 	 */
-	public function setSlug($slug) {
+	public function setSlug($slug)
+	{
 		$this->slug = $slug;
 
 		return $this;
@@ -362,16 +362,18 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return slug|NULL
 	 */
-	public function getSlug() {
+	public function getSlug()
+	{
 		return $this->slug;
 	}
 		
 	/**
-	 * @param integer
+	 * @param \Entity\Location\Location
 	 * @return \Entity\Location\Location
 	 */
-	public function setParentId($parentId) {
-		$this->parentId = $parentId;
+	public function setParent(\Entity\Location\Location $parent)
+	{
+		$this->parent = $parent;
 
 		return $this;
 	}
@@ -379,24 +381,27 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Location\Location
 	 */
-	public function unsetParentId() {
-		$this->parentId = NULL;
+	public function unsetParent()
+	{
+		$this->parent = NULL;
 
 		return $this;
 	}
 		
 	/**
-	 * @return integer|NULL
+	 * @return \Entity\Location\Location|NULL
 	 */
-	public function getParentId() {
-		return $this->parentId;
+	public function getParent()
+	{
+		return $this->parent;
 	}
 		
 	/**
 	 * @param \Entity\Location\Type
 	 * @return \Entity\Location\Location
 	 */
-	public function setType(\Entity\Location\Type $type) {
+	public function setType(\Entity\Location\Type $type)
+	{
 		$this->type = $type;
 
 		return $this;
@@ -405,7 +410,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Location\Location
 	 */
-	public function unsetType() {
+	public function unsetType()
+	{
 		$this->type = NULL;
 
 		return $this;
@@ -414,41 +420,17 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Location\Type|NULL
 	 */
-	public function getType() {
+	public function getType()
+	{
 		return $this->type;
-	}
-		
-	/**
-	 * @param \Entity\Location\RegionType
-	 * @return \Entity\Location\Location
-	 */
-	public function setRegionType(\Entity\Location\RegionType $regionType) {
-		$this->regionType = $regionType;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Location\Location
-	 */
-	public function unsetRegionType() {
-		$this->regionType = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Location\RegionType|NULL
-	 */
-	public function getRegionType() {
-		return $this->regionType;
 	}
 		
 	/**
 	 * @param json
 	 * @return \Entity\Location\Location
 	 */
-	public function setPolygon($polygon) {
+	public function setPolygon($polygon)
+	{
 		$this->polygon = $polygon;
 
 		return $this;
@@ -457,7 +439,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Location\Location
 	 */
-	public function unsetPolygon() {
+	public function unsetPolygon()
+	{
 		$this->polygon = NULL;
 
 		return $this;
@@ -466,7 +449,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return json|NULL
 	 */
-	public function getPolygon() {
+	public function getPolygon()
+	{
 		return $this->polygon;
 	}
 		
@@ -474,7 +458,8 @@ class Location extends \Entity\BaseEntityDetails {
 	 * @param \Extras\Types\Latlong
 	 * @return \Entity\Location\Location
 	 */
-	public function setLatitude(\Extras\Types\Latlong $latitude) {
+	public function setLatitude(\Extras\Types\Latlong $latitude)
+	{
 		$this->latitude = $latitude;
 
 		return $this;
@@ -483,7 +468,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Location\Location
 	 */
-	public function unsetLatitude() {
+	public function unsetLatitude()
+	{
 		$this->latitude = NULL;
 
 		return $this;
@@ -492,7 +478,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Extras\Types\Latlong|NULL
 	 */
-	public function getLatitude() {
+	public function getLatitude()
+	{
 		return $this->latitude;
 	}
 		
@@ -500,7 +487,8 @@ class Location extends \Entity\BaseEntityDetails {
 	 * @param \Extras\Types\Latlong
 	 * @return \Entity\Location\Location
 	 */
-	public function setLongitude(\Extras\Types\Latlong $longitude) {
+	public function setLongitude(\Extras\Types\Latlong $longitude)
+	{
 		$this->longitude = $longitude;
 
 		return $this;
@@ -509,7 +497,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Location\Location
 	 */
-	public function unsetLongitude() {
+	public function unsetLongitude()
+	{
 		$this->longitude = NULL;
 
 		return $this;
@@ -518,7 +507,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Extras\Types\Latlong|NULL
 	 */
-	public function getLongitude() {
+	public function getLongitude()
+	{
 		return $this->longitude;
 	}
 		
@@ -526,7 +516,8 @@ class Location extends \Entity\BaseEntityDetails {
 	 * @param integer
 	 * @return \Entity\Location\Location
 	 */
-	public function setDefaultZoom($defaultZoom) {
+	public function setDefaultZoom($defaultZoom)
+	{
 		$this->defaultZoom = $defaultZoom;
 
 		return $this;
@@ -535,7 +526,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Location\Location
 	 */
-	public function unsetDefaultZoom() {
+	public function unsetDefaultZoom()
+	{
 		$this->defaultZoom = NULL;
 
 		return $this;
@@ -544,7 +536,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return integer|NULL
 	 */
-	public function getDefaultZoom() {
+	public function getDefaultZoom()
+	{
 		return $this->defaultZoom;
 	}
 		
@@ -552,7 +545,8 @@ class Location extends \Entity\BaseEntityDetails {
 	 * @param json
 	 * @return \Entity\Location\Location
 	 */
-	public function setClickMapData($clickMapData) {
+	public function setClickMapData($clickMapData)
+	{
 		$this->clickMapData = $clickMapData;
 
 		return $this;
@@ -561,7 +555,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Location\Location
 	 */
-	public function unsetClickMapData() {
+	public function unsetClickMapData()
+	{
 		$this->clickMapData = NULL;
 
 		return $this;
@@ -570,7 +565,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return json|NULL
 	 */
-	public function getClickMapData() {
+	public function getClickMapData()
+	{
 		return $this->clickMapData;
 	}
 		
@@ -578,7 +574,8 @@ class Location extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Company\BankAccount
 	 * @return \Entity\Location\Location
 	 */
-	public function addBankAccount(\Entity\Company\BankAccount $bankAccount) {
+	public function addBankAccount(\Entity\Company\BankAccount $bankAccount)
+	{
 		if(!$this->bankAccounts->contains($bankAccount)) {
 			$this->bankAccounts->add($bankAccount);
 		}
@@ -589,7 +586,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Company\BankAccount
 	 */
-	public function getBankAccounts() {
+	public function getBankAccounts()
+	{
 		return $this->bankAccounts;
 	}
 		
@@ -597,7 +595,8 @@ class Location extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Company\Company
 	 * @return \Entity\Location\Location
 	 */
-	public function addCompany(\Entity\Company\Company $company) {
+	public function addCompany(\Entity\Company\Company $company)
+	{
 		if(!$this->companies->contains($company)) {
 			$this->companies->add($company);
 		}
@@ -608,7 +607,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Company\Company
 	 */
-	public function getCompanies() {
+	public function getCompanies()
+	{
 		return $this->companies;
 	}
 		
@@ -616,7 +616,8 @@ class Location extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Company\Office
 	 * @return \Entity\Location\Location
 	 */
-	public function addOffice(\Entity\Company\Office $office) {
+	public function addOffice(\Entity\Company\Office $office)
+	{
 		if(!$this->offices->contains($office)) {
 			$this->offices->add($office);
 		}
@@ -627,7 +628,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Company\Office
 	 */
-	public function getOffices() {
+	public function getOffices()
+	{
 		return $this->offices;
 	}
 		
@@ -635,7 +637,8 @@ class Location extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Domain
 	 * @return \Entity\Location\Location
 	 */
-	public function setDomain(\Entity\Domain $domain) {
+	public function setDomain(\Entity\Domain $domain)
+	{
 		$this->domain = $domain;
 
 		return $this;
@@ -644,7 +647,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Location\Location
 	 */
-	public function unsetDomain() {
+	public function unsetDomain()
+	{
 		$this->domain = NULL;
 
 		return $this;
@@ -653,7 +657,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Domain|NULL
 	 */
-	public function getDomain() {
+	public function getDomain()
+	{
 		return $this->domain;
 	}
 		
@@ -661,7 +666,8 @@ class Location extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Invoicing\Marketing
 	 * @return \Entity\Location\Location
 	 */
-	public function addMarketing(\Entity\Invoicing\Marketing $marketing) {
+	public function addMarketing(\Entity\Invoicing\Marketing $marketing)
+	{
 		if(!$this->marketings->contains($marketing)) {
 			$this->marketings->add($marketing);
 		}
@@ -672,7 +678,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Invoicing\Marketing
 	 */
-	public function getMarketings() {
+	public function getMarketings()
+	{
 		return $this->marketings;
 	}
 		
@@ -680,7 +687,8 @@ class Location extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Rental\Rental
 	 * @return \Entity\Location\Location
 	 */
-	public function addRental(\Entity\Rental\Rental $rental) {
+	public function addRental(\Entity\Rental\Rental $rental)
+	{
 		if(!$this->rentals->contains($rental)) {
 			$this->rentals->add($rental);
 		}
@@ -691,7 +699,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Rental\Rental
 	 */
-	public function getRentals() {
+	public function getRentals()
+	{
 		return $this->rentals;
 	}
 		
@@ -699,7 +708,8 @@ class Location extends \Entity\BaseEntityDetails {
 	 * @param \Entity\User\User
 	 * @return \Entity\Location\Location
 	 */
-	public function addUser(\Entity\User\User $user) {
+	public function addUser(\Entity\User\User $user)
+	{
 		if(!$this->users->contains($user)) {
 			$this->users->add($user);
 		}
@@ -712,7 +722,8 @@ class Location extends \Entity\BaseEntityDetails {
 	 * @param \Entity\User\User
 	 * @return \Entity\Location\Location
 	 */
-	public function removeUser(\Entity\User\User $user) {
+	public function removeUser(\Entity\User\User $user)
+	{
 		if($this->users->contains($user)) {
 			$this->users->removeElement($user);
 		}
@@ -724,7 +735,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\User\User
 	 */
-	public function getUsers() {
+	public function getUsers()
+	{
 		return $this->users;
 	}
 		
@@ -732,7 +744,8 @@ class Location extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Location\Traveling
 	 * @return \Entity\Location\Location
 	 */
-	public function addIncomingLocation(\Entity\Location\Traveling $incomingLocation) {
+	public function addIncomingLocation(\Entity\Location\Traveling $incomingLocation)
+	{
 		if(!$this->incomingLocations->contains($incomingLocation)) {
 			$this->incomingLocations->add($incomingLocation);
 		}
@@ -745,7 +758,8 @@ class Location extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Location\Traveling
 	 * @return \Entity\Location\Location
 	 */
-	public function removeIncomingLocation(\Entity\Location\Traveling $incomingLocation) {
+	public function removeIncomingLocation(\Entity\Location\Traveling $incomingLocation)
+	{
 		if($this->incomingLocations->contains($incomingLocation)) {
 			$this->incomingLocations->removeElement($incomingLocation);
 		}
@@ -757,7 +771,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Location\Traveling
 	 */
-	public function getIncomingLocations() {
+	public function getIncomingLocations()
+	{
 		return $this->incomingLocations;
 	}
 		
@@ -765,7 +780,8 @@ class Location extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Location\Traveling
 	 * @return \Entity\Location\Location
 	 */
-	public function addOutgoingLocation(\Entity\Location\Traveling $outgoingLocation) {
+	public function addOutgoingLocation(\Entity\Location\Traveling $outgoingLocation)
+	{
 		if(!$this->outgoingLocations->contains($outgoingLocation)) {
 			$this->outgoingLocations->add($outgoingLocation);
 		}
@@ -778,7 +794,8 @@ class Location extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Location\Traveling
 	 * @return \Entity\Location\Location
 	 */
-	public function removeOutgoingLocation(\Entity\Location\Traveling $outgoingLocation) {
+	public function removeOutgoingLocation(\Entity\Location\Traveling $outgoingLocation)
+	{
 		if($this->outgoingLocations->contains($outgoingLocation)) {
 			$this->outgoingLocations->removeElement($outgoingLocation);
 		}
@@ -790,7 +807,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Location\Traveling
 	 */
-	public function getOutgoingLocations() {
+	public function getOutgoingLocations()
+	{
 		return $this->outgoingLocations;
 	}
 		
@@ -798,7 +816,8 @@ class Location extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Seo\BackLink
 	 * @return \Entity\Location\Location
 	 */
-	public function addBackLink(\Entity\Seo\BackLink $backLink) {
+	public function addBackLink(\Entity\Seo\BackLink $backLink)
+	{
 		if(!$this->backLinks->contains($backLink)) {
 			$this->backLinks->add($backLink);
 		}
@@ -811,7 +830,8 @@ class Location extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Seo\BackLink
 	 * @return \Entity\Location\Location
 	 */
-	public function removeBackLink(\Entity\Seo\BackLink $backLink) {
+	public function removeBackLink(\Entity\Seo\BackLink $backLink)
+	{
 		if($this->backLinks->contains($backLink)) {
 			$this->backLinks->removeElement($backLink);
 		}
@@ -823,7 +843,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Seo\BackLink
 	 */
-	public function getBackLinks() {
+	public function getBackLinks()
+	{
 		return $this->backLinks;
 	}
 		
@@ -831,7 +852,8 @@ class Location extends \Entity\BaseEntityDetails {
 	 * @param string
 	 * @return \Entity\Location\Location
 	 */
-	public function setStatus($status) {
+	public function setStatus($status)
+	{
 		$this->status = $status;
 
 		return $this;
@@ -840,7 +862,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Location\Location
 	 */
-	public function unsetStatus() {
+	public function unsetStatus()
+	{
 		$this->status = NULL;
 
 		return $this;
@@ -849,7 +872,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return string|NULL
 	 */
-	public function getStatus() {
+	public function getStatus()
+	{
 		return $this->status;
 	}
 		
@@ -857,7 +881,8 @@ class Location extends \Entity\BaseEntityDetails {
 	 * @param string
 	 * @return \Entity\Location\Location
 	 */
-	public function setIso($iso) {
+	public function setIso($iso)
+	{
 		$this->iso = $iso;
 
 		return $this;
@@ -866,7 +891,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Location\Location
 	 */
-	public function unsetIso() {
+	public function unsetIso()
+	{
 		$this->iso = NULL;
 
 		return $this;
@@ -875,7 +901,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return string|NULL
 	 */
-	public function getIso() {
+	public function getIso()
+	{
 		return $this->iso;
 	}
 		
@@ -883,7 +910,8 @@ class Location extends \Entity\BaseEntityDetails {
 	 * @param string
 	 * @return \Entity\Location\Location
 	 */
-	public function setIso3($iso3) {
+	public function setIso3($iso3)
+	{
 		$this->iso3 = $iso3;
 
 		return $this;
@@ -892,7 +920,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Location\Location
 	 */
-	public function unsetIso3() {
+	public function unsetIso3()
+	{
 		$this->iso3 = NULL;
 
 		return $this;
@@ -901,7 +930,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return string|NULL
 	 */
-	public function getIso3() {
+	public function getIso3()
+	{
 		return $this->iso3;
 	}
 		
@@ -909,7 +939,8 @@ class Location extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Currency
 	 * @return \Entity\Location\Location
 	 */
-	public function setDefaultCurrency(\Entity\Currency $defaultCurrency) {
+	public function setDefaultCurrency(\Entity\Currency $defaultCurrency)
+	{
 		$this->defaultCurrency = $defaultCurrency;
 
 		return $this;
@@ -918,7 +949,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Location\Location
 	 */
-	public function unsetDefaultCurrency() {
+	public function unsetDefaultCurrency()
+	{
 		$this->defaultCurrency = NULL;
 
 		return $this;
@@ -927,7 +959,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Currency|NULL
 	 */
-	public function getDefaultCurrency() {
+	public function getDefaultCurrency()
+	{
 		return $this->defaultCurrency;
 	}
 		
@@ -935,7 +968,8 @@ class Location extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Currency
 	 * @return \Entity\Location\Location
 	 */
-	public function addCurrency(\Entity\Currency $currency) {
+	public function addCurrency(\Entity\Currency $currency)
+	{
 		if(!$this->currencies->contains($currency)) {
 			$this->currencies->add($currency);
 		}
@@ -948,7 +982,8 @@ class Location extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Currency
 	 * @return \Entity\Location\Location
 	 */
-	public function removeCurrency(\Entity\Currency $currency) {
+	public function removeCurrency(\Entity\Currency $currency)
+	{
 		if($this->currencies->contains($currency)) {
 			$this->currencies->removeElement($currency);
 		}
@@ -960,15 +995,17 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Currency
 	 */
-	public function getCurrencies() {
+	public function getCurrencies()
+	{
 		return $this->currencies;
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Language
+	 * @param \Entity\Language
 	 * @return \Entity\Location\Location
 	 */
-	public function setDefaultLanguage(\Entity\Dictionary\Language $defaultLanguage) {
+	public function setDefaultLanguage(\Entity\Language $defaultLanguage)
+	{
 		$this->defaultLanguage = $defaultLanguage;
 
 		return $this;
@@ -977,24 +1014,27 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Location\Location
 	 */
-	public function unsetDefaultLanguage() {
+	public function unsetDefaultLanguage()
+	{
 		$this->defaultLanguage = NULL;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Language|NULL
+	 * @return \Entity\Language|NULL
 	 */
-	public function getDefaultLanguage() {
+	public function getDefaultLanguage()
+	{
 		return $this->defaultLanguage;
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Language
+	 * @param \Entity\Language
 	 * @return \Entity\Location\Location
 	 */
-	public function addLanguage(\Entity\Dictionary\Language $language) {
+	public function addLanguage(\Entity\Language $language)
+	{
 		if(!$this->languages->contains($language)) {
 			$this->languages->add($language);
 		}
@@ -1004,10 +1044,11 @@ class Location extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Language
+	 * @param \Entity\Language
 	 * @return \Entity\Location\Location
 	 */
-	public function removeLanguage(\Entity\Dictionary\Language $language) {
+	public function removeLanguage(\Entity\Language $language)
+	{
 		if($this->languages->contains($language)) {
 			$this->languages->removeElement($language);
 		}
@@ -1017,9 +1058,10 @@ class Location extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Dictionary\Language
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Language
 	 */
-	public function getLanguages() {
+	public function getLanguages()
+	{
 		return $this->languages;
 	}
 		
@@ -1027,7 +1069,8 @@ class Location extends \Entity\BaseEntityDetails {
 	 * @param integer
 	 * @return \Entity\Location\Location
 	 */
-	public function setPopulation($population) {
+	public function setPopulation($population)
+	{
 		$this->population = $population;
 
 		return $this;
@@ -1036,7 +1079,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Location\Location
 	 */
-	public function unsetPopulation() {
+	public function unsetPopulation()
+	{
 		$this->population = NULL;
 
 		return $this;
@@ -1045,7 +1089,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return integer|NULL
 	 */
-	public function getPopulation() {
+	public function getPopulation()
+	{
 		return $this->population;
 	}
 		
@@ -1053,7 +1098,8 @@ class Location extends \Entity\BaseEntityDetails {
 	 * @param string
 	 * @return \Entity\Location\Location
 	 */
-	public function setPhonePrefix($phonePrefix) {
+	public function setPhonePrefix($phonePrefix)
+	{
 		$this->phonePrefix = $phonePrefix;
 
 		return $this;
@@ -1062,7 +1108,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Location\Location
 	 */
-	public function unsetPhonePrefix() {
+	public function unsetPhonePrefix()
+	{
 		$this->phonePrefix = NULL;
 
 		return $this;
@@ -1071,7 +1118,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return string|NULL
 	 */
-	public function getPhonePrefix() {
+	public function getPhonePrefix()
+	{
 		return $this->phonePrefix;
 	}
 		
@@ -1079,7 +1127,8 @@ class Location extends \Entity\BaseEntityDetails {
 	 * @param \Extras\Types\Url
 	 * @return \Entity\Location\Location
 	 */
-	public function setFacebookGroup(\Extras\Types\Url $facebookGroup) {
+	public function setFacebookGroup(\Extras\Types\Url $facebookGroup)
+	{
 		$this->facebookGroup = $facebookGroup;
 
 		return $this;
@@ -1088,7 +1137,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Location\Location
 	 */
-	public function unsetFacebookGroup() {
+	public function unsetFacebookGroup()
+	{
 		$this->facebookGroup = NULL;
 
 		return $this;
@@ -1097,7 +1147,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Extras\Types\Url|NULL
 	 */
-	public function getFacebookGroup() {
+	public function getFacebookGroup()
+	{
 		return $this->facebookGroup;
 	}
 		
@@ -1105,7 +1156,8 @@ class Location extends \Entity\BaseEntityDetails {
 	 * @param string
 	 * @return \Entity\Location\Location
 	 */
-	public function setCapitalCity($capitalCity) {
+	public function setCapitalCity($capitalCity)
+	{
 		$this->capitalCity = $capitalCity;
 
 		return $this;
@@ -1114,7 +1166,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Location\Location
 	 */
-	public function unsetCapitalCity() {
+	public function unsetCapitalCity()
+	{
 		$this->capitalCity = NULL;
 
 		return $this;
@@ -1123,7 +1176,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return string|NULL
 	 */
-	public function getCapitalCity() {
+	public function getCapitalCity()
+	{
 		return $this->capitalCity;
 	}
 		
@@ -1131,7 +1185,8 @@ class Location extends \Entity\BaseEntityDetails {
 	 * @param \Extras\Types\Phone
 	 * @return \Entity\Location\Location
 	 */
-	public function setPhoneNumberEmergency(\Extras\Types\Phone $phoneNumberEmergency) {
+	public function setPhoneNumberEmergency(\Extras\Types\Phone $phoneNumberEmergency)
+	{
 		$this->phoneNumberEmergency = $phoneNumberEmergency;
 
 		return $this;
@@ -1140,7 +1195,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Location\Location
 	 */
-	public function unsetPhoneNumberEmergency() {
+	public function unsetPhoneNumberEmergency()
+	{
 		$this->phoneNumberEmergency = NULL;
 
 		return $this;
@@ -1149,7 +1205,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Extras\Types\Phone|NULL
 	 */
-	public function getPhoneNumberEmergency() {
+	public function getPhoneNumberEmergency()
+	{
 		return $this->phoneNumberEmergency;
 	}
 		
@@ -1157,7 +1214,8 @@ class Location extends \Entity\BaseEntityDetails {
 	 * @param \Extras\Types\Phone
 	 * @return \Entity\Location\Location
 	 */
-	public function setPhoneNumberPolice(\Extras\Types\Phone $phoneNumberPolice) {
+	public function setPhoneNumberPolice(\Extras\Types\Phone $phoneNumberPolice)
+	{
 		$this->phoneNumberPolice = $phoneNumberPolice;
 
 		return $this;
@@ -1166,7 +1224,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Location\Location
 	 */
-	public function unsetPhoneNumberPolice() {
+	public function unsetPhoneNumberPolice()
+	{
 		$this->phoneNumberPolice = NULL;
 
 		return $this;
@@ -1175,7 +1234,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Extras\Types\Phone|NULL
 	 */
-	public function getPhoneNumberPolice() {
+	public function getPhoneNumberPolice()
+	{
 		return $this->phoneNumberPolice;
 	}
 		
@@ -1183,7 +1243,8 @@ class Location extends \Entity\BaseEntityDetails {
 	 * @param \Extras\Types\Phone
 	 * @return \Entity\Location\Location
 	 */
-	public function setPhoneNumberMedical(\Extras\Types\Phone $phoneNumberMedical) {
+	public function setPhoneNumberMedical(\Extras\Types\Phone $phoneNumberMedical)
+	{
 		$this->phoneNumberMedical = $phoneNumberMedical;
 
 		return $this;
@@ -1192,7 +1253,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Location\Location
 	 */
-	public function unsetPhoneNumberMedical() {
+	public function unsetPhoneNumberMedical()
+	{
 		$this->phoneNumberMedical = NULL;
 
 		return $this;
@@ -1201,7 +1263,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Extras\Types\Phone|NULL
 	 */
-	public function getPhoneNumberMedical() {
+	public function getPhoneNumberMedical()
+	{
 		return $this->phoneNumberMedical;
 	}
 		
@@ -1209,7 +1272,8 @@ class Location extends \Entity\BaseEntityDetails {
 	 * @param \Extras\Types\Phone
 	 * @return \Entity\Location\Location
 	 */
-	public function setPhoneNumberFire(\Extras\Types\Phone $phoneNumberFire) {
+	public function setPhoneNumberFire(\Extras\Types\Phone $phoneNumberFire)
+	{
 		$this->phoneNumberFire = $phoneNumberFire;
 
 		return $this;
@@ -1218,7 +1282,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Location\Location
 	 */
-	public function unsetPhoneNumberFire() {
+	public function unsetPhoneNumberFire()
+	{
 		$this->phoneNumberFire = NULL;
 
 		return $this;
@@ -1227,7 +1292,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Extras\Types\Phone|NULL
 	 */
-	public function getPhoneNumberFire() {
+	public function getPhoneNumberFire()
+	{
 		return $this->phoneNumberFire;
 	}
 		
@@ -1235,7 +1301,8 @@ class Location extends \Entity\BaseEntityDetails {
 	 * @param \Extras\Types\Url
 	 * @return \Entity\Location\Location
 	 */
-	public function setWikipediaLink(\Extras\Types\Url $wikipediaLink) {
+	public function setWikipediaLink(\Extras\Types\Url $wikipediaLink)
+	{
 		$this->wikipediaLink = $wikipediaLink;
 
 		return $this;
@@ -1244,7 +1311,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Location\Location
 	 */
-	public function unsetWikipediaLink() {
+	public function unsetWikipediaLink()
+	{
 		$this->wikipediaLink = NULL;
 
 		return $this;
@@ -1253,7 +1321,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Extras\Types\Url|NULL
 	 */
-	public function getWikipediaLink() {
+	public function getWikipediaLink()
+	{
 		return $this->wikipediaLink;
 	}
 		
@@ -1261,7 +1330,8 @@ class Location extends \Entity\BaseEntityDetails {
 	 * @param \Extras\Types\Contacts
 	 * @return \Entity\Location\Location
 	 */
-	public function setContacts(\Extras\Types\Contacts $contacts) {
+	public function setContacts(\Extras\Types\Contacts $contacts)
+	{
 		$this->contacts = $contacts;
 
 		return $this;
@@ -1270,7 +1340,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Location\Location
 	 */
-	public function unsetContacts() {
+	public function unsetContacts()
+	{
 		$this->contacts = NULL;
 
 		return $this;
@@ -1279,7 +1350,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Extras\Types\Contacts|NULL
 	 */
-	public function getContacts() {
+	public function getContacts()
+	{
 		return $this->contacts;
 	}
 		
@@ -1287,7 +1359,8 @@ class Location extends \Entity\BaseEntityDetails {
 	 * @param string
 	 * @return \Entity\Location\Location
 	 */
-	public function setDrivingSide($drivingSide) {
+	public function setDrivingSide($drivingSide)
+	{
 		$this->drivingSide = $drivingSide;
 
 		return $this;
@@ -1296,7 +1369,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Location\Location
 	 */
-	public function unsetDrivingSide() {
+	public function unsetDrivingSide()
+	{
 		$this->drivingSide = NULL;
 
 		return $this;
@@ -1305,7 +1379,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return string|NULL
 	 */
-	public function getDrivingSide() {
+	public function getDrivingSide()
+	{
 		return $this->drivingSide;
 	}
 		
@@ -1313,7 +1388,8 @@ class Location extends \Entity\BaseEntityDetails {
 	 * @param \Extras\Types\Price
 	 * @return \Entity\Location\Location
 	 */
-	public function setPricesPizza(\Extras\Types\Price $pricesPizza) {
+	public function setPricesPizza(\Extras\Types\Price $pricesPizza)
+	{
 		$this->pricesPizza = $pricesPizza;
 
 		return $this;
@@ -1322,7 +1398,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Location\Location
 	 */
-	public function unsetPricesPizza() {
+	public function unsetPricesPizza()
+	{
 		$this->pricesPizza = NULL;
 
 		return $this;
@@ -1331,7 +1408,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Extras\Types\Price|NULL
 	 */
-	public function getPricesPizza() {
+	public function getPricesPizza()
+	{
 		return $this->pricesPizza;
 	}
 		
@@ -1339,7 +1417,8 @@ class Location extends \Entity\BaseEntityDetails {
 	 * @param \Extras\Types\Price
 	 * @return \Entity\Location\Location
 	 */
-	public function setPricesDinner(\Extras\Types\Price $pricesDinner) {
+	public function setPricesDinner(\Extras\Types\Price $pricesDinner)
+	{
 		$this->pricesDinner = $pricesDinner;
 
 		return $this;
@@ -1348,7 +1427,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Location\Location
 	 */
-	public function unsetPricesDinner() {
+	public function unsetPricesDinner()
+	{
 		$this->pricesDinner = NULL;
 
 		return $this;
@@ -1357,7 +1437,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Extras\Types\Price|NULL
 	 */
-	public function getPricesDinner() {
+	public function getPricesDinner()
+	{
 		return $this->pricesDinner;
 	}
 		
@@ -1365,7 +1446,8 @@ class Location extends \Entity\BaseEntityDetails {
 	 * @param string
 	 * @return \Entity\Location\Location
 	 */
-	public function setAirports($airports) {
+	public function setAirports($airports)
+	{
 		$this->airports = $airports;
 
 		return $this;
@@ -1374,7 +1456,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Location\Location
 	 */
-	public function unsetAirports() {
+	public function unsetAirports()
+	{
 		$this->airports = NULL;
 
 		return $this;
@@ -1383,7 +1466,8 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return string|NULL
 	 */
-	public function getAirports() {
+	public function getAirports()
+	{
 		return $this->airports;
 	}
 }

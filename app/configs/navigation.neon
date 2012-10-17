@@ -172,15 +172,15 @@ common:
 						titleSuffix: 
 							label: Title Suffixes
 							link: ':Admin:SeoTitleSuffix:list'
-				attraction: 
-					label: Attractions
-					items:
-						atraction: 
-							label: All Attractions
-							link: ':Admin:AttractionAttraction:list'
-						type: 
-							label: Attraction Types
-							link: ':Admin:AttractionType:list'
+				# attraction: 
+				# 	label: Attractions
+				# 	items:
+				# 		atraction: 
+				# 			label: All Attractions
+				# 			link: ':Admin:AttractionAttraction:list'
+				# 		type: 
+				# 			label: Attraction Types
+				# 			link: ':Admin:AttractionType:list'
 				location: 
 					label: Locations
 					items:

@@ -23,10 +23,10 @@ class ImportRentals extends BaseImport {
 		qNew('update medium_medium set rental_id = NULL where rental_id > 0');
 		$import->undoSection('rentals');
 
-		$nameDictionaryType = $this->createDictionaryType('\Rental\Rental', 'name', 'NATIVE', array('checkingRequired' => TRUE));
-		$briefDescriptionDictionaryType = $this->createDictionaryType('\Rental\Rental', 'briefDescription', 'NATIVE', array('checkingRequired' => TRUE));
-		$descriptionDictionaryType = $this->createDictionaryType('\Rental\Rental', 'description', 'NATIVE', array('checkingRequired' => TRUE));
-		$teaserDictionaryType = $this->createDictionaryType('\Rental\Rental', 'teaser', 'NATIVE', array('checkingRequired' => TRUE));
+		$nameDictionaryType = $this->createPhraseType('\Rental\Rental', 'name', 'NATIVE', array('checkingRequired' => TRUE));
+		$briefDescriptionDictionaryType = $this->createPhraseType('\Rental\Rental', 'briefDescription', 'NATIVE', array('checkingRequired' => TRUE));
+		$descriptionDictionaryType = $this->createPhraseType('\Rental\Rental', 'description', 'NATIVE', array('checkingRequired' => TRUE));
+		$teaserDictionaryType = $this->createPhraseType('\Rental\Rental', 'teaser', 'NATIVE', array('checkingRequired' => TRUE));
 		\Extras\Models\Service::flush(FALSE);
 
 

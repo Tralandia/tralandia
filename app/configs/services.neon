@@ -1,4 +1,0 @@
-factories:
-	phraseService:
-		parameters: [entity]
-		class: Service\Dictionary\Phrase(@model, %entity%)

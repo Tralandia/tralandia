@@ -2,7 +2,7 @@
 
 namespace Entity\User;
 
-use Entity\Dictionary;
+use Entity\Phrase;
 use Entity\Rental;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -17,7 +17,7 @@ class SiteVisitorReview extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Dictionary\Language")
+	 * @ORM\ManyToOne(targetEntity="Entity\Language")
 	 */
 	protected $language;
 
@@ -51,18 +51,20 @@ class SiteVisitorReview extends \Entity\BaseEntity {
 	 */
 	protected $status = self::STATUS_PENDING;
 
-//@entity-generator-code <--- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Language
+	 * @param \Entity\Language
 	 * @return \Entity\User\SiteVisitorReview
 	 */
-	public function setLanguage(\Entity\Dictionary\Language $language) {
+	public function setLanguage(\Entity\Language $language)
+	{
 		$this->language = $language;
 
 		return $this;
@@ -71,16 +73,18 @@ class SiteVisitorReview extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\User\SiteVisitorReview
 	 */
-	public function unsetLanguage() {
+	public function unsetLanguage()
+	{
 		$this->language = NULL;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Language|NULL
+	 * @return \Entity\Language|NULL
 	 */
-	public function getLanguage() {
+	public function getLanguage()
+	{
 		return $this->language;
 	}
 		
@@ -88,7 +92,8 @@ class SiteVisitorReview extends \Entity\BaseEntity {
 	 * @param \Entity\Location\Location
 	 * @return \Entity\User\SiteVisitorReview
 	 */
-	public function setLocation(\Entity\Location\Location $location) {
+	public function setLocation(\Entity\Location\Location $location)
+	{
 		$this->location = $location;
 
 		return $this;
@@ -97,7 +102,8 @@ class SiteVisitorReview extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\User\SiteVisitorReview
 	 */
-	public function unsetLocation() {
+	public function unsetLocation()
+	{
 		$this->location = NULL;
 
 		return $this;
@@ -106,7 +112,8 @@ class SiteVisitorReview extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Location\Location|NULL
 	 */
-	public function getLocation() {
+	public function getLocation()
+	{
 		return $this->location;
 	}
 		
@@ -114,7 +121,8 @@ class SiteVisitorReview extends \Entity\BaseEntity {
 	 * @param \Extras\Types\Email
 	 * @return \Entity\User\SiteVisitorReview
 	 */
-	public function setSenderEmail(\Extras\Types\Email $senderEmail) {
+	public function setSenderEmail(\Extras\Types\Email $senderEmail)
+	{
 		$this->senderEmail = $senderEmail;
 
 		return $this;
@@ -123,7 +131,8 @@ class SiteVisitorReview extends \Entity\BaseEntity {
 	/**
 	 * @return \Extras\Types\Email|NULL
 	 */
-	public function getSenderEmail() {
+	public function getSenderEmail()
+	{
 		return $this->senderEmail;
 	}
 		
@@ -131,7 +140,8 @@ class SiteVisitorReview extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\User\SiteVisitorReview
 	 */
-	public function setSenderName($senderName) {
+	public function setSenderName($senderName)
+	{
 		$this->senderName = $senderName;
 
 		return $this;
@@ -140,7 +150,8 @@ class SiteVisitorReview extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getSenderName() {
+	public function getSenderName()
+	{
 		return $this->senderName;
 	}
 		
@@ -148,7 +159,8 @@ class SiteVisitorReview extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\User\SiteVisitorReview
 	 */
-	public function setTestimonial($testimonial) {
+	public function setTestimonial($testimonial)
+	{
 		$this->testimonial = $testimonial;
 
 		return $this;
@@ -157,7 +169,8 @@ class SiteVisitorReview extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getTestimonial() {
+	public function getTestimonial()
+	{
 		return $this->testimonial;
 	}
 		
@@ -165,7 +178,8 @@ class SiteVisitorReview extends \Entity\BaseEntity {
 	 * @param integer
 	 * @return \Entity\User\SiteVisitorReview
 	 */
-	public function setStatus($status) {
+	public function setStatus($status)
+	{
 		$this->status = $status;
 
 		return $this;
@@ -174,7 +188,8 @@ class SiteVisitorReview extends \Entity\BaseEntity {
 	/**
 	 * @return integer|NULL
 	 */
-	public function getStatus() {
+	public function getStatus()
+	{
 		return $this->status;
 	}
 }

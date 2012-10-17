@@ -3,7 +3,7 @@
 namespace Entity\Seo;
 
 use Entity\Attraction;
-use Entity\Dictionary;
+use Entity\Phrase;
 use Entity\Location;
 use Entity\Medium;
 use Entity\Rental;
@@ -13,8 +13,6 @@ use	Extras\Annotation as EA;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="seo_seourl")
- * @EA\Service(name="\Service\Seo\SeoUrl")
- * @EA\ServiceList(name="\Service\Seo\SeoUrlList")
  * @EA\Primary(key="id", value="id")
  */
 class SeoUrl extends \Entity\BaseEntity {
@@ -57,31 +55,31 @@ class SeoUrl extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
+	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $title;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
+	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $heading;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
+	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $tabName;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
+	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $description;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
+	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $ppcKeywords;
 
@@ -105,10 +103,11 @@ class SeoUrl extends \Entity\BaseEntity {
 
 
 
-//@entity-generator-code <--- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 
 		$this->media = new \Doctrine\Common\Collections\ArrayCollection;
@@ -118,7 +117,8 @@ class SeoUrl extends \Entity\BaseEntity {
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Seo\SeoUrl
 	 */
-	public function setLocation(\Entity\Location\Location $location) {
+	public function setLocation(\Entity\Location\Location $location)
+	{
 		$this->location = $location;
 
 		return $this;
@@ -127,7 +127,8 @@ class SeoUrl extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Seo\SeoUrl
 	 */
-	public function unsetLocation() {
+	public function unsetLocation()
+	{
 		$this->location = NULL;
 
 		return $this;
@@ -136,7 +137,8 @@ class SeoUrl extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Location\Location|NULL
 	 */
-	public function getLocation() {
+	public function getLocation()
+	{
 		return $this->location;
 	}
 		
@@ -144,7 +146,8 @@ class SeoUrl extends \Entity\BaseEntity {
 	 * @param \Entity\Rental\Type
 	 * @return \Entity\Seo\SeoUrl
 	 */
-	public function setRentalType(\Entity\Rental\Type $rentalType) {
+	public function setRentalType(\Entity\Rental\Type $rentalType)
+	{
 		$this->rentalType = $rentalType;
 
 		return $this;
@@ -153,7 +156,8 @@ class SeoUrl extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Seo\SeoUrl
 	 */
-	public function unsetRentalType() {
+	public function unsetRentalType()
+	{
 		$this->rentalType = NULL;
 
 		return $this;
@@ -162,7 +166,8 @@ class SeoUrl extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Rental\Type|NULL
 	 */
-	public function getRentalType() {
+	public function getRentalType()
+	{
 		return $this->rentalType;
 	}
 		
@@ -170,7 +175,8 @@ class SeoUrl extends \Entity\BaseEntity {
 	 * @param integer
 	 * @return \Entity\Seo\SeoUrl
 	 */
-	public function setPage($page) {
+	public function setPage($page)
+	{
 		$this->page = $page;
 
 		return $this;
@@ -179,7 +185,8 @@ class SeoUrl extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Seo\SeoUrl
 	 */
-	public function unsetPage() {
+	public function unsetPage()
+	{
 		$this->page = NULL;
 
 		return $this;
@@ -188,7 +195,8 @@ class SeoUrl extends \Entity\BaseEntity {
 	/**
 	 * @return integer|NULL
 	 */
-	public function getPage() {
+	public function getPage()
+	{
 		return $this->page;
 	}
 		
@@ -196,7 +204,8 @@ class SeoUrl extends \Entity\BaseEntity {
 	 * @param \Entity\Rental\Amenity
 	 * @return \Entity\Seo\SeoUrl
 	 */
-	public function setTag(\Entity\Rental\Amenity $tag) {
+	public function setTag(\Entity\Rental\Amenity $tag)
+	{
 		$this->tag = $tag;
 
 		return $this;
@@ -205,7 +214,8 @@ class SeoUrl extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Seo\SeoUrl
 	 */
-	public function unsetTag() {
+	public function unsetTag()
+	{
 		$this->tag = NULL;
 
 		return $this;
@@ -214,7 +224,8 @@ class SeoUrl extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Rental\Amenity|NULL
 	 */
-	public function getTag() {
+	public function getTag()
+	{
 		return $this->tag;
 	}
 		
@@ -222,7 +233,8 @@ class SeoUrl extends \Entity\BaseEntity {
 	 * @param \Entity\Attraction\Type
 	 * @return \Entity\Seo\SeoUrl
 	 */
-	public function setAttractionType(\Entity\Attraction\Type $attractionType) {
+	public function setAttractionType(\Entity\Attraction\Type $attractionType)
+	{
 		$this->attractionType = $attractionType;
 
 		return $this;
@@ -231,7 +243,8 @@ class SeoUrl extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Seo\SeoUrl
 	 */
-	public function unsetAttractionType() {
+	public function unsetAttractionType()
+	{
 		$this->attractionType = NULL;
 
 		return $this;
@@ -240,7 +253,8 @@ class SeoUrl extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Attraction\Type|NULL
 	 */
-	public function getAttractionType() {
+	public function getAttractionType()
+	{
 		return $this->attractionType;
 	}
 		
@@ -248,7 +262,8 @@ class SeoUrl extends \Entity\BaseEntity {
 	 * @param \Entity\Medium\Medium
 	 * @return \Entity\Seo\SeoUrl
 	 */
-	public function addMedium(\Entity\Medium\Medium $medium) {
+	public function addMedium(\Entity\Medium\Medium $medium)
+	{
 		if(!$this->media->contains($medium)) {
 			$this->media->add($medium);
 		}
@@ -261,7 +276,8 @@ class SeoUrl extends \Entity\BaseEntity {
 	 * @param \Entity\Medium\Medium
 	 * @return \Entity\Seo\SeoUrl
 	 */
-	public function removeMedium(\Entity\Medium\Medium $medium) {
+	public function removeMedium(\Entity\Medium\Medium $medium)
+	{
 		if($this->media->contains($medium)) {
 			$this->media->removeElement($medium);
 		}
@@ -273,92 +289,103 @@ class SeoUrl extends \Entity\BaseEntity {
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Medium\Medium
 	 */
-	public function getMedia() {
+	public function getMedia()
+	{
 		return $this->media;
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Phrase
+	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Seo\SeoUrl
 	 */
-	public function setTitle(\Entity\Dictionary\Phrase $title) {
+	public function setTitle(\Entity\Phrase\Phrase $title)
+	{
 		$this->title = $title;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Phrase|NULL
+	 * @return \Entity\Phrase\Phrase|NULL
 	 */
-	public function getTitle() {
+	public function getTitle()
+	{
 		return $this->title;
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Phrase
+	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Seo\SeoUrl
 	 */
-	public function setHeading(\Entity\Dictionary\Phrase $heading) {
+	public function setHeading(\Entity\Phrase\Phrase $heading)
+	{
 		$this->heading = $heading;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Phrase|NULL
+	 * @return \Entity\Phrase\Phrase|NULL
 	 */
-	public function getHeading() {
+	public function getHeading()
+	{
 		return $this->heading;
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Phrase
+	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Seo\SeoUrl
 	 */
-	public function setTabName(\Entity\Dictionary\Phrase $tabName) {
+	public function setTabName(\Entity\Phrase\Phrase $tabName)
+	{
 		$this->tabName = $tabName;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Phrase|NULL
+	 * @return \Entity\Phrase\Phrase|NULL
 	 */
-	public function getTabName() {
+	public function getTabName()
+	{
 		return $this->tabName;
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Phrase
+	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Seo\SeoUrl
 	 */
-	public function setDescription(\Entity\Dictionary\Phrase $description) {
+	public function setDescription(\Entity\Phrase\Phrase $description)
+	{
 		$this->description = $description;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Phrase|NULL
+	 * @return \Entity\Phrase\Phrase|NULL
 	 */
-	public function getDescription() {
+	public function getDescription()
+	{
 		return $this->description;
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Phrase
+	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Seo\SeoUrl
 	 */
-	public function setPpcKeyword(\Entity\Dictionary\Phrase $ppcKeyword) {
+	public function setPpcKeyword(\Entity\Phrase\Phrase $ppcKeyword)
+	{
 		$this->ppcKeywords = $ppcKeyword;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Phrase|NULL
+	 * @return \Entity\Phrase\Phrase|NULL
 	 */
-	public function getPpcKeywords() {
+	public function getPpcKeywords()
+	{
 		return $this->ppcKeywords;
 	}
 }

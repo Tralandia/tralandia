@@ -2,7 +2,7 @@
 
 namespace Entity\User;
 
-use Entity\Dictionary;
+use Entity\Phrase;
 use Entity\Rental;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -14,7 +14,7 @@ class RentalQuestion extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Dictionary\Language")
+	 * @ORM\ManyToOne(targetEntity="Entity\Language")
 	 */
 	protected $language;
 
@@ -43,18 +43,20 @@ class RentalQuestion extends \Entity\BaseEntity {
 	protected $question;
 
 
-//@entity-generator-code <--- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Language
+	 * @param \Entity\Language
 	 * @return \Entity\User\RentalQuestion
 	 */
-	public function setLanguage(\Entity\Dictionary\Language $language) {
+	public function setLanguage(\Entity\Language $language)
+	{
 		$this->language = $language;
 
 		return $this;
@@ -63,16 +65,18 @@ class RentalQuestion extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\User\RentalQuestion
 	 */
-	public function unsetLanguage() {
+	public function unsetLanguage()
+	{
 		$this->language = NULL;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Language|NULL
+	 * @return \Entity\Language|NULL
 	 */
-	public function getLanguage() {
+	public function getLanguage()
+	{
 		return $this->language;
 	}
 		
@@ -80,7 +84,8 @@ class RentalQuestion extends \Entity\BaseEntity {
 	 * @param \Entity\Rental\Rental
 	 * @return \Entity\User\RentalQuestion
 	 */
-	public function setRental(\Entity\Rental\Rental $rental) {
+	public function setRental(\Entity\Rental\Rental $rental)
+	{
 		$this->rental = $rental;
 
 		return $this;
@@ -89,7 +94,8 @@ class RentalQuestion extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\User\RentalQuestion
 	 */
-	public function unsetRental() {
+	public function unsetRental()
+	{
 		$this->rental = NULL;
 
 		return $this;
@@ -98,7 +104,8 @@ class RentalQuestion extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Rental\Rental|NULL
 	 */
-	public function getRental() {
+	public function getRental()
+	{
 		return $this->rental;
 	}
 		
@@ -106,7 +113,8 @@ class RentalQuestion extends \Entity\BaseEntity {
 	 * @param \Extras\Types\Email
 	 * @return \Entity\User\RentalQuestion
 	 */
-	public function setSenderEmail(\Extras\Types\Email $senderEmail) {
+	public function setSenderEmail(\Extras\Types\Email $senderEmail)
+	{
 		$this->senderEmail = $senderEmail;
 
 		return $this;
@@ -115,7 +123,8 @@ class RentalQuestion extends \Entity\BaseEntity {
 	/**
 	 * @return \Extras\Types\Email|NULL
 	 */
-	public function getSenderEmail() {
+	public function getSenderEmail()
+	{
 		return $this->senderEmail;
 	}
 		
@@ -123,7 +132,8 @@ class RentalQuestion extends \Entity\BaseEntity {
 	 * @param \Extras\Types\Phone
 	 * @return \Entity\User\RentalQuestion
 	 */
-	public function setSenderPhone(\Extras\Types\Phone $senderPhone) {
+	public function setSenderPhone(\Extras\Types\Phone $senderPhone)
+	{
 		$this->senderPhone = $senderPhone;
 
 		return $this;
@@ -132,7 +142,8 @@ class RentalQuestion extends \Entity\BaseEntity {
 	/**
 	 * @return \Extras\Types\Phone|NULL
 	 */
-	public function getSenderPhone() {
+	public function getSenderPhone()
+	{
 		return $this->senderPhone;
 	}
 		
@@ -140,7 +151,8 @@ class RentalQuestion extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\User\RentalQuestion
 	 */
-	public function setQuestion($question) {
+	public function setQuestion($question)
+	{
 		$this->question = $question;
 
 		return $this;
@@ -149,7 +161,8 @@ class RentalQuestion extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getQuestion() {
+	public function getQuestion()
+	{
 		return $this->question;
 	}
 }

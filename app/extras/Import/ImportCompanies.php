@@ -15,24 +15,18 @@ use Nette\Application as NA,
 class ImportCompanies extends BaseImport {
 
 	public function doImport($subsection) {	
-		$this->setSubsections('companies');
 
-		$this->$subsection();
+		$this->{$subsection}();
 
-		$this->savedVariables['importedSubSections']['companies'][$subsection] = 1;
-
-		if (end($this->sections['companies']['subsections']) == $subsection) {
-			$this->savedVariables['importedSections']['companies'] = 1;		
-		}
 	}
 
 	private function importCompanies() {
 		$r = q('select * from companies order by id');
 
-		$dictionaryTypeRegistrator = $this->createDictionaryType('\Company\Company', 'registrator', 'ACTIVE');
+		$dictionaryTypeRegistrator = $this->createPhraseType('\Company\Company', 'registrator', 'ACTIVE');
 
 		while($x = mysql_fetch_array($r)) {
-			$s = S\Company\Company::get();
+			$s = $this->context->companyEntityFactory->create();
 			$s->oldId = $x['id'];
 			$s->name = $x['name'];
 
@@ -45,67 +39,71 @@ class ImportCompanies extends BaseImport {
 				$s->registrator = $this->createNewPhrase($dictionaryTypeRegistrator, $x['registrator_dic_id']);				
 			}
 
-			$countries = getNewIds('\Company\Company', $x['for_countries_ids']);
-			foreach ($countries as $key => $value) {
-				$s->addCountry(S\Location\Location::get($value));
-			}
-			$s->save();
+			// $countries = getNewIds('\Company\Company', $x['for_countries_ids']);
+			// d($countries);
+			// foreach ($countries as $key => $value) {
+			// 	$t = $this->context->locationRepository->find($value);
+			// 	$s->addCountry($t);
+			// }
+			$this->model->persist($s);
 		}
-		\Extras\Models\Service::flush(FALSE);
+		$this->model->flush();
 	}
 
 	private function importOffices() {
 		$r = q('select * from virtual_offices order by id');
 
-		$dictionaryTypeRegistrator = $this->createDictionaryType('\Company\Company', 'registrator', 'ACTIVE');
+		$dictionaryTypeRegistrator = $this->createPhraseType('\Company\Company', 'registrator', 'ACTIVE');
 
-		$countryLocationType = \Service\Location\Type::getBySlug('country');
+		$countryLocationType = $this->context->locationTypeRepository->findOneBySlug('country');
 
 		while($x = mysql_fetch_array($r)) {
-			$s = S\Company\Office::get();
+			$s = $this->context->companyOfficeEntityFactory->create();
 			$s->oldId = $x['id'];
 
+			$locationTemp = $this->context->locationRepository->findOneBy(array('oldId' => $x['countries_id'], 'type' => $countryLocationType));
 			$s->address = new \Extras\Types\Address(array(
 				'address' => array_filter(array($x['address'], $x['address_2'])),
 				'postcode' => $x['postcode'],
 				'locality' => $x['locality'],
-				'country' => \Service\Location\Location::getByOldIdAndType($x['countries_id'], $countryLocationType)->id,
+				'country' => $locationTemp->id,
 			)); // @todo - toto este neuklada ok, je na to task v taskee
 
-			$s->company = \Service\Company\Company::get(3);
-			$s->addCountry(\Service\Location\Location::getByOldIdAndType($x['countries_id'], $countryLocationType));
-			$s->save();
+			$s->company = $this->context->companyRepository->find(3);
+			$s->addCountry($locationTemp);
+			$this->model->persist($s);
 		}
-		\Extras\Models\Service::flush(FALSE);
+		$this->model->flush();
 	}
 
 	private function importBankAccounts() {
 		$r = q('select * from bank_accounts order by id');
 
-		$dictionaryTypeRegistrator = $this->createDictionaryType('\Company\Company', 'registrator', 'ACTIVE');
+		$dictionaryTypeRegistrator = $this->createPhraseType('\Company\Company', 'registrator', 'ACTIVE');
 
-		$countryLocationType = \Service\Location\Type::getBySlug('country');
+		$countryLocationType = $this->context->locationTypeRepository->findOneBySlug('country');
 
 		while($x = mysql_fetch_array($r)) {
-			$s = S\Company\BankAccount::get();
+			$s = $this->context->companyBankAccountEntityFactory->create();
 			$s->oldId = $x['id'];
-			$s->company = \Service\Company\Company::getByOldId($x['companies_id']);
+			$s->company = $this->context->companyRepository->findOneBy(array('oldId' => $x['companies_id']));
 			$s->bankName = $x['bank_name'];
 			$s->bankSwift = $x['bank_swift'];
 
+			$locationTemp = $this->context->locationRepository->findOneBy(array('oldId' => $x['bank_country_id'], 'type' => $countryLocationType));
 			$s->bankAddress = new \Extras\Types\Address(array(
 				'address' => $x['bank_address'],
-				'country' => \Service\Location\Location::getByOldIdAndType($x['bank_country_id'], $countryLocationType),
+				'country' => $locationTemp,
 			)); // @todo - toto este neuklada ok, je na to task v taskee
 			
 			$s->accountNumber = $x['account_number'];
 			$s->accountName = $x['account_name'];
 			$s->accountIban = $x['account_iban'];
 
-			$s->addCountry(\Service\Location\Location::getByOldIdAndType($x['bank_country_id'], $countryLocationType));
-			$s->save();
+			$s->addCountry($locationTemp);
+			$this->model->persist($s);
 		}
-		\Extras\Models\Service::flush(FALSE);
+		$this->model->flush();
 	}
 
 }

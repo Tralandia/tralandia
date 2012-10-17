@@ -52,8 +52,7 @@ common:
 	includes:
 		- webLoader.neon
 		- acl/acl.neon
-		- repositories.neon
-		- services.neon
+		- modelServices.neon
 
 	services:
 		console: @doctrine.console
@@ -80,7 +79,7 @@ common:
 				- $config(%acl%)
 				- setup()
 
-		environment: Extras\Environment(@dictionaryLanguageRepository, @locationRepository)
+		environment: Extras\Environment(@languageRepository, @locationRepository)
 
 
 		translator: Extras\Translator(@environment, @cacheStorage)
@@ -102,9 +101,6 @@ common:
 				- $taskTypeRepository(@taskTypeRepository)
 				- $taskServiceFactory(@taskServiceFactory)
 
-		taskEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Task\Task')
-		taskServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\Task\TaskService', @taskEntityFactory)
-
 
 		phraseEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Dictionary\Phrase')
 		phraseServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\Dictionary\Phrase', @phraseEntityFactory)
@@ -122,6 +118,9 @@ common:
 
 
 	factories:
+		phraseService:
+			parameters: [entity]
+			class: Service\Dictionary\Phrase(@model, %entity%)
 
 production < common:
 

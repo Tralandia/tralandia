@@ -2,7 +2,7 @@
 
 namespace Entity\Company;
 
-use Entity\Dictionary;
+use Entity\Phrase;
 use Entity\Invoicing;
 use Entity\Location;
 use Entity\Medium;
@@ -11,9 +11,7 @@ use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="company_company")
- * @EA\Service(name="\Service\Company\Company")
- * @EA\ServiceList(name="\Service\Company\CompanyList")
+ * @ORM\Table(name="company")
  * @EA\Primary(key="id", value="name")
  */
 class Company extends \Entity\BaseEntityDetails {
@@ -68,7 +66,7 @@ class Company extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Dictionary\Phrase", cascade={"persist", "remove"})
+	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $registrator;
 
@@ -78,32 +76,11 @@ class Company extends \Entity\BaseEntityDetails {
 	 */
 	protected $invoices;
 
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//@entity-generator-code <--- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 
 		$this->bankAccounts = new \Doctrine\Common\Collections\ArrayCollection;
@@ -116,7 +93,8 @@ class Company extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Company\BankAccount
 	 * @return \Entity\Company\Company
 	 */
-	public function addBankAccount(\Entity\Company\BankAccount $bankAccount) {
+	public function addBankAccount(\Entity\Company\BankAccount $bankAccount)
+	{
 		if(!$this->bankAccounts->contains($bankAccount)) {
 			$this->bankAccounts->add($bankAccount);
 		}
@@ -129,7 +107,8 @@ class Company extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Company\BankAccount
 	 * @return \Entity\Company\Company
 	 */
-	public function removeBankAccount(\Entity\Company\BankAccount $bankAccount) {
+	public function removeBankAccount(\Entity\Company\BankAccount $bankAccount)
+	{
 		if($this->bankAccounts->contains($bankAccount)) {
 			$this->bankAccounts->removeElement($bankAccount);
 		}
@@ -141,7 +120,8 @@ class Company extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Company\BankAccount
 	 */
-	public function getBankAccounts() {
+	public function getBankAccounts()
+	{
 		return $this->bankAccounts;
 	}
 		
@@ -149,7 +129,8 @@ class Company extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Company\Company
 	 */
-	public function addCountry(\Entity\Location\Location $country) {
+	public function addCountry(\Entity\Location\Location $country)
+	{
 		if(!$this->countries->contains($country)) {
 			$this->countries->add($country);
 		}
@@ -162,7 +143,8 @@ class Company extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Company\Company
 	 */
-	public function removeCountry(\Entity\Location\Location $country) {
+	public function removeCountry(\Entity\Location\Location $country)
+	{
 		if($this->countries->contains($country)) {
 			$this->countries->removeElement($country);
 		}
@@ -174,7 +156,8 @@ class Company extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Location\Location
 	 */
-	public function getCountries() {
+	public function getCountries()
+	{
 		return $this->countries;
 	}
 		
@@ -182,7 +165,8 @@ class Company extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Company\Office
 	 * @return \Entity\Company\Company
 	 */
-	public function addOffice(\Entity\Company\Office $office) {
+	public function addOffice(\Entity\Company\Office $office)
+	{
 		if(!$this->offices->contains($office)) {
 			$this->offices->add($office);
 		}
@@ -195,7 +179,8 @@ class Company extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Company\Office
 	 * @return \Entity\Company\Company
 	 */
-	public function removeOffice(\Entity\Company\Office $office) {
+	public function removeOffice(\Entity\Company\Office $office)
+	{
 		if($this->offices->contains($office)) {
 			$this->offices->removeElement($office);
 		}
@@ -207,7 +192,8 @@ class Company extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Company\Office
 	 */
-	public function getOffices() {
+	public function getOffices()
+	{
 		return $this->offices;
 	}
 		
@@ -215,7 +201,8 @@ class Company extends \Entity\BaseEntityDetails {
 	 * @param string
 	 * @return \Entity\Company\Company
 	 */
-	public function setName($name) {
+	public function setName($name)
+	{
 		$this->name = $name;
 
 		return $this;
@@ -224,7 +211,8 @@ class Company extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Company\Company
 	 */
-	public function unsetName() {
+	public function unsetName()
+	{
 		$this->name = NULL;
 
 		return $this;
@@ -233,7 +221,8 @@ class Company extends \Entity\BaseEntityDetails {
 	/**
 	 * @return string|NULL
 	 */
-	public function getName() {
+	public function getName()
+	{
 		return $this->name;
 	}
 		
@@ -241,7 +230,8 @@ class Company extends \Entity\BaseEntityDetails {
 	 * @param \Extras\Types\Address
 	 * @return \Entity\Company\Company
 	 */
-	public function setAddress(\Extras\Types\Address $address) {
+	public function setAddress(\Extras\Types\Address $address)
+	{
 		$this->address = $address;
 
 		return $this;
@@ -250,7 +240,8 @@ class Company extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Company\Company
 	 */
-	public function unsetAddress() {
+	public function unsetAddress()
+	{
 		$this->address = NULL;
 
 		return $this;
@@ -259,7 +250,8 @@ class Company extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Extras\Types\Address|NULL
 	 */
-	public function getAddress() {
+	public function getAddress()
+	{
 		return $this->address;
 	}
 		
@@ -267,7 +259,8 @@ class Company extends \Entity\BaseEntityDetails {
 	 * @param string
 	 * @return \Entity\Company\Company
 	 */
-	public function setCompanyId($companyId) {
+	public function setCompanyId($companyId)
+	{
 		$this->companyId = $companyId;
 
 		return $this;
@@ -276,7 +269,8 @@ class Company extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Company\Company
 	 */
-	public function unsetCompanyId() {
+	public function unsetCompanyId()
+	{
 		$this->companyId = NULL;
 
 		return $this;
@@ -285,7 +279,8 @@ class Company extends \Entity\BaseEntityDetails {
 	/**
 	 * @return string|NULL
 	 */
-	public function getCompanyId() {
+	public function getCompanyId()
+	{
 		return $this->companyId;
 	}
 		
@@ -293,7 +288,8 @@ class Company extends \Entity\BaseEntityDetails {
 	 * @param string
 	 * @return \Entity\Company\Company
 	 */
-	public function setCompanyVatId($companyVatId) {
+	public function setCompanyVatId($companyVatId)
+	{
 		$this->companyVatId = $companyVatId;
 
 		return $this;
@@ -302,7 +298,8 @@ class Company extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Company\Company
 	 */
-	public function unsetCompanyVatId() {
+	public function unsetCompanyVatId()
+	{
 		$this->companyVatId = NULL;
 
 		return $this;
@@ -311,7 +308,8 @@ class Company extends \Entity\BaseEntityDetails {
 	/**
 	 * @return string|NULL
 	 */
-	public function getCompanyVatId() {
+	public function getCompanyVatId()
+	{
 		return $this->companyVatId;
 	}
 		
@@ -319,7 +317,8 @@ class Company extends \Entity\BaseEntityDetails {
 	 * @param float
 	 * @return \Entity\Company\Company
 	 */
-	public function setVat($vat) {
+	public function setVat($vat)
+	{
 		$this->vat = $vat;
 
 		return $this;
@@ -328,7 +327,8 @@ class Company extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Company\Company
 	 */
-	public function unsetVat() {
+	public function unsetVat()
+	{
 		$this->vat = NULL;
 
 		return $this;
@@ -337,24 +337,27 @@ class Company extends \Entity\BaseEntityDetails {
 	/**
 	 * @return float|NULL
 	 */
-	public function getVat() {
+	public function getVat()
+	{
 		return $this->vat;
 	}
 		
 	/**
-	 * @param \Entity\Dictionary\Phrase
+	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Company\Company
 	 */
-	public function setRegistrator(\Entity\Dictionary\Phrase $registrator) {
+	public function setRegistrator(\Entity\Phrase\Phrase $registrator)
+	{
 		$this->registrator = $registrator;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Entity\Dictionary\Phrase|NULL
+	 * @return \Entity\Phrase\Phrase|NULL
 	 */
-	public function getRegistrator() {
+	public function getRegistrator()
+	{
 		return $this->registrator;
 	}
 		
@@ -362,7 +365,8 @@ class Company extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Invoicing\Invoice
 	 * @return \Entity\Company\Company
 	 */
-	public function addInvoice(\Entity\Invoicing\Invoice $invoice) {
+	public function addInvoice(\Entity\Invoicing\Invoice $invoice)
+	{
 		if(!$this->invoices->contains($invoice)) {
 			$this->invoices->add($invoice);
 		}
@@ -375,7 +379,8 @@ class Company extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Invoicing\Invoice
 	 * @return \Entity\Company\Company
 	 */
-	public function removeInvoice(\Entity\Invoicing\Invoice $invoice) {
+	public function removeInvoice(\Entity\Invoicing\Invoice $invoice)
+	{
 		if($this->invoices->contains($invoice)) {
 			$this->invoices->removeElement($invoice);
 		}
@@ -387,7 +392,8 @@ class Company extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Invoicing\Invoice
 	 */
-	public function getInvoices() {
+	public function getInvoices()
+	{
 		return $this->invoices;
 	}
 }
