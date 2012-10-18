@@ -1,22 +1,21 @@
 <?php
 
-namespace Entity\Emailing;
+namespace Entity\Email;
 
 use Entity\Phrase;
-use Entity\Emailing;
 use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="emailing_template")
+ * @ORM\Table(name="email_template")
  * @EA\Primary(key="id", value="domain")
  */
 class Template extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Emailing\TemplateType")
+	 * @ORM\ManyToOne(targetEntity="Entity\Email\TemplateType")
 	 * @ORM\JoinColumn(onDelete="SET NULL")
 	 */
 	protected $type;
@@ -63,10 +62,10 @@ class Template extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Emailing\TemplateType
-	 * @return \Entity\Emailing\Template
+	 * @param \Entity\Email\TemplateType
+	 * @return \Entity\Email\Template
 	 */
-	public function setType(\Entity\Emailing\TemplateType $type)
+	public function setType(\Entity\Email\TemplateType $type)
 	{
 		$this->type = $type;
 
@@ -74,7 +73,7 @@ class Template extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Emailing\Template
+	 * @return \Entity\Email\Template
 	 */
 	public function unsetType()
 	{
@@ -84,7 +83,7 @@ class Template extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Emailing\TemplateType|NULL
+	 * @return \Entity\Email\TemplateType|NULL
 	 */
 	public function getType()
 	{
@@ -93,7 +92,7 @@ class Template extends \Entity\BaseEntity {
 		
 	/**
 	 * @param string
-	 * @return \Entity\Emailing\Template
+	 * @return \Entity\Email\Template
 	 */
 	public function setName($name)
 	{
@@ -103,7 +102,7 @@ class Template extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Emailing\Template
+	 * @return \Entity\Email\Template
 	 */
 	public function unsetName()
 	{
@@ -122,7 +121,7 @@ class Template extends \Entity\BaseEntity {
 		
 	/**
 	 * @param \Entity\Phrase\Phrase
-	 * @return \Entity\Emailing\Template
+	 * @return \Entity\Email\Template
 	 */
 	public function setSubject(\Entity\Phrase\Phrase $subject)
 	{
@@ -141,7 +140,7 @@ class Template extends \Entity\BaseEntity {
 		
 	/**
 	 * @param \Entity\Phrase\Phrase
-	 * @return \Entity\Emailing\Template
+	 * @return \Entity\Email\Template
 	 */
 	public function setBody(\Entity\Phrase\Phrase $body)
 	{
@@ -160,7 +159,7 @@ class Template extends \Entity\BaseEntity {
 		
 	/**
 	 * @param \Entity\Language
-	 * @return \Entity\Emailing\Template
+	 * @return \Entity\Email\Template
 	 */
 	public function setLanguage(\Entity\Language $language)
 	{
@@ -170,7 +169,7 @@ class Template extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Emailing\Template
+	 * @return \Entity\Email\Template
 	 */
 	public function unsetLanguage()
 	{
@@ -188,10 +187,10 @@ class Template extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Emailing\Batch
-	 * @return \Entity\Emailing\Template
+	 * @param \Entity\Email\Batch
+	 * @return \Entity\Email\Template
 	 */
-	public function addBatche(\Entity\Emailing\Batch $batche)
+	public function addBatche(\Entity\Email\Batch $batche)
 	{
 		if(!$this->batches->contains($batche)) {
 			$this->batches->add($batche);
@@ -202,10 +201,10 @@ class Template extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Emailing\Batch
-	 * @return \Entity\Emailing\Template
+	 * @param \Entity\Email\Batch
+	 * @return \Entity\Email\Template
 	 */
-	public function removeBatche(\Entity\Emailing\Batch $batche)
+	public function removeBatche(\Entity\Email\Batch $batche)
 	{
 		if($this->batches->contains($batche)) {
 			$this->batches->removeElement($batche);
@@ -216,7 +215,7 @@ class Template extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Emailing\Batch
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Email\Batch
 	 */
 	public function getBatches()
 	{

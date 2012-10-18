@@ -1,14 +1,13 @@
 <?php
 
-namespace Entity\Invoicing;
+namespace Entity\Invoice;
 
-use Entity\Invoicing;
 use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="invoicing_coupon", indexes={@ORM\index(name="code", columns={"code"}), @ORM\index(name="countTotal", columns={"countTotal"}), @ORM\index(name="countLeft", columns={"countLeft"}), @ORM\index(name="validFrom", columns={"validFrom"}), @ORM\index(name="validTo", columns={"validTo"})})
+ * @ORM\Table(name="invoice_coupon", indexes={@ORM\index(name="code", columns={"code"}), @ORM\index(name="countTotal", columns={"countTotal"}), @ORM\index(name="countLeft", columns={"countLeft"}), @ORM\index(name="validFrom", columns={"validFrom"}), @ORM\index(name="validTo", columns={"validTo"})})
  * @EA\Primary(key="id", value="name")
  */
 class Coupon extends \Entity\BaseEntity {
@@ -72,7 +71,7 @@ class Coupon extends \Entity\BaseEntity {
 		
 	/**
 	 * @param string
-	 * @return \Entity\Invoicing\Coupon
+	 * @return \Entity\Invoice\Coupon
 	 */
 	public function setName($name)
 	{
@@ -82,7 +81,7 @@ class Coupon extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Invoicing\Coupon
+	 * @return \Entity\Invoice\Coupon
 	 */
 	public function unsetName()
 	{
@@ -101,7 +100,7 @@ class Coupon extends \Entity\BaseEntity {
 		
 	/**
 	 * @param string
-	 * @return \Entity\Invoicing\Coupon
+	 * @return \Entity\Invoice\Coupon
 	 */
 	public function setCode($code)
 	{
@@ -111,7 +110,7 @@ class Coupon extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Invoicing\Coupon
+	 * @return \Entity\Invoice\Coupon
 	 */
 	public function unsetCode()
 	{
@@ -130,7 +129,7 @@ class Coupon extends \Entity\BaseEntity {
 		
 	/**
 	 * @param integer
-	 * @return \Entity\Invoicing\Coupon
+	 * @return \Entity\Invoice\Coupon
 	 */
 	public function setCountTotal($countTotal)
 	{
@@ -149,7 +148,7 @@ class Coupon extends \Entity\BaseEntity {
 		
 	/**
 	 * @param integer
-	 * @return \Entity\Invoicing\Coupon
+	 * @return \Entity\Invoice\Coupon
 	 */
 	public function setCountLeft($countLeft)
 	{
@@ -168,7 +167,7 @@ class Coupon extends \Entity\BaseEntity {
 		
 	/**
 	 * @param \DateTime
-	 * @return \Entity\Invoicing\Coupon
+	 * @return \Entity\Invoice\Coupon
 	 */
 	public function setValidFrom(\DateTime $validFrom)
 	{
@@ -187,7 +186,7 @@ class Coupon extends \Entity\BaseEntity {
 		
 	/**
 	 * @param \DateTime
-	 * @return \Entity\Invoicing\Coupon
+	 * @return \Entity\Invoice\Coupon
 	 */
 	public function setValidTo(\DateTime $validTo)
 	{
@@ -205,10 +204,10 @@ class Coupon extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Invoicing\Package
-	 * @return \Entity\Invoicing\Coupon
+	 * @param \Entity\Invoice\Package
+	 * @return \Entity\Invoice\Coupon
 	 */
-	public function setRecommenderPackage(\Entity\Invoicing\Package $recommenderPackage)
+	public function setRecommenderPackage(\Entity\Invoice\Package $recommenderPackage)
 	{
 		$this->recommenderPackage = $recommenderPackage;
 
@@ -216,7 +215,7 @@ class Coupon extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Invoicing\Coupon
+	 * @return \Entity\Invoice\Coupon
 	 */
 	public function unsetRecommenderPackage()
 	{
@@ -226,7 +225,7 @@ class Coupon extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Invoicing\Package|NULL
+	 * @return \Entity\Invoice\Package|NULL
 	 */
 	public function getRecommenderPackage()
 	{
@@ -234,10 +233,10 @@ class Coupon extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Invoicing\Package
-	 * @return \Entity\Invoicing\Coupon
+	 * @param \Entity\Invoice\Package
+	 * @return \Entity\Invoice\Coupon
 	 */
-	public function setRecommendeePackage(\Entity\Invoicing\Package $recommendeePackage)
+	public function setRecommendeePackage(\Entity\Invoice\Package $recommendeePackage)
 	{
 		$this->recommendeePackage = $recommendeePackage;
 
@@ -245,7 +244,7 @@ class Coupon extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Invoicing\Coupon
+	 * @return \Entity\Invoice\Coupon
 	 */
 	public function unsetRecommendeePackage()
 	{
@@ -255,7 +254,7 @@ class Coupon extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Invoicing\Package|NULL
+	 * @return \Entity\Invoice\Package|NULL
 	 */
 	public function getRecommendeePackage()
 	{

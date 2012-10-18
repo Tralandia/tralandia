@@ -14,19 +14,17 @@ use Nette\Application as NA,
 class ImportTickets extends BaseImport {
 
 	public function doImport() {	
-		$import = new \Extras\Import\BaseImport();
 
 		// Detaching all media
-		qNew('update medium_medium set message_id = NULL where message_id > 0');
-		$import->undoSection('tickets');
+		qNew('update medium set message_id = NULL where message_id > 0');
 
 
-		$defaultStaffUser = \Service\User\User::getByLogin('paradeiser@tralandia.com');
+		$defaultStaffUser = $context->userRepository->findOneByLogin('paradeiser@tralandia.com');
 
-		$this->countryTypeId = qNew('select id from location_type where slug = "country"');
-		$this->countryTypeId = mysql_fetch_array($this->countryTypeId);
-		$locationsByOldId = getNewIdsByOld('\Location\Location', 'type_id = '.$this->countryTypeId[0]);
-		$languagesByOldId = getNewIdsByOld('\Language');
+		// $countryTypeId = qNew('select id from location_type where slug = "country"');
+		// $countryTypeId = mysql_fetch_array($countryTypeId);
+		// $locationsByOldId = getNewIdsByOld('\Location\Location', 'type_id = '.$countryTypeId[0]);
+		// $languagesByOldId = getNewIdsByOld('\Language');
 
 		if ($this->developmentMode == TRUE) {
 			$r = q('select * from tickets where stamp > 1325372400 and status <> "closed" order by stamp limit 100');
@@ -35,7 +33,7 @@ class ImportTickets extends BaseImport {
 		}
 
 		while($x = mysql_fetch_array($r)) {
-			$ticket = \Service\Ticket\Ticket::get();
+			$ticket = $this->ticketEntityFactory->create();
 			$ticket->oldId = $x['id'];
 
 			// if (isset($locationsByOldId[$x['country_id']])) {

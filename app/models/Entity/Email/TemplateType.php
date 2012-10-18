@@ -1,14 +1,13 @@
 <?php
 
-namespace Entity\Emailing;
+namespace Entity\Email;
 
-use Entity\Emailing;
 use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="emailing_templatetype")
+ * @ORM\Table(name="email_templatetype")
  * @EA\Primary(key="id", value="name")
  */
 class TemplateType extends \Entity\BaseEntity {
@@ -35,7 +34,7 @@ class TemplateType extends \Entity\BaseEntity {
 		
 	/**
 	 * @param string
-	 * @return \Entity\Emailing\TemplateType
+	 * @return \Entity\Email\TemplateType
 	 */
 	public function setName($name)
 	{
@@ -54,7 +53,7 @@ class TemplateType extends \Entity\BaseEntity {
 		
 	/**
 	 * @param json
-	 * @return \Entity\Emailing\TemplateType
+	 * @return \Entity\Email\TemplateType
 	 */
 	public function setAvailableVariables($availableVariables)
 	{
@@ -64,7 +63,7 @@ class TemplateType extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Emailing\TemplateType
+	 * @return \Entity\Email\TemplateType
 	 */
 	public function unsetAvailableVariables()
 	{

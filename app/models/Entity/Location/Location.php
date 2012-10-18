@@ -109,7 +109,7 @@ class Location extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Invoicing\Marketing", inversedBy="locations")
+	 * @ORM\ManyToMany(targetEntity="Entity\Invoice\Marketing", inversedBy="locations")
 	 */
 	protected $marketings;
 
@@ -663,10 +663,10 @@ class Location extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @param \Entity\Invoicing\Marketing
+	 * @param \Entity\Invoice\Marketing
 	 * @return \Entity\Location\Location
 	 */
-	public function addMarketing(\Entity\Invoicing\Marketing $marketing)
+	public function addMarketing(\Entity\Invoice\Marketing $marketing)
 	{
 		if(!$this->marketings->contains($marketing)) {
 			$this->marketings->add($marketing);
@@ -676,7 +676,7 @@ class Location extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Invoicing\Marketing
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Invoice\Marketing
 	 */
 	public function getMarketings()
 	{

@@ -1,6 +1,6 @@
 <?php
 
-namespace Entity\Invoicing;
+namespace Entity\Invoice;
 
 use Entity\Phrase;
 use Entity\Location;
@@ -9,7 +9,7 @@ use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="invoicing_package")
+ * @ORM\Table(name="invoice_package")
  * @EA\Primary(key="id", value="id")
  */
 class Package extends \Entity\BaseEntity {
@@ -40,7 +40,7 @@ class Package extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Entity\Invoicing\Service", mappedBy="package")
+	 * @ORM\OneToMany(targetEntity="Entity\Invoice\Service", mappedBy="package", cascade={"persist", "remove"})
 	 */
 	protected $services;
 
@@ -58,7 +58,7 @@ class Package extends \Entity\BaseEntity {
 		
 	/**
 	 * @param \Entity\Phrase\Phrase
-	 * @return \Entity\Invoicing\Package
+	 * @return \Entity\Invoice\Package
 	 */
 	public function setName(\Entity\Phrase\Phrase $name)
 	{
@@ -77,7 +77,7 @@ class Package extends \Entity\BaseEntity {
 		
 	/**
 	 * @param \Entity\Phrase\Phrase
-	 * @return \Entity\Invoicing\Package
+	 * @return \Entity\Invoice\Package
 	 */
 	public function setTeaser(\Entity\Phrase\Phrase $teaser)
 	{
@@ -95,10 +95,10 @@ class Package extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Invoicing\UseType
-	 * @return \Entity\Invoicing\Package
+	 * @param \Entity\Invoice\UseType
+	 * @return \Entity\Invoice\Package
 	 */
-	public function addUse(\Entity\Invoicing\UseType $use)
+	public function addUse(\Entity\Invoice\UseType $use)
 	{
 		if(!$this->uses->contains($use)) {
 			$this->uses->add($use);
@@ -109,10 +109,10 @@ class Package extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Invoicing\UseType
-	 * @return \Entity\Invoicing\Package
+	 * @param \Entity\Invoice\UseType
+	 * @return \Entity\Invoice\Package
 	 */
-	public function removeUse(\Entity\Invoicing\UseType $use)
+	public function removeUse(\Entity\Invoice\UseType $use)
 	{
 		if($this->uses->contains($use)) {
 			$this->uses->removeElement($use);
@@ -123,7 +123,7 @@ class Package extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Invoicing\UseType
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Invoice\UseType
 	 */
 	public function getUses()
 	{
@@ -132,7 +132,7 @@ class Package extends \Entity\BaseEntity {
 		
 	/**
 	 * @param \Entity\Location\Location
-	 * @return \Entity\Invoicing\Package
+	 * @return \Entity\Invoice\Package
 	 */
 	public function setCountry(\Entity\Location\Location $country)
 	{
@@ -142,7 +142,7 @@ class Package extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Invoicing\Package
+	 * @return \Entity\Invoice\Package
 	 */
 	public function unsetCountry()
 	{
@@ -160,10 +160,10 @@ class Package extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Invoicing\Service
-	 * @return \Entity\Invoicing\Package
+	 * @param \Entity\Invoice\Service
+	 * @return \Entity\Invoice\Package
 	 */
-	public function addService(\Entity\Invoicing\Service $service)
+	public function addService(\Entity\Invoice\Service $service)
 	{
 		if(!$this->services->contains($service)) {
 			$this->services->add($service);
@@ -174,10 +174,10 @@ class Package extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Invoicing\Service
-	 * @return \Entity\Invoicing\Package
+	 * @param \Entity\Invoice\Service
+	 * @return \Entity\Invoice\Package
 	 */
-	public function removeService(\Entity\Invoicing\Service $service)
+	public function removeService(\Entity\Invoice\Service $service)
 	{
 		if($this->services->contains($service)) {
 			$this->services->removeElement($service);
@@ -188,7 +188,7 @@ class Package extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Invoicing\Service
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Invoice\Service
 	 */
 	public function getServices()
 	{

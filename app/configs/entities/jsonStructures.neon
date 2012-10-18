@@ -90,7 +90,7 @@ Emailing\Batch:
 		item1: null
 		item2: null
 
-Invoicing\Invoice:
+Invoice\Invoice:
 	paymentInfo:
 		item1: null
 		item2: null

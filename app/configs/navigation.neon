@@ -93,25 +93,25 @@ common:
 					link: ':Admin:VisitorType:list'
 
 
-		invoicing:
-			label: Invoicing
+		invoice:
+			label: Invoice
 			items:
 				invoice: 
-					label: Invoices
+					label: Invoice
 					items:
 						pending: 
 							label: Pending
-							link: ':Admin:InvoicingInvoice:list'
+							link: ':Admin:InvoiceInvoice:list'
 							linkArgs:
 								filter: pending
 						paid: 
 							label: Paid
-							link: ':Admin:InvoicingInvoice:list'
+							link: ':Admin:InvoiceInvoice:list'
 							linkArgs:
 								filter: paid
 						overdue: 
 							label: Overdue
-							link: ':Admin:InvoicingInvoice:list'
+							link: ':Admin:InvoiceInvoice:list'
 							linkArgs:
 								filter: overdue
 				expense: 
@@ -123,25 +123,25 @@ common:
 							link: ':Admin:ExpenseType:list'
 				package: 
 					label: Packages
-					link: ':Admin:InvoicingPackage:list'
+					link: ':Admin:InvoicePackage:list'
 				marketing: 
 					label: Marketings
-					link: ':Admin:InvoicingMarketing:list'
+					link: ':Admin:InvoiceMarketing:list'
 				coupon: 
 					label: Coupons
-					link: ':Admin:InvoicingCoupon:list'
+					link: ':Admin:InvoiceCoupon:list'
 				serviceType: 
 					label: Service Types
-					link: ':Admin:InvoicingServiceType:list'
+					link: ':Admin:InvoiceServiceType:list'
 				duration: 
 					label: Durations
-					link: ':Admin:InvoicingServiceDuration:list'
+					link: ':Admin:InvoiceServiceDuration:list'
 				use: 
 					label: Use Types
-					link: ':Admin:InvoicingUseType:list'
+					link: ':Admin:InvoiceUseType:list'
 				export: 
 					label: Export
-					link: ':Admin:InvoicingExport:'
+					link: ':Admin:InvoiceExport:'
 					separator: true
 
 		dictionary:
@@ -205,18 +205,18 @@ common:
 				domain: 
 					label: Domains
 					link: ':Admin:Domain:list'
-		emailing:
-			label: Emailing
+		email:
+			label: Email
 			items:
 				batch: 
 					label: Batches
-					link: ':Admin:EmailingBatch:list'
+					link: ':Admin:EmailBatch:list'
 				email: 
 					label: Emails
-					link: ':Admin:EmailingEmail:list'
+					link: ':Admin:EmailEmail:list'
 				emailType: 
 					label: Email Types
-					link: ':Admin:EmailingType:list'
+					link: ':Admin:EmailType:list'
 		company:
 			label: Company
 			items:

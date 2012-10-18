@@ -12,39 +12,43 @@ use Nette\Application as NA,
 	Service as S,
 	Service\Log as SLog;
 
-class ImportInvoicingStart extends BaseImport {
+class ImportInvoiceStart extends BaseImport {
 
 	public function doImport($subsection = NULL) {
 
-		$en = \Service\Dictionary\Language::getByIso('en');
+		$context = $this->context;
+		$model = $this->model;
 
-		$this->createPhraseType('\Invoicing\UseType', 'name', 'ACTIVE');
-		\Extras\Models\Service::flush(FALSE);
+		$en = $context->languageRepository->findOneByIso('en');
+
+		$phrase = $this->createPhraseType('\Invoice\UseType', 'name', 'ACTIVE');
+		$model->persist($phrase);
+		$model->flush();
 
 
 		$currenciesByOldId = getNewIdsByOld('\Currency');
 
 		// Durations
-		$durationNameType = $this->createPhraseType('\Invoicing\ServiceDuration', 'name', 'ACTIVE');
+		$durationNameType = $this->createPhraseType('\Invoice\ServiceDuration', 'name', 'ACTIVE');
 		$r = q('select * from invoicing_durations order by id');
 		while($x = mysql_fetch_array($r)) {
-			$duration = \Service\Invoicing\ServiceDuration::get();
+			$duration = $context->invoiceServiceDurationEntityFactory->create();
 			$duration->oldId = $x['id'];
 			$duration->duration = $x['strtotime'];
 			$duration->sort = $x['sort'];
 			$duration->name = $this->createNewPhrase($durationNameType, $x['name_dic_id']);
-			$duration->save();
+			$model->persist($duration);
 		}
 
 		// Service Types
-		$serviceTypeNameType = $this->createPhraseType('\Invoicing\ServiceType', 'name', 'ACTIVE');
+		$serviceTypeNameType = $this->createPhraseType('\Invoice\ServiceType', 'name', 'ACTIVE');
 		$r = q('select * from invoicing_services_types order by id');
 		while($x = mysql_fetch_array($r)) {
-			$serviceType = \Service\Invoicing\ServiceType::get();
+			$serviceType = $context->invoiceServiceTypeEntityFactory->create();
 			$serviceType->oldId = $x['id'];
 			$serviceType->slug = $x['name'];
 			$serviceType->name = $this->createNewPhrase($serviceTypeNameType, $x['name_dic_id']);
-			$serviceType->save();
+			$model->persist($serviceType);
 		}
 
 		// Uses
@@ -59,32 +63,32 @@ class ImportInvoicingStart extends BaseImport {
 		);
 
 		foreach ($useTypes as $key => $value) {
-			$useType = \Service\Invoicing\UseType::get();
-			$useType->name = $this->createPhraseFromString('\Invoicing\UseType', 'name', 'ACTIVE', $value, $en);
+			$useType = $context->invoiceUseTypeEntityFactory->create();
+			$useType->name = $this->createPhraseFromString('\Invoice\UseType', 'name', 'ACTIVE', $value, $en);
 			$useType->slug = $key;
-			$useType->save();
+			$model->persist($useType);
 		}
 
-		\Extras\Models\Service::flush(FALSE);
+		$model->flush();
 
 		// Packages
 		// Service Types
-		$packageNameType = $this->createPhraseType('\Invoicing\Package', 'name', 'ACTIVE');
-		$packageTeaserType = $this->createPhraseType('\Invoicing\Package', 'teaser', 'ACTIVE');
-		$countryType = \Service\Location\Type::getBySlug('country');
+		$packageNameType = $this->createPhraseType('\Invoice\Package', 'name', 'ACTIVE');
+		$packageTeaserType = $this->createPhraseType('\Invoice\Package', 'teaser', 'ACTIVE');
+		$countryType = $context->locationRepository->findOneBySlug('country');
 
 		$r = q('select * from invoicing_packages order by id');
 		while($x = mysql_fetch_array($r)) {
-			$package = \Service\Invoicing\Package::get();
+			$package = $context->invoicePackageEntityFactory->create();
 			$package->name = $this->createNewPhrase($packageNameType, $x['name_dic_id']);
 			$package->teaser = $this->createNewPhrase($packageTeaserType, $x['teaser_dic_id']);
 			
-			$temp = \Service\Location\Location::getByTypeAndOldId($countryType, $x['countries_id']);
+			$temp = $context->locationRepository->findOneBy(array('type'=>$countryType, 'oldId'=>$x['countries_id']));
 			if ($temp) $package->country = $temp;
 
 			$temp = array_unique(array_filter(explode(',', $x['package_type'])));
 			foreach ($temp as $key => $value) {
-				$use = \Service\Invoicing\UseType::getBySlug($value);
+				$use = $context->invoiceUseTypeRepository->findOneBySlug($value);
 				if ($use) {
 					$package->addUse($use);
 				}
@@ -92,34 +96,33 @@ class ImportInvoicingStart extends BaseImport {
 
 			$r1 = q('select * from invoicing_packages_services where packages_id = '.$x['id'].' order by id');
 			while($x1 = mysql_fetch_array($r1)) {
-				$packageService = \Service\Invoicing\Service::get();
-				$packageService->type = \Service\Invoicing\ServiceType::getByOldId($x1['services_types_id']);
-				$packageService->duration = \Service\Invoicing\ServiceDuration::getByOldId($x1['duration']);
+				$packageService = $context->invoiceServiceEntityFactory->create();
+				$packageService->type = $context->invoiceServiceTypeRepository->findOneByOldId($x1['services_types_id']);
+				$packageService->duration = $context->invoiceServiceDurationRepository->findOneByOldId($x1['duration']);
 				$packageService->defaultPrice = new \Extras\Types\Price($x1['price_default'], $currenciesByOldId[(int)$x['currencies_id']]); 
 				$packageService->currentPrice = new \Extras\Types\Price($x1['price_current'], $currenciesByOldId[(int)$x['currencies_id']]);
-				$packageService->save();
 				$package->addService($packageService);
 			}
 
-			$package->save();
+			$model->persist($package);
 		}
-		\Extras\Models\Service::flush(FALSE);
+		$model->flush();
 
 		// Marketings
-		$marketingNameType = $this->createPhraseType('\Invoicing\Marketing', 'name', 'ACTIVE');
-		$marketingDescriptionType = $this->createPhraseType('\Invoicing\Marketing', 'description', 'ACTIVE');
+		$marketingNameType = $this->createPhraseType('\Invoice\Marketing', 'name', 'ACTIVE');
+		$marketingDescriptionType = $this->createPhraseType('\Invoice\Marketing', 'description', 'ACTIVE');
 		$r = q('select * from invoicing_marketings order by id');
 		while($x = mysql_fetch_array($r)) {
-			$marketing = \Service\Invoicing\Marketing::get();
+			$marketing = $context->invoiceMarketingEntityFactory->create();
 			$marketing->oldId = $x['id'];
 			$marketing->name = $this->createNewPhrase($marketingNameType, $x['name_dic_id']);
 			$marketing->description = $this->createNewPhrase($marketingDescriptionType, $x['description_dic_id']);
-			$temp = \Service\Invoicing\Package::getByOldId($x['packages_id']);
+			$temp = $context->invoicePackageRepository->findOneByOldId($x['packages_id']);
 			if ($temp) $marketing->package = $temp;
 			
 			$temp = array_unique(array_filter(explode(',', $x['countries_ids_included'])));
 			foreach ($temp as $key => $value) {
-				$country = \Service\Location\Location::getByTypeAndOldId($countryType, $value);;
+				$country = $context->locationRepository->findOneBy(array('type'=>$countryType, 'oldId'=>$value));
 				if ($country) {
 					$marketing->addLocation($country);
 				}
@@ -128,15 +131,12 @@ class ImportInvoicingStart extends BaseImport {
 			$marketing->countLeft = $x['count_left'];
 			$marketing->validFrom = fromStamp($x['time_from']);
 			$marketing->validTo = fromStamp($x['time_to']);
-			$temp = \Service\Invoicing\UseType::getBySlug($x['marketing_type']);
+			$temp = $context->invoiceUseTypeRepository->findOneBySlug($x['marketing_type']);
 			if ($temp) $marketing->addUse($temp);
-			$marketing->save();
+			$model->persist($marketing);
 		}
 
-		// Coupons
-		// Neimportujeme, lebo sa vobec nepouzivaju...
-		
-		$this->savedVariables['importedSections']['invoicingStart'] = 1;
+		$model->flush();
 
 	}
 

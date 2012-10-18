@@ -15,30 +15,31 @@ use Nette\Application as NA,
 class ImportAttractions extends BaseImport {
 
 	public function doImport($subsection = NULL) {
+		$context = $this->context;
+		$model = $this->model;
 
-		$import = new \Extras\Import\BaseImport();
+		$en = $context->languageRepository->findOneByIso('en');
 
 		// Detaching all media
-		qNew('update medium_medium set attraction_id = NULL where attraction_id > 0');
-		$import->undoSection('attractions');
+		qNew('update medium set attraction_id = NULL where attraction_id > 0');
 		//return;
 
-		$en = \Service\Dictionary\Language::getByIso('en');
 
 		$temp = array(
 			'pluralsRequired' => TRUE,
 		);
+
 		$typeNameType = $this->createPhraseType('\Attraction\Type', 'name', 'ACTIVE', $temp);
 
 		$r = q('select * from attractions_types order by id');
 		while($x = mysql_fetch_array($r)) {
-			$attractionType = \Service\Attraction\Type::get();
+			$attractionType = $context->attractionTypeEntityFactory->create();
 			$attractionType->name = $this->createNewPhrase($typeNameType, $x['name_singular_dic_id']);
 			$attractionType->oldId = $x['id'];
-			$attractionType->save();
+			$model->persist($attractionType);
 		}
 
-		\Extras\Models\Service::flush(FALSE);
+		$model->flush();
 
 		$attractionNameType = $this->createPhraseType('\Attraction\Attraction', 'name', 'ACTIVE');
 		$attractionDescriptionType = $this->createPhraseType('\Attraction\Attraction', 'descrition', 'ACTIVE');
@@ -56,11 +57,11 @@ class ImportAttractions extends BaseImport {
 		}
 
 		while($x = mysql_fetch_array($r)) {
-			$attraction = \Service\Attraction\Attraction::get();
-			$attraction->type = \Service\Attraction\Type::getByOldId($x['attraction_type_id']);
+			$attraction = $context->attractionEntityFactory->create();
+			$attraction->type = $context->attractionTypeRepository->findOneByOldId($x['attraction_type_id']);
 			$attraction->name = $this->createNewPhrase($attractionNameType, $x['name_dic_id']);
 			$attraction->description = $this->createNewPhrase($attractionDescriptionType, $x['description_dic_id']);
-			$attraction->country = \Service\Location\Location::get($locationsByOldId[$x['country_id']]);
+			$attraction->country = $context->locationRepository->find($locationsByOldId[$x['country_id']]);
 			$attraction->latitude = new \Extras\Types\Latlong($x['latitude']);
 			$attraction->longitude = new \Extras\Types\Latlong($x['longitude']);
 			$attraction->oldId = $x['id'];
@@ -85,25 +86,20 @@ class ImportAttractions extends BaseImport {
 			$temp = array_unique(array_filter(explode(',', $x['photos'])));
 			if (is_array($temp) && count($temp)) {
 				if ($this->developmentMode == TRUE) $temp = array_slice($temp, 0, 3);
-				$attraction->save();
 				foreach ($temp as $key => $value) {
-					$medium = \Service\Medium\Medium::getByOldUrl('http://www.tralandia.com/u/'.$value);
+					$medium = $context->mediumRepository->findOneByOldUrl('http://www.tralandia.com/u/'.$value);
 					if (!$medium) {
-						$medium = \Service\Medium\Medium::get();
-						if ($medium) {
-							$attraction->addMedium($medium);
-							$medium->setContentFromUrl('http://www.tralandia.com/u/'.$value);
-						}
+						$medium = $context->mediumServiceFactory->create();
+						$medium->setContentFromUrl('http://www.tralandia.com/u/'.$value);
+						$attraction->addMedium($medium->getEntity());
 					} else {
 						$attraction->addMedium($medium);
 					}
-
 				}
 			}
-			$attraction->save();
+			$model->persist($attraction);
 		}
 
-		$this->savedVariables['importedSections']['attractions'] = 1;
-
+		$model->flush();
 	}
 }

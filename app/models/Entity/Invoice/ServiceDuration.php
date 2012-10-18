@@ -1,6 +1,6 @@
 <?php
 
-namespace Entity\Invoicing;
+namespace Entity\Invoice;
 
 use Entity\Phrase;
 use Doctrine\ORM\Mapping as ORM;
@@ -8,7 +8,7 @@ use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="invoicing_serviceduration")
+ * @ORM\Table(name="invoice_serviceduration")
  * @EA\Primary(key="id", value="duration")
  */
 class ServiceDuration extends \Entity\BaseEntity {
@@ -41,7 +41,7 @@ class ServiceDuration extends \Entity\BaseEntity {
 		
 	/**
 	 * @param string
-	 * @return \Entity\Invoicing\ServiceDuration
+	 * @return \Entity\Invoice\ServiceDuration
 	 */
 	public function setDuration($duration)
 	{
@@ -51,7 +51,7 @@ class ServiceDuration extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Invoicing\ServiceDuration
+	 * @return \Entity\Invoice\ServiceDuration
 	 */
 	public function unsetDuration()
 	{
@@ -70,7 +70,7 @@ class ServiceDuration extends \Entity\BaseEntity {
 		
 	/**
 	 * @param \Entity\Phrase\Phrase
-	 * @return \Entity\Invoicing\ServiceDuration
+	 * @return \Entity\Invoice\ServiceDuration
 	 */
 	public function setName(\Entity\Phrase\Phrase $name)
 	{
@@ -89,7 +89,7 @@ class ServiceDuration extends \Entity\BaseEntity {
 		
 	/**
 	 * @param integer
-	 * @return \Entity\Invoicing\ServiceDuration
+	 * @return \Entity\Invoice\ServiceDuration
 	 */
 	public function setSort($sort)
 	{

@@ -1,16 +1,15 @@
 <?php
 
-namespace Entity\Invoicing;
+namespace Entity\Invoice;
 
 use Entity\Phrase;
-use Entity\Invoicing;
 use Entity\Location;
 use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="invoicing_marketing", indexes={@ORM\index(name="countTotal", columns={"countTotal"}), @ORM\index(name="countLeft", columns={"countLeft"}), @ORM\index(name="validFrom", columns={"validFrom"}), @ORM\index(name="validTo", columns={"validTo"})})
+ * @ORM\Table(name="invoice_marketing", indexes={@ORM\index(name="countTotal", columns={"countTotal"}), @ORM\index(name="countLeft", columns={"countLeft"}), @ORM\index(name="validFrom", columns={"validFrom"}), @ORM\index(name="validTo", columns={"validTo"})})
  * @EA\Primary(key="id", value="id")
  */
 class Marketing extends \Entity\BaseEntity {
@@ -103,7 +102,7 @@ class Marketing extends \Entity\BaseEntity {
 		
 	/**
 	 * @param \Entity\Phrase\Phrase
-	 * @return \Entity\Invoicing\Marketing
+	 * @return \Entity\Invoice\Marketing
 	 */
 	public function setName(\Entity\Phrase\Phrase $name)
 	{
@@ -122,7 +121,7 @@ class Marketing extends \Entity\BaseEntity {
 		
 	/**
 	 * @param \Entity\Phrase\Phrase
-	 * @return \Entity\Invoicing\Marketing
+	 * @return \Entity\Invoice\Marketing
 	 */
 	public function setDescription(\Entity\Phrase\Phrase $description)
 	{
@@ -140,10 +139,10 @@ class Marketing extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Invoicing\Package
-	 * @return \Entity\Invoicing\Marketing
+	 * @param \Entity\Invoice\Package
+	 * @return \Entity\Invoice\Marketing
 	 */
-	public function setPackage(\Entity\Invoicing\Package $package)
+	public function setPackage(\Entity\Invoice\Package $package)
 	{
 		$this->package = $package;
 
@@ -151,7 +150,7 @@ class Marketing extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Invoicing\Marketing
+	 * @return \Entity\Invoice\Marketing
 	 */
 	public function unsetPackage()
 	{
@@ -161,7 +160,7 @@ class Marketing extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Invoicing\Package|NULL
+	 * @return \Entity\Invoice\Package|NULL
 	 */
 	public function getPackage()
 	{
@@ -170,7 +169,7 @@ class Marketing extends \Entity\BaseEntity {
 		
 	/**
 	 * @param \Entity\Location\Location
-	 * @return \Entity\Invoicing\Marketing
+	 * @return \Entity\Invoice\Marketing
 	 */
 	public function addLocation(\Entity\Location\Location $location)
 	{
@@ -184,7 +183,7 @@ class Marketing extends \Entity\BaseEntity {
 		
 	/**
 	 * @param \Entity\Location\Location
-	 * @return \Entity\Invoicing\Marketing
+	 * @return \Entity\Invoice\Marketing
 	 */
 	public function removeLocation(\Entity\Location\Location $location)
 	{
@@ -206,7 +205,7 @@ class Marketing extends \Entity\BaseEntity {
 		
 	/**
 	 * @param integer
-	 * @return \Entity\Invoicing\Marketing
+	 * @return \Entity\Invoice\Marketing
 	 */
 	public function setCountTotal($countTotal)
 	{
@@ -225,7 +224,7 @@ class Marketing extends \Entity\BaseEntity {
 		
 	/**
 	 * @param integer
-	 * @return \Entity\Invoicing\Marketing
+	 * @return \Entity\Invoice\Marketing
 	 */
 	public function setCountLeft($countLeft)
 	{
@@ -244,7 +243,7 @@ class Marketing extends \Entity\BaseEntity {
 		
 	/**
 	 * @param \DateTime
-	 * @return \Entity\Invoicing\Marketing
+	 * @return \Entity\Invoice\Marketing
 	 */
 	public function setValidFrom(\DateTime $validFrom)
 	{
@@ -263,7 +262,7 @@ class Marketing extends \Entity\BaseEntity {
 		
 	/**
 	 * @param \DateTime
-	 * @return \Entity\Invoicing\Marketing
+	 * @return \Entity\Invoice\Marketing
 	 */
 	public function setValidTo(\DateTime $validTo)
 	{
@@ -281,10 +280,10 @@ class Marketing extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Invoicing\UseType
-	 * @return \Entity\Invoicing\Marketing
+	 * @param \Entity\Invoice\UseType
+	 * @return \Entity\Invoice\Marketing
 	 */
-	public function addUse(\Entity\Invoicing\UseType $use)
+	public function addUse(\Entity\Invoice\UseType $use)
 	{
 		if(!$this->uses->contains($use)) {
 			$this->uses->add($use);
@@ -295,10 +294,10 @@ class Marketing extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Invoicing\UseType
-	 * @return \Entity\Invoicing\Marketing
+	 * @param \Entity\Invoice\UseType
+	 * @return \Entity\Invoice\Marketing
 	 */
-	public function removeUse(\Entity\Invoicing\UseType $use)
+	public function removeUse(\Entity\Invoice\UseType $use)
 	{
 		if($this->uses->contains($use)) {
 			$this->uses->removeElement($use);
@@ -309,7 +308,7 @@ class Marketing extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Invoicing\UseType
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Invoice\UseType
 	 */
 	public function getUses()
 	{

@@ -3,7 +3,7 @@
 namespace Entity\Rental;
 
 use Entity\Phrase;
-use Entity\Invoicing;
+use Entity\Invoice;
 use Entity\Location;
 use Entity\Medium;
 use Entity\User;
@@ -173,7 +173,7 @@ class Rental extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Entity\Invoicing\Invoice", mappedBy="rental")
+	 * @ORM\OneToMany(targetEntity="Entity\Invoice\Invoice", mappedBy="rental")
 	 */
 	protected $invoices;
 
@@ -877,10 +877,10 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Invoicing\Invoice
+	 * @param \Entity\Invoice\Invoice
 	 * @return \Entity\Rental\Rental
 	 */
-	public function addInvoice(\Entity\Invoicing\Invoice $invoice)
+	public function addInvoice(\Entity\Invoice\Invoice $invoice)
 	{
 		if(!$this->invoices->contains($invoice)) {
 			$this->invoices->add($invoice);
@@ -891,10 +891,10 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Invoicing\Invoice
+	 * @param \Entity\Invoice\Invoice
 	 * @return \Entity\Rental\Rental
 	 */
-	public function removeInvoice(\Entity\Invoicing\Invoice $invoice)
+	public function removeInvoice(\Entity\Invoice\Invoice $invoice)
 	{
 		if($this->invoices->contains($invoice)) {
 			$this->invoices->removeElement($invoice);
@@ -905,7 +905,7 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Invoicing\Invoice
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Invoice\Invoice
 	 */
 	public function getInvoices()
 	{

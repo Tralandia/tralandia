@@ -94,21 +94,21 @@ class BaseImport {
 			),
 			'subsections' => array(),
 		),
-		'invoicingStart' => array(
+		'invoiceStart' => array(
 			'entities' => array(
-				'\Invoicing\ServiceDuration' => array(),
-				'\Invoicing\ServiceType' => array(),
-				'\Invoicing\UseType' => array(),
-				'\Invoicing\Package' => array(),
-				'\Invoicing\Service' => array(),
-				'\Invoicing\Marketing' => array(),
+				'\Invoice\ServiceDuration' => array(),
+				'\Invoice\ServiceType' => array(),
+				'\Invoice\UseType' => array(),
+				'\Invoice\Package' => array(),
+				'\Invoice\Service' => array(),
+				'\Invoice\Marketing' => array(),
 			),
 			'subsections' => array(),
 		),
-		'invoicing' => array(
+		'invoice' => array(
 			'entities' => array(
-				'\Invoicing\Invoice' => array(),
-				'\Invoicing\Item' => array(),
+				'\Invoice\Invoice' => array(),
+				'\Invoice\Item' => array(),
 			),
 			'subsections' => array(),
 		),
@@ -130,9 +130,9 @@ class BaseImport {
 			),
 			'subsections' => array('importRentalReservations', 'importRentalQuestions', 'importRentalToFriend', 'importSiteOwnerReviews', 'importSiteVisitorReviews'),
 		),
-		'emailing' => array(
+		'email' => array(
 			'entities' => array(
-				'\Emailing\Template' => array(),
+				'\Email\Template' => array(),
 			),
 			'subsections' => array(),
 		),

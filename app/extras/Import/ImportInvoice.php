@@ -12,20 +12,27 @@ use Nette\Application as NA,
 	Service as S,
 	Service\Log as SLog;
 
-class ImportInvoicing extends BaseImport {
+class ImportInvoice extends BaseImport {
+
+	public $companiesByOldId;
+	public $rentalsByOldId;
+	public $serviceTypesByOldId;
+	public $countryTypeId;
+	public $locationsByOldId;
+	public $languagesByOldId;
 
 	public function doImport($subsection = NULL) {
-		$import = new \Extras\Import\BaseImport();
-		$import->undoSection('invoicing');
+		$context = $this->context;
+		$model = $this->model;
 
-		$en = \Service\Dictionary\Language::getByIso('en');
+		$en = $context->languageRepository->findOneByIso('en');
 
 		// Invoices
-		//$invoiceNameType = $this->createPhraseType('\Invoicing\ServiceDuration', 'name', 'supportedLanguages', 'ACTIVE');
+		//$invoiceNameType = $this->createPhraseType('\Invoice\ServiceDuration', 'name', 'supportedLanguages', 'ACTIVE');
 
 		$this->companiesByOldId = getNewIdsByOld('\Company\Company');
 		$this->rentalsByOldId = getNewIdsByOld('\Rental\Rental');
-		$this->serviceTypesByOldId = getNewIdsByOld('\Invoicing\ServiceType');
+		$this->serviceTypesByOldId = getNewIdsByOld('\Invoice\ServiceType');
 
 		$this->countryTypeId = qNew('select id from location_type where slug = "country"');
 		$this->countryTypeId = mysql_fetch_array($this->countryTypeId);
@@ -34,9 +41,9 @@ class ImportInvoicing extends BaseImport {
 
 		// Import paid invoices
 		if ($this->developmentMode == TRUE) {
-			$r = q('select * from invoicing_invoices_paid where client_country_id = 46 order by id');
+			$r = q('select * from invoicing_invoices_paid where companies_id NOT IN (1,2) AND client_country_id = 46 order by id');
 		} else {
-			$r = q('select * from invoicing_invoices_paid order by id');
+			$r = q('select * from invoicing_invoices_paid where companies_id NOT IN (1,2) order by id');
 		}
 		
 		while($x = mysql_fetch_array($r)) {
@@ -45,20 +52,22 @@ class ImportInvoicing extends BaseImport {
 
 		// Import pending invoices
 		if ($this->developmentMode == TRUE) {
-			$r = q('select * from invoicing_invoices_pending where client_country_id = 46 order by id');
+			$r = q('select * from invoicing_invoices_pending where companies_id NOT IN (1,2) AND client_country_id = 46 order by id');
 		} else {
-			$r = q('select * from invoicing_invoices_pending order by id');
+			$r = q('select * from invoicing_invoices_pending where companies_id NOT IN (1,2) order by id');
 		}
 		
 		while($x = mysql_fetch_array($r)) {
 			$this->importOneInvoice($x);
 		}
-		
-		$this->savedVariables['importedSections']['invoicing'] = 1;
+		$model->flush();
 	}
 
 	private function importOneInvoice($x) {
-		$invoice = \Service\Invoicing\Invoice::get();
+		$context = $this->context;
+		$model = $this->model;
+
+		$invoice = $context->invoiceEntityFactory->create();
 		$invoice->oldId = $x['id'];
 		if (isset($x['invoice_number'])) {
 			$invoice->invoiceNumber = $x['invoice_number'];
@@ -66,12 +75,10 @@ class ImportInvoicing extends BaseImport {
 		if (isset($x['invoice_variable_number'])) {
 			$invoice->paymentReferenceNumber = $x['invoice_variable_number'];
 		}
-		$invoice->company = \Service\Company\Company::get($this->companiesByOldId[$x['companies_id']]);
+		$invoice->company = $context->companyRepository->find($this->companiesByOldId[$x['companies_id']]);
 		if (isset($this->rentalsByOldId[$x['objects_id']])) {
-			$t = \Service\Rental\Rental::get($this->rentalsByOldId[$x['objects_id']]);
-			if ($t) {
-				$invoice->rental = \Service\Rental\Rental::get($this->rentalsByOldId[$x['objects_id']]);
-			} else {
+			$t = $context->rentalRepository->find($this->rentalsByOldId[$x['objects_id']]);
+			if (!$t) {
 				debug('Nenasiel som rental '.$x['objects_id'].' (stare ID).');
 			}
 		}
@@ -84,12 +91,12 @@ class ImportInvoicing extends BaseImport {
 
 		if ($x['time_paid'] > 0) {
 			if ($x['ok']) {
-				$invoice->status = \Entity\Invoicing\Invoice::STATUS_PAID;
+				$invoice->status = $invoice::STATUS_PAID;
 			} else {
-				$invoice->status = \Entity\Invoicing\Invoice::STATUS_PAID_NOT_CHECKED;
+				$invoice->status = $invoice::STATUS_PAID_NOT_CHECKED;
 			}
 		} else {
-			$invoice->status = \Entity\Invoicing\Invoice::STATUS_PENDING;
+			$invoice->status = $invoice::STATUS_PENDING;
 		}
 
 		$invoice->clientName = $x['client_name'];
@@ -103,7 +110,7 @@ class ImportInvoicing extends BaseImport {
 			'country' => $this->locationsByOldId[$x['client_country_id']],
 		));
 
-		$invoice->clientLanguage = \Service\Dictionary\Language::get($this->languagesByOldId[$x['client_language_id']]);
+		$invoice->clientLanguage = $context->languageRepository->find($this->languagesByOldId[$x['client_language_id']]);
 		$invoice->clientCompanyName = $x['client_company_name'];
 		$invoice->clientCompanyId = $x['client_company_id'];
 		$invoice->clientCompanyVatId = $x['client_company_vat_id'];
@@ -119,13 +126,13 @@ class ImportInvoicing extends BaseImport {
 
 		while ($x1 = mysql_fetch_array($r1)) {
 			if (!$currency) {
-				$currency = \Service\Currency::getByOldId($x1['currencies_id']);			
+				$currency = $context->currencyRepository->findOneByOldId($x1['currencies_id']);			
 			}
 
-			$invoiceItem = \Service\Invoicing\Item::get();
+			$invoiceItem = $context->invoiceItemEntityFactory->create();
 			$invoiceItem->oldId = $x['id'];
 
-			$invoiceItem->serviceType = \Service\Invoicing\ServiceType::get($this->serviceTypesByOldId[$x1['services_types_id']]);
+			$invoiceItem->serviceType = $context->invoiceServiceTypeRepository->find($this->serviceTypesByOldId[$x1['services_types_id']]);
 			$invoiceItem->name = $x1['service_name'];
 			$invoiceItem->nameEn = $x1['service_name_en'];
 			if (isset($x1['time_from'])) {
@@ -143,7 +150,6 @@ class ImportInvoicing extends BaseImport {
 			//$invoiceItem->couponNameEn = $x1['coupons_name_en'];
 			$invoiceItem->packageName = $x1['packages_name'];
 			$invoiceItem->packageNameEn = $x1['packages_name_en'];
-			$invoiceItem->save();
 
 			$invoice->addItem($invoiceItem);
 		}
@@ -154,7 +160,7 @@ class ImportInvoicing extends BaseImport {
 		$invoice->exchangeRate = $currency->exchangeRate;
 
 
-		$invoice->save();
-
+		$model->persist($invoice);
 	}
+
 }
