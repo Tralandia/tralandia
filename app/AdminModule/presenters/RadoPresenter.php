@@ -117,7 +117,6 @@ class RadoPresenter extends BasePresenter {
 			if(!$import->savedVariables['importedSections'][$section]) {
 				$import->developmentMode = (bool)$this->session->developmentMode;
 
-				$import->undoSection($section);
 			
 				if (isset($this->params['subsection'])) {
 					$subsection = $this->params['subsection'];
@@ -129,6 +128,7 @@ class RadoPresenter extends BasePresenter {
 					$import->saveVariables();
 					$import->doImport($subsection);
 				} else {
+					$import->undoSection($section);
 					$import->savedVariables['importedSections'][$section] = 1;
 					$import->saveVariables();
 					$import->doImport();
@@ -151,7 +151,7 @@ class RadoPresenter extends BasePresenter {
 		}
 
 		if ($redirect) {
-			$this->redirect('Rado:default');
+			// $this->redirect('Rado:default');
 		}
 	}
 

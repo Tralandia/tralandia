@@ -21,7 +21,7 @@ class ImportRentals extends BaseImport {
 		$model = $this->model;
 
 		// Detaching all media
-		qNew('update medium_medium set rental_id = NULL where rental_id > 0');
+		qNew('update medium set rental_id = NULL where rental_id > 0');
 
 		$nameDictionaryType = $this->createPhraseType('\Rental\Rental', 'name', 'NATIVE', array('checkingRequired' => TRUE));
 		$model->persist($nameDictionaryType);
@@ -48,7 +48,7 @@ class ImportRentals extends BaseImport {
 		$locationTypes['administrativeregionleveltwo'] = $context->locationTypeRepository->findOneBySlug('administrativeregionleveltwo');
 		$locationTypes['locality'] = $context->locationTypeRepository->findOneBySlug('locality');
 
-		$ownerRole = $context->userRepository->findOneBySlug('owner');
+		$ownerRole = $context->userRoleRepository->findOneBySlug('owner');
 
 		$en = $context->languageRepository->findOneByIso('en');
 		$now = time();
@@ -64,9 +64,10 @@ class ImportRentals extends BaseImport {
 			$rental = $context->rentalEntityFactory->create();
 			$rental->oldId = $x['id'];
 
-			$user = \Service\User\User::getByLogin(qc('select email from members where id = '.$x['member_id']));
+			$user = $context->userRepository->findOneByLogin(qc('select email from members where id = '.$x['member_id']));
 			if (!$user) {
-				$user = qNew('select id from user_user where isOwner = 1 and oldId = '.$x['member_id']);
+				continue; // @todo dorobit
+				$user = qNew('select id from user where isOwner = 1 and oldId = '.$x['member_id']);
 				$user = mysql_fetch_array($user);
 				if ($user['id'] > 0) {
 					$user = $context->userRepository->find($user['id']);
@@ -91,7 +92,7 @@ class ImportRentals extends BaseImport {
 			// Locations
 			$rental->addLocation($context->locationRepository->findOneBy(array('oldId' => $x['country_id'], 'type' => $locationTypes['country'])));
 
-			$administrativeRegion = $context->locationRepository->findOneBy(array('oldId' => $x['region_admin_id'], 'type' => $locationTypes[)'administrativeregionlevelone']);
+			$administrativeRegion = $context->locationRepository->findOneBy(array('oldId' => $x['region_admin_id'], 'type' => $locationTypes['administrativeregionlevelone']));
 			if (!$administrativeRegion) {
 				$administrativeRegion = $context->locationRepository->findOneBy(array('oldId' => $x['region_admin_id'], 'type' => $locationTypes['administrativeregionleveltwo']));
 			}
@@ -112,9 +113,9 @@ class ImportRentals extends BaseImport {
 
 			$thisLocality = $context->locationRepository->findOneBy(array('oldId' => $x['locality_id'], 'type' => $locationTypes['locality']));
 
-			$thisNamePhrase = $contxt->phraseServiceFactory->create($thisLocality->name);
+			$thisNamePhrase = $context->phraseServiceFactory->create($thisLocality->name);
 			$thisCountry = $thisLocality->parent;
-			$thisCountryNamePhrase = $contxt->phraseServiceFactory->create($thisCountry->name);
+			$thisCountryNamePhrase = $context->phraseServiceFactory->create($thisCountry->name);
 			$rental->address = new \Extras\Types\Address(array(
 				'address' => array_filter(array($x['address'])),
 				'postcode' => $x['post_code'],
@@ -137,7 +138,7 @@ class ImportRentals extends BaseImport {
 
 			$contacts->add(new \Extras\Types\Name('', '', $x['contact_name']));
 
-			$x['contact_phone'] = @unserialize($x['contact_phone']);
+			$x['contact_phone'] = @unserialize(stripslashes($x['contact_phone']));
 			if (is_array($x['contact_phone'])) {
 				foreach ($x['contact_phone'] as $key => $value) {
 					$contacts->add(new \Extras\Types\Phone(implode('', $value)));
@@ -234,37 +235,35 @@ class ImportRentals extends BaseImport {
 
 			// Pricelist
 			$pricelists = array();
-			$temp = unserialize($x['prices_simple']);
+			$temp = unserialize(stripslashes($x['prices_simple']));
 			if (is_array($temp) && count($temp)) {
 				$pricelists['simple'] = $temp;
 			}
 
-			$temp = unserialize($x['prices_advanced']);
+			$temp = unserialize(stripslashes($x['prices_advanced']));
 			if (is_array($temp) && count($temp)) {
 				$pricelists['advanced'] = $temp;
 			}
 
-			$temp = unserialize($x['prices_upload']);
+			$temp = unserialize(stripslashes($x['prices_upload']));
 			if (is_array($temp) && count($temp)) {
 				$pricelists['upload'] = $temp;
 			}
 
 			$rental->pricelists = $pricelists;
 
-			$rental->save();
+			$model->persist($rental);
 
 			// Media
 			$temp = array_unique(array_filter(explode(',', $x['photos'])));
 			if (is_array($temp) && count($temp)) {
 				if ($this->developmentMode == TRUE) $temp = array_slice($temp, 0, 3);
 				foreach ($temp as $key => $value) {
-					$medium = \Service\Medium\Medium::getByOldUrl('http://www.tralandia.com/u/'.$value);
+					$medium = $context->mediumRepository->findOneByOldUrl('http://www.tralandia.com/u/'.$value);
 					if (!$medium) {
-						$medium = \Service\Medium\Medium::get();
-						if ($medium) {
-							$rental->addMedium($medium);
-							$medium->setContentFromUrl('http://www.tralandia.com/u/'.$value);
-						}
+						$medium = $context->mediumServiceFactory->create();
+						$medium->setContentFromUrl('http://www.tralandia.com/u/'.$value);
+						$rental->addMedium($medium->getEntity());
 					} else {
 						$rental->addMedium($medium);
 					}
@@ -285,16 +284,12 @@ class ImportRentals extends BaseImport {
 			$rental->calendarUpdated = fromStamp($x['calendar_updated']);
 
 			$rental->created = fromStamp($x['date_added']);
-			$rental->save();
-			\Extras\Models\Service::flush(FALSE);
-
+			$model->persist($rental);
 
 			//@todo
 			//$rental->rank = $rental->calculateRank(); // urobit tuto fciu
 		}
-
-		$this->savedVariables['importedSections']['rentals'] = 1;
-
+		$model->flush();
 	}
 
 }

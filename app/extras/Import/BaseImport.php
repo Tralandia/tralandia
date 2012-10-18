@@ -242,9 +242,7 @@ class BaseImport {
 		}
 
 		foreach ($value as $key2 => $value2) {
-			$tableName = str_replace('\\', '_', $key2);
-			$tableName = trim($tableName, '_');
-			$tableName = strtolower($tableName);
+			$tableName = getTableName($key2);
 			qNew('ALTER TABLE '.$tableName.' AUTO_INCREMENT = 1');
 		}
 		$this->saveVariables();

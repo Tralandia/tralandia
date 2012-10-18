@@ -63,7 +63,7 @@ class User extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var string
-	 * @ORM\Column(type="json", nullable=true)
+	 * @ORM\Column(type="invoicingData", nullable=true)
 	 */
 	protected $invoicingData;
 

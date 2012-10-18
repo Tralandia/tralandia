@@ -247,7 +247,10 @@ services:
 	#----------
 	mediumEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Medium\Medium')
 
-	mediumServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @mediumEntityFactory)
+	mediumServiceFactory: 
+		class: Extras\Models\Service\ServiceFactory(@model, 'Service\Medium\MediumService', @mediumEntityFactory)
+		setup:
+			- setParameters(@mediumTypeRepository, @mediumTypeServiceFactory)
 
 	mediumRepository: @model::getRepository('Entity\Medium\Medium')
 

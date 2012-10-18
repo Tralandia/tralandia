@@ -12,6 +12,8 @@ use Nette\Application as NA,
 
 class ImportUsers extends BaseImport {
 
+	// @todo spravit invoicingData import
+
 	public function doImport($subsection = NULL) {
 
 		// $user1 = \Service\User\User::get(1);
@@ -64,7 +66,7 @@ class ImportUsers extends BaseImport {
 		while($x = mysql_fetch_array($r)) {
 			$user = $this->context->userRepository->findOneByLogin($x['email']);
 
-			if (!$user) {
+			if ($user) {
 				continue;
 			}
 
@@ -96,7 +98,7 @@ class ImportUsers extends BaseImport {
 		while($x = mysql_fetch_array($r)) {
 			$user = $this->context->userRepository->findOneByLogin($x['email']);
 
-			if (!$user) {
+			if ($user) {
 				continue;
 			}
 
@@ -139,7 +141,7 @@ class ImportUsers extends BaseImport {
 		while($x = mysql_fetch_array($r)) {
 			$user = $this->context->userRepository->findOneByLogin($x['email']);
 
-			if (!$user) {
+			if ($user) {
 				continue;
 			}
 
@@ -149,7 +151,7 @@ class ImportUsers extends BaseImport {
 			$user->password = $x['password'];
 			$user->oldId = $x['id'];
 			$user->role = $role;
-			$user->invoicingName = new \Extras\Types\Name('', '', $x['name']);
+			// $user->invoicingData = @todo;
 
 			$contacts = new \Extras\Types\Contacts();
 			$contacts->add(new \Extras\Types\Email($x['email']));
@@ -186,7 +188,7 @@ class ImportUsers extends BaseImport {
 		while($x = mysql_fetch_array($r)) {
 			$user = $this->context->userRepository->findOneByLogin($x['email']);
 
-			if (!$user) {
+			if ($user) {
 				continue;
 			}
 
@@ -195,27 +197,26 @@ class ImportUsers extends BaseImport {
 			$user->login = $x['email'];
 			$user->password = $x['password'];
 			$user->oldId = $x['id'];
-			$user->isOwner = TRUE; //@todo toto tu je len temporary parameter pre import, potom zrusit
 
 			$user->role = $role;
 
-			$user->invoicingSalutation = '';
-			$user->invoicingName = new \Extras\Types\Name($x['client_name']);
+			// $user->invoicingSalutation = '';
+			// // $user->invoicingName = new \Extras\Types\Name($x['client_name']);
 
-			if($x['client_email']) $user->invoicingEmail = new \Extras\Types\Email($x['client_email']);
-			if($x['client_phone']) $user->invoicingPhone = new \Extras\Types\Phone($x['client_phone']);
-			if($x['client_url']) $user->invoicingUrl = new \Extras\Types\Url($x['client_url']);
+			// if($x['client_email']) $user->invoicingEmail = new \Extras\Types\Email($x['client_email']);
+			// if($x['client_phone']) $user->invoicingPhone = new \Extras\Types\Phone($x['client_phone']);
+			// if($x['client_url']) $user->invoicingUrl = new \Extras\Types\Url($x['client_url']);
 
-			$user->invoicingAddress = new \Extras\Types\Address(array(
-				'address' => array_filter(array($x['client_address'], $x['client_address2'])),
-				'postcode' => $x['client_postcode'],
-				'locality' => $x['client_locality'],
-				'country' => $this->context->locationRepository->findOneBy(array('oldId'=>$x['client_country_id'], 'type'=>$locationTypeCountry)),
-			));
+			// $user->invoicingAddress = new \Extras\Types\Address(array(
+			// 	'address' => array_filter(array($x['client_address'], $x['client_address2'])),
+			// 	'postcode' => $x['client_postcode'],
+			// 	'locality' => $x['client_locality'],
+			// 	'country' => $this->context->locationRepository->findOneBy(array('oldId'=>$x['client_country_id'], 'type'=>$locationTypeCountry)),
+			// ));
 
-			$user->invoicingCompanyName = $x['client_company_name'];
-			$user->invoicingCompanyId = $x['client_company_id'];
-			$user->invoicingCompanyVatId = $x['client_company_vat_id'];
+			// $user->invoicingCompanyName = $x['client_company_name'];
+			// $user->invoicingCompanyId = $x['client_company_id'];
+			// $user->invoicingCompanyVatId = $x['client_company_vat_id'];
 
 
 			$contacts = new \Extras\Types\Contacts();
@@ -280,15 +281,15 @@ class ImportUsers extends BaseImport {
 
 			$user->role = $role;
 
-			if (!$user->invoicingSalutation) $user->invoicingSalutation = $x['contact_salutation'];
-			if (!$user->invoicingName) $user->invoicingName = new \Extras\Types\Name($x['contact_firstname'], '', $x['contact_lastname']);
+			// if (!$user->invoicingSalutation) $user->invoicingSalutation = $x['contact_salutation'];
+			// if (!$user->invoicingName) $user->invoicingName = new \Extras\Types\Name($x['contact_firstname'], '', $x['contact_lastname']);
 
-			if (!$user->invoicingAddress) $user->invoicingAddress = new \Extras\Types\Address(array(
-				'address' => array_filter(array($x['address1'], $x['address2'])),
-				'postcode' => $x['postcode'],
-				'locality' => $x['locality'],
-				'country' => $this->context->locationRepository->findOneBy(array('oldId'=>$x['country_id'], 'type'=>$locationTypeCountry)),
-			));
+			// if (!$user->invoicingAddress) $user->invoicingAddress = new \Extras\Types\Address(array(
+			// 	'address' => array_filter(array($x['address1'], $x['address2'])),
+			// 	'postcode' => $x['postcode'],
+			// 	'locality' => $x['locality'],
+			// 	'country' => $this->context->locationRepository->findOneBy(array('oldId'=>$x['country_id'], 'type'=>$locationTypeCountry)),
+			// ));
 
 			$user->subscribed = !(bool)$x['unsubscribed'];
 			$user->banned = (bool)$x['banned'];
