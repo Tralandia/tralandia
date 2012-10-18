@@ -109,20 +109,23 @@ class ImportRentals extends BaseImport {
 				}
 			}
 
-			$rental->addLocation($context->locationRepository->findOneBy(array('oldId' => $x['locality_id'], 'type' => $locationTypes['locality'])));
+			// @todo dorobit
+			// d(array('oldId' => $x['locality_id'], 'type' => $locationTypes['locality']));
+			// $locationTemp = $context->locationRepository->findOneBy(array('oldId' => $x['locality_id'], 'type' => $locationTypes['locality']));
+			// if($locationTemp) $rental->addLocation($locationTemp);
 
-			$thisLocality = $context->locationRepository->findOneBy(array('oldId' => $x['locality_id'], 'type' => $locationTypes['locality']));
+			// $thisLocality = $context->locationRepository->findOneBy(array('oldId' => $x['locality_id'], 'type' => $locationTypes['locality']));
 
-			$thisNamePhrase = $context->phraseServiceFactory->create($thisLocality->name);
-			$thisCountry = $thisLocality->parent;
-			$thisCountryNamePhrase = $context->phraseServiceFactory->create($thisCountry->name);
-			$rental->address = new \Extras\Types\Address(array(
-				'address' => array_filter(array($x['address'])),
-				'postcode' => $x['post_code'],
-				'locality' => $thisNamePhrase->getTranslation($thisCountry->defaultLanguage)->translation,
-				'sublocality' => $x['sublocality'],
-				'country' => $thisCountryNamePhrase->getTranslation($en)->translation,
-			));
+			// $thisNamePhrase = $context->phraseServiceFactory->create($thisLocality->name);
+			// $thisCountry = $thisLocality->parent;
+			// $thisCountryNamePhrase = $context->phraseServiceFactory->create($thisCountry->name);
+			// $rental->address = new \Extras\Types\Address(array(
+			// 	'address' => array_filter(array($x['address'])),
+			// 	'postcode' => $x['post_code'],
+			// 	'locality' => $thisNamePhrase->getTranslation($thisCountry->defaultLanguage)->translation,
+			// 	'sublocality' => $x['sublocality'],
+			// 	'country' => $thisCountryNamePhrase->getTranslation($en)->translation,
+			// ));
 
 			$rental->latitude = new \Extras\Types\Latlong($x['latitude']);
 			$rental->longitude = new \Extras\Types\Latlong($x['longitude']);
@@ -152,6 +155,7 @@ class ImportRentals extends BaseImport {
 			$contacts->add(new \Extras\Types\Url($x['contact_url']));
 			$contacts->add(new \Extras\Types\Url($x['url']));
 
+			d($contacts);
 			$rental->contacts = $contacts;
 
 			$spokenLanguages = array_unique(array_filter(explode(',', $x['languages_spoken'])));

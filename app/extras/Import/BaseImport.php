@@ -276,15 +276,16 @@ class BaseImport {
 
 	protected function createNewPhrase(\Entity\BaseEntity $type, $oldPhraseId = NULL, $oldLocativePhraseId = NULL, $locativeKeys = NULL) {
 
+		$oldPhraseData = NULL;
 		if ($oldPhraseId) {
 			$oldPhraseData = qf('select * from dictionary where id = '.$oldPhraseId);
-			if (!$oldPhraseData) {
-				debug('Nenasiel som staru Phrase podla stareho ID '.$oldPhraseId);
-				$oldPhraseData = array(
-					'ready' => 1,
-				);
-				//throw new \Nette\UnexpectedValueException('Nenasiel som staru Phrase podla starej ID '.$oldPhraseId);
-			}			
+		}
+		if (!$oldPhraseData) {
+			debug('Nenasiel som staru Phrase podla stareho ID '.$oldPhraseId);
+			$oldPhraseData = array(
+				'ready' => 1,
+			);
+			//throw new \Nette\UnexpectedValueException('Nenasiel som staru Phrase podla starej ID '.$oldPhraseId);
 		}
 		$phrase = $this->context->phraseEntityFactory->create();
 		$phrase->ready = (bool)$oldPhraseData['ready'];

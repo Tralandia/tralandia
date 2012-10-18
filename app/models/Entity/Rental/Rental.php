@@ -37,7 +37,7 @@ class Rental extends \Entity\BaseEntity {
 	 * @var integer
 	 * @ORM\Column(type="integer")
 	 */
-	protected $status;
+	protected $status = self::STATUS_DRAFT;
 
 	/**
 	 * @var Collection
@@ -47,7 +47,7 @@ class Rental extends \Entity\BaseEntity {
 
 	/**
 	 * @var datetime
-	 * @ORM\Column(type="datetime")
+	 * @ORM\Column(type="datetime", nullable=true)
 	 */
 	protected $timeDeleted;
 
@@ -71,25 +71,25 @@ class Rental extends \Entity\BaseEntity {
 
 	/**
 	 * @var address
-	 * @ORM\Column(type="address")
+	 * @ORM\Column(type="address", nullable=true)
 	 */
 	protected $address;
 
 	/**
 	 * @var latlong
-	 * @ORM\Column(type="latlong")
+	 * @ORM\Column(type="latlong", nullable=true)
 	 */
 	protected $latitude;
 
 	/**
 	 * @var latlong
-	 * @ORM\Column(type="latlong")
+	 * @ORM\Column(type="latlong", nullable=true)
 	 */
 	protected $longitude;
 
 	/**
 	 * @var slug
-	 * @ORM\Column(type="slug")
+	 * @ORM\Column(type="slug", nullable=true)
 	 */
 	protected $slug;
 
@@ -101,7 +101,7 @@ class Rental extends \Entity\BaseEntity {
 
 	/**
 	 * @var json
-	 * @ORM\Column(type="json")
+	 * @ORM\Column(type="json", nullable=true)
 	 */
 	protected $interview;
 
@@ -143,7 +143,7 @@ class Rental extends \Entity\BaseEntity {
 
 	/**
 	 * @var json
-	 * @ORM\Column(type="json")
+	 * @ORM\Column(type="json", nullable=true)
 	 */
 	protected $pricelists;
 
