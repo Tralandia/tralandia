@@ -7,7 +7,7 @@ namespace AdminModule\Grids;
  *
  * @author Dávid Ďurika
  */
-class AdminGrid extends BaseGrid{
+abstract class AdminGrid extends BaseGrid{
 
 	protected $repository;
 

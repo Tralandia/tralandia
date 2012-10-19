@@ -133,11 +133,11 @@ class AdminPresenter extends BasePresenter {
 		return $text;
 	}
 
-	protected function createComponentDataGrid() {
+	protected function createComponentGrid() {
 		$repositoryName = $this->settings->params->repository;
 		$reposiory = $this->context->{$repositoryName};
 		$gridClass = '\\AdminModule\\Grids\\'.$this->settings->params->grid->class;
-		return new $gridClass($reposiory, $this->settings);
+		return new $gridClass($reposiory);
 	}
 
 }
