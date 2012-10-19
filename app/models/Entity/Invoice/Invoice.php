@@ -1,17 +1,16 @@
 <?php
 
-namespace Entity\Invoicing;
+namespace Entity\Invoice;
 
 use Entity\Company;
 use Entity\Phrase;
-use Entity\Invoicing;
 use Entity\Rental;
 use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="invoicing_invoice", indexes={@ORM\index(name="invoiceNumber", columns={"invoiceNumber"}), @ORM\index(name="paymentReferenceNumber", columns={"paymentReferenceNumber"}), @ORM\index(name="due", columns={"due"}), @ORM\index(name="paid", columns={"paid"}), @ORM\index(name="status", columns={"status"}), @ORM\index(name="clientEmail", columns={"clientEmail"}), @ORM\index(name="referrer", columns={"referrer"}), @ORM\index(name="referrerCommission", columns={"referrerCommission"})})
+ * @ORM\Table(name="invoice", indexes={@ORM\index(name="invoiceNumber", columns={"invoiceNumber"}), @ORM\index(name="paymentReferenceNumber", columns={"paymentReferenceNumber"}), @ORM\index(name="due", columns={"due"}), @ORM\index(name="paid", columns={"paid"}), @ORM\index(name="status", columns={"status"}), @ORM\index(name="clientEmail", columns={"clientEmail"}), @ORM\index(name="referrer", columns={"referrer"}), @ORM\index(name="referrerCommission", columns={"referrerCommission"})})
  * @EA\Primary(key="id", value="clientName")
  */
 class Invoice extends \Entity\BaseEntity {
@@ -22,7 +21,7 @@ class Invoice extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Item", mappedBy="invoice")
+	 * @ORM\OneToMany(targetEntity="Item", mappedBy="invoice", cascade={"persist", "remove"})
 	 */
 	protected $items;
 
@@ -164,27 +163,6 @@ class Invoice extends \Entity\BaseEntity {
 	 */
 	protected $paymentInfo;
 
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -196,10 +174,10 @@ class Invoice extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Invoicing\Item
-	 * @return \Entity\Invoicing\Invoice
+	 * @param \Entity\Invoice\Item
+	 * @return \Entity\Invoice\Invoice
 	 */
-	public function addItem(\Entity\Invoicing\Item $item)
+	public function addItem(\Entity\Invoice\Item $item)
 	{
 		if(!$this->items->contains($item)) {
 			$this->items->add($item);
@@ -210,10 +188,10 @@ class Invoice extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Invoicing\Item
-	 * @return \Entity\Invoicing\Invoice
+	 * @param \Entity\Invoice\Item
+	 * @return \Entity\Invoice\Invoice
 	 */
-	public function removeItem(\Entity\Invoicing\Item $item)
+	public function removeItem(\Entity\Invoice\Item $item)
 	{
 		if($this->items->contains($item)) {
 			$this->items->removeElement($item);
@@ -224,7 +202,7 @@ class Invoice extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Invoicing\Item
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Invoice\Item
 	 */
 	public function getItems()
 	{
@@ -233,7 +211,7 @@ class Invoice extends \Entity\BaseEntity {
 		
 	/**
 	 * @param integer
-	 * @return \Entity\Invoicing\Invoice
+	 * @return \Entity\Invoice\Invoice
 	 */
 	public function setInvoiceNumber($invoiceNumber)
 	{
@@ -243,7 +221,7 @@ class Invoice extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Invoicing\Invoice
+	 * @return \Entity\Invoice\Invoice
 	 */
 	public function unsetInvoiceNumber()
 	{
@@ -262,7 +240,7 @@ class Invoice extends \Entity\BaseEntity {
 		
 	/**
 	 * @param integer
-	 * @return \Entity\Invoicing\Invoice
+	 * @return \Entity\Invoice\Invoice
 	 */
 	public function setPaymentReferenceNumber($paymentReferenceNumber)
 	{
@@ -272,7 +250,7 @@ class Invoice extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Invoicing\Invoice
+	 * @return \Entity\Invoice\Invoice
 	 */
 	public function unsetPaymentReferenceNumber()
 	{
@@ -291,7 +269,7 @@ class Invoice extends \Entity\BaseEntity {
 		
 	/**
 	 * @param \Entity\Company\Company
-	 * @return \Entity\Invoicing\Invoice
+	 * @return \Entity\Invoice\Invoice
 	 */
 	public function setCompany(\Entity\Company\Company $company)
 	{
@@ -301,7 +279,7 @@ class Invoice extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Invoicing\Invoice
+	 * @return \Entity\Invoice\Invoice
 	 */
 	public function unsetCompany()
 	{
@@ -320,7 +298,7 @@ class Invoice extends \Entity\BaseEntity {
 		
 	/**
 	 * @param \Entity\Rental\Rental
-	 * @return \Entity\Invoicing\Invoice
+	 * @return \Entity\Invoice\Invoice
 	 */
 	public function setRental(\Entity\Rental\Rental $rental)
 	{
@@ -330,7 +308,7 @@ class Invoice extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Invoicing\Invoice
+	 * @return \Entity\Invoice\Invoice
 	 */
 	public function unsetRental()
 	{
@@ -349,7 +327,7 @@ class Invoice extends \Entity\BaseEntity {
 		
 	/**
 	 * @param \DateTime
-	 * @return \Entity\Invoicing\Invoice
+	 * @return \Entity\Invoice\Invoice
 	 */
 	public function setDue(\DateTime $due)
 	{
@@ -368,7 +346,7 @@ class Invoice extends \Entity\BaseEntity {
 		
 	/**
 	 * @param \DateTime
-	 * @return \Entity\Invoicing\Invoice
+	 * @return \Entity\Invoice\Invoice
 	 */
 	public function setPaid(\DateTime $paid)
 	{
@@ -387,7 +365,7 @@ class Invoice extends \Entity\BaseEntity {
 		
 	/**
 	 * @param integer
-	 * @return \Entity\Invoicing\Invoice
+	 * @return \Entity\Invoice\Invoice
 	 */
 	public function setStatus($status)
 	{
@@ -406,7 +384,7 @@ class Invoice extends \Entity\BaseEntity {
 		
 	/**
 	 * @param string
-	 * @return \Entity\Invoicing\Invoice
+	 * @return \Entity\Invoice\Invoice
 	 */
 	public function setClientName($clientName)
 	{
@@ -416,7 +394,7 @@ class Invoice extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Invoicing\Invoice
+	 * @return \Entity\Invoice\Invoice
 	 */
 	public function unsetClientName()
 	{
@@ -435,7 +413,7 @@ class Invoice extends \Entity\BaseEntity {
 		
 	/**
 	 * @param string
-	 * @return \Entity\Invoicing\Invoice
+	 * @return \Entity\Invoice\Invoice
 	 */
 	public function setClientPhone($clientPhone)
 	{
@@ -445,7 +423,7 @@ class Invoice extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Invoicing\Invoice
+	 * @return \Entity\Invoice\Invoice
 	 */
 	public function unsetClientPhone()
 	{
@@ -464,7 +442,7 @@ class Invoice extends \Entity\BaseEntity {
 		
 	/**
 	 * @param string
-	 * @return \Entity\Invoicing\Invoice
+	 * @return \Entity\Invoice\Invoice
 	 */
 	public function setClientEmail($clientEmail)
 	{
@@ -474,7 +452,7 @@ class Invoice extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Invoicing\Invoice
+	 * @return \Entity\Invoice\Invoice
 	 */
 	public function unsetClientEmail()
 	{
@@ -493,7 +471,7 @@ class Invoice extends \Entity\BaseEntity {
 		
 	/**
 	 * @param \Extras\Types\Url
-	 * @return \Entity\Invoicing\Invoice
+	 * @return \Entity\Invoice\Invoice
 	 */
 	public function setClientUrl(\Extras\Types\Url $clientUrl)
 	{
@@ -512,7 +490,7 @@ class Invoice extends \Entity\BaseEntity {
 		
 	/**
 	 * @param \Extras\Types\Address
-	 * @return \Entity\Invoicing\Invoice
+	 * @return \Entity\Invoice\Invoice
 	 */
 	public function setClientAddress(\Extras\Types\Address $clientAddress)
 	{
@@ -531,7 +509,7 @@ class Invoice extends \Entity\BaseEntity {
 		
 	/**
 	 * @param \Entity\Language
-	 * @return \Entity\Invoicing\Invoice
+	 * @return \Entity\Invoice\Invoice
 	 */
 	public function setClientLanguage(\Entity\Language $clientLanguage)
 	{
@@ -541,7 +519,7 @@ class Invoice extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Invoicing\Invoice
+	 * @return \Entity\Invoice\Invoice
 	 */
 	public function unsetClientLanguage()
 	{
@@ -560,7 +538,7 @@ class Invoice extends \Entity\BaseEntity {
 		
 	/**
 	 * @param string
-	 * @return \Entity\Invoicing\Invoice
+	 * @return \Entity\Invoice\Invoice
 	 */
 	public function setClientCompanyName($clientCompanyName)
 	{
@@ -570,7 +548,7 @@ class Invoice extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Invoicing\Invoice
+	 * @return \Entity\Invoice\Invoice
 	 */
 	public function unsetClientCompanyName()
 	{
@@ -589,7 +567,7 @@ class Invoice extends \Entity\BaseEntity {
 		
 	/**
 	 * @param string
-	 * @return \Entity\Invoicing\Invoice
+	 * @return \Entity\Invoice\Invoice
 	 */
 	public function setClientCompanyId($clientCompanyId)
 	{
@@ -599,7 +577,7 @@ class Invoice extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Invoicing\Invoice
+	 * @return \Entity\Invoice\Invoice
 	 */
 	public function unsetClientCompanyId()
 	{
@@ -618,7 +596,7 @@ class Invoice extends \Entity\BaseEntity {
 		
 	/**
 	 * @param string
-	 * @return \Entity\Invoicing\Invoice
+	 * @return \Entity\Invoice\Invoice
 	 */
 	public function setClientCompanyVatId($clientCompanyVatId)
 	{
@@ -628,7 +606,7 @@ class Invoice extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Invoicing\Invoice
+	 * @return \Entity\Invoice\Invoice
 	 */
 	public function unsetClientCompanyVatId()
 	{
@@ -647,7 +625,7 @@ class Invoice extends \Entity\BaseEntity {
 		
 	/**
 	 * @param float
-	 * @return \Entity\Invoicing\Invoice
+	 * @return \Entity\Invoice\Invoice
 	 */
 	public function setVat($vat)
 	{
@@ -657,7 +635,7 @@ class Invoice extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Invoicing\Invoice
+	 * @return \Entity\Invoice\Invoice
 	 */
 	public function unsetVat()
 	{
@@ -676,7 +654,7 @@ class Invoice extends \Entity\BaseEntity {
 		
 	/**
 	 * @param \Entity\Currency
-	 * @return \Entity\Invoicing\Invoice
+	 * @return \Entity\Invoice\Invoice
 	 */
 	public function setCurrency(\Entity\Currency $currency)
 	{
@@ -686,7 +664,7 @@ class Invoice extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Invoicing\Invoice
+	 * @return \Entity\Invoice\Invoice
 	 */
 	public function unsetCurrency()
 	{
@@ -705,7 +683,7 @@ class Invoice extends \Entity\BaseEntity {
 		
 	/**
 	 * @param float
-	 * @return \Entity\Invoicing\Invoice
+	 * @return \Entity\Invoice\Invoice
 	 */
 	public function setExchangeRate($exchangeRate)
 	{
@@ -715,7 +693,7 @@ class Invoice extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Invoicing\Invoice
+	 * @return \Entity\Invoice\Invoice
 	 */
 	public function unsetExchangeRate()
 	{
@@ -734,7 +712,7 @@ class Invoice extends \Entity\BaseEntity {
 		
 	/**
 	 * @param string
-	 * @return \Entity\Invoicing\Invoice
+	 * @return \Entity\Invoice\Invoice
 	 */
 	public function setCreatedBy($createdBy)
 	{
@@ -744,7 +722,7 @@ class Invoice extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Invoicing\Invoice
+	 * @return \Entity\Invoice\Invoice
 	 */
 	public function unsetCreatedBy()
 	{
@@ -763,7 +741,7 @@ class Invoice extends \Entity\BaseEntity {
 		
 	/**
 	 * @param string
-	 * @return \Entity\Invoicing\Invoice
+	 * @return \Entity\Invoice\Invoice
 	 */
 	public function setReferrer($referrer)
 	{
@@ -773,7 +751,7 @@ class Invoice extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Invoicing\Invoice
+	 * @return \Entity\Invoice\Invoice
 	 */
 	public function unsetReferrer()
 	{
@@ -792,7 +770,7 @@ class Invoice extends \Entity\BaseEntity {
 		
 	/**
 	 * @param float
-	 * @return \Entity\Invoicing\Invoice
+	 * @return \Entity\Invoice\Invoice
 	 */
 	public function setReferrerCommission($referrerCommission)
 	{
@@ -802,7 +780,7 @@ class Invoice extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Invoicing\Invoice
+	 * @return \Entity\Invoice\Invoice
 	 */
 	public function unsetReferrerCommission()
 	{
@@ -821,7 +799,7 @@ class Invoice extends \Entity\BaseEntity {
 		
 	/**
 	 * @param json
-	 * @return \Entity\Invoicing\Invoice
+	 * @return \Entity\Invoice\Invoice
 	 */
 	public function setPaymentInfo($paymentInfo)
 	{

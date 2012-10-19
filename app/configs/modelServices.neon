@@ -69,29 +69,29 @@ services:
 	domainRepository: @model::getRepository('Entity\Domain')
 
 
-	#emailing
+	#email
 	#----------
-	emailingBatchEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Emailing\Batch')
+	emailBatchEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Email\Batch')
 
-	emailingBatchServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @emailingBatchEntityFactory)
+	emailBatchServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @emailBatchEntityFactory)
 
-	emailingBatchRepository: @model::getRepository('Entity\Emailing\Batch')
-
-
-	#----------
-	emailingTemplateEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Emailing\Template')
-
-	emailingTemplateServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @emailingTemplateEntityFactory)
-
-	emailingTemplateRepository: @model::getRepository('Entity\Emailing\Template')
+	emailBatchRepository: @model::getRepository('Entity\Email\Batch')
 
 
 	#----------
-	emailingTemplateTypeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Emailing\TemplateType')
+	emailTemplateEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Email\Template')
 
-	emailingTemplateTypeServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @emailingTemplateTypeEntityFactory)
+	emailTemplateServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @emailTemplateEntityFactory)
 
-	emailingTemplateTypeRepository: @model::getRepository('Entity\Emailing\TemplateType')
+	emailTemplateRepository: @model::getRepository('Entity\Email\Template')
+
+
+	#----------
+	emailTemplateTypeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Email\TemplateType')
+
+	emailTemplateTypeServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @emailTemplateTypeEntityFactory)
+
+	emailTemplateTypeRepository: @model::getRepository('Entity\Email\TemplateType')
 
 
 	#expense
@@ -111,77 +111,77 @@ services:
 	expenseTypeRepository: @model::getRepository('Entity\Expense\Type')
 
 
-	#invoicing
+	#invoice
 	#----------
-	invoicingCouponEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoicing\Coupon')
+	invoiceEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoice\Invoice')
 
-	invoicingCouponServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoicingCouponEntityFactory)
+	invoiceServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoiceEntityFactory)
 
-	invoicingCouponRepository: @model::getRepository('Entity\Invoicing\Coupon')
-
-
-	#----------
-	invoicingInvoiceEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoicing\Invoice')
-
-	invoicingInvoiceServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoicingInvoiceEntityFactory)
-
-	invoicingInvoiceRepository: @model::getRepository('Entity\Invoicing\Invoice')
+	invoiceRepository: @model::getRepository('Entity\Invoice\Invoice')
 
 
 	#----------
-	invoicingItemEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoicing\Item')
+	invoiceCouponEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoice\Coupon')
 
-	invoicingItemServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoicingItemEntityFactory)
+	invoiceCouponServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoiceCouponEntityFactory)
 
-	invoicingItemRepository: @model::getRepository('Entity\Invoicing\Item')
-
-
-	#----------
-	invoicingMarketingEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoicing\Marketing')
-
-	invoicingMarketingServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoicingMarketingEntityFactory)
-
-	invoicingMarketingRepository: @model::getRepository('Entity\Invoicing\Marketing')
+	invoiceCouponRepository: @model::getRepository('Entity\Invoice\Coupon')
 
 
 	#----------
-	invoicingPackageEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoicing\Package')
+	invoiceItemEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoice\Item')
 
-	invoicingPackageServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoicingPackageEntityFactory)
+	invoiceItemServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoiceItemEntityFactory)
 
-	invoicingPackageRepository: @model::getRepository('Entity\Invoicing\Package')
-
-
-	#----------
-	invoicingServiceEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoicing\Service')
-
-	invoicingServiceServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoicingServiceEntityFactory)
-
-	invoicingServiceRepository: @model::getRepository('Entity\Invoicing\Service')
+	invoiceItemRepository: @model::getRepository('Entity\Invoice\Item')
 
 
 	#----------
-	invoicingServiceDurationEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoicing\ServiceDuration')
+	invoiceMarketingEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoice\Marketing')
 
-	invoicingServiceDurationServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoicingServiceDurationEntityFactory)
+	invoiceMarketingServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoiceMarketingEntityFactory)
 
-	invoicingServiceDurationRepository: @model::getRepository('Entity\Invoicing\ServiceDuration')
-
-
-	#----------
-	invoicingServiceTypeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoicing\ServiceType')
-
-	invoicingServiceTypeServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoicingServiceTypeEntityFactory)
-
-	invoicingServiceTypeRepository: @model::getRepository('Entity\Invoicing\ServiceType')
+	invoiceMarketingRepository: @model::getRepository('Entity\Invoice\Marketing')
 
 
 	#----------
-	invoicingUseTypeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoicing\UseType')
+	invoicePackageEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoice\Package')
 
-	invoicingUseTypeServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoicingUseTypeEntityFactory)
+	invoicePackageServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoicePackageEntityFactory)
 
-	invoicingUseTypeRepository: @model::getRepository('Entity\Invoicing\UseType')
+	invoicePackageRepository: @model::getRepository('Entity\Invoice\Package')
+
+
+	#----------
+	invoiceServiceEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoice\Service')
+
+	invoiceServiceServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoiceServiceEntityFactory)
+
+	invoiceServiceRepository: @model::getRepository('Entity\Invoice\Service')
+
+
+	#----------
+	invoiceServiceDurationEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoice\ServiceDuration')
+
+	invoiceServiceDurationServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoiceServiceDurationEntityFactory)
+
+	invoiceServiceDurationRepository: @model::getRepository('Entity\Invoice\ServiceDuration')
+
+
+	#----------
+	invoiceServiceTypeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoice\ServiceType')
+
+	invoiceServiceTypeServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoiceServiceTypeEntityFactory)
+
+	invoiceServiceTypeRepository: @model::getRepository('Entity\Invoice\ServiceType')
+
+
+	#----------
+	invoiceUseTypeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoice\UseType')
+
+	invoiceUseTypeServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoiceUseTypeEntityFactory)
+
+	invoiceUseTypeRepository: @model::getRepository('Entity\Invoice\UseType')
 
 
 	#language
@@ -247,7 +247,10 @@ services:
 	#----------
 	mediumEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Medium\Medium')
 
-	mediumServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @mediumEntityFactory)
+	mediumServiceFactory: 
+		class: Extras\Models\Service\ServiceFactory(@model, 'Service\Medium\MediumService', @mediumEntityFactory)
+		setup:
+			- setParameters(@mediumTypeRepository, @mediumTypeServiceFactory)
 
 	mediumRepository: @model::getRepository('Entity\Medium\Medium')
 

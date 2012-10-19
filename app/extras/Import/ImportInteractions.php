@@ -14,31 +14,18 @@ use Nette\Application as NA,
 
 class ImportInteractions extends BaseImport {
 
+	public $locationsByOldId, $languagesByOldId;
+
 	public function doImport($subsection = NULL) {
 
-		// $user1 = \Service\User\User::get(1);
-		// $user2 = \Service\User\User::get(4);
-		// // $user3 = \Service\User\User::get(3);
-		// // $user4 = \Service\User\User::get(4);
-
-		// \Service\User\User::merge($user1, $user2);
-		// return;
-
-		$this->setSubsections('interactions');
-
-		$this->countryTypeId = qNew('select id from location_type where slug = "country"');
-		$this->countryTypeId = mysql_fetch_array($this->countryTypeId);
-		$this->locationsByOldId = getNewIdsByOld('\Location\Location', 'type_id = '.$this->countryTypeId[0]);
+		$countryTypeId = qNew('select id from location_type where slug = "country"');
+		$countryTypeId = mysql_fetch_array($countryTypeId);
+		$this->locationsByOldId = getNewIdsByOld('\Location\Location', 'type_id = '.$countryTypeId[0]);
 
 		$this->languagesByOldId = getNewIdsByOld('\Language');
 
-		$this->$subsection();
+		$this->{$subsection}();
 
-		$this->savedVariables['importedSubSections']['interactions'][$subsection] = 1;
-
-		if (end($this->sections['interactions']['subsections']) == $subsection) {
-			$this->savedVariables['importedSections']['interactions'] = 1;		
-		}
 	}
 
 
@@ -51,9 +38,9 @@ class ImportInteractions extends BaseImport {
 		}
 
 		while($x = mysql_fetch_array($r)) {
-			$interaction = \Service\User\RentalReservation::get();
-			$interaction->language = \Service\Dictionary\Language::get($this->languagesByOldId[$x['language']]);
-			$t = \Service\Rental\Rental::getByOldId($x['object_id']);
+			$interaction = $this->context->userRentalReservationEntityFactory->create();
+			$interaction->language = $this->context->languageRepository->find($this->languagesByOldId[$x['language']]);
+			$t = $this->context->rentalRepository->findOneByOldId($x['object_id']);
 			if ($t) {
 				$interaction->rental = $t;
 			}
@@ -72,11 +59,11 @@ class ImportInteractions extends BaseImport {
 			$interaction->oldId = $x['id'];
 			//debug($interaction); return;
 
-			$interaction->save();
-			$interaction->created = fromStamp($x['stamp']); //@todo - uplne to ignoruje....
-			//debug($interaction); return;
-			$interaction->save();
+			$interaction->created = fromStamp($x['stamp']);
+			
+			$this->model->persist($interaction);
 		}
+		$this->model->flush();
 
 		return TRUE;
 	}
@@ -89,9 +76,9 @@ class ImportInteractions extends BaseImport {
 		}
 
 		while($x = mysql_fetch_array($r)) {
-			$interaction = \Service\User\RentalQuestion::get();
-			$interaction->language = \Service\Dictionary\Language::get($this->languagesByOldId[$x['language_id']]);
-			$t = \Service\Rental\Rental::getByOldId($x['object_id']);
+			$interaction = $this->context->userRentalQuestionEntityFactory->create();
+			$interaction->language = $this->context->languageRepository->find($this->languagesByOldId[$x['language_id']]);
+			$t = $this->context->rentalRepository->findOneByOldId($x['object_id']);
 			if ($t) {
 				$interaction->rental = $t;
 			}
@@ -101,11 +88,10 @@ class ImportInteractions extends BaseImport {
 
 			$interaction->oldId = $x['id'];
 
-			$interaction->save();
 			$interaction->created = fromStamp($x['stamp']);
-			$interaction->save();
-			//debug($interaction); return;
+			$this->model->persist($interaction);
 		}
+		$this->model->flush();
 
 		return TRUE;
 	}
@@ -122,9 +108,9 @@ class ImportInteractions extends BaseImport {
 		}
 
 		while($x = mysql_fetch_array($r)) {
-			$interaction = \Service\User\RentalToFriend::get();
-			$interaction->language = \Service\Dictionary\Language::get($this->languagesByOldId[$x['language']]);
-			$t = \Service\Rental\Rental::getByOldId($x['object_id']);
+			$interaction = $this->context->userRentalToFriendEntityFactory->create();
+			$interaction->language = $this->context->languageRepository->find($this->languagesByOldId[$x['language']]);
+			$t = $this->context->rentalRepository->findOneByOldId($x['object_id']);
 			if ($t) {
 				$interaction->rental = $t;
 			}
@@ -135,11 +121,10 @@ class ImportInteractions extends BaseImport {
 
 			$interaction->oldId = $x['id'];
 
-			$interaction->save();
 			$interaction->created = fromStamp($x['stamp']);
-			$interaction->save();
-			//debug($interaction); return;
+			$this->model->persist($interaction);
 		}
+		$this->model->flush();
 
 		return TRUE;
 	}
@@ -152,24 +137,22 @@ class ImportInteractions extends BaseImport {
 		}
 
 		while($x = mysql_fetch_array($r)) {
-			$interaction = \Service\User\SiteOwnerReview::get();
-			$interaction->language = \Service\Dictionary\Language::get($this->languagesByOldId[$x['language_id']]);
-			$interaction->location = \Service\Location\Location::get($this->locationsByOldId[$x['country_id']]);
+			$interaction = $this->context->userSiteOwnerReviewEntityFactory->create();
+			$interaction->language = $this->context->languageRepository->find($this->languagesByOldId[$x['language_id']]);
+			$interaction->location = $this->context->locationRepository->find($this->locationsByOldId[$x['country_id']]);
 
 			$interaction->senderEmail = new \Extras\Types\Email($x['from_email']);
 			$interaction->senderName = $x['from_name'];
 
 			$interaction->testimonial = $x['testimonial'];
-			$interaction->status = $x['live'] == 1 ? \Entity\User\SiteOwnerReview::STATUS_APROVED : \Entity\User\SiteOwnerReview::STATUS_PENDING;
+			$interaction->status = $x['live'] == 1 ? $interaction::STATUS_APROVED : $interaction::STATUS_PENDING;
 
 			$interaction->oldId = $x['id'];
 
-			$interaction->save();
 			$interaction->created = fromStamp($x['date_added']);
-			$interaction->save();
-			//debug($interaction); return;
+			$this->model->persist($interaction);
 		}
-
+		$this->model->flush();
 		return TRUE;
 	}
 
@@ -181,23 +164,22 @@ class ImportInteractions extends BaseImport {
 		}
 
 		while($x = mysql_fetch_array($r)) {
-			$interaction = \Service\User\SiteVisitorReview::get();
-			$interaction->language = \Service\Dictionary\Language::get($this->languagesByOldId[$x['language_id']]);
-			$interaction->location = \Service\Location\Location::get($this->locationsByOldId[$x['country_id']]);
+			$interaction = $this->context->userSiteOwnerReviewEntityFactory->create();
+			$interaction->language = $this->context->languageRepository->find($this->languagesByOldId[$x['language_id']]);
+			$interaction->location = $this->context->locationRepository->find($this->locationsByOldId[$x['country_id']]);
 
 			$interaction->senderEmail = new \Extras\Types\Email($x['from_email']);
 			$interaction->senderName = $x['from_name'];
 
 			$interaction->testimonial = $x['testimonial'];
-			$interaction->status = $x['live'] == 1 ? \Entity\User\SiteVisitorReview::STATUS_APROVED : \Entity\User\SiteVisitorReview::STATUS_PENDING;
+			$interaction->status = $x['live'] == 1 ? $interaction::STATUS_APROVED : $interaction::STATUS_PENDING;
 
 			$interaction->oldId = $x['id'];
 
-			$interaction->save();
 			$interaction->created = fromStamp($x['date_added']);
-			$interaction->save();
-			//debug($interaction); return;
+			$this->model->persist($interaction);
 		}
+		$this->model->flush();
 
 		return TRUE;
 	}

@@ -14,26 +14,18 @@ use Nette\Application as NA,
 class ImportSeo extends BaseImport {
 
 	public function doImport($subsection) {	
-		$this->setSubsections('seo');
 
-		$this->$subsection();
+		$this->{$subsection}();
 
-		$this->savedVariables['importedSubSections']['seo'][$subsection] = 1;
-
-		if (end($this->sections['seo']['subsections']) == $subsection) {
-			$this->savedVariables['importedSections']['seo'] = 1;		
-		}
 	}
 
 	private function importSeoUrls() {
-		$import = new \Extras\Import\BaseImport();
-		// Detaching all media
-		qNew('update medium_medium set seoUrl_id = NULL where seoUrl_id > 0');
-		$import->undoSection('seo');
+		$context = $this->context;
+		$model = $this->model;
 
-		$this->countryTypeId = qNew('select id from location_type where slug = "country"');
-		$this->countryTypeId = mysql_fetch_array($this->countryTypeId);
-		$countriesByOldId = getNewIdsByOld('\Location\Location', 'type_id = '.$this->countryTypeId[0]);
+
+		// Detaching all media
+		qNew('update medium set seoUrl_id = NULL where seoUrl_id > 0');
 
 		$languagesByOldId = getNewIdsByOld('\Language');
 
@@ -50,23 +42,25 @@ class ImportSeo extends BaseImport {
 		$dictionaryTypeDescription = $this->createPhraseType('\Seo\SeoUrl', 'description', 'ACTIVE');
 		$dictionaryTypePpcKeywords = $this->createPhraseType('\Seo\SeoUrl', 'ppcKeywords', 'ACTIVE');
 
-		$locationLocalityType = \Service\Location\Type::getBySlug('locality');
-		$locationRegionType = \Service\Location\Type::getBySlug('region');
-		$locationCountryType = \Service\Location\Type::getBySlug('country');
+		$model->flush();
 
-		$tagType = \Service\Rental\AmenityType::getBySlug('tag');
+		$locationLocalityType = $context->locationTypeRepository->findOneBySlug('locality');
+		$locationRegionType = $context->locationTypeRepository->findOneBySlug('region');
+		$locationCountryType = $context->locationTypeRepository->findOneBySlug('country');
+
+		$tagType = $context->rentalAmenityTypeRepository->findOneBySlug('tag');
 		debug(mysql_num_rows($r));
 		while($x = mysql_fetch_array($r)) {
-			$seoUrl = \Service\Seo\SeoUrl::get();
+			$seoUrl = $context->seoSeoUrlEntityFactory->create();
 			$seoUrl->oldId = $x['id'];
 
 			// Location
 			if ($x['locality_id'] > 0) {
-				$location = \Service\Location\Location::getByTypeAndOldId($locationLocalityType, $x['locality_id']);
+				$location = $context->locationRepository->findOneBy(array('type'=>$locationLocalityType, 'oldId'=>$x['locality_id']));
 			} else if ($x['region_id'] > 0) {
-				$location = \Service\Location\Location::getByTypeAndOldId($locationRegionType, $x['region_id']);
+				$location = $context->locationRepository->findOneBy(array('type'=>$locationRegionType, 'oldId'=>$x['region_id']));
 			} else {
-				$location = \Service\Location\Location::getByTypeAndOldId($locationCountryType, $x['country_id']);
+				$location = $context->locationRepository->findOneBy(array('type'=>$locationCountryType, 'oldId'=>$x['country_id']));
 			}
 			if ($location) {
 				$seoUrl->location = $location;
@@ -74,7 +68,7 @@ class ImportSeo extends BaseImport {
 
 			// Tag
 			if ($x['tag_id'] > 0) {
-				$tag = \Service\Rental\Amenity::getByTypeAndOldId($tagType, $x['tag_id']);
+				$tag = $context->rentalAmenityRepository->findOneBy(array('type'=>$tagType, 'oldId'=>$x['tag_id']));
 				if ($tag) {
 					$seoUrl->tag = $tag;
 				}
@@ -82,7 +76,7 @@ class ImportSeo extends BaseImport {
 
 			// Attraction Type
 			if ($x['attraction_type_id'] > 0) {
-				$attractionType = \Service\Attraction\Type::getByOldId($x['attraction_type_id']);
+				$attractionType = $context->attractionTypeRepository->findOneByOldId($x['attraction_type_id']);
 				if ($attractionType) {
 					$seoUrl->attractionType = $attractionType;
 				}
@@ -93,13 +87,11 @@ class ImportSeo extends BaseImport {
 			if (is_array($temp) && count($temp)) {
 				if ($this->developmentMode == TRUE) $temp = array_slice($temp, 0, 3);
 				foreach ($temp as $key => $value) {
-					$medium = \Service\Medium\Medium::getByOldUrl('http://www.tralandia.com/u/'.$value);
+					$medium = $context->mediumRepository->findOneByOldUrl('http://www.tralandia.com/u/'.$value);
 					if (!$medium) {
-						$medium = \Service\Medium\Medium::get();
-						if ($medium) {
-							$seoUrl->addMedium($medium);
-							$medium->setContentFromUrl('http://www.tralandia.com/u/'.$value);
-						}
+						$medium = $context->mediumServiceFactory->create();
+						$medium->setContentFromUrl('http://www.tralandia.com/u/'.$value);
+						$seoUrl->addMedium($medium->getEntity());
 					} else {
 						$seoUrl->addMedium($medium);
 					}
@@ -108,61 +100,55 @@ class ImportSeo extends BaseImport {
 
 			$titlePhrase = $this->context->phraseEntityFactory->create();
 			$titlePhrase->type = $dictionaryTypeTitle;
+			$sourceLanguage = $context->languageRepository->find($languagesByOldId[$x['source_language_id']]);
 			if (isset($languagesByOldId[$x['source_language_id']])) {
-				$titlePhrase->sourceLanguage = \Service\Dictionary\Language::get($languagesByOldId[$x['source_language_id']]);
+				$titlePhrase->sourceLanguage = $sourceLanguage;
 			}
 
 			$headingPhrase = $this->context->phraseEntityFactory->create();
 			$headingPhrase->type = $dictionaryTypeHeading;
 			if (isset($languagesByOldId[$x['source_language_id']])) {
-				$headingPhrase->sourceLanguage = \Service\Dictionary\Language::get($languagesByOldId[$x['source_language_id']]);
+				$headingPhrase->sourceLanguage = $sourceLanguage;
 			}
 
 			$tabNamePhrase = $this->context->phraseEntityFactory->create();
 			$tabNamePhrase->type = $dictionaryTypeTabName;
 			if (isset($languagesByOldId[$x['source_language_id']])) {
-				$tabNamePhrase->sourceLanguage = \Service\Dictionary\Language::get($languagesByOldId[$x['source_language_id']]);
+				$tabNamePhrase->sourceLanguage = $sourceLanguage;
 			}
 
 			$descriptionPhrase = $this->context->phraseEntityFactory->create();
 			$descriptionPhrase->type = $dictionaryTypeDescription;
 			if (isset($languagesByOldId[$x['source_language_id']])) {
-				$descriptionPhrase->sourceLanguage = \Service\Dictionary\Language::get($languagesByOldId[$x['source_language_id']]);
+				$descriptionPhrase->sourceLanguage = $sourceLanguage;
 			}
 
 			$r1 = q('select * from seo_urls_texts where seo_url_id = '.$x['id'].' and length(description)>0');
 			while ($x1 = mysql_fetch_array($r1)) {
+				$languageTemp = $context->languageRepository->find($languagesByOldId[$x1['language_id']]);
 
 				// Title
-				$t = \Service\Dictionary\Translation::get();
-				$t->language = \Service\Dictionary\Language::getByOldId($x1['language_id']);
+				$t = $context->phraseTranslationEntityFactory->create();
+				$t->language = $languageTemp;
 				$t->translation = $x1['title'];
-				$t->setPhrase($titlePhrase);
-				$t->save();
 				$titlePhrase->addTranslation($t);
 
 				// Heading
-				$t = \Service\Dictionary\Translation::get();
-				$t->language = \Service\Dictionary\Language::getByOldId($x1['language_id']);
+				$t = $context->phraseTranslationEntityFactory->create();
+				$t->language = $languageTemp;
 				$t->translation = $x1['h1'];
-				$t->setPhrase($headingPhrase);
-				$t->save();
 				$headingPhrase->addTranslation($t);
 
 				// Tab Heading
-				$t = \Service\Dictionary\Translation::get();
-				$t->language = \Service\Dictionary\Language::getByOldId($x1['language_id']);
+				$t = $context->phraseTranslationEntityFactory->create();
+				$t->language = $languageTemp;
 				$t->translation = $x1['tab_name'];
-				$t->setPhrase($tabNamePhrase);
-				$t->save();
 				$tabNamePhrase->addTranslation($t);
 
 				// Description
-				$t = \Service\Dictionary\Translation::get();
-				$t->language = \Service\Dictionary\Language::getByOldId($x1['language_id']);
+				$t = $context->phraseTranslationEntityFactory->create();
+				$t->language = $languageTemp;
 				$t->translation = $x1['description'];
-				$t->setPhrase($descriptionPhrase);
-				$t->save();
 				$descriptionPhrase->addTranslation($t);
 			}
 
@@ -172,9 +158,9 @@ class ImportSeo extends BaseImport {
 			$seoUrl->description = $descriptionPhrase;
 			//debug($titlePhrase->getMainEntity()->translations);
 			//debug($descriptionPhrase->getMainEntity()->translations); return;
-			$seoUrl->save();
+			$model->persist($seoUrl);
 		}
-		\Extras\Models\Service::flush(FALSE);
+		$model->flush();
 	}
 
 

@@ -15,6 +15,8 @@ class ServiceFactory extends \Nette\Object {
 	public $serviceName;
 	public $entityFactory;
 
+	public $parameters = NULL;
+
 	public function __construct(\Doctrine\ORM\EntityManager $model, $serviceName, EntityFactory $entityFactory) {
 		$this->model = $model;
 		$this->serviceName = $serviceName;
@@ -24,10 +26,26 @@ class ServiceFactory extends \Nette\Object {
 	public function create($entity = NULL) {
 		$serviceName = $this->serviceName;
 		if($entity === NULL && !func_num_args()) {
-			return new $serviceName($this->model, $this->entityFactory->create());
+			$service = new $serviceName($this->model, $this->entityFactory->create());
 		} else {
-			return new $serviceName($this->model, $entity);
+			$service = new $serviceName($this->model, $entity);
 		}
+
+		$service = $this->injectParametersToService($service);
+
+		return $service;
+	}
+
+	public function setParameters() {
+		$this->parameters = func_get_args();
+	}
+
+	public function injectParametersToService($service) {
+		if($this->parameters) {
+			call_user_func_array(array($service, 'inject'), $this->parameters);
+		}
+
+		return $service;
 	}
 
 }

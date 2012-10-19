@@ -1,14 +1,13 @@
 <?php
 
-namespace Entity\Emailing;
+namespace Entity\Email;
 
-use Entity\Emailing;
 use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="emailing_batch", indexes={@ORM\index(name="confirmed", columns={"confirmed"}), @ORM\index(name="totalCount", columns={"totalCount"})})
+ * @ORM\Table(name="email_batch", indexes={@ORM\index(name="confirmed", columns={"confirmed"}), @ORM\index(name="totalCount", columns={"totalCount"})})
  * @EA\Primary(key="id", value="domain")
  */
 class Batch extends \Entity\BaseEntityDetails {
@@ -59,7 +58,7 @@ class Batch extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param boolean
-	 * @return \Entity\Emailing\Batch
+	 * @return \Entity\Email\Batch
 	 */
 	public function setConfirmed($confirmed)
 	{
@@ -77,10 +76,10 @@ class Batch extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @param \Entity\Emailing\Template
-	 * @return \Entity\Emailing\Batch
+	 * @param \Entity\Email\Template
+	 * @return \Entity\Email\Batch
 	 */
-	public function setTemplate(\Entity\Emailing\Template $template)
+	public function setTemplate(\Entity\Email\Template $template)
 	{
 		$this->template = $template;
 
@@ -88,7 +87,7 @@ class Batch extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Emailing\Batch
+	 * @return \Entity\Email\Batch
 	 */
 	public function unsetTemplate()
 	{
@@ -98,7 +97,7 @@ class Batch extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Emailing\Template|NULL
+	 * @return \Entity\Email\Template|NULL
 	 */
 	public function getTemplate()
 	{
@@ -107,7 +106,7 @@ class Batch extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param integer
-	 * @return \Entity\Emailing\Batch
+	 * @return \Entity\Email\Batch
 	 */
 	public function setTotalCount($totalCount)
 	{
@@ -126,7 +125,7 @@ class Batch extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param string
-	 * @return \Entity\Emailing\Batch
+	 * @return \Entity\Email\Batch
 	 */
 	public function setSubject($subject)
 	{
@@ -145,7 +144,7 @@ class Batch extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param string
-	 * @return \Entity\Emailing\Batch
+	 * @return \Entity\Email\Batch
 	 */
 	public function setBody($body)
 	{
@@ -164,7 +163,7 @@ class Batch extends \Entity\BaseEntityDetails {
 		
 	/**
 	 * @param string
-	 * @return \Entity\Emailing\Batch
+	 * @return \Entity\Email\Batch
 	 */
 	public function setBodyHtml($bodyHtml)
 	{

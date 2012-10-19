@@ -3,7 +3,7 @@
 namespace Entity\Rental;
 
 use Entity\Phrase;
-use Entity\Invoicing;
+use Entity\Invoice;
 use Entity\Location;
 use Entity\Medium;
 use Entity\User;
@@ -37,7 +37,7 @@ class Rental extends \Entity\BaseEntity {
 	 * @var integer
 	 * @ORM\Column(type="integer")
 	 */
-	protected $status;
+	protected $status = self::STATUS_DRAFT;
 
 	/**
 	 * @var Collection
@@ -47,7 +47,7 @@ class Rental extends \Entity\BaseEntity {
 
 	/**
 	 * @var datetime
-	 * @ORM\Column(type="datetime")
+	 * @ORM\Column(type="datetime", nullable=true)
 	 */
 	protected $timeDeleted;
 
@@ -71,25 +71,25 @@ class Rental extends \Entity\BaseEntity {
 
 	/**
 	 * @var address
-	 * @ORM\Column(type="address")
+	 * @ORM\Column(type="address", nullable=true)
 	 */
 	protected $address;
 
 	/**
 	 * @var latlong
-	 * @ORM\Column(type="latlong")
+	 * @ORM\Column(type="latlong", nullable=true)
 	 */
 	protected $latitude;
 
 	/**
 	 * @var latlong
-	 * @ORM\Column(type="latlong")
+	 * @ORM\Column(type="latlong", nullable=true)
 	 */
 	protected $longitude;
 
 	/**
 	 * @var slug
-	 * @ORM\Column(type="slug")
+	 * @ORM\Column(type="slug", nullable=true)
 	 */
 	protected $slug;
 
@@ -101,7 +101,7 @@ class Rental extends \Entity\BaseEntity {
 
 	/**
 	 * @var json
-	 * @ORM\Column(type="json")
+	 * @ORM\Column(type="json", nullable=true)
 	 */
 	protected $interview;
 
@@ -143,7 +143,7 @@ class Rental extends \Entity\BaseEntity {
 
 	/**
 	 * @var json
-	 * @ORM\Column(type="json")
+	 * @ORM\Column(type="json", nullable=true)
 	 */
 	protected $pricelists;
 
@@ -173,7 +173,7 @@ class Rental extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Entity\Invoicing\Invoice", mappedBy="rental")
+	 * @ORM\OneToMany(targetEntity="Entity\Invoice\Invoice", mappedBy="rental")
 	 */
 	protected $invoices;
 
@@ -877,10 +877,10 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Invoicing\Invoice
+	 * @param \Entity\Invoice\Invoice
 	 * @return \Entity\Rental\Rental
 	 */
-	public function addInvoice(\Entity\Invoicing\Invoice $invoice)
+	public function addInvoice(\Entity\Invoice\Invoice $invoice)
 	{
 		if(!$this->invoices->contains($invoice)) {
 			$this->invoices->add($invoice);
@@ -891,10 +891,10 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Invoicing\Invoice
+	 * @param \Entity\Invoice\Invoice
 	 * @return \Entity\Rental\Rental
 	 */
-	public function removeInvoice(\Entity\Invoicing\Invoice $invoice)
+	public function removeInvoice(\Entity\Invoice\Invoice $invoice)
 	{
 		if($this->invoices->contains($invoice)) {
 			$this->invoices->removeElement($invoice);
@@ -905,7 +905,7 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Invoicing\Invoice
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Invoice\Invoice
 	 */
 	public function getInvoices()
 	{

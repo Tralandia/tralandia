@@ -1,5 +1,5 @@
 <?php
-namespace Entity\Invoicing;
+namespace Entity\Invoice;
 
 use Entity\Phrase;
 use Doctrine\ORM\Mapping as ORM;
@@ -7,7 +7,7 @@ use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="invoicing_servicetype")
+ * @ORM\Table(name="invoice_servicetype")
  * @EA\Primary(key="id", value="slug")
  */
 class ServiceType extends \Entity\BaseEntity {
@@ -34,7 +34,7 @@ class ServiceType extends \Entity\BaseEntity {
 		
 	/**
 	 * @param slug
-	 * @return \Entity\Invoicing\ServiceType
+	 * @return \Entity\Invoice\ServiceType
 	 */
 	public function setSlug($slug)
 	{
@@ -53,7 +53,7 @@ class ServiceType extends \Entity\BaseEntity {
 		
 	/**
 	 * @param \Entity\Phrase\Phrase
-	 * @return \Entity\Invoicing\ServiceType
+	 * @return \Entity\Invoice\ServiceType
 	 */
 	public function setName(\Entity\Phrase\Phrase $name)
 	{

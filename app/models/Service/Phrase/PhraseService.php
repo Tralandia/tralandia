@@ -21,6 +21,10 @@ class PhraseService extends Service\BaseService {
 		})->current();
 	}
 
+	public function hasTranslation($language) {
+		return $this->getTranslation($language) instanceof \Entity\Phrase\Translation;
+	}
+
 	/**
 	 * Vrati hodnotu prekladu v textovej forme na zaklade jazyka
 	 * @param Entity\Language

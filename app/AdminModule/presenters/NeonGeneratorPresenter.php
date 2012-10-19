@@ -14,8 +14,8 @@ class NeonGeneratorPresenter extends EntityGeneratorPresenter {
 	protected $skipEntities = array(
 		'Entity\Dictionary\Phrase',
 		'Entity\Dictionary\Translation',
-		'Entity\Invoicing\Invoice',
-		'Entity\Invoicing\Item',
+		'Entity\Invoice\Invoice',
+		'Entity\Invoice\Item',
 		'Entity\Location\Traveling',
 		'Entity\Log\Change',
 		'Entity\Log\ChangeType',

@@ -94,21 +94,21 @@ class BaseImport {
 			),
 			'subsections' => array(),
 		),
-		'invoicingStart' => array(
+		'invoiceStart' => array(
 			'entities' => array(
-				'\Invoicing\ServiceDuration' => array(),
-				'\Invoicing\ServiceType' => array(),
-				'\Invoicing\UseType' => array(),
-				'\Invoicing\Package' => array(),
-				'\Invoicing\Service' => array(),
-				'\Invoicing\Marketing' => array(),
+				'\Invoice\ServiceDuration' => array(),
+				'\Invoice\ServiceType' => array(),
+				'\Invoice\UseType' => array(),
+				'\Invoice\Package' => array(),
+				'\Invoice\Service' => array(),
+				'\Invoice\Marketing' => array(),
 			),
 			'subsections' => array(),
 		),
-		'invoicing' => array(
+		'invoice' => array(
 			'entities' => array(
-				'\Invoicing\Invoice' => array(),
-				'\Invoicing\Item' => array(),
+				'\Invoice\Invoice' => array(),
+				'\Invoice\Item' => array(),
 			),
 			'subsections' => array(),
 		),
@@ -130,9 +130,9 @@ class BaseImport {
 			),
 			'subsections' => array('importRentalReservations', 'importRentalQuestions', 'importRentalToFriend', 'importSiteOwnerReviews', 'importSiteVisitorReviews'),
 		),
-		'emailing' => array(
+		'email' => array(
 			'entities' => array(
-				'\Emailing\Template' => array(),
+				'\Email\Template' => array(),
 			),
 			'subsections' => array(),
 		),
@@ -242,9 +242,7 @@ class BaseImport {
 		}
 
 		foreach ($value as $key2 => $value2) {
-			$tableName = str_replace('\\', '_', $key2);
-			$tableName = trim($tableName, '_');
-			$tableName = strtolower($tableName);
+			$tableName = getTableName($key2);
 			qNew('ALTER TABLE '.$tableName.' AUTO_INCREMENT = 1');
 		}
 		$this->saveVariables();
@@ -278,15 +276,16 @@ class BaseImport {
 
 	protected function createNewPhrase(\Entity\BaseEntity $type, $oldPhraseId = NULL, $oldLocativePhraseId = NULL, $locativeKeys = NULL) {
 
+		$oldPhraseData = NULL;
 		if ($oldPhraseId) {
 			$oldPhraseData = qf('select * from dictionary where id = '.$oldPhraseId);
-			if (!$oldPhraseData) {
-				debug('Nenasiel som staru Phrase podla stareho ID '.$oldPhraseId);
-				$oldPhraseData = array(
-					'ready' => 1,
-				);
-				//throw new \Nette\UnexpectedValueException('Nenasiel som staru Phrase podla starej ID '.$oldPhraseId);
-			}			
+		}
+		if (!$oldPhraseData) {
+			debug('Nenasiel som staru Phrase podla stareho ID '.$oldPhraseId);
+			$oldPhraseData = array(
+				'ready' => 1,
+			);
+			//throw new \Nette\UnexpectedValueException('Nenasiel som staru Phrase podla starej ID '.$oldPhraseId);
 		}
 		$phrase = $this->context->phraseEntityFactory->create();
 		$phrase->ready = (bool)$oldPhraseData['ready'];

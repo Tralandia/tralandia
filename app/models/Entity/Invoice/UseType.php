@@ -1,6 +1,6 @@
 <?php
 
-namespace Entity\Invoicing;
+namespace Entity\Invoice;
 
 use Entity\Phrase;
 use Doctrine\ORM\Mapping as ORM;
@@ -8,7 +8,7 @@ use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="invoicing_usetype", indexes={@ORM\index(name="slug", columns={"slug"})})
+ * @ORM\Table(name="invoice_usetype", indexes={@ORM\index(name="slug", columns={"slug"})})
  * @EA\Primary(key="id", value="slug")
  */
 class UseType extends \Entity\BaseEntity {
@@ -50,7 +50,7 @@ class UseType extends \Entity\BaseEntity {
 		
 	/**
 	 * @param \Entity\Phrase\Phrase
-	 * @return \Entity\Invoicing\UseType
+	 * @return \Entity\Invoice\UseType
 	 */
 	public function setName(\Entity\Phrase\Phrase $name)
 	{
@@ -69,7 +69,7 @@ class UseType extends \Entity\BaseEntity {
 		
 	/**
 	 * @param slug
-	 * @return \Entity\Invoicing\UseType
+	 * @return \Entity\Invoice\UseType
 	 */
 	public function setSlug($slug)
 	{
@@ -87,10 +87,10 @@ class UseType extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Invoicing\Package
-	 * @return \Entity\Invoicing\UseType
+	 * @param \Entity\Invoice\Package
+	 * @return \Entity\Invoice\UseType
 	 */
-	public function addPackage(\Entity\Invoicing\Package $package)
+	public function addPackage(\Entity\Invoice\Package $package)
 	{
 		if(!$this->packages->contains($package)) {
 			$this->packages->add($package);
@@ -100,7 +100,7 @@ class UseType extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Invoicing\Package
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Invoice\Package
 	 */
 	public function getPackages()
 	{
@@ -108,10 +108,10 @@ class UseType extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Invoicing\Marketing
-	 * @return \Entity\Invoicing\UseType
+	 * @param \Entity\Invoice\Marketing
+	 * @return \Entity\Invoice\UseType
 	 */
-	public function addMarketing(\Entity\Invoicing\Marketing $marketing)
+	public function addMarketing(\Entity\Invoice\Marketing $marketing)
 	{
 		if(!$this->marketings->contains($marketing)) {
 			$this->marketings->add($marketing);
@@ -121,7 +121,7 @@ class UseType extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Invoicing\Marketing
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Invoice\Marketing
 	 */
 	public function getMarketings()
 	{

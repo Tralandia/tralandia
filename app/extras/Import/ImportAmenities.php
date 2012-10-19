@@ -14,8 +14,7 @@ class ImportAmenities extends BaseImport {
 
 	public function doImport($subsection = NULL) {
 
-		$import = new \Extras\Import\BaseImport();
-		$import->undoSection('amenities');
+		//$this->undoSection('amenities');
 
 
 		$groups = array(
@@ -38,76 +37,79 @@ class ImportAmenities extends BaseImport {
 			array('other', 'other', 'other'),
 		);
 
-		$en = \Service\Dictionary\Language::getByIso('en');
+		$en = $this->context->languageRepository->findOneByIso('en');
 
 		$nameDictionaryType = $this->createPhraseType('\Rental\Amenity', 'name', 'ACTIVE', array('pluralsRequired' => TRUE));
 		$tagNameDictionaryType = $this->createPhraseType('\Rental\Amenity', 'name-tag', 'ACTIVE', array('genderVariationsRequired' => TRUE, 'positionRequired' => TRUE));
 		$this->createPhraseType('\Rental\AmenityType', 'name', 'ACTIVE');
-		\Extras\Models\Service::flush(FALSE);
+		$this->model->flush();
 
 
 		foreach ($groups as $key => $value) {
-			$g = \Service\Rental\AmenityType::get();
+			$g = $this->context->rentalAmenityTypeEntityFactory->create();
 			$g->name = $this->createPhraseFromString('\Rental\AmenityType', 'name', 'ACTIVE', $value[0], $en);
 			$g->slug = $value[2];
-			$g->save();
+			$this->model->persist($g);
 		}
-
-		\Extras\Models\Service::flush(FALSE);
+		$this->model->flush();
 
 
 		// Activities
-		$amenityType = \Service\Rental\AmenityType::getBySlug('activity');
+		$amenityType = $this->context->rentalAmenityTypeRepository->findOneBySlug('activity');
 		$r = q('select * from activities');
 		while ($x = mysql_fetch_array($r)) {
-			$amenity = \Service\Rental\Amenity::get();
+			$amenity = $this->context->rentalAmenityEntityFactory->create();
 			$amenity->type = $amenityType;
 			$amenity->name = $this->createNewPhrase($nameDictionaryType, $x['name_dic_id']);
 			$amenity->oldId = $x['id'];
-			$amenity->save();
+			$this->model->persist($amenity);
 		}
+		$this->model->flush();
 
 		// General Amenities
 		$subGroups = explode(',', 'other,important,children,room,kitchen,bathroom,heating,parking,relax,service');
 		foreach ($subGroups as $key => $value) {
-			$amenityType = \Service\Rental\AmenityType::getBySlug($value);
+			$amenityType = $this->context->rentalAmenityTypeRepository->findOneBySlug($value);
 			$r = q('select * from amenities_general where type_id = '.$key);
 			while ($x = mysql_fetch_array($r)) {
-				$amenity = \Service\Rental\Amenity::get();
+				$amenity = $this->context->rentalAmenityEntityFactory->create();
 				$amenity->type = $amenityType;
 				$amenity->name = $this->createNewPhrase($nameDictionaryType, $x['name_dic_id']);
 				$amenity->oldId = $x['id'];
-				$amenity->save();
+				$this->model->persist($amenity);
 			}
 		}
+		$this->model->flush();
 
 		// Wellness Options
-		$amenityType = \Service\Rental\AmenityType::getBySlug('wellness');
+		$amenityType = $this->context->rentalAmenityTypeRepository->findOneBySlug('wellness');
 		$r = q('select * from amenities_wellness');
 		while ($x = mysql_fetch_array($r)) {
-			$amenity = \Service\Rental\Amenity::get();
+			$amenity = $this->context->rentalAmenityEntityFactory->create();
 			$amenity->type = $amenityType;
 			$amenity->name = $this->createNewPhrase($nameDictionaryType, $x['name_dic_id']);
 			$amenity->oldId = $x['id'];
-			$amenity->save();
+			$this->model->persist($amenity);
 		}
+		$this->model->flush();
 
 		// Congress Options
-		$amenityType = \Service\Rental\AmenityType::getBySlug('congress');
+		$amenityType = $this->context->rentalAmenityTypeRepository->findOneBySlug('congress');
 		$r = q('select * from amenities_congress');
 		while ($x = mysql_fetch_array($r)) {
-			$amenity = \Service\Rental\Amenity::get();
+			$amenity = $this->context->rentalAmenityEntityFactory->create();
 			$amenity->type = $amenityType;
 			$amenity->name = $this->createNewPhrase($nameDictionaryType, $x['name_dic_id']);
 			$amenity->oldId = $x['id'];
-			$amenity->save();
+			$this->model->persist($amenity);
 		}
+		$this->model->flush();
 
 		// Tags
-		$amenityType = \Service\Rental\AmenityType::getBySlug('tag');
+		$amenityType = $this->context->rentalAmenityTypeRepository->findOneBySlug('tag');
 		$r = q('select * from tags where id = 15');
 		while ($x = mysql_fetch_array($r)) {
-			$amenity = \Service\Rental\Amenity::get();
+			$amenity = $this->context->rentalAmenityEntityFactory->create();
 			$amenity->type = $amenityType;
 			$amenity->name = $this->createNewPhrase($tagNameDictionaryType, $x['name_dic_id']);
 
@@ -116,45 +118,47 @@ class ImportAmenities extends BaseImport {
 			);
 			$amenity->details = $details;
 			$amenity->oldId = $x['id'];
-			$amenity->save();
+			$this->model->persist($amenity);
 		}
+		$this->model->flush();
 
 
 		// Room Types
-		$amenityType = \Service\Rental\AmenityType::getBySlug('room-type');
+		$amenityType = $this->context->rentalAmenityTypeRepository->findOneBySlug('room-type');
 		$r = q('select * from room_types');
 		while ($x = mysql_fetch_array($r)) {
-			$amenity = \Service\Rental\Amenity::get();
+			$amenity = $this->context->rentalAmenityEntityFactory->create();
 			$amenity->type = $amenityType;
 			$amenity->name = $this->createNewPhrase($nameDictionaryType, $x['name_dic_id']);
 			$amenity->oldId = $x['id'];
-			$amenity->save();
+			$this->model->persist($amenity);
 		}
+		$this->model->flush();
 
 		// Owner availabilities
-		$amenityType = \Service\Rental\AmenityType::getBySlug('owner-availability');
-		$r = q('select * from owner');
-		while ($x = mysql_fetch_array($r)) {
-			$amenity = \Service\Rental\Amenity::get();
-			$amenity->type = $amenityType;
-			$amenity->name = $this->createNewPhrase($nameDictionaryType, $x['name_dic_id']);
-			$amenity->oldId = $x['id'];
-			$amenity->save();
-		}
+		// @todo chyba tabulka owner v starej DB
+		// $amenityType = $this->context->rentalAmenityTypeRepository->findOneBySlug('owner-availability');
+		// $r = q('select * from owner');
+		// while ($x = mysql_fetch_array($r)) {
+		// 	$amenity = $this->context->rentalAmenityEntityFactory->create();
+		// 	$amenity->type = $amenityType;
+		// 	$amenity->name = $this->createNewPhrase($nameDictionaryType, $x['name_dic_id']);
+		// 	$amenity->oldId = $x['id'];
+		// 	$this->model->persist($amenity);
+		// }
+		// $this->model->flush();
 
 		// Board
-		$amenityType = \Service\Rental\AmenityType::getBySlug('board');
+		$amenityType = $this->context->rentalAmenityTypeRepository->findOneBySlug('board');
 		$r = q('select * from food');
 		while ($x = mysql_fetch_array($r)) {
-			$amenity = \Service\Rental\Amenity::get();
+			$amenity = $this->context->rentalAmenityEntityFactory->create();
 			$amenity->type = $amenityType;
 			$amenity->name = $this->createNewPhrase($nameDictionaryType, $x['name_dic_id']);
 			$amenity->oldId = $x['id'];
-			$amenity->save();
+			$this->model->persist($amenity);
 		}
-
-
-		$this->savedVariables['importedSections']['amenities'] = 1;
+		$this->model->flush();
 
 	}
 

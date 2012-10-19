@@ -12,6 +12,8 @@ use Nette\Application as NA,
 
 class ImportUsers extends BaseImport {
 
+	// @todo spravit invoicingData import
+
 	public function doImport($subsection = NULL) {
 
 		// $user1 = \Service\User\User::get(1);
@@ -58,17 +60,17 @@ class ImportUsers extends BaseImport {
 
 	private function importAdmins() {
 
-		$role = \Service\User\Role::getBySlug('admin');
+		$role = $this->context->userRoleRepository->findOneBySlug('admin');
 
 		$r = q('select * from members_admins');
 		while($x = mysql_fetch_array($r)) {
-			$user = \Service\User\User::getByLogin($x['email']);
+			$user = $this->context->userRepository->findOneByLogin($x['email']);
 
-			if ($user instanceof \Service\User\User && $user->id > 0) {
+			if ($user) {
 				continue;
 			}
 
-			$user = \Service\User\User::get();
+			$user = $this->context->userEntityFactory->create();
 
 			$user->login = $x['email'];
 			$user->password = $x['password'];
@@ -79,27 +81,28 @@ class ImportUsers extends BaseImport {
 			$contacts->add(new \Extras\Types\Email($x['email']));
 			$user->contacts = $contacts;
 			
-			$user->defaultLanguage = \Service\Dictionary\Language::getByIso('en');
-			$user->save();
+			$user->defaultLanguage = $this->context->languageRepository->findOneByIso('en');
+			$this->model->persist($user);
 		}
+		$this->model->flush();
 
 	}
 
 	private function importManagers() {
 
-		$role = \Service\User\Role::getBySlug('manager');
+		$role = $this->context->userRoleRepository->findOneBySlug('manager');
 
-		$countryLocationType = \Service\Location\Type::getBySlug('country');
+		$countryLocationType = $this->context->locationTypeRepository->findOneBySlug('country');
 
 		$r = q('select * from members_managers');
 		while($x = mysql_fetch_array($r)) {
-			$user = \Service\User\User::getByLogin($x['email']);
+			$user = $this->context->userRepository->findOneByLogin($x['email']);
 
-			if ($user instanceof \Service\User\User && $user->id > 0) {
+			if ($user) {
 				continue;
 			}
 
-			$user = \Service\User\User::get();
+			$user = $this->context->userEntityFactory->create();
 
 			$user->login = $x['email'];
 			$user->password = $x['password'];
@@ -110,69 +113,72 @@ class ImportUsers extends BaseImport {
 			$contacts->add(new \Extras\Types\Email($x['email']));
 			$user->contacts = $contacts;
 			
-			$user->defaultLanguage = \Service\Dictionary\Language::getByIso('en');
+			$user->defaultLanguage = $this->context->languageRepository->findOneByIso('en');
 
 			$assignedCountries = array_unique(array_filter(explode(',', $x['countries'])));
 			$assignedLanguages = array_unique(array_filter(explode(',', $x['languages'])));
 
 			foreach ($assignedCountries as $key => $value) {
 				foreach ($assignedLanguages as $key2 => $value2) {
-					$combination = \Service\User\Combination::get();
-					$combination->country = \Service\Location\Location::getByOldIdAndType($value, $countryLocationType);
-					$combination->language = \Service\Dictionary\Language::getByOldId($value2);
-					$combination->languageLevel = \Entity\Dictionary\Type::TRANSLATION_LEVEL_ACTIVE;
+					$combination = $this->context->userCombinationEntityFactory->create();
+
+					$combination->country = $this->context->locationRepository->findOneBy(array('oldId'=>$value, 'type'=>$countryLocationType));
+					$combination->language = $this->context->languageRepository->findOneByOldId($value2);
+					$combination->languageLevel = \Entity\Phrase\Type::TRANSLATION_LEVEL_ACTIVE;
 					$user->addCombination($combination);
 				}
 			}
-			$user->save();
+			$this->model->persist($user);
 		}
+		$this->model->flush();
 	}
 
 	private function importTranslators() {
 
-		$role = \Service\User\Role::getBySlug('translator');
+		$role = $this->context->userRoleRepository->findOneBySlug('translator');
 
 		$r = q('select * from members_translators');
 		while($x = mysql_fetch_array($r)) {
-			$user = \Service\User\User::getByLogin($x['email']);
+			$user = $this->context->userRepository->findOneByLogin($x['email']);
 
-			if ($user instanceof \Service\User\User && $user->id > 0) {
+			if ($user) {
 				continue;
 			}
 
-			$user = \Service\User\User::get();
+			$user = $this->context->userEntityFactory->create();
 
 			$user->login = $x['email'];
 			$user->password = $x['password'];
 			$user->oldId = $x['id'];
 			$user->role = $role;
-			$user->invoicingName = new \Extras\Types\Name('', '', $x['name']);
+			// $user->invoicingData = @todo;
 
 			$contacts = new \Extras\Types\Contacts();
 			$contacts->add(new \Extras\Types\Email($x['email']));
 			$user->contacts = $contacts;
 			
-			$user->defaultLanguage = \Service\Dictionary\Language::getByIso('en');
+			$user->defaultLanguage = $this->context->languageRepository->findOneByIso('en');
 
 			$details = array(
-				'sourceLanguage' => \Service\Dictionary\Language::getByOldId($x['language_from']),
+				'sourceLanguage' => $this->context->languageRepository->findOneByOldId($x['language_from']),
 				'pricePerStandardPage' => $x['price'],
 				'pricePerTicketsStandardPage' => $x['tickets_price'],
 			);
 			$user->details = $details;
 
-			$combination = \Service\User\Combination::get();
-			$combination->language = \Service\Dictionary\Language::getByOldId($x['language_to']);
-			$combination->languageLevel = \Entity\Dictionary\Type::TRANSLATION_LEVEL_NATIVE;
+			$combination = $this->context->userCombinationEntityFactory->create();
+			$combination->language = $this->context->languageRepository->findOneByOldId($x['language_to']);
+			$combination->languageLevel = \Entity\Phrase\Type::TRANSLATION_LEVEL_NATIVE;
 			$user->addCombination($combination);
-			$user->save();
+			$this->model->persist($user);
 		}
+		$this->model->flush();
 	}
 
 	private function importOwners() {
 
-		$role = \Service\User\Role::getBySlug('owner');
-		$locationTypeCountry = \Service\Location\Type::getBySlug('country');
+		$role = $this->context->userRoleRepository->findOneBySlug('owner');
+		$locationTypeCountry = $this->context->locationTypeRepository->findOneBySlug('country');
 
 		if ($this->developmentMode == TRUE) {
 			$r = q('select * from members where country_id = 46');		
@@ -180,38 +186,37 @@ class ImportUsers extends BaseImport {
 			$r = q('select * from members');		
 		}
 		while($x = mysql_fetch_array($r)) {
-			$user = \Service\User\User::getByLogin($x['email']);
+			$user = $this->context->userRepository->findOneByLogin($x['email']);
 
-			if ($user instanceof \Service\User\User && $user->id > 0) {
+			if ($user) {
 				continue;
 			}
 
-			$user = \Service\User\User::get();
+			$user = $this->context->userEntityFactory->create();
 
 			$user->login = $x['email'];
 			$user->password = $x['password'];
 			$user->oldId = $x['id'];
-			$user->isOwner = TRUE; //@todo toto tu je len temporary parameter pre import, potom zrusit
 
 			$user->role = $role;
 
-			$user->invoicingSalutation = '';
-			$user->invoicingName = new \Extras\Types\Name($x['client_name']);
+			// $user->invoicingSalutation = '';
+			// // $user->invoicingName = new \Extras\Types\Name($x['client_name']);
 
-			if($x['client_email']) $user->invoicingEmail = new \Extras\Types\Email($x['client_email']);
-			if($x['client_phone']) $user->invoicingPhone = new \Extras\Types\Phone($x['client_phone']);
-			if($x['client_url']) $user->invoicingUrl = new \Extras\Types\Url($x['client_url']);
+			// if($x['client_email']) $user->invoicingEmail = new \Extras\Types\Email($x['client_email']);
+			// if($x['client_phone']) $user->invoicingPhone = new \Extras\Types\Phone($x['client_phone']);
+			// if($x['client_url']) $user->invoicingUrl = new \Extras\Types\Url($x['client_url']);
 
-			$user->invoicingAddress = new \Extras\Types\Address(array(
-				'address' => array_filter(array($x['client_address'], $x['client_address2'])),
-				'postcode' => $x['client_postcode'],
-				'locality' => $x['client_locality'],
-				'country' => \Service\Location\Location::getByOldIdAndType($x['client_country_id'], $locationTypeCountry),
-			));
+			// $user->invoicingAddress = new \Extras\Types\Address(array(
+			// 	'address' => array_filter(array($x['client_address'], $x['client_address2'])),
+			// 	'postcode' => $x['client_postcode'],
+			// 	'locality' => $x['client_locality'],
+			// 	'country' => $this->context->locationRepository->findOneBy(array('oldId'=>$x['client_country_id'], 'type'=>$locationTypeCountry)),
+			// ));
 
-			$user->invoicingCompanyName = $x['client_company_name'];
-			$user->invoicingCompanyId = $x['client_company_id'];
-			$user->invoicingCompanyVatId = $x['client_company_vat_id'];
+			// $user->invoicingCompanyName = $x['client_company_name'];
+			// $user->invoicingCompanyId = $x['client_company_id'];
+			// $user->invoicingCompanyVatId = $x['client_company_vat_id'];
 
 
 			$contacts = new \Extras\Types\Contacts();
@@ -219,19 +224,20 @@ class ImportUsers extends BaseImport {
 			$contacts->add(new \Extras\Types\Phone($x['phone']));
 			$user->contacts = $contacts;
 			
-			$user->defaultLanguage = \Service\Dictionary\Language::getByOldId($x['language_id']);
-			$user->location = \Service\Location\Location::getByOldIdAndType($x['country_id'], $locationTypeCountry);
+			$user->defaultLanguage = $this->context->languageRepository->findOneByOldId($x['language_id']);
+			$user->location = $this->context->locationRepository->findOneBy(array('oldId'=>$x['country_id'], 'type'=>$locationTypeCountry));
 
-			$user->save();
+			$this->model->persist($user);
 		}
+		$this->model->flush();
 	}
 
 	private function importPotentialOwners() {
 
 		return true; //@todo - toto treba opravit este nefunguje
 
-		$role = \Service\User\Role::getBySlug('potentialowner');
-		$locationTypeCountry = \Service\Location\Type::getBySlug('country');
+		$role = $this->context->userRoleRepository->findOneBySlug('potentialowner');
+		$locationTypeCountry = $this->context->locationTypeRepository->findOneBySlug('country');
 
 		if ($this->developmentMode == TRUE) {
 			$r = q('select * from contacts where country_id = 46 limit 10000');	
@@ -261,7 +267,7 @@ class ImportUsers extends BaseImport {
 			}
 
 			if (count($existingUsers) == 0) {
-				$user = \Service\User\User::get();
+				$user = $this->context->userEntityFactory->create();
 			} else if (count($existingUsers) == 1) {
 				$user = \Service\User\User::get($existingUsers[0]);
 			} else {
@@ -275,15 +281,15 @@ class ImportUsers extends BaseImport {
 
 			$user->role = $role;
 
-			if (!$user->invoicingSalutation) $user->invoicingSalutation = $x['contact_salutation'];
-			if (!$user->invoicingName) $user->invoicingName = new \Extras\Types\Name($x['contact_firstname'], '', $x['contact_lastname']);
+			// if (!$user->invoicingSalutation) $user->invoicingSalutation = $x['contact_salutation'];
+			// if (!$user->invoicingName) $user->invoicingName = new \Extras\Types\Name($x['contact_firstname'], '', $x['contact_lastname']);
 
-			if (!$user->invoicingAddress) $user->invoicingAddress = new \Extras\Types\Address(array(
-				'address' => array_filter(array($x['address1'], $x['address2'])),
-				'postcode' => $x['postcode'],
-				'locality' => $x['locality'],
-				'country' => \Service\Location\Location::getByOldIdAndType($x['country_id'], $locationTypeCountry),
-			));
+			// if (!$user->invoicingAddress) $user->invoicingAddress = new \Extras\Types\Address(array(
+			// 	'address' => array_filter(array($x['address1'], $x['address2'])),
+			// 	'postcode' => $x['postcode'],
+			// 	'locality' => $x['locality'],
+			// 	'country' => $this->context->locationRepository->findOneBy(array('oldId'=>$x['country_id'], 'type'=>$locationTypeCountry)),
+			// ));
 
 			$user->subscribed = !(bool)$x['unsubscribed'];
 			$user->banned = (bool)$x['banned'];
@@ -304,8 +310,9 @@ class ImportUsers extends BaseImport {
 			
 			$attraction->conctacts = $contacts;
 
-			$user->defaultLanguage = \Service\Dictionary\Language::getByOldId($x['language_id']);
-			$user->addLocation(\Service\Location\Location::getByOldIdAndType($x['country_id'], $locationTypeCountry));
+			$user->defaultLanguage = $this->context->languageRepository->findOneByOldId($x['language_id']);
+			$user->location = $this->context->locationRepository->findOneBy(array('oldId'=>$x['country_id'], 'type'=>$locationTypeCountry));
+
 
 			$user->currentTelmarkOperator = $x['telmark_operator_id'];
 
@@ -320,8 +327,9 @@ class ImportUsers extends BaseImport {
 			
 			debug($user); return;
 
-			$user->save();
+			$this->model->persist($user);
 		}
+		$this->model->flush();
 	}
 
 	private function importVisitors() {
