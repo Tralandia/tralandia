@@ -145,6 +145,10 @@ durika < development:
 			email: tralandia.david@gmail.com
 
 toth < development:
+	parameters:
+		database:
+			user: root
+			password: ""
 
 test < development:
 	parameters:
