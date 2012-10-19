@@ -4,7 +4,7 @@ namespace AdminModule;
 
 use Repository\Dictionary as RD;
 
-class PhrasePhrasePresenter extends AdminPresenter {
+class PhrasePresenter extends AdminPresenter {
 
 	protected $phraseRepository;
 	protected $phraseTypeRepository;

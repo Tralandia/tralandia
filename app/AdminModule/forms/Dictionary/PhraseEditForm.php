@@ -26,7 +26,6 @@ class PhraseEditForm extends \AdminModule\Forms\Form {
 		$this->addCheckbox('corrected', 'Corrected');
 
 		$genderList = $this->sourceLanguage->genders;
-		d($genderList);
 		$positionList = array(
 			'before' => 'Before',
 			'after' => 'After',
