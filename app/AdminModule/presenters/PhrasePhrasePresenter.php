@@ -4,18 +4,20 @@ namespace AdminModule;
 
 use Repository\Dictionary as RD;
 
-class DictionaryPhrasePresenter extends AdminPresenter {
+class PhrasePhrasePresenter extends AdminPresenter {
 
 	protected $phraseRepository;
 	protected $phraseTypeRepository;
-	protected $langaugeRepository;
+	protected $languageRepository;
 
 	public $phrase;
 
-	public function injectRepositories(RD\PhraseRepository $p, RD\TypeRepository $t, RD\LanguageRepository $l) {
-		$this->phraseRepository = $p;
-		$this->phraseTypeRepository = $t;
-		$this->langaugeRepository = $l;
+	public function setContext(\Nette\DI\Container $dic) {
+		parent::setContext($dic);
+
+		$this->phraseRepository = $dic->phraseRepository;
+		$this->phraseTypeRepository = $dic->phraseTypeRepository;
+		$this->languageRepository = $dic->languageRepository;
 	}
 	
 
@@ -33,8 +35,8 @@ class DictionaryPhrasePresenter extends AdminPresenter {
 	 */
 	protected function createComponentPhraseEditForm()
 	{
-		$language = $this->phrase->sourceLanguage;
-		$form = new Forms\Dictionary\PhraseEditForm($this->phraseTypeRepository, $this->langaugeRepository, $language);
+		$sourceLanguage = $this->phrase->sourceLanguage;
+		$form = new Forms\Dictionary\PhraseEditForm($this->phraseTypeRepository, $this->languageRepository, $sourceLanguage);
 	
 		$form->onSuccess[] = callback($this, 'processPhraseEditForm');
 	

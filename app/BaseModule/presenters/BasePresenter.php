@@ -28,6 +28,9 @@ abstract class BasePresenter extends Presenter {
 		}
 	}
 
+	public function setContext(\Nette\DI\Container $dic) { 
+	}
+
 	public function getPreviousBackLink() {
 		$environmentSection = $this->context->session->getSection('environment');
 		return $environmentSection->previousLink;
