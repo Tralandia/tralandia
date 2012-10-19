@@ -14,6 +14,8 @@ use Nette\Application as NA,
 class ImportTickets extends BaseImport {
 
 	public function doImport() {	
+		$context = $this->context;
+		$model = $this->model;
 
 		// Detaching all media
 		qNew('update medium set message_id = NULL where message_id > 0');
@@ -51,11 +53,17 @@ class ImportTickets extends BaseImport {
 			// 	$ticket->status = \Entity\Ticket\Ticket::STATUS_CLOSED;
 			// }
 
-			$currentUser = \Service\User\User::getOrCreate(new \Extras\Types\Email($x['email']));
+			$currentUser = $context->userRepository->findOneByEmail($x['email']);
+			if(!$currentUser) {
+				$currentUser = $context->userEntityFactory->create();
+				$currentUser->login = $x['email'];
+				$model->persist($currentUser);
+				$model->flush();
+			}
 			
 			$r1 = q('select * from tickets_messages where ticket_id = '.$x['id']);
 			while ($x1 = mysql_fetch_array($r1)) {
-				$message = \Service\Ticket\Message::get();
+				$message = $context->ticketMessageEntityFactory->create();
 				if ($x1['sender'] == 'admin') {
 					$message->from = $defaultStaffUser;
 					$message->to = $currentUser;
@@ -78,13 +86,11 @@ class ImportTickets extends BaseImport {
 						if ($this->developmentMode == TRUE) $temp = array_slice($temp, 0, 3);
 						foreach ($temp as $key => $value) {
 							$value = substr($value, 5);
-							$medium = \Service\Medium\Medium::getByOldUrl('http://www.tralandia.com/u/'.$value);
+							$medium = $context->mediumRepository->findOneByOldUrl('http://www.tralandia.com/u/'.$value);
 							if (!$medium) {
-								$medium = \Service\Medium\Medium::get();
-								if ($medium) {
-									$message->addAttachment($medium);
-									$medium->setContentFromUrl('http://www.tralandia.com/u/'.$value);
-								}
+								$medium = $context->mediumServiceFactory->create();
+								$medium->setContentFromUrl('http://www.tralandia.com/u/'.$value);
+								$message->addAttachment($medium->getEntity());
 							} else {
 								$message->addAttachment($medium);
 							}
@@ -92,13 +98,12 @@ class ImportTickets extends BaseImport {
 					}
 				}
 
-				$message->setTicket($ticket);
-				$message->save();
+				$ticket->addMessage($message);
 			}
 
 			//debug($ticket); return;
-			$ticket->save();
+			$context->persist($ticket);
 		}
-		$this->savedVariables['importedSections']['tickets'] = 1;		
+		$model->flush();
 	}
 }
