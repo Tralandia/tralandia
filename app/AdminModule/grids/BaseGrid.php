@@ -9,7 +9,10 @@ use \NiftyGrid\Grid;
  *
  * @author Dávid Ďurika
  */
-class BaseGrid extends Grid{
+abstract class BaseGrid extends Grid{
 
-
+	public function __construct() {
+		parent::__construct();
+		$this->setTemplate(__DIR__ . '/template.latte');
+	}
 }
