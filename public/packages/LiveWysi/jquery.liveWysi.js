@@ -25,7 +25,7 @@
 
             $template.find('.output')
                 .height($base.height())
-                .width(($base.width() - 20));
+                .width(($base.width() - 12));
             $base.after($template);
 
             // bind Refresh button

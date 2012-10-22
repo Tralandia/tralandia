@@ -96,7 +96,7 @@
 				{/if}
 			</td>
 			<td n:if="$control->hasButtons() || $control->hasFilterForm()" n:attr="class => array(grid-row-cell, $control->isEditable() && $control->activeRowForm == $row[$primaryKey] ? 'grid-edited-cell')">
-				<div class="btn-group pull-right">
+				<div class="pull-right">
 				{if $control->activeRowForm == $row[$primaryKey] && $control->isEditable()}
 					{$control['gridForm'][$control->name]['rowForm']['send']->getControl()}
 					<a class="grid-rowForm-cancel grid-ajax" n:href="this" title="Zrušit editaci"></a>

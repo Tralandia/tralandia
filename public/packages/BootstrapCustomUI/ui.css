@@ -29,6 +29,10 @@ table.grid.table thead tr , table.grid.table thead tr td , table.table-bordered.
 	border: none;
 }
 
+table.grid.table tr td .btn {
+	margin-left: 2px;
+}
+
 /* grid UI controll */
 .gridUiTop {}
 
