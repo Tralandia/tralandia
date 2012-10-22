@@ -1,6 +1,6 @@
 <?php
 
-namespace Service\Autopilot;
+namespace Service\TaskManager;
 
 
 /**
@@ -17,5 +17,7 @@ class TaskManager extends \Nette\Object {
 	public function run() {
 		
 	}
+
+	
 
 }
