@@ -101,7 +101,14 @@ common:
 				- $taskTypeRepository(@taskTypeRepository)
 				- $taskServiceFactory(@taskServiceFactory)
 
-		taskManager: Service\TaskManager\TaskManager
+		taskManager: 
+			class: Service\TaskManager\TaskManager
+			setup:
+				- addScanner(@missingTranslationsScanner)
+
+		missingTranslationsScanner:
+			class: Service\TaskManager\MissingTranslationsScanner
+			arguments: [@languageRepository, @phraseRepository]
 
 
 	factories:
