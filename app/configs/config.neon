@@ -101,6 +101,7 @@ common:
 				- $taskTypeRepository(@taskTypeRepository)
 				- $taskServiceFactory(@taskServiceFactory)
 
+		taskManager: Service\Autopilot\TaskManager
 
 
 	factories:
@@ -145,6 +146,10 @@ durika < development:
 			email: tralandia.david@gmail.com
 
 toth < development:
+	parameters:
+		database:
+			user: root
+			password: ""
 
 test < development:
 	parameters:
