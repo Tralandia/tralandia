@@ -151,6 +151,12 @@ toth < development:
 			user: root
 			password: ""
 
+cibi < development:
+	parameters:
+		database:
+			user: root
+			password: ""
+
 test < development:
 	parameters:
 		envOptions:
