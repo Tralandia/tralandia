@@ -158,3 +158,20 @@ test < development:
 			dbname: tralandia_test
 			charset: utf8
 			driver: pdo_mysql
+
+demo < common:
+	php:
+		max_execution_time: 0
+		memory_limit: 1024M
+
+	parameters:
+		envOptions:
+			sendEmail: FASLE
+
+		database:
+			user: root
+			password: root
+			host: 127.0.0.1
+			dbname: tralandia
+			charset: utf8
+			driver: pdo_mysql			
