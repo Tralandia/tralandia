@@ -22,7 +22,7 @@ class PhraseService extends Service\BaseService {
 	}
 
 	public function hasTranslation($language) {
-		return $this->getTranslation($language) instanceof \Entity\Phrase\Translation;
+		return $this->getTranslation($language) instanceof Entity\Phrase\Translation;
 	}
 
 	/**
@@ -38,11 +38,11 @@ class PhraseService extends Service\BaseService {
 
 	/**
 	 * Ulozi hodnotu prekladu na zaklade jazyka
-	 * @param Entity\Dictionary\Language
+	 * @param Entity\Language
 	 * @param string
 	 * @return Phrase
 	 */
-	public function setTranslateValue(Entity\Dictionary\Language $language, $value) {
+	public function setTranslateValue(Entity\Language $language, $value) {
 		$this->entity->getTranslations()->filter(function($entity) use ($language) {
 			return $entity->language == $language;
 		})->current()->translation = $value;

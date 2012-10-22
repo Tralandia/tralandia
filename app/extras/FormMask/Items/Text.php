@@ -17,7 +17,7 @@ class Text extends Base {
 	public function __construct($name, $label, Extras\Models\Entity\IEntity $entity) {
 		$this->name = $name;
 		$this->label = $label;
-		$this->setValueGetter(new Extras\Callback($entity, $this->getterMethodName($this->name), array($entity)));
-		$this->setValueSetter(new Extras\Callback($entity, $this->setterMethodName($this->name), array($entity)));
+		$this->setValueGetter(new Extras\Callback($entity, $this->getterMethodName($this->name)));
+		$this->setValueSetter(new Extras\Callback($entity, $this->setterMethodName($this->name)));
 	}
 }
