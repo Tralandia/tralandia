@@ -1,17 +1,17 @@
 <?php
 
-namespace Service\TaskManager;
+// namespace Service\TaskManager;
 
 
-/**
- * MissingTranslationsScanner class
- *
- * @author Dávid Ďurika
- */
-class MissingTranslationsScanner extends \Nette\Object implements IScanner {
+// /**
+//  * MissingTranslationsScanner class
+//  *
+//  * @author Dávid Ďurika
+//  */
+// class MissingTranslationsScanner extends \Nette\Object implements IScanner {
 
-	public function __construct() {
+// 	public function __construct() {
 		
-	}
+// 	}
 
-}
+// }
