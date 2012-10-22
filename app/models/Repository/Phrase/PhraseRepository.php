@@ -14,9 +14,10 @@ class PhraseRepository extends \Repository\BaseRepository {
 		$qb = $this->_em->createQueryBuilder();
 		$qb->select('p.id AS pId, l.id AS lId')
 			->from('\Entity\Phrase\Phrase', 'p')
-			->join('\Entity\Language', 'l', Expr\Join::ON, 'l.supported = 1')
-			->leftJoin('\Entity\Phrase\Translation', 't', Expr\Join::ON, 'p.id = t.phrase AND l.id = t.language')
-			->where($qb->expr()->idNull('t.id'));
+			->leftJoin('p.translations', 't', Expr\Join::ON, 'p.id = t.phrase AND l.id = t.language')
+			->join('t.language', 'l', Expr\Join::ON, 'l.supported = 1')
+			->where($qb->expr()->isNull('t.id'));
+
 		return $qb->getQuery()->getResult();
 	}
 
