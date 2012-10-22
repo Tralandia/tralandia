@@ -101,6 +101,7 @@ common:
 				- $taskTypeRepository(@taskTypeRepository)
 				- $taskServiceFactory(@taskServiceFactory)
 
+		taskManager: Service\Autopilot\TaskManager
 
 
 	factories:
