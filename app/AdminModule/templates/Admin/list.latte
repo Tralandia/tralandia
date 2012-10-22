@@ -1,4 +1,7 @@
 {block content}
+
+
+<!--
 <h1>{$settings->title}</h1>
 {if $showAddNewButton}
 	{if $directCreating}
@@ -7,4 +10,22 @@
 		<a class="btn btn-large add-new pull-left" href="{link add}" data-toggle="ajax-modal"><i class="icon-plus"></i> Add New</a>
 	{/if}
 {/if}
+
+-->
+<div class="row gridUiTop">
+	<div class="span4"><h2>{$settings->title}</h2></div>
+	<div class="span8">
+		<div class="btn-group pull-right">
+		{if $showAddNewButton}
+			{if $directCreating}
+				<a class="btn btn-large add-new pull-left" href="{link create}"><i class="icon-plus"></i> Add New</a>
+			{else}
+				<a class="btn btn-large add-new pull-left" href="{link add}" data-toggle="ajax-modal"><i class="icon-plus"></i> Add New</a>
+			{/if}
+		{/if}		
+		</div>
+	</div>
+	<hr />
+</div>
+
 {control grid}

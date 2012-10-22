@@ -2,6 +2,11 @@ parameters:
 	webloader:
 		packages:
 
+			customui:
+				
+				css:
+					- BootstrapCustomUI/ui.css
+
 			phrase:
 				js:
 					- phrase/phrase.js
@@ -126,6 +131,7 @@ parameters:
 				- %webloader.packages.fileUpload%
 				- %webloader.packages.bootstrap%
 				- %webloader.packages.phrase%
+				- %webloader.packages.customui%
 
 			Front: 
 				- %webloader.packages.front%
