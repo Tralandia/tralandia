@@ -2,7 +2,7 @@
 
 namespace AdminModule\Grids;
 
-use \NiftyGrid\Grid;
+use NiftyGrid\Grid;
 
 /**
  * Foo class
@@ -15,4 +15,13 @@ abstract class BaseGrid extends Grid{
 		parent::__construct();
 		$this->setTemplate(__DIR__ . '/template.latte');
 	}
+
+	/**
+	 * @return GridPaginator
+	 */
+	protected function createComponentPaginator()
+	{
+		return new BaseGridPaginator;
+	}
+
 }

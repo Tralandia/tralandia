@@ -18,11 +18,22 @@ class PhrasesGrid extends AdminGrid{
 		$this->setDataSource($source);
 
 		$this->addColumn('e_id', 'Id');
-		$this->addColumn('e_ready', 'Ready');
+		$this->addColumn('e_ready', 'Ready')
+			->setRenderer(function($row) use ($presenter){return $row->e_ready ? 'YES' : 'NO';});
 
-		$this->addButton("edit", 'Upravit')
-			->setText('Upravit')
-			->setLink(function($row) use ($presenter) {return $presenter->link("DictionaryPhrase:edit", $row['id']);})
+		$this->addButton("action", 'Action')
+			->setText('Action')
+			->setLink(function($row) use ($presenter) {return '/';})
+			->setClass('action');
+		
+		$this->addButton("edit", 'Edit')
+			->setText('Edit')
+			->setLink(function($row) use ($presenter) {return '/';})
 			->setClass('edit');
+		
+		$this->addButton("delete", 'Delete')
+			->setText('Delete')
+			->setLink(function($row) use ($presenter) {return '/';})
+			->setClass('delete');
 	}
 }
