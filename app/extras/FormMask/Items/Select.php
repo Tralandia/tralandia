@@ -46,7 +46,7 @@ class Select extends Base {
 	 * @param Nette\Forms\Form
 	 * @return Nette\Forms\IControl
 	 */
-	public function extend(Nette\Forms\Form $form) {debug($this->getValue());
+	public function extend(Nette\Forms\Form $form) {
 		return $form->addSelect($this->getName(), $this->getLabel(), $this->getItems())
 			->setDefaultValue($this->getValue());
 	}

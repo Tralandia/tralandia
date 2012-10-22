@@ -47,7 +47,7 @@ class MaskTest extends PHPUnit_Framework_TestCase
 		$mask->extend($form);
 
 		// nasetujem ososlane data a vyvolam sucess event
-		$form['text']->setValue('Iná hodnota 98755');
+		$form->getComponent('text')->setValue('Iná hodnota 98755');
 		$form->onSuccess($form);
 
 		// overujem spravne ulozenie dat
@@ -71,7 +71,7 @@ class MaskTest extends PHPUnit_Framework_TestCase
 		$mask->extend($form);
 
 		// nasetujem ososlane data a vyvolam sucess event
-		$form['selektik']->setValue(4);
+		$form->getComponent('selektik')->setValue(4);
 		$form->onSuccess($form);
 
 		// overujem spravne ulozenie dat

@@ -33,6 +33,7 @@ $configurator->addConfig(APP_DIR . '/configs/config.neon', $section);
 $configurator->onCompile[] = callback('Extras\PresenterGenerator', 'generate');
 $container = $configurator->createContainer();
 
+Panel\Todo::register($container->parameters['appDir']);
 
 // @todo toto niekam schovat
 require_once APP_DIR . '/extras/EntityAnnotation.php';

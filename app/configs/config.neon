@@ -81,7 +81,6 @@ common:
 
 		environment: Extras\Environment(@languageRepository, @locationRepository)
 
-
 		translator: Extras\Translator(@environment, @cacheStorage)
 
 		settings:
@@ -110,14 +109,21 @@ common:
 			class: Service\TaskManager\MissingTranslationsScanner
 			arguments: [@languageRepository, @phraseRepository]
 
+#		phraseEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Phrase\Phrase')
+#		phraseServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\Phrase\Phrase', @phraseEntityFactory)
+#		formMaskGenerator:
+#			parameters: [mask, config, entity]
+#			class: Extras\FormMask\Generator(%mask%, %config%, %entity%)
+#			setup:
+#				- setItemPhrase(@itemPhraseFactory)
+
+		itemPhraseFactory: Extras\FormMask\Items\Foctories\PhraseFactory(@phraseServiceFactory, @environment::getLanguage())
+		itemTextFactory: Extras\FormMask\Items\Foctories\TextFactory
 
 	factories:
-		formMaskGenerator:
-			parameters: [entityReflection, config]
-			factory: Extras\FormMask\Generator::factory(@formMask, %entityReflection%, %config%)
-
-		formMask:
-			class: Extras\FormMask\Mask
+		phraseService:
+			parameters: [entity]
+			class: Service\Phrase\PhraseService(@model, %entity%)
 
 
 production < common:
@@ -143,8 +149,10 @@ development < common:
 
 vaculciak < development:
 	parameters:
-
 		editor: 'txmt://open/?url=file://%file&line=%line'
+
+		database:
+			debugger: true
 
 durika < development:
 	parameters:

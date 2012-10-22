@@ -13,7 +13,7 @@ abstract class Base {
 	protected $name;
 
 	/** @var string */
-	protected $label = null;
+	protected $label;
 
 	/** @var Extras\Callback */
 	protected $valueGetter;
@@ -25,7 +25,7 @@ abstract class Base {
 	 * @param string
 	 * @param string
 	 */
-	public function __construct($name, $label = null) {
+	public function __construct($name, $label) {
 		$this->name = $name;
 		$this->label = $label;
 	}
@@ -50,9 +50,21 @@ abstract class Base {
 	 */
 	public function getValue() {
 		if (!is_callable($this->getValueGetter())) {
-			throw new InvalidStateException("Nebol zadaný callback gettera hodnot.");
+			throw new Nette\InvalidStateException("Nebol zadaný callback gettera hodnot.");
 		}
 		return $this->getValueGetter()->invoke();
+	}
+
+	/**
+	 * Nastavi hodnotu itemu
+	 * @param mixed
+	 * @return mixed
+	 */
+	public function setValue($value) {
+		if (!is_callable($this->getValueSetter())) {
+			throw new Nette\InvalidStateException("Nebol zadaný callback settera hodnot.");
+		}
+		return $this->getValueSetter()->invoke($value);
 	}
 
 	/**
@@ -97,5 +109,33 @@ abstract class Base {
 	 */
 	public function getFormControl() {
 		return $this->form->getComponent($this->getName());
+	}
+
+	/**
+	 * Vrati nazov setter metody
+	 * @param string
+	 * @return string
+	 */
+	protected function setterMethodName($name) {
+		return 'set' . ucfirst($name);
+	}
+
+	/**
+	 * Vrati nazov getter metody
+	 * @param string
+	 * @return string
+	 */
+	protected function getterMethodName($name) {
+		return 'get' . ucfirst($name);
+	}
+
+	/**
+	 * Prida polozku do formulara
+	 * @param Nette\Forms\Form
+	 * @return Nette\Forms\IControl
+	 */
+	public function extend(Nette\Forms\Form $form) {
+		return $form->addText($this->getName(), $this->getLabel())
+			->setDefaultValue($this->getValue());
 	}
 }
