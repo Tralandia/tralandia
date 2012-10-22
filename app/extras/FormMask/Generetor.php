@@ -45,7 +45,7 @@ class Generator extends Nette\Object {
 			$this->mask->addItem($item);
 		}
 		//TODO: toto nejako zautomatizovat, alebo minimalne prelozit
-		$this->mask->add(Extras\FormMask\Mask::SUBMIT, 'submit', 'Odoslať');
+		$this->mask->add('Extras\FormMask\Items\Submit', 'submit', 'Odoslať');
 	}
 
 	/**
