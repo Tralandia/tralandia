@@ -130,3 +130,5 @@ parameters:
 			Front: 
 				- %webloader.packages.front%
 
+			'Gregor:Admin': %webloader.sets.Admin%
+
