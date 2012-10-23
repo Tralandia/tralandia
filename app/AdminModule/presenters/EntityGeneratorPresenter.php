@@ -307,7 +307,7 @@ class EntityGeneratorPresenter extends BasePresenter {
 
 			if(array_key_exists('targetEntity', $annotations[$association][0])) {
 				$return['targetEntity'] = $annotations[$association][0]['targetEntity'];
-				if(!Strings::startsWith($return['targetEntity'], 'Entity')) {
+				if(!Strings::startsWith($return['targetEntity'], 'Entity') && !Strings::startsWith($return['targetEntity'], '\Entity')) {
 					$class = $this->getEntityReflection($property->class);
 					$classNamespace = $class->getNamespaceName();
 					$return['targetEntity'] = $classNamespace.'\\'.$return['targetEntity'];

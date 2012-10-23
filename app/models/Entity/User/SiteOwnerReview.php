@@ -51,7 +51,7 @@ class SiteOwnerReview extends \Entity\BaseEntity {
 	 */
 	protected $status = self::STATUS_PENDING;
 
-	//@entity-generator-code --- NEMAZAT !!!
+				//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()

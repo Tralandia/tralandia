@@ -43,7 +43,7 @@ class Office extends \Entity\BaseEntityDetails {
 	 */
 	protected $address;
 
-	//@entity-generator-code --- NEMAZAT !!!
+									//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()
@@ -60,6 +60,16 @@ class Office extends \Entity\BaseEntityDetails {
 	public function setName($name)
 	{
 		$this->name = $name;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Company\Office
+	 */
+	public function unsetName()
+	{
+		$this->name = NULL;
 
 		return $this;
 	}

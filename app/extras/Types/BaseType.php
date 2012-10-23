@@ -25,4 +25,10 @@ class BaseType extends \Nette\Object {
 	public function getUnifiedFormat() {
 		return (string) $this;
 	}
+
+	public static function decode($data) {
+		$data = \Nette\Utils\Json::decode($data, TRUE);
+		return new self($data);
+	}
+
 }
