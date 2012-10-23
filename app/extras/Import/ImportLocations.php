@@ -154,51 +154,16 @@ class ImportLocations extends BaseImport {
 		while($x = mysql_fetch_array($r)) {
 			$location = $this->context->locationEntityFactory->create();
 
-			$location->status = $x['supported'] == 1 ? 'supported' : ($x['status'] == 1 ? 'launched' : '');
 			$location->oldId = $x['id'];
 			$location->iso = $x['iso'];
 			$location->iso3 = $x['iso3'];
 			$location->defaultLanguage = $this->context->languageRepository->find(getByOldId('\Language', $x['default_language_id']));
-			$t = getNewIds('\Language', $x['languages']);
-			foreach ($t as $key => $value) {
-				$t1 = $this->context->languageRepository->find($value);
-				$location->addLanguage($t1);
-			}
 
 			$t = $this->context->currencyRepository->findOneBy(array('oldId' => $x['default_currency_id']));
 			if ($t) {
 				$location->defaultCurrency = $t;
 			}
 			
-			$t = str_replace(',', '', $x['currencies']);
-			$t1 = NULL;
-			if (((int)$t) > 0) {
-				$t1 = $this->context->currencyRepository->findOneBy(array('oldId' => (int)$t));
-			} else if (strlen($t) == 3) {
-				$t1 = $this->context->currencyRepository->findOneBy(array('iso' => $t));
-			}
-
-			if (isset($t1->id) && $t1->id > 0) {
-				$location->addCurrency($t1);
-			}
-
-			$location->population = $x['population'];
-			$location->phonePrefix = $x['phone_prefix'];
-			
-			if (strlen($x['fb_group'])) $location->facebookGroup = new \Extras\Types\Url($x['fb_group']);
-			$location->capitalCity = $x['capital_city'];
-
-			if (strlen($x['phone_number_emergency'])) $location->phoneNumberEmergency = new \Extras\Types\Phone($x['phone_number_emergency']);
-			if (strlen($x['phone_number_police'])) $location->phoneNumberPolice = new \Extras\Types\Phone($x['phone_number_police']);
-			if (strlen($x['phone_number_medical'])) $location->phoneNumberMedical = new \Extras\Types\Phone($x['phone_number_medical']);
-			if (strlen($x['phone_number_fire'])) $location->phoneNumberFire = new \Extras\Types\Phone($x['phone_number_fire']);
-			if (strlen($x['wikipedia_link'])) $location->wikipediaLink = new \Extras\Types\Url($x['wikipedia_link']);
-
-			$location->drivingSide = $x['driving_side'];
-			$location->pricesPizza = new Price($x['prices_pizza']); // @todo - spravit menu, aby som posielal ako entitu / servicu
-			$location->pricesDinner = new Price($x['prices_dinner']);
-			$location->airports = $x['airports'];
-
 			$countryDetails = array();
 			$countryDetails['beta'] = $x['beta'];
 			$countryDetails['inEu'] = $x['in_eu'];
@@ -283,8 +248,8 @@ class ImportLocations extends BaseImport {
 					$location->parent = $canada;
 				}
 			} else {
-				$location = $this->context->locationRepository->findOneBy(array('oldId' => $x['continent']));
-				$location->parent = $location;
+				$parent = $this->context->locationRepository->findOneBy(array('oldId' => $x['continent']));
+				$location->parent = $parent;
 			}
 
 			if ($x['domain']) $location->domain = $this->context->domainRepository->findOneBy(array('domain' => $x['domain']));
@@ -301,22 +266,22 @@ class ImportLocations extends BaseImport {
 	// ----------------------------------------------------------
 	// ------------- COUNTRIES Travelings
 	// ----------------------------------------------------------
-	private function importTravelings() {
-		$countryLocationType = $this->context->locationTypeRepository->findOneBy(array('slug' => 'country'));
+	// private function importTravelings() {
+	// 	$countryLocationType = $this->context->locationTypeRepository->findOneBy(array('slug' => 'country'));
 
-		$r = q('select * from countries_traveling order by id');
-		while ($x = mysql_fetch_array($r)) {
-			$traveling = $this->context->locationTravelingEntityFactory->create();
-			$traveling->sourceLocation = $this->context->locationRepository->findOneBy(array('type' => $countryLocationType, 'oldId' => $x['source_country_id']));
-			$traveling->destinationLocation = $this->context->locationRepository->findOneBy(array('type' => $countryLocationType, 'oldId' => $x['destination_country_id']));
-			$traveling->peopleCount = $x['people_count'];
-			$traveling->year = $x['year'];
-			$traveling->oldId = $x['id'];
-			$this->model->persist($traveling);
-		}
-		$this->model->flush();
-		return false;
-	}
+	// 	$r = q('select * from countries_traveling order by id');
+	// 	while ($x = mysql_fetch_array($r)) {
+	// 		$traveling = $this->context->locationTravelingEntityFactory->create();
+	// 		$traveling->sourceLocation = $this->context->locationRepository->findOneBy(array('type' => $countryLocationType, 'oldId' => $x['source_country_id']));
+	// 		$traveling->destinationLocation = $this->context->locationRepository->findOneBy(array('type' => $countryLocationType, 'oldId' => $x['destination_country_id']));
+	// 		$traveling->peopleCount = $x['people_count'];
+	// 		$traveling->year = $x['year'];
+	// 		$traveling->oldId = $x['id'];
+	// 		$this->model->persist($traveling);
+	// 	}
+	// 	$this->model->flush();
+	// 	return false;
+	// }
 
 	// ----------------------------------------------------------
 	// ------------- Regions Level 0

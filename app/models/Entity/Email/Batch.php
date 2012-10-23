@@ -48,7 +48,7 @@ class Batch extends \Entity\BaseEntityDetails {
 	 */
 	protected $bodyHtml;
 
-	//@entity-generator-code --- NEMAZAT !!!
+									//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()

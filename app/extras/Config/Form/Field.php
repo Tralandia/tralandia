@@ -25,7 +25,7 @@ abstract class Field extends Nette\Object {
 	 * @return string
 	 */
 	public function getType() {
-		return strtoupper(substr(get_class($this), strrpos(get_class($this), '\\')+1));
+		return strtolower(substr(get_class($this), strrpos(get_class($this), '\\')+1));
 	}
 
 	/**

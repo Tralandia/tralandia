@@ -43,7 +43,7 @@ class RentalQuestion extends \Entity\BaseEntity {
 	protected $question;
 
 
-	//@entity-generator-code --- NEMAZAT !!!
+				//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()

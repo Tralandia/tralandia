@@ -28,7 +28,18 @@ abstract class BasePresenter extends Presenter {
 		}
 	}
 
-	public function setContext(\Nette\DI\Container $dic) { 
+	public function setContext(\Nette\DI\Container $dic) {
+	}
+
+	public function setProperty($name, $value = NULL) {
+		if($this->{$name}) {
+			throw new Nette\InvalidStateException("Property '$name' has already been set");
+		}
+		if(func_num_args() == 1) {
+			$this->{$name} = $this->context->{$name};
+		} else {
+			$this->{$name} = $value;
+		}
 	}
 
 	public function getPreviousBackLink() {
