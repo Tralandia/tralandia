@@ -1,6 +1,6 @@
 <?php
 
-namespace OwnerModule;
+namespace GregorModule;
 
 abstract class BasePresenter extends \BasePresenter {
 	

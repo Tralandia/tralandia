@@ -1,6 +1,6 @@
 <?php
 
-namespace FrontModule;
+namespace OwnerModule;
 
 class RentalPresenter extends BasePresenter {
 
