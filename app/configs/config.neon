@@ -155,7 +155,7 @@ cibi < development:
 	parameters:
 		database:
 			user: root
-			password: ""
+			password: root
 
 test < development:
 	parameters:

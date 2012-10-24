@@ -15,10 +15,10 @@ class Tab extends Control {
 
 	public $active = false;
 
-	public function __construct(TabControl $parent, $id) {
-
-		parent::__construct($parent, $id);
+	public function __construct($id) {
 		$this->id = $id;
+
+		parent::__construct();
 		
 	}
 

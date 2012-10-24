@@ -7,6 +7,12 @@ class TabControl extends Control {
 
 	private $tabs = array();
 
+	public function __construct() {
+
+		parent::__construct();
+
+	}
+
 	public function render() {
 
 	    $template = $this->template;
@@ -21,7 +27,7 @@ class TabControl extends Control {
 
 	public function addTab($id) {
 
-		$t = new Tab($this, $id);
+		$t = new Tab($id);
 
 		$this->tabs[$id] = $t;
 

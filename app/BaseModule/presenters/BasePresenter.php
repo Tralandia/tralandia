@@ -28,7 +28,7 @@ abstract class BasePresenter extends Presenter {
 		}
 	}
 
-	public function setContext(\Nette\DI\Container $dic) { 
+	public function setContext() { 
 	}
 
 	public function getPreviousBackLink() {
@@ -199,7 +199,7 @@ abstract class BasePresenter extends Presenter {
 				$matchKey = str_replace('_', '', $match);
 			}
 
-			if (gettype($data)=='object') {
+			if (gettype(current($data))=='object') {
 				$value = '$item->'.str_replace('.', '->', substr($matchKey, 1, -1));
 			} else {
 				$value = '$item["'.str_replace('.', '"]["', substr($matchKey, 1, -1)).'"]';
