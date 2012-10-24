@@ -24,7 +24,7 @@ class Autopilot extends \Nette\Object {
 		$task->durationPaid = $type->durationPaid;
 		
 		$task->due = new \Nette\DateTime;
-		$task->due->modify("+{$type->timeLimit} min");
+		$task->due->modify("+{$type->timeLimit} sec");
 
 		$task->startTime = new \Nette\DateTime;
 

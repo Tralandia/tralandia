@@ -1,14 +1,14 @@
 <?php
 
-namespace Service\TaskManager;
+namespace Service\TaskRobot;
 
 
 /**
- * MissingTranslationsScanner class
+ * MissingTranslationsRobot class
  *
  * @author Dávid Ďurika
  */
-class MissingTranslationsScanner extends \Nette\Object implements IScanner {
+class MissingTranslationsRobot extends \Nette\Object implements ITaskRobot {
 
 	protected $languageRepository, $phraseRepository;
 
@@ -21,8 +21,9 @@ class MissingTranslationsScanner extends \Nette\Object implements IScanner {
 	}
 
 	public function run() {
-		
-		return true;
+		$languages = $this->languageRepository->findSupported();
+		$missing = $this->phraseRepository->findMissingTranslations($languages);
+		return $missing;
 	}
 
 }
