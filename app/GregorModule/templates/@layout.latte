@@ -10,7 +10,13 @@
 
 			{include components/sidebar.latte}
 
-			{include #content}
+			<div class="span9">
+				<div class="innerPadding baseRadius baseBorder innerPaddingRitgh overflow">
+					<div id="content">
+						{include #content}
+					</div>
+				</div>
+			</div>
 
 			{include components/supFooter.latte}
 

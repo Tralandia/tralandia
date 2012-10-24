@@ -1,6 +1,7 @@
 @import './less/bootstrap.less';
 @import './less/responsive.less';
 
+
 /****************************************************************************************
 /* color scheme 
 /***************************************************************************************/
@@ -14,6 +15,9 @@
 @white : #fff;
 @supfooterBg : #fdfdf8;
 @supfooterDropshadowColor: #3e4813;
+
+/* content colors */
+@contentBackground : @supfooterBg;
 /****************************************************************************************
 /* functions 
 /***************************************************************************************/
@@ -61,6 +65,18 @@
     box-shadow: 0 8px 6px -6px @color; 	
 }
 
+.inner-shadow(@size,@color){
+	-moz-box-shadow: inset 0 0 @size @color;
+	-webkit-box-shadow: inset 0 0 @size@color;
+	box-shadow: inner 0 0 @size @color;	
+}
+
+.basic-shadow(@size,@color){
+	-moz-box-shadow: 0 0 @size @color;
+	-webkit-box-shadow: 0 0 @size@color;
+	box-shadow: 0 0 @size @color;	
+}
+
 /****************************************************************************************
 /* base html elements 
 /***************************************************************************************/
@@ -81,8 +97,109 @@ a , a:hover {
 /****************************************************************************************
 /* helper class 
 /***************************************************************************************/
+.red {
+	color: red;
+}
+
+
+	.red-gradient {
+		text-shadow: -1px -1px 0px #990f06;
+		border-top: 1px solid #990f06;
+		.basic-gradient(#ce2c16,#990f06)
+	}
+
+	.red-gradient .btn {
+		border: 1px solid #990f06;
+		color: #990f06;
+		.basic-gradient(#fff,#ffa69a);
+		.basic-shadow(18px , #ffa69a);
+
+		&:hover {
+			.basic-gradient(#ffa69a,#fff);
+		}
+	}
+
+	.red-inner-shadow {
+		.inner-shadow(20px,#7c0b02);
+	}
+
+.green {
+	color: #A0B325;
+}
+
+
+	.green-gradient {
+		text-shadow: -1px -1px 0px #5c6a1f;
+		border-top: 1px solid #5c6a1f;
+		.basic-gradient(#a0b325,#5c6a1f)
+	}
+
+	.green-gradient .btn {
+		border: 1px solid #5c6a1f;
+		color: #5c6a1f;
+		.basic-gradient(#fff,#d1dc8a);
+		.basic-shadow(18px , #a9ba37);
+
+		&:hover {
+			.basic-gradient(#d1dc8a,#fff);
+		}
+	}
+
+	.green-inner-shadow {
+		.inner-shadow(20px,#4c5718);
+	}	
+
+.yellow {
+	color: #fdbe33;
+}
+
+
+	.yellow-gradient {
+		text-shadow: -1px -1px 0px #f68703;
+		border-top: 1px solid #f68703;
+		.basic-gradient(#fdbe33,#f68703)
+	}
+
+	.yellow-gradient .btn {
+		border: 1px solid #f68703;
+		color: #c87009;
+		.basic-gradient(#fff,#ffe4ab);
+		.basic-shadow(18px , #ffe4ab);
+
+		&:hover {
+			.basic-gradient(#ffe4ab,#fff);
+		}
+	}
+
+	.yellow-inner-shadow {
+		.inner-shadow(20px,#f68703);
+	}
+
+
+
+
+.no-padding , table.table tr td.no-padding {
+	padding: 0;
+}
+
+.bottom-radius {
+	.bottom-border-radius(10px);
+}
+
+.center , table tr td.center, table th.center {
+	text-align: center;
+}
+
+.orange {
+	color: @orange;
+}
+
 .baseRadius {
-	.basic-border-radius(8px);
+	.basic-border-radius(8px);	
+}
+
+.overflow {
+	overflow: hidden;
 }
 
 .baseBorder {
@@ -101,6 +218,15 @@ a , a:hover {
 .innerPadding {
 	margin: 10px;	
 }
+
+.innerPaddingRitgh {
+	margin-left: 0;
+}
+
+.innerPaddingLeft {
+	margin-right: 0;
+}
+
 
 .gadientGreen {
 	.basic-gradient( @lightGreen , @darkGreen );
@@ -424,3 +550,100 @@ a , a:hover {
 	}
 }
 
+/****************************************************************************************
+/* frontend buttons 
+/***************************************************************************************/
+/* red button */
+@btnRedBorderColor : #900d07 ;
+@btnRedGradientStartColor : #cf2c16 ;
+@btnRedGradientStopColor : #8c0b06 ;
+
+.btn {
+	font-size: 13px;
+	font-weight: bold;
+	&:hover {
+		background: none;
+	}
+}
+
+.btn-red {
+	border: 1px solid @btnRedBorderColor;
+	.basic-gradient(@btnRedGradientStartColor,@btnRedGradientStopColor);
+	color: #fff;
+	text-shadow:0 0 3px @btnRedGradientStopColor;
+	&:hover {		
+		color: #fff;		
+		.basic-gradient(@btnRedGradientStopColor,@btnRedGradientStartColor);
+	}
+}
+
+/* green button */
+@btnGreenBorderColor : #627b08 ;
+@btnGreenGradientStartColor : #a7ba24 ;
+@btnGreenGradientStopColor : #4c6505 ;
+
+.btn-green {
+	border: 1px solid @btnGreenBorderColor;	
+	.basic-gradient(@btnGreenGradientStartColor,@btnGreenGradientStopColor);
+	color: #fff;
+	text-shadow:0 0 3px @btnGreenGradientStopColor;
+	&:hover {		
+		color: #fff;		
+		.basic-gradient(@btnGreenGradientStopColor,@btnGreenGradientStartColor);
+	}	
+}
+
+/****************************************************************************************
+/* page content  
+/***************************************************************************************/
+@contentH1size : 18px;
+@contentH2size : 18px;
+@contentH3size : 18px;
+@contentH4size : 18px;
+@contentH5size : 18px;
+
+@contentH1color : @darkGreen;
+@contentH2color : @darkGreen;
+@contentH3color : @darkGreen;
+@contentH4color : @darkGreen;
+@contentH5color : @darkGreen;
+
+#content {
+	background: @contentBackground;	
+	color: @brown;
+	padding: 0 20px;
+	h1 , h2 , h3 , h4 , h5 {
+		margin: 0;
+		padding: 10px 0;
+	}
+
+	h1 {
+		font-size: @contentH1size;
+		color: @contentH1color;
+		font-weight: normal;
+	}
+
+	h2 {
+		font-size: @contentH2size;
+		color: @contentH2color;
+		font-weight: normal;
+	}
+
+	h3 {
+		font-size: @contentH3size;
+		color: @contentH3color;
+		font-weight: normal;
+	}
+
+	h4 {
+		font-size: @contentH4size;
+		color: @contentH4color;
+		font-weight: normal;
+	}
+
+	h5 {
+		font-size: @contentH5size;
+		color: @contentH5color;
+		font-weight: normal;
+	}
+}

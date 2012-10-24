@@ -22,6 +22,7 @@ parameters:
 			Front:
 				css:					
 					- Front/main.css.less
+					- Front/form-registration.less
 			front:
 				css:
 					- front/default.css
