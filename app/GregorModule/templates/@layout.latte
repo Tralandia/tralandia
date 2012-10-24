@@ -3,8 +3,21 @@
 	{control js}
 {control header:end}
 <body>
-	<h1>layout</h1>
-	{include #content}
+	<div class="container baseRadius" id="container">
+		<div class="row">
+
+			{include components/mainMenu.latte}
+
+			{include components/sidebar.latte}
+
+			{include #content}
+
+			{include components/supFooter.latte}
+
+			{include components/footer.latte}
+
+		</div>		
+	</div>		
 </body>
 
 </html>

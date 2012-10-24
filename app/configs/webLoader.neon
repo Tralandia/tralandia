@@ -19,6 +19,9 @@ parameters:
 					- admin/main.js
 				css:
 					- admin/_bootstrap.less
+			Front:
+				css:					
+					- Front/main.css.less
 			front:
 				css:
 					- front/default.css
@@ -136,5 +139,7 @@ parameters:
 			Front: 
 				- %webloader.packages.front%
 
+			Gregor:
+				-  %webloader.packages.Front%	
 			'Gregor:Admin': %webloader.sets.Admin%
 

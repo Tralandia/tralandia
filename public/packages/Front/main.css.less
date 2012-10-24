@@ -1,0 +1,426 @@
+@import './less/bootstrap.less';
+@import './less/responsive.less';
+
+/****************************************************************************************
+/* color scheme 
+/***************************************************************************************/
+
+@bodyBg : #eef2d1;
+@darkGreen : #698308;
+@lightGreen: #b0c13b;
+@brown : #7d3300 ;
+@textGreen: #a8b938;
+@orange: #f35405;
+@white : #fff;
+@supfooterBg : #fdfdf8;
+@supfooterDropshadowColor: #3e4813;
+/****************************************************************************************
+/* functions 
+/***************************************************************************************/
+
+/* radius basic */
+
+.basic-border-radius (@radius) {
+	-webkit-border-radius: @radius;
+	-moz-border-radius: @radius;
+	border-radius: @radius;
+}
+
+/* bottom border radius */
+
+.bottom-border-radius(@radius){
+	-webkit-border-bottom-right-radius: @radius;
+	-webkit-border-bottom-left-radius: @radius;
+	-moz-border-radius-bottomright: @radius;
+	-moz-border-radius-bottomleft: @radius;
+	border-bottom-right-radius: @radius;
+	border-bottom-left-radius: @radius;
+}
+
+/* basic gradient */
+
+.basic-gradient ( @topCollor , @bottomCollor ){
+	background-image: linear-gradient(bottom, @bottomCollor 0%, @topCollor 100%);
+	background-image: -o-linear-gradient(bottom, @bottomCollor 0%, @topCollor 100%);
+	background-image: -moz-linear-gradient(bottom, @bottomCollor 0%, @topCollor 100%);
+	background-image: -webkit-linear-gradient(bottom, @bottomCollor 0%, @topCollor 100%);
+	background-image: -ms-linear-gradient(bottom, @bottomCollor 0%, @topCollor 100%);
+
+	background-image: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(0, @bottomCollor),
+		color-stop(1, @topCollor)
+	);
+}
+
+.drop-shadow(@color){
+    -webkit-box-shadow: 0 8px 6px -6px @color;
+    -moz-box-shadow: 0 8px 6px -6px @color;
+    box-shadow: 0 8px 6px -6px @color; 	
+}
+
+/****************************************************************************************
+/* base html elements 
+/***************************************************************************************/
+body {
+	background:@bodyBg;
+	font-size: 0.8em;
+	font-family: Tahoma,Helvetica,sans-serif;
+}
+
+h1,h2,h3,h4,h5 {
+	color: @brown;
+}
+
+a , a:hover {
+	color: @textGreen;
+}
+
+/****************************************************************************************
+/* helper class 
+/***************************************************************************************/
+.baseRadius {
+	.basic-border-radius(8px);
+}
+
+.baseBorder {
+	border: 1px solid #cbd2a0;
+	
+	.inner {
+		border: 1px solid @white;
+		.basic-border-radius(10px);		
+	}
+}
+
+.center {
+	text-align: center;
+}
+
+.innerPadding {
+	margin: 10px;	
+}
+
+.gadientGreen {
+	.basic-gradient( @lightGreen , @darkGreen );
+	color: @white;	
+}
+
+.radiusSeparator {
+	height:20px;
+	background: #687f0d;
+
+	div {
+		background: @supfooterBg;
+		height:20px;
+		.bottom-border-radius(10px);
+		.drop-shadow(@supfooterDropshadowColor);
+		position: relative;
+		z-index: 5000;
+	}
+}
+
+.radiusSeparator2 {
+	height:20px;
+	background: @supfooterBg;
+
+	div {
+		background: @white;
+		height:20px;
+		.bottom-border-radius(10px);
+		.drop-shadow(#ddd);
+		position: relative;
+		z-index: 5000;
+	}
+}
+
+.arrow_box {
+	position: relative;
+	background: #fcfcf5;
+	border: 1px solid #d4dc90;
+}
+.arrow_box:after, .arrow_box:before {
+	top: 100%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+.arrow_box:after {
+	border-color: rgba(252, 252, 245, 0);
+	border-top-color: #fcfcf5;
+	border-width: 10px;
+	left: 85%;
+	margin-left: -10px;
+}
+.arrow_box:before {
+	border-color: rgba(212, 220, 144, 0);
+	border-top-color: #d4dc90;
+	border-width: 11px;
+	left: 85%;
+	margin-left: -11px;
+}
+
+/****************************************************************************************
+/* base layout design temlape 
+/***************************************************************************************/
+/* header , mainmenu , logo , container*/
+
+#container {
+	background:@white;
+	margin:10px auto 20px auto;	
+}
+
+#header {
+	.drop-shadow(#555);
+}
+
+	#topWidget {
+		height:150px;
+		background:brown;
+		
+	}
+
+	#logo {
+		height:117px;
+		width: 158px;
+		margin-top: -10px;
+		float: left;
+		position: relative;
+		z-index: 10000;
+	}
+
+	#pageTitle {
+		font-size: 15px;
+		color: @white;
+		font-weight: normal;
+		float: left;
+		background: rgba(0, 0, 0, 0.28) url(http://www.tralandia.sk/trax_html/images/sk.domain.png) top left no-repeat;
+		background-position: 0 5px;
+		width: 248px;
+		margin: 28px 0 0 0; 
+		padding: 10px;
+		padding-top: 30px;
+		
+		height:35px;
+	}
+
+	#siteOptions {
+		width:380px;
+		height:32px;
+		line-height:32px;
+		padding-left: 20px;
+		background:@white;
+		float: right;
+		-webkit-border-bottom-left-radius: 5px;
+		-moz-border-radius-bottomleft: 5px;
+		border-bottom-left-radius: 5px;	
+		color: @brown;
+
+		a {
+			color: @brown;
+		}
+	}
+
+/* sidebar */
+#sidebar {
+
+	ul {
+		list-style: none;	
+		margin: 0;
+		padding: 0 ;
+
+		li {
+			a {
+				padding: 2px 10px;
+				display: block;
+
+				&:hover {
+					background: @lightGreen;
+					color: @white;
+					text-decoration: none;
+				}			
+			}
+		}
+	}
+
+	h4 {
+		font-size: 15px;
+		margin: 0;
+		padding: 0 10px;
+	}
+
+	.widget {
+		border-bottom: 1px solid @lightGreen;
+	}	
+
+	.widget:last-child {
+		border: none;
+	}
+
+	form {
+
+		input[type=text] , button {
+			border: none;
+		}
+
+		input[type=text] {
+			
+		}
+
+		button {
+			background: @white;
+		}
+	}
+}
+
+/* supfooter */
+#supFooter {
+
+	background: @supfooterBg;
+
+	h5 {
+		font-size: 1.3em;
+		padding-left: 10px;
+		font-weight: normal;
+		span {
+			color: @orange;
+			font-weight: bold;
+		}
+	}
+
+	ul , p {
+		padding-left: 10px;
+		color: #66331f;
+	}
+
+	ul {
+		
+
+		li {
+
+		}
+	}
+
+	.widget {
+		border-left: 1px solid #c7d29b;		
+	}
+
+	ul.comments {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+
+		.author {
+			float: right;
+			a {
+				color: @brown;
+				font-weight: bold;
+				font-size: 11px;
+			}
+		}
+
+		li {
+			clear: both;
+			p {
+				padding: 10px;
+				background:#fcfcf5;
+				.drop-shadow(#c6d270);
+				.basic-border-radius(5px);
+			}
+		}
+	}
+
+}
+
+
+
+/* footer */
+#footer {
+	height: auto;
+	background: #687f0d;
+	padding: 10px 0 20px 0;
+	.bottom-border-radius(10px);
+	ul {
+
+		list-style: none;
+
+		li {
+			a {
+				padding-left: 20px;
+				color: @white;
+				display: block;
+			}
+		}
+	}
+
+	h5 {
+		color: @white;
+		padding: 0 20px;
+		margin: 5px 0;
+	}
+}
+
+/****************************************************************************************
+/* mainmenu  
+/***************************************************************************************/
+@mainMenuSettingHeight : 38px;
+@mainMenuSettingLiPadding : 10px;
+@mainMenuSettingBorderTopHeight : 5px;
+@mainMenuSettingLinkColor : @white;
+@mainMenuSettingLinkHoverBackground: #d9e09d;
+@mainMenuSettingLinkHoverColor: @brown;
+
+#mainMenu {
+	ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		height: @mainMenuSettingHeight;
+		.basic-gradient( @lightGreen , @darkGreen );
+		border-top: @mainMenuSettingBorderTopHeight solid @darkGreen;
+		.bottom-border-radius(7px);
+
+		text-align: center;
+
+		li {
+			display: block;
+			float: left;
+						
+			a {
+				display: block;
+				height:100%;
+				line-height: @mainMenuSettingHeight;
+				color: @mainMenuSettingLinkColor;
+				padding: 0 @mainMenuSettingLiPadding;
+				border-left: 1px solid @mainMenuSettingLinkHoverBackground;
+				text-shadow:-1px -1px 0px @darkGreen;				
+				font-size: 12px;
+
+				&:hover {
+					background: @mainMenuSettingLinkHoverBackground;
+					color: @mainMenuSettingLinkHoverColor;
+					text-decoration: none;
+					text-shadow:none;
+				}
+
+			}
+			
+		}
+
+		li:first-child {
+			
+			margin-left: 110px;
+
+			a {
+				border: none;	
+			}
+		}
+
+	}
+}
+
