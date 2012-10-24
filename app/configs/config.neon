@@ -117,14 +117,26 @@ common:
 #			setup:
 #				- setItemPhrase(@itemPhraseFactory)
 
-		itemPhraseFactory: Extras\FormMask\Items\Foctories\PhraseFactory(@phraseServiceFactory, @environment::getLanguage())
+		mask: Extras\FormMask\Mask
+
 		itemTextFactory: Extras\FormMask\Items\Foctories\TextFactory
+		itemPhraseFactory: Extras\FormMask\Items\Foctories\PhraseFactory(@phraseServiceFactory, @environment::getLanguage())
+		itemYesNoFactory: Extras\FormMask\Items\Foctories\YesNoFactory
+		itemJsonFactory: Extras\FormMask\Items\Foctories\JsonFactory
 
 	factories:
 		phraseService:
 			parameters: [entity]
 			class: Service\Phrase\PhraseService(@model, %entity%)
 
+		formGenerator:
+			parameters: [config, entity]
+			class: Extras\FormMask\Generator(@mask, %config%, %entity%)
+			setup:
+				- setItemText(@itemTextFactory)
+				- setItemPhrase(@itemPhraseFactory)
+				- setItemYesNo(@itemYesNoFactory)
+				- setItemJson(@itemJsonFactory)
 
 production < common:
 

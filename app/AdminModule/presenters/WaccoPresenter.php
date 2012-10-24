@@ -17,20 +17,15 @@ class WaccoPresenter extends BasePresenter {
 
 		$model = $this->context->model;
 		$configurator = new Extras\Config\Configurator($this->context->params['settingsDir'] . '/presenters/currency.neon');
+		$generator = $this->context->createFormGenerator($configurator, $entity)->build();
 
-		$mask = new Extras\FormMask\Mask;
 		$form = new Nette\Application\UI\Form($this, 'form');
-		$form->onSuccess[] = array($mask, 'process');
+		$form->onSuccess[] = array($generator->getMask(), 'process');
 		$form->onSuccess[] = function($form) use ($model) {
 			$model->flush();
 		};
 
-		$generator = new Extras\FormMask\Generator($mask, $configurator, $entity);
-		$generator->setItemPhrase($this->context->itemPhraseFactory);
-		$generator->setItemText($this->context->itemTextFactory);
-		$generator->build();
-
-		$mask->extend($form);
+		$generator->getMask()->extend($form);
 		$this->template->form = $form;
 	}
 
@@ -39,21 +34,16 @@ class WaccoPresenter extends BasePresenter {
 		$entity = $repo->find(144);
 
 		$model = $this->context->model;
-		$configurator = new Extras\Config\Configurator($this->context->params['settingsDir'] . '/presenters/currency.neon');
+		$configurator = new Extras\Config\Configurator($this->context->params['settingsDir'] . '/presenters/language.neon');
+		$generator = $this->context->createFormGenerator($configurator, $entity)->build();
 
-		$mask = new Extras\FormMask\Mask;
 		$form = new Nette\Application\UI\Form($this, 'form');
-		$form->onSuccess[] = array($mask, 'process');
+		$form->onSuccess[] = array($generator->getMask(), 'process');
 		$form->onSuccess[] = function($form) use ($model) {
 			$model->flush();
 		};
 
-		$generator = new Extras\FormMask\Generator($mask, $configurator, $entity);
-		$generator->setItemPhrase($this->context->itemPhraseFactory);
-		$generator->setItemText($this->context->itemTextFactory);
-		$generator->build();
-
-		$mask->extend($form);
+		$generator->getMask()->extend($form);
 		$this->template->form = $form;
 	}
 }

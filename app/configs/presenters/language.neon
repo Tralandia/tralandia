@@ -1,0 +1,27 @@
+common:
+	service: Service\Language
+	title: Languages
+	h1: 'Language -> %name%'
+
+	form:
+		fields:
+			name:
+				label: Name
+				control:
+					type: phrase
+				validation:
+					- [setRequired, 'Please fill in the name.']
+			iso:
+				label: Iso
+				control:
+					type: text
+				validation:
+					- [addRule, :pattern, 'Must be exactly 3 characters long.', '[a-z]{2}']
+			supported:
+				label: Supported
+				control:
+					type: yesno
+			genders:
+				label: Genders
+				control:
+					type: json
