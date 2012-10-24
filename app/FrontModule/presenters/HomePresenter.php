@@ -6,10 +6,11 @@ class HomePresenter extends BasePresenter {
 
 	public $locationTypeRepository;
 
-	public function setContext() {
+	public function setContext(\Nette\DI\Container $dic) {
 
 		$this->locationTypeRepository = $this->context->locationTypeRepository;
-		parent::setContext();
+		
+		parent::setContext($dic);
 
 	}
 

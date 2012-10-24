@@ -13,13 +13,13 @@ abstract class BasePresenter extends \BasePresenter {
 		parent::startup();
 	}
 
-	public function setContext() {
+	public function setContext(\Nette\DI\Container $dic) {
 
 		$this->languageRepository = $this->context->languageRepository;
 		$this->locationRepository = $this->context->locationRepository;
 		$this->rentalRepository = $this->context->rentalRepository;
 
-		parent::setContext();
+		parent::setContext($dic);
 	}
 
 	public function beforeRender() {

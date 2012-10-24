@@ -28,7 +28,7 @@ abstract class BasePresenter extends Presenter {
 		}
 	}
 
-	public function setContext() { 
+	public function setContext(\Nette\DI\Container $dic) {
 	}
 
 	public function getPreviousBackLink() {
