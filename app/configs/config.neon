@@ -100,6 +100,14 @@ common:
 				- $taskTypeRepository(@taskTypeRepository)
 				- $taskServiceFactory(@taskServiceFactory)
 
+		taskManager: 
+			class: Service\TaskManager\TaskManager
+			setup:
+				- addScanner(@missingTranslationsScanner)
+
+		missingTranslationsScanner:
+			class: Service\TaskManager\MissingTranslationsScanner
+			arguments: [@languageRepository, @phraseRepository]
 
 #		phraseEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Phrase\Phrase')
 #		phraseServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\Phrase\Phrase', @phraseEntityFactory)
@@ -138,6 +146,7 @@ development < common:
 			dbname: tralandia
 			charset: utf8
 			driver: pdo_mysql
+			debugger: true
 
 vaculciak < development:
 	parameters:
@@ -153,6 +162,10 @@ durika < development:
 			email: tralandia.david@gmail.com
 
 toth < development:
+	parameters:
+		database:
+			user: root
+			password: ""
 
 test < development:
 	parameters:
@@ -166,3 +179,20 @@ test < development:
 			dbname: tralandia_test
 			charset: utf8
 			driver: pdo_mysql
+
+demo < common:
+	php:
+		max_execution_time: 0
+		memory_limit: 1024M
+
+	parameters:
+		envOptions:
+			sendEmail: FASLE
+
+		database:
+			user: root
+			password: root
+			host: 127.0.0.1
+			dbname: tralandia
+			charset: utf8
+			driver: pdo_mysql			

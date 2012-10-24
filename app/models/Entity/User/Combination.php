@@ -9,7 +9,7 @@ use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="user_combination", indexes={@ORM\index(name="languageLevel", columns={"languageLevel"})})
+ * @ORM\Table(name="user_combination")
  * @EA\Primary(key="id", value="id")
  */
 class Combination extends \Entity\BaseEntityDetails {
@@ -32,14 +32,8 @@ class Combination extends \Entity\BaseEntityDetails {
 	 */
 	protected $language;
 
-	/**
-	 * @var integer
-	 * @ORM\Column(type="integer")
-	 */
-	protected $languageLevel;
 
-
-	//@entity-generator-code --- NEMAZAT !!!
+				//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()
@@ -132,24 +126,5 @@ class Combination extends \Entity\BaseEntityDetails {
 	public function getLanguage()
 	{
 		return $this->language;
-	}
-		
-	/**
-	 * @param integer
-	 * @return \Entity\User\Combination
-	 */
-	public function setLanguageLevel($languageLevel)
-	{
-		$this->languageLevel = $languageLevel;
-
-		return $this;
-	}
-		
-	/**
-	 * @return integer|NULL
-	 */
-	public function getLanguageLevel()
-	{
-		return $this->languageLevel;
 	}
 }

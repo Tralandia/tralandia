@@ -125,7 +125,7 @@ class User extends \Entity\BaseEntityDetails {
 	protected $ticketMessages;
 
 
-	//@entity-generator-code --- NEMAZAT !!!
+				//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()
@@ -350,10 +350,10 @@ class User extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @param json
+	 * @param \Extras\Types\InvoicingData
 	 * @return \Entity\User\User
 	 */
-	public function setInvoicingData($invoicingData)
+	public function setInvoicingData(\Extras\Types\InvoicingData $invoicingData)
 	{
 		$this->invoicingData = $invoicingData;
 
@@ -371,7 +371,7 @@ class User extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return json|NULL
+	 * @return \Extras\Types\InvoicingData|NULL
 	 */
 	public function getInvoicingData()
 	{

@@ -1,0 +1,19 @@
+{control header:begin}
+	{control css}
+	{control js}
+{control header:end}
+<body>
+	<div class="mainHolder">
+		<div class="flashMessage"><div n:foreach="$flashes as $flash" class="msg {$flash->type}">{$flash->message}</div></div>
+		<div class="mainBody">
+			{include #content}
+			{include search.latte}
+			{include footer.latte}
+		</div>
+		<div class="mainHeader" style="background-image: url({!$staticPath}images/{$currentLocation->iso}.country.png);">
+			{include header.latte}
+		</div>
+	</div>
+</body>
+
+</html>

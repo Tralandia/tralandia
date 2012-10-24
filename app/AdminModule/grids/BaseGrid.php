@@ -2,14 +2,26 @@
 
 namespace AdminModule\Grids;
 
-use \NiftyGrid\Grid;
+use NiftyGrid\Grid;
 
 /**
  * Foo class
  *
  * @author Dávid Ďurika
  */
-class BaseGrid extends Grid{
+abstract class BaseGrid extends Grid{
 
+	public function __construct() {
+		parent::__construct();
+		$this->setTemplate(__DIR__ . '/template.latte');
+	}
+
+	/**
+	 * @return GridPaginator
+	 */
+	protected function createComponentPaginator()
+	{
+		return new BaseGridPaginator;
+	}
 
 }

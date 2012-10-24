@@ -43,6 +43,12 @@ require_once APP_DIR . '/extras/EntityAnnotation.php';
 $container->application->onStartup[] = function() use ($container) {
 	$router = $container->application->getRouter();
 
+	$router[] = $gregor = new RouteList('gregor');
+	$gregor[] = new Route('gregor/[<presenter>/[<action>[/<id>]]]', array(
+		'presenter' => 'Page',
+		'action' =>  'home'
+	));
+
 	$router[] = $adminRouter = new RouteList('Admin');
 	$adminRouter[] = new Route('index.php', 'Admin:Rental:list', Route::ONE_WAY);
 	$adminRouter[] = new Route('admin/<presenter>/<id [0-9]+>', array(

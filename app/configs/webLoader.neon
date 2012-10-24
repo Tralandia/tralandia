@@ -1,6 +1,13 @@
 parameters:
 	webloader:
 		packages:
+
+			phrase:
+				js:
+					- phrase/phrase.js
+
+				css:
+					- phrase/phrase.css
 			admin:
 				js:
 					- admin/admin.js
@@ -118,7 +125,10 @@ parameters:
 				- %webloader.packages.admin%
 				- %webloader.packages.fileUpload%
 				- %webloader.packages.bootstrap%
+				- %webloader.packages.phrase%
 
 			Front: 
 				- %webloader.packages.front%
+
+			'Gregor:Admin': %webloader.sets.Admin%
 

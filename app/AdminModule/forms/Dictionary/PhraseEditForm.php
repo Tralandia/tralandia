@@ -6,12 +6,12 @@ class PhraseEditForm extends \AdminModule\Forms\Form {
 
 	public $phraseTypeRepository;
 	public $languageRepository;
-	public $language;
+	public $sourceLanguage;
 
-	public function __construct($phraseTypeRepository, $languageRepository, $language) {
+	public function __construct($phraseTypeRepository, $languageRepository, $sourceLanguage) {
 		$this->phraseTypeRepository = $phraseTypeRepository;
 		$this->languageRepository = $languageRepository;
-		$this->language = $language;
+		$this->sourceLanguage = $sourceLanguage;
 		parent::__construct();
 	}
 
@@ -25,8 +25,7 @@ class PhraseEditForm extends \AdminModule\Forms\Form {
 		$this->addCheckbox('ready', 'Ready');
 		$this->addCheckbox('corrected', 'Corrected');
 
-		$genderList = $this->language->genders;
-		d($genderList);
+		$genderList = $this->sourceLanguage->genders;
 		$positionList = array(
 			'before' => 'Before',
 			'after' => 'After',

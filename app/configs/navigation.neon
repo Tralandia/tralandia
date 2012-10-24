@@ -144,21 +144,21 @@ common:
 					link: ':Admin:InvoiceExport:'
 					separator: true
 
-		dictionary:
-			label: Dictionary
+		phrase:
+			label: Phrase
 			items:
 				addPhrase: 
 					label: Add Phrase
-					link: ':Admin:DictionaryPhrase:add'
+					link: ':Admin:Phrase:add'
 				phrase: 
 					label: Phrases
-					link: ':Admin:DictionaryPhrase:list'
+					link: ':Admin:Phrase:list'
 				phraseType: 
 					label: Phrase Types
-					link: ':Admin:DictionaryType:list'
+					link: ':Admin:PhraseType:list'
 				language: 
 					label: Languages
-					link: ':Admin:DictionaryLanguage:list'
+					link: ':Admin:Language:list'
 
 		siteContent:
 			label: Site Content
@@ -181,12 +181,16 @@ common:
 				# 		type: 
 				# 			label: Attraction Types
 				# 			link: ':Admin:AttractionType:list'
+				language: 
+					separator: true
+					label: Languages
+					link: ':Admin:Language:list'
 				location: 
 					label: Locations
 					items:
 						location: 
 							label: All Locations
-							link: ':Admin:LocationLocation:list'
+							link: ':Admin:Location:list'
 						type: 
 							label: Location Types
 							link: ':Admin:LocationType:list'

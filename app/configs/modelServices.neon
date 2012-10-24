@@ -203,11 +203,11 @@ services:
 
 
 	#----------
-	locationTravelingEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Location\Traveling')
+	# locationTravelingEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Location\Traveling')
 
-	locationTravelingServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @locationTravelingEntityFactory)
+	# locationTravelingServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @locationTravelingEntityFactory)
 
-	locationTravelingRepository: @model::getRepository('Entity\Location\Traveling')
+	# locationTravelingRepository: @model::getRepository('Entity\Location\Traveling')
 
 
 	#----------

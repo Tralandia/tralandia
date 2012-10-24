@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Repository\Phrase\PhraseRepository")
  * @ORM\Table(name="phrase", indexes={@ORM\index(name="ready", columns={"ready"})})
  * @EA\Primary(key="id", value="translations")
  */
@@ -43,7 +43,7 @@ class Phrase extends \Entity\BaseEntityDetails {
 	 */
 	protected $sourceLanguage;
 
-	//@entity-generator-code --- NEMAZAT !!!
+						//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()
