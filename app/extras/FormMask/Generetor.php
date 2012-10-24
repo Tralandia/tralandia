@@ -42,8 +42,12 @@ class Generator extends Nette\Object {
 	public function build() {
 		foreach ($this->configurator->getForm() as $field) {
 			$item = $this->factories[$field->getType()]->create($field->getName(), $field->getLabel(), $this->entity);
+			if ($field->getValidators()) {
+				$item->setValidators($field->getValidators());
+			}
 			$this->mask->addItem($item);
 		}
+
 		//TODO: toto nejako zautomatizovat, alebo minimalne prelozit
 		$this->mask->add('Extras\FormMask\Items\Submit', 'submit', 'Odoslať');
 	}

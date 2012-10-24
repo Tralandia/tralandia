@@ -38,16 +38,14 @@ common:
 				label: Name
 				control:
 					type: phrase
-			# name:
-				# label: Name
-				# control:
-				# 	type: phrase
-				# addClass: 'myPhraseClass'
-				# inlineEditing: DictionaryPhrase:edit
+				validation:
+					- [setRequired, 'Please fill in the name.']
 			iso:
 				label: Iso
 				control:
 					type: text
+				validation:
+					- [addRule, :pattern, 'Must be exactly 3 characters long.', '[A-Z]{3}']
 			exchangeRate:
 				label: Exchange Rate / EUR
 				control:

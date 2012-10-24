@@ -47,6 +47,15 @@ class Configurator extends Nette\Object {
 		foreach ($this->config->{self::FORM_SETTINGS}->{self::FORM_FIELDS} as $name => $field) {
 			if (isset($this->formFields[$field->control->type])) {
 				$this->form[$name] = new $this->formFields[$field->control->type]($name, $field->label);
+
+				// parsovanie validacnych pravidiel
+				if (isset($field->validation)) {
+					foreach ((array)$field->validation as $params) {
+						$method = current($params);
+						unset($params[key($params)]);
+						$this->form[$name]->addValidator($method, iterator_to_array($params));
+					}
+				}
 			}
 		}
 	}

@@ -12,6 +12,9 @@ abstract class Field extends Nette\Object {
 	/** @var string */
 	protected $label;
 
+	/** @var array */
+	protected $validators = array();
+
 	/**
 	 * @param string
 	 * @param string
@@ -54,5 +57,25 @@ abstract class Field extends Nette\Object {
 	 */
 	public function getClass() {
 		return "";
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getValidators() {
+		return $this->validators;
+	}
+
+	/**
+	 * @param string
+	 * @param array
+	 * @return Field
+	 */
+	public function addValidator($method, array $params) {
+		 $this->validators[] = (object)array(
+			'method' => $method,
+			'params' => $params
+		 );
+		 return $this;
 	}
 }
