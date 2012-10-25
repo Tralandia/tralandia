@@ -7,8 +7,6 @@ use Nette\Diagnostics\Debugger,
 	Nella\Addons\Doctrine\Config\Extension;
 
 
-define('CENTRAL_LANGUAGE', 38);
-
 // Load Nette Framework
 require_once LIBS_DIR . '/Nette/nette.min.php';
 require_once LIBS_DIR . '/rado_functions.php';

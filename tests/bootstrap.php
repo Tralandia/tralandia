@@ -10,6 +10,7 @@ define('LIBS_DIR', ROOT_DIR . '/libs');
 define('APP_DIR', ROOT_DIR . '/app');
 define('TESTS_DIR', ROOT_DIR . '/tests');
 define('INCLUDE_DIR', TESTS_DIR . '/include');
+
 $_SERVER['HTTP_HOST'] = 'localhost';
 
 // Load Nette Framework

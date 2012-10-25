@@ -286,7 +286,10 @@ services:
 
 	phraseTranslationServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @phraseTranslationEntityFactory)
 
-	phraseTranslationRepository: @model::getRepository('Entity\Phrase\Translation')
+	phraseTranslationRepository: 
+		factory: @model::getRepository('Entity\Phrase\Translation')
+		setup:
+			- $centralLanguage(%centralLanguage%)
 
 
 	#----------

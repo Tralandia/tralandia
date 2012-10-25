@@ -10,10 +10,10 @@ namespace Service\TaskManager;
  */
 class MissingTranslationsScanner extends \Nette\Object implements IScanner {
 
-	protected $autopilot, $phraseTranslationRepository;
+	protected $autopilot, $phraseTranslationRepository, $languageRepository;
 
 	public function __construct() {
-		list($this->autopilot, $this->phraseTranslationRepository) = func_get_args();
+		list($this->autopilot, $this->phraseTranslationRepository, $this->languageRepository) = func_get_args();
 	}
 
 	public function needToRun() {
@@ -30,6 +30,10 @@ class MissingTranslationsScanner extends \Nette\Object implements IScanner {
 
 	public function addTask($translationData) {
 		$taskService = $this->autopilot->createTask('\Phrase\Translation - Translation Required');
+		$taskEntity = $taskService->getEntity();
+		$taskEntity->identifier = $translationData['id'];
+		$taskEntity->userLanguage = $this->languageRepository->find($translationData['language_id']);
+		// $taskEntity->userRole = $this->
 		$taskService->save();
 	}
 

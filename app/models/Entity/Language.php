@@ -96,7 +96,7 @@ class Language extends \Entity\BaseEntityDetails {
 	protected $backLinks;
 
 
-									//@entity-generator-code --- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()
