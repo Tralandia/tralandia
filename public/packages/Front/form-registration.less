@@ -55,7 +55,8 @@ form.registrationForm {
 	}
 
 	input[type=text] {
-		width: 100%;
+		width: 390px;
+		margin: 0;
 		border: 1px solid @inputPureBorderColor;
 		height: @inputHeight;
 		padding: 0 5px;
@@ -78,6 +79,10 @@ form.registrationForm {
 		background: @inputErrorBorderColor;
 	}
 
+}
+
+.checkboxies {
+	margin-bottom: 15px;
 }
 
 /****************************************************************************************
@@ -106,6 +111,10 @@ table.table-price {
 			}
 		}
 
+		&:first-child th {
+			border: none;
+		}
+
 		td div {
 
 			padding: 10px 0;
@@ -124,21 +133,26 @@ table.table-price {
 					height:auto;
 				}
 
-				span.year {
-					
-				}
+			}
+
+			&.yellow-gradient , &.red-gradient , &.green-gradient {
+				width: 120px;
 			}
 
 			&.red-gradient {
-				padding: 30px 0;
+				
+				
 				span.priceTotal {
 					font-size: 40px;
+					line-height: 40px;
 				}
 			}			
 			&.green-gradient {
-				padding: 20px 0;				
+				
+								
 				span.priceTotal {
 					font-size: 30px;
+					line-height: 30px;
 				}				
 			}			
 		}
@@ -150,42 +164,41 @@ table.table-price {
 }
 
 
-
-
-.optionGreen {
-	.basic-gradient(#dfe5b8,#fafbe9);
+.optionGreen , .optionGray , .optionOrange {
 	.basic-border-radius(3px);
-	border: 1px solid #ced88e;
 	margin-bottom: 10px;
+	color: #fff;
+	width: 702px;
+	border: 1px solid #ced88e;
+	div {		
+		padding: 5px 0;
+
+		label {
+			padding: 0 0 0 25px;
+			margin: 0;
+			input[type=radio] {
+			}
+		}
+	}
 
 	label {
 		margin-left: 10px;
 		cursor: pointer;
 	}
+}
 
-	div {
-		padding: 2px 0;		
-	}
+.optionGreen {
+	.basic-gradient(#b0c13b,#698308);
 
 	&:hover {
-		.basic-gradient(#fafbe9,#dfe5b8);
+		.basic-gradient(#698308,#b0c13b);
 	}
 }
 
 .optionGray {
 	.basic-gradient(#fefefb,#eff0f1);
-	.basic-border-radius(3px);
-	border: 1px solid #a2a9be;
-	margin-bottom: 10px;
-
-	label {
-		margin-left: 10px;
-		cursor: pointer;
-	}
-
-	div {
-		padding: 2px 0;		
-	}
+	color: #666;
+	border-color: #a2a9be;
 
 	&:hover {
 		.basic-gradient(#d4d8e0,#fefefb);
@@ -194,18 +207,8 @@ table.table-price {
 
 .optionOrange {
 	.basic-gradient(#f88603,#f25000);
-	.basic-border-radius(3px);
-	border: 1px solid #f25000;
-	margin-bottom: 10px;
-	color: #fff;
-	label {
-		margin-left: 10px;
-		cursor: pointer;
-	}
-
-	div {
-		padding: 2px 0;		
-	}
+	
+	border-color: #f25000;
 
 	&:hover {
 		.basic-gradient(#f25000,#f88603);

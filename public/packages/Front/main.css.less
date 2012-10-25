@@ -1,5 +1,5 @@
 @import './less/bootstrap.less';
-@import './less/responsive.less';
+
 
 
 /****************************************************************************************
@@ -81,8 +81,7 @@
 /* base html elements 
 /***************************************************************************************/
 body {
-	background:@bodyBg;
-	font-size: 0.8em;
+	background:@bodyBg;	
 	font-family: Tahoma,Helvetica,sans-serif;
 }
 
@@ -207,7 +206,9 @@ a , a:hover {
 	
 	.inner {
 		border: 1px solid @white;
-		.basic-border-radius(10px);		
+		-webkit-border-radius: 7px;
+		-moz-border-radius: 7px;
+		border-radius: 7px;
 	}
 }
 
@@ -216,7 +217,8 @@ a , a:hover {
 }
 
 .innerPadding {
-	margin: 10px;	
+	margin: 10px;
+	margin-bottom: 0;	
 }
 
 .innerPaddingRitgh {
@@ -298,21 +300,32 @@ a , a:hover {
 
 #container {
 	background:@white;
-	margin:10px auto 20px auto;	
+	margin:10px auto;
+
 }
 
 #header {
 	.drop-shadow(#555);
+
+	.inner {
+-webkit-border-radius: 20px;
+-webkit-border-top-left-radius: 7px;
+-moz-border-radius: 20px;
+-moz-border-radius-topleft: 7px;
+border-radius: 20px;
+border-top-left-radius: 7px;
+
+	}	
 }
 
 	#topWidget {
 		height:150px;
-		background:brown;
+		background: brown;
 		
 	}
 
 	#logo {
-		height:117px;
+		height:123px;
 		width: 158px;
 		margin-top: -10px;
 		float: left;
@@ -337,14 +350,21 @@ a , a:hover {
 
 	#siteOptions {
 		width:380px;
-		height:32px;
-		line-height:32px;
-		padding-left: 20px;
+		height:25px;
+		line-height:25px;
+		padding-left: 10px;
 		background:@white;
 		float: right;
+		position: relative;
+		top: -1px;
+		right: -1px;
+		-webkit-border-top-right-radius: 7px;
 		-webkit-border-bottom-left-radius: 5px;
+		-moz-border-radius-topright: 7px;
 		-moz-border-radius-bottomleft: 5px;
-		border-bottom-left-radius: 5px;	
+		border-top-right-radius: 7px;
+		border-bottom-left-radius: 5px;
+
 		color: @brown;
 
 		a {
@@ -406,13 +426,14 @@ a , a:hover {
 
 /* supfooter */
 #supFooter {
-
+	padding-top: 15px;
 	background: @supfooterBg;
 
 	h5 {
 		font-size: 1.3em;
 		padding-left: 10px;
 		font-weight: normal;
+		margin-top: 0px;
 		span {
 			color: @orange;
 			font-weight: bold;
@@ -494,9 +515,9 @@ a , a:hover {
 /****************************************************************************************
 /* mainmenu  
 /***************************************************************************************/
-@mainMenuSettingHeight : 38px;
+@mainMenuSettingHeight : 33px;
 @mainMenuSettingLiPadding : 10px;
-@mainMenuSettingBorderTopHeight : 5px;
+@mainMenuSettingBorderTopHeight : 4px;
 @mainMenuSettingLinkColor : @white;
 @mainMenuSettingLinkHoverBackground: #d9e09d;
 @mainMenuSettingLinkHoverColor: @brown;
@@ -596,22 +617,22 @@ a , a:hover {
 /****************************************************************************************
 /* page content  
 /***************************************************************************************/
-@contentH1size : 18px;
+@contentH1size : 22px;
 @contentH2size : 18px;
 @contentH3size : 18px;
 @contentH4size : 18px;
 @contentH5size : 18px;
 
-@contentH1color : @darkGreen;
-@contentH2color : @darkGreen;
-@contentH3color : @darkGreen;
-@contentH4color : @darkGreen;
-@contentH5color : @darkGreen;
+@contentH1color : #A0B325;
+@contentH2color : #A0B325;
+@contentH3color : #A0B325;
+@contentH4color : #A0B325;
+@contentH5color : #A0B325;
 
 #content {
 	background: @contentBackground;	
 	color: @brown;
-	padding: 0 20px;
+	padding: 0 10px;
 	h1 , h2 , h3 , h4 , h5 {
 		margin: 0;
 		padding: 10px 0;
