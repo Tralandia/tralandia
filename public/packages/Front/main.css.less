@@ -1,0 +1,670 @@
+@import './less/bootstrap.less';
+
+
+
+/****************************************************************************************
+/* color scheme 
+/***************************************************************************************/
+
+@bodyBg : #eef2d1;
+@darkGreen : #698308;
+@lightGreen: #b0c13b;
+@brown : #7d3300 ;
+@textGreen: #a8b938;
+@orange: #f35405;
+@white : #fff;
+@supfooterBg : #fdfdf8;
+@supfooterDropshadowColor: #3e4813;
+
+/* content colors */
+@contentBackground : @supfooterBg;
+/****************************************************************************************
+/* functions 
+/***************************************************************************************/
+
+/* radius basic */
+
+.basic-border-radius (@radius) {
+	-webkit-border-radius: @radius;
+	-moz-border-radius: @radius;
+	border-radius: @radius;
+}
+
+/* bottom border radius */
+
+.bottom-border-radius(@radius){
+	-webkit-border-bottom-right-radius: @radius;
+	-webkit-border-bottom-left-radius: @radius;
+	-moz-border-radius-bottomright: @radius;
+	-moz-border-radius-bottomleft: @radius;
+	border-bottom-right-radius: @radius;
+	border-bottom-left-radius: @radius;
+}
+
+/* basic gradient */
+
+.basic-gradient ( @topCollor , @bottomCollor ){
+	background-image: linear-gradient(bottom, @bottomCollor 0%, @topCollor 100%);
+	background-image: -o-linear-gradient(bottom, @bottomCollor 0%, @topCollor 100%);
+	background-image: -moz-linear-gradient(bottom, @bottomCollor 0%, @topCollor 100%);
+	background-image: -webkit-linear-gradient(bottom, @bottomCollor 0%, @topCollor 100%);
+	background-image: -ms-linear-gradient(bottom, @bottomCollor 0%, @topCollor 100%);
+
+	background-image: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(0, @bottomCollor),
+		color-stop(1, @topCollor)
+	);
+}
+
+.drop-shadow(@color){
+    -webkit-box-shadow: 0 8px 6px -6px @color;
+    -moz-box-shadow: 0 8px 6px -6px @color;
+    box-shadow: 0 8px 6px -6px @color; 	
+}
+
+.inner-shadow(@size,@color){
+	-moz-box-shadow: inset 0 0 @size @color;
+	-webkit-box-shadow: inset 0 0 @size@color;
+	box-shadow: inner 0 0 @size @color;	
+}
+
+.basic-shadow(@size,@color){
+	-moz-box-shadow: 0 0 @size @color;
+	-webkit-box-shadow: 0 0 @size@color;
+	box-shadow: 0 0 @size @color;	
+}
+
+/****************************************************************************************
+/* base html elements 
+/***************************************************************************************/
+body {
+	background:@bodyBg;	
+	font-family: Tahoma,Helvetica,sans-serif;
+}
+
+h1,h2,h3,h4,h5 {
+	color: @brown;
+}
+
+a , a:hover {
+	color: @textGreen;
+}
+
+/****************************************************************************************
+/* helper class 
+/***************************************************************************************/
+.red {
+	color: #d32c16;
+}
+
+
+	.red-gradient {
+		text-shadow: -1px -1px 0px #990f06;
+		border-top: 1px solid #990f06;
+		.basic-gradient(#ce2c16,#990f06)
+	}
+
+	.red-gradient .btn {
+		border: 1px solid #990f06;
+		color: #990f06;
+		.basic-gradient(#fff,#ffa69a);
+		.basic-shadow(18px , #ffa69a);
+
+		&:hover {
+			.basic-gradient(#ffa69a,#fff);
+		}
+	}
+
+	.red-inner-shadow {
+		.inner-shadow(20px,#7c0b02);
+	}
+
+.green {
+	color: #A0B325;
+}
+
+
+	.green-gradient {
+		text-shadow: -1px -1px 0px #5c6a1f;
+		border-top: 1px solid #5c6a1f;
+		.basic-gradient(#a0b325,#5c6a1f)
+	}
+
+	.green-gradient .btn {
+		border: 1px solid #5c6a1f;
+		color: #5c6a1f;
+		.basic-gradient(#fff,#d1dc8a);
+		.basic-shadow(18px , #a9ba37);
+
+		&:hover {
+			.basic-gradient(#d1dc8a,#fff);
+		}
+	}
+
+	.green-inner-shadow {
+		.inner-shadow(20px,#4c5718);
+	}	
+
+.yellow {
+	color: #fdbe33;
+}
+
+
+	.yellow-gradient {
+		text-shadow: -1px -1px 0px #f68703;
+		border-top: 1px solid #f68703;
+		.basic-gradient(#fdbe33,#f68703)
+	}
+
+	.yellow-gradient .btn {
+		border: 1px solid #f68703;
+		color: #c87009;
+		.basic-gradient(#fff,#ffe4ab);
+		.basic-shadow(18px , #ffe4ab);
+
+		&:hover {
+			.basic-gradient(#ffe4ab,#fff);
+		}
+	}
+
+	.yellow-inner-shadow {
+		.inner-shadow(20px,#f68703);
+	}
+
+
+
+
+.no-padding , table.table tr td.no-padding {
+	padding: 0;
+}
+
+.bottom-radius {
+	.bottom-border-radius(10px);
+}
+
+.center , table tr td.center, table th.center {
+	text-align: center;
+}
+
+.orange {
+	color: @orange;
+}
+
+.baseRadius {
+	.basic-border-radius(8px);	
+}
+
+.overflow {
+	overflow: hidden;
+}
+
+.baseBorder {
+	border: 1px solid #cbd2a0;
+	
+	.inner {
+		border: 1px solid @white;
+		-webkit-border-radius: 7px;
+		-moz-border-radius: 7px;
+		border-radius: 7px;
+	}
+}
+
+.center {
+	text-align: center;
+}
+
+.innerPadding {
+	margin: 10px;
+	margin-bottom: 0;	
+}
+
+.innerPaddingRitgh {
+	margin-left: 0;
+}
+
+.innerPaddingLeft {
+	margin-right: 0;
+}
+
+
+.gadientGreen {
+	.basic-gradient( @lightGreen , @darkGreen );
+	color: @white;	
+}
+
+.radiusSeparator {
+	height:20px;
+	background: #687f0d;
+
+	div {
+		background: @supfooterBg;
+		height:20px;
+		.bottom-border-radius(10px);
+		.drop-shadow(@supfooterDropshadowColor);
+		position: relative;
+		z-index: 5000;
+	}
+}
+
+.radiusSeparator2 {
+	height:20px;
+	background: @supfooterBg;
+
+	div {
+		background: @white;
+		height:20px;
+		.bottom-border-radius(10px);
+		.drop-shadow(#ddd);
+		position: relative;
+		z-index: 5000;
+	}
+}
+
+.arrow_box {
+	position: relative;
+	background: #fcfcf5;
+	border: 1px solid #d4dc90;
+}
+.arrow_box:after, .arrow_box:before {
+	top: 100%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+.arrow_box:after {
+	border-color: rgba(252, 252, 245, 0);
+	border-top-color: #fcfcf5;
+	border-width: 10px;
+	left: 85%;
+	margin-left: -10px;
+}
+.arrow_box:before {
+	border-color: rgba(212, 220, 144, 0);
+	border-top-color: #d4dc90;
+	border-width: 11px;
+	left: 85%;
+	margin-left: -11px;
+}
+
+/****************************************************************************************
+/* base layout design temlape 
+/***************************************************************************************/
+/* header , mainmenu , logo , container*/
+
+#container {
+	background:@white;
+	margin:10px auto;
+
+}
+
+#header {
+	.drop-shadow(#555);
+
+	.inner {
+-webkit-border-radius: 20px;
+-webkit-border-top-left-radius: 7px;
+-moz-border-radius: 20px;
+-moz-border-radius-topleft: 7px;
+border-radius: 20px;
+border-top-left-radius: 7px;
+
+	}	
+}
+
+	#topWidget {
+		height:150px;
+		background: brown;
+		
+	}
+
+	#logo {
+		height:123px;
+		width: 158px;
+		margin-top: -10px;
+		float: left;
+		position: relative;
+		z-index: 10000;
+	}
+
+	#pageTitle {
+		font-size: 15px;
+		color: @white;
+		font-weight: normal;
+		float: left;
+		background: rgba(0, 0, 0, 0.28) url(http://www.tralandia.sk/trax_html/images/sk.domain.png) top left no-repeat;
+		background-position: 0 5px;
+		width: 248px;
+		margin: 28px 0 0 0; 
+		padding: 10px;
+		padding-top: 30px;
+		
+		height:35px;
+	}
+
+	#siteOptions {
+		width:380px;
+		height:25px;
+		line-height:25px;
+		padding-left: 10px;
+		background:@white;
+		float: right;
+		position: relative;
+		top: -1px;
+		right: -1px;
+		-webkit-border-top-right-radius: 7px;
+		-webkit-border-bottom-left-radius: 5px;
+		-moz-border-radius-topright: 7px;
+		-moz-border-radius-bottomleft: 5px;
+		border-top-right-radius: 7px;
+		border-bottom-left-radius: 5px;
+
+		color: @brown;
+
+		a {
+			color: @brown;
+		}
+	}
+
+/* sidebar */
+#sidebar {
+
+	ul {
+		list-style: none;	
+		margin: 0;
+		padding: 0 ;
+
+		li {
+			a {
+				padding: 2px 10px;
+				display: block;
+
+				&:hover {
+					background: @lightGreen;
+					color: @white;
+					text-decoration: none;
+				}			
+			}
+		}
+	}
+
+	h4 {
+		font-size: 15px;
+		margin: 0;
+		padding: 0 10px;
+	}
+
+	.widget {
+		border-bottom: 1px solid @lightGreen;
+	}	
+
+	.widget:last-child {
+		border: none;
+	}
+
+	form {
+
+		input[type=text] , button {
+			border: none;
+		}
+
+		input[type=text] {
+			
+		}
+
+		button {
+			background: @white;
+		}
+	}
+}
+
+/* supfooter */
+#supFooter {
+	padding-top: 15px;
+	background: @supfooterBg;
+
+	h5 {
+		font-size: 1.3em;
+		padding-left: 10px;
+		font-weight: normal;
+		margin-top: 0px;
+		span {
+			color: @orange;
+			font-weight: bold;
+		}
+	}
+
+	ul , p {
+		padding-left: 10px;
+		color: #66331f;
+	}
+
+	ul {
+		
+
+		li {
+
+		}
+	}
+
+	.widget {
+		border-left: 1px solid #c7d29b;		
+	}
+
+	ul.comments {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+
+		.author {
+			float: right;
+			a {
+				color: @brown;
+				font-weight: bold;
+				font-size: 11px;
+			}
+		}
+
+		li {
+			clear: both;
+			p {
+				padding: 10px;
+				background:#fcfcf5;
+				.drop-shadow(#c6d270);
+				.basic-border-radius(5px);
+			}
+		}
+	}
+
+}
+
+
+
+/* footer */
+#footer {
+	height: auto;
+	background: #687f0d;
+	padding: 10px 0 20px 0;
+	.bottom-border-radius(10px);
+	ul {
+
+		list-style: none;
+
+		li {
+			a {
+				padding-left: 20px;
+				color: @white;
+				display: block;
+			}
+		}
+	}
+
+	h5 {
+		color: @white;
+		padding: 0 20px;
+		margin: 5px 0;
+	}
+}
+
+/****************************************************************************************
+/* mainmenu  
+/***************************************************************************************/
+@mainMenuSettingHeight : 33px;
+@mainMenuSettingLiPadding : 10px;
+@mainMenuSettingBorderTopHeight : 4px;
+@mainMenuSettingLinkColor : @white;
+@mainMenuSettingLinkHoverBackground: #d9e09d;
+@mainMenuSettingLinkHoverColor: @brown;
+
+#mainMenu {
+	ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		height: @mainMenuSettingHeight;
+		.basic-gradient( @lightGreen , @darkGreen );
+		border-top: @mainMenuSettingBorderTopHeight solid @darkGreen;
+		.bottom-border-radius(7px);
+
+		text-align: center;
+
+		li {
+			display: block;
+			float: left;
+						
+			a {
+				display: block;
+				height:100%;
+				line-height: @mainMenuSettingHeight;
+				color: @mainMenuSettingLinkColor;
+				padding: 0 @mainMenuSettingLiPadding;
+				border-left: 1px solid @mainMenuSettingLinkHoverBackground;
+				text-shadow:-1px -1px 0px @darkGreen;				
+				font-size: 12px;
+
+				&:hover {
+					background: @mainMenuSettingLinkHoverBackground;
+					color: @mainMenuSettingLinkHoverColor;
+					text-decoration: none;
+					text-shadow:none;
+				}
+
+			}
+			
+		}
+
+		li:first-child {
+			
+			margin-left: 110px;
+
+			a {
+				border: none;	
+			}
+		}
+
+	}
+}
+
+/****************************************************************************************
+/* frontend buttons 
+/***************************************************************************************/
+/* red button */
+@btnRedBorderColor : #900d07 ;
+@btnRedGradientStartColor : #cf2c16 ;
+@btnRedGradientStopColor : #8c0b06 ;
+
+.btn {
+	font-size: 13px;
+	font-weight: bold;
+	&:hover {
+		background: none;
+	}
+}
+
+.btn-red {
+	border: 1px solid @btnRedBorderColor;
+	.basic-gradient(@btnRedGradientStartColor,@btnRedGradientStopColor);
+	color: #fff;
+	text-shadow:0 0 3px @btnRedGradientStopColor;
+	&:hover {		
+		color: #fff;		
+		.basic-gradient(@btnRedGradientStopColor,@btnRedGradientStartColor);
+	}
+}
+
+/* green button */
+@btnGreenBorderColor : #627b08 ;
+@btnGreenGradientStartColor : #a7ba24 ;
+@btnGreenGradientStopColor : #4c6505 ;
+
+.btn-green {
+	border: 1px solid @btnGreenBorderColor;	
+	.basic-gradient(@btnGreenGradientStartColor,@btnGreenGradientStopColor);
+	color: #fff;
+	text-shadow:0 0 3px @btnGreenGradientStopColor;
+	&:hover {		
+		color: #fff;		
+		.basic-gradient(@btnGreenGradientStopColor,@btnGreenGradientStartColor);
+	}	
+}
+
+/****************************************************************************************
+/* page content  
+/***************************************************************************************/
+@contentH1size : 22px;
+@contentH2size : 18px;
+@contentH3size : 18px;
+@contentH4size : 18px;
+@contentH5size : 18px;
+
+@contentH1color : #A0B325;
+@contentH2color : #A0B325;
+@contentH3color : #A0B325;
+@contentH4color : #A0B325;
+@contentH5color : #A0B325;
+
+#content {
+	background: @contentBackground;	
+	color: @brown;
+	padding: 0 10px;
+	h1 , h2 , h3 , h4 , h5 {
+		margin: 0;
+		padding: 10px 0;
+	}
+
+	h1 {
+		font-size: @contentH1size;
+		color: @contentH1color;
+		font-weight: normal;
+	}
+
+	h2 {
+		font-size: @contentH2size;
+		color: @contentH2color;
+		font-weight: normal;
+	}
+
+	h3 {
+		font-size: @contentH3size;
+		color: @contentH3color;
+		font-weight: normal;
+	}
+
+	h4 {
+		font-size: @contentH4size;
+		color: @contentH4color;
+		font-weight: normal;
+	}
+
+	h5 {
+		font-size: @contentH5size;
+		color: @contentH5color;
+		font-weight: normal;
+	}
+}

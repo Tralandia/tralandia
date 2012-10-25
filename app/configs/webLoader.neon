@@ -2,6 +2,11 @@ parameters:
 	webloader:
 		packages:
 
+			customui:
+				
+				css:
+					- BootstrapCustomUI/ui.css
+
 			phrase:
 				js:
 					- phrase/phrase.js
@@ -14,6 +19,10 @@ parameters:
 					- admin/main.js
 				css:
 					- admin/_bootstrap.less
+			Front:
+				css:					
+					- Front/main.css.less
+					- Front/form-registration.less
 			front:
 				css:
 					- front/default.css
@@ -126,9 +135,12 @@ parameters:
 				- %webloader.packages.fileUpload%
 				- %webloader.packages.bootstrap%
 				- %webloader.packages.phrase%
+				- %webloader.packages.customui%
 
 			Front: 
 				- %webloader.packages.front%
 
+			Gregor:
+				-  %webloader.packages.Front%	
 			'Gregor:Admin': %webloader.sets.Admin%
 

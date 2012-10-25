@@ -12,8 +12,9 @@
 {if !$control->isSubGrid}
 {$control['gridForm']->render('begin')}
 {/if}
-<table n:attr="style => $control->width ? 'width: '.$control->width.';'" class="grid table table-striped">
+<table n:attr="style => $control->width ? 'width: '.$control->width.';'" class="grid table table-striped table-bordered">
 	<thead>
+		<!--
 		<tr n:if="$control->gridName">
 			<th colspan="{$colsCount}" class="grid-name">{$control->gridName}</th>
 		</tr>
@@ -27,13 +28,11 @@
 					</div>
 					<div class="grid-upper-info">
 						<a n:href="this" class="grid-current-link" title="Získat odkaz na tuto stránku"></a>
-						<div class="grid-results">
-							celkem {$results} {($results == 1) ? "záznam" : (($results >= 2 && $results <= 4) ? "záznamy" : "záznamů")}{if $paginate} {if (boolean)$results}(Zobrazeno {$viewedFrom} až {$viewedTo}){/if}{/if}
-						</div>
 					</div>
 				</div>
 			</th>
 		</tr>
+	-->
 		<tr n:foreach="$flashes as $flash" class="grid-flash {$flash->type}">
 			<th colspan="{$colsCount}">
 				<span>{$flash->message}</span>
@@ -97,6 +96,7 @@
 				{/if}
 			</td>
 			<td n:if="$control->hasButtons() || $control->hasFilterForm()" n:attr="class => array(grid-row-cell, $control->isEditable() && $control->activeRowForm == $row[$primaryKey] ? 'grid-edited-cell')">
+				<div class="pull-right">
 				{if $control->activeRowForm == $row[$primaryKey] && $control->isEditable()}
 					{$control['gridForm'][$control->name]['rowForm']['send']->getControl()}
 					<a class="grid-rowForm-cancel grid-ajax" n:href="this" title="Zrušit editaci"></a>
@@ -106,6 +106,7 @@
 						{control $button $row}
 					{/foreach}
 				{/if}
+				</div>
 			</td>
 		</tr>
 		<tr n:if="$control->hasActiveSubGrid() && $control->activeSubGridId == $row[$primaryKey]" class="grid-subgrid-row" align="center">
@@ -135,13 +136,22 @@
 				</span>
 			</td>
 		</tr>
-		<tr n:if="$paginate" class="grid-panel">
-			<td colspan="{$colsCount}">
-				{control paginator}
-			</td>
-		</tr>
+
 	</tfoot>
 </table>
+
+
+<div class="row">
+<div n:if="$results" class="span4">
+	celkem <strong>{$results}</strong> {($results == 1) ? "záznam" : (($results >= 2 && $results <= 4) ? "záznamy" : "záznamů")}{if $paginate} {if (boolean)$results}(Zobrazeno {$viewedFrom} až {$viewedTo}){/if}{/if}
+</div>
+<div n:if="$paginate" class="span8">
+	{control paginator}
+</div>	
+</div>
+
+<div class="clearfix"></div>
+
 {if !$control->isSubGrid}
 {$control['gridForm']->render('end')}
 {/if}
