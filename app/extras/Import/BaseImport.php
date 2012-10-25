@@ -31,12 +31,6 @@ class BaseImport {
 			),
 			'subsections' => array(),
 		),
-		'taskTypes' => array(
-			'entities' => array(
-				'\Task\Type' => array(),
-			),
-			'subsections' => array(),
-		),
 		'userRoles' => array(
 			'entities' => array(
 				'\User\Role' => array(),
@@ -156,6 +150,13 @@ class BaseImport {
 		// 	),
 		// 	'subsections' => array(),
 		// ),
+		'taskTypes' => array(
+			'entities' => array(
+				'\Task\Type' => array(),
+			),
+			'subsections' => array(),
+			'saveImportStatus' => FALSE,
+		),
 	);
 
 	public $savedVariables = array();
@@ -410,10 +411,15 @@ class BaseImport {
 		$return = array();
 		$nextToImport = TRUE;
 		foreach ($this->sections as $key => $value) {
+			if(array_key_exists('saveImportStatus', $value)) {
+				$saveImportStatus = $value['saveImportStatus'];
+			} else {
+				$saveImportStatus = TRUE;
+			}
 			$return[$key] = array(
 				'name' => ucfirst($key),
-				'undo' => (bool)((int)$this->savedVariables['importedSections'][$key] > 0),
-				'import' => (!$this->savedVariables['importedSections'][$key] && $nextToImport == TRUE),
+				'undo' => ($saveImportStatus ? (bool)((int)$this->savedVariables['importedSections'][$key] > 0) : TRUE),
+				'import' => ($saveImportStatus ? (!$this->savedVariables['importedSections'][$key] && $nextToImport == TRUE) : TRUE),
 				'subsections' => array(),
 				'rootImport' => !(bool)count($value['subsections']),
 			);

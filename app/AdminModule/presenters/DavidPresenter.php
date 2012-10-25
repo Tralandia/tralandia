@@ -199,8 +199,8 @@ class DavidPresenter extends BasePresenter {
 	public function actionList() {
 
 		// $tm = $this->context->taskManager;
-		$languages = $this->context->languageRepository->findSupported();
-		d($this->context->phraseRepository->findMissingTranslations($languages));
+		$scanner = $this->context->missingTranslationsScanner;
+		$scanner->run();
 
 	}
 	
