@@ -9,6 +9,9 @@ use Nette, Extras;
  */
 class Text extends Base {
 
+	/** @var Extras\Models\Entity\IEntity */
+	protected $entity;
+
 	/**
 	 * @param string
 	 * @param string
@@ -17,6 +20,7 @@ class Text extends Base {
 	public function __construct($name, $label, Extras\Models\Entity\IEntity $entity) {
 		$this->name = $name;
 		$this->label = $label;
+		$this->entity = $entity;
 		$this->setValueGetter(new Extras\Callback($entity, $this->getterMethodName($this->name)));
 		$this->setValueSetter(new Extras\Callback($entity, $this->setterMethodName($this->name)));
 	}

@@ -33,6 +33,8 @@ class WaccoPresenter extends BasePresenter {
 		$repo = $this->context->model->getRepository('Entity\Language');
 		$entity = $repo->find(144);
 
+		debug($this->context->model->getClassMetadata('Entity\Language')->getReflectionProperty('genders'));
+
 		$model = $this->context->model;
 		$configurator = new Extras\Config\Configurator($this->context->params['settingsDir'] . '/presenters/language.neon');
 		$generator = $this->context->createFormGenerator($configurator, $entity)->build();

@@ -43,6 +43,7 @@ class Language extends \Entity\BaseEntityDetails {
 	/**
 	 * @var json
 	 * @ORM\Column(type="json", nullable=true)
+	 * @EA\Json(structure="{polozka1: null, polozka2: null, polocka3: [p1: null, p2: true, p3: 99, p4: 'Yes']}")
 	 */
 	protected $genders;
 

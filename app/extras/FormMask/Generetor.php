@@ -12,9 +12,6 @@ class Generator extends Nette\Object {
 	/** @var Extras\FormMask\Mask */
 	protected $entity;
 
-	/** @var Extras\Reflection\Entity\ClassType */
-	protected $entityReflection;
-
 	/** @var Extras\FormMask\Mask */
 	protected $mask;
 
@@ -31,9 +28,11 @@ class Generator extends Nette\Object {
 	 */
 	public function __construct(Extras\FormMask\Mask $mask, Extras\Config\Configurator $configurator, Extras\Models\Entity\IEntity $entity) {
 		$this->entity = $entity;
-		$this->entityReflection = Extras\Reflection\Entity\ClassType::from($entity);
+		//$this->entityReflection = Extras\Reflection\Entity\ClassType::from($entity);
 		$this->configurator = $configurator;
-		$this->mask = $mask;	
+		$this->mask = $mask;
+
+		//debug($this->entityReflection->getAnnotation('EA\JsonStructure'));
 	}
 
 	/**
