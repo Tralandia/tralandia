@@ -5,7 +5,7 @@
 <div class="tabsContent" n:inner-foreach="$tabs as $id => $v">
 	<div id="tab-{$v->id}" class="{$v->active ? active} tabContent">
 		{if $v->isControl()}
-			{*$v->content->render()*}
+			{dump $v}
 		{else}
 			{$v->content}
 		{/if}

@@ -12,17 +12,19 @@ class Translator implements \Nette\Localization\ITranslator {
 	protected $cache;
 
 	protected $phraseRepository;
+	protected $phraseServiceFactory;
 
-	public function __construct(Environment $environment, $phraseRepository, Caching\IStorage $cacheStorage) {
+	public function __construct(Environment $environment, $phraseRepository, $phraseServiceFactory, Caching\Cache $cache) {
 		$this->language = $environment->getLanguage();
 		$this->phraseRepository = $phraseRepository;
-		$this->cache = new Caching\Cache($cacheStorage, 'Translator');
+		$this->phraseServiceFactory = $phraseServiceFactory;
+		$this->cache = $cache;
 	}
 	
 	public function translate($phrase, $node = NULL, $count = NULL, array $variables = NULL) {
 		$translation = $this->getTranslation($phrase);
 
-		return (gettype($phrase)=='object'? $phrase->id: $phrase);
+		return $translation;
 	}
 
 	public function getDefaultLanguage() {
@@ -44,11 +46,15 @@ class Translator implements \Nette\Localization\ITranslator {
 		if(!$translation = $this->cache->load($translationKey)) {
 			$translation = null;
 			
-			if(!$phrase instanceof \Service\Phrase\Phrase) {
+			if (is_numeric($phrase)) {
 				$phrase = $this->phraseRepository->find($phrase);
 				if(!$phrase) {
 					$translation = '{!'.$phraseId.'!}';
 				}
+			}
+
+			if ($phrase instanceof \Entity\Phrase\Phrase) {
+				$phrase = $this->phraseServiceFactory->create($phrase);
 			}
 
 			if (!$translation && $translation = $phrase->getTranslation($this->language)) {

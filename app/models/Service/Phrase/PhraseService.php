@@ -17,7 +17,7 @@ class PhraseService extends Service\BaseService {
 	 */
 	public function getTranslation(Entity\Language $language) {
 		return $this->entity->getTranslations()->filter(function($entity) use ($language) {
-			return $entity->language == $language;
+			return $entity->language->id == $language->id;
 		})->current();
 	}
 

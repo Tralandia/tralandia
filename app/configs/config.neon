@@ -83,7 +83,7 @@ common:
 		environment: Extras\Environment(@languageRepository, @locationRepository)
 
 
-		translator: Extras\Translator(@environment, @phraseRepository, @translatorCache)
+		translator: Extras\Translator(@environment, @phraseRepository, @phraseServiceFactory, @translatorCache)
 
 		settings:
 			factory: Extras\PresenterSettings::factory
