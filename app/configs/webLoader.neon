@@ -28,6 +28,7 @@ parameters:
 				js:
 					- jQuery/jquery.js
 					- Front/js/fancy-checkboxes.js
+					- Front/js/bootstrap-dropdown.js
 			front:
 				css:
 					- front/default.css

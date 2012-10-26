@@ -256,14 +256,17 @@ a , a:hover {
 }
 
 .radiusSeparator2 {
-	height:20px;
+	height:10px;
 	background: @supfooterBg;
 
 	div {
 		background: @white;
-		height:20px;
+		height:10px;
 		.bottom-border-radius(10px);
-		.drop-shadow(#ddd);
+		border-bottom: 1px solid #ddd;
+		border-right: 1px solid #ddd;
+		border-left: 1px solid #ddd;
+
 		position: relative;
 		z-index: 5000;
 	}
@@ -350,6 +353,7 @@ border-top-left-radius: 7px;
 
 		h1 {
 			font-size: 15px;
+			line-height: 20px;
 			margin: 0;
 			padding: 0;
 			margin-left: 10px;
@@ -360,9 +364,9 @@ border-top-left-radius: 7px;
 
 	#siteOptions {
 		
-		height:25px;
-		line-height:25px;
-		padding:0 10px;
+		height:27px;
+		line-height:27px;
+		
 		background:@white;
 		float: right;
 		position: relative;
@@ -375,11 +379,80 @@ border-top-left-radius: 7px;
 		border-top-right-radius: 7px;
 		border-bottom-left-radius: 5px;
 
+		ul {
+			list-style: none;
+			padding: 0 ;
+			padding-right: 20px;
+			margin: 0;			
+			li {
+				display: block;
+				float: left;
+				padding: 2px 5px;
+
+
+			}
+
+			&.dropdown-menu {
+				padding: 0;
+				border: none;
+				top: 25px;
+				.basic-border-radius(0px);
+				z-index: 4000;
+				li {
+					float: none;
+					padding: 0;
+
+					a {
+
+						&:hover {
+							.basic-gradient(@lightGreen,@darkGreen);
+						}
+					}
+				}
+
+				.btn {
+					background: transparent;
+				}					
+			}
+		}
+
 		color: @brown;
 
 		a {
 			color: @brown;
+			img {
+				border : 1px solid @lightGreen;
+			}
+
+			&.dropdown-toggle {
+				
+				position: relative;
+				top: -7px;
+
+				padding:0; 
+
+				&:hover {
+					text-decoration: none;
+				}
+
+				&:before {
+					font-family: "entypo";
+					content:'\25BE';
+					position: relative;
+					top: 8px;
+					left: 100%;
+					display: block;
+					font-size: 45px;
+					color: @darkGreen;
+
+					&:hover {
+
+					}
+				}
+			}
 		}
+
+
 	}
 
 /* sidebar */
