@@ -12,7 +12,7 @@ use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="rental", indexes={@ORM\index(name="status", columns={"status"}), @ORM\index(name="timeDeleted", columns={"timeDeleted"}), @ORM\index(name="slug", columns={"slug"}), @ORM\index(name="calendarUpdated", columns={"calendarUpdated"})})
+ * @ORM\Table(name="rental", indexes={@ORM\index(name="status", columns={"status"}), @ORM\index(name="slug", columns={"slug"}), @ORM\index(name="calendarUpdated", columns={"calendarUpdated"})})
  * @EA\Primary(key="id", value="slug")
  */
 class Rental extends \Entity\BaseEntity {
@@ -45,11 +45,6 @@ class Rental extends \Entity\BaseEntity {
 	 */
 	protected $types;
 
-	/**
-	 * @var datetime
-	 * @ORM\Column(type="datetime", nullable=true)
-	 */
-	protected $timeDeleted;
 
 	/**
 	 * @var decimal
@@ -61,7 +56,7 @@ class Rental extends \Entity\BaseEntity {
 	 * @var Collection
 	 * @ORM\ManyToMany(targetEntity="Information", mappedBy="rentals")
 	 */
-	protected $missingInformations;
+	protected $missingInformation;
 
 	/**
 	 * @var Collection
@@ -192,7 +187,7 @@ class Rental extends \Entity\BaseEntity {
 		parent::__construct();
 
 		$this->types = new \Doctrine\Common\Collections\ArrayCollection;
-		$this->missingInformations = new \Doctrine\Common\Collections\ArrayCollection;
+		$this->missingInformation = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->locations = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->spokenLanguages = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->amenities = new \Doctrine\Common\Collections\ArrayCollection;
@@ -316,25 +311,6 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \DateTime
-	 * @return \Entity\Rental\Rental
-	 */
-	public function setTimeDeleted(\DateTime $timeDeleted)
-	{
-		$this->timeDeleted = $timeDeleted;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \DateTime|NULL
-	 */
-	public function getTimeDeleted()
-	{
-		return $this->timeDeleted;
-	}
-		
-	/**
 	 * @param decimal
 	 * @return \Entity\Rental\Rental
 	 */
@@ -369,8 +345,8 @@ class Rental extends \Entity\BaseEntity {
 	 */
 	public function addMissingInformation(\Entity\Rental\Information $missingInformation)
 	{
-		if(!$this->missingInformations->contains($missingInformation)) {
-			$this->missingInformations->add($missingInformation);
+		if(!$this->missingInformation->contains($missingInformation)) {
+			$this->missingInformation->add($missingInformation);
 		}
 		$missingInformation->addRental($this);
 
@@ -383,8 +359,8 @@ class Rental extends \Entity\BaseEntity {
 	 */
 	public function removeMissingInformation(\Entity\Rental\Information $missingInformation)
 	{
-		if($this->missingInformations->contains($missingInformation)) {
-			$this->missingInformations->removeElement($missingInformation);
+		if($this->missingInformation->contains($missingInformation)) {
+			$this->missingInformation->removeElement($missingInformation);
 		}
 		$missingInformation->removeRental($this);
 
@@ -394,9 +370,9 @@ class Rental extends \Entity\BaseEntity {
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Rental\Information
 	 */
-	public function getMissingInformations()
+	public function getMissingInformation()
 	{
-		return $this->missingInformations;
+		return $this->missingInformation;
 	}
 		
 	/**
@@ -447,6 +423,16 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
+	 * @return \Entity\Rental\Rental
+	 */
+	public function unsetAddress()
+	{
+		$this->address = NULL;
+
+		return $this;
+	}
+		
+	/**
 	 * @return \Extras\Types\Address|NULL
 	 */
 	public function getAddress()
@@ -461,6 +447,16 @@ class Rental extends \Entity\BaseEntity {
 	public function setLatitude(\Extras\Types\Latlong $latitude)
 	{
 		$this->latitude = $latitude;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Rental\Rental
+	 */
+	public function unsetLatitude()
+	{
+		$this->latitude = NULL;
 
 		return $this;
 	}
@@ -485,6 +481,16 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
+	 * @return \Entity\Rental\Rental
+	 */
+	public function unsetLongitude()
+	{
+		$this->longitude = NULL;
+
+		return $this;
+	}
+		
+	/**
 	 * @return \Extras\Types\Latlong|NULL
 	 */
 	public function getLongitude()
@@ -499,6 +505,16 @@ class Rental extends \Entity\BaseEntity {
 	public function setSlug($slug)
 	{
 		$this->slug = $slug;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Rental\Rental
+	 */
+	public function unsetSlug()
+	{
+		$this->slug = NULL;
 
 		return $this;
 	}
@@ -537,6 +553,16 @@ class Rental extends \Entity\BaseEntity {
 	public function setInterview($interview)
 	{
 		$this->interview = $interview;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Rental\Rental
+	 */
+	public function unsetInterview()
+	{
+		$this->interview = NULL;
 
 		return $this;
 	}
@@ -734,6 +760,16 @@ class Rental extends \Entity\BaseEntity {
 	public function setPricelists($pricelists)
 	{
 		$this->pricelists = $pricelists;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Rental\Rental
+	 */
+	public function unsetPricelists()
+	{
+		$this->pricelists = NULL;
 
 		return $this;
 	}

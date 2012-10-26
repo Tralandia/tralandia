@@ -27,12 +27,12 @@ class Information extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Rental\Rental", inversedBy="missingInformations")
+	 * @ORM\ManyToMany(targetEntity="Entity\Rental\Rental", inversedBy="missingInformation")
 	 */
 	protected $rentals;
 
 
-		//@entity-generator-code --- NEMAZAT !!!
+					//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()

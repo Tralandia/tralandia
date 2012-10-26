@@ -163,7 +163,7 @@ class Invoice extends \Entity\BaseEntity {
 	 */
 	protected $paymentInfo;
 
-	//@entity-generator-code --- NEMAZAT !!!
+									//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()

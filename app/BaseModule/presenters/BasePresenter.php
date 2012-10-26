@@ -31,6 +31,17 @@ abstract class BasePresenter extends Presenter {
 	public function setContext(\Nette\DI\Container $dic) {
 	}
 
+	public function setProperty($name, $value = NULL) {
+		if($this->{$name}) {
+			throw new Nette\InvalidStateException("Property '$name' has already been set");
+		}
+		if(func_num_args() == 1) {
+			$this->{$name} = $this->context->{$name};
+		} else {
+			$this->{$name} = $value;
+		}
+	}
+
 	public function getPreviousBackLink() {
 		$environmentSection = $this->context->session->getSection('environment');
 		return $environmentSection->previousLink;
@@ -199,7 +210,7 @@ abstract class BasePresenter extends Presenter {
 				$matchKey = str_replace('_', '', $match);
 			}
 
-			if (gettype(current($data))=='object') {
+			if (gettype($data)=='object') {
 				$value = '$item->'.str_replace('.', '->', substr($matchKey, 1, -1));
 			} else {
 				$value = '$item["'.str_replace('.', '"]["', substr($matchKey, 1, -1)).'"]';

@@ -147,7 +147,8 @@ class AdvancedCheckboxList extends BaseControl {
 		$label = Html::el('label')->addClass('checkbox '.$this->getOption('columnClass'));
 		//debug($this->getOption('columns'), $this->items);
 		
-		$sortedItems = \Tools::reorganizeArray($this->items, $this->getOption('columns'));
+		$columns = is_numeric($this->getOption('columns')) ? (int)$this->getOption('columns') : 3;
+		$sortedItems = \Tools::reorganizeArray($this->items, $columns);
 		//debug($sortedItems);
 		foreach ($sortedItems as $k => $val) {
 			$counter++;
