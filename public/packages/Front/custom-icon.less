@@ -1,0 +1,60 @@
+
+@font-face {
+    font-family: 'entypo';
+    src: url('../packages/Front/fonts/entypo.eot');
+    src: url('../packages/Front/fonts/entypo.eot?#iefix') format('embedded-opentype'),
+         url('../packages/Front/fonts/entypo.woff') format('woff'),
+         url('../packages/Front/fonts/entypo.ttf') format('truetype'),
+         url('../packages/Front/fonts/entypo.svg#entypo') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'entypo-social';
+    src: url('../packages/Front/fonts/entypo-social.eot');
+    src: url('../packages/Front/fonts/entypo-social.eot?#iefix') format('embedded-opentype'),
+         url('../packages/Front/fonts/entypo-social.woff') format('woff'),
+         url('../packages/Front/fonts/entypo-social.ttf') format('truetype'),
+         url('../packages/Front/fonts/entypo-social.svg#entypo-social') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+/* global foundicon styles */
+[class*="entypo-"] {
+  display: inline;
+  width: auto;
+  height: auto;
+  line-height: inherit;
+  vertical-align: baseline;
+  background-image: none;
+  background-position: 0 0;
+  background-repeat: repeat;
+}
+
+[class*="entypo-"]:before {
+  font-family: "entypo";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 40px;
+  text-decoration: inherit;
+}
+
+.btn span {
+    position: relative;
+    top: -3px;
+
+    &:before {
+        position: relative;
+        top: 5px;
+    }
+}
+
+.entypo-ok:before {content:'\2713';}
+.entypo-no:before {content:'\274C';}
+/* arrows */
+.entypo-arrow-right:before {content:'\E4AE';}
+.entypo-reload:before {content:'\E717';}

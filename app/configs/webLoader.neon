@@ -21,8 +21,13 @@ parameters:
 					- admin/_bootstrap.less
 			Front:
 				css:					
+					- Front/custom-icon.less
 					- Front/main.css.less
 					- Front/form-registration.less
+
+				js:
+					- jQuery/jquery.js
+					- Front/js/fancy-checkboxes.js
 			front:
 				css:
 					- front/default.css

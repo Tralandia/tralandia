@@ -35,7 +35,7 @@
 @inputErrorBackgroundColor : #fef7f1;
 @inputHeight : 38px;
 @inputColor: #873300;
-@inputFontSize : 14px;
+@inputFontSize : 16px;
 
 form.registrationForm {
 	
@@ -72,11 +72,11 @@ form.registrationForm {
 	}
 
 	.error-mesage {
-		color: #fff;
+		color: @inputErrorBorderColor;
 		position: relative;
-		top: -6px;
+		top: -9px;
 		padding: 1px 5px;
-		background: @inputErrorBorderColor;
+		font-size: 11px;
 	}
 
 }
@@ -108,6 +108,13 @@ table.table-price {
 			small {
 				color: #A0B325;
 				font-size: 12px;
+			}
+
+			b {
+				font-size: 16px;
+				color: #A0B325;
+				position:relative;
+				top: 10px;
 			}
 		}
 
@@ -159,23 +166,33 @@ table.table-price {
 	}
 }
 
-.box-shadow  {
-	background: #efefef;	
+.light-red  {
+	background: #fde7e4;	
 }
 
+.light-yellow {
+	background: #fff6e4;
+}
+
+.light-green {
+	background: #ecf1cc;
+}
+/****************************************************************************************
+/* options select
+/***************************************************************************************/
 
 .optionGreen , .optionGray , .optionOrange {
 	.basic-border-radius(3px);
 	margin-bottom: 10px;
 	color: #fff;
 	width: 702px;
-	border: 1px solid #ced88e;
+	border: 1px solid #96a824;
 	div {		
 		padding: 5px 0;
 
 		label {
-			padding: 0 0 0 25px;
-			margin: 0;
+			padding: 0 0 0 35px;
+			margin: 0 0 0 10px;
 			input[type=radio] {
 			}
 		}
@@ -214,3 +231,16 @@ table.table-price {
 		.basic-gradient(#f25000,#f88603);
 	}
 }
+
+/****************************************************************************************
+/* fancy form chceckbox and radio buttons
+/***************************************************************************************/
+
+.has-js .label_check,
+.has-js .label_radio    { padding-left: 34px; }
+.has-js .label_radio    { background: url(../packages/Front/img/radio-off.png) no-repeat; }
+.has-js .label_check    { background: url(../packages/Front/img/check-off.png) no-repeat; }
+.has-js label.c_on      { background: url(../packages/Front/img/check-on.png) no-repeat; }
+.has-js label.r_on      { background: url(../packages/Front/img/radio-on.png) no-repeat; }
+.has-js .label_check input,
+.has-js .label_radio input  { position: absolute; left: -9999px; }
