@@ -168,6 +168,8 @@ toth < development:
 			user: root
 			password: ""
 
+cibi < development:
+
 test < development:
 	parameters:
 		envOptions:
