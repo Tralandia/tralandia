@@ -63,7 +63,11 @@ final class Callback extends Nette\Object
 		if (!is_callable($this->cb)) {
 			throw new Nette\InvalidStateException("Callback '$this' is not callable.");
 		}
-		return call_user_func_array($this->cb, (array)$this->params);
+		$args = func_get_args();
+		if (is_array($this->params)) {
+			$args = array_merge($this->params, $args);
+		}
+		return call_user_func_array($this->cb, $args);
 	}
 
 	/**

@@ -1,0 +1,116 @@
+services:
+	attractionRepository: @model::getRepository('Entity\Attraction\Attraction')
+
+	attractionTypeRepository: @model::getRepository('Entity\Attraction\Type')
+
+	companyBankAccountRepository: @model::getRepository('Entity\Company\BankAccount')
+
+	companyRepository: @model::getRepository('Entity\Company\Company')
+
+	companyOfficeRepository: @model::getRepository('Entity\Company\Office')
+
+	contactCacheRepository: @model::getRepository('Entity\ContactCache')
+
+	currencyRepository: @model::getRepository('Entity\Currency')
+
+	domainRepository: @model::getRepository('Entity\Domain')
+
+	emailBatchRepository: @model::getRepository('Entity\Email\Batch')
+
+	emailTemplateRepository: @model::getRepository('Entity\Email\Template')
+
+	emailTemplateTypeRepository: @model::getRepository('Entity\Email\TemplateType')
+
+	expenseRepository: @model::getRepository('Entity\Expense\Expense')
+
+	expenseTypeRepository: @model::getRepository('Entity\Expense\Type')
+
+	invoiceRepository: @model::getRepository('Entity\Invoice\Invoice')
+
+	invoiceCouponRepository: @model::getRepository('Entity\Invoice\Coupon')
+
+	invoiceItemRepository: @model::getRepository('Entity\Invoice\Item')
+
+	invoiceMarketingRepository: @model::getRepository('Entity\Invoice\Marketing')
+
+	invoicePackageRepository: @model::getRepository('Entity\Invoice\Package')
+
+	invoiceServiceRepository: @model::getRepository('Entity\Invoice\Service')
+
+	invoiceServiceDurationRepository: @model::getRepository('Entity\Invoice\ServiceDuration')
+
+	invoiceServiceTypeRepository: @model::getRepository('Entity\Invoice\ServiceType')
+
+	invoiceUseTypeRepository: @model::getRepository('Entity\Invoice\UseType')
+
+	languageRepository: @model::getRepository('Entity\Language')
+
+	locationRepository: @model::getRepository('Entity\Location\Location')
+
+	# locationTravelingRepository: @model::getRepository('Entity\Location\Traveling')
+
+	locationTypeRepository: @model::getRepository('Entity\Location\Type')
+
+	logChangeRepository: @model::getRepository('Entity\Log\Change')
+
+	logChangeTypeRepository: @model::getRepository('Entity\Log\ChangeType')
+
+	logSystemRepository: @model::getRepository('Entity\Log\System')
+
+	mediumRepository: @model::getRepository('Entity\Medium\Medium')
+
+	mediumTypeRepository: @model::getRepository('Entity\Medium\Type')
+
+	pageRepository: @model::getRepository('Entity\Page')
+
+	phraseRepository: @model::getRepository('Entity\Phrase\Phrase')
+
+	phraseTypeRepository: @model::getRepository('Entity\Phrase\Type')
+
+	rentalAmenityRepository: @model::getRepository('Entity\Rental\Amenity')
+
+	rentalAmenityTypeRepository: @model::getRepository('Entity\Rental\AmenityType')
+
+	rentalInformationRepository: @model::getRepository('Entity\Rental\Information')
+
+	rentalFulltextRepository: @model::getRepository('Entity\Rental\Fulltext')
+
+	rentalRepository: @model::getRepository('Entity\Rental\Rental')
+
+	rentalTypeRepository: @model::getRepository('Entity\Rental\Type')
+
+	routingPathSegmentRepository: @model::getRepository('Entity\Routing\PathSegment')
+
+	routingPathSegmentOldRepository: @model::getRepository('Entity\Routing\PathSegmentOld')
+
+	seoBackLinkRepository: @model::getRepository('Entity\Seo\BackLink')
+
+	seoSeoUrlRepository: @model::getRepository('Entity\Seo\SeoUrl')
+
+	seoTitleSuffixRepository: @model::getRepository('Entity\Seo\TitleSuffix')
+
+	taskRepository: @model::getRepository('Entity\Task\Task')
+
+	taskTypeRepository: @model::getRepository('Entity\Task\Type')
+
+	ticketMessageRepository: @model::getRepository('Entity\Ticket\Message')
+
+	ticketRepository: @model::getRepository('Entity\Ticket\Ticket')
+
+	userCombinationRepository: @model::getRepository('Entity\User\Combination')
+
+	userRentalQuestionRepository: @model::getRepository('Entity\User\RentalQuestion')
+
+	userRentalReservationRepository: @model::getRepository('Entity\User\RentalReservation')
+
+	userRentalReviewRepository: @model::getRepository('Entity\User\RentalReview')
+
+	userRentalToFriendRepository: @model::getRepository('Entity\User\RentalToFriend')
+
+	userRoleRepository: @model::getRepository('Entity\User\Role')
+
+	userSiteOwnerReviewRepository: @model::getRepository('Entity\User\SiteOwnerReview')
+
+	userSiteVisitorReviewRepository: @model::getRepository('Entity\User\SiteVisitorReview')
+
+	userRepository: @model::getRepository('Entity\User\User')

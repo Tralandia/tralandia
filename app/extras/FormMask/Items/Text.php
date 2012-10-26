@@ -2,7 +2,7 @@
 
 namespace Extras\FormMask\Items;
 
-use Nette;
+use Nette, Extras;
 
 /**
  * Text polozka masky
@@ -10,12 +10,14 @@ use Nette;
 class Text extends Base {
 
 	/**
-	 * Prida polozku do formulara
-	 * @param Nette\Forms\Form
-	 * @return Nette\Forms\IControl
+	 * @param string
+	 * @param string
+	 * @param Extras\Models\Entity\IEntity
 	 */
-	public function extend(Nette\Forms\Form $form) {
-		return $form->addText($this->getName(), $this->getLabel())
-			->setDefaultValue($this->getValue());
+	public function __construct($name, $label, Extras\Models\Entity\IEntity $entity) {
+		$this->name = $name;
+		$this->label = $label;
+		$this->setValueGetter(new Extras\Callback($entity, $this->getterMethodName($this->name)));
+		$this->setValueSetter(new Extras\Callback($entity, $this->setterMethodName($this->name)));
 	}
 }

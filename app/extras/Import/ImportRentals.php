@@ -87,8 +87,6 @@ class ImportRentals extends BaseImport {
 				$rental->addType($context->rentalTypeRepository->findOneByOldId($oldRentalTypesEn[$value]));
 			}
 
-			$rental->timeDeleted = fromStamp($x['time_deleted']);
-
 			// Locations
 			$rental->addLocation($context->locationRepository->findOneBy(array('oldId' => $x['country_id'], 'type' => $locationTypes['country'])));
 

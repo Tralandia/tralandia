@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Repository\LanguageRepository")
  * @ORM\Table(name="language", indexes={@ORM\index(name="iso", columns={"iso"}), @ORM\index(name="supported", columns={"supported"})})
  * @EA\Primary(key="id", value="iso")
  */
@@ -85,12 +85,6 @@ class Language extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Location\Location", inversedBy="languages", cascade={"persist"})
-	 */
-	protected $locations;
-
-	/**
-	 * @var Collection
 	 * @ORM\ManyToMany(targetEntity="Entity\Rental\Rental", inversedBy="spokenLanguages")
 	 */
 	protected $rentals;
@@ -109,7 +103,6 @@ class Language extends \Entity\BaseEntityDetails {
 	{
 		parent::__construct();
 
-		$this->locations = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->rentals = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->backLinks = new \Doctrine\Common\Collections\ArrayCollection;
 	}
@@ -421,27 +414,6 @@ class Language extends \Entity\BaseEntityDetails {
 	public function getVariationDetails()
 	{
 		return $this->variationDetails;
-	}
-		
-	/**
-	 * @param \Entity\Location\Location
-	 * @return \Entity\Language
-	 */
-	public function addLocation(\Entity\Location\Location $location)
-	{
-		if(!$this->locations->contains($location)) {
-			$this->locations->add($location);
-		}
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Location\Location
-	 */
-	public function getLocations()
-	{
-		return $this->locations;
 	}
 		
 	/**

@@ -7,9 +7,9 @@ use	Extras\Annotation as EA;
 
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Repository\Phrase\TranslationRepository")
  * @ORM\Table(name="phrase_translation", indexes={@ORM\index(name="timeTranslated", columns={"timeTranslated"}), @ORM\index(name="checked", columns={"checked"})})
- * @EA\Primary(key="id", value="translation")
+ * @EA\Primary(key="id", value="")
  */
 class Translation extends \Entity\BaseEntity {
 
@@ -24,13 +24,6 @@ class Translation extends \Entity\BaseEntity {
 	 * @ORM\ManyToOne(targetEntity="\Entity\Language", cascade={"persist"})
 	 */
 	protected $language;
-
-	/**
-	 * @var text
-	 * @ORM\Column(type="text", nullable=true)
-	 */
-	# @todo toto vyhodit!
-	protected $translation;
 
 	/**
 	 * @var json
@@ -63,7 +56,7 @@ class Translation extends \Entity\BaseEntity {
 	protected $checked;
 
 	public function __toString() {
-		return $this->translation;
+		return $this->variations['translation'];
 	}
 
 	//@entity-generator-code --- NEMAZAT !!!

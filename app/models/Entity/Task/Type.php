@@ -64,7 +64,7 @@ class Type extends \Entity\BaseEntityDetails {
 	protected $actions;
 
 
-	//@entity-generator-code --- NEMAZAT !!!
+				//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()

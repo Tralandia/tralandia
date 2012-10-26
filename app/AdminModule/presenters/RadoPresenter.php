@@ -7,6 +7,7 @@ use Nette\Application as NA,
 	Nette\Diagnostics\Debugger,
 	Nette\Utils\Html,
 	Nette\Utils\Strings,
+	Nette\Utils\Arrays,
 	Extras\Import as I,
 	Service\Dictionary as D,
 	Service as S,
@@ -129,8 +130,10 @@ class RadoPresenter extends BasePresenter {
 					$import->doImport($subsection);
 				} else {
 					//$import->undoSection($section);
-					$import->savedVariables['importedSections'][$section] = 1;
-					$import->saveVariables();
+					if(Arrays::get($import->sections, array($section, 'saveImportStatus'), TRUE)) {
+						$import->savedVariables['importedSections'][$section] = 1;
+						$import->saveVariables();
+					}
 					$import->doImport();
 				}
 				$import->saveVariables();

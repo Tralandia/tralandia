@@ -17,23 +17,26 @@ class PhrasesGrid extends AdminGrid{
 		//Předáme zdroj
 		$this->setDataSource($source);
 
+
+
 		$this->addColumn('e_id', 'Id');
+
 		$this->addColumn('e_ready', 'Ready')
 			->setRenderer(function($row) use ($presenter){return $row->e_ready ? 'YES' : 'NO';});
 
 		$this->addButton("action", 'Action')
 			->setText('Action')
 			->setLink(function($row) use ($presenter) {return '/';})
-			->setClass('action');
+			->setClass('action btn btn-mini');
 		
 		$this->addButton("edit", 'Edit')
 			->setText('Edit')
 			->setLink(function($row) use ($presenter) {return '/';})
-			->setClass('edit');
+			->setClass('edit btn btn-info btn-mini');
 		
 		$this->addButton("delete", 'Delete')
 			->setText('Delete')
 			->setLink(function($row) use ($presenter) {return '/';})
-			->setClass('delete');
+			->setClass('delete btn btn-danger btn-mini');
 	}
 }

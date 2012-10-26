@@ -10,14 +10,23 @@ namespace Service\TaskManager;
  */
 class TaskManager extends \Nette\Object {
 
+	private $scanners = array();
+
 	public function __construct() {
 		
 	}
 
-	public function run() {
-		
+	public function addScanner(IScanner $scanner) {
+		$this->scanners[] = $scanner;
 	}
 
+	public function run() {
+		foreach ($this->scanners as $scanner) {
+			if($scanner->needToRun()) {
+				$scanner->run();
+			}
+		}
+	}
 	
 
 }

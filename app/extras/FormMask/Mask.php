@@ -18,36 +18,6 @@ class Mask extends Nette\Object {
 	/** @var array */
 	public $onAfterProcess = array();
 
-	/** type */
-	const TEXT = 'Extras\FormMask\Items\Text';
-	
-	/** type */
-	const TEXTAREA = 'Extras\FormMask\Items\TextArea';
-	
-	/** type */
-	const BUTTON = 'Extras\FormMask\Items\Button';
-	
-	/** type */
-	const SUBMIT = 'Extras\FormMask\Items\Submit';
-	
-	/** type */
-	const HIDDDEN = 'Extras\FormMask\Items\Hidden';
-	
-	/** type */
-	const CHECKBOX = 'Extras\FormMask\Items\Checkbox';
-	
-	/** type */
-	const RADIOLIST = 'Extras\FormMask\Items\RadioList';
-	
-	/** type */
-	const SELECT = 'Extras\FormMask\Items\Select';
-
-	/** type */
-	const PRICE = 'Extras\Forms\Items\Price';
-
-	/** type */
-	const PHRASE = 'Extras\FormMask\Items\Phrase';
-
 	/**
 	 * Pridanie polozky do masky
 	 * @param param
@@ -109,7 +79,7 @@ class Mask extends Nette\Object {
 		foreach ($this->items as $item) {
 			if ($item->getValueSetter()) {
 				$value = $form->getComponent($item->getName())->getValue();
-				$item->getValueSetter()->invokeArgs(array($value));
+				$item->setValue($value);
 			}
 		}
 		$this->onAfterProcess($form);

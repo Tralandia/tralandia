@@ -22,18 +22,31 @@ class PhraseService extends Service\BaseService {
 	}
 
 	public function hasTranslation($language) {
-		return $this->getTranslation($language) instanceof \Entity\Phrase\Translation;
+		return $this->getTranslation($language) instanceof Entity\Phrase\Translation;
 	}
 
 	/**
-	 * Vrati spravny preklad na zaklade jazyka
+	 * Vrati hodnotu prekladu v textovej forme na zaklade jazyka
 	 * @param Entity\Language
 	 * @return Entity\Phrase\Translation
 	 */
-	public function getTranslate22(Entity\Language $language) {
+	public function getTranslateValue(Entity\Language $language) {
 		return $this->entity->getTranslations()->filter(function($entity) use ($language) {
 			return $entity->language == $language;
-		})->current();
+		})->current()->translation;
+	}
+
+	/**
+	 * Ulozi hodnotu prekladu na zaklade jazyka
+	 * @param Entity\Language
+	 * @param string
+	 * @return Phrase
+	 */
+	public function setTranslateValue(Entity\Language $language, $value) {
+		$this->entity->getTranslations()->filter(function($entity) use ($language) {
+			return $entity->language == $language;
+		})->current()->translation = $value;
+		return $this;
 	}
 
 	public function addTranslation($translation) {

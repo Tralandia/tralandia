@@ -2,20 +2,30 @@
 
 namespace Extras\FormMask\Items;
 
-use Nette;
+use Nette, Service, Entity, Extras;
 
 /**
  * Phrase polozka masky
  */
 class Phrase extends Base {
 
+	/** @var Service\Phrase\PhraseService */
+	protected $phraseService;
+
+	/** @var Entity\Language */
+	protected $language;
+
 	/**
-	 * Prida polozku do formulara
-	 * @param Nette\Forms\Form
-	 * @return Nette\Forms\IControl
+	 * @param string
+	 * @param string
+	 * @param Service\Phrase\PhraseService
 	 */
-	public function extend(Nette\Forms\Form $form) {
-		return $form->addText($this->getName(), $this->getLabel())
-			->setDefaultValue($this->getValue());
+	public function __construct($name, $label, Service\Phrase\PhraseService $phraseService, Entity\Language $language) {
+		parent::__construct($name, $label);
+		$this->phraseService = $phraseService;
+		$this->language = $language;
+
+		$this->setValueGetter(new Extras\Callback($this->phraseService, 'getTranslateValue', array($this->language)));
+		$this->setValueSetter(new Extras\Callback($this->phraseService, 'setTranslateValue', array($this->language)));
 	}
 }
