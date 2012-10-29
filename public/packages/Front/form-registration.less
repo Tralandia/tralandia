@@ -39,7 +39,7 @@
 
 form.registrationForm {
 	
-	margin-top: 10px;
+	margin: 10px 0 0 0;
 
 	label {
 
@@ -79,6 +79,29 @@ form.registrationForm {
 		font-size: 11px;
 	}
 
+	.validation {
+		text-align: center;
+		line-height: @inputHeight;
+		color: @inputPureBorderColor;
+		
+
+		.entypo-invalid:before , .entypo-valid:before {
+			font-size: 70px;
+		}
+
+		.entypo-invalid {
+			color: @inputErrorBorderColor;
+		}
+
+		.entypo-loading {
+			display: block;
+			height: 24px;
+			width: 24px;
+			margin: 7px auto 0 auto;
+			background: url('../packages/Front/img/ajax-loader.gif');
+		}
+	}	
+
 }
 
 .checkboxies {
@@ -97,6 +120,7 @@ table.table-price {
 		display: block;
 		float: left;
 		margin-right: 3px;
+		height: 20px;
 	}
 
 	.center {
@@ -107,6 +131,9 @@ table.table-price {
 
 	p {
 		margin: 0;
+		display: block;
+		float: left;
+		width: 92%;
 	}
 
 	tr {
