@@ -41,6 +41,15 @@
 	border-bottom-left-radius: @radius;
 }
 
+.top-border-radius(@size) {
+	-webkit-border-top-left-radius: @size;
+	-webkit-border-top-right-radius: @size;
+	-moz-border-radius-topleft: @size;
+	-moz-border-radius-topright: @size;
+	border-top-left-radius: @size;
+	border-top-right-radius: @size;	
+}
+
 /* basic gradient */
 
 .basic-gradient ( @topCollor , @bottomCollor ){
@@ -476,11 +485,17 @@ a , a:hover {
 						height:auto;
 						width: 100%;
 						padding: 10px 0;
+
 						li {
 							float: none;
+							
+
+							width: 100%;
 							a {
+								
 								padding: 0 10px;
-								display: block;
+								white-space: normal;	
+
 
 								img {
 									position: relative;
@@ -850,4 +865,49 @@ border-top-right-radius: 5px;
 	imput[type=text] {
 
 	}
+}
+
+/****************************************************************************************
+/****************************************************************************************
+/****************************************************************************************
+/* detail object 
+/****************************************************************************************
+/****************************************************************************************
+/***************************************************************************************/
+
+/****************************************************************************************
+/* detail object right sidebar 
+/****************************************************************************************/
+
+.btn.btn-compare{
+	.basic-gradient(#5b78af,#27407e);
+	color: @white;
+	width: 100%;
+	text-shadow: -1px -1px 0px #27407e;
+	.inner-shadow(20px , #6a87bd);
+	&:hover {
+		.basic-gradient(#27407e,#5b78af);
+	}
+}
+
+.sidebarInner {
+	background: #f4f9e1;
+	.bottom-border-radius(5px);
+}
+
+.sidebarTitle {
+	.basic-gradient(#b7c546,#869c19);
+	color: @white;
+	font-weight: bold;
+	text-align: center;
+	height:32px;
+	line-height:32px;
+	border-bottom: 1px solid #9daa5a;
+	.top-border-radius(5px);
+	text-shadow: -1px -1px 0px #7d9506;
+}
+
+.sidebarContact {
+	margin-top: 10px;
+	
 }
