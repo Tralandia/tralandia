@@ -77,11 +77,11 @@ common:
 			class: Security\Acl
 			setup:
 				# - $cache(@aclCache)
-				- $roleRepository(@userRoleRepository)
+				- $roleRepository(@userRoleRepositoryAccessor)
 				- $config(%acl%)
 				- setup()
 
-		environment: Extras\Environment(@languageRepository, @locationRepository)
+		environment: Extras\Environment(@languageRepositoryAccessor, @locationRepositoryAccessor)
 
 		translator: Extras\Translator(@environment, @cacheStorage)
 
@@ -98,8 +98,8 @@ common:
 		autopilot:
 			class: Service\Autopilot\Autopilot
 			setup:
-				- $taskRepository(@taskRepository)
-				- $taskTypeRepository(@taskTypeRepository)
+				- $taskRepository(@taskRepositoryAccessor)
+				- $taskTypeRepository(@taskTypeRepositoryAccessor)
 				- $taskServiceFactory(@taskServiceFactory)
 
 		taskManager: 
@@ -108,7 +108,7 @@ common:
 				- addScanner(@missingTranslationsScanner)
 
 		missingTranslationsScanner:
-			class: Service\TaskManager\MissingTranslationsScanner(@autopilot, @phraseTranslationRepository, @languageRepository)
+			class: Service\TaskManager\MissingTranslationsScanner(@autopilot, @phraseTranslationRepositoryAccessor, @languageRepositoryAccessor)
 
 #		phraseEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Phrase\Phrase')
 #		phraseServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\Phrase\Phrase', @phraseEntityFactory)

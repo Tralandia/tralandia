@@ -201,7 +201,7 @@ class DavidPresenter extends BasePresenter {
 		// $tm = $this->context->taskManager;
 		//$scanner = $this->context->missingTranslationsScanner;
 		//$scanner->run();
-		d($this->context->attractionRepositoryAccessor->get()->find());
+		d($this->context->attractionRepositoryAccessor->get());
 
 	}
 	

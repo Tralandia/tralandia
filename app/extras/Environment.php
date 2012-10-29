@@ -12,20 +12,20 @@ class Environment extends \Nette\Object {
 	private $currency = NULL; // 
 	private $locale = NULL;
 
-	public $languageRepository;
-	public $locationRepository;
+	public $languageRepositoryAccessor;
+	public $locationRepositoryAccessor;
 
-	public function __construct($languageRepository, $locationRepository) {
-		$this->locationRepository = $locationRepository;
-		$this->languageRepository = $languageRepository;
+	public function __construct($languageRepositoryAccessor, $locationRepositoryAccessor) {
+		$this->languageRepositoryAccessor = $languageRepositoryAccessor;
+		$this->locationRepositoryAccessor = $locationRepositoryAccessor;
 	}
 
 	public function getLocation() {
-		return $this->locationRepository->find(56);
+		return $this->locationRepositoryAccessor->get()->find(56);
 	}
 
 	public function getLanguage() {
-		return $this->languageRepository->find(144);
+		return $this->languageRepositoryAccessor->get()->find(144);
 	}
 	
 }
