@@ -50,6 +50,7 @@ class Language extends \Entity\BaseEntityDetails {
 	/**
 	 * @var json
 	 * @ORM\Column(type="json", nullable=true)
+	 * @EA\Json(structure="{1:, 2:, 3:}")
 	 */
 	protected $plurals;
 
@@ -74,12 +75,14 @@ class Language extends \Entity\BaseEntityDetails {
 	/**
 	 * @var json
 	 * @ORM\Column(type="json", nullable=true)
+	 * @EA\Json(structure="{1:, 2:, 3:}")
 	 */
 	protected $ppcPatterns;
 
 	/**
 	 * @var json
 	 * @ORM\Column(type="json", nullable=true)
+	 * @EA\Json(structure="{1:, 2:, 3:}")
 	 * this defines rules for autogenerating some variations, which will be done in JS. For example, locative in EN is always "in ".$singularNominative
 	 */
 	protected $variationDetails;
