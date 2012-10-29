@@ -90,7 +90,7 @@ form.registrationForm {
 		}
 
 		.entypo-invalid {
-			color: @inputErrorBorderColor;
+			color: #8c0b06;
 		}
 
 		.entypo-loading {
@@ -233,28 +233,30 @@ table.table-price {
 	border: 1px solid #96a824;
 	div {		
 		padding: 5px 0;
-
-		label {
-			padding: 0 0 0 5px;
-			margin: 0 ;
-			input[type=radio] {
-			}
-		}
 	}
 
-	label {
+	
+	b {
+		display: block;
+		font-size: 14px;
+		color: #fff;
+		text-shadow: -1px -1px 0px rgba(0,0,0,0.3);
+	}
+
+	div.description , div.price {
+		padding: 10px 0;
+	}
+
+	div.description {
+		padding-left:10px;
 		
-		cursor: pointer;
-		color: #630;	
-		b {
-			display: block;
-			font-size: 14px;
-			color: #fff;
-			text-shadow: -1px -1px 0px rgba(0,0,0,0.3);
-		}
-
 	}
 
+	div.price {
+		font-size: 18px;
+
+	}
+	
 }
 
 .optionGreen {
