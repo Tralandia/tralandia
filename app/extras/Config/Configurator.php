@@ -12,7 +12,9 @@ class Configurator extends Nette\Object {
 	private $formFields = array(
 		'text' => 'Extras\Config\Form\Text',
 		'select' => 'Extras\Config\Form\Select',
-		'phrase' => 'Extras\Config\Form\Phrase'
+		'phrase' => 'Extras\Config\Form\Phrase',
+		'yesno' => 'Extras\Config\Form\YesNo',
+		'json' => 'Extras\Config\Form\Json'
 	);
 
 	/** @var Nette\ArrayHash */
@@ -47,6 +49,15 @@ class Configurator extends Nette\Object {
 		foreach ($this->config->{self::FORM_SETTINGS}->{self::FORM_FIELDS} as $name => $field) {
 			if (isset($this->formFields[$field->control->type])) {
 				$this->form[$name] = new $this->formFields[$field->control->type]($name, $field->label);
+
+				// parsovanie validacnych pravidiel
+				if (isset($field->validation)) {
+					foreach ((array)$field->validation as $params) {
+						$method = current($params);
+						unset($params[key($params)]);
+						$this->form[$name]->addValidator($method, iterator_to_array($params));
+					}
+				}
 			}
 		}
 	}

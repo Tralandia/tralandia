@@ -12,9 +12,6 @@ class Generator extends Nette\Object {
 	/** @var Extras\FormMask\Mask */
 	protected $entity;
 
-	/** @var Extras\Reflection\Entity\ClassType */
-	protected $entityReflection;
-
 	/** @var Extras\FormMask\Mask */
 	protected $mask;
 
@@ -31,21 +28,42 @@ class Generator extends Nette\Object {
 	 */
 	public function __construct(Extras\FormMask\Mask $mask, Extras\Config\Configurator $configurator, Extras\Models\Entity\IEntity $entity) {
 		$this->entity = $entity;
-		$this->entityReflection = Extras\Reflection\Entity\ClassType::from($entity);
 		$this->configurator = $configurator;
-		$this->mask = $mask;	
+		$this->mask = $mask;
 	}
 
 	/**
 	 * Vyskladanie samostatne fungujucej masky formulara
+	 * @return Generator
 	 */
 	public function build() {
 		foreach ($this->configurator->getForm() as $field) {
 			$item = $this->factories[$field->getType()]->create($field->getName(), $field->getLabel(), $this->entity);
+			if ($field->getValidators()) {
+				$item->setValidators($field->getValidators());
+			}
 			$this->mask->addItem($item);
 		}
+
 		//TODO: toto nejako zautomatizovat, alebo minimalne prelozit
 		$this->mask->add('Extras\FormMask\Items\Submit', 'submit', 'Odoslať');
+		return $this;
+	}
+
+	/**
+	 * Getter form mask
+	 * @return Extras\FormMask\Mask
+	 */
+	public function getMask() {
+		return $this->mask;
+	}
+
+	/**
+	 * Setter text item factory
+	 * @param Extras\FormMask\Items\Foctories\TextFactory
+	 */
+	public function setItemText(Extras\FormMask\Items\Foctories\TextFactory $factory) {
+		$this->factories['text'] = $factory;
 	}
 
 	/**
@@ -57,10 +75,18 @@ class Generator extends Nette\Object {
 	}
 
 	/**
-	 * Setter text item factory
-	 * @param Extras\FormMask\Items\Foctories\PhraseFactory
+	 * Setter yesno item factory
+	 * @param Extras\FormMask\Items\Foctories\YesNoFactory
 	 */
-	public function setItemText(Extras\FormMask\Items\Foctories\TextFactory $factory) {
-		$this->factories['text'] = $factory;
+	public function setItemYesNo(Extras\FormMask\Items\Foctories\YesNoFactory $factory) {
+		$this->factories['yesno'] = $factory;
+	}
+
+	/**
+	 * Setter json item factory
+	 * @param Extras\FormMask\Items\Foctories\JsonFactory
+	 */
+	public function setItemJson(Extras\FormMask\Items\Foctories\JsonFactory $factory) {
+		$this->factories['json'] = $factory;
 	}
 }

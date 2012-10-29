@@ -1,0 +1,54 @@
+common:
+	service: Service\Language
+	title: Languages
+	h1: 'Language -> %name%'
+
+	form:
+		fields:
+			name:
+				label: Name
+				control: [type: phrase]
+				validation:
+					- [setRequired, 'Please fill in the name.']
+
+			iso:
+				label: Iso
+				control: [type: text]
+				validation:
+					- [addRule, :pattern, 'Must be exactly 3 characters long.', '[a-z]{2}']
+
+			supported:
+				label: Supported
+				control: [type: yesno]
+
+			defaultCollation:
+				label: Default Collation
+				control: [type: text]
+
+			genders:
+				label: Genders
+				control: [type: json]
+
+			plurals:
+				label: Plurals
+				control: [type: json]
+
+			primarySingular:
+				label: Primary Singular
+				control: [type: text]
+
+			primaryPlural:
+				label: Primary Plural
+				control: [type: text]
+
+			primaryGender:
+				label: Primary Gender
+				control: [type: text]
+
+			ppcPatterns:
+				label: PPC Patterns
+				control: [type: json]
+
+			variationDetails:
+				label: Variation Details
+				control: [type: json]
