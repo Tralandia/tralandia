@@ -82,7 +82,7 @@
 /***************************************************************************************/
 body {
 	background:@bodyBg;	
-	font-family: Tahoma,Helvetica,sans-serif;
+	font-family: Arial,Helvetica,sans-serif;
 }
 
 h1,h2,h3,h4,h5 {
@@ -99,6 +99,10 @@ a , a:hover {
 .red {
 	color: #d32c16;
 }
+
+	.red:hover {
+		color: #d32c16;		
+	}
 
 
 	.red-gradient {
@@ -175,7 +179,9 @@ a , a:hover {
 	}
 
 
-
+.bold {
+	font-weight: bold;
+}
 
 .no-padding , table.table tr td.no-padding {
 	padding: 0;
@@ -237,7 +243,7 @@ a , a:hover {
 
 .radiusSeparator {
 	height:20px;
-	background: #687f0d;
+	background: #556c08;
 
 	div {
 		background: @supfooterBg;
@@ -250,14 +256,17 @@ a , a:hover {
 }
 
 .radiusSeparator2 {
-	height:20px;
+	height:10px;
 	background: @supfooterBg;
 
 	div {
 		background: @white;
-		height:20px;
+		height:10px;
 		.bottom-border-radius(10px);
-		.drop-shadow(#ddd);
+		border-bottom: 1px solid #ddd;
+		border-right: 1px solid #ddd;
+		border-left: 1px solid #ddd;
+
 		position: relative;
 		z-index: 5000;
 	}
@@ -305,7 +314,7 @@ a , a:hover {
 }
 
 #header {
-	.drop-shadow(#555);
+	
 
 	.inner {
 -webkit-border-radius: 20px;
@@ -320,39 +329,44 @@ border-top-left-radius: 7px;
 
 	#topWidget {
 		height:150px;
-		background: brown;
-		
+		background: url(http://www.tralandia.sk/trax_html/images/sk.country.png) top left;
 	}
 
 	#logo {
 		height:123px;
 		width: 158px;
-		margin-top: -10px;
+		margin-top: -50px;
 		float: left;
 		position: relative;
 		z-index: 10000;
+		float: left;
 	}
 
-	#pageTitle {
-		font-size: 15px;
-		color: @white;
-		font-weight: normal;
-		float: left;
-		background: rgba(0, 0, 0, 0.28) url(http://www.tralandia.sk/trax_html/images/sk.domain.png) top left no-repeat;
-		background-position: 0 5px;
-		width: 248px;
-		margin: 28px 0 0 0; 
-		padding: 10px;
-		padding-top: 30px;
+	#pageTitle {			
 		
-		height:35px;
+		float: left;
+		background: rgba(0, 0, 0, 0.28) ;		
+		width: 448px;
+		margin: 28px 0 0 0; 
+		padding: 10px;				
+		height:65px;
+
+		h1 {
+			font-size: 15px;
+			line-height: 20px;
+			margin: 0;
+			padding: 0;
+			margin-left: 10px;
+			float: left;
+			color: @white;
+		}
 	}
 
 	#siteOptions {
-		width:380px;
-		height:25px;
-		line-height:25px;
-		padding-left: 10px;
+		
+		height:27px;
+		line-height:27px;
+		
 		background:@white;
 		float: right;
 		position: relative;
@@ -365,11 +379,80 @@ border-top-left-radius: 7px;
 		border-top-right-radius: 7px;
 		border-bottom-left-radius: 5px;
 
+		ul {
+			list-style: none;
+			padding: 0 ;
+			padding-right: 20px;
+			margin: 0;			
+			li {
+				display: block;
+				float: left;
+				padding: 2px 5px;
+
+
+			}
+
+			&.dropdown-menu {
+				padding: 0;
+				border: none;
+				top: 25px;
+				.basic-border-radius(0px);
+				z-index: 4000;
+				li {
+					float: none;
+					padding: 0;
+
+					a {
+
+						&:hover {
+							.basic-gradient(@lightGreen,@darkGreen);
+						}
+					}
+				}
+
+				.btn {
+					background: transparent;
+				}					
+			}
+		}
+
 		color: @brown;
 
 		a {
 			color: @brown;
+			img {
+				border : 1px solid @lightGreen;
+			}
+
+			&.dropdown-toggle {
+				
+				position: relative;
+				top: -7px;
+
+				padding:0; 
+
+				&:hover {
+					text-decoration: none;
+				}
+
+				&:before {
+					font-family: "entypo";
+					content:'\25BE';
+					position: relative;
+					top: 8px;
+					left: 100%;
+					display: block;
+					font-size: 45px;
+					color: @darkGreen;
+
+					&:hover {
+
+					}
+				}
+			}
 		}
+
+
 	}
 
 /* sidebar */
@@ -377,7 +460,7 @@ border-top-left-radius: 7px;
 
 	ul {
 		list-style: none;	
-		margin: 0;
+		margin: 0 ;
 		padding: 0 ;
 
 		li {
@@ -430,7 +513,7 @@ border-top-left-radius: 7px;
 	background: @supfooterBg;
 
 	h5 {
-		font-size: 1.3em;
+		font-size: 1.4em;
 		padding-left: 10px;
 		font-weight: normal;
 		margin-top: 0px;
@@ -445,11 +528,9 @@ border-top-left-radius: 7px;
 		color: #66331f;
 	}
 
-	ul {
-		
-
-		li {
-
+	p {
+		a {
+			color: @brown;
 		}
 	}
 
@@ -468,14 +549,16 @@ border-top-left-radius: 7px;
 				color: @brown;
 				font-weight: bold;
 				font-size: 11px;
+				position: relative;
+				top: -5px;
 			}
 		}
 
-		li {
+		li {			
 			clear: both;
 			p {
 				padding: 10px;
-				background:#fcfcf5;
+				background:@white;
 				.drop-shadow(#c6d270);
 				.basic-border-radius(5px);
 			}
@@ -489,7 +572,7 @@ border-top-left-radius: 7px;
 /* footer */
 #footer {
 	height: auto;
-	background: #687f0d;
+	background: #687f0d url('../packages/Front/img/footer_bg.png');
 	padding: 10px 0 20px 0;
 	.bottom-border-radius(10px);
 	ul {
@@ -507,6 +590,7 @@ border-top-left-radius: 7px;
 
 	h5 {
 		color: @white;
+		font-size: 1.3em;
 		padding: 0 20px;
 		margin: 5px 0;
 	}
@@ -523,19 +607,27 @@ border-top-left-radius: 7px;
 @mainMenuSettingLinkHoverColor: @brown;
 
 #mainMenu {
+
+	text-align: center;
+	border-top: @mainMenuSettingBorderTopHeight solid @darkGreen;
+	.basic-gradient( @lightGreen , @darkGreen );
+	height: @mainMenuSettingHeight;
+	.bottom-border-radius(7px);
+
 	ul {
 		list-style: none;
-		margin: 0;
+		margin: 0 auto;
 		padding: 0;
 		height: @mainMenuSettingHeight;
-		.basic-gradient( @lightGreen , @darkGreen );
-		border-top: @mainMenuSettingBorderTopHeight solid @darkGreen;
-		.bottom-border-radius(7px);
+		
+		
+		
 
-		text-align: center;
+		display: table;
+		width: auto;
 
 		li {
-			display: block;
+			display: table-cell;
 			float: left;
 						
 			a {
@@ -546,7 +638,7 @@ border-top-left-radius: 7px;
 				padding: 0 @mainMenuSettingLiPadding;
 				border-left: 1px solid @mainMenuSettingLinkHoverBackground;
 				text-shadow:-1px -1px 0px @darkGreen;				
-				font-size: 12px;
+				
 
 				&:hover {
 					background: @mainMenuSettingLinkHoverBackground;
@@ -560,8 +652,6 @@ border-top-left-radius: 7px;
 		}
 
 		li:first-child {
-			
-			margin-left: 110px;
 
 			a {
 				border: none;	
@@ -641,30 +731,43 @@ border-top-left-radius: 7px;
 	h1 {
 		font-size: @contentH1size;
 		color: @contentH1color;
-		font-weight: normal;
+		font-weight: bold;
 	}
 
 	h2 {
 		font-size: @contentH2size;
-		color: @contentH2color;
-		font-weight: normal;
+		color: @contentH2color;		
 	}
 
 	h3 {
 		font-size: @contentH3size;
-		color: @contentH3color;
-		font-weight: normal;
+		color: @contentH3color;		
 	}
 
 	h4 {
 		font-size: @contentH4size;
-		color: @contentH4color;
-		font-weight: normal;
+		color: @contentH4color;		
 	}
 
 	h5 {
 		font-size: @contentH5size;
-		color: @contentH5color;
-		font-weight: normal;
+		color: @contentH5color;		
+	}
+
+	/* forms */
+
+	label {
+		strong {
+			font-size: 14px;
+		}
+
+		small {
+			position: relative;
+			top: -5px;
+		}
+	}
+
+	imput[type=text] {
+
 	}
 }
