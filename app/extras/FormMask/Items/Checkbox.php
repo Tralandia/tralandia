@@ -7,7 +7,7 @@ use Nette;
 /**
  * Checkbox polozka masky
  */
-class Checkbox extends Base {
+class Checkbox extends Text {
 
 	/**
 	 * Prida polozku do formulara
@@ -15,7 +15,7 @@ class Checkbox extends Base {
 	 * @return Nette\Forms\IControl
 	 */
 	public function extend(Nette\Forms\Form $form) {
-		return $form->addCheckbox($this->getName(), $this->getLabel())
+		return $form->addAdvancedCheckbox($this->getName(), $this->getLabel())
 			->setDefaultValue($this->getValue());
 	}
 }

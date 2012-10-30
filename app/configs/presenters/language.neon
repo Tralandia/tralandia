@@ -22,7 +22,7 @@ common:
 
 			supported:
 				label: Supported
-				control: [type: yesno]
+				control: [type: checkbox]
 
 			defaultCollation:
 				label: Default Collation
@@ -30,7 +30,7 @@ common:
 
 			genders:
 				label: Genders
-				control: [type: json]
+				control: [type: neon]
 
 			plurals:
 				label: Plurals
@@ -42,11 +42,11 @@ common:
 
 			primaryPlural:
 				label: Primary Plural
-				control: [type: text]
+				control: [type: textarea]
 
 			primaryGender:
 				label: Primary Gender
-				control: [type: text]
+				control: [type: tinymce]
 
 			ppcPatterns:
 				label: PPC Patterns

@@ -46,4 +46,22 @@ class WaccoPresenter extends BasePresenter {
 		$generator->getMask()->extend($form);
 		$this->template->form = $form;
 	}
+
+	public function actionList3() {
+		$repo = $this->context->model->getRepository('Entity\Location\Location');
+		$entity = $repo->find(563);
+
+		$model = $this->context->model;
+		$configurator = new Extras\Config\Configurator($this->context->params['settingsDir'] . '/presenters/location.neon');
+		$generator = $this->context->createFormGenerator($configurator, $entity)->build();
+
+		$form = new Nette\Application\UI\Form($this, 'form');
+		$form->onSuccess[] = array($generator->getMask(), 'process');
+		$form->onSuccess[] = function($form) use ($model) {
+			$model->flush();
+		};
+
+		$generator->getMask()->extend($form);
+		$this->template->form = $form;
+	}
 }

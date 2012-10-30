@@ -125,6 +125,12 @@ common:
 		itemPhraseFactory: Extras\FormMask\Items\Foctories\PhraseFactory(@phraseServiceFactory, @environment::getLanguage())
 		itemYesNoFactory: Extras\FormMask\Items\Foctories\YesNoFactory
 		itemJsonFactory: Extras\FormMask\Items\Foctories\JsonFactory
+		itemNeonFactory: Extras\FormMask\Items\Foctories\NeonFactory
+		itemTextareaFactory: Extras\FormMask\Items\Foctories\TextareaFactory
+		itemPriceFactory: Extras\FormMask\Items\Foctories\PriceFactory
+		itemSelectFactory: Extras\FormMask\Items\Foctories\SelectFactory
+		itemCheckboxFactory: Extras\FormMask\Items\Foctories\CheckboxFactory
+		itemTinymceFactory: Extras\FormMask\Items\Foctories\TinymceFactory
 
 	factories:
 		phraseService:
@@ -139,6 +145,12 @@ common:
 				- setItemPhrase(@itemPhraseFactory)
 				- setItemYesNo(@itemYesNoFactory)
 				- setItemJson(@itemJsonFactory)
+				- setItemNeon(@itemNeonFactory)
+				- setItemTextarea(@itemTextareaFactory)
+				- setItemPrice(@itemPriceFactory)
+				- setItemSelect(@itemSelectFactory)
+				- setItemCheckbox(@itemCheckboxFactory)
+				- setItemTinymce(@itemTinymceFactory)
 
 production < common:
 
