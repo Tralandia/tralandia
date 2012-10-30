@@ -7,12 +7,17 @@
 		<div class="row">
 
 			{include ../components/mainMenu.latte}
-			
-			{include ../components/sidebar.latte}
 
-			<div class="span9 innerPaddingRitgh">
-			{include #content}
+			
+
+			<div class="span12">
+				<div class="innerPadding baseRadius baseBorder overflow">
+					<div id="content">
+						{include #content}
+					</div>
+				</div>
 			</div>
+
 			{include ../components/supFooter.latte}
 
 			{include ../components/footer.latte}
