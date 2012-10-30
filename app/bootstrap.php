@@ -26,7 +26,7 @@ $robotLoader->addDirectory(APP_DIR)
 	->addDirectory(TEMP_DIR . '/presenters')
 	->register();
 
-Kdyby\Extension\Forms\BootstrapRenderer\DI\RendererExtension::register($configurator);
+// Kdyby\Extension\Forms\BootstrapRenderer\DI\RendererExtension::register($configurator);
 require_once LIBS_DIR . '/tools.php';
 Extension::register($configurator);
 $configurator->addConfig(APP_DIR . '/configs/config.neon', $section);

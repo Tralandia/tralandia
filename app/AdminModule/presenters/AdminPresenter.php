@@ -100,7 +100,6 @@ class AdminPresenter extends BasePresenter {
 
 		$form = new \AdminModule\Forms\AdminForm;
 
-		
 		$generator->getMask()->extend($form);
 
 		$form->onSuccess[] = array($generator->getMask(), 'process');
@@ -108,6 +107,7 @@ class AdminPresenter extends BasePresenter {
 			$model->flush();
 		};
 		$form->onSuccess[] = callback($this, 'formOnSuccess');
+
 
 
 		return $form;
