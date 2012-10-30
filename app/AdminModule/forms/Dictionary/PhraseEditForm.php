@@ -16,6 +16,7 @@ class PhraseEditForm extends \AdminModule\Forms\Form {
 	}
 
 	protected function buildForm() {
+
 		$typeList = $this->phraseTypeRepositoryAccessor->get()->fetchPairs('id', 'name');
 		$this->addSelect('phraseType', 'Type:', $typeList);
 
