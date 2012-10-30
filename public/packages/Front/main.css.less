@@ -996,7 +996,7 @@ form.traform {
 
 	}
 
-	input[type=text] , textarea {
+	input[type=text] , textarea , select{
 		width: 100%;
 		.box-size();
 		margin: 0;	
@@ -1011,7 +1011,7 @@ form.traform {
 		}		
 	}
 
-	input[type=text] {
+	input[type=text] , select {
 				
 		height: @inputHeight;		
 		line-height: @inputHeight;		
@@ -1021,6 +1021,71 @@ form.traform {
 
 	}
 
+
+	.group-prepend {
+		input[type=text] , select {
+			float: left;
+		} 
+
+		input[type=text] {
+			width: 80%;
+			border-left: none;
+			.basic-border-radius(0);
+			-webkit-border-top-right-radius: 5px;
+			-webkit-border-bottom-right-radius: 5px;
+			-moz-border-radius-topright: 5px;
+			-moz-border-radius-bottomright: 5px;
+			border-top-right-radius: 5px;
+			border-bottom-right-radius: 5px;			
+		}
+
+		select {
+			width: 20%;	
+			border-right: none;
+			.basic-border-radius(0);
+			-webkit-border-top-left-radius: 5px;
+			-webkit-border-bottom-left-radius: 5px;
+			-moz-border-radius-topleft: 5px;
+			-moz-border-radius-bottomleft: 5px;
+			border-top-left-radius: 5px;
+			border-bottom-left-radius: 5px;
+			.basic-gradient(#dfdfdf,#ccc);
+			color: #666;
+			border-right:1px solid #ccc;
+		}
+	}
+
+	p {
+		padding: 10px;
+		margin: 0;
+	}
+
+	table {
+
+		
+		select , input[type=text] {
+			height:22px;
+			font-size: 14px;
+			line-height: 14px;
+			font-weight: normal;
+			padding: 0;
+		}
+	}
+
+	ul.photos {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+
+		li {
+			display: block;
+			padding: 10px 0  0 10px;
+			float: left;
+			width: 178px;
+			text-align: center;
+			.box-size();
+		}
+	}
 
 	.error-mesage {
 		color: @inputErrorBorderColor;
