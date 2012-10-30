@@ -21,7 +21,7 @@ class Json extends Text {
 			$structure = $reflection->getProperty($this->name)->getAnnotation('EA\Json')->structure;
 			$structure = Nette\Utils\Neon::decode($structure);
 		}
-		if (!$structure) {
+		if (!isset($structure) || !$structure) {
 			throw new \Exception('Nebola vyplnena struktura JSON alebo je vyplnena nespravne');
 		}
 
