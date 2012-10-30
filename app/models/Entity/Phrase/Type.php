@@ -12,11 +12,21 @@ use	Extras\Annotation as EA;
  */
 class Type extends \Entity\BaseEntity {
 
+	const TRANSLATE_TO_SUPPORTED = 'supported';
+	const TRANSLATE_TO_CENTRAL = 'central';
+	const TRANSLATE_TO_NONE = 'none';
+
 	/**
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $name;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string")
+	 */
+	protected $translateTo = self::TRANSLATE_TO_SUPPORTED;
 
 	/**
 	 * @var string
@@ -74,7 +84,6 @@ class Type extends \Entity\BaseEntity {
 	 */
 	protected $helpForTranslator;
 
-
 	/**
 	 * @var integer
 	 * @ORM\Column(type="integer")
@@ -86,9 +95,8 @@ class Type extends \Entity\BaseEntity {
 	public function isSimple() {
 		return !$this->pluralsRequired && !$this->genderVariationsRequired && !$this->locativesRequired && !$this->positionRequired;
 	}
-	
 
-						//@entity-generator-code --- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()

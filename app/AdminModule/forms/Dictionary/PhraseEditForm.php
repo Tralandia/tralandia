@@ -4,22 +4,22 @@ namespace AdminModule\Forms\Dictionary;
 
 class PhraseEditForm extends \AdminModule\Forms\Form {
 
-	public $phraseTypeRepository;
-	public $languageRepository;
+	public $phraseTypeRepositoryAccessor;
+	public $languageRepositoryAccessor;
 	public $sourceLanguage;
 
-	public function __construct($phraseTypeRepository, $languageRepository, $sourceLanguage) {
-		$this->phraseTypeRepository = $phraseTypeRepository;
-		$this->languageRepository = $languageRepository;
+	public function __construct($phraseTypeRepositoryAccessor, $languageRepositoryAccessor, $sourceLanguage) {
+		$this->phraseTypeRepositoryAccessor = $phraseTypeRepositoryAccessor;
+		$this->languageRepositoryAccessor = $languageRepositoryAccessor;
 		$this->sourceLanguage = $sourceLanguage;
 		parent::__construct();
 	}
 
 	protected function buildForm() {
-		$typeList = $this->phraseTypeRepository->fetchPairs('id', 'name');
+		$typeList = $this->phraseTypeRepositoryAccessor->get()->fetchPairs('id', 'name');
 		$this->addSelect('phraseType', 'Type:', $typeList);
 
-		$languageList = $this->languageRepository->fetchPairs('id', 'iso');
+		$languageList = $this->languageRepositoryAccessor->get()->fetchPairs('id', 'iso');
 		$this->addSelect('sourceLanguage', 'Source Language:', $languageList);
 
 		$this->addCheckbox('ready', 'Ready');

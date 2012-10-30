@@ -40,7 +40,7 @@ class ServiceFactory extends \Nette\Object {
 		$this->parameters = func_get_args();
 	}
 
-	public function injectParametersToService($service) {
+	protected function injectParametersToService($service) {
 		if($this->parameters) {
 			call_user_func_array(array($service, 'inject'), $this->parameters);
 		}

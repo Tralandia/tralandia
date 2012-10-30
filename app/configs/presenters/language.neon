@@ -1,7 +1,10 @@
 common:
-	service: Service\Language
+	repositoryAccessor: languageRepositoryAccessor
 	title: Languages
 	h1: 'Language -> %name%'
+
+	grid:
+		class: LanguagesGrid
 
 	form:
 		fields:

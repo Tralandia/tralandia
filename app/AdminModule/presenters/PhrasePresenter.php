@@ -6,23 +6,23 @@ use Repository\Dictionary as RD;
 
 class PhrasePresenter extends AdminPresenter {
 
-	protected $phraseRepository;
-	protected $phraseTypeRepository;
-	protected $languageRepository;
+	protected $phraseRepositoryAccessor;
+	protected $phraseTypeRepositoryAccessor;
+	protected $languageRepositoryAccessor;
 
 	public $phrase;
 
 	public function setContext(\Nette\DI\Container $dic) {
 		parent::setContext($dic);
 
-		$this->phraseRepository = $dic->phraseRepository;
-		$this->phraseTypeRepository = $dic->phraseTypeRepository;
-		$this->languageRepository = $dic->languageRepository;
+		$this->setProperty('phraseRepositoryAccessor');
+		$this->setProperty('phraseTypeRepositoryAccessor');
+		$this->setProperty('languageRepositoryAccessor');
 	}
 	
 
 	public function actionEdit($id = 0) {
-		$this->phrase = $phrase = $this->phraseRepository->find($id);
+		$this->phrase = $phrase = $this->phraseRepositoryAccessor->get()->find($id);
 
 	}
 
@@ -36,7 +36,7 @@ class PhrasePresenter extends AdminPresenter {
 	protected function createComponentPhraseEditForm()
 	{
 		$sourceLanguage = $this->phrase->sourceLanguage;
-		$form = new Forms\Dictionary\PhraseEditForm($this->phraseTypeRepository, $this->languageRepository, $sourceLanguage);
+		$form = new Forms\Dictionary\PhraseEditForm($this->phraseTypeRepositoryAccessor, $this->languageRepositoryAccessor, $sourceLanguage);
 	
 		$form->onSuccess[] = callback($this, 'processPhraseEditForm');
 	

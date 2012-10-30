@@ -10,17 +10,26 @@ use Doctrine\ORM\Query\Expr;
  */
 class PhraseRepository extends \Repository\BaseRepository {
 
-	public function findMissingTranslations() {
-		$qb = $this->_em->createQueryBuilder();
-		$qb->select('p.id AS pId, count(p.id) AS c')
-			->from('\Entity\Phrase\Phrase', 'p')
-			->leftJoin('p.translations', 't')
-			->join('t.language', 'l')
-			->where($qb->expr()->isNull('t.id'))
-			->andWhere('l.supported = 1')
-			->groupBy('p.id');
+	public function findMissingTranslations(array $languages) {
 
-		return $qb->getQuery()->getResult();
+		$array = array();
+		foreach ($languages as $language) {
+			$qb = $this->_em->createQueryBuilder();
+			$qb2 = $this->_em->createQueryBuilder();
+			$qb2->select('e.id')
+				->from('\Entity\Phrase\Phrase', 'e')
+				->leftJoin('e.translations', 't')
+				->where('t.language = :lll');
+
+			$qb->select('p.id')
+				->from('\Entity\Phrase\Phrase', 'p')
+				->where($qb->expr()->notIn('p.id', $qb2->getDQL()))
+				->setParameter(':lll', $language->id);
+
+			$array[$language->id] = $qb->getQuery()->getResult();
+		}
+
+		return $array;
 	}
 
 }

@@ -14,18 +14,38 @@ class ImportTaskTypes extends BaseImport {
 
 	public function doImport($subsection = NULL) {
 
-		$type = $this->context->taskTypeEntityFactory->create();
+		$technicalName = '\Location\Location - Level2HasNoParent';
+		$type = $this->context->taskTypeRepository->findOneByTechnicalName($technicalName);
+		if(!$type) {
+			$type = $this->context->taskTypeEntityFactory->create();
+			$this->model->persist($type);
+		}
 		$type->name = 'Administrative region at level 2 has no parent.';
-		$type->technicalName = '\Location\Location - Level2HasNoParent';
+		$type->technicalName = $technicalName;
 		$type->mission = 'This Level 2 Administrative location does not have a parent (Level 1 administrative region) defined. Please select one or add a new one.';
 		$type->timeLimit = 24*60;
 		$type->validation = NULL;
 		$type->actions = NULL;
 
 		$this->model->persist($type);
+
+		//---
+		$technicalName = '\Phrase\Translation - Translation Required';
+		$type = $this->context->taskTypeRepository->findOneByTechnicalName($technicalName);
+		if(!$type) {
+			$type = $this->context->taskTypeEntityFactory->create();
+			$this->model->persist($type);
+		}
+		$type->name = 'Translation Required';
+		$type->technicalName = $technicalName;
+		$type->mission = 'Preloz toto!';
+		$type->timeLimit = 24*60;
+		$type->validation = NULL;
+		$type->actions = NULL;
+
+
+
 		$this->model->flush();
-	
-		$this->savedVariables['importedSections']['taskTypes'] = 1;
 
 	}
 

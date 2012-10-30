@@ -19,7 +19,9 @@ class AdminPresenter extends BasePresenter {
 		$form->addAdvancedCheckbox('checkbox', 'Checkbox');
 		$form->addAdvancedCheckbox('checkbox2', 'Checkbox')->setDefaultValue(TRUE);
 		$form->addAdvancedDatePicker('advancedDatePicker', 'Date Picker')->setDefaultValue(new \Nette\DateTime);
-	
+		$form->addAdvancedJson('json', 'Json')->setStructure(array('ulica' => NULL, 'mesto' => NULL));
+		$form->addAdvancedMultiSelect('MultiSelect', 'MultiSelect', $items);
+
 		$form->addSubmit('sub');
 		
 		return $form;

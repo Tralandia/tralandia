@@ -3,6 +3,7 @@
 use Nette\Application\UI\Presenter,
 	Nette\Environment,
 	Nette\Utils\Finder,
+	Nette\Utils\Strings,
 	Nette\Security\User;
 
 

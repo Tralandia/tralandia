@@ -134,8 +134,8 @@ class AdminPresenter extends BasePresenter {
 	}
 
 	protected function createComponentGrid() {
-		$repositoryName = $this->settings->params->repository;
-		$reposiory = $this->context->{$repositoryName};
+		$repositoryName = $this->settings->params->repositoryAccessor;
+		$reposiory = $this->context->{$repositoryName}->get();
 		$gridClass = '\\AdminModule\\Grids\\'.$this->settings->params->grid->class;
 		return new $gridClass($reposiory);
 	}
