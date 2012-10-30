@@ -36,7 +36,7 @@ class Select extends Base {
 	 */
 	public function getItems() {
 		if (!is_callable($this->getItemsGetter())) {
-			throw new InvalidStateException("Nebol zadaný callback gettera poloziek.");
+			throw new Nette\InvalidStateException("Nebol zadaný callback gettera poloziek.");
 		}
 		return $this->getItemsGetter()->invoke();
 	}
