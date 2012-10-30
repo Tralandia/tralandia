@@ -5,9 +5,9 @@ use Nette;
 
 /**
  * Price polozka masky
- * 
+ *
  * @author Dávid Ďurika
  */
-class Price extends Select {
+class Price extends Text {
 
 }

@@ -89,4 +89,52 @@ class Generator extends Nette\Object {
 	public function setItemJson(Extras\FormMask\Items\Foctories\JsonFactory $factory) {
 		$this->factories['json'] = $factory;
 	}
+
+	/**
+	 * Setter neon item factory
+	 * @param Extras\FormMask\Items\Foctories\NeonFactory
+	 */
+	public function setItemNeon(Extras\FormMask\Items\Foctories\NeonFactory $factory) {
+		$this->factories['neon'] = $factory;
+	}
+
+	/**
+	 * Setter textarea item factory
+	 * @param Extras\FormMask\Items\Foctories\TextareaFactory
+	 */
+	public function setItemTextarea(Extras\FormMask\Items\Foctories\TextareaFactory $factory) {
+		$this->factories['textarea'] = $factory;
+	}
+
+	/**
+	 * Setter price item factory
+	 * @param Extras\FormMask\Items\Foctories\PriceFactory
+	 */
+	public function setItemPrice(Extras\FormMask\Items\Foctories\PriceFactory $factory) {
+		$this->factories['price'] = $factory;
+	}
+
+	/**
+	 * Setter select item factory
+	 * @param Extras\FormMask\Items\Foctories\SelectFactory
+	 */
+	public function setItemSelect(Extras\FormMask\Items\Foctories\SelectFactory $factory) {
+		$this->factories['select'] = $factory;
+	}
+
+	/**
+	 * Setter checkbox item factory
+	 * @param Extras\FormMask\Items\Foctories\CheckboxFactory
+	 */
+	public function setItemCheckbox(Extras\FormMask\Items\Foctories\CheckboxFactory $factory) {
+		$this->factories['checkbox'] = $factory;
+	}
+
+	/**
+	 * Setter tinymce item factory
+	 * @param Extras\FormMask\Items\Foctories\TinymceFactory
+	 */
+	public function setItemTinymce(Extras\FormMask\Items\Foctories\TinymceFactory $factory) {
+		$this->factories['tinymce'] = $factory;
+	}
 }

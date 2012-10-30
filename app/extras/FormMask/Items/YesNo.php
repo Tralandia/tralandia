@@ -30,5 +30,4 @@ class YesNo extends Text {
 		return $form->addSelect($this->getName(), $this->getLabel(), $this->getItems())
 			->setDefaultValue($this->getValue());
 	}
-
 }
