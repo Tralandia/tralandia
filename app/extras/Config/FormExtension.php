@@ -29,7 +29,7 @@ class FormExtension extends Nette\Config\CompilerExtension
 
 		foreach ($config as $name => $item) {
 			//$name = substr($name, strpos($name, '.')+1);
-			debug($name, $item);
+			//debug($name, $item);
 
 			$builder->addDefinition($this->prefix($name))
 				->setClass($this->formFields[$item['control']['type']], array($name, $item['label']));

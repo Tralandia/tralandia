@@ -57,17 +57,18 @@ class Configurator extends Nette\Object {
 		};
 		$c = $configurator->createContainer();
 
-		debug($c);
 
-		foreach ($c->form as $s) {
-			debug($s);
+		foreach ($c->getReflection()->getMethods() as $method) {
+			if (strpos($method->getName(), $c->getMethodName('form', true) . '__') !== false) {
+				$service = substr($method->getName(), strpos($method->getName(), '__') + 2);
+				debug($c->form->$service);
+			}
 		}
-		debug($c->form->parent);
 
 		exit;
 
 
-		$loader = new \Nette\Config\Loader;
+		$loader = new Nette\Config\Loader;
 		$this->config = Nette\ArrayHash::from($loader->load($file, $section));
 		$this->buildForm();
 
