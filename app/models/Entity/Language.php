@@ -43,14 +43,14 @@ class Language extends \Entity\BaseEntityDetails {
 	/**
 	 * @var json
 	 * @ORM\Column(type="json", nullable=true)
-	 * @EA\Json(structure="{polozka1: Prvá položka, polozka2: null, polocka3: [p1: null, p2: true, p3: 99, p4: Yes]}")
+	 * @EA\Json(structure="{feminine:, masculine:, neuter:}")
 	 */
 	protected $genders;
 
 	/**
 	 * @var json
 	 * @ORM\Column(type="json", nullable=true)
-	 * @EA\Json(structure="{1:, 2:, 3:}")
+	 * @EA\Json(structure="{polozka1: Prvá položka, polozka2: null, polocka3: [p1: null, p2: true, p3: 99, p4: Yes]}")
 	 */
 	protected $plurals;
 
@@ -100,7 +100,7 @@ class Language extends \Entity\BaseEntityDetails {
 	protected $backLinks;
 
 
-	//@entity-generator-code --- NEMAZAT !!!
+//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()

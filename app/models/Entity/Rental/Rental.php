@@ -179,7 +179,7 @@ class Rental extends \Entity\BaseEntity {
 	protected $backLinks;
 
 
-	//@entity-generator-code --- NEMAZAT !!!
+//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()

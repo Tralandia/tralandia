@@ -121,18 +121,13 @@
 		</tr>
 		{/if}
 	</tbody>
-	<tfoot>
+	<tfoot n:if="$control->hasActionForm()">
 		<tr>
 			<td colspan="{$colsCount}" class="grid-bottom">
-				<span n:if="$control->hasActionForm()" class="grid-action-box">
+				<span class="grid-action-box">
 						{$control['gridForm'][$control->name]['action']['action_name']->label}
 						{$control['gridForm'][$control->name]['action']['action_name']->getControl()}
 						{$control['gridForm'][$control->name]['action']['send']->getControl()}
-				</span>
-				<span n:if="$paginate" class="grid-perPage">
-						{$control['gridForm'][$control->name]['perPage']['perPage']->label}
-						{$control['gridForm'][$control->name]['perPage']['perPage']->getControl()}
-						{$control['gridForm'][$control->name]['perPage']['send']->getControl()}
 				</span>
 			</td>
 		</tr>

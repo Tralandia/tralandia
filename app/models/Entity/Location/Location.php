@@ -163,7 +163,7 @@ class Location extends \Entity\BaseEntityDetails {
 	 */
 	protected $contacts;
 
-									//@entity-generator-code --- NEMAZAT !!!
+								//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()

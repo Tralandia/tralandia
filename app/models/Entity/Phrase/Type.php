@@ -96,7 +96,7 @@ class Type extends \Entity\BaseEntity {
 		return !$this->pluralsRequired && !$this->genderVariationsRequired && !$this->locativesRequired && !$this->positionRequired;
 	}
 
-	//@entity-generator-code --- NEMAZAT !!!
+//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()
@@ -131,6 +131,25 @@ class Type extends \Entity\BaseEntity {
 	public function getName()
 	{
 		return $this->name;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Phrase\Type
+	 */
+	public function setTranslateTo($translateTo)
+	{
+		$this->translateTo = $translateTo;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getTranslateTo()
+	{
+		return $this->translateTo;
 	}
 		
 	/**
