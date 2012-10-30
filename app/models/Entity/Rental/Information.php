@@ -32,7 +32,7 @@ class Information extends \Entity\BaseEntityDetails {
 	protected $rentals;
 
 
-					//@entity-generator-code --- NEMAZAT !!!
+				//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()

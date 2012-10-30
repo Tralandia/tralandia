@@ -118,6 +118,7 @@ common:
 #			setup:
 #				- setItemPhrase(@itemPhraseFactory)
 
+
 		mask: Extras\FormMask\Mask
 
 		itemTextFactory: Extras\FormMask\Items\Foctories\TextFactory

@@ -51,7 +51,7 @@ class Template extends \Entity\BaseEntity {
 	 */
 	protected $batches;
 
-									//@entity-generator-code --- NEMAZAT !!!
+								//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()

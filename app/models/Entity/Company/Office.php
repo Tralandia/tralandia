@@ -43,7 +43,7 @@ class Office extends \Entity\BaseEntityDetails {
 	 */
 	protected $address;
 
-									//@entity-generator-code --- NEMAZAT !!!
+								//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()

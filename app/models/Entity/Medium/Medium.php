@@ -72,7 +72,7 @@ class Medium extends \Entity\BaseEntityDetails {
 	 */
 	protected $sort;
 
-									//@entity-generator-code --- NEMAZAT !!!
+								//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()

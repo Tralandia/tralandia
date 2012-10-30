@@ -122,7 +122,7 @@ class Item extends \Entity\BaseEntity {
 
 
 
-									//@entity-generator-code --- NEMAZAT !!!
+								//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()

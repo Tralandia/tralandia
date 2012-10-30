@@ -34,7 +34,7 @@ common:
 
 			plurals:
 				label: Plurals
-				control: [type: json]
+				control: [type: neon]
 
 			primarySingular:
 				label: Primary Singular
@@ -50,8 +50,8 @@ common:
 
 			ppcPatterns:
 				label: PPC Patterns
-				control: [type: json]
+				control: [type: neon]
 
 			variationDetails:
 				label: Variation Details
-				control: [type: json]
+				control: [type: neon]

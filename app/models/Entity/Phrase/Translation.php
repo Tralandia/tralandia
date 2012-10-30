@@ -56,10 +56,10 @@ class Translation extends \Entity\BaseEntity {
 	protected $checked;
 
 	public function __toString() {
-		return $this->variations['translation'];
+		return isset($this->variations['translation']) ? $this->variations['translation'] : '{!!' . $this->id . '}';
 	}
 
-	//@entity-generator-code --- NEMAZAT !!!
+//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()
@@ -123,35 +123,6 @@ class Translation extends \Entity\BaseEntity {
 	public function getLanguage()
 	{
 		return $this->language;
-	}
-		
-	/**
-	 * @param string
-	 * @return \Entity\Phrase\Translation
-	 */
-	public function setTranslation($translation)
-	{
-		$this->translation = $translation;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Phrase\Translation
-	 */
-	public function unsetTranslation()
-	{
-		$this->translation = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return string|NULL
-	 */
-	public function getTranslation()
-	{
-		return $this->translation;
 	}
 		
 	/**

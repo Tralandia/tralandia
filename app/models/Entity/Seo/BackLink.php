@@ -86,7 +86,7 @@ class BackLink extends \Entity\BaseEntity {
 	protected $notes;
 
 
-				//@entity-generator-code --- NEMAZAT !!!
+			//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()

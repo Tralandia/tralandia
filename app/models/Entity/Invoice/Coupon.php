@@ -61,7 +61,7 @@ class Coupon extends \Entity\BaseEntity {
 	protected $recommendeePackage;
 
 
-									//@entity-generator-code --- NEMAZAT !!!
+								//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()

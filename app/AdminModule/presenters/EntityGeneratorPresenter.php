@@ -239,7 +239,7 @@ class EntityGeneratorPresenter extends BasePresenter {
 		fclose($fileSource);
 		if($pos = mb_strpos($data, "\t//@entity-generator-code")) {
 			$newFileContent = mb_substr($data, 0, $pos);
-			$newFileContent .= "//@entity-generator-code --- NEMAZAT !!!\n\n";
+			$newFileContent .= "\t//@entity-generator-code --- NEMAZAT !!!\n\n";
 			$newFileContent .= "\t/* ----------------------------- Methods ----------------------------- */";
 			foreach ($newClass->methods as $method) {
 				$newFileContent .= $this->template->indent("\t\n".$method."\n", 1);
