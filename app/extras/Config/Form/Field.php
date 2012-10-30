@@ -13,6 +13,9 @@ abstract class Field extends Nette\Object {
 	protected $label;
 
 	/** @var array */
+	protected $options = array();
+
+	/** @var array */
 	protected $validators = array();
 
 	/**
@@ -76,6 +79,16 @@ abstract class Field extends Nette\Object {
 			'method' => $method,
 			'params' => $params
 		 );
+		 return $this;
+	}
+
+	/**
+	 * @param string
+	 * @param array
+	 * @return Field
+	 */
+	public function setOptions($section, array $params) {
+		 $this->options[$section] = $params;
 		 return $this;
 	}
 }

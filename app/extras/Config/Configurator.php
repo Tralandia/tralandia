@@ -41,9 +41,39 @@ class Configurator extends Nette\Object {
 	 * @param string
 	 */
 	public function __construct($file, $section = 'common') {
+		$configurator = new Nette\Config\Configurator;
+		$configurator->addParameters(array(
+			'container' => array(
+				'class' => 'ExtrasContainer'
+			),
+			'name' => 'nieco'
+		));
+		$configurator->setTempDirectory(TEMP_DIR)->addConfig($file, $section);
+		$configurator->onCompile[] = function ($configurator, $compiler) {
+			$compiler->addExtension('presenter', new PresenterExtension);
+		};
+		$configurator->onCompile[] = function ($configurator, $compiler) {
+			$compiler->addExtension('form', new FormExtension);
+		};
+		$c = $configurator->createContainer();
+
+		debug($c);
+
+		foreach ($c->form as $s) {
+			debug($s);
+		}
+		debug($c->form->parent);
+
+		exit;
+
+
 		$loader = new \Nette\Config\Loader;
 		$this->config = Nette\ArrayHash::from($loader->load($file, $section));
 		$this->buildForm();
+
+
+
+
 	}
 
 
@@ -54,14 +84,17 @@ class Configurator extends Nette\Object {
 	private function buildForm() {
 		foreach ($this->config->{self::FORM_SETTINGS}->{self::FORM_FIELDS} as $name => $field) {
 			if (isset($this->formFields[$field->control->type])) {
-				$this->form[$name] = new $this->formFields[$field->control->type]($name, $field->label);
+				$control = $this->form[$name] = new $this->formFields[$field->control->type]($name, $field->label);
+				if(isset($field->control->items)) debug($field->control->items);
+
+				$control->setOptions('control', iterator_to_array($field->control));
 
 				// parsovanie validacnych pravidiel
 				if (isset($field->validation)) {
 					foreach ((array)$field->validation as $params) {
 						$method = current($params);
 						unset($params[key($params)]);
-						$this->form[$name]->addValidator($method, iterator_to_array($params));
+						$control->addValidator($method, iterator_to_array($params));
 					}
 				}
 			}

@@ -1,25 +1,26 @@
 common:
-	service: Service\Location
-	title: Locations
-	h1: 'Location -> %name%'
+	presenter:
+		service: Service\Location
+		title: Locations
+		h1: 'Location -> %name%'
+
 
 	form:
-		fields:
-			name:
-				label: Name
-				control: [type: phrase]
-				validation:
-					- [setRequired, 'Please fill in the name.']
-			nameOfficial:
-				label: Name Official
-				control: [type: phrase]
-				validation:
-					- [setRequired, 'Please fill in the name official.']
-			nameShort:
-				label: Name Short
-				control: [type: phrase]
-				validation:
-					- [setRequired, 'Please fill in the name short.']
-			parent:
-				label: Parent
-				control: [type: select]
+		name:
+			label: Name
+			control: [type: phrase]
+			validation:
+				- [setRequired, 'Please fill in the name.']
+		nameOfficial:
+			label: Name Official
+			control: [type: phrase]
+			validation:
+				- [setRequired, 'Please fill in the name official.']
+		nameShort:
+			label: Name Short
+			control: [type: phrase]
+			validation:
+				- [setRequired, 'Please fill in the name short.']
+		parent:
+			label: Parent
+			control: [type: select, items: Extras\Callback(@locationRepositoryAccessor::get(), 'fetchPairs', [id, name])]

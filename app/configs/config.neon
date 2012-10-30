@@ -110,15 +110,6 @@ common:
 		missingTranslationsScanner:
 			class: Service\TaskManager\MissingTranslationsScanner(@autopilot, @phraseTranslationRepositoryAccessor, @languageRepositoryAccessor)
 
-#		phraseEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Phrase\Phrase')
-#		phraseServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\Phrase\Phrase', @phraseEntityFactory)
-#		formMaskGenerator:
-#			parameters: [mask, config, entity]
-#			class: Extras\FormMask\Generator(%mask%, %config%, %entity%)
-#			setup:
-#				- setItemPhrase(@itemPhraseFactory)
-
-
 		mask: Extras\FormMask\Mask
 
 		itemTextFactory: Extras\FormMask\Items\Foctories\TextFactory
@@ -133,10 +124,6 @@ common:
 		itemTinymceFactory: Extras\FormMask\Items\Foctories\TinymceFactory
 
 	factories:
-		phraseService:
-			parameters: [entity]
-			class: Service\Phrase\PhraseService(@model, %entity%)
-
 		formGenerator:
 			parameters: [config, entity]
 			class: Extras\FormMask\Generator(@mask, %config%, %entity%)
