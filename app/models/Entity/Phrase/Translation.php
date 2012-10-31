@@ -59,7 +59,7 @@ class Translation extends \Entity\BaseEntity {
 		return isset($this->variations['translation']) ? $this->variations['translation'] : '{!!' . $this->id . '}';
 	}
 
-//@entity-generator-code --- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()

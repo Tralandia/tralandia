@@ -10,7 +10,7 @@ class PhrasePresenter extends AdminPresenter {
 	protected $phraseTypeRepositoryAccessor;
 	protected $languageRepositoryAccessor;
 
-	public $phrase;
+	public $phrase, $fromLanguage, $toLanguage;
 
 	public function setContext(\Nette\DI\Container $dic) {
 		parent::setContext($dic);
@@ -21,9 +21,13 @@ class PhrasePresenter extends AdminPresenter {
 	}
 	
 
-	public function actionEdit($id = 0) {
-		$this->phrase = $phrase = $this->phraseRepositoryAccessor->get()->find($id);
-
+	public function actionEdit($id = 0, $fromLanguage = 0, $toLanguage = 0) {
+		$this->phrase = $this->phraseRepositoryAccessor->get()->find($id);
+		$this->fromLanguage = $this->languageRepositoryAccessor->get()->find($fromLanguage);
+		$this->toLanguage = $this->languageRepositoryAccessor->get()->find($toLanguage);
+		$this->template->phrase = $this->phrase;
+		$this->template->fromLanguage = $this->fromLanguage;
+		$this->template->toLanguage = $this->toLanguage;
 	}
 
 	public function renderEdit($id = 0) {
@@ -36,9 +40,11 @@ class PhrasePresenter extends AdminPresenter {
 	protected function createComponentPhraseEditForm()
 	{
 		$sourceLanguage = $this->phrase->sourceLanguage;
-		$form = new Forms\Dictionary\PhraseEditForm($this->phraseTypeRepositoryAccessor, $this->languageRepositoryAccessor, $sourceLanguage);
+		$form = new Forms\Dictionary\PhraseEditForm($this->fromLanguage, $this->toLanguage, $this->phrase, $this->phraseTypeRepositoryAccessor, $this->languageRepositoryAccessor, $sourceLanguage);
 	
 		$form->onSuccess[] = callback($this, 'processPhraseEditForm');
+
+		$form->setDefaultValues();
 	
 		return $form;
 	}
