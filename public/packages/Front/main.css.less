@@ -321,6 +321,10 @@ a , a:hover {
 	margin:0;
 }
 
+.font14 {
+	font-size: 14px;
+	line-height: 20px;
+}
 /****************************************************************************************
 /* base layout design temlape 
 /***************************************************************************************/
@@ -964,11 +968,14 @@ border-top-right-radius: 5px;
 
 form.traform {
 	
+	margin:0;
+	
 	&.dashboard {
 		label {
 			padding-left: 10px;
 		}
 	}	
+
 
 
 	.row-fluid [class*="span"] {
@@ -977,10 +984,8 @@ form.traform {
 	
 
 	.row-fluid.completeLang {
-		padding: 5px 10px;
+		padding: 20px 10px;
 		min-height: 0;
-		background: @brown;
-		.basic-gradient(#ccc,#fefefe);
 		color: #333;
 		border-bottom: 1px solid #ddd;
 		margin-bottom: 10px;
@@ -992,15 +997,46 @@ form.traform {
 
 	label {
 
+		border: none;
+
 		small {
 			display: block;
 			color: @helpertext;
 			font-size: @helpertextSize;
 		}
+
+		input[type=radio] , input[type=checkbox] {
+			margin-left: -10px;
+			margin-right: 5px;
+		}
+
+
+
+		&.radio , &.checkbox {
+			cursor: pointer;
+
+		   transition: all .25s ease-in-out;
+		   -moz-transition: all .25s ease-in-out;
+		   -webkit-transition: all .25s ease-in-out;
+
+			&:hover {
+				background: @brown;
+				color: @white;
+			}			
+		}
+
 	}
 
 	.row-fluid {
 		min-height:60px;
+
+		&.invalid {
+			background: #f6b5b5;
+
+			label {
+				border: none;
+			}
+		}
 
 		&.autoHeight , &.text {
 			min-height: 0;		
@@ -1128,18 +1164,21 @@ form.traform {
 
 	table {
 
-		
-		select , input[type=text] {
-			height:22px;
-			font-size: 14px;
-			line-height: 14px;
+		margin-bottom: 10px;
+		select , input[type=text], input[type=file] {
+			height:20px;
+			font-size: 13px;
+			line-height: 13px;
 			font-weight: normal;
 			padding: 0;
+			.basic-border-radius(0);
+			margin: 0;
+
 		}
 	}
 
 	ul.photos {
-		margin: 0;
+		margin: 0 0 10px 0 ;
 		padding: 0;
 		list-style: none;
 
@@ -1150,6 +1189,18 @@ form.traform {
 			width: 178px;
 			text-align: center;
 			.box-size();
+			cursor: move;
+
+			img {
+				border: 2px solid transparent;	
+			}
+
+			&:hover {
+				img {
+					border: 2px dashed #000;			
+				}
+			}
+			
 		}
 	}
 
@@ -1174,7 +1225,7 @@ form.traform {
 		}
 
 		.entypo-invalid {
-			color: #8c0b06;
+			color: red;
 		}
 
 		.entypo-loading {
