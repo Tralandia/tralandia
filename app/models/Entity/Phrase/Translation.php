@@ -8,7 +8,13 @@ use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity(repositoryClass="Repository\Phrase\TranslationRepository")
- * @ORM\Table(name="phrase_translation", indexes={@ORM\index(name="timeTranslated", columns={"timeTranslated"}), @ORM\index(name="checked", columns={"checked"})})
+ * @ORM\Table(name="phrase_translation", 
+ * 				indexes={
+ * 					@ORM\index(name="timeTranslated", columns={"timeTranslated"}), 
+ * 					@ORM\index(name="translation", columns={"translation"}), 
+ * 					@ORM\index(name="checked", columns={"checked"})
+ * 				}
+ * 			)
  * @EA\Primary(key="id", value="")
  */
 class Translation extends \Entity\BaseEntity {
@@ -24,6 +30,12 @@ class Translation extends \Entity\BaseEntity {
 	 * @ORM\ManyToOne(targetEntity="\Entity\Language", cascade={"persist"})
 	 */
 	protected $language;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $translation;
 
 	/**
 	 * @var json
@@ -56,7 +68,7 @@ class Translation extends \Entity\BaseEntity {
 	protected $checked;
 
 	public function __toString() {
-		return isset($this->variations['translation']) ? $this->variations['translation'] : '{!!' . $this->id . '}';
+		return isset($this->translation) ? $this->translation : '{!!' . $this->id . '}';
 	}
 
 	//@entity-generator-code --- NEMAZAT !!!
@@ -126,6 +138,35 @@ class Translation extends \Entity\BaseEntity {
 	}
 		
 	/**
+	 * @param string
+	 * @return \Entity\Phrase\Translation
+	 */
+	public function setTranslation($translation)
+	{
+		$this->translation = $translation;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Phrase\Translation
+	 */
+	public function unsetTranslation()
+	{
+		$this->translation = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getTranslation()
+	{
+		return $this->translation;
+	}
+		
+	/**
 	 * @param json
 	 * @return \Entity\Phrase\Translation
 	 */
@@ -174,7 +215,7 @@ class Translation extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param integer
+	 * @param string
 	 * @return \Entity\Phrase\Translation
 	 */
 	public function setPosition($position)
@@ -185,7 +226,7 @@ class Translation extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return integer|NULL
+	 * @return string|NULL
 	 */
 	public function getPosition()
 	{

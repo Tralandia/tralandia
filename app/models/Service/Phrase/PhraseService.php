@@ -41,7 +41,7 @@ class PhraseService extends Service\BaseService {
 	 * @return Phrase
 	 */
 	public function setTranslateValue(Entity\Language $language, $value) {
-		$this->getTranslation($language)->variations['translation'] = $value;
+		$this->getTranslation($language)->translation = $value;
 		return $this;
 	}
 

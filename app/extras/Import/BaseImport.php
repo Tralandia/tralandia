@@ -157,6 +157,12 @@ class BaseImport {
 			'subsections' => array(),
 			'saveImportStatus' => FALSE,
 		),
+		'dictionarySettings' => array(
+			'entities' => array(
+			),
+			'subsections' => array(),
+			'saveImportStatus' => FALSE,
+		),
 	);
 
 	public $savedVariables = array();

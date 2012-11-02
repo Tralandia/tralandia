@@ -60,7 +60,7 @@ class PhraseEditForm extends \AdminModule\Forms\Form {
 		}
 
 		if($phrase->type->locativesRequired) {
-			$pady = array('nominative', 'locative');
+			$pady = array('nominative' => 'Nominative', 'locative' => 'Locative');
 		} else {
 			$pady = array('default');
 		}
@@ -69,12 +69,12 @@ class PhraseEditForm extends \AdminModule\Forms\Form {
 		foreach ($plurals as $pluralKey => $pluralValue) {
 			$plural = $container->addContainer($pluralKey);
 			foreach ($genders as $genderKey => $genderValue) {
-				$gender = $plural->addContainer($genderValue);
+				$gender = $plural->addContainer($genderKey);
 				foreach ($pady as $padKey => $padValue) {
 					if($phrase->type->isSimple()) {
-						$field = $gender->addText($padValue, $padValue);
+						$field = $gender->addText($padKey, $padValue);
 					} else {
-						$field = $gender->addTextArea($padValue, $padValue);
+						$field = $gender->addTextArea($padKey, $padValue);
 					}
 					if($setDisabled) $field->setDisabled();
 				}
