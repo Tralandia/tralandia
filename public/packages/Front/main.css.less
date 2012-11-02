@@ -321,6 +321,10 @@ a , a:hover {
 	margin:0;
 }
 
+.marginBottom {
+	margin-bottom: 10px;
+}
+
 .font14 {
 	font-size: 14px;
 	line-height: 20px;
@@ -1016,7 +1020,7 @@ form.traform {
 
 		&.radio , &.checkbox {
 			cursor: pointer;
-			margin-left: 7px;
+			
 			&:hover {
 				
 				color: @darkGreen;
@@ -1029,7 +1033,7 @@ form.traform {
 		
 
 		&.invalid {
-			background: #f6b5b5;
+			background: #E7DBD0;
 
 			label {
 				border: none;
@@ -1079,9 +1083,13 @@ form.traform {
 			background: @inputErrorBackgroundColor;
 		}	
 
+	
+	}
+
+	input[type=text] , textarea , select , button , div , .span12 {
 		&.marginBottom {
 			margin-bottom: 10px;
-		}	
+		}		
 	}
 
 	input[type=text] , select {
@@ -1250,7 +1258,7 @@ form.traform {
 		padding: 1px 5px;
 		font-size: 11px;
 		line-height: 14px;
-		padding-left: 240px;
+		padding-left: 230px;
 	}
 
 	.validation {
@@ -1279,21 +1287,42 @@ form.traform {
 
 }
 
-.checkboxies {
-	margin-bottom: 15px;
-}
-
 
 
 
 
 	form.traform {
+
+		.row-fluid {
+			.span7 {
+				width: 435px;
+			}		
+		}
+
 		.nopadding {
 			.row-fluid {
 				.span7 {
 					width: 440px;
 				}		
 			}
+
+			.error-mesage {
+				padding-left: 240px;
+			}
+
+			label {
+				&.radio , &.checkbox {
+					margin-left: 7px;
+				}
+			}
+
+			.span3 {
+				label {
+					&.radio , &.checkbox {
+						margin-left: 17px;
+					}
+				}
+			}			
 		}
 		
 	}
