@@ -38,10 +38,10 @@ class Translation extends \Entity\BaseEntity {
 	protected $gender;
 
 	/**
-	 * @var integer
-	 * @ORM\Column(type="integer")
+	 * @var string
+	 * @ORM\Column(type="string")
 	 */
-	protected $position = 0;
+	protected $position = 'before';
 
 	/**
 	 * @var datetime

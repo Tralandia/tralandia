@@ -81,9 +81,7 @@ common:
 				- $config(%acl%)
 				- setup()
 
-		environment: Extras\Environment(@languageRepositoryAccessor, @locationRepositoryAccessor)
-
-		translator: Extras\Translator(@environment, @cacheStorage)
+		translator: Extras\Translator(@languageRepositoryAccessor, @cacheStorage)
 
 		settings:
 			factory: Extras\PresenterSettings::factory
@@ -122,7 +120,8 @@ common:
 		mask: Extras\FormMask\Mask
 
 		itemTextFactory: Extras\FormMask\Items\Foctories\TextFactory
-		itemPhraseFactory: Extras\FormMask\Items\Foctories\PhraseFactory(@phraseServiceFactory, @environment::getLanguage())
+		# @todo brano environment sa uplne zrusil
+		# itemPhraseFactory: Extras\FormMask\Items\Foctories\PhraseFactory(@phraseServiceFactory, @environment::getLanguage())
 		itemYesNoFactory: Extras\FormMask\Items\Foctories\YesNoFactory
 		itemJsonFactory: Extras\FormMask\Items\Foctories\JsonFactory
 		itemNeonFactory: Extras\FormMask\Items\Foctories\NeonFactory
@@ -142,7 +141,7 @@ common:
 			class: Extras\FormMask\Generator(@mask, %config%, %entity%)
 			setup:
 				- setItemText(@itemTextFactory)
-				- setItemPhrase(@itemPhraseFactory)
+				# - setItemPhrase(@itemPhraseFactory)
 				- setItemYesNo(@itemYesNoFactory)
 				- setItemJson(@itemJsonFactory)
 				- setItemNeon(@itemNeonFactory)

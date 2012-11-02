@@ -4,28 +4,22 @@ namespace AdminModule\Forms\Dictionary;
 
 class PhraseEditForm extends \AdminModule\Forms\Form {
 
-	public $fromLanguage, $toLanguage, $phrase;
-	public $phraseTypeRepositoryAccessor;
+	public $phraseService, $fromLanguage, $toLanguage;
 	public $languageRepositoryAccessor;
 	public $sourceLanguage;
 
-	public function __construct(\Entity\Language $fromLanguage,\Entity\Language $toLanguage, $phrase, $phraseTypeRepositoryAccessor, $languageRepositoryAccessor, $sourceLanguage) {
-		list($this->fromLanguage, 
+	public function __construct($phraseService, \Entity\Language $fromLanguage, \Entity\Language $toLanguage, $languageRepositoryAccessor, $sourceLanguage) {
+		list($this->phraseService,
+			$this->fromLanguage,
 			$this->toLanguage,
-			$this->phrase,
-			$this->phraseTypeRepositoryAccessor, 
-			$this->languageRepositoryAccessor, 
+			$this->languageRepositoryAccessor,
 			$this->sourceLanguage) = func_get_args();
 		parent::__construct();
 	}
 
 	protected function buildForm() {
-
-		$typeList = $this->phraseTypeRepositoryAccessor->get()->fetchPairs('id', 'name');
-		$this->addSelect('phraseType', 'Type:', $typeList)->setDisabled();
-
 		$languageList = $this->languageRepositoryAccessor->get()->fetchPairs('id', 'iso');
-		$this->addSelect('sourceLanguage', 'Source Language:', $languageList)->setDisabled();
+		$this->addSelect('sourceLanguage', 'Source Language:', $languageList);
 
 		$this->addCheckbox('ready', 'Ready');
 		$this->addCheckbox('corrected', 'Corrected');
@@ -33,6 +27,7 @@ class PhraseEditForm extends \AdminModule\Forms\Form {
 		$fromTranslations = $this->addContainer('fromTranslations');
 		$this->fillTranslationsContainer($fromTranslations, $this->fromLanguage, TRUE);
 
+		$this->addSelect('changeToLanguage', 'changeToLanguage', $languageList);
 
 		$toTranslations = $this->addContainer('toTranslations');
 		$this->fillTranslationsContainer($toTranslations, $this->toLanguage);
@@ -45,22 +40,26 @@ class PhraseEditForm extends \AdminModule\Forms\Form {
 			'after' => 'After',
 		);
 		$this->addSelect('position', 'Position', $positionList);
+
+		$this->addSubmit('save', 'Save');
 	}
 
 	public function fillTranslationsContainer($container, $language, $setDisabled = NULL) {
-		if($this->phrase->type->pluralVariationsRequired) {
+		$phrase = $this->phraseService->getEntity();
+
+		if($phrase->type->pluralVariationsRequired) {
 			$plurals = $language->plurals;
 		} else {
 			$plurals = array('default' => 'default');
 		}
 
-		if($this->phrase->type->genderVariationsRequired) {
+		if($phrase->type->genderVariationsRequired) {
 			$genders = $language->genders;
 		} else {
 			$genders = array('default');
 		}
 
-		if($this->phrase->type->locativesRequired) {
+		if($phrase->type->locativesRequired) {
 			$pady = array('nominative', 'locative');
 		} else {
 			$pady = array('default');
@@ -72,7 +71,7 @@ class PhraseEditForm extends \AdminModule\Forms\Form {
 			foreach ($genders as $genderKey => $genderValue) {
 				$gender = $plural->addContainer($genderValue);
 				foreach ($pady as $padKey => $padValue) {
-					if($this->phrase->type->isSimple()) {
+					if($phrase->type->isSimple()) {
 						$field = $gender->addText($padValue, $padValue);
 					} else {
 						$field = $gender->addTextArea($padValue, $padValue);
@@ -85,9 +84,17 @@ class PhraseEditForm extends \AdminModule\Forms\Form {
 	}
 
 	public function setDefaultValues() {
+		$phrase = $this->phraseService->getEntity();
+		$toTranslation = $this->phraseService->getTranslation($this->toLanguage);
 		$this->setDefaults(array(
-			'phraseType' => $this->phrase->type->id,
-			'sourceLanguage' => $this->phrase->sourceLanguage->id,
+			'phraseType' => $phrase->type->id,
+			'sourceLanguage' => $phrase->sourceLanguage->id,
+			'ready' => $phrase->ready,
+			'corrected' => $phrase->corrected,
+			'fromTranslations' => $this->phraseService->getTranslation($this->fromLanguage)->variations,
+			'toTranslations' => $toTranslation->variations,
+			'gender' => $toTranslation->gender,
+			'position' => $toTranslation->position,
 		));
 	}
 

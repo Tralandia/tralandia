@@ -1,7 +1,6 @@
 {form phraseEditForm, class => 'row'}
 	<div class="control-group span3">
-		{label phraseType /}
-		{input phraseType}
+		Type: {$phrase->type->entityName}::{$phrase->type->entityAttribute}
 	</div>
 	<div class="control-group span3">
 		{label sourceLanguage /}
@@ -17,19 +16,15 @@
 	<hr class="soften" />
 	<div class="control-group span6">
 		<label><b>ENGLISH:</b></label>
-		{include #translationsTable, container => $form['fromTranslations']}
+		{include #translationsTable, container => $form['fromTranslations'], language => $fromLanguage}
 	</div>
 	<hr class="soften" />
 	<div class="control-group span6">
-		<label>
-			<select class="input-small pull-right">
-				<option>test</option>
-				<option>eeee</option>
-				<option>test</option>
-			</select>
-			<b>TRANSLATION | SLOVAK:</b>
-		</label>
-		{include #translationsTable, container => $form['toTranslations']}
+		<div class="row">
+			<div class="span3"><label><b>TRANSLATION | SLOVAK:</b></label></div>
+			<div class="span2">{input changeToLanguage}</div>
+		</div>
+		{include #translationsTable, container => $form['toTranslations'], language => $toLanguage}
 		<div class="row">
 			<div n:if="$phrase->type->genderRequired" class="control-group span3">
 				{label gender /}
@@ -41,11 +36,17 @@
 			</div>
 		</div>
 	</div>
+	<hr class="soften" />
+	<div class="control-group span6">
+		{input save}
+	</div>
+	
 {/form}
 
 {define translationsTable}
 	{*
 		$container Nette\Forms\Container
+		$language Entity\Language
 	 *}
 
 	<table class="table">
@@ -54,7 +55,7 @@
 				<th>Count</th>
 			{/if}
 			{if $phrase->type->genderVariationsRequired}
-				{foreach $fromLanguage->genders as $genderName}
+				{foreach $language->genders as $genderName}
 					<th>{$genderName}</th>
 				{/foreach}
 			{/if}
@@ -62,7 +63,7 @@
 		{foreach $container->getComponents() as $plural}
 			<tr>
 				{if $phrase->type->pluralVariationsRequired}
-					<td>{$fromLanguage->plurals[$plural->getName()]['name']}</td>
+					<td>{$language->plurals[$plural->getName()]['name']}</td>
 				{/if}
 				{foreach $plural->getComponents() as $genders}
 					<td>

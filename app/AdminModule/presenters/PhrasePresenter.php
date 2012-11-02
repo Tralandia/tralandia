@@ -6,23 +6,24 @@ use Repository\Dictionary as RD;
 
 class PhrasePresenter extends AdminPresenter {
 
+	protected $phraseServiceFactory;
 	protected $phraseRepositoryAccessor;
-	protected $phraseTypeRepositoryAccessor;
 	protected $languageRepositoryAccessor;
 
-	public $phrase, $fromLanguage, $toLanguage;
+	public $phrase, $phraseService, $fromLanguage, $toLanguage;
 
 	public function setContext(\Nette\DI\Container $dic) {
 		parent::setContext($dic);
 
+		$this->setProperty('phraseServiceFactory');
 		$this->setProperty('phraseRepositoryAccessor');
-		$this->setProperty('phraseTypeRepositoryAccessor');
 		$this->setProperty('languageRepositoryAccessor');
 	}
 	
 
 	public function actionEdit($id = 0, $fromLanguage = 0, $toLanguage = 0) {
 		$this->phrase = $this->phraseRepositoryAccessor->get()->find($id);
+		$this->phraseService = $this->phraseServiceFactory->create($this->phrase);
 		$this->fromLanguage = $this->languageRepositoryAccessor->get()->find($fromLanguage);
 		$this->toLanguage = $this->languageRepositoryAccessor->get()->find($toLanguage);
 		$this->template->phrase = $this->phrase;
@@ -40,7 +41,7 @@ class PhrasePresenter extends AdminPresenter {
 	protected function createComponentPhraseEditForm()
 	{
 		$sourceLanguage = $this->phrase->sourceLanguage;
-		$form = new Forms\Dictionary\PhraseEditForm($this->fromLanguage, $this->toLanguage, $this->phrase, $this->phraseTypeRepositoryAccessor, $this->languageRepositoryAccessor, $sourceLanguage);
+		$form = new Forms\Dictionary\PhraseEditForm($this->phraseService, $this->fromLanguage, $this->toLanguage, $this->languageRepositoryAccessor, $sourceLanguage);
 	
 		$form->onSuccess[] = callback($this, 'processPhraseEditForm');
 
@@ -54,8 +55,20 @@ class PhrasePresenter extends AdminPresenter {
 	 */
 	public function processPhraseEditForm(Forms\Dictionary\PhraseEditForm $form)
 	{
-		$values = $form->getValues();
-	
+		$values = $form->getValues(TRUE);
+		$phrase = $this->phraseService->getEntity();
+		$phrase->ready = $values['ready'];
+		$phrase->corrected = $values['corrected'];
+		$phrase->sourceLanguage = $this->languageRepositoryAccessor->get()->find($values['sourceLanguage']);
+
+		$translation = $this->phraseService->getTranslation($this->toLanguage);
+		$translation->variations = $values['toTranslations'];
+		$translation->gender = $values['gender'];
+		$translation->position = $values['position'];
+
+		$this->phraseService->save();
+
+		// d($values);
 		$this->flashMessage('Success', 'success');
 		$this->redirect('this');
 	}
