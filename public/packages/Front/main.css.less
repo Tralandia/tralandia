@@ -1342,9 +1342,22 @@ form.traform {
 }
 
 .table td {
-	padding: 1px 8px;
+	padding: 1px 8px;	
 }
 .table th {
+	padding: 3px 8px;
 	.basic-gradient(@lightGreen,@darkGreen);
 	color: @white;
+
+	&:first-child {
+		-webkit-border-top-left-radius: 5px;
+		-moz-border-radius-topleft: 5px;
+		border-top-left-radius: 5px;		
+	}
+
+	&:last-child {
+		-webkit-border-top-right-radius: 5px;
+		-moz-border-radius-topright: 5px;
+		border-top-right-radius: 5px;		
+	}
 }
