@@ -11,7 +11,7 @@ use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="task", indexes={@ORM\index(name="due", columns={"due"}), @ORM\index(name="userLanguageLevel", columns={"userLanguageLevel"})})
+ * @ORM\Table(name="task", indexes={@ORM\index(name="due", columns={"due"})})
  * @EA\Primary(key="id", value="name")
  */
 class Task extends \Entity\BaseEntityDetails {
@@ -87,12 +87,6 @@ class Task extends \Entity\BaseEntityDetails {
 	protected $userLanguage;
 
 	/**
-	 * @var integer
-	 * @ORM\Column(type="integer", nullable=true)
-	 */
-	protected $userLanguageLevel;
-
-	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\User\Role")
 	 */
@@ -123,7 +117,7 @@ class Task extends \Entity\BaseEntityDetails {
 	protected $completed;
 	
 
-				//@entity-generator-code --- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()
@@ -420,35 +414,6 @@ class Task extends \Entity\BaseEntityDetails {
 	public function getUserLanguage()
 	{
 		return $this->userLanguage;
-	}
-		
-	/**
-	 * @param integer
-	 * @return \Entity\Task\Task
-	 */
-	public function setUserLanguageLevel($userLanguageLevel)
-	{
-		$this->userLanguageLevel = $userLanguageLevel;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Task\Task
-	 */
-	public function unsetUserLanguageLevel()
-	{
-		$this->userLanguageLevel = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return integer|NULL
-	 */
-	public function getUserLanguageLevel()
-	{
-		return $this->userLanguageLevel;
 	}
 		
 	/**

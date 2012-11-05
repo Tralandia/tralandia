@@ -58,7 +58,7 @@ class Change extends \Entity\BaseEntityDetails {
 
 
 
-									//@entity-generator-code --- NEMAZAT !!!
+								//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()

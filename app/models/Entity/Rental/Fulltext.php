@@ -32,7 +32,7 @@ class Fulltext extends \Entity\BaseEntity {
 	protected $value;
 
 
-						//@entity-generator-code --- NEMAZAT !!!
+					//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()

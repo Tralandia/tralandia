@@ -17,7 +17,7 @@ abstract class CoolForm extends Form {
 	public function __construct(\Nette\ComponentModel\IContainer $parent = NULL, $name = NULL) {
 		parent::__construct($parent, $name);
 
-		$this->setRenderer(new BootstrapRenderer);
+		//$this->setRenderer(new BootstrapRenderer);
 
 		//$this->setTranslator($translator);
 
@@ -56,25 +56,30 @@ abstract class CoolForm extends Form {
 	}
 
 	public function onInvalid(Form $form) {
-		if ($this->getParam('invalidate', false)) {
-			//$form->cleanErrors();
-			$this->parent->invalidateControl($this->getName());
-		} else {
-			foreach ($form->getErrors() AS $error) {
-				$this->parent->flashMessage($error, 'error');
-			}
+		// @todo dorobit
+		// if ($this->getParam('invalidate', false)) {
+		// 	//$form->cleanErrors();
+		// 	$this->parent->invalidateControl($this->getName());
+		// } else {
+		// 	foreach ($form->getErrors() AS $error) {
+		// 		$this->parent->flashMessage($error, 'error');
+		// 	}
+		// }
+		foreach ($form->getErrors() AS $error) {
+			$this->parent->flashMessage($error, 'error');
 		}
 	}
 
 	public function addSubmit($name, $caption = NULL, $nospam = TRUE) {
-		if ($nospam && !isset($this['nospam'])) {
-			$noSpam = $this->addHidden('nospam', 'Fill in „nospam“')
-					->addRule(Form::FILLED, 'You are a spambot!')
-					->addRule(Form::EQUAL, 'You are a spambot!', 'nospam');
+		// @todo dorobit
+		// if ($nospam && !isset($this['nospam'])) {
+		// 	$noSpam = $this->addHidden('nospam', 'Fill in „nospam“')
+		// 			->addRule(Form::FILLED, 'You are a spambot!')
+		// 			->addRule(Form::EQUAL, 'You are a spambot!', 'nospam');
 
-			$noSpam->getLabelPrototype()->class('nospam');
-			$noSpam->getControlPrototype()->class('nospam');
-		}
+		// 	$noSpam->getLabelPrototype()->class('nospam');
+		// 	$noSpam->getControlPrototype()->class('nospam');
+		// }
 
 		return parent::addSubmit($name, $caption);
 	}

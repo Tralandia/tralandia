@@ -12,8 +12,8 @@ class Translator implements \Nette\Localization\ITranslator {
 	protected $language = 38;
 	protected $cache;
 
-	public function __construct(Environment $environment, Caching\IStorage $cacheStorage) {
-		$this->language = $environment->getLanguage();
+	public function __construct($languageRepositoryAccessor, Caching\IStorage $cacheStorage) {
+		$this->language = $languageRepositoryAccessor->get()->find(self::DEFAULT_LANGUAGE);
 		$this->cache = new Caching\Cache($cacheStorage, 'Translator');
 	}
 	

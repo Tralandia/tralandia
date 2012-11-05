@@ -31,10 +31,10 @@ class MediumService extends \Service\BaseService {
 			)
 	);
 
-	public $mediumTypeRepository, $mediumTypeServiceFactory;
+	public $mediumTypeRepositoryAccessor, $mediumTypeServiceFactory;
 	
-	public function inject() {
-		list($this->mediumTypeRepository, $this->mediumTypeServiceFactory) = func_get_args();
+	public function inject($mediumTypeRepositoryAccessor, $mediumTypeServiceFactory) {
+		list($this->mediumTypeRepositoryAccessor, $this->mediumTypeServiceFactory) = func_get_args();
 	}
 
 	public function setContentFromUrl($uri) {
@@ -58,7 +58,7 @@ class MediumService extends \Service\BaseService {
 		$this->entity->setCreated();
 		// debug($this);
 
-		$mediumType = $this->mediumTypeRepository->findOneByName($this->entity->details['mime']);
+		$mediumType = $this->mediumTypeRepositoryAccessor->get()->findOneByName($this->entity->details['mime']);
 		if (!$mediumType) {
 			$mediumTypeService = $this->mediumTypeServiceFactory->create();
 			$mediumType = $mediumTypeService->getEntity();

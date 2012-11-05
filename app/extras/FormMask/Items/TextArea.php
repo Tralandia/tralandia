@@ -5,9 +5,9 @@ namespace Extras\FormMask\Items;
 use Nette;
 
 /**
- * TextArea polozka masky
+ * Textarea polozka masky
  */
-class TextArea extends Base {
+class Textarea extends Text {
 
 	/**
 	 * Prida polozku do formulara
@@ -15,7 +15,7 @@ class TextArea extends Base {
 	 * @return Nette\Forms\IControl
 	 */
 	public function extend(Nette\Forms\Form $form) {
-		return $form->addTextArea($this->getName(), $this->getLabel())
+		return $form->addAdvancedTextarea($this->getName(), $this->getLabel())
 			->setDefaultValue($this->getValue());
 	}
 }

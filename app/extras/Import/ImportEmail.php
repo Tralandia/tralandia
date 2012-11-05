@@ -23,11 +23,6 @@ class ImportEmail extends BaseImport {
 		$subjectType = $this->createPhraseType('\Email\Template', 'subject', 'ACTIVE');
 		$bodyType = $this->createPhraseType('\Email\Template', 'body', 'ACTIVE');
 
-		$templateType = $context->emailTemplateTypeEntityFactory->create();
-		$templateType->name = 'default';
-		$model->persist($templateType);
-		$model->flush();
-
 		$r = q('select * from emails');
 		while($x = mysql_fetch_array($r)) {
 			$template = $context->emailTemplateEntityFactory->create();

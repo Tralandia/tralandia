@@ -21,6 +21,9 @@ abstract class Base {
 	/** @var Extras\Callback */
 	protected $valueSetter;
 
+	/** @var array */
+	protected $validators = array();
+
 	/**
 	 * @param string
 	 * @param string
@@ -104,11 +107,19 @@ abstract class Base {
 	}
 
 	/**
-	 * Vrati kontrol formulara
-	 * @return Nette\Forms\IControl
+	 * @return array
 	 */
-	public function getFormControl() {
-		return $this->form->getComponent($this->getName());
+	public function getValidators() {
+		return $this->validators;
+	}
+
+	/**
+	 * @param array
+	 * @return Base
+	 */
+	public function setValidators($validators) {
+		 $this->validators = $validators;
+		 return $this;
 	}
 
 	/**
@@ -135,7 +146,14 @@ abstract class Base {
 	 * @return Nette\Forms\IControl
 	 */
 	public function extend(Nette\Forms\Form $form) {
-		return $form->addText($this->getName(), $this->getLabel())
-			->setDefaultValue($this->getValue());
+		
+		$control = $form->addText($this->getName(), $this->getLabel());
+		$control->setDefaultValue($this->getValue());
+
+		foreach ($this->validators as $validator) {
+			call_user_func_array(array($control, $validator->method), $validator->params);
+		}
+
+		return $control;
 	}
 }

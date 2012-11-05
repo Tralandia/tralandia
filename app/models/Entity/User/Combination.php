@@ -33,7 +33,7 @@ class Combination extends \Entity\BaseEntityDetails {
 	protected $language;
 
 
-				//@entity-generator-code --- NEMAZAT !!!
+			//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()

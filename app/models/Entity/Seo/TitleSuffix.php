@@ -32,7 +32,7 @@ class TitleSuffix extends \Entity\BaseEntity {
 	 */
 	protected $suffix;
 
-				//@entity-generator-code --- NEMAZAT !!!
+			//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()

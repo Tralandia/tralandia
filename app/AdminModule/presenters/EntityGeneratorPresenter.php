@@ -237,7 +237,7 @@ class EntityGeneratorPresenter extends BasePresenter {
 		$fileSource = fopen($filename, "r") or die("Could not open file!");
 		$data = fread($fileSource, filesize($filename)) or die("Could not read file!");
 		fclose($fileSource);
-		if($pos = mb_strpos($data, '//@entity-generator-code')) {
+		if($pos = mb_strpos($data, "\t//@entity-generator-code")) {
 			$newFileContent = mb_substr($data, 0, $pos);
 			$newFileContent .= "\t//@entity-generator-code --- NEMAZAT !!!\n\n";
 			$newFileContent .= "\t/* ----------------------------- Methods ----------------------------- */";

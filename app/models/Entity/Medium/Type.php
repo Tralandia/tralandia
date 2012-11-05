@@ -19,7 +19,7 @@ class Type extends \Entity\BaseEntityDetails {
 	 */
 	protected $name;
 
-									//@entity-generator-code --- NEMAZAT !!!
+								//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()

@@ -10,6 +10,8 @@ common:
 			expiration: '+1 year'
 
 	parameters:
+		centralLanguage: 38
+
 		ticketFetcherApi:
 			email: tralandia.test@gmail.com
 			password: tralandia1
@@ -75,13 +77,11 @@ common:
 			class: Security\Acl
 			setup:
 				# - $cache(@aclCache)
-				- $roleRepository(@userRoleRepository)
+				- $roleRepository(@userRoleRepositoryAccessor)
 				- $config(%acl%)
 				- setup()
 
-		environment: Extras\Environment(@languageRepository, @locationRepository)
-
-		translator: Extras\Translator(@environment, @cacheStorage)
+		translator: Extras\Translator(@languageRepositoryAccessor, @cacheStorage)
 
 		settings:
 			factory: Extras\PresenterSettings::factory
@@ -96,8 +96,8 @@ common:
 		autopilot:
 			class: Service\Autopilot\Autopilot
 			setup:
-				- $taskRepository(@taskRepository)
-				- $taskTypeRepository(@taskTypeRepository)
+				- $taskRepository(@taskRepositoryAccessor)
+				- $taskTypeRepository(@taskTypeRepositoryAccessor)
 				- $taskServiceFactory(@taskServiceFactory)
 
 		taskManager: 
@@ -106,8 +106,7 @@ common:
 				- addScanner(@missingTranslationsScanner)
 
 		missingTranslationsScanner:
-			class: Service\TaskManager\MissingTranslationsScanner
-			arguments: [@languageRepository, @phraseRepository]
+			class: Service\TaskManager\MissingTranslationsScanner(@autopilot, @phraseTranslationRepositoryAccessor, @languageRepositoryAccessor)
 
 #		phraseEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Phrase\Phrase')
 #		phraseServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\Phrase\Phrase', @phraseEntityFactory)
@@ -117,14 +116,40 @@ common:
 #			setup:
 #				- setItemPhrase(@itemPhraseFactory)
 
-		itemPhraseFactory: Extras\FormMask\Items\Foctories\PhraseFactory(@phraseServiceFactory, @environment::getLanguage())
+
+		mask: Extras\FormMask\Mask
+
 		itemTextFactory: Extras\FormMask\Items\Foctories\TextFactory
+		# @todo brano environment sa uplne zrusil
+		# itemPhraseFactory: Extras\FormMask\Items\Foctories\PhraseFactory(@phraseServiceFactory, @environment::getLanguage())
+		itemYesNoFactory: Extras\FormMask\Items\Foctories\YesNoFactory
+		itemJsonFactory: Extras\FormMask\Items\Foctories\JsonFactory
+		itemNeonFactory: Extras\FormMask\Items\Foctories\NeonFactory
+		itemTextareaFactory: Extras\FormMask\Items\Foctories\TextareaFactory
+		itemPriceFactory: Extras\FormMask\Items\Foctories\PriceFactory
+		itemSelectFactory: Extras\FormMask\Items\Foctories\SelectFactory
+		itemCheckboxFactory: Extras\FormMask\Items\Foctories\CheckboxFactory
+		itemTinymceFactory: Extras\FormMask\Items\Foctories\TinymceFactory
 
 	factories:
 		phraseService:
 			parameters: [entity]
 			class: Service\Phrase\PhraseService(@model, %entity%)
 
+		formGenerator:
+			parameters: [config, entity]
+			class: Extras\FormMask\Generator(@mask, %config%, %entity%)
+			setup:
+				- setItemText(@itemTextFactory)
+				# - setItemPhrase(@itemPhraseFactory)
+				- setItemYesNo(@itemYesNoFactory)
+				- setItemJson(@itemJsonFactory)
+				- setItemNeon(@itemNeonFactory)
+				- setItemTextarea(@itemTextareaFactory)
+				- setItemPrice(@itemPriceFactory)
+				- setItemSelect(@itemSelectFactory)
+				- setItemCheckbox(@itemCheckboxFactory)
+				- setItemTinymce(@itemTinymceFactory)
 
 production < common:
 

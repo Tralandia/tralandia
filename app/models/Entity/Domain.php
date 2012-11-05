@@ -38,7 +38,7 @@ class Domain extends \Entity\BaseEntity {
 	protected $locations;
 
 
-									//@entity-generator-code --- NEMAZAT !!!
+								//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()

@@ -12,30 +12,56 @@ class WaccoPresenter extends BasePresenter {
 	}
 
 	public function actionList() {
-		//$locationLocationRepo = $this->context->model->getRepository('Entity\Location\Location');
-		//$locationTypeRepo = $this->context->model->getRepository('Entity\Location\Type');
-		//$entity = $locationLocationRepo->find(2);
-
-		
 		$repo = $this->context->model->getRepository('Entity\Currency');
 		$entity = $repo->find(2);
 
 		$model = $this->context->model;
 		$configurator = new Extras\Config\Configurator($this->context->params['settingsDir'] . '/presenters/currency.neon');
+		$generator = $this->context->createFormGenerator($configurator, $entity)->build();
 
-		$mask = new Extras\FormMask\Mask;
 		$form = new Nette\Application\UI\Form($this, 'form');
-		$form->onSuccess[] = array($mask, 'process');
+		$form->onSuccess[] = array($generator->getMask(), 'process');
 		$form->onSuccess[] = function($form) use ($model) {
 			$model->flush();
 		};
 
-		$generator = new Extras\FormMask\Generator($mask, $configurator, $entity);
-		$generator->setItemPhrase($this->context->itemPhraseFactory);
-		$generator->setItemText($this->context->itemTextFactory);
-		$generator->build();
+		$generator->getMask()->extend($form);
+		$this->template->form = $form;
+	}
 
-		$mask->extend($form);
+	public function actionList2() {
+		$repo = $this->context->model->getRepository('Entity\Language');
+		$entity = $repo->find(144);
+
+		$model = $this->context->model;
+		$configurator = new Extras\Config\Configurator($this->context->params['settingsDir'] . '/presenters/language.neon');
+		$generator = $this->context->createFormGenerator($configurator, $entity)->build();
+
+		$form = new Nette\Application\UI\Form($this, 'form');
+		$form->onSuccess[] = array($generator->getMask(), 'process');
+		$form->onSuccess[] = function($form) use ($model) {
+			$model->flush();
+		};
+
+		$generator->getMask()->extend($form);
+		$this->template->form = $form;
+	}
+
+	public function actionList3() {
+		$repo = $this->context->model->getRepository('Entity\Location\Location');
+		$entity = $repo->find(563);
+
+		$model = $this->context->model;
+		$configurator = new Extras\Config\Configurator($this->context->params['settingsDir'] . '/presenters/location.neon');
+		$generator = $this->context->createFormGenerator($configurator, $entity)->build();
+
+		$form = new Nette\Application\UI\Form($this, 'form');
+		$form->onSuccess[] = array($generator->getMask(), 'process');
+		$form->onSuccess[] = function($form) use ($model) {
+			$model->flush();
+		};
+
+		$generator->getMask()->extend($form);
 		$this->template->form = $form;
 	}
 }

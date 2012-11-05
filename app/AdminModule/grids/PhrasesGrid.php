@@ -13,7 +13,7 @@ class PhrasesGrid extends AdminGrid{
 
 		//Vytvoříme si zdroj dat pro Grid
 		//Při výběru dat vždy vybereme id
-		$source = new \NiftyGrid\DataSource\DoctrineDataSource($this->repository->getDataSource(), 'e_id');
+		$source = new \NiftyGrid\DataSource\DoctrineDataSource($this->repositoryAccessor->get()->getDataSource(), 'e_id');
 		//Předáme zdroj
 		$this->setDataSource($source);
 

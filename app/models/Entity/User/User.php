@@ -125,7 +125,7 @@ class User extends \Entity\BaseEntityDetails {
 	protected $ticketMessages;
 
 
-				//@entity-generator-code --- NEMAZAT !!!
+			//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()
