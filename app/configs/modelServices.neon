@@ -87,11 +87,11 @@ services:
 
 
 	#----------
-	emailTemplateTypeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Email\TemplateType')
+	emailLayoutEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Email\Layout')
 
-	emailTemplateTypeServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @emailTemplateTypeEntityFactory)
+	emailLayoutServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @emailLayoutEntityFactory)
 
-	emailTemplateTypeRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Email\TemplateType')
+	emailLayoutRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Email\Layout')
 
 
 	#expense
