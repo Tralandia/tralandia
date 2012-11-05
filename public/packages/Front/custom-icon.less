@@ -46,11 +46,13 @@
 .btn span {
     position: relative;
     top: -3px;
-
+    display: block;
+    width: 100%;
     &:before {
         position: relative;
         top: 6px;
         left:-3px;
+
     }
 }
 
@@ -67,3 +69,6 @@
 .entypo-plus:before {content:'\229E';}
 .entypo-upload:before {content:'\1F4E4';}
 .entypo-contact:before {content:'\1F464';}
+
+.toogle span:before {content:'\2B07'; font-size: 25px;}
+.toogle.active span:before {content:'\2B06';}

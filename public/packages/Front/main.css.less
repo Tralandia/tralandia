@@ -811,7 +811,7 @@ border-top-right-radius: 5px;
 	.basic-gradient(@btnGreenGradientStartColor,@btnGreenGradientStopColor);
 	color: #fff;
 	text-shadow:0 0 3px @btnGreenGradientStopColor;
-	&:hover {		
+	&:hover , &.active {		
 		color: #fff;		
 		.basic-gradient(@btnGreenGradientStopColor,@btnGreenGradientStartColor);
 	}	
@@ -1013,18 +1013,18 @@ form.traform {
 		}
 
 		input[type=radio] , input[type=checkbox] {
-
+			margin-top: 1px;
 		}
-
-
 
 		&.radio , &.checkbox {
 			cursor: pointer;
-			
+			line-height: 15px;
+			margin-bottom: 8px;
 			&:hover {
 				
 				color: @darkGreen;
-			}			
+			}
+
 		}
 
 	}
@@ -1033,7 +1033,7 @@ form.traform {
 		
 
 		&.invalid {
-			background: #E7DBD0;
+			
 
 			label {
 				border: none;
@@ -1177,6 +1177,10 @@ form.traform {
 
 	.input-append {
 		margin:0;
+
+		.span2 {
+			width: 50px;
+		}
 	}
 
 	table {
@@ -1195,7 +1199,7 @@ form.traform {
 
 		.input-append {
 			input[type=text] {
-				width: 80px;
+				width: 60px;
 			}
 
 			.add-on {
@@ -1216,6 +1220,9 @@ form.traform {
 			}
 		}
 	}
+
+
+
 
 	ul.photos {
 		margin: 0 0 10px 0 ;
@@ -1295,7 +1302,7 @@ form.traform {
 
 		.row-fluid {
 			.span7 {
-				width: 435px;
+				width: 430px;
 			}		
 		}
 
@@ -1326,3 +1333,18 @@ form.traform {
 		}
 		
 	}
+
+
+.table {
+	margin: 0 10px;
+	.box-size();
+	width: 705px;
+}
+
+.table td {
+	padding: 1px 8px;
+}
+.table th {
+	.basic-gradient(@lightGreen,@darkGreen);
+	color: @white;
+}
