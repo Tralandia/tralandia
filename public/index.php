@@ -21,5 +21,6 @@ define('LIBS_DIR', ROOT_DIR . '/libs');
 // absolute filesystem path to the libraries
 define('TEMP_DIR', ROOT_DIR . '/temp');
 
+
 // load bootstrap file
 require APP_DIR . '/bootstrap.php';

@@ -103,7 +103,7 @@ class SeoUrl extends \Entity\BaseEntity {
 
 
 
-	//@entity-generator-code --- NEMAZAT !!!
+			//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()
@@ -376,7 +376,7 @@ class SeoUrl extends \Entity\BaseEntity {
 	 */
 	public function setPpcKeyword(\Entity\Phrase\Phrase $ppcKeyword)
 	{
-		$this->ppcKeywords = $ppcKeyword;
+		$this->ppcKeywords = $ppcKeywords;
 
 		return $this;
 	}

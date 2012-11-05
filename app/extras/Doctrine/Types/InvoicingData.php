@@ -18,7 +18,7 @@ class InvoicingData extends Type {
 	}
 
 	public function convertToPHPValue($value, AbstractPlatform $platform) {
-		return \Extras\Types\Address::decode($value);
+		return \Extras\Types\InvoicingData::decode($value);
 	}
 
 	public function convertToDatabaseValue($value, AbstractPlatform $platform) {

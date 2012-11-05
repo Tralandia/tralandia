@@ -38,7 +38,7 @@ class Domain extends \Entity\BaseEntity {
 	protected $locations;
 
 
-	//@entity-generator-code --- NEMAZAT !!!
+								//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()
@@ -93,6 +93,16 @@ class Domain extends \Entity\BaseEntity {
 	public function setRegistratorDetails($registratorDetails)
 	{
 		$this->registratorDetails = $registratorDetails;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Domain
+	 */
+	public function unsetRegistratorDetails()
+	{
+		$this->registratorDetails = NULL;
 
 		return $this;
 	}

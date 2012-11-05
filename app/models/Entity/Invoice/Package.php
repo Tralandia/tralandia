@@ -45,7 +45,7 @@ class Package extends \Entity\BaseEntity {
 	protected $services;
 
 
-	//@entity-generator-code --- NEMAZAT !!!
+								//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()

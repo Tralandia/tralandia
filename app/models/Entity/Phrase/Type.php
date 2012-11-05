@@ -7,21 +7,26 @@ use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="phrase_type", indexes={@ORM\index(name="entityName", columns={"entityName"}), @ORM\index(name="entityAttribute", columns={"entityAttribute"}), @ORM\index(name="translationLevelRequirement", columns={"translationLevelRequirement"}), @ORM\index(name="pluralsRequired", columns={"pluralsRequired"}), @ORM\index(name="genderVariationsRequired", columns={"genderVariationsRequired"}), @ORM\index(name="locativesRequired", columns={"locativesRequired"}), @ORM\index(name="positionRequired", columns={"positionRequired"}), @ORM\index(name="checkingRequired", columns={"checkingRequired"})})
+ * @ORM\Table(name="phrase_type", indexes={@ORM\index(name="entityName", columns={"entityName"}), @ORM\index(name="entityAttribute", columns={"entityAttribute"}), @ORM\index(name="pluralVariationsRequired", columns={"pluralVariationsRequired"}), @ORM\index(name="genderVariationsRequired", columns={"genderVariationsRequired"}), @ORM\index(name="locativesRequired", columns={"locativesRequired"}), @ORM\index(name="positionRequired", columns={"positionRequired"}), @ORM\index(name="checkingRequired", columns={"checkingRequired"})})
  * @EA\Primary(key="id", value="name")
  */
 class Type extends \Entity\BaseEntity {
 
-	const TRANSLATION_LEVEL_PASSIVE = 'passive';
-	const TRANSLATION_LEVEL_ACTIVE = 'active';
-	const TRANSLATION_LEVEL_NATIVE = 'native';
-	const TRANSLATION_LEVEL_MARKETING = 'marketing';
+	const TRANSLATE_TO_SUPPORTED = 'supported';
+	const TRANSLATE_TO_CENTRAL = 'central';
+	const TRANSLATE_TO_NONE = 'none';
 
 	/**
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $name;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string")
+	 */
+	protected $translateTo = self::TRANSLATE_TO_SUPPORTED;
 
 	/**
 	 * @var string
@@ -36,16 +41,10 @@ class Type extends \Entity\BaseEntity {
 	protected $entityAttribute;
 
 	/**
-	 * @var string
-	 * @ORM\Column(type="string")
-	 */
-	protected $translationLevelRequirement = FALSE;
-
-	/**
 	 * @var boolean
 	 * @ORM\Column(type="boolean")
 	 */
-	protected $pluralsRequired = FALSE;
+	protected $pluralVariationsRequired = FALSE;
 
 	/**
 	 * @var boolean
@@ -85,7 +84,6 @@ class Type extends \Entity\BaseEntity {
 	 */
 	protected $helpForTranslator;
 
-
 	/**
 	 * @var integer
 	 * @ORM\Column(type="integer")
@@ -95,9 +93,8 @@ class Type extends \Entity\BaseEntity {
 
 
 	public function isSimple() {
-		return !$this->pluralsRequired && !$this->genderVariationsRequired && !$this->locativesRequired && !$this->positionRequired;
+		return $this->pluralVariationsRequired || $this->genderVariationsRequired || $this->locativesRequired || $this->positionRequired;
 	}
-	
 
 	//@entity-generator-code --- NEMAZAT !!!
 
@@ -134,6 +131,25 @@ class Type extends \Entity\BaseEntity {
 	public function getName()
 	{
 		return $this->name;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Phrase\Type
+	 */
+	public function setTranslateTo($translateTo)
+	{
+		$this->translateTo = $translateTo;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getTranslateTo()
+	{
+		return $this->translateTo;
 	}
 		
 	/**
@@ -195,31 +211,12 @@ class Type extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param string
-	 * @return \Entity\Phrase\Type
-	 */
-	public function setTranslationLevelRequirement($translationLevelRequirement)
-	{
-		$this->translationLevelRequirement = $translationLevelRequirement;
-
-		return $this;
-	}
-		
-	/**
-	 * @return string|NULL
-	 */
-	public function getTranslationLevelRequirement()
-	{
-		return $this->translationLevelRequirement;
-	}
-		
-	/**
 	 * @param boolean
 	 * @return \Entity\Phrase\Type
 	 */
-	public function setPluralsRequired($pluralsRequired)
+	public function setPluralVariationsRequired($pluralVariationsRequired)
 	{
-		$this->pluralsRequired = $pluralsRequired;
+		$this->pluralVariationsRequired = $pluralVariationsRequired;
 
 		return $this;
 	}
@@ -227,9 +224,9 @@ class Type extends \Entity\BaseEntity {
 	/**
 	 * @return boolean|NULL
 	 */
-	public function getPluralsRequired()
+	public function getPluralVariationsRequired()
 	{
-		return $this->pluralsRequired;
+		return $this->pluralVariationsRequired;
 	}
 		
 	/**

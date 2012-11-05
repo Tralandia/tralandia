@@ -76,7 +76,7 @@ class Company extends \Entity\BaseEntityDetails {
 	 */
 	protected $invoices;
 
-	//@entity-generator-code --- NEMAZAT !!!
+								//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()

@@ -215,12 +215,12 @@ common:
 				batch: 
 					label: Batches
 					link: ':Admin:EmailBatch:list'
-				email: 
-					label: Emails
-					link: ':Admin:EmailEmail:list'
-				emailType: 
-					label: Email Types
-					link: ':Admin:EmailType:list'
+				template: 
+					label: Templates
+					link: ':Admin:EmailTemplate:list'
+				layout: 
+					label: Layouts
+					link: ':Admin:EmailLayout:list'
 		company:
 			label: Company
 			items:

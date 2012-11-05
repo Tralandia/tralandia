@@ -6,24 +6,29 @@ use Repository\Dictionary as RD;
 
 class PhrasePresenter extends AdminPresenter {
 
-	protected $phraseRepository;
-	protected $phraseTypeRepository;
-	protected $languageRepository;
+	protected $phraseServiceFactory;
+	protected $phraseRepositoryAccessor;
+	protected $languageRepositoryAccessor;
 
-	public $phrase;
+	public $phrase, $phraseService, $fromLanguage, $toLanguage;
 
 	public function setContext(\Nette\DI\Container $dic) {
 		parent::setContext($dic);
 
-		$this->phraseRepository = $dic->phraseRepository;
-		$this->phraseTypeRepository = $dic->phraseTypeRepository;
-		$this->languageRepository = $dic->languageRepository;
+		$this->setProperty('phraseServiceFactory');
+		$this->setProperty('phraseRepositoryAccessor');
+		$this->setProperty('languageRepositoryAccessor');
 	}
 	
 
-	public function actionEdit($id = 0) {
-		$this->phrase = $phrase = $this->phraseRepository->find($id);
-
+	public function actionEdit($id = 0, $fromLanguage = 0, $toLanguage = 0) {
+		$this->phrase = $this->phraseRepositoryAccessor->get()->find($id);
+		$this->phraseService = $this->phraseServiceFactory->create($this->phrase);
+		$this->fromLanguage = $this->languageRepositoryAccessor->get()->find($fromLanguage);
+		$this->toLanguage = $this->languageRepositoryAccessor->get()->find($toLanguage);
+		$this->template->phrase = $this->phrase;
+		$this->template->fromLanguage = $this->fromLanguage;
+		$this->template->toLanguage = $this->toLanguage;
 	}
 
 	public function renderEdit($id = 0) {
@@ -36,9 +41,11 @@ class PhrasePresenter extends AdminPresenter {
 	protected function createComponentPhraseEditForm()
 	{
 		$sourceLanguage = $this->phrase->sourceLanguage;
-		$form = new Forms\Dictionary\PhraseEditForm($this->phraseTypeRepository, $this->languageRepository, $sourceLanguage);
+		$form = new Forms\Dictionary\PhraseEditForm($this->phraseService, $this->fromLanguage, $this->toLanguage, $this->languageRepositoryAccessor, $sourceLanguage);
 	
 		$form->onSuccess[] = callback($this, 'processPhraseEditForm');
+
+		$form->setDefaultValues();
 	
 		return $form;
 	}
@@ -48,8 +55,38 @@ class PhrasePresenter extends AdminPresenter {
 	 */
 	public function processPhraseEditForm(Forms\Dictionary\PhraseEditForm $form)
 	{
-		$values = $form->getValues();
-	
+		$values = $form->getValues(TRUE);
+		$phrase = $this->phraseService->getEntity();
+		$phrase->ready = $values['ready'];
+		$phrase->corrected = $values['corrected'];
+		$phrase->sourceLanguage = $this->languageRepositoryAccessor->get()->find($values['sourceLanguage']);
+
+		$translation = $this->phraseService->getTranslation($this->toLanguage);
+		$translation->variations = $values['toTranslations'];
+		$translation->gender = $values['gender'];
+		$translation->position = $values['position'];
+		
+		$translationValue = $values['toTranslations'];
+		if($phrase->type->pluralVariationsRequired) {
+			$translationValue = $translationValue[$this->toLanguage->primarySingular];
+		} else {
+			$translationValue = $translationValue['default'];
+		}
+		if($phrase->type->genderVariationsRequired) {
+			$translationValue = $translationValue[$this->toLanguage->primaryGender];
+		} else {
+			$translationValue = $translationValue['default'];
+		}
+		if($phrase->type->locativesRequired) {
+			$translationValue = $translationValue['nominative'];
+		} else {
+			$translationValue = $translationValue['default'];
+		}
+		$translation->translation = $translationValue;
+
+		$this->phraseService->save();
+
+		// d($values);
 		$this->flashMessage('Success', 'success');
 		$this->redirect('this');
 	}

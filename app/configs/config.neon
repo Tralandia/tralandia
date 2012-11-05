@@ -10,6 +10,8 @@ common:
 			expiration: '+1 year'
 
 	parameters:
+		centralLanguage: 38
+
 		ticketFetcherApi:
 			email: tralandia.test@gmail.com
 			password: tralandia1
@@ -65,7 +67,6 @@ common:
 		# CACHE
 		aclCache: Nette\Caching\Cache(@cacheStorage, 'Acl')
 		routerCache: Nette\Caching\Cache(@cacheStorage, 'Router')
-		translatorCache: Nette\Caching\Cache(@cacheStorage, 'Translator')
 
 		user:
 			class: Security\User
@@ -76,14 +77,11 @@ common:
 			class: Security\Acl
 			setup:
 				# - $cache(@aclCache)
-				- $roleRepository(@userRoleRepository)
+				- $roleRepository(@userRoleRepositoryAccessor)
 				- $config(%acl%)
 				- setup()
 
-		environment: Extras\Environment(@languageRepository, @locationRepository)
-
-
-		translator: Extras\Translator(@environment, @phraseRepository, @translatorCache)
+		translator: Extras\Translator(@languageRepositoryAccessor, @cacheStorage)
 
 		settings:
 			factory: Extras\PresenterSettings::factory
@@ -98,21 +96,60 @@ common:
 		autopilot:
 			class: Service\Autopilot\Autopilot
 			setup:
-				- $taskRepository(@taskRepository)
-				- $taskTypeRepository(@taskTypeRepository)
+				- $taskRepository(@taskRepositoryAccessor)
+				- $taskTypeRepository(@taskTypeRepositoryAccessor)
 				- $taskServiceFactory(@taskServiceFactory)
 
-		taskManager: Service\TaskManager\TaskManager
+		taskManager: 
+			class: Service\TaskManager\TaskManager
+			setup:
+				- addScanner(@missingTranslationsScanner)
 
+		missingTranslationsScanner:
+			class: Service\TaskManager\MissingTranslationsScanner(@autopilot, @phraseTranslationRepositoryAccessor, @languageRepositoryAccessor)
+
+#		phraseEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Phrase\Phrase')
+#		phraseServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\Phrase\Phrase', @phraseEntityFactory)
+#		formMaskGenerator:
+#			parameters: [mask, config, entity]
+#			class: Extras\FormMask\Generator(%mask%, %config%, %entity%)
+#			setup:
+#				- setItemPhrase(@itemPhraseFactory)
+
+
+		mask: Extras\FormMask\Mask
+
+		itemTextFactory: Extras\FormMask\Items\Foctories\TextFactory
+		# @todo brano environment sa uplne zrusil
+		# itemPhraseFactory: Extras\FormMask\Items\Foctories\PhraseFactory(@phraseServiceFactory, @environment::getLanguage())
+		itemYesNoFactory: Extras\FormMask\Items\Foctories\YesNoFactory
+		itemJsonFactory: Extras\FormMask\Items\Foctories\JsonFactory
+		itemNeonFactory: Extras\FormMask\Items\Foctories\NeonFactory
+		itemTextareaFactory: Extras\FormMask\Items\Foctories\TextareaFactory
+		itemPriceFactory: Extras\FormMask\Items\Foctories\PriceFactory
+		itemSelectFactory: Extras\FormMask\Items\Foctories\SelectFactory
+		itemCheckboxFactory: Extras\FormMask\Items\Foctories\CheckboxFactory
+		itemTinymceFactory: Extras\FormMask\Items\Foctories\TinymceFactory
 
 	factories:
-		formMaskGenerator:
-			parameters: [entityReflection, config]
-			factory: Extras\FormMask\Generator::factory(@formMask, %entityReflection%, %config%)
+		phraseService:
+			parameters: [entity]
+			class: Service\Phrase\PhraseService(@model, %entity%)
 
-		formMask:
-			class: Extras\FormMask\Mask
-
+		formGenerator:
+			parameters: [config, entity]
+			class: Extras\FormMask\Generator(@mask, %config%, %entity%)
+			setup:
+				- setItemText(@itemTextFactory)
+				# - setItemPhrase(@itemPhraseFactory)
+				- setItemYesNo(@itemYesNoFactory)
+				- setItemJson(@itemJsonFactory)
+				- setItemNeon(@itemNeonFactory)
+				- setItemTextarea(@itemTextareaFactory)
+				- setItemPrice(@itemPriceFactory)
+				- setItemSelect(@itemSelectFactory)
+				- setItemCheckbox(@itemCheckboxFactory)
+				- setItemTinymce(@itemTinymceFactory)
 
 production < common:
 
@@ -134,11 +171,14 @@ development < common:
 			dbname: tralandia
 			charset: utf8
 			driver: pdo_mysql
+			debugger: true
 
 vaculciak < development:
 	parameters:
-
 		editor: 'txmt://open/?url=file://%file&line=%line'
+
+		database:
+			debugger: true
 
 durika < development:
 	parameters:
@@ -151,12 +191,6 @@ toth < development:
 		database:
 			user: root
 			password: ""
-
-cibi < development:
-	parameters:
-		database:
-			user: root
-			password: root
 
 test < development:
 	parameters:

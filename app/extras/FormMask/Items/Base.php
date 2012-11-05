@@ -13,7 +13,7 @@ abstract class Base {
 	protected $name;
 
 	/** @var string */
-	protected $label = null;
+	protected $label;
 
 	/** @var Extras\Callback */
 	protected $valueGetter;
@@ -21,11 +21,14 @@ abstract class Base {
 	/** @var Extras\Callback */
 	protected $valueSetter;
 
+	/** @var array */
+	protected $validators = array();
+
 	/**
 	 * @param string
 	 * @param string
 	 */
-	public function __construct($name, $label = null) {
+	public function __construct($name, $label) {
 		$this->name = $name;
 		$this->label = $label;
 	}
@@ -50,9 +53,21 @@ abstract class Base {
 	 */
 	public function getValue() {
 		if (!is_callable($this->getValueGetter())) {
-			throw new InvalidStateException("Nebol zadaný callback gettera hodnot.");
+			throw new Nette\InvalidStateException("Nebol zadaný callback gettera hodnot.");
 		}
 		return $this->getValueGetter()->invoke();
+	}
+
+	/**
+	 * Nastavi hodnotu itemu
+	 * @param mixed
+	 * @return mixed
+	 */
+	public function setValue($value) {
+		if (!is_callable($this->getValueSetter())) {
+			throw new Nette\InvalidStateException("Nebol zadaný callback settera hodnot.");
+		}
+		return $this->getValueSetter()->invoke($value);
 	}
 
 	/**
@@ -92,10 +107,53 @@ abstract class Base {
 	}
 
 	/**
-	 * Vrati kontrol formulara
+	 * @return array
+	 */
+	public function getValidators() {
+		return $this->validators;
+	}
+
+	/**
+	 * @param array
+	 * @return Base
+	 */
+	public function setValidators($validators) {
+		 $this->validators = $validators;
+		 return $this;
+	}
+
+	/**
+	 * Vrati nazov setter metody
+	 * @param string
+	 * @return string
+	 */
+	protected function setterMethodName($name) {
+		return 'set' . ucfirst($name);
+	}
+
+	/**
+	 * Vrati nazov getter metody
+	 * @param string
+	 * @return string
+	 */
+	protected function getterMethodName($name) {
+		return 'get' . ucfirst($name);
+	}
+
+	/**
+	 * Prida polozku do formulara
+	 * @param Nette\Forms\Form
 	 * @return Nette\Forms\IControl
 	 */
-	public function getFormControl() {
-		return $this->form->getComponent($this->getName());
+	public function extend(Nette\Forms\Form $form) {
+		
+		$control = $form->addText($this->getName(), $this->getLabel());
+		$control->setDefaultValue($this->getValue());
+
+		foreach ($this->validators as $validator) {
+			call_user_func_array(array($control, $validator->method), $validator->params);
+		}
+
+		return $control;
 	}
 }

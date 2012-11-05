@@ -2,6 +2,11 @@ parameters:
 	webloader:
 		packages:
 
+			customui:
+				
+				css:
+					- BootstrapCustomUI/ui.css
+
 			phrase:
 				js:
 					- phrase/phrase.js
@@ -14,6 +19,16 @@ parameters:
 					- admin/main.js
 				css:
 					- admin/_bootstrap.less
+			Front:
+				css:					
+					- Front/custom-icon.less
+					- Front/main.css.less
+					- Front/form-registration.less
+
+				js:
+					- jQuery/jquery.js
+					- Front/js/fancy-checkboxes.js
+					- Front/js/bootstrap-dropdown.js
 			front:
 				css:
 					- front/default.css
@@ -126,7 +141,12 @@ parameters:
 				- %webloader.packages.fileUpload%
 				- %webloader.packages.bootstrap%
 				- %webloader.packages.phrase%
+				- %webloader.packages.customui%
 
 			Front: 
 				- %webloader.packages.front%
+
+			Gregor:
+				-  %webloader.packages.Front%	
+			'Gregor:Admin': %webloader.sets.Admin%
 

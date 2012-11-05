@@ -31,12 +31,6 @@ class BaseImport {
 			),
 			'subsections' => array(),
 		),
-		'taskTypes' => array(
-			'entities' => array(
-				'\Task\Type' => array(),
-			),
-			'subsections' => array(),
-		),
 		'userRoles' => array(
 			'entities' => array(
 				'\User\Role' => array(),
@@ -53,9 +47,9 @@ class BaseImport {
 			'entities' => array(
 				'\Location\Type' => array(),
 				'\Location\Location' => array(),
-				'\Location\Traveling' => array(),
+				//'\Location\Traveling' => array(),
 			),
-			'subsections' => array('importContinents', 'importCountries', 'importTravelings', 'importRegions', 'importAdministrativeRegions1', 'importAdministrativeRegions2', 'importLocalities'),
+			'subsections' => array('importContinents', 'importCountries', /*'importTravelings',*/ 'importRegions', 'importAdministrativeRegions1', 'importAdministrativeRegions2', 'importLocalities'),
 		),
 		'locationsPolygons' => array(
 			'entities' => array(
@@ -156,6 +150,19 @@ class BaseImport {
 		// 	),
 		// 	'subsections' => array(),
 		// ),
+		'taskTypes' => array(
+			'entities' => array(
+				'\Task\Type' => array(),
+			),
+			'subsections' => array(),
+			'saveImportStatus' => FALSE,
+		),
+		'dictionarySettings' => array(
+			'entities' => array(
+			),
+			'subsections' => array(),
+			'saveImportStatus' => FALSE,
+		),
 	);
 
 	public $savedVariables = array();
@@ -359,11 +366,9 @@ class BaseImport {
 			//debug('iba vraciam premennu '.$phraseType->entityName.'->'.$phraseType->entityAttribute);
 			return $phraseType;
 		} else {
-			$level = constant('\Entity\Phrase\Type::TRANSLATION_LEVEL_'.strtoupper($level));
 			$phraseType = $this->context->phraseTypeEntityFactory->create();
 			$phraseType->entityName = $entityName;
 			$phraseType->entityAttribute = $entityAttribute;
-			$phraseType->translationLevelRequirement = $level;
 			if (isset($params) && count($params) > 0) {
 				foreach ($params as $key => $value) {
 					$phraseType->$key = $value;
@@ -412,10 +417,15 @@ class BaseImport {
 		$return = array();
 		$nextToImport = TRUE;
 		foreach ($this->sections as $key => $value) {
+			if(array_key_exists('saveImportStatus', $value)) {
+				$saveImportStatus = $value['saveImportStatus'];
+			} else {
+				$saveImportStatus = TRUE;
+			}
 			$return[$key] = array(
 				'name' => ucfirst($key),
-				'undo' => (bool)((int)$this->savedVariables['importedSections'][$key] > 0),
-				'import' => (!$this->savedVariables['importedSections'][$key] && $nextToImport == TRUE),
+				'undo' => ($saveImportStatus ? (bool)((int)$this->savedVariables['importedSections'][$key] > 0) : TRUE),
+				'import' => ($saveImportStatus ? (!$this->savedVariables['importedSections'][$key] && $nextToImport == TRUE) : TRUE),
 				'subsections' => array(),
 				'rootImport' => !(bool)count($value['subsections']),
 			);

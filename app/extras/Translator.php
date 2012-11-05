@@ -2,7 +2,8 @@
 
 namespace Extras;
 
-use Nette\Caching;
+use Service\Dictionary as D,
+	Nette\Caching;
 
 class Translator implements \Nette\Localization\ITranslator {
 
@@ -11,18 +12,15 @@ class Translator implements \Nette\Localization\ITranslator {
 	protected $language = 38;
 	protected $cache;
 
-	protected $phraseRepository;
-
-	public function __construct(Environment $environment, $phraseRepository, Caching\IStorage $cacheStorage) {
-		$this->language = $environment->getLanguage();
-		$this->phraseRepository = $phraseRepository;
+	public function __construct($languageRepositoryAccessor, Caching\IStorage $cacheStorage) {
+		$this->language = $languageRepositoryAccessor->get()->find(self::DEFAULT_LANGUAGE);
 		$this->cache = new Caching\Cache($cacheStorage, 'Translator');
 	}
 	
 	public function translate($phrase, $node = NULL, $count = NULL, array $variables = NULL) {
-		$translation = $this->getTranslation($phrase);
+		//$translation = $this->getTranslation($phrase);
 
-		return (gettype($phrase)=='object'? $phrase->id: $phrase);
+		return $phrase;
 	}
 
 	public function getDefaultLanguage() {
@@ -32,9 +30,7 @@ class Translator implements \Nette\Localization\ITranslator {
 
 	
 	protected function getTranslation($phrase) {
-		if($phrase instanceof \Service\Phrase\Phrase) {
-			$phraseId = $phrase->getEntity()->id;
-		} else if ($phrase instanceof \Entity\Phrase\Phrase){
+		if($phrase instanceof D\Phrase || $phrase instanceof \Entity\Dictionary\Phrase) {
 			$phraseId = $phrase->id;
 		} else {
 			$phraseId = $phrase;
@@ -44,8 +40,8 @@ class Translator implements \Nette\Localization\ITranslator {
 		if(!$translation = $this->cache->load($translationKey)) {
 			$translation = null;
 			
-			if(!$phrase instanceof \Service\Phrase\Phrase) {
-				$phrase = $this->phraseRepository->find($phrase);
+			if(!$phrase instanceof D\Phrase) {
+				$phrase = D\Phrase::get($phrase);
 				if(!$phrase) {
 					$translation = '{!'.$phraseId.'!}';
 				}

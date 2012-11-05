@@ -46,7 +46,7 @@ class RentalToFriend extends \Entity\BaseEntity {
 	protected $message;
 
 
-	//@entity-generator-code --- NEMAZAT !!!
+			//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()

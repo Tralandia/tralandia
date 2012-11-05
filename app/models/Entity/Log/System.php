@@ -23,7 +23,7 @@ class System extends \Entity\BaseEntityDetails {
 	protected $comment;
 
 
-	//@entity-generator-code --- NEMAZAT !!!
+								//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()

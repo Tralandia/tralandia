@@ -1,0 +1,57 @@
+common:
+	repositoryAccessor: languageRepositoryAccessor
+	title: Languages
+	h1: 'Language -> %name%'
+
+	grid:
+		class: LanguagesGrid
+
+	form:
+		fields:
+			# name:
+			# 	label: Name
+			# 	control: [type: phrase]
+			# 	validation:
+			# 		- [setRequired, 'Please fill in the name.']
+
+			iso:
+				label: Iso
+				control: [type: text]
+				validation:
+					- [addRule, :pattern, 'Must be exactly 3 characters long.', '[a-z]{2}']
+
+			supported:
+				label: Supported
+				control: [type: checkbox]
+
+			defaultCollation:
+				label: Default Collation
+				control: [type: text]
+
+			genders:
+				label: Genders
+				control: [type: neon]
+
+			plurals:
+				label: Plurals
+				control: [type: neon]
+
+			primarySingular:
+				label: Primary Singular
+				control: [type: text]
+
+			primaryPlural:
+				label: Primary Plural
+				control: [type: textarea]
+
+			primaryGender:
+				label: Primary Gender
+				control: [type: tinymce]
+
+			ppcPatterns:
+				label: PPC Patterns
+				control: [type: neon]
+
+			variationDetails:
+				label: Variation Details
+				control: [type: neon]

@@ -7,9 +7,15 @@ use	Extras\Annotation as EA;
 
 
 /**
- * @ORM\Entity()
- * @ORM\Table(name="phrase_translation", indexes={@ORM\index(name="timeTranslated", columns={"timeTranslated"}), @ORM\index(name="checked", columns={"checked"})})
- * @EA\Primary(key="id", value="translation")
+ * @ORM\Entity(repositoryClass="Repository\Phrase\TranslationRepository")
+ * @ORM\Table(name="phrase_translation", 
+ * 				indexes={
+ * 					@ORM\index(name="timeTranslated", columns={"timeTranslated"}), 
+ * 					@ORM\index(name="translation", columns={"translation"}), 
+ * 					@ORM\index(name="checked", columns={"checked"})
+ * 				}
+ * 			)
+ * @EA\Primary(key="id", value="")
  */
 class Translation extends \Entity\BaseEntity {
 
@@ -26,10 +32,9 @@ class Translation extends \Entity\BaseEntity {
 	protected $language;
 
 	/**
-	 * @var text
-	 * @ORM\Column(type="text", nullable=true)
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
 	 */
-	# @todo toto vyhodit!
 	protected $translation;
 
 	/**
@@ -45,10 +50,10 @@ class Translation extends \Entity\BaseEntity {
 	protected $gender;
 
 	/**
-	 * @var integer
-	 * @ORM\Column(type="integer")
+	 * @var string
+	 * @ORM\Column(type="string")
 	 */
-	protected $position = 0;
+	protected $position = 'before';
 
 	/**
 	 * @var datetime
@@ -63,7 +68,7 @@ class Translation extends \Entity\BaseEntity {
 	protected $checked;
 
 	public function __toString() {
-		return $this->translation;
+		return isset($this->translation) ? $this->translation : '{!!' . $this->id . '}';
 	}
 
 	//@entity-generator-code --- NEMAZAT !!!
@@ -210,7 +215,7 @@ class Translation extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param integer
+	 * @param string
 	 * @return \Entity\Phrase\Translation
 	 */
 	public function setPosition($position)
@@ -221,7 +226,7 @@ class Translation extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return integer|NULL
+	 * @return string|NULL
 	 */
 	public function getPosition()
 	{

@@ -37,20 +37,12 @@ class Currency extends \Entity\BaseEntity {
 	 */
 	protected $rounding;
 
-	/**
-	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Location\Location", inversedBy="currencies")
-	 */
-	protected $locations;
-
 	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()
 	{
 		parent::__construct();
-
-		$this->locations = new \Doctrine\Common\Collections\ArrayCollection;
 	}
 		
 	/**
@@ -147,26 +139,5 @@ class Currency extends \Entity\BaseEntity {
 	public function getRounding()
 	{
 		return $this->rounding;
-	}
-		
-	/**
-	 * @param \Entity\Location\Location
-	 * @return \Entity\Currency
-	 */
-	public function addLocation(\Entity\Location\Location $location)
-	{
-		if(!$this->locations->contains($location)) {
-			$this->locations->add($location);
-		}
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Location\Location
-	 */
-	public function getLocations()
-	{
-		return $this->locations;
 	}
 }

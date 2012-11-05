@@ -124,7 +124,6 @@ class ImportUsers extends BaseImport {
 
 					$combination->country = $this->context->locationRepository->findOneBy(array('oldId'=>$value, 'type'=>$countryLocationType));
 					$combination->language = $this->context->languageRepository->findOneByOldId($value2);
-					$combination->languageLevel = \Entity\Phrase\Type::TRANSLATION_LEVEL_ACTIVE;
 					$user->addCombination($combination);
 				}
 			}
@@ -168,7 +167,6 @@ class ImportUsers extends BaseImport {
 
 			$combination = $this->context->userCombinationEntityFactory->create();
 			$combination->language = $this->context->languageRepository->findOneByOldId($x['language_to']);
-			$combination->languageLevel = \Entity\Phrase\Type::TRANSLATION_LEVEL_NATIVE;
 			$user->addCombination($combination);
 			$this->model->persist($user);
 		}

@@ -26,13 +26,14 @@ $robotLoader->addDirectory(APP_DIR)
 	->addDirectory(TEMP_DIR . '/presenters')
 	->register();
 
-Kdyby\Extension\Forms\BootstrapRenderer\DI\RendererExtension::register($configurator);
+// Kdyby\Extension\Forms\BootstrapRenderer\DI\RendererExtension::register($configurator);
 require_once LIBS_DIR . '/tools.php';
 Extension::register($configurator);
 $configurator->addConfig(APP_DIR . '/configs/config.neon', $section);
 $configurator->onCompile[] = callback('Extras\PresenterGenerator', 'generate');
 $container = $configurator->createContainer();
 
+Panel\Todo::register($container->parameters['appDir']);
 
 // @todo toto niekam schovat
 require_once APP_DIR . '/extras/EntityAnnotation.php';
@@ -41,6 +42,12 @@ require_once APP_DIR . '/extras/EntityAnnotation.php';
 // Setup router // TODO: presunut do config.neon
 $container->application->onStartup[] = function() use ($container) {
 	$router = $container->application->getRouter();
+
+	$router[] = $gregor = new RouteList('gregor');
+	$gregor[] = new Route('gregor/[<presenter>/[<action>[/<id>]]]', array(
+		'presenter' => 'Page',
+		'action' =>  'home'
+	));
 
 	$router[] = $adminRouter = new RouteList('Admin');
 	$adminRouter[] = new Route('index.php', 'Admin:Rental:list', Route::ONE_WAY);
