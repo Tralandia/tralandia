@@ -10,6 +10,24 @@ use Service, Doctrine, Entity;
  */
 class PhraseService extends Service\BaseService {
 
+	protected $translationEntityFactory;
+
+	public function inject($translationEntityFactory) {
+		$this->translationEntityFactory = $translationEntityFactory;
+	}
+
+	public function createTranslation(Entity\Language $language, $translation = NULL) {
+		$type = $this->getEntity()->type;
+		if(!$type instanceof \Entity\Phrase\Type) {
+			throw new \Nette\InvalidArgumentException('Set phrase type before creating translations.');
+		}
+		$translation = $this->translationEntityFactory->create();
+		$this->addTranslation($translation);
+		$translation->language = $language;
+		$translation->variations = $this->getTranslationVariationsMatrix($language);
+		return $translation;
+	}
+
 	/**
 	 * Vrati spravny preklad na zaklade jazyka
 	 * @param Entity\Language
@@ -47,5 +65,35 @@ class PhraseService extends Service\BaseService {
 
 	public function addTranslation($translation) {
 		return $this->getEntity()->addTranslation($translation);
+	}
+
+	public function getTranslationVariationsMatrix($language) {
+		if($this->getEntity()->type->pluralVariationsRequired) {
+			$plurals = $language->plurals;
+		} else {
+			$plurals = array('default' => 'default');
+		}
+
+		if($this->getEntity()->type->genderVariationsRequired) {
+			$genders = $language->genders;
+		} else {
+			$genders = array('default');
+		}
+
+		if($this->getEntity()->type->locativesRequired) {
+			$cases = array('nominative' => 'Nominative', 'locative' => 'Locative');
+		} else {
+			$cases = array('default');
+		}
+
+		$matrix = array();
+		foreach ($plurals as $pluralKey => $pluralValue) {
+			foreach ($genders as $genderKey => $genderValue) {
+				foreach ($cases as $caseKey => $caseValue) {
+					$matrix[$pluralKey][$genderKey][$caseKey] = NULL;
+				}
+			}
+		}
+		return $matrix;
 	}
 }

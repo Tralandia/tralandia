@@ -66,7 +66,7 @@ class ImportRentalTypes extends BaseImport {
 			
 			$thisPhrase = $this->context->phraseServiceFactory->create($rentalType->name);
 			if (!$thisPhrase->hasTranslation($thisLanguage)) {
-				$thisTranslation = $this->createTranslation($thisLanguage, $x['name']);
+				$thisTranslation = $this->createTranslation($thisPhrase, $thisLanguage, $x['name']);
 				$thisPhrase->addTranslation($thisTranslation);
 			}
 			$this->model->persist($rentalType);

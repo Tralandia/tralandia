@@ -45,41 +45,21 @@ class PhraseEditForm extends \AdminModule\Forms\Form {
 	}
 
 	public function fillTranslationsContainer($container, $language, $setDisabled = NULL) {
-		$phrase = $this->phraseService->getEntity();
+		$translation = $this->phraseService->getTranslation($language);
 
-		if($phrase->type->pluralVariationsRequired) {
-			$plurals = $language->plurals;
-		} else {
-			$plurals = array('default' => 'default');
-		}
-
-		if($phrase->type->genderVariationsRequired) {
-			$genders = $language->genders;
-		} else {
-			$genders = array('default');
-		}
-
-		if($phrase->type->locativesRequired) {
-			$pady = array('nominative' => 'Nominative', 'locative' => 'Locative');
-		} else {
-			$pady = array('default');
-		}
-
-		$i = 1;
-		foreach ($plurals as $pluralKey => $pluralValue) {
+		foreach ($translation->variations as $pluralKey => $genders) {
 			$plural = $container->addContainer($pluralKey);
-			foreach ($genders as $genderKey => $genderValue) {
+			foreach ($genders as $genderKey => $genders) {
 				$gender = $plural->addContainer($genderKey);
-				foreach ($pady as $padKey => $padValue) {
+				foreach ($genders as $saceKey => $saceValue) {
 					if($phrase->type->isSimple()) {
-						$field = $gender->addText($padKey, $padValue);
+						$field = $gender->addText($saceKey, $saceValue);
 					} else {
-						$field = $gender->addTextArea($padKey, $padValue);
+						$field = $gender->addTextArea($saceKey, $saceValue);
 					}
 					if($setDisabled) $field->setDisabled();
 				}
 			}
-			$i++;
 		}
 	}
 

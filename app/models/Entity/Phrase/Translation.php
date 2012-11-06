@@ -71,6 +71,55 @@ class Translation extends \Entity\BaseEntity {
 		return isset($this->translation) ? $this->translation : '{!!' . $this->id . '}';
 	}
 
+	/**
+	 * @param string
+	 * @return \Entity\Phrase\Translation
+	 */
+	public function setTranslation($translation)
+	{
+		$this->translation = $translation;
+
+		list($plural, $gender, $case) = $this->getDefaultVariationPath();
+		$this->variations[$plural][$gender][$case] = $translation;
+
+		return $this;
+	}
+
+	/**
+	 * @param json
+	 * @return \Entity\Phrase\Translation
+	 */
+	public function setVariations($variations)
+	{
+		$this->variations = $variations;
+
+		list($plural, $gender, $case) = $this->getDefaultVariationPath();
+		$this->translation = $variations[$plural][$gender][$case];
+
+		return $this;
+	}
+
+	public function getDefaultVariationPath() {
+		$return = array('default', 'default', 'default');
+
+		$phraseType = $this->phrase->type;
+		$language = $this->language;
+		if($phraseType->pluralVariationsRequired && $language->primarySingular) {
+			$return[0] = $language->primarySingular;
+		}
+
+		if($phraseType->genderVariationsRequired && $language->primaryGender) {
+			$return[1] = $language->primaryGender;
+		}
+
+		if($phraseType->locativesRequired) {
+			$return[2] = 'nominative';
+		}
+
+		return $return;
+	}
+
+
 	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -138,17 +187,6 @@ class Translation extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param string
-	 * @return \Entity\Phrase\Translation
-	 */
-	public function setTranslation($translation)
-	{
-		$this->translation = $translation;
-
-		return $this;
-	}
-		
-	/**
 	 * @return \Entity\Phrase\Translation
 	 */
 	public function unsetTranslation()
@@ -164,17 +202,6 @@ class Translation extends \Entity\BaseEntity {
 	public function getTranslation()
 	{
 		return $this->translation;
-	}
-		
-	/**
-	 * @param json
-	 * @return \Entity\Phrase\Translation
-	 */
-	public function setVariations($variations)
-	{
-		$this->variations = $variations;
-
-		return $this;
 	}
 		
 	/**

@@ -59,7 +59,7 @@ class ImportLocations extends BaseImport {
 
 		$namePhrase = $this->context->phraseEntityFactory->create();
 		$namePhrase->type = $this->dictionaryTypeName;
-		$namePhrase->addTranslation($this->createTranslation($language, 'World'));
+		$namePhrase->addTranslation($this->createTranslation($namePhrase, $language, 'World'));
 		$this->model->persist($namePhrase);
 		$this->model->flush();
 
@@ -116,7 +116,7 @@ class ImportLocations extends BaseImport {
 		// Create USA
 		$namePhrase = $this->context->phraseEntityFactory->create();
 		$namePhrase->type = $this->dictionaryTypeName;
-		$namePhrase->addTranslation($this->createTranslation($language, 'USA'));
+		$namePhrase->addTranslation($this->createTranslation($namePhrase, $language, 'USA'));
 		$this->model->persist($namePhrase);
 
 		$s = $this->context->locationEntityFactory->create();
@@ -133,7 +133,7 @@ class ImportLocations extends BaseImport {
 		// Create Canada
 		$namePhrase = $this->context->phraseEntityFactory->create();
 		$namePhrase->type = $this->dictionaryTypeName;
-		$namePhrase->addTranslation($this->createTranslation($language, 'Canada'));
+		$namePhrase->addTranslation($this->createTranslation($namePhrase, $language, 'Canada'));
 		$this->model->persist($namePhrase);
 
 		$s = $this->context->locationEntityFactory->create();
@@ -313,7 +313,7 @@ class ImportLocations extends BaseImport {
 					'locative' => $x1['name_locative'],
 				);
 				$languageTemp = $this->context->languageRepository->findOneBy(array('oldId' => $x1['language_id']));
-				$t = $this->createTranslation($languageTemp, $x['name'], $variations);
+				$t = $this->createTranslation($namePhrase, $languageTemp, $x['name'], $variations);
 				$namePhrase->addTranslation($t);
 			}
 
@@ -364,7 +364,7 @@ class ImportLocations extends BaseImport {
 					'locative' => $x1['name_locative'],
 				);
 				$languageTemp = $this->context->languageRepository->findOneBy(array('oldId' => $x1['language_id']));
-				$t = $this->createTranslation($languageTemp, $x['name'], $variations);
+				$t = $this->createTranslation($namePhrase, $languageTemp, $x['name'], $variations);
 				$namePhrase->addTranslation($t);
 			}
 
@@ -408,7 +408,7 @@ class ImportLocations extends BaseImport {
 					'locative' => $x1['name_locative'],
 				);
 				$languageTemp = $this->context->languageRepository->findOneBy(array('oldId' => $x1['language_id']));
-				$t = $this->createTranslation($languageTemp, $x['name'], $variations);
+				$t = $this->createTranslation($namePhrase, $languageTemp, $x['name'], $variations);
 				$namePhrase->addTranslation($t);
 			}
 
@@ -464,7 +464,7 @@ class ImportLocations extends BaseImport {
 					'locative' => $x1['name_locative'],
 				);
 				$languageTemp = $this->context->languageRepository->findOneBy(array('oldId' => $x1['language_id']));
-				$t = $this->createTranslation($languageTemp, $x['name'], $variations);
+				$t = $this->createTranslation($namePhrase, $languageTemp, $x['name'], $variations);
 				$namePhrase->addTranslation($t);
 			}
 

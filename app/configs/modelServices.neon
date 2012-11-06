@@ -276,15 +276,18 @@ services:
 	#----------
 	phraseEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Phrase\Phrase')
 
-	phraseServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\Phrase\PhraseService', @phraseEntityFactory)
+	phraseServiceFactory: 
+		factory: Extras\Models\Service\ServiceFactory(@model, 'Service\Phrase\PhraseService', @phraseEntityFactory)
+		setup: 
+			- setParameters(Extras\Models\Entity\EntityFactory('Entity\Phrase\Translation'))
 
 	phraseRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Phrase\Phrase')
 
 
 	#----------
-	phraseTranslationEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Phrase\Translation')
+	#phraseTranslationEntityFactory neexistuje pouzi $phrase->createTranslation();
 
-	phraseTranslationServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @phraseTranslationEntityFactory)
+	phraseTranslationServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService')
 
 	phraseTranslationRepositoryAccessor: 
 		factory: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Phrase\Translation')

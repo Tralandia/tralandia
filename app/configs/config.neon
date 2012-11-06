@@ -55,6 +55,7 @@ common:
 		- webLoader.neon
 		- acl/acl.neon
 		- modelServices.neon
+		- oldRepositoryServices.neon
 
 	services:
 		console: @doctrine.console
@@ -185,6 +186,9 @@ durika < development:
 		editor: 'edit://open/?url=file://%file&line=%line'
 		envOptions:
 			email: tralandia.david@gmail.com
+
+		database:
+			debugger: FALSE
 
 toth < development:
 	parameters:

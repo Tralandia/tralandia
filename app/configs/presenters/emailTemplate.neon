@@ -10,4 +10,3 @@ common:
 			name:
 				label: Name
 				control: [type: text]
-
