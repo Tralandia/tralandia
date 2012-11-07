@@ -58,6 +58,11 @@ class Configurator extends Nette\Object {
 		$c = $configurator->createContainer();
 
 
+		debug($c);
+		debug($c->form->default);
+
+
+exit;
 		foreach ($c->getReflection()->getMethods() as $method) {
 			if (strpos($method->getName(), $c->getMethodName('form', true) . '__') !== false) {
 				$service = substr($method->getName(), strpos($method->getName(), '__') + 2);

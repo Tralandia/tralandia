@@ -50,9 +50,18 @@ class WaccoPresenter extends BasePresenter {
 	public function actionList3() {
 		$repo = $this->context->model->getRepository('Entity\Location\Location');
 		$entity = $repo->find(563);
+		
+		debug($this->context->presenter->location->createForm($entity));
+		exit;
 
-		$model = $this->context->model;
-		$configurator = new Extras\Config\Configurator($this->context->params['settingsDir'] . '/presenters/location.neon');
+
+		$configurator = new Extras\Config\Configurator2($this->context->params['settingsDir'] . '/presenters/location.neon');
+		$container = $configurator->createContainer();
+		debug($container);
+		debug($container->form->create($entity));
+
+		exit;
+		/*
 		$generator = $this->context->createFormGenerator($configurator, $entity)->build();
 
 		$form = new Nette\Application\UI\Form($this, 'form');
@@ -63,5 +72,6 @@ class WaccoPresenter extends BasePresenter {
 
 		$generator->getMask()->extend($form);
 		$this->template->form = $form;
+		*/
 	}
 }

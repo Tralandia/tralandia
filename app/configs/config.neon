@@ -51,10 +51,14 @@ common:
 		console:
 			entityManager: default
 
+
 	includes:
 		- webLoader.neon
 		- acl/acl.neon
 		- modelServices.neon
+
+	presenter:
+		configsDir: %appDir%/configs/presenters
 
 	services:
 		console: @doctrine.console
@@ -102,7 +106,7 @@ common:
 				- $taskTypeRepository(@taskTypeRepositoryAccessor)
 				- $taskServiceFactory(@taskServiceFactory)
 
-		taskManager: 
+		taskManager:
 			class: Service\TaskManager\TaskManager
 			setup:
 				- addScanner(@missingTranslationsScanner)
@@ -124,20 +128,25 @@ common:
 		itemTinymceFactory: Extras\FormMask\Items\Foctories\TinymceFactory
 
 	factories:
-		formGenerator:
-			parameters: [config, entity]
-			class: Extras\FormMask\Generator(@mask, %config%, %entity%)
-			setup:
-				- setItemText(@itemTextFactory)
-				- setItemPhrase(@itemPhraseFactory)
-				- setItemYesNo(@itemYesNoFactory)
-				- setItemJson(@itemJsonFactory)
-				- setItemNeon(@itemNeonFactory)
-				- setItemTextarea(@itemTextareaFactory)
-				- setItemPrice(@itemPriceFactory)
-				- setItemSelect(@itemSelectFactory)
-				- setItemCheckbox(@itemCheckboxFactory)
-				- setItemTinymce(@itemTinymceFactory)
+#		formGenerator:
+#			parameters: [config, entity]
+#			class: Extras\FormMask\Generator(@mask, %config%, %entity%)
+#			setup:
+#				- setItemText(@itemTextFactory)
+#				- setItemPhrase(@itemPhraseFactory)
+#				- setItemYesNo(@itemYesNoFactory)
+#				- setItemJson(@itemJsonFactory)
+#				- setItemNeon(@itemNeonFactory)
+#				- setItemTextarea(@itemTextareaFactory)
+#				- setItemPrice(@itemPriceFactory)
+#				- setItemSelect(@itemSelectFactory)
+#				- setItemCheckbox(@itemCheckboxFactory)
+#				- setItemTinymce(@itemTinymceFactory)
+#
+#		automaticForm:
+#			parameters: [config, entity]
+#			class: Extras\FormMask\Generator(@mask, %config%, %entity%)
+#			setup:
 
 production < common:
 

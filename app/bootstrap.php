@@ -29,6 +29,7 @@ $robotLoader->addDirectory(APP_DIR)
 // Kdyby\Extension\Forms\BootstrapRenderer\DI\RendererExtension::register($configurator);
 require_once LIBS_DIR . '/tools.php';
 Extension::register($configurator);
+Extras\Config\PresenterExtension::register($configurator);
 $configurator->addConfig(APP_DIR . '/configs/config.neon', $section);
 $configurator->onCompile[] = callback('Extras\PresenterGenerator', 'generate');
 $container = $configurator->createContainer();

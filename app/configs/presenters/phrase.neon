@@ -1,6 +1,6 @@
-common:
+parameters:
 	repository: phraseRepository
 	title: Phrase Type
 	h1: 'Phrase Type -> %entityName% (%entityAttribute%)'
-	grid:
-		class: PhrasesGrid
+grid:
+	class: PhrasesGrid
