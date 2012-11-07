@@ -198,14 +198,33 @@ class DavidPresenter extends BasePresenter {
 
 	public function actionList() {
 
-		// $tm = $this->context->taskManager;
-		//$scanner = $this->context->missingTranslationsScanner;
-		//$scanner->run();
-		//d($this->context->attractionRepositoryAccessor->get());
-		// $l = $this->context->languageRepositoryAccessor->get()->find(144);
-		// $p = $this->context->phraseRepositoryAccessor->get()->find(1);
-		// $p = $this->context->phraseServiceFactory->create($p);
-		// d($p->createTranslation($l, 'Afarsky'));
+		$emailCompiler = $this->context->emailCompiler;
+
+		// pripravim si template a layout
+		$template = $this->context->tempalteRepositoryAccessor->get()->find(1);
+		$layout = $this->context->layoutRepositoryAccessor->get()->find(1);
+
+		// pripravim si odosielatela
+		$sender = $this->context->userRepositoryAccessor->get()->find(3);
+		$sender = $this->context->userServiceFactory->create($sender);
+
+		// pripravim si prijimatela
+		$receiver = $this->context->userRepositoryAccessor->get()->find(3);
+		$receiver = $this->context->userServiceFactory->create($receiver);
+
+		// pripravim si rental
+		$rental = $this->context->rentalRepositoryAccessor->get()->find(1);
+		$rental = $this->context->rentalServiceFactory->create($rental);
+
+		// ponastavujem compiler
+		$emailCompiler->setTemplate($template);
+		$emailCompiler->setLayout($layout);
+		$emailCompiler->setPrimaryVariable('receiver', $receiver);
+		$emailCompiler->addVariable('sender', $sender);
+		$emailCompiler->addVariable('rental', $rental);
+		$html = $emailCompiler->compile();
+
+		d($html);
 
 	}
 	

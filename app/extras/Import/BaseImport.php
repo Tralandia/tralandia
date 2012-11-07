@@ -300,7 +300,8 @@ class BaseImport {
 			);
 			//throw new \Nette\UnexpectedValueException('Nenasiel som staru Phrase podla starej ID '.$oldPhraseId);
 		}
-		$phrase = $this->context->phraseEntityFactory->create();
+		$phraseService = $this->context->phraseServiceFactory->create();
+		$phrase = $phraseService->getEntity();
 		$phrase->ready = (bool)$oldPhraseData['ready'];
 		$phrase->type = $type;
 		$phrase->oldId = $oldPhraseId;
@@ -319,9 +320,8 @@ class BaseImport {
 			// 		$variations[$locativeKeys[0]][$locativeKeys[1]]['locative'] = $oldTranslationLocative['text'];
 			// 	}
 			// }
-			$translation = $this->createTranslation($phrase, $language, (string)$oldTranslation['text']);
+			$translation = $phraseService->createTranslation($language, (string)$oldTranslation['text']);
 			$translation->timeTranslated = fromStamp($oldTranslation['updated']);
-			$phrase->addTranslation($translation);
 		}
 		//$phrase->save();
 		return $phrase;
@@ -339,15 +339,15 @@ class BaseImport {
 	protected function createPhraseFromString($entityName, $entityAttribute, $level, $text, $textLanguage) {
 		$phraseType = $this->createPhraseType($entityName, $entityAttribute, $level);
 
-		$phrase = $this->context->phraseEntityFactory->create();
+		$phraseService = $this->context->phraseServiceFactory->create();
+		$phrase = $phraseService->getEntity();
 		$phrase->ready = TRUE;
 		$phrase->type = $phraseType;
 
 		if(is_string($textLanguage)) {
 			$textLanguage = $this->context->languageRepository->findOneBy(array('iso' => $textLanguage));
 		}
-		$translation = $this->createTranslation($phrase, $textLanguage, $text);
-		$phrase->addTranslation($translation);
+		$translation = $phraseService->createTranslation($textLanguage, $text);
 
 		return $phrase;
 	}
@@ -384,16 +384,6 @@ class BaseImport {
 			$this->context->model->persist($phraseType);	
 			return $phraseType;
 		}
-	}
-
-	protected function createTranslation($phrase, \Entity\BaseEntity $language, $text) {
-		$translation = $this->context->phraseTranslationEntityFactory->create();
-		$phrase->addTranslation($translation);
-		$translation->language = $language;
-		$translation->translation = $text;
-		$translation->timeTranslated = new \Nette\DateTime();
-
-		return $translation;
 	}
 
 	public function getSections() {

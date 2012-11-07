@@ -16,15 +16,18 @@ class PhraseService extends Service\BaseService {
 		$this->translationEntityFactory = $translationEntityFactory;
 	}
 
-	public function createTranslation(Entity\Language $language, $translation = NULL) {
+	public function createTranslation(Entity\Language $language, $translationText = NULL) {
 		$type = $this->getEntity()->type;
 		if(!$type instanceof \Entity\Phrase\Type) {
 			throw new \Nette\InvalidArgumentException('Set phrase type before creating translations.');
 		}
 		$translation = $this->translationEntityFactory->create();
 		$this->addTranslation($translation);
+		$translation->timeTranslated = new \Nette\DateTime();
 		$translation->language = $language;
 		$translation->variations = $this->getTranslationVariationsMatrix($language);
+		if($translationText !== NULL) $translation->translation = $translationText;
+		
 		return $translation;
 	}
 
@@ -77,13 +80,13 @@ class PhraseService extends Service\BaseService {
 		if($this->getEntity()->type->genderVariationsRequired) {
 			$genders = $language->genders;
 		} else {
-			$genders = array('default');
+			$genders = array('default' => 'default');
 		}
 
 		if($this->getEntity()->type->locativesRequired) {
 			$cases = array('nominative' => 'Nominative', 'locative' => 'Locative');
 		} else {
-			$cases = array('default');
+			$cases = array('default' => 'default');
 		}
 
 		$matrix = array();

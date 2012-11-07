@@ -18,9 +18,9 @@ class Layout extends \Entity\BaseEntity {
 
 	/**
 	 * @var string
-	 * @ORM\Column(type="string", nullable=true)
+	 * @ORM\Column(type="text")
 	 */
-	protected $file;
+	protected $html;
 
 
 	//@entity-generator-code --- NEMAZAT !!!
@@ -64,19 +64,9 @@ class Layout extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Email\Layout
 	 */
-	public function setFile($file)
+	public function setHtml($html)
 	{
-		$this->file = $file;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Email\Layout
-	 */
-	public function unsetFile()
-	{
-		$this->file = NULL;
+		$this->html = $html;
 
 		return $this;
 	}
@@ -84,8 +74,8 @@ class Layout extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getFile()
+	public function getHtml()
 	{
-		return $this->file;
+		return $this->html;
 	}
 }

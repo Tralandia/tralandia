@@ -4,7 +4,7 @@ namespace Entity\Phrase;
 
 use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
-
+use Nette\Utils\Arrays;
 
 /**
  * @ORM\Entity(repositoryClass="Repository\Phrase\TranslationRepository")
@@ -16,6 +16,7 @@ use	Extras\Annotation as EA;
  * 				}
  * 			)
  * @EA\Primary(key="id", value="")
+ * @EA\Generator(skip="{setTranslation, setVariations, updateVariations}")
  */
 class Translation extends \Entity\BaseEntity {
 
@@ -89,14 +90,54 @@ class Translation extends \Entity\BaseEntity {
 	 * @param json
 	 * @return \Entity\Phrase\Translation
 	 */
-	public function setVariations($variations)
+	public function setVariations(array $variations)
 	{
-		$this->variations = $variations;
+		return $this->_updateVariations('set', $variations);
+	}
 
-		list($plural, $gender, $case) = $this->getDefaultVariationPath();
-		$this->translation = $variations[$plural][$gender][$case];
+	public function updateVariations(array $variations) {
+		return $this->_updateVariations('update', $variations);
+	}
 
-		return $this;
+	protected function _updateVariations($option, array $variations) {
+		if($option == 'set') {
+			$foreach = $this->variations;
+			$isset = $variations;
+			$variationsTemp = array();
+		} else {
+			$foreach = $variations;
+			$isset = $this->variations;
+			$variationsTemp = $this->variations;
+		}
+
+		if(isset($this->variations)) {
+			foreach ($foreach as $pluralKey => $genders) {
+				foreach ($genders as $genderKey => $cases) {
+					foreach ($cases as $caseKey => $caseValue) {
+						try {
+							$i = Arrays::get($isset, array($pluralKey, $genderKey, $caseKey));
+							$variationsTemp[$pluralKey][$genderKey][$caseKey] = $variations[$pluralKey][$genderKey][$caseKey];
+						} catch (\Nette\InvalidArgumentException $e) {
+							$this->wrongVariationsScheme($this->variations, $variations);
+						}
+					}
+				}
+			}
+
+			$this->variations = $variationsTemp;
+		} else {
+			$this->variations = $variations;
+		}
+
+
+		list($defaultPlural, $defaultGender, $defaultCase) = $this->getDefaultVariationPath();
+		$this->translation = $this->variations[$defaultPlural][$defaultGender][$defaultCase];
+
+		return $this;		
+	}
+
+	protected function wrongVariationsScheme($expect, $recieved) {
+		throw new \Nette\InvalidArgumentException('Argument "$variations" does not match with the expected value');
 	}
 
 	public function getDefaultVariationPath() {

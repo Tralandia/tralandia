@@ -432,7 +432,7 @@ services:
 	#----------
 	userCombinationEntityFactory: Extras\Models\Entity\EntityFactory('Entity\User\Combination')
 
-	userCombinationServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @userCombinationEntityFactory)
+	userCombinationServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\User\UserService', @userCombinationEntityFactory)
 
 	userCombinationRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\User\Combination')
 

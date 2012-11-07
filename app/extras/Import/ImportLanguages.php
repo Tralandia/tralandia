@@ -21,6 +21,17 @@ class ImportLanguages extends BaseLanguagesImport {
 		$r = q('select * from languages order by id');
 
 		$nameDicIds = array();
+		$defaulOptions = array(
+			'genders' => array('feminine' => 'Feminine', 'masculine' => 'Masculine', 'neuter' => 'Neuter'),
+			'primaryGender' => 'masculine',
+			'plurals' => array(
+				'5plus' => array('name' => '0, 5+', 'pattern' => '$i==0 || $i>4'),
+				'one' => array('name' => '1', 'pattern' => '$i==1'),
+				'twofour' => array('name' => '2-4', 'pattern' => '$i>1 && $i<5'),
+			),
+			'primarySingular' => 'one',
+			'primaryPlural' => 'twofour',
+		);
 		while($x = mysql_fetch_array($r)) {
 			$e = $this->context->languageEntityFactory->create();
 
@@ -31,9 +42,13 @@ class ImportLanguages extends BaseLanguagesImport {
 			$e->details = explode2Levels(';', ':', $x['attributes']);
 			
 			if(array_key_exists($x['iso'], $this->languageOptions)) {
-				foreach ($this->languageOptions[$x['iso']] as $key => $value) {
-					$e->{$key} = $value;
-				}
+				$options = $this->languageOptions[$x['iso']];
+			} else {
+				$options = $defaulOptions;
+			}
+
+			foreach ($options as $key => $value) {
+				$e->{$key} = $value;
 			}
 			$this->model->persist($e);
 

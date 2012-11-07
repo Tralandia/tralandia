@@ -87,6 +87,13 @@ common:
 		settings:
 			factory: Extras\PresenterSettings::factory
 
+		emailCompiler: 
+			calss: Extras\Email\Compiler
+			setup:
+				- setVariableFactory(rental, @rentalEmailVariableFactory)
+
+		rentalEmailVariableFactory: Extras\Email\Variables\RentalVariablesFactory
+
 		ticketFetcherApi:
 			class: Horo\Api( %ticketFetcherApi.host%, %ticketFetcherApi.email%, %ticketFetcherApi.password%, 'INBOX', %ticketFetcherApi.port%, %ticketFetcherApi.tls% )
 			setup:
