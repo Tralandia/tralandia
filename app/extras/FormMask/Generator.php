@@ -9,26 +9,19 @@ use Nette, Extras;
  */
 class Generator extends Nette\Object {
 
-	/** @var Extras\FormMask\Mask */
+	/** @var Extras\Models\Entity\IEntity */
 	protected $entity;
 
 	/** @var Extras\FormMask\Mask */
 	protected $mask;
 
-	/** @var Extras\Config\Configurator */
-	protected $configurator;
-
-	/** @var Extras\FormMask\Mask */
+	/** @var array */
 	protected $factories = array();
 
 	/**
 	 * @param Extras\FormMask\Mask
-	 * @param Extras\Config\Configurator
-	 * @param Extras\Models\Entity\IEntity
 	 */
-	public function __construct(Extras\FormMask\Mask $mask, Extras\Config\Configurator $configurator, Extras\Models\Entity\IEntity $entity) {
-		$this->entity = $entity;
-		$this->configurator = $configurator;
+	public function __construct(Extras\FormMask\Mask $mask) {
 		$this->mask = $mask;
 	}
 
@@ -37,11 +30,14 @@ class Generator extends Nette\Object {
 	 * @return Generator
 	 */
 	public function build() {
-		foreach ($this->configurator->getForm() as $field) {
-			$item = $this->factories[$field->getType()]->create($field->getName(), $field->getLabel(), $this->entity);
-			if ($field->getValidators()) {
-				$item->setValidators($field->getValidators());
+		foreach ($this->factories as $factory) {
+			$item = $factory->object->create($factory->field->getName(), $factory->field->getLabel(), $this->entity);
+			if ($factory->field->getValidators()) {
+				$item->setValidators($factory->field->getValidators());
 			}
+debug($factory->field->options['control']['items']);
+//setItemsGetter
+
 			$this->mask->addItem($item);
 		}
 
@@ -59,82 +55,26 @@ class Generator extends Nette\Object {
 	}
 
 	/**
-	 * Setter text item factory
-	 * @param Extras\FormMask\Items\Foctories\TextFactory
+	 * Getter form mask
+	 * @param Extras\FormMask\Items\Foctories\IFactory 
+	 * @param Extras\Config\Field
+	 * @return Generator
 	 */
-	public function setItemText(Extras\FormMask\Items\Foctories\TextFactory $factory) {
-		$this->factories['text'] = $factory;
+	public function addItem(Extras\FormMask\Items\Foctories\IFactory $factory, Extras\Config\Field $field) {
+		$this->factories[$field->getName()] = (object)array(
+			'object' => $factory,
+			'field' => $field
+		);
+		return $this;
 	}
 
 	/**
-	 * Setter phrase item factory
-	 * @param Extras\FormMask\Items\Foctories\PhraseFactory
+	 * Setter entity
+	 * @param Extras\Models\Entity\IEntity
+	 * @return Generator
 	 */
-	public function setItemPhrase(Extras\FormMask\Items\Foctories\PhraseFactory $factory) {
-		$this->factories['phrase'] = $factory;
-	}
-
-	/**
-	 * Setter yesno item factory
-	 * @param Extras\FormMask\Items\Foctories\YesNoFactory
-	 */
-	public function setItemYesNo(Extras\FormMask\Items\Foctories\YesNoFactory $factory) {
-		$this->factories['yesno'] = $factory;
-	}
-
-	/**
-	 * Setter json item factory
-	 * @param Extras\FormMask\Items\Foctories\JsonFactory
-	 */
-	public function setItemJson(Extras\FormMask\Items\Foctories\JsonFactory $factory) {
-		$this->factories['json'] = $factory;
-	}
-
-	/**
-	 * Setter neon item factory
-	 * @param Extras\FormMask\Items\Foctories\NeonFactory
-	 */
-	public function setItemNeon(Extras\FormMask\Items\Foctories\NeonFactory $factory) {
-		$this->factories['neon'] = $factory;
-	}
-
-	/**
-	 * Setter textarea item factory
-	 * @param Extras\FormMask\Items\Foctories\TextareaFactory
-	 */
-	public function setItemTextarea(Extras\FormMask\Items\Foctories\TextareaFactory $factory) {
-		$this->factories['textarea'] = $factory;
-	}
-
-	/**
-	 * Setter price item factory
-	 * @param Extras\FormMask\Items\Foctories\PriceFactory
-	 */
-	public function setItemPrice(Extras\FormMask\Items\Foctories\PriceFactory $factory) {
-		$this->factories['price'] = $factory;
-	}
-
-	/**
-	 * Setter select item factory
-	 * @param Extras\FormMask\Items\Foctories\SelectFactory
-	 */
-	public function setItemSelect(Extras\FormMask\Items\Foctories\SelectFactory $factory) {
-		$this->factories['select'] = $factory;
-	}
-
-	/**
-	 * Setter checkbox item factory
-	 * @param Extras\FormMask\Items\Foctories\CheckboxFactory
-	 */
-	public function setItemCheckbox(Extras\FormMask\Items\Foctories\CheckboxFactory $factory) {
-		$this->factories['checkbox'] = $factory;
-	}
-
-	/**
-	 * Setter tinymce item factory
-	 * @param Extras\FormMask\Items\Foctories\TinymceFactory
-	 */
-	public function setItemTinymce(Extras\FormMask\Items\Foctories\TinymceFactory $factory) {
-		$this->factories['tinymce'] = $factory;
+	public function setEntity(Extras\Models\Entity\IEntity $entity) {
+		$this->entity = $entity;
+		return $this;
 	}
 }

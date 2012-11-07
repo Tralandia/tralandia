@@ -2,7 +2,7 @@
 
 namespace Extras\Config;
 
-use Nette;
+use Nette, Extras;
 
 class PresenterExtension extends Nette\Config\CompilerExtension
 {
@@ -43,74 +43,42 @@ class PresenterExtension extends Nette\Config\CompilerExtension
 #				//->addSetup('from', $params['parameters'])
 #				->setShared(FALSE)->setAutowired(FALSE);
 
+
+			$generator = $builder->addDefinition($this->prefix($prefix . '.formGenerator'))
+				->setClass('Extras\FormMask\Generator', array(new Nette\DI\Statement('Extras\FormMask\Mask')))
+				->setAutowired(FALSE);
+
 			$form = $builder->addDefinition($this->prefix($prefix . '.form'))
-				->setClass('Nette\Application\UI\Form', array(null))
-				->setShared(FALSE)->setAutowired(FALSE);
+				->setClass('Extras\FormMask\FormFactory', array($generator));
 
 			if (isset($params['form']) && isset($params['form']['fields'])) {
 				foreach ($params['form']['fields'] as $name => $item) {
 					$factory = '@item' . ucfirst($item['control']['type']) . 'Factory';
-					debug($name, $this->formFields[$item['control']['type']], $item['control']['type']);
-//$b = new Nette\DI\Statement($factory);
-//debug($b->create());
-//					$a = $builder->addDefinition($this->prefix($prefix . '.form.' . $name))
-//						->setClass(new Nette\DI\Statement($factory));
 
-//itemPhraseFactory
-
-//					$form->addSetup('addComponent', array($a, $name));
-//					debug($a);
-					//$form->addSetup();
+					if (isset($item['control']['type'])) {
+						$item['control']['items'] = new Nette\DI\Statement('@locationRepositoryAccessor');
 
 
+						$field = new Extras\Config\Field($name, $item['label'], $item['control']['type']);
+						$field->setOptions('control', $item['control']);
+
+						// parsovanie validacnych pravidiel
+						/*
+						if (isset($field->validation)) {
+							foreach ((array)$field->validation as $params) {
+								$method = current($params);
+								unset($params[key($params)]);
+								$control->addValidator($method, iterator_to_array($params));
+							}
+						}
+						*/
+					}
+
+					$generator->addSetup('addItem', array(new Nette\DI\Statement($factory), $field));
 				}
 			}
 		}
 
-/*
-		//$this->compiler->parseServices($builder, $this->loadFromFile(APP_DIR . '/configs/config.neon'));
-
-		foreach ($config as $section => $items) {
-			$form = $builder->addDefinition($this->prefix($section))
-				->setClass('Nette\Application\UI\Form', array(null));
-
-			foreach ($items as $name => $item) {
-				debug($name);
-				$a = $builder->addDefinition($this->prefix($name))
-					->setClass($this->formFields[$item['control']['type']]);
-
-				debug($a);
-				//$form->addSetup();
-
-
-			}
-		}
-
-//		$builder->addDefinition($this->prefix(''))
-//			->setClass('MyBlog\Components\ArticlesList', array($this->prefix('@articles')))
-//			//->addSetup('setPostsPerPage', $config['postsPerPage'])
-//			->setShared(FALSE)->setAutowired(FALSE); // ze služby se stane továrnička
-
-
-		foreach ($config as $name => $item) {
-			//$name = substr($name, strpos($name, '.')+1);
-			//debug($name, $item);
-
-			//addSetup
-
-			//debug($this->formFields[$item['control']['type']], array($name, $item['label']));
-
-			//$builder->addDefinition($this->prefix($name))
-			//	->setClass($this->formFields[$item['control']['type']], array($name, $item['label']));
-		}
-
-
-//		$builder->addDefinition($this->prefix(static::ENTITY_MANAGERS_PREFIX))
-//			->setClass('Nette\DI\NestedAccessor', array('@container', $this->prefix(static::ENTITY_MANAGERS_PREFIX)));
-//$builder->addDefinition($this->prefix('articles'))
-//    ->setClass('MyBlog\ArticlesModel', array('@connection'));
-*/
-		
 	}
 
 

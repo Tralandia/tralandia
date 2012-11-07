@@ -7,7 +7,7 @@ use Extras;
 /**
  * @author Branislav Vaculčiak
  */
-class SelectFactory {
+class SelectFactory implements IFactory {
 	
 	/**
 	 * @param string

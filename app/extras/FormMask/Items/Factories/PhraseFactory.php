@@ -7,7 +7,7 @@ use Extras, Entity;
 /**
  * @author Branislav Vaculčiak
  */
-class PhraseFactory {
+class PhraseFactory implements IFactory {
 
 	/** @var Extras\Models\Service\ServiceFactory */
 	protected $serviceFactory;

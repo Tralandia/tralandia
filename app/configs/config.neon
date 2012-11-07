@@ -114,8 +114,6 @@ common:
 		missingTranslationsScanner:
 			class: Service\TaskManager\MissingTranslationsScanner(@autopilot, @phraseTranslationRepositoryAccessor, @languageRepositoryAccessor)
 
-		mask: Extras\FormMask\Mask
-
 		itemTextFactory: Extras\FormMask\Items\Foctories\TextFactory
 		itemPhraseFactory: Extras\FormMask\Items\Foctories\PhraseFactory(@phraseServiceFactory, @environment::getLanguage())
 		itemYesNoFactory: Extras\FormMask\Items\Foctories\YesNoFactory

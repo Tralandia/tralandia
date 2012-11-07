@@ -7,7 +7,7 @@ use Extras;
 /**
  * @author Branislav Vaculčiak
  */
-class TextareaFactory {
+class TextareaFactory implements IFactory {
 	
 	/**
 	 * @param string
