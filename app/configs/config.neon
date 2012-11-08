@@ -88,11 +88,20 @@ common:
 			factory: Extras\PresenterSettings::factory
 
 		emailCompiler: 
-			calss: Extras\Email\Compiler
+			class: Extras\Email\Compiler
 			setup:
+				- $phraseServiceFactory(@phraseServiceFactory)
 				- setVariableFactory(rental, @rentalEmailVariableFactory)
+				- setVariableFactory(language, @languageEmailVariableFactory)
+				- setVariableFactory(location, @locationEmailVariableFactory)
+				- setVariableFactory(visitor, @visitorEmailVariableFactory)
+				- setVariableFactory(environment, @environmentEmailVariableFactory)
 
-		rentalEmailVariableFactory: Extras\Email\Variables\RentalVariablesFactory
+		rentalEmailVariableFactory: Extras\Email\Variables\RentalVariablesFactory(@rentalServiceFactory)
+		languageEmailVariableFactory: Extras\Email\Variables\LanguageVariablesFactory(@languageServiceFactory)
+		locationEmailVariableFactory: Extras\Email\Variables\LocationVariablesFactory(@locationServiceFactory)
+		visitorEmailVariableFactory: Extras\Email\Variables\UserVariablesFactory('VisitorVariables', @userServiceFactory)
+		environmentEmailVariableFactory: Extras\Email\Variables\EnvironmentVariablesFactory(@locationServiceFactory, @languageServiceFactory)
 
 		ticketFetcherApi:
 			class: Horo\Api( %ticketFetcherApi.host%, %ticketFetcherApi.email%, %ticketFetcherApi.password%, 'INBOX', %ticketFetcherApi.port%, %ticketFetcherApi.tls% )

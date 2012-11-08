@@ -169,6 +169,12 @@ class BaseImport {
 			'subsections' => array(),
 			'saveImportStatus' => FALSE,
 		),
+		'updateEmails' => array(
+			'entities' => array(
+			),
+			'subsections' => array(),
+			'saveImportStatus' => FALSE,
+		),
 	);
 
 	public $savedVariables = array();

@@ -16,7 +16,7 @@ class ImportLanguages extends BaseLanguagesImport {
 
 	public function doImport($subsection = NULL) {
 
-		$this->undoSection('languages');
+		//$this->undoSection('languages');
 
 		$r = q('select * from languages order by id');
 

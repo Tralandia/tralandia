@@ -69,7 +69,12 @@ class Translation extends \Entity\BaseEntity {
 	protected $checked;
 
 	public function __toString() {
-		return isset($this->translation) ? $this->translation : '{!!' . $this->id . '}';
+		if($this->phrase->type->isSimple()) {
+			$translation = $this->translation;
+		} else {
+			$translation = $this->getDefaulVariation();
+		}
+		return $translation ? $translation : '{!!' . $this->id . '}';
 	}
 
 	/**
@@ -129,15 +134,18 @@ class Translation extends \Entity\BaseEntity {
 			$this->variations = $variations;
 		}
 
-
-		list($defaultPlural, $defaultGender, $defaultCase) = $this->getDefaultVariationPath();
-		$this->translation = $this->variations[$defaultPlural][$defaultGender][$defaultCase];
+		$this->translation = $this->getDefaulVariation();
 
 		return $this;		
 	}
 
 	protected function wrongVariationsScheme($expect, $recieved) {
 		throw new \Nette\InvalidArgumentException('Argument "$variations" does not match with the expected value');
+	}
+
+	public function getDefaulVariation() {
+		list($defaultPlural, $defaultGender, $defaultCase) = $this->getDefaultVariationPath();
+		return $this->variations[$defaultPlural][$defaultGender][$defaultCase];
 	}
 
 	public function getDefaultVariationPath() {

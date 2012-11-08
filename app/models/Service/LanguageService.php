@@ -1,12 +1,12 @@
 <?php
 
-namespace Service\User;
+namespace Service;
 
 use Service, Doctrine, Entity;
 
 /**
  * @author Dávid Ďurika
  */
-class UserService extends Service\BaseService {
+class LanguageService extends Service\BaseService {
 	
 }

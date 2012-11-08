@@ -3,6 +3,7 @@
 namespace Extras\Email;
 
 use Entity\Email;
+use Nette\Utils\Strings;
 /**
  * Compiler class
  *
@@ -15,11 +16,15 @@ class Compiler {
 
 	protected $variablesFactories;
 
+	public $phraseServiceFactory;
+
 	/**
 	 * Pole zo zakladnymi premennimy
 	 * @var array
 	 */
 	protected $variables = array();
+
+	protected $customVariables = array();
 
 	public function setTemplate(Email\Template $template) {
 		$this->template = $template;
@@ -45,26 +50,49 @@ class Compiler {
 		return $this->layout;
 	}
 
-	public function setPrimaryVariable($name, \Service\BaseService $variable) {
-		if($variable instanceof \Service\User\UserService) {
-			$user = $variable->getEntity();
-			$htis->setLanguage($user->language);
-			$this->setCountry($user->location);
-			$this->addVariable($name, $variable);
+	public function setPrimaryVariable($variableName, $variableType, \Entity\BaseEntity $variable) {
+		if($variable instanceof \Entity\User\User) {
+			$user = $variable;
+			$this->setEnvironment($user->location, $user->language);
+			$this->addVariable($variableName, $variableType, $variable);
 		} else {
 			throw new \Nette\InvalidArgumentException('Argument does not match with the expected value');
 		}
 	}
 
-	public function addVariable($name, $variable) {
-		$factory = $this->getVariableFactory($name);
-		$this->variables[$name] = $factory->create($variable);
+	public function addVariable($variableName, $variableType, \Entity\BaseEntity $variable) {
+		$factory = $this->getVariableFactory($variableType);
+
+		$params = array_slice(func_get_args(), 2);
+		$this->variables[$variableName] = call_user_func_array(array($factory, 'create'), $params);
+		
 		return $this;
+	}
+
+	public function getVariable($name) {
+		if(!array_key_exists($name, $this->variables)) {
+			throw new \Nette\InvalidArgumentException("Variable '$name' does not exist.");
+		}
+
+		return $this->variables[$name];		
+	}
+
+	public function addCustomVariable($name, $variable) {
+		$this->customVariables[$name] = $variable;
+		return $this;
+	}
+
+	public function getCustomVariable($name) {
+		if(!array_key_exists($name, $this->customVariables)) {
+			throw new \Nette\InvalidArgumentException("Custom variable '$name' does not exist.");
+		}
+
+		return $this->customVariables[$name];				
 	}
 
 	public function setVariableFactory($name, $factory) {
 		$this->variablesFactories[$name] = $factory;
-		return $htis;
+		return $this;
 	}
 
 	public function getVariableFactory($name) {
@@ -78,20 +106,61 @@ class Compiler {
 	public function compile() {
 		$template = $this->getTemplate();
 		$layout = $this->getLayout();
+		$html = $this->buildHtml($layout, $template);
+		$variables = $this->findAllVariables($html);
+		$html = $this->replaceVariables($html, $variables);
+
+		return $html;
 	}
 
+	protected function setEnvironment($location, $language) {
+		$this->setLocation($location);
+		$this->setLanguage($language);
+		$this->addVariable('env', 'environment', $location, $language);
+	}
 
 	protected function setLanguage(\Entity\Language $language) {
-		return $this->addVariable('language', $language);
+		return $this->addVariable('language', 'language', $language);
 	}
 
-	protected function setCountry(\Entity\Location\Location $location) {
+	protected function setLocation(\Entity\Location\Location $location) {
 		if($location->type->id != 3) {
 			throw new \Nette\InvalidArgumentException('Argument does not match with the expected value');
 		}
-		return $this->addVariable('country', $location);
+		return $this->addVariable('location', 'location', $location);
 	}
-	
+
+	protected function buildHtml($layout, $template) {
+		$envVariables = $this->getVariable('env');
+		$body = $this->phraseServiceFactory->create($template->body)->getTranslation($envVariables->getLanguageEntity());
+		return str_replace('{include #content}', $body, $layout->html);
+	}
+
+	protected function findAllVariables($html) {
+		$match = Strings::matchAll($html, '~(?P<originalname>\[(?P<fullname>((?P<prefix>[a-zA-Z]+)_)?(?P<name>[a-zA-Z]+))\])~');
+		$match = array_map('array_filter', $match);
+		return $match;
+	}
+
+	protected function replaceVariables($html, $variables) {
+		d($variables);
+
+		$replace = array();
+		foreach ($variables as $variable) {
+			if(array_key_exists($variable['fullname'], $replace)) continue;
+
+			if(array_key_exists('prefix', $variable)) {
+				$methodName = 'getVariable'.ucfirst($variable['name']);
+				$val = $this->getVariable($variable['prefix'])->{$methodName}();
+			} else {
+				$val = $this->getCustomVariable($variable['name']);
+			}
+			$replace[$variable['originalname']] = $val;
+		}
+
+		return str_replace(array_keys($replace), array_values($replace), $html);
+	}
+
 }
 
 
