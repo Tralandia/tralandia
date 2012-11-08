@@ -59,6 +59,14 @@ abstract class Base {
 	}
 
 	/**
+	 * Vrati zmemenu hodnotu itemu
+	 * @return mixed
+	 */
+	public function getUpdatedValue() {
+		return $this->getValue();
+	}
+
+	/**
 	 * Nastavi hodnotu itemu
 	 * @param mixed
 	 * @return mixed

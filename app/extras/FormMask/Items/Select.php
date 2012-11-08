@@ -49,6 +49,21 @@ class Select extends Text {
 		if (!is_callable($this->getValueGetter())) {
 			throw new Nette\InvalidStateException("Nebol zadaný callback gettera hodnot.");
 		}
+		
+		return $this->getValueGetter()->invoke()->id;
+	}
+
+	/**
+	 * Vrati zmemenu hodnotu itemu
+	 * @return mixed
+	 */
+	public function getUpdatedValue() {
+		if (!is_callable($this->getValueGetter())) {
+			throw new Nette\InvalidStateException("Nebol zadaný callback gettera hodnot.");
+		}
+
+		debug($this->getValueGetter()->invoke());
+		
 		return $this->getValueGetter()->invoke()->id;
 	}
 
