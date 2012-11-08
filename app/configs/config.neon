@@ -125,26 +125,6 @@ common:
 		itemCheckboxFactory: Extras\FormMask\Items\Foctories\CheckboxFactory
 		itemTinymceFactory: Extras\FormMask\Items\Foctories\TinymceFactory
 
-	factories:
-#		formGenerator:
-#			parameters: [config, entity]
-#			class: Extras\FormMask\Generator(@mask, %config%, %entity%)
-#			setup:
-#				- setItemText(@itemTextFactory)
-#				- setItemPhrase(@itemPhraseFactory)
-#				- setItemYesNo(@itemYesNoFactory)
-#				- setItemJson(@itemJsonFactory)
-#				- setItemNeon(@itemNeonFactory)
-#				- setItemTextarea(@itemTextareaFactory)
-#				- setItemPrice(@itemPriceFactory)
-#				- setItemSelect(@itemSelectFactory)
-#				- setItemCheckbox(@itemCheckboxFactory)
-#				- setItemTinymce(@itemTinymceFactory)
-#
-#		automaticForm:
-#			parameters: [config, entity]
-#			class: Extras\FormMask\Generator(@mask, %config%, %entity%)
-#			setup:
 
 production < common:
 

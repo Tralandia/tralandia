@@ -96,4 +96,14 @@ class Field extends Nette\Object {
 		 $this->options[$section] = $params;
 		 return $this;
 	}
+
+	/**
+	 * @return array
+	 */
+	public function getItems() {
+		if (isset($this->options['control']['items'])) {
+			return $this->options['control']['items'];
+		}
+		return false;
+	}
 }

@@ -35,8 +35,9 @@ class Generator extends Nette\Object {
 			if ($factory->field->getValidators()) {
 				$item->setValidators($factory->field->getValidators());
 			}
-debug($factory->field->options['control']['items']);
-//setItemsGetter
+			if ($factory->field->getItems()) {
+				$item->setItemsGetter($factory->field->getItems());
+			}
 
 			$this->mask->addItem($item);
 		}

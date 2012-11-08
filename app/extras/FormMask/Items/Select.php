@@ -7,7 +7,7 @@ use Nette, Extras;
 /**
  * Select polozka masky
  */
-class Select extends Base {
+class Select extends Text {
 
 	/** @var Extras\Callback */
 	protected $itemsGetter;
@@ -39,6 +39,17 @@ class Select extends Base {
 			throw new Nette\InvalidStateException("Nebol zadaný callback gettera poloziek.");
 		}
 		return $this->getItemsGetter()->invoke();
+	}
+
+	/**
+	 * Vrati hodnotu itemu
+	 * @return mixed
+	 */
+	public function getValue() {
+		if (!is_callable($this->getValueGetter())) {
+			throw new Nette\InvalidStateException("Nebol zadaný callback gettera hodnot.");
+		}
+		return $this->getValueGetter()->invoke()->id;
 	}
 
 	/**

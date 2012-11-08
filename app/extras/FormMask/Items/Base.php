@@ -146,7 +146,6 @@ abstract class Base {
 	 * @return Nette\Forms\IControl
 	 */
 	public function extend(Nette\Forms\Form $form) {
-		
 		$control = $form->addText($this->getName(), $this->getLabel());
 		$control->setDefaultValue($this->getValue());
 
