@@ -26,6 +26,7 @@ class FormFactory {
 	 */
 	public function create(Extras\Models\Entity\IEntity $entity) {
 		$form = new Nette\Application\UI\Form;
+		$form->onSuccess[] = array($this->generator->getMask(), 'process');
 		$this->generator->setEntity($entity)->build();
 		$this->generator->getMask()->extend($form);
 		return $form;
