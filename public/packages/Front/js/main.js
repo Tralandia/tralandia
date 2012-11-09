@@ -25,5 +25,6 @@ function uiToogleClick(){
 $(document).ready(function(){
 
 	$('.toogle').click(uiToogleClick);
-
+	$( ".tabs" ).tabs();
+	$( ".datepicker" ).datepicker();
 });

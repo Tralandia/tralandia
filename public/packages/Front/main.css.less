@@ -325,6 +325,10 @@ a , a:hover {
 	margin-bottom: 10px;
 }
 
+.marginTop {
+	margin-top: 10px;
+}
+
 .font14 {
 	font-size: 14px;
 	line-height: 20px;
@@ -925,6 +929,40 @@ border-top-right-radius: 5px;
 .sidebarInner {
 	background: #f4f9e1;
 	.bottom-border-radius(5px);
+
+	form {
+		padding: 10px;
+
+		textarea , input[type=text]  {
+			border: 1px solid @lightGreen;
+			width: 193px;
+		}
+
+		input {
+
+			&.telnum {
+				width: 123px;
+				float: left;
+			}
+		}
+
+		.tel {
+			width: 60px;
+			float: left;
+			margin-right: 10px;
+		}
+
+		.counter {
+			width: 99px;
+			float: left;
+
+			&.first {
+				width: 98px;
+				margin-right: 10px;
+			}
+		}
+
+	}
 }
 
 .sidebarTitle {
@@ -941,7 +979,47 @@ border-top-right-radius: 5px;
 
 .sidebarContact {
 	margin-top: 10px;
+}
+
+.biggall {
+	list-style: none;
+	margin: 0;
+	padding: 0;
 	
+	li {
+		display: block;
+		width: 454px;
+		float: left;
+		
+		margin-bottom: 10px;
+		
+		&:nth-child(odd) {
+			margin-right: 10px;
+		}
+
+		img {
+			min-width: 100%;
+			max-height: 260px;
+		}
+
+		p {
+			text-align: center;
+		}
+	}
+}
+
+.tabs table.tableDefault {
+	width: 100%;
+	margin: 0;
+}
+
+.tabs table.tableDefault.half {
+	width: 454px;
+	float: left;
+}
+
+.tabs table.tableDefault.half.first {
+	margin-right: 10px;
 }
 
 /****************************************************************************************
@@ -1335,16 +1413,16 @@ form.traform {
 	}
 
 
-.table {
+.table.tableDefault {
 	margin: 0 10px;
 	.box-size();
 	width: 705px;
 }
 
-.table td {
+.table.tableDefault td {
 	padding: 1px 8px;	
 }
-.table th {
+.table.tableDefault th {
 	padding: 3px 8px;
 	.basic-gradient(@lightGreen,@darkGreen);
 	color: @white;
