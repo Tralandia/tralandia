@@ -203,14 +203,14 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 	/* need to fix icons sprite */
 	background-position:-65px -16px;
 }
-.ui-tabs { position: relative; padding: .2em; zoom: 1; } /* position: relative prevents IE scroll bug (element with position: relative inside container with overflow: auto appear as "fixed") */
+.ui-tabs { position: relative; zoom: 1; } /* position: relative prevents IE scroll bug (element with position: relative inside container with overflow: auto appear as "fixed") */
 .ui-tabs .ui-tabs-nav { margin: 0; padding: .2em .2em 0; }
 .ui-tabs .ui-tabs-nav li { list-style: none; float: left; position: relative; top: 0; margin: 1px .2em 0 0; border-bottom: 0; padding: 0; white-space: nowrap; }
 .ui-tabs .ui-tabs-nav li a { float: left; padding: .5em 1em; text-decoration: none; }
 .ui-tabs .ui-tabs-nav li.ui-tabs-active { margin-bottom: -1px; padding-bottom: 1px; }
 .ui-tabs .ui-tabs-nav li.ui-tabs-active a, .ui-tabs .ui-tabs-nav li.ui-state-disabled a, .ui-tabs .ui-tabs-nav li.ui-tabs-loading a { cursor: text; }
 .ui-tabs .ui-tabs-nav li a, .ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-active a { cursor: pointer; } /* first selector in group seems obsolete, but required to overcome bug in Opera applying cursor: text overall if defined elsewhere... */
-.ui-tabs .ui-tabs-panel { display: block; border-width: 0; padding: 10px; background: none; }
+.ui-tabs .ui-tabs-panel { display: block; border-width: 0; padding: 10px; background: none; border-top: 1px solid #c8cf9b; position: relative; top: -1px; }
 .ui-tooltip {
 	padding: 8px;
 	position: absolute;
@@ -230,7 +230,7 @@ body .ui-tooltip { border-width: 2px; }
 .ui-widget { font-family: Verdana,Arial,sans-serif; font-size: 14px; }
 .ui-widget .ui-widget { font-size: 1em; }
 .ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button { font-family: Verdana,Arial,sans-serif; font-size: 1em; }
-.ui-widget-content { border: 1px solid #aaaaaa; background: #fdfdf8 url(images/ui-bg_flat_75_fdfdf8_40x100.png) 50% 50% repeat-x; color: #663300; }
+.ui-widget-content { background: #fdfdf8 url(images/ui-bg_flat_75_fdfdf8_40x100.png) 50% 50% repeat-x; color: #663300; }
 .ui-widget-content a { color: #663300; }
 .ui-widget-header { border: 1px solid #fdfdf8; background: #fdfdf8 url(images/ui-bg_highlight-soft_75_fdfdf8_1x100.png) 50% 50% repeat-x; color: #222222; font-weight: bold; }
 .ui-widget-header a { color: #222222; }
@@ -459,3 +459,36 @@ body .ui-tooltip { border-width: 2px; }
 /* Overlays */
 .ui-widget-overlay { background: #aaaaaa url(images/ui-bg_flat_0_aaaaaa_40x100.png) 50% 50% repeat-x; opacity: .3;filter:Alpha(Opacity=30); }
 .ui-widget-shadow { margin: -8px 0 0 -8px; padding: 8px; background: #aaaaaa url(images/ui-bg_flat_0_aaaaaa_40x100.png) 50% 50% repeat-x; opacity: .3;filter:Alpha(Opacity=30); -moz-border-radius: 8px; -khtml-border-radius: 8px; -webkit-border-radius: 8px; border-radius: 8px; }
+
+
+
+
+
+
+
+
+.ui-tabs-nav li.ui-tabs-active a {
+	border-bottom: 1px solid #fdfdf8;
+	position: relative;
+	top: 1px;
+	z-index: 8000;
+	background: #fdfdf8;
+	font-weight: bold;
+}
+
+
+.ui-tabs .ui-tabs-nav li {
+background-image: linear-gradient(bottom, #EEF1D5 0%, #FFFFF7 100%);
+background-image: -o-linear-gradient(bottom, #EEF1D5 0%, #FFFFF7 100%);
+background-image: -moz-linear-gradient(bottom, #EEF1D5 0%, #FFFFF7 100%);
+background-image: -webkit-linear-gradient(bottom, #EEF1D5 0%, #FFFFF7 100%);
+background-image: -ms-linear-gradient(bottom, #EEF1D5 0%, #FFFFF7 100%);
+
+background-image: -webkit-gradient(
+	linear,
+	left bottom,
+	left top,
+	color-stop(0, #EEF1D5),
+	color-stop(1, #FFFFF7)
+);
+}

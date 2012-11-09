@@ -333,6 +333,40 @@ a , a:hover {
 	font-size: 14px;
 	line-height: 20px;
 }
+
+.marginLeft , .row-fluid > [class*="span"]:first-child.marginLeft {
+	margin-left: 10px;	
+}
+
+.row-fluid > [class*="span"]:first-child.marginLeft.leftSidebarObjectDetail {
+	width: 298px;
+}
+
+.list {
+	list-style: none;
+	margin-left: 10px;
+	li {
+		margin-bottom: 5px;
+	}
+
+	li:before {
+	  font-family: "entypo";
+	  font-weight: normal;
+	  font-style: normal;
+	  font-size: 30px;
+	  width: 0;
+	  position: relative;
+	  top: 0px;
+	  left: -15px;
+	  display: block;
+	  height:100%;
+	  float: left;
+	  color: @lightGreen;
+	  text-decoration: inherit;
+		content:'\2713';
+	}
+}
+
 /****************************************************************************************
 /* base layout design temlape 
 /***************************************************************************************/
@@ -911,6 +945,20 @@ border-top-right-radius: 5px;
 /****************************************************************************************
 /***************************************************************************************/
 
+
+.objectDetailServicesIconList {
+	list-style: none;
+	margin: 0;
+
+	li {
+		width: 167px;
+		display: block;
+		float: left;
+		margin-left: 15px;		
+	}
+
+}
+
 /****************************************************************************************
 /* detail object right sidebar 
 /****************************************************************************************/
@@ -941,16 +989,24 @@ border-top-right-radius: 5px;
 		input {
 
 			&.telnum {
-				width: 123px;
+				width: 108px;
 				float: left;
 			}
+
+			&.datepicker {
+				width: 160px;
+				float: none;
+				clear: both;
+			}			
 		}
 
 		.tel {
-			width: 60px;
+			width: 75px;
 			float: left;
 			margin-right: 10px;
 		}
+
+
 
 		.counter {
 			width: 99px;
@@ -988,7 +1044,7 @@ border-top-right-radius: 5px;
 	
 	li {
 		display: block;
-		width: 454px;
+		width: 467px;
 		float: left;
 		
 		margin-bottom: 10px;
@@ -1014,7 +1070,7 @@ border-top-right-radius: 5px;
 }
 
 .tabs table.tableDefault.half {
-	width: 454px;
+	width: 466px;
 	float: left;
 }
 
@@ -1439,3 +1495,4 @@ form.traform {
 		border-top-right-radius: 5px;		
 	}
 }
+
