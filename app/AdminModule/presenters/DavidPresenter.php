@@ -199,7 +199,6 @@ class DavidPresenter extends BasePresenter {
 
 	public function actionList() {
 
-		$emailCompiler = $this->context->emailCompiler;
 
 		// pripravim si template a layout
 		$template = $this->context->emailTemplateRepositoryAccessor->get()->find(1);
@@ -215,6 +214,7 @@ class DavidPresenter extends BasePresenter {
 		$rental = $this->context->rentalRepositoryAccessor->get()->find(1);
 
 		// ponastavujem compiler
+		$emailCompiler = $this->context->emailCompiler;
 		$emailCompiler->setTemplate($template);
 		$emailCompiler->setLayout($layout);
 		$emailCompiler->setPrimaryVariable('receiver', 'visitor', $receiver);

@@ -60,7 +60,7 @@ class Compiler {
 		}
 	}
 
-	public function addVariable($variableName, $variableType, \Entity\BaseEntity $variable) {
+	public function addVariable($variableName, $variableType, $variable) {
 		$factory = $this->getVariableFactory($variableType);
 
 		$params = array_slice(func_get_args(), 2);
@@ -114,8 +114,12 @@ class Compiler {
 	}
 
 	protected function setEnvironment($location, $language) {
-		$this->setLocation($location);
-		$this->setLanguage($language);
+		$locationFactory = $this->getVariableFactory('location');
+		$location = $locationFactory->create($location);
+
+		$languageFactory = $this->getVariableFactory('language');
+		$language = $languageFactory->create($language);
+
 		$this->addVariable('env', 'environment', $location, $language);
 	}
 

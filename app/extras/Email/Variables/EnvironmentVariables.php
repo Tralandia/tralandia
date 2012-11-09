@@ -10,16 +10,16 @@ use Nette;
  */
 class EnvironmentVariables extends Nette\Object {
 
-	private $location;
-	private $language;
+	private $locationVariables;
+	private $languageVariables;
 
-	public function __construct(\Service\Location\LocationService $location, \Service\LanguageService $language) {
-		$this->location = $location;
-		$this->language = $language;
+	public function __construct(LocationVariables $locationVariables, LanguageVariables $languageVariables) {
+		$this->locationVariables = $locationVariables;
+		$this->languageVariables = $languageVariables;
 	}
 
 	public function getLanguageEntity() {
-		return $this->language->getEntity();
+		return $this->languageVariables->getEntity();
 	}
 
 	public function getVariableSiteDomain() {

@@ -58,6 +58,9 @@ common:
 		- oldRepositoryServices.neon
 
 	services:
+		routerFactory: RouterFactory
+		router: @routerFactory::create
+
 		console: @doctrine.console
 		model: @doctrine.entityManagers.default
 
@@ -101,7 +104,7 @@ common:
 		languageEmailVariableFactory: Extras\Email\Variables\LanguageVariablesFactory(@languageServiceFactory)
 		locationEmailVariableFactory: Extras\Email\Variables\LocationVariablesFactory(@locationServiceFactory)
 		visitorEmailVariableFactory: Extras\Email\Variables\UserVariablesFactory('VisitorVariables', @userServiceFactory)
-		environmentEmailVariableFactory: Extras\Email\Variables\EnvironmentVariablesFactory(@locationServiceFactory, @languageServiceFactory)
+		environmentEmailVariableFactory: Extras\Email\Variables\EnvironmentVariablesFactory
 
 		ticketFetcherApi:
 			class: Horo\Api( %ticketFetcherApi.host%, %ticketFetcherApi.email%, %ticketFetcherApi.password%, 'INBOX', %ticketFetcherApi.port%, %ticketFetcherApi.tls% )

@@ -16,18 +16,18 @@ class Route implements Nette\Application\IRouter {
 	protected $cache;
 	protected static $cached;
 	protected $queryParams = array(
-			'lfPeople' => array(),
-			'lfFood' => array(),
-			'lfDog' => array(),
-		);
+		'lfPeople' => array(),
+		'lfFood' => array(),
+		'lfDog' => array(),
+	);
 
 	protected static $pathSegmentTypes = array(
-			'page' => 2,
-			'attractionType' => 4,
-			'location' => 6,
-			'rentalType' => 8,
-			'tag' => 10,
-		);
+		'page' => 2,
+		'attractionType' => 4,
+		'location' => 6,
+		'rentalType' => 8,
+		'tag' => 10,
+	);
 
 	protected $appParams = array(
 		'id' => null,
