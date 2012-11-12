@@ -10,7 +10,6 @@ class Translator implements \Nette\Localization\ITranslator {
 
 	protected $language = 38;
 	protected $cache;
-
 	protected $phraseRepositoryAccessor;
 	protected $phraseServiceFactory;
 

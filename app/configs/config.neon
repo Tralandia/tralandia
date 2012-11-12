@@ -56,11 +56,15 @@ common:
 		- webLoader.neon
 		- acl/acl.neon
 		- modelServices.neon
+		- oldRepositoryServices.neon
 
 	presenter:
 		configsDir: %appDir%/configs/presenters
 
 	services:
+		routerFactory: RouterFactory
+		router: @routerFactory::create
+
 		console: @doctrine.console
 		model: @doctrine.entityManagers.default
 
@@ -86,11 +90,26 @@ common:
 				- setup()
 
 		environment: Extras\Environment(@languageRepositoryAccessor, @locationRepositoryAccessor)
-
 		translator: Extras\Translator(@environment, @phraseRepositoryAccessor, @phraseServiceFactory, @cacheStorage)
 
 		settings:
 			factory: Extras\PresenterSettings::factory
+
+		emailCompiler: 
+			class: Extras\Email\Compiler
+			setup:
+				- $phraseServiceFactory(@phraseServiceFactory)
+				- setVariableFactory(rental, @rentalEmailVariableFactory)
+				- setVariableFactory(language, @languageEmailVariableFactory)
+				- setVariableFactory(location, @locationEmailVariableFactory)
+				- setVariableFactory(visitor, @visitorEmailVariableFactory)
+				- setVariableFactory(environment, @environmentEmailVariableFactory)
+
+		rentalEmailVariableFactory: Extras\Email\Variables\RentalVariablesFactory(@rentalServiceFactory)
+		languageEmailVariableFactory: Extras\Email\Variables\LanguageVariablesFactory(@languageServiceFactory)
+		locationEmailVariableFactory: Extras\Email\Variables\LocationVariablesFactory(@locationServiceFactory)
+		visitorEmailVariableFactory: Extras\Email\Variables\UserVariablesFactory('VisitorVariables', @userServiceFactory)
+		environmentEmailVariableFactory: Extras\Email\Variables\EnvironmentVariablesFactory
 
 		ticketFetcherApi:
 			class: Horo\Api( %ticketFetcherApi.host%, %ticketFetcherApi.email%, %ticketFetcherApi.password%, 'INBOX', %ticketFetcherApi.port%, %ticketFetcherApi.tls% )
@@ -124,6 +143,7 @@ common:
 		itemSelectFactory: Extras\FormMask\Items\Foctories\SelectFactory(@translator)
 		itemCheckboxFactory: Extras\FormMask\Items\Foctories\CheckboxFactory
 		itemTinymceFactory: Extras\FormMask\Items\Foctories\TinymceFactory
+
 
 production < common:
 
@@ -159,6 +179,9 @@ durika < development:
 		editor: 'edit://open/?url=file://%file&line=%line'
 		envOptions:
 			email: tralandia.david@gmail.com
+
+		database:
+			debugger: FALSE
 
 toth < development:
 	parameters:

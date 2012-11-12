@@ -55,6 +55,7 @@ rm -rf ./log/*
 
 cd public
 php -f index.php orm:generate-proxies
+#php public/index.php orm:schema-tool:create
 #php public/index.php orm:schema-tool:update --dump-sql
 #php public/index.php orm:schema-tool:update --force
 

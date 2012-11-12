@@ -7,7 +7,7 @@ use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="phrase_type", indexes={@ORM\index(name="entityName", columns={"entityName"}), @ORM\index(name="entityAttribute", columns={"entityAttribute"}), @ORM\index(name="pluralsRequired", columns={"pluralsRequired"}), @ORM\index(name="genderVariationsRequired", columns={"genderVariationsRequired"}), @ORM\index(name="locativesRequired", columns={"locativesRequired"}), @ORM\index(name="positionRequired", columns={"positionRequired"}), @ORM\index(name="checkingRequired", columns={"checkingRequired"})})
+ * @ORM\Table(name="phrase_type", indexes={@ORM\index(name="entityName", columns={"entityName"}), @ORM\index(name="entityAttribute", columns={"entityAttribute"}), @ORM\index(name="pluralVariationsRequired", columns={"pluralVariationsRequired"}), @ORM\index(name="genderVariationsRequired", columns={"genderVariationsRequired"}), @ORM\index(name="locativesRequired", columns={"locativesRequired"}), @ORM\index(name="positionRequired", columns={"positionRequired"}), @ORM\index(name="checkingRequired", columns={"checkingRequired"})})
  * @EA\Primary(key="id", value="name")
  */
 class Type extends \Entity\BaseEntity {
@@ -44,7 +44,7 @@ class Type extends \Entity\BaseEntity {
 	 * @var boolean
 	 * @ORM\Column(type="boolean")
 	 */
-	protected $pluralsRequired = FALSE;
+	protected $pluralVariationsRequired = FALSE;
 
 	/**
 	 * @var boolean
@@ -93,10 +93,10 @@ class Type extends \Entity\BaseEntity {
 
 
 	public function isSimple() {
-		return !$this->pluralsRequired && !$this->genderVariationsRequired && !$this->locativesRequired && !$this->positionRequired;
+		return $this->pluralVariationsRequired || $this->genderVariationsRequired || $this->locativesRequired || $this->positionRequired;
 	}
 
-//@entity-generator-code --- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()
@@ -214,9 +214,9 @@ class Type extends \Entity\BaseEntity {
 	 * @param boolean
 	 * @return \Entity\Phrase\Type
 	 */
-	public function setPluralsRequired($pluralsRequired)
+	public function setPluralVariationsRequired($pluralVariationsRequired)
 	{
-		$this->pluralsRequired = $pluralsRequired;
+		$this->pluralVariationsRequired = $pluralVariationsRequired;
 
 		return $this;
 	}
@@ -224,9 +224,9 @@ class Type extends \Entity\BaseEntity {
 	/**
 	 * @return boolean|NULL
 	 */
-	public function getPluralsRequired()
+	public function getPluralVariationsRequired()
 	{
-		return $this->pluralsRequired;
+		return $this->pluralVariationsRequired;
 	}
 		
 	/**

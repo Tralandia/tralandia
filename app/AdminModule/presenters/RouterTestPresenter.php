@@ -122,9 +122,9 @@ class RouterTestPresenter extends BasePresenter {
 	}
 
 	public function createComponentUrlForm($name) {
-		$form = new \CoolForm($this, $name);
+		$form = new \Nette\Application\UI\Form($this, $name);
 		$form->addText('url', 'Url')
-			->addRule(\CoolForm::URL, 'Url is not valid :/');
+			->addRule(\Nette\Application\UI\Form::URL, 'Url is not valid :/');
 		$form->addSubmit('submit', 'Submit');
 		$form->addButton('clear', 'Clear');
 		$form->onSuccess[] = callback($this, 'urlFormOnSuccess');

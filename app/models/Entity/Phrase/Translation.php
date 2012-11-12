@@ -4,12 +4,19 @@ namespace Entity\Phrase;
 
 use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
-
+use Nette\Utils\Arrays;
 
 /**
  * @ORM\Entity(repositoryClass="Repository\Phrase\TranslationRepository")
- * @ORM\Table(name="phrase_translation", indexes={@ORM\index(name="timeTranslated", columns={"timeTranslated"}), @ORM\index(name="checked", columns={"checked"})})
+ * @ORM\Table(name="phrase_translation", 
+ * 				indexes={
+ * 					@ORM\index(name="timeTranslated", columns={"timeTranslated"}), 
+ * 					@ORM\index(name="translation", columns={"translation"}), 
+ * 					@ORM\index(name="checked", columns={"checked"})
+ * 				}
+ * 			)
  * @EA\Primary(key="id", value="")
+ * @EA\Generator(skip="{setTranslation, setVariations, updateVariations}")
  */
 class Translation extends \Entity\BaseEntity {
 
@@ -26,6 +33,12 @@ class Translation extends \Entity\BaseEntity {
 	protected $language;
 
 	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $translation;
+
+	/**
 	 * @var json
 	 * @ORM\Column(type="json")
 	 */
@@ -38,10 +51,10 @@ class Translation extends \Entity\BaseEntity {
 	protected $gender;
 
 	/**
-	 * @var integer
-	 * @ORM\Column(type="integer")
+	 * @var string
+	 * @ORM\Column(type="string")
 	 */
-	protected $position = 0;
+	protected $position = 'before';
 
 	/**
 	 * @var datetime
@@ -56,10 +69,107 @@ class Translation extends \Entity\BaseEntity {
 	protected $checked;
 
 	public function __toString() {
-		return isset($this->variations['translation']) ? $this->variations['translation'] : '{!!' . $this->id . '}';
+		if($this->phrase->type->isSimple()) {
+			$translation = $this->translation;
+		} else {
+			$translation = $this->getDefaulVariation();
+		}
+		return $translation ? $translation : '{!!' . $this->id . '}';
 	}
 
-//@entity-generator-code --- NEMAZAT !!!
+	/**
+	 * @param string
+	 * @return \Entity\Phrase\Translation
+	 */
+	public function setTranslation($translation)
+	{
+		$this->translation = $translation;
+
+		list($plural, $gender, $case) = $this->getDefaultVariationPath();
+		$this->variations[$plural][$gender][$case] = $translation;
+
+		return $this;
+	}
+
+	/**
+	 * @param json
+	 * @return \Entity\Phrase\Translation
+	 */
+	public function setVariations(array $variations)
+	{
+		return $this->_updateVariations('set', $variations);
+	}
+
+	public function updateVariations(array $variations) {
+		return $this->_updateVariations('update', $variations);
+	}
+
+	protected function _updateVariations($option, array $variations) {
+		if($option == 'set') {
+			$foreach = $this->variations;
+			$isset = $variations;
+			$variationsTemp = array();
+		} else {
+			$foreach = $variations;
+			$isset = $this->variations;
+			$variationsTemp = $this->variations;
+		}
+
+		if(isset($this->variations)) {
+			foreach ($foreach as $pluralKey => $genders) {
+				foreach ($genders as $genderKey => $cases) {
+					foreach ($cases as $caseKey => $caseValue) {
+						try {
+							$i = Arrays::get($isset, array($pluralKey, $genderKey, $caseKey));
+							$variationsTemp[$pluralKey][$genderKey][$caseKey] = $variations[$pluralKey][$genderKey][$caseKey];
+						} catch (\Nette\InvalidArgumentException $e) {
+							$this->wrongVariationsScheme($this->variations, $variations);
+						}
+					}
+				}
+			}
+
+			$this->variations = $variationsTemp;
+		} else {
+			$this->variations = $variations;
+		}
+
+		$this->translation = $this->getDefaulVariation();
+
+		return $this;		
+	}
+
+	protected function wrongVariationsScheme($expect, $recieved) {
+		throw new \Nette\InvalidArgumentException('Argument "$variations" does not match with the expected value');
+	}
+
+	public function getDefaulVariation() {
+		list($defaultPlural, $defaultGender, $defaultCase) = $this->getDefaultVariationPath();
+		return $this->variations[$defaultPlural][$defaultGender][$defaultCase];
+	}
+
+	public function getDefaultVariationPath() {
+		$return = array('default', 'default', 'default');
+
+		$phraseType = $this->phrase->type;
+		$language = $this->language;
+		if($phraseType->pluralVariationsRequired && $language->primarySingular) {
+			$return[0] = $language->primarySingular;
+		}
+
+		if($phraseType->genderVariationsRequired && $language->primaryGender) {
+			$return[1] = $language->primaryGender;
+		}
+
+		if($phraseType->locativesRequired) {
+			$return[2] = 'nominative';
+		}
+
+		return $return;
+	}
+
+
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()
@@ -126,14 +236,21 @@ class Translation extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param json
 	 * @return \Entity\Phrase\Translation
 	 */
-	public function setVariations($variations)
+	public function unsetTranslation()
 	{
-		$this->variations = $variations;
+		$this->translation = NULL;
 
 		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getTranslation()
+	{
+		return $this->translation;
 	}
 		
 	/**
@@ -174,7 +291,7 @@ class Translation extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param integer
+	 * @param string
 	 * @return \Entity\Phrase\Translation
 	 */
 	public function setPosition($position)
@@ -185,7 +302,7 @@ class Translation extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return integer|NULL
+	 * @return string|NULL
 	 */
 	public function getPosition()
 	{

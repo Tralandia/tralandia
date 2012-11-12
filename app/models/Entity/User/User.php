@@ -45,7 +45,7 @@ class User extends \Entity\BaseEntityDetails {
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Language")
 	 */
-	protected $defaultLanguage;
+	protected $language;
 
 	/**
 	 * @var Collection
@@ -125,7 +125,7 @@ class User extends \Entity\BaseEntityDetails {
 	protected $ticketMessages;
 
 
-			//@entity-generator-code --- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()
@@ -259,9 +259,9 @@ class User extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Language
 	 * @return \Entity\User\User
 	 */
-	public function setDefaultLanguage(\Entity\Language $defaultLanguage)
+	public function setLanguage(\Entity\Language $language)
 	{
-		$this->defaultLanguage = $defaultLanguage;
+		$this->language = $language;
 
 		return $this;
 	}
@@ -269,9 +269,9 @@ class User extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\User\User
 	 */
-	public function unsetDefaultLanguage()
+	public function unsetLanguage()
 	{
-		$this->defaultLanguage = NULL;
+		$this->language = NULL;
 
 		return $this;
 	}
@@ -279,9 +279,9 @@ class User extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Language|NULL
 	 */
-	public function getDefaultLanguage()
+	public function getLanguage()
 	{
-		return $this->defaultLanguage;
+		return $this->language;
 	}
 		
 	/**
