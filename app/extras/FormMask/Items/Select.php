@@ -88,7 +88,6 @@ class Select extends Text {
 			}
 			$items = $itemsFormated;
 		}
-		debug($items);
 		return $items;
 	}
 
