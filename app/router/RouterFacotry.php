@@ -1,5 +1,7 @@
 <?php
 
+namespace Routers;
+
 use Nette\Application\Routers\RouteList,
 	Nette\Application\Routers\Route,
 	Nette\Application\Routers\SimpleRouter;
@@ -11,8 +13,12 @@ use Nette\Application\Routers\RouteList,
 class RouterFactory
 {
 
+	public function __construct(MainRouteFactory $mainRoute) {
+
+	}
+
 	/**
-	 * @return Nette\Application\IRouter
+	 * @return \Nette\Application\IRouter
 	 */
 	public function create()
 	{
@@ -49,7 +55,9 @@ class RouterFactory
 									'action' => 'default',
 									'country' => 'SK',
 								));
-	*/	$frontRouter[] = new Route('<presenter>/[<action>[/<id>]]', 'Home:default');
+	*/
+		
+		$frontRouter[] = new Route('<presenter>/[<action>[/<id>]]', 'Home:default');
 
 		return $router;
 	}

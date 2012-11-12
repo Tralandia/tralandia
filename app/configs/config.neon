@@ -58,7 +58,22 @@ common:
 		- oldRepositoryServices.neon
 
 	services:
-		routerFactory: RouterFactory
+		# CACHE
+		aclCache: Nette\Caching\Cache(@cacheStorage, 'Acl')
+		routerCache: Nette\Caching\Cache(@cacheStorage, 'Router')
+
+		mainRouteFactory:
+			class: Routers\MainRouteFactory(@routerCache)
+			setup:
+				- $locationRepositoryAccessor(@locationRepositoryAccessor)
+				- $languageRepositoryAccessor(@languageRepositoryAccessor)
+				- $rentalRepositoryAccessor(@rentalRepositoryAccessor)
+				- $attractionRepositoryAccessor(@attractionRepositoryAccessor)
+				- $routingPathSegmentRepositoryAccessor(@routingPathSegmentRepositoryAccessor)
+				- $domainRepositoryAccessor(@domainRepositoryAccessor)
+
+		routerFactory: Routers\RouterFactory
+
 		router: @routerFactory::create
 
 		console: @doctrine.console
@@ -67,10 +82,6 @@ common:
 		# nette.presenterFactory:
 			# class: Extras\DynamicPresenterFactory
 			# factory: Extras\DynamicPresenterFactory::factory
-
-		# CACHE
-		aclCache: Nette\Caching\Cache(@cacheStorage, 'Acl')
-		routerCache: Nette\Caching\Cache(@cacheStorage, 'Router')
 
 		user:
 			class: Security\User

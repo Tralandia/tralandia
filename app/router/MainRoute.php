@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Extras;
+namespace Routers;
 
 use Nette,
 	Nette\Application,
@@ -9,7 +9,7 @@ use Nette,
 	Nette\Utils\Strings,
 	Nette\Utils\Arrays;
 
-class Route implements Nette\Application\IRouter {
+class MainRoute implements Nette\Application\IRouter {
 	
 	protected $db;
 	protected $metadata;
@@ -39,14 +39,20 @@ class Route implements Nette\Application\IRouter {
 		'rentalType' => null,
 	);
 
+	public $locationRepositoryAccessor;
+	public $languageRepositoryAccessor;
+	public $rentalRepositoryAccessor;
+	public $attractionRepositoryAccessor;
+	public $routingPathSegmentRepositoryAccessor;
+	public $domainRepositoryAccessor;
+
 	
-	public function __construct(Caching\Cache $cache, array $metadata) {
-		$this->metadata = $metadata;
+	public function __construct(Caching\Cache $cache) {
+		//$this->metadata = $metadata;
 
 		$this->cache = $cache;
 		$this->loadCache();
 	}
-
 
 	public function match(Nette\Http\IRequest $httpRequest) {
 		$params = $this->getParamsByHttpRequest($httpRequest);
@@ -87,14 +93,14 @@ class Route implements Nette\Application\IRouter {
 
 
 		// Params
-		$country = \Service\Location\Location::getByIso($countryIso);
+		$country = $this->locationRepositoryAccessor->get()->findOneByIso($countryIso);
 		if(!$country) {
-			$country = \Service\Location\Location::getByIso($this->getMetadata('country'));
+			$country = $this->locationRepositoryAccessor->get()->findOneByIso($this->getMetadata('country'));
 		}
 
-		$language = \Service\Dictionary\Language::getByIso($languageIso);
+		$language = $this->languageRepositoryAccessor->get()->findOneByIso($languageIso);
 		if(!$language || !$language->supported) {
-			$language = \Service\Dictionary\Language::get($country->defaultLanguage);
+			$language = $country->defaultLanguage;
 		}
 		$params->country = $country->id;
 		$params->language = $language->id;
@@ -107,13 +113,13 @@ class Route implements Nette\Application\IRouter {
 			$pathSegment = reset($pathSegments);
 			// debug($pathSegment);
 			if($match = preg_match('~\.*-a([0-9]+)~', $pathSegment)) {
-				if($attraction = \Service\Attraction\Attraction::get($match[1])) {
+				if($attraction = $this->attractionRepositoryAccessor->get()->find($match[1])) {
 					$params->attraction = $attraction;
 					$params->presenter = 'Attraction';
 					$params->action = 'show';
 				}
 			} else if($match = Strings::match($pathSegment, '~\.*-r([0-9]+)~')) {
-				if($rental = \Service\Rental\Rental::get($match[1])) {
+				if($rental = $this->rentalRepositoryAccessor->get()->find($match[1])) {
 					$params->rental = $rental;
 					$params->presenter = 'Rental';
 					$params->action = 'show';
@@ -186,7 +192,7 @@ class Route implements Nette\Application\IRouter {
 		$criteria['country'] = array($params->country, 0);
 		$criteria['language'] = array($params->language, 0);
 
-		$pathSegmentList = \Service\Routing\PathSegmentList::getBy((array) $criteria, $orderBy = array('type' => 'ASC'));
+		$pathSegmentList = $this->routingPathSegmentRepositoryAccessor->get()->findBy((array) $criteria, $orderBy = array('type' => 'ASC'));
 		// debug('$pathSegmentList', $pathSegmentList);
 		return $pathSegmentList;
 	}
@@ -208,8 +214,8 @@ class Route implements Nette\Application\IRouter {
 
 		list($refLanguageIso, $refDomainName, $refCountryIso) = explode('.', $refUrl->getHost(), 3);
 
-		$country = \Service\Location\Location::get($params['country']);
-		$language = \Service\Dictionary\Language::get($params['language']);
+		$country = $this->locationRepositoryAccessor->get()->find($params['country']);
+		$language = $this->languageRepositoryAccessor->get()->find($params['language']);
 
 		$segments = array();
 		foreach (static::$pathSegmentTypes as $key => $value) {
@@ -241,12 +247,12 @@ class Route implements Nette\Application\IRouter {
 			}
 		} else {
 			if($segmentName == 'location') {
-			$segmentRow = \Service\Routing\PathSegment::getBy(array(
+			$segmentRow = $this->routingPathSegmentRepositoryAccessor->get()->findBy(array(
 					'type' => static::$pathSegmentTypes[$segmentName], 
 					'entityId' => $segmentId
 				));
 			} else {
-				$segmentRow = \Service\Routing\PathSegment::getBy(array(
+				$segmentRow = $this->routingPathSegmentRepositoryAccessor->get()->findBy(array(
 						'type' => static::$pathSegmentTypes[$segmentName], 
 						'entityId' => $segmentId, 
 						'language' => $language
@@ -262,9 +268,9 @@ class Route implements Nette\Application\IRouter {
 	public function getMetadata($key) {
 		return $this->metadata[$key];
 /*		if($key == 'language') {
-			return \Service\Dictionary\Language::getByIso($this->metadata[$key]);
+			return $this->languageRepositoryAccessor->get()->findOneByIso($this->metadata[$key]);
 		} else if($key == 'country') {
-			return \Service\Location\Location::getByIso($this->metadata[$key]);
+			return $this->locationRepositoryAccessor->get()->findOneByIso($this->metadata[$key]);
 		} else {
 			return $this->metadata[$key];
 		}
@@ -278,7 +284,7 @@ class Route implements Nette\Application\IRouter {
 				$exists = true;
 			}
 		} else {
-			$exists = (bool) \Service\Domain::getByDomain($domain);
+			$exists = (bool) $this->domainRepositoryAccessor->get()->findOneByDomain($domain);
 		}
 		return $exists;
 	}

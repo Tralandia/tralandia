@@ -3,7 +3,7 @@
 namespace AdminModule;
 
 use Nette\ArrayHash,
-	Tra\Utils\Arrays,
+	Nette\Utils\Arrays,
 	Nette\Utils\Validators;
 
 class RouterTestPresenter extends BasePresenter {
@@ -29,21 +29,17 @@ class RouterTestPresenter extends BasePresenter {
 	}
 
 	public function renderDefault() {
-		$router = new \Extras\Route($this->context->routerCache, array(
-										'presenter' => 'David',
-										'action' => 'default',
-										'country' => 'SK',
-									));
+		$router = $this->context->mainRouteFactory->create();
 
 		$testResults = ArrayHash::from(array());
 		foreach ($this->getUrlsForTest() as $testName => $test) {
 			$bugs = 0;
 			$testResult = ArrayHash::from(array(
-				'from' => $test->from,
+				'from' => $test['from'],
 				'params' => array(),
 			));
 
-			$scriptUrl = new \Nette\Http\UrlScript($test->from);
+			$scriptUrl = new \Nette\Http\UrlScript($test['from']);
 			$httpRequest = new \Nette\Http\Request($scriptUrl, $scriptUrl->getQuery(), $post = NULL, $files = NULL, $cookies = NULL, $headers = NULL, $method = 'GET', $remoteAddress = NULL, $remoteHost = NULL);
 
 
@@ -55,15 +51,15 @@ class RouterTestPresenter extends BasePresenter {
 
 			$constructedUrl = $router->constructUrl($appRequest, $refUrl);
 
-			if(array_key_exists('presenter', $test) && $test->presenter !== $appRequest->getPresenterName()) {
-				$testResult->params->presenter = ArrayHash::from(array('expected' => $test->presenter, 'value' => $appRequest->getPresenterName()));
+			if(array_key_exists('presenter', $test) && $test['presenter'] !== $appRequest->getPresenterName()) {
+				$testResult->params->presenter = ArrayHash::from(array('expected' => $test['presenter'], 'value' => $appRequest->getPresenterName()));
 				$bugs++;
 			} else {
-				$testResult->params->presenter = $appRequest->getPresenterName();
+				$testResult->params->presenter = $appRequest->getPresenterName() ? : 'NULL';
 			}
 
-			if(array_key_exists('to', $test) && $test->to != $constructedUrl) {
-				$testResult->to = ArrayHash::from(array('expected' => $test->to, 'value' => $constructedUrl));
+			if(array_key_exists('to', $test) && $test['to'] != $constructedUrl) {
+				$testResult->to = ArrayHash::from(array('expected' => $test['to'], 'value' => $constructedUrl));
 				$bugs++;
 			} else {
 				$testResult->to = $constructedUrl;
@@ -76,6 +72,7 @@ class RouterTestPresenter extends BasePresenter {
 			} else {
 				$compareParams = TRUE;
 			}
+
 			foreach ($appParams as $name => $appValue) {
 				if($compareParams) {
 					$value = Arrays::get($testParams, $name, NULL);
@@ -100,6 +97,7 @@ class RouterTestPresenter extends BasePresenter {
 					$bugs++;
 				}
 			}
+			d($testResult);
 
 			$testResult->bugs = $bugs;
 			$testResults->$testName = $testResult;
@@ -144,7 +142,7 @@ class RouterTestPresenter extends BasePresenter {
 		} else {
 			$config = new \Nette\Config\Loader;
 
-			$this->urlsForTest = ArrayHash::from($config->load(APP_DIR . '/configs/router/urlsForTest.neon', 'common'));
+			$this->urlsForTest = $config->load(APP_DIR . '/configs/router/urlsForTest.neon', 'common');
 		}
 	}
 
