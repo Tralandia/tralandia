@@ -45,6 +45,10 @@ class PresenterExtension extends Nette\Config\CompilerExtension
 		}
 	}
 
+	/**
+	 * Vyhlada vsetky pripadne service a nahradi ich
+	 * @param array
+	 */
 	private function findServices(&$params) {
 		foreach ($params as $key => $value) {
 			if ($params[$key] instanceof Nette\Utils\NeonEntity) {

@@ -8,23 +8,27 @@ use Doctrine\ORM\Query\Expr;
  */
 class LocationRepository extends BaseRepository {
 
-	public function getItems($key, $value) {
+	public function getItems() {
+		$query = $this->_em->createQueryBuilder();
+		$query->select('e')->from($this->_entityName, 'e');
+		return $query->getQuery()->getResult();
+
 		return array(
-			1 => 'Položka 1',
-			2 => 'Položka 2',
-			3 => 'Položka 3',
-			4 => 'Položka 4',
-			5 => 'Položka 5',
-			6 => 'Položka 6',
-			7 => 'Položka 7',
-			8 => 'Položka 8',
-			9 => 'Položka 9',
-			10 => 'Položka 10',
-			11 => 'Položka 11',
-			12 => 'Položka 12',
-			52 => 'Položka 52',
-			53 => 'Položka 53',
-			54 => 'Položka 54'
+			(object)array('id' => 1, 'name' => 'Položka 1'),
+			(object)array('id' => 2, 'name' => 'Položka 2'),
+			(object)array('id' => 3, 'name' => 'Položka 3'),
+			(object)array('id' => 4, 'name' => 'Položka 4'),
+			(object)array('id' => 5, 'name' => 'Položka 5'),
+			(object)array('id' => 6, 'name' => 'Položka 6'),
+			(object)array('id' => 7, 'name' => 'Položka 7'),
+			(object)array('id' => 8, 'name' => 'Položka 8'),
+			(object)array('id' => 9, 'name' => 'Položka 9'),
+			(object)array('id' => 10, 'name' => 'Položka 10'),
+			(object)array('id' => 11, 'name' => 'Položka 11'),
+			(object)array('id' => 12, 'name' => 'Položka 12'),
+			(object)array('id' => 52, 'name' => 'Položka 52'),
+			(object)array('id' => 53, 'name' => 'Položka 53'),
+			(object)array('id' => 54, 'name' => 'Položka 54')
 		);
 	}
 }

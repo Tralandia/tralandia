@@ -121,10 +121,9 @@ common:
 		itemNeonFactory: Extras\FormMask\Items\Foctories\NeonFactory
 		itemTextareaFactory: Extras\FormMask\Items\Foctories\TextareaFactory
 		itemPriceFactory: Extras\FormMask\Items\Foctories\PriceFactory
-		itemSelectFactory: Extras\FormMask\Items\Foctories\SelectFactory
+		itemSelectFactory: Extras\FormMask\Items\Foctories\SelectFactory(@translator)
 		itemCheckboxFactory: Extras\FormMask\Items\Foctories\CheckboxFactory
 		itemTinymceFactory: Extras\FormMask\Items\Foctories\TinymceFactory
-
 
 production < common:
 

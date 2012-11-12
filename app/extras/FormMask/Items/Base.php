@@ -163,4 +163,15 @@ abstract class Base {
 
 		return $control;
 	}
+
+	/**
+	 * Spracovanie dat z formulara
+	 * @param Nette\Forms\Form
+	 */
+	public function process(Nette\Forms\Form $form) {
+		if ($this->getValueSetter()) {
+			$value = $form->getComponent($this->getName())->getValue();
+			$this->setValue($value);
+		}
+	}
 }

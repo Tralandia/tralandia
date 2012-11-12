@@ -32,11 +32,18 @@ class Generator extends Nette\Object {
 	public function build() {
 		foreach ($this->factories as $factory) {
 			$item = $factory->object->create($factory->field->getName(), $factory->field->getLabel(), $this->entity);
+			
+			// nastavenie validatorov
 			if ($factory->field->getValidators()) {
 				$item->setValidators($factory->field->getValidators());
 			}
-			if ($factory->field->getItems()) {
-				$item->setItemsGetter($factory->field->getItems());
+
+			// nastavenie veci pre ziskanie itemov ku selektu
+			if ($factory->field->getType() === 'select') {
+				$item->setRepository($factory->field->getControlOption('repository'));
+				$params = $factory->field->getControlOption('items');
+				$method = array_shift($params);
+				$item->setItems($method, $params);
 			}
 
 			$this->mask->addItem($item);

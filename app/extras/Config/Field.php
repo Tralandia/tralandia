@@ -36,7 +36,7 @@ class Field extends Nette\Object {
 	 * @return string
 	 */
 	public function getType() {
-		return strtolower(substr(get_class($this), strrpos(get_class($this), '\\')+1));
+		return strtolower($this->type);
 	}
 
 	/**
@@ -95,6 +95,16 @@ class Field extends Nette\Object {
 	public function setOptions($section, array $params) {
 		 $this->options[$section] = $params;
 		 return $this;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getControlOption($name) {
+		if (!isset($this->options['control'][$name])) {
+			throw new Nette\InvalidStateException("Nastavenia control neobsahuju kluc $name.");
+		}
+		return $this->options['control'][$name];
 	}
 
 	/**
