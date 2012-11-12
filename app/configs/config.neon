@@ -87,7 +87,7 @@ common:
 
 		environment: Extras\Environment(@languageRepositoryAccessor, @locationRepositoryAccessor)
 
-		translator: Extras\Translator(@environment, @cacheStorage)
+		translator: Extras\Translator(@environment, @phraseRepositoryAccessor, @phraseServiceFactory, @cacheStorage)
 
 		settings:
 			factory: Extras\PresenterSettings::factory
