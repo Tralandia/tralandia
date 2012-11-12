@@ -71,16 +71,13 @@ class Mask extends Nette\Object {
 	}
 
 	/**
-	 * Rozsiri formular
+	 * Spracovanie dat z formulara
 	 * @param Nette\Forms\Form
 	 */
 	public function process(Nette\Forms\Form $form) {
 		$this->onBeforeProcess($form);
 		foreach ($this->items as $item) {
-			if ($item->getValueSetter()) {
-				$value = $form->getComponent($item->getName())->getValue();
-				$item->setValue($value);
-			}
+			$item->process($form);
 		}
 		$this->onAfterProcess($form);
 	}

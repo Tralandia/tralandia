@@ -59,6 +59,14 @@ abstract class Base {
 	}
 
 	/**
+	 * Vrati zmemenu hodnotu itemu
+	 * @return mixed
+	 */
+	public function getUpdatedValue() {
+		return $this->getValue();
+	}
+
+	/**
 	 * Nastavi hodnotu itemu
 	 * @param mixed
 	 * @return mixed
@@ -146,7 +154,6 @@ abstract class Base {
 	 * @return Nette\Forms\IControl
 	 */
 	public function extend(Nette\Forms\Form $form) {
-		
 		$control = $form->addText($this->getName(), $this->getLabel());
 		$control->setDefaultValue($this->getValue());
 
@@ -155,5 +162,16 @@ abstract class Base {
 		}
 
 		return $control;
+	}
+
+	/**
+	 * Spracovanie dat z formulara
+	 * @param Nette\Forms\Form
+	 */
+	public function process(Nette\Forms\Form $form) {
+		if ($this->getValueSetter()) {
+			$value = $form->getComponent($this->getName())->getValue();
+			$this->setValue($value);
+		}
 	}
 }

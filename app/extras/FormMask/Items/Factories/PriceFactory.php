@@ -7,7 +7,7 @@ use Extras;
 /**
  * @author Branislav Vaculčiak
  */
-class PriceFactory {
+class PriceFactory implements IFactory {
 	
 	/**
 	 * @param string

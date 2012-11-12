@@ -24,7 +24,7 @@ class AdvancedNeon extends TextBase {
 
 	public function setValue($value) {
 		if(is_array($value)) {
-			$this->value = Neon::encode($value, Neon::BLOCK);
+			$this->value = Neon::encode($value);
 		} else {
 			$this->value = $value;
 		}

@@ -7,7 +7,7 @@ use Extras;
 /**
  * @author Branislav Vaculčiak
  */
-class JsonFactory {
+class JsonFactory implements IFactory {
 	
 	/**
 	 * @param string
