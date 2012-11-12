@@ -65,6 +65,7 @@ common:
 		# CACHE
 		aclCache: Nette\Caching\Cache(@cacheStorage, 'Acl')
 		routerCache: Nette\Caching\Cache(@cacheStorage, 'Router')
+		translatorCache: Nette\Caching\Cache(@cacheStorage, 'Translator')
 
 		mainRouteFactory:
 			class: Routers\MainRouteFactory(@routerCache)
@@ -101,7 +102,7 @@ common:
 				- setup()
 
 		environment: Extras\Environment(@languageRepositoryAccessor, @locationRepositoryAccessor)
-		translator: Extras\Translator(@environment, @phraseRepositoryAccessor, @phraseServiceFactory, @cacheStorage)
+		translator: Extras\Translator(@environment, @phraseRepositoryAccessor, @phraseServiceFactory, @translatorCache)
 
 		settings:
 			factory: Extras\PresenterSettings::factory
@@ -192,7 +193,7 @@ durika < development:
 			email: tralandia.david@gmail.com
 
 		database:
-			debugger: FALSE
+			debugger: true
 
 toth < development:
 	parameters:
