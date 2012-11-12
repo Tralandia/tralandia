@@ -10,7 +10,7 @@ class LocationRepository extends BaseRepository {
 
 	public function getItems() {
 		$query = $this->_em->createQueryBuilder();
-		$query->select('e')->from($this->_entityName, 'e');
+		$query->select('e, p')->from($this->_entityName, 'e')->leftJoin('e.name', 'p');
 		return $query->getQuery()->getResult();
 	}
 }
