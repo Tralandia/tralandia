@@ -279,11 +279,6 @@ class ImportPhraseType extends BaseImport {
 			// ->setIldId(1)
 			->setCheckingRequired(NULL);
 
-
-
-
-
-
 		$this->createPhraseType('\Entity\Invoice\Marketing', 'description')
 			->setTranslateTo('supported')
 			->setPluralVariationsRequired(0)
@@ -356,7 +351,7 @@ class ImportPhraseType extends BaseImport {
 			// ->setIldId(1)
 			->setCheckingRequired(NULL);
 
-		$this->createPhraseType('\Entity\Seo\SeoUrl', 'title')
+		$this->createPhraseType('\Entity\Seo\SeoUrl', 'title') //question - co je SeoUrl??
 			->setTranslateTo('supported')
 			->setPluralVariationsRequired(0)
 			->setGenderRequired(0)
@@ -368,7 +363,7 @@ class ImportPhraseType extends BaseImport {
 			// ->setIldId(1)
 			->setCheckingRequired(NULL);
 
-		$this->createPhraseType('\Entity\Seo\SeoUrl', 'heading')
+		$this->createPhraseType('\Entity\Seo\SeoUrl', 'heading') //question - co je SeoUrl??
 			->setTranslateTo('supported')
 			->setPluralVariationsRequired(0)
 			->setGenderRequired(0)
@@ -394,11 +389,11 @@ class ImportPhraseType extends BaseImport {
 
 		$this->createPhraseType('\Entity\Seo\SeoUrl', 'description')
 			->setTranslateTo('supported')
-			->setPluralVariationsRequired(1)
-			->setGenderRequired(1)
-			->setGenderVariationsRequired(1)
-			->setLocativesRequired(1)
-			->setPositionRequired(1)
+			->setPluralVariationsRequired(0)
+			->setGenderRequired(0)
+			->setGenderVariationsRequired(0)
+			->setLocativesRequired(0)
+			->setPositionRequired(0)
 			// ->setHelpFroTranslator('')
 			// ->setMonthlyBudget(0)
 			// ->setIldId(1)
