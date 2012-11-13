@@ -52,7 +52,7 @@ class ImportPhraseType extends BaseImport {
 			->setCheckingRequired(NULL);
 
 		$this->createPhraseType('\Entity\Location\Location', 'name')
-			->setTranslateTo('supported')
+			->setTranslateTo('important')
 			->setPluralVariationsRequired(0)
 			->setGenderRequired(0)
 			->setGenderVariationsRequired(0)
@@ -64,7 +64,7 @@ class ImportPhraseType extends BaseImport {
 			->setCheckingRequired(1);
 
 		$this->createPhraseType('\Entity\Location\Location', 'nameOfficial')
-			->setTranslateTo('supported')
+			->setTranslateTo('important')
 			->setPluralVariationsRequired(0)
 			->setGenderRequired(0)
 			->setGenderVariationsRequired(0)
@@ -76,7 +76,7 @@ class ImportPhraseType extends BaseImport {
 			->setCheckingRequired(NULL);
 
 		$this->createPhraseType('\Entity\Location\Location', 'nameShort')
-			->setTranslateTo('supported')
+			->setTranslateTo('important')
 			->setPluralVariationsRequired(0)
 			->setGenderRequired(0)
 			->setGenderVariationsRequired(0)
@@ -87,7 +87,7 @@ class ImportPhraseType extends BaseImport {
 			// ->setIldId(1)
 			->setCheckingRequired(NULL);
 
-		$this->createPhraseType('\Entity\Location\TypeService', 'name')
+		$this->createPhraseType('\Entity\Location\TypeService', 'name') //question service??
 			->setTranslateTo('supported')
 			->setPluralVariationsRequired(0)
 			->setGenderRequired(0)
@@ -114,7 +114,7 @@ class ImportPhraseType extends BaseImport {
 		$this->createPhraseType('\Entity\Rental\Amenity', 'name')
 			->setTranslateTo('supported')
 			->setPluralVariationsRequired(1)
-			->setGenderRequired(0)
+			->setGenderRequired(1)
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
@@ -125,10 +125,10 @@ class ImportPhraseType extends BaseImport {
 
 		$this->createPhraseType('\Entity\Rental\Amenity', 'name-tag')
 			->setTranslateTo('supported')
-			->setPluralVariationsRequired(0)
+			->setPluralVariationsRequired(1)
 			->setGenderRequired(0)
 			->setGenderVariationsRequired(1)
-			->setLocativesRequired(0)
+			->setLocativesRequired(1)
 			->setPositionRequired(1)
 			// ->setHelpFroTranslator('')
 			// ->setMonthlyBudget(0)
@@ -149,10 +149,10 @@ class ImportPhraseType extends BaseImport {
 
 		$this->createPhraseType('\Entity\Rental\Type', 'name')
 			->setTranslateTo('supported')
-			->setPluralVariationsRequired(0)
-			->setGenderRequired(0)
+			->setPluralVariationsRequired(1)
+			->setGenderRequired(1)
 			->setGenderVariationsRequired(0)
-			->setLocativesRequired(0)
+			->setLocativesRequired(1)
 			->setPositionRequired(0)
 			// ->setHelpFroTranslator('')
 			// ->setMonthlyBudget(0)
@@ -278,6 +278,11 @@ class ImportPhraseType extends BaseImport {
 			// ->setMonthlyBudget(0)
 			// ->setIldId(1)
 			->setCheckingRequired(NULL);
+
+
+
+
+
 
 		$this->createPhraseType('\Entity\Invoice\Marketing', 'description')
 			->setTranslateTo('supported')
