@@ -32,9 +32,7 @@
 
 	.searchForm {
 
-			
-			margin: 1px;
-			
+			margin: 1px;			
 
 			background-image: linear-gradient(bottom, #F24100 0%, #F26900 100%);
 			background-image: -o-linear-gradient(bottom, #F24100 0%, #F26900 100%);
@@ -50,14 +48,14 @@
 				color-stop(1, #F26900)
 			);
 
-		-webkit-border-radius: 6px;
-		-moz-border-radius: 6px;
-		border-radius: 6px;
+			-webkit-border-radius: 6px;
+			-moz-border-radius: 6px;
+			border-radius: 6px;
 
 		h4 {
 			text-align: center;
 			margin: 0;
-			padding: 5px 0;
+			padding: 10px 0 5px 0;
 			
 			
 			font-size: 17px;
@@ -79,10 +77,10 @@
 		height: 38px;
 		border: 1px solid #F26900;
 		background: #fff;
-		width: 190px;
+		width: 200px;
 
 		input[type=text] {
-			width: 130px;
+			width: 140px;
 			color: @darkGreen;
 			font-weight: bold;
 			font-size: 16px;
@@ -137,7 +135,7 @@
 		font-size: 13px;
 		li {
 
-			padding: 2px 10px 2px 15px;
+			padding: 2px 10px 2px 25px;
 
 			&.disabled {
 
@@ -146,11 +144,6 @@
 				&:hover {
 					background: transparent;
 					color: #ccc;
-
-					span.counter {
-						background: #ddd;
-						color: #888;	
-					}
 				}
 
 				&:before {
@@ -159,23 +152,27 @@
 			}
 
 			span.counter {
-				background: #ddd;
+				
 				
 				padding: 1px 2px;
 				color: #888;
 				font-size: 11px;
+
+				&:before {
+					content: '(';
+				}
+
+				&:after {
+					content: ')';	
+				}
 			}
 
 			a {
-				
 				display: block;	
-
+				padding-left: 5px;
 				&:hover {
-					
 					text-decoration: none;
 				}
-
-
 			}
 
 			&:last-child {
@@ -183,14 +180,9 @@
 			}
 
 			&:hover {
-				background: #d2d9a3;
+				background: #fbfdee;
 				color: @white;
 				text-decoration: none;
-
-				span.counter {
-					background: transparent;
-					color: #fff;
-				}
 			}
 			
 			&:before {
@@ -206,7 +198,9 @@
 				  float: left;
 				  line-height: 19px;
 				  height: 20px;
-
+				  position: relative;
+				  left: -9px;
+				  width: 0;
 			}
 
 			&.selected {
@@ -217,9 +211,9 @@
 						font-weight: normal;
 
 						&.close {
-							background: @lightGreen;
+							
 							opacity:1;
-							color: #fff;
+							color: red;
 							font-size: 15px;
 							display: block;
 							width: 20px;
