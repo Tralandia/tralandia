@@ -66,7 +66,8 @@ class AdvancedPhrase extends BaseControl {
 					: $translation->translation;
 				$control->class = $wrapper->controlBox->inputClass;
 				if (empty($attributes)) {
-					$box->addClass('hide');
+					//TODO: toto sa musi potom povolit
+					//$box->addClass('hide');
 				} else {
 					$control->addAttributes($attributes);
 				}
