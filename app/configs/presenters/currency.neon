@@ -31,7 +31,7 @@ form:
 		name:
 			label: Name
 			control:
-				type: phrase
+				type: advancedPhrase
 			validation:
 				- [setRequired, 'Please fill in the name.']
 		iso:

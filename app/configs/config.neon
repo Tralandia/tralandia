@@ -147,6 +147,7 @@ common:
 
 		itemTextFactory: Extras\FormMask\Items\Foctories\TextFactory
 		itemPhraseFactory: Extras\FormMask\Items\Foctories\PhraseFactory(@phraseServiceFactory, @environment::getLanguage())
+		itemAdvancedPhraseFactory: Extras\FormMask\Items\Foctories\AdvancedPhraseFactory(@environment)
 		itemYesNoFactory: Extras\FormMask\Items\Foctories\YesNoFactory
 		itemJsonFactory: Extras\FormMask\Items\Foctories\JsonFactory
 		itemNeonFactory: Extras\FormMask\Items\Foctories\NeonFactory
