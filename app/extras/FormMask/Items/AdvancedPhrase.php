@@ -21,6 +21,20 @@ class AdvancedPhrase extends Text {
 	public function __construct($name, $label, Extras\Models\Entity\IEntity $entity, Extras\Environment $environment) {
 		parent::__construct($name, $label, $entity);
 		$this->environment = $environment;
+		$this->setValueSetter(new Extras\Callback($this, 'phraseSetter', array($entity->{$this->name})));
+	}
+
+	/**
+	 * Callback na ulozenie dat do frazy
+	 * @param Entity\Phrase\Phrase
+	 * @param array
+	 */
+	public function phraseSetter(Entity\Phrase\Phrase $phrase, array $values) {
+		foreach ($phrase->getTranslations() as $translation) {
+			if (isset($values[$translation->language->iso]) && $translation->translation != $values[$translation->language->iso]) {
+				$translation->translation = $values[$translation->language->iso];
+			}
+		}
 	}
 
 	/**
@@ -37,22 +51,5 @@ class AdvancedPhrase extends Text {
 		}
 
 		return $control;
-	}
-
-	/**
-	 * Spracovanie dat z formulara
-	 * @param Nette\Forms\Form
-	 */
-	public function process(Nette\Forms\Form $form) {
-		if ($this->getValueSetter()) {
-			$value = $form->getComponent($this->getName())->getValue();
-			$phrase = $this->getValue();
-
-			foreach ($phrase->getTranslations() as $translation) {
-				if (isset($value[$translation->language->iso]) && $translation->translation != $value[$translation->language->iso]) {
-					$translation->translation = $value[$translation->language->iso];
-				}
-			}
-		}
 	}
 }
