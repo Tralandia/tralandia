@@ -1,0 +1,138 @@
+@bodyBg : #eef2d1;
+@darkGreen : #698308;
+@lightGreen: #b0c13b;
+@brown : #7d3300 ;
+@textGreen: #a8b938;
+@orange: #f35405;
+@white : #fff;
+@supfooterBg : #fdfdf8;
+@supfooterDropshadowColor: #3e4813;
+
+/* content colors */
+@contentBackground : @supfooterBg;
+
+/* sidebar */
+#sidebar {
+
+
+
+	h4 {
+		font-size: 15px;
+		margin: 0;
+		padding: 0 10px;
+	}
+
+	.widget {
+		border-bottom: 1px solid @lightGreen;
+	}	
+
+	.widget:last-child {
+		border: none;
+	}
+
+	.input-filltext {
+		
+		margin: 1px;
+		padding: 1px;
+		-webkit-border-radius: 6px;
+		-moz-border-radius: 6px;
+		border-radius: 6px;
+		height: 38px;
+		border: 1px solid @darkGreen;
+
+		input[type=text] {
+			width: 170px;
+			color: @darkGreen;
+			font-weight: bold;
+			font-size: 16px;
+		}
+
+		input::-webkit-input-placeholder {
+		    color:    #999;
+		    font-weight: bold;
+		}
+		input:-moz-placeholder {
+		    color:    #999;
+		    font-weight: bold;
+		}
+		input:-ms-input-placeholder {
+		    color:    #999;
+		    font-weight: bold;
+		}
+
+		button.btn {
+			width: 39px;
+			height:38px;
+			line-height: 30px;
+			color: #F24100;
+		}
+
+		input[type=text] , button.btn {
+			float: left;
+			border: none;
+			height:30px;
+			background: transparent;
+		}
+	}
+
+	ul {
+
+		list-style: none;	
+		margin: 0 ;
+		padding: 0 ;
+
+		li {
+
+			padding-left: 10px; 			
+
+			a {
+				padding: 2px 10px;
+				display: block;	
+
+				&:hover {
+					color:#fff;
+				}	
+			}
+
+			&:hover {
+				background: @lightGreen;
+				color: @white;
+				text-decoration: none;
+			}
+			
+			&:before {
+				  font-family: "entypo";
+				  font-weight: normal;
+				  font-style: normal;
+				  font-size: 40px;
+				  text-decoration: inherit;
+				  content:'\E4AE';
+				  color: @brown;
+				  font-size: 22px;
+				  margin-right: 3px;
+				  float: left;
+				  line-height: 25px;
+				  height: 20px;
+			}
+
+			&.more {
+
+				&:before {
+					content:' ';
+				}
+
+				[class*="entypo-"]:before {
+					position: relative;
+					top: 5px;
+				}
+
+				text-align: right;
+
+				a {
+					color: @brown;
+				}
+			}
+		}
+	}
+
+}
