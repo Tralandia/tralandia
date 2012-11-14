@@ -16,6 +16,7 @@ class Tinymce extends Text {
 	 */
 	public function extend(Nette\Forms\Form $form) {
 		return $form->addAdvancedTinymce($this->getName(), $this->getLabel())
-			->setDefaultValue($this->getValue());
+			->setDefaultValue($this->getValue())
+			->setDisabled($this->disabled);
 	}
 }

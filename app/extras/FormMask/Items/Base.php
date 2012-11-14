@@ -24,6 +24,9 @@ abstract class Base {
 	/** @var array */
 	protected $validators = array();
 
+	/** @var bool */
+	protected $disabled = false;
+
 	/**
 	 * @param string
 	 * @param string
@@ -131,6 +134,16 @@ abstract class Base {
 	}
 
 	/**
+	 * Nastavi ci je item didabled
+	 * @param mixed
+	 * @return Base
+	 */
+	public function setDisabled($bool = true) {
+		$this->disabled = $bool;
+		return $this;
+	}
+
+	/**
 	 * Vrati nazov setter metody
 	 * @param string
 	 * @return string
@@ -156,6 +169,7 @@ abstract class Base {
 	public function extend(Nette\Forms\Form $form) {
 		$control = $form->addText($this->getName(), $this->getLabel());
 		$control->setDefaultValue($this->getValue());
+		$control->setDisabled($this->disabled);
 
 		foreach ($this->validators as $validator) {
 			call_user_func_array(array($control, $validator->method), $validator->params);

@@ -110,7 +110,8 @@ class Select extends Text {
 	 */
 	public function extend(Nette\Forms\Form $form) {
 		return $form->addAdvancedSelect($this->getName(), $this->getLabel(), $this->getItems())
-			->setDefaultValue($this->getValue());
+			->setDefaultValue($this->getValue())
+			->setDisabled($this->disabled);
 	}
 
 	/**

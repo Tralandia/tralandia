@@ -38,6 +38,10 @@ class Generator extends Nette\Object {
 				$item->setValidators($factory->field->getValidators());
 			}
 
+			if ($factory->field->isControlDisabled()) {
+				$item->setDisabled(true);
+			}
+
 			// nastavenie veci pre ziskanie itemov ku selektu
 			if ($factory->field->getType() === 'select') {
 				$item->setRepository($factory->field->getControlOption('repository'));
