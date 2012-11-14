@@ -3,24 +3,74 @@
 	#content {
 		.accordion {
 			h3 {
-				
-				margin: 1px 0;
-				padding: 5px 0;
+				margin:0; 
+				margin-top: 1px ;
+				padding:  5px 10px 4px 30px;
 				font-size: 16px;
-				line-height: 16px;
-				
+				line-height: 19px;
+				background: transparent;
 				overflow: hidden;
 				border: none;
 
-				&:before {
-					height: 20px;
-					position: relative;
-					top: 4px;
-					margin: 0 5px;
+				&.ui-state-hover , &.ui-state-active  {
+					backround: #C8CF9B;
 				}
+
+				&:before {
+					height: 12px;
+					position: relative;
+					left: -25px;
+					top: -1px;
+					display: block;
+					width: 0px;
+					float: left;
+				}
+
+				&.ui-state-focus , &.ui-state-active {
+					background: #EFF2D7;
+				}
+
+				&.ui-corner-all, &.ui-corner-top, &.ui-corner-right, &.ui-corner-tr {
+					-webkit-border-top-right-radius: 0;
+				}
+
+				&.ui-corner-top , &.ui-corner-all , &.ui-corner-left , &.ui-corner-tl {
+					-webkit-border-radius: none;
+					-moz-border-radius: none;
+					border-radius: none;
+
+					-webkit-border-top-left-radius: 0;
+				}
+
 			}
 
+			/* content */
+			.ui-accordion-content {
+				background: #EFF2D7;
+			}
 
+			/* sublevel */
+			.accordion {
+				margin-left: 12px;
+
+				h3 {
+
+					font-weight: bold;
+					font-size: 14px;
+					&:before {
+						content: '\27A1';
+					}
+
+				}
+
+				.ui-accordion-content {
+					padding: 0;
+					p {
+						padding: 0 0 10px 30px;
+						margin: 0;
+					}
+				}
+			}
 
 		}
 	}
@@ -28,5 +78,9 @@
 			.ui-accordion .ui-accordion-content {
 				padding:0 10px; 
 			}
+
+
+
+/* .ui-corner-all, .ui-corner-top, .ui-corner-left, .ui-corner-tl */
 
 }

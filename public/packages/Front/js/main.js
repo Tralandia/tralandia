@@ -39,7 +39,8 @@ $(document).ready(function(){
 	
 	$( ".tabs" ).tabs();
 	$( ".datepicker" ).datepicker();
-	$( ".accordion" ).accordion({ autoHeight: false });
+	
+	$('.accordion').accordion({ autoHeight: false , active: false , navigation: true, collapsible: true });
 
 
 });
