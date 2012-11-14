@@ -62,7 +62,7 @@ class AclPresenter extends BasePresenter {
 			$this->entityList = array();
 			foreach (Finder::findFiles('*.php')->from(APP_DIR . '/models/Entity/') as $key => $file) {
 				list($x, $nameTemp) = explode('/models/', $key, 2);
-				$nameTemp = str_replace(array('/', '.php'), array('_', ''), $nameTemp);
+				$nameTemp = str_replace(array('/', 'Entity.php'), array('_', ''), $nameTemp);
 				// list(, $nameTemp) = explode('\\', $nameTemp, 2);
 				$this->entityList[$nameTemp] = $nameTemp; 
 			}
