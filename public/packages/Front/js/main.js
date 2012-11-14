@@ -39,6 +39,7 @@ $(document).ready(function(){
 	
 	$( ".tabs" ).tabs();
 	$( ".datepicker" ).datepicker();
+	$( ".accordion" ).accordion({ autoHeight: false });
 
 
 });

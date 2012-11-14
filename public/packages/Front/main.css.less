@@ -117,6 +117,27 @@ p {
 /* helper class 
 /***************************************************************************************/
 
+ul.arrows {
+	list-style: none;
+	li {
+
+		&:before {
+		  font-family: "entypo";
+		  font-weight: normal;
+		  font-style: normal;
+		  font-size: 40px;
+		  text-decoration: inherit;
+		  content: '\27A1';
+		  display:block;
+		  float: left;
+		  width: 0px;
+		  position: relative;
+		  left: -18px;
+		  font-size: 28px;
+		}
+	}
+}
+
 .breadcrumb {
 	background: transparent;
 	padding-left: 5px;
