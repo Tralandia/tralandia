@@ -12,6 +12,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class PathSegment extends \Entity\BaseEntity {
 
+	const PAGE = 2;
+	const ATTRACTION_TYPE = 4;
+	const LOCATION = 6;
+	const RENTAL_TYPE = 8;
+	const TAG = 10;
+
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Location\Location")
@@ -42,27 +48,7 @@ class PathSegment extends \Entity\BaseEntity {
 	 */
 	protected $entityId;
 
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-			//@entity-generator-code --- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()

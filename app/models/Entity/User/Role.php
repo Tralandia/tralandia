@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Repository\User\RoleRepository")
  * @ORM\Table(name="user_role", indexes={@ORM\index(name="slug", columns={"slug"})})
  * @EA\Primary(key="id", value="name")
  */

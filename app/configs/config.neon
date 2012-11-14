@@ -145,6 +145,16 @@ common:
 		missingTranslationsScanner:
 			class: Service\TaskManager\MissingTranslationsScanner(@autopilot, @phraseTranslationRepositoryAccessor, @languageRepositoryAccessor)
 
+		generatePathSegmentsRobot: 
+			class: Service\Robot\GeneratePathSegmentsRobot
+			arguments: 
+				- @languageRepositoryAccessor
+				- @pageRepositoryAccessor
+				- @attractionTypeRepositoryAccessor
+				- @locationRepositoryAccessor
+				- @rentalTypeRepositoryAccessor
+				- @locationServiceFactory
+
 		itemTextFactory: Extras\FormMask\Items\Foctories\TextFactory
 		itemPhraseFactory: Extras\FormMask\Items\Foctories\PhraseFactory(@phraseServiceFactory, @environment::getLanguage())
 		itemYesNoFactory: Extras\FormMask\Items\Foctories\YesNoFactory

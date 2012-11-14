@@ -1,13 +1,13 @@
 <?php
 
-namespace Service\TaskRobot;
+namespace Service\Robot;
 
 /**
  * IScener interface
  *
  * @author Dávid Ďurika
  */
-interface ITaskRobot {
+interface IRobot {
 
 	public function needToRun();
 
