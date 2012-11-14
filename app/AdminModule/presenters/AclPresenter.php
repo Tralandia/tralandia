@@ -18,19 +18,10 @@ class AclPresenter extends BasePresenter {
 
 	protected $roles;
 
-	protected $roleRepository;
+	protected $userRoleRepositoryAccessor;
 
-	// public function injectRepositories(R\RoleRepository $r) {
-	// 	if ($this->roleRepository) {
-	// 		throw new Nette\InvalidStateException('Repositry has already been set');
-	// 	}
-	// 	$this->roleRepository = $r;
-	// }
-
-	protected function startup() {
-		parent::startup();
-		$this->roleRepository = $this->context->roleRepository;
-		$this->roles = $this->roleRepository->forAcl();
+	public function setContext(\Nette\DI\Container $dic) {
+		$this->setProperty('userRoleRepositoryAccessor');
 	}
 
 	protected function getPresenterList() {
@@ -151,14 +142,14 @@ class AclPresenter extends BasePresenter {
 
 		$this->template->resource = $entityName;
 		$this->template->entityActions = $this->entityActions;
-		$this->template->roles = $this->roles;
+		$this->template->roles = $this->userRoleRepositoryAccessor->get()->forAcl();
 	}
 
 	/**
 	 * @return Forms\Acl\EntityEdit
 	 */
 	protected function createComponentEntityForm($name) {
-		$comp = new Forms\Acl\EntityEdit($this, $name, $this->entityActions, $this->roles);
+		$comp = new Forms\Acl\EntityEdit($this, $name, $this->entityActions, $this->userRoleRepositoryAccessor->get()->forAcl());
 		$comp->destinationDir = $this->context->parameters['acl']['entitiesDir'];
 		$comp->entityName = $this->params['entityName'];
 	

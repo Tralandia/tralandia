@@ -150,12 +150,12 @@ class BaseImport {
 			),
 			'subsections' => array(),
 		),
-		// 'pathsegments' => array(
-		// 	'entities' => array(
-		// 		'\Routing\PathSegment' => array(),
-		// 	),
-		// 	'subsections' => array(),
-		// ),
+		'pathsegments' => array(
+			'entities' => array(
+				'\Routing\PathSegment' => array(),
+			),
+			'subsections' => array(),
+		),
 		'taskTypes' => array(
 			'entities' => array(
 				'\Task\Type' => array(),

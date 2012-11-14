@@ -29,7 +29,6 @@ class RouterCaching extends \Nette\Object {
 		$this->cache->save('domain', $cache);
 	}
 
-
 	// segments
 	public function generateSegments() {
 		$this->generateLocation();
