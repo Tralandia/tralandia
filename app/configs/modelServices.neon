@@ -197,7 +197,7 @@ services:
 	#----------
 	locationEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Location\Location')
 
-	locationServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\Location\LocationService', @locationEntityFactory)
+	locationServiceFactory: Factory\Location\LocationServiceFactory(@locationEntityFactory, @locationRepositoryAccessor)
 
 	locationRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Location\Location')
 
