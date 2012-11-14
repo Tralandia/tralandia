@@ -83,7 +83,7 @@ abstract class Base {
 	 * @param Extras\Callback
 	 * @return Base
 	 */
-	public function setValueGetter(Extras\Callback $valueGetter) {
+	public function setValueGetter(Extras\Callback $valueGetter = null) {
 		$this->valueGetter = $valueGetter;
 		return $this;
 	}
@@ -101,7 +101,7 @@ abstract class Base {
 	 * @param Extras\Callback
 	 * @return Base
 	 */
-	public function setValueSetter(Extras\Callback $valueSetter) {
+	public function setValueSetter(Extras\Callback $valueSetter = null) {
 		$this->valueSetter = $valueSetter;
 		return $this;
 	}

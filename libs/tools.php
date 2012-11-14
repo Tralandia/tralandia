@@ -34,6 +34,7 @@ Extras\Forms\Controls\AdvancedText::register();
 Extras\Forms\Controls\AdvancedTextarea::register();
 Extras\Forms\Controls\AdvancedTinymce::register();
 Extras\Forms\Controls\AdvancedUpload::register();
+Extras\Forms\Controls\ReadOnlyPhrase::register();
 
 function debug() {
 	Tools::dump(func_get_args());

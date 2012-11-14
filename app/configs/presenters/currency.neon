@@ -2,6 +2,7 @@ parameters:
 	service: Service\Currency
 	title: Currencies
 	h1: 'Currency -> %name%'
+
 grid:
 	columns:
 		id:
@@ -31,7 +32,7 @@ form:
 		name:
 			label: Name
 			control:
-				type: advancedPhrase
+				type: readOnlyPhrase
 			validation:
 				- [setRequired, 'Please fill in the name.']
 		iso:
