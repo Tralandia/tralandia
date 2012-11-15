@@ -12,7 +12,6 @@ abstract class BasePresenter extends Presenter {
 	public $cssFiles;
 	public $jsFiles;
 
-
 	protected function startup() {
 		parent::startup();
 		// odstranuje neplatne _fid s url
@@ -97,11 +96,15 @@ abstract class BasePresenter extends Presenter {
 
 	protected function createComponentHeader() {
 		list($modul, $presenter) = explode(':', $this->name, 2);
+		$action = $this->action;
 
 		$wlSets = $this->context->parameters['webloader']['sets'];
 
 		$wlSet = NULL;
-		if(isset($wlSets[$this->name])) {
+
+		if(isset($wlSets[$this->name.':'.$action])) {
+			$wlSet = $wlSets[$this->name.':'.$action];
+		} else if(isset($wlSets[$this->name])) {
 			$wlSet = $wlSets[$this->name];
 		} else if(isset($wlSets[$modul])) {
 			$wlSet = $wlSets[$modul];
@@ -127,8 +130,8 @@ abstract class BasePresenter extends Presenter {
 				}
 			}
 		}
-		$this->cssFiles = $cssFiles;
-		$this->jsFiles = $jsFiles;		
+		$this->cssFiles = array_unique($cssFiles);
+		$this->jsFiles = array_unique($jsFiles);
 
 		$header = new HeaderControl;
 

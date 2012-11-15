@@ -98,26 +98,30 @@ class ImportSeo extends BaseImport {
 				}
 			}
 
-			$titlePhrase = $this->context->phraseEntityFactory->create();
+			$titlePhraseService = $this->context->phraseServiceFactory->create();
+			$titlePhrase = $titlePhraseService->getEntity();
 			$titlePhrase->type = $dictionaryTypeTitle;
 			$sourceLanguage = $context->languageRepository->find($languagesByOldId[$x['source_language_id']]);
 			if (isset($languagesByOldId[$x['source_language_id']])) {
 				$titlePhrase->sourceLanguage = $sourceLanguage;
 			}
 
-			$headingPhrase = $this->context->phraseEntityFactory->create();
+			$headingPhraseService = $this->context->phraseServiceFactory->create();
+			$headingPhrase = $headingPhraseService->getEntity();
 			$headingPhrase->type = $dictionaryTypeHeading;
 			if (isset($languagesByOldId[$x['source_language_id']])) {
 				$headingPhrase->sourceLanguage = $sourceLanguage;
 			}
 
-			$tabNamePhrase = $this->context->phraseEntityFactory->create();
+			$tabNamePhraseService = $this->context->phraseServiceFactory->create();
+			$tabNamePhrase = $tabNamePhraseService->getEntity();
 			$tabNamePhrase->type = $dictionaryTypeTabName;
 			if (isset($languagesByOldId[$x['source_language_id']])) {
 				$tabNamePhrase->sourceLanguage = $sourceLanguage;
 			}
 
-			$descriptionPhrase = $this->context->phraseEntityFactory->create();
+			$descriptionPhraseService = $this->context->phraseServiceFactory->create();
+			$descriptionPhrase = $descriptionPhraseService->getEntity();
 			$descriptionPhrase->type = $dictionaryTypeDescription;
 			if (isset($languagesByOldId[$x['source_language_id']])) {
 				$descriptionPhrase->sourceLanguage = $sourceLanguage;
@@ -126,30 +130,18 @@ class ImportSeo extends BaseImport {
 			$r1 = q('select * from seo_urls_texts where seo_url_id = '.$x['id'].' and length(description)>0');
 			while ($x1 = mysql_fetch_array($r1)) {
 				$languageTemp = $context->languageRepository->find($languagesByOldId[$x1['language_id']]);
-
+				
 				// Title
-				$t = $context->phraseTranslationEntityFactory->create();
-				$t->language = $languageTemp;
-				$t->translation = $x1['title'];
-				$titlePhrase->addTranslation($t);
-
+				$titlePhraseService->createTranslation($languageTemp, $x1['title']);
+				
 				// Heading
-				$t = $context->phraseTranslationEntityFactory->create();
-				$t->language = $languageTemp;
-				$t->translation = $x1['h1'];
-				$headingPhrase->addTranslation($t);
-
+				$headingPhraseService->createTranslation($languageTemp, $x1['h1']);
+				
 				// Tab Heading
-				$t = $context->phraseTranslationEntityFactory->create();
-				$t->language = $languageTemp;
-				$t->translation = $x1['tab_name'];
-				$tabNamePhrase->addTranslation($t);
-
+				$tabNamePhraseService->createTranslation($languageTemp, $x1['tab_name']);
+				
 				// Description
-				$t = $context->phraseTranslationEntityFactory->create();
-				$t->language = $languageTemp;
-				$t->translation = $x1['description'];
-				$descriptionPhrase->addTranslation($t);
+				$descriptionPhraseService->createTranslation($languageTemp, $x1['description']);
 			}
 
 			$seoUrl->title = $titlePhrase;

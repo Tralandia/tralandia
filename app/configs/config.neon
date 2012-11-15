@@ -51,22 +51,42 @@ common:
 		console:
 			entityManager: default
 
+
 	includes:
 		- webLoader.neon
 		- acl/acl.neon
 		- modelServices.neon
+		- oldRepositoryServices.neon
+
+	presenter:
+		configsDir: %appDir%/configs/presenters
 
 	services:
+		# CACHE
+		aclCache: Nette\Caching\Cache(@cacheStorage, 'Acl')
+		routerCache: Nette\Caching\Cache(@cacheStorage, 'Router')
+		translatorCache: Nette\Caching\Cache(@cacheStorage, 'Translator')
+
+		mainRouteFactory:
+			class: Routers\MainRouteFactory(@routerCache)
+			setup:
+				- $locationRepositoryAccessor(@locationRepositoryAccessor)
+				- $languageRepositoryAccessor(@languageRepositoryAccessor)
+				- $rentalRepositoryAccessor(@rentalRepositoryAccessor)
+				- $attractionRepositoryAccessor(@attractionRepositoryAccessor)
+				- $routingPathSegmentRepositoryAccessor(@routingPathSegmentRepositoryAccessor)
+				- $domainRepositoryAccessor(@domainRepositoryAccessor)
+
+		routerFactory: Routers\RouterFactory
+
+		router: @routerFactory::create
+
 		console: @doctrine.console
 		model: @doctrine.entityManagers.default
 
 		# nette.presenterFactory:
 			# class: Extras\DynamicPresenterFactory
 			# factory: Extras\DynamicPresenterFactory::factory
-
-		# CACHE
-		aclCache: Nette\Caching\Cache(@cacheStorage, 'Acl')
-		routerCache: Nette\Caching\Cache(@cacheStorage, 'Router')
 
 		user:
 			class: Security\User
@@ -81,10 +101,27 @@ common:
 				- $config(%acl%)
 				- setup()
 
-		translator: Extras\Translator(@languageRepositoryAccessor, @cacheStorage)
+		environment: Extras\Environment(@languageRepositoryAccessor, @locationRepositoryAccessor)
+		translator: Extras\Translator(@environment, @phraseRepositoryAccessor, @phraseServiceFactory, @translatorCache)
 
 		settings:
 			factory: Extras\PresenterSettings::factory
+
+		emailCompiler: 
+			class: Extras\Email\Compiler
+			setup:
+				- $phraseServiceFactory(@phraseServiceFactory)
+				- setVariableFactory(rental, @rentalEmailVariableFactory)
+				- setVariableFactory(language, @languageEmailVariableFactory)
+				- setVariableFactory(location, @locationEmailVariableFactory)
+				- setVariableFactory(visitor, @visitorEmailVariableFactory)
+				- setVariableFactory(environment, @environmentEmailVariableFactory)
+
+		rentalEmailVariableFactory: Extras\Email\Variables\RentalVariablesFactory(@rentalServiceFactory)
+		languageEmailVariableFactory: Extras\Email\Variables\LanguageVariablesFactory(@languageServiceFactory)
+		locationEmailVariableFactory: Extras\Email\Variables\LocationVariablesFactory(@locationServiceFactory)
+		visitorEmailVariableFactory: Extras\Email\Variables\UserVariablesFactory('VisitorVariables', @userServiceFactory)
+		environmentEmailVariableFactory: Extras\Email\Variables\EnvironmentVariablesFactory
 
 		ticketFetcherApi:
 			class: Horo\Api( %ticketFetcherApi.host%, %ticketFetcherApi.email%, %ticketFetcherApi.password%, 'INBOX', %ticketFetcherApi.port%, %ticketFetcherApi.tls% )
@@ -100,7 +137,7 @@ common:
 				- $taskTypeRepository(@taskTypeRepositoryAccessor)
 				- $taskServiceFactory(@taskServiceFactory)
 
-		taskManager: 
+		taskManager:
 			class: Service\TaskManager\TaskManager
 			setup:
 				- addScanner(@missingTranslationsScanner)
@@ -108,48 +145,29 @@ common:
 		missingTranslationsScanner:
 			class: Service\TaskManager\MissingTranslationsScanner(@autopilot, @phraseTranslationRepositoryAccessor, @languageRepositoryAccessor)
 
-#		phraseEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Phrase\Phrase')
-#		phraseServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\Phrase\Phrase', @phraseEntityFactory)
-#		formMaskGenerator:
-#			parameters: [mask, config, entity]
-#			class: Extras\FormMask\Generator(%mask%, %config%, %entity%)
-#			setup:
-#				- setItemPhrase(@itemPhraseFactory)
-
-
-		mask: Extras\FormMask\Mask
+		generatePathSegmentsRobot: 
+			class: Service\Robot\GeneratePathSegmentsRobot
+			arguments: 
+				- @routingPathSegmentRepositoryAccessor
+				- @routingPathSegmentEntityFactory
+				- @languageRepositoryAccessor
+				- @pageRepositoryAccessor
+				- @attractionTypeRepositoryAccessor
+				- @locationRepositoryAccessor
+				- @rentalTypeRepositoryAccessor
+				- @locationServiceFactory
 
 		itemTextFactory: Extras\FormMask\Items\Foctories\TextFactory
-		# @todo brano environment sa uplne zrusil
-		# itemPhraseFactory: Extras\FormMask\Items\Foctories\PhraseFactory(@phraseServiceFactory, @environment::getLanguage())
+		itemPhraseFactory: Extras\FormMask\Items\Foctories\PhraseFactory(@phraseServiceFactory, @environment::getLanguage())
 		itemYesNoFactory: Extras\FormMask\Items\Foctories\YesNoFactory
 		itemJsonFactory: Extras\FormMask\Items\Foctories\JsonFactory
 		itemNeonFactory: Extras\FormMask\Items\Foctories\NeonFactory
 		itemTextareaFactory: Extras\FormMask\Items\Foctories\TextareaFactory
 		itemPriceFactory: Extras\FormMask\Items\Foctories\PriceFactory
-		itemSelectFactory: Extras\FormMask\Items\Foctories\SelectFactory
+		itemSelectFactory: Extras\FormMask\Items\Foctories\SelectFactory(@translator)
 		itemCheckboxFactory: Extras\FormMask\Items\Foctories\CheckboxFactory
 		itemTinymceFactory: Extras\FormMask\Items\Foctories\TinymceFactory
 
-	factories:
-		phraseService:
-			parameters: [entity]
-			class: Service\Phrase\PhraseService(@model, %entity%)
-
-		formGenerator:
-			parameters: [config, entity]
-			class: Extras\FormMask\Generator(@mask, %config%, %entity%)
-			setup:
-				- setItemText(@itemTextFactory)
-				# - setItemPhrase(@itemPhraseFactory)
-				- setItemYesNo(@itemYesNoFactory)
-				- setItemJson(@itemJsonFactory)
-				- setItemNeon(@itemNeonFactory)
-				- setItemTextarea(@itemTextareaFactory)
-				- setItemPrice(@itemPriceFactory)
-				- setItemSelect(@itemSelectFactory)
-				- setItemCheckbox(@itemCheckboxFactory)
-				- setItemTinymce(@itemTinymceFactory)
 
 production < common:
 
@@ -185,6 +203,9 @@ durika < development:
 		editor: 'edit://open/?url=file://%file&line=%line'
 		envOptions:
 			email: tralandia.david@gmail.com
+
+		database:
+			debugger: true
 
 toth < development:
 	parameters:

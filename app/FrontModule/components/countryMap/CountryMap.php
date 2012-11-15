@@ -5,10 +5,21 @@ use Nette\Application\UI\Control;
 
 class CountryMap extends \BaseModule\Components\BaseControl {
 
+	public $locationRepository;
+	public $locationTypeRepository;
+
+	public function __construct($locationRepository, $locationTypeRepository) {
+
+		$this->locationRepository = $locationRepository;
+		$this->locationTypeRepository = $locationTypeRepository;
+
+		parent::__construct();
+
+	}
+
 	public function render() {
 
-		$environment = new \Extras\Environment;
-		$country = $environment->getLocation();
+		$country = $this->locationRepository->findOneBySlug('slovakia');
 
 		$clickMapData = $this->getClickMapData($country);
 
@@ -28,17 +39,17 @@ class CountryMap extends \BaseModule\Components\BaseControl {
 		$navigatorData = array();
 
 		$navigatorData['top'] = array(
-			\Service\Location\Location::getBySlug('world'),
-			$this->presenter->context->environment->getLocation()
+			$this->locationRepository->find(1),
+			$country
 		);
 
 		$navigatorData['otherCountries'] = array();
 		if ($country->clickMapData) {
-			debug($country->clickMapData);
 			foreach ($country->clickMapData['otherCountries'] as $countryId) {
-				$navigatorData['otherCountries'][] = \Service\Location\Location::get($countryId);
+				$navigatorData['otherCountries'][] = $this->locationRepository->find($countryId);
 			}
 		}
+
 		return $navigatorData;
 
 	}
@@ -50,9 +61,9 @@ class CountryMap extends \BaseModule\Components\BaseControl {
 			'mapBox' => array()
 		));
 
-		$type = \Service\Location\Type::getBySlug('region');
+		$type = $this->locationTypeRepository->findBySlug('region');
 
-		foreach (\Service\Location\LocationList::getBy(array('parent'=>$country, 'type'=>$type)) as $key=>$location) {
+		foreach ($this->locationRepository->findBy(array('parent'=>$country, 'type'=>$type)) as $key=>$location) {
 			if (isset($location->clickMapData['coords'], $location->clickMapData['css'])) {
 				$list['regions'][$key] = $location;
 			}
@@ -60,7 +71,7 @@ class CountryMap extends \BaseModule\Components\BaseControl {
 				$list['mapBox'][$key] = $location;
 			}
  		}
-
+ 		
 		return $list;
 
 	}

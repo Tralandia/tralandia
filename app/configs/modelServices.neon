@@ -188,7 +188,7 @@ services:
 	#----------
 	languageEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Language')
 
-	languageServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @languageEntityFactory)
+	languageServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\LanguageService', @languageEntityFactory)
 
 	languageRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Language')
 
@@ -197,7 +197,7 @@ services:
 	#----------
 	locationEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Location\Location')
 
-	locationServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @locationEntityFactory)
+	locationServiceFactory: Factory\Location\LocationServiceFactory(@locationEntityFactory, @locationRepositoryAccessor)
 
 	locationRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Location\Location')
 
@@ -276,15 +276,18 @@ services:
 	#----------
 	phraseEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Phrase\Phrase')
 
-	phraseServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\Phrase\PhraseService', @phraseEntityFactory)
+	phraseServiceFactory: 
+		factory: Extras\Models\Service\ServiceFactory(@model, 'Service\Phrase\PhraseService', @phraseEntityFactory)
+		setup: 
+			- setParameters(Extras\Models\Entity\EntityFactory('Entity\Phrase\Translation'))
 
 	phraseRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Phrase\Phrase')
 
 
 	#----------
-	phraseTranslationEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Phrase\Translation')
+	#phraseTranslationEntityFactory neexistuje pouzi $phrase->createTranslation();
 
-	phraseTranslationServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @phraseTranslationEntityFactory)
+	phraseTranslationServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService')
 
 	phraseTranslationRepositoryAccessor: 
 		factory: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Phrase\Translation')
@@ -301,6 +304,14 @@ services:
 
 
 	#rental
+	#----------
+	rentalEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Rental\Rental')
+
+	rentalServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\Rental\RentalService', @rentalEntityFactory)
+
+	rentalRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Rental\Rental')
+
+
 	#----------
 	rentalAmenityEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Rental\Amenity')
 
@@ -331,14 +342,6 @@ services:
 	rentalFulltextServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @rentalFulltextEntityFactory)
 
 	rentalFulltextRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Rental\Fulltext')
-
-
-	#----------
-	rentalEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Rental\Rental')
-
-	rentalServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @rentalEntityFactory)
-
-	rentalRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Rental\Rental')
 
 
 	#----------
@@ -427,6 +430,14 @@ services:
 
 	#user
 	#----------
+	userEntityFactory: Extras\Models\Entity\EntityFactory('Entity\User\User')
+
+	userServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\User\UserService', @userEntityFactory)
+
+	userRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\User\User')
+
+
+	#----------
 	userCombinationEntityFactory: Extras\Models\Entity\EntityFactory('Entity\User\Combination')
 
 	userCombinationServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @userCombinationEntityFactory)
@@ -488,13 +499,5 @@ services:
 	userSiteVisitorReviewServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @userSiteVisitorReviewEntityFactory)
 
 	userSiteVisitorReviewRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\User\SiteVisitorReview')
-
-
-	#----------
-	userEntityFactory: Extras\Models\Entity\EntityFactory('Entity\User\User')
-
-	userServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @userEntityFactory)
-
-	userRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\User\User')
 
 

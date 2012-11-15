@@ -1,197 +1,191 @@
 name_show:
-	guest: allow
-	visitor: deny
-	potentialowner: deny
-	owner: deny
-	translator: deny
-	assistant: deny
-	vendor: deny
-	manager: deny
 	admin: deny
+	assistant: deny
+	guest: allow
+	manager: deny
+	owner: deny
+	potentialowner: deny
+	superadmin: deny
+	telmarkmanager: deny
+	telmarkoperator: deny
+	translator: deny
 	
 name_edit:
-	guest: allow
-	visitor: deny
-	potentialowner: deny
-	owner: deny
-	translator: deny
-	assistant: deny
-	vendor: deny
-	manager: deny
 	admin: deny
+	assistant: deny
+	guest: allow
+	manager: deny
+	owner: deny
+	potentialowner: deny
+	superadmin: deny
+	telmarkmanager: deny
+	telmarkoperator: deny
+	translator: deny
 	
 iso_show:
-	guest: allow
-	visitor: deny
-	potentialowner: deny
-	owner: deny
-	translator: deny
-	assistant: deny
-	vendor: deny
-	manager: deny
 	admin: deny
+	assistant: deny
+	guest: deny
+	manager: deny
+	owner: deny
+	potentialowner: deny
+	superadmin: deny
+	telmarkmanager: deny
+	telmarkoperator: deny
+	translator: deny
 	
 iso_edit:
-	guest: allow
-	visitor: deny
-	potentialowner: deny
-	owner: deny
-	translator: deny
-	assistant: deny
-	vendor: deny
-	manager: deny
 	admin: deny
+	assistant: deny
+	guest: deny
+	manager: deny
+	owner: deny
+	potentialowner: deny
+	superadmin: deny
+	telmarkmanager: deny
+	telmarkoperator: deny
+	translator: deny
 	
 exchangeRate_show:
-	guest: allow
-	visitor: deny
-	potentialowner: deny
-	owner: deny
-	translator: deny
-	assistant: deny
-	vendor: deny
-	manager: deny
 	admin: deny
+	assistant: deny
+	guest: allow
+	manager: deny
+	owner: deny
+	potentialowner: deny
+	superadmin: deny
+	telmarkmanager: deny
+	telmarkoperator: deny
+	translator: deny
 	
 exchangeRate_edit:
-	guest: allow
-	visitor: deny
-	potentialowner: deny
-	owner: deny
-	translator: deny
-	assistant: deny
-	vendor: deny
-	manager: deny
 	admin: deny
+	assistant: deny
+	guest: allow
+	manager: deny
+	owner: deny
+	potentialowner: deny
+	superadmin: deny
+	telmarkmanager: deny
+	telmarkoperator: deny
+	translator: deny
 	
 rounding_show:
-	guest: allow
-	visitor: deny
-	potentialowner: deny
-	owner: deny
-	translator: deny
-	assistant: deny
-	vendor: deny
-	manager: deny
 	admin: deny
+	assistant: deny
+	guest: allow
+	manager: deny
+	owner: deny
+	potentialowner: deny
+	superadmin: deny
+	telmarkmanager: deny
+	telmarkoperator: deny
+	translator: deny
 	
 rounding_edit:
-	guest: allow
-	visitor: deny
-	potentialowner: deny
-	owner: deny
-	translator: deny
-	assistant: deny
-	vendor: deny
-	manager: deny
 	admin: deny
-	
-locations_show:
-	guest: allow
-	visitor: deny
-	potentialowner: deny
-	owner: deny
-	translator: deny
 	assistant: deny
-	vendor: deny
-	manager: deny
-	admin: deny
-	
-locations_edit:
 	guest: allow
-	visitor: deny
-	potentialowner: deny
-	owner: deny
-	translator: deny
-	assistant: deny
-	vendor: deny
 	manager: deny
-	admin: deny
+	owner: deny
+	potentialowner: deny
+	superadmin: deny
+	telmarkmanager: deny
+	telmarkoperator: deny
+	translator: deny
 	
 id_show:
-	guest: allow
-	visitor: deny
-	potentialowner: deny
-	owner: deny
-	translator: deny
-	assistant: deny
-	vendor: deny
-	manager: deny
 	admin: deny
+	assistant: deny
+	guest: allow
+	manager: deny
+	owner: deny
+	potentialowner: deny
+	superadmin: deny
+	telmarkmanager: deny
+	telmarkoperator: deny
+	translator: deny
 	
 id_edit:
-	guest: allow
-	visitor: deny
-	potentialowner: deny
-	owner: deny
-	translator: deny
-	assistant: deny
-	vendor: deny
-	manager: deny
 	admin: deny
+	assistant: deny
+	guest: allow
+	manager: deny
+	owner: deny
+	potentialowner: deny
+	superadmin: deny
+	telmarkmanager: deny
+	telmarkoperator: deny
+	translator: deny
 	
 oldId_show:
-	guest: allow
-	visitor: deny
-	potentialowner: deny
-	owner: deny
-	translator: deny
-	assistant: deny
-	vendor: deny
-	manager: deny
 	admin: deny
+	assistant: deny
+	guest: allow
+	manager: deny
+	owner: deny
+	potentialowner: deny
+	superadmin: deny
+	telmarkmanager: deny
+	telmarkoperator: deny
+	translator: deny
 	
 oldId_edit:
-	guest: allow
-	visitor: deny
-	potentialowner: deny
-	owner: deny
-	translator: deny
-	assistant: deny
-	vendor: deny
-	manager: deny
 	admin: deny
+	assistant: deny
+	guest: allow
+	manager: deny
+	owner: deny
+	potentialowner: deny
+	superadmin: deny
+	telmarkmanager: deny
+	telmarkoperator: deny
+	translator: deny
 	
 created_show:
-	guest: allow
-	visitor: deny
-	potentialowner: deny
-	owner: deny
-	translator: deny
-	assistant: deny
-	vendor: deny
-	manager: deny
 	admin: deny
+	assistant: deny
+	guest: allow
+	manager: deny
+	owner: deny
+	potentialowner: deny
+	superadmin: deny
+	telmarkmanager: deny
+	telmarkoperator: deny
+	translator: deny
 	
 created_edit:
-	guest: allow
-	visitor: deny
-	potentialowner: deny
-	owner: deny
-	translator: deny
-	assistant: deny
-	vendor: deny
-	manager: deny
 	admin: deny
+	assistant: deny
+	guest: allow
+	manager: deny
+	owner: deny
+	potentialowner: deny
+	superadmin: deny
+	telmarkmanager: deny
+	telmarkoperator: deny
+	translator: deny
 	
 updated_show:
-	guest: allow
-	visitor: deny
-	potentialowner: deny
-	owner: deny
-	translator: deny
-	assistant: deny
-	vendor: deny
-	manager: deny
 	admin: deny
+	assistant: deny
+	guest: allow
+	manager: deny
+	owner: deny
+	potentialowner: deny
+	superadmin: deny
+	telmarkmanager: deny
+	telmarkoperator: deny
+	translator: deny
 	
 updated_edit:
-	guest: allow
-	visitor: deny
-	potentialowner: deny
-	owner: deny
-	translator: deny
-	assistant: deny
-	vendor: deny
-	manager: deny
 	admin: deny
+	assistant: deny
+	guest: allow
+	manager: deny
+	owner: deny
+	potentialowner: deny
+	superadmin: deny
+	telmarkmanager: deny
+	telmarkoperator: deny
+	translator: deny

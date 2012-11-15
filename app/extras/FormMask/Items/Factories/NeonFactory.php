@@ -7,7 +7,7 @@ use Extras;
 /**
  * @author Branislav Vaculčiak
  */
-class NeonFactory {
+class NeonFactory implements IFactory {
 	
 	/**
 	 * @param string
