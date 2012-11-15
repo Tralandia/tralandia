@@ -4,15 +4,6 @@ namespace FrontModule;
 
 class HomePresenter extends BasePresenter {
 
-	public $locationTypeRepository;
-
-	public function setContext() {
-
-		$this->locationTypeRepository = $this->context->locationTypeRepository;
-		parent::setContext();
-
-	}
-
 	protected function startup() {
 
 		parent::startup();

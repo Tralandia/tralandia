@@ -12,7 +12,6 @@ abstract class BasePresenter extends Presenter {
 	public $cssFiles;
 	public $jsFiles;
 
-
 	protected function startup() {
 		parent::startup();
 		// odstranuje neplatne _fid s url
