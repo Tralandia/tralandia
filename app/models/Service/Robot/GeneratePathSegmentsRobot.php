@@ -50,7 +50,8 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 	public function run()
 	{
 
-		$languageList = $this->languageRepositoryAccessor->get()->getPairs('id', 'iso', array('supported' => TRUE));
+		//$languageList = $this->languageRepositoryAccessor->get()->getPairs('id', 'iso', array('supported' => TRUE));
+		$languageList = $this->languageRepositoryAccessor->get()->findBySupported(TRUE);
 
 		$this->persistPagesSegments($languageList);
 		$this->persistAtractionTypesSegments($languageList);
@@ -65,12 +66,12 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 	{
 		$pages = $this->pageRepositoryAccessor->get()->getPairs('id', array('name', 'id'));
 
-		foreach ($languageList as $languageId => $languageIso) {
+		foreach ($languageList as $languageId => $language) {
 			foreach ($pages as $pageId => $pageName) {
 				$entity = $this->routingPathSegmentEntityFactory->create();
 				$entity->country = NULL;
-				$entity->language = $languageId;
-				$entity->pathSegment = $this->translate($pageName, $languageId);
+				$entity->language = $language;
+				$entity->pathSegment = $this->translate($pageName, $language->id);
 				$entity->type = PathSegment::PAGE;
 				$entity->entityId = $pageId;
 
@@ -83,12 +84,12 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 	{
 		$attractionTypes = $this->attractionTypeRepositoryAccessor->get()->getPairs('id', array('name', 'id'));
 
-		foreach ($languageList as $languageId => $languageIso) {
+		foreach ($languageList as $languageId => $language) {
 			foreach ($attractionTypes as $typeId => $typeName) {
 				$entity = $this->routingPathSegmentEntityFactory->create();
 				$entity->country = NULL;
-				$entity->language = $languageId;
-				$entity->pathSegment = $this->translate($typeName, $languageId);
+				$entity->language = $language;
+				$entity->pathSegment = $this->translate($typeName, $language->id);
 				$entity->type = PathSegment::ATTRACTION_TYPE;
 				$entity->entityId = $typeId;
 
@@ -120,12 +121,12 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 	{
 
 		$rentalTypes = $this->rentalTypeRepositoryAccessor->get()->getPairs('id', array('name', 'id'));
-		foreach ($languageList as $languageId => $languageIso) {
+		foreach ($languageList as $languageId => $language) {
 			foreach ($rentalTypes as $typeId => $typeName) {
 				$entity = $this->routingPathSegmentEntityFactory->create();
 				$entity->country = NULL;
-				$entity->language = $languageId;
-				$entity->pathSegment = $this->translate($typeName, $languageId);
+				$entity->language = $language;
+				$entity->pathSegment = $this->translate($typeName, $language->id);
 				$entity->type = PathSegment::RENTAL_TYPE;
 				$entity->entityId = $typeId;
 
