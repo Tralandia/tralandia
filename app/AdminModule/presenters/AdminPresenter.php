@@ -95,7 +95,8 @@ class AdminPresenter extends BasePresenter {
 		$entity = $reposiory->find($this->getParam('id'));
 
 		$model = $this->context->model;
-		$configurator = new \Extras\Config\Configurator($this->context->params['settingsDir'] . '/presenters/language.neon');
+		list(,$presenterName) = explode(':', $this->name);
+		$configurator = new \Extras\Config\Configurator($this->context->params['settingsDir'] . '/presenters/'.lcfirst($presenterName).'.neon');
 		$generator = $this->context->createFormGenerator($configurator, $entity)->build();
 
 		$form = new \AdminModule\Forms\AdminForm;

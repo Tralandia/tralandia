@@ -2,8 +2,7 @@
 
 namespace Extras;
 
-use Service\Dictionary as D,
-	Nette\Caching;
+use Nette\Caching;
 
 class Translator implements \Nette\Localization\ITranslator {
 
@@ -11,16 +10,20 @@ class Translator implements \Nette\Localization\ITranslator {
 
 	protected $language = 38;
 	protected $cache;
+	protected $phraseRepositoryAccessor;
+	protected $phraseServiceFactory;
 
-	public function __construct($languageRepositoryAccessor, Caching\IStorage $cacheStorage) {
-		$this->language = $languageRepositoryAccessor->get()->find(self::DEFAULT_LANGUAGE);
-		$this->cache = new Caching\Cache($cacheStorage, 'Translator');
+	public function __construct(Environment $environment, $phraseRepositoryAccessor, \Extras\Models\Service\ServiceFactory $phraseServiceFactory, Caching\Cache $translatorCache) {
+		$this->language = $environment->getLanguage();
+		$this->phraseRepositoryAccessor = $phraseRepositoryAccessor;
+		$this->phraseServiceFactory = $phraseServiceFactory;
+		$this->cache = $translatorCache;
 	}
 	
 	public function translate($phrase, $node = NULL, $count = NULL, array $variables = NULL) {
-		//$translation = $this->getTranslation($phrase);
+		$translation = $this->getTranslation($phrase);
 
-		return $phrase;
+		return $translation;
 	}
 
 	public function getDefaultLanguage() {
@@ -30,26 +33,36 @@ class Translator implements \Nette\Localization\ITranslator {
 
 	
 	protected function getTranslation($phrase) {
-		if($phrase instanceof D\Phrase || $phrase instanceof \Entity\Dictionary\Phrase) {
+		if($phrase instanceof \Service\Phrase\Phrase) {
+			$phraseId = $phrase->getEntity()->id;
+		} else if ($phrase instanceof \Entity\Phrase\Phrase){
 			$phraseId = $phrase->id;
 		} else {
 			$phraseId = $phrase;
 		}
 		$translationKey = $phraseId.'_'.$this->language->id;
 		
-		if(!$translation = $this->cache->load($translationKey)) {
-			$translation = null;
+		$translation = $this->cache->load($translationKey);
+		if($translation === NULL) {
+			$translation = NULL;
 			
-			if(!$phrase instanceof D\Phrase) {
-				$phrase = D\Phrase::get($phrase);
-				if(!$phrase) {
-					$translation = '{!'.$phraseId.'!}';
-				}
+			if(is_scalar($phrase)) {
+				$phrase = $this->phraseRepositoryAccessor->get()->find($phrase);
+			}
+
+			if ($phrase instanceof \Entity\Phrase\Phrase){
+				$phrase = $this->phraseServiceFactory->create($phrase);
+			} 
+
+			if(!$phrase) {
+				$translation = '{!'.$phraseId.'!}';
+			} else {
 			}
 
 			if (!$translation && $translation = $phrase->getTranslation($this->language)) {
 				$translation = $translation->translation;
 			}
+
 			$this->cache->save($translationKey, $translation);
 		}
 		if($translation === NULL) $translation = '{'.$phraseId.'|'.$this->language->iso.'}';

@@ -24,11 +24,17 @@ parameters:
 					- Front/custom-icon.less
 					- Front/main.css.less
 					- Front/form-registration.less
+					- Front/calendar.less
+					- Front/object-list.less
+					- FrontJqUi/css/tralandia/jquery-ui-1.9.1.custom.css
 
 				js:
 					- jQuery/jquery.js
 					- Front/js/fancy-checkboxes.js
 					- Front/js/bootstrap-dropdown.js
+					- Front/js/main.js
+
+					- FrontJqUi/js/jquery-ui-1.9.1.custom.min.js
 			front:
 				css:
 					- front/default.css
@@ -147,6 +153,8 @@ parameters:
 				- %webloader.packages.front%
 
 			Gregor:
-				-  %webloader.packages.Front%	
+				-  %webloader.packages.Front%
+				
+				
 			'Gregor:Admin': %webloader.sets.Admin%
 

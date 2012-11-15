@@ -65,24 +65,6 @@ class PhrasePresenter extends AdminPresenter {
 		$translation->variations = $values['toTranslations'];
 		$translation->gender = $values['gender'];
 		$translation->position = $values['position'];
-		
-		$translationValue = $values['toTranslations'];
-		if($phrase->type->pluralVariationsRequired) {
-			$translationValue = $translationValue[$this->toLanguage->primarySingular];
-		} else {
-			$translationValue = $translationValue['default'];
-		}
-		if($phrase->type->genderVariationsRequired) {
-			$translationValue = $translationValue[$this->toLanguage->primaryGender];
-		} else {
-			$translationValue = $translationValue['default'];
-		}
-		if($phrase->type->locativesRequired) {
-			$translationValue = $translationValue['nominative'];
-		} else {
-			$translationValue = $translationValue['default'];
-		}
-		$translation->translation = $translationValue;
 
 		$this->phraseService->save();
 

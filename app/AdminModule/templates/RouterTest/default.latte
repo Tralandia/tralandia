@@ -36,6 +36,7 @@
 			</div>
 		</div>
 		{foreach $result->params as $paramName => $param}
+		{dump $paramName, $param}
 			<div class="row">
 				<div class="span1">{$paramName}</div>
 				{if is_scalar($param)}

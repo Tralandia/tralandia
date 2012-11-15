@@ -7,8 +7,18 @@ use Extras;
 /**
  * @author Branislav Vaculčiak
  */
-class SelectFactory {
+class SelectFactory implements IFactory {
 	
+	/** @var Extras\Translator */
+	protected $translator;
+
+	/**
+	 * @param Extras\Translator
+	 */
+	public function __construct(Extras\Translator $translator) {
+		$this->translator = $translator;
+	}
+
 	/**
 	 * @param string
 	 * @param string
@@ -16,6 +26,6 @@ class SelectFactory {
 	 * @return Extras\FormMask\Items\Select
 	 */
 	public function create($name, $label, Extras\Models\Entity\IEntity $entity) {
-		return new Extras\FormMask\Items\Select($name, $label, $entity);
+		return new Extras\FormMask\Items\Select($name, $label, $entity, $this->translator);
 	}
 }

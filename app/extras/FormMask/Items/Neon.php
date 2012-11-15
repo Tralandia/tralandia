@@ -21,8 +21,8 @@ class Neon extends Text {
 			$structure = $reflection->getProperty($this->name)->getAnnotation('EA\Json')->structure;
 			$structure = Nette\Utils\Neon::decode($structure);
 		}
-		if (!$structure) {
-			throw new \Exception('Nebola vyplnena struktura JSON alebo je vyplnena nespravne');
+		if (!isset($structure) || !$structure) {
+			$structure = array();
 		}
 
 		$control = $form->addAdvancedNeon($this->getName(), $this->getLabel(), $structure);

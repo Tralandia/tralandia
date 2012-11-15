@@ -1,47 +1,81 @@
-{form phraseEditForm, class => 'row'}
-	<div class="control-group span3">
-		Type: {$phrase->type->entityName}::{$phrase->type->entityAttribute}
-	</div>
-	<div class="control-group span3">
-		{label sourceLanguage /}
-		{input sourceLanguage}
-	</div>
-	<div class="control-group span3">
-		<label for="frmeditForm-source_languages"><b>Translation status</b></label>
-		{label ready /}
-		{input ready}
-		{label corrected /}
-		{input corrected}
-	</div>
-	<hr class="soften" />
-	<div class="control-group span6">
-		<label><b>ENGLISH:</b></label>
-		{include #translationsTable, container => $form['fromTranslations'], language => $fromLanguage}
-	</div>
-	<hr class="soften" />
-	<div class="control-group span6">
+{form phraseEditForm}
+<div class="row">
+
+	<div class="span12">
+		
 		<div class="row">
-			<div class="span3"><label><b>TRANSLATION | SLOVAK:</b></label></div>
-			<div class="span2">{input changeToLanguage}</div>
-		</div>
+
+			<div class="span2">
+				<label for="phraseType"><b>Type: </b></label>
+				{$phrase->type->entityName}::{$phrase->type->entityAttribute}		
+			</div>
+
+			<div class="span2">
+				{label sourceLanguage /}
+				{input sourceLanguage  , id => 'sourceLanguage' , class => 'span2'}
+			</div>
+
+			<div class="span2">
+				{label ready , class => "topLabel checkbox" /}
+				{input ready}
+			</div>
+
+			<div class="span2">
+				{label corrected class => "topLabel checkbox" /}
+				{input corrected}
+			</div>
+		</div>		
+
+	</div>
+	<hr />
+	<div class="span6">
+		
+<div class="row">
+	<div class="span4">
+		<label for="phraseLanguage"><b>ENGLISH:</b></label>
+	</div>
+	<div class="span2">
+		
+	</div>
+	<div class="span6">
+{include #translationsTable, container => $form['fromTranslations'], language => $fromLanguage}
+	</div>
+</div>
+
+	</div>
+
+	<div class="span4">
+		<label for="phraseLanguage"><b>TRANSLATION | SLOVAK:</b></label>
+	</div>
+	<div class="span2">
+		{input changeToLanguage , class => 'span2'}		
+	</div>	
+	<div class="span6">
 		{include #translationsTable, container => $form['toTranslations'], language => $toLanguage}
-		<div class="row">
-			<div n:if="$phrase->type->genderRequired" class="control-group span3">
+
+	<div class="row">
+		<div class="span2" n:if="$phrase->type->genderRequired">
 				{label gender /}
-				{input gender}
-			</div>
-			<div n:if="$phrase->type->positionRequired" class="control-group span3">
+				{input gender , class => 'span2'}
+		</div>
+
+		<div class="span2" n:if="$phrase->type->positionRequired">
 				{label position /}
-				{input position}
-			</div>
+				{input position , class => 'span2'}
+		</div>
+		<div class="span2 topLabel">			
+			{input save , class=> "btn pull-right btn-primary "}
 		</div>
 	</div>
-	<hr class="soften" />
-	<div class="control-group span6">
-		{input save}
+
 	</div>
-	
+
+</div>
+
+
 {/form}
+
+
 
 {define translationsTable}
 	{*
@@ -49,7 +83,7 @@
 		$language Entity\Language
 	 *}
 
-	<table class="table">
+	<table class="phraseTable table-striped table">
 		<tr>
 			{if $phrase->type->pluralVariationsRequired}
 				<th>Count</th>

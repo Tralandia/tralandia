@@ -19,3 +19,8 @@ final class SingularName extends Annotation {
 final class Json extends Annotation {
 	public $structure;
 }
+
+/** @Annotation */
+final class Generator extends Annotation {
+	public $skip;
+}

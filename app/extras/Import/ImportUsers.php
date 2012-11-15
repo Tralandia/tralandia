@@ -50,7 +50,7 @@ class ImportUsers extends BaseImport {
 			$contacts->add(new \Extras\Types\Email($value[0]));
 			$user->contacts = $contacts;
 
-			$user->defaultLanguage = $en;
+			$user->language = $en;
 			$this->model->persist($user);
 		}
 
@@ -81,7 +81,7 @@ class ImportUsers extends BaseImport {
 			$contacts->add(new \Extras\Types\Email($x['email']));
 			$user->contacts = $contacts;
 			
-			$user->defaultLanguage = $this->context->languageRepository->findOneByIso('en');
+			$user->language = $this->context->languageRepository->findOneByIso('en');
 			$this->model->persist($user);
 		}
 		$this->model->flush();
@@ -113,7 +113,7 @@ class ImportUsers extends BaseImport {
 			$contacts->add(new \Extras\Types\Email($x['email']));
 			$user->contacts = $contacts;
 			
-			$user->defaultLanguage = $this->context->languageRepository->findOneByIso('en');
+			$user->language = $this->context->languageRepository->findOneByIso('en');
 
 			$assignedCountries = array_unique(array_filter(explode(',', $x['countries'])));
 			$assignedLanguages = array_unique(array_filter(explode(',', $x['languages'])));
@@ -156,7 +156,7 @@ class ImportUsers extends BaseImport {
 			$contacts->add(new \Extras\Types\Email($x['email']));
 			$user->contacts = $contacts;
 			
-			$user->defaultLanguage = $this->context->languageRepository->findOneByIso('en');
+			$user->language = $this->context->languageRepository->findOneByIso('en');
 
 			$details = array(
 				'sourceLanguage' => $this->context->languageRepository->findOneByOldId($x['language_from']),
@@ -222,7 +222,7 @@ class ImportUsers extends BaseImport {
 			$contacts->add(new \Extras\Types\Phone($x['phone']));
 			$user->contacts = $contacts;
 			
-			$user->defaultLanguage = $this->context->languageRepository->findOneByOldId($x['language_id']);
+			$user->language = $this->context->languageRepository->findOneByOldId($x['language_id']);
 			$user->location = $this->context->locationRepository->findOneBy(array('oldId'=>$x['country_id'], 'type'=>$locationTypeCountry));
 
 			$this->model->persist($user);
@@ -308,7 +308,7 @@ class ImportUsers extends BaseImport {
 			
 			$attraction->conctacts = $contacts;
 
-			$user->defaultLanguage = $this->context->languageRepository->findOneByOldId($x['language_id']);
+			$user->language = $this->context->languageRepository->findOneByOldId($x['language_id']);
 			$user->location = $this->context->locationRepository->findOneBy(array('oldId'=>$x['country_id'], 'type'=>$locationTypeCountry));
 
 

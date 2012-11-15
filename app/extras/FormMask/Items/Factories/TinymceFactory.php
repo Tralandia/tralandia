@@ -7,7 +7,7 @@ use Extras;
 /**
  * @author Branislav Vaculčiak
  */
-class TinymceFactory {
+class TinymceFactory implements IFactory {
 	
 	/**
 	 * @param string

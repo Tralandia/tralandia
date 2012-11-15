@@ -7,7 +7,7 @@ use Extras;
 /**
  * @author Branislav Vaculčiak
  */
-class CheckboxFactory {
+class CheckboxFactory implements IFactory {
 	
 	/**
 	 * @param string
