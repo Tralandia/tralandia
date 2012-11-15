@@ -59,29 +59,27 @@ class LocationService extends Service\BaseService {
 	// 	}
 	// }
 
-	// public function findParentByType($slug = 'continent', $location = null) {
-
-	// 	if (!$location) $location = $this;
-
-	// 	if ($location->parent) {
-
-	// 		$parentLocation = \Service\Location\Location::get($location->parent);
-
-	// 		if ($parentLocation->type->slug == $slug) {
-
-	// 			return $parentLocation;
-
-	// 		} else {
-
-	// 			return $this->findParentByType($slug, $parentLocation);
-
-	// 		}
-			
-	// 	} else {
-
-	// 		return $location;
-
-	// 	}
+	public function getParent($slug = NULL) 
+	{
+		if($slug === NULL) {
+			return $this->getEntity()->parent;
+		} else {
+			return $this->_getParent($this->getEntity()->parent, $slug);
+		}
+	}
+		
+	protected function _getParent($parentLocation, $slug)
+	{
+		if(!$parentLocation instanceof \Entity\Location\Location) {
+			return NULL;
+		}
+		
+		if($slug == $parentLocation->type->slug) {
+			return $parentLocation;
+		} else {
+			return $this->_getParent($parentLocation->parent, $slug);
+		}
+	}
 
 	
 }

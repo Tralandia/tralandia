@@ -148,6 +148,8 @@ common:
 		generatePathSegmentsRobot: 
 			class: Service\Robot\GeneratePathSegmentsRobot
 			arguments: 
+				- @routingPathSegmentRepositoryAccessor
+				- @routingPathSegmentEntityFactory
 				- @languageRepositoryAccessor
 				- @pageRepositoryAccessor
 				- @attractionTypeRepositoryAccessor

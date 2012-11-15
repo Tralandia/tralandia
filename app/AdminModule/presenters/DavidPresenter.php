@@ -199,10 +199,8 @@ class DavidPresenter extends BasePresenter {
 
 	public function actionList() {
 
-		d($this->context->locationServiceFactory->create());
-
-		// $robot = $this->context->generatePathSegmentsRobot;
-		// $robot->run();
+		$robot = $this->context->generatePathSegmentsRobot;
+		$robot->run();
 
 
 		// // pripravim si template a layout

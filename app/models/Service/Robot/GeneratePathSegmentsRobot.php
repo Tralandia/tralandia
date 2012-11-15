@@ -9,8 +9,11 @@ use Entity\Routing\PathSegment;
  *
  * @author Dávid Ďurika
  */
-class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot {
+class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot 
+{
 
+	protected $routingPathSegmentRepositoryAccessor;
+	protected $routingPathSegmentEntityFactory;
 	protected $languageRepositoryAccessor;
 	protected $pageRepositoryAccessor;
 	protected $attractionTypeRepositoryAccessor;
@@ -19,6 +22,8 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot {
 	protected $locationServiceFactory;
 
 	public function __construct(
+			$routingPathSegmentRepositoryAccessor,
+			$routingPathSegmentEntityFactory,
 			$languageRepositoryAccessor,
 			$pageRepositoryAccessor,
 			$attractionTypeRepositoryAccessor,
@@ -27,7 +32,9 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot {
 			$locationServiceFactory
 		) 
 	{
-		list($this->languageRepositoryAccessor,
+		list($this->routingPathSegmentRepositoryAccessor,
+			$this->routingPathSegmentEntityFactory,
+			$this->languageRepositoryAccessor,
 			$this->pageRepositoryAccessor,
 			$this->attractionTypeRepositoryAccessor,
 			$this->locationRepositoryAccessor,
@@ -35,104 +42,106 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot {
 			$this->locationServiceFactory) = func_get_args();
 	}
 
-	public function needToRun() {
+	public function needToRun()
+	{
 		return true;
 	}
 
-	public function run() {
+	public function run()
+	{
 
 		$languageList = $this->languageRepositoryAccessor->get()->getPairs('id', 'iso', array('supported' => TRUE));
 
-		$segments = array();
-		$segments = $segments + $this->getPagesSegments($languageList);
-		$segments = $segments + $this->getAtractionTypesSegments($languageList);
-		$segments = $segments + $this->getLocationsSegments();
-		$segments = $segments + $this->getRentalTypesSegments($languageList);
-		//$segments = $segments + $this->getTagsSegments($languageList);
-		debug($segments);
-
+		$this->persistPagesSegments($languageList);
+		$this->persistAtractionTypesSegments($languageList);
+		$this->persistLocationsSegments();
+		$this->persistRentalTypesSegments($languageList);
+		//$this->persistTagsSegments($languageList);
+		
+		$this->rentalTypeRepositoryAccessor->get()->flush();
 	}
 
-	protected function getPagesSegments($languageList) {
-		$segments = array();
+	protected function persistPagesSegments($languageList)
+	{
 		$pages = $this->pageRepositoryAccessor->get()->getPairs('id', array('name', 'id'));
 
 		foreach ($languageList as $languageId => $languageIso) {
 			foreach ($pages as $pageId => $pageName) {
-				$segments[] = array(
-					'country_id' => 0,
-					'language_id' => $languageId,
-					'pathSegment' => $this->translate($pageName, $languageId),
-					'type' => PathSegment::PAGE,
-					'entityId' => $pageId,
-				);
+				$entity = $this->routingPathSegmentEntityFactory->create();
+				$entity->country = NULL;
+				$entity->language = $languageId;
+				$entity->pathSegment = $this->translate($pageName, $languageId);
+				$entity->type = PathSegment::PAGE;
+				$entity->entityId = $pageId;
+
+				$this->rentalTypeRepositoryAccessor->get()->persist($entity);
 			}
 		}
-
-		return $segments;
 	}
 
-	protected function getAtractionTypesSegments($languageList) {
-		$segments = array();
+	protected function persistAtractionTypesSegments($languageList)
+	{
 		$attractionTypes = $this->attractionTypeRepositoryAccessor->get()->getPairs('id', array('name', 'id'));
 
 		foreach ($languageList as $languageId => $languageIso) {
 			foreach ($attractionTypes as $typeId => $typeName) {
-				$segments[] = array(
-					'country_id' => 0,
-					'language_id' => $languageId,
-					'pathSegment' => $this->translate($typeName, $languageId),
-					'type' => PathSegment::ATTRACTION_TYPE,
-					'entityId' => $typeId,
-				);
+				$entity = $this->routingPathSegmentEntityFactory->create();
+				$entity->country = NULL;
+				$entity->language = $languageId;
+				$entity->pathSegment = $this->translate($typeName, $languageId);
+				$entity->type = PathSegment::ATTRACTION_TYPE;
+				$entity->entityId = $typeId;
+
+				$this->rentalTypeRepositoryAccessor->get()->persist($entity);
 			}
 		}
 
-		return $segments;
 	}
 
-	protected function getLocationsSegments() {
-		$segments = array();
+	protected function persistLocationsSegments()
+	{
 		$locations = $this->locationRepositoryAccessor->get()->findAll();
 		foreach ($locations as $location) {
 			$locationService = $this->locationServiceFactory->create($location);
-			$segments[] = array(
-				'country_id' => $locationService->getParent('country'),
-				'language_id' => 0,
-				'pathSegment' => $location->slug,
-				'type' => PathSegment::LOCATION,
-				'entityId' => $location->id,				
-			);
+			$country = $locationService->getParent('country');
+
+			$entity = $this->routingPathSegmentEntityFactory->create();
+			$entity->country = $country;
+			$entity->language = NULL;
+			$entity->pathSegment = $location->slug;
+			$entity->type = PathSegment::LOCATION;
+			$entity->entityId = $location->id;
+
+			$this->rentalTypeRepositoryAccessor->get()->persist($entity);
 		}
-		return $segments;
 	}
 
-	protected function getRentalTypesSegments($languageList) {
-		$segments = array();
+	protected function persistRentalTypesSegments($languageList)
+	{
 
 		$rentalTypes = $this->rentalTypeRepositoryAccessor->get()->getPairs('id', array('name', 'id'));
 		foreach ($languageList as $languageId => $languageIso) {
 			foreach ($rentalTypes as $typeId => $typeName) {
-				$segments[] = array(
-					'country_id' => 0,
-					'language_id' => $languageId,
-					'pathSegment' => $this->translate($typeName, $languageId),
-					'type' => PathSegment::RENTAL_TYPE,
-					'entityId' => $typeId,				
-				);
+				$entity = $this->routingPathSegmentEntityFactory->create();
+				$entity->country = NULL;
+				$entity->language = $languageId;
+				$entity->pathSegment = $this->translate($typeName, $languageId);
+				$entity->type = PathSegment::RENTAL_TYPE;
+				$entity->entityId = $typeId;
+
+				$this->rentalTypeRepositoryAccessor->get()->persist($entity);
 			}
 		}
-		return $segments;
 	}
 
-	protected function getTagsSegments($languageList) {
-		$segments = array();
+	protected function persistTagsSegments($languageList)
+	{
 		// @todo method or operation is not implemented
 		throw new \Nette\NotImplementedException('Requested method or operation is not implemented');
-		return $segments;
 	}
 
-	protected function translate($phraseId, $languageId) {
+	protected function translate($phraseId, $languageId)
+	{
 		return $phraseId . '_' . $languageId;
 	}
 

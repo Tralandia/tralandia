@@ -32,7 +32,7 @@ class Type extends \Entity\BaseEntityDetails {
 	 */
 	protected $primary = FALSE;
 
-								//@entity-generator-code --- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()

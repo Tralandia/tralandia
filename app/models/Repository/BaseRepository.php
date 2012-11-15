@@ -6,10 +6,13 @@ use Doctrine\ORM\EntityRepository;
 
 class BaseRepository extends EntityRepository {
 
-	// # toto by tu podla mne nemalo bit... @david	
-	// public function persist($entity) {
-	// 	$this->_em->persist($entity);
-	// }
+	public function persist($entity) {
+		$this->_em->persist($entity);
+	}
+
+	public function flush() {
+		$this->_em->flush();
+	}
 	
 	public function remove($entity) {
 		$this->_em->remove($entity);
