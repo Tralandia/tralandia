@@ -25,6 +25,7 @@ parameters:
 					- Front/main.css.less
 					- Front/form-registration.less
 					- Front/calendar.less
+					- Front/object-list.less
 					- FrontJqUi/css/tralandia/jquery-ui-1.9.1.custom.css
 
 				js:

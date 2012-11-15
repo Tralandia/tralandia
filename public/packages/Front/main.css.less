@@ -116,6 +116,13 @@ p {
 /****************************************************************************************
 /* helper class 
 /***************************************************************************************/
+
+.breadcrumb {
+	background: transparent;
+	padding-left: 5px;
+	margin-bottom: 0;
+}
+
 .red {
 	color: #d32c16;
 }
@@ -226,6 +233,8 @@ p {
 .overflow {
 	overflow: hidden;
 }
+
+
 
 .baseBorder {
 	border: 1px solid #cbd2a0;
@@ -898,12 +907,16 @@ border-top-right-radius: 5px;
 	padding: 0 10px;
 
 	&.nopadding {
-		padding: 0;		
+		padding: 0;	
+
+		h1 {
+			margin-left: 10px;
+		}	
 	}
 
 	h1 , h2 , h3 , h4 , h5 {
 		margin: 0;
-		padding: 10px 0;
+		padding: 15px 0 0 0;
 	}
 
 	h1 {
@@ -1559,3 +1572,23 @@ form.traform {
 	}
 }
 
+.row-fluid > .span4 {
+width: 31.657201%;
+}
+
+.pagination {
+	ul {
+		li {
+			a {
+				height: 38px;
+			}
+
+			&.active {
+				a {
+					font-weight: bold;
+					color: @brown;
+				}
+			}
+		}
+	}
+}
