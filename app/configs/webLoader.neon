@@ -28,6 +28,7 @@ parameters:
 					- Front/object-list.less
 					- Front/sidebar.less
 					- Front/contact-page.less
+					- Front/object-detail-favorites.less
 					- FrontJqUi/css/tralandia/jquery-ui-1.9.1.custom.css
 
 				js:
