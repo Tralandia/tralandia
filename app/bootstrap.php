@@ -8,7 +8,7 @@ use Nette\Diagnostics\Debugger,
 
 
 // Load Nette Framework
-require_once LIBS_DIR . '/Nette/nette.min.php';
+require_once LIBS_DIR . '/Nette/loader.php';
 require_once LIBS_DIR . '/rado_functions.php';
 
 // Enable Nette\Debug for error visualisation & logging

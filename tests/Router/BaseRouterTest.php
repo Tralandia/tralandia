@@ -1,28 +1,55 @@
 <?php
+namespace Test\Router;
+
+use PHPUnit_Framework_TestCase, Nette, Extras;
 
 require_once __DIR__ . '/../bootstrap.php';
 
-namespace \Test\Emailer;
 
 /**
  * @backupGlobals disabled
  */
-class BaseRouterTest extends \PHPUnit_Framework_TestCase
+abstract class BaseRouterTest extends \PHPUnit_Framework_TestCase
 {
-	public $context;
-	public $emailCompiler;
-	public $userServiceFactory;
-	public $userRepositoryAccessor;
 
-	protected function setUp() {
-		$this->context = Nette\Environment::getContext();
-		$this->emailCompiler = $this->context->emailCompiler;
-		$this->userServiceFactory = $this->context->userServiceFactory;
-		$this->userRepositoryAccessor = $this->context->userRepositoryAccessor;
+	protected function testRouteIn(Nette\Application\IRouter $route, $url, $expectedPresenter=NULL, $expectedParams=NULL, $expectedUrl=NULL)
+	{
+		// ==> $url
+
+		$url = new Nette\Http\UrlScript($url);
+		// $url->appendQuery(array(
+		// 	'test' => 'testvalue',
+		// 	'presenter' => 'querypresenter',
+		// ));
+
+		$httpRequest = new Nette\Http\Request($url);
+
+		$request = $route->match($httpRequest);
+
+		if ($request) { // matched
+			$params = $request->getParameters();
+			//asort($params);
+			$this->assertSame( $expectedPresenter, $request->getPresenterName() );
+			$this->assertSame( $expectedParams, $params );
+
+			unset($params['extra']);
+			$request->setParameters($params);
+			$result = $route->constructUrl($request, $url);
+
+			$this->assertSame( $expectedUrl, $result );
+
+		} else { // not matched
+			$this->assertNull( $expectedPresenter );
+		}
+		return $request;
 	}
 
-	public function testCompiler() {
-		
-	}
 
+
+	protected function testRouteOut(Nette\Application\Routers\Route $route, $presenter, $params = array())
+	{
+		$url = new Nette\Http\Url('http://example.com');
+		$request = new Nette\Application\Request($presenter, 'GET', $params);
+		return $route->constructUrl($request, $url);
+	}
 }

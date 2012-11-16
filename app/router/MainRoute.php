@@ -81,7 +81,7 @@ class MainRoute implements Nette\Application\IRouter {
 				'query' => \Nette\ArrayHash::from(array()),
 			));
 		$url = $httpRequest->url;
-		//debug('$httpRequest', $httpRequest);
+		debug('$httpRequest', $httpRequest);
 		list($languageIso, $domainName, $countryIso) = explode('.', $url->getHost(), 3);
 
 		if($domainName !== 'tra' && !$this->checkDomain($url->getHost())) {
