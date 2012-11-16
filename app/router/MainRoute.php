@@ -12,7 +12,11 @@ use Nette,
 class MainRoute implements Nette\Application\IRouter {
 	
 	protected $db;
-	protected $metadata;
+	protected $metadata = array(
+		'presenter' => 'Rental',
+		'action' => 'list',
+	);
+	protected $hostPattern;
 	protected $cache;
 	protected static $cached;
 	protected $queryParams = array(
@@ -47,14 +51,16 @@ class MainRoute implements Nette\Application\IRouter {
 	public $domainRepositoryAccessor;
 
 	
-	public function __construct(Caching\Cache $cache) {
+	public function __construct(Caching\Cache $cache, $hostPattern)
+	{
 		//$this->metadata = $metadata;
-
 		$this->cache = $cache;
+		$this->hostPattern = $hostPattern;
 		$this->loadCache();
 	}
 
-	public function match(Nette\Http\IRequest $httpRequest) {
+	public function match(Nette\Http\IRequest $httpRequest)
+	{
 		$params = $this->getParamsByHttpRequest($httpRequest);
 
 		$presenter = $params['presenter'];
@@ -69,28 +75,25 @@ class MainRoute implements Nette\Application\IRouter {
 		);
 	}
 
-	public function constructUrl(Nette\Application\Request $appRequest, Nette\Http\Url $refUrl) {
-		//debug('$appRequest', $appRequest);
-		//debug('$refUrl', $refUrl);
+	public function constructUrl(Nette\Application\Request $appRequest, Nette\Http\Url $refUrl)
+	{
+		// debug('$appRequest', $appRequest);
+		// debug('$refUrl', $refUrl);
 		$url = $this->getUrlByAppRequest($appRequest, $refUrl);
 		return "$url";
 	}
 
-	public function getParamsByHttpRequest($httpRequest) {
+	public function getParamsByHttpRequest($httpRequest)
+	{
+		// debug('$httpRequest', $httpRequest);
 		$params = \Nette\ArrayHash::from(array(
 				'query' => \Nette\ArrayHash::from(array()),
 			));
 		$url = $httpRequest->url;
-		debug('$httpRequest', $httpRequest);
-		list($languageIso, $domainName, $countryIso) = explode('.', $url->getHost(), 3);
-
-		if($domainName !== 'tra' && !$this->checkDomain($url->getHost())) {
-			$countryIso = $this->getMetadata('country');
-		}
-
+		
+		list($languageIso, $domainName, $countryIso) = $this->parseHost($url->getHost());
 
 		$pathSegments = array_filter(explode('/', $url->getPath()));
-
 
 		// Params
 		$country = $this->locationRepositoryAccessor->get()->findOneByIso($countryIso);
@@ -102,6 +105,7 @@ class MainRoute implements Nette\Application\IRouter {
 		if(!$language || !$language->supported) {
 			$language = $country->defaultLanguage;
 		}
+
 		$params->country = $country->id;
 		$params->language = $language->id;
 
@@ -112,7 +116,7 @@ class MainRoute implements Nette\Application\IRouter {
 		} else if(count($pathSegments) == 1) {
 			$pathSegment = reset($pathSegments);
 			// debug($pathSegment);
-			if($match = preg_match('~\.*-a([0-9]+)~', $pathSegment)) {
+			if($match = Strings::match($pathSegment, '~\.*-a([0-9]+)~')) {
 				if($attraction = $this->attractionRepositoryAccessor->get()->find($match[1])) {
 					$params->attraction = $attraction;
 					$params->presenter = 'Attraction';
@@ -185,19 +189,14 @@ class MainRoute implements Nette\Application\IRouter {
 		return $return;
 	}
 
-	public function getPathSegmentList($pathSegments, $params) {
-
-		$criteria = array();
-		$criteria['pathSegment'] = $pathSegments;
-		$criteria['country'] = array($params->country, 0);
-		$criteria['language'] = array($params->language, 0);
-
-		$pathSegmentList = $this->routingPathSegmentRepositoryAccessor->get()->findBy((array) $criteria, $orderBy = array('type' => 'ASC'));
-		// debug('$pathSegmentList', $pathSegmentList);
+	public function getPathSegmentList($pathSegments, $params)
+	{
+		$pathSegmentList = $this->routingPathSegmentRepositoryAccessor->get()->findForRouter($params->language, $params->country, $pathSegments);
 		return $pathSegmentList;
 	}
 
-	public function getUrlByAppRequest($appRequest, $refUrl) {
+	public function getUrlByAppRequest($appRequest, $refUrl)
+	{
 		$params = $appRequest->getParameters();
 		$query = array();
 		foreach ($this->queryParams as $key => $value) {
@@ -212,7 +211,7 @@ class MainRoute implements Nette\Application\IRouter {
 		
 		//debug($params, $query, $presenter, $action);
 
-		list($refLanguageIso, $refDomainName, $refCountryIso) = explode('.', $refUrl->getHost(), 3);
+		list($refLanguageIso, $refDomainName, $refCountryIso) = $this->parseHost($refUrl->getHost());
 
 		$country = $this->locationRepositoryAccessor->get()->find($params['country']);
 		$language = $this->languageRepositoryAccessor->get()->find($params['language']);
@@ -235,7 +234,8 @@ class MainRoute implements Nette\Application\IRouter {
 		return $url;
 	}
 
-	public function getSegmentById($segmentName, $params) {
+	public function getSegmentById($segmentName, $params)
+	{
 		$segmentId = $params[$segmentName];
 		$language = $params['language'];
 		$segment = NULL;
@@ -247,17 +247,18 @@ class MainRoute implements Nette\Application\IRouter {
 			}
 		} else {
 			if($segmentName == 'location') {
-			$segmentRow = $this->routingPathSegmentRepositoryAccessor->get()->findBy(array(
+				$segmentRow = $this->routingPathSegmentRepositoryAccessor->get()->findOneBy(array(
 					'type' => static::$pathSegmentTypes[$segmentName], 
 					'entityId' => $segmentId
 				));
 			} else {
-				$segmentRow = $this->routingPathSegmentRepositoryAccessor->get()->findBy(array(
-						'type' => static::$pathSegmentTypes[$segmentName], 
-						'entityId' => $segmentId, 
-						'language' => $language
-					));
+				$segmentRow = $this->routingPathSegmentRepositoryAccessor->get()->findOneBy(array(
+					'type' => static::$pathSegmentTypes[$segmentName], 
+					'entityId' => $segmentId, 
+					'language' => $language
+				));
 			}
+
 			if($segmentRow) {
 				$segment = $segmentRow->pathSegment;
 			}
@@ -265,7 +266,8 @@ class MainRoute implements Nette\Application\IRouter {
 		return $segment;
 	}
 
-	public function getMetadata($key) {
+	public function getMetadata($key)
+	{
 		return $this->metadata[$key];
 /*		if($key == 'language') {
 			return $this->languageRepositoryAccessor->get()->findOneByIso($this->metadata[$key]);
@@ -276,7 +278,8 @@ class MainRoute implements Nette\Application\IRouter {
 		}
 */	}
 
-	public function checkDomain($domain) {
+	public function checkDomain($domain)
+	{
 		$exists = false;
 		if(is_array(static::$cached['domain'])) {
 			$domainsFlip = array_flip(static::$cached['domain']);
@@ -289,7 +292,8 @@ class MainRoute implements Nette\Application\IRouter {
 		return $exists;
 	}
 
-	protected function loadCache() {
+	protected function loadCache()
+	{
 		static::$cached = array();
 		static::$cached['domain'] = $this->cache->load('domain');
 		foreach (static::$pathSegmentTypes as $key => $value) {
@@ -298,8 +302,20 @@ class MainRoute implements Nette\Application\IRouter {
 	}
 
 
-	public static function getPathSegmentTypes () {
+	public static function getPathSegmentTypes ()
+	{
 		return static::$pathSegmentTypes;
+	}
+
+	public function parseHost($host)
+	{
+		$match = Strings::match($host, $this->hostPattern);
+
+		return array(
+			Arrays::get($match, 'langauge', NULL),
+			Arrays::get($match, 'domain', NULL),
+			Arrays::get($match, 'country', NULL),
+		);
 	}
 
 }

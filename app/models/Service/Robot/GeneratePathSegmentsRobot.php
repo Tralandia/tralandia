@@ -3,6 +3,7 @@
 namespace Service\Robot;
 
 use Entity\Routing\PathSegment;
+use Nette\Utils\Strings;
 
 /**
  * GeneratePathSegmentsRobot class
@@ -14,6 +15,7 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 
 	protected $routingPathSegmentRepositoryAccessor;
 	protected $routingPathSegmentEntityFactory;
+	protected $phraseServiceFactory;
 	protected $languageRepositoryAccessor;
 	protected $pageRepositoryAccessor;
 	protected $attractionTypeRepositoryAccessor;
@@ -24,6 +26,7 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 	public function __construct(
 			$routingPathSegmentRepositoryAccessor,
 			$routingPathSegmentEntityFactory,
+			$phraseServiceFactory,
 			$languageRepositoryAccessor,
 			$pageRepositoryAccessor,
 			$attractionTypeRepositoryAccessor,
@@ -34,6 +37,7 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 	{
 		list($this->routingPathSegmentRepositoryAccessor,
 			$this->routingPathSegmentEntityFactory,
+			$this->phraseServiceFactory,
 			$this->languageRepositoryAccessor,
 			$this->pageRepositoryAccessor,
 			$this->attractionTypeRepositoryAccessor,
@@ -64,16 +68,16 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 
 	protected function persistPagesSegments($languageList)
 	{
-		$pages = $this->pageRepositoryAccessor->get()->getPairs('id', array('name', 'id'));
+		$pages = $this->pageRepositoryAccessor->get()->findAll();
 
 		foreach ($languageList as $languageId => $language) {
-			foreach ($pages as $pageId => $pageName) {
+			foreach ($pages as $page) {
 				$entity = $this->routingPathSegmentEntityFactory->create();
 				$entity->country = NULL;
 				$entity->language = $language;
-				$entity->pathSegment = $this->translate($pageName, $language->id);
+				$entity->pathSegment = $this->translate($page->name, $language);
 				$entity->type = PathSegment::PAGE;
-				$entity->entityId = $pageId;
+				$entity->entityId = $page->id;
 
 				$this->rentalTypeRepositoryAccessor->get()->persist($entity);
 			}
@@ -82,16 +86,16 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 
 	protected function persistAtractionTypesSegments($languageList)
 	{
-		$attractionTypes = $this->attractionTypeRepositoryAccessor->get()->getPairs('id', array('name', 'id'));
+		$attractionTypes = $this->attractionTypeRepositoryAccessor->get()->findAll();
 
 		foreach ($languageList as $languageId => $language) {
-			foreach ($attractionTypes as $typeId => $typeName) {
+			foreach ($attractionTypes as $type) {
 				$entity = $this->routingPathSegmentEntityFactory->create();
 				$entity->country = NULL;
 				$entity->language = $language;
-				$entity->pathSegment = $this->translate($typeName, $language->id);
+				$entity->pathSegment = $this->translate($type->name, $language);
 				$entity->type = PathSegment::ATTRACTION_TYPE;
-				$entity->entityId = $typeId;
+				$entity->entityId = $type->id;
 
 				$this->rentalTypeRepositoryAccessor->get()->persist($entity);
 			}
@@ -120,15 +124,15 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 	protected function persistRentalTypesSegments($languageList)
 	{
 
-		$rentalTypes = $this->rentalTypeRepositoryAccessor->get()->getPairs('id', array('name', 'id'));
+		$rentalTypes = $this->rentalTypeRepositoryAccessor->get()->findAll();
 		foreach ($languageList as $languageId => $language) {
-			foreach ($rentalTypes as $typeId => $typeName) {
+			foreach ($rentalTypes as $type) {
 				$entity = $this->routingPathSegmentEntityFactory->create();
 				$entity->country = NULL;
 				$entity->language = $language;
-				$entity->pathSegment = $this->translate($typeName, $language->id);
+				$entity->pathSegment = $this->translate($type->name, $language);
 				$entity->type = PathSegment::RENTAL_TYPE;
-				$entity->entityId = $typeId;
+				$entity->entityId = $type->id;
 
 				$this->rentalTypeRepositoryAccessor->get()->persist($entity);
 			}
@@ -141,9 +145,11 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 		throw new \Nette\NotImplementedException('Requested method or operation is not implemented');
 	}
 
-	protected function translate($phraseId, $languageId)
+	protected function translate($phrase, $language)
 	{
-		return $phraseId . '_' . $languageId;
+		$phrase = $this->phraseServiceFactory->create($phrase);
+		$translation = $phrase->getTranslation($language);
+		return $translation ? Strings::webalize($translation->translation) : $phrase->id.'_'.$language->id;
 	}
 
 

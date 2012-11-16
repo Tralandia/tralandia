@@ -12,7 +12,7 @@ require_once __DIR__ . '/../bootstrap.php';
 abstract class BaseRouterTest extends \PHPUnit_Framework_TestCase
 {
 
-	protected function testRouteIn(Nette\Application\IRouter $route, $url, $expectedPresenter=NULL, $expectedParams=NULL, $expectedUrl=NULL)
+	protected function routeInTest(Nette\Application\IRouter $route, $url, $expectedPresenter=NULL, $expectedParams=NULL, $expectedUrl=NULL)
 	{
 		// ==> $url
 
@@ -46,7 +46,7 @@ abstract class BaseRouterTest extends \PHPUnit_Framework_TestCase
 
 
 
-	protected function testRouteOut(Nette\Application\Routers\Route $route, $presenter, $params = array())
+	protected function routeOutTest(Nette\Application\Routers\Route $route, $presenter, $params = array())
 	{
 		$url = new Nette\Http\Url('http://example.com');
 		$request = new Nette\Application\Request($presenter, 'GET', $params);

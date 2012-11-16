@@ -1,12 +1,12 @@
 <?php
-namespace Repository;
+namespace Repository\Location;
 
 use Doctrine\ORM\Query\Expr;
 
 /**
  * LocationRepository class
  */
-class LocationRepository extends BaseRepository {
+class LocationRepository extends \Repository\BaseRepository {
 
 	public function getItems() {
 		$query = $this->_em->createQueryBuilder();

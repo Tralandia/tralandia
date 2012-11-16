@@ -29,6 +29,9 @@ common:
 
 		editor: 'txmt://open/?url=file://%file&line=%line'
 
+		router:
+			hostPattern: '~^(?P<langauge>\w+)\.(?P<domain>\w+)\.(?P<country>\w+)$~'
+
 		settingsDir: %appDir%/configs
 
 		database:
@@ -68,7 +71,7 @@ common:
 		translatorCache: Nette\Caching\Cache(@cacheStorage, 'Translator')
 
 		mainRouteFactory:
-			class: Routers\MainRouteFactory(@routerCache)
+			class: Routers\MainRouteFactory(@routerCache, %router.hostPattern%)
 			setup:
 				- $locationRepositoryAccessor(@locationRepositoryAccessor)
 				- $languageRepositoryAccessor(@languageRepositoryAccessor)
@@ -150,6 +153,7 @@ common:
 			arguments: 
 				- @routingPathSegmentRepositoryAccessor
 				- @routingPathSegmentEntityFactory
+				- @phraseServiceFactory
 				- @languageRepositoryAccessor
 				- @pageRepositoryAccessor
 				- @attractionTypeRepositoryAccessor

@@ -8,10 +8,13 @@ class DavidPresenter extends BasePresenter {
 
 
 	public function actionList() {
+		// $this->context->generatePathSegmentsRobot->run();
 
 		$route = $this->context->mainRouteFactory->create();
 		
-		$this->testRouteIn($route, 'http://dev.tra.com/');
+		$this->testRouteIn($route, 'http://www.tra.sk/nitra');
+		$this->testRouteIn($route, 'http://www.tra.sk/pozicovna');
+		$this->testRouteIn($route, 'http://www.tra.sk/zabavny-park');
 
 	}
 
@@ -22,9 +25,8 @@ class DavidPresenter extends BasePresenter {
 		$httpRequest = new Nette\Http\Request($url);
 
 		$request = $route->match($httpRequest);
-		d('request', $request);
 		$result = $route->constructUrl($request, $url);
-		d('result', $result);
+		d("$url", $request, $result);
 	}
 
 	

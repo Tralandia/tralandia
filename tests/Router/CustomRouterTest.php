@@ -23,10 +23,21 @@ class CustomRouterTest extends BaseRouterTest
 
 	public function testCompiler() {
 		$route = $this->mainRouteFactory->create();
-		$request = $this->testRouteIn($route, 'http://dev.tra.com/', 'Rental', array(
-			'action' => 'detail',
-			'id' => '3'
-		), 'http://dev.tra.com/');
+
+		$request = $this->routeInTest($route, 'http://www.tra.sk/nitra', 'Rental', array(
+			'action' => 'list',
+			'country' => 58,
+			'language' => 144,
+			'location' => 609,
+		), 'http://www.tra.sk/nitra');
+
+		$request = $this->routeInTest($route, 'http://www.tra.sk/pozicovna', 'Attraction', array(
+			'action' => 'list',
+			'country' => 58,
+			'language' => 144,
+			'attractionType' => 16,
+		), 'http://www.tra.sk/pozicovna');
+
 	}
 
 }
