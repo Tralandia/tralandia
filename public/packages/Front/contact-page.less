@@ -1,0 +1,93 @@
+.contactPage {
+
+	#content {
+		.accordion {
+			h3 {
+				margin:0; 
+				margin-top: 1px ;
+				padding:  5px 10px 4px 30px;
+				font-size: 16px;
+				line-height: 19px;
+				background: transparent;
+				overflow: hidden;
+				border: none;
+				color:#7d3300;
+
+				&.ui-state-hover , &.ui-state-active  {
+					backround: #C8CF9B;
+				}
+
+				&:before {
+					height: 12px;
+					position: relative;
+					left: -25px;
+					top: -1px;
+					display: block;
+					width: 0px;
+					float: left;
+				}
+
+				&.ui-state-hover , &.ui-state-active {
+					background: #EFF2D7;
+				}
+
+
+
+			}
+
+			/* content */
+			.ui-accordion-content {
+				background: #EFF2D7;
+			}
+
+			/* sublevel */
+			.accordion {
+				margin-left: 12px;
+
+				h3 {
+
+					font-weight: bold;
+					font-size: 14px;
+					&:before {
+						content: '\27A1';
+						color: #b0c13b;
+						background: #ddd;
+						display: block;
+						height: 20px;
+
+						&:hover {
+							text-decoration: none;
+						}
+					}
+
+					&:hover {
+						text-decoration: underline;
+						&:before {
+							text-decoration:none;
+						}
+					}
+
+				}
+
+				.ui-accordion-content {
+					padding: 0;
+					p {
+						padding: 0 0 10px 30px;
+						margin: 0;
+						font-size: 12px;
+					}
+				}
+			}
+
+		}
+	}
+
+			.ui-accordion .ui-accordion-content {
+				padding:0 10px; 
+			}
+
+
+
+/* .ui-corner-all, .ui-corner-top, .ui-corner-left, .ui-corner-tl */
+
+}

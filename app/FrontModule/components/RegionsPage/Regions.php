@@ -1,18 +1,29 @@
 <?php 
 namespace FrontModule\Components\RegionsPage;
 
-use Nette\Application\UI\Control,
-	FrontModule\Components\BasePage\BasePage;
+use Nette\Application\UI\Control;
 
 class Regions extends \BaseModule\Components\BaseControl {
 
+	public $locationRepository;
+	public $locationTypeRepository;
+
+	public function __construct($locationRepository, $locationTypeRepository) {
+
+		$this->locationRepository = $locationRepository;
+		$this->locationTypeRepository = $locationTypeRepository;
+
+		parent::__construct();
+
+	}
+
 	public function render() {
 
-		$environment = new \Extras\Environment;
-		$country = $environment->getLocation();
-		$type = \Service\Location\Type::getBySlug('region');
+		$country = $this->locationRepository->findByType(3);
+		debug($country);
+		$type = $this->locationTypeRepository->findBySlug('region');
 
-		$this->template->regions = \Service\Location\LocationList::getBy(array('parent'=>$country, 'type'=>$type));
+		$this->template->regions = $this->locationRepository->findBy(array('parent'=>$country, 'type'=>$type));
 
 		// $rentalsCount = \Nette\ArrayHash::from(array());
 		// foreach ($this->template->regions as $key=>$location) {

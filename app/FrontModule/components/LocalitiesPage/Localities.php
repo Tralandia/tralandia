@@ -6,13 +6,24 @@ use Nette\Application\UI\Control,
 
 class Localities extends \BaseModule\Components\BaseControl {
 
+	public $locationRepository;
+	public $locationTypeRepository;
+
+	public function __construct($locationRepository, $locationTypeRepository) {
+
+		$this->locationRepository = $locationRepository;
+		$this->locationTypeRepository = $locationTypeRepository;
+
+		parent::__construct();
+
+	}
+
 	public function render() {
 
-		$environment = new \Extras\Environment;
-		$country = $environment->getLocation();
-		$type = \Service\Location\Type::getBySlug('locality');
+		$country = $this->locationRepository->find(52);
+		$type = $this->locationTypeRepository->findBySlug('locality');
 
-		$localities = \Service\Location\LocationList::getBy(
+		$localities = $this->locationRepository->findBy(
 			array(
 				'parent' => $country,
 				'type' => $type,

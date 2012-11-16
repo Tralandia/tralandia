@@ -14,7 +14,7 @@
 
 	<div class="clickMapNavigator">
 		<div class="holder">
-			<a n:foreach="$navigatorData['top'] as $location" class="top" href="{$location->slug}">{_$location->name->id}</a>
+			<a n:foreach="$navigatorData['top'] as $location" class="top" href="{$location->slug}">{_$location->name}</a>
 			<div n:foreach="$navigatorData['otherCountries'] as $location" class="iconHolder"><div class="icon"><img src="images/de.clickMapNavigator.png" /></div><a href="{$location->slug}">{_$location->name->id}</a></div>
 		</div>
 		<a class="more" href="#">dalsie<span>&nbsp;</span></a>
@@ -36,7 +36,7 @@
 		</div>-->
 		<div class="tabContent">
 			{*@TODO: Zalozky budu platene sekcie, v kazdej zalozke budu tie locations ktore obsahuju najviac platenych objektov*}
-			{$regions|ulList , 5, '<li><span>&nbsp;</span><a href="%slug%" rid="%id%">%_name%</a></li>', 3}
+			{*$regions|ulList , 5, '<li><span>&nbsp;</span><a href="%slug%" rid="%id%">%_name%</a></li>', 3*}
 		</div>
 	</div>
 </div>

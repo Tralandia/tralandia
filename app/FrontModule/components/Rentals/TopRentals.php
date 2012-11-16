@@ -6,14 +6,19 @@ use Nette\Application\UI\Control,
 
 class TopRentals extends \BaseModule\Components\BaseControl {
 
+	public $rentalRepository;
+
+	public function __construct($rentalRepository) {
+
+		$this->rentalRepository = $rentalRepository;
+
+		parent::__construct();
+
+	}
+
 	public function render() {
 
-		$topRentals = \Service\Rental\Rental::getBy(array(
-				
-			),
-			null,
-			15
-		);
+		$topRentals = $this->rentalRepository->findBy(array(), null, 15);
 
 		$template = $this->template;
 		$template->setFile(dirname(__FILE__) . '/top.latte');
