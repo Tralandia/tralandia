@@ -21,6 +21,9 @@ abstract class Base {
 	/** @var Extras\Callback */
 	protected $valueSetter;
 
+	/** @var array */
+	protected $validators = array();
+
 	/**
 	 * @param string
 	 * @param string
@@ -53,6 +56,14 @@ abstract class Base {
 			throw new Nette\InvalidStateException("Nebol zadaný callback gettera hodnot.");
 		}
 		return $this->getValueGetter()->invoke();
+	}
+
+	/**
+	 * Vrati zmemenu hodnotu itemu
+	 * @return mixed
+	 */
+	public function getUpdatedValue() {
+		return $this->getValue();
 	}
 
 	/**
@@ -104,11 +115,19 @@ abstract class Base {
 	}
 
 	/**
-	 * Vrati kontrol formulara
-	 * @return Nette\Forms\IControl
+	 * @return array
 	 */
-	public function getFormControl() {
-		return $this->form->getComponent($this->getName());
+	public function getValidators() {
+		return $this->validators;
+	}
+
+	/**
+	 * @param array
+	 * @return Base
+	 */
+	public function setValidators($validators) {
+		 $this->validators = $validators;
+		 return $this;
 	}
 
 	/**
@@ -135,7 +154,24 @@ abstract class Base {
 	 * @return Nette\Forms\IControl
 	 */
 	public function extend(Nette\Forms\Form $form) {
-		return $form->addText($this->getName(), $this->getLabel())
-			->setDefaultValue($this->getValue());
+		$control = $form->addText($this->getName(), $this->getLabel());
+		$control->setDefaultValue($this->getValue());
+
+		foreach ($this->validators as $validator) {
+			call_user_func_array(array($control, $validator->method), $validator->params);
+		}
+
+		return $control;
+	}
+
+	/**
+	 * Spracovanie dat z formulara
+	 * @param Nette\Forms\Form
+	 */
+	public function process(Nette\Forms\Form $form) {
+		if ($this->getValueSetter()) {
+			$value = $form->getComponent($this->getName())->getValue();
+			$this->setValue($value);
+		}
 	}
 }

@@ -128,12 +128,12 @@
 						{$control['gridForm'][$control->name]['action']['action_name']->getControl()}
 						{$control['gridForm'][$control->name]['action']['send']->getControl()}
 				</span>
-				<span n:if="$paginate" class="grid-perPage">
+{* 				<span n:if="$paginate" class="grid-perPage">
 						{$control['gridForm'][$control->name]['perPage']['perPage']->label}
 						{$control['gridForm'][$control->name]['perPage']['perPage']->getControl()}
 						{$control['gridForm'][$control->name]['perPage']['send']->getControl()}
 				</span>
-			</td>
+ *}			</td>
 		</tr>
 		<tr n:if="$paginate" class="grid-panel">
 			<td colspan="{$colsCount}">

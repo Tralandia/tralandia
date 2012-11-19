@@ -4,7 +4,7 @@ namespace Extras\Forms\Controls;
 
 
 use Nette\Utils\Html,
-	Tra\Utils\Arrays,
+	Nette\Utils\Arrays,
 	Nette\Forms\Container,
 	Nette\Forms\Controls\BaseControl;
 
@@ -44,14 +44,18 @@ class AdvancedJson extends BaseControl {
 			$itemContainer = Html::el('li');
 			$controlCloned = clone $control;
 			$controlCloned->name .= "[$key]";
-			if(is_array($value)) {
+			if (is_array($value)) {
 				$children = $this->generateCildren($controlCloned, $value, $values ? Arrays::get($values, $key, NULL) : NULL);
 				$container->add($itemContainer->add($children));
 			} else {
 				$id = $controlCloned->id;
 				$controlCloned->id = $id . '-' . $key;
 				$controlCloned->placeholder = $key;
-				if(isset($values[$key])) $controlCloned->value = $values[$key];
+				if (isset($values[$key])) {
+					$controlCloned->value = $values[$key];
+				} elseif (isset($parent[$key]) && !is_null($parent[$key])) {
+					$controlCloned->value = $parent[$key];
+				}
 				$container->add($itemContainer->add($controlCloned));
 			}
 		}

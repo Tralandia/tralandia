@@ -12,6 +12,10 @@ class RepositoryAccessor {
 
 	protected $em, $entityName;
 
+	protected $instance;
+
+	public $parameters = NULL;
+
 	/**
 	 * @param EntityManager $em         
 	 * @param string        $entityName namespace entity
@@ -21,8 +25,22 @@ class RepositoryAccessor {
 	}
 
 	public function get() {
-		// netreba ukladat (cachovat) vytvorenu instanciu, robi to za nas doctrine
-		return $this->em->getRepository($this->entityName);
+		if(!$this->instance) {
+			$this->instance = $this->em->getRepository($this->entityName);
+			$this->injectParametersToInstance();
+		}
+
+		return $this->instance;
+	}
+
+	public function setParameters() {
+		$this->parameters = func_get_args();
+	}
+
+	protected function injectParametersToInstance() {
+		if($this->parameters) {
+			call_user_func_array(array($this->instance, 'inject'), $this->parameters);
+		}
 	}
 
 }

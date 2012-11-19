@@ -9,7 +9,7 @@
 		</table>
 	</div>
 	<div class="mainHeaderCounter">
-		<span>{$liveRentalsCount}</span><br />{_1108, '8152 properties'}
+		{* <span>{$liveRentalsCount}</span><br />{_1108, '8152 properties'} *}
 	</div>
 	<div class="headerBarHolder">
 		<div class="headerBar">
@@ -19,18 +19,18 @@
 					<td><a class="add" href="#"><b class="red">+ {_710, '1609 Add your property'}</b></a>|</td>
 					<td><a class="fb" href="#">&nbsp;</a>|</td>
 					<td>
-						<div class="dropdown" n:inner-foreach="$supportedLanguages as $language">
+{* 						<div class="dropdown" n:inner-foreach="$supportedLanguages as $language">
 							<a href="#">{_$language->name->id}</a>
 							<div class="cleaner" n:if="$iterator->last"></div>
 						</div>
-						<a class="language" href="#">{*_$currentLanguage->name*}<span class="arrow">&nbsp;</span></a>|
+ *}						<a class="language" href="#">{*_$currentLanguage->name*}<span class="arrow">&nbsp;</span></a>|
 					</td>
 					<td>
-						<div class="dropdown" n:inner-foreach="$launchedCountries as $country">
+{* 						<div class="dropdown" n:inner-foreach="$launchedCountries as $country">
 							<a href="#">{_$country->name}</a>
 							<div class="cleaner" n:if="$iterator->last"></div>
 						</div>
-						<a class="country" href="#"><div class="flag" style="background: url({$staticPath}images/flags/sk.gif) 50% top">&nbsp;</div><div class="arrow">&nbsp;</div></a>
+ *}						<a class="country" href="#"><div class="flag" style="background: url({$staticPath}images/flags/sk.gif) 50% top">&nbsp;</div><div class="arrow">&nbsp;</div></a>
 					</td>
 				</tr>
 			</table>

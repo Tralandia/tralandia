@@ -9,10 +9,10 @@ namespace AdminModule\Grids;
  */
 abstract class AdminGrid extends BaseGrid{
 
-	protected $repository;
+	protected $repositoryAccessor;
 
-	public function __construct($repository) {
+	public function __construct($repositoryAccessor) {
 		parent::__construct();
-		$this->repository = $repository;
+		$this->repositoryAccessor = $repositoryAccessor;
 	}
 }

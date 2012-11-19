@@ -78,8 +78,8 @@ class PresenterSettings extends \Nette\Object {
 	}
 
 	protected function checkConfig($config) {
-		if(!isset($config->repository)) {
-			throw new \Nette\InvalidArgumentException('v configu si nezadal "repository"');
+		if(!isset($config->repositoryAccessor)) {
+			throw new \Nette\InvalidArgumentException('v configu si nezadal "repositoryAccessor"');
 		}
 		if(!isset($config->grid->class)) {
 			throw new \Nette\InvalidArgumentException('v configu si nezadal "grid:class"');

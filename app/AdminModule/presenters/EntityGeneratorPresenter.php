@@ -14,6 +14,8 @@ class EntityGeneratorPresenter extends BasePresenter {
 
 	protected $entitiesReflection = array();
 
+	public $skipMethods = array();
+
 	// public function beforeRender() {
 	// 	parent::beforeRender();
 	// 	$this->setView('default');
@@ -103,6 +105,14 @@ class EntityGeneratorPresenter extends BasePresenter {
 	}
 
 	public function generateNewClass($mainEntity) {
+		$ann = $mainEntity->getAnnotations();
+		if(array_key_exists('EA\Generator', $ann)) {
+			$skip = $ann['EA\Generator'][0]->skip;
+			$this->skipMethods = \Nette\Utils\Neon::decode($skip);
+		} else {
+			$this->skipMethods = array();
+		}
+
 		$newClass = new PhpGenerator\ClassType($mainEntity->name);
 
 		$construct = $newClass->addMethod('__construct');
@@ -239,7 +249,7 @@ class EntityGeneratorPresenter extends BasePresenter {
 		fclose($fileSource);
 		if($pos = mb_strpos($data, "\t//@entity-generator-code")) {
 			$newFileContent = mb_substr($data, 0, $pos);
-			$newFileContent .= "//@entity-generator-code --- NEMAZAT !!!\n\n";
+			$newFileContent .= "\t//@entity-generator-code --- NEMAZAT !!!\n\n";
 			$newFileContent .= "\t/* ----------------------------- Methods ----------------------------- */";
 			foreach ($newClass->methods as $method) {
 				$newFileContent .= $this->template->indent("\t\n".$method."\n", 1);
@@ -438,6 +448,10 @@ class EntityGeneratorPresenter extends BasePresenter {
 			throw new \Exception("Neblbni!", 1);
 		}
 
+		d($methodName->prefix.$methodName->name, $this->skipMethods);
+		if(in_array($methodName->prefix.$methodName->name, $this->skipMethods)) {
+			return false;
+		}
 		$method = $newClass->addMethod($methodName->prefix.$methodName->name);
 
 		$parameter = $property->singular;

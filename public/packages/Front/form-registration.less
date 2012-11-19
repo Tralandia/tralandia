@@ -21,69 +21,7 @@
 	);
 }
 
-/****************************************************************************************
-/* registration form
-/***************************************************************************************/
 
-/* label form setting */
-@helpertext : #7d7d7c;
-@helpertextSize: 11px;
-
-/* input type text setting */
-@inputPureBorderColor : #a0b325;
-@inputErrorBorderColor : #ff0000;
-@inputErrorBackgroundColor : #fef7f1;
-@inputHeight : 38px;
-@inputColor: #873300;
-@inputFontSize : 14px;
-
-form.registrationForm {
-	
-	margin-top: 10px;
-
-	label {
-
-		small {
-			display: block;
-			color: @helpertext;
-			font-size: @helpertextSize;
-		}
-	}
-
-	.row-fluid {
-		min-height:60px;
-	}
-
-	input[type=text] {
-		width: 390px;
-		margin: 0;
-		border: 1px solid @inputPureBorderColor;
-		height: @inputHeight;
-		padding: 0 5px;
-		line-height: @inputHeight;
-		color: @inputColor;
-		font-size: @inputFontSize;
-		font-weight: bold;
-		margin-bottom: 4px;
-		&.error {			
-			border: 1px solid @inputErrorBorderColor;
-			background: @inputErrorBackgroundColor;
-		}
-	}
-
-	.error-mesage {
-		color: #fff;
-		position: relative;
-		top: -6px;
-		padding: 1px 5px;
-		background: @inputErrorBorderColor;
-	}
-
-}
-
-.checkboxies {
-	margin-bottom: 15px;
-}
 
 /****************************************************************************************
 /* registration price table
@@ -92,6 +30,26 @@ form.registrationForm {
 table.table-price {
 
 	margin-top: 10px;
+
+	i {
+		display: block;
+		float: left;
+		margin-right: 3px;
+		height: 20px;
+	}
+
+	.center {
+		i {
+			float: none;
+		}
+	}
+
+	p {
+		margin: 0;
+		display: block;
+		float: left;
+		width: 92%;
+	}
 
 	tr {
 		th {
@@ -108,6 +66,22 @@ table.table-price {
 			small {
 				color: #A0B325;
 				font-size: 12px;
+			}
+
+			b {
+				font-size: 16px;
+				color: #A0B325;
+				position:relative;
+				top: 10px;
+			}
+
+			&.header {
+				-webkit-border-top-left-radius: 10px;
+				-webkit-border-top-right-radius: 10px;
+				-moz-border-radius-topleft: 10px;
+				-moz-border-radius-topright: 10px;
+				border-top-left-radius: 10px;
+				border-top-right-radius: 10px;				
 			}
 		}
 
@@ -137,6 +111,7 @@ table.table-price {
 
 			&.yellow-gradient , &.red-gradient , &.green-gradient {
 				width: 120px;
+				line-height: 25px;
 			}
 
 			&.red-gradient {
@@ -159,36 +134,67 @@ table.table-price {
 	}
 }
 
-.box-shadow  {
-	background: #efefef;	
+.light-red  {
+	background: #fde7e4;	
 }
 
+.light-yellow {
+	background: #fff6e4;
+}
+
+.light-green {
+	background: #ecf1cc;
+}
+/****************************************************************************************
+/* options select
+/***************************************************************************************/
 
 .optionGreen , .optionGray , .optionOrange {
 	.basic-border-radius(3px);
 	margin-bottom: 10px;
 	color: #fff;
 	width: 702px;
-	border: 1px solid #ced88e;
+	border: 1px solid #96a824;
 	div {		
 		padding: 5px 0;
+	}
 
-		label {
-			padding: 0 0 0 25px;
-			margin: 0;
-			input[type=radio] {
-			}
+	
+	b {
+		display: block;
+		font-size: 14px;
+		color: #fff;
+		text-shadow: -1px -1px 0px rgba(0,0,0,0.3);
+	}
+
+	div.description , div.price {
+		padding: 3px 0;
+	}
+
+	div.description {
+		padding-left:10px;
+		
+	}
+
+	div.price {
+		font-size: 18px;
+		text-align: right;
+		padding-right: 10px;
+		line-height: 33px;
+
+		strike {
+			float: right;
 		}
 	}
-
-	label {
-		margin-left: 10px;
-		cursor: pointer;
-	}
+	
 }
 
 .optionGreen {
 	.basic-gradient(#b0c13b,#698308);
+
+	label {
+		color: #e7efaf;
+	}
 
 	&:hover {
 		.basic-gradient(#698308,#b0c13b);
@@ -196,12 +202,16 @@ table.table-price {
 }
 
 .optionGray {
-	.basic-gradient(#fefefb,#eff0f1);
-	color: #666;
-	border-color: #a2a9be;
+	.basic-gradient(#2E4B96,#000053);
+	
+	border-color: #A3ABC3;
 
 	&:hover {
-		.basic-gradient(#d4d8e0,#fefefb);
+		.basic-gradient(#000053,#2E4B96);
+	}
+
+	label {
+		color: #7e92c4;
 	}
 }
 
@@ -214,3 +224,50 @@ table.table-price {
 		.basic-gradient(#f25000,#f88603);
 	}
 }
+
+/****************************************************************************************
+/* fancy form chceckbox and radio buttons
+/***************************************************************************************/
+
+.has-js .label_check,
+.has-js .label_radio    {  }
+
+.label_radio .option , .label_radio .description ,
+.label_check .option , .label_check .description {
+	float: left;
+}
+
+.label_radio .option,
+.label_check .option {
+
+	background: rgba(0,0,0,0.3);
+	height:20px;
+	width: 20px;
+	padding: 0;
+	margin-right: 10px;
+	text-align: center;
+	.basic-border-radius(10px);
+
+	-moz-box-shadow: inset 0 0 10px #000;
+	-webkit-box-shadow: inset 0 0 10px#000;
+	box-shadow: inner 0 0 10px #000;	
+
+	&:before {
+		font-family: "entypo";
+		color: #fff;
+		font-size: 45px;
+		content: "\274C";		
+	}
+}
+
+.label_radio .description,.label_check .description {
+	width: 350px;
+}
+
+
+.has-js label.c_on .option:before , .has-js label.r_on .option:before     {
+	content: "\2713";
+}
+.has-js .label_check input,
+.has-js .label_radio input  { position: absolute; left: -9999px; }
+

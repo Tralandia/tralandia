@@ -17,7 +17,7 @@ class ServiceFactory extends \Nette\Object {
 
 	public $parameters = NULL;
 
-	public function __construct(\Doctrine\ORM\EntityManager $model, $serviceName, EntityFactory $entityFactory) {
+	public function __construct(\Doctrine\ORM\EntityManager $model, $serviceName, $entityFactory = NULL) {
 		$this->model = $model;
 		$this->serviceName = $serviceName;
 		$this->entityFactory = $entityFactory;
@@ -25,10 +25,18 @@ class ServiceFactory extends \Nette\Object {
 
 	public function create($entity = NULL) {
 		$serviceName = $this->serviceName;
-		if($entity === NULL && !func_num_args()) {
-			$service = new $serviceName($this->model, $this->entityFactory->create());
+		if(!func_num_args()) {
+			if($this->entityFactory === NULL) {
+				throw new \Nette\InvalidArgumentException('Do ' . $this->serviceName . ' musis vlozit entitu!');
+			} else {
+	 			$service = new $serviceName($this->model, $this->entityFactory->create());
+			}
 		} else {
-			$service = new $serviceName($this->model, $entity);
+			if($entity === NULL) {
+				throw new \Nette\InvalidArgumentException('Do ' . $this->serviceName . ' si vlozil "prazdnu" entitu!');
+			} else {
+				$service = new $serviceName($this->model, $entity);
+			}
 		}
 
 		$service = $this->injectParametersToService($service);
@@ -40,7 +48,7 @@ class ServiceFactory extends \Nette\Object {
 		$this->parameters = func_get_args();
 	}
 
-	public function injectParametersToService($service) {
+	protected function injectParametersToService($service) {
 		if($this->parameters) {
 			call_user_func_array(array($service, 'inject'), $this->parameters);
 		}

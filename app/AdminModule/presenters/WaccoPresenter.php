@@ -12,30 +12,30 @@ class WaccoPresenter extends BasePresenter {
 	}
 
 	public function actionList() {
-		//$locationLocationRepo = $this->context->model->getRepository('Entity\Location\Location');
-		//$locationTypeRepo = $this->context->model->getRepository('Entity\Location\Type');
-		//$entity = $locationLocationRepo->find(2);
-
-		
 		$repo = $this->context->model->getRepository('Entity\Currency');
 		$entity = $repo->find(2);
+		$this->template->form = $this->getForm('currency', $entity);
+	}
 
+	public function actionList2() {
+		$repo = $this->context->model->getRepository('Entity\Language');
+		$entity = $repo->find(144);
+		$this->template->form = $this->getForm('language', $entity);
+	}
+
+	public function actionList3() {
+		$repo = $this->context->model->getRepository('Entity\Location\Location');
+		$entity = $repo->find(563);
+		$this->template->form = $this->getForm('location', $entity);
+	}
+
+	public function getForm($name, $entity) {
 		$model = $this->context->model;
-		$configurator = new Extras\Config\Configurator($this->context->params['settingsDir'] . '/presenters/currency.neon');
-
-		$mask = new Extras\FormMask\Mask;
-		$form = new Nette\Application\UI\Form($this, 'form');
-		$form->onSuccess[] = array($mask, 'process');
+		$form = $this->context->presenter->{$name}->form->create($entity);
 		$form->onSuccess[] = function($form) use ($model) {
 			$model->flush();
 		};
-
-		$generator = new Extras\FormMask\Generator($mask, $configurator, $entity);
-		$generator->setItemPhrase($this->context->itemPhraseFactory);
-		$generator->setItemText($this->context->itemTextFactory);
-		$generator->build();
-
-		$mask->extend($form);
-		$this->template->form = $form;
+		$this->addComponent($form, $name);
+		return $form;
 	}
 }

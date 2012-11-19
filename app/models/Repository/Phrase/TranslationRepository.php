@@ -10,7 +10,11 @@ use Doctrine\ORM\Query\Expr;
  */
 class TranslationRepository extends \Repository\BaseRepository {
 
-	public $centralLanguage;
+	protected $centralLanguage;
+
+	public function inject($centralLanguage) {
+		list($this->centralLanguage) = func_get_args();
+	}
 
 	public function toTranslate() {
 		$rsm = new \Doctrine\ORM\Query\ResultSetMapping;

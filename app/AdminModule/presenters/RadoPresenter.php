@@ -115,7 +115,7 @@ class RadoPresenter extends BasePresenter {
 			$section = $this->params['importSection'];
 			$className = 'Extras\Import\Import'.ucfirst($section);
 			$import = new $className($this->context);
-			if(!$import->savedVariables['importedSections'][$section]) {
+			if(!$import->savedVariables['importedSections'][$section] || !Arrays::get($import->sections, array($section, 'saveImportStatus'), TRUE)) {
 				$import->developmentMode = (bool)$this->session->developmentMode;
 
 			
@@ -130,10 +130,10 @@ class RadoPresenter extends BasePresenter {
 					$import->doImport($subsection);
 				} else {
 					//$import->undoSection($section);
-					if(Arrays::get($import->sections, array($section, 'saveImportStatus'), TRUE)) {
-						$import->savedVariables['importedSections'][$section] = 1;
-						$import->saveVariables();
-					}
+
+					$import->savedVariables['importedSections'][$section] = 1;
+					d($import->savedVariables['importedSections']);
+					$import->saveVariables();
 					$import->doImport();
 				}
 				$import->saveVariables();

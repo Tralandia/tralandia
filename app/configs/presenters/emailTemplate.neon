@@ -1,0 +1,12 @@
+common:
+	repositoryAccessor: emailTemplateRepositoryAccessor
+	title: Email Template
+	h1: 'Email Template -> %entityName% (%entityAttribute%)'
+	grid:
+		class: EmailTemplateGrid
+
+	form:
+		fields:
+			name:
+				label: Name
+				control: [type: text]

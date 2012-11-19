@@ -60,7 +60,6 @@ class ImportRentals extends BaseImport {
 		}
 
 		while ($x = mysql_fetch_array($r)) {
-			debug($x['id'], $x['member_id']);
 			$rental = $context->rentalEntityFactory->create();
 			$rental->oldId = $x['id'];
 
@@ -153,7 +152,6 @@ class ImportRentals extends BaseImport {
 			$contacts->add(new \Extras\Types\Url($x['contact_url']));
 			$contacts->add(new \Extras\Types\Url($x['url']));
 
-			d($contacts);
 			$rental->contacts = $contacts;
 
 			$spokenLanguages = array_unique(array_filter(explode(',', $x['languages_spoken'])));

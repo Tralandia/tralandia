@@ -10,15 +10,14 @@ class Translator implements \Nette\Localization\ITranslator {
 
 	protected $language = 38;
 	protected $cache;
-
-	protected $phraseRepository;
+	protected $phraseRepositoryAccessor;
 	protected $phraseServiceFactory;
 
-	public function __construct(Environment $environment, $phraseRepository, $phraseServiceFactory, Caching\Cache $cache) {
+	public function __construct(Environment $environment, $phraseRepositoryAccessor, \Extras\Models\Service\ServiceFactory $phraseServiceFactory, Caching\Cache $translatorCache) {
 		$this->language = $environment->getLanguage();
-		$this->phraseRepository = $phraseRepository;
+		$this->phraseRepositoryAccessor = $phraseRepositoryAccessor;
 		$this->phraseServiceFactory = $phraseServiceFactory;
-		$this->cache = $cache;
+		$this->cache = $translatorCache;
 	}
 	
 	public function translate($phrase, $node = NULL, $count = NULL, array $variables = NULL) {
@@ -43,23 +42,27 @@ class Translator implements \Nette\Localization\ITranslator {
 		}
 		$translationKey = $phraseId.'_'.$this->language->id;
 		
-		if(!$translation = $this->cache->load($translationKey)) {
-			$translation = null;
+		$translation = $this->cache->load($translationKey);
+		if($translation === NULL) {
+			$translation = NULL;
 			
-			if (is_numeric($phrase)) {
-				$phrase = $this->phraseRepository->find($phrase);
-				if(!$phrase) {
-					$translation = '{!'.$phraseId.'!}';
-				}
+			if(is_scalar($phrase)) {
+				$phrase = $this->phraseRepositoryAccessor->get()->find($phrase);
 			}
 
-			if ($phrase instanceof \Entity\Phrase\Phrase) {
+			if ($phrase instanceof \Entity\Phrase\Phrase){
 				$phrase = $this->phraseServiceFactory->create($phrase);
+			} 
+
+			if(!$phrase) {
+				$translation = '{!'.$phraseId.'!}';
+			} else {
 			}
 
 			if (!$translation && $translation = $phrase->getTranslation($this->language)) {
 				$translation = $translation->translation;
 			}
+
 			$this->cache->save($translationKey, $translation);
 		}
 		if($translation === NULL) $translation = '{'.$phraseId.'|'.$this->language->iso.'}';

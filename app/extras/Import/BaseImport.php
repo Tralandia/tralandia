@@ -13,6 +13,12 @@ use Nette\Application as NA,
 
 class BaseImport {
 	public $sections = array(
+		'phraseType' => array(
+			'entities' => array(
+			),
+			'subsections' => array(),
+			'saveImportStatus' => FALSE,
+		),
 		'languages' => array(
 			'entities' => array(
 				'\Language' => array(),
@@ -144,15 +150,27 @@ class BaseImport {
 			),
 			'subsections' => array(),
 		),
-		// 'pathsegments' => array(
-		// 	'entities' => array(
-		// 		'\Routing\PathSegment' => array(),
-		// 	),
-		// 	'subsections' => array(),
-		// ),
+		'pathsegments' => array(
+			'entities' => array(
+				'\Routing\PathSegment' => array(),
+			),
+			'subsections' => array(),
+		),
 		'taskTypes' => array(
 			'entities' => array(
 				'\Task\Type' => array(),
+			),
+			'subsections' => array(),
+			'saveImportStatus' => FALSE,
+		),
+		'updateLanguage' => array(
+			'entities' => array(
+			),
+			'subsections' => array(),
+			'saveImportStatus' => FALSE,
+		),
+		'updateEmails' => array(
+			'entities' => array(
 			),
 			'subsections' => array(),
 			'saveImportStatus' => FALSE,
@@ -288,7 +306,8 @@ class BaseImport {
 			);
 			//throw new \Nette\UnexpectedValueException('Nenasiel som staru Phrase podla starej ID '.$oldPhraseId);
 		}
-		$phrase = $this->context->phraseEntityFactory->create();
+		$phraseService = $this->context->phraseServiceFactory->create();
+		$phrase = $phraseService->getEntity();
 		$phrase->ready = (bool)$oldPhraseData['ready'];
 		$phrase->type = $type;
 		$phrase->oldId = $oldPhraseId;
@@ -299,17 +318,16 @@ class BaseImport {
 			$oldTranslation = qf('select * from z_'.$language->iso.' where id = '.$oldPhraseId);
 			if (strlen($oldTranslation['text']) == 0) continue;
 
-			$variations = NULL;
-			if ($oldLocativePhraseId > 0) {
-				$oldTranslationLocative = qf('select * from z_'.$language->iso.' where id = '.$oldLocativePhraseId);
-				if (strlen($oldTranslationLocative)) {
-					$variations = array();
-					$variations[$locativeKeys[0]][$locativeKeys[1]]['locative'] = $oldTranslationLocative['text'];
-				}
-			}
-			$translation = $this->createTranslation($language, (string)$oldTranslation['text'], $variations);
+			// $variations = NULL;
+			// if ($oldLocativePhraseId > 0) {
+			// 	$oldTranslationLocative = qf('select * from z_'.$language->iso.' where id = '.$oldLocativePhraseId);
+			// 	if (strlen($oldTranslationLocative)) {
+			// 		$variations = array();
+			// 		$variations[$locativeKeys[0]][$locativeKeys[1]]['locative'] = $oldTranslationLocative['text'];
+			// 	}
+			// }
+			$translation = $phraseService->createTranslation($language, (string)$oldTranslation['text']);
 			$translation->timeTranslated = fromStamp($oldTranslation['updated']);
-			$phrase->addTranslation($translation);
 		}
 		//$phrase->save();
 		return $phrase;
@@ -327,14 +345,15 @@ class BaseImport {
 	protected function createPhraseFromString($entityName, $entityAttribute, $level, $text, $textLanguage) {
 		$phraseType = $this->createPhraseType($entityName, $entityAttribute, $level);
 
-		$phrase = $this->context->phraseEntityFactory->create();
+		$phraseService = $this->context->phraseServiceFactory->create();
+		$phrase = $phraseService->getEntity();
 		$phrase->ready = TRUE;
 		$phrase->type = $phraseType;
 
 		if(is_string($textLanguage)) {
 			$textLanguage = $this->context->languageRepository->findOneBy(array('iso' => $textLanguage));
 		}
-		$phrase->addTranslation($this->createTranslation($textLanguage, $text));
+		$translation = $phraseService->createTranslation($textLanguage, $text);
 
 		return $phrase;
 	}
@@ -348,8 +367,8 @@ class BaseImport {
 	 * @param  [type] $params
 	 * @return \Entity\Phrase\Type
 	 */
-	protected function createPhraseType($entityName, $entityAttribute, $level, $params = NULL) {
-		if (substr($entityName, 0, 7) != '\Entity') {
+	protected function createPhraseType($entityName, $entityAttribute, $level = NULL, $params = NULL) {
+		if (substr($entityName, 0, 7) != '\Entity' && $entityName != 'Html') {
 			$entityName = '\Entity'.$entityName;
 		}
 
@@ -371,20 +390,6 @@ class BaseImport {
 			$this->context->model->persist($phraseType);	
 			return $phraseType;
 		}
-	}
-
-	protected function createTranslation(\Entity\BaseEntity $language, $text, $variations = NULL) {
-		$translation = $this->context->phraseTranslationEntityFactory->create();
-		$translation->language = $language;
-		$translation->translation = $text;
-		$translation->timeTranslated = new \Nette\DateTime();
-
-		if ($variations == NULL) {
-			$variations = array();
-		}
-		$translation->variations = $variations;
-
-		return $translation;
 	}
 
 	public function getSections() {
@@ -435,7 +440,7 @@ class BaseImport {
 					}
 				}
 			}
-			if ($return[$key]['import']) {
+			if (!$this->savedVariables['importedSections'][$key]) {
 				$nextToImport = FALSE;
 			}
 		}

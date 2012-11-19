@@ -1,0 +1,51 @@
+parameters:
+	service: Service\Currency
+	title: Currencies
+	h1: 'Currency -> %name%'
+grid:
+	columns:
+		id:
+			label: Id
+			mapper: e.id
+		name:
+			label: Name
+			mapper: e.id
+			callback: {class: %this%, method: getAttributeForGrid, params: [name]}
+		iso:
+			label: Iso
+			mapper: e.iso
+		exchangeRate:
+			label: Exchange Rate / EUR
+			mapper: e.exchangeRate
+			cellStyle: text-align:right;
+			headerStyle: text-align:right;
+		rounding:
+			label: Rounding
+			mapper: e.rounding
+			cellStyle: text-align:right;
+			headerStyle: text-align:right;
+
+
+form:
+	fields:
+		name:
+			label: Name
+			control:
+				type: phrase
+			validation:
+				- [setRequired, 'Please fill in the name.']
+		iso:
+			label: Iso
+			control:
+				type: text
+			validation:
+				- [addRule, :pattern, 'Must be exactly 3 characters long.', '[A-Z]{3}']
+		exchangeRate:
+			label: Exchange Rate / EUR
+			control:
+				type: text
+			description: "How much of this currency would you get for one Euro?"
+		rounding:
+			label: Rounding
+			control:
+				type: text

@@ -4,16 +4,6 @@ namespace FrontModule;
 
 class HomePresenter extends BasePresenter {
 
-	public $locationTypeRepositoryAccessor;
-
-	public function setContext(\Nette\DI\Container $dic) {
-
-		$this->setProperty("locationTypeRepositoryAccessor");
-		
-		parent::setContext($dic);
-
-	}
-
 	protected function startup() {
 
 		parent::startup();
@@ -33,7 +23,7 @@ class HomePresenter extends BasePresenter {
 
 	public function createComponentCountryMap($name) {
 
-		return new \FrontModule\Components\CountryMap\CountryMap($this->locationRepositoryAccessor, $this->locationTypeRepositoryAccessor);
+		return new \FrontModule\Components\CountryMap\CountryMap($this->locationRepository, $this->locationTypeRepository);
 
 	}
 
@@ -46,12 +36,12 @@ class HomePresenter extends BasePresenter {
 		$tab->setHeading(806);
 		$tab->setContent($content);
 
-		$content = new \FrontModule\Components\RegionsPage\Regions($this->locationRepositoryAccessor, $this->locationTypeRepositoryAccessor);
+		$content = new \FrontModule\Components\RegionsPage\Regions($this->locationRepository, $this->locationTypeRepository);
 		$tab = $tabBar->addTab('regions');
 		$tab->setHeading(678);
 		$tab->setContent($content)->setActive();
 
-		$content = new \FrontModule\Components\LocalitiesPage\Localities($this->locationRepositoryAccessor, $this->locationTypeRepositoryAccessor);
+		$content = new \FrontModule\Components\LocalitiesPage\Localities($this->locationRepository, $this->locationTypeRepository);
 		$tab = $tabBar->addTab('localities');
 		$tab->setHeading(725);
 		$tab->setContent($content);

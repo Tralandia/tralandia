@@ -68,57 +68,54 @@ class AdminPresenter extends BasePresenter {
 	}
 
 	public function actionEdit($id = 0) {
-		$service = $this->serviceName;
-		$this->service = $service::get($id);
-		$this->formMask = $this->reflector->getFormMask($this->service, $this->settings->params->form);
+		// $service = $this->serviceName;
+		// $this->service = $service::get($id);
+		// $this->formMask = $this->reflector->getFormMask($this->service, $this->settings->params->form);
 		// debug($this->service);
 
 	}
+
 	
 	public function renderEdit($id = 0) {
 		$form = $this->getComponent('form');
 
-		$this->service->setDefaultsFormData($this->reflector->getContainer($form), $this->formMask);
+		//$this->service->setDefaultsFormData($this->reflector->getContainer($form), $this->formMask);
 
-		$this->template->record = $this->service;
+		//$this->template->record = $this->service;
 		$this->template->form = $form;
-		$this->template->created = $this->service->created;
-		$this->template->updated = $this->service->updated;
-		$this->template->fomatedH1 = $this->formatText($this->settings->h1, $this->service);
-		$this->template->service = $this->service;
+		//$this->template->created = $this->service->created;
+		//$this->template->updated = $this->service->updated;
+		//$this->template->fomatedH1 = $this->formatText($this->settings->h1, $this->service);
+		//$this->template->service = $this->service;
 	}
 	
 	protected function createComponentForm($name) {
-		$form = new \AdminModule\Forms\AdminForm($this, $name);
+		$repositoryName = $this->settings->params->repositoryAccessor;
+		$reposiory = $this->context->{$repositoryName}->get();
+		$entity = $reposiory->find($this->getParam('id'));
 
-		$this->reflector->extend($form, $this->formMask);
-		$form->setEnvironment($this->environment);
-		$form->setDefaultLanguage($this->context->translator->getDefaultLanguage());
-		$form->setUser($this->getUser());
+		$model = $this->context->model;
+		list(,$presenterName) = explode(':', $this->name);
+		$configurator = new \Extras\Config\Configurator($this->context->params['settingsDir'] . '/presenters/'.lcfirst($presenterName).'.neon');
+		$generator = $this->context->createFormGenerator($configurator, $entity)->build();
 
-		//$this->addAdvancedFileManager('upload', 'File manager');
+		$form = new \AdminModule\Forms\AdminForm;
+
+		$generator->getMask()->extend($form);
+
+		$form->onSuccess[] = array($generator->getMask(), 'process');
+		$form->onSuccess[] = function($form) use ($model) {
+			$model->flush();
+		};
 		$form->onSuccess[] = callback($this, 'formOnSuccess');
+
+
 
 		return $form;
 	}
 
 	public function formOnSuccess(\AdminModule\Forms\AdminForm $form) {
-		$id = $this->presenter->getParam('id');
-		$values = $this->reflector->getPrepareValues($form);
-
-		if ($this->service->id) {
-			// EDIT
-			$this->service->updateFormData($this->formMask, $values);
-		} else {
-			// ADD
-			$this->service->create($this->formMask, $values);
-			$this->redirect('edit', array('id' => $this->service->id));
-		}
-
-		$this->flashMessage('A je to!');
-		if($this->getPresenter()->isAjax()) {
-			$this->getPresenter()->payload->invalidateParent = true;
-		}
+		// nejaky redirect....
 	}
 
 	public function formatText($text, $service) {
@@ -134,7 +131,7 @@ class AdminPresenter extends BasePresenter {
 	}
 
 	protected function createComponentGrid() {
-		$repositoryName = $this->settings->params->repository;
+		$repositoryName = $this->settings->params->repositoryAccessor;
 		$reposiory = $this->context->{$repositoryName};
 		$gridClass = '\\AdminModule\\Grids\\'.$this->settings->params->grid->class;
 		return new $gridClass($reposiory);
