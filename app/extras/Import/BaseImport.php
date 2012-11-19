@@ -93,6 +93,7 @@ class BaseImport {
 				'\Rental\Rental' => array(),
 			),
 			'subsections' => array(),
+			'saveImportStatus' => FALSE,
 		),
 		'invoiceStart' => array(
 			'entities' => array(

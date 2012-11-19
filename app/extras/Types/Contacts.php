@@ -29,10 +29,10 @@ class Contacts extends \Nette\Object {
 
 	public function getByType($type = NULL, $limit = 15) {
 
-		$retass = NULL;
+		$returnType = NULL;
 
 		if ($type!=NULL && !is_array($type)) {
-			$retass = $type;
+			$returnType = $type;
 			$type = array($type);
 		}
 
@@ -55,13 +55,17 @@ class Contacts extends \Nette\Object {
 
 		}
 
-		if($retass){
-			$contacts = $contacts[$retass];						
+		if($returnType){
+			if(isset($contacts[$returnType])) {
+				$contacts = $contacts[$returnType];
+			} else {
+				$contacts = array();
+			}
 		} else {
 
-			foreach ($contacts AS $k=>$v){
+			foreach ($contacts AS $key => $value){
 				
-				if(count($v) < 1) unset($contacts[$k]);
+				if(count($value) < 1) unset($contacts[$key]);
 
 			}
 

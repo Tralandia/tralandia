@@ -21,7 +21,7 @@ class ImportRentals extends BaseImport {
 		$model = $this->model;
 
 		// Detaching all media
-		qNew('update medium set rental_id = NULL where rental_id > 0');
+		//qNew('update medium set rental_id = NULL where rental_id > 0');
 
 		$nameDictionaryType = $this->createPhraseType('\Rental\Rental', 'name', 'NATIVE', array('checkingRequired' => TRUE));
 		$model->persist($nameDictionaryType);
@@ -54,7 +54,7 @@ class ImportRentals extends BaseImport {
 		$now = time();
 
 		if ($this->developmentMode == TRUE) {
-			$r = q('select * from objects where country_id = 46 order by random() limit 20');
+			$r = q('select * from objects where country_id = 46 order by rand() limit 1');
 		} else {
 			$r = q('select * from objects');
 		}
@@ -260,7 +260,7 @@ class ImportRentals extends BaseImport {
 			// Media
 			$temp = array_unique(array_filter(explode(',', $x['photos'])));
 			if (is_array($temp) && count($temp)) {
-				if ($this->developmentMode == TRUE) $temp = array_slice($temp, 0, 3);
+				if ($this->developmentMode == TRUE) $temp = array_slice($temp, 0, 6);
 				foreach ($temp as $key => $value) {
 					$medium = $context->mediumRepository->findOneByOldUrl('http://www.tralandia.com/u/'.$value);
 					if (!$medium) {
