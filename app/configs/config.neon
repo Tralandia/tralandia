@@ -133,6 +133,11 @@ common:
 
 		ticketFetcher: Extras\TicketFetcher( @ticketFetcherApi )
 
+		templateHelpers:
+			class: Extras\Helpers
+			arguments:
+				- @mediumServiceFactory
+
 		autopilot:
 			class: Service\Autopilot\Autopilot
 			setup:
