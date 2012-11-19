@@ -206,6 +206,14 @@ durika < development:
 
 		database:
 			debugger: true
+cibi < development:
+	parameters:
+		editor: 'edit://open/?url=file://%file&line=%line'
+		envOptions:
+			email: tralandia.cibi@gmail.com
+
+		database:
+			debugger: true
 
 toth < development:
 	parameters:
