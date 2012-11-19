@@ -35,5 +35,37 @@ class RentalService extends Service\BaseService
 		}
 
 		return $return;
-	}	
+	}
+
+	public function getPhotos() {
+		return $this->getMediaByType('image/jpeg');
+	}
+
+	public function getMediaByType($types, $limit = NULL) {
+		$returnJustOneType = NULL;
+		if(!is_array($types)) {
+			$returnJustOneType = $types;
+			$types = array($types);
+		}
+
+		$return = array();
+		$i = 0;
+		foreach ($this->getEntity()->getMedia() as $medium) {
+			if(in_array($medium->type->name, $types)) {
+				$return[$medium->type->name][] = $medium;
+				$i++;
+			}
+
+			if(is_numeric($limit)) {
+				if($i == $limit) break;
+			}
+		}
+
+		if($returnJustOneType) {
+			$return = $return[$returnJustOneType];
+		}
+
+		return $return;
+
+	}
 }

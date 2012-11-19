@@ -1,3 +1,7 @@
+{* 
+	$rental Entity\Rental
+ *}
+
 {block content}
 
 <div class="span12">
@@ -159,9 +163,10 @@
 
 <div class="row-fluid objectDetailContent">
 	<div class="span4 marginBottom marginTop marginLeft leftSidebarObjectDetail">
-		<img class="marginBottom" src="http://flickholdr.com/308/150/natural" />
-		<img class="marginBottom" src="http://flickholdr.com/308/150/natural" />
-		<img class="marginBottom" src="http://flickholdr.com/308/150/natural" />
+		{foreach $rentalService->getPhotos() AS $medium}
+			<img class="marginBottom" src="{$medium|mediumSrc:small}" />
+			
+		{/foreach}
 
 
 		<img class="mapsImg" src="https://maps.googleapis.com/maps/api/staticmap?center={$rental->latitude},{$rental->longitude}&markers=color:blue%7C{$rental->latitude},{$rental->longitude}&maptype=terrain&zoom=13&size=288x140&sensor=false" />
@@ -184,10 +189,6 @@
 		{/foreach}
 		</p>
 
-		{dump $rental->pricelists}
-		{dump $rental->calendar}
-		{dump $rentalService}
-
 		{foreach $rental->types AS $rentalType}
 			{_$rentalType->name}
 		{/foreach}
@@ -196,9 +197,6 @@
 			{_$information->name}
 		{/foreach}
 
-		{foreach $rental->media AS $medium}
-			{_$medium->message}
-		{/foreach}
 
 		<br/>
 		{$rental->checkIn}
@@ -212,7 +210,6 @@
 		
 		<br/>
 		{$rental->interview}
-		{dump $rental->getAmenities()->getIterator()}
 
 
 		<div class="row-fluid">

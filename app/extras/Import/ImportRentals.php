@@ -54,12 +54,15 @@ class ImportRentals extends BaseImport {
 		$now = time();
 
 		if ($this->developmentMode == TRUE) {
-			$r = q('select * from objects where country_id = 46 limit 20');
+			$r = q('select * from objects where country_id = 46 order by random() limit 20');
 		} else {
 			$r = q('select * from objects');
 		}
 
 		while ($x = mysql_fetch_array($r)) {
+			if($context->rentalRepository->findOneByOldId($x['id'])) {
+				continue;
+			}
 			$rental = $context->rentalEntityFactory->create();
 			$rental->oldId = $x['id'];
 
