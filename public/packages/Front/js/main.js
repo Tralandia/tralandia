@@ -160,7 +160,6 @@ App.prototype.initMapsObjectDetail = function(){
 ****************************************************************************************************/
 
 
-
 $(document).ready(function(){
 
 	var A = new App();
@@ -178,6 +177,6 @@ $(document).ready(function(){
 	$('.accordion').accordion({ autoHeight: false , active: false , navigation: true, collapsible: true });
 	$('.spinner').spinner();
 
-	
+	$('#map_canvas').traMap();
 
 });

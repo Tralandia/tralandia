@@ -36,7 +36,7 @@
 
 		        <div class="row-fluid objecList">
 		        	<div class="span4">
-		        		<div class="addons btn">icon</div><div class="position btn">Top</div>
+		        		<!--<div class="addons btn">icon</div>--><div class="position btn">Top</div>
 		        		<img src="http://flickholdr.com/240/150/travel" />
 		        	</div>
 		        	<div class="span8">
@@ -45,7 +45,7 @@
 		        		<div class="clearfix"></div>
 		        		<p>
 						{foreach $rental->getLocations() as $location}
-							<span n:class="$iterator->first ? bold" >{_$location->name}</span> {if !$iterator->last}, {/if}
+							<span n:class="$iterator->first ? bold" >{_$location->name}</span>{if !$iterator->last}, {/if}
 						{/foreach}		        			
 		        		</p>
 		        		<p class="red bold">{_$rental->teaser}</p>
