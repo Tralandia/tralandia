@@ -4,17 +4,27 @@ namespace FrontModule;
 
 class RentalPresenter extends BasePresenter {
 
-	protected $rental;
+	public $rentalServiceFactory;
+
+	public function setContext(\Nette\DI\Container $dic) {
+		parent::setContext($dic);
+
+		$this->setProperty('rentalServiceFactory');
+	}
 
 
 	public function actionDetail($id) {
 
-		if (!$id) {
+		$rental = $this->rentalRepositoryAccessor->get()->find($id);
+
+		if (!$rental) {
 			throw new \Nette\InvalidArgumentException('$id argument does not match with the expected value');
 		}
-		$this->rental = $this->rentalRepositoryAccessor->get()->find($id);
+		
+		$rentalService = $this->rentalServiceFactory->create($rental);
 
-		$this->template->rental = $this->rental;
+		$this->template->rental = $rental;
+		$this->template->rentalService = $rentalService;
 	}
 
 	public function actionList() {

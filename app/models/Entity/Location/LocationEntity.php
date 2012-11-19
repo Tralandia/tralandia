@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
 
 /**
- * @ORM\Entity(repositoryClass="Repository\LocationRepository")
+ * @ORM\Entity(repositoryClass="Repository\Location\LocationRepository")
  * @ORM\Table(name="location", indexes={@ORM\index(name="name", columns={"name_id"}), @ORM\index(name="slug", columns={"slug"}), @ORM\index(name="latitude", columns={"latitude"}), @ORM\index(name="longitude", columns={"longitude"})})
  * @EA\Primary(key="id", value="slug")
  */

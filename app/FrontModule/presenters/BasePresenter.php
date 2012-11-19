@@ -8,11 +8,6 @@ abstract class BasePresenter extends \BasePresenter {
 	public $locationRepositoryAccessor;
 	public $rentalRepositoryAccessor;
 
-	protected function startup() {
-
-		parent::startup();
-	}
-
 	public function setContext(\Nette\DI\Container $dic) {
 
 		$this->setProperty('languageRepositoryAccessor');

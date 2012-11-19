@@ -1,0 +1,270 @@
+@bodyBg : #eef2d1;
+@darkGreen : #698308;
+@lightGreen: #b0c13b;
+@brown : #7d3300 ;
+@textGreen: #a8b938;
+@orange: #f35405;
+@white : #fff;
+@supfooterBg : #fdfdf8;
+@supfooterDropshadowColor: #3e4813;
+
+/* content colors */
+@contentBackground : @supfooterBg;
+
+/* sidebar */
+#sidebar {
+
+
+
+	h4 {
+		font-size: 15px;
+		margin: 0;
+		padding: 0 10px;
+	}
+
+	.widget {
+		border-bottom: 1px solid @lightGreen;
+	}	
+
+	.widget:last-child {
+		border: none;
+	}
+
+	.searchForm {
+
+			margin: 1px;			
+
+			background-image: linear-gradient(bottom, #F24100 0%, #F26900 100%);
+			background-image: -o-linear-gradient(bottom, #F24100 0%, #F26900 100%);
+			background-image: -moz-linear-gradient(bottom, #F24100 0%, #F26900 100%);
+			background-image: -webkit-linear-gradient(bottom, #F24100 0%, #F26900 100%);
+			background-image: -ms-linear-gradient(bottom, #F24100 0%, #F26900 100%);
+
+			background-image: -webkit-gradient(
+				linear,
+				left bottom,
+				left top,
+				color-stop(0, #F24100),
+				color-stop(1, #F26900)
+			);
+
+			-webkit-border-radius: 6px;
+			-moz-border-radius: 6px;
+			border-radius: 6px;
+
+		h4 {
+			text-align: center;
+			margin: 0;
+			padding: 10px 0 5px 0;
+			
+			
+			font-size: 17px;
+			color: #fff;
+
+		}
+
+		padding-bottom : 10px;
+
+	}
+
+	.input-filltext {
+		
+		margin: 0 auto;
+		padding: 1px;
+		-webkit-border-radius: 6px;
+		-moz-border-radius: 6px;
+		border-radius: 6px;
+		height: 38px;
+		border: 1px solid #F26900;
+		background: #fff;
+		width: 200px;
+
+		input[type=text] {
+			width: 140px;
+			color: @darkGreen;
+			font-weight: bold;
+			font-size: 16px;
+		}
+
+		input::-webkit-input-placeholder {
+		    color:    #999;
+		    font-weight: bold;
+		}
+		input:-moz-placeholder {
+		    color:    #999;
+		    font-weight: bold;
+		}
+		input:-ms-input-placeholder {
+		    color:    #999;
+		    font-weight: bold;
+		}
+
+		button.btn {
+			width: 39px;
+			height:38px;
+			line-height: 30px;
+			color: #F24100;
+
+			i {
+				&:before {
+					font-size: 80px;
+					position: relative;
+					left: -10px;
+				}
+			}
+		}
+
+		input[type=text] , button.btn {
+			float: left;
+			border: none;
+			height:30px;
+			background: transparent;
+		}
+	}
+
+	h4 {
+		font-size: 13px;
+		margin-top: 10px;
+	}
+
+	ul {
+
+		list-style: none;	
+		margin: 0 ;
+		padding: 0 ;
+		font-size: 13px;
+		li {
+
+			padding: 2px 10px 2px 25px;
+
+			&.disabled {
+
+				color: #ccc;
+
+				&:hover {
+					background: transparent;
+					color: #ccc;
+				}
+
+				&:before {
+					color: #ccc;
+				}
+			}
+
+			span.counter {
+				
+				
+				padding: 1px 2px;
+				color: #888;
+				font-size: 11px;
+
+				&:before {
+					content: '(';
+				}
+
+				&:after {
+					content: ')';	
+				}
+			}
+
+			a {
+				display: block;	
+				padding-left: 5px;
+				&:hover {
+					text-decoration: none;
+				}
+			}
+
+			&:last-child {
+				margin-bottom: 10px;
+			}
+
+			&:hover {
+				background: #fbfdee;
+				color: @white;
+				text-decoration: none;
+			}
+			
+			&:before {
+				  font-family: "entypo";
+				  font-weight: normal;
+				  font-style: normal;
+				  font-size: 40px;
+				  text-decoration: inherit;
+				  content:'\E4AE';
+				  color: @brown;
+				  font-size: 22px;
+				  margin-right: 3px;
+				  float: left;
+				  line-height: 19px;
+				  height: 20px;
+				  position: relative;
+				  left: -9px;
+				  width: 0;
+			}
+
+			&.selected {
+
+				a {
+					font-weight: bold;
+					span {
+						font-weight: normal;
+
+						&.close {
+							
+							opacity:1;
+							color: red;
+							font-size: 15px;
+							display: block;
+							width: 20px;
+							text-align: center;
+							text-shadow: none;
+						}
+					}
+				}
+
+				&:hover {
+					text-decoration: line-through;
+				}
+			}
+
+			&.more {
+
+				font-size: 11px;
+				font-weight: bold;
+
+				&:before {
+					content:' ';
+				}
+
+				&:hover {
+					background: none;
+				}
+
+				[class*="entypo-"]:before {
+					position: relative;
+					top: 5px;
+				}
+
+				text-align: right;
+
+				a {
+					color: @brown;
+					
+					height:20px;
+					line-height: 14px;
+					overflow: hidden;
+
+					&:hover {
+						text-decoration: underline;
+
+						i {
+							text-decoration: none;
+						}
+					}
+				}
+			}
+		}
+	}
+
+}

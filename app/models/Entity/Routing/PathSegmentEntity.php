@@ -7,7 +7,7 @@ use Entity\Location;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Repository\Routing\PathSegmentRepository")
  * @ORM\Table(name="routing_pathsegment", indexes={@ORM\index(name="pathSegment", columns={"pathSegment"}), @ORM\index(name="type", columns={"type"}), @ORM\index(name="entityId", columns={"entityId"})})
  */
 class PathSegment extends \Entity\BaseEntity {

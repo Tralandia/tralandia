@@ -10,6 +10,7 @@ use Nette\Caching;
 class MainRouteFactory {
 
 	protected $cache;
+	protected $hostPattern;
 
 	public $locationRepositoryAccessor;
 	public $languageRepositoryAccessor;
@@ -18,12 +19,12 @@ class MainRouteFactory {
 	public $routingPathSegmentRepositoryAccessor;
 	public $domainRepositoryAccessor;
 
-	public function __construct(Caching\Cache $cache) {
-		list($this->cache) = func_get_args();
+	public function __construct(Caching\Cache $cache, $hostPattern) {
+		list($this->cache, $this->hostPattern) = func_get_args();
 	}
 
 	public function create() {
-		$route = new MainRoute($this->cache);
+		$route = new MainRoute($this->cache, $this->hostPattern);
 		$route->locationRepositoryAccessor = $this->locationRepositoryAccessor;
 		$route->languageRepositoryAccessor = $this->languageRepositoryAccessor;
 		$route->rentalRepositoryAccessor = $this->rentalRepositoryAccessor;
