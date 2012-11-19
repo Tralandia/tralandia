@@ -22,7 +22,7 @@ class RentalPresenter extends BasePresenter {
 		}
 		
 		$rentalService = $this->rentalServiceFactory->create($rental);
-
+		d($rentalService->getPhotos());
 		$this->template->rental = $rental;
 		$this->template->rentalService = $rentalService;
 

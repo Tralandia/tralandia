@@ -1,3 +1,7 @@
+{* 
+	$rental Entity\Rental
+ *}
+
 {block content}
 
 <div class="span12">
@@ -159,9 +163,10 @@
 
 <div class="row-fluid objectDetailContent">
 	<div class="span4 marginBottom marginTop marginLeft leftSidebarObjectDetail">
-		<img class="marginBottom" src="http://flickholdr.com/308/150/natural" />
-		<img class="marginBottom" src="http://flickholdr.com/308/150/natural" />
-		<img class="marginBottom" src="http://flickholdr.com/308/150/natural" />
+		{foreach $rentalService->getPhotos() AS $medium}
+			<img class="marginBottom" src="{$medium|mediumSrc:small}" />
+			
+		{/foreach}
 
 
 		<img class="mapsImg" src="https://maps.googleapis.com/maps/api/staticmap?center={$rental->latitude},{$rental->longitude}&markers=color:blue%7C{$rental->latitude},{$rental->longitude}&maptype=terrain&zoom=13&size=288x140&sensor=false" />
@@ -184,6 +189,7 @@
 		{/foreach}
 		</p>
 
+<<<<<<< HEAD
 		{foreach $rental->types as $type}
 		{_$type->name}
 		{/foreach}
@@ -194,6 +200,10 @@
 
 		{foreach $rentalService->getAmenitiesByType('parking') as $parking}
 		{_$parking->name}
+=======
+		{foreach $rental->types AS $rentalType}
+			{_$rentalType->name}
+>>>>>>> fix
 		{/foreach}
 
 
@@ -202,9 +212,6 @@
 			{_$information->name}
 		{/foreach}
 
-		{foreach $rental->media AS $medium}
-			{_$medium->message}
-		{/foreach}
 
 		<br/>
 
@@ -216,7 +223,11 @@
 		
 		<br/>
 		{$rental->interview}
+<<<<<<< HEAD
 		
+=======
+
+>>>>>>> fix
 
 		<div class="detailAmanities">
 			<ul class="objectDetailServicesIconList list">
