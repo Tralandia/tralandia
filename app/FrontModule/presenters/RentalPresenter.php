@@ -29,7 +29,9 @@ class RentalPresenter extends BasePresenter {
 
 	public function actionList() {
 
-		
+		$rentals = $this->rentalRepositoryAccessor->get()->findAll();
+
+		$this->template->rentals = $rentals;
 
 	}
 
