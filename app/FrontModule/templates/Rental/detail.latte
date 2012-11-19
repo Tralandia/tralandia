@@ -186,6 +186,7 @@
 
 		{dump $rental->pricelists}
 		{dump $rental->calendar}
+		{dump $rentalService}
 
 		{foreach $rental->types AS $rentalType}
 			{_$rentalType->name}
@@ -217,7 +218,7 @@
 		<div class="row-fluid">
 			<div class="span3">wqdqwd</div>
 			<div class="span3">wqdqwd</div>
-			<div class="span3">wqdqwd</div>
+			
 		</div>
 
 		<ul class="objectDetailServicesIconList list">
@@ -249,6 +250,7 @@
 						{foreach $rental->contacts->getByType('phone') as $phone }
 							{$phone} {if !$iterator->last}<br/>{/if}
 						{/foreach}
+						
 						</td>
 					</tr>
 					<tr>
@@ -346,8 +348,8 @@
 <div class="row-fluid">
 	<div class="span12">
 		<div class="marginBottom tabs">
-		    <ul>
-		        <li><a href="#tabs-1">Foto</a></li>
+		    <ul class="ui-tabs-nav">
+		        <li><a href="#gallery">Foto</a></li>
 		        <li><a href="#tabs-3">Ceny</a></li>
 		        <li><a href="#tabs-4">Vybavenie</a></li>
 		        <li><a href="#tabs-5">Interview</a></li>
@@ -379,7 +381,7 @@
 		    </div>
 		    
 
-		    <div id="tabs-1">
+		    <div id="gallery">
 		    	<ul class="biggall">
 		    		<li><img src="http://www.tralandia.sk/trax_html/images/img_1.gif" /><p>Lorem ipsum </p></li>
 		    		<li><img src="http://www.tralandia.sk/trax_html/images/img_1.gif" /><p>Lorem ipsum </p></li>
@@ -391,6 +393,10 @@
 		    </div>
 		    <div id="tabs-2">
 		    	
+
+		    	
+
+		    	<div id="map_canvas" style="width:200px;height:300px;"></div>
 
 		    	<div class="row-fluid marginTop">
 		    		<div class="span4">

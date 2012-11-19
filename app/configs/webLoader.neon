@@ -30,11 +30,13 @@ parameters:
 					- Front/contact-page.less
 					- Front/object-detail-favorites.less
 					- FrontJqUi/css/tralandia/jquery-ui-1.9.1.custom.css
+					
 
 				js:
 					- jQuery/jquery.js
 					- Front/js/fancy-checkboxes.js
 					- Front/js/bootstrap-dropdown.js
+					- Front/js/jquery-tra-map.js
 					- Front/js/main.js
 					- Front/js/jquery.scrollTo-1.4.3.1-min.js
 					- FrontJqUi/js/jquery-ui-1.9.1.custom.min.js
