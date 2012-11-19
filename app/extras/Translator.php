@@ -33,6 +33,7 @@ class Translator implements \Nette\Localization\ITranslator {
 
 	
 	protected function getTranslation($phrase) {
+		//d($phrase);
 		if($phrase instanceof \Service\Phrase\Phrase) {
 			$phraseId = $phrase->getEntity()->id;
 		} else if ($phrase instanceof \Entity\Phrase\Phrase){
@@ -40,6 +41,7 @@ class Translator implements \Nette\Localization\ITranslator {
 		} else {
 			$phraseId = $phrase;
 		}
+		//d($phraseId, $phrase);
 		$translationKey = $phraseId.'_'.$this->language->id;
 		
 		$translation = $this->cache->load($translationKey);
@@ -63,9 +65,9 @@ class Translator implements \Nette\Localization\ITranslator {
 				$translation = $translation->translation;
 			}
 
+			if($translation === NULL) $translation = '{'.$phraseId.'|'.$this->language->iso.'}';
 			$this->cache->save($translationKey, $translation);
 		}
-		if($translation === NULL) $translation = '{'.$phraseId.'|'.$this->language->iso.'}';
 		return $translation;
 	}
 
