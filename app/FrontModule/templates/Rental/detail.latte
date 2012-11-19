@@ -184,13 +184,19 @@
 		{/foreach}
 		</p>
 
-		{dump $rental->pricelists}
-		{dump $rental->calendar}
-		{dump $rentalService}
-
-		{foreach $rental->types AS $rentalType}
-			{_$rentalType->name}
+		{foreach $rental->types as $type}
+		{_$type->name}
 		{/foreach}
+
+		{dump $rental->pricelists}
+		https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false
+		<br/>
+
+		{foreach $rentalService->getAmenitiesByType('parking') as $parking}
+		{_$parking->name}
+		{/foreach}
+
+
 		
 		{foreach $rental->missingInformation AS $information}
 			{_$information->name}
@@ -201,9 +207,7 @@
 		{/foreach}
 
 		<br/>
-		{$rental->checkIn}
-		<br/>
-		{$rental->checkOut}
+
 		<br/>
 		{$rental->latitude}
 
@@ -212,23 +216,39 @@
 		
 		<br/>
 		{$rental->interview}
-		{dump $rental->getAmenities()->getIterator()}
+		
 
+		<div class="detailAmanities">
+			<ul class="objectDetailServicesIconList list">
+			   <li>{_o22830} <strong>{$rental->checkIn}</strong></li>
+			   <li>{_o22831} <strong>{$rental->checkOut}</strong></li>
+			   <li>
+			   	{_o883}
+			   	<strong>
+					{foreach $rental->types AS $rentalType}
+						{_$rentalType->name}
+					{/foreach}
+			   	</strong>
 
-		<div class="row-fluid">
-			<div class="span3">wqdqwd</div>
-			<div class="span3">wqdqwd</div>
-			
+			   </li>
+			   <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
+			   <li>Aliquam tincidunt mauris eu risus.</li>
+			   <li>Vestibulum auctor dapibus neque.</li>
+			</ul>
+		</div>
+		<div class="detailAmanities">
+			<ul class="objectDetailServicesIconList list">
+			   <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
+			   <li>Aliquam tincidunt mauris eu risus.</li>
+			   <li>Vestibulum auctor dapibus neque.</li>
+			   <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
+			   <li>Aliquam tincidunt mauris eu risus.</li>
+			   <li>Vestibulum auctor dapibus neque.</li>
+			</ul>
 		</div>
 
-		<ul class="objectDetailServicesIconList list">
-		   <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
-		   <li>Aliquam tincidunt mauris eu risus.</li>
-		   <li>Vestibulum auctor dapibus neque.</li>
-		   <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
-		   <li>Aliquam tincidunt mauris eu risus.</li>
-		   <li>Vestibulum auctor dapibus neque.</li>
-		</ul>
+
+
 
 	</div>
 

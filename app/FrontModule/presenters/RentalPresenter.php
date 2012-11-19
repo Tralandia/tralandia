@@ -25,6 +25,9 @@ class RentalPresenter extends BasePresenter {
 
 		$this->template->rental = $rental;
 		$this->template->rentalService = $rentalService;
+
+		$this->setLayout('detailLayout');
+
 	}
 
 	public function actionList() {
@@ -32,6 +35,8 @@ class RentalPresenter extends BasePresenter {
 		$rentals = $this->rentalRepositoryAccessor->get()->findAll();
 
 		$this->template->rentals = $rentals;
+
+
 
 	}
 
