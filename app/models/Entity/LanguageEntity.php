@@ -55,24 +55,6 @@ class Language extends \Entity\BaseEntityDetails {
 	protected $plurals;
 
 	/**
-	 * @var string
-	 * @ORM\Column(type="string", nullable=true)
-	 */
-	protected $primarySingular;
-
-	/**
-	 * @var string
-	 * @ORM\Column(type="string", nullable=true)
-	 */
-	protected $primaryPlural;
-
-	/**
-	 * @var string
-	 * @ORM\Column(type="string", nullable=true)
-	 */
-	protected $primaryGender;
-
-	/**
 	 * @var json
 	 * @ORM\Column(type="json", nullable=true)
 	 * @EA\Json(structure="{1:, 2:, 3:}")
@@ -99,6 +81,59 @@ class Language extends \Entity\BaseEntityDetails {
 	 */
 	protected $backLinks;
 
+	public function getPluralsNames()
+	{
+		if(isset($this->plurals['names'])) {
+			return $this->plurals['names'];
+		}
+		return $this->getDefaultPluralsNames();
+	}
+
+	public function getDefaultPluralsNames()
+	{
+		return array('default' => 'default');
+	}
+
+	public function getPrimaryPluralKey()
+	{
+		$a = array_keys($this->getPluralsNames());
+		return reset($a);
+	}
+
+	public function getGendersNames()
+	{
+		if(isset($this->genders) && count($this->genders)) {
+			return $this->genders;
+		}
+		return $this->getDefaultGendersNames();
+	}
+
+	public function getDefaultGendersNames()
+	{
+		return array('default' => 'default');
+	}
+
+	public function getPrimaryGenderKey()
+	{
+		$a = array_keys($this->getGendersNames());
+		return reset($a);
+	}
+
+	public function getCasesNames()
+	{
+		return array('nominative' => 'Nominative', 'locative' => 'Locative');
+	}
+
+	public function getDefaultCasesNames()
+	{
+		return array('default' => 'default');
+	}
+
+	public function getPrimaryCaseKey()
+	{
+		$a = array_keys($this->getCasesNames());
+		return reset($a);
+	}
 
 	//@entity-generator-code --- NEMAZAT !!!
 
@@ -273,93 +308,6 @@ class Language extends \Entity\BaseEntityDetails {
 	public function getPlurals()
 	{
 		return $this->plurals;
-	}
-		
-	/**
-	 * @param string
-	 * @return \Entity\Language
-	 */
-	public function setPrimarySingular($primarySingular)
-	{
-		$this->primarySingular = $primarySingular;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Language
-	 */
-	public function unsetPrimarySingular()
-	{
-		$this->primarySingular = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return string|NULL
-	 */
-	public function getPrimarySingular()
-	{
-		return $this->primarySingular;
-	}
-		
-	/**
-	 * @param string
-	 * @return \Entity\Language
-	 */
-	public function setPrimaryPlural($primaryPlural)
-	{
-		$this->primaryPlural = $primaryPlural;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Language
-	 */
-	public function unsetPrimaryPlural()
-	{
-		$this->primaryPlural = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return string|NULL
-	 */
-	public function getPrimaryPlural()
-	{
-		return $this->primaryPlural;
-	}
-		
-	/**
-	 * @param string
-	 * @return \Entity\Language
-	 */
-	public function setPrimaryGender($primaryGender)
-	{
-		$this->primaryGender = $primaryGender;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Language
-	 */
-	public function unsetPrimaryGender()
-	{
-		$this->primaryGender = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return string|NULL
-	 */
-	public function getPrimaryGender()
-	{
-		return $this->primaryGender;
 	}
 		
 	/**

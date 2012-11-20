@@ -22,8 +22,7 @@ class ImportPathSegments extends BaseImport {
 
 	public function doImport($subsection = NULL) {
 
-		$pathSegment = new \Extras\Cron\PathSegments();
-		$pathSegment->updatePathsegments();
+		$this->context->generatePathSegmentsRobot->run();
 		return;
 	}
 

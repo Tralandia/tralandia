@@ -82,6 +82,7 @@ class ImportAttractions extends BaseImport {
 
 			$attraction->contacts = $contacts;
 
+			$model->persist($attraction);
 			// Media
 			$temp = array_unique(array_filter(explode(',', $x['photos'])));
 			if (is_array($temp) && count($temp)) {
@@ -97,7 +98,6 @@ class ImportAttractions extends BaseImport {
 					}
 				}
 			}
-			$model->persist($attraction);
 		}
 
 		$model->flush();

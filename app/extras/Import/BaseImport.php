@@ -31,6 +31,13 @@ class BaseImport {
 			),
 			'subsections' => array(),
 		),
+		'amenities' => array(
+			'entities' => array(
+				'\Rental\AmenityType' => array(),
+				'\Rental\Amenity' => array(),
+			),
+			'subsections' => array(),
+		),
 		'currencies' => array(
 			'entities' => array(
 				'\Currency' => array(),
@@ -74,13 +81,6 @@ class BaseImport {
 				'\User\Combination' => array(),
 			),
 			'subsections' => array('importSuperAdmins', 'importAdmins', 'importManagers', 'importTranslators', 'importOwners', 'importPotentialOwners', 'importVisitors'),
-		),
-		'amenities' => array(
-			'entities' => array(
-				'\Rental\AmenityType' => array(),
-				'\Rental\Amenity' => array(),
-			),
-			'subsections' => array(),
 		),
 		'rentalTypes' => array(
 			'entities' => array(
@@ -144,13 +144,13 @@ class BaseImport {
 			),
 			'subsections' => array('importSeoUrls'),
 		),
-		'tickets' => array(
-			'entities' => array(
-				'\Ticket\Ticket' => array(),
-				'\Ticket\Message' => array(),
-			),
-			'subsections' => array(),
-		),
+		// 'tickets' => array(
+		// 	'entities' => array(
+		// 		'\Ticket\Ticket' => array(),
+		// 		'\Ticket\Message' => array(),
+		// 	),
+		// 	'subsections' => array(),
+		// ),
 		'pathsegments' => array(
 			'entities' => array(
 				'\Routing\PathSegment' => array(),

@@ -189,9 +189,8 @@
 		{/foreach}
 		</p>
 
-
 		{foreach $rental->types as $type}
-		{_$type->name}
+			{_$type->name}
 		{/foreach}
 
 		{dump $rental->pricelists}
@@ -199,6 +198,7 @@
 		<br/>
 
 		{foreach $rentalService->getAmenitiesByType('parking') as $parking}
+
 		{_$parking->name}
 
 		{/foreach}
