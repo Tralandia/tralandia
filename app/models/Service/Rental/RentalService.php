@@ -37,8 +37,8 @@ class RentalService extends Service\BaseService
 		return $return;
 	}
 
-	public function getPhotos() {
-		return $this->getMediaByType('image/jpeg');
+	public function getPhotos($limit = NULL) {
+		return $this->getMediaByType('image/jpeg', $limit);
 	}
 
 	public function getMediaByType($types, $limit = NULL) {

@@ -72,21 +72,21 @@ class PhraseService extends Service\BaseService {
 
 	public function getTranslationVariationsMatrix($language) {
 		if($this->getEntity()->type->pluralVariationsRequired) {
-			$plurals = $language->plurals;
+			$plurals = $language->getPluralsNames();
 		} else {
-			$plurals = array('default' => 'default');
+			$plurals = $language->getDefaultPluralsNames();
 		}
 
 		if($this->getEntity()->type->genderVariationsRequired) {
-			$genders = $language->genders;
+			$genders = $language->getGendersNames();
 		} else {
-			$genders = array('default' => 'default');
+			$genders = $language->getDefaultGendersNames();
 		}
 
 		if($this->getEntity()->type->locativesRequired) {
-			$cases = array('nominative' => 'Nominative', 'locative' => 'Locative');
+			$cases = $language->getCasesNames();
 		} else {
-			$cases = array('default' => 'default');
+			$cases = $language->getDefaultCasesNames();
 		}
 
 		$matrix = array();
@@ -97,6 +97,7 @@ class PhraseService extends Service\BaseService {
 				}
 			}
 		}
+
 		return $matrix;
 	}
 }

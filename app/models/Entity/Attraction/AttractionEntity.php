@@ -64,8 +64,7 @@ class Attraction extends \Entity\BaseEntityDetails {
 	 */
 	protected $media;
 
-
-								//@entity-generator-code --- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()

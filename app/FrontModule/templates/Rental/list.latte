@@ -3,20 +3,135 @@
  *}
 
 {block content}
-<div class="mainRight">
-<div class="panelGreen">
-	<div class="top"></div>
-	<div class="content">
-		<h1 class="brown objectList">Drevenice na Slovensku</h1>
-		<div class="navigator"><a href="#">Ubytovanie Slovensko</a> &gt; <a href="#">Liptov</a> &gt; <a href="#">Chaty</a> &gt; Luxusne</div>
-		<table class="holder fbBtns">
-			<tr>
-				<td valign="top"><a class="FBshareButton" href="#"><span class="text">Zdielajte</span><span class="space">&nbsp;</span></a></td>
-				<td>&nbsp;</td>
-			</tr>
-		</table>
-	</div>
-	<div class="bottom"></div>
-</div>
-</div>
 
+<div class="row-fluid">
+
+	<div class="span12">
+		<h1 class="marginLeft">Drevenice an slovensku </h1>
+	</div>
+
+	<div class="span12">
+		<ul class="breadcrumb">
+		  <li><a href="#">Home</a> <span class="divider">/</span></li>
+		  <li><a href="#">Library</a> <span class="divider">/</span></li>
+		  <li class="active">Data</li>
+		</ul>
+	</div>
+
+
+
+</div>
+	<div class="row-fluid">
+	<div class="span12">
+		<div class="tabs">
+		    <ul>
+		        <li><a href="#tabs-1">{_o1068}</a></li>
+		        <li><a href="#tabs-2">{_o1625}</a></li>
+		        <li><a href="#tabs-3">{_o1626}</a></li>
+		    </ul>
+		    <div id="tabs-1">
+
+
+		    	{foreach $rentals as $rental}
+
+		        <div class="row-fluid objecList">
+		        	<div class="span4">
+		        		<!--<div class="addons btn">icon</div>--><div class="position btn">Top</div>
+		        		<img src="http://flickholdr.com/240/150/travel" />
+		        	</div>
+		        	<div class="span8">
+		        		<h2><a href="{link Rental:detail $rental->id}">{_$rental->name}</a></h2>
+		        		<button class="btn btn-mini listCompareBtn active"><span class="entypo-like"> porovnaj</span> </button>
+		        		<div class="clearfix"></div>
+		        		<p>
+						{foreach $rental->getLocations() as $location}
+							<span n:class="$iterator->first ? bold" >{_$location->name}</span>{if !$iterator->last}, {/if}
+						{/foreach}		        			
+		        		</p>
+		        		<p class="red bold">{_$rental->teaser}</p>
+
+						<div class="panel baseBorder baseRadius">
+                            <table class="holder">
+                                <tbody><tr>
+                                    <td width="90%">
+                                        <b>Spalni:</b> 4, <b>Kupelni:</b> 2, <b>Osob:</b> 6<br>
+                                        <b>Sezona: 9,50 €, Mimosezona: 8,50 €</b> osoba/noc
+                                    </td>
+                                    <td nowrap="">
+                                        <span class="entypo-phone"></span><a href="{link Rental:detail $rental->id}">Kontaktujte</a><br>
+                                        <span class="entypo-discusion"></span><a href="#">{$rental->rank} hodnoteni</a>
+                                    </td>
+                                </tr>
+                            </tbody></table>
+                            <p class="accessories"><b>Vybavenie:</b> 
+                            	{foreach $rental->amenities as $amenity}
+                            		{_$amenity->name}{if !$iterator->last}, {/if}
+                            	{/foreach}
+                            </p>
+                        </div>
+
+		        	</div>		        	
+		        </div>
+
+		    	{/foreach}
+
+		        <div class="grid-paginator pagination pull-right">
+		        	
+					  <ul>
+					    <li><a href="#" class="entypo-prev"></a></li>
+					    <li class="active"><a href="#">1</a></li>
+					    <li><a href="#">2</a></li>
+					    <li><a href="#">3</a></li>
+					    <li><a href="#">4</a></li>
+					    <li><a href="#" class="entypo-next"></a></li>
+					  </ul>
+		        	
+		        </div>
+
+		    </div>
+		    <div id="tabs-2">
+
+		    	<div class="row-fluid">
+				<div class="span4">
+					<ul class="list">
+					   <li><a href="#">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</a></li>
+					   <li><a href="#">Aliquam tincidunt mauris eu risus.</a></li>
+					   <li><a href="#">Vestibulum auctor dapibus neque.</a></li>
+					   <li><a href="#">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</a></li>
+					   <li><a href="#">Aliquam tincidunt mauris eu risus.</a></li>
+					   <li><a href="#">Vestibulum auctor dapibus neque.</a></li>
+					</ul>
+				</div>
+
+				<div class="span4">
+					<ul class="list">
+					   <li><a href="#">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</a></li>
+					   <li><a href="#">Aliquam tincidunt mauris eu risus.</a></li>
+					   <li><a href="#">Vestibulum auctor dapibus neque.</a></li>
+					   <li><a href="#">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</a></li>
+					   <li><a href="#">Aliquam tincidunt mauris eu risus.</a></li>
+					   <li><a href="#">Vestibulum auctor dapibus neque.</a></li>
+					</ul>
+				</div>
+
+				<div class="span4">
+					<ul class="list">
+					   <li><a href="#">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</a></li>
+					   <li><a href="#">Aliquam tincidunt mauris eu risus.</a></li>
+					   <li><a href="#">Vestibulum auctor dapibus neque.</a></li>
+					   <li><a href="#">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</a></li>
+					   <li><a href="#">Aliquam tincidunt mauris eu risus.</a></li>
+					   <li><a href="#">Vestibulum auctor dapibus neque.</a></li>
+					</ul>
+				</div>
+			</div>
+
+		    </div>
+		    <div id="tabs-3">
+		        <p>Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate, pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem. Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem enim, pretium nec, feugiat nec, luctus a, lacus.</p>
+		        <p>Duis cursus. Maecenas ligula eros, blandit nec, pharetra at, semper at, magna. Nullam ac lacus. Nulla facilisi. Praesent viverra justo vitae neque. Praesent blandit adipiscing velit. Suspendisse potenti. Donec mattis, pede vel pharetra blandit, magna ligula faucibus eros, id euismod lacus dolor eget odio. Nam scelerisque. Donec non libero sed nulla mattis commodo. Ut sagittis. Donec nisi lectus, feugiat porttitor, tempor ac, tempor vitae, pede. Aenean vehicula velit eu tellus interdum rutrum. Maecenas commodo. Pellentesque nec elit. Fusce in lacus. Vivamus a libero vitae lectus hendrerit hendrerit.</p>
+		    </div>
+		</div>
+	</div>
+
+</div>

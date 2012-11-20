@@ -153,16 +153,16 @@ class Translation extends \Entity\BaseEntity {
 
 		$phraseType = $this->phrase->type;
 		$language = $this->language;
-		if($phraseType->pluralVariationsRequired && $language->primarySingular) {
-			$return[0] = $language->primarySingular;
+		if($phraseType->pluralVariationsRequired) {
+			$return[0] = $language->getPrimaryPluralKey();
 		}
 
-		if($phraseType->genderVariationsRequired && $language->primaryGender) {
-			$return[1] = $language->primaryGender;
+		if($phraseType->genderVariationsRequired) {
+			$return[1] = $language->getPrimaryGenderKey();
 		}
 
 		if($phraseType->locativesRequired) {
-			$return[2] = 'nominative';
+			$return[2] = $language->getPrimaryCaseKey();
 		}
 
 		return $return;
