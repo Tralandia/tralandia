@@ -176,6 +176,12 @@ class BaseImport {
 			'subsections' => array(),
 			'saveImportStatus' => FALSE,
 		),
+		'page' => array(
+			'entities' => array(
+			),
+			'subsections' => array(),
+			'saveImportStatus' => FALSE,
+		),
 	);
 
 	public $savedVariables = array();
@@ -316,8 +322,15 @@ class BaseImport {
 		$allLanguages = getSupportedLanguages();
 		foreach ($allLanguages as $key => $value) {
 			$language = $this->context->languageRepository->find($value);
-			$oldTranslation = qf('select * from z_'.$language->iso.' where id = '.$oldPhraseId);
-			if (strlen($oldTranslation['text']) == 0) continue;
+
+			if($oldPhraseId) {
+				$oldTranslation = qf('select * from z_'.$language->iso.' where id = '.$oldPhraseId);
+				$oldTranslationText = $oldTranslation['text'];
+				$oldTranslationUpdated = fromStamp($oldTranslation['updated']);
+			} else {
+				$oldTranslationText = '';
+				$oldTranslationUpdated = new \Nette\DateTime();
+			}
 
 			// $variations = NULL;
 			// if ($oldLocativePhraseId > 0) {
@@ -327,8 +340,8 @@ class BaseImport {
 			// 		$variations[$locativeKeys[0]][$locativeKeys[1]]['locative'] = $oldTranslationLocative['text'];
 			// 	}
 			// }
-			$translation = $phraseService->createTranslation($language, (string)$oldTranslation['text']);
-			$translation->timeTranslated = fromStamp($oldTranslation['updated']);
+			$translation = $phraseService->createTranslation($language, (string)$oldTranslationText);
+			$translation->timeTranslated = $oldTranslationUpdated;
 		}
 		//$phrase->save();
 		return $phrase;
