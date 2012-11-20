@@ -54,7 +54,7 @@ class ImportRentals extends BaseImport {
 		$now = time();
 
 		if ($this->developmentMode == TRUE) {
-			$r = q('select * from objects where country_id = 46 order by rand() limit 1');
+			$r = q('select * from objects where country_id = 46 order by rand() limit 10');
 		} else {
 			$r = q('select * from objects');
 		}
@@ -287,7 +287,6 @@ class ImportRentals extends BaseImport {
 			$rental->calendarUpdated = fromStamp($x['calendar_updated']);
 
 			$rental->created = fromStamp($x['date_added']);
-			$model->persist($rental);
 
 			//@todo
 			//$rental->rank = $rental->calculateRank(); // urobit tuto fciu
