@@ -25,7 +25,7 @@ class WaccoPresenter extends BasePresenter {
 
 	public function actionList3() {
 		$repo = $this->context->model->getRepository('Entity\Location\Location');
-		$entity = $repo->find(563);
+		$entity = $repo->find(87);
 		$this->template->form = $this->getForm('location', $entity);
 	}
 
