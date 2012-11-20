@@ -28,7 +28,13 @@ class Page extends \Entity\BaseEntity {
 	/**
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
-	 * example: :Module:Presenter:Action
+	 */
+	protected $hash;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string")
+	 * example: :Module:Presenter:action
 	 */
 	protected $destination;
 
@@ -42,9 +48,21 @@ class Page extends \Entity\BaseEntity {
 	 * @var Collection
 	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
 	 */
+	protected $titlePattern;
+
+	/**
+	 * @var Collection
+	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
+	 */
+	protected $h1Pattern;
+
+	/**
+	 * @var Collection
+	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
+	 */
 	protected $genericContent;
 
-								//@entity-generator-code --- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()
@@ -104,9 +122,9 @@ class Page extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Page
 	 */
-	public function setDestination($destination)
+	public function setHash($hash)
 	{
-		$this->destination = $destination;
+		$this->hash = $hash;
 
 		return $this;
 	}
@@ -114,9 +132,28 @@ class Page extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Page
 	 */
-	public function unsetDestination()
+	public function unsetHash()
 	{
-		$this->destination = NULL;
+		$this->hash = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getHash()
+	{
+		return $this->hash;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Page
+	 */
+	public function setDestination($destination)
+	{
+		$this->destination = $destination;
 
 		return $this;
 	}
@@ -156,6 +193,44 @@ class Page extends \Entity\BaseEntity {
 	public function getParameters()
 	{
 		return $this->parameters;
+	}
+		
+	/**
+	 * @param \Entity\Phrase\Phrase
+	 * @return \Entity\Page
+	 */
+	public function setTitlePattern(\Entity\Phrase\Phrase $titlePattern)
+	{
+		$this->titlePattern = $titlePattern;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Phrase\Phrase|NULL
+	 */
+	public function getTitlePattern()
+	{
+		return $this->titlePattern;
+	}
+		
+	/**
+	 * @param \Entity\Phrase\Phrase
+	 * @return \Entity\Page
+	 */
+	public function setH1Pattern(\Entity\Phrase\Phrase $h1Pattern)
+	{
+		$this->h1Pattern = $h1Pattern;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Phrase\Phrase|NULL
+	 */
+	public function getH1Pattern()
+	{
+		return $this->h1Pattern;
 	}
 		
 	/**

@@ -78,7 +78,7 @@ class EntityGeneratorPresenter extends BasePresenter {
 			list($x, $entityNameTemp) = explode('/models/', $key, 2);
 			$entityNameTemp = str_replace(array('//', '/', '.php'), array('\\', '\\', ''), $entityNameTemp);
 
-			$filename = $key;
+			$filename = str_replace('.php', 'Entity.php', $key);
 			
 			$mainEntityReflector = $this->getEntityReflection($entityNameTemp);
 			$newClass = $this->generateNewClass($mainEntityReflector);
@@ -285,6 +285,7 @@ class EntityGeneratorPresenter extends BasePresenter {
 	}
 
 	public function getEntityReflection($name) {
+		if(Strings::endsWith($name, 'Entity')) $name = substr($name, 0, -6);
 		if(!array_key_exists($name, $this->entitiesReflection)) {
 			$this->entitiesReflection[$name] = new Reflection\ClassType($name);
 		}
@@ -448,7 +449,7 @@ class EntityGeneratorPresenter extends BasePresenter {
 			throw new \Exception("Neblbni!", 1);
 		}
 
-		d($methodName->prefix.$methodName->name, $this->skipMethods);
+		// d($methodName->prefix.$methodName->name, $this->skipMethods);
 		if(in_array($methodName->prefix.$methodName->name, $this->skipMethods)) {
 			return false;
 		}
