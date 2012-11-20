@@ -25,7 +25,7 @@ class ImportSeo extends BaseImport {
 
 
 		// Detaching all media
-		qNew('update medium set seoUrl_id = NULL where seoUrl_id > 0');
+		// qNew('update medium set seoUrl_id = NULL where seoUrl_id > 0');
 
 		$languagesByOldId = getNewIdsByOld('\Language');
 
