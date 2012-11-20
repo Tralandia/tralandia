@@ -96,6 +96,12 @@ App.prototype.uiSelectedTabs = function(){
 	var setting = {
 		active: currentIndex
 	};
+
+	if(currentIndex == 4) {
+		/* large map plugin */
+		$('#map_canvas').traMap();
+	}
+
 	return setting;
 }
 
@@ -130,15 +136,19 @@ App.prototype.buttonCompareClick = function(){
 }
 
 
-
 App.prototype.uiTabsClickChangeHashAdress = function(){
 
 	var self = new App;
-
+	
 	$.scrollTo(this,{duration:500 , offset: -50} );
 	var currentTabId = $(this).attr('href');
 	self._setLocationUrlAnchor($(this).attr('href'));
 	$(this).blur();
+
+	if($(this).attr('href') == '#tabs-2'){
+		/* large map plugin */
+		$('#map_canvas').traMap();	
+	}
 }
 
 
@@ -152,8 +162,20 @@ App.prototype.uiTabsClickChangeHashAdress = function(){
 
 App.prototype.initMapsObjectDetail = function(){
 	$('#objectDetailListMap').trigger('click');
+	/* large map plugin */
+	$('#map_canvas').traMap();	
 }
 
+App.prototype.addToViewList = function(){
+	var params = {
+		name: $(this).attr('name'),
+		thumb: $(this).attr('thumb'),
+		url: $(this).attr('url'),
+		id: $(this).attr('id')
+	}
+
+	console.log(params);
+}
 
 /****************************************************************************************************
 *	RUNN APPS
@@ -165,18 +187,21 @@ $(document).ready(function(){
 	var A = new App();
 
 	/* register listeners */
-
+	/* UI toogle function */
 	$('.toogle').click(A.uiToogleClick);
+	/* compare button click */
 	$('.btn-compare').click(A.buttonCompareClick);
+	/* object detail init large map after small map click */
 	$('.mapsImg').click(A.initMapsObjectDetail);
-
+	/* UI tabs */
 	$( ".tabs" ).tabs(A.uiSelectedTabs());
 	$( ".tabs ul li a" ).click(A.uiTabsClickChangeHashAdress);
-
+	/* UI calendar */
 	$( ".datepicker" ).datepicker();	
 	$('.accordion').accordion({ autoHeight: false , active: false , navigation: true, collapsible: true });
-	$('.spinner').spinner();
+	
 
-	$('#map_canvas').traMap();
+	$('.addToViewList').ready(A.addToViewList);
+
 
 });
