@@ -9,6 +9,13 @@ use Nette\Application\UI\Presenter,
 
 abstract class BasePresenter extends Presenter {
 
+	/** @persistent */
+	public $language;
+
+	/** @persistent */
+	public $primaryLocation;
+
+
 	public $cssFiles;
 	public $cssRemoteFiles;
 	public $jsFiles;

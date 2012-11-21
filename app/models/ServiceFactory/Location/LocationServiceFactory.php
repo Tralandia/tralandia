@@ -15,7 +15,7 @@ class LocationServiceFactory extends Factory\BaseServiceFactory {
 	protected $locationRepositoryAccessor;
 
 	public function __construct($entityFactory, $locationRepositoryAccessor, Doctrine\ORM\EntityManager $model) {
-		parent::__construct($model, $entityFactory);
+		parent::__construct($entityFactory, $model);
 		$this->locationRepositoryAccessor = $locationRepositoryAccessor;
 	}
 

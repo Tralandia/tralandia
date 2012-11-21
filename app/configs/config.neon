@@ -30,7 +30,7 @@ common:
 		editor: 'txmt://open/?url=file://%file&line=%line'
 
 		router:
-			hostPattern: '~^(?P<langauge>\w+)\.(?P<domain>\w+)\.(?P<country>\w+)$~'
+			hostMask: '<language>.<country>.<domain>.com'
 
 		settingsDir: %appDir%/configs
 
@@ -70,8 +70,8 @@ common:
 		routerCache: Nette\Caching\Cache(@cacheStorage, 'Router')
 		translatorCache: Nette\Caching\Cache(@cacheStorage, 'Translator')
 
-		mainRouteFactory:
-			class: Routers\MainRouteFactory(@routerCache, %router.hostPattern%)
+		frontRouteFactory:
+			class: Routers\FrontRouteFactory(@routerCache, %router.hostMask%)
 			setup:
 				- $locationRepositoryAccessor(@locationRepositoryAccessor)
 				- $languageRepositoryAccessor(@languageRepositoryAccessor)
@@ -199,6 +199,10 @@ development < common:
 			charset: utf8
 			driver: pdo_mysql
 			debugger: true
+
+		router:
+			hostMask: '<language>.<country>.<domain>.com'
+
 
 vaculciak < development:
 	parameters:
