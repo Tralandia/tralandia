@@ -3,11 +3,11 @@ namespace Routers;
 
 use Nette\Caching;
 /**
- * MainRouteFactory class
+ * FrontRouteFactory class
  *
  * @author Dávid Ďurika
  */
-class MainRouteFactory {
+class FrontRouteFactory {
 
 	protected $cache;
 	protected $hostPattern;
@@ -24,7 +24,7 @@ class MainRouteFactory {
 	}
 
 	public function create() {
-		$route = new MainRoute($this->cache, $this->hostPattern);
+		$route = new FrontRoute($this->cache, $this->hostPattern);
 		$route->locationRepositoryAccessor = $this->locationRepositoryAccessor;
 		$route->languageRepositoryAccessor = $this->languageRepositoryAccessor;
 		$route->rentalRepositoryAccessor = $this->rentalRepositoryAccessor;

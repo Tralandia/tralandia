@@ -12,9 +12,10 @@ use Nette\Application\Routers\RouteList,
  */
 class RouterFactory
 {
+	protected $frontRouteFactory;
 
-	public function __construct(MainRouteFactory $mainRoute) {
-
+	public function __construct(FrontRouteFactory $frontRouteFactory) {
+		$this->frontRouteFactory = $frontRouteFactory;
 	}
 
 	/**
@@ -50,12 +51,9 @@ class RouterFactory
 		));
 
 		$router[] = $frontRouter = new RouteList('Front');
-	/*	$frontRouter[] = new \Extras\Route($container->routerCache, array(
-									'presenter' => 'David',
-									'action' => 'default',
-									'country' => 'SK',
-								));
-	*/
+
+		$frontRouter[] = $this->frontRouteFactory->create();
+	
 		
 		$frontRouter[] = new Route('<presenter>/[<action>[/<id>]]', 'Home:default');
 

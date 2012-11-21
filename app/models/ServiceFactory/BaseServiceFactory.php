@@ -15,7 +15,7 @@ abstract class BaseServiceFactory {
 	public $entityFactory;
 
 
-	public function __construct(\Doctrine\ORM\EntityManager $model, $entityFactory = NULL) {
+	public function __construct($entityFactory = NULL, \Doctrine\ORM\EntityManager $model) {
 		$this->model = $model;
 		$this->entityFactory = $entityFactory;
 	}
