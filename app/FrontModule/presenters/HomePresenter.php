@@ -4,9 +4,12 @@ namespace FrontModule;
 
 class HomePresenter extends BasePresenter {
 
-	protected function startup() {
+	public $locationTypeRepositoryAccessor;
 
+	protected function startup() {
 		parent::startup();
+
+		$this->setProperty('locationTypeRepositoryAccessor');
 		
 	}
 
@@ -31,17 +34,17 @@ class HomePresenter extends BasePresenter {
 
 		$tabBar = new \BaseModule\Components\TabControl\TabControl();
 
-		$content = new \FrontModule\Components\Rentals\TopRentals($this->rentalRepository);
+		$content = new \FrontModule\Components\Rentals\TopRentals($this->rentalRepositoryAccessor);
 		$tab = $tabBar->addTab('top');
 		$tab->setHeading(806);
 		$tab->setContent($content);
 
-		$content = new \FrontModule\Components\RegionsPage\Regions($this->locationRepository, $this->locationTypeRepository);
+		$content = new \FrontModule\Components\RegionsPage\Regions($this->locationRepositoryAccessor, $this->locationTypeRepositoryAccessor);
 		$tab = $tabBar->addTab('regions');
 		$tab->setHeading(678);
 		$tab->setContent($content)->setActive();
 
-		$content = new \FrontModule\Components\LocalitiesPage\Localities($this->locationRepository, $this->locationTypeRepository);
+		$content = new \FrontModule\Components\LocalitiesPage\Localities($this->locationRepositoryAccessor, $this->locationTypeRepositoryAccessor);
 		$tab = $tabBar->addTab('localities');
 		$tab->setHeading(725);
 		$tab->setContent($content);

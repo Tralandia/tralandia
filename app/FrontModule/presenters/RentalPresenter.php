@@ -5,11 +5,13 @@ namespace FrontModule;
 class RentalPresenter extends BasePresenter {
 
 	public $rentalServiceFactory;
+	public $rentalAmenityTypeRepositoryAccessor;
 
 	public function setContext(\Nette\DI\Container $dic) {
 		parent::setContext($dic);
 
 		$this->setProperty('rentalServiceFactory');
+		$this->setProperty('rentalAmenityTypeRepositoryAccessor');
 	}
 
 
@@ -22,6 +24,12 @@ class RentalPresenter extends BasePresenter {
 		}
 		
 		$rentalService = $this->rentalServiceFactory->create($rental);
+
+		// get amenities by type
+		$amenities = $rentalService->getAmenitiesByType(array('bathroom', 'congress'));
+
+		// get locations by type
+		$locations = $rentalService->getLocationsByType(array('region'));
 
 		$this->template->rental = $rental;
 		$this->template->rentalService = $rentalService;
