@@ -107,26 +107,28 @@ services:
 			- setup()
 
 	environment: Extras\Environment(@application::getRequests(), @languageRepositoryAccessor, @locationRepositoryAccessor)
-	translator: Extras\Translator(@environment, @phraseRepositoryAccessor, @phraseServiceFactory, @translatorCache)
+	translator: Extras\Translator(@environment, @phraseRepositoryAccessor, @translatorCache)
 
 	settings:
 		factory: Extras\PresenterSettings::factory
 
-	emailCompiler: 
-		class: Extras\Email\Compiler
-		setup:
-			- $phraseServiceFactory(@phraseServiceFactory)
-			- setVariableFactory(rental, @rentalEmailVariableFactory)
-			- setVariableFactory(language, @languageEmailVariableFactory)
-			- setVariableFactory(location, @locationEmailVariableFactory)
-			- setVariableFactory(visitor, @visitorEmailVariableFactory)
-			- setVariableFactory(environment, @environmentEmailVariableFactory)
+	# @TODO ------------------------ 
+	# emailCompiler: 
+	# 	class: Extras\Email\Compiler
+	# 	setup:
+	# 		- $phraseServiceFactory(@phraseServiceFactory)
+	# 		- setVariableFactory(rental, @rentalEmailVariableFactory)
+	# 		- setVariableFactory(language, @languageEmailVariableFactory)
+	# 		- setVariableFactory(location, @locationEmailVariableFactory)
+	# 		- setVariableFactory(visitor, @visitorEmailVariableFactory)
+	# 		- setVariableFactory(environment, @environmentEmailVariableFactory)
 
-	rentalEmailVariableFactory: Extras\Email\Variables\RentalVariablesFactory(@rentalServiceFactory)
-	languageEmailVariableFactory: Extras\Email\Variables\LanguageVariablesFactory(@languageServiceFactory)
-	locationEmailVariableFactory: Extras\Email\Variables\LocationVariablesFactory(@locationServiceFactory)
-	visitorEmailVariableFactory: Extras\Email\Variables\UserVariablesFactory('VisitorVariables', @userServiceFactory)
-	environmentEmailVariableFactory: Extras\Email\Variables\EnvironmentVariablesFactory
+	# rentalEmailVariableFactory: Extras\Email\Variables\RentalVariablesFactory(@rentalServiceFactory)
+	# languageEmailVariableFactory: Extras\Email\Variables\LanguageVariablesFactory(@languageServiceFactory)
+	# locationEmailVariableFactory: Extras\Email\Variables\LocationVariablesFactory(@locationServiceFactory)
+	# visitorEmailVariableFactory: Extras\Email\Variables\UserVariablesFactory('VisitorVariables', @userServiceFactory)
+	# environmentEmailVariableFactory: Extras\Email\Variables\EnvironmentVariablesFactory
+	# --------------------------------
 
 	ticketFetcherApi:
 		class: Horo\Api( %ticketFetcherApi.host%, %ticketFetcherApi.email%, %ticketFetcherApi.password%, 'INBOX', %ticketFetcherApi.port%, %ticketFetcherApi.tls% )
@@ -138,14 +140,14 @@ services:
 	templateHelpers:
 		class: Extras\Helpers
 		arguments:
-			- @mediumServiceFactory
+			- @mediumDecoratorFactory
 
 	autopilot:
 		class: Service\Autopilot\Autopilot
 		setup:
 			- $taskRepository(@taskRepositoryAccessor)
 			- $taskTypeRepository(@taskTypeRepositoryAccessor)
-			- $taskServiceFactory(@taskServiceFactory)
+			- $taskServiceFactory(@taskDecoratorFactory)
 
 	taskManager:
 		class: Service\TaskManager\TaskManager
@@ -160,16 +162,16 @@ services:
 		arguments: 
 			- @routingPathSegmentRepositoryAccessor
 			- @routingPathSegmentEntityFactory
-			- @phraseServiceFactory
+			- @phraseDecoratorFactory
 			- @languageRepositoryAccessor
 			- @pageRepositoryAccessor
 			- @attractionTypeRepositoryAccessor
 			- @locationRepositoryAccessor
 			- @rentalTypeRepositoryAccessor
-			- @locationServiceFactory
+			- @locationDecoratorFactory
 
 	itemTextFactory: Extras\FormMask\Items\Foctories\TextFactory
-	itemPhraseFactory: Extras\FormMask\Items\Foctories\PhraseFactory(@phraseServiceFactory, @environment::getLanguage())
+	itemPhraseFactory: Extras\FormMask\Items\Foctories\PhraseFactory(@phraseDecoratorFactory, @environment::getLanguage())
 	itemYesNoFactory: Extras\FormMask\Items\Foctories\YesNoFactory
 	itemJsonFactory: Extras\FormMask\Items\Foctories\JsonFactory
 	itemNeonFactory: Extras\FormMask\Items\Foctories\NeonFactory

@@ -10,12 +10,6 @@ use Nette\Utils\Strings;
  */
 class LocationService extends Service\BaseService {
 
-	protected $locationRepositoryAccessor;
-
-	public function setLocationRepositoryAccessor($locationRepositoryAccessor) {
-		$this->locationRepositoryAccessor = $locationRepositoryAccessor;
-	}
-
 	// public function generateSlug() {
 
 	// 	if(!$this->getType() instanceof \Entity\Location\Type) {
