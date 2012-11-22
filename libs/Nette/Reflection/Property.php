@@ -39,7 +39,7 @@ class Property extends \ReflectionProperty
 
 	public function __toString()
 	{
-		return 'Property ' . parent::getDeclaringClass()->getName() . '::$' . $this->getName();
+		return parent::getDeclaringClass()->getName() . '::$' . $this->getName();
 	}
 
 
@@ -117,9 +117,9 @@ class Property extends \ReflectionProperty
 	/**
 	 * @return ClassType
 	 */
-	public static function getReflection()
+	public /**/static/**/ function getReflection()
 	{
-		return new ClassType(get_called_class());
+		return new ClassType(/*5.2*$this*//**/get_called_class()/**/);
 	}
 
 

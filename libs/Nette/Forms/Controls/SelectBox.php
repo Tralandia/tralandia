@@ -100,20 +100,12 @@ class SelectBox extends BaseControl
 	public function setPrompt($prompt)
 	{
 		if ($prompt === TRUE) { // back compatibility
+			trigger_error(__METHOD__ . '(TRUE) is deprecated; argument must be string.', E_USER_DEPRECATED);
 			$prompt = reset($this->items);
 			unset($this->allowed[key($this->items)], $this->items[key($this->items)]);
 		}
 		$this->prompt = $prompt;
 		return $this;
-	}
-
-
-
-	/** @deprecated */
-	function skipFirst($v = NULL)
-	{
-		trigger_error(__METHOD__ . '() is deprecated; use setPrompt() instead.', E_USER_WARNING);
-		return $this->setPrompt($v);
 	}
 
 

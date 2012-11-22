@@ -37,7 +37,7 @@ abstract class BasePresenter extends Presenter {
 		}
 	}
 
-	public function setContext(\Nette\DI\Container $dic) {
+	public function inject(\Nette\DI\Container $dic) {
 	}
 
 	public function setProperty($name, $value = NULL) {

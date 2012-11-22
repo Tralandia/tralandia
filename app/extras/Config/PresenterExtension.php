@@ -19,7 +19,7 @@ class PresenterExtension extends Nette\Config\CompilerExtension
 			$params = Nette\Utils\Neon::decode(file_get_contents($path));
 
 			$builder->addDefinition($this->prefix($prefix))
-				->setClass('Nette\DI\NestedAccessor', array('@container', $this->prefix($prefix)));
+				->setClass('Nette\Config\Extensions\NetteAccessor', array('@container', $this->prefix($prefix)));
 
 			$generator = $builder->addDefinition($this->prefix($prefix . '.formGenerator'))
 				->setClass('Extras\FormMask\Generator', array(new Nette\DI\Statement('Extras\FormMask\Mask')))

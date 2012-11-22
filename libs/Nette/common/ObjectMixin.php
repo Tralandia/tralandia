@@ -28,6 +28,10 @@ final class ObjectMixin
 	/** @var array */
 	private static $props;
 
+	/** @var array (method => array(type => callable)) */
+	private static $extMethods;
+
+
 
 	/**
 	 * Static class - cannot be instantiated.
@@ -55,16 +59,19 @@ final class ObjectMixin
 		if ($name === '') {
 			throw new MemberAccessException("Call to class '$class' method without name.");
 
+		} elseif ($isProp && $_this->$name instanceof \Closure) { // closure in property
+			return call_user_func_array($_this->$name, $args);
+
 		} elseif ($isProp === 'event') { // calling event handlers
 			if (is_array($_this->$name) || $_this->$name instanceof \Traversable) {
 				foreach ($_this->$name as $handler) {
-					Nette\Callback::create($handler)->invokeArgs($args);
+					Callback::create($handler)->invokeArgs($args);
 				}
 			} elseif ($_this->$name !== NULL) {
 				throw new UnexpectedValueException("Property $class::$$name must be array or NULL, " . gettype($_this->$name) ." given.");
 			}
 
-		} elseif ($cb = Reflection\ClassType::from($_this)->getExtensionMethod($name)) { // extension methods
+		} elseif ($cb = self::getExtensionMethod($class, $name)) { // extension methods
 			array_unshift($args, $_this);
 			return $cb->invokeArgs($args);
 
@@ -140,8 +147,17 @@ final class ObjectMixin
 			throw new MemberAccessException("Cannot read a class '$class' property without name.");
 
 		} elseif (isset(self::$methods[$class][$m = 'get' . $uname]) || isset(self::$methods[$class][$m = 'is' . $uname])) { // property getter
-			$val = $_this->$m();
-			return $val;
+			$isRef = & self::$methods[$class][$m];
+			if (!is_bool($isRef)) {
+				$rm = new \ReflectionMethod($class, $m);
+				$isRef = $rm->returnsReference();
+			}
+			if ($isRef) {
+				return $_this->$m();
+			} else {
+				$val = $_this->$m();
+				return $val;
+			}
 
 		} elseif (isset(self::$methods[$class][$name])) { // public method as closure getter
 			$val = Callback::create($_this, $name);
@@ -183,7 +199,7 @@ final class ObjectMixin
 
 		} else { // strict class
 			$type = isset(self::$methods[$class]['get' . $uname]) || isset(self::$methods[$class]['is' . $uname])
-			? 'a read-only' : 'an undeclared';
+				? 'a read-only' : 'an undeclared';
 			throw new MemberAccessException("Cannot write to $type property $class::\$$name.");
 		}
 	}
@@ -242,6 +258,74 @@ final class ObjectMixin
 			} catch (\ReflectionException $e) {}
 		}
 		return $prop;
+	}
+
+
+
+	/**
+	 * Adds a method to class.
+	 * @param  string
+	 * @param  string
+	 * @param  mixed   callable
+	 * @return void
+	 */
+	public static function setExtensionMethod($class, $name, $callback)
+	{
+		$l = & self::$extMethods[strtolower($name)];
+		$l[strtolower($class)] = new Callback($callback);
+		$l[''] = NULL;
+	}
+
+
+
+	/**
+	 * Returns extension method.
+	 * @param  string
+	 * @param  string
+	 * @return mixed
+	 */
+	public static function getExtensionMethod($class, $name)
+	{
+		/*5.2* if (self::$extMethods === NULL || $name === NULL) { // for backwards compatibility
+			$list = get_defined_functions(); // names are lowercase!
+			foreach ($list['user'] as $fce) {
+				$pair = explode('_prototype_', $fce);
+				if (count($pair) === 2) {
+					trigger_error("Declaring extension method as function $fce() is deprecated; use $pair[0]::extensionMethod('$pair[1]', ...) instead.", E_USER_WARNING);
+					self::$extMethods[$pair[1]][$pair[0]] = new Callback($fce);
+					self::$extMethods[$pair[1]][''] = NULL;
+				}
+			}
+			if ($name === NULL) {
+				return NULL;
+			}
+		}
+		*/
+
+		$class = strtolower($class);
+		$l = & self::$extMethods[strtolower($name)];
+
+		if (empty($l)) {
+			return FALSE;
+
+		} elseif (isset($l[''][$class])) { // cached value
+			return $l[''][$class];
+		}
+
+		$cl = $class;
+		do {
+			if (isset($l[$cl])) {
+				return $l[''][$class] = $l[$cl];
+			}
+		} while (($cl = strtolower(get_parent_class($cl))) !== '');
+
+		foreach (class_implements($class) as $cl) {
+			$cl = strtolower($cl);
+			if (isset($l[$cl])) {
+				return $l[''][$class] = $l[$cl];
+			}
+		}
+		return $l[''][$class] = FALSE;
 	}
 
 }

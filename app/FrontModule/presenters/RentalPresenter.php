@@ -6,8 +6,8 @@ class RentalPresenter extends BasePresenter {
 
 	public $rentalServiceFactory;
 
-	public function setContext(\Nette\DI\Container $dic) {
-		parent::setContext($dic);
+	public function inject(\Nette\DI\Container $dic) {
+		parent::inject($dic);
 
 		$this->setProperty('rentalServiceFactory');
 	}

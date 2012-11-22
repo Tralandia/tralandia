@@ -114,7 +114,7 @@ class Parameter extends \ReflectionParameter
 
 	public function __toString()
 	{
-		return 'Parameter $' . parent::getName() . ' in ' . $this->getDeclaringFunction();
+		return '$' . parent::getName() . ' in ' . $this->getDeclaringFunction();
 	}
 
 
@@ -126,9 +126,9 @@ class Parameter extends \ReflectionParameter
 	/**
 	 * @return ClassType
 	 */
-	public static function getReflection()
+	public /**/static/**/ function getReflection()
 	{
-		return new ClassType(get_called_class());
+		return new ClassType(/*5.2*$this*//**/get_called_class()/**/);
 	}
 
 

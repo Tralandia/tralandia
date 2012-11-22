@@ -11,8 +11,7 @@
 
 namespace Nette\Utils;
 
-use Nette,
-	Nette\Diagnostics\Debugger;
+use Nette;
 
 
 
@@ -55,15 +54,13 @@ class Strings
 	 */
 	public static function fixEncoding($s, $encoding = 'UTF-8')
 	{
-		// removes xD800-xDFFF, xFEFF, x110000 and higher
-		if (strcasecmp($encoding, 'UTF-8') === 0) {
-			$s = str_replace("\xEF\xBB\xBF", '', $s); // remove UTF-8 BOM
-		}
+		// removes xD800-xDFFF, x110000 and higher
 		if (PHP_VERSION_ID >= 50400) {
 			ini_set('mbstring.substitute_character', 'none');
 			return mb_convert_encoding($s, $encoding, $encoding);
+		} else {
+			return @iconv('UTF-16', 'UTF-8//IGNORE', iconv($encoding, 'UTF-16//IGNORE', $s)); // intentionally @
 		}
-		return @iconv('UTF-16', $encoding . '//IGNORE', iconv($encoding, 'UTF-16//IGNORE', $s)); // intentionally @
 	}
 
 
@@ -152,7 +149,7 @@ class Strings
 		$s = preg_replace('#[\x00-\x08\x0B-\x1F\x7F]+#', '', $s);
 
 		// right trim
-		$s = preg_replace("#[\t ]+$#m", '', $s);
+		$s = preg_replace('#[\t ]+$#m', '', $s);
 
 		// leading and trailing blank lines
 		$s = trim($s, "\n");
@@ -317,6 +314,33 @@ class Strings
 
 
 	/**
+	 * Finds the length of common prefix of strings.
+	 * @param  string|array
+	 * @param  string
+	 * @return string
+	 */
+	public static function findPrefix($strings, $second = NULL)
+	{
+		if (!is_array($strings)) {
+			$strings = func_get_args();
+		}
+		$first = array_shift($strings);
+		for ($i = 0; $i < strlen($first); $i++) {
+			foreach ($strings as $s) {
+				if (!isset($s[$i]) || $first[$i] !== $s[$i]) {
+					if ($i && $first[$i-1] >= "\x80" && $first[$i] >= "\x80" && $first[$i] < "\xC0") {
+						$i--;
+					}
+					return substr($first, 0, $i);
+				}
+			}
+		}
+		return $first;
+	}
+
+
+
+	/**
 	 * Returns UTF-8 string length.
 	 * @param  string
 	 * @return int
@@ -337,7 +361,7 @@ class Strings
 	public static function trim($s, $charlist = " \t\n\r\0\x0B\xC2\xA0")
 	{
 		$charlist = preg_quote($charlist, '#');
-		return self::replace($s, '#^['.$charlist.']+|['.$charlist.']+$#u', '');
+		return self::replace($s, '#^['.$charlist.']+|['.$charlist.']+\z#u', '');
 	}
 
 
@@ -423,10 +447,14 @@ class Strings
 	 */
 	public static function split($subject, $pattern, $flags = 0)
 	{
-		Debugger::tryError();
+		set_error_handler(function($severity, $message) use ($pattern) { // preg_last_error does not return compile errors
+			restore_error_handler();
+			throw new RegexpException("$message in pattern: $pattern");
+		});
 		$res = preg_split($pattern, $subject, -1, $flags | PREG_SPLIT_DELIM_CAPTURE);
-		if (Debugger::catchError($e) || preg_last_error()) { // compile error XOR run-time error
-			throw new RegexpException($e ? $e->getMessage() : NULL, $e ? NULL : preg_last_error(), $pattern);
+		restore_error_handler();
+		if (preg_last_error()) { // run-time error
+			throw new RegexpException(NULL, preg_last_error(), $pattern);
 		}
 		return $res;
 	}
@@ -446,10 +474,14 @@ class Strings
 		if ($offset > strlen($subject)) {
 			return NULL;
 		}
-		Debugger::tryError();
+		set_error_handler(function($severity, $message) use ($pattern) { // preg_last_error does not return compile errors
+			restore_error_handler();
+			throw new RegexpException("$message in pattern: $pattern");
+		});
 		$res = preg_match($pattern, $subject, $m, $flags, $offset);
-		if (Debugger::catchError($e) || preg_last_error()) { // compile error XOR run-time error
-			throw new RegexpException($e ? $e->getMessage() : NULL, $e ? NULL : preg_last_error(), $pattern);
+		restore_error_handler();
+		if (preg_last_error()) { // run-time error
+			throw new RegexpException(NULL, preg_last_error(), $pattern);
 		}
 		if ($res) {
 			return $m;
@@ -471,14 +503,18 @@ class Strings
 		if ($offset > strlen($subject)) {
 			return array();
 		}
-		Debugger::tryError();
+		set_error_handler(function($severity, $message) use ($pattern) { // preg_last_error does not return compile errors
+			restore_error_handler();
+			throw new RegexpException("$message in pattern: $pattern");
+		});
 		$res = preg_match_all(
 			$pattern, $subject, $m,
 			($flags & PREG_PATTERN_ORDER) ? $flags : ($flags | PREG_SET_ORDER),
 			$offset
 		);
-		if (Debugger::catchError($e) || preg_last_error()) { // compile error XOR run-time error
-			throw new RegexpException($e ? $e->getMessage() : NULL, $e ? NULL : preg_last_error(), $pattern);
+		restore_error_handler();
+		if (preg_last_error()) { // run-time error
+			throw new RegexpException(NULL, preg_last_error(), $pattern);
 		}
 		return $m;
 	}
@@ -503,13 +539,14 @@ class Strings
 				throw new Nette\InvalidStateException("Callback '$textual' is not callable.");
 			}
 
+			set_error_handler(function($severity, $message) use (& $tmp) { // preg_last_error does not return compile errors
+				restore_error_handler();
+				throw new RegexpException("$message in pattern: $tmp");
+			});
 			foreach ((array) $pattern as $tmp) {
-				Debugger::tryError();
 				preg_match($tmp, '');
-				if (Debugger::catchError($e)) { // compile error
-					throw new RegexpException($e->getMessage(), NULL, $tmp);
-				}
 			}
+			restore_error_handler();
 
 			$res = preg_replace_callback($pattern, $replacement, $subject, $limit);
 			if ($res === NULL && preg_last_error()) { // run-time error
@@ -522,10 +559,14 @@ class Strings
 			$pattern = array_keys($pattern);
 		}
 
-		Debugger::tryError();
+		set_error_handler(function($severity, $message) use ($pattern) { // preg_last_error does not return compile errors
+			restore_error_handler();
+			throw new RegexpException("$message in pattern: " . implode(' or ', (array) $pattern));
+		});
 		$res = preg_replace($pattern, $replacement, $subject, $limit);
-		if (Debugger::catchError($e) || preg_last_error()) { // compile error XOR run-time error
-			throw new RegexpException($e ? $e->getMessage() : NULL, $e ? NULL : preg_last_error(), $pattern);
+		restore_error_handler();
+		if (preg_last_error()) { // run-time error
+			throw new RegexpException(NULL, preg_last_error(), implode(' or ', (array) $pattern));
 		}
 		return $res;
 	}
@@ -540,19 +581,17 @@ class Strings
 class RegexpException extends \Exception
 {
 	static public $messages = array(
-				PREG_INTERNAL_ERROR => 'Internal error',
-				PREG_BACKTRACK_LIMIT_ERROR => 'Backtrack limit was exhausted',
-				PREG_RECURSION_LIMIT_ERROR => 'Recursion limit was exhausted',
-				PREG_BAD_UTF8_ERROR => 'Malformed UTF-8 data',
-				5 => 'Offset didn\'t correspond to the begin of a valid UTF-8 code point', // PREG_BAD_UTF8_OFFSET_ERROR
-			);
+		PREG_INTERNAL_ERROR => 'Internal error',
+		PREG_BACKTRACK_LIMIT_ERROR => 'Backtrack limit was exhausted',
+		PREG_RECURSION_LIMIT_ERROR => 'Recursion limit was exhausted',
+		PREG_BAD_UTF8_ERROR => 'Malformed UTF-8 data',
+		5 => 'Offset didn\'t correspond to the begin of a valid UTF-8 code point', // PREG_BAD_UTF8_OFFSET_ERROR
+	);
 
 	public function __construct($message, $code = NULL, $pattern = NULL)
 	{
 		if (!$message) {
 			$message = (isset(self::$messages[$code]) ? self::$messages[$code] : 'Unknown error') . ($pattern ? " (pattern: $pattern)" : '');
-		} elseif ($pattern) {
-			$message .= " in pattern: $pattern";
 		}
 		parent::__construct($message, $code);
 	}

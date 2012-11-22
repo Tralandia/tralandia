@@ -116,7 +116,7 @@ class Extension extends \Nette\Config\CompilerExtension
 
 		// connections
 		$builder->addDefinition($this->prefix(static::CONNECTIONS_PREFIX))
-			->setClass('Nette\DI\NestedAccessor', array('@container', $this->prefix(static::CONNECTIONS_PREFIX)));
+			->setClass('Nette\Config\Extensions\NetteAccessor', array('@container', $this->prefix(static::CONNECTIONS_PREFIX)));
 
 		foreach ($config['connections'] as $name => $connection) {
 			$cfg = $connection + $this->connectionDefaults;
@@ -128,11 +128,11 @@ class Extension extends \Nette\Config\CompilerExtension
 
 		// entity managers
 		$builder->addDefinition($this->prefix(static::ENTITY_MANAGERS_PREFIX))
-			->setClass('Nette\DI\NestedAccessor', array('@container', $this->prefix(static::ENTITY_MANAGERS_PREFIX)));
+			->setClass('Nette\Config\Extensions\NetteAccessor', array('@container', $this->prefix(static::ENTITY_MANAGERS_PREFIX)));
 		$builder->addDefinition($this->prefix(static::EVENT_MANAGERS_PREFIX))
-			->setClass('Nette\DI\NestedAccessor', array('@container', $this->prefix(static::EVENT_MANAGERS_PREFIX)));
+			->setClass('Nette\Config\Extensions\NetteAccessor', array('@container', $this->prefix(static::EVENT_MANAGERS_PREFIX)));
 		$builder->addDefinition($this->prefix(static::CONFIGURATIONS_PREFIX))
-			->setClass('Nette\DI\NestedAccessor', array('@container', $this->prefix(static::CONFIGURATIONS_PREFIX)));
+			->setClass('Nette\Config\Extensions\NetteAccessor', array('@container', $this->prefix(static::CONFIGURATIONS_PREFIX)));
 
 		foreach ($config['entityManagers'] as $name => $em) {
 			$cfg = $em + $this->entityManagerDefaults;

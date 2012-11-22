@@ -56,7 +56,7 @@ class Container extends Component implements IContainer
 		} elseif (!is_string($name)) {
 			throw new Nette\InvalidArgumentException("Component name must be integer or string, " . gettype($name) . " given.");
 
-		} elseif (!preg_match('#^[a-zA-Z0-9_]+$#', $name)) {
+		} elseif (!preg_match('#^[a-zA-Z0-9_]+\z#', $name)) {
 			throw new Nette\InvalidArgumentException("Component name must be non-empty alphanumeric string, '$name' given.");
 		}
 
@@ -203,7 +203,9 @@ class Container extends Component implements IContainer
 			$iterator = new \RecursiveIteratorIterator($iterator, $deep);
 		}
 		if ($filterType) {
-			$iterator = new Nette\Iterators\InstanceFilter($iterator, $filterType);
+			$iterator = new Nette\Iterators\Filter($iterator, function($item) use ($filterType) {
+				return $item instanceof $filterType;
+			});
 		}
 		return $iterator;
 	}
