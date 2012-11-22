@@ -30,10 +30,10 @@ use Nette;
  */
 class User extends Nette\Object
 {
-	 /** @deprecated */
+	/**/ /** @deprecated */
 	const MANUAL = IUserStorage::MANUAL,
 		INACTIVITY = IUserStorage::INACTIVITY,
-		BROWSER_CLOSED = IUserStorage::BROWSER_CLOSED;
+		BROWSER_CLOSED = IUserStorage::BROWSER_CLOSED;/**/
 
 	/** @var string  default role for unauthenticated user */
 	public $guestRole = 'guest';
@@ -278,39 +278,6 @@ class User extends Nette\Object
 	final public function getAuthorizator()
 	{
 		return $this->authorizator ?: $this->context->getByType('Nette\Security\IAuthorizator');
-	}
-
-
-
-	/********************* deprecated ****************d*g**/
-
-	/** @deprecated */
-	function setNamespace($namespace)
-	{
-		trigger_error(__METHOD__ . '() is deprecated; use getStorage()->setNamespace() instead.', E_USER_WARNING);
-		$this->storage->setNamespace($namespace);
-		return $this;
-	}
-
-	/** @deprecated */
-	function getNamespace()
-	{
-		trigger_error(__METHOD__ . '() is deprecated; use getStorage()->getNamespace() instead.', E_USER_WARNING);
-		return $this->storage->getNamespace();
-	}
-
-	/** @deprecated */
-	function setAuthenticationHandler($v)
-	{
-		trigger_error(__METHOD__ . '() is deprecated; use setAuthenticator() instead.', E_USER_WARNING);
-		return $this->setAuthenticator($v);
-	}
-
-	/** @deprecated */
-	function setAuthorizationHandler($v)
-	{
-		trigger_error(__METHOD__ . '() is deprecated; use setAuthorizator() instead.', E_USER_WARNING);
-		return $this->setAuthorizator($v);
 	}
 
 }

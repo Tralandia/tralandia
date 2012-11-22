@@ -1,260 +1,180 @@
-common:
-	php:
-		date.timezone: Europe/Bratislava
-		zlib.output_compression: yes
-		max_execution_time: 60
+php:
+	date.timezone: Europe/Bratislava
+	zlib.output_compression: yes
+	max_execution_time: 60
 
-	nette:
-		container:
-			debugger: true  # aktivuje panel v Debugger baru
+nette:
+	container:
+		debugger: true  # aktivuje panel v Debugger baru
 
-		session:
-			autoStart: smart
-			expiration: '+1 year'
+	session:
+		autoStart: smart
+		expiration: '+1 year'
 
-	parameters:
-		centralLanguage: 38
+parameters:
+	centralLanguage: 38
 
-		ticketFetcherApi:
-			email: tralandia.test@gmail.com
-			password: tralandia1
-			host: imap.gmail.com
-			port: 993
-			tls: imap/ssl
-			maxEmails: 10
+	ticketFetcherApi:
+		email: tralandia.test@gmail.com
+		password: tralandia1
+		host: imap.gmail.com
+		port: 993
+		tls: imap/ssl
+		maxEmails: 10
 
-		security:
-			salt: '8723lks762ngknl90835bkd'
-			sender: 'noreply@tralandia.sk'
+	security:
+		salt: '8723lks762ngknl90835bkd'
+		sender: 'noreply@tralandia.sk'
 
-		envOptions:
-			sendEmail: TRUE
+	envOptions:
+		sendEmail: TRUE
 
-		editor: 'txmt://open/?url=file://%file&line=%line'
+	editor: 'txmt://open/?url=file://%file&line=%line'
 
-		router:
-			hostMask: '<language>.<country>.<domain>.com'
+	router:
+		hostMask: '<language>.<country>.<domain>.com'
 
-		settingsDir: %appDir%/configs
+	settingsDir: %appDir%/configs
 
-		database:
-			user: root
-			password: root
-			host: 127.0.0.1
-			dbname: tralandia
-			charset: utf8
-			driver: pdo_mysql
-			debugger: false
+	database:
+		user: root
+		password: root
+		host: 127.0.0.1
+		dbname: tralandia
+		charset: utf8
+		driver: pdo_mysql
+		debugger: false
 
-	doctrine:
-		connections:
-			default: %database%
+doctrine:
+	connections:
+		default: %database%
 
-		entityManagers:
-			default:
-				connection: default
+	entityManagers:
+		default:
+			connection: default
 
-		console:
-			entityManager: default
-
-
-	includes:
-		- webLoader.neon
-		- acl/acl.neon
-		- modelServices.neon
-		- oldRepositoryServices.neon
-
-	# presenter:
-	# 	configsDir: %appDir%/configs/presenters
-
-	services:
-		# CACHE
-		aclCache: Nette\Caching\Cache(@cacheStorage, 'Acl')
-		routerCache: Nette\Caching\Cache(@cacheStorage, 'Router')
-		translatorCache: Nette\Caching\Cache(@cacheStorage, 'Translator')
-
-		frontRouteFactory:
-			class: Routers\FrontRouteFactory(@routerCache, %router.hostMask%)
-			setup:
-				- $locationRepositoryAccessor(@locationRepositoryAccessor)
-				- $languageRepositoryAccessor(@languageRepositoryAccessor)
-				- $rentalRepositoryAccessor(@rentalRepositoryAccessor)
-				- $attractionRepositoryAccessor(@attractionRepositoryAccessor)
-				- $routingPathSegmentRepositoryAccessor(@routingPathSegmentRepositoryAccessor)
-				- $domainRepositoryAccessor(@domainRepositoryAccessor)
-
-		routerFactory: Routers\RouterFactory
-
-		router: @routerFactory::create
-
-		console: @doctrine.console
-		model: @doctrine.entityManagers.default
-
-		# nette.presenterFactory:
-			# class: Extras\DynamicPresenterFactory
-			# factory: Extras\DynamicPresenterFactory::factory
-
-		user:
-			class: Security\User
-
-		authenticator: Security\Authenticator
-
-		authorizator: 
-			class: Security\Acl
-			setup:
-				# - $cache(@aclCache)
-				- $roleRepository(@userRoleRepositoryAccessor)
-				- $config(%acl%)
-				- setup()
-
-		environment: Extras\Environment(@application::getRequests(), @languageRepositoryAccessor, @locationRepositoryAccessor)
-		translator: Extras\Translator(@environment, @phraseRepositoryAccessor, @phraseServiceFactory, @translatorCache)
-
-		settings:
-			factory: Extras\PresenterSettings::factory
-
-		emailCompiler: 
-			class: Extras\Email\Compiler
-			setup:
-				- $phraseServiceFactory(@phraseServiceFactory)
-				- setVariableFactory(rental, @rentalEmailVariableFactory)
-				- setVariableFactory(language, @languageEmailVariableFactory)
-				- setVariableFactory(location, @locationEmailVariableFactory)
-				- setVariableFactory(visitor, @visitorEmailVariableFactory)
-				- setVariableFactory(environment, @environmentEmailVariableFactory)
-
-		rentalEmailVariableFactory: Extras\Email\Variables\RentalVariablesFactory(@rentalServiceFactory)
-		languageEmailVariableFactory: Extras\Email\Variables\LanguageVariablesFactory(@languageServiceFactory)
-		locationEmailVariableFactory: Extras\Email\Variables\LocationVariablesFactory(@locationServiceFactory)
-		visitorEmailVariableFactory: Extras\Email\Variables\UserVariablesFactory('VisitorVariables', @userServiceFactory)
-		environmentEmailVariableFactory: Extras\Email\Variables\EnvironmentVariablesFactory
-
-		ticketFetcherApi:
-			class: Horo\Api( %ticketFetcherApi.host%, %ticketFetcherApi.email%, %ticketFetcherApi.password%, 'INBOX', %ticketFetcherApi.port%, %ticketFetcherApi.tls% )
-			setup:
-				- setMaxEmails(%ticketFetcherApi.maxEmails%)
-
-		ticketFetcher: Extras\TicketFetcher( @ticketFetcherApi )
-
-		templateHelpers:
-			class: Extras\Helpers
-			arguments:
-				- @mediumServiceFactory
-
-		autopilot:
-			class: Service\Autopilot\Autopilot
-			setup:
-				- $taskRepository(@taskRepositoryAccessor)
-				- $taskTypeRepository(@taskTypeRepositoryAccessor)
-				- $taskServiceFactory(@taskServiceFactory)
-
-		taskManager:
-			class: Service\TaskManager\TaskManager
-			setup:
-				- addScanner(@missingTranslationsScanner)
-
-		missingTranslationsScanner:
-			class: Service\TaskManager\MissingTranslationsScanner(@autopilot, @phraseTranslationRepositoryAccessor, @languageRepositoryAccessor)
-
-		generatePathSegmentsRobot: 
-			class: Service\Robot\GeneratePathSegmentsRobot
-			arguments: 
-				- @routingPathSegmentRepositoryAccessor
-				- @routingPathSegmentEntityFactory
-				- @phraseServiceFactory
-				- @languageRepositoryAccessor
-				- @pageRepositoryAccessor
-				- @attractionTypeRepositoryAccessor
-				- @locationRepositoryAccessor
-				- @rentalTypeRepositoryAccessor
-				- @locationServiceFactory
-
-		itemTextFactory: Extras\FormMask\Items\Foctories\TextFactory
-		itemPhraseFactory: Extras\FormMask\Items\Foctories\PhraseFactory(@phraseServiceFactory, @environment::getLanguage())
-		itemYesNoFactory: Extras\FormMask\Items\Foctories\YesNoFactory
-		itemJsonFactory: Extras\FormMask\Items\Foctories\JsonFactory
-		itemNeonFactory: Extras\FormMask\Items\Foctories\NeonFactory
-		itemTextareaFactory: Extras\FormMask\Items\Foctories\TextareaFactory
-		itemPriceFactory: Extras\FormMask\Items\Foctories\PriceFactory
-		itemSelectFactory: Extras\FormMask\Items\Foctories\SelectFactory(@translator)
-		itemCheckboxFactory: Extras\FormMask\Items\Foctories\CheckboxFactory
-		itemTinymceFactory: Extras\FormMask\Items\Foctories\TinymceFactory
+	console:
+		entityManager: default
 
 
-production < common:
+includes:
+	- webLoader.neon
+	- acl/acl.neon
+	- modelServices.neon
+	- oldRepositoryServices.neon
 
-console < common:
+# presenter:
+# 	configsDir: %appDir%/configs/presenters
 
-development < common:
-	php:
-		max_execution_time: 0
-		memory_limit: 1024M
+services:
+	# CACHE
+	aclCache: Nette\Caching\Cache(@cacheStorage, 'Acl')
+	routerCache: Nette\Caching\Cache(@cacheStorage, 'Router')
+	translatorCache: Nette\Caching\Cache(@cacheStorage, 'Translator')
 
-	parameters:
-		envOptions:
-			sendEmail: FASLE
+	frontRouteFactory:
+		class: Routers\FrontRouteFactory(@routerCache, %router.hostMask%)
+		setup:
+			- $locationRepositoryAccessor(@locationRepositoryAccessor)
+			- $languageRepositoryAccessor(@languageRepositoryAccessor)
+			- $rentalRepositoryAccessor(@rentalRepositoryAccessor)
+			- $attractionRepositoryAccessor(@attractionRepositoryAccessor)
+			- $routingPathSegmentRepositoryAccessor(@routingPathSegmentRepositoryAccessor)
+			- $domainRepositoryAccessor(@domainRepositoryAccessor)
 
-		database:
-			user: root
-			password: root
-			host: 127.0.0.1
-			dbname: tralandia
-			charset: utf8
-			driver: pdo_mysql
-			debugger: true
+	routerFactory: Routers\RouterFactory
 
-		router:
-			hostMask: '<language>.<country>.<domain>.com'
+	router: @routerFactory::create
 
+	console: @doctrine.console
+	model: @doctrine.entityManagers.default
 
-vaculciak < development:
-	parameters:
-		editor: 'txmt://open/?url=file://%file&line=%line'
+	# nette.presenterFactory:
+		# class: Extras\DynamicPresenterFactory
+		# factory: Extras\DynamicPresenterFactory::factory
 
-		database:
-			debugger: true
+	user:
+		class: Security\User
 
-durika < development:
-	parameters:
-		editor: 'edit://open/?url=file://%file&line=%line'
-		envOptions:
-			email: tralandia.david@gmail.com
+	authenticator: Security\Authenticator
 
-		database:
-			debugger: false
+	authorizator: 
+		class: Security\Acl
+		setup:
+			# - $cache(@aclCache)
+			- $roleRepository(@userRoleRepositoryAccessor)
+			- $config(%acl%)
+			- setup()
 
-toth < development:
-	parameters:
-		database:
-			user: root
-			password: ""
+	environment: Extras\Environment(@application::getRequests(), @languageRepositoryAccessor, @locationRepositoryAccessor)
+	translator: Extras\Translator(@environment, @phraseRepositoryAccessor, @phraseServiceFactory, @translatorCache)
 
-test < development:
-	parameters:
-		envOptions:
-			sendEmail: FASLE
+	settings:
+		factory: Extras\PresenterSettings::factory
 
-		database:
-			user: root
-			password: root
-			host: 127.0.0.1
-			dbname: tralandia_test
-			charset: utf8
-			driver: pdo_mysql
+	emailCompiler: 
+		class: Extras\Email\Compiler
+		setup:
+			- $phraseServiceFactory(@phraseServiceFactory)
+			- setVariableFactory(rental, @rentalEmailVariableFactory)
+			- setVariableFactory(language, @languageEmailVariableFactory)
+			- setVariableFactory(location, @locationEmailVariableFactory)
+			- setVariableFactory(visitor, @visitorEmailVariableFactory)
+			- setVariableFactory(environment, @environmentEmailVariableFactory)
 
-demo < common:
-	php:
-		max_execution_time: 0
-		memory_limit: 1024M
+	rentalEmailVariableFactory: Extras\Email\Variables\RentalVariablesFactory(@rentalServiceFactory)
+	languageEmailVariableFactory: Extras\Email\Variables\LanguageVariablesFactory(@languageServiceFactory)
+	locationEmailVariableFactory: Extras\Email\Variables\LocationVariablesFactory(@locationServiceFactory)
+	visitorEmailVariableFactory: Extras\Email\Variables\UserVariablesFactory('VisitorVariables', @userServiceFactory)
+	environmentEmailVariableFactory: Extras\Email\Variables\EnvironmentVariablesFactory
 
-	parameters:
-		envOptions:
-			sendEmail: FASLE
+	ticketFetcherApi:
+		class: Horo\Api( %ticketFetcherApi.host%, %ticketFetcherApi.email%, %ticketFetcherApi.password%, 'INBOX', %ticketFetcherApi.port%, %ticketFetcherApi.tls% )
+		setup:
+			- setMaxEmails(%ticketFetcherApi.maxEmails%)
 
-		database:
-			user: root
-			password: root
-			host: 127.0.0.1
-			dbname: tralandia
-			charset: utf8
-			driver: pdo_mysql			
+	ticketFetcher: Extras\TicketFetcher( @ticketFetcherApi )
+
+	templateHelpers:
+		class: Extras\Helpers
+		arguments:
+			- @mediumServiceFactory
+
+	autopilot:
+		class: Service\Autopilot\Autopilot
+		setup:
+			- $taskRepository(@taskRepositoryAccessor)
+			- $taskTypeRepository(@taskTypeRepositoryAccessor)
+			- $taskServiceFactory(@taskServiceFactory)
+
+	taskManager:
+		class: Service\TaskManager\TaskManager
+		setup:
+			- addScanner(@missingTranslationsScanner)
+
+	missingTranslationsScanner:
+		class: Service\TaskManager\MissingTranslationsScanner(@autopilot, @phraseTranslationRepositoryAccessor, @languageRepositoryAccessor)
+
+	generatePathSegmentsRobot: 
+		class: Service\Robot\GeneratePathSegmentsRobot
+		arguments: 
+			- @routingPathSegmentRepositoryAccessor
+			- @routingPathSegmentEntityFactory
+			- @phraseServiceFactory
+			- @languageRepositoryAccessor
+			- @pageRepositoryAccessor
+			- @attractionTypeRepositoryAccessor
+			- @locationRepositoryAccessor
+			- @rentalTypeRepositoryAccessor
+			- @locationServiceFactory
+
+	itemTextFactory: Extras\FormMask\Items\Foctories\TextFactory
+	itemPhraseFactory: Extras\FormMask\Items\Foctories\PhraseFactory(@phraseServiceFactory, @environment::getLanguage())
+	itemYesNoFactory: Extras\FormMask\Items\Foctories\YesNoFactory
+	itemJsonFactory: Extras\FormMask\Items\Foctories\JsonFactory
+	itemNeonFactory: Extras\FormMask\Items\Foctories\NeonFactory
+	itemTextareaFactory: Extras\FormMask\Items\Foctories\TextareaFactory
+	itemPriceFactory: Extras\FormMask\Items\Foctories\PriceFactory
+	itemSelectFactory: Extras\FormMask\Items\Foctories\SelectFactory(@translator)
+	itemCheckboxFactory: Extras\FormMask\Items\Foctories\CheckboxFactory
+	itemTinymceFactory: Extras\FormMask\Items\Foctories\TinymceFactory

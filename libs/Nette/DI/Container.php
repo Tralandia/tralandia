@@ -20,15 +20,12 @@ use Nette;
  *
  * @author     David Grudl
  */
-class Container extends Nette\FreezableObject implements IContainer
+class Container extends Nette\FreezableObject
 {
 	const TAGS = 'tags';
 
 	/** @var array  user parameters */
 	/*private*/public $parameters = array();
-
-	/** @deprecated */
-	public $params = array();
 
 	/** @var array */
 	public $classes = array();
@@ -50,7 +47,6 @@ class Container extends Nette\FreezableObject implements IContainer
 	public function __construct(array $params = array())
 	{
 		$this->parameters = $params + $this->parameters;
-		$this->params = &$this->parameters;
 	}
 
 
@@ -75,7 +71,7 @@ class Container extends Nette\FreezableObject implements IContainer
 	public function addService($name, $service, array $meta = NULL)
 	{
 		$this->updating();
-		if (!is_string($name) || $name === '') {
+		if (!is_string($name) || !$name) {
 			throw new Nette\InvalidArgumentException("Service name must be a non-empty string, " . gettype($name) . " given.");
 		}
 
@@ -88,7 +84,7 @@ class Container extends Nette\FreezableObject implements IContainer
 			$this->meta[$name] = $meta;
 			return $this;
 
-		} elseif (!is_string($service) || strpos($service, ':') !== FALSE) { // callable
+		} elseif (!is_string($service) || strpos($service, ':') !== FALSE/*5.2* || $service[0] === "\0"*/) { // callable
 			$service = new Nette\Callback($service);
 		}
 
@@ -145,7 +141,7 @@ class Container extends Nette\FreezableObject implements IContainer
 			} else {
 				$this->creating[$name] = TRUE;
 				try {
-					$service = $factory($this);
+					$service = $factory/*5.2*->invoke*/($this);
 				} catch (\Exception $e) {}
 			}
 
@@ -272,6 +268,26 @@ class Container extends Nette\FreezableObject implements IContainer
 
 
 	/**
+	 * Calls all methods starting with with "inject" using autowiring.
+	 * @param  object
+	 * @return void
+	 */
+	public function callInjects($service)
+	{
+		if (!is_object($service)) {
+			throw new Nette\InvalidArgumentException("Service must be object, " . gettype($service) . " given.");
+		}
+
+		foreach (array_reverse(get_class_methods($service)) as $method) {
+			if (substr($method, 0, 6) === 'inject') {
+				$this->callMethod(array($service, $method));
+			}
+		}
+	}
+
+
+
+	/**
 	 * Calls method using autowiring.
 	 * @param  mixed   class, object, function, callable
 	 * @param  array   arguments
@@ -365,7 +381,7 @@ class Container extends Nette\FreezableObject implements IContainer
 	public static function getMethodName($name, $isService = TRUE)
 	{
 		$uname = ucfirst($name);
-		return ($isService ? 'createService' : 'create') . ($name === $uname ? '__' : '') . str_replace('.', '__', $uname);
+		return ($isService ? 'createService' : 'create') . ((string) $name === $uname ? '__' : '') . str_replace('.', '__', $uname);
 	}
 
 }

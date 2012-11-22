@@ -25,6 +25,12 @@ class PresenterFactory implements IPresenterFactory
 	/** @var bool */
 	public $caseSensitive = FALSE;
 
+	/** @var string[] of module => mask */
+	public $mapping = array(
+		'*' => '\*Module\*Presenter',
+		'Nette' => 'NetteModule\*\*Presenter',
+	);
+
 	/** @var string */
 	private $baseDir;
 
@@ -55,14 +61,7 @@ class PresenterFactory implements IPresenterFactory
 	public function createPresenter($name)
 	{
 		$presenter = $this->container->createInstance($this->getPresenterClass($name));
-		if (method_exists($presenter, 'setContext')) {
-			$this->container->callMethod(array($presenter, 'setContext'));
-		}
-		foreach (array_reverse(get_class_methods($presenter)) as $method) {
-			if (substr($method, 0, 6) === 'inject') {
-				$this->container->callMethod(array($presenter, $method));
-			}
-		}
+		$this->container->callInjects($presenter);
 
 		if ($presenter instanceof UI\Presenter && $presenter->invalidLinkMode === NULL) {
 			$presenter->invalidLinkMode = $this->container->parameters['debugMode'] ? UI\Presenter::INVALID_LINK_WARNING : UI\Presenter::INVALID_LINK_SILENT;
@@ -84,7 +83,7 @@ class PresenterFactory implements IPresenterFactory
 			return $class;
 		}
 
-		if (!is_string($name) || !Nette\Utils\Strings::match($name, "#^[a-zA-Z\x7f-\xff][a-zA-Z0-9\x7f-\xff:]*$#")) {
+		if (!is_string($name) || !Nette\Utils\Strings::match($name, '#^[a-zA-Z\x7f-\xff][a-zA-Z0-9\x7f-\xff:]*\z#')) {
 			throw new InvalidPresenterException("Presenter name must be alphanumeric string, '$name' is invalid.");
 		}
 
@@ -138,7 +137,16 @@ class PresenterFactory implements IPresenterFactory
 	 */
 	public function formatPresenterClass($presenter)
 	{
-		return str_replace(':', 'Module\\', $presenter) . 'Presenter';
+		/*5.2*return strtr($presenter, ':', '_') . 'Presenter';*/
+		$parts = explode(':', $presenter);
+		$mapping = explode('\\*', isset($parts[1], $this->mapping[$parts[0]])
+			? $this->mapping[array_shift($parts)]
+			: $this->mapping['*']);
+		$class = $mapping[0];
+		while ($part = array_shift($parts)) {
+			$class .= ($class ? '\\' : '') . $part . $mapping[$parts ? 1 : 2];
+		}
+		return $class;
 	}
 
 
@@ -150,7 +158,15 @@ class PresenterFactory implements IPresenterFactory
 	 */
 	public function unformatPresenterClass($class)
 	{
-		return str_replace('Module\\', ':', substr($class, 0, -9));
+		/*5.2*return strtr(substr($class, 0, -9), '_', ':');*/
+		foreach ($this->mapping as $module => $mapping) {
+			$mapping = explode('\\\\\*', preg_quote($mapping, '#'));
+			$mapping[0] .= $mapping[0] ? '\\\\' : '';
+			if (preg_match("#^\\\\?$mapping[0]((?:\\w+$mapping[1]\\\\)*)(\\w+)$mapping[2]\\z#i", $class, $matches)) {
+				return ($module === '*' ? '' : $module . ':')
+					. str_replace($mapping[1] . '\\', ':', $matches[1]) . $matches[2];
+			}
+		}
 	}
 
 

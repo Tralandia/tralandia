@@ -80,7 +80,7 @@ class Method extends \ReflectionMethod
 
 	public function __toString()
 	{
-		return 'Method ' . parent::getDeclaringClass()->getName() . '::' . $this->getName() . '()';
+		return parent::getDeclaringClass()->getName() . '::' . $this->getName() . '()';
 	}
 
 
@@ -193,9 +193,9 @@ class Method extends \ReflectionMethod
 	/**
 	 * @return ClassType
 	 */
-	public static function getReflection()
+	public /**/static/**/ function getReflection()
 	{
-		return new ClassType(get_called_class());
+		return new ClassType(/*5.2*$this*//**/get_called_class()/**/);
 	}
 
 

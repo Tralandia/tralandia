@@ -30,7 +30,13 @@ $robotLoader->addDirectory(APP_DIR)
 require_once LIBS_DIR . '/tools.php';
 Extension::register($configurator);
 Extras\Config\PresenterExtension::register($configurator);
-$configurator->addConfig(APP_DIR . '/configs/config.neon', $section);
+
+$configurator->addConfig(APP_DIR . '/configs/config.neon');
+$configurator->addConfig(APP_DIR . '/configs/local.config.neon');
+if($section) {
+	$configurator->addConfig(APP_DIR . '/configs/'.$section.'.config.neon');
+}
+
 $configurator->onCompile[] = callback('Extras\PresenterGenerator', 'generate');
 $container = $configurator->createContainer();
 

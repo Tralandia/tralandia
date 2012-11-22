@@ -34,7 +34,7 @@ class Validators extends Nette\Object
 		'string' =>  'is_string',
 		'unicode' => array(__CLASS__, 'isUnicode'),
 		'array' => 'is_array',
-		'list' => array(__CLASS__, 'isList'),
+		'list' => array('Nette\Utils\Arrays', 'isList'),
 		'object' => 'is_object',
 		'resource' => 'is_resource',
 		'scalar' => 'is_scalar',
@@ -134,7 +134,7 @@ class Validators extends Nette\Object
 					continue;
 				}
 			} elseif ($type === 'pattern') {
-				if (preg_match('|^' . (isset($item[1]) ? $item[1] : '') . '$|', $value)) {
+				if (preg_match('|^' . (isset($item[1]) ? $item[1] : '') . '\z|', $value)) {
 					return TRUE;
 				}
 				continue;
@@ -168,7 +168,7 @@ class Validators extends Nette\Object
 	 */
 	public static function isNumericInt($value)
 	{
-		return is_int($value) || is_string($value) && preg_match('#^-?[0-9]+$#', $value);
+		return is_int($value) || is_string($value) && preg_match('#^-?[0-9]+\z#', $value);
 	}
 
 
@@ -180,7 +180,7 @@ class Validators extends Nette\Object
 	 */
 	public static function isNumeric($value)
 	{
-		return is_float($value) || is_int($value) || is_string($value) && preg_match('#^-?[0-9]*[.]?[0-9]+$#', $value);
+		return is_float($value) || is_int($value) || is_string($value) && preg_match('#^-?[0-9]*[.]?[0-9]+\z#', $value);
 	}
 
 
@@ -228,7 +228,7 @@ class Validators extends Nette\Object
 	 */
 	public static function isList($value)
 	{
-		return is_array($value) && (!$value || array_keys($value) === range(0, count($value) - 1));
+		return Arrays::isList($value);
 	}
 
 
@@ -273,7 +273,7 @@ class Validators extends Nette\Object
 		$alpha = "a-z\x80-\xFF";
 		$domain = "[0-9$alpha](?:[-0-9$alpha]{0,61}[0-9$alpha])?";
 		$topDomain = "[$alpha][-0-9$alpha]{0,17}[$alpha]";
-		return (bool) preg_match("(^https?://(?:(?:$domain\\.)*$topDomain|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})(:\d{1,5})?(/\S*)?\\z)i", $value);
+		return (bool) preg_match("(^https?://(?:(?:$domain\\.)*$topDomain|\\d{1,3}\.\\d{1,3}\.\\d{1,3}\.\\d{1,3})(:\\d{1,5})?(/\\S*)?\\z)i", $value);
 	}
 
 }

@@ -193,7 +193,7 @@ class Finder extends Nette\Object implements \IteratorAggregate
 			$pattern[] = $prefix . strtr(preg_quote($mask, '#'),
 				array('\*\*' => '.*', '\*' => '[^/]*', '\?' => '[^/]', '\[\!' => '[^', '\[' => '[', '\]' => ']', '\-' => '-'));
 		}
-		return $pattern ? '#/(' . implode('|', $pattern) . ')$#i' : NULL;
+		return $pattern ? '#/(' . implode('|', $pattern) . ')\z#i' : NULL;
 	}
 
 
@@ -242,7 +242,7 @@ class Finder extends Nette\Object implements \IteratorAggregate
 
 		if ($this->exclude) {
 			$filters = $this->exclude;
-			$iterator = new Nette\Iterators\RecursiveFilter($iterator, function($file) use ($filters) {
+			$iterator = new Nette\Iterators\RecursiveFilter($iterator, function($foo, $foo, $file) use ($filters) {
 				if (!$file->isDot() && !$file->isFile()) {
 					foreach ($filters as $filter) {
 						if (!call_user_func($filter, $file)) {
@@ -261,7 +261,7 @@ class Finder extends Nette\Object implements \IteratorAggregate
 
 		if ($this->groups) {
 			$groups = $this->groups;
-			$iterator = new Nette\Iterators\Filter($iterator, function($file) use ($groups) {
+			$iterator = new Nette\Iterators\Filter($iterator, function($foo, $foo, $file) use ($groups) {
 				foreach ($groups as $filters) {
 					foreach ($filters as $filter) {
 						if (!call_user_func($filter, $file)) {
@@ -340,7 +340,7 @@ class Finder extends Nette\Object implements \IteratorAggregate
 	public function size($operator, $size = NULL)
 	{
 		if (func_num_args() === 1) { // in $operator is predicate
-			if (!preg_match('#^(?:([=<>!]=?|<>)\s*)?((?:\d*\.)?\d+)\s*(K|M|G|)B?$#i', $operator, $matches)) {
+			if (!preg_match('#^(?:([=<>!]=?|<>)\s*)?((?:\d*\.)?\d+)\s*(K|M|G|)B?\z#i', $operator, $matches)) {
 				throw new Nette\InvalidArgumentException('Invalid size predicate format.');
 			}
 			list(, $operator, $size, $unit) = $matches;
@@ -364,7 +364,7 @@ class Finder extends Nette\Object implements \IteratorAggregate
 	public function date($operator, $date = NULL)
 	{
 		if (func_num_args() === 1) { // in $operator is predicate
-			if (!preg_match('#^(?:([=<>!]=?|<>)\s*)?(.+)$#i', $operator, $matches)) {
+			if (!preg_match('#^(?:([=<>!]=?|<>)\s*)?(.+)\z#i', $operator, $matches)) {
 				throw new Nette\InvalidArgumentException('Invalid date predicate format.');
 			}
 			list(, $operator, $date) = $matches;

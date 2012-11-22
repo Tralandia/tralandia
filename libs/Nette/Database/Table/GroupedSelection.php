@@ -43,7 +43,7 @@ class GroupedSelection extends Selection
 	 */
 	public function __construct(Selection $refTable, $table, $column)
 	{
-		parent::__construct($table, $refTable->connection);
+		parent::__construct($refTable->connection, $table, $refTable->reflection, $refTable->cache ? $refTable->cache->getStorage() : NULL);
 		$this->refTable = $refTable;
 		$this->column = $column;
 	}
@@ -67,7 +67,7 @@ class GroupedSelection extends Selection
 	/** @deprecated */
 	public function through($column)
 	{
-		trigger_error(__METHOD__ . '() is deprecated; use ' . __CLASS__ . '::related("' . $this->name . '", "' . $column . '") instead.', E_USER_WARNING);
+		trigger_error(__METHOD__ . '() is deprecated; use ' . __CLASS__ . '::related("' . $this->name . '", "' . $column . '") instead.', E_USER_DEPRECATED);
 		$this->column = $column;
 		$this->delimitedColumn = $this->refTable->connection->getSupplementalDriver()->delimite($this->column);
 		return $this;
@@ -90,7 +90,7 @@ class GroupedSelection extends Selection
 	{
 		if (!$this->sqlBuilder->getOrder()) {
 			// improve index utilization
-			$this->sqlBuilder->addOrder("$this->name.$this->column" . (preg_match('~\\bDESC$~i', $columns) ? ' DESC' : ''));
+			$this->sqlBuilder->addOrder("$this->name.$this->column" . (preg_match('~\bDESC\z~i', $columns) ? ' DESC' : ''));
 		}
 
 		return parent::order($columns);
@@ -215,7 +215,7 @@ class GroupedSelection extends Selection
 			$data = iterator_to_array($data);
 		}
 
-		if (Nette\Utils\Validators::isList($data)) {
+		if (Nette\Utils\Arrays::isList($data)) {
 			foreach (array_keys($data) as $key) {
 				$data[$key][$this->column] = $this->active;
 			}

@@ -8,12 +8,11 @@ abstract class BasePresenter extends \BasePresenter {
 	public $locationRepositoryAccessor;
 	public $rentalRepositoryAccessor;
 
-	public function setContext(\Nette\DI\Container $dic) {
-
+	public function inject(\Nette\DI\Container $dic) {
 		$this->setProperty('languageRepositoryAccessor');
 		$this->setProperty('locationRepositoryAccessor');
 		$this->setProperty('rentalRepositoryAccessor');
-		parent::setContext($dic);
+		parent::inject($dic);
 	}
 
 	public function beforeRender() {

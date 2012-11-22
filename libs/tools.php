@@ -35,9 +35,6 @@ Extras\Forms\Controls\AdvancedTextarea::register();
 Extras\Forms\Controls\AdvancedTinymce::register();
 Extras\Forms\Controls\AdvancedUpload::register();
 
-function debug() {
-	Tools::dump(func_get_args());
-}
 
 function d() {
 	return Tools::dump(func_get_args());
