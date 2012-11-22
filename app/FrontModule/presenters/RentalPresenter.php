@@ -32,7 +32,10 @@ class RentalPresenter extends BasePresenter {
 
 	public function actionList() {
 
-		$rentals = $this->rentalRepositoryAccessor->get()->findAll();
+		$r = $this->rentalRepositoryAccessor->get()->findAll();
+
+
+		$rentals = $r;
 
 		$this->template->rentals = $rentals;
 

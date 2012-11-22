@@ -41,8 +41,8 @@
 					this.currentId = $(this.currentId).attr('id');
 					
 
-					$.each(this.favoritesData , function(k,v){
-				
+					$.each(this.favoritesData , function(k,v){			
+
 						var newLink = $('<a></a>').attr('href',v.link);
 
 						var newLi = $('<li></li>').attr('rel',v.id);
@@ -57,6 +57,25 @@
 							newLi.appendTo(self.list);
 
 					});
+
+
+					// full real width list
+					var sumPx = 0;
+					var listCount = 0;
+					$(this).find('ul li').each(function(index) {					    
+					    sumPx += parseInt($(this).css('width'));
+					    ++listCount;
+					});
+
+					sumPx = sumPx + (listCount*3);
+
+					$(this).find('ul').css('width',sumPx+'px');
+
+					console.log(sumPx);
+
+					// set nav links
+
+
 				}
 
 		});

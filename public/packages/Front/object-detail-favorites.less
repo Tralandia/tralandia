@@ -149,7 +149,9 @@
 		li {
 			display: block;
 			height: 63px;
-			width: 100px;
+			/* width: 100px; */
+			width: 150px;
+
 
 			background: url(http://flickholdr.com/100/63/nature);
 			float: left;
@@ -172,7 +174,7 @@
 
 			&.current {
 				height:53px;
-				width: 80px;
+				width: 90px;
 			    -webkit-box-shadow: 0 8px 6px -6px #777;
 			    -moz-box-shadow: 0 8px 6px -6px #777;
 			    box-shadow: 0 8px 6px -6px #777;  
@@ -182,6 +184,10 @@
 				position: relative;
 				
 				border: 5px solid #ee4a00;
+
+				&:hover {
+					border: 5px solid #ee4a00;					
+				}
 			}
 			&.current:after, &.current:before {
 				top: 100%;
@@ -208,10 +214,18 @@
 				margin-left: -10px;
 			}
 
+			&:hover {
+				border: 5px solid #b0c13b;
+				height:53px;
+				width: 90px;
+			}
+
 			a {
 				display: block;
 				height:100%;
 				width: 100%;
+
+
 			}
 
 		}
