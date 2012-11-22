@@ -267,7 +267,7 @@ services:
 	#----------
 	pageEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Page')
 
-	pageServiceFactory: Factory\PageServiceFactory(@model, @pageEntityFactory)
+	pageServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @pageEntityFactory)
 
 	pageRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Page')
 

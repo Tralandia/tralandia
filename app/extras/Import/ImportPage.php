@@ -25,7 +25,7 @@ class ImportPage extends BaseImport {
 		array('destination' => ':Front:Rental:list', 'hash' => '/location/tagBefore'),
 		array('destination' => ':Front:Rental:list', 'hash' => '/location/tagAfter'),
 		array('destination' => ':Front:Rental:list', 'hash' => '/attractionType'),
-		array('destination' => ':Front:Rental:list', 'hash' => '/location/attractionType'),
+		array('destination' => ':Front:Rental:list', 'hash' => '/attractionType/location'),
 	);
 
 	public function doImport($subsection = NULL) {
