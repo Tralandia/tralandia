@@ -129,7 +129,7 @@ App.prototype.uiTabsClickChangeHashAdress = function(){
 
 	var self = new App;
 	
-	$.scrollTo(this,{duration:500 , offset: -50} );
+	
 	var currentTabId = $(this).attr('href');
 	self._setLocationUrlAnchor($(this).attr('href'));
 	$(this).blur();
@@ -138,6 +138,8 @@ App.prototype.uiTabsClickChangeHashAdress = function(){
 		/* large map plugin */
 		$('#map_canvas').traMap();	
 	}
+
+
 }
 
 
@@ -198,7 +200,7 @@ App.prototype.addToFavorites = function(){
 
 		$.each(list,function(k,v){
 			if(v.id != data.id){
-				newList.push(v);	
+				newList.push(v);
 			}			
 		});
 
@@ -219,6 +221,10 @@ App.prototype.addToFavorites = function(){
 			favoriteSlider.find('ul li.rel-'+data.id).remove();
 		}
 
+		if(newList.length == 0){
+			$('#compareList').parent().parent().parent().hide();
+		}
+
 
 	} else {
 
@@ -228,7 +234,15 @@ App.prototype.addToFavorites = function(){
 			list[0] = data;
 
 			self.storageSet('favoritesList',list);
-			
+			favoriteSlider.parent().parent().parent().show();
+
+			var newLi = $('<li></li>');
+				newLi.addClass('current');
+				newLi.addClass('rel-'+data.id);
+
+				var sliderList = favoriteSlider.find('ul');
+					newLi.appendTo(sliderList);
+
 		} else {
 
 			if(!self._checkIdInObject(list,data.id)){
@@ -238,6 +252,8 @@ App.prototype.addToFavorites = function(){
 				$(this).addClass('selected');
 
 				// append to favorites slider (if exist)
+
+
 
 				if(favoriteSlider.length > 0){
 
