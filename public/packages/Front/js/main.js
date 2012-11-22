@@ -30,6 +30,7 @@ function executeFunctionByName(functionName, context /*, args */) {
 var App = $class({
 	
 	constructor: function (){
+
 	}
 
 });
@@ -122,18 +123,6 @@ App.prototype.uiToogleClick = function(){
 }
 
 
-App.prototype.buttonCompareClick = function(){
-	var child = $(this).find('span');
-	
-	if($(child).hasClass('entypo-star')){
-		$(child).removeClass('entypo-star');
-		$(child).addClass('entypo-ok');
-	} else {
-		$(child).removeClass('entypo-ok');
-		$(child).addClass('entypo-star');
-	}
-	
-}
 
 
 App.prototype.uiTabsClickChangeHashAdress = function(){
@@ -152,9 +141,148 @@ App.prototype.uiTabsClickChangeHashAdress = function(){
 }
 
 
+App.prototype.in_array = function(array, value) {
+
+	var r = false ;
+
+	$.each(array , function(k,v){
+		if(v == value) r = true;
+	});
+
+	return r; 
+}
+
 /****************************************************************************************************
-*	OBJECT DETAIL
+*	LOCAL STORAGE FUNCTION
 ****************************************************************************************************/
+
+App.prototype.storageSet = function(key,value){
+	$.jStorage.set(key, value);
+}
+
+App.prototype.storageGet = function(key){
+	return $.jStorage.get(key);
+}
+
+App.prototype.storageDelete = function(key){
+	$.jStorage.deleteKey(key);
+}
+
+
+/****************************************************************************************************
+*	RENTAL DETAIL + RENTALI LIST
+****************************************************************************************************/
+
+/*
+* add to favorites function
+*/ 
+
+App.prototype.addToFavorites = function(){
+
+	var self = new App;
+
+	var list = self.storageGet('favoritesList');
+
+	var data = {
+		id: parseInt($(this).attr('rel')),
+		link: $(this).attr('link'),
+		thumb: $(this).attr('thumb'),
+	}
+
+	var favoriteSlider = $('#compareList');
+
+	if($(this).hasClass('selected')){
+		// remove from list
+
+		newList = new Array();
+
+		$.each(list,function(k,v){
+			if(v.id != data.id){
+				newList.push(v);	
+			}			
+		});
+
+		// save new list to local storage 
+
+		if(newList.length == 0){
+			self.storageDelete('favoritesList');
+		} else {
+			self.storageSet('favoritesList' , newList);
+		}
+
+		$(this).removeClass('selected');
+
+		// remove from favorites slider 		
+		// if page is Rental:detai 
+
+		if(favoriteSlider.length > 0){
+			favoriteSlider.find('ul li.rel-'+data.id).remove();
+		}
+
+
+	} else {
+
+		if(typeof list == 'undefined' || list == null){
+			// if favorites dont exist 
+			var list = new Array();
+			list[0] = data;
+
+			self.storageSet('favoritesList',list);
+			
+		} else {
+
+			if(!self._checkIdInObject(list,data.id)){
+				// write unique data
+				list.push(data);
+				self.storageSet('favoritesList',list);
+				$(this).addClass('selected');
+
+				// append to favorites slider (if exist)
+
+				if(favoriteSlider.length > 0){
+
+					var newLi = $('<li></li>');
+						newLi.addClass('current');
+						newLi.addClass('rel-'+data.id);
+
+						var sliderList = favoriteSlider.find('ul');
+							newLi.appendTo(sliderList);
+
+					//favoriteSlider.find('ul li.rel-'+data.id).remove();
+				}
+
+			}
+
+		}		
+	}
+
+}
+
+App.prototype._checkIdInObject = function( object , id ){
+	var r = false;
+		$.each(object , function(k,v){
+			
+			if(v.id == id){
+				r=true;
+			}
+		});	
+
+	return r;
+}
+
+/****************************************************************************************************
+*	RENTAL LIST
+****************************************************************************************************/
+
+App.prototype.openContactForm = function(){
+	$('#ModalBox').modal();
+	return false;
+}
+
+/****************************************************************************************************
+*	RENTAL DETAIL
+****************************************************************************************************/
+
 
 /**
 *	initialize map in object detail
@@ -166,16 +294,7 @@ App.prototype.initMapsObjectDetail = function(){
 	$('#map_canvas').traMap();	
 }
 
-App.prototype.addToViewList = function(){
-	var params = {
-		name: $(this).attr('name'),
-		thumb: $(this).attr('thumb'),
-		url: $(this).attr('url'),
-		id: $(this).attr('id')
-	}
 
-	console.log(params);
-}
 
 /****************************************************************************************************
 *	RUNN APPS
@@ -189,8 +308,7 @@ $(document).ready(function(){
 	/* register listeners */
 	/* UI toogle function */
 	$('.toogle').click(A.uiToogleClick);
-	/* compare button click */
-	$('.btn-compare').click(A.buttonCompareClick);
+
 	/* object detail init large map after small map click */
 	$('.mapsImg').click(A.initMapsObjectDetail);
 	/* UI tabs */
@@ -200,8 +318,20 @@ $(document).ready(function(){
 	$( ".datepicker" ).datepicker();	
 	$('.accordion').accordion({ autoHeight: false , active: false , navigation: true, collapsible: true });
 	
+	/* rental favorites list*/
+	$('.addToFavorites').click(A.addToFavorites);
+	$('.addToFavorites').favoriteActiveLinks(A);
 
-	$('.addToViewList').ready(A.addToViewList);
+	/* rental open modal contact dialog */
+	$('.openContactForm').click(A.openContactForm);
 
+	/* after show Rental object detail append this object to View list in local storage */
+	$('.addToViewList').objectVisitList(A);
+
+	/* @todo */
+	$('.favoriteSlider').favoriteSlider(A);
+
+	/* */
+	$('#compareList').showFavoriteSlider(A);
 
 });

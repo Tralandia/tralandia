@@ -214,7 +214,7 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 .ui-tooltip {
 	padding: 8px;
 	position: absolute;
-	z-index: 9999;
+	z-index: 1000;
 	max-width: 300px;
 	-webkit-box-shadow: 0 0 5px #aaa;
 	box-shadow: 0 0 5px #aaa;
@@ -471,7 +471,7 @@ body .ui-tooltip { border-width: 2px; }
 	border-bottom: 1px solid #fdfdf8;
 	position: relative;
 	top: 1px;
-	z-index: 8000;
+	z-index: 1000;
 	background: #fdfdf8;
 	font-weight: bold;
 }

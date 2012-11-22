@@ -8,7 +8,7 @@
 	<div class="innerPadding baseRadius baseBorder overflow">
 		<div id="content noPadding">
 			
-			<div class="detailSlider">
+			<div class="detailSlider favoriteSlider">
 				<div class="header">
 					<a href="#" class="entypo-prev">Navrat na vysledky</a>
 					<h3>Vysledky vzhladavania</h3>
@@ -42,7 +42,7 @@
 	<div class="innerPadding baseRadius baseBorder overflow">
 		<div id="content noPadding">
 			
-			<div class="detailSlider">
+			<div class="detailSlider favoriteSlider">
 				<div class="header">
 					<a href="#" class="entypo-prev">Navrat na vysledky</a>
 					<h3>Vysledky vzhladavania</h3>
@@ -72,12 +72,12 @@
 	</div>
 </div>
 
-
+<!--
 <div class="span12">
 	<div class="innerPadding baseRadius borderBlue overflow">
 		<div id="content noPadding">
 			
-			<div class="detailSlider compare">
+			<div class="detailSlider favoriteSlider compare">
 				<div class="header">
 					<a href="#" class="entypo-prev">Navrat na vysledky</a>
 					<h3>Vysledky vzhladavania</h3>
@@ -107,36 +107,26 @@
 	</div>
 </div>
 
-
+-->
 
 <div class="span12">
 	<div class="innerPadding baseRadius borderBlue overflow">
 		<div id="content noPadding">
 			
-			<div class="detailSlider compare">
+			<div class="detailSlider favoriteSlider compare" id="compareList">
 				<div class="header">
 					<a href="#" class="entypo-prev">Navrat na vysledky</a>
 					<h3>Vysledky vzhladavania</h3>
 				</div>
 
-				<div class="disabled leftArrow entypo-prev"></div>
+				<div class="leftArrow entypo-prev"></div>
 				<div class="content">
 					<ul>
-						<li></li>
-						<li></li>
-						<li></li>
-						<li></li>
-						<li class="current"></li>
-						<li><div class="checked entypo-ok"></div></li>
-						<li></li>
-						<li></li>
-						<li></li>
-						<li></li>
-						<li></li>
+
 					</ul>
 				</div>
 
-				<div class="disabled rightArrow entypo-slider-right"></div>
+				<div class="rightArrow entypo-slider-right"></div>
 
 
 				<div class="submenu">
@@ -163,12 +153,15 @@
 
 <div class="row-fluid objectDetailContent">
 	<div class="span4 marginBottom marginTop marginLeft leftSidebarObjectDetail">
-		{foreach $rentalService->getPhotos() AS $medium}
+		{foreach $rentalService->getPhotos(3) AS $medium}
+
+		{var $test = $medium|mediumSrc:small}
+
 			<img class="marginBottom" src="{$medium|mediumSrc:small}" />
 			
 		{/foreach}
 
-
+		{dump $test}
 		<img class="mapsImg" src="https://maps.googleapis.com/maps/api/staticmap?center={$rental->latitude},{$rental->longitude}&markers=color:blue%7C{$rental->latitude},{$rental->longitude}&maptype=terrain&zoom=13&size=288x140&sensor=false" />
 	</div>
 
@@ -185,7 +178,7 @@
 		
 		<p>
 		{foreach $rental->getLocations() as $location}
-			<a n:class="$iterator->first ? bold" href="#">{_$location->name}</a> {if !$iterator->last}, {/if}
+			<a n:class="$iterator->first ? bold" href="{link Rental:list location => $location->id}">{_$location->name}</a> {if !$iterator->last}, {/if}
 		{/foreach}
 		</p>
 
@@ -259,7 +252,7 @@
 
 	<!-- right sidebar -->
 	<div class="span3 marginTop">
-		<button class="btn btn-compare"><span class="entypo-star">{_o12334}</span></button>
+		<button class="btn btn-compare addToFavorites" rel="{$rental->id}" link="{link Rental:detail $rental->id}" thumb="{link Rental:detail $rental->id}"><span class="entypo-star">{_o12334}</span></button>
 
 
 		<div class="sidebarContact">
@@ -378,11 +371,11 @@
 		        <li><a href="#tabs-5">Interview</a></li>
 		        <li><a id="objectDetailListMap" href="#tabs-2">Mapa</a></li>
 		        <li><a href="#tabs-6">Obsadenost</a></li>
-		        <li><a href="#tabs-7">Hodnotenie</a></li>
+		        
 		        
 		        
 		    </ul>
-		    <div id="tabs-7"></div>
+		    
 
 		    <div id="tabs-5">
 		    	<h3>Opis objektu</h3>
@@ -409,6 +402,8 @@
 
 		    <div id="gallery">
 		    	<ul class="biggall">
+
+
 		    		<li><img src="http://www.tralandia.sk/trax_html/images/img_1.gif" /><p>Lorem ipsum </p></li>
 		    		<li><img src="http://www.tralandia.sk/trax_html/images/img_1.gif" /><p>Lorem ipsum </p></li>
 		    		<li><img src="http://www.tralandia.sk/trax_html/images/img_1.gif" /><p>Lorem ipsum </p></li>

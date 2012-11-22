@@ -307,7 +307,7 @@ ul.arrows {
 		.bottom-border-radius(10px);
 		.drop-shadow(@supfooterDropshadowColor);
 		position: relative;
-		z-index: 5000;
+		z-index: 1000;
 	}
 }
 
@@ -324,7 +324,7 @@ ul.arrows {
 		border-left: 1px solid #ddd;
 
 		position: relative;
-		z-index: 5000;
+		z-index: 1000;
 	}
 }
 
@@ -460,8 +460,12 @@ ul.arrows {
 		margin-top: -50px;
 		float: left;
 		position: relative;
-		z-index: 10000;
+		z-index: 1000;
 		float: left;
+
+		object {
+
+		}
 	}
 
 	#pageTitle , .gradiendEnd {
@@ -499,7 +503,7 @@ ul.arrows {
 		line-height:27px;
 		
 		position: relative;
-		z-index: 8000;
+		z-index: 1000;
 		top: -1px;
 		right: -1px;
 
@@ -989,8 +993,15 @@ border-top-right-radius: 5px;
 	width: 100%;
 	text-shadow: -1px -1px 0px #27407e;
 	.inner-shadow(20px , #6a87bd);
-	&:hover {
+	&:hover , &.selected {
 		.basic-gradient(#27407e,#5b78af);
+
+		span {
+			&:before {
+				content:'\2713';
+			}			
+		}
+
 	}
 }
 
