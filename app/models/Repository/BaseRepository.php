@@ -6,6 +6,13 @@ use Doctrine\ORM\EntityRepository;
 
 class BaseRepository extends EntityRepository {
 
+
+	public function createNew()
+	{
+		$class = $this->getEntityName();
+		return new $class;
+	}
+
 	public function persist($entity) {
 		$this->_em->persist($entity);
 	}
