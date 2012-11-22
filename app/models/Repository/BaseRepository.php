@@ -10,6 +10,8 @@ class BaseRepository extends EntityRepository {
 	public function createNew()
 	{
 		$class = $this->getEntityName();
+		// @todo method or operation is not implemented
+		throw new \Nette\NotImplementedException('ak je to translator tak vyhod exception');
 		return new $class;
 	}
 

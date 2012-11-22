@@ -2,14 +2,14 @@
 
 namespace FrontModule;
 
+use Model\Rental\IRentalDecoratorFactory;
+
 class RentalPresenter extends BasePresenter {
 
-	public $rentalServiceFactory;
+	public $rentalDecoratorFactory;
 
-	public function inject(\Nette\DI\Container $dic) {
-		parent::inject($dic);
-
-		$this->setProperty('rentalServiceFactory');
+	public function injectDecorators(IRentalDecoratorFactory $rentalDecoratorFactory) {
+		$this->rentalDecoratorFactory = $rentalDecoratorFactory;
 	}
 
 
@@ -21,9 +21,7 @@ class RentalPresenter extends BasePresenter {
 			throw new \Nette\InvalidArgumentException('$id argument does not match with the expected value');
 		}
 		
-		d($this->getService('pageServiceFactory')->create());
-
-		$rentalService = $this->rentalServiceFactory->create($rental);
+		$rentalService = $this->rentalDecoratorFactory->create($rental);
 
 		$this->template->rental = $rental;
 		$this->template->rentalService = $rentalService;

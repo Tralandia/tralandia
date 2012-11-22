@@ -3,6 +3,7 @@
 namespace Service\Medium;
 
 use Nette\Http\FileUpload;
+use Model\Medium\IMediumDecoratorFactory;
 
 class MediumService extends \Service\BaseService {
 
@@ -33,8 +34,14 @@ class MediumService extends \Service\BaseService {
 
 	public $mediumTypeRepositoryAccessor, $mediumTypeServiceFactory;
 	
-	public function inject($mediumTypeRepositoryAccessor, $mediumTypeServiceFactory) {
-		list($this->mediumTypeRepositoryAccessor, $this->mediumTypeServiceFactory) = func_get_args();
+	public function injectRepositories(\Nette\DI\Container $dic)
+	{
+		$this->mediumTypeRepositoryAccessor = $dic->mediumTypeRepositoryAccessor;
+	}
+
+	public function injectDecorators(IMediumDecoratorFactory $mediumTypeServiceFactory)
+	{
+		$this->mediumTypeServiceFactory = $mediumTypeServiceFactory;
 	}
 
 	public function setContentFromUrl($uri) {

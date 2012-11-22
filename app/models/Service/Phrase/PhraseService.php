@@ -12,8 +12,9 @@ class PhraseService extends Service\BaseService {
 
 	protected $translationEntityFactory;
 
-	public function inject($translationEntityFactory) {
-		$this->translationEntityFactory = $translationEntityFactory;
+	public function injectRepositories(\Nette\DI\Container $dic)
+	{
+		$this->translationEntityFactory = $dic->translationEntityFactory;
 	}
 
 	public function createTranslation(Entity\Language $language, $translationText = NULL) {
