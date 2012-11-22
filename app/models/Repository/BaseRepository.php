@@ -10,8 +10,8 @@ class BaseRepository extends EntityRepository {
 		$this->_em->persist($entity);
 	}
 
-	public function flush() {
-		$this->_em->flush();
+	public function flush($entity = NULL) {
+		$this->_em->flush($entity);
 	}
 	
 	public function remove($entity) {

@@ -21,8 +21,10 @@ class RentalPresenter extends BasePresenter {
 			throw new \Nette\InvalidArgumentException('$id argument does not match with the expected value');
 		}
 		
+		d($this->getService('pageServiceFactory')->create());
+
 		$rentalService = $this->rentalServiceFactory->create($rental);
-		d($rentalService->getPhotos());
+
 		$this->template->rental = $rental;
 		$this->template->rentalService = $rentalService;
 

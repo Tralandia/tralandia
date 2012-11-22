@@ -2,30 +2,46 @@
 
 namespace Extras;
 
-class Environment extends \Nette\Object {
+use Nette;
 
-	private $location = NULL;
-	private $language = NULL;
+class Environment extends Nette\Object {
 
-	// @todo
-	private $url = NULL; // Extras\Type\Url
-	private $currency = NULL; // 
-	private $locale = NULL;
+	protected $location;
+	protected $language;
+
+	protected $request;
+	protected $currency;
+	protected $locale;
 
 	public $languageRepositoryAccessor;
 	public $locationRepositoryAccessor;
 
-	public function __construct($languageRepositoryAccessor, $locationRepositoryAccessor) {
+	public function __construct(array $request, $languageRepositoryAccessor, $locationRepositoryAccessor)
+	{
+		$this->request = reset($request);
 		$this->languageRepositoryAccessor = $languageRepositoryAccessor;
 		$this->locationRepositoryAccessor = $locationRepositoryAccessor;
 	}
 
-	public function getLocation() {
-		return $this->locationRepositoryAccessor->get()->find(56);
+
+	public function getPrimaryLocation()
+	{
+		return $this->locationRepositoryAccessor->get()->find($this->getRequestParameter('primaryLocation'));
 	}
 
-	public function getLanguage() {
-		return $this->languageRepositoryAccessor->get()->find(144);
+	public function getLanguage()
+	{
+		return $this->languageRepositoryAccessor->get()->find($this->getRequestParameter('language'));
+	}
+
+	public function getRequest()
+	{
+		return $this->request;
 	}
 	
+	protected function getRequestParameter($name)
+	{
+		$parameters = $this->request->getParameters();
+		return $parameters[$name];
+	}
 }

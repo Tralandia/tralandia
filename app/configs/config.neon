@@ -5,6 +5,9 @@ common:
 		max_execution_time: 60
 
 	nette:
+		container:
+			debugger: true  # aktivuje panel v Debugger baru
+
 		session:
 			autoStart: smart
 			expiration: '+1 year'
@@ -104,7 +107,7 @@ common:
 				- $config(%acl%)
 				- setup()
 
-		environment: Extras\Environment(@languageRepositoryAccessor, @locationRepositoryAccessor)
+		environment: Extras\Environment(@application::getRequests(), @languageRepositoryAccessor, @locationRepositoryAccessor)
 		translator: Extras\Translator(@environment, @phraseRepositoryAccessor, @phraseServiceFactory, @translatorCache)
 
 		settings:

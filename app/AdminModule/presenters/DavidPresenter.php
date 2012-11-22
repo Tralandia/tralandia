@@ -10,18 +10,18 @@ class DavidPresenter extends BasePresenter {
 
 	public function actionList() {
 
-		$host = 'www.sk.tra.com';
+		$url = 'http://www.tra.sk/nitra';
+		$url = new Nette\Http\UrlScript($url);
+		$httpRequest = new Nette\Http\Request($url);
 
-		$mask = '<language>.<country>.<domain>.com';
+		$request = $route->match($httpRequest);
 
-		$patter = '~^(?P<langauge>\w+)\.(?P<country>\w+)\.(?P<domain>\w+)\.com$~';
-		$patter = '~^(?P<langauge>\w+)\.(?P<country>\w+)\.(?P<domain>\w+)\.com$~';
+		$languageRepositoryAccessor = $this->getService('languageRepositoryAccessor');
+		$locationRepositoryAccessor = $this->getService('locationRepositoryAccessor');
+		$environment = new Extras\Environment($request, $languageRepositoryAccessor, $locationRepositoryAccessor);
+		d($environment);
+		// $seo = new Service\Seo\SeoService;
 
-		$patter = Strings::replace($mask, '~<\w+>~', function ($m) {
-			return '(?P'.$m[0].'\w+)';
-		});
-		$patter = str_replace('.', '\.', $patter);
-		d($patter);
 
 	}
 
