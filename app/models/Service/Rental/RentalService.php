@@ -10,6 +10,14 @@ use Service, Doctrine, Entity;
 class RentalService extends Service\BaseService 
 {
 
+	public $attractionRepositoryAccessor;
+
+	public function startup() {
+		parent::startup();
+
+		$this->setProperty('attractionRepositoryAccessor');
+	}
+
 	public function getAmenitiesByType($types, $limit = NULL) {
 
 		$returnJustOneType = NULL;
@@ -65,6 +73,13 @@ class RentalService extends Service\BaseService
 		}
 
 		return $return;
+	}
+
+	// @todo: atrakcie sa maju vyberat na zaklade polohy objektu
+	public function getAttractions($limit=30) {
+
+		dump($this->attractionRepositoryAccessor);
+
 	}
 
 }

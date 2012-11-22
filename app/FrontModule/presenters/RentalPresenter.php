@@ -31,6 +31,10 @@ class RentalPresenter extends BasePresenter {
 		// get locations by type
 		$locations = $rentalService->getLocationsByType(array('region'));
 
+		// get attractions by type
+		$attractions = $rentalService->getAttractions();
+		debug($attractions);
+
 		$this->template->rental = $rental;
 		$this->template->rentalService = $rentalService;
 	}
