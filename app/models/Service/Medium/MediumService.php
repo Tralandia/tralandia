@@ -85,8 +85,7 @@ class MediumService extends \Service\BaseService {
 
 	}
 
-	//@TODO - cela tato fcia je este todo :)
-	public function getThumbnail($size) {
+	public function getThumbnail($size = 'full') {
 
 		if (!$imgSize = $this::$imgSizes[$size]) {
 			throw new \Nette\UnexpectedValueException('Image size "' . $size . '" does not exist.');
