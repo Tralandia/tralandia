@@ -13,44 +13,48 @@ use Nette\Caching;
 class SearchCaching extends \Nette\Object {
 
 	protected $cache;
-	protected $criteriaTypes = array(
-		self::CRITERIA_COUNTRY,
-		self::CRITERIA_LOCATION,
-		self::CRITERIA_OBJECT_TYPE,
-		self::CRITERIA_AREA_BOUNDRIES,
-		self::CRITERIA_CAPACITY,
-		self::CRITERIA_AMENITIES,
-		self::CRITERIA_LANGUAGES_SPOKEN,
-		self::CRITERIA_PRICE_CATEGORY
-	);
+	protected $country;
 
-	const CRITERIA_COUNTRY 			= 'country';
-	const CRITERIA_LOCATION  		= 'location';
-	const CRITERIA_OBJECT_TYPE 		= 'objecttype';
-	const CRITERIA_AREA_BOUNDRIES 	= 'areaboundries';
-	const CRITERIA_CAPACITY 		= 'capacity';
-	const CRITERIA_AMENITIES 		= 'amenities';
-	const CRITERIA_LANGUAGES_SPOKEN = 'languagesspoken';
-	const CRITERIA_PRICE_CATEGORY 	= 'pricecategory';
+	protected $rentalRepositoryAccessor;
 	
-	public function __construct(Caching\Cache $cache) {
-		$this->cache = $cache;
+	public function __construct(\Entity\Location\Location $location) {
+
+		
+
 	}
 
-	public function setCriteria($criteria) {
-		if (!is_array($criteria)) $criteria = array($criteria);
-		
-		foreach ($criteria as $entities) {
-			if (!is_array($entities)) $entities = array($entities);
+	public function setCache(Caching\Cache $cache) {
 
-			foreach ($entities as $entity) {
+		$this->cache = $cache;
 
-				$criteriaType = str_replace(array("Entity\\", "\\"), "", get_class($entity));
-				if (isset($this->criteriaTypes[$criteriaType])) {
+	}
 
-				}
-			}
+	public function setCriteria($criteria, $value) {
+
+		switch($criteria) {
+
+			case self::CRITERIA_COUNTRY:
+				$this->country = $value;
+				break;
+
+			default:
+				$this->criteria[$this->country] = $this->getIdsFor($criteria, $value);
+				break;
 		}
+
+	}
+
+	public function inject(\Nette\DI\Container $container) {
+
+		$this->rentalRepositoryAccessor = $container->rentalRepositoryAccessor;
+
+	}
+
+	// private functions
+	private function getRentalsFor($criteria, $value) {
+
+		
+
 	}
 
 }

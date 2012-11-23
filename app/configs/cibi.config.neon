@@ -1,0 +1,7 @@
+parameters:
+	editor: 'edit://open/?url=file://%file&line=%line'
+	envOptions:
+		email: tralandia.cibi@gmail.com
+
+	database:
+		debugger: false

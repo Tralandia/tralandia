@@ -2,30 +2,41 @@
 
 namespace AdminModule;
 
+use 
+	Extras\Cache\SearchCaching,
+	Service\Rental\RentalSearchService;
+
 class CibiPresenter extends BasePresenter {
 
-	public $domainRepositoryAccessor;
+	public $searchFactory;
+
 	public $locationRepositoryAccessor;
 	public $rentalTypeRepositoryAccessor;
 
-	public function setContext(\Nette\DI\Container $dic) {
-		parent::setContext($dic);
+	public function inject(\Nette\DI\Container $container) {
+		
+		$this->locationRepositoryAccessor = $container->locationRepositoryAccessor;
+		$this->rentalTypeRepositoryAccessor = $container->rentalTypeRepositoryAccessor;
+	}
 
-		$this->setProperty('domainRepositoryAccessor');
-		$this->setProperty('rentalTypeRepositoryAccessor');
+	public function injectRentalSearchService(\Service\Rental\IRentalSearchServiceFactory $searchFactory) {
+		$this->searchFactory = $searchFactory;
 	}
 
 	public function actionList() {
-		$searchCaching = $this->getService('searchCaching');
 
-		$country = $this->locationRepositoryAccessor->get()->findBySlug('slovakia');
-		$searchCaching->setCountry($country);
+		$location = $this->locationRepositoryAccessor->get()->findOneById(10);
 
-		$criteria = array();
-		$criteria[] = $searchCaching->getCache($country, SearchCaching::CRITERIA_COUNTRY);
-		$criteria[] = new SearchCaching($domain, SearchCaching::CRITERIA_DOMAIN);
+		$search = $this->searchFactory->create($location);
+		$search->addCriteria(
+			RentalSearchService::CRITERIA_RENTAL_TYPE, 
+			$this->rentalTypeRepositoryAccessor->get()->findById(array(5, 6))
+		);
+		$search->setCountPerPage(50);
+		$search->setPage(1);
+		$results = $search->getResults();
 
-		$search->setCriteria($criteria);
+		dump($results);
 
 	}
 
