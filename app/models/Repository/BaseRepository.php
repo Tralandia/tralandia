@@ -10,8 +10,9 @@ class BaseRepository extends EntityRepository {
 	public function createNew()
 	{
 		$class = $this->getEntityName();
-		// @todo method or operation is not implemented
-		throw new \Nette\NotImplementedException('ak je to translator tak vyhod exception');
+		if($class == 'Entity\Phrase\Translation') {
+			throw new \Nette\InvalidArgumentException('Nemozes vitvorit translation len tak kedy sa ti zachce! Toto nieje holubnik! Pouzi na to $phraseDecorator->createTranslation()');
+		}
 		return new $class;
 	}
 
