@@ -33,6 +33,8 @@ Extras\Config\PresenterExtension::register($configurator);
 
 $configurator->addConfig(APP_DIR . '/configs/config.neon');
 $configurator->addConfig(APP_DIR . '/configs/local.config.neon');
+
+debug($section);
 if($section) {
 	$configurator->addConfig(APP_DIR . '/configs/'.$section.'.config.neon');
 }

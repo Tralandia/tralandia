@@ -163,12 +163,6 @@
 
 <div class="row-fluid objectDetailContent">
 	<div class="span4 marginBottom marginTop marginLeft leftSidebarObjectDetail">
-		{foreach $rentalService->getPhotos() AS $medium}
-			<img class="marginBottom" src="{$medium|mediumSrc:small}" />
-			
-		{/foreach}
-
-
 		<img class="mapsImg" src="https://maps.googleapis.com/maps/api/staticmap?center={$rental->latitude},{$rental->longitude}&markers=color:blue%7C{$rental->latitude},{$rental->longitude}&maptype=terrain&zoom=13&size=288x140&sensor=false" />
 	</div>
 
