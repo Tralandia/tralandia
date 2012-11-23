@@ -29,6 +29,7 @@ parameters:
 					- Front/contact-page.less
 					- Front/object-detail-favorites.less
 					- FrontJqUi/css/tralandia/jquery-ui-1.9.1.custom.css
+					
 
 				js:
 					- jQuery/jquery.js
@@ -43,6 +44,8 @@ parameters:
 					- Front/js/favorite-slider.js
 					- Front/js/show-favorite-slider.js
 					- Front/js/jstorage.min.js
+					- Front/js/jquery.jcarousel.min.js
+					
 					- Front/js/main.js
 
 			front:

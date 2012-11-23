@@ -30,7 +30,9 @@
 			this.list = $(this).find('ul');
 
 				this.favoritesData = appObject.storageGet('favoritesList');
+				this.visitList = appObject.storageGet('visitObjectList');
 
+				
 
 				if(typeof this.favoritesData == 'undefined' || this.favoritesData == null){
 					$(this).parent().parent().parent().hide();
@@ -44,6 +46,12 @@
 					$.each(this.favoritesData , function(k,v){			
 
 						var newLink = $('<a></a>').attr('href',v.link);
+
+							// if is visited object
+							if(appObject.in_array(self.visitList,v.id)){
+								var visited = $('<div></div>').addClass('checked entypo-ok');
+									visited.appendTo(newLink);
+							}
 
 						var newLi = $('<li></li>').attr('rel',v.id);
 
@@ -71,10 +79,7 @@
 
 					$(this).find('ul').css('width',sumPx+'px');
 
-					console.log(sumPx);
-
 					// set nav links
-
 
 				}
 

@@ -80,6 +80,23 @@ App.prototype._setLocationUrlAnchor = function(anchorName){
 *	UNIVERSAL UI FUNCTIONS
 ****************************************************************************************************/
 
+App.prototype.uiTabsClickChangeHashAdress = function(){
+
+	var self = new App;
+	
+	
+	var currentTabId = $(this).attr('href');
+	self._setLocationUrlAnchor($(this).attr('href'));
+	$(this).blur();
+
+	if($(this).attr('href') == '#tabs-2'){
+		/* large map plugin */
+		$('#map_canvas').traMap();	
+	}
+
+
+}
+
 App.prototype.uiSelectedTabs = function(){
 
 	var currentAnchor = this._getLocationUrlAnchor();
@@ -125,22 +142,7 @@ App.prototype.uiToogleClick = function(){
 
 
 
-App.prototype.uiTabsClickChangeHashAdress = function(){
 
-	var self = new App;
-	
-	
-	var currentTabId = $(this).attr('href');
-	self._setLocationUrlAnchor($(this).attr('href'));
-	$(this).blur();
-
-	if($(this).attr('href') == '#tabs-2'){
-		/* large map plugin */
-		$('#map_canvas').traMap();	
-	}
-
-
-}
 
 
 App.prototype.in_array = function(array, value) {
@@ -240,8 +242,8 @@ App.prototype.addToFavorites = function(){
 				newLi.addClass('current');
 				newLi.addClass('rel-'+data.id);
 
-				var sliderList = favoriteSlider.find('ul');
-					newLi.appendTo(sliderList);
+			var sliderList = favoriteSlider.find('ul');
+				newLi.appendTo(sliderList);
 
 		} else {
 
@@ -345,9 +347,12 @@ $(document).ready(function(){
 	$('.addToViewList').objectVisitList(A);
 
 	/* @todo */
-	$('.favoriteSlider').favoriteSlider(A);
+	//$('.favoriteSlider').favoriteSlider(A);
 
 	/* */
 	$('#compareList').showFavoriteSlider(A);
+
+
+	jQuery('#mycarousel').jcarousel();
 
 });
