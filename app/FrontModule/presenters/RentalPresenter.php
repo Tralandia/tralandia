@@ -2,16 +2,14 @@
 
 namespace FrontModule;
 
+use Model\Rental\IRentalDecoratorFactory;
+
 class RentalPresenter extends BasePresenter {
 
-	public $rentalServiceFactory;
-	public $rentalAmenityTypeRepositoryAccessor;
+	public $rentalDecoratorFactory;
 
-	public function setContext(\Nette\DI\Container $dic) {
-		parent::setContext($dic);
-
-		$this->setProperty('rentalServiceFactory');
-		$this->setProperty('rentalAmenityTypeRepositoryAccessor');
+	public function injectDecorators(IRentalDecoratorFactory $rentalDecoratorFactory) {
+		$this->rentalDecoratorFactory = $rentalDecoratorFactory;
 	}
 
 
@@ -23,25 +21,22 @@ class RentalPresenter extends BasePresenter {
 			throw new \Nette\InvalidArgumentException('$id argument does not match with the expected value');
 		}
 		
-		$rentalService = $this->rentalServiceFactory->create($rental);
-
-		// get amenities by type
-		$amenities = $rentalService->getAmenitiesByType(array('bathroom', 'congress'));
-
-		// get locations by type
-		$locations = $rentalService->getLocationsByType(array('region'));
-
-		// get attractions by type
-		$attractions = $rentalService->getAttractions();
-		debug($attractions);
+		$rentalService = $this->rentalDecoratorFactory->create($rental);
 
 		$this->template->rental = $rental;
 		$this->template->rentalService = $rentalService;
+
+		$this->setLayout('detailLayout');
+
 	}
 
 	public function actionList() {
 
-		
+		$rentals = $this->rentalRepositoryAccessor->get()->findAll();
+
+		$this->template->rentals = $rentals;
+
+
 
 	}
 

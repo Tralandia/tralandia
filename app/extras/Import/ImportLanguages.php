@@ -21,17 +21,7 @@ class ImportLanguages extends BaseLanguagesImport {
 		$r = q('select * from languages order by id');
 
 		$nameDicIds = array();
-		$defaulOptions = array(
-			'genders' => array('feminine' => 'Feminine', 'masculine' => 'Masculine', 'neuter' => 'Neuter'),
-			'primaryGender' => 'masculine',
-			'plurals' => array(
-				'5plus' => array('name' => '0, 5+', 'pattern' => '$i==0 || $i>4'),
-				'one' => array('name' => '1', 'pattern' => '$i==1'),
-				'twofour' => array('name' => '2-4', 'pattern' => '$i>1 && $i<5'),
-			),
-			'primarySingular' => 'one',
-			'primaryPlural' => 'twofour',
-		);
+		$defaulOptions = $this->languageOptions['en'];
 		while($x = mysql_fetch_array($r)) {
 			$e = $this->context->languageEntityFactory->create();
 

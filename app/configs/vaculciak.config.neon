@@ -1,0 +1,5 @@
+parameters:
+	editor: 'txmt://open/?url=file://%file&line=%line'
+
+	database:
+		debugger: true

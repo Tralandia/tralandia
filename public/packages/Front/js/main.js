@@ -24,16 +24,80 @@ function executeFunctionByName(functionName, context /*, args */) {
 }
 
 /*
-* App controller 
+* App class 
 */
 
 var App = $class({
 	
 	constructor: function (){
-
 	}
 
 });
+
+/****************************************************************************************************
+*	UNIVERSAL FUNCTIONS
+****************************************************************************************************/
+
+
+/**
+* return current location url string
+*/
+
+App.prototype._getLocationUrl = function(withAnchor){
+
+	if(typeof withAnchor == 'undefined' || withAnchor == false){
+		var hash = window.location.hash;
+		var url = document.location.toString();
+			url = url.replace(hash,''); 
+		
+		return url;		
+	}
+
+	if(withAnchor == true) {
+		return document.location.toString();
+	}
+
+}
+
+/**
+* return location url anchor string
+*/
+
+App.prototype._getLocationUrlAnchor = function(){
+	return window.location.hash;
+}
+
+/**
+* set url anchor 
+*/
+
+App.prototype._setLocationUrlAnchor = function(anchorName){
+	location.replace(this._getLocationUrl()+anchorName);
+}
+
+/****************************************************************************************************
+*	UNIVERSAL UI FUNCTIONS
+****************************************************************************************************/
+
+App.prototype.uiSelectedTabs = function(){
+
+	var currentAnchor = this._getLocationUrlAnchor();
+
+		currentIndex = 0;
+
+		$('.tabs ul.ui-tabs-nav li a').each(function(index){
+
+			if($(this).attr('href') == currentAnchor){			
+				currentIndex = index;
+			}
+
+		});
+
+	var setting = {
+		active: currentIndex
+	};
+	return setting;
+}
 
 App.prototype.uiToogleClick = function(){
 	var span  = $(this).find('span');
@@ -65,6 +129,19 @@ App.prototype.buttonCompareClick = function(){
 	
 }
 
+
+
+App.prototype.uiTabsClickChangeHashAdress = function(){
+
+	var self = new App;
+
+	$.scrollTo(this,{duration:500 , offset: -50} );
+	var currentTabId = $(this).attr('href');
+	self._setLocationUrlAnchor($(this).attr('href'));
+	$(this).blur();
+}
+
+
 /****************************************************************************************************
 *	OBJECT DETAIL
 ****************************************************************************************************/
@@ -75,8 +152,6 @@ App.prototype.buttonCompareClick = function(){
 
 App.prototype.initMapsObjectDetail = function(){
 	$('#objectDetailListMap').trigger('click');
-	
-	$.scrollTo('#objectDetailListMap',{duration:3000} );
 }
 
 
@@ -95,9 +170,13 @@ $(document).ready(function(){
 	$('.btn-compare').click(A.buttonCompareClick);
 	$('.mapsImg').click(A.initMapsObjectDetail);
 
-	$( ".tabs" ).tabs();
+	$( ".tabs" ).tabs(A.uiSelectedTabs());
+	$( ".tabs ul li a" ).click(A.uiTabsClickChangeHashAdress);
+
 	$( ".datepicker" ).datepicker();	
 	$('.accordion').accordion({ autoHeight: false , active: false , navigation: true, collapsible: true });
+	$('.spinner').spinner();
 
+	$('#map_canvas').traMap();
 
 });

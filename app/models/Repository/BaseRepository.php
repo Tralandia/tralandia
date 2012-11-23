@@ -6,12 +6,22 @@ use Doctrine\ORM\EntityRepository;
 
 class BaseRepository extends EntityRepository {
 
+
+	public function createNew()
+	{
+		$class = $this->getEntityName();
+		if($class == 'Entity\Phrase\Translation') {
+			throw new \Nette\InvalidArgumentException('Nemozes vitvorit translation len tak kedy sa ti zachce! Toto nieje holubnik! Pouzi na to $phraseDecorator->createTranslation()');
+		}
+		return new $class;
+	}
+
 	public function persist($entity) {
 		$this->_em->persist($entity);
 	}
 
-	public function flush() {
-		$this->_em->flush();
+	public function flush($entity = NULL) {
+		$this->_em->flush($entity);
 	}
 	
 	public function remove($entity) {

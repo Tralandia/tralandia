@@ -62,9 +62,9 @@ abstract class Object
 	 * Access to reflection.
 	 * @return Nette\Reflection\ClassType
 	 */
-	public static function getReflection()
+	public /**/static/**/ function getReflection()
 	{
-		return new Reflection\ClassType(get_called_class());
+		return new Reflection\ClassType(/*5.2*$this*//**/get_called_class()/**/);
 	}
 
 
@@ -110,11 +110,10 @@ abstract class Object
 		} else {
 			list($class, $name) = explode('::', $name);
 		}
-		$class = new Reflection\ClassType($class);
 		if ($callback === NULL) {
-			return $class->getExtensionMethod($name);
+			return ObjectMixin::getExtensionMethod($class, $name);
 		} else {
-			$class->setExtensionMethod($name, $callback);
+			ObjectMixin::setExtensionMethod($class, $name, $callback);
 		}
 	}
 

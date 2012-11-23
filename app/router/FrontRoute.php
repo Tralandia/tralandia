@@ -9,7 +9,7 @@ use Nette,
 	Nette\Utils\Strings,
 	Nette\Utils\Arrays;
 
-class MainRoute implements Nette\Application\IRouter {
+class FrontRoute implements Nette\Application\IRouter {
 	
 	protected $db;
 	protected $metadata = array(
@@ -17,6 +17,7 @@ class MainRoute implements Nette\Application\IRouter {
 		'action' => 'list',
 	);
 	protected $hostPattern;
+	protected $hostMask;
 	protected $cache;
 	protected static $cached;
 	protected $queryParams = array(
@@ -35,7 +36,7 @@ class MainRoute implements Nette\Application\IRouter {
 
 	protected $appParams = array(
 		'id' => null,
-		'country' => true,
+		'primaryLocation' => true,
 		'language' => null,
 		'location' => null,
 		'tag' => null,
@@ -51,11 +52,12 @@ class MainRoute implements Nette\Application\IRouter {
 	public $domainRepositoryAccessor;
 
 	
-	public function __construct(Caching\Cache $cache, $hostPattern)
+	public function __construct(Caching\Cache $cache, $hostMask)
 	{
 		//$this->metadata = $metadata;
 		$this->cache = $cache;
-		$this->hostPattern = $hostPattern;
+		$this->setHostPattern($hostMask);
+		$this->setHostMask($hostMask);
 		$this->loadCache();
 	}
 
@@ -73,6 +75,20 @@ class MainRoute implements Nette\Application\IRouter {
 			$httpRequest->getFiles(),
 			array(Application\Request::SECURED => $httpRequest->isSecured())
 		);
+	}
+
+	public function setHostPattern($mask)
+	{
+		$patter = Strings::replace($mask, '~<\w+>~', function ($m) {
+			return '(?P'.$m[0].'\w+)';
+		});
+		$patter = str_replace('.', '\.', $patter);
+		$this->hostPattern = '~^'.$patter.'$~';
+	}
+
+	public function setHostMask($mask)
+	{
+		$this->hostMask =  $mask;
 	}
 
 	public function constructUrl(Nette\Application\Request $appRequest, Nette\Http\Url $refUrl)
@@ -106,7 +122,7 @@ class MainRoute implements Nette\Application\IRouter {
 			$language = $country->defaultLanguage;
 		}
 
-		$params->country = $country->id;
+		$params->primaryLocation = $country->id;
 		$params->language = $language->id;
 
 
@@ -120,13 +136,15 @@ class MainRoute implements Nette\Application\IRouter {
 				if($attraction = $this->attractionRepositoryAccessor->get()->find($match[1])) {
 					$params->attraction = $attraction;
 					$params->presenter = 'Attraction';
-					$params->action = 'show';
+					$params->action = 'detail';
+					$params->id = $match[1];
 				}
 			} else if($match = Strings::match($pathSegment, '~\.*-r([0-9]+)~')) {
 				if($rental = $this->rentalRepositoryAccessor->get()->find($match[1])) {
 					$params->rental = $rental;
 					$params->presenter = 'Rental';
-					$params->action = 'show';
+					$params->action = 'detail';
+					$params->id = $match[1];
 				}
 			}
 		}
@@ -191,13 +209,14 @@ class MainRoute implements Nette\Application\IRouter {
 
 	public function getPathSegmentList($pathSegments, $params)
 	{
-		$pathSegmentList = $this->routingPathSegmentRepositoryAccessor->get()->findForRouter($params->language, $params->country, $pathSegments);
+		$pathSegmentList = $this->routingPathSegmentRepositoryAccessor->get()->findForRouter($params->language, $params->primaryLocation, $pathSegments);
 		return $pathSegmentList;
 	}
 
 	public function getUrlByAppRequest($appRequest, $refUrl)
 	{
 		$params = $appRequest->getParameters();
+
 		$query = array();
 		foreach ($this->queryParams as $key => $value) {
 			if(array_key_exists($key, $params)) {
@@ -209,24 +228,30 @@ class MainRoute implements Nette\Application\IRouter {
 		$action = $params['action'];
 		unset($params['action']);
 		
-		//debug($params, $query, $presenter, $action);
+		debug($params, $query, $presenter, $action);
 
 		list($refLanguageIso, $refDomainName, $refCountryIso) = $this->parseHost($refUrl->getHost());
 
-		$country = $this->locationRepositoryAccessor->get()->find($params['country']);
+		$country = $this->locationRepositoryAccessor->get()->find($params['primaryLocation']);
 		$language = $this->languageRepositoryAccessor->get()->find($params['language']);
 
 		$segments = array();
-		foreach (static::$pathSegmentTypes as $key => $value) {
-			if(!isset($params[$key])) continue;
-			$segment = $this->getSegmentById($key, $params);
-			if(!$segment) continue;
-			$segments[$value] = $segment;
+		if($presenter == 'Rental' && $action == 'detail') {
+			$rental = $this->rentalRepositoryAccessor->get()->find($params['id']);
+			$segments[] = $rental->slug . '-r' . $rental->id;
+		} else {
+			foreach (static::$pathSegmentTypes as $key => $value) {
+				if(!isset($params[$key])) continue;
+				$segment = $this->getSegmentById($key, $params);
+				if(!$segment) continue;
+				$segments[$value] = $segment;
+			}
+			ksort($segments);
 		}
-		ksort($segments);
+
 
 		$url = clone $refUrl;
-		$host = ($language->id == $country->defaultLanguage->id ? 'www' : $language->iso) . '.' . $refDomainName . '.' . $country->iso;
+		$host = $this->buildHost(($language->id == $country->defaultLanguage->id ? 'www' : $language->iso), $refDomainName, $country->iso);
 		$url->setHost($host);
 		$path = '/' . implode('/', $segments);
 		$url->setPath($path);
@@ -301,16 +326,26 @@ class MainRoute implements Nette\Application\IRouter {
 		}
 	}
 
-
 	public static function getPathSegmentTypes ()
 	{
 		return static::$pathSegmentTypes;
 	}
 
+	public function buildHost($language, $domain, $country)
+	{
+		return str_replace(
+			array('<language>', '<domain>', '<country>'), 
+			array($language, $domain, $country), 
+			$this->hostMask
+		);
+	}
+
 	public function parseHost($host)
 	{
 		$match = Strings::match($host, $this->hostPattern);
-
+		if(!is_array($match)) {
+			throw new \Nette\InvalidArgumentException('Wrong router.hostPattern');
+		}
 		return array(
 			Arrays::get($match, 'langauge', NULL),
 			Arrays::get($match, 'domain', NULL),

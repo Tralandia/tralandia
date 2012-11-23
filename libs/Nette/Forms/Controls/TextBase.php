@@ -56,7 +56,7 @@ abstract class TextBase extends BaseControl
 	{
 		$value = $this->value;
 		foreach ($this->filters as $filter) {
-			$value = (string) $filter($value);
+			$value = (string) $filter/*5.2*->invoke*/($value);
 		}
 		return $value === $this->translate($this->emptyValue) ? '' : $value;
 	}
@@ -210,7 +210,7 @@ abstract class TextBase extends BaseControl
 	 */
 	public static function validatePattern(TextBase $control, $pattern)
 	{
-		return (bool) Strings::match($control->getValue(), "\x01^($pattern)$\x01u");
+		return (bool) Strings::match($control->getValue(), "\x01^($pattern)\\z\x01u");
 	}
 
 
@@ -235,19 +235,6 @@ abstract class TextBase extends BaseControl
 	public static function validateFloat(TextBase $control)
 	{
 		return Validators::isNumeric(static::filterFloat($control->getValue()));
-	}
-
-
-
-	/**
-	 * Rangle validator: is a control's value number in specified range?
-	 * @param  TextBase
-	 * @param  array  min and max value pair
-	 * @return bool
-	 */
-	public static function validateRange(TextBase $control, $range)
-	{
-		return Validators::isInRange($control->getValue(), $range);
 	}
 
 

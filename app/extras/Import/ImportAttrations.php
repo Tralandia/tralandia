@@ -21,7 +21,7 @@ class ImportAttractions extends BaseImport {
 		$en = $context->languageRepository->findOneByIso('en');
 
 		// Detaching all media
-		qNew('update medium set attraction_id = NULL where attraction_id > 0');
+		// qNew('update medium set attraction_id = NULL where attraction_id > 0');
 		//return;
 
 
@@ -82,6 +82,7 @@ class ImportAttractions extends BaseImport {
 
 			$attraction->contacts = $contacts;
 
+			$model->persist($attraction);
 			// Media
 			$temp = array_unique(array_filter(explode(',', $x['photos'])));
 			if (is_array($temp) && count($temp)) {
@@ -97,7 +98,6 @@ class ImportAttractions extends BaseImport {
 					}
 				}
 			}
-			$model->persist($attraction);
 		}
 
 		$model->flush();

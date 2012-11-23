@@ -19,40 +19,32 @@ use Nette;
  * Reflection metadata class with discovery for a database.
  *
  * @author     Jan Skrasek
- * @property-write Nette\Database\Connection $connection
  */
 class DiscoveredReflection extends Nette\Object implements Nette\Database\IReflection
 {
-	/** @var Nette\Caching\Cache */
-	protected $cache;
-
-	/** @var Nette\Caching\IStorage */
-	protected $cacheStorage;
-
 	/** @var Nette\Database\Connection */
 	protected $connection;
 
+	/** @var Nette\Caching\Cache */
+	protected $cache;
+
 	/** @var array */
 	protected $structure = array();
+
+	/** @var array */
+	protected $loadedStructure;
 
 
 
 	/**
 	 * Create autodiscovery structure.
 	 */
-	public function __construct(Nette\Caching\IStorage $storage = NULL)
-	{
-		$this->cacheStorage = $storage;
-	}
-
-
-
-	public function setConnection(Nette\Database\Connection $connection)
+	public function __construct(Nette\Database\Connection $connection, Nette\Caching\IStorage $cacheStorage = NULL)
 	{
 		$this->connection = $connection;
-		if ($this->cacheStorage) {
-			$this->cache = new Nette\Caching\Cache($this->cacheStorage, 'Nette.Database.' . md5($connection->getDsn()));
-			$this->structure = $this->cache->load('structure') ?: $this->structure;
+		if ($cacheStorage) {
+			$this->cache = new Nette\Caching\Cache($cacheStorage, 'Nette.Database.' . md5($connection->getDsn()));
+			$this->structure = $this->loadedStructure = $this->cache->load('structure') ?: array();
 		}
 	}
 
@@ -60,7 +52,7 @@ class DiscoveredReflection extends Nette\Object implements Nette\Database\IRefle
 
 	public function __destruct()
 	{
-		if ($this->cache) {
+		if ($this->cache && $this->structure !== $this->loadedStructure) {
 			$this->cache->save('structure', $this->structure);
 		}
 	}
@@ -75,17 +67,17 @@ class DiscoveredReflection extends Nette\Object implements Nette\Database\IRefle
 		}
 
 		$columns = $this->connection->getSupplementalDriver()->getColumns($table);
-		$primaryCount = 0;
+		$primary = array();
 		foreach ($columns as $column) {
 			if ($column['primary']) {
-				$primary = $column['name'];
-				$primaryCount++;
+				$primary[] = $column['name'];
 			}
 		}
 
-		if ($primaryCount !== 1) {
-			$primary = '';
+		if (count($primary) === 0) {
 			return NULL;
+		} elseif (count($primary) === 1) {
+			$primary = reset($primary);
 		}
 
 		return $primary;

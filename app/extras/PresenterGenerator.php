@@ -34,6 +34,8 @@ class PresenterGenerator extends \Nette\Object {
 			fclose($handle);
 		}
 
+		@chmod($dirName, 0777, true);
+
 	}
 
 }

@@ -16,14 +16,14 @@ use Nette;
 
 
 /**
- * Callback iterator filter.
+ * CallbackFilterIterator for PHP < 5.4.
  *
  * @author     David Grudl
  */
 class Filter extends \FilterIterator
 {
 	/** @var callable */
-	private $callback;
+	protected $callback;
 
 
 	public function __construct(\Iterator $iterator, $callback)
@@ -36,7 +36,7 @@ class Filter extends \FilterIterator
 
 	public function accept()
 	{
-		return $this->callback->invoke($this);
+		return $this->callback->invoke($this->current(), $this->key(), $this);
 	}
 
 }

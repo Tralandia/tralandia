@@ -183,6 +183,7 @@ final class AnnotationsParser
 				) {
 					$value = substr($value, strlen($m[0]));
 					list(, $key, $val) = $m;
+					$val = rtrim($val);
 					if ($val[0] === "'" || $val[0] === '"') {
 						$val = substr($val, 1, -1);
 
@@ -220,7 +221,7 @@ final class AnnotationsParser
 				$res[$name][] = new $class(is_array($value) ? $value : array('value' => $value));
 
 			} else {
-				$res[$name][] = is_array($value) ? new \ArrayObject($value, \ArrayObject::ARRAY_AS_PROPS) : $value;
+				$res[$name][] = is_array($value) ? Nette\ArrayHash::from($value) : $value;
 			}
 		}
 

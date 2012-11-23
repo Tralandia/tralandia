@@ -3,6 +3,7 @@
 namespace Extras;
 
 use Nette\Caching;
+use Model\Phrase\IPhraseDecoratorFactory;
 
 class Translator implements \Nette\Localization\ITranslator {
 
@@ -11,12 +12,12 @@ class Translator implements \Nette\Localization\ITranslator {
 	protected $language = 38;
 	protected $cache;
 	protected $phraseRepositoryAccessor;
-	protected $phraseServiceFactory;
+	protected $phraseDecoratorFactory;
 
-	public function __construct(Environment $environment, $phraseRepositoryAccessor, \Extras\Models\Service\ServiceFactory $phraseServiceFactory, Caching\Cache $translatorCache) {
+	public function __construct(Environment $environment, $phraseRepositoryAccessor, Caching\Cache $translatorCache, IPhraseDecoratorFactory $phraseDecoratorFactory) {
 		$this->language = $environment->getLanguage();
 		$this->phraseRepositoryAccessor = $phraseRepositoryAccessor;
-		$this->phraseServiceFactory = $phraseServiceFactory;
+		$this->phraseDecoratorFactory = $phraseDecoratorFactory;
 		$this->cache = $translatorCache;
 	}
 	
@@ -33,6 +34,7 @@ class Translator implements \Nette\Localization\ITranslator {
 
 	
 	protected function getTranslation($phrase) {
+		//d($phrase);
 		if($phrase instanceof \Service\Phrase\Phrase) {
 			$phraseId = $phrase->getEntity()->id;
 		} else if ($phrase instanceof \Entity\Phrase\Phrase){
@@ -40,6 +42,7 @@ class Translator implements \Nette\Localization\ITranslator {
 		} else {
 			$phraseId = $phrase;
 		}
+		//d($phraseId, $phrase);
 		$translationKey = $phraseId.'_'.$this->language->id;
 		
 		$translation = $this->cache->load($translationKey);
@@ -51,7 +54,7 @@ class Translator implements \Nette\Localization\ITranslator {
 			}
 
 			if ($phrase instanceof \Entity\Phrase\Phrase){
-				$phrase = $this->phraseServiceFactory->create($phrase);
+				$phrase = $this->phraseDecoratorFactory->create($phrase);
 			} 
 
 			if(!$phrase) {
@@ -63,9 +66,9 @@ class Translator implements \Nette\Localization\ITranslator {
 				$translation = $translation->translation;
 			}
 
+			if($translation === NULL) $translation = '{'.$phraseId.'|'.$this->language->iso.'}';
 			$this->cache->save($translationKey, $translation);
 		}
-		if($translation === NULL) $translation = '{'.$phraseId.'|'.$this->language->iso.'}';
 		return $translation;
 	}
 

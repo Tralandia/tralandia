@@ -1,3 +1,7 @@
+{* 
+	$rental Entity\Rental
+ *}
+
 {block content}
 
 <div class="span12">
@@ -159,9 +163,10 @@
 
 <div class="row-fluid objectDetailContent">
 	<div class="span4 marginBottom marginTop marginLeft leftSidebarObjectDetail">
-		<img class="marginBottom" src="http://flickholdr.com/308/150/natural" />
-		<img class="marginBottom" src="http://flickholdr.com/308/150/natural" />
-		<img class="marginBottom" src="http://flickholdr.com/308/150/natural" />
+		{foreach $rentalService->getPhotos() AS $medium}
+			<img class="marginBottom" src="{$medium|mediumSrc:small}" />
+			
+		{/foreach}
 
 
 		<img class="mapsImg" src="https://maps.googleapis.com/maps/api/staticmap?center={$rental->latitude},{$rental->longitude}&markers=color:blue%7C{$rental->latitude},{$rental->longitude}&maptype=terrain&zoom=13&size=288x140&sensor=false" />
@@ -184,9 +189,6 @@
 		{/foreach}
 		</p>
 
-		{dump $rental->pricelists}
-		{dump $rental->calendar}
-
 		{foreach $rental->types AS $rentalType}
 			{_$rentalType->name}
 		{/foreach}
@@ -195,9 +197,6 @@
 			{_$information->name}
 		{/foreach}
 
-		{foreach $rental->media AS $medium}
-			{_$medium->message}
-		{/foreach}
 
 		<br/>
 		{$rental->checkIn}
@@ -211,13 +210,12 @@
 		
 		<br/>
 		{$rental->interview}
-		{dump $rental->getAmenities()->getIterator()}
 
 
 		<div class="row-fluid">
 			<div class="span3">wqdqwd</div>
 			<div class="span3">wqdqwd</div>
-			<div class="span3">wqdqwd</div>
+			
 		</div>
 
 		<ul class="objectDetailServicesIconList list">
@@ -249,6 +247,7 @@
 						{foreach $rental->contacts->getByType('phone') as $phone }
 							{$phone} {if !$iterator->last}<br/>{/if}
 						{/foreach}
+						
 						</td>
 					</tr>
 					<tr>
@@ -346,8 +345,8 @@
 <div class="row-fluid">
 	<div class="span12">
 		<div class="marginBottom tabs">
-		    <ul>
-		        <li><a href="#tabs-1">Foto</a></li>
+		    <ul class="ui-tabs-nav">
+		        <li><a href="#gallery">Foto</a></li>
 		        <li><a href="#tabs-3">Ceny</a></li>
 		        <li><a href="#tabs-4">Vybavenie</a></li>
 		        <li><a href="#tabs-5">Interview</a></li>
@@ -379,7 +378,7 @@
 		    </div>
 		    
 
-		    <div id="tabs-1">
+		    <div id="gallery">
 		    	<ul class="biggall">
 		    		<li><img src="http://www.tralandia.sk/trax_html/images/img_1.gif" /><p>Lorem ipsum </p></li>
 		    		<li><img src="http://www.tralandia.sk/trax_html/images/img_1.gif" /><p>Lorem ipsum </p></li>
@@ -391,6 +390,10 @@
 		    </div>
 		    <div id="tabs-2">
 		    	
+
+		    	
+
+		    	<div id="map_canvas" style="width:200px;height:300px;"></div>
 
 		    	<div class="row-fluid marginTop">
 		    		<div class="span4">

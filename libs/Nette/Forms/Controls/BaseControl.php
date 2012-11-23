@@ -44,7 +44,7 @@ use Nette,
 abstract class BaseControl extends Nette\ComponentModel\Component implements IControl
 {
 	/** @var string */
-	public static $idMask = 'frm%s-%s';
+	public static $idMask = 'frm-%s';
 
 	/** @var string textual caption or label */
 	public $caption;
@@ -167,7 +167,9 @@ abstract class BaseControl extends Nette\ComponentModel\Component implements ICo
 			return NULL;
 
 		} elseif ($this->htmlId === NULL) {
-			$this->htmlId = sprintf(self::$idMask, $this->getForm()->getName(), $this->lookupPath('Nette\Forms\Form'));
+			$this->htmlId = sprintf(self::$idMask, $this->lookup('Nette\Application\IPresenter', FALSE)
+				? $this->lookupPath('Nette\Application\IPresenter')
+				: $this->lookupPath('Nette\Forms\Form'));
 		}
 		return $this->htmlId;
 	}
@@ -387,8 +389,12 @@ abstract class BaseControl extends Nette\ComponentModel\Component implements ICo
 		$control->id = $this->getHtmlId();
 		$control->required = $this->isRequired();
 
+		if (isset($control->placeholder)) {
+			$control->placeholder = $this->translate($control->placeholder);
+		}
+
 		$rules = self::exportRules($this->rules);
-		$rules = substr(PHP_VERSION_ID >= 50400 ? json_encode($rules, JSON_UNESCAPED_UNICODE) : json_encode($rules), 1, -1);
+		$rules = substr(Nette\Utils\Json::encode($rules), 1, -1);
 		$rules = preg_replace('#"([a-z0-9_]+)":#i', '$1:', $rules);
 		$rules = preg_replace('#(?<!\\\\)"(?!:[^a-z])([^\\\\\',]*)"#i', "'$1'", $rules);
 		$control->data('nette-rules', $rules ? $rules : NULL);
@@ -574,6 +580,17 @@ abstract class BaseControl extends Nette\ComponentModel\Component implements ICo
 
 
 	/**
+	 * Performs the server side validation.
+	 * @return void
+	 */
+	public function validate()
+	{
+		$this->errors = $this->rules->validate();
+	}
+
+
+
+	/**
 	 * Equal validator: are control's value and second parameter equal?
 	 * @param  Nette\Forms\IControl
 	 * @param  mixed
@@ -612,7 +629,20 @@ abstract class BaseControl extends Nette\ComponentModel\Component implements ICo
 	 */
 	public static function validateValid(IControl $control)
 	{
-		return $control->rules->validate(TRUE);
+		return !$control->rules->validate();
+	}
+
+
+
+	/**
+	 * Rangle validator: is a control's value number in specified range?
+	 * @param  Nette\Forms\IControl
+	 * @param  array  min and max value pair
+	 * @return bool
+	 */
+	public static function validateRange(IControl $control, $range)
+	{
+		return Nette\Utils\Validators::isInRange($control->getValue(), $range);
 	}
 
 
@@ -624,10 +654,7 @@ abstract class BaseControl extends Nette\ComponentModel\Component implements ICo
 	 */
 	public function addError($message)
 	{
-		if (!in_array($message, $this->errors, TRUE)) {
-			$this->errors[] = $message;
-		}
-		$this->getForm()->addError($message);
+		$this->errors[] = $message;
 	}
 
 
@@ -638,7 +665,7 @@ abstract class BaseControl extends Nette\ComponentModel\Component implements ICo
 	 */
 	public function getErrors()
 	{
-		return $this->errors;
+		return array_unique($this->errors);
 	}
 
 

@@ -9,8 +9,17 @@ use Nette\Application\UI\Presenter,
 
 abstract class BasePresenter extends Presenter {
 
+	/** @persistent */
+	public $language;
+
+	/** @persistent */
+	public $primaryLocation;
+
+
 	public $cssFiles;
+	public $cssRemoteFiles;
 	public $jsFiles;
+	public $jsRemoteFiles;
 
 	protected function startup() {
 		parent::startup();
@@ -28,7 +37,7 @@ abstract class BasePresenter extends Presenter {
 		}
 	}
 
-	public function setContext(\Nette\DI\Container $dic) {
+	public function inject(\Nette\DI\Container $dic) {
 	}
 
 	public function setProperty($name, $value = NULL) {
@@ -56,6 +65,9 @@ abstract class BasePresenter extends Presenter {
 
 	protected function createTemplate($class = NULL) {
 		$template = parent::createTemplate($class);
+		$helpers = $this->getService('templateHelpers');
+		$template->registerHelperLoader(array($helpers, 'loader'));
+		// @todo tieto helpre presunit do loadera
 		$template->registerHelper('ulList', callback($this, 'ulListHelper'));
 		$template->registerHelper('cnt', callback($this, 'countHelper'));
 		return $template;
@@ -111,27 +123,42 @@ abstract class BasePresenter extends Presenter {
 		}
 
 		$cssFiles = array();
+		$cssRemoteFiles = array();
 		$jsFiles = array();
+		$jsRemoteFiles = array();
 		if(is_array($wlSet)) {
 			foreach ($wlSet as $key => $value) {
 				if(isset($value['css'])) {
-					if(is_array($value['css'])) {
-						$cssFiles = array_merge($cssFiles, $value['css']);
-					} else {
-						$cssFiles[] = $value['css'];
+					if(!is_array($value['css'])) {
+						$value['css'] = array($value['css']);
+					}
+					foreach ($value['css'] as $filePath) {
+						if(Strings::startsWith($filePath, 'http://') || Strings::startsWith($filePath, 'https://')) {
+							$cssRemoteFiles[] = $filePath;
+						} else {
+							$cssFiles[] = $filePath;
+						}
 					}
 				}
+
 				if(isset($value['js'])) {
-					if(is_array($value['js'])) {
-						$jsFiles = array_merge($jsFiles, $value['js']);
-					} else {
-						$jsFiles[] = $value['js'];
+					if(!is_array($value['js'])) {
+						$value['js'] = array($value['js']);
+					}
+					foreach ($value['js'] as $filePath) {
+						if(Strings::startsWith($filePath, 'http://') || Strings::startsWith($filePath, 'https://')) {
+							$jsRemoteFiles[] = $filePath;
+						} else {
+							$jsFiles[] = $filePath;
+						}
 					}
 				}
 			}
 		}
 		$this->cssFiles = array_unique($cssFiles);
+		$this->cssRemoteFiles = array_unique($cssRemoteFiles);
 		$this->jsFiles = array_unique($jsFiles);
+		$this->jsRemoteFiles = array_unique($jsRemoteFiles);
 
 		$header = new HeaderControl;
 
@@ -160,6 +187,10 @@ abstract class BasePresenter extends Presenter {
 		$files = new \WebLoader\FileCollection(WWW_DIR . '/packages');
 		$files->addFiles($this->cssFiles);
 
+		if($this->cssRemoteFiles) {
+			$files->addRemoteFile($this->cssRemoteFiles);
+		}
+
 		$compiler = \WebLoader\Compiler::createCssCompiler($files, WWW_DIR . '/webtemp');
 		$compiler->addFileFilter(new \Webloader\Filter\LessFilter());
 
@@ -169,6 +200,10 @@ abstract class BasePresenter extends Presenter {
 	public function createComponentJs() {
 		$files = new \WebLoader\FileCollection(WWW_DIR . '/packages');
 		$files->addFiles($this->jsFiles);
+
+		if($this->jsRemoteFiles) {
+			$files->addRemoteFile($this->jsRemoteFiles);
+		}
 
 		$compiler = \WebLoader\Compiler::createJsCompiler($files, WWW_DIR . '/webtemp');
 		$compiler->setJoinFiles(TRUE);

@@ -9,25 +9,16 @@ use Service, Doctrine, Entity;
  */
 class RentalService extends Service\BaseService 
 {
-
-	public $attractionRepositoryAccessor;
-
-	public function startup() {
-		parent::startup();
-
-		$this->setProperty('attractionRepositoryAccessor');
-	}
-
-	public function getAmenitiesByType($types, $limit = NULL) {
-
+	public function getAmenitiesByType($types, $limit = NULL)
+	{
 		$returnJustOneType = NULL;
 		if(!is_array($types)) {
 			$returnJustOneType = $types;
 			$types = array($types);
 		}
 
-		$i = 0;
 		$return = array();
+		$i = 0;
 		foreach ($this->getEntity()->getAmenities() as $amenity) {
 			if(in_array($amenity->type->slug, $types)) {
 				$return[$amenity->type->slug][] = $amenity;
@@ -46,20 +37,22 @@ class RentalService extends Service\BaseService
 		return $return;
 	}
 
+	public function getPhotos($limit = NULL) {
+		return $this->getMediaByType('image/jpeg', $limit);
+	}
 
-	public function getLocationsByType($types, $limit = NULL) {
-
+	public function getMediaByType($types, $limit = NULL) {
 		$returnJustOneType = NULL;
 		if(!is_array($types)) {
 			$returnJustOneType = $types;
 			$types = array($types);
 		}
 
-		$i = 0;
 		$return = array();
-		foreach ($this->getEntity()->getLocations() as $amenity) {
-			if(in_array($amenity->type->slug, $types)) {
-				$return[$amenity->type->slug][] = $amenity;
+		$i = 0;
+		foreach ($this->getEntity()->getMedia() as $medium) {
+			if(in_array($medium->type->name, $types)) {
+				$return[$medium->type->name][] = $medium;
 				$i++;
 			}
 
@@ -73,13 +66,6 @@ class RentalService extends Service\BaseService
 		}
 
 		return $return;
-	}
-
-	// @todo: atrakcie sa maju vyberat na zaklade polohy objektu
-	public function getAttractions($limit=30) {
-
-		dump($this->attractionRepositoryAccessor);
 
 	}
-
 }

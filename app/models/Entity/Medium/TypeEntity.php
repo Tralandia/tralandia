@@ -14,12 +14,12 @@ use	Extras\Annotation as EA;
 class Type extends \Entity\BaseEntityDetails {
 
 	/**
-	 * @var text
-	 * @ORM\Column(type="text")
+	 * @var string
+	 * @ORM\Column(type="string")
 	 */
 	protected $name;
 
-								//@entity-generator-code --- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()

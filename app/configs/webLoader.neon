@@ -3,7 +3,6 @@ parameters:
 		packages:
 
 			customui:
-				
 				css:
 					- BootstrapCustomUI/ui.css
 
@@ -38,7 +37,8 @@ parameters:
 					- Front/js/main.js
 					- Front/js/jquery.scrollTo-1.4.3.1-min.js
 					- FrontJqUi/js/jquery-ui-1.9.1.custom.min.js
-					
+					- Front/js/jquery-tra-map.js
+
 			front:
 				css:
 					- front/default.css
@@ -128,6 +128,9 @@ parameters:
 				js: 
 					- DateInput/timepicker.js
 					- DateInput/dateInput.js
+
+			gMap:
+				js: "https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"
 		sets:
 
 			'Admin:Ap':
@@ -155,10 +158,10 @@ parameters:
 
 			Front: 
 				-  %webloader.packages.Front%
+				-  %webloader.packages.gMap%
 
 			Gregor:
 				-  %webloader.packages.Front%
-				
-				
+
 			'Gregor:Admin': %webloader.sets.Admin%
 

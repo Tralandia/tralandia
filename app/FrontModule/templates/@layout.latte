@@ -3,17 +3,27 @@
 	{control js}
 {control header:end}
 <body>
-	<div class="mainHolder">
-		<div class="flashMessage"><div n:foreach="$flashes as $flash" class="msg {$flash->type}">{$flash->message}</div></div>
-		<div class="mainBody">
-			{include #content}
-			{include search.latte}
-			{include footer.latte}
-		</div>
-		<div class="mainHeader" style="background-image: url({!$staticPath}images/sk.country.png);">
-			{include header.latte}
-		</div>
-	</div>
+	<div class="container baseRadius" id="container">
+		<div class="row">
+
+			{include Components/mainMenu.latte}
+
+			{include Components/sidebar.latte}
+
+			<div class="span9">
+				<div class="innerPadding baseRadius baseBorder innerPaddingRitgh overflow">
+					<div id="content" class="nopadding">
+						{include #content}
+					</div>
+				</div>
+			</div>
+
+			{include Components/supFooter.latte}
+
+			{include Components/footer.latte}
+
+		</div>		
+	</div>		
 </body>
 
 </html>
