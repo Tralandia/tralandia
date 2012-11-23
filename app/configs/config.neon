@@ -82,7 +82,7 @@ services:
 			- $routingPathSegmentRepositoryAccessor(@routingPathSegmentRepositoryAccessor)
 			- $domainRepositoryAccessor(@domainRepositoryAccessor)
 
-	routerFactory: Routers\RouterFactory
+	routerFactory: Routers\RouterFactory([defaultLanguage: %centralLanguage%, defaultPrimaryLocation: 58])
 
 	router: @routerFactory::create
 
@@ -106,7 +106,8 @@ services:
 			- $config(%acl%)
 			- setup()
 
-	environment: Extras\Environment(@application::getRequests(), @languageRepositoryAccessor, @locationRepositoryAccessor)
+	environment: 
+		class: Extras\Environment(@application::getRequests(), @languageRepositoryAccessor, @locationRepositoryAccessor)
 	translator: Extras\Translator(@environment, @phraseRepositoryAccessor, @translatorCache)
 
 	settings:
