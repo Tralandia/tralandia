@@ -25,7 +25,8 @@ class RentalPresenter extends BasePresenter {
 
 		$this->template->rental = $rental;
 		$this->template->rentalService = $rentalService;
-
+		d($rentalService->getMainPhoto()->getThumbnail());
+		d($rentalService->getPhotos());
 		$this->setLayout('detailLayout');
 
 	}

@@ -3,12 +3,19 @@
 namespace Service\Rental;
 
 use Service, Doctrine, Entity;
-
+use Model\Medium\IMediumDecoratorFactory;
 /**
  * @author Dávid Ďurika
  */
 class RentalService extends Service\BaseService 
 {
+	protected $mediumDecoratorFactory;	
+
+	public function inject(IMediumDecoratorFactory $mediumDecoratorFactory)
+	{
+		$this->mediumDecoratorFactory = $mediumDecoratorFactory;
+	}
+
 	public function getAmenitiesByType($types, $limit = NULL)
 	{
 		$returnJustOneType = NULL;
@@ -37,10 +44,21 @@ class RentalService extends Service\BaseService
 		return $return;
 	}
 
+	public function getMainPhoto() {
+		$photos = $this->getPhotos(1);
+		return count($photos) ? reset($photos) : NULL;
+	}
+
 	public function getPhotos($limit = NULL) {
 		return $this->getMediaByType('image/jpeg', $limit);
 	}
 
+	/**
+	 * [getMediaByType description]
+	 * @param  mixed $types string alebo pole stringov
+	 * @param  int $limit
+	 * @return array[\Service\Medium\MediumService] or array[$types][\Service\Medium\MediumService]
+	 */
 	public function getMediaByType($types, $limit = NULL) {
 		$returnJustOneType = NULL;
 		if(!is_array($types)) {
@@ -52,7 +70,7 @@ class RentalService extends Service\BaseService
 		$i = 0;
 		foreach ($this->getEntity()->getMedia() as $medium) {
 			if(in_array($medium->type->name, $types)) {
-				$return[$medium->type->name][] = $medium;
+				$return[$medium->type->name][] = $this->mediumDecoratorFactory->create($medium);
 				$i++;
 			}
 
