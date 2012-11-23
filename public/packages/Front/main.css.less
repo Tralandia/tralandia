@@ -69,9 +69,9 @@
 }
 
 .drop-shadow(@color){
-    -webkit-box-shadow: 0 8px 6px -6px @color;
-    -moz-box-shadow: 0 8px 6px -6px @color;
-    box-shadow: 0 8px 6px -6px @color; 	
+	-webkit-box-shadow: 0 8px 6px -6px @color;
+	-moz-box-shadow: 0 8px 6px -6px @color;
+	box-shadow: 0 8px 6px -6px @color; 	
 }
 
 .inner-shadow(@size,@color){
@@ -307,7 +307,7 @@ ul.arrows {
 		.bottom-border-radius(10px);
 		.drop-shadow(@supfooterDropshadowColor);
 		position: relative;
-		z-index: 5000;
+		z-index: 1000;
 	}
 }
 
@@ -324,7 +324,7 @@ ul.arrows {
 		border-left: 1px solid #ddd;
 
 		position: relative;
-		z-index: 5000;
+		z-index: 1000;
 	}
 }
 
@@ -449,6 +449,7 @@ ul.arrows {
 	}	
 }
 
+
 	#topWidget {
 		height:150px;
 		background: url(http://www.tralandia.sk/trax_html/images/sk.country.png) top left;
@@ -456,12 +457,20 @@ ul.arrows {
 
 	#logo {
 		height:123px;
-		width: 158px;
+		width: 128px;
 		margin-top: -50px;
 		float: left;
 		position: relative;
-		z-index: 10000;
+		z-index: 1000;
 		float: left;
+		top: 15px;
+		a {
+			display: block;
+			width: 100%;
+			height: 100%;
+			background: url(http://www.tra.com/images/tra-logo-icon.svg);
+			background-size: contain;
+		}
 	}
 
 	#pageTitle , .gradiendEnd {
@@ -499,7 +508,7 @@ ul.arrows {
 		line-height:27px;
 		
 		position: relative;
-		z-index: 8000;
+		z-index: 1000;
 		top: -1px;
 		right: -1px;
 
@@ -558,40 +567,61 @@ ul.arrows {
 
 					}
 
+
+
 				}		
 			}
 
 			&.dropdown-menu {
 				
 				border: none;
-				top: 27px;
-				left: -331px;
+				top: 28px;
+				left: -385px;
 				background: #fff;
 				height: auto;
 				width: 492px;
 
 				-webkit-border-radius: 5px;
-				-webkit-border-top-right-radius: 0;
 				-moz-border-radius: 5px;
-				-moz-border-radius-topright: 0;
 				border-radius: 5px;
-				border-top-right-radius: 0;
 
 				
 				z-index: 4000;
 
 				li {
+
 					float: left;
-					width: 33%;
+					width: 30%;
 					padding: 0;
+					padding-left: 3%;
+
 					height: auto;	
 					background: transparent;
 					a {
 						border:none;
+						padding-left: 30px;
+
 						&:hover {
 							background : none;
 							text-decoration: underline;
+
+							&:before {
+								text-decoration: none;
+							}							
 						}
+
+						&:before {
+						  font-family: "entypo";
+						  font-weight: normal;
+						  font-style: normal;
+						  font-size: 40px;
+						  text-decoration: inherit;
+						  content:'\2713';
+						  float: left;
+						  width: 0px;
+						  position: relative;
+						  left: -20px;
+						}						
 					}
 
 					ul {
@@ -628,8 +658,16 @@ ul.arrows {
 				
 				height: 27px;
 
+				a {
+					border-right: 1px solid @white;
+				}
+
 				&:hover {
 					background: @lightGreen;
+
+-webkit-border-top-right-radius: 5px;
+-moz-border-radius-topright: 5px;
+border-top-right-radius: 5px;
 
 					a {
 						border-right: 1px solid @lightGreen;
@@ -646,9 +684,7 @@ ul.arrows {
 			.country {
 
 				&:hover {
--webkit-border-top-right-radius: 5px;
--moz-border-radius-topright: 5px;
-border-top-right-radius: 5px;					
+					
 				}
 
 				ul {
@@ -989,8 +1025,15 @@ border-top-right-radius: 5px;
 	width: 100%;
 	text-shadow: -1px -1px 0px #27407e;
 	.inner-shadow(20px , #6a87bd);
-	&:hover {
+	&:hover , &.selected {
 		.basic-gradient(#27407e,#5b78af);
+
+		span {
+			&:before {
+				content:'\2713';
+			}			
+		}
+
 	}
 }
 
@@ -1576,3 +1619,18 @@ width: 31.657201%;
 		}
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* tmp */

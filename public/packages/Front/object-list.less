@@ -47,6 +47,8 @@
 				color-stop(0, #FEFEFD),
 				color-stop(1, #E1E8B6)
 			);
+
+
 		}
 
 		&.active {
@@ -71,7 +73,7 @@
 				color: #cfdaef;
 			}
 
-			&:hover {
+			&:hover  {
 				background-image: linear-gradient(bottom, #5976AD 0%, #27407D 100%);
 				background-image: -o-linear-gradient(bottom, #5976AD 0%, #27407D 100%);
 				background-image: -moz-linear-gradient(bottom, #5976AD 0%, #27407D 100%);
@@ -85,6 +87,42 @@
 					color-stop(0, #5976AD),
 					color-stop(1, #27407D)
 				);
+
+
+			}
+
+			&.selected {
+				background-image: linear-gradient(bottom, #688308 0%, #AFC13B 100%);
+				background-image: -o-linear-gradient(bottom, #688308 0%, #AFC13B 100%);
+				background-image: -moz-linear-gradient(bottom, #688308 0%, #AFC13B 100%);
+				background-image: -webkit-linear-gradient(bottom, #688308 0%, #AFC13B 100%);
+				background-image: -ms-linear-gradient(bottom, #688308 0%, #AFC13B 100%);
+
+				background-image: -webkit-gradient(
+					linear,
+					left bottom,
+					left top,
+					color-stop(0, #688308),
+					color-stop(1, #AFC13B)
+				);
+
+				border: 1px solid #698308;
+
+				&:hover {
+					background-image: linear-gradient(bottom, #AFC13B 0%, #688308 100%);
+					background-image: -o-linear-gradient(bottom, #AFC13B 0%, #688308 100%);
+					background-image: -moz-linear-gradient(bottom, #AFC13B 0%, #688308 100%);
+					background-image: -webkit-linear-gradient(bottom, #AFC13B 0%, #688308 100%);
+					background-image: -ms-linear-gradient(bottom, #AFC13B 0%, #688308 100%);
+
+					background-image: -webkit-gradient(
+						linear,
+						left bottom,
+						left top,
+						color-stop(0, #AFC13B),
+						color-stop(1, #688308)
+					);
+				}
 			}
 		}
 	}
@@ -120,6 +158,12 @@
 			background-image: -moz-linear-gradient(bottom, #F24100 0%, #F26900 100%);
 			background-image: -webkit-linear-gradient(bottom, #F24100 0%, #F26900 100%);
 			background-image: -ms-linear-gradient(bottom, #F24100 0%, #F26900 100%);
+
+			-webkit-border-radius: 4px;
+			-moz-border-radius: 4px;
+			border-radius: 4px;
+			
+			font-weight: bold;
 
 			background-image: -webkit-gradient(
 				linear,
@@ -186,6 +230,10 @@
 		p {
 			padding: 0;
 			margin: 0;
+		}
+
+		.text-top {
+			vertical-align: text-top;
 		}
 	}
 

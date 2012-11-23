@@ -30,6 +30,7 @@ function executeFunctionByName(functionName, context /*, args */) {
 var App = $class({
 	
 	constructor: function (){
+
 	}
 
 });
@@ -79,6 +80,23 @@ App.prototype._setLocationUrlAnchor = function(anchorName){
 *	UNIVERSAL UI FUNCTIONS
 ****************************************************************************************************/
 
+App.prototype.uiTabsClickChangeHashAdress = function(){
+
+	var self = new App;
+	
+	
+	var currentTabId = $(this).attr('href');
+	self._setLocationUrlAnchor($(this).attr('href'));
+	$(this).blur();
+
+	if($(this).attr('href') == '#tabs-2'){
+		/* large map plugin */
+		$('#map_canvas').traMap();	
+	}
+
+
+}
+
 App.prototype.uiSelectedTabs = function(){
 
 	var currentAnchor = this._getLocationUrlAnchor();
@@ -96,6 +114,12 @@ App.prototype.uiSelectedTabs = function(){
 	var setting = {
 		active: currentIndex
 	};
+
+	if(currentIndex == 4) {
+		/* large map plugin */
+		$('#map_canvas').traMap();
+	}
+
 	return setting;
 }
 
@@ -116,35 +140,167 @@ App.prototype.uiToogleClick = function(){
 }
 
 
-App.prototype.buttonCompareClick = function(){
-	var child = $(this).find('span');
-	
-	if($(child).hasClass('entypo-star')){
-		$(child).removeClass('entypo-star');
-		$(child).addClass('entypo-ok');
-	} else {
-		$(child).removeClass('entypo-ok');
-		$(child).addClass('entypo-star');
-	}
-	
+
+
+
+
+
+App.prototype.in_array = function(array, value) {
+
+	var r = false ;
+
+	$.each(array , function(k,v){
+		if(v == value) r = true;
+	});
+
+	return r; 
 }
 
+/****************************************************************************************************
+*	LOCAL STORAGE FUNCTION
+****************************************************************************************************/
 
+App.prototype.storageSet = function(key,value){
+	$.jStorage.set(key, value);
+}
 
-App.prototype.uiTabsClickChangeHashAdress = function(){
+App.prototype.storageGet = function(key){
+	return $.jStorage.get(key);
+}
 
-	var self = new App;
-
-	$.scrollTo(this,{duration:500 , offset: -50} );
-	var currentTabId = $(this).attr('href');
-	self._setLocationUrlAnchor($(this).attr('href'));
-	$(this).blur();
+App.prototype.storageDelete = function(key){
+	$.jStorage.deleteKey(key);
 }
 
 
 /****************************************************************************************************
-*	OBJECT DETAIL
+*	RENTAL DETAIL + RENTALI LIST
 ****************************************************************************************************/
+
+/*
+* add to favorites function
+*/ 
+
+App.prototype.addToFavorites = function(){
+
+	var self = new App;
+
+	var list = self.storageGet('favoritesList');
+
+	var data = {
+		id: parseInt($(this).attr('rel')),
+		link: $(this).attr('link'),
+		thumb: $(this).attr('thumb'),
+	}
+
+	var favoriteSlider = $('#compareList');
+
+	if($(this).hasClass('selected')){
+		// remove from list
+
+		newList = new Array();
+
+		$.each(list,function(k,v){
+			if(v.id != data.id){
+				newList.push(v);
+			}			
+		});
+
+		// save new list to local storage 
+
+		if(newList.length == 0){
+			self.storageDelete('favoritesList');
+		} else {
+			self.storageSet('favoritesList' , newList);
+		}
+
+		$(this).removeClass('selected');
+
+		// remove from favorites slider 		
+		// if page is Rental:detai 
+
+		if(favoriteSlider.length > 0){
+			favoriteSlider.find('ul li.rel-'+data.id).remove();
+		}
+
+		if(newList.length == 0){
+			$('#compareList').parent().parent().parent().hide();
+		}
+
+
+	} else {
+
+		if(typeof list == 'undefined' || list == null){
+			// if favorites dont exist 
+			var list = new Array();
+			list[0] = data;
+
+			self.storageSet('favoritesList',list);
+			favoriteSlider.parent().parent().parent().show();
+
+			var newLi = $('<li></li>');
+				newLi.addClass('current');
+				newLi.addClass('rel-'+data.id);
+
+			var sliderList = favoriteSlider.find('ul');
+				newLi.appendTo(sliderList);
+
+		} else {
+
+			if(!self._checkIdInObject(list,data.id)){
+				// write unique data
+				list.push(data);
+				self.storageSet('favoritesList',list);
+				$(this).addClass('selected');
+
+				// append to favorites slider (if exist)
+
+
+
+				if(favoriteSlider.length > 0){
+
+					var newLi = $('<li></li>');
+						newLi.addClass('current');
+						newLi.addClass('rel-'+data.id);
+
+						var sliderList = favoriteSlider.find('ul');
+							newLi.appendTo(sliderList);
+
+					//favoriteSlider.find('ul li.rel-'+data.id).remove();
+				}
+
+			}
+
+		}		
+	}
+
+}
+
+App.prototype._checkIdInObject = function( object , id ){
+	var r = false;
+		$.each(object , function(k,v){
+			
+			if(v.id == id){
+				r=true;
+			}
+		});	
+
+	return r;
+}
+
+/****************************************************************************************************
+*	RENTAL LIST
+****************************************************************************************************/
+
+App.prototype.openContactForm = function(){
+	$('#ModalBox').modal();
+	return false;
+}
+
+/****************************************************************************************************
+*	RENTAL DETAIL
+****************************************************************************************************/
+
 
 /**
 *	initialize map in object detail
@@ -152,7 +308,10 @@ App.prototype.uiTabsClickChangeHashAdress = function(){
 
 App.prototype.initMapsObjectDetail = function(){
 	$('#objectDetailListMap').trigger('click');
+	/* large map plugin */
+	$('#map_canvas').traMap();	
 }
+
 
 
 /****************************************************************************************************
@@ -165,18 +324,35 @@ $(document).ready(function(){
 	var A = new App();
 
 	/* register listeners */
-
+	/* UI toogle function */
 	$('.toogle').click(A.uiToogleClick);
-	$('.btn-compare').click(A.buttonCompareClick);
-	$('.mapsImg').click(A.initMapsObjectDetail);
 
+	/* object detail init large map after small map click */
+	$('.mapsImg').click(A.initMapsObjectDetail);
+	/* UI tabs */
 	$( ".tabs" ).tabs(A.uiSelectedTabs());
 	$( ".tabs ul li a" ).click(A.uiTabsClickChangeHashAdress);
-
+	/* UI calendar */
 	$( ".datepicker" ).datepicker();	
 	$('.accordion').accordion({ autoHeight: false , active: false , navigation: true, collapsible: true });
-	$('.spinner').spinner();
+	
+	/* rental favorites list*/
+	$('.addToFavorites').click(A.addToFavorites);
+	$('.addToFavorites').favoriteActiveLinks(A);
 
-	$('#map_canvas').traMap();
+	/* rental open modal contact dialog */
+	$('.openContactForm').click(A.openContactForm);
+
+	/* after show Rental object detail append this object to View list in local storage */
+	$('.addToViewList').objectVisitList(A);
+
+	/* @todo */
+	//$('.favoriteSlider').favoriteSlider(A);
+
+	/* */
+	$('#compareList').showFavoriteSlider(A);
+
+
+	jQuery('#mycarousel').jcarousel();
 
 });

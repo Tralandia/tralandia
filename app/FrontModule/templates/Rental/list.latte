@@ -23,7 +23,7 @@
 </div>
 	<div class="row-fluid">
 	<div class="span12">
-		<div class="tabs">
+		<div class="tabs ui-tabs-nav">
 		    <ul>
 		        <li><a href="#tabs-1">{_o1068}</a></li>
 		        <li><a href="#tabs-2">{_o1625}</a></li>
@@ -36,16 +36,19 @@
 
 		        <div class="row-fluid objecList">
 		        	<div class="span4">
-		        		<!--<div class="addons btn">icon</div>--><div class="position btn">Top</div>
+		        		<a href="{link Rental:detail $rental->id}">
+		        		<!--<div class="addons btn">icon</div>--><div class="position">Top</div>
+
 		        		<img src="http://flickholdr.com/240/150/travel" />
+		        		</a>
 		        	</div>
 		        	<div class="span8">
 		        		<h2><a href="{link Rental:detail $rental->id}">{_$rental->name}</a></h2>
-		        		<button class="btn btn-mini listCompareBtn active"><span class="entypo-like"> porovnaj</span> </button>
+		        		<button rel="{$rental->id}" link="{link Rental:detail $rental->id}" thumb="{link Rental:detail $rental->id}" class="addToFavorites btn btn-mini listCompareBtn active"><span class="entypo-like"> porovnaj</span> </button>
 		        		<div class="clearfix"></div>
 		        		<p>
 						{foreach $rental->getLocations() as $location}
-							<span n:class="$iterator->first ? bold" >{_$location->name}</span>{if !$iterator->last}, {/if}
+							<span n:class="$iterator->first ? bold" ><a href="{link Rental:list location => $location->id}">{_$location->name}</a></span>{if !$iterator->last}, {/if}
 						{/foreach}		        			
 		        		</p>
 		        		<p class="red bold">{_$rental->teaser}</p>
@@ -57,9 +60,9 @@
                                         <b>Spalni:</b> 4, <b>Kupelni:</b> 2, <b>Osob:</b> 6<br>
                                         <b>Sezona: 9,50 €, Mimosezona: 8,50 €</b> osoba/noc
                                     </td>
-                                    <td nowrap="">
+                                    <td class="text-top">
                                         <span class="entypo-phone"></span><a href="{link Rental:detail $rental->id}">Kontaktujte</a><br>
-                                        <span class="entypo-discusion"></span><a href="#">{$rental->rank} hodnoteni</a>
+                                        {if $rental->rank}<span class="entypo-discusion"></span><a href="#">{$rental->rank} hodnoteni</a>{/if}
                                     </td>
                                 </tr>
                             </tbody></table>
