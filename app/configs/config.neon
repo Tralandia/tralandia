@@ -69,6 +69,7 @@ common:
 		aclCache: Nette\Caching\Cache(@cacheStorage, 'Acl')
 		routerCache: Nette\Caching\Cache(@cacheStorage, 'Router')
 		translatorCache: Nette\Caching\Cache(@cacheStorage, 'Translator')
+		searchCache: Nette\Caching\Cache(@cacheStorage, 'Search')
 
 		mainRouteFactory:
 			class: Routers\MainRouteFactory(@routerCache, %router.hostPattern%)
@@ -83,6 +84,7 @@ common:
 		routerFactory: Routers\RouterFactory
 
 		router: @routerFactory::create
+		searchCaching: Extras\Cache\SearchCaching(@searchCache)
 
 		console: @doctrine.console
 		model: @doctrine.entityManagers.default
