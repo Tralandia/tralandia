@@ -446,11 +446,11 @@
 				<ul class="biggall">
 
 
-					{* <li><img src="http://www.tralandia.sk/trax_html/images/img_1.gif" /><p>Lorem ipsum </p></li> *}
-					<li><img src="http://www.tralandia.sk/trax_html/images/img_1.gif" /><p>Lorem ipsum </p></li>
-					<li><img src="http://www.tralandia.sk/trax_html/images/img_1.gif" /><p>Lorem ipsum </p></li>
-					<li><img src="http://www.tralandia.sk/trax_html/images/img_1.gif" /><p>Lorem ipsum </p></li>
-					<li><img src="http://www.tralandia.sk/trax_html/images/img_1.gif" /><p>Lorem ipsum </p></li>
+					{foreach $rentalService->getPhotos() as $photo}
+
+					<li><img src="{$photo->getThumbnail()}" />{* <p> popis </p>*}</li>
+					{/foreach}
+
 				</ul>
 				<div class="clearfix"></div>
 			</div>

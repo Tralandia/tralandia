@@ -2,22 +2,30 @@
 
 namespace FrontModule;
 
+use Model\Rental\IRentalDecoratorFactory;
+
 class HomePresenter extends BasePresenter {
 
-	protected function startup() {
+	public $rentalDecoratorFactory;
 
-		parent::startup();
-		
+	public function injectDecorators(IRentalDecoratorFactory $rentalDecoratorFactory) {
+		$this->rentalDecoratorFactory = $rentalDecoratorFactory;
 	}
+
 
 	public function renderDefault() {
 
-		$vp = new \VisualPaginator($this, 'vp');
-		$vp->templateFile = APP_DIR.'/FrontModule/components/VisualPaginator/paginator.latte';
 
-		$paginator = $vp->getPaginator();
-		$paginator->itemsPerPage = 15;
-		$paginator->itemCount = 568;
+		$rentalsEntities = $this->rentalRepositoryAccessor->get()->findAll();	
+
+		$rentals = array();
+
+		foreach ($rentalsEntities as $rental){
+			$rentals[$rental->id]['service'] = $this->rentalDecoratorFactory->create($rental);			
+			$rentals[$rental->id]['entity'] = $rental;
+		}
+
+		$this->template->rentals = $rentals;
 
 	}
 
@@ -31,7 +39,7 @@ class HomePresenter extends BasePresenter {
 
 		$tabBar = new \BaseModule\Components\TabControl\TabControl();
 
-		$content = new \FrontModule\Components\Rentals\TopRentals($this->rentalRepository);
+/*		$content = new \FrontModule\Components\Rentals\TopRentals($this->rentalRepository);
 		$tab = $tabBar->addTab('top');
 		$tab->setHeading(806);
 		$tab->setContent($content);
@@ -56,7 +64,7 @@ class HomePresenter extends BasePresenter {
 		$tab = $tabBar->addTab('about');
 		$tab->setHeading(1163);
 		$tab->setContent($content);
-
+*/
 		return $tabBar;
 
 	}
