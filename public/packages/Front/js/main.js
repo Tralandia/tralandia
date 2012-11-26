@@ -1,16 +1,16 @@
 var $class = function(definition) {
-    var constructor = definition.constructor;        
-    var parent = definition.Extends;
-    if (parent) {
-        var F = function() { };
-        constructor._superClass = F.prototype = parent.prototype;
-        constructor.prototype = new F();
-    }
-    for (var key in definition) {
-        constructor.prototype[key] = definition[key];
-    }
-    constructor.prototype.constructor = constructor;
-    return constructor;
+	var constructor = definition.constructor;        
+	var parent = definition.Extends;
+	if (parent) {
+		var F = function() { };
+		constructor._superClass = F.prototype = parent.prototype;
+		constructor.prototype = new F();
+	}
+	for (var key in definition) {
+		constructor.prototype[key] = definition[key];
+	}
+	constructor.prototype.constructor = constructor;
+	return constructor;
 };
 
 function executeFunctionByName(functionName, context /*, args */) {
@@ -18,7 +18,7 @@ function executeFunctionByName(functionName, context /*, args */) {
   var namespaces = functionName.split(".");
   var func = namespaces.pop();
   for(var i = 0; i < namespaces.length; i++) {
-    context = context[namespaces[i]];
+	context = context[namespaces[i]];
   }
   return context[func].apply(this, args);
 }
@@ -221,6 +221,9 @@ App.prototype.addToFavorites = function(){
 
 		if(favoriteSlider.length > 0){
 			favoriteSlider.find('ul li.rel-'+data.id).remove();
+			
+			//@todo vsade aplikovat
+
 		}
 
 		if(newList.length == 0){
@@ -254,8 +257,6 @@ App.prototype.addToFavorites = function(){
 				$(this).addClass('selected');
 
 				// append to favorites slider (if exist)
-
-
 
 				if(favoriteSlider.length > 0){
 
@@ -313,7 +314,6 @@ App.prototype.initMapsObjectDetail = function(){
 }
 
 
-
 /****************************************************************************************************
 *	RUNN APPS
 ****************************************************************************************************/
@@ -353,6 +353,5 @@ $(document).ready(function(){
 	$('#compareList').showFavoriteSlider(A);
 
 
-	jQuery('#mycarousel').jcarousel();
 
 });
