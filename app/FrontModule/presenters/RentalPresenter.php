@@ -33,14 +33,16 @@ class RentalPresenter extends BasePresenter {
 
 	public function actionList() {
 
-		$r = $this->rentalRepositoryAccessor->get()->findAll();
+		$rentalsEntities = $this->rentalRepositoryAccessor->get()->findAll();	
 
+		$rentals = array();
 
-		$rentals = $r;
+		foreach ($rentalsEntities as $rental){
+			$rentals[$rental->id]['service'] = $this->rentalDecoratorFactory->create($rental);			
+			$rentals[$rental->id]['entity'] = $rental;
+		}
 
 		$this->template->rentals = $rentals;
-
-
 
 	}
 
