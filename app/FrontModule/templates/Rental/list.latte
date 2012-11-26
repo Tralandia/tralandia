@@ -32,19 +32,30 @@
 		    <div id="tabs-1">
 
 
-		    	{foreach $rentals as $rental}
+		    	{foreach $rentals as $val}
+		    	{var $rental = $val['entity']; }
+		    	{var $rentalService = $val['service']; }
 
 		        <div class="row-fluid objecList">
 		        	<div class="span4">
 		        		<a href="{link Rental:detail $rental->id}">
 		        		<!--<div class="addons btn">icon</div>--><div class="position">Top</div>
+		        		{* @todo odstranit *}
+		        		{if $rentalService->getMainPhoto()}
+		        		<img src="{$rentalService->getMainPhoto()->getThumbnail()}" />
+		        		{/if}
 
-		        		<img src="http://flickholdr.com/240/150/travel" />
 		        		</a>
 		        	</div>
 		        	<div class="span8">
 		        		<h2><a href="{link Rental:detail $rental->id}">{_$rental->name}</a></h2>
-		        		<button rel="{$rental->id}" link="{link Rental:detail $rental->id}" thumb="{link Rental:detail $rental->id}" class="addToFavorites btn btn-mini listCompareBtn active"><span class="entypo-like"> porovnaj</span> </button>
+
+		        		{* @todo odstranit *}
+		        		{if $rentalService->getMainPhoto()}
+		        		<button rel="{$rental->id}" link="{link Rental:detail $rental->id}" thumb="{$rentalService->getMainPhoto()->getThumbnail()}" class="addToFavorites btn btn-mini listCompareBtn active"><span class="entypo-like"> porovnaj</span> </button>		        		
+		        		{/if}
+
+		        		
 		        		<div class="clearfix"></div>
 		        		<p>
 						{foreach $rental->getLocations() as $location}

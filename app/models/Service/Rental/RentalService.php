@@ -4,6 +4,7 @@ namespace Service\Rental;
 
 use Service, Doctrine, Entity;
 use Model\Medium\IMediumDecoratorFactory;
+use Nette\Utils\Arrays;
 /**
  * @author Dávid Ďurika
  */
@@ -69,7 +70,8 @@ class RentalService extends Service\BaseService
 		$return = array();
 		$i = 0;
 		foreach ($this->getEntity()->getMedia() as $medium) {
-			if(in_array($medium->type->name, $types)) {
+			
+			if(!empty($medium->type) && in_array($medium->type->name, $types)) {
 				$return[$medium->type->name][] = $this->mediumDecoratorFactory->create($medium);
 				$i++;
 			}
@@ -80,7 +82,8 @@ class RentalService extends Service\BaseService
 		}
 
 		if($returnJustOneType) {
-			$return = $return[$returnJustOneType];
+			
+			$return = Arrays::get($return,$returnJustOneType,array());
 		}
 
 		return $return;
