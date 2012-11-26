@@ -73,7 +73,14 @@ App.prototype._getLocationUrlAnchor = function(){
 */
 
 App.prototype._setLocationUrlAnchor = function(anchorName){
-	location.replace(this._getLocationUrl()+anchorName);
+	//location.replace(this._getLocationUrl()+anchorName);
+
+	var scrollmem = $('body').scrollTop();
+
+	document.location.hash = anchorName;
+	$('html,body').scrollTop(scrollmem);
+	//window.location.href = this._getLocationUrl()+anchorName;
+	return false;
 }
 
 /****************************************************************************************************
@@ -84,7 +91,6 @@ App.prototype.uiTabsClickChangeHashAdress = function(){
 
 	var self = new App;
 	
-	
 	var currentTabId = $(this).attr('href');
 	self._setLocationUrlAnchor($(this).attr('href'));
 	$(this).blur();
@@ -94,8 +100,12 @@ App.prototype.uiTabsClickChangeHashAdress = function(){
 		$('#map_canvas').traMap();	
 	}
 
+	
+
 
 }
+
+
 
 App.prototype.uiSelectedTabs = function(){
 
@@ -332,6 +342,9 @@ $(document).ready(function(){
 	/* UI tabs */
 	$( ".tabs" ).tabs(A.uiSelectedTabs());
 	$( ".tabs ul li a" ).click(A.uiTabsClickChangeHashAdress);
+
+
+	
 	/* UI calendar */
 	$( ".datepicker" ).datepicker();	
 	$('.accordion').accordion({ autoHeight: false , active: false , navigation: true, collapsible: true });
