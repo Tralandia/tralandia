@@ -270,7 +270,9 @@ App.prototype.addToFavorites = function(){
 
 				if(favoriteSlider.length > 0){
 
-					var newLi = $('<li></li>');
+
+
+					var newLi = $('<li></li>').css('background-image','url('+data.thumb+')');
 						newLi.addClass('current');
 						newLi.addClass('rel-'+data.id);
 

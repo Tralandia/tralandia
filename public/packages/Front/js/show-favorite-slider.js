@@ -57,7 +57,9 @@
 									visited.appendTo(newLink);
 							}
 
-						var newLi = $('<li></li>').attr('rel',v.id);
+							
+
+						var newLi = $('<li></li>').attr('rel',v.id).css('background-image', 'url('+v.thumb+')');
 
 							newLi.addClass('rel-'+v.id);
 

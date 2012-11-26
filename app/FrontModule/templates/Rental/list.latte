@@ -23,14 +23,13 @@
 </div>
 	<div class="row-fluid">
 	<div class="span12">
-		<div class="tabs ui-tabs-nav">
+		<div class="tabs mytabUi ui-tabs-nav">
 		    <ul>
 		        <li><a href="#tabs-1">{_o1068}</a></li>
 		        <li><a href="#tabs-2">{_o1625}</a></li>
 		        <li><a href="#tabs-3">{_o1626}</a></li>
 		    </ul>
 		    <div id="tabs-1">
-
 
 		    	{foreach $rentals as $val}
 		    	{var $rental = $val['entity']; }
@@ -41,8 +40,11 @@
 		        		<a href="{link Rental:detail $rental->id}">
 		        		<!--<div class="addons btn">icon</div>--><div class="position">Top</div>
 		        		{* @todo odstranit *}
+		        		{var $thumbLink = '';}
+		        		
 		        		{if $rentalService->getMainPhoto()}
-		        		<img src="{$rentalService->getMainPhoto()->getThumbnail()}" />
+		        		{$thumbLink = $rentalService->getMainPhoto()->getThumbnail()}
+		        		<img src="{$thumbLink}" />
 		        		{/if}
 
 		        		</a>
@@ -50,10 +52,9 @@
 		        	<div class="span8">
 		        		<h2><a href="{link Rental:detail $rental->id}">{_$rental->name}</a></h2>
 
-		        		{* @todo odstranit *}
-		        		{if $rentalService->getMainPhoto()}
-		        		<button rel="{$rental->id}" link="{link Rental:detail $rental->id}" thumb="{$rentalService->getMainPhoto()->getThumbnail()}" class="addToFavorites btn btn-mini listCompareBtn active"><span class="entypo-like"> porovnaj</span> </button>		        		
-		        		{/if}
+		        		
+		        		<button rel="{$rental->id}" link="{link Rental:detail $rental->id}" thumb="{$thumbLink}" class="addToFavorites btn btn-mini listCompareBtn active"><span class="entypo-like"> porovnaj</span> </button>		        		
+		        		
 
 		        		
 		        		<div class="clearfix"></div>
