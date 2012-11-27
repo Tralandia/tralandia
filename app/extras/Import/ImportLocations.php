@@ -52,9 +52,8 @@ class ImportLocations extends BaseImport {
 
 		$worldType = $locationType;
 
-		$phrase = $this->context->phraseRepositoryAccessor->get()->createNew();
-		$namePhraseService = $this->context->phraseDecoratorFactory->create($phrase);
-		$namePhrase = $namePhraseService->getEntity();
+		$namePhrase = $this->context->phraseRepositoryAccessor->get()->createNew();
+		$namePhraseService = $this->context->phraseDecoratorFactory->create($namePhrase);
 		$namePhrase->type = $this->dictionaryTypeName;
 		$namePhraseService->createTranslation($language, 'World');
 		$this->model->persist($namePhrase);
@@ -111,8 +110,8 @@ class ImportLocations extends BaseImport {
 		$this->model->persist($locationTypeState);
 
 		// Create USA
-		$namePhraseService = $this->context->phraseDecoratorFactory->create();
-		$namePhrase = $namePhraseService->getEntity();
+		$namePhrase = $this->context->phraseRepositoryAccessor->get()->createNew();
+		$namePhraseService = $this->context->phraseDecoratorFactory->create($namePhrase);
 		$namePhrase->type = $this->dictionaryTypeName;
 		$namePhraseService->createTranslation($language, 'USA');
 		$this->model->persist($namePhrase);
@@ -129,8 +128,8 @@ class ImportLocations extends BaseImport {
 		$usa = $s;
 
 		// Create Canada
-		$namePhraseService = $this->context->phraseDecoratorFactory->create();
-		$namePhrase = $namePhraseService->getEntity();
+		$namePhrase = $this->context->phraseRepositoryAccessor->get()->createNew();
+		$namePhraseService = $this->context->phraseDecoratorFactory->create($namePhrase);
 		$namePhrase->type = $this->dictionaryTypeName;
 		$namePhraseService->createTranslation($language, 'Canada');
 		$this->model->persist($namePhrase);
@@ -190,13 +189,13 @@ class ImportLocations extends BaseImport {
 			*/
 
 			$namePhrase = $this->createNewPhrase($this->dictionaryTypeName, $x['name_dic_id']);
-			$namePhraseService = $this->context->phraseServiceFactory->create($namePhrase);
+			$namePhraseService = $this->context->phraseDecoratorFactory->create($namePhrase);
 			$r1 = q('select * from countries_translations where location_id = '.$x['id']);
 			//$r1 = q('select * from countries_translations where location_id = 46');
 			while ($x1 = mysql_fetch_array($r1)) {
 				$languageTemp = $this->context->languageRepository->findOneBy(array('oldId' => $x1['language_id']));
 				$t = $namePhraseService->getTranslation($languageTemp);
-$variations = array();
+				$variations = array();
 				$variations['default']['default'] = array(
 					'nominative' => $x1['name'],
 					'locative' => $x1['name_locative'],
@@ -304,8 +303,8 @@ $variations = array();
 		while($x = mysql_fetch_array($r)) {
 			$location = $this->context->locationEntityFactory->create();
 
-			$namePhraseService = $this->context->phraseDecoratorFactory->create();
-			$namePhrase = $namePhraseService->getEntity();
+			$namePhrase = $this->context->phraseRepositoryAccessor->get()->createNew();
+			$namePhraseService = $this->context->phraseDecoratorFactory->create($namePhrase);
 			$namePhrase->type = $this->dictionaryTypeName;
 			$namePhrase->ready = TRUE;
 
@@ -357,8 +356,8 @@ $variations = array();
 		while($x = mysql_fetch_array($r)) {
 			$location = $this->context->locationEntityFactory->create();
 
-			$namePhraseService = $this->context->phraseDecoratorFactory->create();
-			$namePhrase = $namePhraseService->getEntity();
+			$namePhrase = $this->context->phraseRepositoryAccessor->get()->createNew();
+			$namePhraseService = $this->context->phraseDecoratorFactory->create($namePhrase);
 			$namePhrase->type = $this->dictionaryTypeName;
 			$namePhrase->ready = TRUE;
 
@@ -403,8 +402,8 @@ $variations = array();
 		while($x = mysql_fetch_array($r)) {
 			$location = $this->context->locationEntityFactory->create();
 
-			$namePhraseService = $this->context->phraseDecoratorFactory->create();
-			$namePhrase = $namePhraseService->getEntity();
+			$namePhrase = $this->context->phraseRepositoryAccessor->get()->createNew();
+			$namePhraseService = $this->context->phraseDecoratorFactory->create($namePhrase);
 			$namePhrase->type = $this->dictionaryTypeName;
 			$namePhrase->ready = TRUE;
 
@@ -460,8 +459,8 @@ $variations = array();
 		while($x = mysql_fetch_array($r)) {
 			$location = $this->context->locationEntityFactory->create();
 
-			$namePhraseService = $this->context->phraseDecoratorFactory->create();
-			$namePhrase = $namePhraseService->getEntity();
+			$namePhrase = $this->context->phraseRepositoryAccessor->get()->createNew();
+			$namePhraseService = $this->context->phraseDecoratorFactory->create($namePhrase);
 			$namePhrase->type = $this->dictionaryTypeName;
 			$namePhrase->ready = TRUE;
 

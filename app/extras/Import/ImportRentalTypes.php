@@ -63,8 +63,8 @@ class ImportRentalTypes extends BaseImport {
 			
 			$thisLanguage = $this->context->languageRepository->findOneByOldId($x['language_id']);
 			if (!$thisLanguage) continue;
-			
-			$thisPhrase = $this->context->phraseServiceFactory->create($rentalType->name);
+
+			$thisPhrase = $this->context->phraseDecoratorFactory->create($rentalType->name);
 			if (!$thisPhrase->hasTranslation($thisLanguage)) {
 				$thisTranslation = $thisPhrase->createTranslation($thisLanguage, $x['name']);
 			}

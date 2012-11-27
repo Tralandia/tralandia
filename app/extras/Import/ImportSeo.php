@@ -90,39 +90,40 @@ class ImportSeo extends BaseImport {
 				foreach ($temp as $key => $value) {
 					$medium = $context->mediumRepository->findOneByOldUrl('http://www.tralandia.com/u/'.$value);
 					if (!$medium) {
-						$medium = $context->mediumServiceFactory->create();
-						$medium->setContentFromUrl('http://www.tralandia.com/u/'.$value);
-						$seoUrl->addMedium($medium->getEntity());
+						$medium = $context->mediumRepositoryAccessor->get()->createNew();
+						$mediumService = $context->mediumDecoratorFactory->create($medium);
+						$mediumService->setContentFromUrl('http://www.tralandia.com/u/'.$value);
+						$seoUrl->addMedium($medium);
 					} else {
 						$seoUrl->addMedium($medium);
 					}
 				}
 			}
 
-			$titlePhraseService = $this->context->phraseDecoratorFactory->create();
-			$titlePhrase = $titlePhraseService->getEntity();
+			$titlePhrase = $this->context->phraseRepositoryAccessor->get()->createNew();
+			$titlePhraseService = $this->context->phraseDecoratorFactory->create($titlePhrase);
 			$titlePhrase->type = $dictionaryTypeTitle;
 			$sourceLanguage = $context->languageRepository->find($languagesByOldId[$x['source_language_id']]);
 			if (isset($languagesByOldId[$x['source_language_id']])) {
 				$titlePhrase->sourceLanguage = $sourceLanguage;
 			}
 
-			$headingPhraseService = $this->context->phraseDecoratorFactory->create();
-			$headingPhrase = $headingPhraseService->getEntity();
+			$headingPhrase = $this->context->phraseRepositoryAccessor->get()->createNew();
+			$headingPhraseService = $this->context->phraseDecoratorFactory->create($headingPhrase);
 			$headingPhrase->type = $dictionaryTypeHeading;
 			if (isset($languagesByOldId[$x['source_language_id']])) {
 				$headingPhrase->sourceLanguage = $sourceLanguage;
 			}
 
-			$tabNamePhraseService = $this->context->phraseDecoratorFactory->create();
-			$tabNamePhrase = $tabNamePhraseService->getEntity();
+			$tabNamePhrase = $this->context->phraseRepositoryAccessor->get()->createNew();
+			$tabNamePhraseService = $this->context->phraseDecoratorFactory->create($tabNamePhrase);
 			$tabNamePhrase->type = $dictionaryTypeTabName;
 			if (isset($languagesByOldId[$x['source_language_id']])) {
 				$tabNamePhrase->sourceLanguage = $sourceLanguage;
 			}
 
-			$descriptionPhraseService = $this->context->phraseDecoratorFactory->create();
-			$descriptionPhrase = $descriptionPhraseService->getEntity();
+			$descriptionPhrase = $this->context->phraseRepositoryAccessor->get()->createNew();
+			$descriptionPhraseService = $this->context->phraseDecoratorFactory->create($descriptionPhrase);
 			$descriptionPhrase->type = $dictionaryTypeDescription;
 			if (isset($languagesByOldId[$x['source_language_id']])) {
 				$descriptionPhrase->sourceLanguage = $sourceLanguage;

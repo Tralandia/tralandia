@@ -83,8 +83,7 @@ class ImportRentals extends BaseImport {
 			$rental->editLanguage = $context->languageRepository->findOneByOldId($x['edit_language_id']);
 
 			$rental->status = $x['live'] == 1 ? $rental::STATUS_LIVE : $rental::STATUS_DRAFT;
-
-			$oldRentalType = current(explode(',', $x['objects_types_new']));
+			$oldRentalType = current(explode(',,', substr($x['objects_types_new'], 2, -2)));
 			$rental->setType($context->rentalTypeRepository->findOneByOldId($oldRentalTypesEn[$oldRentalType]));
 
 			// Locations
@@ -252,7 +251,6 @@ class ImportRentals extends BaseImport {
 			}
 
 			$rental->pricelists = $pricelists;
-
 			$model->persist($rental);
 
 			// Media
@@ -262,7 +260,8 @@ class ImportRentals extends BaseImport {
 				foreach ($temp as $key => $value) {
 					$medium = $context->mediumRepository->findOneByOldUrl('http://www.tralandia.com/u/'.$value);
 					if (!$medium) {
-						$medium = $context->mediumServiceFactory->create();
+						$mediumEntity = $context->mediumRepositoryAccessor->get()->createNew();
+						$medium = $context->mediumDecoratorFactory->create($mediumEntity);
 						$medium->setContentFromUrl('http://www.tralandia.com/u/'.$value);
 						$rental->addMedium($medium->getEntity());
 					} else {

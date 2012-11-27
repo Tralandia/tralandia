@@ -68,10 +68,9 @@ class MediumService extends \Service\BaseService {
 
 		$mediumType = $this->mediumTypeRepositoryAccessor->get()->findOneByName($this->entity->details['mime']);
 		if (!$mediumType) {
-			$mediumTypeService = $this->mediumTypeServiceFactory->create();
-			$mediumType = $mediumTypeService->getEntity();
+			$mediumType = $this->mediumTypeRepositoryAccessor->get()->createNew();
 			$mediumType->name = $this->entity->details['mime'];
-			$mediumTypeService->save();
+			$this->mediumTypeRepositoryAccessor->get()->persist($mediumType);
 		}
 
 		if (preg_match("/image\//", $this->entity->details['mime'])) {
