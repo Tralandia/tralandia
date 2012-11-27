@@ -230,7 +230,7 @@ body .ui-tooltip { border-width: 2px; }
 .ui-widget { font-size: 14px; }
 .ui-widget .ui-widget { font-size: 1em; }
 .ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button { font-family: Verdana,Arial,sans-serif; font-size: 1em; }
-.ui-widget-content { background: #fdfdf8 url(images/ui-bg_flat_75_fdfdf8_40x100.png) 50% 50% repeat-x; color: #663300; }
+.ui-widget-content { color: #663300; }
 
 .ui-widget-header { border: 1px solid #fdfdf8; background: #fdfdf8 url(images/ui-bg_highlight-soft_75_fdfdf8_1x100.png) 50% 50% repeat-x; color: #222222; font-weight: bold; }
 .ui-widget-header a { color: #222222; }

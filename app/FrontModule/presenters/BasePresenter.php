@@ -6,13 +6,13 @@ abstract class BasePresenter extends \BasePresenter {
 	
 	public $languageRepositoryAccessor;
 	public $locationRepositoryAccessor;
-	public $locationTypeRepositoryAccessor;
+	public $rentalTypeRepositoryAccessor;
 	public $rentalRepositoryAccessor;
 
 	public function inject(\Nette\DI\Container $dic) {
 		$this->setProperty('languageRepositoryAccessor');
 		$this->setProperty('locationRepositoryAccessor');
-		$this->setProperty('locationTypeRepositoryAccessor');
+		$this->setProperty('rentalTypeRepositoryAccessor');
 		$this->setProperty('rentalRepositoryAccessor');
 		parent::inject($dic);
 	}
@@ -25,7 +25,7 @@ abstract class BasePresenter extends \BasePresenter {
 		// $this->template->supportedLanguages = $this->languageRepositoryAccessor->findBySupported(\Entity\Language::SUPPORTED);
 		// $this->template->launchedCountries = $this->locationRepositoryAccessor->findBy(array('status'=>\Entity\Location\Location::STATUS_LAUNCHED), null, 15);
 		// $this->template->liveRentalsCount = count($this->rentalRepositoryAccessor->findByStatus(\Entity\Rental\Rental::STATUS_LIVE));
-		$this->template->mainMenuItems = $this->locationTypeRepositoryAccessor->get()->findBy(array(),null,8);
+		$this->template->mainMenuItems = $this->rentalTypeRepositoryAccessor->get()->findBy(array(),null,8);
 
 		parent::beforeRender();
 	}

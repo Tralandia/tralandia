@@ -101,7 +101,7 @@
 
 						<div id="pageTitle">
 							<div id="logo">
-								<a href="#">
+								<a n:href=":Front:Home:default">
 									{*<img src="http://www.tralandia.sk/trax_html/images/logo.png" alt=""/>*}
 									{*<object  data="http://www.tra.com/images/tra-logo-icon.svg" type="image/svg+xml"></object>*}
 									{*<embed src="http://www.tra.com/images/tra-logo-icon.svg" type="image/svg+xml" />*}
@@ -117,19 +117,10 @@
 
 						<nav role="main-menu" id="mainMenu">
 							<ul>
-								<li><a href="#"><i class="entypo-home"></i> Uvod - pomenovat</a></li>
+								<li><a n:href=":Front:Home:default"><i class="entypo-home"></i> Uvod - pomenovat</a></li>
 
-								{foreach $mainMenuItems as $menuItem}
-								<li><a n:href="Rental:list rentalType => $menuItem->id">{_$menuItem->name}</a><li>
-								{/foreach}
+								<li n:foreach="$mainMenuItems as $menuItem"><a n:href="Rental:list rentalType => $menuItem->id">{_$menuItem->name}</a></li>
 
-
-								<li><a href="#">Chaty a chalupy</a></li>
-								<li><a href="#">Apartmany</a></li>
-								<li><a href="#">Regiony</a></li>
-								<li><a href="#">Chaty a chalupy</a></li>
-								<li><a href="#">Apartmany</a></li>
-								<li><a href="#">Regiony</a></li>
 							</ul>
 						</nav>
 					</div>
