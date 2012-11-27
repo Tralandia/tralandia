@@ -117,6 +117,12 @@ p {
 /* helper class 
 /***************************************************************************************/
 
+.borderSeparator {
+	margin: 10px 0;
+	border-bottom: 1px solid @lightGreen;
+
+}
+
 ul.arrows {
 	list-style: none;
 	li {
@@ -385,10 +391,23 @@ ul.arrows {
 
 .row-fluid > [class*="span"]:first-child.marginLeft.leftSidebarObjectDetail {
 	width: 288px;
+
+	img {
+		width: 288px;
+		height: 170px;
+	}
 }
 
-.objectDetailContent .span5 {
-	margin-top: 15px;
+#content.nopadding {
+
+	.objectDetailContent .span5 {
+		margin-top: 15px;
+		h1 {
+			margin: 0 0 10px 0;
+			padding: 0;
+		}
+	}
+
 }
 
 .row-fluid.objectDetailContent .span5 , .row-fluid.objectDetailContent .span3 {
@@ -405,6 +424,7 @@ ul.arrows {
 	li {
 		margin-bottom: 5px;
 		margin-left: 20px;		
+		color: @darkGreen;
 	}
 
 	li:before {
@@ -419,7 +439,7 @@ ul.arrows {
 	  display: block;
 	  height:100%;
 	  float: left;
-	  color: @darkGreen;
+	  color: @brown;
 	  text-decoration: inherit;
 		content:'\2713';
 	}
@@ -450,9 +470,22 @@ ul.arrows {
 }
 
 
+	#siteName {
+		font-family: 'neosansbold';
+		color: #fff;
+		font-size: 35px;
+		margin-top: 6px;
+		float: left;
+		margin-left: 10px;
+		margin-bottom: 3px;
+		span {
+			font-family: 'neosansregular';
+		}
+	}
+
 	#topWidget {
 		height:150px;
-		background: url(http://www.tralandia.sk/trax_html/images/sk.country.png) top left;
+		background: url(/images/headerBanner/kw.jpg) top left;
 	}
 
 	#logo {
@@ -468,16 +501,18 @@ ul.arrows {
 			display: block;
 			width: 100%;
 			height: 100%;
-			background: url(http://www.tra.com/images/tra-logo-icon.svg);
+			background: url(/images/tra-logo-icon.png);
+			background: url(/images/tra-logo-icon.svg);
 			background-size: contain;
 		}
 	}
 
 	#pageTitle , .gradiendEnd {
 		padding: 10px;				
-		height:66px;	
+		height:50px;	
 		position: relative;
 		float: left;	
+		margin-bottom: 16px;
 	}
 
 	#pageTitle {			
@@ -600,7 +635,7 @@ ul.arrows {
 					a {
 						border:none;
 						padding-left: 30px;
-
+						color: @darkGreen;
 						&:hover {
 							background : none;
 							text-decoration: underline;
@@ -614,13 +649,14 @@ ul.arrows {
 						  font-family: "entypo";
 						  font-weight: normal;
 						  font-style: normal;
-						  font-size: 40px;
+						  font-size: 30px;
+						  color: @brown;
 						  text-decoration: inherit;
 						  content:'\2713';
 						  float: left;
 						  width: 0px;
 						  position: relative;
-						  left: -20px;
+						  left: -15px;
 						}						
 					}
 
@@ -1129,9 +1165,47 @@ border-top-right-radius: 5px;
 }
 
 
+		.position , .addons {
+			position: relative;
+			z-index: 10;
+			top: 5px;
+			left: 5px;
 
+		}
 
+		.position {
+			left: 0;
+			margin-right: 5px;
+			float: right;
+			height:10px;
+			line-height: 10px;
+			padding: 5px 8px;
+			background-image: linear-gradient(bottom, #F24100 0%, #F26900 100%);
+			background-image: -o-linear-gradient(bottom, #F24100 0%, #F26900 100%);
+			background-image: -moz-linear-gradient(bottom, #F24100 0%, #F26900 100%);
+			background-image: -webkit-linear-gradient(bottom, #F24100 0%, #F26900 100%);
+			background-image: -ms-linear-gradient(bottom, #F24100 0%, #F26900 100%);
 
+			-webkit-border-radius: 4px;
+			-moz-border-radius: 4px;
+			border-radius: 4px;
+			
+			font-weight: bold;
+
+			background-image: -webkit-gradient(
+				linear,
+				left bottom,
+				left top,
+				color-stop(0, #F24100),
+				color-stop(1, #F26900)
+			);
+			color: #fff;
+			font-size: 11px;
+			border: 1px solid #fff;
+			-moz-box-shadow: 0 0 5px #888;
+			-webkit-box-shadow: 0 0 5px#888;
+			box-shadow: 0 0 5px #888;
+		}
 
 
 
@@ -1153,8 +1227,8 @@ border-top-right-radius: 5px;
 		}
 
 		img {
-			min-width: 100%;
-			max-height: 260px;
+			width: 467px;
+			height: 276px;
 		}
 
 		p {
@@ -1162,6 +1236,59 @@ border-top-right-radius: 5px;
 		}
 	}
 }
+
+
+/* UI tabs */
+
+.mytabUi > ul {
+	list-style: none;
+	margin: 0;
+	padding: .2em .2em 0;
+	width: 100%;
+	display: block;
+	height: 37px;
+	border-bottom: 1px solid #c8cf9b;
+
+
+
+	li {
+		display: block;
+		float: left;
+		margin: 1px .2em 0 0;
+		position: relative;
+		padding: 0;
+		white-space: nowrap;
+		border-top-right-radius: 4px ;
+		-khtml-border-top-right-radius: 4px;
+		-khtml-border-top-left-radius: 4px;
+		border-top-left-radius: 4px;
+		
+		height: 34px;
+		
+		border: 1px solid #dde4ac;
+		border-bottom: none;
+
+		background-image: -webkit-linear-gradient(bottom, #EEF1D5 0%, #FFFFF7 100%);
+		background-image: -webkit-gradient( linear, left bottom, left top, color-stop(0, #EEF1D5), color-stop(1, #FFFFF7) );
+		background-image: -moz-linear-gradient(bottom, #EEF1D5 0%, #FFFFF7 100%);
+		background-image: -ms-linear-gradient(bottom, #EEF1D5 0%, #FFFFF7 100%);
+
+
+		&:first-child {
+
+		}
+
+		a {
+			font-weight: bold;
+			padding: .5em 1em;
+			display: block;
+			color: @brown;
+			
+		}
+	}
+}
+
+
 
 .tabs table.tableDefault {
 	width: 100%;

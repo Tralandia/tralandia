@@ -33,14 +33,29 @@ class RentalPresenter extends BasePresenter {
 
 	public function actionList() {
 
-		$r = $this->rentalRepositoryAccessor->get()->findAll();
+		$rentalsEntities = $this->rentalRepositoryAccessor->get()->findAll();	
+
+		$rentals = array();
+
+		foreach ($rentalsEntities as $rental){
+			$rentals[$rental->id]['service'] = $this->rentalDecoratorFactory->create($rental);			
+			$rentals[$rental->id]['entity'] = $rental;
+		}
+
+		
+
+		$regions = $this->locationRepositoryAccessor->get()->findBy(array(
+				'parent' => 58
+			), null , 50);
 
 
-		$rentals = $r;
+		$topRegions = $this->locationRepositoryAccessor->get()->findBy(array(
+				'parent' => 58
+			), null , 11);
 
 		$this->template->rentals = $rentals;
-
-
+		$this->template->regions = array_chunk($regions,ceil(count($regions)/3));
+		$this->template->topRegions = array_chunk($topRegions,ceil(count($topRegions)/3));
 
 	}
 

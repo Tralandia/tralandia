@@ -6,11 +6,13 @@ abstract class BasePresenter extends \BasePresenter {
 	
 	public $languageRepositoryAccessor;
 	public $locationRepositoryAccessor;
+	public $rentalTypeRepositoryAccessor;
 	public $rentalRepositoryAccessor;
 
 	public function inject(\Nette\DI\Container $dic) {
 		$this->setProperty('languageRepositoryAccessor');
 		$this->setProperty('locationRepositoryAccessor');
+		$this->setProperty('rentalTypeRepositoryAccessor');
 		$this->setProperty('rentalRepositoryAccessor');
 		parent::inject($dic);
 	}
@@ -23,21 +25,11 @@ abstract class BasePresenter extends \BasePresenter {
 		// $this->template->supportedLanguages = $this->languageRepositoryAccessor->findBySupported(\Entity\Language::SUPPORTED);
 		// $this->template->launchedCountries = $this->locationRepositoryAccessor->findBy(array('status'=>\Entity\Location\Location::STATUS_LAUNCHED), null, 15);
 		// $this->template->liveRentalsCount = count($this->rentalRepositoryAccessor->findByStatus(\Entity\Rental\Rental::STATUS_LIVE));
-		$this->template->mainMenuItems = $this->getMainMenuItems();
+		$this->template->mainMenuItems = $this->rentalTypeRepositoryAccessor->get()->findBy(array(),null,8);
 
 		parent::beforeRender();
 	}
 
-	/******* Things @TODO *****/
-	public function getMainMenuItems() {
-
-		return array("Uvod", "Chaty a chalupy", "Apartmany", "Uvod", "Chaty a chalupy", "Apartmany", "Uvod", "Chaty a chalupy", "Apartmany");
-	}
-
-	public function createComponentMainMenu($name) {
-
-		return new \FrontModule\MainMenu\MainMenu($this, $name);
-	}
 
 	public function createComponentBreadcrumb($name) {
 		

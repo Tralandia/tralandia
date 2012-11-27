@@ -1,0 +1,8 @@
+parameters:
+	editor: 'edit://open/?url=file://%file&line=%line'
+	envOptions:
+		email: toth.radoslav@gmail.com
+
+	database:
+		debugger: false
+		password: ""

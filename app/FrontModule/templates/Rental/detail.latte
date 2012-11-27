@@ -129,17 +129,12 @@
 				<div class="leftArrow entypo-prev"></div>
 				<div class="content">
 					<ul>
-
 					</ul>
 				</div>
 
 				<div class="rightArrow entypo-slider-right"></div>
 
-				{*
-				<div class="submenu">
-					<a href="#" class="entypo-people">Blah</a>	
-				</div>
-				*}
+				
 				<div class="clearfix"></div>
 			</div>
 
@@ -147,11 +142,12 @@
 	</div>
 </div>
 
+{*
 <div class="span12">
 	<div class="innerPadding baseRadius borderBlue overflow">
 		<div class="content noPadding">
 			
-			<div class="detailSlider favoriteSlider compare" id="fawlist">
+			<div class="detailSlider favoriteSlider compare" id="compareList">
 				<div class="header">
 					<a href="#" class="entypo-prev">Navrat na vysledky</a>
 					<h3>Vysledky vzhladavania</h3>
@@ -160,21 +156,7 @@
 				
 				
 				  <ul id="mycarousel" class="jcarousel-skin-tango">
-				    <li><img src="http://static.flickr.com/66/199481236_dc98b5abb3_s.jpg" width="75" height="75" alt="" /></li>
-				    <li><img src="http://static.flickr.com/75/199481072_b4a0d09597_s.jpg" width="75" height="75" alt="" /></li>
-				    <li><img src="http://static.flickr.com/57/199481087_33ae73a8de_s.jpg" width="75" height="75" alt="" /></li>
-				    <li><img src="http://static.flickr.com/77/199481108_4359e6b971_s.jpg" width="75" height="75" alt="" /></li>
-				    <li><img src="http://static.flickr.com/58/199481143_3c148d9dd3_s.jpg" width="75" height="75" alt="" /></li>
-				    <li><img src="http://static.flickr.com/72/199481203_ad4cdcf109_s.jpg" width="75" height="75" alt="" /></li>
-				    <li><img src="http://static.flickr.com/58/199481218_264ce20da0_s.jpg" width="75" height="75" alt="" /></li>
-				    <li><img src="http://static.flickr.com/69/199481255_fdfe885f87_s.jpg" width="75" height="75" alt="" /></li>
-				    <li><img src="http://static.flickr.com/60/199480111_87d4cb3e38_s.jpg" width="75" height="75" alt="" /></li>
-				    <li><img src="http://static.flickr.com/70/229228324_08223b70fa_s.jpg" width="75" height="75" alt="" /></li>
-				    <li><img src="http://static.flickr.com/66/199481236_dc98b5abb3_s.jpg" width="75" height="75" alt="" /></li>
-				    <li><img src="http://static.flickr.com/75/199481072_b4a0d09597_s.jpg" width="75" height="75" alt="" /></li>
-				    <li><img src="http://static.flickr.com/57/199481087_33ae73a8de_s.jpg" width="75" height="75" alt="" /></li>
-				    <li><img src="http://static.flickr.com/77/199481108_4359e6b971_s.jpg" width="75" height="75" alt="" /></li>
-				    <li><img src="http://static.flickr.com/58/199481143_3c148d9dd3_s.jpg" width="75" height="75" alt="" /></li>
+
 				    <li><img src="http://static.flickr.com/72/199481203_ad4cdcf109_s.jpg" width="75" height="75" alt="" /></li>
 				    <li><img src="http://static.flickr.com/58/199481218_264ce20da0_s.jpg" width="75" height="75" alt="" /></li>
 				    <li><img src="http://static.flickr.com/69/199481255_fdfe885f87_s.jpg" width="75" height="75" alt="" /></li>
@@ -185,18 +167,18 @@
 
 				
 
-				{*
+				
 				<div class="submenu">
 					<a href="#" class="entypo-people">Blah</a>	
 				</div>
-				*}
+				
 				<div class="clearfix"></div>
 			</div>
 
 		</div>
 	</div>
 </div>
-
+*}
 
 
 
@@ -210,20 +192,19 @@
 
 <div class="row-fluid objectDetailContent">
 	<div class="span4 marginBottom marginTop marginLeft leftSidebarObjectDetail">
-<<<<<<< HEAD
-=======
-		{foreach $rentalService->getPhotos(3) AS $medium}
 
-		{var $test = $medium|mediumSrc:small}
+	{foreach $rentalService->getPhotos(3) as $photo}
 
-			<img class="marginBottom" src="{$medium|mediumSrc:small}" />
-			
-		{/foreach}
+	{if $iterator->first}
+	{var $firstPhoto = $photo->getThumbnail()}
+	{/if}
 
-		
->>>>>>> 857b21e269af62beb766419d604b15dde98e28de
-		<img class="mapsImg" src="https://maps.googleapis.com/maps/api/staticmap?center={$rental->latitude},{$rental->longitude}&markers=color:blue%7C{$rental->latitude},{$rental->longitude}&maptype=terrain&zoom=13&size=288x140&sensor=false" />
+	<img src="{$photo->getThumbnail()}" class="marginBottom" />
+	{/foreach}
+
+		<img class="mapsImg" src="https://maps.googleapis.com/maps/api/staticmap?center={$rental->latitude},{$rental->longitude}&markers=color:blue%7C{$rental->latitude},{$rental->longitude}&maptype=terrain&zoom=13&size=288x170&sensor=false" />
 	</div>
+
 
 
 
@@ -238,7 +219,7 @@
 		
 		<p>
 		{foreach $rental->getLocations() as $location}
-			<a n:class="$iterator->first ? bold" href="{link Rental:list location => $location->id}">{_$location->name}</a> {if !$iterator->last}, {/if}
+			<a n:class="$iterator->first ? bold" href="{link Rental:list location => $location->id}">{_$location->name}</a>{if !$iterator->last}, {/if}
 		{/foreach}
 		</p>
 
@@ -263,13 +244,7 @@
 		{/foreach}
 
 
-		<br/>
-
-		<br/>
-		{$rental->latitude}
-
-		<br/>
-		{$rental->longitude}
+		
 		
 		<br/>
 		{$rental->interview}
@@ -312,7 +287,7 @@
 
 	<!-- right sidebar -->
 	<div class="span3 marginTop">
-		<button class="btn btn-compare addToFavorites" rel="{$rental->id}" link="{link Rental:detail $rental->id}" thumb="{link Rental:detail $rental->id}"><span class="entypo-star">{_o12334}</span></button>
+		<button class="btn btn-compare addToFavorites" rel="{$rental->id}" link="{link Rental:detail $rental->id}" thumb="{$firstPhoto}"><span class="entypo-star">{_o12334}</span></button>
 
 
 		<div class="sidebarContact">
@@ -343,16 +318,16 @@
 						{foreach $rental->contacts->getByType('name') as $name }
 							<b>{$name}</b> {if !$iterator->last}<br/>{/if}
 						{/foreach}
-
+						<br/>
 						{foreach $rental->contacts->getByType('email') as $email }
-							<b>{$email}</b> {if !$iterator->last}<br/>{/if}
+							<b><a href="mailto:{$email}">posli mail</a></b> {if !$iterator->last}<br/>{/if}
 						{/foreach}
-
+						<br/> 
 							{_o1013} <br/> 
-							<b>
+						<b>
 						
 						{foreach $rental->spokenLanguages as $language}
-							{$language->iso}{if !$iterator->last}, {/if}
+							{_$language->name}{if !$iterator->last}, {/if}
 						{/foreach}
 							</b>
 						</td>
@@ -389,12 +364,12 @@
 					<div class="clearfix"></div>
 					<div class="input-append">
 					  <input placeholder="{_o1043}" class="datepicker" type="text">
-					  <span class="add-on entypo-calendar"></span>
+					  <span class="add-on datepickerIcon entypo-calendar"></span>
 					</div>
 
 					<div class="input-append">
 					  <input placeholder="{_o1044}" class="datepicker" type="text">
-					  <span class="add-on entypo-calendar"></span>
+					  <span class="add-on datepickerIcon entypo-calendar"></span>
 					</div>
 
 					<textarea placeholder="{_o12279}"></textarea>
@@ -465,18 +440,20 @@
 				<ul class="biggall">
 
 
-					{* <li><img src="http://www.tralandia.sk/trax_html/images/img_1.gif" /><p>Lorem ipsum </p></li> *}
-					<li><img src="http://www.tralandia.sk/trax_html/images/img_1.gif" /><p>Lorem ipsum </p></li>
-					<li><img src="http://www.tralandia.sk/trax_html/images/img_1.gif" /><p>Lorem ipsum </p></li>
-					<li><img src="http://www.tralandia.sk/trax_html/images/img_1.gif" /><p>Lorem ipsum </p></li>
-					<li><img src="http://www.tralandia.sk/trax_html/images/img_1.gif" /><p>Lorem ipsum </p></li>
+					{foreach $rentalService->getPhotos() as $photo}
+
+					<li><img src="{$photo->getThumbnail()}" />{* <p> popis </p>*}</li>
+					{/foreach}
+
 				</ul>
 				<div class="clearfix"></div>
 			</div>
 			<div id="tabs-2">
 				
 
-				
+				{foreach $rentalService->getPhotos() as $photo}
+
+				{/foreach}
 
 				<div id="map_canvas" zoom="10" value="{$rental->latitude},{$rental->longitude}" style="width:100%;height:400px;"></div>
 

@@ -1,16 +1,16 @@
 var $class = function(definition) {
-    var constructor = definition.constructor;        
-    var parent = definition.Extends;
-    if (parent) {
-        var F = function() { };
-        constructor._superClass = F.prototype = parent.prototype;
-        constructor.prototype = new F();
-    }
-    for (var key in definition) {
-        constructor.prototype[key] = definition[key];
-    }
-    constructor.prototype.constructor = constructor;
-    return constructor;
+	var constructor = definition.constructor;        
+	var parent = definition.Extends;
+	if (parent) {
+		var F = function() { };
+		constructor._superClass = F.prototype = parent.prototype;
+		constructor.prototype = new F();
+	}
+	for (var key in definition) {
+		constructor.prototype[key] = definition[key];
+	}
+	constructor.prototype.constructor = constructor;
+	return constructor;
 };
 
 function executeFunctionByName(functionName, context /*, args */) {
@@ -18,7 +18,7 @@ function executeFunctionByName(functionName, context /*, args */) {
   var namespaces = functionName.split(".");
   var func = namespaces.pop();
   for(var i = 0; i < namespaces.length; i++) {
-    context = context[namespaces[i]];
+	context = context[namespaces[i]];
   }
   return context[func].apply(this, args);
 }
@@ -73,7 +73,14 @@ App.prototype._getLocationUrlAnchor = function(){
 */
 
 App.prototype._setLocationUrlAnchor = function(anchorName){
-	location.replace(this._getLocationUrl()+anchorName);
+	//location.replace(this._getLocationUrl()+anchorName);
+
+	var scrollmem = $('body').scrollTop();
+
+	document.location.hash = anchorName;
+	$('html,body').scrollTop(scrollmem);
+	//window.location.href = this._getLocationUrl()+anchorName;
+	return false;
 }
 
 /****************************************************************************************************
@@ -84,7 +91,6 @@ App.prototype.uiTabsClickChangeHashAdress = function(){
 
 	var self = new App;
 	
-	
 	var currentTabId = $(this).attr('href');
 	self._setLocationUrlAnchor($(this).attr('href'));
 	$(this).blur();
@@ -94,8 +100,12 @@ App.prototype.uiTabsClickChangeHashAdress = function(){
 		$('#map_canvas').traMap();	
 	}
 
+	
+
 
 }
+
+
 
 App.prototype.uiSelectedTabs = function(){
 
@@ -221,6 +231,9 @@ App.prototype.addToFavorites = function(){
 
 		if(favoriteSlider.length > 0){
 			favoriteSlider.find('ul li.rel-'+data.id).remove();
+			
+			//@todo vsade aplikovat
+
 		}
 
 		if(newList.length == 0){
@@ -255,11 +268,11 @@ App.prototype.addToFavorites = function(){
 
 				// append to favorites slider (if exist)
 
-
-
 				if(favoriteSlider.length > 0){
 
-					var newLi = $('<li></li>');
+
+
+					var newLi = $('<li></li>').css('background-image','url('+data.thumb+')');
 						newLi.addClass('current');
 						newLi.addClass('rel-'+data.id);
 
@@ -301,6 +314,9 @@ App.prototype.openContactForm = function(){
 *	RENTAL DETAIL
 ****************************************************************************************************/
 
+App.prototype.datepickerIcon = function(){
+	$(this).parent().find('input').focus();
+}
 
 /**
 *	initialize map in object detail
@@ -311,7 +327,6 @@ App.prototype.initMapsObjectDetail = function(){
 	/* large map plugin */
 	$('#map_canvas').traMap();	
 }
-
 
 
 /****************************************************************************************************
@@ -332,10 +347,17 @@ $(document).ready(function(){
 	/* UI tabs */
 	$( ".tabs" ).tabs(A.uiSelectedTabs());
 	$( ".tabs ul li a" ).click(A.uiTabsClickChangeHashAdress);
+
+
+	
 	/* UI calendar */
 	$( ".datepicker" ).datepicker();	
+	$(".datepickerIcon").click(A.datepickerIcon);
+
 	$('.accordion').accordion({ autoHeight: false , active: false , navigation: true, collapsible: true });
 	
+
+
 	/* rental favorites list*/
 	$('.addToFavorites').click(A.addToFavorites);
 	$('.addToFavorites').favoriteActiveLinks(A);
@@ -353,6 +375,5 @@ $(document).ready(function(){
 	$('#compareList').showFavoriteSlider(A);
 
 
-	jQuery('#mycarousel').jcarousel();
 
 });

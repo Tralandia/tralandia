@@ -15,6 +15,7 @@
 			base.options = $.extend({},$.showFavoriteSlider.defaultOptions, options);      
 		};
 		
+
 		base.init();
 	};
 	
@@ -22,6 +23,7 @@
 		
 	};
 	
+
 	$.fn.showFavoriteSlider = function( appObject , options ){
 		return this.each(function(){
 
@@ -29,10 +31,12 @@
 			
 			this.list = $(this).find('ul');
 
+				//appObject.storageDelete('favoritesList');
+
 				this.favoritesData = appObject.storageGet('favoritesList');
 				this.visitList = appObject.storageGet('visitObjectList');
 
-				
+				console.log(this.favoritesData);
 
 				if(typeof this.favoritesData == 'undefined' || this.favoritesData == null){
 					$(this).parent().parent().parent().hide();
@@ -53,7 +57,9 @@
 									visited.appendTo(newLink);
 							}
 
-						var newLi = $('<li></li>').attr('rel',v.id);
+							
+
+						var newLi = $('<li></li>').attr('rel',v.id).css('background-image', 'url('+v.thumb+')');
 
 							newLi.addClass('rel-'+v.id);
 
@@ -68,18 +74,92 @@
 
 
 					// full real width list
-					var sumPx = 0;
+
+					var liWidth = 100;
+
+					
 					var listCount = 0;
-					$(this).find('ul li').each(function(index) {					    
-					    sumPx += parseInt($(this).css('width'));
-					    ++listCount;
+					$(this).find('ul li').each(function(index) {						
+						++listCount;
 					});
 
-					sumPx = sumPx + (listCount*3);
+					var sumPx = (listCount*liWidth)+(listCount*6);
 
-					$(this).find('ul').css('width',sumPx+'px');
+					this.list.css('width',sumPx+'px');
 
-					// set nav links
+					// set nav links action
+
+					var animationOfset = 200;
+					var animationSpeed = 800;
+
+					$rigthArrow = $(this).find('.rightArrow');
+					$lefthArrow = $(this).find('.leftArrow');
+
+					var self = this;
+
+					var leftOfset = parseInt(self.list.css('left'));
+					
+
+					$rigthArrow.click(function(){
+
+						
+
+						console.log(leftOfset);
+
+						listCount = 0;
+						$(this).parent().find('ul li').each(function(index) {						
+							++listCount;
+						});
+
+						sumPx = (listCount*liWidth)+(listCount*6);
+						
+						console.log(leftOfset);
+						console.log(sumPx);
+
+						if( (leftOfset+920) < sumPx){
+							leftOfset += animationOfset;
+						  self.list.animate({
+							
+							left: '-='+animationOfset,
+							
+						  }, animationSpeed, function() {
+							// Animation complete.
+							
+						  });
+
+						}
+
+
+					});
+
+
+					
+
+					
+
+					$lefthArrow.click(function(){
+
+						
+
+						console.log(leftOfset);
+
+						if(leftOfset > 0){
+							leftOfset -= animationOfset;
+							  self.list.animate({
+								
+								left: '+='+animationOfset,
+								
+							  }, animationSpeed, function() {
+								// Animation complete.
+								
+							  });
+						}
+
+
+					});
+
+
+					
 
 				}
 
