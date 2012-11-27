@@ -314,6 +314,9 @@ App.prototype.openContactForm = function(){
 *	RENTAL DETAIL
 ****************************************************************************************************/
 
+App.prototype.datepickerIcon = function(){
+	$(this).parent().find('input').focus();
+}
 
 /**
 *	initialize map in object detail
@@ -349,8 +352,12 @@ $(document).ready(function(){
 	
 	/* UI calendar */
 	$( ".datepicker" ).datepicker();	
+	$(".datepickerIcon").click(A.datepickerIcon);
+
 	$('.accordion').accordion({ autoHeight: false , active: false , navigation: true, collapsible: true });
 	
+
+
 	/* rental favorites list*/
 	$('.addToFavorites').click(A.addToFavorites);
 	$('.addToFavorites').favoriteActiveLinks(A);
