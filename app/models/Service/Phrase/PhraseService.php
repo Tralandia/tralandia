@@ -16,6 +16,7 @@ class PhraseService extends Service\BaseService {
 			throw new \Nette\InvalidArgumentException('Set phrase type before creating translations.');
 		}
 		$translation = new Entity\Phrase\Translation;
+
 		$this->addTranslation($translation);
 		$translation->timeTranslated = new \Nette\DateTime();
 		$translation->language = $language;
@@ -65,23 +66,11 @@ class PhraseService extends Service\BaseService {
 	}
 
 	public function getTranslationVariationsMatrix($language) {
-		if($this->getEntity()->type->pluralVariationsRequired) {
-			$plurals = $language->getPluralsNames();
-		} else {
-			$plurals = $language->getDefaultPluralsNames();
-		}
+		$plurals = $language->getPluralsNames();
 
-		if($this->getEntity()->type->genderVariationsRequired) {
-			$genders = $language->getGendersNames();
-		} else {
-			$genders = $language->getDefaultGendersNames();
-		}
+		$genders = $language->getGendersNames();
 
-		if($this->getEntity()->type->locativesRequired) {
-			$cases = $language->getCasesNames();
-		} else {
-			$cases = $language->getDefaultCasesNames();
-		}
+		$cases = $language->getCasesNames();
 
 		$matrix = array();
 		foreach ($plurals as $pluralKey => $pluralValue) {

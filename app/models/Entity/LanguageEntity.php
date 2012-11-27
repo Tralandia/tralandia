@@ -15,6 +15,13 @@ class Language extends \Entity\BaseEntityDetails {
 
 	const SUPPORTED = TRUE;
 	const NOT_SUPPORTED = FALSE;
+	const NOMINATIVE = 'nominative';
+	const LOCATIVE = 'locative';
+
+	const DEFAULT_SINGULAR = 0;
+	const DEFAULT_PLURAL = 0;
+	const DEFAULT_GENDER = 0;
+	const DEFAULT_CASE = self::NOMINATIVE;
 
 	/**
 	 * @var Collection
@@ -86,18 +93,12 @@ class Language extends \Entity\BaseEntityDetails {
 		if(isset($this->plurals['names'])) {
 			return $this->plurals['names'];
 		}
-		return $this->getDefaultPluralsNames();
+		return $this->getDefaultPluralName();
 	}
 
-	public function getDefaultPluralsNames()
+	public function getDefaultPluralName()
 	{
-		return array('default' => 'default');
-	}
-
-	public function getPrimaryPluralKey()
-	{
-		$a = array_keys($this->getPluralsNames());
-		return reset($a);
+		return array(self::DEFAULT_PLURAL => 'default');
 	}
 
 	public function getGendersNames()
@@ -105,34 +106,29 @@ class Language extends \Entity\BaseEntityDetails {
 		if(isset($this->genders) && count($this->genders)) {
 			return $this->genders;
 		}
-		return $this->getDefaultGendersNames();
+		return $this->getDefaultGenderName();
 	}
 
-	public function getDefaultGendersNames()
+	public function getDefaultGenderName()
 	{
-		return array('default' => 'default');
-	}
-
-	public function getPrimaryGenderKey()
-	{
-		$a = array_keys($this->getGendersNames());
-		return reset($a);
+		return array(self::DEFAULT_GENDER => 'default');
 	}
 
 	public function getCasesNames()
 	{
-		return array('nominative' => 'Nominative', 'locative' => 'Locative');
+		return array(self::NOMINATIVE => 'Nominative', self::LOCATIVE => 'Locative');
 	}
 
-	public function getDefaultCasesNames()
+	public function getDefaultCaseName()
 	{
-		return array('default' => 'default');
+		return array(self::DEFAULT_CASE => 'default');
 	}
 
-	public function getPrimaryCaseKey()
+	public function getPlural($n)
 	{
-		$a = array_keys($this->getCasesNames());
-		return reset($a);
+		$rule = $this->getPlurals();
+		eval('$plural = (int)'.$rule['rule'].';');
+		return $plural;
 	}
 
 	//@entity-generator-code --- NEMAZAT !!!

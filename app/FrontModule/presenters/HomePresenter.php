@@ -2,25 +2,35 @@
 
 namespace FrontModule;
 
+use Model\Rental\IRentalDecoratorFactory;
+
 class HomePresenter extends BasePresenter {
 
-	public $locationTypeRepositoryAccessor;
+	public $rentalDecoratorFactory;
 
-	protected function startup() {
-		parent::startup();
-
-		$this->setProperty('locationTypeRepositoryAccessor');
-		
+	public function injectDecorators(IRentalDecoratorFactory $rentalDecoratorFactory) {
+		$this->rentalDecoratorFactory = $rentalDecoratorFactory;
 	}
+
 
 	public function renderDefault() {
 
-		$vp = new \VisualPaginator($this, 'vp');
-		$vp->templateFile = APP_DIR.'/FrontModule/components/VisualPaginator/paginator.latte';
 
-		$paginator = $vp->getPaginator();
-		$paginator->itemsPerPage = 15;
-		$paginator->itemCount = 568;
+		$rentalsEntities = $this->rentalRepositoryAccessor->get()->findAll();	
+
+		$rentals = array();
+
+		foreach ($rentalsEntities as $rental){
+			$rentals[$rental->id]['service'] = $this->rentalDecoratorFactory->create($rental);			
+			$rentals[$rental->id]['entity'] = $rental;
+		}
+
+		$regions = $this->locationRepositoryAccessor->get()->findBy(array(
+				'parent' => 58
+			), null , 50);
+
+		$this->template->regions = array_chunk($regions,ceil(count($regions)/3));
+		$this->template->rentals = $rentals;
 
 	}
 
@@ -34,17 +44,17 @@ class HomePresenter extends BasePresenter {
 
 		$tabBar = new \BaseModule\Components\TabControl\TabControl();
 
-		$content = new \FrontModule\Components\Rentals\TopRentals($this->rentalRepositoryAccessor);
+/*		$content = new \FrontModule\Components\Rentals\TopRentals($this->rentalRepository);
 		$tab = $tabBar->addTab('top');
 		$tab->setHeading(806);
 		$tab->setContent($content);
 
-		$content = new \FrontModule\Components\RegionsPage\Regions($this->locationRepositoryAccessor, $this->locationTypeRepositoryAccessor);
+		$content = new \FrontModule\Components\RegionsPage\Regions($this->locationRepository, $this->locationTypeRepository);
 		$tab = $tabBar->addTab('regions');
 		$tab->setHeading(678);
 		$tab->setContent($content)->setActive();
 
-		$content = new \FrontModule\Components\LocalitiesPage\Localities($this->locationRepositoryAccessor, $this->locationTypeRepositoryAccessor);
+		$content = new \FrontModule\Components\LocalitiesPage\Localities($this->locationRepository, $this->locationTypeRepository);
 		$tab = $tabBar->addTab('localities');
 		$tab->setHeading(725);
 		$tab->setContent($content);
@@ -59,7 +69,7 @@ class HomePresenter extends BasePresenter {
 		$tab = $tabBar->addTab('about');
 		$tab->setHeading(1163);
 		$tab->setContent($content);
-
+*/
 		return $tabBar;
 
 	}

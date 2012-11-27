@@ -143,8 +143,6 @@ services:
 
 	templateHelpers:
 		class: Extras\Helpers
-		arguments:
-			- @mediumDecoratorFactory
 
 	autopilot:
 		class: Service\Autopilot\Autopilot

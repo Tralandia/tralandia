@@ -6,7 +6,7 @@ use Nette;
 
 class Environment extends Nette\Object {
 
-	protected $prymaryLocation;
+	protected $primaryLocation;
 	protected $language;
 
 	protected $request;
@@ -26,7 +26,7 @@ class Environment extends Nette\Object {
 
 	public function getPrimaryLocation()
 	{
-		if(!$this->prymaryLocation) {
+		if(!$this->primaryLocation) {
 			$locationId = $this->getRequestParameter('primaryLocation');
 			$this->primaryLocation = $this->locationRepositoryAccessor->get()->find($locationId);
 		}

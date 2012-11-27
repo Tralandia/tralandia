@@ -127,8 +127,8 @@ class FrontRoute implements Nette\Application\IRouter {
 
 
 		if(count($pathSegments) == 0) {
-			$params->presenter = $this->getMetadata('presenter');
-			$params->action = $this->getMetadata('action');
+			$params->presenter = 'Home';
+			$params->action = 'default';
 		} else if(count($pathSegments) == 1) {
 			$pathSegment = reset($pathSegments);
 			// debug($pathSegment);
