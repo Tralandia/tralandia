@@ -73,23 +73,11 @@ class PhraseService extends Service\BaseService {
 	}
 
 	public function getTranslationVariationsMatrix($language) {
-		if($this->getEntity()->type->pluralVariationsRequired) {
-			$plurals = $language->getPluralsNames();
-		} else {
-			$plurals = $language->getDefaultPluralsNames();
-		}
+		$plurals = $language->getPluralsNames();
 
-		if($this->getEntity()->type->genderVariationsRequired) {
-			$genders = $language->getGendersNames();
-		} else {
-			$genders = $language->getDefaultGendersNames();
-		}
+		$genders = $language->getGendersNames();
 
-		if($this->getEntity()->type->locativesRequired) {
-			$cases = $language->getCasesNames();
-		} else {
-			$cases = $language->getDefaultCasesNames();
-		}
+		$cases = $language->getCasesNames();
 
 		$matrix = array();
 		foreach ($plurals as $pluralKey => $pluralValue) {

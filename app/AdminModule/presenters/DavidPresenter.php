@@ -22,10 +22,8 @@ class DavidPresenter extends BasePresenter {
 		$locationRepositoryAccessor = $this->getService('locationRepositoryAccessor');
 		$environment = new \Extras\Environment(array($request), $languageRepositoryAccessor, $locationRepositoryAccessor);
 		d($environment);
-		$seo = new Service\Seo\SeoService;
+		$seo = new \Service\Seo\SeoService($environment, $this->getService('pageRepositoryAccessor'));
 	}
 
-
-	
 
 }

@@ -8,7 +8,7 @@ abstract class BaseLanguagesImport extends BaseImport {
 		'en' => array(
 			'genders' => array(),
 			'plurals' => array(
-				'rule' => '(n != 1)',
+				'rule' => '($n != 1)',
 				'names' => array(
 					0 => 'Singular',
 					1 => 'Zero, Plural',
@@ -22,7 +22,7 @@ abstract class BaseLanguagesImport extends BaseImport {
 				2 => 'Neuter'
 			),
 			'plurals' => array(
-				'rule' => '(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2',
+				'rule' => '($n==1) ? 0 : ($n>=2 && $n<=4) ? 1 : 2',
 				'names' => array(
 					0 => 'Singular',
 					1 => '2, 3, 4',
@@ -37,7 +37,7 @@ abstract class BaseLanguagesImport extends BaseImport {
 				2 => 'Neuter DAS'
 			),
 			'plurals' => array(
-				'rule' => '(n != 1)',
+				'rule' => '($n != 1)',
 				'names' => array(
 					0 => 'Singular',
 					1 => 'Zero, Plural',
@@ -51,7 +51,7 @@ abstract class BaseLanguagesImport extends BaseImport {
 				2 => 'Neuter'
 			),
 			'plurals' => array(
-				'rule' => '(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)',
+				'rule' => '($n%10==1 && $n%100!=11 ? 0 : $n%10>=2 && $n%10<=4 && ($n%100<10 || $n%100>=20) ? 1 : 2)',
 				'names' => array(
 					0 => 'Singular',
 					1 => '2, 3, 4, 12, 13, 14, ...',
@@ -65,7 +65,7 @@ abstract class BaseLanguagesImport extends BaseImport {
 				1 => 'Feminine', 
 			),
 			'plurals' => array(
-				'rule' => '(n != 1)',
+				'rule' => '($n != 1)',
 				'names' => array(
 					0 => 'Singular',
 					1 => 'Zero, Plural',
@@ -79,7 +79,7 @@ abstract class BaseLanguagesImport extends BaseImport {
 				2 => 'Neuter'
 			),
 			'plurals' => array(
-				'rule' => '(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)',
+				'rule' => '($n==1 ? 0 : $n%10>=2 && $n%10<=4 && ($n%100<10 || $n%100>=20) ? 1 : 2)',
 				'names' => array(
 					0 => 'Singular',
 					1 => '2, 3, 4, 12, 13, 14, ...',
@@ -94,7 +94,7 @@ abstract class BaseLanguagesImport extends BaseImport {
 				2 => 'Neuter'
 			),
 			'plurals' => array(
-				'rule' => '(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)',
+				'rule' => '($n%10==1 && $n%100!=11 ? 0 : $n%10>=2 && $n%10<=4 && ($n%100<10 || $n%100>=20) ? 1 : 2)',
 				'names' => array(
 					0 => 'Singular',
 					1 => '2, 3, 4, 12, 13, 14, ...',
@@ -109,7 +109,7 @@ abstract class BaseLanguagesImport extends BaseImport {
 				2 => 'Neuter'
 			),
 			'plurals' => array(
-				'rule' => '(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2',
+				'rule' => '($n==1) ? 0 : ($n>=2 && $n<=4) ? 1 : 2',
 				'names' => array(
 					0 => 'Singular',
 					1 => '2, 3, 4',
@@ -124,7 +124,7 @@ abstract class BaseLanguagesImport extends BaseImport {
 				2 => 'Neuter'
 			),
 			'plurals' => array(
-				'rule' => '(n != 1)',
+				'rule' => '($n != 1)',
 				'names' => array(
 					0 => 'Singular',
 					1 => 'Zero, Plural',
@@ -137,7 +137,7 @@ abstract class BaseLanguagesImport extends BaseImport {
 				1 => 'Feminine', 
 			),
 			'plurals' => array(
-				'rule' => '(n != 1)',
+				'rule' => '($n != 1)',
 				'names' => array(
 					0 => 'Singular',
 					1 => 'Zero, Plural',
@@ -150,7 +150,7 @@ abstract class BaseLanguagesImport extends BaseImport {
 				1 => 'Feminine', 
 			),
 			'plurals' => array(
-				'rule' => '(n != 1)',
+				'rule' => '($n != 1)',
 				'names' => array(
 					0 => 'Singular',
 					1 => 'Zero, Plural',
@@ -160,7 +160,7 @@ abstract class BaseLanguagesImport extends BaseImport {
 		'hu' => array(
 			'genders' => array(),
 			'plurals' => array(
-				'rule' => '(n != 1)',
+				'rule' => '($n != 1)',
 				'names' => array(
 					0 => 'Singular',
 					1 => 'Zero, Plural',
@@ -174,7 +174,7 @@ abstract class BaseLanguagesImport extends BaseImport {
 				2 => 'Neuter'
 			),
 			'plurals' => array(
-				'rule' => '(n != 1)',
+				'rule' => '($n != 1)',
 				'names' => array(
 					0 => 'Singular',
 					1 => 'Zero, Plural',
@@ -187,7 +187,7 @@ abstract class BaseLanguagesImport extends BaseImport {
 				1 => 'Feminine', 
 			),
 			'plurals' => array(
-				'rule' => '(n != 1)',
+				'rule' => '($n != 1)',
 				'names' => array(
 					0 => 'Singular',
 					1 => 'Zero, Plural',
