@@ -69,6 +69,11 @@ services:
 	domainRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Domain')
 
 
+	#phone
+	#----------
+	phoneRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Contacts\Phone')
+
+
 	#email
 	#----------
 	emailBatchEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Email\Batch')

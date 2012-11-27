@@ -12,9 +12,20 @@ class WaccoPresenter extends BasePresenter {
 	}
 
 	public function actionList() {
+		/*
 		$repo = $this->context->model->getRepository('Entity\Currency');
 		$entity = $repo->find(2);
 		$this->template->form = $this->getForm('currency', $entity);
+		*/
+
+		$phoneBook = $this->getService('phoneBook');
+		$phone = '0918 590 768';
+
+		debug($phoneBook->find($phone));
+		debug($phoneBook->getOrCreate($phone));
+		debug($phoneBook->find($phone));
+
+		$this->template->form = null;
 	}
 
 	public function actionList2() {
