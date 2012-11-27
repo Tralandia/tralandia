@@ -38,7 +38,7 @@ class SearchCaching extends \Nette\Object {
 				break;
 
 			default:
-				$this->criteria[$this->country] = $this->getIdsFor($criteria, $value);
+				$this->criteria[$this->country] = $this->getRentalsFor($criteria, $value);
 				break;
 		}
 
@@ -53,7 +53,7 @@ class SearchCaching extends \Nette\Object {
 	// private functions
 	private function getRentalsFor($criteria, $value) {
 
-		
+		debug($criteria);
 
 	}
 

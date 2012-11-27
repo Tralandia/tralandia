@@ -10,19 +10,12 @@ use Service, Doctrine, Entity;
  */
 class PhraseService extends Service\BaseService {
 
-	protected $translationEntityFactory;
-
-	public function injectRepositories(\Nette\DI\Container $dic)
-	{
-		$this->translationEntityFactory = $dic->translationEntityFactory;
-	}
-
 	public function createTranslation(Entity\Language $language, $translationText = NULL) {
 		$type = $this->getEntity()->type;
 		if(!$type instanceof \Entity\Phrase\Type) {
 			throw new \Nette\InvalidArgumentException('Set phrase type before creating translations.');
 		}
-		$translation = $this->translationEntityFactory->create();
+		$translation = new Entity\Phrase\Translation;
 		$this->addTranslation($translation);
 		$translation->timeTranslated = new \Nette\DateTime();
 		$translation->language = $language;

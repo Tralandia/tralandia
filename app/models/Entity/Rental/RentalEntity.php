@@ -41,9 +41,9 @@ class Rental extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Type", mappedBy="rentals")
+	 * @ORM\ManyToOne(targetEntity="Type", inversedBy="rentals")
 	 */
-	protected $types;
+	protected $type;
 
 
 	/**
@@ -186,7 +186,6 @@ class Rental extends \Entity\BaseEntity {
 	{
 		parent::__construct();
 
-		$this->types = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->missingInformation = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->locations = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->spokenLanguages = new \Doctrine\Common\Collections\ArrayCollection;
@@ -278,36 +277,29 @@ class Rental extends \Entity\BaseEntity {
 	 * @param \Entity\Rental\Type
 	 * @return \Entity\Rental\Rental
 	 */
-	public function addType(\Entity\Rental\Type $type)
+	public function setType(\Entity\Rental\Type $type)
 	{
-		if(!$this->types->contains($type)) {
-			$this->types->add($type);
-		}
-		$type->addRental($this);
+		$this->type = $type;
 
 		return $this;
 	}
 		
 	/**
-	 * @param \Entity\Rental\Type
 	 * @return \Entity\Rental\Rental
 	 */
-	public function removeType(\Entity\Rental\Type $type)
+	public function unsetType()
 	{
-		if($this->types->contains($type)) {
-			$this->types->removeElement($type);
-		}
-		$type->removeRental($this);
+		$this->type = NULL;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Rental\Type
+	 * @return \Entity\Rental\Type|NULL
 	 */
-	public function getTypes()
+	public function getType()
 	{
-		return $this->types;
+		return $this->type;
 	}
 		
 	/**

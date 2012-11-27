@@ -249,13 +249,11 @@ class FrontRoute implements Nette\Application\IRouter {
 			ksort($segments);
 		}
 
-
 		$url = clone $refUrl;
 		$host = $this->buildHost(($language->id == $country->defaultLanguage->id ? 'www' : $language->iso), $refDomainName, $country->iso);
 		$url->setHost($host);
 		$path = '/' . implode('/', $segments);
 		$url->setPath($path);
-		// debug('url', "$url");
 		return $url;
 	}
 

@@ -84,10 +84,8 @@ class ImportRentals extends BaseImport {
 
 			$rental->status = $x['live'] == 1 ? $rental::STATUS_LIVE : $rental::STATUS_DRAFT;
 
-			$oldRentalTypes = array_unique(array_filter(explode(',', $x['objects_types_new'])));
-			foreach ($oldRentalTypes as $key => $value) {
-				$rental->addType($context->rentalTypeRepository->findOneByOldId($oldRentalTypesEn[$value]));
-			}
+			$oldRentalType = current(explode(',', $x['objects_types_new']));
+			$rental->setType($context->rentalTypeRepository->findOneByOldId($oldRentalTypesEn[$oldRentalType]));
 
 			// Locations
 			$rental->addLocation($context->locationRepository->findOneBy(array('oldId' => $x['country_id'], 'type' => $locationTypes['country'])));

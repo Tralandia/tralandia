@@ -99,7 +99,7 @@ class ImportSeo extends BaseImport {
 				}
 			}
 
-			$titlePhraseService = $this->context->phraseServiceFactory->create();
+			$titlePhraseService = $this->context->phraseDecoratorFactory->create();
 			$titlePhrase = $titlePhraseService->getEntity();
 			$titlePhrase->type = $dictionaryTypeTitle;
 			$sourceLanguage = $context->languageRepository->find($languagesByOldId[$x['source_language_id']]);
@@ -107,21 +107,21 @@ class ImportSeo extends BaseImport {
 				$titlePhrase->sourceLanguage = $sourceLanguage;
 			}
 
-			$headingPhraseService = $this->context->phraseServiceFactory->create();
+			$headingPhraseService = $this->context->phraseDecoratorFactory->create();
 			$headingPhrase = $headingPhraseService->getEntity();
 			$headingPhrase->type = $dictionaryTypeHeading;
 			if (isset($languagesByOldId[$x['source_language_id']])) {
 				$headingPhrase->sourceLanguage = $sourceLanguage;
 			}
 
-			$tabNamePhraseService = $this->context->phraseServiceFactory->create();
+			$tabNamePhraseService = $this->context->phraseDecoratorFactory->create();
 			$tabNamePhrase = $tabNamePhraseService->getEntity();
 			$tabNamePhrase->type = $dictionaryTypeTabName;
 			if (isset($languagesByOldId[$x['source_language_id']])) {
 				$tabNamePhrase->sourceLanguage = $sourceLanguage;
 			}
 
-			$descriptionPhraseService = $this->context->phraseServiceFactory->create();
+			$descriptionPhraseService = $this->context->phraseDecoratorFactory->create();
 			$descriptionPhrase = $descriptionPhraseService->getEntity();
 			$descriptionPhrase->type = $dictionaryTypeDescription;
 			if (isset($languagesByOldId[$x['source_language_id']])) {

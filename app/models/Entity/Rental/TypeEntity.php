@@ -21,7 +21,7 @@ class Type extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Rental", inversedBy="types", cascade={"persist"})
+	 * @ORM\OneToMany(targetEntity="Rental", mappedBy="type", cascade={"persist"})
 	 */
 	protected $rentals;
 
@@ -31,7 +31,7 @@ class Type extends \Entity\BaseEntity {
 	 */
 	protected $users;
 
-			//@entity-generator-code --- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()
@@ -70,6 +70,21 @@ class Type extends \Entity\BaseEntity {
 		if(!$this->rentals->contains($rental)) {
 			$this->rentals->add($rental);
 		}
+		$rental->setType($this);
+
+		return $this;
+	}
+		
+	/**
+	 * @param \Entity\Rental\Rental
+	 * @return \Entity\Rental\Type
+	 */
+	public function removeRental(\Entity\Rental\Rental $rental)
+	{
+		if($this->rentals->contains($rental)) {
+			$this->rentals->removeElement($rental);
+		}
+		$rental->unsetType();
 
 		return $this;
 	}
