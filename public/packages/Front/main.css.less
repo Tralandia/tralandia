@@ -117,6 +117,12 @@ p {
 /* helper class 
 /***************************************************************************************/
 
+.borderSeparator {
+	margin: 10px 0;
+	border-bottom: 1px solid @lightGreen;
+
+}
+
 ul.arrows {
 	list-style: none;
 	li {
@@ -1146,9 +1152,47 @@ border-top-right-radius: 5px;
 }
 
 
+		.position , .addons {
+			position: relative;
+			z-index: 10;
+			top: 5px;
+			left: 5px;
 
+		}
 
+		.position {
+			left: 0;
+			margin-right: 5px;
+			float: right;
+			height:10px;
+			line-height: 10px;
+			padding: 5px 3px;
+			background-image: linear-gradient(bottom, #F24100 0%, #F26900 100%);
+			background-image: -o-linear-gradient(bottom, #F24100 0%, #F26900 100%);
+			background-image: -moz-linear-gradient(bottom, #F24100 0%, #F26900 100%);
+			background-image: -webkit-linear-gradient(bottom, #F24100 0%, #F26900 100%);
+			background-image: -ms-linear-gradient(bottom, #F24100 0%, #F26900 100%);
 
+			-webkit-border-radius: 4px;
+			-moz-border-radius: 4px;
+			border-radius: 4px;
+			
+			font-weight: bold;
+
+			background-image: -webkit-gradient(
+				linear,
+				left bottom,
+				left top,
+				color-stop(0, #F24100),
+				color-stop(1, #F26900)
+			);
+			color: #fff;
+			font-size: 11px;
+			border: 1px solid #fff;
+			-moz-box-shadow: 0 0 5px #888;
+			-webkit-box-shadow: 0 0 5px#888;
+			box-shadow: 0 0 5px #888;
+		}
 
 
 
@@ -1189,7 +1233,7 @@ border-top-right-radius: 5px;
 	padding: .2em .2em 0;
 	width: 100%;
 	display: block;
-	height: 39px;
+	height: 37px;
 	border-bottom: 1px solid #c8cf9b;
 
 	li {
@@ -1203,7 +1247,8 @@ border-top-right-radius: 5px;
 		-khtml-border-top-right-radius: 4px;
 		-khtml-border-top-left-radius: 4px;
 		border-top-left-radius: 4px;
-		height: 36px;
+		
+		height: 34px;
 		
 		border: 1px solid #dde4ac;
 		border-bottom: none;

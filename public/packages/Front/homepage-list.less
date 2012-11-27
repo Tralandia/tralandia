@@ -1,0 +1,46 @@
+.hp-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+
+	li.span4 {
+		width: 229px;
+		height: 180px;
+		overflow: hidden;
+		
+		margin-left: 8px; 
+		margin-bottom: 8px;
+		height:135px;
+		width: 229px;
+
+		a {
+			color: #fff;
+		}
+
+		&:nth-child(3n+1) {
+		  
+		  margin-left: 0;
+		}
+
+		img {
+			height:135px;
+			width: 229px;
+			position: relative;
+			top: -22px;
+			z-index: 1;			
+		}
+
+		.label {
+			background: #000;
+			position: relative;
+			z-index: 2;
+			top: -53px;
+			margin: 0 2px;
+			height: 25px;
+			line-height: 25px;
+			-webkit-border-radius: 5px;
+			-moz-border-radius: 5px;
+			border-radius: 5px;			
+		}
+	}
+}

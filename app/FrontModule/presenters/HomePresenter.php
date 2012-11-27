@@ -25,6 +25,11 @@ class HomePresenter extends BasePresenter {
 			$rentals[$rental->id]['entity'] = $rental;
 		}
 
+		$regions = $this->locationRepositoryAccessor->get()->findBy(array(
+				'parent' => 58
+			), null , 50);
+
+		$this->template->regions = array_chunk($regions,ceil(count($regions)/3));
 		$this->template->rentals = $rentals;
 
 	}
