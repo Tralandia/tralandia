@@ -3,7 +3,7 @@
 namespace VojtechDobes\NetteForms;
 
 use Nette\Config\CompilerExtension;
-use Nette\Utils\PhpGenerator\ClassType;
+use Nette\PhpGenerator\ClassType;
 
 
 /**
@@ -21,7 +21,6 @@ class GpsPickerExtension extends CompilerExtension
 		$latte = $container->getDefinition('nette.latte');
 		$latte->addSetup('VojtechDobes\NetteForms\GpsPickerMacros::install(?->compiler)', array('@self'));
 	}
-
 
 
 	public function afterCompile(ClassType $class)
