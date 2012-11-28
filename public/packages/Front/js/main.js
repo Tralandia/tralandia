@@ -125,7 +125,9 @@ App.prototype.uiSelectedTabs = function(){
 		active: currentIndex
 	};
 
-	if(currentIndex == 4) {
+	
+
+	if(currentIndex == 3) {
 		/* large map plugin */
 		$('#map_canvas').traMap();
 	}
@@ -325,7 +327,8 @@ App.prototype.datepickerIcon = function(){
 App.prototype.initMapsObjectDetail = function(){
 	$('#objectDetailListMap').trigger('click');
 	/* large map plugin */
-	$('#map_canvas').traMap();	
+	$('#map_canvas').traMap();
+	$.scrollTo('#objectDetailListMap',800);	
 }
 
 
