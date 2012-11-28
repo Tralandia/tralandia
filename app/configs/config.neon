@@ -155,7 +155,7 @@ common:
 				- @rentalTypeRepositoryAccessor
 				- @locationServiceFactory
 
-		phoneBook: Extras\PhoneBook\PhoneBook(@phoneRepositoryAccessor)
+		phoneBook: Extras\Books\Phone(@phoneRepositoryAccessor)
 
 		itemTextFactory: Extras\FormMask\Items\Foctories\TextFactory
 		itemPhraseFactory: Extras\FormMask\Items\Foctories\PhraseFactory(@phraseServiceFactory, @environment::getLanguage())
