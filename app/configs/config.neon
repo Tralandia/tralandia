@@ -169,8 +169,12 @@ services:
 			- @rentalTypeRepositoryAccessor
 			- @locationDecoratorFactory
 
+	phoneBook: Extras\Books\Phone(@phoneRepositoryAccessor)
+
 	itemTextFactory: Extras\FormMask\Items\Foctories\TextFactory
 	itemPhraseFactory: Extras\FormMask\Items\Foctories\PhraseFactory(@phraseDecoratorFactory, @environment::getLanguage())
+	itemAdvancedPhraseFactory: Extras\FormMask\Items\Foctories\AdvancedPhraseFactory(@environment)
+	itemReadOnlyPhraseFactory: Extras\FormMask\Items\Foctories\ReadOnlyPhraseFactory(@environment)
 	itemYesNoFactory: Extras\FormMask\Items\Foctories\YesNoFactory
 	itemJsonFactory: Extras\FormMask\Items\Foctories\JsonFactory
 	itemNeonFactory: Extras\FormMask\Items\Foctories\NeonFactory
@@ -179,3 +183,4 @@ services:
 	itemSelectFactory: Extras\FormMask\Items\Foctories\SelectFactory(@translator)
 	itemCheckboxFactory: Extras\FormMask\Items\Foctories\CheckboxFactory
 	itemTinymceFactory: Extras\FormMask\Items\Foctories\TinymceFactory
+	itemMapFactory: Extras\FormMask\Items\Foctories\MapFactory
