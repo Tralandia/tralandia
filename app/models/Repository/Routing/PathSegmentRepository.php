@@ -15,11 +15,11 @@ class PathSegmentRepository extends \Repository\BaseRepository {
 		$qb = $this->_em->createQueryBuilder();
 
 		$languageOr = $qb->expr()->orx();
-		$languageOr->add($qb->expr()->eq('e.language', $language));
+		$languageOr->add($qb->expr()->eq('e.language', $language->id));
 		$languageOr->add($qb->expr()->isNull('e.language'));
 
 		$countryOr = $qb->expr()->orx();
-		$countryOr->add($qb->expr()->eq('e.country', $country));
+		$countryOr->add($qb->expr()->eq('e.country', $country->id));
 		$countryOr->add($qb->expr()->isNull('e.country'));
 
 		$qb->select('e')
@@ -29,6 +29,7 @@ class PathSegmentRepository extends \Repository\BaseRepository {
 			->andWhere($qb->expr()->in('e.pathSegment', $pathSegments))
 			->orderBy($qb->expr()->asc('e.type'));
 
-		return $qb->getQuery()->getResult();
+		$t = $qb->getQuery()->getResult();
+		return $t;
 	}
 }

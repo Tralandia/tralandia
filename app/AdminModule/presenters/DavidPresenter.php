@@ -10,6 +10,8 @@ class DavidPresenter extends BasePresenter {
 
 	public function actionList() {
 
+		$this->getService('generatePathSegmentsRobot')->run();
+
 		$url = 'http://www.sk.tra.com/nitra';
 		$url = new Nette\Http\UrlScript($url);
 		$httpRequest = new Nette\Http\Request($url);
@@ -17,12 +19,10 @@ class DavidPresenter extends BasePresenter {
 		$route = $this->getService('frontRouteFactory')->create();
 
 		$request = $route->match($httpRequest);
-
 		$languageRepositoryAccessor = $this->getService('languageRepositoryAccessor');
 		$locationRepositoryAccessor = $this->getService('locationRepositoryAccessor');
-		$environment = new \Extras\Environment(array($request), $languageRepositoryAccessor, $locationRepositoryAccessor);
-		d($environment);
-		$seo = new \Service\Seo\SeoService($environment, $this->getService('pageRepositoryAccessor'));
+
+		$seo = new \Service\Seo\SeoService($request, $this->getService('pageRepositoryAccessor'));
 	}
 
 

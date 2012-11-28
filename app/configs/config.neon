@@ -76,12 +76,17 @@ services:
 	frontRouteFactory:
 		class: Routers\FrontRouteFactory(@routerCache, %router.hostMask%)
 		setup:
+			- $model(@model)
 			- $locationRepositoryAccessor(@locationRepositoryAccessor)
 			- $languageRepositoryAccessor(@languageRepositoryAccessor)
 			- $rentalRepositoryAccessor(@rentalRepositoryAccessor)
+			- $rentalTypeRepositoryAccessor(@rentalTypeRepositoryAccessor)
 			- $attractionRepositoryAccessor(@attractionRepositoryAccessor)
+			- $attractionTypeRepositoryAccessor(@attractionTypeRepositoryAccessor)
 			- $routingPathSegmentRepositoryAccessor(@routingPathSegmentRepositoryAccessor)
 			- $domainRepositoryAccessor(@domainRepositoryAccessor)
+			- $pageRepositoryAccessor(@pageRepositoryAccessor)
+			- $rentalAmenityRepositoryAccessor(@rentalAmenityRepositoryAccessor)
 
 	routerFactory: Routers\RouterFactory([defaultLanguage: %centralLanguage%, defaultPrimaryLocation: 58])
 
