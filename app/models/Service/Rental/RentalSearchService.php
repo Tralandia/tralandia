@@ -48,25 +48,30 @@ class RentalSearchService extends Service\BaseService
 			if ($criteria===self::CRITERIA_PRIMARY_LOCATION) {
 				$this->primaryLocation = $value;
 			} else {
-				$this->results[$this->primaryLocation->getId()][$criteria][$value->getId()] = $this->findRentalsBy($criteria, $value);
+				$this->results[$this->primaryLocation->getId()][$criteria][$value->getId()] = $this->findRentaIdsBy($criteria, $value);
 			}
 			
 		}
 
 	}
 
-	private function findRentalsBy($criteria, $value) {
+	private function findRentaIdsBy($criteria, $value) {
+		$ids = array();
 
 		switch($criteria) {
 			case self::CRITERIA_PRIMARY_LOCATION:
 
 				break;
 			case self::CRITERIA_LOCATION:
-
+				foreach($this->rentalRepositoryAccessor->get()->findByLocation($value) as $entity) {
+					$ids[] = $entity->getId();
+				}
 				break;
 
 			case self::CRITERIA_RENTAL_TYPE:
-				return $this->rentalRepositoryAccessor->get()->findByType($value);
+				foreach($this->rentalRepositoryAccessor->get()->findByType($value) as $entity) {
+					$ids[] = $entity->getId();
+				}
 				break;
 
 			case self::CRITERIA_AREA_BOUNDRIES:
@@ -97,6 +102,8 @@ class RentalSearchService extends Service\BaseService
 				return array();
 				break;
 		}
+
+		return $ids;
 
 	}
 

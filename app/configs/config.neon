@@ -5,7 +5,7 @@ php:
 
 nette:
 	container:
-		debugger: true  # aktivuje panel v Debugger baru
+		debugger: false  # aktivuje panel v Debugger baru
 
 	session:
 		autoStart: smart

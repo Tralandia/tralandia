@@ -196,7 +196,7 @@ class ImportLocations extends BaseImport {
 				$languageTemp = $this->context->languageRepository->findOneBy(array('oldId' => $x1['language_id']));
 				$t = $namePhraseService->getTranslation($languageTemp);
 				$variations = array();
-				$variations['default']['default'] = array(
+				$variations[0][0] = array(
 					'nominative' => $x1['name'],
 					'locative' => $x1['name_locative'],
 				);
@@ -215,7 +215,7 @@ class ImportLocations extends BaseImport {
 					$x1 = qf('select * from countries_synonyms where country_id = '.$x['id'].' and language_id = '.$language->oldId.' order by length(name) DESC limit 1');
 					$value->translation = $x1['name'];
 					$variations = array();
-					$variations['default']['default'] = array(
+					$variations[0][0] = array(
 						'nominative' => $x1['name'],
 						'locative' => $x1['name_locative'],
 					);
@@ -311,7 +311,7 @@ class ImportLocations extends BaseImport {
 			$r1 = q('select * from regions_translations where location_id = '.$x['id']);
 			while ($x1 = mysql_fetch_array($r1)) {
 				$variations = array();
-				$variations['default']['default'] = array(
+				$variations[0][0] = array(
 					'locative' => $x1['name_locative'],
 				);
 				$languageTemp = $this->context->languageRepository->findOneBy(array('oldId' => $x1['language_id']));
@@ -364,7 +364,7 @@ class ImportLocations extends BaseImport {
 			$r1 = q('select * from regions_translations where location_id = '.$x['id']);
 			while ($x1 = mysql_fetch_array($r1)) {
 				$variations = array();
-				$variations['default']['default'] = array(
+				$variations[0][0] = array(
 					'locative' => $x1['name_locative'],
 				);
 				$languageTemp = $this->context->languageRepository->findOneBy(array('oldId' => $x1['language_id']));
@@ -410,7 +410,7 @@ class ImportLocations extends BaseImport {
 			$r1 = q('select * from regions_translations where location_id = '.$x['id']);
 			while ($x1 = mysql_fetch_array($r1)) {
 				$variations = array();
-				$variations['default']['default'] = array(
+				$variations[0][0] = array(
 					'locative' => $x1['name_locative'],
 				);
 				$languageTemp = $this->context->languageRepository->findOneBy(array('oldId' => $x1['language_id']));
@@ -468,7 +468,7 @@ class ImportLocations extends BaseImport {
 			$r1 = q('select * from localities_translations where location_id = '.$x['id']);
 			while ($x1 = mysql_fetch_array($r1)) {
 				$variations = array();
-				$variations['default']['default'] = array(
+				$variations[0][0] = array(
 					'locative' => $x1['name_locative'],
 				);
 				$languageTemp = $this->context->languageRepository->findOneBy(array('oldId' => $x1['language_id']));

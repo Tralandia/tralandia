@@ -32,11 +32,15 @@ class CibiPresenter extends BasePresenter {
 			RentalSearchService::CRITERIA_RENTAL_TYPE, 
 			$this->rentalTypeRepositoryAccessor->get()->findById(array(5, 6))
 		);
+		$search->addCriteria(
+			RentalSearchService::CRITERIA_LOCATION, 
+			$this->locationRepositoryAccessor->get()->findById(56)
+		);
 		$search->setCountPerPage(50);
 		$search->setPage(1);
 		$results = $search->getResults();
 
-		dump($results);
+		dump($results[$location]);
 
 	}
 

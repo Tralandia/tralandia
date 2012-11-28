@@ -72,7 +72,7 @@ class Translation extends \Entity\BaseEntity {
 		if($this->phrase->type->isSimple()) {
 			$translation = $this->translation;
 		} else {
-			$translation = $this->getDefaulVariation();
+			$translation = $this->getDefaultVariation();
 		}
 		return $translation ? $translation : '{!!' . $this->id . '}';
 	}
@@ -134,7 +134,7 @@ class Translation extends \Entity\BaseEntity {
 			$this->variations = $variations;
 		}
 
-		$this->translation = $this->getDefaulVariation();
+		$this->translation = $this->getDefaultVariation();
 
 		return $this;		
 	}

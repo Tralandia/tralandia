@@ -22,7 +22,7 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
-			// ->setHelpFroTranslator('')
+			// ->setHelpForTranslator('')
 			// ->setMonthlyBudget(0)
 			// ->setIldId(1)
 			->setCheckingRequired(NULL);
@@ -34,7 +34,7 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
-			// ->setHelpFroTranslator('')
+			// ->setHelpForTranslator('')
 			// ->setMonthlyBudget(0)
 			// ->setIldId(1)
 			->setCheckingRequired(NULL);
@@ -46,7 +46,7 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
-			// ->setHelpFroTranslator('')
+			// ->setHelpForTranslator('')
 			// ->setMonthlyBudget(0)
 			// ->setIldId(1)
 			->setCheckingRequired(NULL);
@@ -58,7 +58,7 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(1)
 			->setPositionRequired(0)
-			// ->setHelpFroTranslator('')
+			// ->setHelpForTranslator('')
 			// ->setMonthlyBudget(0)
 			// ->setIldId(1)
 			->setCheckingRequired(1);
@@ -70,7 +70,7 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(1)
 			->setPositionRequired(0)
-			// ->setHelpFroTranslator('')
+			// ->setHelpForTranslator('')
 			// ->setMonthlyBudget(0)
 			// ->setIldId(1)
 			->setCheckingRequired(NULL);
@@ -82,7 +82,7 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(1)
 			->setPositionRequired(0)
-			// ->setHelpFroTranslator('')
+			// ->setHelpForTranslator('')
 			// ->setMonthlyBudget(0)
 			// ->setIldId(1)
 			->setCheckingRequired(NULL);
@@ -94,7 +94,7 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(1)
 			->setPositionRequired(0)
-			// ->setHelpFroTranslator('')
+			// ->setHelpForTranslator('')
 			// ->setMonthlyBudget(0)
 			// ->setIldId(1)
 			->setCheckingRequired(NULL);
@@ -106,7 +106,7 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
-			// ->setHelpFroTranslator('')
+			// ->setHelpForTranslator('')
 			// ->setMonthlyBudget(0)
 			// ->setIldId(1)
 			->setCheckingRequired(NULL);
@@ -118,7 +118,7 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
-			// ->setHelpFroTranslator('')
+			// ->setHelpForTranslator('')
 			// ->setMonthlyBudget(0)
 			// ->setIldId(1)
 			->setCheckingRequired(NULL);
@@ -130,7 +130,7 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(1)
 			->setLocativesRequired(1)
 			->setPositionRequired(1)
-			// ->setHelpFroTranslator('')
+			// ->setHelpForTranslator('')
 			// ->setMonthlyBudget(0)
 			// ->setIldId(1)
 			->setCheckingRequired(NULL);
@@ -142,7 +142,7 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
-			// ->setHelpFroTranslator('')
+			// ->setHelpForTranslator('')
 			// ->setMonthlyBudget(0)
 			// ->setIldId(1)
 			->setCheckingRequired(NULL);
@@ -154,7 +154,7 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(1)
 			->setPositionRequired(0)
-			// ->setHelpFroTranslator('')
+			// ->setHelpForTranslator('')
 			// ->setMonthlyBudget(0)
 			// ->setIldId(1)
 			->setCheckingRequired(NULL);
@@ -166,7 +166,7 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
-			// ->setHelpFroTranslator('')
+			// ->setHelpForTranslator('')
 			// ->setMonthlyBudget(0)
 			// ->setIldId(1)
 			->setCheckingRequired(1);
@@ -178,7 +178,7 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
-			// ->setHelpFroTranslator('')
+			// ->setHelpForTranslator('')
 			// ->setMonthlyBudget(0)
 			// ->setIldId(1)
 			->setCheckingRequired(1);
@@ -190,7 +190,7 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
-			// ->setHelpFroTranslator('')
+			// ->setHelpForTranslator('')
 			// ->setMonthlyBudget(0)
 			// ->setIldId(1)
 			->setCheckingRequired(1);
@@ -202,7 +202,7 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
-			// ->setHelpFroTranslator('')
+			// ->setHelpForTranslator('')
 			// ->setMonthlyBudget(0)
 			// ->setIldId(1)
 			->setCheckingRequired(1);
@@ -214,7 +214,7 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
-			// ->setHelpFroTranslator('')
+			// ->setHelpForTranslator('')
 			// ->setMonthlyBudget(0)
 			// ->setIldId(1)
 			->setCheckingRequired(NULL);
@@ -226,7 +226,7 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
-			// ->setHelpFroTranslator('')
+			// ->setHelpForTranslator('')
 			// ->setMonthlyBudget(0)
 			// ->setIldId(1)
 			->setCheckingRequired(NULL);
@@ -238,7 +238,7 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
-			// ->setHelpFroTranslator('')
+			// ->setHelpForTranslator('')
 			// ->setMonthlyBudget(0)
 			// ->setIldId(1)
 			->setCheckingRequired(NULL);
@@ -250,7 +250,7 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
-			// ->setHelpFroTranslator('')
+			// ->setHelpForTranslator('')
 			// ->setMonthlyBudget(0)
 			// ->setIldId(1)
 			->setCheckingRequired(NULL);
@@ -262,7 +262,7 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
-			// ->setHelpFroTranslator('')
+			// ->setHelpForTranslator('')
 			// ->setMonthlyBudget(0)
 			// ->setIldId(1)
 			->setCheckingRequired(NULL);
@@ -274,7 +274,7 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
-			// ->setHelpFroTranslator('')
+			// ->setHelpForTranslator('')
 			// ->setMonthlyBudget(0)
 			// ->setIldId(1)
 			->setCheckingRequired(NULL);
@@ -286,7 +286,7 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
-			// ->setHelpFroTranslator('')
+			// ->setHelpForTranslator('')
 			// ->setMonthlyBudget(0)
 			// ->setIldId(1)
 			->setCheckingRequired(NULL);
@@ -298,7 +298,7 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
-			// ->setHelpFroTranslator('')
+			// ->setHelpForTranslator('')
 			// ->setMonthlyBudget(0)
 			// ->setIldId(1)
 			->setCheckingRequired(NULL);
@@ -310,7 +310,7 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
-			// ->setHelpFroTranslator('')
+			// ->setHelpForTranslator('')
 			// ->setMonthlyBudget(0)
 			// ->setIldId(1)
 			->setCheckingRequired(NULL);
@@ -322,7 +322,7 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
-			// ->setHelpFroTranslator('')
+			// ->setHelpForTranslator('')
 			// ->setMonthlyBudget(0)
 			// ->setIldId(1)
 			->setCheckingRequired(NULL);
@@ -334,7 +334,7 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
-			// ->setHelpFroTranslator('')
+			// ->setHelpForTranslator('')
 			// ->setMonthlyBudget(0)
 			// ->setIldId(1)
 			->setCheckingRequired(NULL);
@@ -346,7 +346,7 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
-			// ->setHelpFroTranslator('')
+			// ->setHelpForTranslator('')
 			// ->setMonthlyBudget(0)
 			// ->setIldId(1)
 			->setCheckingRequired(NULL);
@@ -358,7 +358,7 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
-			// ->setHelpFroTranslator('')
+			// ->setHelpForTranslator('')
 			// ->setMonthlyBudget(0)
 			// ->setIldId(1)
 			->setCheckingRequired(NULL);
@@ -370,7 +370,7 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
-			// ->setHelpFroTranslator('')
+			// ->setHelpForTranslator('')
 			// ->setMonthlyBudget(0)
 			// ->setIldId(1)
 			->setCheckingRequired(NULL);
@@ -382,7 +382,7 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
-			// ->setHelpFroTranslator('')
+			// ->setHelpForTranslator('')
 			// ->setMonthlyBudget(0)
 			// ->setIldId(1)
 			->setCheckingRequired(NULL);
@@ -394,7 +394,7 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
-			// ->setHelpFroTranslator('')
+			// ->setHelpForTranslator('')
 			// ->setMonthlyBudget(0)
 			// ->setIldId(1)
 			->setCheckingRequired(NULL);
@@ -406,7 +406,7 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
-			// ->setHelpFroTranslator('')
+			// ->setHelpForTranslator('')
 			// ->setMonthlyBudget(0)
 			// ->setIldId(1)
 			->setCheckingRequired(NULL);
