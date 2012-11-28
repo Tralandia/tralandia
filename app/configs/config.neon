@@ -63,8 +63,8 @@ includes:
 	- modelServices.neon
 	- oldRepositoryServices.neon
 
-# presenter:
-# 	configsDir: %appDir%/configs/presenters
+presenter:
+	configsDir: %appDir%/configs/presenters
 
 services:
 	# CACHE

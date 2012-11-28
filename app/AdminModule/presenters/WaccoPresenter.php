@@ -41,8 +41,8 @@ class WaccoPresenter extends BasePresenter {
 	}
 
 	public function getForm($name, $entity) {
-		$model = $this->context->model;
-		$form = $this->context->presenter->{$name}->form->create($entity);
+		$model = $this->getService('model');
+		$form = $this->getService("presenter.$name.form")->create($entity);
 		$form->onSuccess[] = function($form) use ($model) {
 			$model->flush();
 		};

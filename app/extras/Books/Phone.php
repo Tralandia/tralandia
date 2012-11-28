@@ -44,14 +44,14 @@ class Phone extends Nette\Object {
 				throw new \Exception('Telefonne cislo nie je validne');
 			}
 
-			$phone = new Entity\Contacts\Phone;
+			$phone = $this->phoneRepository->get()->createNew();
 			$phone->setPhone($this->prepareNumber($response->formattingResults->E164))
 				->setInternational($response->formattingResults->international)
 				->setNational($response->formattingResults->national)
 				->setRegion($response->validationResult->phoneNumberForRegion);
 
 			//TODO: este persiste a flush
-			//$this->phoneRepository->get()->
+			//$this->phoneRepository->get()->persist()
 		}
 
 		return $phone;
