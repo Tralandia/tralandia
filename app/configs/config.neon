@@ -179,3 +179,9 @@ services:
 	itemSelectFactory: Extras\FormMask\Items\Foctories\SelectFactory(@translator)
 	itemCheckboxFactory: Extras\FormMask\Items\Foctories\CheckboxFactory
 	itemTinymceFactory: Extras\FormMask\Items\Foctories\TinymceFactory
+
+factories: 
+	rentalEditFormFactory: 
+		class: OwnerModule\Forms\RentalEditForm(%rental%)
+		implement: OwnerModule\Forms\IRentalEditFormFactory
+		arguments: [Entity\Rental\Rental rental]
