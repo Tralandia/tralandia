@@ -90,6 +90,7 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 
 #ui-datepicker-div {
 	background: #fff;
+	border: 1px solid #cbd2a0;
 }
 
 .datepickerIcon {
