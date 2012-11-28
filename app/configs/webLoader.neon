@@ -3,7 +3,6 @@ parameters:
 		packages:
 
 			customui:
-				
 				css:
 					- BootstrapCustomUI/ui.css
 
@@ -25,15 +24,31 @@ parameters:
 					- Front/main.css.less
 					- Front/form-registration.less
 					- Front/calendar.less
+					- Front/object-list.less
+					- Front/sidebar.less
+					- Front/contact-page.less
+					- Front/object-detail-favorites.less
+					- Front/homepage-list.less
 					- FrontJqUi/css/tralandia/jquery-ui-1.9.1.custom.css
+					
 
 				js:
 					- jQuery/jquery.js
 					- Front/js/fancy-checkboxes.js
-					- Front/js/bootstrap-dropdown.js
+					- Front/js/bootstrap-dropdown.js					
+					- Front/js/bootstrap-modal.js
+					- Front/js/jquery.scrollTo-1.4.3.1-min.js
+					- FrontJqUi/js/jquery-ui-1.9.1.custom.min.js
+					- Front/js/jquery-tra-map.js
+					- Front/js/object-register-to-view-list.js
+					- Front/js/favorite-active-links.js
+					- Front/js/favorite-slider.js
+					- Front/js/show-favorite-slider.js
+					- Front/js/jstorage.min.js
+					- Front/js/jquery.jcarousel.min.js
+					
 					- Front/js/main.js
 
-					- FrontJqUi/js/jquery-ui-1.9.1.custom.min.js
 			front:
 				css:
 					- front/default.css
@@ -123,6 +138,9 @@ parameters:
 				js: 
 					- DateInput/timepicker.js
 					- DateInput/dateInput.js
+
+			gMap:
+				js: "https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"
 		sets:
 
 			'Admin:Ap':
@@ -149,11 +167,11 @@ parameters:
 				- %webloader.packages.customui%
 
 			Front: 
-				- %webloader.packages.front%
+				-  %webloader.packages.Front%
+				-  %webloader.packages.gMap%
 
 			Gregor:
 				-  %webloader.packages.Front%
-				
-				
+
 			'Gregor:Admin': %webloader.sets.Admin%
 

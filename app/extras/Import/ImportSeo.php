@@ -25,7 +25,7 @@ class ImportSeo extends BaseImport {
 
 
 		// Detaching all media
-		qNew('update medium set seoUrl_id = NULL where seoUrl_id > 0');
+		// qNew('update medium set seoUrl_id = NULL where seoUrl_id > 0');
 
 		$languagesByOldId = getNewIdsByOld('\Language');
 
@@ -82,6 +82,7 @@ class ImportSeo extends BaseImport {
 				}
 			}
 
+			$model->persist($seoUrl);
 			// Media
 			$temp = array_unique(array_filter(explode(',', $x['photos'])));
 			if (is_array($temp) && count($temp)) {
@@ -150,7 +151,6 @@ class ImportSeo extends BaseImport {
 			$seoUrl->description = $descriptionPhrase;
 			//debug($titlePhrase->getMainEntity()->translations);
 			//debug($descriptionPhrase->getMainEntity()->translations); return;
-			$model->persist($seoUrl);
 		}
 		$model->flush();
 	}

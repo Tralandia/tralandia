@@ -10,10 +10,11 @@ use Service, Doctrine, Entity;
  */
 class PhraseService extends Service\BaseService {
 
-	protected $translationEntityFactory;
+	protected $phraseTranslationRepositoryAccessor;
 
-	public function inject($translationEntityFactory) {
-		$this->translationEntityFactory = $translationEntityFactory;
+	public function injectRepositories(\Nette\DI\Container $dic)
+	{
+		$this->phraseTranslationRepositoryAccessor = $dic->phraseTranslationRepositoryAccessor;
 	}
 
 	public function createTranslation(Entity\Language $language, $translationText = NULL) {
@@ -21,7 +22,8 @@ class PhraseService extends Service\BaseService {
 		if(!$type instanceof \Entity\Phrase\Type) {
 			throw new \Nette\InvalidArgumentException('Set phrase type before creating translations.');
 		}
-		$translation = $this->translationEntityFactory->create();
+		// @todo toto dorobit 
+		$translation = $this->phraseTranslationRepositoryAccessor->get()->createNew();
 		$this->addTranslation($translation);
 		$translation->timeTranslated = new \Nette\DateTime();
 		$translation->language = $language;
@@ -71,23 +73,11 @@ class PhraseService extends Service\BaseService {
 	}
 
 	public function getTranslationVariationsMatrix($language) {
-		if($this->getEntity()->type->pluralVariationsRequired) {
-			$plurals = $language->plurals;
-		} else {
-			$plurals = array('default' => 'default');
-		}
+		$plurals = $language->getPluralsNames();
 
-		if($this->getEntity()->type->genderVariationsRequired) {
-			$genders = $language->genders;
-		} else {
-			$genders = array('default' => 'default');
-		}
+		$genders = $language->getGendersNames();
 
-		if($this->getEntity()->type->locativesRequired) {
-			$cases = array('nominative' => 'Nominative', 'locative' => 'Locative');
-		} else {
-			$cases = array('default' => 'default');
-		}
+		$cases = $language->getCasesNames();
 
 		$matrix = array();
 		foreach ($plurals as $pluralKey => $pluralValue) {
@@ -97,6 +87,7 @@ class PhraseService extends Service\BaseService {
 				}
 			}
 		}
+
 		return $matrix;
 	}
 }

@@ -4,60 +4,41 @@ namespace FrontModule;
 
 abstract class BasePresenter extends \BasePresenter {
 	
-	protected function startup() {
-		parent::startup();
+	public $languageRepositoryAccessor;
+	public $locationRepositoryAccessor;
+	public $rentalTypeRepositoryAccessor;
+	public $rentalRepositoryAccessor;
+	public $environment;
+
+	public function injectEnvironment(\Extras\Environment $environment) {
+		$this->environment = $environment;
+	}
+
+	public function inject(\Nette\DI\Container $dic) {
+		$this->setProperty('languageRepositoryAccessor');
+		$this->setProperty('locationRepositoryAccessor');
+		$this->setProperty('rentalTypeRepositoryAccessor');
+		$this->setProperty('rentalRepositoryAccessor');
+		parent::inject($dic);
 	}
 
 	public function beforeRender() {
 
+		$this->template->currentLanguage = NULL;
+		$this->template->currentLocation = NULL;
+
+		// $this->template->supportedLanguages = $this->languageRepositoryAccessor->findBySupported(\Entity\Language::SUPPORTED);
+		// $this->template->launchedCountries = $this->locationRepositoryAccessor->findBy(array('status'=>\Entity\Location\Location::STATUS_LAUNCHED), null, 15);
+		// $this->template->liveRentalsCount = count($this->rentalRepositoryAccessor->findByStatus(\Entity\Rental\Rental::STATUS_LIVE));
+		$this->template->mainMenuItems = $this->rentalTypeRepositoryAccessor->get()->findBy(array(),null,8);
+		$this->template->slogan = $this->translate('o21083').' '.$this->translate($this->environment->getPrimaryLocation()->name, NULL, array('case' => \Entity\Language::LOCATIVE));
+
 		parent::beforeRender();
-
-		$this->template->currentLanguage = $currentLanguage = $this->context->environment->getLanguage();
-		$this->template->currentLocation = $currentLocation = $this->context->environment->getLocation();
-
-		$this->template->supportedLanguages = \Service\Dictionary\LanguageList::getBySupported(\Entity\Dictionary\Language::SUPPORTED);
-		$this->template->launchedCountries = \Service\Location\LocationList::getBy(
-			array(
-				'status'=>\Entity\Location\Location::STATUS_LAUNCHED,
-				//'parent'=>$currentLocation->findParentByType('continent')->id, // @NOTE: where parent is the current continent
-			),
-			null,
-			15
-		);
-		$this->template->liveRentalsCount = count(\Service\Rental\RentalList::getByStatus(\Entity\Rental\Rental::STATUS_LIVE));
-		$this->template->mainMenuItems = $this->getMainMenuItems();
-
 	}
 
-	/******* Things @TODO *****/
-	public function getMainMenuItems() {
-		
-		// foreach (\Service\Rental\TypeList::getAll() as $type) {
-
-		// 	$qb = \Extras\Models\Service::getEm()->createQueryBuilder();
-		// 	$qb
-		// 		->select('r')
-		// 		->from('\Entity\Rental\Rental', 'r')
-		// 		->leftJoin('r.types', 't') //, \Doctrine\ORM\Query\Expr\Join::ON, 'r.type = :type')
-		// 		->where('r.status = :live')
-		// 		->setParameter('live', \Entity\Rental\Rental::STATUS_LIVE)
-		// 		// ->setParameter('type', $type->id)
-		// 		;
-
-		// 	$result = $qb->getQuery()->getResult();
-		// 	// debug($result[0]->types[0]->name);
-		// 	break;
-
-		// }
-
-		return array("Uvod", "Chaty a chalupy", "Apartmany", "Uvod", "Chaty a chalupy", "Apartmany", "Uvod", "Chaty a chalupy", "Apartmany");
-	}
-
-	public function createComponentMainMenu($name) {
-		return new \FrontModule\MainMenu\MainMenu($this, $name);
-	}
 
 	public function createComponentBreadcrumb($name) {
+		
 		return new \FrontModule\Breadcrumb\Breadcrumb($this, $name);
 	}
 

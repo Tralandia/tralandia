@@ -14,7 +14,7 @@ define('INCLUDE_DIR', TESTS_DIR . '/include');
 $_SERVER['HTTP_HOST'] = 'localhost';
 
 // Load Nette Framework
-require LIBS_DIR . '/Nette/nette.min.php';
+require_once LIBS_DIR . '/Nette/loader.php';
 
 // Enable Nette\Debug for error visualisation & logging
 Debugger::enable(FALSE);
@@ -33,6 +33,8 @@ $robotLoader->addDirectory(APP_DIR)
 
 require_once LIBS_DIR . '/tools.php';
 Extension::register($configurator);
+// Extras\Config\PresenterExtension::register($configurator);
+
 $configurator->addConfig(APP_DIR . '/configs/config.neon', $section);
 $configurator->onCompile[] = callback('Extras\PresenterGenerator', 'generate');
 $container = $configurator->createContainer();

@@ -55,9 +55,13 @@ rm -rf ./log/*
 
 cd public
 php -f index.php orm:generate-proxies
+
+cd ..
+chmod -R 777 ./temp
+
 #php public/index.php orm:schema-tool:create
 #php public/index.php orm:schema-tool:update --dump-sql
-#php public/index.php orm:schema-tool:update --force
+# php public/index.php orm:schema-tool:update --force
 
 #run test
 #sh run-tests.sh -p /Applications/MAMP/bin/php/php5.3.6/bin/php

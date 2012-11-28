@@ -31,6 +31,13 @@ class BaseImport {
 			),
 			'subsections' => array(),
 		),
+		'amenities' => array(
+			'entities' => array(
+				'\Rental\AmenityType' => array(),
+				'\Rental\Amenity' => array(),
+			),
+			'subsections' => array(),
+		),
 		'currencies' => array(
 			'entities' => array(
 				'\Currency' => array(),
@@ -75,13 +82,6 @@ class BaseImport {
 			),
 			'subsections' => array('importSuperAdmins', 'importAdmins', 'importManagers', 'importTranslators', 'importOwners', 'importPotentialOwners', 'importVisitors'),
 		),
-		'amenities' => array(
-			'entities' => array(
-				'\Rental\AmenityType' => array(),
-				'\Rental\Amenity' => array(),
-			),
-			'subsections' => array(),
-		),
 		'rentalTypes' => array(
 			'entities' => array(
 				'\Rental\Type' => array(),
@@ -93,6 +93,7 @@ class BaseImport {
 				'\Rental\Rental' => array(),
 			),
 			'subsections' => array(),
+			'saveImportStatus' => FALSE,
 		),
 		'invoiceStart' => array(
 			'entities' => array(
@@ -143,13 +144,13 @@ class BaseImport {
 			),
 			'subsections' => array('importSeoUrls'),
 		),
-		'tickets' => array(
-			'entities' => array(
-				'\Ticket\Ticket' => array(),
-				'\Ticket\Message' => array(),
-			),
-			'subsections' => array(),
-		),
+		// 'tickets' => array(
+		// 	'entities' => array(
+		// 		'\Ticket\Ticket' => array(),
+		// 		'\Ticket\Message' => array(),
+		// 	),
+		// 	'subsections' => array(),
+		// ),
 		'pathsegments' => array(
 			'entities' => array(
 				'\Routing\PathSegment' => array(),
@@ -170,6 +171,12 @@ class BaseImport {
 			'saveImportStatus' => FALSE,
 		),
 		'updateEmails' => array(
+			'entities' => array(
+			),
+			'subsections' => array(),
+			'saveImportStatus' => FALSE,
+		),
+		'page' => array(
 			'entities' => array(
 			),
 			'subsections' => array(),
@@ -315,8 +322,15 @@ class BaseImport {
 		$allLanguages = getSupportedLanguages();
 		foreach ($allLanguages as $key => $value) {
 			$language = $this->context->languageRepository->find($value);
-			$oldTranslation = qf('select * from z_'.$language->iso.' where id = '.$oldPhraseId);
-			if (strlen($oldTranslation['text']) == 0) continue;
+
+			if($oldPhraseId) {
+				$oldTranslation = qf('select * from z_'.$language->iso.' where id = '.$oldPhraseId);
+				$oldTranslationText = $oldTranslation['text'];
+				$oldTranslationUpdated = fromStamp($oldTranslation['updated']);
+			} else {
+				$oldTranslationText = '';
+				$oldTranslationUpdated = new \Nette\DateTime();
+			}
 
 			// $variations = NULL;
 			// if ($oldLocativePhraseId > 0) {
@@ -326,8 +340,8 @@ class BaseImport {
 			// 		$variations[$locativeKeys[0]][$locativeKeys[1]]['locative'] = $oldTranslationLocative['text'];
 			// 	}
 			// }
-			$translation = $phraseService->createTranslation($language, (string)$oldTranslation['text']);
-			$translation->timeTranslated = fromStamp($oldTranslation['updated']);
+			$translation = $phraseService->createTranslation($language, (string)$oldTranslationText);
+			$translation->timeTranslated = $oldTranslationUpdated;
 		}
 		//$phrase->save();
 		return $phrase;

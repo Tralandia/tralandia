@@ -87,12 +87,12 @@ class ImportPhraseType extends BaseImport {
 			// ->setIldId(1)
 			->setCheckingRequired(NULL);
 
-		$this->createPhraseType('\Entity\Location\TypeService', 'name') //question service??
+		$this->createPhraseType('\Entity\Location\Type', 'name')
 			->setTranslateTo('supported')
-			->setPluralVariationsRequired(0)
-			->setGenderRequired(0)
+			->setPluralVariationsRequired(1)
+			->setGenderRequired(1)
 			->setGenderVariationsRequired(0)
-			->setLocativesRequired(0)
+			->setLocativesRequired(1)
 			->setPositionRequired(0)
 			// ->setHelpFroTranslator('')
 			// ->setMonthlyBudget(0)
@@ -351,7 +351,7 @@ class ImportPhraseType extends BaseImport {
 			// ->setIldId(1)
 			->setCheckingRequired(NULL);
 
-		$this->createPhraseType('\Entity\Seo\SeoUrl', 'title') //question - co je SeoUrl??
+		$this->createPhraseType('\Entity\Seo\SeoUrl', 'title')
 			->setTranslateTo('supported')
 			->setPluralVariationsRequired(0)
 			->setGenderRequired(0)
@@ -363,7 +363,7 @@ class ImportPhraseType extends BaseImport {
 			// ->setIldId(1)
 			->setCheckingRequired(NULL);
 
-		$this->createPhraseType('\Entity\Seo\SeoUrl', 'heading') //question - co je SeoUrl??
+		$this->createPhraseType('\Entity\Seo\SeoUrl', 'heading')
 			->setTranslateTo('supported')
 			->setPluralVariationsRequired(0)
 			->setGenderRequired(0)

@@ -2,99 +2,66 @@
 
 namespace FrontModule;
 
+use Model\Rental\IRentalDecoratorFactory;
+
 class RentalPresenter extends BasePresenter {
 
-	protected $rental;
+	public $rentalDecoratorFactory;
 
-	public function actionDetail($rental) {
+	public function injectDecorators(IRentalDecoratorFactory $rentalDecoratorFactory) {
+		$this->rentalDecoratorFactory = $rentalDecoratorFactory;
+	}
+
+
+	public function actionDetail($id) {
+
+		$rental = $this->rentalRepositoryAccessor->get()->find($id);
 
 		if (!$rental) {
-			throw new \Nette\InvalidArgumentException('$rental argument does not match with the expected value');
+			throw new \Nette\InvalidArgumentException('$id argument does not match with the expected value');
 		}
-		$this->rental = \Service\Rental\Rental::get($rental);
+		
+		$rentalService = $this->rentalDecoratorFactory->create($rental);
 
-		$this->template->rental = $this->rental;
-		$this->template->amenities = $this->getAmenities($this->rental);
-		$this->template->contacts = $this->separateContacts($this->rental);
+		$this->template->rental = $rental;
+		$this->template->rentalService = $rentalService;
+		d($rentalService->getMainPhoto()->getThumbnail());
+		d($rentalService->getPhotos());
+		$this->setLayout('detailLayout');
 
 	}
 
 	public function actionList() {
 
-		
+		$rentalsEntities = $this->rentalRepositoryAccessor->get()->findAll();	
 
-	}
+		$rentals = array();
 
-	private function getAmenities($rental, $limit = 15) {
-
-		$i=1;
-		$amenities = array();
-		foreach ($this->rental->amenities as $amenity) {
-			$amenities[] = $amenity;
-			if ($i >= $limit) break;
-			$i++;
+		foreach ($rentalsEntities as $rental){
+			$rentals[$rental->id]['service'] = $this->rentalDecoratorFactory->create($rental);			
+			$rentals[$rental->id]['entity'] = $rental;
 		}
 
-		return $amenities;
-
-	}
-
-	private function separateContacts($rental) {
-
-		$contacts = $rental->contacts->getByType();
-		debug($contacts);
-		return $contacts;
-
-	}
-
-	// COMPONENTS
-	
-	public function createComponentListControl($name) {
-
-		$tabBar = new \BaseModule\Components\TabControl\TabControl($this, $name);
-
-		$t = $tabBar->addTab('rentals');
-		$content = new \FrontModule\Components\Rentals\RentalsList($this, 'RentalsList');
-		$t->setHeading(806)->setContent($content)->setActive();
-
-		// $t = $tabBar->addTab('about');
-		// $content = new \FrontModule\Components\RegionsPage\Regions($this, 'RegionsPage');
-		// $t->setHeading(678)->setContent($content);
-
-	}
-
-	public function createComponentTabControl($name) {
-
-		// Tabs contents
-		$gallery 	= new \FrontModule\Components\Rentals\Gallery(
-			$this, 
-			'gallery', 
-			$this->rental->media
-		);
 		
-		$pricelist 	= new \FrontModule\Components\Rentals\Pricelists(
-			$this, 
-			'pricelists', 
-			$this->rental->pricelists, 
-			$this->context->environment->getLanguage()
-		);
 
-		// Tabs
-		$tabBar = new \BaseModule\Components\TabControl\TabControl($this, $name);
-		$tabBar->addTab('photos')
-			->setHeading(806)
-			->setActive()
-			->setContent($gallery);
-		$tabBar->addTab('prices')
-			->setHeading(678)
-			->setContent($pricelist);
-		$tabBar->addTab('ammenities')
-			->setHeading(725)
-			->setContent('');
-		$tabBar->addTab('map')
-			->setHeading(727)
-			->setContent('');
+		$regions = $this->locationRepositoryAccessor->get()->findBy(array(
+				'parent' => 58
+			), null , 50);
+
+
+		$topRegions = $this->locationRepositoryAccessor->get()->findBy(array(
+				'parent' => 58
+			), null , 11);
+
+		$this->template->rentals = $rentals;
+		$this->template->regions = array_chunk($regions,ceil(count($regions)/3));
+		$this->template->topRegions = array_chunk($topRegions,ceil(count($topRegions)/3));
 
 	}
+
+	//
+	// COMPONENTS
+	// 
+
 
 }

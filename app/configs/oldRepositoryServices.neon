@@ -114,3 +114,121 @@ services:
 	userSiteVisitorReviewRepository: @model::getRepository('Entity\User\SiteVisitorReview')
 
 	userRepository: @model::getRepository('Entity\User\User')
+
+	# Entities
+
+	attractionEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Attraction\Attraction')
+
+	attractionTypeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Attraction\Type')
+
+	companyBankAccountEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Company\BankAccount')
+
+	companyEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Company\Company')
+
+	companyOfficeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Company\Office')
+
+	contactCacheEntityFactory: Extras\Models\Entity\EntityFactory('Entity\ContactCache')
+
+	currencyEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Currency')
+
+	domainEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Domain')
+
+	emailBatchEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Email\Batch')
+
+	emailTemplateEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Email\Template')
+
+	emailLayoutEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Email\Layout')
+
+	expenseEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Expense\Expense')
+
+	expenseTypeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Expense\Type')
+
+	invoiceEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoice\Invoice')
+
+	invoiceCouponEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoice\Coupon')
+
+	invoiceItemEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoice\Item')
+
+	invoiceMarketingEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoice\Marketing')
+
+	invoicePackageEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoice\Package')
+
+	invoiceServiceEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoice\Service')
+
+	invoiceServiceDurationEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoice\ServiceDuration')
+
+	invoiceServiceTypeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoice\ServiceType')
+
+	invoiceUseTypeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoice\UseType')
+
+	languageEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Language')
+
+	locationEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Location\Location')
+
+	locationTypeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Location\Type')
+
+	logChangeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Log\Change')
+
+	logChangeTypeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Log\ChangeType')
+
+	logSystemEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Log\System')
+
+	mediumEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Medium\Medium')
+
+	mediumTypeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Medium\Type')
+
+	pageEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Page')
+
+	phraseEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Phrase\Phrase')
+
+	phraseTypeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Phrase\Type')
+
+	rentalEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Rental\Rental')
+
+	rentalAmenityEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Rental\Amenity')
+
+	rentalAmenityTypeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Rental\AmenityType')
+
+	rentalInformationEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Rental\Information')
+
+	rentalFulltextEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Rental\Fulltext')
+
+	rentalTypeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Rental\Type')
+
+	routingPathSegmentEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Routing\PathSegment')
+
+	routingPathSegmentOldEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Routing\PathSegmentOld')
+
+	seoBackLinkEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Seo\BackLink')
+
+	seoSeoUrlEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Seo\SeoUrl')
+
+	seoTitleSuffixEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Seo\TitleSuffix')
+
+	taskEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Task\Task')
+
+	taskTypeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Task\Type')
+
+	ticketMessageEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Ticket\Message')
+
+	ticketEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Ticket\Ticket')
+
+	userEntityFactory: Extras\Models\Entity\EntityFactory('Entity\User\User')
+
+	userCombinationEntityFactory: Extras\Models\Entity\EntityFactory('Entity\User\Combination')
+
+	userRentalQuestionEntityFactory: Extras\Models\Entity\EntityFactory('Entity\User\RentalQuestion')
+
+	userRentalReservationEntityFactory: Extras\Models\Entity\EntityFactory('Entity\User\RentalReservation')
+
+	userRentalReviewEntityFactory: Extras\Models\Entity\EntityFactory('Entity\User\RentalReview')
+
+	userRentalToFriendEntityFactory: Extras\Models\Entity\EntityFactory('Entity\User\RentalToFriend')
+
+	userRoleEntityFactory: Extras\Models\Entity\EntityFactory('Entity\User\Role')
+
+	userSiteOwnerReviewEntityFactory: Extras\Models\Entity\EntityFactory('Entity\User\SiteOwnerReview')
+
+	userSiteVisitorReviewEntityFactory: Extras\Models\Entity\EntityFactory('Entity\User\SiteVisitorReview')
+
+

@@ -2,70 +2,38 @@ services:
 
 	#attraction
 	#----------
-	attractionEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Attraction\Attraction')
-
-	attractionServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @attractionEntityFactory)
-
 	attractionRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Attraction\Attraction')
 
 
 
 	#----------
-	attractionTypeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Attraction\Type')
-
-	attractionTypeServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @attractionTypeEntityFactory)
-
 	attractionTypeRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Attraction\Type')
 
 
 	#company
 	#----------
-	companyBankAccountEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Company\BankAccount')
-
-	companyBankAccountServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @companyBankAccountEntityFactory)
-
 	companyBankAccountRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Company\BankAccount')
 
 
 	#----------
-	companyEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Company\Company')
-
-	companyServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @companyEntityFactory)
-
 	companyRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Company\Company')
 
 
 	#----------
-	companyOfficeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Company\Office')
-
-	companyOfficeServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @companyOfficeEntityFactory)
-
 	companyOfficeRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Company\Office')
 
 
 	#contact
 	#----------
-	contactCacheEntityFactory: Extras\Models\Entity\EntityFactory('Entity\ContactCache')
-
-	contactCacheServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @contactCacheEntityFactory)
-
 	contactCacheRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\ContactCache')
 
 
 	#----------
-	currencyEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Currency')
-
-	currencyServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @currencyEntityFactory)
-
 	currencyRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Currency')
 
 
 	#domain
 	#----------
-	domainEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Domain')
-
-	domainServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @domainEntityFactory)
-
 	domainRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Domain')
 
 
@@ -76,223 +44,112 @@ services:
 
 	#email
 	#----------
-	emailBatchEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Email\Batch')
-
-	emailBatchServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @emailBatchEntityFactory)
-
 	emailBatchRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Email\Batch')
 
 
 	#----------
-	emailTemplateEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Email\Template')
-
-	emailTemplateServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @emailTemplateEntityFactory)
-
 	emailTemplateRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Email\Template')
 
 
 	#----------
-	emailLayoutEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Email\Layout')
-
-	emailLayoutServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @emailLayoutEntityFactory)
-
 	emailLayoutRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Email\Layout')
 
 
 	#expense
 	#----------
-	expenseEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Expense\Expense')
-
-	expenseServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @expenseEntityFactory)
-
 	expenseRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Expense\Expense')
 
 
 	#----------
-	expenseTypeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Expense\Type')
-
-	expenseTypeServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @expenseTypeEntityFactory)
-
 	expenseTypeRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Expense\Type')
 
 
 	#invoice
 	#----------
-	invoiceEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoice\Invoice')
-
-	invoiceServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoiceEntityFactory)
-
 	invoiceRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Invoice\Invoice')
 
 
 	#----------
-	invoiceCouponEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoice\Coupon')
-
-	invoiceCouponServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoiceCouponEntityFactory)
-
 	invoiceCouponRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Invoice\Coupon')
 
 
 	#----------
-	invoiceItemEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoice\Item')
-
-	invoiceItemServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoiceItemEntityFactory)
-
 	invoiceItemRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Invoice\Item')
 
 
 	#----------
-	invoiceMarketingEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoice\Marketing')
-
-	invoiceMarketingServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoiceMarketingEntityFactory)
-
 	invoiceMarketingRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Invoice\Marketing')
 
 
 	#----------
-	invoicePackageEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoice\Package')
-
-	invoicePackageServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoicePackageEntityFactory)
-
 	invoicePackageRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Invoice\Package')
 
 
 	#----------
-	invoiceServiceEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoice\Service')
-
-	invoiceServiceServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoiceServiceEntityFactory)
-
 	invoiceServiceRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Invoice\Service')
 
 
 	#----------
-	invoiceServiceDurationEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoice\ServiceDuration')
-
-	invoiceServiceDurationServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoiceServiceDurationEntityFactory)
-
 	invoiceServiceDurationRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Invoice\ServiceDuration')
 
 
 	#----------
-	invoiceServiceTypeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoice\ServiceType')
-
-	invoiceServiceTypeServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoiceServiceTypeEntityFactory)
-
 	invoiceServiceTypeRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Invoice\ServiceType')
 
 
 	#----------
-	invoiceUseTypeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoice\UseType')
-
-	invoiceUseTypeServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @invoiceUseTypeEntityFactory)
-
 	invoiceUseTypeRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Invoice\UseType')
 
 
 	#language
 	#----------
-	languageEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Language')
-
-	languageServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\LanguageService', @languageEntityFactory)
-
 	languageRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Language')
 
 
 	#locatoin
 	#----------
-	locationEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Location\Location')
-
-	locationServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\Location\LocationService', @locationEntityFactory)
 
 	locationRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Location\Location')
 
 
 	#----------
-	# locationTravelingEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Location\Traveling')
-
-	# locationTravelingServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @locationTravelingEntityFactory)
-
-	#Accessor lExtras\Models\Repository\RepositoryAccessor(ocationTravelingRepository:, :getRepository('Entity\Location\Traveling')
-
-
-	#----------
-	locationTypeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Location\Type')
-
-	locationTypeServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @locationTypeEntityFactory)
-
 	locationTypeRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Location\Type')
 
 
 	#log
 	#----------
-	logChangeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Log\Change')
-
-	logChangeServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @logChangeEntityFactory)
-
 	logChangeRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Log\Change')
 
 
 	#----------
-	logChangeTypeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Log\ChangeType')
-
-	logChangeTypeServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @logChangeTypeEntityFactory)
-
 	logChangeTypeRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Log\ChangeType')
 
 
 	#----------
-	logSystemEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Log\System')
-
-	logSystemServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @logSystemEntityFactory)
-
 	logSystemRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Log\System')
 
 
 	#medium
 	#----------
-	mediumEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Medium\Medium')
-
-	mediumServiceFactory: 
-		class: Extras\Models\Service\ServiceFactory(@model, 'Service\Medium\MediumService', @mediumEntityFactory)
-		setup:
-			- setParameters(@mediumTypeRepositoryAccessor, @mediumTypeServiceFactory)
-
 	mediumRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Medium\Medium')
 
 
 	#----------
-	mediumTypeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Medium\Type')
-
-	mediumTypeServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @mediumTypeEntityFactory)
-
 	mediumTypeRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Medium\Type')
 
 
 	#page
 	#----------
-	pageEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Page')
-
-	pageServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @pageEntityFactory)
-
 	pageRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Page')
 
 
 	#phrase
 	#----------
-	phraseEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Phrase\Phrase')
-
-	phraseServiceFactory: 
-		factory: Extras\Models\Service\ServiceFactory(@model, 'Service\Phrase\PhraseService', @phraseEntityFactory)
-		setup: 
-			- setParameters(Extras\Models\Entity\EntityFactory('Entity\Phrase\Translation'))
-
 	phraseRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Phrase\Phrase')
 
 
 	#----------
 	#phraseTranslationEntityFactory neexistuje pouzi $phrase->createTranslation();
-
-	phraseTranslationServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService')
 
 	phraseTranslationRepositoryAccessor: 
 		factory: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Phrase\Translation')
@@ -301,208 +158,134 @@ services:
 
 
 	#----------
-	phraseTypeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Phrase\Type')
-
-	phraseTypeServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @phraseTypeEntityFactory)
-
 	phraseTypeRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Phrase\Type')
 
 
 	#rental
 	#----------
-	rentalEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Rental\Rental')
-
-	rentalServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\Rental\RentalService', @rentalEntityFactory)
-
 	rentalRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Rental\Rental')
 
 
 	#----------
-	rentalAmenityEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Rental\Amenity')
-
-	rentalAmenityServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @rentalAmenityEntityFactory)
-
 	rentalAmenityRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Rental\Amenity')
 
 
 	#----------
-	rentalAmenityTypeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Rental\AmenityType')
-
-	rentalAmenityTypeServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @rentalAmenityTypeEntityFactory)
-
 	rentalAmenityTypeRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Rental\AmenityType')
 
 
 	#----------
-	rentalInformationEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Rental\Information')
-
-	rentalInformationServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @rentalInformationEntityFactory)
-
 	rentalInformationRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Rental\Information')
 
 
 	#----------
-	rentalFulltextEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Rental\Fulltext')
-
-	rentalFulltextServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @rentalFulltextEntityFactory)
-
 	rentalFulltextRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Rental\Fulltext')
 
 
 	#----------
-	rentalTypeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Rental\Type')
-
-	rentalTypeServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @rentalTypeEntityFactory)
-
 	rentalTypeRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Rental\Type')
 
 
 	#routing
 	#----------
-	routingPathSegmentEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Routing\PathSegment')
-
-	routingPathSegmentServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @routingPathSegmentEntityFactory)
-
 	routingPathSegmentRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Routing\PathSegment')
 
 
 	#----------
-	routingPathSegmentOldEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Routing\PathSegmentOld')
-
-	routingPathSegmentOldServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @routingPathSegmentOldEntityFactory)
-
 	routingPathSegmentOldRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Routing\PathSegmentOld')
 
 
 	#seo
 	#----------
-	seoBackLinkEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Seo\BackLink')
-
-	seoBackLinkServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @seoBackLinkEntityFactory)
-
 	seoBackLinkRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Seo\BackLink')
 
 
 	#----------
-	seoSeoUrlEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Seo\SeoUrl')
-
-	seoSeoUrlServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @seoSeoUrlEntityFactory)
-
 	seoSeoUrlRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Seo\SeoUrl')
 
 
 	#----------
-	seoTitleSuffixEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Seo\TitleSuffix')
-
-	seoTitleSuffixServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @seoTitleSuffixEntityFactory)
-
 	seoTitleSuffixRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Seo\TitleSuffix')
 
 
 	#task
 	#----------
-	taskEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Task\Task')
-
-	taskServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\Task\TaskService', @taskEntityFactory)
-
 	taskRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Task\Task')
 
 
 	#----------
-	taskTypeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Task\Type')
-
-	taskTypeServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @taskTypeEntityFactory)
-
 	taskTypeRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Task\Type')
 
 
 	#ticket
 	#----------
-	ticketMessageEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Ticket\Message')
-
-	ticketMessageServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @ticketMessageEntityFactory)
-
 	ticketMessageRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Ticket\Message')
 
 
 	#----------
-	ticketEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Ticket\Ticket')
-
-	ticketServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @ticketEntityFactory)
-
 	ticketRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Ticket\Ticket')
 
 
 	#user
 	#----------
-	userEntityFactory: Extras\Models\Entity\EntityFactory('Entity\User\User')
-
-	userServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\User\UserService', @userEntityFactory)
-
 	userRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\User\User')
 
 
 	#----------
-	userCombinationEntityFactory: Extras\Models\Entity\EntityFactory('Entity\User\Combination')
-
-	userCombinationServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @userCombinationEntityFactory)
-
 	userCombinationRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\User\Combination')
 
 
 	#----------
-	userRentalQuestionEntityFactory: Extras\Models\Entity\EntityFactory('Entity\User\RentalQuestion')
-
-	userRentalQuestionServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @userRentalQuestionEntityFactory)
-
 	userRentalQuestionRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\User\RentalQuestion')
 
 
 	#----------
-	userRentalReservationEntityFactory: Extras\Models\Entity\EntityFactory('Entity\User\RentalReservation')
-
-	userRentalReservationServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @userRentalReservationEntityFactory)
-
 	userRentalReservationRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\User\RentalReservation')
 
 
 	#----------
-	userRentalReviewEntityFactory: Extras\Models\Entity\EntityFactory('Entity\User\RentalReview')
-
-	userRentalReviewServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @userRentalReviewEntityFactory)
-
 	userRentalReviewRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\User\RentalReview')
 
 
 	#----------
-	userRentalToFriendEntityFactory: Extras\Models\Entity\EntityFactory('Entity\User\RentalToFriend')
-
-	userRentalToFriendServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @userRentalToFriendEntityFactory)
-
 	userRentalToFriendRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\User\RentalToFriend')
 
 
 	#----------
-	userRoleEntityFactory: Extras\Models\Entity\EntityFactory('Entity\User\Role')
-
-	userRoleServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @userRoleEntityFactory)
-
 	userRoleRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\User\Role')
 
 
 	#----------
-	userSiteOwnerReviewEntityFactory: Extras\Models\Entity\EntityFactory('Entity\User\SiteOwnerReview')
-
-	userSiteOwnerReviewServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @userSiteOwnerReviewEntityFactory)
-
 	userSiteOwnerReviewRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\User\SiteOwnerReview')
 
 
 	#----------
-	userSiteVisitorReviewEntityFactory: Extras\Models\Entity\EntityFactory('Entity\User\SiteVisitorReview')
-
-	userSiteVisitorReviewServiceFactory: Extras\Models\Service\ServiceFactory(@model, 'Service\BaseService', @userSiteVisitorReviewEntityFactory)
-
 	userSiteVisitorReviewRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\User\SiteVisitorReview')
 
+factories:
+
+	rentalDecoratorFactory: 
+		class: Service\Rental\RentalService(..., %entity%)
+		implement: Model\Rental\IRentalDecoratorFactory
+		parameters: [Entity\Rental\Rental entity]
+
+	mediumDecoratorFactory: 
+		class: Service\Medium\MediumService(..., %entity%)
+		implement: Model\Medium\IMediumDecoratorFactory
+		parameters: [Entity\Medium\Medium entity]
+
+	taskDecoratorFactory: 
+		class: Service\Task\TaskService(..., %entity%)
+		implement: Model\Task\ITaskDecoratorFactory
+		parameters: [Entity\Task\Task entity]
+
+	phraseDecoratorFactory: 
+		class: Service\Phrase\PhraseService(..., %entity%)
+		implement: Model\Phrase\IPhraseDecoratorFactory
+		parameters: [Entity\Phrase\Phrase entity]
+
+	locationDecoratorFactory: 
+		class: Service\Location\LocationService(..., %entity%)
+		implement: Model\Location\ILocationDecoratorFactory
+		parameters: [Entity\Location\Location entity]
 

@@ -8,7 +8,7 @@ use Nette\Diagnostics\Debugger,
 
 
 // Load Nette Framework
-require_once LIBS_DIR . '/Nette/nette.min.php';
+require_once LIBS_DIR . '/Nette/loader.php';
 require_once LIBS_DIR . '/rado_functions.php';
 
 // Enable Nette\Debug for error visualisation & logging
@@ -30,7 +30,11 @@ $robotLoader->addDirectory(APP_DIR)
 require_once LIBS_DIR . '/tools.php';
 Extension::register($configurator);
 Extras\Config\PresenterExtension::register($configurator);
-$configurator->addConfig(APP_DIR . '/configs/config.neon', $section);
+$configurator->addConfig(APP_DIR . '/configs/config.neon');
+$configurator->addConfig(APP_DIR . '/configs/local.config.neon');
+if($section) {
+	$configurator->addConfig(APP_DIR . '/configs/'.$section.'.config.neon');
+}
 $configurator->onCompile[] = function ($configurator, $compiler) {
 	Extras\PresenterGenerator::generate();
 	$compiler->addExtension('gpspicker', new VojtechDobes\NetteForms\GpsPickerExtension);

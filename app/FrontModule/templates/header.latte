@@ -1,46 +1,128 @@
-{block header}
-<div class="mask">
-	<div class="mainHeaderLogo">
-		<table class="holder">
-			<tr>
-				<td><a href="{plink Home:default}"><img src="{$staticPath}images/logo.png" alt="" /></a></td>
-				<td><a class="mainHeaderTitle" href="#"><img src="{$staticPath}images/domains/{$currentLocation->iso}.png" alt="" /></a><a class="mainHeaderSlogan" href="#"><img src="{$staticPath}images/slogans/{$currentLocation->iso}{$currentLanguage->iso}.png" alt="" /></a></td>
-			</tr>
-		</table>
-	</div>
-	<div class="mainHeaderCounter">
-		<span>{$liveRentalsCount}</span><br />{_1108, '8152 properties'}
-	</div>
-	<div class="headerBarHolder">
-		<div class="headerBar">
-			<table class="holder">
-				<tr>
-					<td><a class="login" href="#">Upravte si ubytovanie</a>|</td>
-					<td><a class="add" href="#"><b class="red">+ {_710, '1609 Add your property'}</b></a>|</td>
-					<td><a class="fb" href="#">&nbsp;</a>|</td>
-					<td>
-						<div class="dropdown" n:inner-foreach="$supportedLanguages as $language">
-							<a href="#">{_$language->name->id}</a>
-							<div class="cleaner" n:if="$iterator->last"></div>
+			<div class="span12">
+				<header class="innerPadding baseRadius baseBorder" id="header">					
+					<div class="inner" id="topWidget">
+
+
+						<div id="siteOptions">
+																				
+							<ul>
+								<li><a href="#">Uprav ubytovanie</a></li>
+								<li><a href="#"><strong class="red">+ Pridajte ubytovanie</strong></a> </li>
+
+								<li>
+									<div class="dropdown lang">
+									  <a class="dropdown-toggle" data-toggle="dropdown" href="#">Slovencina <i class="entypo-down"></i></a>
+									  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+									  	
+
+									  	<li>
+									  		<ul>
+											    <li><a href="#">Auefuoiwehf</a></li>
+											    <li><a href="#">Anikea</a></li>
+											    <li><a href="#">Aowenfinowe</a></li>									  			
+											    <li><a href="#">Bwoefh</a></li>
+											    <li><a href="#">Cowefhowe</a></li>
+											    <li><a href="#">Uvod</a></li>
+											    <li><a href="#">Uvod</a></li>
+											    <li><a href="#">Uvod</a></li>
+											    <li><a href="#">Uvod</a></li>											    											    
+									  		</ul>
+									  	</li>
+									  	<li>
+									  		<ul>
+											    <li><a href="#">Uvod</a></li>
+											    <li><a href="#">Uvod</a></li>
+											    <li><a href="#">Uvod</a></li>									  			
+									  		</ul>
+									  	</li>
+									  	<li>
+									  		<ul>
+											    <li><a href="#">Uvod</a></li>
+											    <li><a href="#">Uvod</a></li>
+											    <li><a href="#">Uvod</a></li>									  			
+									  		</ul>
+									  	</li>									  	
+
+									  </ul>
+									</div>								
+								</li>
+								
+								{*
+								<li>
+									<div class="dropdown country">
+									  <a class="dropdown-toggle" data-toggle="dropdown" href="#"><img src="http://www.tralandia.sk/trax_html/images/flags/sk.gif" /> <i class="entypo-down"></i></a>
+									  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+									  	<li>
+									  		<ul>
+											    <li><a href="#"><img src="http://www.tralandia.sk/trax_html/images/flags/sk.gif" /> Slovensko</a></li>
+											    <li><a href="#"><img src="http://www.tralandia.sk/trax_html/images/flags/sk.gif" /> Slovensko</a></li>
+											    <li><a href="#"><img src="http://www.tralandia.sk/trax_html/images/flags/sk.gif" /> Slovensko</a></li>
+											    <li><a href="#"><img src="http://www.tralandia.sk/trax_html/images/flags/sk.gif" /> Slovensko</a></li>
+											    <li><a href="#"><img src="http://www.tralandia.sk/trax_html/images/flags/sk.gif" /> Slovensko</a></li>
+											    <li><a href="#"><img src="http://www.tralandia.sk/trax_html/images/flags/sk.gif" /> Slovensko</a></li>
+											    <li><a href="#"><img src="http://www.tralandia.sk/trax_html/images/flags/sk.gif" /> Slovensko</a></li>
+											    <li><a href="#"><img src="http://www.tralandia.sk/trax_html/images/flags/sk.gif" /> Slovensko</a></li>
+											    <li><a href="#"><img src="http://www.tralandia.sk/trax_html/images/flags/sk.gif" /> Slovensko</a></li>										    											    
+									  		</ul>
+									  	</li>
+									  	<li>
+									  		<ul>
+											    <li><a href="#"><img src="http://www.tralandia.sk/trax_html/images/flags/sk.gif" /> Slovensko</a></li>
+											    <li><a href="#"><img src="http://www.tralandia.sk/trax_html/images/flags/sk.gif" /> Slovensko kde bolo tam bolo rozpravka </a></li>
+											    <li><a href="#"><img src="http://www.tralandia.sk/trax_html/images/flags/sk.gif" /> Slovensko</a></li>
+											    <li><a href="#"><img src="http://www.tralandia.sk/trax_html/images/flags/sk.gif" /> Slovensko</a></li>
+											    <li><a href="#"><img src="http://www.tralandia.sk/trax_html/images/flags/sk.gif" /> Slovensko</a></li>
+											    <li><a href="#"><img src="http://www.tralandia.sk/trax_html/images/flags/sk.gif" /> Slovensko</a></li>
+											    <li><a href="#"><img src="http://www.tralandia.sk/trax_html/images/flags/sk.gif" /> Slovensko</a></li>
+											    <li><a href="#"><img src="http://www.tralandia.sk/trax_html/images/flags/sk.gif" /> Slovensko</a></li>
+											    <li><a href="#"><img src="http://www.tralandia.sk/trax_html/images/flags/sk.gif" /> Slovensko</a></li>										    											    
+									  		</ul>
+									  	</li>
+<li>
+									  		<ul>
+											    <li><a href="#"><img src="http://www.tralandia.sk/trax_html/images/flags/sk.gif" /> Slovensko</a></li>
+											    <li><a href="#"><img src="http://www.tralandia.sk/trax_html/images/flags/sk.gif" /> Slovensko</a></li>
+											    <li><a href="#"><img src="http://www.tralandia.sk/trax_html/images/flags/sk.gif" /> Slovensko</a></li>
+											    <li><a href="#"><img src="http://www.tralandia.sk/trax_html/images/flags/sk.gif" /> Slovensko</a></li>
+											    <li><a href="#"><img src="http://www.tralandia.sk/trax_html/images/flags/sk.gif" /> Slovensko</a></li>
+											    <li><a href="#"><img src="http://www.tralandia.sk/trax_html/images/flags/sk.gif" /> Slovensko</a></li>
+											    <li><a href="#"><img src="http://www.tralandia.sk/trax_html/images/flags/sk.gif" /> Slovensko</a></li>
+											    <li><a href="#"><img src="http://www.tralandia.sk/trax_html/images/flags/sk.gif" /> Slovensko</a></li>
+											    <li><a href="#"><img src="http://www.tralandia.sk/trax_html/images/flags/sk.gif" /> Slovensko</a></li>										    											    
+									  		</ul>
+									  	</li>									  										  	
+									  </ul>
+									</div>								
+								</li>
+								*}
+							</ul>
+
 						</div>
-						<a class="language" href="#">{_$currentLanguage->name}<span class="arrow">&nbsp;</span></a>|
-					</td>
-					<td>
-						<div class="dropdown" n:inner-foreach="$launchedCountries as $country">
-							<a href="#">{_$country->name}</a>
-							<div class="cleaner" n:if="$iterator->last"></div>
+
+						<div id="pageTitle">
+							<div id="logo">
+								<a n:href=":Front:Home:default">
+									{*<img src="http://www.tralandia.sk/trax_html/images/logo.png" alt=""/>*}
+									{*<object  data="http://www.tra.com/images/tra-logo-icon.svg" type="image/svg+xml"></object>*}
+									{*<embed src="http://www.tra.com/images/tra-logo-icon.svg" type="image/svg+xml" />*}
+								</a>
+							</div>
+							{*<img src="http://www.tralandia.sk/trax_html/images/sk.domain.png" />*}
+							<div id="siteName">Tralandia.<span>com</span></div>
+							<h1>{$slogan}</h1>
 						</div>
-						<a class="country" href="#"><div class="flag" style="background: url({$staticPath}images/flags/{$currentLanguage->iso}.gif) 50% top">&nbsp;</div><div class="arrow">&nbsp;</div></a>
-					</td>
-				</tr>
-			</table>
-		</div>
-	</div>
-	<div class="mainHeaderMenu">
-		<table class="holder">
-			<tr n:inner-foreach="$mainMenuItems as $item">
-				<td><a href="#">{$item}</a></td>
-			</tr>
-		</table>
-	</div>
-</div>
+						<div class="gradiendEnd"></div>
+
+						<div class="clearfix"></div>
+
+						<nav role="main-menu" id="mainMenu">
+							<ul>
+								<li><a n:href=":Front:Home:default"><i class="entypo-home"></i> Uvod - pomenovat</a></li>
+
+								<li n:foreach="$mainMenuItems as $menuItem"><a n:href="Rental:list rentalType => $menuItem->id">{_$menuItem->name}</a></li>
+
+							</ul>
+						</nav>
+					</div>
+				</header>
+			</div>

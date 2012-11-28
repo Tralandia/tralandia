@@ -3,6 +3,7 @@
 namespace Service\Medium;
 
 use Nette\Http\FileUpload;
+use Model\Medium\IMediumDecoratorFactory;
 
 class MediumService extends \Service\BaseService {
 
@@ -33,8 +34,14 @@ class MediumService extends \Service\BaseService {
 
 	public $mediumTypeRepositoryAccessor, $mediumTypeServiceFactory;
 	
-	public function inject($mediumTypeRepositoryAccessor, $mediumTypeServiceFactory) {
-		list($this->mediumTypeRepositoryAccessor, $this->mediumTypeServiceFactory) = func_get_args();
+	public function injectRepositories(\Nette\DI\Container $dic)
+	{
+		$this->mediumTypeRepositoryAccessor = $dic->mediumTypeRepositoryAccessor;
+	}
+
+	public function injectDecorators(IMediumDecoratorFactory $mediumTypeServiceFactory)
+	{
+		$this->mediumTypeServiceFactory = $mediumTypeServiceFactory;
 	}
 
 	public function setContentFromUrl($uri) {
@@ -52,6 +59,7 @@ class MediumService extends \Service\BaseService {
 		fputs($handle, $data);
 		fclose($handle);
 
+		$this->save();
 		$this->entity->oldUrl = $uri;
 		$this->entity->details = $this->getFileDetails($file);
 		$this->entity->sort = 1;
@@ -69,7 +77,7 @@ class MediumService extends \Service\BaseService {
 		if (preg_match("/image\//", $this->entity->details['mime'])) {
 			$this->saveImageFiles($file);
 		} else {
-			rename($file, $this->getMediumDir() . '/original.' . $this->entity->details['extension']);
+			rename($file, $this->getMediumAbsolutepDir() . '/original.' . $this->entity->details['extension']);
 		}
 		$this->entity->type = $mediumType;
 
@@ -77,18 +85,13 @@ class MediumService extends \Service\BaseService {
 
 	}
 
-	//@TODO - cela tato fcia je este todo :)
-	public function getThumbnail($size) {
+	public function getThumbnail($size = 'full') {
 
 		if (!$imgSize = $this::$imgSizes[$size]) {
 			throw new \Nette\UnexpectedValueException('Image size "' . $size . '" does not exist.');
 		}
 
-		$uri = '/storage/';
-		foreach ($this->getPathStructure() as $level) {
-			$uri .= $level . '/';
-		}
-		$uri .=  $size . '.jpg'; //@todo - upravit aby to bola KONSTANTA
+		$uri = '/storage'.$this->getMediumDir() . '/' . $size . '.jpg';
 
 		return $uri;
 
@@ -96,7 +99,7 @@ class MediumService extends \Service\BaseService {
 
 	public function delete($flush = true) {
 
-		$mediumDir = $this->getMediumDir();
+		$mediumDir = $this->getMediumAbsolutepDir();
 
 		foreach(glob($mediumDir . '/*') as $file) {
 			if(is_dir($file)) {
@@ -121,7 +124,8 @@ class MediumService extends \Service\BaseService {
 
 	private function saveImageFiles($file) {
 
-		$currentDir = $this->getMediumDir();
+		$currentDir = $this->getMediumAbsolutepDir();
+		@mkdir($currentDir, 0777, TRUE);
 
 		foreach ($this::$imgSizes as $size => $options) {
 
@@ -144,11 +148,14 @@ class MediumService extends \Service\BaseService {
 	}
 
 	private function getMediumDir() {
-		$dir = FILES_DIR;
-		foreach ($this->getPathStructure() as $level) {
-			$dir .= '/' . $level;
-			if (!is_dir($dir)) mkdir($dir);
-		}
+		$dir = '/' . implode('/', $this->getPathStructure());
+
+		return $dir;
+
+	}
+
+	private function getMediumAbsolutepDir() {
+		$dir = FILES_DIR . '/' . implode('/', $this->getPathStructure());
 
 		return $dir;
 
@@ -177,7 +184,6 @@ class MediumService extends \Service\BaseService {
 	}
 
 	private function getPathStructure() {
-
 		return array(
 			$this->entity->created->format('Y'),
 			$this->entity->created->format('m'),
