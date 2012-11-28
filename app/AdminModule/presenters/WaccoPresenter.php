@@ -19,7 +19,7 @@ class WaccoPresenter extends BasePresenter {
 		*/
 
 		$phoneBook = $this->getService('phoneBook');
-		$phone = '0918 590 768';
+		$phone = '0949 888 999';
 
 		debug($phoneBook->find($phone));
 		debug($phoneBook->getOrCreate($phone));

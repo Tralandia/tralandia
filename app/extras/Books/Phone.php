@@ -43,15 +43,18 @@ class Phone extends Nette\Object {
 			if ($response->validationResult->isValidNumber != 'true') {
 				throw new \Exception('Telefonne cislo nie je validne');
 			}
+			$number = $this->prepareNumber($response->formattingResults->E164);
 
-			$phone = $this->phoneRepository->get()->createNew();
-			$phone->setPhone($this->prepareNumber($response->formattingResults->E164))
-				->setInternational($response->formattingResults->international)
-				->setNational($response->formattingResults->national)
-				->setRegion($response->validationResult->phoneNumberForRegion);
+			if (!$phone = $this->find($number)) {
+				$phone = $this->phoneRepository->get()->createNew();
+				$phone->setPhone($this->prepareNumber($response->formattingResults->E164))
+					->setInternational($response->formattingResults->international)
+					->setNational($response->formattingResults->national)
+					->setRegion($response->validationResult->phoneNumberForRegion);
 
-			//TODO: este persiste a flush
-			//$this->phoneRepository->get()->persist()
+				$this->phoneRepository->get()->persist($phone);
+				$this->phoneRepository->get()->flush($phone);
+			}
 		}
 
 		return $phone;
