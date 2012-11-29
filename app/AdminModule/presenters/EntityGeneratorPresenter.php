@@ -244,7 +244,7 @@ class EntityGeneratorPresenter extends BasePresenter {
 	}
 
 	public function generateNewCode($filename, $newClass) {
-		if (!strpos($filename, 'Entity.php')) {
+		if (!preg_match("/\/[a-zA-Z]+Entity[\/a-zA-Z\.]*$/", $filename)) {
 			$filename = str_replace('.php', 'Entity.php', $filename);
 		}
 		$fileSource = fopen($filename, "r") or die("Could not open file!");

@@ -170,6 +170,10 @@ services:
 
 
 	#----------
+	rentalTagRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Rental\Tag')
+
+
+	#----------
 	rentalInformationRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Rental\Information')
 
 

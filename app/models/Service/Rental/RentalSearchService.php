@@ -14,6 +14,7 @@ class RentalSearchService extends Service\BaseService
 	public $cacheFactory;
 	
 	public $rentalRepositoryAccessor;
+	public $locationRepositoryAccessor;
 
 	public $results;
 
@@ -34,6 +35,7 @@ class RentalSearchService extends Service\BaseService
 
 	public function inject(\Nette\DI\Container $container) {
 		$this->rentalRepositoryAccessor = $container->rentalRepositoryAccessor;
+		$this->locationRepositoryAccessor = $container->locationRepositoryAccessor;
 	}
 
 	public function injectCache(\Extras\Cache\ISearchCachingFactory $cache) {
@@ -48,69 +50,65 @@ class RentalSearchService extends Service\BaseService
 			if ($criteria===self::CRITERIA_PRIMARY_LOCATION) {
 				$this->primaryLocation = $value;
 			} else {
-				$this->results[$this->primaryLocation->getId()][$criteria][$value->getId()] = $this->findRentaIdsBy($criteria, $value);
+				if ($rentalsIds = $this->findRentalIdsBy($criteria, $value)) {
+					$this->results[$this->primaryLocation->getId()][$criteria][$value->getId()] = $rentalsIds;
+				}
 			}
 			
 		}
 
 	}
 
-	private function findRentaIdsBy($criteria, $value) {
-		$ids = array();
+	private function findRentalIdsBy($criteria, $value) {
 
-		switch($criteria) {
-			case self::CRITERIA_PRIMARY_LOCATION:
+		$searchCache = $this->cacheFactory->create($this->primaryLocation);
+		$searchCache->setCriteria($criteria);
 
-				break;
-			case self::CRITERIA_LOCATION:
-				foreach($this->rentalRepositoryAccessor->get()->findByLocation($value) as $entity) {
-					$ids[] = $entity->getId();
-				}
-				break;
+		if ($searchCache->isValid()) {
+			return $searchCache->getIds();
+		} else {
+			$ids = array();
+			switch($criteria) {
+				case self::CRITERIA_LOCATION:
+				case self::CRITERIA_AMENITIES:
+				case self::CRITERIA_LANGUAGES_SPOKEN:
+					foreach($value->getRentals() as $rental) {
+						$ids[] = $rental->getId();
+					}
+					break;
 
-			case self::CRITERIA_RENTAL_TYPE:
-				foreach($this->rentalRepositoryAccessor->get()->findByType($value) as $entity) {
-					$ids[] = $entity->getId();
-				}
-				break;
+				case self::CRITERIA_RENTAL_TYPE:
+					foreach($this->rentalRepositoryAccessor->get()->findByType($value) as $rental) {
+						$ids[] = $rental->getId();
+					}
+					break;
 
-			case self::CRITERIA_AREA_BOUNDRIES:
+				case self::CRITERIA_AREA_BOUNDRIES:
+					
+					break;
 
-				break;
+				case self::CRITERIA_CAPACITY:
+					
+					break;
 
-			case self::CRITERIA_CAPACITY:
+				case self::CRITERIA_PRICE_CATEGORY:
+					
+					break;
 
-				break;
+				default:
+					return FALSE;
+					break;
+			}
 
-			case self::CRITERIA_AMENITIES:
+			$searchCache->save($ids);
 
-				break;
-
-			case self::CRITERIA_LANGUAGES_SPOKEN:
-
-				break;
-
-			case self::CRITERIA_PRICE_CATEGORY:
-
-				break;
-
-			case self::CRITERIA_PRIMARY_LOCATION:
-				
-				break;
-
-			default:
-				return array();
-				break;
+			return $ids;
 		}
-
-		return $ids;
 
 	}
 
 	public function getResults() {
-
 		return $this->results;
-
 	}
 
 	public function setCountPerPage($num) {}

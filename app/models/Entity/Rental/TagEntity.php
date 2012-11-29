@@ -27,4 +27,52 @@ class Tag extends \Entity\BaseEntityDetails {
 
 
 	//@entity-generator-code --- NEMAZAT !!!
+
+	/* ----------------------------- Methods ----------------------------- */		
+	public function __construct()
+	{
+		parent::__construct();
+
+		$this->rentals = new \Doctrine\Common\Collections\ArrayCollection;
+	}
+		
+	/**
+	 * @param \Entity\Rental\Rental
+	 * @return \Entity\Rental\Tag
+	 */
+	public function addRental(\Entity\Rental\Rental $rental)
+	{
+		if(!$this->rentals->contains($rental)) {
+			$this->rentals->add($rental);
+		}
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Rental\Rental
+	 */
+	public function getRentals()
+	{
+		return $this->rentals;
+	}
+		
+	/**
+	 * @param \Entity\Phrase\Phrase
+	 * @return \Entity\Rental\Tag
+	 */
+	public function setName(\Entity\Phrase\Phrase $name)
+	{
+		$this->name = $name;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Phrase\Phrase|NULL
+	 */
+	public function getName()
+	{
+		return $this->name;
+	}
 }
