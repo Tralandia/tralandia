@@ -216,17 +216,15 @@
 		</p>
 
 		
-		{foreach $rental->types as $type}
-			{var $rentalType = $type}
-		{/foreach}
+		{var $rentalType = $rental->type}
 				
 
 		<p>
 		{foreach $rental->getLocations() as $location}
 			{if $iterator->first}
-			<a href="{link Rental:list location => $location->id , rentalType => $rentalType->id }" class="bold">{_$rentalType->name} {_$location->name}</a>
+			<a href="{link Rental:list location => $location , rentalType => $rentalType }" class="bold">{_$rentalType->name} {_$location->name}</a>
 			{/if}
-			<a n:class="$iterator->first ? bold" href="{link Rental:list location => $location->id}">{_$location->name}</a>{if !$iterator->last}, {/if}
+			<a n:class="$iterator->first ? bold" href="{link Rental:list location => $location}">{_$location->name}</a>{if !$iterator->last}, {/if}
 		{/foreach}
 		</p>
 		
@@ -248,7 +246,7 @@
 		
 		
 		
-		{$rental->interview}
+		{dump $rental->interview}
 
 		<div class="detailAmanities">
 			<ul class="objectDetailServicesIconList list">
@@ -257,9 +255,7 @@
 			   <li>
 				{_o883}
 				<strong>
-					{foreach $rental->types AS $rentalType}
-						{_$rentalType->name}
-					{/foreach}
+					{_$rental->type->name}
 				</strong>
 
 			   </li>
@@ -302,7 +298,7 @@
 
 	<!-- right sidebar -->
 	<div class="span3 marginTop sidebarRightDetail">
-		<button class="btn btn-compare addToFavorites" rel="{$rental->id}" link="{link Rental:detail $rental->id}" thumb="{$firstPhoto}"><span class="entypo-star">{_o12334}</span></button>
+		<button class="btn btn-compare addToFavorites" rel="{$rental->id}" link="{link Rental:detail $rental}" thumb="{$firstPhoto}"><span class="entypo-star">{_o12334}</span></button>
 
 
 		<div class="sidebarContact">
