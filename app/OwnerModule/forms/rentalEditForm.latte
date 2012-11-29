@@ -893,7 +893,8 @@
 										
 									</tr>
 								</thead>
-								<tbody>
+								<tbody>								
+
 									<tr>
 										<td>
 											<select class="span1">
@@ -1090,35 +1091,35 @@
 				<div class="row-fluid">
 					<div class="span12">
 						<p class="font14"><b>1.</b> Čo je na Vašom ubytovaní najzaujímavejšie? V čom sa líšite od konkurencie v okolí? Čo konkrétne si najviac pochvaľujú Vaši hostia na Vašom ubytovaní? Prečo by si mali hostia vybrať práve Vás?</p>
-						<textarea class="marginBottom"></textarea>
+						{input interview1}
 					</div>				
 				</div>
 
 				<div class="row-fluid">
 					<div class="span12">
 						<p class="font14"><b>2.</b> Aké sú najzaujímavejšie atrakcie v blízkom okolí? Aké sú ich vzdialenosti a orientačné ceny?</p>
-						<textarea class="marginBottom"></textarea>
+						{input interview2}
 					</div>				
 				</div>
 
 				<div class="row-fluid">
 					<div class="span12">
 						<p class="font14"><b>3.</b> Aký je postup rezervácie? Platí sa záloha za pobyt? Ak áno, koľko je záloha za pobyt a akým spôsobom sa platí?</p>	
-						<textarea class="marginBottom"></textarea>
+						{input interview3}
 					</div>				
 				</div>
 
 				<div class="row-fluid">
 					<div class="span12">
 						<p class="font14"><b>4.</b> Ktorá časť roka je vo Vašej lokalite najatraktívnejšia. Ktorú by ste doporučili?</p>
-						<textarea class="marginBottom"></textarea>
+						{input interview1}
 					</div>				
 				</div>
 
 				<div class="row-fluid">
 					<div class="span12">
 						<p class="font14"><b>5.</b> Kde sa dá vo Vašom okolí najlepšie najesť? Ako je to ďaleko?</p>
-						<textarea class="marginBottom"></textarea>
+						{input interview4}
 					</div>				
 				</div>
 
@@ -1168,11 +1169,7 @@
 					</div>
 					<div class="span7">
 						<label for="">
-							<select class="span9">
-								<option>Slovensko</option>
-								<option>Slovensko</option>
-								<option>Slovensko</option>
-							</select>
+							{input country}
 						</label>						
 					</div>
 					<div class="span1 validation"><i class="entypo-valid"></i></div>
@@ -1197,7 +1194,7 @@
 						</label>			
 					</div>
 					<div class="span7">
-						<input type="text">
+						{input lat}
 					</div>
 					<div class="span1 validation"><i class="entypo-valid"></i></div>
 					<div class="span12 error-mesage">ValidationError</div>	
@@ -1210,7 +1207,7 @@
 						</label>			
 					</div>
 					<div class="span7">
-						<input type="text">
+						{input lng}
 					</div>
 					<div class="span1 validation"><i class="entypo-valid"></i></div>
 					<div class="span12 error-mesage">ValidationError</div>	
@@ -1223,7 +1220,7 @@
 						</label>			
 					</div>
 					<div class="span7">
-						<input type="text">
+						{input location1}
 					</div>
 					<div class="span1 validation"><i class="entypo-valid"></i></div>
 					<div class="span12 error-mesage">ValidationError</div>	
@@ -1236,7 +1233,7 @@
 						</label>			
 					</div>
 					<div class="span7">
-						<input type="text">
+						{input location2}
 					</div>
 					<div class="span1 validation"><i class="entypo-valid"></i></div>
 					<div class="span12 error-mesage">ValidationError</div>	
@@ -1249,7 +1246,7 @@
 						</label>			
 					</div>
 					<div class="span7">
-						<textarea></textarea>
+						{input location3}
 					</div>
 					<div class="span1 validation"><i class="entypo-valid"></i></div>
 					<div class="span12 error-mesage">ValidationError</div>	
@@ -1262,7 +1259,7 @@
 						</label>			
 					</div>
 					<div class="span7">
-						<input type="text">
+						{input location4}
 					</div>
 					<div class="span1 validation"><i class="entypo-valid"></i></div>
 					<div class="span12 error-mesage">ValidationError</div>	

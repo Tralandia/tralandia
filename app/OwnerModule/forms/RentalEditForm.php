@@ -58,24 +58,23 @@ class RentalEditForm extends BaseForm {
 		/* rental teaser */
 		$this->addText('teaser','Rental teaser');
 
+		/* latitude */
+		$this->addText('lat');
 
+		/* longtitude */	
+		$this->addText('lng');		
 
+		/* location */	
+		$this->addText('location1');
+		$this->addText('location2');
+		$this->addTextArea('location3');
+		$this->addText('location4');
 
 		$this->addButton('sbumit', '_o985')
 			->setAttribute('onclick', 'send()')
 			->setAttribute('class','btn btn-green marginBottom');
 
-
-
-
-
-		/* patterns */
-
-
-		$this->addTextArea('desc','desc');
-		
-
-		/* select */
+		/* coutry */
 		$countries = array(
 			'Europe' => array(
 				'CZ' => 'Česká Republika',
@@ -86,9 +85,29 @@ class RentalEditForm extends BaseForm {
 			'US' => 'USA',
 			'?'  => 'jiná',
 		);
-		$this->addSelect('country', 'Země:', $countries)
-			->setPrompt('Zvolte zemi');		
 
+		$this->addSelect('country', 'Země:', $countries)
+			->setPrompt('Zvolte zemi')
+			->setAttribute('class','span9');	
+
+
+		/* interview */
+		$this->addTextArea('interview1')
+			->setAttribute('class','marginBottom');
+		$this->addTextArea('interview2')
+			->setAttribute('class','marginBottom');
+		$this->addTextArea('interview3')
+			->setAttribute('class','marginBottom');
+		$this->addTextArea('interview4')
+			->setAttribute('class','marginBottom');
+		$this->addTextArea('interview5')
+			->setAttribute('class','marginBottom');
+
+		/* patterns */
+
+
+		$this->addTextArea('desc','desc');
+		
 		/* button */
 
 		$this->addButton('raise', 'Zvýšit plat')
