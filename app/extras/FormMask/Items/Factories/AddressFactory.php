@@ -9,14 +9,14 @@ use Extras;
  */
 class AddressFactory implements IFactory {
 
-	/** @var Extras\Books\Address */
-	protected $book;
+	/** @var Extras\Models\Repository\RepositoryAccessor */
+	protected $repositoryAccessor;
 
 	/**
-	 * @param Extras\Books\Address
+	 * @param Extras\Models\Repository\RepositoryAccessor
 	 */
-	public function __construct(Extras\Books\Address $book) {
-		$this->book = $book;
+	public function __construct(Extras\Models\Repository\RepositoryAccessor $repositoryAccessor) {
+		$this->repositoryAccessor = $repositoryAccessor;
 	}
 	
 	/**
@@ -27,6 +27,6 @@ class AddressFactory implements IFactory {
 	 * @return Extras\FormMask\Items\Address
 	 */
 	public function create($name, $label, Extras\Models\Entity\IEntity $entity) {
-		return new Extras\FormMask\Items\Address($name, $label, $entity, $this->book);
+		return new Extras\FormMask\Items\Address($name, $label, $entity, $this->repositoryAccessor);
 	}
 }

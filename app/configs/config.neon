@@ -172,8 +172,6 @@ services:
 	phoneBook: Extras\Books\Phone(@phoneRepositoryAccessor)
 	emailBook: Extras\Books\Email(@emailRepositoryAccessor)
 	urlBook: Extras\Books\Url(@urlRepositoryAccessor)
-	addressBook: Extras\Books\Address(@addressRepositoryAccessor)
-
 
 	itemTextFactory: Extras\FormMask\Items\Foctories\TextFactory
 	itemPhraseFactory: Extras\FormMask\Items\Foctories\PhraseFactory(@phraseDecoratorFactory, @environment::getLanguage())
@@ -189,6 +187,6 @@ services:
 	itemTinymceFactory: Extras\FormMask\Items\Foctories\TinymceFactory
 	itemMapFactory: Extras\FormMask\Items\Foctories\MapFactory
 	itemEmailFactory: Extras\FormMask\Items\Foctories\EmailFactory
-	itemAddressFactory: Extras\FormMask\Items\Foctories\AddressFactory
+	itemAddressFactory: Extras\FormMask\Items\Foctories\AddressFactory(@addressRepositoryAccessor)
 	itemPhoneFactory: Extras\FormMask\Items\Foctories\PhoneFactory
 	itemUrlFactory: Extras\FormMask\Items\Foctories\UrlFactory

@@ -17,6 +17,6 @@ form:
 			label: URL
 			control: [type: url]
 
-#		address:
-#			label: Address
-#			control: [type: address]
+		address:
+			label: Address
+			control: [type: address]
