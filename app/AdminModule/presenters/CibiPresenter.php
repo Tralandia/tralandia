@@ -12,11 +12,15 @@ class CibiPresenter extends BasePresenter {
 
 	public $locationRepositoryAccessor;
 	public $rentalTypeRepositoryAccessor;
+	public $rentalAmenityRepositoryAccessor;
+	public $languageRepositoryAccessor;
 
 	public function inject(\Nette\DI\Container $container) {
 		
 		$this->locationRepositoryAccessor = $container->locationRepositoryAccessor;
 		$this->rentalTypeRepositoryAccessor = $container->rentalTypeRepositoryAccessor;
+		$this->rentalAmenityRepositoryAccessor = $container->rentalAmenityRepositoryAccessor;
+		$this->languageRepositoryAccessor = $container->languageRepositoryAccessor;
 	}
 
 	public function injectRentalSearchService(\Service\Rental\IRentalSearchServiceFactory $searchFactory) {
@@ -34,13 +38,21 @@ class CibiPresenter extends BasePresenter {
 		);
 		$search->addCriteria(
 			RentalSearchService::CRITERIA_LOCATION, 
-			$this->locationRepositoryAccessor->get()->findById(56)
+			$this->locationRepositoryAccessor->get()->findById(58)
+		);
+		$search->addCriteria(
+			RentalSearchService::CRITERIA_AMENITIES, 
+			$this->rentalAmenityRepositoryAccessor->get()->findById(array(139, 140))
+		);
+		$search->addCriteria(
+			RentalSearchService::CRITERIA_LANGUAGES_SPOKEN, 
+			$this->languageRepositoryAccessor->get()->findById(array(28, 38))
 		);
 		$search->setCountPerPage(50);
 		$search->setPage(1);
 		$results = $search->getResults();
 
-		dump($results[$location]);
+		dump($results);
 
 	}
 

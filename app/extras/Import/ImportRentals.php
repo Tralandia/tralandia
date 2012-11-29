@@ -54,7 +54,7 @@ class ImportRentals extends BaseImport {
 		$now = time();
 
 		if ($this->developmentMode == TRUE) {
-			$r = q('select * from objects where country_id = 46 order by rand() limit 1');
+			$r = q('select * from objects where country_id = 46 and interview is not null order by rand() limit 1');
 		} else {
 			$r = q('select * from objects');
 		}
@@ -224,12 +224,22 @@ class ImportRentals extends BaseImport {
 				}
 			}
 
+			// Interview
+			$temp = unserialize(stripslashes($x['interview']));
+			if (is_array($temp) && count($temp)) {
+				$rental->interview = $temp;
+			}
+
 			if (strlen($x['check_in'])) {
 				$rental->checkIn = $x['check_in'];
 			}
 
 			if (strlen($x['check_out'])) {
 				$rental->checkOut = $x['check_out'];
+			}
+
+			if (strlen($x['rooms'])) {
+				$rental->rooms = $x['rooms'];
 			}
 
 

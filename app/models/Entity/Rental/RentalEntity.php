@@ -178,6 +178,18 @@ class Rental extends \Entity\BaseEntity {
 	 */
 	protected $backLinks;
 
+	/**
+	 * @var integer
+	 * @ORM\Column(type="integer", nullable=true)
+	 */
+	protected $maxCapacity;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $rooms;
+
 
 	//@entity-generator-code --- NEMAZAT !!!
 
@@ -974,5 +986,43 @@ class Rental extends \Entity\BaseEntity {
 	public function getBackLinks()
 	{
 		return $this->backLinks;
+	}
+		
+	/**
+	 * @param integer
+	 * @return \Entity\Rental\Rental
+	 */
+	public function setMaxCapacity($maxCapacity)
+	{
+		$this->maxCapacity = $maxCapacity;
+
+		return $this;
+	}
+		
+	/**
+	 * @return integer|NULL
+	 */
+	public function getMaxCapacity()
+	{
+		return $this->maxCapacity;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Rental\Rental
+	 */
+	public function setRooms($rooms)
+	{
+		$this->rooms = $rooms;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getRooms()
+	{
+		return $this->rooms;
 	}
 }

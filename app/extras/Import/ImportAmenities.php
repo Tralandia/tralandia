@@ -136,17 +136,16 @@ class ImportAmenities extends BaseImport {
 		$this->model->flush();
 
 		// Owner availabilities
-		// @todo chyba tabulka owner v starej DB
-		// $amenityType = $this->context->rentalAmenityTypeRepository->findOneBySlug('owner-availability');
-		// $r = q('select * from owner');
-		// while ($x = mysql_fetch_array($r)) {
-		// 	$amenity = $this->context->rentalAmenityEntityFactory->create();
-		// 	$amenity->type = $amenityType;
-		// 	$amenity->name = $this->createNewPhrase($nameDictionaryType, $x['name_dic_id']);
-		// 	$amenity->oldId = $x['id'];
-		// 	$this->model->persist($amenity);
-		// }
-		// $this->model->flush();
+		$amenityType = $this->context->rentalAmenityTypeRepository->findOneBySlug('owner-availability');
+		$r = q('select * from owner');
+		while ($x = mysql_fetch_array($r)) {
+			$amenity = $this->context->rentalAmenityEntityFactory->create();
+			$amenity->type = $amenityType;
+			$amenity->name = $this->createNewPhrase($nameDictionaryType, $x['name_dic_id']);
+			$amenity->oldId = $x['id'];
+			$this->model->persist($amenity);
+		}
+		$this->model->flush();
 
 		// Board
 		$amenityType = $this->context->rentalAmenityTypeRepository->findOneBySlug('board');

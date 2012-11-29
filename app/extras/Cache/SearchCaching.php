@@ -12,48 +12,28 @@ use Nette\Caching;
 
 class SearchCaching extends \Nette\Object {
 
-	protected $cache;
-	protected $country;
+	protected $primaryLocation;
+	protected $criteria;
 
 	protected $rentalRepositoryAccessor;
 	
-	public function __construct(\Entity\Location\Location $location) {
-
-		
-
+	public function __construct($location) {
+		$this->primaryLocation = $location;
 	}
 
 	public function setCache(Caching\Cache $cache) {
-
 		$this->cache = $cache;
-
 	}
 
-	public function setCriteria($criteria, $value) {
-
-		switch($criteria) {
-
-			case self::CRITERIA_COUNTRY:
-				$this->country = $value;
-				break;
-
-			default:
-				$this->criteria[$this->country] = $this->getRentalsFor($criteria, $value);
-				break;
-		}
-
+	public function setCriteria($criteria) {
+		$this->criteria = $criteria;
 	}
 
 	public function inject(\Nette\DI\Container $container) {
-
 		$this->rentalRepositoryAccessor = $container->rentalRepositoryAccessor;
-
 	}
 
-	// private functions
-	private function getRentalsFor($criteria, $value) {
-
-		debug($criteria);
+	public function save($ids) {
 
 	}
 
