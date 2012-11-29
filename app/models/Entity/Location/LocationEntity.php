@@ -115,6 +115,12 @@ class Location extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
+	 * @ORM\OneToMany(targetEntity="Entity\Rental\Rental", mappedBy="primaryLocation")
+	 */
+	protected $primaryRentals;
+
+	/**
+	 * @var Collection
 	 * @ORM\ManyToMany(targetEntity="Entity\Rental\Rental", inversedBy="locations")
 	 */
 	protected $rentals;

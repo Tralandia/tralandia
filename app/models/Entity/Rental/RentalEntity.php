@@ -60,6 +60,12 @@ class Rental extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
+	 * @ORM\ManyToOne(targetEntity="Entity\Location\Location", inversedBy="rental")
+	 */
+	protected $primaryLocation;
+
+	/**
+	 * @var Collection
 	 * @ORM\ManyToMany(targetEntity="Entity\Location\Location", mappedBy="rentals")
 	 */
 	protected $locations;
