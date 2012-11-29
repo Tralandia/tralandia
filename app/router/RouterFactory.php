@@ -16,7 +16,7 @@ class RouterFactory
 	protected $defaultPrymaryLocation;
 	protected $frontRouteFactory;
 
-	public function __construct(array $options, FrontRouteFactory $frontRouteFactory) {
+	public function __construct(array $options, IFrontRouteFactory $frontRouteFactory) {
 		$this->defaultLanguage = $options['defaultLanguage'];
 		$this->defaultPrymaryLocation = $options['defaultPrimaryLocation'];
 		$this->frontRouteFactory = $frontRouteFactory;
@@ -62,7 +62,7 @@ class RouterFactory
 
 		$router[] = $frontRouter = new RouteList('Front');
 
-		// $frontRouter[] = $this->frontRouteFactory->create();
+		$frontRouter[] = $this->frontRouteFactory->create();
 	
 		
 		$frontRouter[] = new Route('<presenter>/[<action>[/<id>]]', array(

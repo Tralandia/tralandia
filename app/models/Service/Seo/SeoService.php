@@ -9,21 +9,21 @@ use Nette, Extras, Service, Doctrine, Entity;
  */
 class SeoService extends Service\BaseService {
 	
-	protected $environment;
+	protected $request;
 	protected $page;
 
-	public function __construct(Extras\Environment $environment, $pageRepositoryAccessor)
+	public function __construct(Nette\Application\Request $request, $pageRepositoryAccessor)
 	{
-		$this->environment = $environment;
+		$this->request = $request;
 		$this->setPage($pageRepositoryAccessor);
 	}
 
 
 	protected function setPage($pageRepositoryAccessor)
 	{
-		$request = $this->environment->getRequest();
+		$request = $this->request;
 		$params = $request->getParameters();
-		$destination = $request->name . ':' . $params['action'];
+		$destination = ':Front:'.$request->getPresenterName() . ':' . $params['action'];
 		if($params['page']) {
 
 		} else {

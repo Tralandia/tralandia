@@ -73,15 +73,19 @@ services:
 	translatorCache: Nette\Caching\Cache(@cacheStorage, 'Translator')
 	searchCache: Nette\Caching\Cache(@cacheStorage, 'Search')
 
-	frontRouteFactory:
-		class: Routers\FrontRouteFactory(@routerCache, %router.hostMask%)
-		setup:
-			- $locationRepositoryAccessor(@locationRepositoryAccessor)
-			- $languageRepositoryAccessor(@languageRepositoryAccessor)
-			- $rentalRepositoryAccessor(@rentalRepositoryAccessor)
-			- $attractionRepositoryAccessor(@attractionRepositoryAccessor)
-			- $routingPathSegmentRepositoryAccessor(@routingPathSegmentRepositoryAccessor)
-			- $domainRepositoryAccessor(@domainRepositoryAccessor)
+	# frontRouteFactory:
+	# 	class: Routers\FrontRouteFactory(@routerCache, %router.hostMask%)
+	# 	setup:
+	# 		- $locationRepositoryAccessor(@locationRepositoryAccessor)
+	# 		- $languageRepositoryAccessor(@languageRepositoryAccessor)
+	# 		- $rentalRepositoryAccessor(@rentalRepositoryAccessor)
+	# 		- $rentalTypeRepositoryAccessor(@rentalTypeRepositoryAccessor)
+	# 		- $attractionRepositoryAccessor(@attractionRepositoryAccessor)
+	# 		- $attractionTypeRepositoryAccessor(@attractionTypeRepositoryAccessor)
+	# 		- $routingPathSegmentRepositoryAccessor(@routingPathSegmentRepositoryAccessor)
+	# 		- $domainRepositoryAccessor(@domainRepositoryAccessor)
+	# 		- $pageRepositoryAccessor(@pageRepositoryAccessor)
+	# 		- $rentalAmenityRepositoryAccessor(@rentalAmenityRepositoryAccessor)
 
 	routerFactory: Routers\RouterFactory([defaultLanguage: %centralLanguage%, defaultPrimaryLocation: 58])
 
@@ -184,7 +188,20 @@ services:
 	itemTinymceFactory: Extras\FormMask\Items\Foctories\TinymceFactory
 
 factories:
-
+	frontRentalFactory:
+		class: Routers\FrontRoute(@routerCache, %router.hostMask%)
+		implement: Routers\IFrontRouteFactory
+		setup:
+			- $locationRepositoryAccessor(@locationRepositoryAccessor)
+			- $languageRepositoryAccessor(@languageRepositoryAccessor)
+			- $rentalRepositoryAccessor(@rentalRepositoryAccessor)
+			- $rentalTypeRepositoryAccessor(@rentalTypeRepositoryAccessor)
+			- $attractionRepositoryAccessor(@attractionRepositoryAccessor)
+			- $attractionTypeRepositoryAccessor(@attractionTypeRepositoryAccessor)
+			- $routingPathSegmentRepositoryAccessor(@routingPathSegmentRepositoryAccessor)
+			- $domainRepositoryAccessor(@domainRepositoryAccessor)
+			- $pageRepositoryAccessor(@pageRepositoryAccessor)
+			- $rentalAmenityRepositoryAccessor(@rentalAmenityRepositoryAccessor)
 	rentalSearchServiceFactory: 
 		class: Service\Rental\RentalSearchService(%location%)
 		implement: Service\Rental\IRentalSearchServiceFactory

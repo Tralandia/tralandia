@@ -16,8 +16,6 @@
 		<li><a href="#tabs-4">{_o23011}</a></li>
 	</ul>
 	<div id="tabs-1" class="ui-tabs-panel">
-		{dump $rentals}
-
 		<ul n:inner-foreach="$rentals as $rental" class="row-fluid hp-list">
 			<li class="span4">
 				<a n:href=":Front:Rental:detail $rental['entity']->id">

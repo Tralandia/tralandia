@@ -123,7 +123,7 @@ class ImportPhraseType extends BaseImport {
 			// ->setIldId(1)
 			->setCheckingRequired(NULL);
 
-		$this->createPhraseType('\Entity\Rental\Amenity', 'name-tag')
+		$this->createPhraseType('\Entity\Rental\Tag', 'name')
 			->setTranslateTo('supported')
 			->setPluralVariationsRequired(1)
 			->setGenderRequired(0)

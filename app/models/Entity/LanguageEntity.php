@@ -126,6 +126,7 @@ class Language extends \Entity\BaseEntityDetails {
 
 	public function getPlural($n)
 	{
+		if ($n === NULL) $n = 1;
 		$rule = $this->getPlurals();
 		eval('$plural = (int)'.$rule['rule'].';');
 		return $plural;
