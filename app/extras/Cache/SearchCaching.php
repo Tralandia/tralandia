@@ -13,6 +13,8 @@ use Service\Rental\RentalSearchService;
 
 class SearchCaching extends \Nette\Object {
 
+	const CACHE_EXPIRE = '1 hour';
+
 	protected $primaryLocation;
 
 	protected $criteria;
@@ -49,47 +51,53 @@ class SearchCaching extends \Nette\Object {
 
 	public function findRentalIdsBy() {
 
-		// $this->cache->save($this->generateKey(), );
+		$cacheKey = $this->getCacheKey();
+		$ids = $this->cache->load($cacheKey);
 
-		$ids = array();
-		switch($this->criteria) {
-			case RentalSearchService::CRITERIA_LOCATION:
-			case RentalSearchService::CRITERIA_AMENITIES:
-			case RentalSearchService::CRITERIA_LANGUAGES_SPOKEN:
-				foreach($this->value->getRentals() as $rental) {
-					$ids[] = $rental->getId();
-				}
-				break;
+		if ($ids === NULL) {
 
-			case RentalSearchService::CRITERIA_RENTAL_TYPE:
-				foreach($this->rentalRepositoryAccessor->get()->findByType($this->value) as $rental) {
-					$ids[] = $rental->getId();
-				}
-				break;
+			$ids = array();
+			switch($this->criteria) {
+				case RentalSearchService::CRITERIA_LOCATION:
+				case RentalSearchService::CRITERIA_AMENITIES:
+				case RentalSearchService::CRITERIA_LANGUAGES_SPOKEN:
+					foreach($this->value->getRentals() as $rental) {
+						$ids[] = $rental->getId();
+					}
+					break;
 
-			case RentalSearchService::CRITERIA_AREA_BOUNDRIES:
-				
-				break;
+				case RentalSearchService::CRITERIA_RENTAL_TYPE:
+					foreach($this->rentalRepositoryAccessor->get()->findByType($this->value) as $rental) {
+						$ids[] = $rental->getId();
+					}
+					break;
 
-			case RentalSearchService::CRITERIA_CAPACITY:
-				
-				break;
+				case RentalSearchService::CRITERIA_CAPACITY:
+					// $this->rentalRepositoryAccessor->get()->findByCapacity();
+					break;
 
-			case RentalSearchService::CRITERIA_PRICE_CATEGORY:
-				
-				break;
+				case RentalSearchService::CRITERIA_PRICE_CATEGORY:
+					
+					break;
 
-			default:
-				return FALSE;
-				break;
+				case RentalSearchService::CRITERIA_AREA_BOUNDRIES:
+					
+					break;
+
+				default:
+					return FALSE;
+					break;
+			}
+
+			$this->cache->save($cacheKey, $ids, array(Caching\Cache::EXPIRE => self::CACHE_EXPIRE));
 		}
 
 		return $ids;
 
 	}
 
-	private function generateKey() {
-		return $this->primaryLocation->getId() . '_' . $this->criteria . '_' . $this->value;
+	private function getCacheKey() {
+		return $this->primaryLocation->getId() . '_' . $this->criteria . '_' . $this->value->getId();
 	}
 
 }
