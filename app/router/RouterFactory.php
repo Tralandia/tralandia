@@ -16,7 +16,7 @@ class RouterFactory
 	protected $defaultPrymaryLocation;
 	protected $frontRouteFactory;
 
-	public function __construct(array $options, FrontRouteFactory $frontRouteFactory) {
+	public function __construct(array $options, IFrontRouteFactory $frontRouteFactory) {
 		$this->defaultLanguage = $options['defaultLanguage'];
 		$this->defaultPrymaryLocation = $options['defaultPrimaryLocation'];
 		$this->frontRouteFactory = $frontRouteFactory;

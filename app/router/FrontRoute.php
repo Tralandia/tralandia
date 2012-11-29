@@ -50,9 +50,9 @@ class FrontRoute implements Nette\Application\IRouter {
 		'tag' => null,
 		'attractionType' => null,
 		'rentalType' => null,
+		'page' => null,
 	);
 
-	public $model;
 	public $locationRepositoryAccessor;
 	public $languageRepositoryAccessor;
 	public $rentalRepositoryAccessor;
@@ -207,11 +207,8 @@ class FrontRoute implements Nette\Application\IRouter {
 			} else {
 				$hash = '';
 			}
-			d($this);
-			//d($this->pageRepositoryAccessor);
-			//$params->page = $this->pageRepositoryAccessor->get()->findOneBy(array('hash' => $hash, 'destination' => $destination));
+			$params->page = $this->pageRepositoryAccessor->get()->findOneBy(array('hash' => $hash, 'destination' => $destination));
 		}
-		d($params);
 		$return = array(
 			'params' => array(
 				'action' => $params->action

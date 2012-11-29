@@ -7,23 +7,27 @@ use Nette\Utils\Strings;
 
 class DavidPresenter extends BasePresenter {
 
+	private $frontRouteFactory;
+
+	public function injectRoute(\Routers\IFrontRouteFactory $frontRouteFactory) {
+		$this->frontRouteFactory = $frontRouteFactory;
+	}
 
 	public function actionList() {
 
-		$this->getService('generatePathSegmentsRobot')->run();
+		//$this->getService('generatePathSegmentsRobot')->run();
 
 		$url = 'http://www.sk.tra.com/nitra';
 		$url = new Nette\Http\UrlScript($url);
 		$httpRequest = new Nette\Http\Request($url);
 
-		$route = $this->getService('frontRouteFactory')->create();
+		$route = $this->frontRouteFactory->create();
 
 		$request = $route->match($httpRequest);
+		d($request);
 		$languageRepositoryAccessor = $this->getService('languageRepositoryAccessor');
 		$locationRepositoryAccessor = $this->getService('locationRepositoryAccessor');
 
 		$seo = new \Service\Seo\SeoService($request, $this->getService('pageRepositoryAccessor'));
 	}
-
-
 }
