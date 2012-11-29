@@ -199,6 +199,7 @@ class FrontRoute implements Nette\Application\IRouter {
 				$hash = array();
 				foreach (self::$pathSegmentTypesById as $key => $value) {
 					if ($key == 2) continue;
+					//@todo - dorobit tagAfter alebo tagBefore (ak je to tag)
 					if (isset($params->{$value})) {
 						$hash[] = '/'.$value;
 					}

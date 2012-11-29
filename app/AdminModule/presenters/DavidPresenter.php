@@ -17,6 +17,8 @@ class DavidPresenter extends BasePresenter {
 
 		//$this->getService('generatePathSegmentsRobot')->run();
 
+		$variables = Strings::matchAll('Ubytovanie [locationLocative] [amindenit]', '/\[(?P<replacements>[a-zA-Z]+)\]/');
+		d($variables); exit;
 		$url = 'http://www.sk.tra.com/nitra';
 		$url = new Nette\Http\UrlScript($url);
 		$httpRequest = new Nette\Http\Request($url);

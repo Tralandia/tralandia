@@ -48,10 +48,10 @@ class PhraseServiceTest extends PHPUnit_Framework_TestCase
 		$service = new Service\Dictionary\Phrase($this->model, $entity->name);
 		
 		// vytiahnem preklad, ulozim si jeho aktualnu hodnotu
-		$this->assertInternalType('string', $oldTranslation = $service->getTranslateValue($this->language));
+		$this->assertInternalType('string', $oldTranslation = $service->getTranslationText($this->language));
 
 		// zmenim preklad a ulozim zmenu
-		$service->setTranslateValue($this->language, 'nová hodnota 9875');
+		$service->setTranslationText($this->language, 'nová hodnota 9875');
 		$this->model->flush();
 
 		// vytiahnem zmeneny preklad
@@ -59,11 +59,11 @@ class PhraseServiceTest extends PHPUnit_Framework_TestCase
 		$service = new Service\Dictionary\Phrase($this->model, $entity->name);
 		
 		// overujem ci sa zmena preniesla do DB
-		$this->assertInternalType('string', $translation = $service->getTranslateValue($this->language));
+		$this->assertInternalType('string', $translation = $service->getTranslationText($this->language));
 		$this->assertSame('nová hodnota 9875', $translation);
 
 		// znova zmenit preklad na povodnu hodnotu a ulozim
-		$service->setTranslateValue($this->language, $oldTranslation);
+		$service->setTranslationText($this->language, $oldTranslation);
 		$this->model->flush();
 	}
 

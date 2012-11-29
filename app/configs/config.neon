@@ -213,3 +213,8 @@ factories:
 			- setCache(@searchCache)
 		implement: Extras\Cache\ISearchCachingFactory
 		parameters: [Entity\Location\Location location]
+
+	seoServiceFactory:
+		class: Service\Seo\SeoService(%request%)
+		implement: Service\Seo\ISeoServiceFactory
+		parameters: [Nette\Application\Request request]

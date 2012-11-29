@@ -24,7 +24,7 @@ class PhraseTest extends PHPUnit_Framework_TestCase
 	public function testDefault() {
 		$entity = $this->model->getRepository('Entity\Currency')->find(2);
 		$service = new Service\Dictionary\Phrase($this->model, $entity->name);
-		$oldTranslate = $service->getTranslateValue($this->language);
+		$oldTranslate = $service->getTranslationText($this->language);
 
 		// vytvorim masku a form
 		$mask = new Extras\FormMask\Mask;
@@ -33,8 +33,8 @@ class PhraseTest extends PHPUnit_Framework_TestCase
 
 		// vytvorim masku
 		$item = new Extras\FormMask\Items\Phrase('phrase', 'Phrase');
-		$item->setValueGetter(new Extras\Callback($service, 'getTranslateValue', array($this->language)));
-		$item->setValueSetter(new Extras\Callback($service, 'setTranslateValue', array($this->language)));
+		$item->setValueGetter(new Extras\Callback($service, 'getTranslationText', array($this->language)));
+		$item->setValueSetter(new Extras\Callback($service, 'setTranslationText', array($this->language)));
 
 		// rozsirim formular maskou
 		$mask->addItem($item);
@@ -44,13 +44,13 @@ class PhraseTest extends PHPUnit_Framework_TestCase
 		$form->getComponent('phrase')->setValue('Iná hodnota 98755');
 		$form->onSuccess($form);
 
-		$newTranslate = $service->getTranslateValue($this->language);
+		$newTranslate = $service->getTranslationText($this->language);
 
 		// overujem spravne ulozenie dat
 		$this->assertSame('Iná hodnota 98755', $newTranslate);
 
 		// vratim staru hodnotu naspat
 		$service = new Service\Dictionary\Phrase($this->model, $entity->name);
-		$oldTranslate = $service->setTranslateValue($this->language, $oldTranslate);
+		$oldTranslate = $service->setTranslationText($this->language, $oldTranslate);
 	}
 }

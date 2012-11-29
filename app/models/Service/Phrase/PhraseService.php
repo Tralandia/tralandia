@@ -10,6 +10,12 @@ use Service, Doctrine, Entity;
  */
 class PhraseService extends Service\BaseService {
 
+	const REQUESTED = 'requested';
+	const CENTRAL = 'central';
+	const SOURCE = 'source';
+
+	public $centralLanguage;
+
 	public function createTranslation(Entity\Language $language, $translationText = NULL) {
 		$type = $this->getEntity()->type;
 		if(!$type instanceof \Entity\Phrase\Type) {
@@ -27,14 +33,42 @@ class PhraseService extends Service\BaseService {
 	}
 
 	/**
+	 * Vrati translation-y v ziadanom, centralom a source jazyku, ak existuju
+	 * @param Entity\Language
+	 * @return Entity\Phrase\Translation
+	 */
+	public function getMainTranslations(Entity\Language $language) {
+		$t = array();
+
+		foreach ($this->entity->getTranslations() as $key => $value) {
+			if ($value->language->id == $language->id) {
+				$t[self::REQUESTED] = $value;
+			}
+
+			if ($value->language->id == $this->centralLanguage) {
+				$t[self::CENTRAL] = $value;
+			}
+
+			if ($value->language->id == $this->entity->sourceLanguage->id) {
+				$t[self::SOURCE] = $value;
+			}
+		}
+
+		return $t;
+	}
+
+	/**
 	 * Vrati spravny preklad na zaklade jazyka
 	 * @param Entity\Language
 	 * @return Entity\Phrase\Translation
 	 */
-	public function getTranslation(Entity\Language $language) {
-		return $this->entity->getTranslations()->filter(function($entity) use ($language) {
-			return $entity->language->id == $language->id;
-		})->current();
+	public function getTranslation(Entity\Language $language, $loose = FALSE) {
+		$t = $this->getMainTranslations($language);
+		if ($loose) {
+			return reset(array_filter($t));
+		} else {
+			return $t[self::REQUESTED];
+		}
 	}
 
 	public function hasTranslation($language) {
@@ -46,8 +80,22 @@ class PhraseService extends Service\BaseService {
 	 * @param Entity\Language
 	 * @return Entity\Phrase\Translation
 	 */
-	public function getTranslateValue(Entity\Language $language) {
-		return (string) $this->getTranslation($language);
+	public function getTranslationText(Entity\Language $language, $loose = FALSE) {
+		$t = $this->getMainTranslations($language);
+
+		$text = '';
+		if ($loose) {
+			foreach ($t as $key => $value) {
+				if (strlen((string) $value)) {
+					$text = (string) $value;
+					break;
+				}
+			}
+		} else {
+			$text = $t[self::REQUESTED];
+		}
+
+		return (string) $text;
 	}
 
 	/**
@@ -56,7 +104,7 @@ class PhraseService extends Service\BaseService {
 	 * @param string
 	 * @return Phrase
 	 */
-	public function setTranslateValue(Entity\Language $language, $value) {
+	public function setTranslationText(Entity\Language $language, $value) {
 		$this->getTranslation($language)->translation = $value;
 		return $this;
 	}
