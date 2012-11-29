@@ -217,10 +217,15 @@ class ImportRentals extends BaseImport {
 			}
 
 			// Tags
+			$allTags = array();
+			$r2 = qNew('select * from rental_tag');
+			while ($x1 = mysql_fetch_array($r2)) {
+				$allTags[$x1['oldId']] = $context->rentalTagRepositoryAccessor->get()->find($x1['id']);
+			}
 			$temp = array_unique(array_filter(explode(',', $x['tags'])));
 			if (is_array($temp) && count($temp)) {
 				foreach ($temp as $key => $value) {
-					if (isset($allAmenities[$value])) $rental->addAmenity($allAmenities[$value]);
+					if (isset($allTags[$value])) $rental->addTag($allTags[$value]);
 				}
 			}
 

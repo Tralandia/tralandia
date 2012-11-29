@@ -125,6 +125,12 @@ class Rental extends \Entity\BaseEntity {
 	protected $amenities;
 
 	/**
+	 * @var Collection
+	 * @ORM\ManyToMany(targetEntity="Entity\Rental\Tag", mappedBy="rentals")
+	 */
+	protected $tags;
+
+	/**
 	 * @var text
 	 * @ORM\Column(type="text", nullable=true)
 	 */
@@ -202,6 +208,7 @@ class Rental extends \Entity\BaseEntity {
 		$this->locations = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->spokenLanguages = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->amenities = new \Doctrine\Common\Collections\ArrayCollection;
+		$this->tags = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->media = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->fulltexts = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->invoices = new \Doctrine\Common\Collections\ArrayCollection;
@@ -700,6 +707,42 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
+	 * @param \Entity\Rental\Tag
+	 * @return \Entity\Rental\Rental
+	 */
+	public function addTag(\Entity\Rental\Tag $tag)
+	{
+		if(!$this->tags->contains($tag)) {
+			$this->tags->add($tag);
+		}
+		$tag->addRental($this);
+
+		return $this;
+	}
+		
+	/**
+	 * @param \Entity\Rental\Tag
+	 * @return \Entity\Rental\Rental
+	 */
+	public function removeTag(\Entity\Rental\Tag $tag)
+	{
+		if($this->tags->contains($tag)) {
+			$this->tags->removeElement($tag);
+		}
+		$tag->removeRental($this);
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Rental\Tag
+	 */
+	public function getTags()
+	{
+		return $this->tags;
+	}
+		
+	/**
 	 * @param string
 	 * @return \Entity\Rental\Rental
 	 */
@@ -1000,6 +1043,16 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
+	 * @return \Entity\Rental\Rental
+	 */
+	public function unsetMaxCapacity()
+	{
+		$this->maxCapacity = NULL;
+
+		return $this;
+	}
+		
+	/**
 	 * @return integer|NULL
 	 */
 	public function getMaxCapacity()
@@ -1014,6 +1067,16 @@ class Rental extends \Entity\BaseEntity {
 	public function setRooms($rooms)
 	{
 		$this->rooms = $rooms;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Rental\Rental
+	 */
+	public function unsetRooms()
+	{
+		$this->rooms = NULL;
 
 		return $this;
 	}
