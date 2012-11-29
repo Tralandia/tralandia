@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="phone", indexes={@ORM\index(name="phone", columns={"phone"})})
+ * @ORM\Table(name="phone", indexes={@ORM\index(name="value", columns={"value"})})
  */
 class Phone extends \Entity\BaseEntity {
 
@@ -14,7 +14,7 @@ class Phone extends \Entity\BaseEntity {
 	 * @var string
 	 * @ORM\Column(type="string", length=20)
 	 */
-	protected $phone;
+	protected $value;
 		
 	/**
 	 * @var string
@@ -38,16 +38,16 @@ class Phone extends \Entity\BaseEntity {
 	 * @param string
 	 * @return Phone
 	 */
-	public function setPhone($phone) {
-		$this->phone = $phone;
+	public function setValue($value) {
+		$this->value = $value;
 		return $this;
 	}
 		
 	/**
 	 * @return string|NULL
 	 */
-	public function getPhone() {
-		return $this->phone;
+	public function getValue() {
+		return $this->value;
 	}
 
 	/**

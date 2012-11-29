@@ -26,7 +26,7 @@ class PhoneFactory implements IFactory {
 	 * @param Extras\Books\Phone
 	 * @return Extras\FormMask\Items\Phone
 	 */
-	public function create($name, $label, Extras\Models\Entity\IEntity $entit) {
+	public function create($name, $label, Extras\Models\Entity\IEntity $entity) {
 		return new Extras\FormMask\Items\Phone($name, $label, $entity, $this->book);
 	}
 }

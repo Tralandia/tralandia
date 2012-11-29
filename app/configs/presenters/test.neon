@@ -9,9 +9,9 @@ form:
 			label: Email
 			control: [type: email]
 
-#		phone:
-#			label: Phone
-#			control: [type: phone]
+		phone:
+			label: Phone
+			control: [type: phone]
 
 		url:
 			label: URL

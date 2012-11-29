@@ -29,7 +29,7 @@ class Phone extends Nette\Object {
 	 * @return Entity\Contacts\Phone|false
 	 */
 	public function find($number) {
-		return $this->phoneRepository->get()->findOneByPhone($this->prepareNumber($number));
+		return $this->phoneRepository->get()->findOneByValue($this->prepareNumber($number));
 	}
 
 	/**
@@ -47,7 +47,7 @@ class Phone extends Nette\Object {
 
 			if (!$phone = $this->find($number)) {
 				$phone = $this->phoneRepository->get()->createNew();
-				$phone->setPhone($this->prepareNumber($response->formattingResults->E164))
+				$phone->setValue($this->prepareNumber($response->formattingResults->E164))
 					->setInternational($response->formattingResults->international)
 					->setNational($response->formattingResults->national)
 					->setRegion($response->validationResult->phoneNumberForRegion);
