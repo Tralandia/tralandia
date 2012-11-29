@@ -25,7 +25,7 @@ class Phrase extends Base {
 		$this->phraseService = $phraseService;
 		$this->language = $language;
 
-		$this->setValueGetter(new Extras\Callback($this->phraseService, 'getTranslateValue', array($this->language)));
-		$this->setValueSetter(new Extras\Callback($this->phraseService, 'setTranslateValue', array($this->language)));
+		$this->setValueGetter(new Extras\Callback($this->phraseService, 'getTranslationText', array($this->language)));
+		$this->setValueSetter(new Extras\Callback($this->phraseService, 'setTranslationText', array($this->language)));
 	}
 }

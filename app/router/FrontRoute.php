@@ -31,7 +31,15 @@ class FrontRoute implements Nette\Application\IRouter {
 		'attractionType' => 4,
 		'location' => 6,
 		'rentalType' => 8,
-		'tag' => 10,
+		'rentalTag' => 10,
+	);
+
+	protected static $pathSegmentTypesById = array(
+		2 => 'page',
+		4 => 'attractionType',
+		6 => 'location',
+		8 => 'rentalType',
+		10 => 'rentalTag',
 	);
 
 	protected $appParams = array(
@@ -39,18 +47,25 @@ class FrontRoute implements Nette\Application\IRouter {
 		'primaryLocation' => true,
 		'language' => null,
 		'location' => null,
-		'tag' => null,
+		'rental' => null,
+		'rentalTag' => null,
 		'attractionType' => null,
 		'rentalType' => null,
+		'page' => null,
 	);
 
 	public $locationRepositoryAccessor;
 	public $languageRepositoryAccessor;
 	public $rentalRepositoryAccessor;
+	public $rentalTypeRepositoryAccessor;
 	public $attractionRepositoryAccessor;
+	public $attractionTypeRepositoryAccessor;
 	public $routingPathSegmentRepositoryAccessor;
 	public $domainRepositoryAccessor;
-
+	public $pageRepositoryAccessor;
+	public $rentalTagRepositoryAccessor;
+	public $rentalAmenityRepositoryAccessor;
+	public $phraseDecoratorFactory;
 	
 	public function __construct(Caching\Cache $cache, $hostMask)
 	{
@@ -101,7 +116,7 @@ class FrontRoute implements Nette\Application\IRouter {
 
 	public function getParamsByHttpRequest($httpRequest)
 	{
-		// debug('$httpRequest', $httpRequest);
+		//d('$httpRequest', $httpRequest);
 		$params = \Nette\ArrayHash::from(array(
 				'query' => \Nette\ArrayHash::from(array()),
 			));
@@ -122,8 +137,8 @@ class FrontRoute implements Nette\Application\IRouter {
 			$language = $country->defaultLanguage;
 		}
 
-		$params->primaryLocation = $country->id;
-		$params->language = $language->id;
+		$params->primaryLocation = $country;
+		$params->language = $language;
 
 
 		if(count($pathSegments) == 0) {
@@ -137,14 +152,12 @@ class FrontRoute implements Nette\Application\IRouter {
 					$params->attraction = $attraction;
 					$params->presenter = 'Attraction';
 					$params->action = 'detail';
-					$params->id = $match[1];
 				}
 			} else if($match = Strings::match($pathSegment, '~\.*-r([0-9]+)~')) {
 				if($rental = $this->rentalRepositoryAccessor->get()->find($match[1])) {
 					$params->rental = $rental;
 					$params->presenter = 'Rental';
 					$params->action = 'detail';
-					$params->id = $match[1];
 				}
 			}
 		}
@@ -167,14 +180,13 @@ class FrontRoute implements Nette\Application\IRouter {
 
 		if(count($pathSegments)) {
 			$segmentList = $this->getPathSegmentList($pathSegments, $params);
-			$pathSegmentTypesFlip = array_flip(static::$pathSegmentTypes);
 			foreach ($segmentList as $key => $value) {
-				$params->{$pathSegmentTypesFlip[$value->type]} = $value->entityId;
-				if($value->type == static::$pathSegmentTypes['attractionType']) {
-					$params->presenter = 'Attraction';
-				} else if($value->type == static::$pathSegmentTypes['rentalType']) {
-					$params->presenter = 'Rental';
-				}
+				$params->{$key} = $value;
+				// if($value->type == static::$pathSegmentTypes['attractionType']) {
+				// 	$params->presenter = 'Attraction';
+				// } else if($value->type == static::$pathSegmentTypes['rentalType']) {
+				// 	$params->presenter = 'Rental';
+				// }
 			}
 		} else {
 			$segmentList = array();
@@ -184,14 +196,40 @@ class FrontRoute implements Nette\Application\IRouter {
 			// @todo pocet najdenych pathsegmentov je mensi
 			// ak nejake chybaju tak ich skus najst v PathSegmentsOld
 		}
-
-
+		if (!isset($params->page)) {
+			$destination = ':Front:'.$params->presenter . ':' . $params->action;
+			if ($destination == ':Front:Rental:list') {
+				$hash = array();
+				foreach (self::$pathSegmentTypesById as $key => $value) {
+					if ($key == 2) continue;
+					//@todo - dorobit tagAfter alebo tagBefore (ak je to tag)
+					if (isset($params->{$value})) {
+						if ($value == 'rentalTag') {
+							$tagName = $this->phraseDecoratorFactory->create($params->rentalTag->name);
+							$tagTranslation = $tagName->getTranslation($params->language);
+							if ($tagTranslation->position == \Entity\Phrase\Translation::BEFORE) {
+								$value = \Entity\Phrase\Translation::BEFORE;
+							} else {
+								$value = \Entity\Phrase\Translation::AFTER;
+							}
+							$value = 'tag'.$value;
+						}
+						$hash[] = '/'.$value;
+					}
+				}
+				$hash = implode('', $hash);
+			} else {
+				$hash = '';
+			}
+			$params->page = $this->pageRepositoryAccessor->get()->findOneBy(array('hash' => $hash, 'destination' => $destination));
+		}
 		$return = array(
 			'params' => array(
 				'action' => $params->action
 			),
 			'presenter' => $params->presenter,
 		);
+
 		foreach ($this->appParams as $key => $value) {
 			if($value === true && !isset($params->$key)) {
 				$params->$key = $this->getMetadata($key);
@@ -209,8 +247,18 @@ class FrontRoute implements Nette\Application\IRouter {
 
 	public function getPathSegmentList($pathSegments, $params)
 	{
+		$pathSegmentListNew = array();
+		
+		$pathSegmentTypesFlip = array_flip(static::$pathSegmentTypes);
+
 		$pathSegmentList = $this->routingPathSegmentRepositoryAccessor->get()->findForRouter($params->language, $params->primaryLocation, $pathSegments);
-		return $pathSegmentList;
+		foreach ($pathSegmentList as $key => $value) {
+			$t = self::$pathSegmentTypesById[$value->type];
+			$keyTemp = $pathSegmentTypesFlip[$value->type];
+			$accessor = $t.'RepositoryAccessor';
+			$pathSegmentListNew[$keyTemp] = $this->{$accessor}->get()->find($value->entityId);
+		}
+		return $pathSegmentListNew;
 	}
 
 	public function getUrlByAppRequest($appRequest, $refUrl)
@@ -228,16 +276,16 @@ class FrontRoute implements Nette\Application\IRouter {
 		$action = $params['action'];
 		unset($params['action']);
 		
-		debug($params, $query, $presenter, $action);
+		//debug($params, $query, $presenter, $action);
 
 		list($refLanguageIso, $refDomainName, $refCountryIso) = $this->parseHost($refUrl->getHost());
 
-		$country = $this->locationRepositoryAccessor->get()->find($params['primaryLocation']);
-		$language = $this->languageRepositoryAccessor->get()->find($params['language']);
+		$country = $params['primaryLocation'];
+		$language = $params['language'];
 
 		$segments = array();
 		if($presenter == 'Rental' && $action == 'detail') {
-			$rental = $this->rentalRepositoryAccessor->get()->find($params['id']);
+			$rental = $params['rental'];
 			$segments[] = $rental->slug . '-r' . $rental->id;
 		} else {
 			foreach (static::$pathSegmentTypes as $key => $value) {
@@ -249,13 +297,11 @@ class FrontRoute implements Nette\Application\IRouter {
 			ksort($segments);
 		}
 
-
 		$url = clone $refUrl;
 		$host = $this->buildHost(($language->id == $country->defaultLanguage->id ? 'www' : $language->iso), $refDomainName, $country->iso);
 		$url->setHost($host);
 		$path = '/' . implode('/', $segments);
 		$url->setPath($path);
-		// debug('url', "$url");
 		return $url;
 	}
 

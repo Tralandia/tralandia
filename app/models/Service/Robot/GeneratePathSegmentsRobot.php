@@ -21,6 +21,7 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 	protected $attractionTypeRepositoryAccessor;
 	protected $locationRepositoryAccessor;
 	protected $rentalTypeRepositoryAccessor;
+	protected $rentalTagRepositoryAccessor;
 	protected $locationServiceFactory;
 
 	public function __construct(
@@ -32,6 +33,7 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 			$attractionTypeRepositoryAccessor,
 			$locationRepositoryAccessor,
 			$rentalTypeRepositoryAccessor,
+			$rentalTagRepositoryAccessor,
 			$locationServiceFactory
 		) 
 	{
@@ -43,6 +45,7 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 			$this->attractionTypeRepositoryAccessor,
 			$this->locationRepositoryAccessor,
 			$this->rentalTypeRepositoryAccessor,
+			$this->rentalTagRepositoryAccessor,
 			$this->locationServiceFactory) = func_get_args();
 	}
 
@@ -61,7 +64,7 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 		$this->persistAtractionTypesSegments($languageList);
 		$this->persistLocationsSegments();
 		$this->persistRentalTypesSegments($languageList);
-		//$this->persistTagsSegments($languageList);
+		$this->persistTagsSegments($languageList);
 		
 		$this->rentalTypeRepositoryAccessor->get()->flush();
 	}
@@ -141,8 +144,20 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 
 	protected function persistTagsSegments($languageList)
 	{
-		// @todo method or operation is not implemented
-		throw new \Nette\NotImplementedException('Requested method or operation is not implemented');
+
+		$tags = $this->rentalTagRepositoryAccessor->get()->findAll();
+		foreach ($languageList as $languageId => $language) {
+			foreach ($tags as $tag) {
+				$entity = $this->routingPathSegmentEntityFactory->create();
+				$entity->country = NULL;
+				$entity->language = $language;
+				$entity->pathSegment = $this->translate($tag->name, $language);
+				$entity->type = PathSegment::TAG;
+				$entity->entityId = $tag->id;
+
+				$this->rentalTagRepositoryAccessor->get()->persist($entity);
+			}
+		}
 	}
 
 	protected function translate($phrase, $language)

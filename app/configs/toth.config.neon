@@ -1,3 +1,6 @@
+nette:
+	container:
+		debugger: false  # aktivuje panel v Debugger baru
 parameters:
 	editor: 'edit://open/?url=file://%file&line=%line'
 	envOptions:
@@ -5,4 +8,3 @@ parameters:
 
 	database:
 		debugger: false
-		password: ""

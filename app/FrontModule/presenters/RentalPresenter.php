@@ -13,20 +13,15 @@ class RentalPresenter extends BasePresenter {
 	}
 
 
-	public function actionDetail($id) {
-
-		$rental = $this->rentalRepositoryAccessor->get()->find($id);
-
+	public function actionDetail($rental) {
 		if (!$rental) {
 			throw new \Nette\InvalidArgumentException('$id argument does not match with the expected value');
 		}
 		
 		$rentalService = $this->rentalDecoratorFactory->create($rental);
-
 		$this->template->rental = $rental;
 		$this->template->rentalService = $rentalService;
-		//d($rentalService->getMainPhoto()->getThumbnail());
-		//d($rentalService->getPhotos());
+
 		$this->setLayout('detailLayout');
 
 	}

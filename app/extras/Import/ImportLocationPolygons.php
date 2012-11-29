@@ -87,8 +87,8 @@ class ImportLocationsPolygons extends BaseImport {
 					$q = qNew("SELECT id, slug FROM location WHERE slug LIKE '".\Nette\Utils\Strings::webalize($area['name'])."'");
 					$i = 0;
 
+					$newCss = array();
 					while($location = mysql_fetch_assoc($q)) {
-						$newCss = array();
 						foreach ($css as $class => $styles) {
 							$newClass = str_replace("rid{$area['rid']}", "rid{$location['id']}", $class);
 							$newCss[$newClass] = $styles;

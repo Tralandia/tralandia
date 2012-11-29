@@ -5,13 +5,13 @@ use Nette\Application\UI\Control;
 
 class CountryMap extends \BaseModule\Components\BaseControl {
 
-	public $locationRepository;
-	public $locationTypeRepository;
+	public $locationRepositoryAccessor;
+	public $locationTypeRepositoryAccessor;
 
-	public function __construct($locationRepository, $locationTypeRepository) {
+	public function __construct($locationRepositoryAccessor, $locationTypeRepositoryAccessor) {
 
-		$this->locationRepository = $locationRepository;
-		$this->locationTypeRepository = $locationTypeRepository;
+		$this->locationRepositoryAccessor = $locationRepositoryAccessor;
+		$this->locationTypeRepositoryAccessor = $locationTypeRepositoryAccessor;
 
 		parent::__construct();
 
@@ -19,7 +19,7 @@ class CountryMap extends \BaseModule\Components\BaseControl {
 
 	public function render() {
 
-		$country = $this->locationRepository->findOneBySlug('slovakia');
+		$country = $this->locationRepositoryAccessor->findOneBySlug('slovakia');
 
 		$clickMapData = $this->getClickMapData($country);
 
@@ -39,14 +39,14 @@ class CountryMap extends \BaseModule\Components\BaseControl {
 		$navigatorData = array();
 
 		$navigatorData['top'] = array(
-			$this->locationRepository->find(1),
+			$this->locationRepositoryAccessor->find(1),
 			$country
 		);
 
 		$navigatorData['otherCountries'] = array();
 		if ($country->clickMapData) {
 			foreach ($country->clickMapData['otherCountries'] as $countryId) {
-				$navigatorData['otherCountries'][] = $this->locationRepository->find($countryId);
+				$navigatorData['otherCountries'][] = $this->locationRepositoryAccessor->find($countryId);
 			}
 		}
 
@@ -61,9 +61,9 @@ class CountryMap extends \BaseModule\Components\BaseControl {
 			'mapBox' => array()
 		));
 
-		$type = $this->locationTypeRepository->findBySlug('region');
+		$type = $this->locationTypeRepositoryAccessor->findBySlug('region');
 
-		foreach ($this->locationRepository->findBy(array('parent'=>$country, 'type'=>$type)) as $key=>$location) {
+		foreach ($this->locationRepositoryAccessor->findBy(array('parent'=>$country, 'type'=>$type)) as $key=>$location) {
 			if (isset($location->clickMapData['coords'], $location->clickMapData['css'])) {
 				$list['regions'][$key] = $location;
 			}

@@ -78,7 +78,7 @@ class EntityGeneratorPresenter extends BasePresenter {
 			list($x, $entityNameTemp) = explode('/models/', $key, 2);
 			$entityNameTemp = str_replace(array('//', '/', '.php'), array('\\', '\\', ''), $entityNameTemp);
 
-			$filename = str_replace('.php', 'Entity.php', $key);
+			$filename = $key;
 			
 			$mainEntityReflector = $this->getEntityReflection($entityNameTemp);
 			$newClass = $this->generateNewClass($mainEntityReflector);
@@ -113,7 +113,7 @@ class EntityGeneratorPresenter extends BasePresenter {
 			$this->skipMethods = array();
 		}
 
-		$newClass = new PhpGenerator\ClassType($mainEntity->name);
+		$newClass = new \Nette\PhpGenerator\ClassType($mainEntity->name);
 
 		$construct = $newClass->addMethod('__construct');
 		$collections = array();
@@ -244,6 +244,9 @@ class EntityGeneratorPresenter extends BasePresenter {
 	}
 
 	public function generateNewCode($filename, $newClass) {
+		if (!preg_match("/\/[a-zA-Z]+Entity[\/a-zA-Z\.]*$/", $filename)) {
+			$filename = str_replace('.php', 'Entity.php', $filename);
+		}
 		$fileSource = fopen($filename, "r") or die("Could not open file!");
 		$data = fread($fileSource, filesize($filename)) or die("Could not read file!");
 		fclose($fileSource);
@@ -285,7 +288,7 @@ class EntityGeneratorPresenter extends BasePresenter {
 	}
 
 	public function getEntityReflection($name) {
-		if(Strings::endsWith($name, 'Entity')) $name = substr($name, 0, -6);
+		if($name!=='Entity\BaseEntity' && Strings::endsWith($name, 'Entity')) $name = substr($name, 0, -6);
 		if(!array_key_exists($name, $this->entitiesReflection)) {
 			$this->entitiesReflection[$name] = new Reflection\ClassType($name);
 		}

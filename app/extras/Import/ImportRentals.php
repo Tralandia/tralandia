@@ -54,7 +54,7 @@ class ImportRentals extends BaseImport {
 		$now = time();
 
 		if ($this->developmentMode == TRUE) {
-			$r = q('select * from objects where country_id = 46 order by rand() limit 1');
+			$r = q('select * from objects where country_id = 46 and interview is not null order by rand() limit 1');
 		} else {
 			$r = q('select * from objects');
 		}
@@ -83,11 +83,8 @@ class ImportRentals extends BaseImport {
 			$rental->editLanguage = $context->languageRepository->findOneByOldId($x['edit_language_id']);
 
 			$rental->status = $x['live'] == 1 ? $rental::STATUS_LIVE : $rental::STATUS_DRAFT;
-
-			$oldRentalTypes = array_unique(array_filter(explode(',', $x['objects_types_new'])));
-			foreach ($oldRentalTypes as $key => $value) {
-				$rental->addType($context->rentalTypeRepository->findOneByOldId($oldRentalTypesEn[$value]));
-			}
+			$oldRentalType = current(explode(',,', substr($x['objects_types_new'], 2, -2)));
+			$rental->setType($context->rentalTypeRepository->findOneByOldId($oldRentalTypesEn[$oldRentalType]));
 
 			// Locations
 			$rental->addLocation($context->locationRepository->findOneBy(array('oldId' => $x['country_id'], 'type' => $locationTypes['country'])));
@@ -220,11 +217,22 @@ class ImportRentals extends BaseImport {
 			}
 
 			// Tags
+			$allTags = array();
+			$r2 = qNew('select * from rental_tag');
+			while ($x1 = mysql_fetch_array($r2)) {
+				$allTags[$x1['oldId']] = $context->rentalTagRepositoryAccessor->get()->find($x1['id']);
+			}
 			$temp = array_unique(array_filter(explode(',', $x['tags'])));
 			if (is_array($temp) && count($temp)) {
 				foreach ($temp as $key => $value) {
-					if (isset($allAmenities[$value])) $rental->addAmenity($allAmenities[$value]);
+					if (isset($allTags[$value])) $rental->addTag($allTags[$value]);
 				}
+			}
+
+			// Interview
+			$temp = unserialize(stripslashes($x['interview']));
+			if (is_array($temp) && count($temp)) {
+				$rental->interview = $temp;
 			}
 
 			if (strlen($x['check_in'])) {
@@ -233,6 +241,10 @@ class ImportRentals extends BaseImport {
 
 			if (strlen($x['check_out'])) {
 				$rental->checkOut = $x['check_out'];
+			}
+
+			if (strlen($x['rooms'])) {
+				$rental->rooms = $x['rooms'];
 			}
 
 
@@ -254,7 +266,6 @@ class ImportRentals extends BaseImport {
 			}
 
 			$rental->pricelists = $pricelists;
-
 			$model->persist($rental);
 
 			// Media
@@ -264,7 +275,8 @@ class ImportRentals extends BaseImport {
 				foreach ($temp as $key => $value) {
 					$medium = $context->mediumRepository->findOneByOldUrl('http://www.tralandia.com/u/'.$value);
 					if (!$medium) {
-						$medium = $context->mediumServiceFactory->create();
+						$mediumEntity = $context->mediumRepositoryAccessor->get()->createNew();
+						$medium = $context->mediumDecoratorFactory->create($mediumEntity);
 						$medium->setContentFromUrl('http://www.tralandia.com/u/'.$value);
 						$rental->addMedium($medium->getEntity());
 					} else {

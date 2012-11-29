@@ -16,18 +16,13 @@ class MediumService extends \Service\BaseService {
 
 	private static $imgSizes = array(
 		'original' => array(
-				'width' => 0,
+				'width' => 1200,
 				'height' => 0,
 				'crop' => FALSE
 			),
 		'full' => array(
-				'width'=>451,
-				'height'=>288,
-				'crop'=>FALSE
-			),
-		'small' => array(
-				'width'=>271, 
-				'height'=>170, 
+				'width'	=> 467,
+				'height' => 276,
 				'crop'=>TRUE
 			)
 	);
@@ -68,10 +63,9 @@ class MediumService extends \Service\BaseService {
 
 		$mediumType = $this->mediumTypeRepositoryAccessor->get()->findOneByName($this->entity->details['mime']);
 		if (!$mediumType) {
-			$mediumTypeService = $this->mediumTypeServiceFactory->create();
-			$mediumType = $mediumTypeService->getEntity();
+			$mediumType = $this->mediumTypeRepositoryAccessor->get()->createNew();
 			$mediumType->name = $this->entity->details['mime'];
-			$mediumTypeService->save();
+			$this->mediumTypeRepositoryAccessor->get()->persist($mediumType);
 		}
 
 		if (preg_match("/image\//", $this->entity->details['mime'])) {

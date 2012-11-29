@@ -313,8 +313,8 @@ class BaseImport {
 			);
 			//throw new \Nette\UnexpectedValueException('Nenasiel som staru Phrase podla starej ID '.$oldPhraseId);
 		}
-		$phraseService = $this->context->phraseServiceFactory->create();
-		$phrase = $phraseService->getEntity();
+		$phrase = $this->context->phraseRepositoryAccessor->get()->createNew();
+		$phraseService = $this->context->phraseDecoratorFactory->create($phrase);
 		$phrase->ready = (bool)$oldPhraseData['ready'];
 		$phrase->type = $type;
 		$phrase->oldId = $oldPhraseId;
@@ -359,8 +359,8 @@ class BaseImport {
 	protected function createPhraseFromString($entityName, $entityAttribute, $level, $text, $textLanguage) {
 		$phraseType = $this->createPhraseType($entityName, $entityAttribute, $level);
 
-		$phraseService = $this->context->phraseServiceFactory->create();
-		$phrase = $phraseService->getEntity();
+		$phrase = $this->context->phraseRepositoryAccessor->get()->createNew();
+		$phraseService = $this->context->phraseDecoratorFactory->create($phrase);
 		$phrase->ready = TRUE;
 		$phrase->type = $phraseType;
 
@@ -393,6 +393,9 @@ class BaseImport {
 			//debug('iba vraciam premennu '.$phraseType->entityName.'->'.$phraseType->entityAttribute);
 			return $phraseType;
 		} else {
+			
+			// $phrase = $this->context->phraseRepositoryAccessor->get()->createNew();
+			// $phraseService = $this->context->phraseDecoratorFactory->create($phrase);
 			$phraseType = $this->context->phraseTypeEntityFactory->create();
 			$phraseType->entityName = $entityName;
 			$phraseType->entityAttribute = $entityAttribute;

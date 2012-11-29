@@ -10,20 +10,19 @@ use Service, Doctrine, Entity;
  */
 class PhraseService extends Service\BaseService {
 
-	protected $phraseTranslationRepositoryAccessor;
+	const REQUESTED = 1;
+	const CENTRAL = 5;
+	const SOURCE = 10;
 
-	public function injectRepositories(\Nette\DI\Container $dic)
-	{
-		$this->phraseTranslationRepositoryAccessor = $dic->phraseTranslationRepositoryAccessor;
-	}
+	public $centralLanguage;
 
 	public function createTranslation(Entity\Language $language, $translationText = NULL) {
 		$type = $this->getEntity()->type;
 		if(!$type instanceof \Entity\Phrase\Type) {
 			throw new \Nette\InvalidArgumentException('Set phrase type before creating translations.');
 		}
-		// @todo toto dorobit 
-		$translation = $this->phraseTranslationRepositoryAccessor->get()->createNew();
+		$translation = new Entity\Phrase\Translation;
+
 		$this->addTranslation($translation);
 		$translation->timeTranslated = new \Nette\DateTime();
 		$translation->language = $language;
@@ -34,14 +33,45 @@ class PhraseService extends Service\BaseService {
 	}
 
 	/**
+	 * Vrati translation-y v ziadanom, centralom a source jazyku, ak existuju
+	 * @param Entity\Language
+	 * @return Entity\Phrase\Translation
+	 */
+	public function getMainTranslations(Entity\Language $language) {
+		$t = array();
+
+		foreach ($this->entity->getTranslations() as $key => $value) {
+			if ($value->language->id == $language->id) {
+				$t[self::REQUESTED] = $value;
+			}
+
+			if ($value->language->id == $this->centralLanguage) {
+				$t[self::CENTRAL] = $value;
+			}
+
+			if ($this->entity->sourceLanguage && $value->language->id == $this->entity->sourceLanguage->id) {
+				$t[self::SOURCE] = $value;
+			}
+		}
+
+		ksort($t);
+
+		return $t;
+	}
+
+	/**
 	 * Vrati spravny preklad na zaklade jazyka
 	 * @param Entity\Language
 	 * @return Entity\Phrase\Translation
 	 */
-	public function getTranslation(Entity\Language $language) {
-		return $this->entity->getTranslations()->filter(function($entity) use ($language) {
-			return $entity->language->id == $language->id;
-		})->current();
+	public function getTranslation(Entity\Language $language, $loose = FALSE) {
+		$t = $this->getMainTranslations($language);
+		if ($loose) {
+			$t = array_filter($t);
+			return reset($t);
+		} else {
+			return $t[self::REQUESTED];
+		}
 	}
 
 	public function hasTranslation($language) {
@@ -53,8 +83,21 @@ class PhraseService extends Service\BaseService {
 	 * @param Entity\Language
 	 * @return Entity\Phrase\Translation
 	 */
-	public function getTranslateValue(Entity\Language $language) {
-		return (string) $this->getTranslation($language);
+	public function getTranslationText(Entity\Language $language, $loose = FALSE) {
+		$t = $this->getMainTranslations($language);
+		$text = '';
+		if ($loose) {
+			foreach ($t as $key => $value) {
+				if (strlen((string) $value)) {
+					$text = (string) $value;
+					break;
+				}
+			}
+		} else {
+			$text = $t[self::REQUESTED];
+		}
+
+		return (string) $text;
 	}
 
 	/**
@@ -63,7 +106,7 @@ class PhraseService extends Service\BaseService {
 	 * @param string
 	 * @return Phrase
 	 */
-	public function setTranslateValue(Entity\Language $language, $value) {
+	public function setTranslationText(Entity\Language $language, $value) {
 		$this->getTranslation($language)->translation = $value;
 		return $this;
 	}
@@ -76,19 +119,19 @@ class PhraseService extends Service\BaseService {
 		if($this->getEntity()->type->pluralVariationsRequired) {
 			$plurals = $language->getPluralsNames();
 		} else {
-			$plurals = $language->getDefaultPluralsNames();
+			$plurals = $language->getDefaultPluralName();
 		}
-
+ 
 		if($this->getEntity()->type->genderVariationsRequired) {
 			$genders = $language->getGendersNames();
 		} else {
-			$genders = $language->getDefaultGendersNames();
+			$genders = $language->getDefaultGenderName();
 		}
-
+ 
 		if($this->getEntity()->type->locativesRequired) {
 			$cases = $language->getCasesNames();
 		} else {
-			$cases = $language->getDefaultCasesNames();
+			$cases = $language->getDefaultCaseName();
 		}
 
 		$matrix = array();

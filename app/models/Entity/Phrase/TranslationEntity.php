@@ -20,6 +20,9 @@ use Nette\Utils\Arrays;
  */
 class Translation extends \Entity\BaseEntity {
 
+	const AFTER = 'After';
+	const BEFORE = 'Before';
+
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Phrase", inversedBy="translations", cascade={"persist", "remove"})
@@ -54,7 +57,7 @@ class Translation extends \Entity\BaseEntity {
 	 * @var string
 	 * @ORM\Column(type="string")
 	 */
-	protected $position = 'before';
+	protected $position = self::BEFORE;
 
 	/**
 	 * @var datetime
@@ -72,7 +75,7 @@ class Translation extends \Entity\BaseEntity {
 		if($this->phrase->type->isSimple()) {
 			$translation = $this->translation;
 		} else {
-			$translation = $this->getDefaulVariation();
+			$translation = $this->getDefaultVariation();
 		}
 		return $translation ? $translation : '{!!' . $this->id . '}';
 	}
@@ -134,7 +137,7 @@ class Translation extends \Entity\BaseEntity {
 			$this->variations = $variations;
 		}
 
-		$this->translation = $this->getDefaulVariation();
+		$this->translation = $this->getDefaultVariation();
 
 		return $this;		
 	}
@@ -143,27 +146,18 @@ class Translation extends \Entity\BaseEntity {
 		throw new \Nette\InvalidArgumentException('Argument "$variations" does not match with the expected value');
 	}
 
-	public function getDefaulVariation() {
+	public function getDefaultVariation() {
 		list($defaultPlural, $defaultGender, $defaultCase) = $this->getDefaultVariationPath();
 		return $this->variations[$defaultPlural][$defaultGender][$defaultCase];
 	}
 
+	public function getVariation($plural = NULL, $gender = NULL, $case = NULL) {
+		list($defaultPlural, $defaultGender, $defaultCase) = $this->getDefaultVariationPath();
+		return $this->variations[$plural === NULL ? $defaultPlural : $plural][$gender === NULL ? $defaultGender : $gender][$case === NULL ? $defaultCase : $case];
+	}
+
 	public function getDefaultVariationPath() {
-		$return = array('default', 'default', 'default');
-
-		$phraseType = $this->phrase->type;
-		$language = $this->language;
-		if($phraseType->pluralVariationsRequired) {
-			$return[0] = $language->getPrimaryPluralKey();
-		}
-
-		if($phraseType->genderVariationsRequired) {
-			$return[1] = $language->getPrimaryGenderKey();
-		}
-
-		if($phraseType->locativesRequired) {
-			$return[2] = $language->getPrimaryCaseKey();
-		}
+		$return = array(\Entity\Language::DEFAULT_SINGULAR, \Entity\Language::DEFAULT_GENDER, \Entity\Language::DEFAULT_CASE);
 
 		return $return;
 	}

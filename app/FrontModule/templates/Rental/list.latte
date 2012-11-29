@@ -48,7 +48,7 @@
 
 		        <div class="row-fluid objecList">
 		        	<div class="span4">
-		        		<a href="{link Rental:detail $rental->id}">
+		        		<a href="{link Rental:detail $rental}">
 		        		<!--<div class="addons btn">icon</div>--><div class="position">TOP</div>
 		        		{* @todo odstranit *}
 		        		{var $thumbLink = '';}
@@ -61,10 +61,10 @@
 		        		</a>
 		        	</div>
 		        	<div class="span8">
-		        		<h2><a href="{link Rental:detail $rental->id}">{_$rental->name}</a></h2>
+		        		<h2><a href="{link Rental:detail $rental}">{_$rental->name}</a></h2>
 
 		        		
-		        		<button rel="{$rental->id}" link="{link Rental:detail $rental->id}" thumb="{$thumbLink}" class="addToFavorites btn btn-mini listCompareBtn active"><span class="entypo-like"> porovnaj</span> </button>		        		
+		        		<button rel="{$rental->id}" link="{link Rental:detail $rental}" thumb="{$thumbLink}" class="addToFavorites btn btn-mini listCompareBtn active"><span class="entypo-like"> porovnaj</span> </button>		        		
 		        		
 
 		        		
@@ -84,7 +84,7 @@
                                         <b>Sezona: 9,50 €, Mimosezona: 8,50 €</b> osoba/noc
                                     </td>
                                     <td class="text-top">
-                                        <span class="entypo-phone"></span><a href="{link Rental:detail $rental->id}">Kontaktujte</a><br>
+                                        <span class="entypo-phone"></span><a href="{link Rental:detail $rental}">Kontaktujte</a><br>
                                         {if $rental->rank}<span class="entypo-discusion"></span><a href="#">{$rental->rank} hodnoteni</a>{/if}
                                     </td>
                                 </tr>

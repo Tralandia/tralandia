@@ -90,9 +90,10 @@ class ImportAttractions extends BaseImport {
 				foreach ($temp as $key => $value) {
 					$medium = $context->mediumRepository->findOneByOldUrl('http://www.tralandia.com/u/'.$value);
 					if (!$medium) {
-						$medium = $context->mediumServiceFactory->create();
-						$medium->setContentFromUrl('http://www.tralandia.com/u/'.$value);
-						$attraction->addMedium($medium->getEntity());
+						$medium = $context->mediumRepositoryAccessor->get()->createNew();
+						$mediumService = $context->mediumDecoratorFactory->create($medium);
+						$mediumService->setContentFromUrl('http://www.tralandia.com/u/'.$value);
+						$attraction->addMedium($medium);
 					} else {
 						$attraction->addMedium($medium);
 					}

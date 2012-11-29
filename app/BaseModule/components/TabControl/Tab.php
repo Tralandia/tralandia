@@ -9,7 +9,7 @@ class Tab extends Control {
 
 	public $header;
 
-	protected $content;
+	public $content;
 
 	protected $isControl = false;
 
