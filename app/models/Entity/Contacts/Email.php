@@ -20,7 +20,7 @@ class Email extends \Entity\BaseEntity {
 	 * @param string
 	 * @return Email
 	 */
-	public function setEmail($value) {
+	public function setValue($value) {
 		$this->value = $value;
 		return $this;
 	}
@@ -28,7 +28,7 @@ class Email extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getEmail() {
+	public function getValue() {
 		return $this->value;
 	}
 }

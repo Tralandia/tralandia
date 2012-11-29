@@ -7,4 +7,16 @@ form:
 	fields:
 		email:
 			label: Email
-			control: [type: text]
+			control: [type: email]
+
+#		phone:
+#			label: Phone
+#			control: [type: phone]
+
+		url:
+			label: URL
+			control: [type: url]
+
+#		address:
+#			label: Address
+#			control: [type: address]

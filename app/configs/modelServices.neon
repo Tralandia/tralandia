@@ -37,9 +37,12 @@ services:
 	domainRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Domain')
 
 
-	#phone
+	#phone+email+address+url
 	#----------
 	phoneRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Contacts\Phone')
+	emailRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Contacts\Email')
+	urlRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Contacts\Url')
+	addressRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Contacts\Address')
 
 
 	#email

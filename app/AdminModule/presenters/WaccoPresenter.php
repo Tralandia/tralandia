@@ -28,7 +28,7 @@ class WaccoPresenter extends BasePresenter {
 */
 
 		$repo = $this->context->model->getRepository('Entity\Test');
-		$entity = $repo->createNew();
+		$entity = $repo->find(1);
 		$this->template->form = $this->getForm('test', $entity);
 	}
 

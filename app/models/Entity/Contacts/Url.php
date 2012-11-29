@@ -20,7 +20,7 @@ class Url extends \Entity\BaseEntity {
 	 * @param string
 	 * @return Url
 	 */
-	public function setUrl($value) {
+	public function setValue($value) {
 		$this->value = $value;
 		return $this;
 	}
@@ -28,7 +28,7 @@ class Url extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getUrl() {
+	public function getValue() {
 		return $this->value;
 	}
 }
