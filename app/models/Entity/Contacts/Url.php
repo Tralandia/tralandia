@@ -6,9 +6,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="email", indexes={@ORM\index(name="value", columns={"value"})})
+ * @ORM\Table(name="url")
  */
-class Email extends \Entity\BaseEntity {
+class Url extends \Entity\BaseEntity {
 
 	/**
 	 * @var string
@@ -18,9 +18,9 @@ class Email extends \Entity\BaseEntity {
 		
 	/**
 	 * @param string
-	 * @return Email
+	 * @return Url
 	 */
-	public function setEmail($value) {
+	public function setUrl($value) {
 		$this->value = $value;
 		return $this;
 	}
@@ -28,7 +28,7 @@ class Email extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getEmail() {
+	public function getUrl() {
 		return $this->value;
 	}
 }

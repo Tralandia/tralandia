@@ -18,14 +18,18 @@ class WaccoPresenter extends BasePresenter {
 		$this->template->form = $this->getForm('currency', $entity);
 		*/
 
+/*
 		$phoneBook = $this->getService('phoneBook');
 		$phone = '0949 888 999';
 
 		debug($phoneBook->find($phone));
 		debug($phoneBook->getOrCreate($phone));
 		debug($phoneBook->find($phone));
+*/
 
-		$this->template->form = null;
+		$repo = $this->context->model->getRepository('Entity\Test');
+		$entity = $repo->createNew();
+		$this->template->form = $this->getForm('test', $entity);
 	}
 
 	public function actionList2() {

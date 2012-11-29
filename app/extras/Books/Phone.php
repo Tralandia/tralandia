@@ -61,6 +61,16 @@ class Phone extends Nette\Object {
 	}
 
 	/**
+	 * Je cislo validne?
+	 * @param string $number
+	 * @return bool
+	 */
+	public function isValid($number) {
+		$response = $this->serviceRequest($number);
+		return $response->validationResult->isValidNumber == 'true';
+	}
+
+	/**
 	 * Vycisti a pripravi cislo na vyhladavanie
 	 * @param string $number
 	 * @return int

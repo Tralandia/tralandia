@@ -3,12 +3,10 @@
 namespace Entity\Contacts;
 
 use Doctrine\ORM\Mapping as ORM;
-use	Extras\Annotation as EA;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity
  * @ORM\Table(name="phone", indexes={@ORM\index(name="phone", columns={"phone"})})
- * @EA\Primary(key="id", value="phone")
  */
 class Phone extends \Entity\BaseEntity {
 
