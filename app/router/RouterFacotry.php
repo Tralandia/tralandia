@@ -32,7 +32,9 @@ class RouterFactory
 		$router[] = $gregor = new RouteList('gregor');
 		$gregor[] = new Route('gregor/[<presenter>/[<action>[/<id>]]]', array(
 			'presenter' => 'Page',
-			'action' =>  'home'
+			'action' =>  'home',
+			'primaryLocation' => $this->defaultPrymaryLocation,
+			'language' => $this->defaultLanguage,			
 		));
 
 		$router[] = $adminRouter = new RouteList('Admin');

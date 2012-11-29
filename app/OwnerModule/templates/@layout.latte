@@ -1,19 +1,32 @@
+
 {control header:begin}
 	{control css}
 	{control js}
 {control header:end}
 <body>
-	<div class="mainHolder">
-		<div class="flashMessage"><div n:foreach="$flashes as $flash" class="msg {$flash->type}">{$flash->message}</div></div>
-		<div class="mainBody">
-			{include #content}
-			{include search.latte}
-			{include footer.latte}
-		</div>
-		<div class="mainHeader" style="background-image: url({!$staticPath}images/{$currentLocation->iso}.country.png);">
-			{include header.latte}
-		</div>
-	</div>
+	<div class="container baseRadius" id="container">
+		<div class="row">
+
+			{*
+			{include '../../FrontModule/templates/header.latte'}
+			*}
+			
+			{include '../../FrontModule/templates/Components/sidebar.latte'}
+
+			<div class="span9 innerPaddingRitgh">
+
+						{include #content}
+
+			</div>
+
+{*
+			{include '/app/FrontModule/templates/Components/supFooter.latte'}
+
+			{include '/app/FrontModule/templates/Components/footer.latte'}
+*}
+
+		</div>		
+	</div>		
 </body>
 
 </html>

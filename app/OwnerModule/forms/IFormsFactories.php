@@ -4,6 +4,6 @@ namespace OwnerModule\Forms;
 
 interface IRentalEditFormFactory {
 
-	public function create();
-	
+	public function create(\Entity\Rental\Rental $rental);
+
 }

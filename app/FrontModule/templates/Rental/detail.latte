@@ -283,7 +283,7 @@
 
 
 
-		{foreach $rentalService->getAmenitiesByType(array('relax','kitchen')) as $amenities}
+		{foreach $rentalService->getAmenitiesByType(array('important','board','kitchen','bathroom','heating','parking','children','room','relax','service','owner-availability','wellness','congress','other')) as $amenities}
 			<div class="amenities">
 			{foreach $amenities as $amenity}
 				{if $iterator->first}				
