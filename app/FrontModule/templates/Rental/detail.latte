@@ -218,9 +218,7 @@
 		{/foreach}
 		</p>
 
-		{foreach $rental->types as $type}
-			{_$type->name}
-		{/foreach}
+		{_$rental->type->name}
 
 		{dump $rental->pricelists}
 		
@@ -242,7 +240,7 @@
 		
 		
 		<br/>
-		{$rental->interview}
+		{dump $rental->interview}
 
 		<div class="detailAmanities">
 			<ul class="objectDetailServicesIconList list">
@@ -251,9 +249,7 @@
 			   <li>
 				{_o883}
 				<strong>
-					{foreach $rental->types AS $rentalType}
-						{_$rentalType->name}
-					{/foreach}
+						{_$rental->type->name}
 				</strong>
 
 			   </li>
@@ -282,7 +278,7 @@
 
 	<!-- right sidebar -->
 	<div class="span3 marginTop">
-		<button class="btn btn-compare addToFavorites" rel="{$rental->id}" link="{link Rental:detail $rental->id}" thumb="{$firstPhoto}"><span class="entypo-star">{_o12334}</span></button>
+		<button class="btn btn-compare addToFavorites" rel="{$rental->id}" link="{link Rental:detail $rental}" thumb="{$firstPhoto}"><span class="entypo-star">{_o12334}</span></button>
 
 
 		<div class="sidebarContact">

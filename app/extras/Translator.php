@@ -63,7 +63,7 @@ class Translator implements \Nette\Localization\ITranslator {
 			} else {
 			}
 
-			if (!$translation && $translation = $phrase->getTranslation($this->language)) {
+			if (!$translation && $translation = $phrase->getTranslation($this->language, TRUE)) {
 				if ($variation === NULL) {
 					$translation = $translation->translation;
 				} else {
