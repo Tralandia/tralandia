@@ -10,9 +10,9 @@ use Service, Doctrine, Entity;
  */
 class PhraseService extends Service\BaseService {
 
-	const REQUESTED = 'requested';
-	const CENTRAL = 'central';
-	const SOURCE = 'source';
+	const REQUESTED = 1;
+	const CENTRAL = 5;
+	const SOURCE = 10;
 
 	public $centralLanguage;
 
@@ -49,10 +49,12 @@ class PhraseService extends Service\BaseService {
 				$t[self::CENTRAL] = $value;
 			}
 
-			if ($value->language->id == $this->entity->sourceLanguage->id) {
+			if ($this->entity->sourceLanguage && $value->language->id == $this->entity->sourceLanguage->id) {
 				$t[self::SOURCE] = $value;
 			}
 		}
+
+		ksort($t);
 
 		return $t;
 	}
@@ -65,7 +67,8 @@ class PhraseService extends Service\BaseService {
 	public function getTranslation(Entity\Language $language, $loose = FALSE) {
 		$t = $this->getMainTranslations($language);
 		if ($loose) {
-			return reset(array_filter($t));
+			$t = array_filter($t);
+			return reset($t);
 		} else {
 			return $t[self::REQUESTED];
 		}
@@ -82,7 +85,6 @@ class PhraseService extends Service\BaseService {
 	 */
 	public function getTranslationText(Entity\Language $language, $loose = FALSE) {
 		$t = $this->getMainTranslations($language);
-
 		$text = '';
 		if ($loose) {
 			foreach ($t as $key => $value) {

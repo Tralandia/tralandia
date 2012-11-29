@@ -202,7 +202,9 @@ factories:
 			- $routingPathSegmentRepositoryAccessor(@routingPathSegmentRepositoryAccessor)
 			- $domainRepositoryAccessor(@domainRepositoryAccessor)
 			- $pageRepositoryAccessor(@pageRepositoryAccessor)
+			- $rentalTagRepositoryAccessor(@rentalTagRepositoryAccessor)
 			- $rentalAmenityRepositoryAccessor(@rentalAmenityRepositoryAccessor)
+			- $phraseDecoratorFactory(@phraseDecoratorFactory)
 	rentalSearchServiceFactory: 
 		class: Service\Rental\RentalSearchService(%location%)
 		implement: Service\Rental\IRentalSearchServiceFactory

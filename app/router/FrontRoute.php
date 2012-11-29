@@ -31,7 +31,7 @@ class FrontRoute implements Nette\Application\IRouter {
 		'attractionType' => 4,
 		'location' => 6,
 		'rentalType' => 8,
-		'tag' => 10,
+		'rentalTag' => 10,
 	);
 
 	protected static $pathSegmentTypesById = array(
@@ -39,7 +39,7 @@ class FrontRoute implements Nette\Application\IRouter {
 		4 => 'attractionType',
 		6 => 'location',
 		8 => 'rentalType',
-		10 => 'tag',
+		10 => 'rentalTag',
 	);
 
 	protected $appParams = array(
@@ -47,7 +47,7 @@ class FrontRoute implements Nette\Application\IRouter {
 		'primaryLocation' => true,
 		'language' => null,
 		'location' => null,
-		'tag' => null,
+		'rentalTag' => null,
 		'attractionType' => null,
 		'rentalType' => null,
 		'page' => null,
@@ -62,7 +62,9 @@ class FrontRoute implements Nette\Application\IRouter {
 	public $routingPathSegmentRepositoryAccessor;
 	public $domainRepositoryAccessor;
 	public $pageRepositoryAccessor;
+	public $rentalTagRepositoryAccessor;
 	public $rentalAmenityRepositoryAccessor;
+	public $phraseDecoratorFactory;
 	
 	public function __construct(Caching\Cache $cache, $hostMask)
 	{
@@ -201,6 +203,16 @@ class FrontRoute implements Nette\Application\IRouter {
 					if ($key == 2) continue;
 					//@todo - dorobit tagAfter alebo tagBefore (ak je to tag)
 					if (isset($params->{$value})) {
+						if ($value == 'rentalTag') {
+							$tagName = $this->phraseDecoratorFactory->create($params->rentalTag->name);
+							$tagTranslation = $tagName->getTranslation($params->language);
+							if ($tagTranslation->position == \Entity\Phrase\Translation::BEFORE) {
+								$value = \Entity\Phrase\Translation::BEFORE;
+							} else {
+								$value = \Entity\Phrase\Translation::AFTER;
+							}
+							$value = 'tag'.$value;
+						}
 						$hash[] = '/'.$value;
 					}
 				}
@@ -241,14 +253,8 @@ class FrontRoute implements Nette\Application\IRouter {
 		foreach ($pathSegmentList as $key => $value) {
 			$t = self::$pathSegmentTypesById[$value->type];
 			$keyTemp = $pathSegmentTypesFlip[$value->type];
-			if ($t == 'tag') {
-				$accessor = 'rentalAmenityRepositoryAccessor';
-				$amenityTypeId = 13; //@todo - toto spravit dynamicky alebo zmenit na konstantu po spusteni trax
-				$pathSegmentListNew[$keyTemp] = $this->{$accessor}->get()->findOneBy(array('id' => $value->entityId, 'type_id' => $amenityTypeId));
-			} else {
-				$accessor = $t.'RepositoryAccessor';
-				$pathSegmentListNew[$keyTemp] = $this->{$accessor}->get()->find($value->entityId);
-			}
+			$accessor = $t.'RepositoryAccessor';
+			$pathSegmentListNew[$keyTemp] = $this->{$accessor}->get()->find($value->entityId);
 		}
 		return $pathSegmentListNew;
 	}

@@ -12,6 +12,7 @@ class RentalSearchService extends Service\BaseService
 
 	public $primaryLocation;
 	public $cacheFactory;
+	public $searchCache;
 	
 	public $rentalRepositoryAccessor;
 	public $locationRepositoryAccessor;
@@ -30,6 +31,7 @@ class RentalSearchService extends Service\BaseService
 	public function __construct(\Entity\Location\Location $location) {
 
 		$this->addCriteria(self::CRITERIA_PRIMARY_LOCATION, $location);
+		$this->searchCache = $this->cacheFactory->create($this->primaryLocation);
 
 	}
 
@@ -50,59 +52,14 @@ class RentalSearchService extends Service\BaseService
 			if ($criteria===self::CRITERIA_PRIMARY_LOCATION) {
 				$this->primaryLocation = $value;
 			} else {
-				if ($rentalsIds = $this->findRentalIdsBy($criteria, $value)) {
+				$this->searchCache->setCriteria($criteria);
+				$this->searchCache->setValue($value);
+
+				if ($rentalsIds = $this->searchCache->findRentalIdsBy($criteria, $value)) {
 					$this->results[$this->primaryLocation->getId()][$criteria][$value->getId()] = $rentalsIds;
 				}
 			}
 			
-		}
-
-	}
-
-	private function findRentalIdsBy($criteria, $value) {
-
-		$searchCache = $this->cacheFactory->create($this->primaryLocation);
-		$searchCache->setCriteria($criteria);
-
-		if ($searchCache->isValid()) {
-			return $searchCache->getIds();
-		} else {
-			$ids = array();
-			switch($criteria) {
-				case self::CRITERIA_LOCATION:
-				case self::CRITERIA_AMENITIES:
-				case self::CRITERIA_LANGUAGES_SPOKEN:
-					foreach($value->getRentals() as $rental) {
-						$ids[] = $rental->getId();
-					}
-					break;
-
-				case self::CRITERIA_RENTAL_TYPE:
-					foreach($this->rentalRepositoryAccessor->get()->findByType($value) as $rental) {
-						$ids[] = $rental->getId();
-					}
-					break;
-
-				case self::CRITERIA_AREA_BOUNDRIES:
-					
-					break;
-
-				case self::CRITERIA_CAPACITY:
-					
-					break;
-
-				case self::CRITERIA_PRICE_CATEGORY:
-					
-					break;
-
-				default:
-					return FALSE;
-					break;
-			}
-
-			$searchCache->save($ids);
-
-			return $ids;
 		}
 
 	}

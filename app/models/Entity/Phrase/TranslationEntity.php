@@ -20,6 +20,9 @@ use Nette\Utils\Arrays;
  */
 class Translation extends \Entity\BaseEntity {
 
+	const AFTER = 'After';
+	const BEFORE = 'Before';
+
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Phrase", inversedBy="translations", cascade={"persist", "remove"})
@@ -54,7 +57,7 @@ class Translation extends \Entity\BaseEntity {
 	 * @var string
 	 * @ORM\Column(type="string")
 	 */
-	protected $position = 'before';
+	protected $position = self::BEFORE;
 
 	/**
 	 * @var datetime
