@@ -37,6 +37,12 @@ class Currency extends \Entity\BaseEntity {
 	 */
 	protected $rounding;
 
+	/**
+	 * @var float
+	 * @ORM\Column(type="float")
+	 */
+	protected $searchInterval = 10;
+
 	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
