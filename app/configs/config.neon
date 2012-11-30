@@ -187,6 +187,6 @@ services:
 	itemTinymceFactory: Extras\FormMask\Items\Foctories\TinymceFactory
 	itemMapFactory: Extras\FormMask\Items\Foctories\MapFactory
 	itemEmailFactory: Extras\FormMask\Items\Foctories\EmailFactory
-	itemAddressFactory: Extras\FormMask\Items\Foctories\AddressFactory(@addressRepositoryAccessor)
+	itemAddressFactory: Extras\FormMask\Items\Foctories\AddressFactory(@translator, @addressRepositoryAccessor)
 	itemPhoneFactory: Extras\FormMask\Items\Foctories\PhoneFactory
 	itemUrlFactory: Extras\FormMask\Items\Foctories\UrlFactory

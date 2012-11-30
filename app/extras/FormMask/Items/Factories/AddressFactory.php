@@ -12,11 +12,16 @@ class AddressFactory implements IFactory {
 	/** @var Extras\Models\Repository\RepositoryAccessor */
 	protected $repositoryAccessor;
 
+	/** @var Extras\Translator */
+	protected $translator;
+
 	/**
+	 * @param Extras\Translator
 	 * @param Extras\Models\Repository\RepositoryAccessor
 	 */
-	public function __construct(Extras\Models\Repository\RepositoryAccessor $repositoryAccessor) {
+	public function __construct(Extras\Translator $translator, Extras\Models\Repository\RepositoryAccessor $repositoryAccessor) {
 		$this->repositoryAccessor = $repositoryAccessor;
+		$this->translator = $translator;
 	}
 	
 	/**
@@ -27,6 +32,6 @@ class AddressFactory implements IFactory {
 	 * @return Extras\FormMask\Items\Address
 	 */
 	public function create($name, $label, Extras\Models\Entity\IEntity $entity) {
-		return new Extras\FormMask\Items\Address($name, $label, $entity, $this->repositoryAccessor);
+		return new Extras\FormMask\Items\Address($name, $label, $entity, $this->translator, $this->repositoryAccessor);
 	}
 }

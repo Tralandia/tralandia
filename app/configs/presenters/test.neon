@@ -19,4 +19,7 @@ form:
 
 		address:
 			label: Address
-			control: [type: address]
+			control: 
+				type: address
+				repository: @locationRepositoryAccessor
+				items: [getItems, id, name]

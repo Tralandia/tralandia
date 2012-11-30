@@ -43,7 +43,7 @@ class Generator extends Nette\Object {
 			}
 
 			// nastavenie veci pre ziskanie itemov ku selektu
-			if ($factory->field->getType() === 'select') {
+			if ($factory->field->getType() === 'select' || $factory->field->getType() === 'address') {
 				$item->setRepository($factory->field->getControlOption('repository'));
 				$params = $factory->field->getControlOption('items');
 				$method = array_shift($params);

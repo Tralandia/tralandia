@@ -32,9 +32,9 @@ class Email extends Base {
 	}
 
 	public function getChildrenValue() {
-		$children = $this->entity->{$this->getterMethodName($this->name)};
+		$children = $this->entity->{$this->getterMethodName($this->name)}();
 		if ($children) {
-			return $children()->getValue();
+			return $children->getValue();
 		}
 		return null;
 	}

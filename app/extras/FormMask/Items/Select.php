@@ -84,7 +84,7 @@ class Select extends Text {
 			$itemsFormated = array();
 			list($key, $value) = $this->itemsParams;
 			foreach ($items as $item) {
-				$itemsFormated[$item->{$key}] = $this->translator->translate($item->{$value});
+				$itemsFormated[$item->{$key}] = @$this->translator->translate($item->{$value});
 			}
 			$items = $itemsFormated;
 		}
