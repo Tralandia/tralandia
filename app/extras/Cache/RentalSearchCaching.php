@@ -30,9 +30,42 @@ class RentalSearchCaching extends \Nette\Object {
 		return $this;
 	}
 
-	public function createTopRentalList() {
+	public function createFeaturedRentalList() {
+		$featured = array();
 		$rentals = $this->rentalRepositoryAccessor->get()->findFeatured($this->location);
-		
+		foreach ($rentals as $key => $value) {
+			$featured[$value['id']] = $value['id'];
+		}
+		$this->searchCache['featured'] = $featured;
+
+		return $featured;
+	}
+
+	public function createOrderRentalList() {
+		$featured = $this->createFeaturedRentalList();
+
+		$notFeatured = array();
+
+		$rentals = $this->rentalRepositoryAccessor->get()->find(array('primaryLocation' => $this->location, 'status' => \Entity\Rental\Rental::STATUS_LIVE));
+		foreach ($rentals as $key => $value) {
+			$notFeatured[$value['id']] = $value['id'];
+		}
+
+		foreach ($featured as $key => $value) {
+			unset($notFeatured[$key]);
+		}
+
+		//@todo - this is just simple shuffle, but we need to make it more efficient so that: 
+		// results are the same during the day (reconsider whether trully necessary)
+		// better filled rentals should be higher with higher probability
+		shuffle($featured);
+		shuffle($notFeatured);
+
+		$order = array_merge($featured, $notFeatured);
+
+		$this->searchCache['order'] = $order;
+
+		return $order;
 	}
 
 }
