@@ -60,7 +60,7 @@ class Rental extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Location\Location", inversedBy="rental")
+	 * @ORM\ManyToOne(targetEntity="Entity\Location\Location")
 	 */
 	protected $primaryLocation;
 
@@ -402,6 +402,35 @@ class Rental extends \Entity\BaseEntity {
 	public function getMissingInformation()
 	{
 		return $this->missingInformation;
+	}
+		
+	/**
+	 * @param \Entity\Location\Location
+	 * @return \Entity\Rental\Rental
+	 */
+	public function setPrimaryLocation(\Entity\Location\Location $primaryLocation)
+	{
+		$this->primaryLocation = $primaryLocation;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Rental\Rental
+	 */
+	public function unsetPrimaryLocation()
+	{
+		$this->primaryLocation = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Location\Location|NULL
+	 */
+	public function getPrimaryLocation()
+	{
+		return $this->primaryLocation;
 	}
 		
 	/**
@@ -816,6 +845,64 @@ class Rental extends \Entity\BaseEntity {
 	public function getCheckOut()
 	{
 		return $this->checkOut;
+	}
+		
+	/**
+	 * @param float
+	 * @return \Entity\Rental\Rental
+	 */
+	public function setPriceSeason($priceSeason)
+	{
+		$this->priceSeason = $priceSeason;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Rental\Rental
+	 */
+	public function unsetPriceSeason()
+	{
+		$this->priceSeason = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return float|NULL
+	 */
+	public function getPriceSeason()
+	{
+		return $this->priceSeason;
+	}
+		
+	/**
+	 * @param float
+	 * @return \Entity\Rental\Rental
+	 */
+	public function setPriceOffSeason($priceOffSeason)
+	{
+		$this->priceOffSeason = $priceOffSeason;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Rental\Rental
+	 */
+	public function unsetPriceOffSeason()
+	{
+		$this->priceOffSeason = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return float|NULL
+	 */
+	public function getPriceOffSeason()
+	{
+		return $this->priceOffSeason;
 	}
 		
 	/**

@@ -33,4 +33,87 @@ class InterviewAnswer extends \Entity\BaseEntityDetails {
 
 
 	//@entity-generator-code --- NEMAZAT !!!
+
+	/* ----------------------------- Methods ----------------------------- */		
+	public function __construct()
+	{
+		parent::__construct();
+	}
+		
+	/**
+	 * @param \Entity\Rental\Rental
+	 * @return \Entity\Rental\InterviewAnswer
+	 */
+	public function setRental(\Entity\Rental\Rental $rental)
+	{
+		$this->rental = $rental;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Rental\InterviewAnswer
+	 */
+	public function unsetRental()
+	{
+		$this->rental = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Rental\Rental|NULL
+	 */
+	public function getRental()
+	{
+		return $this->rental;
+	}
+		
+	/**
+	 * @param \Entity\Rental\InterviewQuestion
+	 * @return \Entity\Rental\InterviewAnswer
+	 */
+	public function setQuestion(\Entity\Rental\InterviewQuestion $question)
+	{
+		$this->question = $question;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Rental\InterviewAnswer
+	 */
+	public function unsetQuestion()
+	{
+		$this->question = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Rental\InterviewQuestion|NULL
+	 */
+	public function getQuestion()
+	{
+		return $this->question;
+	}
+		
+	/**
+	 * @param \Entity\Phrase\Phrase
+	 * @return \Entity\Rental\InterviewAnswer
+	 */
+	public function setAnswer(\Entity\Phrase\Phrase $answer)
+	{
+		$this->answer = $answer;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Phrase\Phrase|NULL
+	 */
+	public function getAnswer()
+	{
+		return $this->answer;
+	}
 }

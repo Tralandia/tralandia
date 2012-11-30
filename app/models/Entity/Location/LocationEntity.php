@@ -180,6 +180,7 @@ class Location extends \Entity\BaseEntityDetails {
 		$this->companies = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->offices = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->marketings = new \Doctrine\Common\Collections\ArrayCollection;
+		$this->primaryRentals = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->rentals = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->users = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->backLinks = new \Doctrine\Common\Collections\ArrayCollection;
@@ -575,6 +576,42 @@ class Location extends \Entity\BaseEntityDetails {
 	public function getMarketings()
 	{
 		return $this->marketings;
+	}
+		
+	/**
+	 * @param \Entity\Rental\Rental
+	 * @return \Entity\Location\Location
+	 */
+	public function addPrimaryRental(\Entity\Rental\Rental $primaryRental)
+	{
+		if(!$this->primaryRentals->contains($primaryRental)) {
+			$this->primaryRentals->add($primaryRental);
+		}
+		$primaryRental->setPrimaryLocation($this);
+
+		return $this;
+	}
+		
+	/**
+	 * @param \Entity\Rental\Rental
+	 * @return \Entity\Location\Location
+	 */
+	public function removePrimaryRental(\Entity\Rental\Rental $primaryRental)
+	{
+		if($this->primaryRentals->contains($primaryRental)) {
+			$this->primaryRentals->removeElement($primaryRental);
+		}
+		$primaryRental->unsetPrimaryLocation();
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Rental\Rental
+	 */
+	public function getPrimaryRentals()
+	{
+		return $this->primaryRentals;
 	}
 		
 	/**
