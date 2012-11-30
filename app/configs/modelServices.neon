@@ -158,8 +158,10 @@ services:
 
 	#rental
 	#----------
-	rentalRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Rental\Rental')
-
+	rentalRepositoryAccessor: 
+		class: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Rental\Rental')
+		setup:
+			- setParameters(@invoiceServiceTypeRepositoryAccessor)
 
 	#----------
 	rentalAmenityRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Rental\Amenity')
