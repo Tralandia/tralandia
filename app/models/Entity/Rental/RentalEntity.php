@@ -149,6 +149,18 @@ class Rental extends \Entity\BaseEntity {
 	protected $checkOut;
 
 	/**
+	 * @var float
+	 * @ORM\Column(type="float", nullable=true)
+	 */
+	protected $priceSeason;
+
+	/**
+	 * @var float
+	 * @ORM\Column(type="float", nullable=true)
+	 */
+	protected $priceOffSeason;
+
+	/**
 	 * @var json
 	 * @ORM\Column(type="json", nullable=true)
 	 */
