@@ -188,7 +188,12 @@ services:
 	itemCheckboxFactory: Extras\FormMask\Items\Foctories\CheckboxFactory
 	itemTinymceFactory: Extras\FormMask\Items\Foctories\TinymceFactory
 
-factories:
+factories: 
+	rentalEditFormFactory: 
+		class: OwnerModule\Forms\RentalEditForm(%rental%)
+		implement: OwnerModule\Forms\IRentalEditFormFactory
+		arguments: [Entity\Rental\Rental rental]
+
 	frontRentalFactory:
 		class: Routers\FrontRoute(@routerCache, %router.hostMask%)
 		implement: Routers\IFrontRouteFactory

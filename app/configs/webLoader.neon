@@ -169,7 +169,9 @@ parameters:
 			Front: 
 				-  %webloader.packages.Front%
 				-  %webloader.packages.gMap%
-
+			Owner: 
+				-  %webloader.packages.Front%
+				-  %webloader.packages.gMap%
 			Gregor:
 				-  %webloader.packages.Front%
 

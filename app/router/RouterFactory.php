@@ -32,7 +32,9 @@ class RouterFactory
 		$router[] = $gregor = new RouteList('gregor');
 		$gregor[] = new Route('gregor/[<presenter>/[<action>[/<id>]]]', array(
 			'presenter' => 'Page',
-			'action' =>  'home'
+			'action' =>  'home',
+			'primaryLocation' => $this->defaultPrymaryLocation,
+			'language' => $this->defaultLanguage,			
 		));
 
 		$router[] = $adminRouter = new RouteList('Admin');
@@ -53,16 +55,27 @@ class RouterFactory
 			'presenter' => 'Admin',
 			'action' =>  'list'
 		));
-	*/	$adminRouter[] = new Route('admin/<presenter>/[<action>[/<id>]]', array(
+	*/	
+		$adminRouter[] = new Route('admin/<presenter>/[<action>[/<id>]]', array(
 			'presenter' => 'Admin',
 			'action' =>  'list',
 			'primaryLocation' => $this->defaultPrymaryLocation,
 			'language' => $this->defaultLanguage,
 		));
 
+		$router[] = $ownerRouter = new RouteList('Owner');
+
+		$ownerRouter[] = new Route('owner/<presenter>/[<action>[/<id>]]', array(
+			'presenter' => 'Rental',
+			'action' =>  'default',
+			'primaryLocation' => $this->defaultPrymaryLocation,
+			'language' => $this->defaultLanguage,
+		));
+
+		
 		$router[] = $frontRouter = new RouteList('Front');
 
-		// $frontRouter[] = $this->frontRouteFactory->create();
+		$frontRouter[] = $this->frontRouteFactory->create();
 	
 		
 		$frontRouter[] = new Route('<presenter>/[<action>[/<id>]]', array(

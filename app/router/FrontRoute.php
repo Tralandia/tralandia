@@ -47,6 +47,7 @@ class FrontRoute implements Nette\Application\IRouter {
 		'primaryLocation' => true,
 		'language' => null,
 		'location' => null,
+		'rental' => null,
 		'rentalTag' => null,
 		'attractionType' => null,
 		'rentalType' => null,
@@ -228,6 +229,7 @@ class FrontRoute implements Nette\Application\IRouter {
 			),
 			'presenter' => $params->presenter,
 		);
+
 		foreach ($this->appParams as $key => $value) {
 			if($value === true && !isset($params->$key)) {
 				$params->$key = $this->getMetadata($key);

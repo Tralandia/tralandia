@@ -107,6 +107,7 @@ h1,h2,h3,h4,h5 {
 
 a , a:hover {
 	color: @darkGreen;
+	text-decoration: underline;
 }
 
 p {
@@ -1029,6 +1030,25 @@ border-top-right-radius: 5px;
 /****************************************************************************************
 /***************************************************************************************/
 
+#content {
+
+	.amenities {
+
+		h3 {
+			
+			color: #fff;
+			font-size: 16px;
+			line-height: 16px;
+			margin: 0;
+			padding: 5px;
+			.top-border-radius(5px);
+			.basic-gradient(@lightGreen,@darkGreen);
+		}
+	}
+
+}
+
+
 .detailAmanities {
 	width: 50%;
 	float: left;
@@ -1055,6 +1075,14 @@ border-top-right-radius: 5px;
 /* detail object right sidebar 
 /****************************************************************************************/
 
+.sidebarRightDetail {
+	font-size: 11px;
+
+	.btn {
+		font-size: 11px;		
+	}
+}
+
 .btn.btn-compare{
 	.basic-gradient(#5b78af,#27407e);
 	color: @white;
@@ -1063,13 +1091,14 @@ border-top-right-radius: 5px;
 	.inner-shadow(20px , #6a87bd);
 	&:hover , &.selected {
 		.basic-gradient(#27407e,#5b78af);
+	}
 
+	&.selected {
 		span {
 			&:before {
 				content:'\2713';
 			}			
 		}
-
 	}
 }
 
