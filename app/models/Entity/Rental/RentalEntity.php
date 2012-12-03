@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
 
 /**
- * @ORM\Entity(repositoryClass="Repository\Rental\RentalRepository")
+ * @ORM\Entity()
  * @ORM\Table(name="rental", indexes={@ORM\index(name="status", columns={"status"}), @ORM\index(name="slug", columns={"slug"}), @ORM\index(name="calendarUpdated", columns={"calendarUpdated"})})
  * @EA\Primary(key="id", value="slug")
  */

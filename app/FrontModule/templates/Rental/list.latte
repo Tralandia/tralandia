@@ -48,7 +48,7 @@
 
 		        <div class="row-fluid objecList">
 		        	<div class="span4">
-		        		<a href="{link Rental:detail $rental}">
+		        		<a href="{link Rental:detail $rental}" n:class="$rentalService->isFeatured() ? top , clasic">
 		        		<!--<div class="addons btn">icon</div>--><div class="position">TOP</div>
 		        		{* @todo odstranit *}
 		        		{var $thumbLink = '';}
@@ -64,10 +64,7 @@
 		        		<h2><a href="{link Rental:detail $rental}">{_$rental->name}</a></h2>
 
 		        		
-		        		<button rel="{$rental->id}" link="{link Rental:detail $rental}" thumb="{$thumbLink}" class="addToFavorites btn btn-mini listCompareBtn active"><span class="entypo-like"> porovnaj</span> </button>		        		
-		        		
-		        		
-		        		{dump $rentalService->isFeatured()}
+		        		<button rel="{$rental->id}" link="{link Rental:detail $rental}" thumb="{$thumbLink}" class="addToFavorites btn btn-mini listCompareBtn active"><span class="entypo-like"> porovnaj</span> </button>		        				        				        	
 		        		
 		        		<div class="clearfix"></div>
 		        		<p>
