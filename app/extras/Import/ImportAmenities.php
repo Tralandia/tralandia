@@ -34,10 +34,11 @@ class ImportAmenities extends BaseImport {
 			array('room type', 'room types', 'room-type'),
 			array('owner availability', 'owner availability', 'owner-availability'),
 			array('board', 'board', 'board'),
+			array('separate group', 'separate groups', 'separate-groups'),
 			array('other', 'other', 'other'),
 		);
 
-		$en = $this->context->languageRepository->findOneByIso('en');
+		$en = $this->context->languageRepositoryAccessor->get()->findOneByIso('en');
 
 		$nameDictionaryType = $this->createPhraseType('\Rental\Amenity', 'name', 'ACTIVE', array('pluralsRequired' => TRUE));
 		$tagNameDictionaryType = $this->createPhraseType('\Rental\Amenity', 'name-tag', 'ACTIVE', array('genderVariationsRequired' => TRUE, 'positionRequired' => TRUE));
@@ -55,7 +56,7 @@ class ImportAmenities extends BaseImport {
 
 
 		// Activities
-		$amenityType = $this->context->rentalAmenityTypeRepository->findOneBySlug('activity');
+		$amenityType = $this->context->rentalAmenityTypeRepositoryAccessor->get()->findOneBySlug('activity');
 		$r = q('select * from activities');
 		while ($x = mysql_fetch_array($r)) {
 			$amenity = $this->context->rentalAmenityEntityFactory->create();
@@ -69,7 +70,7 @@ class ImportAmenities extends BaseImport {
 		// General Amenities
 		$subGroups = explode(',', 'other,important,children,room,kitchen,bathroom,heating,parking,relax,service');
 		foreach ($subGroups as $key => $value) {
-			$amenityType = $this->context->rentalAmenityTypeRepository->findOneBySlug($value);
+			$amenityType = $this->context->rentalAmenityTypeRepositoryAccessor->get()->findOneBySlug($value);
 			$r = q('select * from amenities_general where type_id = '.$key);
 			while ($x = mysql_fetch_array($r)) {
 				$amenity = $this->context->rentalAmenityEntityFactory->create();
@@ -82,7 +83,7 @@ class ImportAmenities extends BaseImport {
 		$this->model->flush();
 
 		// Wellness Options
-		$amenityType = $this->context->rentalAmenityTypeRepository->findOneBySlug('wellness');
+		$amenityType = $this->context->rentalAmenityTypeRepositoryAccessor->get()->findOneBySlug('wellness');
 		$r = q('select * from amenities_wellness');
 		while ($x = mysql_fetch_array($r)) {
 			$amenity = $this->context->rentalAmenityEntityFactory->create();
@@ -94,7 +95,7 @@ class ImportAmenities extends BaseImport {
 		$this->model->flush();
 
 		// Congress Options
-		$amenityType = $this->context->rentalAmenityTypeRepository->findOneBySlug('congress');
+		$amenityType = $this->context->rentalAmenityTypeRepositoryAccessor->get()->findOneBySlug('congress');
 		$r = q('select * from amenities_congress');
 		while ($x = mysql_fetch_array($r)) {
 			$amenity = $this->context->rentalAmenityEntityFactory->create();
@@ -117,7 +118,7 @@ class ImportAmenities extends BaseImport {
 
 
 		// Room Types
-		$amenityType = $this->context->rentalAmenityTypeRepository->findOneBySlug('room-type');
+		$amenityType = $this->context->rentalAmenityTypeRepositoryAccessor->get()->findOneBySlug('room-type');
 		$r = q('select * from room_types');
 		while ($x = mysql_fetch_array($r)) {
 			$amenity = $this->context->rentalAmenityEntityFactory->create();
@@ -129,7 +130,7 @@ class ImportAmenities extends BaseImport {
 		$this->model->flush();
 
 		// Owner availabilities
-		$amenityType = $this->context->rentalAmenityTypeRepository->findOneBySlug('owner-availability');
+		$amenityType = $this->context->rentalAmenityTypeRepositoryAccessor->get()->findOneBySlug('owner-availability');
 		$r = q('select * from owner');
 		while ($x = mysql_fetch_array($r)) {
 			$amenity = $this->context->rentalAmenityEntityFactory->create();
@@ -141,7 +142,7 @@ class ImportAmenities extends BaseImport {
 		$this->model->flush();
 
 		// Board
-		$amenityType = $this->context->rentalAmenityTypeRepository->findOneBySlug('board');
+		$amenityType = $this->context->rentalAmenityTypeRepositoryAccessor->get()->findOneBySlug('board');
 		$r = q('select * from food');
 		while ($x = mysql_fetch_array($r)) {
 			$amenity = $this->context->rentalAmenityEntityFactory->create();
@@ -150,6 +151,15 @@ class ImportAmenities extends BaseImport {
 			$amenity->oldId = $x['id'];
 			$this->model->persist($amenity);
 		}
+		$this->model->flush();
+
+		// Separate Group
+		$amenityType = $this->context->rentalAmenityTypeRepositoryAccessor->get()->findOneBySlug('separate-groups');
+		$amenity = $this->context->rentalAmenityEntityFactory->create();
+		$amenity->type = $amenityType;
+		$amenity->name = $this->createNewPhrase($nameDictionaryType, 1011);
+		$amenity->oldId = $x['id'];
+		$this->model->persist($amenity);
 		$this->model->flush();
 
 	}

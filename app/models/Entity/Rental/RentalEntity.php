@@ -8,7 +8,7 @@ use Entity\Location;
 use Entity\Medium;
 use Entity\User;
 use Doctrine\ORM\Mapping as ORM;
-use	Extras\Annotation as EA;
+use Extras\Annotation as EA;
 
 /**
  * @ORM\Entity(repositoryClass="Repository\Rental\RentalRepository")
@@ -101,12 +101,6 @@ class Rental extends \Entity\BaseEntity {
 	protected $name;
 
 	/**
-	 * @var json
-	 * @ORM\Column(type="json", nullable=true)
-	 */
-	protected $interview;
-
-	/**
 	 * @var Collection
 	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
 	 */
@@ -173,6 +167,12 @@ class Rental extends \Entity\BaseEntity {
 	protected $media;
 
 	/**
+	 * @var Collection
+	 * @ORM\OneToMany(targetEntity="Entity\Rental\InterviewAnswer", mappedBy="rental", cascade={"persist"})
+	 */
+	protected $interviewAnswers;
+
+	/**
 	 * @var text
 	 * @ORM\Column(type="text", nullable=true)
 	 */
@@ -228,6 +228,7 @@ class Rental extends \Entity\BaseEntity {
 		$this->amenities = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->tags = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->media = new \Doctrine\Common\Collections\ArrayCollection;
+		$this->interviewAnswers = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->fulltexts = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->invoices = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->backLinks = new \Doctrine\Common\Collections\ArrayCollection;
@@ -605,35 +606,6 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param json
-	 * @return \Entity\Rental\Rental
-	 */
-	public function setInterview($interview)
-	{
-		$this->interview = $interview;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Rental\Rental
-	 */
-	public function unsetInterview()
-	{
-		$this->interview = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return json|NULL
-	 */
-	public function getInterview()
-	{
-		return $this->interview;
-	}
-		
-	/**
 	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Rental\Rental
 	 */
@@ -968,6 +940,42 @@ class Rental extends \Entity\BaseEntity {
 	public function getMedia()
 	{
 		return $this->media;
+	}
+		
+	/**
+	 * @param \Entity\Rental\InterviewAnswer
+	 * @return \Entity\Rental\Rental
+	 */
+	public function addInterviewAnswer(\Entity\Rental\InterviewAnswer $interviewAnswer)
+	{
+		if(!$this->interviewAnswers->contains($interviewAnswer)) {
+			$this->interviewAnswers->add($interviewAnswer);
+		}
+		$interviewAnswer->setRental($this);
+
+		return $this;
+	}
+		
+	/**
+	 * @param \Entity\Rental\InterviewAnswer
+	 * @return \Entity\Rental\Rental
+	 */
+	public function removeInterviewAnswer(\Entity\Rental\InterviewAnswer $interviewAnswer)
+	{
+		if($this->interviewAnswers->contains($interviewAnswer)) {
+			$this->interviewAnswers->removeElement($interviewAnswer);
+		}
+		$interviewAnswer->unsetRental();
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Rental\InterviewAnswer
+	 */
+	public function getInterviewAnswers()
+	{
+		return $this->interviewAnswers;
 	}
 		
 	/**

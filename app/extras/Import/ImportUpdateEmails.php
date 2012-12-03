@@ -14,7 +14,7 @@ class ImportUpdateEmails extends BaseImport {
 
 	public function doImport($subsection = NULL) {
 
-		$email = $this->context->emailTemplateRepository->findOneByOldId(6);
+		$email = $this->context->emailTemplateRepositoryAccessor->get()->findOneByOldId(6);
 
 		$replace = array(
 			'emailFrom' => 'sender_email',

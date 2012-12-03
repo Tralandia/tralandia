@@ -47,7 +47,7 @@ class ImportLanguages extends BaseLanguagesImport {
 		$this->model->flush();
 
 		$phraseType = $this->createPhraseType('\Language', 'name', 'ACTIVE');
-		$allLanguages = $this->context->languageRepository->findAll();
+		$allLanguages = $this->context->languageRepositoryAccessor->get()->findAll();
 		foreach ($allLanguages as $language) {
 			$language->name = $this->createNewPhrase($phraseType, $nameDicIds[$language->oldId]);
 		}

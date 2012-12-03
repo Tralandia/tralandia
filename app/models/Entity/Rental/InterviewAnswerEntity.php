@@ -15,7 +15,7 @@ class InterviewAnswer extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Rental\Rental")
+	 * @ORM\ManyToOne(targetEntity="Entity\Rental\Rental", inversedBy="interviewAnswers")
 	 */
 	protected $rental;
 

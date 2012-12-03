@@ -15,7 +15,7 @@ class ImportTaskTypes extends BaseImport {
 	public function doImport($subsection = NULL) {
 
 		$technicalName = '\Location\Location - Level2HasNoParent';
-		$type = $this->context->taskTypeRepository->findOneByTechnicalName($technicalName);
+		$type = $this->context->taskTypeRepositoryAccessor->get()->findOneByTechnicalName($technicalName);
 		if(!$type) {
 			$type = $this->context->taskTypeEntityFactory->create();
 			$this->model->persist($type);
@@ -31,7 +31,7 @@ class ImportTaskTypes extends BaseImport {
 
 		//---
 		$technicalName = '\Phrase\Translation - Translation Required';
-		$type = $this->context->taskTypeRepository->findOneByTechnicalName($technicalName);
+		$type = $this->context->taskTypeRepositoryAccessor->get()->findOneByTechnicalName($technicalName);
 		if(!$type) {
 			$type = $this->context->taskTypeEntityFactory->create();
 			$this->model->persist($type);

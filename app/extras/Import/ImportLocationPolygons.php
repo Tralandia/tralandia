@@ -128,7 +128,7 @@ class ImportLocationsPolygons extends BaseImport {
 		// Update all success data
 		foreach ($success as $key => $data) {
 			foreach ($data as $location) {
-				$region = $this->context->locationRepository->find($location['id']);
+				$region = $this->context->locationRepositoryAccessor->get()->find($location['id']);
 				$region->clickMapData = $location;
 				$this->model->persist($region);
 			}

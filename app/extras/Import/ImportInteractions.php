@@ -39,8 +39,8 @@ class ImportInteractions extends BaseImport {
 
 		while($x = mysql_fetch_array($r)) {
 			$interaction = $this->context->userRentalReservationEntityFactory->create();
-			$interaction->language = $this->context->languageRepository->find($this->languagesByOldId[$x['language']]);
-			$t = $this->context->rentalRepository->findOneByOldId($x['object_id']);
+			$interaction->language = $this->context->languageRepositoryAccessor->get()->find($this->languagesByOldId[$x['language']]);
+			$t = $this->context->rentalRepositoryAccessor->get()->findOneByOldId($x['object_id']);
 			if ($t) {
 				$interaction->rental = $t;
 			}
@@ -77,8 +77,8 @@ class ImportInteractions extends BaseImport {
 
 		while($x = mysql_fetch_array($r)) {
 			$interaction = $this->context->userRentalQuestionEntityFactory->create();
-			$interaction->language = $this->context->languageRepository->find($this->languagesByOldId[$x['language_id']]);
-			$t = $this->context->rentalRepository->findOneByOldId($x['object_id']);
+			$interaction->language = $this->context->languageRepositoryAccessor->get()->find($this->languagesByOldId[$x['language_id']]);
+			$t = $this->context->rentalRepositoryAccessor->get()->findOneByOldId($x['object_id']);
 			if ($t) {
 				$interaction->rental = $t;
 			}
@@ -109,8 +109,8 @@ class ImportInteractions extends BaseImport {
 
 		while($x = mysql_fetch_array($r)) {
 			$interaction = $this->context->userRentalToFriendEntityFactory->create();
-			$interaction->language = $this->context->languageRepository->find($this->languagesByOldId[$x['language']]);
-			$t = $this->context->rentalRepository->findOneByOldId($x['object_id']);
+			$interaction->language = $this->context->languageRepositoryAccessor->get()->find($this->languagesByOldId[$x['language']]);
+			$t = $this->context->rentalRepositoryAccessor->get()->findOneByOldId($x['object_id']);
 			if ($t) {
 				$interaction->rental = $t;
 			}
@@ -138,8 +138,8 @@ class ImportInteractions extends BaseImport {
 
 		while($x = mysql_fetch_array($r)) {
 			$interaction = $this->context->userSiteOwnerReviewEntityFactory->create();
-			$interaction->language = $this->context->languageRepository->find($this->languagesByOldId[$x['language_id']]);
-			$interaction->location = $this->context->locationRepository->find($this->locationsByOldId[$x['country_id']]);
+			$interaction->language = $this->context->languageRepositoryAccessor->get()->find($this->languagesByOldId[$x['language_id']]);
+			$interaction->location = $this->context->locationRepositoryAccessor->get()->find($this->locationsByOldId[$x['country_id']]);
 
 			$interaction->senderEmail = new \Extras\Types\Email($x['from_email']);
 			$interaction->senderName = $x['from_name'];
@@ -165,8 +165,8 @@ class ImportInteractions extends BaseImport {
 
 		while($x = mysql_fetch_array($r)) {
 			$interaction = $this->context->userSiteOwnerReviewEntityFactory->create();
-			$interaction->language = $this->context->languageRepository->find($this->languagesByOldId[$x['language_id']]);
-			$interaction->location = $this->context->locationRepository->find($this->locationsByOldId[$x['country_id']]);
+			$interaction->language = $this->context->languageRepositoryAccessor->get()->find($this->languagesByOldId[$x['language_id']]);
+			$interaction->location = $this->context->locationRepositoryAccessor->get()->find($this->locationsByOldId[$x['country_id']]);
 
 			$interaction->senderEmail = new \Extras\Types\Email($x['from_email']);
 			$interaction->senderName = $x['from_name'];
