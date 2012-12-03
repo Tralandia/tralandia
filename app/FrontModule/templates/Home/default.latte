@@ -18,7 +18,7 @@
 	<div id="tabs-1" class="ui-tabs-panel">
 		<ul n:inner-foreach="$rentals as $rental" class="row-fluid hp-list">
 			<li class="span4">
-				<a n:href=":Front:Rental:detail $rental['entity']->id">
+				<a n:href=":Front:Rental:detail $rental['entity']">
 					<div class="position">TOP</div>
 				{if $rental['service']->getMainPhoto()}
 				<img src="{$rental['service']->getMainPhoto()->getThumbnail()}" />
@@ -31,8 +31,6 @@
 				<div class="label">{_$location->name} popis</div>
 				{/if}
 				{/foreach}
-
-				
 
 				{_$rental['entity']->name}
 				</a>

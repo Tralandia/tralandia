@@ -5,11 +5,6 @@
 {block content}
 
 
-
-
-
-
-
 {*
 <div class="span12">
 	<div class="innerPadding baseRadius baseBorder overflow">
@@ -45,74 +40,8 @@
 	</div>
 </div>
 
-<div class="span12">
-	<div class="innerPadding baseRadius baseBorder overflow">
-		<div id="content noPadding">
-			
-			<div class="detailSlider favoriteSlider">
-				<div class="header">
-					<a href="#" class="entypo-prev">Navrat na vysledky</a>
-					<h3>Vysledky vzhladavania</h3>
-				</div>
-
-				<div class="disabled leftArrow entypo-prev"></div>
-				<div class="content">
-					<ul>
-						<li></li>
-						<li></li>
-						<li></li>
-						<li></li>
-						<li class="current"></li>
-						<li><div class="checked entypo-ok"></div></li>
-						<li></li>
-						<li></li>
-						<li></li>
-						<li></li>
-						<li></li>
-					</ul>
-				</div>
-				<div class="disabled rightArrow entypo-slider-right"></div>
-				<div class="clearfix"></div>
-			</div>
-
-		</div>
-	</div>
-</div>
 
 
-<div class="span12">
-	<div class="innerPadding baseRadius borderBlue overflow">
-		<div id="content noPadding">
-			
-			<div class="detailSlider favoriteSlider compare">
-				<div class="header">
-					<a href="#" class="entypo-prev">Navrat na vysledky</a>
-					<h3>Vysledky vzhladavania</h3>
-				</div>
-
-				<div class="leftArrow entypo-prev"></div>
-				<div class="content">
-					<ul>
-						<li></li>
-						<li></li>
-						<li></li>
-						<li></li>
-						<li class="current"></li>
-						<li><div class="checked entypo-ok"></div></li>
-						<li></li>
-						<li></li>
-						<li></li>
-						<li></li>
-						<li></li>
-					</ul>
-				</div>
-				<div class="rightArrow entypo-slider-right"></div>
-				<div class="clearfix"></div>
-			</div>
-
-		</div>
-	</div>
-</div>
 
 *}
 
@@ -141,54 +70,12 @@
 		</div>
 	</div>
 </div>
-
-{*
-<div class="span12">
-	<div class="innerPadding baseRadius borderBlue overflow">
-		<div class="content noPadding">
-			
-			<div class="detailSlider favoriteSlider compare" id="compareList">
-				<div class="header">
-					<a href="#" class="entypo-prev">Navrat na vysledky</a>
-					<h3>Vysledky vzhladavania</h3>
-				</div>
-
-				
-				
-				  <ul id="mycarousel" class="jcarousel-skin-tango">
-
-				    <li><img src="http://static.flickr.com/72/199481203_ad4cdcf109_s.jpg" width="75" height="75" alt="" /></li>
-				    <li><img src="http://static.flickr.com/58/199481218_264ce20da0_s.jpg" width="75" height="75" alt="" /></li>
-				    <li><img src="http://static.flickr.com/69/199481255_fdfe885f87_s.jpg" width="75" height="75" alt="" /></li>
-				    <li><img src="http://static.flickr.com/60/199480111_87d4cb3e38_s.jpg" width="75" height="75" alt="" /></li>
-				    <li><img src="http://static.flickr.com/70/229228324_08223b70fa_s.jpg" width="75" height="75" alt="" /></li>    
-				  </ul>
-				
-
-				
-
-				
-				<div class="submenu">
-					<a href="#" class="entypo-people">Blah</a>	
-				</div>
-				
-				<div class="clearfix"></div>
-			</div>
-
-		</div>
-	</div>
-</div>
-*}
-
 
 
 <div class="span12">
 	<div class="innerPadding baseRadius baseBorder overflow">
 		<div id="content" class="nopadding">
 			
-
-
-
 
 <div class="row-fluid objectDetailContent">
 	<div class="span4 marginBottom marginTop marginLeft leftSidebarObjectDetail">
@@ -216,6 +103,8 @@
 		</p>
 
 		
+		{dump $rental->maxCapacity}
+
 		{var $rentalType = $rental->type}
 				
 
@@ -238,6 +127,7 @@
 *}
 
 		
+
 		{foreach $rental->missingInformation AS $information}
 			{_$information->name}
 		{/foreach}
@@ -259,19 +149,46 @@
 				</strong>
 
 			   </li>
-			   <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
-			   <li>Aliquam tincidunt mauris eu risus.</li>
-			   <li>Vestibulum auctor dapibus neque.</li>
+			   <li>
+			   		{foreach $rentalService->getAmenitiesByType(array('tag')) as $amenities}
+						{foreach $amenities as $amenity}
+								{_$amenity->name}{if !$iterator->last}, {/if}			
+						{/foreach}			  
+			   		{/foreach}
+			   </li>
+			   <li>
+			   		{$rental->maxCapacity}
+			   </li>
 			</ul>
 		</div>
 		<div class="detailAmanities">
 			<ul class="objectDetailServicesIconList list">
-			   <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
-			   <li>Aliquam tincidunt mauris eu risus.</li>
-			   <li>Vestibulum auctor dapibus neque.</li>
-			   <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
-			   <li>Aliquam tincidunt mauris eu risus.</li>
-			   <li>Vestibulum auctor dapibus neque.</li>
+			   <li>
+				{foreach $rentalService->getAmenitiesByType(array('other')) as $amenities}
+					
+					{foreach $amenities as $amenity}
+						{if $iterator->first}				
+							{_$amenity->type->name}
+						{/if}
+						{_$amenity->name}{if !$iterator->last}, {/if}
+					{/foreach}
+					
+				{/foreach}
+			   </li>
+			   <li>
+				{foreach $rentalService->getAmenitiesByType(array('owner-availability')) as $amenities}
+					
+					{foreach $amenities as $amenity}
+						{if $iterator->first}				
+							{_$amenity->type->name}
+						{/if}
+						{_$amenity->name}{if !$iterator->last}, {/if}
+					{/foreach}
+					
+				{/foreach}
+			   </li>
+			   <li>{_$rental->rooms}</li>
+
 			</ul>
 		</div>
 
@@ -283,7 +200,7 @@
 			<div class="amenities">
 			{foreach $amenities as $amenity}
 				{if $iterator->first}				
-					<h3>{_$amenity->type->name} ---- </h3>				
+					<h3>{_$amenity->type->name} </h3>				
 				{/if}
 
 				{_$amenity->name}{if !$iterator->last}, {/if}

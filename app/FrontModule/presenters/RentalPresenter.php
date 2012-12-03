@@ -20,8 +20,9 @@ class RentalPresenter extends BasePresenter {
 		
 		$rentalService = $this->rentalDecoratorFactory->create($rental);
 		$this->template->rental = $rental;
+		d($rental->maxCapacity);
 		$this->template->rentalService = $rentalService;
-		d($rental->locations->getIterator());
+		//d($rental->locations->getIterator());
 		$this->setLayout('detailLayout');
 
 	}
