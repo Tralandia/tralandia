@@ -7,9 +7,14 @@ use Model\Rental\IRentalDecoratorFactory;
 class RentalPresenter extends BasePresenter {
 
 	public $rentalDecoratorFactory;
+	public $rentalSearchKeysCachingFactory;
 
 	public function injectDecorators(IRentalDecoratorFactory $rentalDecoratorFactory) {
 		$this->rentalDecoratorFactory = $rentalDecoratorFactory;
+	}
+
+	public function injectCache(\Extras\Cache\IRentalSearchKeysCachingFactory $rentalSearchKeysCachingFactory) {
+		$this->rentalSearchKeysCachingFactory = $rentalSearchKeysCachingFactory;
 	}
 
 
@@ -20,9 +25,10 @@ class RentalPresenter extends BasePresenter {
 		
 		$rentalService = $this->rentalDecoratorFactory->create($rental);
 		$this->template->rental = $rental;
-		d($rental->maxCapacity);
 		$this->template->rentalService = $rentalService;
-		//d($rental->locations->getIterator());
+		
+		$this->rentalSearchKeysCachingFactory->create($rental)->updateRentalInCache();
+
 		$this->setLayout('detailLayout');
 
 	}
@@ -37,8 +43,6 @@ class RentalPresenter extends BasePresenter {
 			$rentals[$rental->id]['service'] = $this->rentalDecoratorFactory->create($rental);			
 			$rentals[$rental->id]['entity'] = $rental;
 		}
-
-		
 
 		$regions = $this->locationRepositoryAccessor->get()->findBy(array(
 				'parent' => 58

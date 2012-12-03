@@ -44,8 +44,6 @@ class DavidPresenter extends BasePresenter {
 		$locationRepositoryAccessor = $this->getService('locationRepositoryAccessor');
 
 		$seo = $this->seoServiceFactory->create($request);
-		d($seo->getH1());
-		d($seo->getTitle());
 
 	}
 

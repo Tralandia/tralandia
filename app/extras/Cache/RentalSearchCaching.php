@@ -21,16 +21,20 @@ class RentalSearchCaching extends \Nette\Object {
 	}
 
 	public function removeRental(\Entity\Rental\Rental $rental, $key) {
-		unset($this->searchCache[$key][$rental->id]);
+		$tempCache = $this->searchCache->load($key);
+		unset($tempCache[$rental->id]);
+		$this->searchCache->save($key, $tempCache);
 		return $this;
 	}
 
 	public function addRental(\Entity\Rental\Rental $rental, $key) {
-		$this->searchCache[$key][$rental->id] = $rental->id;
+		$tempCache = $this->searchCache->load($key);
+		$tempCache[$rental->id] = $rental->id;
+		$this->searchCache->save($key, $tempCache);
 		return $this;
 	}
 
-	public function createFeaturedRentalList() {
+	public function createRentalFeaturedList() {
 		$featured = array();
 		$rentals = $this->rentalRepositoryAccessor->get()->findFeatured($this->location);
 		foreach ($rentals as $key => $value) {
@@ -41,8 +45,8 @@ class RentalSearchCaching extends \Nette\Object {
 		return $featured;
 	}
 
-	public function createOrderRentalList() {
-		$featured = $this->createFeaturedRentalList();
+	public function createRentalOrderList() {
+		$featured = $this->createRentalFeaturedList();
 
 		$notFeatured = array();
 
@@ -68,4 +72,7 @@ class RentalSearchCaching extends \Nette\Object {
 		return $order;
 	}
 
+	public function isFeatured(\Entity\Rental\Rental $rental) {
+		return isset($this->searchCache['featured'][$rental->id]);
+	}
 }

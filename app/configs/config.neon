@@ -210,6 +210,7 @@ factories:
 			- $rentalTagRepositoryAccessor(@rentalTagRepositoryAccessor)
 			- $rentalAmenityRepositoryAccessor(@rentalAmenityRepositoryAccessor)
 			- $phraseDecoratorFactory(@phraseDecoratorFactory)
+
 	rentalSearchServiceFactory: 
 		class: Service\Rental\RentalSearchService(%location%)
 		implement: Service\Rental\IRentalSearchServiceFactory
@@ -222,12 +223,17 @@ factories:
 	# 	implement: Extras\Cache\ISearchCachingFactory
 	# 	parameters: [Entity\Location\Location location]
 
-	rentalSearchCachingFactory: 
-		class: Extras\Cache\RentalSearchCaching(%rental%)
+	rentalSearchKeysCachingFactory: 
+		class: Extras\Cache\RentalSearchKeysCaching(%rental%)
 		setup: 
 			- setCache(@rentalSearchKeysCache)
-		implement: Extras\Cache\IRentalSearchCachingFactory
+		implement: Extras\Cache\IRentalSearchKeysCachingFactory
 		parameters: [Entity\Rental\Rental rental]
+
+	rentalSearchCachingFactory: 
+		class: Extras\Cache\RentalSearchCaching(%location%)
+		implement: Extras\Cache\IRentalSearchCachingFactory
+		parameters: [Entity\Location\Location location]
 
 	seoServiceFactory:
 		class: Service\Seo\SeoService(%request%)
