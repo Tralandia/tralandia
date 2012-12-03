@@ -7,12 +7,25 @@ use Nette\Utils\Strings;
 
 class DavidPresenter extends BasePresenter {
 
+	private $rentalRepositoryAccessor;
+	private $locationRepositoryAccessor;
 	private $frontRouteFactory;
 	private $seoServiceFactory;
+
+	protected $rentalSearchCachingFactory;
 
 	public function injectRoute(\Routers\IFrontRouteFactory $frontRouteFactory, \Service\Seo\ISeoServiceFactory $seoServiceFactory) {
 		$this->frontRouteFactory = $frontRouteFactory;
 		$this->seoServiceFactory = $seoServiceFactory;
+	}
+
+	public function injectRentalCache(\Extras\Cache\IRentalSearchCachingFactory $rentalSearchCachingFactory) {
+		$this->rentalSearchCachingFactory = $rentalSearchCachingFactory;
+	}
+
+	public function inject(\Nette\DI\Container $dic) {
+		$this->rentalRepositoryAccessor = $dic->rentalRepositoryAccessor;
+		$this->locationRepositoryAccessor = $dic->locationRepositoryAccessor;
 	}
 
 	public function actionList() {
@@ -33,6 +46,16 @@ class DavidPresenter extends BasePresenter {
 		$seo = $this->seoServiceFactory->create($request);
 		d($seo->getH1());
 		d($seo->getTitle());
+
+	}
+
+	public function actionRentalCache() {
+
+		$t = $this->locationRepositoryAccessor->get()->findOneByIso('cz');
+		$t = $this->rentalRepositoryAccessor->get()->findFeatured($t);
+		d($t);
+		//$rental = $this->rentalRepositoryAccessor->get()->find(1);
+		//$t = $this->rentalSearchCachingFactory->create($rental);
 
 	}
 }

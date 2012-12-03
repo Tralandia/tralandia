@@ -71,7 +71,7 @@ services:
 	aclCache: Nette\Caching\Cache(@cacheStorage, 'Acl')
 	routerCache: Nette\Caching\Cache(@cacheStorage, 'Router')
 	translatorCache: Nette\Caching\Cache(@cacheStorage, 'Translator')
-	searchCache: Nette\Caching\Cache(@cacheStorage, 'Search')
+	rentalSearchKeysCache: Nette\Caching\Cache(@cacheStorage, 'RentalSearchKeys')
 
 	# frontRouteFactory:
 	# 	class: Routers\FrontRouteFactory(@routerCache, %router.hostMask%)
@@ -89,7 +89,7 @@ services:
 
 	routerFactory: Routers\RouterFactory([defaultLanguage: %centralLanguage%, defaultPrimaryLocation: 58])
 
-	searchCaching: Extras\Cache\SearchCaching(@searchCache)
+	# searchCaching: Extras\Cache\SearchCaching(@searchCache)
 
 	router: @routerFactory::create
 
@@ -215,14 +215,26 @@ factories:
 		implement: Service\Rental\IRentalSearchServiceFactory
 		parameters: [Entity\Location\Location location]
 
-	searchCachingFactory: 
-		class: Extras\Cache\SearchCaching(%location%)
+	# searchCachingFactory: 
+	# 	class: Extras\Cache\SearchCaching(%location%)
+	# 	setup: 
+	# 		- setCache(@searchCache)
+	# 	implement: Extras\Cache\ISearchCachingFactory
+	# 	parameters: [Entity\Location\Location location]
+
+	rentalSearchCachingFactory: 
+		class: Extras\Cache\RentalSearchCaching(%rental%)
 		setup: 
-			- setCache(@searchCache)
-		implement: Extras\Cache\ISearchCachingFactory
-		parameters: [Entity\Location\Location location]
+			- setCache(@rentalSearchKeysCache)
+		implement: Extras\Cache\IRentalSearchCachingFactory
+		parameters: [Entity\Rental\Rental rental]
 
 	seoServiceFactory:
 		class: Service\Seo\SeoService(%request%)
 		implement: Service\Seo\ISeoServiceFactory
 		parameters: [Nette\Application\Request request]
+
+	searchCacheFactory:
+		class: Nette\Caching\Cache(@cacheStorage, %namespace%)
+		implement: Extras\Cache\ISearchCacheFactory
+		parameters: [namespace]

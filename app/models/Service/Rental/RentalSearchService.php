@@ -11,13 +11,18 @@ class RentalSearchService extends Service\BaseService
 {
 
 	const CRITERIA_PRIMARY_LOCATION = 'primaryLocation';
+	
 	const CRITERIA_LOCATION  		= 'location';
 	const CRITERIA_RENTAL_TYPE 		= 'rentalType';
-	const CRITERIA_AREA_BOUNDRIES 	= 'areaBoundries';
+	const CRITERIA_TAG	 			= 'tag';
+
+	const CRITERIA_AREA_BOUNDRY 	= 'areaBoundry';
 	const CRITERIA_CAPACITY 		= 'capacity';
-	const CRITERIA_AMENITIES 		= 'amenities';
-	const CRITERIA_LANGUAGES_SPOKEN = 'languagesSpoken';
-	const CRITERIA_PRICE_CATEGORY 	= 'priceCategory';
+	//const CRITERIA_AMENITY	 		= 'amenity';
+	const CRITERIA_LANGUAGE_SPOKEN 	= 'languageSpoken';
+	const CRITERIA_PRICE 			= 'price';
+
+	const CAPACITY_MAX		= 50;
 
 	public $primaryLocation;
 	public $cacheFactory;
