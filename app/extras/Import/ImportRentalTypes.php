@@ -58,11 +58,11 @@ class ImportRentalTypes extends BaseImport {
 
 		$r = q('select * from objects_types_new where language_id <> 38 && trax_en_type_id > 0');
 		while($x = mysql_fetch_array($r)) {
-			$rentalType = $this->context->rentalTypeRepository->findOneByOldId($x['trax_en_type_id']);
+			$rentalType = $this->context->rentalTypeRepositoryAccessor->get()->findOneByOldId($x['trax_en_type_id']);
 			
 			if (!$rentalType) throw new \Nette\UnexpectedValueException('nenasiel som EN rental Type oldID: '.$x['trax_en_type_id']); 
 			
-			$thisLanguage = $this->context->languageRepository->findOneByOldId($x['language_id']);
+			$thisLanguage = $this->context->languageRepositoryAccessor->get()->findOneByOldId($x['language_id']);
 			if (!$thisLanguage) continue;
 
 			$thisPhrase = $this->context->phraseDecoratorFactory->create($rentalType->name);

@@ -29,7 +29,7 @@ class ImportUsers extends BaseImport {
 
 	private function importSuperAdmins() {
 
-		$role = $this->context->userRoleRepository->findOneBySlug('superadmin');
+		$role = $this->context->userRoleRepositoryAccessor->get()->findOneBySlug('superadmin');
 
 		$admins = array(
 			array('toth@tralandia.com', 'radkos'),
@@ -38,7 +38,7 @@ class ImportUsers extends BaseImport {
 			array('vaculciak@tralandia.com', 'branoheslo'),
 		);
 
-		$en = $this->context->languageRepository->findOneByIso('en');
+		$en = $this->context->languageRepositoryAccessor->get()->findOneByIso('en');
 		foreach ($admins as $key => $value) {
 			// Rado
 			$user = $this->context->userEntityFactory->create();
@@ -60,11 +60,11 @@ class ImportUsers extends BaseImport {
 
 	private function importAdmins() {
 
-		$role = $this->context->userRoleRepository->findOneBySlug('admin');
+		$role = $this->context->userRoleRepositoryAccessor->get()->findOneBySlug('admin');
 
 		$r = q('select * from members_admins');
 		while($x = mysql_fetch_array($r)) {
-			$user = $this->context->userRepository->findOneByLogin($x['email']);
+			$user = $this->context->userRepositoryAccessor->get()->findOneByLogin($x['email']);
 
 			if ($user) {
 				continue;
@@ -81,7 +81,7 @@ class ImportUsers extends BaseImport {
 			$contacts->add(new \Extras\Types\Email($x['email']));
 			$user->contacts = $contacts;
 			
-			$user->language = $this->context->languageRepository->findOneByIso('en');
+			$user->language = $this->context->languageRepositoryAccessor->get()->findOneByIso('en');
 			$this->model->persist($user);
 		}
 		$this->model->flush();
@@ -90,13 +90,13 @@ class ImportUsers extends BaseImport {
 
 	private function importManagers() {
 
-		$role = $this->context->userRoleRepository->findOneBySlug('manager');
+		$role = $this->context->userRoleRepositoryAccessor->get()->findOneBySlug('manager');
 
-		$countryLocationType = $this->context->locationTypeRepository->findOneBySlug('country');
+		$countryLocationType = $this->context->locationTypeRepositoryAccessor->get()->findOneBySlug('country');
 
 		$r = q('select * from members_managers');
 		while($x = mysql_fetch_array($r)) {
-			$user = $this->context->userRepository->findOneByLogin($x['email']);
+			$user = $this->context->userRepositoryAccessor->get()->findOneByLogin($x['email']);
 
 			if ($user) {
 				continue;
@@ -113,7 +113,7 @@ class ImportUsers extends BaseImport {
 			$contacts->add(new \Extras\Types\Email($x['email']));
 			$user->contacts = $contacts;
 			
-			$user->language = $this->context->languageRepository->findOneByIso('en');
+			$user->language = $this->context->languageRepositoryAccessor->get()->findOneByIso('en');
 
 			$assignedCountries = array_unique(array_filter(explode(',', $x['countries'])));
 			$assignedLanguages = array_unique(array_filter(explode(',', $x['languages'])));
@@ -122,8 +122,8 @@ class ImportUsers extends BaseImport {
 				foreach ($assignedLanguages as $key2 => $value2) {
 					$combination = $this->context->userCombinationEntityFactory->create();
 
-					$combination->country = $this->context->locationRepository->findOneBy(array('oldId'=>$value, 'type'=>$countryLocationType));
-					$combination->language = $this->context->languageRepository->findOneByOldId($value2);
+					$combination->country = $this->context->locationRepositoryAccessor->get()->findOneBy(array('oldId'=>$value, 'type'=>$countryLocationType));
+					$combination->language = $this->context->languageRepositoryAccessor->get()->findOneByOldId($value2);
 					$user->addCombination($combination);
 				}
 			}
@@ -134,11 +134,11 @@ class ImportUsers extends BaseImport {
 
 	private function importTranslators() {
 
-		$role = $this->context->userRoleRepository->findOneBySlug('translator');
+		$role = $this->context->userRoleRepositoryAccessor->get()->findOneBySlug('translator');
 
 		$r = q('select * from members_translators');
 		while($x = mysql_fetch_array($r)) {
-			$user = $this->context->userRepository->findOneByLogin($x['email']);
+			$user = $this->context->userRepositoryAccessor->get()->findOneByLogin($x['email']);
 
 			if ($user) {
 				continue;
@@ -156,17 +156,17 @@ class ImportUsers extends BaseImport {
 			$contacts->add(new \Extras\Types\Email($x['email']));
 			$user->contacts = $contacts;
 			
-			$user->language = $this->context->languageRepository->findOneByIso('en');
+			$user->language = $this->context->languageRepositoryAccessor->get()->findOneByIso('en');
 
 			$details = array(
-				'sourceLanguage' => $this->context->languageRepository->findOneByOldId($x['language_from']),
+				'sourceLanguage' => $this->context->languageRepositoryAccessor->get()->findOneByOldId($x['language_from']),
 				'pricePerStandardPage' => $x['price'],
 				'pricePerTicketsStandardPage' => $x['tickets_price'],
 			);
 			$user->details = $details;
 
 			$combination = $this->context->userCombinationEntityFactory->create();
-			$combination->language = $this->context->languageRepository->findOneByOldId($x['language_to']);
+			$combination->language = $this->context->languageRepositoryAccessor->get()->findOneByOldId($x['language_to']);
 			$user->addCombination($combination);
 			$this->model->persist($user);
 		}
@@ -175,8 +175,8 @@ class ImportUsers extends BaseImport {
 
 	private function importOwners() {
 
-		$role = $this->context->userRoleRepository->findOneBySlug('owner');
-		$locationTypeCountry = $this->context->locationTypeRepository->findOneBySlug('country');
+		$role = $this->context->userRoleRepositoryAccessor->get()->findOneBySlug('owner');
+		$locationTypeCountry = $this->context->locationTypeRepositoryAccessor->get()->findOneBySlug('country');
 
 		if ($this->developmentMode == TRUE) {
 			$r = q('select * from members where country_id = 46');		
@@ -184,7 +184,7 @@ class ImportUsers extends BaseImport {
 			$r = q('select * from members');		
 		}
 		while($x = mysql_fetch_array($r)) {
-			$user = $this->context->userRepository->findOneByLogin($x['email']);
+			$user = $this->context->userRepositoryAccessor->get()->findOneByLogin($x['email']);
 
 			if ($user) {
 				continue;
@@ -209,7 +209,7 @@ class ImportUsers extends BaseImport {
 			// 	'address' => array_filter(array($x['client_address'], $x['client_address2'])),
 			// 	'postcode' => $x['client_postcode'],
 			// 	'locality' => $x['client_locality'],
-			// 	'country' => $this->context->locationRepository->findOneBy(array('oldId'=>$x['client_country_id'], 'type'=>$locationTypeCountry)),
+			// 	'country' => $this->context->locationRepositoryAccessor->get()->findOneBy(array('oldId'=>$x['client_country_id'], 'type'=>$locationTypeCountry)),
 			// ));
 
 			// $user->invoicingCompanyName = $x['client_company_name'];
@@ -222,8 +222,8 @@ class ImportUsers extends BaseImport {
 			$contacts->add(new \Extras\Types\Phone($x['phone']));
 			$user->contacts = $contacts;
 			
-			$user->language = $this->context->languageRepository->findOneByOldId($x['language_id']);
-			$user->location = $this->context->locationRepository->findOneBy(array('oldId'=>$x['country_id'], 'type'=>$locationTypeCountry));
+			$user->language = $this->context->languageRepositoryAccessor->get()->findOneByOldId($x['language_id']);
+			$user->location = $this->context->locationRepositoryAccessor->get()->findOneBy(array('oldId'=>$x['country_id'], 'type'=>$locationTypeCountry));
 
 			$this->model->persist($user);
 		}
@@ -234,8 +234,8 @@ class ImportUsers extends BaseImport {
 
 		return true; //@todo - toto treba opravit este nefunguje
 
-		$role = $this->context->userRoleRepository->findOneBySlug('potentialowner');
-		$locationTypeCountry = $this->context->locationTypeRepository->findOneBySlug('country');
+		$role = $this->context->userRoleRepositoryAccessor->get()->findOneBySlug('potentialowner');
+		$locationTypeCountry = $this->context->locationTypeRepositoryAccessor->get()->findOneBySlug('country');
 
 		if ($this->developmentMode == TRUE) {
 			$r = q('select * from contacts where country_id = 46 limit 10000');	
@@ -286,7 +286,7 @@ class ImportUsers extends BaseImport {
 			// 	'address' => array_filter(array($x['address1'], $x['address2'])),
 			// 	'postcode' => $x['postcode'],
 			// 	'locality' => $x['locality'],
-			// 	'country' => $this->context->locationRepository->findOneBy(array('oldId'=>$x['country_id'], 'type'=>$locationTypeCountry)),
+			// 	'country' => $this->context->locationRepositoryAccessor->get()->findOneBy(array('oldId'=>$x['country_id'], 'type'=>$locationTypeCountry)),
 			// ));
 
 			$user->subscribed = !(bool)$x['unsubscribed'];
@@ -308,8 +308,8 @@ class ImportUsers extends BaseImport {
 			
 			$attraction->conctacts = $contacts;
 
-			$user->language = $this->context->languageRepository->findOneByOldId($x['language_id']);
-			$user->location = $this->context->locationRepository->findOneBy(array('oldId'=>$x['country_id'], 'type'=>$locationTypeCountry));
+			$user->language = $this->context->languageRepositoryAccessor->get()->findOneByOldId($x['language_id']);
+			$user->location = $this->context->locationRepositoryAccessor->get()->findOneBy(array('oldId'=>$x['country_id'], 'type'=>$locationTypeCountry));
 
 
 			$user->currentTelmarkOperator = $x['telmark_operator_id'];

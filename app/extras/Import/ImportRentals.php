@@ -38,12 +38,12 @@ class ImportRentals extends BaseImport {
 		}
 
 		$locationTypes = array();
-		$locationTypes['country'] = $context->locationTypeRepository->findOneBySlug('country');
-		$locationTypes['continent'] = $context->locationTypeRepository->findOneBySlug('continent');
-		$locationTypes['region'] = $context->locationTypeRepository->findOneBySlug('region');
-		$locationTypes['administrativeregionlevelone'] = $context->locationTypeRepository->findOneBySlug('administrativeregionlevelone');
-		$locationTypes['administrativeregionleveltwo'] = $context->locationTypeRepository->findOneBySlug('administrativeregionleveltwo');
-		$locationTypes['locality'] = $context->locationTypeRepository->findOneBySlug('locality');
+		$locationTypes['country'] = $context->locationTypeRepositoryAccessor->get()->findOneBySlug('country');
+		$locationTypes['continent'] = $context->locationTypeRepositoryAccessor->get()->findOneBySlug('continent');
+		$locationTypes['region'] = $context->locationTypeRepositoryAccessor->get()->findOneBySlug('region');
+		$locationTypes['administrativeregionlevelone'] = $context->locationTypeRepositoryAccessor->get()->findOneBySlug('administrativeregionlevelone');
+		$locationTypes['administrativeregionleveltwo'] = $context->locationTypeRepositoryAccessor->get()->findOneBySlug('administrativeregionleveltwo');
+		$locationTypes['locality'] = $context->locationTypeRepositoryAccessor->get()->findOneBySlug('locality');
 
 		$interviewQuestions = array();
 		foreach ($context->rentalInterviewQuestionRepositoryAccessor->get()->findAll() as $key => $value) {
@@ -55,31 +55,31 @@ class ImportRentals extends BaseImport {
 			$languages[$value->oldId] = $value;
 		}
 
-		$ownerRole = $context->userRoleRepository->findOneBySlug('owner');
+		$ownerRole = $context->userRoleRepositoryAccessor->get()->findOneBySlug('owner');
 
-		$en = $context->languageRepository->findOneByIso('en');
+		$en = $context->languageRepositoryAccessor->get()->findOneByIso('en');
 		$now = time();
 
 		if ($this->developmentMode == TRUE) {
-			$r = q('select * from objects where country_id = 46 and interview is not null order by rand() limit 5');
+			$r = q('select * from objects where country_id = 46 and interview is not null order by rand() limit 10');
 		} else {
 			$r = q('select * from objects');
 		}
 
 		while ($x = mysql_fetch_array($r)) {
-			if($context->rentalRepository->findOneByOldId($x['id'])) {
+			if($context->rentalRepositoryAccessor->get()->findOneByOldId($x['id'])) {
 				continue;
 			}
 			$rental = $context->rentalEntityFactory->create();
 			$rental->oldId = $x['id'];
 
-			$user = $context->userRepository->findOneByLogin(qc('select email from members where id = '.$x['member_id']));
+			$user = $context->userRepositoryAccessor->get()->findOneByLogin(qc('select email from members where id = '.$x['member_id']));
 			if (!$user) {
 				continue; // @todo dorobit
 				$user = qNew('select id from user where isOwner = 1 and oldId = '.$x['member_id']);
 				$user = mysql_fetch_array($user);
 				if ($user['id'] > 0) {
-					$user = $context->userRepository->find($user['id']);
+					$user = $context->userRepositoryAccessor->get()->find($user['id']);
 				} else {
 					//@todo - treba zapisat do logov, ze sa nenasiel user, ktory sa hladal, docasne sa to ignoruje...
 					continue;
@@ -87,18 +87,18 @@ class ImportRentals extends BaseImport {
 			}
 			$rental->user = $user;
 
-			$rental->editLanguage = $context->languageRepository->findOneByOldId($x['edit_language_id']);
+			$rental->editLanguage = $context->languageRepositoryAccessor->get()->findOneByOldId($x['edit_language_id']);
 
 			$rental->status = $x['live'] == 1 ? $rental::STATUS_LIVE : $rental::STATUS_DRAFT;
 			$oldRentalType = current(explode(',,', substr($x['objects_types_new'], 2, -2)));
-			$rental->setType($context->rentalTypeRepository->findOneByOldId($oldRentalTypesEn[$oldRentalType]));
+			$rental->setType($context->rentalTypeRepositoryAccessor->get()->findOneByOldId($oldRentalTypesEn[$oldRentalType]));
 
 			// Locations
-			$rental->setPrimaryLocation($context->locationRepository->findOneBy(array('oldId' => $x['country_id'], 'type' => $locationTypes['country'])));
+			$rental->setPrimaryLocation($context->locationRepositoryAccessor->get()->findOneBy(array('oldId' => $x['country_id'], 'type' => $locationTypes['country'])));
 
-			$administrativeRegion = $context->locationRepository->findOneBy(array('oldId' => $x['region_admin_id'], 'type' => $locationTypes['administrativeregionlevelone']));
+			$administrativeRegion = $context->locationRepositoryAccessor->get()->findOneBy(array('oldId' => $x['region_admin_id'], 'type' => $locationTypes['administrativeregionlevelone']));
 			if (!$administrativeRegion) {
-				$administrativeRegion = $context->locationRepository->findOneBy(array('oldId' => $x['region_admin_id'], 'type' => $locationTypes['administrativeregionleveltwo']));
+				$administrativeRegion = $context->locationRepositoryAccessor->get()->findOneBy(array('oldId' => $x['region_admin_id'], 'type' => $locationTypes['administrativeregionleveltwo']));
 			}
 
 			if ($administrativeRegion) {
@@ -108,17 +108,17 @@ class ImportRentals extends BaseImport {
 			$regions = array_unique(array_filter(explode(',', $x['regions'])));
 			if (is_array($regions) && count($regions)) {
 				foreach ($regions as $key => $value) {
-					$temp = $context->locationRepository->findOneBy(array('oldId' => $value, 'type' => $locationTypes['region']));
+					$temp = $context->locationRepositoryAccessor->get()->findOneBy(array('oldId' => $value, 'type' => $locationTypes['region']));
 					if ($temp) $rental->addLocation($temp);
 				}
 			}
 
 			// @todo dorobit
 			// d(array('oldId' => $x['locality_id'], 'type' => $locationTypes['locality']));
-			// $locationTemp = $context->locationRepository->findOneBy(array('oldId' => $x['locality_id'], 'type' => $locationTypes['locality']));
+			// $locationTemp = $context->locationRepositoryAccessor->get()->findOneBy(array('oldId' => $x['locality_id'], 'type' => $locationTypes['locality']));
 			// if($locationTemp) $rental->addLocation($locationTemp);
 
-			// $thisLocality = $context->locationRepository->findOneBy(array('oldId' => $x['locality_id'], 'type' => $locationTypes['locality']));
+			// $thisLocality = $context->locationRepositoryAccessor->get()->findOneBy(array('oldId' => $x['locality_id'], 'type' => $locationTypes['locality']));
 
 			// $thisNamePhrase = $context->phraseServiceFactory->create($thisLocality->name);
 			// $thisCountry = $thisLocality->parent;
@@ -164,7 +164,7 @@ class ImportRentals extends BaseImport {
 			$spokenLanguages = array_unique(array_filter(explode(',', $x['languages_spoken'])));
 			if (is_array($spokenLanguages) && count($spokenLanguages)) {
 				foreach ($spokenLanguages as $key => $value) {
-					$rental->addSpokenLanguage($context->languageRepository->findOneByOldId($value));
+					$rental->addSpokenLanguage($context->languageRepositoryAccessor->get()->findOneByOldId($value));
 				}
 			}
 
@@ -172,11 +172,11 @@ class ImportRentals extends BaseImport {
 			$allAmenities = array();
 			$r1 = qNew('select * from rental_amenity');
 			while ($x1 = mysql_fetch_array($r1)) {
-				$allAmenities[$x1['oldId']] = $context->rentalAmenityRepository->find($x1['id']);
+				$allAmenities[$x1['oldId']] = $context->rentalAmenityRepositoryAccessor->get()->find($x1['id']);
 			}
 
 			// Activities
-			$temp = array_unique(array_filter(explode(',', $x['activities'])));
+			$temp = array_unique(array_filter(explode(',,', $x['activities'])));
 			if (is_array($temp) && count($temp)) {
 				foreach ($temp as $key => $value) {
 					if (isset($allAmenities[$value])) $rental->addAmenity($allAmenities[$value]);
@@ -184,7 +184,7 @@ class ImportRentals extends BaseImport {
 			}
 
 			// Food
-			$temp = array_unique(array_filter(explode(',', $x['food'])));
+			$temp = array_unique(array_filter(explode(',,', $x['food'])));
 			if (is_array($temp) && count($temp)) {
 				foreach ($temp as $key => $value) {
 					if (isset($allAmenities[$value])) $rental->addAmenity($allAmenities[$value]);
@@ -192,7 +192,7 @@ class ImportRentals extends BaseImport {
 			}
 
 			// Owner
-			$temp = array_unique(array_filter(explode(',', $x['owner'])));
+			$temp = array_unique(array_filter(explode(',,', $x['owner'])));
 			if (is_array($temp) && count($temp)) {
 				foreach ($temp as $key => $value) {
 					if (isset($allAmenities[$value])) $rental->addAmenity($allAmenities[$value]);
@@ -200,7 +200,7 @@ class ImportRentals extends BaseImport {
 			}
 
 			// Amentities General
-			$temp = array_unique(array_filter(explode(',', $x['amenities_general'])));
+			$temp = array_unique(array_filter(explode(',,', $x['amenities_general'])));
 			if (is_array($temp) && count($temp)) {
 				foreach ($temp as $key => $value) {
 					if (isset($allAmenities[$value])) $rental->addAmenity($allAmenities[$value]);
@@ -208,7 +208,7 @@ class ImportRentals extends BaseImport {
 			}
 
 			// Amenities Congress
-			$temp = array_unique(array_filter(explode(',', $x['amenities_congress'])));
+			$temp = array_unique(array_filter(explode(',,', $x['amenities_congress'])));
 			if (is_array($temp) && count($temp)) {
 				foreach ($temp as $key => $value) {
 					if (isset($allAmenities[$value])) $rental->addAmenity($allAmenities[$value]);
@@ -216,7 +216,7 @@ class ImportRentals extends BaseImport {
 			}
 
 			// Amenities Wellness
-			$temp = array_unique(array_filter(explode(',', $x['amenities_wellness'])));
+			$temp = array_unique(array_filter(explode(',,', $x['amenities_wellness'])));
 			if (is_array($temp) && count($temp)) {
 				foreach ($temp as $key => $value) {
 					if (isset($allAmenities[$value])) $rental->addAmenity($allAmenities[$value]);
@@ -229,7 +229,7 @@ class ImportRentals extends BaseImport {
 			while ($x1 = mysql_fetch_array($r2)) {
 				$allTags[$x1['oldId']] = $context->rentalTagRepositoryAccessor->get()->find($x1['id']);
 			}
-			$temp = array_unique(array_filter(explode(',', $x['tags'])));
+			$temp = array_unique(array_filter(explode(',,', $x['tags'])));
 			if (is_array($temp) && count($temp)) {
 				foreach ($temp as $key => $value) {
 					if (isset($allTags[$value])) $rental->addTag($allTags[$value]);
@@ -250,12 +250,13 @@ class ImportRentals extends BaseImport {
 				foreach ($answersNew as $oldQuestionId => $answers) {
 
 					$answerEntity = $context->rentalInterviewAnswerRepositoryAccessor->get()->createNew();
-					dump($answerEntity);
 					$answerEntity->setQuestion($interviewQuestions[$oldQuestionId]);
 
 					$answerPhrase = $this->createNewPhrase($interviewQuestionPhraseType);
 					$answerPhrase = $context->phraseDecoratorFactory->create($answerPhrase);
 					foreach ($answers as $oldLanguageId => $value) {
+						if (!strlen($value)) continue;
+
 						$language = $languages[$oldLanguageId];
 						$translation = $answerPhrase->getTranslation($language);
 						$translation->translation = $value;
@@ -287,6 +288,10 @@ class ImportRentals extends BaseImport {
 				$rental->priceOffSeason = $x['price_offseason'];
 			}
 
+			if (strlen($x['capacity_max'])) {
+				$rental->maxCapacity = $x['capacity_max'];
+			}
+
 
 			// Pricelist
 			$pricelists = array();
@@ -313,7 +318,7 @@ class ImportRentals extends BaseImport {
 			if (is_array($temp) && count($temp)) {
 				if ($this->developmentMode == TRUE) $temp = array_slice($temp, 0, 6);
 				foreach ($temp as $key => $value) {
-					$medium = $context->mediumRepository->findOneByOldUrl('http://www.tralandia.com/u/'.$value);
+					$medium = $context->mediumRepositoryAccessor->get()->findOneByOldUrl('http://www.tralandia.com/u/'.$value);
 					if (!$medium) {
 						$mediumEntity = $context->mediumRepositoryAccessor->get()->createNew();
 						$medium = $context->mediumDecoratorFactory->create($mediumEntity);

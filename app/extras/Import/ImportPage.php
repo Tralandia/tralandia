@@ -134,7 +134,7 @@ class ImportPage extends BaseImport {
 		$h1PatternType = $this->createPhraseType('\Page', 'h1Pattern', 'ACTIVE');
 
 		foreach ($this->pages as $pageData) {
-			$page = $context->pageRepository->findOneBy(array('destination' => $pageData['destination'], 'hash' => $pageData['hash']));
+			$page = $context->pageRepositoryAccessor->get()->findOneBy(array('destination' => $pageData['destination'], 'hash' => $pageData['hash']));
 			if(!$page) {
 				$page = $context->pageEntityFactory->create();
 				$page->name = $this->createNewPhrase($nameType);

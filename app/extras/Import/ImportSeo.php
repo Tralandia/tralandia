@@ -44,11 +44,11 @@ class ImportSeo extends BaseImport {
 
 		$model->flush();
 
-		$locationLocalityType = $context->locationTypeRepository->findOneBySlug('locality');
-		$locationRegionType = $context->locationTypeRepository->findOneBySlug('region');
-		$locationCountryType = $context->locationTypeRepository->findOneBySlug('country');
+		$locationLocalityType = $context->locationTypeRepositoryAccessor->get()->findOneBySlug('locality');
+		$locationRegionType = $context->locationTypeRepositoryAccessor->get()->findOneBySlug('region');
+		$locationCountryType = $context->locationTypeRepositoryAccessor->get()->findOneBySlug('country');
 
-		$tagType = $context->rentalAmenityTypeRepository->findOneBySlug('tag');
+		$tagType = $context->rentalAmenityTypeRepositoryAccessor->get()->findOneBySlug('tag');
 		debug(mysql_num_rows($r));
 		while($x = mysql_fetch_array($r)) {
 			$seoUrl = $context->seoSeoUrlEntityFactory->create();
@@ -56,11 +56,11 @@ class ImportSeo extends BaseImport {
 
 			// Location
 			if ($x['locality_id'] > 0) {
-				$location = $context->locationRepository->findOneBy(array('type'=>$locationLocalityType, 'oldId'=>$x['locality_id']));
+				$location = $context->locationRepositoryAccessor->get()->findOneBy(array('type'=>$locationLocalityType, 'oldId'=>$x['locality_id']));
 			} else if ($x['region_id'] > 0) {
-				$location = $context->locationRepository->findOneBy(array('type'=>$locationRegionType, 'oldId'=>$x['region_id']));
+				$location = $context->locationRepositoryAccessor->get()->findOneBy(array('type'=>$locationRegionType, 'oldId'=>$x['region_id']));
 			} else {
-				$location = $context->locationRepository->findOneBy(array('type'=>$locationCountryType, 'oldId'=>$x['country_id']));
+				$location = $context->locationRepositoryAccessor->get()->findOneBy(array('type'=>$locationCountryType, 'oldId'=>$x['country_id']));
 			}
 			if ($location) {
 				$seoUrl->location = $location;
@@ -68,7 +68,7 @@ class ImportSeo extends BaseImport {
 
 			// Tag
 			if ($x['tag_id'] > 0) {
-				$tag = $context->rentalAmenityRepository->findOneBy(array('type'=>$tagType, 'oldId'=>$x['tag_id']));
+				$tag = $context->rentalAmenityRepositoryAccessor->get()->findOneBy(array('type'=>$tagType, 'oldId'=>$x['tag_id']));
 				if ($tag) {
 					$seoUrl->tag = $tag;
 				}
@@ -76,7 +76,7 @@ class ImportSeo extends BaseImport {
 
 			// Attraction Type
 			if ($x['attraction_type_id'] > 0) {
-				$attractionType = $context->attractionTypeRepository->findOneByOldId($x['attraction_type_id']);
+				$attractionType = $context->attractionTypeRepositoryAccessor->get()->findOneByOldId($x['attraction_type_id']);
 				if ($attractionType) {
 					$seoUrl->attractionType = $attractionType;
 				}
@@ -88,7 +88,7 @@ class ImportSeo extends BaseImport {
 			if (is_array($temp) && count($temp)) {
 				if ($this->developmentMode == TRUE) $temp = array_slice($temp, 0, 3);
 				foreach ($temp as $key => $value) {
-					$medium = $context->mediumRepository->findOneByOldUrl('http://www.tralandia.com/u/'.$value);
+					$medium = $context->mediumRepositoryAccessor->get()->findOneByOldUrl('http://www.tralandia.com/u/'.$value);
 					if (!$medium) {
 						$medium = $context->mediumRepositoryAccessor->get()->createNew();
 						$mediumService = $context->mediumDecoratorFactory->create($medium);
@@ -103,7 +103,7 @@ class ImportSeo extends BaseImport {
 			$titlePhrase = $this->context->phraseRepositoryAccessor->get()->createNew();
 			$titlePhraseService = $this->context->phraseDecoratorFactory->create($titlePhrase);
 			$titlePhrase->type = $dictionaryTypeTitle;
-			$sourceLanguage = $context->languageRepository->find($languagesByOldId[$x['source_language_id']]);
+			$sourceLanguage = $context->languageRepositoryAccessor->get()->find($languagesByOldId[$x['source_language_id']]);
 			if (isset($languagesByOldId[$x['source_language_id']])) {
 				$titlePhrase->sourceLanguage = $sourceLanguage;
 			}
@@ -131,7 +131,7 @@ class ImportSeo extends BaseImport {
 
 			$r1 = q('select * from seo_urls_texts where seo_url_id = '.$x['id'].' and length(description)>0');
 			while ($x1 = mysql_fetch_array($r1)) {
-				$languageTemp = $context->languageRepository->find($languagesByOldId[$x1['language_id']]);
+				$languageTemp = $context->languageRepositoryAccessor->get()->find($languagesByOldId[$x1['language_id']]);
 				
 				// Title
 				$titlePhraseService->createTranslation($languageTemp, $x1['title']);

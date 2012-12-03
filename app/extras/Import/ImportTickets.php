@@ -21,7 +21,7 @@ class ImportTickets extends BaseImport {
 		qNew('update medium set message_id = NULL where message_id > 0');
 
 
-		$defaultStaffUser = $context->userRepository->findOneByLogin('paradeiser@tralandia.com');
+		$defaultStaffUser = $context->userRepositoryAccessor->get()->findOneByLogin('paradeiser@tralandia.com');
 
 		// $countryTypeId = qNew('select id from location_type where slug = "country"');
 		// $countryTypeId = mysql_fetch_array($countryTypeId);
@@ -53,7 +53,7 @@ class ImportTickets extends BaseImport {
 			// 	$ticket->status = \Entity\Ticket\Ticket::STATUS_CLOSED;
 			// }
 
-			$currentUser = $context->userRepository->findOneByEmail($x['email']);
+			$currentUser = $context->userRepositoryAccessor->get()->findOneByEmail($x['email']);
 			if(!$currentUser) {
 				$currentUser = $context->userEntityFactory->create();
 				$currentUser->login = $x['email'];
@@ -86,7 +86,7 @@ class ImportTickets extends BaseImport {
 						if ($this->developmentMode == TRUE) $temp = array_slice($temp, 0, 3);
 						foreach ($temp as $key => $value) {
 							$value = substr($value, 5);
-							$medium = $context->mediumRepository->findOneByOldUrl('http://www.tralandia.com/u/'.$value);
+							$medium = $context->mediumRepositoryAccessor->get()->findOneByOldUrl('http://www.tralandia.com/u/'.$value);
 							if (!$medium) {
 								$medium = $context->mediumServiceFactory->create();
 								$medium->setContentFromUrl('http://www.tralandia.com/u/'.$value);

@@ -42,7 +42,7 @@ class ImportCompanies extends BaseImport {
 			// $countries = getNewIds('\Company\Company', $x['for_countries_ids']);
 			// d($countries);
 			// foreach ($countries as $key => $value) {
-			// 	$t = $this->context->locationRepository->find($value);
+			// 	$t = $this->context->locationRepositoryAccessor->get()->find($value);
 			// 	$s->addCountry($t);
 			// }
 			$this->model->persist($s);
@@ -55,13 +55,13 @@ class ImportCompanies extends BaseImport {
 
 		$dictionaryTypeRegistrator = $this->createPhraseType('\Company\Company', 'registrator', 'ACTIVE');
 
-		$countryLocationType = $this->context->locationTypeRepository->findOneBySlug('country');
+		$countryLocationType = $this->context->locationTypeRepositoryAccessor->get()->findOneBySlug('country');
 
 		while($x = mysql_fetch_array($r)) {
 			$s = $this->context->companyOfficeEntityFactory->create();
 			$s->oldId = $x['id'];
 
-			$locationTemp = $this->context->locationRepository->findOneBy(array('oldId' => $x['countries_id'], 'type' => $countryLocationType));
+			$locationTemp = $this->context->locationRepositoryAccessor->get()->findOneBy(array('oldId' => $x['countries_id'], 'type' => $countryLocationType));
 			$s->address = new \Extras\Types\Address(array(
 				'address' => array_filter(array($x['address'], $x['address_2'])),
 				'postcode' => $x['postcode'],
@@ -69,7 +69,7 @@ class ImportCompanies extends BaseImport {
 				'country' => $locationTemp->id,
 			)); // @todo - toto este neuklada ok, je na to task v taskee
 
-			$s->company = $this->context->companyRepository->find(3);
+			$s->company = $this->context->companyRepositoryAccessor->get()->find(3);
 			$s->addCountry($locationTemp);
 			$this->model->persist($s);
 		}
@@ -81,16 +81,16 @@ class ImportCompanies extends BaseImport {
 
 		$dictionaryTypeRegistrator = $this->createPhraseType('\Company\Company', 'registrator', 'ACTIVE');
 
-		$countryLocationType = $this->context->locationTypeRepository->findOneBySlug('country');
+		$countryLocationType = $this->context->locationTypeRepositoryAccessor->get()->findOneBySlug('country');
 
 		while($x = mysql_fetch_array($r)) {
 			$s = $this->context->companyBankAccountEntityFactory->create();
 			$s->oldId = $x['id'];
-			$s->company = $this->context->companyRepository->findOneBy(array('oldId' => $x['companies_id']));
+			$s->company = $this->context->companyRepositoryAccessor->get()->findOneBy(array('oldId' => $x['companies_id']));
 			$s->bankName = $x['bank_name'];
 			$s->bankSwift = $x['bank_swift'];
 
-			$locationTemp = $this->context->locationRepository->findOneBy(array('oldId' => $x['bank_country_id'], 'type' => $countryLocationType));
+			$locationTemp = $this->context->locationRepositoryAccessor->get()->findOneBy(array('oldId' => $x['bank_country_id'], 'type' => $countryLocationType));
 			$s->bankAddress = new \Extras\Types\Address(array(
 				'address' => $x['bank_address'],
 				'country' => $locationTemp,

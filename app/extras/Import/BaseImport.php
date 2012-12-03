@@ -321,7 +321,7 @@ class BaseImport {
 
 		$allLanguages = getSupportedLanguages();
 		foreach ($allLanguages as $key => $value) {
-			$language = $this->context->languageRepository->find($value);
+			$language = $this->context->languageRepositoryAccessor->get()->find($value);
 
 			if($oldPhraseId) {
 				$oldTranslation = qf('select * from z_'.$language->iso.' where id = '.$oldPhraseId);
@@ -365,7 +365,7 @@ class BaseImport {
 		$phrase->type = $phraseType;
 
 		if(is_string($textLanguage)) {
-			$textLanguage = $this->context->languageRepository->findOneBy(array('iso' => $textLanguage));
+			$textLanguage = $this->context->languageRepositoryAccessor->get()->findOneBy(array('iso' => $textLanguage));
 		}
 		$translation = $phraseService->createTranslation($textLanguage, $text);
 
