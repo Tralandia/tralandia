@@ -247,6 +247,14 @@ class ImportRentals extends BaseImport {
 				$rental->rooms = $x['rooms'];
 			}
 
+			if (strlen($x['price_season'])) {
+				$rental->priceSeason = $x['price_season'];
+			}
+
+			if (strlen($x['price_offseason'])) {
+				$rental->priceOffSeason = $x['price_offseason'];
+			}
+
 
 			// Pricelist
 			$pricelists = array();

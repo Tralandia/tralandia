@@ -70,7 +70,7 @@ class PhraseService extends Service\BaseService {
 			$t = array_filter($t);
 			return reset($t);
 		} else {
-			return $t[self::REQUESTED];
+			return (array_key_exists(self::REQUESTED, $t) ? $t[self::REQUESTED] : NULL);
 		}
 	}
 

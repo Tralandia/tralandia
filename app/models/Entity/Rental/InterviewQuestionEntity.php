@@ -26,4 +26,48 @@ class InterviewQuestion extends \Entity\BaseEntityDetails {
 	protected $sort = 0;
 
 	//@entity-generator-code --- NEMAZAT !!!
+
+	/* ----------------------------- Methods ----------------------------- */		
+	public function __construct()
+	{
+		parent::__construct();
+	}
+		
+	/**
+	 * @param \Entity\Phrase\Phrase
+	 * @return \Entity\Rental\InterviewQuestion
+	 */
+	public function setQuestion(\Entity\Phrase\Phrase $question)
+	{
+		$this->question = $question;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Phrase\Phrase|NULL
+	 */
+	public function getQuestion()
+	{
+		return $this->question;
+	}
+		
+	/**
+	 * @param integer
+	 * @return \Entity\Rental\InterviewQuestion
+	 */
+	public function setSort($sort)
+	{
+		$this->sort = $sort;
+
+		return $this;
+	}
+		
+	/**
+	 * @return integer|NULL
+	 */
+	public function getSort()
+	{
+		return $this->sort;
+	}
 }

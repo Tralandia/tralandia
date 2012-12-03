@@ -34,7 +34,7 @@ class CibiPresenter extends BasePresenter {
 		$search = $this->searchFactory->create($location);
 		$search->addCriteria(
 			RentalSearchService::CRITERIA_RENTAL_TYPE, 
-			$this->rentalTypeRepositoryAccessor->get()->findById(array(5, 6))
+			$this->rentalTypeRepositoryAccessor->get()->findById(array(2, 10, 6))
 		);
 		$search->addCriteria(
 			RentalSearchService::CRITERIA_LOCATION, 
@@ -48,9 +48,13 @@ class CibiPresenter extends BasePresenter {
 			RentalSearchService::CRITERIA_LANGUAGES_SPOKEN, 
 			$this->languageRepositoryAccessor->get()->findById(array(28, 38))
 		);
+		$search->addCriteria(
+			RentalSearchService::CRITERIA_CAPACITY, 
+			10
+		);
 		$search->setCountPerPage(50);
 		$search->setPage(1);
-		$results = $search->getResults();
+		$results = $search->getRentals();
 
 		dump($results);
 

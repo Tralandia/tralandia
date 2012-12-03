@@ -146,4 +146,23 @@ class Currency extends \Entity\BaseEntity {
 	{
 		return $this->rounding;
 	}
+		
+	/**
+	 * @param float
+	 * @return \Entity\Currency
+	 */
+	public function setSearchInterval($searchInterval)
+	{
+		$this->searchInterval = $searchInterval;
+
+		return $this;
+	}
+		
+	/**
+	 * @return float|NULL
+	 */
+	public function getSearchInterval()
+	{
+		return $this->searchInterval;
+	}
 }

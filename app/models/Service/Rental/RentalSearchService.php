@@ -10,15 +10,6 @@ use Service, Doctrine, Entity;
 class RentalSearchService extends Service\BaseService 
 {
 
-	public $primaryLocation;
-	public $cacheFactory;
-	public $searchCache;
-	
-	public $rentalRepositoryAccessor;
-	public $locationRepositoryAccessor;
-
-	public $results;
-
 	const CRITERIA_PRIMARY_LOCATION = 'primaryLocation';
 	
 	const CRITERIA_LOCATION  		= 'location';
@@ -33,10 +24,18 @@ class RentalSearchService extends Service\BaseService
 
 	const CAPACITY_MAX		= 50;
 
+	public $primaryLocation;
+	public $cacheFactory;
+	public $searchCache;
+	
+	public $rentalRepositoryAccessor;
+	public $locationRepositoryAccessor;
+
+	public $results;
+
 	public function __construct(\Entity\Location\Location $location) {
 
 		$this->addCriteria(self::CRITERIA_PRIMARY_LOCATION, $location);
-		$this->searchCache = $this->cacheFactory->create($this->primaryLocation);
 
 	}
 
@@ -47,6 +46,7 @@ class RentalSearchService extends Service\BaseService
 
 	public function injectCache(\Extras\Cache\ISearchCachingFactory $cache) {
 		$this->cacheFactory = $cache;
+		$this->searchCache = $this->cacheFactory->create($this->primaryLocation);
 	}
 
 	public function addCriteria($criteria, $values) {
@@ -61,7 +61,7 @@ class RentalSearchService extends Service\BaseService
 				$this->searchCache->setValue($value);
 
 				if ($rentalsIds = $this->searchCache->findRentalIdsBy($criteria, $value)) {
-					$this->results[$this->primaryLocation->getId()][$criteria][$value->getId()] = $rentalsIds;
+					$this->results[$this->primaryLocation->getId()][$criteria][(is_object($value) ? $value->getId() : $value)] = $rentalsIds;
 				}
 			}
 			
@@ -69,8 +69,37 @@ class RentalSearchService extends Service\BaseService
 
 	}
 
-	public function getResults() {
-		return $this->results;
+	public function getRentalIds() {
+
+		foreach ($this->results[$this->primaryLocation->getId()] as $criteria => $result) {
+
+			$criteriaIds = array();
+			foreach ($result as $key => $value) {
+				$criteriaIds = array_merge($criteriaIds, $value);
+			}
+
+			if (isset($return)) {
+				$return = array_intersect($return, $criteriaIds);
+			} else {
+				$return = $criteriaIds;
+			}
+
+		}
+
+		return $return;
+
+	}
+
+	public function getRentals() {
+
+		$rentals = array();
+
+		foreach ($this->getRentalIds() as $rentalId) {
+			$rentals[] = $this->rentalRepositoryAccessor->get()->findOneById($rentalId);
+		}
+
+		return $rentals;
+
 	}
 
 	public function setCountPerPage($num) {}
