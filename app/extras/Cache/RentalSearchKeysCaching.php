@@ -91,7 +91,7 @@ class RentalSearchKeysCaching extends \Nette\Object {
 
 		// Set Languages Spoken
 		foreach ($this->rental->spokenLanguages as $key => $value) {
-			$thisKey = RentalSearchService::CRITERIA_LANGUAGE_SPOKEN.$value->id;
+			$thisKey = RentalSearchService::CRITERIA_SPOKEN_LANGUAGE.$value->id;
 			$rentalSearchCaching->addRental($this->rental, $thisKey);
 			$newKeys[] = $thisKey;
 		}

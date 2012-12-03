@@ -7,6 +7,7 @@ use Service\Rental\RentalSearchService;
 
 class RentalSearchCaching extends \Nette\Object {
 
+	const CACHE_LIFETIME = '';
 	protected $searchCache;
 	protected $location;
 	protected $rentalRepositoryAccessor;
@@ -18,6 +19,10 @@ class RentalSearchCaching extends \Nette\Object {
 	public function __construct($location, ISearchCacheFactory $searchCacheFactory) {
 		$this->location = $location;
 		$this->searchCache = $searchCacheFactory->create('RentalSearchCache'.$location->id);
+	}
+
+	public function load($key) {
+		return $this->searchCache->load($key);
 	}
 
 	public function removeRental(\Entity\Rental\Rental $rental, $key) {
@@ -34,25 +39,37 @@ class RentalSearchCaching extends \Nette\Object {
 		return $this;
 	}
 
-	public function createRentalFeaturedList() {
+	public function getOrderList() {
+		$order = $this->searchCache->load('order');
+
+		if ($order === NULL) {
+			$order = $this->createRentalOrderList();
+		}
+
+		return $order;
+	}
+
+	protected function createRentalFeaturedList() {
 		$featured = array();
 		$rentals = $this->rentalRepositoryAccessor->get()->findFeatured($this->location);
 		foreach ($rentals as $key => $value) {
 			$featured[$value['id']] = $value['id'];
 		}
-		$this->searchCache['featured'] = $featured;
+		$this->searchCache->save('featured', $featured, array(
+			Caching\Cache::EXPIRE => $this->getExpirationTimeStamp(),
+		));
 
 		return $featured;
 	}
 
-	public function createRentalOrderList() {
+	protected function createRentalOrderList() {
 		$featured = $this->createRentalFeaturedList();
 
 		$notFeatured = array();
 
-		$rentals = $this->rentalRepositoryAccessor->get()->find(array('primaryLocation' => $this->location, 'status' => \Entity\Rental\Rental::STATUS_LIVE));
+		$rentals = $this->rentalRepositoryAccessor->get()->findBy(array('primaryLocation' => $this->location, 'status' => \Entity\Rental\Rental::STATUS_LIVE));
 		foreach ($rentals as $key => $value) {
-			$notFeatured[$value['id']] = $value['id'];
+			$notFeatured[$value->id] = $value->id;
 		}
 
 		foreach ($featured as $key => $value) {
@@ -66,13 +83,22 @@ class RentalSearchCaching extends \Nette\Object {
 		shuffle($notFeatured);
 
 		$order = array_merge($featured, $notFeatured);
-
-		$this->searchCache['order'] = $order;
+		$order = array_flip(array_values($order));
+		$this->searchCache->save('order', $order, array(
+			Caching\Cache::EXPIRE => $this->getExpirationTimeStamp(),
+		));
 
 		return $order;
 	}
 
 	public function isFeatured(\Entity\Rental\Rental $rental) {
-		return isset($this->searchCache['featured'][$rental->id]);
+		$t = $this->searchCache->load('featured');
+		return isset($t[$rental->id]);
+	}
+
+	protected function getExpirationTimeStamp() {
+		$t = strtotime('next hour');
+		$t = mktime (date("H", $t), 0, 0, date("n", $t), date("j", $t), date("Y", $t));
+		return $t;
 	}
 }

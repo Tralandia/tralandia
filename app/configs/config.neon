@@ -244,3 +244,7 @@ factories:
 		class: Nette\Caching\Cache(@cacheStorage, %namespace%)
 		implement: Extras\Cache\ISearchCacheFactory
 		parameters: [namespace]
+
+	updateRentalSearchKeysCacheRobotFactory:
+		class: Service\Robot\UpdateRentalSearchKeysCacheRobot(%location%)
+		implement: Service\Robot\IUpdateRentalSearchKeysCacheRobotFactory
