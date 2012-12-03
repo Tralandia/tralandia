@@ -24,13 +24,10 @@ class ImportRentals extends BaseImport {
 		//qNew('update medium set rental_id = NULL where rental_id > 0');
 
 		$nameDictionaryType = $this->createPhraseType('\Rental\Rental', 'name', 'NATIVE', array('checkingRequired' => TRUE));
-		$model->persist($nameDictionaryType);
 		$briefDescriptionDictionaryType = $this->createPhraseType('\Rental\Rental', 'briefDescription', 'NATIVE', array('checkingRequired' => TRUE));
-		$model->persist($briefDescriptionDictionaryType);
 		$descriptionDictionaryType = $this->createPhraseType('\Rental\Rental', 'description', 'NATIVE', array('checkingRequired' => TRUE));
-		$model->persist($descriptionDictionaryType);
 		$teaserDictionaryType = $this->createPhraseType('\Rental\Rental', 'teaser', 'NATIVE', array('checkingRequired' => TRUE));
-		$model->persist($teaserDictionaryType);
+		$interviewQuestionPhraseType = $this->createPhraseType('\Rental\InterviewQuestion', 'question');
 
 		$model->flush();
 
@@ -48,13 +45,23 @@ class ImportRentals extends BaseImport {
 		$locationTypes['administrativeregionleveltwo'] = $context->locationTypeRepository->findOneBySlug('administrativeregionleveltwo');
 		$locationTypes['locality'] = $context->locationTypeRepository->findOneBySlug('locality');
 
+		$interviewQuestions = array();
+		foreach ($context->rentalInterviewQuestionRepositoryAccessor->get()->findAll() as $key => $value) {
+			$interviewQuestions[$value->oldId] = $value;
+		}
+
+		$languages = array();
+		foreach ($context->languageRepositoryAccessor->get()->findAll() as $key => $value) {
+			$languages[$value->oldId] = $value;
+		}
+
 		$ownerRole = $context->userRoleRepository->findOneBySlug('owner');
 
 		$en = $context->languageRepository->findOneByIso('en');
 		$now = time();
 
 		if ($this->developmentMode == TRUE) {
-			$r = q('select * from objects where country_id = 46 and interview is not null order by rand() limit 1');
+			$r = q('select * from objects where country_id = 46 and interview is not null order by rand() limit 5');
 		} else {
 			$r = q('select * from objects');
 		}
@@ -87,7 +94,7 @@ class ImportRentals extends BaseImport {
 			$rental->setType($context->rentalTypeRepository->findOneByOldId($oldRentalTypesEn[$oldRentalType]));
 
 			// Locations
-			$rental->addLocation($context->locationRepository->findOneBy(array('oldId' => $x['country_id'], 'type' => $locationTypes['country'])));
+			$rental->setPrimaryLocation($context->locationRepository->findOneBy(array('oldId' => $x['country_id'], 'type' => $locationTypes['country'])));
 
 			$administrativeRegion = $context->locationRepository->findOneBy(array('oldId' => $x['region_admin_id'], 'type' => $locationTypes['administrativeregionlevelone']));
 			if (!$administrativeRegion) {
@@ -232,7 +239,32 @@ class ImportRentals extends BaseImport {
 			// Interview
 			$temp = unserialize(stripslashes($x['interview']));
 			if (is_array($temp) && count($temp)) {
-				$rental->interview = $temp;
+
+				$answersNew = array();
+				foreach ($temp as $oldLanguageId => $answers) {
+					foreach ($answers as $oldQuestionId => $answer) {
+						$answersNew[$oldQuestionId][$oldLanguageId] = $answer;
+					}
+				}
+
+				foreach ($answersNew as $oldQuestionId => $answers) {
+
+					$answerEntity = $context->rentalInterviewAnswerRepositoryAccessor->get()->createNew();
+					dump($answerEntity);
+					$answerEntity->setQuestion($interviewQuestions[$oldQuestionId]);
+
+					$answerPhrase = $this->createNewPhrase($interviewQuestionPhraseType);
+					$answerPhrase = $context->phraseDecoratorFactory->create($answerPhrase);
+					foreach ($answers as $oldLanguageId => $value) {
+						$language = $languages[$oldLanguageId];
+						$translation = $answerPhrase->getTranslation($language);
+						$translation->translation = $value;
+					}
+
+					$answerEntity->answer = $answerPhrase->getEntity();
+					$rental->addInterviewAnswer($answerEntity);
+				}
+
 			}
 
 			if (strlen($x['check_in'])) {

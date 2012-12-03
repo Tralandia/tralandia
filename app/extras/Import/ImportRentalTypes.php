@@ -17,6 +17,7 @@ class ImportRentalTypes extends BaseImport {
 	public function doImport($subsection = NULL) {
 
 		$phrase = $this->createPhraseType('\Rental\Type', 'name', 'ACTIVE');
+		$questionPhraseType = $this->createPhraseType('\Rental\interviewQuestion', 'question', 'ACTIVE');
 		$this->model->persist($phrase);
 		$this->model->flush();
 
@@ -69,6 +70,16 @@ class ImportRentalTypes extends BaseImport {
 				$thisTranslation = $thisPhrase->createTranslation($thisLanguage, $x['name']);
 			}
 			$this->model->persist($rentalType);
+		}
+		$this->model->flush();
+
+		// Rental Interview Questions
+		$r = q('select * from interview_questions');
+		while ($x = mysql_fetch_array($r)) {
+			$question = $this->context->rentalInterviewQuestionRepositoryAccessor->get()->createNew();
+			$question->oldId = $x['id'];
+			$question->question = $this->createNewPhrase($questionPhraseType, $x['name_dic_id']);
+			$this->model->persist($question);
 		}
 		$this->model->flush();
 
