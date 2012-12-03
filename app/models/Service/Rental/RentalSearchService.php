@@ -3,6 +3,7 @@
 namespace Service\Rental;
 
 use Service, Doctrine, Entity;
+use Extras\Cache\IRentalSearchCachingFactory;
 
 /**
  * @author Jan Czibula
@@ -10,94 +11,115 @@ use Service, Doctrine, Entity;
 class RentalSearchService extends Service\BaseService 
 {
 
-	const CRITERIA_PRIMARY_LOCATION = 'primaryLocation';
 	const CRITERIA_LOCATION  		= 'location';
 	const CRITERIA_RENTAL_TYPE 		= 'rentalType';
-	const CRITERIA_AREA_BOUNDRIES 	= 'areaBoundries';
+	const CRITERIA_TAG	 			= 'tag';
 	const CRITERIA_CAPACITY 		= 'capacity';
-	const CRITERIA_AMENITIES 		= 'amenities';
-	const CRITERIA_LANGUAGES_SPOKEN = 'languagesSpoken';
-	const CRITERIA_PRICE_CATEGORY 	= 'priceCategory';
+	const CRITERIA_SPOKEN_LANGUAGE 	= 'spokenLanguage';
+	const CRITERIA_PRICE 			= 'price';
+	//const CRITERIA_AREA_BOUNDRY 	= 'areaBoundry';
 
-	public $primaryLocation;
-	public $cacheFactory;
-	public $searchCache;
-	
-	public $rentalRepositoryAccessor;
-	public $locationRepositoryAccessor;
+	const CAPACITY_MAX		= 50;
 
-	public $results;
+	protected $primaryLocation;
+	protected $criteria = array();
+	protected $countPerPage = 50;
 
-	public function __construct(\Entity\Location\Location $location) {
+	protected $results;
 
-		$this->addCriteria(self::CRITERIA_PRIMARY_LOCATION, $location);
+	protected $rentalSearchCaching;
+	protected $rentalRepositoryAccessor;
 
+	public function __construct(\Entity\Location\Location $primaryLocation, IRentalSearchCachingFactory $rentalSearchCachingFactory) {
+		$this->primaryLocation = $primaryLocation;
+
+		$this->rentalSearchCaching = $rentalSearchCachingFactory->create($this->primaryLocation);
 	}
 
 	public function inject(\Nette\DI\Container $container) {
 		$this->rentalRepositoryAccessor = $container->rentalRepositoryAccessor;
-		$this->locationRepositoryAccessor = $container->locationRepositoryAccessor;
 	}
 
-	public function injectCache(\Extras\Cache\ISearchCachingFactory $cache) {
-		$this->cacheFactory = $cache;
-		$this->searchCache = $this->cacheFactory->create($this->primaryLocation);
+	// Criteria
+	// ==============================
+	public function addLocationCriteria(Entity\Location\Location $location) {
+		$this->criteria[self::CRITERIA_LOCATION] = $location;
 	}
 
-	public function addCriteria($criteria, $values) {
-		if (!is_array($values)) $values = array($values);
+	public function addRentalTypeCriteria(Entity\Rental\Type $rentalType) {
+		$this->criteria[self::CRITERIA_RENTAL_TYPE] = $rentalType;
+	}
 
-		foreach ($values as $key => $value) {
+	public function addTagCriteria(Entity\Rental\Type $tag) {
+		$this->criteria[self::CRITERIA_TAG] = $tag;
+	}
 
-			if ($criteria===self::CRITERIA_PRIMARY_LOCATION) {
-				$this->primaryLocation = $value;
-			} else {
-				$this->searchCache->setCriteria($criteria);
-				$this->searchCache->setValue($value);
+	public function addCapacityCriteria($capacity) {
+		$this->criteria[self::CRITERIA_CAPACITY] = $capacity;
+	}
 
-				if ($rentalsIds = $this->searchCache->findRentalIdsBy($criteria, $value)) {
-					$this->results[$this->primaryLocation->getId()][$criteria][(is_object($value) ? $value->getId() : $value)] = $rentalsIds;
-				}
-			}
-			
+	public function addSpokenLanguageCriteria(Entity\Language $spokenLanguage) {
+		$this->criteria[self::CRITERIA_SPOKEN_LANGUAGE] = $spokenLanguage;
+	}
+
+	public function addPriceCriteria($price) {
+		$this->criteria[self::CRITERIA_PRICE] = $price;
+	}
+
+	public function getRentalIds($page = NULL) {
+		$results = $this->getResults();
+
+		if ($page === NULL) {
+			return $results;
+		} else {
+			$results = array_chunk($results, $this->countPerPage);
+			return isset($results[$page]) ? $results[$page] : NULL;
+		}
+	}
+
+	public function getRentals($page = NULL) {
+		$results = $this->getRentalIds($page);
+
+		return $this->rentalRepositoryAccessor->get()->findById($results);
+	}
+
+	public function getResultsCount() {
+		return count($this->getResults());
+	}
+
+	//=================================
+
+	protected function getResults() {
+		if ($this->results !== NULL) {
+			return $this->results;
 		}
 
-	}
+		$cache = array();
 
-	public function getRentalIds() {
-
-		foreach ($this->results[$this->primaryLocation->getId()] as $criteria => $result) {
-
-			$criteriaIds = array();
-			foreach ($result as $key => $value) {
-				$criteriaIds = array_merge($criteriaIds, $value);
-			}
-
-			if (isset($return)) {
-				$return = array_intersect($return, $criteriaIds);
-			} else {
-				$return = $criteriaIds;
-			}
-
+		foreach ($this->criteria as $key => $value) {
+			$cache[$key] = $this->rentalSearchCaching->load($key.$value->id);
 		}
 
-		return $return;
-
-	}
-
-	public function getRentals() {
-
-		$rentals = array();
-
-		foreach ($this->getRentalIds() as $rentalId) {
-			$rentals[] = $this->rentalRepositoryAccessor->get()->findOneById($rentalId);
+		if (count($cache) > 1) {
+			$tempResults = call_user_func_array('array_intersect', $cache);			
+		} else {
+			$tempResults = reset($cache);
 		}
 
-		return $rentals;
-
+		$this->results = $this->reorderResults($tempResults);
+		d($this->results);
+		return $this->results;
 	}
 
-	public function setCountPerPage($num) {}
+	protected function reorderResults($results) {
+		$order = $this->rentalSearchCaching->getOrderList();
+		$t = array();
+		foreach ($results as $key => $value) {
+			$t[$key] = $order[$key];
+		}
 
-	public function setPage($num) {}
+		asort($t);
+
+		return array_keys($t);
+	}
 }

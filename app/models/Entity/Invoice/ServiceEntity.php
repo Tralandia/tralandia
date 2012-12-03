@@ -41,28 +41,9 @@ class Service extends \Entity\BaseEntity {
 	 * @ORM\ManyToOne(targetEntity="Entity\Invoice\Package", inversedBy="services")
 	 */
 	protected $package;
-	
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-								//@entity-generator-code --- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()
