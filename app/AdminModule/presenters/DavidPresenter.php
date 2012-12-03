@@ -11,16 +11,20 @@ class DavidPresenter extends BasePresenter {
 	private $locationRepositoryAccessor;
 	private $frontRouteFactory;
 	private $seoServiceFactory;
+	private $robot;
 
 	protected $rentalSearchCachingFactory;
+	protected $rentalSearchServiceFactory;
 
 	public function injectRoute(\Routers\IFrontRouteFactory $frontRouteFactory, \Service\Seo\ISeoServiceFactory $seoServiceFactory) {
 		$this->frontRouteFactory = $frontRouteFactory;
 		$this->seoServiceFactory = $seoServiceFactory;
 	}
 
-	public function injectRentalCache(\Extras\Cache\IRentalSearchCachingFactory $rentalSearchCachingFactory) {
+	public function injectRentalCache(\Extras\Cache\IRentalSearchCachingFactory $rentalSearchCachingFactory, \Service\Rental\IRentalSearchServiceFactory $rentalSearchServiceFactory, \Service\Robot\IUpdateRentalSearchKeysCacheRobotFactory $robot) {
 		$this->rentalSearchCachingFactory = $rentalSearchCachingFactory;
+		$this->rentalSearchServiceFactory = $rentalSearchServiceFactory;
+		$this->robot = $robot;
 	}
 
 	public function inject(\Nette\DI\Container $dic) {
@@ -47,13 +51,19 @@ class DavidPresenter extends BasePresenter {
 
 	}
 
-	public function actionRentalCache() {
+	public function actionSearch() {
+		$primaryLocation = $this->locationRepositoryAccessor->get()->findOneByIso('sk');
+		$location = $this->locationRepositoryAccessor->get()->find(338);
 
-		$t = $this->locationRepositoryAccessor->get()->findOneByIso('cz');
-		$t = $this->rentalRepositoryAccessor->get()->findFeatured($t);
-		d($t);
-		//$rental = $this->rentalRepositoryAccessor->get()->find(1);
-		//$t = $this->rentalSearchCachingFactory->create($rental);
+		$this->robot->create($primaryLocation)->run();
 
+		$thisSearch = $this->rentalSearchServiceFactory->create($primaryLocation);
+		$thisSearch->addLocationCriteria($location);
+		//$thisSearch->addTagCriteria($tag);
+
+		d($thisSearch->getResultsCount());
+		d($thisSearch->getRentalIds());
+		d($thisSearch->getRentals());
+		
 	}
 }
