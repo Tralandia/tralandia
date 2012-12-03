@@ -17,6 +17,7 @@ class ImportRentalTypes extends BaseImport {
 	public function doImport($subsection = NULL) {
 
 		$phrase = $this->createPhraseType('\Rental\Type', 'name', 'ACTIVE');
+		$questionPhraseType = $this->createPhraseType('\Rental\interviewQuestion', 'question', 'ACTIVE');
 		$this->model->persist($phrase);
 		$this->model->flush();
 
@@ -57,11 +58,11 @@ class ImportRentalTypes extends BaseImport {
 
 		$r = q('select * from objects_types_new where language_id <> 38 && trax_en_type_id > 0');
 		while($x = mysql_fetch_array($r)) {
-			$rentalType = $this->context->rentalTypeRepository->findOneByOldId($x['trax_en_type_id']);
+			$rentalType = $this->context->rentalTypeRepositoryAccessor->get()->findOneByOldId($x['trax_en_type_id']);
 			
 			if (!$rentalType) throw new \Nette\UnexpectedValueException('nenasiel som EN rental Type oldID: '.$x['trax_en_type_id']); 
 			
-			$thisLanguage = $this->context->languageRepository->findOneByOldId($x['language_id']);
+			$thisLanguage = $this->context->languageRepositoryAccessor->get()->findOneByOldId($x['language_id']);
 			if (!$thisLanguage) continue;
 
 			$thisPhrase = $this->context->phraseDecoratorFactory->create($rentalType->name);
@@ -69,6 +70,16 @@ class ImportRentalTypes extends BaseImport {
 				$thisTranslation = $thisPhrase->createTranslation($thisLanguage, $x['name']);
 			}
 			$this->model->persist($rentalType);
+		}
+		$this->model->flush();
+
+		// Rental Interview Questions
+		$r = q('select * from interview_questions');
+		while ($x = mysql_fetch_array($r)) {
+			$question = $this->context->rentalInterviewQuestionRepositoryAccessor->get()->createNew();
+			$question->oldId = $x['id'];
+			$question->question = $this->createNewPhrase($questionPhraseType, $x['name_dic_id']);
+			$this->model->persist($question);
 		}
 		$this->model->flush();
 

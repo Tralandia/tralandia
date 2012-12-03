@@ -19,7 +19,7 @@ class ImportInvoiceStart extends BaseImport {
 		$context = $this->context;
 		$model = $this->model;
 
-		$en = $context->languageRepository->findOneByIso('en');
+		$en = $context->languageRepositoryAccessor->get()->findOneByIso('en');
 
 		$phrase = $this->createPhraseType('\Invoice\UseType', 'name', 'ACTIVE');
 		$model->persist($phrase);
@@ -75,7 +75,7 @@ class ImportInvoiceStart extends BaseImport {
 		// Service Types
 		$packageNameType = $this->createPhraseType('\Invoice\Package', 'name', 'ACTIVE');
 		$packageTeaserType = $this->createPhraseType('\Invoice\Package', 'teaser', 'ACTIVE');
-		$countryType = $context->locationRepository->findOneBySlug('country');
+		$countryType = $context->locationRepositoryAccessor->get()->findOneBySlug('country');
 
 		$r = q('select * from invoicing_packages order by id');
 		while($x = mysql_fetch_array($r)) {
@@ -83,12 +83,12 @@ class ImportInvoiceStart extends BaseImport {
 			$package->name = $this->createNewPhrase($packageNameType, $x['name_dic_id']);
 			$package->teaser = $this->createNewPhrase($packageTeaserType, $x['teaser_dic_id']);
 			
-			$temp = $context->locationRepository->findOneBy(array('type'=>$countryType, 'oldId'=>$x['countries_id']));
+			$temp = $context->locationRepositoryAccessor->get()->findOneBy(array('type'=>$countryType, 'oldId'=>$x['countries_id']));
 			if ($temp) $package->country = $temp;
 
 			$temp = array_unique(array_filter(explode(',', $x['package_type'])));
 			foreach ($temp as $key => $value) {
-				$use = $context->invoiceUseTypeRepository->findOneBySlug($value);
+				$use = $context->invoiceUseTypeRepositoryAccessor->get()->findOneBySlug($value);
 				if ($use) {
 					$package->addUse($use);
 				}
@@ -97,8 +97,8 @@ class ImportInvoiceStart extends BaseImport {
 			$r1 = q('select * from invoicing_packages_services where packages_id = '.$x['id'].' order by id');
 			while($x1 = mysql_fetch_array($r1)) {
 				$packageService = $context->invoiceServiceEntityFactory->create();
-				$packageService->type = $context->invoiceServiceTypeRepository->findOneByOldId($x1['services_types_id']);
-				$packageService->duration = $context->invoiceServiceDurationRepository->findOneByOldId($x1['duration']);
+				$packageService->type = $context->invoiceServiceTypeRepositoryAccessor->get()->findOneByOldId($x1['services_types_id']);
+				$packageService->duration = $context->invoiceServiceDurationRepositoryAccessor->get()->findOneByOldId($x1['duration']);
 				$packageService->defaultPrice = new \Extras\Types\Price($x1['price_default'], $currenciesByOldId[(int)$x['currencies_id']]); 
 				$packageService->currentPrice = new \Extras\Types\Price($x1['price_current'], $currenciesByOldId[(int)$x['currencies_id']]);
 				$package->addService($packageService);
@@ -117,12 +117,12 @@ class ImportInvoiceStart extends BaseImport {
 			$marketing->oldId = $x['id'];
 			$marketing->name = $this->createNewPhrase($marketingNameType, $x['name_dic_id']);
 			$marketing->description = $this->createNewPhrase($marketingDescriptionType, $x['description_dic_id']);
-			$temp = $context->invoicePackageRepository->findOneByOldId($x['packages_id']);
+			$temp = $context->invoicePackageRepositoryAccessor->get()->findOneByOldId($x['packages_id']);
 			if ($temp) $marketing->package = $temp;
 			
 			$temp = array_unique(array_filter(explode(',', $x['countries_ids_included'])));
 			foreach ($temp as $key => $value) {
-				$country = $context->locationRepository->findOneBy(array('type'=>$countryType, 'oldId'=>$value));
+				$country = $context->locationRepositoryAccessor->get()->findOneBy(array('type'=>$countryType, 'oldId'=>$value));
 				if ($country) {
 					$marketing->addLocation($country);
 				}
@@ -131,7 +131,7 @@ class ImportInvoiceStart extends BaseImport {
 			$marketing->countLeft = $x['count_left'];
 			$marketing->validFrom = fromStamp($x['time_from']);
 			$marketing->validTo = fromStamp($x['time_to']);
-			$temp = $context->invoiceUseTypeRepository->findOneBySlug($x['marketing_type']);
+			$temp = $context->invoiceUseTypeRepositoryAccessor->get()->findOneBySlug($x['marketing_type']);
 			if ($temp) $marketing->addUse($temp);
 			$model->persist($marketing);
 		}

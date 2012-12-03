@@ -18,7 +18,7 @@ class ImportAttractions extends BaseImport {
 		$context = $this->context;
 		$model = $this->model;
 
-		$en = $context->languageRepository->findOneByIso('en');
+		$en = $context->languageRepositoryAccessor->get()->findOneByIso('en');
 
 		// Detaching all media
 		// qNew('update medium set attraction_id = NULL where attraction_id > 0');
@@ -58,10 +58,10 @@ class ImportAttractions extends BaseImport {
 
 		while($x = mysql_fetch_array($r)) {
 			$attraction = $context->attractionEntityFactory->create();
-			$attraction->type = $context->attractionTypeRepository->findOneByOldId($x['attraction_type_id']);
+			$attraction->type = $context->attractionTypeRepositoryAccessor->get()->findOneByOldId($x['attraction_type_id']);
 			$attraction->name = $this->createNewPhrase($attractionNameType, $x['name_dic_id']);
 			$attraction->description = $this->createNewPhrase($attractionDescriptionType, $x['description_dic_id']);
-			$attraction->country = $context->locationRepository->find($locationsByOldId[$x['country_id']]);
+			$attraction->country = $context->locationRepositoryAccessor->get()->find($locationsByOldId[$x['country_id']]);
 			$attraction->latitude = new \Extras\Types\Latlong($x['latitude']);
 			$attraction->longitude = new \Extras\Types\Latlong($x['longitude']);
 			$attraction->oldId = $x['id'];
@@ -88,7 +88,7 @@ class ImportAttractions extends BaseImport {
 			if (is_array($temp) && count($temp)) {
 				if ($this->developmentMode == TRUE) $temp = array_slice($temp, 0, 3);
 				foreach ($temp as $key => $value) {
-					$medium = $context->mediumRepository->findOneByOldUrl('http://www.tralandia.com/u/'.$value);
+					$medium = $context->mediumRepositoryAccessor->get()->findOneByOldUrl('http://www.tralandia.com/u/'.$value);
 					if (!$medium) {
 						$medium = $context->mediumRepositoryAccessor->get()->createNew();
 						$mediumService = $context->mediumDecoratorFactory->create($medium);

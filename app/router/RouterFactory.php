@@ -75,7 +75,11 @@ class RouterFactory
 		
 		$router[] = $frontRouter = new RouteList('Front');
 
-		$frontRouter[] = $this->frontRouteFactory->create();
+		$section = isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : null;
+		if ($section !== 'cibi') {
+			$frontRouter[] = $this->frontRouteFactory->create();
+		}
+
 	
 		
 		$frontRouter[] = new Route('<presenter>/[<action>[/<id>]]', array(

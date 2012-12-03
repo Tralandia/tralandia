@@ -25,7 +25,7 @@ class ImportInvoice extends BaseImport {
 		$context = $this->context;
 		$model = $this->model;
 
-		$en = $context->languageRepository->findOneByIso('en');
+		$en = $context->languageRepositoryAccessor->get()->findOneByIso('en');
 
 		// Invoices
 		//$invoiceNameType = $this->createPhraseType('\Invoice\ServiceDuration', 'name', 'supportedLanguages', 'ACTIVE');
@@ -75,9 +75,9 @@ class ImportInvoice extends BaseImport {
 		if (isset($x['invoice_variable_number'])) {
 			$invoice->paymentReferenceNumber = $x['invoice_variable_number'];
 		}
-		$invoice->company = $context->companyRepository->find($this->companiesByOldId[$x['companies_id']]);
+		$invoice->company = $context->companyRepositoryAccessor->get()->find($this->companiesByOldId[$x['companies_id']]);
 		if (isset($this->rentalsByOldId[$x['objects_id']])) {
-			$t = $context->rentalRepository->find($this->rentalsByOldId[$x['objects_id']]);
+			$t = $context->rentalRepositoryAccessor->get()->find($this->rentalsByOldId[$x['objects_id']]);
 			if (!$t) {
 				debug('Nenasiel som rental '.$x['objects_id'].' (stare ID).');
 			}
@@ -110,7 +110,7 @@ class ImportInvoice extends BaseImport {
 			'country' => $this->locationsByOldId[$x['client_country_id']],
 		));
 
-		$invoice->clientLanguage = $context->languageRepository->find($this->languagesByOldId[$x['client_language_id']]);
+		$invoice->clientLanguage = $context->languageRepositoryAccessor->get()->find($this->languagesByOldId[$x['client_language_id']]);
 		$invoice->clientCompanyName = $x['client_company_name'];
 		$invoice->clientCompanyId = $x['client_company_id'];
 		$invoice->clientCompanyVatId = $x['client_company_vat_id'];
@@ -126,13 +126,13 @@ class ImportInvoice extends BaseImport {
 
 		while ($x1 = mysql_fetch_array($r1)) {
 			if (!$currency) {
-				$currency = $context->currencyRepository->findOneByOldId($x1['currencies_id']);			
+				$currency = $context->currencyRepositoryAccessor->get()->findOneByOldId($x1['currencies_id']);			
 			}
 
 			$invoiceItem = $context->invoiceItemEntityFactory->create();
 			$invoiceItem->oldId = $x['id'];
 
-			$invoiceItem->serviceType = $context->invoiceServiceTypeRepository->find($this->serviceTypesByOldId[$x1['services_types_id']]);
+			$invoiceItem->serviceType = $context->invoiceServiceTypeRepositoryAccessor->get()->find($this->serviceTypesByOldId[$x1['services_types_id']]);
 			$invoiceItem->name = $x1['service_name'];
 			$invoiceItem->nameEn = $x1['service_name_en'];
 			if (isset($x1['time_from'])) {
