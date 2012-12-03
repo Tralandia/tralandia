@@ -42,5 +42,8 @@ abstract class BasePresenter extends \BasePresenter {
 		return new \FrontModule\Breadcrumb\Breadcrumb($this, $name);
 	}
 
+	public function createComponentFooter($name) {
+		return $this->getService('footerControlFactory')->create($this->environment->getPrimaryLocation());
+	}
 
 }

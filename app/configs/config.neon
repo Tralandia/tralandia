@@ -248,3 +248,7 @@ factories:
 	updateRentalSearchKeysCacheRobotFactory:
 		class: Service\Robot\UpdateRentalSearchKeysCacheRobot(%location%)
 		implement: Service\Robot\IUpdateRentalSearchKeysCacheRobotFactory
+
+	footerControlFactory:
+		class: FrontModule\Components\Footer\FooterControl(%location%)
+		implement: FrontModule\Components\Footer\IFooterControlFactory

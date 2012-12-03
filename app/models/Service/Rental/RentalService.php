@@ -103,4 +103,34 @@ class RentalService extends Service\BaseService
 			return (bool)$this->rentalSearchCachingFactory->create($this->entity->primaryLocation)->isFeatured($this->entity);
 		}
 	}
+
+	public function getLocationsByType($types, $limit = NULL) {
+		$returnJustOneType = NULL;
+		if(!is_array($types)) {
+			$returnJustOneType = $types;
+			$types = array($types);
+		}
+
+		$return = array();
+		$i = 0;
+		foreach ($this->getEntity()->getLocations() as $location) {
+			
+			if(!empty($location->type) && in_array($location->type->slug, $types)) {
+				$return[$location->type->slug][] = $location;
+				$i++;
+			}
+
+			if(is_numeric($limit)) {
+				if($i == $limit) break;
+			}
+		}
+
+		if($returnJustOneType) {
+			
+			$return = Arrays::get($return,$returnJustOneType,array());
+		}
+
+		return $return;
+
+	}
 }

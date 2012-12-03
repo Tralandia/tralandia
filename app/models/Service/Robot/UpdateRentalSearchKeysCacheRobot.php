@@ -24,7 +24,6 @@ class UpdateRentalSearchKeysCacheRobot extends \Nette\Object implements IRobot {
 
 	public function run() {
 		$rentals = $this->primaryLocation->rentals;
-
 		foreach ($rentals as $rental) {
 			$this->rentalSearchKeysFactory->create($rental)->updateRentalInCache();
 		}
