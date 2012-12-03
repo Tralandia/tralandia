@@ -113,8 +113,7 @@ class RentalService extends Service\BaseService
 
 		$return = array();
 		$i = 0;
-		foreach ($this->getEntity()->getLocations() as $location) {
-			
+		foreach ($this->getEntity()->locations as $location) {
 			if(!empty($location->type) && in_array($location->type->slug, $types)) {
 				$return[$location->type->slug][] = $location;
 				$i++;

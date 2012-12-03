@@ -29,7 +29,7 @@ class RentalPresenter extends BasePresenter {
 		
 		$this->rentalSearchKeysCachingFactory->create($rental)->updateRentalInCache();
 
-		d($rentalService->getLocationsByType(array('locality')));
+		d($rentalService->getLocationsByType('region'));
 		$this->setLayout('detailLayout');
 
 	}
