@@ -7,62 +7,77 @@ use Service\Rental\RentalSearchService;
 
 class RentalSearchKeysCaching extends \Nette\Object {
 
-	protected $searchCacheFactory;
+	protected $rentalSearchCachingFactory;
 	protected $rentalSearchKeysCache;
 	protected $rental;
-	protected $searchCache = array();
+	protected $rentalSearchCaching = array();
+	protected $locationRepositoryAccessor;
 	
-	public function __construct($rental, ISearchCacheFactory $searchCacheFactory) {
+	public function inject(\Nette\DI\Container $dic) {
+		$this->locationRepositoryAccessor = $dic->locationRepositoryAccessor;
+	}
+
+	public function __construct($rental, IRentalSearchCachingFactory $rentalSearchCachingFactory) {
 		$this->rental = $rental;
-		$this->searchCacheFactory = $searchCacheFactory;
+		$this->rentalSearchCachingFactory = $rentalSearchCachingFactory;
 	}
 
 	public function setCache(Caching\Cache $rentalSearchKeysCache) {
 		$this->rentalSearchKeysCache = $rentalSearchKeysCache;
 	}
 
-	protected function getPrimaryLocationCache($primaryLocation) {
-		if (!isset($this->searchCache[$primaryLocation->id])) {
-			$this->searchCache[$primaryLocation->id] = $this->searchCacheFactory->create('RentalSearchCache'.$primaryLocation->id);
+	protected function getPrimaryLocationCache(\Entity\Location\Location $primaryLocation) {
+		if (!isset($this->rentalSearchCaching[$primaryLocation->id])) {
+			$this->rentalSearchCaching[$primaryLocation->id] = $this->rentalSearchCachingFactory->create($primaryLocation);
 		}
 
-		return $this->searchCache[$primaryLocation->id];
+		return $this->rentalSearchCaching[$primaryLocation->id];
+	}
+
+	public function updateRentalInCache() {
+		$this->removeRentalFromCache();
+		$this->addRentalToCache();
+		return $this;
 	}
 
 	protected function removeRentalFromCache() {
 		$currentKeys = $this->rentalSearchKeysCache->load($this->rental->id);
 
 		if ($currentKeys !== NULL) {
-			$searchCache = $this->getPrimaryLocationCache($currentKeys['primaryKey']);
-
+			$primaryLcoation = $this->locationRepositoryAccessor->get()->find($currentKeys['primaryKey']);
+			$rentalSearchCaching = $this->getPrimaryLocationCache($primaryLcoation);
 			foreach ($currentKeys['keys'] as $key => $value) {
-				unset($searchCache[$value][$this->rental->id]);
+
 			}
+			$this->rentalSearchKeysCache->remove($this->rental->id);
 		}
+
+		return $this;
 	}
 
 	protected function addRentalToCache() {
-		$searchCache = $this->getPrimaryLocationCache($this->rental->primaryLocation->id);
+		$rentalSearchCaching = $this->getPrimaryLocationCache($this->rental->primaryLocation);
+		$tempCache = array();
 
 		$newKeys = array();
 		// Set Locations
 		foreach ($this->rental->locations as $key => $value) {
 			$thisKey = RentalSearchService::CRITERIA_LOCATION.$value->id;
-			$searchCache[$thisKey][$this->rental->id] = $this->rental->id;
+			$rentalSearchCaching->addRental($this->rental, $thisKey);
 			$newKeys[] = $thisKey;
 		}
 
 		// Set rental Type
 		if ($this->rental->type) {
 			$thisKey = RentalSearchService::CRITERIA_RENTAL_TYPE.$this->rental->type->id;
-			$searchCache[$thisKey][$this->rental->id] = $this->rental->id;
+			$rentalSearchCaching->addRental($this->rental, $thisKey);
 			$newKeys[] = $thisKey;
 		}
 
 		// Set Tags
 		foreach ($this->rental->tags as $key => $value) {
 			$thisKey = RentalSearchService::CRITERIA_TAG.$value->id;
-			$searchCache[$thisKey][$this->rental->id] = $this->rental->id;
+			$rentalSearchCaching->addRental($this->rental, $thisKey);
 			$newKeys[] = $thisKey;
 		}
 
@@ -70,14 +85,14 @@ class RentalSearchKeysCaching extends \Nette\Object {
 		if ($this->rental->maxCapacity) {
 			$t = $this->rental->maxCapacity >= RentalSearchService::CAPACITY_MAX ? RentalSearchService::CAPACITY_MAX : $this->rental->maxCapacity;
 			$thisKey = RentalSearchService::CRITERIA_RENTAL_TYPE.$t;
-			$searchCache[$thisKey][$this->rental->id] = $this->rental->id;
+			$rentalSearchCaching->addRental($this->rental, $thisKey);
 			$newKeys[] = $thisKey;
 		}
 
 		// Set Languages Spoken
-		foreach ($this->rental->languagesSpoken as $key => $value) {
+		foreach ($this->rental->spokenLanguages as $key => $value) {
 			$thisKey = RentalSearchService::CRITERIA_LANGUAGE_SPOKEN.$value->id;
-			$searchCache[$thisKey][$this->rental->id] = $this->rental->id;
+			$rentalSearchCaching->addRental($this->rental, $thisKey);
 			$newKeys[] = $thisKey;
 		}
 
@@ -86,7 +101,8 @@ class RentalSearchKeysCaching extends \Nette\Object {
 			$searchInterval = $this->rental->primaryLocation->defaultCurrency->searchInterval;
 			$t = ceil($this->rental->priceSeason / $searchInterval)*$searchInterval;
 			$thisKey = RentalSearchService::CRITERIA_PRICE.$t;
-			$searchCache[$thisKey][$this->rental->id] = $this->rental->id;
+			
+			$rentalSearchCaching->addRental($this->rental, $thisKey);
 			$newKeys[] = $thisKey;
 		}
 
@@ -99,6 +115,8 @@ class RentalSearchKeysCaching extends \Nette\Object {
 		);
 
 		$this->rentalSearchKeysCache->save($this->rental->id, $rentalSearchKeysCache);
+
+		return $this;
 	}
 
 }

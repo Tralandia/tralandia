@@ -8,9 +8,11 @@ interface ISearchCachingFactory {
 }
 
 interface IRentalSearchCachingFactory {
-	
-	public function create(\Entity\Rental\Rental $rental);
+	public function create(\Entity\Location\Location $location);
+}
 
+interface IRentalSearchKeysCachingFactory {
+	public function create(\Entity\Rental\Rental $rental);
 }
 
 interface ISearchCacheFactory {

@@ -11,10 +11,17 @@ use Nette\Utils\Arrays;
 class RentalService extends Service\BaseService 
 {
 	protected $mediumDecoratorFactory;	
+	protected $rentalSearchCachingFactory;
+	protected $rentalRepositoryAccessor;
 
-	public function inject(IMediumDecoratorFactory $mediumDecoratorFactory)
+	public function inject(IMediumDecoratorFactory $mediumDecoratorFactory, \Extras\Cache\IRentalSearchCachingFactory $rentalSearchCachingFactory)
 	{
 		$this->mediumDecoratorFactory = $mediumDecoratorFactory;
+		$this->rentalSearchCachingFactory = $rentalSearchCachingFactory;
+	}
+
+	public function injectRepository(\Nette\DI\Container $dic) {
+		$this->rentalRepositoryAccessor = $dic->rentalRepositoryAccessor;
 	}
 
 	public function getAmenitiesByType($types, $limit = NULL)
@@ -87,6 +94,13 @@ class RentalService extends Service\BaseService
 		}
 
 		return $return;
+	}
 
+	public function isFeatured($strict = FALSE) {
+		if ($strict) {
+			return (bool)$this->rentalRepositoryAccessor->get()->isFeatured($this->entity);
+		} else {
+			return (bool)$this->rentalSearchCachingFactory->create($this->entity->primaryLocation)->isFeatured($this->entity);
+		}
 	}
 }
