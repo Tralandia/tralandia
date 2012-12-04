@@ -7,14 +7,14 @@ use Model\Rental\IRentalDecoratorFactory;
 class RentalPresenter extends BasePresenter {
 
 	public $rentalDecoratorFactory;
-	public $rentalSearchKeysCachingFactory;
+	public $rentalSearchFactory;
 
 	public function injectDecorators(IRentalDecoratorFactory $rentalDecoratorFactory) {
 		$this->rentalDecoratorFactory = $rentalDecoratorFactory;
 	}
 
-	public function injectCache(\Extras\Cache\IRentalSearchKeysCachingFactory $rentalSearchKeysCachingFactory) {
-		$this->rentalSearchKeysCachingFactory = $rentalSearchKeysCachingFactory;
+	public function injectSearch(\Service\Rental\IRentalSearchServiceFactory $rentalSearchFactory) {
+		$this->rentalSearchFactory = $rentalSearchFactory;
 	}
 
 
@@ -27,20 +27,26 @@ class RentalPresenter extends BasePresenter {
 		$this->template->rental = $rental;
 		$this->template->rentalService = $rentalService;
 		
-		$this->rentalSearchKeysCachingFactory->create($rental)->updateRentalInCache();
-
 		d($rentalService->getLocationsByType('region'));
 		$this->setLayout('detailLayout');
 
 	}
 
-	public function actionList() {
+	public function actionList($primaryLocation, $location) {
 
-		$rentalsEntities = $this->rentalRepositoryAccessor->get()->findAll();	
+		$search = $this->rentalSearchFactory->create($this->environment->primaryLocation);
+		$search->addLocationCriteria($location);
 
+		$vp = $this['paginator'];
+		$paginator = $vp->getPaginator();
+		$paginator->itemsPerPage = \Service\Rental\RentalSearchService::COUNT_PER_PAGE;
+		//$paginator->itemCount = $search->getRentalsCount();	
+		$paginator->itemCount = 123;	
+
+		$rentalsEntities = $search->getRentals(0);//@todo
 		$rentals = array();
 
-		foreach ($rentalsEntities as $rental){
+		foreach ($rentalsEntities as $rental) {
 			$rentals[$rental->id]['service'] = $this->rentalDecoratorFactory->create($rental);			
 			$rentals[$rental->id]['entity'] = $rental;
 		}
@@ -64,5 +70,9 @@ class RentalPresenter extends BasePresenter {
 	// COMPONENTS
 	// 
 
-
+	protected function createComponentPaginator() {
+		$vp = new \VisualPaginator();
+		$vp->templateFile = APP_DIR.'/FrontModule/components/VisualPaginator/paginator.latte';
+		return $vp;
+	}
 }

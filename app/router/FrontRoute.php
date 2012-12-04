@@ -24,6 +24,7 @@ class FrontRoute implements Nette\Application\IRouter {
 		'lfPeople' => array(),
 		'lfFood' => array(),
 		'lfDog' => array(),
+		'paging' => array(),
 	);
 
 	protected static $pathSegmentTypes = array(
@@ -108,8 +109,8 @@ class FrontRoute implements Nette\Application\IRouter {
 
 	public function constructUrl(Nette\Application\Request $appRequest, Nette\Http\Url $refUrl)
 	{
-		// debug('$appRequest', $appRequest);
-		// debug('$refUrl', $refUrl);
+		debug('$appRequest', $appRequest);
+		debug('$refUrl', $refUrl);
 		$url = $this->getUrlByAppRequest($appRequest, $refUrl);
 		return "$url";
 	}

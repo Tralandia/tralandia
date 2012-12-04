@@ -11,6 +11,7 @@ use Extras\Cache\IRentalSearchCachingFactory;
 class RentalSearchService extends Service\BaseService 
 {
 
+	const COUNT_PER_PAGE			= 50;
 	const CRITERIA_LOCATION  		= 'location';
 	const CRITERIA_RENTAL_TYPE 		= 'rentalType';
 	const CRITERIA_TAG	 			= 'tag';
@@ -23,7 +24,6 @@ class RentalSearchService extends Service\BaseService
 
 	protected $primaryLocation;
 	protected $criteria = array();
-	protected $countPerPage = 50;
 
 	protected $results;
 
@@ -72,7 +72,7 @@ class RentalSearchService extends Service\BaseService
 		if ($page === NULL) {
 			return $results;
 		} else {
-			$results = array_chunk($results, $this->countPerPage);
+			$results = array_chunk($results, self::COUNT_PER_PAGE);
 			return isset($results[$page]) ? $results[$page] : NULL;
 		}
 	}
@@ -83,7 +83,7 @@ class RentalSearchService extends Service\BaseService
 		return $this->rentalRepositoryAccessor->get()->findById($results);
 	}
 
-	public function getResultsCount() {
+	public function getRentalsCount() {
 		return count($this->getResults());
 	}
 
@@ -99,7 +99,6 @@ class RentalSearchService extends Service\BaseService
 		foreach ($this->criteria as $key => $value) {
 			$cache[$key] = $this->rentalSearchCaching->load($key.$value->id);
 		}
-
 		if (count($cache) > 1) {
 			$tempResults = call_user_func_array('array_intersect', $cache);			
 		} else {
@@ -107,7 +106,6 @@ class RentalSearchService extends Service\BaseService
 		}
 
 		$this->results = $this->reorderResults($tempResults);
-		d($this->results);
 		return $this->results;
 	}
 

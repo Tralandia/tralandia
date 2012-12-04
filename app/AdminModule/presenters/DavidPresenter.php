@@ -57,13 +57,13 @@ class DavidPresenter extends BasePresenter {
 
 		$this->robot->create($primaryLocation)->run();
 
-		$thisSearch = $this->rentalSearchServiceFactory->create($primaryLocation);
-		$thisSearch->addLocationCriteria($location);
-		//$thisSearch->addTagCriteria($tag);
+		// $thisSearch = $this->rentalSearchServiceFactory->create($primaryLocation);
+		// $thisSearch->addLocationCriteria($location);
+		// $thisSearch->addTagCriteria($tag);
 
-		d($thisSearch->getResultsCount());
-		d($thisSearch->getRentalIds());
-		d($thisSearch->getRentals());
+		// d($thisSearch->getResultsCount());
+		// d($thisSearch->getRentalIds());
+		// d($thisSearch->getRentals());
 		
 	}
 }

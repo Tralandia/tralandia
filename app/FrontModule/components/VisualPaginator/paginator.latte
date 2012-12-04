@@ -4,21 +4,21 @@
 		<td class="buttons">
 			<table class="holder">
 				<tr>
-					<td><a class="first" href="{link this, 'page' => $paginator->getFirstPage()}">&nbsp;</a></td>
+					<td><a class="first" href="{plink this, 'paging' => $paginator->getFirstPage()}">&nbsp;</a></td>
 					{if $paginator->isFirst()}
-						<td><a class="prev" href="{link this, 'page' => $paginator->page - 1}">&nbsp;</a></td>
+						<td><a class="prev" href="{plink this, 'paging' => $paginator->page - 1}">&nbsp;</a></td>
 					{/if}
 					{foreach $steps as $step}
 						{if $step == $paginator->page}
 							<td><span>{$step}</span></td>
 						{else}
-							<td><a class="" href="{link this, 'page' => $step}">{$step}</a></td>
+							<td><a class="" href="{plink this, 'paging' => $step}">{$step}</a></td>
 						{/if}
 					{/foreach}
 					{if $paginator->isLast()}
-						<td><a class="next" href="{link this, 'page' => $paginator->page + 1}">&nbsp;</a></td>
+						<td><a class="next" href="{plink this, 'paging' => $paginator->page + 1}">&nbsp;</a></td>
 					{/if}
-					<td><a class="last" href="{link this, 'page' => $paginator->getLastPage()}">&nbsp;</a></td>
+					<td><a class="last" href="{plink this, 'paging' => $paginator->getLastPage()}">&nbsp;</a></td>
 				</tr>
 			</table>
 		</td>
