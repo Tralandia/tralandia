@@ -30,7 +30,7 @@ class ImportAmenities extends BaseImport {
 			array('service', 'services', 'service'),
 			array('wellness', 'wellness', 'wellness'),
 			array('congress', 'congress', 'congress'),
-			array('tag', 'tags', 'tag'),
+			// array('tag', 'tags', 'tag'),
 			array('room type', 'room types', 'room-type'),
 			array('owner availability', 'owner availability', 'owner-availability'),
 			array('board', 'board', 'board'),

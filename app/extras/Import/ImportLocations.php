@@ -238,6 +238,7 @@ class ImportLocations extends BaseImport {
 			$location->polygon = NULL;
 			$location->latitude = new Latlong($x['latitude']);
 			$location->longitude = new Latlong($x['longitude']);
+			$location->phonePrefix = $x['phone_prefix'];
 			$location->defaultZoom = $x['default_zoom'];
 
 			if (strlen($x['iso']) == 4) {
