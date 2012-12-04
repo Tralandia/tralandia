@@ -11,8 +11,8 @@
 {if $paginator->pageCount > 1}
 <div class="grid-paginator pagination pull-right">
 	<ul>
-	{foreach range($paginator->getBase(), $paginator->getPageCount()) as $page}
-	{/foreach}
+	{* {foreach range($paginator->getBase(), $paginator->getPageCount()) as $page}
+	{/foreach} *}
 	{if !$paginator->isFirst()}
 		<li><a href="{link this, 'page' => $paginator->getFirstPage()}" class="grid-ajax">&lt;&lt;</a></li>
 	{else}
@@ -33,6 +33,7 @@
 	{/if}
 	{if $iterator->nextValue > $step + 1} <!-- <span>…</span> -->{/if}
 	{/foreach}
+
 
 	{if $paginator->getPage() + 1 <= $paginator->getLastPage()}
 		<li><a href="{link this, 'page' => $paginator->getPage() + 1}" class="grid-ajax">&gt;</a></li>

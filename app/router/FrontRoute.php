@@ -24,7 +24,7 @@ class FrontRoute implements Nette\Application\IRouter {
 		'lfPeople' => array(),
 		'lfFood' => array(),
 		'lfDog' => array(),
-		'paging' => array(),
+		'paginator-page' => array(),
 	);
 
 	protected static $pathSegmentTypes = array(
@@ -79,6 +79,7 @@ class FrontRoute implements Nette\Application\IRouter {
 
 	public function match(Nette\Http\IRequest $httpRequest)
 	{
+		// d('httpRequest', $httpRequest);
 		$params = $this->getParamsByHttpRequest($httpRequest);
 
 		$presenter = $params['presenter'];
@@ -109,8 +110,8 @@ class FrontRoute implements Nette\Application\IRouter {
 
 	public function constructUrl(Nette\Application\Request $appRequest, Nette\Http\Url $refUrl)
 	{
-		debug('$appRequest', $appRequest);
-		debug('$refUrl', $refUrl);
+		// d('$appRequest', $appRequest);
+		// d('$refUrl', $refUrl);
 		$url = $this->getUrlByAppRequest($appRequest, $refUrl);
 		return "$url";
 	}
@@ -273,11 +274,12 @@ class FrontRoute implements Nette\Application\IRouter {
 				unset($params[$key]);
 			}
 		}
+
 		$presenter = $appRequest->getPresenterName();
 		$action = $params['action'];
 		unset($params['action']);
 		
-		//debug($params, $query, $presenter, $action);
+		//d($params, $query, $presenter, $action);
 
 		list($refLanguageIso, $refDomainName, $refCountryIso) = $this->parseHost($refUrl->getHost());
 
@@ -303,6 +305,7 @@ class FrontRoute implements Nette\Application\IRouter {
 		$url->setHost($host);
 		$path = '/' . implode('/', $segments);
 		$url->setPath($path);
+		$url->setQuery($query);
 		return $url;
 	}
 
