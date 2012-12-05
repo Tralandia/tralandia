@@ -99,8 +99,6 @@ services:
 
 	userCombinationRepository: @model::getRepository('Entity\User\Combination')
 
-	userRentalQuestionRepository: @model::getRepository('Entity\User\RentalQuestion')
-
 	userRentalReservationRepository: @model::getRepository('Entity\User\RentalReservation')
 
 	userRentalReviewRepository: @model::getRepository('Entity\User\RentalReview')
@@ -216,8 +214,6 @@ services:
 	userEntityFactory: Extras\Models\Entity\EntityFactory('Entity\User\User')
 
 	userCombinationEntityFactory: Extras\Models\Entity\EntityFactory('Entity\User\Combination')
-
-	userRentalQuestionEntityFactory: Extras\Models\Entity\EntityFactory('Entity\User\RentalQuestion')
 
 	userRentalReservationEntityFactory: Extras\Models\Entity\EntityFactory('Entity\User\RentalReservation')
 

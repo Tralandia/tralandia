@@ -27,7 +27,7 @@ class RentalPresenter extends BasePresenter {
 		$this->template->rental = $rental;
 		$this->template->rentalService = $rentalService;
 		
-		d($rentalService->getLocationsByType('region'));
+		d($rentalService->getLocationsByType('locality'));
 		$this->setLayout('detailLayout');
 
 	}
@@ -41,7 +41,7 @@ class RentalPresenter extends BasePresenter {
 		$paginator = $vp->getPaginator();
 		$paginator->itemsPerPage = \Service\Rental\RentalSearchService::COUNT_PER_PAGE;
 		//$paginator->itemCount = $search->getRentalsCount();	
-		$paginator->itemCount = 123;	
+		$paginator->itemCount = 123;
 
 		$rentalsEntities = $search->getRentals(0);//@todo
 		$rentals = array();
