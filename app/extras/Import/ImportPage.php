@@ -27,7 +27,7 @@ class ImportPage extends BaseImport {
 			'titlePattern' => array('sk' => 'ubytovanie')
 		),
 		array(
-			'destination' => ':Front:Homepage:', 
+			'destination' => ':Front:Home:default', 
 			'hash' => '',
 			'h1Pattern' => array('sk' => 'ubytovanie'), 
 			'titlePattern' => array('sk' => 'ubytovanie')

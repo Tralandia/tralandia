@@ -48,4 +48,8 @@ abstract class BasePresenter extends \BasePresenter {
 		return $this->getService('footerControlFactory')->create($this->environment->getPrimaryLocation());
 	}
 
+	public function createComponentCountriesFooter($name) {
+		return $this->getService('countriesfooterControlFactory')->create();
+	}
+
 }

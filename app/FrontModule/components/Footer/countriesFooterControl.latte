@@ -1,0 +1,25 @@
+<div class="span12 radiusSeparator"><div></div></div>
+<!--
+<div class="span8">
+	<h5><span>Ubytovanie</span> V dalsich krajinach</h5>
+</div>
+<div class="span4">
+	Tralandia
+</div>
+-->
+<div class="span12">
+	
+		<footer id="footer">
+
+		<div class="row">
+			<div class="span12">
+				<h5><span>Ubytovanie</span> v Dalsich krajinach</h5>
+			</div>
+
+		</div>
+
+		<ul class="row" n:inner-foreach="$locations as $location">
+			<li class="span2"><a href="{$location['link']}" title="{$location['seo']->getTitle()}">{_$location['entity']->name}</a></li>
+		</ul>
+	</footer>
+</div>

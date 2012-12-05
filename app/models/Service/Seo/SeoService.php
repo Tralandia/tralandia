@@ -15,6 +15,8 @@ class SeoService extends Service\BaseService {
 	protected $page;
 	protected $phraseDecoratorFactory;
 
+	protected $frontRoute;
+
 	protected $replacements = array(
 		'location' => array(
 			'location',
@@ -45,12 +47,20 @@ class SeoService extends Service\BaseService {
 
 	public function inject(\Model\Phrase\IPhraseDecoratorFactory $phraseDecoratorFactory) {
 		$this->phraseDecoratorFactory = $phraseDecoratorFactory;
+		// $this->frontRoute = $frontRouteFactory->create();
 	}
 
-	public function __construct(Nette\Application\Request $request)
+	public function __construct($url, \Routers\IFrontRouteFactory $frontRouteFactory)
 	{
+		$url = new Nette\Http\UrlScript($url);
+		$httpRequest = new Nette\Http\Request($url);
+
+		$route = $frontRouteFactory->create();
+		$request = $route->match($httpRequest);
+
 		$this->request = $request;
 		$this->requestParameters = $this->request->getParameters();
+
 		$this->setPage($this->requestParameters['page']);
 	}
 
