@@ -182,12 +182,6 @@ class BaseImport {
 			'subsections' => array(),
 			'saveImportStatus' => FALSE,
 		),
-		'updateSearchCache' => array(
-			'entities' => array(
-			),
-			'subsections' => array(),
-			'saveImportStatus' => FALSE,
-		),
 	);
 
 	public $savedVariables = array();

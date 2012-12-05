@@ -61,7 +61,7 @@ class ImportRentals extends BaseImport {
 		$now = time();
 
 		if ($this->developmentMode == TRUE) {
-			$r = q('select * from objects where country_id = 46 order by rand() limit 150');
+			$r = q('select * from objects where country_id = 46 order by rand() limit 100');
 		} else {
 			$r = q('select * from objects');
 		}
@@ -113,10 +113,11 @@ class ImportRentals extends BaseImport {
 				}
 			}
 
-			// @todo dorobit
-			// d(array('oldId' => $x['locality_id'], 'type' => $locationTypes['locality']));
-			// $locationTemp = $context->locationRepositoryAccessor->get()->findOneBy(array('oldId' => $x['locality_id'], 'type' => $locationTypes['locality']));
-			// if($locationTemp) $rental->addLocation($locationTemp);
+			// location | obec
+			$locationTemp = $context->locationRepositoryAccessor->get()->findOneBy(array('oldId' => $x['locality_id'], 'type' => $locationTypes['locality']));
+			if($locationTemp) {
+				$rental->addLocation($locationTemp);
+			}
 
 			// $thisLocality = $context->locationRepositoryAccessor->get()->findOneBy(array('oldId' => $x['locality_id'], 'type' => $locationTypes['locality']));
 
