@@ -9,11 +9,11 @@ class ImportPage extends BaseImport {
 
 	protected $pages = array(
 		array(
-			'destination' => ':Front:Sign:up', 
+			'destination' => ':Front:Registration:default', 
 			'hash' => '',
 			'h1Pattern' => array(
-				'sk' => 'Zverejnite svoje ubytovanie', 
-				'en' => 'Add your property'
+				'sk' => 'Registrácia ubytovacieho zariadenia', 
+				'en' => 'Add your rental'
 			), 
 			'titlePattern' => array(
 				'sk' => 'Registrácia', 
@@ -24,28 +24,28 @@ class ImportPage extends BaseImport {
 			'destination' => ':Front:Sign:in', 
 			'hash' => '',
 			'h1Pattern' => array(
-				'sk' => 'Prihláste', 
-				'en' => ''
+				'sk' => 'Prihlásenie', 
+				'en' => 'Login'
 			), 
 			'titlePattern' => array(
-				'sk' => '', 
-				'en' => ''
+				'sk' => 'Prihlásenie', 
+				'en' => 'Login'
 			)
 		),
 		array(
 			'destination' => ':Front:Sign:out', 
 			'hash' => '',
 			'h1Pattern' => array(
-				'sk' => '', 
-				'en' => ''
+				'sk' => 'Odhlásenie', 
+				'en' => 'Logout'
 			), 
 			'titlePattern' => array(
-				'sk' => '', 
-				'en' => ''
+				'sk' => 'Odhlásenie', 
+				'en' => 'Logout'
 			)
 		),
 		array(
-			'destination' => ':Front:Homepage:', 
+			'destination' => ':Front:Home:default', 
 			'hash' => '',
 			'h1Pattern' => array(
 				'sk' => 'Ubytovanie a Dovolenky [locationLocative]', 
@@ -57,15 +57,27 @@ class ImportPage extends BaseImport {
 			)
 		),
 		array(
+			'destination' => ':Front:Roothome:default',
+			'hash' => '',
+			'h1Pattern' => array(
+				'sk' => 'Ubytovanie a Dovolenky na celom svete', 
+				'en' => 'Worldwide rentals'
+			), 
+			'titlePattern' => array(
+				'sk' => 'Ubytovanie a Dovolenky',
+				'en' => 'Worldwide entals'
+			)
+		),
+		array(
 			'destination' => ':Front:Attraction:detail', 
 			'hash' => '/attraction',
 			'h1Pattern' => array(
-				'sk' => '[rental]', 
-				'en' => ''
+				'sk' => '[attraction]', 
+				'en' => '[attraction]'
 			), 
 			'titlePattern' => array(
-				'sk' => '[rental], [location]', 
-				'en' => '[rental], [location]'
+				'sk' => '[attraction]', 
+				'en' => '[attraction]'
 			)
 		),
 		array(
