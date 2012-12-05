@@ -11,117 +11,232 @@ class ImportPage extends BaseImport {
 		array(
 			'destination' => ':Front:Sign:up', 
 			'hash' => '',
-			'h1Pattern' => array('sk' => 'ubytovanie'), 
-			'titlePattern' => array('sk' => 'ubytovanie')
+			'h1Pattern' => array(
+				'sk' => 'Zverejnite svoje ubytovanie', 
+				'en' => 'Add your property'
+			), 
+			'titlePattern' => array(
+				'sk' => 'Registrácia', 
+				'en' => 'Registration'
+			)
 		),
 		array(
 			'destination' => ':Front:Sign:in', 
 			'hash' => '',
-			'h1Pattern' => array('sk' => 'ubytovanie'), 
-			'titlePattern' => array('sk' => 'ubytovanie')
+			'h1Pattern' => array(
+				'sk' => 'Prihláste', 
+				'en' => ''
+			), 
+			'titlePattern' => array(
+				'sk' => '', 
+				'en' => ''
+			)
 		),
 		array(
 			'destination' => ':Front:Sign:out', 
 			'hash' => '',
-			'h1Pattern' => array('sk' => 'ubytovanie'), 
-			'titlePattern' => array('sk' => 'ubytovanie')
+			'h1Pattern' => array(
+				'sk' => '', 
+				'en' => ''
+			), 
+			'titlePattern' => array(
+				'sk' => '', 
+				'en' => ''
+			)
 		),
 		array(
 			'destination' => ':Front:Homepage:', 
 			'hash' => '',
-			'h1Pattern' => array('sk' => 'ubytovanie'), 
-			'titlePattern' => array('sk' => 'ubytovanie')
+			'h1Pattern' => array(
+				'sk' => 'Ubytovanie a Dovolenky [locationLocative]', 
+				'en' => 'Accommodation in [location]'
+			), 
+			'titlePattern' => array(
+				'sk' => 'Ubytovanie a Dovolenky [location]', 
+				'en' => 'Accommodation [location]'
+			)
 		),
 		array(
 			'destination' => ':Front:Attraction:detail', 
 			'hash' => '/attraction',
-			'h1Pattern' => array('sk' => 'ubytovanie'), 
-			'titlePattern' => array('sk' => 'ubytovanie')
+			'h1Pattern' => array(
+				'sk' => '[rental]', 
+				'en' => ''
+			), 
+			'titlePattern' => array(
+				'sk' => '[rental], [location]', 
+				'en' => '[rental], [location]'
+			)
 		),
 		array(
 			'destination' => ':Front:Rental:detail', 
 			'hash' => '/rental',
-			'h1Pattern' => array('sk' => 'ubytovanie'), 
-			'titlePattern' => array('sk' => 'ubytovanie')
+			'h1Pattern' => array(
+				'sk' => '[rental]', 
+				'en' => '[rental]'
+			), 
+			'titlePattern' => array(
+				'sk' => '[rental], [location]', 
+				'en' => '[rental], [location]'
+			)
 		),
-		# serach
+
+		# search
 		array(
 			'destination' => ':Front:Rental:list', 
 			'hash' => '/location',
-			'h1Pattern' => array('sk' => 'ubytovanie [locationLocative]'), 
-			'titlePattern' => array('sk' => 'ubytovanie [location]')
+			'h1Pattern' => array(
+				'sk' => 'Ubytovanie [locationLocative]', 
+				'en' => '[location] rentals'
+			), 
+			'titlePattern' => array(
+				'sk' => 'Ubytovanie [location]', 
+				'en' => 'Rentals in [location]'
+			)
 		),
 		array(
 			'destination' => ':Front:Rental:list', 
-			'hash' => '/location/objectType',
-			'h1Pattern' => array('sk' => 'ubytovanie'), 
-			'titlePattern' => array('sk' => 'ubytovanie')
+			'hash' => '/location/rentalType',
+			'h1Pattern' => array(
+				'sk' => '[rentalTypePlural] [locationLocative]', 
+				'en' => '[rentalTypePlural] in [location]'
+			), 
+			'titlePattern' => array(
+				'sk' => '[rentalTypePlural] [location]', 
+				'en' => '[rentalTypePlural] [location]'
+			)
 		),
 		array(
 			'destination' => ':Front:Rental:list', 
-			'hash' => '/location/objectType/tagBefore',
-			'h1Pattern' => array('sk' => 'ubytovanie'), 
-			'titlePattern' => array('sk' => 'ubytovanie')
+			'hash' => '/location/rentalType/tagBefore',
+			'h1Pattern' => array(
+				'sk' => '[tag] [rentalTypePlural] [locationLocative]', 
+				'en' => '[tag] [rentalTypePlural] in [location]'
+			), 
+			'titlePattern' => array(
+				'sk' => '[tag] [rentalTypePlural] [location]', 
+				'en' => '[tag] [rentalTypePlural] [location]'
+			)
 		),
 		array(
 			'destination' => ':Front:Rental:list', 
-			'hash' => '/location/objectType/tagAfter',
-			'h1Pattern' => array('sk' => 'ubytovanie'), 
-			'titlePattern' => array('sk' => 'ubytovanie')
+			'hash' => '/location/rentalType/tagAfter',
+			'h1Pattern' => array(
+				'sk' => '[rentalTypePlural] [tag] [locationLocative]', 
+				'en' => '[rentalTypePlural] [tag] in [location]'
+			), 
+			'titlePattern' => array(
+				'sk' => '[rentalTypePlural] [tag] [location]', 
+				'en' => '[rentalTypePlural] [tag] [location]'
+			)
 		),
 		array(
 			'destination' => ':Front:Rental:list', 
-			'hash' => '/objectType',
-			'h1Pattern' => array('sk' => 'ubytovanie'), 
-			'titlePattern' => array('sk' => 'ubytovanie')
+			'hash' => '/rentalType',
+			'h1Pattern' => array(
+				'sk' => '[rentalTypePlural] [locationLocative]', 
+				'en' => '[rentalTypePlural] in [location]'
+			), 
+			'titlePattern' => array(
+				'sk' => '[rentalTypePlural] [location]', 
+				'en' => '[rentalTypePlural] [location]'
+			)
 		),
 		array(
 			'destination' => ':Front:Rental:list', 
-			'hash' => '/objectType/tagBefore',
-			'h1Pattern' => array('sk' => 'ubytovanie'), 
-			'titlePattern' => array('sk' => 'ubytovanie')
+			'hash' => '/rentalType/tagBefore',
+			'h1Pattern' => array(
+				'sk' => '[tag] [rentalTypePlural] [locationLocative]', 
+				'en' => '[tag] [rentalTypePlural] in [location]'
+			), 
+			'titlePattern' => array(
+				'sk' => '[tag] [rentalTypePlural] [location]', 
+				'en' => '[tag] [rentalTypePlural] [location]'
+			)
 		),
 		array(
 			'destination' => ':Front:Rental:list', 
-			'hash' => '/objectType/tagAfter',
-			'h1Pattern' => array('sk' => 'ubytovanie'), 
-			'titlePattern' => array('sk' => 'ubytovanie')
+			'hash' => '/rentalType/tagAfter',
+			'h1Pattern' => array(
+				'sk' => '[rentalTypePlural] [tag] [locationLocative]', 
+				'en' => '[rentalTypePlural] [tag] in [location]'
+			), 
+			'titlePattern' => array(
+				'sk' => '[rentalTypePlural] [tag] [location]', 
+				'en' => '[rentalTypePlural] [tag] [location]'
+			)
 		),
 		array(
 			'destination' => ':Front:Rental:list', 
 			'hash' => '/tagBefore',
-			'h1Pattern' => array('sk' => 'ubytovanie'), 
-			'titlePattern' => array('sk' => 'ubytovanie')
+			'h1Pattern' => array(
+				'sk' => '[tag] ubytovanie [locationLocative]', 
+				'en' => '[tag] rentals in [location]'
+			), 
+			'titlePattern' => array(
+				'sk' => '[tag] ubytovanie [location]', 
+				'en' => '[tag] rentals [location]f'
+			)
 		),
 		array(
 			'destination' => ':Front:Rental:list', 
 			'hash' => '/tagAfter',
-			'h1Pattern' => array('sk' => 'ubytovanie'), 
-			'titlePattern' => array('sk' => 'ubytovanie')
+			'h1Pattern' => array(
+				'sk' => 'Ubytovanie [tag] [locationLocative]', 
+				'en' => 'Rentals [tag] in [location]'
+			), 
+			'titlePattern' => array(
+				'sk' => 'Ubytovanie [tag] [location]', 
+				'en' => 'Rentals [tag] [location]'
+			)
 		),
 		array(
 			'destination' => ':Front:Rental:list', 
 			'hash' => '/location/tagBefore',
-			'h1Pattern' => array('sk' => 'ubytovanie'), 
-			'titlePattern' => array('sk' => 'ubytovanie')
+			'h1Pattern' => array(
+				'sk' => '[tag] ubytovanie [locationLocative]', 
+				'en' => '[tag] rentals in [location]'
+			), 
+			'titlePattern' => array(
+				'sk' => '[tag] ubytovanie [location]', 
+				'en' => '[tag] rentals [location]f'
+			)
 		),
 		array(
 			'destination' => ':Front:Rental:list', 
 			'hash' => '/location/tagAfter',
-			'h1Pattern' => array('sk' => 'ubytovanie [location] [tagAfter]'), 
-			'titlePattern' => array('sk' => 'ubytovanie [locationLocative] [tagAfter]')
+			'h1Pattern' => array(
+				'sk' => 'Ubytovanie [tag] [locationLocative]', 
+				'en' => 'Rentals [tag] in [location]'
+			), 
+			'titlePattern' => array(
+				'sk' => 'Ubytovanie [tag] [location]', 
+				'en' => 'Rentals [tag] [location]'
+			)
 		),
 		array(
 			'destination' => ':Front:Rental:list', 
 			'hash' => '/attractionType',
-			'h1Pattern' => array('sk' => 'ubytovanie'), 
-			'titlePattern' => array('sk' => 'ubytovanie')
+			'h1Pattern' => array(
+				'sk' => '[attractionTypePlural] [locationLocative]', 
+				'en' => '[attractionTypePlural] in [location]'
+			), 
+			'titlePattern' => array(
+				'sk' => '[attractionTypePlural] [location]', 
+				'en' => '[attractionTypePlural] [location]'
+			)
 		),
 		array(
 			'destination' => ':Front:Rental:list', 
 			'hash' => '/attractionType/location',
-			'h1Pattern' => array('sk' => 'ubytovanie'), 
-			'titlePattern' => array('sk' => 'ubytovanie')
+			'h1Pattern' => array(
+				'sk' => '[attractionTypePlural] [locationLocative]', 
+				'en' => '[attractionTypePlural] in [location]'
+			), 
+			'titlePattern' => array(
+				'sk' => '[attractionTypePlural] [location]', 
+				'en' => '[attractionTypePlural] [location]'
+			)
 		),
 	);
 

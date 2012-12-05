@@ -20,7 +20,7 @@ class RentalSearchService extends Service\BaseService
 	const CRITERIA_PRICE 			= 'price';
 	//const CRITERIA_AREA_BOUNDRY 	= 'areaBoundry';
 
-	const CAPACITY_MAX		= 50;
+	const CAPACITY_MAX				= 50;
 
 	protected $primaryLocation;
 	protected $criteria = array();
