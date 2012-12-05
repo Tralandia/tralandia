@@ -3,6 +3,7 @@
 namespace Extras;
 
 use Nette\Caching;
+use Nette\Utils\Strings;
 use Model\Phrase\IPhraseDecoratorFactory;
 
 class Translator implements \Nette\Localization\ITranslator {
