@@ -4,4 +4,4 @@ parameters:
 		email: tralandia.david@gmail.com
 
 	database:
-		debugger: false
+		debugger: true
