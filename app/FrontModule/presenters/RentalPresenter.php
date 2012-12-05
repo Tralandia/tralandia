@@ -24,12 +24,16 @@ class RentalPresenter extends BasePresenter {
 		}
 		
 		$rentalService = $this->rentalDecoratorFactory->create($rental);
+
+		$locality = $rentalService->getLocationsByType('locality', 1);
+		$locality = reset($locality);
+		$link = $this->link('//list', array('location' => $locality));
+		
 		$this->template->rental = $rental;
 		$this->template->rentalService = $rentalService;
-		
-		d($rentalService->getLocationsByType('locality'));
-		$this->setLayout('detailLayout');
+		$this->template->locality = $this->seoFactory->create($link);
 
+		$this->setLayout('detailLayout');
 	}
 
 	public function actionList($primaryLocation, $location) {
