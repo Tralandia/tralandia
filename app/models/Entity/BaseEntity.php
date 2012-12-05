@@ -3,6 +3,7 @@
 namespace Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Proxy\Proxy;
 use Extras;
 
 /**
@@ -55,7 +56,15 @@ class BaseEntity extends \Extras\Models\Entity\Entity {
 	/**
 	 * @return integer|NULL
 	 */
-	public function getId() {
+	final public function getId()
+	{
+		if ($this instanceof Proxy && !$this->__isInitialized__ && !$this->id) {
+			$identifier = $this->getReflection()->getProperty('_identifier');
+			$identifier->setAccessible(TRUE);
+			$id = $identifier->getValue($this);
+			$this->id = reset($id);
+		}
+
 		return $this->id;
 	}
 

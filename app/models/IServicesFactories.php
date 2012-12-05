@@ -9,7 +9,7 @@ interface IRentalSearchServiceFactory {
 namespace Service\Seo;
 
 interface ISeoServiceFactory {
-	function create(\Nette\Application\Request $request);
+	function create($url);
 }
 
 namespace Service\Robot;

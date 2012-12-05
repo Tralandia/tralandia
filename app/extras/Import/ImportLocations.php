@@ -123,6 +123,8 @@ class ImportLocations extends BaseImport {
 		$s->type = $locationTypeCountry;
 		$s->parent = $this->context->locationRepositoryAccessor->get()->find(5); // north america
 		$s->slug = 'usa';
+		$s->iso = 'com';
+		$s->defaultLanguage = $language;
 		$this->model->persist($s);
 
 		$usa = $s;
@@ -141,6 +143,8 @@ class ImportLocations extends BaseImport {
 		$s->type = $locationTypeCountry;
 		$s->parent = $this->context->locationRepositoryAccessor->get()->find(5); // north america
 		$s->slug = 'canada';
+		$s->iso = 'com';
+		$s->defaultLanguage = $language;
 		$this->model->persist($s);
 
 		$canada = $s;

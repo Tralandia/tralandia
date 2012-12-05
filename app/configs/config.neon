@@ -32,7 +32,7 @@ parameters:
 	editor: 'txmt://open/?url=file://%file&line=%line'
 
 	router:
-		hostMask: '<language>.<country>.<domain>.com'
+		mode: development
 
 	settingsDir: %appDir%/configs
 
@@ -194,9 +194,8 @@ factories:
 		implement: OwnerModule\Forms\IRentalEditFormFactory
 		arguments: [Entity\Rental\Rental rental]
 
-	frontRentalFactory:
-		class: Routers\FrontRoute(@routerCache, %router.hostMask%)
-		implement: Routers\IFrontRouteFactory
+	frontRouteFactory:
+		class: Routers\FrontRoute(@routerCache, %router.mode%)
 		setup:
 			- $locationRepositoryAccessor(@locationRepositoryAccessor)
 			- $languageRepositoryAccessor(@languageRepositoryAccessor)
@@ -210,6 +209,7 @@ factories:
 			- $rentalTagRepositoryAccessor(@rentalTagRepositoryAccessor)
 			- $rentalAmenityRepositoryAccessor(@rentalAmenityRepositoryAccessor)
 			- $phraseDecoratorFactory(@phraseDecoratorFactory)
+		implement: Routers\IFrontRouteFactory
 
 	rentalSearchServiceFactory: 
 		class: Service\Rental\RentalSearchService(%location%)
@@ -236,9 +236,9 @@ factories:
 		parameters: [Entity\Location\Location location]
 
 	seoServiceFactory:
-		class: Service\Seo\SeoService(%request%)
+		class: Service\Seo\SeoService(%url%)
 		implement: Service\Seo\ISeoServiceFactory
-		parameters: [Nette\Application\Request request]
+		parameters: [url]
 
 	searchCacheFactory:
 		class: Nette\Caching\Cache(@cacheStorage, %namespace%)
@@ -248,3 +248,12 @@ factories:
 	updateRentalSearchKeysCacheRobotFactory:
 		class: Service\Robot\UpdateRentalSearchKeysCacheRobot(%location%)
 		implement: Service\Robot\IUpdateRentalSearchKeysCacheRobotFactory
+
+	footerControlFactory:
+		class: FrontModule\Components\Footer\FooterControl(%location%)
+		implement: FrontModule\Components\Footer\IFooterControlFactory
+
+	countriesfooterControlFactory:
+		class: FrontModule\Components\Footer\CountriesFooterControl
+		implement: FrontModule\Components\Footer\ICountriesFooterControlFactory
+

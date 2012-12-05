@@ -3,27 +3,32 @@
 
 namespace Routers;
 
-use Nette,
-	Nette\Application,
-	Nette\Caching,
-	Nette\Utils\Strings,
-	Nette\Utils\Arrays;
+use Nette;
+use Nette\Application;
+use Nette\Caching;
+use Nette\Utils\Strings;
+use Nette\Utils\Arrays;
+
+use Entity;
 
 class FrontRoute implements Nette\Application\IRouter {
+
+	const DEVELOPMENT = 'development';
+	const PRODUCTION = 'production';
+	const DEV_HOST_PATTERN = '~^(?P<language>\w+)\.(?P<country>\w+)\.(?P<domain>\w+)\.com$~';
 	
-	protected $db;
 	protected $metadata = array(
 		'presenter' => 'Rental',
 		'action' => 'list',
 	);
-	protected $hostPattern;
-	protected $hostMask;
+	protected $mode;
 	protected $cache;
 	protected static $cached;
 	protected $queryParams = array(
 		'lfPeople' => array(),
 		'lfFood' => array(),
 		'lfDog' => array(),
+		'paginator-page' => array(),
 	);
 
 	protected static $pathSegmentTypes = array(
@@ -67,17 +72,17 @@ class FrontRoute implements Nette\Application\IRouter {
 	public $rentalAmenityRepositoryAccessor;
 	public $phraseDecoratorFactory;
 	
-	public function __construct(Caching\Cache $cache, $hostMask)
+	public function __construct(Caching\Cache $cache, $mode)
 	{
 		//$this->metadata = $metadata;
 		$this->cache = $cache;
-		$this->setHostPattern($hostMask);
-		$this->setHostMask($hostMask);
+		$this->mode = $mode;
 		$this->loadCache();
 	}
 
 	public function match(Nette\Http\IRequest $httpRequest)
 	{
+		// d('httpRequest', $httpRequest);
 		$params = $this->getParamsByHttpRequest($httpRequest);
 
 		$presenter = $params['presenter'];
@@ -92,24 +97,10 @@ class FrontRoute implements Nette\Application\IRouter {
 		);
 	}
 
-	public function setHostPattern($mask)
-	{
-		$patter = Strings::replace($mask, '~<\w+>~', function ($m) {
-			return '(?P'.$m[0].'\w+)';
-		});
-		$patter = str_replace('.', '\.', $patter);
-		$this->hostPattern = '~^'.$patter.'$~';
-	}
-
-	public function setHostMask($mask)
-	{
-		$this->hostMask =  $mask;
-	}
-
 	public function constructUrl(Nette\Application\Request $appRequest, Nette\Http\Url $refUrl)
 	{
-		// debug('$appRequest', $appRequest);
-		// debug('$refUrl', $refUrl);
+		// d('$appRequest', $appRequest);
+		// d('$refUrl', $refUrl);
 		$url = $this->getUrlByAppRequest($appRequest, $refUrl);
 		return "$url";
 	}
@@ -129,7 +120,14 @@ class FrontRoute implements Nette\Application\IRouter {
 		// Params
 		$country = $this->locationRepositoryAccessor->get()->findOneByIso($countryIso);
 		if(!$country) {
-			$country = $this->locationRepositoryAccessor->get()->findOneByIso($this->getMetadata('country'));
+			$domain = $this->domainRepositoryAccessor->get()->findOneByDomain('tralandia.'.$countryIso);
+			if($domain) {
+				$country = $this->locationRepositoryAccessor->get()->findOneByDomain($domain);
+			}
+		}
+
+		if(!$country) {
+			throw new \Nette\InvalidArgumentException('Country not found');
 		}
 
 		$language = $this->languageRepositoryAccessor->get()->findOneByIso($languageIso);
@@ -272,20 +270,29 @@ class FrontRoute implements Nette\Application\IRouter {
 				unset($params[$key]);
 			}
 		}
+
 		$presenter = $appRequest->getPresenterName();
 		$action = $params['action'];
 		unset($params['action']);
 		
-		//debug($params, $query, $presenter, $action);
-
-		list($refLanguageIso, $refDomainName, $refCountryIso) = $this->parseHost($refUrl->getHost());
+		//d($params, $query, $presenter, $action);
 
 		$country = $params['primaryLocation'];
+		if(!$country instanceof Entity\Location\Location) {
+			throw new \Nette\InvalidArgumentException('Parameter "primaryLocation" must be instance of Entity\Location\Location');
+		}
+
 		$language = $params['language'];
+		if(!$language instanceof Entity\Language) {
+			throw new \Nette\InvalidArgumentException('Parameter "language" must be instance of Entity\Language');
+		}
 
 		$segments = array();
 		if($presenter == 'Rental' && $action == 'detail') {
 			$rental = $params['rental'];
+			if(!$rental instanceof Entity\Rental\Rental) {
+				throw new \Nette\InvalidArgumentException('Parameter "rental" must be instance of Entity\Rental\Rental');
+			}
 			$segments[] = $rental->slug . '-r' . $rental->id;
 		} else {
 			foreach (static::$pathSegmentTypes as $key => $value) {
@@ -297,11 +304,13 @@ class FrontRoute implements Nette\Application\IRouter {
 			ksort($segments);
 		}
 
+		$host = $this->buildHost($language, $country, $refUrl);
+		
 		$url = clone $refUrl;
-		$host = $this->buildHost(($language->id == $country->defaultLanguage->id ? 'www' : $language->iso), $refDomainName, $country->iso);
 		$url->setHost($host);
 		$path = '/' . implode('/', $segments);
 		$url->setPath($path);
+		$url->setQuery($query);
 		return $url;
 	}
 
@@ -377,21 +386,29 @@ class FrontRoute implements Nette\Application\IRouter {
 		return static::$pathSegmentTypes;
 	}
 
-	public function buildHost($language, $domain, $country)
+	public function buildHost($language, $country, $refUrl)
 	{
-		return str_replace(
-			array('<language>', '<domain>', '<country>'), 
-			array($language, $domain, $country), 
-			$this->hostMask
-		);
+		$languageIso = $language->id == $country->defaultLanguage->id ? 'www' : $language->iso;
+
+		if($this->mode == self::DEVELOPMENT)
+			return $languageIso . '.' . $country->iso . '.' . 'tra.com';
+
+		if($this->mode == self::PRODUCTION)
+			if($country->domain) 
+				return $languageIso . '.' . $country->domain->domain;
+			else 
+				return $languageIso . '.tralandia.' . $country->iso;
 	}
 
 	public function parseHost($host)
 	{
-		$match = Strings::match($host, $this->hostPattern);
-		if(!is_array($match)) {
-			throw new \Nette\InvalidArgumentException('Wrong router.hostPattern');
-		}
+		if($this->mode == self::DEVELOPMENT)
+			if(!$match = Strings::match($host, self::DEV_HOST_PATTERN))
+				throw new \Nette\InvalidArgumentException("Host '$host' do not match with pattern ".self::DEV_HOST_PATTERN);
+
+		# @todo
+		// if($this->mode == self::PRODUCTION)
+
 		return array(
 			Arrays::get($match, 'langauge', NULL),
 			Arrays::get($match, 'domain', NULL),

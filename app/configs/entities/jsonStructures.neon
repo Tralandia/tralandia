@@ -146,11 +146,6 @@ User\Combination:
 		item1: null
 		item2: null
 
-User\RentalQuestion:
-	capacity:
-		item1: null
-		item2: null
-
 User\RentalReservation:
 	capacity:
 		item1: null

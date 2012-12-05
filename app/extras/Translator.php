@@ -44,14 +44,23 @@ class Translator implements \Nette\Localization\ITranslator {
 
 		//@todo - dorobit cache, zatial vykomentovana
 		//d($phraseId, $phrase);
-		//$translationKey = $phraseId.'_'.$this->language->id;
+		if($variation === NULL) {
+			$translationKey = $phraseId.'_'.$this->language->id;
+		} else {
+			$translationKey = $phraseId.'_'.$this->language->id.'_'.implode('_', $variation);
+		}
 		
-		//$translation = $this->cache->load($translationKey);
-		//if($translation === NULL) {
-			$translation = NULL;
-			
+		$translation = $this->cache->load($translationKey);
+		if($translation === NULL) {
+
 			if(is_scalar($phrase)) {
-				$phrase = $this->phraseRepositoryAccessor->get()->find($phrase);
+				if(Strings::startsWith($phrase, 'o')) {
+					$phrase = $this->phraseRepositoryAccessor->get()->findOneByOldId(substr($phrase, 1));
+				} else if(is_numeric($phrase)) {
+					$phrase = $this->phraseRepositoryAccessor->get()->find($phrase);
+				} else {
+					throw new \Nette\InvalidArgumentException('Argument "$phrase" does not match with the expected value');
+				}
 			}
 
 			if ($phrase instanceof \Entity\Phrase\Phrase){
@@ -71,9 +80,9 @@ class Translator implements \Nette\Localization\ITranslator {
 				}
 			}
 
-			//if($translation === NULL) $translation = '{'.$phraseId.'|'.$this->language->iso.'}';
-			//$this->cache->save($translationKey, $translation);
-		//}
+			if($translation === NULL) $translation = '{'.$phraseId.'|'.$this->language->iso.'}';
+			$this->cache->save($translationKey, $translation);
+		}
 		return $translation;
 	}
 

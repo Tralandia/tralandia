@@ -33,6 +33,8 @@ abstract class BasePresenter extends \BasePresenter {
 		$this->template->mainMenuItems = $this->rentalTypeRepositoryAccessor->get()->findBy(array(),null,8);
 		$this->template->slogan = $this->translate('o21083').' '.$this->translate($this->environment->getPrimaryLocation()->name, NULL, array('case' => \Entity\Language::LOCATIVE));
 
+		$this->template->envLanguage = $this->environment->getLanguage();
+		$this->template->envPrimaryLocation = $this->environment->getPrimaryLocation();
 		parent::beforeRender();
 	}
 
@@ -42,5 +44,12 @@ abstract class BasePresenter extends \BasePresenter {
 		return new \FrontModule\Breadcrumb\Breadcrumb($this, $name);
 	}
 
+	public function createComponentFooter($name) {
+		return $this->getService('footerControlFactory')->create($this->environment->getPrimaryLocation());
+	}
+
+	public function createComponentCountriesFooter($name) {
+		return $this->getService('countriesfooterControlFactory')->create();
+	}
 
 }
