@@ -196,7 +196,7 @@
 	<div class="span4 marginBottom marginTop marginLeft leftSidebarObjectDetail">
 
 	{foreach $rentalService->getPhotos(3) as $photo}
-		<img src="{$photo|thumbnail:100}" class="marginBottom" />
+		{* <img src="{$photo|thumbnail:100}" class="marginBottom" /> *}
 	{/foreach}
 
 		<img class="mapsImg" src="https://maps.googleapis.com/maps/api/staticmap?center={$rental->latitude},{$rental->longitude}&markers=color:blue%7C{$rental->latitude},{$rental->longitude}&maptype=terrain&zoom=13&size=288x170&sensor=false" />
@@ -356,6 +356,9 @@
 						</td>
 					</tr>
 				</table>
+
+				{include '../../forms/Rental/reservationForm.latte'}
+				
 
 				<form>
 					<input type="text" placeholder="{_o1031}" />

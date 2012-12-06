@@ -189,11 +189,33 @@ services:
 	itemTinymceFactory: Extras\FormMask\Items\Foctories\TinymceFactory
 
 factories: 
+	# ==============================
+	# ==================== FORMS
+	# ==============================
 	rentalEditFormFactory: 
 		class: OwnerModule\Forms\RentalEditForm(%rental%)
 		implement: OwnerModule\Forms\IRentalEditFormFactory
 		arguments: [Entity\Rental\Rental rental]
 
+	rentalReservationFormFactory: 
+		class: FrontModule\Forms\Rental\ReservationForm(%rental%)
+		implement: FrontModule\Forms\Rental\IReservationFormFactory
+		arguments: [Entity\Rental\Rental rental]
+
+	# ==============================
+	# ==================== COMPONENTS
+	# ==============================
+	footerControlFactory:
+		class: FrontModule\Components\Footer\FooterControl(%location%)
+		implement: FrontModule\Components\Footer\IFooterControlFactory
+
+	countriesfooterControlFactory:
+		class: FrontModule\Components\Footer\CountriesFooterControl
+		implement: FrontModule\Components\Footer\ICountriesFooterControlFactory
+
+	# ==============================
+	# ==================== ROUTERS
+	# ==============================
 	frontRouteFactory:
 		class: Routers\FrontRoute(@routerCache, %router.mode%)
 		setup:
@@ -211,18 +233,9 @@ factories:
 			- $phraseDecoratorFactory(@phraseDecoratorFactory)
 		implement: Routers\IFrontRouteFactory
 
-	rentalSearchServiceFactory: 
-		class: Service\Rental\RentalSearchService(%location%)
-		implement: Service\Rental\IRentalSearchServiceFactory
-		parameters: [Entity\Location\Location location]
-
-	# searchCachingFactory: 
-	# 	class: Extras\Cache\SearchCaching(%location%)
-	# 	setup: 
-	# 		- setCache(@searchCache)
-	# 	implement: Extras\Cache\ISearchCachingFactory
-	# 	parameters: [Entity\Location\Location location]
-
+	# ==============================
+	# ==================== CACHE
+	# ==============================
 	rentalSearchKeysCachingFactory: 
 		class: Extras\Cache\RentalSearchKeysCaching(%rental%)
 		setup: 
@@ -230,9 +243,22 @@ factories:
 		implement: Extras\Cache\IRentalSearchKeysCachingFactory
 		parameters: [Entity\Rental\Rental rental]
 
+	searchCacheFactory:
+		class: Nette\Caching\Cache(@cacheStorage, %namespace%)
+		implement: Extras\Cache\ISearchCacheFactory
+		parameters: [namespace]
+
 	rentalSearchCachingFactory: 
 		class: Extras\Cache\RentalSearchCaching(%location%)
 		implement: Extras\Cache\IRentalSearchCachingFactory
+		parameters: [Entity\Location\Location location]
+
+	# ==============================
+	# ==================== SERVICES
+	# ==============================
+	rentalSearchServiceFactory: 
+		class: Service\Rental\RentalSearchService(%location%)
+		implement: Service\Rental\IRentalSearchServiceFactory
 		parameters: [Entity\Location\Location location]
 
 	seoServiceFactory:
@@ -240,20 +266,7 @@ factories:
 		implement: Service\Seo\ISeoServiceFactory
 		parameters: [url]
 
-	searchCacheFactory:
-		class: Nette\Caching\Cache(@cacheStorage, %namespace%)
-		implement: Extras\Cache\ISearchCacheFactory
-		parameters: [namespace]
-
 	updateRentalSearchKeysCacheRobotFactory:
 		class: Service\Robot\UpdateRentalSearchKeysCacheRobot(%location%)
 		implement: Service\Robot\IUpdateRentalSearchKeysCacheRobotFactory
-
-	footerControlFactory:
-		class: FrontModule\Components\Footer\FooterControl(%location%)
-		implement: FrontModule\Components\Footer\IFooterControlFactory
-
-	countriesfooterControlFactory:
-		class: FrontModule\Components\Footer\CountriesFooterControl
-		implement: FrontModule\Components\Footer\ICountriesFooterControlFactory
 

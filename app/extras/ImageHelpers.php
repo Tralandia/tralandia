@@ -20,7 +20,7 @@ abstract class LayoutHelpers extends Object
      * @param  NULL|int vyska miniatury
      * @return string absolutni URI miniatury
      */
-    public static function thumb($origName, $width, $height = NULL)
+    public static function thumb(\Service\Medium\MediumService $origName, $width, $height = NULL)
     {
         $thumbDirPath = WWW_DIR . '/' . trim(self::$thumbDirUri, '/\\');
             $origPath = WWW_DIR . '/' . $origName;

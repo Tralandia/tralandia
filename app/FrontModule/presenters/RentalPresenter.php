@@ -3,11 +3,14 @@
 namespace FrontModule;
 
 use Model\Rental\IRentalDecoratorFactory;
+use FrontModule\Forms\Rental\IReservationFormFactory;
 
 class RentalPresenter extends BasePresenter {
 
-	public $rentalDecoratorFactory;
-	public $rentalSearchFactory;
+	protected $rentalDecoratorFactory;
+	protected $rentalSearchFactory;
+
+	protected $reservationFormFactory;
 
 	public function injectDecorators(IRentalDecoratorFactory $rentalDecoratorFactory) {
 		$this->rentalDecoratorFactory = $rentalDecoratorFactory;
@@ -15,6 +18,10 @@ class RentalPresenter extends BasePresenter {
 
 	public function injectSearch(\Service\Rental\IRentalSearchServiceFactory $rentalSearchFactory) {
 		$this->rentalSearchFactory = $rentalSearchFactory;
+	}
+
+	public function injectForm(IReservationFormFactory $reservationFormFactory) {
+		$this->reservationFormFactory = $reservationFormFactory;
 	}
 
 
@@ -73,6 +80,18 @@ class RentalPresenter extends BasePresenter {
 	//
 	// COMPONENTS
 	// 
+
+
+	protected function createComponentReservationForm()
+	{
+		$form = $this->reservationFormFactory->create($this->getParameter('rental'));
+	
+		$form->onSuccess[] = function ($form) { 
+			if ($form->valid) $form->presenter->redirect('this'); 
+		};
+	
+		return $form;
+	}
 
 	protected function createComponentPaginator() {
 		$vp = new \VisualPaginator();
