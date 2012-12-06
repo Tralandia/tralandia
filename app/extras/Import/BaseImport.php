@@ -128,7 +128,7 @@ class BaseImport {
 				'\User\SiteOwnerReview' => array(),
 				'\User\SiteVisitorReview' => array(),
 			),
-			'subsections' => array('importRentalReservations', 'importRentalQuestions', 'importRentalToFriend', 'importSiteOwnerReviews', 'importSiteVisitorReviews'),
+			'subsections' => array('importRentalReservations', 'importRentalToFriend', 'importSiteOwnerReviews', 'importSiteVisitorReviews'),
 		),
 		'email' => array(
 			'entities' => array(
