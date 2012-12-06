@@ -48,12 +48,12 @@ class ImportPage extends BaseImport {
 			'destination' => ':Front:Home:default', 
 			'hash' => '',
 			'h1Pattern' => array(
-				'sk' => 'Ubytovanie a Dovolenky [locationLocative]', 
-				'en' => 'Accommodation in [location]'
+				'sk' => 'Ubytovanie a Dovolenky [primaryLocationLocative]', 
+				'en' => 'Accommodation in [primaryLocation]'
 			), 
 			'titlePattern' => array(
-				'sk' => 'Ubytovanie a Dovolenky [location]', 
-				'en' => 'Accommodation [location]'
+				'sk' => 'Ubytovanie a Dovolenky [primaryLocation]', 
+				'en' => 'Accommodation [primaryLocation]'
 			)
 		),
 		array(

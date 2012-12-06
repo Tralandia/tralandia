@@ -1,259 +1,272 @@
-php:
-	date.timezone: Europe/Bratislava
-	zlib.output_compression: yes
-	max_execution_time: 60
+common:
+	php:
+		date.timezone: Europe/Bratislava
+		zlib.output_compression: yes
+		max_execution_time: 60
 
-nette:
-	container:
-		debugger: false  # aktivuje panel v Debugger baru
+	nette:
+		container:
+			debugger: false  # aktivuje panel v Debugger baru
 
-	session:
-		autoStart: smart
-		expiration: '+1 year'
+		session:
+			autoStart: smart
+			expiration: '+1 year'
 
-parameters:
-	centralLanguage: 38
+	parameters:
+		centralLanguage: 38
 
-	ticketFetcherApi:
-		email: tralandia.test@gmail.com
-		password: tralandia1
-		host: imap.gmail.com
-		port: 993
-		tls: imap/ssl
-		maxEmails: 10
+		ticketFetcherApi:
+			email: tralandia.test@gmail.com
+			password: tralandia1
+			host: imap.gmail.com
+			port: 993
+			tls: imap/ssl
+			maxEmails: 10
 
-	security:
-		salt: '8723lks762ngknl90835bkd'
-		sender: 'noreply@tralandia.sk'
+		security:
+			salt: '8723lks762ngknl90835bkd'
+			sender: 'noreply@tralandia.sk'
 
-	envOptions:
-		sendEmail: TRUE
+		envOptions:
+			sendEmail: TRUE
 
-	editor: 'txmt://open/?url=file://%file&line=%line'
+		editor: 'txmt://open/?url=file://%file&line=%line'
 
-	router:
-		mode: development
+		router:
+			mode: development
 
-	settingsDir: %appDir%/configs
+		settingsDir: %appDir%/configs
 
-	database:
-		user: root
-		password: root
-		host: 127.0.0.1
-		dbname: tralandia
-		charset: utf8
-		driver: pdo_mysql
-		debugger: false
+		database:
+			user: root
+			password: root
+			host: 127.0.0.1
+			dbname: tralandia
+			charset: utf8
+			driver: pdo_mysql
+			debugger: false
 
-doctrine:
-	connections:
-		default: %database%
+	doctrine:
+		connections:
+			default: %database%
 
-	entityManagers:
-		default:
-			connection: default
+		entityManagers:
+			default:
+				connection: default
 
-	console:
-		entityManager: default
+		console:
+			entityManager: default
 
 
-includes:
-	- webLoader.neon
-	- acl/acl.neon
-	- modelServices.neon
-	- oldRepositoryServices.neon
+	# presenter:
+	# 	configsDir: %appDir%/configs/presenters
 
-# presenter:
-# 	configsDir: %appDir%/configs/presenters
+	services:
+		# CACHE
+		aclCache: Nette\Caching\Cache(@cacheStorage, 'Acl')
+		routerCache: Nette\Caching\Cache(@cacheStorage, 'Router')
+		translatorCache: Nette\Caching\Cache(@cacheStorage, 'Translator')
+		rentalSearchKeysCache: Nette\Caching\Cache(@cacheStorage, 'RentalSearchKeys')
 
-services:
-	# CACHE
-	aclCache: Nette\Caching\Cache(@cacheStorage, 'Acl')
-	routerCache: Nette\Caching\Cache(@cacheStorage, 'Router')
-	translatorCache: Nette\Caching\Cache(@cacheStorage, 'Translator')
-	rentalSearchKeysCache: Nette\Caching\Cache(@cacheStorage, 'RentalSearchKeys')
+		# frontRouteFactory:
+		# 	class: Routers\FrontRouteFactory(@routerCache, %router.hostMask%)
+		# 	setup:
+		# 		- $locationRepositoryAccessor(@locationRepositoryAccessor)
+		# 		- $languageRepositoryAccessor(@languageRepositoryAccessor)
+		# 		- $rentalRepositoryAccessor(@rentalRepositoryAccessor)
+		# 		- $rentalTypeRepositoryAccessor(@rentalTypeRepositoryAccessor)
+		# 		- $attractionRepositoryAccessor(@attractionRepositoryAccessor)
+		# 		- $attractionTypeRepositoryAccessor(@attractionTypeRepositoryAccessor)
+		# 		- $routingPathSegmentRepositoryAccessor(@routingPathSegmentRepositoryAccessor)
+		# 		- $domainRepositoryAccessor(@domainRepositoryAccessor)
+		# 		- $pageRepositoryAccessor(@pageRepositoryAccessor)
+		# 		- $rentalAmenityRepositoryAccessor(@rentalAmenityRepositoryAccessor)
 
-	# frontRouteFactory:
-	# 	class: Routers\FrontRouteFactory(@routerCache, %router.hostMask%)
-	# 	setup:
-	# 		- $locationRepositoryAccessor(@locationRepositoryAccessor)
-	# 		- $languageRepositoryAccessor(@languageRepositoryAccessor)
-	# 		- $rentalRepositoryAccessor(@rentalRepositoryAccessor)
-	# 		- $rentalTypeRepositoryAccessor(@rentalTypeRepositoryAccessor)
-	# 		- $attractionRepositoryAccessor(@attractionRepositoryAccessor)
-	# 		- $attractionTypeRepositoryAccessor(@attractionTypeRepositoryAccessor)
-	# 		- $routingPathSegmentRepositoryAccessor(@routingPathSegmentRepositoryAccessor)
-	# 		- $domainRepositoryAccessor(@domainRepositoryAccessor)
-	# 		- $pageRepositoryAccessor(@pageRepositoryAccessor)
-	# 		- $rentalAmenityRepositoryAccessor(@rentalAmenityRepositoryAccessor)
+		routerFactory: Routers\RouterFactory([defaultLanguage: %centralLanguage%, defaultPrimaryLocation: 58])
 
-	routerFactory: Routers\RouterFactory([defaultLanguage: %centralLanguage%, defaultPrimaryLocation: 58])
+		# searchCaching: Extras\Cache\SearchCaching(@searchCache)
 
-	# searchCaching: Extras\Cache\SearchCaching(@searchCache)
+		router: @routerFactory::create
 
-	router: @routerFactory::create
+		console: @doctrine.console
+		model: @doctrine.entityManagers.default
 
-	console: @doctrine.console
-	model: @doctrine.entityManagers.default
+		# nette.presenterFactory:
+			# class: Extras\DynamicPresenterFactory
+			# factory: Extras\DynamicPresenterFactory::factory
 
-	# nette.presenterFactory:
-		# class: Extras\DynamicPresenterFactory
-		# factory: Extras\DynamicPresenterFactory::factory
+		user:
+			class: Security\User
 
-	user:
-		class: Security\User
+		authenticator: Security\Authenticator
 
-	authenticator: Security\Authenticator
+		authorizator: 
+			class: Security\Acl
+			setup:
+				# - $cache(@aclCache)
+				- $roleRepository(@userRoleRepositoryAccessor)
+				- $config(%acl%)
+				- setup()
 
-	authorizator: 
-		class: Security\Acl
-		setup:
-			# - $cache(@aclCache)
-			- $roleRepository(@userRoleRepositoryAccessor)
-			- $config(%acl%)
-			- setup()
+		environment: 
+			class: Extras\Environment(@application::getRequests(), @languageRepositoryAccessor, @locationRepositoryAccessor)
+		translator: Extras\Translator(@environment, @phraseRepositoryAccessor, @translatorCache)
 
-	environment: 
-		class: Extras\Environment(@application::getRequests(), @languageRepositoryAccessor, @locationRepositoryAccessor)
-	translator: Extras\Translator(@environment, @phraseRepositoryAccessor, @translatorCache)
+		settings:
+			factory: Extras\PresenterSettings::factory
 
-	settings:
-		factory: Extras\PresenterSettings::factory
+		# @TODO ------------------------ 
+		# emailCompiler: 
+		# 	class: Extras\Email\Compiler
+		# 	setup:
+		# 		- $phraseServiceFactory(@phraseServiceFactory)
+		# 		- setVariableFactory(rental, @rentalEmailVariableFactory)
+		# 		- setVariableFactory(language, @languageEmailVariableFactory)
+		# 		- setVariableFactory(location, @locationEmailVariableFactory)
+		# 		- setVariableFactory(visitor, @visitorEmailVariableFactory)
+		# 		- setVariableFactory(environment, @environmentEmailVariableFactory)
 
-	# @TODO ------------------------ 
-	# emailCompiler: 
-	# 	class: Extras\Email\Compiler
-	# 	setup:
-	# 		- $phraseServiceFactory(@phraseServiceFactory)
-	# 		- setVariableFactory(rental, @rentalEmailVariableFactory)
-	# 		- setVariableFactory(language, @languageEmailVariableFactory)
-	# 		- setVariableFactory(location, @locationEmailVariableFactory)
-	# 		- setVariableFactory(visitor, @visitorEmailVariableFactory)
-	# 		- setVariableFactory(environment, @environmentEmailVariableFactory)
+		# rentalEmailVariableFactory: Extras\Email\Variables\RentalVariablesFactory(@rentalServiceFactory)
+		# languageEmailVariableFactory: Extras\Email\Variables\LanguageVariablesFactory(@languageServiceFactory)
+		# locationEmailVariableFactory: Extras\Email\Variables\LocationVariablesFactory(@locationServiceFactory)
+		# visitorEmailVariableFactory: Extras\Email\Variables\UserVariablesFactory('VisitorVariables', @userServiceFactory)
+		# environmentEmailVariableFactory: Extras\Email\Variables\EnvironmentVariablesFactory
+		# --------------------------------
 
-	# rentalEmailVariableFactory: Extras\Email\Variables\RentalVariablesFactory(@rentalServiceFactory)
-	# languageEmailVariableFactory: Extras\Email\Variables\LanguageVariablesFactory(@languageServiceFactory)
-	# locationEmailVariableFactory: Extras\Email\Variables\LocationVariablesFactory(@locationServiceFactory)
-	# visitorEmailVariableFactory: Extras\Email\Variables\UserVariablesFactory('VisitorVariables', @userServiceFactory)
-	# environmentEmailVariableFactory: Extras\Email\Variables\EnvironmentVariablesFactory
-	# --------------------------------
+		ticketFetcherApi:
+			class: Horo\Api( %ticketFetcherApi.host%, %ticketFetcherApi.email%, %ticketFetcherApi.password%, 'INBOX', %ticketFetcherApi.port%, %ticketFetcherApi.tls% )
+			setup:
+				- setMaxEmails(%ticketFetcherApi.maxEmails%)
 
-	ticketFetcherApi:
-		class: Horo\Api( %ticketFetcherApi.host%, %ticketFetcherApi.email%, %ticketFetcherApi.password%, 'INBOX', %ticketFetcherApi.port%, %ticketFetcherApi.tls% )
-		setup:
-			- setMaxEmails(%ticketFetcherApi.maxEmails%)
+		ticketFetcher: Extras\TicketFetcher( @ticketFetcherApi )
 
-	ticketFetcher: Extras\TicketFetcher( @ticketFetcherApi )
+		templateHelpers:
+			class: Extras\Helpers
 
-	templateHelpers:
-		class: Extras\Helpers
+		autopilot:
+			class: Service\Autopilot\Autopilot
+			setup:
+				- $taskRepository(@taskRepositoryAccessor)
+				- $taskTypeRepository(@taskTypeRepositoryAccessor)
+				- $taskServiceFactory(@taskDecoratorFactory)
 
-	autopilot:
-		class: Service\Autopilot\Autopilot
-		setup:
-			- $taskRepository(@taskRepositoryAccessor)
-			- $taskTypeRepository(@taskTypeRepositoryAccessor)
-			- $taskServiceFactory(@taskDecoratorFactory)
+		taskManager:
+			class: Service\TaskManager\TaskManager
+			setup:
+				- addScanner(@missingTranslationsScanner)
 
-	taskManager:
-		class: Service\TaskManager\TaskManager
-		setup:
-			- addScanner(@missingTranslationsScanner)
+		missingTranslationsScanner:
+			class: Service\TaskManager\MissingTranslationsScanner(@autopilot, @phraseTranslationRepositoryAccessor, @languageRepositoryAccessor)
 
-	missingTranslationsScanner:
-		class: Service\TaskManager\MissingTranslationsScanner(@autopilot, @phraseTranslationRepositoryAccessor, @languageRepositoryAccessor)
+		generatePathSegmentsRobot: 
+			class: Service\Robot\GeneratePathSegmentsRobot
+			arguments: 
+				- @routingPathSegmentRepositoryAccessor
+				- @routingPathSegmentEntityFactory
+				- @phraseDecoratorFactory
+				- @languageRepositoryAccessor
+				- @pageRepositoryAccessor
+				- @attractionTypeRepositoryAccessor
+				- @locationRepositoryAccessor
+				- @rentalTypeRepositoryAccessor
+				- @rentalTagRepositoryAccessor
+				- @locationDecoratorFactory
 
-	generatePathSegmentsRobot: 
-		class: Service\Robot\GeneratePathSegmentsRobot
-		arguments: 
-			- @routingPathSegmentRepositoryAccessor
-			- @routingPathSegmentEntityFactory
-			- @phraseDecoratorFactory
-			- @languageRepositoryAccessor
-			- @pageRepositoryAccessor
-			- @attractionTypeRepositoryAccessor
-			- @locationRepositoryAccessor
-			- @rentalTypeRepositoryAccessor
-			- @rentalTagRepositoryAccessor
-			- @locationDecoratorFactory
+		itemTextFactory: Extras\FormMask\Items\Foctories\TextFactory
+		itemPhraseFactory: Extras\FormMask\Items\Foctories\PhraseFactory(@phraseDecoratorFactory, @environment::getLanguage())
+		itemYesNoFactory: Extras\FormMask\Items\Foctories\YesNoFactory
+		itemJsonFactory: Extras\FormMask\Items\Foctories\JsonFactory
+		itemNeonFactory: Extras\FormMask\Items\Foctories\NeonFactory
+		itemTextareaFactory: Extras\FormMask\Items\Foctories\TextareaFactory
+		itemPriceFactory: Extras\FormMask\Items\Foctories\PriceFactory
+		itemSelectFactory: Extras\FormMask\Items\Foctories\SelectFactory(@translator)
+		itemCheckboxFactory: Extras\FormMask\Items\Foctories\CheckboxFactory
+		itemTinymceFactory: Extras\FormMask\Items\Foctories\TinymceFactory
 
-	itemTextFactory: Extras\FormMask\Items\Foctories\TextFactory
-	itemPhraseFactory: Extras\FormMask\Items\Foctories\PhraseFactory(@phraseDecoratorFactory, @environment::getLanguage())
-	itemYesNoFactory: Extras\FormMask\Items\Foctories\YesNoFactory
-	itemJsonFactory: Extras\FormMask\Items\Foctories\JsonFactory
-	itemNeonFactory: Extras\FormMask\Items\Foctories\NeonFactory
-	itemTextareaFactory: Extras\FormMask\Items\Foctories\TextareaFactory
-	itemPriceFactory: Extras\FormMask\Items\Foctories\PriceFactory
-	itemSelectFactory: Extras\FormMask\Items\Foctories\SelectFactory(@translator)
-	itemCheckboxFactory: Extras\FormMask\Items\Foctories\CheckboxFactory
-	itemTinymceFactory: Extras\FormMask\Items\Foctories\TinymceFactory
+	factories: 
+		# ==============================
+		# ==================== FORMS
+		# ==============================
+		rentalEditFormFactory: 
+			class: OwnerModule\Forms\RentalEditForm(%rental%)
+			implement: OwnerModule\Forms\IRentalEditFormFactory
+			arguments: [Entity\Rental\Rental rental]
 
-factories: 
-	rentalEditFormFactory: 
-		class: OwnerModule\Forms\RentalEditForm(%rental%)
-		implement: OwnerModule\Forms\IRentalEditFormFactory
-		arguments: [Entity\Rental\Rental rental]
+		rentalReservationFormFactory: 
+			class: FrontModule\Forms\Rental\ReservationForm(%rental%)
+			implement: FrontModule\Forms\Rental\IReservationFormFactory
+			arguments: [Entity\Rental\Rental rental]
 
-	frontRouteFactory:
-		class: Routers\FrontRoute(@routerCache, %router.mode%)
-		setup:
-			- $locationRepositoryAccessor(@locationRepositoryAccessor)
-			- $languageRepositoryAccessor(@languageRepositoryAccessor)
-			- $rentalRepositoryAccessor(@rentalRepositoryAccessor)
-			- $rentalTypeRepositoryAccessor(@rentalTypeRepositoryAccessor)
-			- $attractionRepositoryAccessor(@attractionRepositoryAccessor)
-			- $attractionTypeRepositoryAccessor(@attractionTypeRepositoryAccessor)
-			- $routingPathSegmentRepositoryAccessor(@routingPathSegmentRepositoryAccessor)
-			- $domainRepositoryAccessor(@domainRepositoryAccessor)
-			- $pageRepositoryAccessor(@pageRepositoryAccessor)
-			- $rentalTagRepositoryAccessor(@rentalTagRepositoryAccessor)
-			- $rentalAmenityRepositoryAccessor(@rentalAmenityRepositoryAccessor)
-			- $phraseDecoratorFactory(@phraseDecoratorFactory)
-		implement: Routers\IFrontRouteFactory
+		# ==============================
+		# ==================== COMPONENTS
+		# ==============================
+		footerControlFactory:
+			class: FrontModule\Components\Footer\FooterControl(%location%)
+			implement: FrontModule\Components\Footer\IFooterControlFactory
 
-	rentalSearchServiceFactory: 
-		class: Service\Rental\RentalSearchService(%location%)
-		implement: Service\Rental\IRentalSearchServiceFactory
-		parameters: [Entity\Location\Location location]
+		countriesfooterControlFactory:
+			class: FrontModule\Components\Footer\CountriesFooterControl
+			implement: FrontModule\Components\Footer\ICountriesFooterControlFactory
 
-	# searchCachingFactory: 
-	# 	class: Extras\Cache\SearchCaching(%location%)
-	# 	setup: 
-	# 		- setCache(@searchCache)
-	# 	implement: Extras\Cache\ISearchCachingFactory
-	# 	parameters: [Entity\Location\Location location]
+		# ==============================
+		# ==================== ROUTERS
+		# ==============================
+		frontRouteFactory:
+			class: Routers\FrontRoute(@routerCache, %router.mode%)
+			setup:
+				- $locationRepositoryAccessor(@locationRepositoryAccessor)
+				- $languageRepositoryAccessor(@languageRepositoryAccessor)
+				- $rentalRepositoryAccessor(@rentalRepositoryAccessor)
+				- $rentalTypeRepositoryAccessor(@rentalTypeRepositoryAccessor)
+				- $attractionRepositoryAccessor(@attractionRepositoryAccessor)
+				- $attractionTypeRepositoryAccessor(@attractionTypeRepositoryAccessor)
+				- $routingPathSegmentRepositoryAccessor(@routingPathSegmentRepositoryAccessor)
+				- $domainRepositoryAccessor(@domainRepositoryAccessor)
+				- $pageRepositoryAccessor(@pageRepositoryAccessor)
+				- $rentalTagRepositoryAccessor(@rentalTagRepositoryAccessor)
+				- $rentalAmenityRepositoryAccessor(@rentalAmenityRepositoryAccessor)
+				- $phraseDecoratorFactory(@phraseDecoratorFactory)
+			implement: Routers\IFrontRouteFactory
 
-	rentalSearchKeysCachingFactory: 
-		class: Extras\Cache\RentalSearchKeysCaching(%rental%)
-		setup: 
-			- setCache(@rentalSearchKeysCache)
-		implement: Extras\Cache\IRentalSearchKeysCachingFactory
-		parameters: [Entity\Rental\Rental rental]
+		# ==============================
+		# ==================== CACHE
+		# ==============================
+		rentalSearchKeysCachingFactory: 
+			class: Extras\Cache\RentalSearchKeysCaching(%rental%)
+			setup: 
+				- setCache(@rentalSearchKeysCache)
+			implement: Extras\Cache\IRentalSearchKeysCachingFactory
+			parameters: [Entity\Rental\Rental rental]
 
-	rentalSearchCachingFactory: 
-		class: Extras\Cache\RentalSearchCaching(%location%)
-		implement: Extras\Cache\IRentalSearchCachingFactory
-		parameters: [Entity\Location\Location location]
+		searchCacheFactory:
+			class: Nette\Caching\Cache(@cacheStorage, %namespace%)
+			implement: Extras\Cache\ISearchCacheFactory
+			parameters: [namespace]
 
-	seoServiceFactory:
-		class: Service\Seo\SeoService(%url%)
-		implement: Service\Seo\ISeoServiceFactory
-		parameters: [url]
+		rentalSearchCachingFactory: 
+			class: Extras\Cache\RentalSearchCaching(%location%)
+			implement: Extras\Cache\IRentalSearchCachingFactory
+			parameters: [Entity\Location\Location location]
 
-	searchCacheFactory:
-		class: Nette\Caching\Cache(@cacheStorage, %namespace%)
-		implement: Extras\Cache\ISearchCacheFactory
-		parameters: [namespace]
+		# ==============================
+		# ==================== SERVICES
+		# ==============================
+		rentalSearchServiceFactory: 
+			class: Service\Rental\RentalSearchService(%location%)
+			implement: Service\Rental\IRentalSearchServiceFactory
+			parameters: [Entity\Location\Location location]
 
-	updateRentalSearchKeysCacheRobotFactory:
-		class: Service\Robot\UpdateRentalSearchKeysCacheRobot(%location%)
-		implement: Service\Robot\IUpdateRentalSearchKeysCacheRobotFactory
+		seoServiceFactory:
+			class: Service\Seo\SeoService(%url%)
+			implement: Service\Seo\ISeoServiceFactory
+			parameters: [url]
 
-	footerControlFactory:
-		class: FrontModule\Components\Footer\FooterControl(%location%)
-		implement: FrontModule\Components\Footer\IFooterControlFactory
+		updateRentalSearchKeysCacheRobotFactory:
+			class: Service\Robot\UpdateRentalSearchKeysCacheRobot(%location%)
+			implement: Service\Robot\IUpdateRentalSearchKeysCacheRobotFactory
 
-	countriesfooterControlFactory:
-		class: FrontModule\Components\Footer\CountriesFooterControl
-		implement: FrontModule\Components\Footer\ICountriesFooterControlFactory
-
+	includes:
+		- webLoader.neon
+		- acl/acl.neon
+		- modelServices.neon
+		- oldRepositoryServices.neon

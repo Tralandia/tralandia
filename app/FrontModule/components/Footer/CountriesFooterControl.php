@@ -11,14 +11,14 @@ class CountriesFooterControl extends \BaseModule\Components\BaseControl {
 
 	protected $seoFactory;
 
-	public function inject(\Nette\DI\Container $dic) {
-		$this->locationRepositoryAccessor = $dic->locationRepositoryAccessor;
-		$this->locationTypeRepositoryAccessor = $dic->locationTypeRepositoryAccessor;
-	}
-
 	public function injectSeo(ISeoServiceFactory $seoFactory)
 	{
 		$this->seoFactory = $seoFactory;
+	}
+
+	public function inject(\Nette\DI\Container $dic) {
+		$this->locationRepositoryAccessor = $dic->locationRepositoryAccessor;
+		$this->locationTypeRepositoryAccessor = $dic->locationTypeRepositoryAccessor;
 	}
 
 	public function render() {
@@ -32,11 +32,7 @@ class CountriesFooterControl extends \BaseModule\Components\BaseControl {
 		$locations = array();
 		foreach ($locationsTemp as $location) {
 			$link = $this->presenter->link('//:Front:Rental:list', array('primaryLocation' => $location));
-			$locations[] = array(
-				'entity' => $location,
-				'link' => $link,
-				'seo' => $this->seoFactory->create($link),
-			);
+			$locations[] = $this->seoFactory->create($link);
 		}
 		$template->locations = $locations;
 
