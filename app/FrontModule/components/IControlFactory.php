@@ -10,3 +10,9 @@ interface ICountriesFooterControlFactory {
 	public function create();
 }
 
+namespace FrontModule\Components\SearchBar;
+
+interface ISearchBarControlFactory {
+	public function create(\Entity\Location\Location $location);
+}
+
