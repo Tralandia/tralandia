@@ -82,7 +82,11 @@ common:
 		# 		- $pageRepositoryAccessor(@pageRepositoryAccessor)
 		# 		- $rentalAmenityRepositoryAccessor(@rentalAmenityRepositoryAccessor)
 
-		routerFactory: Routers\RouterFactory([defaultLanguage: %centralLanguage%, defaultPrimaryLocation: 58])
+		routerFactory: 
+			class: Routers\RouterFactory([defaultLanguage: %centralLanguage%, defaultPrimaryLocation: 58])
+			setup:
+				- $locationRepositoryAccessor(@locationRepositoryAccessor)
+				- $languageRepositoryAccessor(@languageRepositoryAccessor)
 
 		# searchCaching: Extras\Cache\SearchCaching(@searchCache)
 
