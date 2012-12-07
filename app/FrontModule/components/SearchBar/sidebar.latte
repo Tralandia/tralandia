@@ -8,19 +8,44 @@
 							</div>							
 						</form>
 					</div>
-{* 
-					<div n:foreach="$criteriaRentalType as $criteria" class="widget">
-						<h4>Menu counter</h4>
-						<ul n:foreach="$criteria->links as $link">
-							<li><a href="$link->uri">{$link->entity->name} <span class="counter">12</span></a></li>
+
+ 					{* Rental Tag *}
+					<div n:ifset="$criteriaRentalTag" class="widget">
+						<h4>{_'o2454'}</h4>
+						<ul n:inner-foreach="$criteriaRentalTag as $link">
+							<li><a href="{$link->seo->getUrl()}">{_$link->seo->getParameter('rentalTag')->name|firstUpper} <span class="counter">{$link->count}</span></a></li>
 						</ul>
 					</div>
- *}
 
-					<div n:if="$criteriaRentalTag" class="widget">
-						<h4>Menu counter</h4>
-						<ul n:foreach="$criteriaRentalTag as $link">
-							<li><a href="{$link->seo->getUrl()}">{_$link->seo->getParameter('rentalTag')->name} <span class="counter">{$link->count}</span></a></li>
+ 					{* Rental Type *}
+					<div n:ifset="$criteriaRentalType" class="widget">
+						<h4>{_'o20926'}</h4>
+						<ul n:inner-foreach="$criteriaRentalType as $link">
+							<li><a href="{$link->seo->getUrl()}">{_$link->seo->getParameter('rentalType')->name|firstUpper} <span class="counter">{$link->count}</span></a></li>
+						</ul>
+					</div>
+
+ 					{* Location *}
+					<div n:ifset="$criteriaLocation" class="widget">
+						<h4>{_'o1070'}</h4>
+						<ul n:inner-foreach="$criteriaLocation as $link">
+							<li><a href="{$link->seo->getUrl()}">{_$link->seo->getParameter('location')->name|firstUpper} <span class="counter">{$link->count}</span></a></li>
+						</ul>
+					</div>
+
+ 					{* Languages *}
+					<div n:ifset="$criteriaSpokenLanguage" class="widget">
+						<h4>{_'o20930'}</h4>
+						<ul n:inner-foreach="$criteriaSpokenLanguage as $link">
+							<li><a href="{$link->seo->getUrl()}">{_$link->seo->getParameter('spokenLanguage')->name|firstUpper} <span class="counter">{$link->count}</span></a></li>
+						</ul>
+					</div>
+
+ 					{* Capacity *}
+					<div n:ifset="$criteriaCapacity" class="widget">
+						<h4>{_'o20928'}</h4>
+						<ul n:inner-foreach="$criteriaCapacity as $link">
+							<li><a href="{$link->seo->getUrl()}">{_$link->seo->getParameter('capacity')->name|firstUpper} <span class="counter">{$link->count}</span></a></li>
 						</ul>
 					</div>
 

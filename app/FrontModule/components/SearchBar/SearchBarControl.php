@@ -8,6 +8,8 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 
 	public $rentalTypeRepositoryAccessor;
 	public $rentalTagRepositoryAccessor;
+	public $locationRepositoryAccessor;
+	public $languageRepositoryAccessor;
 	public $primaryLocation;
 
 	protected $seoFactory;
@@ -28,7 +30,8 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 	public function inject(\Nette\DI\Container $dic) {
 		$this->rentalTypeRepositoryAccessor = $dic->rentalTypeRepositoryAccessor;
 		$this->rentalTagRepositoryAccessor = $dic->rentalTagRepositoryAccessor;
-		// $this->rentalRepositoryAccessor = $dic->rentalRepositoryAccessor;
+		$this->locationRepositoryAccessor = $dic->locationRepositoryAccessor;
+		$this->languageRepositoryAccessor = $dic->languageRepositoryAccessor;
 	}
 
 	public function __construct(\Entity\Location\Location $primaryLocation) {
@@ -45,8 +48,11 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		$template->setFile(dirname(__FILE__) . '/sidebar.latte');
 		$template->setTranslator($this->presenter->getService('translator'));
 
-		// $template->criteriaRentalType = $this->getRentalTypeCriteria();
+		$template->criteriaRentalType = $this->getRentalTypeCriteria();
 		$template->criteriaRentalTag = $this->getRentalTagCriteria();
+		$template->criteriaLocation = $this->getLocationCriteria();
+		$template->criteriaSpokenLanguage = $this->getSpokenLanguageCriteria();
+		// $template->criteriaCapacity = $this->getCapacityCriteria();
 
 		$template->render();
 	}
@@ -57,6 +63,8 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 			'rentalTag' => $this->presenter->getParameter('rentalTag'),
 			'location' => $this->presenter->getParameter('location'),
 			'rentalType' => $this->presenter->getParameter('rentalType'),
+			'location' => $this->presenter->getParameter('location'),
+			'spokenLanguage' => $this->presenter->getParameter('spokenLanguage'),
 		);
 
 	}
@@ -85,7 +93,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 
 	}
 
-	protected function getRentalTypeCriteria() { 
+	protected function getRentalTypeCriteria() {
 
 		$links = array();
 		$selected = $this->getSelectedParams();
@@ -94,13 +102,90 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		foreach ($rentalTypes as $rentalType) {
 			$params = array_merge($selected, array('rentalType' => $rentalType));
 
+			$link = $this->presenter->link('//Rental:list', $params);
+			$seo = $this->seoFactory->create($link, $this->presenter->getLastCreatedRequest());
+
+			$count = 0; //$this->getCount($params);
+
 			$links[] = array(
-				'entity' => $rentalType,
-				'uri' => $this->presenter->link('//Rental:list', $params)
+				'seo' => $seo,
+				'count' => $count
 			);
 		}
 
-		return $links;
+		return \Nette\ArrayHash::from($links);
+
+	}
+
+	protected function getLocationCriteria() {
+
+		$links = array();
+		$selected = $this->getSelectedParams();
+
+		$locations = $this->locationRepositoryAccessor->get()->findByParent($this->primaryLocation);
+		foreach ($locations as $location) {
+			$params = array_merge($selected, array('location' => $location));
+
+			$link = $this->presenter->link('//Rental:list', $params);
+			$seo = $this->seoFactory->create($link, $this->presenter->getLastCreatedRequest());
+
+			$count = 0; //$this->getCount($params);
+
+			$links[] = array(
+				'seo' => $seo,
+				'count' => $count
+			);
+		}
+
+		return \Nette\ArrayHash::from($links);
+
+	}
+
+	protected function getSpokenLanguageCriteria() {
+
+		$links = array();
+		$selected = $this->getSelectedParams();
+
+		$languages = $this->languageRepositoryAccessor->get()->findAll();
+		foreach ($languages as $language) {
+			$params = array_merge($selected, array('spokenLanguage' => $language));
+
+			$link = $this->presenter->link('//Rental:list', $params);
+			$seo = $this->seoFactory->create($link, $this->presenter->getLastCreatedRequest());
+
+			$count = 0; //$this->getCount($params);
+
+			$links[] = array(
+				'seo' => $seo,
+				'count' => $count
+			);
+		}
+
+		return \Nette\ArrayHash::from($links);
+
+	}
+
+	protected function getCapacityCriteria() {
+
+		$links = array();
+		// $selected = $this->getSelectedParams();
+
+		// $locations = $this->locationRepositoryAccessor->get()->findByParent($this->primaryLocation);
+		// foreach ($locations as $location) {
+		// 	$params = array_merge($selected, array('location' => $location));
+
+		// 	$link = $this->presenter->link('//Rental:list', $params);
+		// 	$seo = $this->seoFactory->create($link, $this->presenter->getLastCreatedRequest());
+
+		// 	$count = 0; //$this->getCount($params);
+
+		// 	$links[] = array(
+		// 		'seo' => $seo,
+		// 		'count' => $count
+		// 	);
+		// }
+
+		return \Nette\ArrayHash::from($links);
 
 	}
 
