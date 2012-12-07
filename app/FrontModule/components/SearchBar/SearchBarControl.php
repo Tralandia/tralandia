@@ -72,21 +72,33 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 	protected function getRentalTagCriteria() {
 
 		$links = array();
+		$showLinks = array();
 		$selected = $this->getSelectedParams();
 
 		$rentalTags = $this->rentalTagRepositoryAccessor->get()->findAll();
-		foreach ($rentalTags as $rentalTag) {
+		foreach ($rentalTags as $key => $rentalTag) {
 			$params = array_merge($selected, array('rentalTag' => $rentalTag));
 
 			$link = $this->presenter->link('//Rental:list', $params);
 			$seo = $this->seoFactory->create($link, $this->presenter->getLastCreatedRequest());
 
-			$count = 0; //$this->getCount($params);
+			$count = $this->getCount($params);
 
-			$links[] = array(
+			$showLinks[$key] = $count;
+
+			$links[$key] = array(
 				'seo' => $seo,
-				'count' => $count
+				'count' => $count,
+				'hide' => TRUE,
 			);
+		}
+
+		$i=0;
+		asort($showLinks);
+		foreach ($showLinks as $key => $value) {
+			$links[$key]['hide'] = FALSE;
+			if ($i==10) break;
+			$i++;
 		}
 
 		return \Nette\ArrayHash::from($links);
@@ -99,18 +111,29 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		$selected = $this->getSelectedParams();
 
 		$rentalTypes = $this->rentalTypeRepositoryAccessor->get()->findAll();
-		foreach ($rentalTypes as $rentalType) {
+		foreach ($rentalTypes as $key => $rentalType) {
 			$params = array_merge($selected, array('rentalType' => $rentalType));
 
 			$link = $this->presenter->link('//Rental:list', $params);
 			$seo = $this->seoFactory->create($link, $this->presenter->getLastCreatedRequest());
 
-			$count = 0; //$this->getCount($params);
+			$count = $this->getCount($params);
 
-			$links[] = array(
+			$showLinks[$key] = $count;
+
+			$links[$key] = array(
 				'seo' => $seo,
-				'count' => $count
+				'count' => $count,
+				'hide' => TRUE,
 			);
+		}
+
+		$i=0;
+		asort($showLinks);
+		foreach ($showLinks as $key => $value) {
+			$links[$key]['hide'] = FALSE;
+			if ($i==10) break;
+			$i++;
 		}
 
 		return \Nette\ArrayHash::from($links);
@@ -123,18 +146,30 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		$selected = $this->getSelectedParams();
 
 		$locations = $this->locationRepositoryAccessor->get()->findByParent($this->primaryLocation);
-		foreach ($locations as $location) {
+		foreach ($locations as $key => $location) {
 			$params = array_merge($selected, array('location' => $location));
 
 			$link = $this->presenter->link('//Rental:list', $params);
 			$seo = $this->seoFactory->create($link, $this->presenter->getLastCreatedRequest());
 
-			$count = 0; //$this->getCount($params);
+			$count = $this->getCount($params);
 
-			$links[] = array(
+			$showLinks[$key] = $count;
+
+			$links[$key] = array(
 				'seo' => $seo,
-				'count' => $count
+				'count' => $count,
+				'hide' => TRUE,
 			);
+		}
+
+		$i=0;
+		arsort($showLinks);
+		d($showLinks);
+		foreach ($showLinks as $key => $count) {
+			$links[$key]['hide'] = FALSE;
+			if ($i==10) break;
+			$i++;
 		}
 
 		return \Nette\ArrayHash::from($links);
@@ -147,18 +182,29 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		$selected = $this->getSelectedParams();
 
 		$languages = $this->languageRepositoryAccessor->get()->findAll();
-		foreach ($languages as $language) {
+		foreach ($languages as $key => $language) {
 			$params = array_merge($selected, array('spokenLanguage' => $language));
 
 			$link = $this->presenter->link('//Rental:list', $params);
 			$seo = $this->seoFactory->create($link, $this->presenter->getLastCreatedRequest());
 
-			$count = 0; //$this->getCount($params);
+			$count = $this->getCount($params);
 
-			$links[] = array(
+			$showLinks[$key] = $count;
+
+			$links[$key] = array(
 				'seo' => $seo,
-				'count' => $count
+				'count' => $count,
+				'hide' => TRUE,
 			);
+		}
+
+		$i=0;
+		asort($showLinks);
+		foreach ($showLinks as $key => $value) {
+			$links[$key]['hide'] = FALSE;
+			if ($i==10) break;
+			$i++;
 		}
 
 		return \Nette\ArrayHash::from($links);
@@ -177,7 +223,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		// 	$link = $this->presenter->link('//Rental:list', $params);
 		// 	$seo = $this->seoFactory->create($link, $this->presenter->getLastCreatedRequest());
 
-		// 	$count = 0; //$this->getCount($params);
+		// 	$count = $this->getCount($params);
 
 		// 	$links[] = array(
 		// 		'seo' => $seo,
