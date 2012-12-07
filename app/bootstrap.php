@@ -33,7 +33,7 @@ Extension::register($configurator);
 Extras\Config\PresenterExtension::register($configurator);
 
 
-$configurator->addConfig(APP_DIR . '/configs/config.neon');
+$configurator->addConfig(APP_DIR . '/configs/config.neon', FALSE);
 $configurator->addConfig(APP_DIR . '/configs/local.config.neon');
 if($section) {
 	$configurator->addConfig(APP_DIR . '/configs/'.$section.'.config.neon');
