@@ -50,7 +50,7 @@ class RentalSearchService extends Service\BaseService
 		$this->criteria[self::CRITERIA_RENTAL_TYPE] = $rentalType;
 	}
 
-	public function addTagCriteria(Entity\Rental\Type $tag) {
+	public function addRentalTagCriteria(Entity\Rental\Tag $tag) {
 		$this->criteria[self::CRITERIA_TAG] = $tag;
 	}
 
@@ -99,6 +99,7 @@ class RentalSearchService extends Service\BaseService
 		foreach ($this->criteria as $key => $value) {
 			$cache[$key] = $this->rentalSearchCaching->load($key.$value->id);
 		}
+		$cache = array_filter($cache);
 		if (count($cache) > 1) {
 			$tempResults = call_user_func_array('array_intersect', $cache);			
 		} else {
@@ -117,10 +118,10 @@ class RentalSearchService extends Service\BaseService
 	protected function reorderResults(array $results) {
 		$order = $this->rentalSearchCaching->getOrderList();
 		$t = array();
+
 		foreach ($results as $key => $value) {
 			$t[$key] = $order[$key];
 		}
-
 		asort($t);
 
 		return array_keys($t);

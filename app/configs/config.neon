@@ -214,6 +214,9 @@ factories:
 		class: FrontModule\Components\Footer\CountriesFooterControl
 		implement: FrontModule\Components\Footer\ICountriesFooterControlFactory
 
+	searchBarControlFactory:
+		class: FrontModule\Components\SearchBar\SearchBarControl(%location%)
+		implement: FrontModule\Components\SearchBar\ISearchBarControlFactory
 	# ==============================
 	# ==================== ROUTERS
 	# ==============================

@@ -8,18 +8,26 @@
 							</div>							
 						</form>
 					</div>
-
-					<div class="widget">
-						<h4>Menu theme</h4>
-						<ul>
-							<li><a href="{link Page:home}">Homepage</a></li>
-							<li><a href="{link Page:registration}">Register Form</a></li>
-							<li><a href="{link Dashboard:home}">Dashboard</a></li>
+{* 
+					<div n:foreach="$criteriaRentalType as $criteria" class="widget">
+						<h4>Menu counter</h4>
+						<ul n:foreach="$criteria->links as $link">
+							<li><a href="$link->uri">{$link->entity->name} <span class="counter">12</span></a></li>
 						</ul>
 					</div>
-					<div class="widget">
+ *}
+
+					<div n:if="$criteriaRentalTag" class="widget">
 						<h4>Menu counter</h4>
-						<ul>
+						<ul n:foreach="$criteriaRentalTag as $link">
+							<li><a href="{$link->seo->getUrl()}">{_$link->seo->getParameter('rentalTag')->name} <span class="counter">{$link->count}</span></a></li>
+						</ul>
+					</div>
+
+{* 
+					<div n:foreach="$criteria as $c" class="widget">
+						<h4>Menu counter</h4>
+						<ul n:foreach="$c['links'] as $link">
 							<li><a href="#">Bratislava <span class="counter">12</span></a></li>
 							<li><a href="#">Nitra <span class="counter">222</span></a></li>
 							<li><a href="#">Prešov <span class="counter">66</span></a></li>
@@ -30,6 +38,8 @@
 							<li class="more"><a href="#">More option <i class="entypo-down"></i></a></li>
 						</ul>
 					</div>
+
+
 					<div class="widget">
 						<h4>Menu selected</h4>
 						<ul>
@@ -47,7 +57,6 @@
 							<li><a href="#">Menu sidebar item</a></li>
 						</ul>
 					</div>
-
-
+*}
 				</aside>
 			</div>

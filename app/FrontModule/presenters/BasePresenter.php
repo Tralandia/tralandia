@@ -63,4 +63,8 @@ abstract class BasePresenter extends \BasePresenter {
 		return $this->getService('countriesfooterControlFactory')->create();
 	}
 
+	public function createComponentSearchBar($name) {
+		return $this->getService('searchBarControlFactory')->create($this->environment->getPrimaryLocation());
+	}
+
 }

@@ -42,7 +42,7 @@ class RentalSearchCaching extends \Nette\Object {
 	public function getOrderList() {
 		$order = $this->searchCache->load('order');
 
-		if ($order === NULL) {
+		if (true || $order === NULL) {
 			$order = $this->createRentalOrderList();
 		}
 
@@ -81,14 +81,19 @@ class RentalSearchCaching extends \Nette\Object {
 		// better filled rentals should be higher with higher probability
 		shuffle($featured);
 		shuffle($notFeatured);
-
+d($featured, $notFeatured);
 		$order = array_merge($featured, $notFeatured);
+		d($order);
 		$order = array_flip(array_values($order));
 		$this->searchCache->save('order', $order, array(
 			Caching\Cache::EXPIRE => $this->getExpirationTimeStamp(),
 		));
 
 		return $order;
+	}
+
+	public function invalidateRentalOrderList() {
+		$this->searchCache->remove('order');
 	}
 
 	public function isFeatured(\Entity\Rental\Rental $rental) {
