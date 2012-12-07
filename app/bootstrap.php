@@ -32,7 +32,7 @@ require_once LIBS_DIR . '/tools.php';
 Extension::register($configurator);
 Extras\Config\PresenterExtension::register($configurator);
 
-$configurator->addConfig(APP_DIR . '/configs/config.neon', 'common');
+$configurator->addConfig(APP_DIR . '/configs/config.neon', FALSE);
 $configurator->addConfig(APP_DIR . '/configs/local.config.neon');
 if($section) {
 	$configurator->addConfig(APP_DIR . '/configs/'.$section.'.config.neon');

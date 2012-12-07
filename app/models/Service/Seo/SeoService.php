@@ -12,8 +12,10 @@ class SeoService extends Nette\Object {
 
 	protected $request;
 	protected $requestParameters;
+	protected $page;
 	protected $url;
 	protected $phraseDecoratorFactory;
+	protected $pageRepositoryAccessor;
 
 	protected $replacements = array(
 		'primaryLocation' => array(
@@ -55,22 +57,19 @@ class SeoService extends Nette\Object {
 		$this->phraseDecoratorFactory = $phraseDecoratorFactory;
 	}
 
+	public function injectDic(\Nette\DI\Container $dic) {
+		$this->pageRepositoryAccessor = $dic->pageRepositoryAccessor;
+	}
+
 	/**
-	 * @param string                      $url
-	 * @param \Routers\IFrontRouteFactory $frontRouteFactory
+	 * @param string                    $url
+	 * @param Nette\Application\Request $request
 	 */
-	public function __construct($url, \Routers\IFrontRouteFactory $frontRouteFactory)
+	public function __construct($url, Nette\Application\Request $request)
 	{
-		$url = new Nette\Http\UrlScript($url);
-		$httpRequest = new Nette\Http\Request($url);
-
-		$route = $frontRouteFactory->create();
-		$request = $route->match($httpRequest);
-
 		$this->url = $url;
 		$this->request = $request;
 		$this->requestParameters = $this->request->getParameters();
-
 	}
 
 	/**
@@ -86,7 +85,7 @@ class SeoService extends Nette\Object {
 	 * @return string
 	 */
 	public function getH1() {
-		return $this->compilePattern($this->getParameter('page')->h1Pattern);
+		return $this->compilePattern($this->getPage()->h1Pattern);
 	}
 
 	/**
@@ -94,7 +93,7 @@ class SeoService extends Nette\Object {
 	 * @return string
 	 */
 	public function getTitle() {
-		return $this->compilePattern($this->getParameter('page')->titlePattern);
+		return $this->compilePattern($this->getPage()->titlePattern);
 	}
 
 	/**
@@ -105,6 +104,36 @@ class SeoService extends Nette\Object {
 		return $this->getH1();
 	}
 
+	public function getPage() {
+		if (!$this->page) {
+			$destination = ':' . $this->request->getPresenterName() . ':' . $this->getParameter('action');
+			if ($destination == ':Front:Rental:list') {
+				$hash = array();
+				foreach (\Routers\FrontRoute::$pathSegmentTypesById as $key => $value) {
+					if ($key == 2) continue;
+					if ($this->existsParameter($value)) {
+						if ($value == 'rentalTag') {
+							$tagName = $this->phraseDecoratorFactory->create($this->getParameter($value)->name);
+							$tagTranslation = $tagName->getTranslation($this->getParameter('language'));
+							if ($tagTranslation->position == \Entity\Phrase\Translation::BEFORE) {
+								$value = \Entity\Phrase\Translation::BEFORE;
+							} else {
+								$value = \Entity\Phrase\Translation::AFTER;
+							}
+							$value = 'tag'.$value;
+						}
+						$hash[] = '/'.$value;
+					}
+				}
+				$hash = implode('', $hash);
+			} else {
+				$hash = '';
+			}
+			$this->page = $this->pageRepositoryAccessor->get()->findOneBy(array('hash' => $hash, 'destination' => $destination));
+		}
+		return $this->page;
+	}
+
 	/**
 	 * Return parameter by given name
 	 * @param  string $name parameter name
@@ -112,6 +141,10 @@ class SeoService extends Nette\Object {
 	 */
 	public function getParameter($name) {
 		return $this->requestParameters[$name];
+	}
+
+	public function getParameters() {
+		return $this->requestParameters;
 	}
 
 	/**
