@@ -16,19 +16,8 @@ class Url extends \Entity\BaseEntity {
 	 */
 	protected $value;
 		
-	/**
-	 * @param string
-	 * @return Url
-	 */
-	public function setValue($value) {
-		$this->value = $value;
-		return $this;
-	}
-		
-	/**
-	 * @return string|NULL
-	 */
-	public function getValue() {
-		return $this->value;
-	}
+	//@entity-generator-code --- NEMAZAT !!!
+
+	/* ----------------------------- Methods ----------------------------- */		
+
 }
