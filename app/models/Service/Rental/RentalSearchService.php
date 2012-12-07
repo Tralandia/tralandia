@@ -100,6 +100,7 @@ class RentalSearchService extends Service\BaseService
 			$cache[$key] = $this->rentalSearchCaching->load($key.$value->id);
 		}
 		$cache = array_filter($cache);
+
 		if (count($cache) > 1) {
 			$tempResults = call_user_func_array('array_intersect', $cache);			
 		} else {

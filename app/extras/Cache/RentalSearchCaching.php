@@ -33,16 +33,20 @@ class RentalSearchCaching extends \Nette\Object {
 	}
 
 	public function addRental(\Entity\Rental\Rental $rental, $key) {
+		if($rental->status != \Entity\Rental\Rental::STATUS_LIVE) {
+			throw new \Nette\InvalidArgumentException('Len live rental mozes ulozit do cache');
+		}
 		$tempCache = $this->searchCache->load($key);
 		$tempCache[$rental->id] = $rental->id;
 		$this->searchCache->save($key, $tempCache);
+
 		return $this;
 	}
 
 	public function getOrderList() {
 		$order = $this->searchCache->load('order');
 
-		if (true || $order === NULL) {
+		if ($order === NULL) {
 			$order = $this->createRentalOrderList();
 		}
 
@@ -81,9 +85,9 @@ class RentalSearchCaching extends \Nette\Object {
 		// better filled rentals should be higher with higher probability
 		shuffle($featured);
 		shuffle($notFeatured);
-d($featured, $notFeatured);
+
 		$order = array_merge($featured, $notFeatured);
-		d($order);
+
 		$order = array_flip(array_values($order));
 		$this->searchCache->save('order', $order, array(
 			Caching\Cache::EXPIRE => $this->getExpirationTimeStamp(),
@@ -92,8 +96,14 @@ d($featured, $notFeatured);
 		return $order;
 	}
 
-	public function invalidateRentalOrderList() {
+	public function removeRentalOrderList() {
 		$this->searchCache->remove('order');
+		return $this;
+	}
+
+	public function drop() {
+		$this->searchCache->clean(array(Caching\Cache::ALL => TRUE));
+		return $this;
 	}
 
 	public function isFeatured(\Entity\Rental\Rental $rental) {
