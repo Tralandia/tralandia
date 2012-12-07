@@ -25,6 +25,84 @@ class RadoTempPresenter extends BasePresenter {
 		d(7, $this->DMSdoFloat('-40° 26.7717'), $this->DMSdoFloat('79° 56.93172'));
 	}
 
+	public function actionGoogleMapsApi() {
+		$service = new \GoogleGeocodeServiceV3( new \CurlCommunicator() );
+
+		// $response = $service->geocode('Springfield');
+
+		// // Make sure we have a good result
+		// if ( $response->isValid() && $response->hasResults() ) {
+		//   d($response->getFormattedAddress());
+		// } else {
+		//   d('Invalid Response');
+		// }
+
+		// while ($response->valid()) {
+		// 	// Get the State name
+		// 	//d($response->getAddressComponentName(\GoogleGeocodeResponseV3::ACT_LOCALITY));
+		// 	d($response->getFormattedAddress());
+		// 	$response->next();
+		// }
+
+		// $response = $service->reverseGeocode( 34.1346702, -118.4389877 );
+
+		// while ( $response->valid() ) {
+		// 	// Address component type we're checking for
+		// 	$component = \GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_1;
+
+		// 	// Is it a city-level result?
+		// 	if ( $response->assertType( $component ) ) {
+		// 		// Get the city name
+		// 		d($response->getAddressComponentName( $component ));
+		// 		break;
+		// 	}
+		// 	$response->next();
+		// }
+
+		// Show that the API assumes "Portland, OR" for "Portland USA"
+		d($service->geocode( 'Portland USA' )->getFormattedAddress());
+
+		// Now geocode the state of Maine and bias results to its viewport
+		$maine = $service->geocode( 'Maine, USA' );
+		$service->biasViewportByBoundsObject( $maine->getViewport() );
+
+		// Re-geocode "Portland USA"
+		d($service->geocode( 'Portland USA' )->getFormattedAddress());
+
+
+		// Establish an ambiguous location
+		$location = 'Toledo';
+
+		// Bias for the USA
+		$service->biasRegion( 'com' );
+		d($service->geocode( $location )->getFormattedAddress());
+
+		// Bias for Spain
+		$service->biasRegion( 'es' );
+		d($service->geocode( $location )->getFormattedAddress());
+	}
+
+	public function googleReverseGeocode() {
+		$response = $service->reverseGeocode(51.053205, 21.988672);
+
+		while ( $response->valid() ) {
+			// Address component type we're checking for
+			$components = array(
+				\GoogleGeocodeResponseV3::ACT_LOCALITY,
+				\GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_1,
+				\GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_2,
+				\GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_3,
+			);
+
+			foreach ($components as $key => $value) {
+				d($response->getAddressComponentName( $value ));
+			}
+
+			$response->next();
+		}
+
+	}
+
 	public function DMSdoFloat($degrees) {
 		$degrees = str_replace(",",".", $degrees);
 		
