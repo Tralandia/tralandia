@@ -193,12 +193,10 @@ factories:
 	rentalEditFormFactory: 
 		class: OwnerModule\Forms\RentalEditForm(%rental%)
 		implement: OwnerModule\Forms\IRentalEditFormFactory
-		parameters: [Entity\Rental\Rental rental]
 
 	rentalReservationFormFactory: 
 		class: FrontModule\Forms\Rental\ReservationForm(%rental%)
 		implement: FrontModule\Forms\Rental\IReservationFormFactory
-		parameters: [Entity\Rental\Rental rental]
 
 	# ==============================
 	# ==================== COMPONENTS
@@ -239,17 +237,14 @@ factories:
 		setup: 
 			- setCache(@rentalSearchKeysCache)
 		implement: Extras\Cache\IRentalSearchKeysCachingFactory
-		parameters: [Entity\Rental\Rental rental]
 
 	searchCacheFactory:
 		class: Nette\Caching\Cache(@cacheStorage, %namespace%)
 		implement: Extras\Cache\ISearchCacheFactory
-		parameters: [namespace]
 
 	rentalSearchCachingFactory: 
 		class: Extras\Cache\RentalSearchCaching(%location%)
 		implement: Extras\Cache\IRentalSearchCachingFactory
-		parameters: [Entity\Location\Location location]
 
 	# ==============================
 	# ==================== SERVICES
@@ -257,7 +252,6 @@ factories:
 	rentalSearchServiceFactory: 
 		class: Service\Rental\RentalSearchService(%location%)
 		implement: Service\Rental\IRentalSearchServiceFactory
-		parameters: [Entity\Location\Location location]
 
 	seoServiceFactory:
 		class: Service\Seo\SeoService
