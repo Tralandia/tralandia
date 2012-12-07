@@ -37,6 +37,14 @@ services:
 	domainRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Domain')
 
 
+	#phone+email+address+url
+	#----------
+	phoneRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Contacts\Phone')
+	emailRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Contacts\Email')
+	urlRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Contacts\Url')
+	addressRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Contacts\Address')
+
+
 	#email
 	#----------
 	emailBatchRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Email\Batch')
@@ -239,10 +247,6 @@ services:
 
 	#----------
 	userCombinationRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\User\Combination')
-
-
-	#----------
-	userRentalQuestionRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\User\RentalQuestion')
 
 
 	#----------

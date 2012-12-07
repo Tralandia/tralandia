@@ -26,7 +26,8 @@ class Json extends Text {
 		}
 
 		$control = $form->addAdvancedJson($this->getName(), $this->getLabel(), $structure);
-		$control->setDefaultValue($this->getValue());
+		$control->setDefaultValue($this->getValue())
+			->setDisabled($this->disabled);
 
 		foreach ($this->validators as $validator) {
 			call_user_func_array(array($control, $validator->method), $validator->params);

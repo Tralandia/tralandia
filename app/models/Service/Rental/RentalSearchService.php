@@ -105,11 +105,16 @@ class RentalSearchService extends Service\BaseService
 			$tempResults = reset($cache);
 		}
 
-		$this->results = $this->reorderResults($tempResults);
+		if(is_array($tempResults)) {
+			$this->results = $this->reorderResults($tempResults);
+		} else {
+			$this->results = array();
+		}
+
 		return $this->results;
 	}
 
-	protected function reorderResults($results) {
+	protected function reorderResults(array $results) {
 		$order = $this->rentalSearchCaching->getOrderList();
 		$t = array();
 		foreach ($results as $key => $value) {

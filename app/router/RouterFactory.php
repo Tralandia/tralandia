@@ -16,6 +16,9 @@ class RouterFactory
 	protected $defaultPrymaryLocation;
 	protected $frontRouteFactory;
 
+	public $languageRepositoryAccessor;
+	public $locationRepositoryAccessor;
+
 	public function __construct(array $options, IFrontRouteFactory $frontRouteFactory) {
 		$this->defaultLanguage = $options['defaultLanguage'];
 		$this->defaultPrymaryLocation = $options['defaultPrimaryLocation'];
@@ -27,6 +30,9 @@ class RouterFactory
 	 */
 	public function create()
 	{
+		$this->defaultLanguage = $this->languageRepositoryAccessor->get()->find($this->defaultLanguage);
+		$this->defaultPrymaryLocation = $this->locationRepositoryAccessor->get()->find($this->defaultPrymaryLocation);
+
 		$router = new RouteList();
 
 		$router[] = $gregor = new RouteList('gregor');
@@ -75,11 +81,7 @@ class RouterFactory
 		
 		$router[] = $frontRouter = new RouteList('Front');
 
-		$section = isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : null;
-		if ($section !== 'cibi') {
-			$frontRouter[] = $this->frontRouteFactory->create();
-		}
-
+		$frontRouter[] = $this->frontRouteFactory->create();
 	
 		
 		$frontRouter[] = new Route('<presenter>/[<action>[/<id>]]', array(

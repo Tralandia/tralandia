@@ -2,15 +2,26 @@
 
 namespace FrontModule;
 
+use Nette;
+use Service\Seo\ISeoServiceFactory;
+
 abstract class BasePresenter extends \BasePresenter {
 	
 	public $languageRepositoryAccessor;
 	public $locationRepositoryAccessor;
 	public $rentalTypeRepositoryAccessor;
 	public $rentalRepositoryAccessor;
-	public $environment;
+	
+	protected $environment;
+	protected $seoFactory;
 
-	public function injectEnvironment(\Extras\Environment $environment) {
+	public function injectSeo(ISeoServiceFactory $seoFactory)
+	{
+		$this->seoFactory = $seoFactory;
+	}
+
+	public function injectEnvironment(\Extras\Environment $environment) 
+	{
 		$this->environment = $environment;
 	}
 
@@ -46,6 +57,10 @@ abstract class BasePresenter extends \BasePresenter {
 
 	public function createComponentFooter($name) {
 		return $this->getService('footerControlFactory')->create($this->environment->getPrimaryLocation());
+	}
+
+	public function createComponentCountriesFooter($name) {
+		return $this->getService('countriesfooterControlFactory')->create();
 	}
 
 }

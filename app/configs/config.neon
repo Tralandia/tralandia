@@ -32,7 +32,7 @@ parameters:
 	editor: 'txmt://open/?url=file://%file&line=%line'
 
 	router:
-		hostMask: '<language>.<country>.<domain>.com'
+		mode: development
 
 	settingsDir: %appDir%/configs
 
@@ -56,15 +56,8 @@ doctrine:
 	console:
 		entityManager: default
 
-
-includes:
-	- webLoader.neon
-	- acl/acl.neon
-	- modelServices.neon
-	- oldRepositoryServices.neon
-
-# presenter:
-# 	configsDir: %appDir%/configs/presenters
+presenter:
+	configsDir: %appDir%/configs/presenters
 
 services:
 	# CACHE
@@ -87,7 +80,11 @@ services:
 	# 		- $pageRepositoryAccessor(@pageRepositoryAccessor)
 	# 		- $rentalAmenityRepositoryAccessor(@rentalAmenityRepositoryAccessor)
 
-	routerFactory: Routers\RouterFactory([defaultLanguage: %centralLanguage%, defaultPrimaryLocation: 58])
+	routerFactory: 
+		class: Routers\RouterFactory([defaultLanguage: %centralLanguage%, defaultPrimaryLocation: 58])
+		setup:
+			- $locationRepositoryAccessor(@locationRepositoryAccessor)
+			- $languageRepositoryAccessor(@languageRepositoryAccessor)
 
 	# searchCaching: Extras\Cache\SearchCaching(@searchCache)
 
@@ -177,8 +174,14 @@ services:
 			- @rentalTagRepositoryAccessor
 			- @locationDecoratorFactory
 
+	phoneBook: Extras\Books\Phone(@phoneRepositoryAccessor)
+	emailBook: Extras\Books\Email(@emailRepositoryAccessor)
+	urlBook: Extras\Books\Url(@urlRepositoryAccessor)
+
 	itemTextFactory: Extras\FormMask\Items\Foctories\TextFactory
 	itemPhraseFactory: Extras\FormMask\Items\Foctories\PhraseFactory(@phraseDecoratorFactory, @environment::getLanguage())
+	itemAdvancedPhraseFactory: Extras\FormMask\Items\Foctories\AdvancedPhraseFactory(@environment)
+	itemReadOnlyPhraseFactory: Extras\FormMask\Items\Foctories\ReadOnlyPhraseFactory(@environment)
 	itemYesNoFactory: Extras\FormMask\Items\Foctories\YesNoFactory
 	itemJsonFactory: Extras\FormMask\Items\Foctories\JsonFactory
 	itemNeonFactory: Extras\FormMask\Items\Foctories\NeonFactory
@@ -189,14 +192,33 @@ services:
 	itemTinymceFactory: Extras\FormMask\Items\Foctories\TinymceFactory
 
 factories: 
+	# ==============================
+	# ==================== FORMS
+	# ==============================
 	rentalEditFormFactory: 
 		class: OwnerModule\Forms\RentalEditForm(%rental%)
 		implement: OwnerModule\Forms\IRentalEditFormFactory
-		arguments: [Entity\Rental\Rental rental]
 
-	frontRentalFactory:
-		class: Routers\FrontRoute(@routerCache, %router.hostMask%)
-		implement: Routers\IFrontRouteFactory
+	rentalReservationFormFactory: 
+		class: FrontModule\Forms\Rental\ReservationForm(%rental%)
+		implement: FrontModule\Forms\Rental\IReservationFormFactory
+
+	# ==============================
+	# ==================== COMPONENTS
+	# ==============================
+	footerControlFactory:
+		class: FrontModule\Components\Footer\FooterControl(%location%)
+		implement: FrontModule\Components\Footer\IFooterControlFactory
+
+	countriesfooterControlFactory:
+		class: FrontModule\Components\Footer\CountriesFooterControl
+		implement: FrontModule\Components\Footer\ICountriesFooterControlFactory
+
+	# ==============================
+	# ==================== ROUTERS
+	# ==============================
+	frontRouteFactory:
+		class: Routers\FrontRoute(@routerCache, %router.mode%)
 		setup:
 			- $locationRepositoryAccessor(@locationRepositoryAccessor)
 			- $languageRepositoryAccessor(@languageRepositoryAccessor)
@@ -210,45 +232,49 @@ factories:
 			- $rentalTagRepositoryAccessor(@rentalTagRepositoryAccessor)
 			- $rentalAmenityRepositoryAccessor(@rentalAmenityRepositoryAccessor)
 			- $phraseDecoratorFactory(@phraseDecoratorFactory)
+		implement: Routers\IFrontRouteFactory
 
-	rentalSearchServiceFactory: 
-		class: Service\Rental\RentalSearchService(%location%)
-		implement: Service\Rental\IRentalSearchServiceFactory
-		parameters: [Entity\Location\Location location]
-
-	# searchCachingFactory: 
-	# 	class: Extras\Cache\SearchCaching(%location%)
-	# 	setup: 
-	# 		- setCache(@searchCache)
-	# 	implement: Extras\Cache\ISearchCachingFactory
-	# 	parameters: [Entity\Location\Location location]
-
+	# ==============================
+	# ==================== CACHE
+	# ==============================
 	rentalSearchKeysCachingFactory: 
 		class: Extras\Cache\RentalSearchKeysCaching(%rental%)
 		setup: 
 			- setCache(@rentalSearchKeysCache)
 		implement: Extras\Cache\IRentalSearchKeysCachingFactory
-		parameters: [Entity\Rental\Rental rental]
-
-	rentalSearchCachingFactory: 
-		class: Extras\Cache\RentalSearchCaching(%location%)
-		implement: Extras\Cache\IRentalSearchCachingFactory
-		parameters: [Entity\Location\Location location]
-
-	seoServiceFactory:
-		class: Service\Seo\SeoService(%request%)
-		implement: Service\Seo\ISeoServiceFactory
-		parameters: [Nette\Application\Request request]
 
 	searchCacheFactory:
 		class: Nette\Caching\Cache(@cacheStorage, %namespace%)
 		implement: Extras\Cache\ISearchCacheFactory
-		parameters: [namespace]
+
+	rentalSearchCachingFactory: 
+		class: Extras\Cache\RentalSearchCaching(%location%)
+		implement: Extras\Cache\IRentalSearchCachingFactory
+
+	# ==============================
+	# ==================== SERVICES
+	# ==============================
+	rentalSearchServiceFactory: 
+		class: Service\Rental\RentalSearchService(%location%)
+		implement: Service\Rental\IRentalSearchServiceFactory
+
+	seoServiceFactory:
+		class: Service\Seo\SeoService
+		arguments: [%url%, %request%]
+		implement: Service\Seo\ISeoServiceFactory
 
 	updateRentalSearchKeysCacheRobotFactory:
 		class: Service\Robot\UpdateRentalSearchKeysCacheRobot(%location%)
 		implement: Service\Robot\IUpdateRentalSearchKeysCacheRobotFactory
 
-	footerControlFactory:
-		class: FrontModule\Components\Footer\FooterControl(%location%)
-		implement: FrontModule\Components\Footer\IFooterControlFactory
+	itemMapFactory: Extras\FormMask\Items\Foctories\MapFactory
+	itemEmailFactory: Extras\FormMask\Items\Foctories\EmailFactory
+	itemAddressFactory: Extras\FormMask\Items\Foctories\AddressFactory(@translator, @addressRepositoryAccessor)
+	itemPhoneFactory: Extras\FormMask\Items\Foctories\PhoneFactory
+	itemUrlFactory: Extras\FormMask\Items\Foctories\UrlFactory
+
+includes:
+	- webLoader.neon
+	- acl/acl.neon
+	- modelServices.neon
+	- oldRepositoryServices.neon

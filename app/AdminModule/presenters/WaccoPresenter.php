@@ -12,9 +12,25 @@ class WaccoPresenter extends BasePresenter {
 	}
 
 	public function actionList() {
+		/*
 		$repo = $this->context->model->getRepository('Entity\Currency');
 		$entity = $repo->find(2);
 		$this->template->form = $this->getForm('currency', $entity);
+		*/
+
+/*
+		$phoneBook = $this->getService('phoneBook');
+		$phone = '0949 888 999';
+
+		debug($phoneBook->find($phone));
+		debug($phoneBook->getOrCreate($phone));
+		debug($phoneBook->find($phone));
+*/
+
+		$repo = $this->context->model->getRepository('Entity\Test');
+		$entity = $repo->createNew();
+		$this->context->model->persist($entity);
+		$this->template->form = $this->getForm('test', $entity);
 	}
 
 	public function actionList2() {
@@ -25,13 +41,13 @@ class WaccoPresenter extends BasePresenter {
 
 	public function actionList3() {
 		$repo = $this->context->model->getRepository('Entity\Location\Location');
-		$entity = $repo->find(563);
+		$entity = $repo->find(87);
 		$this->template->form = $this->getForm('location', $entity);
 	}
 
 	public function getForm($name, $entity) {
-		$model = $this->context->model;
-		$form = $this->context->presenter->{$name}->form->create($entity);
+		$model = $this->getService('model');
+		$form = $this->getService("presenter.$name.form")->create($entity);
 		$form->onSuccess[] = function($form) use ($model) {
 			$model->flush();
 		};

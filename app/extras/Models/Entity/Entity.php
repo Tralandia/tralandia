@@ -45,10 +45,6 @@ abstract class Entity extends \Nette\Object implements IEntity, \Nette\Security\
 
 		return $arr;
 	}
-
-	public function getId() {
-		return $this->id;
-	}
 /*
 	public function setId() {
 		throw new \InvalidArgumentException("Nemozes nastavovat ID");

@@ -32,13 +32,16 @@ require_once LIBS_DIR . '/tools.php';
 Extension::register($configurator);
 Extras\Config\PresenterExtension::register($configurator);
 
-$configurator->addConfig(APP_DIR . '/configs/config.neon');
+
+$configurator->addConfig(APP_DIR . '/configs/config.neon', FALSE);
 $configurator->addConfig(APP_DIR . '/configs/local.config.neon');
 if($section) {
 	$configurator->addConfig(APP_DIR . '/configs/'.$section.'.config.neon');
 }
-
-$configurator->onCompile[] = callback('Extras\PresenterGenerator', 'generate');
+$configurator->onCompile[] = function ($configurator, $compiler) {
+	Extras\PresenterGenerator::generate();
+	$compiler->addExtension('gpspicker', new VojtechDobes\NetteForms\GpsPickerExtension);
+};
 $container = $configurator->createContainer();
 
 

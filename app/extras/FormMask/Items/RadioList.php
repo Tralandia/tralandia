@@ -16,6 +16,7 @@ class RadioList extends Select {
 	 */
 	public function extend(Nette\Forms\Form $form) {
 		return $form->addRadioList($this->getName(), $this->getLabel(), $this->getItems())
-			->setDefaultValue($this->getValue());
+			->setDefaultValue($this->getValue())
+			->setDisabled($this->disabled);
 	}
 }
