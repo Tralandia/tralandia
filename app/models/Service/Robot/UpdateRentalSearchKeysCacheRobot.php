@@ -18,6 +18,7 @@ class UpdateRentalSearchKeysCacheRobot extends \Nette\Object implements IRobot {
 		$this->primaryLocation = $primaryLocation;
 	}
 
+
 	public function needToRun() {
 		return true;
 	}

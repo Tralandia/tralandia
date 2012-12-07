@@ -10,7 +10,7 @@ class LocationRepository extends \Repository\BaseRepository {
 
 	public function getItems() {
 		$query = $this->_em->createQueryBuilder();
-		$query->select('e, p')->from($this->_entityName, 'e')->leftJoin('e.name', 'p');
+		$query->select('e')->from($this->_entityName, 'e')->setMaxResults(60);
 		return $query->getQuery()->getResult();
 	}
 }

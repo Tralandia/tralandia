@@ -31,8 +31,13 @@ class RunRobotPresenter extends BasePresenter {
 		$primaryLocation = $this->locationRepositoryAccessor->get()->findOneByIso('sk');
 		$location = $this->locationRepositoryAccessor->get()->find(338);
 
+		$searchCaching = $this->rentalSearchCachingFactory->create($primaryLocation);
+		$searchCaching->drop();
+		
 		$this->rentalSearchKeysCacheRobotFactory->create($primaryLocation)->run();
-		$this->rentalSearchCachingFactory->create($primaryLocation)->invalidateRentalOrderList();
+		
+		//$searchCaching->getOrderList();
+		
 		$this->sendResponse(new TextResponse('done'));
 	}
 }

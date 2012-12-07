@@ -6,9 +6,7 @@ use Doctrine\ORM\EntityRepository;
 
 class BaseRepository extends EntityRepository {
 
-
-	public function createNew()
-	{
+	public function createNew() {
 		$class = $this->getEntityName();
 		if($class == 'Entity\Phrase\Translation') {
 			throw new \Nette\InvalidArgumentException('Nemozes vitvorit translation len tak kedy sa ti zachce! Toto nieje holubnik! Pouzi na to $phraseDecorator->createTranslation()');
