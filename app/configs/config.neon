@@ -56,9 +56,8 @@ doctrine:
 	console:
 		entityManager: default
 
-
-# presenter:
-# 	configsDir: %appDir%/configs/presenters
+presenter:
+	configsDir: %appDir%/configs/presenters
 
 services:
 	# CACHE
@@ -175,8 +174,14 @@ services:
 			- @rentalTagRepositoryAccessor
 			- @locationDecoratorFactory
 
+	phoneBook: Extras\Books\Phone(@phoneRepositoryAccessor)
+	emailBook: Extras\Books\Email(@emailRepositoryAccessor)
+	urlBook: Extras\Books\Url(@urlRepositoryAccessor)
+
 	itemTextFactory: Extras\FormMask\Items\Foctories\TextFactory
 	itemPhraseFactory: Extras\FormMask\Items\Foctories\PhraseFactory(@phraseDecoratorFactory, @environment::getLanguage())
+	itemAdvancedPhraseFactory: Extras\FormMask\Items\Foctories\AdvancedPhraseFactory(@environment)
+	itemReadOnlyPhraseFactory: Extras\FormMask\Items\Foctories\ReadOnlyPhraseFactory(@environment)
 	itemYesNoFactory: Extras\FormMask\Items\Foctories\YesNoFactory
 	itemJsonFactory: Extras\FormMask\Items\Foctories\JsonFactory
 	itemNeonFactory: Extras\FormMask\Items\Foctories\NeonFactory
@@ -261,6 +266,12 @@ factories:
 	updateRentalSearchKeysCacheRobotFactory:
 		class: Service\Robot\UpdateRentalSearchKeysCacheRobot(%location%)
 		implement: Service\Robot\IUpdateRentalSearchKeysCacheRobotFactory
+
+	itemMapFactory: Extras\FormMask\Items\Foctories\MapFactory
+	itemEmailFactory: Extras\FormMask\Items\Foctories\EmailFactory
+	itemAddressFactory: Extras\FormMask\Items\Foctories\AddressFactory(@translator, @addressRepositoryAccessor)
+	itemPhoneFactory: Extras\FormMask\Items\Foctories\PhoneFactory
+	itemUrlFactory: Extras\FormMask\Items\Foctories\UrlFactory
 
 includes:
 	- webLoader.neon

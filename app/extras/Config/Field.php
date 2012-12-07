@@ -116,4 +116,11 @@ class Field extends Nette\Object {
 		}
 		return false;
 	}
+
+	/**
+	 * @return bool
+	 */
+	public function isControlDisabled() {
+		return isset($this->options['control']['disabled']) && $this->options['control']['disabled'] === true;
+	}
 }

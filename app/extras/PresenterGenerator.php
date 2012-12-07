@@ -2,10 +2,9 @@
 
 namespace Extras;
 
-use Nette\Config,
-	Nette\Utils\Finder;
+use Nette;
 
-class PresenterGenerator extends \Nette\Object {
+class PresenterGenerator extends Nette\Object {
 
 	public static $dirName = '/presenters';
 
@@ -19,7 +18,7 @@ class PresenterGenerator extends \Nette\Object {
 
 		@mkdir($dirName, 0777, true);
 
-		foreach (Finder::findFiles('*.neon')->in(APP_DIR . '/configs/presenters') as $key => $file) {
+		foreach (Nette\Utils\Finder::findFiles('*.neon')->in(APP_DIR . '/configs/presenters') as $key => $file) {
 			$filename = $file->getFilename();
 			$name = substr($filename, 0, strrpos($filename, '.'));
 			if($name == 'baseConfig') continue;
@@ -33,9 +32,5 @@ class PresenterGenerator extends \Nette\Object {
 			fwrite($handle, $content);
 			fclose($handle);
 		}
-
-		@chmod($dirName, 0777, true);
-
 	}
-
 }

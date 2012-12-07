@@ -2,24 +2,24 @@
 
 namespace Extras\FormMask\Items\Foctories;
 
-use Extras, Entity;
+use Extras, Entity, Model;
 
 /**
  * @author Branislav Vaculčiak
  */
 class PhraseFactory implements IFactory {
 
-	/** @var Extras\Models\Service\ServiceFactory */
+	/** @var Model\Phrase\IPhraseDecoratorFactory */
 	protected $serviceFactory;
 
 	/** @var Entity\Language */
 	protected $language;
 
 	/**
-	 * @param Extras\Models\Service\ServiceFactory
+	 * @param Model\Phrase\IPhraseDecoratorFactory
 	 * @param Entity\Language
 	 */
-	public function __construct(Extras\Models\Service\ServiceFactory $serviceFactory, Entity\Language $language) {
+	public function __construct(Model\Phrase\IPhraseDecoratorFactory $serviceFactory, Entity\Language $language) {
 		$this->serviceFactory = $serviceFactory;
 		$this->language = $language;
 	}

@@ -16,7 +16,7 @@ use Nette\Diagnostics\Debugger;
 /**
  * Nette\Diagnostics\Debugger::enable() shortcut.
  */
-function debug()
+function debug2()
 {
 	Debugger::$strictMode = TRUE;
 	Debugger::enable(Debugger::DEVELOPMENT);
