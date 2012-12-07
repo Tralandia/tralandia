@@ -66,27 +66,9 @@ class Rental extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Location\Location", mappedBy="rentals")
-	 */
-	protected $locations;
-
-	/**
-	 * @var address
-	 * @ORM\Column(type="address", nullable=true)
+	 * @ORM\OneToOne(targetEntity="Entity\Contacts\Address")
 	 */
 	protected $address;
-
-	/**
-	 * @var latlong
-	 * @ORM\Column(type="latlong", nullable=true)
-	 */
-	protected $latitude;
-
-	/**
-	 * @var latlong
-	 * @ORM\Column(type="latlong", nullable=true)
-	 */
-	protected $longitude;
 
 	/**
 	 * @var slug
@@ -107,10 +89,22 @@ class Rental extends \Entity\BaseEntity {
 	protected $teaser;
 
 	/**
-	 * @var contacts
-	 * @ORM\Column(type="contacts", nullable=true)
+	 * @var Collection
+	 * @ORM\ManyToMany(targetEntity="Entity\Contacts\Phone", mappedBy="rentals")
 	 */
-	protected $contacts;
+	protected $phones;
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToMany(targetEntity="Entity\Contacts\Email", mappedBy="rentals")
+	 */
+	protected $emails;
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToMany(targetEntity="Entity\Contacts\Url", mappedBy="rentals")
+	 */
+	protected $urls;
 
 	/**
 	 * @var Collection

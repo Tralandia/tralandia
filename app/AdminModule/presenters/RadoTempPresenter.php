@@ -16,13 +16,23 @@ use Nette\Application as NA,
 class RadoTempPresenter extends BasePresenter {
 
 	public function actionGps() {
-		d(1, $this->DMSdoFloat('40:26:46S'), $this->DMSdoFloat('79:56:55E'));
-		d(2, $this->DMSdoFloat('40:26:46.302S'), $this->DMSdoFloat('79:56:55.903E'));
-		d(3, $this->DMSdoFloat('40°26′47″S'), $this->DMSdoFloat('79°58′36″E'));
-		d(4, $this->DMSdoFloat('40d 26′ 47″ S'), $this->DMSdoFloat('79d 58′ 36″ E'));
-		d(5, $this->DMSdoFloat('40.446195S'), $this->DMSdoFloat('79.948862E'));
-		d(6, $this->DMSdoFloat('-40.446195'), $this->DMSdoFloat('79.948862'));
-		d(7, $this->DMSdoFloat('-40° 26.7717'), $this->DMSdoFloat('79° 56.93172'));
+		$testValues = array(
+			array('40:26:46S', '79:56:55E'),
+			array('40:26:46.302S', '79:56:55.903E'),
+			array('40°26′47″S', '79°58′36″E'),
+			array('40d 26′ 47″ S', '79d 58′ 36″ E'),
+			array('40.446195S', '79.948862E'),
+			array('-40.446195', '79.948862'),
+			array('-40° 26.7717', '79° 56.93172'),
+		);
+
+		$i = 0;
+		foreach ($testValues as $key => $value) {
+			$lat = new \Extras\Types\Latlong($value[0], 'latitude');
+			$long = new \Extras\Types\Latlong($value[1], 'longitude');
+			d($i, $value, $lat->toString(), $long->toString());			
+			$i++;
+		}
 	}
 
 	public function actionGoogleMapsApi() {
@@ -44,20 +54,20 @@ class RadoTempPresenter extends BasePresenter {
 		// 	$response->next();
 		// }
 
-		// $response = $service->reverseGeocode( 34.1346702, -118.4389877 );
+		$response = $service->reverseGeocode( 34.1346702, -118.4389877 );
 
-		// while ( $response->valid() ) {
-		// 	// Address component type we're checking for
-		// 	$component = \GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_1;
+		while ( $response->valid() ) {
+			// Address component type we're checking for
+			$component = \GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_1;
 
-		// 	// Is it a city-level result?
-		// 	if ( $response->assertType( $component ) ) {
-		// 		// Get the city name
-		// 		d($response->getAddressComponentName( $component ));
-		// 		break;
-		// 	}
-		// 	$response->next();
-		// }
+			// Is it a city-level result?
+			if ( $response->assertType( $component ) ) {
+				// Get the city name
+				d($response->getAddressComponentName( $component ));
+				break;
+			}
+			$response->next();
+		}
 
 		// Show that the API assumes "Portland, OR" for "Portland USA"
 		d($service->geocode( 'Portland USA' )->getFormattedAddress());
@@ -82,9 +92,9 @@ class RadoTempPresenter extends BasePresenter {
 		d($service->geocode( $location )->getFormattedAddress());
 	}
 
-	public function googleReverseGeocode() {
+	public function actionGoogleReverseGeocode() {
+		$service = new \GoogleGeocodeServiceV3( new \CurlCommunicator(), NULL, array('language' => 'pl') );
 		$response = $service->reverseGeocode(51.053205, 21.988672);
-
 		while ( $response->valid() ) {
 			// Address component type we're checking for
 			$components = array(
@@ -95,41 +105,11 @@ class RadoTempPresenter extends BasePresenter {
 			);
 
 			foreach ($components as $key => $value) {
-				d($response->getAddressComponentName( $value ));
+				d($value, $response->getAddressComponentName( $value ));
 			}
 
 			$response->next();
 		}
-
-	}
-
-	public function DMSdoFloat($degrees) {
-		$degrees = str_replace(",",".", $degrees);
-		
-		if (is_numeric($degrees)) {
-			return (float)$degrees;
-		}
-		if (is_numeric(str_replace(",",".", $degrees))) {
-			return (float)str_replace(",",".", $degrees);
-		}
-
-		$isNegative = FALSE;
-
-	   	$degrees = strtolower(trim($degrees));
-	   	if (preg_match('/[w|s|-]/', $degrees)) {
-	   		$isNegative = TRUE;
-	   	}
-
-	   	$degrees = preg_replace('/[n|e|w|s|-]/', '', $degrees);
-	   	$degrees = preg_replace('/[^0-9|.]/', 'x', $degrees);
-
-		$a = array_filter(explode('x', $degrees));
-		$a = array_values($a);
-		for ($i=0; $i < 3; $i++) { 
-			if (!isset($a[$i])) $a[$i] = 0;
-		}
-
-		return (float) ($a[0]+($a[1]/60)+($a[2]/60/60))*(($isNegative)?(-1):(1));
 	}
 
 
