@@ -61,7 +61,7 @@ class ImportRentals extends BaseImport {
 		$now = time();
 
 		if ($this->developmentMode == TRUE) {
-			$r = q('select * from objects where country_id = 46 and interview is not null order by rand() limit 10');
+			$r = q('select * from objects where country_id = 46 order by rand() limit 1');
 		} else {
 			$r = q('select * from objects');
 		}
@@ -113,10 +113,11 @@ class ImportRentals extends BaseImport {
 				}
 			}
 
-			// @todo dorobit
-			// d(array('oldId' => $x['locality_id'], 'type' => $locationTypes['locality']));
-			// $locationTemp = $context->locationRepositoryAccessor->get()->findOneBy(array('oldId' => $x['locality_id'], 'type' => $locationTypes['locality']));
-			// if($locationTemp) $rental->addLocation($locationTemp);
+			// location | obec
+			$locationTemp = $context->locationRepositoryAccessor->get()->findOneBy(array('oldId' => $x['locality_id'], 'type' => $locationTypes['locality']));
+			if($locationTemp) {
+				$rental->addLocation($locationTemp);
+			}
 
 			// $thisLocality = $context->locationRepositoryAccessor->get()->findOneBy(array('oldId' => $x['locality_id'], 'type' => $locationTypes['locality']));
 
@@ -153,11 +154,9 @@ class ImportRentals extends BaseImport {
 			}
 
 			$contacts->add(new \Extras\Types\Email($x['contact_email']));
-
 			$contacts->add(new \Extras\Types\Skype($x['contact_skype']));
-
-			$contacts->add(new \Extras\Types\Url($x['contact_url']));
-			$contacts->add(new \Extras\Types\Url($x['url']));
+			if (\Nette\Utils\Validators::isUrl($x['contact_url'])) $contacts->add(new \Extras\Types\Url($x['contact_url']));
+			if (\Nette\Utils\Validators::isUrl($x['url'])) $contacts->add(new \Extras\Types\Url($x['url']));
 
 			$rental->contacts = $contacts;
 

@@ -152,6 +152,12 @@ class Location extends \Entity\BaseEntityDetails {
 	protected $iso3;
 
 	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $phonePrefix;
+
+	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Currency", cascade={"persist"})
 	 */
@@ -763,6 +769,35 @@ class Location extends \Entity\BaseEntityDetails {
 	public function getIso3()
 	{
 		return $this->iso3;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Location\Location
+	 */
+	public function setPhonePrefix($phonePrefix)
+	{
+		$this->phonePrefix = $phonePrefix;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Location\Location
+	 */
+	public function unsetPhonePrefix()
+	{
+		$this->phonePrefix = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getPhonePrefix()
+	{
+		return $this->phonePrefix;
 	}
 		
 	/**

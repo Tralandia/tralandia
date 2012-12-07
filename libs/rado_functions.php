@@ -5,8 +5,12 @@ function q($query, $show = 0) {
 
 	if (!$link) {
 		$link=mysql_connect('127.0.0.1', 'root', 'root');
-		q("SET character_set_client = binary;"); q("SET character_set_connection = binary;"); q("SET character_set_results = binary;"); 
-		q("SET character_set_database = binary;"); q("SET character_set_server = binary;");
+		q("SET NAMES utf8");
+		q("SET character_set_client = utf8;");
+		q("SET character_set_connection = utf8;");
+		q("SET character_set_results = utf8;"); 
+		q("SET character_set_database = utf8;");
+		q("SET character_set_server = utf8;");
 	}
 	mysql_select_db('tralandia_old', $link);
 
