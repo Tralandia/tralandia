@@ -193,12 +193,12 @@ factories:
 	rentalEditFormFactory: 
 		class: OwnerModule\Forms\RentalEditForm(%rental%)
 		implement: OwnerModule\Forms\IRentalEditFormFactory
-		arguments: [Entity\Rental\Rental rental]
+		parameters: [Entity\Rental\Rental rental]
 
 	rentalReservationFormFactory: 
 		class: FrontModule\Forms\Rental\ReservationForm(%rental%)
 		implement: FrontModule\Forms\Rental\IReservationFormFactory
-		arguments: [Entity\Rental\Rental rental]
+		parameters: [Entity\Rental\Rental rental]
 
 	# ==============================
 	# ==================== COMPONENTS
@@ -260,9 +260,9 @@ factories:
 		parameters: [Entity\Location\Location location]
 
 	seoServiceFactory:
-		class: Service\Seo\SeoService(%url%)
+		class: Service\Seo\SeoService
+		arguments: [%url%, %request%]
 		implement: Service\Seo\ISeoServiceFactory
-		parameters: [url]
 
 	updateRentalSearchKeysCacheRobotFactory:
 		class: Service\Robot\UpdateRentalSearchKeysCacheRobot(%location%)

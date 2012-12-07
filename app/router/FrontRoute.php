@@ -67,7 +67,6 @@ class FrontRoute implements Nette\Application\IRouter {
 	public $attractionTypeRepositoryAccessor;
 	public $routingPathSegmentRepositoryAccessor;
 	public $domainRepositoryAccessor;
-	public $pageRepositoryAccessor;
 	public $rentalTagRepositoryAccessor;
 	public $rentalAmenityRepositoryAccessor;
 	public $phraseDecoratorFactory;
@@ -194,33 +193,33 @@ class FrontRoute implements Nette\Application\IRouter {
 			// @todo pocet najdenych pathsegmentov je mensi
 			// ak nejake chybaju tak ich skus najst v PathSegmentsOld
 		}
-		if (!isset($params->page)) {
-			$destination = ':Front:'.$params->presenter . ':' . $params->action;
-			if ($destination == ':Front:Rental:list') {
-				$hash = array();
-				foreach (self::$pathSegmentTypesById as $key => $value) {
-					if ($key == 2) continue;
-					//@todo - dorobit tagAfter alebo tagBefore (ak je to tag)
-					if (isset($params->{$value})) {
-						if ($value == 'rentalTag') {
-							$tagName = $this->phraseDecoratorFactory->create($params->rentalTag->name);
-							$tagTranslation = $tagName->getTranslation($params->language);
-							if ($tagTranslation->position == \Entity\Phrase\Translation::BEFORE) {
-								$value = \Entity\Phrase\Translation::BEFORE;
-							} else {
-								$value = \Entity\Phrase\Translation::AFTER;
-							}
-							$value = 'tag'.$value;
-						}
-						$hash[] = '/'.$value;
-					}
-				}
-				$hash = implode('', $hash);
-			} else {
-				$hash = '';
-			}
-			$params->page = $this->pageRepositoryAccessor->get()->findOneBy(array('hash' => $hash, 'destination' => $destination));
-		}
+		// if (!isset($params->page)) {
+		// 	$destination = ':Front:'.$params->presenter . ':' . $params->action;
+		// 	if ($destination == ':Front:Rental:list') {
+		// 		$hash = array();
+		// 		foreach (self::$pathSegmentTypesById as $key => $value) {
+		// 			if ($key == 2) continue;
+		// 			//@todo - dorobit tagAfter alebo tagBefore (ak je to tag)
+		// 			if (isset($params->{$value})) {
+		// 				if ($value == 'rentalTag') {
+		// 					$tagName = $this->phraseDecoratorFactory->create($params->rentalTag->name);
+		// 					$tagTranslation = $tagName->getTranslation($params->language);
+		// 					if ($tagTranslation->position == \Entity\Phrase\Translation::BEFORE) {
+		// 						$value = \Entity\Phrase\Translation::BEFORE;
+		// 					} else {
+		// 						$value = \Entity\Phrase\Translation::AFTER;
+		// 					}
+		// 					$value = 'tag'.$value;
+		// 				}
+		// 				$hash[] = '/'.$value;
+		// 			}
+		// 		}
+		// 		$hash = implode('', $hash);
+		// 	} else {
+		// 		$hash = '';
+		// 	}
+		// 	$params->page = $this->pageRepositoryAccessor->get()->findOneBy(array('hash' => $hash, 'destination' => $destination));
+		// }
 		$return = array(
 			'params' => array(
 				'action' => $params->action

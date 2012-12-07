@@ -31,8 +31,8 @@ class CountriesFooterControl extends \BaseModule\Components\BaseControl {
 		$locationsTemp = $this->locationRepositoryAccessor->get()->findByType($typeCountry);
 		$locations = array();
 		foreach ($locationsTemp as $location) {
-			$link = $this->presenter->link('//:Front:Rental:list', array('primaryLocation' => $location));
-			$locations[] = $this->seoFactory->create($link);
+			$link = $this->presenter->link('//:Front:Home:default', array('primaryLocation' => $location));
+			$locations[] = $this->seoFactory->create($link, $this->presenter->getLastCreatedRequest());
 		}
 		$template->locations = $locations;
 
