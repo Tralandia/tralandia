@@ -13,11 +13,13 @@ class RunRobotPresenter extends BasePresenter {
 	private $rentalRepositoryAccessor;
 	private $locationRepositoryAccessor;
 
-	private $rentalSearchKeysCacheFactory;
+	private $rentalSearchKeysCacheRobotFactory;
+	private $rentalSearchCachingFactory;
 
 
-	public function injectCache(IUpdateRentalSearchKeysCacheRobotFactory $rentalSearchKeysCacheFactory) {
-		$this->rentalSearchKeysCacheFactory = $rentalSearchKeysCacheFactory;
+	public function injectCache(IUpdateRentalSearchKeysCacheRobotFactory $rentalSearchKeysCacheRobotFactory, \Extras\Cache\IRentalSearchCachingFactory $rentalSearchCachingFactory) {
+		$this->rentalSearchKeysCacheRobotFactory = $rentalSearchKeysCacheRobotFactory;
+		$this->rentalSearchCachingFactory = $rentalSearchCachingFactory;
 	}
 
 	public function inject(\Nette\DI\Container $dic) {
@@ -29,8 +31,8 @@ class RunRobotPresenter extends BasePresenter {
 		$primaryLocation = $this->locationRepositoryAccessor->get()->findOneByIso('sk');
 		$location = $this->locationRepositoryAccessor->get()->find(338);
 
-		$this->rentalSearchKeysCacheFactory->create($primaryLocation)->run();
-		
+		$this->rentalSearchKeysCacheRobotFactory->create($primaryLocation)->run();
+		$this->rentalSearchCachingFactory->create($primaryLocation)->invalidateRentalOrderList();
 		$this->sendResponse(new TextResponse('done'));
 	}
 }

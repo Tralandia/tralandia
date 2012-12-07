@@ -11,12 +11,18 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 	public $primaryLocation;
 
 	protected $seoFactory;
+	protected $searchServiceFactory;
 
 	protected $selected = array();
 
 	public function injectSeo(ISeoServiceFactory $seoFactory) {
 
 		$this->seoFactory = $seoFactory;
+	}
+
+	public function injectRentalSearchService(\Service\Rental\IRentalSearchServiceFactory $searchServiceFactory) {
+
+		$this->searchServiceFactory = $searchServiceFactory;
 	}
 
 	public function inject(\Nette\DI\Container $dic) {
@@ -60,18 +66,22 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		$links = array();
 		$selected = $this->getSelectedParams();
 
-		$rentalTypes = $this->rentalTagRepositoryAccessor->get()->findAll();
-		foreach ($rentalTypes as $rentalType) {
-			$params = array_merge($selected, array('rentalType' => $rentalType));
+		$rentalTags = $this->rentalTagRepositoryAccessor->get()->findAll();
+		foreach ($rentalTags as $rentalTag) {
+			$params = array_merge($selected, array('rentalTag' => $rentalTag));
+
+			$link = $this->presenter->link('//Rental:list', $params);
+			$seo = $this->seoFactory->create($link, $this->presenter->getLastCreatedRequest());
+
+			$count = 0; //$this->getCount($params);
 
 			$links[] = array(
-				'entity' => $rentalType,
-				'uri' => $this->presenter->link('//Rental:list', $params),
-				'count' => 0
+				'seo' => $seo,
+				'count' => $count
 			);
 		}
 
-		return $links;
+		return \Nette\ArrayHash::from($links);
 
 	}
 
@@ -92,6 +102,15 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 
 		return $links;
 
+	}
+
+	protected function getCount($params) {
+		$searchService = $this->searchServiceFactory->create($this->primaryLocation);
+		foreach ($params as $criteria => $value) {
+			$name = 'add'.ucfirst($criteria).'Criteria';
+			$searchService->{$name}($value);
+		}
+		return $searchService->getRentalsCount();
 	}
 
 	protected function getSelectedParams() {

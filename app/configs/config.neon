@@ -260,7 +260,6 @@ factories:
 	rentalSearchServiceFactory: 
 		class: Service\Rental\RentalSearchService(%location%)
 		implement: Service\Rental\IRentalSearchServiceFactory
-		parameters: [Entity\Location\Location location]
 
 	seoServiceFactory:
 		class: Service\Seo\SeoService

@@ -20,7 +20,7 @@
 					<div n:if="$criteriaRentalTag" class="widget">
 						<h4>Menu counter</h4>
 						<ul n:foreach="$criteriaRentalTag as $link">
-							<li><a href="{$link['uri']}">Name <span class="counter">12</span></a></li>
+							<li><a href="{$link->seo->getUrl()}">{_$link->seo->getParameter('rentalTag')->name} <span class="counter">{$link->count}</span></a></li>
 						</ul>
 					</div>
 
