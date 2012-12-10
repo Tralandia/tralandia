@@ -15,20 +15,9 @@ class Email extends \Entity\BaseEntity {
 	 * @ORM\Column(type="string")
 	 */
 	protected $value;
-		
-	/**
-	 * @param string
-	 * @return Email
-	 */
-	public function setValue($value) {
-		$this->value = $value;
-		return $this;
-	}
-		
-	/**
-	 * @return string|NULL
-	 */
-	public function getValue() {
-		return $this->value;
-	}
+
+	//@entity-generator-code --- NEMAZAT !!!
+
+	/* ----------------------------- Methods ----------------------------- */		
+
 }
