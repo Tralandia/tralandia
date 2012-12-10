@@ -90,7 +90,7 @@ class EntityGeneratorPresenter extends BasePresenter {
 			} else {
 				$message = "V subore: $entityNameTemp chyba riadok: //@entity-generator-code";
 				$this->flashMessage($message);
-				debug($message);
+				d($message);
 			}
 		}
 		if(count($messageSuccess)) {
@@ -99,9 +99,8 @@ class EntityGeneratorPresenter extends BasePresenter {
 			$messageSuccess = "Pregeneroval som: NIC";
 		}
 		$this->flashMessage($messageSuccess);
-		debug($messageSuccess);
-		$this->redirect('EntityGenerator:default', array('id' => 'Entity-Company'));
-
+		//d($messageSuccess);
+		$this->redirect('EntityGenerator:default', array('id' => 'Entity-Company-Company'));
 	}
 
 	public function generateNewClass($mainEntity) {

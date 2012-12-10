@@ -217,7 +217,9 @@ class Rental extends \Entity\BaseEntity {
 		parent::__construct();
 
 		$this->missingInformation = new \Doctrine\Common\Collections\ArrayCollection;
-		$this->locations = new \Doctrine\Common\Collections\ArrayCollection;
+		$this->phones = new \Doctrine\Common\Collections\ArrayCollection;
+		$this->emails = new \Doctrine\Common\Collections\ArrayCollection;
+		$this->urls = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->spokenLanguages = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->amenities = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->tags = new \Doctrine\Common\Collections\ArrayCollection;
@@ -429,46 +431,10 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Location\Location
+	 * @param \Entity\Contacts\Address
 	 * @return \Entity\Rental\Rental
 	 */
-	public function addLocation(\Entity\Location\Location $location)
-	{
-		if(!$this->locations->contains($location)) {
-			$this->locations->add($location);
-		}
-		$location->addRental($this);
-
-		return $this;
-	}
-		
-	/**
-	 * @param \Entity\Location\Location
-	 * @return \Entity\Rental\Rental
-	 */
-	public function removeLocation(\Entity\Location\Location $location)
-	{
-		if($this->locations->contains($location)) {
-			$this->locations->removeElement($location);
-		}
-		$location->removeRental($this);
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Location\Location
-	 */
-	public function getLocations()
-	{
-		return $this->locations;
-	}
-		
-	/**
-	 * @param \Extras\Types\Address
-	 * @return \Entity\Rental\Rental
-	 */
-	public function setAddress(\Extras\Types\Address $address)
+	public function setAddress(\Entity\Contacts\Address $address)
 	{
 		$this->address = $address;
 
@@ -476,79 +442,11 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Rental\Rental
-	 */
-	public function unsetAddress()
-	{
-		$this->address = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Extras\Types\Address|NULL
+	 * @return \Entity\Contacts\Address|NULL
 	 */
 	public function getAddress()
 	{
 		return $this->address;
-	}
-		
-	/**
-	 * @param \Extras\Types\Latlong
-	 * @return \Entity\Rental\Rental
-	 */
-	public function setLatitude(\Extras\Types\Latlong $latitude)
-	{
-		$this->latitude = $latitude;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Rental\Rental
-	 */
-	public function unsetLatitude()
-	{
-		$this->latitude = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Extras\Types\Latlong|NULL
-	 */
-	public function getLatitude()
-	{
-		return $this->latitude;
-	}
-		
-	/**
-	 * @param \Extras\Types\Latlong
-	 * @return \Entity\Rental\Rental
-	 */
-	public function setLongitude(\Extras\Types\Latlong $longitude)
-	{
-		$this->longitude = $longitude;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Rental\Rental
-	 */
-	public function unsetLongitude()
-	{
-		$this->longitude = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Extras\Types\Latlong|NULL
-	 */
-	public function getLongitude()
-	{
-		return $this->longitude;
 	}
 		
 	/**
@@ -619,32 +517,111 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Extras\Types\Contacts
+	 * @param \Entity\Contacts\Phone
 	 * @return \Entity\Rental\Rental
 	 */
-	public function setContacts(\Extras\Types\Contacts $contacts)
+	public function addPhone(\Entity\Contacts\Phone $phone)
 	{
-		$this->contacts = $contacts;
+		if(!$this->phones->contains($phone)) {
+			$this->phones->add($phone);
+		}
+		$phone->addRental($this);
 
 		return $this;
 	}
 		
 	/**
+	 * @param \Entity\Contacts\Phone
 	 * @return \Entity\Rental\Rental
 	 */
-	public function unsetContacts()
+	public function removePhone(\Entity\Contacts\Phone $phone)
 	{
-		$this->contacts = NULL;
+		if($this->phones->contains($phone)) {
+			$this->phones->removeElement($phone);
+		}
+		$phone->removeRental($this);
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Extras\Types\Contacts|NULL
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Contacts\Phone
 	 */
-	public function getContacts()
+	public function getPhones()
 	{
-		return $this->contacts;
+		return $this->phones;
+	}
+		
+	/**
+	 * @param \Entity\Contacts\Email
+	 * @return \Entity\Rental\Rental
+	 */
+	public function addEmail(\Entity\Contacts\Email $email)
+	{
+		if(!$this->emails->contains($email)) {
+			$this->emails->add($email);
+		}
+		$email->addRental($this);
+
+		return $this;
+	}
+		
+	/**
+	 * @param \Entity\Contacts\Email
+	 * @return \Entity\Rental\Rental
+	 */
+	public function removeEmail(\Entity\Contacts\Email $email)
+	{
+		if($this->emails->contains($email)) {
+			$this->emails->removeElement($email);
+		}
+		$email->removeRental($this);
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Contacts\Email
+	 */
+	public function getEmails()
+	{
+		return $this->emails;
+	}
+		
+	/**
+	 * @param \Entity\Contacts\Url
+	 * @return \Entity\Rental\Rental
+	 */
+	public function addUrl(\Entity\Contacts\Url $url)
+	{
+		if(!$this->urls->contains($url)) {
+			$this->urls->add($url);
+		}
+		$url->addRental($this);
+
+		return $this;
+	}
+		
+	/**
+	 * @param \Entity\Contacts\Url
+	 * @return \Entity\Rental\Rental
+	 */
+	public function removeUrl(\Entity\Contacts\Url $url)
+	{
+		if($this->urls->contains($url)) {
+			$this->urls->removeElement($url);
+		}
+		$url->removeRental($this);
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Contacts\Url
+	 */
+	public function getUrls()
+	{
+		return $this->urls;
 	}
 		
 	/**
