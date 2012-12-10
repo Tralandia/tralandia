@@ -19,10 +19,6 @@ services:
 	companyRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Company\Company')
 
 
-	#----------
-	companyOfficeRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Company\Office')
-
-
 	#contact
 	#----------
 	contactCacheRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\ContactCache')

@@ -222,9 +222,6 @@ common:
 				company: 
 					label: Companies
 					link: ':Admin:CompanyCompany:list'
-				office: 
-					label: Virtual Offices
-					link: ':Admin:CompanyOffice:list'
 				bankAccount: 
 					label: Bank Accounts
 					link: ':Admin:CompanyBankAccount:list'

@@ -100,7 +100,7 @@ class EntityGeneratorPresenter extends BasePresenter {
 		}
 		$this->flashMessage($messageSuccess);
 		debug($messageSuccess);
-		$this->redirect('EntityGenerator:default', array('id' => 'Entity-Company-Office'));
+		$this->redirect('EntityGenerator:default', array('id' => 'Entity-Company'));
 
 	}
 
