@@ -15,6 +15,12 @@ use Nette\Application as NA,
 
 class RadoTempPresenter extends BasePresenter {
 
+	protected $addressNormalizerFactory;
+
+	public function injectAddressNormalizer(\Service\Contact\IAddressNormalizerFactory $factory) {
+		$this->addressNormalizerFactory = $factory;
+	}
+
 	public function actionGps() {
 		$testValues = array(
 			array('40:26:46S', '79:56:55E'),
@@ -37,6 +43,7 @@ class RadoTempPresenter extends BasePresenter {
 
 	public function actionAddress() {
 		$testValues = array(
+			array('49.058232', '19.581903'),
 			array('40:26:46S', '79:56:55E'),
 			array('40:26:46.302S', '79:56:55.903E'),
 			array('40°26′47″S', '79°58′36″E'),
@@ -48,11 +55,13 @@ class RadoTempPresenter extends BasePresenter {
 
 		$lat = new \Extras\Types\Latlong($testValues[0][0], 'latitude');
 		$long = new \Extras\Types\Latlong($testValues[0][1], 'longitude');
-		$a = new \Entity\Contact\Address();
-		$a->latitude = $lat;
-		$a->longitude = $long;
 
-		$aa = new Service\Contact\AddressNormalizer($a);
+		$a = new \Entity\Contact\Address();
+		$a->primaryLocation = $this->locationRepositoryAccessor->get()->find(46);
+		//$a->latitude = $lat;
+		//$a->longitude = $long;
+
+		$aa = $this->addressNormalizerFactory->create($a);
 		$aa->updateFromLocation($lat, $long);
 	}
 
