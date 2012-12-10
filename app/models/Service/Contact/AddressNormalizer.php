@@ -9,10 +9,10 @@ class AddressNormalizer extends \Nette\Object {
 	protected $address;
 	protected $geocodeService;
 
-	public function __construct(\Entity\Contact\Address $address) {
+	public function __construct(\Entity\Contact\Address $address, \GoogleGeocodeServiceV3 $googleGeocodeService) {
 		$this->address = $address;
 
-		$this->geocodeService = new \GoogleGeocodeServiceV3( new \CurlCommunicator() );
+		$this->geocodeService = $googleGeocodeService;
 	}
 
 	public function updateFromLocation($latitude, $longitude) {
