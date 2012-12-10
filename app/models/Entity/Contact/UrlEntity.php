@@ -1,14 +1,14 @@
 <?php
 
-namespace Entity\Contacts;
+namespace Entity\Contact;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="email", indexes={@ORM\index(name="value", columns={"value"})})
+ * @ORM\Table(name="contact_url")
  */
-class Email extends \Entity\BaseEntity {
+class Url extends \Entity\BaseEntity {
 
 	/**
 	 * @var string
@@ -18,10 +18,10 @@ class Email extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Rental\Rental", inversedBy="emails")
+	 * @ORM\ManyToMany(targetEntity="Entity\Rental\Rental", inversedBy="urls")
 	 */
 	protected $rentals;
-
+		
 	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -34,7 +34,7 @@ class Email extends \Entity\BaseEntity {
 		
 	/**
 	 * @param string
-	 * @return \Entity\Contacts\Email
+	 * @return \Entity\Contact\Url
 	 */
 	public function setValue($value)
 	{
@@ -53,7 +53,7 @@ class Email extends \Entity\BaseEntity {
 		
 	/**
 	 * @param \Entity\Rental\Rental
-	 * @return \Entity\Contacts\Email
+	 * @return \Entity\Contact\Url
 	 */
 	public function addRental(\Entity\Rental\Rental $rental)
 	{

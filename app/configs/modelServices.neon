@@ -35,10 +35,10 @@ services:
 
 	#phone+email+address+url
 	#----------
-	phoneRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Contacts\Phone')
-	emailRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Contacts\Email')
-	urlRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Contacts\Url')
-	addressRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Contacts\Address')
+	phoneRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Contact\Phone')
+	emailRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Contact\Email')
+	urlRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Contact\Url')
+	addressRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Contact\Address')
 
 
 	#email

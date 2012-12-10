@@ -66,7 +66,7 @@ class Rental extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Contacts\Address")
+	 * @ORM\OneToOne(targetEntity="Entity\Contact\Address")
 	 */
 	protected $address;
 
@@ -90,19 +90,19 @@ class Rental extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Contacts\Phone", mappedBy="rentals")
+	 * @ORM\ManyToMany(targetEntity="Entity\Contact\Phone", mappedBy="rentals")
 	 */
 	protected $phones;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Contacts\Email", mappedBy="rentals")
+	 * @ORM\ManyToMany(targetEntity="Entity\Contact\Email", mappedBy="rentals")
 	 */
 	protected $emails;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Contacts\Url", mappedBy="rentals")
+	 * @ORM\ManyToMany(targetEntity="Entity\Contact\Url", mappedBy="rentals")
 	 */
 	protected $urls;
 
@@ -431,10 +431,10 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Contacts\Address
+	 * @param \Entity\Contact\Address
 	 * @return \Entity\Rental\Rental
 	 */
-	public function setAddress(\Entity\Contacts\Address $address)
+	public function setAddress(\Entity\Contact\Address $address)
 	{
 		$this->address = $address;
 
@@ -442,7 +442,7 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Contacts\Address|NULL
+	 * @return \Entity\Contact\Address|NULL
 	 */
 	public function getAddress()
 	{
@@ -517,10 +517,10 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Contacts\Phone
+	 * @param \Entity\Contact\Phone
 	 * @return \Entity\Rental\Rental
 	 */
-	public function addPhone(\Entity\Contacts\Phone $phone)
+	public function addPhone(\Entity\Contact\Phone $phone)
 	{
 		if(!$this->phones->contains($phone)) {
 			$this->phones->add($phone);
@@ -531,10 +531,10 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Contacts\Phone
+	 * @param \Entity\Contact\Phone
 	 * @return \Entity\Rental\Rental
 	 */
-	public function removePhone(\Entity\Contacts\Phone $phone)
+	public function removePhone(\Entity\Contact\Phone $phone)
 	{
 		if($this->phones->contains($phone)) {
 			$this->phones->removeElement($phone);
@@ -545,7 +545,7 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Contacts\Phone
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Contact\Phone
 	 */
 	public function getPhones()
 	{
@@ -553,10 +553,10 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Contacts\Email
+	 * @param \Entity\Contact\Email
 	 * @return \Entity\Rental\Rental
 	 */
-	public function addEmail(\Entity\Contacts\Email $email)
+	public function addEmail(\Entity\Contact\Email $email)
 	{
 		if(!$this->emails->contains($email)) {
 			$this->emails->add($email);
@@ -567,10 +567,10 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Contacts\Email
+	 * @param \Entity\Contact\Email
 	 * @return \Entity\Rental\Rental
 	 */
-	public function removeEmail(\Entity\Contacts\Email $email)
+	public function removeEmail(\Entity\Contact\Email $email)
 	{
 		if($this->emails->contains($email)) {
 			$this->emails->removeElement($email);
@@ -581,7 +581,7 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Contacts\Email
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Contact\Email
 	 */
 	public function getEmails()
 	{
@@ -589,10 +589,10 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Contacts\Url
+	 * @param \Entity\Contact\Url
 	 * @return \Entity\Rental\Rental
 	 */
-	public function addUrl(\Entity\Contacts\Url $url)
+	public function addUrl(\Entity\Contact\Url $url)
 	{
 		if(!$this->urls->contains($url)) {
 			$this->urls->add($url);
@@ -603,10 +603,10 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Contacts\Url
+	 * @param \Entity\Contact\Url
 	 * @return \Entity\Rental\Rental
 	 */
-	public function removeUrl(\Entity\Contacts\Url $url)
+	public function removeUrl(\Entity\Contact\Url $url)
 	{
 		if($this->urls->contains($url)) {
 			$this->urls->removeElement($url);
@@ -617,7 +617,7 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Contacts\Url
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Contact\Url
 	 */
 	public function getUrls()
 	{

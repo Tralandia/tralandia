@@ -1,12 +1,12 @@
 <?php
 
-namespace Entity\Contacts;
+namespace Entity\Contact;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="phone", indexes={@ORM\index(name="value", columns={"value"})})
+ * @ORM\Table(name="contact_phone", indexes={@ORM\index(name="value", columns={"value"})})
  */
 class Phone extends \Entity\BaseEntity {
 
@@ -52,7 +52,7 @@ class Phone extends \Entity\BaseEntity {
 		
 	/**
 	 * @param string
-	 * @return \Entity\Contacts\Phone
+	 * @return \Entity\Contact\Phone
 	 */
 	public function setValue($value)
 	{
@@ -71,7 +71,7 @@ class Phone extends \Entity\BaseEntity {
 		
 	/**
 	 * @param string
-	 * @return \Entity\Contacts\Phone
+	 * @return \Entity\Contact\Phone
 	 */
 	public function setInternational($international)
 	{
@@ -90,7 +90,7 @@ class Phone extends \Entity\BaseEntity {
 		
 	/**
 	 * @param string
-	 * @return \Entity\Contacts\Phone
+	 * @return \Entity\Contact\Phone
 	 */
 	public function setNational($national)
 	{
@@ -109,7 +109,7 @@ class Phone extends \Entity\BaseEntity {
 		
 	/**
 	 * @param \Entity\Location\Location
-	 * @return \Entity\Contacts\Phone
+	 * @return \Entity\Contact\Phone
 	 */
 	public function setPrimaryLocation(\Entity\Location\Location $primaryLocation)
 	{
@@ -119,7 +119,7 @@ class Phone extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Contacts\Phone
+	 * @return \Entity\Contact\Phone
 	 */
 	public function unsetPrimaryLocation()
 	{
@@ -138,7 +138,7 @@ class Phone extends \Entity\BaseEntity {
 		
 	/**
 	 * @param \Entity\Rental\Rental
-	 * @return \Entity\Contacts\Phone
+	 * @return \Entity\Contact\Phone
 	 */
 	public function addRental(\Entity\Rental\Rental $rental)
 	{

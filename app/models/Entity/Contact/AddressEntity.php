@@ -1,12 +1,12 @@
 <?php
 
-namespace Entity\Contacts;
+namespace Entity\Contact;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="address")
+ * @ORM\Table(name="contact_address")
  */
 class Address extends \Entity\BaseEntity {
 
@@ -56,7 +56,7 @@ class Address extends \Entity\BaseEntity {
 		
 	/**
 	 * @param string
-	 * @return \Entity\Contacts\Address
+	 * @return \Entity\Contact\Address
 	 */
 	public function setAddress($address)
 	{
@@ -75,7 +75,7 @@ class Address extends \Entity\BaseEntity {
 		
 	/**
 	 * @param string
-	 * @return \Entity\Contacts\Address
+	 * @return \Entity\Contact\Address
 	 */
 	public function setPostalCode($postalCode)
 	{
@@ -94,7 +94,7 @@ class Address extends \Entity\BaseEntity {
 		
 	/**
 	 * @param \Entity\Location\Location
-	 * @return \Entity\Contacts\Address
+	 * @return \Entity\Contact\Address
 	 */
 	public function setLocality(\Entity\Location\Location $locality)
 	{
@@ -104,7 +104,7 @@ class Address extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Contacts\Address
+	 * @return \Entity\Contact\Address
 	 */
 	public function unsetLocality()
 	{
@@ -123,7 +123,7 @@ class Address extends \Entity\BaseEntity {
 		
 	/**
 	 * @param \Entity\Location\Location
-	 * @return \Entity\Contacts\Address
+	 * @return \Entity\Contact\Address
 	 */
 	public function setPrimaryLocation(\Entity\Location\Location $primaryLocation)
 	{
@@ -133,7 +133,7 @@ class Address extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Contacts\Address
+	 * @return \Entity\Contact\Address
 	 */
 	public function unsetPrimaryLocation()
 	{
@@ -152,7 +152,7 @@ class Address extends \Entity\BaseEntity {
 		
 	/**
 	 * @param \Extras\Types\Latlong
-	 * @return \Entity\Contacts\Address
+	 * @return \Entity\Contact\Address
 	 */
 	public function setLatitude(\Extras\Types\Latlong $latitude)
 	{
@@ -162,7 +162,7 @@ class Address extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Contacts\Address
+	 * @return \Entity\Contact\Address
 	 */
 	public function unsetLatitude()
 	{
@@ -181,7 +181,7 @@ class Address extends \Entity\BaseEntity {
 		
 	/**
 	 * @param \Extras\Types\Latlong
-	 * @return \Entity\Contacts\Address
+	 * @return \Entity\Contact\Address
 	 */
 	public function setLongitude(\Extras\Types\Latlong $longitude)
 	{
@@ -191,7 +191,7 @@ class Address extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Contacts\Address
+	 * @return \Entity\Contact\Address
 	 */
 	public function unsetLongitude()
 	{

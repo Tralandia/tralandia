@@ -22,7 +22,7 @@ class Url extends Nette\Object {
 	/**
 	 * Vyhlada url v DB
 	 * @param string $url
-	 * @return Entity\Contacts\Url|false
+	 * @return Entity\Contact\Url|false
 	 */
 	public function find($url) {
 		return $this->urlRepository->get()->findOneByValue($url);
@@ -31,7 +31,7 @@ class Url extends Nette\Object {
 	/**
 	 * Skusi najst url, ak nenajde vytvori novu a vrati jej zaznam
 	 * @param string $value
-	 * @return Entity\Contacts\Url
+	 * @return Entity\Contact\Url
 	 */
 	public function getOrCreate($value) {
 		if (!$url = $this->find($value)) {

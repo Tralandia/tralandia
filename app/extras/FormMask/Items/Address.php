@@ -38,7 +38,7 @@ class Address extends Select {
 	 */
 	public function setValue($value) {
 		if (!$address = $this->getValue()) {
-			$address = new Entity\Contacts\Address;
+			$address = new Entity\Contact\Address;
 			$this->entity->{$this->setterMethodName($this->name)}($address);
 		}
 		$value = (object)$value;

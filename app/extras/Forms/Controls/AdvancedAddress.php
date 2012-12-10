@@ -20,7 +20,7 @@ class AdvancedAddress extends BaseControl {
 
 	private $items = array();
 
-	public function setAddress(Entity\Contacts\Address $address = null) {
+	public function setAddress(Entity\Contact\Address $address = null) {
 		$address ? $this->setDefaultValue(array(
 			self::ROW1 => $address->row1,
 			self::ROW2 => $address->row2,
