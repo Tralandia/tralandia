@@ -1,5 +1,12 @@
 <?php
 
+namespace Service\Contact;
+
+interface IAddressNormalizerFactory {
+	/** @return \Service\Contact\AddressNormalizer */
+	function create(\Entity\Contact\Address $address);
+}
+
 namespace Service\Rental;
 
 interface IRentalSearchServiceFactory {
