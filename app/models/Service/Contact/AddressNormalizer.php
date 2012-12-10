@@ -25,6 +25,7 @@ class AddressNormalizer extends \Nette\Object {
 		}
 
 		$response = $this->geocodeService->reverseGeocode($latitude, $longitude);
+		d($response);
 
 		while ( $response->valid() ) {
 			$component = \GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_1;

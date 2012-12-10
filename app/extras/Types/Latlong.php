@@ -22,7 +22,7 @@ class Latlong extends BaseType {
 
 	// Retuns the value in DMS degrees
 	// Format: 40°26′21″N 79°58′36″W.
-	public function toString() {
+	public function __toString() {
 		if (!$this->isValid()) return '';
 
 		$values = array();
@@ -45,7 +45,7 @@ class Latlong extends BaseType {
 	    	(string) abs($values[0]).$this->dmsSeparators[0]
 	    	.$values[1].$this->dmsSeparators[1]
 	    	.$values[2].$this->dmsSeparators[2]
-	    	.' '.$suffix;
+	    	.$suffix;
 	}
 
 	protected function isValid() {
