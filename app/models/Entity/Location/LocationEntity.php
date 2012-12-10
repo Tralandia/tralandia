@@ -115,6 +115,12 @@ class Location extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
+	 * @ORM\ManyToMany(targetEntity="Entity\Rental\Rental", inversedBy="locations")
+	 */
+	protected $rentals;
+
+	/**
+	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="Entity\User\User", mappedBy="location", cascade={"persist"})
 	 */
 	protected $users;
@@ -174,6 +180,7 @@ class Location extends \Entity\BaseEntityDetails {
 		$this->companies = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->marketings = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->primaryRentals = new \Doctrine\Common\Collections\ArrayCollection;
+		$this->rentals = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->users = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->backLinks = new \Doctrine\Common\Collections\ArrayCollection;
 	}
@@ -583,6 +590,27 @@ class Location extends \Entity\BaseEntityDetails {
 	public function getPrimaryRentals()
 	{
 		return $this->primaryRentals;
+	}
+		
+	/**
+	 * @param \Entity\Rental\Rental
+	 * @return \Entity\Location\Location
+	 */
+	public function addRental(\Entity\Rental\Rental $rental)
+	{
+		if(!$this->rentals->contains($rental)) {
+			$this->rentals->add($rental);
+		}
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Rental\Rental
+	 */
+	public function getRentals()
+	{
+		return $this->rentals;
 	}
 		
 	/**

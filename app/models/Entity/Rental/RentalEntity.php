@@ -66,6 +66,12 @@ class Rental extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
+	 * @ORM\ManyToMany(targetEntity="Entity\Location\Location", mappedBy="rentals")
+	 */
+	protected $locations;
+
+	/**
+	 * @var Collection
 	 * @ORM\OneToOne(targetEntity="Entity\Contact\Address")
 	 */
 	protected $address;
@@ -217,6 +223,7 @@ class Rental extends \Entity\BaseEntity {
 		parent::__construct();
 
 		$this->missingInformation = new \Doctrine\Common\Collections\ArrayCollection;
+		$this->locations = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->phones = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->emails = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->urls = new \Doctrine\Common\Collections\ArrayCollection;
@@ -428,6 +435,42 @@ class Rental extends \Entity\BaseEntity {
 	public function getPrimaryLocation()
 	{
 		return $this->primaryLocation;
+	}
+		
+	/**
+	 * @param \Entity\Location\Location
+	 * @return \Entity\Rental\Rental
+	 */
+	public function addLocation(\Entity\Location\Location $location)
+	{
+		if(!$this->locations->contains($location)) {
+			$this->locations->add($location);
+		}
+		$location->addRental($this);
+
+		return $this;
+	}
+		
+	/**
+	 * @param \Entity\Location\Location
+	 * @return \Entity\Rental\Rental
+	 */
+	public function removeLocation(\Entity\Location\Location $location)
+	{
+		if($this->locations->contains($location)) {
+			$this->locations->removeElement($location);
+		}
+		$location->removeRental($this);
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Location\Location
+	 */
+	public function getLocations()
+	{
+		return $this->locations;
 	}
 		
 	/**
