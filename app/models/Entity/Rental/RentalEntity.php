@@ -162,13 +162,13 @@ class Rental extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Entity\Medium\Medium", mappedBy="rental", cascade={"persist"})
+	 * @ORM\OneToMany(targetEntity="Image", mappedBy="rental", cascade={"persist"})
 	 */
-	protected $media;
+	protected $images;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Entity\Rental\InterviewAnswer", mappedBy="rental", cascade={"persist"})
+	 * @ORM\OneToMany(targetEntity="InterviewAnswer", mappedBy="rental", cascade={"persist"})
 	 */
 	protected $interviewAnswers;
 
@@ -230,7 +230,7 @@ class Rental extends \Entity\BaseEntity {
 		$this->spokenLanguages = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->amenities = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->tags = new \Doctrine\Common\Collections\ArrayCollection;
-		$this->media = new \Doctrine\Common\Collections\ArrayCollection;
+		$this->images = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->interviewAnswers = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->fulltexts = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->invoices = new \Doctrine\Common\Collections\ArrayCollection;
@@ -921,39 +921,39 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Medium\Medium
+	 * @param \Entity\Rental\Image
 	 * @return \Entity\Rental\Rental
 	 */
-	public function addMedium(\Entity\Medium\Medium $medium)
+	public function addImage(\Entity\Rental\Image $image)
 	{
-		if(!$this->media->contains($medium)) {
-			$this->media->add($medium);
+		if(!$this->images->contains($image)) {
+			$this->images->add($image);
 		}
-		$medium->setRental($this);
+		$image->setRental($this);
 
 		return $this;
 	}
 		
 	/**
-	 * @param \Entity\Medium\Medium
+	 * @param \Entity\Rental\Image
 	 * @return \Entity\Rental\Rental
 	 */
-	public function removeMedium(\Entity\Medium\Medium $medium)
+	public function removeImage(\Entity\Rental\Image $image)
 	{
-		if($this->media->contains($medium)) {
-			$this->media->removeElement($medium);
+		if($this->images->contains($image)) {
+			$this->images->removeElement($image);
 		}
-		$medium->unsetRental();
+		$image->unsetRental();
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Medium\Medium
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Rental\Image
 	 */
-	public function getMedia()
+	public function getImages()
 	{
-		return $this->media;
+		return $this->images;
 	}
 		
 	/**
