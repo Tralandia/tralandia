@@ -19,12 +19,29 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 
 	protected function buildForm()
 	{
-		$this->addText('name', 'Name:');
+		$this->addText('name');
+		$this->addText('email');
+		$this->addText('from');
+		$this->addText('to');
+		$this->addText('phone2');
+
+		$parents = array();
+
+			for($i = 0 ; $i < 21 ; ++$i) {
+				$parents[$i] = $i;
+			}
+
+		$this->addSelect('parents','',$parents)->setPrompt('o12277');
+		$this->addSelect('childs','',$parents)->setPrompt('_o2443');
+
+		$this->addTextArea('message');
+
+		$this->onSuccess[] = callback($this, 'process');
 	}
 
 	public function setDefaultsValues() 
 	{
-		$this->onSuccess[] = callback($this, 'process');
+		
 	}
 
 	public function process(ReservationForm $form)

@@ -127,8 +127,9 @@
 
 		{/foreach}
 *}
-
-
+		
+		{dump $locality}
+		{dump $rental->interviewAnswers}
 		
 		{foreach $rental->interviewAnswers as $interview}
 			{dump $interview}
@@ -300,44 +301,6 @@
 				</table>
 
 				{include '../../forms/Rental/reservationForm.latte'}
-				
-
-				<form>
-					<input type="text" placeholder="{_o1031}" />
-					<input type="text" placeholder="{_o1034}" />
-					<select class="tel">
-						<option>+4208</option>
-						<option>+421</option>
-						<option>+4215</option>
-					</select>
-					<input type="text" class="telnum" placeholder="{_o1037}" />
-					<select class="counter first">
-						<option>{_o12277}</option>						
-						{for $i = 1; $i < 21; $i++}						    
-							<option>{$i}</option>
-						{/for}
-					</select>
-					<select class="counter">
-						<option>{_o2443}</option>
-						{for $i = 1; $i < 21; $i++}						    
-							<option>{$i}</option>
-						{/for}
-					</select>
-
-					<div class="clearfix"></div>
-					<div class="input-append">
-					  <input placeholder="{_o1043}" class="datepicker" type="text">
-					  <span class="add-on datepickerIcon entypo-calendar"></span>
-					</div>
-
-					<div class="input-append">
-					  <input placeholder="{_o1044}" class="datepicker" type="text">
-					  <span class="add-on datepickerIcon entypo-calendar"></span>
-					</div>
-
-					<textarea placeholder="{_o12279}"></textarea>
-					<button class="btn btn-green"> <span class="entypo-send">{_o1719}</span> </button>
-				</form>
 
 			</div>
 		</div>
@@ -376,11 +339,11 @@ $(document).ready(function(){
 	<div class="span12">
 		<div class="marginBottom tabs">
 			<ul class="ui-tabs-nav">
-				<li><a href="#gallery">Foto</a></li>
-				<li><a href="#tabs-3">Ceny</a></li>
+				<li><a href="#gallery">{_o1016}</a></li>
+				<li><a href="#tabs-3">{_o1015}</a></li>
 				{*<li><a href="#tabs-4">Vybavenie</a></li>*}
-				<li><a href="#tabs-5">Interview</a></li>
-				<li><a id="objectDetailListMap" href="#tabs-2">Mapa</a></li>
+				<li><a href="#tabs-5">{_o25231}</a></li>
+				<li><a id="objectDetailListMap" href="#tabs-2">{_o1018}</a></li>
 				{*<li><a href="#tabs-6">Obsadenost</a></li>*}
 				
 				
@@ -390,7 +353,7 @@ $(document).ready(function(){
 
 			<div id="tabs-5">
 
-				{dump $rental->interviewAnswers}
+				
 				{foreach $rental->interviewAnswers as $interview}
 					{dump $interview}
 				{/foreach}
