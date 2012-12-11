@@ -97,7 +97,7 @@ class RentalSearchService extends Service\BaseService
 		$cache = array();
 
 		foreach ($this->criteria as $key => $value) {
-			$cache[$key] = $this->rentalSearchCaching->load($key.$value->id);
+			$cache[$key] = $this->rentalSearchCaching->load($key.(is_object($value) ? $value->id : $value));
 		}
 		$cache = array_filter($cache);
 
