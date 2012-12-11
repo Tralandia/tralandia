@@ -9,15 +9,16 @@
 						</form>
 					</div>
 
- 					{* Rental Tag *}
-					<div n:ifset="$criteriaRentalTag" class="widget">
-						<h4>{_'o2454'}</h4>
-						<ul n:inner-foreach="$criteriaRentalTag as $link">
-							<li {if $link->hide}class="hidden hide"{/if}>
-								<a href="{$link->seo->getUrl()}">
-									{_$link->seo->getParameter('rentalTag')->name|firstUpper}
-									<span class="counter">{$link->count}</span>
-								</a>
+ 					{* Location *}
+					<div n:ifset="$criteriaLocation" class="widget">
+						<h4>{_'o1070'}</h4>
+						<ul n:inner-foreach="$criteriaLocation as $link">
+							<li class="{if $link->hide}hidden hide{/if}{if $link->count==0} disabled{/if}">
+								{if $link->count==0}
+									{_$link->seo->getParameter('location')->name|firstUpper} <span class="counter">{$link->count}</span>
+								{else}
+									<a href="{$link->seo->getUrl()}">{_$link->seo->getParameter('location')->name|firstUpper} <span class="counter">{$link->count}</span></a>
+								{/if}
 							</li>
 							{if $iterator->last}<li class="more"><a href="#">More option <i class="entypo-down"></i></a></li>{/if}
 						</ul>
@@ -27,23 +28,27 @@
 					<div n:ifset="$criteriaRentalType" class="widget">
 						<h4>{_'o20926'}</h4>
 						<ul n:inner-foreach="$criteriaRentalType as $link">
-							<li {if $link->hide}class="hidden hide"{/if}>
-								<a href="{$link->seo->getUrl()}">{_$link->seo->getParameter('rentalType')->name|firstUpper} 
-									<span class="counter">{$link->count}</span>
-								</a>
+							<li class="{if $link->hide}hidden hide{/if}{if $link->count==0} disabled{/if}">
+								{if $link->count==0}
+									{_$link->seo->getParameter('rentalType')->name|firstUpper} <span class="counter">{$link->count}</span>
+								{else}
+									<a href="{$link->seo->getUrl()}">{_$link->seo->getParameter('rentalType')->name|firstUpper} <span class="counter">{$link->count}</span></a>
+								{/if}
 							</li>
 							{if $iterator->last}<li class="more"><a href="#">More option <i class="entypo-down"></i></a></li>{/if}
 						</ul>
 					</div>
 
- 					{* Location *}
-					<div n:ifset="$criteriaLocation" class="widget">
-						<h4>{_'o1070'}</h4>
-						<ul n:inner-foreach="$criteriaLocation as $link">
-							<li {if $link->hide}class="hidden hide"{/if}>
-								<a href="{$link->seo->getUrl()}">{_$link->seo->getParameter('location')->name|firstUpper} 
-									<span class="counter">{$link->count}</span>
-								</a>
+ 					{* Rental Tag *}
+					<div n:ifset="$criteriaRentalTag" class="widget">
+						<h4>{_'o2454'}</h4>
+						<ul n:inner-foreach="$criteriaRentalTag as $link">
+							<li class="{if $link->hide}hidden hide{/if}{if $link->count==0} disabled{/if}">
+								{if $link->count==0}
+									{_$link->seo->getParameter('rentalTag')->name|firstUpper} <span class="counter">{$link->count}</span>
+								{else}
+									<a href="{$link->seo->getUrl()}">{_$link->seo->getParameter('rentalTag')->name|firstUpper} <span class="counter">{$link->count}</span></a>
+								{/if}
 							</li>
 							{if $iterator->last}<li class="more"><a href="#">More option <i class="entypo-down"></i></a></li>{/if}
 						</ul>
@@ -53,10 +58,12 @@
 					<div n:ifset="$criteriaSpokenLanguage" class="widget">
 						<h4>{_'o20930'}</h4>
 						<ul n:inner-foreach="$criteriaSpokenLanguage as $link">
-							<li {if $link->hide}class="hidden hide"{/if}>
-								<a href="{$link->seo->getUrl()}">{_$link->seo->getParameter('spokenLanguage')->name|firstUpper} 
-									<span class="counter">{$link->count}</span>
-								</a>
+							<li class="{if $link->hide}hidden hide{/if}{if $link->count==0} disabled{/if}">
+								{if $link->count==0}
+									{_$link->seo->getParameter('spokenLanguage')->name|firstUpper} <span class="counter">{$link->count}</span>
+								{else}
+									<a href="{$link->seo->getUrl()}">{_$link->seo->getParameter('spokenLanguage')->name|firstUpper} <span class="counter">{$link->count}</span></a>
+								{/if}
 							</li>
 							{if $iterator->last}<li class="more"><a href="#">More option <i class="entypo-down"></i></a></li>{/if}
 						</ul>
@@ -66,10 +73,12 @@
 					<div n:ifset="$criteriaCapacity" class="widget">
 						<h4>Capacity</h4>
 						<ul n:inner-foreach="$criteriaCapacity as $link">
-							<li {if $link->hide}class="hidden hide"{/if}>
-								<a href="{$link->seo->getUrl()}">{$link->seo->getParameter('capacity')} 
-									<span class="counter">{$link->count}</span>
-								</a>
+							<li class="{if $link->hide}hidden hide{/if}{if $link->count==0} disabled{/if}">
+								{if $link->count==0}
+									{_$link->seo->getParameter('capacity')} <span class="counter">{$link->count}</span>
+								{else}
+									<a href="{$link->seo->getUrl()}">{_$link->seo->getParameter('capacity')} <span class="counter">{$link->count}</span></a>
+								{/if}
 							</li>
 							{if $iterator->last}<li class="more"><a href="#">More option <i class="entypo-down"></i></a></li>{/if}
 						</ul>
@@ -79,10 +88,12 @@
 					<div n:ifset="$criteriaPrice" class="widget">
 						<h4>{_'o20928'}</h4>
 						<ul n:inner-foreach="$criteriaPrice as $link">
-							<li {if $link->hide}class="hidden hide"{/if}>
-								<a href="{$link->seo->getUrl()}">{$link->name} 
-									<span class="counter">{$link->count}</span>
-								</a>
+							<li class="{if $link->hide}hidden hide{/if}{if $link->count==0} disabled{/if}">
+								{if $link->count==0}
+									{_$link->seo->getParameter('price')} <span class="counter">{$link->count}</span>
+								{else}
+									<a href="{$link->seo->getUrl()}">{$link->name} <span class="counter">{$link->count}</span></a>
+								{/if}
 							</li>
 							{if $iterator->last}<li class="more"><a href="#">More option <i class="entypo-down"></i></a></li>{/if}
 						</ul>
