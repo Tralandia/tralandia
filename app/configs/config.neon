@@ -191,6 +191,9 @@ services:
 	itemCheckboxFactory: Extras\FormMask\Items\Foctories\CheckboxFactory
 	itemTinymceFactory: Extras\FormMask\Items\Foctories\TinymceFactory
 
+	googleGeocodeService: GoogleGeocodeServiceV3(@googleServiceCommunicator)
+	googleServiceCommunicator: CurlCommunicator
+
 factories: 
 	# ==============================
 	# ==================== FORMS
@@ -257,6 +260,10 @@ factories:
 	# ==============================
 	# ==================== SERVICES
 	# ==============================
+	addressNormalizerFactory: 
+		class: Service\Contact\AddressNormalizer(%address%)
+		implement: Service\Contact\IAddressNormalizerFactory
+
 	rentalSearchServiceFactory: 
 		class: Service\Rental\RentalSearchService(%location%)
 		implement: Service\Rental\IRentalSearchServiceFactory

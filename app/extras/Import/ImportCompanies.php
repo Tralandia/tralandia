@@ -50,31 +50,31 @@ class ImportCompanies extends BaseImport {
 		$this->model->flush();
 	}
 
-	private function importOffices() {
-		$r = q('select * from virtual_offices order by id');
+	// private function importOffices() {
+	// 	$r = q('select * from virtual_offices order by id');
 
-		$dictionaryTypeRegistrator = $this->createPhraseType('\Company\Company', 'registrator', 'ACTIVE');
+	// 	$dictionaryTypeRegistrator = $this->createPhraseType('\Company\Company', 'registrator', 'ACTIVE');
 
-		$countryLocationType = $this->context->locationTypeRepositoryAccessor->get()->findOneBySlug('country');
+	// 	$countryLocationType = $this->context->locationTypeRepositoryAccessor->get()->findOneBySlug('country');
 
-		while($x = mysql_fetch_array($r)) {
-			$s = $this->context->companyOfficeEntityFactory->create();
-			$s->oldId = $x['id'];
+	// 	while($x = mysql_fetch_array($r)) {
+	// 		$s = $this->context->companyOfficeEntityFactory->create();
+	// 		$s->oldId = $x['id'];
 
-			$locationTemp = $this->context->locationRepositoryAccessor->get()->findOneBy(array('oldId' => $x['countries_id'], 'type' => $countryLocationType));
-			$s->address = new \Extras\Types\Address(array(
-				'address' => array_filter(array($x['address'], $x['address_2'])),
-				'postcode' => $x['postcode'],
-				'locality' => $x['locality'],
-				'country' => $locationTemp->id,
-			)); // @todo - toto este neuklada ok, je na to task v taskee
+	// 		$locationTemp = $this->context->locationRepositoryAccessor->get()->findOneBy(array('oldId' => $x['countries_id'], 'type' => $countryLocationType));
+	// 		$s->address = new \Extras\Types\Address(array(
+	// 			'address' => array_filter(array($x['address'], $x['address_2'])),
+	// 			'postcode' => $x['postcode'],
+	// 			'locality' => $x['locality'],
+	// 			'country' => $locationTemp->id,
+	// 		)); // @todo - toto este neuklada ok, je na to task v taskee
 
-			$s->company = $this->context->companyRepositoryAccessor->get()->find(3);
-			$s->addCountry($locationTemp);
-			$this->model->persist($s);
-		}
-		$this->model->flush();
-	}
+	// 		$s->company = $this->context->companyRepositoryAccessor->get()->find(3);
+	// 		$s->addCountry($locationTemp);
+	// 		$this->model->persist($s);
+	// 	}
+	// 	$this->model->flush();
+	// }
 
 	private function importBankAccounts() {
 		$r = q('select * from bank_accounts order by id');

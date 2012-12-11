@@ -26,7 +26,7 @@ class Phone extends Nette\Object {
 	 * Vyhlada cislo v DB
 	 * - cislo musi byt v medzinarodnom formate
 	 * @param string $number
-	 * @return Entity\Contacts\Phone|false
+	 * @return Entity\Contact\Phone|false
 	 */
 	public function find($number) {
 		return $this->phoneRepository->get()->findOneByValue($this->prepareNumber($number));
@@ -35,7 +35,7 @@ class Phone extends Nette\Object {
 	/**
 	 * Skusi najst cislo, ak nenajde vytvori nove a vrati jeho zaznam
 	 * @param string $number
-	 * @return Entity\Contacts\Phone
+	 * @return Entity\Contact\Phone
 	 */
 	public function getOrCreate($number) {
 		if (!$phone = $this->find($number)) {

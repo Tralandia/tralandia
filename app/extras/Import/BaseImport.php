@@ -73,7 +73,7 @@ class BaseImport {
 			'entities' => array(
 				'\Company\Company' => array(),
 			),
-			'subsections' => array('importCompanies', 'importOffices', 'importBankAccounts'),
+			'subsections' => array('importCompanies', 'importBankAccounts'),
 		),
 		'users' => array(
 			'entities' => array(

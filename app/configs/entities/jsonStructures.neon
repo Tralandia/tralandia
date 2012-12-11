@@ -41,11 +41,6 @@ Company\Company:
 		item1: null
 		item2: null
 
-Company\Office:
-	details:
-		item1: null
-		item2: null
-
 Contact\Contact:
 	info:
 		item1: null

@@ -19,16 +19,16 @@ class SeoService extends Nette\Object {
 
 	protected $replacements = array(
 		'primaryLocation' => array(
-			'primaryLocation', // request parameter's name
-			'name', // entity attribute
+			'primaryLocation', 
+			'name', 
 		),
 		'primaryLocationLocative' => array(
 			'primaryLocation',
 			'name',
 		),
 		'location' => array(
-			'location',
-			'name',
+			'location', // request parameter's name
+			'name', // entity attribute
 		),
 		'locationLocative' => array(
 			'location', 
@@ -177,7 +177,12 @@ class SeoService extends Nette\Object {
 		
 		$texts = array();
 		foreach ($variables as $key => $value) {
-			$replacement = $this->replacements[$value['replacement']];
+			if( ($value['replacement'] == 'location' || $value['replacement'] == 'locationLocative') && !$this->existsParameter($value['replacement']) ) {
+				$replacement = $this->replacements['primary'.ucfirst($value['replacement'])];
+			} else {
+				$replacement = $this->replacements[$value['replacement']];
+			}
+
 			$phrase = $this->getParameter($replacement[0])->{$replacement[1]};
 			$phrase = $this->phraseDecoratorFactory->create($phrase);
 			$translation = $phrase->getTranslation($this->getParameter('language'), TRUE);

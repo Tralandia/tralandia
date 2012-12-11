@@ -20,8 +20,8 @@ class AclPresenter extends BasePresenter {
 
 	protected $userRoleRepositoryAccessor;
 
-	public function setContext(\Nette\DI\Container $dic) {
-		$this->setProperty('userRoleRepositoryAccessor');
+	public function injectDic(\Nette\DI\Container $dic) {
+		$this->userRoleRepositoryAccessor = $dic->userRoleRepositoryAccessor;
 	}
 
 	protected function getPresenterList() {

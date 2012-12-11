@@ -22,7 +22,7 @@ class Email extends Nette\Object {
 	/**
 	 * Vyhlada email v DB
 	 * @param string $email
-	 * @return Entity\Contacts\Email|false
+	 * @return Entity\Contact\Email|false
 	 */
 	public function find($email) {
 		return $this->emailRepository->get()->findOneByValue($email);
@@ -31,7 +31,7 @@ class Email extends Nette\Object {
 	/**
 	 * Skusi najst email, ak nenajde vytvori novy a vrati jeho zaznam
 	 * @param string $value
-	 * @return Entity\Contacts\Email
+	 * @return Entity\Contact\Email
 	 */
 	public function getOrCreate($value) {
 		if (!$email = $this->find($value)) {

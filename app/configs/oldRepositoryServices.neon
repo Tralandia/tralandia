@@ -7,8 +7,6 @@ services:
 
 	companyRepository: @model::getRepository('Entity\Company\Company')
 
-	companyOfficeRepository: @model::getRepository('Entity\Company\Office')
-
 	contactCacheRepository: @model::getRepository('Entity\ContactCache')
 
 	currencyRepository: @model::getRepository('Entity\Currency')
@@ -122,8 +120,6 @@ services:
 	companyBankAccountEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Company\BankAccount')
 
 	companyEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Company\Company')
-
-	companyOfficeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Company\Office')
 
 	contactCacheEntityFactory: Extras\Models\Entity\EntityFactory('Entity\ContactCache')
 

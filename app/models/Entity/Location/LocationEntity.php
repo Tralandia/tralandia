@@ -97,12 +97,6 @@ class Location extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Company\Office", inversedBy="countries")
-	 */
-	protected $offices;
-
-	/**
-	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Domain", inversedBy="locations")
 	 */
 	protected $domain;
@@ -175,7 +169,7 @@ class Location extends \Entity\BaseEntityDetails {
 	 */
 	protected $contacts;
 
-								//@entity-generator-code --- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()
@@ -184,7 +178,6 @@ class Location extends \Entity\BaseEntityDetails {
 
 		$this->bankAccounts = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->companies = new \Doctrine\Common\Collections\ArrayCollection;
-		$this->offices = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->marketings = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->primaryRentals = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->rentals = new \Doctrine\Common\Collections\ArrayCollection;
@@ -511,27 +504,6 @@ class Location extends \Entity\BaseEntityDetails {
 	public function getCompanies()
 	{
 		return $this->companies;
-	}
-		
-	/**
-	 * @param \Entity\Company\Office
-	 * @return \Entity\Location\Location
-	 */
-	public function addOffice(\Entity\Company\Office $office)
-	{
-		if(!$this->offices->contains($office)) {
-			$this->offices->add($office);
-		}
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Company\Office
-	 */
-	public function getOffices()
-	{
-		return $this->offices;
 	}
 		
 	/**

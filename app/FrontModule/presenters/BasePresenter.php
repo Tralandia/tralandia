@@ -7,10 +7,10 @@ use Service\Seo\ISeoServiceFactory;
 
 abstract class BasePresenter extends \BasePresenter {
 	
-	public $languageRepositoryAccessor;
-	public $locationRepositoryAccessor;
-	public $rentalTypeRepositoryAccessor;
-	public $rentalRepositoryAccessor;
+	protected $languageRepositoryAccessor;
+	protected $locationRepositoryAccessor;
+	protected $rentalTypeRepositoryAccessor;
+	protected $rentalRepositoryAccessor;
 	
 	protected $environment;
 	protected $seoFactory;
@@ -25,12 +25,11 @@ abstract class BasePresenter extends \BasePresenter {
 		$this->environment = $environment;
 	}
 
-	public function inject(\Nette\DI\Container $dic) {
-		$this->setProperty('languageRepositoryAccessor');
-		$this->setProperty('locationRepositoryAccessor');
-		$this->setProperty('rentalTypeRepositoryAccessor');
-		$this->setProperty('rentalRepositoryAccessor');
-		parent::inject($dic);
+	public function injectBaseRepositories(\Nette\DI\Container $dic) {
+		$this->languageRepositoryAccessor = $dic->languageRepositoryAccessor;
+		$this->locationRepositoryAccessor = $dic->locationRepositoryAccessor;
+		$this->rentalTypeRepositoryAccessor = $dic->rentalTypeRepositoryAccessor;
+		$this->rentalRepositoryAccessor = $dic->rentalRepositoryAccessor;
 	}
 
 	public function beforeRender() {

@@ -29,12 +29,6 @@ class Company extends \Entity\BaseEntityDetails {
 	protected $countries;
 
 	/**
-	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Office", mappedBy="company", cascade={"persist", "remove"})
-	 */
-	protected $offices;
-
-	/**
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
 	 */
@@ -85,7 +79,6 @@ class Company extends \Entity\BaseEntityDetails {
 
 		$this->bankAccounts = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->countries = new \Doctrine\Common\Collections\ArrayCollection;
-		$this->offices = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->invoices = new \Doctrine\Common\Collections\ArrayCollection;
 	}
 		
@@ -159,42 +152,6 @@ class Company extends \Entity\BaseEntityDetails {
 	public function getCountries()
 	{
 		return $this->countries;
-	}
-		
-	/**
-	 * @param \Entity\Company\Office
-	 * @return \Entity\Company\Company
-	 */
-	public function addOffice(\Entity\Company\Office $office)
-	{
-		if(!$this->offices->contains($office)) {
-			$this->offices->add($office);
-		}
-		$office->setCompany($this);
-
-		return $this;
-	}
-		
-	/**
-	 * @param \Entity\Company\Office
-	 * @return \Entity\Company\Company
-	 */
-	public function removeOffice(\Entity\Company\Office $office)
-	{
-		if($this->offices->contains($office)) {
-			$this->offices->removeElement($office);
-		}
-		$office->unsetCompany();
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Company\Office
-	 */
-	public function getOffices()
-	{
-		return $this->offices;
 	}
 		
 	/**

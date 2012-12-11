@@ -12,12 +12,10 @@ class PhrasePresenter extends AdminPresenter {
 
 	public $phrase, $phraseService, $fromLanguage, $toLanguage;
 
-	public function setContext(\Nette\DI\Container $dic) {
-		parent::setContext($dic);
-
-		$this->setProperty('phraseServiceFactory');
-		$this->setProperty('phraseRepositoryAccessor');
-		$this->setProperty('languageRepositoryAccessor');
+	public function injectDic(\Nette\DI\Container $dic) {
+		$this->phraseServiceFactory = $dic->phraseServiceFactory;
+		$this->phraseRepositoryAccessor = $dic->phraseRepositoryAccessor;
+		$this->languageRepositoryAccessor = $dic->languageRepositoryAccessor;
 	}
 	
 
