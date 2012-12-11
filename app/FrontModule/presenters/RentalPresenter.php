@@ -55,13 +55,13 @@ class RentalPresenter extends BasePresenter {
 		//$paginator->itemCount = $search->getRentalsCount();	
 		$paginator->itemCount = 123;
 
-		$rentalsEntities = $search->getRentals(0);//@todo
+		// $rentalsEntities = $search->getRentals(0);//@todo
 		$rentals = array();
 
-		foreach ($rentalsEntities as $rental) {
-			$rentals[$rental->id]['service'] = $this->rentalDecoratorFactory->create($rental);			
-			$rentals[$rental->id]['entity'] = $rental;
-		}
+		// foreach ($rentalsEntities as $rental) {
+		// 	$rentals[$rental->id]['service'] = $this->rentalDecoratorFactory->create($rental);			
+		// 	$rentals[$rental->id]['entity'] = $rental;
+		// }
 
 		$regions = $this->locationRepositoryAccessor->get()->findBy(array(
 				'parent' => 58
