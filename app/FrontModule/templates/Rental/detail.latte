@@ -128,7 +128,7 @@
 		{/foreach}
 *}
 
-		{dump $envLanguage->iso}
+
 		
 		{foreach $rental->interviewAnswers as $interview}
 			{dump $interview}
@@ -145,45 +145,65 @@
 				</strong>
 
 			   </li>
+
 			   <li>
-			   		{foreach $rentalService->getAmenitiesByType(array('tag')) as $amenities}
-						{foreach $amenities as $amenity}
-								{_$amenity->name}{if !$iterator->last}, {/if}			
-						{/foreach}			  
-			   		{/foreach}
-			   </li>
-			   <li>
-			   		{$rental->maxCapacity}
+			   		{_o1006} <strong>{$rental->maxCapacity}</strong>
 			   </li>
 			</ul>
 		</div>
 		<div class="detailAmanities">
 			<ul class="objectDetailServicesIconList list">
+
 			   <li>
-				{foreach $rentalService->getAmenitiesByType(array('other')) as $amenities}
-					
+			   {_o1010}
+			   <strong>
+				{foreach $rentalService->getAmenitiesByType(array('board')) as $amenities}					
 					{foreach $amenities as $amenity}
-						{if $iterator->first}				
-							{_$amenity->type->name}
-						{/if}
 						{_$amenity->name}{if !$iterator->last}, {/if}
-					{/foreach}
-					
+					{/foreach}					
 				{/foreach}
-			   </li>
+				</strong>
+			   </li>			   
+
 			   <li>
+			   {_o1011}
+			   <strong>
+				{foreach $rentalService->getAmenitiesByType(array('separate-groups')) as $amenities}					
+					{foreach $amenities as $amenity}
+						{_$amenity->name}{if !$iterator->last}, {/if}
+					{/foreach}					
+				{/foreach}
+				</strong>
+			   </li>	
+
+			   <li>
+			   {_o1014}
+			   <strong>
+				{foreach $rental->tags as $tag}					
+					{_$tag->name}
+				{/foreach}
+				</strong>
+			   </li>
+
+
+			   <li>
+			   {_o1012}
+			   <strong>
 				{foreach $rentalService->getAmenitiesByType(array('owner-availability')) as $amenities}
 					
 					{foreach $amenities as $amenity}
-						{if $iterator->first}				
-							{_$amenity->type->name}
-						{/if}
 						{_$amenity->name}{if !$iterator->last}, {/if}
 					{/foreach}
 					
 				{/foreach}
+				</strong>
 			   </li>
-			   <li>{$rental->rooms}</li>
+			   <li>
+			   {_o23006}
+			   <strong>
+			   {$rental->rooms}
+			   </strong>
+			   </li>
 
 			</ul>
 		</div>
@@ -321,7 +341,18 @@
 
 			</div>
 		</div>
-{*
+
+
+<script>
+
+$(document).ready(function(){
+	
+	$( ".datepicker" ).datepicker( $.datepicker.regional[ {$envLanguage->iso} ] );	
+});
+
+
+</script>
+{*	
 		<div class="sidebarContact">
 			<div class="sidebarTitle">{_o1049}</div>
 			<div class="sidebarInner">
@@ -358,8 +389,10 @@
 			
 
 			<div id="tabs-5">
+
+				{dump $rental->interviewAnswers}
 				{foreach $rental->interviewAnswers as $interview}
-					{dump $interview->question}
+					{dump $interview}
 				{/foreach}
 			</div>
 
