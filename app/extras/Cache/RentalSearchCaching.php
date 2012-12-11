@@ -33,9 +33,13 @@ class RentalSearchCaching extends \Nette\Object {
 	}
 
 	public function addRental(\Entity\Rental\Rental $rental, $key) {
+		if($rental->status != \Entity\Rental\Rental::STATUS_LIVE) {
+			throw new \Nette\InvalidArgumentException('Len live rental mozes ulozit do cache');
+		}
 		$tempCache = $this->searchCache->load($key);
 		$tempCache[$rental->id] = $rental->id;
 		$this->searchCache->save($key, $tempCache);
+
 		return $this;
 	}
 
@@ -83,12 +87,23 @@ class RentalSearchCaching extends \Nette\Object {
 		shuffle($notFeatured);
 
 		$order = array_merge($featured, $notFeatured);
+
 		$order = array_flip(array_values($order));
 		$this->searchCache->save('order', $order, array(
 			Caching\Cache::EXPIRE => $this->getExpirationTimeStamp(),
 		));
 
 		return $order;
+	}
+
+	public function removeRentalOrderList() {
+		$this->searchCache->remove('order');
+		return $this;
+	}
+
+	public function drop() {
+		$this->searchCache->clean(array(Caching\Cache::ALL => TRUE));
+		return $this;
 	}
 
 	public function isFeatured(\Entity\Rental\Rental $rental) {

@@ -4,7 +4,7 @@ namespace Doctrine\Types;
 
 use Doctrine\DBAL\Types\Type, 
 	Doctrine\DBAL\Platforms\AbstractPlatform,
-	Nette\Utils as NU;
+	Nette\Utils as NU, Extras;
 
 class LatLong extends Type {
 	const NAME = 'latlong';
@@ -18,10 +18,13 @@ class LatLong extends Type {
 	}
 
 	public function convertToPHPValue($value, AbstractPlatform $platform) {
-		return $value;
+		return new Extras\Types\Latlong($value);
 	}
 
 	public function convertToDatabaseValue($value, AbstractPlatform $platform) {
+		if ($value instanceof Extras\Types\Latlong) {
+			return $value->toFloat();
+		}
 		return $value;
 	}
 /*

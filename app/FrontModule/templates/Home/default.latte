@@ -43,7 +43,7 @@
 
 			<div n:foreach="$regions as $chunk" class="span4">
 				<ul class="list" n:inner-foreach="$chunk as $region">
-					<li><a n:href="Rental:list location => $region->id">{_$region->name}</a></li>
+					<li><a n:href="Rental:list location => $region">{_$region->name}</a></li>
 				</ul>
 			</div>                  
 

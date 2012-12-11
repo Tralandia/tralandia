@@ -350,28 +350,6 @@ companies_edit:
 	manager: deny
 	admin: deny
 	
-offices_show:
-	guest: deny
-	potentialowner: deny
-	owner: deny
-	translator: deny
-	assistant: deny
-	telmarkmanager: deny
-	telmarkoperator: deny
-	manager: deny
-	admin: deny
-	
-offices_edit:
-	guest: deny
-	potentialowner: deny
-	owner: deny
-	translator: deny
-	assistant: deny
-	telmarkmanager: deny
-	telmarkoperator: deny
-	manager: deny
-	admin: deny
-	
 domain_show:
 	guest: deny
 	potentialowner: deny

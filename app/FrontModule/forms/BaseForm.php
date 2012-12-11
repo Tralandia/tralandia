@@ -1,6 +1,6 @@
 <?php
 
-namespace BaseModule\Forms;
+namespace FrontModule\Forms;
 
 abstract class BaseForm extends \CoolForm {
 

@@ -1,5 +1,7 @@
 {* 
-	$rental Entity\Rental
+	$rental        Entity\Rental\Rental
+	$rentalService Service\Rental\RentalService
+	$locality      Service\Seo\SeoService
  *}
 
 {block content}
@@ -81,12 +83,7 @@
 	<div class="span4 marginBottom marginTop marginLeft leftSidebarObjectDetail">
 
 	{foreach $rentalService->getPhotos(3) as $photo}
-
-	{if $iterator->first}
-	{var $firstPhoto = $photo->getThumbnail()}
-	{/if}
-
-	<img src="{$photo->getThumbnail()}" class="marginBottom" />
+		{* <img src="{$photo|thumbnail:100}" class="marginBottom" /> *}
 	{/foreach}
 
 		<img class="mapsImg" src="https://maps.googleapis.com/maps/api/staticmap?center={$rental->latitude},{$rental->longitude}&markers=color:blue%7C{$rental->latitude},{$rental->longitude}&maptype=terrain&zoom=13&size=288x170&sensor=false" />
@@ -215,7 +212,7 @@
 
 	<!-- right sidebar -->
 	<div class="span3 marginTop sidebarRightDetail">
-		<button class="btn btn-compare addToFavorites" rel="{$rental->id}" link="{link Rental:detail $rental}" thumb="{$firstPhoto}"><span class="entypo-star">{_o12334}</span></button>
+		<button class="btn btn-compare addToFavorites" rel="{$rental->id}" link="{link Rental:detail $rental}" thumb="{$rentalService->getMainPhoto()->getThumbnail()}"><span class="entypo-star">{_o12334}</span></button>
 
 
 		<div class="sidebarContact">
@@ -276,6 +273,9 @@
 						</td>
 					</tr>
 				</table>
+
+				{include '../../forms/Rental/reservationForm.latte'}
+				
 
 				<form>
 					<input type="text" placeholder="{_o1031}" />

@@ -7,8 +7,6 @@ services:
 
 	companyRepository: @model::getRepository('Entity\Company\Company')
 
-	companyOfficeRepository: @model::getRepository('Entity\Company\Office')
-
 	contactCacheRepository: @model::getRepository('Entity\ContactCache')
 
 	currencyRepository: @model::getRepository('Entity\Currency')
@@ -99,8 +97,6 @@ services:
 
 	userCombinationRepository: @model::getRepository('Entity\User\Combination')
 
-	userRentalQuestionRepository: @model::getRepository('Entity\User\RentalQuestion')
-
 	userRentalReservationRepository: @model::getRepository('Entity\User\RentalReservation')
 
 	userRentalReviewRepository: @model::getRepository('Entity\User\RentalReview')
@@ -124,8 +120,6 @@ services:
 	companyBankAccountEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Company\BankAccount')
 
 	companyEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Company\Company')
-
-	companyOfficeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Company\Office')
 
 	contactCacheEntityFactory: Extras\Models\Entity\EntityFactory('Entity\ContactCache')
 
@@ -216,8 +210,6 @@ services:
 	userEntityFactory: Extras\Models\Entity\EntityFactory('Entity\User\User')
 
 	userCombinationEntityFactory: Extras\Models\Entity\EntityFactory('Entity\User\Combination')
-
-	userRentalQuestionEntityFactory: Extras\Models\Entity\EntityFactory('Entity\User\RentalQuestion')
 
 	userRentalReservationEntityFactory: Extras\Models\Entity\EntityFactory('Entity\User\RentalReservation')
 

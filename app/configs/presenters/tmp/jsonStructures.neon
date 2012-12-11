@@ -55,11 +55,6 @@ Company\Company:
 		item1: null
 		item2: null
 	
-Company\Office:
-	details:
-		item1: null
-		item2: null
-	
 Contact\Contact:
 	info:
 		item1: null
@@ -147,11 +142,6 @@ Rental\Rental:
 	
 User\Combination:
 	details:
-		item1: null
-		item2: null
-	
-User\RentalQuestion:
-	capacity:
 		item1: null
 		item2: null
 	

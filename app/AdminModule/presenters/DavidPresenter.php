@@ -36,9 +36,9 @@ class DavidPresenter extends BasePresenter {
 
 		//$this->getService('generatePathSegmentsRobot')->run();
 
-		$url = 'http://www.sk.tra.com/nitra/golf';
-		$url = new Nette\Http\UrlScript($url);
-		$httpRequest = new Nette\Http\Request($url);
+		$url = 'http://sk.com.tra.com/';
+		$urlScript = new Nette\Http\UrlScript($url);
+		$httpRequest = new Nette\Http\Request($urlScript);
 
 		$route = $this->frontRouteFactory->create();
 
@@ -47,7 +47,9 @@ class DavidPresenter extends BasePresenter {
 		$languageRepositoryAccessor = $this->getService('languageRepositoryAccessor');
 		$locationRepositoryAccessor = $this->getService('locationRepositoryAccessor');
 
-		$seo = $this->seoServiceFactory->create($request);
+		d($request);
+		$seo = $this->seoServiceFactory->create($url, $request);
+
 
 	}
 
@@ -57,13 +59,13 @@ class DavidPresenter extends BasePresenter {
 
 		$this->robot->create($primaryLocation)->run();
 
-		$thisSearch = $this->rentalSearchServiceFactory->create($primaryLocation);
-		$thisSearch->addLocationCriteria($location);
-		//$thisSearch->addTagCriteria($tag);
+		// $thisSearch = $this->rentalSearchServiceFactory->create($primaryLocation);
+		// $thisSearch->addLocationCriteria($location);
+		// $thisSearch->addTagCriteria($tag);
 
-		d($thisSearch->getResultsCount());
-		d($thisSearch->getRentalIds());
-		d($thisSearch->getRentals());
+		// d($thisSearch->getResultsCount());
+		// d($thisSearch->getRentalIds());
+		// d($thisSearch->getRentals());
 		
 	}
 }

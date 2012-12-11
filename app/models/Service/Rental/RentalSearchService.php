@@ -11,6 +11,7 @@ use Extras\Cache\IRentalSearchCachingFactory;
 class RentalSearchService extends Service\BaseService 
 {
 
+	const COUNT_PER_PAGE			= 50;
 	const CRITERIA_LOCATION  		= 'location';
 	const CRITERIA_RENTAL_TYPE 		= 'rentalType';
 	const CRITERIA_TAG	 			= 'tag';
@@ -19,11 +20,10 @@ class RentalSearchService extends Service\BaseService
 	const CRITERIA_PRICE 			= 'price';
 	//const CRITERIA_AREA_BOUNDRY 	= 'areaBoundry';
 
-	const CAPACITY_MAX		= 50;
+	const CAPACITY_MAX				= 50;
 
 	protected $primaryLocation;
 	protected $criteria = array();
-	protected $countPerPage = 50;
 
 	protected $results;
 
@@ -50,7 +50,7 @@ class RentalSearchService extends Service\BaseService
 		$this->criteria[self::CRITERIA_RENTAL_TYPE] = $rentalType;
 	}
 
-	public function addTagCriteria(Entity\Rental\Type $tag) {
+	public function addRentalTagCriteria(Entity\Rental\Tag $tag) {
 		$this->criteria[self::CRITERIA_TAG] = $tag;
 	}
 
@@ -72,7 +72,7 @@ class RentalSearchService extends Service\BaseService
 		if ($page === NULL) {
 			return $results;
 		} else {
-			$results = array_chunk($results, $this->countPerPage);
+			$results = array_chunk($results, self::COUNT_PER_PAGE);
 			return isset($results[$page]) ? $results[$page] : NULL;
 		}
 	}
@@ -83,7 +83,7 @@ class RentalSearchService extends Service\BaseService
 		return $this->rentalRepositoryAccessor->get()->findById($results);
 	}
 
-	public function getResultsCount() {
+	public function getRentalsCount() {
 		return count($this->getResults());
 	}
 
@@ -99,6 +99,7 @@ class RentalSearchService extends Service\BaseService
 		foreach ($this->criteria as $key => $value) {
 			$cache[$key] = $this->rentalSearchCaching->load($key.$value->id);
 		}
+		$cache = array_filter($cache);
 
 		if (count($cache) > 1) {
 			$tempResults = call_user_func_array('array_intersect', $cache);			
@@ -106,18 +107,22 @@ class RentalSearchService extends Service\BaseService
 			$tempResults = reset($cache);
 		}
 
-		$this->results = $this->reorderResults($tempResults);
-		d($this->results);
+		if(is_array($tempResults)) {
+			$this->results = $this->reorderResults($tempResults);
+		} else {
+			$this->results = array();
+		}
+
 		return $this->results;
 	}
 
-	protected function reorderResults($results) {
+	protected function reorderResults(array $results) {
 		$order = $this->rentalSearchCaching->getOrderList();
 		$t = array();
+
 		foreach ($results as $key => $value) {
 			$t[$key] = $order[$key];
 		}
-
 		asort($t);
 
 		return array_keys($t);

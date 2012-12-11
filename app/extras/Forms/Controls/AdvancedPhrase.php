@@ -3,92 +3,113 @@
 namespace Extras\Forms\Controls;
 
 
-use Nette\Utils\Html,
-	Tra\Utils\Arrays,
-	Tra\Utils\Strings,
+use Entity,
+	Nette\ArrayHash,
+	Nette\Utils\Html,
 	Nette\Forms\Container,
-	Nette\Forms\Controls\BaseControl,
-	Extras\Types\Address;
+	Nette\Forms\Controls\BaseControl;
 
-
+/**
+ * @author  Branislav Vaculčiak
+ */
 class AdvancedPhrase extends BaseControl {
 
-	public $phrase;
+	/** @var Entity\Phrase\Phrase */
+	protected $phrase;
 
-	public function setPhrase($phrase) {
+	/** @var array */
+	protected $wrapper = array(
+		'wrapperBox' => 'div class="input-wrapper phrase-control plain-text-simple"',
+		'controlBox' => array(
+			'box' => 'div class=input-prepend',
+			'addOn' => 'span class=add-on',
+			'inputClass' => 'span3 text input-arge'
+		)
+	);
+
+	/**
+	 * Setter frazy
+	 * @param Entity\Phrase\Phrase
+	 */
+	public function setPhrase(Entity\Phrase\Phrase $phrase) {
 		$this->phrase = $phrase;
 	}
 
-
-	// public function setValue($value) {
-	// 	if(!is_array($value)) $value = $value->toArray();
-	// 	$this->value = $value;
-	// 	return $this;
-	// }
-
-	// public function getValue()
-	// {
-	// 	return is_array($this->value) ? $this->value : NULL;
-	// }
-
-
+	/**
+	 * Generovanie HTML kontrolu
+	 * @return Html
+	 */
 	public function getControl() {
-		$wrapper = Html::el('div')->class('btn-group phrase-control html-text');
-		$control = parent::getControl();
-		$colne = clone $control;
-		$name = $control->name;
-		$id = $control->id;
+		$wrapper = ArrayHash::from($this->wrapper);
+		$wrapperBox = Html::el($wrapper->wrapperBox);
+		$parent = parent::getControl();
+		$parent->type = 'text';
 
-		$phrase = $this->phrase;
-		if(!$phrase) {
-			throw new \Exception("Chyba preklad: ".$name."! Asi nieje v DB kukni sa tam...");
-		}
-		if(!$this->getOption('inlineEditing')) {
-			throw new \Exception("Nenastavil si InlineEditing pre frazu");
-		}
-		$inlineEditing = $this->getOption('inlineEditing');
-		$inlineEditing->href->setParameter('id', $phrase->id);
-		
-		//$defaultLanguage = $this->getForm()->getDefaultLanguage();
-		//$sourceLanguage = $phrase->getSourceLanguage();
+		if ($this->phrase instanceof Entity\Phrase\Phrase) {
+			foreach ($this->phrase->getTranslations() as $translation) {
+				$attributes = array();
+				$box = Html::el($wrapper->controlBox->box);
+				$box->add(Html::el($wrapper->controlBox->addOn)->setText($translation->language->iso));
 
-		$button = Html::el('button')
-					->class('btn btn-success dropdown-toggle')
-					->addAttributes(array('data-toggle' => 'dropdown'));
-		$wrapper->add($button);
-		$ul = Html::el('ul')->class('dropdown-menu');
-		$isFirst = TRUE;
-		foreach ($phrase->translations as $translation) {
-			$truncatedTranslation = Strings::truncate($translation->translation, 75);
-			if($isFirst) {
-				$button->add('<span class="caret pull-right"></span><div class="wrap"><b>'.strtoupper($translation->language->iso) . ': </b>'.$truncatedTranslation.'</div>');
-				$isFirst = false;
+				if ($this->phrase->sourceLanguage === $translation->language) {
+					$attributes['data-special'] = 'sourceLanguage';
+				}
+				//TODO: sem pripravit dalsie vynimky
+				if ($translation->language->iso == 'sk') {
+					$attributes['data-special'] = 'štúrovina';
+				}
+
+				$control = clone $parent;
+				$control->name = $control->name . '[' . $translation->language->iso . ']';
+				$control->value = $this->hasPostedValue($translation->language->iso)
+					? $this->value[$translation->language->iso]
+					: $translation->translation;
+				$control->class = $wrapper->controlBox->inputClass;
+				if (empty($attributes)) {
+					//TODO: toto sa musi potom povolit
+					//$box->addClass('hide');
+				} else {
+					$control->addAttributes($attributes);
+				}
+
+				$box->add($control);
+				$wrapperBox->add($box);
 			}
-
-			$a = Html::el('a')
-				->lang($translation->language->iso)
-				->add('<b>'.strtoupper($translation->language->iso).': </b><span>'.$truncatedTranslation.'</span>')
-				->href($inlineEditing->href->setParameter('languageIso', $translation->language->iso)->setParameter('display', 'modal'))
-				->addAttributes(array('data-toggle'=>'ajax-modal'));
-			$li = Html::el('li')->add($a);
-			// @todo dorobit task #12649
-			// if(!$this->getUser()->isAllowed()){
-			// 	$li->addClass('disabled');
-			// }
-			$ul->add($li);
 		}
-		$wrapper->add($ul);
 		
-		return $wrapper;
+		return $wrapperBox;
 	}
 
 	/**
+	 * Zisti ci boli prijate post data a ci existuju pre ISO kod
+	 * @return bool
 	 */
-	public static function register()
-	{
+	protected function hasPostedValue($iso) {
+		return isset($this->value) && isset($this->value[$iso]);
+	}
+
+	/**
+	 * Je kontrol vyplneny?
+	 * @return bool
+	 */
+	public function isFilled() {
+		return !empty($this->value);
+	}
+
+	/**
+	 * Vrati wrapper nastavenia
+	 * @return array
+	 */
+	public static function &getWrapper() {
+		return $this->wrapper;
+	}
+
+	/**
+	 * Zaregistruje koponentu do formulara
+	 */
+	public static function register() {
 		Container::extensionMethod('addAdvancedPhrase', function (Container $_this, $name, $label) {
 			return $_this[$name] = new AdvancedPhrase($label);
 		});
 	}
-
 }

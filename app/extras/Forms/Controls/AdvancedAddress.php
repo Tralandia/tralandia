@@ -3,97 +3,84 @@
 namespace Extras\Forms\Controls;
 
 
-use Nette\Utils\Html,
+use Entity,
+	Nette\Utils\Html,
 	Tra\Utils\Arrays,
 	Nette\Forms\Container,
-	Nette\Forms\Controls\SelectBox,
-	Extras\Types\Address;
+	Nette\Forms\Controls\BaseControl,
+	Nette\Forms\Controls\SelectBox;
 
+class AdvancedAddress extends BaseControl {
 
-class AdvancedAddress extends SelectBox {
+	const ROW1 = 'row1';
+	const ROW2 = 'row2';
+	const CITY = 'city';
+	const COUNTRY = 'country';
+	const POSTCODE = 'postcode';
 
-	public function setItems(array $items, $useKeys = TRUE) {
-		parent::setItems($items, $useKeys);
-		$this->allowed = array();
+	private $items = array();
 
-		foreach ($items as $key => $value) {
-			if (!is_array($value)) {
-				$value = array($key => $value);
-			}
-
-			foreach ($value as $key2 => $value2) {
-				if($value2 instanceof Html) {
-					$this->allowed[$key2] = $value2->getText();
-				} else {
-					$this->allowed[$key2] = $value2;
-				}
-			}
-		}
+	public function setAddress(Entity\Contact\Address $address = null) {
+		$address ? $this->setDefaultValue(array(
+			self::ROW1 => $address->row1,
+			self::ROW2 => $address->row2,
+			self::CITY => $address->city,
+			self::POSTCODE => $address->postcode,
+			self::COUNTRY => $address->country->id,
+		)) : array();
 		return $this;
 	}
 
-
-
-	public function setValue($value) {
-		if(!is_array($value)) $value = $value->toArray();
-		$this->value = $value;
+	public function setCountryItems(array $items) {
+		$this->items = $items;
 		return $this;
 	}
-
-	public function getValue()
-	{
-		return is_array($this->value) ? $this->value : NULL;
-	}
-
-	public function getSelectedEntry()
-	{
-		$selected = $this->getValue();
-		return array($selected[Address::COUNTRY] => true);
-	}
-
 
 	public function getControl() {
 		$wrapper = Html::el('div')->class('address-wrapper row-fluid');
 		$control = parent::getControl();
 		$name = $control->name;
+		$value = $this->getValue();
 		$id = $control->id;
 
 		$input = Html::el('input');
 		$fields = array(
-			Address::ADDRESS => array('class' => 'span8', 'placeholder' => 'Address Line 1'),
-			Address::ADDRESS2 => array('class' => 'span3', 'placeholder' => 'Address Line 2'),
-			Address::LOCALITY => array('class' => 'span8', 'placeholder' => 'Locality'),
-			Address::POSTCODE => array('class' => 'span3', 'placeholder' => 'Postcode'),
-			Address::COUNTRY => array('class' => 'span11'),
+			self::ROW1 => array('class' => 'span4', 'placeholder' => 'Address Line 1'),
+			self::ROW2 => array('class' => 'span4', 'placeholder' => 'Address Line 2'),
+			self::POSTCODE => array('class' => 'span2', 'placeholder' => 'Postcode'),
+			self::CITY => array('class' => 'span6'),
 		);
 
 		foreach ($fields as $field => $params) {
-			if($field == Address::COUNTRY) {
-				$control->id = $id . '-'.$field;
-				$control->name = $name . "[$field]";
-				$control->class = $params['class'];
-				$wrapper->add((string) $control);
-				continue;
-			}
-			$input->id = $id . '-'.$field;
+			$input->id = $id . '-' . $field;
+			$input->type = 'text';
 			$input->name = $name . "[$field]";
-			$input->value = $this->value[$field];
+			$input->value = $value[$field];
 			$input->class = $params['class'];
-			$input->placeholder = $params['placeholder'];
+			$input->placeholder = isset($params['placeholder']) ? $params['placeholder'] : null;
 			$wrapper->add((string) $input);
 		}
+		$select = Html::el('select')->name($name . '[' . self::COUNTRY . ']');
 
-		// $values = $this->getValue();
+		foreach ($this->items as $key => $val) {
+			$option = Html::el('option')->value($key)->setText($val);
+			if ($key == $value[self::COUNTRY]) {
+				$option->selected('selected');
+			}
+			$select->add($option);
+		}
+
+		$wrapper->add((string) $select);
+
 		return $wrapper;
 	}
 
 	/**
+	 * Registracia kontrolu
 	 */
-	public static function register()
-	{
-		Container::extensionMethod('addAdvancedAddress', function (Container $_this, $name, $label) {
+	public static function register() {
+		Container::extensionMethod('addAdvancedAddress', function(Container $_this, $name, $label) {
 			return $_this[$name] = new AdvancedAddress($label);
 		});
 	}
-
 }

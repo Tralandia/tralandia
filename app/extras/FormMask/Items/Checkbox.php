@@ -16,6 +16,7 @@ class Checkbox extends Text {
 	 */
 	public function extend(Nette\Forms\Form $form) {
 		return $form->addAdvancedCheckbox($this->getName(), $this->getLabel())
-			->setDefaultValue($this->getValue());
+			->setDefaultValue($this->getValue())
+			->setDisabled($this->disabled);
 	}
 }

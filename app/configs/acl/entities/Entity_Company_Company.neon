@@ -42,28 +42,6 @@ countries_edit:
 	manager: deny
 	admin: deny
 	
-offices_show:
-	guest: allow
-	visitor: deny
-	potentialowner: deny
-	owner: deny
-	translator: deny
-	assistant: deny
-	vendor: deny
-	manager: deny
-	admin: deny
-	
-offices_edit:
-	guest: allow
-	visitor: deny
-	potentialowner: deny
-	owner: deny
-	translator: deny
-	assistant: deny
-	vendor: deny
-	manager: deny
-	admin: deny
-	
 name_show:
 	guest: allow
 	visitor: deny

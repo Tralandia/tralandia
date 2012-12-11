@@ -7,7 +7,7 @@ use Nette, Extras;
 class PresenterExtension extends Nette\Config\CompilerExtension
 {
 	public $defaults = array(
-		'configsDir' => '%appDir%/configs'
+		'configsDir' => '%appDir%/configs/presenters'
 	);
 
 	public function loadConfiguration() {

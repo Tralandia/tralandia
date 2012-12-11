@@ -68,33 +68,33 @@ class ImportInteractions extends BaseImport {
 		return TRUE;
 	}
 
-	public function importRentalQuestions() {
-		if ($this->developmentMode == TRUE) {
-			$r = q('select * from visitors_questions limit 100');
-		} else {
-			$r = q('select * from visitors_questions order by id');
-		}
+	// public function importRentalQuestions() {
+	// 	if ($this->developmentMode == TRUE) {
+	// 		$r = q('select * from visitors_questions limit 100');
+	// 	} else {
+	// 		$r = q('select * from visitors_questions order by id');
+	// 	}
 
-		while($x = mysql_fetch_array($r)) {
-			$interaction = $this->context->userRentalQuestionEntityFactory->create();
-			$interaction->language = $this->context->languageRepositoryAccessor->get()->find($this->languagesByOldId[$x['language_id']]);
-			$t = $this->context->rentalRepositoryAccessor->get()->findOneByOldId($x['object_id']);
-			if ($t) {
-				$interaction->rental = $t;
-			}
-			$interaction->senderEmail = new \Extras\Types\Email($x['email_from']);
-			$interaction->senderPhone = new \Extras\Types\Phone(Strings::fixEncoding($x['phone']));
-			$interaction->question = $x['message'];
+	// 	while($x = mysql_fetch_array($r)) {
+	// 		$interaction = $this->context->userRentalQuestionEntityFactory->create();
+	// 		$interaction->language = $this->context->languageRepositoryAccessor->get()->find($this->languagesByOldId[$x['language_id']]);
+	// 		$t = $this->context->rentalRepositoryAccessor->get()->findOneByOldId($x['object_id']);
+	// 		if ($t) {
+	// 			$interaction->rental = $t;
+	// 		}
+	// 		$interaction->senderEmail = new \Extras\Types\Email($x['email_from']);
+	// 		$interaction->senderPhone = new \Extras\Types\Phone(Strings::fixEncoding($x['phone']));
+	// 		$interaction->question = $x['message'];
 
-			$interaction->oldId = $x['id'];
+	// 		$interaction->oldId = $x['id'];
 
-			$interaction->created = fromStamp($x['stamp']);
-			$this->model->persist($interaction);
-		}
-		$this->model->flush();
+	// 		$interaction->created = fromStamp($x['stamp']);
+	// 		$this->model->persist($interaction);
+	// 	}
+	// 	$this->model->flush();
 
-		return TRUE;
-	}
+	// 	return TRUE;
+	// }
 
 	public function importRentalReviews() {
 		// toto vlastne ani nemame :)

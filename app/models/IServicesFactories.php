@@ -1,5 +1,12 @@
 <?php
 
+namespace Service\Contact;
+
+interface IAddressNormalizerFactory {
+	/** @return \Service\Contact\AddressNormalizer */
+	function create(\Entity\Contact\Address $address);
+}
+
 namespace Service\Rental;
 
 interface IRentalSearchServiceFactory {
@@ -9,7 +16,8 @@ interface IRentalSearchServiceFactory {
 namespace Service\Seo;
 
 interface ISeoServiceFactory {
-	function create(\Nette\Application\Request $request);
+	/** @return \Service\Seo\SeoService */
+	function create($url, \Nette\Application\Request $request);
 }
 
 namespace Service\Robot;

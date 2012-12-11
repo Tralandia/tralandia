@@ -1,11 +1,8 @@
 #!/bin/bash
 
-if [ ! -d ./temp ]; then
-	mkdir -m 777 ./temp
-else
-	chmod 777 ./temp
-	rm -rf ./temp/*
-fi
+rm -rf ./temp
+mkdir -m 777 ./temp
+
 
 if [ ! -d ./temp/sessions ]; then
 	mkdir -m 777 ./temp/sessions

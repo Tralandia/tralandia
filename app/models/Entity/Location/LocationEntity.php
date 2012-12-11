@@ -18,7 +18,7 @@ class Location extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
+	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"}, fetch="EAGER")
 	 */
 	protected $name;
 
@@ -97,12 +97,6 @@ class Location extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Company\Office", inversedBy="countries")
-	 */
-	protected $offices;
-
-	/**
-	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Domain", inversedBy="locations")
 	 */
 	protected $domain;
@@ -152,6 +146,12 @@ class Location extends \Entity\BaseEntityDetails {
 	protected $iso3;
 
 	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $phonePrefix;
+
+	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Currency", cascade={"persist"})
 	 */
@@ -169,7 +169,7 @@ class Location extends \Entity\BaseEntityDetails {
 	 */
 	protected $contacts;
 
-								//@entity-generator-code --- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()
@@ -178,7 +178,6 @@ class Location extends \Entity\BaseEntityDetails {
 
 		$this->bankAccounts = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->companies = new \Doctrine\Common\Collections\ArrayCollection;
-		$this->offices = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->marketings = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->primaryRentals = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->rentals = new \Doctrine\Common\Collections\ArrayCollection;
@@ -508,27 +507,6 @@ class Location extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @param \Entity\Company\Office
-	 * @return \Entity\Location\Location
-	 */
-	public function addOffice(\Entity\Company\Office $office)
-	{
-		if(!$this->offices->contains($office)) {
-			$this->offices->add($office);
-		}
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Company\Office
-	 */
-	public function getOffices()
-	{
-		return $this->offices;
-	}
-		
-	/**
 	 * @param \Entity\Domain
 	 * @return \Entity\Location\Location
 	 */
@@ -763,6 +741,35 @@ class Location extends \Entity\BaseEntityDetails {
 	public function getIso3()
 	{
 		return $this->iso3;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Location\Location
+	 */
+	public function setPhonePrefix($phonePrefix)
+	{
+		$this->phonePrefix = $phonePrefix;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Location\Location
+	 */
+	public function unsetPhonePrefix()
+	{
+		$this->phonePrefix = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getPhonePrefix()
+	{
+		return $this->phonePrefix;
 	}
 		
 	/**

@@ -73,7 +73,7 @@ class BaseImport {
 			'entities' => array(
 				'\Company\Company' => array(),
 			),
-			'subsections' => array('importCompanies', 'importOffices', 'importBankAccounts'),
+			'subsections' => array('importCompanies', 'importBankAccounts'),
 		),
 		'users' => array(
 			'entities' => array(
@@ -123,13 +123,12 @@ class BaseImport {
 		'interactions' => array(
 			'entities' => array(
 				'\User\RentalReservation' => array(),
-				'\User\RentalQuestion' => array(),
 				'\User\RentalReview' => array(),
 				'\User\RentalToFriend' => array(),
 				'\User\SiteOwnerReview' => array(),
 				'\User\SiteVisitorReview' => array(),
 			),
-			'subsections' => array('importRentalReservations', 'importRentalQuestions', 'importRentalToFriend', 'importSiteOwnerReviews', 'importSiteVisitorReviews'),
+			'subsections' => array('importRentalReservations', 'importRentalToFriend', 'importSiteOwnerReviews', 'importSiteVisitorReviews'),
 		),
 		'email' => array(
 			'entities' => array(

@@ -14,8 +14,8 @@ class RentalPresenter extends BasePresenter {
 		$this->formFactory = $formFactory;
 	}
 
-	public function inject(\Nette\DI\Container $dic) {
-		$this->setProperty('rentalRepositoryAccessor');
+	public function injectDic(\Nette\DI\Container $dic) {
+		$this->rentalRepositoryAccessor = $dic->rentalRepositoryAccessor;
 	}
 
 

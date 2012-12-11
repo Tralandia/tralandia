@@ -2,24 +2,34 @@
 
 namespace FrontModule;
 
+use Nette;
+use Service\Seo\ISeoServiceFactory;
+
 abstract class BasePresenter extends \BasePresenter {
 	
-	public $languageRepositoryAccessor;
-	public $locationRepositoryAccessor;
-	public $rentalTypeRepositoryAccessor;
-	public $rentalRepositoryAccessor;
-	public $environment;
+	protected $languageRepositoryAccessor;
+	protected $locationRepositoryAccessor;
+	protected $rentalTypeRepositoryAccessor;
+	protected $rentalRepositoryAccessor;
+	
+	protected $environment;
+	protected $seoFactory;
 
-	public function injectEnvironment(\Extras\Environment $environment) {
+	public function injectSeo(ISeoServiceFactory $seoFactory)
+	{
+		$this->seoFactory = $seoFactory;
+	}
+
+	public function injectEnvironment(\Extras\Environment $environment) 
+	{
 		$this->environment = $environment;
 	}
 
-	public function inject(\Nette\DI\Container $dic) {
-		$this->setProperty('languageRepositoryAccessor');
-		$this->setProperty('locationRepositoryAccessor');
-		$this->setProperty('rentalTypeRepositoryAccessor');
-		$this->setProperty('rentalRepositoryAccessor');
-		parent::inject($dic);
+	public function injectBaseRepositories(\Nette\DI\Container $dic) {
+		$this->languageRepositoryAccessor = $dic->languageRepositoryAccessor;
+		$this->locationRepositoryAccessor = $dic->locationRepositoryAccessor;
+		$this->rentalTypeRepositoryAccessor = $dic->rentalTypeRepositoryAccessor;
+		$this->rentalRepositoryAccessor = $dic->rentalRepositoryAccessor;
 	}
 
 	public function beforeRender() {
@@ -33,6 +43,8 @@ abstract class BasePresenter extends \BasePresenter {
 		$this->template->mainMenuItems = $this->rentalTypeRepositoryAccessor->get()->findBy(array(),null,8);
 		$this->template->slogan = $this->translate('o21083').' '.$this->translate($this->environment->getPrimaryLocation()->name, NULL, array('case' => \Entity\Language::LOCATIVE));
 
+		$this->template->envLanguage = $this->environment->getLanguage();
+		$this->template->envPrimaryLocation = $this->environment->getPrimaryLocation();
 		parent::beforeRender();
 	}
 
@@ -44,6 +56,14 @@ abstract class BasePresenter extends \BasePresenter {
 
 	public function createComponentFooter($name) {
 		return $this->getService('footerControlFactory')->create($this->environment->getPrimaryLocation());
+	}
+
+	public function createComponentCountriesFooter($name) {
+		return $this->getService('countriesfooterControlFactory')->create();
+	}
+
+	public function createComponentSearchBar($name) {
+		return $this->getService('searchBarControlFactory')->create($this->environment->getPrimaryLocation());
 	}
 
 }

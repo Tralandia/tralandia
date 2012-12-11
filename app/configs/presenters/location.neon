@@ -5,24 +5,13 @@ parameters:
 
 form:
 	fields:
-		name:
-			label: Name
-			control: [type: phrase]
-			validation:
-				- [setRequired, 'Please fill in the name.']
-		nameOfficial:
-			label: Name Official
-			control: [type: phrase]
-			validation:
-				- [setRequired, 'Please fill in the name official.']
-		nameShort:
-			label: Name Short
-			control: [type: phrase]
-			validation:
-				- [setRequired, 'Please fill in the name short.']
+
 		parent:
 			label: Parent
 			control:
 				type: select
 				repository: @locationRepositoryAccessor
 				items: [getItems, id, name]
+		map:
+			label: GMap
+			control: [type: map]

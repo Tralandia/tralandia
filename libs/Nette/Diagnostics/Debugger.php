@@ -405,8 +405,8 @@ final class Debugger
 						self::$bar->render();
 					}
 
-				} elseif (connection_aborted() || !self::fireLog($exception, self::ERROR)) {
-					$file = self::log($exception);
+				} elseif (connection_aborted() || !self::fireLog($exception)) {
+					$file = self::log($exception, self::ERROR);
 					if (!headers_sent()) {
 						header("X-Nette-Error-Log: $file");
 					}
@@ -498,7 +498,7 @@ final class Debugger
 			return NULL;
 
 		} else {
-			$ok = self::fireLog(new \ErrorException($message, 0, $severity, $file, $line), self::WARNING);
+			$ok = self::fireLog(new \ErrorException($message, 0, $severity, $file, $line));
 			return !self::isHtmlMode() || (!self::$bar && !$ok) ? FALSE : NULL;
 		}
 
@@ -630,7 +630,8 @@ final class Debugger
 
 	private static function isHtmlMode()
 	{
-		return preg_match('#^Content-Type: text/html#im', implode("\n", headers_list()));
+		return empty($_SERVER['HTTP_X_REQUESTED_WITH'])
+			&& preg_match('#^Content-Type: text/html#im', implode("\n", headers_list()));
 	}
 
 

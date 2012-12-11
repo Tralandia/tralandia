@@ -36,7 +36,9 @@ class RentalSearchKeysCaching extends \Nette\Object {
 
 	public function updateRentalInCache() {
 		$this->removeRentalFromCache();
-		$this->addRentalToCache();
+		if($this->rental->status == \Entity\Rental\Rental::STATUS_LIVE) {
+			$this->addRentalToCache();
+		}
 		return $this;
 	}
 
@@ -47,7 +49,7 @@ class RentalSearchKeysCaching extends \Nette\Object {
 			$primaryLcoation = $this->locationRepositoryAccessor->get()->find($currentKeys['primaryKey']);
 			$rentalSearchCaching = $this->getPrimaryLocationCache($primaryLcoation);
 			foreach ($currentKeys['keys'] as $key => $value) {
-
+				$rentalSearchCaching->removeRental($this->rental, $value);
 			}
 			$this->rentalSearchKeysCache->remove($this->rental->id);
 		}

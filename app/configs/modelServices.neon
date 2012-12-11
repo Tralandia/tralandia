@@ -19,10 +19,6 @@ services:
 	companyRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Company\Company')
 
 
-	#----------
-	companyOfficeRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Company\Office')
-
-
 	#contact
 	#----------
 	contactCacheRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\ContactCache')
@@ -35,6 +31,14 @@ services:
 	#domain
 	#----------
 	domainRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Domain')
+
+
+	#phone+email+address+url
+	#----------
+	phoneRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Contact\Phone')
+	emailRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Contact\Email')
+	urlRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Contact\Url')
+	addressRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Contact\Address')
 
 
 	#email
@@ -239,10 +243,6 @@ services:
 
 	#----------
 	userCombinationRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\User\Combination')
-
-
-	#----------
-	userRentalQuestionRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\User\RentalQuestion')
 
 
 	#----------

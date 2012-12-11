@@ -74,11 +74,6 @@ common:
 					link: ':Admin:VisitorInteraction:list'
 					linkArgs:
 						filter: reservation
-				question: 
-					label: Questions
-					link: ':Admin:VisitorInteraction:list'
-					linkArgs:
-						filter: question
 				review: 
 					label: Reviews
 					link: ':Admin:VisitorInteraction:list'
@@ -227,9 +222,6 @@ common:
 				company: 
 					label: Companies
 					link: ':Admin:CompanyCompany:list'
-				office: 
-					label: Virtual Offices
-					link: ':Admin:CompanyOffice:list'
 				bankAccount: 
 					label: Bank Accounts
 					link: ':Admin:CompanyBankAccount:list'

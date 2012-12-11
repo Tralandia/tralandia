@@ -1,0 +1,25 @@
+parameters:
+	repositoryAccessor: testRepositoryAccessor
+	title: Test
+	h1: 'Test -> %name%'
+
+form:
+	fields:
+		email:
+			label: Email
+			control: [type: email]
+
+		phone:
+			label: Phone
+			control: [type: phone]
+
+		url:
+			label: URL
+			control: [type: url]
+
+		address:
+			label: Address
+			control: 
+				type: address
+				repository: @locationRepositoryAccessor
+				items: [getItems, id, name]
