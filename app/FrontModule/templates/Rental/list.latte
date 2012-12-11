@@ -24,14 +24,10 @@
 	<div class="row-fluid">
 	<div class="span12">
 		<div class="tabs mytabUi ui-tabs-nav ui-tabs">
-		    <ul>
-		        <li><a href="#tabs-1">{_o1068}</a></li>
-		        <li><a href="#tabs-2">pomenovat</a></li>
-		        
-		    </ul>
+
 		    <div id="tabs-1" class="ui-tabs-panel">
 
-
+		    	{*
 				<div class="row-fluid">
 					<div n:foreach="$topRegions as $chunk" class="span4">
 						<ul class="list" n:inner-foreach="$chunk as $region">
@@ -39,8 +35,9 @@
 						</ul>
 					</div>
 				</div>
+				*}
 
-				<div class="clearfix borderSeparator"></div>
+				
 
 		    	{foreach $rentals as $val}
 		    	{var $rental = $val['entity']; }
@@ -99,19 +96,6 @@
 
 		    	{/foreach}
 		    	{control paginator}
-
-		    </div>
-		    <div id="tabs-2" class="ui-tabs-panel">
-
-		    	<div class="row-fluid">
-
-					<div n:foreach="$regions as $chunk" class="span4">
-						<ul class="list" n:inner-foreach="$chunk as $region">
-							<li><a n:href="Rental:list location => $region->id">{_$region->name}</a></li>
-						</ul>
-					</div>		    		
-
-				</div>
 
 		    </div>
 

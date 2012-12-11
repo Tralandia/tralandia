@@ -6,16 +6,13 @@
 	<div class="container baseRadius" id="container">
 		<div class="row">
 
-			{include ../header.latte}
-
-			
+			{include ../header.latte}		
 
 			{include #content}
 
-
-			{include ../Components/supFooter.latte}
-
-			{include ../Components/footer.latte}
+			{control footer}
+			
+			{control countriesFooter}
 
 		</div>		
 	</div>		
