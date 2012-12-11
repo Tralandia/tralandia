@@ -17,6 +17,12 @@ class Location extends \Entity\BaseEntityDetails {
 	const STATUS_LAUNCHED = 'launched';
 
 	/**
+	 * @var Boolean
+	 * @ORM\Column(type="boolean")
+	 */
+	protected $primary = FALSE;
+
+	/**
 	 * @var Collection
 	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"}, fetch="EAGER")
 	 */
@@ -168,6 +174,10 @@ class Location extends \Entity\BaseEntityDetails {
 	 * @ORM\Column(type="contacts", nullable=true)
 	 */
 	protected $contacts;
+
+	public function isPrimary() {
+		return (bool)$this->primary;
+	}
 
 	//@entity-generator-code --- NEMAZAT !!!
 

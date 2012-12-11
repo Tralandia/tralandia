@@ -53,6 +53,35 @@ class LocationService extends Service\BaseService {
 	// 	}
 	// }
 
+	public function setName($name) {
+		$this->getEntity()->name = $name;
+	}
+
+	public function updateSlug() {
+		$name = $this->getEntity()->name->getSourceTranslation()->translation;
+		$newSlug = Strings::webalize($name);
+		$oldSlug = $this->getEntity()->slug;
+
+		if ($newSlug != $oldSlug) {
+			$existingLocation = 1;
+			while ($existingLocation) {
+				$existingLocation = $this->locationRepositoryAccessor->get()->findOneBy(array(
+					'parent' => $this->getEntity()->parent,
+					'slug' => $newSlug,
+				));
+				if ($existingLocation) {
+					$newSlug .= 1;
+				}
+			}
+
+			
+
+		}
+
+		return $newSlug;
+
+	}
+
 	public function getParent($slug = NULL) 
 	{
 		if($slug === NULL) {

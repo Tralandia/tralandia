@@ -74,6 +74,20 @@ class PhraseService extends Service\BaseService {
 		}
 	}
 
+	/**
+	 * Vrati source Language
+	 * @param Entity\Language
+	 * @return Entity\Phrase\Translation
+	 */
+	public function getSourceTranslation() {
+		foreach ($this->entity->getTranslations() as $key => $value) {
+			if ($this->entity->sourceLanguage && $value->language->id == $this->entity->sourceLanguage->id) {
+				return $value;
+			}
+		}
+		return FALSE;
+	}
+
 	public function hasTranslation($language) {
 		return $this->getTranslation($language) instanceof Entity\Phrase\Translation;
 	}
@@ -111,7 +125,7 @@ class PhraseService extends Service\BaseService {
 		return $this;
 	}
 
-	public function addTranslation($translation) {
+	private function addTranslation($translation) {
 		return $this->getEntity()->addTranslation($translation);
 	}
 

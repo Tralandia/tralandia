@@ -10,6 +10,16 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Address extends \Entity\BaseEntity {
 
+	const STATUS_MISPLACED = 'misplaced';
+	const STATUS_OK = 'ok';
+	const STATUS_INCOMPLETE = 'incomplete';
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string")
+	 */
+	protected $status;
+
 	/**
 	 * @var string
 	 * @ORM\Column(type="string")
@@ -18,19 +28,25 @@ class Address extends \Entity\BaseEntity {
 
 	/**
 	 * @var string
-	 * @ORM\Column(type="string")
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $subLocality;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $postalCode;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Location\Location")
+	 * @ORM\ManyToOne(targetEntity="Entity\Location\Location", cascade={"persist"})
 	 */
 	protected $locality;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Location\Location")
+	 * @ORM\ManyToOne(targetEntity="Entity\Location\Location", cascade={"persist"})
 	 */
 	protected $primaryLocation;
 
@@ -58,6 +74,25 @@ class Address extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Contact\Address
 	 */
+	public function setStatus($status)
+	{
+		$this->status = $status;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getStatus()
+	{
+		return $this->status;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Contact\Address
+	 */
 	public function setAddress($address)
 	{
 		$this->address = $address;
@@ -77,9 +112,48 @@ class Address extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Contact\Address
 	 */
+	public function setSubLocality($subLocality)
+	{
+		$this->subLocality = $subLocality;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Contact\Address
+	 */
+	public function unsetSubLocality()
+	{
+		$this->subLocality = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getSubLocality()
+	{
+		return $this->subLocality;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Contact\Address
+	 */
 	public function setPostalCode($postalCode)
 	{
 		$this->postalCode = $postalCode;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Contact\Address
+	 */
+	public function unsetPostalCode()
+	{
+		$this->postalCode = NULL;
 
 		return $this;
 	}

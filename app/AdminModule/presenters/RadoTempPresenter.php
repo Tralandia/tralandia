@@ -15,7 +15,19 @@ use Nette\Application as NA,
 
 class RadoTempPresenter extends BasePresenter {
 
+	protected $languageRepositoryAccessor;
+	protected $locationRepositoryAccessor;
+	protected $rentalTypeRepositoryAccessor;
+	protected $rentalRepositoryAccessor;
+
 	protected $addressNormalizerFactory;
+
+	public function injectBaseRepositories(\Nette\DI\Container $dic) {
+		$this->languageRepositoryAccessor = $dic->languageRepositoryAccessor;
+		$this->locationRepositoryAccessor = $dic->locationRepositoryAccessor;
+		$this->rentalTypeRepositoryAccessor = $dic->rentalTypeRepositoryAccessor;
+		$this->rentalRepositoryAccessor = $dic->rentalRepositoryAccessor;
+	}
 
 	public function injectAddressNormalizer(\Service\Contact\IAddressNormalizerFactory $factory) {
 		$this->addressNormalizerFactory = $factory;
@@ -43,7 +55,8 @@ class RadoTempPresenter extends BasePresenter {
 
 	public function actionAddress() {
 		$testValues = array(
-			array('49.058232', '19.581903'),
+			array('45.470725', '-98.47566'),
+			array('47.978267', '18.154208'),
 			array('40:26:46S', '79:56:55E'),
 			array('40:26:46.302S', '79:56:55.903E'),
 			array('40°26′47″S', '79°58′36″E'),
@@ -57,12 +70,13 @@ class RadoTempPresenter extends BasePresenter {
 		$long = new \Extras\Types\Latlong($testValues[0][1], 'longitude');
 
 		$a = new \Entity\Contact\Address();
-		$a->primaryLocation = $this->locationRepositoryAccessor->get()->find(46);
+		$a->primaryLocation = $this->locationRepositoryAccessor->get()->findOneByIso('ussd');
 		//$a->latitude = $lat;
 		//$a->longitude = $long;
 
 		$aa = $this->addressNormalizerFactory->create($a);
-		$aa->updateFromLocation($lat, $long);
+		//$aa->updateUsingGPS($lat, $long, TRUE);
+		$aa->updateUsingAddress('800-1018 E 61st St, Sioux Falls, South Dakota 57108');
 	}
 
 	public function actionGoogleMapsApi() {
