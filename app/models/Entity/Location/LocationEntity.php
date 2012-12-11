@@ -196,6 +196,25 @@ class Location extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
+	 * @param boolean
+	 * @return \Entity\Location\Location
+	 */
+	public function setPrimary($primary)
+	{
+		$this->primary = $primary;
+
+		return $this;
+	}
+		
+	/**
+	 * @return boolean|NULL
+	 */
+	public function getPrimary()
+	{
+		return $this->primary;
+	}
+		
+	/**
 	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Location\Location
 	 */
