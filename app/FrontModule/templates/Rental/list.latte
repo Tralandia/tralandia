@@ -32,14 +32,14 @@
 		    <div id="tabs-1" class="ui-tabs-panel">
 
 
-				<div class="row-fluid">
+				{* <div class="row-fluid">
 					<div n:foreach="$topRegions as $chunk" class="span4">
 						<ul class="list" n:inner-foreach="$chunk as $region">
 							<li><a n:href="Rental:list location => $region->id">{_$region->name}</a></li>
 						</ul>
 					</div>
 				</div>
-
+ *}
 				<div class="clearfix borderSeparator"></div>
 
 		    	{foreach $rentals as $val}
@@ -107,11 +107,11 @@
 
 		    	<div class="row-fluid">
 
-					<div n:foreach="$regions as $chunk" class="span4">
+					{* <div n:foreach="$regions as $chunk" class="span4">
 						<ul class="list" n:inner-foreach="$chunk as $region">
 							<li><a n:href="Rental:list location => $region->id">{_$region->name}</a></li>
 						</ul>
-					</div>		    		
+					</div> *}		    		
 
 				</div>
 
