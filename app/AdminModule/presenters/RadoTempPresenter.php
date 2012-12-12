@@ -19,8 +19,8 @@ class RadoTempPresenter extends BasePresenter {
 		$testValues = array(
 			array('40:26:46S', '79:56:55E'),
 			array('40:26:46.302S', '79:56:55.903E'),
-			array('40°26′47″S', '79°58′36″E'),
-			array('40d 26′ 47″ S', '79d 58′ 36″ E'),
+			array('40°26′46″S', '79°56′55″E'),
+			array('40d 26′ 46″ S', '79d 56′ 55″ E'),
 			array('40.446195S', '79.948862E'),
 			array('-40.446195', '79.948862'),
 			array('-40° 26.7717', '79° 56.93172'),
