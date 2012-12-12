@@ -56,9 +56,9 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 
 		// template variables
 		$template->criteriaLocation 		= $this->getLocationCriteria();
-		$template->criteriaRentalType 		= $this->getRentalTypeCriteria();
-		$template->criteriaRentalTag 		= $this->getRentalTagCriteria();
-		$template->criteriaSpokenLanguage 	= $this->getSpokenLanguageCriteria();
+		// $template->criteriaRentalType 		= $this->getRentalTypeCriteria();
+		// $template->criteriaRentalTag 		= $this->getRentalTagCriteria();
+		// $template->criteriaSpokenLanguage 	= $this->getSpokenLanguageCriteria();
 		// $template->criteriaCapacity 		= $this->getCapacityCriteria();
 		// $template->criteriaPrice 			= $this->getPriceCriteria();
 
@@ -92,7 +92,6 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 			$name = $this->translator->translate($location->name);
 			$link = $this->presenter->link('//Rental:list', $params);
 			$seo = $this->seoFactory->create($link, $this->presenter->getLastCreatedRequest());
-
 			$visible[$key] = $count;
 			$order[$name] = $key;
 
