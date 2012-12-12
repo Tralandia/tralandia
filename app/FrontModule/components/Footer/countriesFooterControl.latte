@@ -22,8 +22,10 @@
 
 		</div>
 
-		<ul class="row" n:inner-foreach="$locations as $seo">
-			<li class="span2"><a href="{$seo->url}" title="{$seo->getTitle()}">{_$seo->primaryLocation->name}</a></li>
-		</ul>
+		{foreach $locations as $chunk}
+			<ul class="row" n:inner-foreach="$chunk as $seo">
+				<li class="span2"><a href="{$seo->url}" title="{$seo->getTitle()}">{_$seo->primaryLocation->name}</a></li>
+			</ul>
+		{/foreach}
 	</footer>
 </div>

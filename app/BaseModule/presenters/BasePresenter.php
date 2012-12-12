@@ -59,6 +59,7 @@ abstract class BasePresenter extends Presenter {
 		return $template;
 	}
 
+
 	protected function createComponentFlashes($name) {
 		return new FlashesControl($this, $name);
 	}
