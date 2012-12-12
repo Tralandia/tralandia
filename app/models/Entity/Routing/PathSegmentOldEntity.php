@@ -23,7 +23,7 @@ class PathSegmentOld extends \Entity\BaseEntity {
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Location\Location")
 	 */
-	protected $country;
+	protected $primaryLocation;
 
 	/**
 	 * @var Collection
@@ -110,9 +110,9 @@ class PathSegmentOld extends \Entity\BaseEntity {
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Routing\PathSegmentOld
 	 */
-	public function setCountry(\Entity\Location\Location $country)
+	public function setPrimaryLocation(\Entity\Location\Location $primaryLocation)
 	{
-		$this->country = $country;
+		$this->primaryLocation = $primaryLocation;
 
 		return $this;
 	}
@@ -120,9 +120,9 @@ class PathSegmentOld extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Routing\PathSegmentOld
 	 */
-	public function unsetCountry()
+	public function unsetPrimaryLocation()
 	{
-		$this->country = NULL;
+		$this->primaryLocation = NULL;
 
 		return $this;
 	}
@@ -130,9 +130,9 @@ class PathSegmentOld extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Location\Location|NULL
 	 */
-	public function getCountry()
+	public function getPrimaryLocation()
 	{
-		return $this->country;
+		return $this->primaryLocation;
 	}
 		
 	/**

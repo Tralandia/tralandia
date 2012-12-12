@@ -14,7 +14,6 @@ class ImportPhraseType extends BaseImport {
 
 	public function doImport($subsection = NULL) {
 
-
 		$this->createPhraseType('\Entity\Language', 'name')
 			->setTranslateTo('supported')
 			->setPluralVariationsRequired(0)

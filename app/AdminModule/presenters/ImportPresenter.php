@@ -13,7 +13,7 @@ use Nette\Application as NA,
 	Service as S,
 	Service\Log as SLog;
 
-class RadoPresenter extends BasePresenter {
+class ImportPresenter extends BasePresenter {
 
 	public $session;
 
@@ -82,13 +82,6 @@ class RadoPresenter extends BasePresenter {
 			$this->flashMessage('Dropping Done');
 			$redirect = TRUE;
 		}
-		if (isset($this->params['truncateAllTables'])) {
-			$import = new I\BaseImport($this->context);
-			$import->developmentMode = (bool)$this->session->developmentMode;
-			$import->truncateAllTables();
-			$this->flashMessage('Truncating Done');
-			$redirect = TRUE;
-		}
 		if (isset($this->params['undoSection'])) {
 			$import = new I\BaseImport($this->context);
 			$import->developmentMode = (bool)$this->session->developmentMode;
@@ -154,7 +147,7 @@ class RadoPresenter extends BasePresenter {
 		}
 
 		if ($redirect) {
-			// $this->redirect('Rado:default');
+			$this->redirect('Import:default');
 		}
 	}
 

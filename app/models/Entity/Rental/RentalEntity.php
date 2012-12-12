@@ -18,7 +18,6 @@ use Extras\Annotation as EA;
 class Rental extends \Entity\BaseEntity {
 
 	const STATUS_DRAFT = 0;
-	const STATUS_CHECKED = 3;
 	const STATUS_LIVE = 6;
 
 	/**
@@ -63,12 +62,6 @@ class Rental extends \Entity\BaseEntity {
 	 * @ORM\ManyToOne(targetEntity="Entity\Location\Location")
 	 */
 	protected $primaryLocation;
-
-	/**
-	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Location\Location", mappedBy="rentals")
-	 */
-	protected $locations;
 
 	/**
 	 * @var Collection
@@ -223,7 +216,6 @@ class Rental extends \Entity\BaseEntity {
 		parent::__construct();
 
 		$this->missingInformation = new \Doctrine\Common\Collections\ArrayCollection;
-		$this->locations = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->phones = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->emails = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->urls = new \Doctrine\Common\Collections\ArrayCollection;
@@ -435,42 +427,6 @@ class Rental extends \Entity\BaseEntity {
 	public function getPrimaryLocation()
 	{
 		return $this->primaryLocation;
-	}
-		
-	/**
-	 * @param \Entity\Location\Location
-	 * @return \Entity\Rental\Rental
-	 */
-	public function addLocation(\Entity\Location\Location $location)
-	{
-		if(!$this->locations->contains($location)) {
-			$this->locations->add($location);
-		}
-		$location->addRental($this);
-
-		return $this;
-	}
-		
-	/**
-	 * @param \Entity\Location\Location
-	 * @return \Entity\Rental\Rental
-	 */
-	public function removeLocation(\Entity\Location\Location $location)
-	{
-		if($this->locations->contains($location)) {
-			$this->locations->removeElement($location);
-		}
-		$location->removeRental($this);
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Location\Location
-	 */
-	public function getLocations()
-	{
-		return $this->locations;
 	}
 		
 	/**

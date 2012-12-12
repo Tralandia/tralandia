@@ -76,7 +76,7 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 		foreach ($languageList as $languageId => $language) {
 			foreach ($pages as $page) {
 				$entity = $this->routingPathSegmentEntityFactory->create();
-				$entity->country = NULL;
+				$entity->primaryLocation = NULL;
 				$entity->language = $language;
 				$entity->pathSegment = $this->translate($page->name, $language);
 				$entity->type = PathSegment::PAGE;
@@ -94,7 +94,7 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 		foreach ($languageList as $languageId => $language) {
 			foreach ($attractionTypes as $type) {
 				$entity = $this->routingPathSegmentEntityFactory->create();
-				$entity->country = NULL;
+				$entity->primaryLocation = NULL;
 				$entity->language = $language;
 				$entity->pathSegment = $this->translate($type->name, $language);
 				$entity->type = PathSegment::ATTRACTION_TYPE;
@@ -114,7 +114,7 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 			$country = $locationService->getParent('country');
 
 			$entity = $this->routingPathSegmentEntityFactory->create();
-			$entity->country = $country;
+			$entity->primaryLocation = $country;
 			$entity->language = NULL;
 			$entity->pathSegment = $location->slug;
 			$entity->type = PathSegment::LOCATION;
@@ -131,7 +131,7 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 		foreach ($languageList as $languageId => $language) {
 			foreach ($rentalTypes as $type) {
 				$entity = $this->routingPathSegmentEntityFactory->create();
-				$entity->country = NULL;
+				$entity->primaryLocation = NULL;
 				$entity->language = $language;
 				$entity->pathSegment = $this->translate($type->name, $language);
 				$entity->type = PathSegment::RENTAL_TYPE;
@@ -149,7 +149,7 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 		foreach ($languageList as $languageId => $language) {
 			foreach ($tags as $tag) {
 				$entity = $this->routingPathSegmentEntityFactory->create();
-				$entity->country = NULL;
+				$entity->primaryLocation = NULL;
 				$entity->language = $language;
 				$entity->pathSegment = $this->translate($tag->name, $language);
 				$entity->type = PathSegment::TAG;

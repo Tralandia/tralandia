@@ -18,7 +18,6 @@ class AddressNormalizer extends \Nette\Object {
 	protected $phraseRepositoryAccessor;
 	protected $phraseTypeRepositoryAccessor;
 
-	//check
 	public function injectBaseRepositories(\Nette\DI\Container $dic) {
 		$this->locationRepositoryAccessor = $dic->locationRepositoryAccessor;
 		$this->locationTypeRepositoryAccessor = $dic->locationTypeRepositoryAccessor;
@@ -115,7 +114,7 @@ class AddressNormalizer extends \Nette\Object {
 		// If the location is outside the primaryLocation, return false
 		if (Strings::lower($info[\GoogleGeocodeResponseV3::ACT_COUNTRY]) != $this->address->primaryLocation->iso) {
 			$this->address->status = \Entity\Contact\Address::STATUS_MISPLACED;
-			return \Entity\Contact\Address::STATUS_MISPLACED;//check
+			return \Entity\Contact\Address::STATUS_MISPLACED;
 		} else if (isset($info[\GoogleGeocodeResponseV3::ACT_LOCALITY])) {
 			$this->address->status = \Entity\Contact\Address::STATUS_OK;
 		} else {
@@ -160,16 +159,12 @@ class AddressNormalizer extends \Nette\Object {
 
 		// Locality
 		if (isset($info[\GoogleGeocodeResponseV3::ACT_LOCALITY])) {
-			//check do this using AddressDecorator
 			$this->setLocality($info[\GoogleGeocodeResponseV3::ACT_LOCALITY]);
 		} else {
 			$this->setLocality(NULL);
 		}
-
-		d($this->address);
 	}
 
-	//check
 	protected function setLocality($locality) {
 		if ($locality === NULL) {
 			$this->address->locality = NULL;
@@ -198,13 +193,22 @@ class AddressNormalizer extends \Nette\Object {
 				$phraseType = $this->phraseTypeRepositoryAccessor->get()->findOneBy(array('entityName' => '\Entity\Location\Location'));
 
 				$namePhrase->type = $phraseType;
+				$namePhrase->sourceLanguage = $this->address->primaryLocation->defaultLanguage;
+
 				$namePhraseDecorator = $this->phraseDecoratorFactory->create($namePhrase);
 				$namePhraseDecorator->createTranslation($this->address->primaryLocation->defaultLanguage, $locality);
 
 				$newLocality->parent = $this->address->primaryLocation;
 				$newLocality->type = $locationType;
+
+				// We must save the new location to be able to work on it's slug
+				$this->locationRepositoryAccessor->get()->persist($newLocality);
+				$this->locationRepositoryAccessor->get()->flush($newLocality);
+
 				$newLocalityDecorator->setName($namePhrase);
 				$this->address->locality = $newLocality;
+				$this->locationRepositoryAccessor->get()->persist($newLocality);
+				$this->locationRepositoryAccessor->get()->flush($newLocality);
 			}
 		}		
 	}

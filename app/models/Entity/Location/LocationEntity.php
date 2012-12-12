@@ -20,7 +20,7 @@ class Location extends \Entity\BaseEntityDetails {
 	 * @var Boolean
 	 * @ORM\Column(type="boolean")
 	 */
-	protected $primary = FALSE;
+	protected $isPrimary = FALSE;
 
 	/**
 	 * @var Collection
@@ -63,7 +63,7 @@ class Location extends \Entity\BaseEntityDetails {
 	 * @var json
 	 * @ORM\Column(type="json", nullable=true)
 	 */
-	protected $polygon;
+	protected $polygons;
 
 	/**
 	 * @var latlong
@@ -121,9 +121,9 @@ class Location extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Rental\Rental", inversedBy="locations")
+	 * @ORM\ManyToMany(targetEntity="Entity\Contact\Address", inversedBy="locations")
 	 */
-	protected $rentals;
+	protected $addresses;
 
 	/**
 	 * @var Collection
@@ -176,7 +176,7 @@ class Location extends \Entity\BaseEntityDetails {
 	protected $contacts;
 
 	public function isPrimary() {
-		return (bool)$this->primary;
+		return (bool)$this->isPrimary;
 	}
 
 	//@entity-generator-code --- NEMAZAT !!!
@@ -190,7 +190,7 @@ class Location extends \Entity\BaseEntityDetails {
 		$this->companies = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->marketings = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->primaryRentals = new \Doctrine\Common\Collections\ArrayCollection;
-		$this->rentals = new \Doctrine\Common\Collections\ArrayCollection;
+		$this->addresses = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->users = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->backLinks = new \Doctrine\Common\Collections\ArrayCollection;
 	}
@@ -199,9 +199,9 @@ class Location extends \Entity\BaseEntityDetails {
 	 * @param boolean
 	 * @return \Entity\Location\Location
 	 */
-	public function setPrimary($primary)
+	public function setIsPrimary($isPrimary)
 	{
-		$this->primary = $primary;
+		$this->isPrimary = $isPrimary;
 
 		return $this;
 	}
@@ -209,9 +209,9 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return boolean|NULL
 	 */
-	public function getPrimary()
+	public function getIsPrimary()
 	{
-		return $this->primary;
+		return $this->isPrimary;
 	}
 		
 	/**
@@ -352,9 +352,9 @@ class Location extends \Entity\BaseEntityDetails {
 	 * @param json
 	 * @return \Entity\Location\Location
 	 */
-	public function setPolygon($polygon)
+	public function setPolygons($polygons)
 	{
-		$this->polygon = $polygon;
+		$this->polygons = $polygons;
 
 		return $this;
 	}
@@ -362,9 +362,9 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\Location\Location
 	 */
-	public function unsetPolygon()
+	public function unsetPolygons()
 	{
-		$this->polygon = NULL;
+		$this->polygons = NULL;
 
 		return $this;
 	}
@@ -372,9 +372,9 @@ class Location extends \Entity\BaseEntityDetails {
 	/**
 	 * @return json|NULL
 	 */
-	public function getPolygon()
+	public function getPolygons()
 	{
-		return $this->polygon;
+		return $this->polygons;
 	}
 		
 	/**
@@ -622,24 +622,24 @@ class Location extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @param \Entity\Rental\Rental
+	 * @param \Entity\Contact\Address
 	 * @return \Entity\Location\Location
 	 */
-	public function addRental(\Entity\Rental\Rental $rental)
+	public function addAddresse(\Entity\Contact\Address $addresse)
 	{
-		if(!$this->rentals->contains($rental)) {
-			$this->rentals->add($rental);
+		if(!$this->addresses->contains($addresse)) {
+			$this->addresses->add($addresse);
 		}
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Rental\Rental
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Contact\Address
 	 */
-	public function getRentals()
+	public function getAddresses()
 	{
-		return $this->rentals;
+		return $this->addresses;
 	}
 		
 	/**

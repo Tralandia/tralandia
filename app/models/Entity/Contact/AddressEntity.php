@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Address extends \Entity\BaseEntity {
 
+	const STATUS_UNCHECKED = 'unchecked';
 	const STATUS_MISPLACED = 'misplaced';
 	const STATUS_OK = 'ok';
 	const STATUS_INCOMPLETE = 'incomplete';
@@ -42,13 +43,19 @@ class Address extends \Entity\BaseEntity {
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Location\Location", cascade={"persist"})
 	 */
-	protected $locality;
+	protected $primaryLocation;
 
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Location\Location", cascade={"persist"})
 	 */
-	protected $primaryLocation;
+	protected $locality;
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToMany(targetEntity="Entity\Location\Location", mappedBy="addresses")
+	 */
+	protected $locations;
 
 	/**
 	 * @var latlong
@@ -68,6 +75,8 @@ class Address extends \Entity\BaseEntity {
 	public function __construct()
 	{
 		parent::__construct();
+
+		$this->locations = new \Doctrine\Common\Collections\ArrayCollection;
 	}
 		
 	/**
@@ -170,6 +179,35 @@ class Address extends \Entity\BaseEntity {
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Contact\Address
 	 */
+	public function setPrimaryLocation(\Entity\Location\Location $primaryLocation)
+	{
+		$this->primaryLocation = $primaryLocation;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Contact\Address
+	 */
+	public function unsetPrimaryLocation()
+	{
+		$this->primaryLocation = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Location\Location|NULL
+	 */
+	public function getPrimaryLocation()
+	{
+		return $this->primaryLocation;
+	}
+		
+	/**
+	 * @param \Entity\Location\Location
+	 * @return \Entity\Contact\Address
+	 */
 	public function setLocality(\Entity\Location\Location $locality)
 	{
 		$this->locality = $locality;
@@ -199,29 +237,36 @@ class Address extends \Entity\BaseEntity {
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Contact\Address
 	 */
-	public function setPrimaryLocation(\Entity\Location\Location $primaryLocation)
+	public function addLocation(\Entity\Location\Location $location)
 	{
-		$this->primaryLocation = $primaryLocation;
+		if(!$this->locations->contains($location)) {
+			$this->locations->add($location);
+		}
+		$location->addAddresse($this);
 
 		return $this;
 	}
 		
 	/**
+	 * @param \Entity\Location\Location
 	 * @return \Entity\Contact\Address
 	 */
-	public function unsetPrimaryLocation()
+	public function removeLocation(\Entity\Location\Location $location)
 	{
-		$this->primaryLocation = NULL;
+		if($this->locations->contains($location)) {
+			$this->locations->removeElement($location);
+		}
+		$location->removeAddresse($this);
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Entity\Location\Location|NULL
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Location\Location
 	 */
-	public function getPrimaryLocation()
+	public function getLocations()
 	{
-		return $this->primaryLocation;
+		return $this->locations;
 	}
 		
 	/**

@@ -13,7 +13,7 @@ use Nette\Application\Routers\RouteList,
 class RouterFactory
 {
 	protected $defaultLanguage;
-	protected $defaultPrymaryLocation;
+	protected $defaultPrimaryLocation;
 	protected $frontRouteFactory;
 
 	public $languageRepositoryAccessor;
@@ -21,7 +21,7 @@ class RouterFactory
 
 	public function __construct(array $options, IFrontRouteFactory $frontRouteFactory) {
 		$this->defaultLanguage = $options['defaultLanguage'];
-		$this->defaultPrymaryLocation = $options['defaultPrimaryLocation'];
+		$this->defaultPrimaryLocation = $options['defaultPrimaryLocation'];
 		$this->frontRouteFactory = $frontRouteFactory;
 	}
 
@@ -30,8 +30,8 @@ class RouterFactory
 	 */
 	public function create()
 	{
-		$this->defaultLanguage = $this->languageRepositoryAccessor->get()->find($this->defaultLanguage);
-		$this->defaultPrymaryLocation = $this->locationRepositoryAccessor->get()->find($this->defaultPrymaryLocation);
+		//$this->defaultLanguage = $this->languageRepositoryAccessor->get()->find($this->defaultLanguage);
+		//$this->defaultPrimaryLocation = $this->locationRepositoryAccessor->get()->find($this->defaultPrimaryLocation);
 
 		$router = new RouteList();
 
@@ -39,7 +39,7 @@ class RouterFactory
 		$gregor[] = new Route('gregor/[<presenter>/[<action>[/<id>]]]', array(
 			'presenter' => 'Page',
 			'action' =>  'home',
-			'primaryLocation' => $this->defaultPrymaryLocation,
+			'primaryLocation' => $this->defaultPrimaryLocation,
 			'language' => $this->defaultLanguage,			
 		));
 
@@ -48,13 +48,13 @@ class RouterFactory
 		$adminRouter[] = new Route('admin/<presenter>/<id [0-9]+>', array(
 			'presenter' => NULL,
 			'action' =>  'edit',
-			'primaryLocation' => $this->defaultPrymaryLocation,
+			'primaryLocation' => $this->defaultPrimaryLocation,
 			'language' => $this->defaultLanguage,
 		));
 		$adminRouter[] = new Route('admin/<presenter>/[<action>[/<id>]]', array(
 			'presenter' => NULL,
 			'action' =>  'list',
-			'primaryLocation' => $this->defaultPrymaryLocation,
+			'primaryLocation' => $this->defaultPrimaryLocation,
 			'language' => $this->defaultLanguage,
 		));
 	/*	$adminRouter[] = new Route('admin/<presenter>/[<action list|add|registration>]', array(
@@ -65,7 +65,7 @@ class RouterFactory
 		$adminRouter[] = new Route('admin/<presenter>/[<action>[/<id>]]', array(
 			'presenter' => 'Admin',
 			'action' =>  'list',
-			'primaryLocation' => $this->defaultPrymaryLocation,
+			'primaryLocation' => $this->defaultPrimaryLocation,
 			'language' => $this->defaultLanguage,
 		));
 
@@ -74,7 +74,7 @@ class RouterFactory
 		$ownerRouter[] = new Route('owner/<presenter>/[<action>[/<id>]]', array(
 			'presenter' => 'Rental',
 			'action' =>  'default',
-			'primaryLocation' => $this->defaultPrymaryLocation,
+			'primaryLocation' => $this->defaultPrimaryLocation,
 			'language' => $this->defaultLanguage,
 		));
 
@@ -91,7 +91,7 @@ class RouterFactory
 		$frontRouter[] = new Route('<presenter>/[<action>[/<id>]]', array(
 			'presenter' => 'Home',
 			'action' =>  'default',
-			'primaryLocation' => $this->defaultPrymaryLocation,
+			'primaryLocation' => $this->defaultPrimaryLocation,
 			'language' => $this->defaultLanguage,
 		));
 
