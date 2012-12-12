@@ -165,7 +165,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 
 		$i=0;
 		arsort($showLinks);
-		d($showLinks);
+
 		foreach ($showLinks as $key => $count) {
 			$links[$key]['hide'] = FALSE;
 			if ($i==10) break;

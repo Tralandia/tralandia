@@ -195,11 +195,11 @@
 <div class="row-fluid objectDetailContent">
 	<div class="span4 marginBottom marginTop marginLeft leftSidebarObjectDetail">
 
-	{foreach $rentalService->getImages(3) as $photo}
+	{foreach $rentalService->getPhotos(3) as $photo}
 		{* <img src="{$photo|thumbnail:100}" class="marginBottom" /> *}
 	{/foreach}
 
-		<img class="mapsImg" src="https://maps.googleapis.com/maps/api/staticmap?center={$rental->latitude},{$rental->longitude}&markers=color:blue%7C{$rental->latitude},{$rental->longitude}&maptype=terrain&zoom=13&size=288x170&sensor=false" />
+		{* <img class="mapsImg" src="https://maps.googleapis.com/maps/api/staticmap?center={$rental->latitude},{$rental->longitude}&markers=color:blue%7C{$rental->latitude},{$rental->longitude}&maptype=terrain&zoom=13&size=288x170&sensor=false" /> *}
 	</div>
 
 
@@ -243,8 +243,8 @@
 		
 		
 		
-		{dump $rental->interviewAnswers}
-
+{* 		{dump $rental->interviewAnswers}
+ *}
 		<div class="detailAmanities">
 			<ul class="objectDetailServicesIconList list">
 			   <li>{_o22830} <strong>{$rental->checkIn}</strong></li>
@@ -295,14 +295,16 @@
 
 	<!-- right sidebar -->
 	<div class="span3 marginTop sidebarRightDetail">
-		<button class="btn btn-compare addToFavorites" rel="{$rental->id}" link="{link Rental:detail $rental}" thumb="{$rentalService->getMainPhoto()->getThumbnail()}"><span class="entypo-star">{_o12334}</span></button>
+	{dump $rentalService->getMainPhoto()}
+	
+		{* <button class="btn btn-compare addToFavorites" rel="{$rental->id}" link="{link Rental:detail $rental}" thumb="{$rentalService->getMainPhoto()->getThumbnail()}"><span class="entypo-star">{_o12334}</span></button> *}
 
 
 		<div class="sidebarContact">
 			<div class="sidebarTitle">{_o12275}</div>
 			<div class="sidebarInner paddingTop">
 
-				<table>
+{* 				<table>
 					<tr>
 						<td><i class="entypo-phone"></i></td>
 						<td>						
@@ -356,7 +358,7 @@
 						</td>
 					</tr>
 				</table>
-
+ *}
 				{include '../../forms/Rental/reservationForm.latte'}
 				
 
@@ -456,14 +458,14 @@
 			<div id="gallery">
 
 				<ul class="biggall">					
-					<li n:foreach="$rentalService->getImages() as $photo"><img src="{$photo->getThumbnail()}" />{* <p> popis </p>*}</li>
+					 {* <li n:foreach="$rentalService->getPhotos() as $photo"><img src="{$photo->getThumbnail()}" /><p> popis </p></li> *}
 				</ul>
 
 				<div class="clearfix"></div>
 			</div>
 			<div id="tabs-2">
 				
-				<div id="map_canvas" zoom="10" value="{$rental->latitude},{$rental->longitude}" style="width:100%;height:400px;"></div>
+				{* <div id="map_canvas" zoom="10" value="{$rental->latitude},{$rental->longitude}" style="width:100%;height:400px;"></div> *}
 				{*
 				<div class="row-fluid marginTop">
 					<div class="span4">
