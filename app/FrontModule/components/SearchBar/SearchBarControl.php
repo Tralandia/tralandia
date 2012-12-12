@@ -73,32 +73,34 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 			'rentalTag' => $this->presenter->getParameter('rentalTag'),
 			'spokenLanguage' => $this->presenter->getParameter('spokenLanguage'),
 			'capacity' => $this->presenter->getParameter('capacity'),
+			'price' => $this->presenter->getParameter('price'),
 		);
 
 	}
 
 	protected function getLocationCriteria() {
 
-		$order = array();
-		$linksTmp = array();
-		$visible = array();
-		$selected = $this->getSelectedParams();
+		$order 		= array();
+		$linksTmp 	= array();
+		$visible 	= array();
+		$selected 	= $this->getSelectedParams();
 
-		$locations = $this->locationRepositoryAccessor->get()->findByParent($this->primaryLocation);
+		$locations 	= $this->locationRepositoryAccessor->get()->findByParent($this->primaryLocation);
 		foreach ($locations as $key => $location) {
 			$params = array_merge($selected, array('location' => $location));
 
-			$count = $this->getRentalsCount($params);
-			$name = $this->translator->translate($location->name);
-			$link = $this->presenter->link('//Rental:list', $params);
-			$seo = $this->seoFactory->create($link, $this->presenter->getLastCreatedRequest());
-			$visible[$key] = $count;
-			$order[$name] = $key;
+			$count 	= $this->getRentalsCount($params);
+			$name 	= $this->translator->translate($location->name);
+			$link 	= $this->presenter->link('//Rental:list', $params);
+			$seo 	= $this->seoFactory->create($link, $this->presenter->getLastCreatedRequest());
+
+			$visible[$key] 	= $count;
+			$order[$name] 	= $key;
 
 			$linksTmp[$key] = array(
-				'seo' => $seo,
+				'seo' 	=> $seo,
 				'count' => $count,
-				'hide' => TRUE,
+				'hide' 	=> TRUE,
 			);
 		}
 
@@ -110,10 +112,10 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 
 	protected function getRentalTypeCriteria() {
 
-		$order = array();
-		$linksTmp = array();
-		$visible = array();
-		$selected = $this->getSelectedParams();
+		$order 		= array();
+		$linksTmp 	= array();
+		$visible 	= array();
+		$selected 	= $this->getSelectedParams();
 
 		$rentalTypes = $this->rentalTypeRepositoryAccessor->get()->findAll();
 		foreach ($rentalTypes as $key => $rentalType) {
@@ -142,10 +144,10 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 
 	protected function getRentalTagCriteria() {
 
-		$order = array();
-		$linksTmp = array();
-		$visible = array();
-		$selected = $this->getSelectedParams();
+		$order 		= array();
+		$linksTmp 	= array();
+		$visible 	= array();
+		$selected 	= $this->getSelectedParams();
 
 		$rentalTags = $this->rentalTagRepositoryAccessor->get()->findAll();
 		foreach ($rentalTags as $key => $rentalTag) {
@@ -174,10 +176,10 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 
 	protected function getSpokenLanguageCriteria() {
 
-		$order = array();
-		$linksTmp = array();
-		$visible = array();
-		$selected = $this->getSelectedParams();
+		$order 		= array();
+		$linksTmp 	= array();
+		$visible 	= array();
+		$selected 	= $this->getSelectedParams();
 
 		$languages = $this->languageRepositoryAccessor->get()->findAll();
 		foreach ($languages as $key => $language) {
