@@ -60,6 +60,9 @@ presenter:
 	configsDir: %appDir%/configs/presenters
 
 services:
+	# STORAGE
+	rentalImageStorage: Extras\RentalImageStorage(%wwwDir%/storage/rental_images)
+
 	# CACHE
 	aclCache: Nette\Caching\Cache(@cacheStorage, 'Acl')
 	routerCache: Nette\Caching\Cache(@cacheStorage, 'Router')
@@ -174,9 +177,9 @@ services:
 			- @rentalTagRepositoryAccessor
 			- @locationDecoratorFactory
 
-	phoneBook: Extras\Books\Phone(@phoneRepositoryAccessor)
-	emailBook: Extras\Books\Email(@emailRepositoryAccessor)
-	urlBook: Extras\Books\Url(@urlRepositoryAccessor)
+	phoneBook: Extras\Books\Phone(@contactPhoneRepositoryAccessor)
+	emailBook: Extras\Books\Email(@contactEmailRepositoryAccessor)
+	urlBook: Extras\Books\Url(@contactUrlRepositoryAccessor)
 
 	itemTextFactory: Extras\FormMask\Items\Foctories\TextFactory
 	itemPhraseFactory: Extras\FormMask\Items\Foctories\PhraseFactory(@phraseDecoratorFactory, @environment::getLanguage())
@@ -220,6 +223,7 @@ factories:
 	searchBarControlFactory:
 		class: FrontModule\Components\SearchBar\SearchBarControl(%location%)
 		implement: FrontModule\Components\SearchBar\ISearchBarControlFactory
+
 	# ==============================
 	# ==================== ROUTERS
 	# ==============================
@@ -279,7 +283,7 @@ factories:
 
 	itemMapFactory: Extras\FormMask\Items\Foctories\MapFactory
 	itemEmailFactory: Extras\FormMask\Items\Foctories\EmailFactory
-	itemAddressFactory: Extras\FormMask\Items\Foctories\AddressFactory(@translator, @addressRepositoryAccessor)
+	itemAddressFactory: Extras\FormMask\Items\Foctories\AddressFactory(@translator, @contactAddressRepositoryAccessor)
 	itemPhoneFactory: Extras\FormMask\Items\Foctories\PhoneFactory
 	itemUrlFactory: Extras\FormMask\Items\Foctories\UrlFactory
 

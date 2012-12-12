@@ -63,18 +63,7 @@ class RentalPresenter extends BasePresenter {
 		// 	$rentals[$rental->id]['entity'] = $rental;
 		// }
 
-		$regions = $this->locationRepositoryAccessor->get()->findBy(array(
-				'parent' => 58
-			), null , 50);
-
-
-		$topRegions = $this->locationRepositoryAccessor->get()->findBy(array(
-				'parent' => 58
-			), null , 11);
-
 		$this->template->rentals = $rentals;
-		$this->template->regions = array_chunk($regions,ceil(count($regions)/3));
-		$this->template->topRegions = array_chunk($topRegions,ceil(count($topRegions)/3));
 
 	}
 

@@ -1,13 +1,28 @@
 <?php
 namespace Extras;
 
+use Nette\Latte\Compiler;
+use Nette\Latte\MacroNode;
+use Nette\Latte\PhpWriter;
+
+
 class Macros extends \Nette\Latte\Macros\MacroSet {
 
-	public static function install(\Nette\Latte\Compiler $compiler) {
+	public static function install(Compiler $compiler) {
 		$me = parent::install($compiler);
-		//$me->addMacro('ulList', 'echo \Extras\Component\UlList(%node.args)');
-		$me->addMacro('ulList', 'echo \Extras\Helpers\LatteHelpers::ulList(%node.args)');
+		$me->addMacro('timer', array($me, 'macroTimer'), '\Nette\Diagnostics\Debugger::barDump(\Nette\Diagnostics\Debugger::timer(%node.word), %node.word)');
 		return $me;
+	}
+
+	public function macroTimer(MacroNode $node, PhpWriter $writer)
+	{
+		$cmd = '\Nette\Diagnostics\Debugger::timer(%node.word)';
+		if ($node->isEmpty = (substr($node->args, -1) === '/')) {
+			$cmd = '\Nette\Diagnostics\Debugger::barDump(' . $cmd . ', %node.word)';
+			return $writer->write($cmd);
+		} else {
+			return $writer->write($cmd);
+		}
 	}
 
 }

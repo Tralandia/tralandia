@@ -85,7 +85,7 @@ class MediumService extends \Service\BaseService {
 			throw new \Nette\UnexpectedValueException('Image size "' . $size . '" does not exist.');
 		}
 
-		$uri = '/storage'.$this->getMediumDir() . '/' . $size . '.jpg';
+		$uri = '/storage' . $this->getMediumDir() . '/' . $size . '.jpg';
 
 		return $uri;
 
