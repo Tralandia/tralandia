@@ -195,7 +195,7 @@
 <div class="row-fluid objectDetailContent">
 	<div class="span4 marginBottom marginTop marginLeft leftSidebarObjectDetail">
 
-	{foreach $rentalService->getPhotos(3) as $photo}
+	{foreach $rentalService->getImages(3) as $photo}
 		{* <img src="{$photo|thumbnail:100}" class="marginBottom" /> *}
 	{/foreach}
 
@@ -456,7 +456,7 @@
 			<div id="gallery">
 
 				<ul class="biggall">					
-					<li n:foreach="$rentalService->getPhotos() as $photo"><img src="{$photo->getThumbnail()}" />{* <p> popis </p>*}</li>
+					<li n:foreach="$rentalService->getImages() as $photo"><img src="{$photo->getThumbnail()}" />{* <p> popis </p>*}</li>
 				</ul>
 
 				<div class="clearfix"></div>

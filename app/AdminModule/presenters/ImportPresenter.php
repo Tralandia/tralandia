@@ -125,7 +125,7 @@ class ImportPresenter extends BasePresenter {
 					//$import->undoSection($section);
 
 					$import->savedVariables['importedSections'][$section] = 1;
-					d($import->savedVariables['importedSections']);
+					//d($import->savedVariables['importedSections']);
 					$import->saveVariables();
 					$import->doImport();
 				}

@@ -7,7 +7,7 @@ use Service, Doctrine, Entity;
 /**
  * @author Radoslav Toth
  */
-class PolygonService extends Service\BaseService {
+class PolygonService {
 
 	protected $locationRepositoryAccessor;
 	protected $locationTypeRepositoryAccessor;
@@ -21,22 +21,25 @@ class PolygonService extends Service\BaseService {
 	
 	public function setLocationsForRental(\Entity\Rental\Rental $rental){
 		$matches = array();
-		$locationType = $this->locationTypeRepositoryAccessor->get()->findBy(array('slug' => 'region'));
-
+		$locationType = $this->locationTypeRepositoryAccessor->get()->findOneBy(array('slug' => 'region'));
+		
 		$locations = $this->locationRepositoryAccessor->get()->findBy(array(
 			'parent' => $rental->primaryLocation,
 			'type' => $locationType,
 		));
 
+		$latitude = $rental->address->latitude->setType('latitude')->toFloat();
+		$longitude = $rental->address->longitude->setType('longitude')->toFloat();
+
 		foreach ($locations as $location) {			
 			foreach ($location->polygons as $key2 => $val2) {
 				if(count($val2) == 4){
-					if($val2[0] <= $rental->address->latitude && $val2[2] >= $rental->address->latitude && $val2[1]<=$rental->address->longitude && $val2[3] >= $rental->address->longitude){
+					if($val2[0] <= $latitude && $val2[2] >= $latitude && $val2[1]<=$longitude && $val2[3] >= $longitude){
 						$matches[] = $location;
 						break;
 					}
 				}else if(count($val2) == 3){
-					$distance=(((acos(sin(($val2[0]*pi()/180))*sin(($rental->address->latitude*pi()/180))+cos(($val2[0]*pi()/180))*cos(($rental->address->latitude*pi()/180))*cos((($val2[1]-$rental->address->longitude)*pi()/180))))*180/pi())*60*1.1515*1.609344*1000);
+					$distance=(((acos(sin(($val2[0]*pi()/180))*sin(($latitude*pi()/180))+cos(($val2[0]*pi()/180))*cos(($latitude*pi()/180))*cos((($val2[1]-$longitude)*pi()/180))))*180/pi())*60*1.1515*1.609344*1000);
 					if($distance<$val2[2]){
 						$matches[] = $location;
 						break;
@@ -44,7 +47,6 @@ class PolygonService extends Service\BaseService {
 				}
 			}
 		}
-
 		foreach ($matches as $location) {
 			$rental->address->addLocation($location);
 		}
@@ -56,9 +58,9 @@ class PolygonService extends Service\BaseService {
 	function setRentalsForLocation(\Entity\Location\Location $location){
 		$matches = array();
 
-		$locationType = $this->locationTypeRepositoryAccessor->get()->findBy(array('slug' => 'region'));
+		$locationType = $this->locationTypeRepositoryAccessor->get()->findOneBy(array('slug' => 'region'));
 
-		$rentals = $this->locationRepositoryAccessor->get()->findBy(array(
+		$rentals = $this->rentalRepositoryAccessor->get()->findBy(array(
 			'primaryLocation' => $location->parent,
 			'status' => \Entity\Rental\Rental::STATUS_LIVE,
 		));
@@ -70,21 +72,22 @@ class PolygonService extends Service\BaseService {
 		}
 		
 		foreach ($rentals as $rental) {
+			$latitude = $rental->address->latitude->setType('latitude')->toFloat();
+			$longitude = $rental->address->longitude->setType('longitude')->toFloat();
 			foreach ($location->polygons as $key2 => $val2) {
 				if(count($val2) == 4){
-					if($val2[0] <= $rental->address->latitude && $val2[2] >= $rental->address->latitude && $val2[1]<=$rental->address->longitude && $val2[3] >= $rental->address->longitude){
+					if($val2[0] <= $latitude && $val2[2] >= $latitude && $val2[1]<=$longitude && $val2[3] >= $longitude){
 						$matches[] = $location;
 						break;
 					}
 				}else if(count($val2) == 3){
-					$distance=(((acos(sin(($val2[0]*pi()/180))*sin(($rental->address->latitude*pi()/180))+cos(($val2[0]*pi()/180))*cos(($rental->address->latitude*pi()/180))*cos((($val2[1]-$rental->address->longitude)*pi()/180))))*180/pi())*60*1.1515*1.609344*1000);
+					$distance=(((acos(sin(($val2[0]*pi()/180))*sin(($latitude*pi()/180))+cos(($val2[0]*pi()/180))*cos(($latitude*pi()/180))*cos((($val2[1]-$longitude)*pi()/180))))*180/pi())*60*1.1515*1.609344*1000);
 					if($distance<$val2[2]){
 						$matches[] = $location;
 						break;
 					}
 				}
 			}
-
 			foreach ($matches as $location) {
 				$rental->address->addLocation($location);
 			}

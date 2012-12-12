@@ -15,6 +15,7 @@ class LocationService extends Service\BaseService {
 	protected $locationRepositoryAccessor;
 
 	protected $phraseDecoratorFactory;
+	protected $polygonService;
 
 	public function injectBaseRepositories(\Nette\DI\Container $dic) {
 		$this->routingPathSegmentRepositoryAccessor = $dic->routingPathSegmentRepositoryAccessor;
@@ -24,6 +25,10 @@ class LocationService extends Service\BaseService {
 
 	public function injectPhrase(\Model\Phrase\IPhraseDecoratorFactory $factory) {
 		$this->phraseDecoratorFactory = $factory;
+	}
+
+	public function inject(\Service\PolygonService $service) {
+		$this->polygonService = $service;
 	}
 
 	public function setName(\Entity\Phrase\Phrase $name) {
@@ -88,6 +93,11 @@ class LocationService extends Service\BaseService {
 		}
 		return $newSlug;
 
+	}
+
+	public function setLongitude(\Extras\Types\Latlong $longitude) {
+		$this->getEntity()->longitude = $longitude;
+		$this->polygonService->setRentalsForLocation($this->getEntity());
 	}
 
 	public function getParent($slug = NULL) 

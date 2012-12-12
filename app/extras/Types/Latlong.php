@@ -14,8 +14,13 @@ class Latlong extends BaseType {
 		}
 	}
 
+	public function setType($type) {
+		$this->type = $type;
+		return $this;
+	}
+
 	public function toFloat() {
-		if (!$this->isValid()) return FALSE;
+		//if (!$this->isValid()) return FALSE;
 
 		return (float)$this->data;
 	}

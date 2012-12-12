@@ -114,6 +114,7 @@ class BaseImport {
 				'\Invoice\Item' => array(),
 			),
 			'subsections' => array(),
+			'saveImportStatus' => FALSE,
 		),
 		// 'attractions' => array(
 		// 	'entities' => array(
@@ -151,13 +152,13 @@ class BaseImport {
 			),
 			'subsections' => array(),
 		),
-		'taskTypes' => array(
-			'entities' => array(
-				'\Task\Type' => array(),
-			),
-			'subsections' => array(),
-			'saveImportStatus' => FALSE,
-		),
+		// 'taskTypes' => array(
+		// 	'entities' => array(
+		// 		'\Task\Type' => array(),
+		// 	),
+		// 	'subsections' => array(),
+		// 	'saveImportStatus' => FALSE,
+		// ),
 		'updateLanguage' => array(
 			'entities' => array(
 			),

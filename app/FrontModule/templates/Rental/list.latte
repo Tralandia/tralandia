@@ -53,8 +53,8 @@
 		        		{* @todo odstranit *}
 		        		{var $thumbLink = '';}
 		        		
-		        		{if $rentalService->getMainPhoto()}
-		        		{$thumbLink = $rentalService->getMainPhoto()->getThumbnail()}
+		        		{if $rentalService->getMainImage()}
+		        		{$thumbLink = $rentalService->getMainImage()->getThumbnail()}
 		        		<img src="{$thumbLink}" />
 		        		{/if}
 

@@ -32,10 +32,16 @@ class BankAccount extends \Entity\BaseEntity {
 	protected $bankName;
 
 	/**
-	 * @var address
-	 * @ORM\Column(type="address")
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $bankAddress;
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToOne(targetEntity="Entity\Location\Location")
+	 */
+	protected $primaryLocation;
 
 	/**
 	 * @var string
@@ -172,10 +178,10 @@ class BankAccount extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Extras\Types\Address
+	 * @param string
 	 * @return \Entity\Company\BankAccount
 	 */
-	public function setBankAddress(\Extras\Types\Address $bankAddress)
+	public function setBankAddress($bankAddress)
 	{
 		$this->bankAddress = $bankAddress;
 
@@ -183,11 +189,50 @@ class BankAccount extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Extras\Types\Address|NULL
+	 * @return \Entity\Company\BankAccount
+	 */
+	public function unsetBankAddress()
+	{
+		$this->bankAddress = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
 	 */
 	public function getBankAddress()
 	{
 		return $this->bankAddress;
+	}
+		
+	/**
+	 * @param \Entity\Location\Location
+	 * @return \Entity\Company\BankAccount
+	 */
+	public function setPrimaryLocation(\Entity\Location\Location $primaryLocation)
+	{
+		$this->primaryLocation = $primaryLocation;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Company\BankAccount
+	 */
+	public function unsetPrimaryLocation()
+	{
+		$this->primaryLocation = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Location\Location|NULL
+	 */
+	public function getPrimaryLocation()
+	{
+		return $this->primaryLocation;
 	}
 		
 	/**

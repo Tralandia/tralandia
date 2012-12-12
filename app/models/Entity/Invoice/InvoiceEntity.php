@@ -87,15 +87,33 @@ class Invoice extends \Entity\BaseEntity {
 
 	/**
 	 * @var url
-	 * @ORM\Column(type="url")
+	 * @ORM\Column(type="url", nullable=true)
 	 */
 	protected $clientUrl;
 
 	/**
-	 * @var address
-	 * @ORM\Column(type="address")
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $clientAddress;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $clientLocality;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $clientPostalCode;
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToOne(targetEntity="Entity\Location\Location")
+	 */
+	protected $clientPrimaryLocation;
 
 	/**
 	 * @var Collection
@@ -481,6 +499,16 @@ class Invoice extends \Entity\BaseEntity {
 	}
 		
 	/**
+	 * @return \Entity\Invoice\Invoice
+	 */
+	public function unsetClientUrl()
+	{
+		$this->clientUrl = NULL;
+
+		return $this;
+	}
+		
+	/**
 	 * @return \Extras\Types\Url|NULL
 	 */
 	public function getClientUrl()
@@ -489,10 +517,10 @@ class Invoice extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Extras\Types\Address
+	 * @param string
 	 * @return \Entity\Invoice\Invoice
 	 */
-	public function setClientAddress(\Extras\Types\Address $clientAddress)
+	public function setClientAddress($clientAddress)
 	{
 		$this->clientAddress = $clientAddress;
 
@@ -500,11 +528,108 @@ class Invoice extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Extras\Types\Address|NULL
+	 * @return \Entity\Invoice\Invoice
+	 */
+	public function unsetClientAddress()
+	{
+		$this->clientAddress = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
 	 */
 	public function getClientAddress()
 	{
 		return $this->clientAddress;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Invoice\Invoice
+	 */
+	public function setClientLocality($clientLocality)
+	{
+		$this->clientLocality = $clientLocality;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Invoice\Invoice
+	 */
+	public function unsetClientLocality()
+	{
+		$this->clientLocality = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getClientLocality()
+	{
+		return $this->clientLocality;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Invoice\Invoice
+	 */
+	public function setClientPostalCode($clientPostalCode)
+	{
+		$this->clientPostalCode = $clientPostalCode;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Invoice\Invoice
+	 */
+	public function unsetClientPostalCode()
+	{
+		$this->clientPostalCode = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getClientPostalCode()
+	{
+		return $this->clientPostalCode;
+	}
+		
+	/**
+	 * @param \Entity\Location\Location
+	 * @return \Entity\Invoice\Invoice
+	 */
+	public function setClientPrimaryLocation(\Entity\Location\Location $clientPrimaryLocation)
+	{
+		$this->clientPrimaryLocation = $clientPrimaryLocation;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Invoice\Invoice
+	 */
+	public function unsetClientPrimaryLocation()
+	{
+		$this->clientPrimaryLocation = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Location\Location|NULL
+	 */
+	public function getClientPrimaryLocation()
+	{
+		return $this->clientPrimaryLocation;
 	}
 		
 	/**

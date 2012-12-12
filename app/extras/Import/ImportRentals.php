@@ -39,8 +39,6 @@ class ImportRentals extends BaseImport {
 		$locationTypes['country'] = $context->locationTypeRepositoryAccessor->get()->findOneBySlug('country');
 		$locationTypes['continent'] = $context->locationTypeRepositoryAccessor->get()->findOneBySlug('continent');
 		$locationTypes['region'] = $context->locationTypeRepositoryAccessor->get()->findOneBySlug('region');
-		$locationTypes['administrativeregionlevelone'] = $context->locationTypeRepositoryAccessor->get()->findOneBySlug('administrativeregionlevelone');
-		$locationTypes['administrativeregionleveltwo'] = $context->locationTypeRepositoryAccessor->get()->findOneBySlug('administrativeregionleveltwo');
 		$locationTypes['locality'] = $context->locationTypeRepositoryAccessor->get()->findOneBySlug('locality');
 
 		$interviewQuestions = array();
@@ -92,7 +90,7 @@ class ImportRentals extends BaseImport {
 			$rental->setType($context->rentalTypeRepositoryAccessor->get()->findOneByOldId($oldRentalTypesEn[$oldRentalType]));
 
 			// Address
-			$address = $context->contactAddressRepositoryAccessor->get()->create();
+			$address = $context->contactAddressRepositoryAccessor->get()->createNew();
 			$address->status = \Entity\Contact\Address::STATUS_UNCHECKED;
 
 			$address->address = implode('\n', array_filter(array($x['address'])));
@@ -105,7 +103,7 @@ class ImportRentals extends BaseImport {
 
 			$rental->address = $address;
 
-
+			$rental->primaryLocation = $context->locationRepositoryAccessor->get()->findOneBy(array('oldId' => $x['country_id'], 'type' => $locationTypes['country']));
 
 			$rental->slug = $x['name_url'];
 			$rental->name = $this->createPhraseFromString('\Rental\Rental', 'name', 'NATIVE', $x['name'], $rental->editLanguage);
@@ -116,7 +114,7 @@ class ImportRentals extends BaseImport {
 			// // \Contact\Phone
 			// $phones = explode(';', $x['phones']);
 			// foreach ($phones as $key => $value) {
-			// 	$phone = $context->contactPhoneRepositoryAccessor->get()->create();
+			// 	$phone = $context->contactPhoneRepositoryAccessor->get()->createNew();
 			// }
 
 			// $contacts->add(new \Extras\Types\Email($x['contact_email']));
@@ -131,7 +129,8 @@ class ImportRentals extends BaseImport {
 			$spokenLanguages = array_unique(array_filter(explode(',', $x['languages_spoken'])));
 			if (is_array($spokenLanguages) && count($spokenLanguages)) {
 				foreach ($spokenLanguages as $key => $value) {
-					$rental->addSpokenLanguage($context->languageRepositoryAccessor->get()->findOneByOldId($value));
+					$t = $context->languageRepositoryAccessor->get()->findOneByOldId($value);
+					if ($t) $rental->addSpokenLanguage($t);
 				}
 			}
 
@@ -275,19 +274,19 @@ class ImportRentals extends BaseImport {
 			$rental->pricelists = $pricelists;
 			$model->persist($rental);
 
-			// Media
+			// Images
 			$temp = array_unique(array_filter(explode(',', $x['photos'])));
 			if (is_array($temp) && count($temp)) {
 				if ($this->developmentMode == TRUE) $temp = array_slice($temp, 0, 6);
 				foreach ($temp as $key => $value) {
-					$medium = $context->mediumRepositoryAccessor->get()->findOneByOldUrl('http://www.tralandia.com/u/'.$value);
-					if (!$medium) {
-						$mediumEntity = $context->mediumRepositoryAccessor->get()->createNew();
-						$medium = $context->mediumDecoratorFactory->create($mediumEntity);
-						$medium->setContentFromUrl('http://www.tralandia.com/u/'.$value);
-						$rental->addMedium($medium->getEntity());
+					$image = $context->rentalImageRepositoryAccessor->get()->findOneByOldUrl('http://www.tralandia.com/u/'.$value);
+					if (!$image) {
+						$imageEntity = $context->rentalImageRepositoryAccessor->get()->createNew();
+						$image = $context->rentalImageDecoratorFactory->create($imageEntity);
+						$image->setContentFromFile('http://www.tralandia.com/u/'.$value);
+						$rental->addImage($imageEntity);
 					} else {
-						$rental->addMedium($medium);
+						$rental->addImage($image);
 					}
 				}
 			}
@@ -306,6 +305,7 @@ class ImportRentals extends BaseImport {
 			$rental->calendarUpdated = fromStamp($x['calendar_updated']);
 
 			$rental->created = fromStamp($x['date_added']);
+			//d($rental); return;
 			$model->persist($rental);
 
 			//@todo

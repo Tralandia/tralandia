@@ -35,8 +35,8 @@ class Company extends \Entity\BaseEntityDetails {
 	protected $name;
 
 	/**
-	 * @var address
-	 * @ORM\Column(type="address", nullable=true)
+	 * @var Collection
+	 * @ORM\OneToOne(targetEntity="Entity\Contact\Address", cascade={"persist", "remove"})
 	 */
 	protected $address;
 
@@ -184,10 +184,10 @@ class Company extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @param \Extras\Types\Address
+	 * @param \Entity\Contact\Address
 	 * @return \Entity\Company\Company
 	 */
-	public function setAddress(\Extras\Types\Address $address)
+	public function setAddress(\Entity\Contact\Address $address)
 	{
 		$this->address = $address;
 
@@ -195,17 +195,7 @@ class Company extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Company\Company
-	 */
-	public function unsetAddress()
-	{
-		$this->address = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Extras\Types\Address|NULL
+	 * @return \Entity\Contact\Address|NULL
 	 */
 	public function getAddress()
 	{

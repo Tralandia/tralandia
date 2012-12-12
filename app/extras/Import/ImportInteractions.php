@@ -39,7 +39,10 @@ class ImportInteractions extends BaseImport {
 
 		while($x = mysql_fetch_array($r)) {
 			$interaction = $this->context->userRentalReservationEntityFactory->create();
-			$interaction->language = $this->context->languageRepositoryAccessor->get()->find($this->languagesByOldId[$x['language']]);
+			if (isset($this->languagesByOldId[$x['language']])) {
+				$interaction->language = $this->context->languageRepositoryAccessor->get()->find($this->languagesByOldId[$x['language']]);			
+			}
+
 			$t = $this->context->rentalRepositoryAccessor->get()->findOneByOldId($x['object_id']);
 			if ($t) {
 				$interaction->rental = $t;

@@ -180,6 +180,7 @@ class ImportLocations extends BaseImport {
 			$location->oldId = $x['id'];
 			$location->iso = $x['iso'];
 			$location->iso3 = $x['iso3'];
+			$location->isPrimary = TRUE;
 
 			if ($x['default_language_id'] > 0) {
 				$location->defaultLanguage = $this->context->languageRepositoryAccessor->get()->find(getByOldId('\Language', $x['default_language_id']));
@@ -299,10 +300,14 @@ class ImportLocations extends BaseImport {
 	// ------------- Regions
 	// ----------------------------------------------------------
 	private function importRegions() {
-		$locationType = $this->context->locationTypeEntityFactory->create();
-		$locationType->name = $this->createPhraseFromString('\Location\Location', 'name', 'NATIVE', 'region', 'en');
-		$locationType->slug = 'region';
-		$this->model->persist($locationType);
+		$locationType = $this->context->locationTypeRepositoryAccessor->get()->findOneBy(array('slug' => 'region'));
+		if (!$locationType) {
+			d('Vytvaram region locationType');
+			$locationType = $this->context->locationTypeEntityFactory->create();
+			$locationType->name = $this->createPhraseFromString('\Location\Location', 'name', 'NATIVE', 'region', 'en');
+			$locationType->slug = 'region';
+			$this->model->persist($locationType);			
+		}
 
 		$countryLocationType = $this->context->locationTypeRepositoryAccessor->get()->findOneBy(array('slug' => 'country'));
 
@@ -313,7 +318,7 @@ class ImportLocations extends BaseImport {
 		}
 
 		while($x = mysql_fetch_array($r)) {
-			$location = $this->context->locationEntityFactory->create();
+			$location = $this->context->locationEntityFactory->create();				
 
 			$namePhrase = $this->context->phraseRepositoryAccessor->get()->createNew();
 			$namePhraseService = $this->context->phraseDecoratorFactory->create($namePhrase);
@@ -338,14 +343,14 @@ class ImportLocations extends BaseImport {
 			$location->oldId = $x['id'];
 
 			$t = unserialize($x['polygons']);
-			$location->polygons = new Json($t);
+			$location->polygons = $t;
 
 			$location->parent = $this->context->locationRepositoryAccessor->get()->findOneBy(array(
 				'oldId' => $x['country_id'], 
 				'type' => $countryLocationType
 			));
 
-			//debug($location); return;
+			//debug($location); exit;
 			$this->model->persist($location);
 		}
 		$this->model->flush();

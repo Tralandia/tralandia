@@ -52,12 +52,12 @@ class RentalService extends Service\BaseService
 		return $return;
 	}
 
-	public function getMainPhoto() {
+	public function getMainImage() {
 		$images = $this->entity->getImages();
 		return $images instanceof \Doctrine\Common\Collections\ArrayCollection ? $images->first() : NULL;
 	}
 
-	public function getPhotos($limit = NULL, $offset = 0) {
+	public function getImages($limit = NULL, $offset = 0) {
 		return $this->entity->getImages()->slice($offset, $limit);
 	}
 
@@ -95,6 +95,5 @@ class RentalService extends Service\BaseService
 		}
 
 		return $return;
-
 	}
 }

@@ -197,6 +197,8 @@ services:
 	googleGeocodeService: GoogleGeocodeServiceV3(@googleServiceCommunicator)
 	googleServiceCommunicator: CurlCommunicator
 
+	polygonService: Service\PolygonService
+
 factories: 
 	# ==============================
 	# ==================== FORMS

@@ -66,7 +66,7 @@ class AddressNormalizer extends \Nette\Object {
 		return $this->updateAddressData($response, TRUE);
 	}
 
-	protected function updateAddressData($response) {
+	protected function updateAddressData($response, $override) {
 
 		$info = array();
 		$components = array(

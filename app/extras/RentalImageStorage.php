@@ -31,7 +31,7 @@ class RentalImageStorage extends FileStorage
 	{
 		$imageFull = clone $image;
 
-		$image->resize(1200, NULL);
+		$image->resize(1200, NULL, Nette\Image::SHRINK_ONLY);
 		$image->save($path . DIRECTORY_SEPARATOR . 'original.jpeg');
 
 		$imageFull->resizeCrop(467, 276);

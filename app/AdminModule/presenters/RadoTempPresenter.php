@@ -22,6 +22,8 @@ class RadoTempPresenter extends BasePresenter {
 
 	protected $addressNormalizerFactory;
 
+	protected $polygonService;
+
 	public function injectBaseRepositories(\Nette\DI\Container $dic) {
 		$this->languageRepositoryAccessor = $dic->languageRepositoryAccessor;
 		$this->locationRepositoryAccessor = $dic->locationRepositoryAccessor;
@@ -31,6 +33,10 @@ class RadoTempPresenter extends BasePresenter {
 
 	public function injectAddressNormalizer(\Service\Contact\IAddressNormalizerFactory $factory) {
 		$this->addressNormalizerFactory = $factory;
+	}
+
+	public function inject(\Service\PolygonService $service) {
+		$this->polygonService = $service;
 	}
 
 	public function actionGps() {
@@ -77,6 +83,27 @@ class RadoTempPresenter extends BasePresenter {
 		$aa = $this->addressNormalizerFactory->create($a);
 		//$aa->updateUsingGPS($lat, $long, TRUE);
 		$aa->updateUsingAddress('800-1018 E 61st St, Sioux Falls, South Dakota 57108');
+	}
+
+	public function actionPolygons() {
+		$testValues = array(
+			array('45.470725', '-98.47566'),
+		);
+
+		$lat = new \Extras\Types\Latlong($testValues[0][0], 'latitude');
+		$long = new \Extras\Types\Latlong($testValues[0][1], 'longitude');
+
+		$rental = $this->rentalRepositoryAccessor->get()->find(1);
+		$normalizer = $this->addressNormalizerFactory->create($rental->address);
+		$normalizer->updateUsingAddress('Demänovská Dolina 584, Slovensko');
+		$this->polygonService->setLocationsForRental($rental);
+
+		$this->rentalRepositoryAccessor->get()->persist($rental->address);
+		$this->rentalRepositoryAccessor->get()->flush($rental->address);
+
+		// $location = $this->locationRepositoryAccessor->get()->find(335);
+		// $this->polygonService->setRentalsForLocation($location);
+		d($rental->address);
 	}
 
 	public function actionGoogleMapsApi() {

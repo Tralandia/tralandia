@@ -22,8 +22,10 @@ class LatLong extends Type {
 	}
 
 	public function convertToDatabaseValue($value, AbstractPlatform $platform) {
+			d('tu som');
 		if ($value instanceof Extras\Types\Latlong) {
 			return $value->toFloat();
+
 		}
 		return $value;
 	}
