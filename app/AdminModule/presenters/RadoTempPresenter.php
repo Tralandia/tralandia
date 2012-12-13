@@ -98,12 +98,13 @@ class RadoTempPresenter extends BasePresenter {
 		$normalizer->updateUsingAddress('Demänovská Dolina 584, Slovensko');
 		$this->polygonService->setLocationsForRental($rental);
 
-		$this->rentalRepositoryAccessor->get()->persist($rental->address);
-		$this->rentalRepositoryAccessor->get()->flush($rental->address);
 
 		// $location = $this->locationRepositoryAccessor->get()->find(335);
 		// $this->polygonService->setRentalsForLocation($location);
-		d($rental->address);
+		//d($rental->address);
+
+		$this->rentalRepositoryAccessor->get()->persist($rental);
+		$this->rentalRepositoryAccessor->get()->flush();
 	}
 
 	public function actionGoogleMapsApi() {

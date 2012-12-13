@@ -633,6 +633,15 @@ class Location extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
+
+	/**
+	 * @return NULL
+	 */
+	public function removeAddresse($address)
+	{
+		return $this->addresses->removeElement($address);
+	}
+
 		
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Contact\Address
@@ -641,7 +650,8 @@ class Location extends \Entity\BaseEntityDetails {
 	{
 		return $this->addresses;
 	}
-		
+
+
 	/**
 	 * @param \Entity\User\User
 	 * @return \Entity\Location\Location
