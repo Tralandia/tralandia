@@ -387,7 +387,7 @@ class FrontRoute implements Nette\Application\IRouter {
 
 	public function buildHost($language, $country, $refUrl)
 	{
-		$languageIso = $language->id == $country->defaultLanguage->id ? 'www' : $language->iso;
+		$languageIso = $country->defaultLanguage && $language->id == $country->defaultLanguage->id ? 'www' : $language->iso;
 
 		if($this->mode == self::DEVELOPMENT)
 			return $languageIso . '.' . $country->iso . '.' . 'tra.com';
