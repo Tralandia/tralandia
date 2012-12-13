@@ -1,29 +1,34 @@
 <?php
 
-// namespace Service\TaskRobot;
+namespace Service\TaskRobot;
 
 
-// /**
-//  * MissingTranslationsRobot class
-//  *
-//  * @author Dávid Ďurika
-//  */
-// class CreateMissingTranslationsRobot extends \Nette\Object implements ITaskRobot {
+/**
+ * MissingTranslationsRobot class
+ *
+ * @author Dávid Ďurika
+ */
+class CreateMissingTranslationsRobot extends \Nette\Object implements ITaskRobot {
 
-// 	protected $languageRepository, $phraseRepository;
+	protected $languageRepositoryAccessor;
+	protected $phraseRepositoryAccessor;
 
-// 	public function __construct() {
-// 		list($this->languageRepository, $this->phraseRepository) = func_get_args();
-// 	}
+	public function injectDic(\Nette\DI\Container $dic) {
+		$this->languageRepositoryAccessor = $dic->languageRepositoryAccessor;
+		$this->phraseRepositoryAccessor = $dic->phraseRepositoryAccessor;
+	}
 
-// 	public function needToRun() {
-// 		return true;
-// 	}
+	public function needToRun() {
+		return true;
+	}
 
-// 	public function run() {
-// 		$languages = $this->languageRepository->findSupported();
-// 		$missing = $this->phraseRepository->findMissingTranslations($languages);
-// 		return $missing;
-// 	}
+	public function run() {
+		$languages = $this->languageRepositoryAccessor->get()->findSupported();
+		$missing = $this->phraseRepositoryAccessor->get()->findMissingTranslations($languages);
 
-// }
+		# @todo pridat tasky
+
+		return $missing;
+	}
+
+}
