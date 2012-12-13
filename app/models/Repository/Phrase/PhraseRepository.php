@@ -19,12 +19,11 @@ class PhraseRepository extends \Repository\BaseRepository {
 			$qb2->select('e.id')
 				->from('\Entity\Phrase\Phrase', 'e')
 				->leftJoin('e.translations', 't')
-				->where('t.language = :lll');
+				->where('t.language = :lll')->setParameter(':lll', $language->id);
 
 			$qb->select('p.id')
 				->from('\Entity\Phrase\Phrase', 'p')
-				->where($qb->expr()->notIn('p.id', $qb2->getDQL()))
-				->setParameter(':lll', $language->id);
+				->where($qb->expr()->notIn('p.id', $qb2->getDQL()));
 
 			$array[$language->id] = $qb->getQuery()->getResult();
 		}
