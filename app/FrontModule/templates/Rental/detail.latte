@@ -195,7 +195,7 @@
 <div class="row-fluid objectDetailContent">
 	<div class="span4 marginBottom marginTop marginLeft leftSidebarObjectDetail">
 
-	{foreach $rentalService->getImages(3) as $photo}
+	{foreach $rental->getImages(3) as $photo}
 		{* <img src="{$photo|thumbnail:100}" class="marginBottom" /> *}
 	{/foreach}
 
@@ -217,7 +217,7 @@
 				
 
 		<p>
-		{foreach $rental->getLocations() as $location}
+		{foreach $rental->address->getLocations() as $location}
 			{if $iterator->first}
 			<a href="{link Rental:list location => $location , rentalType => $rentalType }" class="bold">{_$rentalType->name} {_$location->name}</a>
 			{/if}
@@ -227,7 +227,7 @@
 		
 		
 {*
-		{foreach $rentalService->getAmenitiesByType('parking') as $parking}
+		{foreach $rental->getAmenitiesByType('parking') as $parking}
 
 		{_$parking->name}
 
@@ -276,7 +276,7 @@
 
 
 
-		{foreach $rentalService->getAmenitiesByType(array('important','board','kitchen','bathroom','heating','parking','children','room','relax','service','owner-availability','wellness','congress','other')) as $amenities}
+		{foreach $rental->getAmenitiesByType(array('important','board','kitchen','bathroom','heating','parking','children','room','relax','service','owner-availability','wellness','congress','other')) as $amenities}
 			<div class="amenities">
 			{foreach $amenities as $amenity}
 				{if $iterator->first}				
@@ -295,9 +295,9 @@
 
 	<!-- right sidebar -->
 	<div class="span3 marginTop sidebarRightDetail">
-	{dump $rentalService->getMainImage()}
+	{dump $rental->getMainImage()}
 	
-		{* <button class="btn btn-compare addToFavorites" rel="{$rental->id}" link="{link Rental:detail $rental}" thumb="{$rentalService->getMainImage()->getThumbnail()}"><span class="entypo-star">{_o12334}</span></button> *}
+		{* <button class="btn btn-compare addToFavorites" rel="{$rental->id}" link="{link Rental:detail $rental}" thumb="{$rental->getMainImage()->getThumbnail()}"><span class="entypo-star">{_o12334}</span></button> *}
 
 
 		<div class="sidebarContact">
@@ -458,7 +458,7 @@
 			<div id="gallery">
 
 				<ul class="biggall">					
-					 {* <li n:foreach="$rentalService->getImages() as $photo"><img src="{$photo->getThumbnail()}" /><p> popis </p></li> *}
+					 {* <li n:foreach="$rental->getImages() as $photo"><img src="{$photo->getThumbnail()}" /><p> popis </p></li> *}
 				</ul>
 
 				<div class="clearfix"></div>

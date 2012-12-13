@@ -20,8 +20,8 @@
 			<li class="span4">
 				<a n:href=":Front:Rental:detail $rental['entity']">
 					<div class="position">TOP</div>
-				{if $rental['service']->getMainImage()}
-				<img src="{$rental['service']->getMainImage()->getThumbnail()}" />
+				{if $rental['entity']->getMainImage()}
+				{* <img src="{$rental['entity']->getMainImage()->getThumbnail()}" /> *}
 				{/if}
 
 				
