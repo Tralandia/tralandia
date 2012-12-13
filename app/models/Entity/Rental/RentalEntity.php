@@ -207,6 +207,43 @@ class Rental extends \Entity\BaseEntity {
 	 */
 	protected $rooms;
 
+	public function getMainImage() {
+		return $this->images->first();
+	}
+
+	public function getImages($limit = NULL, $offset = 0) {
+		return $this->images->slice($offset, $limit);
+	}
+
+	public function getAmenitiesByType($types, $limit = NULL)
+	{
+		$returnJustOneType = NULL;
+		if(!is_array($types)) {
+			$returnJustOneType = $types;
+			$types = array($types);
+		}
+
+		$return = array();
+		$i = 0;
+		foreach ($this->getAmenities() as $amenity) {
+			if(in_array($amenity->type->slug, $types)) {
+				$return[$amenity->type->slug][] = $amenity;
+				$i++;
+			}
+
+			if(is_numeric($limit)) {
+				if($i == $limit) break;
+			}
+		}
+
+		if($returnJustOneType) {
+			$return = Arrays::get($return,$returnJustOneType,array());
+		}
+
+		return $return;
+	}
+
+
 
 	//@entity-generator-code --- NEMAZAT !!!
 
@@ -904,13 +941,6 @@ class Rental extends \Entity\BaseEntity {
 		return $this;
 	}
 		
-	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Rental\Image
-	 */
-	public function getImages()
-	{
-		return $this->images;
-	}
 		
 	/**
 	 * @param \Entity\Rental\InterviewAnswer

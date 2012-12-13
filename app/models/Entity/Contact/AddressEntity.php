@@ -2,6 +2,7 @@
 
 namespace Entity\Contact;
 
+use Nette\Utils\Arrays;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -68,6 +69,35 @@ class Address extends \Entity\BaseEntity {
 	 * @ORM\Column(type="latlong", nullable=true)
 	 */
 	protected $longitude;
+
+
+	public function getLocationsByType($types, $limit = NULL) {
+		$returnJustOneType = NULL;
+		if(!is_array($types)) {
+			$returnJustOneType = $types;
+			$types = array($types);
+		}
+
+		$return = array();
+		$i = 0;
+		foreach ($this->getLocations as $location) {
+			if(!empty($location->type) && in_array($location->type->slug, $types)) {
+				$return[$location->type->slug][] = $location;
+				$i++;
+			}
+
+			if(is_numeric($limit)) {
+				if($i == $limit) break;
+			}
+		}
+
+		if($returnJustOneType) {
+			
+			$return = Arrays::get($return,$returnJustOneType,array());
+		}
+
+		return $return;
+	}
 
 	//@entity-generator-code --- NEMAZAT !!!
 
