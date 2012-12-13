@@ -163,19 +163,7 @@ services:
 	missingTranslationsScanner:
 		class: Service\TaskManager\MissingTranslationsScanner(@autopilot, @phraseTranslationRepositoryAccessor, @languageRepositoryAccessor)
 
-	generatePathSegmentsRobot: 
-		class: Service\Robot\GeneratePathSegmentsRobot
-		arguments: 
-			- @routingPathSegmentRepositoryAccessor
-			- @routingPathSegmentEntityFactory
-			- @phraseDecoratorFactory
-			- @languageRepositoryAccessor
-			- @pageRepositoryAccessor
-			- @attractionTypeRepositoryAccessor
-			- @locationRepositoryAccessor
-			- @rentalTypeRepositoryAccessor
-			- @rentalTagRepositoryAccessor
-			- @locationDecoratorFactory
+	generatePathSegmentsRobot: Service\Robot\GeneratePathSegmentsRobot
 
 	phoneBook: Extras\Books\Phone(@contactPhoneRepositoryAccessor)
 	emailBook: Extras\Books\Email(@contactEmailRepositoryAccessor)
