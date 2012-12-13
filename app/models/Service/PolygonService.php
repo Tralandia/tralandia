@@ -56,7 +56,6 @@ class PolygonService {
 
 	//david - ako zabezpecit, ze sem moze prist len "region", nie hociaky location?
 	function setRentalsForLocation(\Entity\Location\Location $location){
-		$matches = array();
 
 		$locationType = $this->locationTypeRepositoryAccessor->get()->findOneBy(array('slug' => 'region'));
 
@@ -72,6 +71,7 @@ class PolygonService {
 		}
 		
 		foreach ($rentals as $rental) {
+			$matches = array();
 			$latitude = $rental->address->latitude->setType('latitude')->toFloat();
 			$longitude = $rental->address->longitude->setType('longitude')->toFloat();
 			foreach ($location->polygons as $key2 => $val2) {
@@ -88,9 +88,8 @@ class PolygonService {
 					}
 				}
 			}
-			foreach ($matches as $location) {
-				$rental->address->addLocation($location);
-			}
+			d($rental->id, $latitude, $longitude, $matches);
+			$rental->address->setLocations($matches);
 		}
 		return TRUE;
 	}

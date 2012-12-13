@@ -63,7 +63,7 @@ class RentalSearchKeysCaching extends \Nette\Object {
 
 		$newKeys = array();
 		// Set Locations
-		foreach ($this->rental->locations as $key => $value) {
+		foreach ($this->rental->address->locations as $key => $value) {
 			$thisKey = RentalSearchService::CRITERIA_LOCATION.$value->id;
 			$rentalSearchCaching->addRental($this->rental, $thisKey);
 			$newKeys[] = $thisKey;

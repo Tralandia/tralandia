@@ -69,6 +69,37 @@ class Address extends \Entity\BaseEntity {
 	 */
 	protected $longitude;
 
+
+	/**
+	 * @param NULL
+	 * @return \Entity\Contact\Address
+	 */
+	public function clearLocations()
+	{
+		foreach ($this->locations as $key => $value) {
+			$value->removeAddresse($this);
+		}
+		$this->locations->clear();
+
+		return $this;
+	}
+
+	/**
+	 * @param array of \Entity\Location\Location
+	 * @return \Entity\Contact\Address
+	 */
+	public function setLocations(array $locations)
+	{
+		$this->clearLocations();
+		foreach ($locations as $key => $value) {
+			if ($value instanceof \Entity\Location\Location) {
+				$this->addLocation($value);
+			}
+		}
+
+		return $this;
+	}
+
 	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
