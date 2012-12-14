@@ -29,8 +29,7 @@ abstract class CoolForm extends Form {
 		// if ($this->getParam('invalidate', false)) {
 		// 	$this->valid = FALSE;
 		// }
-
-		$this->buildForm();
+	
 	}
 
 
