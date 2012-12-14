@@ -220,6 +220,20 @@ common:
 					label: Bank Accounts
 					link: ':Admin:CompanyBankAccount:list'
 
+		admin:
+			label: Admin
+			items:
+				import: 
+					label: Import
+					link: ':Admin:Import:default'
+				entityGenerator: 
+					label: Entity Generator
+					link: ':Admin:EntityGenerator:default'
+				searchCache: 
+					label: Update Search Cache
+					link: ':Admin:RunRobot:searchCache'
+					target: _blank
+
 	right: # parave strana
 		account:
 			items:
