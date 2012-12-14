@@ -10,20 +10,45 @@ use Doctrine\ORM\Query\Expr;
  */
 class PhraseRepository extends \Repository\BaseRepository {
 
-	public function findMissingTranslations(array $languages) {
+	protected $languageRepositoryAccessor;
 
+	protected $centralLanguage;
+
+	public function inject($centralLanguage, $languageRepositoryAccessor) {
+		$this->centralLanguage = $centralLanguage;
+		$this->languageRepositoryAccessor = $languageRepositoryAccessor;
+	}
+
+	/**
+	 * Vrati vnorene pole ID-cok fraz zoskupene podla jazyka ktore treba prelozit
+	 * @return array
+	 */
+	public function findMissingTranslations()
+	{
+		$languages = $this->languageRepositoryAccessor->get()->findSupported();
 		$array = array();
 		foreach ($languages as $language) {
-			$qb = $this->_em->createQueryBuilder();
+			
+			# vyberiem frazy ktore maju preklad v danom jazyku
 			$qb2 = $this->_em->createQueryBuilder();
 			$qb2->select('e.id')
 				->from('\Entity\Phrase\Phrase', 'e')
-				->leftJoin('e.translations', 't')
-				->where('t.language = :lll')->setParameter(':lll', $language->id);
+				->leftJoin('e.translations', 'translations')
+				->leftJoin('e.type', 'type')
+				->where('type.translateTo = :supported')
+				->andWhere('translations.language = :language');
 
-			$qb->select('p.id')
+
+			# vyberiem vsetky zvisne frazy ktore som nevybral v tom hornom query
+			# cize su to tie frazy kde chyba transaltion entita v danom jazyku
+			$qb = $this->_em->createQueryBuilder();
+			$qb->select('p')
 				->from('\Entity\Phrase\Phrase', 'p')
-				->where($qb->expr()->notIn('p.id', $qb2->getDQL()));
+				->leftJoin('p.type', 'ttt')
+				->where($qb->expr()->notIn('p.id', $qb2->getDQL()))
+				->andWhere('ttt.translateTo = :supported')
+				->setParameter('language', $language->id)
+				->setParameter('supported', \Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED);
 
 			$array[$language->id] = $qb->getQuery()->getResult();
 		}

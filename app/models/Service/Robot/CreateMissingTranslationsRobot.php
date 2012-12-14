@@ -1,6 +1,6 @@
 <?php
 
-namespace Service\TaskRobot;
+namespace Service\Robot;
 
 
 /**
@@ -8,14 +8,20 @@ namespace Service\TaskRobot;
  *
  * @author Dávid Ďurika
  */
-class CreateMissingTranslationsRobot extends \Nette\Object implements ITaskRobot {
+class CreateMissingTranslationsRobot extends \Nette\Object implements IRobot {
 
-	protected $languageRepositoryAccessor;
+	protected $phraseDecoratorFactory;
+
 	protected $phraseRepositoryAccessor;
+	protected $languageRepositoryAccessor;
+
+	public function inject(\Model\Phrase\IPhraseDecoratorFactory $phraseDecoratorFactory) {
+		$this->phraseDecoratorFactory = $phraseDecoratorFactory;
+	}
 
 	public function injectDic(\Nette\DI\Container $dic) {
-		$this->languageRepositoryAccessor = $dic->languageRepositoryAccessor;
 		$this->phraseRepositoryAccessor = $dic->phraseRepositoryAccessor;
+		$this->languageRepositoryAccessor = $dic->languageRepositoryAccessor;
 	}
 
 	public function needToRun() {
@@ -23,10 +29,16 @@ class CreateMissingTranslationsRobot extends \Nette\Object implements ITaskRobot
 	}
 
 	public function run() {
-		$languages = $this->languageRepositoryAccessor->get()->findSupported();
-		$missing = $this->phraseRepositoryAccessor->get()->findMissingTranslations($languages);
+		$missing = $this->phraseRepositoryAccessor->get()->findMissingTranslations();
 
-		# @todo pridat tasky
+		$langauges = $this->languageRepositoryAccessor->get()->findById(array_keys($missing));
+		foreach ($langauges as $language) {
+			foreach ($missing[$language->id] as $phrase) {
+				$phraseService = $this->phraseDecoratorFactory->create($phrase);
+				$translaion = $phraseService->createTranslation($language);
+			}
+		}
+		$this->phraseRepositoryAccessor->get()->flush();
 
 		return $missing;
 	}
