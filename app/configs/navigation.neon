@@ -119,12 +119,6 @@ common:
 				package: 
 					label: Packages
 					link: ':Admin:InvoicePackage:list'
-				marketing: 
-					label: Marketings
-					link: ':Admin:InvoiceMarketing:list'
-				coupon: 
-					label: Coupons
-					link: ':Admin:InvoiceCoupon:list'
 				serviceType: 
 					label: Service Types
 					link: ':Admin:InvoiceServiceType:list'

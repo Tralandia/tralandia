@@ -14,6 +14,7 @@ use Extras\Annotation as EA;
  * @ORM\Entity(repositoryClass="Repository\Rental\RentalRepository")
  * @ORM\Table(name="rental", indexes={@ORM\index(name="status", columns={"status"}), @ORM\index(name="slug", columns={"slug"}), @ORM\index(name="calendarUpdated", columns={"calendarUpdated"})})
  * @EA\Primary(key="id", value="slug")
+ * @EA\Generator(skip="{getImages}")
  */
 class Rental extends \Entity\BaseEntity {
 
@@ -940,7 +941,6 @@ class Rental extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
 		
 	/**
 	 * @param \Entity\Rental\InterviewAnswer
