@@ -109,12 +109,6 @@ class Location extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Invoice\Marketing", inversedBy="locations")
-	 */
-	protected $marketings;
-
-	/**
-	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="Entity\Rental\Rental", mappedBy="primaryLocation")
 	 */
 	protected $primaryRentals;
@@ -188,7 +182,6 @@ class Location extends \Entity\BaseEntityDetails {
 
 		$this->bankAccounts = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->companies = new \Doctrine\Common\Collections\ArrayCollection;
-		$this->marketings = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->primaryRentals = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->addresses = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->users = new \Doctrine\Common\Collections\ArrayCollection;
@@ -565,27 +558,6 @@ class Location extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @param \Entity\Invoice\Marketing
-	 * @return \Entity\Location\Location
-	 */
-	public function addMarketing(\Entity\Invoice\Marketing $marketing)
-	{
-		if(!$this->marketings->contains($marketing)) {
-			$this->marketings->add($marketing);
-		}
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Invoice\Marketing
-	 */
-	public function getMarketings()
-	{
-		return $this->marketings;
-	}
-		
-	/**
 	 * @param \Entity\Rental\Rental
 	 * @return \Entity\Location\Location
 	 */
@@ -633,15 +605,6 @@ class Location extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-
-	/**
-	 * @return NULL
-	 */
-	public function removeAddresse($address)
-	{
-		return $this->addresses->removeElement($address);
-	}
-
 		
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Contact\Address
@@ -650,8 +613,7 @@ class Location extends \Entity\BaseEntityDetails {
 	{
 		return $this->addresses;
 	}
-
-
+		
 	/**
 	 * @param \Entity\User\User
 	 * @return \Entity\Location\Location
