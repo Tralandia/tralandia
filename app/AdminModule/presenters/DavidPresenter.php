@@ -44,7 +44,8 @@ class DavidPresenter extends BasePresenter {
 	public function actionList() {
 
 		// $this->getService('generatePathSegmentsRobot')->run();
-		// return 1;
+		$this->getService('createMissingTranslationsRobot')->run();
+		return 1;
 		$url = 'http://sk.com.tra.com/';
 		$urlScript = new Nette\Http\UrlScript($url);
 		$httpRequest = new Nette\Http\Request($urlScript);

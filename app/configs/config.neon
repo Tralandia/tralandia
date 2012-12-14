@@ -164,6 +164,7 @@ services:
 		class: Service\TaskManager\MissingTranslationsScanner(@autopilot, @phraseTranslationRepositoryAccessor, @languageRepositoryAccessor)
 
 	generatePathSegmentsRobot: Service\Robot\GeneratePathSegmentsRobot
+	createMissingTranslationsRobot: Service\Robot\CreateMissingTranslationsRobot
 
 	phoneBook: Extras\Books\Phone(@contactPhoneRepositoryAccessor)
 	emailBook: Extras\Books\Email(@contactEmailRepositoryAccessor)

@@ -91,7 +91,10 @@ services:
 
 	#phrase
 	#----------
-	phraseRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Phrase\Phrase')
+	phraseRepositoryAccessor: 
+		factory: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Phrase\Phrase')
+		setup:
+			- setParameters(%centralLanguage%, @languageRepositoryAccessor)
 
 	phraseTranslationRepositoryAccessor: 
 		factory: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Phrase\Translation')
