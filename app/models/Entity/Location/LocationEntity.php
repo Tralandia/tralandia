@@ -52,7 +52,6 @@ class Location extends \Entity\BaseEntityDetails {
 	 */
 	protected $parent;
 
-
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Type")
@@ -106,12 +105,6 @@ class Location extends \Entity\BaseEntityDetails {
 	 * @ORM\ManyToOne(targetEntity="Entity\Domain", inversedBy="locations")
 	 */
 	protected $domain;
-
-	/**
-	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Invoice\Marketing", inversedBy="locations")
-	 */
-	protected $marketings;
 
 	/**
 	 * @var Collection
@@ -188,7 +181,6 @@ class Location extends \Entity\BaseEntityDetails {
 
 		$this->bankAccounts = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->companies = new \Doctrine\Common\Collections\ArrayCollection;
-		$this->marketings = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->primaryRentals = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->addresses = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->users = new \Doctrine\Common\Collections\ArrayCollection;
@@ -562,27 +554,6 @@ class Location extends \Entity\BaseEntityDetails {
 	public function getDomain()
 	{
 		return $this->domain;
-	}
-		
-	/**
-	 * @param \Entity\Invoice\Marketing
-	 * @return \Entity\Location\Location
-	 */
-	public function addMarketing(\Entity\Invoice\Marketing $marketing)
-	{
-		if(!$this->marketings->contains($marketing)) {
-			$this->marketings->add($marketing);
-		}
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Invoice\Marketing
-	 */
-	public function getMarketings()
-	{
-		return $this->marketings;
 	}
 		
 	/**

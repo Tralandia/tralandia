@@ -57,7 +57,7 @@ class Expense extends \Entity\BaseEntity {
 	 */
 	protected $user;
 
-								//@entity-generator-code --- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()

@@ -39,6 +39,11 @@ class Navigation extends BaseControl {
 			if(!isset($value->label)) {
 				$value->label = ucfirst($key);
 			}
+			if(isset($value->target)) {
+				$value->target = 'target="'.$value->target.'"';
+			} else {
+				$value->target = '';
+			}
 			if(isset($value->link)) {
 				$linkArgs = (isset($value->linkArgs) ? $value->linkArgs : array());
 				$value->href = $this->presenter->link($value->link, $linkArgs);

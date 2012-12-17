@@ -35,6 +35,7 @@ parameters:
 		mode: development
 
 	settingsDir: %appDir%/configs
+	rentalImageDir: /storage/rental_images
 
 	database:
 		user: root
@@ -61,7 +62,7 @@ presenter:
 
 services:
 	# STORAGE
-	rentalImageStorage: Extras\RentalImageStorage(%wwwDir%/storage/rental_images)
+	rentalImageStorage: Extras\RentalImageStorage(%wwwDir%%rentalImageDir%)
 
 	# CACHE
 	aclCache: Nette\Caching\Cache(@cacheStorage, 'Acl')
@@ -147,6 +148,8 @@ services:
 
 	templateHelpers:
 		class: Extras\Helpers
+		setup:
+			- $rentalImageDir(%rentalImageDir%)
 
 	autopilot:
 		class: Service\Autopilot\Autopilot
@@ -163,19 +166,8 @@ services:
 	missingTranslationsScanner:
 		class: Service\TaskManager\MissingTranslationsScanner(@autopilot, @phraseTranslationRepositoryAccessor, @languageRepositoryAccessor)
 
-	generatePathSegmentsRobot: 
-		class: Service\Robot\GeneratePathSegmentsRobot
-		arguments: 
-			- @routingPathSegmentRepositoryAccessor
-			- @routingPathSegmentEntityFactory
-			- @phraseDecoratorFactory
-			- @languageRepositoryAccessor
-			- @pageRepositoryAccessor
-			- @attractionTypeRepositoryAccessor
-			- @locationRepositoryAccessor
-			- @rentalTypeRepositoryAccessor
-			- @rentalTagRepositoryAccessor
-			- @locationDecoratorFactory
+	generatePathSegmentsRobot: Service\Robot\GeneratePathSegmentsRobot
+	createMissingTranslationsRobot: Service\Robot\CreateMissingTranslationsRobot
 
 	phoneBook: Extras\Books\Phone(@contactPhoneRepositoryAccessor)
 	emailBook: Extras\Books\Email(@contactEmailRepositoryAccessor)

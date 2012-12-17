@@ -6,13 +6,13 @@
 				{foreach $leftItems as $itemL1}
 					{if isset($itemL1->items) && count($itemL1->items)}
 						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">{$itemL1->label}</a>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" >{$itemL1->label}</a>
 							<ul class="dropdown-menu" n:inner-foreach="$itemL1->items as $itemL2">
 								<li>
-									<a n:class="$itemL2->class" href="{$itemL2->href}">{ifset $itemL2->icon}<i class="icon {$itemL2->icon}"></i>{/ifset}{$itemL2->label}</a>
+									<a n:class="$itemL2->class" href="{$itemL2->href}" {!$itemL2->target}>{ifset $itemL2->icon}<i class="icon {$itemL2->icon}"></i>{/ifset}{$itemL2->label}</a>
 									{if isset($itemL2->items) && count($itemL2->items)}
 										<ul n:inner-foreach="$itemL2->items as $itemL3">
-											<li><a n:class="$itemL3->class" href="{$itemL3->href}">{ifset $itemL3->icon}<i class="icon {$itemL3->icon}"></i>{/ifset}{$itemL3->label}</a></li>
+											<li><a n:class="$itemL3->class" href="{$itemL3->href}" {!$itemL3->target}>{ifset $itemL3->icon}<i class="icon {$itemL3->icon}"></i>{/ifset}{$itemL3->label}</a></li>
 											{ifset $itemL2->separator}
 												<li class="divider"></li>
 											{/ifset}

@@ -10,14 +10,11 @@ use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="invoice", indexes={@ORM\index(name="invoiceNumber", columns={"invoiceNumber"}), @ORM\index(name="paymentReferenceNumber", columns={"paymentReferenceNumber"}), @ORM\index(name="due", columns={"due"}), @ORM\index(name="paid", columns={"paid"}), @ORM\index(name="status", columns={"status"}), @ORM\index(name="clientEmail", columns={"clientEmail"}), @ORM\index(name="referrer", columns={"referrer"}), @ORM\index(name="referrerCommission", columns={"referrerCommission"})})
+ * @ORM\Table(name="invoice", indexes={@ORM\index(name="invoiceNumber", columns={"invoiceNumber"}), @ORM\index(name="paymentReferenceNumber", columns={"paymentReferenceNumber"}), @ORM\index(name="due", columns={"due"}), @ORM\index(name="paid", columns={"paid"}), @ORM\index(name="status", columns={"status"}), @ORM\index(name="clientEmail", columns={"clientEmail"})})
  * @EA\Primary(key="id", value="clientName")
+ * @EA\Generator(skip="{addItem, removeItem, setPrice}")
  */
 class Invoice extends \Entity\BaseEntity {
-
-	const STATUS_PENDING = 2;
-	const STATUS_PAID_NOT_CHECKED = 4;
-	const STATUS_PAID = 8;
 
 	/**
 	 * @var Collection
@@ -30,12 +27,6 @@ class Invoice extends \Entity\BaseEntity {
 	 * @ORM\Column(type="integer", nullable=true)
 	 */
 	protected $invoiceNumber;
-
-	/**
-	 * @var integer
-	 * @ORM\Column(type="integer", nullable=true)
-	 */
-	protected $paymentReferenceNumber;
 
 	/**
 	 * @var Collection
@@ -57,93 +48,27 @@ class Invoice extends \Entity\BaseEntity {
 
 	/**
 	 * @var datetime
-	 * @ORM\Column(type="datetime")
+	 * @ORM\Column(type="datetime", nullable=true)
 	 */
 	protected $paid;
 
 	/**
-	 * @var integer
-	 * @ORM\Column(type="integer")
-	 */
-	protected $status = self::STATUS_PENDING;
-
-	/**
-	 * @var string
-	 * @ORM\Column(type="string", nullable=true)
-	 */
-	protected $clientName;
-
-	/**
-	 * @var string
-	 * @ORM\Column(type="string", nullable=true)
-	 */
-	protected $clientPhone;
-
-	/**
-	 * @var string
-	 * @ORM\Column(type="string", nullable=true)
-	 */
-	protected $clientEmail;
-
-	/**
-	 * @var url
-	 * @ORM\Column(type="url", nullable=true)
-	 */
-	protected $clientUrl;
-
-	/**
-	 * @var string
-	 * @ORM\Column(type="string", nullable=true)
-	 */
-	protected $clientAddress;
-
-	/**
-	 * @var string
-	 * @ORM\Column(type="string", nullable=true)
-	 */
-	protected $clientLocality;
-
-	/**
-	 * @var string
-	 * @ORM\Column(type="string", nullable=true)
-	 */
-	protected $clientPostalCode;
-
-	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Location\Location")
+	 * @ORM\OneToOne(targetEntity="InvoicingData", cascade={"persist", "remove"})
 	 */
-	protected $clientPrimaryLocation;
-
-	/**
-	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Language")
-	 */
-	protected $clientLanguage;
-
-	/**
-	 * @var string
-	 * @ORM\Column(type="string", nullable=true)
-	 */
-	protected $clientCompanyName;
-
-	/**
-	 * @var string
-	 * @ORM\Column(type="string", nullable=true)
-	 */
-	protected $clientCompanyId;
-
-	/**
-	 * @var string
-	 * @ORM\Column(type="string", nullable=true)
-	 */
-	protected $clientCompanyVatId;
+	protected $invoicingData;
 
 	/**
 	 * @var float
 	 * @ORM\Column(type="float", nullable=true)
 	 */
 	protected $vat;
+
+	/**
+	 * @var float
+	 * @ORM\Column(type="float")
+	 */
+	protected $price;
 
 	/**
 	 * @var Collection
@@ -164,33 +89,12 @@ class Invoice extends \Entity\BaseEntity {
 	protected $createdBy;
 
 	/**
-	 * @var string
-	 * @ORM\Column(type="string", nullable=true)
-	 */
-	protected $referrer;
-
-	/**
-	 * @var float
-	 * @ORM\Column(type="float", nullable=true)
-	 */
-	protected $referrerCommission;
-
-	/**
 	 * @var json
 	 * @ORM\Column(type="json")
 	 */
 	protected $paymentInfo;
 
-								//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
-	public function __construct()
-	{
-		parent::__construct();
-
-		$this->items = new \Doctrine\Common\Collections\ArrayCollection;
-	}
-		
 	/**
 	 * @param \Entity\Invoice\Item
 	 * @return \Entity\Invoice\Invoice
@@ -201,6 +105,7 @@ class Invoice extends \Entity\BaseEntity {
 			$this->items->add($item);
 		}
 		$item->setInvoice($this);
+		$item->updatePrice();
 
 		return $this;
 	}
@@ -215,8 +120,30 @@ class Invoice extends \Entity\BaseEntity {
 			$this->items->removeElement($item);
 		}
 		$item->unsetInvoice();
+		$item->updatePrice();
 
 		return $this;
+	}
+
+	public function updatePrice()
+	{
+		$price = 0.0;
+		foreach ($this->getItems() as $item) {
+			$price += $item->price;
+		}
+		$this->price;
+		return $this;
+	}
+
+
+	//@entity-generator-code --- NEMAZAT !!!
+
+	/* ----------------------------- Methods ----------------------------- */		
+	public function __construct()
+	{
+		parent::__construct();
+
+		$this->items = new \Doctrine\Common\Collections\ArrayCollection;
 	}
 		
 	/**
@@ -254,35 +181,6 @@ class Invoice extends \Entity\BaseEntity {
 	public function getInvoiceNumber()
 	{
 		return $this->invoiceNumber;
-	}
-		
-	/**
-	 * @param integer
-	 * @return \Entity\Invoice\Invoice
-	 */
-	public function setPaymentReferenceNumber($paymentReferenceNumber)
-	{
-		$this->paymentReferenceNumber = $paymentReferenceNumber;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Invoice\Invoice
-	 */
-	public function unsetPaymentReferenceNumber()
-	{
-		$this->paymentReferenceNumber = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return integer|NULL
-	 */
-	public function getPaymentReferenceNumber()
-	{
-		return $this->paymentReferenceNumber;
 	}
 		
 	/**
@@ -374,6 +272,16 @@ class Invoice extends \Entity\BaseEntity {
 	}
 		
 	/**
+	 * @return \Entity\Invoice\Invoice
+	 */
+	public function unsetPaid()
+	{
+		$this->paid = NULL;
+
+		return $this;
+	}
+		
+	/**
 	 * @return \DateTime|NULL
 	 */
 	public function getPaid()
@@ -382,370 +290,22 @@ class Invoice extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param integer
+	 * @param \Entity\Invoice\InvoicingData
 	 * @return \Entity\Invoice\Invoice
 	 */
-	public function setStatus($status)
+	public function setInvoicingData(\Entity\Invoice\InvoicingData $invoicingData)
 	{
-		$this->status = $status;
+		$this->invoicingData = $invoicingData;
 
 		return $this;
 	}
 		
 	/**
-	 * @return integer|NULL
+	 * @return \Entity\Invoice\InvoicingData|NULL
 	 */
-	public function getStatus()
+	public function getInvoicingData()
 	{
-		return $this->status;
-	}
-		
-	/**
-	 * @param string
-	 * @return \Entity\Invoice\Invoice
-	 */
-	public function setClientName($clientName)
-	{
-		$this->clientName = $clientName;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Invoice\Invoice
-	 */
-	public function unsetClientName()
-	{
-		$this->clientName = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return string|NULL
-	 */
-	public function getClientName()
-	{
-		return $this->clientName;
-	}
-		
-	/**
-	 * @param string
-	 * @return \Entity\Invoice\Invoice
-	 */
-	public function setClientPhone($clientPhone)
-	{
-		$this->clientPhone = $clientPhone;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Invoice\Invoice
-	 */
-	public function unsetClientPhone()
-	{
-		$this->clientPhone = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return string|NULL
-	 */
-	public function getClientPhone()
-	{
-		return $this->clientPhone;
-	}
-		
-	/**
-	 * @param string
-	 * @return \Entity\Invoice\Invoice
-	 */
-	public function setClientEmail($clientEmail)
-	{
-		$this->clientEmail = $clientEmail;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Invoice\Invoice
-	 */
-	public function unsetClientEmail()
-	{
-		$this->clientEmail = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return string|NULL
-	 */
-	public function getClientEmail()
-	{
-		return $this->clientEmail;
-	}
-		
-	/**
-	 * @param \Extras\Types\Url
-	 * @return \Entity\Invoice\Invoice
-	 */
-	public function setClientUrl(\Extras\Types\Url $clientUrl)
-	{
-		$this->clientUrl = $clientUrl;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Invoice\Invoice
-	 */
-	public function unsetClientUrl()
-	{
-		$this->clientUrl = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Extras\Types\Url|NULL
-	 */
-	public function getClientUrl()
-	{
-		return $this->clientUrl;
-	}
-		
-	/**
-	 * @param string
-	 * @return \Entity\Invoice\Invoice
-	 */
-	public function setClientAddress($clientAddress)
-	{
-		$this->clientAddress = $clientAddress;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Invoice\Invoice
-	 */
-	public function unsetClientAddress()
-	{
-		$this->clientAddress = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return string|NULL
-	 */
-	public function getClientAddress()
-	{
-		return $this->clientAddress;
-	}
-		
-	/**
-	 * @param string
-	 * @return \Entity\Invoice\Invoice
-	 */
-	public function setClientLocality($clientLocality)
-	{
-		$this->clientLocality = $clientLocality;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Invoice\Invoice
-	 */
-	public function unsetClientLocality()
-	{
-		$this->clientLocality = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return string|NULL
-	 */
-	public function getClientLocality()
-	{
-		return $this->clientLocality;
-	}
-		
-	/**
-	 * @param string
-	 * @return \Entity\Invoice\Invoice
-	 */
-	public function setClientPostalCode($clientPostalCode)
-	{
-		$this->clientPostalCode = $clientPostalCode;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Invoice\Invoice
-	 */
-	public function unsetClientPostalCode()
-	{
-		$this->clientPostalCode = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return string|NULL
-	 */
-	public function getClientPostalCode()
-	{
-		return $this->clientPostalCode;
-	}
-		
-	/**
-	 * @param \Entity\Location\Location
-	 * @return \Entity\Invoice\Invoice
-	 */
-	public function setClientPrimaryLocation(\Entity\Location\Location $clientPrimaryLocation)
-	{
-		$this->clientPrimaryLocation = $clientPrimaryLocation;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Invoice\Invoice
-	 */
-	public function unsetClientPrimaryLocation()
-	{
-		$this->clientPrimaryLocation = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Location\Location|NULL
-	 */
-	public function getClientPrimaryLocation()
-	{
-		return $this->clientPrimaryLocation;
-	}
-		
-	/**
-	 * @param \Entity\Language
-	 * @return \Entity\Invoice\Invoice
-	 */
-	public function setClientLanguage(\Entity\Language $clientLanguage)
-	{
-		$this->clientLanguage = $clientLanguage;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Invoice\Invoice
-	 */
-	public function unsetClientLanguage()
-	{
-		$this->clientLanguage = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Language|NULL
-	 */
-	public function getClientLanguage()
-	{
-		return $this->clientLanguage;
-	}
-		
-	/**
-	 * @param string
-	 * @return \Entity\Invoice\Invoice
-	 */
-	public function setClientCompanyName($clientCompanyName)
-	{
-		$this->clientCompanyName = $clientCompanyName;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Invoice\Invoice
-	 */
-	public function unsetClientCompanyName()
-	{
-		$this->clientCompanyName = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return string|NULL
-	 */
-	public function getClientCompanyName()
-	{
-		return $this->clientCompanyName;
-	}
-		
-	/**
-	 * @param string
-	 * @return \Entity\Invoice\Invoice
-	 */
-	public function setClientCompanyId($clientCompanyId)
-	{
-		$this->clientCompanyId = $clientCompanyId;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Invoice\Invoice
-	 */
-	public function unsetClientCompanyId()
-	{
-		$this->clientCompanyId = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return string|NULL
-	 */
-	public function getClientCompanyId()
-	{
-		return $this->clientCompanyId;
-	}
-		
-	/**
-	 * @param string
-	 * @return \Entity\Invoice\Invoice
-	 */
-	public function setClientCompanyVatId($clientCompanyVatId)
-	{
-		$this->clientCompanyVatId = $clientCompanyVatId;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Invoice\Invoice
-	 */
-	public function unsetClientCompanyVatId()
-	{
-		$this->clientCompanyVatId = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return string|NULL
-	 */
-	public function getClientCompanyVatId()
-	{
-		return $this->clientCompanyVatId;
+		return $this->invoicingData;
 	}
 		
 	/**
@@ -775,6 +335,14 @@ class Invoice extends \Entity\BaseEntity {
 	public function getVat()
 	{
 		return $this->vat;
+	}
+		
+	/**
+	 * @return float|NULL
+	 */
+	public function getPrice()
+	{
+		return $this->price;
 	}
 		
 	/**
@@ -862,64 +430,6 @@ class Invoice extends \Entity\BaseEntity {
 	public function getCreatedBy()
 	{
 		return $this->createdBy;
-	}
-		
-	/**
-	 * @param string
-	 * @return \Entity\Invoice\Invoice
-	 */
-	public function setReferrer($referrer)
-	{
-		$this->referrer = $referrer;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Invoice\Invoice
-	 */
-	public function unsetReferrer()
-	{
-		$this->referrer = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return string|NULL
-	 */
-	public function getReferrer()
-	{
-		return $this->referrer;
-	}
-		
-	/**
-	 * @param float
-	 * @return \Entity\Invoice\Invoice
-	 */
-	public function setReferrerCommission($referrerCommission)
-	{
-		$this->referrerCommission = $referrerCommission;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Invoice\Invoice
-	 */
-	public function unsetReferrerCommission()
-	{
-		$this->referrerCommission = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return float|NULL
-	 */
-	public function getReferrerCommission()
-	{
-		return $this->referrerCommission;
 	}
 		
 	/**

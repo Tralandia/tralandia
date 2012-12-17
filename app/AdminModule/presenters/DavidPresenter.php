@@ -43,8 +43,9 @@ class DavidPresenter extends BasePresenter {
 
 	public function actionList() {
 
-		//$this->getService('generatePathSegmentsRobot')->run();
-
+		// $this->getService('generatePathSegmentsRobot')->run();
+		$this->getService('createMissingTranslationsRobot')->run();
+		return 1;
 		$url = 'http://sk.com.tra.com/';
 		$urlScript = new Nette\Http\UrlScript($url);
 		$httpRequest = new Nette\Http\Request($urlScript);
@@ -58,7 +59,6 @@ class DavidPresenter extends BasePresenter {
 
 		d($request);
 		$seo = $this->seoServiceFactory->create($url, $request);
-
 
 	}
 
@@ -78,11 +78,8 @@ class DavidPresenter extends BasePresenter {
 		
 	}
 
-	public function actionImage() {
-		$imageEntity = $this->rentalImageRepositoryAccessor->get()->createNew();
-		$imageDecorator = $this->rentalImageDecoratorFactory->create($imageEntity);
-
-		$imageDecorator->setContentFromFile('http://www.tralandia.sk/u/87/13376844217106.jpg');
-		d($imageDecorator); #@debug
+	public function actionInvoice()
+	{
+		
 	}
 }

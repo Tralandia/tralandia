@@ -111,7 +111,6 @@ class BaseImport {
 				'\Invoice\UseType' => array(),
 				'\Invoice\Package' => array(),
 				'\Invoice\Service' => array(),
-				'\Invoice\Marketing' => array(),
 			),
 			'subsections' => array(),
 		),

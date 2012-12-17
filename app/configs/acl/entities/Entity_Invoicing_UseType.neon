@@ -64,28 +64,6 @@ packages_edit:
 	manager: deny
 	admin: deny
 	
-marketings_show:
-	guest: allow
-	visitor: deny
-	potentialowner: deny
-	owner: deny
-	translator: deny
-	assistant: deny
-	vendor: deny
-	manager: deny
-	admin: deny
-	
-marketings_edit:
-	guest: allow
-	visitor: deny
-	potentialowner: deny
-	owner: deny
-	translator: deny
-	assistant: deny
-	vendor: deny
-	manager: deny
-	admin: deny
-	
 id_show:
 	guest: allow
 	visitor: deny

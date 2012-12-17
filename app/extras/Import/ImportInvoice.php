@@ -154,10 +154,6 @@ class ImportInvoice extends BaseImport {
 			$invoiceItem->durationName = $x1['duration_name'];
 			$invoiceItem->durationNameEn = $x1['duration_name_en'];
 			$invoiceItem->price = $x1['price'];
-			$invoiceItem->marketingName = $x1['marketings_name'];
-			$invoiceItem->marketingNameEn = $x1['marketings_name_en'];
-			$invoiceItem->couponName = $x1['coupons_name'];
-			//$invoiceItem->couponNameEn = $x1['coupons_name_en'];
 			$invoiceItem->packageName = $x1['packages_name'];
 			$invoiceItem->packageNameEn = $x1['packages_name_en'];
 

@@ -50,9 +50,7 @@ services:
 	#invoice
 	#----------
 	invoiceRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Invoice\Invoice')
-	invoiceCouponRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Invoice\Coupon')
 	invoiceItemRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Invoice\Item')
-	invoiceMarketingRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Invoice\Marketing')
 	invoicePackageRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Invoice\Package')
 	invoiceServiceRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Invoice\Service')
 	invoiceServiceDurationRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Invoice\ServiceDuration')
@@ -91,7 +89,10 @@ services:
 
 	#phrase
 	#----------
-	phraseRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Phrase\Phrase')
+	phraseRepositoryAccessor: 
+		factory: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Phrase\Phrase')
+		setup:
+			- setParameters(%centralLanguage%, @languageRepositoryAccessor)
 
 	phraseTranslationRepositoryAccessor: 
 		factory: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Phrase\Translation')
