@@ -32,7 +32,7 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 			}
 
 		$this->addSelect('parents','',$parents)->setPrompt('o12277');
-		$this->addSelect('childs','',$parents)->setPrompt('_o2443');
+		$this->addSelect('childs','',$parents)->setPrompt('o2443');
 
 		$this->addTextArea('message');
 
