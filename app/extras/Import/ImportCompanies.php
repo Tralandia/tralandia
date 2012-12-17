@@ -91,10 +91,8 @@ class ImportCompanies extends BaseImport {
 			$s->bankSwift = $x['bank_swift'];
 
 			$locationTemp = $this->context->locationRepositoryAccessor->get()->findOneBy(array('oldId' => $x['bank_country_id'], 'type' => $countryLocationType));
-			$s->bankAddress = new \Extras\Types\Address(array(
-				'address' => $x['bank_address'],
-				'country' => $locationTemp,
-			)); // @todo - toto este neuklada ok, je na to task v taskee
+			$s->bankAddress = $x['bank_address'];
+			$s->primaryLocation = $locationTemp;
 			
 			$s->accountNumber = $x['account_number'];
 			$s->accountName = $x['account_name'];

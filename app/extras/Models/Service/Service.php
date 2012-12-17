@@ -60,7 +60,7 @@ abstract class Service extends Nette\Object implements IService {
 	public function save($flush = true) {
 		try {
 			$this->getEntityManager()->persist($this->entity);
-			if ($flush) $this->getEntityManager()->flush();
+			if ($flush) $this->getEntityManager()->flush($this->entity);
 			return true; 
 		} catch (Exception $e) {
 			// @todo brano tu by som normalne vyhodil vynimku, ci ?
@@ -75,7 +75,7 @@ abstract class Service extends Nette\Object implements IService {
 	public function delete($flush = true) {
 		try {
 			$this->getEntityManager()->remove($this->entity);
-			if ($flush) $this->getEntityManager()->flush();
+			if ($flush) $this->getEntityManager()->flush($this->entity);
 			return true; 
 		} catch (Exception $e) {
 			// @todo brano tu by som normalne vyhodil vynimku, ci ?

@@ -5,7 +5,7 @@ namespace Extras\Books;
 use Nette, Extras, Entity;
 
 /**
- * Treda sluzi ako databaza unikatnych telefonnych cisel.
+ * Trieda sluzi ako databaza unikatnych telefonnych cisel.
  */
 class Phone extends Nette\Object {
 

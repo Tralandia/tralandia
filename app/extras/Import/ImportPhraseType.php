@@ -14,7 +14,6 @@ class ImportPhraseType extends BaseImport {
 
 	public function doImport($subsection = NULL) {
 
-
 		$this->createPhraseType('\Entity\Language', 'name')
 			->setTranslateTo('supported')
 			->setPluralVariationsRequired(0)
@@ -256,30 +255,6 @@ class ImportPhraseType extends BaseImport {
 			->setCheckingRequired(NULL);
 
 		$this->createPhraseType('\Entity\Invoice\Package', 'teaser')
-			->setTranslateTo('supported')
-			->setPluralVariationsRequired(0)
-			->setGenderRequired(0)
-			->setGenderVariationsRequired(0)
-			->setLocativesRequired(0)
-			->setPositionRequired(0)
-			// ->setHelpForTranslator('')
-			// ->setMonthlyBudget(0)
-			// ->setIldId(1)
-			->setCheckingRequired(NULL);
-
-		$this->createPhraseType('\Entity\Invoice\Marketing', 'name')
-			->setTranslateTo('supported')
-			->setPluralVariationsRequired(0)
-			->setGenderRequired(0)
-			->setGenderVariationsRequired(0)
-			->setLocativesRequired(0)
-			->setPositionRequired(0)
-			// ->setHelpForTranslator('')
-			// ->setMonthlyBudget(0)
-			// ->setIldId(1)
-			->setCheckingRequired(NULL);
-
-		$this->createPhraseType('\Entity\Invoice\Marketing', 'description')
 			->setTranslateTo('supported')
 			->setPluralVariationsRequired(0)
 			->setGenderRequired(0)

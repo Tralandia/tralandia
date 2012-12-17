@@ -2,6 +2,7 @@
 
 namespace Service\Robot;
 
+use Model;
 use Entity\Routing\PathSegment;
 use Nette\Utils\Strings;
 
@@ -13,40 +14,32 @@ use Nette\Utils\Strings;
 class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot 
 {
 
+	protected $phraseDecoratorFactory;
+	protected $locationDecoratorFactory;
+
 	protected $routingPathSegmentRepositoryAccessor;
-	protected $routingPathSegmentEntityFactory;
-	protected $phraseServiceFactory;
 	protected $languageRepositoryAccessor;
 	protected $pageRepositoryAccessor;
 	protected $attractionTypeRepositoryAccessor;
 	protected $locationRepositoryAccessor;
 	protected $rentalTypeRepositoryAccessor;
 	protected $rentalTagRepositoryAccessor;
-	protected $locationServiceFactory;
 
-	public function __construct(
-			$routingPathSegmentRepositoryAccessor,
-			$routingPathSegmentEntityFactory,
-			$phraseServiceFactory,
-			$languageRepositoryAccessor,
-			$pageRepositoryAccessor,
-			$attractionTypeRepositoryAccessor,
-			$locationRepositoryAccessor,
-			$rentalTypeRepositoryAccessor,
-			$rentalTagRepositoryAccessor,
-			$locationServiceFactory
-		) 
-	{
-		list($this->routingPathSegmentRepositoryAccessor,
-			$this->routingPathSegmentEntityFactory,
-			$this->phraseServiceFactory,
-			$this->languageRepositoryAccessor,
-			$this->pageRepositoryAccessor,
-			$this->attractionTypeRepositoryAccessor,
-			$this->locationRepositoryAccessor,
-			$this->rentalTypeRepositoryAccessor,
-			$this->rentalTagRepositoryAccessor,
-			$this->locationServiceFactory) = func_get_args();
+	public function injectDic(\Nette\DI\Container $dic) {
+		$this->routingPathSegmentRepositoryAccessor = $dic->routingPathSegmentRepositoryAccessor;
+		$this->languageRepositoryAccessor = $dic->languageRepositoryAccessor;
+		$this->pageRepositoryAccessor = $dic->pageRepositoryAccessor;
+		$this->attractionTypeRepositoryAccessor = $dic->attractionTypeRepositoryAccessor;
+		$this->locationRepositoryAccessor = $dic->locationRepositoryAccessor;
+		$this->rentalTypeRepositoryAccessor = $dic->rentalTypeRepositoryAccessor;
+		$this->rentalTagRepositoryAccessor = $dic->rentalTagRepositoryAccessor;
+	}
+
+
+
+	public function inject(Model\Phrase\IPhraseDecoratorFactory $phraseDecoratorFactory, Model\Location\ILocationDecoratorFactory $locationDecoratorFactory) {
+		$this->phraseDecoratorFactory = $phraseDecoratorFactory;
+		$this->locationDecoratorFactory = $locationDecoratorFactory;
 	}
 
 	public function needToRun()
@@ -57,7 +50,6 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 	public function run()
 	{
 
-		//$languageList = $this->languageRepositoryAccessor->get()->getPairs('id', 'iso', array('supported' => TRUE));
 		$languageList = $this->languageRepositoryAccessor->get()->findBySupported(TRUE);
 
 		$this->persistPagesSegments($languageList);
@@ -75,8 +67,8 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 
 		foreach ($languageList as $languageId => $language) {
 			foreach ($pages as $page) {
-				$entity = $this->routingPathSegmentEntityFactory->create();
-				$entity->country = NULL;
+				$entity = $this->routingPathSegmentRepositoryAccessor->get()->createNew();
+				$entity->primaryLocation = NULL;
 				$entity->language = $language;
 				$entity->pathSegment = $this->translate($page->name, $language);
 				$entity->type = PathSegment::PAGE;
@@ -93,8 +85,8 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 
 		foreach ($languageList as $languageId => $language) {
 			foreach ($attractionTypes as $type) {
-				$entity = $this->routingPathSegmentEntityFactory->create();
-				$entity->country = NULL;
+				$entity = $this->routingPathSegmentRepositoryAccessor->get()->createNew();
+				$entity->primaryLocation = NULL;
 				$entity->language = $language;
 				$entity->pathSegment = $this->translate($type->name, $language);
 				$entity->type = PathSegment::ATTRACTION_TYPE;
@@ -110,13 +102,21 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 	{
 		$locations = $this->locationRepositoryAccessor->get()->findAll();
 		foreach ($locations as $location) {
-			$locationService = $this->locationServiceFactory->create($location);
+			$locationService = $this->locationDecoratorFactory->create($location);
 			$country = $locationService->getParent('country');
 
-			$entity = $this->routingPathSegmentEntityFactory->create();
-			$entity->country = $country;
+			$entity = $this->routingPathSegmentRepositoryAccessor->get()->createNew();
+			$entity->primaryLocation = $country;
 			$entity->language = NULL;
-			$entity->pathSegment = $location->slug;
+
+			$parent = $location->parent;
+			if(in_array($location->type->slug, array('region', 'locality')) && $parent && !$parent->domain) {
+				$slug = $parent->slug . '-' . $location->slug;
+			} else {
+				$slug = $location->slug;
+			}
+
+			$entity->pathSegment = $slug;
 			$entity->type = PathSegment::LOCATION;
 			$entity->entityId = $location->id;
 
@@ -130,8 +130,8 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 		$rentalTypes = $this->rentalTypeRepositoryAccessor->get()->findAll();
 		foreach ($languageList as $languageId => $language) {
 			foreach ($rentalTypes as $type) {
-				$entity = $this->routingPathSegmentEntityFactory->create();
-				$entity->country = NULL;
+				$entity = $this->routingPathSegmentRepositoryAccessor->get()->createNew();
+				$entity->primaryLocation = NULL;
 				$entity->language = $language;
 				$entity->pathSegment = $this->translate($type->name, $language);
 				$entity->type = PathSegment::RENTAL_TYPE;
@@ -148,8 +148,8 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 		$tags = $this->rentalTagRepositoryAccessor->get()->findAll();
 		foreach ($languageList as $languageId => $language) {
 			foreach ($tags as $tag) {
-				$entity = $this->routingPathSegmentEntityFactory->create();
-				$entity->country = NULL;
+				$entity = $this->routingPathSegmentRepositoryAccessor->get()->createNew();
+				$entity->primaryLocation = NULL;
 				$entity->language = $language;
 				$entity->pathSegment = $this->translate($tag->name, $language);
 				$entity->type = PathSegment::TAG;
@@ -162,7 +162,7 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 
 	protected function translate($phrase, $language)
 	{
-		$phrase = $this->phraseServiceFactory->create($phrase);
+		$phrase = $this->phraseDecoratorFactory->create($phrase);
 		$translation = $phrase->getTranslation($language);
 		return $translation ? Strings::webalize($translation->translation) : $phrase->id.'_'.$language->id;
 	}

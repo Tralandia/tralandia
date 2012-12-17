@@ -57,8 +57,6 @@ class ImportInvoiceStart extends BaseImport {
 			'member' => 'Adding new rental',
 			'recurrence' => 'Recurrence',
 			'admin' => 'Internal (for admins / managers)',
-			'coupon' => 'Coupons',
-			'marketing' => 'Marketings',
 			'objectProlong' => 'Prolong object for FREE',
 		);
 
@@ -109,7 +107,7 @@ class ImportInvoiceStart extends BaseImport {
 		$model->flush();
 
 		// Marketings
-		$marketingNameType = $this->createPhraseType('\Invoice\Marketing', 'name', 'ACTIVE');
+/*		$marketingNameType = $this->createPhraseType('\Invoice\Marketing', 'name', 'ACTIVE');
 		$marketingDescriptionType = $this->createPhraseType('\Invoice\Marketing', 'description', 'ACTIVE');
 		$r = q('select * from invoicing_marketings order by id');
 		while($x = mysql_fetch_array($r)) {
@@ -137,7 +135,7 @@ class ImportInvoiceStart extends BaseImport {
 		}
 
 		$model->flush();
-
+*/
 	}
 
 }

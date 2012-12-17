@@ -35,13 +35,6 @@ class Medium extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Rental\Rental", inversedBy="media")
-	 * @ORM\JoinColumn(onDelete="CASCADE")
-	 */
-	protected $rental;
-
-	/**
-	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Seo\SeoUrl", inversedBy="media")
 	 * @ORM\JoinColumn(onDelete="CASCADE")
 	 */
@@ -155,35 +148,6 @@ class Medium extends \Entity\BaseEntityDetails {
 	public function getAttraction()
 	{
 		return $this->attraction;
-	}
-		
-	/**
-	 * @param \Entity\Rental\Rental
-	 * @return \Entity\Medium\Medium
-	 */
-	public function setRental(\Entity\Rental\Rental $rental)
-	{
-		$this->rental = $rental;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Medium\Medium
-	 */
-	public function unsetRental()
-	{
-		$this->rental = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Rental\Rental|NULL
-	 */
-	public function getRental()
-	{
-		return $this->rental;
 	}
 		
 	/**

@@ -36,7 +36,7 @@ class Package extends \Entity\BaseEntity {
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Location\Location")
 	 */
-	protected $country;
+	protected $location;
 
 	/**
 	 * @var Collection
@@ -44,8 +44,7 @@ class Package extends \Entity\BaseEntity {
 	 */
 	protected $services;
 
-
-								//@entity-generator-code --- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()
@@ -134,9 +133,9 @@ class Package extends \Entity\BaseEntity {
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Invoice\Package
 	 */
-	public function setCountry(\Entity\Location\Location $country)
+	public function setLocation(\Entity\Location\Location $location)
 	{
-		$this->country = $country;
+		$this->location = $location;
 
 		return $this;
 	}
@@ -144,9 +143,9 @@ class Package extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoice\Package
 	 */
-	public function unsetCountry()
+	public function unsetLocation()
 	{
-		$this->country = NULL;
+		$this->location = NULL;
 
 		return $this;
 	}
@@ -154,9 +153,9 @@ class Package extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Location\Location|NULL
 	 */
-	public function getCountry()
+	public function getLocation()
 	{
-		return $this->country;
+		return $this->location;
 	}
 		
 	/**

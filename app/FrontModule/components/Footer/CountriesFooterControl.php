@@ -25,15 +25,25 @@ class CountriesFooterControl extends \BaseModule\Components\BaseControl {
 
 		$template = $this->template;
 		$template->setFile(dirname(__FILE__) . '/countriesFooterControl.latte');
-		$template->setTranslator($this->presenter->getService('translator'));
+		$translator = $this->presenter->getService('translator');
+		$template->setTranslator($translator);
 		
 		$typeCountry = $this->locationTypeRepositoryAccessor->get()->findBySlug('country');
 		$locationsTemp = $this->locationRepositoryAccessor->get()->findByType($typeCountry);
 		$locations = array();
+
 		foreach ($locationsTemp as $location) {
 			$link = $this->presenter->link('//:Front:Home:default', array('primaryLocation' => $location));
-			$locations[] = $this->seoFactory->create($link, $this->presenter->getLastCreatedRequest());
+			$locations[$translator->translate($location->name)] = $this->seoFactory->create($link, $this->presenter->getLastCreatedRequest());
 		}
+
+		$l = setlocale(LC_ALL, 'sk_SK');
+		ksort($locations, SORT_LOCALE_STRING);
+
+		$locations = array_chunk($locations, ceil(count($locations) / 6));
+		
+		//d($locations); #@debug
+		// $this->presenter->terminate();
 		$template->locations = $locations;
 
 		$template->render();

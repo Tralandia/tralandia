@@ -42,7 +42,6 @@ class Service extends \Entity\BaseEntity {
 	 */
 	protected $package;
 
-
 	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		

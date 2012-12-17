@@ -25,11 +25,7 @@ services:
 
 	invoiceRepository: @model::getRepository('Entity\Invoice\Invoice')
 
-	invoiceCouponRepository: @model::getRepository('Entity\Invoice\Coupon')
-
 	invoiceItemRepository: @model::getRepository('Entity\Invoice\Item')
-
-	invoiceMarketingRepository: @model::getRepository('Entity\Invoice\Marketing')
 
 	invoicePackageRepository: @model::getRepository('Entity\Invoice\Package')
 
@@ -139,11 +135,7 @@ services:
 
 	invoiceEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoice\Invoice')
 
-	invoiceCouponEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoice\Coupon')
-
 	invoiceItemEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoice\Item')
-
-	invoiceMarketingEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoice\Marketing')
 
 	invoicePackageEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoice\Package')
 

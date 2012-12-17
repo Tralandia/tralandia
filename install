@@ -3,6 +3,7 @@
 rm -rf ./temp
 mkdir -m 777 ./temp
 
+chmod -R 777 ./app/models/Entity
 
 if [ ! -d ./temp/sessions ]; then
 	mkdir -m 777 ./temp/sessions

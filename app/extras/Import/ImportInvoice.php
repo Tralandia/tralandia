@@ -5,6 +5,7 @@ namespace Extras\Import;
 use Nette\Application as NA,
 	Nette\Environment,
 	Nette\Diagnostics\Debugger,
+	Nette\Utils\Validators,
 	Nette\Utils\Html,
 	Nette\Utils\Strings,
 	Extras\Models\Service,
@@ -38,6 +39,13 @@ class ImportInvoice extends BaseImport {
 		$this->countryTypeId = mysql_fetch_array($this->countryTypeId);
 		$this->locationsByOldId = getNewIdsByOld('\Location\Location', 'type_id = '.$this->countryTypeId[0]);
 		$this->languagesByOldId = getNewIdsByOld('\Language');
+
+		$this->locationTypes = array();
+		$this->locationTypes['country'] = $context->locationTypeRepositoryAccessor->get()->findOneBySlug('country');
+		$this->locationTypes['continent'] = $context->locationTypeRepositoryAccessor->get()->findOneBySlug('continent');
+		$this->locationTypes['region'] = $context->locationTypeRepositoryAccessor->get()->findOneBySlug('region');
+		$this->locationTypes['locality'] = $context->locationTypeRepositoryAccessor->get()->findOneBySlug('locality');
+
 
 		// Import paid invoices
 		if ($this->developmentMode == TRUE) {
@@ -102,13 +110,15 @@ class ImportInvoice extends BaseImport {
 		$invoice->clientName = $x['client_name'];
 		$invoice->clientPhone = $x['client_phone'];
 		$invoice->clientEmail = $x['client_email'];
-		$invoice->clientUrl = new \Extras\Types\Url($x['client_url']);
-		$invoice->clientAddress = new \Extras\Types\Address(array(
-			'address' => array_filter(array($x['client_address'], $x['client_address_2'])),
-			'postcode' => $x['client_postcode'],
-			'locality' => $x['client_locality'],
-			'country' => $this->locationsByOldId[$x['client_country_id']],
-		));
+		if (Validators::isUrl($x['client_url'])) {
+			$invoice->clientUrl = new \Extras\Types\Url($x['client_url']);
+		}
+
+		// Address
+		$invoice->clientAddress = implode('\n', array_filter(array($x['client_address'], $x['client_address_2'])));
+		$invoice->clientPostalCode = $x['client_postcode'];
+		$invoice->clientPrimaryLocation = $context->locationRepositoryAccessor->get()->findOneBy(array('oldId' => $x['client_country_id'], 'type' => $this->locationTypes['country']));
+		$invoice->clientLocality = $x['client_locality'];
 
 		$invoice->clientLanguage = $context->languageRepositoryAccessor->get()->find($this->languagesByOldId[$x['client_language_id']]);
 		$invoice->clientCompanyName = $x['client_company_name'];
@@ -144,10 +154,6 @@ class ImportInvoice extends BaseImport {
 			$invoiceItem->durationName = $x1['duration_name'];
 			$invoiceItem->durationNameEn = $x1['duration_name_en'];
 			$invoiceItem->price = $x1['price'];
-			$invoiceItem->marketingName = $x1['marketings_name'];
-			$invoiceItem->marketingNameEn = $x1['marketings_name_en'];
-			$invoiceItem->couponName = $x1['coupons_name'];
-			//$invoiceItem->couponNameEn = $x1['coupons_name_en'];
 			$invoiceItem->packageName = $x1['packages_name'];
 			$invoiceItem->packageNameEn = $x1['packages_name_en'];
 
@@ -158,7 +164,6 @@ class ImportInvoice extends BaseImport {
 		$invoice->currency = $currency;
 		if ($currency->exchangeRate === NULL) debug($currency->exchangeRate);
 		$invoice->exchangeRate = $currency->exchangeRate;
-
 
 		$model->persist($invoice);
 	}

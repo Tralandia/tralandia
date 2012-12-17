@@ -36,6 +36,12 @@ class Item extends \Entity\BaseEntity {
 	protected $nameEn;
 
 	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $duration;
+
+	/**
 	 * @var datetime
 	 * @ORM\Column(type="datetime", nullable=true)
 	 */
@@ -69,30 +75,6 @@ class Item extends \Entity\BaseEntity {
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
 	 */
-	protected $marketingName;
-
-	/**
-	 * @var string
-	 * @ORM\Column(type="string", nullable=true)
-	 */
-	protected $marketingNameEn;
-
-	/**
-	 * @var string
-	 * @ORM\Column(type="string", nullable=true)
-	 */
-	protected $couponName;
-
-	/**
-	 * @var string
-	 * @ORM\Column(type="string", nullable=true)
-	 */
-	protected $couponNameEn;
-
-	/**
-	 * @var string
-	 * @ORM\Column(type="string", nullable=true)
-	 */
 	protected $packageName;
 
 	/**
@@ -101,28 +83,7 @@ class Item extends \Entity\BaseEntity {
 	 */
 	protected $packageNameEn;
 
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-								//@entity-generator-code --- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()
@@ -244,6 +205,35 @@ class Item extends \Entity\BaseEntity {
 	public function getNameEn()
 	{
 		return $this->nameEn;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Invoice\Item
+	 */
+	public function setDuration($duration)
+	{
+		$this->duration = $duration;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Invoice\Item
+	 */
+	public function unsetDuration()
+	{
+		$this->duration = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getDuration()
+	{
+		return $this->duration;
 	}
 		
 	/**
@@ -379,122 +369,6 @@ class Item extends \Entity\BaseEntity {
 	public function getPrice()
 	{
 		return $this->price;
-	}
-		
-	/**
-	 * @param string
-	 * @return \Entity\Invoice\Item
-	 */
-	public function setMarketingName($marketingName)
-	{
-		$this->marketingName = $marketingName;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Invoice\Item
-	 */
-	public function unsetMarketingName()
-	{
-		$this->marketingName = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return string|NULL
-	 */
-	public function getMarketingName()
-	{
-		return $this->marketingName;
-	}
-		
-	/**
-	 * @param string
-	 * @return \Entity\Invoice\Item
-	 */
-	public function setMarketingNameEn($marketingNameEn)
-	{
-		$this->marketingNameEn = $marketingNameEn;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Invoice\Item
-	 */
-	public function unsetMarketingNameEn()
-	{
-		$this->marketingNameEn = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return string|NULL
-	 */
-	public function getMarketingNameEn()
-	{
-		return $this->marketingNameEn;
-	}
-		
-	/**
-	 * @param string
-	 * @return \Entity\Invoice\Item
-	 */
-	public function setCouponName($couponName)
-	{
-		$this->couponName = $couponName;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Invoice\Item
-	 */
-	public function unsetCouponName()
-	{
-		$this->couponName = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return string|NULL
-	 */
-	public function getCouponName()
-	{
-		return $this->couponName;
-	}
-		
-	/**
-	 * @param string
-	 * @return \Entity\Invoice\Item
-	 */
-	public function setCouponNameEn($couponNameEn)
-	{
-		$this->couponNameEn = $couponNameEn;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Invoice\Item
-	 */
-	public function unsetCouponNameEn()
-	{
-		$this->couponNameEn = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return string|NULL
-	 */
-	public function getCouponNameEn()
-	{
-		return $this->couponNameEn;
 	}
 		
 	/**

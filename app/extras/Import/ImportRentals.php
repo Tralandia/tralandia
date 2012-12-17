@@ -24,8 +24,6 @@ class ImportRentals extends BaseImport {
 		//qNew('update medium set rental_id = NULL where rental_id > 0');
 
 		$nameDictionaryType = $this->createPhraseType('\Rental\Rental', 'name', 'NATIVE', array('checkingRequired' => TRUE));
-		$briefDescriptionDictionaryType = $this->createPhraseType('\Rental\Rental', 'briefDescription', 'NATIVE', array('checkingRequired' => TRUE));
-		$descriptionDictionaryType = $this->createPhraseType('\Rental\Rental', 'description', 'NATIVE', array('checkingRequired' => TRUE));
 		$teaserDictionaryType = $this->createPhraseType('\Rental\Rental', 'teaser', 'NATIVE', array('checkingRequired' => TRUE));
 		$interviewQuestionPhraseType = $this->createPhraseType('\Rental\InterviewQuestion', 'question');
 
@@ -41,8 +39,6 @@ class ImportRentals extends BaseImport {
 		$locationTypes['country'] = $context->locationTypeRepositoryAccessor->get()->findOneBySlug('country');
 		$locationTypes['continent'] = $context->locationTypeRepositoryAccessor->get()->findOneBySlug('continent');
 		$locationTypes['region'] = $context->locationTypeRepositoryAccessor->get()->findOneBySlug('region');
-		$locationTypes['administrativeregionlevelone'] = $context->locationTypeRepositoryAccessor->get()->findOneBySlug('administrativeregionlevelone');
-		$locationTypes['administrativeregionleveltwo'] = $context->locationTypeRepositoryAccessor->get()->findOneBySlug('administrativeregionleveltwo');
 		$locationTypes['locality'] = $context->locationTypeRepositoryAccessor->get()->findOneBySlug('locality');
 
 		$interviewQuestions = array();
@@ -93,47 +89,21 @@ class ImportRentals extends BaseImport {
 			$oldRentalType = current(explode(',,', substr($x['objects_types_new'], 2, -2)));
 			$rental->setType($context->rentalTypeRepositoryAccessor->get()->findOneByOldId($oldRentalTypesEn[$oldRentalType]));
 
-			// Locations
-			$rental->setPrimaryLocation($context->locationRepositoryAccessor->get()->findOneBy(array('oldId' => $x['country_id'], 'type' => $locationTypes['country'])));
+			// Address
+			$address = $context->contactAddressRepositoryAccessor->get()->createNew();
+			$address->status = \Entity\Contact\Address::STATUS_UNCHECKED;
 
-			$administrativeRegion = $context->locationRepositoryAccessor->get()->findOneBy(array('oldId' => $x['region_admin_id'], 'type' => $locationTypes['administrativeregionlevelone']));
-			if (!$administrativeRegion) {
-				$administrativeRegion = $context->locationRepositoryAccessor->get()->findOneBy(array('oldId' => $x['region_admin_id'], 'type' => $locationTypes['administrativeregionleveltwo']));
-			}
+			$address->address = implode('\n', array_filter(array($x['address'])));
+			$address->subLocality = $x['sublocality'];
+			$address->postalCode = $x['post_code'];
+			$address->primaryLocation = $context->locationRepositoryAccessor->get()->findOneBy(array('oldId' => $x['country_id'], 'type' => $locationTypes['country']));
+			$address->locality = $context->locationRepositoryAccessor->get()->findOneBy(array('oldId' => $x['country_id'], 'type' => $locationTypes['locality']));
+			$address->latitude = new \Extras\Types\Latlong($x['latitude']);
+			$address->longitude = new \Extras\Types\Latlong($x['longitude']);
 
-			if ($administrativeRegion) {
-				$rental->addLocation($administrativeRegion);
-			}
+			$rental->address = $address;
 
-			$regions = array_unique(array_filter(explode(',', $x['regions'])));
-			if (is_array($regions) && count($regions)) {
-				foreach ($regions as $key => $value) {
-					$temp = $context->locationRepositoryAccessor->get()->findOneBy(array('oldId' => $value, 'type' => $locationTypes['region']));
-					if ($temp) $rental->addLocation($temp);
-				}
-			}
-
-			// location | obec
-			$locationTemp = $context->locationRepositoryAccessor->get()->findOneBy(array('oldId' => $x['locality_id'], 'type' => $locationTypes['locality']));
-			if($locationTemp) {
-				$rental->addLocation($locationTemp);
-			}
-
-			// $thisLocality = $context->locationRepositoryAccessor->get()->findOneBy(array('oldId' => $x['locality_id'], 'type' => $locationTypes['locality']));
-
-			// $thisNamePhrase = $context->phraseServiceFactory->create($thisLocality->name);
-			// $thisCountry = $thisLocality->parent;
-			// $thisCountryNamePhrase = $context->phraseServiceFactory->create($thisCountry->name);
-			// $rental->address = new \Extras\Types\Address(array(
-			// 	'address' => array_filter(array($x['address'])),
-			// 	'postcode' => $x['post_code'],
-			// 	'locality' => $thisNamePhrase->getTranslation($thisCountry->defaultLanguage)->translation,
-			// 	'sublocality' => $x['sublocality'],
-			// 	'country' => $thisCountryNamePhrase->getTranslation($en)->translation,
-			// ));
-
-			$rental->latitude = new \Extras\Types\Latlong($x['latitude']);
-			$rental->longitude = new \Extras\Types\Latlong($x['longitude']);
+			$rental->primaryLocation = $context->locationRepositoryAccessor->get()->findOneBy(array('oldId' => $x['country_id'], 'type' => $locationTypes['country']));
 
 			$rental->slug = $x['name_url'];
 			$rental->name = $this->createPhraseFromString('\Rental\Rental', 'name', 'NATIVE', $x['name'], $rental->editLanguage);
@@ -141,29 +111,26 @@ class ImportRentals extends BaseImport {
 			$rental->teaser = $this->createNewPhrase($teaserDictionaryType, $x['marketing_dic_id']);
 
 
-			// Contacts
-			$contacts = new \Extras\Types\Contacts();
+			// // \Contact\Phone
+			// $phones = explode(';', $x['phones']);
+			// foreach ($phones as $key => $value) {
+			// 	$phone = $context->contactPhoneRepositoryAccessor->get()->createNew();
+			// }
 
-			$contacts->add(new \Extras\Types\Name('', '', $x['contact_name']));
+			// $contacts->add(new \Extras\Types\Email($x['contact_email']));
+			// if (\Nette\Utils\Validators::isUrl($x['contact_url'])) {
+			// 	$url = $context->contactUrlRepositoryAccessor->get()->create();
+			// 	//todo - ako mu setnut hodnotu? $x['contact_url']
+			// 	$rental->addUrl();
+			// }
+			// if (\Nette\Utils\Validators::isUrl($x['url'])) $contacts->add(new \Extras\Types\Url($x['url']));
 
-			$x['contact_phone'] = @unserialize(stripslashes($x['contact_phone']));
-			if (is_array($x['contact_phone'])) {
-				foreach ($x['contact_phone'] as $key => $value) {
-					$contacts->add(new \Extras\Types\Phone(implode('', $value)));
-				}
-			}
-
-			$contacts->add(new \Extras\Types\Email($x['contact_email']));
-			$contacts->add(new \Extras\Types\Skype($x['contact_skype']));
-			if (\Nette\Utils\Validators::isUrl($x['contact_url'])) $contacts->add(new \Extras\Types\Url($x['contact_url']));
-			if (\Nette\Utils\Validators::isUrl($x['url'])) $contacts->add(new \Extras\Types\Url($x['url']));
-
-			$rental->contacts = $contacts;
 
 			$spokenLanguages = array_unique(array_filter(explode(',', $x['languages_spoken'])));
 			if (is_array($spokenLanguages) && count($spokenLanguages)) {
 				foreach ($spokenLanguages as $key => $value) {
-					$rental->addSpokenLanguage($context->languageRepositoryAccessor->get()->findOneByOldId($value));
+					$t = $context->languageRepositoryAccessor->get()->findOneByOldId($value);
+					if ($t) $rental->addSpokenLanguage($t);
 				}
 			}
 
@@ -299,11 +266,6 @@ class ImportRentals extends BaseImport {
 				$pricelists['simple'] = $temp;
 			}
 
-			$temp = unserialize(stripslashes($x['prices_advanced']));
-			if (is_array($temp) && count($temp)) {
-				$pricelists['advanced'] = $temp;
-			}
-
 			$temp = unserialize(stripslashes($x['prices_upload']));
 			if (is_array($temp) && count($temp)) {
 				$pricelists['upload'] = $temp;
@@ -312,19 +274,19 @@ class ImportRentals extends BaseImport {
 			$rental->pricelists = $pricelists;
 			$model->persist($rental);
 
-			// Media
+			// Images
 			$temp = array_unique(array_filter(explode(',', $x['photos'])));
 			if (is_array($temp) && count($temp)) {
 				if ($this->developmentMode == TRUE) $temp = array_slice($temp, 0, 6);
 				foreach ($temp as $key => $value) {
-					$medium = $context->mediumRepositoryAccessor->get()->findOneByOldUrl('http://www.tralandia.com/u/'.$value);
-					if (!$medium) {
-						$mediumEntity = $context->mediumRepositoryAccessor->get()->createNew();
-						$medium = $context->mediumDecoratorFactory->create($mediumEntity);
-						$medium->setContentFromUrl('http://www.tralandia.com/u/'.$value);
-						$rental->addMedium($medium->getEntity());
+					$image = $context->rentalImageRepositoryAccessor->get()->findOneByOldUrl('http://www.tralandia.com/u/'.$value);
+					if (!$image) {
+						$imageEntity = $context->rentalImageRepositoryAccessor->get()->createNew();
+						$image = $context->rentalImageDecoratorFactory->create($imageEntity);
+						$image->setContentFromFile('http://www.tralandia.com/u/'.$value);
+						$rental->addImage($imageEntity);
 					} else {
-						$rental->addMedium($medium);
+						$rental->addImage($image);
 					}
 				}
 			}
@@ -343,6 +305,7 @@ class ImportRentals extends BaseImport {
 			$rental->calendarUpdated = fromStamp($x['calendar_updated']);
 
 			$rental->created = fromStamp($x['date_added']);
+			//d($rental); return;
 			$model->persist($rental);
 
 			//@todo

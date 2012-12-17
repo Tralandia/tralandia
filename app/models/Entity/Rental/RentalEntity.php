@@ -14,11 +14,11 @@ use Extras\Annotation as EA;
  * @ORM\Entity(repositoryClass="Repository\Rental\RentalRepository")
  * @ORM\Table(name="rental", indexes={@ORM\index(name="status", columns={"status"}), @ORM\index(name="slug", columns={"slug"}), @ORM\index(name="calendarUpdated", columns={"calendarUpdated"})})
  * @EA\Primary(key="id", value="slug")
+ * @EA\Generator(skip="{getImages}")
  */
 class Rental extends \Entity\BaseEntity {
 
 	const STATUS_DRAFT = 0;
-	const STATUS_CHECKED = 3;
 	const STATUS_LIVE = 6;
 
 	/**
@@ -66,13 +66,7 @@ class Rental extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Location\Location", mappedBy="rentals")
-	 */
-	protected $locations;
-
-	/**
-	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Contact\Address")
+	 * @ORM\OneToOne(targetEntity="Entity\Contact\Address", cascade={"persist", "remove"})
 	 */
 	protected $address;
 
@@ -162,13 +156,13 @@ class Rental extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Entity\Medium\Medium", mappedBy="rental", cascade={"persist"})
+	 * @ORM\OneToMany(targetEntity="Image", mappedBy="rental", cascade={"persist"})
 	 */
-	protected $media;
+	protected $images;
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Entity\Rental\InterviewAnswer", mappedBy="rental", cascade={"persist"})
+	 * @ORM\OneToMany(targetEntity="InterviewAnswer", mappedBy="rental", cascade={"persist"})
 	 */
 	protected $interviewAnswers;
 
@@ -214,6 +208,43 @@ class Rental extends \Entity\BaseEntity {
 	 */
 	protected $rooms;
 
+	public function getMainImage() {
+		return $this->images->first();
+	}
+
+	public function getImages($limit = NULL, $offset = 0) {
+		return $this->images->slice($offset, $limit);
+	}
+
+	public function getAmenitiesByType($types, $limit = NULL)
+	{
+		$returnJustOneType = NULL;
+		if(!is_array($types)) {
+			$returnJustOneType = $types;
+			$types = array($types);
+		}
+
+		$return = array();
+		$i = 0;
+		foreach ($this->getAmenities() as $amenity) {
+			if(in_array($amenity->type->slug, $types)) {
+				$return[$amenity->type->slug][] = $amenity;
+				$i++;
+			}
+
+			if(is_numeric($limit)) {
+				if($i == $limit) break;
+			}
+		}
+
+		if($returnJustOneType) {
+			$return = Arrays::get($return,$returnJustOneType,array());
+		}
+
+		return $return;
+	}
+
+
 
 	//@entity-generator-code --- NEMAZAT !!!
 
@@ -223,14 +254,13 @@ class Rental extends \Entity\BaseEntity {
 		parent::__construct();
 
 		$this->missingInformation = new \Doctrine\Common\Collections\ArrayCollection;
-		$this->locations = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->phones = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->emails = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->urls = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->spokenLanguages = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->amenities = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->tags = new \Doctrine\Common\Collections\ArrayCollection;
-		$this->media = new \Doctrine\Common\Collections\ArrayCollection;
+		$this->images = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->interviewAnswers = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->fulltexts = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->invoices = new \Doctrine\Common\Collections\ArrayCollection;
@@ -435,42 +465,6 @@ class Rental extends \Entity\BaseEntity {
 	public function getPrimaryLocation()
 	{
 		return $this->primaryLocation;
-	}
-		
-	/**
-	 * @param \Entity\Location\Location
-	 * @return \Entity\Rental\Rental
-	 */
-	public function addLocation(\Entity\Location\Location $location)
-	{
-		if(!$this->locations->contains($location)) {
-			$this->locations->add($location);
-		}
-		$location->addRental($this);
-
-		return $this;
-	}
-		
-	/**
-	 * @param \Entity\Location\Location
-	 * @return \Entity\Rental\Rental
-	 */
-	public function removeLocation(\Entity\Location\Location $location)
-	{
-		if($this->locations->contains($location)) {
-			$this->locations->removeElement($location);
-		}
-		$location->removeRental($this);
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Location\Location
-	 */
-	public function getLocations()
-	{
-		return $this->locations;
 	}
 		
 	/**
@@ -921,39 +915,31 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Medium\Medium
+	 * @param \Entity\Rental\Image
 	 * @return \Entity\Rental\Rental
 	 */
-	public function addMedium(\Entity\Medium\Medium $medium)
+	public function addImage(\Entity\Rental\Image $image)
 	{
-		if(!$this->media->contains($medium)) {
-			$this->media->add($medium);
+		if(!$this->images->contains($image)) {
+			$this->images->add($image);
 		}
-		$medium->setRental($this);
+		$image->setRental($this);
 
 		return $this;
 	}
 		
 	/**
-	 * @param \Entity\Medium\Medium
+	 * @param \Entity\Rental\Image
 	 * @return \Entity\Rental\Rental
 	 */
-	public function removeMedium(\Entity\Medium\Medium $medium)
+	public function removeImage(\Entity\Rental\Image $image)
 	{
-		if($this->media->contains($medium)) {
-			$this->media->removeElement($medium);
+		if($this->images->contains($image)) {
+			$this->images->removeElement($image);
 		}
-		$medium->unsetRental();
+		$image->unsetRental();
 
 		return $this;
-	}
-		
-	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Medium\Medium
-	 */
-	public function getMedia()
-	{
-		return $this->media;
 	}
 		
 	/**

@@ -32,7 +32,7 @@ class RentalPresenter extends BasePresenter {
 		
 		$rentalService = $this->rentalDecoratorFactory->create($rental);
 
-		$locality = $rentalService->getLocationsByType('locality', 1);
+		$locality = $rental->address->getLocationsByType('locality', 1);
 		$locality = reset($locality);
 		$link = $this->link('//list', array('location' => $locality));
 		$localitySeo = $this->seoFactory->create($link, $this->getLastCreatedRequest());
@@ -55,26 +55,15 @@ class RentalPresenter extends BasePresenter {
 		//$paginator->itemCount = $search->getRentalsCount();	
 		$paginator->itemCount = 123;
 
-		$rentalsEntities = $search->getRentals(0);//@todo
+		// $rentalsEntities = $search->getRentals(0);//@todo
 		$rentals = array();
 
-		foreach ($rentalsEntities as $rental) {
-			$rentals[$rental->id]['service'] = $this->rentalDecoratorFactory->create($rental);			
-			$rentals[$rental->id]['entity'] = $rental;
-		}
-
-		$regions = $this->locationRepositoryAccessor->get()->findBy(array(
-				'parent' => 58
-			), null , 50);
-
-
-		$topRegions = $this->locationRepositoryAccessor->get()->findBy(array(
-				'parent' => 58
-			), null , 11);
+		// foreach ($rentalsEntities as $rental) {
+		// 	$rentals[$rental->id]['service'] = $this->rentalDecoratorFactory->create($rental);			
+		// 	$rentals[$rental->id]['entity'] = $rental;
+		// }
 
 		$this->template->rentals = $rentals;
-		$this->template->regions = array_chunk($regions,ceil(count($regions)/3));
-		$this->template->topRegions = array_chunk($topRegions,ceil(count($topRegions)/3));
 
 	}
 
