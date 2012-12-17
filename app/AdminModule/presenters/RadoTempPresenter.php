@@ -19,6 +19,7 @@ class RadoTempPresenter extends BasePresenter {
 	protected $locationRepositoryAccessor;
 	protected $rentalTypeRepositoryAccessor;
 	protected $rentalRepositoryAccessor;
+	protected $rentalDecoratorFactory;
 
 	protected $addressNormalizerFactory;
 
@@ -35,8 +36,9 @@ class RadoTempPresenter extends BasePresenter {
 		$this->addressNormalizerFactory = $factory;
 	}
 
-	public function inject(\Service\PolygonService $service) {
+	public function inject(\Service\PolygonService $service, \Model\Rental\IRentalDecoratorFactory $rentalDecoratorFactory) {
 		$this->polygonService = $service;
+		$this->rentalDecoratorFactory = $rentalDecoratorFactory;
 	}
 
 	public function actionGps() {
@@ -102,6 +104,15 @@ class RadoTempPresenter extends BasePresenter {
 		// $location = $this->locationRepositoryAccessor->get()->find(335);
 		// $this->polygonService->setRentalsForLocation($location);
 		//d($rental->address);
+
+		$this->rentalRepositoryAccessor->get()->persist($rental);
+		$this->rentalRepositoryAccessor->get()->flush();
+	}
+
+	public function actionRank() {
+		$rental = $this->rentalRepositoryAccessor->get()->find(1);
+		$rentalDecorator = $this->rentalDecoratorFactory->create($rental);
+		$rentalDecorator->calculateRank();
 
 		$this->rentalRepositoryAccessor->get()->persist($rental);
 		$this->rentalRepositoryAccessor->get()->flush();

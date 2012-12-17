@@ -28,7 +28,7 @@ class Price extends \Nette\Object {
 		$this->amounts = array();
 		if (is_numeric($currency) && $currency > 0) {
 			$currencyId = (int)$currency;
-		} else if ($currency instanceof \Extras\Models\Entity || $currency instanceof \Extras\Models\Service) {
+		} else if ($currency instanceof \Extras\Models\Entity) {
 			$currencyId = $currency->id;
 		} else {
 			// debug(1, $currency);
@@ -40,8 +40,12 @@ class Price extends \Nette\Object {
 		$amounts[(int)$currency] = $amount;
 	}
 
+	public function isNull() {
+		return $this->sourceAmount > 0;
+	}
+
 	public function getIn($currency) {
-		if ($currency instanceof \Extras\Models\Entity || $currency instanceof \Extras\Models\Service) {
+		if ($currency instanceof \Extras\Models\Entity) {
 		} else {
 			// debug(2, $currency);
 			throw new \Nette\UnexpectedValueException('$currency is not an ID or Entity or Service');
@@ -68,7 +72,7 @@ class Price extends \Nette\Object {
 	}
 
 	public static function decode($value) {
-		if(!$value) {
+		if($value !== NULL) {
 			$value = \Nette\Utils\Json::decode($value, true);
 			return new static($value);
 		} else {

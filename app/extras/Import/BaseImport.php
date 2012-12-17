@@ -90,6 +90,13 @@ class BaseImport {
 			),
 			'subsections' => array(),
 		),
+		'rentalInformation' => array(
+			'entities' => array(
+				'\Rental\Information' => array(),
+			),
+			'subsections' => array(),
+			'saveImportStatus' => FALSE,
+		),
 		'rentals' => array(
 			'entities' => array(
 				'\Rental\Rental' => array(),

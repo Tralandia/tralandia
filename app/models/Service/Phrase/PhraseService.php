@@ -3,6 +3,7 @@
 namespace Service\Phrase;
 
 use Service, Doctrine, Entity;
+use Nette\Utils\Strings;
 
 /**
  * Sluzba frazy
@@ -112,6 +113,45 @@ class PhraseService extends Service\BaseService {
 		}
 
 		return (string) $text;
+	}
+
+	/**
+	 * Returns the number of translations that contain any text (length > 0)
+	 * @return int
+	 */
+	public function getValidTranslationsCount() {
+		$c = 0;
+		foreach ($this->entity->getTranslations() as $key => $value) {
+			if (Strings::length($value->translation) > 0) $c++;
+		}
+
+		return $c;
+	}
+
+	/**
+	 * Checks for existing central language translation
+	 * @return boolean
+	 */
+	public function hasCentralTranslation() {
+		$mainTranslations = $this->getMainTranslations();
+		if (Strings::length($mainTranslations[self::CENTRAL]->translation) > 0) {
+			return TRUE;
+		} else {
+			return FALSE;
+		}
+	}
+
+	/**
+	 * Checks for existing source language translation
+	 * @return boolean
+	 */
+	public function hasSourceTranslation() {
+		$mainTranslations = $this->getMainTranslations();
+		if (Strings::length($mainTranslations[self::SOURCE]->translation) > 0) {
+			return TRUE;
+		} else {
+			return FALSE;
+		}
 	}
 
 	/**

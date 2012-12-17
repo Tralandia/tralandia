@@ -70,7 +70,6 @@ class Address extends \Entity\BaseEntity {
 	 */
 	protected $longitude;
 
-
 	/**
 	 * @param NULL
 	 * @return \Entity\Contact\Address

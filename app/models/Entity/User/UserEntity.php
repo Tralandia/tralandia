@@ -36,10 +36,40 @@ class User extends \Entity\BaseEntityDetails {
 	protected $role;
 
 	/**
-	 * @var contacts
-	 * @ORM\Column(type="contacts", nullable=true)
+	 * @var Collection
+	 * @ORM\ManyToOne(targetEntity="Entity\Location\Location")
 	 */
-	protected $contacts;
+	protected $primaryLocation;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $clientLocality;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $clientPostalCode;
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToMany(targetEntity="Entity\Contact\Phone", mappedBy="rentals")
+	 */
+	protected $phones;
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToMany(targetEntity="Entity\Contact\Email", mappedBy="rentals")
+	 */
+	protected $emails;
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToMany(targetEntity="Entity\Contact\Url", mappedBy="rentals")
+	 */
+	protected $urls;
 
 	/**
 	 * @var Collection
@@ -50,7 +80,7 @@ class User extends \Entity\BaseEntityDetails {
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Location\Location", inversedBy="users")
-	 * @EA\SingularName(name="location") 
+	 * @EA\SingularName(name="location")
 	 */
 	protected $location;
 
@@ -62,8 +92,8 @@ class User extends \Entity\BaseEntityDetails {
 	protected $rentalTypes;
 
 	/**
-	 * @var string
-	 * @ORM\Column(type="invoicingData", nullable=true)
+	 * @var Collection
+	 * @ORM\OneToOne(targetEntity="Entity\Invoice\InvoicingData", cascade={"persist", "remove"})
 	 */
 	protected $invoicingData;
 
@@ -132,6 +162,9 @@ class User extends \Entity\BaseEntityDetails {
 	{
 		parent::__construct();
 
+		$this->phones = new \Doctrine\Common\Collections\ArrayCollection;
+		$this->emails = new \Doctrine\Common\Collections\ArrayCollection;
+		$this->urls = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->rentalTypes = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->combinations = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->rentals = new \Doctrine\Common\Collections\ArrayCollection;
@@ -227,12 +260,12 @@ class User extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @param \Extras\Types\Contacts
+	 * @param \Entity\Location\Location
 	 * @return \Entity\User\User
 	 */
-	public function setContacts(\Extras\Types\Contacts $contacts)
+	public function setPrimaryLocation(\Entity\Location\Location $primaryLocation)
 	{
-		$this->contacts = $contacts;
+		$this->primaryLocation = $primaryLocation;
 
 		return $this;
 	}
@@ -240,19 +273,185 @@ class User extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\User\User
 	 */
-	public function unsetContacts()
+	public function unsetPrimaryLocation()
 	{
-		$this->contacts = NULL;
+		$this->primaryLocation = NULL;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Extras\Types\Contacts|NULL
+	 * @return \Entity\Location\Location|NULL
 	 */
-	public function getContacts()
+	public function getPrimaryLocation()
 	{
-		return $this->contacts;
+		return $this->primaryLocation;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\User\User
+	 */
+	public function setClientLocality($clientLocality)
+	{
+		$this->clientLocality = $clientLocality;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\User\User
+	 */
+	public function unsetClientLocality()
+	{
+		$this->clientLocality = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getClientLocality()
+	{
+		return $this->clientLocality;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\User\User
+	 */
+	public function setClientPostalCode($clientPostalCode)
+	{
+		$this->clientPostalCode = $clientPostalCode;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\User\User
+	 */
+	public function unsetClientPostalCode()
+	{
+		$this->clientPostalCode = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getClientPostalCode()
+	{
+		return $this->clientPostalCode;
+	}
+		
+	/**
+	 * @param \Entity\Contact\Phone
+	 * @return \Entity\User\User
+	 */
+	public function addPhone(\Entity\Contact\Phone $phone)
+	{
+		if(!$this->phones->contains($phone)) {
+			$this->phones->add($phone);
+		}
+		$phone->addRental($this);
+
+		return $this;
+	}
+		
+	/**
+	 * @param \Entity\Contact\Phone
+	 * @return \Entity\User\User
+	 */
+	public function removePhone(\Entity\Contact\Phone $phone)
+	{
+		if($this->phones->contains($phone)) {
+			$this->phones->removeElement($phone);
+		}
+		$phone->removeRental($this);
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Contact\Phone
+	 */
+	public function getPhones()
+	{
+		return $this->phones;
+	}
+		
+	/**
+	 * @param \Entity\Contact\Email
+	 * @return \Entity\User\User
+	 */
+	public function addEmail(\Entity\Contact\Email $email)
+	{
+		if(!$this->emails->contains($email)) {
+			$this->emails->add($email);
+		}
+		$email->addRental($this);
+
+		return $this;
+	}
+		
+	/**
+	 * @param \Entity\Contact\Email
+	 * @return \Entity\User\User
+	 */
+	public function removeEmail(\Entity\Contact\Email $email)
+	{
+		if($this->emails->contains($email)) {
+			$this->emails->removeElement($email);
+		}
+		$email->removeRental($this);
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Contact\Email
+	 */
+	public function getEmails()
+	{
+		return $this->emails;
+	}
+		
+	/**
+	 * @param \Entity\Contact\Url
+	 * @return \Entity\User\User
+	 */
+	public function addUrl(\Entity\Contact\Url $url)
+	{
+		if(!$this->urls->contains($url)) {
+			$this->urls->add($url);
+		}
+		$url->addRental($this);
+
+		return $this;
+	}
+		
+	/**
+	 * @param \Entity\Contact\Url
+	 * @return \Entity\User\User
+	 */
+	public function removeUrl(\Entity\Contact\Url $url)
+	{
+		if($this->urls->contains($url)) {
+			$this->urls->removeElement($url);
+		}
+		$url->removeRental($this);
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Contact\Url
+	 */
+	public function getUrls()
+	{
+		return $this->urls;
 	}
 		
 	/**
@@ -350,10 +549,10 @@ class User extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @param \Extras\Types\InvoicingData
+	 * @param \Entity\Invoice\InvoicingData
 	 * @return \Entity\User\User
 	 */
-	public function setInvoicingData(\Extras\Types\InvoicingData $invoicingData)
+	public function setInvoicingData(\Entity\Invoice\InvoicingData $invoicingData)
 	{
 		$this->invoicingData = $invoicingData;
 
@@ -361,17 +560,7 @@ class User extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\User\User
-	 */
-	public function unsetInvoicingData()
-	{
-		$this->invoicingData = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Extras\Types\InvoicingData|NULL
+	 * @return \Entity\Invoice\InvoicingData|NULL
 	 */
 	public function getInvoicingData()
 	{
