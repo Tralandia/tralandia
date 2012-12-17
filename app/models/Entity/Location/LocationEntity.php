@@ -52,7 +52,6 @@ class Location extends \Entity\BaseEntityDetails {
 	 */
 	protected $parent;
 
-
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Type")
