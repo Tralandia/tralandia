@@ -23,12 +23,13 @@
 				<a n:href=":Front:Rental:detail $rental['entity']">
 					<div class="position">TOP</div>
 				{if $rental['entity']->getMainImage()}
-				{* <img src="{$rental['entity']->getMainImage()->getThumbnail()}" /> *}
+				 <img src="{$rental['entity']->getMainImage()|rentalImageSrc}" /> 
 
 				{/if}
 
-				{$basePath}{$rental['entity']->photo|rentalImageSrc}
-
+				{*
+				{$basePath}{$rental['entity']->getImages(1)|rentalImageSrc}
+				*}
 				{foreach $rental['entity']->address->getLocations() as $location}
 				{if $iterator->first}
 				
