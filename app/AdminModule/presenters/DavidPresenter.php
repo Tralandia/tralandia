@@ -78,11 +78,8 @@ class DavidPresenter extends BasePresenter {
 		
 	}
 
-	public function actionImage() {
-		$imageEntity = $this->rentalImageRepositoryAccessor->get()->createNew();
-		$imageDecorator = $this->rentalImageDecoratorFactory->create($imageEntity);
-
-		$imageDecorator->setContentFromFile('http://www.tralandia.sk/u/87/13376844217106.jpg');
-		d($imageDecorator); #@debug
+	public function actionInvoice()
+	{
+		
 	}
 }
