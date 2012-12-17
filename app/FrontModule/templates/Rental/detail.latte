@@ -94,6 +94,10 @@
 	<div class="span5">
 
 		<h1 class="addToViewList" id="{$rental->id}">{_$rental->name}</h1>
+		{dump $locality}
+
+
+
 
 		<p class="red bold">			
 			{_$rental->teaser}
@@ -111,6 +115,11 @@
 
 		{foreach $rental->address->getLocations() as $location}
 			{if $iterator->first}
+
+			{if $locality->getParameter('location')}
+			{_$locality->getParameter('location')->name}
+			{/if}
+			
 			<a href="{link Rental:list location => $location , rentalType => $rentalType }" class="bold">{_$rentalType->name} {_$location->name}</a>
 			{/if}
 			<a n:class="$iterator->first ? bold" href="{link Rental:list location => $location}">{_$location->name}</a>{if !$iterator->last}, {/if}
@@ -125,7 +134,7 @@
 
 		{/foreach}
 *}
-		{dump $locality}
+		
 		{dump $rental->interviewAnswers}
 		
 		{foreach $rental->interviewAnswers as $interview}
@@ -155,7 +164,7 @@
 			   <li>
 			   {_o1010}
 			   <strong>
-				{foreach $rentalService->getAmenitiesByType(array('board')) as $amenities}					
+				{foreach $rental->getAmenitiesByType(array('board')) as $amenities}					
 					{foreach $amenities as $amenity}
 						{_$amenity->name}{if !$iterator->last}, {/if}
 					{/foreach}					
@@ -166,7 +175,7 @@
 			   <li>
 			   {_o1011}
 			   <strong>
-				{foreach $rentalService->getAmenitiesByType(array('separate-groups')) as $amenities}					
+				{foreach $rental->getAmenitiesByType(array('separate-groups')) as $amenities}					
 					{foreach $amenities as $amenity}
 						{_$amenity->name}{if !$iterator->last}, {/if}
 					{/foreach}					
@@ -187,7 +196,7 @@
 			   <li>
 			   {_o1012}
 			   <strong>
-				{foreach $rentalService->getAmenitiesByType(array('owner-availability')) as $amenities}
+				{foreach $rental->getAmenitiesByType(array('owner-availability')) as $amenities}
 					
 					{foreach $amenities as $amenity}
 						{_$amenity->name}{if !$iterator->last}, {/if}

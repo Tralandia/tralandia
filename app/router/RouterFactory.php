@@ -89,7 +89,6 @@ class RouterFactory
 	
 		
 		$frontRouter[] = new Route('<presenter>/[<action>[/<id>]]', array(
-			'presenter' => 'Home',
 			'action' =>  'default',
 			'primaryLocation' => $this->defaultPrimaryLocation,
 			'language' => $this->defaultLanguage,

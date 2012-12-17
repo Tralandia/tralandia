@@ -24,9 +24,11 @@
 					<div class="position">TOP</div>
 				{if $rental['entity']->getMainImage()}
 				{* <img src="{$rental['entity']->getMainImage()->getThumbnail()}" /> *}
+
 				{/if}
 
-				
+				{$basePath}{$rental['entity']->photo|rentalImageSrc}
+
 				{foreach $rental['entity']->address->getLocations() as $location}
 				{if $iterator->first}
 				
@@ -48,7 +50,7 @@
 				<ul class="list" n:inner-foreach="$chunk as $region">
 					<li><a n:href="Rental:list location => $region">{_$region->name}</a></li>
 				</ul>
-			</div>     *}              
+			</div>                
 
 		</div>
 	</div>
