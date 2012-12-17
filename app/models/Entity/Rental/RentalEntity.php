@@ -225,6 +225,12 @@ class Rental extends \Entity\BaseEntity {
 	 */
 	protected $rooms;
 
+	/**
+	 * @var Collection
+	 * @ORM\OneToMany(targetEntity="Referral", mappedBy="rental", cascade={"persist"})
+	 */
+	protected $referrals;
+
 	public function getMainImage() {
 		return $this->images->first();
 	}

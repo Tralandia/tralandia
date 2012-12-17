@@ -94,6 +94,12 @@ class Invoice extends \Entity\BaseEntity {
 	 */
 	protected $paymentInfo;
 
+	/**
+	 * @var Collection
+	 * @ORM\OneToMany(targetEntity="Entity\Renral\Referral", mappedBy="invoice", cascade={"persist"})
+	 */
+	protected $referrals;
+
 
 	/**
 	 * @param \Entity\Invoice\Item
