@@ -110,22 +110,25 @@ class ImportRentals extends BaseImport {
 			
 			$rental->teaser = $this->createNewPhrase($teaserDictionaryType, $x['marketing_dic_id']);
 
+			// Contact Name
+			$rental->contactName = $x['contact_name'];
 
-			// // \Contact\Phone
-			// $phones = explode(';', $x['phones']);
-			// foreach ($phones as $key => $value) {
-			// 	$phone = $context->contactPhoneRepositoryAccessor->get()->createNew();
-			// }
+			// Contact Phones
+			$phones = explode(';', $x['phones']);
+			foreach ($phones as $key => $value) {
+				$rental->addPhone($context->contactPhoneRepositoryAccessor->get()->createNew($value));
+			}
 
-			// $contacts->add(new \Extras\Types\Email($x['contact_email']));
-			// if (\Nette\Utils\Validators::isUrl($x['contact_url'])) {
-			// 	$url = $context->contactUrlRepositoryAccessor->get()->create();
-			// 	//todo - ako mu setnut hodnotu? $x['contact_url']
-			// 	$rental->addUrl();
-			// }
-			// if (\Nette\Utils\Validators::isUrl($x['url'])) $contacts->add(new \Extras\Types\Url($x['url']));
+			// Contact Emails
+			$rental->addEmail($context->contactEmailRepositoryAccessor->get()->createNew($x['contact_email']));
 
+			// Contact Urls
+			if (\Nette\Utils\Validators::isUrl($x['contact_url'])) {
+				$rental->addUrl($context->contactUrlRepositoryAccessor->get()->createNew($x['contact_url']));
+			}
+			$rental->addUrl($context->contactUrlRepositoryAccessor->get()->createNew($x['url']));
 
+			// Spoken Languages
 			$spokenLanguages = array_unique(array_filter(explode(',', $x['languages_spoken'])));
 			if (is_array($spokenLanguages) && count($spokenLanguages)) {
 				foreach ($spokenLanguages as $key => $value) {
@@ -247,17 +250,16 @@ class ImportRentals extends BaseImport {
 			}
 
 			if (strlen($x['price_season'])) {
-				$rental->priceSeason = $x['price_season'];
+				$rental->priceSeason = new \Extras\Types\Price($x['price_season'], $rental->primaryLocation->defaultCurrency);
 			}
 
 			if (strlen($x['price_offseason'])) {
-				$rental->priceOffSeason = $x['price_offseason'];
+				$rental->priceOffSeason = new \Extras\Types\Price($x['price_offseason'], $rental->primaryLocation->defaultCurrency);
 			}
 
 			if (strlen($x['capacity_max'])) {
 				$rental->maxCapacity = $x['capacity_max'];
 			}
-
 
 			// Pricelist
 			$pricelists = array();
@@ -305,11 +307,11 @@ class ImportRentals extends BaseImport {
 			$rental->calendarUpdated = fromStamp($x['calendar_updated']);
 
 			$rental->created = fromStamp($x['date_added']);
-			//d($rental); return;
+
+			$rental->calculateRank();
+
 			$model->persist($rental);
 
-			//@todo
-			//$rental->rank = $rental->calculateRank(); // urobit tuto fciu
 		}
 		$model->flush();
 	}

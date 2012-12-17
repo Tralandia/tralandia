@@ -14,6 +14,12 @@ use	Extras\Annotation as EA;
 class Information extends \Entity\BaseEntityDetails {
 
 	/**
+	 * @var string
+	 * @ORM\Column(type="string")
+	 */
+	protected $slug;
+
+	/**
 	 * @var Collection
 	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
 	 */
@@ -23,7 +29,7 @@ class Information extends \Entity\BaseEntityDetails {
 	 * @var boolean
 	 * @ORM\Column(type="boolean")
 	 */
-	protected $required = FALSE;
+	protected $compulsory = FALSE;
 
 	/**
 	 * @var Collection
@@ -40,6 +46,25 @@ class Information extends \Entity\BaseEntityDetails {
 		parent::__construct();
 
 		$this->rentals = new \Doctrine\Common\Collections\ArrayCollection;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Rental\Information
+	 */
+	public function setSlug($slug)
+	{
+		$this->slug = $slug;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getSlug()
+	{
+		return $this->slug;
 	}
 		
 	/**
@@ -65,9 +90,9 @@ class Information extends \Entity\BaseEntityDetails {
 	 * @param boolean
 	 * @return \Entity\Rental\Information
 	 */
-	public function setRequired($required)
+	public function setCompulsory($compulsory)
 	{
-		$this->required = $required;
+		$this->compulsory = $compulsory;
 
 		return $this;
 	}
@@ -75,9 +100,9 @@ class Information extends \Entity\BaseEntityDetails {
 	/**
 	 * @return boolean|NULL
 	 */
-	public function getRequired()
+	public function getCompulsory()
 	{
-		return $this->required;
+		return $this->compulsory;
 	}
 		
 	/**

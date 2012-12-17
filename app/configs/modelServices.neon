@@ -117,6 +117,13 @@ services:
 	rentalTypeRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Rental\Type')
 	rentalInterviewQuestionRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Rental\InterviewQuestion')
 	rentalInterviewAnswerRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Rental\InterviewAnswer')
+	rentalRoomTypeRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Rental\RoomType')
+
+	#FAQ
+	#----------	
+	faqCategoryRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Faq\Category')
+	faqQuestionRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Faq\Question')
+
 
 	#routing
 	#----------

@@ -56,9 +56,9 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 
 		// template variables
 		$template->criteriaLocation 		= $this->getLocationCriteria();
-		// $template->criteriaRentalType 		= $this->getRentalTypeCriteria();
-		// $template->criteriaRentalTag 		= $this->getRentalTagCriteria();
-		// $template->criteriaSpokenLanguage 	= $this->getSpokenLanguageCriteria();
+		$template->criteriaRentalType 		= $this->getRentalTypeCriteria();
+		$template->criteriaRentalTag 		= $this->getRentalTagCriteria();
+		$template->criteriaSpokenLanguage 	= $this->getSpokenLanguageCriteria();
 		// $template->criteriaCapacity 		= $this->getCapacityCriteria();
 		// $template->criteriaPrice 			= $this->getPriceCriteria();
 

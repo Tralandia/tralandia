@@ -44,10 +44,15 @@ class Rental extends \Entity\BaseEntity {
 	 */
 	protected $type;
 
+	/**
+	 * @var float
+	 * @ORM\Column(type="float", nullable=true)
+	 */
+	protected $classification;
 
 	/**
-	 * @var decimal
-	 * @ORM\Column(type="decimal", nullable=true)
+	 * @var integer
+	 * @ORM\Column(type="integer", nullable=true)
 	 */
 	protected $rank;
 
@@ -86,6 +91,12 @@ class Rental extends \Entity\BaseEntity {
 	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $teaser;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $contactName;
 
 	/**
 	 * @var Collection
@@ -136,28 +147,34 @@ class Rental extends \Entity\BaseEntity {
 	protected $checkOut;
 
 	/**
-	 * @var float
-	 * @ORM\Column(type="float", nullable=true)
+	 * @var Boolean
+	 * @ORM\Column(type="boolean")
+	 */
+	protected $pricesUponRequest = FALSE;
+
+	/**
+	 * @var price
+	 * @ORM\Column(type="price", nullable=true)
 	 */
 	protected $priceSeason;
 
 	/**
-	 * @var float
-	 * @ORM\Column(type="float", nullable=true)
+	 * @var price
+	 * @ORM\Column(type="price", nullable=true)
 	 */
 	protected $priceOffSeason;
-
-	/**
-	 * @var json
-	 * @ORM\Column(type="json", nullable=true)
-	 */
-	protected $pricelists;
 
 	/**
 	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="Image", mappedBy="rental", cascade={"persist"})
 	 */
 	protected $images;
+
+	/**
+	 * @var Collection
+	 * @ORM\OneToMany(targetEntity="Pricelist", mappedBy="rental", cascade={"persist", "remove"})
+	 */
+	protected $pricelists;
 
 	/**
 	 * @var Collection
@@ -211,7 +228,7 @@ class Rental extends \Entity\BaseEntity {
 		return $this->images->first();
 	}
 
-	public function getImages($limit = NULL, $offset = 0) {
+	public function getImages1($limit = NULL, $offset = 0) {
 		return $this->images->slice($offset, $limit);
 	}
 
@@ -260,6 +277,7 @@ class Rental extends \Entity\BaseEntity {
 		$this->amenities = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->tags = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->images = new \Doctrine\Common\Collections\ArrayCollection;
+		$this->pricelists = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->interviewAnswers = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->fulltexts = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->invoices = new \Doctrine\Common\Collections\ArrayCollection;
@@ -373,7 +391,36 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param decimal
+	 * @param float
+	 * @return \Entity\Rental\Rental
+	 */
+	public function setClassification($classification)
+	{
+		$this->classification = $classification;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Rental\Rental
+	 */
+	public function unsetClassification()
+	{
+		$this->classification = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return float|NULL
+	 */
+	public function getClassification()
+	{
+		return $this->classification;
+	}
+		
+	/**
+	 * @param integer
 	 * @return \Entity\Rental\Rental
 	 */
 	public function setRank($rank)
@@ -394,7 +441,7 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return decimal|NULL
+	 * @return integer|NULL
 	 */
 	public function getRank()
 	{
@@ -550,6 +597,35 @@ class Rental extends \Entity\BaseEntity {
 	public function getTeaser()
 	{
 		return $this->teaser;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Rental\Rental
+	 */
+	public function setContactName($contactName)
+	{
+		$this->contactName = $contactName;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Rental\Rental
+	 */
+	public function unsetContactName()
+	{
+		$this->contactName = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getContactName()
+	{
+		return $this->contactName;
 	}
 		
 	/**
@@ -827,10 +903,29 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param float
+	 * @param boolean
 	 * @return \Entity\Rental\Rental
 	 */
-	public function setPriceSeason($priceSeason)
+	public function setPricesUponRequest($pricesUponRequest)
+	{
+		$this->pricesUponRequest = $pricesUponRequest;
+
+		return $this;
+	}
+		
+	/**
+	 * @return boolean|NULL
+	 */
+	public function getPricesUponRequest()
+	{
+		return $this->pricesUponRequest;
+	}
+		
+	/**
+	 * @param \Extras\Types\Price
+	 * @return \Entity\Rental\Rental
+	 */
+	public function setPriceSeason(\Extras\Types\Price $priceSeason)
 	{
 		$this->priceSeason = $priceSeason;
 
@@ -848,7 +943,7 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return float|NULL
+	 * @return \Extras\Types\Price|NULL
 	 */
 	public function getPriceSeason()
 	{
@@ -856,10 +951,10 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param float
+	 * @param \Extras\Types\Price
 	 * @return \Entity\Rental\Rental
 	 */
-	public function setPriceOffSeason($priceOffSeason)
+	public function setPriceOffSeason(\Extras\Types\Price $priceOffSeason)
 	{
 		$this->priceOffSeason = $priceOffSeason;
 
@@ -877,40 +972,11 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return float|NULL
+	 * @return \Extras\Types\Price|NULL
 	 */
 	public function getPriceOffSeason()
 	{
 		return $this->priceOffSeason;
-	}
-		
-	/**
-	 * @param json
-	 * @return \Entity\Rental\Rental
-	 */
-	public function setPricelists($pricelists)
-	{
-		$this->pricelists = $pricelists;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Rental\Rental
-	 */
-	public function unsetPricelists()
-	{
-		$this->pricelists = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return json|NULL
-	 */
-	public function getPricelists()
-	{
-		return $this->pricelists;
 	}
 		
 	/**
@@ -941,6 +1007,49 @@ class Rental extends \Entity\BaseEntity {
 		return $this;
 	}
 		
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Rental\Image
+	 */
+	public function getImages()
+	{
+		return $this->images;
+	}
+		
+	/**
+	 * @param \Entity\Rental\Pricelist
+	 * @return \Entity\Rental\Rental
+	 */
+	public function addPricelist(\Entity\Rental\Pricelist $pricelist)
+	{
+		if(!$this->pricelists->contains($pricelist)) {
+			$this->pricelists->add($pricelist);
+		}
+		$pricelist->setRental($this);
+
+		return $this;
+	}
+		
+	/**
+	 * @param \Entity\Rental\Pricelist
+	 * @return \Entity\Rental\Rental
+	 */
+	public function removePricelist(\Entity\Rental\Pricelist $pricelist)
+	{
+		if($this->pricelists->contains($pricelist)) {
+			$this->pricelists->removeElement($pricelist);
+		}
+		$pricelist->unsetRental();
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Rental\Pricelist
+	 */
+	public function getPricelists()
+	{
+		return $this->pricelists;
+	}
 		
 	/**
 	 * @param \Entity\Rental\InterviewAnswer
