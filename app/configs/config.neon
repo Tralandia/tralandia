@@ -169,7 +169,7 @@ services:
 	generatePathSegmentsRobot: Service\Robot\GeneratePathSegmentsRobot
 	createMissingTranslationsRobot: Service\Robot\CreateMissingTranslationsRobot
 
-	phoneBook: Extras\Books\Phone(@contactPhoneRepositoryAccessor)
+	phoneBook: Extras\Books\Phone(@contactPhoneRepositoryAccessor, @locationRepositoryAccessor)
 	emailBook: Extras\Books\Email(@contactEmailRepositoryAccessor)
 	urlBook: Extras\Books\Url(@contactUrlRepositoryAccessor)
 

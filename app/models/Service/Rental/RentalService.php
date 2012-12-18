@@ -39,7 +39,7 @@ class RentalService extends Service\BaseService
 	public function calculateRank() {
 		$r = $this->entity;
 
-		$conditionalCompulsoryInformation = array('priceSeason', 'priceOffSeason', 'priceLists');
+		$conditionalCompulsoryInformation = array('priceSeason', 'priceOffSeason');
 		$pricesCompulsory = !$r->pricesUponRequest;
 
 		$rank = array(
@@ -81,7 +81,7 @@ class RentalService extends Service\BaseService
 		// Interview Answers
 		$t = 0;
 		foreach ($r->interviewAnswers as $key => $value) {
-			$decorator = $this->phraseDecoratorFactory->create($value);
+			$decorator = $this->phraseDecoratorFactory->create($value->answer);
 			if ($teaserDecorator->getValidTranslationsCount() > 0) {
 				$t++;
 			}
@@ -194,7 +194,7 @@ class RentalService extends Service\BaseService
 		}
 
 		// Prices Season
-		if ($r->priceSeason !== NULL) {
+		if ($r->priceSeason > 0) {
 			$rank['points'] += 3;
 		} else {
 			if ($pricesCompulsory) {
@@ -205,7 +205,7 @@ class RentalService extends Service\BaseService
 		}
 
 		// Prices Off Season
-		if ($r->priceOffSeason !== NULL) {
+		if ($r->priceOffSeason > 0) {
 			$rank['points'] += 3;
 		} else {
 			if ($pricesCompulsory) {
@@ -223,16 +223,16 @@ class RentalService extends Service\BaseService
 		}
 
 		// Prices - //@todo
-		$t = count($r->priceLists);
-		if ($t > 0) {
-			$rank['points'] += ($t > 35 ? 35 : $t);
-		} else {
-			if ($pricesCompulsory) {
-				$rank['missing'][] = 'priceLists';
-			} else {
-				$rank['missing'][] = 'priceLists';
-			}
-		}
+		// $t = count($r->priceLists);
+		// if ($t > 0) {
+		// 	$rank['points'] += ($t > 35 ? 35 : $t);
+		// } else {
+		// 	if ($pricesCompulsory) {
+		// 		$rank['missing'][] = 'priceLists';
+		// 	} else {
+		// 		$rank['missing'][] = 'priceLists';
+		// 	}
+		// }
 
 		// Images
 		$t = count($r->images)*2;
@@ -258,7 +258,6 @@ class RentalService extends Service\BaseService
 
 		$r->status = $rank['status'];
 		$r->rank = $rank['points'];
-
 		return $rank;
 	}
 }

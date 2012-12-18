@@ -10,7 +10,7 @@ use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="invoice", indexes={@ORM\index(name="invoiceNumber", columns={"invoiceNumber"}), @ORM\index(name="paymentReferenceNumber", columns={"paymentReferenceNumber"}), @ORM\index(name="due", columns={"due"}), @ORM\index(name="paid", columns={"paid"}), @ORM\index(name="status", columns={"status"}), @ORM\index(name="clientEmail", columns={"clientEmail"})})
+ * @ORM\Table(name="invoice", indexes={@ORM\index(name="invoiceNumber", columns={"invoiceNumber"}), @ORM\index(name="due", columns={"due"}), @ORM\index(name="paid", columns={"paid"})})
  * @EA\Primary(key="id", value="clientName")
  * @EA\Generator(skip="{addItem, removeItem, setPrice}")
  */
@@ -105,7 +105,7 @@ class Invoice extends \Entity\BaseEntity {
 			$this->items->add($item);
 		}
 		$item->setInvoice($this);
-		$item->updatePrice();
+		$this->updatePrice();
 
 		return $this;
 	}
@@ -120,7 +120,7 @@ class Invoice extends \Entity\BaseEntity {
 			$this->items->removeElement($item);
 		}
 		$item->unsetInvoice();
-		$item->updatePrice();
+		$this->updatePrice();
 
 		return $this;
 	}
@@ -131,7 +131,7 @@ class Invoice extends \Entity\BaseEntity {
 		foreach ($this->getItems() as $item) {
 			$price += $item->price;
 		}
-		$this->price;
+		$this->price = $price;
 		return $this;
 	}
 

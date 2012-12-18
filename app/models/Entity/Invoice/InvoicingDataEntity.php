@@ -11,7 +11,7 @@ use	Extras\Annotation as EA;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="invoice_invoicingdata")
- * @EA\Primary(key="id", value="clientName")
+ * @EA\Primary(key="id", value="name")
  */
 class InvoicingData extends \Entity\BaseEntity {
 
@@ -19,55 +19,61 @@ class InvoicingData extends \Entity\BaseEntity {
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
 	 */
-	protected $clientName;
+	protected $name;
 
 	/**
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
 	 */
-	protected $clientPhone;
+	protected $phone;
 
 	/**
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
 	 */
-	protected $clientEmail;
+	protected $email;
 
 	/**
 	 * @var url
-	 * @ORM\Column(type="url", nullable=true)
+	 * @ORM\Column(type="string", nullable=true)
 	 */
-	protected $clientUrl;
+	protected $url;
 
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Location\Location")
 	 */
-	protected $clientPrimaryLocation;
+	protected $primaryLocation;
 
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Language")
 	 */
-	protected $clientLanguage;
+	protected $language;
 
 	/**
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
 	 */
-	protected $clientCompanyName;
+	protected $companyName;
 
 	/**
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
 	 */
-	protected $clientCompanyId;
+	protected $companyId;
 
 	/**
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
 	 */
-	protected $clientCompanyVatId;
+	protected $companyVatId;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $address;
 
 	//@entity-generator-code --- NEMAZAT !!!
 
@@ -81,9 +87,9 @@ class InvoicingData extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Invoice\InvoicingData
 	 */
-	public function setClientName($clientName)
+	public function setName($name)
 	{
-		$this->clientName = $clientName;
+		$this->name = $name;
 
 		return $this;
 	}
@@ -91,9 +97,9 @@ class InvoicingData extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoice\InvoicingData
 	 */
-	public function unsetClientName()
+	public function unsetName()
 	{
-		$this->clientName = NULL;
+		$this->name = NULL;
 
 		return $this;
 	}
@@ -101,18 +107,18 @@ class InvoicingData extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getClientName()
+	public function getName()
 	{
-		return $this->clientName;
+		return $this->name;
 	}
 		
 	/**
 	 * @param string
 	 * @return \Entity\Invoice\InvoicingData
 	 */
-	public function setClientPhone($clientPhone)
+	public function setPhone($phone)
 	{
-		$this->clientPhone = $clientPhone;
+		$this->phone = $phone;
 
 		return $this;
 	}
@@ -120,9 +126,9 @@ class InvoicingData extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoice\InvoicingData
 	 */
-	public function unsetClientPhone()
+	public function unsetPhone()
 	{
-		$this->clientPhone = NULL;
+		$this->phone = NULL;
 
 		return $this;
 	}
@@ -130,18 +136,18 @@ class InvoicingData extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getClientPhone()
+	public function getPhone()
 	{
-		return $this->clientPhone;
+		return $this->phone;
 	}
 		
 	/**
 	 * @param string
 	 * @return \Entity\Invoice\InvoicingData
 	 */
-	public function setClientEmail($clientEmail)
+	public function setEmail($email)
 	{
-		$this->clientEmail = $clientEmail;
+		$this->email = $email;
 
 		return $this;
 	}
@@ -149,9 +155,9 @@ class InvoicingData extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoice\InvoicingData
 	 */
-	public function unsetClientEmail()
+	public function unsetEmail()
 	{
-		$this->clientEmail = NULL;
+		$this->email = NULL;
 
 		return $this;
 	}
@@ -159,18 +165,18 @@ class InvoicingData extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getClientEmail()
+	public function getEmail()
 	{
-		return $this->clientEmail;
+		return $this->email;
 	}
 		
 	/**
-	 * @param \Extras\Types\Url
+	 * @param string
 	 * @return \Entity\Invoice\InvoicingData
 	 */
-	public function setClientUrl(\Extras\Types\Url $clientUrl)
+	public function setUrl($url)
 	{
-		$this->clientUrl = $clientUrl;
+		$this->url = $url;
 
 		return $this;
 	}
@@ -178,28 +184,28 @@ class InvoicingData extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoice\InvoicingData
 	 */
-	public function unsetClientUrl()
+	public function unsetUrl()
 	{
-		$this->clientUrl = NULL;
+		$this->url = NULL;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Extras\Types\Url|NULL
+	 * @return string|NULL
 	 */
-	public function getClientUrl()
+	public function getUrl()
 	{
-		return $this->clientUrl;
+		return $this->url;
 	}
 		
 	/**
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Invoice\InvoicingData
 	 */
-	public function setClientPrimaryLocation(\Entity\Location\Location $clientPrimaryLocation)
+	public function setPrimaryLocation(\Entity\Location\Location $primaryLocation)
 	{
-		$this->clientPrimaryLocation = $clientPrimaryLocation;
+		$this->primaryLocation = $primaryLocation;
 
 		return $this;
 	}
@@ -207,9 +213,9 @@ class InvoicingData extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoice\InvoicingData
 	 */
-	public function unsetClientPrimaryLocation()
+	public function unsetPrimaryLocation()
 	{
-		$this->clientPrimaryLocation = NULL;
+		$this->primaryLocation = NULL;
 
 		return $this;
 	}
@@ -217,18 +223,18 @@ class InvoicingData extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Location\Location|NULL
 	 */
-	public function getClientPrimaryLocation()
+	public function getPrimaryLocation()
 	{
-		return $this->clientPrimaryLocation;
+		return $this->primaryLocation;
 	}
 		
 	/**
 	 * @param \Entity\Language
 	 * @return \Entity\Invoice\InvoicingData
 	 */
-	public function setClientLanguage(\Entity\Language $clientLanguage)
+	public function setLanguage(\Entity\Language $language)
 	{
-		$this->clientLanguage = $clientLanguage;
+		$this->language = $language;
 
 		return $this;
 	}
@@ -236,9 +242,9 @@ class InvoicingData extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoice\InvoicingData
 	 */
-	public function unsetClientLanguage()
+	public function unsetLanguage()
 	{
-		$this->clientLanguage = NULL;
+		$this->language = NULL;
 
 		return $this;
 	}
@@ -246,18 +252,18 @@ class InvoicingData extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Language|NULL
 	 */
-	public function getClientLanguage()
+	public function getLanguage()
 	{
-		return $this->clientLanguage;
+		return $this->language;
 	}
 		
 	/**
 	 * @param string
 	 * @return \Entity\Invoice\InvoicingData
 	 */
-	public function setClientCompanyName($clientCompanyName)
+	public function setCompanyName($companyName)
 	{
-		$this->clientCompanyName = $clientCompanyName;
+		$this->companyName = $companyName;
 
 		return $this;
 	}
@@ -265,9 +271,9 @@ class InvoicingData extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoice\InvoicingData
 	 */
-	public function unsetClientCompanyName()
+	public function unsetCompanyName()
 	{
-		$this->clientCompanyName = NULL;
+		$this->companyName = NULL;
 
 		return $this;
 	}
@@ -275,18 +281,18 @@ class InvoicingData extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getClientCompanyName()
+	public function getCompanyName()
 	{
-		return $this->clientCompanyName;
+		return $this->companyName;
 	}
 		
 	/**
 	 * @param string
 	 * @return \Entity\Invoice\InvoicingData
 	 */
-	public function setClientCompanyId($clientCompanyId)
+	public function setCompanyId($companyId)
 	{
-		$this->clientCompanyId = $clientCompanyId;
+		$this->companyId = $companyId;
 
 		return $this;
 	}
@@ -294,9 +300,9 @@ class InvoicingData extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoice\InvoicingData
 	 */
-	public function unsetClientCompanyId()
+	public function unsetCompanyId()
 	{
-		$this->clientCompanyId = NULL;
+		$this->companyId = NULL;
 
 		return $this;
 	}
@@ -304,18 +310,18 @@ class InvoicingData extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getClientCompanyId()
+	public function getCompanyId()
 	{
-		return $this->clientCompanyId;
+		return $this->companyId;
 	}
 		
 	/**
 	 * @param string
 	 * @return \Entity\Invoice\InvoicingData
 	 */
-	public function setClientCompanyVatId($clientCompanyVatId)
+	public function setCompanyVatId($companyVatId)
 	{
-		$this->clientCompanyVatId = $clientCompanyVatId;
+		$this->companyVatId = $companyVatId;
 
 		return $this;
 	}
@@ -323,9 +329,9 @@ class InvoicingData extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoice\InvoicingData
 	 */
-	public function unsetClientCompanyVatId()
+	public function unsetCompanyVatId()
 	{
-		$this->clientCompanyVatId = NULL;
+		$this->companyVatId = NULL;
 
 		return $this;
 	}
@@ -333,8 +339,37 @@ class InvoicingData extends \Entity\BaseEntity {
 	/**
 	 * @return string|NULL
 	 */
-	public function getClientCompanyVatId()
+	public function getCompanyVatId()
 	{
-		return $this->clientCompanyVatId;
+		return $this->companyVatId;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Invoice\InvoicingData
+	 */
+	public function setAddress($address)
+	{
+		$this->address = $address;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Invoice\InvoicingData
+	 */
+	public function unsetAddress()
+	{
+		$this->address = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getAddress()
+	{
+		return $this->address;
 	}
 }

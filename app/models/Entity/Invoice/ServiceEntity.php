@@ -9,6 +9,7 @@ use	Extras\Annotation as EA;
  * @ORM\Entity()
  * @ORM\Table(name="invoice_service")
  * @EA\Primary(key="id", value="id")
+ * @EA\Generator(skip="{getCurrentPrice,getDefaultPrice}")
  */
 class Service extends \Entity\BaseEntity {
 
@@ -26,13 +27,13 @@ class Service extends \Entity\BaseEntity {
 
 	/**
 	 * @var price
-	 * @ORM\Column(type="price")
+	 * @ORM\Column(type="float")
 	 */
 	protected $defaultPrice;
 
 	/**
 	 * @var price
-	 * @ORM\Column(type="price")
+	 * @ORM\Column(type="float")
 	 */
 	protected $currentPrice;
 
@@ -41,6 +42,26 @@ class Service extends \Entity\BaseEntity {
 	 * @ORM\ManyToOne(targetEntity="Entity\Invoice\Package", inversedBy="services")
 	 */
 	protected $package;
+
+	/**
+	 * @return \Extras\Types\Price
+	 */
+	public function getDefaultPrice()
+	{
+		return new \Extras\Types\Price($this->defaultPrice, $this->getCurrency());
+	}
+
+	/**
+	 * @return \Extras\Types\Price
+	 */
+	public function getCurrentPrice()
+	{
+		return new \Extras\Types\Price($this->currentPrice, $this->getCurrency());
+	}
+
+	public function getCurrency() {
+		return $this->package->currency;
+	}
 
 	//@entity-generator-code --- NEMAZAT !!!
 
@@ -109,10 +130,10 @@ class Service extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Extras\Types\Price
+	 * @param float
 	 * @return \Entity\Invoice\Service
 	 */
-	public function setDefaultPrice(\Extras\Types\Price $defaultPrice)
+	public function setDefaultPrice($defaultPrice)
 	{
 		$this->defaultPrice = $defaultPrice;
 
@@ -120,30 +141,14 @@ class Service extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Extras\Types\Price|NULL
-	 */
-	public function getDefaultPrice()
-	{
-		return $this->defaultPrice;
-	}
-		
-	/**
-	 * @param \Extras\Types\Price
+	 * @param float
 	 * @return \Entity\Invoice\Service
 	 */
-	public function setCurrentPrice(\Extras\Types\Price $currentPrice)
+	public function setCurrentPrice($currentPrice)
 	{
 		$this->currentPrice = $currentPrice;
 
 		return $this;
-	}
-		
-	/**
-	 * @return \Extras\Types\Price|NULL
-	 */
-	public function getCurrentPrice()
-	{
-		return $this->currentPrice;
 	}
 		
 	/**

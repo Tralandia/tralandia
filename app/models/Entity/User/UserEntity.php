@@ -42,32 +42,20 @@ class User extends \Entity\BaseEntityDetails {
 	protected $primaryLocation;
 
 	/**
-	 * @var string
-	 * @ORM\Column(type="string", nullable=true)
-	 */
-	protected $clientLocality;
-
-	/**
-	 * @var string
-	 * @ORM\Column(type="string", nullable=true)
-	 */
-	protected $clientPostalCode;
-
-	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Contact\Phone", mappedBy="rentals")
+	 * @ORM\ManyToMany(targetEntity="Entity\Contact\Phone", mappedBy="users", cascade={"persist"})
 	 */
 	protected $phones;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Contact\Email", mappedBy="rentals")
+	 * @ORM\ManyToMany(targetEntity="Entity\Contact\Email", mappedBy="users", cascade={"persist"})
 	 */
 	protected $emails;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Contact\Url", mappedBy="rentals")
+	 * @ORM\ManyToMany(targetEntity="Entity\Contact\Url", mappedBy="users", cascade={"persist"})
 	 */
 	protected $urls;
 
@@ -79,29 +67,9 @@ class User extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Location\Location", inversedBy="users")
-	 * @EA\SingularName(name="location")
-	 */
-	protected $location;
-
-	/**
-	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Rental\Type", mappedBy="users")
-	 * @EA\SingularName(name="rentalType") 
-	 */
-	protected $rentalTypes;
-
-	/**
-	 * @var Collection
 	 * @ORM\OneToOne(targetEntity="Entity\Invoice\InvoicingData", cascade={"persist", "remove"})
 	 */
 	protected $invoicingData;
-
-	/**
-	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="User")
-	 */
-	protected $currentTelmarkOperator;
 
 	/**
 	 * @var Collection
@@ -128,7 +96,13 @@ class User extends \Entity\BaseEntityDetails {
 	 * @var boolean
 	 * @ORM\Column(type="boolean", nullable=true)
 	 */
-	protected $subscribed;
+	protected $newsletterMarketing;
+
+	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean", nullable=true)
+	 */
+	protected $newsletterNews;
 
 	/**
 	 * @var boolean
@@ -165,7 +139,6 @@ class User extends \Entity\BaseEntityDetails {
 		$this->phones = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->emails = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->urls = new \Doctrine\Common\Collections\ArrayCollection;
-		$this->rentalTypes = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->combinations = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->rentals = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->tasks = new \Doctrine\Common\Collections\ArrayCollection;
@@ -289,64 +262,6 @@ class User extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @param string
-	 * @return \Entity\User\User
-	 */
-	public function setClientLocality($clientLocality)
-	{
-		$this->clientLocality = $clientLocality;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\User\User
-	 */
-	public function unsetClientLocality()
-	{
-		$this->clientLocality = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return string|NULL
-	 */
-	public function getClientLocality()
-	{
-		return $this->clientLocality;
-	}
-		
-	/**
-	 * @param string
-	 * @return \Entity\User\User
-	 */
-	public function setClientPostalCode($clientPostalCode)
-	{
-		$this->clientPostalCode = $clientPostalCode;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\User\User
-	 */
-	public function unsetClientPostalCode()
-	{
-		$this->clientPostalCode = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return string|NULL
-	 */
-	public function getClientPostalCode()
-	{
-		return $this->clientPostalCode;
-	}
-		
-	/**
 	 * @param \Entity\Contact\Phone
 	 * @return \Entity\User\User
 	 */
@@ -355,7 +270,7 @@ class User extends \Entity\BaseEntityDetails {
 		if(!$this->phones->contains($phone)) {
 			$this->phones->add($phone);
 		}
-		$phone->addRental($this);
+		$phone->addUser($this);
 
 		return $this;
 	}
@@ -369,7 +284,7 @@ class User extends \Entity\BaseEntityDetails {
 		if($this->phones->contains($phone)) {
 			$this->phones->removeElement($phone);
 		}
-		$phone->removeRental($this);
+		$phone->removeUser($this);
 
 		return $this;
 	}
@@ -391,7 +306,7 @@ class User extends \Entity\BaseEntityDetails {
 		if(!$this->emails->contains($email)) {
 			$this->emails->add($email);
 		}
-		$email->addRental($this);
+		$email->addUser($this);
 
 		return $this;
 	}
@@ -405,7 +320,7 @@ class User extends \Entity\BaseEntityDetails {
 		if($this->emails->contains($email)) {
 			$this->emails->removeElement($email);
 		}
-		$email->removeRental($this);
+		$email->removeUser($this);
 
 		return $this;
 	}
@@ -427,7 +342,7 @@ class User extends \Entity\BaseEntityDetails {
 		if(!$this->urls->contains($url)) {
 			$this->urls->add($url);
 		}
-		$url->addRental($this);
+		$url->addUser($this);
 
 		return $this;
 	}
@@ -441,7 +356,7 @@ class User extends \Entity\BaseEntityDetails {
 		if($this->urls->contains($url)) {
 			$this->urls->removeElement($url);
 		}
-		$url->removeRental($this);
+		$url->removeUser($this);
 
 		return $this;
 	}
@@ -484,71 +399,6 @@ class User extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @param \Entity\Location\Location
-	 * @return \Entity\User\User
-	 */
-	public function setLocation(\Entity\Location\Location $location)
-	{
-		$this->location = $location;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\User\User
-	 */
-	public function unsetLocation()
-	{
-		$this->location = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Location\Location|NULL
-	 */
-	public function getLocation()
-	{
-		return $this->location;
-	}
-		
-	/**
-	 * @param \Entity\Rental\Type
-	 * @return \Entity\User\User
-	 */
-	public function addRentalType(\Entity\Rental\Type $rentalType)
-	{
-		if(!$this->rentalTypes->contains($rentalType)) {
-			$this->rentalTypes->add($rentalType);
-		}
-		$rentalType->addUser($this);
-
-		return $this;
-	}
-		
-	/**
-	 * @param \Entity\Rental\Type
-	 * @return \Entity\User\User
-	 */
-	public function removeRentalType(\Entity\Rental\Type $rentalType)
-	{
-		if($this->rentalTypes->contains($rentalType)) {
-			$this->rentalTypes->removeElement($rentalType);
-		}
-		$rentalType->removeUser($this);
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Rental\Type
-	 */
-	public function getRentalTypes()
-	{
-		return $this->rentalTypes;
-	}
-		
-	/**
 	 * @param \Entity\Invoice\InvoicingData
 	 * @return \Entity\User\User
 	 */
@@ -565,35 +415,6 @@ class User extends \Entity\BaseEntityDetails {
 	public function getInvoicingData()
 	{
 		return $this->invoicingData;
-	}
-		
-	/**
-	 * @param \Entity\User\User
-	 * @return \Entity\User\User
-	 */
-	public function setCurrentTelmarkOperator(\Entity\User\User $currentTelmarkOperator)
-	{
-		$this->currentTelmarkOperator = $currentTelmarkOperator;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\User\User
-	 */
-	public function unsetCurrentTelmarkOperator()
-	{
-		$this->currentTelmarkOperator = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\User\User|NULL
-	 */
-	public function getCurrentTelmarkOperator()
-	{
-		return $this->currentTelmarkOperator;
 	}
 		
 	/**
@@ -693,9 +514,9 @@ class User extends \Entity\BaseEntityDetails {
 	 * @param boolean
 	 * @return \Entity\User\User
 	 */
-	public function setSubscribed($subscribed)
+	public function setNewsletterMarketing($newsletterMarketing)
 	{
-		$this->subscribed = $subscribed;
+		$this->newsletterMarketing = $newsletterMarketing;
 
 		return $this;
 	}
@@ -703,9 +524,9 @@ class User extends \Entity\BaseEntityDetails {
 	/**
 	 * @return \Entity\User\User
 	 */
-	public function unsetSubscribed()
+	public function unsetNewsletterMarketing()
 	{
-		$this->subscribed = NULL;
+		$this->newsletterMarketing = NULL;
 
 		return $this;
 	}
@@ -713,9 +534,38 @@ class User extends \Entity\BaseEntityDetails {
 	/**
 	 * @return boolean|NULL
 	 */
-	public function getSubscribed()
+	public function getNewsletterMarketing()
 	{
-		return $this->subscribed;
+		return $this->newsletterMarketing;
+	}
+		
+	/**
+	 * @param boolean
+	 * @return \Entity\User\User
+	 */
+	public function setNewsletterNews($newsletterNews)
+	{
+		$this->newsletterNews = $newsletterNews;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\User\User
+	 */
+	public function unsetNewsletterNews()
+	{
+		$this->newsletterNews = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return boolean|NULL
+	 */
+	public function getNewsletterNews()
+	{
+		return $this->newsletterNews;
 	}
 		
 	/**

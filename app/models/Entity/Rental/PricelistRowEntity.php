@@ -56,7 +56,7 @@ class PricelistRow extends \Entity\BaseEntity {
 
 	/**
 	 * @var price
-	 * @ORM\Column(type="price")
+	 * @ORM\Column(type="float")
 	 */
 	protected $price;
 
@@ -213,10 +213,10 @@ class PricelistRow extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Extras\Types\Price
+	 * @param float
 	 * @return \Entity\Rental\PricelistRow
 	 */
-	public function setPrice(\Extras\Types\Price $price)
+	public function setPrice($price)
 	{
 		$this->price = $price;
 
@@ -224,7 +224,7 @@ class PricelistRow extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Extras\Types\Price|NULL
+	 * @return float|NULL
 	 */
 	public function getPrice()
 	{

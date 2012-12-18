@@ -120,12 +120,6 @@ class Location extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Entity\User\User", mappedBy="location", cascade={"persist"})
-	 */
-	protected $users;
-
-	/**
-	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="Entity\Seo\BackLink", mappedBy="location")
 	 */
 	protected $backLinks;
@@ -183,7 +177,6 @@ class Location extends \Entity\BaseEntityDetails {
 		$this->companies = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->primaryRentals = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->addresses = new \Doctrine\Common\Collections\ArrayCollection;
-		$this->users = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->backLinks = new \Doctrine\Common\Collections\ArrayCollection;
 	}
 		
@@ -611,42 +604,6 @@ class Location extends \Entity\BaseEntityDetails {
 	public function getAddresses()
 	{
 		return $this->addresses;
-	}
-		
-	/**
-	 * @param \Entity\User\User
-	 * @return \Entity\Location\Location
-	 */
-	public function addUser(\Entity\User\User $user)
-	{
-		if(!$this->users->contains($user)) {
-			$this->users->add($user);
-		}
-		$user->setLocation($this);
-
-		return $this;
-	}
-		
-	/**
-	 * @param \Entity\User\User
-	 * @return \Entity\Location\Location
-	 */
-	public function removeUser(\Entity\User\User $user)
-	{
-		if($this->users->contains($user)) {
-			$this->users->removeElement($user);
-		}
-		$user->unsetLocation();
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\User\User
-	 */
-	public function getUsers()
-	{
-		return $this->users;
 	}
 		
 	/**

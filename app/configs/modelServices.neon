@@ -57,13 +57,15 @@ services:
 	invoiceServiceTypeRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Invoice\ServiceType')
 	invoiceUseTypeRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Invoice\UseType')
 
+	invoiceInvoicingDataRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Invoice\InvoicingData')
+
 
 	#language
 	#----------
 	languageRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Language')
 
 
-	#locatoin
+	#location
 	#----------
 	locationRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Location\Location')
 	locationTypeRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Location\Type')

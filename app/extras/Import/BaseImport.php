@@ -293,7 +293,7 @@ class BaseImport {
 			$oldPhraseData = qf('select * from dictionary where id = '.$oldPhraseId);
 		}
 		if (!$oldPhraseData) {
-			debug('Nenasiel som staru Phrase podla stareho ID '.$oldPhraseId);
+			//debug('Nenasiel som staru Phrase podla stareho ID '.$oldPhraseId);
 			$oldPhraseData = array(
 				'ready' => 1,
 			);

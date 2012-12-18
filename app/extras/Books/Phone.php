@@ -11,6 +11,7 @@ class Phone extends Nette\Object {
 
 	/** @var Extras\Models\Repository\RepositoryAccessor */
 	private $phoneRepository;
+	private $locationRepository;
 
 	/** @var string */
 	private $serviceUrl = 'http://tra-devel.soft1.sk:8080/phonenumberparser?';
@@ -18,8 +19,9 @@ class Phone extends Nette\Object {
 	/**
 	 * @param Extras\Models\Repository\RepositoryAccessor $phoneRepository
 	 */
-	public function __construct(Extras\Models\Repository\RepositoryAccessor $phoneRepository) {
+	public function __construct(Extras\Models\Repository\RepositoryAccessor $phoneRepository, Extras\Models\Repository\RepositoryAccessor $locationRepository) {
 		$this->phoneRepository = $phoneRepository;
+		$this->locationRepository = $locationRepository;
 	}
 
 	/**
@@ -40,18 +42,19 @@ class Phone extends Nette\Object {
 	public function getOrCreate($number) {
 		if (!$phone = $this->find($number)) {
 			$response = $this->serviceRequest($number);
-			if ($response->validationResult->isValidNumber != 'true') {
-				throw new \Exception('Telefonne cislo nie je validne');
+			if (!isset($response->validationResult) || $response->validationResult->isValidNumber != 'true') {
+				return FALSE;
 			}
 			$number = $this->prepareNumber($response->formattingResults->E164);
 
 			if (!$phone = $this->find($number)) {
 				$phone = $this->phoneRepository->get()->createNew();
+				$primaryLocation = $this->locationRepository->get()->findOneByIso(strtolower($response->validationResult->phoneNumberForRegion));
+
 				$phone->setValue($this->prepareNumber($response->formattingResults->E164))
 					->setInternational($response->formattingResults->international)
 					->setNational($response->formattingResults->national)
-					->setRegion($response->validationResult->phoneNumberForRegion);
-
+					->setPrimaryLocation($primaryLocation);
 				$this->phoneRepository->get()->persist($phone);
 				$this->phoneRepository->get()->flush($phone);
 			}

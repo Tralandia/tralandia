@@ -21,6 +21,12 @@ class Url extends \Entity\BaseEntity {
 	 * @ORM\ManyToMany(targetEntity="Entity\Rental\Rental", inversedBy="urls")
 	 */
 	protected $rentals;
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToMany(targetEntity="Entity\User\User", inversedBy="urls")
+	 */
+	protected $users;
 		
 	//@entity-generator-code --- NEMAZAT !!!
 
@@ -30,6 +36,7 @@ class Url extends \Entity\BaseEntity {
 		parent::__construct();
 
 		$this->rentals = new \Doctrine\Common\Collections\ArrayCollection;
+		$this->users = new \Doctrine\Common\Collections\ArrayCollection;
 	}
 		
 	/**
@@ -70,5 +77,26 @@ class Url extends \Entity\BaseEntity {
 	public function getRentals()
 	{
 		return $this->rentals;
+	}
+		
+	/**
+	 * @param \Entity\User\User
+	 * @return \Entity\Contact\Url
+	 */
+	public function addUser(\Entity\User\User $user)
+	{
+		if(!$this->users->contains($user)) {
+			$this->users->add($user);
+		}
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\User\User
+	 */
+	public function getUsers()
+	{
+		return $this->users;
 	}
 }

@@ -41,13 +41,13 @@ class ImportRentalInformation extends BaseImport {
 			'amenities' => array('compulsory' => TRUE),
 			'tags' => array('compulsory' => TRUE),
 			'spokenLanguages' => array('compulsory' => TRUE),
-			'checkIn' => array('compulsory' => TRUE),
-			'checkOut' => array('compulsory' => TRUE),
+			'checkIn' => array('compulsory' => FALSE),
+			'checkOut' => array('compulsory' => FALSE),
 			'maxCapacity' => array('compulsory' => TRUE),
 			'priceSeason' => array('compulsory' => FALSE),
 			'priceOffSeason' => array('compulsory' => FALSE),
 			'priceLists' => array('compulsory' => FALSE),
-			'classification' => array('compulsory' => TRUE),
+			'classification' => array('compulsory' => FALSE),
 			'images' => array('compulsory' => TRUE),
 		);
 
