@@ -12,14 +12,8 @@ class HomePresenter extends BasePresenter {
 	 */
 	protected $rentalDecoratorFactory;
 
-	// public function injectDecorators(IRentalDecoratorFactory $rentalDecoratorFactory) {
-	// 	$this->rentalDecoratorFactory = $rentalDecoratorFactory;
-	// }
-
 
 	public function renderDefault() {
-
-		d($this->rentalDecoratorFactory); #@debug
 
 		$rentalsEntities = $this->rentalRepositoryAccessor->get()->findAll();	
 
