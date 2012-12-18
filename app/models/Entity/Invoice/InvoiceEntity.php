@@ -94,6 +94,12 @@ class Invoice extends \Entity\BaseEntity {
 	 */
 	protected $paymentInfo;
 
+	/**
+	 * @var Collection
+	 * @ORM\OneToMany(targetEntity="Entity\Rental\Referral", mappedBy="invoice", cascade={"persist"})
+	 */
+	protected $referrals;
+
 
 	/**
 	 * @param \Entity\Invoice\Item
@@ -144,6 +150,7 @@ class Invoice extends \Entity\BaseEntity {
 		parent::__construct();
 
 		$this->items = new \Doctrine\Common\Collections\ArrayCollection;
+		$this->referrals = new \Doctrine\Common\Collections\ArrayCollection;
 	}
 		
 	/**
@@ -449,5 +456,41 @@ class Invoice extends \Entity\BaseEntity {
 	public function getPaymentInfo()
 	{
 		return $this->paymentInfo;
+	}
+		
+	/**
+	 * @param \Entity\Rental\Referral
+	 * @return \Entity\Invoice\Invoice
+	 */
+	public function addReferral(\Entity\Rental\Referral $referral)
+	{
+		if(!$this->referrals->contains($referral)) {
+			$this->referrals->add($referral);
+		}
+		$referral->setInvoice($this);
+
+		return $this;
+	}
+		
+	/**
+	 * @param \Entity\Rental\Referral
+	 * @return \Entity\Invoice\Invoice
+	 */
+	public function removeReferral(\Entity\Rental\Referral $referral)
+	{
+		if($this->referrals->contains($referral)) {
+			$this->referrals->removeElement($referral);
+		}
+		$referral->unsetInvoice();
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Rental\Referral
+	 */
+	public function getReferrals()
+	{
+		return $this->referrals;
 	}
 }

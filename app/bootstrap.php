@@ -51,7 +51,7 @@ $container = $configurator->createContainer();
 
 
 // @todo toto niekam schovat
-Panel\Todo::register($container->parameters['appDir']);
+// Panel\Todo::register($container->parameters['appDir']);
 require_once APP_DIR . '/extras/EntityAnnotation.php';
 
 //Extras\Models\Service::$translator = $container->translator;
