@@ -31,13 +31,7 @@ class UseType extends \Entity\BaseEntity {
 	 */
 	protected $packages;
 
-	/**
-	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Marketing", inversedBy="uses")
-	 */
-	protected $marketings;
-
-								//@entity-generator-code --- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()
@@ -45,7 +39,6 @@ class UseType extends \Entity\BaseEntity {
 		parent::__construct();
 
 		$this->packages = new \Doctrine\Common\Collections\ArrayCollection;
-		$this->marketings = new \Doctrine\Common\Collections\ArrayCollection;
 	}
 		
 	/**
@@ -105,26 +98,5 @@ class UseType extends \Entity\BaseEntity {
 	public function getPackages()
 	{
 		return $this->packages;
-	}
-		
-	/**
-	 * @param \Entity\Invoice\Marketing
-	 * @return \Entity\Invoice\UseType
-	 */
-	public function addMarketing(\Entity\Invoice\Marketing $marketing)
-	{
-		if(!$this->marketings->contains($marketing)) {
-			$this->marketings->add($marketing);
-		}
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Invoice\Marketing
-	 */
-	public function getMarketings()
-	{
-		return $this->marketings;
 	}
 }

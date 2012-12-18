@@ -13,7 +13,6 @@ use	Extras\Annotation as EA;
 class Type extends \Entity\BaseEntity {
 
 	const TRANSLATE_TO_SUPPORTED = 'supported';
-	const TRANSLATE_TO_CENTRAL = 'central';
 	const TRANSLATE_TO_NONE = 'none';
 
 	/**

@@ -35,6 +35,11 @@ Extras\Config\PresenterExtension::register($configurator);
 
 $configurator->addConfig(APP_DIR . '/configs/config.neon', FALSE);
 $configurator->addConfig(APP_DIR . '/configs/local.config.neon');
+
+if (isset($_SERVER['REDIRECT_URL']) && ($_SERVER['REDIRECT_URL'] == '/admin/import/default' || strpos($_SERVER['REDIRECT_URL'], 'admin/entity-generator') !== FALSE)) {
+	$section = 'import';
+}
+
 if($section) {
 	$configurator->addConfig(APP_DIR . '/configs/'.$section.'.config.neon');
 }
@@ -46,7 +51,7 @@ $container = $configurator->createContainer();
 
 
 // @todo toto niekam schovat
-Panel\Todo::register($container->parameters['appDir']);
+// Panel\Todo::register($container->parameters['appDir']);
 require_once APP_DIR . '/extras/EntityAnnotation.php';
 
 //Extras\Models\Service::$translator = $container->translator;

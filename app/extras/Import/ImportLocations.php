@@ -14,6 +14,7 @@ use Nette\Application as NA,
 	Extras\Models\Service,
 	Extras\Types\Price,
 	Extras\Types\Latlong,
+	Extras\Types\Json,
 	Service\Autopilot\Autopilot as AP,
 	Service\Log as SLog;
 
@@ -123,7 +124,7 @@ class ImportLocations extends BaseImport {
 		$s->type = $locationTypeCountry;
 		$s->parent = $this->context->locationRepositoryAccessor->get()->find(5); // north america
 		$s->slug = 'usa';
-		$s->iso = 'com';
+		$s->iso = 'us';
 		$s->defaultLanguage = $language;
 		$this->model->persist($s);
 
@@ -143,11 +144,31 @@ class ImportLocations extends BaseImport {
 		$s->type = $locationTypeCountry;
 		$s->parent = $this->context->locationRepositoryAccessor->get()->find(5); // north america
 		$s->slug = 'canada';
-		$s->iso = 'com';
+		$s->iso = 'ca';
 		$s->defaultLanguage = $language;
 		$this->model->persist($s);
 
 		$canada = $s;
+
+		// Create Australia
+		$namePhrase = $this->context->phraseRepositoryAccessor->get()->createNew();
+		$namePhraseService = $this->context->phraseDecoratorFactory->create($namePhrase);
+		$namePhrase->type = $this->dictionaryTypeName;
+		$namePhraseService->createTranslation($language, 'Australia');
+		$this->model->persist($namePhrase);
+
+		$s = $this->context->locationEntityFactory->create();
+		$s->name = $namePhrase;
+		$s->nameShort = $this->context->phraseEntityFactory->create();
+		$s->nameOfficial = $this->context->phraseEntityFactory->create();
+		$s->type = $locationTypeCountry;
+		$s->parent = $this->context->locationRepositoryAccessor->get()->find(5); // north america
+		$s->slug = 'australia';
+		$s->iso = 'au';
+		$s->defaultLanguage = $language;
+		$this->model->persist($s);
+
+		$australia = $s;
 
 		$this->model->flush();
 
@@ -159,7 +180,11 @@ class ImportLocations extends BaseImport {
 			$location->oldId = $x['id'];
 			$location->iso = $x['iso'];
 			$location->iso3 = $x['iso3'];
-			$location->defaultLanguage = $this->context->languageRepositoryAccessor->get()->find(getByOldId('\Language', $x['default_language_id']));
+			$location->isPrimary = TRUE;
+
+			if ($x['default_language_id'] > 0) {
+				$location->defaultLanguage = $this->context->languageRepositoryAccessor->get()->find(getByOldId('\Language', $x['default_language_id']));
+			}
 
 			$t = $this->context->currencyRepositoryAccessor->get()->findOneBy(array('oldId' => $x['default_currency_id']));
 			if ($t) {
@@ -239,9 +264,9 @@ class ImportLocations extends BaseImport {
 			$languageTemp = $this->context->languageRepositoryAccessor->get()->findOneBy(array('iso' => 'en'));
 			$location->slug = $namePhraseService->getTranslation($languageTemp)->translation;
 			
-			$location->polygon = NULL;
-			$location->latitude = new Latlong($x['latitude']);
-			$location->longitude = new Latlong($x['longitude']);
+			$location->polygons = NULL;
+			if ($x['latitude'] != 0) $location->latitude = new Latlong($x['latitude']);
+			if ($x['longitude'] != 0) $location->longitude = new Latlong($x['longitude']);
 			$location->phonePrefix = $x['phone_prefix'];
 			$location->defaultZoom = $x['default_zoom'];
 
@@ -251,6 +276,10 @@ class ImportLocations extends BaseImport {
 					$location->type = $locationTypeState;
 				} else if (substr($x['iso'], 0, 2) == 'ca') {
 					$location->parent = $canada;
+					$location->type = $locationTypeState;
+				} else if (substr($x['iso'], 0, 2) == 'au') {
+					$location->parent = $australia;
+					$location->type = $locationTypeState;
 				}
 			} else {
 				$parent = $this->context->locationRepositoryAccessor->get()->findOneBy(array('oldId' => $x['continent']));
@@ -267,46 +296,29 @@ class ImportLocations extends BaseImport {
 		$this->model->flush();
 	}
 
-
 	// ----------------------------------------------------------
-	// ------------- COUNTRIES Travelings
-	// ----------------------------------------------------------
-	// private function importTravelings() {
-	// 	$countryLocationType = $this->context->locationTypeRepositoryAccessor->get()->findOneBy(array('slug' => 'country'));
-
-	// 	$r = q('select * from countries_traveling order by id');
-	// 	while ($x = mysql_fetch_array($r)) {
-	// 		$traveling = $this->context->locationTravelingEntityFactory->create();
-	// 		$traveling->sourceLocation = $this->context->locationRepositoryAccessor->get()->findOneBy(array('type' => $countryLocationType, 'oldId' => $x['source_country_id']));
-	// 		$traveling->destinationLocation = $this->context->locationRepositoryAccessor->get()->findOneBy(array('type' => $countryLocationType, 'oldId' => $x['destination_country_id']));
-	// 		$traveling->peopleCount = $x['people_count'];
-	// 		$traveling->year = $x['year'];
-	// 		$traveling->oldId = $x['id'];
-	// 		$this->model->persist($traveling);
-	// 	}
-	// 	$this->model->flush();
-	// 	return false;
-	// }
-
-	// ----------------------------------------------------------
-	// ------------- Regions Level 0
+	// ------------- Regions
 	// ----------------------------------------------------------
 	private function importRegions() {
-		$locationType = $this->context->locationTypeEntityFactory->create();
-		$locationType->name = $this->createPhraseFromString('\Location\Location', 'name', 'NATIVE', 'region', 'en');
-		$locationType->slug = 'region';
-		$this->model->persist($locationType);
+		$locationType = $this->context->locationTypeRepositoryAccessor->get()->findOneBy(array('slug' => 'region'));
+		if (!$locationType) {
+			d('Vytvaram region locationType');
+			$locationType = $this->context->locationTypeEntityFactory->create();
+			$locationType->name = $this->createPhraseFromString('\Location\Location', 'name', 'NATIVE', 'region', 'en');
+			$locationType->slug = 'region';
+			$this->model->persist($locationType);			
+		}
 
 		$countryLocationType = $this->context->locationTypeRepositoryAccessor->get()->findOneBy(array('slug' => 'country'));
 
 		if ($this->developmentMode == TRUE) {
-			$r = q('select * from regions where country_id = 46 and level = 0 order by id');
+			$r = q('select * from regions where country_id = 46 order by id');
 		} else {
-			$r = q('select * from regions where level = 0 order by id');
+			$r = q('select * from regions order by id');
 		}
 
 		while($x = mysql_fetch_array($r)) {
-			$location = $this->context->locationEntityFactory->create();
+			$location = $this->context->locationEntityFactory->create();				
 
 			$namePhrase = $this->context->phraseRepositoryAccessor->get()->createNew();
 			$namePhraseService = $this->context->phraseDecoratorFactory->create($namePhrase);
@@ -325,122 +337,23 @@ class ImportLocations extends BaseImport {
 			}
 
 			$location->name = $namePhrase;
-			$location->nameOfficial = $namePhrase;
-			$location->nameShort = $namePhrase;
 			$location->type = $locationType;
-			$location->slug = $x['name_url'];			
+			$location->slug = $x['name_url'];
 
 			$location->oldId = $x['id'];
 
+			$t = unserialize($x['polygons']);
+			$location->polygons = $t;
 
-			$location->parent = $this->context->locationRepositoryAccessor->get()->findOneBy(array('oldId'=>$x['country_id'], 'type'=>$countryLocationType));
-			//debug($location); return;
+			$location->parent = $this->context->locationRepositoryAccessor->get()->findOneBy(array(
+				'oldId' => $x['country_id'], 
+				'type' => $countryLocationType
+			));
+
+			//debug($location); exit;
 			$this->model->persist($location);
 		}
 		$this->model->flush();
-	}
-
-	// ----------------------------------------------------------
-	// ------------- Administrative Regions
-	// ----------------------------------------------------------
-	private function importAdministrativeRegions1() {
-
-		// Level 1
-
-		$locationType = $this->context->locationTypeRepositoryAccessor->get()->findOneBy(array('slug'=> 'region'));
-
-
-		$countryLocationType = $this->context->locationTypeRepositoryAccessor->get()->findOneBy(array('slug' => 'country'));
-
-		if ($this->developmentMode == TRUE) {
-			$r = q('select * from regions where country_id = 46 and level = 1 order by id');
-		} else {
-			$r = q('select * from regions where level = 1 order by id');
-		}
-
-		while($x = mysql_fetch_array($r)) {
-			$location = $this->context->locationEntityFactory->create();
-
-			$namePhrase = $this->context->phraseRepositoryAccessor->get()->createNew();
-			$namePhraseService = $this->context->phraseDecoratorFactory->create($namePhrase);
-			$namePhrase->type = $this->dictionaryTypeName;
-			$namePhrase->ready = TRUE;
-
-			$r1 = q('select * from regions_translations where location_id = '.$x['id']);
-			while ($x1 = mysql_fetch_array($r1)) {
-				$variations = array();
-				$variations[0][0] = array(
-					'locative' => $x1['name_locative'],
-				);
-				$languageTemp = $this->context->languageRepositoryAccessor->get()->findOneBy(array('oldId' => $x1['language_id']));
-				$t = $namePhraseService->createTranslation($languageTemp, $x['name']);
-				$t->updateVariations($variations);
-			}
-
-			$location->name = $namePhrase;
-			$location->nameOfficial = $namePhrase;
-			$location->nameShort = $namePhrase;
-			$location->type = $locationType;
-			$location->slug = $x['name_url'];			
-
-			$location->oldId = $x['id'];
-
-			$location->parent = $this->context->locationRepositoryAccessor->get()->findOneBy(array('oldId'=>$x['country_id'], 'type'=>$countryLocationType));
-			$this->model->persist($location);
-		}
-		$this->model->flush();
-
-	}
-
-	private function importAdministrativeRegions2() {
-		// Level 2
-
-		$locationType = $this->context->locationTypeRepositoryAccessor->get()->findOneBy(array('slug'=> 'region'));
-
-		$countryLocationType = $this->context->locationTypeRepositoryAccessor->get()->findOneBy(array('slug' => 'country'));
-
-		if ($this->developmentMode == TRUE) {
-			$r = q('select * from regions where country_id = 46 and level = 2 order by id');
-		} else {
-			$r = q('select * from regions where level = 2 order by id');
-		}
-		while($x = mysql_fetch_array($r)) {
-			$location = $this->context->locationEntityFactory->create();
-
-			$namePhrase = $this->context->phraseRepositoryAccessor->get()->createNew();
-			$namePhraseService = $this->context->phraseDecoratorFactory->create($namePhrase);
-			$namePhrase->type = $this->dictionaryTypeName;
-			$namePhrase->ready = TRUE;
-
-			$r1 = q('select * from regions_translations where location_id = '.$x['id']);
-			while ($x1 = mysql_fetch_array($r1)) {
-				$variations = array();
-				$variations[0][0] = array(
-					'locative' => $x1['name_locative'],
-				);
-				$languageTemp = $this->context->languageRepositoryAccessor->get()->findOneBy(array('oldId' => $x1['language_id']));
-				$t = $namePhraseService->createTranslation($languageTemp, $x['name']);
-				$t->updateVariations($variations);
-			}
-
-			$location->name = $namePhrase;
-			$location->nameOfficial = $namePhrase;
-			$location->nameShort = $namePhrase;
-			$location->type = $locationType;
-			$location->slug = $x['name_url'];			
-
-			$location->oldId = $x['id'];
-
-			//debug($x['parent_id']); debug($this->administrativeRegions1Type); return;
-
-			$t = $this->context->locationRepositoryAccessor->get()->findOneBy(array('oldId'=>$x['country_id'], 'type'=>$countryLocationType));
-			if ($t) {
-				$location->parent = $t;
-			}
-			$this->model->persist($location);
-		}
-		$this->model->flush();
-
 	}
 
 	// ----------------------------------------------------------
@@ -490,6 +403,8 @@ class ImportLocations extends BaseImport {
 			$location->oldId = $x['id'];
 
 			$location->parent = $countryLocation;
+
+			//d($location); return;
 			$this->model->persist($location);
 		}
 		$this->model->flush();

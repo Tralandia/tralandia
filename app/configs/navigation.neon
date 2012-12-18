@@ -119,12 +119,6 @@ common:
 				package: 
 					label: Packages
 					link: ':Admin:InvoicePackage:list'
-				marketing: 
-					label: Marketings
-					link: ':Admin:InvoiceMarketing:list'
-				coupon: 
-					label: Coupons
-					link: ':Admin:InvoiceCoupon:list'
 				serviceType: 
 					label: Service Types
 					link: ':Admin:InvoiceServiceType:list'
@@ -225,6 +219,20 @@ common:
 				bankAccount: 
 					label: Bank Accounts
 					link: ':Admin:CompanyBankAccount:list'
+
+		admin:
+			label: Admin
+			items:
+				import: 
+					label: Import
+					link: ':Admin:Import:default'
+				entityGenerator: 
+					label: Entity Generator
+					link: ':Admin:EntityGenerator:default'
+				searchCache: 
+					label: Update Search Cache
+					link: ':Admin:RunRobot:searchCache'
+					target: _blank
 
 	right: # parave strana
 		account:

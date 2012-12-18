@@ -57,8 +57,6 @@ class ImportInvoiceStart extends BaseImport {
 			'member' => 'Adding new rental',
 			'recurrence' => 'Recurrence',
 			'admin' => 'Internal (for admins / managers)',
-			'coupon' => 'Coupons',
-			'marketing' => 'Marketings',
 			'objectProlong' => 'Prolong object for FREE',
 		);
 
@@ -82,7 +80,11 @@ class ImportInvoiceStart extends BaseImport {
 			$package = $context->invoicePackageEntityFactory->create();
 			$package->name = $this->createNewPhrase($packageNameType, $x['name_dic_id']);
 			$package->teaser = $this->createNewPhrase($packageTeaserType, $x['teaser_dic_id']);
-			
+
+			$t = $context->currencyRepositoryAccessor->get()->findOneByOldId((int)$x['currencies_id']);
+
+			$package->currency = $t;
+
 			$temp = $context->locationRepositoryAccessor->get()->findOneBy(array('type'=>$countryType, 'oldId'=>$x['countries_id']));
 			if ($temp) $package->country = $temp;
 
@@ -99,17 +101,18 @@ class ImportInvoiceStart extends BaseImport {
 				$packageService = $context->invoiceServiceEntityFactory->create();
 				$packageService->type = $context->invoiceServiceTypeRepositoryAccessor->get()->findOneByOldId($x1['services_types_id']);
 				$packageService->duration = $context->invoiceServiceDurationRepositoryAccessor->get()->findOneByOldId($x1['duration']);
-				$packageService->defaultPrice = new \Extras\Types\Price($x1['price_default'], $currenciesByOldId[(int)$x['currencies_id']]); 
-				$packageService->currentPrice = new \Extras\Types\Price($x1['price_current'], $currenciesByOldId[(int)$x['currencies_id']]);
+				$packageService->defaultPrice = (float)$x1['price_default']; 
+				$packageService->currentPrice = (float)$x1['price_current'];
 				$package->addService($packageService);
 			}
+			d($package);
 
 			$model->persist($package);
 		}
 		$model->flush();
 
 		// Marketings
-		$marketingNameType = $this->createPhraseType('\Invoice\Marketing', 'name', 'ACTIVE');
+/*		$marketingNameType = $this->createPhraseType('\Invoice\Marketing', 'name', 'ACTIVE');
 		$marketingDescriptionType = $this->createPhraseType('\Invoice\Marketing', 'description', 'ACTIVE');
 		$r = q('select * from invoicing_marketings order by id');
 		while($x = mysql_fetch_array($r)) {
@@ -137,7 +140,7 @@ class ImportInvoiceStart extends BaseImport {
 		}
 
 		$model->flush();
-
+*/
 	}
 
 }

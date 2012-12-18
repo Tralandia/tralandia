@@ -36,7 +36,13 @@ class Package extends \Entity\BaseEntity {
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Location\Location")
 	 */
-	protected $country;
+	protected $primaryLocation;
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToOne(targetEntity="Entity\Currency")
+	 */
+	protected $currency;
 
 	/**
 	 * @var Collection
@@ -44,8 +50,7 @@ class Package extends \Entity\BaseEntity {
 	 */
 	protected $services;
 
-
-								//@entity-generator-code --- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()
@@ -134,9 +139,9 @@ class Package extends \Entity\BaseEntity {
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Invoice\Package
 	 */
-	public function setCountry(\Entity\Location\Location $country)
+	public function setPrimaryLocation(\Entity\Location\Location $primaryLocation)
 	{
-		$this->country = $country;
+		$this->primaryLocation = $primaryLocation;
 
 		return $this;
 	}
@@ -144,9 +149,9 @@ class Package extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoice\Package
 	 */
-	public function unsetCountry()
+	public function unsetPrimaryLocation()
 	{
-		$this->country = NULL;
+		$this->primaryLocation = NULL;
 
 		return $this;
 	}
@@ -154,9 +159,38 @@ class Package extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Location\Location|NULL
 	 */
-	public function getCountry()
+	public function getPrimaryLocation()
 	{
-		return $this->country;
+		return $this->primaryLocation;
+	}
+		
+	/**
+	 * @param \Entity\Currency
+	 * @return \Entity\Invoice\Package
+	 */
+	public function setCurrency(\Entity\Currency $currency)
+	{
+		$this->currency = $currency;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Invoice\Package
+	 */
+	public function unsetCurrency()
+	{
+		$this->currency = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Currency|NULL
+	 */
+	public function getCurrency()
+	{
+		return $this->currency;
 	}
 		
 	/**

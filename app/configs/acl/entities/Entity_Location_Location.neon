@@ -372,28 +372,6 @@ domain_edit:
 	manager: deny
 	admin: deny
 	
-marketings_show:
-	guest: deny
-	potentialowner: deny
-	owner: deny
-	translator: deny
-	assistant: deny
-	telmarkmanager: deny
-	telmarkoperator: deny
-	manager: deny
-	admin: deny
-	
-marketings_edit:
-	guest: deny
-	potentialowner: deny
-	owner: deny
-	translator: deny
-	assistant: deny
-	telmarkmanager: deny
-	telmarkoperator: deny
-	manager: deny
-	admin: deny
-	
 rentals_show:
 	guest: deny
 	potentialowner: deny

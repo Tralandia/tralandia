@@ -10,7 +10,7 @@ use Doctrine\ORM\Query\Expr;
  */
 class PathSegmentRepository extends \Repository\BaseRepository {
 
-	public function findForRouter($language, $country ,array $pathSegments)
+	public function findForRouter($language, $primaryLocation ,array $pathSegments)
 	{
 		$qb = $this->_em->createQueryBuilder();
 
@@ -18,14 +18,14 @@ class PathSegmentRepository extends \Repository\BaseRepository {
 		$languageOr->add($qb->expr()->eq('e.language', $language->id));
 		$languageOr->add($qb->expr()->isNull('e.language'));
 
-		$countryOr = $qb->expr()->orx();
-		$countryOr->add($qb->expr()->eq('e.country', $country->id));
-		$countryOr->add($qb->expr()->isNull('e.country'));
+		$primaryLocationOr = $qb->expr()->orx();
+		$primaryLocationOr->add($qb->expr()->eq('e.primaryLocation', $primaryLocation->id));
+		$primaryLocationOr->add($qb->expr()->isNull('e.primaryLocation'));
 
 		$qb->select('e')
 			->from($this->_entityName, 'e')
 			->where($languageOr)
-			->andWhere($countryOr)
+			->andWhere($primaryLocationOr)
 			->andWhere($qb->expr()->in('e.pathSegment', $pathSegments))
 			->orderBy($qb->expr()->asc('e.type'));
 

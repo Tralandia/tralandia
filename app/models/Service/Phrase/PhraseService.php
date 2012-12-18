@@ -3,6 +3,7 @@
 namespace Service\Phrase;
 
 use Service, Doctrine, Entity;
+use Nette\Utils\Strings;
 
 /**
  * Sluzba frazy
@@ -74,6 +75,20 @@ class PhraseService extends Service\BaseService {
 		}
 	}
 
+	/**
+	 * Vrati source Language
+	 * @param Entity\Language
+	 * @return Entity\Phrase\Translation
+	 */
+	public function getSourceTranslation() {
+		foreach ($this->entity->getTranslations() as $key => $value) {
+			if ($this->entity->sourceLanguage && $value->language->id == $this->entity->sourceLanguage->id) {
+				return $value;
+			}
+		}
+		return FALSE;
+	}
+
 	public function hasTranslation($language) {
 		return $this->getTranslation($language) instanceof Entity\Phrase\Translation;
 	}
@@ -101,6 +116,45 @@ class PhraseService extends Service\BaseService {
 	}
 
 	/**
+	 * Returns the number of translations that contain any text (length > 0)
+	 * @return int
+	 */
+	public function getValidTranslationsCount() {
+		$c = 0;
+		foreach ($this->entity->getTranslations() as $key => $value) {
+			if (Strings::length($value->translation) > 0) $c++;
+		}
+
+		return $c;
+	}
+
+	/**
+	 * Checks for existing central language translation
+	 * @return boolean
+	 */
+	public function hasCentralTranslation() {
+		$mainTranslations = $this->getMainTranslations();
+		if (Strings::length($mainTranslations[self::CENTRAL]->translation) > 0) {
+			return TRUE;
+		} else {
+			return FALSE;
+		}
+	}
+
+	/**
+	 * Checks for existing source language translation
+	 * @return boolean
+	 */
+	public function hasSourceTranslation() {
+		$mainTranslations = $this->getMainTranslations();
+		if (Strings::length($mainTranslations[self::SOURCE]->translation) > 0) {
+			return TRUE;
+		} else {
+			return FALSE;
+		}
+	}
+
+	/**
 	 * Ulozi hodnotu prekladu na zaklade jazyka
 	 * @param Entity\Language
 	 * @param string
@@ -111,7 +165,7 @@ class PhraseService extends Service\BaseService {
 		return $this;
 	}
 
-	public function addTranslation($translation) {
+	private function addTranslation($translation) {
 		return $this->getEntity()->addTranslation($translation);
 	}
 

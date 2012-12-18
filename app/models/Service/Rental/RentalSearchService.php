@@ -2,13 +2,11 @@
 
 namespace Service\Rental;
 
-use Service, Doctrine, Entity;
+use Service, Doctrine, Entity, Nette;
 use Extras\Cache\IRentalSearchCachingFactory;
 
-/**
- * @author Jan Czibula
- */
-class RentalSearchService extends Service\BaseService 
+
+class RentalSearchService extends Nette\Object 
 {
 
 	const COUNT_PER_PAGE			= 50;

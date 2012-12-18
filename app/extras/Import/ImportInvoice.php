@@ -5,6 +5,7 @@ namespace Extras\Import;
 use Nette\Application as NA,
 	Nette\Environment,
 	Nette\Diagnostics\Debugger,
+	Nette\Utils\Validators,
 	Nette\Utils\Html,
 	Nette\Utils\Strings,
 	Extras\Models\Service,
@@ -39,6 +40,13 @@ class ImportInvoice extends BaseImport {
 		$this->locationsByOldId = getNewIdsByOld('\Location\Location', 'type_id = '.$this->countryTypeId[0]);
 		$this->languagesByOldId = getNewIdsByOld('\Language');
 
+		$this->locationTypes = array();
+		$this->locationTypes['country'] = $context->locationTypeRepositoryAccessor->get()->findOneBySlug('country');
+		$this->locationTypes['continent'] = $context->locationTypeRepositoryAccessor->get()->findOneBySlug('continent');
+		$this->locationTypes['region'] = $context->locationTypeRepositoryAccessor->get()->findOneBySlug('region');
+		$this->locationTypes['locality'] = $context->locationTypeRepositoryAccessor->get()->findOneBySlug('locality');
+
+
 		// Import paid invoices
 		if ($this->developmentMode == TRUE) {
 			$r = q('select * from invoicing_invoices_paid where companies_id NOT IN (1,2) AND client_country_id = 46 order by id');
@@ -72,9 +80,9 @@ class ImportInvoice extends BaseImport {
 		if (isset($x['invoice_number'])) {
 			$invoice->invoiceNumber = $x['invoice_number'];
 		}
-		if (isset($x['invoice_variable_number'])) {
-			$invoice->paymentReferenceNumber = $x['invoice_variable_number'];
-		}
+		// if (isset($x['invoice_variable_number'])) {
+		// 	$invoice->paymentReferenceNumber = $x['invoice_variable_number'];
+		// }
 		$invoice->company = $context->companyRepositoryAccessor->get()->find($this->companiesByOldId[$x['companies_id']]);
 		if (isset($this->rentalsByOldId[$x['objects_id']])) {
 			$t = $context->rentalRepositoryAccessor->get()->find($this->rentalsByOldId[$x['objects_id']]);
@@ -85,40 +93,33 @@ class ImportInvoice extends BaseImport {
 		if (isset($x['time_due'])) {
 			$invoice->due = fromStamp($x['time_due']);
 		}
-		if (isset($x['time_due'])) {
+		if (isset($x['time_paid'])) {
 			$invoice->paid = fromStamp($x['time_paid']);
 		}
 
-		if ($x['time_paid'] > 0) {
-			if ($x['ok']) {
-				$invoice->status = $invoice::STATUS_PAID;
-			} else {
-				$invoice->status = $invoice::STATUS_PAID_NOT_CHECKED;
-			}
-		} else {
-			$invoice->status = $invoice::STATUS_PENDING;
-		}
+		$invoicingData = $this->context->invoiceInvoicingDataRepositoryAccessor->get()->createNew();
+		$invoicingData->name = $x['client_name'];
+		$invoicingData->email = $x['client_email'];
+		$invoicingData->phone = $x['client_phone'];
+		$invoicingData->url = $x['client_url'];
+		$invoicingData->address = implode("\n", array_filter(array(
+			$x['client_address'],
+			$x['client_address_2'],
+			$x['client_postcode'],
+			$x['client_locality'],
+		)));
 
-		$invoice->clientName = $x['client_name'];
-		$invoice->clientPhone = $x['client_phone'];
-		$invoice->clientEmail = $x['client_email'];
-		$invoice->clientUrl = new \Extras\Types\Url($x['client_url']);
-		$invoice->clientAddress = new \Extras\Types\Address(array(
-			'address' => array_filter(array($x['client_address'], $x['client_address_2'])),
-			'postcode' => $x['client_postcode'],
-			'locality' => $x['client_locality'],
-			'country' => $this->locationsByOldId[$x['client_country_id']],
-		));
+		$invoicingData->primaryLocation = $this->context->locationRepositoryAccessor->get()->findOneBy(array('oldId'=>$x['client_country_id'], 'type' => $this->locationTypes['country']));
 
-		$invoice->clientLanguage = $context->languageRepositoryAccessor->get()->find($this->languagesByOldId[$x['client_language_id']]);
-		$invoice->clientCompanyName = $x['client_company_name'];
-		$invoice->clientCompanyId = $x['client_company_id'];
-		$invoice->clientCompanyVatId = $x['client_company_vat_id'];
+		$invoicingData->companyName = $x['client_company_name'];
+		$invoicingData->companyId = $x['client_company_id'];
+		$invoicingData->companyVatId = $x['client_company_vat_id'];
+		$this->model->persist($invoicingData);
+
+		$invoice->invoicingData = $invoicingData;
 		
-		$invoice->vat = $x['vat'];
+		$invoice->vat = (float)$x['vat'];
 		$invoice->createdBy = $x['created_by'];
-		$invoice->referrer = $x['referrer'];
-		$invoice->referrerCommission = $x['telmark_operator_commission'];
 		$invoice->paymentInfo = @unserialize($x['payment_info']);
 
 		$r1 = q('select * from invoicing_invoices_services_'.($x['time_paid'] ? 'paid' : 'pending').' where invoices_id = '.$x['id']);
@@ -143,11 +144,7 @@ class ImportInvoice extends BaseImport {
 			}
 			$invoiceItem->durationName = $x1['duration_name'];
 			$invoiceItem->durationNameEn = $x1['duration_name_en'];
-			$invoiceItem->price = $x1['price'];
-			$invoiceItem->marketingName = $x1['marketings_name'];
-			$invoiceItem->marketingNameEn = $x1['marketings_name_en'];
-			$invoiceItem->couponName = $x1['coupons_name'];
-			//$invoiceItem->couponNameEn = $x1['coupons_name_en'];
+			$invoiceItem->price = (float)$x1['price'];
 			$invoiceItem->packageName = $x1['packages_name'];
 			$invoiceItem->packageNameEn = $x1['packages_name_en'];
 
@@ -156,10 +153,8 @@ class ImportInvoice extends BaseImport {
 
 		// This is done after the items have been imported, as currency is stored for items in old system
 		$invoice->currency = $currency;
-		if ($currency->exchangeRate === NULL) debug($currency->exchangeRate);
+		if ($currency->exchangeRate === NULL) debug('Currency has no exchange rate', $currency->exchangeRate);
 		$invoice->exchangeRate = $currency->exchangeRate;
-
-
 		$model->persist($invoice);
 	}
 

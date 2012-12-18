@@ -19,11 +19,12 @@
 			<div class="span12">
 				<h5><span>Ubytovanie</span> v Dalsich krajinach</h5>
 			</div>
-
 		</div>
 
-		<ul class="row" n:inner-foreach="$locations as $seo">
-			<li class="span2"><a href="{$seo->url}" title="{$seo->getTitle()}">{_$seo->primaryLocation->name}</a></li>
-		</ul>
+		<div class="row" n:inner-foreach="$locations as $chunk">
+			<ul class="span2" n:inner-foreach="$chunk as $seo">
+				<li class=""><a href="{$seo->url}" title="{$seo->getTitle()}">{_$seo->primaryLocation->name}</a></li>
+			</ul>
+		</div>
 	</footer>
 </div>
