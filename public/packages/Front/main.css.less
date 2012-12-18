@@ -817,20 +817,28 @@ border-top-right-radius: 5px;
 		list-style: none;
 
 		li {
-
-			&:before {content:'\E4AE';
+			
+			&:before {
+			content:'\E4AE';
 			  font-family: "entypo";
 			  font-weight: normal;
 			  font-style: normal;
-			  font-size: 40px;
+			  font-size: 25px;
+			  top: -3px;
+			  right: -11px;
 			  text-decoration: inherit;
-		}
+			  position: relative;
+			  float: left;
+			  color: #fff;
+			}
 
 
+			clear: both;
+			display:block;
 
 			padding-bottom: 5px;
 			a {
-				padding-left: 20px;
+				padding-left: 25px;
 				color: @white;
 				display: block;
 				font-size: 12px;
@@ -1831,15 +1839,4 @@ width: 31.657201%;
 		float: right;
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
 
