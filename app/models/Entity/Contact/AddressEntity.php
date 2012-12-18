@@ -2,6 +2,7 @@
 
 namespace Entity\Contact;
 
+use Nette\Utils\Arrays;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -9,6 +10,17 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="contact_address")
  */
 class Address extends \Entity\BaseEntity {
+
+	const STATUS_UNCHECKED = 'unchecked';
+	const STATUS_MISPLACED = 'misplaced';
+	const STATUS_OK = 'ok';
+	const STATUS_INCOMPLETE = 'incomplete';
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string")
+	 */
+	protected $status;
 
 	/**
 	 * @var string
@@ -18,21 +30,33 @@ class Address extends \Entity\BaseEntity {
 
 	/**
 	 * @var string
-	 * @ORM\Column(type="string")
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $subLocality;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $postalCode;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Location\Location")
+	 * @ORM\ManyToOne(targetEntity="Entity\Location\Location", cascade={"persist"})
+	 */
+	protected $primaryLocation;
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToOne(targetEntity="Entity\Location\Location", cascade={"persist"})
 	 */
 	protected $locality;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Location\Location")
+	 * @ORM\ManyToMany(targetEntity="Entity\Location\Location", mappedBy="addresses")
 	 */
-	protected $primaryLocation;
+	protected $locations;
 
 	/**
 	 * @var latlong
@@ -46,12 +70,91 @@ class Address extends \Entity\BaseEntity {
 	 */
 	protected $longitude;
 
+	/**
+	 * @param NULL
+	 * @return \Entity\Contact\Address
+	 */
+	public function clearLocations()
+	{
+		foreach ($this->locations as $key => $value) {
+			$value->removeAddresse($this);
+		}
+		$this->locations->clear();
+
+		return $this;
+	}
+
+	/**
+	 * @param array of \Entity\Location\Location
+	 * @return \Entity\Contact\Address
+	 */
+	public function setLocations(array $locations)
+	{
+		$this->clearLocations();
+		foreach ($locations as $key => $value) {
+			if ($value instanceof \Entity\Location\Location) {
+				$this->addLocation($value);
+			}
+		}
+
+		return $this;
+	}
+
+	public function getLocationsByType($types, $limit = NULL) {
+		$returnJustOneType = NULL;
+		if(!is_array($types)) {
+			$returnJustOneType = $types;
+			$types = array($types);
+		}
+
+		$return = array();
+		$i = 0;
+		foreach ($this->getLocations as $location) {
+			if(!empty($location->type) && in_array($location->type->slug, $types)) {
+				$return[$location->type->slug][] = $location;
+				$i++;
+			}
+
+			if(is_numeric($limit)) {
+				if($i == $limit) break;
+			}
+		}
+
+		if($returnJustOneType) {
+			
+			$return = Arrays::get($return,$returnJustOneType,array());
+		}
+
+		return $return;
+	}
+
 	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()
 	{
 		parent::__construct();
+
+		$this->locations = new \Doctrine\Common\Collections\ArrayCollection;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Contact\Address
+	 */
+	public function setStatus($status)
+	{
+		$this->status = $status;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getStatus()
+	{
+		return $this->status;
 	}
 		
 	/**
@@ -77,9 +180,48 @@ class Address extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Contact\Address
 	 */
+	public function setSubLocality($subLocality)
+	{
+		$this->subLocality = $subLocality;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Contact\Address
+	 */
+	public function unsetSubLocality()
+	{
+		$this->subLocality = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getSubLocality()
+	{
+		return $this->subLocality;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Contact\Address
+	 */
 	public function setPostalCode($postalCode)
 	{
 		$this->postalCode = $postalCode;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Contact\Address
+	 */
+	public function unsetPostalCode()
+	{
+		$this->postalCode = NULL;
 
 		return $this;
 	}
@@ -90,6 +232,35 @@ class Address extends \Entity\BaseEntity {
 	public function getPostalCode()
 	{
 		return $this->postalCode;
+	}
+		
+	/**
+	 * @param \Entity\Location\Location
+	 * @return \Entity\Contact\Address
+	 */
+	public function setPrimaryLocation(\Entity\Location\Location $primaryLocation)
+	{
+		$this->primaryLocation = $primaryLocation;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Contact\Address
+	 */
+	public function unsetPrimaryLocation()
+	{
+		$this->primaryLocation = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Location\Location|NULL
+	 */
+	public function getPrimaryLocation()
+	{
+		return $this->primaryLocation;
 	}
 		
 	/**
@@ -125,29 +296,36 @@ class Address extends \Entity\BaseEntity {
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Contact\Address
 	 */
-	public function setPrimaryLocation(\Entity\Location\Location $primaryLocation)
+	public function addLocation(\Entity\Location\Location $location)
 	{
-		$this->primaryLocation = $primaryLocation;
+		if(!$this->locations->contains($location)) {
+			$this->locations->add($location);
+		}
+		$location->addAddresse($this);
 
 		return $this;
 	}
 		
 	/**
+	 * @param \Entity\Location\Location
 	 * @return \Entity\Contact\Address
 	 */
-	public function unsetPrimaryLocation()
+	public function removeLocation(\Entity\Location\Location $location)
 	{
-		$this->primaryLocation = NULL;
+		if($this->locations->contains($location)) {
+			$this->locations->removeElement($location);
+		}
+		$location->removeAddresse($this);
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Entity\Location\Location|NULL
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Location\Location
 	 */
-	public function getPrimaryLocation()
+	public function getLocations()
 	{
-		return $this->primaryLocation;
+		return $this->locations;
 	}
 		
 	/**

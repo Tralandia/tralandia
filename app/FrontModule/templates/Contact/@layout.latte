@@ -1,0 +1,34 @@
+{control header:begin}
+	{control css}
+	{control js}
+{control header:end}
+<body>
+	<div class="container baseRadius" id="container">
+		<div class="row">
+
+			{timer 'timer.header'}
+			{include ../header.latte}
+			{/timer}
+
+			{include ../search.latte}
+
+			<div class="span9 contactPage">
+				<div class="innerPadding baseRadius baseBorder innerPaddingRitgh overflow">
+					<div id="content" class="nopadding">
+						{include #content}
+					</div>
+				</div>
+			</div>
+
+			{timer 'timer.footer'}
+			{control footer}
+			{/timer}
+
+			{timer 'timer.countriesFooter'}
+			{control countriesFooter}
+			{/timer}
+		</div>		
+	</div>		
+</body>
+
+</html>

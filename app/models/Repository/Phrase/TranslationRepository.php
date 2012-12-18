@@ -13,9 +13,13 @@ class TranslationRepository extends \Repository\BaseRepository {
 	protected $centralLanguage;
 
 	public function inject($centralLanguage) {
-		list($this->centralLanguage) = func_get_args();
+		$this->centralLanguage = $centralLanguage;
 	}
 
+	/**
+	 * Vyberie preklady kt. treba prelozit (aktualizovat)
+	 * @return array
+	 */
 	public function toTranslate() {
 		$rsm = new \Doctrine\ORM\Query\ResultSetMapping;
 		$rsm->addEntityResult('\Entity\Phrase\Translation', 't');

@@ -22,7 +22,7 @@ class Price extends Type {
 	}
 
 	public function convertToDatabaseValue($value, AbstractPlatform $platform) {
-		if ($value) {
+		if (!$value->isNull()) {
 			return $value->encode();
 		} else {
 			return NULL;

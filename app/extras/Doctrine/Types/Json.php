@@ -25,7 +25,6 @@ class Json extends Type {
 		if (!is_string($value)) {
 			$value = @NU\Json::encode($value);
 			if (!$value) debug($value);
-			// @todo - tu vyhadzovalo chybu "invalid UTF-8 sequence"
 		}
 		return $value;
 	}

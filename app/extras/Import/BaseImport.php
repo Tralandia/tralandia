@@ -62,13 +62,15 @@ class BaseImport {
 				'\Location\Location' => array(),
 				//'\Location\Traveling' => array(),
 			),
-			'subsections' => array('importContinents', 'importCountries', /*'importTravelings',*/ 'importRegions', 'importAdministrativeRegions1', 'importAdministrativeRegions2', 'importLocalities'),
+			'subsections' => array('importContinents', 'importCountries', 'importRegions', 'importLocalities'),
+			'saveImportStatus' => FALSE,
 		),
-		'locationsPolygons' => array(
-			'entities' => array(
-			),
-			'subsections' => array(),
-		),
+		// Vykomentovane, lebo vo V1 to nepotrebujeme
+		// 'locationsPolygons' => array(
+		// 	'entities' => array(
+		// 	),
+		// 	'subsections' => array(),
+		// ),
 		'companies' => array(
 			'entities' => array(
 				'\Company\Company' => array(),
@@ -80,13 +82,20 @@ class BaseImport {
 				'\User\User' => array(),
 				'\User\Combination' => array(),
 			),
-			'subsections' => array('importSuperAdmins', 'importAdmins', 'importManagers', 'importTranslators', 'importOwners', 'importPotentialOwners', 'importVisitors'),
+			'subsections' => array('importSuperAdmins', 'importAdmins', 'importManagers', 'importTranslators', 'importOwners'/*, 'importPotentialOwners'*/, 'importVisitors'),
 		),
 		'rentalTypes' => array(
 			'entities' => array(
 				'\Rental\Type' => array(),
 			),
 			'subsections' => array(),
+		),
+		'rentalInformation' => array(
+			'entities' => array(
+				'\Rental\Information' => array(),
+			),
+			'subsections' => array(),
+			'saveImportStatus' => FALSE,
 		),
 		'rentals' => array(
 			'entities' => array(
@@ -102,7 +111,6 @@ class BaseImport {
 				'\Invoice\UseType' => array(),
 				'\Invoice\Package' => array(),
 				'\Invoice\Service' => array(),
-				'\Invoice\Marketing' => array(),
 			),
 			'subsections' => array(),
 		),
@@ -112,14 +120,15 @@ class BaseImport {
 				'\Invoice\Item' => array(),
 			),
 			'subsections' => array(),
+			'saveImportStatus' => FALSE,
 		),
-		'attractions' => array(
-			'entities' => array(
-				'\Attraction\Type' => array(),
-				'\Attraction\Attraction' => array(),
-			),
-			'subsections' => array(),
-		),
+		// 'attractions' => array(
+		// 	'entities' => array(
+		// 		'\Attraction\Type' => array(),
+		// 		'\Attraction\Attraction' => array(),
+		// 	),
+		// 	'subsections' => array(),
+		// ),
 		'interactions' => array(
 			'entities' => array(
 				'\User\RentalReservation' => array(),
@@ -136,19 +145,12 @@ class BaseImport {
 			),
 			'subsections' => array(),
 		),
-		'seo' => array(
-			'entities' => array(
-				'\Seo\TitleSuffix' => array(),
-				'\Seo\SeoUrl' => array(),
-			),
-			'subsections' => array('importSeoUrls'),
-		),
-		// 'tickets' => array(
+		// 'seo' => array(
 		// 	'entities' => array(
-		// 		'\Ticket\Ticket' => array(),
-		// 		'\Ticket\Message' => array(),
+		// 		'\Seo\TitleSuffix' => array(),
+		// 		'\Seo\SeoUrl' => array(),
 		// 	),
-		// 	'subsections' => array(),
+		// 	'subsections' => array('importSeoUrls'),
 		// ),
 		'pathsegments' => array(
 			'entities' => array(
@@ -156,13 +158,13 @@ class BaseImport {
 			),
 			'subsections' => array(),
 		),
-		'taskTypes' => array(
-			'entities' => array(
-				'\Task\Type' => array(),
-			),
-			'subsections' => array(),
-			'saveImportStatus' => FALSE,
-		),
+		// 'taskTypes' => array(
+		// 	'entities' => array(
+		// 		'\Task\Type' => array(),
+		// 	),
+		// 	'subsections' => array(),
+		// 	'saveImportStatus' => FALSE,
+		// ),
 		'updateLanguage' => array(
 			'entities' => array(
 			),
@@ -210,21 +212,6 @@ class BaseImport {
 				}
 			}
 		}
-	}
-
-	public function truncateAllTables() {
-		qNew('SET FOREIGN_KEY_CHECKS = 0;');
-		$allTables = qNew('SHOW tables');
-		while ($table = mysql_fetch_array($allTables)) {
-			if ($table[0] == '__importVariables') continue;
-			qNew('truncate table '.$table[0]);
-		}
-		qNew('SET FOREIGN_KEY_CHECKS = 1;');
-		foreach ($this->savedVariables['importedSections'] as $key => $value) {
-			$this->savedVariables['importedSections'][$key] = 0;
-		}
-		$this->savedVariables['importedSubSections'] = array();
-		$this->saveVariables();
 	}
 
 	public function dropAllTables() {
@@ -306,7 +293,7 @@ class BaseImport {
 			$oldPhraseData = qf('select * from dictionary where id = '.$oldPhraseId);
 		}
 		if (!$oldPhraseData) {
-			debug('Nenasiel som staru Phrase podla stareho ID '.$oldPhraseId);
+			//debug('Nenasiel som staru Phrase podla stareho ID '.$oldPhraseId);
 			$oldPhraseData = array(
 				'ready' => 1,
 			);
@@ -347,7 +334,7 @@ class BaseImport {
 	}
 
 	/**
-	 * Vytvory novu Phrase entitu
+	 * Vytvori novu Phrase entitu
 	 * @param  text $entityName
 	 * @param  text $entityAttribute
 	 * @param  text $level

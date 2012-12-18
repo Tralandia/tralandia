@@ -7,14 +7,18 @@ use Nette\Utils\Strings;
 
 class DavidPresenter extends BasePresenter {
 
-	private $rentalRepositoryAccessor;
-	private $locationRepositoryAccessor;
 	private $frontRouteFactory;
 	private $seoServiceFactory;
 	private $robot;
 
+	protected $rentalRepositoryAccessor;
+	protected $rentalImageRepositoryAccessor;
+	protected $locationRepositoryAccessor;
+
 	protected $rentalSearchCachingFactory;
 	protected $rentalSearchServiceFactory;
+
+	protected $rentalImageDecoratorFactory;
 
 	public function injectRoute(\Routers\IFrontRouteFactory $frontRouteFactory, \Service\Seo\ISeoServiceFactory $seoServiceFactory) {
 		$this->frontRouteFactory = $frontRouteFactory;
@@ -27,15 +31,21 @@ class DavidPresenter extends BasePresenter {
 		$this->robot = $robot;
 	}
 
-	public function inject(\Nette\DI\Container $dic) {
+	public function injectDic(\Nette\DI\Container $dic) {
 		$this->rentalRepositoryAccessor = $dic->rentalRepositoryAccessor;
+		$this->rentalImageRepositoryAccessor = $dic->rentalImageRepositoryAccessor;
 		$this->locationRepositoryAccessor = $dic->locationRepositoryAccessor;
+	}
+
+	public function inject(\Model\Rental\IImageDecoratorFactory $rentalImageDecoratorFactory) {
+		$this->rentalImageDecoratorFactory = $rentalImageDecoratorFactory;
 	}
 
 	public function actionList() {
 
-		//$this->getService('generatePathSegmentsRobot')->run();
-
+		// $this->getService('generatePathSegmentsRobot')->run();
+		$this->getService('createMissingTranslationsRobot')->run();
+		return 1;
 		$url = 'http://sk.com.tra.com/';
 		$urlScript = new Nette\Http\UrlScript($url);
 		$httpRequest = new Nette\Http\Request($urlScript);
@@ -49,7 +59,6 @@ class DavidPresenter extends BasePresenter {
 
 		d($request);
 		$seo = $this->seoServiceFactory->create($url, $request);
-
 
 	}
 
@@ -66,6 +75,11 @@ class DavidPresenter extends BasePresenter {
 		// d($thisSearch->getResultsCount());
 		// d($thisSearch->getRentalIds());
 		// d($thisSearch->getRentals());
+		
+	}
+
+	public function actionInvoice()
+	{
 		
 	}
 }

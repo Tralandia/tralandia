@@ -46,11 +46,14 @@ class ImportUsers extends BaseImport {
 			$user->password = $value[1];
 			$user->role = $role;
 
-			$contacts = new \Extras\Types\Contacts();
-			$contacts->add(new \Extras\Types\Email($value[0]));
-			$user->contacts = $contacts;
+
+			if (\Nette\Utils\Validators::isEmail($value[0])) {
+				$user->addEmail($this->context->contactEmailRepositoryAccessor->get()->createNew()->setValue($value[0]));
+			}
 
 			$user->language = $en;
+
+			d($user);
 			$this->model->persist($user);
 		}
 
@@ -77,9 +80,7 @@ class ImportUsers extends BaseImport {
 			$user->oldId = $x['id'];
 			$user->role = $role;
 
-			$contacts = new \Extras\Types\Contacts();
-			$contacts->add(new \Extras\Types\Email($x['email']));
-			$user->contacts = $contacts;
+			$user->addEmail($this->context->contactEmailRepositoryAccessor->get()->createNew()->setValue($x['email']));
 			
 			$user->language = $this->context->languageRepositoryAccessor->get()->findOneByIso('en');
 			$this->model->persist($user);
@@ -109,9 +110,7 @@ class ImportUsers extends BaseImport {
 			$user->oldId = $x['id'];
 			$user->role = $role;
 
-			$contacts = new \Extras\Types\Contacts();
-			$contacts->add(new \Extras\Types\Email($x['email']));
-			$user->contacts = $contacts;
+			$user->addEmail($this->context->contactEmailRepositoryAccessor->get()->createNew()->setValue($x['email']));
 			
 			$user->language = $this->context->languageRepositoryAccessor->get()->findOneByIso('en');
 
@@ -152,9 +151,7 @@ class ImportUsers extends BaseImport {
 			$user->role = $role;
 			// $user->invoicingData = @todo;
 
-			$contacts = new \Extras\Types\Contacts();
-			$contacts->add(new \Extras\Types\Email($x['email']));
-			$user->contacts = $contacts;
+			$user->addEmail($this->context->contactEmailRepositoryAccessor->get()->createNew()->setValue($x['email']));
 			
 			$user->language = $this->context->languageRepositoryAccessor->get()->findOneByIso('en');
 
@@ -198,137 +195,132 @@ class ImportUsers extends BaseImport {
 
 			$user->role = $role;
 
-			// $user->invoicingSalutation = '';
-			// // $user->invoicingName = new \Extras\Types\Name($x['client_name']);
+			$invoicingData = $this->context->invoiceInvoicingDataRepositoryAccessor->get()->createNew();
+			$invoicingData->name = $x['client_name'];
+			$invoicingData->email = $x['client_email'];
+			$invoicingData->phone = $x['client_phone'];
+			$invoicingData->url = $x['client_url'];
+			$invoicingData->address = implode("\n", array_filter(array(
+				$x['client_address'], 
+				$x['client_address2'],
+				$x['client_postcode'],
+				$x['client_locality'],
+			)));
 
-			// if($x['client_email']) $user->invoicingEmail = new \Extras\Types\Email($x['client_email']);
-			// if($x['client_phone']) $user->invoicingPhone = new \Extras\Types\Phone($x['client_phone']);
-			// if($x['client_url']) $user->invoicingUrl = new \Extras\Types\Url($x['client_url']);
+			$invoicingData->primaryLocation = $this->context->locationRepositoryAccessor->get()->findOneBy(array('oldId'=>$x['client_country_id'], 'type'=>$locationTypeCountry));
 
-			// $user->invoicingAddress = new \Extras\Types\Address(array(
-			// 	'address' => array_filter(array($x['client_address'], $x['client_address2'])),
-			// 	'postcode' => $x['client_postcode'],
-			// 	'locality' => $x['client_locality'],
-			// 	'country' => $this->context->locationRepositoryAccessor->get()->findOneBy(array('oldId'=>$x['client_country_id'], 'type'=>$locationTypeCountry)),
-			// ));
+			$invoicingData->companyName = $x['client_company_name'];
+			$invoicingData->companyId = $x['client_company_id'];
+			$invoicingData->companyVatId = $x['client_company_vat_id'];
+			$this->model->persist($invoicingData);
 
-			// $user->invoicingCompanyName = $x['client_company_name'];
-			// $user->invoicingCompanyId = $x['client_company_id'];
-			// $user->invoicingCompanyVatId = $x['client_company_vat_id'];
+			$user->invoicingData = $invoicingData;
 
+			$user->addEmail($this->context->contactEmailRepositoryAccessor->get()->createNew()->setValue($x['email']));
 
-			$contacts = new \Extras\Types\Contacts();
-			$contacts->add(new \Extras\Types\Email($x['email']));
-			$contacts->add(new \Extras\Types\Phone($x['phone']));
-			$user->contacts = $contacts;
-			
+			if (strlen($x['phone'])) {
+				if ($tempPhone = $this->context->phoneBook->getOrCreate($x['phone'])) {
+					$user->addPhone($tempPhone);
+				}	
+			}
+
 			$user->language = $this->context->languageRepositoryAccessor->get()->findOneByOldId($x['language_id']);
-			$user->location = $this->context->locationRepositoryAccessor->get()->findOneBy(array('oldId'=>$x['country_id'], 'type'=>$locationTypeCountry));
+			$user->primaryLocation = $this->context->locationRepositoryAccessor->get()->findOneBy(array('oldId'=>$x['country_id'], 'type'=>$locationTypeCountry));
 
+			$user->newsletterNews = (bool)$x['newsletter_news'];
+			$user->newsletterMarketing = (bool)$x['newsletter_marketing'];
 			$this->model->persist($user);
 		}
 		$this->model->flush();
 	}
 
-	private function importPotentialOwners() {
+	// private function importPotentialOwners() {
 
-		return true; //@todo - toto treba opravit este nefunguje
+	// 	return true; //@todo - toto treba opravit este nefunguje
 
-		$role = $this->context->userRoleRepositoryAccessor->get()->findOneBySlug('potentialowner');
-		$locationTypeCountry = $this->context->locationTypeRepositoryAccessor->get()->findOneBySlug('country');
+	// 	$role = $this->context->userRoleRepositoryAccessor->get()->findOneBySlug('potentialowner');
+	// 	$locationTypeCountry = $this->context->locationTypeRepositoryAccessor->get()->findOneBySlug('country');
 
-		if ($this->developmentMode == TRUE) {
-			$r = q('select * from contacts where country_id = 46 limit 10000');	
-		} else {
-			$r = q('select * from contacts');
-		}
+	// 	if ($this->developmentMode == TRUE) {
+	// 		$r = q('select * from contacts where country_id = 46 limit 10000');	
+	// 	} else {
+	// 		$r = q('select * from contacts');
+	// 	}
 
-		while($x = mysql_fetch_array($r)) {
-			$contacts = array();
-			$r1 = q('select email from contacts_emails where contact_id = '.$x['id']);
-			while($x1 = mysql_fetch_array($r1)) {
-				$contacts[] = '"'.$x1['email'].'"';
-			}
+	// 	while($x = mysql_fetch_array($r)) {
+	// 		$user = $this->context->userEntityFactory->create();
 
-			$r1 = q('select phone from contacts_phones where contact_id = '.$x['id']);
-			while($x1 = mysql_fetch_array($r1)) {
-				$contacts[] = '"'.$x1['phone'].'"';
-			}
+	// 		$r1 = q('select email from contacts_emails where contact_id = '.$x['id']);
+	// 		while($x1 = mysql_fetch_array($r1)) {
+	// 			$user->addEmail($this->context->contactEmailRepositoryAccessor->get()->createNew()->setValue($x1['email']));
+	// 		}
 
-			$existingUsers = array();
-			if (count($contacts)) {
-				$query = 'select user_id from contact_contact where user_id is not null and value in ('.implode(', ', $contacts).')';
-				$r1 = qNew($query);
-				while($x1 = mysql_fetch_array($r1)) {
-					$existingUsers[] = $x1['user_id'];
-				}				
-			}
+	// 		$r1 = q('select phone from contacts_phones where contact_id = '.$x['id']);
+	// 		while($x1 = mysql_fetch_array($r1)) {
+	// 			if (strlen($x1['phone'])) {
+	// 				if ($tempPhone = $this->context->phoneBook->getOrCreate($x1['phone'])) {
+	// 					$user->addPhone($tempPhone);
+	// 				}
+	// 			}
+	// 		}
 
-			if (count($existingUsers) == 0) {
-				$user = $this->context->userEntityFactory->create();
-			} else if (count($existingUsers) == 1) {
-				$user = \Service\User\User::get($existingUsers[0]);
-			} else {
-				eval('$user = \Service\User\User::merge('.implode(', ', $existingUsers).');');
-			}
+	// 		if (!$user->login) $user->login = $x['email'];
+	// 		if (!$user->password) $user->password = NULL;
+	// 		//if (!$user->oldId) $user->oldId = $x['id'];
+
+	// 		$user->role = $role;
+
+	// 		// if (!$user->invoicingSalutation) $user->invoicingSalutation = $x['contact_salutation'];
+	// 		// if (!$user->invoicingName) $user->invoicingName = new \Extras\Types\Name($x['contact_firstname'], '', $x['contact_lastname']);
+
+	// 		// if (!$user->invoicingAddress) $user->invoicingAddress = new \Extras\Types\Address(array(
+	// 		// 	'address' => array_filter(array($x['address1'], $x['address2'])),
+	// 		// 	'postcode' => $x['postcode'],
+	// 		// 	'locality' => $x['locality'],
+	// 		// 	'country' => $this->context->locationRepositoryAccessor->get()->findOneBy(array('oldId'=>$x['country_id'], 'type'=>$locationTypeCountry)),
+	// 		// ));
+
+	// 		$user->subscribed = !(bool)$x['unsubscribed'];
+	// 		$user->banned = (bool)$x['banned'];
+	// 		$user->full = (bool)$x['full'];
+	// 		$user->spam = (bool)$x['spam'];
+
+	// 		$user->addPhone($this->context->contactPhoneRepositoryAccessor->get()->createNew()->setValue($x['phone']));
 
 
-			if (!$user->login) $user->login = $x['email'];
-			if (!$user->password) $user->password = NULL;
-			//if (!$user->oldId) $user->oldId = $x['id'];
+	// 		$contacts = new \Extras\Types\Contacts();
 
-			$user->role = $role;
+	// 		$user->addEmail($this->context->contactUrlRepositoryAccessor->get()->createNew()->setValue($x['url']));
 
-			// if (!$user->invoicingSalutation) $user->invoicingSalutation = $x['contact_salutation'];
-			// if (!$user->invoicingName) $user->invoicingName = new \Extras\Types\Name($x['contact_firstname'], '', $x['contact_lastname']);
-
-			// if (!$user->invoicingAddress) $user->invoicingAddress = new \Extras\Types\Address(array(
-			// 	'address' => array_filter(array($x['address1'], $x['address2'])),
-			// 	'postcode' => $x['postcode'],
-			// 	'locality' => $x['locality'],
-			// 	'country' => $this->context->locationRepositoryAccessor->get()->findOneBy(array('oldId'=>$x['country_id'], 'type'=>$locationTypeCountry)),
-			// ));
-
-			$user->subscribed = !(bool)$x['unsubscribed'];
-			$user->banned = (bool)$x['banned'];
-			$user->full = (bool)$x['full'];
-			$user->spam = (bool)$x['spam'];
-
-			$contacts = new \Extras\Types\Contacts();
-
-			$contacts->add(new \Extras\Types\Url($x['url']));
-
-			foreach ($contacts as $key => $value) {
-				if(Validators::isEmail($x['email'])) {
-					$contacts->add(new \Extras\Types\Email($value));
-				} else {
-					$contacts->add(new \Extras\Types\Phone($value));
-				}
-			}
+	// 		foreach ($contacts as $key => $value) {
+	// 			if(Validators::isEmail($value)) {
+	// 				$user->addEmail($this->context->contactEmailRepositoryAccessor->get()->createNew()->setValue($value));
+	// 			} else {
+	// 				$user->addPhone($this->context->contactPhoneRepositoryAccessor->get()->createNew()->setValue($value));
+	// 			}
+	// 		}
 			
-			$attraction->conctacts = $contacts;
-
-			$user->language = $this->context->languageRepositoryAccessor->get()->findOneByOldId($x['language_id']);
-			$user->location = $this->context->locationRepositoryAccessor->get()->findOneBy(array('oldId'=>$x['country_id'], 'type'=>$locationTypeCountry));
+	// 		$user->language = $this->context->languageRepositoryAccessor->get()->findOneByOldId($x['language_id']);
+	// 		$user->location = $this->context->locationRepositoryAccessor->get()->findOneBy(array('oldId'=>$x['country_id'], 'type'=>$locationTypeCountry));
 
 
-			$user->currentTelmarkOperator = $x['telmark_operator_id'];
+	// 		$user->currentTelmarkOperator = $x['telmark_operator_id'];
 
-			$details = array(
-				'counter' => $x['counter'],
-				'done' => $x['done'],
-				'done_stamp' => $x['done_stamp'],
-				'status' => $x['status'],
-				'call_count' => $x['call_count'],
-			);
-			$user->details = $details;
+	// 		$details = array(
+	// 			'counter' => $x['counter'],
+	// 			'done' => $x['done'],
+	// 			'done_stamp' => $x['done_stamp'],
+	// 			'status' => $x['status'],
+	// 			'call_count' => $x['call_count'],
+	// 		);
+	// 		$user->details = $details;
 			
-			debug($user); return;
+	// 		debug($user); return;
 
-			$this->model->persist($user);
-		}
-		$this->model->flush();
-	}
+	// 		$this->model->persist($user);
+	// 	}
+	// 	$this->model->flush();
+	// }
 
 	private function importVisitors() {
 

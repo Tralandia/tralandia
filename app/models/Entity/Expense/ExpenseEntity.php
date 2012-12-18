@@ -23,7 +23,7 @@ class Expense extends \Entity\BaseEntity {
 
 	/**
 	 * @var price
-	 * @ORM\Column(type="price")
+	 * @ORM\Column(type="float")
 	 */
 	protected $amount;
 
@@ -57,7 +57,7 @@ class Expense extends \Entity\BaseEntity {
 	 */
 	protected $user;
 
-								//@entity-generator-code --- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()
@@ -95,10 +95,10 @@ class Expense extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Extras\Types\Price
+	 * @param float
 	 * @return \Entity\Expense\Expense
 	 */
-	public function setAmount(\Extras\Types\Price $amount)
+	public function setAmount($amount)
 	{
 		$this->amount = $amount;
 
@@ -106,7 +106,7 @@ class Expense extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Extras\Types\Price|NULL
+	 * @return float|NULL
 	 */
 	public function getAmount()
 	{

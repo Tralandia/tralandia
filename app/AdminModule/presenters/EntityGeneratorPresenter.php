@@ -72,6 +72,7 @@ class EntityGeneratorPresenter extends BasePresenter {
 	public function actionForceAll($id) {
 		$id = str_replace(array('Entity', '-'), array('', '/'), $id);
 		$entityDir = APP_DIR . '/models/Entity/'.$id;
+
 		$menu = array();
 		$messageSuccess = array();
 		foreach (Finder::findFiles('*.php')->from($entityDir) as $key => $file) {

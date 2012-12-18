@@ -6,9 +6,16 @@
 	<div class="container baseRadius" id="container">
 		<div class="row">
 
+			{timer 'timer.header'}
 			{include header.latte}
+			{/timer}
 
+
+
+
+			{timer 'timer.searchBar'}
 			{control searchBar}
+			{/timer}
 
 			<div class="span9">
 				<div class="innerPadding baseRadius baseBorder innerPaddingRitgh overflow">
@@ -18,9 +25,13 @@
 				</div>
 			</div>
 
+			{timer 'timer.footer'}
 			{control footer}
-			{* {control countriesFooter} *}
+			{/timer}
 
+			{timer 'timer.countriesFooter'}
+			{control countriesFooter}
+			{/timer}
 		</div>		
 	</div>		
 </body>

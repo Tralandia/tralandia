@@ -36,11 +36,9 @@
 			<div class="widget">
 				<h5><span> Special </span> Subinfo</h5>
 				<ul>
-					<li><a href="#">Simple link</a>
-					<li><a href="#">Simple link</a>
-					<li><a href="#">Simple link</a>
-					<li><a href="#">Simple link</a>
-					<li><a href="#">Simple link</a>						
+					{foreach $lastRegisteredObjects as $rental }
+						<li><a href="{plink :Front:Rental:detail $rental}" >{_$rental->name}</a></li>
+					{/foreach}					
 				</ul>
 			</div>
 		</div>
