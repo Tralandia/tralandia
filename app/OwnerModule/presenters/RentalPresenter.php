@@ -18,7 +18,9 @@ class RentalPresenter extends BasePresenter {
 		$this->rentalRepositoryAccessor = $dic->rentalRepositoryAccessor;
 	}
 
-
+	public function actionAdd(){
+		
+	}
 
 	public function actionEdit($id) {
 

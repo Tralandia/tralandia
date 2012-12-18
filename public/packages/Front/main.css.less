@@ -107,7 +107,6 @@ h1,h2,h3,h4,h5 {
 
 a , a:hover {
 	color: @darkGreen;
-	text-decoration: underline;
 }
 
 p {
@@ -779,6 +778,8 @@ border-top-right-radius: 5px;
 		margin: 0;
 		padding: 0;
 
+		font-size: 12px;
+		line-height: 13px;
 		.author {
 			float: right;
 			a {
@@ -816,10 +817,24 @@ border-top-right-radius: 5px;
 		list-style: none;
 
 		li {
+
+			&:before {content:'\E4AE';
+			  font-family: "entypo";
+			  font-weight: normal;
+			  font-style: normal;
+			  font-size: 40px;
+			  text-decoration: inherit;
+		}
+
+
+
+			padding-bottom: 5px;
 			a {
 				padding-left: 20px;
 				color: @white;
 				display: block;
+				font-size: 12px;
+				line-height: 14px;
 			}
 		}
 	}
