@@ -38,6 +38,8 @@ class CountriesFooterControl extends \BaseModule\Components\BaseControl {
 		}
 
 		$l = setlocale(LC_ALL, 'sk_SK');
+		// $a = array_keys($locations);
+		// usort($a, 'strcoll');
 		ksort($locations, SORT_LOCALE_STRING);
 
 		$locations = array_chunk($locations, ceil(count($locations) / 6));

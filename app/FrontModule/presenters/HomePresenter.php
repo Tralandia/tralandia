@@ -16,6 +16,7 @@ class HomePresenter extends BasePresenter {
 	public function renderDefault() {
 
 		$rentalsEntities = $this->rentalRepositoryAccessor->get()->findAll();	
+		// $rentalsEntities = array();
 
 		$rentals = array();
 
