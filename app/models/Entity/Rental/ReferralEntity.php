@@ -184,7 +184,7 @@ class Referral extends \Entity\BaseEntity {
 
 		return $this;
 	}
-				
+		
 	/**
 	 * @param \Entity\Currency
 	 * @return \Entity\Rental\Referral
