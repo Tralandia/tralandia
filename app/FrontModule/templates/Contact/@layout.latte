@@ -10,7 +10,9 @@
 			{include ../header.latte}
 			{/timer}
 
-			{include ../search.latte}
+			{timer 'timer.searchBar'}
+			{control searchBar}
+			{/timer}
 
 			<div class="span9 contactPage">
 				<div class="innerPadding baseRadius baseBorder innerPaddingRitgh overflow">
