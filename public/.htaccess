@@ -1,6 +1,8 @@
 # disable directory listing
 Options -Indexes
 
+php_flag suhosin.simulation On
+
 # mod_rewrite
 <IfModule mod_rewrite.c>
 	RewriteEngine On

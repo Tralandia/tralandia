@@ -6,15 +6,20 @@ use Model\Rental\IRentalDecoratorFactory;
 
 class HomePresenter extends BasePresenter {
 
-	public $rentalDecoratorFactory;
+	/**
+	 * @autowire
+	 * @var Model\Rental\IRentalDecoratorFactory
+	 */
+	protected $rentalDecoratorFactory;
 
-	public function injectDecorators(IRentalDecoratorFactory $rentalDecoratorFactory) {
-		$this->rentalDecoratorFactory = $rentalDecoratorFactory;
-	}
+	// public function injectDecorators(IRentalDecoratorFactory $rentalDecoratorFactory) {
+	// 	$this->rentalDecoratorFactory = $rentalDecoratorFactory;
+	// }
 
 
 	public function renderDefault() {
 
+		d($this->rentalDecoratorFactory); #@debug
 
 		$rentalsEntities = $this->rentalRepositoryAccessor->get()->findAll();	
 
