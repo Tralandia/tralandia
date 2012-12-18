@@ -25,30 +25,6 @@ class Message extends \Entity\BaseEntity {
 	protected $from;
 
 	/**
-	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\User\User")
-	 */
-	protected $to;
-
-	/**
-	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\User\User", inversedBy="ticketMessages")
-	 */
-	protected $toCc;
-
-	/**
-	 * @var string
-	 * @ORM\Column(type="string", nullable=true)
-	 */
-	protected $subject;
-
-	/**
-	 * @var string
-	 * @ORM\Column(type="string", nullable=true)
-	 */
-	protected $subjectEn;
-
-	/**
 	 * @var text
 	 * @ORM\Column(type="text", nullable=true)
 	 */
@@ -59,6 +35,12 @@ class Message extends \Entity\BaseEntity {
 	 * @ORM\Column(type="text", nullable=true)
 	 */
 	protected $messageEn;
+
+	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean")
+	 */
+	protected $translated = 0;
 
 	/**
 	 * @var Collection
@@ -74,7 +56,6 @@ class Message extends \Entity\BaseEntity {
 	{
 		parent::__construct();
 
-		$this->toCc = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->attachments = new \Doctrine\Common\Collections\ArrayCollection;
 	}
 		
@@ -163,27 +144,6 @@ class Message extends \Entity\BaseEntity {
 	public function getTo()
 	{
 		return $this->to;
-	}
-		
-	/**
-	 * @param \Entity\User\User
-	 * @return \Entity\Ticket\Message
-	 */
-	public function addToCc(\Entity\User\User $toCc)
-	{
-		if(!$this->toCc->contains($toCc)) {
-			$this->toCc->add($toCc);
-		}
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\User\User
-	 */
-	public function getToCc()
-	{
-		return $this->toCc;
 	}
 		
 	/**

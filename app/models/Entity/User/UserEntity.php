@@ -122,12 +122,6 @@ class User extends \Entity\BaseEntityDetails {
 	 */
 	protected $spam;
 
-	/**
-	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Ticket\Message", inversedBy="toCc")
-	 */
-	protected $ticketMessages;
-
 
 	//@entity-generator-code --- NEMAZAT !!!
 
@@ -142,7 +136,6 @@ class User extends \Entity\BaseEntityDetails {
 		$this->combinations = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->rentals = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->tasks = new \Doctrine\Common\Collections\ArrayCollection;
-		$this->ticketMessages = new \Doctrine\Common\Collections\ArrayCollection;
 	}
 		
 	/**
@@ -653,26 +646,5 @@ class User extends \Entity\BaseEntityDetails {
 	public function getSpam()
 	{
 		return $this->spam;
-	}
-		
-	/**
-	 * @param \Entity\Ticket\Message
-	 * @return \Entity\User\User
-	 */
-	public function addTicketMessage(\Entity\Ticket\Message $ticketMessage)
-	{
-		if(!$this->ticketMessages->contains($ticketMessage)) {
-			$this->ticketMessages->add($ticketMessage);
-		}
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Ticket\Message
-	 */
-	public function getTicketMessages()
-	{
-		return $this->ticketMessages;
 	}
 }

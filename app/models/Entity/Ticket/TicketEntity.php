@@ -13,6 +13,27 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Ticket extends \Entity\BaseEntity {
 
+	const STATUS_PENDING = TRUE;
+	const STATUS_REPLIED = FALSE;
+
+	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean")
+	 */
+	protected $status = self::STATUS_PENDING;
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToOne(targetEntity="Entity\Language")
+	 */
+	protected $language;
+
+	/**
+	 * @var Collection
+	 * @ORM\ManyToOne(targetEntity="Entity\Rental\Rental")
+	 */
+	protected $rental;
+
 	/**
 	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="Message", mappedBy="ticket", cascade={"persist", "remove"})
@@ -20,7 +41,7 @@ class Ticket extends \Entity\BaseEntity {
 	protected $messages;
 
 
-			//@entity-generator-code --- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()
