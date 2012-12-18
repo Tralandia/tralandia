@@ -354,7 +354,8 @@ $(document).ready(function(){
 
 	
 	/* UI calendar */
-	$( ".datepicker" ).datepicker();	
+
+
 	$(".datepickerIcon").click(A.datepickerIcon);
 
 	$('.accordion').accordion({ autoHeight: false , active: false , navigation: true, collapsible: true });
