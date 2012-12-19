@@ -244,12 +244,15 @@ class RentalService extends Service\BaseService
 
 		// Update Rental
 		$rank['status'] = \Entity\Rental\Rental::STATUS_LIVE;
+		foreach ($r->missingInformation as $key => $value) {
+			$r->removeMissingInformation($value);
+		}
+
 		foreach ($rank['missing'] as $key => $value) {
 			$information = $this->rentalInformationRepositoryAccessor->get()->findOneBySlug($value);
 			if (!$information) {
 				throw new \Exception("Rental::CalculateRank - MissingInformation type does not exist: ".$value, 1);
 			}
-
 			$r->addMissingInformation($information);
 			if ((in_array($value, $conditionalCompulsoryInformation) && $pricesCompulsory) || $information->compulsory) {
 				$rank['status'] = \Entity\Rental\Rental::STATUS_DRAFT;
@@ -258,6 +261,8 @@ class RentalService extends Service\BaseService
 
 		$r->status = $rank['status'];
 		$r->rank = $rank['points'];
+
+		$this->save();
 		return $rank;
 	}
 }

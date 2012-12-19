@@ -62,6 +62,13 @@ class RentalSearchKeysCaching extends \Nette\Object {
 		$tempCache = array();
 
 		$newKeys = array();
+
+		// Set Locality
+		$t = $this->rental->address->locality;
+		$thisKey = RentalSearchService::CRITERIA_LOCATION.$t->id;
+		$rentalSearchCaching->addRental($this->rental, $thisKey);
+		$newKeys[] = $thisKey;
+
 		// Set Locations
 		foreach ($this->rental->address->locations as $key => $value) {
 			$thisKey = RentalSearchService::CRITERIA_LOCATION.$value->id;
@@ -107,6 +114,8 @@ class RentalSearchKeysCaching extends \Nette\Object {
 			$rentalSearchCaching->addRental($this->rental, $thisKey);
 			$newKeys[] = $thisKey;
 		}
+
+		d($newKeys);
 
 		// Set Boundry box
 		//@todo

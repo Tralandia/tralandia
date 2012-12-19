@@ -64,6 +64,9 @@ services:
 	# STORAGE
 	rentalImageStorage: Extras\RentalImageStorage(%wwwDir%%rentalImageDir%)
 
+	cacheStorage: 
+		class: Nette\Caching\Storages\MemcachedStorage('127.0.0.1', '11211', 'tralandia_')
+
 	# CACHE
 	aclCache: Nette\Caching\Cache(@cacheStorage, 'Acl')
 	routerCache: Nette\Caching\Cache(@cacheStorage, 'Router')

@@ -102,7 +102,7 @@ class ImportRentals extends BaseImport {
 			$address->subLocality = $x['sublocality'];
 			$address->postalCode = $x['post_code'];
 			$address->primaryLocation = $context->locationRepositoryAccessor->get()->findOneBy(array('oldId' => $x['country_id'], 'type' => $locationTypes['country']));
-			$address->locality = $context->locationRepositoryAccessor->get()->findOneBy(array('oldId' => $x['country_id'], 'type' => $locationTypes['locality']));
+			$address->locality = $context->locationRepositoryAccessor->get()->findOneBy(array('oldId' => $x['locality_id'], 'type' => $locationTypes['locality']));
 			$address->latitude = new \Extras\Types\Latlong($x['latitude']);
 			$address->longitude = new \Extras\Types\Latlong($x['longitude']);
 

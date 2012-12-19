@@ -34,7 +34,7 @@ class RunRobotPresenter extends BasePresenter {
 
 	public function actionSearchCache() {
 		$primaryLocation = $this->locationRepositoryAccessor->get()->findOneByIso('sk');
-		$location = $this->locationRepositoryAccessor->get()->find(338);
+		//$location = $this->locationRepositoryAccessor->get()->find(338);
 
 		$searchCaching = $this->rentalSearchCachingFactory->create($primaryLocation);
 		$searchCaching->drop();
@@ -50,7 +50,7 @@ class RunRobotPresenter extends BasePresenter {
 		$rentals = $this->rentalRepositoryAccessor->get()->findAll();
 		foreach ($rentals as $rental) {
 			$rentalDecorator = $this->rentalDecoratorFactory->create($rental);
-			d($rentalDecorator->calculateRank());
+			$rentalDecorator->calculateRank();
 		}		
 		$this->sendResponse(new TextResponse('done'));
 	}
