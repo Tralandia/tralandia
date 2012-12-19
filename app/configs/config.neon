@@ -212,6 +212,11 @@ factories:
 			- $phraseDecoratorFactory(@phraseDecoratorFactory)
 		implement: Routers\IFrontRouteFactory
 
+	ownerRouteListFactory:
+		class: Routers\OwnerRouteList(@languageRepositoryAccessor, @locationRepositoryAccessor)
+		implement: Routers\IOwnerRouteListFactory
+
+
 	# ==============================
 	# ==================== CACHE
 	# ==============================

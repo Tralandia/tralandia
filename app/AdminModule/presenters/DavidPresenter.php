@@ -78,8 +78,20 @@ class DavidPresenter extends BasePresenter {
 		
 	}
 
-	public function actionInvoice()
+	public function actionRouter()
 	{
-		
+		$url = 'http://cs.sk.tra.com/owner/rental/edit/1';
+		$urlScript = new Nette\Http\UrlScript($url);
+		// d($urlScript); #@debug
+		$httpRequest = new Nette\Http\Request($urlScript);
+
+		$route = $this->getService('ownerRouteListFactory')->create();
+
+		$request = $route->match($httpRequest);
+		d($request); #@debug
+
+		$url = $route->constructUrl($request, $urlScript);
+		d($url); #@debug
+
 	}
 }
