@@ -34,7 +34,10 @@ class OwnerRouteList extends Nette\Application\Routers\RouteList
 		$this->locationRepositoryAccessor = $locationRepositoryAccessor;
 		parent::__construct('Owner');
 
-		$this[] = new Route('//<language ([a-z]{2}|www)>.<primaryLocation [a-z]{2,3}>.%domain%/owner/<presenter>[/<action>[/<id>]]');
+		$this[] = new Route('//<language ([a-z]{2}|www)>.<primaryLocation [a-z]{2,3}>.%domain%/owner/<presenter>[/<action>[/<id>]]', array(
+			self::PARAM_PRIMARY_LOCATION => 'sk',
+			self::PARAM_LANGUAGE => 'www',
+		));
 
 	}
 

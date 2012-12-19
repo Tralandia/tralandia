@@ -39,7 +39,8 @@ class RentalPresenter extends BasePresenter {
 	}
 
 	public function actionEdit($id) {
-
+		d($this->primaryLocation); #@debug
+		d($this->link('//add')); #@debug
 		$this->rental = $this->rentalRepositoryAccessor->get()->find($id);		
 
 		//$rentalService = $this->rentalDecoratorFactory->create($this->rental);
