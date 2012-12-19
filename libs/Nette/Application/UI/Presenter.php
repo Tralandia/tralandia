@@ -1006,7 +1006,6 @@ abstract class Presenter extends Control implements Application\IPresenter
 			$args[self::FLASH_KEY] = $this->getParameter(self::FLASH_KEY);
 		}
 
-		d($args); #@debug
 		$this->lastCreatedRequest = new Application\Request(
 			$presenter,
 			Application\Request::FORWARD,

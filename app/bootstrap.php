@@ -14,9 +14,9 @@ require_once LIBS_DIR . '/Nette/loader.php';
 require_once LIBS_DIR . '/rado_functions.php';
 
 // Enable Nette\Debug for error visualisation & logging
-Debugger::enable();
+Debugger::enable(Debugger::PRODUCTION);
 Debugger::$strictMode = TRUE;
-Debugger::$maxLen = 2000;
+
 $section = isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : null;
 
 // Configure application

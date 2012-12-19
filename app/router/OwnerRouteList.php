@@ -99,11 +99,17 @@ class OwnerRouteList extends Nette\Application\Routers\RouteList
 	 */
 	public function constructUrl(Nette\Application\Request $appRequest, Nette\Http\Url $refUrl)
 	{
-		$params = $appRequest->getParameters();
+		$params = $oldParameters = $appRequest->getParameters();
 		$params = $this->filterOut($params);
 		$appRequest->setParameters($params);
+		$url = parent::constructUrl($appRequest, $refUrl);
 
-		return parent::constructUrl($appRequest, $refUrl);
+		if(!$url) {
+			$appRequest->setParameters($oldParameters);
+			return NULL;
+		} else {
+			return $url;
+		}
 	}
 
 }
