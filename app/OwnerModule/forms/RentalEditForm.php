@@ -8,8 +8,10 @@ use Nette\Forms\Form;
 class RentalEditForm extends BaseForm {
 	
 	protected $languageRepositoryAccessor;
+	protected $locationRepositoryAccessor;
 	protected $rentalTagRepositoryAccessor;
 	protected $rentalTypeRepositoryAccessor;
+	protected $locationTypeRepositoryAccessor;
 	protected $rentalAmenityRepositoryAccessor;
 	protected $rentalAmenityTypeRepositoryAccessor;
 
@@ -19,8 +21,10 @@ class RentalEditForm extends BaseForm {
 
 	public function injectBaseRepositories(\Nette\DI\Container $dic) {
 		$this->languageRepositoryAccessor = $dic->languageRepositoryAccessor;
+		$this->locationRepositoryAccessor = $dic->locationRepositoryAccessor;
 		$this->rentalTagRepositoryAccessor = $dic->rentalTagRepositoryAccessor;
 		$this->rentalTypeRepositoryAccessor = $dic->rentalTypeRepositoryAccessor;
+		$this->locationTypeRepositoryAccessor = $dic->locationTypeRepositoryAccessor;
 		$this->rentalAmenityRepositoryAccessor = $dic->rentalAmenityRepositoryAccessor;
 		$this->rentalAmenityTypeRepositoryAccessor = $dic->rentalAmenityTypeRepositoryAccessor;
 	}
@@ -37,7 +41,20 @@ class RentalEditForm extends BaseForm {
 
 	public function buildForm() {
 
+		$allCountries = array();
+		$phonePrefixes = array();
+		$locationType = $this->locationTypeRepositoryAccessor->get()->findOneBySlug('country');
+		foreach ($this->locationRepositoryAccessor->get()->findBy(array('type' => $locationType), array('iso'=>'ASC')) as $location) {
+			$phrase = $this->phraseDecoratorFactory->create($location->name);
+			$language = $this->rental->editLanguage;
+			$allCountries[$location->iso] = $phrase->getTranslationText($language, TRUE);
+			if ($location->phonePrefix) $phonePrefixes[$location->iso] = strtoupper($location->iso) . ' (+'.$location->phonePrefix.')';
+		}
+		$allCountries = array_reverse($allCountries);
+
+
 		/*
+		 * FORM
 		 * Contact info
 		 */
 
@@ -49,19 +66,14 @@ class RentalEditForm extends BaseForm {
 		$formEmail->setAttribute('placeholder', 'example@domain.com');
 		$formEmail->setValue($this->rental->user->login);
 
-		$phonePresets = array('+421','+420','+5694');
-
-		$formPhonePresets1 = $this->addSelect('phonePresets1', '', $phonePresets);
-		$formPhonePresets2 = $this->addSelect('phonePresets2', '', $phonePresets);
+		$formPhonePresets1 = $this->addSelect('phonePresets1', '', $phonePrefixes);
+		$formPhonePresets2 = $this->addSelect('phonePresets2', '', $phonePrefixes);
 
 		$formPhone1 = $this->addText('phone1','_o968');
 		$formPhone1->setAttribute('placeholder','09XX XXX XXX');
 
 		$formPhone2 = $this->addText('phone2','_o971');
 		$formPhone2->setAttribute('placeholder','09XX XXX XXX');
-
-		$formSkype = $this->addText('skype','_o972');
-		$formSkype->setAttribute('placeholder','skype.name');
 
 		$formSite = $this->addText('siteWWW','_o977');
 		$formSite->setAttribute('placeholder','www.neco.co');		
@@ -88,28 +100,17 @@ class RentalEditForm extends BaseForm {
 		$formLocation3 = $this->addTextArea('location3');
 		$formLocation4 = $this->addText('location4');
 
-		$countries = array(
-			'Europe' => array(
-				'CZ' => 'Česká Republika',
-				'SK' => 'Slovensko',
-				'GB' => 'Velká Británie',
-			),
-			'CA' => 'Kanada',
-			'US' => 'USA',
-			'?'  => 'jiná',
-		);
-
-		$formCountry = $this->addSelect('country', 'Země:', $countries);
-		$formCountry->setPrompt('Zvolte zemi');
-		$formCountry->setAttribute('class','span9');	
 
 
 		/*
 		 * Rental basic info
 		 */
 
-		$basicInfo = $this->addContainer('basicInfo');
+		$formCountry = $this->addSelect('country', 'Země:', $allCountries);
+		$formCountry->setPrompt('Zvolte zemi');
+		$formCountry->setAttribute('class','span9');
 
+		$basicInfo = $this->addContainer('basicInfo');
 		$languages = $this->languageRepositoryAccessor->get()->findSupported();
 		foreach ($languages as $language) {
 
@@ -130,14 +131,16 @@ class RentalEditForm extends BaseForm {
 		/*
 		 * Rental Amenities & Tags
 		 */
+
+		// Tags
 		$tagsContainer = $this->addContainer('tags');
 		foreach ($this->rentalTagRepositoryAccessor->get()->findAll() as $tag) {
 			$phrase = $this->phraseDecoratorFactory->create($tag->name);
 			$tagsContainer->addCheckbox($tag->id, $phrase->getTranslationText($this->rental->editLanguage, TRUE));
 		}
 
+		// Amenities
 		foreach ($this->rentalAmenityTypeRepositoryAccessor->get()->findAll() as $amenityType) {
-			d($amenityType->slug);
 			$container = $this->addContainer(str_replace('-', '_', $amenityType->slug));
 			foreach ($this->rentalAmenityRepositoryAccessor->get()->findByType($amenityType) as $amenity) {
 				$phrase = $this->phraseDecoratorFactory->create($amenity->name);
@@ -145,6 +148,22 @@ class RentalEditForm extends BaseForm {
 			}
 		}
 
+
+		/*
+		 * Check in & Check out
+		 */
+		$time = array();
+		for ($i=0; $i < 24; $i++) { 
+			$time[$i] = $i.':00';
+		}
+		$checkIn = $this->addSelect('checkin', 'Prichod', $time);
+		$checkOut = $this->addSelect('checkout', 'Odchod', $time);
+		
+		// Owner-availability
+		$ownerAvailability = $this->addCheckbox('ownerAvailability', 'Je možné ubytovať viaceré nezávislé skupiny naraz.');
+
+		// Price upon Request
+		$ownerAvailability = $this->addCheckbox('priceUponRequest', '');
 
 		/*
 		 * Rental Interview
@@ -165,13 +184,6 @@ class RentalEditForm extends BaseForm {
 		$formInterview5 = $this->addTextArea('interview5');
 		$formInterview5->setAttribute('class','marginBottom');
 
-		$this->addTextArea('desc','desc');
-
-		$formGender = $this->addRadioList('gender', 'Pohlaví:', array(
-			'm' => 'muž',
-			'f' => 'žena',
-		));
-
 
 		/*
 		 * Form agree, submit
@@ -184,6 +196,6 @@ class RentalEditForm extends BaseForm {
 		$formSubmit->setAttribute('onclick', 'send()');
 		$formSubmit->setAttribute('class','btn btn-green marginBottom');
 
-	}	
+	}
 
 }

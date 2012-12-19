@@ -36,6 +36,10 @@ class RentalService extends Service\BaseService
 		}
 	}
 
+	public function getMainPhoto() {
+		
+	}
+
 	public function calculateRank() {
 		$r = $this->entity;
 
@@ -265,4 +269,5 @@ class RentalService extends Service\BaseService
 		$this->save();
 		return $rank;
 	}
+
 }

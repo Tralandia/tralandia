@@ -65,7 +65,7 @@
 		        		
 		        		<div class="clearfix"></div>
 		        		<p>
-						{foreach $rental->getLocations() as $location}
+						{foreach $rental->address->locations as $location}
 							<span n:class="$iterator->first ? bold" ><a href="{link Rental:list location => $location->id}">{_$location->name}</a></span>{if !$iterator->last}, {/if}
 						{/foreach}		        			
 		        		</p>

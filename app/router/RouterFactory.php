@@ -15,16 +15,14 @@ class RouterFactory
 	protected $defaultLanguage;
 	protected $defaultPrimaryLocation;
 	protected $frontRouteFactory;
-	protected $ownerRouteListFactory;
 
 	public $languageRepositoryAccessor;
 	public $locationRepositoryAccessor;
 
-	public function __construct(array $options, IFrontRouteFactory $frontRouteFactory, IOwnerRouteListFactory $ownerRouteListFactory) {
+	public function __construct(array $options, IFrontRouteFactory $frontRouteFactory) {
 		$this->defaultLanguage = $options['defaultLanguage'];
 		$this->defaultPrimaryLocation = $options['defaultPrimaryLocation'];
 		$this->frontRouteFactory = $frontRouteFactory;
-		$this->ownerRouteListFactory = $ownerRouteListFactory;
 	}
 
 	/**
@@ -32,8 +30,8 @@ class RouterFactory
 	 */
 	public function create()
 	{
-		$this->defaultLanguage = $this->languageRepositoryAccessor->get()->findOneByOldId($this->defaultLanguage);
-		$this->defaultPrimaryLocation = $this->locationRepositoryAccessor->get()->findOneByOldId($this->defaultPrimaryLocation);
+		$this->defaultLanguage = $this->languageRepositoryAccessor->get()->find($this->defaultLanguage);
+		$this->defaultPrimaryLocation = $this->locationRepositoryAccessor->get()->find($this->defaultPrimaryLocation);
 
 		$router = new RouteList();
 
@@ -71,11 +69,22 @@ class RouterFactory
 			'language' => $this->defaultLanguage,
 		));
 
-		$router[] = $ownerRouter = $this->ownerRouteListFactory->create();
+		$router[] = $ownerRouter = new RouteList('Owner');
+
+		$ownerRouter[] = new Route('owner/<presenter>/[<action>[/<id>]]', array(
+			'presenter' => 'Rental',
+			'action' =>  'default',
+			'primaryLocation' => $this->defaultPrimaryLocation,
+			'language' => $this->defaultLanguage,
+		));
+
 		
 		$router[] = $frontRouter = new RouteList('Front');
 
-		$frontRouter[] = $this->frontRouteFactory->create();
+		$section = isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : null;
+		// if ($section !== 'cibi') {
+			$frontRouter[] = $this->frontRouteFactory->create();
+		// }
 
 	
 		

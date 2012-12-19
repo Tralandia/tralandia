@@ -43,24 +43,33 @@ class RentalPresenter extends BasePresenter {
 		$this->setLayout('detailLayout');
 	}
 
-	public function actionList($primaryLocation, $location) {
+	public function actionList($primaryLocation, $location, $rentalType) {
+
+		d($rentalType);
 
 		$search = $this->rentalSearchFactory->create($this->environment->primaryLocation);
-		$search->addLocationCriteria($location);
+
+		if ($location) {
+			$search->addLocationCriteria($location);
+		}
+
+		if ($rentalType) {
+			$search->addRentalTypeCriteria($rentalType);
+		}
 
 		$vp = $this['paginator'];
 		$paginator = $vp->getPaginator();
 		$paginator->itemsPerPage = \Service\Rental\RentalSearchService::COUNT_PER_PAGE;
-		//$paginator->itemCount = $search->getRentalsCount();	
+		$paginator->itemCount = $search->getRentalsCount();	
 		$paginator->itemCount = 123;
 
-		// $rentalsEntities = $search->getRentals(0);//@todo
+		$rentalsEntities = $search->getRentals(0);//@todo
 		$rentals = array();
 
-		// foreach ($rentalsEntities as $rental) {
-		// 	$rentals[$rental->id]['service'] = $this->rentalDecoratorFactory->create($rental);			
-		// 	$rentals[$rental->id]['entity'] = $rental;
-		// }
+		foreach ($rentalsEntities as $rental) {
+			$rentals[$rental->id]['service'] = $this->rentalDecoratorFactory->create($rental);			
+			$rentals[$rental->id]['entity'] = $rental;
+		}
 
 		$this->template->rentals = $rentals;
 
