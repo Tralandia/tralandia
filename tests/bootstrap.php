@@ -18,12 +18,12 @@ require_once LIBS_DIR . '/Nette/loader.php';
 
 // Enable Nette\Debug for error visualisation & logging
 Debugger::enable(FALSE);
-//Debugger::$strictMode = FALSE;
-// $section = isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : null;
-$section = 'test';
+Debugger::$strictMode = FALSE;
+
 // Load configuration from config.neon
 $configurator = new Nette\Config\Configurator;
 $configurator->setTempDirectory(TEMP_DIR);
+$configurator->addParameters(array('appDir' => APP_DIR));
 $configurator->enableDebugger(ROOT_DIR . '/log');
 $robotLoader = $configurator->createRobotLoader();
 $robotLoader->addDirectory(APP_DIR)
@@ -36,10 +36,7 @@ Extension::register($configurator);
 Extras\Config\PresenterExtension::register($configurator);
 
 $configurator->addConfig(APP_DIR . '/configs/config.neon', FALSE);
-if($section) {
-	$configurator->addConfig(APP_DIR . '/configs/'.$section.'.config.neon');
-}
-
+$configurator->addConfig(APP_DIR . '/configs/test.config.neon');
 $configurator->onCompile[] = function ($configurator, $compiler) {
 	Extras\PresenterGenerator::generate();
 	$compiler->addExtension('gpspicker', new VojtechDobes\NetteForms\GpsPickerExtension);

@@ -16,13 +16,13 @@ class BaseTest extends PHPUnit_Framework_TestCase
 	}
 
 	public function testConstruct() {
-		$service = new Service\Currency($this->model, new Entity\Currency);
-		$this->assertInstanceOf('Service\Currency', $service);
+		$service = new Service\CurrencyService($this->model, new Entity\Currency);
+		$this->assertInstanceOf('Service\CurrencyService', $service);
 	}
 
 	public function testSetterAndGetter() {
 		$entity = new Entity\Currency;
-		$service = new Service\Currency($this->model, $entity);
+		$service = new Service\CurrencyService($this->model, $entity);
 
 		$entity->setIso('EUR');
 		$this->assertSame('EUR', $entity->getIso());
@@ -36,7 +36,7 @@ class BaseTest extends PHPUnit_Framework_TestCase
 
 	public function testSaveAndFindAndDelete() {
 		$entity = new Entity\Currency;
-		$service = new Service\Currency($this->model, $entity);
+		$service = new Service\CurrencyService($this->model, $entity);
 		$entity->setIso('EUR');
 		$entity->setExchangeRate(44.66);
 		$entity->setRounding(2);
@@ -49,7 +49,7 @@ class BaseTest extends PHPUnit_Framework_TestCase
 		$entity = $this->model->getRepository('Entity\Currency')->find($entity->getId());
 		$this->assertInstanceOf('Entity\Currency', $entity);
 
-		$service = new Service\Currency($this->model, $entity);
+		$service = new Service\CurrencyService($this->model, $entity);
 
 		$this->assertSame('EUR', $entity->getIso());
 		$this->assertSame(44.66, $entity->getExchangeRate());
