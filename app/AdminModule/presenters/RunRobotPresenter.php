@@ -16,11 +16,11 @@ class RunRobotPresenter extends BasePresenter {
 	private $rentalSearchKeysCacheRobotFactory;
 	private $rentalSearchCachingFactory;
 	
-    /**
-     * @autowire
-     * @var Model\Rental\IRentalDecoratorFactory
-     */
-   	private $rentalDecoratorFactory;
+	/**
+	 * @autowire
+	 * @var \Model\Rental\IRentalDecoratorFactory
+	 */
+	protected $rentalDecoratorFactory;
 
 	public function injectCache(IUpdateRentalSearchKeysCacheRobotFactory $rentalSearchKeysCacheRobotFactory, \Extras\Cache\IRentalSearchCachingFactory $rentalSearchCachingFactory) {
 		$this->rentalSearchKeysCacheRobotFactory = $rentalSearchKeysCacheRobotFactory;
