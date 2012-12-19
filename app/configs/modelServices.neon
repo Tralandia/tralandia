@@ -121,6 +121,7 @@ services:
 	rentalInterviewQuestionRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Rental\InterviewQuestion')
 	rentalInterviewAnswerRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Rental\InterviewAnswer')
 	rentalRoomTypeRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Rental\RoomType')
+	rentalPricelistRowRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Rental\PricelistRow')
 
 	#FAQ
 	#----------	

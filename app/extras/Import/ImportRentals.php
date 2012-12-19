@@ -40,6 +40,11 @@ class ImportRentals extends BaseImport {
 		$locationTypes['continent'] = $context->locationTypeRepositoryAccessor->get()->findOneBySlug('continent');
 		$locationTypes['region'] = $context->locationTypeRepositoryAccessor->get()->findOneBySlug('region');
 		$locationTypes['locality'] = $context->locationTypeRepositoryAccessor->get()->findOneBySlug('locality');
+		
+		$roomTypes = array();
+		$roomTypes[1] = $context->rentalRoomTypeRepositoryAccessor->get()->findOneBySlug('building');
+		$roomTypes[2] = $context->rentalRoomTypeRepositoryAccessor->get()->findOneBySlug('apartment');
+		$roomTypes[3] = $context->rentalRoomTypeRepositoryAccessor->get()->findOneBySlug('room');
 
 		$interviewQuestions = array();
 		foreach ($context->rentalInterviewQuestionRepositoryAccessor->get()->findAll() as $key => $value) {
@@ -57,8 +62,9 @@ class ImportRentals extends BaseImport {
 		$now = time();
 
 		if ($this->developmentMode == TRUE) {
-			//$r = q('select * from objects where country_id = 46 order by rand() limit 10');
-			$r = q('select * from objects where country_id = 46 order by id limit 10');
+			$r = q('select * from objects where id = 7116');
+			//$r = q('select * from objects where country_id = 46 order by rand() limit 3');
+			//$r = q('select * from objects where country_id = 46 order by id limit 10');
 		} else {
 			$r = q('select * from objects');
 		}
@@ -277,19 +283,31 @@ class ImportRentals extends BaseImport {
 				$rental->maxCapacity = $x['capacity_max'];
 			}
 
-			// // Pricelist
-			// $pricelists = array();
-			// $temp = unserialize(stripslashes($x['prices_simple']));
-			// if (is_array($temp) && count($temp)) {
-			// 	$pricelists['simple'] = $temp;
-			// }
+			// Pricelist Rows
+			$temp = unserialize(stripslashes($x['prices_simple']));
+			if (is_array($temp) && count($temp)) {
+				$sort = 0;
+				$temp = array_chunk($temp, 6);
+				foreach ($temp as $key => $value) {
+					$row = $context->rentalPricelistRowRepositoryAccessor->get()->createNew();
+					$row->sort; $sort++;
+					$row->roomCount = $value[0];
+					$row->roomType = $roomTypes[$value[1]];
+					$row->bedCount = $value[2];
+					$row->extraBedCount = $value[3];
 
-			// $temp = unserialize(stripslashes($x['prices_upload']));
-			// if (is_array($temp) && count($temp)) {
-			// 	$pricelists['upload'] = $temp;
-			// }
+					if ($value[5] != $rental->primaryLocation->defaultCurrency->oldId) {
+						$oldCurrency = $context->currencyRepositoryAccessor->get()->findOneByOldId($value[5]);
+						$t = new \Extras\Types\Price($value[4], $oldCurrency);
+					} else {
+						$t = new \Extras\Types\Price($value[4], $rental->primaryLocation->defaultCurrency);
+					}
 
-			// $rental->pricelists = $pricelists;
+					$row->price = $t->convertToFloat($rental->primaryLocation->defaultCurrency);
+					$rental->addPricelistRow($row);
+				}
+			}
+			
 			$model->persist($rental);
 
 			// Images

@@ -173,6 +173,12 @@ class Rental extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
+	 * @ORM\OneToMany(targetEntity="PricelistRow", mappedBy="rental", cascade={"persist", "remove"})
+	 */
+	protected $pricelistRows;
+
+	/**
+	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="Pricelist", mappedBy="rental", cascade={"persist", "remove"})
 	 */
 	protected $pricelists;
@@ -303,6 +309,7 @@ class Rental extends \Entity\BaseEntity {
 		$this->amenities = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->tags = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->images = new \Doctrine\Common\Collections\ArrayCollection;
+		$this->pricelistRows = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->pricelists = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->interviewAnswers = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->fulltexts = new \Doctrine\Common\Collections\ArrayCollection;
@@ -1016,6 +1023,42 @@ class Rental extends \Entity\BaseEntity {
 		$image->unsetRental();
 
 		return $this;
+	}
+		
+	/**
+	 * @param \Entity\Rental\PricelistRow
+	 * @return \Entity\Rental\Rental
+	 */
+	public function addPricelistRow(\Entity\Rental\PricelistRow $pricelistRow)
+	{
+		if(!$this->pricelistRows->contains($pricelistRow)) {
+			$this->pricelistRows->add($pricelistRow);
+		}
+		$pricelistRow->setRental($this);
+
+		return $this;
+	}
+		
+	/**
+	 * @param \Entity\Rental\PricelistRow
+	 * @return \Entity\Rental\Rental
+	 */
+	public function removePricelistRow(\Entity\Rental\PricelistRow $pricelistRow)
+	{
+		if($this->pricelistRows->contains($pricelistRow)) {
+			$this->pricelistRows->removeElement($pricelistRow);
+		}
+		$pricelistRow->unsetRental();
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Rental\PricelistRow
+	 */
+	public function getPricelistRows()
+	{
+		return $this->pricelistRows;
 	}
 		
 	/**

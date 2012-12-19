@@ -118,93 +118,6 @@ class Message extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\User\User
-	 * @return \Entity\Ticket\Message
-	 */
-	public function setTo(\Entity\User\User $to)
-	{
-		$this->to = $to;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Ticket\Message
-	 */
-	public function unsetTo()
-	{
-		$this->to = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\User\User|NULL
-	 */
-	public function getTo()
-	{
-		return $this->to;
-	}
-		
-	/**
-	 * @param string
-	 * @return \Entity\Ticket\Message
-	 */
-	public function setSubject($subject)
-	{
-		$this->subject = $subject;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Ticket\Message
-	 */
-	public function unsetSubject()
-	{
-		$this->subject = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return string|NULL
-	 */
-	public function getSubject()
-	{
-		return $this->subject;
-	}
-		
-	/**
-	 * @param string
-	 * @return \Entity\Ticket\Message
-	 */
-	public function setSubjectEn($subjectEn)
-	{
-		$this->subjectEn = $subjectEn;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Ticket\Message
-	 */
-	public function unsetSubjectEn()
-	{
-		$this->subjectEn = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return string|NULL
-	 */
-	public function getSubjectEn()
-	{
-		return $this->subjectEn;
-	}
-		
-	/**
 	 * @param string
 	 * @return \Entity\Ticket\Message
 	 */
@@ -260,6 +173,25 @@ class Message extends \Entity\BaseEntity {
 	public function getMessageEn()
 	{
 		return $this->messageEn;
+	}
+		
+	/**
+	 * @param boolean
+	 * @return \Entity\Ticket\Message
+	 */
+	public function setTranslated($translated)
+	{
+		$this->translated = $translated;
+
+		return $this;
+	}
+		
+	/**
+	 * @return boolean|NULL
+	 */
+	public function getTranslated()
+	{
+		return $this->translated;
 	}
 		
 	/**

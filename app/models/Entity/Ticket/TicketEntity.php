@@ -52,6 +52,83 @@ class Ticket extends \Entity\BaseEntity {
 	}
 		
 	/**
+	 * @param boolean
+	 * @return \Entity\Ticket\Ticket
+	 */
+	public function setStatus($status)
+	{
+		$this->status = $status;
+
+		return $this;
+	}
+		
+	/**
+	 * @return boolean|NULL
+	 */
+	public function getStatus()
+	{
+		return $this->status;
+	}
+		
+	/**
+	 * @param \Entity\Language
+	 * @return \Entity\Ticket\Ticket
+	 */
+	public function setLanguage(\Entity\Language $language)
+	{
+		$this->language = $language;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Ticket\Ticket
+	 */
+	public function unsetLanguage()
+	{
+		$this->language = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Language|NULL
+	 */
+	public function getLanguage()
+	{
+		return $this->language;
+	}
+		
+	/**
+	 * @param \Entity\Rental\Rental
+	 * @return \Entity\Ticket\Ticket
+	 */
+	public function setRental(\Entity\Rental\Rental $rental)
+	{
+		$this->rental = $rental;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Ticket\Ticket
+	 */
+	public function unsetRental()
+	{
+		$this->rental = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Rental\Rental|NULL
+	 */
+	public function getRental()
+	{
+		return $this->rental;
+	}
+		
+	/**
 	 * @param \Entity\Ticket\Message
 	 * @return \Entity\Ticket\Ticket
 	 */
