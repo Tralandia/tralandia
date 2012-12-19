@@ -1,4 +1,3 @@
-
 {control header:begin}
 	{control css}
 	{control js}
@@ -7,22 +6,29 @@
 	<div class="container baseRadius" id="container">
 		<div class="row">
 
-			{*
+			{timer 'timer.header'}
 			{include '../../FrontModule/templates/header.latte'}
-			*}
+			{/timer}
 
-			<div class="span9 innerPaddingRigth">
+			{timer 'timer.searchBar'}
+			{control searchBar}
+			{/timer}
 
+			<div class="span9">
+				<div class="innerPadding baseRadius baseBorder innerPaddingRitgh overflow">
+					<div id="content" class="nopadding">
 						{include #content}
-
+					</div>
+				</div>
 			</div>
 
-{*
-			{include '/app/FrontModule/templates/Components/supFooter.latte'}
+			{timer 'timer.footer'}
+			{control footer}
+			{/timer}
 
-			{include '/app/FrontModule/templates/Components/footer.latte'}
-*}
-
+			{timer 'timer.countriesFooter'}
+			{control countriesFooter}
+			{/timer}
 		</div>		
 	</div>		
 </body>
