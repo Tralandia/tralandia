@@ -402,198 +402,130 @@
 </div>
 
 {* Rental Amenities & Tags *}
+{define #rentalAmenities}
+	{var $components = $form->getComponent($slug)->components}
+	{var $countPerCol = round(count($components)/4)}
+	{var $i = 1}
+	{foreach $form->getComponent($slug)->components as $component}
+		{if $i==1}
+			<div class="span3">
+		{/if}
+			{label $component, class => 'checkbox'}
+				{$component->caption|firstUpper}
+				{input $component}
+			{/label}
+		{if $i==$countPerCol || $iterator->last}
+			</div>
+			{var $i = 1}
+		{else}
+			{var $i = $i+1}
+		{/if}
+	{/foreach}
+{/define}
+
 <div class="span9">
 	<div class="innerPadding baseRadius baseBorder innerPaddingRitgh overflow">
 		<div id="content" class="nopadding">
 
-				<div class="row-fluid fieldset marginBottom">
-					<div class="span12">
-							{_o882}
-					</div>
+			<div class="row-fluid fieldset marginBottom">
+				<div class="span12">
+						{_o882}
 				</div>
+			</div>
 
-				<div class="row-fluid text">
-					<div class="span12">
-						<h2>{_o892}: </h2>
-					</div>
+			{* Tags *}
+			<div class="row-fluid text">
+				<div class="span12">
+					<h2>Tags: </h2>
 				</div>
+			</div>
+			<div class="row-fluid">
+				{include #rentalAmenities, slug => 'tags'}
+			</div>
 
-				<div class="row-fluid">
-
-					<div class="span3">
-					{foreach $form->getComponent('tags')->components as $component}
-						{label $component, class => 'checkbox'}
-							{$component->caption|firstUpper}
-							{input $component}
-						{/label}
-					{/foreach}
-					</div>
-
+			{* Kitchen *}
+			<div class="row-fluid text">
+				<div class="span12">
+					<h2>Kitchen: </h2>
 				</div>
+			</div>
+			<div class="row-fluid">
+				{include #rentalAmenities, slug => 'kitchen'}
+			</div>
 
-
-				<div class="row-fluid text">
-					<div class="span12">
-						<h2>Dalsie moznosti: </h2>
-					</div>
+			{* Room *}
+			<div class="row-fluid text">
+				<div class="span12">
+					<h2>Room: </h2>
 				</div>
+			</div>
+			<div class="row-fluid">
+				{include #rentalAmenities, slug => 'room'}
+			</div>
 
-				<div class="row-fluid">
-
-					<div class="span3">
-						<label class="checkbox">
-						  <input type="checkbox" value="">
-						  Option one is this 
-						</label>
-						<label class="checkbox">
-						  <input type="checkbox" value="">
-						  Option one is this dlhy text bla bla bla
-						</label>
-						<label class="checkbox">
-						  <input type="checkbox" value="">
-						  Option one is this 
-						</label>
-						<label class="checkbox">
-						  <input type="checkbox" value="">
-						  Option one is this 
-						</label>
-					</div>
-					<div class="span3">
-						<label class="checkbox">
-						  <input type="checkbox" value="">
-						  Option one is this 
-						</label>
-						<label class="checkbox">
-						  <input type="checkbox" value="">
-						  Option one is this dlhy text bla bla bla
-						</label>
-						<label class="checkbox">
-						  <input type="checkbox" value="">
-						  Option one is this 
-						</label>
-						<label class="checkbox">
-						  <input type="checkbox" value="">
-						  Option one is this 
-						</label>
-					</div>
-					<div class="span3">
-						<label class="checkbox">
-						  <input type="checkbox" value="">
-						  Option one is this 
-						</label>
-						<label class="checkbox">
-						  <input type="checkbox" value="">
-						  Option one is this dlhy text bla bla bla
-						</label>
-						<label class="checkbox">
-						  <input type="checkbox" value="">
-						  Option one is this 
-						</label>
-						<label class="checkbox">
-						  <input type="checkbox" value="">
-						  Option one is this 
-						</label>
-					</div>
-					<div class="span3">
-						<label class="checkbox">
-						  <input type="checkbox" value="">
-						  Option one is this 
-						</label>
-						<label class="checkbox">
-						  <input type="checkbox" value="">
-						  Option one is this dlhy text bla bla bla
-						</label>
-						<label class="checkbox">
-						  <input type="checkbox" value="">
-						  Option one is this 
-						</label>
-						<label class="checkbox">
-						  <input type="checkbox" value="">
-						  Option one is this 
-						</label>
-					</div>
-
-					<div class="span12">
-						<button for="moreServices" class="btn toogle btn-green marginBottom"><span> Pridaj riadok</span></button>
-					</div>
-
+			{* Children *}
+			<div class="row-fluid text">
+				<div class="span12">
+					<h2>Children: </h2>
 				</div>
+			</div>
+			<div class="row-fluid">
+				{include #rentalAmenities, slug => 'children'}
+			</div>
 
+			{* Activity *}
+			<div class="row-fluid text">
+				<div class="span12">
+					<h2>Activity: </h2>
+				</div>
+			</div>
+			<div class="row-fluid">
+				{include #rentalAmenities, slug => 'activity'}
+			</div>
 
-					<div class="row-fluid hide" id="moreServices">
-					<div class="span3">
-						<label class="checkbox">
-						  <input type="checkbox" value="">
-						  Option one is this 
-						</label>
-						<label class="checkbox">
-						  <input type="checkbox" value="">
-						  Option one is this dlhy text bla bla bla
-						</label>
-						<label class="checkbox">
-						  <input type="checkbox" value="">
-						  Option one is this 
-						</label>
-						<label class="checkbox">
-						  <input type="checkbox" value="">
-						  Option one is this 
-						</label>
-					</div>
-					<div class="span3">
-						<label class="checkbox">
-						  <input type="checkbox" value="">
-						  Option one is this 
-						</label>
-						<label class="checkbox">
-						  <input type="checkbox" value="">
-						  Option one is this dlhy text bla bla bla
-						</label>
-						<label class="checkbox">
-						  <input type="checkbox" value="">
-						  Option one is this 
-						</label>
-						<label class="checkbox">
-						  <input type="checkbox" value="">
-						  Option one is this 
-						</label>
-					</div>
-					<div class="span3">
-						<label class="checkbox">
-						  <input type="checkbox" value="">
-						  Option one is this 
-						</label>
-						<label class="checkbox">
-						  <input type="checkbox" value="">
-						  Option one is this dlhy text bla bla bla
-						</label>
-						<label class="checkbox">
-						  <input type="checkbox" value="">
-						  Option one is this 
-						</label>
-						<label class="checkbox">
-						  <input type="checkbox" value="">
-						  Option one is this 
-						</label>
-					</div>
-					<div class="span3">
-						<label class="checkbox">
-						  <input type="checkbox" value="">
-						  Option one is this 
-						</label>
-						<label class="checkbox">
-						  <input type="checkbox" value="">
-						  Option one is this dlhy text bla bla bla
-						</label>
-						<label class="checkbox">
-						  <input type="checkbox" value="">
-						  Option one is this 
-						</label>
-						<label class="checkbox">
-						  <input type="checkbox" value="">
-						  Option one is this 
-						</label>
-					</div>
-					</div>
+			{* Important *}
+			<div class="row-fluid text">
+				<div class="span12">
+					<h2>Important: </h2>
+				</div>
+			</div>
+			<div class="row-fluid">
+				{include #rentalAmenities, slug => 'important'}
+			</div>
+
+			{* Bathroom *}
+			<div class="row-fluid text">
+				<div class="span12">
+					<h2>Bathroom: </h2>
+				</div>
+			</div>
+			<div class="row-fluid">
+				{include #rentalAmenities, slug => 'bathroom'}
+			</div>
+
+			{* Heating *}
+			<div class="row-fluid text">
+				<div class="span12">
+					<h2>Heating: </h2>
+				</div>
+			</div>
+			<div class="row-fluid">
+				{include #rentalAmenities, slug => 'heating'}
+			</div>
+
+			{* More amenities
+			<div class="span12">
+				<button for="moreServices" class="btn toogle btn-green marginBottom"><span> More</span></button>
+			</div>
+			<div class="row-fluid text hide" id="moreServices">
+				<div class="span12">
+					<h2>Children: </h2>
+				</div>
+			</div>
+			<div class="row-fluid hide" id="moreServices">
+
+			</div>
+			*}
 
 		</div>
 	</div>

@@ -7,18 +7,22 @@ use Nette\Forms\Form;
 
 class RentalEditForm extends BaseForm {
 	
-	protected $rentalTypeRepositoryAccessor;
-	protected $rentalTagRepositoryAccessor;
 	protected $languageRepositoryAccessor;
+	protected $rentalTagRepositoryAccessor;
+	protected $rentalTypeRepositoryAccessor;
+	protected $rentalAmenityRepositoryAccessor;
+	protected $rentalAmenityTypeRepositoryAccessor;
 
 	protected $phraseDecoratorFactory;
 
 	protected $rental;
 
 	public function injectBaseRepositories(\Nette\DI\Container $dic) {
-		$this->rentalTypeRepositoryAccessor = $dic->rentalTypeRepositoryAccessor;
-		$this->rentalTagRepositoryAccessor = $dic->rentalTagRepositoryAccessor;
 		$this->languageRepositoryAccessor = $dic->languageRepositoryAccessor;
+		$this->rentalTagRepositoryAccessor = $dic->rentalTagRepositoryAccessor;
+		$this->rentalTypeRepositoryAccessor = $dic->rentalTypeRepositoryAccessor;
+		$this->rentalAmenityRepositoryAccessor = $dic->rentalAmenityRepositoryAccessor;
+		$this->rentalAmenityTypeRepositoryAccessor = $dic->rentalAmenityTypeRepositoryAccessor;
 	}
 
 	public function injectPhraseService(\Model\Phrase\IPhraseDecoratorFactory $phraseDecoratorFactory) {
@@ -127,10 +131,18 @@ class RentalEditForm extends BaseForm {
 		 * Rental Amenities & Tags
 		 */
 		$tagsContainer = $this->addContainer('tags');
-		$rentalTags = $this->rentalTagRepositoryAccessor->get()->findAll();
-		foreach ($rentalTags as $tag) {
+		foreach ($this->rentalTagRepositoryAccessor->get()->findAll() as $tag) {
 			$phrase = $this->phraseDecoratorFactory->create($tag->name);
 			$tagsContainer->addCheckbox($tag->id, $phrase->getTranslationText($this->rental->editLanguage, TRUE));
+		}
+
+		foreach ($this->rentalAmenityTypeRepositoryAccessor->get()->findAll() as $amenityType) {
+			d($amenityType->slug);
+			$container = $this->addContainer(str_replace('-', '_', $amenityType->slug));
+			foreach ($this->rentalAmenityRepositoryAccessor->get()->findByType($amenityType) as $amenity) {
+				$phrase = $this->phraseDecoratorFactory->create($amenity->name);
+				$container->addCheckbox($amenity->id, $phrase->getTranslationText($this->rental->editLanguage, TRUE));
+			}
 		}
 
 
