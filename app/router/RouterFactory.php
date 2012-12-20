@@ -83,7 +83,7 @@ class RouterFactory
 
 		$section = isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : null;
 		if ($section !== 'cibi') {
-			//$frontRouter[] = $this->frontRouteFactory->create();
+			$frontRouter[] = $this->frontRouteFactory->create();
 		}
 
 	
