@@ -37,19 +37,6 @@ class Information extends \Entity\BaseEntityDetails {
 	 */
 	protected $rentals;
 
-	/**
-	 * @param \Entity\Rental\Rental
-	 * @return \Entity\Rental\Information
-	 */
-	public function removeRental(\Entity\Rental\Rental $rental)
-	{
-		if($this->rentals->contains($rental)) {
-			$this->rentals->removeElement($rental);
-		}
-
-		return $this;
-	}
-
 
 	//@entity-generator-code --- NEMAZAT !!!
 
