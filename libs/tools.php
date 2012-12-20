@@ -44,6 +44,10 @@ function debug() {
 	return Tools::dump(func_get_args());
 }
 
+function t($name = NULL) {
+	return Debugger::timer('TIMER.'.$name);
+}
+
 
 function rrmdir($dir) {
 	$fp = opendir($dir);

@@ -73,20 +73,6 @@ services:
 	translatorCache: Nette\Caching\Cache(@cacheStorage, 'Translator')
 	rentalSearchKeysCache: Nette\Caching\Cache(@cacheStorage, 'RentalSearchKeys')
 
-	# frontRouteFactory:
-	# 	class: Routers\FrontRouteFactory(@routerCache, %router.hostMask%)
-	# 	setup:
-	# 		- $locationRepositoryAccessor(@locationRepositoryAccessor)
-	# 		- $languageRepositoryAccessor(@languageRepositoryAccessor)
-	# 		- $rentalRepositoryAccessor(@rentalRepositoryAccessor)
-	# 		- $rentalTypeRepositoryAccessor(@rentalTypeRepositoryAccessor)
-	# 		- $attractionRepositoryAccessor(@attractionRepositoryAccessor)
-	# 		- $attractionTypeRepositoryAccessor(@attractionTypeRepositoryAccessor)
-	# 		- $routingPathSegmentRepositoryAccessor(@routingPathSegmentRepositoryAccessor)
-	# 		- $domainRepositoryAccessor(@domainRepositoryAccessor)
-	# 		- $pageRepositoryAccessor(@pageRepositoryAccessor)
-	# 		- $rentalAmenityRepositoryAccessor(@rentalAmenityRepositoryAccessor)
-
 	routerFactory: 
 		class: Routers\RouterFactory([defaultLanguage: %centralLanguage%, defaultPrimaryLocation: 58])
 		setup:
