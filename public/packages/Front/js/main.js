@@ -370,7 +370,7 @@ App.prototype.forgottenPasswordOpen = function(){
 
 App.prototype.closeForgottenPasswordForm = function(){
 	$('#forgottenPassword').slideUp();
-	return false;	
+	return false;		
 }
 
 /****************************************************************************************************
