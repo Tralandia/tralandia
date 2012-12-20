@@ -23,7 +23,8 @@ class MemcachePresenter extends BasePresenter {
 	    $this->memcache = new \Memcache;
 	    $this->memcache->connect('localhost', 11211) or die ("Could not connect to memcache server");
 
-	    $filter = 'tralandia_RentalSearchCache59location';
+	    $filter = 'tralandia_RentalOrderCache';
+	    //$filter = 'tralandia_RentalSearchCache';
 
 		$keys = $this->getMemcacheKeys($filter);
 

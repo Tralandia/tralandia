@@ -22,6 +22,6 @@ interface ISeoServiceFactory {
 
 namespace Service\Robot;
 
-interface IUpdateRentalSearchKeysCacheRobotFactory {
+interface IUpdateRentalSearchCacheRobotFactory {
 	function create(\Entity\Location\Location $location);
 }

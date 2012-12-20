@@ -63,7 +63,6 @@ services:
 	aclCache: Nette\Caching\Cache(@cacheStorage, 'Acl')
 	routerCache: Nette\Caching\Cache(@cacheStorage, 'Router')
 	translatorCache: Nette\Caching\Cache(@cacheStorage, 'Translator')
-	rentalSearchKeysCache: Nette\Caching\Cache(@cacheStorage, 'RentalSearchKeys')
 
 	routerFactory: 
 		class: Routers\RouterFactory([defaultLanguage: %centralLanguage%, defaultPrimaryLocation: 46])
@@ -220,12 +219,6 @@ factories:
 	# ==============================
 	# ==================== CACHE
 	# ==============================
-	rentalSearchKeysCachingFactory: 
-		class: Extras\Cache\RentalSearchKeysCaching(%rental%)
-		setup: 
-			- setCache(@rentalSearchKeysCache)
-		implement: Extras\Cache\IRentalSearchKeysCachingFactory
-
 	searchCacheFactory:
 		class: Extras\Cache\Cache(@cacheStorage, %namespace%)
 		implement: Extras\Cache\ISearchCacheFactory
@@ -233,6 +226,10 @@ factories:
 	rentalSearchCachingFactory: 
 		class: Extras\Cache\RentalSearchCaching(%location%)
 		implement: Extras\Cache\IRentalSearchCachingFactory
+
+	rentalOrderCachingFactory: 
+		class: Extras\Cache\RentalOrderCaching(%location%)
+		implement: Extras\Cache\IRentalOrderCachingFactory
 
 	# ==============================
 	# ==================== SERVICES
@@ -250,9 +247,9 @@ factories:
 		arguments: [%url%, %request%]
 		implement: Service\Seo\ISeoServiceFactory
 
-	updateRentalSearchKeysCacheRobotFactory:
-		class: Service\Robot\UpdateRentalSearchKeysCacheRobot(%location%)
-		implement: Service\Robot\IUpdateRentalSearchKeysCacheRobotFactory
+	updateRentalSearchCacheRobotFactory:
+		class: Service\Robot\UpdateRentalSearchCacheRobot(%location%)
+		implement: Service\Robot\IUpdateRentalSearchCacheRobotFactory
 
 	itemMapFactory: Extras\FormMask\Items\Foctories\MapFactory
 	itemEmailFactory: Extras\FormMask\Items\Foctories\EmailFactory

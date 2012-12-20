@@ -8,7 +8,9 @@ use Service\Rental\RentalSearchService;
 class RentalSearchCaching extends \Nette\Object {
 
 	const CACHE_LIFETIME = '';
-	protected $searchCache;
+	protected $cache;
+	protected $cacheContent;
+	protected $cacheLoaded = FALSE;
 	protected $location;
 	protected $rentalRepositoryAccessor;
 	
@@ -18,102 +20,76 @@ class RentalSearchCaching extends \Nette\Object {
 
 	public function __construct($location, ISearchCacheFactory $searchCacheFactory) {
 		$this->location = $location;
-		$this->searchCache = $searchCacheFactory->create('RentalSearchCache'.$location->id);
+		$this->cache = $searchCacheFactory->create('RentalSearchCache');
+		$this->load();
 	}
 
-	public function load($key) {
-		return $this->searchCache->load($key);
+	protected function load() {
+		if (!$this->cacheLoaded) {
+			$this->cacheContent = $this->cache->load($this->location->id);
+			if ($this->cacheContent === NULL) {
+				$this->cacheContent = array();
+			}
+			$this->cacheLoaded = TRUE;			
+		}
 	}
 
-	public function removeRental(\Entity\Rental\Rental $rental, $key) {
-		$tempCache = $this->searchCache->load($key);
-		unset($tempCache[$rental->id]);
-		$this->searchCache->save($key, $tempCache);
-		return $this;
+	public function save() {
+		if ($this->cacheLoaded) {
+			$this->cache->save($this->location->id, $this->cacheContent);		
+		}
 	}
 
-	public function addRental(\Entity\Rental\Rental $rental, $key) {
+	protected function removeRental(\Entity\Rental\Rental $rental) {
+		foreach ($this->cacheContent as $key => $value) {
+			foreach ($value as $key2 => $value2) {
+				if (isset($value2[$rental->id])) unset($this->cacheContent[$key][$key2][$rental->id]);
+			}
+		}
+	}
+
+	public function addRental(\Entity\Rental\Rental $rental) {
+		$this->removeRental($rental);
+
 		if($rental->status != \Entity\Rental\Rental::STATUS_LIVE) {
 			throw new \Nette\InvalidArgumentException('Len live rental mozes ulozit do cache');
 		}
-		$tempCache = $this->searchCache->load($key);
-		$tempCache[$rental->id] = $rental->id;
-		$this->searchCache->save($key, $tempCache);
 
-		return $this;
-	}
+		// Set Locality
+		$this->cacheContent[RentalSearchService::CRITERIA_LOCATION][$rental->address->locality->id][$rental->id] = $rental->id;
 
-	public function getOrderList() {
-		$order = $this->searchCache->load('order');
-
-		if ($order === NULL) {
-			$order = $this->createRentalOrderList();
+		// Set Locations
+		foreach ($rental->address->locations as $key => $value) {
+			$this->cacheContent[RentalSearchService::CRITERIA_LOCATION][$value->id][$rental->id] = $rental->id;
 		}
 
-		return $order;
-	}
-
-	protected function createRentalFeaturedList() {
-		$featured = array();
-		$rentals = $this->rentalRepositoryAccessor->get()->findFeatured($this->location);
-		foreach ($rentals as $key => $value) {
-			$featured[$value['id']] = $value['id'];
-		}
-		$this->searchCache->save('featured', $featured, array(
-			Caching\Cache::EXPIRE => $this->getExpirationTimeStamp(),
-		));
-
-		return $featured;
-	}
-
-	protected function createRentalOrderList() {
-		$featured = $this->createRentalFeaturedList();
-
-		$notFeatured = array();
-
-		$rentals = $this->rentalRepositoryAccessor->get()->findBy(array('primaryLocation' => $this->location, 'status' => \Entity\Rental\Rental::STATUS_LIVE));
-		foreach ($rentals as $key => $value) {
-			$notFeatured[$value->id] = $value->id;
+		// Set rental Type
+		if ($rental->type) {
+			$this->cacheContent[RentalSearchService::CRITERIA_RENTAL_TYPE][$rental->type->id][$rental->id] = $rental->id;
 		}
 
-		foreach ($featured as $key => $value) {
-			unset($notFeatured[$key]);
+		// Set Tags
+		foreach ($rental->tags as $key => $value) {
+			$this->cacheContent[RentalSearchService::CRITERIA_RENTAL_TYPE][$value->id][$rental->id] = $rental->id;
 		}
 
-		//@todo - this is just simple shuffle, but we need to make it more efficient so that: 
-		// results are the same during the day (reconsider whether trully necessary)
-		// better filled rentals should be higher with higher probability
-		shuffle($featured);
-		shuffle($notFeatured);
+		// Set Max Capacity
+		if ($rental->maxCapacity) {
+			$t = $rental->maxCapacity >= RentalSearchService::CAPACITY_MAX ? RentalSearchService::CAPACITY_MAX : $rental->maxCapacity;
 
-		$order = array_merge($featured, $notFeatured);
+			$this->cacheContent[RentalSearchService::CRITERIA_CAPACITY][$t][$rental->id] = $rental->id;
+		}
 
-		$order = array_flip(array_values($order));
-		$this->searchCache->save('order', $order, array(
-			Caching\Cache::EXPIRE => $this->getExpirationTimeStamp(),
-		));
+		// Set Languages Spoken
+		foreach ($rental->spokenLanguages as $key => $value) {
+			$this->cacheContent[RentalSearchService::CRITERIA_SPOKEN_LANGUAGE][$value->id][$rental->id] = $rental->id;
+		}
 
-		return $order;
-	}
-
-	public function removeRentalOrderList() {
-		$this->searchCache->remove('order');
-		return $this;
-	}
-
-	public function drop() {
-		$this->searchCache->clean(array(Caching\Cache::ALL => TRUE));
-		return $this;
-	}
-
-	public function isFeatured(\Entity\Rental\Rental $rental) {
-		$t = $this->searchCache->load('featured');
-		return isset($t[$rental->id]);
-	}
-
-	protected function getExpirationTimeStamp() {
-		$t = strtotime('next hour');
-		$t = mktime (date("H", $t), 0, 0, date("n", $t), date("j", $t), date("Y", $t));
-		return $t;
+		// Set Price
+		if ($rental->priceSeason) {
+			$searchInterval = $rental->primaryLocation->defaultCurrency->searchInterval;
+			$t = ceil($rental->priceSeason / $searchInterval)*$searchInterval;
+			$this->cacheContent[RentalSearchService::CRITERIA_PRICE][$t][$rental->id] = $rental->id;
+		}
 	}
 }

@@ -8,7 +8,6 @@ use Service\Rental\RentalSearchService;
 class RentalSearchKeysCaching extends \Nette\Object {
 
 	protected $rentalSearchCachingFactory;
-	protected $rentalSearchKeysCache;
 	protected $rental;
 	protected $rentalSearchCaching = array();
 	protected $locationRepositoryAccessor;
@@ -20,10 +19,6 @@ class RentalSearchKeysCaching extends \Nette\Object {
 	public function __construct($rental, IRentalSearchCachingFactory $rentalSearchCachingFactory) {
 		$this->rental = $rental;
 		$this->rentalSearchCachingFactory = $rentalSearchCachingFactory;
-	}
-
-	public function setCache(Caching\Cache $rentalSearchKeysCache) {
-		$this->rentalSearchKeysCache = $rentalSearchKeysCache;
 	}
 
 	protected function getPrimaryLocationCache(\Entity\Location\Location $primaryLocation) {
@@ -43,11 +38,10 @@ class RentalSearchKeysCaching extends \Nette\Object {
 	}
 
 	protected function removeRentalFromCache() {
-		$currentKeys = $this->rentalSearchKeysCache->load($this->rental->id);
 
 		if ($currentKeys !== NULL) {
-			$primaryLcoation = $this->locationRepositoryAccessor->get()->find($currentKeys['primaryKey']);
-			$rentalSearchCaching = $this->getPrimaryLocationCache($primaryLcoation);
+			$primaryLocation = $this->locationRepositoryAccessor->get()->find($currentKeys['primaryKey']);
+			$rentalSearchCaching = $this->getPrimaryLocationCache($primaryLocation);
 			foreach ($currentKeys['keys'] as $key => $value) {
 				$rentalSearchCaching->removeRental($this->rental, $value);
 			}

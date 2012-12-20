@@ -6,15 +6,16 @@ use Nette;
 use Nette\Utils\Strings;
 use Nette\Application\Responses\TextResponse;
 
-use Service\Robot\IUpdateRentalSearchKeysCacheRobotFactory;
+use Service\Robot\IUpdateRentalSearchCacheRobotFactory;
 
 class RunRobotPresenter extends BasePresenter {
 
 	private $rentalRepositoryAccessor;
 	private $locationRepositoryAccessor;
 
-	private $rentalSearchKeysCacheRobotFactory;
+	private $rentalSearchCacheRobotFactory;
 	private $rentalSearchCachingFactory;
+	private $rentalOrderCachingFactory;
 	
 	/**
 	 * @autowire
@@ -22,9 +23,10 @@ class RunRobotPresenter extends BasePresenter {
 	 */
 	protected $rentalDecoratorFactory;
 
-	public function injectCache(IUpdateRentalSearchKeysCacheRobotFactory $rentalSearchKeysCacheRobotFactory, \Extras\Cache\IRentalSearchCachingFactory $rentalSearchCachingFactory) {
-		$this->rentalSearchKeysCacheRobotFactory = $rentalSearchKeysCacheRobotFactory;
+	public function injectCache(\Extras\Cache\IRentalSearchCachingFactory $rentalSearchCachingFactory, \Extras\Cache\IRentalOrderCachingFactory $rentalOrderCachingFactory, IUpdateRentalSearchCacheRobotFactory $rentalSearchCacheRobotFactory) {
+		$this->rentalSearchCacheRobotFactory = $rentalSearchCacheRobotFactory;
 		$this->rentalSearchCachingFactory = $rentalSearchCachingFactory;
+		$this->rentalOrderCachingFactory = $rentalOrderCachingFactory;
 	}
 
 	public function inject(\Nette\DI\Container $dic) {
@@ -35,11 +37,8 @@ class RunRobotPresenter extends BasePresenter {
 	public function actionSearchCache() {
 		$primaryLocation = $this->locationRepositoryAccessor->get()->findOneByIso('sk');
 		//$location = $this->locationRepositoryAccessor->get()->find(338);
-
-		$searchCaching = $this->rentalSearchCachingFactory->create($primaryLocation);
-		$searchCaching->drop();
 		
-		$this->rentalSearchKeysCacheRobotFactory->create($primaryLocation)->run();
+		$this->rentalSearchCacheRobotFactory->create($primaryLocation)->run();
 		
 		//$searchCaching->getOrderList();
 		

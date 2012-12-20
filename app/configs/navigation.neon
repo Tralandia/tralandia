@@ -233,6 +233,10 @@ common:
 					label: Update Search Cache
 					link: ':Admin:RunRobot:searchCache'
 					target: _blank
+				memCache: 
+					label: Memcache Viewer
+					link: ':Admin:Memcache:default'
+					target: _blank
 
 	right: # parave strana
 		account:
