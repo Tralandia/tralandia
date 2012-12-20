@@ -83,6 +83,9 @@ class FrontRoute implements Nette\Application\IRouter {
 	{
 		// d('httpRequest', $httpRequest);
 		$params = $this->getParamsByHttpRequest($httpRequest);
+		if(!$params) {
+			return NULL;
+		}
 
 		$presenter = $params['presenter'];
 		$params = $params['params'];
@@ -101,6 +104,9 @@ class FrontRoute implements Nette\Application\IRouter {
 		// d('$appRequest', $appRequest);
 		// d('$refUrl', $refUrl);
 		$url = $this->getUrlByAppRequest($appRequest, $refUrl);
+		if(!$url) {
+			return NULL;
+		}
 		return "$url";
 	}
 
@@ -159,14 +165,6 @@ class FrontRoute implements Nette\Application\IRouter {
 			}
 		}
 
-		if(!isset($params->presenter)) {
-			$params->presenter = $this->getMetadata('presenter');
-		}
-
-		if(!isset($params->action)) {
-			$params->action = $this->getMetadata('action');
-		}
-
 		// Query
 		if(count($httpRequest->query)) {
 			foreach ($httpRequest->query as $key => $value) {
@@ -193,33 +191,12 @@ class FrontRoute implements Nette\Application\IRouter {
 			// @todo pocet najdenych pathsegmentov je mensi
 			// ak nejake chybaju tak ich skus najst v PathSegmentsOld
 		}
-		// if (!isset($params->page)) {
-		// 	$destination = ':Front:'.$params->presenter . ':' . $params->action;
-		// 	if ($destination == ':Front:Rental:list') {
-		// 		$hash = array();
-		// 		foreach (self::$pathSegmentTypesById as $key => $value) {
-		// 			if ($key == 2) continue;
-		// 			//@todo - dorobit tagAfter alebo tagBefore (ak je to tag)
-		// 			if (isset($params->{$value})) {
-		// 				if ($value == 'rentalTag') {
-		// 					$tagName = $this->phraseDecoratorFactory->create($params->rentalTag->name);
-		// 					$tagTranslation = $tagName->getTranslation($params->language);
-		// 					if ($tagTranslation->position == \Entity\Phrase\Translation::BEFORE) {
-		// 						$value = \Entity\Phrase\Translation::BEFORE;
-		// 					} else {
-		// 						$value = \Entity\Phrase\Translation::AFTER;
-		// 					}
-		// 					$value = 'tag'.$value;
-		// 				}
-		// 				$hash[] = '/'.$value;
-		// 			}
-		// 		}
-		// 		$hash = implode('', $hash);
-		// 	} else {
-		// 		$hash = '';
-		// 	}
-		// 	$params->page = $this->pageRepositoryAccessor->get()->findOneBy(array('hash' => $hash, 'destination' => $destination));
-		// }
+
+
+		if(!isset($params->action) || !isset($params->presenter)) {
+			return NULL;
+		}
+
 		$return = array(
 			'params' => array(
 				'action' => $params->action
@@ -238,7 +215,6 @@ class FrontRoute implements Nette\Application\IRouter {
 		}
 		$return['params'] = array_merge($return['params'], (array) $params->query);
 
-		// debug('$return', $return);
 		return $return;
 	}
 
@@ -292,7 +268,7 @@ class FrontRoute implements Nette\Application\IRouter {
 				throw new \Nette\InvalidArgumentException('Parameter "rental" must be instance of Entity\Rental\Rental');
 			}
 			$segments[] = $rental->slug . '-r' . $rental->id;
-		} else {
+		} else if($presenter == 'Rental' && $action == 'list'){
 			foreach (static::$pathSegmentTypes as $key => $value) {
 				if(!isset($params[$key])) continue;
 				$segment = $this->getSegmentById($key, $params);
@@ -300,6 +276,8 @@ class FrontRoute implements Nette\Application\IRouter {
 				$segments[$value] = $segment;
 			}
 			ksort($segments);
+		} else {
+			return NULL;
 		}
 
 		$host = $this->buildHost($language, $country, $refUrl);

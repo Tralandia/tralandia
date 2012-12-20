@@ -80,7 +80,11 @@ class DavidPresenter extends BasePresenter {
 
 	public function actionRouter()
 	{
-		$url = 'http://cs.sk.tra.com/owner/rental/edit/1';
+
+		d($this->link(':Front:Sign:in')); #@debug
+		$this->terminate();
+
+		$url = 'http://www.sk.tra.com/sign/in';
 		$urlScript = new Nette\Http\UrlScript($url);
 		// d($urlScript); #@debug
 		$httpRequest = new Nette\Http\Request($urlScript);
