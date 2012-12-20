@@ -235,7 +235,7 @@ class Rental extends \Entity\BaseEntity {
 		return $this->images->first();
 	}
 
-	public function getImages1($limit = NULL, $offset = 0) {
+	public function getImages($limit = NULL, $offset = 0) {
 		return $this->images->slice($offset, $limit);
 	}
 

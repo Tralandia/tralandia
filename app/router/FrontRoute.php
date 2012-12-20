@@ -261,7 +261,6 @@ class FrontRoute implements Nette\Application\IRouter {
 	public function getUrlByAppRequest($appRequest, $refUrl)
 	{
 		$params = $appRequest->getParameters();
-
 		$query = array();
 		foreach ($this->queryParams as $key => $value) {
 			if(array_key_exists($key, $params)) {

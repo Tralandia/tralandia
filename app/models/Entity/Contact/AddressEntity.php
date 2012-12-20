@@ -32,12 +32,6 @@ class Address extends \Entity\BaseEntity {
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
 	 */
-	protected $subLocality;
-
-	/**
-	 * @var string
-	 * @ORM\Column(type="string", nullable=true)
-	 */
 	protected $postalCode;
 
 	/**
@@ -51,6 +45,12 @@ class Address extends \Entity\BaseEntity {
 	 * @ORM\ManyToOne(targetEntity="Entity\Location\Location", cascade={"persist"})
 	 */
 	protected $locality;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $subLocality;
 
 	/**
 	 * @var Collection
