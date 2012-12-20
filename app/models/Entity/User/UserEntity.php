@@ -42,6 +42,12 @@ class User extends \Entity\BaseEntityDetails {
 	protected $primaryLocation;
 
 	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $name;
+
+	/**
 	 * @var Collection
 	 * @ORM\ManyToMany(targetEntity="Entity\Contact\Phone", mappedBy="users", cascade={"persist"})
 	 */

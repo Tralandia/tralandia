@@ -185,6 +185,8 @@ class ImportLocations extends BaseImport {
 
 			if ($x['default_language_id'] > 0) {
 				$location->defaultLanguage = $this->context->languageRepositoryAccessor->get()->find(getByOldId('\Language', $x['default_language_id']));
+			} else {
+				$location->defaultLanguage = $this->context->languageRepositoryAccessor->get()->find(getByOldId('\Language', 38));
 			}
 
 			$t = $this->context->currencyRepositoryAccessor->get()->findOneBy(array('oldId' => $x['default_currency_id']));

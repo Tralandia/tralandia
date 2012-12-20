@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="user_rentalreview", indexes={@ORM\index(name="senderEmail", columns={"senderEmail"})})
+ * @ORM\Table(name="user_rentalreview")
  */
 class RentalReview extends \Entity\BaseEntity {
 
