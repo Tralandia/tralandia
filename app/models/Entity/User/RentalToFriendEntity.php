@@ -28,14 +28,14 @@ class RentalToFriend extends \Entity\BaseEntity {
 	protected $rental;
 
 	/**
-	 * @var email
-	 * @ORM\Column(type="email")
+	 * @var string
+	 * @ORM\Column(type="string")
 	 */
 	protected $senderEmail;
 
 	/**
-	 * @var email
-	 * @ORM\Column(type="email")
+	 * @var string
+	 * @ORM\Column(type="string")
 	 */
 	protected $receiverEmail;
 
@@ -113,10 +113,10 @@ class RentalToFriend extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Extras\Types\Email
+	 * @param string
 	 * @return \Entity\User\RentalToFriend
 	 */
-	public function setSenderEmail(\Extras\Types\Email $senderEmail)
+	public function setSenderEmail($senderEmail)
 	{
 		$this->senderEmail = $senderEmail;
 
@@ -124,7 +124,7 @@ class RentalToFriend extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Extras\Types\Email|NULL
+	 * @return string|NULL
 	 */
 	public function getSenderEmail()
 	{
@@ -132,10 +132,10 @@ class RentalToFriend extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Extras\Types\Email
+	 * @param string
 	 * @return \Entity\User\RentalToFriend
 	 */
-	public function setReceiverEmail(\Extras\Types\Email $receiverEmail)
+	public function setReceiverEmail($receiverEmail)
 	{
 		$this->receiverEmail = $receiverEmail;
 
@@ -143,7 +143,7 @@ class RentalToFriend extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Extras\Types\Email|NULL
+	 * @return string|NULL
 	 */
 	public function getReceiverEmail()
 	{

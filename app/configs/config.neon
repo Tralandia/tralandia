@@ -14,14 +14,6 @@ nette:
 parameters:
 	centralLanguage: 38
 
-	ticketFetcherApi:
-		email: tralandia.test@gmail.com
-		password: tralandia1
-		host: imap.gmail.com
-		port: 993
-		tls: imap/ssl
-		maxEmails: 10
-
 	security:
 		salt: '8723lks762ngknl90835bkd'
 		sender: 'noreply@tralandia.sk'
@@ -127,13 +119,6 @@ services:
 	# visitorEmailVariableFactory: Extras\Email\Variables\UserVariablesFactory('VisitorVariables', @userServiceFactory)
 	# environmentEmailVariableFactory: Extras\Email\Variables\EnvironmentVariablesFactory
 	# --------------------------------
-
-	ticketFetcherApi:
-		class: Horo\Api( %ticketFetcherApi.host%, %ticketFetcherApi.email%, %ticketFetcherApi.password%, 'INBOX', %ticketFetcherApi.port%, %ticketFetcherApi.tls% )
-		setup:
-			- setMaxEmails(%ticketFetcherApi.maxEmails%)
-
-	ticketFetcher: Extras\TicketFetcher( @ticketFetcherApi )
 
 	templateHelpers:
 		class: Extras\Helpers

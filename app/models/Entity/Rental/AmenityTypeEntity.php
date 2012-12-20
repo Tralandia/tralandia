@@ -10,6 +10,7 @@ use	Extras\Annotation as EA;
  * @ORM\Entity()
  * @ORM\Table(name="rental_amenitytype", indexes={@ORM\index(name="slug", columns={"slug"})})
  * @EA\Primary(key="id", value="slug")
+ * @EA\Generator(skip="{setSlug}")
  */
 class AmenityType extends \Entity\BaseEntity {
 
@@ -26,11 +27,21 @@ class AmenityType extends \Entity\BaseEntity {
 	protected $name;
 
 	/**
-	 * @var slug
-	 * @ORM\Column(type="slug")
+	 * @var string
+	 * @ORM\Column(type="string")
 	 */
 	protected $slug;
 	
+	/**
+	 * @param string
+	 * @return \Entity\Rental\AmenityType
+	 */
+	public function setSlug($slug)
+	{
+		$this->slug = \Nette\Utils\Strings::webalize($slug);
+
+		return $this;
+	}
 
 	//@entity-generator-code --- NEMAZAT !!!
 
@@ -98,18 +109,7 @@ class AmenityType extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param slug
-	 * @return \Entity\Rental\AmenityType
-	 */
-	public function setSlug($slug)
-	{
-		$this->slug = $slug;
-
-		return $this;
-	}
-		
-	/**
-	 * @return slug|NULL
+	 * @return string|NULL
 	 */
 	public function getSlug()
 	{

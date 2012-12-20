@@ -14,7 +14,7 @@ use Extras\Annotation as EA;
  * @ORM\Entity(repositoryClass="Repository\Rental\RentalRepository")
  * @ORM\Table(name="rental", indexes={@ORM\index(name="status", columns={"status"}), @ORM\index(name="slug", columns={"slug"}), @ORM\index(name="calendarUpdated", columns={"calendarUpdated"})})
  * @EA\Primary(key="id", value="slug")
- * @EA\Generator(skip="{getImages,getPriceSeason,getPriceOffSeason}")
+ * @EA\Generator(skip="{getImages,getPriceSeason,getPriceOffSeason,setSlug}")
  */
 class Rental extends \Entity\BaseEntity {
 
@@ -76,8 +76,8 @@ class Rental extends \Entity\BaseEntity {
 	protected $address;
 
 	/**
-	 * @var slug
-	 * @ORM\Column(type="slug", nullable=true)
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $slug;
 
@@ -292,7 +292,17 @@ class Rental extends \Entity\BaseEntity {
 	public function getCurrency() {
 		return $this->primaryLocation->defaultCurrency;
 	}
-		
+
+	/**
+	 * @param string
+	 * @return \Entity\Rental\Rental
+	 */
+	public function setSlug($slug)
+	{
+		$this->slug = \Nette\Utils\Strings::webalize($slug);
+
+		return $this;
+	}		
 
 	//@entity-generator-code --- NEMAZAT !!!
 
@@ -567,17 +577,6 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param slug
-	 * @return \Entity\Rental\Rental
-	 */
-	public function setSlug($slug)
-	{
-		$this->slug = $slug;
-
-		return $this;
-	}
-		
-	/**
 	 * @return \Entity\Rental\Rental
 	 */
 	public function unsetSlug()
@@ -588,7 +587,7 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return slug|NULL
+	 * @return string|NULL
 	 */
 	public function getSlug()
 	{

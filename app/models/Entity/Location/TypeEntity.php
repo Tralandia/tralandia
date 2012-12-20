@@ -10,6 +10,7 @@ use	Extras\Annotation as EA;
  * @ORM\Entity()
  * @ORM\Table(name="location_type", indexes={@ORM\index(name="slug", columns={"slug"})})
  * @EA\Primary(key="id", value="name")
+ * @EA\Generator(skip="{setSlug}")
  */
 class Type extends \Entity\BaseEntityDetails {
 
@@ -20,8 +21,8 @@ class Type extends \Entity\BaseEntityDetails {
 	protected $name;
 	
 	/**
-	 * @var slug
-	 * @ORM\Column(type="slug")
+	 * @var string
+	 * @ORM\Column(type="string")
 	 */
 	protected $slug;
 
@@ -31,6 +32,17 @@ class Type extends \Entity\BaseEntityDetails {
 	 * @ORM\Column(name="`primary`", type="boolean")
 	 */
 	protected $primary = FALSE;
+
+	/**
+	 * @param string
+	 * @return \Entity\Location\Type
+	 */
+	public function setSlug($slug)
+	{
+		$this->slug = \Nette\Utils\Strings::webalize($slug);
+
+		return $this;
+	}
 
 	//@entity-generator-code --- NEMAZAT !!!
 
@@ -58,20 +70,10 @@ class Type extends \Entity\BaseEntityDetails {
 	{
 		return $this->name;
 	}
+	
 		
 	/**
-	 * @param slug
-	 * @return \Entity\Location\Type
-	 */
-	public function setSlug($slug)
-	{
-		$this->slug = $slug;
-
-		return $this;
-	}
-		
-	/**
-	 * @return slug|NULL
+	 * @return string|NULL
 	 */
 	public function getSlug()
 	{

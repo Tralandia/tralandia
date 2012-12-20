@@ -66,6 +66,7 @@ class ImportLocations extends BaseImport {
 		$s->nameShort = $this->context->phraseEntityFactory->create();
 		$s->nameOfficial = $this->context->phraseEntityFactory->create();
 		$s->type = $worldType;
+		$s->slug = 'world';
 		$this->model->persist($s);
 		$this->model->flush();
 
@@ -196,26 +197,6 @@ class ImportLocations extends BaseImport {
 			$countryDetails['inEu'] = $x['in_eu'];
 
 			$location->details = $countryDetails;
-
-			$contacts = new \Extras\Types\Contacts();
-
-
-			if (strlen($x['skype'])) $contacts->add(new \Extras\Types\Skype($x['skype']));
-
-			if (strlen($x['phone'])) $contacts->add(new \Extras\Types\Phone($x['phone']));
-
-			if (strlen($x['domain'])) {
-				$contacts->add(new \Extras\Types\Email('info@'.$x['domain']));
-			}
-
-			$location->contacts = $contacts;
-
-			/*
-				name - importujem z countries.name, a locative hladam v countries_translations, kde name = '' a name_locative mame, ak je done = 1 hned aj dame activated
-				nameOfficial - hladam najdlhsi name v countries_synonyms, aj locative beriem odtialto
-				nameShort - hladam najkratsi name v countries_synonyms, aj locative beriem odtialto
-				VSETKO TOTO SA BUDE PREKLADAT DO INCOMINGLANGUAGES
-			*/
 
 			$namePhrase = $this->createNewPhrase($this->dictionaryTypeName, $x['name_dic_id']);
 			$namePhraseService = $this->context->phraseDecoratorFactory->create($namePhrase);

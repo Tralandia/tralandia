@@ -28,8 +28,8 @@ class SiteOwnerReview extends \Entity\BaseEntity {
 	protected $location;
 
 	/**
-	 * @var email
-	 * @ORM\Column(type="email")
+	 * @var string
+	 * @ORM\Column(type="string")
 	 */
 	protected $senderEmail;
 
@@ -118,10 +118,10 @@ class SiteOwnerReview extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Extras\Types\Email
+	 * @param string
 	 * @return \Entity\User\SiteOwnerReview
 	 */
-	public function setSenderEmail(\Extras\Types\Email $senderEmail)
+	public function setSenderEmail($senderEmail)
 	{
 		$this->senderEmail = $senderEmail;
 
@@ -129,7 +129,7 @@ class SiteOwnerReview extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Extras\Types\Email|NULL
+	 * @return string|NULL
 	 */
 	public function getSenderEmail()
 	{

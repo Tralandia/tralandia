@@ -53,12 +53,6 @@ class Attraction extends \Entity\BaseEntityDetails {
 	protected $longitude;
 
 	/**
-	 * @var contacts
-	 * @ORM\Column(type="contacts", nullable=true)
-	 */
-	protected $contacts;
-
-	/**
 	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="Entity\Medium\Medium", mappedBy="attraction", cascade={"persist", "remove"})
 	 */
@@ -226,35 +220,6 @@ class Attraction extends \Entity\BaseEntityDetails {
 	public function getLongitude()
 	{
 		return $this->longitude;
-	}
-		
-	/**
-	 * @param \Extras\Types\Contacts
-	 * @return \Entity\Attraction\Attraction
-	 */
-	public function setContacts(\Extras\Types\Contacts $contacts)
-	{
-		$this->contacts = $contacts;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Attraction\Attraction
-	 */
-	public function unsetContacts()
-	{
-		$this->contacts = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Extras\Types\Contacts|NULL
-	 */
-	public function getContacts()
-	{
-		return $this->contacts;
 	}
 		
 	/**

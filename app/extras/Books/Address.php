@@ -21,7 +21,4 @@ class Address extends Nette\Object {
 	public function __construct(Extras\Models\Repository\RepositoryAccessor $addressRepository) {
 		$this->addressRepository = $addressRepository;
 	}
-
-
-
 }

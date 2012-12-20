@@ -24,8 +24,8 @@ class Change extends \Entity\BaseEntityDetails {
 	protected $entityName;
 
 	/**
-	 * @var email
-	 * @ORM\Column(type="email")
+	 * @var string
+	 * @ORM\Column(type="string")
 	 */
     protected $userEmail;
 
@@ -125,10 +125,10 @@ class Change extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @param \Extras\Types\Email
+	 * @param string
 	 * @return \Entity\Log\Change
 	 */
-	public function setUserEmail(\Extras\Types\Email $userEmail)
+	public function setUserEmail($userEmail)
 	{
 		$this->userEmail = $userEmail;
 
@@ -136,7 +136,7 @@ class Change extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Extras\Types\Email|NULL
+	 * @return string|NULL
 	 */
 	public function getUserEmail()
 	{

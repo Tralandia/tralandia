@@ -10,6 +10,7 @@ use	Extras\Annotation as EA;
  * @ORM\Entity()
  * @ORM\Table(name="invoice_usetype", indexes={@ORM\index(name="slug", columns={"slug"})})
  * @EA\Primary(key="id", value="slug")
+ * @EA\Generator(skip="{setSlug}")
  */
 class UseType extends \Entity\BaseEntity {
 
@@ -20,8 +21,8 @@ class UseType extends \Entity\BaseEntity {
 	protected $name;
 
 	/**
-	 * @var slug
-	 * @ORM\Column(type="slug")
+	 * @var string
+	 * @ORM\Column(type="string")
 	 */
 	protected $slug;
 
@@ -30,6 +31,17 @@ class UseType extends \Entity\BaseEntity {
 	 * @ORM\ManyToMany(targetEntity="Package", inversedBy="uses")
 	 */
 	protected $packages;
+
+	/**
+	 * @param string
+	 * @return \Entity\Invoice\UseType
+	 */
+	public function setSlug($slug)
+	{
+		$this->slug = \Nette\Utils\Strings::webalize($slug);
+
+		return $this;
+	}
 
 	//@entity-generator-code --- NEMAZAT !!!
 
@@ -61,18 +73,7 @@ class UseType extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param slug
-	 * @return \Entity\Invoice\UseType
-	 */
-	public function setSlug($slug)
-	{
-		$this->slug = $slug;
-
-		return $this;
-	}
-		
-	/**
-	 * @return slug|NULL
+	 * @return string|NULL
 	 */
 	public function getSlug()
 	{

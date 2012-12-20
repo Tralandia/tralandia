@@ -10,7 +10,8 @@ use	Extras\Annotation as EA;
  * @ORM\Entity(repositoryClass="Repository\Location\LocationRepository")
  * @ORM\Table(name="location", indexes={@ORM\index(name="name", columns={"name_id"}), @ORM\index(name="slug", columns={"slug"}), @ORM\index(name="latitude", columns={"latitude"}), @ORM\index(name="longitude", columns={"longitude"})})
  * @EA\Primary(key="id", value="slug")
- */
+ * @EA\Generator(skip="{setSlug}")
+*/
 class Location extends \Entity\BaseEntityDetails {
 
 	const STATUS_DRAFT = 'draft';
@@ -41,8 +42,8 @@ class Location extends \Entity\BaseEntityDetails {
 	protected $nameShort;
 
 	/**
-	 * @var slug
-	 * @ORM\Column(type="slug")
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $slug;
 
@@ -156,14 +157,19 @@ class Location extends \Entity\BaseEntityDetails {
 	 */
 	protected $defaultLanguage;
 
-	/**
-	 * @var contacts
-	 * @ORM\Column(type="contacts", nullable=true)
-	 */
-	protected $contacts;
-
 	public function isPrimary() {
 		return (bool)$this->isPrimary;
+	}
+
+	/**
+	 * @param string
+	 * @return \Entity\Location\Location
+	 */
+	public function setSlug($slug)
+	{
+		$this->slug = \Nette\Utils\Strings::webalize($slug);
+
+		return $this;
 	}
 
 	//@entity-generator-code --- NEMAZAT !!!
@@ -255,20 +261,9 @@ class Location extends \Entity\BaseEntityDetails {
 	{
 		return $this->nameShort;
 	}
-		
+				
 	/**
-	 * @param slug
-	 * @return \Entity\Location\Location
-	 */
-	public function setSlug($slug)
-	{
-		$this->slug = $slug;
-
-		return $this;
-	}
-		
-	/**
-	 * @return slug|NULL
+	 * @return string|NULL
 	 */
 	public function getSlug()
 	{
@@ -785,34 +780,5 @@ class Location extends \Entity\BaseEntityDetails {
 	public function getDefaultLanguage()
 	{
 		return $this->defaultLanguage;
-	}
-		
-	/**
-	 * @param \Extras\Types\Contacts
-	 * @return \Entity\Location\Location
-	 */
-	public function setContacts(\Extras\Types\Contacts $contacts)
-	{
-		$this->contacts = $contacts;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Location\Location
-	 */
-	public function unsetContacts()
-	{
-		$this->contacts = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Extras\Types\Contacts|NULL
-	 */
-	public function getContacts()
-	{
-		return $this->contacts;
 	}
 }

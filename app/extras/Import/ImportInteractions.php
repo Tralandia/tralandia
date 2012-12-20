@@ -47,9 +47,15 @@ class ImportInteractions extends BaseImport {
 			if ($t) {
 				$interaction->rental = $t;
 			}
-			$interaction->senderEmail = new \Extras\Types\Email($x['email']);
+			$interaction->senderEmail = $x['email'];
 			$interaction->senderName = $x['name'];
-			$interaction->senderPhone = new \Extras\Types\Phone(Strings::fixEncoding($x['phone']));
+
+			if (strlen($x['phone'])) {
+				if ($tempPhone = $this->context->phoneBook->getOrCreate($x['phone'])) {
+					$interaction->senderPhone = $tempPhone;
+				}	
+			}
+
 			$interaction->arrivalDate = fromStamp($x['date_from']);
 			$interaction->departureDate = fromStamp($x['date_to']);
 			$interaction->capacity = array(
@@ -71,34 +77,6 @@ class ImportInteractions extends BaseImport {
 		return TRUE;
 	}
 
-	// public function importRentalQuestions() {
-	// 	if ($this->developmentMode == TRUE) {
-	// 		$r = q('select * from visitors_questions limit 100');
-	// 	} else {
-	// 		$r = q('select * from visitors_questions order by id');
-	// 	}
-
-	// 	while($x = mysql_fetch_array($r)) {
-	// 		$interaction = $this->context->userRentalQuestionEntityFactory->create();
-	// 		$interaction->language = $this->context->languageRepositoryAccessor->get()->find($this->languagesByOldId[$x['language_id']]);
-	// 		$t = $this->context->rentalRepositoryAccessor->get()->findOneByOldId($x['object_id']);
-	// 		if ($t) {
-	// 			$interaction->rental = $t;
-	// 		}
-	// 		$interaction->senderEmail = new \Extras\Types\Email($x['email_from']);
-	// 		$interaction->senderPhone = new \Extras\Types\Phone(Strings::fixEncoding($x['phone']));
-	// 		$interaction->question = $x['message'];
-
-	// 		$interaction->oldId = $x['id'];
-
-	// 		$interaction->created = fromStamp($x['stamp']);
-	// 		$this->model->persist($interaction);
-	// 	}
-	// 	$this->model->flush();
-
-	// 	return TRUE;
-	// }
-
 	public function importRentalReviews() {
 		// toto vlastne ani nemame :)
 	}
@@ -117,8 +95,8 @@ class ImportInteractions extends BaseImport {
 			if ($t) {
 				$interaction->rental = $t;
 			}
-			$interaction->senderEmail = new \Extras\Types\Email($x['email_from']);
-			$interaction->receiverEmail = new \Extras\Types\Email($x['email_to']);
+			$interaction->senderEmail = $x['email_from'];
+			$interaction->receiverEmail = $x['email_to'];
 
 			$interaction->message = $x['message'];
 
@@ -144,7 +122,7 @@ class ImportInteractions extends BaseImport {
 			$interaction->language = $this->context->languageRepositoryAccessor->get()->find($this->languagesByOldId[$x['language_id']]);
 			$interaction->location = $this->context->locationRepositoryAccessor->get()->find($this->locationsByOldId[$x['country_id']]);
 
-			$interaction->senderEmail = new \Extras\Types\Email($x['from_email']);
+			$interaction->senderEmail = $x['from_email'];
 			$interaction->senderName = $x['from_name'];
 
 			$interaction->testimonial = $x['testimonial'];
@@ -171,7 +149,7 @@ class ImportInteractions extends BaseImport {
 			$interaction->language = $this->context->languageRepositoryAccessor->get()->find($this->languagesByOldId[$x['language_id']]);
 			$interaction->location = $this->context->locationRepositoryAccessor->get()->find($this->locationsByOldId[$x['country_id']]);
 
-			$interaction->senderEmail = new \Extras\Types\Email($x['from_email']);
+			$interaction->senderEmail = $x['from_email'];
 			$interaction->senderName = $x['from_name'];
 
 			$interaction->testimonial = $x['testimonial'];

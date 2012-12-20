@@ -9,12 +9,13 @@ use	Extras\Annotation as EA;
  * @ORM\Entity()
  * @ORM\Table(name="invoice_servicetype")
  * @EA\Primary(key="id", value="slug")
+ * @EA\Generator(skip="{setSlug}")
  */
 class ServiceType extends \Entity\BaseEntity {
 
 	/**
-	 * @var slug
-	 * @ORM\Column(type="slug")
+	 * @var string
+	 * @ORM\Column(type="string")
 	 */
 	protected $slug;
 
@@ -23,6 +24,18 @@ class ServiceType extends \Entity\BaseEntity {
 	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $name;
+
+		
+	/**
+	 * @param string
+	 * @return \Entity\Invoice\ServiceType
+	 */
+	public function setSlug($slug)
+	{
+		$this->slug = \Nette\Utils\Strings::webalize($slug);
+
+		return $this;
+	}
 
 	//@entity-generator-code --- NEMAZAT !!!
 
@@ -33,18 +46,7 @@ class ServiceType extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param slug
-	 * @return \Entity\Invoice\ServiceType
-	 */
-	public function setSlug($slug)
-	{
-		$this->slug = $slug;
-
-		return $this;
-	}
-		
-	/**
-	 * @return slug|NULL
+	 * @return string|NULL
 	 */
 	public function getSlug()
 	{

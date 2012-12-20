@@ -28,8 +28,8 @@ class RentalReview extends \Entity\BaseEntity {
 	protected $rental;
 
 	/**
-	 * @var email
-	 * @ORM\Column(type="email")
+	 * @var string
+	 * @ORM\Column(type="string")
 	 */
 	protected $senderEmail;
 
@@ -40,8 +40,8 @@ class RentalReview extends \Entity\BaseEntity {
 	protected $senderName;
 
 	/**
-	 * @var phone
-	 * @ORM\Column(type="phone")
+	 * @var Collection
+	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Phone", cascade={"persist"})
 	 */
 	protected $senderPhone;
 
@@ -138,10 +138,10 @@ class RentalReview extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Extras\Types\Email
+	 * @param string
 	 * @return \Entity\User\RentalReview
 	 */
-	public function setSenderEmail(\Extras\Types\Email $senderEmail)
+	public function setSenderEmail($senderEmail)
 	{
 		$this->senderEmail = $senderEmail;
 
@@ -149,7 +149,7 @@ class RentalReview extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Extras\Types\Email|NULL
+	 * @return string|NULL
 	 */
 	public function getSenderEmail()
 	{
@@ -176,10 +176,10 @@ class RentalReview extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Extras\Types\Phone
+	 * @param \Entity\Contact\Phone
 	 * @return \Entity\User\RentalReview
 	 */
-	public function setSenderPhone(\Extras\Types\Phone $senderPhone)
+	public function setSenderPhone(\Entity\Contact\Phone $senderPhone)
 	{
 		$this->senderPhone = $senderPhone;
 
@@ -187,7 +187,7 @@ class RentalReview extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Extras\Types\Phone|NULL
+	 * @return \Entity\Contact\Phone|NULL
 	 */
 	public function getSenderPhone()
 	{

@@ -10,6 +10,7 @@ use	Extras\Annotation as EA;
  * @ORM\Entity()
  * @ORM\Table(name="rental_roomtype")
  * @EA\Primary(key="id", value="id")
+ * @EA\Generator(skip="{setSlug}")
  */
 class RoomType extends \Entity\BaseEntity {
 	
@@ -24,6 +25,18 @@ class RoomType extends \Entity\BaseEntity {
 	 * @ORM\Column(type="string")
 	 */
 	protected $slug;
+
+		
+	/**
+	 * @param string
+	 * @return \Entity\Rental\RoomType
+	 */
+	public function setSlug($slug)
+	{
+		$this->slug = \Nette\Utils\Strings::webalize($slug);
+
+		return $this;
+	}
 
 	//@entity-generator-code --- NEMAZAT !!!
 
@@ -50,17 +63,6 @@ class RoomType extends \Entity\BaseEntity {
 	public function getName()
 	{
 		return $this->name;
-	}
-		
-	/**
-	 * @param string
-	 * @return \Entity\Rental\RoomType
-	 */
-	public function setSlug($slug)
-	{
-		$this->slug = $slug;
-
-		return $this;
 	}
 		
 	/**

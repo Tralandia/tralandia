@@ -12,7 +12,7 @@ use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="seo_backlink", indexes={@ORM\index(name="rental", columns={"rental_id"}), @ORM\index(name="location", columns={"location_id"}), @ORM\index(name="language", columns={"language_id"}), @ORM\index(name="linkUrl", columns={"linkUrl"})})
+ * @ORM\Table(name="seo_backlink", indexes={@ORM\index(name="rental", columns={"rental_id"}), @ORM\index(name="location", columns={"location_id"}), @ORM\index(name="language", columns={"language_id"})})
  * @EA\Primary(key="id", value="id")
  */
 class BackLink extends \Entity\BaseEntity {
@@ -56,10 +56,10 @@ class BackLink extends \Entity\BaseEntity {
 	protected $status;
 
 	/**
-	 * @var url
-	 * @ORM\Column(type="url", nullable=true)
+	 * @var Collection
+	 * @ORM\OneToOne(targetEntity="Entity\Contact\Url", cascade={"persist"})
 	 */
-	protected $linkUrl;
+	protected $url;
 
 	/**
 	 * @var string
@@ -230,32 +230,22 @@ class BackLink extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Extras\Types\Url
+	 * @param \Entity\Contact\Url
 	 * @return \Entity\Seo\BackLink
 	 */
-	public function setLinkUrl(\Extras\Types\Url $linkUrl)
+	public function setUrl(\Entity\Contact\Url $url)
 	{
-		$this->linkUrl = $linkUrl;
+		$this->url = $url;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Entity\Seo\BackLink
+	 * @return \Entity\Contact\Url|NULL
 	 */
-	public function unsetLinkUrl()
+	public function getUrl()
 	{
-		$this->linkUrl = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Extras\Types\Url|NULL
-	 */
-	public function getLinkUrl()
-	{
-		return $this->linkUrl;
+		return $this->url;
 	}
 		
 	/**

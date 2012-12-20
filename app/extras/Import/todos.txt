@@ -14,8 +14,8 @@ Current status:
 
 
 	/**
-	 * @var email
-	 * @ORM\Column(type="email")
+	 * @var string
+	 * @ORM\Column(type="string")
 	 */
 	protected $email;
 

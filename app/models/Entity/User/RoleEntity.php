@@ -10,6 +10,7 @@ use	Extras\Annotation as EA;
  * @ORM\Entity(repositoryClass="Repository\User\RoleRepository")
  * @ORM\Table(name="user_role", indexes={@ORM\index(name="slug", columns={"slug"})})
  * @EA\Primary(key="id", value="name")
+ * @EA\Generator(skip="{setSlug}")
  */
 class Role extends \Entity\BaseEntity {
 
@@ -20,8 +21,8 @@ class Role extends \Entity\BaseEntity {
 	protected $name;
 
 	/**
-	 * @var slug
-	 * @ORM\Column(type="slug")
+	 * @var string
+	 * @ORM\Column(type="string")
 	 */
 	protected $slug;
 
@@ -37,8 +38,19 @@ class Role extends \Entity\BaseEntity {
 	 */
 	protected $users;
 
+		
+	/**
+	 * @param string
+	 * @return \Entity\User\Role
+	 */
+	public function setSlug($slug)
+	{
+		$this->slug = \Nette\Utils\Strings::webalize($slug);
 
-			//@entity-generator-code --- NEMAZAT !!!
+		return $this;
+	}
+
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()
@@ -68,18 +80,7 @@ class Role extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param slug
-	 * @return \Entity\User\Role
-	 */
-	public function setSlug($slug)
-	{
-		$this->slug = $slug;
-
-		return $this;
-	}
-		
-	/**
-	 * @return slug|NULL
+	 * @return string|NULL
 	 */
 	public function getSlug()
 	{
