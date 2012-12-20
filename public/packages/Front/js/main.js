@@ -331,6 +331,35 @@ App.prototype.initMapsObjectDetail = function(){
 	$.scrollTo('#objectDetailListMap',800);	
 }
 
+/****************************************************************************************************
+*	CONTACT PAGE FORM CREATOR
+****************************************************************************************************/
+
+
+App.prototype.loadContactForm = function(){
+	
+	$('#contentForForm').hide();
+	$('#contactFormCover').show();
+
+	//var $myTabs = $('.mytabUi');
+	//var $myContentDiv = $myTabs.find('div#tabs-4');
+
+	//var existText = $myContentDiv.html();
+
+	//$myContentDiv.html('');
+
+	//$myContentDiv.append($Form);
+
+	return false;
+}
+
+App.prototype.cancelContactForm = function(){
+	
+	$('#contentForForm').show();
+	$('#contactFormCover').hide();
+
+	return false;
+}
 
 /****************************************************************************************************
 *	RUNN APPS
@@ -351,7 +380,7 @@ $(document).ready(function(){
 	$( ".tabs" ).tabs(A.uiSelectedTabs());
 	$( ".tabs ul li a" ).click(A.uiTabsClickChangeHashAdress);
 
-
+	$('.loadContactForm').click(A.loadContactForm);
 	
 	/* UI calendar */
 
@@ -368,6 +397,7 @@ $(document).ready(function(){
 
 	/* rental open modal contact dialog */
 	$('.openContactForm').click(A.openContactForm);
+	$('.cancelContactForm').click(A.cancelContactForm);
 
 	/* after show Rental object detail append this object to View list in local storage */
 	$('.addToViewList').objectVisitList(A);

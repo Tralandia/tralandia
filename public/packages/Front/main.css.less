@@ -1822,21 +1822,67 @@ width: 31.657201%;
 	img {
 		float: left;		
 		height: auto;
-		width: 120px;
+		width: 140px;
 	}
 
 
 	.info {
 		font-size: 12px;
-		color: @darkGreen;
+		font-weight: bold;
+
+
 		a {
-			color: @brown;
+			font-weight: normal;
 		}
 	}
 
 	.description {
-		width: 580px;
+		width: 555px;
 		float: right;
+
+		p {
+			margin: 0;
+
+		}
+
 	}
 }
 
+.contactForm {
+	input[type=text] , textarea {
+		display: block;
+	}
+}
+
+.btn.cancel {
+	
+	background-image: linear-gradient(bottom, #D8DBDB 1%, #F2F2F2 51%);
+	background-image: -o-linear-gradient(bottom, #D8DBDB 1%, #F2F2F2 51%);
+	background-image: -moz-linear-gradient(bottom, #D8DBDB 1%, #F2F2F2 51%);
+	background-image: -webkit-linear-gradient(bottom, #D8DBDB 1%, #F2F2F2 51%);
+	background-image: -ms-linear-gradient(bottom, #D8DBDB 1%, #F2F2F2 51%);
+
+	background-image: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(0.01, #D8DBDB),
+		color-stop(0.51, #F2F2F2)
+	);
+
+	&:hover {
+background-image: linear-gradient(bottom, #F2F2F2 1%, #D8DBDB 51%);
+background-image: -o-linear-gradient(bottom, #F2F2F2 1%, #D8DBDB 51%);
+background-image: -moz-linear-gradient(bottom, #F2F2F2 1%, #D8DBDB 51%);
+background-image: -webkit-linear-gradient(bottom, #F2F2F2 1%, #D8DBDB 51%);
+background-image: -ms-linear-gradient(bottom, #F2F2F2 1%, #D8DBDB 51%);
+
+background-image: -webkit-gradient(
+	linear,
+	left bottom,
+	left top,
+	color-stop(0.01, #F2F2F2),
+	color-stop(0.51, #D8DBDB)
+);
+	}
+}

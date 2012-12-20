@@ -1,5 +1,7 @@
 <?php
 
+
+
 use Nette\Diagnostics\Debugger,
 	Nette\Environment,
 	Nette\Application\Routers\Route,
