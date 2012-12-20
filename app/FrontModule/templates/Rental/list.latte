@@ -50,9 +50,8 @@
 		        		{* @todo odstranit *}
 		        		{var $thumbLink = '';}
 		        		
-		        		{if $rentalService->getMainPhoto()}
-		        		{$thumbLink = $rentalService->getMainPhoto()->getThumbnail()}
-		        		<img src="{$thumbLink}" />
+		        		{if $mainImage = $rental->getMainImage()}
+		        			<img src="{$basePath}{$mainImage|rentalImageSrc}" />
 		        		{/if}
 
 		        		</a>
@@ -75,8 +74,8 @@
                             <table class="holder">
                                 <tbody><tr>
                                     <td width="90%">
-                                        <b>Spalni:</b> 4, <b>Kupelni:</b> 2, <b>Osob:</b> 6<br>
-                                        <b>Sezona: 9,50 €, Mimosezona: 8,50 €</b> osoba/noc
+                                        <b>Spalni:</b> 4, <b>Kupelni:</b> 2, <b>Osob:</b> {$rental->maxCapacity}<br>
+                                        <b>Sezona: {$rental->priceSeason}, Mimosezona: {$rental->priceOffSeason} €</b> osoba/noc
                                     </td>
                                     <td class="text-top">
                                         <span class="entypo-phone"></span><a href="{link Rental:detail $rental}">Kontaktujte</a><br>

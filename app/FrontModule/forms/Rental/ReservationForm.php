@@ -27,9 +27,9 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 
 		$parents = array();
 
-			for($i = 0 ; $i < 21 ; ++$i) {
-				$parents[$i] = $i;
-			}
+		for($i = 0 ; $i < 21 ; ++$i) {
+			$parents[$i] = $i;
+		}
 
 		$this->addSelect('parents','',$parents)->setPrompt('o12277');
 		$this->addSelect('childs','',$parents)->setPrompt('o2443');

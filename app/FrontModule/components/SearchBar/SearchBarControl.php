@@ -55,12 +55,13 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		$template->setTranslator($this->translator);
 
 		// template variables
-		$template->criteriaLocation 		= $this->getLocationCriteria();
-		$template->criteriaRentalType 		= $this->getRentalTypeCriteria();
-		$template->criteriaRentalTag 		= $this->getRentalTagCriteria();
-		$template->criteriaSpokenLanguage 	= $this->getSpokenLanguageCriteria();
-		// $template->criteriaCapacity 		= $this->getCapacityCriteria();
-		// $template->criteriaPrice 			= $this->getPriceCriteria();
+		$template->criteria = array();
+		$template->criteria['location'] 		= $this->getLocationCriteria();
+		$template->criteria['rentalType'] 		= $this->getRentalTypeCriteria();
+		$template->criteria['rentalTag'] 		= $this->getRentalTagCriteria();
+		$template->criteria['spokenLanguage'] 	= $this->getSpokenLanguageCriteria();
+		// $template->criteria['capacity'] 		= $this->getCapacityCriteria();
+		// $template->criteria['price'] 			= $this->getPriceCriteria();
 
 		$template->render();
 		d(t('searchBar'));
@@ -85,6 +86,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		$linksTmp 	= array();
 		$visible 	= array();
 		$selected 	= $this->getSelectedParams();
+		$active		= FALSE;
 
 		$locations 	= $this->locationRepositoryAccessor->get()->findByParent($this->primaryLocation);
 		foreach ($locations as $key => $location) {
@@ -102,6 +104,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 				'seo' 	=> $seo,
 				'count' => $count,
 				'hide' 	=> TRUE,
+				'active' => $active,
 			);
 		}
 
@@ -117,8 +120,15 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		$linksTmp 	= array();
 		$visible 	= array();
 		$selected 	= $this->getSelectedParams();
+		$active		= FALSE;
 
-		$rentalTypes = $this->rentalTypeRepositoryAccessor->get()->findAll();
+		if (array_key_exists('rentalType', $selected)) {
+			$active = TRUE;
+			$rentalTypes = array($selected['rentalType']);
+		} else {
+			$rentalTypes = $this->rentalTypeRepositoryAccessor->get()->findAll();
+		}
+
 		foreach ($rentalTypes as $key => $rentalType) {
 			$params = array_merge($selected, array('rentalType' => $rentalType));
 
@@ -134,6 +144,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 				'seo' => $seo,
 				'count' => $count,
 				'hide' => TRUE,
+				'active' => $active,
 			);
 		}
 
@@ -149,8 +160,15 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		$linksTmp 	= array();
 		$visible 	= array();
 		$selected 	= $this->getSelectedParams();
+		$active		= FALSE;
 
-		$rentalTags = $this->rentalTagRepositoryAccessor->get()->findAll();
+		if (array_key_exists('rentalTag', $selected)) {
+			$active = TRUE;
+			$rentalTags = array($selected['rentalTag']);
+		} else {
+			$rentalTags = $this->rentalTagRepositoryAccessor->get()->findAll();
+		}
+
 		foreach ($rentalTags as $key => $rentalTag) {
 			$params = array_merge($selected, array('rentalTag' => $rentalTag));
 
@@ -166,6 +184,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 				'seo' => $seo,
 				'count' => $count,
 				'hide' => TRUE,
+				'active' => $active,
 			);
 		}
 
@@ -181,6 +200,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		$linksTmp 	= array();
 		$visible 	= array();
 		$selected 	= $this->getSelectedParams();
+		$active		= FALSE;
 
 		$languages = $this->languageRepositoryAccessor->get()->findAll();
 		foreach ($languages as $key => $language) {
@@ -198,6 +218,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 				'seo' => $seo,
 				'count' => $count,
 				'hide' => TRUE,
+				'active' => $active,
 			);
 		}
 
