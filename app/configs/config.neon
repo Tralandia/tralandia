@@ -227,7 +227,7 @@ factories:
 		implement: Extras\Cache\IRentalSearchKeysCachingFactory
 
 	searchCacheFactory:
-		class: Nette\Caching\Cache(@cacheStorage, %namespace%)
+		class: Extras\Cache\Cache(@cacheStorage, %namespace%)
 		implement: Extras\Cache\ISearchCacheFactory
 
 	rentalSearchCachingFactory: 
