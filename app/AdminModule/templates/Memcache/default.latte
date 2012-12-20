@@ -10,7 +10,7 @@
 {foreach $keys as $key => $value}
     <tr>
     	<td><b>{$value['key']}</b></td>
-    	<td>{$value['content']}</td>
+    	<td>{!$value['content']}</td>
     </tr>
 {/foreach}
 </table>

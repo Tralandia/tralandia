@@ -23,12 +23,14 @@ class MemcachePresenter extends BasePresenter {
 	    $this->memcache = new \Memcache;
 	    $this->memcache->connect('localhost', 11211) or die ("Could not connect to memcache server");
 
-		$keys = $this->getMemcacheKeys('RentalSearchCache');
+	    $filter = 'tralandia_RentalSearchCache59location';
+
+		$keys = $this->getMemcacheKeys($filter);
 
 		$this->template->keys = array();
 		foreach ($keys as $key => $value) {
 			$this->template->keys[] = array(
-				'key' => $value,
+				'key' => str_replace($filter, '', $value),
 				'content' => \Nette\Diagnostics\Dumper::toHtml($this->memcache->get($value)),
 			);
 		}
@@ -40,14 +42,14 @@ class MemcachePresenter extends BasePresenter {
 
 	    $list = array();
 	    $allSlabs = $this->memcache->getExtendedStats('slabs');
-	    $items = $this->memcache->getExtendedStats('items');
+	    //$items = $this->memcache->getExtendedStats('items');
 	    foreach($allSlabs as $server => $slabs) {
 	        foreach($slabs AS $slabId => $slabMeta) {
 	           $cdump = $this->memcache->getExtendedStats('cachedump',(int)$slabId);
 	            foreach($cdump AS $keys => $arrVal) {
 	                if (!is_array($arrVal)) continue;
-	                foreach($arrVal AS $k => $v) {                   
-	                	if ($filter && !strpos($k, $filter)) {
+	                foreach($arrVal AS $k => $v) {
+	                	if ($filter && strpos($k, $filter) !== 0) {
 	                		continue;
 	                	}
 	                    $foundKeys[] = $k;
