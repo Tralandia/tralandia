@@ -361,6 +361,18 @@ App.prototype.cancelContactForm = function(){
 	return false;
 }
 
+App.prototype.forgottenPasswordOpen = function(){
+  $('#forgottenPassword').slideDown('fast', function() {
+    // Animation complete.
+  });
+  return false;	
+}
+
+App.prototype.closeForgottenPasswordForm = function(){
+	$('#forgottenPassword').slideUp();
+	return false;	
+}
+
 /****************************************************************************************************
 *	RUNN APPS
 ****************************************************************************************************/
@@ -408,6 +420,8 @@ $(document).ready(function(){
 	/* */
 	$('#compareList').showFavoriteSlider(A);
 
-
+	// closeForgottenPasswordForm
+	$('#forgottenPasswordOpen').click(A.forgottenPasswordOpen);
+	$('#closeForgottenPasswordForm').click(A.closeForgottenPasswordForm);
 
 });
