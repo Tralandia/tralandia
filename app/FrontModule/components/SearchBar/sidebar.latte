@@ -2,9 +2,9 @@
 				<aside class="innerPadding baseRadius baseBorder innerPaddingLeft">
 					<div class="">						
 						<form class="searchForm">
-							<h4>Vyhladavanie</h4>
+							<h4>{_o821}</h4>
 							<div class="input-filltext">
-							  <input class="span2" placeholder="Hladaj" id="appendedInputButton" size="16" type="text"><button class="btn" type="button"><i class="entypo-search"></i></button>
+							  <input class="span2" placeholder="{_o1110}" id="appendedInputButton" size="16" type="text"><button class="btn" type="button"><i class="entypo-search"></i></button>
 							</div>							
 						</form>
 					</div>
@@ -20,7 +20,7 @@
 									<a href="{$link->seo->getUrl()}">{_$link->seo->getParameter('location')->name|firstUpper} <span class="counter">{$link->count}</span></a>
 								{/if}
 							</li>
-							{if $iterator->last}<li class="more"><a href="#">More option <i class="entypo-down"></i></a></li>{/if}
+							{if $iterator->last}<li class="more"><a href="#" data-open="#Fewer options" data-close="More option">#More option <i class="entypo-down"></i></a></li>{/if}
 						</ul>
 					</div>
 
@@ -35,7 +35,7 @@
 									<a href="{$link->seo->getUrl()}">{_$link->seo->getParameter('rentalType')->name|firstUpper} <span class="counter">{$link->count}</span></a>
 								{/if}
 							</li>
-							{if $iterator->last}<li class="more"><a href="#">More option <i class="entypo-down"></i></a></li>{/if}
+							{if $iterator->last}<li class="more"><a href="#" data-open="#Fewer options" data-close="#More option">#More option <i class="entypo-down"></i></a></li>{/if}
 						</ul>
 					</div>
 
@@ -50,7 +50,7 @@
 									<a href="{$link->seo->getUrl()}">{_$link->seo->getParameter('rentalTag')->name|firstUpper} <span class="counter">{$link->count}</span></a>
 								{/if}
 							</li>
-							{if $iterator->last}<li class="more"><a href="#">More option <i class="entypo-down"></i></a></li>{/if}
+							{if $iterator->last}<li class="more"><a href="#" data-open="#Fewer options" data-close="#More option">#More option <i class="entypo-down"></i></a></li>{/if}
 						</ul>
 					</div>
 
@@ -65,7 +65,7 @@
 									<a href="{$link->seo->getUrl()}">{_$link->seo->getParameter('spokenLanguage')->name|firstUpper} <span class="counter">{$link->count}</span></a>
 								{/if}
 							</li>
-							{if $iterator->last}<li class="more"><a href="#">More option <i class="entypo-down"></i></a></li>{/if}
+							{if $iterator->last}<li class="more"><a href="#" data-open="#Fewer options" data-close="#More option">#More option <i class="entypo-down"></i></a></li>{/if}
 						</ul>
 					</div>
 
@@ -80,7 +80,7 @@
 									<a href="{$link->seo->getUrl()}">{_$link->seo->getParameter('capacity')} <span class="counter">{$link->count}</span></a>
 								{/if}
 							</li>
-							{if $iterator->last}<li class="more"><a href="#">More option <i class="entypo-down"></i></a></li>{/if}
+							{if $iterator->last}<li class="more"><a href="#" data-open="#Fewer options" data-close="#More option">#More option <i class="entypo-down"></i></a></li>{/if}
 						</ul>
 					</div>
 
@@ -95,19 +95,10 @@
 									<a href="{$link->seo->getUrl()}">{$link->name} <span class="counter">{$link->count}</span></a>
 								{/if}
 							</li>
-							{if $iterator->last}<li class="more"><a href="#">More option <i class="entypo-down"></i></a></li>{/if}
+							{if $iterator->last}<li class="more"><a href="#" data-open="#Fewer options" data-close="#More option">#More option <i class="entypo-down"></i></a></li>{/if}
 						</ul>
 					</div>
 
-					<script>
-					$(function() {
-						$('ul li.more a').click(function(e) {
-							e.preventDefault();
-							$ul = $(this).parents('ul');
-							$ul.find('li.hidden').toggleClass('hide');
-						});
-					});
-					</script>
 
 {* 
 					<div n:foreach="$criteria as $c" class="widget">

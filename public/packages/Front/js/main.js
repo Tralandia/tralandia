@@ -424,4 +424,24 @@ $(document).ready(function(){
 	$('#forgottenPasswordOpen').click(A.forgottenPasswordOpen);
 	$('#closeForgottenPasswordForm').click(A.closeForgottenPasswordForm);
 
+	// sidebar show hide more options	
+	$('ul li.more a').click(function(e) {
+		e.preventDefault();
+		$ul = $(this).parents('ul');
+		$ul.find('li.hidden').toggleClass('hide');
+		
+		var $icon = $(this).find('i');
+		var currentClass = $icon.attr('class');
+
+		if(currentClass == 'entypo-down'){
+			$(this).html($(this).attr('data-open')+' <i class="entypo-up"></i>');
+		} else {
+			$(this).html($(this).attr('data-close')+' <i class="entypo-down"></i>');
+		}
+
+	});
+
+
+
+
 });
