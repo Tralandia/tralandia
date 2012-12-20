@@ -487,6 +487,17 @@ class Location extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
+	 * @param \Entity\Company\BankAccount
+	 * @return \Entity\Location\Location
+	 */
+	public function removeBankAccount(\Entity\Company\BankAccount $bankAccount)
+	{
+		$this->bankAccounts->removeElement($bankAccount);
+
+		return $this;
+	}
+		
+	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Company\BankAccount
 	 */
 	public function getBankAccounts()
@@ -503,6 +514,17 @@ class Location extends \Entity\BaseEntityDetails {
 		if(!$this->companies->contains($company)) {
 			$this->companies->add($company);
 		}
+
+		return $this;
+	}
+		
+	/**
+	 * @param \Entity\Company\Company
+	 * @return \Entity\Location\Location
+	 */
+	public function removeCompany(\Entity\Company\Company $company)
+	{
+		$this->companies->removeElement($company);
 
 		return $this;
 	}
@@ -564,9 +586,7 @@ class Location extends \Entity\BaseEntityDetails {
 	 */
 	public function removePrimaryRental(\Entity\Rental\Rental $primaryRental)
 	{
-		if($this->primaryRentals->contains($primaryRental)) {
-			$this->primaryRentals->removeElement($primaryRental);
-		}
+		$this->primaryRentals->removeElement($primaryRental);
 		$primaryRental->unsetPrimaryLocation();
 
 		return $this;
@@ -589,6 +609,17 @@ class Location extends \Entity\BaseEntityDetails {
 		if(!$this->addresses->contains($addresse)) {
 			$this->addresses->add($addresse);
 		}
+
+		return $this;
+	}
+		
+	/**
+	 * @param \Entity\Contact\Address
+	 * @return \Entity\Location\Location
+	 */
+	public function removeAddresse(\Entity\Contact\Address $addresse)
+	{
+		$this->addresses->removeElement($addresse);
 
 		return $this;
 	}
@@ -621,9 +652,7 @@ class Location extends \Entity\BaseEntityDetails {
 	 */
 	public function removeBackLink(\Entity\Seo\BackLink $backLink)
 	{
-		if($this->backLinks->contains($backLink)) {
-			$this->backLinks->removeElement($backLink);
-		}
+		$this->backLinks->removeElement($backLink);
 		$backLink->unsetLocation();
 
 		return $this;

@@ -73,9 +73,7 @@ class Phrase extends \Entity\BaseEntityDetails {
 	 */
 	public function removeTranslation(\Entity\Phrase\Translation $translation)
 	{
-		if($this->translations->contains($translation)) {
-			$this->translations->removeElement($translation);
-		}
+		$this->translations->removeElement($translation);
 		$translation->unsetPhrase();
 
 		return $this;

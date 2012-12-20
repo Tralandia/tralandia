@@ -136,9 +136,7 @@ class Role extends \Entity\BaseEntity {
 	 */
 	public function removeUser(\Entity\User\User $user)
 	{
-		if($this->users->contains($user)) {
-			$this->users->removeElement($user);
-		}
+		$this->users->removeElement($user);
 		$user->unsetRole();
 
 		return $this;

@@ -103,9 +103,7 @@ class BankAccount extends \Entity\BaseEntity {
 	 */
 	public function removeCountry(\Entity\Location\Location $country)
 	{
-		if($this->countries->contains($country)) {
-			$this->countries->removeElement($country);
-		}
+		$this->countries->removeElement($country);
 		$country->removeBankAccount($this);
 
 		return $this;

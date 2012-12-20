@@ -478,9 +478,7 @@ class Invoice extends \Entity\BaseEntity {
 	 */
 	public function removeReferral(\Entity\Rental\Referral $referral)
 	{
-		if($this->referrals->contains($referral)) {
-			$this->referrals->removeElement($referral);
-		}
+		$this->referrals->removeElement($referral);
 		$referral->unsetInvoice();
 
 		return $this;

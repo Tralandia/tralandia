@@ -73,9 +73,7 @@ class AmenityType extends \Entity\BaseEntity {
 	 */
 	public function removeAmenity(\Entity\Rental\Amenity $amenity)
 	{
-		if($this->amenities->contains($amenity)) {
-			$this->amenities->removeElement($amenity);
-		}
+		$this->amenities->removeElement($amenity);
 		$amenity->unsetType();
 
 		return $this;

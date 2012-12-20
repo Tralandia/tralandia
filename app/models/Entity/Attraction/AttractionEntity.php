@@ -242,9 +242,7 @@ class Attraction extends \Entity\BaseEntityDetails {
 	 */
 	public function removeMedium(\Entity\Medium\Medium $medium)
 	{
-		if($this->media->contains($medium)) {
-			$this->media->removeElement($medium);
-		}
+		$this->media->removeElement($medium);
 		$medium->unsetAttraction();
 
 		return $this;

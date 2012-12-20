@@ -465,9 +465,7 @@ class Task extends \Entity\BaseEntityDetails {
 	 */
 	public function removeUsersExcluded(\Entity\User\User $usersExcluded)
 	{
-		if($this->usersExcluded->contains($usersExcluded)) {
-			$this->usersExcluded->removeElement($usersExcluded);
-		}
+		$this->usersExcluded->removeElement($usersExcluded);
 		$usersExcluded->removeTask($this);
 
 		return $this;

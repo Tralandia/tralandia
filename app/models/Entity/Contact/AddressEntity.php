@@ -180,35 +180,6 @@ class Address extends \Entity\BaseEntity {
 	 * @param string
 	 * @return \Entity\Contact\Address
 	 */
-	public function setSubLocality($subLocality)
-	{
-		$this->subLocality = $subLocality;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Contact\Address
-	 */
-	public function unsetSubLocality()
-	{
-		$this->subLocality = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return string|NULL
-	 */
-	public function getSubLocality()
-	{
-		return $this->subLocality;
-	}
-		
-	/**
-	 * @param string
-	 * @return \Entity\Contact\Address
-	 */
 	public function setPostalCode($postalCode)
 	{
 		$this->postalCode = $postalCode;
@@ -293,6 +264,35 @@ class Address extends \Entity\BaseEntity {
 	}
 		
 	/**
+	 * @param string
+	 * @return \Entity\Contact\Address
+	 */
+	public function setSubLocality($subLocality)
+	{
+		$this->subLocality = $subLocality;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Contact\Address
+	 */
+	public function unsetSubLocality()
+	{
+		$this->subLocality = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getSubLocality()
+	{
+		return $this->subLocality;
+	}
+		
+	/**
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Contact\Address
 	 */
@@ -312,9 +312,7 @@ class Address extends \Entity\BaseEntity {
 	 */
 	public function removeLocation(\Entity\Location\Location $location)
 	{
-		if($this->locations->contains($location)) {
-			$this->locations->removeElement($location);
-		}
+		$this->locations->removeElement($location);
 		$location->removeAddresse($this);
 
 		return $this;

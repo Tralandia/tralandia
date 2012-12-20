@@ -214,9 +214,7 @@ class Message extends \Entity\BaseEntity {
 	 */
 	public function removeAttachment(\Entity\Medium\Medium $attachment)
 	{
-		if($this->attachments->contains($attachment)) {
-			$this->attachments->removeElement($attachment);
-		}
+		$this->attachments->removeElement($attachment);
 		$attachment->unsetMessage();
 
 		return $this;

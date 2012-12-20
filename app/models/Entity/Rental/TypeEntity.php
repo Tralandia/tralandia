@@ -74,9 +74,7 @@ class Type extends \Entity\BaseEntity {
 	 */
 	public function removeRental(\Entity\Rental\Rental $rental)
 	{
-		if($this->rentals->contains($rental)) {
-			$this->rentals->removeElement($rental);
-		}
+		$this->rentals->removeElement($rental);
 		$rental->unsetType();
 
 		return $this;

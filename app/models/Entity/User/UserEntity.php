@@ -280,9 +280,7 @@ class User extends \Entity\BaseEntityDetails {
 	 */
 	public function removePhone(\Entity\Contact\Phone $phone)
 	{
-		if($this->phones->contains($phone)) {
-			$this->phones->removeElement($phone);
-		}
+		$this->phones->removeElement($phone);
 		$phone->removeUser($this);
 
 		return $this;
@@ -316,9 +314,7 @@ class User extends \Entity\BaseEntityDetails {
 	 */
 	public function removeEmail(\Entity\Contact\Email $email)
 	{
-		if($this->emails->contains($email)) {
-			$this->emails->removeElement($email);
-		}
+		$this->emails->removeElement($email);
 		$email->removeUser($this);
 
 		return $this;
@@ -352,9 +348,7 @@ class User extends \Entity\BaseEntityDetails {
 	 */
 	public function removeUrl(\Entity\Contact\Url $url)
 	{
-		if($this->urls->contains($url)) {
-			$this->urls->removeElement($url);
-		}
+		$this->urls->removeElement($url);
 		$url->removeUser($this);
 
 		return $this;
@@ -436,9 +430,7 @@ class User extends \Entity\BaseEntityDetails {
 	 */
 	public function removeCombination(\Entity\User\Combination $combination)
 	{
-		if($this->combinations->contains($combination)) {
-			$this->combinations->removeElement($combination);
-		}
+		$this->combinations->removeElement($combination);
 		$combination->unsetUser();
 
 		return $this;
@@ -472,9 +464,7 @@ class User extends \Entity\BaseEntityDetails {
 	 */
 	public function removeRental(\Entity\Rental\Rental $rental)
 	{
-		if($this->rentals->contains($rental)) {
-			$this->rentals->removeElement($rental);
-		}
+		$this->rentals->removeElement($rental);
 		$rental->unsetUser();
 
 		return $this;
@@ -497,6 +487,17 @@ class User extends \Entity\BaseEntityDetails {
 		if(!$this->tasks->contains($task)) {
 			$this->tasks->add($task);
 		}
+
+		return $this;
+	}
+		
+	/**
+	 * @param \Entity\Task\Task
+	 * @return \Entity\User\User
+	 */
+	public function removeTask(\Entity\Task\Task $task)
+	{
+		$this->tasks->removeElement($task);
 
 		return $this;
 	}

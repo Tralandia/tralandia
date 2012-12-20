@@ -157,6 +157,17 @@ class Phone extends \Entity\BaseEntity {
 	}
 		
 	/**
+	 * @param \Entity\Rental\Rental
+	 * @return \Entity\Contact\Phone
+	 */
+	public function removeRental(\Entity\Rental\Rental $rental)
+	{
+		$this->rentals->removeElement($rental);
+
+		return $this;
+	}
+		
+	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Rental\Rental
 	 */
 	public function getRentals()
@@ -173,6 +184,17 @@ class Phone extends \Entity\BaseEntity {
 		if(!$this->users->contains($user)) {
 			$this->users->add($user);
 		}
+
+		return $this;
+	}
+		
+	/**
+	 * @param \Entity\User\User
+	 * @return \Entity\Contact\Phone
+	 */
+	public function removeUser(\Entity\User\User $user)
+	{
+		$this->users->removeElement($user);
 
 		return $this;
 	}

@@ -379,6 +379,17 @@ class Language extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
+	 * @param \Entity\Rental\Rental
+	 * @return \Entity\Language
+	 */
+	public function removeRental(\Entity\Rental\Rental $rental)
+	{
+		$this->rentals->removeElement($rental);
+
+		return $this;
+	}
+		
+	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Rental\Rental
 	 */
 	public function getRentals()
@@ -406,9 +417,7 @@ class Language extends \Entity\BaseEntityDetails {
 	 */
 	public function removeBackLink(\Entity\Seo\BackLink $backLink)
 	{
-		if($this->backLinks->contains($backLink)) {
-			$this->backLinks->removeElement($backLink);
-		}
+		$this->backLinks->removeElement($backLink);
 		$backLink->unsetLanguage();
 
 		return $this;

@@ -50,6 +50,17 @@ class Tag extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
+	 * @param \Entity\Rental\Rental
+	 * @return \Entity\Rental\Tag
+	 */
+	public function removeRental(\Entity\Rental\Rental $rental)
+	{
+		$this->rentals->removeElement($rental);
+
+		return $this;
+	}
+		
+	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Rental\Rental
 	 */
 	public function getRentals()

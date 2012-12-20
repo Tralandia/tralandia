@@ -135,9 +135,7 @@ class Domain extends \Entity\BaseEntity {
 	 */
 	public function removeLocation(\Entity\Location\Location $location)
 	{
-		if($this->locations->contains($location)) {
-			$this->locations->removeElement($location);
-		}
+		$this->locations->removeElement($location);
 		$location->unsetDomain();
 
 		return $this;

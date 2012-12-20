@@ -512,9 +512,7 @@ class Rental extends \Entity\BaseEntity {
 	 */
 	public function removeMissingInformation(\Entity\Rental\Information $missingInformation)
 	{
-		if($this->missingInformation->contains($missingInformation)) {
-			$this->missingInformation->removeElement($missingInformation);
-		}
+		$this->missingInformation->removeElement($missingInformation);
 		$missingInformation->removeRental($this);
 
 		return $this;
@@ -681,9 +679,7 @@ class Rental extends \Entity\BaseEntity {
 	 */
 	public function removePhone(\Entity\Contact\Phone $phone)
 	{
-		if($this->phones->contains($phone)) {
-			$this->phones->removeElement($phone);
-		}
+		$this->phones->removeElement($phone);
 		$phone->removeRental($this);
 
 		return $this;
@@ -717,9 +713,7 @@ class Rental extends \Entity\BaseEntity {
 	 */
 	public function removeEmail(\Entity\Contact\Email $email)
 	{
-		if($this->emails->contains($email)) {
-			$this->emails->removeElement($email);
-		}
+		$this->emails->removeElement($email);
 		$email->removeRental($this);
 
 		return $this;
@@ -753,9 +747,7 @@ class Rental extends \Entity\BaseEntity {
 	 */
 	public function removeUrl(\Entity\Contact\Url $url)
 	{
-		if($this->urls->contains($url)) {
-			$this->urls->removeElement($url);
-		}
+		$this->urls->removeElement($url);
 		$url->removeRental($this);
 
 		return $this;
@@ -789,9 +781,7 @@ class Rental extends \Entity\BaseEntity {
 	 */
 	public function removeSpokenLanguage(\Entity\Language $spokenLanguage)
 	{
-		if($this->spokenLanguages->contains($spokenLanguage)) {
-			$this->spokenLanguages->removeElement($spokenLanguage);
-		}
+		$this->spokenLanguages->removeElement($spokenLanguage);
 		$spokenLanguage->removeRental($this);
 
 		return $this;
@@ -825,9 +815,7 @@ class Rental extends \Entity\BaseEntity {
 	 */
 	public function removeAmenity(\Entity\Rental\Amenity $amenity)
 	{
-		if($this->amenities->contains($amenity)) {
-			$this->amenities->removeElement($amenity);
-		}
+		$this->amenities->removeElement($amenity);
 		$amenity->removeRental($this);
 
 		return $this;
@@ -861,9 +849,7 @@ class Rental extends \Entity\BaseEntity {
 	 */
 	public function removeTag(\Entity\Rental\Tag $tag)
 	{
-		if($this->tags->contains($tag)) {
-			$this->tags->removeElement($tag);
-		}
+		$this->tags->removeElement($tag);
 		$tag->removeRental($this);
 
 		return $this;
@@ -1016,9 +1002,7 @@ class Rental extends \Entity\BaseEntity {
 	 */
 	public function removeImage(\Entity\Rental\Image $image)
 	{
-		if($this->images->contains($image)) {
-			$this->images->removeElement($image);
-		}
+		$this->images->removeElement($image);
 		$image->unsetRental();
 
 		return $this;
@@ -1080,9 +1064,7 @@ class Rental extends \Entity\BaseEntity {
 	 */
 	public function removePricelist(\Entity\Rental\Pricelist $pricelist)
 	{
-		if($this->pricelists->contains($pricelist)) {
-			$this->pricelists->removeElement($pricelist);
-		}
+		$this->pricelists->removeElement($pricelist);
 		$pricelist->unsetRental();
 
 		return $this;
@@ -1116,9 +1098,7 @@ class Rental extends \Entity\BaseEntity {
 	 */
 	public function removeInterviewAnswer(\Entity\Rental\InterviewAnswer $interviewAnswer)
 	{
-		if($this->interviewAnswers->contains($interviewAnswer)) {
-			$this->interviewAnswers->removeElement($interviewAnswer);
-		}
+		$this->interviewAnswers->removeElement($interviewAnswer);
 		$interviewAnswer->unsetRental();
 
 		return $this;
@@ -1210,9 +1190,7 @@ class Rental extends \Entity\BaseEntity {
 	 */
 	public function removeFulltext(\Entity\Rental\Fulltext $fulltext)
 	{
-		if($this->fulltexts->contains($fulltext)) {
-			$this->fulltexts->removeElement($fulltext);
-		}
+		$this->fulltexts->removeElement($fulltext);
 		$fulltext->unsetRental();
 
 		return $this;
@@ -1246,9 +1224,7 @@ class Rental extends \Entity\BaseEntity {
 	 */
 	public function removeInvoice(\Entity\Invoice\Invoice $invoice)
 	{
-		if($this->invoices->contains($invoice)) {
-			$this->invoices->removeElement($invoice);
-		}
+		$this->invoices->removeElement($invoice);
 		$invoice->unsetRental();
 
 		return $this;
@@ -1282,9 +1258,7 @@ class Rental extends \Entity\BaseEntity {
 	 */
 	public function removeBackLink(\Entity\Seo\BackLink $backLink)
 	{
-		if($this->backLinks->contains($backLink)) {
-			$this->backLinks->removeElement($backLink);
-		}
+		$this->backLinks->removeElement($backLink);
 		$backLink->unsetRental();
 
 		return $this;
@@ -1376,9 +1350,7 @@ class Rental extends \Entity\BaseEntity {
 	 */
 	public function removeReferral(\Entity\Rental\Referral $referral)
 	{
-		if($this->referrals->contains($referral)) {
-			$this->referrals->removeElement($referral);
-		}
+		$this->referrals->removeElement($referral);
 		$referral->unsetRental();
 
 		return $this;

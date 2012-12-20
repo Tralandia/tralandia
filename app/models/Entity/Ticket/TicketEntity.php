@@ -148,9 +148,7 @@ class Ticket extends \Entity\BaseEntity {
 	 */
 	public function removeMessage(\Entity\Ticket\Message $message)
 	{
-		if($this->messages->contains($message)) {
-			$this->messages->removeElement($message);
-		}
+		$this->messages->removeElement($message);
 		$message->unsetTicket();
 
 		return $this;

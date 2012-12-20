@@ -108,9 +108,7 @@ class Category extends \Entity\BaseEntity {
 	 */
 	public function removeQuestion(\Entity\Faq\Question $question)
 	{
-		if($this->questions->contains($question)) {
-			$this->questions->removeElement($question);
-		}
+		$this->questions->removeElement($question);
 		$question->unsetCategory();
 
 		return $this;

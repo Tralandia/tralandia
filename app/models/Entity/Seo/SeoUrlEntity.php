@@ -259,9 +259,7 @@ class SeoUrl extends \Entity\BaseEntity {
 	 */
 	public function removeMedium(\Entity\Medium\Medium $medium)
 	{
-		if($this->media->contains($medium)) {
-			$this->media->removeElement($medium);
-		}
+		$this->media->removeElement($medium);
 		$medium->unsetSeoUrl();
 
 		return $this;

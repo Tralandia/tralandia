@@ -102,9 +102,7 @@ class Company extends \Entity\BaseEntityDetails {
 	 */
 	public function removeBankAccount(\Entity\Company\BankAccount $bankAccount)
 	{
-		if($this->bankAccounts->contains($bankAccount)) {
-			$this->bankAccounts->removeElement($bankAccount);
-		}
+		$this->bankAccounts->removeElement($bankAccount);
 		$bankAccount->unsetCompany();
 
 		return $this;
@@ -138,9 +136,7 @@ class Company extends \Entity\BaseEntityDetails {
 	 */
 	public function removeCountry(\Entity\Location\Location $country)
 	{
-		if($this->countries->contains($country)) {
-			$this->countries->removeElement($country);
-		}
+		$this->countries->removeElement($country);
 		$country->removeCompany($this);
 
 		return $this;
@@ -328,9 +324,7 @@ class Company extends \Entity\BaseEntityDetails {
 	 */
 	public function removeInvoice(\Entity\Invoice\Invoice $invoice)
 	{
-		if($this->invoices->contains($invoice)) {
-			$this->invoices->removeElement($invoice);
-		}
+		$this->invoices->removeElement($invoice);
 		$invoice->unsetCompany();
 
 		return $this;

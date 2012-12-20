@@ -94,6 +94,17 @@ class UseType extends \Entity\BaseEntity {
 	}
 		
 	/**
+	 * @param \Entity\Invoice\Package
+	 * @return \Entity\Invoice\UseType
+	 */
+	public function removePackage(\Entity\Invoice\Package $package)
+	{
+		$this->packages->removeElement($package);
+
+		return $this;
+	}
+		
+	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Invoice\Package
 	 */
 	public function getPackages()

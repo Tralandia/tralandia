@@ -119,9 +119,7 @@ class Package extends \Entity\BaseEntity {
 	 */
 	public function removeUse(\Entity\Invoice\UseType $use)
 	{
-		if($this->uses->contains($use)) {
-			$this->uses->removeElement($use);
-		}
+		$this->uses->removeElement($use);
 		$use->removePackage($this);
 
 		return $this;
@@ -213,9 +211,7 @@ class Package extends \Entity\BaseEntity {
 	 */
 	public function removeService(\Entity\Invoice\Service $service)
 	{
-		if($this->services->contains($service)) {
-			$this->services->removeElement($service);
-		}
+		$this->services->removeElement($service);
 		$service->unsetPackage();
 
 		return $this;

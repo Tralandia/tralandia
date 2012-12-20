@@ -135,9 +135,7 @@ class Template extends \Entity\BaseEntity {
 	 */
 	public function removeBatche(\Entity\Email\Batch $batche)
 	{
-		if($this->batches->contains($batche)) {
-			$this->batches->removeElement($batche);
-		}
+		$this->batches->removeElement($batche);
 		$batche->unsetTemplate();
 
 		return $this;
