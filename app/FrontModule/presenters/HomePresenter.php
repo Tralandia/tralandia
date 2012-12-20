@@ -15,11 +15,6 @@ class HomePresenter extends BasePresenter {
 
 	public function renderDefault() {
 
-		$array = array('škola', 'slon', 'auto', 'áno', 'čokoláda');
-		$coll = new \Collator('sk_SK');
-		$coll->sort($array);
-		d($array);
-
 		$rentalsEntities = $this->rentalRepositoryAccessor->get()->findAll();	
 		// $rentalsEntities = array();
 

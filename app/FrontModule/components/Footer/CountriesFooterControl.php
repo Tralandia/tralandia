@@ -37,10 +37,10 @@ class CountriesFooterControl extends \BaseModule\Components\BaseControl {
 			$locations[$translator->translate($location->name)] = $this->seoFactory->create($link, $this->presenter->getLastCreatedRequest());
 		}
 
-		$l = setlocale(LC_ALL, 'sk_SK');
+		$coll = new \Extras\Collator('sk_SK');
+		$coll->ksort($locations);
 		// $a = array_keys($locations);
 		// usort($a, 'strcoll');
-		ksort($locations, SORT_LOCALE_STRING);
 
 		$locations = array_chunk($locations, ceil(count($locations) / 6));
 		
