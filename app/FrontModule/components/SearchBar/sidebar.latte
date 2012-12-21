@@ -10,9 +10,9 @@
 					</div>
 
  					{* Location *}
-					<div n:ifset="$criteriaLocation" class="widget">
+					<div n:ifset="$criteria['location']" class="widget">
 						<h4>{_'o1070'}</h4>
-						<ul n:inner-foreach="$criteriaLocation as $link">
+						<ul n:inner-foreach="$criteria['location'] as $link">
 							<li class="{if $link->hide}hidden hide{/if}{if $link->count==0} disabled{/if}">
 								{if $link->count==0}
 									{_$link->seo->getParameter('location')->name|firstUpper} <span class="counter">{$link->count}</span>
@@ -25,9 +25,9 @@
 					</div>
 
  					{* Rental Type *}
-					<div n:ifset="$criteriaRentalType" class="widget">
+					<div n:ifset="$criteria['rentalType']" class="widget">
 						<h4>{_'o20926'}</h4>
-						<ul n:inner-foreach="$criteriaRentalType as $link">
+						<ul n:inner-foreach="$criteria['rentalType'] as $link">
 							<li class="{if $link->hide}hidden hide{/if}{if $link->count==0} disabled{/if}">
 								{if $link->count==0}
 									{_$link->seo->getParameter('rentalType')->name|firstUpper} <span class="counter">{$link->count}</span>
@@ -40,9 +40,9 @@
 					</div>
 
  					{* Rental Tag *}
-					<div n:ifset="$criteriaRentalTag" class="widget">
+					<div n:ifset="$criteria['rentalTag']" class="widget">
 						<h4>{_'o2454'}</h4>
-						<ul n:inner-foreach="$criteriaRentalTag as $link">
+						<ul n:inner-foreach="$criteria['rentalTag'] as $link">
 							<li class="{if $link->hide}hidden hide{/if}{if $link->count==0} disabled{/if}">
 								{if $link->count==0}
 									{_$link->seo->getParameter('rentalTag')->name|firstUpper} <span class="counter">{$link->count}</span>

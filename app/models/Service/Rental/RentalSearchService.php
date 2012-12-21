@@ -44,6 +44,7 @@ class RentalSearchService extends Nette\Object
 
 	public function getCriteriumOptions($criterium) {
 		$this->loadCache();
+		d($this->searchCacheData);
 		return array_keys($this->searchCacheData[$criterium]);
 	}
 
