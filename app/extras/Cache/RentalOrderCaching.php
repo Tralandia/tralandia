@@ -10,7 +10,6 @@ class RentalOrderCaching extends \Nette\Object {
 	const CACHE_LIFETIME = '';
 	protected $cache;
 	protected $cacheContent;
-	protected $cacheLoaded = FALSE;
 	protected $location;
 	protected $rentalRepositoryAccessor;
 	
@@ -25,15 +24,14 @@ class RentalOrderCaching extends \Nette\Object {
 	}
 
 	protected function load() {
-		if (!$this->cacheLoaded) {
-			$this->cacheContent = $this->cache->load($this->location->id);
-			$this->cacheLoaded = TRUE;
-		}
+		$this->cacheContent = $this->cache->load($this->location->id);
 	}
 
 	public function save() {
-		if ($this->cacheLoaded) {
-			$this->cache->save($this->location->id, $this->cacheContent);
+		if ($this->cacheContent !== NULL) {
+			$this->cache->save($this->location->id, $this->cacheContent, array(
+				Caching\Cache::EXPIRE => $this->getExpirationTimeStamp(),
+			));
 		}
 	}
 
@@ -99,5 +97,11 @@ class RentalOrderCaching extends \Nette\Object {
 		$this->cacheContent['order'] = $order;
 
 		return $order;
+	}
+
+	protected function getExpirationTimeStamp() {
+		$t = strtotime('next hour');
+		$t = mktime (date("H", $t), 0, 0, date("n", $t), date("j", $t), date("Y", $t));
+		return $t;
 	}
 }

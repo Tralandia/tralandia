@@ -28,14 +28,14 @@ class RentalSearchService extends Nette\Object
 	protected $results;
 
 	protected $rentalSearchCache;
-	protected $rentalOrderCache;
+	protected $rentalOrderCaching;
 	protected $rentalRepositoryAccessor;
 
-	public function __construct(\Entity\Location\Location $primaryLocation, Cache $rentalSearchCache, Cache $rentalOrderCache) {
+	public function __construct(\Entity\Location\Location $primaryLocation, Cache $rentalSearchCache, \Extras\Cache\IRentalOrderCachingFactory $rentalOrderCachingFactory) {
 		$this->primaryLocation = $primaryLocation;
 
 		$this->rentalSearchCache = $rentalSearchCache;
-		$this->rentalOrderCache = $rentalOrderCache;
+		$this->rentalOrderCaching = $rentalOrderCachingFactory->create($primaryLocation);
 	}
 
 	public function inject(\Nette\DI\Container $container) {
@@ -154,10 +154,6 @@ class RentalSearchService extends Nette\Object
 	}
 
 	protected function reorderResults() {
-		if (!$this->orderCacheData) {
-			$this->orderCacheData = $this->rentalOrderCache->load($this->primaryLocation->id);
-		}
-
 		$order = $this->rentalOrderCaching->getOrderList();
 		$t = array();
 

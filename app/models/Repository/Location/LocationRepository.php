@@ -13,4 +13,18 @@ class LocationRepository extends \Repository\BaseRepository {
 		$query->select('e')->from($this->_entityName, 'e')->setMaxResults(60);
 		return $query->getQuery()->getResult();
 	}
+
+	public function getRentalCounts() {
+		$qb = $this->_em->createQueryBuilder();
+
+		$qb->select('l.id, count(r.id)')
+			->from($this->_entityName, 'l')
+			->join('l.primaryRentals', 'r')
+			->where($qb->expr()->eq('l.isPrimary', 1))
+			->andWhere($qb->expr()->eq('r.status', \Entity\Rental\Rental::STATUS_LIVE))
+			->addGroupBy('l.id')
+			;
+
+		return $qb->getQuery()->getResult();
+	}
 }

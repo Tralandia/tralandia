@@ -41,6 +41,11 @@ class RadoTempPresenter extends BasePresenter {
 		$this->rentalDecoratorFactory = $rentalDecoratorFactory;
 	}
 
+	public function actionTest() {
+		$results = $this->locationRepositoryAccessor->get()->getRentalCounts();
+		d($results);
+	}
+
 	public function actionGps() {
 		$testValues = array(
 			array('40:26:46S', '79:56:55E'),

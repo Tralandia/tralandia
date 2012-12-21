@@ -246,7 +246,7 @@ factories:
 		implement: Service\Contact\IAddressNormalizerFactory
 
 	rentalSearchServiceFactory: 
-		class: Service\Rental\RentalSearchService(%location%, @rentalSearchCache, @rentalOrderCache)
+		class: Service\Rental\RentalSearchService(%location%, @rentalSearchCache)
 		implement: Service\Rental\IRentalSearchServiceFactory
 
 	seoServiceFactory:

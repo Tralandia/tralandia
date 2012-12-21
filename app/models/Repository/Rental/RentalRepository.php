@@ -56,4 +56,5 @@ class RentalRepository extends \Repository\BaseRepository {
 
 		return $qb->getQuery()->getOneOrNullResult();
 	}
+
 }
