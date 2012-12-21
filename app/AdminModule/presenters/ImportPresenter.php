@@ -17,12 +17,6 @@ class ImportPresenter extends BasePresenter {
 
 	public $session;
 
-	/**
-	 * @autowire
-	 * @var \Extras\Cache\ISearchCacheFactory
-	 */
-	protected $searchCacheFactory;
-
 	public function startup() {
 		parent::startup();
 		$this->session = $this->context->session->getSection('importSession');
@@ -155,12 +149,6 @@ class ImportPresenter extends BasePresenter {
 		if ($redirect) {
 			$this->redirect('Import:default');
 		}
-	}
-
-	public function actionShowSearchCache() {
-		$t = $this->searchCacheFactory->create('RentalSearchCache59');
-		$a = $t->load('spokenLanguage28');
-		d($a);
 	}
 
 	public function renderDefault() {

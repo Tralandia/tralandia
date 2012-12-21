@@ -51,8 +51,8 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		$template->criteria = array();
 		$template->criteria['rentalType'] 		= $this->getRentalTypeCriteria();
 		$template->criteria['location'] 		= $this->getLocationCriteria();
-		$template->criteria['rentalTag'] 		= $this->getRentalTagCriteria();
-		// $template->criteria['spokenLanguage'] 	= $this->getSpokenLanguageCriteria();
+		// $template->criteria['rentalTag'] 		= $this->getRentalTagCriteria();
+		$template->criteria['spokenLanguage'] 	= $this->getSpokenLanguageCriteria();
 		// $template->criteria['capacity'] 		= $this->getCapacityCriteria();
 		// $template->criteria['price'] 			= $this->getPriceCriteria();
 
@@ -210,7 +210,16 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		$selected 	= $this->getSelectedParams();
 		$active		= FALSE;
 
-		$languages = $this->languageRepositoryAccessor->get()->findAll();
+		$languages = array();
+		if (array_key_exists('language', $selected)) {
+			$active = TRUE;
+			$languages[] = $selected['language'];
+		} else {
+			foreach($this->searchService->getCriteriumOptions(RentalSearchService::CRITERIA_SPOKEN_LANGUAGE) as $entityId) {
+				$languages[] = $this->languageRepositoryAccessor->get()->find($entityId);
+			}
+		}
+
 		foreach ($languages as $key => $language) {
 			$params = array_merge($selected, array('spokenLanguage' => $language));
 

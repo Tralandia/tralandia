@@ -70,7 +70,7 @@ class RentalSearchCaching extends \Nette\Object {
 
 		// Set Tags
 		foreach ($rental->tags as $key => $value) {
-			$this->cacheContent[RentalSearchService::CRITERIA_RENTAL_TYPE][$value->id][$rental->id] = $rental->id;
+			$this->cacheContent[RentalSearchService::CRITERIA_TAG][$value->id][$rental->id] = $rental->id;
 		}
 
 		// Set Max Capacity
