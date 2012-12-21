@@ -184,7 +184,7 @@ factories:
 		class: FrontModule\Components\Footer\FooterControl(%location%)
 		implement: FrontModule\Components\Footer\IFooterControlFactory
 
-	countriesfooterControlFactory:
+	countriesFooterControlFactory:
 		class: FrontModule\Components\Footer\CountriesFooterControl
 		implement: FrontModule\Components\Footer\ICountriesFooterControlFactory
 

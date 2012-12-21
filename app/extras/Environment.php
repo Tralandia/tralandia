@@ -23,7 +23,9 @@ class Environment extends Nette\Object {
 		$this->locationRepositoryAccessor = $locationRepositoryAccessor;
 	}
 
-
+	/**
+	 * @return \Entity\Location\Location
+	 */
 	public function getPrimaryLocation()
 	{
 		if(!$this->primaryLocation) {

@@ -24,6 +24,9 @@ class RepositoryAccessor {
 		list($this->em, $this->entityName) = func_get_args();
 	}
 
+	/**
+	 * @return \Repository\BaseRepository
+	 */
 	public function get() {
 		if(!$this->instance) {
 			$this->instance = $this->em->getRepository($this->entityName);
