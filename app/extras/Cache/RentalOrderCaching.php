@@ -18,9 +18,9 @@ class RentalOrderCaching extends \Nette\Object {
 		$this->rentalRepositoryAccessor = $dic->rentalRepositoryAccessor;
 	}
 
-	public function __construct($location, ISearchCacheFactory $searchCacheFactory) {
+	public function __construct($location, Cache $orderCache) {
 		$this->location = $location;
-		$this->cache = $searchCacheFactory->create('RentalOrderCache');
+		$this->cache = $orderCache;
 		$this->load();
 	}
 
@@ -33,9 +33,7 @@ class RentalOrderCaching extends \Nette\Object {
 
 	public function save() {
 		if ($this->cacheLoaded) {
-			$this->cache->save($this->location->id, $this->cacheContent, array(
-				Caching\Cache::EXPIRE => $this->getExpirationTimeStamp(),
-			));
+			$this->cache->save($this->location->id, $this->cacheContent);
 		}
 	}
 
@@ -101,11 +99,5 @@ class RentalOrderCaching extends \Nette\Object {
 		$this->cacheContent['order'] = $order;
 
 		return $order;
-	}
-
-	protected function getExpirationTimeStamp() {
-		$t = strtotime('next hour');
-		$t = mktime (date("H", $t), 0, 0, date("n", $t), date("j", $t), date("Y", $t));
-		return $t;
 	}
 }

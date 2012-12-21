@@ -3,8 +3,8 @@
 namespace Service\Rental;
 
 use Service, Doctrine, Entity, Nette;
-use Extras\Cache\IRentalSearchCachingFactory;
-
+use Extras\Cache\Cache;
+use Nette\Utils\Arrays;
 
 class RentalSearchService extends Nette\Object 
 {
@@ -22,16 +22,20 @@ class RentalSearchService extends Nette\Object
 
 	protected $primaryLocation;
 	protected $criteria = array();
+	protected $searchCacheData;
+	protected $orderCacheData;
 
 	protected $results;
 
-	protected $rentalSearchCaching;
+	protected $rentalSearchCache;
+	protected $rentalOrderCache;
 	protected $rentalRepositoryAccessor;
 
-	public function __construct(\Entity\Location\Location $primaryLocation, IRentalSearchCachingFactory $rentalSearchCachingFactory) {
+	public function __construct(\Entity\Location\Location $primaryLocation, Cache $rentalSearchCache, Cache $rentalOrderCache) {
 		$this->primaryLocation = $primaryLocation;
 
-		$this->rentalSearchCaching = $rentalSearchCachingFactory->create($this->primaryLocation);
+		$this->rentalSearchCache = $rentalSearchCache;
+		$this->rentalOrderCache = $rentalOrderCache;
 	}
 
 	public function inject(\Nette\DI\Container $container) {
@@ -40,32 +44,46 @@ class RentalSearchService extends Nette\Object
 
 	// Criteria
 	// ==============================
-	public function addLocationCriteria(Entity\Location\Location $location) {
+	public function resetCriteria() {
+		$this->criteria = array();
+		$this->resetResults();
+	}
+
+	public function setLocationCriterium(Entity\Location\Location $location = NULL) {
 		$this->criteria[self::CRITERIA_LOCATION] = $location;
+		$this->resetResults();
 	}
 
-	public function addRentalTypeCriteria(Entity\Rental\Type $rentalType) {
+	public function setRentalTypeCriterium(Entity\Rental\Type $rentalType = NULL) {
 		$this->criteria[self::CRITERIA_RENTAL_TYPE] = $rentalType;
+		$this->resetResults();
 	}
 
-	public function addRentalTagCriteria(Entity\Rental\Tag $tag) {
+	public function setRentalTagCriterium(Entity\Rental\Tag $tag = NULL) {
 		$this->criteria[self::CRITERIA_TAG] = $tag;
+		$this->resetResults();
 	}
 
-	public function addCapacityCriteria($capacity) {
+	public function setCapacityCriterium($capacity = NULL) {
 		$this->criteria[self::CRITERIA_CAPACITY] = $capacity;
+		$this->resetResults();
 	}
 
-	public function addSpokenLanguageCriteria(Entity\Language $spokenLanguage) {
+	public function setSpokenLanguageCriterium(Entity\Language $spokenLanguage = NULL) {
 		$this->criteria[self::CRITERIA_SPOKEN_LANGUAGE] = $spokenLanguage;
+		$this->resetResults();
 	}
 
-	public function addPriceCriteria($price) {
+	public function setPriceCriterium($price = NULL) {
 		$this->criteria[self::CRITERIA_PRICE] = $price;
+		$this->resetResults();
 	}
+
+	//todo - pridat funkcie na vyhodenie kriteria
 
 	public function getRentalIds($page = NULL) {
-		$results = $this->getResults();
+		$this->loadResults();
+		$this->reorderResults();
 
 		if ($page === NULL) {
 			return $results;
@@ -82,47 +100,63 @@ class RentalSearchService extends Nette\Object
 	}
 
 	public function getRentalsCount() {
-		return count($this->getResults());
+		$this->loadResults();
+		return count($this->results);
 	}
 
 	//=================================
 
-	protected function getResults() {
+	protected function resetResults() {
+		$this->results = NULL;
+	}
+
+	protected function loadResults() {
+		// Load the cache data when first needed (lazy)
+		if (!$this->searchCacheData) {
+			$this->searchCacheData = $this->rentalSearchCache->load($this->primaryLocation->id);
+		}
+
+		/// return the results if already loaded
 		if ($this->results !== NULL) {
 			return $this->results;
 		}
 
-		$cache = array();
+		$results = array();
 
 		foreach ($this->criteria as $key => $value) {
-			$cache[$key] = $this->rentalSearchCaching->load($key.(is_object($value) ? $value->id : $value));
+			if ($value === NULL) continue;
+			$results[$key] = Arrays::get($this->searchCacheData, array($key, (is_object($value) ? $value->id : $value)), NULL);
 		}
-		$cache = array_filter($cache);
 
-		if (count($cache) > 1) {
-			$tempResults = call_user_func_array('array_intersect', $cache);			
+		$results = array_filter($results);
+
+		if (count($results) > 1) {
+			$tempResults = call_user_func_array('array_intersect', $results);			
 		} else {
-			$tempResults = reset($cache);
+			$tempResults = reset($results);
 		}
 
 		if(is_array($tempResults)) {
-			$this->results = $this->reorderResults($tempResults);
+			$this->results = $tempResults;
 		} else {
 			$this->results = array();
 		}
-
 		return $this->results;
 	}
 
-	protected function reorderResults(array $results) {
-		$order = $this->rentalSearchCaching->getOrderList();
+	protected function reorderResults() {
+		if (!$this->orderCacheData) {
+			$this->orderCacheData = $this->rentalOrderCache->load($this->primaryLocation->id);
+		}
+
+		$order = $this->rentalOrderCaching->getOrderList();
 		$t = array();
 
-		foreach ($results as $key => $value) {
+		foreach ($this->results as $key => $value) {
 			$t[$key] = $order[$key];
 		}
 		asort($t);
 
-		return array_keys($t);
+		$this->results = array_keys($t);
 	}
 }

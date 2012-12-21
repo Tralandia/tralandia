@@ -63,14 +63,14 @@ services:
 	aclCache: Nette\Caching\Cache(@cacheStorage, 'Acl')
 	routerCache: Nette\Caching\Cache(@cacheStorage, 'Router')
 	translatorCache: Nette\Caching\Cache(@cacheStorage, 'Translator')
+	rentalSearchCache: Extras\Cache\Cache(@cacheStorage, 'RentalSearchCache')
+	rentalOrderCache: Extras\Cache\Cache(@cacheStorage, 'RentalOrderCache')
 
 	routerFactory: 
 		class: Routers\RouterFactory([defaultLanguage: %centralLanguage%, defaultPrimaryLocation: 46])
 		setup:
 			- $locationRepositoryAccessor(@locationRepositoryAccessor)
 			- $languageRepositoryAccessor(@languageRepositoryAccessor)
-
-	# searchCaching: Extras\Cache\SearchCaching(@searchCache)
 
 	router: @routerFactory::create
 
@@ -219,16 +219,16 @@ factories:
 	# ==============================
 	# ==================== CACHE
 	# ==============================
-	searchCacheFactory:
-		class: Extras\Cache\Cache(@cacheStorage, %namespace%)
-		implement: Extras\Cache\ISearchCacheFactory
+	# searchCacheFactory:
+	# 	class: Extras\Cache\Cache(@cacheStorage, %namespace%)
+	# 	implement: Extras\Cache\ISearchCacheFactory
 
 	rentalSearchCachingFactory: 
-		class: Extras\Cache\RentalSearchCaching(%location%)
+		class: Extras\Cache\RentalSearchCaching(%location%, @rentalSearchCache)
 		implement: Extras\Cache\IRentalSearchCachingFactory
 
 	rentalOrderCachingFactory: 
-		class: Extras\Cache\RentalOrderCaching(%location%)
+		class: Extras\Cache\RentalOrderCaching(%location%, @rentalOrderCache)
 		implement: Extras\Cache\IRentalOrderCachingFactory
 
 	# ==============================
@@ -239,7 +239,7 @@ factories:
 		implement: Service\Contact\IAddressNormalizerFactory
 
 	rentalSearchServiceFactory: 
-		class: Service\Rental\RentalSearchService(%location%)
+		class: Service\Rental\RentalSearchService(%location%, @rentalSearchCache, @rentalOrderCache)
 		implement: Service\Rental\IRentalSearchServiceFactory
 
 	seoServiceFactory:

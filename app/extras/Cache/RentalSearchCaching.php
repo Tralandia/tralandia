@@ -18,9 +18,9 @@ class RentalSearchCaching extends \Nette\Object {
 		$this->rentalRepositoryAccessor = $dic->rentalRepositoryAccessor;
 	}
 
-	public function __construct($location, ISearchCacheFactory $searchCacheFactory) {
+	public function __construct($location, Cache $searchCache) {
 		$this->location = $location;
-		$this->cache = $searchCacheFactory->create('RentalSearchCache');
+		$this->cache = $searchCache;
 		$this->load();
 	}
 
@@ -91,5 +91,6 @@ class RentalSearchCaching extends \Nette\Object {
 			$t = ceil($rental->priceSeason / $searchInterval)*$searchInterval;
 			$this->cacheContent[RentalSearchService::CRITERIA_PRICE][$t][$rental->id] = $rental->id;
 		}
+		$this->save();
 	}
 }

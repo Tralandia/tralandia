@@ -46,7 +46,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 	}
 
 	public function render() {
-
+		t('searchBar');
 		$this->translator = $this->presenter->getService('translator');
 		$this->setSelectedCriteria();
 
@@ -63,6 +63,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		// $template->criteriaPrice 			= $this->getPriceCriteria();
 
 		$template->render();
+		d(t('searchBar'));
 	}
 
 	protected function setSelectedCriteria() {
@@ -286,7 +287,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 	protected function getRentalsCount($params) {
 		$searchService = $this->searchServiceFactory->create($this->primaryLocation);
 		foreach ($params as $criteria => $value) {
-			$name = 'add'.ucfirst($criteria).'Criteria';
+			$name = 'set'.ucfirst($criteria).'Criterium';
 			$searchService->{$name}($value);
 		}
 		return $searchService->getRentalsCount();
