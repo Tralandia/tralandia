@@ -1,0 +1,31 @@
+{control header:begin}
+	{control css}
+	{control js}
+{control header:end}
+<body>
+	<div class="container baseRadius" id="container">
+		<div class="row">
+
+
+			{include ../header.latte}
+
+
+
+
+			{control searchBar}
+
+			<div class="span9">
+				<div class="innerPadding baseRadius baseBorder innerPaddingRitgh overflow">
+					<div id="content" >
+						{include #content}
+					</div>
+				</div>
+			</div>
+
+			{control footer}
+			{control countriesFooter}
+		</div>		
+	</div>		
+</body>
+
+</html>
