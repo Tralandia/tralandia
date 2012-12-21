@@ -48,6 +48,9 @@ function t($name = NULL) {
 	return Debugger::timer('TIMER.'.$name);
 }
 
+function get_file_extension($file_name) {
+	return substr(strrchr($file_name,'.'),1);
+}
 
 function rrmdir($dir) {
 	$fp = opendir($dir);

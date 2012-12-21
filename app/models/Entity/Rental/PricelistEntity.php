@@ -43,6 +43,12 @@ class Pricelist extends \Entity\BaseEntity {
 	 */
 	protected $filePath;
 
+	/**
+	 * @var text
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $oldUrl;
+
 	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -145,5 +151,34 @@ class Pricelist extends \Entity\BaseEntity {
 	public function getFilePath()
 	{
 		return $this->filePath;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Rental\Pricelist
+	 */
+	public function setOldUrl($oldUrl)
+	{
+		$this->oldUrl = $oldUrl;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Rental\Pricelist
+	 */
+	public function unsetOldUrl()
+	{
+		$this->oldUrl = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getOldUrl()
+	{
+		return $this->oldUrl;
 	}
 }

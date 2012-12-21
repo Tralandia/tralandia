@@ -12,6 +12,11 @@ interface IImageDecoratorFactory {
 	function create(\Entity\Rental\Image $entity);
 }
 
+interface IPricelistDecoratorFactory {
+	/** @return \Service\Rental\PricelistDecorator */
+	function create(\Entity\Rental\Pricelist $entity);
+}
+
 
 namespace Model\Medium;
 

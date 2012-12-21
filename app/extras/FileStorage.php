@@ -54,7 +54,6 @@ class FileStorage extends Nette\Object
 	}
 
 
-
 	/**
 	 * @param string $content
 	 * @param string $filename
@@ -68,6 +67,12 @@ class FileStorage extends Nette\Object
 		return $this->getRelativePath($path);
 	}
 
+	public function saveFromFile($filepath)
+	{
+		$content = file_get_contents($filepath);
+		$extension = get_file_extension($filepath);
+		return $this->save($content, time() . '.' . $extension);
+	}
 
 	/**
 	 * @return string

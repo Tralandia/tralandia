@@ -14,11 +14,19 @@ class DavidPresenter extends BasePresenter {
 	protected $rentalRepositoryAccessor;
 	protected $rentalImageRepositoryAccessor;
 	protected $locationRepositoryAccessor;
+	protected $rentalPricelistRepositoryAccessor;
 
 	protected $rentalSearchCachingFactory;
 	protected $rentalSearchServiceFactory;
 
 	protected $rentalImageDecoratorFactory;
+
+	/**
+	 * @autowire
+	 * @var Model\Rental\IPricelistDecoratorFactory
+	 */
+	protected $pricelistDecoratorFactory;
+
 
 	public function injectRoute(\Routers\IFrontRouteFactory $frontRouteFactory, \Service\Seo\ISeoServiceFactory $seoServiceFactory) {
 		$this->frontRouteFactory = $frontRouteFactory;
@@ -35,6 +43,7 @@ class DavidPresenter extends BasePresenter {
 		$this->rentalRepositoryAccessor = $dic->rentalRepositoryAccessor;
 		$this->rentalImageRepositoryAccessor = $dic->rentalImageRepositoryAccessor;
 		$this->locationRepositoryAccessor = $dic->locationRepositoryAccessor;
+		$this->rentalPricelistRepositoryAccessor = $dic->rentalPricelistRepositoryAccessor;
 	}
 
 	public function inject(\Model\Rental\IImageDecoratorFactory $rentalImageDecoratorFactory) {
@@ -43,23 +52,10 @@ class DavidPresenter extends BasePresenter {
 
 	public function actionList() {
 
-		// $this->getService('generatePathSegmentsRobot')->run();
-		$this->getService('createMissingTranslationsRobot')->run();
-		return 1;
-		$url = 'http://sk.com.tra.com/';
-		$urlScript = new Nette\Http\UrlScript($url);
-		$httpRequest = new Nette\Http\Request($urlScript);
-
-		$route = $this->frontRouteFactory->create();
-
-		$request = $route->match($httpRequest);
-
-		$languageRepositoryAccessor = $this->getService('languageRepositoryAccessor');
-		$locationRepositoryAccessor = $this->getService('locationRepositoryAccessor');
-
-		d($request);
-		$seo = $this->seoServiceFactory->create($url, $request);
-
+		$pricelist = $this->rentalPricelistRepositoryAccessor->get()->createNew();
+		$pricelistDecorator = $this->pricelistDecoratorFactory->create($pricelist);
+		$pricelistDecorator->setContentFromFile('http://www.tralandia.sk/u/01/13220628967186.png');
+		d($pricelistDecorator); #@debug
 	}
 
 	public function actionSearch() {

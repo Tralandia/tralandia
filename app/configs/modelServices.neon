@@ -122,6 +122,7 @@ services:
 	rentalInterviewAnswerRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Rental\InterviewAnswer')
 	rentalRoomTypeRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Rental\RoomType')
 	rentalPricelistRowRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Rental\PricelistRow')
+	rentalPricelistRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Rental\Pricelist')
 
 	#FAQ
 	#----------	
@@ -176,6 +177,12 @@ factories:
 		setup:
 			- setStorage(@rentalImageStorage)
 		implement: Model\Rental\IImageDecoratorFactory
+
+	rentalPricelistDecoratorFactory: 
+		class: Service\Rental\PricelistDecorator(..., %entity%)
+		setup:
+			- setStorage(@rentalPricelistStorage)
+		implement: Model\Rental\IPricelistDecoratorFactory
 
 	mediumDecoratorFactory: 
 		class: Service\Medium\MediumService(..., %entity%)
