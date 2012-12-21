@@ -42,6 +42,11 @@ class RentalSearchService extends Nette\Object
 		$this->rentalRepositoryAccessor = $container->rentalRepositoryAccessor;
 	}
 
+	public function getCriteriumOptions($criterium) {
+		$this->loadCache();
+		return array_keys($this->searchCacheData[$criterium]);
+	}
+
 	// Criteria
 	// ==============================
 	public function resetCriteria() {
@@ -82,7 +87,7 @@ class RentalSearchService extends Nette\Object
 	//todo - pridat funkcie na vyhodenie kriteria
 
 	public function getRentalIds($page = NULL) {
-		$this->loadResults();
+		$this->getResults();
 		$this->reorderResults();
 
 		if ($page === NULL) {
@@ -100,7 +105,7 @@ class RentalSearchService extends Nette\Object
 	}
 
 	public function getRentalsCount() {
-		$this->loadResults();
+		$this->getResults();
 		return count($this->results);
 	}
 
@@ -110,11 +115,15 @@ class RentalSearchService extends Nette\Object
 		$this->results = NULL;
 	}
 
-	protected function loadResults() {
+	protected function loadCache() {
 		// Load the cache data when first needed (lazy)
 		if (!$this->searchCacheData) {
 			$this->searchCacheData = $this->rentalSearchCache->load($this->primaryLocation->id);
 		}
+	}
+
+	protected function getResults() {
+		$this->loadCache();
 
 		/// return the results if already loaded
 		if ($this->results !== NULL) {

@@ -17,7 +17,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 
 	protected $translator;
 	protected $seoFactory;
-	protected $searchServiceFactory;
+	protected $searchService;
 
 	protected $selected = array();
 
@@ -26,9 +26,9 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		$this->seoFactory = $seoFactory;
 	}
 
-	public function injectRentalSearchService(\Service\Rental\IRentalSearchServiceFactory $searchServiceFactory) {
+	public function injectRentalSearchService(\Service\Rental\RentalSearchService $searchService) {
 
-		$this->searchServiceFactory = $searchServiceFactory;
+		$this->searchService = $searchService;
 	}
 
 	public function inject(\Nette\DI\Container $dic) {

@@ -66,6 +66,11 @@ services:
 	rentalSearchCache: Extras\Cache\Cache(@cacheStorage, 'RentalSearchCache')
 	rentalOrderCache: Extras\Cache\Cache(@cacheStorage, 'RentalOrderCache')
 
+	# SEARCH
+	rentalSearchService:
+		factory: @rentalSearchServiceFactory::create(@environment::getPrimaryLocation())
+
+	# ROUTER
 	routerFactory: 
 		class: Routers\RouterFactory([defaultLanguage: %centralLanguage%, defaultPrimaryLocation: 46])
 		setup:
