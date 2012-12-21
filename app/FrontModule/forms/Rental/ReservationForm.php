@@ -17,7 +17,7 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 	}
 
 
-	protected function buildForm()
+	public function buildForm()
 	{
 		$this->addText('name');
 		$this->addText('email');
