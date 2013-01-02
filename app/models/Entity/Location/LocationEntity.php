@@ -157,6 +157,13 @@ class Location extends \Entity\BaseEntityDetails {
 	 */
 	protected $defaultLanguage;
 
+	/**
+	 * @var integer
+	 * @ORM\Column(type="integer", nullable=true)
+	 */
+	protected $rentalCount;
+
+
 	public function isPrimary() {
 		return (bool)$this->isPrimary;
 	}
@@ -261,7 +268,17 @@ class Location extends \Entity\BaseEntityDetails {
 	{
 		return $this->nameShort;
 	}
-				
+		
+	/**
+	 * @return \Entity\Location\Location
+	 */
+	public function unsetSlug()
+	{
+		$this->slug = NULL;
+
+		return $this;
+	}
+		
 	/**
 	 * @return string|NULL
 	 */
@@ -809,5 +826,34 @@ class Location extends \Entity\BaseEntityDetails {
 	public function getDefaultLanguage()
 	{
 		return $this->defaultLanguage;
+	}
+		
+	/**
+	 * @param integer
+	 * @return \Entity\Location\Location
+	 */
+	public function setRentalCount($rentalCount)
+	{
+		$this->rentalCount = $rentalCount;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Location\Location
+	 */
+	public function unsetRentalCount()
+	{
+		$this->rentalCount = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return integer|NULL
+	 */
+	public function getRentalCount()
+	{
+		return $this->rentalCount;
 	}
 }

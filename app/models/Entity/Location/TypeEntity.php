@@ -70,7 +70,6 @@ class Type extends \Entity\BaseEntityDetails {
 	{
 		return $this->name;
 	}
-	
 		
 	/**
 	 * @return string|NULL

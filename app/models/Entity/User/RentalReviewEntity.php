@@ -187,6 +187,16 @@ class RentalReview extends \Entity\BaseEntity {
 	}
 		
 	/**
+	 * @return \Entity\User\RentalReview
+	 */
+	public function unsetSenderPhone()
+	{
+		$this->senderPhone = NULL;
+
+		return $this;
+	}
+		
+	/**
 	 * @return \Entity\Contact\Phone|NULL
 	 */
 	public function getSenderPhone()

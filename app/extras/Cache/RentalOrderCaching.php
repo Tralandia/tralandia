@@ -96,6 +96,9 @@ class RentalOrderCaching extends \Nette\Object {
 		$order = array_flip(array_values($order));
 		$this->cacheContent['order'] = $order;
 
+		$this->location->rentalCount = count($order);
+		$this->rentalRepositoryAccessor->get()->flush();
+
 		return $order;
 	}
 

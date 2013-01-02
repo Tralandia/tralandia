@@ -1028,9 +1028,7 @@ class Rental extends \Entity\BaseEntity {
 	 */
 	public function removePricelistRow(\Entity\Rental\PricelistRow $pricelistRow)
 	{
-		if($this->pricelistRows->contains($pricelistRow)) {
-			$this->pricelistRows->removeElement($pricelistRow);
-		}
+		$this->pricelistRows->removeElement($pricelistRow);
 		$pricelistRow->unsetRental();
 
 		return $this;

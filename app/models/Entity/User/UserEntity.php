@@ -261,6 +261,35 @@ class User extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
+	 * @param string
+	 * @return \Entity\User\User
+	 */
+	public function setName($name)
+	{
+		$this->name = $name;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\User\User
+	 */
+	public function unsetName()
+	{
+		$this->name = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getName()
+	{
+		return $this->name;
+	}
+		
+	/**
 	 * @param \Entity\Contact\Phone
 	 * @return \Entity\User\User
 	 */
