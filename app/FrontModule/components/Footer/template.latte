@@ -9,10 +9,10 @@
 	<div class="row">
 		<div class="span6">
 			<div class="row">
-				<div class="span6"><h5><span>Extra </span> Text</h5></div>
+				<div class="span6"><h5><span>#Extra </span> Text</h5></div>
 				<div class="span3">
 					<div class="">
-						wqqwd
+						&nbsp;
 					</div>							
 				</div>							
 				<div class="span3">
@@ -26,7 +26,7 @@
 
 						</ul>
 						
-							<a href="#" class="bold red">Čítaj ďalšie… </a>									
+							<a href="#" class="bold red">#Čítaj ďalšie… </a>									
 					
 					</div>
 				</div>
@@ -34,7 +34,7 @@
 		</div>
 		<div class="span3">
 			<div class="widget">
-				<h5><span> Special </span> Subinfo</h5>
+				<h5><span> #Special </span> Subinfo</h5>
 				<ul>
 					{foreach $lastRegisteredObjects as $rental }
 						<li><a href="{plink :Front:Rental:detail $rental}" >{_$rental->name}</a></li>
@@ -44,13 +44,10 @@
 		</div>
 		<div class="span3">
 			<div class="widget">
-				<h5><span> Special </span> Subinfo</h5>
+				<h5><span> #Special </span> Subinfo</h5>
 				<ul>
-					<li><a href="#">Simple link</a>
-					<li><a href="#">Simple link</a>
-					<li><a href="#">Simple link</a>
-					<li><a href="#">Simple link</a>
-					<li><a href="#">Simple link</a>						
+					<li><a href="{plink :Front:Home:default}">{_o823}</a></li>
+					<li><a href="{plink :Front:Home:contact}">{_o741}</a></li>						
 				</ul>
 				<p>
 					{var $now = date('Y')}

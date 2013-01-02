@@ -84,7 +84,7 @@
 		{foreach $rental->getImages(3) as $photo}
 			<img src="{$basePath}{$photo|rentalImageSrc}" class="marginBottom" />
 		{/foreach}
-		{* <img class="mapsImg" src="https://maps.googleapis.com/maps/api/staticmap?center={$rental->latitude},{$rental->longitude}&markers=color:blue%7C{$rental->latitude},{$rental->longitude}&maptype=terrain&zoom=13&size=288x170&sensor=false" /> *}
+		 <img class="mapsImg" src="https://maps.googleapis.com/maps/api/staticmap?center={$rental->address->latitude->data},{$rental->address->longitude->data}&markers=color:blue%7C{$rental->address->latitude->data},{$rental->address->longitude->data}&maptype=terrain&zoom=13&size=288x170&sensor=false" /> 
 	</div>
 
 
@@ -92,25 +92,21 @@
 	<div class="span5">
 
 		<h1 class="addToViewList" id="{$rental->id}">{_$rental->name}</h1>
-		{dump $locality}
-
-
-
-
-		<p class="red bold">			
-			{_$rental->teaser}
-		</p>
-
 		
-		{dump $rental->maxCapacity}
+		
 
-		{var $rentalType = $rental->type}
-				
+		<a href="{link Rental:list location => $rental->address->locality , rentalType => $rental->type }"><b>{_$rental->address->locality->name}</b></a>
 
-		<p>
+		{dump $rental->address->getLocations()}
+		{dump $supportedLanguages}
 
-		<a href="">{_$locality->primaryLocation->name}</a>
+		{foreach $rental->address->getLocations() as $location}
 
+			<a href="{link Rental:list location => $location}">{_$location->name}</a>{if !$iterator->last}, {/if}
+			
+		{/foreach}
+
+		{*
 		{foreach $rental->address->getLocations() as $location}
 			{if $iterator->first}
 
@@ -121,18 +117,15 @@
 			<a href="{link Rental:list location => $location , rentalType => $rentalType }" class="bold">{_$rentalType->name} {_$location->name}</a>
 			{/if}
 			<a n:class="$iterator->first ? bold" href="{link Rental:list location => $location}">{_$location->name}</a>{if !$iterator->last}, {/if}
+
 		{/foreach}
+		*}
+
+		<p class="red bold nopadding">			
+			{_$rental->teaser}
 		</p>
 		
-		
-{*
-		{foreach $rental->getAmenitiesByType('parking') as $parking}
-
-		{_$parking->name}
-
-		{/foreach}
-*}
-		
+			
 		{dump $rental->interviewAnswers}
 		
 		{foreach $rental->interviewAnswers as $interview}
@@ -245,36 +238,31 @@
 			<div class="sidebarTitle">{_o12275}</div>
 			<div class="sidebarInner paddingTop">
 
-{* 				<table>
+				<table>
 					<tr>
 						<td><i class="entypo-phone"></i></td>
 						<td>		
-						{*				
-						{foreach $rental->contacts->getByType('phone') as $phone }
-							{$phone} {if !$iterator->last}<br/>{/if}
+							
+						{foreach $rental->phones as $phone }
+							{$phone->international} {if !$iterator->last}<br/>{/if}
 						{/foreach}
-						*}
+						
 						</td>
 					</tr>
 					<tr>
 						<td><i class="entypo-www"></i></td>
 						<td>
-						{*
-						{foreach $rental->contacts->getByType('url') as $url }
-							<a href="{$url}">{_o1666}</a> {if !$iterator->last}<br/>{/if}
+						
+						{foreach $rental->urls as $url }
+							<a href="{$url->value}">{_o1666}</a> {if !$iterator->last}<br/>{/if}
 						{/foreach}
-						*}
+						
 						</td>
 					</tr>
 					<tr>
 						<td><i class="entypo-contact"></i></td>
 						<td>	
-
-						{*						
-						{foreach $rental->contacts->getByType('name') as $name }
-							<b>{$name}</b> {if !$iterator->last}<br/>{/if}
-						{/foreach}
-						*}
+						{$rental->contactName}
 						</td>
 					</tr>
 
@@ -283,11 +271,11 @@
 						<td>
 						
 
-						{*
-						{foreach $rental->contacts->getByType('email') as $email }
-							<b><a href="mailto:{$email}">posli mail</a></b> {if !$iterator->last}<br/>{/if}
+						
+						{foreach $rental->emails as $email }
+							<b><a href="mailto:{$email->value}">{_o965}</a></b> {if !$iterator->last}<br/>{/if}
 						{/foreach}
-						*}
+						
 						<br/> 
 							{_o1013} <br/> 
 						<b>
@@ -305,7 +293,7 @@
 						</td>
 					</tr>
 				</table>
- *}
+ 
 				{include '../../forms/Rental/reservationForm.latte'}
 
 			</div>
@@ -377,49 +365,19 @@ $(document).ready(function(){
 
 			<div id="gallery">
 
-				<ul class="biggall">					
-					 {* <li n:foreach="$rental->getImages() as $photo"><img src="{$photo->getThumbnail()}" /><p> popis </p></li> *}
+				<ul class="biggall">	
+					{foreach $rental->getImages() as $photo}
+						<li><img src="{$basePath}{$photo|rentalImageSrc}" class="marginBottom" /></li>
+					{/foreach}
 				</ul>
 
 				<div class="clearfix"></div>
 			</div>
-			<div id="tabs-2">
-				
 
-				{*
-				<div id="map_canvas" zoom="10" value="{$rental->latitude},{$rental->longitude}" style="width:100%;height:400px;"></div>
-				
-				<div class="row-fluid marginTop">
-					<div class="span4">
-						<ul class="list">
-						{foreach $rental->amenities as $amenity}
-							<li>{_$amenity->name}</li>
-						{/foreach}
-						</ul>
-					</div>
-					<div class="span4">
-						<ul class="list">
-						   <li><a href="#">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</a></li>
-						   <li><a href="#">Aliquam tincidunt mauris eu risus.</a></li>
-						   <li><a href="#">Vestibulum auctor dapibus neque.</a></li>
-						   <li><a href="#">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</a></li>
-						   <li><a href="#">Aliquam tincidunt mauris eu risus.</a></li>
-						   <li><a href="#">Vestibulum auctor dapibus neque.</a></li>
-						</ul>
-					</div>
-					<div class="span4">
-						<ul class="list">
-						   <li><a href="#">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</a></li>
-						   <li><a href="#">Aliquam tincidunt mauris eu risus.</a></li>
-						   <li><a href="#">Vestibulum auctor dapibus neque.</a></li>
-						   <li><a href="#">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</a></li>
-						   <li><a href="#">Aliquam tincidunt mauris eu risus.</a></li>
-						   <li><a href="#">Vestibulum auctor dapibus neque.</a></li>
-						</ul>
-					</div>
-				</div>
-				*}
+			<div id="tabs-2">
+				<div id="map_canvas" zoom="10" value="{$rental->address->latitude->data},{$rental->address->longitude->data}" style="width:100%;height:400px;"></div>
 			</div>
+
 			<div id="tabs-3">
 				<table class="table table-striped tableDefault">
 					<thead>
