@@ -11,15 +11,15 @@ use Nette\Utils\Strings;
  */
 class RentalService extends Service\BaseService 
 {
-	protected $rentalSearchCachingFactory;
+	protected $rentalOrderCachingFactory;
 	protected $rentalRepositoryAccessor;
 	protected $rentalInformationRepositoryAccessor;
 	protected $phraseDecoratorFactory;
 
 
-	public function inject(\Extras\Cache\IRentalSearchCachingFactory $rentalSearchCachingFactory, \Model\Phrase\IPhraseDecoratorFactory $phraseDecoratorFactory)
+	public function inject(\Extras\Cache\IRentalOrderCachingFactory $rentalOrderCachingFactory, \Model\Phrase\IPhraseDecoratorFactory $phraseDecoratorFactory)
 	{
-		$this->rentalSearchCachingFactory = $rentalSearchCachingFactory;
+		$this->rentalOrderCachingFactory = $rentalOrderCachingFactory;
 		$this->phraseDecoratorFactory = $phraseDecoratorFactory;
 	}
 
@@ -28,12 +28,8 @@ class RentalService extends Service\BaseService
 		$this->rentalInformationRepositoryAccessor = $dic->rentalInformationRepositoryAccessor;
 	}
 
-	public function isFeatured($strict = FALSE) {
-		if ($strict) {
-			return (bool)$this->rentalRepositoryAccessor->get()->isFeatured($this->entity);
-		} else {
-			return (bool)$this->rentalSearchCachingFactory->create($this->entity->primaryLocation)->isFeatured($this->entity);
-		}
+	public function isFeatured() {
+		return (bool)$this->rentalRepositoryAccessor->get()->isFeatured($this->entity);
 	}
 
 	public function calculateRank() {

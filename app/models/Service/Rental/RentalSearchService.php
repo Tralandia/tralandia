@@ -44,8 +44,12 @@ class RentalSearchService extends Nette\Object
 
 	public function getCriteriumOptions($criterium) {
 		$this->loadCache();
-		d($this->searchCacheData);
-		return array_keys($this->searchCacheData[$criterium]);
+		if (isset($this->searchCacheData[$criterium])) {
+			return array_keys($this->searchCacheData[$criterium]);		
+		} else {
+			return array();
+		}
+
 	}
 
 	// Criteria
@@ -92,9 +96,9 @@ class RentalSearchService extends Nette\Object
 		$this->reorderResults();
 
 		if ($page === NULL) {
-			return $results;
+			return $this->results;
 		} else {
-			$results = array_chunk($results, self::COUNT_PER_PAGE);
+			$results = array_chunk($this->results, self::COUNT_PER_PAGE);
 			return isset($results[$page]) ? $results[$page] : NULL;
 		}
 	}

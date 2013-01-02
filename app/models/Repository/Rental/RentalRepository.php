@@ -48,7 +48,7 @@ class RentalRepository extends \Repository\BaseRepository {
 			->join('i.items', 'ii')
 			->where($qb->expr()->eq('r.id', $rental->id))
 			->andWhere($qb->expr()->eq('r.status', \Entity\Rental\Rental::STATUS_LIVE))
-			->andWhere($qb->expr()->eq('i.status', \Entity\Invoice\Invoice::STATUS_PAID))
+			->andWhere($qb->expr()->gt('i.paid', 0))
 			->andWhere($qb->expr()->eq('ii.serviceType', $serviceType->id))
 			->andWhere($qb->expr()->lte('ii.serviceFrom', '?1'))
 			->andWhere($qb->expr()->gt('ii.serviceTo', '?1'))
