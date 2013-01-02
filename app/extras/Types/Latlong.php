@@ -38,7 +38,7 @@ class Latlong extends BaseType {
 
 	    $t = $t * 3600;
 	    $values[1] = floor($t / 60);
-	    $values[2] = (int) ($t - ($values[1] * 60));
+	    $values[2] = (int) round($t - ($values[1] * 60));
 
 	    if ($this->type == 'latitude') {
 	    	$suffix = $values[0] < 0 ? 'S' : 'N';

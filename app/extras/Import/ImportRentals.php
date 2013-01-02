@@ -310,6 +310,20 @@ class ImportRentals extends BaseImport {
 			
 			$model->persist($rental);
 
+			// Pricelists
+			$temp = unserialize(stripslashes($x['prices_upload']));
+			if (is_array($temp) && count($temp)) {
+				foreach ($temp as $key => $value) {
+					$pricelist = $this->rentalPricelistRepositoryAccessor->get()->createNew();
+					$pricelistDecorator = $this->pricelistDecoratorFactory->create($pricelist);
+					$pricelistDecorator->setContentFromFile('http://www.tralandia.sk/u/'.$value[4]);
+					$pricelistDecorator->name = $value[2];
+					$pricelistDecorator->language = $context->languageRepositoryAccessor->get()->findOneByOldId($value[1]);
+					d($pricelistDecorator);
+				}
+			}
+
+
 			// Images
 			$temp = array_unique(array_filter(explode(',', $x['photos'])));
 			if (is_array($temp) && count($temp)) {
