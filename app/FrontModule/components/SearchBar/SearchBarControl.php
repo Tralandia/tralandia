@@ -57,7 +57,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		$template->criteria['spokenLanguage'] 	= $this->getSpokenLanguageCriteria();
 
 		$template->criteria['capacity'] 		= $this->getCapacityCriteria();
-		// $template->criteria['price'] 			= $this->getPriceCriteria();
+		// $template->criteria['price'] 		= $this->getPriceCriteria();
 
 		$template->render();
 
@@ -139,6 +139,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 
 				$linksTmp[$i] = array(
 					'seo' => $seo,
+					'name' => $i,
 					'count' => $count,
 					'hide' => TRUE,
 					'active' => $active,
@@ -146,7 +147,9 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 			}
 		}
 
-		return $this->prepareOrder($linksTmp, $order, $visible);
+		$links = $this->prepareOrder($linksTmp, $order, $visible);
+
+		return \Nette\ArrayHash::from($links);
 
 	}
 
@@ -193,6 +196,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 
 	}
 */
+
 	protected function getRentalsCount($params) {
 		foreach ($params as $criteria => $value) {
 			$name = 'set'.ucfirst($criteria).'Criterium';

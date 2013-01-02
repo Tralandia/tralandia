@@ -10,13 +10,16 @@
 					</div>
 
 					{define #criteriaOptions}
-						<div n:ifset="$criteria[$type]" class="widget">
+					<div n:ifset="$criteria[$type]" class="widget">
 						<h4>{_'o1070'}</h4>
 						<ul n:inner-foreach="$criteria[$type] as $link">
-						{dump $link}
 							<li class="{if $link->hide}hidden hide{/if}{if $link->count==0} disabled{/if}">
 								{if $link->count==0}
-									{_$link->seo->getParameter($type)->name|firstUpper} <span class="counter">{$link->count}</span>
+									{ifset $link->name}
+										{$link->name}
+									{else}
+										{_$link->seo->getParameter($type)->name|firstUpper} <span class="counter">{$link->count}</span>
+									{/ifset}
 								{else}
 									<a href="{$link->seo->getUrl()}">{_$link->seo->getParameter($type)->name|firstUpper} <span class="counter">{$link->count}</span></a>
 								{/if}
