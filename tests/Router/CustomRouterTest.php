@@ -3,8 +3,6 @@ namespace Test\Router;
 
 use PHPUnit_Framework_TestCase, Nette, Extras;
 
-require_once __DIR__ . '/../bootstrap.php';
-
 
 /**
  * @backupGlobals disabled

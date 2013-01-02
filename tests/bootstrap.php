@@ -16,10 +16,6 @@ $_SERVER['HTTP_HOST'] = 'localhost';
 // Load Nette Framework
 require_once LIBS_DIR . '/Nette/loader.php';
 
-// Enable Nette\Debug for error visualisation & logging
-Debugger::enable(FALSE);
-Debugger::$strictMode = FALSE;
-
 // Load configuration from config.neon
 $configurator = new Nette\Config\Configurator;
 $configurator->setTempDirectory(TEMP_DIR);
@@ -28,6 +24,7 @@ $configurator->enableDebugger(ROOT_DIR . '/log');
 $robotLoader = $configurator->createRobotLoader();
 $robotLoader->addDirectory(APP_DIR)
 	->addDirectory(LIBS_DIR)
+	->addDirectory(__DIR__)
 	->addDirectory(TEMP_DIR . '/presenters')
 	->register();
 
@@ -43,4 +40,7 @@ $configurator->onCompile[] = function ($configurator, $compiler) {
 };
 $container = $configurator->createContainer();
 
-ob_start();
+Debugger::enable(FALSE);
+
+
+//ob_start();
