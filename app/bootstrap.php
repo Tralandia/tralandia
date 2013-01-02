@@ -1,7 +1,5 @@
 <?php
 
-
-
 use Nette\Diagnostics\Debugger,
 	Nette\Environment,
 	Nette\Application\Routers\Route,
@@ -51,6 +49,7 @@ $configurator->onCompile[] = function ($configurator, $compiler) {
 };
 $container = $configurator->createContainer();
 
+// Debugger::$editor = $container->parameters['editor'];
 
 // @todo toto niekam schovat
 // Panel\Todo::register($container->parameters['appDir']);

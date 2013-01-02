@@ -149,7 +149,6 @@ class FrontRoute implements Nette\Application\IRouter {
 			$params->action = 'default';
 		} else if(count($pathSegments) == 1) {
 			$pathSegment = reset($pathSegments);
-			// debug($pathSegment);
 			if($match = Strings::match($pathSegment, '~\.*-a([0-9]+)~')) {
 				if($attraction = $this->attractionRepositoryAccessor->get()->find($match[1])) {
 					$params->attraction = $attraction;
@@ -183,6 +182,8 @@ class FrontRoute implements Nette\Application\IRouter {
 				// 	$params->presenter = 'Rental';
 				// }
 			}
+			 $params->presenter = 'Rental';
+			 $params->action = 'list';
 		} else {
 			$segmentList = array();
 		}
@@ -192,7 +193,7 @@ class FrontRoute implements Nette\Application\IRouter {
 			// ak nejake chybaju tak ich skus najst v PathSegmentsOld
 		}
 
-
+		//d($params); #@debug
 		if(!isset($params->action) || !isset($params->presenter)) {
 			return NULL;
 		}

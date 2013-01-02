@@ -1,5 +1,5 @@
 parameters:
-	editor: 'edit://open/?url=file://%file&line=%line'
+	editor: 'sublime://open/?url=file://%file&line=%line' #nefunguje..
 	envOptions:
 		email: tralandia.david@gmail.com
 

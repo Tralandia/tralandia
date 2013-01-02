@@ -10,7 +10,7 @@ use  Nette, Extras;
 abstract class BaseRouterTest extends \Tests\TestCase
 {
 
-	protected function routeInTest(Nette\Application\IRouter $route, $url, $expectedPresenter=NULL, $expectedParams=NULL, $expectedUrl=NULL)
+	protected function routeIn(Nette\Application\IRouter $route, $url, $expectedPresenter=NULL, $expectedParams=NULL, $expectedUrl=NULL)
 	{
 		// ==> $url
 
@@ -27,6 +27,7 @@ abstract class BaseRouterTest extends \Tests\TestCase
 		if ($request) { // matched
 			$params = $request->getParameters();
 			//asort($params);
+			//d($request); #@debug
 			$this->assertSame( $expectedPresenter, $request->getPresenterName() );
 			$this->assertSame( $expectedParams, $params );
 
@@ -44,7 +45,7 @@ abstract class BaseRouterTest extends \Tests\TestCase
 
 
 
-	protected function routeOutTest(Nette\Application\Routers\Route $route, $presenter, $params = array())
+	protected function routeOut(Nette\Application\Routers\Route $route, $presenter, $params = array())
 	{
 		$url = new Nette\Http\Url('http://example.com');
 		$request = new Nette\Application\Request($presenter, 'GET', $params);

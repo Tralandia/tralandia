@@ -62,6 +62,7 @@ abstract class BasePresenter extends Presenter {
 	}
 
 	protected function createTemplate($class = NULL) {
+		/** @var \Nette\Templating\FileTemplate|\stdClass $template */
 		$template = parent::createTemplate($class);
 		$helpers = $this->getService('templateHelpers');
 		$template->registerHelperLoader(array($helpers, 'loader'));
