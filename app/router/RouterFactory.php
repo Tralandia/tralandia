@@ -15,14 +15,16 @@ class RouterFactory
 	protected $defaultLanguage;
 	protected $defaultPrimaryLocation;
 	protected $frontRouteFactory;
+	protected $ownerRouteListFactory;
 
 	public $languageRepositoryAccessor;
 	public $locationRepositoryAccessor;
 
-	public function __construct(array $options, IFrontRouteFactory $frontRouteFactory) {
+	public function __construct(array $options, IFrontRouteFactory $frontRouteFactory, IOwnerRouteListFactory $ownerRouteListFactory) {
 		$this->defaultLanguage = $options['defaultLanguage'];
 		$this->defaultPrimaryLocation = $options['defaultPrimaryLocation'];
 		$this->frontRouteFactory = $frontRouteFactory;
+		$this->ownerRouteListFactory = $ownerRouteListFactory;
 	}
 
 	/**
@@ -69,22 +71,11 @@ class RouterFactory
 			'language' => $this->defaultLanguage,
 		));
 
-		$router[] = $ownerRouter = new RouteList('Owner');
-
-		$ownerRouter[] = new Route('owner/<presenter>/[<action>[/<id>]]', array(
-			'presenter' => 'Rental',
-			'action' =>  'default',
-			'primaryLocation' => $this->defaultPrimaryLocation,
-			'language' => $this->defaultLanguage,
-		));
-
+		$router[] = $ownerRouter = $this->ownerRouteListFactory->create();
 		
 		$router[] = $frontRouter = new RouteList('Front');
 
-		$section = isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : null;
-		// if ($section !== 'cibi') {
-			$frontRouter[] = $this->frontRouteFactory->create();
-		// }
+		$frontRouter[] = $this->frontRouteFactory->create();
 
 	
 		
