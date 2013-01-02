@@ -98,7 +98,8 @@
 		<a href="{link Rental:list location => $rental->address->locality , rentalType => $rental->type }"><b>{_$rental->address->locality->name}</b></a>
 
 		{dump $rental->address->getLocations()}
-		{dump $supportedLanguages}
+		{dump $rental->interviewAnswers}
+
 
 		{foreach $rental->address->getLocations() as $location}
 
@@ -346,10 +347,15 @@ $(document).ready(function(){
 
 			<div id="tabs-5">
 
+
+		{foreach $rental->interviewAnswers as $interviewAnswer}
+			{if !empty($interviewAnswer->answer)}
+				<p class="question">{_$interviewAnswer->question->question}</p>
+				<p class="answer">"{_$interviewAnswer->answer}"</p>
+			{/if}			
+		{/foreach}
 				
-				{foreach $rental->interviewAnswers as $interview}
-					{dump $interview}
-				{/foreach}
+
 			</div>
 
 {*
