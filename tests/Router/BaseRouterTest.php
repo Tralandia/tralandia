@@ -29,9 +29,17 @@ abstract class BaseRouterTest extends \Tests\TestCase
 			//asort($params);
 			//d($request); #@debug
 			$this->assertSame( $expectedPresenter, $request->getPresenterName() );
-			$this->assertSame( $expectedParams, $params );
+			foreach($params as $paramName => $param) {
+				if(!array_key_exists($paramName, $expectedParams)) {
+					continue;
+				}
+				if($param instanceof \Entity\BaseEntity) {
+					$param = $param->getOldId();
+				}
+				$this->assertSame( $expectedParams[$paramName], $param );
+			}
 
-			unset($params['extra']);
+			//unset($params['extra']);
 			$request->setParameters($params);
 			$result = $route->constructUrl($request, $url);
 
