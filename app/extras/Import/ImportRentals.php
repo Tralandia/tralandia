@@ -314,12 +314,13 @@ class ImportRentals extends BaseImport {
 			$temp = unserialize(stripslashes($x['prices_upload']));
 			if (is_array($temp) && count($temp)) {
 				foreach ($temp as $key => $value) {
-					$pricelist = $this->rentalPricelistRepositoryAccessor->get()->createNew();
-					$pricelistDecorator = $this->pricelistDecoratorFactory->create($pricelist);
+					$pricelist = $context->rentalPricelistRepositoryAccessor->get()->createNew();
+					$pricelistDecorator = $context->rentalPricelistDecoratorFactory->create($pricelist);
 					$pricelistDecorator->setContentFromFile('http://www.tralandia.sk/u/'.$value[4]);
-					$pricelistDecorator->name = $value[2];
-					$pricelistDecorator->language = $context->languageRepositoryAccessor->get()->findOneByOldId($value[1]);
-					d($pricelistDecorator);
+					$pricelistDecorator->getEntity()->name = $value[2];
+					$pricelistDecorator->getEntity()->rental = $rental;
+					$pricelistDecorator->getEntity()->language = $context->languageRepositoryAccessor->get()->findOneByOldId($value[1]);
+					//d($pricelistDecorator);
 				}
 			}
 

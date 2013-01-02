@@ -25,7 +25,7 @@ class Category extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Entity\Faq\Question", mappedBy="category")
+	 * @ORM\OneToMany(targetEntity="Entity\Faq\Question", mappedBy="category", cascade={"persist", "remove"})
 	 */
 	protected $questions;
 
