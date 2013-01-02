@@ -9,6 +9,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 
 	const VISIBLE_OPTIONS_COUNT = 10;
 
+	// repositories
 	public $rentalTypeRepositoryAccessor;
 	public $rentalTagRepositoryAccessor;
 	public $locationRepositoryAccessor;
@@ -16,6 +17,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 	public $currencyRepositoryAccessor;
 	public $primaryLocation;
 
+	// services
 	protected $translator;
 	protected $seoFactory;
 	protected $searchService;
@@ -51,9 +53,10 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		$template->criteria = array();
 		$template->criteria['rentalType'] 		= $this->getRentalTypeCriteria();
 		$template->criteria['location'] 		= $this->getLocationCriteria();
-		// $template->criteria['rentalTag'] 		= $this->getRentalTagCriteria();
+		$template->criteria['rentalTag'] 		= $this->getRentalTagCriteria();
 		$template->criteria['spokenLanguage'] 	= $this->getSpokenLanguageCriteria();
-		// $template->criteria['capacity'] 		= $this->getCapacityCriteria();
+
+		$template->criteria['capacity'] 		= $this->getCapacityCriteria();
 		// $template->criteria['price'] 			= $this->getPriceCriteria();
 
 		$template->render();
@@ -75,42 +78,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 
 	protected function getRentalTypeCriteria() {
 
-		$order 		= array();
-		$linksTmp 	= array();
-		$visible 	= array();
-		$selected 	= $this->getSelectedParams();
-		$active		= FALSE;
-
-		$rentalTypes = array();
-		if (array_key_exists('rentalType', $selected)) {
-			$active = TRUE;
-			$rentalTypes[] = $selected['rentalType'];
-		} else {
-			foreach($this->searchService->getCriteriumOptions(RentalSearchService::CRITERIA_RENTAL_TYPE) as $entityId) {
-				$rentalTypes[] = $this->rentalTypeRepositoryAccessor->get()->find($entityId);
-			}
-		}
-
-		foreach ($rentalTypes as $key => $rentalType) {
-			$params = array_merge($selected, array('rentalType' => $rentalType));
-
-			$name = $this->translator->translate($rentalType->name);
-			$count = $this->getRentalsCount($params);
-			$link = $this->presenter->link('//Rental:list', $params);
-			$seo = $this->seoFactory->create($link, $this->presenter->getLastCreatedRequest());
-
-			$visible[$key] = $count;
-			$order[$name] = $key;
-
-			$linksTmp[$key] = array(
-				'seo' => $seo,
-				'count' => $count,
-				'hide' => TRUE,
-				'active' => $active,
-			);
-		}
-
-		$links = $this->prepareOrder($linksTmp, $order, $visible);
+		$links = $this->getLinksFor(RentalSearchService::CRITERIA_RENTAL_TYPE, $this->rentalTypeRepositoryAccessor);
 
 		return \Nette\ArrayHash::from($links);
 
@@ -118,42 +86,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 
 	protected function getLocationCriteria() {
 
-		$order 		= array();
-		$linksTmp 	= array();
-		$visible 	= array();
-		$selected 	= $this->getSelectedParams();
-		$active		= FALSE;
-
-		$locations = array();
-		if (array_key_exists('location', $selected)) {
-			$active = TRUE;
-			$locations[] = $selected['location'];
-		} else {
-			foreach($this->searchService->getCriteriumOptions(RentalSearchService::CRITERIA_LOCATION) as $entityId) {
-				$locations[] = $this->locationRepositoryAccessor->get()->find($entityId);
-			}
-		}
-
-		foreach ($locations as $key => $location) {
-			$params = array_merge($selected, array('location' => $location));
-
-			$count 	= $this->getRentalsCount($params);
-			$name 	= $this->translator->translate($location->name);
-			$link 	= $this->presenter->link('//Rental:list', $params);
-			$seo 	= $this->seoFactory->create($link, $this->presenter->getLastCreatedRequest());
-
-			$visible[$key] 	= $count;
-			$order[$name] 	= $key;
-
-			$linksTmp[$key] = array(
-				'seo' 	=> $seo,
-				'count' => $count,
-				'hide' 	=> TRUE,
-				'active' => $active,
-			);
-		}
-
-		$links = $this->prepareOrder($linksTmp, $order, $visible);
+		$links = $this->getLinksFor(RentalSearchService::CRITERIA_LOCATION, $this->locationRepositoryAccessor);
 
 		return \Nette\ArrayHash::from($links);
 
@@ -161,42 +94,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 
 	protected function getRentalTagCriteria() {
 
-		$order 		= array();
-		$linksTmp 	= array();
-		$visible 	= array();
-		$selected 	= $this->getSelectedParams();
-		$active		= FALSE;
-
-		$rentalTags = array();
-		if (array_key_exists('rentalTag', $selected)) {
-			$active = TRUE;
-			$rentalTags[] = $selected['rentalTag'];
-		} else {
-			foreach($this->searchService->getCriteriumOptions(RentalSearchService::CRITERIA_TAG) as $entityId) {
-				$rentalTags[] = $this->rentalTypeRepositoryAccessor->get()->find($entityId);
-			}
-		}
-
-		foreach ($rentalTags as $key => $rentalTag) {
-			$params = array_merge($selected, array('rentalTag' => $rentalTag));
-
-			$name = $this->translator->translate($rentalTag->name);
-			$count = $this->getRentalsCount($params);
-			$link = $this->presenter->link('//Rental:list', $params);
-			$seo = $this->seoFactory->create($link, $this->presenter->getLastCreatedRequest());
-
-			$visible[$key] = $count;
-			$order[$name] = $key;
-
-			$linksTmp[$key] = array(
-				'seo' => $seo,
-				'count' => $count,
-				'hide' => TRUE,
-				'active' => $active,
-			);
-		}
-
-		$links = $this->prepareOrder($linksTmp, $order, $visible);
+		$links = $this->getLinksFor(RentalSearchService::CRITERIA_TAG, $this->rentalTagRepositoryAccessor);
 
 		return \Nette\ArrayHash::from($links);
 
@@ -204,82 +102,55 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 
 	protected function getSpokenLanguageCriteria() {
 
+		$links = $this->getLinksFor(RentalSearchService::CRITERIA_SPOKEN_LANGUAGE, $this->languageRepositoryAccessor);
+
+		return \Nette\ArrayHash::from($links);
+
+	}
+
+	protected function getCapacityCriteria() {
+
 		$order 		= array();
 		$linksTmp 	= array();
 		$visible 	= array();
 		$selected 	= $this->getSelectedParams();
 		$active		= FALSE;
 
-		$languages = array();
-		if (array_key_exists('language', $selected)) {
+		$entities = array();
+		if (array_key_exists('capacity', $selected)) {
+			
 			$active = TRUE;
-			$languages[] = $selected['language'];
+			$entities[] = $selected['capacity'];
+
 		} else {
-			foreach($this->searchService->getCriteriumOptions(RentalSearchService::CRITERIA_SPOKEN_LANGUAGE) as $entityId) {
-				$languages[] = $this->languageRepositoryAccessor->get()->find($entityId);
+			
+			for ($i=0; $i < 50; $i++) {
+
+				$params = array_merge($selected, array('capacity' => $i));
+
+				$name = $i;
+
+				$count = $this->getRentalsCount($params);
+				$link = $this->presenter->link('//Rental:list', $params);
+				$seo = $this->seoFactory->create($link, $this->presenter->getLastCreatedRequest());
+
+				$visible[$i] = $count;
+				$order[$name] = $i;
+
+				$linksTmp[$i] = array(
+					'seo' => $seo,
+					'count' => $count,
+					'hide' => TRUE,
+					'active' => $active,
+				);
 			}
 		}
 
-		foreach ($languages as $key => $language) {
-			$params = array_merge($selected, array('spokenLanguage' => $language));
-
-			$name = $this->translator->translate($language->name);
-			$count = $this->getRentalsCount($params);
-			$link = $this->presenter->link('//Rental:list', $params);
-			$seo = $this->seoFactory->create($link, $this->presenter->getLastCreatedRequest());
-
-			$visible[$key] = $count;
-			$order[$name] = $key;
-
-			$linksTmp[$key] = array(
-				'seo' => $seo,
-				'count' => $count,
-				'hide' => TRUE,
-				'active' => $active,
-			);
-		}
-
-		$links = $this->prepareOrder($linksTmp, $order, $visible);
-
-		return \Nette\ArrayHash::from($links);
+		return $this->prepareOrder($linksTmp, $order, $visible);
 
 	}
+
 /*
-	protected function getCapacityCriteria() {
-
-		$links = array();
-		$visible = array();
-		$selected = $this->getSelectedParams();
-
-		for ($i=0; $i < 50; $i++) {
-
-			$params = array_merge($selected, array('capacity' => $i));
-			$link = $this->presenter->link('//Rental:list', $params);
-
-			$seo = $this->seoFactory->create($link, $this->presenter->getLastCreatedRequest());
-			$count = $this->getRentalsCount($params);
-
-			$visible[$i] = $count;
-
-			$links[$i] = array(
-				'seo' => $seo,
-				'count' => $count,
-				'hide' => TRUE,
-			);
-		}
-
-		$i=0;
-		arsort($visible);
-		foreach ($visible as $key => $value) {
-			$links[$key]['hide'] = FALSE;
-			if ($i==self::VISIBLE_OPTIONS_COUNT) break;
-			$i++;
-		}
-
-		return \Nette\ArrayHash::from($links);
-
-	}
-
 	protected function getPriceCriteria() {
 
 		$links = array();
@@ -328,6 +199,48 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 			$this->searchService->{$name}($value);
 		}
 		return $this->searchService->getRentalsCount();
+	}
+
+	protected function getLinksFor($criteriaName, $repositoryAccessor) {
+
+		$order 		= array();
+		$linksTmp 	= array();
+		$visible 	= array();
+		$selected 	= $this->getSelectedParams();
+		$active		= FALSE;
+
+		$entities = array();
+		if (array_key_exists($criteriaName, $selected)) {
+			$active = TRUE;
+			$entities[] = $selected[$criteriaName];
+		} else {
+			foreach($this->searchService->getCriteriumOptions($criteriaName) as $entityId) {
+				$entities[] = $repositoryAccessor->get()->find($entityId);
+			}
+		}
+
+		foreach ($entities as $key => $entity) {
+			$params = array_merge($selected, array($criteriaName => $entity));
+
+			$name = $this->translator->translate($entity->name);
+
+			$count = $this->getRentalsCount($params);
+			$link = $this->presenter->link('//Rental:list', $params);
+			$seo = $this->seoFactory->create($link, $this->presenter->getLastCreatedRequest());
+
+			$visible[$key] = $count;
+			$order[$name] = $key;
+
+			$linksTmp[$key] = array(
+				'seo' => $seo,
+				'count' => $count,
+				'hide' => TRUE,
+				'active' => $active,
+			);
+		}
+
+		return $this->prepareOrder($linksTmp, $order, $visible);
+
 	}
 
 	protected function getSelectedParams() {

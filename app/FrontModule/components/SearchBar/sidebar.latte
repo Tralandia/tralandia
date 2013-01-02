@@ -13,6 +13,7 @@
 						<div n:ifset="$criteria[$type]" class="widget">
 						<h4>{_'o1070'}</h4>
 						<ul n:inner-foreach="$criteria[$type] as $link">
+						{dump $link}
 							<li class="{if $link->hide}hidden hide{/if}{if $link->count==0} disabled{/if}">
 								{if $link->count==0}
 									{_$link->seo->getParameter($type)->name|firstUpper} <span class="counter">{$link->count}</span>

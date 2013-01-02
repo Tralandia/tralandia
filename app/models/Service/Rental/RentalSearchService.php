@@ -12,7 +12,7 @@ class RentalSearchService extends Nette\Object
 	const COUNT_PER_PAGE			= 50;
 	const CRITERIA_LOCATION  		= 'location';
 	const CRITERIA_RENTAL_TYPE 		= 'rentalType';
-	const CRITERIA_TAG	 			= 'tag';
+	const CRITERIA_TAG	 			= 'rentalTag';
 	const CRITERIA_CAPACITY 		= 'capacity';
 	const CRITERIA_SPOKEN_LANGUAGE 	= 'spokenLanguage';
 	const CRITERIA_PRICE 			= 'price';
@@ -44,12 +44,7 @@ class RentalSearchService extends Nette\Object
 
 	public function getCriteriumOptions($criterium) {
 		$this->loadCache();
-		if (isset($this->searchCacheData[$criterium])) {
-			return array_keys($this->searchCacheData[$criterium]);		
-		} else {
-			return array();
-		}
-
+		return array_keys($this->searchCacheData[$criterium]);
 	}
 
 	// Criteria
@@ -96,9 +91,9 @@ class RentalSearchService extends Nette\Object
 		$this->reorderResults();
 
 		if ($page === NULL) {
-			return $this->results;
+			return $results;
 		} else {
-			$results = array_chunk($this->results, self::COUNT_PER_PAGE);
+			$results = array_chunk($results, self::COUNT_PER_PAGE);
 			return isset($results[$page]) ? $results[$page] : NULL;
 		}
 	}
