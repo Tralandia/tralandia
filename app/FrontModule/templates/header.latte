@@ -4,7 +4,13 @@
 
 
 						<div id="siteOptions">
-																				
+									
+						{dump $supportedLanguages}
+
+						{foreach $supportedLanguages as $supportedLanguage}
+							{_$supportedLanguage->name}
+						{/foreach}
+
 							<ul>
 								<li><a n:href=":Owner:Rental:edit">Uprav ubytovanie</a></li>
 								<li><a n:href=":Owner:Rental:add"><strong class="red">+ Pridajte ubytovanie</strong></a> </li>
