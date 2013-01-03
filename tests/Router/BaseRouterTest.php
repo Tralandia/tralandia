@@ -1,7 +1,7 @@
 <?php
 namespace Tests\Router;
 
-use  Nette, Extras;
+use Nette, Extras;
 
 
 /**

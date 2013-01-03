@@ -1,5 +1,5 @@
 <?php
-namespace Test\Router;
+namespace Tests\Router;
 
 use Nette, Extras;
 
@@ -23,12 +23,18 @@ class FrontRouterTest extends BaseRouterTest
 
 		$route = $this->frontRouteFactory->create();
 
+		$this->routeIn($route, 'http://www.sk.tra.com/registracia', 'Registration', array(
+			'action' => 'default',
+			'country' => 58,
+			'language' => 144,
+		), 'http://www.sk.tra.com/registracia');
+
 		$this->routeIn($route, 'http://www.sk.tra.com/nitra', 'Rental', array(
 			'action' => 'list',
 			'country' => 58,
 			'language' => 144,
 			'location' => 4020,
-		), 'http://www.sk.tra.com/nitra');
+	), 'http://www.sk.tra.com/nitra');
 
 //		$this->routeIn($route, 'http://www.sk.tra.com/pozicovna', 'Rental', array(
 //			'action' => 'list',
@@ -36,6 +42,7 @@ class FrontRouterTest extends BaseRouterTest
 //			'language' => 144,
 //			'attractionType' => 16,
 //		), 'http://www.sk.tra.com/pozicovna');
+
 
 	}
 

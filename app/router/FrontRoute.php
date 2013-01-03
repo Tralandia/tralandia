@@ -226,7 +226,7 @@ class FrontRoute implements Nette\Application\IRouter {
 		$pathSegmentTypesFlip = array_flip(static::$pathSegmentTypes);
 
 		$pathSegmentList = $this->routingPathSegmentRepositoryAccessor->get()->findForRouter($params->language, $params->primaryLocation, $pathSegments);
-		foreach ($pathSegmentList as $key => $value) {
+		foreach ($pathSegmentList as $value) {
 			$t = self::$pathSegmentTypesById[$value->type];
 			$keyTemp = $pathSegmentTypesFlip[$value->type];
 			$accessor = $t.'RepositoryAccessor';

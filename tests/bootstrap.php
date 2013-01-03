@@ -23,8 +23,8 @@ $configurator->addParameters(array('appDir' => APP_DIR));
 $configurator->enableDebugger(ROOT_DIR . '/log');
 $robotLoader = $configurator->createRobotLoader();
 $robotLoader->addDirectory(APP_DIR)
-	->addDirectory(LIBS_DIR)
 	->addDirectory(__DIR__)
+	->addDirectory(LIBS_DIR)
 	->addDirectory(TEMP_DIR . '/presenters')
 	->register();
 
