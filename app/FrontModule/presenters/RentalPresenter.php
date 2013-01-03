@@ -36,6 +36,7 @@ class RentalPresenter extends BasePresenter {
 		$link = $this->link('//list', array('location' => $locality));
 		$localitySeo = $this->seoFactory->create($link, $this->getLastCreatedRequest());
 
+
 		$this->template->rental = $rental;
 		$this->template->rentalService = $rentalService;
 		$this->template->locality = $localitySeo;

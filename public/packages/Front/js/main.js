@@ -142,10 +142,14 @@ App.prototype.uiToogleClick = function(){
 
 	if($(this).hasClass('active')){
 		$(forClass).slideUp();
-		$(this).removeClass('active');
+		$(this).removeClass('active').html($(this).attr('close'));
+		$(this).parent().parent().find('i').addClass('entypo-open');
+		$(this).parent().parent().find('i').removeClass('entypo-close');
 	} else {
 		$(forClass).slideDown();
-		$(this).addClass('active');
+		$(this).addClass('active').html($(this).attr('opened'));
+		$(this).parent().parent().find('i').addClass('entypo-close');
+		$(this).parent().parent().find('i').removeClass('entypo-open');
 	}
 
 	return false;
