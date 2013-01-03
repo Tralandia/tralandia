@@ -198,4 +198,9 @@ class RentalEditForm extends BaseForm {
 
 	}
 
+	public function setDefaultsValues()
+	{
+
+	}
+
 }

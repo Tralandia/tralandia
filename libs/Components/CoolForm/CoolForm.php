@@ -1,8 +1,7 @@
 <?php
 
-use Nette\Environment,
-	Nette\Application\UI\Form,
-	Nette\ObjectMixin;
+use Nette\Application\UI\Form;
+use Nette\ObjectMixin;
 
 use Kdyby\Extension\Forms\BootstrapRenderer\BootstrapRenderer;
 
@@ -14,14 +13,19 @@ abstract class CoolForm extends Form {
 
 	const AJAX_CLASS = 'ajax';
 
-	public function __construct(\Nette\ComponentModel\IContainer $parent = NULL, $name = NULL) {
-		parent::__construct($parent, $name);
+	public function __construct(Nette\Localization\ITranslator $translator = NULL) {
+		parent::__construct();
 
 		//$this->setRenderer(new BootstrapRenderer);
 
-		//$this->setTranslator($translator);
+		if($translator) {
+			$this->setTranslator($translator);
+		}
 
 		$this->getElementPrototype()->novalidate = 'novalidate';
+
+		$this->buildForm();
+		$this->setDefaultsValues();
 
 		$this->onError[] = callback($this, 'onInvalid');
 
@@ -39,6 +43,8 @@ abstract class CoolForm extends Form {
 	 * @return void
 	 */
 	protected abstract function buildForm();
+
+	protected abstract function setDefaultsValues();
 
 
 	public function ajax() {

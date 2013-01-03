@@ -4,17 +4,15 @@ namespace FrontModule;
 
 class RegistrationPresenter extends BasePresenter {
 
-	public function createComponentTabControl($name) {
+	/**
+	 * @autowire
+	 * @var \FrontModule\Forms\IRegistrationFormFactory
+	 */
+	protected $registrationFormFactory;
 
-		$tabBar = new \BaseModule\Components\TabControl\TabControl();
-
-		$content = new \FrontModule\Components\Rentals\TopRentals($this->rentalRepository);
-		$tab = $tabBar->addTab('top');
-		$tab->setHeading(806);
-		$tab->setContent($content);
-
-		return $tabBar;
-
+	public function createComponentRegistrationForm()
+	{
+		return $this->registrationFormFactory->create($this->primaryLocation);
 	}
 
 }

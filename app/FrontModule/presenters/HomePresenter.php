@@ -2,13 +2,11 @@
 
 namespace FrontModule;
 
-use Model\Rental\IRentalDecoratorFactory;
-
 class HomePresenter extends BasePresenter {
 
 	/**
 	 * @autowire
-	 * @var Model\Rental\IRentalDecoratorFactory
+	 * @var \Model\Rental\IRentalDecoratorFactory
 	 */
 	protected $rentalDecoratorFactory;
 

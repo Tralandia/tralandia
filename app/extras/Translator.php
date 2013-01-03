@@ -15,21 +15,26 @@ class Translator implements \Nette\Localization\ITranslator {
 	protected $phraseRepositoryAccessor;
 	protected $phraseDecoratorFactory;
 
-	public function __construct(Environment $environment, $phraseRepositoryAccessor, Caching\Cache $translatorCache, IPhraseDecoratorFactory $phraseDecoratorFactory) {
+	public function __construct(Environment $environment,
+								$phraseRepositoryAccessor,
+								Caching\Cache $translatorCache,
+								IPhraseDecoratorFactory $phraseDecoratorFactory)
+	{
 		$this->language = $environment->getLanguage();
 		$this->phraseRepositoryAccessor = $phraseRepositoryAccessor;
 		$this->phraseDecoratorFactory = $phraseDecoratorFactory;
 		$this->cache = $translatorCache;
 	}
 	
-	public function translate($phrase, $note = NULL, array $variation = NULL, array $variables = NULL) {
+	public function translate($phrase, $note = NULL, array $variation = NULL, array $variables = NULL)
+	{
 		$translation = $this->getTranslation($phrase, $variation);
 
 		return $translation;
 	}
 	
-	protected function getTranslation($phrase, $variation = NULL) {
-		
+	protected function getTranslation($phrase, $variation = NULL)
+	{
 		if (!isset($variation['count'])) $variation['count'] = NULL;
 		if (!isset($variation['gender'])) $variation['gender'] = NULL;
 		if (!isset($variation['case'])) $variation['case'] = NULL;
@@ -43,8 +48,6 @@ class Translator implements \Nette\Localization\ITranslator {
 			$phraseId = $phrase;
 		}
 
-		//@todo - dorobit cache, zatial vykomentovana
-		//d($phraseId, $phrase);
 		if($variation === NULL) {
 			$translationKey = $phraseId.'_'.$this->language->id;
 		} else {
@@ -60,7 +63,8 @@ class Translator implements \Nette\Localization\ITranslator {
 				} else if(is_numeric($phrase)) {
 					$phrase = $this->phraseRepositoryAccessor->get()->find($phrase);
 				} else {
-					throw new \Nette\InvalidArgumentException('Argument "$phrase" does not match with the expected value');
+					return $phrase;
+//					throw new \Nette\InvalidArgumentException('Argument "$phrase" does not match with the expected value');
 				}
 			}
 

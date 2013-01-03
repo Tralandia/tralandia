@@ -23,8 +23,28 @@ class LocationRepository extends \Repository\BaseRepository {
 			->where($qb->expr()->eq('l.isPrimary', 1))
 			->andWhere($qb->expr()->eq('r.status', \Entity\Rental\Rental::STATUS_LIVE))
 			->addGroupBy('l.id')
-			;
+		;
 
 		return $qb->getQuery()->getResult();
+	}
+
+	public function getCountriesForSelect()
+	{
+		$qb = $this->_em->createQueryBuilder();
+
+		$qb->select('l.id, n.id AS name')
+			->from($this->_entityName, 'l')
+			->join('l.type', 't')
+			->join('l.name', 'n')
+			->where($qb->expr()->eq('t.slug', ':country'))
+			->setParameter('country', 'country');
+
+		$return = [];
+		$rows = $qb->getQuery()->getResult();
+		foreach($rows as $row) {
+			$return[$row['id']] = $row['name'];
+		}
+
+		return $return;
 	}
 }
