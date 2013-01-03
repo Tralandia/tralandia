@@ -7,11 +7,7 @@
 									
 						{dump $supportedLanguages}
 
-{*
-						{foreach $supportedLanguages as $supportedLanguage}
-							{_$supportedLanguage->name}
-						{/foreach}
-*}
+
 							<ul>
 								<li><a n:href=":Owner:Rental:edit">Uprav ubytovanie</a></li>
 								<li><a n:href=":Owner:Rental:add"><strong class="red">+ Pridajte ubytovanie</strong></a> </li>
@@ -22,33 +18,17 @@
 									  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 									  	
 
-									  	<li>
-									  		<ul>
-											    <li><a href="#">Auefuoiwehf</a></li>
-											    <li><a href="#">Anikea</a></li>
-											    <li><a href="#">Aowenfinowe</a></li>									  			
-											    <li><a href="#">Bwoefh</a></li>
-											    <li><a href="#">Cowefhowe</a></li>
-											    <li><a href="#">Uvod</a></li>
-											    <li><a href="#">Uvod</a></li>
-											    <li><a href="#">Uvod</a></li>
-											    <li><a href="#">Uvod</a></li>											    											    
-									  		</ul>
-									  	</li>
-									  	<li>
-									  		<ul>
-											    <li><a href="#">Uvod</a></li>
-											    <li><a href="#">Uvod</a></li>
-											    <li><a href="#">Uvod</a></li>									  			
-									  		</ul>
-									  	</li>
-									  	<li>
-									  		<ul>
-											    <li><a href="#">Uvod</a></li>
-											    <li><a href="#">Uvod</a></li>
-											    <li><a href="#">Uvod</a></li>									  			
-									  		</ul>
-									  	</li>									  	
+									{foreach $supportedLanguages as $supportedLanguage}
+									<li>
+										<ul>
+											{foreach $supportedLanguage as $language}
+												<li>
+													<a href="{link :Front:Home:default language => $language}">{_$language->name}</a>
+												</li>
+											{/foreach}
+										</ul>
+									</li>										
+									{/foreach}								  	
 
 									  </ul>
 									</div>								
