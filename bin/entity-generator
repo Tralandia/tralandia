@@ -1,0 +1,5 @@
+#!/bin/bash
+
+WORKING_DIR=`pwd`
+
+php -f $WORKING_DIR/public/index.php orm:generate-proxies

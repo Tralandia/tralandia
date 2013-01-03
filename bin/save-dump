@@ -1,0 +1,17 @@
+#!/bin/bash
+
+HOST="127.0.0.1"
+USER="root"
+PASS="root"
+
+if [ "$APPENV" = "durika" ]; then
+	SQLDUMP=~/Dropbox/nejakacesticka/new_dump.sql.gz
+else
+	SQLDUMP=~/Dropbox/TRA/Import/new_dump.sql.gz
+fi
+
+MYSQL=`which mysql`
+MYSQLDUMP=`which mysqldump`
+GZIP=`which gzip`
+
+$MYSQLDUMP -h $HOST -u $USER -p$PASS tralandia | $GZIP > $SQLDUMP

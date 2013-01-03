@@ -1,0 +1,50 @@
+#!/bin/bash
+
+HOST="127.0.0.1"
+USER="root"
+PASS="root"
+
+if [ "$APPENV" = "durika" ]; then
+	SQLDUMP=~/Dropbox/nejakacesticka/new_dump.sql.gz
+else
+	SQLDUMP=~/Dropbox/TRA/Import/new_dump.sql.gz
+fi
+
+##############################
+# ODTIALTO NEMENIT!!!
+##############################
+MYSQL=`which mysql`
+MYSQLADMIN=`which mysqladmin`
+AWK=`which awk`
+GREP=`which grep`
+GZCAT=`which gzcat`
+
+function prepare {
+	echo "Prepare database $1..."
+	$MYSQL -h $HOST -u $USER -p$PASS -e "CREATE DATABASE IF NOT EXISTS $1;"
+}
+
+function drop {
+	TABLES=$($MYSQL -h $HOST -u $USER -p$PASS $1 -e 'show tables' | $AWK '{ print $1}' | $GREP -v '^Tables' )
+
+	for t in $TABLES
+	do
+		echo "Deleting $t table from $1 database..."
+		$MYSQL -h $HOST -u $USER -p$PASS $1 -e "SET FOREIGN_KEY_CHECKS=0;drop table $t;SET FOREIGN_KEY_CHECKS=1;"
+	done
+}
+
+function import {
+	echo "Importing $1 into table $2..."
+	$GZCAT -cd $1 | $MYSQL -h $HOST -u $USER -p$PASS $2
+}
+
+prepare "tralandia"
+prepare "tralandia_test"
+prepare "tralandia_dump"
+
+drop "tralandia_test"
+
+import $SQLDUMP "tralandia"
+import $SQLDUMP "tralandia_test"
+import $SQLDUMP "tralandia_dump"

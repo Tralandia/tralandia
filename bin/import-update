@@ -1,0 +1,7 @@
+#!/bin/bash
+
+WORKING_DIR=`pwd`
+
+sh $WORKING_DIR/bin/install
+sh $WORKING_DIR/bin/entity-generator
+php $WORKING_DIR/public/index.php orm:schema-tool:update --force
