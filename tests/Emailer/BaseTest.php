@@ -1,8 +1,8 @@
 <?php
 
-namespace Test\Emailer;
+namespace Tests\Emailer;
 
-use PHPUnit_Framework_TestCase, Nette, Extras;
+use  Nette, Extras;
 
 
 require_once __DIR__ . '/../bootstrap.php';
@@ -10,7 +10,7 @@ require_once __DIR__ . '/../bootstrap.php';
 /**
  * @backupGlobals disabled
  */
-class BaseTest extends \PHPUnit_Framework_TestCase
+class BaseTest extends \Tests\TestCase
 {
 	public $context;
 	public $emailCompiler;
@@ -18,7 +18,6 @@ class BaseTest extends \PHPUnit_Framework_TestCase
 	public $userRepositoryAccessor;
 
 	protected function setUp() {
-		$this->context = Nette\Environment::getContext();
 		$this->emailCompiler = $this->context->emailCompiler;
 		$this->userServiceFactory = $this->context->userServiceFactory;
 		$this->userRepositoryAccessor = $this->context->userRepositoryAccessor;

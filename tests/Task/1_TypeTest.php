@@ -2,14 +2,14 @@
 
 namespace Autopilot;
 
-use PHPUnit_Framework_TestCase, Nette, Extras;
+use  Nette, Extras;
 
 require_once __DIR__ . '/../bootstrap.php';
 
 /**
  * @backupGlobals disabled
  */
-class BaseTest extends PHPUnit_Framework_TestCase
+class BaseTest extends \Tests\TestCase
 {
 	public $context;
 	public $model;
@@ -18,7 +18,6 @@ class BaseTest extends PHPUnit_Framework_TestCase
 	public $entityTechnicalName = 'totoSaMaloZmazat';
 
 	protected function setUp() {
-		$this->context = Nette\Environment::getContext();
 		$this->model = $this->context->model;
 		$this->typeRepository = $this->context->taskTypeRepository;
 	}

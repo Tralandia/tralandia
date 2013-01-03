@@ -2,21 +2,20 @@
 
 namespace FormMask\Items;
 
-use PHPUnit_Framework_TestCase, Nette, Extras, Service;
+use  Nette, Extras, Service;
 
 require_once __DIR__ . '/../../../bootstrap.php';
 
 /**
  * @backupGlobals disabled
  */
-class PhraseTest extends PHPUnit_Framework_TestCase
+class PhraseTest extends \Tests\TestCase
 {
 	public $context;
 	public $model;
 	public $language;
 
 	protected function setUp() {
-		$this->context = Nette\Environment::getContext();
 		$this->model = $this->context->model;
 		$this->language = $this->context->environment->getLanguage();
 	}

@@ -5,14 +5,13 @@ require_once __DIR__ . '/../bootstrap.php';
 /**
  * @backupGlobals disabled
  */
-class PhraseServiceTest extends PHPUnit_Framework_TestCase
+class PhraseServiceTest extends \Tests\TestCase
 {
 	public $context;
 	public $model;
 	public $language;
 
 	protected function setUp() {
-		$this->context = Nette\Environment::getContext();
 		$this->model = $this->context->model;
 		$this->language = $this->context->environment->getLanguage();
 	}

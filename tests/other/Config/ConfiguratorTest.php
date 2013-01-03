@@ -2,14 +2,14 @@
 
 namespace Config;
 
-use PHPUnit_Framework_TestCase, Nette, Extras;
+use  Nette, Extras;
 
 require_once __DIR__ . '/../../bootstrap.php';
 
 /**
  * @backupGlobals disabled
  */
-class ConfiguratorTest extends PHPUnit_Framework_TestCase
+class ConfiguratorTest extends \Tests\TestCase
 {
 	public $configPath;
 

@@ -5,14 +5,13 @@ require_once __DIR__ . '/../bootstrap.php';
 /**
  * @backupGlobals disabled
  */
-class ServiceFactoryTest extends PHPUnit_Framework_TestCase
+class ServiceFactoryTest extends \Tests\TestCase
 {
 	public $context;
 	public $taskRepository;
 	public $taskServiceFactory;
 
 	protected function setUp() {
-		$this->context = Nette\Environment::getContext();
 		$this->taskRepository = $this->context->taskRepository;
 		$this->taskServiceFactory = $this->context->taskServiceFactory;
 	}

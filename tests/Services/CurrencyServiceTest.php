@@ -5,13 +5,12 @@ require_once __DIR__ . '/../bootstrap.php';
 /**
  * @backupGlobals disabled
  */
-class CurrencyServiceTest extends PHPUnit_Framework_TestCase
+class CurrencyServiceTest extends \Tests\TestCase
 {
 	public $context;
 	public $model;
 
 	protected function setUp() {
-		$this->context = Nette\Environment::getContext();
 		$this->model = $this->context->model;
 	}
 

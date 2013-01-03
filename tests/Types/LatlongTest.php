@@ -1,8 +1,8 @@
 <?php
 
-namespace Test\Emailer;
+namespace Tests\Emailer;
 
-use PHPUnit_Framework_TestCase, Nette, Extras;
+use  Nette, Extras;
 
 
 require_once __DIR__ . '/../bootstrap.php';
@@ -10,7 +10,7 @@ require_once __DIR__ . '/../bootstrap.php';
 /**
  * @backupGlobals disabled
  */
-class LatlongTest extends \PHPUnit_Framework_TestCase
+class LatlongTest extends \Tests\TestCase
 {
 
 	public function testCompiler() {

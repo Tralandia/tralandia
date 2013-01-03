@@ -1,7 +1,7 @@
 <?php
-namespace Test\Router;
+namespace Tests\Router;
 
-use PHPUnit_Framework_TestCase, Nette, Extras;
+use  Nette, Extras;
 
 
 /**
@@ -15,7 +15,6 @@ class CustomRouterTest extends BaseRouterTest
 	public $userRepositoryAccessor;
 
 	protected function setUp() {
-		$this->context = Nette\Environment::getContext();
 		$this->mainRouteFactory = $this->context->mainRouteFactory;
 	}
 

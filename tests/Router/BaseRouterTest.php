@@ -1,13 +1,13 @@
 <?php
-namespace Test\Router;
+namespace Tests\Router;
 
-use PHPUnit_Framework_TestCase, Nette, Extras;
+use  Nette, Extras;
 
 
 /**
  * @backupGlobals disabled
  */
-abstract class BaseRouterTest extends \PHPUnit_Framework_TestCase
+abstract class BaseRouterTest extends \Tests\TestCase
 {
 
 	protected function routeInTest(Nette\Application\IRouter $route, $url, $expectedPresenter=NULL, $expectedParams=NULL, $expectedUrl=NULL)

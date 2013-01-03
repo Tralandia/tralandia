@@ -5,13 +5,12 @@ require_once __DIR__ . '/../bootstrap.php';
 /**
  * @backupGlobals disabled
  */
-class EntityFactoryTest extends PHPUnit_Framework_TestCase
+class EntityFactoryTest extends \Tests\TestCase
 {
 	public $context;
 	public $taskEntityFactory;
 
 	protected function setUp() {
-		$this->context = Nette\Environment::getContext();
 		$this->taskEntityFactory = $this->context->taskEntityFactory;
 	}
 
