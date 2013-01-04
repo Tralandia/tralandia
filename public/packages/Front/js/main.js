@@ -110,6 +110,12 @@ App.prototype.attachment = function(){
 	return false;
 }
 
+App.prototype.ticketMesageCannedSelect = function(){	
+	$(this).parent().find('textarea').remove();
+	$(this).parent().parent().find('a').remove();
+	return false;
+}
+
 App.prototype.uiSelectedTabs = function(){
 
 	var currentAnchor = this._getLocationUrlAnchor();
@@ -407,6 +413,9 @@ $(document).ready(function(){
 	
 	/* add attachment file  */
 	$('.attachment').click(A.attachment);
+
+	/**/
+	$('#ticketMesageCannedSelect').change(A.ticketMesageCannedSelect);
 
 	/* rental favorites list*/
 	$('.addToFavorites').click(A.addToFavorites);

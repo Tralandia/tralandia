@@ -14,6 +14,19 @@
 			.box-size();
 			height: 150px;
 		}
+
+		.half {
+			width: 46%;
+			float: left;
+
+			&:first-child {
+				width: 52%;
+				padding-right: 10px;
+				border-right: 1px solid @lightGreen;
+				margin-right: 10px;
+				.box-size();
+			}
+		}
 	}
 
 	&.admin {
@@ -22,14 +35,22 @@
 		}
 	}
 
+	select {
+		width: 100%;
+	}
+
 	.header {
 		background: #ddd;
 		.basic-gradient(@lightGreen,@darkGreen);
 		line-height: 30px;
 		padding: 0 10px;
 		color: #fff;
+
 		span {
-			float: right;
+			text-transform: uppercase;
+			&.time {
+				float: right;
+			}
 		}
 	}
 
@@ -37,7 +58,10 @@
 	.footer {
 		padding: 5px 10px;
 		background: @lightGreen;
-
+		clear: both;
+		button {
+			margin-left: 10px;
+		}
 		&.more {
 			padding: 0 10px;
 			background: none;
