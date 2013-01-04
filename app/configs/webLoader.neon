@@ -30,6 +30,7 @@ parameters:
 					- Front/object-detail-favorites.less
 					- Front/homepage-list.less
 					- FrontJqUi/css/tralandia/jquery-ui-1.9.1.custom.css
+					- Front/ticket.less
 					
 
 				js:
