@@ -35,6 +35,11 @@ class PresenterEdit extends \AdminModule\Forms\Form {
 		
 	}
 
+	public function setDefaultsValues()
+	{
+
+	}
+
 
 	public function onSuccess(PresenterEdit $form) {
 		$values = $this->getValues(TRUE);

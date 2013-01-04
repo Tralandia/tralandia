@@ -63,7 +63,7 @@ class PhraseEditForm extends \AdminModule\Forms\Form {
 		}
 	}
 
-	public function setDefaultValues() {
+	public function setDefaultsValues() {
 		$phrase = $this->phraseService->getEntity();
 		$toTranslation = $this->phraseService->getTranslation($this->toLanguage);
 		$this->setDefaults(array(

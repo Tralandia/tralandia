@@ -20,6 +20,10 @@ class In extends \BaseModule\Forms\BaseForm {
 		
 	}
 
+	public function setDefaultsValues()
+	{
+
+	}
 
 	public function onSuccess(In $form) {
 		$values = $form->getValues();

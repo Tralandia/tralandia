@@ -4,8 +4,8 @@ HOST="127.0.0.1"
 USER="root"
 PASS="root"
 
-if [ "$APPENV" = "durika" ]; then
-	SQLDUMP=~/Dropbox/nejakacesticka/new_dump.sql.gz
+if [ "$APPENV" = "david" ]; then
+	SQLDUMP=~/Dropbox/Work/TRA/Import/new_dump.sql.gz
 else
 	SQLDUMP=~/Dropbox/TRA/Import/new_dump.sql.gz
 fi

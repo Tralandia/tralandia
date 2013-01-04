@@ -19,6 +19,10 @@ class AdminForm extends Form {
 
 	}
 
+	public function setDefaultsValues()
+	{
+
+	}
 
 	public function getEnvironment() {
 		return $this->environment;

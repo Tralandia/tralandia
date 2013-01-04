@@ -38,6 +38,11 @@ class EntityEdit extends \AdminModule\Forms\Form {
 		
 	}
 
+	public function setDefaultsValues()
+	{
+
+	}
+
 	public function onSuccess(EntityEdit $form) {
 		$values = $this->getValues(TRUE);
 		debug($values);
