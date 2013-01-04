@@ -49,8 +49,9 @@ else
 	sudo chmod -R 777 $WORKING_DIR/public/storage
 fi
 
+php -f $WORKING_DIR/public/index.php orm:generate-proxies
+
 #@toto toto je tu len docasne!
 sudo rm -rf $WORKING_DIR/log/*
 sudo chmod -R 777 $WORKING_DIR/temp
 
-php -f $WORKING_DIR/public/index.php orm:generate-proxies
