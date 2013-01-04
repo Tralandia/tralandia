@@ -19,7 +19,7 @@ class ImportHtmlPhrases extends BaseImport {
 		$dictionaryType = $this->createPhraseType('Html', 'Html', 'MARKETING');
 
 		if ($this->developmentMode == TRUE) {
-			$r = q('select * from dictionary where text_type = 2 limit 20');
+			$r = q('select * from dictionary where text_type = 2');
 		} else {
 			$r = q('select * from dictionary where text_type = 2');
 		}

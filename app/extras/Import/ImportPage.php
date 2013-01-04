@@ -18,7 +18,11 @@ class ImportPage extends BaseImport {
 			'titlePattern' => array(
 				'sk' => 'Registrácia', 
 				'en' => 'Registration'
-			)
+			),
+			'name' => array(
+				'sk' => 'Registrácia', 
+				'en' => 'Registration'
+			),
 		),
 		array(
 			'destination' => ':Front:Sign:in', 
@@ -30,7 +34,11 @@ class ImportPage extends BaseImport {
 			'titlePattern' => array(
 				'sk' => 'Prihlásenie', 
 				'en' => 'Login'
-			)
+			),
+			'name' => array(
+				'sk' => 'Prihlásenie', 
+				'en' => 'Login'
+			),
 		),
 		array(
 			'destination' => ':Front:Sign:out', 
@@ -40,6 +48,10 @@ class ImportPage extends BaseImport {
 				'en' => 'Logout'
 			), 
 			'titlePattern' => array(
+				'sk' => 'Odhlásenie', 
+				'en' => 'Logout'
+			),
+			'name' => array(
 				'sk' => 'Odhlásenie', 
 				'en' => 'Logout'
 			)
@@ -279,6 +291,10 @@ class ImportPage extends BaseImport {
 
 			foreach ($page->h1Pattern->getTranslations() as $translation) {
 				$translation->translation = Arrays::get($pageData, array('h1Pattern', $translation->language->iso), '');
+			}
+
+			foreach ($page->name->getTranslations() as $translation) {
+				$translation->translation = Arrays::get($pageData, array('name', $translation->language->iso), '');
 			}
 
 			$model->persist($page);

@@ -53,7 +53,7 @@ class ImportUsers extends BaseImport {
 
 			$user->language = $en;
 
-			d($user);
+			//d($user);
 			$this->model->persist($user);
 		}
 

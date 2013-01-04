@@ -53,7 +53,7 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 		$languageList = $this->languageRepositoryAccessor->get()->findBySupported(TRUE);
 
 		$this->persistPagesSegments($languageList);
-		$this->persistAtractionTypesSegments($languageList);
+		//$this->persistAtractionTypesSegments($languageList);
 		$this->persistLocationsSegments();
 		$this->persistRentalTypesSegments($languageList);
 		$this->persistTagsSegments($languageList);
@@ -67,10 +67,13 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 
 		foreach ($languageList as $languageId => $language) {
 			foreach ($pages as $page) {
+				$thisPathSegment = $this->translate($page->name, $language);
+				if (Strings::length($thisPathSegment) == 0) continue;
+
 				$entity = $this->routingPathSegmentRepositoryAccessor->get()->createNew();
 				$entity->primaryLocation = NULL;
 				$entity->language = $language;
-				$entity->pathSegment = $this->translate($page->name, $language);
+				$entity->pathSegment = $thisPathSegment;
 				$entity->type = PathSegment::PAGE;
 				$entity->entityId = $page->id;
 

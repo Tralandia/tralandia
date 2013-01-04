@@ -152,12 +152,6 @@ class BaseImport {
 		// 	),
 		// 	'subsections' => array('importSeoUrls'),
 		// ),
-		'pathsegments' => array(
-			'entities' => array(
-				'\Routing\PathSegment' => array(),
-			),
-			'subsections' => array(),
-		),
 		// 'taskTypes' => array(
 		// 	'entities' => array(
 		// 		'\Task\Type' => array(),
@@ -185,6 +179,13 @@ class BaseImport {
 		),
 		'page' => array(
 			'entities' => array(
+			),
+			'subsections' => array(),
+			'saveImportStatus' => FALSE,
+		),
+		'pathsegments' => array(
+			'entities' => array(
+				'\Routing\PathSegment' => array(),
 			),
 			'subsections' => array(),
 			'saveImportStatus' => FALSE,
