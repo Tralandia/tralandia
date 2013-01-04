@@ -18,6 +18,7 @@ class FrontRouteFactory {
 	public $attractionRepositoryAccessor;
 	public $routingPathSegmentRepositoryAccessor;
 	public $domainRepositoryAccessor;
+	public $pageRepositoryAccessor;
 
 	public function __construct(Caching\Cache $cache, $hostPattern) {
 		list($this->cache, $this->hostPattern) = func_get_args();
@@ -31,6 +32,7 @@ class FrontRouteFactory {
 		$route->attractionRepositoryAccessor = $this->attractionRepositoryAccessor;
 		$route->routingPathSegmentRepositoryAccessor = $this->routingPathSegmentRepositoryAccessor;
 		$route->domainRepositoryAccessor = $this->domainRepositoryAccessor;
+		$route->pageRepositoryAccessor = $this->pageRepositoryAccessor;
 		return $route;
 	}
 

@@ -15,8 +15,7 @@ class FrontRouterTest extends BaseRouterTest
 	public $userRepositoryAccessor;
 
 	protected function setUp() {
-		$this->context = Nette\Environment::getContext();
-		$this->frontRouteFactory = $this->context->frontRouteFactory;
+		$this->frontRouteFactory = $this->getContext()->frontRouteFactory;
 	}
 
 	public function testCompiler() {

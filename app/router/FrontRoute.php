@@ -69,8 +69,9 @@ class FrontRoute implements Nette\Application\IRouter {
 	public $domainRepositoryAccessor;
 	public $rentalTagRepositoryAccessor;
 	public $rentalAmenityRepositoryAccessor;
+	public $pageRepositoryAccessor;
 	public $phraseDecoratorFactory;
-	
+
 	public function __construct(Caching\Cache $cache, $mode)
 	{
 		//$this->metadata = $metadata;
@@ -174,16 +175,21 @@ class FrontRoute implements Nette\Application\IRouter {
 
 		if(count($pathSegments)) {
 			$segmentList = $this->getPathSegmentList($pathSegments, $params);
-			foreach ($segmentList as $key => $value) {
-				$params->{$key} = $value;
-				// if($value->type == static::$pathSegmentTypes['attractionType']) {
-				// 	$params->presenter = 'Attraction';
-				// } else if($value->type == static::$pathSegmentTypes['rentalType']) {
-				// 	$params->presenter = 'Rental';
-				// }
+			if(array_key_exists('page', $segmentList)) {
+				$page = $segmentList['page'];
+				list( , , $params->presenter, $params->action) = array_filter(explode(':', $page->destination));
+			} else {
+				foreach ($segmentList as $key => $value) {
+					$params->{$key} = $value;
+					// if($value->type == static::$pathSegmentTypes['attractionType']) {
+					// 	$params->presenter = 'Attraction';
+					// } else if($value->type == static::$pathSegmentTypes['rentalType']) {
+					// 	$params->presenter = 'Rental';
+					// }
+				}
+				$params->presenter = 'Rental';
+				$params->action = 'list';
 			}
-			 $params->presenter = 'Rental';
-			 $params->action = 'list';
 		} else {
 			$segmentList = array();
 		}
@@ -278,7 +284,14 @@ class FrontRoute implements Nette\Application\IRouter {
 			}
 			ksort($segments);
 		} else {
-			return NULL;
+			$destination = ':Front:'.$presenter.':'.$action;
+			if($page = $this->pageRepositoryAccessor->get()->findOneByDestination($destination)) {
+				$paramsTemp = $params;
+				$paramsTemp['page'] = $page->id;
+				$segments['page'] = $this->getSegmentById('page', $paramsTemp);
+			} else {
+				return NULL;
+			}
 		}
 
 		$host = $this->buildHost($language, $country, $refUrl);

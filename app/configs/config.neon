@@ -215,6 +215,7 @@ factories:
 			- $pageRepositoryAccessor(@pageRepositoryAccessor)
 			- $rentalTagRepositoryAccessor(@rentalTagRepositoryAccessor)
 			- $rentalAmenityRepositoryAccessor(@rentalAmenityRepositoryAccessor)
+			- $pageRepositoryAccessor(@pageRepositoryAccessor)
 			- $phraseDecoratorFactory(@phraseDecoratorFactory)
 		implement: Routers\IFrontRouteFactory
 
