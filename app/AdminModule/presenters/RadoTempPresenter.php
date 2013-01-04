@@ -25,6 +25,12 @@ class RadoTempPresenter extends BasePresenter {
 
 	protected $polygonService;
 
+	/**
+	 * @autowire
+	 * @var Service\Statistics\RentalRegistrations
+	 */
+	protected $rentalRegistrationsStats;
+
 	public function injectBaseRepositories(\Nette\DI\Container $dic) {
 		$this->languageRepositoryAccessor = $dic->languageRepositoryAccessor;
 		$this->locationRepositoryAccessor = $dic->locationRepositoryAccessor;
@@ -198,6 +204,10 @@ class RadoTempPresenter extends BasePresenter {
 
 			$response->next();
 		}
+	}
+
+	public function actionStatsRegistrations() {
+		d($this->rentalRegistrationsStats->getData());
 	}
 
 

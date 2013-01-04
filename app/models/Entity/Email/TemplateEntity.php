@@ -32,12 +32,6 @@ class Template extends \Entity\BaseEntity {
 	 */
 	protected $body;
 
-	/**
-	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Batch", mappedBy="template")
-	 */
-	protected $batches;
-
 	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		

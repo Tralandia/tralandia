@@ -166,10 +166,14 @@ services:
 	itemCheckboxFactory: Extras\FormMask\Items\Foctories\CheckboxFactory
 	itemTinymceFactory: Extras\FormMask\Items\Foctories\TinymceFactory
 
+	# ==============================
+	# ==================== SERVICES
+	# ==============================
 	googleGeocodeService: GoogleGeocodeServiceV3(@googleServiceCommunicator)
 	googleServiceCommunicator: CurlCommunicator
 
 	polygonService: Service\PolygonService
+	rentalRegistrationsStats: Service\Statistics\RentalRegistrations(@rentalRepositoryAccessor::get(), @locationRepositoryAccessor::get())
 
 factories: 
 	# ==============================

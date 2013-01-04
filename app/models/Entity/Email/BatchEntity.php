@@ -19,12 +19,6 @@ class Batch extends \Entity\BaseEntityDetails {
 	protected $confirmed;
 
 	/**
-	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Template", inversedBy="batches")
-	 */
-	protected $template;
-
-	/**
 	 * @var integer
 	 * @ORM\Column(type="integer")
 	 */

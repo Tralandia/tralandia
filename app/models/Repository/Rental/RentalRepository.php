@@ -57,4 +57,25 @@ class RentalRepository extends \Repository\BaseRepository {
 		return $qb->getQuery()->getOneOrNullResult();
 	}
 
+	public function getCounts(\Entity\Location\Location $primaryLocation = NULL, $live = FALSE, $dateFrom = FALSE, $dateTo = FALSE) {
+		$qb = $this->_em->createQueryBuilder();
+
+		$qb->select($qb->expr()->count())
+			->from($this->_entityName, 'r');
+		if ($primaryLocation) {
+			$qb->where($qb->expr()->eq('r.primaryLocation', $location->id));
+		}
+		if ($live) {
+			$qb->andWhere($qb->expr()->eq('r.status', \Entity\Rental\Rental::STATUS_LIVE));
+		}
+		if ($dateFrom && $dateTo) {
+			$qb->andWhere($qb->expr()->gte('r.created', '?1'));
+			$qb->andWhere($qb->expr()->lt('r.created', '?2'));
+			$qb->setParameter(1, new \Nette\DateTime(), \Doctrine\DBAL\Types\Type::DATETIME);
+			$qb->setParameter(2, new \Nette\DateTime(), \Doctrine\DBAL\Types\Type::DATETIME);
+		}
+
+		return $qb->getQuery()->getResult();
+	}
+
 }

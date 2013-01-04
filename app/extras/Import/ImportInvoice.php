@@ -60,9 +60,9 @@ class ImportInvoice extends BaseImport {
 
 		// Import pending invoices
 		if ($this->developmentMode == TRUE) {
-			$r = q('select * from invoicing_invoices_pending where companies_id NOT IN (1,2) AND client_country_id = 46 order by id');
+			$r = q('select * from invoicing_invoices_pending where companies_id NOT IN (1,2) AND time_created > '.(time()-(3*30*24*60*60)).' AND client_country_id = 46 order by id');
 		} else {
-			$r = q('select * from invoicing_invoices_pending where companies_id NOT IN (1,2) order by id');
+			$r = q('select * from invoicing_invoices_pending where companies_id NOT IN (1,2) AND time_created > '.(time()-(3*30*24*60*60)).' order by id');
 		}
 		
 		while($x = mysql_fetch_array($r)) {

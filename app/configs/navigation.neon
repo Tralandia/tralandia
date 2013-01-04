@@ -1,13 +1,5 @@
 common:
 	left: # lava starana
-		telmark:
-			label: TelMark
-			items: # ak ma potomkov
-				telmarkOpen: # 2. uroven
-					label: Open TelMark
-					link: ':Admin:TelMark:'
-
-
 		support:
 			label: Support
 			items:
@@ -19,14 +11,14 @@ common:
 				ticket: 
 					label: All Tickets
 					link: ':Admin:Ticket:list'
+					separator: true
 
-				mailerResponse: 
-					label: Mailer Responses
-					link: ':Admin:mailerResponse'
-				cannedResponse: 
-					label: Canned Responses
-					link: ':Admin:cannedResponse:list'
-
+				faqCategory: 
+					label: FAQ Categories
+					link: ':Admin:FaqCategory:list'
+				faqQuestion: 
+					label: FAQ Questions
+					link: ':Admin:FaqQuestion:list'
 
 		statistics:
 			label: Statistics #@todo
@@ -69,6 +61,15 @@ common:
 				rental: 
 					label: All Rentals
 					link: ':Admin:RentalRental:list'
+				information: 
+					label: Rental Information
+					link: ':Admin:RentalInformation:list'
+				interviewQuestion: 
+					label: Interview Questions
+					link: ':Admin:RentalInterviewQuestion:list'
+				interviewAnswer: 
+					label: Interview Answers
+					link: ':Admin:RentalInterviewAnswer:list'
 				reservation: 
 					label: Reservations
 					link: ':Admin:VisitorInteraction:list'
@@ -82,6 +83,10 @@ common:
 				rentalType: 
 					label: Rental Types
 					link: ':Admin:RentalType:list'
+					separator: true
+				roomType: 
+					label: Room Types
+					link: ':Admin:RentalRoomType:list'
 					separator: true
 				interactionType: 
 					label: Interaction Types
@@ -109,13 +114,6 @@ common:
 							link: ':Admin:InvoiceInvoice:list'
 							linkArgs:
 								filter: overdue
-				expense: 
-					label: Expenses
-					link: ':Admin:ExpenseExpense:list'
-					items:
-						type: 
-							label: Types
-							link: ':Admin:ExpenseType:list'
 				package: 
 					label: Packages
 					link: ':Admin:InvoicePackage:list'
@@ -134,18 +132,19 @@ common:
 					separator: true
 
 		phrase:
-			label: Phrase
+			label: Dictionary
 			items:
-				addPhrase: 
-					label: Add Phrase
-					link: ':Admin:Phrase:add'
 				phrase: 
 					label: Phrases
 					link: ':Admin:Phrase:list'
 				phraseType: 
 					label: Phrase Types
 					link: ':Admin:PhraseType:list'
+				addPhrase: 
+					label: Add Phrase
+					link: ':Admin:Phrase:add'
 				language: 
+					separator: true
 					label: Languages
 					link: ':Admin:Language:list'
 
@@ -170,28 +169,23 @@ common:
 				# 		type: 
 				# 			label: Attraction Types
 				# 			link: ':Admin:AttractionType:list'
-				language: 
-					separator: true
-					label: Languages
-					link: ':Admin:Language:list'
 				location: 
 					label: Locations
-					items:
-						location: 
-							label: All Locations
-							link: ':Admin:Location:list'
-						type: 
-							label: Location Types
-							link: ':Admin:LocationType:list'
+					link: ':Admin:Location:list'
+				locationType: 
+					label: Location Types
+					link: ':Admin:LocationType:list'
+					separator: true
+				tag: 
+					label: Tags
+					link: ':Admin:RentalTag:list'
 				amenity: 
 					label: Amenities
-					items:
-						amenity: 
-							label: All Amenities
-							link: ':Admin:RentalAmenity:list'
-						type: 
-							label: Amenity Types
-							link: ':Admin:RentalAmenityType:list'
+					link: ':Admin:RentalAmenity:list'
+				amenityType: 
+					label: Amenity Types
+					link: ':Admin:RentalAmenityType:list'
+					separator: true
 				currency: 
 					label: Currencies
 					link: ':Admin:Currency:list'
