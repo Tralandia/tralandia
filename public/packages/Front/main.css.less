@@ -1427,13 +1427,18 @@ border-top-right-radius: 5px;
 
 
 .tabs table.tableDefault {
-	width: 100%;
+	width: 467px;
 	margin: 0;
+	box-size();
+	float: left;
 	td , th {
 		font-size: 13px;
 		padding: 8px;
 	}
 
+	&:first-child {
+		margin-right: 10px;
+	}
 
 }
 

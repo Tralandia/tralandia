@@ -405,43 +405,35 @@ $(document).ready(function(){
 			<div id="pricetable">
 				<table class="table table-striped tableDefault marginBottom">
 					<thead>
-						<tr>
-							
-							<th>#roomType name</th>
-							<th>{_o772}</th>
-							<th>{_o940}</th>
-							<th>{_o1158}</th>
-							<th>{_o1015}</th>
+						<tr>							
+							<th colspan="5">{_o1015}</th>
 						</tr>
 					</thead>
 					<tbody>
 					{foreach $rental->pricelistRows as $pricelistRow}
 						<tr>
-						<td>{_$pricelistRow->roomType->name}</td>
-						<td>{$pricelistRow->roomCount}</td>
-						<td>{$pricelistRow->bedCount}</td>
-						<td>{$pricelistRow->extraBedCount}</td>
-						<td>{$pricelistRow->price}</td>
+						<td>{_$pricelistRow->roomType->name}: </td>
+						<td>{$pricelistRow->roomCount} "-#krat"</td>
+						<td>{$pricelistRow->bedCount} "{_o940}"</td>
+						<td>{if $pricelistRow->extraBedCount}{$pricelistRow->extraBedCount} "{_o1158}"{/if}</td>
+						<td>{$pricelistRow->price} #mena</td>
 						</tr>
 					{/foreach}
 					</tbody>
 				</table>
-				<br/>
+				
 
 				<table class="table table-striped tableDefault marginTop">
 					<thead>
-						<tr>
-							
-							<th>{_o957}</th>
-							<th>{_o956}</th>
-							<th>{_o955}</th>
+						<tr>							
+							<th>{_o933}</th>
 						</tr>
 					</thead>
 					<tbody>
 					{foreach $rental->pricelists as $pricelist}
 						<tr>
-						<td>{$pricelist->name}</td>
-						<td>{_$pricelist->language->name}</td>
+						<td>{if $pricelist->name}{_o957} {$pricelist->name}{/if}</td>
+						<td>{_o956} {_$pricelist->language->name}</td>
 						<td><a href="{$pricelist->filePath}">{_o955}</a></td>
 						</tr>
 					{/foreach}
