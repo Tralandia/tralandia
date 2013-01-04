@@ -92,7 +92,7 @@
 	<div class="span5">
 
 		<h1 class="addToViewList" id="{$rental->id}">{_$rental->name}</h1>
-		
+
 		<a href="{link Rental:list location => $rental->address->locality , rentalType => $rental->type }"><b>{_$rental->address->locality->name}</b></a>
 
 		{dump $rental}
@@ -400,39 +400,54 @@ $(document).ready(function(){
 					{/foreach}
 				</ul>
 				<div class="clearfix"></div>
-			</div>	
-			
+			</div>				
+
 			<div id="pricetable">
-				<table class="table table-striped tableDefault">
+				<table class="table table-striped tableDefault marginBottom">
 					<thead>
 						<tr>
-							<th>Header</th>
-							<th>Header</th>
-							<th>Header</th>
-							<th>Header</th>
+							
+							<th>#roomType name</th>
+							<th>{_o772}</th>
+							<th>{_o940}</th>
+							<th>{_o1158}</th>
+							<th>{_o1015}</th>
 						</tr>
 					</thead>
 					<tbody>
+					{foreach $rental->pricelistRows as $pricelistRow}
 						<tr>
-							<td>Value </td>
-							<td>Value </td>
-							<td>Neco ine</td>
-							<td>Neco ine</td>
+						<td>{_$pricelistRow->roomType->name}</td>
+						<td>{$pricelistRow->roomCount}</td>
+						<td>{$pricelistRow->bedCount}</td>
+						<td>{$pricelistRow->extraBedCount}</td>
+						<td>{$pricelistRow->price}</td>
 						</tr>
-						<tr>
-							<td>Value </td>
-							<td>Value </td>
-							<td>Neco ine</td>
-							<td>Neco ine</td>
-						</tr>
-						<tr>
-							<td>Value </td>
-							<td>Value </td>
-							<td>Neco ine</td>
-							<td>Neco ine</td>
-						</tr>
+					{/foreach}
 					</tbody>
 				</table>
+				<br/>
+
+				<table class="table table-striped tableDefault marginTop">
+					<thead>
+						<tr>
+							
+							<th>{_o957}</th>
+							<th>{_o956}</th>
+							<th>{_o955}</th>
+						</tr>
+					</thead>
+					<tbody>
+					{foreach $rental->pricelists as $pricelist}
+						<tr>
+						<td>{$pricelist->name}</td>
+						<td>{_$pricelist->language->name}</td>
+						<td><a href="{$pricelist->filePath}">{_o955}</a></td>
+						</tr>
+					{/foreach}
+					</tbody>
+				</table>
+
 			</div>					
 
 			<div id="interviewAnswers">
