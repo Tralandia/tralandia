@@ -91,9 +91,9 @@ class RentalSearchService extends Nette\Object
 		$this->reorderResults();
 
 		if ($page === NULL) {
-			return $results;
+			return $this->results;
 		} else {
-			$results = array_chunk($results, self::COUNT_PER_PAGE);
+			$results = array_chunk($this->results, self::COUNT_PER_PAGE);
 			return isset($results[$page]) ? $results[$page] : NULL;
 		}
 	}
