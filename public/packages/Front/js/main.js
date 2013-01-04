@@ -100,12 +100,15 @@ App.prototype.uiTabsClickChangeHashAdress = function(){
 		$('#map_canvas').traMap();	
 	}
 
-	
-
-
 }
 
-
+App.prototype.attachment = function(){
+	var forInput = $(this).attr('for');
+	$(forInput).show();
+	$(this).html('<i class="entypo-attachment"></i>');
+	$(forInput).click();
+	return false;
+}
 
 App.prototype.uiSelectedTabs = function(){
 
@@ -399,13 +402,11 @@ $(document).ready(function(){
 	$('.loadContactForm').click(A.loadContactForm);
 	
 	/* UI calendar */
-
-
 	$(".datepickerIcon").click(A.datepickerIcon);
-
 	$('.accordion').accordion({ autoHeight: false , active: false , navigation: true, collapsible: true });
 	
-
+	/* add attachment file  */
+	$('.attachment').click(A.attachment);
 
 	/* rental favorites list*/
 	$('.addToFavorites').click(A.addToFavorites);
