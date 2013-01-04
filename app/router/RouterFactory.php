@@ -32,8 +32,8 @@ class RouterFactory
 	 */
 	public function create()
 	{
-		$this->defaultLanguage = $this->languageRepositoryAccessor->get()->find($this->defaultLanguage);
-		$this->defaultPrimaryLocation = $this->locationRepositoryAccessor->get()->find($this->defaultPrimaryLocation);
+		$this->defaultLanguage = $this->languageRepositoryAccessor->get()->findOneByOldId($this->defaultLanguage);
+		$this->defaultPrimaryLocation = $this->locationRepositoryAccessor->get()->findOneByOldId($this->defaultPrimaryLocation);
 
 		$router = new RouteList();
 

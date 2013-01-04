@@ -53,7 +53,6 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm {
 		$this->addText('clientName', 'Client name');
 		$this->addSelect('clientCountry', 'Client country', $countries);
 
-		$this->onSuccess[] = callback($this, 'process');
 	}
 
 	public function setDefaultsValues()
@@ -62,11 +61,6 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm {
 			'country' => $this->country->id,
 			'clientCountry' => $this->country->id,
 		]);
-	}
-
-	public function process(ReservationForm $form)
-	{
-		$values = $form->getValues();
 	}
 
 }
