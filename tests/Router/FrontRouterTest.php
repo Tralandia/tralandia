@@ -28,6 +28,8 @@ class FrontRouterTest extends BaseRouterTest
 			'language' => 144,
 		), 'http://www.sk.tra.com/registracia');
 
+		$this->routeIn($route, 'http://www.sk.tra.com/ticket', NULL);
+
 		$this->routeIn($route, 'http://www.sk.tra.com/nitra', 'Rental', array(
 			'action' => 'list',
 			'country' => 58,

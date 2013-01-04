@@ -175,20 +175,19 @@ class FrontRoute implements Nette\Application\IRouter {
 
 		if(count($pathSegments)) {
 			$segmentList = $this->getPathSegmentList($pathSegments, $params);
-			if(array_key_exists('page', $segmentList)) {
-				$page = $segmentList['page'];
-				list( , , $params->presenter, $params->action) = array_filter(explode(':', $page->destination));
-			} else {
-				foreach ($segmentList as $key => $value) {
-					$params->{$key} = $value;
-					// if($value->type == static::$pathSegmentTypes['attractionType']) {
-					// 	$params->presenter = 'Attraction';
-					// } else if($value->type == static::$pathSegmentTypes['rentalType']) {
-					// 	$params->presenter = 'Rental';
-					// }
+			if(count($segmentList)) {
+				if(array_key_exists('page', $segmentList)) {
+					$page = $segmentList['page'];
+					list( , , $params->presenter, $params->action) = array_filter(explode(':', $page->destination));
+				} else {
+					foreach ($segmentList as $key => $value) {
+						$params->{$key} = $value;
+					}
+					$params->presenter = 'Rental';
+					$params->action = 'list';
 				}
-				$params->presenter = 'Rental';
-				$params->action = 'list';
+			} else {
+				$segmentList = array();
 			}
 		} else {
 			$segmentList = array();
