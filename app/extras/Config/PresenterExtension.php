@@ -18,6 +18,8 @@ class PresenterExtension extends Nette\Config\CompilerExtension
 			$prefix = substr($file->getBasename(), 0, -5);
 			$params = Nette\Utils\Neon::decode(file_get_contents($path));
 
+debug($params);
+
 			$builder->addDefinition($this->prefix($prefix))
 				->setClass('Nette\Config\Extensions\NetteAccessor', array('@container', $this->prefix($prefix)));
 
@@ -43,6 +45,8 @@ class PresenterExtension extends Nette\Config\CompilerExtension
 				}
 			}
 		}
+
+		exit;
 	}
 
 	/**

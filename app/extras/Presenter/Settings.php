@@ -21,7 +21,7 @@ class PresenterSettings extends \Nette\Object {
 	
 	public static function factory(DI\Container $container) {
 		$presenter = $container->getService('application')->getPresenter();
-		return new self($presenter, $container->params['settingsDir']);
+		return new self($presenter, $container->parameters['settingsDir']);
 	}
 	
 	public function __construct($presenter, $settingsDir) {

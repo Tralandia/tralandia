@@ -27,10 +27,10 @@ class WaccoPresenter extends BasePresenter {
 		debug($phoneBook->find($phone));
 */
 
-		$repo = $this->context->model->getRepository('Entity\Test');
-		$entity = $repo->createNew();
-		$this->context->model->persist($entity);
-		$this->template->form = $this->getForm('test', $entity);
+		// $repo = $this->context->model->getRepository('Entity\Test');
+		// $entity = $repo->createNew();
+		// $this->context->model->persist($entity);
+		// $this->template->form = $this->getForm('test', $entity);
 	}
 
 	public function actionList2() {

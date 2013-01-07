@@ -84,9 +84,9 @@ services:
 	console: @doctrine.console
 	model: @doctrine.entityManagers.default
 
-	# nette.presenterFactory:
-		# class: Extras\DynamicPresenterFactory
-		# factory: Extras\DynamicPresenterFactory::factory
+	nette.presenterFactory:
+		factory: Extras\Presenter\Factory::factory(%appDir%, %tempDir%/presenters, @container)
+		class: Extras\Presenter\Factory
 
 	user:
 		class: Security\User

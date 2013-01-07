@@ -26,7 +26,6 @@ grid:
 			cellStyle: text-align:right;
 			headerStyle: text-align:right;
 
-
 form:
 	fields:
 		name:

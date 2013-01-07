@@ -40,11 +40,10 @@ if (isset($_SERVER['REDIRECT_URL']) && ($_SERVER['REDIRECT_URL'] == '/admin/impo
 	$section = 'import';
 }
 
-if($section) {
+if ($section) {
 	$configurator->addConfig(APP_DIR . '/configs/'.$section.'.config.neon');
 }
 $configurator->onCompile[] = function ($configurator, $compiler) {
-	Extras\PresenterGenerator::generate();
 	$compiler->addExtension('gpspicker', new VojtechDobes\NetteForms\GpsPickerExtension);
 };
 $container = $configurator->createContainer();
