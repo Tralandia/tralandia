@@ -134,8 +134,6 @@ App.prototype.uiSelectedTabs = function(){
 		active: currentIndex
 	};
 
-	
-
 	if(currentIndex == 3) {
 		/* large map plugin */
 		$('#map_canvas').traMap();
@@ -354,15 +352,6 @@ App.prototype.loadContactForm = function(){
 	$('#contentForForm').hide();
 	$('#contactFormCover').show();
 
-	//var $myTabs = $('.mytabUi');
-	//var $myContentDiv = $myTabs.find('div#tabs-4');
-
-	//var existText = $myContentDiv.html();
-
-	//$myContentDiv.html('');
-
-	//$myContentDiv.append($Form);
-
 	return false;
 }
 
@@ -404,6 +393,10 @@ $(document).ready(function(){
 	/* UI tabs */
 	$( ".tabs" ).tabs(A.uiSelectedTabs());
 	$( ".tabs ul li a" ).click(A.uiTabsClickChangeHashAdress);
+	$(window).bind('hashchange', function() {
+	  $( ".tabs" ).tabs(A.uiSelectedTabs());
+	});
+
 
 	$('.loadContactForm').click(A.loadContactForm);
 	
@@ -414,7 +407,7 @@ $(document).ready(function(){
 	/* add attachment file  */
 	$('.attachment').click(A.attachment);
 
-	/**/
+	/* http://www.sk.tra.com/ticket/ */
 	$('#ticketMesageCannedSelect').change(A.ticketMesageCannedSelect);
 
 	/* rental favorites list*/
