@@ -103,7 +103,7 @@ services:
 
 	environment: 
 		class: Extras\Environment(@application::getRequests(), @languageRepositoryAccessor, @locationRepositoryAccessor)
-	translator: Extras\Translator(@environment, @phraseRepositoryAccessor, @translatorCache)
+	translator: @translatorFactory::create(@environment::getLanguage())
 
 	settings:
 		factory: Extras\PresenterSettings::factory
@@ -257,6 +257,10 @@ factories:
 	updateRentalSearchCacheRobotFactory:
 		class: Service\Robot\UpdateRentalSearchCacheRobot(%location%)
 		implement: Service\Robot\IUpdateRentalSearchCacheRobotFactory
+
+	translatorFactory:
+		class: Extras\Translator(%language%, @phraseRepositoryAccessor, @translatorCache)
+		implement: Extras\ITranslatorFactory
 
 	itemMapFactory: Extras\FormMask\Items\Foctories\MapFactory
 	itemEmailFactory: Extras\FormMask\Items\Foctories\EmailFactory

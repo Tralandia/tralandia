@@ -4,6 +4,7 @@ namespace Extras;
 
 use Nette\Caching;
 use Nette\Utils\Strings;
+use Entity\Language;
 use Model\Phrase\IPhraseDecoratorFactory;
 
 class Translator implements \Nette\Localization\ITranslator {
@@ -15,15 +16,19 @@ class Translator implements \Nette\Localization\ITranslator {
 	protected $phraseRepositoryAccessor;
 	protected $phraseDecoratorFactory;
 
-	public function __construct(Environment $environment,
-								$phraseRepositoryAccessor,
-								Caching\Cache $translatorCache,
-								IPhraseDecoratorFactory $phraseDecoratorFactory)
-	{
-		$this->language = $environment->getLanguage();
+
+	public function __construct(Language $language, $phraseRepositoryAccessor, Caching\Cache $translatorCache,
+								IPhraseDecoratorFactory $phraseDecoratorFactory) {
+		$this->language = $language;
 		$this->phraseRepositoryAccessor = $phraseRepositoryAccessor;
 		$this->phraseDecoratorFactory = $phraseDecoratorFactory;
 		$this->cache = $translatorCache;
+	}
+
+	public function setLanguage(Language $language)
+	{
+        $this->language = $language;
+		return $this;
 	}
 	
 	public function translate($phrase, $note = NULL, array $variation = NULL, array $variables = NULL)
