@@ -168,6 +168,11 @@ services:
 	polygonService: Service\PolygonService
 	rentalRegistrationsStats: Service\Statistics\RentalRegistrations(@rentalRepositoryAccessor::get(), @locationRepositoryAccessor::get())
 
+	# ==============================
+	# ==================== FORMS HANDLERS
+	# ==============================
+	registrationHandler: FormHandler\RegistrationHandler
+
 factories: 
 	# ==============================
 	# ==================== FORMS

@@ -58,8 +58,8 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm {
 	public function setDefaultsValues()
 	{
 		$this->setDefaults([
-			'country' => $this->country->id,
-			'clientCountry' => $this->country->id,
+			'country' => $this->country->getId(),
+			'clientCountry' => $this->country->getId(),
 		]);
 	}
 

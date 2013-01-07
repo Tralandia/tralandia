@@ -1,7 +1,14 @@
 <?php
 
+namespace FormHandler;
+
+use Nette;
+use Nette\Application\UI\Form;
+use Nette\Forms\Controls\SubmitButton;
+
 abstract class FormHandler extends Nette\Object
 {
+
 	public function attach(Form $form)
 	{
 		$self = $this;
@@ -32,7 +39,7 @@ abstract class FormHandler extends Nette\Object
 			$button->onClick[] = function (SubmitButton $button) use ($self) {
 				$form = $button->form;
 				try {
-					$self->handleClick($button, $form->getValues());
+					$self->handleClick($form->getValues());
 
 				} catch (ValidationError $e) {
 					foreach ($e->errors as $error) {
@@ -45,49 +52,9 @@ abstract class FormHandler extends Nette\Object
 		if (method_exists($this, 'handleInvalidClick')) {
 			$button->onInvalidClick[] = function (SubmitButton $button) use ($self) {
 				$form = $button->form;
-				$self->handleInvalidClick($button, $form->getValues());
+				$self->handleInvalidClick($form->getValues());
 			};
 		}
 	}
+
 }
-
-class RegistrationHandler extends FormHandler
-{
-	public $onFoo = array();
-	public $onBar = array();
-
-	public function handleSuccess($values)
-	{
-		$error = new ValidationError;
-
-		if ($values->name != "Valid") {
-			$error->addError("Name is invalid", 'name');
-		}
-
-		$error->assertValid();
-		$this->model->save($values);
-	}
-}
-
-
-class ValidationError extends \Exception
-{
-	public $errors = array();
-
-	public function addError($error, $controlName = NULL)
-	{
-		$this->errors[] = array('message' => $error, 'control' => $controlName);
-		return $this;
-	}
-
-	public function assertValid()
-	{
-		if ($this->errors) { throw $this; }
-	}
-}
-
-$form = new Form;
-$handler = new RegistrationHandler();
-$handler->attach($form);
-$handler->attachButton($form->addSubmit('send', "Odeslat"));
-$handler->attachButton($form->addSubmit('send2', "Odeslat 2"));
