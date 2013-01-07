@@ -100,27 +100,12 @@ class LocationService extends Service\BaseService {
 		$this->polygonService->setRentalsForLocation($this->getEntity());
 	}
 
-	public function getParent($slug = NULL) 
+	/**
+	 * @deprecated
+	 */
+	public function getParent($slug = NULL)
 	{
-		if($slug === NULL) {
-			return $this->getEntity()->parent;
-		} else {
-			return $this->_getParent($this->getEntity()->parent, $slug);
-		}
-	}
-	
-	protected function _getParent($parentLocation, $slug)
-	{
-		if(!$parentLocation instanceof \Entity\Location\Location) {
-			return NULL;
-		}
-		
-		if($slug == $parentLocation->type->slug) {
-			return $parentLocation;
-		} else {
-			return $this->_getParent($parentLocation->parent, $slug);
-		}
+		throw \Exception('This method is deprecated. Use $locationEntity::getParent');
 	}
 
-	
 }

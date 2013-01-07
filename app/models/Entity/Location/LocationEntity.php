@@ -10,7 +10,7 @@ use	Extras\Annotation as EA;
  * @ORM\Entity(repositoryClass="Repository\Location\LocationRepository")
  * @ORM\Table(name="location", indexes={@ORM\index(name="name", columns={"name_id"}), @ORM\index(name="slug", columns={"slug"}), @ORM\index(name="latitude", columns={"latitude"}), @ORM\index(name="longitude", columns={"longitude"})})
  * @EA\Primary(key="id", value="slug")
- * @EA\Generator(skip="{setSlug}")
+ * @EA\Generator(skip="{setSlug, getParent}")
 */
 class Location extends \Entity\BaseEntityDetails {
 
@@ -164,9 +164,50 @@ class Location extends \Entity\BaseEntityDetails {
 	protected $rentalCount;
 
 
+	/**
+	 * @return bool
+	 */
 	public function isPrimary() {
 		return (bool)$this->isPrimary;
 	}
+
+
+	/**
+	 * @param string|null $slug
+	 *
+	 * @return Location|null
+	 */
+	public function getParent($slug = NULL)
+	{
+		/** @var $parent \Entity\Location\Location | NULL */
+		$parent = $this->parent;
+		if(!$parent) return NULL;
+
+		if($slug === NULL) {
+			return $parent;
+		} else if ($slug == $parent->getType()->getSlug()) {
+			return $parent;
+		} else {
+			return $parent->getParent($slug);
+		}
+	}
+
+	/**
+	 * @return Location|null
+	 */
+	public function getPrimaryParent()
+	{
+		/** @var $parent \Entity\Location\Location | NULL */
+		$parent = $this->parent;
+		if(!$parent) return NULL;
+
+		if($parent->isPrimary()) {
+			return $parent;
+		} else {
+			return $parent->getPrimaryParent();
+		}
+	}
+
 
 	/**
 	 * @param string
@@ -306,14 +347,6 @@ class Location extends \Entity\BaseEntityDetails {
 		$this->parent = NULL;
 
 		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Location\Location|NULL
-	 */
-	public function getParent()
-	{
-		return $this->parent;
 	}
 		
 	/**
