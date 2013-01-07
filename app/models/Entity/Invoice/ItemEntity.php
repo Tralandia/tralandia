@@ -2,7 +2,6 @@
 
 namespace Entity\Invoice;
 
-use Entity\Attraction;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

@@ -30,7 +30,6 @@ class ImportSeo extends BaseImport {
 		$languagesByOldId = getNewIdsByOld('\Language');
 
 		// Note: we don't import those 40 texts written for object_type pages, becuase we can't pair them properly...
-		// Note: attraction_id - tiez neimportujeme, musi sa to spravit zvlast tym, ze sa tie descriptions naimportuju uz do entity atraction...
 		$r = q('SELECT seo_urls.* 
 			FROM seo_urls LEFT JOIN seo_urls_texts ON seo_urls_texts.seo_url_id = seo_urls.id 
 			WHERE length(seo_urls_texts.description) > 0 AND object_type_id = 0 AND attraction_id = 0
@@ -71,14 +70,6 @@ class ImportSeo extends BaseImport {
 				$tag = $context->rentalAmenityRepositoryAccessor->get()->findOneBy(array('type'=>$tagType, 'oldId'=>$x['tag_id']));
 				if ($tag) {
 					$seoUrl->tag = $tag;
-				}
-			}
-
-			// Attraction Type
-			if ($x['attraction_type_id'] > 0) {
-				$attractionType = $context->attractionTypeRepositoryAccessor->get()->findOneByOldId($x['attraction_type_id']);
-				if ($attractionType) {
-					$seoUrl->attractionType = $attractionType;
 				}
 			}
 

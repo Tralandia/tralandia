@@ -1,18 +1,5 @@
 services:
 
-	#attraction
-	#----------
-	attractionRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Attraction\Attraction')
-
-	attractionTypeRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Attraction\Type')
-
-
-	#company
-	#----------
-	companyBankAccountRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Company\BankAccount')
-	companyRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Company\Company')
-
-
 	#contact
 	#----------
 	contactCacheRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\ContactCache')
@@ -36,7 +23,6 @@ services:
 
 	#email
 	#----------
-	emailBatchRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Email\Batch')
 	emailTemplateRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Email\Template')
 	emailLayoutRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Email\Layout')
 
@@ -142,13 +128,6 @@ services:
 	seoSeoUrlRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Seo\SeoUrl')
 	seoTitleSuffixRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Seo\TitleSuffix')
 
-
-	#task
-	#----------
-	taskRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Task\Task')
-	taskTypeRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Task\Type')
-
-
 	#ticket
 	#----------
 	ticketMessageRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Ticket\Message')
@@ -158,13 +137,11 @@ services:
 	#user
 	#----------
 	userRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\User\User')
-	userCombinationRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\User\Combination')
 	userRentalReservationRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\User\RentalReservation')
 	userRentalReviewRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\User\RentalReview')
 	userRentalToFriendRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\User\RentalToFriend')
 	userRoleRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\User\Role')
-	userSiteOwnerReviewRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\User\SiteOwnerReview')
-	userSiteVisitorReviewRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\User\SiteVisitorReview')
+	userSiteReviewRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\User\SiteReview')
 
 factories:
 
@@ -187,10 +164,6 @@ factories:
 	mediumDecoratorFactory: 
 		class: Service\Medium\MediumService(..., %entity%)
 		implement: Model\Medium\IMediumDecoratorFactory
-
-	taskDecoratorFactory: 
-		class: Service\Task\TaskService(..., %entity%)
-		implement: Model\Task\ITaskDecoratorFactory
 
 	phraseDecoratorFactory: 
 		class: Service\Phrase\PhraseService(..., %entity%)

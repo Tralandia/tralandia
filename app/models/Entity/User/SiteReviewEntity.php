@@ -67,7 +67,7 @@ class SiteReview extends \Entity\BaseEntity {
 		
 	/**
 	 * @param \Entity\Language
-	 * @return \Entity\User\SiteOwnerReview
+	 * @return \Entity\User\SiteReview
 	 */
 	public function setLanguage(\Entity\Language $language)
 	{
@@ -77,7 +77,7 @@ class SiteReview extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\User\SiteOwnerReview
+	 * @return \Entity\User\SiteReview
 	 */
 	public function unsetLanguage()
 	{
@@ -96,21 +96,21 @@ class SiteReview extends \Entity\BaseEntity {
 		
 	/**
 	 * @param \Entity\Location\Location
-	 * @return \Entity\User\SiteOwnerReview
+	 * @return \Entity\User\SiteReview
 	 */
-	public function setLocation(\Entity\Location\Location $location)
+	public function setPrimaryLocation(\Entity\Location\Location $primaryLocation)
 	{
-		$this->location = $location;
+		$this->primaryLocation = $primaryLocation;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Entity\User\SiteOwnerReview
+	 * @return \Entity\User\SiteReview
 	 */
-	public function unsetLocation()
+	public function unsetPrimaryLocation()
 	{
-		$this->location = NULL;
+		$this->primaryLocation = NULL;
 
 		return $this;
 	}
@@ -118,14 +118,33 @@ class SiteReview extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Location\Location|NULL
 	 */
-	public function getLocation()
+	public function getPrimaryLocation()
 	{
-		return $this->location;
+		return $this->primaryLocation;
+	}
+		
+	/**
+	 * @param \Entity\Rental\Rental
+	 * @return \Entity\User\SiteReview
+	 */
+	public function setRental(\Entity\Rental\Rental $rental)
+	{
+		$this->rental = $rental;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Rental\Rental|NULL
+	 */
+	public function getRental()
+	{
+		return $this->rental;
 	}
 		
 	/**
 	 * @param string
-	 * @return \Entity\User\SiteOwnerReview
+	 * @return \Entity\User\SiteReview
 	 */
 	public function setSenderEmail($senderEmail)
 	{
@@ -144,7 +163,7 @@ class SiteReview extends \Entity\BaseEntity {
 		
 	/**
 	 * @param string
-	 * @return \Entity\User\SiteOwnerReview
+	 * @return \Entity\User\SiteReview
 	 */
 	public function setSenderName($senderName)
 	{
@@ -163,7 +182,7 @@ class SiteReview extends \Entity\BaseEntity {
 		
 	/**
 	 * @param string
-	 * @return \Entity\User\SiteOwnerReview
+	 * @return \Entity\User\SiteReview
 	 */
 	public function setTestimonial($testimonial)
 	{
@@ -182,7 +201,7 @@ class SiteReview extends \Entity\BaseEntity {
 		
 	/**
 	 * @param integer
-	 * @return \Entity\User\SiteOwnerReview
+	 * @return \Entity\User\SiteReview
 	 */
 	public function setStatus($status)
 	{

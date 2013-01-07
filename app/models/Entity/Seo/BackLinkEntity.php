@@ -2,7 +2,6 @@
 
 namespace Entity\Seo;
 
-use Entity\Attraction;
 use Entity\Phrase;
 use Entity\Location;
 use Entity\Medium;

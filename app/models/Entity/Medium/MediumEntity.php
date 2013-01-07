@@ -3,7 +3,6 @@
 namespace Entity\Medium;
 
 use Entity\Phrase;
-use Entity\Attraction;
 use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
 
@@ -25,13 +24,6 @@ class Medium extends \Entity\BaseEntityDetails {
 	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
 	 */
 	protected $name;
-
-	/**
-	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Attraction\Attraction", inversedBy="media")
-	 * @ORM\JoinColumn(onDelete="CASCADE")
-	 */
-	protected $attraction;
 
 	/**
 	 * @var Collection
@@ -119,35 +111,6 @@ class Medium extends \Entity\BaseEntityDetails {
 	public function getName()
 	{
 		return $this->name;
-	}
-		
-	/**
-	 * @param \Entity\Attraction\Attraction
-	 * @return \Entity\Medium\Medium
-	 */
-	public function setAttraction(\Entity\Attraction\Attraction $attraction)
-	{
-		$this->attraction = $attraction;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Medium\Medium
-	 */
-	public function unsetAttraction()
-	{
-		$this->attraction = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Attraction\Attraction|NULL
-	 */
-	public function getAttraction()
-	{
-		return $this->attraction;
 	}
 		
 	/**

@@ -34,7 +34,7 @@ class RouterCaching extends \Nette\Object {
 		$this->generateLocation();
 		$this->generateRentalType();
 		$this->generateTag();
-		$this->generateAttractionType();
+		//$this->generateAttractionType();
 	}
 
 	public function generatePage() {
@@ -46,14 +46,14 @@ class RouterCaching extends \Nette\Object {
 		$this->cache->save('page', $cache);
 	}
 
-	public function generateAttractionType() {
-		$data = qNew('select * from routing_pathsegment where type = '.$this->pathSegmentTypes['attractionType']);
-		$cache = array();
-		while ($l = mysql_fetch_assoc($data)) {
-			$cache[$l['language_id']][$l['entityId']] = $l['pathSegment'];
-		}
-		$this->cache->save('attractionType', $cache);
-	}
+	// public function generateAttractionType() {
+	// 	$data = qNew('select * from routing_pathsegment where type = '.$this->pathSegmentTypes['attractionType']);
+	// 	$cache = array();
+	// 	while ($l = mysql_fetch_assoc($data)) {
+	// 		$cache[$l['language_id']][$l['entityId']] = $l['pathSegment'];
+	// 	}
+	// 	$this->cache->save('attractionType', $cache);
+	// }
 
 	public function generateLocation() {
 		$data = qNew('select * from routing_pathsegment where type = '.$this->pathSegmentTypes['location']);

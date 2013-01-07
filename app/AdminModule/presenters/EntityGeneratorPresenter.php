@@ -22,7 +22,6 @@ class EntityGeneratorPresenter extends BasePresenter {
 	// }
 
 	public function actionDefault($id) {
-		//d($this->context->taskRepository);
 		$id = str_replace('-', '\\', $id);
 		$entityDir = APP_DIR . '/models/Entity/';
 		$menu = array();
@@ -101,7 +100,7 @@ class EntityGeneratorPresenter extends BasePresenter {
 		}
 		$this->flashMessage($messageSuccess);
 		//d($messageSuccess);
-		$this->redirect('EntityGenerator:default', array('id' => 'Entity-Company-Company'));
+		$this->redirect('EntityGenerator:default', array('id' => 'Entity-Currency'));
 	}
 
 	public function generateNewClass($mainEntity) {

@@ -215,8 +215,6 @@ class Location extends \Entity\BaseEntityDetails {
 	{
 		parent::__construct();
 
-		$this->bankAccounts = new \Doctrine\Common\Collections\ArrayCollection;
-		$this->companies = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->primaryRentals = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->addresses = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->backLinks = new \Doctrine\Common\Collections\ArrayCollection;
@@ -509,70 +507,6 @@ class Location extends \Entity\BaseEntityDetails {
 	public function getClickMapData()
 	{
 		return $this->clickMapData;
-	}
-		
-	/**
-	 * @param \Entity\Company\BankAccount
-	 * @return \Entity\Location\Location
-	 */
-	public function addBankAccount(\Entity\Company\BankAccount $bankAccount)
-	{
-		if(!$this->bankAccounts->contains($bankAccount)) {
-			$this->bankAccounts->add($bankAccount);
-		}
-
-		return $this;
-	}
-		
-	/**
-	 * @param \Entity\Company\BankAccount
-	 * @return \Entity\Location\Location
-	 */
-	public function removeBankAccount(\Entity\Company\BankAccount $bankAccount)
-	{
-		$this->bankAccounts->removeElement($bankAccount);
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Company\BankAccount
-	 */
-	public function getBankAccounts()
-	{
-		return $this->bankAccounts;
-	}
-		
-	/**
-	 * @param \Entity\Company\Company
-	 * @return \Entity\Location\Location
-	 */
-	public function addCompany(\Entity\Company\Company $company)
-	{
-		if(!$this->companies->contains($company)) {
-			$this->companies->add($company);
-		}
-
-		return $this;
-	}
-		
-	/**
-	 * @param \Entity\Company\Company
-	 * @return \Entity\Location\Location
-	 */
-	public function removeCompany(\Entity\Company\Company $company)
-	{
-		$this->companies->removeElement($company);
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Company\Company
-	 */
-	public function getCompanies()
-	{
-		return $this->companies;
 	}
 		
 	/**

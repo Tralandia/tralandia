@@ -1,25 +1,3 @@
-bankAccounts_show:
-	guest: allow
-	visitor: deny
-	potentialowner: deny
-	owner: deny
-	translator: deny
-	assistant: deny
-	vendor: deny
-	manager: deny
-	admin: deny
-	
-bankAccounts_edit:
-	guest: allow
-	visitor: deny
-	potentialowner: deny
-	owner: deny
-	translator: deny
-	assistant: deny
-	vendor: deny
-	manager: deny
-	admin: deny
-	
 countries_show:
 	guest: allow
 	visitor: deny

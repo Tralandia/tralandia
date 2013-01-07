@@ -3,7 +3,6 @@
 namespace Entity\Rental;
 
 use Entity\Phrase;
-use Entity\Attraction;
 use Doctrine\ORM\Mapping as ORM;
 
 use	Extras\Annotation as EA;

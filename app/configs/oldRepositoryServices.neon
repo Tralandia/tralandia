@@ -1,19 +1,9 @@
 services:
-	attractionRepository: @model::getRepository('Entity\Attraction\Attraction')
-
-	attractionTypeRepository: @model::getRepository('Entity\Attraction\Type')
-
-	companyBankAccountRepository: @model::getRepository('Entity\Company\BankAccount')
-
-	companyRepository: @model::getRepository('Entity\Company\Company')
-
 	contactCacheRepository: @model::getRepository('Entity\ContactCache')
 
 	currencyRepository: @model::getRepository('Entity\Currency')
 
 	domainRepository: @model::getRepository('Entity\Domain')
-
-	emailBatchRepository: @model::getRepository('Entity\Email\Batch')
 
 	emailTemplateRepository: @model::getRepository('Entity\Email\Template')
 
@@ -83,10 +73,6 @@ services:
 
 	seoTitleSuffixRepository: @model::getRepository('Entity\Seo\TitleSuffix')
 
-	taskRepository: @model::getRepository('Entity\Task\Task')
-
-	taskTypeRepository: @model::getRepository('Entity\Task\Type')
-
 	ticketMessageRepository: @model::getRepository('Entity\Ticket\Message')
 
 	ticketRepository: @model::getRepository('Entity\Ticket\Ticket')
@@ -108,22 +94,11 @@ services:
 	userRepository: @model::getRepository('Entity\User\User')
 
 	# Entities
-
-	attractionEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Attraction\Attraction')
-
-	attractionTypeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Attraction\Type')
-
-	companyBankAccountEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Company\BankAccount')
-
-	companyEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Company\Company')
-
 	contactCacheEntityFactory: Extras\Models\Entity\EntityFactory('Entity\ContactCache')
 
 	currencyEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Currency')
 
 	domainEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Domain')
-
-	emailBatchEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Email\Batch')
 
 	emailTemplateEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Email\Template')
 
@@ -190,10 +165,6 @@ services:
 	seoSeoUrlEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Seo\SeoUrl')
 
 	seoTitleSuffixEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Seo\TitleSuffix')
-
-	taskEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Task\Task')
-
-	taskTypeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Task\Type')
 
 	ticketMessageEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Ticket\Message')
 

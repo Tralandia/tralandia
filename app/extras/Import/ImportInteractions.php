@@ -110,17 +110,24 @@ class ImportInteractions extends BaseImport {
 		return TRUE;
 	}
 
-	public function importSiteOwnerReviews() {
+	public function importSiteReviews() {
 		if ($this->developmentMode == TRUE) {
-			$r = q('select * from testimonials where from_type = "client" limit 100');
+			$r = q('select * from testimonials limit 100');
 		} else {
-			$r = q('select * from testimonials where from_type = "client" order by id');
+			$r = q('select * from testimonials order by id');
 		}
 
 		while($x = mysql_fetch_array($r)) {
-			$interaction = $this->context->userSiteOwnerReviewEntityFactory->create();
+			$interaction = $this->context->userSiteReviewRepositoryAccessor->get()->createNew();
 			$interaction->language = $this->context->languageRepositoryAccessor->get()->find($this->languagesByOldId[$x['language_id']]);
 			$interaction->location = $this->context->locationRepositoryAccessor->get()->find($this->locationsByOldId[$x['country_id']]);
+
+			if ($x['from_type'] == 'client') {
+				$t = $this->context->userRepositoryAccessor->get()->findOneByLogin($x['from_email']);
+				d($t); exit;
+				$interaction->rental = $this->context->rentalRepositoryAccessor->get()->findOneByUser($t);
+			}
+
 
 			$interaction->senderEmail = $x['from_email'];
 			$interaction->senderName = $x['from_name'];
@@ -137,31 +144,4 @@ class ImportInteractions extends BaseImport {
 		return TRUE;
 	}
 
-	public function importSiteVisitorReviews() {
-		if ($this->developmentMode == TRUE) {
-			$r = q('select * from testimonials where from_type = "visitor" limit 100');
-		} else {
-			$r = q('select * from testimonials where from_type = "visitor" order by id');
-		}
-
-		while($x = mysql_fetch_array($r)) {
-			$interaction = $this->context->userSiteOwnerReviewEntityFactory->create();
-			$interaction->language = $this->context->languageRepositoryAccessor->get()->find($this->languagesByOldId[$x['language_id']]);
-			$interaction->location = $this->context->locationRepositoryAccessor->get()->find($this->locationsByOldId[$x['country_id']]);
-
-			$interaction->senderEmail = $x['from_email'];
-			$interaction->senderName = $x['from_name'];
-
-			$interaction->testimonial = $x['testimonial'];
-			$interaction->status = $x['live'] == 1 ? $interaction::STATUS_APROVED : $interaction::STATUS_PENDING;
-
-			$interaction->oldId = $x['id'];
-
-			$interaction->created = fromStamp($x['date_added']);
-			$this->model->persist($interaction);
-		}
-		$this->model->flush();
-
-		return TRUE;
-	}
 }

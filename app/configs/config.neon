@@ -131,20 +131,13 @@ services:
 		setup:
 			- $rentalImageDir(%rentalImageDir%)
 
-	autopilot:
-		class: Service\Autopilot\Autopilot
-		setup:
-			- $taskRepository(@taskRepositoryAccessor)
-			- $taskTypeRepository(@taskTypeRepositoryAccessor)
-			- $taskServiceFactory(@taskDecoratorFactory)
+	# taskManager:
+	# 	class: Service\TaskManager\TaskManager
+	# 	setup:
+	# 		- addScanner(@missingTranslationsScanner)
 
-	taskManager:
-		class: Service\TaskManager\TaskManager
-		setup:
-			- addScanner(@missingTranslationsScanner)
-
-	missingTranslationsScanner:
-		class: Service\TaskManager\MissingTranslationsScanner(@autopilot, @phraseTranslationRepositoryAccessor, @languageRepositoryAccessor)
+	# missingTranslationsScanner:
+	# 	class: Service\TaskManager\MissingTranslationsScanner(@autopilot, @phraseTranslationRepositoryAccessor, @languageRepositoryAccessor)
 
 	generatePathSegmentsRobot: Service\Robot\GeneratePathSegmentsRobot
 	createMissingTranslationsRobot: Service\Robot\CreateMissingTranslationsRobot
@@ -216,8 +209,6 @@ factories:
 			- $languageRepositoryAccessor(@languageRepositoryAccessor)
 			- $rentalRepositoryAccessor(@rentalRepositoryAccessor)
 			- $rentalTypeRepositoryAccessor(@rentalTypeRepositoryAccessor)
-			- $attractionRepositoryAccessor(@attractionRepositoryAccessor)
-			- $attractionTypeRepositoryAccessor(@attractionTypeRepositoryAccessor)
 			- $routingPathSegmentRepositoryAccessor(@routingPathSegmentRepositoryAccessor)
 			- $domainRepositoryAccessor(@domainRepositoryAccessor)
 			- $pageRepositoryAccessor(@pageRepositoryAccessor)

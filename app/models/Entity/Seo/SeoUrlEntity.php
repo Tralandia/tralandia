@@ -2,7 +2,6 @@
 
 namespace Entity\Seo;
 
-use Entity\Attraction;
 use Entity\Phrase;
 use Entity\Location;
 use Entity\Medium;
@@ -40,12 +39,6 @@ class SeoUrl extends \Entity\BaseEntity {
 	 * @ORM\ManyToOne(targetEntity="Entity\Rental\Amenity")
 	 */
 	protected $tag;
-
-	/**
-	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Attraction\Type")
-	 */
-	protected $attractionType;
 
 	/**
 	 * @var Collection
@@ -208,35 +201,6 @@ class SeoUrl extends \Entity\BaseEntity {
 	public function getTag()
 	{
 		return $this->tag;
-	}
-		
-	/**
-	 * @param \Entity\Attraction\Type
-	 * @return \Entity\Seo\SeoUrl
-	 */
-	public function setAttractionType(\Entity\Attraction\Type $attractionType)
-	{
-		$this->attractionType = $attractionType;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Seo\SeoUrl
-	 */
-	public function unsetAttractionType()
-	{
-		$this->attractionType = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Attraction\Type|NULL
-	 */
-	public function getAttractionType()
-	{
-		return $this->attractionType;
 	}
 		
 	/**

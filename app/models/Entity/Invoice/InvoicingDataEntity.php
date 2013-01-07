@@ -2,7 +2,6 @@
 
 namespace Entity\Invoice;
 
-use Entity\Company;
 use Entity\Phrase;
 use Entity\Rental;
 use Doctrine\ORM\Mapping as ORM;

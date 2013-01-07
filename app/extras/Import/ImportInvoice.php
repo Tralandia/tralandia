@@ -15,7 +15,6 @@ use Nette\Application as NA,
 
 class ImportInvoice extends BaseImport {
 
-	public $companiesByOldId;
 	public $rentalsByOldId;
 	public $serviceTypesByOldId;
 	public $countryTypeId;
@@ -31,7 +30,6 @@ class ImportInvoice extends BaseImport {
 		// Invoices
 		//$invoiceNameType = $this->createPhraseType('\Invoice\ServiceDuration', 'name', 'supportedLanguages', 'ACTIVE');
 
-		$this->companiesByOldId = getNewIdsByOld('\Company\Company');
 
 		$this->rentalsByOldId = getNewIdsByOld('\Rental\Rental');
 		$this->serviceTypesByOldId = getNewIdsByOld('\Invoice\ServiceType');
@@ -122,7 +120,6 @@ class ImportInvoice extends BaseImport {
 		$this->model->persist($clientInvoicingData);
 
 		$invoice->clientInvoicingData = $clientInvoicingData;
-		d($clientInvoicingData);
 
 		// Our invoicing data
 		$companyData = qf('select * from companies where id = '.$x['companies_id']);
@@ -145,8 +142,6 @@ class ImportInvoice extends BaseImport {
 		$this->model->persist($ourInvoicingData);
 
 		$invoice->ourInvoicingData = $ourInvoicingData;
-		d($ourInvoicingData);
-		exit();
 
 		$invoice->vat = (float)$x['vat'];
 		$invoice->createdBy = $x['created_by'];

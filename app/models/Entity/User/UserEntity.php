@@ -74,12 +74,7 @@ class User extends \Entity\BaseEntityDetails {
 	{
 		parent::__construct();
 
-		$this->phones = new \Doctrine\Common\Collections\ArrayCollection;
-		$this->emails = new \Doctrine\Common\Collections\ArrayCollection;
-		$this->urls = new \Doctrine\Common\Collections\ArrayCollection;
-		$this->combinations = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->rentals = new \Doctrine\Common\Collections\ArrayCollection;
-		$this->tasks = new \Doctrine\Common\Collections\ArrayCollection;
 	}
 		
 	/**
@@ -199,137 +194,6 @@ class User extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @param string
-	 * @return \Entity\User\User
-	 */
-	public function setName($name)
-	{
-		$this->name = $name;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\User\User
-	 */
-	public function unsetName()
-	{
-		$this->name = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return string|NULL
-	 */
-	public function getName()
-	{
-		return $this->name;
-	}
-		
-	/**
-	 * @param \Entity\Contact\Phone
-	 * @return \Entity\User\User
-	 */
-	public function addPhone(\Entity\Contact\Phone $phone)
-	{
-		if(!$this->phones->contains($phone)) {
-			$this->phones->add($phone);
-		}
-		$phone->addUser($this);
-
-		return $this;
-	}
-		
-	/**
-	 * @param \Entity\Contact\Phone
-	 * @return \Entity\User\User
-	 */
-	public function removePhone(\Entity\Contact\Phone $phone)
-	{
-		$this->phones->removeElement($phone);
-		$phone->removeUser($this);
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Contact\Phone
-	 */
-	public function getPhones()
-	{
-		return $this->phones;
-	}
-		
-	/**
-	 * @param \Entity\Contact\Email
-	 * @return \Entity\User\User
-	 */
-	public function addEmail(\Entity\Contact\Email $email)
-	{
-		if(!$this->emails->contains($email)) {
-			$this->emails->add($email);
-		}
-		$email->addUser($this);
-
-		return $this;
-	}
-		
-	/**
-	 * @param \Entity\Contact\Email
-	 * @return \Entity\User\User
-	 */
-	public function removeEmail(\Entity\Contact\Email $email)
-	{
-		$this->emails->removeElement($email);
-		$email->removeUser($this);
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Contact\Email
-	 */
-	public function getEmails()
-	{
-		return $this->emails;
-	}
-		
-	/**
-	 * @param \Entity\Contact\Url
-	 * @return \Entity\User\User
-	 */
-	public function addUrl(\Entity\Contact\Url $url)
-	{
-		if(!$this->urls->contains($url)) {
-			$this->urls->add($url);
-		}
-		$url->addUser($this);
-
-		return $this;
-	}
-		
-	/**
-	 * @param \Entity\Contact\Url
-	 * @return \Entity\User\User
-	 */
-	public function removeUrl(\Entity\Contact\Url $url)
-	{
-		$this->urls->removeElement($url);
-		$url->removeUser($this);
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Contact\Url
-	 */
-	public function getUrls()
-	{
-		return $this->urls;
-	}
-		
-	/**
 	 * @param \Entity\Language
 	 * @return \Entity\User\User
 	 */
@@ -356,59 +220,6 @@ class User extends \Entity\BaseEntityDetails {
 	public function getLanguage()
 	{
 		return $this->language;
-	}
-		
-	/**
-	 * @param \Entity\Invoice\InvoicingData
-	 * @return \Entity\User\User
-	 */
-	public function setInvoicingData(\Entity\Invoice\InvoicingData $invoicingData)
-	{
-		$this->invoicingData = $invoicingData;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Invoice\InvoicingData|NULL
-	 */
-	public function getInvoicingData()
-	{
-		return $this->invoicingData;
-	}
-		
-	/**
-	 * @param \Entity\User\Combination
-	 * @return \Entity\User\User
-	 */
-	public function addCombination(\Entity\User\Combination $combination)
-	{
-		if(!$this->combinations->contains($combination)) {
-			$this->combinations->add($combination);
-		}
-		$combination->setUser($this);
-
-		return $this;
-	}
-		
-	/**
-	 * @param \Entity\User\Combination
-	 * @return \Entity\User\User
-	 */
-	public function removeCombination(\Entity\User\Combination $combination)
-	{
-		$this->combinations->removeElement($combination);
-		$combination->unsetUser();
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\User\Combination
-	 */
-	public function getCombinations()
-	{
-		return $this->combinations;
 	}
 		
 	/**
@@ -443,38 +254,6 @@ class User extends \Entity\BaseEntityDetails {
 	public function getRentals()
 	{
 		return $this->rentals;
-	}
-		
-	/**
-	 * @param \Entity\Task\Task
-	 * @return \Entity\User\User
-	 */
-	public function addTask(\Entity\Task\Task $task)
-	{
-		if(!$this->tasks->contains($task)) {
-			$this->tasks->add($task);
-		}
-
-		return $this;
-	}
-		
-	/**
-	 * @param \Entity\Task\Task
-	 * @return \Entity\User\User
-	 */
-	public function removeTask(\Entity\Task\Task $task)
-	{
-		$this->tasks->removeElement($task);
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Task\Task
-	 */
-	public function getTasks()
-	{
-		return $this->tasks;
 	}
 		
 	/**
@@ -533,92 +312,5 @@ class User extends \Entity\BaseEntityDetails {
 	public function getNewsletterNews()
 	{
 		return $this->newsletterNews;
-	}
-		
-	/**
-	 * @param boolean
-	 * @return \Entity\User\User
-	 */
-	public function setBanned($banned)
-	{
-		$this->banned = $banned;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\User\User
-	 */
-	public function unsetBanned()
-	{
-		$this->banned = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return boolean|NULL
-	 */
-	public function getBanned()
-	{
-		return $this->banned;
-	}
-		
-	/**
-	 * @param boolean
-	 * @return \Entity\User\User
-	 */
-	public function setFull($full)
-	{
-		$this->full = $full;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\User\User
-	 */
-	public function unsetFull()
-	{
-		$this->full = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return boolean|NULL
-	 */
-	public function getFull()
-	{
-		return $this->full;
-	}
-		
-	/**
-	 * @param boolean
-	 * @return \Entity\User\User
-	 */
-	public function setSpam($spam)
-	{
-		$this->spam = $spam;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\User\User
-	 */
-	public function unsetSpam()
-	{
-		$this->spam = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return boolean|NULL
-	 */
-	public function getSpam()
-	{
-		return $this->spam;
 	}
 }

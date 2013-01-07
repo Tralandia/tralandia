@@ -2,7 +2,6 @@
 
 namespace Entity\Invoice;
 
-use Entity\Company;
 use Entity\Phrase;
 use Entity\Rental;
 use Doctrine\ORM\Mapping as ORM;
@@ -191,35 +190,6 @@ class Invoice extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Company\Company
-	 * @return \Entity\Invoice\Invoice
-	 */
-	public function setCompany(\Entity\Company\Company $company)
-	{
-		$this->company = $company;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Invoice\Invoice
-	 */
-	public function unsetCompany()
-	{
-		$this->company = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Company\Company|NULL
-	 */
-	public function getCompany()
-	{
-		return $this->company;
-	}
-		
-	/**
 	 * @param \Entity\Rental\Rental
 	 * @return \Entity\Invoice\Invoice
 	 */
@@ -300,9 +270,9 @@ class Invoice extends \Entity\BaseEntity {
 	 * @param \Entity\Invoice\InvoicingData
 	 * @return \Entity\Invoice\Invoice
 	 */
-	public function setInvoicingData(\Entity\Invoice\InvoicingData $invoicingData)
+	public function setClientInvoicingData(\Entity\Invoice\InvoicingData $clientInvoicingData)
 	{
-		$this->invoicingData = $invoicingData;
+		$this->clientInvoicingData = $clientInvoicingData;
 
 		return $this;
 	}
@@ -310,9 +280,28 @@ class Invoice extends \Entity\BaseEntity {
 	/**
 	 * @return \Entity\Invoice\InvoicingData|NULL
 	 */
-	public function getInvoicingData()
+	public function getClientInvoicingData()
 	{
-		return $this->invoicingData;
+		return $this->clientInvoicingData;
+	}
+		
+	/**
+	 * @param \Entity\Invoice\InvoicingData
+	 * @return \Entity\Invoice\Invoice
+	 */
+	public function setOurInvoicingData(\Entity\Invoice\InvoicingData $ourInvoicingData)
+	{
+		$this->ourInvoicingData = $ourInvoicingData;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Invoice\InvoicingData|NULL
+	 */
+	public function getOurInvoicingData()
+	{
+		return $this->ourInvoicingData;
 	}
 		
 	/**

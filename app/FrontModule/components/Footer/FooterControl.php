@@ -5,12 +5,12 @@ use Nette\Application\UI\Control;
 
 class FooterControl extends \BaseModule\Components\BaseControl {
 
-	public $userSiteOwnerReviewRepositoryAccessor;
+	public $userSiteReviewRepositoryAccessor;
 	public $rentalRepositoryAccessor;
 	public $location;
 
 	public function inject(\Nette\DI\Container $dic) {
-		$this->userSiteOwnerReviewRepositoryAccessor = $dic->userSiteOwnerReviewRepositoryAccessor;
+		$this->userSiteReviewRepositoryAccessor = $dic->userSiteReviewRepositoryAccessor;
 		$this->rentalRepositoryAccessor = $dic->rentalRepositoryAccessor;
 	}
 
@@ -25,7 +25,7 @@ class FooterControl extends \BaseModule\Components\BaseControl {
 		$template->setFile(dirname(__FILE__) . '/template.latte');
 		$template->setTranslator($this->presenter->getService('translator'));
 		
-		$testimonials = $this->userSiteOwnerReviewRepositoryAccessor->get()->findBy(array('location' => $this->location), array('id' => 'DESC'), 2);
+		$testimonials = $this->userSiteReviewRepositoryAccessor->get()->findBy(array('location' => $this->location), array('id' => 'DESC'), 2);
 		$template->testimonials = $testimonials;
 
 		$lastRegisteredObjects = $this->rentalRepositoryAccessor->get()->findBy(array('primaryLocation' => $this->location), array('id' => 'DESC'), 5);

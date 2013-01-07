@@ -170,25 +170,6 @@ class Message extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param boolean
-	 * @return \Entity\Ticket\Message
-	 */
-	public function setTranslated($translated)
-	{
-		$this->translated = $translated;
-
-		return $this;
-	}
-		
-	/**
-	 * @return boolean|NULL
-	 */
-	public function getTranslated()
-	{
-		return $this->translated;
-	}
-		
-	/**
 	 * @param \Entity\Medium\Medium
 	 * @return \Entity\Ticket\Message
 	 */

@@ -74,7 +74,6 @@ class BaseImport {
 		'users' => array(
 			'entities' => array(
 				'\User\User' => array(),
-				'\User\Combination' => array(),
 			),
 			'subsections' => array('importSuperAdmins', 'importAdmins', 'importManagers', 'importTranslators', 'importOwners'/*, 'importPotentialOwners'*/, 'importVisitors'),
 		),
@@ -116,13 +115,6 @@ class BaseImport {
 			'subsections' => array(),
 			'saveImportStatus' => FALSE,
 		),
-		// 'attractions' => array(
-		// 	'entities' => array(
-		// 		'\Attraction\Type' => array(),
-		// 		'\Attraction\Attraction' => array(),
-		// 	),
-		// 	'subsections' => array(),
-		// ),
 		'interactions' => array(
 			'entities' => array(
 				'\User\RentalReservation' => array(),
@@ -131,7 +123,7 @@ class BaseImport {
 				'\User\SiteOwnerReview' => array(),
 				'\User\SiteVisitorReview' => array(),
 			),
-			'subsections' => array('importRentalReservations', 'importRentalToFriend', 'importSiteOwnerReviews', 'importSiteVisitorReviews'),
+			'subsections' => array('importRentalReservations', 'importRentalToFriend', 'importSiteReviews'),
 		),
 		'email' => array(
 			'entities' => array(

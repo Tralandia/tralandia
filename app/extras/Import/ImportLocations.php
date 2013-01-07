@@ -15,7 +15,6 @@ use Nette\Application as NA,
 	Extras\Types\Price,
 	Extras\Types\Latlong,
 	Extras\Types\Json,
-	Service\Autopilot\Autopilot as AP,
 	Service\Log as SLog;
 
 class ImportLocations extends BaseImport {

@@ -80,18 +80,18 @@ class ImportPage extends BaseImport {
 				'en' => 'Worldwide entals'
 			)
 		),
-		array(
-			'destination' => ':Front:Attraction:detail', 
-			'hash' => '/attraction',
-			'h1Pattern' => array(
-				'sk' => '[attraction]', 
-				'en' => '[attraction]'
-			), 
-			'titlePattern' => array(
-				'sk' => '[attraction]', 
-				'en' => '[attraction]'
-			)
-		),
+		// array(
+		// 	'destination' => ':Front:Attraction:detail', 
+		// 	'hash' => '/attraction',
+		// 	'h1Pattern' => array(
+		// 		'sk' => '[attraction]', 
+		// 		'en' => '[attraction]'
+		// 	), 
+		// 	'titlePattern' => array(
+		// 		'sk' => '[attraction]', 
+		// 		'en' => '[attraction]'
+		// 	)
+		// ),
 		array(
 			'destination' => ':Front:Rental:detail', 
 			'hash' => '/rental',

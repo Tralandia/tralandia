@@ -40,12 +40,6 @@ class Phone extends \Entity\BaseEntity {
 	 */
 	protected $rentals;
 
-	/**
-	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\User\User", inversedBy="phones")
-	 */
-	protected $users;
-
 	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -54,7 +48,6 @@ class Phone extends \Entity\BaseEntity {
 		parent::__construct();
 
 		$this->rentals = new \Doctrine\Common\Collections\ArrayCollection;
-		$this->users = new \Doctrine\Common\Collections\ArrayCollection;
 	}
 		
 	/**
@@ -173,37 +166,5 @@ class Phone extends \Entity\BaseEntity {
 	public function getRentals()
 	{
 		return $this->rentals;
-	}
-		
-	/**
-	 * @param \Entity\User\User
-	 * @return \Entity\Contact\Phone
-	 */
-	public function addUser(\Entity\User\User $user)
-	{
-		if(!$this->users->contains($user)) {
-			$this->users->add($user);
-		}
-
-		return $this;
-	}
-		
-	/**
-	 * @param \Entity\User\User
-	 * @return \Entity\Contact\Phone
-	 */
-	public function removeUser(\Entity\User\User $user)
-	{
-		$this->users->removeElement($user);
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\User\User
-	 */
-	public function getUsers()
-	{
-		return $this->users;
 	}
 }

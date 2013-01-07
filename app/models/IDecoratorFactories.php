@@ -26,14 +26,6 @@ interface IMediumDecoratorFactory {
 }
 
 
-namespace Model\Task;
-
-interface ITaskDecoratorFactory {
-	/** @return \Service\Task\TaskService */
-	function create(\Entity\Task\Task $entity);
-}
-
-
 namespace Model\Phrase;
 
 interface IPhraseDecoratorFactory {

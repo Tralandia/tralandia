@@ -38,8 +38,6 @@ class Template extends \Entity\BaseEntity {
 	public function __construct()
 	{
 		parent::__construct();
-
-		$this->batches = new \Doctrine\Common\Collections\ArrayCollection;
 	}
 		
 	/**
@@ -107,39 +105,5 @@ class Template extends \Entity\BaseEntity {
 	public function getBody()
 	{
 		return $this->body;
-	}
-		
-	/**
-	 * @param \Entity\Email\Batch
-	 * @return \Entity\Email\Template
-	 */
-	public function addBatche(\Entity\Email\Batch $batche)
-	{
-		if(!$this->batches->contains($batche)) {
-			$this->batches->add($batche);
-		}
-		$batche->setTemplate($this);
-
-		return $this;
-	}
-		
-	/**
-	 * @param \Entity\Email\Batch
-	 * @return \Entity\Email\Template
-	 */
-	public function removeBatche(\Entity\Email\Batch $batche)
-	{
-		$this->batches->removeElement($batche);
-		$batche->unsetTemplate();
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Email\Batch
-	 */
-	public function getBatches()
-	{
-		return $this->batches;
 	}
 }

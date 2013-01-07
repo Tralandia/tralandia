@@ -15,7 +15,7 @@ class FrontRouteFactory {
 	public $locationRepositoryAccessor;
 	public $languageRepositoryAccessor;
 	public $rentalRepositoryAccessor;
-	public $attractionRepositoryAccessor;
+	//public $attractionRepositoryAccessor;
 	public $routingPathSegmentRepositoryAccessor;
 	public $domainRepositoryAccessor;
 	public $pageRepositoryAccessor;
@@ -29,7 +29,7 @@ class FrontRouteFactory {
 		$route->locationRepositoryAccessor = $this->locationRepositoryAccessor;
 		$route->languageRepositoryAccessor = $this->languageRepositoryAccessor;
 		$route->rentalRepositoryAccessor = $this->rentalRepositoryAccessor;
-		$route->attractionRepositoryAccessor = $this->attractionRepositoryAccessor;
+		//$route->attractionRepositoryAccessor = $this->attractionRepositoryAccessor;
 		$route->routingPathSegmentRepositoryAccessor = $this->routingPathSegmentRepositoryAccessor;
 		$route->domainRepositoryAccessor = $this->domainRepositoryAccessor;
 		$route->pageRepositoryAccessor = $this->pageRepositoryAccessor;
