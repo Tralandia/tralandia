@@ -55,14 +55,16 @@ class ImportInvoice extends BaseImport {
 		}
 		
 		while($x = mysql_fetch_array($r)) {
+			$maxTimeTo = qc('select max(time_to) from invoicing_invoices_services_paid where invoice_id = '.$x['id']);
+			if ((int)$maxTimeTo < 1356994800) continue;
 			$this->importOneInvoice($x);
 		}
 
 		// Import pending invoices
 		if ($this->developmentMode == TRUE) {
-			$r = q('select * from invoicing_invoices_pending where companies_id NOT IN (1,2) AND time_created > '.(time()-(3*30*24*60*60)).' AND client_country_id = 46 order by id');
+			$r = q('select * from invoicing_invoices_pending where companies_id NOT IN (1,2) AND time_created > '.(time()-(45*24*60*60)).' AND client_country_id = 46 order by id');
 		} else {
-			$r = q('select * from invoicing_invoices_pending where companies_id NOT IN (1,2) AND time_created > '.(time()-(3*30*24*60*60)).' order by id');
+			$r = q('select * from invoicing_invoices_pending where companies_id NOT IN (1,2) AND time_created > '.(time()-(45*24*60*60)).' order by id');
 		}
 		
 		while($x = mysql_fetch_array($r)) {
