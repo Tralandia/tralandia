@@ -56,7 +56,7 @@ abstract class BasePresenter extends \BasePresenter {
 	}
 
 	public function createComponentCountriesFooter($name) {
-		return $this->getService('countriesfooterControlFactory')->create();
+		//return $this->getService('countriesfooterControlFactory')->create();
 	}
 
 	public function createComponentSearchBar($name) {

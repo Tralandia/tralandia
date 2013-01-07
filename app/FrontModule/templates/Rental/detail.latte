@@ -413,9 +413,9 @@ $(document).ready(function(){
 					{foreach $rental->pricelistRows as $pricelistRow}
 						<tr>
 						<td>{_$pricelistRow->roomType->name}: </td>
-						<td>{$pricelistRow->roomCount} "-#krat"</td>
-						<td>{$pricelistRow->bedCount} "{_o940}"</td>
-						<td>{if $pricelistRow->extraBedCount}{$pricelistRow->extraBedCount} "{_o1158}"{/if}</td>
+						<td>{$pricelistRow->roomCount} -#krat</td>
+						<td>{$pricelistRow->bedCount} {_o940}</td>
+						<td>{if $pricelistRow->extraBedCount}{$pricelistRow->extraBedCount} {_o1158}{/if}</td>
 						<td>{$pricelistRow->price} #mena</td>
 						</tr>
 					{/foreach}
