@@ -42,30 +42,6 @@ class User extends \Entity\BaseEntityDetails {
 	protected $primaryLocation;
 
 	/**
-	 * @var string
-	 * @ORM\Column(type="string", nullable=true)
-	 */
-	protected $name;
-
-	/**
-	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Contact\Phone", mappedBy="users", cascade={"persist"})
-	 */
-	protected $phones;
-
-	/**
-	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Contact\Email", mappedBy="users", cascade={"persist"})
-	 */
-	protected $emails;
-
-	/**
-	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Contact\Url", mappedBy="users", cascade={"persist"})
-	 */
-	protected $urls;
-
-	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Language")
 	 */
@@ -73,30 +49,10 @@ class User extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Invoice\InvoicingData", cascade={"persist", "remove"})
-	 */
-	protected $invoicingData;
-
-	/**
-	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Combination", mappedBy="user", cascade={"persist", "remove"})
-	 * @EA\SingularName(name="combination") 
-	 */
-	protected $combinations;
-
-	/**
-	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="Entity\Rental\Rental", mappedBy="user", cascade={"persist"})
 	 * @EA\SingularName(name="rental") 
 	 */
 	protected $rentals;
-
-	/**
-	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Task\Task", inversedBy="usersExcluded")
-	 * @EA\SingularName(name="task") 
-	 */
-	protected $tasks;
 
 	/**
 	 * @var boolean
@@ -109,24 +65,6 @@ class User extends \Entity\BaseEntityDetails {
 	 * @ORM\Column(type="boolean", nullable=true)
 	 */
 	protected $newsletterNews;
-
-	/**
-	 * @var boolean
-	 * @ORM\Column(type="boolean", nullable=true)
-	 */
-	protected $banned;
-
-	/**
-	 * @var boolean
-	 * @ORM\Column(type="boolean", nullable=true)
-	 */
-	protected $full;
-
-	/**
-	 * @var boolean
-	 * @ORM\Column(type="boolean", nullable=true)
-	 */
-	protected $spam;
 
 
 	//@entity-generator-code --- NEMAZAT !!!

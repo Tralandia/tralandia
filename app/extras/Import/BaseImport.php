@@ -71,12 +71,6 @@ class BaseImport {
 		// 	),
 		// 	'subsections' => array(),
 		// ),
-		'companies' => array(
-			'entities' => array(
-				'\Company\Company' => array(),
-			),
-			'subsections' => array('importCompanies', 'importBankAccounts'),
-		),
 		'users' => array(
 			'entities' => array(
 				'\User\User' => array(),

@@ -32,6 +32,7 @@ class ImportInvoice extends BaseImport {
 		//$invoiceNameType = $this->createPhraseType('\Invoice\ServiceDuration', 'name', 'supportedLanguages', 'ACTIVE');
 
 		$this->companiesByOldId = getNewIdsByOld('\Company\Company');
+
 		$this->rentalsByOldId = getNewIdsByOld('\Rental\Rental');
 		$this->serviceTypesByOldId = getNewIdsByOld('\Invoice\ServiceType');
 
@@ -55,7 +56,7 @@ class ImportInvoice extends BaseImport {
 		}
 		
 		while($x = mysql_fetch_array($r)) {
-			$maxTimeTo = qc('select max(time_to) from invoicing_invoices_services_paid where invoice_id = '.$x['id']);
+			$maxTimeTo = qc('select max(time_to) from invoicing_invoices_services_paid where invoices_id = '.$x['id']);
 			if ((int)$maxTimeTo < 1356994800) continue;
 			$this->importOneInvoice($x);
 		}
@@ -85,41 +86,68 @@ class ImportInvoice extends BaseImport {
 		// if (isset($x['invoice_variable_number'])) {
 		// 	$invoice->paymentReferenceNumber = $x['invoice_variable_number'];
 		// }
-		$invoice->company = $context->companyRepositoryAccessor->get()->find($this->companiesByOldId[$x['companies_id']]);
+
+
 		if (isset($this->rentalsByOldId[$x['objects_id']])) {
 			$t = $context->rentalRepositoryAccessor->get()->find($this->rentalsByOldId[$x['objects_id']]);
 			if (!$t) {
 				debug('Nenasiel som rental '.$x['objects_id'].' (stare ID).');
 			}
 		}
-		if (isset($x['time_due'])) {
+		if (isset($x['time_due']) && $x['time_due'] > 0) {
 			$invoice->due = fromStamp($x['time_due']);
 		}
-		if (isset($x['time_paid'])) {
+		if (isset($x['time_paid']) && $x['time_paid'] > 0) {
 			$invoice->paid = fromStamp($x['time_paid']);
 		}
 
-		$invoicingData = $this->context->invoiceInvoicingDataRepositoryAccessor->get()->createNew();
-		$invoicingData->name = $x['client_name'];
-		$invoicingData->email = $x['client_email'];
-		$invoicingData->phone = $x['client_phone'];
-		$invoicingData->url = $x['client_url'];
-		$invoicingData->address = implode("\n", array_filter(array(
+		// Client invoicing data
+		$clientInvoicingData = $this->context->invoiceInvoicingDataRepositoryAccessor->get()->createNew();
+		$clientInvoicingData->name = $x['client_name'];
+		$clientInvoicingData->email = $x['client_email'];
+		$clientInvoicingData->phone = $x['client_phone'];
+		$clientInvoicingData->url = $x['client_url'];
+		$clientInvoicingData->address = implode("\n", array_filter(array(
 			$x['client_address'],
 			$x['client_address_2'],
 			$x['client_postcode'],
 			$x['client_locality'],
 		)));
 
-		$invoicingData->primaryLocation = $this->context->locationRepositoryAccessor->get()->findOneBy(array('oldId'=>$x['client_country_id'], 'type' => $this->locationTypes['country']));
+		$clientInvoicingData->primaryLocation = $this->context->locationRepositoryAccessor->get()->findOneBy(array('oldId'=>$x['client_country_id'], 'type' => $this->locationTypes['country']));
 
-		$invoicingData->companyName = $x['client_company_name'];
-		$invoicingData->companyId = $x['client_company_id'];
-		$invoicingData->companyVatId = $x['client_company_vat_id'];
-		$this->model->persist($invoicingData);
+		$clientInvoicingData->companyName = $x['client_company_name'];
+		$clientInvoicingData->companyId = $x['client_company_id'];
+		$clientInvoicingData->companyVatId = $x['client_company_vat_id'];
+		$this->model->persist($clientInvoicingData);
 
-		$invoice->invoicingData = $invoicingData;
-		
+		$invoice->clientInvoicingData = $clientInvoicingData;
+		d($clientInvoicingData);
+
+		// Our invoicing data
+		$companyData = qf('select * from companies where id = '.$x['companies_id']);
+
+		$ourInvoicingData = $this->context->invoiceInvoicingDataRepositoryAccessor->get()->createNew();
+		$ourInvoicingData->email = 'info@tralandia.com';
+
+		$ourInvoicingData->address = implode("\n", array_filter(array(
+			$companyData['address'],
+			$companyData['address2'],
+			$companyData['postcode'],
+			$companyData['locality'],
+		)));
+
+		$ourInvoicingData->primaryLocation = $this->context->locationRepositoryAccessor->get()->findOneBy(array('oldId'=>$companyData['countries_id'], 'type' => $this->locationTypes['country']));
+
+		$ourInvoicingData->companyName = $companyData['name'];
+		$ourInvoicingData->companyId = $companyData['company_id'];
+		$ourInvoicingData->companyVatId = $companyData['company_vat_id'];
+		$this->model->persist($ourInvoicingData);
+
+		$invoice->ourInvoicingData = $ourInvoicingData;
+		d($ourInvoicingData);
+		exit();
+
 		$invoice->vat = (float)$x['vat'];
 		$invoice->createdBy = $x['created_by'];
 		$invoice->paymentInfo = @unserialize($x['payment_info']);

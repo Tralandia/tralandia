@@ -37,19 +37,13 @@ class Message extends \Entity\BaseEntity {
 	protected $messageEn;
 
 	/**
-	 * @var boolean
-	 * @ORM\Column(type="boolean")
-	 */
-	protected $translated = 0;
-
-	/**
 	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="Entity\Medium\Medium", mappedBy="message", cascade={"persist", "remove"})
 	 */
 	protected $attachments;
 
 
-			//@entity-generator-code --- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()

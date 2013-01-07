@@ -7,10 +7,10 @@ use Entity\Rental;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity()
- * @ORM\Table(name="user_sitevisitorreview", indexes={@ORM\index(name="senderEmail", columns={"senderEmail"})})
+ * @ORM\Entity(repositoryClass="Repository\User\SiteReviewRepository")
+ * @ORM\Table(name="user_sitereview", indexes={@ORM\index(name="senderEmail", columns={"senderEmail"})})
  */
-class SiteVisitorReview extends \Entity\BaseEntity {
+class SiteReview extends \Entity\BaseEntity {
 
 	const STATUS_PENDING = 0;
 	const STATUS_APROVED = 1;
@@ -25,7 +25,13 @@ class SiteVisitorReview extends \Entity\BaseEntity {
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Location\Location")
 	 */
-	protected $location;
+	protected $primaryLocation;
+
+	/**
+	 * @var Collection
+	 * @ORM\OneToOne(targetEntity="Entity\Rental\Rental", cascade={"persist", "remove"}, fetch="EAGER")
+	 */
+	protected $rental;
 
 	/**
 	 * @var string
@@ -51,7 +57,7 @@ class SiteVisitorReview extends \Entity\BaseEntity {
 	 */
 	protected $status = self::STATUS_PENDING;
 
-			//@entity-generator-code --- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()
@@ -61,7 +67,7 @@ class SiteVisitorReview extends \Entity\BaseEntity {
 		
 	/**
 	 * @param \Entity\Language
-	 * @return \Entity\User\SiteVisitorReview
+	 * @return \Entity\User\SiteOwnerReview
 	 */
 	public function setLanguage(\Entity\Language $language)
 	{
@@ -71,7 +77,7 @@ class SiteVisitorReview extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\User\SiteVisitorReview
+	 * @return \Entity\User\SiteOwnerReview
 	 */
 	public function unsetLanguage()
 	{
@@ -90,7 +96,7 @@ class SiteVisitorReview extends \Entity\BaseEntity {
 		
 	/**
 	 * @param \Entity\Location\Location
-	 * @return \Entity\User\SiteVisitorReview
+	 * @return \Entity\User\SiteOwnerReview
 	 */
 	public function setLocation(\Entity\Location\Location $location)
 	{
@@ -100,7 +106,7 @@ class SiteVisitorReview extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\User\SiteVisitorReview
+	 * @return \Entity\User\SiteOwnerReview
 	 */
 	public function unsetLocation()
 	{
@@ -119,7 +125,7 @@ class SiteVisitorReview extends \Entity\BaseEntity {
 		
 	/**
 	 * @param string
-	 * @return \Entity\User\SiteVisitorReview
+	 * @return \Entity\User\SiteOwnerReview
 	 */
 	public function setSenderEmail($senderEmail)
 	{
@@ -138,7 +144,7 @@ class SiteVisitorReview extends \Entity\BaseEntity {
 		
 	/**
 	 * @param string
-	 * @return \Entity\User\SiteVisitorReview
+	 * @return \Entity\User\SiteOwnerReview
 	 */
 	public function setSenderName($senderName)
 	{
@@ -157,7 +163,7 @@ class SiteVisitorReview extends \Entity\BaseEntity {
 		
 	/**
 	 * @param string
-	 * @return \Entity\User\SiteVisitorReview
+	 * @return \Entity\User\SiteOwnerReview
 	 */
 	public function setTestimonial($testimonial)
 	{
@@ -176,7 +182,7 @@ class SiteVisitorReview extends \Entity\BaseEntity {
 		
 	/**
 	 * @param integer
-	 * @return \Entity\User\SiteVisitorReview
+	 * @return \Entity\User\SiteOwnerReview
 	 */
 	public function setStatus($status)
 	{

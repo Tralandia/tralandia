@@ -30,12 +30,6 @@ class Invoice extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Company\Company", inversedBy="invoices")
-	 */
-	protected $company;
-
-	/**
-	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Rental\Rental", inversedBy="invoices")
 	 */
 	protected $rental;
@@ -56,7 +50,13 @@ class Invoice extends \Entity\BaseEntity {
 	 * @var Collection
 	 * @ORM\OneToOne(targetEntity="InvoicingData", cascade={"persist", "remove"})
 	 */
-	protected $invoicingData;
+	protected $clientInvoicingData;
+
+	/**
+	 * @var Collection
+	 * @ORM\OneToOne(targetEntity="InvoicingData", cascade={"persist", "remove"})
+	 */
+	protected $ourInvoicingData;
 
 	/**
 	 * @var float
