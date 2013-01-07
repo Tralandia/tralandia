@@ -84,8 +84,13 @@ class Address extends \Entity\BaseEntity {
 		return $this;
 	}
 
+	public function gpsToString()
+	{
+		return "$this->latitude $this->longitude";
+	}
+
 	/**
-	 * @param array of \Entity\Location\Location
+	 * @param array[\Entity\Location\Location]
 	 * @return \Entity\Contact\Address
 	 */
 	public function setLocations(array $locations)

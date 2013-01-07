@@ -41,10 +41,10 @@ function import {
 
 prepare "tralandia"
 prepare "tralandia_test"
-prepare "tralandia_dump"
+# prepare "tralandia_dump"
 
 drop "tralandia_test"
 
 import $SQLDUMP "tralandia"
 import $SQLDUMP "tralandia_test"
-import $SQLDUMP "tralandia_dump"
+# import $SQLDUMP "tralandia_dump"

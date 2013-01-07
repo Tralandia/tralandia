@@ -9,12 +9,12 @@ class DavidPresenter extends BasePresenter {
 
 	private $frontRouteFactory;
 	private $seoServiceFactory;
-	private $robot;
 
 	protected $rentalRepositoryAccessor;
 	protected $rentalImageRepositoryAccessor;
 	protected $locationRepositoryAccessor;
 	protected $rentalPricelistRepositoryAccessor;
+	protected $contactAddressRepositoryAccessor;
 
 	protected $rentalSearchCachingFactory;
 	protected $rentalSearchServiceFactory;
@@ -33,10 +33,9 @@ class DavidPresenter extends BasePresenter {
 		$this->seoServiceFactory = $seoServiceFactory;
 	}
 
-	public function injectRentalCache(\Extras\Cache\IRentalSearchCachingFactory $rentalSearchCachingFactory, \Service\Rental\IRentalSearchServiceFactory $rentalSearchServiceFactory, \Service\Robot\IUpdateRentalSearchKeysCacheRobotFactory $robot) {
+	public function injectRentalCache(\Extras\Cache\IRentalSearchCachingFactory $rentalSearchCachingFactory, \Service\Rental\IRentalSearchServiceFactory $rentalSearchServiceFactory) {
 		$this->rentalSearchCachingFactory = $rentalSearchCachingFactory;
 		$this->rentalSearchServiceFactory = $rentalSearchServiceFactory;
-		$this->robot = $robot;
 	}
 
 	public function injectDic(\Nette\DI\Container $dic) {
@@ -44,6 +43,7 @@ class DavidPresenter extends BasePresenter {
 		$this->rentalImageRepositoryAccessor = $dic->rentalImageRepositoryAccessor;
 		$this->locationRepositoryAccessor = $dic->locationRepositoryAccessor;
 		$this->rentalPricelistRepositoryAccessor = $dic->rentalPricelistRepositoryAccessor;
+		$this->contactAddressRepositoryAccessor = $dic->contactAddressRepositoryAccessor;
 	}
 
 	public function inject(\Model\Rental\IImageDecoratorFactory $rentalImageDecoratorFactory) {
@@ -62,7 +62,6 @@ class DavidPresenter extends BasePresenter {
 		$primaryLocation = $this->locationRepositoryAccessor->get()->findOneByIso('sk');
 		$location = $this->locationRepositoryAccessor->get()->find(338);
 
-		$this->robot->create($primaryLocation)->run();
 
 		// $thisSearch = $this->rentalSearchServiceFactory->create($primaryLocation);
 		// $thisSearch->addLocationCriteria($location);
@@ -93,5 +92,13 @@ class DavidPresenter extends BasePresenter {
 		$url = $route->constructUrl($request, $urlScript);
 		d($url); #@debug
 
+	}
+
+	public function actionGps()
+	{
+		/** @var $gps \Entity\Contact\Address */
+		$gps = $this->contactAddressRepositoryAccessor->get()->find(1);
+		$var = $gps->gpsToString();
+		d($var);
 	}
 }
