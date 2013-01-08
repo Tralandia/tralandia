@@ -84,7 +84,7 @@ class RentalPresenter extends BasePresenter {
 	protected function createComponentReservationForm()
 	{
 		$form = $this->reservationFormFactory->create($this->getParameter('rental'));
-		$form->buildForm();
+		//$form->buildForm();
 	
 		$form->onSuccess[] = function ($form) { 
 			if ($form->valid) $form->presenter->redirect('this'); 
