@@ -33,7 +33,6 @@ class FrontRoute implements Nette\Application\IRouter {
 
 	protected static $pathSegmentTypes = array(
 		'page' => 2,
-		'attractionType' => 4,
 		'location' => 6,
 		'rentalType' => 8,
 		'rentalTag' => 10,
@@ -41,7 +40,6 @@ class FrontRoute implements Nette\Application\IRouter {
 
 	protected static $pathSegmentTypesById = array(
 		2 => 'page',
-		4 => 'attractionType',
 		6 => 'location',
 		8 => 'rentalType',
 		10 => 'rentalTag',
@@ -54,7 +52,6 @@ class FrontRoute implements Nette\Application\IRouter {
 		'location' => null,
 		'rental' => null,
 		'rentalTag' => null,
-		'attractionType' => null,
 		'rentalType' => null,
 		'page' => null,
 	);
@@ -63,8 +60,6 @@ class FrontRoute implements Nette\Application\IRouter {
 	public $languageRepositoryAccessor;
 	public $rentalRepositoryAccessor;
 	public $rentalTypeRepositoryAccessor;
-	public $attractionRepositoryAccessor;
-	public $attractionTypeRepositoryAccessor;
 	public $routingPathSegmentRepositoryAccessor;
 	public $domainRepositoryAccessor;
 	public $rentalTagRepositoryAccessor;
@@ -150,13 +145,7 @@ class FrontRoute implements Nette\Application\IRouter {
 			$params->action = 'default';
 		} else if(count($pathSegments) == 1) {
 			$pathSegment = reset($pathSegments);
-			if($match = Strings::match($pathSegment, '~\.*-a([0-9]+)~')) {
-				if($attraction = $this->attractionRepositoryAccessor->get()->find($match[1])) {
-					$params->attraction = $attraction;
-					$params->presenter = 'Attraction';
-					$params->action = 'detail';
-				}
-			} else if($match = Strings::match($pathSegment, '~\.*-r([0-9]+)~')) {
+			if($match = Strings::match($pathSegment, '~\.*-r([0-9]+)~')) {
 				if($rental = $this->rentalRepositoryAccessor->get()->find($match[1])) {
 					$params->rental = $rental;
 					$params->presenter = 'Rental';

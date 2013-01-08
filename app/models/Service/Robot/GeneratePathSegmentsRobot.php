@@ -20,7 +20,6 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 	protected $routingPathSegmentRepositoryAccessor;
 	protected $languageRepositoryAccessor;
 	protected $pageRepositoryAccessor;
-	//protected $attractionTypeRepositoryAccessor;
 	protected $locationRepositoryAccessor;
 	protected $rentalTypeRepositoryAccessor;
 	protected $rentalTagRepositoryAccessor;
@@ -29,7 +28,6 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 		$this->routingPathSegmentRepositoryAccessor = $dic->routingPathSegmentRepositoryAccessor;
 		$this->languageRepositoryAccessor = $dic->languageRepositoryAccessor;
 		$this->pageRepositoryAccessor = $dic->pageRepositoryAccessor;
-		//$this->attractionTypeRepositoryAccessor = $dic->attractionTypeRepositoryAccessor;
 		$this->locationRepositoryAccessor = $dic->locationRepositoryAccessor;
 		$this->rentalTypeRepositoryAccessor = $dic->rentalTypeRepositoryAccessor;
 		$this->rentalTagRepositoryAccessor = $dic->rentalTagRepositoryAccessor;
@@ -81,25 +79,6 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 			}
 		}
 	}
-
-	// protected function persistAtractionTypesSegments($languageList)
-	// {
-	// 	$attractionTypes = $this->attractionTypeRepositoryAccessor->get()->findAll();
-
-	// 	foreach ($languageList as $languageId => $language) {
-	// 		foreach ($attractionTypes as $type) {
-	// 			$entity = $this->routingPathSegmentRepositoryAccessor->get()->createNew();
-	// 			$entity->primaryLocation = NULL;
-	// 			$entity->language = $language;
-	// 			$entity->pathSegment = $this->translate($type->name, $language);
-	// 			$entity->type = PathSegment::ATTRACTION_TYPE;
-	// 			$entity->entityId = $type->id;
-
-	// 			$this->rentalTypeRepositoryAccessor->get()->persist($entity);
-	// 		}
-	// 	}
-
-	// }
 
 	protected function persistLocationsSegments()
 	{
