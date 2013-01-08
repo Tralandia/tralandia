@@ -105,9 +105,6 @@ services:
 		class: Extras\Environment(@application::getRequests(), @languageRepositoryAccessor, @locationRepositoryAccessor)
 	translator: @translatorFactory::create(@environment::getLanguage())
 
-	settings:
-		factory: Extras\PresenterSettings::factory
-
 	# @TODO ------------------------ 
 	# emailCompiler: 
 	# 	class: Extras\Email\Compiler
