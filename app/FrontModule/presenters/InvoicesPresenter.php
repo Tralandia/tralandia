@@ -10,5 +10,8 @@ class InvoicesPresenter extends BasePresenter {
 
 	}
 
-	
+	public function actionList(){
+		$this->setLayout('adminMenu');
+	}
+
 }

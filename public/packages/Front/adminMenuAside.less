@@ -1,0 +1,53 @@
+@import './less-functions.less';
+
+#sidebar {
+
+	.adminMenuAside {
+		
+
+		h4 {
+			margin: 0;
+			padding-top: 10px;
+			font-size: 17px;
+		}
+
+		ul {
+			li {
+				font-weight: bold;
+				&.level2 {
+					padding-left: 40px;
+					font-weight: normal;
+					a {
+						color: @brown;
+					}
+				}
+
+				&.level3 {
+					font-weight: normal;
+					padding-left: 55px;
+
+					&.edit {
+						&:before {
+							content: "\270E";
+						}
+					}
+
+					&.calendar {
+						&:before {
+							content: "\1F4C5";
+						}
+					}
+
+					&.view {
+						&:before {
+							content: "\E70A";
+						}
+					}
+
+				}
+
+			}
+		}
+	}	
+
+}
