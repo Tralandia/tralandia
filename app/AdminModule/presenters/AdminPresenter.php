@@ -17,7 +17,7 @@ class AdminPresenter extends BasePresenter {
 	}
 
 	public function getConfigName() {
-		$parts = explode(':', $this->name);;
+		$parts = explode(':', $this->name);
 		return strtolower(end($parts));
 	}
 
