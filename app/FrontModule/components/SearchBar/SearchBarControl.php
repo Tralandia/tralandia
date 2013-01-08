@@ -7,7 +7,7 @@ use Service\Rental\RentalSearchService;
 
 class SearchBarControl extends \BaseModule\Components\BaseControl {
 
-	const VISIBLE_OPTIONS_COUNT = 10;
+	const VISIBLE_OPTIONS_COUNT = 15;
 
 	// repositories
 	public $rentalTypeRepositoryAccessor;
@@ -86,7 +86,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 
 	protected function getLocationCriteria() {
 
-		$links = $this->getLinksFor(RentalSearchService::CRITERIA_LOCATION, $this->locationRepositoryAccessor);
+		$links = $this->getLinksFor(RentalSearchService::CRITERIA_LOCATION, $this->locationRepositoryAccessor, TRUE);
 
 		return \Nette\ArrayHash::from($links);
 
@@ -205,7 +205,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		return $this->searchService->getRentalsCount();
 	}
 
-	protected function getLinksFor($criteriaName, $repositoryAccessor) {
+	protected function getLinksFor($criteriaName, $repositoryAccessor, $ignoreNull=FALSE) {
 
 		$order 		= array();
 		$linksTmp 	= array();
@@ -226,20 +226,25 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		foreach ($entities as $key => $entity) {
 			$params = array_merge($selected, array($criteriaName => $entity));
 
-			$name = $this->translator->translate($entity->name);
+			$baseCount = $this->getRentalsCount(array('location' => $this->primaryLocation, $criteriaName => $entity));
+			$count 	= $this->getRentalsCount($params);
+			if (($ignoreNull && $count==0) || $baseCount==0) continue;
 
-			$count = $this->getRentalsCount($params);
-			$link = $this->presenter->link('//Rental:list', $params);
-			$seo = $this->seoFactory->create($link, $this->presenter->getLastCreatedRequest());
+			$linkParams = $params;
+			if ($active) unset($linkParams[$criteriaName]);
+
+			$name 	= $this->translator->translate($entity->name);
+			$link = $this->presenter->link('//Rental:list', $linkParams);
+			$seo 	= $this->seoFactory->create($link, $this->presenter->getLastCreatedRequest());
 
 			$visible[$key] = $count;
 			$order[$name] = $key;
-
 			$linksTmp[$key] = array(
 				'seo' => $seo,
 				'count' => $count,
 				'hide' => TRUE,
 				'active' => $active,
+				'entity' => $entity,
 			);
 		}
 

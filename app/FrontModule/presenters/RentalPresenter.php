@@ -51,11 +51,11 @@ class RentalPresenter extends BasePresenter {
 		$search = $this->rentalSearchFactory->create($this->environment->primaryLocation);
 
 		if ($location) {
-			$search->addLocationCriteria($location);
+			$search->setLocationCriterium($location);
 		}
 
 		if ($rentalType) {
-			$search->addRentalTypeCriteria($rentalType);
+			$search->setRentalTypeCriterium($rentalType);
 		}
 
 		$vp = $this['paginator'];

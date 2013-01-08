@@ -10,21 +10,28 @@
 					</div>
 
 					{define #criteriaOptions}
+					{var $hasHidden=FALSE}
 					<div n:ifset="$criteria[$type]" class="widget">
 						<h4>{_'o1070'}</h4>
 						<ul n:inner-foreach="$criteria[$type] as $link">
-							<li class="{if $link->hide}hidden hide{/if}{if $link->count==0} disabled{/if}">
-								{if $link->count==0}
-									{ifset $link->name}
-										{$link->name}
+							{if $link->hide}{var $hasHidden=TRUE}{/if}
+							{if $link->active}
+								<li class="selected"><a href="{$link->seo->getUrl()}">{_$link->entity->name|firstUpper} <span class="counter">{$link->count}</span><span class="close entypo-close"></span></a></li>
+							{else}
+								<li class="{if $link->hide || $link->count==0}hidden hide{/if}{if $link->count==0} disabled{/if}">
+									{if $link->count==0}
+										{ifset $link->name}
+											{$link->name}
+										{else}
+											{_$link->entity->name|firstUpper}
+										{/ifset}
+										<span class="counter">{$link->count}</span>
 									{else}
-										{_$link->seo->getParameter($type)->name|firstUpper} <span class="counter">{$link->count}</span>
-									{/ifset}
-								{else}
-									<a href="{$link->seo->getUrl()}">{_$link->seo->getParameter($type)->name|firstUpper} <span class="counter">{$link->count}</span></a>
-								{/if}
-							</li>
-							{if $iterator->last}<li class="more"><a href="#" data-open="#Fewer options" data-close="More option">#More option <i class="entypo-down"></i></a></li>{/if}
+										<a href="{$link->seo->getUrl()}">{_$link->entity->name|firstUpper} <span class="counter">{$link->count}</span></a>
+									{/if}
+								</li>
+							{/if}
+							{if $iterator->last && $hasHidden}<li class="more"><a href="#" data-open="#Fewer options" data-close="More option">#More option <i class="entypo-down"></i></a></li>{/if}
 						</ul>
 					</div>
 					{/define}
