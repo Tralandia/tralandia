@@ -6,12 +6,32 @@ use Doctrine\ORM\EntityRepository;
 
 class BaseRepository extends EntityRepository {
 
-	public function createNew() {
+	/**
+	 * @param bool $createPhrases tento param je to len docasne koly importu
+	 *
+	 * @return mixed
+	 * @throws \Nette\InvalidArgumentException
+	 */
+	public function createNew($createPhrases = TRUE) {
 		$class = $this->getEntityName();
 		if($class == 'Entity\Phrase\Translation') {
 			throw new \Nette\InvalidArgumentException('Nemozes vitvorit translation len tak kedy sa ti zachce! Toto nieje holubnik! Pouzi na to $phraseDecorator->createTranslation()');
 		}
-		return new $class;
+
+		$newEntity = new $class;
+
+		$associationMappings = $this->getClassMetadata()->getAssociationMappings();
+		if(count($associationMappings) && $createPhrases) {
+			foreach($associationMappings as $mapping) {
+				if($mapping['targetEntity'] == 'Entity\Phrase\Phrase') {
+					$fieldName = $mapping['fieldName'];
+					$phraseCreator = new \Serivice\Phrase\PhraseCreator($this->related($fieldName));
+					$phraseTypeName = '\\'.$class.':'.$fieldName;
+					$newEntity->{$fieldName} = $phraseCreator->create($phraseTypeName);
+				}
+			}
+		}
+		return $newEntity;
 	}
 
 	public function persist($entity) {
