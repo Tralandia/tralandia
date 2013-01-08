@@ -3,16 +3,21 @@ namespace Serivice\Invoice;
 
 use Nette;
 use Entity\Rental\Rental;
-use Extras\Types\InvoicingData;
+use Entity\Invoice;
+use Repository\Invoice\InvoiceRepository;
 
 /**
  * CreateInvoice class
  *
  * @author Dávid Ďurika
  */
-class CreateInvoice extends Nette\Object {
+class CreateInvoice extends Nette\Object
+{
 
-	protected $invoiceRepositoryAccessor;
+	/**
+	 * @var \Repository\Invoice\InvoiceRepository
+	 */
+	protected $invoiceRepository;
 
 	/**
 	 * @var Rental
@@ -21,7 +26,7 @@ class CreateInvoice extends Nette\Object {
 
 	/**
 	 * Faktoracne udaje
-	 * @var InvoicingData
+	 * @var Invoice\InvoicingData
 	 */
 	protected $invoicingData;
 
@@ -31,25 +36,20 @@ class CreateInvoice extends Nette\Object {
 	protected $packages = array();
 
 	/**
-	 * @param  \Nette\DI\Container $dic
-	 * @return void
-	 */
-	public function injectDic(\Nette\DI\Container $dic)
-	{
-		$this->invoiceRepositoryAccessor = $dic->invoiceRepositoryAccessor;
-	}
-
-	/**
 	 * Sluzba na vyvaranie faktur
-	 * @param Rental          $retnal
-	 * @param InvoicingData   $invoicingData
-	 * @param Invoice\Package $package
+	 *
+	 * @param \Entity\Rental\Rental $rental
+	 * @param \Entity\Invoice\InvoicingData $invoicingData
+	 * @param \Entity\Invoice\Package $package
+	 * @param \Repository\Invoice\InvoiceRepository $invoiceRepository
 	 */
-	public function __construct(Rental $retnal, InvoicingData $invoicingData, Invoice\Package $package)
+	public function __construct(Rental $rental, Invoice\InvoicingData $invoicingData, Invoice\Package $package,
+								InvoiceRepository $invoiceRepository)
 	{
 		$this->rental = $rental;
 		$this->invoicingData = $invoicingData;
 		$this->addPackage($package);
+		$this->invoiceRepository = $invoiceRepository;
 	}
 
 	/**
@@ -65,16 +65,17 @@ class CreateInvoice extends Nette\Object {
 	 * Vygeneruje FA
 	 * @return Invoice\Invoice
 	 */
-	public function createInvocie()
+	public function createInvoice()
 	{
-		$invocie = $this->invoiceRepositoryAccessor->get()->createNew();
+		/** @var $invoice Invoice\Invoice */
+		$invoice = $this->invoiceRepositoryAccessor->get()->createNew();
 
 		$rental = $this->rental;
-		$retnal->addInvoice($invocie);
+		$rental->addInvoice($invoice);
 
-		$invocie->invoicingData = $this->invoicingData;
+		$invoice->invoicingData = $this->invoicingData;
 
-		$invoice->due = c(new Nette\DateTime)->modify('+7 day');
+		$invoice->setDue((new Nette\DateTime)->modify('+7 day'));
 
 		return $invoice;
 	}

@@ -3,6 +3,7 @@
 namespace FormHandler;
 
 use Repository\User\UserRepository;
+use Repository\Rental\RentalRepository;
 
 class RegistrationHandler extends FormHandler
 {
@@ -15,10 +16,19 @@ class RegistrationHandler extends FormHandler
 	 */
 	protected $userRepository;
 
+	/**
+	 * @var \Repository\Rental\RentalRepository
+	 */
+	protected $rentalRepository;
 
-	public function __construct(UserRepository $userRepository)
+	/**
+	 * @param \Repository\User\UserRepository $userRepository
+	 * @param \Repository\Rental\RentalRepository $rentalRepository
+	 */
+	public function __construct(UserRepository $userRepository, RentalRepository $rentalRepository)
 	{
 		$this->userRepository = $userRepository;
+		$this->rentalRepository = $rentalRepository;
 	}
 
 	public function handleSuccess($values)
@@ -37,9 +47,12 @@ class RegistrationHandler extends FormHandler
 		$user->setLogin($values->login);
 		$user->setPassword($values->password);
 
-		// process data
+		/** @var $rental \Entity\Rental\Rental */
+		$rental = $this->rentalRepository->createNew();
+		$rental->setName();
 
-		$this->model->save($values);
+
+		//$this->model->save($values);
 	}
 
 

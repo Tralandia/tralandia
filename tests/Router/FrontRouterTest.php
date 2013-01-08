@@ -9,10 +9,7 @@ use Nette, Extras;
  */
 class FrontRouterTest extends BaseRouterTest
 {
-	public $context;
 	public $frontRouteFactory;
-	public $userServiceFactory;
-	public $userRepositoryAccessor;
 
 	protected function setUp() {
 		$this->frontRouteFactory = $this->getContext()->frontRouteFactory;

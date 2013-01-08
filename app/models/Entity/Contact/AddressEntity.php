@@ -6,7 +6,7 @@ use Nette\Utils\Arrays;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Repository\Contact\AddressRepository")
  * @ORM\Table(name="contact_address")
  */
 class Address extends \Entity\BaseEntity {

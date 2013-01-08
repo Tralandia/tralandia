@@ -42,7 +42,7 @@ class BaseRepository extends EntityRepository {
 	// 	return $query->getResult();
 	// }
 
-	public function fetchPairs($key, $value = null) {
+	public function fetchPairs($key, $value = NULL) {
 		$collection = array();
 		//debug($this->findAll());
 		
@@ -176,5 +176,28 @@ class BaseRepository extends EntityRepository {
 		}
 		return $return;
 	}
- 
+
+
+	/**
+	 * @return \Doctrine\ORM\Mapping\ClassMetadata
+	 */
+	public function getClassMetadata()
+	{
+		return parent::getClassMetadata();
+	}
+
+	/**
+	 * @param $relation
+	 *
+	 * @return \Doctrine\ORM\EntityRepository
+	 */
+	public function related($relation)
+	{
+		$meta = $this->getClassMetadata();
+		$targetClass = $meta->getAssociationTargetClass($relation);
+		return $this->getEntityManager()->getRepository($targetClass);
+	}
+
+
+
 }

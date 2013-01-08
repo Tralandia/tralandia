@@ -47,7 +47,7 @@ class RegistrationHandlerTest extends \Tests\TestCase
 		$data->country = $this->locationRepository->findOneByOldId(46);
 		$data->language = $this->languageRepository->findOneByOldId(144);
 
-		$data->referrer = 'asdf';
+		$data->referrer = 'david@gmail.sk';
 
 		$data->email = 'test@email.com';
 		$data->phone = '+421908123456';
