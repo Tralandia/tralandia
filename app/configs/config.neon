@@ -182,7 +182,7 @@ factories:
 		implement: OwnerModule\Forms\IRentalEditFormFactory
 
 	rentalReservationFormFactory: 
-		class: FrontModule\Forms\Rental\ReservationForm(%rental%)
+		class: FrontModule\Forms\Rental\ReservationForm(%rental%, @locationRepositoryAccessor::get())
 		implement: FrontModule\Forms\Rental\IReservationFormFactory
 
 	registrationFormFactory:

@@ -11,11 +11,16 @@ use Nette;
  */
 class ReservationForm extends \FrontModule\Forms\BaseForm {
 
-	public function __construct()
+	protected $rental;
+	protected $locationRepository;
+
+	public function __construct(\Entity\Rental\Rental $rental, \Repository\Location\LocationRepository $locationRepository)
 	{
+		$this->rental = $rental;
+		$this->locationRepository = $locationRepository;
+
 		parent::__construct();
 	}
-
 
 	public function buildForm()
 	{
@@ -23,6 +28,9 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 		$this->addText('email');
 		$this->addText('from');
 		$this->addText('to');
+
+		$this->addSelect('phonePrefix', '', $this->locationRepository->getCountriesPhonePrefixes());
+
 		$this->addText('phone2');
 
 		$parents = array();

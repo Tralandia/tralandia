@@ -47,4 +47,24 @@ class LocationRepository extends \Repository\BaseRepository {
 
 		return $return;
 	}
+
+	public function getCountriesPhonePrefixes() {
+
+		$qb = $this->_em->createQueryBuilder();
+
+		$qb->select('l.id, l.iso, l.phonePrefix')
+			->from($this->_entityName, 'l')
+			->join('l.type', 't')
+			->where($qb->expr()->eq('t.slug', ':country'))
+			->setParameter('country', 'country');
+
+		$return = [];
+		$rows = $qb->getQuery()->getResult();
+		foreach($rows as $row) {
+			$return[$row['iso']] = strtoupper($row['iso']) . ' (+'.$row['phonePrefix'].')';
+		}
+
+		return $return;
+
+	}
 }
