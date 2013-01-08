@@ -13,7 +13,7 @@ require_once LIBS_DIR . '/rado_functions.php';
 
 // Enable Nette\Debug for error visualisation & logging
 Debugger::enable(Debugger::PRODUCTION);
-Debugger::$strictMode = TRUE;
+//Debugger::$strictMode = TRUE;
 
 $section = isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : null;
 

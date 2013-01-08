@@ -17,8 +17,12 @@ class PresenterExtension extends Nette\Config\CompilerExtension
 		foreach (Nette\Utils\Finder::findFiles('*.neon')->in($config['configsDir']) as $path => $file) {
 			$prefix = substr($file->getBasename(), 0, -5);
 			$params = Nette\Utils\Neon::decode(file_get_contents($path));
+			$settings = isset($params['parameters']) ? $params['parameters'] : array();
+			$this->normalizeVariables($settings);
 
-debug($params);
+			$settings = $builder->addDefinition($this->prefix($prefix . '.settings'))
+				->setClass('Extras\Presenter\Settings', array($settings, '@container'))
+				->setAutowired(FALSE);
 
 			$builder->addDefinition($this->prefix($prefix))
 				->setClass('Nette\Config\Extensions\NetteAccessor', array('@container', $this->prefix($prefix)));
@@ -45,8 +49,6 @@ debug($params);
 				}
 			}
 		}
-
-		exit;
 	}
 
 	/**
@@ -63,6 +65,16 @@ debug($params);
 			} elseif (is_array($params[$key])) {
 				$this->findServices($params[$key]);
 			}
+		}
+	}
+
+	/**
+	 * Vyhlada vsetky % a nahradi $
+	 * @param array
+	 */
+	private function normalizeVariables(&$params) {
+		foreach ($params as $key => $value) {
+			$params[$key] = str_replace('%', '$', $value);
 		}
 	}
 

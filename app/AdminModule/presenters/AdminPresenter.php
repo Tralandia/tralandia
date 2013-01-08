@@ -6,6 +6,8 @@ use Nette, Extras, Service;
 
 class AdminPresenter extends BasePresenter {
 
+	protected $settings;
+
 	public function getServiceName() {
 		$parts = explode(':', $this->name);
 		return strtolower(end($parts));
@@ -14,22 +16,14 @@ class AdminPresenter extends BasePresenter {
 	public function startup() {
 		parent::startup();
 		
-
-		//debug($this->getServiceName());
-		$settings = $this->getService('presenter.' . $this->getServiceName() . '.settings');
-
-debug($this->context);
-
-exit;
-
-		//$this->settings = $this->getService('settings');
-		//$this->template->settings = $this->settings;
-		//$this->serviceName = $this->settings->serviceClass;
-		//$this->serviceListName = $this->settings->serviceListClass;
-		//$this->reflector = new Reflector($this->settings, $this);
+		$this->settings = $this->getService('presenter.' . $this->getServiceName() . '.settings');
+		$this->template->settings = $this->settings;
+		
 	}
 
 	public function actionList() {
+		$this->settings->test = "ide toooo!!!";
+
 		/*
 		$repo = $this->context->model->getRepository('Entity\Currency');
 		$entity = $repo->find(2);
