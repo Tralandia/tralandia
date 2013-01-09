@@ -48,14 +48,7 @@ class AdminPresenter extends BasePresenter {
 	 */
 	public function actionAdd() {
 		$entity = $this->repository->createNew();
-
-		// TODO: docasne
-		$model = $this->getService('model');
-		$model->persist($entity);
-		$languageRepo = $this->context->model->getRepository('Entity\\Language');
-		$entity->name->createTranslation($languageRepo->findOneByIso('sk'));
-		$entity->name->createTranslation($languageRepo->findOneByIso('en'));
-	
+		$this->getService('model')->persist($entity);
 		$this->template->form = $this->getForm($this->getConfigName(), $entity);
 		$this->settings->name = 'novééé';
 	}
