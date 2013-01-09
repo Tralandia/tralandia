@@ -3,6 +3,7 @@ temp/
 log/
 public/webtemp/
 public/storage/
+public/storage
 .idea/
 .DS_Store
 public/.DS_Store
