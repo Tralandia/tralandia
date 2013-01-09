@@ -1,7 +1,19 @@
+entity: Entity\Location\Location
+
 parameters:
-	service: Service\Location
 	title: Locations
 	h1: 'Location -> %name%'
+
+grid:
+	columns:
+		id:
+			label: Id
+		name:
+			label: Name
+		nameOfficial:
+			label: Name Official
+		iso:
+			label: Iso
 
 form:
 	fields:

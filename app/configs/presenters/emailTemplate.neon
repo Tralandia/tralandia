@@ -1,3 +1,5 @@
+entity: Entity\Email\Template
+
 common:
 	repositoryAccessor: emailTemplateRepositoryAccessor
 	title: Email Template

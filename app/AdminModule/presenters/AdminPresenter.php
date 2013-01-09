@@ -17,28 +17,12 @@ class AdminPresenter extends BasePresenter {
 	protected $repository;
 
 	/**
-	 * Vrati nazov entity pre aktualny prezenter
-	 * @return string
-	 */
-	public function getEntityName() {
-		return '\\Entity\\' . ucfirst($this->getConfigName());
-	}
-
-	/**
-	 * Vrati nazov service pre aktualny prezenter
-	 * @return string
-	 */
-	public function getServiceName() {
-		return '\\Service\\' . ucfirst($this->getConfigName()) . 'Service';
-	}
-
-	/**
 	 * Vrati nazov entity pouzivany pre konfiguraky
 	 * @return string
 	 */
 	public function getConfigName() {
 		$parts = explode(':', $this->name);
-		return strtolower(end($parts));
+		return lcfirst(end($parts));
 	}
 
 	/**
@@ -49,7 +33,7 @@ class AdminPresenter extends BasePresenter {
 		
 		$this->settings = $this->getService('presenter.' . $this->getConfigName() . '.settings');
 		$this->template->settings = $this->settings;
-		$this->repository = $this->context->model->getRepository($this->getEntityName());
+		$this->repository = $this->context->model->getRepository($this->settings->getEntityClass());
 	}
 
 	/**

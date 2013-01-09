@@ -1,3 +1,5 @@
+entity: Entity\Language
+
 parameters:
 	repositoryAccessor: languageRepositoryAccessor
 	title: Languages

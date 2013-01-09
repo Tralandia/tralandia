@@ -15,13 +15,20 @@ class PresenterExtension extends Nette\Config\CompilerExtension
 		$builder = $this->getContainerBuilder();
 
 		foreach (Nette\Utils\Finder::findFiles('*.neon')->in($config['configsDir']) as $path => $file) {
+			$builder->addDependency($path);
 			$prefix = substr($file->getBasename(), 0, -5);
 			$params = Nette\Utils\Neon::decode(file_get_contents($path));
+
+			if (!isset($params['entity'])) {
+				throw new \Exception("Subor $path musi obsahovat sekciu entity!");
+			}
+
 			$settings = isset($params['parameters']) ? $params['parameters'] : array();
+			$entityClass = isset($params['entity']) ? $params['entity'] : null;
 			$this->normalizeVariables($settings);
 
 			$settings = $builder->addDefinition($this->prefix($prefix . '.settings'))
-				->setClass('Extras\Presenter\Settings', array($settings, '@container'))
+				->setClass('Extras\Presenter\Settings', array($settings, $entityClass, '@container'))
 				->setAutowired(FALSE);
 
 			$builder->addDefinition($this->prefix($prefix))
@@ -52,7 +59,6 @@ class PresenterExtension extends Nette\Config\CompilerExtension
 					$generator->addSetup('addItem', array(new Nette\DI\Statement($factory), $field));
 				}
 			}
-			//exit;
 		}
 	}
 

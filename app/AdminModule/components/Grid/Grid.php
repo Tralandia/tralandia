@@ -11,7 +11,7 @@ class Grid extends Nette\Object {
 	private $repository;
 
 	private $columns = array();
-	private $itemsPerPage = 10;
+	private $itemsPerPage = 20;
 	private $orderBy = 'id';
 	private $sort = 'ASC';
 
@@ -24,6 +24,9 @@ class Grid extends Nette\Object {
 		isset($parameters['orderBy']) && $this->orderBy = $parameters['orderBy'];
 		isset($parameters['columns']) && $this->columns = $parameters['columns'];
 
+		if (empty($this->columns)) {
+			throw new Nette\InvalidStateException("Neboli nastavene ziadne stlpce v konfigu");
+		}
 	}
 
 	public function render() {
@@ -66,7 +69,7 @@ class Grid extends Nette\Object {
 	function recordValueGetter(Extras\Models\Entity\IEntity $record, $column) {
 		if ($record->$column instanceof Entity\Phrase\Phrase) {
 			return $this->presenter->translate($record->$column);
-		}
+		}debug($record->$column);
 		return $record->$column;
 	}
 

@@ -15,14 +15,18 @@ class Settings extends Nette\Object {
 	/** @var Nette\DI\Container */
 	private $container;
 
+	/** @var string */
+	private $entityClass;
+
 	/**
 	 * @param array
 	 * @param Nette\DI\Container
 	 */
-	public function __construct(array $defaults = array(), Nette\DI\Container $container)
+	public function __construct(array $defaults = array(), $entityClass, Nette\DI\Container $container)
 	{
 		$this->defaults = $defaults;
 		$this->container = $container;
+		$this->entityClass = $entityClass;
 	}
 
 	public function __set($name, $value) {
@@ -40,5 +44,9 @@ class Settings extends Nette\Object {
 			}
 		}
 		return $var;
+	}
+
+	public function getEntityClass() {
+		return $this->entityClass;
 	}
 }

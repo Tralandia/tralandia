@@ -1,5 +1,6 @@
+entity: Entity\Currency
+
 parameters:
-	service: Service\Currency
 	title: Currencies
 	h1: 'Currency -> %name%'
 
