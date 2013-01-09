@@ -6,6 +6,7 @@ use Nette, Extras, Service, Entity, TwiGrid;
 
 /**
  * Vsemohuci automaticky prezenter
+ * @author Branislav Vaculčiak <branislav@vauclciak.sk>
  */
 class AdminPresenter extends BasePresenter {
 
@@ -63,8 +64,14 @@ class AdminPresenter extends BasePresenter {
 	 */
 	public function actionAdd() {
 		$entity = $this->repository->createNew();
-		//$this->context->model->persist($entity);
-		debug($entity->name);
+
+		// TODO: docasne
+		$model = $this->getService('model');
+		$model->persist($entity);
+		$languageRepo = $this->context->model->getRepository('Entity\\Language');
+		$entity->name->createTranslation($languageRepo->findOneByIso('sk'));
+		$entity->name->createTranslation($languageRepo->findOneByIso('en'));
+	
 		$this->template->form = $this->getForm($this->getConfigName(), $entity);
 		$this->settings->name = 'novééé';
 	}
@@ -82,10 +89,12 @@ class AdminPresenter extends BasePresenter {
 	 * Vrati formular pre aktualny prezenter
 	 */
 	public function getForm($name, $entity) {
+		$presenter = $this;
 		$model = $this->getService('model');
 		$form = $this->getService("presenter.$name.form")->create($entity);
-		$form->onSuccess[] = function($form) use ($model) {
+		$form->onSuccess[] = function($form) use ($model, $entity, $presenter) {	
 			$model->flush();
+			$presenter->redirect('edit', $entity->id);
 		};
 		$this->addComponent($form, $name);
 		return $form;
