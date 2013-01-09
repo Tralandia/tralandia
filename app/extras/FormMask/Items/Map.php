@@ -23,8 +23,8 @@ class Map extends Base {
 		$this->entity = $entity;
 		$this->setValueGetter(new Extras\Callback(function() use ($entity) {
 			return array(
-				'lat' => $entity->latitude->toFloat(),
-				'lng' => $entity->longitude->toFloat()
+				'lat' => $entity->latitude instanceof Extras\Types\Latlong ? $entity->latitude->toFloat() : 0,
+				'lng' => $entity->longitude instanceof Extras\Types\Latlong ? $entity->longitude->toFloat() : 0
 			);
 		}));
 		$this->setValueSetter(new Extras\Callback(function($value) use ($entity) {

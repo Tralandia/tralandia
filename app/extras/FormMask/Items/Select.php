@@ -99,8 +99,8 @@ class Select extends Text {
 		if (!is_callable($this->getValueGetter())) {
 			throw new Nette\InvalidStateException("Nebol zadaný callback gettera hodnot.");
 		}
-		
-		return $this->getValueGetter()->invoke()->id;
+		$data = $this->getValueGetter()->invoke();
+		return isset($data) ? $data->id : null;
 	}
 
 	/**

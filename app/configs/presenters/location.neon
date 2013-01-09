@@ -17,7 +17,10 @@ grid:
 
 form:
 	fields:
-
+		name:
+			label: Name
+			control:
+				type: advancedPhrase
 		parent:
 			label: Parent
 			control:

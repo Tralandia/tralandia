@@ -21,6 +21,7 @@ class GridFactory extends Nette\Object {
 
 	public function create(Nette\Application\IPresenter $presenter, Doctrine\ORM\EntityRepository $repository) {
 		$grid = new TwiGrid\DataGrid($this->session);
+		$grid->setTranslator($this->translator);
 		return new Grid($this->parameters, $grid, $presenter, $repository);
 	}
 }
