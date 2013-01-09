@@ -31,6 +31,26 @@ p {
 
 }
 
+a.toogle {
+	font-size: 13px;
+	line-height: 15px;
+
+	i {
+		height: 12px;
+		overflow: hidden;
+		display: block;		
+		float: left;
+		margin-right: 3px;	
+		&:before {
+			position:relative;
+			top: 2px;
+			font-size: 28px;
+
+		}		
+	}
+
+}
+
 ul.arrows {
 	list-style: none;
 	li {
@@ -1020,6 +1040,13 @@ border-top-right-radius: 5px;
 			position: relative;
 			top: -5px;
 		}
+
+	}
+
+	label.radio.single {
+		margin-left: 0;
+		padding-left: 0;
+		padding-top: 15px;
 	}
 
 	imput[type=text] {
