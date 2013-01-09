@@ -69,7 +69,7 @@ class Grid extends Nette\Object {
 	function recordValueGetter(Extras\Models\Entity\IEntity $record, $column) {
 		if ($record->$column instanceof Entity\Phrase\Phrase) {
 			return $this->presenter->translate($record->$column);
-		}debug($record->$column);
+		}
 		return $record->$column;
 	}
 
