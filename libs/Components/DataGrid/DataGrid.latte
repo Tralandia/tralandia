@@ -1,0 +1,348 @@
+{**
+ * Default DataGrid template
+ *
+ * @param  array  $flashes
+ * @param  string  $defaultTemplatePath
+ * @param  Nette\Application\UI\Form  $form
+ * @param  array  $columns
+ * @param  int  $columnCount number of table columns
+ * @param  \ArrayIterator  $filterButtons
+ * @param  bool  $isFiltered
+ * @param  array|\Traversable  $data
+ * @param  int  $dataCount
+ * @param  int|NULL  $countAll
+ * @param  array  $rowActions
+ * @param  string  $csrfToken
+ * @param  array  $groupActions
+ * @param  bool  $isTimelined
+ * @param  int  $page
+ * @param  bool  $renderFirstColumn
+ * @param  bool  $renderFilterRow
+ * @param  bool  $renderLastColumn
+ * @param  bool  $renderFooter
+ * @param  bool  $isActiveInlineEdit
+ * @param  string|NULL  $inlineEditPrimary
+ *}
+
+
+<div n:snippet="" class="twigrid">
+
+	<div n:snippet="flashes">
+		<div n:foreach="$flashes as $flash" class="alert alert-{$flash->type} hidable">{_$flash->message}</div>
+	</div>
+
+{include #datagrid}
+
+</div>
+
+
+
+{* === ... ============================================ *}
+
+{define datagrid}
+
+	{? }{form $form, class => ajax}
+	{if $errors = $form->errors}
+
+		<div class="alert alert-error hidable" n:foreach="$errors as $error">{$error}</div>
+	{/if}
+
+{include #container|indent:1}
+
+	{? }{/form}
+
+{/define}
+
+
+
+{* === ... ============================================ *}
+
+{define container}
+
+	<table class="table table-striped table-bordered table-hover">
+
+{include #header|indent:2}
+
+{include #body|indent:2}
+
+{include #footer|indent:2}
+
+	</table>
+
+{/define}
+
+
+
+{* === ... ============================================ *}
+
+{define header}
+
+	<thead>
+
+		<tr>
+			<th rowspan="2" class="center" n:if="$renderFirstColumn">&nbsp;</th>
+
+		{foreach $columns as $name => $column}
+{include #header-cell, name => $name, column => $column |indent:2}
+		{/foreach}
+
+			<th n:if="$renderLastColumn">&nbsp;</th>
+		</tr>
+
+		<tr n:if="$renderFilterRow">
+		{foreach $columns as $name => $column}
+{include #filter-cell, column => $name |indent:2}
+		{/foreach}
+
+			<th class="center">
+{include #filter-buttons |indent:3}
+			</th>
+		</tr>
+
+	</thead>
+
+{/define}
+
+
+
+{* === ... ============================================ *}
+
+{define header-cell}
+
+	<th>
+	{if $column->sortable}
+		<a n:href="sort!,
+				orderBy => !$column->orderedBy || !$column->orderedDesc ? $name : NULL,
+				orderDesc => $column->orderedBy && !$column->orderedDesc"
+			n:class="ajax">
+{include #header-label, column => $column |indent:2}
+		</a>
+
+	{else}
+{include #header-label, column => $column |indent:1}
+	{/if}
+
+		<i n:class="$column->orderedDesc ? icon-chevron-down : icon-chevron-up" n:if="$column->orderedBy"></i>
+	</th>
+
+{/define}
+
+
+
+{* === ... ============================================ *}
+
+{define header-label}
+	{$column->label}
+{/define}
+
+
+
+{* === ... ============================================ *}
+
+{define filter-cell}
+
+	<th>
+	{ifset $form["filters-criteria-$column"]}
+		{? }{input filters-criteria-$column}
+	{else}
+		&nbsp;
+	{/ifset}
+	</th>
+
+{/define}
+
+
+
+{* === ... ============================================ *}
+
+{define filter-buttons}
+	<div class="btn-group">
+	{foreach $filterButtons as $name => $button}
+{include #filter-button, name => $name, button => $button |indent:1}
+	{/foreach}
+	</div>
+{/define}
+
+
+
+{* === ... ============================================ *}
+
+{define filter-button}
+	{? }{input $button, class => btn}
+{/define}
+
+
+
+{* === ... ============================================ *}
+
+{define body}
+
+	<tbody>
+
+	{if $dataCount}
+	{foreach $data as $record}
+		{var $primaryString = $template->primaryToString( $record ),
+			$isInlineEdited = $inlineEditPrimary === $primaryString}
+		<tr n:class="$isInlineEdited ? success">
+
+			<td class="center" n:if="$renderFirstColumn">
+				{var $inputKey = $iterator->counter - 1}
+				{? }{input actions-records-$inputKey}
+			</td>
+
+		{foreach $columns as $name => $column}
+{include #body-cell, record => $record, isInlineEdited => $isInlineEdited, column => $name, value => $template->getValue($record, $name) |indent:2}
+		{/foreach}
+
+			<td n:if="$renderLastColumn" class="center">
+			{if $rowActions !== NULL || $isActiveInlineEdit}
+{include #row-action-buttons, i => $iterator->counter - 1, record => $record, isInlineEdited => $isInlineEdited, primaryString => $primaryString |indent:3}
+
+			{else}
+				&nbsp;
+			{/if}
+			</td>
+
+		</tr>
+	{/foreach}
+
+	{else}
+		<tr class="warning">
+			<td colspan="{$columnCount}">{_'No data.'}</td>
+		</tr>
+	{/if}
+
+	</tbody>
+
+{/define}
+
+
+
+{* === ... ============================================ *}
+
+{define body-cell}
+	<td>
+	{if $isInlineEdited && isset($form["inline-values-$column"])}
+		{input inline-values-$column}
+
+	{else}
+		{$value}
+	{/if}
+	</td>
+{/define}
+
+
+
+{* === ... ============================================ *}
+
+{define row-action-buttons}
+	<div class="btn-group">
+	{if $isInlineEdited}
+		{input inline-buttons-edit, class => 'btn btn-success'}
+		{input inline-buttons-cancel, class => 'btn btn-danger'}
+
+	{else}
+	{ifset $form[ $buttonName = "inline-buttons-" . ($i) ]}
+		{? }{input $buttonName, class => 'btn btn-info'}
+	{/ifset}
+	{foreach (array) $rowActions as $name => $action}
+{include #row-action-button, record => $record, primaryString => $primaryString, name => $name, action => $action |indent:1}
+	{/foreach}
+	{/if}
+	</div>
+{/define}
+
+
+
+{* === ... ============================================ *}
+
+{define row-action-button}
+	<a n:href="rowAction!,
+			action => $name,
+			primary => $primaryString,
+			token => $csrfToken"
+		n:class="btn, btn-info, ajax"
+		n:attr="data-confirm => $action[confirmation]">
+		{$action[label]}
+	</a>
+{/define}
+
+
+
+{* === ... ============================================ *}
+
+{define footer}
+
+	<tfoot n:if="$renderFooter">
+
+		<td colspan="{$columnCount}" class="center">
+			{if $groupActions !== NULL}
+{include #group-action-buttons |indent:2}
+			{/if}
+
+			{if $isTimelined}
+{include #timeline-buttons |indent:2}
+			{/if}
+		</td>
+
+	</tfoot>
+
+{/define}
+
+
+
+{* === ... ============================================ *}
+
+{define group-action-buttons}
+
+	<div class="pull-left">
+
+{include #group-action-buttons-label |indent:1}
+
+		<div class="btn-group">
+		{foreach $groupActions as $name => $action}
+{include #group-action-button, name => $name, action => $action |indent:2}
+		{/foreach}
+		</div>
+
+	</div>
+
+{/define}
+
+
+
+{* === ... ============================================ *}
+
+{define group-action-buttons-label}
+	<label class="action-buttons-label">{_'Checked:'}</label>
+{/define}
+
+
+
+{* === ... ============================================ *}
+
+{define group-action-button}
+	{? }{input actions-buttons-$name, class => btn, data-confirm => $action[confirmation]}
+{/define}
+
+
+
+{* === ... ============================================ *}
+
+{define timeline-buttons}
+
+	<div class="pull-right">
+		<div class="btn-group">
+
+			<a n:href="changePage!, page => $page + 1" n:class="btn, ajax" title="{_'Load next records'}" n:if="$page > 0 && ( $countAll === NULL || $dataCount < $countAll )">
+				<i class="icon-chevron-down"></i>
+			</a>
+
+			<a n:href="changePage!, page => 1" title="{_'Reset timeline'}" n:class="btn, ajax" n:if="$page !== 1">
+				<i class="icon-remove"></i>
+			</a>
+
+		</div>
+	</div>
+
+{/define}
