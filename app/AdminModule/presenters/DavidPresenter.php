@@ -98,6 +98,7 @@ class DavidPresenter extends BasePresenter {
 	{
 		/** @var $gps \Entity\Contact\Address */
 		$gps = $this->contactAddressRepositoryAccessor->get()->find(1);
+		d($gps->latitude);
 		$var = $gps->gpsToString();
 		d($var);
 	}
