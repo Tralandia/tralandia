@@ -170,6 +170,7 @@ services:
 	# ==============================
 	# registrationHandler: FormHandler\RegistrationHandler
 
+
 factories: 
 	# ==============================
 	# ==================== FORMS
@@ -270,11 +271,12 @@ factories:
 	itemPhoneFactory: Extras\FormMask\Items\Foctories\PhoneFactory
 	itemUrlFactory: Extras\FormMask\Items\Foctories\UrlFactory
 
-
-	dataGrid:
-		factory: TwiGrid\DataGrid
+	#dataGrid:
+		#class: TwiGrid\DataGrid
+		#factory: TwiGrid\DataGrid
 		#setup:
 		#	- setTranslator(@translator)
+
 includes:
 	- webLoader.neon
 	- acl/acl.neon

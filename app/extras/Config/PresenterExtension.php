@@ -34,6 +34,10 @@ class PresenterExtension extends Nette\Config\CompilerExtension
 			$form = $builder->addDefinition($this->prefix($prefix . '.form'))
 				->setClass('Extras\FormMask\FormFactory', array($generator));
 
+			$builder->addDefinition($this->prefix($prefix . '.grid'))
+				->setClass('AdminModule\Components\GridFactory')
+				->addSetup('setParameters', array(isset($params['grid']) ? $params['grid'] : array()));				
+
 			if (isset($params['form']) && isset($params['form']['fields'])) {
 				foreach ($params['form']['fields'] as $name => $item) {
 					$factory = '@item' . ucfirst($item['control']['type']) . 'Factory';
@@ -48,6 +52,7 @@ class PresenterExtension extends Nette\Config\CompilerExtension
 					$generator->addSetup('addItem', array(new Nette\DI\Statement($factory), $field));
 				}
 			}
+			//exit;
 		}
 	}
 
