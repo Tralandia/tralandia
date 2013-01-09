@@ -4,6 +4,7 @@ namespace Serivice\Phrase;
 use Nette;
 use Nette\Utils\Strings;
 use Repository\Phrase\PhraseRepository;
+use Repository\LanguageRepository;
 
 /**
  * CreatePhrase class
@@ -15,14 +16,22 @@ class PhraseCreator extends Nette\Object
 
 	/**
 	 * @var \Repository\Phrase\PhraseRepository
-	 */protected $phraseRepository;
+	 */
+	protected $phraseRepository;
+
+	/**
+	 * @var \Repository\LanguageRepository
+	 */
+	protected $languageRepository;
 
 	/**
 	 * @param \Repository\Phrase\PhraseRepository $phraseRepository
+	 * @param \Repository\LanguageRepository $languageRepository
 	 */
-	public function __construct(PhraseRepository $phraseRepository)
+	public function __construct(PhraseRepository $phraseRepository, LanguageRepository $languageRepository)
 	{
 		$this->phraseRepository = $phraseRepository;
+		$this->languageRepository = $languageRepository;
 	}
 
 	/**
@@ -37,6 +46,13 @@ class PhraseCreator extends Nette\Object
 		/** @var $phrase \Entity\Phrase\Phrase */
 		$phrase = $this->phraseRepository->createNew();
 		$phrase->setType($phraseType);
+
+		if($phraseType->getTranslateTo() == \Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED) {
+			$supportedLanguages = $this->languageRepository->findSupported();
+			foreach($supportedLanguages as $language) {
+				$phrase->createTranslation($language);
+			}
+		}
 
 		return $phrase;
 	}

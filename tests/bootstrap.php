@@ -35,11 +35,11 @@ Extras\Config\PresenterExtension::register($configurator);
 $configurator->addConfig(APP_DIR . '/configs/config.neon', FALSE);
 $configurator->addConfig(APP_DIR . '/configs/test.config.neon');
 $configurator->onCompile[] = function ($configurator, $compiler) {
-	Extras\PresenterGenerator::generate();
 	$compiler->addExtension('gpspicker', new VojtechDobes\NetteForms\GpsPickerExtension);
 };
 $container = $configurator->createContainer();
 
+# toto musi byt to dole!
 Debugger::enable(FALSE);
 
 
