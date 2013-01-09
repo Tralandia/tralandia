@@ -39,6 +39,7 @@ class Grid extends Nette\Object {
 		//$this->grid->setFilterContainerFactory( $this->createFilterContainer );
 		$this->grid->setDataLoader($this->dataLoader);
 		$this->grid->setRecordValueGetter($this->recordValueGetter);
+		$this->grid->setTimelineBehavior(true);
 
 		//$this->grid->setInlineEditing($this->createInlineEditContainer, $this->processInlineEditForm);
 		$this->grid->addRowAction('edit', 'Edit', $this->editRecord);
@@ -57,7 +58,7 @@ class Grid extends Nette\Object {
 
 
 		$query = $builder->getQuery();
-		$query->setFirstResult($page);
+		$query->setFirstResult($page * $this->itemsPerPage);
 		$query->setMaxResults($this->itemsPerPage);
 		return $query->getResult();
 	}

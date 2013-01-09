@@ -7,6 +7,7 @@ use Nette, Extras, Service, Entity, TwiGrid;
 class AdminPresenter extends BasePresenter {
 
 	protected $settings;
+	protected $repository;
 
 	public function getEntityName() {
 		return '\\Entity\\' . ucfirst($this->getConfigName());
@@ -26,6 +27,7 @@ class AdminPresenter extends BasePresenter {
 		
 		$this->settings = $this->getService('presenter.' . $this->getConfigName() . '.settings');
 		$this->template->settings = $this->settings;
+		$this->repository = $this->context->model->getRepository($this->getEntityName());
 	}
 
 	public function actionList() {
@@ -33,16 +35,14 @@ class AdminPresenter extends BasePresenter {
 	}
 
 	public function actionAdd() {
-		$repo = $this->context->model->getRepository($this->getEntityName());
-		$entity = $repo->createNew();
+		$entity = $this->repository->createNew();
 		$this->context->model->persist($entity);
 		$this->template->form = $this->getForm($this->getConfigName(), $entity);
 		$this->settings->name = 'novééé';
 	}
 
 	public function actionEdit($id) {
-		$repo = $this->context->model->getRepository($this->getEntityName());
-		$entity = $repo->find($id);
+		$entity = $this->repository->find($id);
 		$this->template->form = $this->getForm($this->getConfigName(), $entity);
 		$this->settings->name = $entity->id . ' - dynamika';
 	}
@@ -58,7 +58,6 @@ class AdminPresenter extends BasePresenter {
 	}
 
 	protected function createComponentDataGrid() {
-		$repo = $this->context->model->getRepository($this->getEntityName());
-		return $this->getService('presenter.' . $this->getConfigName() . '.grid')->create($this, $repo)->render();
+		return $this->getService('presenter.' . $this->getConfigName() . '.grid')->create($this, $this->repository)->render();
 	}
 }

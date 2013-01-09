@@ -4,13 +4,7 @@
 	<div class="span4"><h2>{$settings->title}</h2></div>
 	<div class="span8">
 		<div class="btn-group pull-right">
-		{if isset($showAddNewButton) && $showAddNewButton}
-			{if isset($directCreating) && $directCreating}
-				<a class="btn add-new pull-left" href="{link create}"><i class="icon-plus"></i> Add New</a>
-			{else}
-				<a class="btn add-new pull-left" href="{link add}" data-toggle="ajax-modal"><i class="icon-plus"></i> Add New</a>
-			{/if}
-		{/if}		
+			<a class="btn add-new pull-left" href="{link add}"><i class="icon-plus"></i> Add New</a>		
 		</div>
 	</div>
 	<hr />
