@@ -30,6 +30,9 @@ class CreateNewTest extends \Tests\TestCase
 		$this->assertInstanceOf('\Entity\Phrase\Type', $nameType);
 		$this->assertSame('\Entity\Location\Location', $nameType->getEntityName());
 		$this->assertSame('name', $nameType->getEntityAttribute());
+
+		$translations = $location->getName()->translations;
+		$this->assertGreaterThan(10, $translations->count());
 	}
 
 	public function testDoNotCreatePhrases() {
