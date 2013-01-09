@@ -78,7 +78,7 @@ class BaseRepository extends EntityRepository {
 			// if (isset($entity->rentals))
 			// 	debug($entity->rentals);
 			
-			if ($value instanceof Closure) {
+			if ($value instanceof \Closure) {
 				$collection[$entity->$key] = $value($entity);
 			} else {
 				$collection[$entity->$key] = !empty($value) ? $entity->$value : $entity;

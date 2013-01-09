@@ -1,5 +1,5 @@
 <?php
-namespace Serivice\Phrase;
+namespace Service\Phrase;
 
 use Nette;
 use Nette\Utils\Strings;

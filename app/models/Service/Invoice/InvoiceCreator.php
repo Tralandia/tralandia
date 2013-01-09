@@ -1,5 +1,5 @@
 <?php
-namespace Serivice\Invoice;
+namespace Service\Invoice;
 
 use Nette;
 use Entity\Rental\Rental;
@@ -7,11 +7,11 @@ use Entity\Invoice;
 use Repository\Invoice\InvoiceRepository;
 
 /**
- * CreateInvoice class
+ * InvoiceCreator class
  *
  * @author Dávid Ďurika
  */
-class CreateInvoice extends Nette\Object
+class InvoiceCreator extends Nette\Object
 {
 
 	/**
@@ -22,7 +22,7 @@ class CreateInvoice extends Nette\Object
 	/**
 	 * @var Rental
 	 */
-	protected $retnal;
+	protected $rental;
 
 	/**
 	 * Faktoracne udaje
@@ -46,7 +46,7 @@ class CreateInvoice extends Nette\Object
 	public function __construct(Rental $rental, Invoice\InvoicingData $invoicingData, Invoice\Package $package,
 								InvoiceRepository $invoiceRepository)
 	{
-		$this->rental = $rental;
+		$this->retnal = $rental;
 		$this->invoicingData = $invoicingData;
 		$this->addPackage($package);
 		$this->invoiceRepository = $invoiceRepository;

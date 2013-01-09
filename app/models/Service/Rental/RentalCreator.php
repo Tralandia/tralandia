@@ -1,18 +1,17 @@
 <?php
 
-namespace Serivice\Rental;
+namespace Service\Rental;
 
 use Nette;
 use Entity\Location\Location;
-use Serivice\Phrase\CreatePhrase;
 use Repository\Rental\RentalRepository;
 
 /**
- * CreateRental class
+ * RentalCreator class
  *
  * @author Dávid Ďurika
  */
-class CreateRental
+class RentalCreator
 {
 
 	/**
@@ -36,8 +35,9 @@ class CreateRental
 		/** @var $address \Entity\Contact\Address */
 		$address = $this->rentalRepository->related('address')->createNew();
 		$address->setPrimaryLocation($location);
-
 		$rental->setAddress($address);
+
+		$rental->getName()->createTranslation($location->getDefaultLanguage(), $rentalName);
 
 		return $rental;
 	}
