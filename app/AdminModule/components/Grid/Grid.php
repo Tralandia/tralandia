@@ -58,7 +58,7 @@ class Grid extends Nette\Object {
 
 
 		$query = $builder->getQuery();
-		$query->setFirstResult($page * $this->itemsPerPage);
+		$query->setFirstResult(($page - 1) * $this->itemsPerPage);
 		$query->setMaxResults($this->itemsPerPage);
 		return $query->getResult();
 	}
