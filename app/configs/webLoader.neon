@@ -39,6 +39,7 @@ parameters:
 					#- Front/js/fancy-checkboxes.js
 					- Front/js/bootstrap-dropdown.js					
 					- Front/js/bootstrap-modal.js
+					- Front/js/bootstrap-tab.js
 					- Front/js/jquery.scrollTo-1.4.3.1-min.js
 					- FrontJqUi/js/jquery-ui-1.9.1.custom.min.js
 					- Front/js/jquery-tra-map.js

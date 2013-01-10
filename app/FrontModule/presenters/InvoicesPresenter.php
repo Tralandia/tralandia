@@ -20,6 +20,10 @@ class InvoicesPresenter extends BasePresenter {
 
 	public function actionForms(){
 		$this->setLayout('layout');
-	}		
+	}	
+
+	public function actionCalendar(){
+		$this->setLayout('adminMenu');
+	}	
 
 }

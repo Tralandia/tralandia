@@ -87,21 +87,6 @@ App.prototype._setLocationUrlAnchor = function(anchorName){
 *	UNIVERSAL UI FUNCTIONS
 ****************************************************************************************************/
 
-App.prototype.uiTabsClickChangeHashAdress = function(){
-
-	var self = new App;
-	
-	var currentTabId = $(this).attr('href');
-	self._setLocationUrlAnchor($(this).attr('href'));
-	$(this).blur();
-
-	if($(this).attr('href') == '#tabs-2'){
-		/* large map plugin */
-		$('#map_canvas').traMap();	
-	}
-
-}
-
 App.prototype.attachment = function(){
 	var forInput = $(this).attr('for');
 	$(forInput).show();
@@ -114,32 +99,6 @@ App.prototype.ticketMesageCannedSelect = function(){
 	$(this).parent().find('textarea').remove();
 	$(this).parent().parent().find('a').remove();
 	return false;
-}
-
-App.prototype.uiSelectedTabs = function(){
-
-	var currentAnchor = this._getLocationUrlAnchor();
-
-		currentIndex = 0;
-
-		$('.tabs ul.ui-tabs-nav li a').each(function(index){
-
-			if($(this).attr('href') == currentAnchor){			
-				currentIndex = index;
-			}
-
-		});
-
-	var setting = {
-		active: currentIndex
-	};
-
-	if(currentIndex == 3) {
-		/* large map plugin */
-		$('#map_canvas').traMap();
-	}
-
-	return setting;
 }
 
 App.prototype.uiToogleClick = function(){
@@ -390,13 +349,13 @@ $(document).ready(function(){
 
 	/* object detail init large map after small map click */
 	$('.mapsImg').click(A.initMapsObjectDetail);
-	/* UI tabs */
+	/* UI tabs 
 	$( ".tabs" ).tabs(A.uiSelectedTabs());
 	$( ".tabs ul li a" ).click(A.uiTabsClickChangeHashAdress);
 	$(window).bind('hashchange', function() {
 	  $( ".tabs" ).tabs(A.uiSelectedTabs());
 	});
-
+	*/
 
 	$('.loadContactForm').click(A.loadContactForm);
 	
@@ -449,6 +408,52 @@ $(document).ready(function(){
 	});
 
 
+	/* ui tabs */
+    $('.nav-tabs a').click(function (e) {
+      
+      e.preventDefault();
+      var id = $(this).attr('id');
+      var href = $(this).attr('href');
 
+      console.log(href);
+
+      //$(this).tab('show');
+      $('.nav-tabs li').removeClass('active');
+      $(this).parent().addClass('active');
+
+
+		var scrollmem = $('body').scrollTop();
+		window.location.hash = href;
+		$('html,body').scrollTop(scrollmem);
+
+      if(id = 'objectDetailListMap'){
+      	$('#map_canvas').traMap();
+      }
+      
+
+      $('.tab-content .tab-pane').hide();
+      $('.tab-content .tab-pane'+href).show();
+
+      return false;
+    });
+
+    // nastavenie default tabu
+        
+    if(window.location.hash.length > 1){    	
+		var currentId  = window.location.hash;
+		$('.nav-tabs a[href$="'+currentId+'"]').tab('show');
+		$.scrollTo(currentId,800);	
+
+		// pokial obsahuje otvoreny div mapu
+		var haveMapContent = $(currentId).find("#map_canvas");			
+			if(haveMapContent.length != 0){
+				$('#map_canvas').traMap();
+			}
+
+    } else {
+    	$('.nav-tabs a:first').tab('show');
+    }
+
+    
 
 });

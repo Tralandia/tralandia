@@ -1342,57 +1342,51 @@ border-top-right-radius: 5px;
 
 /* UI tabs */
 
-
-
-.mytabUi > ul {
-	list-style: none;
-	margin: 0;
-	padding: .2em .2em 0;
-	width: 100%;
-	display: block;
-	height: 37px;
+.nav-tabs {
+	
 	border-bottom: 1px solid #c8cf9b;
+	margin-bottom: 0;
 
+		li {
 
+			a {
+				.basic-gradient(#FFFFF7,#EEF1D5);
+				font-weight: bold;				
+				display: block;
+				color: @brown;
+				border: 1px solid #dde4ac;
+				border-bottom: 1px solid #c8cf9b;
 
-	li {
-		display: block;
-		float: left;
-		margin: 1px .2em 0 0;
-		position: relative;
-		padding: 0;
-		white-space: nowrap;
-		border-top-right-radius: 4px ;
-		-khtml-border-top-right-radius: 4px;
-		-khtml-border-top-left-radius: 4px;
-		border-top-left-radius: 4px;
+				&:hover {
+					background:#fff;
+					border: 1px solid #dde4ac;
+					border-bottom: 1px solid #fff;
+					color: @brown;
+				}			
+			}
 
-		height: 34px;
-		
-		border: 1px solid #dde4ac;
-		border-bottom: none;
+			&:first-child {
+				margin-left: 10px;				
+			}
 
-		background-image: -webkit-linear-gradient(bottom, #EEF1D5 0%, #FFFFF7 100%);
-		background-image: -webkit-gradient( linear, left bottom, left top, color-stop(0, #EEF1D5), color-stop(1, #FFFFF7) );
-		background-image: -moz-linear-gradient(bottom, #EEF1D5 0%, #FFFFF7 100%);
-		background-image: -ms-linear-gradient(bottom, #EEF1D5 0%, #FFFFF7 100%);
-
-
-		&:first-child {
+			a:hover , &.active {
+				a {
+					background:#fff;
+					border: 1px solid #dde4ac;
+					border-bottom: 1px solid #fff;
+					color: @brown;
+				}
+			}
 
 		}
-
-		a {
-			font-weight: bold;
-			padding: .5em 1em;
-			display: block;
-			color: @brown;
-			
-		}
-	}
+	
 }
 
-
+.tab-content {
+	.tab-pane {
+		padding: 10px;
+	}
+}
 
 .tabs table.tableDefault {
 	width: 467px;
@@ -1413,12 +1407,13 @@ border-top-right-radius: 5px;
 
 }
 
-.tabs table.tableDefault.half {
+.tab-pane table.tableDefault.half {
 	width: 466px;
 	float: left;
+	margin: 0;
 }
 
-.tabs table.tableDefault.half.first {
+.tab-pane table.tableDefault.half.first {
 	margin-right: 10px;
 }
 
@@ -1579,7 +1574,19 @@ form.traform {
 
 	}
 
-		
+	select {
+		&.big {
+		width: 705px;
+		margin: 0 10px;
+		.box-size()
+
+
+		}
+
+			&.nomargin {
+				margin: 0;
+			}		
+	}
 
 	.span12  {
 		.btn {
@@ -1644,6 +1651,7 @@ form.traform {
 			.basic-gradient(#dfdfdf,#ccc);
 			color: #666;
 			border-right:1px solid #ccc;
+
 		}
 	}
 

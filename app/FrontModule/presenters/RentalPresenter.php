@@ -44,6 +44,7 @@ class RentalPresenter extends BasePresenter {
 		$this->setLayout('detailLayout');
 	}
 
+
 	public function actionList($primaryLocation, $location, $rentalType) {
 
 		d($rentalType);
