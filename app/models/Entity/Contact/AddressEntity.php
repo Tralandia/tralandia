@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="Repository\Contact\AddressRepository")
  * @ORM\Table(name="contact_address")
+ * @EA\Generator(skip="{setLatitude, unsetLatitude, getLatitude, setLongitude, unsetLongitude, getLongitude}")
  */
 class Address extends \Entity\BaseEntity {
 
@@ -59,16 +60,36 @@ class Address extends \Entity\BaseEntity {
 	protected $locations;
 
 	/**
-	 * @var latlong
-	 * @ORM\Column(type="latlong", nullable=true)
+	 * @var float
+	 * @ORM\Column(type="float", nullable=true)
 	 */
 	protected $latitude;
 
 	/**
-	 * @var latlong
-	 * @ORM\Column(type="latlong", nullable=true)
+	 * @var float
+	 * @ORM\Column(type="float", nullable=true)
 	 */
 	protected $longitude;
+
+	/**
+	 * @param \Extras\Types\Latlong
+	 * @return \Entity\Contact\Address
+	 */
+	public function setGps(\Extras\Types\Latlong $latlong)
+	{
+		$this->latitude = $latlong->getLatitude();
+		$this->longitude = $latlong->getLongitude();
+
+		return $this;
+	}
+
+	/**
+	 * @return \Extras\Types\Latlong
+	 */
+	public function getGps()
+	{
+		return new \Extras\Types\Latlong($this->latitude, $this->longitude);
+	}
 
 	/**
 	 * @param NULL
@@ -82,11 +103,6 @@ class Address extends \Entity\BaseEntity {
 		$this->locations->clear();
 
 		return $this;
-	}
-
-	public function gpsToString()
-	{
-		return "$this->latitude $this->longitude";
 	}
 
 	/**
@@ -329,63 +345,5 @@ class Address extends \Entity\BaseEntity {
 	public function getLocations()
 	{
 		return $this->locations;
-	}
-		
-	/**
-	 * @param \Extras\Types\Latlong
-	 * @return \Entity\Contact\Address
-	 */
-	public function setLatitude(\Extras\Types\Latlong $latitude)
-	{
-		$this->latitude = $latitude;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Contact\Address
-	 */
-	public function unsetLatitude()
-	{
-		$this->latitude = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Extras\Types\Latlong|NULL
-	 */
-	public function getLatitude()
-	{
-		return $this->latitude;
-	}
-		
-	/**
-	 * @param \Extras\Types\Latlong
-	 * @return \Entity\Contact\Address
-	 */
-	public function setLongitude(\Extras\Types\Latlong $longitude)
-	{
-		$this->longitude = $longitude;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Contact\Address
-	 */
-	public function unsetLongitude()
-	{
-		$this->longitude = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Extras\Types\Latlong|NULL
-	 */
-	public function getLongitude()
-	{
-		return $this->longitude;
 	}
 }

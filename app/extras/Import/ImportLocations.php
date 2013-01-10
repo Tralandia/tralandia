@@ -20,16 +20,12 @@ use Nette\Application as NA,
 class ImportLocations extends BaseImport {
 
 	private $dictionaryTypeName;
-	private $dictionaryTypeNameOfficial;
-	private $dictionaryTypeNameShort;
 	private $continentsByOldId = array();
 
 	public function doImport($subsection) {
 		
 
 		$this->dictionaryTypeName = $this->createPhraseType('\Location\Location', 'name', 'NATIVE');
-		$this->dictionaryTypeNameOfficial = $this->createPhraseType('\Location\Location', 'nameOfficial', 'NATIVE');
-		$this->dictionaryTypeNameShort = $this->createPhraseType('\Location\Location', 'nameShort', 'NATIVE');
 
 		$this->{$subsection}();
 
@@ -62,13 +58,12 @@ class ImportLocations extends BaseImport {
 		// Create location World
 		$s = $this->context->locationEntityFactory->create();
 		$s->name = $namePhrase;
-		$s->nameShort = $this->context->phraseEntityFactory->create();
-		$s->nameOfficial = $this->context->phraseEntityFactory->create();
 		$s->type = $worldType;
 		$s->slug = 'world';
 		$this->model->persist($s);
 		$this->model->flush();
 
+		$world = $s;
 
 		$locationType = $this->context->locationTypeEntityFactory->create();
 		$locationType->name = $this->createPhraseFromString('\Location\Location', 'name', 'NATIVE', 'continent', $language);
@@ -77,38 +72,19 @@ class ImportLocations extends BaseImport {
 		$this->model->persist($locationType);
 		$this->model->flush();
 
-		$r = q('select * from continents order by id');
+		$r = q('select * from continents where id not in (4, 5, 10) order by id');
 		while($x = mysql_fetch_array($r)) {
 			$s = $this->context->locationEntityFactory->create();
 			$s->name = $this->createNewPhrase($this->dictionaryTypeName, $x['name_dic_id']);
-			$s->nameShort = $this->context->phraseEntityFactory->create();
-			$s->nameOfficial = $this->context->phraseEntityFactory->create();
 			$s->type = $locationType;
 			$s->slug = qc('select text from z_en where id = '.$x['name_dic_id']);
+			$s->parent = $world;
 			$s->oldId = $x['id'];
+
 			$this->model->persist($s);
 			//debug($s);
 		}
 		$this->model->flush();
-	}
-
-	// ----------------------------------------------------------
-	// ------------- COUNTRIES
-	// ----------------------------------------------------------
-	private function importCountries() {
-
-		$language = $this->context->languageRepositoryAccessor->get()->findOneBy(array('iso' => 'en'));
-		$dictionaryType = $this->createPhraseType('\Location\TypeService', 'name', 'ACTIVE');
-
-		$locationTypeCountry = $this->context->locationTypeEntityFactory->create();
-		$locationTypeCountry->name = $this->createNewPhrase($dictionaryType, 865);
-		$locationTypeCountry->slug = 'country';
-		$this->model->persist($locationTypeCountry);
-
-		$locationTypeState = $this->context->locationTypeEntityFactory->create();
-		$locationTypeState->name = $this->createNewPhrase($dictionaryType, 865);
-		$locationTypeState->slug = 'state';
-		$this->model->persist($locationTypeState);
 
 		// Create USA
 		$namePhrase = $this->context->phraseRepositoryAccessor->get()->createNew();
@@ -119,12 +95,10 @@ class ImportLocations extends BaseImport {
 
 		$s = $this->context->locationEntityFactory->create();
 		$s->name = $namePhrase;
-		$s->nameShort = $this->context->phraseEntityFactory->create();
-		$s->nameOfficial = $this->context->phraseEntityFactory->create();
-		$s->type = $locationTypeCountry;
-		$s->parent = $this->context->locationRepositoryAccessor->get()->find(5); // north america
+		$s->type = $locationType;
 		$s->slug = 'usa';
 		$s->iso = 'us';
+		$s->parent = $world;
 		$s->defaultLanguage = $language;
 		$this->model->persist($s);
 
@@ -139,12 +113,10 @@ class ImportLocations extends BaseImport {
 
 		$s = $this->context->locationEntityFactory->create();
 		$s->name = $namePhrase;
-		$s->nameShort = $this->context->phraseEntityFactory->create();
-		$s->nameOfficial = $this->context->phraseEntityFactory->create();
-		$s->type = $locationTypeCountry;
-		$s->parent = $this->context->locationRepositoryAccessor->get()->find(5); // north america
+		$s->type = $locationType;
 		$s->slug = 'canada';
 		$s->iso = 'ca';
+		$s->parent = $world;
 		$s->defaultLanguage = $language;
 		$this->model->persist($s);
 
@@ -159,18 +131,25 @@ class ImportLocations extends BaseImport {
 
 		$s = $this->context->locationEntityFactory->create();
 		$s->name = $namePhrase;
-		$s->nameShort = $this->context->phraseEntityFactory->create();
-		$s->nameOfficial = $this->context->phraseEntityFactory->create();
-		$s->type = $locationTypeCountry;
-		$s->parent = $this->context->locationRepositoryAccessor->get()->find(5); // north america
+		$s->type = $locationType;
 		$s->slug = 'australia';
 		$s->iso = 'au';
+		$s->parent = $world;
 		$s->defaultLanguage = $language;
 		$this->model->persist($s);
 
 		$australia = $s;
 
 		$this->model->flush();
+
+		// Countries
+
+		$dictionaryType = $this->createPhraseType('\Location\TypeService', 'name', 'ACTIVE');
+
+		$locationTypeCountry = $this->context->locationTypeEntityFactory->create();
+		$locationTypeCountry->name = $this->createNewPhrase($dictionaryType, 865);
+		$locationTypeCountry->slug = 'country';
+		$this->model->persist($locationTypeCountry);
 
 		$r = q('select * from countries order by id');
 		//$r = q('select * from countries where id = 46 order by id');
@@ -180,7 +159,6 @@ class ImportLocations extends BaseImport {
 			$location->oldId = $x['id'];
 			$location->iso = $x['iso'];
 			$location->iso3 = $x['iso3'];
-			$location->isPrimary = TRUE;
 
 			if ($x['default_language_id'] > 0) {
 				$location->defaultLanguage = $this->context->languageRepositoryAccessor->get()->find(getByOldId('\Language', $x['default_language_id']));
@@ -216,52 +194,25 @@ class ImportLocations extends BaseImport {
 
 			$location->name = $namePhrase;
 
-			if ($x['name_long_dic_id'] > 0) {
-
-				$nameOfficialPhrase = $this->createNewPhrase($this->dictionaryTypeNameOfficial, $x['name_long_dic_id']);
-				
-				$t = $nameOfficialPhrase->getTranslations();
-				foreach ($t as $key => $value) {
-					$language = $value->language;
-					$x1 = qf('select * from countries_synonyms where country_id = '.$x['id'].' and language_id = '.$language->oldId.' order by length(name) DESC limit 1');
-					$value->translation = $x1['name'];
-					$variations = array();
-					$variations[0][0] = array(
-						'nominative' => $x1['name'],
-						'locative' => $x1['name_locative'],
-					);
-					$value->updateVariations($variations);
-					//debug($value);
-					$this->model->persist($value);
-				}
-
-				$location->nameOfficial = $nameOfficialPhrase;
-			} else {
-				$location->nameOfficial = $this->context->phraseEntityFactory->create();				
-			}
-
-			$location->nameShort = $this->context->phraseEntityFactory->create();
-
 			$location->type = $locationTypeCountry;
 			$languageTemp = $this->context->languageRepositoryAccessor->get()->findOneBy(array('iso' => 'en'));
 			$location->slug = $namePhraseService->getTranslation($languageTemp)->translation;
 			
 			$location->polygons = NULL;
-			if ($x['latitude'] != 0) $location->latitude = new Latlong($x['latitude']);
-			if ($x['longitude'] != 0) $location->longitude = new Latlong($x['longitude']);
+			if ($x['latitude'] != 0 && $x['longitude'] != 0) {
+				$gps = new \Extras\Types\Latlong($x['latitude'], $x['longitude']);
+				$location->setGps($gps);
+			}
 			$location->phonePrefix = $x['phone_prefix'];
 			$location->defaultZoom = $x['default_zoom'];
 
 			if (strlen($x['iso']) == 4) {
 				if (substr($x['iso'], 0, 2) == 'us') {
 					$location->parent = $usa;
-					$location->type = $locationTypeState;
 				} else if (substr($x['iso'], 0, 2) == 'ca') {
 					$location->parent = $canada;
-					$location->type = $locationTypeState;
 				} else if (substr($x['iso'], 0, 2) == 'au') {
 					$location->parent = $australia;
-					$location->type = $locationTypeState;
 				}
 			} else {
 				$parent = $this->context->locationRepositoryAccessor->get()->findOneBy(array('oldId' => $x['continent']));
@@ -377,8 +328,6 @@ class ImportLocations extends BaseImport {
 			}
 
 			$location->name = $namePhrase;
-			$location->nameOfficial = $namePhrase;
-			$location->nameShort = $namePhrase;
 			$location->type = $locationType;
 			$location->slug = $x['name_url'];			
 

@@ -170,8 +170,7 @@ class ImportUsers extends BaseImport {
 			$user->language = $this->context->languageRepositoryAccessor->get()->findOneByOldId($x['language_id']);
 			$user->primaryLocation = $this->context->locationRepositoryAccessor->get()->findOneBy(array('oldId'=>$x['country_id'], 'type'=>$locationTypeCountry));
 
-			$user->newsletterNews = (bool)$x['newsletter_news'];
-			$user->newsletterMarketing = (bool)$x['newsletter_marketing'];
+			$user->newsletter = (bool)($x['newsletter_news'] || $x['newsletter_marketing']);
 			$this->model->persist($user);
 		}
 		$this->model->flush();

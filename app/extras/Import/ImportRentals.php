@@ -109,8 +109,10 @@ class ImportRentals extends BaseImport {
 			$address->postalCode = $x['post_code'];
 			$address->primaryLocation = $context->locationRepositoryAccessor->get()->findOneBy(array('oldId' => $x['country_id'], 'type' => $locationTypes['country']));
 			$address->locality = $context->locationRepositoryAccessor->get()->findOneBy(array('oldId' => $x['locality_id'], 'type' => $locationTypes['locality']));
-			$address->latitude = new \Extras\Types\Latlong($x['latitude']);
-			$address->longitude = new \Extras\Types\Latlong($x['longitude']);
+			if ($x['latitude'] != 0 && $x['longitude'] != 0) {
+				$gps = new \Extras\Types\Latlong($x['latitude'], $x['longitude']);
+				$address->setGps($gps);
+			}
 
 			$rental->address = $address;
 
@@ -257,26 +259,14 @@ class ImportRentals extends BaseImport {
 
 			$rental->checkOut = (int)$x['check_out'];
 
-			if ($x['price_season']>0) {
-				//d($x['price_season'], $x['price_season_currency']);
-				if ($x['price_season_currency'] != $rental->primaryLocation->defaultCurrency->oldId) {
-					$oldCurrency = $context->currencyRepositoryAccessor->get()->findOneByOldId($x['price_season_currency']);
-					$t = new \Extras\Types\Price($x['price_season'], $oldCurrency);
-				} else {
-					$t = new \Extras\Types\Price($x['price_season'], $rental->primaryLocation->defaultCurrency);
-				}
-				$rental->priceSeason = $t->convertToFloat($rental->primaryLocation->defaultCurrency);
-			}
-
 			if ($x['price_offseason']>0) {
-				//d($x['price_offseason'], $x['price_season_currency']);
 				if ($x['price_season_currency'] != $rental->primaryLocation->defaultCurrency->oldId) {
 					$oldCurrency = $context->currencyRepositoryAccessor->get()->findOneByOldId($x['price_season_currency']);
 					$t = new \Extras\Types\Price($x['price_offseason'], $oldCurrency);
 				} else {
 					$t = new \Extras\Types\Price($x['price_offseason'], $rental->primaryLocation->defaultCurrency);
 				}
-				$rental->priceOffSeason = $t->convertToFloat($rental->primaryLocation->defaultCurrency);
+				$rental->price = $t->convertToFloat($rental->primaryLocation->defaultCurrency);
 			}
 
 			if (strlen($x['capacity_max'])) {

@@ -74,30 +74,6 @@ class ImportPhraseType extends BaseImport {
 			// ->setIldId(1)
 			->setCheckingRequired(1);
 
-		$this->createPhraseType('\Entity\Location\Location', 'nameOfficial')
-			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_NONE)
-			->setPluralVariationsRequired(0)
-			->setGenderRequired(0)
-			->setGenderVariationsRequired(0)
-			->setLocativesRequired(1)
-			->setPositionRequired(0)
-			// ->setHelpForTranslator('')
-			// ->setMonthlyBudget(0)
-			// ->setIldId(1)
-			->setCheckingRequired(NULL);
-
-		$this->createPhraseType('\Entity\Location\Location', 'nameShort')
-			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_NONE)
-			->setPluralVariationsRequired(0)
-			->setGenderRequired(0)
-			->setGenderVariationsRequired(0)
-			->setLocativesRequired(1)
-			->setPositionRequired(0)
-			// ->setHelpForTranslator('')
-			// ->setMonthlyBudget(0)
-			// ->setIldId(1)
-			->setCheckingRequired(NULL);
-
 		$this->createPhraseType('\Entity\Location\Type', 'name')
 			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED)
 			->setPluralVariationsRequired(1)

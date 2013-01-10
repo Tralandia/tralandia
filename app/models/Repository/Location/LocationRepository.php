@@ -17,12 +17,12 @@ class LocationRepository extends \Repository\BaseRepository {
 	public function getRentalCounts() {
 		$qb = $this->_em->createQueryBuilder();
 
-		$qb->select('l.id, count(r.id)')
+		$qb->select('l.id, count(r.id) as c')
 			->from($this->_entityName, 'l')
 			->join('l.primaryRentals', 'r')
-			->where($qb->expr()->eq('l.isPrimary', 1))
-			->andWhere($qb->expr()->eq('r.status', \Entity\Rental\Rental::STATUS_LIVE))
+			->where($qb->expr()->eq('r.status', \Entity\Rental\Rental::STATUS_LIVE))
 			->addGroupBy('l.id')
+    		->having('c > 0')
 		;
 
 		return $qb->getQuery()->getResult();

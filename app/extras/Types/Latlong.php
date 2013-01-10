@@ -5,24 +5,33 @@ namespace Extras\Types;
 class Latlong extends BaseType {
 
 	protected $dmsSeparators = array('°', '′', '″');
-	protected $type;
+	protected $locationSeparator = ' ';
+	protected $latitude;
+	protected $longitude;
 
-	public function __construct($data = NULL, $type = NULL) {
-		$this->type = $type;
-		if ($data !== NULL) {
-			$this->data = $this->normalizeLocation($data);
+	public function __construct($latitude, $longitude) {
+		$this->setGps($latitude, $longitude);
+	}
+
+	public function getLatitude() {
+		if ($this->isValid()) {
+			return $this->latitude;
 		}
+		return NULL;
 	}
 
-	public function setType($type) {
-		$this->type = $type;
-		return $this;
+	public function getLongitude() {
+		if ($this->isValid()) {
+			return $this->longitude;
+		}
+		return NULL;
 	}
 
-	public function toFloat() {
-		//if (!$this->isValid()) return FALSE;
+	public function setGps($latitude, $longitude) {
+		$this->latitude = $this->normalizeLocation($latitude);
+		$this->longitude = $this->normalizeLocation($longitude);
 
-		return (float)$this->data;
+		return $this->isValid();
 	}
 
 	// Retuns the value in DMS degrees
@@ -30,31 +39,15 @@ class Latlong extends BaseType {
 	public function __toString() {
 		if (!$this->isValid()) return '';
 
-		$values = array();
-	    $vars = explode(".",$this->data);
-	    $values[0] = (int)$vars[0];
-	    $t = (float)("0.".$vars[1]);
-
-
-	    $t = $t * 3600;
-	    $values[1] = floor($t / 60);
-	    $values[2] = (int) round($t - ($values[1] * 60));
-
-	    if ($this->type == 'latitude') {
-	    	$suffix = $values[0] < 0 ? 'S' : 'N';
-	    } else {
-	    	$suffix = $values[0] < 0 ? 'W' : 'E';
-	    }
-
-	    return 
-	    	(string) abs($values[0]).$this->dmsSeparators[0]
-	    	.$values[1].$this->dmsSeparators[1]
-	    	.$values[2].$this->dmsSeparators[2]
-	    	.$suffix;
+		return 
+			$this->locationToString($this->latitude, 'latitude')
+			.$this->locationSeparator
+			.$this->locationToString($this->longitude, 'longitude')
+		;
 	}
 
-	protected function isValid() {
-		if ($this->data !== NULL && ($this->type == 'latitude' || $this->type == 'longitude')) {
+	public function isValid() {
+		if ($this->latitude != 0 && $this->longitude != 0) {
 			return TRUE;
 		} else {
 			return FALSE;
@@ -72,16 +65,9 @@ class Latlong extends BaseType {
 			return (float)str_replace(",",".", $value);
 		}
 
-		$isNegative = FALSE;
-
 	   	$value = strtolower(trim($value));
 
-	   	if (preg_match('/[n|s]/', $value)) {
-	   		$this->type = 'latitude';
-	   	} else if (preg_match('/[e|w]/', $value)) {
-	   		$this->type = 'longitude';
-	   	}
-
+		$isNegative = FALSE;
 
 	   	if (preg_match('/[w|s|-]/', $value)) {
 	   		$isNegative = TRUE;
@@ -97,5 +83,29 @@ class Latlong extends BaseType {
 		}
 
 		return (float) ($a[0]+($a[1]/60)+($a[2]/60/60))*(($isNegative)?(-1):(1));		
+	}
+
+	protected function locationToString($value, $type) {
+		$values = array();
+	    $vars = explode(".",$value);
+	    $values[0] = (int)$vars[0];
+	    $t = (float)("0.".$vars[1]);
+
+
+	    $t = $t * 3600;
+	    $values[1] = floor($t / 60);
+	    $values[2] = (int) round($t - ($values[1] * 60));
+
+	    if ($type == 'latitude') {
+	    	$suffix = $values[0] < 0 ? 'S' : 'N';
+	    } else {
+	    	$suffix = $values[0] < 0 ? 'W' : 'E';
+	    }
+
+	    return 
+	    	(string) abs($values[0]).$this->dmsSeparators[0]
+	    	.$values[1].$this->dmsSeparators[1]
+	    	.$values[2].$this->dmsSeparators[2]
+	    	.$suffix;
 	}
 }

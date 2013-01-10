@@ -14,7 +14,7 @@ use Extras\Annotation as EA;
  * @ORM\Entity(repositoryClass="Repository\Rental\RentalRepository")
  * @ORM\Table(name="rental", indexes={@ORM\index(name="status", columns={"status"}), @ORM\index(name="slug", columns={"slug"}), @ORM\index(name="calendarUpdated", columns={"calendarUpdated"})})
  * @EA\Primary(key="id", value="slug")
- * @EA\Generator(skip="{getImages,getPriceSeason,getPriceOffSeason,setSlug}")
+ * @EA\Generator(skip="{getImages,getPrice,setSlug}")
  */
 class Rental extends \Entity\BaseEntity {
 
@@ -157,13 +157,7 @@ class Rental extends \Entity\BaseEntity {
 	 * @var price
 	 * @ORM\Column(type="float", nullable=true)
 	 */
-	protected $priceSeason;
-
-	/**
-	 * @var price
-	 * @ORM\Column(type="float", nullable=true)
-	 */
-	protected $priceOffSeason;
+	protected $price;
 
 	/**
 	 * @var Collection
@@ -276,17 +270,9 @@ class Rental extends \Entity\BaseEntity {
 	/**
 	 * @return \Extras\Types\Price
 	 */
-	public function getPriceSeason()
+	public function getPrice()
 	{
-		return new \Extras\Types\Price($this->priceSeason, $this->getCurrency());
-	}
-
-	/**
-	 * @return \Extras\Types\Price
-	 */
-	public function getPriceOffSeason()
-	{
-		return new \Extras\Types\Price($this->priceOffSeason, $this->getCurrency());
+		return new \Extras\Types\Price($this->price, $this->getCurrency());
 	}
 
 	public function getCurrency() {
@@ -939,49 +925,7 @@ class Rental extends \Entity\BaseEntity {
 	{
 		return $this->pricesUponRequest;
 	}
-		
-	/**
-	 * @param float
-	 * @return \Entity\Rental\Rental
-	 */
-	public function setPriceSeason($priceSeason)
-	{
-		$this->priceSeason = $priceSeason;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Rental\Rental
-	 */
-	public function unsetPriceSeason()
-	{
-		$this->priceSeason = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @param float
-	 * @return \Entity\Rental\Rental
-	 */
-	public function setPriceOffSeason($priceOffSeason)
-	{
-		$this->priceOffSeason = $priceOffSeason;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Rental\Rental
-	 */
-	public function unsetPriceOffSeason()
-	{
-		$this->priceOffSeason = NULL;
-
-		return $this;
-	}
-		
+				
 	/**
 	 * @param \Entity\Rental\Image
 	 * @return \Entity\Rental\Rental

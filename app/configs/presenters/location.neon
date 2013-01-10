@@ -1,7 +1,7 @@
 entity: Entity\Location\Location
 
 parameters:
-	title: Locations
+	title: Locations -> Continents
 	h1: 'Location -> %name%'
 
 grid:
@@ -27,6 +27,46 @@ form:
 				type: select
 				repository: @locationRepositoryAccessor
 				items: [getItems, id, name]
+		type:
+			label: Type
+			control:
+				type: select
+				repository: @locationTypeRepositoryAccessor
+				items: [getItems, id, name]
+		domain:
+			label: Domain
+			control:
+				type: select
+				repository: @domainRepositoryAccessor
+				items: [getItems, id, name]
 		map:
 			label: GMap
 			control: [type: map]
+		defaultZoom:
+			label: Default Map Zoom
+			control:
+				type: text
+		iso:
+			label: ISO 2
+			control:
+				type: text
+		iso3:
+			label: ISO 3
+			control:
+				type: text
+		phonePrefix:
+			label: Country Phone Prefix
+			control:
+				type: text
+		defaultCurrency:
+			label: Default Currency
+			control:
+				type: select
+				repository: @currencyRepositoryAccessor
+				items: [getItems, id, name]
+		defaultLanguage:
+			label: Default Language
+			control:
+				type: select
+				repository: @languageRepositoryAccessor
+				items: [getItems, id, name]

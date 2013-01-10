@@ -86,9 +86,9 @@ class RentalSearchCaching extends \Nette\Object {
 		}
 
 		// Set Price
-		if ($rental->priceSeason) {
+		if ($rental->price) {
 			$searchInterval = $rental->primaryLocation->defaultCurrency->searchInterval;
-			$t = ceil($rental->priceSeason / $searchInterval)*$searchInterval;
+			$t = ceil($rental->price / $searchInterval)*$searchInterval;
 			$this->cacheContent[RentalSearchService::CRITERIA_PRICE][$t][$rental->id] = $rental->id;
 		}
 		$this->save();

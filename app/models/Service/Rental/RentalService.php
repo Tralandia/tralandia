@@ -35,7 +35,7 @@ class RentalService extends Service\BaseService
 	public function calculateRank() {
 		$r = $this->entity;
 
-		$conditionalCompulsoryInformation = array('priceSeason', 'priceOffSeason');
+		$conditionalCompulsoryInformation = array('price');
 		$pricesCompulsory = !$r->pricesUponRequest;
 
 		$rank = array(
@@ -190,24 +190,13 @@ class RentalService extends Service\BaseService
 		}
 
 		// Prices Season
-		if ($r->priceSeason > 0) {
+		if ($r->price > 0) {
 			$rank['points'] += 3;
 		} else {
 			if ($pricesCompulsory) {
-				$rank['missing'][] = 'priceSeason';
+				$rank['missing'][] = 'price';
 			} else {
-				$rank['missing'][] = 'priceSeason';
-			}
-		}
-
-		// Prices Off Season
-		if ($r->priceOffSeason > 0) {
-			$rank['points'] += 3;
-		} else {
-			if ($pricesCompulsory) {
-				$rank['missing'][] = 'priceOffSeason';
-			} else {
-				$rank['missing'][] = 'priceOffSeason';
+				$rank['missing'][] = 'price';
 			}
 		}
 

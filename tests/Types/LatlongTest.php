@@ -25,11 +25,9 @@ class LatlongTest extends \Tests\TestCase
 		);
 
 		foreach ($testValues as $value) {
-			$lat = new \Extras\Types\Latlong($value[0], 'latitude');
-			$long = new \Extras\Types\Latlong($value[1], 'longitude');
+			$t = new \Extras\Types\Latlong($value[0], $value[1]);
 			echo("\n".$value[0].' : '.$value[1]);
-			$this->assertSame("40°26′46″S", (string)$lat);
-			$this->assertSame("79°56′55″E", (string)$long);
+			$this->assertSame("40°26′46″S 79°56′55″E", (string)$t);
 		}
 
 	}

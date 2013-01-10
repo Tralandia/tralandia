@@ -58,13 +58,7 @@ class User extends \Entity\BaseEntityDetails {
 	 * @var boolean
 	 * @ORM\Column(type="boolean", nullable=true)
 	 */
-	protected $newsletterMarketing;
-
-	/**
-	 * @var boolean
-	 * @ORM\Column(type="boolean", nullable=true)
-	 */
-	protected $newsletterNews;
+	protected $newsletter;
 
 
 	//@entity-generator-code --- NEMAZAT !!!
@@ -255,62 +249,5 @@ class User extends \Entity\BaseEntityDetails {
 	{
 		return $this->rentals;
 	}
-		
-	/**
-	 * @param boolean
-	 * @return \Entity\User\User
-	 */
-	public function setNewsletterMarketing($newsletterMarketing)
-	{
-		$this->newsletterMarketing = $newsletterMarketing;
 
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\User\User
-	 */
-	public function unsetNewsletterMarketing()
-	{
-		$this->newsletterMarketing = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return boolean|NULL
-	 */
-	public function getNewsletterMarketing()
-	{
-		return $this->newsletterMarketing;
-	}
-		
-	/**
-	 * @param boolean
-	 * @return \Entity\User\User
-	 */
-	public function setNewsletterNews($newsletterNews)
-	{
-		$this->newsletterNews = $newsletterNews;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\User\User
-	 */
-	public function unsetNewsletterNews()
-	{
-		$this->newsletterNews = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return boolean|NULL
-	 */
-	public function getNewsletterNews()
-	{
-		return $this->newsletterNews;
-	}
 }

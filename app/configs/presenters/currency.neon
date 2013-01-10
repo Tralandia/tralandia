@@ -32,7 +32,7 @@ form:
 			control:
 				type: text
 			validation:
-				- [addRule, :pattern, 'Must be exactly 3 characters long.', '[A-Z]{3}']
+				- [addRule, :pattern, 'Must be exactly 3 characters long and UPPERCASE.', '[A-Z]{3}']
 		exchangeRate:
 			label: Exchange Rate / EUR
 			control:
@@ -40,5 +40,9 @@ form:
 			description: "How much of this currency would you get for one Euro?"
 		rounding:
 			label: Rounding
+			control:
+				type: text
+		searchInterval:
+			label: Search Interval
 			control:
 				type: text

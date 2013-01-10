@@ -10,36 +10,15 @@ use	Extras\Annotation as EA;
  * @ORM\Entity(repositoryClass="Repository\Location\LocationRepository")
  * @ORM\Table(name="location", indexes={@ORM\index(name="name", columns={"name_id"}), @ORM\index(name="slug", columns={"slug"}), @ORM\index(name="latitude", columns={"latitude"}), @ORM\index(name="longitude", columns={"longitude"})})
  * @EA\Primary(key="id", value="slug")
- * @EA\Generator(skip="{setSlug, getParent}")
+ * @EA\Generator(skip="{setSlug, getParent, setLatitude, unsetLatitude, getLatitude, setLongitude, unsetLongitude, getLongitude}")
 */
 class Location extends \Entity\BaseEntityDetails {
-
-	const STATUS_DRAFT = 'draft';
-	const STATUS_LAUNCHED = 'launched';
-
-	/**
-	 * @var Boolean
-	 * @ORM\Column(type="boolean")
-	 */
-	protected $isPrimary = FALSE;
 
 	/**
 	 * @var Collection
 	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"}, fetch="EAGER")
 	 */
 	protected $name;
-
-	/**
-	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
-	 */
-	protected $nameOfficial;
-
-	/**
-	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
-	 */
-	protected $nameShort;
 
 	/**
 	 * @var string
@@ -66,14 +45,14 @@ class Location extends \Entity\BaseEntityDetails {
 	protected $polygons;
 
 	/**
-	 * @var latlong
-	 * @ORM\Column(type="latlong", nullable=true)
+	 * @var float
+	 * @ORM\Column(type="float", nullable=true)
 	 */
 	protected $latitude;
 
 	/**
-	 * @var latlong
-	 * @ORM\Column(type="latlong", nullable=true)
+	 * @var float
+	 * @ORM\Column(type="float", nullable=true)
 	 */
 	protected $longitude;
 
@@ -156,9 +135,28 @@ class Location extends \Entity\BaseEntityDetails {
 	 * @return bool
 	 */
 	public function isPrimary() {
-		return (bool)$this->isPrimary;
+		return (bool)($this->getType()->slug == 'country');
 	}
 
+	/**
+	 * @param \Extras\Types\Latlong
+	 * @return \Entity\Contact\Address
+	 */
+	public function setGps(\Extras\Types\Latlong $latlong)
+	{
+		$this->latitude = $latlong->getLatitude();
+		$this->longitude = $latlong->getLongitude();
+
+		return $this;
+	}
+
+	/**
+	 * @return \Extras\Types\Latlong
+	 */
+	public function getGps()
+	{
+		return new \Extras\Types\Latlong($this->latitude, $this->longitude);
+	}
 
 	/**
 	 * @param string|null $slug
@@ -257,45 +255,7 @@ class Location extends \Entity\BaseEntityDetails {
 	{
 		return $this->name;
 	}
-		
-	/**
-	 * @param \Entity\Phrase\Phrase
-	 * @return \Entity\Location\Location
-	 */
-	public function setNameOfficial(\Entity\Phrase\Phrase $nameOfficial)
-	{
-		$this->nameOfficial = $nameOfficial;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Phrase\Phrase|NULL
-	 */
-	public function getNameOfficial()
-	{
-		return $this->nameOfficial;
-	}
-		
-	/**
-	 * @param \Entity\Phrase\Phrase
-	 * @return \Entity\Location\Location
-	 */
-	public function setNameShort(\Entity\Phrase\Phrase $nameShort)
-	{
-		$this->nameShort = $nameShort;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Phrase\Phrase|NULL
-	 */
-	public function getNameShort()
-	{
-		return $this->nameShort;
-	}
-		
+				
 	/**
 	 * @return \Entity\Location\Location
 	 */
@@ -392,65 +352,7 @@ class Location extends \Entity\BaseEntityDetails {
 	{
 		return $this->polygons;
 	}
-		
-	/**
-	 * @param \Extras\Types\Latlong
-	 * @return \Entity\Location\Location
-	 */
-	public function setLatitude(\Extras\Types\Latlong $latitude)
-	{
-		$this->latitude = $latitude;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Location\Location
-	 */
-	public function unsetLatitude()
-	{
-		$this->latitude = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Extras\Types\Latlong|NULL
-	 */
-	public function getLatitude()
-	{
-		return $this->latitude;
-	}
-		
-	/**
-	 * @param \Extras\Types\Latlong
-	 * @return \Entity\Location\Location
-	 */
-	public function setLongitude(\Extras\Types\Latlong $longitude)
-	{
-		$this->longitude = $longitude;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Location\Location
-	 */
-	public function unsetLongitude()
-	{
-		$this->longitude = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Extras\Types\Latlong|NULL
-	 */
-	public function getLongitude()
-	{
-		return $this->longitude;
-	}
-		
+				
 	/**
 	 * @param integer
 	 * @return \Entity\Location\Location
