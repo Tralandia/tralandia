@@ -3,6 +3,7 @@
 
 // the identification of this site
 define('SITE', '');
+define('CENTRAL_LANGUAGE', 38);
 
 // absolute filesystem path to the web root
 define('WWW_DIR', dirname(__FILE__));

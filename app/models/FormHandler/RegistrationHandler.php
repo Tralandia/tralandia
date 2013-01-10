@@ -2,8 +2,8 @@
 
 namespace FormHandler;
 
-use Repository\User\UserRepository;
 use Repository\Rental\RentalRepository;
+use Service\Rental\RentalCreator;
 
 class RegistrationHandler extends FormHandler
 {
@@ -12,44 +12,86 @@ class RegistrationHandler extends FormHandler
 	public $onInvoiceNotExists = array();
 
 	/**
-	 * @var \Repository\User\UserRepository
-	 */
-	protected $userRepository;
-
-	/**
 	 * @var \Repository\Rental\RentalRepository
 	 */
 	protected $rentalRepository;
 
 	/**
-	 * @param \Repository\User\UserRepository $userRepository
-	 * @param \Repository\Rental\RentalRepository $rentalRepository
+	 * @var \Service\Rental\RentalCreator
 	 */
-	public function __construct(UserRepository $userRepository, RentalRepository $rentalRepository)
+	protected $rentalCreator;
+
+	/**
+	 * @param \Repository\Rental\RentalRepository $rentalRepository
+	 * @param \Service\Rental\RentalCreator $rentalCreator
+	 */
+	public function __construct(RentalRepository $rentalRepository, RentalCreator $rentalCreator)
 	{
-		$this->userRepository = $userRepository;
 		$this->rentalRepository = $rentalRepository;
+		$this->rentalCreator = $rentalCreator;
 	}
 
 	public function handleSuccess($values)
 	{
+		$userRepository = $this->rentalRepository->related('user');
+		$locationRepository = $this->rentalRepository->related('primaryLocation');
+		$languageRepository = $this->rentalRepository->related('editLanguage');
+		$rentalTypeRepository = $this->rentalRepository->related('type');
+		$referralRepository = $this->rentalRepository->related('referrals');
+		$emailRepository = $this->rentalRepository->related('emails');
+
 		$error = new ValidationError;
 
+		/** @var $location \Entity\Location\Location */
+		$location = $locationRepository->find($values->location);
+		if(!$location || !$location->isPrimary()) {
+			$error->addError("Invalid location", 'location');
+		}
+
+		/** @var $language \Entity\Language */
+		$language = $languageRepository->find($values->language);
+		if(!$language) {
+			$error->addError("Invalid language", 'language');
+		}
+
 		// User
-		$user = $this->userRepository->findByEmail($values->email);
+		$user = $userRepository->findByEmail($values->email);
 		if($user) {
 			$error->addError("Email exists", 'email');
 		}
+
+		/** @var $rentalType \Entity\Rental\Type */
+		$rentalType = $rentalTypeRepository->find($values->rentalType);
+		if(!$rentalType) {
+			$error->addError("Invalid rental type", 'rentalType');
+		}
+
 		$error->assertValid();
 
 		/** @var $user \Entity\User\User */
 		$user = $this->userRepository->createNew();
 		$user->setLogin($values->login);
 		$user->setPassword($values->password);
+		$user->setLanguage($language);
+
+		/** @var $referral \Entity\Rental\Referral */
+		$referral = $referralRepository->createNew();
+
+		/** @var $email \Entity\Contact\Email */
+		$email = $emailRepository->createNew();
 
 		/** @var $rental \Entity\Rental\Rental */
-		$rental = $this->rentalRepository->createNew();
-		$rental->setName();
+		$rentalCreator = $this->rentalCreator;
+		$rental = $rentalCreator->create($location, $user, $values->rentalName);
+		$rentalCreator->setPrice($rental, $values->rentalPrice);
+
+		$rental->setType($rentalType)
+			->setEditLanguage($language)
+			->addSpokenLanguage($language)
+			->addEmail($email)
+			->setClassification($values->rentalClassification)
+			->setMaxCapacity($values->rentalMaxCapacity)
+			->addReferral($referral);
 
 
 		//$this->model->save($values);

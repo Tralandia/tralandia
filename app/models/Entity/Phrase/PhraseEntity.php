@@ -4,6 +4,7 @@ namespace Entity\Phrase;
 
 use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
+use Nette\Utils\Strings;
 
 /**
  * @ORM\Entity(repositoryClass="Repository\Phrase\PhraseRepository")
@@ -11,6 +12,10 @@ use	Extras\Annotation as EA;
  * @EA\Primary(key="id", value="translations")
  */
 class Phrase extends \Entity\BaseEntityDetails {
+
+	const REQUESTED = 1;
+	const CENTRAL = 5;
+	const SOURCE = 10;
 
 	/**
 	 * @var Collection
@@ -103,6 +108,105 @@ class Phrase extends \Entity\BaseEntityDetails {
 		return $matrix;
 	}
 
+	/**
+	 * Vrati translation-y v ziadanom, centralom a source jazyku, ak existuju
+	 *
+	 * @param \Entity\Language $language
+	 * @return array[Entity\Phrase\Translation]
+	 */
+	public function getMainTranslations(\Entity\Language $language = NULL) {
+		$t = array();
+
+		foreach ($this->getTranslations() as $value) {
+			if ($language && $value->language->id == $language->id) {
+				$t[self::REQUESTED] = $value;
+			}
+
+			if ($value->language->id == CENTRAL_LANGUAGE) {
+				$t[self::CENTRAL] = $value;
+			}
+
+			if ($this->sourceLanguage && $value->language->id == $this->sourceLanguage->id) {
+				$t[self::SOURCE] = $value;
+			}
+		}
+
+		ksort($t);
+
+		return $t;
+	}
+
+	public function getTranslation(\Entity\Language $language, $loose = FALSE) {
+		$t = $this->getMainTranslations($language);
+		if ($loose) {
+			$t = array_filter($t);
+			return reset($t);
+		} else {
+			return (array_key_exists(self::REQUESTED, $t) ? $t[self::REQUESTED] : NULL);
+		}
+	}
+
+	public function getSourceTranslation() {
+		foreach ($this->getTranslations() as $value) {
+			if ($this->sourceLanguage && $value->language->id == $this->sourceLanguage->id) {
+				return $value;
+			}
+		}
+		return FALSE;
+	}
+
+	public function hasTranslation($language) {
+		return $this->getTranslation($language) instanceof \Entity\Phrase\Translation;
+	}
+
+	public function getTranslationText(\Entity\Language $language, $loose = FALSE) {
+		$t = $this->getMainTranslations($language);
+		$text = '';
+		if ($loose) {
+			foreach ($t as $value) {
+				if (strlen((string) $value)) {
+					$text = (string) $value;
+					break;
+				}
+			}
+		} else {
+			$text = $t[self::REQUESTED];
+		}
+
+		return (string) $text;
+	}
+
+	public function getValidTranslationsCount() {
+		$c = 0;
+		foreach ($this->getTranslations() as $key => $value) {
+			if (Strings::length($value->translation) > 0) $c++;
+		}
+
+		return $c;
+	}
+
+	public function hasCentralTranslation() {
+		$mainTranslations = $this->getMainTranslations();
+		if (Strings::length($mainTranslations[self::CENTRAL]->translation) > 0) {
+			return TRUE;
+		} else {
+			return FALSE;
+		}
+	}
+
+	public function hasSourceTranslation() {
+		$mainTranslations = $this->getMainTranslations();
+		if (Strings::length($mainTranslations[self::SOURCE]->translation) > 0) {
+			return TRUE;
+		} else {
+			return FALSE;
+		}
+	}
+
+	public function setTranslationText(\Entity\Language $language, $value) {
+		$this->getTranslation($language)->translation = $value;
+		return $this;
+	}
 
 	//@entity-generator-code --- NEMAZAT !!!
 

@@ -81,3 +81,16 @@ class InvoiceCreator extends Nette\Object
 	}
 
 }
+
+
+interface IInvoiceCreatorFactory {
+
+	/**
+	 * @param \Entity\Rental\Rental $rental
+	 * @param \Entity\Invoice\InvoicingData $invoicingData
+	 * @param \Entity\Invoice\Package $package
+	 *
+	 * @return InvoiceCreator
+	 */
+	function create(Rental $rental, Invoice\InvoicingData $invoicingData, Invoice\Package $package);
+}

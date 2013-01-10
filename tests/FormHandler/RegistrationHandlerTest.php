@@ -14,26 +14,8 @@ class RegistrationHandlerTest extends \Tests\TestCase
 	 */
 	public $registrationHandler;
 
-	/**
-	 * @var \Repository\Location\LocationRepository
-	 */
-	public $locationRepository;
-
-	/**
-	 * @var \Repository\LanguageRepository
-	 */
-	public $languageRepository;
-
-	/**
-	 * @var \Repository\BaseRepository
-	 */
-	public $rentalTypeRepository;
-
 	protected function setUp() {
 		$this->registrationHandler = $this->getContext()->registrationHandler;
-		$this->locationRepository = $this->getContext()->locationRepositoryAccessor->get();
-		$this->languageRepository = $this->getContext()->languageRepositoryAccessor->get();
-		$this->rentalTypeRepository = $this->getContext()->rentalTypeRepositoryAccessor->get();
 	}
 
 	/**
@@ -44,8 +26,8 @@ class RegistrationHandlerTest extends \Tests\TestCase
 
 		$data = new \Nette\ArrayHash;
 
-		$data->country = $this->locationRepository->findOneByOldId(46);
-		$data->language = $this->languageRepository->findOneByOldId(144);
+		$data->country = 46;
+		$data->language = 144;
 
 		$data->referrer = 'david@gmail.sk';
 
@@ -54,10 +36,12 @@ class RegistrationHandlerTest extends \Tests\TestCase
 		$data->password = 'df34kdj4se4jr33';
 
 		$data->rentalName = 'Chata pri lese';
-		$data->rentalType = $this->rentalTypeRepository->findOneById(1);
+		$data->rentalType = 1;
 		$data->rentalClassification = 3;
 		$data->rentalPrice = 5;
 		$data->rentalMaxCapacity = 22;
+
+		$data->package = 1;
 
 		$data->legalForm = TRUE;
 		$data->clientName = 'Test Testovic';

@@ -167,8 +167,6 @@ factories:
 
 	phraseDecoratorFactory: 
 		class: Service\Phrase\PhraseService(..., %entity%)
-		setup:
-			- $centralLanguage(%centralLanguage%)
 		implement: Model\Phrase\IPhraseDecoratorFactory
 
 	locationDecoratorFactory: 

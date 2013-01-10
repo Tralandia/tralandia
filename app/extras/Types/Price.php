@@ -9,9 +9,9 @@ class Price extends \Nette\Object {
 
 	const FORMAT_FLOAT = 'float';
 
-	private $amounts = array();
-	private $sourceAmount;
-	private $sourceCurrency;
+	protected $amounts = array();
+	protected $sourceAmount;
+	protected $sourceCurrency;
 
 	public function __construct($amount, \Entity\Currency $currency) {
 		$this->setAmount($amount, $currency);
@@ -29,6 +29,11 @@ class Price extends \Nette\Object {
 
 	public function isNull() {
 		return !($this->sourceAmount > 0);
+	}
+
+	public function getSourceAmount()
+	{
+		return $this->sourceAmount;
 	}
 
 	public function convertToFloat(\Entity\Currency $currency) {

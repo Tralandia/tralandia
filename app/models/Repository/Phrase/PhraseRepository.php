@@ -12,10 +12,7 @@ class PhraseRepository extends \Repository\BaseRepository {
 
 	protected $languageRepositoryAccessor;
 
-	protected $centralLanguage;
-
-	public function inject($centralLanguage, $languageRepositoryAccessor) {
-		$this->centralLanguage = $centralLanguage;
+	public function inject($languageRepositoryAccessor) {
 		$this->languageRepositoryAccessor = $languageRepositoryAccessor;
 	}
 

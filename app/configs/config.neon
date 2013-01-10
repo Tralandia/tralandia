@@ -12,7 +12,6 @@ nette:
 		expiration: '+1 year'
 
 parameters:
-	centralLanguage: 38
 
 	security:
 		salt: '8723lks762ngknl90835bkd'
@@ -164,7 +163,7 @@ services:
 
 	polygonService: Service\PolygonService
 	rentalRegistrationsStats: Service\Statistics\RentalRegistrations(@rentalRepositoryAccessor::get(), @locationRepositoryAccessor::get())
-	#rentalCreator: Service\Rental\RentalCreator
+	rentalCreator: Service\Rental\RentalCreator(@rentalRepositoryAccessor::get())
 
 	# ==============================
 	# ==================== FORMS HANDLERS
@@ -265,6 +264,11 @@ factories:
 	translatorFactory:
 		class: Extras\Translator(%language%, @phraseRepositoryAccessor, @translatorCache)
 		implement: Extras\ITranslatorFactory
+
+	invoiceCreatorFactory:
+		class: Service\Invoice\InvoiceCreator
+		arguments: [%rental%, %invoicingData%, %package%, @invoiceRepositoryAccessor::get()]
+		implement: Service\Invoice\IInvoiceCreatorFactory
 
 	itemMapFactory: Extras\FormMask\Items\Foctories\MapFactory
 	itemEmailFactory: Extras\FormMask\Items\Foctories\EmailFactory

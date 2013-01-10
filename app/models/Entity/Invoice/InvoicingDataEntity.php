@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Repository\Invoice\InvoicingDataRepository")
  * @ORM\Table(name="invoice_invoicingdata")
  * @EA\Primary(key="id", value="name")
  */

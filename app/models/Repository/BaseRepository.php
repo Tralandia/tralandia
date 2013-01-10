@@ -15,13 +15,13 @@ class BaseRepository extends EntityRepository {
 	public function createNew($createPhrases = TRUE) {
 		$class = $this->getEntityName();
 		if($class == 'Entity\Phrase\Translation') {
-			throw new \Nette\InvalidArgumentException('Nemozes vitvorit translation len tak kedy sa ti zachce! Toto nieje holubnik! Pouzi na to $phraseDecorator->createTranslation()');
+			throw new \Nette\InvalidArgumentException('Nemozes vitvorit translation len tak kedy sa ti zachce! Toto nieje holubnik! Pouzi na to $phrase->createTranslation()');
 		}
 
 		$newEntity = new $class;
 
-		$associationMappings = $this->getClassMetadata()->getAssociationMappings();
-		if(count($associationMappings) && $createPhrases) {
+		if($createPhrases) {
+			$associationMappings = $this->getClassMetadata()->getAssociationMappings();
 			foreach($associationMappings as $mapping) {
 				if($mapping['targetEntity'] == 'Entity\Phrase\Phrase') {
 					$fieldName = $mapping['fieldName'];

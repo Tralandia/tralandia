@@ -3,6 +3,7 @@
 namespace Service\Rental;
 
 use Nette;
+use Entity\User\User;
 use Entity\Location\Location;
 use Repository\Rental\RentalRepository;
 
@@ -27,7 +28,7 @@ class RentalCreator
 		$this->rentalRepository = $rentalRepository;
 	}
 
-	public function create(Location $location, $rentalName)
+	public function create(Location $location, User $user, $rentalName)
 	{
 		/** @var $rental \Entity\Rental\Rental */
 		$rental = $this->rentalRepository->createNew();
@@ -37,10 +38,20 @@ class RentalCreator
 		$address->setPrimaryLocation($location);
 		$rental->setAddress($address);
 
+		$user->addRental($rental);
+
 		$rental->getName()->createTranslation($location->getDefaultLanguage(), $rentalName);
 
 		return $rental;
 	}
 
+	public function setPrice(\Entity\Rental\Rental $rental, $price)
+	{
+		$currency = $rental->getPrimaryLocation()->getDefaultCurrency();
+		$price = new \Extras\Types\Price($price, $currency);
+		$rental->setPriceSeason($price);
+
+		return $this;
+	}
 
 }

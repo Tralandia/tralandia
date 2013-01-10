@@ -11,6 +11,9 @@ define('APP_DIR', ROOT_DIR . '/app');
 define('TESTS_DIR', ROOT_DIR . '/tests');
 define('INCLUDE_DIR', TESTS_DIR . '/include');
 
+define('CENTRAL_LANGUAGE', 38);
+
+
 $_SERVER['HTTP_HOST'] = 'localhost';
 
 // Load Nette Framework
@@ -19,7 +22,7 @@ require_once LIBS_DIR . '/Nette/loader.php';
 // Load configuration from config.neon
 $configurator = new Nette\Config\Configurator;
 $configurator->setTempDirectory(TEMP_DIR);
-$configurator->addParameters(array('appDir' => APP_DIR));
+$configurator->addParameters(array('appDir' => APP_DIR, 'centralLanguage' => CENTRAL_LANGUAGE));
 $configurator->enableDebugger(ROOT_DIR . '/log');
 $robotLoader = $configurator->createRobotLoader();
 $robotLoader->addDirectory(APP_DIR)
