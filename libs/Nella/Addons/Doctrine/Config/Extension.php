@@ -440,6 +440,7 @@ class Extension extends \Nette\Config\CompilerExtension
 	public static function register(Configurator $configurator, $name = 'doctrine')
 	{
 		\Doctrine\DBAL\Types\Type::addType('json', 'Doctrine\Types\Json');
+		\Doctrine\DBAL\Types\Type::addType('latlong', 'Doctrine\Types\LatLong');
 
 		$class = get_called_class();
 		$configurator->onCompile[] = function(Configurator $configurator, \Nette\Config\Compiler $compiler) use($class, $name) {
