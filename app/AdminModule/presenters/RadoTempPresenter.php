@@ -48,7 +48,7 @@ class RadoTempPresenter extends BasePresenter {
 	}
 
 	public function actionTest() {
-		$results = $this->locationRepositoryAccessor->get()->getRentalCounts();
+		$results = $this->locationRepositoryAccessor->get()->getWorldwideRentalCount();
 		d($results);
 	}
 

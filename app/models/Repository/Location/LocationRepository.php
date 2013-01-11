@@ -14,18 +14,14 @@ class LocationRepository extends \Repository\BaseRepository {
 		return $query->getQuery()->getResult();
 	}
 
-	public function getRentalCounts() {
+	public function getWorldwideRentalCount() {
 		$qb = $this->_em->createQueryBuilder();
 
-		$qb->select('l.id, count(r.id) as c')
+		$qb->select('sum(l.rentalCount) as total')
 			->from($this->_entityName, 'l')
-			->join('l.primaryRentals', 'r')
-			->where($qb->expr()->eq('r.status', \Entity\Rental\Rental::STATUS_LIVE))
-			->addGroupBy('l.id')
-    		->having('c > 0')
 		;
 
-		return $qb->getQuery()->getResult();
+		return $qb->getQuery()->getResult()[0]['total'];
 	}
 
 	public function getCountriesForSelect()
