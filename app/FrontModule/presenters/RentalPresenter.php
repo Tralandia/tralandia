@@ -31,6 +31,7 @@ class RentalPresenter extends BasePresenter {
 		}
 		
 		$rentalService = $this->rentalDecoratorFactory->create($rental);
+		d($rentalService->getInterviewAnswers());
 
 		$locality = $rental->address->locality;
 		$link = $this->link('//list', array('location' => $locality));

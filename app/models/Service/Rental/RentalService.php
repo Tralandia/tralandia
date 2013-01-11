@@ -32,7 +32,7 @@ class RentalService extends Service\BaseService
 		return (bool)$this->rentalRepositoryAccessor->get()->isFeatured($this->entity);
 	}
 
-	public function getInterviewAnswers(\Entity\Phrase\Language $language) {
+	public function getInterviewAnswers(/*\Entity\Phrase\Language $language*/) {
 
 		$r = $this->entity;
 
