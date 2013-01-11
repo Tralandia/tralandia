@@ -87,10 +87,13 @@ class ImportInvoice extends BaseImport {
 
 
 		if (isset($this->rentalsByOldId[$x['objects_id']])) {
-			$t = $context->rentalRepositoryAccessor->get()->find($this->rentalsByOldId[$x['objects_id']]);
+			$t = $context->rentalRepositoryAccessor->get()->findOneByOldId($x['objects_id']);
 			if (!$t) {
 				debug('Nenasiel som rental '.$x['objects_id'].' (stare ID).');
+			} else {
+				$invoice->rental = $t;
 			}
+
 		}
 		if (isset($x['time_due']) && $x['time_due'] > 0) {
 			$invoice->due = fromStamp($x['time_due']);

@@ -111,12 +111,10 @@ class RentalSearchService extends Nette\Object
 
 	public function getFeaturedRentalIds($limit = NULL) {
 		$featured = $this->rentalOrderCaching->getFeaturedList();
-		d($featured);
 		if ($limit === NULL) {
-			return $this->results;
+			return $featured;
 		} else {
-			$results = array_chunk($this->results, self::COUNT_PER_PAGE);
-			return isset($results[$page]) ? $results[$page] : NULL;
+			return array_slice($featured, 0, $limit);
 		}
 	}
 

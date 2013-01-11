@@ -21,7 +21,8 @@ class HomePresenter extends BasePresenter {
 
 		$search = $this->rentalSearchFactory->create($this->environment->primaryLocation);
 
-		// $rentalsEntities = $search->getRentals(); //@todo
+		$featuredIds = $search->getFeaturedRentalIds();
+		d($featuredIds);
 		$rentals = array();
 
 		// foreach ($rentalsEntities as $rental) {
