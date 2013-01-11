@@ -38,6 +38,7 @@ $configurator->addConfig(APP_DIR . '/configs/config.neon', FALSE);
 $configurator->addConfig(APP_DIR . '/configs/local.config.neon');
 
 if (isset($_SERVER['REDIRECT_URL']) && ($_SERVER['REDIRECT_URL'] == '/import/')) {
+
 	$section = 'import';
 }
 

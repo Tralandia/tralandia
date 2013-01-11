@@ -143,7 +143,7 @@ class Role extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\User\User
+	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\User\User[]
 	 */
 	public function getUsers()
 	{

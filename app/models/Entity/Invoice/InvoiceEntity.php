@@ -156,7 +156,7 @@ class Invoice extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Invoice\Item
+	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Invoice\Item[]
 	 */
 	public function getItems()
 	{
@@ -477,7 +477,7 @@ class Invoice extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Rental\Referral
+	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Rental\Referral[]
 	 */
 	public function getReferrals()
 	{

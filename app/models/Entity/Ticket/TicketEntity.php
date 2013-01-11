@@ -155,7 +155,7 @@ class Ticket extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Ticket\Message
+	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Ticket\Message[]
 	 */
 	public function getMessages()
 	{

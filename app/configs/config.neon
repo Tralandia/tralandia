@@ -168,7 +168,7 @@ services:
 	# ==============================
 	# ==================== FORMS HANDLERS
 	# ==============================
-	# registrationHandler: FormHandler\RegistrationHandler
+	registrationHandler: FormHandler\RegistrationHandler
 
 
 factories: 

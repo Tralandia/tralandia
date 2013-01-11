@@ -341,7 +341,7 @@ class Address extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Location\Location
+	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Location\Location[]
 	 */
 	public function getLocations()
 	{

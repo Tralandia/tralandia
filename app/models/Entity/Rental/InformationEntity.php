@@ -130,7 +130,7 @@ class Information extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Rental\Rental
+	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Rental\Rental[]
 	 */
 	public function getRentals()
 	{

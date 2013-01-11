@@ -2,8 +2,9 @@
 
 namespace FormHandler;
 
-use Repository\Rental\RentalRepository;
 use Service\Rental\RentalCreator;
+use Service\Invoice\IInvoiceCreatorFactory;
+use Doctrine\ORM\EntityManager;
 
 class RegistrationHandler extends FormHandler
 {
@@ -12,67 +13,84 @@ class RegistrationHandler extends FormHandler
 	public $onInvoiceNotExists = array();
 
 	/**
-	 * @var \Repository\Rental\RentalRepository
-	 */
-	protected $rentalRepository;
-
-	/**
 	 * @var \Service\Rental\RentalCreator
 	 */
 	protected $rentalCreator;
 
 	/**
-	 * @param \Repository\Rental\RentalRepository $rentalRepository
-	 * @param \Service\Rental\RentalCreator $rentalCreator
+	 * @var \Service\Invoice\IInvoiceCreatorFactory
 	 */
-	public function __construct(RentalRepository $rentalRepository, RentalCreator $rentalCreator)
+	protected $invoiceCreatorFactory;
+
+	/**
+	 * @var \Doctrine\ORM\EntityManager
+	 */
+	protected $em;
+
+	/**
+	 * @param \Service\Rental\RentalCreator $rentalCreator
+	 * @param \Service\Invoice\IInvoiceCreatorFactory $invoiceCreatorFactory
+	 */
+	public function __construct(RentalCreator $rentalCreator, IInvoiceCreatorFactory $invoiceCreatorFactory,
+								EntityManager $em)
 	{
-		$this->rentalRepository = $rentalRepository;
 		$this->rentalCreator = $rentalCreator;
+		$this->invoiceCreatorFactory = $invoiceCreatorFactory;
+		$this->em = $em;
 	}
 
 	public function handleSuccess($values)
 	{
-		$userRepository = $this->rentalRepository->related('user');
-		$locationRepository = $this->rentalRepository->related('primaryLocation');
-		$languageRepository = $this->rentalRepository->related('editLanguage');
-		$rentalTypeRepository = $this->rentalRepository->related('type');
-		$referralRepository = $this->rentalRepository->related('referrals');
-		$emailRepository = $this->rentalRepository->related('emails');
+		$userRepository = $this->em->getRepository('\Entity\User\User');
+		$locationRepository = $this->em->getRepository('\Entity\Location\Location');
+		$languageRepository = $this->em->getRepository('\Entity\Language');
+		$rentalTypeRepository = $this->em->getRepository('\Entity\Rental\Type');
+		$referralRepository = $this->em->getRepository('\Entity\Rental\Referral');
+		$emailRepository = $this->em->getRepository('\Entity\Contact\Email');
+		$packageRepository = $this->em->getRepository('\Entity\Invoice\Package');
 
 		$error = new ValidationError;
 
-		/** @var $location \Entity\Location\Location */
-		$location = $locationRepository->find($values->location);
-		if(!$location || !$location->isPrimary()) {
-			$error->addError("Invalid location", 'location');
+		$values->country = $locationRepository->find($values->country);
+		if(!$values->country || !$values->country->isPrimary()) {
+			$error->addError("Invalid country", 'country');
 		}
 
-		/** @var $language \Entity\Language */
-		$language = $languageRepository->find($values->language);
-		if(!$language) {
+		$values->clientCountry = $locationRepository->find($values->clientCountry);
+		if(!$values->clientCountry || !$values->clientCountry->isPrimary()) {
+			$error->addError("Invalid clientCountry", 'clientCountry');
+		}
+
+		$values->language = $languageRepository->find($values->language);
+		if(!$values->language) {
 			$error->addError("Invalid language", 'language');
 		}
 
 		// User
-		$user = $userRepository->findByEmail($values->email);
+		$user = $userRepository->findByLogin($values->email);
 		if($user) {
 			$error->addError("Email exists", 'email');
 		}
 
-		/** @var $rentalType \Entity\Rental\Type */
-		$rentalType = $rentalTypeRepository->find($values->rentalType);
-		if(!$rentalType) {
+		$values->rentalType = $rentalTypeRepository->find($values->rentalType);
+		if(!$values->rentalType) {
 			$error->addError("Invalid rental type", 'rentalType');
 		}
+
+		$values->package = $packageRepository->find($values->package);
+		if(!$values->package) {
+			$error->addError("Invalid package", 'package');
+		}
+
+		$clientInvoicingData = $this->prepareInvoicingData($values);
 
 		$error->assertValid();
 
 		/** @var $user \Entity\User\User */
-		$user = $this->userRepository->createNew();
-		$user->setLogin($values->login);
+		$user = $userRepository->createNew();
+		$user->setLogin($values->email);
 		$user->setPassword($values->password);
-		$user->setLanguage($language);
+		$user->setLanguage($values->language);
 
 		/** @var $referral \Entity\Rental\Referral */
 		$referral = $referralRepository->createNew();
@@ -82,19 +100,48 @@ class RegistrationHandler extends FormHandler
 
 		/** @var $rental \Entity\Rental\Rental */
 		$rentalCreator = $this->rentalCreator;
-		$rental = $rentalCreator->create($location, $user, $values->rentalName);
+		$rental = $rentalCreator->create($values->country, $user, $values->rentalName);
 		$rentalCreator->setPrice($rental, $values->rentalPrice);
 
-		$rental->setType($rentalType)
-			->setEditLanguage($language)
-			->addSpokenLanguage($language)
+		$rental->setType($values->rentalType)
+			->setEditLanguage($values->language)
+			->addSpokenLanguage($values->language)
 			->addEmail($email)
 			->setClassification($values->rentalClassification)
 			->setMaxCapacity($values->rentalMaxCapacity)
 			->addReferral($referral);
 
+		$invoiceCreator = $this->invoiceCreatorFactory->create($rental, $clientInvoicingData, $values->package);
+		$invoice = $invoiceCreator->createInvoice($values->country->getDefaultCurrency());
 
 		//$this->model->save($values);
+		return $rental;
+	}
+
+	/**
+	 * @param $values
+	 *
+	 * @return \Entity\Invoice\InvoicingData
+	 */
+	protected function prepareInvoicingData($values)
+	{
+
+		/** @var $invoicingData \Entity\Invoice\InvoicingData */
+		$invoicingData = $this->em->getRepository('\Entity\Invoice\InvoicingData')->createNew();
+
+		$invoicingData->setName($values->clientName);
+		$invoicingData->setPhone($values->phone);
+		$invoicingData->setEmail($values->email)
+			->setUrl($values->url)
+			->setPrimaryLocation($values->clientCountry)
+			->setLanguage($values->language)
+			->setCompanyName($values->clientCompanyName)
+			->setCompanyId($values->clientCompanyId)
+			->setCompanyVatId($values->clientCompanyVatId1 . $values->clientCompanyVatId2)
+			->setAddress($values->clientLocality . ' ' . $values->clientPostalCode . ' ' . $values->clientAddress1 .
+			' ' . $values->clientAddress2);
+
+		return $invoicingData;
 	}
 
 

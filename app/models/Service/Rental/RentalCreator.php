@@ -47,9 +47,9 @@ class RentalCreator
 
 	public function setPrice(\Entity\Rental\Rental $rental, $price)
 	{
-		$currency = $rental->getPrimaryLocation()->getDefaultCurrency();
+		$currency = $rental->getAddress()->getPrimaryLocation()->getDefaultCurrency();
 		$price = new \Extras\Types\Price($price, $currency);
-		$rental->setPriceSeason($price);
+		$rental->setPrice($price);
 
 		return $this;
 	}

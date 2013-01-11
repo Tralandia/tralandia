@@ -33,6 +33,7 @@ class RegistrationHandlerTest extends \Tests\TestCase
 
 		$data->email = 'test@email.com';
 		$data->phone = '+421908123456';
+		$data->url = 'www.google.com';
 		$data->password = 'df34kdj4se4jr33';
 
 		$data->rentalName = 'Chata pri lese';
@@ -53,7 +54,7 @@ class RegistrationHandlerTest extends \Tests\TestCase
 		$data->clientVatPayer = TRUE;
 		$data->clientCompanyVatId1 = 'SK';
 		$data->clientCompanyVatId2 = '3453483292443';
-		$data->clientCompanyId = 'Tuto neviem co ma byt...';
+		$data->clientCompanyId = '23432434';
 		$data->clientCountry = $data->country;
 
 		return $data;
@@ -63,7 +64,9 @@ class RegistrationHandlerTest extends \Tests\TestCase
 	{
 		$data = $this->getValidData();
 		$handler = $this->registrationHandler;
-		$handler->handleSuccess($data);
+		$rental = $handler->handleSuccess($data);
+
+		$this->assertInstanceOf('\Entity\Rental\Rental', $rental);
 	}
 
 }

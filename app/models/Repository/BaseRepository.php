@@ -211,7 +211,7 @@ class BaseRepository extends EntityRepository {
 	/**
 	 * @param $relation
 	 *
-	 * @return \Doctrine\ORM\EntityRepository
+	 * @return BaseRepository
 	 */
 	public function related($relation)
 	{

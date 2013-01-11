@@ -105,7 +105,7 @@ class UseType extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Invoice\Package
+	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Invoice\Package[]
 	 */
 	public function getPackages()
 	{

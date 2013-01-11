@@ -390,7 +390,7 @@ class Language extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Rental\Rental
+	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Rental\Rental[]
 	 */
 	public function getRentals()
 	{
@@ -424,7 +424,7 @@ class Language extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Seo\BackLink
+	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Seo\BackLink[]
 	 */
 	public function getBackLinks()
 	{

@@ -115,7 +115,7 @@ class Category extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Faq\Question
+	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Faq\Question[]
 	 */
 	public function getQuestions()
 	{

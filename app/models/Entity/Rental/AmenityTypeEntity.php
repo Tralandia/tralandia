@@ -80,7 +80,7 @@ class AmenityType extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Rental\Amenity
+	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Rental\Amenity[]
 	 */
 	public function getAmenities()
 	{

@@ -246,7 +246,7 @@ class Phrase extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Phrase\Translation
+	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Phrase\Translation[]
 	 */
 	public function getTranslations()
 	{

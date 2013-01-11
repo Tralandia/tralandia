@@ -262,6 +262,64 @@ class Item extends \Entity\BaseEntity {
 	}
 		
 	/**
+	 * @param string
+	 * @return \Entity\Invoice\Item
+	 */
+	public function setDurationName($durationName)
+	{
+		$this->durationName = $durationName;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Invoice\Item
+	 */
+	public function unsetDurationName()
+	{
+		$this->durationName = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getDurationName()
+	{
+		return $this->durationName;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Invoice\Item
+	 */
+	public function setDurationNameEn($durationNameEn)
+	{
+		$this->durationNameEn = $durationNameEn;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Invoice\Item
+	 */
+	public function unsetDurationNameEn()
+	{
+		$this->durationNameEn = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getDurationNameEn()
+	{
+		return $this->durationNameEn;
+	}
+		
+	/**
 	 * @param \DateTime
 	 * @return \Entity\Invoice\Item
 	 */
@@ -319,64 +377,6 @@ class Item extends \Entity\BaseEntity {
 		return $this->serviceTo;
 	}
 		
-	/**
-	 * @param string
-	 * @return \Entity\Invoice\Item
-	 */
-	public function setDurationName($durationName)
-	{
-		$this->durationName = $durationName;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Invoice\Item
-	 */
-	public function unsetDurationName()
-	{
-		$this->durationName = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return string|NULL
-	 */
-	public function getDurationName()
-	{
-		return $this->durationName;
-	}
-		
-	/**
-	 * @param string
-	 * @return \Entity\Invoice\Item
-	 */
-	public function setDurationNameEn($durationNameEn)
-	{
-		$this->durationNameEn = $durationNameEn;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Invoice\Item
-	 */
-	public function unsetDurationNameEn()
-	{
-		$this->durationNameEn = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return string|NULL
-	 */
-	public function getDurationNameEn()
-	{
-		return $this->durationNameEn;
-	}
-
 	/**
 	 * @param string
 	 * @return \Entity\Invoice\Item

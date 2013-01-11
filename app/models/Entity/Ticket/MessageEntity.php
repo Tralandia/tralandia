@@ -196,7 +196,7 @@ class Message extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Medium\Medium
+	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Medium\Medium[]
 	 */
 	public function getAttachments()
 	{

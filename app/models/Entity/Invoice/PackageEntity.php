@@ -126,7 +126,7 @@ class Package extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Invoice\UseType
+	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Invoice\UseType[]
 	 */
 	public function getUses()
 	{
@@ -218,7 +218,7 @@ class Package extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection[\Entity\Invoice\Service]
+	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Invoice\Service[]
 	 */
 	public function getServices()
 	{
