@@ -10,9 +10,11 @@
 					</div>
 
 					{define #criteriaOptions}
-					{var $hasHidden=FALSE}
+					{var $hasHidden = FALSE}
+					{var $firstLink = ($criteria[$type] ? current($criteria[$type]) : NULL)}
 					<div n:ifset="$criteria[$type]" class="widget">
-						<h4>{_'o1070'}</h4>
+						{if $firstLink && !$firstLink->active}<h4>{_'o1070'}</h4>{/if}
+						
 						<ul n:inner-foreach="$criteria[$type] as $link">
 							{if $link->hide}{var $hasHidden=TRUE}{/if}
 							{if $link->active}
@@ -42,7 +44,7 @@
  					{include #criteriaOptions, type => 'rentalTag'}
  					{include #criteriaOptions, type => 'spokenLanguage'}
  					{include #criteriaOptions, type => 'capacity'}
- 					{include #criteriaOptions, type => 'price'}
+ 					{* {include #criteriaOptions, type => 'price'} *}
 
 {* 
 					<div n:foreach="$criteria as $c" class="widget">

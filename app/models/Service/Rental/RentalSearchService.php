@@ -9,7 +9,7 @@ use Nette\Utils\Arrays;
 class RentalSearchService extends Nette\Object 
 {
 
-	const COUNT_PER_PAGE			= 50;
+	const COUNT_PER_PAGE			= 2;
 	const CRITERIA_LOCATION  		= 'location';
 	const CRITERIA_RENTAL_TYPE 		= 'rentalType';
 	const CRITERIA_TAG	 			= 'rentalTag';
@@ -89,16 +89,17 @@ class RentalSearchService extends Nette\Object
 	public function getRentalIds($page = NULL) {
 		$this->getResults();
 		$this->reorderResults();
-
 		if ($page === NULL) {
 			return $this->results;
 		} else {
+			$page = $page-1;
 			$results = array_chunk($this->results, self::COUNT_PER_PAGE);
 			return isset($results[$page]) ? $results[$page] : NULL;
 		}
 	}
 
 	public function getRentals($page = NULL) {
+		d($page);
 		$results = $this->getRentalIds($page);
 
 		return $this->rentalRepositoryAccessor->get()->findById($results);

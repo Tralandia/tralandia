@@ -226,15 +226,14 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		foreach ($entities as $key => $entity) {
 			$params = array_merge($selected, array($criteriaName => $entity));
 
-			$baseCount = $this->getRentalsCount(array('location' => $this->primaryLocation, $criteriaName => $entity));
 			$count 	= $this->getRentalsCount($params);
-			if (($ignoreNull && $count==0) || $baseCount==0) continue;
+			if ($ignoreNull && $count==0) continue;
 
 			$linkParams = $params;
 			if ($active) unset($linkParams[$criteriaName]);
 
 			$name 	= $this->translator->translate($entity->name);
-			$link = $this->presenter->link('//Rental:list', $linkParams);
+			$link 	= $this->presenter->link('//Rental:list', $linkParams);
 			$seo 	= $this->seoFactory->create($link, $this->presenter->getLastCreatedRequest());
 
 			$visible[$key] = $count;
