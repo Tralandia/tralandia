@@ -5,8 +5,9 @@ namespace Entity\Invoice;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Repository\Invoice\ItemRepository")
  * @ORM\Table(name="invoice_item")
+ * @EA\Generator(skip="{getPrice, setPrice}")
  */
 class Item extends \Entity\BaseEntity {
 
@@ -41,18 +42,6 @@ class Item extends \Entity\BaseEntity {
 	protected $duration;
 
 	/**
-	 * @var datetime
-	 * @ORM\Column(type="datetime", nullable=true)
-	 */
-	protected $serviceFrom;
-
-	/**
-	 * @var datetime
-	 * @ORM\Column(type="datetime", nullable=true)
-	 */
-	protected $serviceTo;
-
-	/**
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
 	 */
@@ -63,6 +52,18 @@ class Item extends \Entity\BaseEntity {
 	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $durationNameEn;
+
+	/**
+	 * @var datetime
+	 * @ORM\Column(type="datetime", nullable=true)
+	 */
+	protected $serviceFrom;
+
+	/**
+	 * @var datetime
+	 * @ORM\Column(type="datetime", nullable=true)
+	 */
+	protected $serviceTo;
 
 	/**
 	 * @var float
@@ -81,6 +82,31 @@ class Item extends \Entity\BaseEntity {
 	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $packageNameEn;
+
+
+	/**
+	 * @return \Extras\Types\Price
+	 */
+	public function getPrice()
+	{
+		return new \Extras\Types\Price($this->price, $this->getCurrency());
+	}
+
+	/**
+	 * @param \Extras\Types\Price $price
+	 *
+	 * @return Item
+	 */
+	public function setPrice(\Extras\Types\Price $price)
+	{
+		$this->price = $price->convertToFloat($this->getCurrency());
+		return $this;
+	}
+
+	public function getCurrency() {
+		return $this->invoice->currency;
+	}
+
 
 	//@entity-generator-code --- NEMAZAT !!!
 
@@ -350,26 +376,7 @@ class Item extends \Entity\BaseEntity {
 	{
 		return $this->durationNameEn;
 	}
-		
-	/**
-	 * @param float
-	 * @return \Entity\Invoice\Item
-	 */
-	public function setPrice($price)
-	{
-		$this->price = $price;
 
-		return $this;
-	}
-		
-	/**
-	 * @return float|NULL
-	 */
-	public function getPrice()
-	{
-		return $this->price;
-	}
-		
 	/**
 	 * @param string
 	 * @return \Entity\Invoice\Item

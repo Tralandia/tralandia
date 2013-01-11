@@ -512,7 +512,8 @@ class EntityGeneratorPresenter extends BasePresenter {
 			$method->documents[] = sprintf('@param %s', $tagetProperyClass);
 			$body[] = sprintf('return $%s->add%s($this);', $firstParameter->name, $property->singularFu);
 		} else if($snippet->type == 7) {
-			$method->documents[] = sprintf('@return \Doctrine\Common\Collections\ArrayCollection of %s', $tagetProperyClass);
+			$method->documents[] = sprintf('@return \Doctrine\Common\Collections\ArrayCollection|%s[]',
+				$tagetProperyClass);
 			$body[] = sprintf('return $this->%s;', $property->name, $property->name);
 		} else if($snippet->type == 8) {
 			$body[] = sprintf('$this->%s = NULL;', $property->name);

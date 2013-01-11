@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Repository\CurrencyRepository")
  * @ORM\Table(name="currency", indexes={@ORM\index(name="name", columns={"name_id"}), @ORM\index(name="iso", columns={"iso"})})
  * @EA\Primary(key="id", value="iso")
  */

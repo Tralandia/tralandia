@@ -5,6 +5,7 @@ namespace Entity\Phrase;
 use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
 use Nette\Utils\Strings;
+use Nette\Utils\Arrays;
 
 /**
  * @ORM\Entity(repositoryClass="Repository\Phrase\PhraseRepository")
@@ -160,17 +161,17 @@ class Phrase extends \Entity\BaseEntityDetails {
 	}
 
 	public function getTranslationText(\Entity\Language $language, $loose = FALSE) {
-		$t = $this->getMainTranslations($language);
+		$translation = $this->getMainTranslations($language);
 		$text = '';
 		if ($loose) {
-			foreach ($t as $value) {
+			foreach ($translation as $value) {
 				if (strlen((string) $value)) {
 					$text = (string) $value;
 					break;
 				}
 			}
 		} else {
-			$text = $t[self::REQUESTED];
+			$text = Arrays::get($translation, self::REQUESTED, $text);
 		}
 
 		return (string) $text;
@@ -185,13 +186,13 @@ class Phrase extends \Entity\BaseEntityDetails {
 		return $c;
 	}
 
-	public function hasCentralTranslation() {
+	public function hasCentralTranslationText() {
+		return Strings::length($this->getCentralTranslationText()) > 0;
+	}
+
+	public function getCentralTranslationText() {
 		$mainTranslations = $this->getMainTranslations();
-		if (Strings::length($mainTranslations[self::CENTRAL]->translation) > 0) {
-			return TRUE;
-		} else {
-			return FALSE;
-		}
+		return array_key_exists(self::CENTRAL, $mainTranslations) ? $mainTranslations[self::CENTRAL]->translation : '';
 	}
 
 	public function hasSourceTranslation() {

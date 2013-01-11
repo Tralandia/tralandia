@@ -36,10 +36,20 @@ class InvoiceCreatorTest extends \Tests\TestCase
 	 */
 	public $package2;
 
+	/**
+	 * @var \Entity\Currency
+	 */
+	public $currency;
+
+	/**
+	 * @var \Entity\Language
+	 */
+	public $language;
+
 	protected function setUp() {
 		$this->invoicingDataRepository = $this->getContext()->invoiceInvoicingDataRepositoryAccessor->get();
-		$invoiceRepository = $this->getContext()->invoiceRepositoryAccessor->get();
-		$languageRepository = $this->getContext()->languageRepositoryAccessor->get();
+		$this->currency = $this->getContext()->currencyRepositoryAccessor->get()->find(1);
+		$this->language = $this->getContext()->languageRepositoryAccessor->get()->find(144);
 		$this->invoiceCreatorFactory = $this->getContext()->invoiceCreatorFactory;
 		$this->rental = $this->getContext()->rentalRepositoryAccessor->get()->find(1);
 		$this->package = $this->getContext()->invoicePackageRepositoryAccessor->get()->find(1);
@@ -47,11 +57,15 @@ class InvoiceCreatorTest extends \Tests\TestCase
 	}
 
 	public function testCreate() {
+
+		/** @var $invoicingData \Entity\Invoice\InvoicingData */
 		$invoicingData = $this->invoicingDataRepository->createNew();
+		$invoicingData->setLanguage($this->language);
 		$invoiceCreator = $this->invoiceCreatorFactory->create($this->rental, $invoicingData, $this->package);
 		$invoiceCreator->addPackage($this->package2);
-		$invoice = $invoiceCreator->createInvoice();
-		$i = 1;
+		$invoice = $invoiceCreator->createInvoice($this->currency);
+
+		$this->assertGreaterThan(10, $invoice->getPrice());
 	}
 
 }
