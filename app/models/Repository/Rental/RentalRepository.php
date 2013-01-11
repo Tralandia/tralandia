@@ -57,11 +57,12 @@ class RentalRepository extends \Repository\BaseRepository {
 		return $qb->getQuery()->getOneOrNullResult();
 	}
 
-	public function getCounts(\Entity\Location\Location $primaryLocation = NULL, $live = FALSE, $dateFrom = FALSE, $dateTo = FALSE) {
+	public function getCounts(\Entity\Location\Location $primaryLocation = NULL, $live = FALSE, \Nette\DateTime $dateFrom = NULL, \Nette\DateTime $dateTo = NULL) {
 		$qb = $this->_em->createQueryBuilder();
 
-		$qb->select($qb->expr()->count())
-			->from($this->_entityName, 'r');
+		$qb->select('l.id locationId', 'COUNT(r.id) as c')
+			->from($this->_entityName, 'r')
+			->join('r.primaryLocation', 'l');
 		if ($primaryLocation) {
 			$qb->where($qb->expr()->eq('r.primaryLocation', $location->id));
 		}
@@ -71,11 +72,19 @@ class RentalRepository extends \Repository\BaseRepository {
 		if ($dateFrom && $dateTo) {
 			$qb->andWhere($qb->expr()->gte('r.created', '?1'));
 			$qb->andWhere($qb->expr()->lt('r.created', '?2'));
-			$qb->setParameter(1, new \Nette\DateTime(), \Doctrine\DBAL\Types\Type::DATETIME);
-			$qb->setParameter(2, new \Nette\DateTime(), \Doctrine\DBAL\Types\Type::DATETIME);
+			$qb->setParameter(1, $dateFrom, \Doctrine\DBAL\Types\Type::DATETIME);
+			$qb->setParameter(2, $dateTo, \Doctrine\DBAL\Types\Type::DATETIME);
+		}
+		if (!$primaryLocation) {
+			$qb->groupBy('r.primaryLocation');
 		}
 
-		return $qb->getQuery()->getResult();
+		$result = $qb->getQuery()->getResult();
+		$myResult = array();
+		foreach ($result as $key => $value) {
+			$myResult[$value['locationId']] = $value['c'];
+		}
+		return $myResult;
 	}
 
 }
