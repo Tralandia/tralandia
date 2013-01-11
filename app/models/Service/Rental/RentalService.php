@@ -32,6 +32,18 @@ class RentalService extends Service\BaseService
 		return (bool)$this->rentalRepositoryAccessor->get()->isFeatured($this->entity);
 	}
 
+	public function getInterviewAnswers(\Entity\Phrase\Language $language) {
+
+		$r = $this->entity;
+
+		$interviews = array();
+		foreach ($r->interviewAnswers as $key => $value) {
+			d($value);
+		}
+
+
+	}
+
 	public function calculateRank() {
 		$r = $this->entity;
 

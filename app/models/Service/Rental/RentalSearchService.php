@@ -99,7 +99,6 @@ class RentalSearchService extends Nette\Object
 	}
 
 	public function getRentals($page = NULL) {
-		d($page);
 		$results = $this->getRentalIds($page);
 
 		return $this->rentalRepositoryAccessor->get()->findById($results);
@@ -132,7 +131,6 @@ class RentalSearchService extends Nette\Object
 		}
 
 		$results = array();
-
 		foreach ($this->criteria as $key => $value) {
 			if ($value === NULL) continue;
 			$results[$key] = Arrays::get($this->searchCacheData, array($key, (is_object($value) ? $value->id : $value)), NULL);

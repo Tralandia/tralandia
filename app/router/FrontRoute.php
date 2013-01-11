@@ -38,13 +38,6 @@ class FrontRoute implements Nette\Application\IRouter {
 		'rentalTag' => 10,
 	);
 
-	protected static $pathSegmentTypesById = array(
-		2 => 'page',
-		6 => 'location',
-		8 => 'rentalType',
-		10 => 'rentalTag',
-	);
-
 	protected $appParams = array(
 		'id' => null,
 		'primaryLocation' => true,
@@ -54,6 +47,13 @@ class FrontRoute implements Nette\Application\IRouter {
 		'rentalTag' => null,
 		'rentalType' => null,
 		'page' => null,
+	);
+
+	public static $pathSegmentTypesById = array(
+		2 => 'page',
+		6 => 'location',
+		8 => 'rentalType',
+		10 => 'rentalTag',
 	);
 
 	public $locationRepositoryAccessor;

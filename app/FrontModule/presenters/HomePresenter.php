@@ -1,6 +1,7 @@
 <?php
 
 namespace FrontModule;
+use Model\Rental\IRentalDecoratorFactory;
 
 class HomePresenter extends BasePresenter {
 
@@ -10,18 +11,23 @@ class HomePresenter extends BasePresenter {
 	 */
 	protected $rentalDecoratorFactory;
 
+	protected $rentalSearchFactory;
+
+	public function injectSearch(\Service\Rental\IRentalSearchServiceFactory $rentalSearchFactory) {
+		$this->rentalSearchFactory = $rentalSearchFactory;
+	}
 
 	public function renderDefault() {
 
-		$rentalsEntities = $this->rentalRepositoryAccessor->get()->findAll();	
-		// $rentalsEntities = array();
+		$search = $this->rentalSearchFactory->create($this->environment->primaryLocation);
 
+		// $rentalsEntities = $search->getRentals(); //@todo
 		$rentals = array();
 
-		foreach ($rentalsEntities as $rental){
-			$rentals[$rental->id]['service'] = $this->rentalDecoratorFactory->create($rental);			
-			$rentals[$rental->id]['entity'] = $rental;
-		}
+		// foreach ($rentalsEntities as $rental) {
+		// 	$rentals[$rental->id]['service'] = $this->rentalDecoratorFactory->create($rental);			
+		// 	$rentals[$rental->id]['entity'] = $rental;
+		// }
 
 		$this->template->rentals = $rentals;
 

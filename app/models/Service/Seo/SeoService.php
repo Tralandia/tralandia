@@ -45,6 +45,10 @@ class SeoService extends Nette\Object {
 			'rentalTag',
 			'name',
 		),
+		'rentalTypePlural' => array(
+			'rentalType',
+			'name',
+		)
 	);
 
 	protected $defaultVariation = array(
