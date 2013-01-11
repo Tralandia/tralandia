@@ -18,20 +18,25 @@ class HomePresenter extends BasePresenter {
 	protected $rentalSearchFactory;
 
 
+
+
 	public function renderDefault() {
+		
+		$this->template->countryCountObjects = $this->environment->primaryLocation->rentalCount;
 
 		$search = $this->rentalSearchFactory->create($this->environment->primaryLocation);
 
-		$featuredIds = $search->getFeaturedRentalIds();
-		d($featuredIds);
+		$featuredIds = $search->getFeaturedRentals();
+	
 		$rentals = array();
 
-		// foreach ($rentalsEntities as $rental) {
-		// 	$rentals[$rental->id]['service'] = $this->rentalDecoratorFactory->create($rental);			
-		// 	$rentals[$rental->id]['entity'] = $rental;
-		// }
+		foreach ($featuredIds as $rental) {
+		 	$rentals[$rental->id]['service'] = $this->rentalDecoratorFactory->create($rental);			
+		 	$rentals[$rental->id]['entity'] = $rental;
+		}
 
 		$this->template->rentals = $rentals;
+		$this->template->h1 = $this->seoFactory->create($this->link('//this'), $this->getRequest())->getH1();
 
 	}
 

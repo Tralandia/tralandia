@@ -71,6 +71,9 @@ abstract class BasePresenter extends \BasePresenter {
 		$this->template->pageH1 = $this->pageSeo->getH1();
 		$this->template->pageTitle = $this->pageSeo->getTitle();
 		
+
+		$this->template->worldwideCount = $this->locationRepositoryAccessor->get()->getWorldwideRentalCount();
+		
 		parent::beforeRender();
 	}
 
