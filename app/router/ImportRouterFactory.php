@@ -18,21 +18,18 @@ class ImportRouterFactory
 	 */
 	public function create()
 	{
-
-		$router = new RouteList();
-
-		$router[] = $adminRouter = new RouteList('Admin');
-		$adminRouter[] = new Route('index.php', 'Admin:Rental:list', Route::ONE_WAY);
-		$adminRouter[] = new Route('admin/<presenter>/<id [0-9]+>', array(
-			'presenter' => NULL,
-			'action' =>  'edit',
+		$importRouter = new RouteList('Import');
+		$importRouter[] = new Route('index.php', 'Import:Import:default', Route::ONE_WAY);
+		$importRouter[] = new Route('import/<presenter>/<id [0-9]+>', array(
+			'presenter' => 'Import',
+			'action' =>  'default',
 		));
-		$adminRouter[] = new Route('admin/<presenter>/[<action>[/<id>]]', array(
-			'presenter' => NULL,
-			'action' =>  'list',
+		$importRouter[] = new Route('import/<presenter>/[<action>[/<id>]]', array(
+			'presenter' => 'Import',
+			'action' =>  'default',
 		));
 
-		return $router;
+		return $importRouter;
 	}
 
 }

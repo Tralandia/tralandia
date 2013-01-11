@@ -1,6 +1,6 @@
 <?php
 
-namespace AdminModule;
+namespace ImportModule;
 
 use Nette\Application as NA,
 	Nette\Environment,
@@ -13,7 +13,9 @@ use Nette\Application as NA,
 	Service as S,
 	Service\Log as SLog;
 
-class ImportPresenter extends BasePresenter {
+use Nette\Application\UI\Presenter;
+
+class ImportPresenter extends Presenter {
 
 	public $session;
 
