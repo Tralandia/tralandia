@@ -154,21 +154,23 @@ parameters:
 				- %webloader.packages.bootstrap%
 
 			Admin: 
-				- %webloader.packages.jQuery%
-				- %webloader.packages.liveQuery%
-				- %webloader.packages.jQueryUI%
-				- %webloader.packages.dateInput%
-				- %webloader.packages.nette%
-				- %webloader.packages.contactsControl%
-				- %webloader.packages.jQueryCalendar%
-				- %webloader.packages.phraseControl%
-				- %webloader.packages.liveWysi%
-				- %webloader.packages.admin%
-				- %webloader.packages.fileUpload%
-				- %webloader.packages.bootstrap%
-				- %webloader.packages.phrase%
-				- %webloader.packages.customui%
-
+				#- %webloader.packages.jQuery%
+				#- %webloader.packages.liveQuery%
+				#- %webloader.packages.jQueryUI%
+				#- %webloader.packages.dateInput%
+				#- %webloader.packages.nette%
+				#- %webloader.packages.contactsControl%
+				#- %webloader.packages.jQueryCalendar%
+				#- %webloader.packages.phraseControl%
+				#- %webloader.packages.liveWysi%
+				#- %webloader.packages.admin%
+				#- %webloader.packages.fileUpload%
+				#- %webloader.packages.bootstrap%
+				#- %webloader.packages.phrase%
+				#- %webloader.packages.customui%
+				-  %webloader.packages.Front%
+				-  %webloader.packages.gMap%
+				
 			Front: 
 				-  %webloader.packages.Front%
 				-  %webloader.packages.gMap%
