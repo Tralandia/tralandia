@@ -38,7 +38,8 @@ class InvoiceCreatorTest extends \Tests\TestCase
 
 	protected function setUp() {
 		$this->invoicingDataRepository = $this->getContext()->invoiceInvoicingDataRepositoryAccessor->get();
-		$this->invoicingDataRepository = $this->getContext()->languageRepositoryAccessor->get();
+		$invoiceRepository = $this->getContext()->invoiceRepositoryAccessor->get();
+		$languageRepository = $this->getContext()->languageRepositoryAccessor->get();
 		$this->invoiceCreatorFactory = $this->getContext()->invoiceCreatorFactory;
 		$this->rental = $this->getContext()->rentalRepositoryAccessor->get()->find(1);
 		$this->package = $this->getContext()->invoicePackageRepositoryAccessor->get()->find(1);

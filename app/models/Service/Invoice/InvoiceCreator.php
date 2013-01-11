@@ -46,7 +46,7 @@ class InvoiceCreator extends Nette\Object
 	public function __construct(Rental $rental, Invoice\InvoicingData $invoicingData, Invoice\Package $package,
 								InvoiceRepository $invoiceRepository)
 	{
-		$this->retnal = $rental;
+		$this->rental = $rental;
 		$this->invoicingData = $invoicingData;
 		$this->addPackage($package);
 		$this->invoiceRepository = $invoiceRepository;

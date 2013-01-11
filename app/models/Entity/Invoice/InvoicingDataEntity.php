@@ -10,7 +10,6 @@ use	Extras\Annotation as EA;
 /**
  * @ORM\Entity(repositoryClass="Repository\Invoice\InvoicingDataRepository")
  * @ORM\Table(name="invoice_invoicingdata")
- * @EA\Primary(key="id", value="name")
  */
 class InvoicingData extends \Entity\BaseEntity {
 
