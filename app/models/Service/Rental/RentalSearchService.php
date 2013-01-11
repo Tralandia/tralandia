@@ -118,6 +118,13 @@ class RentalSearchService extends Nette\Object
 		}
 	}
 
+	public function getFeaturedRentals($page = NULL) {
+		$results = $this->getFeaturedRentalIds($page);
+
+		return $this->rentalRepositoryAccessor->get()->findById($results);
+	}
+
+
 	//=================================
 
 	protected function resetResults() {
