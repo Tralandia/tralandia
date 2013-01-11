@@ -925,7 +925,28 @@ class Rental extends \Entity\BaseEntity {
 	{
 		return $this->pricesUponRequest;
 	}
-				
+		
+	/**
+	 * @param float
+	 * @return \Entity\Rental\Rental
+	 */
+	public function setPrice($price)
+	{
+		$this->price = $price;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Rental\Rental
+	 */
+	public function unsetPrice()
+	{
+		$this->price = NULL;
+
+		return $this;
+	}
+		
 	/**
 	 * @param \Entity\Rental\Image
 	 * @return \Entity\Rental\Rental

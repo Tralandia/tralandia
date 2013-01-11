@@ -118,9 +118,9 @@ class ImportInteractions extends BaseImport {
 		}
 
 		while($x = mysql_fetch_array($r)) {
-			$interaction = $this->context->userSiteReviewRepositoryAccessor->get()->createNew();
+			$interaction = $this->context->userSiteReviewRepositoryAccessor->get()->createNew(FALSE);
 			$interaction->language = $this->context->languageRepositoryAccessor->get()->find($this->languagesByOldId[$x['language_id']]);
-			$interaction->location = $this->context->locationRepositoryAccessor->get()->find($this->locationsByOldId[$x['country_id']]);
+			$interaction->primaryLocation = $this->context->locationRepositoryAccessor->get()->find($this->locationsByOldId[$x['country_id']]);
 
 			if ($x['from_type'] == 'client') {
 				$t = $this->context->userRepositoryAccessor->get()->findOneByLogin($x['from_email']);

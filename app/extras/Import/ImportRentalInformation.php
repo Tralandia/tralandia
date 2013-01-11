@@ -51,7 +51,7 @@ class ImportRentalInformation extends BaseImport {
 		);
 
 		foreach ($informationTypes as $key => $value) {
-			$t = $context->rentalInformationRepositoryAccessor->get()->createNew();
+			$t = $context->rentalInformationRepositoryAccessor->get()->createNew(FALSE);
 
 			$t->name = $this->createNewPhrase($nameDictionaryType);
 			$t->slug = $key;
@@ -70,7 +70,7 @@ class ImportRentalInformation extends BaseImport {
 		);
 
 		foreach ($roomTypes as $key => $value) {
-			$t = $context->rentalRoomTypeRepositoryAccessor->get()->createNew();
+			$t = $context->rentalRoomTypeRepositoryAccessor->get()->createNew(FALSE);
 
 			$t->name = $this->createNewPhrase($nameDictionaryType);
 			$t->slug = $key;

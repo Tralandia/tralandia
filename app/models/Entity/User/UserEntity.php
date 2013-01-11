@@ -249,5 +249,33 @@ class User extends \Entity\BaseEntityDetails {
 	{
 		return $this->rentals;
 	}
+		
+	/**
+	 * @param boolean
+	 * @return \Entity\User\User
+	 */
+	public function setNewsletter($newsletter)
+	{
+		$this->newsletter = $newsletter;
 
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\User\User
+	 */
+	public function unsetNewsletter()
+	{
+		$this->newsletter = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return boolean|NULL
+	 */
+	public function getNewsletter()
+	{
+		return $this->newsletter;
+	}
 }

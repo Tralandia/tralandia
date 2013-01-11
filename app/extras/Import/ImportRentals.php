@@ -101,7 +101,7 @@ class ImportRentals extends BaseImport {
 			}
 
 			// Address
-			$address = $context->contactAddressRepositoryAccessor->get()->createNew();
+			$address = $context->contactAddressRepositoryAccessor->get()->createNew(FALSE);
 			$address->status = \Entity\Contact\Address::STATUS_UNCHECKED;
 
 			$address->address = implode('\n', array_filter(array($x['address'])));
@@ -137,14 +137,14 @@ class ImportRentals extends BaseImport {
 			}
 
 			// Contact Emails
-			$rental->addEmail($context->contactEmailRepositoryAccessor->get()->createNew()->setValue($x['contact_email']));
+			$rental->addEmail($context->contactEmailRepositoryAccessor->get()->createNew(FALSE)->setValue($x['contact_email']));
 
 			// Contact Urls
 			if (\Nette\Utils\Validators::isUrl($x['contact_url'])) {
-				$rental->addUrl($context->contactUrlRepositoryAccessor->get()->createNew()->setValue($x['contact_url']));
+				$rental->addUrl($context->contactUrlRepositoryAccessor->get()->createNew(FALSE)->setValue($x['contact_url']));
 			}
 			if (\Nette\Utils\Validators::isUrl($x['url'])) {
-				$rental->addUrl($context->contactUrlRepositoryAccessor->get()->createNew()->setValue($x['url']));
+				$rental->addUrl($context->contactUrlRepositoryAccessor->get()->createNew(FALSE)->setValue($x['url']));
 			}
 			// Spoken Languages
 			$spokenLanguages = array_unique(array_filter(explode(',', $x['languages_spoken'])));
@@ -236,7 +236,7 @@ class ImportRentals extends BaseImport {
 
 				foreach ($answersNew as $oldQuestionId => $answers) {
 
-					$answerEntity = $context->rentalInterviewAnswerRepositoryAccessor->get()->createNew();
+					$answerEntity = $context->rentalInterviewAnswerRepositoryAccessor->get()->createNew(FALSE);
 					$answerEntity->setQuestion($interviewQuestions[$oldQuestionId]);
 
 					$answerPhrase = $this->createNewPhrase($interviewQuestionPhraseType);
@@ -279,7 +279,7 @@ class ImportRentals extends BaseImport {
 				$sort = 0;
 				$temp = array_chunk($temp, 6);
 				foreach ($temp as $key => $value) {
-					$row = $context->rentalPricelistRowRepositoryAccessor->get()->createNew();
+					$row = $context->rentalPricelistRowRepositoryAccessor->get()->createNew(FALSE);
 					$row->sort; $sort++;
 					$row->roomCount = $value[0];
 					$row->roomType = $roomTypes[$value[1]];
@@ -304,7 +304,7 @@ class ImportRentals extends BaseImport {
 			$temp = unserialize(stripslashes($x['prices_upload']));
 			if (is_array($temp) && count($temp)) {
 				foreach ($temp as $key => $value) {
-					$pricelist = $context->rentalPricelistRepositoryAccessor->get()->createNew();
+					$pricelist = $context->rentalPricelistRepositoryAccessor->get()->createNew(FALSE);
 					$pricelistDecorator = $context->rentalPricelistDecoratorFactory->create($pricelist);
 					$pricelistDecorator->setContentFromFile('http://www.tralandia.sk/u/'.$value[4]);
 					$pricelistDecorator->getEntity()->name = $value[2];
@@ -322,7 +322,7 @@ class ImportRentals extends BaseImport {
 				foreach ($temp as $key => $value) {
 					$image = $context->rentalImageRepositoryAccessor->get()->findOneByOldUrl('http://www.tralandia.com/u/'.$value);
 					if (!$image) {
-						$imageEntity = $context->rentalImageRepositoryAccessor->get()->createNew();
+						$imageEntity = $context->rentalImageRepositoryAccessor->get()->createNew(FALSE);
 						$image = $context->rentalImageDecoratorFactory->create($imageEntity);
 						$image->setContentFromFile('http://www.tralandia.com/u/'.$value);
 						$rental->addImage($imageEntity);

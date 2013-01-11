@@ -76,7 +76,7 @@ class ImportRentalTypes extends BaseImport {
 		// Rental Interview Questions
 		$r = q('select * from interview_questions');
 		while ($x = mysql_fetch_array($r)) {
-			$question = $this->context->rentalInterviewQuestionRepositoryAccessor->get()->createNew();
+			$question = $this->context->rentalInterviewQuestionRepositoryAccessor->get()->createNew(FALSE);
 			$question->oldId = $x['id'];
 			$question->question = $this->createNewPhrase($questionPhraseType, $x['name_dic_id']);
 			$this->model->persist($question);

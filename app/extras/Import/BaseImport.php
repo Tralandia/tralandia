@@ -62,7 +62,7 @@ class BaseImport {
 				'\Location\Location' => array(),
 				//'\Location\Traveling' => array(),
 			),
-			'subsections' => array('importContinents', 'importCountries', 'importRegions', 'importLocalities'),
+			'subsections' => array('importContinents', 'importRegions', 'importLocalities'),
 			'saveImportStatus' => FALSE,
 		),
 		// Vykomentovane, lebo vo V1 to nepotrebujeme
@@ -292,7 +292,7 @@ class BaseImport {
 			);
 			//throw new \Nette\UnexpectedValueException('Nenasiel som staru Phrase podla starej ID '.$oldPhraseId);
 		}
-		$phrase = $this->context->phraseRepositoryAccessor->get()->createNew();
+		$phrase = $this->context->phraseRepositoryAccessor->get()->createNew(FALSE);
 		$phraseService = $this->context->phraseDecoratorFactory->create($phrase);
 		$phrase->ready = (bool)$oldPhraseData['ready'];
 		$phrase->type = $type;
@@ -338,7 +338,7 @@ class BaseImport {
 	protected function createPhraseFromString($entityName, $entityAttribute, $level, $text, $textLanguage) {
 		$phraseType = $this->createPhraseType($entityName, $entityAttribute, $level);
 
-		$phrase = $this->context->phraseRepositoryAccessor->get()->createNew();
+		$phrase = $this->context->phraseRepositoryAccessor->get()->createNew(FALSE);
 		$phraseService = $this->context->phraseDecoratorFactory->create($phrase);
 		$phrase->ready = TRUE;
 		$phrase->type = $phraseType;
@@ -373,7 +373,7 @@ class BaseImport {
 			return $phraseType;
 		} else {
 			
-			// $phrase = $this->context->phraseRepositoryAccessor->get()->createNew();
+			// $phrase = $this->context->phraseRepositoryAccessor->get()->createNew(FALSE);
 			// $phraseService = $this->context->phraseDecoratorFactory->create($phrase);
 			$phraseType = $this->context->phraseTypeEntityFactory->create();
 			$phraseType->entityName = $entityName;

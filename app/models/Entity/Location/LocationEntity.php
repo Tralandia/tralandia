@@ -219,25 +219,6 @@ class Location extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @param boolean
-	 * @return \Entity\Location\Location
-	 */
-	public function setIsPrimary($isPrimary)
-	{
-		$this->isPrimary = $isPrimary;
-
-		return $this;
-	}
-		
-	/**
-	 * @return boolean|NULL
-	 */
-	public function getIsPrimary()
-	{
-		return $this->isPrimary;
-	}
-		
-	/**
 	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Location\Location
 	 */
@@ -255,7 +236,7 @@ class Location extends \Entity\BaseEntityDetails {
 	{
 		return $this->name;
 	}
-				
+		
 	/**
 	 * @return \Entity\Location\Location
 	 */
@@ -352,7 +333,7 @@ class Location extends \Entity\BaseEntityDetails {
 	{
 		return $this->polygons;
 	}
-				
+		
 	/**
 	 * @param integer
 	 * @return \Entity\Location\Location

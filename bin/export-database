@@ -5,7 +5,7 @@ USER="root"
 PASS="root"
 
 if [ "$APPENV" = "toth" ]; then
-	SQLDUMP=~/Dropbox/nejakacesticka/new_dump.sql.gz
+	SQLDUMP=~/Dropbox/TRA/Import/new_dump.sql.gz
 else
 	SQLDUMP=~/Dropbox/TRA/Import/new_dump.sql.gz
 fi

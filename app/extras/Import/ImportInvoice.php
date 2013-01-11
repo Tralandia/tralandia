@@ -100,7 +100,7 @@ class ImportInvoice extends BaseImport {
 		}
 
 		// Client invoicing data
-		$clientInvoicingData = $this->context->invoiceInvoicingDataRepositoryAccessor->get()->createNew();
+		$clientInvoicingData = $this->context->invoiceInvoicingDataRepositoryAccessor->get()->createNew(FALSE);
 		$clientInvoicingData->name = $x['client_name'];
 		$clientInvoicingData->email = $x['client_email'];
 		$clientInvoicingData->phone = $x['client_phone'];
@@ -124,7 +124,7 @@ class ImportInvoice extends BaseImport {
 		// Our invoicing data
 		$companyData = qf('select * from companies where id = '.$x['companies_id']);
 
-		$ourInvoicingData = $this->context->invoiceInvoicingDataRepositoryAccessor->get()->createNew();
+		$ourInvoicingData = $this->context->invoiceInvoicingDataRepositoryAccessor->get()->createNew(FALSE);
 		$ourInvoicingData->email = 'info@tralandia.com';
 
 		$ourInvoicingData->address = implode("\n", array_filter(array(

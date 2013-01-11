@@ -48,7 +48,7 @@ class ImportLocations extends BaseImport {
 
 		$worldType = $locationType;
 
-		$namePhrase = $this->context->phraseRepositoryAccessor->get()->createNew();
+		$namePhrase = $this->context->phraseRepositoryAccessor->get()->createNew(FALSE);
 		$namePhraseService = $this->context->phraseDecoratorFactory->create($namePhrase);
 		$namePhrase->type = $this->dictionaryTypeName;
 		$namePhraseService->createTranslation($language, 'World');
@@ -87,7 +87,7 @@ class ImportLocations extends BaseImport {
 		$this->model->flush();
 
 		// Create USA
-		$namePhrase = $this->context->phraseRepositoryAccessor->get()->createNew();
+		$namePhrase = $this->context->phraseRepositoryAccessor->get()->createNew(FALSE);
 		$namePhraseService = $this->context->phraseDecoratorFactory->create($namePhrase);
 		$namePhrase->type = $this->dictionaryTypeName;
 		$namePhraseService->createTranslation($language, 'USA');
@@ -105,7 +105,7 @@ class ImportLocations extends BaseImport {
 		$usa = $s;
 
 		// Create Canada
-		$namePhrase = $this->context->phraseRepositoryAccessor->get()->createNew();
+		$namePhrase = $this->context->phraseRepositoryAccessor->get()->createNew(FALSE);
 		$namePhraseService = $this->context->phraseDecoratorFactory->create($namePhrase);
 		$namePhrase->type = $this->dictionaryTypeName;
 		$namePhraseService->createTranslation($language, 'Canada');
@@ -123,7 +123,7 @@ class ImportLocations extends BaseImport {
 		$canada = $s;
 
 		// Create Australia
-		$namePhrase = $this->context->phraseRepositoryAccessor->get()->createNew();
+		$namePhrase = $this->context->phraseRepositoryAccessor->get()->createNew(FALSE);
 		$namePhraseService = $this->context->phraseDecoratorFactory->create($namePhrase);
 		$namePhrase->type = $this->dictionaryTypeName;
 		$namePhraseService->createTranslation($language, 'Australia');
@@ -253,7 +253,7 @@ class ImportLocations extends BaseImport {
 		while($x = mysql_fetch_array($r)) {
 			$location = $this->context->locationEntityFactory->create();				
 
-			$namePhrase = $this->context->phraseRepositoryAccessor->get()->createNew();
+			$namePhrase = $this->context->phraseRepositoryAccessor->get()->createNew(FALSE);
 			$namePhraseService = $this->context->phraseDecoratorFactory->create($namePhrase);
 			$namePhrase->type = $this->dictionaryTypeName;
 			$namePhrase->ready = TRUE;
@@ -310,7 +310,7 @@ class ImportLocations extends BaseImport {
 		while($x = mysql_fetch_array($r)) {
 			$location = $this->context->locationEntityFactory->create();
 
-			$namePhrase = $this->context->phraseRepositoryAccessor->get()->createNew();
+			$namePhrase = $this->context->phraseRepositoryAccessor->get()->createNew(FALSE);
 			$namePhraseService = $this->context->phraseDecoratorFactory->create($namePhrase);
 			$namePhrase->type = $this->dictionaryTypeName;
 			$namePhrase->ready = TRUE;

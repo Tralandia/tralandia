@@ -109,7 +109,7 @@ class ImportAmenities extends BaseImport {
 		// Tags
 		$r = q('select * from tags');
 		while ($x = mysql_fetch_array($r)) {
-			$amenity = $this->context->rentalTagRepositoryAccessor->get()->createNew();
+			$amenity = $this->context->rentalTagRepositoryAccessor->get()->createNew(FALSE);
 			$amenity->name = $this->createNewPhrase($tagNameDictionaryType, $x['name_dic_id']);
 			$amenity->oldId = $x['id'];
 			$this->model->persist($amenity);
