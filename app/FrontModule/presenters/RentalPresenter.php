@@ -31,12 +31,12 @@ class RentalPresenter extends BasePresenter {
 		}
 		
 		$rentalService = $this->rentalDecoratorFactory->create($rental);
-		d($rentalService->getInterviewAnswers());
+		$interviewAnswers = $rentalService->getInterviewAnswers($this->environment->primaryLocation->defaultLanguage);
+		d($interviewAnswers);
 
 		$locality = $rental->address->locality;
 		$link = $this->link('//list', array('location' => $locality));
 		$localitySeo = $this->seoFactory->create($link, $this->getLastCreatedRequest());
-
 
 		$this->template->rental = $rental;
 		$this->template->rentalService = $rentalService;
