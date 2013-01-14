@@ -14,14 +14,11 @@ class Translator implements \Nette\Localization\ITranslator {
 	protected $language = 38;
 	protected $cache;
 	protected $phraseRepositoryAccessor;
-	protected $phraseDecoratorFactory;
 
 
-	public function __construct(Language $language, $phraseRepositoryAccessor, Caching\Cache $translatorCache,
-								IPhraseDecoratorFactory $phraseDecoratorFactory) {
+	public function __construct(Language $language, $phraseRepositoryAccessor, Caching\Cache $translatorCache) {
 		$this->language = $language;
 		$this->phraseRepositoryAccessor = $phraseRepositoryAccessor;
-		$this->phraseDecoratorFactory = $phraseDecoratorFactory;
 		$this->cache = $translatorCache;
 	}
 
@@ -38,14 +35,10 @@ class Translator implements \Nette\Localization\ITranslator {
 		return $translation;
 	}
 	
-	protected function getTranslation($phrase, $variation = NULL)
+	protected function getTranslation($phrase,array $variation = NULL)
 	{
-		if (!isset($variation['count'])) $variation['count'] = NULL;
-		if (!isset($variation['gender'])) $variation['gender'] = NULL;
-		if (!isset($variation['case'])) $variation['case'] = NULL;
-
 		//d($phrase);
-		if($phrase instanceof \Service\Phrase\Phrase) {
+		if($phrase instanceof \Service\Phrase\PhraseService) {
 			$phraseId = $phrase->getEntity()->id;
 		} else if ($phrase instanceof \Entity\Phrase\Phrase){
 			$phraseId = $phrase->id;
@@ -56,9 +49,13 @@ class Translator implements \Nette\Localization\ITranslator {
 		if($variation === NULL) {
 			$translationKey = $phraseId.'_'.$this->language->id;
 		} else {
+			if (!isset($variation['count'])) $variation['count'] = NULL;
+			if (!isset($variation['gender'])) $variation['gender'] = NULL;
+			if (!isset($variation['case'])) $variation['case'] = NULL;
 			$translationKey = $phraseId.'_'.$this->language->id.'_'.implode('_', $variation);
 		}
-		
+
+
 		$translation = $this->cache->load($translationKey);
 		if($translation === NULL) {
 
@@ -72,10 +69,6 @@ class Translator implements \Nette\Localization\ITranslator {
 //					throw new \Nette\InvalidArgumentException('Argument "$phrase" does not match with the expected value');
 				}
 			}
-
-			if ($phrase instanceof \Entity\Phrase\Phrase){
-				$phrase = $this->phraseDecoratorFactory->create($phrase);
-			} 
 
 			if(!$phrase) {
 				$translation = '{!'.$phraseId.'!}';

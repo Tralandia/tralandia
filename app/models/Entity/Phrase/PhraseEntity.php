@@ -124,11 +124,11 @@ class Phrase extends \Entity\BaseEntityDetails {
 			}
 
 			if ($value->language->id == CENTRAL_LANGUAGE) {
-				$t[self::CENTRAL] = "^$value^";
+				$t[self::CENTRAL] = $value;
 			}
 
 			if ($this->sourceLanguage && $value->language->id == $this->sourceLanguage->id) {
-				$t[self::SOURCE] = "*$value*";
+				$t[self::SOURCE] = $value;
 			}
 		}
 
@@ -153,19 +153,6 @@ class Phrase extends \Entity\BaseEntityDetails {
 		}
 	}
 
-	public function getSourceTranslation() {
-		foreach ($this->getTranslations() as $value) {
-			if ($this->sourceLanguage && $value->language->id == $this->sourceLanguage->id) {
-				return $value;
-			}
-		}
-		return FALSE;
-	}
-
-	public function hasTranslation($language) {
-		return $this->getTranslation($language) instanceof \Entity\Phrase\Translation;
-	}
-
 	public function getTranslationText(\Entity\Language $language, $loose = FALSE) {
 		$translation = $this->getMainTranslations($language);
 		$text = '';
@@ -181,6 +168,19 @@ class Phrase extends \Entity\BaseEntityDetails {
 		}
 
 		return (string) $text;
+	}
+
+	public function getSourceTranslation() {
+		foreach ($this->getTranslations() as $value) {
+			if ($this->sourceLanguage && $value->language->id == $this->sourceLanguage->id) {
+				return $value;
+			}
+		}
+		return FALSE;
+	}
+
+	public function hasTranslation($language) {
+		return $this->getTranslation($language) instanceof \Entity\Phrase\Translation;
 	}
 
 	public function getValidTranslationsCount() {
