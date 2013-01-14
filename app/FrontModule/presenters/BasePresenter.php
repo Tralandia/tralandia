@@ -30,12 +30,25 @@ abstract class BasePresenter extends \BasePresenter {
 	 */
 	protected $seoFactory;
 
+
+	/**
+	 * @var \Service\Seo\SeoService
+	 */
+	public $pageSeo;
+
 	public function injectBaseRepositories(\Nette\DI\Container $dic) {
 		$this->languageRepositoryAccessor = $dic->languageRepositoryAccessor;
 		$this->locationRepositoryAccessor = $dic->locationRepositoryAccessor;
 		$this->rentalTypeRepositoryAccessor = $dic->rentalTypeRepositoryAccessor;
 		$this->rentalRepositoryAccessor = $dic->rentalRepositoryAccessor;
 	}
+
+	protected function startup() {
+		parent::startup();
+
+		$this->pageSeo = $this->seoFactory->create($this->link('//this'), $this->getRequest());
+	}
+
 
 	public function beforeRender() {
 
@@ -54,6 +67,9 @@ abstract class BasePresenter extends \BasePresenter {
 
 		$supportedLanguages = $this->languageRepositoryAccessor->get()->findSupported();
 		$this->template->supportedLanguages = array_chunk($supportedLanguages,round(count($supportedLanguages)/3));
+
+		$this->template->pageH1 = $this->pageSeo->getH1();
+		$this->template->pageTitle = $this->pageSeo->getTitle();
 		
 		parent::beforeRender();
 	}
