@@ -208,6 +208,7 @@ class DefaultFormRenderer extends Nette\Object implements Nette\Forms\IFormRende
 
 
 		} else {
+
 			return $this->form->getElementPrototype()->startTag();
 		}
 	}
