@@ -41,9 +41,20 @@ class PresenterExtension extends Nette\Config\CompilerExtension
 			$form = $builder->addDefinition($this->prefix($prefix . '.form'))
 				->setClass('Extras\FormMask\FormFactory', array($generator));
 
-			$builder->addDefinition($this->prefix($prefix . '.grid'))
-				->setClass('AdminModule\Components\GridFactory')
-				->addSetup('setParameters', array(isset($params['grid']) ? $params['grid'] : array()));				
+			$grid = $builder->addDefinition($this->prefix($prefix . '.grid'))
+				->setClass('AdminModule\Components\GridFactory');
+			
+			if (isset($params['grid']) && is_array($params['grid'])) {
+				if (isset($params['grid'])) {
+					$grid->addSetup('setParameters', array($params['grid']));
+				}
+				if (isset($params['grid']) && isset($params['grid']['class'])) {
+					$grid->addSetup('setClass', array($params['grid']['class']));
+				}
+			} elseif(isset($params['grid']) && is_string($params['grid'])) {
+				$grid->addSetup('setClass', array($params['grid']));		
+			}
+
 
 			if (isset($params['form']) && isset($params['form']['fields'])) {
 				foreach ($params['form']['fields'] as $name => $item) {

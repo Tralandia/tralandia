@@ -6,14 +6,14 @@ use Nette, TwiGrid, Doctrine, Extras, Entity;
 
 class Grid extends Nette\Object {
 
-	private $grid;
-	private $presenter;
-	private $repository;
+	protected $grid;
+	protected $presenter;
+	protected $repository;
 
-	private $columns = array();
-	private $itemsPerPage = 20;
-	private $orderBy = 'id';
-	private $sort = 'ASC';
+	protected $columns = array();
+	protected $itemsPerPage = 20;
+	protected $orderBy = 'id';
+	protected $sort = 'ASC';
 
 	public function __construct(array $parameters, TwiGrid\DataGrid $grid, Nette\Application\IPresenter $presenter, Doctrine\ORM\EntityRepository $repository) {
 		$this->grid = $grid;
@@ -25,7 +25,7 @@ class Grid extends Nette\Object {
 		isset($parameters['columns']) && $this->columns = $parameters['columns'];
 
 		if (empty($this->columns)) {
-			throw new Nette\InvalidStateException("Neboli nastavene ziadne stlpce v konfigu");
+			//throw new Nette\InvalidStateException("Neboli nastavene ziadne stlpce v konfigu");
 		}
 	}
 

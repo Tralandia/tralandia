@@ -4,20 +4,7 @@ parameters:
 	title: Currencies
 	h1: 'Currency -> %name%'
 
-grid:
-	orderBy: iso
-	itemsPerPage: 20
-	columns:
-		id:
-			label: Id
-		name:
-			label: Name
-		iso:
-			label: Iso
-		exchangeRate:
-			label: Exchange Rate / EUR
-		rounding:
-			label: Rounding
+grid: AdminModule\Grids\CurrencyGrid
 
 form:
 	fields:
