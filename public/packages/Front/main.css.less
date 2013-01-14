@@ -1901,7 +1901,7 @@ form.traform {
 				float: left;				
 			}
 
-			input[type=text] , input[type=password] {
+			input[type=text] , input[type=password] , textarea {
 				height: 38px;
 				line-height: 38px;
 				font-size: 16px;
@@ -1909,20 +1909,39 @@ form.traform {
 				border: 1px solid #a0b325;
 				width: 440px;
 				float: left;
+			}			
+
+			textarea {
+				height: 200px;
+				margin-bottom: 0;
+				line-height: 21px;
+				padding: 5px;
 			}
 
 			i.va­lidation:before {
 				font-size: 70px;
 				position: relative;
 				top: 10px;
+				left: 3px;
 				color: @lightGreen;
 			}
 
 			.control-error {
 				height: 23px;
-				padding: 1px 5px;
+				padding: 1px 10px;
 				color: #ff0000;
 				font-size: 11px;
+				clear: both;
+			}
+
+			&.error {
+				input[type=text] , input[type=password] , textarea {
+					border: 1px solid #ff0000;
+					background: #fef7f1;
+				}
+				i.va­lidation:before {
+					color: red;
+				}
 			}
 
 		}
