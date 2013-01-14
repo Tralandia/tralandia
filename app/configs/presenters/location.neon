@@ -10,8 +10,6 @@ grid:
 			label: Id
 		name:
 			label: Name
-		nameOfficial:
-			label: Name Official
 		iso:
 			label: Iso
 

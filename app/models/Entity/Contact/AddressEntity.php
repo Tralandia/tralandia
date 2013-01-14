@@ -4,6 +4,7 @@ namespace Entity\Contact;
 
 use Nette\Utils\Arrays;
 use Doctrine\ORM\Mapping as ORM;
+use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity(repositoryClass="Repository\Contact\AddressRepository")
