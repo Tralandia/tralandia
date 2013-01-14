@@ -36,8 +36,6 @@ class HomePresenter extends BasePresenter {
 		}
 
 		$this->template->rentals = $rentals;
-		$this->template->h1 = $this->seoFactory->create($this->link('//this'), $this->getRequest())->getH1();
-
 	}
 
 	public function createComponentCountryMap($name) {
