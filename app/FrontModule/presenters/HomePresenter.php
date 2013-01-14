@@ -11,16 +11,16 @@ class HomePresenter extends BasePresenter {
 	 */
 	protected $rentalDecoratorFactory;
 
+	/**
+	 * @autowire
+	 * @var \Service\Rental\IRentalSearchServiceFactory
+	 */
 	protected $rentalSearchFactory;
-
-	public function injectSearch(\Service\Rental\IRentalSearchServiceFactory $rentalSearchFactory) {
-		$this->rentalSearchFactory = $rentalSearchFactory;
-	}
 
 	public function renderDefault() {
 
 		$search = $this->rentalSearchFactory->create($this->environment->primaryLocation);
-		$featuredIds = $search->getFeaturedRentalIds();
+		$featuredIds = $search->getFeaturedRentals();
 
 		$rentals = array();
 		foreach ($featuredIds as $rental) {
