@@ -124,11 +124,11 @@ class Phrase extends \Entity\BaseEntityDetails {
 			}
 
 			if ($value->language->id == CENTRAL_LANGUAGE) {
-				$t[self::CENTRAL] = $value;
+				$t[self::CENTRAL] = "^$value^";
 			}
 
 			if ($this->sourceLanguage && $value->language->id == $this->sourceLanguage->id) {
-				$t[self::SOURCE] = $value;
+				$t[self::SOURCE] = "*$value*";
 			}
 		}
 
