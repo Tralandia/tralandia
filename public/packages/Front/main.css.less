@@ -1871,7 +1871,60 @@ form.traform {
 						margin-left: 17px;
 					}
 				}
+
 			}			
+		}
+
+		.control-group {
+
+			height: 37px;
+
+			.form-label {
+				width: 229px;
+				float: left;
+
+				label {
+					font-weight: bold;
+					font-size: 14px;
+				}
+				small {
+					padding-left: 10px;
+					font-size: 11px;
+					position: relative;
+					top: -5px;
+					color: #7d7d7c;
+				}				
+			}
+
+			.controls {
+				width: 490px;
+				float: left;				
+			}
+
+			input[type=text] , input[type=password] {
+				height: 38px;
+				line-height: 38px;
+				font-size: 16px;
+				font-weight: bold;
+				border: 1px solid #a0b325;
+				width: 440px;
+				float: left;
+			}
+
+			i.va­lidation:before {
+				font-size: 70px;
+				position: relative;
+				top: 10px;
+				color: @lightGreen;
+			}
+
+			.control-error {
+				height: 23px;
+				padding: 1px 5px;
+				color: #ff0000;
+				font-size: 11px;
+			}
+
 		}
 		
 	}
