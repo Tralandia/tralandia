@@ -1,14 +1,15 @@
 <?php
-namespace Repository;
+namespace Repository\Rental;
 
 use Doctrine\ORM\Query\Expr;
 
 /**
- * CurrencyRepository class
+ * AddressRepository class
  *
  * @author Dávid Ďurika
  */
-class CurrencyRepository extends \Repository\BaseRepository {
+class TypeRepository extends \Repository\BaseRepository
+{
 
 	public function getForSelect() {
 
@@ -21,4 +22,5 @@ class CurrencyRepository extends \Repository\BaseRepository {
 		return $return;
 
 	}
+
 }

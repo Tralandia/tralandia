@@ -184,7 +184,7 @@ factories:
 		implement: FrontModule\Forms\Rental\IReservationFormFactory
 
 	registrationFormFactory:
-		class: FrontModule\Forms\RegistrationForm(%country%, @locationRepositoryAccessor::get(), @languageRepositoryAccessor::get())
+		class: FrontModule\Forms\RegistrationForm(%country%, @locationRepositoryAccessor::get(), @languageRepositoryAccessor::get(), @rentalTypeRepositoryAccessor::get(), @currencyRepositoryAccessor::get())
 		implement: FrontModule\Forms\IRegistrationFormFactory
 
 	# ==============================
