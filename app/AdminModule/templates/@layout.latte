@@ -5,13 +5,7 @@
 <body>
 	<div class="container baseRadius" id="container">
 		<div class="row">
-
-
-			{*include header.latte*}
-
-			{*control searchBar*}
-
-			{include sideBar.latte}
+			{control navigation}
 			<div class="span9">
 				<div class="innerPadding baseRadius baseBorder innerPaddingRitgh overflow">
 					<div id="content" class="nopadding">
@@ -19,64 +13,23 @@
 					</div>
 				</div>
 			</div>
-
-			{*{control footer}*}
-			{*control countriesFooter*}
 		</div>		
 	</div>
 
-
 	<div class="container">
-
 		<div class="row smallFooterSignature">
 			<div class="span12">
-			{var $now = date('Y')}
+				{var $now = date('Y')}
 				<p>
-				<a href="{plink :Front:Home:default}">@2006–{$now} Tralandia.sk</a> | 
-				<a href="{plink :Front:Contact:default#aboutUs}">{_o23011}</a> | 
-				<a href="{plink :Front:Contact:default#tabs-2}">#napisali onas</a> |
-				<a href="{plink :Front:Contact:default#TermsOfUse}">{_o795}</a> |
-				<a href="{plink :Front:Contact:default#faq}">{_o741}</a>
+					<a href="{plink :Front:Home:default}">@2006–{$now} Tralandia.sk</a> | 
+					<a href="{plink :Front:Contact:default#aboutUs}">{_o23011}</a> | 
+					<a href="{plink :Front:Contact:default#tabs-2}">#napisali onas</a> |
+					<a href="{plink :Front:Contact:default#TermsOfUse}">{_o795}</a> |
+					<a href="{plink :Front:Contact:default#faq}">{_o741}</a>
 				</p>
 			</div>
 		</div>
-
 	</div>
 
 </body>
-
 </html>
-
-{*
-{control header:begin}
-	{control css}
-	<script type="text/javascript"> var baseUrl = '{!$baseUrl}'; </script>
-	{control js}
-	<script type="text/javascript" src="{$baseUrl}/scripts/tinymce/jquery.tinymce.js" ></script>
-{control header:end}
-	<div class="container">
-		<div class="inner">
-			{control navigation}
-			<div class="content">
-				{control flashes}
-				{include #content}
-			</div>
-		</div>
-	</div>
-	<!-- MODAL -->
-	<div class="modal hide" id="modal">
-		<div class="modal-header">
-			<button class="close" data-dismiss="modal">×</button>
-			<h3>Modal header</h3>
-		</div>
-		<div class="modal-body">
-		</div>
-		<div class="modal-footer">
-			<a href="#" class="btn">Close</a>
-			<a href="#" class="btn btn-primary">Save changes</a>
-		</div>
-	</div>
-	<!-- MODAL END -->
-</body>
-</html>
-*}
