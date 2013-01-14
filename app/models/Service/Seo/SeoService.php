@@ -85,7 +85,9 @@ class SeoService extends Nette\Object {
 	 * @return string
 	 */
 	public function getH1() {
-		return $this->compilePattern($this->getPage()->h1Pattern);
+		$page = $this->getPage();
+		if(!$page) return '';
+		else return $this->compilePattern($page->h1Pattern);
 	}
 
 	/**
@@ -93,7 +95,9 @@ class SeoService extends Nette\Object {
 	 * @return string
 	 */
 	public function getTitle() {
-		return $this->compilePattern($this->getPage()->titlePattern);
+		$page = $this->getPage();
+		if(!$page) return '';
+		else return $this->compilePattern($page->titlePattern);
 	}
 
 	/**
