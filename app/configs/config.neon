@@ -254,7 +254,7 @@ factories:
 
 	seoServiceFactory:
 		class: Service\Seo\SeoService
-		arguments: [%url%, %request%]
+		arguments: [%url%, %request%, @pageRepositoryAccessor]
 		implement: Service\Seo\ISeoServiceFactory
 
 	updateRentalSearchCacheRobotFactory:

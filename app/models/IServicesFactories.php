@@ -26,20 +26,6 @@ namespace Service\Rental {
 }
 
 
-namespace Service\Seo {
-
-	interface ISeoServiceFactory {
-		/**
-		 * @param $url
-		 * @param \Nette\Application\Request $request
-		 *
-		 * @return SeoService
-		 */
-		function create($url, \Nette\Application\Request $request);
-	}
-}
-
-
 namespace Service\Robot {
 
 	interface IUpdateRentalSearchCacheRobotFactory {

@@ -70,8 +70,10 @@ class RentalPresenter extends BasePresenter {
 			$rentals[$rental->id]['entity'] = $rental;
 		}
 
+		$pageSeo = $this->seoFactory->create($this->link('//this'), $this->getRequest());
+
 		$this->template->rentals = $rentals;
-		$this->template->h1 = $this->seoFactory->create($this->link('//this'), $this->getRequest())->getH1();
+		$this->template->h1 = $pageSeo->getH1();
 
 	}
 

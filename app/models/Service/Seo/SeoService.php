@@ -48,6 +48,9 @@ class SeoService extends Nette\Object {
 		'rentalTypePlural' => array(
 			'rentalType',
 			'name',
+			array(
+				'plural' => 1,
+			),
 		)
 	);
 
@@ -57,22 +60,15 @@ class SeoService extends Nette\Object {
 		'case' => \Entity\Language::DEFAULT_CASE,
 	);
 
-	public function inject(\Model\Phrase\IPhraseDecoratorFactory $phraseDecoratorFactory) {
-		$this->phraseDecoratorFactory = $phraseDecoratorFactory;
-	}
-
-	public function injectDic(\Nette\DI\Container $dic) {
-		$this->pageRepositoryAccessor = $dic->pageRepositoryAccessor;
-	}
-
 	/**
 	 * @param string                    $url
 	 * @param Nette\Application\Request $request
 	 */
-	public function __construct($url, Nette\Application\Request $request)
+	public function __construct($url, Nette\Application\Request $request, $pageRepositoryAccessor)
 	{
 		$this->url = $url;
 		$this->request = $request;
+		$this->pageRepositoryAccessor = $pageRepositoryAccessor;
 		$this->requestParameters = $this->request->getParameters();
 	}
 
@@ -117,7 +113,7 @@ class SeoService extends Nette\Object {
 					if ($key == 2) continue;
 					if ($this->existsParameter($value)) {
 						if ($value == 'rentalTag') {
-							$tagName = $this->phraseDecoratorFactory->create($this->getParameter($value)->name);
+							$tagName = $this->getParameter($value)->name;
 							$tagTranslation = $tagName->getTranslation($this->getParameter('language'));
 							if ($tagTranslation->position == \Entity\Phrase\Translation::BEFORE) {
 								$value = \Entity\Phrase\Translation::BEFORE;
@@ -171,8 +167,7 @@ class SeoService extends Nette\Object {
 
 	protected function compilePattern($pattern) {
 
-		$phrase = $this->phraseDecoratorFactory->create($pattern);
-		$patternTranslation = $phrase->getTranslationText($this->getParameter('language'), TRUE);
+		$patternTranslation = $pattern->getTranslationText($this->getParameter('language'), TRUE);
 		if (!$patternTranslation) {
 			return NULL;
 		}
@@ -180,23 +175,27 @@ class SeoService extends Nette\Object {
 		$variables = Strings::matchAll($patternTranslation, '/\[(?P<replacement>[a-zA-Z]+)\]/');
 		
 		$texts = array();
-		foreach ($variables as $key => $value) {
-			if( ($value['replacement'] == 'location' || $value['replacement'] == 'locationLocative') && !$this->existsParameter($value['replacement']) ) {
+		foreach ($variables as $value) {
+			if( ($value['replacement'] == 'location' || $value['replacement'] == 'locationLocative') && !$this->existsParameter('location') ) {
 				$replacement = $this->replacements['primary'.ucfirst($value['replacement'])];
 			} else {
 				$replacement = $this->replacements[$value['replacement']];
 			}
 
+			/** @var $phrase \Entity\Phrase\Phrase */
 			$phrase = $this->getParameter($replacement[0])->{$replacement[1]};
-			$phrase = $this->phraseDecoratorFactory->create($phrase);
 			$translation = $phrase->getTranslation($this->getParameter('language'), TRUE);
 
 			$textKey = '['.$value['replacement'].']';
-			if (array_key_exists(2, $replacement) && is_array($replacement[2])) {
-				$variationPath = array_merge($this->defaultVariation, $replacement[2]);
-				$texts[$textKey] = $translation->getVariation($variationPath['plural'], $variationPath['gender'], $variationPath['case']);
+			if($translation) {
+				if (array_key_exists(2, $replacement) && is_array($replacement[2])) {
+					$variationPath = array_merge($this->defaultVariation, $replacement[2]);
+					$texts[$textKey] = $translation->getVariation($variationPath['plural'], $variationPath['gender'], $variationPath['case']);
+				} else {
+					$texts[$textKey] = (string) $translation;
+				}
 			} else {
-				$texts[$textKey] = (string) $translation;
+				$texts[$textKey] = '';
 			}
 
 		}
@@ -205,4 +204,14 @@ class SeoService extends Nette\Object {
 
 	}
 
+}
+
+interface ISeoServiceFactory {
+	/**
+	 * @param $url
+	 * @param \Nette\Application\Request $request
+	 *
+	 * @return SeoService
+	 */
+	function create($url, \Nette\Application\Request $request);
 }

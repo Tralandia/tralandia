@@ -137,6 +137,12 @@ class Phrase extends \Entity\BaseEntityDetails {
 		return $t;
 	}
 
+	/**
+	 * @param \Entity\Language $language
+	 * @param bool $loose
+	 *
+	 * @return \Entity\Phrase\Translation|null
+	 */
 	public function getTranslation(\Entity\Language $language, $loose = FALSE) {
 		$t = $this->getMainTranslations($language);
 		if ($loose) {

@@ -3,7 +3,6 @@
 namespace FrontModule;
 
 use Nette;
-use Service\Seo\ISeoServiceFactory;
 
 abstract class BasePresenter extends \BasePresenter {
 	
@@ -20,20 +19,16 @@ abstract class BasePresenter extends \BasePresenter {
 	protected $rentalRepositoryAccessor;
 
 	/**
+	 * @autowire
 	 * @var \Extras\Environment
 	 */
 	protected $environment;
+
+	/**
+	 * @autowire
+	 * @var \Service\Seo\ISeoServiceFactory
+	 */
 	protected $seoFactory;
-
-	public function injectSeo(ISeoServiceFactory $seoFactory)
-	{
-		$this->seoFactory = $seoFactory;
-	}
-
-	public function injectEnvironment(\Extras\Environment $environment) 
-	{
-		$this->environment = $environment;
-	}
 
 	public function injectBaseRepositories(\Nette\DI\Container $dic) {
 		$this->languageRepositoryAccessor = $dic->languageRepositoryAccessor;
