@@ -7,23 +7,23 @@ use FrontModule\Forms\Rental\IReservationFormFactory;
 
 class RentalPresenter extends BasePresenter {
 
+	/**
+	 * @autowire
+	 * @var \Model\Rental\IRentalDecoratorFactory
+	 */
 	protected $rentalDecoratorFactory;
+
+	/**
+	 * @autowire
+	 * @var \Service\Rental\IRentalSearchServiceFactory
+	 */
 	protected $rentalSearchFactory;
 
+	/**
+	 * @autowire
+	 * @var \FrontModule\Forms\Rental\IReservationFormFactory
+	 */
 	protected $reservationFormFactory;
-
-	public function injectDecorators(IRentalDecoratorFactory $rentalDecoratorFactory) {
-		$this->rentalDecoratorFactory = $rentalDecoratorFactory;
-	}
-
-	public function injectSearch(\Service\Rental\IRentalSearchServiceFactory $rentalSearchFactory) {
-		$this->rentalSearchFactory = $rentalSearchFactory;
-	}
-
-	public function injectForm(IReservationFormFactory $reservationFormFactory) {
-		$this->reservationFormFactory = $reservationFormFactory;
-	}
-
 
 	public function actionDetail($rental) {
 		if (!$rental) {
