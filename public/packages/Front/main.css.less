@@ -1882,7 +1882,7 @@ form.traform {
 			.form-label {
 				width: 229px;
 				float: left;
-
+				height: 38px;
 				label {
 					font-weight: bold;
 					font-size: 14px;
@@ -1898,25 +1898,47 @@ form.traform {
 
 			.controls {
 				width: 490px;
-				float: left;				
-			}
-
-			input[type=text] , input[type=password] , textarea {
-				height: 38px;
-				line-height: 38px;
-				font-size: 16px;
-				font-weight: bold;
-				border: 1px solid #a0b325;
-				width: 440px;
 				float: left;
-			}			
 
-			textarea {
-				height: 200px;
-				margin-bottom: 0;
-				line-height: 21px;
-				padding: 5px;
+				input[type=text] , input[type=password] , textarea , label , select {
+					width: 440px;
+					float: left;					
+				}
+
+				label {
+					width: 420px;
+					margin-left: 10px;
+				}
+
+				input[type=text] , input[type=password] , textarea   {
+					height: 38px;
+					line-height: 38px;
+					font-size: 16px;
+					font-weight: bold;
+					border: 1px solid #a0b325;
+
+				}
+
+				textarea {
+					height: 200px;
+					margin-bottom: 0;
+					line-height: 21px;
+					padding: 5px;
+				}
+
+				.input-append {
+					width: 176px;
+					float: left;
+					input[type=text] , input[type=password] {
+						width: 50px;
+					}
+				}			
+
 			}
+
+			
+
+
 
 			i.va­lidation:before {
 				font-size: 70px;
@@ -1924,14 +1946,6 @@ form.traform {
 				top: 10px;
 				left: 3px;
 				color: @lightGreen;
-			}
-
-			.control-error {
-				height: 23px;
-				padding: 1px 10px;
-				color: #ff0000;
-				font-size: 11px;
-				clear: both;
 			}
 
 			&.error {
@@ -1944,7 +1958,23 @@ form.traform {
 				}
 			}
 
+
+			.control-error {
+				height: 23px;
+				padding: 1px 10px;
+				color: #ff0000;
+				font-size: 11px;
+				clear: both;
+				position: relative;
+			}				
+
 		}
+
+		.control-group.options {
+			.control-error {
+					top:-12px;
+				}	
+			}
 		
 	}
 
