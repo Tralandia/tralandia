@@ -18,7 +18,7 @@
 						<ul n:inner-foreach="$criteria[$type] as $link">
 							{if $link->hide}{var $hasHidden=TRUE}{/if}
 							{if $link->active}
-								<li class="selected"><a href="{$link->seo->getUrl()}">{_$link->entity->name|firstUpper} <span class="counter">{$link->count}</span><span class="close entypo-close"></span></a></li>
+								<li class="selected"><a href="{$link->seo->getUrl()}">{_$link->entity->name|firstUpper} <span class="counter">{$link->count}</span><span class="close entypo-remove"></span></a></li>
 							{else}
 								<li class="{if $link->hide || $link->count==0}hidden hide{/if}{if $link->count==0} disabled{/if}">
 									{if $link->count==0}

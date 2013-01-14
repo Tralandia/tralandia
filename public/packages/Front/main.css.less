@@ -356,7 +356,14 @@ ul.arrows {
 
 #content.nopadding {
 
+	.objectDetailContent {
+		margin-bottom: 10px;
+	}
+
 	.objectDetailContent .span5 {
+
+		
+
 		margin-top: 15px;
 		h1 {
 			margin: 0 0 10px 0;
@@ -514,6 +521,10 @@ ul.arrows {
 			margin: 0;
 		}
 
+		a:hover {
+			text-decoration: underline;
+		}
+
 		ul {
 
 			background:@white;
@@ -538,6 +549,10 @@ ul.arrows {
 					border-right: 1px solid @brown;
 					padding: 0 10px;
 					color: @brown;
+
+					&.red {
+						color: #d32c16;
+					}
 
 					&.dropdown-toggle {
 						
@@ -588,13 +603,13 @@ ul.arrows {
 					float: left;
 					width: 30%;
 					padding: 0;
-					padding-left: 3%;
+					
 
 					height: auto;	
 					background: transparent;
 					a {
 						border:none;
-						padding-left: 30px;
+						
 						color: @darkGreen;
 						&:hover {
 							background : none;
@@ -625,15 +640,17 @@ ul.arrows {
 						height:auto;
 						width: 100%;
 						padding: 10px 0;
+						
 
 						li {
 							float: none;
-							
+							overflow: visible;
 
 							width: 100%;
 							a {
 								
 								padding: 0 10px;
+								padding-left: 30px;
 								white-space: normal;	
 
 
@@ -656,17 +673,24 @@ ul.arrows {
 
 				a {
 					border-right: 1px solid @white;
+					height: 26px;
+					overflow: hidden;
+					display: block;					
 				}
 
 				&:hover {
-					background: @lightGreen;
+					
 
--webkit-border-top-right-radius: 5px;
--moz-border-radius-topright: 5px;
-border-top-right-radius: 5px;
+					a {	
 
-					a {
-						border-right: 1px solid @lightGreen;
+
+						&:hover {
+							text-decoration: underline;
+						}
+
+						i {
+
+						}
 					}
 
 					ul {
@@ -868,6 +892,7 @@ border-top-right-radius: 5px;
 		li {
 			display: table-cell;
 			float: left;
+			text-transform: capitalize;
 						
 			a {
 				display: block;
@@ -1206,6 +1231,7 @@ border-top-right-radius: 5px;
 .sidebarContact {
 	margin-top: 10px;
 	line-height: 15px;
+	
 	ul {
 		list-style: none;
 		margin: 10px;
@@ -1222,6 +1248,7 @@ border-top-right-radius: 5px;
 	table {
 
 		margin-left: 10px;
+		margin-right: 10px;
 		tr {
 			vertical-align: top;
 		}
@@ -1241,7 +1268,7 @@ border-top-right-radius: 5px;
 	form {
 		border-top: 1px solid @lightGreen;
 		margin-top: 5px;
-
+		margin-bottom: 0;
 		button {
 			width: 100%;
 		}
@@ -1835,9 +1862,12 @@ form.traform {
 		margin: 0;
 		margin-top: 10px;
 		td , th {
-			font-size: 13px;
-			padding: 8px;
+
 		}		
+	}
+
+	td {
+		line-height: 18px;
 	}
 
 	b {

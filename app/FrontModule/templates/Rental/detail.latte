@@ -47,6 +47,8 @@
 
 *}
 
+
+
 <div class="span12">
 	<div class="innerPadding baseRadius borderBlue overflow">
 		<div class="content noPadding">
@@ -80,10 +82,14 @@
 
 <div class="row-fluid objectDetailContent">
 	<div class="span4 marginBottom marginTop marginLeft leftSidebarObjectDetail">
+		{var $ii = 1}
 		{foreach $rental->getImages(3) as $photo}
-			<img src="{$basePath}{$photo|rentalImageSrc}" class="marginBottom" />
+			<img alt="{_$rental->name} {_$photo->name} {$ii}" src="{$basePath}{$photo|rentalImageSrc}" class="marginBottom" />
+			{var $ii = $ii + 1}
 		{/foreach}
-		 <img class="mapsImg" src="https://maps.googleapis.com/maps/api/staticmap?center={$rental->address->latitude->data},{$rental->address->longitude->data}&markers=color:blue%7C{$rental->address->latitude->data},{$rental->address->longitude->data}&maptype=terrain&zoom=13&size=288x170&sensor=false" /> 
+		
+		 <img class="mapsImg" src="https://maps.googleapis.com/maps/api/staticmap?center={$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&markers=color:blue%7C{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&maptype=terrain&zoom=13&size=288x170&sensor=false" /> 
+		
 	</div>
 
 
@@ -250,7 +256,7 @@
 					<tr>
 						<td><i class="entypo-contact"></i></td>
 						<td>	
-						{$rental->contactName}
+						<strong>{$rental->contactName}</strong>
 						</td>
 					</tr>
 
@@ -332,7 +338,8 @@
 						
 						<a class="mapsImg">
 						
-						{$rental->address->latitude->data},{$rental->address->longitude->data}
+						{$rental->address->getGps()}
+						
 							</a>	
 
 						</td>
@@ -396,14 +403,20 @@ $(document).ready(function(){
 
 				<div class="tab-pane" id="gallery">
 					<ul class="biggall">	
+						{var $ii = 1}
 						{foreach $rental->getImages() as $photo}
-							<li><img src="{$basePath}{$photo|rentalImageSrc}" /></li>
+							<li><img alt="{_$rental->name} {_$photo->name} {$ii}" src="{$basePath}{$photo|rentalImageSrc}" /></li>
+							{var $ii = $ii + 1}
 						{/foreach}
 					</ul>
 					<div class="clearfix"></div>
 				</div>				
 
 				<div class="tab-pane" id="pricetable">
+
+					{var $noPriceTable = true}
+					{if count($rental->pricelistRows) > 0}
+					{var $noPriceTable = false}
 					<table class="table table-striped tableDefault half first marginBottom">
 						<thead>
 							<tr>							
@@ -422,8 +435,9 @@ $(document).ready(function(){
 						{/foreach}
 						</tbody>
 					</table>
-					
-
+					{/if}
+					{if count($rental->pricelists) > 0}
+					{var $noPriceTable = false}
 					<table class="table table-striped tableDefault half marginTop">
 						<thead>
 							<tr>							
@@ -440,6 +454,14 @@ $(document).ready(function(){
 						{/foreach}
 						</tbody>
 					</table>
+					{/if}
+					{if $noPriceTable}
+						{if $rental->pricesUponRequest}
+							#len na dotaz
+							{else}
+							#Übytovatel neuvadza detailne ceny. Orientacna cena ubytovania je {$rental->price} Eur / osoba / noc"	
+						{/if}								
+					{/if}
 
 				</div>					
 
@@ -457,7 +479,9 @@ $(document).ready(function(){
 
 
 				<div class="tab-pane" id="tabs-2">
-					<div id="map_canvas" zoom="10" value="{$rental->address->latitude->data},{$rental->address->longitude->data}" style="width:100%;height:400px;"></div>
+				
+					<div id="map_canvas" zoom="10" value="{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}" style="width:100%;height:400px;"></div>
+				
 				</div>
 
 			</div>

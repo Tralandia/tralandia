@@ -8,12 +8,12 @@
 
 
 							<ul>
-								<li><a n:href=":Owner:Rental:edit">Uprav ubytovanie</a></li>
-								<li><a n:href=":Owner:Rental:add"><strong class="red">+ Pridajte ubytovanie</strong></a> </li>
+								<li><a n:href=":Owner:Rental:edit">{_o749}</a></li>
+								<li><a n:href=":Owner:Rental:add" class="red"><strong>+ {_o793}</strong></a> </li>
 
 								<li>
 									<div class="dropdown lang">
-									  <a class="dropdown-toggle" data-toggle="dropdown" href="#">Slovencina <i class="entypo-down"></i></a>
+									  <a class="dropdown-toggle" data-toggle="dropdown" href="#">#Slovencina <i class="entypo-down"></i></a>
 									  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 									  	
 
@@ -103,7 +103,7 @@
 
 						<nav role="main-menu" id="mainMenu">
 							<ul>
-								<li><a n:href=":Front:Home:default"><i class="entypo-home"></i> Uvod - pomenovat</a></li>
+								<li><a n:href=":Front:Home:default"><i class="entypo-home"></i> {_o823}</a></li>
 
 								<li n:foreach="$mainMenuItems as $menuItem"><a n:href="Rental:list rentalType => $menuItem->id">{_$menuItem->name}</a></li>
 
