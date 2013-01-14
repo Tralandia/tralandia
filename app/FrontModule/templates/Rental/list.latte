@@ -12,8 +12,8 @@
 
 	<div class="span12">
 		<ul class="breadcrumb">
-		  <li><a href="#">Home</a> <span class="divider">/</span></li>
-		  <li><a href="#">Library</a> <span class="divider">/</span></li>
+		  <li><a href="#">Home</a></li>
+		  <li><a href="#">Library</a></li>
 		  <li class="active">Data</li>
 		</ul>
 	</div>
@@ -79,7 +79,9 @@
                                     </td>
                                     <td class="text-top">
                                         <span class="entypo-phone"></span><a href="{link Rental:detail $rental}">Kontaktujte</a><br>
+                                        {*
                                         {if $rental->rank}<span class="entypo-discusion"></span><a href="#">{$rental->rank} hodnoteni</a>{/if}
+                                        *}
                                     </td>
                                 </tr>
                             </tbody></table>
