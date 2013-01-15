@@ -124,14 +124,15 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 
 		} else {
 			
-			for ($i=0; $i < 50; $i++) {
+			for ($i=1; $i <= RentalSearchService::CAPACITY_MAX; $i++) {
 
-				$params = array_merge($selected, array('capacity' => $i));
+				$params = array_merge($selected, array('fcapacity' => $i));
 
 				$name = $i;
 
 				$count = $this->getRentalsCount($params);
 				$link = $this->presenter->link('//Rental:list', $params);
+				d($link);
 				$seo = $this->seoFactory->create($link, $this->presenter->getLastCreatedRequest());
 
 				$visible[$i] = $count;
@@ -139,7 +140,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 
 				$linksTmp[$i] = array(
 					'seo' => $seo,
-					'name' => $i,
+					'name' => $i . (RentalSearchService::CAPACITY_MAX==$i ? '+' : FALSE),
 					'count' => $count,
 					'hide' => TRUE,
 					'active' => $active,

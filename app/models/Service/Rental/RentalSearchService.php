@@ -69,7 +69,7 @@ class RentalSearchService extends Nette\Object
 		$this->resetResults();
 	}
 
-	public function setCapacityCriterium($capacity = NULL) {
+	public function setFcapacityCriterium($capacity = NULL) {
 		$this->criteria[self::CRITERIA_CAPACITY] = $capacity;
 		$this->resetResults();
 	}
