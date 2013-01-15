@@ -1,0 +1,51 @@
+@import './less-functions.less';
+
+
+.twigrid {
+	table {
+
+		td {
+			padding: 3px 8px;
+			line-height: 17px;
+			font-size: 13px;
+		}
+
+		th {
+			padding: 0 8px;
+			.basic-gradient(#b7c546,#869c19);
+			text-shadow:-1px -1px 0px #7d9506;
+			color: @white;
+			height: 32px;
+			line-height: 32px;
+			border-left: 1px solid #869c19;
+		}
+
+		.btn {
+			padding: 2px 6px;
+			font-size: 10px;
+			line-height: 13px;
+			&.btn-info {
+				.basic-gradient(#e8e8e8,#adadad);
+				border: 1px solid @darkGreen;
+				color: #333333;
+				border: 1px solid #adadad;
+
+				&:hover {
+					.basic-gradient(#adadad,#e8e8e8);
+				}
+			}
+		}
+
+		.btn-group {
+			float: right;
+		}
+	}
+}
+
+.btn.add-new {
+	.basic-gradient(#fdbe33,#f68703);
+	color: #7d3300;
+	&:hover {
+		.basic-gradient(#f68703,#fdbe33);
+	}
+}

@@ -18,6 +18,14 @@ parameters:
 					- admin/main.js
 				css:
 					- admin/_bootstrap.less
+
+			AdminFront:
+				css:					
+					- Front/datagrid.less
+
+				js:
+
+
 			Front:
 				css:					
 					- Front/custom-icon.less
@@ -170,6 +178,7 @@ parameters:
 				#- %webloader.packages.customui%
 				-  %webloader.packages.Front%
 				-  %webloader.packages.gMap%
+				-  %webloader.packages.AdminFront%				
 				
 			Front: 
 				-  %webloader.packages.Front%
