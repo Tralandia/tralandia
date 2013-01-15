@@ -25,9 +25,10 @@ class FrontRoute implements Nette\Application\IRouter {
 	protected $cache;
 	protected static $cached;
 	protected $queryParams = array(
-		'lfPeople' => array(),
-		'lfFood' => array(),
-		'lfDog' => array(),
+		'fcapacity' => array(),
+		'fboard' => array(),
+		'flanguage' => array(),
+		'fprice' => array(),
 		'paginator-page' => array(),
 	);
 

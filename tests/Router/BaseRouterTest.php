@@ -36,14 +36,14 @@ abstract class BaseRouterTest extends \Tests\TestCase
 				if($param instanceof \Entity\BaseEntity) {
 					$param = $param->getOldId();
 				}
-				$this->assertSame( $expectedParams[$paramName], $param );
+				$this->assertEquals( $expectedParams[$paramName], $param );
 			}
 
 			//unset($params['extra']);
 			$request->setParameters($params);
 			$result = $route->constructUrl($request, $url);
 
-			$this->assertSame( $expectedUrl, $result );
+			$this->assertEquals( $expectedUrl, $result );
 
 		} else { // not matched
 			$this->assertNull( $expectedPresenter );
