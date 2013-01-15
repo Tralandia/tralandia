@@ -3,7 +3,6 @@
 namespace Service\Rental;
 
 use Service, Doctrine, Entity;
-use Model\Medium\IMediumDecoratorFactory;
 use Nette\Utils\Arrays;
 use Nette\Utils\Strings;
 /**
@@ -11,15 +10,9 @@ use Nette\Utils\Strings;
  */
 class RentalService extends Service\BaseService 
 {
-	protected $rentalOrderCachingFactory;
 	protected $rentalRepositoryAccessor;
 	protected $rentalInformationRepositoryAccessor;
 
-
-	public function inject(\Extras\Cache\IRentalOrderCachingFactory $rentalOrderCachingFactory)
-	{
-		$this->rentalOrderCachingFactory = $rentalOrderCachingFactory;
-	}
 
 	public function injectRepository(\Nette\DI\Container $dic) {
 		$this->rentalRepositoryAccessor = $dic->rentalRepositoryAccessor;
@@ -92,7 +85,7 @@ class RentalService extends Service\BaseService
 				$t++;
 			}
 		}
-		
+
 		if ($t > 0) {
 			$rank['points'] += $t;
 		} else {
