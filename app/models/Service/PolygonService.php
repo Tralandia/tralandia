@@ -28,8 +28,13 @@ class PolygonService {
 			'type' => $locationType,
 		));
 
-		$latitude = $rental->address->latitude->setType('latitude')->toFloat();
-		$longitude = $rental->address->longitude->setType('longitude')->toFloat();
+		$gps =$rental->getAddress()->getGps();
+		if($gps->isValid()) {
+			$latitude = $gps->getLatitudeAsString();
+			$longitude = $gps->getLongitudeAsString();
+		} else {
+			return FALSE;
+		}
 
 		foreach ($locations as $location) {			
 			foreach ($location->polygons as $key2 => $val2) {
@@ -72,8 +77,13 @@ class PolygonService {
 		
 		foreach ($rentals as $rental) {
 			$matches = array();
-			$latitude = $rental->address->latitude->setType('latitude')->toFloat();
-			$longitude = $rental->address->longitude->setType('longitude')->toFloat();
+			$gps = $rental->getAddress()->getGps();
+			if($gps->isValid()) {
+				$latitude = $gps->getLatitudeAsString();
+				$longitude = $gps->getLongitudeAsString();
+			} else {
+				continue;
+			}
 			foreach ($location->polygons as $key2 => $val2) {
 				if(count($val2) == 4){
 					if($val2[0] <= $latitude && $val2[2] >= $latitude && $val2[1]<=$longitude && $val2[3] >= $longitude){

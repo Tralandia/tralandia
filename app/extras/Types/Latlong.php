@@ -36,14 +36,20 @@ class Latlong extends BaseType {
 
 	// Retuns the value in DMS degrees
 	// Format: 40°26′21″N 79°58′36″W.
-	public function __toString() {
+	public function __toString()
+	{
 		if (!$this->isValid()) return '';
 
-		return 
-			$this->locationToString($this->latitude, 'latitude')
-			.$this->locationSeparator
-			.$this->locationToString($this->longitude, 'longitude')
-		;
+		return $this->getLatitudeAsString().$this->locationSeparator.$this->getLongitudeAsString();
+	}
+
+	public function getLatitudeAsString()
+	{
+		return $this->locationToString($this->latitude, 'latitude');
+	}
+	public function getLongitudeAsString()
+	{
+		return $this->locationToString($this->longitude, 'longitude');
 	}
 
 	public function isValid() {
