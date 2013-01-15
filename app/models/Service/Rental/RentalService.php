@@ -37,6 +37,7 @@ class RentalService extends Service\BaseService
 	}
 
 	public function calculateRank() {
+		/** @var $r \Entity\Rental\Rental */
 		$r = $this->entity;
 
 		$conditionalCompulsoryInformation = array('price');
@@ -194,7 +195,7 @@ class RentalService extends Service\BaseService
 		}
 
 		// Prices Season
-		if ($r->price > 0) {
+		if ($r->getPrice()->getSourceAmount() > 0) {
 			$rank['points'] += 3;
 		} else {
 			if ($pricesCompulsory) {
@@ -251,7 +252,6 @@ class RentalService extends Service\BaseService
 		$r->status = $rank['status'];
 		$r->rank = $rank['points'];
 
-		$this->save();
 		return $rank;
 	}
 

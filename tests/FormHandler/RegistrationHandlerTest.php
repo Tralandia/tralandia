@@ -14,8 +14,14 @@ class RegistrationHandlerTest extends \Tests\TestCase
 	 */
 	public $registrationHandler;
 
+	/**
+	 * @var \Model\Rental\IRentalDecoratorFactory
+	 */
+	public $rentalDecoratorFactory;
+
 	protected function setUp() {
 		$this->registrationHandler = $this->getContext()->registrationHandler;
+		$this->rentalDecoratorFactory = $this->getContext()->rentalDecoratorFactory;
 	}
 
 	/**
@@ -67,6 +73,10 @@ class RegistrationHandlerTest extends \Tests\TestCase
 		$rental = $handler->handleSuccess($data);
 
 		$this->assertInstanceOf('\Entity\Rental\Rental', $rental);
+		$rentalDecorator = $this->rentalDecoratorFactory->create($rental);
+		$rentalDecorator->calculateRank();
+		$compulsory = $rental->getCompulsoryMissingInformation();
+		$i = 0;
 	}
 
 }

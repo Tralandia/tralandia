@@ -13,7 +13,7 @@ use Extras\Annotation as EA;
  * @ORM\Entity(repositoryClass="Repository\Rental\RentalRepository")
  * @ORM\Table(name="rental", indexes={@ORM\index(name="status", columns={"status"}), @ORM\index(name="slug", columns={"slug"}), @ORM\index(name="calendarUpdated", columns={"calendarUpdated"})})
  * @EA\Primary(key="id", value="slug")
- * @EA\Generator(skip="{getImages,getPrice,setSlug}")
+ * @EA\Generator(skip="{getImages,getPrice,setPrice,setSlug}")
  */
 class Rental extends \Entity\BaseEntity {
 
@@ -282,8 +282,15 @@ class Rental extends \Entity\BaseEntity {
 		return new \Extras\Types\Price($this->price, $this->getCurrency());
 	}
 
+	public function setPrice(\Extras\Types\Price $price)
+	{
+		$this->price = $price->convertToFloat($this->getCurrency());
+
+		return $this;
+	}
+
 	public function getCurrency() {
-		return $this->primaryLocation->defaultCurrency;
+		return $this->getAddress()->getPrimaryLocation()->getDefaultCurrency();
 	}
 
 	/**
@@ -296,6 +303,14 @@ class Rental extends \Entity\BaseEntity {
 
 		return $this;
 	}		
+
+	public function getCompulsoryMissingInformation()
+	{
+		return $this->missingInformation->filter(function($e){
+			/** @var $e \Entity\Rental\Information */
+			return $e->getCompulsory();
+		});
+	}
 
 	//@entity-generator-code --- NEMAZAT !!!
 
@@ -931,18 +946,7 @@ class Rental extends \Entity\BaseEntity {
 	{
 		return $this->pricesUponRequest;
 	}
-		
-	/**
-	 * @param float
-	 * @return \Entity\Rental\Rental
-	 */
-	public function setPrice($price)
-	{
-		$this->price = $price;
 
-		return $this;
-	}
-		
 	/**
 	 * @return \Entity\Rental\Rental
 	 */
