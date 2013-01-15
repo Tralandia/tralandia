@@ -23,13 +23,13 @@ class RentalService extends Service\BaseService
 		return (bool)$this->rentalRepositoryAccessor->get()->isFeatured($this->entity);
 	}
 
-	public function getInterviewAnswers($language) {
-// d($language);
+	public function getInterviewAnswers(\Entity\Language $language) {
+
 		$interviews = array();
 		foreach ($this->entity->interviewAnswers as $key => $answer) {
-			// d($answer->answer);
-			// if ($language->id!=$answer)
-			$interviews[] = $answer;
+			if ($answer->answer->hasTranslationText($language)) {
+				$interviews[] = $answer;
+			}
 		}
 
 		return $interviews;

@@ -183,6 +183,10 @@ class Phrase extends \Entity\BaseEntityDetails {
 		return $this->getTranslation($language) instanceof \Entity\Phrase\Translation;
 	}
 
+	public function hasTranslationText($language) {
+		return (bool) strlen($this->getTranslation($language)->getTranslation());
+	}
+
 	public function getValidTranslationsCount() {
 		$c = 0;
 		foreach ($this->getTranslations() as $key => $value) {

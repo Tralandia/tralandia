@@ -38,7 +38,6 @@ class RentalPresenter extends BasePresenter {
 		
 		$rentalService = $this->rentalDecoratorFactory->create($rental);
 		$interviewAnswers = $rentalService->getInterviewAnswers($this->environment->primaryLocation->defaultLanguage);
-		d($interviewAnswers);
 
 		$locality = $rental->address->locality;
 		$link = $this->link('//list', array('location' => $locality));
