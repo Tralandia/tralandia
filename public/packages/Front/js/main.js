@@ -427,7 +427,7 @@ $(document).ready(function(){
 		$('html,body').scrollTop(scrollmem);
 
       if(id = 'objectDetailListMap'){
-      	$('#map_canvas').traMap();
+      	mapLoader();
       }
       
 
@@ -447,13 +447,39 @@ $(document).ready(function(){
 		// pokial obsahuje otvoreny div mapu
 		var haveMapContent = $(currentId).find("#map_canvas");			
 			if(haveMapContent.length != 0){
-				$('#map_canvas').traMap();
+				mapLoader();
 			}
 
     } else {
     	$('.nav-tabs a:first').tab('show');
     }
 
-    
+ 	// nahrada pre zobrazenie lang menu
+    var langmenuOpen = false;
+    $('#langMenuOptionsOpen').click(function(){
+    	if(!langmenuOpen){
+    		$('#langMenuOptions').show();
+    		langmenuOpen = true;
+    	} else {
+    		$('#langMenuOptions').hide();
+    		langmenuOpen = false;
+    	}
+    	
+    	return false;
+    });
+
+    $('body').click(function(){
+    	if(langmenuOpen){
+    		$('#langMenuOptions').hide();
+    		langmenuOpen = false;
+    	}  	
+    });
 
 });
+
+function mapLoader(){	
+	setTimeout(function(){
+		$('#map_canvas').traMap();
+	},500);
+}
+

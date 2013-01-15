@@ -83,7 +83,7 @@ ul.arrows {
 	margin-bottom: 0;
 
 	li {
-		padding-left: 30px;
+		padding-left: 26px;
 
 		&:first-child {
 			padding-left:0;
@@ -533,7 +533,7 @@ ul.arrows {
 		
 		height:27px;
 		line-height:27px;
-		
+		font-size: 13px;
 		position: relative;
 		z-index: 1000;
 		top: -1px;
@@ -611,7 +611,7 @@ ul.arrows {
 				
 				border: none;
 				top: 28px;
-				left: -385px;
+				left: 470px;
 				background: #fff;
 				height: auto;
 				width: 492px;
@@ -831,6 +831,8 @@ ul.arrows {
 	background: #7a9111 url('../packages/Front/img/footer-bg.png') top left no-repeat;
 	padding: 10px 0 20px 0;
 	.bottom-border-radius(10px);
+
+
 	ul {
 
 		list-style: none;
@@ -869,7 +871,7 @@ ul.arrows {
 	h5 {
 		color: @white;
 		font-size: 1.3em;
-		padding: 0 20px;
+		padding: 0 10px;
 		margin: 5px 0;
 	}
 }
@@ -919,6 +921,8 @@ ul.arrows {
 			float: left;
 			text-transform: capitalize;
 						
+
+
 			a {
 				display: block;
 				height:100%;
@@ -1168,11 +1172,17 @@ ul.arrows {
 /****************************************************************************************/
 
 .sidebarRightDetail {
-	font-size: 11px;
+	font-size: 12px;
 
 	.btn {
 		font-size: 11px;		
 	}
+
+	a.toogle {
+		font-size: 11px;	
+	}
+
+
 }
 
 .btn.btn-compare{
@@ -1251,6 +1261,7 @@ ul.arrows {
 	border-bottom: 1px solid #9daa5a;
 	.top-border-radius(5px);
 	text-shadow: -1px -1px 0px #7d9506;
+	font-size: 14px;
 }
 
 .sidebarContact {
@@ -1283,6 +1294,11 @@ ul.arrows {
 			&:before {
 				font-size: 30px;
 			}
+		}
+
+		td.iconcenter {
+			width: 19px;
+			text-align: center;
 		}
 	}
 
@@ -1994,7 +2010,7 @@ form.traform {
 	}
 
 	td {
-		line-height: 18px;
+		line-height: 17px;
 	}
 
 	b {
@@ -2002,6 +2018,7 @@ form.traform {
 	}	
 
 	th {
+
 		a {
 			color: #fff;
 			text-decoration: underline;
@@ -2018,12 +2035,16 @@ form.traform {
 }
 
 .table.tableDefault td {
-	padding: 1px 8px;	
+	padding: 3px 8px;
+	font-size: 13px;	
 }
 .table.tableDefault th {
-	padding: 3px 8px;
-	.basic-gradient(@lightGreen,@darkGreen);
+	padding: 0 8px;
+	.basic-gradient(#b7c546,#869c19);
+	text-shadow:-1px -1px 0px #7d9506;
 	color: @white;
+	height: 32px;
+	line-height: 32px;
 
 	&:first-child {
 		-webkit-border-top-left-radius: 5px;
