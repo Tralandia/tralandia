@@ -61,32 +61,51 @@
 		        		<h2><a href="{link Rental:detail $rental}">{_$rental->name}</a></h2>
 
 		        		
-		        		<button rel="{$rental->id}" link="{link Rental:detail $rental}" thumb="{$thumbLink}" class="addToFavorites btn btn-mini listCompareBtn active"><span class="entypo-like"> porovnaj</span> </button>		        				        				        	
+		        		<button rel="{$rental->id}" link="{link Rental:detail $rental}" thumb="{$thumbLink}" class="addToFavorites btn btn-mini listCompareBtn active"><span class="entypo-like">{_o12334}</span> </button>		        				        				        	
 		        		
 		        		<div class="clearfix"></div>
+
 		        		<p>
-						{foreach $rental->address->locations as $location}
-							<span n:class="$iterator->first ? bold" ><a href="{link Rental:list location => $location->id}">{_$location->name}</a></span>{if !$iterator->last}, {/if}
-						{/foreach}		        			
+		        		<a href="{link Rental:list location => $rental->address->locality , rentalType => $rental->type }"><b>{_$rental->type->name} {_$rental->address->locality->name}</b></a>
+
+		        		{if count($rental->address->getLocations()) > 0}
+		        		(
+						{foreach $rental->address->getLocations() as $location}
+							<a href="{link Rental:list location => $location}">{_$location->name}</a>{if !$iterator->last}, {/if}							
+						{/foreach}
+						)
+						{/if}
+
 		        		</p>
-		        		<p class="red bold">{_$rental->teaser}</p>
+		        		<p class="red teaser">{_$rental->teaser}</p>
+
+		        		<p class="answer">
+						{foreach $rental->interviewAnswers as $interviewAnswer}
+							{if !empty($interviewAnswer->answer)}
+								{if $iterator->first}
+									{_$interviewAnswer->answer}
+								{/if}																
+							{/if}			
+						{/foreach}
+						</p>
+		        		
 
 						<div class="panel baseBorder baseRadius">
                             <table class="holder">
                                 <tbody><tr>
                                     <td width="90%">
-                                        <b>Spalni:</b> 4, <b>Kupelni:</b> 2, <b>Osob:</b> {$rental->maxCapacity}<br>
-                                        <b>Cena od: {$rental->price} €</b> osoba/noc
+                                    	<b>#Cena od: {$rental->price} #€</b> #osoba/noc, 
+                                        <b>{_o924}</b> {$rental->maxCapacity} #osob
+                                        
                                     </td>
-                                    <td class="text-top">
-                                        <span class="entypo-phone"></span><a href="{link Rental:detail $rental}">Kontaktujte</a><br>
+                               
                                         {*
                                         {if $rental->rank}<span class="entypo-discusion"></span><a href="#">{$rental->rank} hodnoteni</a>{/if}
                                         *}
-                                    </td>
+                                    
                                 </tr>
                             </tbody></table>
-                            <p class="accessories"><b>Vybavenie:</b> 
+                            <p class="accessories">
                             	{foreach $rental->amenities as $amenity}
                             		{_$amenity->name}{if !$iterator->last}, {/if}
                             	{/foreach}

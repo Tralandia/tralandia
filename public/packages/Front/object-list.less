@@ -10,10 +10,13 @@
 		color: #7b3300;
 		font-size: 11px;
 		border: 1px solid #cbd2a0;
-		height:18px;
+		height:22px;
 		padding: 0 6px;
-		line-height:15px;
+		line-height:22px;
 		font-weight: normal;
+
+		position: relative;
+		top: -2px;
 
 		background-image: linear-gradient(bottom, #E1E8B6 0%, #FEFEFD 100%);
 		background-image: -o-linear-gradient(bottom, #E1E8B6 0%, #FEFEFD 100%);
@@ -161,7 +164,12 @@
 	}
 
 	.panel {
-		padding: 5px;
+		padding: 0 5px;
+		font-size: 11px;
+
+		p {
+			font-size: 11px;			
+		}
 	}	
 
 	.accessories {
@@ -194,14 +202,31 @@
 	}
 
 	p {
+		display: block;
 		font-size: 12px;
-		margin: 5px 0;
+		height: 17px;
+		line-height: 17px;
 		padding: 0;
+		margin: 0;
+		&.answer {
+			font-size: 11px;
+			line-height: 13px;
+			height: 40px;
+			overflow: hidden;
+			margin-bottom: 4px;
+		}
+
+		&.teaser {
+			margin-top: 3px;
+			margin-bottom: 1px;
+		}
 	}
 
 	table {
-		font-size: 12px;
-
+		
+		line-height: 12px;
+		margin-top: 4px;
+		margin-bottom: 1px;
 		p {
 			padding: 0;
 			margin: 0;
@@ -209,6 +234,9 @@
 
 		.text-top {
 			vertical-align: text-top;
+		}
+		tr {
+			border-spacing: 0;
 		}
 	}
 

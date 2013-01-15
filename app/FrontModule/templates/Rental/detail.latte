@@ -100,11 +100,6 @@
 
 		<a href="{link Rental:list location => $rental->address->locality , rentalType => $rental->type }"><b>{_$rental->address->locality->name}</b></a>
 
-		{dump $rental}
-		{_$rental->address->primaryLocation->name}
-		{dump $rental->interviewAnswers}
-
-
 		{foreach $rental->address->getLocations() as $location}
 
 			<a href="{link Rental:list location => $location}">{_$location->name}</a>{if !$iterator->last}, {/if}
