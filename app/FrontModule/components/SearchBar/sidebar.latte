@@ -16,20 +16,24 @@
 						{if $firstLink && !$firstLink->active}<h4>{_'o1070'}</h4>{/if}
 						
 						<ul n:inner-foreach="$criteria[$type] as $link">
-							{if $link->hide}{var $hasHidden=TRUE}{/if}
+							{var $name = isset($link->name) ? $link->name : $link->entity->name}
+
+							{if $link->hide || $link->count==0}{var $hasHidden=TRUE}{/if}
 							{if $link->active}
-								<li class="selected"><a href="{$link->seo->getUrl()}">{_$link->entity->name|firstUpper} <span class="counter">{$link->count}</span><span class="close entypo-remove"></span></a></li>
+								<li class="selected"><a href="{$link->seo->getUrl()}">
+									{ifset $link->name}{$link->name}{else}{_$link->entity->name}{/ifset}
+									{$name|firstUpper} <span class="counter">{$link->count}</span><span class="close entypo-remove"></span>
+								</a></li>
 							{else}
 								<li class="{if $link->hide || $link->count==0}hidden hide{/if}{if $link->count==0} disabled{/if}">
 									{if $link->count==0}
-										{ifset $link->name}
-											{$link->name}
-										{else}
-											{_$link->entity->name|firstUpper}
-										{/ifset}
+										{ifset $link->name}{$link->name}{else}{_$link->entity->name}{/ifset}
 										<span class="counter">{$link->count}</span>
 									{else}
-										<a href="{$link->seo->getUrl()}">{_$link->entity->name|firstUpper} <span class="counter">{$link->count}</span></a>
+										<a href="{$link->seo->getUrl()}">
+											{ifset $link->name}{$link->name}{else}{_$link->entity->name}{/ifset}
+											<span class="counter">{$link->count}</span>
+										</a>
 									{/if}
 								</li>
 							{/if}
@@ -42,9 +46,9 @@
  					{include #criteriaOptions, type => 'location'}
  					{include #criteriaOptions, type => 'rentalType'}
  					{include #criteriaOptions, type => 'rentalTag'}
- 					{include #criteriaOptions, type => 'spokenLanguage'}
- 					{include #criteriaOptions, type => 'capacity'}
- 					{* {include #criteriaOptions, type => 'price'} *}
+ 					{include #criteriaOptions, type => 'flanguage'}
+ 					{include #criteriaOptions, type => 'fcapacity'}
+ 					{* {include #criteriaOptions, type => 'fprice'} *}
 
 {* 
 					<div n:foreach="$criteria as $c" class="widget">

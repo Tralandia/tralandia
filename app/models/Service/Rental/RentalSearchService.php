@@ -13,9 +13,10 @@ class RentalSearchService extends Nette\Object
 	const CRITERIA_LOCATION  		= 'location';
 	const CRITERIA_RENTAL_TYPE 		= 'rentalType';
 	const CRITERIA_TAG	 			= 'rentalTag';
-	const CRITERIA_CAPACITY 		= 'capacity';
-	const CRITERIA_SPOKEN_LANGUAGE 	= 'spokenLanguage';
-	const CRITERIA_PRICE 			= 'price';
+
+	const CRITERIA_CAPACITY 		= 'fcapacity';
+	const CRITERIA_SPOKEN_LANGUAGE 	= 'flanguage';
+	const CRITERIA_PRICE 			= 'fprice';
 	//const CRITERIA_AREA_BOUNDRY 	= 'areaBoundry';
 
 	const CAPACITY_MAX				= 50;
@@ -74,13 +75,13 @@ class RentalSearchService extends Nette\Object
 		$this->resetResults();
 	}
 
-	public function setSpokenLanguageCriterium(Entity\Language $spokenLanguage = NULL) {
-		$this->criteria[self::CRITERIA_SPOKEN_LANGUAGE] = $spokenLanguage;
+	public function setFpriceCriterium($price = NULL) {
+		$this->criteria[self::CRITERIA_PRICE] = $price;
 		$this->resetResults();
 	}
 
-	public function setPriceCriterium($price = NULL) {
-		$this->criteria[self::CRITERIA_PRICE] = $price;
+	public function setFlanguageCriterium(Entity\Language $spokenLanguage = NULL) {
+		$this->criteria[self::CRITERIA_SPOKEN_LANGUAGE] = $spokenLanguage;
 		$this->resetResults();
 	}
 
