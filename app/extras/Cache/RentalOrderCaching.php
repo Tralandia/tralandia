@@ -55,6 +55,11 @@ class RentalOrderCaching extends \Nette\Object {
 		return $featured;
 	}
 
+	/**
+	 * @param \Entity\Rental\Rental $rental
+	 *
+	 * @return bool
+	 */
 	public function isFeatured(\Entity\Rental\Rental $rental) {
 		return isset($this->cacheContent['featured'][$rental->id]);
 	}
@@ -107,4 +112,13 @@ class RentalOrderCaching extends \Nette\Object {
 		$t = mktime (date("H", $t), 0, 0, date("n", $t), date("j", $t), date("Y", $t));
 		return $t;
 	}
+}
+
+interface IRentalOrderCachingFactory {
+	/**
+	 * @param \Entity\Location\Location $location
+	 *
+	 * @return RentalOrderCaching
+	 */
+	public function create(\Entity\Location\Location $location);
 }

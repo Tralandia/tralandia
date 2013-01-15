@@ -21,6 +21,12 @@ class RentalPresenter extends BasePresenter {
 
 	/**
 	 * @autowire
+	 * @var \Extras\Cache\IRentalOrderCachingFactory
+	 */
+	protected $rentalOrderCachingFactory;
+
+	/**
+	 * @autowire
 	 * @var \FrontModule\Forms\Rental\IReservationFormFactory
 	 */
 	protected $reservationFormFactory;
@@ -49,6 +55,7 @@ class RentalPresenter extends BasePresenter {
 	public function actionList($primaryLocation, $location, $rentalType) {
 
 		$search = $this->rentalSearchFactory->create($this->environment->primaryLocation);
+		$orderCache = $this->rentalOrderCachingFactory->create($primaryLocation);
 
 		if ($location) {
 			$search->setLocationCriterium($location);
@@ -69,6 +76,7 @@ class RentalPresenter extends BasePresenter {
 		foreach ($rentalsEntities as $rental) {
 			$rentals[$rental->id]['service'] = $this->rentalDecoratorFactory->create($rental);			
 			$rentals[$rental->id]['entity'] = $rental;
+			$rentals[$rental->id]['featured'] = $orderCache->isFeatured($rental);
 		}
 
 		$this->template->rentals = $rentals;

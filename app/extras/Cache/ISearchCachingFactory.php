@@ -11,10 +11,6 @@ interface IRentalSearchCachingFactory {
 	public function create(\Entity\Location\Location $location);
 }
 
-interface IRentalOrderCachingFactory {
-	public function create(\Entity\Location\Location $location);
-}
-
 interface IRentalSearchKeysCachingFactory {
 	public function create(\Entity\Rental\Rental $rental);
 }
