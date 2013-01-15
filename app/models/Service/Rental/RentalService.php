@@ -14,13 +14,11 @@ class RentalService extends Service\BaseService
 	protected $rentalOrderCachingFactory;
 	protected $rentalRepositoryAccessor;
 	protected $rentalInformationRepositoryAccessor;
-	protected $phraseDecoratorFactory;
 
 
-	public function inject(\Extras\Cache\IRentalOrderCachingFactory $rentalOrderCachingFactory, \Model\Phrase\IPhraseDecoratorFactory $phraseDecoratorFactory)
+	public function inject(\Extras\Cache\IRentalOrderCachingFactory $rentalOrderCachingFactory)
 	{
 		$this->rentalOrderCachingFactory = $rentalOrderCachingFactory;
-		$this->phraseDecoratorFactory = $phraseDecoratorFactory;
 	}
 
 	public function injectRepository(\Nette\DI\Container $dic) {
@@ -72,16 +70,16 @@ class RentalService extends Service\BaseService
 		}
 
 		// Rental Name
-		$nameDecorator = $this->phraseDecoratorFactory->create($r->name);
-		if ($nameDecorator->getValidTranslationsCount() > 0) {
+		$name = $r->name;
+		if ($name->getValidTranslationsCount() > 0) {
 			$rank['points'] += 1;
 		} else {
 			$rank['missing'][] = 'name';
 		}
 
 		// Teaser
-		$teaserDecorator = $this->phraseDecoratorFactory->create($r->teaser);
-		if ($teaserDecorator->getValidTranslationsCount() > 0) {
+		$teaser = $r->teaser;
+		if ($teaser->getValidTranslationsCount() > 0) {
 			$rank['points'] += 3;
 		} else {
 			$rank['missing'][] = 'teaser';
@@ -89,12 +87,12 @@ class RentalService extends Service\BaseService
 
 		// Interview Answers
 		$t = 0;
-		foreach ($r->interviewAnswers as $key => $value) {
-			$decorator = $this->phraseDecoratorFactory->create($value->answer);
-			if ($teaserDecorator->getValidTranslationsCount() > 0) {
+		foreach ($r->interviewAnswers as $value) {
+			if ($value->answer->getValidTranslationsCount() > 0) {
 				$t++;
 			}
 		}
+		
 		if ($t > 0) {
 			$rank['points'] += $t;
 		} else {
