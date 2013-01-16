@@ -390,7 +390,9 @@ $(document).ready(function(){
 			<ul class="nav nav-tabs">
 				<li><a href="#gallery">{_o1016}</a></li>
 				<li><a href="#pricetable">{_o1015}</a></li>
+				{if count($interviewAnswers) > 0}
 				<li><a href="#interviewAnswers">{_o25231}</a></li>
+				{/if}
 				<li><a id="objectDetailListMap" href="#tabs-2">{_o1018}</a></li>	
 			</ul>
 			
@@ -458,19 +460,18 @@ $(document).ready(function(){
 						{/if}								
 					{/if}
 
-				</div>					
+				</div>
 
-				{dump $rental->interviewAnswers}
-
+				{if count($interviewAnswers) > 0}
 				<div class="tab-pane" id="interviewAnswers">
-					{foreach $rental->interviewAnswers as $interviewAnswer}
+					{foreach $interviewAnswers as $interviewAnswer}
 						{if !empty($interviewAnswer->answer)}
 							<p class="question">{_$interviewAnswer->question->question}</p>
 							<p class="answer">"{_$interviewAnswer->answer}"</p>
 						{/if}			
 					{/foreach}
 				</div>
-
+				{/if}
 
 
 				<div class="tab-pane" id="tabs-2">
