@@ -77,6 +77,9 @@ abstract class BasePresenter extends \BasePresenter {
 		//d($this->environment);
 
 		$this->template->worldwideCount = $this->locationRepositoryAccessor->get()->getWorldwideRentalCount();
+
+		$header = $this->getComponent('header');
+		$header->addTitle($this->pageSeo->getTitle());
 		
 		parent::beforeRender();
 	}

@@ -106,6 +106,9 @@ abstract class BasePresenter extends Presenter {
 		return $this->getService('environment');
 	}
 
+	/**
+	 * @return HeaderControl
+	 */
 	protected function createComponentHeader() {
 		list($modul, $presenter) = explode(':', $this->name, 2);
 		$action = $this->action;
@@ -172,7 +175,7 @@ abstract class BasePresenter extends Presenter {
 		//$header->htmlTag->attrs['xmlns:fb'] = 'http://www.facebook.com/2008/fbml';
 
 		$header->setTitleSeparator(' - ')
-				->setTitlesReverseOrder(true)
+				->setTitlesReverseOrder(TRUE)
 				->setFavicon('favicon.ico')
 				->addKeywords(array())
 				->setDescription('')
@@ -349,10 +352,10 @@ abstract class BasePresenter extends Presenter {
 
 		foreach ($matches[0] as $match) {
 
-			$translate = false;
+			$translate = FALSE;
 			$matchKey = $match;
 			if (strpos($match, '_')) {
-				$translate = true;
+				$translate = TRUE;
 				$matchKey = str_replace('_', '', $match);
 			}
 
