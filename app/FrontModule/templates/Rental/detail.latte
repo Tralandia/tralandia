@@ -238,7 +238,13 @@
 
 	<!-- right sidebar -->
 	<div class="span3 sidebarRightDetail">
-	{dump $rental->getMainImage()|rentalImageSrc}
+
+		        		{if $mainImage = $rental->getMainImage()}		        			
+		        			<button class="marginTop btn btn-compare addToFavorites" rel="{$rental->id}" link="{link Rental:detail $rental}" thumb="{$basePath}{$mainImage|rentalImageSrc}"><span class="entypo-star">{_o12334}</span></button>
+		        		{/if}
+	
+
+	
 	
 		{* <button class="btn btn-compare addToFavorites" rel="{$rental->id}" link="{link Rental:detail $rental}" thumb="{$rental->getMainImage()->getThumbnail()}"><span class="entypo-star">{_o12334}</span></button> *}
 

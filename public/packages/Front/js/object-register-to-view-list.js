@@ -6,6 +6,8 @@
   	if(this.length > 0){
 
 	  	var visitList = new Array();
+
+
 	  	var objectList = appObject.storageGet('visitObjectList');
 
 	  	var currentId = parseInt($(this).attr('id'));  	

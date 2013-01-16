@@ -173,6 +173,14 @@
 				padding-left: 5px;
 				&:hover {
 					text-decoration: none;
+
+					span.entypo-remove {
+						visibility: visible;
+					}					
+				}
+
+				span.entypo-remove {
+					visibility: hidden;
 				}
 			}
 
@@ -202,6 +210,7 @@
 				  position: relative;
 				  left: -9px;
 				  width: 0;
+
 			}
 
 			&.selected {
@@ -209,6 +218,8 @@
 				&:first-child {
 					margin-top: 10px;
 				}
+
+
 
 				a {
 					font-weight: bold;
@@ -234,7 +245,7 @@
 				}
 
 				&:before {
-					content:'\2713';
+					content:'\2713';					
 				}
 			}
 

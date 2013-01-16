@@ -165,6 +165,8 @@ App.prototype.storageDelete = function(key){
 
 App.prototype.addToFavorites = function(){
 
+
+
 	var self = new App;
 
 	var list = self.storageGet('favoritesList');
@@ -215,6 +217,8 @@ App.prototype.addToFavorites = function(){
 
 	} else {
 
+		
+
 		if(typeof list == 'undefined' || list == null){
 			// if favorites dont exist 
 			var list = new Array();
@@ -229,8 +233,12 @@ App.prototype.addToFavorites = function(){
 
 			var sliderList = favoriteSlider.find('ul');
 				newLi.appendTo(sliderList);
+				$(this).addClass('selected');
+				
 
 		} else {
+
+			
 
 			if(!self._checkIdInObject(list,data.id)){
 				// write unique data

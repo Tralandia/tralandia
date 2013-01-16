@@ -13,6 +13,7 @@ use	Extras\Annotation as EA;
  * @ORM\Table(name="invoice", indexes={@ORM\index(name="invoiceNumber", columns={"invoiceNumber"}), @ORM\index(name="due", columns={"due"}), @ORM\index(name="paid", columns={"paid"})})
  * @EA\Generator(skip="{addItem, removeItem, setPrice}")
  */
+
 class Invoice extends \Entity\BaseEntity {
 
 	/**

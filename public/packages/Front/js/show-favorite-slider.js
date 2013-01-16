@@ -33,7 +33,10 @@
 
 				//appObject.storageDelete('favoritesList');
 
+				//this.visitList = appObject.storageDelete('favoritesList');
+
 				this.favoritesData = appObject.storageGet('favoritesList');
+				
 				this.visitList = appObject.storageGet('visitObjectList');
 
 				console.log(this.favoritesData);
