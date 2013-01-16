@@ -10,36 +10,47 @@
 					</div>
 
 					{define #criteriaOptions}
-					{var $hasHidden = FALSE}
-					{var $firstLink = ($criteria[$type] ? current($criteria[$type]) : NULL)}
-					<div n:ifset="$criteria[$type]" class="widget">
-						{if $firstLink && !$firstLink->active}<h4>{_'o1070'}</h4>{/if}
-						
-						<ul n:inner-foreach="$criteria[$type] as $link">
-							{var $name = isset($link->name) ? $link->name : $link->entity->name}
+						{var $hasHidden = FALSE}
+						{var $hasVisible = FALSE}
+						{var $hasActive = FALSE}
 
-							{if $link->hide || $link->count==0}{var $hasHidden=TRUE}{/if}
-							{if $link->active}
-								<li class="selected"><a href="{$link->seo->getUrl()}">
-									{ifset $link->name}{$link->name}{else}{_$link->entity->name}{/ifset}
-									{$name|firstUpper} <span class="counter">{$link->count}</span><span class="close entypo-remove"></span>
-								</a></li>
-							{else}
-								<li class="{if $link->hide || $link->count==0}hidden hide{/if}{if $link->count==0} disabled{/if}">
-									{if $link->count==0}
-										{ifset $link->name}{$link->name}{else}{_$link->entity->name}{/ifset}
-										<span class="counter">{$link->count}</span>
-									{else}
-										<a href="{$link->seo->getUrl()}">
-											{ifset $link->name}{$link->name}{else}{_$link->entity->name}{/ifset}
-											<span class="counter">{$link->count}</span>
-										</a>
-									{/if}
-								</li>
+						{ifset $criteria[$type]}
+							{foreach $criteria[$type] as $link}
+								{if $link->active}{var $hasActive = TRUE}{/if}
+								{if $link->count > 0}{var $hasVisible = TRUE}{/if}
+							{/foreach}
+
+							{if $hasVisible}
+								<div class="widget">
+									{if !$hasActive}<h4>{_'o1070'}</h4>{/if}
+									
+									<ul n:inner-foreach="$criteria[$type] as $link">
+										{var $name = isset($link->name) ? $link->name : $link->entity->name}
+
+										{if $link->hide || $link->count==0}{var $hasHidden=TRUE}{/if}
+										{if $link->active}
+											<li class="selected"><a href="{$link->seo->getUrl()}">
+												{ifset $link->name}{$link->name}{else}{_$link->entity->name}{/ifset}
+												{$name|firstUpper} <span class="counter">{$link->count}</span><span class="close entypo-remove"></span>
+											</a></li>
+										{else}
+											<li class="{if $link->hide || $link->count==0}hidden hide{/if}{if $link->count==0} disabled{/if}">
+												{if $link->count==0}
+													{ifset $link->name}{$link->name}{else}{_$link->entity->name}{/ifset}
+													<span class="counter">{$link->count}</span>
+												{else}
+													<a href="{$link->seo->getUrl()}">
+														{ifset $link->name}{$link->name}{else}{_$link->entity->name}{/ifset}
+														<span class="counter">{$link->count}</span>
+													</a>
+												{/if}
+											</li>
+										{/if}
+										{if $iterator->last && $hasHidden}<li class="more"><a href="#" data-open="#Fewer options" data-close="More option">#More option <i class="entypo-down"></i></a></li>{/if}
+									</ul>
+								</div>
 							{/if}
-							{if $iterator->last && $hasHidden}<li class="more"><a href="#" data-open="#Fewer options" data-close="More option">#More option <i class="entypo-down"></i></a></li>{/if}
-						</ul>
-					</div>
+						{/ifset}
 					{/define}
 
  					{* Location *}
@@ -48,7 +59,7 @@
  					{include #criteriaOptions, type => 'rentalTag'}
  					{include #criteriaOptions, type => 'flanguage'}
  					{include #criteriaOptions, type => 'fcapacity'}
- 					{* {include #criteriaOptions, type => 'fprice'} *}
+ 					{include #criteriaOptions, type => 'fprice'}
 
 {* 
 					<div n:foreach="$criteria as $c" class="widget">

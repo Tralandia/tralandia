@@ -57,7 +57,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		$template->criteria['flanguage'] 		= $this->getLanguageCriteria();
 
 		$template->criteria['fcapacity'] 		= $this->getCapacityCriteria();
-		// $template->criteria['fprice'] 			= $this->getPriceCriteria();
+		$template->criteria['fprice'] 			= $this->getPriceCriteria();
 
 		$template->render();
 
@@ -132,12 +132,11 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		$options = array();
 		for ($i=0; $i < 10; $i++) { 
 
-			$from = $i*$searchInterval+1;
 			$to = $searchInterval*($i+1);
 
-			$options[$i] = array(
+			$options[$i*$searchInterval] = array(
 				'id' => $i,
-				'name' => $from . ' do ' . $to,
+				'name' => ' do ' . $to,
 			);
 		}
 
