@@ -105,21 +105,15 @@ services:
 	translator: @translatorFactory::create(@environment::getLanguage())
 
 	# @TODO ------------------------ 
-	# emailCompiler: 
-	# 	class: Extras\Email\Compiler
-	# 	setup:
-	# 		- $phraseServiceFactory(@phraseServiceFactory)
-	# 		- setVariableFactory(rental, @rentalEmailVariableFactory)
-	# 		- setVariableFactory(language, @languageEmailVariableFactory)
-	# 		- setVariableFactory(location, @locationEmailVariableFactory)
-	# 		- setVariableFactory(visitor, @visitorEmailVariableFactory)
-	# 		- setVariableFactory(environment, @environmentEmailVariableFactory)
+	emailCompiler:
+		class: Extras\Email\Compiler
+		setup:
+			- registerVariableFactory(rental, @rentalEmailVariableFactory)
+			- registerVariableFactory(language, @languageEmailVariableFactory)
+			- registerVariableFactory(location, @locationEmailVariableFactory)
+			- registerVariableFactory(visitor, @visitorEmailVariableFactory)
+			- registerVariableFactory(environment, @environmentEmailVariableFactory)
 
-	# rentalEmailVariableFactory: Extras\Email\Variables\RentalVariablesFactory(@rentalServiceFactory)
-	# languageEmailVariableFactory: Extras\Email\Variables\LanguageVariablesFactory(@languageServiceFactory)
-	# locationEmailVariableFactory: Extras\Email\Variables\LocationVariablesFactory(@locationServiceFactory)
-	# visitorEmailVariableFactory: Extras\Email\Variables\UserVariablesFactory('VisitorVariables', @userServiceFactory)
-	# environmentEmailVariableFactory: Extras\Email\Variables\EnvironmentVariablesFactory
 	# --------------------------------
 
 	templateHelpers:
@@ -224,6 +218,32 @@ factories:
 	ownerRouteListFactory:
 		class: Routers\OwnerRouteList(@languageRepositoryAccessor, @locationRepositoryAccessor)
 		implement: Routers\IOwnerRouteListFactory
+
+
+	# ==============================
+	# ==================== EMAIL VARIABLES
+	# ==============================
+
+	rentalEmailVariableFactory:
+		class: Extras\Email\Variables\RentalVariables(%rental%)
+		implement: Extras\Email\Variables\IRentalVariablesFactory
+
+	languageEmailVariableFactory:
+		class: Extras\Email\Variables\LanguageVariables(%language%)
+		implement: Extras\Email\Variables\ILanguageVariablesFactory
+
+	locationEmailVariableFactory:
+		class: Extras\Email\Variables\LocationVariables(%location%)
+		implement: Extras\Email\Variables\ILocationVariablesFactory
+
+	visitorEmailVariableFactory:
+		class: Extras\Email\Variables\VisitorVariables(%visitor%)
+		implement: Extras\Email\Variables\IVisitorVariablesFactory
+
+	environmentEmailVariableFactory:
+		class: Extras\Email\Variables\EnvironmentVariables(%locationVariables%, %languageVariables%)
+		implement: Extras\Email\Variables\IEnvironmentVariablesFactory
+
 
 
 	# ==============================

@@ -10,14 +10,32 @@ use Nette;
  */
 class LanguageVariables extends Nette\Object {
 
+	/**
+	 * @var \Entity\Language
+	 */
 	private $language;
 
-	public function __construct(\Service\LanguageService $language) {
+	/**
+	 * @param \Entity\Language $language
+	 */
+	public function __construct(\Entity\Language $language) {
 		$this->language = $language;
 	}
 
+	/**
+	 * @return \Entity\Language
+	 */
 	public function getEntity() {
-		return $this->language->getEntity();
+		return $this->language;
 	}
 
+}
+
+interface ILanguageVariablesFactory {
+	/**
+	 * @param \Entity\Language $language
+	 *
+	 * @return LanguageVariables
+	 */
+	function create(\Entity\Language $language);
 }

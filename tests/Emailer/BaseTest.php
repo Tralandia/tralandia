@@ -4,50 +4,44 @@ namespace Tests\Emailer;
 
 use  Nette, Extras;
 
-
-require_once __DIR__ . '/../bootstrap.php';
-
 /**
  * @backupGlobals disabled
  */
 class BaseTest extends \Tests\TestCase
 {
-	public $context;
+	/**
+	 * @var \Extras\Email\Compiler
+	 */
 	public $emailCompiler;
-	public $userServiceFactory;
-	public $userRepositoryAccessor;
 
 	protected function setUp() {
-		$this->emailCompiler = $this->context->emailCompiler;
-		$this->userServiceFactory = $this->context->userServiceFactory;
-		$this->userRepositoryAccessor = $this->context->userRepositoryAccessor;
+		$this->emailCompiler = $this->getContext()->emailCompiler;
 	}
 
 	public function testCompiler() {
+
+		$template = $this->getContext()->emailTemplateRepositoryAccessor->get()->find(1);
+		$layout = $this->getContext()->emailLayoutRepositoryAccessor->get()->find(1);
+
+		/** @var $sender \Entity\User\User */
+		$sender = $this->getContext()->userRepositoryAccessor->get()->findOneByLogin('privat66@szm.sk');
+
+		/** @var $receiver \Entity\User\User */
+		$receiver = $this->getContext()->userRepositoryAccessor->get()->findOneByLogin('privatpodvrskom@gmail.com');
+
+		/** @var $rental \Entity\Rental\Rental */
+		$rental = $this->getContext()->rentalRepositoryAccessor->get()->find(1);
+
 		$emailCompiler = $this->emailCompiler;
+		$emailCompiler->setTemplate($template);
+		$emailCompiler->setLayout($layout);
+		$emailCompiler->setEnvironment($receiver->getPrimaryLocation(), $receiver->getLanguage());
+		$emailCompiler->addRental('rental', $rental);
+		$emailCompiler->addVisitor('sender', $sender);
+		$emailCompiler->addCustomVariable('message', 'Toto je sprava pre teba!');
+		$html = $emailCompiler->compile();
 
-		// // pripravim si template a layout
-		// $template = $this->context->emailTemplateRepositoryAccessor->get()->find(1);
-		// $layout = $this->context->emailLayoutRepositoryAccessor->get()->find(1);
-
-		// // pripravim si odosielatela
-		// $sender = $this->context->userRepositoryAccessor->get()->findOneByLogin('infoubytovanie@gmail.com');
-
-		// // pripravim si prijimatela
-		// $receiver = $this->context->userRepositoryAccessor->get()->findOneByLogin('pavol@paradeiser.sk');
-
-		// // pripravim si rental
-		// $rental = $this->context->rentalRepositoryAccessor->get()->find(1);
-
-		// // ponastavujem compiler
-		// $emailCompiler = $this->context->emailCompiler;
-		// $emailCompiler->setTemplate($template);
-		// $emailCompiler->setLayout($layout);
-		// $emailCompiler->setPrimaryVariable('receiver', 'visitor', $receiver);
-		// $emailCompiler->addVariable('sender', 'visitor', $sender);
-		// $emailCompiler->addVariable('rental', 'rental', $rental);
-		// $emailCompiler->addCustomVariable('message', 'Toto je sprava pre teba!');
-		// $html = $emailCompiler->compile();
+		$i = 1;
 	}
 
 }

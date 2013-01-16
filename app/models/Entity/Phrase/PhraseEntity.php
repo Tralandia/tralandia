@@ -119,15 +119,15 @@ class Phrase extends \Entity\BaseEntityDetails {
 		$t = array();
 
 		foreach ($this->getTranslations() as $value) {
-			if ($language && $value->language->id == $language->id) {
+			if ($language && $value->getLanguage()->getId() == $language->getId()) {
 				$t[self::REQUESTED] = $value;
 			}
 
-			if ($value->language->id == CENTRAL_LANGUAGE) {
+			if ($value->getLanguage()->getId() == CENTRAL_LANGUAGE) {
 				$t[self::CENTRAL] = $value;
 			}
 
-			if ($this->sourceLanguage && $value->language->id == $this->sourceLanguage->id) {
+			if ($this->sourceLanguage && $value->getLanguage()->getId() == $this->getSourceLanguage()->getId()) {
 				$t[self::SOURCE] = $value;
 			}
 		}

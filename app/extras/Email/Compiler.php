@@ -11,26 +11,45 @@ use Nette\Utils\Strings;
  */
 class Compiler {
 
+	/**
+	 * @var \Entity\Email\Template
+	 */
 	protected $template;
-	protected $layout;
-
-	protected $variablesFactories;
-
-	public $phraseServiceFactory;
 
 	/**
-	 * Pole zo zakladnymi premennimy
+	 * @var \Entity\Email\Layout
+	 */
+	protected $layout;
+
+	/**
+	 * @var array
+	 */
+	protected $variablesFactories = array();
+
+	/**
 	 * @var array
 	 */
 	protected $variables = array();
 
+	/**
+	 * @var array
+	 */
 	protected $customVariables = array();
 
-	public function setTemplate(Email\Template $template) {
+	/**
+	 * @param \Entity\Email\Template $template
+	 */
+	public function setTemplate(Email\Template $template)
+	{
 		$this->template = $template;
 	}
 
-	public function getTemplate() {
+	/**
+	 * @return \Entity\Email\Template
+	 * @throws \Nette\InvalidArgumentException
+	 */
+	public function getTemplate()
+	{
 		if(!$this->template) {
 			throw new \Nette\InvalidArgumentException('Template este nebol nastaveny');
 		}
@@ -38,11 +57,20 @@ class Compiler {
 		return $this->template;
 	}
 
-	public function setLayout(Email\Layout $layout) {
+	/**
+	 * @param \Entity\Email\Layout $layout
+	 */
+	public function setLayout(Email\Layout $layout)
+	{
 		$this->layout = $layout;
 	}
 
-	public function getLayout() {
+	/**
+	 * @return \Entity\Email\Layout
+	 * @throws \Nette\InvalidArgumentException
+	 */
+	public function getLayout()
+	{
 		if(!$this->layout) {
 			throw new \Nette\InvalidArgumentException('Layout este nebol nastaveny');
 		}
@@ -50,26 +78,74 @@ class Compiler {
 		return $this->layout;
 	}
 
-	public function setPrimaryVariable($variableName, $variableType, \Entity\BaseEntity $variable) {
-		if($variable instanceof \Entity\User\User) {
-			$user = $variable;
-			$this->setEnvironment($user->location, $user->language);
-			$this->addVariable($variableName, $variableType, $variable);
-		} else {
-			throw new \Nette\InvalidArgumentException('Argument does not match with the expected value');
-		}
-	}
+	/**
+	 * @param \Entity\Location\Location $location
+	 * @param \Entity\Language $language
+	 **
+	 * @return Compiler
+	 */
+	public function setEnvironment(\Entity\Location\Location $location, \Entity\Language $language)
+	{
+		$locationFactory = $this->getVariableFactory('location');
+		$location = $locationFactory->create($location);
 
-	public function addVariable($variableName, $variableType, $variable) {
-		$factory = $this->getVariableFactory($variableType);
+		$languageFactory = $this->getVariableFactory('language');
+		$language = $languageFactory->create($language);
 
-		$params = array_slice(func_get_args(), 2);
-		$this->variables[$variableName] = call_user_func_array(array($factory, 'create'), $params);
-		
+		$this->variables['env'] = $this->getVariableFactory('environment')->create($location, $language);
 		return $this;
 	}
 
-	public function getVariable($name) {
+	/**
+	 * @param string $variableName
+	 * @param \Entity\Language $language
+	 *
+	 * @return Compiler
+	 */
+	public function addLanguage($variableName, \Entity\Language $language)
+	{
+		$this->variables[$variableName] = $this->getVariableFactory('language')->create($language);
+		return $this;
+	}
+
+	/**
+	 * @param string $variableName
+	 * @param \Entity\Location\Location $location
+	 *
+	 * @return Compiler
+	 */
+	public function addLocation($variableName, \Entity\Location\Location $location)
+	{
+		$this->variables[$variableName] = $this->getVariableFactory('location')->create($location);
+		return $this;
+	}
+
+	/**
+	 * @param string $variableName
+	 * @param \Entity\Rental\Rental $rental
+	 *
+	 * @return Compiler
+	 */
+	public function addRental($variableName, \Entity\Rental\Rental $rental)
+	{
+		$this->variables[$variableName] = $this->getVariableFactory('rental')->create($rental);
+		return $this;
+	}
+
+	public function addVisitor($variableName, \Entity\User\User $visitor)
+	{
+		$this->variables[$variableName] = $this->getVariableFactory('visitor')->create($visitor);
+		return $this;
+	}
+
+	/**
+	 * @param $name
+	 *
+	 * @return mixed
+	 * @throws \Nette\InvalidArgumentException
+	 */
+	protected function getVariable($name)
+	{
 		if(!array_key_exists($name, $this->variables)) {
 			throw new \Nette\InvalidArgumentException("Variable '$name' does not exist.");
 		}
@@ -77,12 +153,26 @@ class Compiler {
 		return $this->variables[$name];		
 	}
 
-	public function addCustomVariable($name, $variable) {
-		$this->customVariables[$name] = $variable;
+	/**
+	 * @param $name
+	 * @param $value
+	 *
+	 * @return Compiler
+	 */
+	public function addCustomVariable($name, $value)
+	{
+		$this->customVariables[$name] = $value;
 		return $this;
 	}
 
-	public function getCustomVariable($name) {
+	/**
+	 * @param $name
+	 *
+	 * @return mixed
+	 * @throws \Nette\InvalidArgumentException
+	 */
+	protected function getCustomVariable($name)
+	{
 		if(!array_key_exists($name, $this->customVariables)) {
 			throw new \Nette\InvalidArgumentException("Custom variable '$name' does not exist.");
 		}
@@ -90,12 +180,26 @@ class Compiler {
 		return $this->customVariables[$name];				
 	}
 
-	public function setVariableFactory($name, $factory) {
+	/**
+	 * @param $name
+	 * @param $factory
+	 *
+	 * @return Compiler
+	 */
+	public function registerVariableFactory($name, $factory)
+	{
 		$this->variablesFactories[$name] = $factory;
 		return $this;
 	}
 
-	public function getVariableFactory($name) {
+	/**
+	 * @param $name
+	 *
+	 * @return mixed
+	 * @throws \Nette\InvalidArgumentException
+	 */
+	protected function getVariableFactory($name)
+	{
 		if(!array_key_exists($name, $this->variablesFactories)) {
 			throw new \Nette\InvalidArgumentException("Pre typ premennej '$name' nieje nastaveny factory");
 		}
@@ -103,7 +207,12 @@ class Compiler {
 		return $this->variablesFactories[$name];
 	}
 
-	public function compile() {
+	/**
+	 * Vrati html emailu uz aj s dosadenymi premennymi
+	 * @return mixed
+	 */
+	public function compile()
+	{
 		$template = $this->getTemplate();
 		$layout = $this->getLayout();
 		$html = $this->buildHtml($layout, $template);
@@ -113,42 +222,40 @@ class Compiler {
 		return $html;
 	}
 
-	protected function setEnvironment($location, $language) {
-		$locationFactory = $this->getVariableFactory('location');
-		$location = $locationFactory->create($location);
-
-		$languageFactory = $this->getVariableFactory('language');
-		$language = $languageFactory->create($language);
-
-		$this->addVariable('env', 'environment', $location, $language);
-	}
-
-	protected function setLanguage(\Entity\Language $language) {
-		return $this->addVariable('language', 'language', $language);
-	}
-
-	protected function setLocation(\Entity\Location\Location $location) {
-		if($location->type->id != 3) {
-			throw new \Nette\InvalidArgumentException('Argument does not match with the expected value');
-		}
-		return $this->addVariable('location', 'location', $location);
-	}
-
-	protected function buildHtml($layout, $template) {
+	/**
+	 * @param \Entity\Email\Layout $layout
+	 * @param \Entity\Email\Template $template
+	 *
+	 * @return string
+	 */
+	protected function buildHtml(\Entity\Email\Layout $layout, \Entity\Email\Template $template)
+	{
+		/** @var $envVariables \Extras\Email\Variables\EnvironmentVariables */
 		$envVariables = $this->getVariable('env');
-		$body = $this->phraseServiceFactory->create($template->body)->getTranslation($envVariables->getLanguageEntity());
-		return str_replace('{include #content}', $body, $layout->html);
+		$body = $template->getBody()->getTranslationText($envVariables->getLanguageEntity(), TRUE);
+		return str_replace('{include #content}', $body, $layout->getHtml());
 	}
 
-	protected function findAllVariables($html) {
+	/**
+	 * @param string $html
+	 *
+	 * @return array
+	 */
+	protected function findAllVariables($html)
+	{
 		$match = Strings::matchAll($html, '~(?P<originalname>\[(?P<fullname>((?P<prefix>[a-zA-Z]+)_)?(?P<name>[a-zA-Z]+))\])~');
 		$match = array_map('array_filter', $match);
 		return $match;
 	}
 
-	protected function replaceVariables($html, $variables) {
-		d($variables);
-
+	/**
+	 * @param string $html
+	 * @param array $variables
+	 *
+	 * @return string
+	 */
+	protected function replaceVariables($html, array $variables)
+	{
 		$replace = array();
 		foreach ($variables as $variable) {
 			if(array_key_exists($variable['fullname'], $replace)) continue;
@@ -166,5 +273,3 @@ class Compiler {
 	}
 
 }
-
-
