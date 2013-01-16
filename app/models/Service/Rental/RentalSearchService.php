@@ -146,7 +146,7 @@ class RentalSearchService extends Nette\Object
 		if ($this->results !== NULL) {
 			return $this->results;
 		}
-
+		
 		$results = array();
 		foreach ($this->criteria as $key => $value) {
 			if ($value === NULL) continue;

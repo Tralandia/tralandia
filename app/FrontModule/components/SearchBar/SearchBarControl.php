@@ -54,8 +54,8 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		$template->criteria['rentalType'] 		= $this->getRentalTypeCriteria();
 		$template->criteria['location'] 		= $this->getLocationCriteria();
 		$template->criteria['rentalTag'] 		= $this->getRentalTagCriteria();
-		$template->criteria['flanguage'] 		= $this->getLanguageCriteria();
 
+		$template->criteria['flanguage'] 		= $this->getLanguageCriteria();
 		$template->criteria['fcapacity'] 		= $this->getCapacityCriteria();
 		$template->criteria['fprice'] 			= $this->getPriceCriteria();
 
@@ -147,6 +147,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 	}
 
 	protected function getRentalsCount($params) {
+		$this->searchService->resetCriteria();
 		foreach ($params as $criteria => $value) {
 			$name = 'set'.ucfirst($criteria).'Criterium';
 			$this->searchService->{$name}($value);
