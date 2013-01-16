@@ -98,6 +98,15 @@
 
 		<h1 class="addToViewList" id="{$rental->id}">{_$rental->name}</h1>
 
+   
+						   
+		<iframe src="http://www.facebook.com/plugins/like.php?href={link Rental:detail $rental};layout=button_count&amp;show_faces=false&amp;width=160&amp;action=like&amp;colorscheme=light&amp;height=80" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:114px; height:25px; margin-bottom: 3px; margin-left: 5px float:left;" allowTransparency="true"></iframe>
+		<br/>
+		<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+		<g:plusone size="medium" href="{link Rental:detail $rental}" style=""></g:plusone>
+		<br/>
+
+		<a class="capitalize" href="{link Rental:list rentalType => $rental->type }"><b>{_$rental->type->name}</b></a>
 		<a href="{link Rental:list location => $rental->address->locality , rentalType => $rental->type }"><b>{_$rental->address->locality->name}</b></a>
 
 		{foreach $rental->address->getLocations() as $location}
@@ -115,20 +124,20 @@
 			<ul class="objectDetailServicesIconList list">
 
 				{if isset($rental->checkIn)}
-			   	<li>{_o22830} 
-			   		<strong>
-			   			{$rental->checkIn}
-			   		</strong>
-			   	</li>
-			   	{/if}
-			   	{if isset($rental->checkOut)}
+				<li>{_o22830} 
+					<strong>
+						{$rental->checkIn}
+					</strong>
+				</li>
+				{/if}
+				{if isset($rental->checkOut)}
 			   <li>
-			   	{_o22831} 
-			   	<strong>
-			   		{$rental->checkOut}
-			   	</strong>
-			   	</li>
-			   	{/if}
+				{_o22831} 
+				<strong>
+					{$rental->checkOut}
+				</strong>
+				</li>
+				{/if}
 			   {if $rental->type->name}
 			   <li>
 					{_o883}
@@ -139,7 +148,7 @@
 			   {/if}
 			   {if $rental->maxCapacity}
 				   <li>
-				   		{_o1006} <strong>{$rental->maxCapacity}</strong>
+						{_o1006} <strong>{$rental->maxCapacity}</strong>
 				   </li>
 			   {/if}
 			</ul>
@@ -200,7 +209,7 @@
 				   <li>
 				   {_o23006}
 					   <strong>
-					   	{$rental->rooms}
+						{$rental->rooms}
 					   </strong>
 				   </li>
 			   {/if}
@@ -239,9 +248,9 @@
 	<!-- right sidebar -->
 	<div class="span3 sidebarRightDetail">
 
-		        		{if $mainImage = $rental->getMainImage()}		        			
-		        			<button class="marginTop btn btn-compare addToFavorites" rel="{$rental->id}" link="{link Rental:detail $rental}" thumb="{$basePath}{$mainImage|rentalImageSrc}"><span class="entypo-star">{_o12334}</span></button>
-		        		{/if}
+						{if $mainImage = $rental->getMainImage()}		        			
+							<button class="marginTop btn btn-compare addToFavorites" rel="{$rental->id}" link="{link Rental:detail $rental}" thumb="{$basePath}{$mainImage|rentalImageSrc}"><span class="entypo-heart">{_o12334}</span></button>
+						{/if}
 	
 
 	
@@ -312,7 +321,7 @@
 						<td><i class="entypo-www"></i></td>
 						<td>
 						{foreach $rental->urls as $url }
-							<a href="{$url->value}">{_o1666}</a> {if !$iterator->last}<br/>{/if}
+							<a target="_blank" href="{$url->value}">{_o1666}</a> {if !$iterator->last}<br/>{/if}
 						{/foreach}						
 						</td>
 					</tr>
@@ -335,7 +344,7 @@
 					<tr>						
 						<td class="iconcenter"><i class="entypo-location"></i></td>
 						<td>
-						#gps <br/> 
+						#gps:
 						
 						<a class="mapsImg">
 						
@@ -346,8 +355,8 @@
 						</td>
 					</tr>
 				</table>
- 				</div>
- 				<table>
+				</div>
+				<table>
 					<tr>						
 						<td class="iconcenter"><i class="entypo-open"></i></td>
 						<td>

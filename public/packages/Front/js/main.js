@@ -107,12 +107,12 @@ App.prototype.uiToogleClick = function(){
 	var forClass = '#'+$(this).attr('for');
 
 	if($(this).hasClass('active')){
-		$(forClass).slideUp();
+		$(forClass).slideUp('fast');
 		$(this).removeClass('active').html($(this).attr('close'));
 		$(this).parent().parent().find('i').addClass('entypo-open');
 		$(this).parent().parent().find('i').removeClass('entypo-close');
 	} else {
-		$(forClass).slideDown();
+		$(forClass).slideDown('fast');
 		$(this).addClass('active').html($(this).attr('opened'));
 		$(this).parent().parent().find('i').addClass('entypo-close');
 		$(this).parent().parent().find('i').removeClass('entypo-open');
@@ -450,7 +450,7 @@ $(document).ready(function(){
     if(window.location.hash.length > 1){    	
 		var currentId  = window.location.hash;
 		$('.nav-tabs a[href$="'+currentId+'"]').tab('show');
-		$.scrollTo(currentId,800);	
+		$.scrollTo(currentId);	
 
 		// pokial obsahuje otvoreny div mapu
 		var haveMapContent = $(currentId).find("#map_canvas");			
@@ -488,6 +488,6 @@ $(document).ready(function(){
 function mapLoader(){	
 	setTimeout(function(){
 		$('#map_canvas').traMap();
-	},500);
+	},1000);
 }
 
