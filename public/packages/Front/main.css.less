@@ -1183,7 +1183,8 @@ ul.arrows {
 	}
 
 	a.toogle {
-		font-size: 11px;	
+		font-size: 12px;
+		margin-left: 4px;
 	}
 
 
@@ -1203,6 +1204,7 @@ ul.arrows {
 		span {
 			&:before {
 				content:'\2713';
+
 			}			
 		}
 	}
@@ -1273,6 +1275,10 @@ ul.arrows {
 	
 }
 
+.toogle {
+	font-weight: bold;
+}
+
 .sidebarContact {
 	margin-top: 10px;
 	line-height: 15px;
@@ -1301,13 +1307,23 @@ ul.arrows {
 		i {
 			color: @lightGreen;
 			&:before {
-				font-size: 30px;
+				font-size: 33px;
+				margin-right: 3px;
+				position: relative;
+				top: -1px;
 			}
 		}
 
 		td.iconcenter {
 			width: 19px;
 			text-align: center;
+
+			i {
+				&:before {
+					position:relative;
+					left: 2px;
+				}				
+			}
 		}
 	}
 

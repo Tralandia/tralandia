@@ -12,27 +12,31 @@
 
   		if(typeof $(this).attr('value') == 'undefined')
   		{
-  			$(this).html('nejde to bo nemas suradnice vole');
+  			$(this).html('error');
   		} else {
 
-  			var coordinates = $(this).attr('value').split(',');
 
-			var lat = parseFloat(coordinates[0]);
-			var lng = parseFloat(coordinates[1]);
 
-	        var myLatlng = new google.maps.LatLng(lat,lng);
-	        var mapOptions = {
-	          zoom: zoomVal,
-	          scrollwheel: false,
-	          center: myLatlng,
-	          mapTypeId: google.maps.MapTypeId.ROADMAP
-	        }
-	        var map = new google.maps.Map(document.getElementById($(this).attr('id')), mapOptions);
+	  			var coordinates = $(this).attr('value').split(',');
 
-	        var marker = new google.maps.Marker({
-	            position: myLatlng,
-	            map: map
-	        });
+				var lat = parseFloat(coordinates[0]);
+				var lng = parseFloat(coordinates[1]);
+
+		        var myLatlng = new google.maps.LatLng(lat,lng);
+		        var mapOptions = {
+		          zoom: zoomVal,
+		          scrollwheel: false,
+		          center: myLatlng,
+		          mapTypeId: google.maps.MapTypeId.ROADMAP
+		        }
+		        var map = new google.maps.Map(document.getElementById($(this).attr('id')), mapOptions);
+
+		        var marker = new google.maps.Marker({
+		            position: myLatlng,
+		            map: map
+		        });
+
+  			
 
   		}
 

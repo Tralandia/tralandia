@@ -1,3 +1,5 @@
+
+
 var $class = function(definition) {
 	var constructor = definition.constructor;        
 	var parent = definition.Extends;
@@ -30,7 +32,7 @@ function executeFunctionByName(functionName, context /*, args */) {
 var App = $class({
 	
 	constructor: function (){
-
+		this._traMapInit = false;
 	}
 
 });
@@ -305,7 +307,8 @@ App.prototype.datepickerIcon = function(){
 App.prototype.initMapsObjectDetail = function(){
 	$('#objectDetailListMap').trigger('click');
 	/* large map plugin */
-	$('#map_canvas').traMap();
+	maplodader();
+	
 	$.scrollTo('#objectDetailListMap',800);	
 }
 
@@ -485,9 +488,19 @@ $(document).ready(function(){
 
 });
 
+var tramapInit = false;
+
 function mapLoader(){	
-	setTimeout(function(){
-		$('#map_canvas').traMap();
-	},1000);
+
+	
+
+	if(!tramapInit){
+		setTimeout(function(){
+			$('#map_canvas').traMap();
+		},1000);
+		tramapInit = true;
+	}
+
+
 }
 

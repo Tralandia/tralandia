@@ -66,8 +66,8 @@
 		        		
 		        		<div class="clearfix"></div>
 
-		        		<p>
-		        		<a href="{link Rental:list location => $rental->address->locality , rentalType => $rental->type }"><b>{_$rental->type->name} {_$rental->address->locality->name}</b></a>
+		        		<p class="locations">
+		        		<a href="{link Rental:list location => $rental->address->locality , rentalType => $rental->type }" >{_$rental->type->name} {_$rental->address->locality->name}</a>
 
 		        		{if count($rental->address->getLocations()) > 0}
 		        		(
@@ -91,7 +91,7 @@
 						</p>
 		        		
 
-						<div class="panel baseBorder baseRadius">
+						<div class="panel baseBorder ">
                             <table class="holder">
                                 <tbody><tr>
                                     <td width="90%">

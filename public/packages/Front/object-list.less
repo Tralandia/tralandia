@@ -16,7 +16,7 @@
 		font-weight: normal;
 
 		position: relative;
-		top: -2px;
+		top: 0px;
 
 		background-image: linear-gradient(bottom, #E1E8B6 0%, #FEFEFD 100%);
 		background-image: -o-linear-gradient(bottom, #E1E8B6 0%, #FEFEFD 100%);
@@ -166,7 +166,9 @@
 	.panel {
 		padding: 0 5px;
 		font-size: 11px;
-
+			-webkit-border-radius: 5px;
+			-moz-border-radius: 5px;
+			border-radius: 5px;
 		p {
 			font-size: 11px;			
 		}
@@ -183,10 +185,22 @@
 		line-height: 19px;
 		height: 19px;
 		overflow: hidden;
-		font-weight: normal;
+		font-weight: bold;
 		margin: 0;
 		float: left;
 		max-width: 370px;
+
+	}
+
+	.locations {
+		font-size: 12px;
+		color: #999;
+
+		height: 14px;
+		margin: 0 0 7px 0;
+		a {
+			color: #999;	
+		}
 	}
 
 	button {
@@ -208,17 +222,19 @@
 		line-height: 17px;
 		padding: 0;
 		margin: 0;
+
 		&.answer {
-			font-size: 11px;
-			line-height: 13px;
-			height: 40px;
+			font-size: 12px;
+			line-height: 17px;
+			height: 36px;
 			overflow: hidden;
 			margin-bottom: 4px;
 		}
 
 		&.teaser {
-			margin-top: 3px;
-			margin-bottom: 1px;
+			margin-top: 4px;
+			margin-bottom: 4px;
+			font-weight: bold;
 		}
 	}
 
