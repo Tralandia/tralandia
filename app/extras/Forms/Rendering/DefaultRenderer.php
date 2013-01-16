@@ -29,34 +29,34 @@ class DefaultRenderer extends DefaultFormRenderer {
 		),
 
 		'pair' => array(
-			'container' => 'div class=row-fluid',
+			'container' => 'div class=control-group',
 			'.required' => 'required',
 			'.optional' => NULL,
 			'.odd' => NULL,
 		),
 
 		'control' => array(
-			'container' => 'div class=span7',
+			'container' => 'div class=controls',
 			'.odd' => NULL,
 
 			'description' => 'small',
 			'requiredsuffix' => '',
-			'validationcontainer' => 'div class="span1 validation"',
-			'errorcontainer' => 'div class="span12 error-mesage"',
+			'validationcontainer' => 'i class="va­lidation entypo-valid"',
+			'errorcontainer' => 'div class=control-error',
 			'erroritem' => 'span',
 
 			'.required' => 'required',
 			'.text' => 'text',
 			'.password' => 'text',
 			'.file' => 'text',
-			'.submit' => 'button',
+			'.submit' => 'btn btn-orange',
 			'.image' => 'imagebutton',
-			'.button' => 'button',
+			'.button' => 'btn btn-orange',
 		),
 
 		'label' => array(
-			'container' => 'div class=span4',
-			'label' => 'strong',
+			'container' => 'div class=form-label',
+			'label' => 'label',
 			'suffix' => NULL,
 			'requiredsuffix' => '',
 			'description' => 'small',
@@ -84,10 +84,6 @@ class DefaultRenderer extends DefaultFormRenderer {
 			$pair->class($this->getValue('pair .odd'), TRUE);
 		}
 		$pair->id = $control->getOption('id');
-
-		$pair->add($this->renderValidation($control));
-		$pair->add($this->renderError($control));
-
 		return $pair->render(0);
 	}
 
@@ -105,9 +101,6 @@ class DefaultRenderer extends DefaultFormRenderer {
 				$wrapper->setHtml($wrapper->getHtml() . $suffix);
 				$suffix = '';
 			}
-			$body = $wrapper->getHtml();
-			$wrapper->setHtml('');
-			$wrapper->add($this->getWrapper('label label')->setHtml($body));
 
 			$description = $control->getOption('description');
 			if ($description instanceof Html) {
@@ -120,15 +113,13 @@ class DefaultRenderer extends DefaultFormRenderer {
 				$description = '';
 			}
 
-			$wrapper->add($description);
-
-			return $head->setHtml((string) $wrapper . $suffix);
+			return $head->setHtml((string) $wrapper . $description . $suffix);
 		}
 	}
 
 	public function renderValidation(Nette\Forms\IControl $control)
 	{
-		return $this->getWrapper('control validationcontainer')->add(Html::el('i class=entypo-valid'));
+		return $this->getWrapper('control validationcontainer');
 	}
 
 	public function renderError(Nette\Forms\IControl $control = NULL)
@@ -156,11 +147,14 @@ class DefaultRenderer extends DefaultFormRenderer {
 			$body->class($this->getValue('control .odd'), TRUE);
 		}
 
+		$validation = $this->renderValidation($control);
+		$error = $this->renderError($control);
+
 		if ($control instanceof Nette\Forms\Controls\Checkbox || $control instanceof Nette\Forms\Controls\Button) {
 			return $body->setHtml((string) $control->getControl() . (string) $control->getLabel());
 
 		} else {
-			return $body->setHtml((string) $control->getControl());
+			return $body->setHtml((string) $control->getControl() . $validation . $error);
 		}
 	}
 }

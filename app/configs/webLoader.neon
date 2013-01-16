@@ -178,7 +178,7 @@ parameters:
 				#- %webloader.packages.customui%
 				-  %webloader.packages.Front%
 				-  %webloader.packages.gMap%
-				-  %webloader.packages.AdminFront%				
+				#-  %webloader.packages.AdminFront%				
 				
 			Front: 
 				-  %webloader.packages.Front%
