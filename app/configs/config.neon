@@ -121,14 +121,6 @@ services:
 		setup:
 			- $rentalImageDir(%rentalImageDir%)
 
-	# taskManager:
-	# 	class: Service\TaskManager\TaskManager
-	# 	setup:
-	# 		- addScanner(@missingTranslationsScanner)
-
-	# missingTranslationsScanner:
-	# 	class: Service\TaskManager\MissingTranslationsScanner(@autopilot, @phraseTranslationRepositoryAccessor, @languageRepositoryAccessor)
-
 	generatePathSegmentsRobot: Service\Robot\GeneratePathSegmentsRobot
 	createMissingTranslationsRobot: Service\Robot\CreateMissingTranslationsRobot
 
