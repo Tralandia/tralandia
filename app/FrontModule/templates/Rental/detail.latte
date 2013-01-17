@@ -77,16 +77,13 @@
 		<h1 class="addToViewList" id="{$rental->id}">{_$rental->name}</h1>
 
    
-			<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>	   
-            <table>
-            	<tr>
-            		<td><iframe src="http://www.facebook.com/plugins/like.php?href={link Rental:detail $rental}&amp;locale=sk_SK&amp;layout=button_count&amp;show_faces=false&amp;width=130&amp;action=like&amp;colorscheme=light&amp;height=80" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:20px; margin-top: 8px; width:130px;" allowTransparency="true"></iframe></td>
-            		<td style="padding-top: 8px;"><g:plusone size="small" href="{link Rental:detail $rental}"  style="margin-top:2px;"></g:plusone></td>
-            	</tr>
-            </table>
+
 
 		
 		<a class="capitalize"  href="{link Rental:list location => $rental->address->locality , rentalType => $rental->type }"><b>{_$rental->type->name} {_$rental->address->locality->name}</b></a>
+
+			<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>	   
+
 
 		{foreach $rental->address->getLocations() as $location}
 
@@ -98,9 +95,12 @@
 			{_$rental->teaser}
 		</p>
 		
+		<div class="socialIconTable marginBottom">
+        <iframe src="http://www.facebook.com/plugins/like.php?href={link Rental:detail $rental}&amp;locale=sk_SK&amp;layout=button_count&amp;show_faces=false&amp;width=130&amp;action=like&amp;colorscheme=light&amp;height=80" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:20px; width:130px;" allowTransparency="true"></iframe>
+        <g:plusone size="small" href="{link Rental:detail $rental}"  style="margin-top:2px;"></g:plusone>
+        </div>
 
-
-		<div class="metainfobox marginRight"><i class="entypo-users"></i> <span class="capitalize">{_o1008}.</span> {$rental->maxCapacity} {_o925}</div>
+		<div class="metainfobox marginRight"><i class="entypo-users"></i> <strong><span class="capitalize">{_o1008}.</span></strong> {$rental->maxCapacity} <strong>{_o925}</strong></div>
 		<div class="metainfobox"><i class="entypo-info2"></i> {$rental->price} #Eur  {_o932} </div>
 		<div class="clearfix marginBottom"></div>
 

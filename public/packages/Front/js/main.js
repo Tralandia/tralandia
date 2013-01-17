@@ -462,7 +462,9 @@ $(document).ready(function(){
 
     // nastavenie default tabu
         
-    if(window.location.hash.length > 1){    	
+    if(window.location.hash.length > 1){  
+
+
 		var currentId  = window.location.hash;
 
 		var scrollmem = $('.objectDetailContent').height();
@@ -471,7 +473,7 @@ $(document).ready(function(){
 
 		$('.nav-tabs a[href$="'+currentId+'"]').tab('show');
 
-		$.scrollTo(scrollmem+'px',1);	
+		//$.scrollTo('0px',1);	
 	
 		// pokial obsahuje otvoreny div mapu
 		var haveMapContent = $(currentId).find("#map_canvas");			
