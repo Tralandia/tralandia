@@ -179,6 +179,11 @@ factories:
 		class: FrontModule\Forms\ContactForm(%user%, %language%, @ticketRepositoryAccessor::get())
 		implement: FrontModule\Forms\IContactFormFactory
 
+	ticketFormFactory:
+		class: FrontModule\Forms\TicketForm(%user%, %ticket%, @ticketMessageRepositoryAccessor::get(),
+		@faqQuestionRepositoryAccessor::get())
+		implement: FrontModule\Forms\ITicketFormFactory
+
 	registrationFormFactory:
 		class: FrontModule\Forms\RegistrationForm(%country%)
 		implement: FrontModule\Forms\IRegistrationFormFactory

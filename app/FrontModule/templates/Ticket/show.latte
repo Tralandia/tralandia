@@ -1,0 +1,37 @@
+{block content}
+
+<div class="ticletConteiner">
+
+    <div class="ticketEntity"><h1>#Ticket <span>#{$ticket->getId()}</span></h1></div>
+
+	{foreach $ticket->getMessages() as $message}
+        <div n:class="$message->getFrom()->hasRole(['admin']) ? 'admin ticketMesageEntity' : 'ticketMesageEntity'">
+            <div class="header">
+				<span class="from">{_o948}</span>
+				{$message->getFrom()->getLogin()}
+				<span class="time">{$message->getCreated()|date}</span>
+			</div>
+            <div class="content">
+				{if $loggedUser->hasRole(['admin'])}
+                    <div class="half">{$message->getMessage()}</div>
+                    <div class="half">{$message->getMessageEn()}</div>
+                    <div class="clearfix"></div>
+				{else}
+					{$message->getMessage() ? $message->getMessage() : $message->getMessageEn()}
+				{/if}
+			</div>
+			{if $message->hasAttachments()}
+                <div class="footer more">
+					{foreach $message->getAttachments() as $attachment}
+                        <a href="#"><i class="entypo-attachment"></i> {$attachment->getName()}</a>
+					{/foreach}
+                <div class="clearfix"></div>
+            </div>
+			{/if}
+		</div>
+	{/foreach}
+	{include '../../forms/ticketForm.latte'}
+
+</div>
+
+
