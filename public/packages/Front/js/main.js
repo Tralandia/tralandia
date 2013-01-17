@@ -78,7 +78,7 @@ App.prototype._setLocationUrlAnchor = function(anchorName){
 	//location.replace(this._getLocationUrl()+anchorName);
 
 	var scrollmem = $('body').scrollTop();
-
+	
 	document.location.hash = anchorName;
 	$('html,body').scrollTop(scrollmem);
 	//window.location.href = this._getLocationUrl()+anchorName;
@@ -321,6 +321,7 @@ App.prototype.initMapsObjectDetail = function(){
 	maplodader();
 	
 	$.scrollTo('#objectDetailListMap',800);	
+	
 }
 
 /****************************************************************************************************
@@ -437,7 +438,7 @@ $(document).ready(function(){
       var id = $(this).attr('id');
       var href = $(this).attr('href');
 
-      console.log(href);
+      
 
       //$(this).tab('show');
       $('.nav-tabs li').removeClass('active');
@@ -463,9 +464,15 @@ $(document).ready(function(){
         
     if(window.location.hash.length > 1){    	
 		var currentId  = window.location.hash;
-		$('.nav-tabs a[href$="'+currentId+'"]').tab('show');
-		$.scrollTo(currentId);	
 
+		var scrollmem = $('.objectDetailContent').height();
+
+		scrollmem = scrollmem + 80;
+
+		$('.nav-tabs a[href$="'+currentId+'"]').tab('show');
+
+		$.scrollTo(scrollmem+'px',1);	
+	
 		// pokial obsahuje otvoreny div mapu
 		var haveMapContent = $(currentId).find("#map_canvas");			
 			if(haveMapContent.length != 0){
@@ -498,8 +505,6 @@ $(document).ready(function(){
     });
 
     $(document).scroll(function(){
-
-    	console.log($(window.height()));
 
     	var offset = parseInt($(this).scrollTop());
     	if(offset > 185){

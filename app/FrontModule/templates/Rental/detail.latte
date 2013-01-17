@@ -99,39 +99,16 @@
 		</p>
 		
 
-		<div class="detailAmanities">
-			<ul class="objectDetailServicesIconList list">
 
-				{if isset($rental->checkIn)}
-				<li>{_o22830} 
-					<strong>
-						{$rental->checkIn}
-					</strong>
-				</li>
-				{/if}
-				{if isset($rental->checkOut)}
-			   <li>
-				{_o22831} 
-				<strong>
-					{$rental->checkOut}
-				</strong>
-				</li>
-				{/if}
-			   {if $rental->type->name}
-			   <li>
-					{_o883}
-					<strong>
-						{_$rental->type->name}
-					</strong>
-			   </li>
-			   {/if}
-			   {if $rental->maxCapacity}
-				   <li>
-						{_o1006} <strong>{$rental->maxCapacity}</strong>
-				   </li>
-			   {/if}
-			</ul>
-		</div>
+		<div class="metainfobox marginRight"><i class="entypo-users"></i> <span class="capitalize">{_o1008}.</span> {$rental->maxCapacity} {_o925}</div>
+		<div class="metainfobox"><i class="entypo-info2"></i> {$rental->price} #Eur  {_o932} </div>
+		<div class="clearfix marginBottom"></div>
+
+		{if isset($rental->checkIn)}
+		<div class="metainfobox large marginBottom"><i class="entypo-clock"></i> <div class="content">#Check-in: {$rental->checkIn} #Check-out: {$rental->checkOut}</div></div>
+		{/if}
+
+
 		<div class="detailAmanities">
 			<ul class="objectDetailServicesIconList list">
 

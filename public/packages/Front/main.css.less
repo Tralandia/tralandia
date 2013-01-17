@@ -427,7 +427,7 @@ ul.arrows {
 	  width: 0;
 	  position: relative;
 	  top: 0px;
-	  left: -17px;
+	  left: -15px;
 	  display: block;
 	  height:100%;
 	  float: left;
@@ -1125,6 +1125,36 @@ ul.arrows {
 /****************************************************************************************
 /***************************************************************************************/
 
+.metainfobox {
+	padding:5px 10px;
+	background: #dfe6b1;
+	width: 172px;
+	float: left;
+	.basic-border-radius (5px);	
+	font-weight: bold;
+
+	i {
+		&:before {
+			margin-right: 4px;
+			float: left;
+			color: @darkGreen;
+		}
+	}
+
+	&.large {
+		.box-size();
+		width: 100%;
+		background: transparent;
+		border: 1px solid #dfe6b1;
+		
+
+		.content {
+			width: 347px;
+			float: right;
+		}
+	}
+}
+
 #content {
 
 	.amenities {
@@ -1146,17 +1176,14 @@ ul.arrows {
 }
 
 
-.detailAmanities {
-	width: 50%;
-	float: left;
-}
+
 
 .objectDetailServicesIconList {
 	list-style: none;
 	margin: 0;
 
 	li {
-		width: 167px;
+		width: 100%;
 		display: block;
 		float: left;
 		margin-left: 15px;		
