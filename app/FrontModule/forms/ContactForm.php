@@ -1,6 +1,6 @@
 <?php
 
-namespace FrontModule\Forms\Rental;
+namespace FrontModule\Forms;
 
 use Nette;
 
@@ -9,16 +9,30 @@ use Nette;
  *
  * @author Dávid Ďurika
  */
-class ContactForm extends \FrontModule\Forms\BaseForm {
+class ContactForm extends BaseForm {
 
 	/**
 	 * @var \Entity\User\User
 	 */
 	protected $user;
 
-	public function __construct(\Entity\User\User $user = NULL)
+	/**
+	 * @var \Entity\Language
+	 */
+	protected $language;
+
+	public $ticketRepository;
+
+	public function __construct(\Entity\User\User $user = NULL, \Entity\Language $language = NULL, $ticketRepository)
 	{
 		$this->user = $user;
+		$this->language = $language;
+
+		if(!$user && !$language) {
+			throw new \Nette\InvalidArgumentException;
+		}
+
+		$this->ticketRepository = $ticketRepository;
 
 		parent::__construct();
 	}
@@ -41,6 +55,9 @@ class ContactForm extends \FrontModule\Forms\BaseForm {
 
 		$this->addTextArea('message', '#Message');
 
+		$this->addSubmit('submit', 'o1719');
+		$this->addButton('cancel', '#cancel');
+
 		$this->onSuccess[] = callback($this, 'process');
 	}
 
@@ -52,6 +69,48 @@ class ContactForm extends \FrontModule\Forms\BaseForm {
 	public function process(ContactForm $form)
 	{
 		$values = $form->getValues();
+		d($values);
+		$messageRepository = $this->ticketRepository->related('messages');
+
+		/** @var $user \Entity\User\User */
+		if($this->user) {
+			$user = $this->user;
+			$language = $user->getLanguage();
+		} else {
+			$userRepository = $messageRepository->related('from');
+
+			if(!$user = $userRepository->findOneByLogin($values->email)) {
+				$user = $userRepository->createNew();
+				$user->setLanguage($this->language);
+				$user->setLogin($values->email);
+				$userRepository->persist($user);
+			}
+		}
+
+		/** @var $ticket \Entity\Ticket\Ticket */
+		$ticket = $this->ticketRepository->createNew();
+		$ticket->setLanguage($user->getLanguage());
+
+		/** @var $message \Entity\Ticket\Message */
+		$message = $messageRepository->createNew();
+		$message->setMessage($values->message);
+		$message->setFrom($user);
+
+		$ticket->addMessage($message);
+
+
+		$this->ticketRepository->save($ticket);
 	}
 
+}
+
+interface IContactFormFactory {
+
+	/**
+	 * @param \Entity\User\User $user
+	 * @param \Entity\Language $language
+	 *
+	 * @return ContactForm
+	 */
+	public function create(\Entity\User\User $user = NULL, \Entity\Language $language = NULL);
 }

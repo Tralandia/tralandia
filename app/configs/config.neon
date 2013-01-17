@@ -175,6 +175,10 @@ factories:
 		class: FrontModule\Forms\Rental\ReservationForm(%rental%, @locationRepositoryAccessor::get())
 		implement: FrontModule\Forms\Rental\IReservationFormFactory
 
+	contactFormFactory:
+		class: FrontModule\Forms\ContactForm(%user%, %language%, @ticketRepositoryAccessor::get())
+		implement: FrontModule\Forms\IContactFormFactory
+
 	registrationFormFactory:
 		class: FrontModule\Forms\RegistrationForm(%country%)
 		implement: FrontModule\Forms\IRegistrationFormFactory
