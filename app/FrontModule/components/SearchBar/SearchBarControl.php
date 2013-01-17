@@ -130,13 +130,12 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		$searchInterval = $currency->searchInterval;
 
 		$options = array();
-		for ($i=0; $i < 10; $i++) { 
+		for ($i=1; $i < 10; $i++) { 
+			$key = $i*$searchInterval;
 
-			$to = $searchInterval*($i+1);
-
-			$options[$i*$searchInterval] = array(
-				'id' => $i,
-				'name' => ' do ' . $to,
+			$options[$key] = array(
+				'id' => (string) $key,
+				'name' => 'do ' . $key,
 			);
 		}
 
@@ -166,7 +165,11 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		$options = array();
 		if (array_key_exists($criteriaName, $selected)) {
 			$active = TRUE;
-			$options[] = $selected[$criteriaName];
+			if ($repositoryAccessor instanceof \Nette\ArrayHash) {
+				$options[] = $repositoryAccessor->{$selected[$criteriaName]};
+			} else {
+				$options[] = $selected[$criteriaName];
+			}
 		} else {
 			foreach($this->searchService->getCriteriumOptions($criteriaName) as $entityId) {
 				if ($repositoryAccessor instanceof \Nette\ArrayHash) {
@@ -179,7 +182,9 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 
 		foreach ($options as $key => $option) {
 
-			$params = array_merge($selected, array($criteriaName => $option));
+			$criteriaValue = $option;
+			if ($option instanceof \Nette\ArrayHash) $criteriaValue = $option->id;
+			$params = array_merge($selected, array($criteriaName => $criteriaValue));
 
 			$count 	= $this->getRentalsCount($params);
 			if ($ignoreNull && $count==0) continue;
@@ -192,6 +197,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 			} else {
 				$name = $option->name;
 			}
+
 			$link 	= $this->presenter->link('//Rental:list', $linkParams);
 			$seo 	= $this->seoFactory->create($link, $this->presenter->getLastCreatedRequest());
 
