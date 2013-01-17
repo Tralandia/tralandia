@@ -1130,7 +1130,7 @@ ul.arrows {
 
 	#___plusone_0 {
 		position: relative;
-		top: -3px;
+		top: -2px;
 	}
 }
 
@@ -1154,32 +1154,51 @@ ul.arrows {
 }
 
 .metainfobox {
-	padding:5px 10px;
-	background: #dfe6b1;
-	width: 172px;
-	float: left;
+	padding:0 ;
+	background: #fcb72d;
+	font-weight: bold;
+		.box-size();
+		width: 100%;
 	.basic-border-radius (5px);	
 	
 
 	i {
 		&:before {
-			margin-right: 4px;
+			margin-right: 6px;
 			float: left;
-			color: @darkGreen;
+			color: #d97c0d;
 		}
 	}
 
 	&.large {
-		.box-size();
-		width: 100%;
+
 		background: transparent;
 		border: 1px solid #dfe6b1;
-		
+		padding:5px 10px;
 
 		.content {
-			width: 347px;
+			width: 345px;
 			float: right;
 		}
+	}
+
+
+
+	.separator {
+		padding: 5px 10px;
+		width: 177px;
+		float: left;
+		border-left: 1px solid #d97c0d;
+
+		&.first {
+			border: none;
+			
+		}
+
+		&.second {
+			
+		}
+
 	}
 }
 

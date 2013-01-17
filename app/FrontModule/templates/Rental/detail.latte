@@ -100,12 +100,17 @@
         <g:plusone size="small" href="{link Rental:detail $rental}"  style="margin-top:2px;"></g:plusone>
         </div>
 
-		<div class="metainfobox marginRight"><i class="entypo-users"></i> <strong><span class="capitalize">{_o1008}.</span></strong> {$rental->maxCapacity} <strong>{_o925}</strong></div>
-		<div class="metainfobox"><i class="entypo-info2"></i> {$rental->price} #Eur  {_o932} </div>
+		<div class="metainfobox marginRight"> 
+			<div class="separator first"><i class="entypo-users"></i><span class="capitalize">{_o1008}.</span> <small>{$rental->maxCapacity}</small> {_o925}</div>
+			<div class="separator second"><i class="entypo-info2"></i> {$rental->price} #Eur  {_o932} </div>
+			<div class="clearfix"></div>
+		</div>
+		
 		<div class="clearfix marginBottom"></div>
 
 		{if isset($rental->checkIn)}
-		<div class="metainfobox large marginBottom"><i class="entypo-clock"></i> <div class="content">#Check-in: {$rental->checkIn} #Check-out: {$rental->checkOut}</div></div>
+		<div class="metainfobox large marginBottom"><i class="entypo-clock"></i> <div class="content">#Check-in: {$rental->checkIn} #Check-out: {$rental->checkOut}</div>
+		<div class="clearfix"></div></div>
 		{/if}
 
 
