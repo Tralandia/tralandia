@@ -7,7 +7,7 @@ use AdminModule\Components\Grid;
 class CurrencyGrid extends Grid {
 
 	public function render() {
-		$this->grid->setTemplateFile(__DIR__ . '/../components/Grid/grid.latte');
+		$this->grid->setTemplateFile(__DIR__ . '/../../components/Grid/grid.latte');
 
 		$this->grid->addColumn('name', 'Name');
 		$this->grid->addColumn('iso', 'Iso');
