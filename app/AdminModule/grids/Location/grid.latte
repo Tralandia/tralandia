@@ -2,7 +2,7 @@
 
 {define header}
 	<thead>
-		<tr>
+		<tr class="head">
 			<th rowspan="2" class="center" n:if="$renderFirstColumn">&nbsp;</th>
 			{foreach $columns as $name => $column}
 			{include #header-cell, name => $name, column => $column |indent:2}
@@ -10,7 +10,7 @@
 			<th n:if="$renderLastColumn">&nbsp;</th>
 		</tr>
 
-		<tr n:if="$renderFilterRow">
+		<tr n:if="$renderFilterRow" class="filters">
 			<th colspan="{count($columns)+1}" class="right">
 				{foreach $form['filters']->getControls() as $control}
 				{include #filter-cell, control => $control |indent:2}

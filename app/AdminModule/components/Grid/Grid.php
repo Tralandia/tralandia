@@ -46,7 +46,7 @@ class Grid extends Nette\Object {
 
 		//$this->grid->setInlineEditing($this->createInlineEditContainer, $this->processInlineEditForm);
 		$this->grid->addRowAction('edit', 'Edit', $this->editRecord);
-		$this->grid->addRowAction('delete', 'Smazat', $this->deleteRecord, 'Opravdu chcete smazat tento záznam?');
+		$this->grid->addRowAction('delete', 'Delete', $this->deleteRecord, 'Opravdu chcete smazat tento záznam?');
 
 		//$this->grid->setDefaultFilters(array(
 		//	'birthday' => $this->loadMinMaxBirthday(),

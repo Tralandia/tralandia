@@ -59,7 +59,7 @@
 
 {define container}
 
-	<table class="table table-striped table-bordered table-hover">
+	<table class="table table-striped table-hover tableDefault">
 
 {include #header|indent:2}
 
@@ -79,7 +79,7 @@
 
 	<thead>
 
-		<tr>
+		<tr class="head">
 			<th rowspan="2" class="center" n:if="$renderFirstColumn">&nbsp;</th>
 
 		{foreach $columns as $name => $column}
@@ -89,7 +89,7 @@
 			<th n:if="$renderLastColumn">&nbsp;</th>
 		</tr>
 
-		<tr n:if="$renderFilterRow">
+		<tr n:if="$renderFilterRow" class="filters">
 		{foreach $columns as $name => $column}
 {include #filter-cell, column => $name |indent:2}
 		{/foreach}
@@ -122,7 +122,7 @@
 {include #header-label, column => $column |indent:1}
 	{/if}
 
-		<i n:class="$column->orderedDesc ? icon-chevron-down : icon-chevron-up" n:if="$column->orderedBy"></i>
+		<i n:class="$column->orderedDesc ? entypo-down : entypo-up" n:if="$column->orderedBy"></i>
 	</th>
 
 {/define}
@@ -238,12 +238,12 @@
 {define row-action-buttons}
 	<div class="btn-group">
 	{if $isInlineEdited}
-		{input inline-buttons-edit, class => 'btn btn-success'}
-		{input inline-buttons-cancel, class => 'btn btn-danger'}
+		{input inline-buttons-edit, class => 'btn btn-mini btn-silver'}
+		{input inline-buttons-cancel, class => 'btn btn-mini btn-silver'}
 
 	{else}
 	{ifset $form[ $buttonName = "inline-buttons-" . ($i) ]}
-		{? }{input $buttonName, class => 'btn btn-info'}
+		{? }{input $buttonName, class => 'btn btn-mini btn-silver'}
 	{/ifset}
 	{foreach (array) $rowActions as $name => $action}
 {include #row-action-button, record => $record, primaryString => $primaryString, name => $name, action => $action |indent:1}
@@ -261,9 +261,9 @@
 			action => $name,
 			primary => $primaryString,
 			token => $csrfToken"
-		n:class="btn, btn-info, ajax"
+		n:class="btn, btn-mini, btn-silver"
 		n:attr="data-confirm => $action[confirmation]">
-		{$action[label]}
+		<i class="entypo-{$name|lower}"></i> {$action[label]}
 	</a>
 {/define}
 
@@ -334,12 +334,12 @@
 	<div class="pull-right">
 		<div class="btn-group">
 
-			<a n:href="changePage!, page => $page + 1" n:class="btn, ajax" title="{_'Load next records'}" n:if="$page > 0 && ( $countAll === NULL || $dataCount < $countAll )">
-				<i class="icon-chevron-down"></i>
+			<a n:href="changePage!, page => $page + 1" n:class="'btn btn-mini btn-silver', ajax" title="{_'Load next records'}" n:if="$page > 0 && ( $countAll === NULL || $dataCount < $countAll )">
+				<i class="entypo-down"></i>
 			</a>
 
-			<a n:href="changePage!, page => 1" title="{_'Reset timeline'}" n:class="btn, ajax" n:if="$page !== 1">
-				<i class="icon-remove"></i>
+			<a n:href="changePage!, page => 1" title="{_'Reset timeline'}" n:class="'btn btn-mini btn-silver', ajax" n:if="$page !== 1">
+				<i class="entypo-remove"></i>
 			</a>
 
 		</div>

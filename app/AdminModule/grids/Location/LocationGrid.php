@@ -28,7 +28,7 @@ class LocationGrid extends Grid {
 		$this->grid->setTimelineBehavior(true);
 		
 		$this->grid->addRowAction('edit', 'Edit', $this->editRecord);
-		$this->grid->addRowAction('delete', 'Smazat', $this->deleteRecord, 'Opravdu chcete smazat tento záznam?');
+		$this->grid->addRowAction('delete', 'Delete', $this->deleteRecord, 'Opravdu chcete smazat tento záznam?');
 
 		return $this->grid;
 	}
