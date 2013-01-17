@@ -5,6 +5,7 @@ parameters:
 	h1: 'Location -> %name%'
 
 grid:
+	class: AdminModule\Grids\LocationGrid
 	columns:
 		id:
 			label: Id

@@ -8,6 +8,19 @@ use Doctrine\ORM\Query\Expr;
  */
 class LocationRepository extends \Repository\BaseRepository {
 
+	/**
+	 * DataSource pre grid
+	 * @return Doctrine\ORM\QueryBuilder
+	 */
+	public function getDefaultDataSource($type) {
+		return $this->_em->createQueryBuilder()
+			->select('e')
+			->from($this->_entityName, 'e')
+			->leftJoin('e.type', 't')
+			->where('t.slug = :slug')->setParameter('slug', $type)
+			->groupBy('e.id');
+	}
+
 	public function getItems() {
 		$query = $this->_em->createQueryBuilder();
 		$query->select('e')->from($this->_entityName, 'e')->setMaxResults(60);
@@ -18,8 +31,7 @@ class LocationRepository extends \Repository\BaseRepository {
 		$qb = $this->_em->createQueryBuilder();
 
 		$qb->select('sum(l.rentalCount) as total')
-			->from($this->_entityName, 'l')
-		;
+			->from($this->_entityName, 'l');
 
 		return $qb->getQuery()->getResult()[0]['total'];
 	}

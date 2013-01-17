@@ -16,6 +16,9 @@ class AdminPresenter extends BasePresenter {
 	/** @var Doctrine\ORM\EntityRepository */
 	protected $repository;
 
+	/** @var string */
+	protected $gridRenderType = null;
+
 	/**
 	 * Vrati nazov entity pouzivany pre konfiguraky
 	 * @return string
@@ -39,8 +42,8 @@ class AdminPresenter extends BasePresenter {
 	/**
 	 * Akcia zoznam
 	 */
-	public function actionList() {
-
+	public function actionList($type = null) {
+		$this->gridRenderType = $type;
 	}
 
 	/**
@@ -81,6 +84,11 @@ class AdminPresenter extends BasePresenter {
 	 * Komponenta data gridu
 	 */
 	protected function createComponentDataGrid() {
-		return $this->getService('presenter.' . $this->getConfigName() . '.grid')->create($this, $this->repository)->render();
+		$renderMethod = "render$this->gridRenderType";
+		$grid = $this->getService('presenter.' . $this->getConfigName() . '.grid')->create($this, $this->repository);
+		if (!method_exists($grid, $renderMethod)) {
+			throw new Nette\NotImplementedException("Grid {$this->getConfigName()} nema definovanu renderovaciu metodu pre typ {$this->gridRenderType}");
+		}
+		return $grid->$renderMethod();
 	}
 }
