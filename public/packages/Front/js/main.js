@@ -297,7 +297,18 @@ App.prototype.openContactForm = function(){
 ****************************************************************************************************/
 
 App.prototype.datepickerIcon = function(){
-	$(this).parent().find('input').focus();
+
+	//console.log($( ".datepicker" ).datepicker( "isDisabled" ));
+
+	if($(this).parent().find('input').hasClass('focus')){
+		$( ".datepicker" ).datepicker( "hide" );
+		$(this).parent().find('input').removeClass('focus');
+	} else {
+		$(this).parent().find('input').focus();
+		$(this).parent().find('input').addClass('focus');
+	}
+
+	
 }
 
 /**
@@ -486,13 +497,28 @@ $(document).ready(function(){
     	}  	
     });
 
+    $(document).scroll(function(){
+
+    	console.log($(window.height()));
+
+    	var offset = parseInt($(this).scrollTop());
+    	if(offset > 185){
+    		$('#favoritesStatisContainer').css({
+    			position: 'fixed',
+    			top:'-10px'
+    		});
+    	} else {
+    		$('#favoritesStatisContainer').css({
+    			position: 'static'
+    		});    		
+    	}   	
+    });
+
 });
 
 var tramapInit = false;
 
 function mapLoader(){	
-
-	
 
 	if(!tramapInit){
 		setTimeout(function(){

@@ -49,30 +49,8 @@
 
 
 
-<div class="span12">
-	<div class="innerPadding baseRadius borderBlue overflow">
-		<div class="content noPadding">
-			
-			<div class="detailSlider favoriteSlider compare" id="compareList">
-				<div class="header">
-					<h3>#favorites</h3>
-				</div>
 
-				<div class="leftArrow entypo-prev"></div>
-				<div class="content">
-					<ul>
-					</ul>
-				</div>
 
-				<div class="rightArrow entypo-slider-right"></div>
-
-				
-				<div class="clearfix"></div>
-			</div>
-
-		</div>
-	</div>
-</div>
 
 
 <div class="span12">
@@ -374,6 +352,11 @@
 <script>
 
 $(document).ready(function(){
+
+	$('.datepicker').click(function(){
+		$(this).addClass('focus');
+	});
+
 	$( ".datepicker" ).datepicker( $.datepicker.regional[ {$envLanguage->iso} ] );	
 });
 
