@@ -212,9 +212,9 @@
 	<!-- right sidebar -->
 	<div class="span3 sidebarRightDetail">
 
-						{if $mainImage = $rental->getMainImage()}		        			
+						{* {if $mainImage = $rental->getMainImage()} *}
 							<button class="marginTop btn btn-compare addToFavorites currentObject" rel="{$rental->id}" link="{link Rental:detail $rental}" thumb="{$basePath}{$mainImage|rentalImageSrc}"><span class="entypo-heart">{_o12334}</span></button>
-						{/if}
+						{* {/if} *}
 	
 
 			<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
