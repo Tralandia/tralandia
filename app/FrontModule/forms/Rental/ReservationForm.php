@@ -11,9 +11,20 @@ use Nette;
  */
 class ReservationForm extends \FrontModule\Forms\BaseForm {
 
+	/**
+	 * @var \Entity\Rental\Rental
+	 */
 	protected $rental;
+
+	/**
+	 * @var \Repository\Location\LocationRepository
+	 */
 	protected $locationRepository;
 
+	/**
+	 * @param \Entity\Rental\Rental $rental
+	 * @param \Repository\Location\LocationRepository $locationRepository
+	 */
 	public function __construct(\Entity\Rental\Rental $rental, \Repository\Location\LocationRepository $locationRepository)
 	{
 		$this->rental = $rental;
@@ -57,4 +68,13 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 		$values = $form->getValues();
 	}
 
+}
+
+interface IReservationFormFactory {
+	/**
+	 * @param \Entity\Rental\Rental $rental
+	 *
+	 * @return ReservationForm
+	 */
+	public function create(\Entity\Rental\Rental $rental);
 }

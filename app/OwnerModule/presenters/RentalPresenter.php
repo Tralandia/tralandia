@@ -50,7 +50,7 @@ class RentalPresenter extends BasePresenter {
 
 	protected function createComponentRentalEditForm(){
 		$form = $this->formFactory->create($this->rental);
-		$form->buildForm();
+
 		return $form ;
 	}
 

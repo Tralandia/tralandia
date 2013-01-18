@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class SiteReview extends \Entity\BaseEntity {
 
 	const STATUS_PENDING = 0;
-	const STATUS_APROVED = 1;
+	const STATUS_APPROVED = 1;
 
 	/**
 	 * @var Collection

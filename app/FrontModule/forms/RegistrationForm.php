@@ -15,7 +15,8 @@ use Repository\BaseRepository;
  *
  * @author Dávid Ďurika
  */
-class RegistrationForm extends \FrontModule\Forms\BaseForm {
+class RegistrationForm extends \FrontModule\Forms\BaseForm
+{
 
 	/**
 	 * @var \Entity\Location\Location
@@ -33,7 +34,7 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm {
 	private $languageRepository;
 
 	/**
-	 * @var \Repository\RentalType
+	 * @var \Repository\Rental\TypeRepository
 	 */
 	private $rentalTypeRepository;
 
@@ -72,37 +73,53 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm {
 
 		$this->addText('www', 'WWW');
 
-		$this->addPassword('password1', 'Password');
+		$this->addPassword('password', 'Password');
 		$this->addPassword('password2', 'Confirm Password');
 
 		$this->addText('address', 'Address');
 		$this->addText('gps', 'GPS');
 
-		$rental = $this->addContainer('rental');
-		$rental->addText('name', 'Rental Name');
-		$rental->addSelect('type', 'Rental Type', $rentalTypes);
-		$rental->addSelect('classification', 'Classification', array('*', '**', '***', '****', '*****'));
+		$this->addText('rentalName', 'Rental Name');
+		$this->addSelect('rentalType', 'Rental Type', $rentalTypes);
+		$this->addSelect('rentalClassification', 'Classification', array('*', '**', '***', '****', '*****'));
 
-		$rental->addText('price', 'Price category');
-		$rental->addSelect('currency', '', $currencies);
+		$this->addText('rentalPrice', 'Price category');
 
-		$rental->addText('maxCapacity', 'Max Capacity');
+		$this->addText('rentalMaxCapacity', 'Max Capacity');
 
-		$this->addSelect('legalForm', 'Legal Form');
-		$this->addText('clientName', 'Client name');
-		$this->addSelect('clientCountry', 'Client country', $countries);
-
-		$this->addSubmit('register', 'Register');
+		$this->addSubmit('register', 'OK let\'s do this shit');
 
 	}
 
 	public function setDefaultsValues()
 	{
-		$this->setDefaults([
+		$defaults = [
 			'country' => $this->country->getId(),
-			'clientCountry' => $this->country->getId(),
-			'rental[currency]' => $this->country->getDefaultCurrency(),
-		]);
+			'language' => $this->country->getDefaultLanguage()->getId(),
+			'phone' => ['prefix' => $this->country->getIso()],
+
+			'referrer' => 'luzbo',
+			'email' => 'email@' . \Tra\Utils\Strings::random(6) . '.com',
+			'www' => 'google.com',
+			'password' => 'adsfasdf',
+			'password2' => 'adsfasdf',
+			'address' => 'Nesvady',
+			'gps' => '1423345',
+			'rentalName' => 'Chata Test',
+			'rentalPrice' => '3',
+			'rentalMaxCapacity' => 15,
+		];
+		$this->setDefaults($defaults);
 	}
 
+}
+
+interface IRegistrationFormFactory
+{
+	/**
+	 * @param \Entity\Location\Location $country
+	 *
+	 * @return RegistrationForm
+	 */
+	public function create(\Entity\Location\Location $country);
 }

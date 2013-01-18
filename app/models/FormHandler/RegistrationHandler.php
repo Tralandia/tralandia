@@ -8,18 +8,10 @@ use Doctrine\ORM\EntityManager;
 class RegistrationHandler extends FormHandler
 {
 
-	public $onInvoiceExists = array();
-	public $onInvoiceNotExists = array();
-
 	/**
 	 * @var \Service\Rental\RentalCreator
 	 */
 	protected $rentalCreator;
-
-	/**
-	 * @var \Service\Invoice\IInvoiceCreatorFactory
-	 */
-	protected $invoiceCreatorFactory;
 
 	/**
 	 * @var \Doctrine\ORM\EntityManager
@@ -27,11 +19,16 @@ class RegistrationHandler extends FormHandler
 	protected $em;
 
 	/**
-	 * @param \Service\Rental\RentalCreator $rentalCreator
-	 * @param \Service\Invoice\IInvoiceCreatorFactory $invoiceCreatorFactory
+	 * @var \Entity\Rental\Rental
 	 */
-	public function __construct(RentalCreator $rentalCreator,
-								EntityManager $em)
+	public $rental;
+
+
+	/**
+	 * @param \Service\Rental\RentalCreator $rentalCreator
+	 * @param \Doctrine\ORM\EntityManager $em
+	 */
+	public function __construct(RentalCreator $rentalCreator, EntityManager $em)
 	{
 		$this->rentalCreator = $rentalCreator;
 		$this->em = $em;
@@ -45,18 +42,12 @@ class RegistrationHandler extends FormHandler
 		$rentalTypeRepository = $this->em->getRepository('\Entity\Rental\Type');
 		$referralRepository = $this->em->getRepository('\Entity\Rental\Referral');
 		$emailRepository = $this->em->getRepository('\Entity\Contact\Email');
-		$packageRepository = $this->em->getRepository('\Entity\Invoice\Package');
 
 		$error = new ValidationError;
 
 		$values->country = $locationRepository->find($values->country);
 		if(!$values->country || !$values->country->isPrimary()) {
 			$error->addError("Invalid country", 'country');
-		}
-
-		$values->clientCountry = $locationRepository->find($values->clientCountry);
-		if(!$values->clientCountry || !$values->clientCountry->isPrimary()) {
-			$error->addError("Invalid clientCountry", 'clientCountry');
 		}
 
 		$values->language = $languageRepository->find($values->language);
@@ -74,13 +65,6 @@ class RegistrationHandler extends FormHandler
 		if(!$values->rentalType) {
 			$error->addError("Invalid rental type", 'rentalType');
 		}
-
-		$values->package = $packageRepository->find($values->package);
-		if(!$values->package) {
-			$error->addError("Invalid package", 'package');
-		}
-
-		$clientInvoicingData = $this->prepareInvoicingData($values);
 
 		$error->assertValid();
 
@@ -109,37 +93,13 @@ class RegistrationHandler extends FormHandler
 			->setMaxCapacity($values->rentalMaxCapacity)
 			->addReferral($referral);
 
-		$invoiceCreator = $this->invoiceCreatorFactory->create($rental, $clientInvoicingData, $values->package);
-		$invoice = $invoiceCreator->createInvoice($values->country->getDefaultCurrency());
-
 		//$this->model->save($values);
-		return $rental;
+		$this->rental = $rental;
 	}
 
-	/**
-	 * @param $values
-	 *
-	 * @return \Entity\Invoice\InvoicingData
-	 */
-	protected function prepareInvoicingData($values)
+	public function getRental()
 	{
-
-		/** @var $invoicingData \Entity\Invoice\InvoicingData */
-		$invoicingData = $this->em->getRepository('\Entity\Invoice\InvoicingData')->createNew();
-
-		$invoicingData->setName($values->clientName);
-		$invoicingData->setPhone($values->phone);
-		$invoicingData->setEmail($values->email)
-			->setUrl($values->url)
-			->setPrimaryLocation($values->clientCountry)
-			->setLanguage($values->language)
-			->setCompanyName($values->clientCompanyName)
-			->setCompanyId($values->clientCompanyId)
-			->setCompanyVatId($values->clientCompanyVatId1 . $values->clientCompanyVatId2)
-			->setAddress($values->clientLocality . ' ' . $values->clientPostalCode . ' ' . $values->clientAddress1 .
-			' ' . $values->clientAddress2);
-
-		return $invoicingData;
+		return $this->rental;
 	}
 
 

@@ -7,34 +7,26 @@ use Nette\Forms\Form;
 
 class RentalEditForm extends BaseForm {
 	
-	protected $languageRepositoryAccessor;
-	protected $locationRepositoryAccessor;
-	protected $rentalTagRepositoryAccessor;
-	protected $rentalTypeRepositoryAccessor;
-	protected $locationTypeRepositoryAccessor;
-	protected $rentalAmenityRepositoryAccessor;
-	protected $rentalAmenityTypeRepositoryAccessor;
-
-	protected $phraseDecoratorFactory;
+	protected $languageRepository;
+	protected $locationRepository;
+	protected $rentalTagRepository;
+	protected $rentalTypeRepository;
+	protected $locationTypeRepository;
+	protected $rentalAmenityRepository;
+	protected $rentalAmenityTypeRepository;
 
 	protected $rental;
 
-	public function injectBaseRepositories(\Nette\DI\Container $dic) {
-		$this->languageRepositoryAccessor = $dic->languageRepositoryAccessor;
-		$this->locationRepositoryAccessor = $dic->locationRepositoryAccessor;
-		$this->rentalTagRepositoryAccessor = $dic->rentalTagRepositoryAccessor;
-		$this->rentalTypeRepositoryAccessor = $dic->rentalTypeRepositoryAccessor;
-		$this->locationTypeRepositoryAccessor = $dic->locationTypeRepositoryAccessor;
-		$this->rentalAmenityRepositoryAccessor = $dic->rentalAmenityRepositoryAccessor;
-		$this->rentalAmenityTypeRepositoryAccessor = $dic->rentalAmenityTypeRepositoryAccessor;
-	}
 
-	public function injectPhraseService(\Model\Phrase\IPhraseDecoratorFactory $phraseDecoratorFactory) {
-		$this->phraseDecoratorFactory = $phraseDecoratorFactory;
-	}
-
-	public function __construct(Rental $rental){
+	public function __construct(Rental $rental, \Doctrine\ORM\EntityManager $em){
 		$this->rental = $rental;
+		$this->languageRepository = $em->getRepository('\Entity\Language');
+		$this->locationRepository = $em->getRepository('\Entity\Location\Location');
+		$this->rentalTagRepository = $em->getRepository('\Entity\Rental\Tag');
+		$this->rentalTypeRepository = $em->getRepository('\Entity\Rental\Type');
+		$this->locationTypeRepository = $em->getRepository('\Entity\Location\Type');
+		$this->rentalAmenityRepository = $em->getRepository('\Entity\Rental\Amenity');
+		$this->rentalAmenityTypeRepository = $em->getRepository('\Entity\Rental\AmenityType');
 		parent::__construct();
 	}
 
@@ -43,11 +35,10 @@ class RentalEditForm extends BaseForm {
 
 		$allCountries = array();
 		$phonePrefixes = array();
-		$locationType = $this->locationTypeRepositoryAccessor->get()->findOneBySlug('country');
-		foreach ($this->locationRepositoryAccessor->get()->findBy(array('type' => $locationType), array('iso'=>'ASC')) as $location) {
-			$phrase = $this->phraseDecoratorFactory->create($location->name);
+		$locationType = $this->locationTypeRepository->findOneBySlug('country');
+		foreach ($this->locationRepository->findBy(array('type' => $locationType), array('iso'=>'ASC')) as $location) {
 			$language = $this->rental->editLanguage;
-			$allCountries[$location->iso] = $phrase->getTranslationText($language, TRUE);
+			$allCountries[$location->iso] = $location->name->getTranslationText($language, TRUE);
 			if ($location->phonePrefix) $phonePrefixes[$location->iso] = strtoupper($location->iso) . ' (+'.$location->phonePrefix.')';
 		}
 		$allCountries = array_reverse($allCountries);
@@ -111,13 +102,12 @@ class RentalEditForm extends BaseForm {
 		$formCountry->setAttribute('class','span9');
 
 		$basicInfo = $this->addContainer('basicInfo');
-		$languages = $this->languageRepositoryAccessor->get()->findSupported();
+		$languages = $this->languageRepository->findSupported();
 		foreach ($languages as $language) {
 
 			$rentalTypes = array();
-			foreach ($this->rentalTypeRepositoryAccessor->get()->findAll() as $entity) {
-				$phrase = $this->phraseDecoratorFactory->create($entity->name);
-				$rentalTypes[$entity->id] = $phrase->getTranslationText($language, TRUE);
+			foreach ($this->rentalTypeRepository->findAll() as $entity) {
+				$rentalTypes[$entity->id] = $entity->name->getTranslationText($language, TRUE);
 			}
 
 			$formContainer = $basicInfo->addContainer($language->iso);
@@ -134,17 +124,15 @@ class RentalEditForm extends BaseForm {
 
 		// Tags
 		$tagsContainer = $this->addContainer('tags');
-		foreach ($this->rentalTagRepositoryAccessor->get()->findAll() as $tag) {
-			$phrase = $this->phraseDecoratorFactory->create($tag->name);
-			$tagsContainer->addCheckbox($tag->id, $phrase->getTranslationText($this->rental->editLanguage, TRUE));
+		foreach ($this->rentalTagRepository->findAll() as $tag) {
+			$tagsContainer->addCheckbox($tag->id, $tag->name->getTranslationText($this->rental->editLanguage, TRUE));
 		}
 
 		// Amenities
-		foreach ($this->rentalAmenityTypeRepositoryAccessor->get()->findAll() as $amenityType) {
+		foreach ($this->rentalAmenityTypeRepository->findAll() as $amenityType) {
 			$container = $this->addContainer(str_replace('-', '_', $amenityType->slug));
-			foreach ($this->rentalAmenityRepositoryAccessor->get()->findByType($amenityType) as $amenity) {
-				$phrase = $this->phraseDecoratorFactory->create($amenity->name);
-				$container->addCheckbox($amenity->id, $phrase->getTranslationText($this->rental->editLanguage, TRUE));
+			foreach ($this->rentalAmenityRepository->findByType($amenityType) as $amenity) {
+				$container->addCheckbox($amenity->id, $amenity->name->getTranslationText($this->rental->editLanguage, TRUE));
 			}
 		}
 

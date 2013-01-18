@@ -38,7 +38,8 @@ class RegistrationHandlerTest extends \Tests\TestCase
 		$data->referrer = 'david@gmail.sk';
 
 		$data->email = 'test@email.com';
-		$data->phone = '+421908123456';
+		$data->phone->prefix = '+421';
+		$data->phone->number = '908123456';
 		$data->url = 'www.google.com';
 		$data->password = 'df34kdj4se4jr33';
 
@@ -47,21 +48,6 @@ class RegistrationHandlerTest extends \Tests\TestCase
 		$data->rentalClassification = 3;
 		$data->rentalPrice = 5;
 		$data->rentalMaxCapacity = 22;
-
-		$data->package = 1;
-
-		$data->legalForm = TRUE;
-		$data->clientName = 'Test Testovic';
-		$data->clientCompanyName = 'Test s.r.o.';
-		$data->clientAddress1 = 'Ulica 2';
-		$data->clientAddress2 = '/444';
-		$data->clientLocality = 'Nesvady';
-		$data->clientPostalCode = '12345';
-		$data->clientVatPayer = TRUE;
-		$data->clientCompanyVatId1 = 'SK';
-		$data->clientCompanyVatId2 = '3453483292443';
-		$data->clientCompanyId = '23432434';
-		$data->clientCountry = $data->country;
 
 		return $data;
 	}
