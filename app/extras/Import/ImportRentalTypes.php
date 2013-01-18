@@ -14,6 +14,48 @@ use Nette\Application as NA,
 
 class ImportRentalTypes extends BaseImport {
 
+	protected $skPlurals = array(
+		'apartment' => 'apartmány',
+		'mountain hotel' => 'horské hotely',
+		'hostel' => 'hostely',
+		'hotel' => 'hotely',
+		'houseboat' => 'hausbóty',
+		'chalet' => 'chaty',
+		'campsite' => 'kempingy',
+		'spas' => 'kúpele',
+		'motel' => 'motely',
+		'guesthouse' => 'ubytovne',
+		'private lodging' => 'priváty',
+		'ranch' => 'ranče',
+		'recreational home' => 'ubytovne',
+		'mansion' => '',
+		'studio' => 'štúdiá',
+		'dormitory' => 'internáty',
+		'villa' => 'vily',
+		'apartment house' => 'apartmánové domy',
+		'cottage' => 'chaty',
+		'timbered house' => 'drevenice',
+		'cabin' => 'chaty',
+		'holiday home' => 'výletné domy',
+		'tourist dormitory' => '',
+		'boat' => 'lode',
+		'barn' => 'stodoly',
+		'bungalow' => 'bungalovy',
+		'castle' => 'zámky',
+		'condo' => '',
+		'estate' => '',
+		'farmhouse' => 'farmy',
+		'house' => 'domy',
+		'townhome' => 'mestské domy',
+		'yacht' => 'jachty',
+		'B&B' => '' => '',
+		'caravan' => 'karavany',
+		'cave house' => 'jaskynné domy',
+		'chateau' => 'chaty',
+		'manor' => '',
+		'log cabin' => 'drevenice',
+	);
+
 	public function doImport($subsection = NULL) {
 
 		$phrase = $this->createPhraseType('\Rental\Type', 'name', 'ACTIVE');
@@ -47,10 +89,20 @@ class ImportRentalTypes extends BaseImport {
 			q('update objects_types_new set trax_en_type_id = '.$enTypeId.' where id = '.$x['id']);
 		}
 
+		$sk = $this->context->languageRepositoryAccessor->get()->findOneByIso('sk');
+
 		$r = q('select * from objects_types_new where language_id = 38');
 		while($x = mysql_fetch_array($r)) {
 			$rentalType = $this->context->rentalTypeEntityFactory->create();
 			$rentalType->name = $this->createPhraseFromString('\Rental\Type', 'name', 'ACTIVE', $x['name'], 'en');
+			
+			if (strlen($this->skPlurals[$x['name']]) != 0) {
+				$skTranslation = $rentalType->name->getTranslation($sk, FALSE);
+				$variations[1][0]['nominative'] = $this->skPlurals[$x['name']];
+				$skTranslation->updateVariations($variations);
+				d($skTranslation); exit;
+			}
+
 			$rentalType->oldId = $x['id'];
 			$this->model->persist($rentalType);
 		}
