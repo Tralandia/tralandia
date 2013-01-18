@@ -42,7 +42,11 @@ class Price extends \Nette\Object {
 
 	public function convertTo(\Entity\Currency $currency, $format = '%f %s') {
 		if (!isset($this->amounts[1])) {
-			$this->amounts[1] = $this->sourceAmount / $this->sourceCurrency->exchangeRate;
+			if ($this->sourceCurrency->exchangeRate == 0) {
+				$this->amounts[1] = 0;
+			} else {
+				$this->amounts[1] = $this->sourceAmount / $this->sourceCurrency->exchangeRate;			
+			}
 		}
 
 		$value = $this->amounts[1] * $currency->exchangeRate;

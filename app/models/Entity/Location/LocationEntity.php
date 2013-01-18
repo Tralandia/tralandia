@@ -448,7 +448,7 @@ class Location extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Rental\Rental
+	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Rental\Rental[]
 	 */
 	public function getPrimaryRentals()
 	{
@@ -480,7 +480,7 @@ class Location extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Contact\Address
+	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Contact\Address[]
 	 */
 	public function getAddresses()
 	{
@@ -514,7 +514,7 @@ class Location extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Seo\BackLink
+	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Seo\BackLink[]
 	 */
 	public function getBackLinks()
 	{

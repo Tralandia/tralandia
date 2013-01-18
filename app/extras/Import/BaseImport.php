@@ -97,16 +97,16 @@ class BaseImport {
 			'subsections' => array(),
 			'saveImportStatus' => FALSE,
 		),
-		'invoiceStart' => array(
-			'entities' => array(
-				'\Invoice\ServiceDuration' => array(),
-				'\Invoice\ServiceType' => array(),
-				'\Invoice\UseType' => array(),
-				'\Invoice\Package' => array(),
-				'\Invoice\Service' => array(),
-			),
-			'subsections' => array(),
-		),
+		// 'invoiceStart' => array(
+		// 	'entities' => array(
+		// 		'\Invoice\ServiceDuration' => array(),
+		// 		'\Invoice\ServiceType' => array(),
+		// 		'\Invoice\UseType' => array(),
+		// 		'\Invoice\Package' => array(),
+		// 		'\Invoice\Service' => array(),
+		// 	),
+		// 	'subsections' => array(),
+		// ),
 		'invoice' => array(
 			'entities' => array(
 				'\Invoice\Invoice' => array(),

@@ -69,6 +69,8 @@ class FileStorage extends Nette\Object
 
 	public function saveFromFile($filepath)
 	{
+		if (!is_file($filepath)) return FALSE;
+
 		$content = file_get_contents($filepath);
 		$extension = get_file_extension($filepath);
 		return $this->save($content, time() . '.' . $extension);

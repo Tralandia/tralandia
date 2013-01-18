@@ -81,45 +81,6 @@ common:
 					label: Interaction Types
 					link: ':Admin:VisitorType:list'
 
-
-		invoice:
-			label: Invoice
-			items:
-				invoice: 
-					label: Invoice
-					items:
-						pending: 
-							label: Pending
-							link: ':Admin:InvoiceInvoice:list'
-							linkArgs:
-								filter: pending
-						paid: 
-							label: Paid
-							link: ':Admin:InvoiceInvoice:list'
-							linkArgs:
-								filter: paid
-						overdue: 
-							label: Overdue
-							link: ':Admin:InvoiceInvoice:list'
-							linkArgs:
-								filter: overdue
-				package: 
-					label: Packages
-					link: ':Admin:InvoicePackage:list'
-				serviceType: 
-					label: Service Types
-					link: ':Admin:InvoiceServiceType:list'
-				duration: 
-					label: Durations
-					link: ':Admin:InvoiceServiceDuration:list'
-				use: 
-					label: Use Types
-					link: ':Admin:InvoiceUseType:list'
-				export: 
-					label: Export
-					link: ':Admin:InvoiceExport:'
-					separator: true
-
 		phrase:
 			label: Dictionary
 			items:

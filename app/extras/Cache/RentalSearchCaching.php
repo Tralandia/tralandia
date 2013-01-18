@@ -52,6 +52,8 @@ class RentalSearchCaching extends \Nette\Object {
 		$this->removeRental($rental);
 
 		if($rental->status != \Entity\Rental\Rental::STATUS_LIVE) {
+			$this->save();
+			return;
 			throw new \Nette\InvalidArgumentException('Len live rental mozes ulozit do cache');
 		}
 

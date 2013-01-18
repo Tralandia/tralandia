@@ -278,11 +278,6 @@ factories:
 		class: Extras\Translator(%language%, @phraseRepositoryAccessor, @translatorCache)
 		implement: Extras\ITranslatorFactory
 
-	invoiceCreatorFactory:
-		class: Service\Invoice\InvoiceCreator
-		arguments: [%rental%, %invoicingData%, %package%, @invoiceRepositoryAccessor::get()]
-		implement: Service\Invoice\IInvoiceCreatorFactory
-
 	itemMapFactory: Extras\FormMask\Items\Foctories\MapFactory
 	itemEmailFactory: Extras\FormMask\Items\Foctories\EmailFactory
 	itemAddressFactory: Extras\FormMask\Items\Foctories\AddressFactory(@translator, @contactAddressRepositoryAccessor)

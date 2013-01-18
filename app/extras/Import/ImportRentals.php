@@ -64,7 +64,7 @@ class ImportRentals extends BaseImport {
 		if ($this->developmentMode == TRUE) {
 			//$r = q('select * from objects where id = 7116');
 			//$r = q('select * from objects where country_id = 46 order by rand() limit 3');
-			$r = q('select * from objects where country_id = 46 order by id limit 10');
+			$r = q('select * from objects where country_id = 46 order by id');
 		} else {
 			$r = q('select * from objects');
 		}
@@ -259,14 +259,19 @@ class ImportRentals extends BaseImport {
 
 			$rental->checkOut = (int)$x['check_out'];
 
+			$t = NULL;
 			if ($x['price_offseason']>0) {
 				if ($x['price_season_currency'] != $rental->primaryLocation->defaultCurrency->oldId) {
 					$oldCurrency = $context->currencyRepositoryAccessor->get()->findOneByOldId($x['price_season_currency']);
-					$t = new \Extras\Types\Price($x['price_offseason'], $oldCurrency);
+					if ($oldCurrency) {
+						$t = new \Extras\Types\Price($x['price_offseason'], $oldCurrency);
+					}
 				} else {
 					$t = new \Extras\Types\Price($x['price_offseason'], $rental->primaryLocation->defaultCurrency);
 				}
-				$rental->price = $t->convertToFloat($rental->primaryLocation->defaultCurrency);
+				if ($t) {
+					$rental->price = $t->convertToFloat($rental->primaryLocation->defaultCurrency);
+				}
 			}
 
 			if (strlen($x['capacity_max'])) {
@@ -282,13 +287,15 @@ class ImportRentals extends BaseImport {
 					$row = $context->rentalPricelistRowRepositoryAccessor->get()->createNew(FALSE);
 					$row->sort; $sort++;
 					$row->roomCount = $value[0];
-					$row->roomType = $roomTypes[$value[1]];
+					if(isset($roomTypes[$value[1]])) $row->roomType = $roomTypes[$value[1]];
 					$row->bedCount = $value[2];
 					$row->extraBedCount = $value[3];
 
 					if ($value[5] != $rental->primaryLocation->defaultCurrency->oldId) {
 						$oldCurrency = $context->currencyRepositoryAccessor->get()->findOneByOldId($value[5]);
-						$t = new \Extras\Types\Price($value[4], $oldCurrency);
+						if ($oldCurrency) {
+							$t = new \Extras\Types\Price($value[4], $oldCurrency);						
+						}
 					} else {
 						$t = new \Extras\Types\Price($value[4], $rental->primaryLocation->defaultCurrency);
 					}
@@ -304,6 +311,7 @@ class ImportRentals extends BaseImport {
 			$temp = unserialize(stripslashes($x['prices_upload']));
 			if (is_array($temp) && count($temp)) {
 				foreach ($temp as $key => $value) {
+					if (!is_file('http://www.tralandia.sk/u/'.$value[4])) continue;
 					$pricelist = $context->rentalPricelistRepositoryAccessor->get()->createNew(FALSE);
 					$pricelistDecorator = $context->rentalPricelistDecoratorFactory->create($pricelist);
 					$pricelistDecorator->setContentFromFile('http://www.tralandia.sk/u/'.$value[4]);
@@ -314,23 +322,22 @@ class ImportRentals extends BaseImport {
 				}
 			}
 
-
-			// Images
-			$temp = array_unique(array_filter(explode(',', $x['photos'])));
-			if (is_array($temp) && count($temp)) {
-				if ($this->developmentMode == TRUE) $temp = array_slice($temp, 0, 6);
-				foreach ($temp as $key => $value) {
-					$image = $context->rentalImageRepositoryAccessor->get()->findOneByOldUrl('http://www.tralandia.com/u/'.$value);
-					if (!$image) {
-						$imageEntity = $context->rentalImageRepositoryAccessor->get()->createNew(FALSE);
-						$image = $context->rentalImageDecoratorFactory->create($imageEntity);
-						$image->setContentFromFile('http://www.tralandia.com/u/'.$value);
-						$rental->addImage($imageEntity);
-					} else {
-						$rental->addImage($image);
-					}
-				}
-			}
+			// // Images
+			// $temp = array_unique(array_filter(explode(',', $x['photos'])));
+			// if (is_array($temp) && count($temp)) {
+			// 	if ($this->developmentMode == TRUE) $temp = array_slice($temp, 0, 6);
+			// 	foreach ($temp as $key => $value) {
+			// 		$image = $context->rentalImageRepositoryAccessor->get()->findOneByOldUrl('http://www.tralandia.com/u/'.$value);
+			// 		if (!$image) {
+			// 			$imageEntity = $context->rentalImageRepositoryAccessor->get()->createNew(FALSE);
+			// 			$image = $context->rentalImageDecoratorFactory->create($imageEntity);
+			// 			$image->setContentFromFile('http://www.tralandia.com/u/'.$value);
+			// 			$rental->addImage($imageEntity);
+			// 		} else {
+			// 			$rental->addImage($image);
+			// 		}
+			// 	}
+			// }
 
 			// Classification
 			if ($x['classification'] !== NULL) {
@@ -354,7 +361,7 @@ class ImportRentals extends BaseImport {
 
 			$rentalDecorator = $context->rentalDecoratorFactory->create($rental);
 			$rentalDecorator->calculateRank();
-			d($rental->phones);
+			//d($rental->phones);
 			$model->persist($rental);
 
 		}

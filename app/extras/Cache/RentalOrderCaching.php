@@ -27,6 +27,10 @@ class RentalOrderCaching extends \Nette\Object {
 		$this->cacheContent = $this->cache->load($this->location->id);
 	}
 
+	public function reset() {
+		$this->cacheContent = NULL;
+	}
+
 	public function save() {
 		if ($this->cacheContent !== NULL) {
 			$this->cache->save($this->location->id, $this->cacheContent, array(
@@ -67,7 +71,6 @@ class RentalOrderCaching extends \Nette\Object {
 	protected function createFeaturedList() {
 		// Clear the featured list first
 		$this->cacheContent['featured'] = array();
-
 		$rentals = $this->rentalRepositoryAccessor->get()->findFeatured($this->location);
 		foreach ($rentals as $key => $value) {
 			$this->cacheContent['featured'][$value['id']] = $value['id'];

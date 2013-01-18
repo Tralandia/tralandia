@@ -3,7 +3,6 @@
 namespace FormHandler;
 
 use Service\Rental\RentalCreator;
-use Service\Invoice\IInvoiceCreatorFactory;
 use Doctrine\ORM\EntityManager;
 
 class RegistrationHandler extends FormHandler
@@ -31,11 +30,10 @@ class RegistrationHandler extends FormHandler
 	 * @param \Service\Rental\RentalCreator $rentalCreator
 	 * @param \Service\Invoice\IInvoiceCreatorFactory $invoiceCreatorFactory
 	 */
-	public function __construct(RentalCreator $rentalCreator, IInvoiceCreatorFactory $invoiceCreatorFactory,
+	public function __construct(RentalCreator $rentalCreator,
 								EntityManager $em)
 	{
 		$this->rentalCreator = $rentalCreator;
-		$this->invoiceCreatorFactory = $invoiceCreatorFactory;
 		$this->em = $em;
 	}
 

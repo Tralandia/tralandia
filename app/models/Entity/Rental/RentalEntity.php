@@ -3,7 +3,6 @@
 namespace Entity\Rental;
 
 use Entity\Phrase;
-use Entity\Invoice;
 use Entity\Location;
 use Entity\Medium;
 use Entity\User;
@@ -203,12 +202,6 @@ class Rental extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Entity\Invoice\Invoice", mappedBy="rental")
-	 */
-	protected $invoices;
-
-	/**
-	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="Entity\Seo\BackLink", mappedBy="rental")
 	 */
 	protected $backLinks;
@@ -227,9 +220,9 @@ class Rental extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Referral", mappedBy="rental", cascade={"persist"})
+	 * @ORM\OneToMany(targetEntity="Entity\Rental\Service", mappedBy="rental")
 	 */
-	protected $referrals;
+	protected $services;
 
 	public function getMainImage() {
 		return $this->images->first();
@@ -309,9 +302,8 @@ class Rental extends \Entity\BaseEntity {
 		$this->pricelists = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->interviewAnswers = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->fulltexts = new \Doctrine\Common\Collections\ArrayCollection;
-		$this->invoices = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->backLinks = new \Doctrine\Common\Collections\ArrayCollection;
-		$this->referrals = new \Doctrine\Common\Collections\ArrayCollection;
+		$this->services = new \Doctrine\Common\Collections\ArrayCollection;
 	}
 		
 	/**
@@ -505,7 +497,7 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Rental\Information
+	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Rental\Information[]
 	 */
 	public function getMissingInformation()
 	{
@@ -672,7 +664,7 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Contact\Phone
+	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Contact\Phone[]
 	 */
 	public function getPhones()
 	{
@@ -706,7 +698,7 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Contact\Email
+	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Contact\Email[]
 	 */
 	public function getEmails()
 	{
@@ -740,7 +732,7 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Contact\Url
+	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Contact\Url[]
 	 */
 	public function getUrls()
 	{
@@ -774,7 +766,7 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Language
+	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Language[]
 	 */
 	public function getSpokenLanguages()
 	{
@@ -808,7 +800,7 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Rental\Amenity
+	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Rental\Amenity[]
 	 */
 	public function getAmenities()
 	{
@@ -842,7 +834,7 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Rental\Tag
+	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Rental\Tag[]
 	 */
 	public function getTags()
 	{
@@ -1000,7 +992,7 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Rental\PricelistRow
+	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Rental\PricelistRow[]
 	 */
 	public function getPricelistRows()
 	{
@@ -1034,7 +1026,7 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Rental\Pricelist
+	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Rental\Pricelist[]
 	 */
 	public function getPricelists()
 	{
@@ -1068,7 +1060,7 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Rental\InterviewAnswer
+	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Rental\InterviewAnswer[]
 	 */
 	public function getInterviewAnswers()
 	{
@@ -1160,45 +1152,11 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Rental\Fulltext
+	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Rental\Fulltext[]
 	 */
 	public function getFulltexts()
 	{
 		return $this->fulltexts;
-	}
-		
-	/**
-	 * @param \Entity\Invoice\Invoice
-	 * @return \Entity\Rental\Rental
-	 */
-	public function addInvoice(\Entity\Invoice\Invoice $invoice)
-	{
-		if(!$this->invoices->contains($invoice)) {
-			$this->invoices->add($invoice);
-		}
-		$invoice->setRental($this);
-
-		return $this;
-	}
-		
-	/**
-	 * @param \Entity\Invoice\Invoice
-	 * @return \Entity\Rental\Rental
-	 */
-	public function removeInvoice(\Entity\Invoice\Invoice $invoice)
-	{
-		$this->invoices->removeElement($invoice);
-		$invoice->unsetRental();
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Invoice\Invoice
-	 */
-	public function getInvoices()
-	{
-		return $this->invoices;
 	}
 		
 	/**
@@ -1228,7 +1186,7 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Seo\BackLink
+	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Seo\BackLink[]
 	 */
 	public function getBackLinks()
 	{
@@ -1294,36 +1252,36 @@ class Rental extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Rental\Referral
+	 * @param \Entity\Rental\Service
 	 * @return \Entity\Rental\Rental
 	 */
-	public function addReferral(\Entity\Rental\Referral $referral)
+	public function addService(\Entity\Rental\Service $service)
 	{
-		if(!$this->referrals->contains($referral)) {
-			$this->referrals->add($referral);
+		if(!$this->services->contains($service)) {
+			$this->services->add($service);
 		}
-		$referral->setRental($this);
+		$service->setRental($this);
 
 		return $this;
 	}
 		
 	/**
-	 * @param \Entity\Rental\Referral
+	 * @param \Entity\Rental\Service
 	 * @return \Entity\Rental\Rental
 	 */
-	public function removeReferral(\Entity\Rental\Referral $referral)
+	public function removeService(\Entity\Rental\Service $service)
 	{
-		$this->referrals->removeElement($referral);
-		$referral->unsetRental();
+		$this->services->removeElement($service);
+		$service->unsetRental();
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection of \Entity\Rental\Referral
+	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Rental\Service[]
 	 */
-	public function getReferrals()
+	public function getServices()
 	{
-		return $this->referrals;
+		return $this->services;
 	}
 }

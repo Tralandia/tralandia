@@ -32,20 +32,6 @@ services:
 	expenseRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Expense\Expense')
 	expenseTypeRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Expense\Type')
 
-
-	#invoice
-	#----------
-	invoiceRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Invoice\Invoice')
-	invoiceItemRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Invoice\Item')
-	invoicePackageRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Invoice\Package')
-	invoiceServiceRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Invoice\Service')
-	invoiceServiceDurationRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Invoice\ServiceDuration')
-	invoiceServiceTypeRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Invoice\ServiceType')
-	invoiceUseTypeRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Invoice\UseType')
-
-	invoiceInvoicingDataRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Invoice\InvoicingData')
-
-
 	#language
 	#----------
 	languageRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Language')
@@ -94,8 +80,6 @@ services:
 	#----------
 	rentalRepositoryAccessor: 
 		class: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Rental\Rental')
-		setup:
-			- setParameters(@invoiceServiceTypeRepositoryAccessor)
 
 	rentalAmenityRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Rental\Amenity')
 	rentalAmenityTypeRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Rental\AmenityType')
@@ -104,6 +88,7 @@ services:
 	rentalImageRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Rental\Image')
 	rentalFulltextRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Rental\Fulltext')
 	rentalTypeRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Rental\Type')
+	rentalServiceRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Rental\Service')
 	rentalInterviewQuestionRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Rental\InterviewQuestion')
 	rentalInterviewAnswerRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Rental\InterviewAnswer')
 	rentalRoomTypeRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Rental\RoomType')

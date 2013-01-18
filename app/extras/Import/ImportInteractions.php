@@ -124,8 +124,9 @@ class ImportInteractions extends BaseImport {
 
 			if ($x['from_type'] == 'client') {
 				$t = $this->context->userRepositoryAccessor->get()->findOneByLogin($x['from_email']);
-				d($t); exit;
-				$interaction->rental = $this->context->rentalRepositoryAccessor->get()->findOneByUser($t);
+				if ($t) {
+					$interaction->rental = $this->context->rentalRepositoryAccessor->get()->findOneByUser($t);
+				}
 			}
 
 

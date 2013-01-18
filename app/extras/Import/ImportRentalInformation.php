@@ -47,7 +47,7 @@ class ImportRentalInformation extends BaseImport {
 			'price' => array('compulsory' => FALSE),
 			'priceLists' => array('compulsory' => FALSE),
 			'classification' => array('compulsory' => FALSE),
-			'images' => array('compulsory' => TRUE),
+			'images' => array('compulsory' => FALSE), // toto je tu docasne pocas DEV
 		);
 
 		foreach ($informationTypes as $key => $value) {

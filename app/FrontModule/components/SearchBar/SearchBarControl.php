@@ -57,7 +57,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 
 		$template->criteria['flanguage'] 		= $this->getLanguageCriteria();
 		$template->criteria['fcapacity'] 		= $this->getCapacityCriteria();
-		$template->criteria['fprice'] 			= $this->getPriceCriteria();
+		// $template->criteria['fprice'] 			= $this->getPriceCriteria();
 
 		$template->render();
 

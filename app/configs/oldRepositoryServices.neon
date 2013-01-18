@@ -13,20 +13,6 @@ services:
 
 	expenseTypeRepository: @model::getRepository('Entity\Expense\Type')
 
-	invoiceRepository: @model::getRepository('Entity\Invoice\Invoice')
-
-	invoiceItemRepository: @model::getRepository('Entity\Invoice\Item')
-
-	invoicePackageRepository: @model::getRepository('Entity\Invoice\Package')
-
-	invoiceServiceRepository: @model::getRepository('Entity\Invoice\Service')
-
-	invoiceServiceDurationRepository: @model::getRepository('Entity\Invoice\ServiceDuration')
-
-	invoiceServiceTypeRepository: @model::getRepository('Entity\Invoice\ServiceType')
-
-	invoiceUseTypeRepository: @model::getRepository('Entity\Invoice\UseType')
-
 	languageRepository: @model::getRepository('Entity\Language')
 
 	locationRepository: @model::getRepository('Entity\Location\Location')
@@ -62,6 +48,8 @@ services:
 	rentalRepository: @model::getRepository('Entity\Rental\Rental')
 
 	rentalTypeRepository: @model::getRepository('Entity\Rental\Type')
+
+	rentalServiceRepository: @model::getRepository('Entity\Rental\Service')
 
 	routingPathSegmentRepository: @model::getRepository('Entity\Routing\PathSegment')
 
@@ -108,20 +96,6 @@ services:
 
 	expenseTypeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Expense\Type')
 
-	invoiceEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoice\Invoice')
-
-	invoiceItemEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoice\Item')
-
-	invoicePackageEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoice\Package')
-
-	invoiceServiceEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoice\Service')
-
-	invoiceServiceDurationEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoice\ServiceDuration')
-
-	invoiceServiceTypeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoice\ServiceType')
-
-	invoiceUseTypeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Invoice\UseType')
-
 	languageEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Language')
 
 	locationEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Location\Location')
@@ -151,6 +125,8 @@ services:
 	rentalAmenityTypeEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Rental\AmenityType')
 
 	rentalInformationEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Rental\Information')
+
+	rentalServiceEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Rental\Service')
 
 	rentalFulltextEntityFactory: Extras\Models\Entity\EntityFactory('Entity\Rental\Fulltext')
 

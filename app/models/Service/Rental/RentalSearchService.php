@@ -9,7 +9,7 @@ use Nette\Utils\Arrays;
 class RentalSearchService extends Nette\Object 
 {
 
-	const COUNT_PER_PAGE			= 2;
+	const COUNT_PER_PAGE			= 10;
 	const CRITERIA_LOCATION  		= 'location';
 	const CRITERIA_RENTAL_TYPE 		= 'rentalType';
 	const CRITERIA_TAG	 			= 'rentalTag';
@@ -171,6 +171,8 @@ class RentalSearchService extends Nette\Object
 
 	protected function reorderResults() {
 		$order = $this->rentalOrderCaching->getOrderList();
+		d($this->results);
+		
 		$t = array();
 
 		foreach ($this->results as $key => $value) {
