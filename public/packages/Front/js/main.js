@@ -561,6 +561,7 @@ $(document).ready(function(){
     	id = $(this).attr('rel');
     	A.removeObjectFromFavorites(id);
     	$('.addToFavorites[rel='+id+']').removeClass('selected');
+    	return false;
     });
 
 

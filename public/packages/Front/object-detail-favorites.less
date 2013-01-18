@@ -163,16 +163,18 @@
 			margin: 6px 9px;
 
 			.checked {
-				width: 15px;
-				height: 15px;
+				width: 25px;
+				height: 18px;
+				overflow: hidden;
+				padding: 0;
 				float:right;
-				background: #ee4a00;
+				
 				color: #fff;
 				&:before {
-					font-size: 30px;
+					font-size: 38px;
 					position: relative;
-					top: -3px;
-					left: 1px;
+					top: 0px;
+					left: 0px;
 				}
 			}
 
@@ -222,6 +224,11 @@
 
 				a.removeLink {
 					visibility: visible;
+					background: #ee4a00;
+
+					&:before {
+						color: #fff;
+					}
 				}
 			}
 
@@ -229,7 +236,7 @@
 				display: block;
 				height:100%;
 				width: 100%;
-				
+				background: #ddd;
 				position: relative;
 				top: -20px;				
 			}

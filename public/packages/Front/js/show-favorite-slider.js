@@ -61,7 +61,7 @@
 
 							// if is visited object
 							if(appObject.in_array(self.visitList,v.id)){
-								var visited = $('<div></div>').addClass('checked entypo-ok');
+								var visited = $('<div></div>').addClass('checked entypo-eye');
 									visited.appendTo(newLink);
 							}
 
@@ -99,7 +99,7 @@
 					// set nav links action
 
 					var animationOfset = 200;
-					var animationSpeed = 800;
+					var animationSpeed = 200;
 
 					$rigthArrow = $(this).find('.rightArrow');
 					$lefthArrow = $(this).find('.leftArrow');
