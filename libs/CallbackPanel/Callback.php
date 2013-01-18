@@ -82,7 +82,11 @@ class Callback extends \Nette\Object implements \Nette\Diagnostics\IBarPanel
 	private function invokeCallback($name)
 	{
 		if (strlen($name) > 0 && array_key_exists($name, $this->callbacks)) {
-			$this->callbacks[$name]['callback']->invokeArgs($this->callbacks[$name]['args']);
+			if(array_key_exists('callback', $this->callbacks[$name])) {
+				$this->callbacks[$name]['callback']->invokeArgs($this->callbacks[$name]['args']);
+			} else {
+				call_user_func($this->callbacks[$name]['function']);
+			}
 		} else {
 			throw new \InvalidArgumentException("Callback '" . $name . "' doesn't exist.");
 		}

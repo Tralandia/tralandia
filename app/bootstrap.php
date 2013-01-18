@@ -48,7 +48,6 @@ $configurator->onCompile[] = function ($configurator, $compiler) {
 	$compiler->addExtension('gpspicker', new VojtechDobes\NetteForms\GpsPickerExtension);
 };
 $container = $configurator->createContainer();
-\Addons\Panels\Callback::register($container);
 // Debugger::$editor = $container->parameters['editor'];
 
 // @todo toto niekam schovat

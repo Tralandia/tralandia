@@ -63,13 +63,7 @@ class RouterFactory
 			'presenter' => 'Admin',
 			'action' =>  'list'
 		));
-	*/	
-		$adminRouter[] = new Route('admin/<presenter>/[<action>[/<id>]]', array(
-			'presenter' => 'Admin',
-			'action' =>  'list',
-			'primaryLocation' => $this->defaultPrimaryLocation,
-			'language' => $this->defaultLanguage,
-		));
+	*/
 
 		$router[] = $ownerRouter = $this->ownerRouteListFactory->create();
 		

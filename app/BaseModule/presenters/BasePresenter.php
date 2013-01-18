@@ -41,12 +41,28 @@ abstract class BasePresenter extends Presenter {
 			$this->redirect(301, 'this');
 		}
 
+		//$this->initCallbackPanel();
+
 		$backlink = $this->storeRequest();
 		if(!$this->getHttpRequest()->isPost()) {
 			$environmentSection = $this->context->session->getSection('environment');
 			$environmentSection->previousLink = $environmentSection->actualLink;
 			$environmentSection->actualLink = $backlink;
 		}
+	}
+
+	public function initCallbackPanel()
+	{
+		d($this->link(':Admin:RunRobot:searchCache', array('language' => $this->language->getId(),
+			'primaryLocation' => $this->primaryLocation->getId())));
+		$self = $this;
+		$callbacks = array();
+		$callbacks['test'] = array(
+			'name' => "test",
+			'function' => function () use($self) {$self->redirect(':Admin:RunRobot:searchCache');},
+		);
+
+		\Addons\Panels\Callback::register($this->getContext(), $callbacks);
 	}
 
 	public function getPreviousBackLink() {
