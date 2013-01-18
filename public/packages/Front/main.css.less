@@ -23,7 +23,7 @@ a , a:hover , .btn-link , .btn-link:hover {
 }
 
 p {
-	line-height: 17px;
+	line-height: 12px;
 }
 
 
@@ -391,9 +391,7 @@ ul.arrows {
 
 	.objectDetailContent .span5 {
 
-		
-
-		margin-top: 15px;
+		margin-top: 10px;
 		h1 {
 			margin: 0 0 10px 0;
 			padding: 0;
@@ -1058,7 +1056,7 @@ ul.arrows {
 
 	h1 {
 		font-size: @contentH1size;
-		line-height: @contentH1size;
+		line-height: 24px;
 		color: darkblue;
 		font-weight: bold;
 		margin: 0 0 10px 0;
@@ -1127,7 +1125,10 @@ ul.arrows {
 
 .socialIconTable {
 	height: 21px;
-
+	.basic-border-radius(5px);
+	background: #f9f9f9;
+	border: 1px solid #ddd;	
+	padding: 5px ;
 	#___plusone_0 {
 		position: relative;
 		top: -2px;
@@ -1155,25 +1156,32 @@ ul.arrows {
 
 .metainfobox {
 	padding:0 ;
-	background: #fcb72d;
+	
 	font-weight: bold;
-		.box-size();
-		width: 100%;
+	.box-size();
+	width: 100%;
 	.basic-border-radius (5px);	
 	
+	small {
+		font-weight: normal;
+		font-size: 14px;
+	}
+
+	background: rgb(245, 248, 234);
 
 	i {
 		&:before {
-			margin-right: 6px;
+			margin-right: 7px;
 			float: left;
 			color: #d97c0d;
+			color: @lightGreen;
 		}
 	}
 
 	&.large {
 
 		background: transparent;
-		border: 1px solid #dfe6b1;
+		border: 1px solid #fff;
 		padding:5px 10px;
 
 		.content {
@@ -1185,20 +1193,45 @@ ul.arrows {
 
 
 	.separator {
-		padding: 5px 10px;
-		width: 177px;
+		padding: 3px 10px;
+		width: 176px;
 		float: left;
 		border-left: 1px solid #d97c0d;
+		border-left: 1px solid #fff;
 
 		&.first {
+			border: none;			
+		}
+
+
+
+	}
+
+	&.double {
+		background: transparent;
+		border: none;
+		.separator {
+			padding: 5px 10px;
+			height: 20px;
 			border: none;
-			
-		}
+			background: rgb(250, 240, 221);
+			.basic-border-radius (5px);	
+			width: 172px;
+			i {
+				&:before {
+					color: #d97c0d;					
+				}
+			}
 
-		&.second {
-			
-		}
+			&.first {
+				margin-right: 10px;
+			}
 
+			&.second {
+				width: 173px;				
+			}
+
+		}
 	}
 }
 
@@ -1225,20 +1258,80 @@ ul.arrows {
 
 
 
-.objectDetailServicesIconList {
+.objectDetailServicesIconList.list {
 	list-style: none;
 	margin: 0;
 
 	li {
-		width: 100%;
-		display: block;
-		float: left;
-		margin-left: 15px;		
+		width: 381px;
+		.box-size();
+
+		margin-left: 15px;	
+			
 		font-size: 13px;
 		line-height: 15px;
+
+		clear: both;
 		strong {
 			display: block;
 		}
+
+		.content {
+			width: 375px;
+			float: right;
+			margin-bottom: 10px;
+		}
+
+		color: #aaa;
+
+		strong {
+			color: @darkGreen;
+		}
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+
+		&:before {
+			color: @lightGreen;
+		}
+
+		&.tag {
+			&:before {
+				content:'\E70C';
+			}
+		}
+
+		&.owner-availability {
+			&:before {
+				content:'\1F514';
+			}			
+		}
+
+		&.separate-groups {
+			&:before {
+				content:'\1F465';
+			}			
+		}
+
+		&.rooms {
+			&:before {
+				content:'\F601';
+			}			
+		}		
+
+		&.board {			
+			&:before {
+				font-family: 'FontAwesome';
+				font-size: 15px;
+				content:'\f0f4';
+			}			
+		}
+
+		&:before {
+			margin-right: 5px;
+		}
+		
 	}
 
 }
@@ -1253,7 +1346,7 @@ ul.arrows {
 	font-size: 12px;
 
 	.btn {
-		font-size: 11px;		
+		font-size: 14px;		
 	}
 
 	a.toogle {
@@ -1299,7 +1392,7 @@ ul.arrows {
 		input {
 
 			&.telnum {
-				width: 110px;
+				width: 70px;
 				float: left;
 			}
 
@@ -1311,7 +1404,7 @@ ul.arrows {
 		}
 
 		.tel {
-			width: 75px;
+			width: 115px;
 			float: left;
 			margin-right: 10px;
 		}

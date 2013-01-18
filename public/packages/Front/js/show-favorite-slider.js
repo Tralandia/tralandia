@@ -52,7 +52,12 @@
 
 					$.each(this.favoritesData , function(k,v){			
 
-						var newLink = $('<a></a>').attr('href',v.link);
+						var removeLink = $('<a></a>').attr({
+							href: '#',
+							rel: v.id
+						}).addClass('removeLink');
+
+						var newLink = $('<a></a>').attr('href',v.link).addClass('link');
 
 							// if is visited object
 							if(appObject.in_array(self.visitList,v.id)){
@@ -66,6 +71,7 @@
 
 							newLi.addClass('rel-'+v.id);
 
+							removeLink.appendTo(newLi);
 							newLink.appendTo(newLi);
 
 							if(v.id == self.currentId){
@@ -78,7 +84,7 @@
 
 					// full real width list
 
-					var liWidth = 100;
+					var liWidth = 122;
 
 					
 					var listCount = 0;
@@ -105,9 +111,6 @@
 
 					$rigthArrow.click(function(){
 
-						
-
-						console.log(leftOfset);
 
 						listCount = 0;
 						$(this).parent().find('ul li').each(function(index) {						

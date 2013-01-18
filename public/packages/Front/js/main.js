@@ -165,29 +165,20 @@ App.prototype.storageDelete = function(key){
 * add to favorites function
 */ 
 
-App.prototype.addToFavorites = function(){
-
-
+App.prototype.removeObjectFromFavorites = function(id){
 
 	var self = new App;
 
 	var list = self.storageGet('favoritesList');
 
-	var data = {
-		id: parseInt($(this).attr('rel')),
-		link: $(this).attr('link'),
-		thumb: $(this).attr('thumb'),
-	}
-
 	var favoriteSlider = $('#compareList');
 
-	if($(this).hasClass('selected')){
-		// remove from list
+	var sliderList = favoriteSlider.find('ul');
 
 		newList = new Array();
 
 		$.each(list,function(k,v){
-			if(v.id != data.id){
+			if(v.id != id){
 				newList.push(v);
 			}			
 		});
@@ -200,26 +191,68 @@ App.prototype.addToFavorites = function(){
 			self.storageSet('favoritesList' , newList);
 		}
 
-		$(this).removeClass('selected');
+		
 
 		// remove from favorites slider 		
 		// if page is Rental:detai 
 
 		if(favoriteSlider.length > 0){
-			favoriteSlider.find('ul li.rel-'+data.id).remove();
+			favoriteSlider.find('ul li.rel-'+id).remove();
 			
 			//@todo vsade aplikovat
 
 		}
 
+		var newWidth = sliderList.width();
+			newWidth -= 110;
+			// set new width 
+			sliderList.css({
+				width: newWidth+'px'
+			});
+
 		if(newList.length == 0){
 			$('#compareList').parent().parent().parent().hide();
 		}
+}
 
+
+App.prototype.addToFavorites = function(){
+
+	var self = new App;
+
+	var list = self.storageGet('favoritesList');
+
+	var data = {
+		id: parseInt($(this).attr('rel')),
+		link: $(this).attr('link'),
+		thumb: $(this).attr('thumb'),
+	}
+
+	var removeLink = $('<a></a>').attr({
+		href: '#',
+		rel: data.id
+	}).addClass('removeLink');
+
+
+	var newLink = $('<a></a>').attr('href',data.link).addClass('link');
+
+	var favoriteSlider = $('#compareList');
+
+	var sliderList = favoriteSlider.find('ul');
+
+	if($(this).hasClass('selected')){
+		// remove from list
+
+		self.removeObjectFromFavorites(data.id);
+
+		$(this).removeClass('selected');
 
 	} else {
 
-		
+		var removeLink = $('<a></a>').attr({
+			href: '#',
+			rel: data.id
+		}).addClass('removeLink');
 
 		if(typeof list == 'undefined' || list == null){
 			// if favorites dont exist 
@@ -230,17 +263,22 @@ App.prototype.addToFavorites = function(){
 			favoriteSlider.parent().parent().parent().show();
 
 			var newLi = $('<li></li>');
-				newLi.addClass('current');
+				
 				newLi.addClass('rel-'+data.id);
+
+				if($(this).hasClass('currentObject')){
+					newLi.addClass('current');
+				}
+				
+				removeLink.appendTo(newLi);
+				newLink.appendTo(newLi);
 
 			var sliderList = favoriteSlider.find('ul');
 				newLi.appendTo(sliderList);
 				$(this).addClass('selected');
 				
 
-		} else {
-
-			
+		} else {			
 
 			if(!self._checkIdInObject(list,data.id)){
 				// write unique data
@@ -253,15 +291,27 @@ App.prototype.addToFavorites = function(){
 				if(favoriteSlider.length > 0){
 
 
-
 					var newLi = $('<li></li>').css('background-image','url('+data.thumb+')');
-						newLi.addClass('current');
+						
 						newLi.addClass('rel-'+data.id);
 
-						var sliderList = favoriteSlider.find('ul');
+						if($(this).hasClass('currentObject')){
+							newLi.addClass('current');
+						}
+
+						removeLink.appendTo(newLi);
+						newLink.appendTo(newLi);
+
+						
+						var newWidth = sliderList.width();
+							newWidth += 122;
+							// set new width 
+							sliderList.css({
+								width: newWidth+'px'
+							});
+							
 							newLi.appendTo(sliderList);
 
-					//favoriteSlider.find('ul li.rel-'+data.id).remove();
 				}
 
 			}
@@ -505,6 +555,14 @@ $(document).ready(function(){
     		langmenuOpen = false;
     	}  	
     });
+
+    // remove object from favorites list 
+    $('.removeLink').live('click',function(){  
+    	id = $(this).attr('rel');
+    	A.removeObjectFromFavorites(id);
+    	$('.addToFavorites[rel='+id+']').removeClass('selected');
+    });
+
 
     $(document).scroll(function(){
 

@@ -40,6 +40,7 @@ parameters:
 					- FrontJqUi/css/tralandia/jquery-ui-1.9.1.custom.css
 					- Front/ticket.less
 					- Front/adminMenuAside.less
+					- Front/less/font-awesome.less
 					
 
 				js:

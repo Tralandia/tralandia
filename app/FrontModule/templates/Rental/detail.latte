@@ -66,7 +66,7 @@
 			{var $ii = $ii + 1}
 		{/foreach}
 		
-		 <img class="mapsImg" src="https://maps.googleapis.com/maps/api/staticmap?center={$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&markers=color:blue%7C{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&maptype=terrain&zoom=13&size=288x170&sensor=false" /> 
+		 <img class="mapsImg" src="https://maps.googleapis.com/maps/api/staticmap?center={$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&markers=color:blue%7C{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&zoom=10&size=288x170&sensor=false" /> 
 		
 	</div>
 
@@ -80,10 +80,15 @@
 
 
 		
+
+				   
+
+		<p class="red bold nopadding marginBottom">			
+			{_$rental->teaser}
+		</p>
+		<p class="marginBottom nopadding">
 		<a class="capitalize"  href="{link Rental:list location => $rental->address->locality , rentalType => $rental->type }"><b>{_$rental->type->name} {_$rental->address->locality->name}</b></a>
-
-			<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>	   
-
+		</p>
 
 		{foreach $rental->address->getLocations() as $location}
 
@@ -91,26 +96,23 @@
 			
 		{/foreach}
 
-		<p class="red bold nopadding">			
-			{_$rental->teaser}
-		</p>
-		
-		<div class="socialIconTable marginBottom">
-        <iframe src="http://www.facebook.com/plugins/like.php?href={link Rental:detail $rental}&amp;locale=sk_SK&amp;layout=button_count&amp;show_faces=false&amp;width=130&amp;action=like&amp;colorscheme=light&amp;height=80" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:20px; width:130px;" allowTransparency="true"></iframe>
-        <g:plusone size="small" href="{link Rental:detail $rental}"  style="margin-top:2px;"></g:plusone>
-        </div>
 
-		<div class="metainfobox marginRight"> 
-			<div class="separator first"><i class="entypo-users"></i><span class="capitalize">{_o1008}.</span> <small>{$rental->maxCapacity}</small> {_o925}</div>
-			<div class="separator second"><i class="entypo-info2"></i> {$rental->price} #Eur  {_o932} </div>
+
+
+		<div class="metainfobox double"> 
+			<div class="separator first"><i class="entypo-info2"></i>{$rental->price} #Eur <small>/ osoba / noc</small> </div>
+			<div class="separator second"><i class="entypo-users"></i><span class="capitalize">{_o1008}.</span> <small>{$rental->maxCapacity} osoba</small></div>
 			<div class="clearfix"></div>
 		</div>
 		
 		<div class="clearfix marginBottom"></div>
 
 		{if isset($rental->checkIn)}
-		<div class="metainfobox large marginBottom"><i class="entypo-clock"></i> <div class="content">#Check-in: {$rental->checkIn} #Check-out: {$rental->checkOut}</div>
-		<div class="clearfix"></div></div>
+		<div class="metainfobox marginBottom">
+			<div class="separator first"><i class="entypo-clock"></i> #Check-in: <small>{$rental->checkIn} </small></div> 
+			<div class="separator second"><i class="entypo-checkout"></i> #Check-out: <small>{$rental->checkOut}</small></div>
+			<div class="clearfix"></div>
+		</div>
 		{/if}
 
 
@@ -120,61 +122,61 @@
 
 				{var $board = $rental->getAmenitiesByType(array('board'))}
 				{if $board}
-				   <li>
-				   {_o1010}
-					   <strong>
+				   <li class="board">
+				   <strong>{_o1010}</strong>
+					   <div class="content">
 						{foreach $board  as $amenities}					
 							{foreach $amenities as $amenity}
 								{_$amenity->name}{if !$iterator->last}, {/if}
 							{/foreach}					
 						{/foreach}
-						</strong>
+					</div>
 				   </li>			   
 			   {/if}
 			   {var $separateGroups = $rental->getAmenitiesByType(array('separate-groups'))}
-			   {if $separateGroups}
-				   <li>
-				   {_o1011}
-					   <strong>
+			   {* {if $separateGroups} *}
+				   <li class="separate-groups">				   
+				   <strong>{_o1011}</strong>
+					   <div class="content">
 						{foreach $separateGroups as $amenities}					
 							{foreach $amenities as $amenity}
 								{_$amenity->name}{if !$iterator->last}, {/if}
 							{/foreach}					
 						{/foreach}
-						</strong>
+						</div>
 				   </li>	
-			   {/if}
+			   {* {/if} *}
 			   {if $rental->tags}
-				   <li>
-				   {_o1014}
-					   <strong>
+				   <li class="tag">
+				   <strong>{_o1014}</strong>
+					   <div class="content">
 						{foreach $rental->tags as $tag}					
 							{_$tag->name}
 						{/foreach}
-						</strong>
+					</div>
 				   </li>
 			   {/if}
 			   {var $ownerAvailability = $rental->getAmenitiesByType(array('owner-availability'))}
-			   {if $ownerAvailability}
-			   <li>
-			   {_o1012}
-				   <strong>
+			  {* {if $ownerAvailability} *}
+			   <li class="owner-availability">
+			   <strong>{_o1012}</strong>
+				   <div class="content">
 						{foreach $ownerAvailability as $amenities}					
 							{foreach $amenities as $amenity}
 								{_$amenity->name}{if !$iterator->last}, {/if}
 							{/foreach}				
 						{/foreach}
-					</strong>
+				</div>
 			   </li>
-			   {/if}
-			   {if $rental->rooms}
-				   <li>
-				   {_o23006}
-					   <strong>
+			   {* {/if} *}
+			   {*  {if $rental->rooms} *}
+				   <li class="rooms">
+				   <strong>{_o23006}</strong>
+					   <div class="content">
 						{$rental->rooms}
-					   </strong>
+					  </div>
 				   </li>
-			   {/if}
+			   {* {/if} *}
 			</ul>
 		</div>
 
@@ -211,11 +213,15 @@
 	<div class="span3 sidebarRightDetail">
 
 						{if $mainImage = $rental->getMainImage()}		        			
-							<button class="marginTop btn btn-compare addToFavorites" rel="{$rental->id}" link="{link Rental:detail $rental}" thumb="{$basePath}{$mainImage|rentalImageSrc}"><span class="entypo-heart">{_o12334}</span></button>
+							<button class="marginTop btn btn-compare addToFavorites currentObject" rel="{$rental->id}" link="{link Rental:detail $rental}" thumb="{$basePath}{$mainImage|rentalImageSrc}"><span class="entypo-heart">{_o12334}</span></button>
 						{/if}
 	
 
-	
+			<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+		<div class="socialIconTable marginBottom marginTop">
+        <iframe src="http://www.facebook.com/plugins/like.php?href={link Rental:detail $rental}&amp;locale=sk_SK&amp;layout=button_count&amp;show_faces=false&amp;width=130&amp;action=like&amp;colorscheme=light&amp;height=80" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:20px; width:130px;" allowTransparency="true"></iframe>
+        <g:plusone size="small" href="{link Rental:detail $rental}"  style="margin-top:2px;"></g:plusone>
+        </div>
 	
 		{* <button class="btn btn-compare addToFavorites" rel="{$rental->id}" link="{link Rental:detail $rental}" thumb="{$rental->getMainImage()->getThumbnail()}"><span class="entypo-star">{_o12334}</span></button> *}
 
@@ -249,7 +255,7 @@
 
 						
 						{foreach $rental->emails as $email }
-							<strong><a href="mailto:{$email->value}">{_o965}</a> {if !$iterator->last}<br/>{/if}</strong>
+							<strong><a href="mailto:{$email->value}">#email</a> {if !$iterator->last}<br/>{/if}</strong>
 						{/foreach}
 
 						</td>
