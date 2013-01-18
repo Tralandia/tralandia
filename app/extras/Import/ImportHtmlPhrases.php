@@ -14,9 +14,12 @@ use Nette\Application as NA,
 
 class ImportHtmlPhrases extends BaseImport {
 
+	protected $multiIds = array(12277, 2443);
+
 	public function doImport($subsection = NULL) {
 
 		$dictionaryType = $this->createPhraseType('Html', 'Html', 'MARKETING');
+		$dictionaryTypeMulti = $this->createPhraseType('HtmlMulti', 'HtmlMulti', 'MARKETING');
 
 		if ($this->developmentMode == TRUE) {
 			$r = q('select * from dictionary where text_type = 2');
@@ -25,7 +28,11 @@ class ImportHtmlPhrases extends BaseImport {
 		}
 		$i = 0;
 		while ($x = mysql_fetch_array($r)) {
-			$newPhrase = $this->createNewPhrase($dictionaryType, $x['id']);
+			if (in_array($x['id'], $this->multiIds)) {
+				$newPhrase = $this->createNewPhrase($dictionaryTypeMulti, $x['id']);
+			} else {
+				$newPhrase = $this->createNewPhrase($dictionaryType, $x['id']);
+			}
 
 			$details = array(
 				'translationHelp' => $x['help'],

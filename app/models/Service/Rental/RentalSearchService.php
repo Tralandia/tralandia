@@ -85,8 +85,6 @@ class RentalSearchService extends Nette\Object
 		$this->resetResults();
 	}
 
-	//todo - pridat funkcie na vyhodenie kriteria
-
 	public function getRentalIds($page = NULL) {
 		$this->getResults();
 		$this->reorderResults();
@@ -151,6 +149,10 @@ class RentalSearchService extends Nette\Object
 		foreach ($this->criteria as $key => $value) {
 			if ($value === NULL) continue;
 			$results[$key] = Arrays::get($this->searchCacheData, array($key, (is_object($value) ? $value->id : $value)), NULL);
+			if (count($results[$key]) == 0) {
+				$this->results = array();
+				return $this->results;
+			}
 		}
 
 		$results = array_filter($results);
@@ -171,7 +173,6 @@ class RentalSearchService extends Nette\Object
 
 	protected function reorderResults() {
 		$order = $this->rentalOrderCaching->getOrderList();
-		d($this->results);
 		
 		$t = array();
 

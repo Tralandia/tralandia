@@ -154,7 +154,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		return $this->searchService->getRentalsCount();
 	}
 
-	protected function getLinksFor($criteriaName, $repositoryAccessor, $ignoreNull=FALSE) {
+	protected function getLinksFor($criteriaName, $repositoryAccessor, $ignoreNull = FALSE) {
 
 		$order 		= array();
 		$linksTmp 	= array();
@@ -185,8 +185,10 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 			$criteriaValue = $option;
 			if ($option instanceof \Nette\ArrayHash) $criteriaValue = $option->id;
 			$params = array_merge($selected, array($criteriaName => $criteriaValue));
-
 			$count 	= $this->getRentalsCount($params);
+
+			//d($params, $count);
+
 			if ($ignoreNull && $count==0) continue;
 
 			$linkParams = $params;
@@ -216,7 +218,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 				$linksTmp[$key]['entity'] = $option;
 			}
 		}
-
+		//d($linksTmp);
 		return $this->prepareOrder($linksTmp, $order, $visible);
 
 	}
