@@ -30,7 +30,6 @@ class HomePresenter extends BasePresenter {
 
 		$this->template->rentals = $rentals;
 		$this->template->isHome = TRUE;
-		$this->template->homeCacheId = 'home'.$this->template->envPrimaryLocation->id.'-'.$this->template->envLanguage->id;
 
 	}
 

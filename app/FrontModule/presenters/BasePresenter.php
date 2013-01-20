@@ -78,6 +78,7 @@ abstract class BasePresenter extends \BasePresenter {
 
 		$this->template->worldwideCount = $this->locationRepositoryAccessor->get()->getWorldwideRentalCount();
 
+		$this->template->homeCacheId = 'home'.$this->template->envPrimaryLocation->id.'-'.$this->template->envLanguage->id;
 		$this->template->footerCountriesCacheId = 'footerCountries'.$this->template->envLanguage->id;
 
 		$header = $this->getComponent('header');
