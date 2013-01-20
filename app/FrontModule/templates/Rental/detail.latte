@@ -62,7 +62,7 @@
 	<div class="span4 marginBottom marginTop marginLeft leftSidebarObjectDetail">
 		{var $ii = 1}
 		{foreach $rental->getImages(3) as $photo}
-			<img alt="{_$rental->name} {_$photo->name} {$ii}" src="{$basePath}{$photo|rentalImageSrc}" class="marginBottom" />
+			<img alt="{_$rental->name} {$ii}" src="{$basePath}{$photo|rentalImageSrc}" class="marginBottom" />
 			{var $ii = $ii + 1}
 		{/foreach}
 		
@@ -391,7 +391,7 @@ $(document).ready(function(){
 					<ul class="biggall">	
 						{var $ii = 1}
 						{foreach $rental->getImages() as $photo}
-							<li><img alt="{_$rental->name} {_$photo->name} {$ii}" src="{$basePath}{$photo|rentalImageSrc}" /></li>
+							<li><img alt="{_$rental->name} {$ii}" src="{$basePath}{$photo|rentalImageSrc}" /></li>
 							{var $ii = $ii + 1}
 						{/foreach}
 					</ul>

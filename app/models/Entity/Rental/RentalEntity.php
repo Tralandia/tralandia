@@ -225,11 +225,25 @@ class Rental extends \Entity\BaseEntity {
 	protected $services;
 
 	public function getMainImage() {
-		return $this->images->first();
+		$t = $this->images->first();
+		if (!$t) {
+			$t = 'http://www.tralandia.sk/u/87/13376844217106.jpg';
+		}
+		return $t;
 	}
 
 	public function getImages($limit = NULL, $offset = 0) {
-		return $this->images->slice($offset, $limit);
+		$images = $this->images->slice($offset, $limit);
+		if (count($images) == 0) {
+			$images = array(
+				'http://www.tralandia.sk/u/87/13376844217106.jpg',		
+				'http://www.tralandia.sk/u/87/13376844369216.jpg',		
+				'http://www.tralandia.sk/u/87/13376844270394.jpg',		
+				'http://www.tralandia.sk/u/87/13376844324019.jpg',		
+			);
+			return array_slice($images, 0, $limit);
+		}
+		return $images;
 	}
 
 	public function getAmenitiesByType($types, $limit = NULL)

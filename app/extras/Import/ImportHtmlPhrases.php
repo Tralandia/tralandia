@@ -14,7 +14,7 @@ use Nette\Application as NA,
 
 class ImportHtmlPhrases extends BaseImport {
 
-	protected $multiIds = array(12277, 2443);
+	protected $multiIds = array(12277, 2443, 940, 925);
 
 	public function doImport($subsection = NULL) {
 

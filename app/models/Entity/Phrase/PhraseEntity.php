@@ -153,6 +153,14 @@ class Phrase extends \Entity\BaseEntityDetails {
 		}
 	}
 
+	// public function getTranslation(\Entity\Language $language) {
+	// 	foreach ($this->getTranslations() as $value) {
+	// 		if ($value->getLanguage()->getId() == $language->getId()) {
+	// 			return $value;
+	// 		}
+	// 	}
+	// }
+
 	public function getTranslationText(\Entity\Language $language, $loose = FALSE) {
 		$translation = $this->getMainTranslations($language);
 		$text = '';

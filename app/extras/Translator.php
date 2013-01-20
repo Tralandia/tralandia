@@ -11,7 +11,7 @@ class Translator implements \Nette\Localization\ITranslator {
 
 	const DEFAULT_LANGUAGE = 38;
 
-	protected $language = 38;
+	protected $language;
 	protected $cache;
 	protected $phraseRepositoryAccessor;
 
@@ -35,7 +35,7 @@ class Translator implements \Nette\Localization\ITranslator {
 		return $translation;
 	}
 	
-	protected function getTranslation($phrase,array $variation = NULL)
+	protected function getTranslation($phrase, array $variation = NULL)
 	{
 		//d($phrase);
 		if($phrase instanceof \Service\Phrase\PhraseService) {

@@ -48,11 +48,19 @@ class RadoTempPresenter extends BasePresenter {
 	}
 
 	public function actionTest() {
-		$rentalType = $this->rentalTypeRepositoryAccessor->get()->find(1);
 		$language = $this->languageRepositoryAccessor->get()->findOneByIso('sk');
-		d($rentalType->name->getTranslationVariationsMatrix($language));
-		d($rentalType->name->getTranslation($language));
-		//$results = $this->locationRepositoryAccessor->get()->getWorldwideRentalCount();
+		$translator = $this->presenter->getService('translator');
+		$location = $this->locationRepositoryAccessor->get()->findOneByIso('hu');
+		d($location);
+		$translator->setLanguage($language);
+		$t = $translator->translate($location->name);
+		d($t);
+
+		// $rentalType = $this->rentalTypeRepositoryAccessor->get()->find(1);
+		// $language = $this->languageRepositoryAccessor->get()->findOneByIso('sk');
+		// d($rentalType->name->getTranslationVariationsMatrix($language));
+		// d($rentalType->name->getTranslation($language));
+		// //$results = $this->locationRepositoryAccessor->get()->getWorldwideRentalCount();
 		//d($results);
 	}
 

@@ -20,6 +20,10 @@ class Helpers {
 
 	public function rentalImageSrc($image, $size = 'thumbnail')
 	{
-		return $this->rentalImageDir . $image->filePath . DIRECTORY_SEPARATOR . $size . '.jpeg';
+		if (is_object($image)) {
+			return $this->rentalImageDir . $image->filePath . DIRECTORY_SEPARATOR . $size . '.jpeg';		
+		} else {
+			return $image;
+		}
 	}
 }

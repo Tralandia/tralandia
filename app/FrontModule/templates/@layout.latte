@@ -7,10 +7,13 @@
 		<div class="row">
 
 
+			{cache $homeCacheId, expire => '+1 day'}
 			{include header.latte}
+			{/cache}
 			{include favorites.latte}
-			{control searchBar}
-			
+			{cache homeSearchBar, if => isset($isHome), expire => '+1 day'}
+				{control searchBar}
+			{/cache}
 			<div class="span9">
 				<div class="innerPadding baseRadius baseBorder innerPaddingRitgh overflow">
 					<div id="content" class="nopadding">
@@ -19,9 +22,12 @@
 					</div>
 				</div>
 			</div>
-
 			{*{control footer}*}
-			{control countriesFooter}
+			{if isset($isHome)}
+				{cache $footerCountriesCacheId, expire => '+1 day'}
+					{control countriesFooter}
+				{/cache}
+			{/if}
 		</div>		
 	</div>
 

@@ -189,6 +189,7 @@ class ImportLocations extends BaseImport {
 					'nominative' => $x1['name'],
 					'locative' => $x1['name_locative'],
 				);
+				$variations[0][0] = array_filter($variations[0][0]);
 				$t->updateVariations($variations);
 			}
 
@@ -262,13 +263,15 @@ class ImportLocations extends BaseImport {
 			while ($x1 = mysql_fetch_array($r1)) {
 				$variations = array();
 				$variations[0][0] = array(
+					'nominative' => $x1['name'] ? $x1['name'] : $x['name'],
 					'locative' => $x1['name_locative'],
 				);
 				$languageTemp = $this->context->languageRepositoryAccessor->get()->findOneBy(array('oldId' => $x1['language_id']));
 				$t = $namePhraseService->createTranslation($languageTemp, $x['name']);
+				$variations[0][0] = array_filter($variations[0][0]);
 				$t->updateVariations($variations);
 			}
-
+			//d($namePhrase); exit;
 			$location->name = $namePhrase;
 			$location->type = $locationType;
 			$location->slug = $x['name_url'];
@@ -317,14 +320,23 @@ class ImportLocations extends BaseImport {
 
 			$countryLocation = $this->context->locationRepositoryAccessor->get()->findOneBy(array('oldId'=>$x['country_id'], 'type'=>$countryLocationType));
 			$r1 = q('select * from localities_translations where location_id = '.$x['id']);
+			$translationsCount = 0;
 			while ($x1 = mysql_fetch_array($r1)) {
 				$variations = array();
 				$variations[0][0] = array(
+					'nominative' => $x1['name'] ? $x1['name'] : $x['name'],
 					'locative' => $x1['name_locative'],
 				);
 				$languageTemp = $this->context->languageRepositoryAccessor->get()->findOneBy(array('oldId' => $x1['language_id']));
 				$t = $namePhraseService->createTranslation($languageTemp, $x['name']);
+				$variations[0][0] = array_filter($variations[0][0]);
 				$t->updateVariations($variations);
+				$translationsCount++;
+			}
+
+			if ($namePhraseService->getTranslation($countryLocation->defaultLanguage) == FALSE) {
+				$languageTemp = $countryLocation->defaultLanguage;
+				$t = $namePhraseService->createTranslation($languageTemp, $x['name']);
 			}
 
 			$location->name = $namePhrase;
@@ -335,7 +347,6 @@ class ImportLocations extends BaseImport {
 
 			$location->parent = $countryLocation;
 
-			//d($location); return;
 			$this->model->persist($location);
 		}
 		$this->model->flush();

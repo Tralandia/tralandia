@@ -8,6 +8,7 @@ use Service\Rental\RentalSearchService;
 class SearchBarControl extends \BaseModule\Components\BaseControl {
 
 	const VISIBLE_OPTIONS_COUNT = 15;
+	const LOCATION_MAX_COUNT = 100;
 
 	// repositories
 	public $rentalTypeRepositoryAccessor;
@@ -114,7 +115,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		for ($i=1; $i <= RentalSearchService::CAPACITY_MAX; $i++) {
 			$options[$i] = array(
 				'id' => $i,
-				'name' => $i,
+				'name' => $i.' - a',
 			);
 		}
 
@@ -180,13 +181,14 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 			}
 		}
 
+		$totalRentalCount = 0;
 		foreach ($options as $key => $option) {
 
 			$criteriaValue = $option;
 			if ($option instanceof \Nette\ArrayHash) $criteriaValue = $option->id;
 			$params = array_merge($selected, array($criteriaName => $criteriaValue));
 			$count 	= $this->getRentalsCount($params);
-
+			$totalRentalCount += $count;
 			//d($params, $count);
 
 			if ($ignoreNull && $count==0) continue;
@@ -198,6 +200,9 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 				$name = $this->translator->translate($option->name);
 			} else {
 				$name = $option->name;
+			}
+			if (strlen($name) == 0) {
+				d($criteriaName, $option->id);
 			}
 
 			$link 	= $this->presenter->link('//Rental:list', $linkParams);
@@ -218,7 +223,18 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 				$linksTmp[$key]['entity'] = $option;
 			}
 		}
-		//d($linksTmp);
+
+		if ($criteriaName == RentalSearchService::CRITERIA_LOCATION) {
+			$visibleTmp = $visible;
+			arsort($visibleTmp);
+			$visibleTmp = array_slice($visibleTmp, 0, self::LOCATION_MAX_COUNT, TRUE);
+			foreach ($linksTmp as $key => $value) {
+				if (!isset($visibleTmp[$key])) {
+					unset($linksTmp[$key]);
+				}
+			}
+		}
+		//d($criteriaName, $totalRentalCount);
 		return $this->prepareOrder($linksTmp, $order, $visible);
 
 	}
@@ -251,11 +267,11 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 
 		// sort by name
 		ksort($order);
+		//natcasesort
 		$links = array();
 		foreach ($order as $key) {
-			$links[] = $linksTmp[$key];
+			if (isset($linksTmp[$key])) $links[] = $linksTmp[$key];
 		}
-
 		return $links;
 
 	}

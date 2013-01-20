@@ -64,16 +64,23 @@ class ImportRentals extends BaseImport {
 		if ($this->developmentMode == TRUE) {
 			//$r = q('select * from objects where id = 7116');
 			//$r = q('select * from objects where country_id = 46 order by rand() limit 3');
+			$existingIds = array();
+			if (count($existingIds)) {
+
+			} else {
+
+			}
 			$r = q('select * from objects where country_id = 46 order by id');
 		} else {
-			$r = q('select * from objects');
+			$existingIds = array();
+			if (count($existingIds)) {
+				$r = q('select * from objects where id id > '.$this->savedVariables['lastRentalImported'].' order by id asc limit 500');
+			} else {
+				$r = q('select * from objects order by id asc limit 500');
+			}
 		}
 
 		while ($x = mysql_fetch_array($r)) {
-			d('Old id', $x['id']);
-			if($context->rentalRepositoryAccessor->get()->findOneByOldId($x['id'])) {
-				continue;
-			}
 			$rental = $context->rentalEntityFactory->create();
 			$rental->oldId = $x['id'];
 
@@ -363,9 +370,10 @@ class ImportRentals extends BaseImport {
 			$rentalDecorator->calculateRank();
 			//d($rental->phones);
 			$model->persist($rental);
-
+			$this->savedVariables['lastRentalImported'] = $x['id'];
 		}
 		$model->flush();
+		$this->saveVariables();
 	}
 
 }

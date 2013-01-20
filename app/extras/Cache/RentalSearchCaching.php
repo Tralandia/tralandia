@@ -44,6 +44,8 @@ class RentalSearchCaching extends \Nette\Object {
 		foreach ($this->cacheContent as $key => $value) {
 			foreach ($value as $key2 => $value2) {
 				if (isset($value2[$rental->id])) unset($this->cacheContent[$key][$key2][$rental->id]);
+				if (count($this->cacheContent[$key][$key2]) == 0) unset($this->cacheContent[$key][$key2]);
+
 			}
 		}
 	}

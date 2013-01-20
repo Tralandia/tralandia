@@ -48,7 +48,7 @@ class ImportRentalTypes extends BaseImport {
 		'house' => 'domy',
 		'townhome' => 'mestské domy',
 		'yacht' => 'jachty',
-		'B&B' => '' => '',
+		'B&B' => '',
 		'caravan' => 'karavany',
 		'cave house' => 'jaskynné domy',
 		'chateau' => 'chaty',
@@ -96,13 +96,14 @@ class ImportRentalTypes extends BaseImport {
 			$rentalType = $this->context->rentalTypeEntityFactory->create();
 			$rentalType->name = $this->createPhraseFromString('\Rental\Type', 'name', 'ACTIVE', $x['name'], 'en');
 			
-			if (strlen($this->skPlurals[$x['name']]) != 0) {
-				$skTranslation = $rentalType->name->getTranslation($sk, FALSE);
-				$variations[1][0]['nominative'] = $this->skPlurals[$x['name']];
-				$skTranslation->updateVariations($variations);
-				d($skTranslation); exit;
-			}
-
+			// if (strlen($this->skPlurals[$x['name']]) != 0) {
+			// 	$skTranslation = $this->context->phraseTranslationEntityFactory->create();
+			// 	$skTranslation->setLanguage($sk);
+			// 	d($skTranslation); exit;
+			// 	$variations[1][0]['nominative'] = $this->skPlurals[$x['name']];
+			// 	$skTranslation->updateVariations($variations);
+			// }
+			// exit;
 			$rentalType->oldId = $x['id'];
 			$this->model->persist($rentalType);
 		}

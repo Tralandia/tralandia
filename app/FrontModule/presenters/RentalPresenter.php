@@ -47,6 +47,7 @@ class RentalPresenter extends BasePresenter {
 		$this->template->rentalService = $rentalService;
 		$this->template->locality = $localitySeo;
 		$this->template->interviewAnswers = $interviewAnswers;
+
 		$this->setLayout('detailLayout');
 	}
 

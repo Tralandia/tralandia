@@ -34,8 +34,8 @@ class UpdateRentalSearchCacheRobot extends \Nette\Object implements IRobot {
 
 		$cache = $this->rentalOrderFactory->create($this->primaryLocation);
 		$cache->reset();
-		d($cache->getOrderList());
-		d($cache->getFeaturedList());
+		//d($cache->getOrderList());
+		//d($cache->getFeaturedList());
 		$cache->save();
 	}
 }

@@ -17,14 +17,14 @@
 		<li><a href="#tabs-4">{_o23011}</a></li>
 	</ul>
 *}
+	{cache homeTop, expire => '+1 day'}
+
 	<div id="tabs-1" class="ui-tabs-panel">
 		<ul n:inner-foreach="$rentals as $rental" class="row-fluid hp-list">
 			<li class="span4">
 				<a n:href=":Front:Rental:detail $rental['entity']" title="{_$rental['entity']->name}" >
-					<div class="position">TOP</div>
-				{if $rental['entity']->getMainImage()}
-				 <img alt="{_$rental['entity']->name}" src="{$rental['entity']->getMainImage()|rentalImageSrc}" /> 
-				{/if}
+				<div class="position">TOP</div>
+				<img alt="{_$rental['entity']->name}" src="{$rental['entity']->getMainImage()|rentalImageSrc}" /> 
 
 				{*
 				{$basePath}{$rental['entity']->getImages(1)|rentalImageSrc}
@@ -42,6 +42,7 @@
 		</ul>
 
 	</div>
+	{/cache}
 	{*}
 	<div id="tabs-2" class="ui-tabs-panel">
 		<div class="row-fluid">
