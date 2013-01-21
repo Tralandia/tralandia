@@ -44,6 +44,7 @@
 				if(typeof this.favoritesData == 'undefined' || this.favoritesData == null){
 					$(this).parent().parent().parent().hide();
 				} else {
+					$(this).parent().parent().parent().show();
 					var self = this;
 
 					this.currentId = $('#content').find('h1.addToViewList');

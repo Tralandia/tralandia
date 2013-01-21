@@ -33,6 +33,7 @@ var App = $class({
 	
 	constructor: function (){
 		this._traMapInit = false;
+
 	}
 
 });
@@ -196,12 +197,6 @@ App.prototype.removeObjectFromFavorites = function(id){
 		// remove from favorites slider 		
 		// if page is Rental:detai 
 
-		if(favoriteSlider.length > 0){
-			favoriteSlider.find('ul li.rel-'+id).remove();
-			
-			//@todo vsade aplikovat
-
-		}
 
 		var newWidth = sliderList.width();
 			newWidth -= 110;
@@ -211,7 +206,11 @@ App.prototype.removeObjectFromFavorites = function(id){
 			});
 
 		if(newList.length == 0){
-			$('#compareList').parent().parent().parent().hide();
+			$('#compareList').parent().parent().parent().slideUp(500,function(){
+				favoriteSlider.find('ul li.rel-'+id).remove();
+			});
+		} else {
+			favoriteSlider.find('ul li.rel-'+id).remove();
 		}
 }
 
@@ -260,9 +259,9 @@ App.prototype.addToFavorites = function(){
 			list[0] = data;
 
 			self.storageSet('favoritesList',list);
-			favoriteSlider.parent().parent().parent().show();
+			favoriteSlider.parent().parent().parent().slideDown();
 
-			var newLi = $('<li></li>');
+			var newLi = $('<li></li>').css('background-image','url('+data.thumb+')');
 				
 				newLi.addClass('rel-'+data.id);
 
@@ -368,9 +367,13 @@ App.prototype.datepickerIcon = function(){
 App.prototype.initMapsObjectDetail = function(){
 	$('#objectDetailListMap').trigger('click');
 	/* large map plugin */
-	maplodader();
+	//maplodader();
 	
 	$.scrollTo('#objectDetailListMap',800);	
+
+	setTimeout(function(){
+		maplodader();
+	},800);
 	
 }
 

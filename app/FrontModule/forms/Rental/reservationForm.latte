@@ -1,13 +1,17 @@
 
 {form reservationForm}
-	<input type="text" n:input="name" placeholder="{_o1031}" class="invalid"/>
-	<span class="errorMsg">Error mesage Error mesage Error mesage Error mesage Error mesage Error mesage Error mesage Error mesage </span>
+
+	{* add class invalid to input *}
+
+	<input type="text" n:input="name" placeholder="{_o1031}" class="valid"/>
+	{*<span class="errorMsg">Error mesage Error mesage Error mesage Error mesage Error mesage Error mesage Error mesage Error mesage </span>*}
 	<input type="text" n:input="email" placeholder="{_o1034}" />
 
 
 	{input phonePrefix , class => 'tel'}
-	<input n:input="phone2" type="text" class="telnum invalid" placeholder="{_o1037}"/>
-	<span class="errorMsg">Error mesage Error mesage Error mesage Error mesage Error mesage Error mesage Error mesage Error mesage </span>
+	<input n:input="phone2" type="text" class="telnum valid" placeholder="{_o1037}"/>
+	{* <span class="errorMsg">Error mesage Error mesage Error mesage Error mesage Error mesage Error mesage Error mesage Error mesage </span>
+	*}
 
 	{input parents , class => 'counter first'}
 	{input childs , class => 'counter'}
@@ -23,7 +27,8 @@
 	  <span class="add-on datepickerIcon entypo-calendar"></span>
 	</div>
 
-	<textarea n:input="message" placeholder="{_o12279}" class="invalid"></textarea>
-	<span class="errorMsg">Error mesage Error mesage Error mesage Error mesage Error mesage Error mesage Error mesage Error mesage </span>
+	<textarea n:input="message" placeholder="{_o12279}" class="valid"></textarea>
+	{*<span class="errorMsg">Error mesage Error mesage Error mesage Error mesage Error mesage Error mesage Error mesage Error mesage </span>
+	*}
 	<button class="btn btn-orange"> <span class="entypo-send">{_o1719}</span> </button>
 {/form}

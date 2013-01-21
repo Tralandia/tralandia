@@ -100,8 +100,8 @@
 	.header {
 
 
-		text-align: center;
-		padding: 2px 0;
+		
+		padding: 2px 10px;
 
 		height: 20px;
 		a {
@@ -124,15 +124,26 @@
 
 		h3 {
 			
-			text-align: center;			
-			width: 500px;
 			font-size: 11px;
 			line-height: 19px;
 			margin: 0 auto;
 			padding: 0;
 			color: #fff;
+			float: left;
+		}
+
+		.menu {
+			float: right;
+			
+
+			a {
+				display: block;
+				float: right;
+			}
 		}
 	}
+
+
 
 	.content {
 		width: 920px;
@@ -224,10 +235,14 @@
 
 				a.removeLink {
 					visibility: visible;
-					background: #ee4a00;
+					background: #b0c13b;
 
 					&:before {
 						color: #fff;
+					}
+
+					&:hover {
+						background: #ee4a00;
 					}
 				}
 			}
@@ -236,7 +251,7 @@
 				display: block;
 				height:100%;
 				width: 100%;
-				background: #ddd;
+				
 				position: relative;
 				top: -20px;				
 			}

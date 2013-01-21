@@ -31,25 +31,31 @@
 		}
 
 		&.active {
-			color: #fff;
-			border: 1px solid #273f7d;
 
-			.basic-gradient(#5976AD,#27407D);
+	.basic-gradient(#ddd,#ccc);
+	color: #444;
+	border: 1px solid rgb(147, 172, 218);
 
 			[class*="entypo-"]:before {
-				color: #cfdaef;
+				color: #444;
 			}
 
 			&:hover  {	
-				.basic-gradient(#27407D,#5976AD);
+				.basic-gradient(#ccc,#ddd);
 			}
 
 			&.selected {
 
-				.basic-gradient(#27407D,#5976AD);
+				color: #fff;
+				.basic-gradient(#5b78af,#27407e);
 
 				span.entypo-heart:before {
-					content:'\2713';
+					
+					color: #f68905;
+				}
+
+				&:hover {
+					.basic-gradient(#27407e,#5b78af);
 				}
 
 			}
@@ -116,12 +122,12 @@
 
 	.locations {
 		font-size: 12px;
-		color: #999;
+		color: @brown;
 
 		height: 14px;
 		margin: 0 0 7px 0;
 		a {
-			color: #999;	
+			color: @brown;
 		}
 	}
 
@@ -151,6 +157,7 @@
 			height: 36px;
 			overflow: hidden;
 			margin-bottom: 4px;
+			color: #999;
 		}
 
 		&.teaser {

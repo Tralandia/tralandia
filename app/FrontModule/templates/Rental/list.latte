@@ -7,7 +7,7 @@
 <div class="row-fluid">
 
 	<div class="span12">
-		<h1 class="marginLeft">{$pageH1}</h1>
+		<h1 class="marginLeft">{$pageH1} <span class="counter">({$countryCountObjects} #ubytovani)</span></h1>
 	</div>
 
 {*
@@ -62,7 +62,7 @@
 		        		<h2><a href="{link Rental:detail $rental}">{_$rental->name}</a></h2>
 
 		        		
-		        		<button rel="{$rental->id}" link="{link Rental:detail $rental}" thumb="{$thumbLink}" class="addToFavorites btn btn-mini listCompareBtn active"><span class="entypo-heart">{_o12334}</span> </button>		        				        				        	
+		        		<button rel="{$rental->id}" link="{link Rental:detail $rental}" thumb="{$basePath}{$mainImage|rentalImageSrc}" class="addToFavorites btn btn-mini listCompareBtn active"><span class="entypo-heart">{_o12334}</span> </button>		        				        				        	
 		        		
 		        		<div class="clearfix"></div>
 

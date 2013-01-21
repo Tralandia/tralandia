@@ -54,7 +54,7 @@
 
 
 <div class="span12">
-	<div class="innerPadding baseRadius baseBorder overflow">
+	<div class="innerPadding baseRadius baseBorder marginBottom overflow">
 		<div id="content" class="nopadding">
 			
 
@@ -87,7 +87,7 @@
 			{_$rental->teaser}
 		</p>
 		<p class="marginBottom nopadding">
-		<a class="capitalize"  href="{link Rental:list location => $rental->address->locality , rentalType => $rental->type }"><b>{_$rental->type->name} {_$rental->address->locality->name}</b></a>
+		<a class="capitalize"  href="{link Rental:list location => $rental->address->locality , rentalType => $rental->type }">{_$rental->type->name} {_$rental->address->locality->name}</a>
 		</p>
 
 		{foreach $rental->address->getLocations() as $location}
@@ -101,7 +101,7 @@
 
 		<div class="metainfobox double"> 
 			<div class="separator first"><i class="entypo-info2"></i>{$rental->price} #Eur <small>/ osoba / noc</small> </div>
-			<div class="separator second"><i class="entypo-users"></i><span class="capitalize">{_o1008}.</span> <small>{$rental->maxCapacity} osoba</small></div>
+			<div class="separator second"><i class="entypo-users"></i><span class="capitalize">{_o1008}.</span> <small>{$rental->maxCapacity} {_o925,null,[count=>$rental->maxCapacity]}</small></div>
 			<div class="clearfix"></div>
 		</div>
 		
@@ -110,7 +110,7 @@
 		{if isset($rental->checkIn)}
 		<div class="metainfobox marginBottom">
 			<div class="separator first"><i class="entypo-clock"></i> #Check-in: <small>{$rental->checkIn} </small></div> 
-			<div class="separator second"><i class="entypo-checkout"></i> #Check-out: <small>{$rental->checkOut}</small></div>
+			<div class="separator second"><i class="entypo-clock"></i> #Check-out: <small>{$rental->checkOut}</small></div>
 			<div class="clearfix"></div>
 		</div>
 		{/if}
@@ -232,14 +232,14 @@
 
 				<table>
 					<tr>
-						<td><i class="entypo-contact"></i></td>
+						<td class="iconcover"><i class="entypo-contact"></i></td>
 						<td>	
 						<strong>{$rental->contactName}</strong>
 						</td>
 					</tr>
 
 					<tr>
-						<td><i class="entypo-phone"></i></td>
+						<td class="iconcover"><i class="entypo-phone"></i></td>
 						<td>		
 							
 						{foreach $rental->phones as $phone }
@@ -250,7 +250,7 @@
 					</tr>
 
 					<tr>						
-						<td><i class="entypo-mail"></i></td>
+						<td class="iconcover"><i class="entypo-mail"></i></td>
 						<td>
 
 						
@@ -265,7 +265,7 @@
 
 
 					<tr>						
-						<td><i class="entypo-language"></i></td>
+						<td class="iconcover"><i class="entypo-language"></i></td>
 						<td>
 						<strong>{_o1013} </strong><br/> 
 						
@@ -286,7 +286,7 @@
 				<table>
 
 					<tr>
-						<td><i class="entypo-www"></i></td>
+						<td class="iconcover"><i class="entypo-www"></i></td>
 						<td>
 						{foreach $rental->urls as $url }
 							<strong><a target="_blank" href="{$url->value}">{_o1666}</a><strong> {if !$iterator->last}<br/>{/if}
@@ -295,7 +295,7 @@
 					</tr>
 
 					<tr>						
-						<td><i class="entypo-adress"></i></td>
+						<td class="iconcover"><i class="entypo-adress"></i></td>
 						<td>
 						<strong>{_o2431} </strong><br/> 
 						
@@ -310,7 +310,7 @@
 					</tr>
 
 					<tr>						
-						<td class="iconcenter"><i class="entypo-location"></i></td>
+						<td class="iconcover"><i class="entypo-location"></i></td>
 						<td>
 						<strong>#gps:</strong>
 						
@@ -326,7 +326,7 @@
 				</div>
 				<table>
 					<tr>						
-						<td class="iconcenter"><i class="entypo-open"></i></td>
+						<td class="iconcover"><i class="entypo-open"></i></td>
 						<td>
 						<a href="#" class="toogle" opened="#less option" close="{_o1701}" for="moreInfoContactTable">{_o1701}</a>
 						</td>
@@ -414,7 +414,7 @@ $(document).ready(function(){
 							<tr>
 							<td>{_$pricelistRow->roomType->name}: </td>
 							<td>{$pricelistRow->roomCount} -#krat</td>
-							<td>{$pricelistRow->bedCount} {_o940}</td>
+							<td>{$pricelistRow->bedCount} {_o940 , null , [count => $pricelistRow->bedCount]}</td>
 							<td>{if $pricelistRow->extraBedCount}{$pricelistRow->extraBedCount} {_o1158}{/if}</td>
 							<td>{$pricelistRow->price} #mena</td>
 							</tr>
