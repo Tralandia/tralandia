@@ -14,16 +14,24 @@ class RouterFactory
 {
 	protected $defaultLanguage;
 	protected $defaultPrimaryLocation;
-	protected $frontRouteFactory;
+	/**
+	 * @var IFrontRouteListFactory
+	 */
+	protected $frontRouteListFactory;
+	/**
+	 * @var IOwnerRouteListFactory
+	 */
 	protected $ownerRouteListFactory;
 
 	public $languageRepositoryAccessor;
 	public $locationRepositoryAccessor;
 
-	public function __construct(array $options, IFrontRouteFactory $frontRouteFactory, IOwnerRouteListFactory $ownerRouteListFactory) {
+	public function __construct(array $options, IFrontRouteListFactory $frontRouteListFactory,
+								IOwnerRouteListFactory $ownerRouteListFactory)
+	{
 		$this->defaultLanguage = $options['defaultLanguage'];
 		$this->defaultPrimaryLocation = $options['defaultPrimaryLocation'];
-		$this->frontRouteFactory = $frontRouteFactory;
+		$this->frontRouteListFactory = $frontRouteListFactory;
 		$this->ownerRouteListFactory = $ownerRouteListFactory;
 	}
 
@@ -65,11 +73,12 @@ class RouterFactory
 		));
 	*/
 
-		$router[] = $ownerRouter = $this->ownerRouteListFactory->create();
-		
-		$router[] = $frontRouter = new RouteList('Front');
+		$router[] = $this->ownerRouteListFactory->create();
 
-		$frontRouter[] = $this->frontRouteFactory->create();
+
+		$router[] = $this->frontRouteListFactory->create();
+		//$router[] = $frontRouter = new RouteList('Front');
+		//$frontRouter[] = $this->frontRouteFactory->create();
 
 	
 		

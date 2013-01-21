@@ -215,6 +215,18 @@ factories:
 
 	frontRouteListFactory:
 		class: Routers\FrontRouteList(@languageRepositoryAccessor::get(), @locationRepositoryAccessor::get())
+		setup:
+			- $locationRepositoryAccessor(@locationRepositoryAccessor)
+			- $languageRepositoryAccessor(@languageRepositoryAccessor)
+			- $rentalRepositoryAccessor(@rentalRepositoryAccessor)
+			- $rentalTypeRepositoryAccessor(@rentalTypeRepositoryAccessor)
+			- $routingPathSegmentRepositoryAccessor(@routingPathSegmentRepositoryAccessor)
+			- $domainRepositoryAccessor(@domainRepositoryAccessor)
+			- $pageRepositoryAccessor(@pageRepositoryAccessor)
+			- $rentalTagRepositoryAccessor(@rentalTagRepositoryAccessor)
+			- $rentalAmenityRepositoryAccessor(@rentalAmenityRepositoryAccessor)
+			- $pageRepositoryAccessor(@pageRepositoryAccessor)
+			- $phraseDecoratorFactory(@phraseDecoratorFactory)
 		implement: Routers\IFrontRouteListFactory
 
 

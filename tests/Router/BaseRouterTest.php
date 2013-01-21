@@ -47,7 +47,7 @@ abstract class BaseRouterTest extends \Tests\TestCase
 			}
 
 			//unset($params['extra']);
-			$request->setParameters($params);
+			//$request->setParameters($params);
 			$result = $route->constructUrl($request, $url);
 
 			$this->assertEquals( $expectedUrl, $result );
