@@ -25,23 +25,19 @@ class FrontRouterListTest extends BaseRouterTest
 //			'action' => 'default',
 //		));
 
-		$this->routeIn($route, 'http://www.sk.tra.com/', 'Front:Home', array(
-			'action' => 'default',
-			'primaryLocation' => '56',
-			'language' => '144',
-		), 'http://www.sk.tra.com/');
+//		$this->routeIn($route, 'http://www.sk.tra.com/nitra/chata?fprice=20', 'Rental', array(
+//			'action' => 'list',
+//			'primaryLocation' => 56,
+//			'language' => 144,
+//			'location' => 408,
+//			'rentalType' => 6,
+//			'fprice' => 20,
+//		), 'http://www.sk.tra.com/nitra/chata?fprice=20');
 
-/*		$this->routeIn($route, 'http://www.sk.tra.com/nitra/chaty?fprice=20', 'Front:Rental', array(
-			'action' => 'list',
-			'primaryLocation' => 56,
-			'language' => 144,
-			'location' => 4020,
-			'fprice' => 20,
-		), 'http://www.sk.tra.com/nitra/chaty?fprice=20');
-*/
-/*		$this->routeIn($route, 'http://www.sk.tra.com/registracia', 'Front:Registration', array(
+
+		$this->routeIn($route, 'http://www.sk.tra.com/registracia', 'Registration', array(
 			'action' => 'default',
-			'country' => 58,
+			'primaryLocation' => 56,
 			'language' => 144,
 		), 'http://www.sk.tra.com/registracia');
 
@@ -49,14 +45,14 @@ class FrontRouterListTest extends BaseRouterTest
 
 		$this->routeIn($route, 'http://www.sk.tra.com/nitra', 'Front:Rental', array(
 			'action' => 'list',
-			'country' => 58,
+			'primaryLocation' => 58,
 			'language' => 144,
 			'location' => 4020,
-	), 'http://www.sk.tra.com/nitra');*/
+	), 'http://www.sk.tra.com/nitra');
 
 //		$this->routeIn($route, 'http://www.sk.tra.com/pozicovna', 'Front:Rental', array(
 //			'action' => 'list',
-//			'country' => 58,
+//			'primaryLocation' => 58,
 //			'language' => 144,
 //			'attractionType' => 16,
 //		), 'http://www.sk.tra.com/pozicovna');

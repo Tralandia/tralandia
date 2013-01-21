@@ -42,11 +42,12 @@ class FrontRouteList extends BaseRouteList
 	public function __construct(\Repository\LanguageRepository $languageRepository,
 							\Repository\Location\LocationRepository $locationRepository)
 	{
-		$this->route = new Route('//<language ([a-z]{2}|www)>.<primaryLocation [a-z]{2,3}>.%domain%/[<hash .*>]', array(
+		parent::__construct($languageRepository, $locationRepository);
+		$this->route = new Route('//<language ([a-z]{2}|www)>.<primaryLocation [a-z]{2,3}>.%domain%/<hash .*>', array(
 			self::PARAM_PRIMARY_LOCATION => 'sk',
 			self::PARAM_LANGUAGE => 'www',
-			//'presenter' => array('fixity' => Route::VALUE, 'value' => '*'),
-			'action' => array('fixity' => Route::VALUE, 'value' => 'list'),
+			'presenter' => 'Rental',
+			'action' => 'list',
 		));
 	}
 
@@ -68,10 +69,7 @@ class FrontRouteList extends BaseRouteList
 			$pathSegments = array_filter(explode('/', $params[self::PARAM_HASH]));
 			unset($params[self::PARAM_HASH]);
 
-			if(count($pathSegments) == 0) {
-				$presenter = 'Home';
-				$params['action'] = 'default';
-			} else if(count($pathSegments) == 1) {
+			if(count($pathSegments) == 1) {
 				$pathSegment = reset($pathSegments);
 				if($match = Strings::match($pathSegment, '~\.*-r([0-9]+)~')) {
 					if($rental = $this->rentalRepositoryAccessor->get()->find($match[1])) {
@@ -113,7 +111,7 @@ class FrontRouteList extends BaseRouteList
 			}
 
 
-			$appRequest->setPresenterName($this->getModule() . $presenter);
+			$appRequest->setPresenterName($presenter);
 			$appRequest->setParameters($params);
 
 			return $appRequest;
@@ -122,6 +120,25 @@ class FrontRouteList extends BaseRouteList
 		return NULL;
 	}
 
+
+	public function filterOut(array $params)
+	{
+		$segments = [];
+		foreach (static::$pathSegmentTypes as $key => $value) {
+			if(!isset($params[$key])) continue;
+			$segment = $this->getSegmentById($key, $params);
+			if(!$segment) continue;
+			$segments[$value] = $segment;
+			unset($params[$key]);
+		}
+		ksort($segments);
+
+		$params[self::PARAM_HASH] = array_merge($params[self::PARAM_HASH], $segments);
+
+		$params = parent::filterOut($params);
+
+		return $params;
+	}
 
 
 	/**
@@ -133,10 +150,29 @@ class FrontRouteList extends BaseRouteList
 	{
 		$appRequest = clone $appRequest;
 		$params = $appRequest->getParameters();
-		$params = $this->filterOut($params);
-		$params[self::PARAM_HASH] = '';
-		$appRequest->setParameters($params);
+		$params[self::PARAM_HASH] = [];
 
+		$presenter = $appRequest->getPresenterName();
+		$action = $params['action'];
+
+		if($presenter == 'Rental' && $action == 'detail') {
+			// hmm
+		} else if($presenter == 'Rental' && $action == 'list'){
+			// hmm
+		} else {
+			$destination = ':Front:'.$presenter.':'.$action;
+			if($page = $this->pageRepositoryAccessor->get()->findOneByDestination($destination)) {
+				$paramsTemp = $params;
+				$paramsTemp['page'] = $page->id;
+				$params[self::PARAM_HASH][] = $this->getSegmentById('page', $paramsTemp);
+			} else {
+				return NULL;
+			}
+		}
+
+		$params = $this->filterOut($params);
+		$params[self::PARAM_HASH] = implode('/', $params[self::PARAM_HASH]);
+		$appRequest->setParameters($params);
 
 		$url = $this->route->constructUrl($appRequest, $refUrl);
 
@@ -165,6 +201,32 @@ class FrontRouteList extends BaseRouteList
 		return $pathSegmentListNew;
 	}
 
+
+	public function getSegmentById($segmentName, $params)
+	{
+		$segmentId = $params[$segmentName];
+		$language = $params['language'];
+		$segment = NULL;
+
+		if($segmentName == 'location') {
+			$segmentRow = $this->routingPathSegmentRepositoryAccessor->get()->findOneBy(array(
+				'type' => static::$pathSegmentTypes[$segmentName],
+				'entityId' => $segmentId
+			));
+		} else {
+			$segmentRow = $this->routingPathSegmentRepositoryAccessor->get()->findOneBy(array(
+				'type' => static::$pathSegmentTypes[$segmentName],
+				'entityId' => $segmentId,
+				'language' => $language
+			));
+		}
+
+		if($segmentRow) {
+			$segment = $segmentRow->pathSegment;
+		}
+
+		return $segment;
+	}
 
 }
 
