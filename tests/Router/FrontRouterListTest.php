@@ -25,6 +25,12 @@ class FrontRouterListTest extends BaseRouterTest
 //			'action' => 'default',
 //		));
 
+		$this->routeIn($route, 'http://www.sk.tra.com/', 'Home', array(
+			'action' => 'default',
+			'primaryLocation' => 56,
+			'language' => 144,
+		), 'http://www.sk.tra.com/');
+
 //		$this->routeIn($route, 'http://www.sk.tra.com/nitra/chata?fprice=20', 'Rental', array(
 //			'action' => 'list',
 //			'primaryLocation' => 56,
@@ -40,6 +46,13 @@ class FrontRouterListTest extends BaseRouterTest
 			'primaryLocation' => 56,
 			'language' => 144,
 		), 'http://www.sk.tra.com/registracia');
+
+		$this->routeIn($route, 'http://www.sk.tra.com/registracia?do=registrationForm-submit', 'Registration', array(
+			'action' => 'default',
+			'primaryLocation' => 56,
+			'language' => 144,
+			'do' => 'registrationForm-submit',
+		), 'http://www.sk.tra.com/registracia?do=registrationForm-submit');
 
 		$this->routeIn($route, 'http://www.sk.tra.com/ticket', NULL);
 

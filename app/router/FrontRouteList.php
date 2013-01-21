@@ -43,7 +43,7 @@ class FrontRouteList extends BaseRouteList
 							\Repository\Location\LocationRepository $locationRepository)
 	{
 		parent::__construct($languageRepository, $locationRepository);
-		$this->route = new Route('//<language ([a-z]{2}|www)>.<primaryLocation [a-z]{2,3}>.%domain%/<hash .*>', array(
+		$this->route = new Route('//<language ([a-z]{2}|www)>.<primaryLocation [a-z]{2,3}>.%domain%/[<hash .*>]', array(
 			self::PARAM_PRIMARY_LOCATION => 'sk',
 			self::PARAM_LANGUAGE => 'www',
 			'presenter' => 'Rental',
@@ -61,15 +61,22 @@ class FrontRouteList extends BaseRouteList
 
 		$route = $this->route;
 		if ($appRequest = $route->match($httpRequest)) {
-			$presenter = $appRequest->getPresenterName();
+			$presenter = NULL;
+			$params['action'] = NULL;
+			$pathSegments = [];
 
 			$params = $appRequest->getParameters();
 			$params = $this->filterIn($params);
 
-			$pathSegments = array_filter(explode('/', $params[self::PARAM_HASH]));
+			if(array_key_exists(self::PARAM_HASH, $params)) {
+				$pathSegments = array_filter(explode('/', $params[self::PARAM_HASH]));
+			}
 			unset($params[self::PARAM_HASH]);
 
-			if(count($pathSegments) == 1) {
+			if(count($pathSegments) == 0) {
+				$presenter = 'Home';
+				$params['action'] = 'default';
+			} else if(count($pathSegments) == 1) {
 				$pathSegment = reset($pathSegments);
 				if($match = Strings::match($pathSegment, '~\.*-r([0-9]+)~')) {
 					if($rental = $this->rentalRepositoryAccessor->get()->find($match[1])) {
@@ -155,7 +162,9 @@ class FrontRouteList extends BaseRouteList
 		$presenter = $appRequest->getPresenterName();
 		$action = $params['action'];
 
-		if($presenter == 'Rental' && $action == 'detail') {
+		if($presenter == 'Home' && $action == 'default') {
+
+		} else if($presenter == 'Rental' && $action == 'detail') {
 			// hmm
 		} else if($presenter == 'Rental' && $action == 'list'){
 			// hmm
@@ -171,8 +180,18 @@ class FrontRouteList extends BaseRouteList
 		}
 
 		$params = $this->filterOut($params);
-		$params[self::PARAM_HASH] = implode('/', $params[self::PARAM_HASH]);
+
+		if(!count($params[self::PARAM_HASH])) {
+			$params[self::PARAM_HASH] = '';
+		} else {
+			$params[self::PARAM_HASH] = implode('/', $params[self::PARAM_HASH]);
+		}
+
+		$params['action'] = 'list';
+		$appRequest->setPresenterName('Rental');
+
 		$appRequest->setParameters($params);
+
 
 		$url = $this->route->constructUrl($appRequest, $refUrl);
 

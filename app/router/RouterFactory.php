@@ -75,9 +75,8 @@ class RouterFactory
 
 		$router[] = $this->ownerRouteListFactory->create();
 
-
-		$router[] = $this->frontRouteListFactory->create();
-		//$router[] = $frontRouter = new RouteList('Front');
+		$router[] = $frontRouter = new RouteList('Front');
+		$frontRouter[] = $this->frontRouteListFactory->create();
 		//$frontRouter[] = $this->frontRouteFactory->create();
 
 	
