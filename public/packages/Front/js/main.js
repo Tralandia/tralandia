@@ -206,7 +206,7 @@ App.prototype.removeObjectFromFavorites = function(id){
 			});
 
 		if(newList.length == 0){
-			$('#compareList').parent().parent().parent().slideUp(500,function(){
+			$('#compareList').parent().parent().parent().slideUp(300,function(){
 				favoriteSlider.find('ul li.rel-'+id).remove();
 			});
 		} else {
@@ -259,7 +259,7 @@ App.prototype.addToFavorites = function(){
 			list[0] = data;
 
 			self.storageSet('favoritesList',list);
-			favoriteSlider.parent().parent().parent().slideDown();
+			favoriteSlider.parent().parent().parent().slideDown(300);
 
 			var newLi = $('<li></li>').css('background-image','url('+data.thumb+')');
 				
