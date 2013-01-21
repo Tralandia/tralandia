@@ -43,7 +43,7 @@ class FrontRouteList extends BaseRouteList
 							\Repository\Location\LocationRepository $locationRepository)
 	{
 		parent::__construct($languageRepository, $locationRepository);
-		$this->route = new Route('//<language ([a-z]{2}|www)>.<primaryLocation [a-z]{2,3}>.%domain%/[<hash .*>]', array(
+		$this->route = new Route('//[!<language ([a-z]{2}|www)>.<primaryLocation [a-z]{2,3}>.%domain%/][<hash .*>]', array(
 			self::PARAM_PRIMARY_LOCATION => 'sk',
 			self::PARAM_LANGUAGE => 'www',
 			'presenter' => 'Rental',

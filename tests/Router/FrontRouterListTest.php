@@ -56,16 +56,16 @@ class FrontRouterListTest extends BaseRouterTest
 
 		$this->routeIn($route, 'http://www.sk.tra.com/ticket', NULL);
 
-		$this->routeIn($route, 'http://www.sk.tra.com/nitra', 'Front:Rental', array(
+		$this->routeIn($route, 'http://www.sk.tra.com/nitra', 'Rental', array(
 			'action' => 'list',
-			'primaryLocation' => 58,
+			'primaryLocation' => 56,
 			'language' => 144,
-			'location' => 4020,
+			'location' => 408,
 	), 'http://www.sk.tra.com/nitra');
 
 //		$this->routeIn($route, 'http://www.sk.tra.com/pozicovna', 'Front:Rental', array(
 //			'action' => 'list',
-//			'primaryLocation' => 58,
+//			'primaryLocation' => 56,
 //			'language' => 144,
 //			'attractionType' => 16,
 //		), 'http://www.sk.tra.com/pozicovna');

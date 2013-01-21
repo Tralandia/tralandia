@@ -52,6 +52,8 @@ $container = $configurator->createContainer();
 // @todo toto niekam schovat
 // Panel\Todo::register($container->parameters['appDir']);
 require_once APP_DIR . '/extras/EntityAnnotation.php';
+\Doctrine\Common\Annotations\AnnotationRegistry::registerFile(__DIR__ . '/../app/extras/EntityAnnotation.php');
+\Doctrine\Common\Annotations\AnnotationRegistry::registerLoader(callback('class_exists'));
 
 //Extras\Models\Service::$translator = $container->translator;
 

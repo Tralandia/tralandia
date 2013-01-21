@@ -42,6 +42,9 @@ $configurator->onCompile[] = function ($configurator, $compiler) {
 };
 $container = $configurator->createContainer();
 
+\Doctrine\Common\Annotations\AnnotationRegistry::registerFile(__DIR__ . '/../app/extras/EntityAnnotation.php');
+\Doctrine\Common\Annotations\AnnotationRegistry::registerLoader(callback('class_exists'));
+
 # toto musi byt to dole!
 Debugger::enable(FALSE);
 
