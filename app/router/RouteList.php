@@ -6,7 +6,7 @@ use Nette;
 use Repository\LanguageRepository;
 use Repository\Location\LocationRepository;
 
-class BaseRouteList extends Nette\Application\Routers\RouteList
+abstract class BaseRouteList extends Nette\Object implements Nette\Application\IRouter
 {
 
 	const PARAM_LANGUAGE = 'language';
@@ -32,8 +32,6 @@ class BaseRouteList extends Nette\Application\Routers\RouteList
 	{
 		$this->languageRepository = $languageRepository;
 		$this->locationRepository = $locationRepository;
-		parent::__construct($module);
-
 	}
 
 	/**

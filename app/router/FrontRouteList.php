@@ -10,6 +10,11 @@ use Nette\Utils\Arrays;
 class FrontRouteList extends BaseRouteList
 {
 
+	/**
+	 * @var \Nette\Application\Routers\Route
+	 */
+	protected $route;
+
 	const PARAM_HASH = 'hash';
 
 	protected static $pathSegmentTypes = array(
@@ -34,42 +39,15 @@ class FrontRouteList extends BaseRouteList
 	 * @param \Repository\LanguageRepository $languageRepository
 	 * @param \Repository\Location\LocationRepository $locationRepository
 	 */
-	public function __construct(\Repository\LanguageRepository $languageRepository, \Repository\Location\LocationRepository $locationRepository)
+	public function __construct(\Repository\LanguageRepository $languageRepository,
+							\Repository\Location\LocationRepository $locationRepository)
 	{
-		parent::__construct($languageRepository, $locationRepository, 'Front');
-
-		$this[] = new Route('//<language ([a-z]{2}|www)>.<primaryLocation [a-z]{2,3}>.%domain%/[<hash .*>]', array(
+		$this->route = new Route('//<language ([a-z]{2}|www)>.<primaryLocation [a-z]{2,3}>.%domain%/[<hash .*>]', array(
 			self::PARAM_PRIMARY_LOCATION => 'sk',
 			self::PARAM_LANGUAGE => 'www',
-			'presenter' => '*',
-			'action' => 'list',
+			//'presenter' => array('fixity' => Route::VALUE, 'value' => '*'),
+			'action' => array('fixity' => Route::VALUE, 'value' => 'list'),
 		));
-
-	}
-
-
-	/**
-	 * @param array $params
-	 *
-	 * @return array
-	 */
-	public function filterIn(array $params)
-	{
-		$params = parent::filterIn($params);
-
-		return $params;
-	}
-
-	/**
-	 * @param array $params
-	 *
-	 * @return array
-	 */
-	public function filterOut(array $params)
-	{
-		$params = parent::filterOut($params);
-
-		return $params;
 	}
 
 
@@ -80,8 +58,7 @@ class FrontRouteList extends BaseRouteList
 	public function match(Nette\Http\IRequest $httpRequest)
 	{
 
-		/** @var Route $route */
-		$route = $this[0];
+		$route = $this->route;
 		if ($appRequest = $route->match($httpRequest)) {
 			$presenter = $appRequest->getPresenterName();
 
@@ -157,11 +134,11 @@ class FrontRouteList extends BaseRouteList
 		$appRequest = clone $appRequest;
 		$params = $appRequest->getParameters();
 		$params = $this->filterOut($params);
+		$params[self::PARAM_HASH] = '';
 		$appRequest->setParameters($params);
 
-		$params[self::PARAM_HASH] = '';
 
-		$url = parent::constructUrl($appRequest, $refUrl);
+		$url = $this->route->constructUrl($appRequest, $refUrl);
 
 		if(!$url) {
 			return NULL;

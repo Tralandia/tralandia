@@ -18,18 +18,17 @@ class FrontRouterListTest extends BaseRouterTest
 	public function testCompiler() {
 
 		$route = $this->frontRouteListFactory->create();
-		$route = new \Nette\Application\Routers\Route('//<language ([a-z]{2}|www)>.<primaryLocation [a-z]{2,3}>.%domain%/[<hash .*>]', array(
-			'primaryLocation' => 'sk',
-			'language' => 'www',
-			'presenter' => 'Home',
-			'action' => 'default',
-		));
+//		$route = new \Nette\Application\Routers\Route('//<language ([a-z]{2}|www)>.<primaryLocation [a-z]{2,3}>.%domain%/[<hash .*>]', array(
+//			'primaryLocation' => 'sk',
+//			'language' => 'www',
+//			'presenter' => 'Home',
+//			'action' => 'default',
+//		));
 
-		$this->routeIn($route, 'http://www.sk.tra.com/', 'Home', array(
+		$this->routeIn($route, 'http://www.sk.tra.com/', 'Front:Home', array(
 			'action' => 'default',
-			'primaryLocation' => 'sk',
-			'language' => 'www',
-			'hash' => '',
+			'primaryLocation' => '56',
+			'language' => '144',
 		), 'http://www.sk.tra.com/');
 
 /*		$this->routeIn($route, 'http://www.sk.tra.com/nitra/chaty?fprice=20', 'Front:Rental', array(
