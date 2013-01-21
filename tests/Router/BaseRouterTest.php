@@ -30,13 +30,20 @@ abstract class BaseRouterTest extends \Tests\TestCase
 			//d($request); #@debug
 			$this->assertSame( $expectedPresenter, $request->getPresenterName() );
 			foreach($params as $paramName => $param) {
-				if(!array_key_exists($paramName, $expectedParams)) {
-					continue;
-				}
+				$this->assertArrayHasKey( $paramName, $expectedParams );
 				if($param instanceof \Entity\BaseEntity) {
-					$param = $param->getOldId();
+					$param = $param->getId();
 				}
 				$this->assertEquals( $expectedParams[$paramName], $param );
+			}
+
+			foreach($expectedParams as $paramName => $value) {
+				$this->assertArrayHasKey( $paramName, $params );
+				$param = $params[$paramName];
+				if($param instanceof \Entity\BaseEntity) {
+					$param = $param->getId();
+				}
+				$this->assertEquals( $value, $param );
 			}
 
 			//unset($params['extra']);
