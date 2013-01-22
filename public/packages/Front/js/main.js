@@ -347,8 +347,6 @@ App.prototype.openContactForm = function(){
 
 App.prototype.datepickerIcon = function(){
 
-	//console.log($( ".datepicker" ).datepicker( "isDisabled" ));
-
 	if($(this).parent().find('input').hasClass('focus')){
 		$( ".datepicker" ).datepicker( "hide" );
 		$(this).parent().find('input').removeClass('focus');
@@ -357,7 +355,6 @@ App.prototype.datepickerIcon = function(){
 		$(this).parent().find('input').addClass('focus');
 	}
 
-	
 }
 
 /**
@@ -366,8 +363,6 @@ App.prototype.datepickerIcon = function(){
 
 App.prototype.initMapsObjectDetail = function(){
 	$('#objectDetailListMap').trigger('click');
-	/* large map plugin */
-	//maplodader();
 	
 	$.scrollTo('#objectDetailListMap',800);	
 
@@ -499,7 +494,9 @@ $(document).ready(function(){
 
 
 		var scrollmem = $('body').scrollTop();
-		window.location.hash = href;
+		var newHref = href.replace("#","#_");
+
+		window.location.hash = newHref;
 		$('html,body').scrollTop(scrollmem);
 
       if(id = 'objectDetailListMap'){
@@ -515,10 +512,10 @@ $(document).ready(function(){
 
     // nastavenie default tabu
         
-    if(window.location.hash.length > 1){  
-
+    if(window.location.hash.length > 1){
 
 		var currentId  = window.location.hash;
+			currentId=currentId.replace("#_","#");
 
 		var scrollmem = $('.objectDetailContent').height();
 
