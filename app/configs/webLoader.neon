@@ -61,6 +61,10 @@ parameters:
 					- Front/js/ui-localization-datepicker.js
 					- Front/js/main.js
 
+			FavoriteScroll:
+				js:
+					- Front/favorites-scroll.js	
+
 			front:
 				css:
 					- front/default.css
@@ -184,6 +188,11 @@ parameters:
 			Front: 
 				-  %webloader.packages.Front%
 				-  %webloader.packages.gMap%
+			
+			'Front:Rental:list': 
+				-  %webloader.packages.Front%
+				-  %webloader.packages.gMap%			
+				-  %webloader.packages.FavoriteScroll%		
 			Owner: 
 				-  %webloader.packages.Front%
 				-  %webloader.packages.gMap%

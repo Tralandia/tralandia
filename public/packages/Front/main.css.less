@@ -30,6 +30,14 @@ p {
 .capitalize {
 	text-transform: capitalize;
 }
+
+.brown {
+	color: @brown;
+
+	a {
+		color: @brown;
+	}
+}
 /****************************************************************************************
 /* helper class 
 /***************************************************************************************/
@@ -110,6 +118,10 @@ ul.arrows {
 		}
 
 	}
+}
+
+.teaser {
+	line-height: 17px;
 }
 
 .red {
@@ -474,7 +486,7 @@ ul.arrows {
 	}
 
 	#topWidget {
-		height:140px;
+		height:120px;
 		background: url(/images/headerBanner/kw.jpg) top left;
 
 		a {
@@ -483,9 +495,9 @@ ul.arrows {
 	}
 
 	#logo {
-		height:123px;
-		width: 128px;
-		margin-top: -50px;
+		height:103px;
+		width: 106px;
+		margin-top: -40px;
 		float: left;
 		position: relative;
 		z-index: 1000;
@@ -505,6 +517,7 @@ ul.arrows {
 		padding: 10px;				
 		height:50px;	
 		position: relative;
+		top: -20px;
 		float: left;	
 		margin-bottom: 6px;
 	}
@@ -513,7 +526,7 @@ ul.arrows {
 				
 		background: url('../packages/Front/img/page_title_bg.png') repeat;		
 		width: 448px;		
-		top: 0; 
+		
 
 		h1 {
 			font-size: 15px;
@@ -651,10 +664,10 @@ ul.arrows {
 						  font-family: "entypo";
 						  font-weight: normal;
 						  font-style: normal;
-						  font-size: 30px;
+						  font-size: 24px;
 						  color: @brown;
 						  text-decoration: inherit;
-						  content:'\2713';
+						  content:'\E4AE';
 						  float: left;
 						  width: 0px;
 						  position: relative;
@@ -905,6 +918,8 @@ ul.arrows {
 	.basic-gradient( @lightGreen , @darkGreen );
 	height: @mainMenuSettingHeight;
 	.bottom-border-radius(7px);
+	position: relative;
+	top: -20px;
 
 	ul {
 		list-style: none;
@@ -1051,7 +1066,7 @@ ul.arrows {
 
 	h1 , h2 , h3 , h4 , h5 {
 		margin: 0;
-		padding: 15px 0 0 0;
+		padding: 10px 0 0 0;
 	}
 
 	h1 {
@@ -1059,7 +1074,7 @@ ul.arrows {
 		line-height: 24px;
 		color: darkblue;
 		font-weight: bold;
-		margin: 0 0 10px 0;
+		margin: 0;
 	}
 
 	h2 {
@@ -1162,9 +1177,10 @@ ul.arrows {
 	width: 100%;
 	.basic-border-radius (5px);	
 	
+	font-size: 11px;
 	small {
 		font-weight: normal;
-		font-size: 14px;
+		font-size: 12px;
 	}
 
 	background: rgb(234, 240, 215);
@@ -1208,6 +1224,7 @@ ul.arrows {
 	}
 
 	&.double {
+		font-size: 14px;
 		background: transparent;
 		border: none;
 		.separator {
@@ -1265,7 +1282,7 @@ ul.arrows {
 	li {
 		width: 381px;
 		.box-size();
-
+		color: #888;
 		margin-left: 29px;	
 			
 		font-size: 13px;
@@ -1283,7 +1300,7 @@ ul.arrows {
 			padding-right: 15px;
 		}
 
-		color: #aaa;
+		
 
 		strong {
 			color: @darkGreen;
@@ -1409,7 +1426,7 @@ ul.arrows {
 				float: left;
 			}
 
-			&.datepicker {
+			&.datepicker , &.datepickerto {
 				width: 162px;
 				float: none;
 				clear: both;
@@ -2213,12 +2230,16 @@ form.traform {
 	width: 705px;
 
 	&.autowidth {
-		width: 100%;
-		margin: 0;
-		margin-top: 10px;
+		width: 100%;		
+		margin: 10px 0 ;
 		td , th {
+			
+		}	
 
-		}		
+		td {
+			padding: 6px 8px;
+			font-size: 12px;
+		}	
 	}
 
 	td {

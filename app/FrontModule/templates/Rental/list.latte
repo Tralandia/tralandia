@@ -7,7 +7,8 @@
 <div class="row-fluid">
 
 	<div class="span12">
-		<h1 class="marginLeft">{$pageH1} <span class="counter">({$countryCountObjects} #ubytovani)</span></h1>
+		<h1 class="marginLeft pull-left">{$pageH1} <span class="counter">({$countryCountObjects} #ubytovani)</span></h1>
+		<button class="btn pull-right marginTop marginRight btn-orange"><i class="entypo-plus"></i> {_o793}</button>
 	</div>
 
 {*
@@ -28,18 +29,6 @@
 
 		    <div id="tabs-1" class="ui-tabs-panel">
 
-		    	{*
-				<div class="row-fluid">
-					<div n:foreach="$topRegions as $chunk" class="span4">
-						<ul class="list" n:inner-foreach="$chunk as $region">
-							<li><a n:href="Rental:list location => $region->id">{_$region->name}</a></li>
-						</ul>
-					</div>
-				</div>
-				*}
-
-				
-
 		    	{foreach $rentals as $val}
 		    	{var $rental = $val['entity']; }
 		    	{var $rentalService = $val['service']; }
@@ -49,8 +38,6 @@
 		        	<div class="span4">
 		        		<a href="{link Rental:detail $rental}" n:class="$featured ? top , clasic">
 		        		<!--<div class="addons btn">icon</div>--><div class="position">TOP</div>
-		        		{* @todo odstranit *}
-		        		{var $thumbLink = '';}
 		        		
 		        		{if $mainImage = $rental->getMainImage()}
 		        			<img src="{$basePath}{$mainImage|rentalImageSrc}" />
@@ -60,14 +47,13 @@
 		        	</div>
 		        	<div class="span8">
 		        		<h2><a href="{link Rental:detail $rental}">{_$rental->name}</a></h2>
-
 		        		
 		        		<button rel="{$rental->id}" link="{link Rental:detail $rental}" thumb="{$basePath}{$mainImage|rentalImageSrc}" class="addToFavorites btn btn-mini listCompareBtn active"><span class="entypo-heart">{_o12334}</span> </button>		        				        				        	
 		        		
 		        		<div class="clearfix"></div>
 
 		        		<p class="locations">
-		        		<a href="{link Rental:list location => $rental->address->locality , rentalType => $rental->type }" >{_$rental->type->name} {_$rental->address->locality->name}</a>
+		        		<a href="{link Rental:list location => $rental->address->locality , rentalType => $rental->type}">{_$rental->type->name|firstUpper} {_$rental->address->locality->name}</a>
 
 		        		{if count($rental->address->getLocations()) > 0}
 		        		(
@@ -78,13 +64,13 @@
 						{/if}
 
 		        		</p>
-		        		<p class="red teaser">{_$rental->teaser}</p>
+		        		<p class="red teaser">{_$rental->teaser|firstUpper}</p>
 
 		        		<p class="answer">
 						{foreach $rental->interviewAnswers as $interviewAnswer}
 							{if !empty($interviewAnswer->answer)}
 								{if $iterator->first}
-									{_$interviewAnswer->answer}
+									{_$interviewAnswer->answer|firstUpper}
 								{/if}																
 							{/if}			
 						{/foreach}
@@ -125,3 +111,5 @@
 	</div>
 
 </div>
+
+

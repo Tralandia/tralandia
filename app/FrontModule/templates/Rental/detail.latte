@@ -76,18 +76,11 @@
 
 		<h1 class="addToViewList" id="{$rental->id}">{_$rental->name}</h1>
 
-   
-
-
-		
-
-				   
-
-		<p class="red bold nopadding marginBottom">			
-			{_$rental->teaser}
+		<p class="teaser red bold nopadding marginBottom">			
+			{_$rental->teaser|firstUpper}
 		</p>
 		<p class="marginBottom nopadding">
-		<a class="capitalize"  href="{link Rental:list location => $rental->address->locality , rentalType => $rental->type }">{_$rental->type->name} {_$rental->address->locality->name}</a>
+		<a class="capitalize brown"  href="{link Rental:list location => $rental->address->locality , rentalType => $rental->type }">{_$rental->type->name|firstUpper} {_$rental->address->locality->name}</a>
 		</p>
 
 		{foreach $rental->address->getLocations() as $location}
@@ -261,9 +254,6 @@
 						</td>
 					</tr>
 
-
-
-
 					<tr>						
 						<td class="iconcover"><i class="entypo-language"></i></td>
 						<td>
@@ -346,7 +336,9 @@ $(document).ready(function(){
 		$(this).addClass('focus');
 	});
 
-	$( ".datepicker" ).datepicker( $.datepicker.regional[ {$envLanguage->iso} ] );	
+	$.datepicker.setDefaults(  $.datepicker.regional[ {$envLanguage->iso} ] );
+	$( ".datepicker" ).datepicker({ minDate: 0, maxDate: "+1M +10D" });	
+	$( ".datepickerto" ).datepicker({ minDate: 1, maxDate: "+1M +10D" });	
 });
 
 
@@ -455,8 +447,8 @@ $(document).ready(function(){
 				<div class="tab-pane" id="interviewAnswers">
 					{foreach $interviewAnswers as $interviewAnswer}
 						{if !empty($interviewAnswer->answer)}
-							<p class="question">{_$interviewAnswer->question->question}</p>
-							<p class="answer">"{_$interviewAnswer->answer}"</p>
+							<p class="question">{_$interviewAnswer->question->question|firstUpper}</p>
+							<p class="answer">"{_$interviewAnswer->answer|firstUpper}"</p>
 						{/if}			
 					{/foreach}
 				</div>
