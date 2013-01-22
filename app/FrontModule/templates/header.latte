@@ -26,7 +26,7 @@
 									<ul>
 										{foreach $supportedLanguage as $language}
 											<li>
-												<a href="{link :Front:Home:default language => $language}">{_$language->name}</a>
+												<a href="{link :Front:Home:default language => $language}">{$language->name->getTranslation($language)}</a>
 											</li>
 										{/foreach}
 									</ul>

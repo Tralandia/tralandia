@@ -15,6 +15,26 @@ class LanguageRepository extends \Repository\BaseRepository {
 		return $this->findBySupported($entityName::SUPPORTED);
 	}
 
+	public function getSupportedSortedByName() {
+		$supporded = $this->findSupported();
+
+		$sort = array();
+		foreach ($supporded as $key => $language) {
+			$sort[$language->name->getTranslation($language)->getDefaultVariation()] = $key;
+		}
+
+		// TODO: Zoradit pomocou \Collator
+		ksort($sort);
+
+		$return = array();
+		foreach ($sort as $name => $key) {
+			$return[] = $supporded[$key];
+		}
+
+		return $return;
+
+	}
+
 	public function getForSelect()
 	{
 		$return = [];

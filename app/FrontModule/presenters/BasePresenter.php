@@ -68,7 +68,7 @@ abstract class BasePresenter extends \BasePresenter {
 		$this->template->envLanguage = $this->environment->getLanguage();
 		$this->template->envPrimaryLocation = $this->environment->getPrimaryLocation();
 
-		$supportedLanguages = $this->languageRepositoryAccessor->get()->findSupported();
+		$supportedLanguages = $this->languageRepositoryAccessor->get()->getSupportedSortedByName();
 		$this->template->supportedLanguages = array_chunk($supportedLanguages,round(count($supportedLanguages)/3));
 
 		$this->template->pageH1 = $this->pageSeo->getH1();
