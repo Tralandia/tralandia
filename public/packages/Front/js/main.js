@@ -486,12 +486,9 @@ $(document).ready(function(){
       var id = $(this).attr('id');
       var href = $(this).attr('href');
 
-      
-
       //$(this).tab('show');
       $('.nav-tabs li').removeClass('active');
       $(this).parent().addClass('active');
-
 
 		var scrollmem = $('body').scrollTop();
 		var newHref = href.replace("#","#_");
@@ -503,7 +500,6 @@ $(document).ready(function(){
       	mapLoader();
       }
       
-
       $('.tab-content .tab-pane').hide();
       $('.tab-content .tab-pane'+href).show();
 
