@@ -80,7 +80,7 @@
 			{_$rental->teaser|firstUpper}
 		</p>
 		<p class="marginBottom nopadding">
-		<a class="capitalize brown"  href="{link Rental:list location => $rental->address->locality , rentalType => $rental->type }">{_$rental->type->name|firstUpper} {_$rental->address->locality->name}</a>
+		<a class="capitalize brown"  href="{link Rental:list location => $rental->address->locality , rentalType => $rental->type }">{_$rental->type->name|firstUpper} {_$rental->address->locality->name , null , [case=>locative]}</a>
 		</p>
 
 		{foreach $rental->address->getLocations() as $location}
