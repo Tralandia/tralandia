@@ -38,6 +38,8 @@ parameters:
 		driver: pdo_mysql
 		debugger: false
 
+	useTemplateCache: FALSE
+
 doctrine:
 	connections:
 		default: %database%

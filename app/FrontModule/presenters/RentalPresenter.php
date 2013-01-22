@@ -65,7 +65,7 @@ class RentalPresenter extends BasePresenter {
 			$search->setRentalTypeCriterium($rentalType);
 		}
 
-		$vp = $this['paginator'];
+		$vp = $this['p'];
 		$paginator = $vp->getPaginator();
 		$paginator->itemsPerPage = \Service\Rental\RentalSearchService::COUNT_PER_PAGE;
 		$paginator->itemCount = $search->getRentalsCount();
@@ -99,7 +99,7 @@ class RentalPresenter extends BasePresenter {
 		return $form;
 	}
 
-	protected function createComponentPaginator() {
+	protected function createComponentP() {
 		$vp = new \VisualPaginator();
 		$vp->templateFile = APP_DIR.'/FrontModule/components/VisualPaginator/paginator.latte';
 		return $vp;

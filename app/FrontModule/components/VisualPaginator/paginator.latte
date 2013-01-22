@@ -2,7 +2,7 @@
 <div class="grid-paginator pagination pull-right">
 	<ul>
 	{if $paginator->getPage() - 1 >= $paginator->getFirstPage()}
-		<li><a href="{link this, page => $paginator->getPage() - 1}" class="entypo-prev"></a></li>
+		<li><a href="{link this, p => $paginator->getPage() - 1}" class="entypo-prev"></a></li>
 	{else}
 		<li class="disabled"><a href="#" class="entypo-prev"></a></li>
 	{/if}
@@ -12,14 +12,14 @@
 	{if $step == $paginator->page}
 		<li class="disabled current"><a href="#"><span class="grid-current">{$step}</span></a></li>
 	{else}
-		<li><a href="{link this, page => $step}">{$step}</a></li>
+		<li><a href="{link this, p => $step}">{$step}</a></li>
 	{/if}
 	{if $iterator->nextValue > $step + 1} <!-- <span>…</span> -->{/if}
 	{/foreach}
 
 
 	{if $paginator->getPage() + 1 <= $paginator->getLastPage()}
-		<li><a href="{link this, page => $paginator->getPage() + 1}" class="entypo-next"></a></li>
+		<li><a href="{link this, p => $paginator->getPage() + 1}" class="entypo-next"></a></li>
 	{else}
 		<li class="disabled"><a href="#" class="entypo-next"></a></li>
 	{/if}

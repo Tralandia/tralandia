@@ -72,9 +72,11 @@ abstract class BasePresenter extends Presenter {
 
 	public function beforeRender() {
 		parent::beforeRender();
+		$parameters = $this->getContext()->getParameters();
 		$this->template->staticPath = '/';
 		$this->template->setTranslator($this->getService('translator'));
 		$this->template->registerHelper('image', callback('Tools::helperImage'));
+		$this->template->useTemplateCache = $parameters['useTemplateCache'];
 	}
 
 	protected function createTemplate($class = NULL) {

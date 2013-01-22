@@ -7,11 +7,11 @@
 		<div class="row">
 
 
-			{cache $homeCacheId, expire => '+1 day'}
+			{cache $homeCacheId, if => $useTemplateCache, expire => '+1 day'}
 			{include header.latte}
 			{/cache}
 			{include favorites.latte}
-			{cache homeSearchBar, if => isset($isHome), expire => '+1 day'}
+			{cache homeSearchBar, if => isset($isHome) && $useTemplateCache, expire => '+1 day'}
 				{control searchBar}
 			{/cache}
 			<div class="span9">
@@ -24,7 +24,7 @@
 			</div>
 			{*{control footer}*}
 			{if isset($isHome)}
-				{cache $footerCountriesCacheId, expire => '+1 day'}
+				{cache $footerCountriesCacheId, if => $useTemplateCache, expire => '+1 day'}
 					{control countriesFooter}
 				{/cache}
 			{/if}

@@ -32,7 +32,7 @@ class VisualPaginator extends Control
 	private $paginator;
 
 	/** @persistent */
-	public $page = 1;
+	public $p = 1;
 
 	public $templateFile = null;
 
@@ -87,7 +87,7 @@ class VisualPaginator extends Control
 	public function loadState(array $params)
 	{
 		parent::loadState($params);
-		$this->getPaginator()->page = $this->page;
+		$this->getPaginator()->page = $this->p;
 	}
 
 }
