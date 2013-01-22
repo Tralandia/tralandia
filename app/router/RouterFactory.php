@@ -15,9 +15,9 @@ class RouterFactory
 	protected $defaultLanguage;
 	protected $defaultPrimaryLocation;
 	/**
-	 * @var IFrontRouteListFactory
+	 * @var IFrontRouteFactory
 	 */
-	protected $frontRouteListFactory;
+	protected $frontRouteFactory;
 	/**
 	 * @var IOwnerRouteListFactory
 	 */
@@ -26,12 +26,12 @@ class RouterFactory
 	public $languageRepositoryAccessor;
 	public $locationRepositoryAccessor;
 
-	public function __construct(array $options, IFrontRouteListFactory $frontRouteListFactory,
+	public function __construct(array $options, IFrontRouteFactory $frontRouteFactory,
 								IOwnerRouteListFactory $ownerRouteListFactory)
 	{
 		$this->defaultLanguage = $options['defaultLanguage'];
 		$this->defaultPrimaryLocation = $options['defaultPrimaryLocation'];
-		$this->frontRouteListFactory = $frontRouteListFactory;
+		$this->frontRouteFactory = $frontRouteFactory;
 		$this->ownerRouteListFactory = $ownerRouteListFactory;
 	}
 
@@ -46,7 +46,7 @@ class RouterFactory
 		$router = new RouteList();
 
 		$router[] = $gregor = new RouteList('gregor');
-		$gregor[] = new Route('gregor/[<presenter>/[<action>[/<id>]]]', array(
+		$gregor[] = new Route('gregor[/<presenter>[/<action>[/<id>]]]', array(
 			'presenter' => 'Page',
 			'action' =>  'home',
 			'primaryLocation' => $this->defaultPrimaryLocation,
@@ -61,31 +61,32 @@ class RouterFactory
 			'primaryLocation' => $this->defaultPrimaryLocation,
 			'language' => $this->defaultLanguage,
 		));
-		$adminRouter[] = new Route('admin/<presenter>/[<action>[/<id>]]', array(
+		$adminRouter[] = new Route('admin/<presenter>[/<action>[/<id>]]', array(
 			'presenter' => NULL,
 			'action' =>  'list',
 			'primaryLocation' => $this->defaultPrimaryLocation,
 			'language' => $this->defaultLanguage,
 		));
-	/*	$adminRouter[] = new Route('admin/<presenter>/[<action list|add|registration>]', array(
+	/*	$adminRouter[] = new Route('admin/<presenter>[/<action list|add|registration>]', array(
 			'presenter' => 'Admin',
 			'action' =>  'list'
 		));
 	*/
 
+
 		$router[] = $this->ownerRouteListFactory->create();
 
 		$router[] = $frontRouter = new RouteList('Front');
-		$frontRouter[] = $this->frontRouteListFactory->create();
-		//$frontRouter[] = $this->frontRouteFactory->create();
-
-	
-		
-		$frontRouter[] = new Route('<presenter>/[<action>[/<id>]]', array(
+		$frontRouter[] = new Route('front/<presenter>[/<action>[/<id>]]', array(
 			'action' =>  'default',
 			'primaryLocation' => $this->defaultPrimaryLocation,
 			'language' => $this->defaultLanguage,
 		));
+		$frontRouter[] = $this->frontRouteFactory->create();
+		//$frontRouter[] = $this->frontRouteFactory->create();
+
+
+
 
 		return $router;
 	}

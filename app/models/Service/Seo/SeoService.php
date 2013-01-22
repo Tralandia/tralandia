@@ -37,11 +37,7 @@ class SeoService extends Nette\Object {
 				'case' => \Entity\Language::LOCATIVE,
 			),
 		),
-		'tagAfter' => array(
-			'rentalTag',
-			'name',
-		),
-		'tagBefore' => array(
+		'tag' => array(
 			'rentalTag',
 			'name',
 		),
@@ -113,20 +109,20 @@ class SeoService extends Nette\Object {
 			$destination = ':' . $this->request->getPresenterName() . ':' . $this->getParameter('action');
 			if ($destination == ':Front:Rental:list') {
 				$hash = array();
-				foreach (\Routers\FrontRoute::$pathSegmentTypesById as $key => $value) {
-					if ($key == 2) continue;
-					if ($this->existsParameter($value)) {
-						if ($value == 'rentalTag') {
-							$tagName = $this->getParameter($value)->name;
+				foreach (\Routers\FrontRoute::$pathSegmentTypes as $key => $value) {
+					if ($value == 2) continue;
+					if ($this->existsParameter($key)) {
+						if ($key == 'rentalTag') {
+							$tagName = $this->getParameter($key)->name;
 							$tagTranslation = $tagName->getTranslation($this->getParameter('language'));
 							if ($tagTranslation->position == \Entity\Phrase\Translation::BEFORE) {
-								$value = \Entity\Phrase\Translation::BEFORE;
+								$key = \Entity\Phrase\Translation::BEFORE;
 							} else {
-								$value = \Entity\Phrase\Translation::AFTER;
+								$key = \Entity\Phrase\Translation::AFTER;
 							}
-							$value = 'tag'.$value;
+							$key = 'tag'.$key;
 						}
-						$hash[] = '/'.$value;
+						$hash[] = '/'.$key;
 					}
 				}
 				$hash = implode('', $hash);

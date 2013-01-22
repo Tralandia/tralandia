@@ -6,11 +6,11 @@ use Nette;
 use Repository\LanguageRepository;
 use Repository\Location\LocationRepository;
 
-abstract class BaseRouteList extends Nette\Object implements Nette\Application\IRouter
+abstract class BaseRoute extends Nette\Object implements Nette\Application\IRouter
 {
 
-	const PARAM_LANGUAGE = 'language';
-	const PARAM_PRIMARY_LOCATION = 'primaryLocation';
+	const LANGUAGE = 'language';
+	const PRIMARY_LOCATION = 'primaryLocation';
 
 	/**
 	 * @var \Entity\Language
@@ -41,13 +41,13 @@ abstract class BaseRouteList extends Nette\Object implements Nette\Application\I
 	 */
 	public function filterIn(array $params)
 	{
-		$primaryLocationIso = $params[self::PARAM_PRIMARY_LOCATION];
+		$primaryLocationIso = $params[self::PRIMARY_LOCATION];
 		$primaryLocation = $this->locationRepository->findOneByIso($primaryLocationIso);
-		$params[self::PARAM_PRIMARY_LOCATION] = $primaryLocation;
+		$params[self::PRIMARY_LOCATION] = $primaryLocation;
 
-		$languageIso = $params[self::PARAM_LANGUAGE];
+		$languageIso = $params[self::LANGUAGE];
 		$language = $languageIso == 'www' ? $primaryLocation->defaultLanguage : $this->languageRepository->findOneByIso($languageIso);
-		$params[self::PARAM_LANGUAGE] = $language;
+		$params[self::LANGUAGE] = $language;
 
 		return $params;
 	}
@@ -59,13 +59,13 @@ abstract class BaseRouteList extends Nette\Object implements Nette\Application\I
 	 */
 	public function filterOut(array $params)
 	{
-		$primaryLocation = $params[self::PARAM_PRIMARY_LOCATION];
-		$params[self::PARAM_PRIMARY_LOCATION] = $primaryLocation->iso;
+		$primaryLocation = $params[self::PRIMARY_LOCATION];
+		$params[self::PRIMARY_LOCATION] = $primaryLocation->iso;
 
 
-		$language = $params[self::PARAM_LANGUAGE];
+		$language = $params[self::LANGUAGE];
 		$languageIso = $language->iso == $primaryLocation->defaultLanguage->iso ? 'www' : $language->iso;
-		$params[self::PARAM_LANGUAGE] = $languageIso;
+		$params[self::LANGUAGE] = $languageIso;
 
 		return $params;
 	}

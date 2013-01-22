@@ -36,7 +36,7 @@ Extras\Config\PresenterExtension::register($configurator);
 $configurator->addConfig(APP_DIR . '/configs/config.neon', FALSE);
 $configurator->addConfig(APP_DIR . '/configs/local.config.neon');
 
-if (isset($_SERVER['REDIRECT_URL']) && ($_SERVER['REDIRECT_URL'] == '/import/' || $_SERVER['REDIRECT_URL'] == '/import/import/default')) {
+if (isset($_SERVER['REDIRECT_URL']) && ($_SERVER['REDIRECT_URL'] == '/import' || $_SERVER['REDIRECT_URL'] == '/import/import/default')) {
 	$section = 'import';
 }
 

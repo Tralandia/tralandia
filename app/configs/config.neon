@@ -193,8 +193,12 @@ factories:
 	# ==============================
 	# ==================== ROUTERS
 	# ==============================
+	ownerRouteListFactory:
+		class: Routers\OwnerRouteList(@languageRepositoryAccessor, @locationRepositoryAccessor)
+		implement: Routers\IOwnerRouteListFactory
+
 	frontRouteFactory:
-		class: Routers\FrontRoute(@routerCache, %router.mode%)
+		class: Routers\FrontRoute(@languageRepositoryAccessor::get(), @locationRepositoryAccessor::get())
 		setup:
 			- $locationRepositoryAccessor(@locationRepositoryAccessor)
 			- $languageRepositoryAccessor(@languageRepositoryAccessor)
@@ -208,26 +212,6 @@ factories:
 			- $pageRepositoryAccessor(@pageRepositoryAccessor)
 			- $phraseDecoratorFactory(@phraseDecoratorFactory)
 		implement: Routers\IFrontRouteFactory
-
-	ownerRouteListFactory:
-		class: Routers\OwnerRouteList(@languageRepositoryAccessor, @locationRepositoryAccessor)
-		implement: Routers\IOwnerRouteListFactory
-
-	frontRouteListFactory:
-		class: Routers\FrontRouteList(@languageRepositoryAccessor::get(), @locationRepositoryAccessor::get())
-		setup:
-			- $locationRepositoryAccessor(@locationRepositoryAccessor)
-			- $languageRepositoryAccessor(@languageRepositoryAccessor)
-			- $rentalRepositoryAccessor(@rentalRepositoryAccessor)
-			- $rentalTypeRepositoryAccessor(@rentalTypeRepositoryAccessor)
-			- $routingPathSegmentRepositoryAccessor(@routingPathSegmentRepositoryAccessor)
-			- $domainRepositoryAccessor(@domainRepositoryAccessor)
-			- $pageRepositoryAccessor(@pageRepositoryAccessor)
-			- $rentalTagRepositoryAccessor(@rentalTagRepositoryAccessor)
-			- $rentalAmenityRepositoryAccessor(@rentalAmenityRepositoryAccessor)
-			- $pageRepositoryAccessor(@pageRepositoryAccessor)
-			- $phraseDecoratorFactory(@phraseDecoratorFactory)
-		implement: Routers\IFrontRouteListFactory
 
 
 	# ==============================

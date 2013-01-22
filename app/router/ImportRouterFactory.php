@@ -24,7 +24,7 @@ class ImportRouterFactory
 			'presenter' => 'Import',
 			'action' =>  'default',
 		));
-		$importRouter[] = new Route('import/<presenter>/[<action>[/<id>]]', array(
+		$importRouter[] = new Route('import[/<presenter>/[<action>[/<id>]]]', array(
 			'presenter' => 'Import',
 			'action' =>  'default',
 		));
