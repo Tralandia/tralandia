@@ -172,10 +172,11 @@ class Phrase extends \Entity\BaseEntityDetails {
 				}
 			}
 		} else {
-			$text = Arrays::get($translation, self::REQUESTED, $text);
+			$text = (string) Arrays::get($translation, self::REQUESTED, $text);
 		}
 
-		return (string) $text;
+		if(!strlen($text)) $text = '{~'.$this->getId().'|'.$language->getIso().'~}';
+		return $text;
 	}
 
 	public function getSourceTranslation() {

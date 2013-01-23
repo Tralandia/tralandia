@@ -47,7 +47,11 @@ class SeoService extends Nette\Object {
 			array(
 				'plural' => 1,
 			),
-		)
+		),
+		'rental' => array(
+			'rental',
+			'name',
+		),
 	);
 
 	protected $defaultVariation = array(
@@ -126,6 +130,8 @@ class SeoService extends Nette\Object {
 					}
 				}
 				$hash = implode('', $hash);
+			} else if($destination == ':Front:Rental:detail') {
+				$hash = '/rental';
 			} else {
 				$hash = '';
 			}
