@@ -39,8 +39,6 @@
 				
 				this.visitList = appObject.storageGet('visitObjectList');
 
-				console.log(this.favoritesData);
-
 				if(typeof this.favoritesData == 'undefined' || this.favoritesData == null){
 					$(this).parent().parent().parent().hide();
 				} else {
@@ -58,7 +56,10 @@
 							rel: v.id
 						}).addClass('removeLink');
 
-						var newLink = $('<a></a>').attr('href',v.link).addClass('link');
+						var newLink = $('<a></a>').attr({
+							href: v.link,
+							title: v.title
+						}).addClass('link');
 
 							// if is visited object
 							if(appObject.in_array(self.visitList,v.id)){
@@ -120,8 +121,6 @@
 
 						sumPx = (listCount*liWidth)+(listCount*6);
 						
-						console.log(leftOfset);
-						console.log(sumPx);
 
 						if( (leftOfset+920) < sumPx){
 							leftOfset += animationOfset;
@@ -139,16 +138,7 @@
 
 					});
 
-
-					
-
-					
-
 					$lefthArrow.click(function(){
-
-						
-
-						console.log(leftOfset);
 
 						if(leftOfset > 0){
 							leftOfset -= animationOfset;

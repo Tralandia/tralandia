@@ -80,7 +80,7 @@
 			{_$rental->teaser|firstUpper}
 		</p>
 		<p class="marginBottom nopadding">
-		<a class="capitalize brown"  href="{link Rental:list location => $rental->address->locality , rentalType => $rental->type }">{_$rental->type->name|firstUpper} {_$rental->address->locality->name , null , [case=>locative]}</a>
+		<a class="brown"  href="{link Rental:list location => $rental->address->locality , rentalType => $rental->type }">{_$rental->type->name|firstUpper} {_$rental->address->locality->name , null , [case=>locative]}</a>
 		</p>
 
 		{foreach $rental->address->getLocations() as $location}
@@ -206,7 +206,7 @@
 	<div class="span3 sidebarRightDetail">
 
 						{if $mainImage = $rental->getMainImage()}
-							<button class="marginTop btn btn-compare addToFavorites currentObject" rel="{$rental->id}" link="{link Rental:detail $rental}" thumb="{$basePath}{$mainImage|rentalImageSrc}"><span class="entypo-heart">{_o12334}</span></button>
+							<button class="marginTop btn btn-compare addToFavorites currentObject" rel="{$rental->id}" link="{link Rental:detail $rental}" data-title="{_$rental->name}" thumb="{$basePath}{$mainImage|rentalImageSrc}"><span class="entypo-heart">{_o12334}</span></button>
 						{/if}
 	
 
@@ -332,13 +332,52 @@
 
 $(document).ready(function(){
 
+
+	var fromDateOrigin = {
+		year: 0,
+		month: 0,
+		day:0,
+		date: new Date(),
+		dayPlus:0,
+	}
+
 	$('.datepicker').click(function(){
 		$(this).addClass('focus');
 	});
 
+
 	$.datepicker.setDefaults(  $.datepicker.regional[ {$envLanguage->iso} ] );
-	$( ".datepicker" ).datepicker({ minDate: 0, maxDate: "+1M +10D" });	
-	$( ".datepickerto" ).datepicker({ minDate: 1, maxDate: "+1M +10D" });	
+	$( ".datepicker" ).datepicker({ minDate: 0, maxDate: "+12M +10D" });	
+
+
+	$( ".datepickerto" ).datepicker({ 
+			minDate: new Date(2013, 1, 28), 
+			maxDate: "+12M +10D" ,
+			beforeShow: function(){
+
+				var fromValues = $('.datepicker').val().split('.');
+
+				if ( fromValues.length > 1 ) {
+
+					fromDateOrigin.year = parseInt(fromValues[2]);
+					fromDateOrigin.month = parseInt(fromValues[1])-1;
+					fromDateOrigin.day = parseInt(fromValues[0]);
+							
+					fromDateOrigin.date.setYear(fromDateOrigin.year);
+					fromDateOrigin.date.setMonth(fromDateOrigin.month);
+					fromDateOrigin.date.setDate(fromDateOrigin.day);
+
+					fromDateOrigin.dayPlus = new Date(fromDateOrigin.date.getFullYear(), fromDateOrigin.date.getMonth(), fromDateOrigin.date.getDate()+1);
+
+					$( this ).datepicker("option",{ minDate: fromDateOrigin.dayPlus, maxDate: "+12M +10D" });	
+
+				} else {
+					$( this ).datepicker("option",{ minDate: 1 , maxDate: "+12M +10D" });
+				}
+
+
+			}
+		});	
 });
 
 

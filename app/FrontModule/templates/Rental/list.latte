@@ -8,7 +8,7 @@
 
 	<div class="span12">
 		<h1 class="marginLeft pull-left">{$pageH1} <span class="counter">({$countryCountObjects} #ubytovani)</span></h1>
-		<button class="btn pull-right marginTop marginRight btn-orange"><i class="entypo-plus"></i> {_o793}</button>
+		
 	</div>
 
 {*
@@ -48,7 +48,7 @@
 		        	<div class="span8">
 		        		<h2><a href="{link Rental:detail $rental}">{_$rental->name}</a></h2>
 		        		
-		        		<button rel="{$rental->id}" link="{link Rental:detail $rental}" thumb="{$basePath}{$mainImage|rentalImageSrc}" class="addToFavorites btn btn-mini listCompareBtn active"><span class="entypo-heart">{_o12334}</span> </button>		        				        				        	
+		        		<button rel="{$rental->id}" data-title="{_$rental->name}" link="{link Rental:detail $rental}" thumb="{$basePath}{$mainImage|rentalImageSrc}" class="addToFavorites btn btn-mini listCompareBtn active"><span class="entypo-heart">{_o12334}</span> </button>		        				        				        	
 		        		
 		        		<div class="clearfix"></div>
 

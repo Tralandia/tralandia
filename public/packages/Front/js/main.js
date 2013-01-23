@@ -225,6 +225,7 @@ App.prototype.addToFavorites = function(){
 		id: parseInt($(this).attr('rel')),
 		link: $(this).attr('link'),
 		thumb: $(this).attr('thumb'),
+		title: $(this).attr('data-title')
 	}
 
 	var removeLink = $('<a></a>').attr({
@@ -233,7 +234,10 @@ App.prototype.addToFavorites = function(){
 	}).addClass('removeLink');
 
 
-	var newLink = $('<a></a>').attr('href',data.link).addClass('link');
+	var newLink = $('<a></a>').attr({
+		href: data.link,
+		title: data.title
+	}).addClass('link');
 
 	var favoriteSlider = $('#compareList');
 
