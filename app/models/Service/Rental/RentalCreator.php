@@ -28,30 +28,18 @@ class RentalCreator
 		$this->rentalRepository = $rentalRepository;
 	}
 
-	public function create(Location $location, User $user, $rentalName)
+	public function create(\Entity\Contact\Address $address, User $user, $rentalName)
 	{
 		/** @var $rental \Entity\Rental\Rental */
 		$rental = $this->rentalRepository->createNew();
 
-		/** @var $address \Entity\Contact\Address */
-		$address = $this->rentalRepository->related('address')->createNew();
-		$address->setPrimaryLocation($location);
 		$rental->setAddress($address);
 
 		$user->addRental($rental);
 
-		$rental->getName()->createTranslation($location->getDefaultLanguage(), $rentalName);
+		$rental->getName()->createTranslation($address->getPrimaryLocation()->getDefaultLanguage(), $rentalName);
 
 		return $rental;
-	}
-
-	public function setPrice(\Entity\Rental\Rental $rental, $price)
-	{
-		$currency = $rental->getAddress()->getPrimaryLocation()->getDefaultCurrency();
-		$price = new \Extras\Types\Price($price, $currency);
-		$rental->setPrice($price);
-
-		return $this;
 	}
 
 }

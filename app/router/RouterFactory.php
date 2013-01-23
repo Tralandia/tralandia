@@ -78,11 +78,11 @@ class RouterFactory
 
 		$router[] = $frontRouter = new RouteList('Front');
 		$frontRouter[] = $this->frontRouteFactory->create();
-//		$frontRouter[] = new Route('front/<presenter>[/<action>[/<id>]]', array(
-//			'action' =>  'default',
-//			'primaryLocation' => $this->defaultPrimaryLocation,
-//			'language' => $this->defaultLanguage,
-//		));
+		$frontRouter[] = new Route('front/<presenter>[/<action>[/<id>]]', array(
+			'action' =>  'default',
+			'primaryLocation' => $this->defaultPrimaryLocation,
+			'language' => $this->defaultLanguage,
+		));
 		//$frontRouter[] = $this->frontRouteFactory->create();
 
 

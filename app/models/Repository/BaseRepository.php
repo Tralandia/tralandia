@@ -47,6 +47,12 @@ class BaseRepository extends EntityRepository {
 	public function remove($entity) {
 		$this->_em->remove($entity);
 	}
+
+	public function save($entity)
+	{
+		$this->persist($entity);
+		$this->flush($entity);
+	}
 	
 	public function getDataSource() {
 		$query = $this->_em->createQueryBuilder();
@@ -164,7 +170,7 @@ class BaseRepository extends EntityRepository {
 		if($valuePropertyName) $qb->join('e.'.$valueName, 'p');
  
 		if(is_array($criteria) || $criteria instanceof \Traversable) {
-			foreach ($this->pripareCriteria($criteria) as $key => $value) {
+			foreach ($this->prepareCriteria($criteria) as $key => $value) {
 				if(is_array($value) || $value instanceof \Traversable) {
 					$qb->andWhere($qb->expr()->in('e.'.$key, $value));
 				} else {
@@ -186,13 +192,13 @@ class BaseRepository extends EntityRepository {
 		return $qb->getQuery()->getResult();
 	}
 
-	private function pripareCriteria($criteria) {
+	private function prepareCriteria($criteria) {
 		$return = array();
 		foreach ($criteria as $key => $value) {
 			if($value instanceof \Entity\BaseEntity) {
 				$value = $value->id;
 			} else if(is_array($value)) {
-				$value = $this->pripareCriteria($value);
+				$value = $this->prepareCriteria($value);
 			}
 			$return[$key] = $value;
 		}

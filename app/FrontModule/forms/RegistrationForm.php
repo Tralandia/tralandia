@@ -76,8 +76,8 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 		$this->addPassword('password', 'Password');
 		$this->addPassword('password2', 'Confirm Password');
 
-		$this->addText('address', 'Address');
-		$this->addText('gps', 'GPS');
+		$this->addText('rentalAddress', 'Address');
+		$this->addText('rentalGps', 'GPS');
 
 		$this->addText('rentalName', 'Rental Name');
 		$this->addSelect('rentalType', 'Rental Type', $rentalTypes);
@@ -103,8 +103,8 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 			'www' => 'google.com',
 			'password' => 'adsfasdf',
 			'password2' => 'adsfasdf',
-			'address' => 'Nesvady',
-			'gps' => '1423345',
+			'rentalAddress' => 'Nesvady',
+			'rentalGps' => '1423345',
 			'rentalName' => 'Chata Test',
 			'rentalPrice' => '3',
 			'rentalMaxCapacity' => 15,

@@ -22,7 +22,7 @@ class Rental extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\User\User", inversedBy="rentals")
+	 * @ORM\ManyToOne(targetEntity="Entity\User\User", inversedBy="rentals", cascade={"persist"})
 	 */
 	protected $user;
 
@@ -58,7 +58,7 @@ class Rental extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Information", mappedBy="rentals")
+	 * @ORM\ManyToMany(targetEntity="Information", mappedBy="rentals", cascade={"persist"})
 	 */
 	protected $missingInformation;
 
@@ -287,6 +287,11 @@ class Rental extends \Entity\BaseEntity {
 		$this->price = $price->convertToFloat($this->getCurrency());
 
 		return $this;
+	}
+
+	public function setFloatPrice($price)
+	{
+		$this->setPrice(new \Extras\Types\Price($price, $this->getCurrency()));
 	}
 
 	public function getCurrency() {

@@ -30,25 +30,28 @@ class RegistrationHandlerTest extends \Tests\TestCase
 	 */
 	public function getValidData() {
 
-		$data = new \Nette\ArrayHash;
+		$data = [];
 
-		$data->country = 46;
-		$data->language = 144;
+		$data['country'] = 46;
+		$data['language'] = 144;
 
-		$data->referrer = 'david@gmail.sk';
+		$data['referrer'] = 'david@gmail.sk';
 
-		$data->email = 'test@email.com';
-		$data->phone->prefix = '+421';
-		$data->phone->number = '908123456';
-		$data->url = 'www.google.com';
-		$data->password = 'df34kdj4se4jr33';
+		$data['email'] = 'test@email.com';
+		$data['phone']['prefix'] = '+421';
+		$data['phone']['number'] = '908123456';
+		$data['url'] = 'www.google.com';
+		$data['password'] = 'df34kdj4se4jr33';
 
-		$data->rentalName = 'Chata pri lese';
-		$data->rentalType = 1;
-		$data->rentalClassification = 3;
-		$data->rentalPrice = 5;
-		$data->rentalMaxCapacity = 22;
+		$data['rentalAddress'] = 'Nesvady';
+		$data['rentalGps'] = '23345234';
+		$data['rentalName'] = 'Chata pri lese';
+		$data['rentalType'] = 1;
+		$data['rentalClassification'] = 3;
+		$data['rentalPrice'] = 5;
+		$data['rentalMaxCapacity'] = 22;
 
+		$data = \Nette\ArrayHash::from($data);
 		return $data;
 	}
 
