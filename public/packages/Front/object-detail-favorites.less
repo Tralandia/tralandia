@@ -147,7 +147,7 @@
 
 	.content {
 		width: 920px;
-		height:77px;
+		height:75px;
 		float: left;		
 		background: #fff;
 	}
@@ -171,7 +171,8 @@
 			background-size: cover;
 			
 			float: left;
-			margin: 6px 9px;
+			margin: 6px ;
+			margin-right: 0;
 
 			.checked {
 				width: 20px;
@@ -225,9 +226,9 @@
 			&.current:before {
 				border-color: rgba(238, 74, 0, 0);
 				border-top-color: #ee4a00;
-				border-width: 10px;
+				border-width: 7px;
 				left: 50%;
-				margin-left: -10px;
+				margin-left: -7px;
 			}
 
 			&:hover {
@@ -262,10 +263,11 @@
 				width: 16px;
 				background: #ddd;
 				position: relative;
-				left: 102px;
-				top: -2px;
+				left: 84px;
+				top: 0px;
 
 				visibility: hidden;
+				z-index: 30000;
 				&:before {
 				  font-family: "entypo";
 				  font-weight: normal;
@@ -289,7 +291,7 @@
 	}
 
 	.leftArrow , .rightArrow {
-		height: 75px;
+		height: 73px;
 		width: 20px;
 		
 		float: left;
