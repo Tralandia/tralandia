@@ -24,13 +24,15 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 	/**
 	 * @param \Entity\Rental\Rental $rental
 	 * @param \Repository\Location\LocationRepository $locationRepository
+	 * @param \Nette\Localization\ITranslator $translator
 	 */
-	public function __construct(\Entity\Rental\Rental $rental, \Repository\Location\LocationRepository $locationRepository)
+	public function __construct(\Entity\Rental\Rental $rental, \Repository\Location\LocationRepository
+	$locationRepository, Nette\Localization\ITranslator $translator)
 	{
 		$this->rental = $rental;
 		$this->locationRepository = $locationRepository;
 
-		parent::__construct();
+		parent::__construct($translator);
 	}
 
 	public function buildForm()
@@ -47,7 +49,7 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 		$parents = array();
 
 		for($i = 0 ; $i < 21 ; ++$i) {
-			$parents[$i] = $i;
+			$parents[$i] = $i . ' ' . $this->translate('o940', NULL, ['count' => $i]);
 		}
 
 		$this->addSelect('parents','',$parents)->setPrompt('o12277');

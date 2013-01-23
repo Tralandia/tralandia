@@ -99,4 +99,10 @@ abstract class CoolForm extends Form {
 		return $this->getElementPrototype()->getId();
 	}
 
+	public function translate()
+	{
+		$args = func_get_args();
+		return call_user_func_array(array($this->getTranslator(), 'translate'), $args);
+	}
+
 }
