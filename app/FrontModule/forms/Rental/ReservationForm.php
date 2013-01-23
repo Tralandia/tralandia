@@ -47,13 +47,15 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 		$this->addText('phone2');
 
 		$parents = array();
+		$childs = array();
 
 		for($i = 0 ; $i < 21 ; ++$i) {
-			$parents[$i] = $i . ' ' . $this->translate('o940', NULL, ['count' => $i]);
+			$parents[$i] = $i . ' ' . $this->translate('o12277', NULL, ['count' => $i]);
+			$childs[$i] = $i . ' ' . $this->translate('o2443', NULL, ['count' => $i]);
 		}
 
 		$this->addSelect('parents','',$parents)->setPrompt('o12277');
-		$this->addSelect('childs','',$parents)->setPrompt('o2443');
+		$this->addSelect('childs','',$childs)->setPrompt('o2443');
 
 		$this->addTextArea('message');
 
