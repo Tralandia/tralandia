@@ -5,7 +5,8 @@
 .objecList {
 
 	margin-bottom: 10px;	
-	
+	padding-bottom: 10px;
+	border-bottom: 1px solid #ddd;
 
 	.listCompareBtn {
 
@@ -20,19 +21,22 @@
 		position: relative;
 		top: 0px;
 
-		.basic-gradient(#5976AD,#27407D);
+
+
+			.basic-gradient(#FEFEFE,#D9DFEB);
 
 		span:before {
 			font-size: 22px;
 		}
 
 		&:hover {
-			.basic-gradient(#27407D,#5976AD);
+			.basic-gradient(#FEFEFE,#D9DFEB);
+
 		}
 
 		&.active {
 
-	.basic-gradient(#ddd,#ccc);
+
 	color: #444;
 	border: 1px solid rgb(147, 172, 218);
 
@@ -41,12 +45,13 @@
 			}
 
 			&:hover  {	
-				.basic-gradient(#ccc,#ddd);
+				.basic-gradient(#D9DFEB,#FEFEFE);
 			}
 
 			&.selected {
 
 				color: #fff;
+				border: 1px solid #27407e;
 				.basic-gradient(#5b78af,#27407e);
 
 				span.entypo-heart:before {
@@ -64,7 +69,7 @@
 
 	.span4 {
 		width: 245px;
-		height: 150px;
+		height: 145px;
 		overflow: hidden;
 
 
