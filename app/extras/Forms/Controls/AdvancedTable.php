@@ -68,6 +68,7 @@ class AdvancedTable extends BaseControl {
 				$tr = Html::el('tr');
 				foreach ($this->columns as $key => $value) {
 					$clonedControl = clone($control);
+					$clonedControl->id .= '-'.$i.'-'.$key;
 					$clonedControl->name .= '['.$i.']['.$key.']';
 					if(isset($values[$i][$key])) $clonedControl->value = $values[$i][$key];
 					$td = Html::el('td')->add($clonedControl);

@@ -25,7 +25,7 @@ class DefaultRenderer extends DefaultFormRenderer {
 		),
 
 		'controls' => array(
-			'container' => 'table',
+			'container' => 'div',
 		),
 
 		'pair' => array(
