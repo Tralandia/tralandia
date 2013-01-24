@@ -8,12 +8,13 @@
 
 
 							<ul>
-								<li><a n:href=":Owner:Rental:edit">{_o749}</a></li>
-								<li><a n:href=":Owner:Rental:add" class="red"><strong>+ {_o793}</strong></a> </li>
+								<li class="home topicon"><a n:href=":Front:Home:default"><i class="entypo-home"></i> {_o823}</a></li>
+								<li class="topicon"><a n:href=":Owner:Rental:edit"><i class="entypo-edit"></i> {_o749}</a></li>
+								<li class="topicon"><a n:href=":Owner:Rental:add" class="red"><i class="entypo-plus"></i><strong> {_o793}</strong></a> </li>
 
 								<li>
 									<div class="dropdown lang">
-									  <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="langMenuOptionsOpen">#Slovencina <i class="entypo-down"></i></a>
+									  <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="langMenuOptionsOpen"><i class="entypo-language"></i> #Slovencina <i class="entypo-down"></i></a>
 									</div>								
 								</li>
 								
@@ -48,13 +49,14 @@
 								</a>
 							</div>
 							{*<img src="http://www.tralandia.sk/trax_html/images/sk.domain.png" />*}
-							<div id="siteName">Tralandia.<span>com</span></div>
-							<h1>{$slogan}</h1>
+							<div id="siteName"><a href="{link :Front:Home:default language => $language}">Tralandia.<span>com</span></a></div>
+							<h1><a href="{link :Front:Home:default language => $language}">{$slogan}</a></h1>
 						</div>
 						<div class="gradiendEnd"></div>
 
 						<div class="clearfix"></div>
 
+						{*
 						<nav role="main-menu" id="mainMenu">
 							<ul>
 								<li><a n:href=":Front:Home:default"><i class="entypo-home"></i> {_o823}</a></li>
@@ -63,6 +65,16 @@
 
 							</ul>
 						</nav>
+						*}
+
+						<nav class="socialIcons">
+							<ul>
+								<li><a href="#"><i class="entypo-star"></i></a></li>
+								<li><a href="#"><i class="entypo-star"></i></a></li>
+								<li><a href="#"><i class="entypo-star"></i></a></li>
+							</ul>
+						</nav>
+
 					</div>
 				</header>
 			</div>

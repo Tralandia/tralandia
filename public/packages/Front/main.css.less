@@ -461,20 +461,39 @@ ul.arrows {
 #header {
 	
 	.inner {
-		-webkit-border-radius: 20px;
-		-webkit-border-top-left-radius: 7px;
-		-moz-border-radius: 20px;
-		-moz-border-radius-topleft: 7px;
-		border-radius: 20px;
-		border-top-left-radius: 7px;
+		-webkit-border-radius: 7px;
+		-moz-border-radius: 7px;
+		border-radius: 7px;
 
+	}
+
+
+	.socialIcons {
+		list-style: none;
+		width: 280px;
+		float: right;
+		position: relative;
+		top: -4px;
+		
+		height: 27px;
+
+		li {
+			display: block;
+			float: right;
+			height: 30px;
+			width: 30px;
+
+			a {
+				color: #fff;
+			}
+		}
 	}	
 }
 
 
 	#siteName {
 		font-family: 'neosansbold';
-		color: #fff;
+		
 		font-size: 35px;
 		margin-top: 6px;
 		float: left;
@@ -483,6 +502,8 @@ ul.arrows {
 		span {
 			font-family: 'neosansregular';
 		}
+
+
 	}
 
 	#topWidget {
@@ -497,7 +518,7 @@ ul.arrows {
 	#logo {
 		height:103px;
 		width: 106px;
-		margin-top: -40px;
+		margin-top: -43px;
 		float: left;
 		position: relative;
 		z-index: 1000;
@@ -507,8 +528,8 @@ ul.arrows {
 			display: block;
 			width: 100%;
 			height: 100%;
-			background: url(/images/tra-logo-icon.png);
-			background: url(/images/tra-logo-icon.svg);
+			background: url(/images/tra-logo-icon.png) no-repeat;
+			background: url(/images/tra-logo-icon.svg) no-repeat;
 			background-size: contain;
 		}
 	}
@@ -517,9 +538,9 @@ ul.arrows {
 		padding: 10px;				
 		height:50px;	
 		position: relative;
-		top: -14px;
+		top: 0;
 		float: left;	
-		margin-bottom: 6px;
+		margin-bottom: 0;
 	}
 
 	#pageTitle {			
@@ -537,6 +558,15 @@ ul.arrows {
 			float: left;
 			color: @white;
 		}
+
+		a {
+			color: #fff;
+
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+
 	}
 
 	.gradiendEnd {			
@@ -555,10 +585,47 @@ ul.arrows {
 		right: -1px;
 
 		ul , ul li {
-			height:27px;
-			line-height:27px;
+			height:25px;
+			line-height:25px;
 			padding: 0 ;			
 			margin: 0;
+		}
+
+		li {
+
+
+			&.topicon {
+
+				a {
+					i {
+						&:before {
+							left:11px;
+							top: 1px;
+							float: left;
+							font-size: 34px;
+							position: relative;
+						}
+					}
+				}
+
+			&.home {
+				a {
+					i {
+						&:before {
+							
+							top: -1px;
+							
+							font-size: 34px;
+							
+						}
+					}
+				}				
+			}
+
+
+			}
+
+
 		}
 
 		a:hover {
@@ -626,7 +693,7 @@ ul.arrows {
 				
 				border: none;
 				top: 28px;
-				left: 470px;
+				left: 464px;
 				background: #fff;
 				height: auto;
 				width: 492px;
@@ -635,8 +702,37 @@ ul.arrows {
 				-moz-border-radius: 5px;
 				border-radius: 5px;
 
+				border: 1px solid @lightGreen;
 				
 				z-index: 4000;
+
+
+				&:after, &:before {
+					bottom: 100%;
+					border: solid transparent;
+					content: " ";
+					height: 0;
+					width: 0;
+					position: absolute;
+					pointer-events: none;
+				}
+
+				&:after {
+					border-color: rgba(255, 255, 255, 0);
+					border-bottom-color: #ffffff;
+					border-width: 7px;
+					left: 86%;
+					margin-left: -7px;
+				}
+				&:before {
+					border-color: rgba(176, 193, 59, 0);
+					border-bottom-color: #b0c13b;
+					border-width: 8px;
+					left: 86%;
+					margin-left: -8px;
+				}
+
+
 
 				li {
 
@@ -706,6 +802,15 @@ ul.arrows {
 				}
 				
 			}
+
+
+
+
+
+
+
+
+
 
 			.dropdown {
 				

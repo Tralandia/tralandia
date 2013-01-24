@@ -567,6 +567,8 @@ $(document).ready(function(){
 
 
 
+    $('.pricePhrase').pricePhrase();
+
 });
 
 var tramapInit = false;
