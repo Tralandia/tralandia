@@ -76,12 +76,14 @@
 
 		<h1 class="addToViewList" id="{$rental->id}">{_$rental->name}</h1>
 
-		<p class="teaser red bold nopadding marginBottom">			
-			{_$rental->teaser|firstUpper}
-		</p>
+
 		<p class="marginBottom nopadding">
 		<a class="brown"  href="{link Rental:list location => $rental->address->locality , rentalType => $rental->type }">{_$rental->type->name|firstUpper} {_$rental->address->locality->name , null , [case=>locative]}</a>
 		</p>
+		<p class="teaser red bold nopadding marginBottom">			
+			{_$rental->teaser|firstUpper}
+		</p>
+
 
 		{foreach $rental->address->getLocations() as $location}
 
