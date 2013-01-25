@@ -480,17 +480,17 @@ ul.arrows {
 		li {
 			display: block;
 			float: right;
-			height: 30px;
-			width: 30px;
+			height: 34px;
+			width: 34px;
 			background: url('../packages/Front/img/page_title_bg.png') repeat;
 			position: relative;
-			top: -5px;
+			top: -8px;
 			margin-right: 2px;
 
 
--webkit-border-radius: 15px;
--moz-border-radius: 15px;
-border-radius: 15px;
+-webkit-border-radius: 22px;
+-moz-border-radius: 22px;
+border-radius: 22px;
 
 			a {
 				color: #fff;
@@ -500,10 +500,10 @@ border-radius: 15px;
 				text-align: center;
 				i {
 					position: relative;
-					top: 5px;
+					top: 7px;
 					
 					&:before {
-						font-size:30px;
+						font-size:40px;
 					}
 				}
 			}
@@ -614,7 +614,7 @@ border-radius: 15px;
 		}
 
 		ul {
-			padding: 0 10px;
+			padding: 0 5px;
 		}
 
 
@@ -2517,6 +2517,13 @@ width: 31.657201%;
 
 .pagination {
 
+	width: 100%;
+	text-align: center;
+
+	.grid-current {
+		font-size: 15px;
+	}
+
 	ul {
 		li {
 			a {
@@ -2529,6 +2536,18 @@ width: 31.657201%;
 					font-weight: bold;
 					color: @brown;
 				}
+			}
+
+			&:first-child a {
+				-webkit-border-radius:5px 0 0 5px;
+				-moz-border-radius:5px 0 0 5px;
+				border-radius:5px 0 0 5px;
+			}
+
+			&:last-child a {
+				-webkit-border-radius:0 5px 5px 0;
+				-moz-border-radius:0 5px 5px 0;
+				border-radius:0 5px 5px 0;				
 			}
 		}
 	}

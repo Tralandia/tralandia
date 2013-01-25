@@ -8,6 +8,10 @@
 	padding-bottom: 10px;
 	border-bottom: 1px solid #ddd;
 
+	&.last {
+		border-bottom: none;
+	}
+
 	.listCompareBtn {
 
 		color: #7b3300;
@@ -21,9 +25,7 @@
 		position: relative;
 		top: 0px;
 
-
-
-			.basic-gradient(#FEFEFE,#D9DFEB);
+		.basic-gradient(#FEFEFE,#D9DFEB);
 
 		span:before {
 			font-size: 22px;
@@ -95,11 +97,13 @@
 	}
 
 	.span8 {
-		width: 452px;
+		width: 450px;
+		margin-left:10px;
 	}
 
 	.panel {
 		padding: 0 5px;
+		background: #FDF5CE;
 		font-size: 11px;
 			.basic-border-radius(5px);
 		p {
@@ -168,7 +172,7 @@
 		&.teaser {
 			margin-top: 4px;
 			margin-bottom: 4px;
-			font-weight: bold;
+			
 		}
 	}
 

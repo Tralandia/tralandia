@@ -7,7 +7,7 @@
 <div class="row-fluid">
 
 	<div class="span12">
-		<h1 class="marginLeft pull-left">{$pageH1} <span class="counter">({$totalResultsCount} #ubytovani)</span></h1>
+		<h1 class="marginLeft pull-left">{$pageH1} <span class="counter">({$totalResultsCount})</span></h1>
 		
 	</div>
 
@@ -38,7 +38,12 @@
 		    		{var $featured = $rentalService->isFeatured(); }
 
 
-		        <div class="row-fluid objecList">
+		    	{var $lastClass = ''}
+		    	{if $iterator->last}
+		    	{var $lastClass = 'last'}
+		    	{/if}
+
+		        <div class="row-fluid objecList {$lastClass}">
 		        	<div class="span4">
 		        		<a href="{link Rental:detail $rental}" n:class="$featured ? top , clasic">
 		        		<!--<div class="addons btn">icon</div>--><div class="position">TOP</div>
