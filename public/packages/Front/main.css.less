@@ -482,9 +482,30 @@ ul.arrows {
 			float: right;
 			height: 30px;
 			width: 30px;
+			background: url('../packages/Front/img/page_title_bg.png') repeat;
+			position: relative;
+			top: -5px;
+			margin-right: 2px;
+
+
+-webkit-border-radius: 15px;
+-moz-border-radius: 15px;
+border-radius: 15px;
 
 			a {
 				color: #fff;
+				display: block;
+				height: 100%;
+				width: 100%;
+				text-align: center;
+				i {
+					position: relative;
+					top: 5px;
+					
+					&:before {
+						font-size:30px;
+					}
+				}
 			}
 		}
 	}	
@@ -584,12 +605,18 @@ ul.arrows {
 		top: -1px;
 		right: -1px;
 
+
 		ul , ul li {
 			height:25px;
 			line-height:25px;
 			padding: 0 ;			
 			margin: 0;
 		}
+
+		ul {
+			padding: 0 10px;
+		}
+
 
 		li {
 
@@ -599,13 +626,23 @@ ul.arrows {
 				a {
 					i {
 						&:before {
-							left:11px;
-							top: 1px;
+							left:5px;
+							top: 0px;
 							float: left;
-							font-size: 34px;
+							font-size: 30px;
 							position: relative;
 						}
 					}
+				}
+
+				&.edit {
+					a {
+						i {
+							&:before {
+								font-size: 28px;
+							}
+						}
+					}					
 				}
 
 			&.home {
@@ -613,9 +650,9 @@ ul.arrows {
 					i {
 						&:before {
 							
-							top: -1px;
-							
-							font-size: 34px;
+							top: 0px;
+							margin-right: 0;
+							font-size: 26px;
 							
 						}
 					}
@@ -653,8 +690,9 @@ ul.arrows {
 				float: left;
 				
 				a {
-					border-right: 1px solid @brown;
-					padding: 0 10px;
+					
+
+					padding: 0 6px;
 					color: @brown;
 
 					&.red {
@@ -664,7 +702,7 @@ ul.arrows {
 					&.dropdown-toggle {
 						
 						position: relative;
-						top: -6px;
+						top: -3px;
 
 						&:hover {
 							text-decoration: none;
@@ -672,8 +710,19 @@ ul.arrows {
 
 						i {
 							position: relative;
-							top: 5px;
+							top: 6px;
 							color: @darkGreen;
+
+							&.entypo-language {
+
+								&:before {
+									color: @brown;
+									position: relative;
+									top: -3px;
+									font-size: 30px;									
+								}
+
+							}
 						}
 
 						img {
@@ -818,7 +867,7 @@ ul.arrows {
 
 				a {
 					border-right: 1px solid transparent;
-					height: 26px;
+					height: 23px;
 					overflow: hidden;
 					display: block;					
 				}
@@ -2138,10 +2187,11 @@ form.traform {
 	}
 
 
-	.add-on {
+	.add-on  {
 		height: 36px;
 		line-height: 36px;
 		padding: 0 10px;
+
 	}
 
 	.error-mesage {
@@ -2350,6 +2400,33 @@ form.traform {
 				font-size: 11px;
 				clear: both;
 				position: relative;
+			}
+
+
+			&.pricePhrase {
+
+				select {
+					display: none;
+				}
+
+				ul.options {
+
+					list-style: none;
+					clear: both;
+					margin: 0;
+					width: 438px;
+					top: -5px;
+					position: absolute;
+					border-left: 1px solid #ddd;
+					border-right: 1px solid #ddd;
+					li {
+						background: #fff;
+						padding: 3px;
+						border-bottom: 1px solid #ddd;
+					}
+					
+
+				}
 			}				
 
 		}

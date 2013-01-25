@@ -36,11 +36,44 @@
     
     $.fn.pricePhrase = function(radius, options){
         return this.each(function(){
-            (new $.pricePhrase(this, radius, options));
 
-		   // HAVE YOUR PLUGIN DO STUFF HERE
-			
-	       $(this).find('span').css('background','red');
+            var html = '';
+            var self = this;
+
+            $(this).find('select option').each(function( i ) {              
+              html += '<li><a href="#" data-value="'+$(this).val()+'" data-text="'+$(this).text()+'"><strong>'+$(this).val()+'</strong> ' +$(this).text()+'</a></li>';              
+            });
+
+            $(this).find('.dropdown-menu').html(html);
+
+            $(this).find('.dropdown-menu li a').click(function(){
+               
+                var newValue = $(this).attr('data-text');
+                var newPrefix = $(this).attr('data-value');
+
+                // replace input values
+
+                $(self).find('.input-prepend').each(function(i){
+                    
+                });
+
+                console.log($(this).parent());
+                $(this).parent().find('input').each(function( i ) {              
+                  $(this).val(newValue);             
+                });
+
+                // replace prefix values
+                $(self).find('span').each(function( i ) {              
+                  $(this).html(newPrefix);             
+                });
+
+                // replace prefix values
+                $(self).find('button').each(function( i ) {              
+                  $(this).html(newPrefix);             
+                });
+
+                return false;
+            });
 		   // END DOING STUFF
 
         });
