@@ -79,6 +79,7 @@ class RentalOrderCaching extends \Nette\Object {
 	}
 
 	protected function createOrderList() {
+		d('ts');
 		$this->createFeaturedList();
 
 		$featured = $this->cacheContent['featured'];
@@ -107,6 +108,7 @@ class RentalOrderCaching extends \Nette\Object {
 		$this->location->rentalCount = count($order);
 		$this->rentalRepositoryAccessor->get()->flush();
 
+		$this->save();
 		return $order;
 	}
 

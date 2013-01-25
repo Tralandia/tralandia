@@ -89,7 +89,7 @@ class RentalPresenter extends BasePresenter {
 
 	public function findRental($id)
 	{
-		d($id);
+		//d($id);
 		$rental = $this->rentalRepositoryAccessor->get()->find($id);
 		return $this->rentalDecoratorFactory->create($rental);
 	}
