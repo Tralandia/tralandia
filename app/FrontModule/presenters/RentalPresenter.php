@@ -72,16 +72,26 @@ class RentalPresenter extends BasePresenter {
 
 		$this->template->totalResultsCount = $paginator->itemCount;
 
-		$rentalsEntities = $search->getRentals($paginator->getPage());//@todo
-		$rentals = array();
+		$rentals = $search->getRentalsIds($paginator->getPage());//@todo
 
-		foreach ($rentalsEntities as $rental) {
-			$rentals[$rental->id]['service'] = $this->rentalDecoratorFactory->create($rental);			
-			$rentals[$rental->id]['entity'] = $rental;
-			$rentals[$rental->id]['featured'] = $orderCache->isFeatured($rental);
-		}
+
+		//d($rentalsEntities);
+//		$rentals = array();
+//		foreach ($rentalsEntities as $rental) {
+//			$rentals[$rental->id]['service'] = $this->rentalDecoratorFactory->create($rental);
+//			$rentals[$rental->id]['entity'] = $rental;
+//			$rentals[$rental->id]['featured'] = $orderCache->isFeatured($rental);
+//		}
 
 		$this->template->rentals = $rentals;
+		$this->template->findRental = array($this, 'findRental');
+	}
+
+	public function findRental($id)
+	{
+		d($id);
+		$rental = $this->rentalRepositoryAccessor->get()->find($id);
+		return $this->rentalDecoratorFactory->create($rental);
 	}
 
 	//

@@ -29,10 +29,12 @@
 
 		    <div id="tabs-1" class="ui-tabs-panel">
 
-		    	{foreach $rentals as $val}
-		    	{var $rental = $val['entity']; }
-		    	{var $rentalService = $val['service']; }
-		    	{var $featured = $val['featured']; }
+		    	{foreach $rentals as $rentalId}
+					{cache 'rental-list-box-'.$rentalId, if => $useTemplateCache, expire => '+1 day'}
+
+					{var $rentalService = $findRental($rentalId); }
+					{var $rental = $rentalService->getEntity(); }
+		    		{var $featured = $rentalService->isFeatured(); }
 
 		        <div class="row-fluid objecList">
 		        	<div class="span4">
@@ -102,6 +104,7 @@
 		        	</div>		        	
 		        </div>
 
+					{/cache}
 		    	{/foreach}
 		    	{control p}
 

@@ -85,7 +85,7 @@ class RentalSearchService extends Nette\Object
 		$this->resetResults();
 	}
 
-	public function getRentalIds($page = NULL) {
+	public function getRentalsIds($page = NULL) {
 		$this->getResults();
 		$this->reorderResults();
 		if ($page === NULL) {
@@ -98,7 +98,7 @@ class RentalSearchService extends Nette\Object
 	}
 
 	public function getRentals($page = NULL) {
-		$results = $this->getRentalIds($page);
+		$results = $this->getRentalsIds($page);
 
 		return $this->rentalRepositoryAccessor->get()->findById($results);
 	}
