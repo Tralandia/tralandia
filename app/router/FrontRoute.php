@@ -199,7 +199,7 @@ class FrontRoute extends BaseRoute
 		$params = parent::filterIn($params);
 
 		if(isset($params[self::SPOKEN_LANGUAGE])) {
-			$params[self::SPOKEN_LANGUAGE] = $this->locationRepository->find($params[self::SPOKEN_LANGUAGE]);
+			$params[self::SPOKEN_LANGUAGE] = $this->languageRepository->find($params[self::SPOKEN_LANGUAGE]);
 		}
 
 		return $params;
