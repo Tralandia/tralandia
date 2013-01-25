@@ -73,8 +73,10 @@ class RentalPresenter extends BasePresenter {
 		$this->template->totalResultsCount = $paginator->itemCount;
 
 		$rentalsEntities = $search->getRentals($paginator->getPage());//@todo
+
 		$rentals = array();
 
+		//d($rentalsEntities);
 		foreach ($rentalsEntities as $rental) {
 			$rentals[$rental->id]['service'] = $this->rentalDecoratorFactory->create($rental);			
 			$rentals[$rental->id]['entity'] = $rental;

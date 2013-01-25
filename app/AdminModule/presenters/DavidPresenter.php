@@ -102,4 +102,15 @@ class DavidPresenter extends BasePresenter {
 		$var = $gps->gpsToString();
 		d($var);
 	}
+
+	public function actionRentalList()
+	{
+		$list = $this->rentalRepositoryAccessor->get()->findByRank(68);
+		d($list);
+//		foreach($list as $rental) {
+//			d($rental);
+//		}
+		//d($list);
+
+	}
 }
