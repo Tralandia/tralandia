@@ -113,4 +113,12 @@ class DavidPresenter extends BasePresenter {
 		//d($list);
 
 	}
+
+	public function createComponentForm()
+	{
+		$form = new \Nette\Application\UI\Form;
+		$form->addText('ha');
+		$form->addSubmit('submit');
+		return $form;
+	}
 }

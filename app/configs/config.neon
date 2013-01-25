@@ -108,6 +108,13 @@ services:
 		class: Extras\Environment(@application::getRequests(), @languageRepositoryAccessor, @locationRepositoryAccessor)
 	translator: @translatorFactory::create(@environment::getLanguage())
 
+	# ==============================
+	# ==================== LISTENERS
+	# ==============================
+	foo:
+		class: TestListener
+		tags: [kdyby.subscriber]
+
 	# @TODO ------------------------ 
 	emailCompiler:
 		class: Extras\Email\Compiler

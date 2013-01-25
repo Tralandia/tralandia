@@ -3,12 +3,12 @@
 use Nette\Diagnostics\Debugger,
 	Nette\Environment,
 	Nette\Application\Routers\Route,
-	Nette\Application\Routers\RouteList,
 	Nella\Addons\Doctrine\Config\Extension;
 
 
 // Load Nette Framework
-require_once LIBS_DIR . '/Nette/loader.php';
+require_once LIBS_DIR . '/Doctrine/Common/EventManager.php';
+require_once VENDOR_DIR . '/autoload.php';
 require_once LIBS_DIR . '/rado_functions.php';
 
 // Enable Nette\Debug for error visualisation & logging
@@ -45,6 +45,7 @@ if ($section) {
 }
 $configurator->onCompile[] = function ($configurator, $compiler) {
 	$compiler->addExtension('gpspicker', new VojtechDobes\NetteForms\GpsPickerExtension);
+	$compiler->addExtension('events', new Kdyby\Events\DI\EventsExtension);
 };
 $container = $configurator->createContainer();
 // Debugger::$editor = $container->parameters['editor'];

@@ -20,6 +20,9 @@ define('APP_DIR', ROOT_DIR . '/app');
 // absolute filesystem path to the libraries
 define('LIBS_DIR', ROOT_DIR . '/libs');
 
+define('VENDOR_DIR', ROOT_DIR . '/vendor');
+
+
 // absolute filesystem path to the libraries
 define('TEMP_DIR', ROOT_DIR . '/temp');
 

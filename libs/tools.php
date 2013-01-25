@@ -40,9 +40,6 @@ Extras\Forms\Controls\ReadOnlyPhrase::register();
 function d() {
 	return Tools::dump(func_get_args());
 }
-function debug() {
-	return Tools::dump(func_get_args());
-}
 
 function t($name = NULL) {
 	return Debugger::timer('TIMER.'.$name);
