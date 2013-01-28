@@ -1,7 +1,33 @@
 {block content}
 
 
+<script>
+
+function setFormAttr(){
+	$('.traform .control-group').removeClass('valid');
+	$('.traform .control-group').removeClass('error');
+
+	$('.traform .control-group').addClass($(this).attr('rel'));
+	return false;
+}
+
+$(document).ready(function(){
+	
+	$('.changeform').click(setFormAttr);
+
+	$(".control-group select").select2(); 
+	
+});
+</script>
+
+<button rel="" class="changeform">Normal</button>
+<button rel="valid" class="changeform">Valid</button>
+<button rel="error" class="changeform">Invalid</button>
+
+
 <form class="traform dashboard">
+
+
 
 <div class="span9">
 	<div class="innerPadding baseRadius baseBorder innerPaddingRitgh overflow">
@@ -19,19 +45,20 @@
 				</div>
 
 
-				<div class="control-group">
+				<div class="control-group ">
 				   <div class="form-label">
 				       <label>Email</label>
 				       <small>(poznam­ka)</small>
 				   </div>
 				   <div class="controls">
 				       <input type="text" id="inputEmail" placeholder="E­mail"/>
-				       <i class="va­lidation entypo-valid"></i>
-				       <div class="control-error"></div>
+				       <i class="va­lidation"></i>
+				       <div class="control-error">validation error</div>
 				   </div>
 				</div>
 
 
+{*}
 <div class="control-group pricePhrase">
 	<div class="form-label"><label for="frm-currency-name">Name</label></div>
 	
@@ -74,117 +101,64 @@
 	<div class="control-error"></div>
 	</div>
 </div>
+*}
+
+
+	
 
 
 
-
-				<div class="control-group error">
-				   <div class="form-label">
-				       <label>Email</label>
-				       <small>(poznam­ka)</small>
-				   </div>
-				   <div class="controls">
-				       <input type="text" id="inputEmail" placeholder="E­mail"/>
-				       <i class="va­lidation entypo-invalid"></i>
-				       <div class="control-error">validation error</div>
-				   </div>
-				</div>
-
-
-
-				<div class="control-group error pricecontroll">
+				<div class="control-group  pricecontroll">
 				   <div class="form-label">
 				       <label>Price</label>
 				       <small>(poznam­ka)</small>
 				   </div>
 				   <div class="controls">
-				       <select>
-							<option>eh</option>
-							<option>eh</option>
-							<option>eh</option>
-							<option>eh</option>
-				       </select>
 				       <input type="text" />
-				       <i class="va­lidation entypo-invalid"></i>
+				       <select>
+							<option>EUR</option>
+							<option>USD</option>
+							<option>eh</option>
+							<option>eh</option>
+				       </select>				       
+				       <i class="va­lidation"></i>
 				       <div class="control-error">validation error</div>
 				   </div>
 				</div>
 
 
 
-				<div class="control-group">
+
+
+				<div class="control-group ">
 				   <div class="form-label">
 				       <label>Password</label>
 				       <small>(poznam­ka)</small>
 				   </div>
 				   <div class="controls">
 				       <input type="password" id="inputPassword" placeholder="Password"/>
-				       <i class="va­lidation entypo-valid"></i>
-				       <div class="control-error"></div>
-				   </div>
-				</div>
-
-				<div class="control-group error">
-				   <div class="form-label">
-				       <label>Password</label>
-				       <small>(poznam­ka)</small>
-				   </div>
-				   <div class="controls">
-				       <input type="password" id="inputPassword" placeholder="Password"/>
-				       <i class="va­lidation entypo-invalid"></i>
+				       <i class="va­lidation"></i>
 				       <div class="control-error">validation error</div>
 				   </div>
 				</div>
 
 
 
-				<div class="control-group">
+
+
+				<div class="control-group ">
 				   <div class="form-label">
 				       <label>Textarea</label>
 				       <small>(poznam­ka)</small>
 				   </div>
 				   <div class="controls">
 				       <textarea id="inputTextarea"></textarea>
-				       <i class="va­lidation entypo-valid"></i>
-				       <div class="control-error"></div>
-				   </div>
-				</div>
-
-				<div class="control-group error">
-				   <div class="form-label">
-				       <label>Textarea</label>
-				       <small>(poznam­ka)</small>
-				   </div>
-				   <div class="controls">
-				       <textarea id="inputTextarea"></textarea>
-				       <i class="va­lidation entypo-invalid"></i>
+				       <i class="va­lidation"></i>
 				       <div class="control-error">validation error</div>
 				   </div>
 				</div>
 
 
-				<div class="control-group error options">
-				   <div class="form-label">
-						<label>#radio button group</label>
-						<small>(Some lehper text lorem ipsum Blah)</small>
-				   </div>
-				   <div class="controls">
-						<label class="radio">
-						  <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
-						  Option one is this and that—be sure to include why it's great
-						</label>
-						<label class="radio">
-						  <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-						  Option two can be something else and selecting it will
-						</label>
-						<label class="radio">
-						  <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-						  Option two can be something else and selecting it will
-						</label>
-				       <i class="va­lidation entypo-invalid"></i>
-				       <div class="control-error">validation error</div>
-				   </div>
-				</div>
 
 
 				<div class="control-group options">
@@ -205,38 +179,17 @@
 						  <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
 						  Option two can be something else and selecting it will
 						</label>
-				       <i class="va­lidation entypo-valid"></i>
-				       <div class="control-error"></div>
-				   </div>
-				</div>
-
-
-
-
-				<div class="control-group error options">
-				   <div class="form-label">
-						<label>#radio button group</label>
-						<small>(Some lehper text lorem ipsum Blah)</small>
-				   </div>
-				   <div class="controls">
-						<label class="checkbox">
-						  <input type="checkbox" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
-						  Option one is this and that—be sure to include why it's great
-						</label>
-						<label class="checkbox">
-						  <input type="checkbox" name="optionsRadios" id="optionsRadios2" value="option2">
-						  Option two can be something else and selecting it will
-						</label>
-						<label class="checkbox">
-						  <input type="checkbox" name="optionsRadios" id="optionsRadios2" value="option2">
-						  Option two can be something else and selecting it will
-						</label>
-				       <i class="va­lidation entypo-invalid"></i>
+				       <i class="va­lidation"></i>
 				       <div class="control-error">validation error</div>
 				   </div>
 				</div>
 
 
+
+
+
+
+
 				<div class="control-group options">
 				   <div class="form-label">
 						<label>#radio button group</label>
@@ -255,14 +208,15 @@
 						  <input type="checkbox" name="optionsRadios" id="optionsRadios2" value="option2">
 						  Option two can be something else and selecting it will
 						</label>
-				       <i class="va­lidation entypo-valid"></i>
-				       <div class="control-error"></div>
+				       <i class="va­lidation"></i>
+				       <div class="control-error">validation error</div>
 				   </div>
 				</div>
 
 
 
-				<div class="control-group">
+
+				<div class="control-group ">
 				   <div class="form-label">
 						<label>#radio button group</label>
 						<small>(Some lehper text lorem ipsum Blah)</small>
@@ -272,43 +226,14 @@
 						  <input id="appendedInput" type="text">
 						  <span class="add-on"><b>Eur</b> Osoba / Noc</span>
 						</div>
-				       <i class="va­lidation entypo-valid"></i>
-				       <div class="control-error"></div>
-				   </div>
-				</div>
-
-				<div class="control-group error">
-				   <div class="form-label">
-						<label>#radio button group</label>
-						<small>(Some lehper text lorem ipsum Blah)</small>
-				   </div>
-				   <div class="controls">
-						<div class="input-append">
-						  <input id="appendedInput" type="text">
-						  <span class="add-on"><b>Eur</b> Osoba / Noc</span>
-						</div>
-				       <i class="va­lidation entypo-invalid"></i>
+				       <i class="va­lidation"></i>
 				       <div class="control-error">error</div>
 				   </div>
 				</div>
 
 
 
-				<div class="control-group error">
-				   <div class="form-label">
-						<label>#radio button group</label>
-						<small>(Some lehper text lorem ipsum Blah)</small>
-				   </div>
-				   <div class="controls">
-						<select class="span9">
-								<option>Slovensko</option>
-								<option>Slovensko</option>
-								<option>Slovensko</option>
-						</select>
-				       <i class="va­lidation entypo-invalid"></i>
-				       <div class="control-error">error</div>
-				   </div>
-				</div>
+
 
 				<div class="control-group">
 				   <div class="form-label">
@@ -321,10 +246,95 @@
 								<option>Slovensko</option>
 								<option>Slovensko</option>
 						</select>
-				       <i class="va­lidation entypo-valid"></i>
+				       <i class="va­lidation"></i>
 				       <div class="control-error">error</div>
 				   </div>
 				</div>
+
+
+<div class="row-fluid text">
+		<div class="span12">
+			<h2>Tags</h2>
+		</div>
+	</div>
+
+
+<div class="row-fluid">
+				<div class="span3">
+					<label class="checkbox" for="frm-rentalEditForm-tags-12">
+						<input type="checkbox" name="tags[12]" id="frm-rentalEditForm-tags-12">	Poznávací pobyt Poznávací pobyt Poznávací pobyt
+					</label>
+					<label class="checkbox" for="frm-rentalEditForm-tags-12">
+						<input type="checkbox" name="tags[12]" id="frm-rentalEditForm-tags-12">	text test
+					</label>
+					<label class="checkbox" for="frm-rentalEditForm-tags-12">
+						<input type="checkbox" name="tags[12]" id="frm-rentalEditForm-tags-12">	text test
+					</label>
+					<label class="checkbox" for="frm-rentalEditForm-tags-12">
+						<input type="checkbox" name="tags[12]" id="frm-rentalEditForm-tags-12">	text test
+					</label>
+					<label class="checkbox" for="frm-rentalEditForm-tags-12">
+						<input type="checkbox" name="tags[12]" id="frm-rentalEditForm-tags-12">	text test
+					</label>										
+
+				</div>
+				<div class="span3">
+					<label class="checkbox" for="frm-rentalEditForm-tags-12">
+						<input type="checkbox" name="tags[12]" id="frm-rentalEditForm-tags-12">	Poznávací pobyt Poznávací pobyt Poznávací pobyt
+					</label>
+					<label class="checkbox" for="frm-rentalEditForm-tags-12">
+						<input type="checkbox" name="tags[12]" id="frm-rentalEditForm-tags-12">	text test
+					</label>
+					<label class="checkbox" for="frm-rentalEditForm-tags-12">
+						<input type="checkbox" name="tags[12]" id="frm-rentalEditForm-tags-12">	text test
+					</label>
+					<label class="checkbox" for="frm-rentalEditForm-tags-12">
+						<input type="checkbox" name="tags[12]" id="frm-rentalEditForm-tags-12">	text test
+					</label>
+					<label class="checkbox" for="frm-rentalEditForm-tags-12">
+						<input type="checkbox" name="tags[12]" id="frm-rentalEditForm-tags-12">	text test
+					</label>										
+
+				</div>
+				<div class="span3">
+					<label class="checkbox" for="frm-rentalEditForm-tags-12">
+						<input type="checkbox" name="tags[12]" id="frm-rentalEditForm-tags-12">	Poznávací pobyt Poznávací pobyt Poznávací pobyt
+					</label>
+					<label class="checkbox" for="frm-rentalEditForm-tags-12">
+						<input type="checkbox" name="tags[12]" id="frm-rentalEditForm-tags-12">	text test
+					</label>
+					<label class="checkbox" for="frm-rentalEditForm-tags-12">
+						<input type="checkbox" name="tags[12]" id="frm-rentalEditForm-tags-12">	text test
+					</label>
+					<label class="checkbox" for="frm-rentalEditForm-tags-12">
+						<input type="checkbox" name="tags[12]" id="frm-rentalEditForm-tags-12">	text test
+					</label>
+					<label class="checkbox" for="frm-rentalEditForm-tags-12">
+						<input type="checkbox" name="tags[12]" id="frm-rentalEditForm-tags-12">	text test
+					</label>										
+
+				</div>
+												<div class="span3">
+					<label class="checkbox" for="frm-rentalEditForm-tags-12">
+						<input type="checkbox" name="tags[12]" id="frm-rentalEditForm-tags-12">	Poznávací pobyt Poznávací pobyt Poznávací pobyt
+					</label>
+					<label class="checkbox" for="frm-rentalEditForm-tags-12">
+						<input type="checkbox" name="tags[12]" id="frm-rentalEditForm-tags-12">	text test
+					</label>
+					<label class="checkbox" for="frm-rentalEditForm-tags-12">
+						<input type="checkbox" name="tags[12]" id="frm-rentalEditForm-tags-12">	text test
+					</label>
+					<label class="checkbox" for="frm-rentalEditForm-tags-12">
+						<input type="checkbox" name="tags[12]" id="frm-rentalEditForm-tags-12">	text test
+					</label>
+					<label class="checkbox" for="frm-rentalEditForm-tags-12">
+						<input type="checkbox" name="tags[12]" id="frm-rentalEditForm-tags-12">	text test
+					</label>										
+
+				</div>
+	</div>
+
+
 
 
 
@@ -338,25 +348,12 @@
 						  <input type="checkbox" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
 						  #checkbox single
 						</label>
-				       <i class="va­lidation entypo-valid"></i>
+				       <i class="va­lidation"></i>
 				       <div class="control-error"></div>
 				   </div>
 				</div>
 
 
-				<div class="control-group options error">
-				   <div class="form-label">
-
-				   </div>
-				   <div class="controls">
-						<label class="checkbox">
-						  <input type="checkbox" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
-						  #checkbox single
-						</label>
-				       <i class="va­lidation entypo-invalid"></i>
-				       <div class="control-error">error</div>
-				   </div>
-				</div>
 
 
 				<div class="control-group">

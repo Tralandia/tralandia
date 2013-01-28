@@ -2191,6 +2191,8 @@ form.traform {
 		height: 36px;
 		line-height: 36px;
 		padding: 0 10px;
+		border: 1px solid @lightGreen;
+		text-shadow:none;		
 
 	}
 
@@ -2236,6 +2238,10 @@ form.traform {
 
 	form.traform {
 
+		select {
+			display: none;
+		}
+
 		.row-fluid {
 			.span7 {
 				width: 430px;
@@ -2269,7 +2275,44 @@ form.traform {
 			}			
 		}
 
+		input {
+		-moz-box-shadow: none;
+		-webkit-box-shadow: none;
+		box-shadow: none;			
+		}
+
+
+
 		.control-group {
+
+
+					.select2-container {
+						width: 440px;
+
+						&.span9 {
+							margin-left: 0;
+						}
+
+						
+
+						a.select2-choice {
+							border: 1px solid @lightGreen;
+							height: 36px;
+							line-height: 36px;
+							
+							div {
+								width: 23px;
+								background: none;
+								border: none;
+								b {
+									background:url('select2.png') no-repeat 3px 5px;
+								}
+							}
+
+							
+						}
+									
+					}
 
 			height: 37px;
 
@@ -2277,26 +2320,27 @@ form.traform {
 
 				.controls {
 
-					select {
-						width: 131px;
+					.select2-container {
+						width: 75px;
+						text-align: center;
+
+						a.select2-choice {
+
+							border-radius: 0 4px 4px 0;
+
+						}
+									
+					}
+
+					input[type=text] {
+						width: 110px;
 						-webkit-border-top-right-radius: 0;
 						-webkit-border-bottom-right-radius: 0;
 						-moz-border-radius-topright: 0;
 						-moz-border-radius-bottomright: 0;
 						border-top-right-radius: 0;
 						border-bottom-right-radius: 0;	
-						border-right: none;					
-					}
-
-					input[type=text] {
-						width: 310px;
-						-webkit-border-top-left-radius: 0;
-						-webkit-border-bottom-left-radius: 0;
-						-moz-border-radius-topleft: 0;
-						-moz-border-radius-bottomleft: 0;
-						border-top-left-radius: 0;
-						border-bottom-left-radius: 0;
-						border-left: none;						
+						border-right: none;							
 					}
 				}
 
@@ -2365,6 +2409,7 @@ form.traform {
 					float: left;
 					input[type=text] , input[type=password] {
 						width: 50px;
+						border-right: 1px solid rgb(199, 199, 199);
 					}
 				}			
 
@@ -2375,11 +2420,36 @@ form.traform {
 
 
 			i.va­lidation:before {
+
+				  display: inline;
+				  width: auto;
+				  height: auto;
+				  line-height: inherit;
+				  vertical-align: baseline;
+				  background-image: none;
+				  background-position: 0 0;
+				  background-repeat: repeat;
+				    font-family: "entypo";
+				  font-weight: normal;
+				  font-style: normal;
+				  font-size: 40px;
+				  text-decoration: inherit;				
 				font-size: 70px;
 				position: relative;
 				top: 10px;
 				left: 3px;
 				color: @lightGreen;
+
+			}
+
+			.control-error {
+				height: 23px;
+				padding: 1px 10px;
+				color: #ff0000;
+				font-size: 11px;
+				clear: both;
+				position: relative;
+				visibility: hidden;
 			}
 
 			&.error {
@@ -2389,18 +2459,32 @@ form.traform {
 				}
 				i.va­lidation:before {
 					color: red;
+					content:'\26A0';
+				}
+				.control-error {
+					visibility: visible;
+				}
+
+				.controls {
+					.select2-container {
+						a.select2-choice {
+							border: 1px solid red;
+							background: #f2dede;
+						}
+									
+					}					
 				}
 			}
 
 
-			.control-error {
-				height: 23px;
-				padding: 1px 10px;
-				color: #ff0000;
-				font-size: 11px;
-				clear: both;
-				position: relative;
+			&.valid {
+
+				i.va­lidation:before {
+					content:'\2713';
+				}
 			}
+
+
 
 
 			&.pricePhrase {
