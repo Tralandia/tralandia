@@ -64,7 +64,7 @@ abstract class BasePresenter extends Presenter {
 		$this->locationRepositoryAccessor = $dic->locationRepositoryAccessor;
 	}
 
-	
+
 	public $loggedUser;
 
 	protected function startup() {

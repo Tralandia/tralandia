@@ -32,7 +32,6 @@ class Translator implements \Nette\Localization\ITranslator {
 	{
 		$translation = $this->getTranslation($phrase, $variation);
 
-		//d($translation, $variables);
 		if($translation && count($variables)) {
 			$keys = array_keys($variables);
 			$keys = array_map(function($v) { return "[$v]"; }, $keys);

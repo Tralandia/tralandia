@@ -55,12 +55,6 @@ class BaseRepository extends EntityRepository {
 		$this->_em->remove($entity);
 	}
 
-	public function save($entity)
-	{
-		$this->persist($entity);
-		$this->flush($entity);
-	}
-	
 	public function getDataSource() {
 		$query = $this->_em->createQueryBuilder();
 		$query->select('e')->from($this->_entityName, 'e');
