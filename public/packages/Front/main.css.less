@@ -1963,7 +1963,11 @@ form.traform {
 		}
 
 		&.autoHeight , &.text {
-			min-height: 0;		
+			min-height: 0;	
+
+			.span8 {
+				margin-bottom: 10px;
+			}	
 		}
 
 		&.fieldset {
@@ -2286,6 +2290,8 @@ form.traform {
 		.control-group {
 
 
+
+
 					.select2-container {
 						width: 440px;
 
@@ -2314,7 +2320,7 @@ form.traform {
 									
 					}
 
-			height: 37px;
+			
 
 			&.pricecontroll {
 
@@ -2342,6 +2348,7 @@ form.traform {
 						border-bottom-right-radius: 0;	
 						border-right: none;							
 					}
+
 				}
 
 			}
@@ -2452,6 +2459,13 @@ form.traform {
 				visibility: hidden;
 			}
 
+			.text {
+				i {
+					position: relative;
+					right: 9px;
+				}
+			}
+
 			&.error {
 				input[type=text] , input[type=password] , textarea {
 					border: 1px solid #ff0000;
@@ -2474,6 +2488,12 @@ form.traform {
 									
 					}					
 				}
+
+			.text {
+				i {					
+					right: 0;
+				}
+			}				
 			}
 
 
