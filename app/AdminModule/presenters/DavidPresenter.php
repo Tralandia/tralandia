@@ -52,10 +52,7 @@ class DavidPresenter extends BasePresenter {
 
 	public function actionList() {
 
-		$pricelist = $this->rentalPricelistRepositoryAccessor->get()->createNew();
-		$pricelistDecorator = $this->pricelistDecoratorFactory->create($pricelist);
-		$pricelistDecorator->setContentFromFile('http://www.tralandia.sk/u/01/13220628967186.png');
-		d($pricelistDecorator); #@debug
+
 	}
 
 	public function actionSearch() {
