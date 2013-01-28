@@ -9,3 +9,5 @@ public/storage
 public/.DS_Store
 libs/.DS_Store
 tralandia.TODO
+vendor/
+composer.phar

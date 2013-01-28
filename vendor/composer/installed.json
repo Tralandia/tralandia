@@ -76,49 +76,6 @@
         ]
     },
     {
-        "name": "hosiplan/nette-autowire-properties",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/HosipLan/Nette-AutowireProperties",
-            "reference": "v0.1.1"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://github.com/HosipLan/Nette-AutowireProperties/archive/v0.1.1.zip",
-            "reference": "v0.1.1",
-            "shasum": ""
-        },
-        "require": {
-            "nette/nette": "*"
-        },
-        "time": "2012-12-21 13:52:10",
-        "type": "library",
-        "installation-source": "source",
-        "autoload": {
-            "classmap": [
-                "src/"
-            ]
-        },
-        "notification-url": "http://packagist.org/downloads/",
-        "license": [
-            "BSD-3-Clause",
-            "GPL-2.0",
-            "GPL-3.0"
-        ],
-        "authors": [
-            {
-                "name": "Filip Procházka",
-                "homepage": "http://filip-prochazka.com"
-            }
-        ],
-        "description": "Lazy-Autowire of properties for Nette PresenterComponents.",
-        "keywords": [
-            "nette"
-        ]
-    },
-    {
         "name": "kdyby/events",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
@@ -170,6 +127,49 @@
         "keywords": [
             "nette",
             "kdyby"
+        ]
+    },
+    {
+        "name": "hosiplan/nette-autowire-properties",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/HosipLan/Nette-AutowireProperties",
+            "reference": "v0.1.1"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://github.com/HosipLan/Nette-AutowireProperties/archive/v0.1.1.zip",
+            "reference": "v0.1.1",
+            "shasum": ""
+        },
+        "require": {
+            "nette/nette": "*"
+        },
+        "time": "2012-12-21 13:52:10",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "classmap": [
+                "src/"
+            ]
+        },
+        "notification-url": "http://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause",
+            "GPL-2.0",
+            "GPL-3.0"
+        ],
+        "authors": [
+            {
+                "name": "Filip Procházka",
+                "homepage": "http://filip-prochazka.com"
+            }
+        ],
+        "description": "Lazy-Autowire of properties for Nette PresenterComponents.",
+        "keywords": [
+            "nette"
         ]
     }
 ]

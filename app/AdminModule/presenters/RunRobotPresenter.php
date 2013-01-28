@@ -12,6 +12,7 @@ class RunRobotPresenter extends BasePresenter {
 
 	private $rentalRepositoryAccessor;
 	private $locationRepositoryAccessor;
+	private $locationTypeRepositoryAccessor;
 
 	private $rentalSearchCacheRobotFactory;
 	private $rentalSearchCachingFactory;
@@ -32,13 +33,19 @@ class RunRobotPresenter extends BasePresenter {
 	public function inject(\Nette\DI\Container $dic) {
 		$this->rentalRepositoryAccessor = $dic->rentalRepositoryAccessor;
 		$this->locationRepositoryAccessor = $dic->locationRepositoryAccessor;
+		$this->locationTypeRepositoryAccessor = $dic->locationTypeRepositoryAccessor;
 	}
 
 	public function actionSearchCache() {
-		$primaryLocation = $this->locationRepositoryAccessor->get()->findOneByIso('sk');
-		//$location = $this->locationRepositoryAccessor->get()->find(338);
+		$primaryLocationType = $this->locationTypeRepositoryAccessor->get()->findOneBySlug('country');
+		$primaryLocations = $this->locationRepositoryAccessor->get()->findByType($primaryLocationType);
+		d(count($primaryLocations));
+		foreach ($primaryLocations as $key => $location) {
+			$this->rentalSearchCacheRobotFactory->create($location)->run();
+			//$this->sendResponse(new TextResponse(Strings::upper($location->iso).': Done'));
+			d(Strings::upper($location->iso).': Done');
+		}
 		
-		$this->rentalSearchCacheRobotFactory->create($primaryLocation)->run();
 		
 		//$searchCaching->getOrderList();
 		
