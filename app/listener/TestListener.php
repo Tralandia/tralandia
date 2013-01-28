@@ -10,6 +10,6 @@ class TestListener extends Nette\Object implements Kdyby\Events\Subscriber
 
 	public function onStartup(Application $app)
 	{
-		d('ha!');
+		//d('ha!');
 	}
 }

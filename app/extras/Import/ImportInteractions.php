@@ -134,7 +134,7 @@ class ImportInteractions extends BaseImport {
 			$interaction->senderName = $x['from_name'];
 
 			$interaction->testimonial = $x['testimonial'];
-			$interaction->status = $x['live'] == 1 ? $interaction::STATUS_APROVED : $interaction::STATUS_PENDING;
+			$interaction->status = $x['live'] == 1 ? $interaction::STATUS_APPROVED : $interaction::STATUS_PENDING;
 
 			$interaction->oldId = $x['id'];
 

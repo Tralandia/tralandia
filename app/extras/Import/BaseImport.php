@@ -82,6 +82,7 @@ class BaseImport {
 				'\Rental\Type' => array(),
 			),
 			'subsections' => array(),
+			'saveImportStatus' => FALSE,
 		),
 		'rentalInformation' => array(
 			'entities' => array(

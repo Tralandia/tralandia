@@ -96,14 +96,11 @@ class ImportRentalTypes extends BaseImport {
 			$rentalType = $this->context->rentalTypeEntityFactory->create();
 			$rentalType->name = $this->createPhraseFromString('\Rental\Type', 'name', 'ACTIVE', $x['name'], 'en');
 			
-			// if (strlen($this->skPlurals[$x['name']]) != 0) {
-			// 	$skTranslation = $this->context->phraseTranslationEntityFactory->create();
-			// 	$skTranslation->setLanguage($sk);
-			// 	d($skTranslation); exit;
-			// 	$variations[1][0]['nominative'] = $this->skPlurals[$x['name']];
-			// 	$skTranslation->updateVariations($variations);
-			// }
-			// exit;
+			if (strlen($this->skPlurals[$x['name']]) != 0) {
+				$skTranslation = $rentalType->name->createTranslation($sk);
+				$variations[1][0]['nominative'] = $this->skPlurals[$x['name']];
+				$skTranslation->updateVariations($variations);
+			}
 			$rentalType->oldId = $x['id'];
 			$this->model->persist($rentalType);
 		}

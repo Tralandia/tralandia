@@ -277,7 +277,8 @@ class ImportRentals extends BaseImport {
 					$t = new \Extras\Types\Price($x['price_offseason'], $rental->primaryLocation->defaultCurrency);
 				}
 				if ($t) {
-					$rental->price = $t->convertToFloat($rental->primaryLocation->defaultCurrency);
+					//$rental->price = $t->convertToFloat($rental->primaryLocation->defaultCurrency);
+					$rental->price = $t;
 				}
 			}
 
