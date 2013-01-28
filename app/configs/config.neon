@@ -30,6 +30,7 @@ parameters:
 	settingsDir: %appDir%/configs
 	rentalImageDir: /storage/rental_images
 	rentalPricelistDir: /storage/rental_pricelists
+	ticketMessageAttachmentDir: /storage/ticket_message_attachment
 
 	database:
 		user: root
@@ -62,6 +63,7 @@ services:
 	rentalImageStorage: Extras\RentalImageStorage(%wwwDir%%rentalImageDir%)
 	rentalImagePipe: Extras\ImagePipe(%wwwDir%, %rentalImageDir%)
 	rentalPricelistStorage: Extras\FileStorage(%wwwDir%%rentalPricelistDir%)
+	ticketMessageAttachmentStorage: Extras\FileStorage(%wwwDir%%ticketMessageAttachmentDir%)
 
 	cacheStorage: 
 		class: Nette\Caching\Storages\MemcachedStorage('127.0.0.1', '11211', 'tralandia_')

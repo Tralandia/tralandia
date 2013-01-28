@@ -47,6 +47,7 @@ class FileStorage extends Nette\Object
 			throw new Nette\InvalidArgumentException;
 		}
 
+		$filename = $file->getSanitizedName();
 		$path = $this->generateFilePath($filename);
 
 		$file->move($path);
@@ -67,12 +68,12 @@ class FileStorage extends Nette\Object
 		return $this->getRelativePath($path);
 	}
 
-	public function saveFromFile($filepath)
+	public function saveFromFile($filePath)
 	{
-		if (!is_file($filepath)) return FALSE;
+		if (!is_file($filePath)) return FALSE;
 
-		$content = file_get_contents($filepath);
-		$extension = get_file_extension($filepath);
+		$content = file_get_contents($filePath);
+		$extension = get_file_extension($filePath);
 		return $this->save($content, time() . '.' . $extension);
 	}
 
