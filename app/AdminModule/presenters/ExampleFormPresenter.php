@@ -38,8 +38,15 @@ class ExampleFormPresenter extends BasePresenter {
 
 		// -------------------- FIELDS --------------------
 		$form->addText('text', 'Text')
-			->setRequired('toto je povinne!');
+			->setOption('description', 'this is description')
+			->setRequired('toto je povinne!')
+			->getControlPrototype()
+				->setPlaceholder('Text');
 
+
+		$form->addAdvancedPrice('price' , 'Price', ['EUR', 'HUF', 'CZK']);
+
+/*
 		$form->addTextArea('textArea', 'Text Area')
 			->setRequired();
 
@@ -91,8 +98,7 @@ class ExampleFormPresenter extends BasePresenter {
 
 		$form->addReadOnlyPhrase('readOnlyPhrase', 'Read Only Phrase')
 			->setPhrase($phrase);
-
-		$form->addAdvancedPrice('price' , 'Price', ['EUR', 'HUF', 'CZK']);
+*/
 
 
 		// -------------------- BUTTONS --------------------
