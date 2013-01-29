@@ -24,7 +24,14 @@
 			{/foreach}
 
 			{if $hasVisible}
-                <div class="widget">
+
+			{var $class = ''}
+
+			{if $iterator->first}
+				{var $class = 'first'}
+			{/if}
+
+                <div class="widget {$class = 'first'}">
 					
 
                     <ul n:inner-foreach="$criteria[$type] as $link">
