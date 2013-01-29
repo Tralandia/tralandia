@@ -233,6 +233,9 @@
 						</td>
 					</tr>
 
+
+				
+
 					<tr>
 						<td class="iconcover"><i class="entypo-phone"></i></td>
 						<td>		
@@ -246,12 +249,50 @@
 						</td>
 					</tr>
 
+
+					<tr>						
+						<td class="iconcover"><i class="entypo-adress"></i></td>
+						<td>
+						<strong>{_o2431} </strong><br/> 
+						
+						
+							{$rental->address->address} <br/> {$rental->address->postalCode} {_$rental->address->locality->name} 
+							{if $rental->address->subLocality}
+							({$rental->address->subLocality} )
+							{/if}
+								
+
+						</td>
+					</tr>	
 		
+					<tr>						
+						<td class="iconcover"><i class="entypo-location"></i></td>
+						<td>
+						<strong>#gps:</strong>
+						
+						<a class="mapsImg">
+						
+						{$rental->address->getGps()}
+						
+							</a>	
+
+						</td>
+					</tr>
+
+					<tr>
+						<td class="iconcover"><i class="entypo-www"></i></td>
+						<td>
+						{foreach $rental->urls as $url }
+							<strong><a target="_blank" href="{$url->value}">{_o1666}</a><strong> {if !$iterator->last}<br/>{/if}
+						{/foreach}						
+						</td>
+					</tr>
+
 
 					<tr>						
 						<td class="iconcover"><i class="entypo-language"></i></td>
 						<td>
-						<strong>{_o1013} </strong><br/> 
+						<strong>#Ubytovatel rozumie </strong><br/> 
 						
 						
 						
@@ -266,48 +307,10 @@
 				</table>
 
 				
-				<div  id="moreInfoContactTable" class="hide">
-				<table>
+				<div  id="moreInfoContactTable" class="">
 
-					<tr>
-						<td class="iconcover"><i class="entypo-www"></i></td>
-						<td>
-						{foreach $rental->urls as $url }
-							<strong><a target="_blank" href="{$url->value}">{_o1666}</a><strong> {if !$iterator->last}<br/>{/if}
-						{/foreach}						
-						</td>
-					</tr>
-
-					<tr>						
-						<td class="iconcover"><i class="entypo-adress"></i></td>
-						<td>
-						<strong>{_o2431} </strong><br/> 
-						
-						
-							{$rental->contactName} <br/> {$rental->address->address} <br/> {$rental->address->postalCode} {_$rental->address->locality->name} 
-							{if $rental->address->subLocality}
-							({$rental->address->subLocality} )
-							{/if}
-								
-
-						</td>
-					</tr>
-
-					<tr>						
-						<td class="iconcover"><i class="entypo-location"></i></td>
-						<td>
-						<strong>#gps:</strong>
-						
-						<a class="mapsImg">
-						
-						{$rental->address->getGps()}
-						
-							</a>	
-
-						</td>
-					</tr>
-				</table>
 				</div>
+				{*
 				<table>
 					<tr>						
 						<td class="iconcover"><i class="entypo-open"></i></td>
@@ -316,6 +319,7 @@
 						</td>
 					</tr>
 				</table>
+				*}
 				{include '../../forms/Rental/reservationForm.latte'}
 
 			</div>
