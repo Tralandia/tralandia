@@ -43,24 +43,83 @@
 		border: none;
 	}
 
-	.searchForm {
 
-			margin: 1px;			
-
+	.widget.filter {
+		border-top: none;
 			background: #f26900;
+			border-radius: 0 0 6px 6px;
+			border-bottom: none;
+			padding-bottom: 5px;
+			margin: 0 1px;
+			li.selected {
 
+				margin: 0 14px 5px 14px;
+				border: none;
+
+				background: #fff;
+				padding:0 10px 0 2px;
+				border-radius: 4px;
+
+				&:last-child {
+					margin-bottom: 10px;
+				}
+
+
+
+
+
+
+				a {
+					padding: 3px 0;
+					font-weight: bold;
+					color: #d32c16;
+					color: @brown;
+					span {
+						font-weight: normal;
+
+						&.close {
+							
+							opacity:1;
+							color: red;
+							font-size: 15px;
+							display: block;
+							width: 20px;
+							text-align: center;
+							text-shadow: none;
+							color: @orange;
+						}
+
+						&.counter {
+							display: none;
+						}
+					}
+				}
+
+				&:hover {
+					text-decoration: line-through;
+				}
+
+				&:before {
+					content:'';					
+				}
+			}		
+	}
+
+	.searchForm {
+			margin: 1px;			
+			background: #f26900;
 			-webkit-border-top-left-radius: 6px;
 			-webkit-border-top-right-radius: 6px;
 			-moz-border-radius-topleft: 6px;
 			-moz-border-radius-topright: 6px;
 			border-top-left-radius: 6px;
 			border-top-right-radius: 6px;
+			margin-bottom: 0;
+			padding: 10px 0;
 
-margin-bottom: 0;
-border-bottom: 1px solid rgb(170, 96, 40);
-box-shadow: -1px 1px 1px #fff;
-
-		padding: 10px 0;
+			select {
+				display: none;
+			}
 
 	}
 
@@ -225,53 +284,7 @@ box-shadow: -1px 1px 1px #fff;
 
 			}
 
-			&.selected {
 
-
-				&:last-child {
-					margin-bottom: 20px;
-				}
-
-				margin: 0 1px;
-				border: none;
-
-				background: #f26900;
-
-
-
-
-				a {
-					padding: 6px 0;
-					font-weight: bold;
-					color: #d32c16;
-					span {
-						font-weight: normal;
-
-						&.close {
-							
-							opacity:1;
-							color: red;
-							font-size: 15px;
-							display: block;
-							width: 20px;
-							text-align: center;
-							text-shadow: none;
-						}
-
-						&.counter {
-							display: none;
-						}
-					}
-				}
-
-				&:hover {
-					text-decoration: line-through;
-				}
-
-				&:before {
-					content:'\2713';					
-				}
-			}
 
 			&.more {
 
@@ -295,3 +308,4 @@ box-shadow: -1px 1px 1px #fff;
 	}
 
 }
+

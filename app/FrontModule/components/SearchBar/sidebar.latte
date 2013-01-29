@@ -12,6 +12,23 @@
             </form>
         </div>
 
+        <div class="widget filter">
+        	<ul>
+        		<li class="selected"><a href="http://www.sk.tra.com/">
+								Demänovská Dolina
+                                <span class="counter">13</span><span class="close entypo-remove"></span>
+                            </a></li>
+        		<li class="selected"><a href="http://www.sk.tra.com/">
+								Demänovská Dolina
+                                <span class="counter">13</span><span class="close entypo-remove"></span>
+                            </a></li>
+                                                                		<li class="selected"><a href="http://www.sk.tra.com/">
+								Demänovská Dolina
+                                <span class="counter">13</span><span class="close entypo-remove"></span>
+                            </a></li>
+        	</ul>
+        </div>
+
 	{define #criteriaOptions}
 		{var $hasHidden = FALSE}
 		{var $hasVisible = FALSE}
@@ -25,7 +42,8 @@
 
 			{if $hasVisible}
 
-                <div class="widget">					
+                <div class="widget">
+                {if !$hasActive}<h4>{_$title}</h4>{/if}					
 
                     <ul n:inner-foreach="$criteria[$type] as $link">
 
