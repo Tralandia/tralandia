@@ -238,23 +238,15 @@
 						<td>		
 							
 						{foreach $rental->phones as $phone }
-							<strong>{$phone->international} {if !$iterator->last}<br/>{/if}</strong>
+							{if !$iterator->first}
+								<strong>{$phone->international} </strong><br/>
+							{/if}														
 						{/foreach}
 						
 						</td>
 					</tr>
 
-					<tr>						
-						<td class="iconcover"><i class="entypo-mail"></i></td>
-						<td>
-
-						
-						{foreach $rental->emails as $email }
-							<strong><a href="mailto:{$email->value}">#email</a> {if !$iterator->last}<br/>{/if}</strong>
-						{/foreach}
-
-						</td>
-					</tr>
+		
 
 					<tr>						
 						<td class="iconcover"><i class="entypo-language"></i></td>

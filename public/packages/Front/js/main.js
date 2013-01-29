@@ -199,15 +199,18 @@ App.prototype.removeObjectFromFavorites = function(id){
 
 
 		var newWidth = sliderList.width();
-			newWidth -= 110;
+			newWidth -= 125;
 			// set new width 
 			sliderList.css({
 				width: newWidth+'px'
 			});
 
 		if(newList.length == 0){
+
 			$('#compareList').parent().parent().parent().slideUp(300,function(){
 				favoriteSlider.find('ul li.rel-'+id).remove();
+				$('#favoritesStatisContainerPlaceholder').addClass('inactive');
+				$('#favoritesStatisContainerPlaceholder').addClass('hide');
 			});
 		} else {
 			favoriteSlider.find('ul li.rel-'+id).remove();
@@ -220,6 +223,9 @@ App.prototype.addToFavorites = function(){
 	var self = new App;
 
 	var list = self.storageGet('favoritesList');
+
+$('#favoritesStatisContainerPlaceholder').removeClass('inactive');
+
 
 	var data = {
 		id: parseInt($(this).attr('rel')),
@@ -275,9 +281,16 @@ App.prototype.addToFavorites = function(){
 				
 				removeLink.appendTo(newLi);
 				newLink.appendTo(newLi);
-
-			var sliderList = favoriteSlider.find('ul');
-				newLi.appendTo(sliderList);
+			
+						var newWidth = sliderList.width();
+							newWidth += 125;
+							// set new width 
+							sliderList.css({
+								width: newWidth+'px'
+							});
+							
+							newLi.appendTo(sliderList);
+							
 				$(this).addClass('selected');
 				
 
@@ -307,7 +320,7 @@ App.prototype.addToFavorites = function(){
 
 						
 						var newWidth = sliderList.width();
-							newWidth += 122;
+							newWidth += 125;
 							// set new width 
 							sliderList.css({
 								width: newWidth+'px'
@@ -471,13 +484,12 @@ $(document).ready(function(){
 		$ul = $(this).parents('ul');
 		$ul.find('li.hidden').toggleClass('hide');
 		
-		var $icon = $(this).find('i');
-		var currentClass = $icon.attr('class');
+		$(this).parent().toggleClass('open');
 
-		if(currentClass == 'entypo-down'){
-			$(this).html($(this).attr('data-open')+' <i class="entypo-up"></i>');
+		if($(this).parent().hasClass('open')){
+			$(this).html($(this).attr('data-open'));
 		} else {
-			$(this).html($(this).attr('data-close')+' <i class="entypo-down"></i>');
+			$(this).html($(this).attr('data-close'));
 		}
 
 	});
@@ -568,6 +580,10 @@ $(document).ready(function(){
 
 
     $('.pricePhrase').pricePhrase();
+
+    $('#serachSidebar').select2({
+    	placeholder: "Search for a movie"
+    });
 
 });
 

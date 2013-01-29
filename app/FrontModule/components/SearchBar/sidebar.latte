@@ -3,8 +3,11 @@
         <div class="">
             <form class="searchForm">                
                 <div class="input-filltext">
-                    <input class="span2" placeholder="{_o1110}" id="appendedInputButton" size="16" type="text">
-                    <button class="btn" type="button"><i class="entypo-search"></i></button>
+                	<select id="serachSidebar" name="q">
+                		<option value="alabama"> Alabama</option>
+                		<option value="nebraska"> Nebraska</option>
+                		<option value="branovo"> Branovo</option>
+                	</select>
                 </div>
             </form>
         </div>
@@ -22,7 +25,7 @@
 
 			{if $hasVisible}
                 <div class="widget">
-					{if !$hasActive}<h4>{_$title}</h4>{/if}
+					
 
                     <ul n:inner-foreach="$criteria[$type] as $link">
 
@@ -47,7 +50,7 @@
 						{/if}
 						{if $iterator->last && $hasHidden}
                             <li class="more"><a href="#" data-open="#Fewer options" data-close="More option">#More
-                                option <i class="entypo-down"></i></a></li>{/if}
+                                option </a></li>{/if}
                     </ul>
                 </div>
 			{/if}
