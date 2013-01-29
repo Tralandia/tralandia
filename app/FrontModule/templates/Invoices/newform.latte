@@ -1,24 +1,7 @@
 {block content}
 
 
-<script>
 
-function setFormAttr(){
-	$('.traform .control-group').removeClass('valid');
-	$('.traform .control-group').removeClass('error');
-
-	$('.traform .control-group').addClass($(this).attr('rel'));
-	return false;
-}
-
-$(document).ready(function(){
-	
-	$('.changeform').click(setFormAttr);
-
-	$(".control-group select").select2(); 
-	
-});
-</script>
 
 <button rel="" class="changeform">Normal</button>
 <button rel="valid" class="changeform">Valid</button>

@@ -431,6 +431,8 @@ $(document).ready(function(){
 
 	var A = new App();
 
+$(".control-group select").select2(); 
+
 	/* register listeners */
 	/* UI toogle function */
 	$('.toogle').click(A.uiToogleClick);
@@ -561,11 +563,36 @@ $(document).ready(function(){
     	return false;
     });
 
+ 	// nahrada pre zobrazenie lang menu
+    var socialIconsMenu = false;
+    $('#socialIcons').click(function(){
+
+
+    	if(!socialIconsMenu){
+    		    	console.log('click open');
+
+    		$('#socialIconsMenu').show();
+    		socialIconsMenu = true;
+    	} else {
+    		    	console.log('click close');
+
+    		$('#socialIconsMenu').hide();
+    		socialIconsMenu = false;
+    	}
+    	
+    	return false;
+    });
+
+
     $('body').click(function(){
     	if(langmenuOpen){
     		$('#langMenuOptions').hide();
     		langmenuOpen = false;
     	}  	
+    	if(socialIconsMenu){
+    		$('#socialIconsMenu').hide();
+    		socialIconsMenu = false;
+    	}      	
     });
 
     // remove object from favorites list 
