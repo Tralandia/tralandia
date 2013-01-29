@@ -70,7 +70,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 			'location' => $this->presenter->getParameter('location'),
 			'rentalType' => $this->presenter->getParameter('rentalType'),
 			'rentalTag' => $this->presenter->getParameter('rentalTag'),
-			'spokenLanguage' => $this->presenter->getParameter('spokenLanguage'),
+			'flanguage' => $this->presenter->getParameter('flanguage'),
 			'fcapacity' => $this->presenter->getParameter('fcapacity'),
 			'fprice' => $this->presenter->getParameter('fprice'),
 		);
@@ -162,6 +162,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		$visible 	= array();
 		$selected 	= $this->getSelectedParams();
 		$active		= FALSE;
+		d($repositoryAccessor);
 
 		$options = array();
 		if (array_key_exists($criteriaName, $selected)) {
@@ -189,7 +190,6 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 			$params = array_merge($selected, array($criteriaName => $criteriaValue));
 			$count 	= $this->getRentalsCount($params);
 			$totalRentalCount += $count;
-			//d($params, $count);
 
 			if ($ignoreNull && $count==0) continue;
 
@@ -234,7 +234,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 				}
 			}
 		}
-		//d($criteriaName, $totalRentalCount);
+		
 		return $this->prepareOrder($linksTmp, $order, $visible);
 
 	}
