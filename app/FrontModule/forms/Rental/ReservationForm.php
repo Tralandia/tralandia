@@ -42,7 +42,7 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 		$this->addText('from');
 		$this->addText('to');
 
-		$this->addSelect('phonePrefix', '', $this->locationRepository->getCountriesPhonePrefixes());
+		$this->addSelect('phonePrefix', '', $this->locationRepository->getCountriesPhonePrefixes())->setDefaultValue($this->rental->primaryLocation->phonePrefix);
 
 		$this->addText('phone2');
 

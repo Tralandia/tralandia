@@ -64,12 +64,25 @@ class LocationRepository extends \Repository\BaseRepository {
 			->from($this->_entityName, 'l')
 			->join('l.type', 't')
 			->where($qb->expr()->eq('t.slug', ':country'))
-			->setParameter('country', 'country');
+			->setParameter('country', 'country')
+			->groupBy('l.phonePrefix')
+			->orderBy('l.iso')
+			;
 
 		$return = [];
 		$rows = $qb->getQuery()->getResult();
+		$continentType = $this->related('type')->findOneBySlug('continent');
+		$usa = $this->findOneBy(array('slug' => 'usa', 'type' => $continentType));
+		$australia = $this->findOneBy(array('slug' => 'australia', 'type' => $continentType));
+
 		foreach($rows as $row) {
-			$return[$row['iso']] = strtoupper($row['iso']) . ' (+'.$row['phonePrefix'].')';
+			if ($row['phonePrefix'] == 1) {
+				$return[$row['phonePrefix']] = strtoupper($usa->iso) . ' (+'.$row['phonePrefix'].')';
+			} else if ($row['phonePrefix'] == 61) {
+				$return[$row['phonePrefix']] = strtoupper($australia->iso) . ' (+'.$row['phonePrefix'].')';
+			} else {
+				$return[$row['phonePrefix']] = strtoupper($row['iso']) . ' (+'.$row['phonePrefix'].')';
+			}
 		}
 
 		return $return;

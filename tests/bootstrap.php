@@ -10,14 +10,14 @@ define('LIBS_DIR', ROOT_DIR . '/libs');
 define('APP_DIR', ROOT_DIR . '/app');
 define('TESTS_DIR', ROOT_DIR . '/tests');
 define('INCLUDE_DIR', TESTS_DIR . '/include');
-
 define('CENTRAL_LANGUAGE', 38);
-
+define('VENDOR_DIR', ROOT_DIR . '/vendor');
 
 $_SERVER['HTTP_HOST'] = 'localhost';
 
 // Load Nette Framework
-require_once LIBS_DIR . '/Nette/loader.php';
+require_once LIBS_DIR . '/Doctrine/Common/EventManager.php';
+require_once VENDOR_DIR . '/autoload.php';
 
 // Load configuration from config.neon
 $configurator = new Nette\Config\Configurator;
