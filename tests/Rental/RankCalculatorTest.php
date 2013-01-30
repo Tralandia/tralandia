@@ -48,8 +48,29 @@ class RankCalculatorTest extends \Tests\TestCase
 		$address->setGps($gps);
 		
 		$rental = $this->rentalCreator->create($address, $this->user, $this->rentalName);
-		
-		
+		$rental->classification = 3;
+		$rental->type => ;
+		$rental->name => ;
+		$rental->teaser => ;
+		$rental->contactName => ;
+		$rental->phones => ;
+		$rental->emails => ;
+		$rental->urls => ;
+		$rental->spokenLanguages => ;
+		$rental->amenities => ;
+		$rental->tags => ;
+		$rental->checkIn => ;
+		$rental->checkOut => ;
+		$rental->price => ;
+		$rental->pricelistRows => ;
+		$rental->pricelists => ;
+		$rental->interviewAnswers => ;
+		$rental->maxCapacity => ;
+		$rental->bedroomsCount => ;
+		$rental->rooms => ;
+
+
+
 
 		$this->assertInstanceOf('\Entity\Rental\Rental', $rental);
 		$this->assertSame($this->location->getId(), $rental->getAddress()->getPrimaryLocation()->getId());
