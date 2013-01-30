@@ -35,6 +35,7 @@ class ImportAmenities extends BaseImport {
 			array('owner availability', 'owner availability', 'owner-availability'),
 			array('board', 'board', 'board'),
 			array('separate group', 'separate groups', 'separate-groups'),
+			array('animal', 'animals', 'animal'),
 			array('other', 'other', 'other'),
 		);
 
@@ -158,7 +159,14 @@ class ImportAmenities extends BaseImport {
 		$amenity = $this->context->rentalAmenityEntityFactory->create();
 		$amenity->type = $amenityType;
 		$amenity->name = $this->createNewPhrase($nameDictionaryType, 1011);
-		$amenity->oldId = $x['id'];
+		$this->model->persist($amenity);
+		$this->model->flush();
+
+		// Animals
+		$amenityType = $this->context->rentalAmenityTypeRepositoryAccessor->get()->findOneBySlug('animal');
+		$amenity = $this->context->rentalAmenityEntityFactory->create();
+		$amenity->type = $amenityType;
+		$amenity->name = $this->createPhraseFromString('\Rental\Amenity', 'name', 'ACTIVE', 'small dog allowed', $en);
 		$this->model->persist($amenity);
 		$this->model->flush();
 

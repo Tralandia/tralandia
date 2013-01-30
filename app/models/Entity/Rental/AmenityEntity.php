@@ -31,6 +31,12 @@ class Amenity extends \Entity\BaseEntityDetails {
 	 */
 	protected $name;
 
+	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean")
+	 */
+	protected $important = FALSE;
+
 
 	//@entity-generator-code --- NEMAZAT !!!
 

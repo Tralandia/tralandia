@@ -62,8 +62,10 @@
 		        		<div class="clearfix"></div>
 
 		        		<p class="locations">
-		        		<a href="{link Rental:list location => $rental->address->locality , rentalType => $rental->type}">{_$rental->type->name|firstUpper} {_$rental->address->locality->name}</a>
+		        		{*<a href="{link Rental:list location => $rental->address->locality , rentalType => $rental->type}">{_$rental->type->name|firstUpper} {_$rental->address->locality->name}</a>*}
+		        		{_$rental->type->name|firstUpper} {_$rental->address->locality->name}
 
+		        		{*
 		        		{if count($rental->address->getLocations()) > 0}
 		        		(
 						{foreach $rental->address->getLocations() as $location}
@@ -71,6 +73,7 @@
 						{/foreach}
 						)
 						{/if}
+						*}
 
 		        		</p>
 		        		<p class="red teaser">{_$rental->teaser|firstUpper}</p>

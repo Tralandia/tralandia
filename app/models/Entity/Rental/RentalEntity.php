@@ -213,6 +213,12 @@ class Rental extends \Entity\BaseEntity {
 	protected $maxCapacity;
 
 	/**
+	 * @var integer
+	 * @ORM\Column(type="integer", nullable=true)
+	 */
+	protected $bedroomCount;
+
+	/**
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
 	 */
