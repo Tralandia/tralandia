@@ -61,6 +61,12 @@ abstract class BasePresenter extends Presenter {
 		return $environmentSection->previousLink;
 	}
 
+	public function accessDeny()
+	{
+		$this->flashMessage('Hey dude! You don\'t have permissions to view that page.', 'warning');
+		$this->redirect(':Front:Home:default');
+	}
+
 	public function beforeRender() {
 		parent::beforeRender();
 		$parameters = $this->getContext()->getParameters();

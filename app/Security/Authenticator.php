@@ -12,26 +12,39 @@ use Nette\Object,
 class Authenticator extends Object implements NS\IAuthenticator {
 
 	/**
-	 * Performs an authentication
-	 * @param  array
-	 * @return IIdentity
-	 * @throws AuthenticationException
+	 * @var \Repository\User\UserRepository
+	 */
+	public $userRepository;
+
+	/**
+	 * @param \Repository\User\UserRepository $userRepository
+	 */
+	public function __construct(\Repository\User\UserRepository $userRepository)
+	{
+		$this->userRepository = $userRepository;
+	}
+
+	/**
+	 * @param array $credentials
+	 *
+	 * @return \Nette\Security\Identity
+	 * @throws \Nette\Security\AuthenticationException
 	 */
 	public function authenticate(array $credentials) {
 		list($email, $password) = $credentials;
 
-		// $row = $this->users->findOneBy(array('email' => $email));
-		$user = \Service\User\User::getByLogin($email);
+		/** @var $user \Entity\User\User */
+		$user = $this->userRepository->findOneByLogin($email);
 
 		if (!$user) {
 			throw new NS\AuthenticationException("User '$email' not found.", self::IDENTITY_NOT_FOUND);
 		}
 
-		if ($user->password !== $this->calculateHash($password)) {
+		if ($user->getPassword() !== self::calculateHash($password)) {
 			throw new NS\AuthenticationException("Invalid password.", self::INVALID_CREDENTIAL);
 		}
 		
-		return new NS\Identity($user->id, array($user->role->slug), $user->getIdentity());
+		return new NS\Identity($user->getId(), array($user->getRole()->getSlug()), $user->getIdentity());
 	}
 
 	/**
@@ -39,8 +52,8 @@ class Authenticator extends Object implements NS\IAuthenticator {
 	 * @param  string
 	 * @return string
 	 */
-	public function calculateHash($password) {
-		return md5($password);
+	public static function calculateHash($password) {
+		return $password;
 	}
 }
 

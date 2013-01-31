@@ -10,7 +10,7 @@ use	Extras\Annotation as EA;
 
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Repository\User\UserRepository")
  * @ORM\Table(name="user", indexes={@ORM\index(name="login", columns={"login"}), @ORM\index(name="password", columns={"password"})})
  * @EA\Primary(key="id", value="login")
  */
@@ -60,6 +60,16 @@ class User extends \Entity\BaseEntityDetails {
 	 */
 	protected $newsletter;
 
+
+	public function getIdentity()
+	{
+		$identity = [
+			'id' => $this->getId(),
+			'login' => $this->getLogin(),
+		];
+
+		return $identity;
+	}
 
 	//@entity-generator-code --- NEMAZAT !!!
 
@@ -278,4 +288,5 @@ class User extends \Entity\BaseEntityDetails {
 	{
 		return $this->newsletter;
 	}
+
 }

@@ -2,15 +2,38 @@
 
 namespace Security;
 
-use Nette\Environment,
-	Nette\Security\Permission;
+use Nette\Security\Permission;
 
 class MyAssertion {
-	
-	public static function test(Permission $acl, $role, $resource, $privilege) {
-		// debug(func_get_args());
-		// debug($acl->getQueriedRole()->getUser());
+
+	/**
+	 * @var \Nette\Security\User
+	 */
+	protected $user;
+
+	/**
+	 * @param \Nette\Security\User $user
+	 */
+	public function __construct(\Nette\Security\User $user)
+	{
+		$this->user = $user;
+	}
+
+	/**
+	 * @param \Nette\Security\Permission $acl
+	 * @param $role
+	 * @param $resource
+	 * @param $privilege
+	 *
+	 * @return bool
+	 */
+	public function owner(Permission $acl, $role, $resource, $privilege) {
+		$iResource = $acl->getQueriedResource();
+
+		if($iResource instanceof IOwnerable) {
+			return $iResource->getOwnerId() == $this->user->getId();
+		}
 		
-		return $acl->getQueriedResource()->supported;
+		return FALSE;
 	}
 }

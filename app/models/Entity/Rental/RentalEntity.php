@@ -15,7 +15,7 @@ use Extras\Annotation as EA;
  * @EA\Primary(key="id", value="slug")
  * @EA\Generator(skip="{getImages,getPrice,setPrice,setSlug}")
  */
-class Rental extends \Entity\BaseEntity {
+class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 	const STATUS_DRAFT = 0;
 	const STATUS_LIVE = 6;
@@ -229,6 +229,11 @@ class Rental extends \Entity\BaseEntity {
 	 * @ORM\OneToMany(targetEntity="Entity\Rental\Service", mappedBy="rental")
 	 */
 	protected $services;
+
+	public function getOwnerId()
+	{
+		return $this->getUser()->getId();
+	}
 
 	public function getMainImage() {
 		$t = $this->images->first();

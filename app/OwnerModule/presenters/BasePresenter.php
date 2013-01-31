@@ -5,7 +5,7 @@ namespace OwnerModule;
 use Nette;
 use Service\Seo\ISeoServiceFactory;
 
-abstract class BasePresenter extends \BasePresenter {
+abstract class BasePresenter extends \SecuredPresenter {
 	
 	protected $languageRepositoryAccessor;
 	protected $locationRepositoryAccessor;

@@ -111,6 +111,12 @@ class DavidPresenter extends BasePresenter {
 
 	}
 
+	public function actionAcl()
+	{
+		$rental = $this->rentalRepositoryAccessor->get()->find(2);
+		d($this->getUser()->isAllowed($rental, 'edit'));
+	}
+
 	public function createComponentForm()
 	{
 		$form = new \Nette\Application\UI\Form;

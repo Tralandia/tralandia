@@ -8,19 +8,14 @@ class SignPresenter extends BasePresenter {
 		if($this->user->isLoggedIn()) {
 			$this->redirect('Home:default');
 		}
-
-		$form = $this->getComponent('signIn');
-		$form->setDefaults(array(
-			'backlink' => $this->getParam('backlink'),
-		));
 	}
 
 	/**
-	 * @return \BaseModule\Froms\SignIn
+	 * @return \BaseModule\Forms\Sign\In
 	 */
-	protected function createComponentSignIn($name)
+	protected function createComponentSignIn()
 	{
-		$comp = new \BaseModule\Forms\Sign\In($this, $name);
+		$comp = new \BaseModule\Forms\Sign\In;
 	
 		return $comp;
 	}

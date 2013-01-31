@@ -41,6 +41,8 @@ class RentalPresenter extends BasePresenter {
 	public function actionEdit($id) {
 		$this->rental = $this->rentalRepositoryAccessor->get()->find($id);
 
+		if(!$this->getUser()->isAllowed($this->rental, 'edit')) $this->accessDeny();
+
 		//$rentalService = $this->rentalDecoratorFactory->create($this->rental);
 
 		$this->template->rental = $this->rental;

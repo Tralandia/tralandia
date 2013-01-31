@@ -5,7 +5,7 @@ namespace AdminModule;
 use Nette\Environment;
 use Nette\Security\User;
 
-abstract class BasePresenter extends \BasePresenter {
+abstract class BasePresenter extends \SecuredPresenter {
 	
 	protected function startup() {
 		// $this->autoCanonicalize = FALSE;

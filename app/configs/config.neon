@@ -91,18 +91,10 @@ services:
 		factory: Extras\Presenter\Factory::factory(%appDir%, %tempDir%/presenters, @container)
 		class: Extras\Presenter\Factory
 
-	user:
-		class: Security\User
-
-	authenticator: Security\Authenticator
+	authenticator: Security\Authenticator(@userRepositoryAccessor::get())
 
 	authorizator: 
-		class: Security\Acl
-		setup:
-			# - $cache(@aclCache)
-			- $roleRepository(@userRoleRepositoryAccessor)
-			- $config(%acl%)
-			- setup()
+		class: Security\SimpleAcl(..., @userRoleRepositoryAccessor::get())
 
 	environment: 
 		class: Extras\Environment(@application::getRequests(), @languageRepositoryAccessor, @locationRepositoryAccessor)

@@ -10,7 +10,7 @@ use Extras;
  * @ORM\MappedSuperclass(repositoryClass="\Repository\BaseRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class BaseEntity extends \Extras\Models\Entity\Entity {
+class BaseEntity extends \Extras\Models\Entity\Entity implements \Nette\Security\IResource {
 
 	/**
 	 * @var integer
@@ -41,6 +41,11 @@ class BaseEntity extends \Extras\Models\Entity\Entity {
 
 	public function __construct() {
 		parent::__construct();
+	}
+
+	public function getResourceId()
+	{
+		return get_class($this);
 	}
 
 	/**
