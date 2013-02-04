@@ -38,10 +38,10 @@ class Authenticator extends Object implements NS\IAuthenticator {
 	public function authenticate(array $credentials) {
 		list($email, $password) = $credentials;
 
+		/** @var $user \Entity\User\User */
 		if($email instanceof \Entity\User\User) {
 			$user = $email;
 		} else {
-			/** @var $user \Entity\User\User */
 			$user = $this->userRepository->findOneByLogin($email);
 
 			if (!$user) {
