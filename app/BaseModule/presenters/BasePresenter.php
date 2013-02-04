@@ -24,6 +24,12 @@ abstract class BasePresenter extends Presenter {
 	public $jsFiles;
 	public $jsRemoteFiles;
 
+	/**
+	 * @autowire
+	 * @var \Security\Authenticator
+	 */
+	protected $authenticator;
+
 	protected function startup() {
 		parent::startup();
 		// odstranuje neplatne _fid s url
@@ -34,11 +40,22 @@ abstract class BasePresenter extends Presenter {
 
 		//$this->initCallbackPanel();
 
-		$backlink = $this->storeRequest();
+		if($autologin = $this->getParameter(\Routers\OwnerRouteList::AUTOLOGIN)) {
+			try{
+				$identity = $this->authenticator->autologin($autologin);
+				$this->getUser()->login($identity);
+			} catch(\Nette\Security\AuthenticationException $e) {
+			}
+			$parameters = $this->getParameters();
+			unset($parameters['l'], $parameters['primaryLocation'], $parameters['language']);
+			$this->redirect('this', $parameters);
+		}
+
+		$backLink = $this->storeRequest();
 		if(!$this->getHttpRequest()->isPost()) {
 			$environmentSection = $this->context->session->getSection('environment');
 			$environmentSection->previousLink = $environmentSection->actualLink;
-			$environmentSection->actualLink = $backlink;
+			$environmentSection->actualLink = $backLink;
 		}
 	}
 
@@ -79,11 +96,8 @@ abstract class BasePresenter extends Presenter {
 	protected function createTemplate($class = NULL) {
 		/** @var \Nette\Templating\FileTemplate|\stdClass $template */
 		$template = parent::createTemplate($class);
-		$helpers = $this->getService('templateHelpers');
+		$helpers = $this->getContext()->getService('templateHelpers');
 		$template->registerHelperLoader(array($helpers, 'loader'));
-		// @todo tieto helpre presunit do loadera
-		$template->registerHelper('ulList', callback($this, 'ulListHelper'));
-		$template->registerHelper('cnt', callback($this, 'countHelper'));
 		return $template;
 	}
 
@@ -92,8 +106,8 @@ abstract class BasePresenter extends Presenter {
 		return new FlashesControl($this, $name);
 	}
 
-	public function getParams() {
-		return (object)$this->getParam();
+	public function getParameters() {
+		return $this->getParameter();
 	}
 
 	public function flashMessage($message, $type = 'warning') {
@@ -238,80 +252,4 @@ abstract class BasePresenter extends Presenter {
 	public function getBaseUrl() {
 		return $this->template->baseUrl;
 	}
-
-	/* --------------------- Helpers --------------------- */
-
-	public function ulListHelper($data, $columnCount = 3, $li = NULL, $columnLimit = 0) {
-		if(!($data instanceof \Traversable || is_array($data))) {
-			throw new \Nette\InvalidArgumentException('Argument "$data" does not match with the expected value');
-		}
-
-		if(!is_numeric($columnCount) || $columnCount <= 0) {
-			throw new \Nette\InvalidArgumentException('Argument "$columnCount" does not match with the expected value');
-		}
-
-		if($li === NULL) {
-			$li = '<li>%name% - {_123}</li>';
-		}
-
-		preg_match_all('/%[a-zA-Z\._]+%/', $li, $matches);
-
-		$replaces = array();
-
-		foreach ($matches[0] as $match) {
-
-			$translate = FALSE;
-			$matchKey = $match;
-			if (strpos($match, '_')) {
-				$translate = TRUE;
-				$matchKey = str_replace('_', '', $match);
-			}
-
-			if (gettype($data)=='object') {
-				$value = '$item->'.str_replace('.', '->', substr($matchKey, 1, -1));
-			} else {
-				$value = '$item["'.str_replace('.', '"]["', substr($matchKey, 1, -1)).'"]';
-			}
-
-			if ($translate) {
-				$value = '$this->template->translate('.$value.')';
-			}
-
-			$replaces[$match] = $value;
-		}
-
-		$newData = array();
-
-		$i=1;
-		$counter=0;
-		foreach ($data as $k=>$item) {
-			$search = array();
-			$replace = array();
-			foreach ($replaces as $key => $value) {
-				$search[] = $key;
-				eval('$r = '.$value.';');
-				$replace[] = $r;
-			}
-			$liTemp = str_replace($search, $replace, $li);
-			$row = ($i<=$columnCount)?$i:$i=1;
-			$newData[$row][] = $liTemp;
-			$i++;
-			$counter++;
-			if ($columnLimit!=0 && ($columnLimit*$columnCount)<=$counter) break;
-		}
-
-		$html = \Nette\Utils\Html::el();
-		foreach ($newData as $key => $value) {
-			$ul = \Nette\Utils\Html::el('ul');
-			$ul->add(implode('', $value));
-			$html->add($ul);
-		}
-
-		return $html;
-	}
-
-	public function countHelper($data) {
-		return count($data);
-	}
-
 }

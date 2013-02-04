@@ -14,7 +14,12 @@ class Authenticator extends Object implements NS\IAuthenticator {
 	/**
 	 * @var \Repository\User\UserRepository
 	 */
-	public $userRepository;
+	protected $userRepository;
+
+	/**
+	 * @var string
+	 */
+	protected static $autoLoginDelimiter = '-';
 
 	/**
 	 * @param \Repository\User\UserRepository $userRepository
@@ -33,17 +38,22 @@ class Authenticator extends Object implements NS\IAuthenticator {
 	public function authenticate(array $credentials) {
 		list($email, $password) = $credentials;
 
-		/** @var $user \Entity\User\User */
-		$user = $this->userRepository->findOneByLogin($email);
+		if($email instanceof \Entity\User\User) {
+			$user = $email;
+		} else {
+			/** @var $user \Entity\User\User */
+			$user = $this->userRepository->findOneByLogin($email);
 
-		if (!$user) {
-			throw new NS\AuthenticationException("User '$email' not found.", self::IDENTITY_NOT_FOUND);
+			if (!$user) {
+				throw new NS\AuthenticationException("User '$email' not found.", self::IDENTITY_NOT_FOUND);
+			}
+
+			if ($user->getPassword() !== self::calculatePasswordHash($password)) {
+				throw new NS\AuthenticationException("Invalid password.", self::INVALID_CREDENTIAL);
+			}
 		}
 
-		if ($user->getPassword() !== self::calculateHash($password)) {
-			throw new NS\AuthenticationException("Invalid password.", self::INVALID_CREDENTIAL);
-		}
-		
+
 		return new NS\Identity($user->getId(), array($user->getRole()->getSlug()), $user->getIdentity());
 	}
 
@@ -52,8 +62,33 @@ class Authenticator extends Object implements NS\IAuthenticator {
 	 * @param  string
 	 * @return string
 	 */
-	public static function calculateHash($password) {
+	public static function calculatePasswordHash($password) {
 		return $password;
+	}
+
+	/**
+	 * @param \Entity\User\User $user
+	 *
+	 * @return string
+	 */
+	public static function calculateAutoLoginHash(\Entity\User\User $user)
+	{
+		return $user->getId() . self::$autoLoginDelimiter . substr( sha1($user->getPassword() . 'dkh43k5h3k2o9'), 0, 16 );
+	}
+
+	/**
+	 * @param $autologin
+	 *
+	 * @return \Nette\Security\Identity
+	 * @throws \Nette\Security\AuthenticationException
+	 */
+	public function autologin($autologin)
+	{
+		list($userId, ) = explode(self::$autoLoginDelimiter, $autologin, 2);
+		if(!$user = $this->userRepository->find($userId)) {
+			throw new NS\AuthenticationException("Invalid autologin link.");
+		}
+		return $this->authenticate([$user, NULL]);
 	}
 }
 
