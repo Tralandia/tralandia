@@ -10,6 +10,8 @@ use Nette\Application\Routers\Route;
 class OwnerRouteList extends Nette\Application\Routers\RouteList
 {
 
+	const AUTOLOGIN = 'l';
+
 	const PARAM_LANGUAGE = 'language';
 	const PARAM_PRIMARY_LOCATION = 'primaryLocation';
 
