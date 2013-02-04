@@ -1,7 +1,25 @@
 {block content}
 
 
+<script>
+$(function(){
+		$('.changeform').click(function(){
 
+			var self = this;
+
+			$( ".control-group" ).each(function( index ) {
+			  //console.log( index + ": " + $(this).text() );
+
+			  $(this).removeClass('valid');
+			  $(this).removeClass('error');
+			  $(this).addClass($(self).attr('rel'));
+			});			
+
+			return false;
+
+		});
+	});
+</script>
 
 <button rel="" class="changeform">Normal</button>
 <button rel="valid" class="changeform">Valid</button>
@@ -42,50 +60,41 @@
 				</div>
 
 
-{*
-<div class="control-group pricePhrase">
-	<div class="form-label"><label for="frm-currency-name">Name</label></div>
-	
-	
-	<select>
-		<option value="br">br text </option>
-		<option value="mr">mr text </option>
-		<option value="cr">cr text </option>
-	</select>
-	
-	
-	<div class="controls">
-		<div class="input-wrapper phrase-control plain-text-simple">
 
-			<div class="input-prepend">
-			  <div class="btn-group">
-			    <button class="btn dropdown-toggle" data-toggle="dropdown">
-			      Action
-			    </button>
-			    <ul class="dropdown-menu">
-			    </ul>
-			  </div>
-			  <input class="span2" id="prependedDropdownButton" type="text">
-			</div>
 
-			<div class="input-prepend">
-			  <div class="btn-group">
-			    <button class="btn dropdown-toggle" data-toggle="dropdown">
-			      Action
-			    </button>
-			    <ul class="dropdown-menu">
-			    </ul>
-			  </div>
-			  <input class="span2" id="prependedDropdownButton" type="text">
-			</div>
-			
-		</div>
-		<i class="va­lidation entypo-valid"></i>
 
-	<div class="control-error"></div>
-	</div>
-</div>
-*}
+				<div class="control-group pricePhrase">
+					<div class="form-label"><label for="frm-currency-name">Name</label></div>
+
+					<div class="controls">
+									  
+							<div class="input-prepend">
+							  <span class="add-on">br</span>
+							  <input id="prependedInput" type="text" placeholder="">
+							</div>
+								
+
+							<div class="input-prepend">
+							  <span class="add-on">cr</span>
+							  <input id="prependedInput" type="text" placeholder="">
+							</div>	
+
+							<select id="sha2" rel="prependedDropdownButton22" class="select2" name="sha2">
+								<option value="br" data-sufix="br teeext" >br</option>
+								<option value="mr" data-sufix="mr tetex" >mr</option>
+								<option value="cr" data-sufix="cr textos" >cr</option>
+							</select>
+						
+						  <input id="prependedDropdownButton22" type="text">						
+						
+						<i class="va­lidation"></i>
+
+						<div class="control-error">validation error</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+
+
 
 
 	
@@ -99,11 +108,10 @@
 				   </div>
 				   <div class="controls">
 				       <input type="text" />
-				       <select>
-							<option>EUR</option>
-							<option>USD</option>
-							<option>eh</option>
-							<option>eh</option>
+				       <select name="tlalaaa" id="tlaaaalalal" class="select2">
+							<option value="br">br</option>
+							<option value="mr">mr</option>
+							<option value="cr">cr</option>
 				       </select>				       
 				       <i class="va­lidation"></i>
 				       <div class="control-error">validation error</div>
@@ -231,10 +239,10 @@
 						<small>(Some lehper text lorem ipsum Blah)</small>
 				   </div>
 				   <div class="controls">
-						<select class="span9">
-								<option>Slovensko</option>
-								<option>Slovensko</option>
-								<option>Slovensko</option>
+						<select class="span9" id="sha3" name="sha3">
+							<option value="br">br</option>
+							<option value="mr">mr</option>
+							<option value="cr">cr</option>
 						</select>
 				       <i class="va­lidation"></i>
 				       <div class="control-error">error</div>
@@ -398,11 +406,10 @@
 							Interview s majiteľom
 					</div>
 					<div class="span3">
-						<select>
-							<option>Cz</option>
-							<option>Cz</option>
-							<option>Cz</option>
-							<option>Cz</option>
+						<select id="sha4" name="sha4">
+							<option value="br">br</option>
+							<option value="mr">mr</option>
+							<option value="cr">cr</option>
 						</select>
 					</div>					
 				</div>
