@@ -11,7 +11,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/HosipLan/Nette-AutowireProperties/archive/v0.1.1.zip",
+                "url": "https://api.github.com/repos/HosipLan/Nette-AutowireProperties/zipball/v0.1.1",
                 "reference": "v0.1.1",
                 "shasum": ""
             },
@@ -52,7 +52,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/Kdyby/Events/archive/e4fe5617f05273ba98bd94f4394eeef0c516a88e.zip",
+                "url": "https://api.github.com/repos/Kdyby/Events/zipball/e4fe5617f05273ba98bd94f4394eeef0c516a88e",
                 "reference": "e4fe5617f05273ba98bd94f4394eeef0c516a88e",
                 "shasum": ""
             },
@@ -90,8 +90,8 @@
             "description": "Events for Nette Framework",
             "homepage": "http://kdyby.org",
             "keywords": [
-                "nette",
-                "kdyby"
+                "kdyby",
+                "nette"
             ]
         },
         {
@@ -109,19 +109,19 @@
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.0",
                 "ext-iconv": "*",
-                "ext-tokenizer": "*"
+                "ext-tokenizer": "*",
+                "php": ">=5.3.0"
             },
             "require-dev": {
                 "nette/tester": "@dev"
             },
             "suggest": {
-                "ext-mbstring": "*",
-                "ext-pdo": "*",
-                "ext-memcache": "*",
+                "ext-fileinfo": "*",
                 "ext-gd": "*",
-                "ext-fileinfo": "*"
+                "ext-mbstring": "*",
+                "ext-memcache": "*",
+                "ext-pdo": "*"
             },
             "time": "2013-01-22 17:52:40",
             "type": "library",
@@ -154,18 +154,18 @@
             "description": "Nette Framework - innovative framework for fast and easy development of secured web applications in PHP. Write less, have cleaner code and your work will bring you joy.",
             "homepage": "http://nette.org",
             "keywords": [
-                "templating",
-                "framework",
+                "Forms",
                 "database",
                 "dbal",
                 "debugging",
-                "mvc",
-                "micro",
-                "Forms",
+                "framework",
+                "images",
                 "latte",
-                "neon",
                 "mailing",
-                "images"
+                "micro",
+                "mvc",
+                "neon",
+                "templating"
             ]
         }
     ],
