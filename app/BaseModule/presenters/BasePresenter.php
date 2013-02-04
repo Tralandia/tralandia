@@ -60,7 +60,6 @@ abstract class BasePresenter extends Presenter {
 		$environmentSection = $this->context->session->getSection('environment');
 		return $environmentSection->previousLink;
 	}
-
 	
 	public function accessDeny()
 	{
