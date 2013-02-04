@@ -431,7 +431,9 @@ $(document).ready(function(){
 
 	var A = new App();
 
-$(".control-group select").select2(); 
+	$(".control-group select.select2").select2(); 
+
+
 
 	/* register listeners */
 	/* UI toogle function */

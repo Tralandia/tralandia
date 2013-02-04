@@ -2174,7 +2174,7 @@ form.traform {
 								background: none;
 								border: none;
 								b {
-									background:url('select2.png') no-repeat 3px 5px;
+									background:url('../packages/Front/select2.png') no-repeat 3px 5px;
 								}
 							}
 
@@ -2183,7 +2183,40 @@ form.traform {
 									
 					}
 
-			
+			&.pricePhrase {
+				.controls {
+
+					.select2-container {
+						width: 75px;
+						text-align: center;
+						float: left;
+						a.select2-choice {
+
+							border-radius: 4px 0  0 4px;
+
+						}
+									
+					}
+
+					input[type=text] {
+						width: 365px;
+						border-radius: 0 4px 4px 0;
+						border-left: none;							
+					}
+
+					.input-prepend {
+						input[type=text] {
+							width: 365px;				
+						}	
+
+						span.add-on {
+							width: 74px;
+							padding: 0;
+						}					
+					}
+
+				}				
+			}
 
 			&.pricecontroll {
 
@@ -2203,12 +2236,7 @@ form.traform {
 
 					input[type=text] {
 						width: 110px;
-						-webkit-border-top-right-radius: 0;
-						-webkit-border-bottom-right-radius: 0;
-						-moz-border-radius-topright: 0;
-						-moz-border-radius-bottomright: 0;
-						border-top-right-radius: 0;
-						border-bottom-right-radius: 0;	
+						border-radius: 4px 0  0 4px;	
 						border-right: none;							
 					}
 
