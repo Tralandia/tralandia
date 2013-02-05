@@ -2,21 +2,17 @@
 
 namespace BaseModule\Forms\Sign;
 
-class In extends \BaseModule\Forms\BaseForm {
+use Nette;
 
-	public function __construct() {
-		parent::__construct();
+class InForm extends \BaseModule\Forms\BaseForm {
 
+	protected function buildForm() {
 		$this->addText('login', 'Login:');
 		$this->addPassword('password', 'Password');
 
 		$this->addSubmit('signIn', 'SignIn');
-		
-		$this->onSuccess[] = callback($this, 'onSuccess');
-	}
 
-	protected function buildForm() {
-		
+		$this->onSuccess[] = callback($this, 'onSuccess');
 	}
 
 	public function setDefaultsValues()
@@ -35,4 +31,11 @@ class In extends \BaseModule\Forms\BaseForm {
 		}
 	}
 
+}
+
+interface IInFormFactory {
+	/**
+	 * @return InForm
+	 */
+	public function create();
 }

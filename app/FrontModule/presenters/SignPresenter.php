@@ -4,6 +4,18 @@ namespace FrontModule;
 
 class SignPresenter extends BasePresenter {
 
+	/**
+	 * @autowire
+	 * @var \BaseModule\Forms\Sign\IInFormFactory
+	 */
+	protected $signInFormFactory;
+
+	/**
+	 * @autowire
+	 * @var \BaseModule\Forms\IForgotPasswordFormFactory
+	 */
+	protected $forgotPasswordFormFactory;
+
 	public function actionIn() {
 		if($this->user->isLoggedIn()) {
 			$this->redirect('Home:default');
@@ -11,12 +23,22 @@ class SignPresenter extends BasePresenter {
 	}
 
 	/**
-	 * @return \BaseModule\Forms\Sign\In
+	 * @return \BaseModule\Forms\Sign\InForm
 	 */
-	protected function createComponentSignIn()
+	protected function createComponentSignInForm()
 	{
-		$comp = new \BaseModule\Forms\Sign\In;
+		$comp = $this->signInFormFactory->create();
 	
+		return $comp;
+	}
+
+	/**
+	 * @return \BaseModule\Forms\ForgotPasswordForm
+	 */
+	protected function createComponentForgotPasswordForm()
+	{
+		$comp = $this->forgotPasswordFormFactory->create();
+
 		return $comp;
 	}
 
