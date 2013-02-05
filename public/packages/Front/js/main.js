@@ -433,7 +433,7 @@ $(document).ready(function(){
 
 	$(".control-group select.select2").select2(); 
 
-
+	$('.calendarEdit').calendarEdit();
 
 	/* register listeners */
 	/* UI toogle function */
