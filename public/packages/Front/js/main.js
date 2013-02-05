@@ -429,11 +429,15 @@ App.prototype.closeForgottenPasswordForm = function(){
 
 $(document).ready(function(){
 
+//$.nette.init();
+
 	var A = new App();
 
 	$(".control-group select.select2").select2(); 
 
 	$('.calendarEdit').calendarEdit();
+
+	$('.traMapControll').traMapControll();
 
 	/* register listeners */
 	/* UI toogle function */
