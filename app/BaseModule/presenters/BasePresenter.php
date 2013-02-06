@@ -252,4 +252,45 @@ abstract class BasePresenter extends Presenter {
 	public function getBaseUrl() {
 		return $this->template->baseUrl;
 	}
+
+
+	public function actionValidateAddress()
+	{
+		$json = [];
+//		$address = $this->getParameter('address');
+//		$locality = $this->getParameter('locality');
+//		$postalCode = $this->getParameter('postalCode');
+//		$primaryLocation = $this->getParameter('primaryLocation');
+		$json = [
+			'status' => false,
+			'elements' => [
+				'address' => [
+					'status' => false,
+					'value' => 'ajax q value',
+					'message' => 'ajax error mesage'
+				],
+				'locality' => [
+					'status' => false,
+					'value' => 'ajax q value',
+					'message' => 'ajax error mesage'
+				],
+				'postalCode' => [
+					'status' => false,
+					'value' => 'ajax q value',
+					'message' => 'ajax error mesage'
+				],
+				'location' => [
+					'status' => false,
+					'value' => 'ajax q value',
+					'message' => 'ajax error mesage'
+				]
+			],
+			'gps' => [
+				'lat' => '48.166326426',
+				'lng' => '17.102033625'
+			]
+		];
+
+		$this->sendJson($json);
+	}
 }

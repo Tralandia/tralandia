@@ -4,17 +4,26 @@ namespace Extras\Forms\Container;
 
 use Nette\Application\UI\Link;
 
-class AddressContainer extends BaseContainer implements \Nette\Application\UI\ISignalReceiver
+class AddressContainer extends BaseContainer
 {
 
-	public function __construct($locations = NULL)
+	/**
+	 * @var \Entity\Contact\Address
+	 */
+	protected $address;
+
+	public function __construct($locations, \Entity\Contact\Address $address)
 	{
 		parent::__construct();
+
+		$this->address = $address;
 
 		$this->addText('address', '#Address');
 		$this->addText('locality', '#Locality');
 		$this->addText('postalCode', '#Postal Code');
 		$this->addSelect('primaryLocation', '#Primary location', $locations);
+		$this->addHidden('latitude');
+		$this->addHidden('longitude');
 	}
 
 	public function getMainControl()
@@ -22,14 +31,25 @@ class AddressContainer extends BaseContainer implements \Nette\Application\UI\IS
 		return $this['address'];
 	}
 
-	/**
-	 * @param  string
-	 *
-	 * @return void
-	 */
-	function signalReceived($signal)
+	public function setDefaultValues()
 	{
-		// TODO: Implement signalReceived() method.
+		$locality = $this->getForm()->getTranslator()->translate($this->address->getLocality()->getName());
+		$this->setDefaults([
+			'address' => $this->address->getAddress(),
+			'locality' => $locality,
+			'postalCode' => $this->address->getPostalCode(),
+			'primaryLocation' => $this->address->getPrimaryLocation()->getId(),
+			'latitude' => $this->address->getGps()->getLatitude(),
+			'longitude' => $this->address->getGps()->getLongitude(),
+		]);
+	}
+
+	/**
+	 * @return \Entity\Location\Location|NULL
+	 */
+	public function getPrimaryLocation()
+	{
+		return $this->address->getPrimaryLocation();
 	}
 
 }

@@ -13,10 +13,12 @@ class ExampleFormPresenter extends BasePresenter {
 	 * @var \Repository\Location\LocationRepository
 	 */
 	protected $locationRepository;
+	protected $addressRepository;
 
 	public function injectDic(\Nette\DI\Container $dic) {
 		$this->phraseRepositoryAccessor = $dic->phraseRepositoryAccessor;
 		$this->locationRepository = $dic->locationRepositoryAccessor->get();
+		$this->addressRepository = $dic->contactAddressRepositoryAccessor->get();
 	}
 
 	public function actionDefault() {
@@ -26,6 +28,7 @@ class ExampleFormPresenter extends BasePresenter {
 	public function createComponentBaseForm()
 	{
 		$form = new Form;
+		$form->setTranslator($this->getContext()->getService('translator'));
 		$form->setRenderer(new Extras\Forms\Rendering\DefaultRenderer);
 		$form->getElementPrototype()->novalidate = 'novalidate';
 
@@ -50,7 +53,11 @@ class ExampleFormPresenter extends BasePresenter {
 
 
 		$form['price'] = new \Extras\Forms\Container\PriceContainer('Price', ['EUR', 'HUF', 'CZK']);
-		$form['address'] = new \Extras\Forms\Container\AddressContainer ($this->locationRepository->getCountriesForSelect());
+
+		$locations = $this->locationRepository->getCountriesForSelect();
+		$address = $this->addressRepository->find(1);
+		$form['address'] = new \Extras\Forms\Container\AddressContainer($locations, $address);
+		$form['address']->setDefaultValues();
 /*
 		$form->addTextArea('textArea', 'Text Area')
 			->setRequired();
