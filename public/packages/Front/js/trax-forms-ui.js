@@ -22,17 +22,71 @@ Nette.addError = function(elem, message) {
 	}
 };
 
+
+// phrase form
 (function($){
-	$.pricePhrase = function(el, options){
-		// To avoid scope issues, use 'base' instead of 'this'
-		// to reference this class from internal events and functions.
+	$.phraseForm = function(el, options){
+
 		var base = this;
-		
-		// Access to jQuery and DOM versions of element
+
 		base.$el = $(el);
 		base.el = el;
+
+		base.$el.data("phraseForm", base);
 		
-		// Add a reverse reference to the DOM object
+		base.init = function(){
+			
+			base.options = $.extend({},$.phraseForm.defaultOptions, options);            
+
+		};
+		
+
+		base.init();
+	};
+	
+	$.phraseForm.defaultOptions = {
+		
+	};
+	
+	$.fn.phraseForm = function(options){
+		return this.each(function(){
+
+			var self = this;
+			var $self = $(this);
+
+			$self.find('#phraseLanguage').on('change',function(){
+				
+
+
+				var visibleID = '#'+$(this).val()+'_phrase';
+					console.log(visibleID);
+
+					$('#phraseTranslateCurrent').html($('#phraseLanguage option:selected').text());
+					$self.find('.phraseControll').addClass('hide');
+					$(visibleID).removeClass('hide');
+			})
+
+
+
+		});
+	};
+	
+})(jQuery);
+
+
+
+
+
+
+// small price phrase form
+(function($){
+	$.pricePhrase = function(el, options){
+
+		var base = this;
+
+		base.$el = $(el);
+		base.el = el;
+
 		base.$el.data("pricePhrase", base);
 		
 		base.init = function(){
@@ -46,7 +100,7 @@ Nette.addError = function(elem, message) {
 	};
 	
 	$.pricePhrase.defaultOptions = {
-		radius: "20px"
+
 	};
 	
 	$.fn.pricePhrase = function(options){
