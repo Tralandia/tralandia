@@ -64,6 +64,8 @@ parameters:
 					- Front/js/trax-forms-ui.js
 					- Front/js/select2.js
 					- Front/js/main.js
+					#- Front/js/nette.ajax.js
+					- Front/js/netteForms.js
 
 			FavoriteScroll:
 				js:

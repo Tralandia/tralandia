@@ -120,8 +120,15 @@ ul.arrows {
 	}
 }
 
-.teaser {
+
+
+#content.nopadding p.teaser {
 	line-height: 17px;
+	background: #fdf5ce;
+	padding: 10px;
+	text-align: center;
+
+
 }
 
 .red {
@@ -405,8 +412,15 @@ ul.arrows {
 
 		margin-top: 10px;
 		h1 {
-			margin: 0 0 10px 0;
+			margin: 0 0 2px 0;
 			padding: 0;
+			
+			height: 24px;
+			
+			white-space: nowrap;
+			width: 100%;
+			overflow: hidden;
+			text-overflow: ellipsis;			
 		}
 	}
 
@@ -470,7 +484,8 @@ ul.arrows {
 
 	.socialIcons {
 		list-style: none;
-		width: 115px;
+		width: 150px;
+		cursor: pointer;
 		color: #ffffff;
 		float: right;
 		margin-right: 8px;
@@ -2182,6 +2197,14 @@ form.traform {
 						}
 									
 					}
+
+					.span3 {
+						.select2-container {
+							width: 173px;
+										
+						}
+					}
+
 
 			&.pricePhrase {
 				.controls {
