@@ -47,6 +47,7 @@ parameters:
 
 				js:
 					- jQuery/jquery.js
+					- Front/js/netteForms.js
 					#- Front/js/fancy-checkboxes.js
 					- Front/js/bootstrap-dropdown.js					
 					- Front/js/bootstrap-modal.js
@@ -65,7 +66,7 @@ parameters:
 					- Front/js/select2.js
 					- Front/js/main.js
 					#- Front/js/nette.ajax.js
-					- Front/js/netteForms.js
+					
 
 			FavoriteScroll:
 				js:
