@@ -25,7 +25,7 @@ class DefaultRenderer extends DefaultFormRenderer {
 		),
 
 		'controls' => array(
-			'container' => 'table',
+			'container' => 'div',
 		),
 
 		'pair' => array(
@@ -41,7 +41,7 @@ class DefaultRenderer extends DefaultFormRenderer {
 
 			'description' => 'small',
 			'requiredsuffix' => '',
-			'validationcontainer' => 'i class="va­lidation entypo-valid"',
+			'validationcontainer' => 'i class="validation"',
 			'errorcontainer' => 'div class=control-error',
 			'erroritem' => 'span',
 
@@ -58,7 +58,7 @@ class DefaultRenderer extends DefaultFormRenderer {
 			'container' => 'div class=form-label',
 			'label' => 'label',
 			'suffix' => NULL,
-			'requiredsuffix' => '',
+			'requiredsuffix' => ' *',
 			'description' => 'small',
 		),
 
@@ -107,7 +107,8 @@ class DefaultRenderer extends DefaultFormRenderer {
 				$description = ' ' . $control->getOption('description');
 
 			} elseif (is_string($description)) {
-				$description = ' ' . $this->getWrapper('label description')->setText($control->translate($description));
+				$description = '(' . $control->translate($description) . ')';
+				$description = $this->getWrapper('label description')->setText($description);
 
 			} else {
 				$description = '';
