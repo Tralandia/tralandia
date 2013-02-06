@@ -9,9 +9,14 @@ use Nette\Application\UI\Form;
 class ExampleFormPresenter extends BasePresenter {
 
 	protected $phraseRepositoryAccessor;
+	/**
+	 * @var \Repository\Location\LocationRepository
+	 */
+	protected $locationRepository;
 
 	public function injectDic(\Nette\DI\Container $dic) {
 		$this->phraseRepositoryAccessor = $dic->phraseRepositoryAccessor;
+		$this->locationRepository = $dic->locationRepositoryAccessor->get();
 	}
 
 	public function actionDefault() {
@@ -44,8 +49,8 @@ class ExampleFormPresenter extends BasePresenter {
 				->setPlaceholder('Text');
 
 
-		$form->addAdvancedPrice('price' , 'Price', ['EUR', 'HUF', 'CZK']);
-
+		$form['price'] = new \Extras\Forms\Container\PriceContainer('Price', ['EUR', 'HUF', 'CZK']);
+		$form['address'] = new \Extras\Forms\Container\AddressContainer ($this->locationRepository->getCountriesForSelect());
 /*
 		$form->addTextArea('textArea', 'Text Area')
 			->setRequired();

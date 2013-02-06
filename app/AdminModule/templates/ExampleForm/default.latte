@@ -1,4 +1,10 @@
 {#content}
 <div class="page-header"><h1>Example Form</h1></div>
-{control baseForm}
+
+{includeblock '@formControls.latte'}
+{form baseForm, class => "traform dashboard"}
+	{include #text, control => $form['text']}
+	{include #price, control => $form['price']}
+	{include #address, control => $form['address']}
+{/form}
 {/#}

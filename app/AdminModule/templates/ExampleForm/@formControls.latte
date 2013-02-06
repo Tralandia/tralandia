@@ -1,0 +1,97 @@
+{define #text}
+	{include #baseControl, control => $control}
+{/define #text}
+
+
+{define #price}
+{var
+	$container = $control;
+	$mainControl = $container->getMainControl()
+}
+{?unset($control)}
+<div class="control-group  pricecontroll">
+    <div class="form-label">
+		{label $mainControl /}
+        <small>{$container->getDescription()}</small>
+    </div>
+    <div class="controls">
+        {input $container['amount']}
+		{input $container['currency']}
+        <i class="validation"></i>
+		{include #controlErrors, errors => $container->getAllErrors()}
+    </div>
+    <div class="clearfix"></div>
+</div>
+{/define #price}
+
+
+{define #address}
+{var
+	$container = $control;
+	$mainControl = $container->getMainControl()
+}
+{?unset($control)}
+<div class="control-group traMapControll" data-link="{plink validateAddress}">
+
+    <div class="row-fluid">
+        <div class="span2">
+            {label $container['address'] /}
+        </div>
+        <div class="span2">
+			{label $container['locality'] /}
+        </div>
+        <div class="span2">
+			{label $container['postalCode'] /}
+        </div>
+        <div class="span2">
+			{label $container['primaryLocation'] /}
+        </div>
+    </div>
+
+
+    <div class="row-fluid marginBottom">
+        <div class="span2">
+			{input $container['address'], data-validation-message => "gps-validation-message"}
+        </div>
+        <div class="span2">
+			{input $container['locality'], data-validation-message => "gps-validation-message"}
+		</div>
+        <div class="span2">
+			{input $container['postalCode'], data-validation-message => "gps-validation-message"}
+		</div>
+        <div class="span3">
+			{input $container['primaryLocation'], data-validation-message => "gps-validation-message"}
+        </div>
+        <div class="span2"><button class="btn">toto</button></div>
+    </div>
+
+    <div class="row-fluid">
+        <div class="span12">
+            <div id="gps_position">Mapa</div>
+        </div>
+    </div>
+</div>
+{/define #address}
+
+
+{define #baseControl}
+<div class="control-group ">
+    <div class="form-label">
+        {label $control /}
+        <small>{$control->getOption('description')}</small>
+    </div>
+    <div class="controls">
+        {input $control}
+        <i class="validation"></i>
+		{include #controlErrors, errors => $control->getErrors()}
+    </div>
+    <div class="clearfix"></div>
+</div>
+{/define #baseControl}
+
+
+{define #controlErrors}
+<div class="control-error">
+	{foreach $errors as $error}{$error}{/foreach}
+</div>
+{/define #controlErrors}
