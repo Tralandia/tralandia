@@ -1,16 +1,92 @@
 
 
-(function($){
-	$.pricePhrase = function(el, options){
-		// To avoid scope issues, use 'base' instead of 'this'
-		// to reference this class from internal events and functions.
-		var base = this;
+/**
+ * custom Nette addError function
+ * Display error message.
+ */
+Nette.addError = function(elem, message) {
+	if (elem.focus) {
+		elem.focus();
+	}
+	if (message) {		
 		
-		// Access to jQuery and DOM versions of element
+			var errorMessageDiv = $('#'+elem.getAttribute('data-validation-message-div-id'));
+			var controllGroup = $('#'+elem.getAttribute('data-validation-controll-div-id'));
+
+			errorMessageDiv.html(message);
+
+			if(!controllGroup.hasClass('error')){
+				controllGroup.addClass('error');
+			}		
+		
+	}
+};
+
+
+// phrase form
+(function($){
+	$.phraseForm = function(el, options){
+
+		var base = this;
+
 		base.$el = $(el);
 		base.el = el;
+
+		base.$el.data("phraseForm", base);
 		
-		// Add a reverse reference to the DOM object
+		base.init = function(){
+			
+			base.options = $.extend({},$.phraseForm.defaultOptions, options);            
+
+		};
+		
+
+		base.init();
+	};
+	
+	$.phraseForm.defaultOptions = {
+		
+	};
+	
+	$.fn.phraseForm = function(options){
+		return this.each(function(){
+
+			var self = this;
+			var $self = $(this);
+
+			$self.find('#phraseLanguage').on('change',function(){
+				
+
+
+				var visibleID = '#'+$(this).val()+'_phrase';
+					console.log(visibleID);
+
+					$('#phraseTranslateCurrent').html($('#phraseLanguage option:selected').text());
+					$self.find('.phraseControll').addClass('hide');
+					$(visibleID).removeClass('hide');
+			})
+
+
+
+		});
+	};
+	
+})(jQuery);
+
+
+
+
+
+
+// small price phrase form
+(function($){
+	$.pricePhrase = function(el, options){
+
+		var base = this;
+
+		base.$el = $(el);
+		base.el = el;
+
 		base.$el.data("pricePhrase", base);
 		
 		base.init = function(){
@@ -24,7 +100,7 @@
 	};
 	
 	$.pricePhrase.defaultOptions = {
-		radius: "20px"
+
 	};
 	
 	$.fn.pricePhrase = function(options){
@@ -89,14 +165,96 @@
 	};
 
 	$.traMapControll.ajax = function(url,data,callback){
+		/*
 		$.ajax({
 			  type: "POST",
 			  url: url,
 			  data: data,
 			  dataType: 'json',
 			}).done(callback);	
+	*/
+
+		console.log(data);
+
+		data = {
+			status: false,
+			elements: {
+				address: {
+					status: false,
+					value: 'ajax q value',
+					message: 'ajax error mesage'
+				},
+				locality: {
+					status: false,
+					value: 'ajax q value',
+					message: 'ajax error mesage'
+				},
+				postalCode: {
+					status: false,
+					value: 'ajax q value',
+					message: 'ajax error mesage'
+				},
+				location: {
+					status: false,
+					value: 'ajax q value',
+					message: 'ajax error mesage'
+				}
+			},
+			gps: {
+				lat: '48.166326426',
+				lng: '17.102033625'
+			}
+		};
+
+		callback(data);
+
 	}
 
+	$.traMapControll.removeError = function(elem){
+		
+		var errorMessageDiv = $('#'+$(elem).attr('data-validation-message-div-id'));
+		var controllGroup = $('#'+$(elem).attr('data-validation-controll-div-id'));
+
+		errorMessageDiv.html('');
+
+		if(controllGroup.hasClass('error')){
+			controllGroup.removeClass('error');
+		}		 
+
+	}
+
+    // add error message 
+	$.traMapControll.addError = function(elem,message){
+		
+		var errorMessageDiv = $('#'+elem.attr('data-validation-message-div-id'));
+		var controllGroup = $('#'+elem.attr('data-validation-controll-div-id'));
+
+		errorMessageDiv.html(message);
+
+		if(!controllGroup.hasClass('error')){
+			controllGroup.addClass('error');
+		}		
+	}
+
+	// before ajax request validation
+	$.traMapControll.responseValidation = function(data){
+		$.each(data.elements,function(k,v){
+			if(!v.status){
+				
+				$input = $($("[name='"+k+"']"));
+				$input.val(v.value);
+	
+				if(v.message){
+					$.traMapControll.addError($input,v.message);
+				}
+				
+
+			}
+		});
+	}
+
+	// js validation client site with Nette validator
+	// using after send ajax request
 	$.traMapControll.validateInputs = function(p){
 	
 		var o = {
@@ -104,23 +262,23 @@
 			data: {}
 		};
 
-		p.find('input[type=text]').each(function(){
+		p.find('input[type=text] , select , input[type=hidden]').each(function(){
 			// nette validation
-			if(!Nette.validateControl(this)){
-				o.valid = false;
+			var inputName = $(this).attr('name');
+
+			if(typeof inputName != 'undefined'){
+
+				if(!Nette.validateControl(this)){
+					o.valid = false;
+				} else {
+					$.traMapControll.removeError(this);
+				}
+
+				o.data[inputName] = $(this).val();		
+
 			}
 
-			o.data[$(this).attr('name')] = $(this).val();
 		}); 
-
-		p.find('select').each(function(){
-			// nette validation
-			if(!Nette.validateControl(this)){
-				o.valid = false;
-			}
-
-			o.data[$(this).attr('name')] = $(this).val();
-		});
 
 		return o;
 
@@ -137,6 +295,10 @@
 
 			// render map and add map listener
 			var $mapDiv = $self.find('div.mapRender');
+
+			var $inputLat = $self.find('[name="gpsLat"]');
+			var $inputLng = $self.find('[name="gpsLng"]');
+
 
 				var coordinates = $mapDiv.attr('data-value').split(',');
 				var zoomVal = 4;
@@ -165,10 +327,29 @@
 
 				  var lat = event.latLng.gb;
 				  var lng = event.latLng.hb;
-				  //console.log(lng);
+				  $inputLat.val(lat);
+				  $inputLng.val(lng);
+				  
 
 				  $('#gps_position').html(lat+' '+lng);
 				  //map.setCenter(event.latLng);
+
+
+					v = $.traMapControll.validateInputs($self);
+					
+					
+					// send data
+						
+					$.traMapControll.ajax(requestUrl,v.data , function(data){
+					
+						if(!data.status){
+							$.traMapControll.responseValidation(data);
+							
+							//var newPosition = new google.maps.LatLng(data.gps.lat,data.gps.lng);
+							//	marker.setPosition(newPosition);
+						}
+					});
+					
 
 			  });  
 
@@ -182,9 +363,15 @@
 					
 					if(v.valid){
 						// send data
-						console.log(v.data);
+						
 						$.traMapControll.ajax(requestUrl,v.data , function(data){
-							
+							//console.log(data);
+							if(!data.status){
+								$.traMapControll.responseValidation(data);
+								
+								var newPosition = new google.maps.LatLng(data.gps.lat,data.gps.lng);
+									marker.setPosition(newPosition);
+							}
 						});
 					}
 			

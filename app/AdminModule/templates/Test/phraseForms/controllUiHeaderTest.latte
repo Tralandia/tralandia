@@ -1,25 +1,25 @@
-<div class="row">
+
 
 	<div class="span2">
 		<label for="phraseType"><b>phraseType</b></label>
-		<select id="phraseType" class="span2">
-			<<option>Region name</option>
-			<<option>Test</option>
-			<<option>Test</option>
-			<<option>Test</option>
-			<<option>Test</option>
+		<select id="phraseType" class="select2">
+			<option value="sk">Region name</option>
+			<option value="sk">Test</option>
+			<option value="sk">Test</option>
+			<option value="sk">Test</option>
+			<option value="sk">Test</option>
 		</select>		
 	</div>
 
 
-	<div class="span2">
+	<div class="span3">
 		<label for="sourceLanguage"><b>sourceLanguage</b></label>
-		<select id="sourceLanguage" class="span2">
-			<<option>Slovak</option>
-			<<option>Test</option>
-			<<option>Test</option>
-			<<option>Test</option>
-			<<option>Test</option>
+		<select id="sourceLanguage" class="select2">
+			<option value="sk">Slovak</option>
+			<option value="sk">Test</option>
+			<option value="sk">Test</option>
+			<option value="sk">Test</option>
+			<option value="sk">Test</option>
 		</select>
 	</div>
 
@@ -28,11 +28,20 @@
 		  <input type="checkbox" id="phraseReady" checked=true value="">
 		  Ready
 		</label>
+		<label for="phraseLanguage"><b>Translation | <span id="phraseTranslateCurrent">#default</b></label>
 	</div>
 	<div class="span2">
 		<label class="topLabel checkbox">
 		  <input name="phraseCorrected" type="checkbox" checked=true value="">
 		  Corrected
-		</label>		
+		</label>
+
+		<select id="phraseLanguage" name="phraseLanguage" class="select2 pull-right">
+			<option value="sk">Slovakia</option>
+			<option value="hu">Hungaria</option>
+			<option value="de">Nemec</option>
+			<option value="en">English</option>	
+			
+		</select>	
+
 	</div>
-</div>
