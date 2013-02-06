@@ -9,7 +9,6 @@ class RentalEditForm extends BaseForm {
 	
 	protected $languageRepository;
 	protected $locationRepository;
-	protected $rentalTagRepository;
 	protected $rentalTypeRepository;
 	protected $locationTypeRepository;
 	protected $rentalAmenityRepository;
@@ -22,7 +21,6 @@ class RentalEditForm extends BaseForm {
 		$this->rental = $rental;
 		$this->languageRepository = $em->getRepository('\Entity\Language');
 		$this->locationRepository = $em->getRepository('\Entity\Location\Location');
-		$this->rentalTagRepository = $em->getRepository('\Entity\Rental\Tag');
 		$this->rentalTypeRepository = $em->getRepository('\Entity\Rental\Type');
 		$this->locationTypeRepository = $em->getRepository('\Entity\Location\Type');
 		$this->rentalAmenityRepository = $em->getRepository('\Entity\Rental\Amenity');
@@ -119,14 +117,8 @@ class RentalEditForm extends BaseForm {
 
 
 		/*
-		 * Rental Amenities & Tags
+		 * Rental Amenities
 		 */
-
-		// Tags
-		$tagsContainer = $this->addContainer('tags');
-		foreach ($this->rentalTagRepository->findAll() as $tag) {
-			$tagsContainer->addCheckbox($tag->id, $tag->name->getTranslationText($this->rental->editLanguage, TRUE));
-		}
 
 		// Amenities
 		foreach ($this->rentalAmenityTypeRepository->findAll() as $amenityType) {

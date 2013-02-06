@@ -5,10 +5,6 @@ namespace Extras\Cache;
 
 use Nette\Caching;
 
-// $cache['location'][123] = 'liptov'
-// $cache['rentalType'][144][12] = 'chaty'
-// $cache['tag'][144][567] = 'lacne'
-
 
 class RouterCaching extends \Nette\Object {
 
@@ -33,7 +29,6 @@ class RouterCaching extends \Nette\Object {
 	public function generateSegments() {
 		$this->generateLocation();
 		$this->generateRentalType();
-		$this->generateTag();
 		//$this->generateAttractionType();
 	}
 
@@ -71,15 +66,6 @@ class RouterCaching extends \Nette\Object {
 			$cache[$l['language_id']][$l['entityId']] = $l['pathSegment'];
 		}
 		$this->cache->save('rentalType', $cache);
-	}
-
-	public function generateTag() {
-		$data = qNew('select * from routing_pathsegment where type = '.$this->pathSegmentTypes['tag']);
-		$cache = array();
-		while ($l = mysql_fetch_assoc($data)) {
-			$cache[$l['language_id']][$l['entityId']] = $l['pathSegment'];
-		}
-		$this->cache->save('tag', $cache);
 	}
 
 

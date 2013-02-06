@@ -47,8 +47,6 @@ class ImportSeo extends BaseImport {
 		$locationRegionType = $context->locationTypeRepositoryAccessor->get()->findOneBySlug('region');
 		$locationCountryType = $context->locationTypeRepositoryAccessor->get()->findOneBySlug('country');
 
-		$tagType = $context->rentalAmenityTypeRepositoryAccessor->get()->findOneBySlug('tag');
-		debug(mysql_num_rows($r));
 		while($x = mysql_fetch_array($r)) {
 			$seoUrl = $context->seoSeoUrlEntityFactory->create();
 			$seoUrl->oldId = $x['id'];
@@ -63,14 +61,6 @@ class ImportSeo extends BaseImport {
 			}
 			if ($location) {
 				$seoUrl->location = $location;
-			}
-
-			// Tag
-			if ($x['tag_id'] > 0) {
-				$tag = $context->rentalAmenityRepositoryAccessor->get()->findOneBy(array('type'=>$tagType, 'oldId'=>$x['tag_id']));
-				if ($tag) {
-					$seoUrl->tag = $tag;
-				}
 			}
 
 			$model->persist($seoUrl);

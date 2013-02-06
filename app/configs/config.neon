@@ -208,7 +208,6 @@ factories:
 			- $routingPathSegmentRepositoryAccessor(@routingPathSegmentRepositoryAccessor)
 			- $domainRepositoryAccessor(@domainRepositoryAccessor)
 			- $pageRepositoryAccessor(@pageRepositoryAccessor)
-			- $rentalTagRepositoryAccessor(@rentalTagRepositoryAccessor)
 			- $rentalAmenityRepositoryAccessor(@rentalAmenityRepositoryAccessor)
 			- $pageRepositoryAccessor(@pageRepositoryAccessor)
 			- $phraseDecoratorFactory(@phraseDecoratorFactory)

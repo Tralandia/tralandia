@@ -12,7 +12,6 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 
 	// repositories
 	public $rentalTypeRepositoryAccessor;
-	public $rentalTagRepositoryAccessor;
 	public $locationRepositoryAccessor;
 	public $languageRepositoryAccessor;
 	public $currencyRepositoryAccessor;
@@ -27,7 +26,6 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 
 	public function inject(\Nette\DI\Container $dic) {
 		$this->rentalTypeRepositoryAccessor = $dic->rentalTypeRepositoryAccessor;
-		$this->rentalTagRepositoryAccessor = $dic->rentalTagRepositoryAccessor;
 		$this->locationRepositoryAccessor = $dic->locationRepositoryAccessor;
 		$this->languageRepositoryAccessor = $dic->languageRepositoryAccessor;
 		$this->currencyRepositoryAccessor = $dic->currencyRepositoryAccessor;
@@ -54,7 +52,6 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		$template->criteria = array();
 		$template->criteria['rentalType'] 		= $this->getRentalTypeCriteria();
 		$template->criteria['location'] 		= $this->getLocationCriteria();
-		$template->criteria['rentalTag'] 		= $this->getRentalTagCriteria();
 
 		$template->criteria['flanguage'] 		= $this->getLanguageCriteria();
 		$template->criteria['fcapacity'] 		= $this->getCapacityCriteria();
@@ -69,7 +66,6 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		return $this->selected = array(
 			'location' => $this->presenter->getParameter('location'),
 			'rentalType' => $this->presenter->getParameter('rentalType'),
-			'rentalTag' => $this->presenter->getParameter('rentalTag'),
 			'flanguage' => $this->presenter->getParameter('flanguage'),
 			'fcapacity' => $this->presenter->getParameter('fcapacity'),
 			'fprice' => $this->presenter->getParameter('fprice'),
@@ -88,14 +84,6 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 	protected function getLocationCriteria() {
 
 		$links = $this->getLinksFor(RentalSearchService::CRITERIA_LOCATION, $this->locationRepositoryAccessor, TRUE);
-
-		return \Nette\ArrayHash::from($links);
-
-	}
-
-	protected function getRentalTagCriteria() {
-
-		$links = $this->getLinksFor(RentalSearchService::CRITERIA_TAG, $this->rentalTagRepositoryAccessor);
 
 		return \Nette\ArrayHash::from($links);
 
@@ -162,7 +150,6 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		$visible 	= array();
 		$selected 	= $this->getSelectedParams();
 		$active		= FALSE;
-		d($repositoryAccessor);
 
 		$options = array();
 		if (array_key_exists($criteriaName, $selected)) {

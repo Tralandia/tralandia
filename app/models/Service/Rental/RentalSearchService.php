@@ -12,12 +12,10 @@ class RentalSearchService extends Nette\Object
 	const COUNT_PER_PAGE			= 10;
 	const CRITERIA_LOCATION  		= 'location';
 	const CRITERIA_RENTAL_TYPE 		= 'rentalType';
-	const CRITERIA_TAG	 			= 'rentalTag';
 
 	const CRITERIA_CAPACITY 		= 'fcapacity';
 	const CRITERIA_SPOKEN_LANGUAGE 	= 'flanguage';
 	const CRITERIA_PRICE 			= 'fprice';
-	//const CRITERIA_AREA_BOUNDRY 	= 'areaBoundry';
 
 	const CAPACITY_MAX				= 50;
 
@@ -62,11 +60,6 @@ class RentalSearchService extends Nette\Object
 
 	public function setRentalTypeCriterium(Entity\Rental\Type $rentalType = NULL) {
 		$this->criteria[self::CRITERIA_RENTAL_TYPE] = $rentalType;
-		$this->resetResults();
-	}
-
-	public function setRentalTagCriterium(Entity\Rental\Tag $tag = NULL) {
-		$this->criteria[self::CRITERIA_TAG] = $tag;
 		$this->resetResults();
 	}
 

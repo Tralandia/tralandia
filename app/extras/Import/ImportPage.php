@@ -132,30 +132,6 @@ class ImportPage extends BaseImport {
 		),
 		array(
 			'destination' => ':Front:Rental:list', 
-			'hash' => '/location/rentalType/tagBefore',
-			'h1Pattern' => array(
-				'sk' => '[tag] [rentalTypePlural] [locationLocative]', 
-				'en' => '[tag] [rentalTypePlural] in [location]'
-			), 
-			'titlePattern' => array(
-				'sk' => '[tag] [rentalTypePlural] [location]', 
-				'en' => '[tag] [rentalTypePlural] [location]'
-			)
-		),
-		array(
-			'destination' => ':Front:Rental:list', 
-			'hash' => '/location/rentalType/tagAfter',
-			'h1Pattern' => array(
-				'sk' => '[rentalTypePlural] [tag] [locationLocative]', 
-				'en' => '[rentalTypePlural] [tag] in [location]'
-			), 
-			'titlePattern' => array(
-				'sk' => '[rentalTypePlural] [tag] [location]', 
-				'en' => '[rentalTypePlural] [tag] [location]'
-			)
-		),
-		array(
-			'destination' => ':Front:Rental:list', 
 			'hash' => '/rentalType',
 			'h1Pattern' => array(
 				'sk' => '[rentalTypePlural] [locationLocative]', 
@@ -164,78 +140,6 @@ class ImportPage extends BaseImport {
 			'titlePattern' => array(
 				'sk' => '[rentalTypePlural] [location]', 
 				'en' => '[rentalTypePlural] [location]'
-			)
-		),
-		array(
-			'destination' => ':Front:Rental:list', 
-			'hash' => '/rentalType/tagBefore',
-			'h1Pattern' => array(
-				'sk' => '[tag] [rentalTypePlural] [locationLocative]', 
-				'en' => '[tag] [rentalTypePlural] in [location]'
-			), 
-			'titlePattern' => array(
-				'sk' => '[tag] [rentalTypePlural] [location]', 
-				'en' => '[tag] [rentalTypePlural] [location]'
-			)
-		),
-		array(
-			'destination' => ':Front:Rental:list', 
-			'hash' => '/rentalType/tagAfter',
-			'h1Pattern' => array(
-				'sk' => '[rentalTypePlural] [tag] [locationLocative]', 
-				'en' => '[rentalTypePlural] [tag] in [location]'
-			), 
-			'titlePattern' => array(
-				'sk' => '[rentalTypePlural] [tag] [location]', 
-				'en' => '[rentalTypePlural] [tag] [location]'
-			)
-		),
-		array(
-			'destination' => ':Front:Rental:list', 
-			'hash' => '/tagBefore',
-			'h1Pattern' => array(
-				'sk' => '[tag] ubytovanie [locationLocative]', 
-				'en' => '[tag] rentals in [location]'
-			), 
-			'titlePattern' => array(
-				'sk' => '[tag] ubytovanie [location]', 
-				'en' => '[tag] rentals [location]f'
-			)
-		),
-		array(
-			'destination' => ':Front:Rental:list', 
-			'hash' => '/tagAfter',
-			'h1Pattern' => array(
-				'sk' => 'Ubytovanie [tag] [locationLocative]', 
-				'en' => 'Rentals [tag] in [location]'
-			), 
-			'titlePattern' => array(
-				'sk' => 'Ubytovanie [tag] [location]', 
-				'en' => 'Rentals [tag] [location]'
-			)
-		),
-		array(
-			'destination' => ':Front:Rental:list', 
-			'hash' => '/location/tagBefore',
-			'h1Pattern' => array(
-				'sk' => '[tag] ubytovanie [locationLocative]', 
-				'en' => '[tag] rentals in [location]'
-			), 
-			'titlePattern' => array(
-				'sk' => '[tag] ubytovanie [location]', 
-				'en' => '[tag] rentals [location]f'
-			)
-		),
-		array(
-			'destination' => ':Front:Rental:list', 
-			'hash' => '/location/tagAfter',
-			'h1Pattern' => array(
-				'sk' => 'Ubytovanie [tag] [locationLocative]', 
-				'en' => 'Rentals [tag] in [location]'
-			), 
-			'titlePattern' => array(
-				'sk' => 'Ubytovanie [tag] [location]', 
-				'en' => 'Rentals [tag] [location]'
 			)
 		),
 		array(
