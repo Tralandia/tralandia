@@ -16,7 +16,6 @@ class PathSegment extends \Entity\BaseEntity {
 	const ATTRACTION_TYPE = 4;
 	const LOCATION = 6;
 	const RENTAL_TYPE = 8;
-	const TAG = 10;
 
 	/**
 	 * @var Collection

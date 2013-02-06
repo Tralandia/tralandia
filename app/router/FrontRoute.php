@@ -27,7 +27,6 @@ class FrontRoute extends BaseRoute
 		'page' => 2,
 		'location' => 6,
 		'rentalType' => 8,
-		'rentalTag' => 10,
 	);
 
 	public $locationRepositoryAccessor;
@@ -36,7 +35,6 @@ class FrontRoute extends BaseRoute
 	public $rentalTypeRepositoryAccessor;
 	public $routingPathSegmentRepositoryAccessor;
 	public $domainRepositoryAccessor;
-	public $rentalTagRepositoryAccessor;
 	public $rentalAmenityRepositoryAccessor;
 	public $pageRepositoryAccessor;
 	public $phraseDecoratorFactory;

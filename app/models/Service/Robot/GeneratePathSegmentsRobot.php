@@ -22,7 +22,6 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 	protected $pageRepositoryAccessor;
 	protected $locationRepositoryAccessor;
 	protected $rentalTypeRepositoryAccessor;
-	protected $rentalTagRepositoryAccessor;
 
 	public function injectDic(\Nette\DI\Container $dic) {
 		$this->routingPathSegmentRepositoryAccessor = $dic->routingPathSegmentRepositoryAccessor;
@@ -30,7 +29,6 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 		$this->pageRepositoryAccessor = $dic->pageRepositoryAccessor;
 		$this->locationRepositoryAccessor = $dic->locationRepositoryAccessor;
 		$this->rentalTypeRepositoryAccessor = $dic->rentalTypeRepositoryAccessor;
-		$this->rentalTagRepositoryAccessor = $dic->rentalTagRepositoryAccessor;
 	}
 
 
@@ -54,8 +52,7 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 		//$this->persistAtractionTypesSegments($languageList);
 		$this->persistLocationsSegments();
 		$this->persistRentalTypesSegments($languageList);
-		$this->persistTagsSegments($languageList);
-		
+
 		$this->rentalTypeRepositoryAccessor->get()->flush();
 	}
 
@@ -120,24 +117,6 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 				$entity->entityId = $type->id;
 
 				$this->rentalTypeRepositoryAccessor->get()->persist($entity);
-			}
-		}
-	}
-
-	protected function persistTagsSegments($languageList)
-	{
-
-		$tags = $this->rentalTagRepositoryAccessor->get()->findAll();
-		foreach ($languageList as $languageId => $language) {
-			foreach ($tags as $tag) {
-				$entity = $this->routingPathSegmentRepositoryAccessor->get()->createNew();
-				$entity->primaryLocation = NULL;
-				$entity->language = $language;
-				$entity->pathSegment = $this->translate($tag->name, $language);
-				$entity->type = PathSegment::TAG;
-				$entity->entityId = $tag->id;
-
-				$this->rentalTagRepositoryAccessor->get()->persist($entity);
 			}
 		}
 	}

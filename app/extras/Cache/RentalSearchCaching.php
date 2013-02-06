@@ -72,11 +72,6 @@ class RentalSearchCaching extends \Nette\Object {
 			$this->cacheContent[RentalSearchService::CRITERIA_RENTAL_TYPE][$rental->type->id][$rental->id] = $rental->id;
 		}
 
-		// Set Tags
-		foreach ($rental->tags as $key => $value) {
-			$this->cacheContent[RentalSearchService::CRITERIA_TAG][$value->id][$rental->id] = $rental->id;
-		}
-
 		// Set Max Capacity
 		if ($rental->maxCapacity) {
 			$t = $rental->maxCapacity >= RentalSearchService::CAPACITY_MAX ? RentalSearchService::CAPACITY_MAX : $rental->maxCapacity;

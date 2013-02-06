@@ -110,18 +110,6 @@ class ImportPhraseType extends BaseImport {
 			// ->setIldId(1)
 			->setCheckingRequired(NULL);
 
-		$this->createPhraseType('\Entity\Rental\Tag', 'name')
-			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED)
-			->setPluralVariationsRequired(1)
-			->setGenderRequired(0)
-			->setGenderVariationsRequired(1)
-			->setLocativesRequired(1)
-			->setPositionRequired(1)
-			// ->setHelpForTranslator('')
-			// ->setMonthlyBudget(0)
-			// ->setIldId(1)
-			->setCheckingRequired(NULL);
-
 		$this->createPhraseType('\Entity\Rental\AmenityType', 'name')
 			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED)
 			->setPluralVariationsRequired(0)

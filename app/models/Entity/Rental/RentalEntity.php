@@ -129,12 +129,6 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 	protected $amenities;
 
 	/**
-	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Rental\Tag", mappedBy="rentals")
-	 */
-	protected $tags;
-
-	/**
 	 * @var integer
 	 * @ORM\Column(type="integer", nullable=true)
 	 */
@@ -341,7 +335,6 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 		$this->urls = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->spokenLanguages = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->amenities = new \Doctrine\Common\Collections\ArrayCollection;
-		$this->tags = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->images = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->pricelistRows = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->pricelists = new \Doctrine\Common\Collections\ArrayCollection;
@@ -851,41 +844,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 	{
 		return $this->amenities;
 	}
-		
-	/**
-	 * @param \Entity\Rental\Tag
-	 * @return \Entity\Rental\Rental
-	 */
-	public function addTag(\Entity\Rental\Tag $tag)
-	{
-		if(!$this->tags->contains($tag)) {
-			$this->tags->add($tag);
-		}
-		$tag->addRental($this);
 
-		return $this;
-	}
-		
-	/**
-	 * @param \Entity\Rental\Tag
-	 * @return \Entity\Rental\Rental
-	 */
-	public function removeTag(\Entity\Rental\Tag $tag)
-	{
-		$this->tags->removeElement($tag);
-		$tag->removeRental($this);
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Rental\Tag[]
-	 */
-	public function getTags()
-	{
-		return $this->tags;
-	}
-		
 	/**
 	 * @param integer
 	 * @return \Entity\Rental\Rental
