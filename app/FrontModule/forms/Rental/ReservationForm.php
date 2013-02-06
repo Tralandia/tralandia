@@ -37,7 +37,7 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 
 	public function buildForm()
 	{
-		$this->addText('name');
+		$this->addText('name')->addRule(self::MAX_LENGTH , null , 4);
 		$this->addText('email');
 		$this->addText('from');
 		$this->addText('to');
