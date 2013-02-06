@@ -88,6 +88,28 @@ abstract class BasePresenter extends \BasePresenter {
 	}
 
 
+	public function actionSearchSuggestion($string)
+	{
+		if(strlen($string)) {
+			$locationRepository = $this->locationRepositoryAccessor->get();
+			$suggestLocations['counties'] = $locationRepository->findSuggestForCountries($string);
+			$suggestLocations['other'] = $locationRepository->findSuggestForLocalityAndRegion($string,
+				$this->primaryLocation);
+			$return = [];
+			/** @var $location \Entity\Location\Location */
+			foreach($suggestLocations as $groupName => $group) {
+				foreach($group as $location) {
+					$return[$groupName][] = [
+						'flag' => $location->getIso() ? '/images/flags/' . $location->getIso() . '.gif' : NULL,
+						'name' => $location->getName()->getTranslationText($this->language),
+					];
+				}
+			}
+			$this->sendJson($return);
+		}
+	}
+
+
 	public function createComponentBreadcrumb($name) {
 		
 //		return new \FrontModule\Breadcrumb\Breadcrumb($this, $name);
