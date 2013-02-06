@@ -10,7 +10,9 @@ class LocationRepository extends \Repository\BaseRepository {
 
 	/**
 	 * DataSource pre grid
-	 * @return Doctrine\ORM\QueryBuilder
+	 * @param $type
+	 *
+	 * @return \Doctrine\ORM\QueryBuilder
 	 */
 	public function getDefaultDataSource($type) {
 		return $this->_em->createQueryBuilder()
@@ -54,6 +56,31 @@ class LocationRepository extends \Repository\BaseRepository {
 		}
 
 		return $return;
+	}
+
+	public function findSuggestForCountries($search)
+	{
+		$qb = $this->_em->createQueryBuilder();
+		$qb->select('e')
+			->from($this->_entityName, 'e')
+			->leftJoin('e.type', 't')
+			->andWhere($qb->expr()->eq('t.slug', ':type'))->setParameter('type', 'country')
+			->andWhere($qb->expr()->like('e.slug', ':slug'))->setParameter('slug', '%'.$search.'%');
+
+		return $qb->getQuery()->getResult();
+	}
+
+	public function findSuggestForLocalityAndRegion($search, $location)
+	{
+		$qb = $this->_em->createQueryBuilder();
+		$qb->select('e')
+			->from($this->_entityName, 'e')
+			->leftJoin('e.type', 't')
+			->andWhere($qb->expr()->in('t.slug', ':type'))->setParameter('type', ['locality', 'region'])
+			->andWhere($qb->expr()->eq('e.parent', ':parent'))->setParameter('parent', $location)
+			->andWhere($qb->expr()->like('e.slug', ':slug'))->setParameter('slug', '%'.$search.'%');
+
+		return $qb->getQuery()->getResult();
 	}
 
 	public function getCountriesPhonePrefixes() {
