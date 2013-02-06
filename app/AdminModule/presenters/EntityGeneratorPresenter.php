@@ -129,21 +129,21 @@ class EntityGeneratorPresenter extends BasePresenter {
 
 				$targetEntity = $this->getEntityReflection($property->targetEntity);
 
-				$targetedEntityPropery = NULL;
+				$targetedEntityProperty = NULL;
 				if(isset($property->mappedBy)) {
-					$targetedEntityPropery = $this->getPropertyInfo($targetEntity->getProperty($property->mappedBy));
+					$targetedEntityProperty = $this->getPropertyInfo($targetEntity->getProperty($property->mappedBy));
 				} else if(isset($property->inversedBy)) {
-					$targetedEntityPropery = $this->getPropertyInfo($targetEntity->getProperty($property->inversedBy));
+					$targetedEntityProperty = $this->getPropertyInfo($targetEntity->getProperty($property->inversedBy));
 				}
 
 				if($property->association == ORM\ClassMetadataInfo::MANY_TO_ONE) {
 
 					if(isset($property->mappedBy)) {
-						$this->addMethod('todo', $newClass, $property, $targetedEntityPropery);						
+						$this->addMethod('todo', $newClass, $property, $targetedEntityProperty);
 					} else if(isset($property->inversedBy)) {
-						$this->addMethod('set', $newClass, $property, $targetedEntityPropery);
-						$this->addMethod('unset', $newClass, $property, $targetedEntityPropery);
-						$this->addMethod('get2', $newClass, $property, $targetedEntityPropery);
+						$this->addMethod('set', $newClass, $property, $targetedEntityProperty);
+						$this->addMethod('unset', $newClass, $property, $targetedEntityProperty);
+						$this->addMethod('get2', $newClass, $property, $targetedEntityProperty);
 					} else {
 						$this->addMethod('set', $newClass, $property, $targetEntity->name);
 						$this->addMethod('unset', $newClass, $property, $targetEntity->name);
@@ -154,54 +154,54 @@ class EntityGeneratorPresenter extends BasePresenter {
 				} else if($property->association == ORM\ClassMetadataInfo::MANY_TO_MANY) {
 					$collections[] = $property;
 
-					if($targetedEntityPropery->association == ORM\ClassMetadataInfo::MANY_TO_MANY) { 	// Many To Many Bi
+					if($targetedEntityProperty->association == ORM\ClassMetadataInfo::MANY_TO_MANY) { 	// Many To Many Bi
 						
 						if(isset($property->mappedBy)) {
-							$this->addMethod('add', $newClass, $property, $targetedEntityPropery);
-							$this->addMethod('remove', $newClass, $property, $targetedEntityPropery);							
-							$this->addMethod('get', $newClass, $property, $targetedEntityPropery);
+							$this->addMethod('add', $newClass, $property, $targetedEntityProperty);
+							$this->addMethod('remove', $newClass, $property, $targetedEntityProperty);
+							$this->addMethod('get', $newClass, $property, $targetedEntityProperty);
 						} else if(isset($property->inversedBy)) {
-							$this->addMethod('add2', $newClass, $property, $targetedEntityPropery);
-							$this->addMethod('remove2', $newClass, $property, $targetedEntityPropery);							
-							$this->addMethod('get', $newClass, $property, $targetedEntityPropery);
+							$this->addMethod('add2', $newClass, $property, $targetedEntityProperty);
+							$this->addMethod('remove2', $newClass, $property, $targetedEntityProperty);
+							$this->addMethod('get', $newClass, $property, $targetedEntityProperty);
 						} else {
-							$this->addMethod('todo', $newClass, $property, $targetedEntityPropery);
+							$this->addMethod('todo', $newClass, $property, $targetedEntityProperty);
 						}
 
-					} else if($targetedEntityPropery->association == ORM\ClassMetadataInfo::ONE_TO_MANY){
+					} else if($targetedEntityProperty->association == ORM\ClassMetadataInfo::ONE_TO_MANY){
 						if(isset($property->mappedBy)) {
-							$this->addMethod('todo', $newClass, $property, $targetedEntityPropery);
+							$this->addMethod('todo', $newClass, $property, $targetedEntityProperty);
 						} else if(isset($property->inversedBy)) {					
-							$this->addMethod('get', $newClass, $property, $targetedEntityPropery);
+							$this->addMethod('get', $newClass, $property, $targetedEntityProperty);
 						} else {
-							$this->addMethod('todo', $newClass, $property, $targetedEntityPropery);
+							$this->addMethod('todo', $newClass, $property, $targetedEntityProperty);
 						}
 					} else {
-						$this->addMethod('todo', $newClass, $property, $targetedEntityPropery);
+						$this->addMethod('todo', $newClass, $property, $targetedEntityProperty);
 					}
 
 				} else if($property->association == ORM\ClassMetadataInfo::ONE_TO_MANY){
 					$collections[] = $property;
 
-					if($targetedEntityPropery->association == ORM\ClassMetadataInfo::MANY_TO_ONE) { 	// One To Many Bi
+					if($targetedEntityProperty->association == ORM\ClassMetadataInfo::MANY_TO_ONE) { 	// One To Many Bi
 						if(isset($property->mappedBy)) {
-							$this->addMethod('add3', $newClass, $property, $targetedEntityPropery);
-							$this->addMethod('remove3', $newClass, $property, $targetedEntityPropery);
-							$this->addMethod('get', $newClass, $property, $targetedEntityPropery);
+							$this->addMethod('add3', $newClass, $property, $targetedEntityProperty);
+							$this->addMethod('remove3', $newClass, $property, $targetedEntityProperty);
+							$this->addMethod('get', $newClass, $property, $targetedEntityProperty);
 						} else if(isset($property->inversedBy)) {
-							$this->addMethod('add2', $newClass, $property, $targetedEntityPropery);
-							$this->addMethod('remove2', $newClass, $property, $targetedEntityPropery);
-							$this->addMethod('get', $newClass, $property, $targetedEntityPropery);
+							$this->addMethod('add2', $newClass, $property, $targetedEntityProperty);
+							$this->addMethod('remove2', $newClass, $property, $targetedEntityProperty);
+							$this->addMethod('get', $newClass, $property, $targetedEntityProperty);
 						} else {
-							$this->addMethod('todo', $newClass, $property, $targetedEntityPropery);
+							$this->addMethod('todo', $newClass, $property, $targetedEntityProperty);
 						}						
 					} else {
-						$this->addMethod('todo', $newClass, $property, $targetedEntityPropery);
+						$this->addMethod('todo', $newClass, $property, $targetedEntityProperty);
 					}
 
 				} else if($property->association == ORM\ClassMetadataInfo::ONE_TO_ONE){
 					
-					if($targetedEntityPropery == NULL) {												// One To One Uni
+					if($targetedEntityProperty == NULL) {												// One To One Uni
 						if($targetEntity->name == 'Entity\Dictionary\Phrase') {
 							$this->addMethod('setPhrase', $newClass, $property, $targetEntity->name);
 							$this->addMethod('get2', $newClass, $property, $targetEntity->name);
@@ -209,19 +209,19 @@ class EntityGeneratorPresenter extends BasePresenter {
 							$this->addMethod('set', $newClass, $property, $targetEntity->name);
 							$this->addMethod('get2', $newClass, $property, $targetEntity->name);
 						}
-					}else if($targetedEntityPropery->association == ORM\ClassMetadataInfo::ONE_TO_ONE){
+					}else if($targetedEntityProperty->association == ORM\ClassMetadataInfo::ONE_TO_ONE){
 						if(isset($property->mappedBy)) {
-							$this->addMethod('setMapped', $newClass, $property, $targetedEntityPropery);
-							$this->addMethod('unsetMapped', $newClass, $property, $targetedEntityPropery);
-							$this->addMethod('get2', $newClass, $property, $targetedEntityPropery);
+							$this->addMethod('setMapped', $newClass, $property, $targetedEntityProperty);
+							$this->addMethod('unsetMapped', $newClass, $property, $targetedEntityProperty);
+							$this->addMethod('get2', $newClass, $property, $targetedEntityProperty);
 						} else if(isset($property->inversedBy)) {
-							$this->addMethod('setInverse', $newClass, $property, $targetedEntityPropery);
-							$this->addMethod('get2', $newClass, $property, $targetedEntityPropery);
+							$this->addMethod('setInverse', $newClass, $property, $targetedEntityProperty);
+							$this->addMethod('get2', $newClass, $property, $targetedEntityProperty);
 						} else {
-							$this->addMethod('todo', $newClass, $property, $targetedEntityPropery);
+							$this->addMethod('todo', $newClass, $property, $targetedEntityProperty);
 						}						
 					} else {
-						$this->addMethod('todo', $newClass, $property, $targetedEntityPropery);
+						$this->addMethod('todo', $newClass, $property, $targetedEntityProperty);
 					}
 
 				} else {
@@ -373,17 +373,17 @@ class EntityGeneratorPresenter extends BasePresenter {
 		return \Nette\ArrayHash::from($return);
 	}
 
-	public function addMethod($type, $newClass, $property, $tagetPropery) {
-		if(is_string($tagetPropery)) {
-			if(Strings::startsWith($tagetPropery, 'Entity'))
-				$tagetProperyClass = '\\'.$tagetPropery;
+	public function addMethod($type, $newClass, $property, $targetProperty) {
+		if(is_string($targetProperty)) {
+			if(Strings::startsWith($targetProperty, 'Entity'))
+				$targetPropertyClass = '\\'.$targetProperty;
 			else 
-				$tagetProperyClass = $tagetPropery;
-		} else if($tagetPropery instanceof \Nette\ArrayHash){
-			$tagetProperyClass = '\\'.$tagetPropery->class;
+				$targetPropertyClass = $targetProperty;
+		} else if($targetProperty instanceof \Nette\ArrayHash){
+			$targetPropertyClass = '\\'.$targetProperty->class;
 		} else {
-			debug($type, $newClass, $property, $tagetPropery);
-			$tagetProperyClass = '#todo';
+			debug($type, $newClass, $property, $targetProperty);
+			$targetPropertyClass = '#todo';
 		}
 
 		$snippet = \Nette\ArrayHash::from(array());
@@ -458,7 +458,7 @@ class EntityGeneratorPresenter extends BasePresenter {
 
 		// d($methodName->prefix.$methodName->name, $this->skipMethods);
 		if(in_array($methodName->prefix.$methodName->name, $this->skipMethods)) {
-			return false;
+			return FALSE;
 		}
 		$method = $newClass->addMethod($methodName->prefix.$methodName->name);
 
@@ -467,58 +467,58 @@ class EntityGeneratorPresenter extends BasePresenter {
 
 		} else {
 			$firstParameter = $method->addParameter($property->singular);
-			if(!in_array($tagetProperyClass, self::$skipTypeHintIn)) {
-				$firstParameter->typeHint = $tagetProperyClass;
+			if(!in_array($targetPropertyClass, self::$skipTypeHintIn)) {
+				$firstParameter->typeHint = $targetPropertyClass;
 			}
 		}
 
 		$body = array();
 		if($snippet->type == 1) {
-			$method->documents[] = sprintf('@param %s', $tagetProperyClass);
+			$method->documents[] = sprintf('@param %s', $targetPropertyClass);
 			$body[] = sprintf('if(%s$this->%s->contains($%s)) {', ($methodName->prefix == 'add' ? '!' : NULL), $property->name, $firstParameter->name);
 			$body[] = sprintf('%s$this->%s->%s($%s);', "\t", $property->name, $snippet->var, $firstParameter->name);
 			$body[] = '}';			
 			if($snippet->var2 === TRUE) {
-				$body[] = sprintf('$%s->%s%s($this);', $parameter, $type, $tagetPropery->singularFu);
+				$body[] = sprintf('$%s->%s%s($this);', $parameter, $type, $targetProperty->singularFu);
 			} else if($snippet->var2 === FALSE){
-				$body[] = sprintf('$%s->set%s($this);', $parameter, $tagetPropery->nameFu);
+				$body[] = sprintf('$%s->set%s($this);', $parameter, $targetProperty->nameFu);
 			}
 		} else if($snippet->type == 9) {
-			$method->documents[] = sprintf('@param %s', $tagetProperyClass);
+			$method->documents[] = sprintf('@param %s', $targetPropertyClass);
 			$body[] = sprintf('$this->%s->%s($%s);', $property->name, $snippet->var, $firstParameter->name);
 			if($snippet->var2 === TRUE) {
-				$body[] = sprintf('$%s->%s%s($this);', $parameter, $type, $tagetPropery->singularFu);
+				$body[] = sprintf('$%s->%s%s($this);', $parameter, $type, $targetProperty->singularFu);
 			} else if($snippet->var2 === FALSE){
-				$body[] = sprintf('$%s->unset%s();', $parameter, $tagetPropery->nameFu);
+				$body[] = sprintf('$%s->unset%s();', $parameter, $targetProperty->nameFu);
 			}
 		} else if($snippet->type == 2) {
 			if($type == 'setInverse') {
 				$method->documents[] = sprintf('@warning Bacha inverzna strana!');
 			}
-			$method->documents[] = sprintf('@param %s', $tagetProperyClass);
+			$method->documents[] = sprintf('@param %s', $targetPropertyClass);
 			$body[] = sprintf('$this->%s = $%s;', $property->name, $property->name);
 			if($type == 'setMapped') {
-				$body[] = sprintf('$%s->set%s($this);', $parameter, $tagetPropery->nameFu);
+				$body[] = sprintf('$%s->set%s($this);', $parameter, $targetProperty->nameFu);
 			}
 		} else if($snippet->type == 3) {
-			$method->documents[] = sprintf('@return %s|NULL', $tagetProperyClass);
+			$method->documents[] = sprintf('@return %s|NULL', $targetPropertyClass);
 			$body[] = sprintf('return $this->%s;', $property->name, $property->name);
 		} else if($snippet->type == 4) {
 			$method->documents[] = sprintf('@todo %s', $property->name);
 		} else if($snippet->type == 5) {
-			$method->documents[] = sprintf('@param %s', $tagetProperyClass);
+			$method->documents[] = sprintf('@param %s', $targetPropertyClass);
 			$body[] = sprintf('$this->%s = $%s;', $property->name, $firstParameter->name);
 		} else if($snippet->type == 6) {
-			$method->documents[] = sprintf('@param %s', $tagetProperyClass);
+			$method->documents[] = sprintf('@param %s', $targetPropertyClass);
 			$body[] = sprintf('return $%s->add%s($this);', $firstParameter->name, $property->singularFu);
 		} else if($snippet->type == 7) {
 			$method->documents[] = sprintf('@return \Doctrine\Common\Collections\ArrayCollection|%s[]',
-				$tagetProperyClass);
+				$targetPropertyClass);
 			$body[] = sprintf('return $this->%s;', $property->name, $property->name);
 		} else if($snippet->type == 8) {
 			$body[] = sprintf('$this->%s = NULL;', $property->name);
 			if($type == 'unsetMapped') {
-				$body[] = sprintf('$%s->set%s();', $parameter, $tagetPropery->nameFu);
+				$body[] = sprintf('$%s->set%s();', $parameter, $targetProperty->nameFu);
 			}
 		}
 

@@ -18,7 +18,6 @@ class ImportPathSegments extends BaseImport {
 	const TYPE_ATTRACTION_TYPE = 4;
 	const TYPE_LOCATION = 6;
 	const TYPE_RENTAL_TYPE = 8;
-	const TYPE_TAG = 10;
 
 	public function doImport($subsection = NULL) {
 

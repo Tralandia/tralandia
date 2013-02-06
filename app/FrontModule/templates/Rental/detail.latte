@@ -141,16 +141,6 @@
 						</div>
 				   </li>	
 			   {* {/if} *}
-			   {if $rental->tags}
-				   <li class="tag">
-				   <strong>{_o1014}</strong>
-					   <div class="content">
-						{foreach $rental->tags as $tag}					
-							{_$tag->name}
-						{/foreach}
-					</div>
-				   </li>
-			   {/if}
 			   {var $ownerAvailability = $rental->getAmenitiesByType(array('owner-availability'))}
 			  {* {if $ownerAvailability} *}
 			   <li class="owner-availability">

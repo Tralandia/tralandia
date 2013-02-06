@@ -157,14 +157,6 @@ class RentalService extends Service\BaseService
 			$rank['missing'][] = 'amenities';
 		}
 
-		// Tags
-		$t = count($r->tags);
-		if ($t > 0) {
-			$rank['points'] += ($t > 5 ? 5 : $t);
-		} else {
-			$rank['missing'][] = 'tags';
-		}
-
 		// Spoken Languages
 		$t = count($r->spokenLanguages);
 		if ($t > 0) {

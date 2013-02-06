@@ -36,12 +36,6 @@ class SeoUrl extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Rental\Amenity")
-	 */
-	protected $tag;
-
-	/**
-	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="Entity\Medium\Medium", mappedBy="seoUrl", cascade={"persist", "remove"})
 	 */
 	protected $media;
@@ -172,35 +166,6 @@ class SeoUrl extends \Entity\BaseEntity {
 	public function getPage()
 	{
 		return $this->page;
-	}
-		
-	/**
-	 * @param \Entity\Rental\Amenity
-	 * @return \Entity\Seo\SeoUrl
-	 */
-	public function setTag(\Entity\Rental\Amenity $tag)
-	{
-		$this->tag = $tag;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Seo\SeoUrl
-	 */
-	public function unsetTag()
-	{
-		$this->tag = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Rental\Amenity|NULL
-	 */
-	public function getTag()
-	{
-		return $this->tag;
 	}
 		
 	/**

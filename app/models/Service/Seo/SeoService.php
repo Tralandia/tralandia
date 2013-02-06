@@ -37,10 +37,6 @@ class SeoService extends Nette\Object {
 				'case' => \Entity\Language::LOCATIVE,
 			),
 		),
-		'tag' => array(
-			'rentalTag',
-			'name',
-		),
 		'rentalTypePlural' => array(
 			'rentalType',
 			'name',
@@ -116,16 +112,6 @@ class SeoService extends Nette\Object {
 				foreach (\Routers\FrontRoute::$pathSegmentTypes as $key => $value) {
 					if ($value == 2) continue;
 					if ($this->existsParameter($key)) {
-						if ($key == 'rentalTag') {
-							$tagName = $this->getParameter($key)->name;
-							$tagTranslation = $tagName->getTranslation($this->getParameter('language'));
-							if ($tagTranslation->position == \Entity\Phrase\Translation::BEFORE) {
-								$key = \Entity\Phrase\Translation::BEFORE;
-							} else {
-								$key = \Entity\Phrase\Translation::AFTER;
-							}
-							$key = 'tag'.$key;
-						}
 						$hash[] = '/'.$key;
 					}
 				}
