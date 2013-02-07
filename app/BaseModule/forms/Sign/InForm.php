@@ -20,11 +20,15 @@ class InForm extends \BaseModule\Forms\BaseForm {
 
 	}
 
-	public function onSuccess(In $form) {
+	public function onSuccess(InForm $form) {
 		$values = $form->getValues();
 		try {
-			$this->getPresenter()->getUser()->setExpiration('+ 30 days', FALSE);
-			$this->getPresenter()->getUser()->login($values->login, $values->password);
+			$user = $this->getPresenter()->getUser();
+			$user->setExpiration('+ 30 days', FALSE);
+			$user->login($values->login, $values->password);
+			if($homepage = $user->getIdentity()){
+				$this->presenter->redirect($homepage);
+			}
 			$this->presenter->redirect('this');
 		} catch(\Nette\Security\AuthenticationException $e) {
 			$form->addError('#zle prihlasovacie udaje');
