@@ -1,0 +1,10 @@
+services:
+
+	# forgot password form
+	foo:
+		class: TestListener
+		tags: [kdyby.subscriber]
+
+
+	- [class: Listener\ForgotPasswordEmailListener, tags: [kdyby.subscriber]]
+
