@@ -20,8 +20,6 @@ parameters:
 	envOptions:
 		sendEmail: TRUE
 
-	editor: 'txmt://open/?url=file://%file&line=%line'
-
 	router:
 		mode: development
 
