@@ -3,6 +3,10 @@
 {/define #text}
 
 
+{*
+	Base Control -------------------------------------------
+	@param $control \Nette\Forms\Controls\BaseControl
+*}
 {define #baseControl}
 <div class="control-group ">
     <div class="form-label">
@@ -19,6 +23,10 @@
 {/define #baseControl}
 
 
+{*
+	Errors -------------------------------------------
+	@param $errors array
+*}
 {define #controlErrors}
 <div class="control-error">
 	{foreach $errors as $error}{$error}{/foreach}
@@ -26,6 +34,10 @@
 {/define #controlErrors}
 
 
+{*
+	Price Container -------------------------------------------
+	@param $control \Extras\Forms\Container\PriceContainer
+*}
 {define #price}
 {var
 	$container = $control;
@@ -48,6 +60,10 @@
 {/define #price}
 
 
+{*
+	Address Container -------------------------------------------
+	@param $control \Extras\Forms\Container\AddressContainer
+*}
 {define #address}
 {var
 	$container = $control;
@@ -106,13 +122,16 @@
 {/define #address}
 
 
+{*
+	Phrase Container -------------------------------------------
+	@param $control \Extras\Forms\Container\PhraseContainer
+*}
 {define #phrase}
 {var
 	$container = $control;
 	$phrase = $container->getPhrase();
 }
 {?unset($control)}
-
 <div class="row">
 
     <div class="span12">
@@ -152,7 +171,7 @@
 
             </div>
             <div class="span6">
-			{include #translationVatiations, container => $container['fromVariations']}
+			{include #translationVatiations, control => $container['fromVariations']}
             </div>
         </div>
 
@@ -167,7 +186,7 @@
         <label for="phraseLanguage"><b>TRANSLATION | SLOVAK:</b></label>
 	</div>
     <div class="span6">
-		{include #translationVatiations, container => $languageContainer['variations']}
+		{include #translationVatiations, control => $languageContainer['variations']}
 
         <div class="row">
             <div class="span2" n:if="$phrase->type->genderRequired">
@@ -191,11 +210,17 @@
 
 
 
+{*
+	Translation Variations Container -------------------------------------------
+	@param $control \Extras\Forms\Container\TranslationVariationsContainer
+*}
 {define #translationVatiations}
 {var
+	$container = $control;
 	$phrase = $container->getPhrase();
 	$language = $container->getLanguage();
 }
+{?unset($control)}
 <table class="phraseTable table-striped table">
     <tr>
 		{if $phrase->type->pluralVariationsRequired}
