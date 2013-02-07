@@ -427,6 +427,8 @@ App.prototype.closeForgottenPasswordForm = function(){
 ****************************************************************************************************/
 
 
+
+
 $(document).ready(function(){
 
 //$.nette.init();
@@ -439,7 +441,9 @@ $(document).ready(function(){
 
 	$('.traMapControll').traMapControll();
 
-	$('#phraseForm').phraseForm();
+	$('.phraseForm').phraseForm();
+
+	$('.control-photo').galleryControl();
 
 	/* register listeners */
 	/* UI toogle function */

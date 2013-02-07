@@ -49,6 +49,11 @@ parameters:
 					- jQuery/jquery.js
 					- Front/js/netteForms.js
 					#- Front/js/fancy-checkboxes.js
+					- Front/js/assets/jquery-file-upload/js/vendor/jquery.ui.widget.js
+					- Front/js/assets/jquery-file-upload/js/jquery.iframe-transport.js
+					- Front/js/assets/jquery-file-upload/js/jquery.fileupload.js
+
+
 					- Front/js/bootstrap-dropdown.js					
 					- Front/js/bootstrap-modal.js
 					- Front/js/bootstrap-tab.js
