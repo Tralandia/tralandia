@@ -54,19 +54,20 @@ Nette.addError = function(elem, message) {
 			var self = this;
 			var $self = $(this);
 
-			$self.find('#phraseLanguage').on('change',function(){
-				
+			var current = $self.find('#phraseLanguage').val();
+				current = '#'+current+'_phrase';
+				$(current).removeClass('hide');
+			//console.log(current);
 
+			$self.find('#phraseLanguage').on('change',function(){
 
 				var visibleID = '#'+$(this).val()+'_phrase';
-					console.log(visibleID);
+					//console.log(visibleID);
 
 					$('#phraseTranslateCurrent').html($('#phraseLanguage option:selected').text());
 					$self.find('.phraseControll').addClass('hide');
 					$(visibleID).removeClass('hide');
-			})
-
-
+			});
 
 		});
 	};

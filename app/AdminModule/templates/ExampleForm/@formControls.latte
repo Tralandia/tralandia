@@ -3,10 +3,6 @@
 {/define #text}
 
 
-{*
-	Base Control -------------------------------------------
-	@param $control \Nette\Forms\Controls\BaseControl
-*}
 {define #baseControl}
 <div class="control-group ">
     <div class="form-label">
@@ -23,10 +19,6 @@
 {/define #baseControl}
 
 
-{*
-	Errors -------------------------------------------
-	@param $errors array
-*}
 {define #controlErrors}
 <div class="control-error">
 	{foreach $errors as $error}{$error}{/foreach}
@@ -34,10 +26,6 @@
 {/define #controlErrors}
 
 
-{*
-	Price Container -------------------------------------------
-	@param $control \Extras\Forms\Container\PriceContainer
-*}
 {define #price}
 {var
 	$container = $control;
@@ -60,10 +48,6 @@
 {/define #price}
 
 
-{*
-	Address Container -------------------------------------------
-	@param $control \Extras\Forms\Container\AddressContainer
-*}
 {define #address}
 {var
 	$container = $control;
@@ -122,105 +106,94 @@
 {/define #address}
 
 
-{*
-	Phrase Container -------------------------------------------
-	@param $control \Extras\Forms\Container\PhraseContainer
-*}
 {define #phrase}
 {var
 	$container = $control;
 	$phrase = $container->getPhrase();
 }
 {?unset($control)}
-<div class="row">
+<div class="row-fluid phraseForm">
 
     <div class="span12">
+    
 
-        <div class="row">
+    <div class="span2">
+        <label for="phraseType"><b>{label $container['phraseType'] /}</b></label>
+        {input $container['phraseType'] , class => 'select2'}       
+    </div>
 
-            <div class="span2">
-                {label $container['phraseType'] /}
-				{input $container['phraseType']}
-            </div>
 
-            <div class="span2">
-				{label $container['sourceLanguage'] /}
-				{input $container['sourceLanguage'], class => 'span2'}
-            </div>
+    <div class="span3">
+        <label for="sourceLanguage"><b>{label $container['sourceLanguage'] /}</b></label>
+        {input $container['sourceLanguage'], class => 'select2'}
+    </div>
 
-            <div class="span2">
-				{label $container['ready'] /}
-				{input $container['ready']}
-            </div>
+    <div class="span2">
+        <label class="topLabel checkbox">
+          {input $container['ready']}
+          {label $container['ready'] /}
+        </label>
+        <label for="phraseLanguage"><b>Translation | <span id="phraseTranslateCurrent"></b></label>
+    </div>
+    <div class="span2">
+        <label class="topLabel checkbox">
+          {input $container['corrected']}
+          {label $container['corrected'] /}
+        </label>
 
-            <div class="span2">
-				{label $container['corrected'] /}
-				{input $container['corrected']}
-            </div>
-        </div>
+        {input $container['changeToLanguage'] , class => 'select2 pull-right' , id => 'phraseLanguage'} 
+
+    </div>  
 
     </div>
     <hr />
     <div class="span6">
-
-        <div class="row">
-            <div class="span4">
-                <label for="phraseLanguage"><b>{_$container->getFromLanguage()->getName()}</b></label>
-            </div>
-            <div class="span2">
-
-            </div>
-            <div class="span6">
-			{include #translationVatiations, control => $container['fromVariations']}
-            </div>
-        </div>
+        
+    {include #translationVatiations, container => $container['fromVariations']}
 
     </div>
-
-    <div class="span2">
-		{input $container['changeToLanguage'] , class => 'span2'}
-    </div>
-	{foreach $container['to']->getComponents() as $languageContainer}
-
-        <div class="span4">
-        <label for="phraseLanguage"><b>TRANSLATION | SLOVAK:</b></label>
-	</div>
     <div class="span6">
-		{include #translationVatiations, control => $languageContainer['variations']}
 
-        <div class="row">
-            <div class="span2" n:if="$phrase->type->genderRequired">
-				{label $languageContainer['gender'] /}
-				{input $languageContainer['gender'] , class => 'span2'}
-            </div>
+        
+    {foreach $container['to']->getComponents() as $languageContainer}
+    {var $language = $languageContainer['variations']->getLanguage()}
+    <div class="phraseControll hide" id="{$language->getId()}_phrase"> 
 
-            <div class="span2" n:if="$phrase->type->positionRequired">
-				{label $languageContainer['position'] /}
-				{input $languageContainer['position'] , class => 'span2'}
-            </div>
+
+        {include #translationVatiations, container => $languageContainer['variations']}
+
+        <div class="pull-left">
+        <label for="phraseGender"><b>{label $languageContainer['gender'] /}</b></label>
+        {input $languageContainer['gender'] , class => 'select2'}
         </div>
 
+        <div class="pull-right">
+        <label for="phrasePosition"><b>{label $languageContainer['position'] /}</b></label> 
+        {input $languageContainer['position'] , class => 'select2'}
+        </div>
+        <div class="clearfix"></div>
+
+
+
     </div>
-	{/foreach}
+    {/foreach}
+
+
+    </div>
 
 </div>
+
 
 
 {/define #phrase}
 
 
 
-{*
-	Translation Variations Container -------------------------------------------
-	@param $control \Extras\Forms\Container\TranslationVariationsContainer
-*}
 {define #translationVatiations}
 {var
-	$container = $control;
 	$phrase = $container->getPhrase();
 	$language = $container->getLanguage();
 }
-{?unset($control)}
 <table class="phraseTable table-striped table">
     <tr>
 		{if $phrase->type->pluralVariationsRequired}

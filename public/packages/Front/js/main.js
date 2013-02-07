@@ -441,7 +441,7 @@ $(document).ready(function(){
 
 	$('.traMapControll').traMapControll();
 
-	$('#phraseForm').phraseForm();
+	$('.phraseForm').phraseForm();
 
 	$('.control-photo').galleryControl();
 
