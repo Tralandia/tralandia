@@ -165,46 +165,17 @@ Nette.addError = function(elem, message) {
 	};
 
 	$.traMapControll.ajax = function(url,data,callback){
-		/*
+
 		$.ajax({
 			  type: "POST",
 			  url: url,
 			  data: data,
 			  dataType: 'json',
-			}).done(callback);	
-	*/
+			}).done(callback);
+
 
 		console.log(data);
 
-		data = {
-			status: false,
-			elements: {
-				address: {
-					status: false,
-					value: 'ajax q value',
-					message: 'ajax error mesage'
-				},
-				locality: {
-					status: false,
-					value: 'ajax q value',
-					message: 'ajax error mesage'
-				},
-				postalCode: {
-					status: false,
-					value: 'ajax q value',
-					message: 'ajax error mesage'
-				},
-				location: {
-					status: false,
-					value: 'ajax q value',
-					message: 'ajax error mesage'
-				}
-			},
-			gps: {
-				lat: '48.166326426',
-				lng: '17.102033625'
-			}
-		};
 
 		callback(data);
 
@@ -264,7 +235,7 @@ Nette.addError = function(elem, message) {
 
 		p.find('input[type=text] , select , input[type=hidden]').each(function(){
 			// nette validation
-			var inputName = $(this).attr('name');
+			var inputName = $(this).attr('data-name');
 
 			if(typeof inputName != 'undefined'){
 
@@ -296,18 +267,17 @@ Nette.addError = function(elem, message) {
 			// render map and add map listener
 			var $mapDiv = $self.find('div.mapRender');
 
-			var $inputLat = $self.find('[name="gpsLat"]');
-			var $inputLng = $self.find('[name="gpsLng"]');
+			var $inputLat = $self.find('input.latitude');
+			var $inputLng = $self.find('input.longitude');
 
-
+            var zoom = $(this).attr('data-zoom');
 				var coordinates = $mapDiv.attr('data-value').split(',');
-				var zoomVal = 4;
 				var lat = parseFloat(coordinates[0]);
 				var lng = parseFloat(coordinates[1]);
 
 				var myLatlng = new google.maps.LatLng(lat,lng);
 				var mapOptions = {
-				  zoom: zoomVal,
+				  zoom: zoom,
 				  scrollwheel: false,
 				  center: myLatlng,
 				  mapTypeId: google.maps.MapTypeId.ROADMAP
