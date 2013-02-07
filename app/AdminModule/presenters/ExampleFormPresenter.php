@@ -13,11 +13,13 @@ class ExampleFormPresenter extends BasePresenter {
 	 * @var \Repository\Location\LocationRepository
 	 */
 	protected $locationRepository;
+	protected $languageRepository;
 	protected $addressRepository;
 
 	public function injectDic(\Nette\DI\Container $dic) {
 		$this->phraseRepositoryAccessor = $dic->phraseRepositoryAccessor;
 		$this->locationRepository = $dic->locationRepositoryAccessor->get();
+		$this->languageRepository = $dic->languageRepositoryAccessor->get();
 		$this->addressRepository = $dic->contactAddressRepositoryAccessor->get();
 	}
 
@@ -42,7 +44,7 @@ class ExampleFormPresenter extends BasePresenter {
 			'Small Mammals' => [200 => 'Prairie dog', 'Fruit bat', 'Long-nosed bat', 'American porcupine',
 				'Nine banded armadillo'],
 		];
-		$phrase = $this->phraseRepositoryAccessor->get()->find(1);
+		$phrase = $this->phraseRepositoryAccessor->get()->find(1503);
 
 		// -------------------- FIELDS --------------------
 		$form->addText('text', 'Text')
@@ -58,6 +60,9 @@ class ExampleFormPresenter extends BasePresenter {
 		$address = $this->addressRepository->find(1);
 		$form['address'] = new \Extras\Forms\Container\AddressContainer($locations, $address);
 		$form['address']->setDefaultValues();
+
+		$form['phrase'] = new \Extras\Forms\Container\PhraseContainer($phrase, $this->languageRepository);
+		$form['phrase']->setDefaultValues();
 /*
 		$form->addTextArea('textArea', 'Text Area')
 			->setRequired();

@@ -3,6 +3,29 @@
 {/define #text}
 
 
+{define #baseControl}
+<div class="control-group ">
+    <div class="form-label">
+		{label $control /}
+        <small>{$control->getOption('description')}</small>
+    </div>
+    <div class="controls">
+		{input $control}
+        <i class="validation"></i>
+	{include #controlErrors, errors => $control->getErrors()}
+    </div>
+    <div class="clearfix"></div>
+</div>
+{/define #baseControl}
+
+
+{define #controlErrors}
+<div class="control-error">
+	{foreach $errors as $error}{$error}{/foreach}
+</div>
+{/define #controlErrors}
+
+
 {define #price}
 {var
 	$container = $control;
@@ -83,24 +106,121 @@
 {/define #address}
 
 
-{define #baseControl}
-<div class="control-group ">
-    <div class="form-label">
-        {label $control /}
-        <small>{$control->getOption('description')}</small>
+{define #phrase}
+{var
+	$container = $control;
+	$phrase = $container->getPhrase();
+}
+{?unset($control)}
+
+<div class="row">
+
+    <div class="span12">
+
+        <div class="row">
+
+            <div class="span2">
+                {label $container['phraseType'] /}
+				{input $container['phraseType']}
+            </div>
+
+            <div class="span2">
+				{label $container['sourceLanguage'] /}
+				{input $container['sourceLanguage'], class => 'span2'}
+            </div>
+
+            <div class="span2">
+				{label $container['ready'] /}
+				{input $container['ready']}
+            </div>
+
+            <div class="span2">
+				{label $container['corrected'] /}
+				{input $container['corrected']}
+            </div>
+        </div>
+
     </div>
-    <div class="controls">
-        {input $control}
-        <i class="validation"></i>
-		{include #controlErrors, errors => $control->getErrors()}
+    <hr />
+    <div class="span6">
+
+        <div class="row">
+            <div class="span4">
+                <label for="phraseLanguage"><b>{_$container->getFromLanguage()->getName()}</b></label>
+            </div>
+            <div class="span2">
+
+            </div>
+            <div class="span6">
+			{include #translationVatiations, container => $container['fromVariations']}
+            </div>
+        </div>
+
     </div>
-    <div class="clearfix"></div>
+
+    <div class="span2">
+		{input $container['changeToLanguage'] , class => 'span2'}
+    </div>
+	{foreach $container['to']->getComponents() as $languageContainer}
+
+        <div class="span4">
+        <label for="phraseLanguage"><b>TRANSLATION | SLOVAK:</b></label>
+	</div>
+    <div class="span6">
+		{include #translationVatiations, container => $languageContainer['variations']}
+
+        <div class="row">
+            <div class="span2" n:if="$phrase->type->genderRequired">
+				{label $languageContainer['gender'] /}
+				{input $languageContainer['gender'] , class => 'span2'}
+            </div>
+
+            <div class="span2" n:if="$phrase->type->positionRequired">
+				{label $languageContainer['position'] /}
+				{input $languageContainer['position'] , class => 'span2'}
+            </div>
+        </div>
+
+    </div>
+	{/foreach}
+
 </div>
-{/define #baseControl}
 
 
-{define #controlErrors}
-<div class="control-error">
-	{foreach $errors as $error}{$error}{/foreach}
-</div>
-{/define #controlErrors}
+{/define #phrase}
+
+
+
+{define #translationVatiations}
+{var
+	$phrase = $container->getPhrase();
+	$language = $container->getLanguage();
+}
+<table class="phraseTable table-striped table">
+    <tr>
+		{if $phrase->type->pluralVariationsRequired}
+            <th>Count</th>
+		{/if}
+		{if $phrase->type->genderVariationsRequired}
+			{foreach $language->genders as $genderName}
+                <th>{$genderName}</th>
+			{/foreach}
+		{/if}
+    </tr>
+	{foreach $container->getComponents() as $plural}
+        <tr>
+			{if $phrase->type->pluralVariationsRequired}
+                <td>{$language->plurals[$plural->getName()]['name']}</td>
+			{/if}
+			{foreach $plural->getComponents() as $genders}
+                <td>
+					{foreach $genders->getComponents() as $gender}
+						{$gender->getControl()}
+					{/foreach}
+                </td>
+			{/foreach}
+        </tr>
+	{/foreach}
+</table>
+
+{/define #translationVatiations}
