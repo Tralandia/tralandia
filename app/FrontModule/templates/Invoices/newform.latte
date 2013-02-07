@@ -608,7 +608,7 @@ $(function(){
 
 <div class="span9">
 	<div class="innerPadding baseRadius baseBorder innerPaddingRitgh overflow">
-		<div id="content" class="nopadding">
+		<div id="content" class="nopadding" >
 
 				<div class="row-fluid fieldset">					
 					<div class="span12">						
@@ -616,52 +616,49 @@ $(function(){
 					</div>
 				</div>
 		
+			<div class="control-photo"><!-- controll photo start -->
 
 				<div class="row-fluid">
 
+
 					<div class="span12">
-						<ul class="photos">
-
-							<li>
-								<img src="http://www.tralandia.sk/u/01/___t_13220628889049.png">
-								<a href="#">Zmazat</a>
-							</li>
-
-							<li>
-								<img src="http://www.tralandia.sk/u/01/___t_13220628967186.png">
-								<a href="#">Zmazat</a>
-							</li>
-
-							<li>
-								<img src="http://www.tralandia.sk/u/01/___t_13220628593348.png">
-								<a href="#">Zmazat</a>
-							</li>
-
-							<li>
-								<img src="http://www.tralandia.sk/u/01/___t_12592468758592.jpg">
-								<a href="#">Zmazat</a>
-							</li>
-							<li>
-								<img src="http://www.tralandia.sk/u/01/___t_13220628889049.png">
-								<a href="#">Zmazat</a>
-							</li>
-
-							<li>
-								<img src="http://www.tralandia.sk/u/01/___t_13220628967186.png">
-								<a href="#">Zmazat</a>
-							</li>
-
-							<li>
-								<img src="http://www.tralandia.sk/u/01/___t_13220628593348.png">
-								<a href="#">Zmazat</a>
-							</li>
-
-							<li>
-								<img src="http://www.tralandia.sk/u/01/___t_12592468758592.jpg">
-								<a href="#">Zmazat</a>
-							</li>
-							<div class="clearfix"></div>
-
+						<ul id="sortable" data-url="/sortable" data-remove-url="/remove-url">
+						  <li data-id="13220628889049" class="ui-state-default"><img src="http://www.tralandia.sk/u/01/___t_13220628889049.png">
+						  	<a href="#" class="remove">#delete</a>
+						  </li>
+						  <li data-id="13220628967186" class="ui-state-default"><img src="http://www.tralandia.sk/u/01/___t_13220628967186.png">
+						  	<a href="#" class="remove">#delete</a>
+						  </li>
+						  <li data-id="13220628593348" class="ui-state-default"><img src="http://www.tralandia.sk/u/01/___t_13220628593348.png">
+						  	<a href="#" class="remove">#delete</a>
+						  </li>
+						  <li data-id="12592468758592" class="ui-state-default"><img src="http://www.tralandia.sk/u/01/___t_12592468758592.jpg">
+						  	<a href="#" class="remove">#delete</a>
+						  </li>
+						  <li data-id="13220628889049" class="ui-state-default"><img src="http://www.tralandia.sk/u/01/___t_13220628889049.png">
+						  	<a href="#" class="remove">#delete</a>
+						  </li>
+						  <li data-id="13220628967186" class="ui-state-default"><img src="http://www.tralandia.sk/u/01/___t_13220628967186.png">
+						  	<a href="#" class="remove">#delete</a>
+						  </li>
+						  <li data-id="13220628593348" class="ui-state-default"><img src="http://www.tralandia.sk/u/01/___t_13220628593348.png">
+						  	<a href="#" class="remove">#delete</a>
+						  </li>
+						  <li data-id="12592468758592" class="ui-state-default"><img src="http://www.tralandia.sk/u/01/___t_12592468758592.jpg">
+						  	<a href="#" class="remove">#delete</a>
+						  </li>
+						  <li data-id="13220628889049" class="ui-state-default"><img src="http://www.tralandia.sk/u/01/___t_13220628889049.png">
+						  	<a href="#" class="remove">#delete</a>
+						  </li>
+						  <li data-id="13220628967186" class="ui-state-default"><img src="http://www.tralandia.sk/u/01/___t_13220628967186.png">
+						  	<a href="#" class="remove">#delete</a>
+						  </li>
+						  <li data-id="13220628593348" class="ui-state-default"><img src="http://www.tralandia.sk/u/01/___t_13220628593348.png">
+						  	<a href="#" class="remove">#delete</a>
+						  </li>
+						  <li data-id="12592468758592" class="ui-state-default"><img src="http://www.tralandia.sk/u/01/___t_12592468758592.jpg">
+						  	<a href="#" class="remove">#delete</a>
+						  </li>
 						</ul>
 					</div>
 
@@ -674,8 +671,13 @@ $(function(){
 				<div class="row-fluid">
 					<p>Vyberte súbory alebo ich potiahnite z inej aplikácie sem. Nahrať môžete aj viac fotografií naraz. Maximálny rozmer je 1500 x 1500 pixelov. Minimálna šírka fotografie je 450px.
 Pridanie fotografie trvá niekoľko sekúnd v závislosti od rýchlosti vášho pripojenia.</p>
-				</div>	
-			
+				</div>
+
+
+
+				<input id="fileupload" type="file" name="files[]" data-url="server/php/" multiple>
+
+				</div> <!-- controll photo end -->
 		</div>
 	</div>
 </div>

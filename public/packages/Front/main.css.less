@@ -2041,29 +2041,26 @@ form.traform {
 
 
 
-	ul.photos {
-		margin: 0 0 10px 0 ;
-		padding: 0;
-		list-style: none;
 
+
+	ul#sortable {
+ 		list-style-type: none; 
+ 		margin: 0; 
+ 		padding: 0; 
+ 		width: 740px;
 		li {
+ 			margin: 3px 3px 3px 0; 
+ 			padding: 1px; 
+ 			float: left; 
+ 			width: 172px; 
+ 			height: 130px; 
+ 			text-align: center; 
 			display: block;
-			padding: 10px 0  0 10px;
-			float: left;
-			width: 178px;
-			text-align: center;
-			.box-size();
-			
-
-			img {
-				cursor: move;
-				border: 2px solid transparent;	
-				&:hover {
-					
-						border: 2px dashed #000;			
-					
-				}				
-			}
+			overflow: hidden;
+ 			&.loading {
+ 				background: #ddd url('../packages/Front/img/ajax-loader-img.gif') center center no-repeat;
+ 				border: 1px solid #eee;
+ 			}
 			
 		}
 	}

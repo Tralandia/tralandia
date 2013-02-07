@@ -194,7 +194,7 @@ Nette.addError = function(elem, message) {
 
 	}
 
-    // add error message 
+	// add error message 
 	$.traMapControll.addError = function(elem,message){
 		
 		var errorMessageDiv = $('#'+elem.attr('data-validation-message-div-id'));
@@ -347,7 +347,7 @@ Nette.addError = function(elem, message) {
 			
 					return false;
 				});
-          
+		  
 
 
 		});
@@ -470,3 +470,166 @@ Nette.addError = function(elem, message) {
 	};
 	
 })(jQuery);
+
+
+
+
+
+
+
+// photo controll
+(function($){
+	$.galleryControl = function(el, options){
+
+		var base = this;
+
+		base.$el = $(el);
+		base.el = el;
+
+		base.$el.data("galleryControl", base);
+		
+		base.init = function(){
+			
+			base.options = $.extend({},$.galleryControl.defaultOptions, options);            
+
+		};
+		
+
+		base.init();
+	};
+	
+	$.galleryControl.defaultOptions = {
+		
+	};
+	
+
+	$.galleryControl.hashCode = function(str){
+		var hash = 0;
+		if (str.length == 0) return hash;
+		for (i = 0; i < str.length; i++) {
+			char = str.charCodeAt(i);
+			hash = ((hash<<5)-hash)+char;
+			hash = hash & hash; // Convert to 32bit integer
+		}
+		return hash;
+	}
+
+	$.galleryControl.getName = function(v){
+		return $.galleryControl.hashCode(v.name+v.lastModifiedDate+v.size);
+	}
+
+	// after sort photos set array
+	$.galleryControl.sortableArray = function($elem){
+
+		var o = {};
+
+		$elem.find('li').each(function(i){
+			o[i] = $(this).attr('data-id');
+			++i
+			//o.push($(this).attr('data-id'));
+		});
+
+		return o ;
+	}
+
+	$.fn.galleryControl = function(options){
+
+		return this.each(function(){
+
+			var self = this;
+			var $self = $(this);
+
+			var $listGallery = $self.find('#sortable');
+
+			var sortableUrl = $listGallery.attr('data-url');
+
+			var removeUrl = $listGallery.attr('data-remove-url');
+
+			var $removeLinkElement = $listGallery.find('li a');
+			
+			// remove image function 
+			$removeLinkElement.live('click',function(){						
+				
+				var $el = $(this);
+
+				$el.parent().css({
+					opacity: '0.5'
+				});
+
+				var data = {
+					id: $el.parent().attr('data-id')
+				}
+
+				$.ajax({
+				  url: removeUrl,
+				  data: data,
+				}).done(function() {
+				  	$el.parent().fadeOut({
+				  		complete: function(){
+				  			$(this).remove();
+				  		}
+				  	});
+				});
+
+				return false;
+			});
+
+
+			// sort images function
+			$listGallery.sortable({
+			  stop: function( event, ui ) {
+
+				$.ajax({
+				  url: sortableUrl,
+				  data: $.galleryControl.sortableArray($listGallery),
+				}).done(function() {
+				  
+				});
+
+			  }
+			});
+
+			$listGallery.disableSelection();
+
+
+			// upload images function
+			var firstStart = false;
+
+			$self.find('input[type="file"]').fileupload({
+				dataType: 'json',
+				add: function (e, data) {
+
+					if(!firstStart){
+
+						var html = '';
+						$.each(data.originalFiles,function(k,v){
+							//var divId = $.galleryControl.getName(v);
+							html+= '<li class="loading" id="+divId+"></li>';
+						});
+
+						$listGallery.append(html);
+
+						firstStart = true;
+					}
+
+					data.submit();
+				},
+				done: function (e, data) {
+
+				}
+			});
+
+
+
+		});
+	};
+	
+})(jQuery);
+
+
+
+
+
+
+
+
