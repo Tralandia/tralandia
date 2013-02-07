@@ -98,23 +98,6 @@ services:
 		class: Extras\Environment(@application::getRequests(), @languageRepositoryAccessor, @locationRepositoryAccessor)
 	translator: @translatorFactory::create(@environment::getLanguage())
 
-	# ==============================
-	# ==================== LISTENERS
-	# ==============================
-	foo:
-		class: TestListener
-		tags: [kdyby.subscriber]
-
-	# @TODO ------------------------ 
-	emailCompiler:
-		class: Extras\Email\Compiler
-		setup:
-			- registerVariableFactory(rental, @rentalEmailVariableFactory)
-			- registerVariableFactory(language, @languageEmailVariableFactory)
-			- registerVariableFactory(location, @locationEmailVariableFactory)
-			- registerVariableFactory(visitor, @visitorEmailVariableFactory)
-			- registerVariableFactory(environment, @environmentEmailVariableFactory)
-
 	# --------------------------------
 
 	templateHelpers:
@@ -152,6 +135,15 @@ services:
 	rentalRegistrationsStats: Service\Statistics\RentalRegistrations(@rentalRepositoryAccessor::get(), @locationRepositoryAccessor::get())
 	rentalCreator: Service\Rental\RentalCreator(@rentalRepositoryAccessor::get())
 
+	emailCompiler:
+		class: Extras\Email\Compiler
+		setup:
+			- registerVariableFactory(rental, @rentalEmailVariableFactory)
+			- registerVariableFactory(language, @languageEmailVariableFactory)
+			- registerVariableFactory(location, @locationEmailVariableFactory)
+			- registerVariableFactory(visitor, @visitorEmailVariableFactory)
+			- registerVariableFactory(environment, @environmentEmailVariableFactory)
+
 	# ==============================
 	# ==================== FORMS HANDLERS
 	# ==============================
@@ -166,7 +158,15 @@ factories:
 		class: OwnerModule\Forms\RentalEditForm(%rental%)
 		implement: OwnerModule\Forms\IRentalEditFormFactory
 
-	rentalReservationFormFactory: 
+	signInFormFactory:
+		class: BaseModule\Forms\Sign\InForm()
+		implement: BaseModule\Forms\Sign\IInFormFactory
+
+	forgotPasswordFormFactory:
+		class: BaseModule\Forms\ForgotPasswordForm(@userRepositoryAccessor)
+		implement: BaseModule\Forms\IForgotPasswordFormFactory
+
+	rentalReservationFormFactory:
 		class: FrontModule\Forms\Rental\ReservationForm(%rental%, @locationRepositoryAccessor::get())
 		implement: FrontModule\Forms\Rental\IReservationFormFactory
 
@@ -294,3 +294,4 @@ includes:
 	- acl/acl.neon
 	- modelServices.neon
 	- oldRepositoryServices.neon
+	- listeners.neon

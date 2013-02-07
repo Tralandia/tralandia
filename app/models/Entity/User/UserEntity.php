@@ -66,6 +66,7 @@ class User extends \Entity\BaseEntityDetails {
 		$identity = [
 			'id' => $this->getId(),
 			'login' => $this->getLogin(),
+			'homepage' => $this->getRole()->getHomePage(),
 		];
 
 		return $identity;
