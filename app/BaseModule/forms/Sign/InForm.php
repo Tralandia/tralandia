@@ -26,7 +26,7 @@ class InForm extends \BaseModule\Forms\BaseForm {
 			$user = $this->getPresenter()->getUser();
 			$user->setExpiration('+ 30 days', FALSE);
 			$user->login($values->login, $values->password);
-			if($homepage = $user->getIdentity()){
+			if($homepage = $user->getIdentity()->homepage){
 				$this->presenter->redirect($homepage);
 			}
 			$this->presenter->redirect('this');

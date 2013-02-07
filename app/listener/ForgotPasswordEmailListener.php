@@ -18,7 +18,7 @@ class ForgotPasswordEmailListener extends Nette\Object implements \Kdyby\Events\
 
 	public function getSubscribedEvents()
 	{
-		return ['\BaseModule\Forms\ForgotPasswordForm::onAfterProcess'];
+		return ['BaseModule\Forms\ForgotPasswordForm::onAfterProcess'];
 	}
 
 	public function onAfterProcess(\Entity\User\User $user)
