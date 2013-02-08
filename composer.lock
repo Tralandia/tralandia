@@ -100,12 +100,12 @@
             "source": {
                 "type": "git",
                 "url": "http://github.com/nette/nette",
-                "reference": "1ef0abfc8a3f8db7382248efa9a56152b3b67b39"
+                "reference": "b203f1bb8b5e4a5cae3932b85d2dc1e17e65a679"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/nette/nette/archive/1ef0abfc8a3f8db7382248efa9a56152b3b67b39.zip",
-                "reference": "1ef0abfc8a3f8db7382248efa9a56152b3b67b39",
+                "url": "https://api.github.com/repos/nette/nette/zipball/b203f1bb8b5e4a5cae3932b85d2dc1e17e65a679",
+                "reference": "b203f1bb8b5e4a5cae3932b85d2dc1e17e65a679",
                 "shasum": ""
             },
             "require": {
@@ -123,7 +123,7 @@
                 "ext-memcache": "*",
                 "ext-pdo": "*"
             },
-            "time": "2013-01-22 17:52:40",
+            "time": "2013-02-07 10:40:20",
             "type": "library",
             "extra": {
                 "branch-alias": {
