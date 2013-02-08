@@ -63,6 +63,10 @@ class ExampleFormPresenter extends BasePresenter {
 
 		$form['phrase'] = new \Extras\Forms\Container\PhraseContainer($phrase, $this->languageRepository);
 		$form['phrase']->setDefaultValues();
+
+		$form['photos'] = new \Extras\Forms\Container\RentalPhotosContainer();
+
+
 /*
 		$form->addTextArea('textArea', 'Text Area')
 			->setRequired();
