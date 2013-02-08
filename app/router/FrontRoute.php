@@ -3,6 +3,8 @@
 namespace Routers;
 
 use Nette;
+use Repository\LanguageRepository;
+use Repository\Location\LocationRepository;
 use Nette\Application\Routers\Route;
 use Nette\Utils\Strings;
 use Nette\Utils\Arrays;
@@ -35,6 +37,18 @@ class FrontRoute extends BaseRoute
 	public $phraseDecoratorFactory;
 
 	/**
+	 * @param \Repository\LanguageRepository $languageRepository
+	 * @param \Repository\Location\LocationRepository $locationRepository
+	 */
+	public function __construct(LanguageRepository $languageRepository, LocationRepository $locationRepository)
+	{
+		$mask = '//[!<language ([a-z]{2}|www)>.<primaryLocation [a-z]{2,3}>.%domain%/][<hash .*>]';
+		$metadata = [ 'presenter' => 'Rental', 'action' => 'list' ];
+		parent::__construct($mask, $metadata, $languageRepository, $locationRepository);
+	}
+
+
+		/**
 	 * @param \Nette\Http\IRequest $httpRequest
 	 * @return \Nette\Application\Request|NULL
 	 */
@@ -85,6 +99,7 @@ class FrontRoute extends BaseRoute
 					if(array_key_exists('page', $segmentList)) {
 						$page = $segmentList['page'];
 						list( , , $presenter, $params['action']) = array_filter(explode(':', $page->destination));
+						$params['page'] = $segmentList['page'];
 					} else {
 						foreach ($segmentList as $key => $value) {
 							$params[$key] = $value;
@@ -136,20 +151,11 @@ class FrontRoute extends BaseRoute
 		$presenter = $appRequest->getPresenterName();
 		$action = $params['action'];
 
-		if($presenter == 'Home' && $action == 'default') {
-
-		} else if($presenter == 'Rental' && $action == 'detail') {
-		} else if($presenter == 'Rental' && $action == 'list'){
-			// hmm
-		} else {
-			$destination = ':Front:'.$presenter.':'.$action;
-			if($page = $this->pageRepositoryAccessor->get()->findOneByDestination($destination)) {
-				$paramsTemp = $params;
-				$paramsTemp['page'] = $page->id;
-				$params[self::HASH][] = $this->getSegmentById('page', $paramsTemp);
-			} else {
-				return NULL;
-			}
+		switch (TRUE) {
+			case $presenter == 'Home' && $action == 'default':
+			case $presenter == 'Rental' && $action == 'detail':
+			case $presenter == 'Rental' && $action == 'list':
+				unset($params['page']);
 		}
 
 		$params = $this->filterOut($params);
@@ -266,10 +272,7 @@ class FrontRoute extends BaseRoute
 
 interface IFrontRouteFactory {
 	/**
-	 * @param $mask
-	 * @param $metadata
-	 *
 	 * @return FrontRoute
 	 */
-	public function create($mask, $metadata);
+	public function create();
 }
