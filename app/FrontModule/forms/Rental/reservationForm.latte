@@ -1,5 +1,5 @@
 
-{form reservationForm}
+{form reservationForm , class => 'ajaxForm' }
 
 	{* add class invalid to input *}
 
@@ -28,7 +28,7 @@
 	</div>
 
 	<textarea n:input="message" placeholder="{_o12279}" class="valid"></textarea>
-	{*<span class="errorMsg">Error mesage Error mesage Error mesage Error mesage Error mesage Error mesage Error mesage Error mesage </span>
-	*}
+	<span class="errorMsg" style="display:none;"></span>
+	
 	<button class="btn btn-orange"> <span class="entypo-send">{_o1719}</span> </button>
 {/form}
