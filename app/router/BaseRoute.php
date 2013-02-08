@@ -3,6 +3,7 @@
 namespace Routers;
 
 use Nette;
+use Nette\Application\Routers\Route;
 use Repository\LanguageRepository;
 use Repository\Location\LocationRepository;
 
@@ -21,17 +22,36 @@ abstract class BaseRoute extends Nette\Object implements Nette\Application\IRout
 	 */
 	protected $locationRepository;
 
+	/**
+	 * @var \Nette\Application\Routers\Route
+	 */
+	protected $route;
 
 	/**
+	 * @var string
+	 */
+	protected $presenterName;
+
+	/**
+	 * @var string
+	 */
+	protected $actionName;
+
+	/**
+	 * @param string $mask
+	 * @param array $metadata
 	 * @param \Repository\LanguageRepository $languageRepository
 	 * @param \Repository\Location\LocationRepository $locationRepository
-	 * @param string $module
 	 */
-	public function __construct(LanguageRepository $languageRepository, LocationRepository $locationRepository,
-								$module = NULL)
+	public function __construct($mask, $metadata, LanguageRepository $languageRepository,
+LocationRepository $locationRepository)
 	{
 		$this->languageRepository = $languageRepository;
 		$this->locationRepository = $locationRepository;
+		$this->presenterName = $metadata['presenter'];
+		$this->actionName = $metadata['action'];
+		$this->route = new Route($mask, $metadata);
+
 	}
 
 	/**
