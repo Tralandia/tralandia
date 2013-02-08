@@ -29,20 +29,19 @@
 
                 </ul>
 
-                <ul class="dropdown-menu" role="menu" id="langMenuOptions">
-
-				{foreach $supportedLanguages as $supportedLanguage}
+                <ul class="dropdown-menu" role="menu" id="langMenuOptions" n:inner-foreach="$supportedLanguages as $column">
                     <li>
-                        <ul>
-							{foreach $supportedLanguage as $language}
-                                <li>
-                                    <a href="{link :Front:Home:default language => $language}">{$language->name->getTranslation($language)}</a>
-                                </li>
-							{/foreach}
+                        <ul n:inner-foreach="$column as $language">
+                            <li>
+							{var $name = $language->getName()->getTranslationText($language);}
+							{if $language->getId() == $envLanguage->getId()}
+                                <span>{$name}</span>
+							{else}
+                                <a n:href="this, language => $language">{$name}</a>
+							{/if}
+                            </li>
                         </ul>
                     </li>
-				{/foreach}
-
                 </ul>
 
             </div>
@@ -80,74 +79,20 @@
             <div class="socialIcons" id="socialIcons">
                 &#62220; &#62223; &#62217; &#62226; <span>&#59228;</span>
 
-                <ul class="dropdown-menu" role="menu" id="socialIconsMenu">
-
+                <ul class="dropdown-menu" role="menu" id="socialIconsMenu" n:inner-foreach="$supportedLanguages as $column">
                     <li>
-                        <ul>
+                        <ul n:inner-foreach="$column as $language">
                             <li>
-                                <a href="http://de.sk.tra.com/">Deutsch</a>
-                            </li>
-                            <li>
-                                <a href="/front/home">English</a>
-                            </li>
-                            <li>
-                                <a href="http://es.sk.tra.com/">Español</a>
-                            </li>
-                            <li>
-                                <a href="http://fr.sk.tra.com/">Français</a>
-                            </li>
-                            <li>
-                                <a href="http://hr.sk.tra.com/">Hrvatski</a>
-                            </li>
-                            <li>
-                                <a href="http://it.sk.tra.com/">Italiano</a>
+							{var $name = $language->getName()->getTranslationText($language);}
+							{if $language->getId() == $envLanguage->getId()}
+                                <span>{$name}</span>
+								{else}
+                                <a n:href="this, language => $language">{$name}</a>
+							{/if}
                             </li>
                         </ul>
                     </li>
-                    <li>
-                        <ul>
-                            <li>
-                                <a href="http://hu.sk.tra.com/">Magyar</a>
-                            </li>
-                            <li>
-                                <a href="http://nl.sk.tra.com/">Nederlands</a>
-                            </li>
-                            <li>
-                                <a href="http://pl.sk.tra.com/">Polski</a>
-                            </li>
-                            <li>
-                                <a href="http://pt.sk.tra.com/">Português</a>
-                            </li>
-                            <li>
-                                <a href="http://ro.sk.tra.com/">Română</a>
-                            </li>
-                            <li>
-                                <a href="/">Slovenský</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <ul>
-                            <li>
-                                <a href="http://cs.sk.tra.com/">Český</a>
-                            </li>
-                            <li>
-                                <a href="http://el.sk.tra.com/">Ελληνικά</a>
-                            </li>
-                            <li>
-                                <a href="http://ru.sk.tra.com/">Русский</a>
-                            </li>
-                            <li>
-                                <a href="http://uk.sk.tra.com/">Українська</a>
-                            </li>
-                            <li>
-                                <a href="http://bg.sk.tra.com/">български</a>
-                            </li>
-                        </ul>
-                    </li>
-
                 </ul>
-
             </div>
 
 
