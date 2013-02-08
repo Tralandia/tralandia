@@ -63,8 +63,16 @@
 		{var $ii = 1}
 		{foreach $rental->getImages(3) as $photo}
 			<img alt="{_$rental->name} {$ii}" src="{$basePath}{$photo|rentalImageSrc}" class="marginBottom" />
+
+			{if $ii == 1}
+				{var $firstPhotoSrc = $photo|rentalImageSrc}
+			{/if}
+
 			{var $ii = $ii + 1}
+
 		{/foreach}
+
+
 		
 		 <img class="mapsImg" src="https://maps.googleapis.com/maps/api/staticmap?center={$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&markers=color:blue%7C{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&zoom=10&size=288x170&sensor=false" /> 
 		
@@ -203,9 +211,23 @@
 	
 
 			<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
-		<div class="socialIconTable marginBottom marginTop">
-        <iframe src="http://www.facebook.com/plugins/like.php?href={link Rental:detail $rental}&amp;locale=sk_SK&amp;layout=button_count&amp;show_faces=false&amp;width=130&amp;action=like&amp;colorscheme=light&amp;height=80" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:20px; width:130px;" allowTransparency="true"></iframe>
-        <g:plusone size="small" href="{link Rental:detail $rental}"  style="margin-top:2px;"></g:plusone>
+
+		<div class="socialIconTable marginBottom marginTop socialIconsDetail">
+			<div class="socialBtnHeader">
+				&#62220; &#62223; &#62217; &#62226; 
+			</div>
+			<div class="clearfix"></div>
+			<div class="socialBtnContent hide">
+		        <iframe src="http://www.facebook.com/plugins/like.php?href={link Rental:detail $rental}&amp;locale=sk_SK&amp;layout=button_count&amp;show_faces=false&amp;width=130&amp;action=like&amp;colorscheme=light&amp;height=80" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:20px; width:130px;" allowTransparency="true"></iframe>
+		        
+		        <g:plusone size="small" href="{link Rental:detail $rental}"  style="margin-top:2px;"></g:plusone>
+		        
+				<a href="https://twitter.com/share" class="twitter-share-button" data-lang="en">Tweet</a>
+
+				<a href="http://pinterest.com/pin/create/button/?url={link Rental:detail $rental}&media={$basePath}{$firstPhotoSrc}&description={_$rental->name}" class="pin-it-button" count-layout="horizontal"><img border="0" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" /></a>
+				<script type="text/javascript" src="//assets.pinterest.com/js/pinit.js"></script>
+
+	        </div>
         </div>
 	
 		{* <button class="btn btn-compare addToFavorites" rel="{$rental->id}" link="{link Rental:detail $rental}" thumb="{$rental->getMainImage()->getThumbnail()}"><span class="entypo-star">{_o12334}</span></button> *}
