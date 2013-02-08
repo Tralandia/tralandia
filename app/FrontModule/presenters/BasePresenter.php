@@ -83,6 +83,8 @@ abstract class BasePresenter extends \BasePresenter {
 
 		$header = $this->getComponent('header');
 		$header->addTitle($this->pageSeo->getTitle());
+
+
 		
 		parent::beforeRender();
 	}
