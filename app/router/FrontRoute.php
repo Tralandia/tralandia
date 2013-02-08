@@ -86,7 +86,13 @@ class FrontRoute extends BaseRoute
 
 			if(count($pathSegments) == 1) {
 				$pathSegment = reset($pathSegments);
-				if($match = Strings::match($pathSegment, '~\.*-r([0-9]+)~')) {
+				if($match = Strings::match($pathSegment, '~\.*-([0-9]+)~')) {
+					if($rental = $this->rentalRepositoryAccessor->get()->findOneByOldId($match[1])) {
+						$params['rental'] = $rental;
+						$presenter = 'Rental';
+						$params['action'] = 'detail';
+					}
+				} else if ($match = Strings::match($pathSegment, '~\.*-r([0-9]+)~')) {
 					if($rental = $this->rentalRepositoryAccessor->get()->find($match[1])) {
 						$params['rental'] = $rental;
 						$presenter = 'Rental';
