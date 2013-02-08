@@ -1,13 +1,11 @@
 <div class="span3" role="sidebar" id="sidebar">
     <aside class="innerPadding baseRadius baseBorder innerPaddingLeft">
         <div class="">
-            <form data-url="{plink searchSuggestion}" class="searchForm">                
+            <form data-url="{plink searchSuggestion}" data-conditions-text="#Please enter % more character" data-placeholder="#Search" class="searchForm">                
                 <div class="input-filltext">
-                	<select id="serachSidebar" name="q">
-                		<option value="alabama"> Alabama</option>
-                		<option value="nebraska"> Nebraska</option>
-                		<option value="branovo"> Branovo</option>
-                	</select>
+
+                <input type="hidden" class="suggestion" id="serachSidebar" name="serachSidebar"/>
+           
                 </div>
             </form>
         </div>
