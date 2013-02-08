@@ -71,6 +71,71 @@ Nette.addError = function(elem, message) {
 
 
 
+
+// autosuggest form search
+(function($){
+	$.searchFormSuggest = function(el, options){
+
+		var base = this;
+
+		base.$el = $(el);
+		base.el = el;
+
+		base.$el.data("searchFormSuggest", base);
+		
+		base.init = function(){
+			
+			base.options = $.extend({},$.searchFormSuggest.defaultOptions, options);            
+
+		};
+		
+		base.init();
+	};
+	
+	$.searchFormSuggest.defaultOptions = {
+		
+	};
+	
+	$.fn.searchFormSuggest = function(options){
+		return this.each(function(){
+
+			var self = this;
+			var $self = $(this);
+
+			var url = $self.attr('data-url');
+
+			$('select#serachSidebar').select2({
+			    placeholder: "Search ",
+			    minimumInputLength: 1,
+			    ajax: { 
+			        url: url,
+			        dataType: 'json',
+			        data: function (term, page) {
+			            return {
+			                string: term, 
+			            };
+			        },
+			        results: function (data, page) { 
+			            return {results: data.counties};
+			        }
+			    },
+			    formatResult: function(){}, // omitted for brevity, see the source of this page
+			    formatSelection:  function(){},  // omitted for brevity, see the source of this page
+			    dropdownCssClass: "bigdrop", // apply css that makes the dropdown taller
+			    escapeMarkup: function (m) { return m; } // we do not want to escape markup since we are displaying html in results
+			});
+
+
+
+
+		});
+	};
+	
+})(jQuery);
+
+
+
+
 // universal form ajax
 (function($){
 	$.ajaxForm = function(el, options){

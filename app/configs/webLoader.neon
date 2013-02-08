@@ -67,9 +67,10 @@ parameters:
 					- Front/js/jstorage.min.js
 					- Front/js/jquery.jcarousel.min.js
 					- Front/js/ui-localization-datepicker.js
-					- Front/js/trax-forms-ui.js
+					
 					- Front/js/select2.js
 					- Front/js/main.js
+					- Front/js/trax-forms-ui.js
 					#- Front/js/nette.ajax.js
 					
 
