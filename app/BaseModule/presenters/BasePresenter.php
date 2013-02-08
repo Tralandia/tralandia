@@ -18,6 +18,9 @@ abstract class BasePresenter extends Presenter {
 	/** @persistent */
 	public $primaryLocation;
 
+	/** @persistent */
+	public $page;
+
 
 	public $cssFiles;
 	public $cssRemoteFiles;
@@ -40,7 +43,6 @@ abstract class BasePresenter extends Presenter {
 
 		//$this->initCallbackPanel();
 
-		//$this->terminate();
 		if($autologin = $this->getParameter(\Routers\OwnerRouteList::AUTOLOGIN)) {
 			try{
 				$identity = $this->authenticator->autologin($autologin);
