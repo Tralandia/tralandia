@@ -437,6 +437,8 @@ $(document).ready(function(){
 
 	$('.ajaxForm').ajaxForm();
 
+	$('.socialIconsDetail').socialIconsDetail();
+
 	$("select.select2").select2(); 
 
 	$('.calendarEdit').calendarEdit();
