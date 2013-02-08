@@ -104,8 +104,12 @@ Nette.addError = function(elem, message) {
 
 			var url = $self.attr('data-url');
 
-			$('select#serachSidebar').select2({
-			    placeholder: "Search ",
+			var placeholder = $self.attr('data-placeholder');
+
+			var conditionsText = $self.attr('data-conditions-text');
+
+			$('#serachSidebar').select2({
+			    placeholder: placeholder,
 			    minimumInputLength: 1,
 			    ajax: { 
 			        url: url,
@@ -119,12 +123,24 @@ Nette.addError = function(elem, message) {
 			            return {results: data.counties};
 			        }
 			    },
-			    formatResult: function(){}, // omitted for brevity, see the source of this page
-			    formatSelection:  function(){},  // omitted for brevity, see the source of this page
-			    dropdownCssClass: "bigdrop", // apply css that makes the dropdown taller
-			    escapeMarkup: function (m) { return m; } // we do not want to escape markup since we are displaying html in results
-			});
+			    formatResult: function(r){
+			    	return '<img class="flag" src="'+r.flag+'"> '+r.name;
+			    }, 
 
+			    formatSelection: function(r){
+			    	return r.name;
+			    },
+			   
+			    
+			    escapeMarkup: function (m) { return m; } ,
+			    formatInputTooShort: function (input, min) { 
+			    	var n = min - input.length; 
+			    	//conditionsText = conditionsText.split('%');
+			    	return '';
+			    	//return conditionsText[0] + n + conditionsText[1] + (n == 1? "" : "s"); 
+			    }
+
+			});
 
 
 

@@ -441,6 +441,9 @@ $(document).ready(function(){
 
 	$("select.select2").select2(); 
 
+
+
+
 	$('.searchForm').searchFormSuggest();
 
 	$('.calendarEdit').calendarEdit();
