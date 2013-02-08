@@ -48,8 +48,13 @@ LocationRepository $locationRepository)
 	{
 		$this->languageRepository = $languageRepository;
 		$this->locationRepository = $locationRepository;
+
+		if(!isset($metadata[self::PRIMARY_LOCATION])) $metadata[self::PRIMARY_LOCATION] = 'sk';
+		if(!isset($metadata[self::LANGUAGE])) $metadata[self::LANGUAGE] = 'www';
 		$this->presenterName = $metadata['presenter'];
 		$this->actionName = $metadata['action'];
+
+		//d($mask, $metadata);
 		$this->route = new Route($mask, $metadata);
 
 	}

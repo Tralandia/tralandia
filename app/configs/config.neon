@@ -203,7 +203,7 @@ factories:
 
 	frontRouteFactory:
 		class: Routers\FrontRoute
-		arguments: [%mask%, %metadata%, @languageRepositoryAccessor::get(), @locationRepositoryAccessor::get()]
+		arguments: [ @languageRepositoryAccessor::get(), @locationRepositoryAccessor::get() ]
 		setup:
 			- $locationRepositoryAccessor(@locationRepositoryAccessor)
 			- $languageRepositoryAccessor(@languageRepositoryAccessor)
