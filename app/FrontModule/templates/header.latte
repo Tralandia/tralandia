@@ -1,154 +1,101 @@
-			<div class="span12">
-				<header class="innerPadding baseRadius baseBorder" id="header">					
-					<div class="inner" id="topWidget" style="background-image: url({$basePath}/images/headerBanner/{$envPrimaryLocation->iso}.jpg);">
+<div class="span12">
+    <header class="innerPadding baseRadius baseBorder" id="header">
+        <div class="inner" id="topWidget"
+             style="background-image: url({$basePath}/images/headerBanner/{$envPrimaryLocation->iso}.jpg);">
 
 
-						<div id="siteOptions">
-								
+            <div id="siteOptions">
 
 
-							<ul>
-							{*
-								<li class="home topicon"><a n:href=":Front:Home:default"><i class="entypo-home"></i> {_o823}</a></li>
-								<li class="topicon"><a n:href=":Owner:Rental:edit"><i class="entypo-edit"></i> {_o749}</a></li>
-								<li class="topicon"><a n:href=":Owner:Rental:add" class="red"><i class="entypo-plus"></i><strong> {_o793}</strong></a> </li>
-							*}
+                <ul>
+				{*
+					<li class="home topicon"><a n:href=":Front:Home:default"><i class="entypo-home"></i> {_o823}</a></li>
+					<li class="topicon"><a n:href=":Owner:Rental:edit"><i class="entypo-edit"></i> {_o749}</a></li>
+					<li class="topicon"><a n:href=":Owner:Rental:add" class="red"><i class="entypo-plus"></i><strong> {_o793}</strong></a> </li>
+				*}
 
-								<li class="home topicon"><a n:href=":Front:Home:default"><i class="entypo-home"></i> Home</a></li>
-								<li class="topicon edit"><a n:href=":Owner:Rental:edit"><i class="entypo-edit"></i> Real Text</a></li>
-								<li class="topicon"><a n:href=":Owner:Rental:add" class="red"><i class="entypo-plus2"></i><strong> Real text</strong></a> </li>
+                    <li class="home topicon"><a n:href=":Front:Home:default"><i class="entypo-home"></i> Home</a></li>
+                    <li class="topicon edit"><a n:href=":Owner:Rental:edit"><i class="entypo-edit"></i> Real Text</a>
+                    </li>
+                    <li class="topicon"><a n:href=":Owner:Rental:add" class="red"><i class="entypo-plus2"></i><strong>
+                        Real text</strong></a></li>
 
-								<li>
-									<div class="dropdown lang">
-									  <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="langMenuOptionsOpen"><i class="entypo-language"></i> #Slovencina </a>
-									</div>								
-								</li>
-								
-							</ul>
+                    <li>
+                        <div class="dropdown lang">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="langMenuOptionsOpen"><i
+                                    class="entypo-language"></i> #Slovencina </a>
+                        </div>
+                    </li>
 
-							<ul class="dropdown-menu" role="menu" id="langMenuOptions">
-							  	
-								{foreach $supportedLanguages as $supportedLanguage}
-								<li>
-									<ul>
-										{foreach $supportedLanguage as $language}
-											<li>
-												<a href="{link :Front:Home:default language => $language}">{$language->name->getTranslation($language)}</a>
-											</li>
-										{/foreach}
-									</ul>
-								</li>										
-								{/foreach}								  	
+                </ul>
 
-							</ul>							
+                <ul class="dropdown-menu" role="menu" id="langMenuOptions" n:inner-foreach="$supportedLanguages as $column">
+                    <li>
+                        <ul n:inner-foreach="$column as $language">
+                            <li>
+							{var $name = $language->getName()->getTranslationText($language);}
+							{if $language->getId() == $envLanguage->getId()}
+                                <span>{$name}</span>
+							{else}
+                                <a n:href="this, language => $language">{$name}</a>
+							{/if}
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
 
-						</div>
-						
-					
-						
-						<div id="pageTitle">
-							<div id="logo">
-								<a n:href=":Front:Home:default" title="{$pageTitle}">
-									{*<img src="http://www.tralandia.sk/trax_html/images/logo.png" alt=""/>*}
+            </div>
+
+
+            <div id="pageTitle">
+                <div id="logo">
+                    <a n:href=":Front:Home:default" title="{$pageTitle}">
+					{*<img src="http://www.tralandia.sk/trax_html/images/logo.png" alt=""/>*}
 									{*<object  data="http://www.tra.com/images/tra-logo-icon.svg" type="image/svg+xml"></object>*}
 									{*<embed src="http://www.tra.com/images/tra-logo-icon.svg" type="image/svg+xml" />*}
-								</a>
-							</div>
-							{*<img src="http://www.tralandia.sk/trax_html/images/sk.domain.png" />*}
-							<div id="siteName"><a href="{link :Front:Home:default language => $language}">Tralandia.<span>com</span></a></div>
-							<h1><a href="{link :Front:Home:default language => $language}">{$slogan}</a></h1>
-						</div>
-						<div class="gradiendEnd"></div>
+                    </a>
+                </div>
+			{*<img src="http://www.tralandia.sk/trax_html/images/sk.domain.png" />*}
+                <div id="siteName"><a href="{link :Front:Home:default language => $language}">Tralandia.<span>com</span></a>
+                </div>
+                <h1><a href="{link :Front:Home:default language => $language}">{$slogan}</a></h1>
+            </div>
+            <div class="gradiendEnd"></div>
 
-						<div class="clearfix"></div>
+            <div class="clearfix"></div>
 
-						{*
-						<nav role="main-menu" id="mainMenu">
-							<ul>
-								<li><a n:href=":Front:Home:default"><i class="entypo-home"></i> {_o823}</a></li>
+		{*
+		<nav role="main-menu" id="mainMenu">
+			<ul>
+				<li><a n:href=":Front:Home:default"><i class="entypo-home"></i> {_o823}</a></li>
 
-								<li n:foreach="$mainMenuItems as $menuItem"><a n:href="Rental:list rentalType => $menuItem->id">{_$menuItem->name}</a></li>
+				<li n:foreach="$mainMenuItems as $menuItem"><a n:href="Rental:list rentalType => $menuItem->id">{_$menuItem->name}</a></li>
 
-							</ul>
-						</nav>
-						*}
-
-
-						<div class="socialIcons" id="socialIcons">
-							&#62220; &#62223; &#62217; &#62226; <span>&#59228;</span>
-
-<ul class="dropdown-menu" role="menu" id="socialIconsMenu">
-							  	
-								<li>
-									<ul>
-											<li>
-												<a href="http://de.sk.tra.com/">Deutsch</a>
-											</li>
-											<li>
-												<a href="/front/home">English</a>
-											</li>
-											<li>
-												<a href="http://es.sk.tra.com/">Español</a>
-											</li>
-											<li>
-												<a href="http://fr.sk.tra.com/">Français</a>
-											</li>
-											<li>
-												<a href="http://hr.sk.tra.com/">Hrvatski</a>
-											</li>
-											<li>
-												<a href="http://it.sk.tra.com/">Italiano</a>
-											</li>
-									</ul>
-								</li>										
-								<li>
-									<ul>
-											<li>
-												<a href="http://hu.sk.tra.com/">Magyar</a>
-											</li>
-											<li>
-												<a href="http://nl.sk.tra.com/">Nederlands</a>
-											</li>
-											<li>
-												<a href="http://pl.sk.tra.com/">Polski</a>
-											</li>
-											<li>
-												<a href="http://pt.sk.tra.com/">Português</a>
-											</li>
-											<li>
-												<a href="http://ro.sk.tra.com/">Română</a>
-											</li>
-											<li>
-												<a href="/">Slovenský</a>
-											</li>
-									</ul>
-								</li>										
-								<li>
-									<ul>
-											<li>
-												<a href="http://cs.sk.tra.com/">Český</a>
-											</li>
-											<li>
-												<a href="http://el.sk.tra.com/">Ελληνικά</a>
-											</li>
-											<li>
-												<a href="http://ru.sk.tra.com/">Русский</a>
-											</li>
-											<li>
-												<a href="http://uk.sk.tra.com/">Українська</a>
-											</li>
-											<li>
-												<a href="http://bg.sk.tra.com/">български</a>
-											</li>
-									</ul>
-								</li>										
-
-							</ul>	
-							
-						</div>
+			</ul>
+		</nav>
+		*}
 
 
+            <div class="socialIcons" id="socialIcons">
+                &#62220; &#62223; &#62217; &#62226; <span>&#59228;</span>
 
-					</div>
-				</header>
-			</div>
+                <ul class="dropdown-menu" role="menu" id="socialIconsMenu" n:inner-foreach="$supportedLanguages as $column">
+                    <li>
+                        <ul n:inner-foreach="$column as $language">
+                            <li>
+							{var $name = $language->getName()->getTranslationText($language);}
+							{if $language->getId() == $envLanguage->getId()}
+                                <span>{$name}</span>
+								{else}
+                                <a n:href="this, language => $language">{$name}</a>
+							{/if}
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+
+        </div>
+    </header>
+</div>
