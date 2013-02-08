@@ -1,4 +1,6 @@
 
+/* tweet button */
+!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
 
 /**
  * custom Nette addError function
@@ -21,6 +23,51 @@ Nette.addError = function(elem, message) {
 		
 	}
 };
+
+
+
+
+// social shit 
+(function($){
+	$.socialIconsDetail = function(el, options){
+
+		var base = this;
+
+		base.$el = $(el);
+		base.el = el;
+
+		base.$el.data("socialIconsDetail", base);
+		
+		base.init = function(){
+			
+			base.options = $.extend({},$.socialIconsDetail.defaultOptions, options);            
+
+		};
+		
+		base.init();
+	};
+	
+	$.socialIconsDetail.defaultOptions = {
+		
+	};
+	
+	$.fn.socialIconsDetail = function(options){
+		return this.each(function(){
+
+			var self = this;
+			var $self = $(this);
+
+			$self.hover(function(){
+				$self.find('.socialBtnContent').removeClass('hide');
+				$self.find('.socialBtnHeader').addClass('hide');
+			});
+
+
+		});
+	};
+	
+})(jQuery);
+
 
 
 

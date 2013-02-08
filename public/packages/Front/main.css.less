@@ -481,8 +481,11 @@ ul.arrows {
 
 	}
 
+	
+}
 
-	.socialIcons {
+
+	.socialIcons , .socialBtnHeader {
 		list-style: none;
 		width: 150px;
 		cursor: pointer;
@@ -506,8 +509,14 @@ ul.arrows {
 			font-size: 14px;
 			font-family: Arial;
 		}
-	}	
-}
+	}
+
+	.socialBtnHeader {
+		top: -1px;
+		background: none;
+		color: rgb(155, 155, 155);
+		text-shadow: -1px -1px 0px #fff;
+	}
 
 
 	#siteName {
@@ -1172,7 +1181,7 @@ ul.arrows {
 /***************************************************************************************/
 
 .socialIconTable {
-	height: 21px;
+	height: auto;
 	.basic-border-radius(5px);
 	background: #f9f9f9;
 	border: 1px solid #ddd;	
