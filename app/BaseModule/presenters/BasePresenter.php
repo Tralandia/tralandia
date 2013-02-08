@@ -40,6 +40,7 @@ abstract class BasePresenter extends Presenter {
 
 		//$this->initCallbackPanel();
 
+		//$this->terminate();
 		if($autologin = $this->getParameter(\Routers\OwnerRouteList::AUTOLOGIN)) {
 			try{
 				$identity = $this->authenticator->autologin($autologin);

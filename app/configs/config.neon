@@ -196,8 +196,14 @@ factories:
 		class: Routers\OwnerRouteList(@languageRepositoryAccessor, @locationRepositoryAccessor)
 		implement: Routers\IOwnerRouteListFactory
 
+	simpleRouteFactory:
+		class: Routers\SimpleRoute
+		arguments: [%mask%, %metadata%, @languageRepositoryAccessor::get(), @locationRepositoryAccessor::get()]
+		implement: Routers\ISimpleRouteFactory
+
 	frontRouteFactory:
-		class: Routers\FrontRoute(@languageRepositoryAccessor::get(), @locationRepositoryAccessor::get())
+		class: Routers\FrontRoute
+		arguments: [%mask%, %metadata%, @languageRepositoryAccessor::get(), @locationRepositoryAccessor::get()]
 		setup:
 			- $locationRepositoryAccessor(@locationRepositoryAccessor)
 			- $languageRepositoryAccessor(@languageRepositoryAccessor)

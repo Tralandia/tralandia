@@ -10,11 +10,6 @@ use Nette\Utils\Arrays;
 class FrontRoute extends BaseRoute
 {
 
-	/**
-	 * @var \Nette\Application\Routers\Route
-	 */
-	protected $route;
-
 	const HASH = 'hash';
 	const RENTAL = 'rental';
 
@@ -38,23 +33,6 @@ class FrontRoute extends BaseRoute
 	public $rentalAmenityRepositoryAccessor;
 	public $pageRepositoryAccessor;
 	public $phraseDecoratorFactory;
-
-	/**
-	 * @param \Repository\LanguageRepository $languageRepository
-	 * @param \Repository\Location\LocationRepository $locationRepository
-	 */
-	public function __construct(\Repository\LanguageRepository $languageRepository,
-							\Repository\Location\LocationRepository $locationRepository)
-	{
-		parent::__construct($languageRepository, $locationRepository);
-		$this->route = new Route('//[!<language ([a-z]{2}|www)>.<primaryLocation [a-z]{2,3}>.%domain%/][<hash .*>]', array(
-			self::PRIMARY_LOCATION => 'sk',
-			self::LANGUAGE => 'www',
-			'presenter' => 'Rental',
-			'action' => 'list',
-		));
-	}
-
 
 	/**
 	 * @param \Nette\Http\IRequest $httpRequest
@@ -86,7 +64,13 @@ class FrontRoute extends BaseRoute
 
 			if(count($pathSegments) == 1) {
 				$pathSegment = reset($pathSegments);
-				if($match = Strings::match($pathSegment, '~\.*-r([0-9]+)~')) {
+				if($match = Strings::match($pathSegment, '~\.*-([0-9]+)~')) {
+					if($rental = $this->rentalRepositoryAccessor->get()->findOneByOldId($match[1])) {
+						$params['rental'] = $rental;
+						$presenter = 'Rental';
+						$params['action'] = 'detail';
+					}
+				} else if ($match = Strings::match($pathSegment, '~\.*-r([0-9]+)~')) {
 					if($rental = $this->rentalRepositoryAccessor->get()->find($match[1])) {
 						$params['rental'] = $rental;
 						$presenter = 'Rental';
@@ -177,7 +161,7 @@ class FrontRoute extends BaseRoute
 		}
 
 		$params['action'] = 'list';
-		$appRequest->setPresenterName('Rental');
+		$appRequest->setPresenterName($this->presenterName);
 
 		$appRequest->setParameters($params);
 
@@ -282,7 +266,10 @@ class FrontRoute extends BaseRoute
 
 interface IFrontRouteFactory {
 	/**
+	 * @param $mask
+	 * @param $metadata
+	 *
 	 * @return FrontRoute
 	 */
-	public function create();
+	public function create($mask, $metadata);
 }

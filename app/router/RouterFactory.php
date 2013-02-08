@@ -15,6 +15,10 @@ class RouterFactory
 	protected $defaultLanguage;
 	protected $defaultPrimaryLocation;
 	/**
+	 * @var ISimpleRouteFactory
+	 */
+	protected $simpleRouteFactory;
+	/**
 	 * @var IFrontRouteFactory
 	 */
 	protected $frontRouteFactory;
@@ -26,11 +30,13 @@ class RouterFactory
 	public $languageRepositoryAccessor;
 	public $locationRepositoryAccessor;
 
-	public function __construct(array $options, IFrontRouteFactory $frontRouteFactory,
+	public function __construct(array $options, ISimpleRouteFactory $simpleRouteFactory,
+								IFrontRouteFactory $frontRouteFactory,
 								IOwnerRouteListFactory $ownerRouteListFactory)
 	{
 		$this->defaultLanguage = $options['defaultLanguage'];
 		$this->defaultPrimaryLocation = $options['defaultPrimaryLocation'];
+		$this->simpleRouteFactory = $simpleRouteFactory;
 		$this->frontRouteFactory = $frontRouteFactory;
 		$this->ownerRouteListFactory = $ownerRouteListFactory;
 	}
@@ -73,18 +79,28 @@ class RouterFactory
 		));
 	*/
 
-
 		$router[] = $this->ownerRouteListFactory->create();
 
+
 		$router[] = $frontRouter = new RouteList('Front');
-		//$frontRouter[] = new Route('/front/home', 'Home:default', Route::ONE_WAY);
-		$frontRouter[] = new Route('front/<presenter>[/<action>[/<id>]]', array(
+
+		$mask = '//[!<language ([a-z]{2}|www)>.<primaryLocation [a-z]{2,3}>.%domain%/]<presenter>[/<action>[/<id>]]';
+		$metadata = [
+			BaseRoute::PRIMARY_LOCATION => 'sk',
+			BaseRoute::LANGUAGE => 'www',
 			'presenter' => 'Home',
-			'action' =>  'default',
-			'primaryLocation' => $this->defaultPrimaryLocation,
-			'language' => $this->defaultLanguage,
-		));
-		$frontRouter[] = $this->frontRouteFactory->create();
+			'action' => 'default',
+		];
+		$frontRouter[] = $this->simpleRouteFactory->create($mask, $metadata);
+
+		$mask = '//[!<language ([a-z]{2}|www)>.<primaryLocation [a-z]{2,3}>.%domain%/][<hash .*>]';
+		$metadata = [
+			BaseRoute::PRIMARY_LOCATION => 'sk',
+			BaseRoute::LANGUAGE => 'www',
+			'presenter' => 'Rental',
+			'action' => 'list',
+		];
+		$frontRouter[] = $this->frontRouteFactory->create($mask, $metadata);
 		//$frontRouter[] = $this->frontRouteFactory->create();
 
 
