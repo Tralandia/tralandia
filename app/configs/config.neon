@@ -11,6 +11,9 @@ nette:
 		autoStart: smart
 		expiration: '+1 year'
 
+	latte:
+		macros: [Extras\ImageMacro, Extras\Macros]
+
 parameters:
 
 	security:
@@ -56,6 +59,7 @@ services:
 
 	# STORAGE
 	rentalImageStorage: Extras\RentalImageStorage(%wwwDir%%rentalImageDir%)
+	rentalImagePipe: Extras\ImagePipe(%wwwDir%, %rentalImageDir%)
 	rentalPricelistStorage: Extras\FileStorage(%wwwDir%%rentalPricelistDir%)
 
 	cacheStorage: 

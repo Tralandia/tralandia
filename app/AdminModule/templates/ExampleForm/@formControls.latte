@@ -3,6 +3,10 @@
 {/define #text}
 
 
+{*
+	Base Control -------------------------------------------
+	@param $control \Nette\Forms\Controls\BaseControl
+*}
 {define #baseControl}
 <div class="control-group ">
     <div class="form-label">
@@ -19,6 +23,10 @@
 {/define #baseControl}
 
 
+{*
+	Errors -------------------------------------------
+	@param $errors array
+*}
 {define #controlErrors}
 <div class="control-error">
 	{foreach $errors as $error}{$error}{/foreach}
@@ -26,6 +34,10 @@
 {/define #controlErrors}
 
 
+{*
+	Price Container -------------------------------------------
+	@param $control \Extras\Forms\Container\PriceContainer
+*}
 {define #price}
 {var
 	$container = $control;
@@ -48,6 +60,10 @@
 {/define #price}
 
 
+{*
+	Address Container -------------------------------------------
+	@param $control \Extras\Forms\Container\AddressContainer
+*}
 {define #address}
 {var
 	$container = $control;
@@ -106,6 +122,10 @@
 {/define #address}
 
 
+{*
+	Phrase Container -------------------------------------------
+	@param $control \Extras\Forms\Container\PhraseContainer
+*}
 {define #phrase}
 {var
 	$container = $control;
@@ -149,7 +169,7 @@
     <hr />
     <div class="span6">
         
-    {include #translationVatiations, container => $container['fromVariations']}
+    {include #translationVatiations, control => $container['fromVariations']}
 
     </div>
     <div class="span6">
@@ -160,7 +180,7 @@
     <div class="phraseControll hide" id="{$language->getId()}_phrase"> 
 
 
-        {include #translationVatiations, container => $languageContainer['variations']}
+        {include #translationVatiations, control => $languageContainer['variations']}
 
         <div class="pull-left">
         <label for="phraseGender"><b>{label $languageContainer['gender'] /}</b></label>
@@ -183,17 +203,20 @@
 
 </div>
 
-
-
 {/define #phrase}
 
 
-
+{*
+	Translation Variations Container -------------------------------------------
+	@param $control \Extras\Forms\Container\TranslationVariationsContainer
+*}
 {define #translationVatiations}
 {var
+	$container = $control;
 	$phrase = $container->getPhrase();
 	$language = $container->getLanguage();
 }
+{?unset($control)}
 <table class="phraseTable table-striped table">
     <tr>
 		{if $phrase->type->pluralVariationsRequired}
@@ -222,3 +245,47 @@
 </table>
 
 {/define #translationVatiations}
+
+
+{*
+	Rental Photos Container -------------------------------------------
+	@param $control \Extras\Forms\Container\RentalPhotosContainer
+*}
+{define #rentalPhotos}
+{var
+	$container = $control;
+}
+{?unset($control)}
+<div class="control-photo"><!-- controll photo start -->
+
+    <div class="row-fluid">
+
+
+        <div class="span12">
+            <ul id="sortable" class="ui-sortable" n:inner-foreach="$container->getImages() as $image">
+                <li data-id="{$image->getId()}" class="ui-state-default">
+					<img n:img="$image">
+                    <a href="#" class="remove">#delete</a>
+                </li>
+			</ul>
+        </div>
+
+    </div>
+    <div class="row-fluid text">
+        <div class="span12">
+            <button class="btn btn-green"> <span class="entypo-upload">#upload</span> </button>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <p>#Vyberte súbory alebo ich potiahnite z inej aplikácie sem. Nahrať môžete aj viac fotografií naraz. Maximálny rozmer je 1500 x 1500 pixelov. Minimálna šírka fotografie je 450px.
+            Pridanie fotografie trvá niekoľko sekúnd v závislosti od rýchlosti vášho pripojenia.</p>
+    </div>
+
+
+
+    {*<input id="fileupload" type="file" name="files[]" data-url="server/php/" multiple="">*}
+	{input $container['upload']}
+	{input $container['sort']}
+
+</div>
+{/define #rentalPhotos}

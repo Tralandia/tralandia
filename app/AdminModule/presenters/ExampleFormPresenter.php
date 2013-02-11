@@ -9,17 +9,21 @@ use Nette\Application\UI\Form;
 class ExampleFormPresenter extends BasePresenter {
 
 	protected $phraseRepositoryAccessor;
+	protected $rentalRepository;
 	/**
 	 * @var \Repository\Location\LocationRepository
 	 */
 	protected $locationRepository;
 	protected $languageRepository;
+	protected $rentalImageRepository;
 	protected $addressRepository;
 
 	public function injectDic(\Nette\DI\Container $dic) {
 		$this->phraseRepositoryAccessor = $dic->phraseRepositoryAccessor;
+		$this->rentalRepository = $dic->rentalRepositoryAccessor->get();
 		$this->locationRepository = $dic->locationRepositoryAccessor->get();
 		$this->languageRepository = $dic->languageRepositoryAccessor->get();
+		$this->rentalImageRepository = $dic->rentalImageRepositoryAccessor->get();
 		$this->addressRepository = $dic->contactAddressRepositoryAccessor->get();
 	}
 
@@ -45,6 +49,7 @@ class ExampleFormPresenter extends BasePresenter {
 				'Nine banded armadillo'],
 		];
 		$phrase = $this->phraseRepositoryAccessor->get()->find(1503);
+		$rental = $this->rentalRepository->find(1);
 
 		// -------------------- FIELDS --------------------
 		$form->addText('text', 'Text')
@@ -64,7 +69,11 @@ class ExampleFormPresenter extends BasePresenter {
 		$form['phrase'] = new \Extras\Forms\Container\PhraseContainer($phrase, $this->languageRepository);
 		$form['phrase']->setDefaultValues();
 
-		$form['photos'] = new \Extras\Forms\Container\RentalPhotosContainer();
+		$imageStorage = $this->getContext()->getService('rentalImageStorage');
+		$imagePipe = $this->getContext()->getService('rentalImagePipe');
+		$form['photos'] = new \Extras\Forms\Container\RentalPhotosContainer($rental, $this->rentalImageRepository,
+			$imageStorage,
+			$imagePipe);
 
 
 /*

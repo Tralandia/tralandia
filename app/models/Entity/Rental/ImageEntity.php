@@ -18,6 +18,11 @@ use Nette\Http\FileUpload;
  */
 class Image extends \Entity\BaseEntity {
 
+	const ORIGINAL = 'original';
+	const MEDIUM = 'medium';
+
+	const EXTENSION = 'jpeg';
+
 	/**
 	 * @var Collection
 	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})

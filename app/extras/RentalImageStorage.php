@@ -2,6 +2,7 @@
 namespace Extras;
 
 use Nette;
+use Entity\Rental\Image;
 use Nette\Http\FileUpload;
 use Nette\Utils\Finder;
 use Nette\Utils\Strings;
@@ -15,7 +16,7 @@ class RentalImageStorage extends FileStorage
 
 	/**
 	 * @param Nette\Image $image
-	 * @param string $filename
+	 *
 	 * @return string
 	 */
 	public function saveImage(Nette\Image $image)
@@ -32,10 +33,10 @@ class RentalImageStorage extends FileStorage
 		$imageFull = clone $image;
 
 		$image->resize(1200, NULL, Nette\Image::SHRINK_ONLY);
-		$image->save($path . DIRECTORY_SEPARATOR . 'original.jpeg');
+		$image->save($path . DIRECTORY_SEPARATOR . Image::ORIGINAL . '.' . Image::EXTENSION);
 
 		$imageFull->resizeCrop(467, 276);
-		$imageFull->save($path . DIRECTORY_SEPARATOR . 'full.jpeg');
+		$imageFull->save($path . DIRECTORY_SEPARATOR . Image::MEDIUM . '.' . Image::EXTENSION);
 	}
 
 

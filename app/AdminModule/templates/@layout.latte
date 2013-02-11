@@ -1,6 +1,15 @@
 {control header:begin}
 	{control css}
 	{control js}
+<script type="text/javascript" n:syntax="double">
+    $(function() {
+        $.nette.ext({
+            error: function(request) {
+                window.open(request.getResponseHeader('X-Nette-Error-Log'));
+            }
+        });
+    });
+</script>
 {control header:end}
 <body>
 	<div class="container baseRadius" id="container">
