@@ -431,11 +431,11 @@ App.prototype.closeForgottenPasswordForm = function(){
 
 $(document).ready(function(){
 
-	//$.nette.init();
+	$.nette.init();
 
 	var A = new App();
 
-	$('.ajaxForm').ajaxForm();
+	//$('.ajaxForm').ajaxForm();
 
 	$('.socialIconsDetail').socialIconsDetail();
 

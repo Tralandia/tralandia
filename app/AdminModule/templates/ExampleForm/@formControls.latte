@@ -282,10 +282,16 @@
     </div>
 
 
+                <span class="btn btn-success fileinput-button">
+                    <i class="icon-plus icon-white"></i>
+                    <span>Add files...</span>
+                    {input $container['upload']}
+                </span>
+
 
     {*<input id="fileupload" type="file" name="files[]" data-url="server/php/" multiple="">*}
-	{input $container['upload']}
+	
 	{input $container['sort']}
-
+<div class="clearfix"></div>
 </div>
 {/define #rentalPhotos}

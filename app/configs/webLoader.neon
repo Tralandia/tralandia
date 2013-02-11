@@ -28,7 +28,7 @@ parameters:
 
 			Front:
 				css:					
-					- Front/select2.css
+					- Select2/css/select2.css
 					- Front/custom-icon.less
 					- Front/main.css.less
 					- Front/form-registration.less
@@ -42,35 +42,37 @@ parameters:
 					- Front/ticket.less
 					- Front/adminMenuAside.less
 					- Front/less/font-awesome.less
-					
+					- FileUpload/css/jquery.fileupload-ui.css
 					
 
 				js:
 					- jQuery/jquery.js
-					- Front/js/netteForms.js
-					#- Front/js/fancy-checkboxes.js
-					- Front/js/assets/jquery-file-upload/js/vendor/jquery.ui.widget.js
-					- Front/js/assets/jquery-file-upload/js/jquery.iframe-transport.js
-					- Front/js/assets/jquery-file-upload/js/jquery.fileupload.js
+
+					- nette/netteForms.js	
+
+					- FileUpload/js/vendor/jquery.ui.widget.js
+					- FileUpload/js/jquery.iframe-transport.js
+					- FileUpload/js/jquery.fileupload.js
 
 
-					- Front/js/bootstrap-dropdown.js					
-					- Front/js/bootstrap-modal.js
-					- Front/js/bootstrap-tab.js
-					- Front/js/jquery.scrollTo-1.4.3.1-min.js
+					- bootstrap/bootstrap-dropdown.js					
+					- bootstrap/bootstrap-modal.js
+					- bootstrap/bootstrap-tab.js
+
+					- jqueryScrollTo/jquery.scrollTo-1.4.3.1-min.js
 					- FrontJqUi/js/jquery-ui-1.9.1.custom.min.js
 					- Front/js/jquery-tra-map.js
 					- Front/js/object-register-to-view-list.js
 					- Front/js/favorite-active-links.js
 					- Front/js/favorite-slider.js
 					- Front/js/show-favorite-slider.js
-					- Front/js/jstorage.min.js
+					- jstorage/jstorage.min.js
 					- Front/js/jquery.jcarousel.min.js
 					- Front/js/ui-localization-datepicker.js
 					- Front/js/trax-forms-ui.js
-					- Front/js/select2.js
+					- Select2/js/select2.js
 					- Front/js/main.js
-					- Front/js/nette.ajax.js
+					- nette/nette.ajax.js
 
 
 			FavoriteScroll:

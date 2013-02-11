@@ -121,15 +121,47 @@ ul.arrows {
 }
 
 
-
 #content.nopadding p.teaser {
 	line-height: 17px;
-	background: #fdf5ce;
-	padding: 10px;
-	text-align: center;
 
+
+	i {
+		float: left;
+		&:before {
+			font-size:50px;
+		}
+	}
 
 }
+
+
+#content.nopadding .objectDetailContent table.teaser {
+
+	background: #fdf5ce;
+	margin-bottom: 10px;
+	border-radius: 5px;
+	color: #d32c16;
+	width: 100%;
+
+	td {
+		padding: 10px 5px;
+		text-align: center;
+		&:first-child {
+			padding-left: 10px;
+
+			i:before {
+				font-size: 50px;
+				line-height: 38px;
+			}
+		}
+	}
+}
+
+
+
+
+
+
 
 .red {
 	color: #d32c16;
@@ -412,7 +444,7 @@ ul.arrows {
 
 		margin-top: 10px;
 		h1 {
-			margin: 0 0 2px 0;
+			margin: 0 0 5px 0;
 			padding: 0;
 			
 			height: 24px;
@@ -516,8 +548,38 @@ ul.arrows {
 		background: none;
 		color: rgb(155, 155, 155);
 		text-shadow: -1px -1px 0px #fff;
+		cursor: auto;
+
+		strong {
+			cursor: pointer;
+			font-weight: normal;
+		}
+
+		.gplus:hover {
+			color: #ba3526;
+		}
+
+		.facebook:hover {
+			color: #3c5a9a;
+		}
+
+		.twitter:hover {
+			color: #32def6;
+		}
+
+		.pinterest:hover {
+			color: #cf2027;
+		}				
+
 	}
 
+
+	.socialIcons {
+		border: 1px solid transparent;
+		&:hover {
+			border: 1px solid rgba(255, 255, 255, 0.7);
+		}
+	}
 
 	#siteName {
 		font-family: 'neosansbold';
@@ -1180,6 +1242,50 @@ ul.arrows {
 /****************************************************************************************
 /***************************************************************************************/
 
+.detailInfoBoxCover {
+	width: 375px;
+	margin: 0 auto;
+	
+	height: 160px;
+}
+
+.detailInfoBox {
+	font-size: 14px;
+	margin-bottom: 10px;
+	line-height: 15px;
+	width: 182px;
+	float: left;
+	color: @darkGreen;
+	font-weight: bold;
+	i {
+		float: left;
+	}
+
+	i:before {
+		font-size: 35px;
+		position: relative;
+		top: 0px;
+		color: @brown;
+		font-weight: normal;
+	}
+
+	span {
+		display: block;
+		font-size: 12px;
+		color: @brown;
+		font-weight: normal;
+	}
+
+	&.first {
+		margin-right: 10px;
+	}
+
+	.content {
+		width: 157px;
+		float: right;
+	}
+}
+
 .socialIconTable {
 	height: auto;
 	.basic-border-radius(5px);
@@ -1189,6 +1295,10 @@ ul.arrows {
 	#___plusone_0 {
 		position: relative;
 		top: -2px;
+	}
+
+	.socialBtnHeader {
+
 	}
 }
 
@@ -1316,87 +1426,24 @@ ul.arrows {
 
 
 
-
-.objectDetailServicesIconList.list {
-	list-style: none;
-	margin: 0;
-	margin-top: 20px;
-	li {
-		width: 381px;
-		.box-size();
-		color: @brown;
-		margin-left: 29px;	
-			
-		font-size: 13px;
-		line-height: 15px;
-
-		clear: both;
-		strong {
-			display: block;
-		}
-
-		.content {
-			width: 345px;
-			float: right;
-			margin-bottom: 10px;
-			padding-right: 25px;
-		}
-
-		
-
-		strong {
-			color: @darkGreen;
-		}
-
-		&:last-child {
-			margin-bottom: 0;
-		}
-
-		&:before {
-			color: @brown;
-		}
-
-		&.tag {
-			&:before {
-				content:'\E70C';
-			}
-		}
-
-		&.owner-availability {
-			&:before {
-				content:'\1F514';
-			}			
-		}
-
-		&.separate-groups {
-			&:before {
-				content:'\1F465';
-			}			
-		}
-
-		&.rooms {
-			&:before {
-				content:'\F601';
-			}			
-		}		
-
-		&.board {			
-			&:before {
-				font-family: 'FontAwesome';
-				font-size: 15px;
-				content:'\f0f4';
-			}			
-		}
-
-		&:before {
-			margin-right: 11px;
-		}
-		
-	}
-
+#content h3.amenitiesTitle {
+	font-size: 15px;
+	border-bottom: 1px solid @lightGreen;
+	color: @darkGreen;
+	font-weight: normal;
+	box-shadow: 0 1px 0 #fff;
+	line-height: 22px;
+	
 }
 
 
+.amenitiesContent {
+	border-bottom: 1px solid rgb(185, 185, 185);
+	font-size: 13px;
+	color: rgb(119, 119, 119);
+	padding: 5px 0;
+	box-shadow: 0 1px 0 rgb(255, 255, 255);
+}
 
 /****************************************************************************************
 /* detail object right sidebar 
@@ -1788,7 +1835,12 @@ form.traform {
 		}
 	}	
 
+	.control-photo {
 
+		input[type=file] {
+			
+		}
+	}
 
 
 	.row-fluid [class*="span"] {
