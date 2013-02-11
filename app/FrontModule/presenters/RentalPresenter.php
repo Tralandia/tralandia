@@ -49,6 +49,7 @@ class RentalPresenter extends BasePresenter {
 		$this->template->interviewAnswers = $interviewAnswers;
 
 		$this->setLayout('detailLayout');
+		//$t = $this['reservationForm'];
 	}
 
 
@@ -96,16 +97,17 @@ class RentalPresenter extends BasePresenter {
 
 	//
 	// COMPONENTS
-	// 
-
+	//
 
 	protected function createComponentReservationForm()
 	{
 		$form = $this->reservationFormFactory->create($this->getParameter('rental'));
 		//$form->buildForm();
-	
+
 		$form->onSuccess[] = function ($form) { 
-			if ($form->valid) $form->presenter->redirect('this'); 
+			if ($form->valid) $form->presenter->redirect('this');
+			//$form->presenter->invalidateControl('reservationForm');
+			//$form->presenter->sendPayload();
 		};
 	
 		return $form;

@@ -37,8 +37,12 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 
 	public function buildForm()
 	{
-		$this->addText('name');
-		$this->addText('email');
+		$this->addText('name')
+			->addRule(self::MIN_LENGTH, NULL, 5);
+
+		$this->addText('email')
+			->addRule(self::EMAIL);
+
 		$this->addText('from');
 		$this->addText('to');
 
@@ -47,15 +51,15 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 		$this->addText('phone2');
 
 		$parents = array();
-		$childs = array();
+		$children = array();
 
 		for($i = 0 ; $i < 21 ; ++$i) {
 			$parents[$i] = $i . ' ' . $this->translate('o12277', NULL, ['count' => $i]);
-			$childs[$i] = $i . ' ' . $this->translate('o2443', NULL, ['count' => $i]);
+			$children[$i] = $i . ' ' . $this->translate('o2443', NULL, ['count' => $i]);
 		}
 
 		$this->addSelect('parents','',$parents)->setPrompt('o12277');
-		$this->addSelect('childs','',$childs)->setPrompt('o2443');
+		$this->addSelect('children','',$children)->setPrompt('o2443');
 
 		$this->addTextArea('message');
 
