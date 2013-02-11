@@ -33,6 +33,12 @@ abstract class BasePresenter extends Presenter {
 	 */
 	protected $authenticator;
 
+	/**
+	 * @autowire
+	 * @var \Extras\ImagePipe
+	 */
+	protected $rentalImagePipe;
+
 	protected function startup() {
 		parent::startup();
 		// odstranuje neplatne _fid s url
@@ -101,6 +107,7 @@ abstract class BasePresenter extends Presenter {
 		$template = parent::createTemplate($class);
 		$helpers = $this->getContext()->getService('templateHelpers');
 		$template->registerHelperLoader(array($helpers, 'loader'));
+		$template->_imagePipe = $this->rentalImagePipe;
 		return $template;
 	}
 
@@ -244,12 +251,6 @@ abstract class BasePresenter extends Presenter {
 		$compiler->setJoinFiles(TRUE);
 
 		return new \WebLoader\Nette\JavaScriptLoader($compiler, $this->template->basePath . '/webtemp');
-	}
-
-	public function templatePrepareFilters($template) {
-		$latte = new \Nette\Latte\Engine;
-		$template->registerFilter($latte);
-		\Extras\Macros::install($latte->compiler);
 	}
 
 	public function getBaseUrl() {

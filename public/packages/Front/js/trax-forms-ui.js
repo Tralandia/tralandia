@@ -809,7 +809,7 @@ Nette.addError = function(elem, message) {
 					data.submit();
 				},
 				done: function (e, data) {
-
+                    console.log(data);
 				}
 			});
 
