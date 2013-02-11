@@ -433,6 +433,7 @@ $(document).ready(function(){
 
 	//$.nette.init();
 
+
 	var A = new App();
 
 	$('.ajaxForm').ajaxForm();

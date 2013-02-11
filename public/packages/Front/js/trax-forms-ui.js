@@ -57,7 +57,7 @@ Nette.addError = function(elem, message) {
 			var self = this;
 			var $self = $(this);
 
-			$self.hover(function(){
+			$self.click(function(){
 				$self.find('.socialBtnContent').removeClass('hide');
 				$self.find('.socialBtnHeader').addClass('hide');
 			});
