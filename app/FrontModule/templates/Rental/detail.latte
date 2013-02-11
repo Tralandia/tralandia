@@ -80,20 +80,60 @@
 		<p class="marginBottom nopadding">
 		<a class="brown"  href="{link Rental:list location => $rental->address->locality , rentalType => $rental->type }">{_$rental->type->name|firstUpper} {_$rental->address->locality->name , null , [case=>locative]}</a>
 		</p>
-		<p class="teaser red bold marginBottom">			
-			<i class="entypo-new"></i>{_$rental->teaser|firstUpper}
-		</p>
 
 
-		{foreach $rental->address->getLocations() as $location}
-
-			<a href="{link Rental:list location => $location}">{_$location->name}</a>{if !$iterator->last}, {/if}
-			
-		{/foreach}
-
+		<table class="teaser">
+			<tr>
+				<td><i class="entypo-new"></i></td>
+				<td>{_$rental->teaser|firstUpper}</td>
+			</tr>			
+		</table>
 
 
 
+		<div class="detailInfoBox first">
+			<i class="entypo-new-circle"></i>
+			<div class="content">
+				{$rental->price} #Eur
+				<span>#/ osoba / noc</span>
+			</div>
+		</div>
+
+		<div class="detailInfoBox">
+			<i class="entypo-users"></i>
+			<div class="content">
+				{_o1008} {$rental->maxCapacity} {_o925,null,[count=>$rental->maxCapacity]}
+				<span>{$rental->rooms} #rooms</span>
+			</div>
+		</div>
+
+
+
+
+<div class="detailInfoBoxCover">
+		<div class="detailInfoBox first">		
+			<i class="entypo-bell"></i>	
+			<div class="content">	
+				{_o1012}			
+				<span>ubytovatel byva niekde na cervenom majetry</span>
+			</div>
+		</div>
+
+		<div class="detailInfoBox">
+			<i class="entypo-info2"></i>
+			<div class="content">
+				
+				<span>{$rental->rooms} #rooms lorem ipsum text #rooms lorem ipsum text</span>
+			</div>
+		</div>
+</div>
+
+
+
+
+
+
+{*}
 		<div class="metainfobox double"> 
 			<div class="separator first"><i class="entypo-info2"></i>{$rental->price} #Eur <small>/ osoba / noc</small> </div>
 			<div class="separator second"><i class="entypo-users"></i><span class="capitalize">{_o1008}.</span> <small>{$rental->maxCapacity} {_o925,null,[count=>$rental->maxCapacity]}</small></div>
@@ -109,75 +149,18 @@
 			<div class="clearfix"></div>
 		</div>
 		{/if}
+*}
 
 
 
-		<div class="detailAmanities">
-			<ul class="objectDetailServicesIconList list">
 
-				{var $board = $rental->getAmenitiesByType(array('board'))}
-				{if $board}
-				   <li class="board">
-				   <strong>{_o1010}</strong>
-					   <div class="content">
-						{foreach $board  as $amenities}					
-							{foreach $amenities as $amenity}
-								{_$amenity->name}{if !$iterator->last}, {/if}
-							{/foreach}					
-						{/foreach}
-					</div>
-				   </li>			   
-			   {/if}
-			   {var $separateGroups = $rental->getAmenitiesByType(array('separate-groups'))}
-			   {* {if $separateGroups} *}
-				   <li class="separate-groups">				   
-				   <strong>{_o1011}</strong>
-					   <div class="content">
-						{foreach $separateGroups as $amenities}					
-							{foreach $amenities as $amenity}
-								{_$amenity->name}{if !$iterator->last}, {/if}
-							{/foreach}					
-						{/foreach}
-						</div>
-				   </li>	
-			   {* {/if} *}
-			   {var $ownerAvailability = $rental->getAmenitiesByType(array('owner-availability'))}
-			  {* {if $ownerAvailability} *}
-			   <li class="owner-availability">
-			   <strong>{_o1012}</strong>
-				   <div class="content">
-						{foreach $ownerAvailability as $amenities}					
-							{foreach $amenities as $amenity}
-								{_$amenity->name}{if !$iterator->last}, {/if}
-							{/foreach}				
-						{/foreach}
-				</div>
-			   </li>
-			   {* {/if} *}
-			   {*  {if $rental->rooms} *}
-				   <li class="rooms">
-				   <strong>{_o23006}</strong>
-					   <div class="content">
-						{$rental->rooms}
-					  </div>
-				   </li>
-			   {* {/if} *}
-			</ul>
-		</div>
+<div class="clearfix"></div>
 
-		<div class="clearfix"></div>
-
-
-
-<table class="table table-striped tableDefault autowidth">
-					<thead>
-						<tr>
-							<th>{_o1059}</th>
-						</tr>
-					</thead>
-					<tbody>
+					<h3 class="amenitiesTitle">{_o1059}</h3>
+			
+					<div class="amenitiesContent">
 					{foreach $rental->getAmenitiesByType(array('important','board','kitchen','bathroom','heating','parking','children','room','relax','service','owner-availability','wellness','congress','other')) as $amenities}
-						<tr><td>
+						
 						{foreach $amenities as $amenity}
 							{if $iterator->first}				
 								<b>{_$amenity->type->name}: </b>				
@@ -185,12 +168,10 @@
 
 							{_$amenity->name}{if !$iterator->last}, {/if}
 						{/foreach}
-						</td></tr>
+						
 					{/foreach}
-					</tbody>
-				</table>
-
-	</div>
+					</div>
+</div>
 
 
 
@@ -206,7 +187,7 @@
 
 		<div class="socialIconTable marginBottom marginTop socialIconsDetail">
 			<div class="socialBtnHeader">
-				&#62220; &#62223; &#62217; &#62226; 
+				<strong class="facebook">&#62220;</strong> <strong class="gplus">&#62223;</strong> <strong class="twitter">&#62217;</strong> <strong class="pinterest">&#62226;</strong> 
 			</div>
 			<div class="clearfix"></div>
 			<div class="socialBtnContent hide">
