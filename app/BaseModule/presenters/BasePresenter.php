@@ -230,7 +230,7 @@ abstract class BasePresenter extends Presenter {
 		$files->addFiles($this->cssFiles);
 
 		if($this->cssRemoteFiles) {
-			$files->addRemoteFile($this->cssRemoteFiles);
+			$files->addRemoteFiles($this->cssRemoteFiles);
 		}
 
 		$compiler = \WebLoader\Compiler::createCssCompiler($files, WWW_DIR . '/webtemp');
@@ -244,7 +244,7 @@ abstract class BasePresenter extends Presenter {
 		$files->addFiles($this->jsFiles);
 
 		if($this->jsRemoteFiles) {
-			$files->addRemoteFile($this->jsRemoteFiles);
+			$files->addRemoteFiles($this->jsRemoteFiles);
 		}
 
 		$compiler = \WebLoader\Compiler::createJsCompiler($files, WWW_DIR . '/webtemp');
