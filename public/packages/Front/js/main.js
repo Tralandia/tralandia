@@ -431,7 +431,7 @@ App.prototype.closeForgottenPasswordForm = function(){
 
 $(document).ready(function(){
 
-	//$.nette.init();
+	$.nette.init();
 
 	var A = new App();
 
