@@ -4,6 +4,7 @@
 {includeblock '@formControls.latte'}
 
 {form baseForm, class => "traform dashboard"}
+	{include #rentalPhotos, control => $form['photos']}
 	{include #text, control => $form['text']}
 	{include #price, control => $form['price']}
 	{include #address, control => $form['address']}
