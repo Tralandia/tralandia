@@ -70,9 +70,10 @@ abstract class CoolForm extends Form {
 		// 		$this->parent->flashMessage($error, 'error');
 		// 	}
 		// }
-		foreach ($form->getErrors() AS $error) {
-			$this->parent->flashMessage($error, 'error');
-		}
+//		foreach ($form->getErrors() AS $error) {
+//			$this->parent->flashMessage($error, 'error');
+//		}
+		$this->presenter->invalidateControl($this->getName());
 	}
 
 	public function addSubmit($name, $caption = NULL, $nospam = TRUE) {
