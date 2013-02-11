@@ -153,6 +153,7 @@ Nette.addError = function(elem, message) {
 
 
 // universal form ajax
+/*
 (function($){
 	$.ajaxForm = function(el, options){
 
@@ -212,6 +213,7 @@ Nette.addError = function(elem, message) {
 	};
 	
 })(jQuery);
+*/
 
 
 
@@ -688,7 +690,6 @@ Nette.addError = function(elem, message) {
 
 		};
 		
-
 		base.init();
 	};
 	
@@ -697,34 +698,24 @@ Nette.addError = function(elem, message) {
 	};
 	
 
-	$.galleryControl.hashCode = function(str){
-		var hash = 0;
-		if (str.length == 0) return hash;
-		for (i = 0; i < str.length; i++) {
-			char = str.charCodeAt(i);
-			hash = ((hash<<5)-hash)+char;
-			hash = hash & hash; // Convert to 32bit integer
-		}
-		return hash;
-	}
-
-	$.galleryControl.getName = function(v){
-		return $.galleryControl.hashCode(v.name+v.lastModifiedDate+v.size);
-	}
-
-	// after sort photos set array
+	// return sort array 
 	$.galleryControl.sortableArray = function($elem){
 
-		var o = {};
+		var o = [];
 
 		$elem.find('li').each(function(i){
-			o[i] = $(this).attr('data-id');
-			++i
-			//o.push($(this).attr('data-id'));
+
+			o.push($(this).attr('data-id'));
 		});
 
-		return o ;
+		return o.join(',') ;
 	}
+
+	// save sortable values
+	$.galleryControl.saveSortableValues = function($input,$elem){
+		$input.val($.galleryControl.sortableArray($elem));
+	}
+
 
 	$.fn.galleryControl = function(options){
 
@@ -732,6 +723,11 @@ Nette.addError = function(elem, message) {
 
 			var self = this;
 			var $self = $(this);
+
+			var $uploadButton = $self.find('button');
+			var $uploadButtonReal = $self.find('input[type=file]');
+
+			var $sortInput = $self.find('#frm-baseForm-photos-sort');
 
 			var $listGallery = $self.find('#sortable');
 
@@ -741,6 +737,16 @@ Nette.addError = function(elem, message) {
 
 			var $removeLinkElement = $listGallery.find('li a');
 			
+			// default sort photos 
+			$.galleryControl.saveSortableValues($sortInput,$listGallery);
+
+			// upload button ui
+			$uploadButton.live('click',function(){
+				//alert('click');
+				//$uploadButtonReal.trigger('click');
+				return false;
+			});
+
 			// remove image function 
 			$removeLinkElement.live('click',function(){						
 				
@@ -754,16 +760,14 @@ Nette.addError = function(elem, message) {
 					id: $el.parent().attr('data-id')
 				}
 
-				$.ajax({
-				  url: removeUrl,
-				  data: data,
-				}).done(function() {
+				setTimeout(function(){
 				  	$el.parent().fadeOut({
 				  		complete: function(){
 				  			$(this).remove();
+				  			$.galleryControl.saveSortableValues($sortInput,$listGallery);
 				  		}
-				  	});
-				});
+				  	});					
+				},1000);
 
 				return false;
 			});
@@ -772,17 +776,9 @@ Nette.addError = function(elem, message) {
 			// sort images function
 			$listGallery.sortable({
 			  stop: function( event, ui ) {
-
-				$.ajax({
-				  url: sortableUrl,
-				  data: $.galleryControl.sortableArray($listGallery),
-				}).done(function() {
-				  
-				});
-
+			  	$.galleryControl.saveSortableValues($sortInput,$listGallery);
 			  }
 			});
-
 			$listGallery.disableSelection();
 
 
@@ -796,8 +792,7 @@ Nette.addError = function(elem, message) {
 					if(!firstStart){
 
 						var html = '';
-						$.each(data.originalFiles,function(k,v){
-							//var divId = $.galleryControl.getName(v);
+						$.each(data.originalFiles,function(k,v){							
 							html+= '<li class="loading" id="+divId+"></li>';
 						});
 
@@ -810,7 +805,22 @@ Nette.addError = function(elem, message) {
 				},
 				done: function (e, data) {
 
+					$listGallery.find('li.loading').each(function(index){
+						
+						if(index == 0){
+							$(this).attr({
+									class: 'ui-state-default',
+									'data-id': data.result[0].id
+								}).html('<img src="'+data.result[0].path+'" /><a href="#" class="remove">#delete</a>');
+						} else {
+							return false;
+						}
+					});
+
+					firstStart = false;
 				}
+			}).bind('fileuploadstop',function(d){
+				$.galleryControl.saveSortableValues($sortInput,$listGallery);
 			});
 
 

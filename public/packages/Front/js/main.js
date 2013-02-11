@@ -433,10 +433,9 @@ $(document).ready(function(){
 
 	//$.nette.init();
 
-
 	var A = new App();
 
-	$('.ajaxForm').ajaxForm();
+	//$('.ajaxForm').ajaxForm();
 
 	$('.socialIconsDetail').socialIconsDetail();
 
