@@ -306,7 +306,6 @@
 	$months = $container->getMonths();
 }
 {?unset($control)}
-
 <div class="calendarEdit">
     <div class="calendar" n:foreach="$months as $key => $month">
         <div class="monthName">{$month->title}</div>
@@ -328,7 +327,7 @@
 		{/foreach}
     </div>
 </div>
-
+{input $container['data']}
 {/define #calendar}
 
 
