@@ -2,10 +2,13 @@
 <div class="page-header"><h1>Example Form</h1></div>
 
 {form baseForm, class => "traform dashboard"}
+	{include #text, control => $form['text']}
+	{include #text, control => $form['text'], prepend => ['text' => 'http://']}
+	{include #text, control => $form['text'], append => ['text' => 'EUR / noc']}
 	{include #calendar, control => $form['calendar']}
 	{include #rentalPhotos, control => $form['photos']}
-	{include #text, control => $form['text']}
 	{include #price, control => $form['price']}
+	{include #phone, control => $form['phone']}
 	{include #address, control => $form['address']}
 	{include #phrase, control => $form['phrase']}
 	{include #submit, control => $form['submit'], icon => 'icon-trash'}
