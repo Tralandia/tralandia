@@ -71,10 +71,9 @@ class ExampleFormPresenter extends BasePresenter {
 
 		$imageStorage = $this->getContext()->getService('rentalImageStorage');
 		$imagePipe = $this->getContext()->getService('rentalImagePipe');
-		$form['photos'] = new \Extras\Forms\Container\RentalPhotosContainer($rental, $this->rentalImageRepository,
-			$imageStorage,
-			$imagePipe);
+		$form['photos'] = new \Extras\Forms\Container\RentalPhotosContainer($rental, $this->rentalImageRepository, $imageStorage, $imagePipe);
 
+		$form['calendar'] = new \Extras\Forms\Container\CalendarContainer();
 
 /*
 		$form->addTextArea('textArea', 'Text Area')
