@@ -12,6 +12,58 @@
 
 
 {*
+	Password Control -------------------------------------------
+	@param $control \Nette\Forms\Controls\BaseControl
+	@param $prepend array
+	@param $append array
+*}
+{define #password}
+	{default $prepend = ['text' => '<i class="icon-lock"></i>']}
+	{default $append = NULL}
+	{include #baseControl, control => $control, prepend => $prepend, append => $append}
+{/define #password}
+
+
+{*
+	Email Control -------------------------------------------
+	@param $control \Nette\Forms\Controls\BaseControl
+	@param $prepend array
+	@param $append array
+*}
+{define #email}
+	{default $prepend = ['text' => '<i class="icon-envelope"></i>']}
+	{default $append = NULL}
+	{include #baseControl, control => $control, prepend => $prepend, append => $append}
+{/define #email}
+
+
+{*
+	Url Control -------------------------------------------
+	@param $control \Nette\Forms\Controls\BaseControl
+	@param $prepend array
+	@param $append array
+*}
+{define #url}
+	{default $prepend = ['text' => 'http://']}
+	{default $append = NULL}
+	{include #baseControl, control => $control, prepend => $prepend, append => $append}
+{/define #url}
+
+
+{*
+	Select Control -------------------------------------------
+	@param $control \Nette\Forms\Controls\SelectControl
+	@param $prepend array
+	@param $append array
+*}
+{define #select}
+	{default $prepend = NULL}
+	{default $append = NULL}
+	{include #baseControl, control => $control, prepend => $prepend, append => $append}
+{/define #select}
+
+
+{*
 	Base Control -------------------------------------------
 	@param $control \Nette\Forms\Controls\BaseControl
 	@param $prepend array
@@ -24,18 +76,26 @@
         <small>{$control->getOption('description')}</small>
     </div>
     <div class="controls">
+		{capture $input}
+			{if $control instanceof \Nette\Forms\Controls\SelectBox}
+				{input $control, class => 'select2'}
+			{else}
+				{input $control}
+			{/if}
+		{/capture}
+
 		{ifset $prepend}
             <div class="input-prepend">
-                <span class="add-on">{$prepend['text']}</span>
-				{input $control}
+                <span class="add-on">{!$prepend['text']}</span>
+				{!$input}
             </div>
 		{elseifset $append}
             <div class="input-append">
-				{input $control}
-                <span class="add-on">{$append['text']}</span>
+				{!$input}
+                <span class="add-on">{!$append['text']}</span>
             </div>
 		{else}
-			{input $control}
+			{!$input}
 		{/ifset}
         <i class="validation"></i>
 	{include #controlErrors, errors => $control->getErrors()}
@@ -386,7 +446,7 @@
 	@param $icon string
 *}
 {define #submit}
-<button type="submit" name="{$control->getHtmlName()}" id="{$control->getHtmlId()}">
+<button type="submit" class="btn" name="{$control->getHtmlName()}" id="{$control->getHtmlId()}">
 	<i n:ifset="$icon" class="{$icon}"></i> {$control->caption}
 </button>
 {/define #submit}
