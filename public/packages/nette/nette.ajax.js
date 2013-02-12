@@ -163,6 +163,7 @@ var nette = function () {
 				isImage: $el.is('input[type=image]'),
 				form: null
 			};
+			
 
 			if (analyze.isSubmit || analyze.isImage) {
 				analyze.form = analyze.el.closest('form');
@@ -171,7 +172,7 @@ var nette = function () {
 			}
 
 			if (!settings.url) {
-				settings.url = analyze.form ? analyze.form.attr('action') : ui.href;
+				settings.url = analyze.form ? analyze.form.attr('action') : ui.href;				
 			}
 			if (!settings.type) {
 				settings.type = analyze.form ? analyze.form.attr('method') : 'get';

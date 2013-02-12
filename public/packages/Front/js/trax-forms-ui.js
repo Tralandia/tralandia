@@ -6,6 +6,7 @@
  * custom Nette addError function
  * Display error message.
  */
+ /*
 Nette.addError = function(elem, message) {
 	if (elem.focus) {
 		elem.focus();
@@ -23,7 +24,7 @@ Nette.addError = function(elem, message) {
 		
 	}
 };
-
+*/
 
 
 
@@ -582,42 +583,61 @@ Nette.addError = function(elem, message) {
 		
 	};
 	
+
+	$.calendarEdit.conteiner = [];
+
+	$.calendarEdit.addToInput = function(a,$elem){		
+
+		$elem.val(a.toString());
+
+	}
+
+	$.calendarEdit.addDate = function(d,$elem){
+
+		$.calendarEdit.conteiner.push(d);
+
+		$.calendarEdit.addToInput($.calendarEdit.conteiner,$elem);
+	};	
+
+	$.calendarEdit.removeDate = function(d,$elem){
+	
+		var p = $.calendarEdit.conteiner.indexOf(d);
+
+		$.calendarEdit.conteiner.splice(p,1);
+		$.calendarEdit.addToInput($.calendarEdit.conteiner,$elem);
+	};		
+
 	$.fn.calendarEdit = function(options){
 		return this.each(function(){
 
 			var calendarForm = this;
 			var $calendarForm = $(this);
 
+			var $input = $calendarForm.find('input[type=hidden]');
+
+			$.calendarEdit.conteiner = $input.val().split(',');
+
 			$calendarForm.find('.calendar').each(function(i){
 
 				var calendar = this;
 				var $calendar = $(this);
-
-				var currentDate = $calendar.attr('data-date');
-
+								
 					$calendar.find('.day.active').click(function(){
-
-						var currentDay = $(this).attr('data-day');
-						var currentTime = currentDate+'-'+currentDay;
+						
+						var currentTime = $(this).attr('data-date');
 						
 						if(!$(this).hasClass('selected')){
 
 							$(this).addClass('selected');
-
-							var newInput = $('<input>').attr({
-								value: currentTime,
-								type: 'hidden',
-								name: 'calendar[]'
-							});
-
-							$(this).append(newInput);
+													
+							$.calendarEdit.addDate(currentTime,$input);
 
 						} else {
 							$(this).removeClass('selected');
-
-							$(this).find('input').remove();
+							
+							$.calendarEdit.removeDate(currentTime,$input);
+							
 						}
-
 
 						var statusClass = {
 							first: 'status01',
@@ -655,9 +675,7 @@ Nette.addError = function(elem, message) {
 
 						return false;
 						
-					});
-
-			   
+					});			   
 
 			});
 
