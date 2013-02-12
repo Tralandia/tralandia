@@ -124,8 +124,9 @@ class AddressNormalizer extends \Nette\Object {
 		// Set the Address Entity details
 
 		// Latitude / Longitude
-		$this->address->latitude = new \Extras\Types\Latlong($response->getLocation()->lat);
-		$this->address->longitude = new \Extras\Types\Latlong($response->getLocation()->lng);
+		$latlong = new \Extras\Types\Latlong($response->getLocation()->lat, $response->getLocation()->lng);
+		$this->address->latitude = $latlong->getLatitude();
+		$this->address->longitude = $latlong->getLongitude();
 
 		// Address
 		if ((!$this->address->address || $override === TRUE) && isset($info[\GoogleGeocodeResponseV3::ACT_ROUTE])) {
