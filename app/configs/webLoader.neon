@@ -25,10 +25,49 @@ parameters:
 
 				js:
 
+			Texyla:
+				css:
+					- texyla/texyla/css/style.css
+					- texyla/themes/default/theme.css
+				js:
+					# Texyla core
+					- texyla/texyla/js/texyla.js
+					- texyla/texyla/js/selection.js
+					- texyla/texyla/js/texy.js
+					- texyla/texyla/js/buttons.js
+					- texyla/texyla/js/dom.js
+					- texyla/texyla/js/view.js
+					- texyla/texyla/js/ajaxupload.js
+					- texyla/texyla/js/window.js
+					# languages
+					- texyla/texyla/languages/cs.js
+					- texyla/texyla/languages/en.js
+					- texyla/texyla/languages/sk.js
+					# plugins
+					# - texyla/texyla/plugins/keys/keys.js
+					# - texyla/texyla/plugins/resizableTextarea/resizableTextarea.js
+					# - texyla/texyla/plugins/img/img.js
+					# - texyla/texyla/plugins/table/table.js
+					# - texyla/texyla/plugins/link/link.js
+					# - texyla/texyla/plugins/emoticon/emoticon.js
+					# - texyla/texyla/plugins/symbol/symbol.js
+					# - texyla/texyla/plugins/files/files.js
+					# - texyla/texyla/plugins/color/color.js
+					# - texyla/texyla/plugins/textTransform/textTransform.js
+					# - texyla/texyla/plugins/youtube/youtube.js
+					# - texyla/texyla/plugins/gravatar/gravatar.js
+
+
+
+			Select2:
+				css:
+					- Select2/css/select2.css
+				js:
+					- Select2/js/select2.js
 
 			Front:
 				css:					
-					- Select2/css/select2.css
+					
 					- Front/custom-icon.less
 					- Front/main.css.less
 					- Front/form-registration.less
@@ -54,11 +93,6 @@ parameters:
 					- FileUpload/js/jquery.iframe-transport.js
 					- FileUpload/js/jquery.fileupload.js
 
-
-					- bootstrap/bootstrap-dropdown.js					
-					- bootstrap/bootstrap-modal.js
-					- bootstrap/bootstrap-tab.js
-
 					- jqueryScrollTo/jquery.scrollTo-1.4.3.1-min.js
 					- FrontJqUi/js/jquery-ui-1.9.1.custom.min.js
 					- Front/js/jquery-tra-map.js
@@ -70,7 +104,7 @@ parameters:
 					- Front/js/jquery.jcarousel.min.js
 					- Front/js/ui-localization-datepicker.js
 					- Front/js/trax-forms-ui.js
-					- Select2/js/select2.js
+					
 					- Front/js/main.js
 					- nette/nette.ajax.js
 
@@ -108,18 +142,18 @@ parameters:
 					- nette/netteForms.js
 			bootstrap:
 				js: 
-					- bootstrap/bootstrap-alert.js
-					- bootstrap/bootstrap-button.js
-					# - bootstrap/bootstrap-carousel.js
-					- bootstrap/bootstrap-collapse.js
+					#- bootstrap/bootstrap-alert.js
+					#- bootstrap/bootstrap-button.js
+					#- bootstrap/bootstrap-carousel.js
+					#- bootstrap/bootstrap-collapse.js
 					- bootstrap/bootstrap-dropdown.js
 					- bootstrap/bootstrap-modal.js
-					- bootstrap/bootstrap-tooltip.js
-					- bootstrap/bootstrap-popover.js
-					# - bootstrap/bootstrap-scrollspy.js
+					#- bootstrap/bootstrap-tooltip.js
+					#- bootstrap/bootstrap-popover.js
+					#- bootstrap/bootstrap-scrollspy.js
 					- bootstrap/bootstrap-tab.js
-					- bootstrap/bootstrap-transition.js
-					- bootstrap/bootstrap-typeahead.js
+					#- bootstrap/bootstrap-transition.js
+					#- bootstrap/bootstrap-typeahead.js
 			liveQuery:
 				js: liveQuery/livequery.js
 			jQuery:
@@ -199,8 +233,12 @@ parameters:
 				-  %webloader.packages.gMap%
 				#-  %webloader.packages.AdminFront%				
 				
-			Front: 
+			Front:				
+
 				-  %webloader.packages.Front%
+				-  %webloader.packages.bootstrap%				
+				-  %webloader.packages.Select2%
+				-  %webloader.packages.Texyla%
 				-  %webloader.packages.gMap%
 			
 			'Front:Rental:list': 
