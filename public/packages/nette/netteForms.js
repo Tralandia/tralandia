@@ -109,6 +109,7 @@ Nette.validateForm = function(sender) {
 
 
 Nette.addError = function(elem, message) {
+
 	if (elem.focus) {
 		$(elem)
 			.parents('.control-group')
