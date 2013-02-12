@@ -2227,45 +2227,64 @@ form.traform {
 
 		.control-group {
 
+			&.phonecontrol {
+				.select2-container {
+					width: 110px;
+					float: left;
+					
+
+					a {
+						border-radius: 3px 0 0 3px;
+					}
+				}
+
+				.controls {
+					input[type=text] {
+						width: 330px;
+						border-radius: 0 3px 3px 0;
+						border-left: none;
+					}					
+				}
+
+			}
 
 
+			.select2-container {
+				width: 440px;
 
-					.select2-container {
-						width: 440px;
+				&.span9 {
+					margin-left: 0;
+				}
 
-						&.span9 {
-							margin-left: 0;
+				
+
+				a.select2-choice {
+					border: 1px solid @lightGreen;
+					height: 36px;
+					line-height: 36px;
+					
+					div {
+						width: 23px;
+						background: none;
+						border: none;
+						b {
+							background:url('../packages/Select2/css/select2.png') no-repeat 3px 5px;
 						}
-
-						
-
-						a.select2-choice {
-							border: 1px solid @lightGreen;
-							height: 36px;
-							line-height: 36px;
-							
-							div {
-								width: 23px;
-								background: none;
-								border: none;
-								b {
-									background:url('../packages/Select2/css/select2.png') no-repeat 3px 5px;
-								}
-							}
-
-							
-						}
-									
 					}
 
+					
+				}
+							
+			}
 
 
-					.span3 {
-						.select2-container {
-							width: 173px;
-										
-						}
-					}
+
+			.span3 {
+				.select2-container {
+					width: 173px;
+								
+				}
+			}
 
 
 			&.pricePhrase {
@@ -2364,9 +2383,12 @@ form.traform {
 					float: left;
 					height: 38px;
 
-					input[type=text] {
+					input[type=text],input[type=password] {
 						float: right;
-						width: 403px;
+						width: 379px;
+					}
+					span.add-on {
+						width: 40px;
 					}
 				}
 
