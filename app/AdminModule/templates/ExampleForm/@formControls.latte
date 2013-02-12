@@ -298,3 +298,16 @@
 <div class="clearfix"></div>
 </div>
 {/define #rentalPhotos}
+
+
+
+{*
+	Submit Button Container -------------------------------------------
+	@param $control \Nette\Forms\Controls\SubmitButton
+	@param $icon string
+*}
+{define #submit}
+<button type="submit" name="{$control->getHtmlName()}" id="{$control->getHtmlId()}">
+	<i n:ifset="$icon" class="{$icon}"></i> {$control->caption}
+</button>
+{/define #submit}
