@@ -11,11 +11,17 @@
  */
 
 .fileinput-button {
-  position: relative;
-  overflow: hidden;
-  float: left;
-  margin-right: 4px;
+position: relative;
+overflow: hidden;
+float: left;
+width: 110px;
+margin-right: 4px;
+margin-bottom: 10px;
 }
+.btn.btn-green.fileinput-button span {
+  top: 1px;
+}
+
 .fileinput-button input {
   position: absolute;
   top: 0;
