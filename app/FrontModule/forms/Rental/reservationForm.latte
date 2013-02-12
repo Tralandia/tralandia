@@ -1,35 +1,44 @@
 {includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
-{form reservationForm , class => 'ajax' }
+{form reservationForm , class => ' reservationform' }
 
 	{* add class invalid to input *}
 
-	{input name}
-	{*<span class="errorMsg">Error mesage Error mesage Error mesage Error mesage Error mesage Error mesage Error mesage Error mesage </span>*}
-	{input email}
+	<div class="control-group">
+	{input name ,data-validation-message => "error-msg-reservation-name"}
+	<span class="control-error" id="error-msg-reservation-name"></span>
+	</div>
 
+	<div class="control-group">
+	{input email , data-validation-message => "error-msg-reservation-email"}
+	<span class="control-error" id="error-msg-reservation-email"></span>
+	</div>
 
-	{input $form['phone']['prefix'] , class => 'tel'}
-	{input $form['phone']['number'], class => "telnum"}
+	<div class="control-group">
+	{input $form['phone']['prefix'] , class => 'tel' , data-validation-message => "error-msg-reservation-tel"}
+	{input $form['phone']['number'], class => "telnum" , data-validation-message => "error-msg-reservation-tel"}
+	<span class="control-error" id="error-msg-reservation-tel"></span>
+	</div>
 
-	{* <span class="errorMsg">Error mesage Error mesage Error mesage Error mesage Error mesage Error mesage Error mesage Error mesage </span>
-	*}
 
 	{input parents , class => 'counter first'}
 	{input children , class => 'counter'}
 
+
 	<div class="clearfix"></div>
+
+
 	<div class="input-append">
-		{input from, class => "datepicker"}
+		{input from, class => "datepicker" ,data-validation-message => "error-msg-reservation" }
 	  	<span class="add-on datepickerIcon entypo-calendar"></span>
 	</div>
 
 	<div class="input-append">
-		{input from, class => "datepickerto"}
+		{input from, class => "datepickerto" , data-validation-message => "error-msg-reservation"}
 		<span class="add-on datepickerIcon entypo-calendar"></span>
 	</div>
 
-	{input message}
-	<span class="errorMsg" style="display:none;"></span>
+	{input message , data-validation-message => "error-msg-reservation"}
+	<span class="errorMsg" id="error-msg-reservation" style=""></span>
 	
 	{input submit, class => "btn btn-orange"}
 {/form}

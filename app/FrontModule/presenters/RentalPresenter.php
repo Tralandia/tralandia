@@ -105,9 +105,9 @@ class RentalPresenter extends BasePresenter {
 		//$form->buildForm();
 
 		$form->onSuccess[] = function ($form) { 
-			if ($form->valid) $form->presenter->redirect('this');
+			//if ($form->valid) $form->presenter->redirect('this');
 			//$form->presenter->invalidateControl('reservationForm');
-			//$form->presenter->sendPayload();
+			$form->presenter->sendPayload();
 		};
 	
 		return $form;
