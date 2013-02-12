@@ -60,6 +60,7 @@ class ExampleFormPresenter extends BasePresenter {
 
 
 		$form['price'] = new \Extras\Forms\Container\PriceContainer('Price', ['EUR', 'HUF', 'CZK']);
+		$form['phone'] = new \Extras\Forms\Container\PhoneContainer('Phone', ['+ 421', '+ 1', '+ 2']);
 
 		$locations = $this->locationRepository->getCountriesForSelect();
 		$address = $this->addressRepository->find(1);
