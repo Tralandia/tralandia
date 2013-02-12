@@ -168,6 +168,28 @@
 						
 					{/foreach}
 					</div>
+
+
+					{if count($rental->pricelistRows) > 0}
+					{var $noPriceTable = false}
+						<ul>
+							<li><h4>{_o1015}</h4>
+								<ul>
+									{foreach $rental->pricelistRows as $pricelistRow}
+									<li>	
+									{_$pricelistRow->roomType->name}: 
+									{$pricelistRow->roomCount} -#krat
+									{$pricelistRow->bedCount} {_o940 , null , [count => $pricelistRow->bedCount]}
+									{if $pricelistRow->extraBedCount}{$pricelistRow->extraBedCount} {_o1158}{/if}
+									{$pricelistRow->price} #mena
+									</li>
+									{/foreach}
+								</ul>
+							</li>
+						</ul>
+					{/if}
+
+
 </div>
 
 
@@ -415,27 +437,7 @@ $(document).ready(function(){
 				<div class="tab-pane" id="pricetable">
 
 					{var $noPriceTable = true}
-					{if count($rental->pricelistRows) > 0}
-					{var $noPriceTable = false}
-					<table class="table table-striped tableDefault half first marginBottom">
-						<thead>
-							<tr>							
-								<th colspan="5">{_o1015}</th>
-							</tr>
-						</thead>
-						<tbody>
-						{foreach $rental->pricelistRows as $pricelistRow}
-							<tr>
-							<td>{_$pricelistRow->roomType->name}: </td>
-							<td>{$pricelistRow->roomCount} -#krat</td>
-							<td>{$pricelistRow->bedCount} {_o940 , null , [count => $pricelistRow->bedCount]}</td>
-							<td>{if $pricelistRow->extraBedCount}{$pricelistRow->extraBedCount} {_o1158}{/if}</td>
-							<td>{$pricelistRow->price} #mena</td>
-							</tr>
-						{/foreach}
-						</tbody>
-					</table>
-					{/if}
+
 					{if count($rental->pricelists) > 0}
 					{var $noPriceTable = false}
 					<table class="table table-striped tableDefault half marginTop">
