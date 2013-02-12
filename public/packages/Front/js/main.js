@@ -427,11 +427,11 @@ App.prototype.closeForgottenPasswordForm = function(){
 ****************************************************************************************************/
 
 
-
-
 $(document).ready(function(){
 
 	$.nette.init();
+
+    //$("textarea.texyla").texyla();
 
 	var A = new App();
 
