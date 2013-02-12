@@ -1,14 +1,16 @@
+{includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
 {form reservationForm , class => 'ajax' }
 
 	{* add class invalid to input *}
 
-	<input type="text" n:input="name" placeholder="{_o1031}" class="valid"/>
+	{input name}
 	{*<span class="errorMsg">Error mesage Error mesage Error mesage Error mesage Error mesage Error mesage Error mesage Error mesage </span>*}
-	<input type="text" n:input="email" placeholder="{_o1034}" />
+	{input email}
 
 
-	{input phonePrefix , class => 'tel'}
-	<input n:input="phone2" type="text" class="telnum valid" placeholder="{_o1037}"/>
+	{input $form['phone']['prefix'] , class => 'tel'}
+	{input $form['phone']['number'], class => "telnum"}
+
 	{* <span class="errorMsg">Error mesage Error mesage Error mesage Error mesage Error mesage Error mesage Error mesage Error mesage </span>
 	*}
 
@@ -17,17 +19,17 @@
 
 	<div class="clearfix"></div>
 	<div class="input-append">
-	  <input n:input="from" placeholder="{_o1043}" class="datepicker" type="text">
-	  <span class="add-on datepickerIcon entypo-calendar"></span>
+		{input from, class => "datepicker"}
+	  	<span class="add-on datepickerIcon entypo-calendar"></span>
 	</div>
 
 	<div class="input-append">
-	  <input n:input="to"  placeholder="{_o1044}" class="datepickerto" type="text">
-	  <span class="add-on datepickerIcon entypo-calendar"></span>
+		{input from, class => "datepickerto"}
+		<span class="add-on datepickerIcon entypo-calendar"></span>
 	</div>
 
-	<textarea n:input="message" placeholder="{_o12279}" class="valid"></textarea>
+	{input message}
 	<span class="errorMsg" style="display:none;"></span>
 	
-	<input type="submit" class="btn btn-orange">
+	{input submit, class => "btn btn-orange"}
 {/form}
