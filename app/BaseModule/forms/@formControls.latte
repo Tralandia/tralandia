@@ -1,11 +1,21 @@
+{*
+	Text Control -------------------------------------------
+	@param $control \Nette\Forms\Controls\BaseControl
+	@param $prepend array
+	@param $append array
+*}
 {define #text}
-	{include #baseControl, control => $control}
+	{default $prepend = NULL}
+	{default $append = NULL}
+	{include #baseControl, control => $control, prepend => $prepend, append => $append}
 {/define #text}
 
 
 {*
 	Base Control -------------------------------------------
 	@param $control \Nette\Forms\Controls\BaseControl
+	@param $prepend array
+	@param $append array
 *}
 {define #baseControl}
 <div class="control-group ">
@@ -14,7 +24,19 @@
         <small>{$control->getOption('description')}</small>
     </div>
     <div class="controls">
-		{input $control}
+		{ifset $prepend}
+            <div class="input-prepend">
+                <span class="add-on">{$prepend['text']}</span>
+				{input $control}
+            </div>
+		{elseifset $append}
+            <div class="input-append">
+				{input $control}
+                <span class="add-on">{$append['text']}</span>
+            </div>
+		{else}
+			{input $control}
+		{/ifset}
         <i class="validation"></i>
 	{include #controlErrors, errors => $control->getErrors()}
     </div>
@@ -58,6 +80,32 @@
     <div class="clearfix"></div>
 </div>
 {/define #price}
+
+
+{*
+	Phone Container -------------------------------------------
+	@param $control \Extras\Forms\Container\PhoneContainer
+*}
+{define #phone}
+{var
+	$container = $control;
+	$mainControl = $container->getMainControl()
+}
+{?unset($control)}
+<div class="control-group">
+    <div class="form-label">
+		{label $mainControl /}
+        <small>{$container->getDescription()}</small>
+    </div>
+    <div class="controls">
+		{input $container['prefix'], class => 'select2'}
+		{input $container['number']}
+        <i class="validation"></i>
+		{include #controlErrors, errors => $container->getAllErrors()}
+    </div>
+    <div class="clearfix"></div>
+</div>
+{/define #phone}
 
 
 {*
