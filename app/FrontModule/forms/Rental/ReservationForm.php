@@ -38,17 +38,32 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 	public function buildForm()
 	{
 		$this->addText('name')
-			->addRule(self::MIN_LENGTH, NULL, 5);
+			->addRule(self::MIN_LENGTH, NULL, 5)
+			->getControlPrototype()
+				->setPlaceholder('o1031');
 
 		$this->addText('email')
-			->addRule(self::EMAIL);
+			->addRule(self::EMAIL)
+			->getControlPrototype()
+				->setPlaceholder('o1034');
 
-		$this->addText('from');
-		$this->addText('to');
+		$this->addText('from')
+			->getControlPrototype()
+				->setPlaceholder('o1043');
 
-		$this->addSelect('phonePrefix', '', $this->locationRepository->getCountriesPhonePrefixes())->setDefaultValue($this->rental->primaryLocation->phonePrefix);
+		$this->addText('to')
+			->getControlPrototype()
+				->setPlaceholder('o1044');
 
-		$this->addText('phone2');
+
+		$phone = $this->addContainer('phone');
+		$phone->addSelect('prefix', '', $this->locationRepository->getCountriesPhonePrefixes())
+			->setDefaultValue($this->rental->primaryLocation->phonePrefix);
+
+		$phone->addText('number')
+			->getControlPrototype()
+				->setPlaceholder('o1037');
+
 
 		$parents = array();
 		$children = array();
@@ -61,7 +76,12 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 		$this->addSelect('parents','',$parents)->setPrompt('o12277');
 		$this->addSelect('children','',$children)->setPrompt('o2443');
 
-		$this->addTextArea('message');
+		$this->addTextArea('message')
+			->getControlPrototype()
+				->setPlaceholder('o12279');
+
+
+		$this->addSubmit('submit', '#send');
 
 		$this->onSuccess[] = callback($this, 'process');
 	}
