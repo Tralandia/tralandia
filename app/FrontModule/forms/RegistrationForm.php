@@ -67,17 +67,15 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 		$this->addText('referrer', 'Referrer');
 		$this->addText('email', 'Email');
 
-		$phone = $this->addContainer('phone');
-		$phone->addSelect('prefix', '', $phonePrefixes);
-		$phone->addText('number', 'Phone');
+		$this['phone'] = new \Extras\Forms\Container\PhoneContainer('Phone', $phonePrefixes);
 
-		$this->addText('www', 'WWW');
+		$this->addText('url', 'WWW');
 
 		$this->addPassword('password', 'Password');
 		$this->addPassword('password2', 'Confirm Password');
 
-		$this->addText('rentalAddress', 'Address');
-		$this->addText('rentalGps', 'GPS');
+//		$this->addText('rentalAddress', 'Address');
+//		$this->addText('rentalGps', 'GPS');
 
 		$this->addText('rentalName', 'Rental Name');
 		$this->addSelect('rentalType', 'Rental Type', $rentalTypes);
@@ -87,7 +85,7 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 
 		$this->addText('rentalMaxCapacity', 'Max Capacity');
 
-		$this->addSubmit('register', 'OK let\'s do this shit');
+		$this->addSubmit('submit', 'OK let\'s do this shit');
 
 	}
 
