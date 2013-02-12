@@ -280,7 +280,11 @@ class BaseImport {
 	// 	}
 	// }
 
-	protected function createNewPhrase(\Entity\BaseEntity $type, $oldPhraseId = NULL, $oldLocativePhraseId = NULL, $locativeKeys = NULL) {
+	protected function createNewPhrase(\Entity\BaseEntity $type, $oldPhraseId = NULL, $oldLocativePhraseId = NULL, $locativeKeys = NULL, \Entity\Language $sourceLanguage = NULL) {
+
+		if (!$sourceLanguage) {
+			$sourceLanguage = $this->context->languageRepositoryAccessor->get()->findOneBy(array('iso' => 'en'));
+		}
 
 		$oldPhraseData = NULL;
 		if ($oldPhraseId) {
@@ -298,6 +302,7 @@ class BaseImport {
 		$phrase->ready = (bool)$oldPhraseData['ready'];
 		$phrase->type = $type;
 		$phrase->oldId = $oldPhraseId;
+		$phrase->sourceLanguage = $sourceLanguage;
 
 		$allLanguages = getSupportedLanguages();
 		foreach ($allLanguages as $key => $value) {
@@ -337,6 +342,7 @@ class BaseImport {
 	 * @return \Entity\Phrase\Phrase
 	 */
 	protected function createPhraseFromString($entityName, $entityAttribute, $level, $text, $textLanguage) {
+		
 		$phraseType = $this->createPhraseType($entityName, $entityAttribute, $level);
 
 		$phrase = $this->context->phraseRepositoryAccessor->get()->createNew(FALSE);
@@ -347,6 +353,9 @@ class BaseImport {
 		if(is_string($textLanguage)) {
 			$textLanguage = $this->context->languageRepositoryAccessor->get()->findOneBy(array('iso' => $textLanguage));
 		}
+
+		$phrase->sourceLanguage = $textLanguage;
+
 		$translation = $phraseService->createTranslation($textLanguage, $text);
 
 		return $phrase;
