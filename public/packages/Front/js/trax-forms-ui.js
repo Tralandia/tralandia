@@ -614,8 +614,13 @@ Nette.addError = function(elem, message) {
 			var $calendarForm = $(this);
 
 			var $input = $calendarForm.find('input[type=hidden]');
+			var defaultValue = $input.val();
 
-			$.calendarEdit.conteiner = $input.val().split(',');
+			if(defaultValue.length > 0){
+				$.calendarEdit.conteiner = defaultValue.split(',');
+			}
+
+			
 
 			$calendarForm.find('.calendar').each(function(i){
 
