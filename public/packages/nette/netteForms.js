@@ -117,7 +117,8 @@ Nette.addError = function(elem, message) {
 		elem.focus();
 	}
 	if (message) {
-		$(elem).after('<span class="help-inline error">' + message + '</span>');
+		var msgId = '#'+$(elem).attr('data-validation-message');
+		$(msgId).html(message);
 	}
 };
 
@@ -128,6 +129,9 @@ Nette.removeError = function(elem) {
 		.removeClass('error')
 		.find('.help-inline.error')
 		.detach();
+
+		var msgId = '#'+$(elem).attr('data-validation-message');
+		$(msgId).html('');
 };
 
 
