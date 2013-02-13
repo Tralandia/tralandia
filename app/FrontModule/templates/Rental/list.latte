@@ -49,7 +49,9 @@
 		        		<!--<div class="addons btn">icon</div>--><div class="position">TOP</div>
 		        		
 		        		{if $mainImage = $rental->getMainImage()}
-		        			<img src="{$basePath}{$mainImage|rentalImageSrc}" />
+		        			<img n:img="{$mainImage}" />
+						{else}
+                            <img alt="{_$rental->name}" n:fakeImg="" class="marginBottom" />
 		        		{/if}
 
 		        		</a>
