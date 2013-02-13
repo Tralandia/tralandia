@@ -532,9 +532,9 @@ ul.arrows {
 		cursor: pointer;
 		color: #ffffff;
 		float: right;
-		margin-right: 8px;
+		margin-right: 10px;
 		position: relative;
-		top: -12px;
+		top: -20px;
 		background: url('../packages/Front/img/page_title_bg.png') repeat;
 		height: 27px;
 		line-height: 29px;
@@ -1640,6 +1640,7 @@ border: 1px solid rgb(213, 213, 213);
 		span {
 			&:before {				
 				color: #f68905;
+				
 			}			
 		}
 	}
@@ -1649,46 +1650,8 @@ border: 1px solid rgb(213, 213, 213);
 	background: #f4f9e1;
 	.bottom-border-radius(5px);
 
-	form {
-		padding: 10px;
-
-		textarea , input[type=text]  {
-			border: 1px solid @lightGreen;
-			width: 195px;
-		}
-
-		input {
-
-			&.telnum {
-				width: 70px;
-				float: left;
-			}
-
-			&.datepicker , &.datepickerto {
-				width: 162px;
-				float: none;
-				clear: both;
-			}			
-		}
-
-		.tel {
-			width: 115px;
-			float: left;
-			margin-right: 10px;
-		}
-
-
-
-		.counter {
-			width: 101px;
-			float: left;
-
-			&.first {
-				width: 98px;
-				margin-right: 10px;
-			}
-		}
-
+	a {
+		color: @darkGreen;
 	}
 }
 
@@ -2919,7 +2882,7 @@ form#contactFormCover {
 				
 				border: none;
 				top: 28px;
-				left: 464px;
+				left: 459px;
 				background: #fff;
 				height: auto;
 				width: 492px;
@@ -2969,7 +2932,7 @@ form#contactFormCover {
 
 					height: auto;	
 					background: transparent;
-					a {
+					a , span {
 						border:none;
 						
 						color: @darkGreen;
@@ -2995,6 +2958,26 @@ form#contactFormCover {
 						  position: relative;
 						  left: -10px;
 						}						
+					}
+
+					span {
+						color: @brown;
+						display: block;
+						clear: both;
+						font-weight: normal;
+						line-height: 20px;
+						padding: 0 10px;
+						padding-left: 30px;
+						white-space: normal;
+						&:hover {
+							text-decoration: none;
+						}
+
+						&:before {
+							content: '\2713';
+							left: -11px;
+							font-size: 20px;							
+						}
 					}
 
 					ul {
