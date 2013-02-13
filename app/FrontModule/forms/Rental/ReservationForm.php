@@ -38,7 +38,6 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 	public function buildForm()
 	{
 		$this->addText('name')
-			->addRule(self::MIN_LENGTH, NULL, 5)
 			->getControlPrototype()
 				->setPlaceholder('o1031');
 
@@ -92,8 +91,7 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 
 	public function validation(ReservationForm $form){
 		$form->addError('yle');
-		$form['name']->addError('yle1');
-		d($form->getAllErrors());
+		$form['name']->addError('bar');
 	}
 
 	public function setDefaultsValues() 
@@ -104,7 +102,6 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 	public function process(ReservationForm $form)
 	{
 		$values = $form->getValues();
-		d($form->getAllErrors());
 	}
 
 }

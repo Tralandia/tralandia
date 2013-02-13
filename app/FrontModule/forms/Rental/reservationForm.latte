@@ -5,7 +5,10 @@
 
 	<div class="control-group">
 	{input name ,data-validation-message => "error-msg-reservation-name"}
-	<span class="control-error" id="error-msg-reservation-name"></span>
+	<span class="control-error" id="error-msg-reservation-name">
+		{dump $form['name']->getErrors()}
+		{foreach $form['name']->getErrors() as $error}{$error}{/foreach}
+	</span>
 	</div>
 
 	<div class="control-group">
