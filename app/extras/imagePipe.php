@@ -32,6 +32,7 @@ class ImagePipe extends Nette\Object
 	 */
 	private $baseUrl;
 
+	private $fakeImages = ['61/13408040347241', '62/13481447622502', '88/13492616958914', '20/13493474250862', '03/13497077840824', '34/13497124592268', '06/13481350326739', '44/13487502697093', '04/13498067239461', '86/13498564035416', '02/13504600165413'];
 
 	/**
 	 * @param string $wwwDir
@@ -58,6 +59,11 @@ class ImagePipe extends Nette\Object
 		$targetPath = $image->getFilePath() . DIRECTORY_SEPARATOR . $size . '.' . Image::EXTENSION;
 
 		return $this->publicPath($targetPath);
+	}
+
+	public function requestFake()
+	{
+		return 'http://www.tralandia.sk/u/' . $this->fakeImages[array_rand($this->fakeImages)] . '.jpg';
 	}
 
 

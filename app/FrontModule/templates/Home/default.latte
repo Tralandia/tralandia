@@ -17,7 +17,11 @@
 			<li class="span4">
 				<a n:href=":Front:Rental:detail $rental['entity']" title="{_$rental['entity']->name}" >
 				<div class="position">TOP</div>
-				<img alt="{_$rental['entity']->name}" src="{$rental['entity']->getMainImage()|rentalImageSrc}" /> 
+				{if $mainImage = $rental['entity']->getMainImage()}
+					<img alt="{_$rental['entity']->name}" n:img="{$mainImage}" />
+				{else}
+					<img alt="{_$rental['entity']->name}" n:fakeImg="" />
+				{/if}
 
 				{foreach $rental['entity']->address->getLocations() as $location}
 				{if $iterator->first}
