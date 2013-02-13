@@ -23,7 +23,6 @@ class ImageMacro extends Nette\Latte\Macros\MacroSet
 	private $isUsed = FALSE;
 
 
-
 	/**
 	 * @param \Nette\Latte\Compiler $compiler
 	 *
@@ -37,6 +36,7 @@ class ImageMacro extends Nette\Latte\Macros\MacroSet
 		 * {img} je obecně pro jakýkoliv obrázek, který je veřejný na webu.
 		 */
 		$me->addMacro('img', array($me, 'macroImg'), NULL, array($me, 'macroAttrImg'));
+		$me->addMacro('fakeImg', array($me, 'macroFakeImg'), NULL, array($me, 'macroFakeAttrImg'));
 
 		return $me;
 	}
@@ -66,6 +66,21 @@ class ImageMacro extends Nette\Latte\Macros\MacroSet
 		$this->isUsed = TRUE;
 		return $writer->write('?>src="<?php echo %escape($_imagePipe->request(%node.word))?>" <?php');
 	}
+
+	/* ------------------ Fake image macros ------------------ */
+	public function macroFakeImg(MacroNode $node, PhpWriter $writer)
+	{
+		$this->isUsed = TRUE;
+		return $writer->write('echo %escape($_imagePipe->request(%node.word))');
+	}
+
+
+	public function macroFakeAttrImg(MacroNode $node, PhpWriter $writer)
+	{
+		$this->isUsed = TRUE;
+		return $writer->write('?>src="<?php echo %escape($_imagePipe->requestFake())?>" <?php');
+	}
+	/* -------------------------------------------------------- */
 
 
 	/**
