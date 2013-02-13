@@ -128,7 +128,7 @@ class ImportRentals extends BaseImport {
 			$rental->slug = $x['name_url'];
 			$rental->name = $this->createPhraseFromString('\Rental\Rental', 'name', 'NATIVE', $x['name'], $rental->editLanguage);
 			
-			$rental->teaser = $this->createNewPhrase($teaserDictionaryType, $x['marketing_dic_id']);
+			$rental->teaser = $this->createNewPhrase($teaserDictionaryType, $x['marketing_dic_id'], NULL, NULL, $rental->editLanguage);
 
 			// Contact Name
 			$rental->contactName = $x['contact_name'];
