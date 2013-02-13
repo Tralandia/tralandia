@@ -84,6 +84,16 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 		$this->addSubmit('submit', '#send');
 
 		$this->onSuccess[] = callback($this, 'process');
+		$this->onValidate[] = callback($this, 'validation');
+
+		
+	}
+
+
+	public function validation(ReservationForm $form){
+		$form->addError('yle');
+		$form['name']->addError('yle1');
+		d($form->getAllErrors());
 	}
 
 	public function setDefaultsValues() 
@@ -94,6 +104,7 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 	public function process(ReservationForm $form)
 	{
 		$values = $form->getValues();
+		d($form->getAllErrors());
 	}
 
 }

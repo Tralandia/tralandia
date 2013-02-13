@@ -1243,7 +1243,7 @@ ul.arrows {
 /***************************************************************************************/
 
 .detailInfoBoxCover {
-	width: 375px;
+	width: 367px;
 	margin: 0 auto;
 	
 	
@@ -1253,7 +1253,7 @@ ul.arrows {
 	font-size: 14px;
 	margin-bottom: 10px;
 	line-height: 15px;
-	width: 182px;
+	width: 178px;
 	float: left;
 	color: @darkGreen;
 	font-weight: bold;
@@ -1281,7 +1281,7 @@ ul.arrows {
 	}
 
 	.content {
-		width: 157px;
+		width: 152px;
 		float: right;
 	}
 }
@@ -1448,6 +1448,90 @@ ul.arrows {
 /****************************************************************************************
 /* detail object right sidebar 
 /****************************************************************************************/
+
+
+.objectDetailServicesIconList.list {
+	list-style: none;
+	margin: 0;
+	margin-top: 20px;
+	li {
+		width: 381px;
+		.box-size();
+		color: @brown;
+		margin-left: 29px;	
+			
+		font-size: 13px;
+		line-height: 15px;
+
+		clear: both;
+		strong {
+			display: block;
+		}
+
+		.content {
+			width: 345px;
+			float: right;
+			margin-bottom: 10px;
+			padding-right: 25px;
+		}
+
+		
+
+		strong {
+			color: @darkGreen;
+		}
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+
+		&:before {
+			color: @brown;
+		}
+
+		&.tag {
+			&:before {
+				content:'\E70C';
+			}
+		}
+
+		&.owner-availability {
+			&:before {
+				content:'\1F514';
+			}			
+		}
+
+		&.separate-groups {
+			&:before {
+				content:'\1F465';
+			}			
+		}
+
+		&.rooms {
+			&:before {
+				content:'\F601';
+			}			
+		}		
+
+		&.board {			
+			&:before {
+				font-family: 'FontAwesome';
+				font-size: 15px;
+				content:'\f0f4';
+			}			
+		}
+
+		&:before {
+			margin-right: 11px;
+		}
+		
+	}
+
+}
+		
+
+
+
 
 .sidebarRightDetail {
 	font-size: 12px;
