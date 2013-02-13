@@ -66,33 +66,26 @@ parameters:
 					- Select2/js/select2.js
 
 			Front:
-				css:					
-					
-					- Front/custom-icon.less
-					- Front/main.css.less
+				css:
+					- Front/custom-icon.less					
 					- Front/form-registration.less
-					- Front/calendar.less
-					- Front/object-list.less
+					- Front/calendar.less					
 					- Front/sidebar.less
 					- Front/contact-page.less
 					- Front/object-detail-favorites.less
-					- Front/homepage-list.less
 					- FrontJqUi/css/tralandia/jquery-ui-1.9.1.custom.css
 					- Front/ticket.less
 					- Front/adminMenuAside.less
 					- Front/less/font-awesome.less
 					- FileUpload/css/jquery.fileupload-ui.css
-					
-
+					- Front/reservation-form.less
+					- Front/main.css.less
+					- Front/object-list.less
+					- Front/homepage-list.less					
 				js:
-					- jQuery/jquery.js
-
-					- nette/netteForms.js	
-
 					- FileUpload/js/vendor/jquery.ui.widget.js
 					- FileUpload/js/jquery.iframe-transport.js
 					- FileUpload/js/jquery.fileupload.js
-
 					- jqueryScrollTo/jquery.scrollTo-1.4.3.1-min.js
 					- FrontJqUi/js/jquery-ui-1.9.1.custom.min.js
 					- Front/js/jquery-tra-map.js
@@ -103,11 +96,8 @@ parameters:
 					- jstorage/jstorage.min.js
 					- Front/js/jquery.jcarousel.min.js
 					- Front/js/ui-localization-datepicker.js
-					- Front/js/trax-forms-ui.js
-					
+					- Front/js/trax-forms-ui.js					
 					- Front/js/main.js
-					- nette/nette.ajax.js
-
 
 			FavoriteScroll:
 				js:
@@ -140,6 +130,7 @@ parameters:
 				js: 
 					- nette/nette.js
 					- nette/netteForms.js
+					- nette/nette.ajax.js
 			bootstrap:
 				js: 
 					#- bootstrap/bootstrap-alert.js
@@ -232,17 +223,23 @@ parameters:
 				-  %webloader.packages.Front%
 				-  %webloader.packages.gMap%
 				#-  %webloader.packages.AdminFront%				
-				
-			Front:				
 
-				-  %webloader.packages.Front%
-				-  %webloader.packages.bootstrap%				
+			Front:
+				- %webloader.packages.jQuery%
+				-  %webloader.packages.Front%				
 				-  %webloader.packages.Select2%
 				-  %webloader.packages.Texyla%
+				-  %webloader.packages.bootstrap%
+				-  %webloader.packages.nette%								
 				-  %webloader.packages.gMap%
-			
-			'Front:Rental:list': 
-				-  %webloader.packages.Front%
+
+			'Front:Rental:list':
+				-  %webloader.packages.jQuery%
+				-  %webloader.packages.Front%				
+				-  %webloader.packages.Select2%
+				-  %webloader.packages.Texyla%
+				-  %webloader.packages.bootstrap%
+				-  %webloader.packages.nette%
 				-  %webloader.packages.gMap%			
 				-  %webloader.packages.FavoriteScroll%		
 			Owner: 

@@ -1,5 +1,5 @@
 {includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
-{form reservationForm , class => ' reservationform' }
+{form reservationForm , class => 'reservationform' }
 
 	{* add class invalid to input *}
 
@@ -14,17 +14,18 @@
 	</div>
 
 	<div class="control-group">
-	{input $form['phone']['prefix'] , class => 'tel' , data-validation-message => "error-msg-reservation-tel"}
+	{input $form['phone']['prefix'] , class => 'tel select2' , data-validation-message => "error-msg-reservation-tel"}
 	{input $form['phone']['number'], class => "telnum" , data-validation-message => "error-msg-reservation-tel"}
 	<span class="control-error" id="error-msg-reservation-tel"></span>
 	</div>
 
-
-	{input parents , class => 'counter first'}
-	{input children , class => 'counter'}
-
-
+	<div class="marginBottom">
+	{input parents , class => 'counter first select2'}
+	{input children , class => 'counter select2'}
 	<div class="clearfix"></div>
+	</div>
+
+	
 
 
 	<div class="input-append">
@@ -38,7 +39,7 @@
 	</div>
 
 	{input message , data-validation-message => "error-msg-reservation"}
-	<span class="errorMsg" id="error-msg-reservation" style=""></span>
+	
 	
 	{input submit, class => "btn btn-orange"}
 {/form}
