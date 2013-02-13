@@ -212,24 +212,12 @@ parameters:
 				- %webloader.packages.autopilot%
 				- %webloader.packages.bootstrap%
 
-			Admin: 
-				#- %webloader.packages.jQuery%
-				#- %webloader.packages.liveQuery%
-				#- %webloader.packages.jQueryUI%
-				#- %webloader.packages.dateInput%
-				#- %webloader.packages.nette%
-				#- %webloader.packages.contactsControl%
-				#- %webloader.packages.jQueryCalendar%
-				#- %webloader.packages.phraseControl%
-				#- %webloader.packages.liveWysi%
-				#- %webloader.packages.admin%
-				#- %webloader.packages.fileUpload%
-				#- %webloader.packages.bootstrap%
-				#- %webloader.packages.phrase%
-				#- %webloader.packages.customui%
+			Admin:
 				-  %webloader.packages.Front%
+				-  %webloader.packages.bootstrap%
+				-  %webloader.packages.Select2%
+				-  %webloader.packages.Texyla%
 				-  %webloader.packages.gMap%
-				#-  %webloader.packages.AdminFront%				
 
 			Front:
 				-  %webloader.packages.jQuery%
