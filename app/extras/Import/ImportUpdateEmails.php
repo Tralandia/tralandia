@@ -12,27 +12,55 @@ use Nette\Application as NA,
 
 class ImportUpdateEmails extends BaseImport {
 
+	const DELETE = NULL;
+
 	public function doImport($subsection = NULL) {
 
-		$email = $this->context->emailTemplateRepositoryAccessor->get()->findOneByOldId(6);
-
 		$replace = array(
-			'emailFrom' => 'sender_email',
-			'siteDomain' => 'env_siteDomain',
-			'message' => 'message',
-			'objectLink' => 'rental_link',
+			'default' => [
+				'emailFrom' => 'sender_email',
+				'siteDomain' => 'env_siteDomain',
+				'siteName' => 'env_siteName',
+				'message' => 'message',
+				'objectLink' => 'rental_link',
+				'loginLink' => 'env_loginLink',
+				'email' => 'owner_email',
+				'password' => 'owner_password',
+				'RID' => self::DELETE,
+			],
 		);
 
-		$replaceTemp = array();
-		foreach ($replace as $key => $value) {
-			$replaceTemp["~$key~"] = "[$value]";
-		}
-		$replace = $replaceTemp;
+		$emails = $this->context->emailTemplateRepositoryAccessor->get()->findAll();
 
-		$body = $email->body;
-		foreach ($body->translations as $translation) {
-			$translation->translation = str_replace(array_keys($replace), array_values($replace), $translation->translation);
+		foreach($emails as $email) {
+
+			$replaceMerge = array_merge(
+				$replace['default'],
+				\Nette\Utils\Arrays::get($replace, $email->getOldId(), array())
+			);
+
+			$replaceTemp = array();
+			foreach ($replaceMerge as $key => $value) {
+				if($value === self::DELETE) {
+					$replaceTemp["~$key~"] = '';
+				} else {
+					$replaceTemp["~$key~"] = "[$value]";
+				}
+			}
+
+			$body = $email->body;
+			foreach ($body->translations as $translation) {
+				$translationText = str_replace(
+					array_keys($replaceTemp),
+					array_values($replaceTemp),
+					$translation->getTranslation()
+				);
+
+				$translation->setTranslation($translationText);
+			}
+
 		}
+
 
 		$layout = $this->context->emailLayoutRepositoryAccessor->get()->findOneByName('default');
 		if(!$layout) {

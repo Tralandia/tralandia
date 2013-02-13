@@ -16,7 +16,7 @@ use Nette\Utils\Arrays;
  * 				}
  * 			)
  * @EA\Primary(key="id", value="")
- * @EA\Generator(skip="{setTranslation, setVariations, updateVariations}")
+ * @EA\Generator(skip="{setTranslation, getTranslation, setVariations, updateVariations}")
  */
 class Translation extends \Entity\BaseEntity {
 
@@ -95,7 +95,15 @@ class Translation extends \Entity\BaseEntity {
 	}
 
 	/**
-	 * @param json
+	 * @return string|NULL
+	 */
+	public function getTranslation()
+	{
+		return $this->getDefaultVariation();
+	}
+
+	/**
+	 * @param array
 	 * @return \Entity\Phrase\Translation
 	 */
 	public function setVariations(array $variations)
@@ -239,14 +247,6 @@ class Translation extends \Entity\BaseEntity {
 		$this->translation = NULL;
 
 		return $this;
-	}
-		
-	/**
-	 * @return string|NULL
-	 */
-	public function getTranslation()
-	{
-		return $this->translation;
 	}
 		
 	/**
