@@ -82,6 +82,7 @@ parameters:
 					- Front/adminMenuAside.less
 					- Front/less/font-awesome.less
 					- FileUpload/css/jquery.fileupload-ui.css
+					- Front/reservation-form.less
 					
 
 				js:
@@ -234,11 +235,11 @@ parameters:
 				#-  %webloader.packages.AdminFront%				
 				
 			Front:				
-
-				-  %webloader.packages.Front%
-				-  %webloader.packages.bootstrap%				
 				-  %webloader.packages.Select2%
 				-  %webloader.packages.Texyla%
+				-  %webloader.packages.bootstrap%	
+				-  %webloader.packages.Front%
+
 				-  %webloader.packages.gMap%
 			
 			'Front:Rental:list': 
