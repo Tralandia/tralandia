@@ -2,7 +2,7 @@
 namespace Tests\Rental;
 
 use Nette, Extras;
-
+use Service\Contact;
 
 /**
  * @backupGlobals disabled
@@ -11,72 +11,71 @@ class AddressNormalizerTest extends \Tests\TestCase
 {
 
 	/**
-	 * @var \Service\Rental\RentalCreator
-	 */
-	public $rentalCreator;
-
-	/**
-	 * @var string
-	 */
-	public $rentalName;
-
-	/**
 	 * @var \Entity\Location\Location
 	 */
-	public $location;
-
-	/**
-	 * @var \Entity\User\User
-	 */
-	public $user;
+	public $location = array();
 
 	protected function setUp() {
-		$this->rentalCreator = $this->getContext()->rentalCreator;
-		$this->location = $this->getContext()->locationRepositoryAccessor->get()->findOneByOldId(46);
-		$this->user = $this->getContext()->userRepositoryAccessor->get()->findOneByRole(3);
-		$this->rentalName = 'Chata Chalupa';
+		$this->location['sk'] = $this->getContext()->locationRepositoryAccessor->get()->findOneByIso('sk');
+		$this->location['hu'] = $this->getContext()->locationRepositoryAccessor->get()->findOneByIso('hu');
+		// $this->rentalCreator = $this->getContext()->rentalCreator;
+		// $this->user = $this->getContext()->userRepositoryAccessor->get()->findOneByRole(3);
+		// $this->rentalName = 'Chata Chalupa';
 	}
 
-	public function testRank() {
+	protected function createAddress($data) {
 		$address = $this->getContext()->contactAddressRepositoryAccessor->get()->createNew();
-		$address->primaryLocation = $this->location;
-		$address->postalCode = '94651';
-		$address->address = 'Nová 58';
-		$address->locality = $this->getContext()->locationRepositoryAccessor->get()->findOneBy(array('slug' => 'nesvady', 'parent' => $this->location));
+		if (isset($data['latitude']) && isset($data['longitude'])) {
+			$address->setGps(new \Extras\Types\LatLong(47.924086,18.12742));
+			unset($data['latitude'], $data['longitude']);
+		}
+		foreach ($data as $key => $value) {
+			$address->$key = $value;
+		}
 
-		$gps = new \Extras\Types\LatLong(47.924237, 18.127506);
-		$address->setGps($gps);
+		return $address;
+	}
+
+	public function testNormalizer() {
+		// Testing using proper address
+		$address = $this->createAddress(array(
+			'primaryLocation' => $this->location['sk'],
+			'postalCode' => '94651',
+			'address' => 'Nová 58',
+			'locality' => $this->getContext()->locationRepositoryAccessor->get()->findOneBy(array('slug' => 'nesvady', 'parent' => $this->location)),
+		));
+
+		$normalizer = $this->getContext()->addressNormalizerFactory->create($address);
+		$normalizer->update(true);
 		
-		$rental = $this->rentalCreator->create($address, $this->user, $this->rentalName);
-		$rental->classification = 3;
-		$rental->type => ;
-		$rental->name => ;
-		$rental->teaser => ;
-		$rental->contactName => ;
-		$rental->phones => ;
-		$rental->emails => ;
-		$rental->urls => ;
-		$rental->spokenLanguages => ;
-		$rental->amenities => ;
-		$rental->tags => ;
-		$rental->checkIn => ;
-		$rental->checkOut => ;
-		$rental->price => ;
-		$rental->pricelistRows => ;
-		$rental->pricelists => ;
-		$rental->interviewAnswers => ;
-		$rental->maxCapacity => ;
-		$rental->bedroomsCount => ;
-		$rental->rooms => ;
+		$gps = $address->getGps();
+		$this->assertSame($gps->getLatitude(), 47.9241334);
+		$this->assertSame($gps->getLongitude(), 18.1274789);
+		d($address);
 
 
+		// Testing using GPS
+		$address = $this->createAddress(array(
+			'primaryLocation' => $this->location['sk'],
+			'latitude' => 47.9241334,
+			'longitude' => 18.1274789,
+		));
+
+		$normalizer = $this->getContext()->addressNormalizerFactory->create($address);
+		$normalizer->update(true);
+		
+		$this->assertSame($address->primaryLocation, $this->location['sk']);
+		$this->assertSame($address->postalCode, '94651');
+		$this->assertSame($address->address, 'Nová 58');
+		$this->assertSame($address->locality, $this->getContext()->locationRepositoryAccessor->get()->findOneBy(array('slug' => 'nesvady', 'parent' => $this->location)));
+		$this->assertSame($address->subLocality, NULL);
 
 
-		$this->assertInstanceOf('\Entity\Rental\Rental', $rental);
-		$this->assertSame($this->location->getId(), $rental->getAddress()->getPrimaryLocation()->getId());
+		// $this->assertInstanceOf('\Entity\Rental\Rental', $rental);
+		// $this->assertSame($this->location->getId(), $rental->getAddress()->getPrimaryLocation()->getId());
 
-		$language = $this->location->getDefaultLanguage();
-		$this->assertSame($this->rentalName, $rental->getName()->getTranslationText($language));
+		// $language = $this->location->getDefaultLanguage();
+		// $this->assertSame($this->rentalName, $rental->getName()->getTranslationText($language));
 
 	}
 }

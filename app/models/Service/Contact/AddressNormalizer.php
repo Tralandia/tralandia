@@ -46,9 +46,33 @@ class AddressNormalizer extends \Nette\Object {
 		));
 	}
 
-	public function updateUsingGPS(\Extras\Types\Latlong $latitude, \Extras\Types\Latlong $longitude, $override = FALSE) {
+	public function update($override = FALSE) {
+		$latLong = $this->address->getGps();
+		if ($latLong->isValid()) {
+			$this->updateUsingGPS($latLong, $override);
+		} else {
+			$this->updateUsingAddress($this->getFormattedAddress());
+		}
+	}
 
-		$response = $this->geocodeService->reverseGeocode($latitude->toFloat(), $longitude->toFloat());
+	private function getFormattedAddress() {
+		$t = array();
+		$t[] = $this->address->address;
+		$t[] = $this->address->subLocality;
+		$t[] = $this->address->locality->name->getTranslationText($this->address->primaryLocation->defaultLanguage, TRUE);
+		$t[] = $this->address->primaryLocation->name->getTranslationText($this->address->primaryLocation->defaultLanguage, TRUE);
+		$t = array_filter($t);
+		$t = implode(', ', $t);
+
+		return $t;
+
+	}
+
+	private function updateUsingGPS(\Extras\Types\Latlong $latLong, $override = FALSE) {
+		$latitude = $latLong->getLatitude();
+		$longitude = $latLong->getLongitude();
+
+		$response = $this->geocodeService->reverseGeocode($latitude, $longitude);
 		
 		if (!$response->hasResults() || !$response->isValid()) {
 			return FALSE;
@@ -57,7 +81,7 @@ class AddressNormalizer extends \Nette\Object {
 		return $this->updateAddressData($response, $override);
 	}
 
-	public function updateUsingAddress($address) {
+	private function updateUsingAddress($address) {
 		$response = $this->geocodeService->geocode($address);
 		if (!$response->hasResults() || !$response->isValid()) {
 			return FALSE;
@@ -82,7 +106,7 @@ class AddressNormalizer extends \Nette\Object {
 		);
 
 		$lowerCased = array(
-			\GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_1,
+			//\GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_1,
 			\GoogleGeocodeResponseV3::ACT_COUNTRY,
 		);
 		while ( $response->valid() ) {
@@ -105,11 +129,28 @@ class AddressNormalizer extends \Nette\Object {
 			$info[\GoogleGeocodeResponseV3::ACT_LOCALITY] = $info[\GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_3];
 		}
 
+		// If we still don't have LOCALITY, try to use ADMINISTRATIVE LEVEL 2
+		if (!isset($info[\GoogleGeocodeResponseV3::ACT_LOCALITY]) && isset($info[\GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_2])) {
+			$info[\GoogleGeocodeResponseV3::ACT_LOCALITY] = $info[\GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_2];
+		}
+
+		// If we still don't have LOCALITY, try to use ADMINISTRATIVE LEVEL 1
+		if (!isset($info[\GoogleGeocodeResponseV3::ACT_LOCALITY]) && isset($info[\GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_1])) {
+			$info[\GoogleGeocodeResponseV3::ACT_LOCALITY] = $info[\GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_1];
+		}
+
 		// IF it's in USA, create a 4-letter ISO code
 		if (isset($info[\GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_1]) && isset($info[\GoogleGeocodeResponseV3::ACT_COUNTRY]) && Strings::lower($info[\GoogleGeocodeResponseV3::ACT_COUNTRY]) == 'us') {
 			$info[\GoogleGeocodeResponseV3::ACT_COUNTRY] = $info[\GoogleGeocodeResponseV3::ACT_COUNTRY].$info[\GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_1];
 		}
-		d($info);
+
+		if (isset($info[\GoogleGeocodeResponseV3::ACT_LOCALITY]) && isset($info[\GoogleGeocodeResponseV3::ACT_SUBLOCALITY])) {
+			if ($info[\GoogleGeocodeResponseV3::ACT_LOCALITY] == $info[\GoogleGeocodeResponseV3::ACT_SUBLOCALITY]) {
+				unset($info[\GoogleGeocodeResponseV3::ACT_SUBLOCALITY]);
+			}
+		}
+
+		//d($info);
 
 		// If the location is outside the primaryLocation, return false
 		if (Strings::lower($info[\GoogleGeocodeResponseV3::ACT_COUNTRY]) != $this->address->primaryLocation->iso) {
@@ -125,8 +166,7 @@ class AddressNormalizer extends \Nette\Object {
 
 		// Latitude / Longitude
 		$latlong = new \Extras\Types\Latlong($response->getLocation()->lat, $response->getLocation()->lng);
-		$this->address->latitude = $latlong->getLatitude();
-		$this->address->longitude = $latlong->getLongitude();
+		$this->address->setGps($latlong);
 
 		// Address
 		if ((!$this->address->address || $override === TRUE) && isset($info[\GoogleGeocodeResponseV3::ACT_ROUTE])) {
@@ -153,7 +193,7 @@ class AddressNormalizer extends \Nette\Object {
 
 		// Postal Code
 		if (isset($info[\GoogleGeocodeResponseV3::ACT_POSTAL_CODE])) {
-			$this->address->postalCode = $t;
+			$this->address->postalCode = $info[\GoogleGeocodeResponseV3::ACT_POSTAL_CODE];
 		} else {
 			$this->address->postalCode = NULL;
 		}
