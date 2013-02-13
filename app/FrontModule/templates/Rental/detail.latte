@@ -84,8 +84,8 @@
 
 		<table class="teaser">
 			<tr>
-				<td><i class="entypo-new"></i></td>
-				<td>{_$rental->teaser|firstUpper}</td>
+				<td class="icon"><i class="entypo-new"></i></td>
+				<td class="content">{_$rental->teaser|firstUpper}</td>
 			</tr>			
 		</table>
 
@@ -111,117 +111,152 @@
 		<div class="detailInfoBox first">		
 			<i class="entypo-bell"></i>	
 			<div class="content">	
-				{_o1012}			
-				<span>ubytovatel byva niekde na cervenom majetry</span>
+				{_o1012}	
+
+				{var $ownerAvailability = $rental->getAmenitiesByType(array('owner-availability'))}		
+				<span>#ubytovatel byva 
+					{if $ownerAvailability}
+						{foreach $ownerAvailability as $amenities}					
+							{foreach $amenities as $amenity}
+								{_$amenity->name}{if !$iterator->last}, {/if}
+							{/foreach}				
+						{/foreach}
+					{/if}
+				</span>
 			</div>
 		</div>
 
 		<div class="detailInfoBox">
 			<i class="entypo-info2"></i>
 			<div class="content">
-				
-				<span>{$rental->rooms} #rooms lorem ipsum text #rooms lorem ipsum text</span>
+				{var $separateGroups = $rental->getAmenitiesByType(array('separate-groups'))}
+				{if $separateGroups}
+					{foreach $separateGroups as $amenities}					
+						{foreach $amenities as $amenity}
+							{_$amenity->name}{if !$iterator->last}, {/if}
+						{/foreach}					
+					{/foreach}
+				{/if}
+				 #rooms lorem ipsum text #rooms lorem ipsum text
 			</div>
 		</div>
 </div>
 
 <div class="clearfix"></div>
 
-<div class="detailAmanities">
+		<div class="detailAmanities">
 			<ul class="objectDetailServicesIconList list">
 
+				{var $board = $rental->getAmenitiesByType(array('board'))}
+				{if $board}
 				   <li class="board">
-				   <strong>Stravovanie:</strong>
+				   <strong>{_o1010}</strong>
 					   <div class="content">
-								raňajky, 
-								obed, 
-								večera, 
-								plná penzia, 
-								polpenzia (raňajky + večera), 
-								polpenzia (raňajky + obed), 
-								polpenzia (obed + večera), 
-								all inclusive, 
-								bez stravy
+						{foreach $board  as $amenities}					
+							{foreach $amenities as $amenity}
+								{_$amenity->name}{if !$iterator->last}, {/if}
+							{/foreach}					
+						{/foreach}
 					</div>
 				   </li>			   
-			   				   <li class="separate-groups">				   
-				   <strong>Viaceré nezávislé skupiny:</strong>
+			   {/if}
+
+				{var $board = $rental->getAmenitiesByType(array('board'))}
+				{if $board}
+				   <li class="monitor">
+				   <strong>{_o1010}</strong>
 					   <div class="content">
-						</div>
-				   </li>	
-			  			   <li class="owner-availability">
-			   <strong>Ubytovateľ býva:</strong>
-				   <div class="content">
-				</div>
-			   </li>
-			   			   				   <li class="rooms">
-				   <strong>Rozloženie izieb</strong>
-					   <div class="content">
-						
-					  </div>
-				   </li>
-			   			</ul>
+						{foreach $board  as $amenities}					
+							{foreach $amenities as $amenity}
+								{_$amenity->name}{if !$iterator->last}, {/if}
+							{/foreach}					
+						{/foreach}
+					</div>
+				   </li>			   
+			   {/if}			   
+
+
+			</ul>
 		</div>
-
-
-{*}
-		<div class="metainfobox double"> 
-			<div class="separator first"><i class="entypo-info2"></i>{$rental->price} #Eur <small>/ osoba / noc</small> </div>
-			<div class="separator second"><i class="entypo-users"></i><span class="capitalize">{_o1008}.</span> <small>{$rental->maxCapacity} {_o925,null,[count=>$rental->maxCapacity]}</small></div>
-			<div class="clearfix"></div>
-		</div>
-		
-		<div class="clearfix marginBottom"></div>
-
-		{if isset($rental->checkIn)}
-		<div class="metainfobox marginBottom">
-			<div class="separator first"><i class="entypo-clock"></i> #Check-in: <small>{$rental->checkIn} </small></div> 
-			<div class="separator second"><i class="entypo-clock"></i> #Check-out: <small>{$rental->checkOut}</small></div>
-			<div class="clearfix"></div>
-		</div>
-		{/if}
-*}
-
-
 
 
 <div class="clearfix"></div>
 
-					<h3 class="amenitiesTitle">{_o1059}</h3>
-			
-					<div class="amenitiesContent">
-					{foreach $rental->getAmenitiesByType(array('important','board','kitchen','bathroom','heating','parking','children','room','relax','service','owner-availability','wellness','congress','other')) as $amenities}
-						
-						{foreach $amenities as $amenity}
-							{if $iterator->first}				
-								<b>{_$amenity->type->name}: </b>				
-							{/if}
+{*}
+	<h3 class="amenitiesTitle">{_o1059}</h3>
 
-							{_$amenity->name}{if !$iterator->last}, {/if}
-						{/foreach}
-						
+	
+	<div class="amenitiesContent">
+	{foreach $rental->getAmenitiesByType(array('important','kitchen','bathroom','heating','parking','children','room','relax','service','owner-availability','wellness','congress','other')) as $amenities}
+		
+		{foreach $amenities as $amenity}
+			{if $iterator->first}				
+				<b>{_$amenity->type->name}: </b>				
+			{/if}
+
+			{_$amenity->name}{if !$iterator->last}, {/if}
+		{/foreach}
+		
+	{/foreach}
+	</div>
+	*}
+
+	{var $noPriceTable = true}
+
+	{if count($rental->pricelistRows) > 0}
+	{var $noPriceTable = false}
+		<ul class="detailPriceList">
+			<li>
+				<ul>
+					{foreach $rental->pricelistRows as $pricelistRow}
+					<li>	
+					{$pricelistRow->roomCount}x {_$pricelistRow->roomType->name}
+						<span>(
+							{$pricelistRow->bedCount} {_o940 , null , [count => $pricelistRow->bedCount]}
+							{if $pricelistRow->extraBedCount}{$pricelistRow->extraBedCount} {_o1158}{/if}
+							)
+						</span>
+
+						<span class="price">
+							{$pricelistRow->price} #mena
+						</span>
+					</li>
 					{/foreach}
-					</div>
+				</ul>
+			</li>
+		</ul>
+	{/if}
 
 
-					{if count($rental->pricelistRows) > 0}
-					{var $noPriceTable = false}
-						<ul>
-							<li><h4>{_o1015}</h4>
-								<ul>
-									{foreach $rental->pricelistRows as $pricelistRow}
-									<li>	
-									{_$pricelistRow->roomType->name}: 
-									{$pricelistRow->roomCount} -#krat
-									{$pricelistRow->bedCount} {_o940 , null , [count => $pricelistRow->bedCount]}
-									{if $pricelistRow->extraBedCount}{$pricelistRow->extraBedCount} {_o1158}{/if}
-									{$pricelistRow->price} #mena
-									</li>
-									{/foreach}
-								</ul>
-							</li>
-						</ul>
-					{/if}
+	{if count($rental->pricelists) > 0}
+	{var $noPriceTable = false}
+		{foreach $rental->pricelists as $pricelist}
+			<a href="{$pricelist->filePath}" class="btn btn-green btn-text-wrap btn-pricelist">
+				<i class="entypo-download"></i> {if $pricelist->name}{_o957} {$pricelist->name}{/if} {_$pricelist->language->name}
+			</a>
+		{/foreach}
+	{/if}
+	{if $noPriceTable}
+		{if $rental->pricesUponRequest}
+			#len na dotaz
+			{else}
+			#Übytovatel neuvadza detailne ceny. Orientacna cena ubytovania je {$rental->price} Eur / osoba / noc"	
+		{/if}								
+	{/if}					
+
+	<a href="#" class="btn btn-green btn-text-wrap btn-pricelist">
+	<i class="entypo-download"></i> tetetet </a>
+
+	<a href="#" class="btn btn-green btn-text-wrap btn-pricelist">
+	<i class="entypo-download"></i> tetetet </a>
+
+	<a href="#" class="btn btn-green btn-text-wrap btn-pricelist">
+	<i class="entypo-download"></i> tetetet </a>
+
+	<a href="#" class="btn btn-green btn-text-wrap btn-pricelist">
+	<i class="entypo-download"></i> tetetet </a>
+
+	<div class="clearfix"></div>	
 
 
 </div>
@@ -470,34 +505,6 @@ $(document).ready(function(){
 
 				<div class="tab-pane" id="pricetable">
 
-					{var $noPriceTable = true}
-
-					{if count($rental->pricelists) > 0}
-					{var $noPriceTable = false}
-					<table class="table table-striped tableDefault half marginTop">
-						<thead>
-							<tr>							
-								<th>{_o933}</th>
-							</tr>
-						</thead>
-						<tbody>
-						{foreach $rental->pricelists as $pricelist}
-							<tr>
-							<td>{if $pricelist->name}{_o957} {$pricelist->name}{/if}</td>
-							<td>{_o956} {_$pricelist->language->name}</td>
-							<td><a href="{$pricelist->filePath}">{_o955}</a></td>
-							</tr>
-						{/foreach}
-						</tbody>
-					</table>
-					{/if}
-					{if $noPriceTable}
-						{if $rental->pricesUponRequest}
-							#len na dotaz
-							{else}
-							#Übytovatel neuvadza detailne ceny. Orientacna cena ubytovania je {$rental->price} Eur / osoba / noc"	
-						{/if}								
-					{/if}
 
 				</div>
 
