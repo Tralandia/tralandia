@@ -2882,7 +2882,7 @@ form#contactFormCover {
 				
 				border: none;
 				top: 28px;
-				left: 464px;
+				left: 459px;
 				background: #fff;
 				height: auto;
 				width: 492px;
@@ -2932,7 +2932,7 @@ form#contactFormCover {
 
 					height: auto;	
 					background: transparent;
-					a {
+					a , span {
 						border:none;
 						
 						color: @darkGreen;
@@ -2958,6 +2958,26 @@ form#contactFormCover {
 						  position: relative;
 						  left: -10px;
 						}						
+					}
+
+					span {
+						color: @brown;
+						display: block;
+						clear: both;
+						font-weight: normal;
+						line-height: 20px;
+						padding: 0 10px;
+						padding-left: 30px;
+						white-space: normal;
+						&:hover {
+							text-decoration: none;
+						}
+
+						&:before {
+							content: '\2713';
+							left: -11px;
+							font-size: 20px;							
+						}
 					}
 
 					ul {

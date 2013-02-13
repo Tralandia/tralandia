@@ -427,10 +427,6 @@ App.prototype.closeForgottenPasswordForm = function(){
 ****************************************************************************************************/
 
 
-
-
-
-
 $(document).ready(function(){
 
 
@@ -473,9 +469,6 @@ $(document).ready(function(){
 
 	$("select.select2").select2(); 
 
-
-
-
 	$('.searchForm').searchFormSuggest();
 
 	$('.calendarEdit').calendarEdit();
@@ -492,13 +485,7 @@ $(document).ready(function(){
 
 	/* object detail init large map after small map click */
 	$('.mapsImg').click(A.initMapsObjectDetail);
-	/* UI tabs 
-	$( ".tabs" ).tabs(A.uiSelectedTabs());
-	$( ".tabs ul li a" ).click(A.uiTabsClickChangeHashAdress);
-	$(window).bind('hashchange', function() {
-	  $( ".tabs" ).tabs(A.uiSelectedTabs());
-	});
-	*/
+
 
 	$('.loadContactForm').click(A.loadContactForm);
 	
@@ -661,9 +648,7 @@ $(document).ready(function(){
 
     $('.pricePhrase').pricePhrase();
 
-    $('#serachSidebar').select2({
-    	placeholder: "Search for a movie"
-    });
+
 
 });
 

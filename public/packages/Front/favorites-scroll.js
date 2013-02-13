@@ -1,6 +1,9 @@
 $(document).ready(function(){
 
+
     $(document).scroll(function(){
+
+
 
     	var offset = parseInt($(this).scrollTop());
     	if(offset > 155){
