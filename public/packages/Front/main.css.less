@@ -135,6 +135,10 @@ ul.arrows {
 }
 
 
+#content.nopadding p.locality {
+	margin-bottom: 15px;
+}
+
 #content.nopadding .objectDetailContent table.teaser {
 
 	background: #fdf5ce;
@@ -162,6 +166,7 @@ ul.arrows {
 
 		&.content {
 			width: 90%;
+			line-height: 15px;
 		}
 	}
 }
@@ -1138,6 +1143,15 @@ ul.arrows {
 	.box-size();
 	float: left;
 	margin-bottom: 5px;	
+	font-weight: normal;
+	padding: 2px;
+	text-align: left;
+	padding-left: 14px;
+
+	i {
+		left: -4px;		
+		font-size: 15px;
+	}
 }
 
 .btn-pricelist:nth-child(odd) {
@@ -1276,27 +1290,28 @@ ul.arrows {
 
 .detailInfoBox {
 
-	font-size: 13px;
+	font-size: 15px;
 	margin-bottom: 10px;
 	line-height: 18px;
-	width: 160px;
+	width: 170px;
 	float: left;
-	color: rgb(93, 94, 93);
+	color: @darkGreen;
 	font-weight: bold;
-	background: rgb(238, 238, 238);
-	padding: 15px;
-	.basic-border-radius (3px);
-border: 1px solid rgb(213, 213, 213);
+	background: #fafafa;
+	padding: 10px;
+	.basic-border-radius (5px);
+	border: 1px solid #eee;
+	height: 33px;
 
 	i {
 		float: left;
 	}
 
 	i:before {
-		font-size: 35px;
+		font-size: 33px;
 		position: relative;
 		top: 0px;
-		color: rgb(129, 129, 129);
+		color: @brown;
 		font-weight: normal;
 	}
 
@@ -1304,7 +1319,7 @@ border: 1px solid rgb(213, 213, 213);
 		display: block;
 		font-size: 12px;
 		line-height: 14px;
-		color: rgb(134, 134, 134);
+		color: @brown;
 		font-weight: normal;
 	}
 
@@ -1313,7 +1328,7 @@ border: 1px solid rgb(213, 213, 213);
 	}
 
 	.content {
-		width: 135px;
+		width: 143px;
 		float: right;
 	}
 }
@@ -1478,29 +1493,62 @@ border: 1px solid rgb(213, 213, 213);
 	box-shadow: 0 1px 0 rgb(255, 255, 255);
 }
 
-.detailPriceList {
-	list-style: none;
-	margin: 10px 0;
-	padding: 0;
+#content {
 
-	li , ul {
+	.detailPriceList {
 		list-style: none;
-		margin: 0;
-		padding: 0;		
-	}
+		margin: 10px 0;
+		padding: 0;
 
-	li span {
-		color: rgb(160, 160, 160);
-		font-size: 12px;
-	}
+		li h3 {
+			margin: 0;
+			padding: 0 15px;
+			background: #eeeeee;
+			font-weight: normal;
+			font-size: 17px;
+			line-height: 34px;
+			color: @darkGreen;
+			.top-border-radius(5px);
+		}
 
-	li span.price {
-		color: @brown;
-		font-size: 14px;
-		float: right;
+		li , ul {
+			list-style: none;
+			margin: 0;
+			padding: 0;		
+		}
+
+		ul {
+			padding: 5px 15px;
+			box-sizing: border-box;
+			display: block;
+			background: #fafafa;
+			border: 1px solid #eee;	
+			.bottom-border-radius(5px);
+			
+			li {
+				border-bottom: 1px solid #ddd;
+
+				&:last-child {
+					border: none;
+				}
+			}	
+		}
+
+		li span {
+			color: rgb(122, 122, 122);
+			font-size: 12px;
+		}
+
+		li span.price {
+			color: @brown;
+			font-size: 14px;
+			float: right;
+		}
+
 	}
 
 }
+
 
 /****************************************************************************************
 /* detail object right sidebar 
