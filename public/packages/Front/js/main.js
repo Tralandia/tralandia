@@ -168,8 +168,6 @@ App.prototype.storageDelete = function(key){
 
 App.prototype.removeObjectFromFavorites = function(id){
 
-	console.log('call remove '+id)
-
 	var self = new App;
 
 	var list = $.cookie('favoritesList');
@@ -184,27 +182,21 @@ App.prototype.removeObjectFromFavorites = function(id){
 
 	var sliderList = favoriteSlider.find('ul');
 
-		newList = new Array();
-
-		$.each(list,function(k,v){
-			if(v.id != id){
-				newList.push(v);
-			}			
-		});
+		
+		var p = list.indexOf(id);
+				list.splice(p,1);
+		
 
 		// save new list to local storage 
 
-		if(newList.length == 0){
+		if(list.length == 0){
 			$.removeCookie('favoritesList');
 		} else {
-			$.cookie('favoritesList' , newList.join());
+			$.cookie('favoritesList' , list.join());
 		}
-
 		
-
 		// remove from favorites slider 		
 		// if page is Rental:detai 
-
 
 		var newWidth = sliderList.width();
 			newWidth -= 125;
@@ -213,7 +205,7 @@ App.prototype.removeObjectFromFavorites = function(id){
 				width: newWidth+'px'
 			});
 
-		if(newList.length == 0){
+		if(list.length == 0){
 
 			$('#compareList').parent().parent().parent().slideUp(300,function(){
 				favoriteSlider.find('ul li.rel-'+id).remove();
@@ -230,7 +222,6 @@ App.prototype.addToFavorites = function(){
 
 	var self = new App;
 
-	//var list = self.storageGet('favoritesList');
 	var list = $.cookie('favoritesList');
 
 	if(typeof list != 'undefined'){
@@ -239,8 +230,6 @@ App.prototype.addToFavorites = function(){
 		list = false;
 	}
  
- 	console.log(list);
-
 	$('#favoritesStatisContainerPlaceholder').removeClass('inactive');
 
 	var data = {
@@ -445,6 +434,7 @@ App.prototype.closeForgottenPasswordForm = function(){
 
 $(document).ready(function(){
 
+$.removeCookie('favoritesList');
 
 
 	$.nette.init();

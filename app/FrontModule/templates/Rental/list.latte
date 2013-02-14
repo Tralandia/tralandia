@@ -51,11 +51,9 @@
 		        		
 
 		        		{if $mainImage = $rental->getMainImage()}
-
 		        			<img src="{$basePath}{$mainImage|rentalImageSrc}" />
 		        		{else}
-		        			<img src="http://www.tralandia.com/u/32/13539183882248.jpg" />
-
+		        			<img alt="{_$rental->name}" n:fakeImg="" class="marginBottom" />
 		        		{/if}
 
 		        		</a>
