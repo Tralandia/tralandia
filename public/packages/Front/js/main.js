@@ -170,33 +170,33 @@ App.prototype.removeObjectFromFavorites = function(id){
 
 	var self = new App;
 
-	var list = self.storageGet('favoritesList');
+	var list = $.cookie('favoritesList');
+
+	if(typeof list != 'undefined'){
+		list = list.split(',');
+	} else {
+		list = false;
+	}
 
 	var favoriteSlider = $('#compareList');
 
 	var sliderList = favoriteSlider.find('ul');
 
-		newList = new Array();
-
-		$.each(list,function(k,v){
-			if(v.id != id){
-				newList.push(v);
-			}			
-		});
+		
+		var p = list.indexOf(id);
+				list.splice(p,1);
+		
 
 		// save new list to local storage 
 
-		if(newList.length == 0){
-			self.storageDelete('favoritesList');
+		if(list.length == 0){
+			$.removeCookie('favoritesList');
 		} else {
-			self.storageSet('favoritesList' , newList);
+			$.cookie('favoritesList' , list.join());
 		}
-
 		
-
 		// remove from favorites slider 		
 		// if page is Rental:detai 
-
 
 		var newWidth = sliderList.width();
 			newWidth -= 125;
@@ -205,7 +205,7 @@ App.prototype.removeObjectFromFavorites = function(id){
 				width: newWidth+'px'
 			});
 
-		if(newList.length == 0){
+		if(list.length == 0){
 
 			$('#compareList').parent().parent().parent().slideUp(300,function(){
 				favoriteSlider.find('ul li.rel-'+id).remove();
@@ -222,10 +222,15 @@ App.prototype.addToFavorites = function(){
 
 	var self = new App;
 
-	var list = self.storageGet('favoritesList');
+	var list = $.cookie('favoritesList');
 
-$('#favoritesStatisContainerPlaceholder').removeClass('inactive');
-
+	if(typeof list != 'undefined'){
+		list = list.split(',');
+	} else {
+		list = false;
+	}
+ 
+	$('#favoritesStatisContainerPlaceholder').removeClass('inactive');
 
 	var data = {
 		id: parseInt($(this).attr('rel')),
@@ -258,19 +263,17 @@ $('#favoritesStatisContainerPlaceholder').removeClass('inactive');
 
 	} else {
 
-		var removeLink = $('<a></a>').attr({
-			href: '#',
-			rel: data.id
-		}).addClass('removeLink');
+		if(!list){
 
-		if(typeof list == 'undefined' || list == null){
 			// if favorites dont exist 
-			var list = new Array();
-			list[0] = data;
+			// write id to cookie
 
-			self.storageSet('favoritesList',list);
+			$.cookie('favoritesList',data.id);
+
+			// show slider
 			favoriteSlider.parent().parent().parent().slideDown(300);
 
+			// create new li element and append to favorites slider list
 			var newLi = $('<li></li>').css('background-image','url('+data.thumb+')');
 				
 				newLi.addClass('rel-'+data.id);
@@ -282,30 +285,32 @@ $('#favoritesStatisContainerPlaceholder').removeClass('inactive');
 				removeLink.appendTo(newLi);
 				newLink.appendTo(newLi);
 			
+						// change default css width favoritest slider ul
 						var newWidth = sliderList.width();
-							newWidth += 125;
-							// set new width 
+							newWidth += 125;							
 							sliderList.css({
 								width: newWidth+'px'
 							});
 							
 							newLi.appendTo(sliderList);
 							
+				// change button class
 				$(this).addClass('selected');
 				
 
 		} else {			
 
 			if(!self._checkIdInObject(list,data.id)){
-				// write unique data
-				list.push(data);
-				self.storageSet('favoritesList',list);
+				
+				list.push(data.id);
+
+				$.cookie('favoritesList',list.join());
+
 				$(this).addClass('selected');
 
 				// append to favorites slider (if exist)
 
 				if(favoriteSlider.length > 0){
-
 
 					var newLi = $('<li></li>').css('background-image','url('+data.thumb+')');
 						
@@ -429,7 +434,9 @@ App.prototype.closeForgottenPasswordForm = function(){
 
 $(document).ready(function(){
 
+$.removeCookie('favoritesList');
 
+console.log($.cookie('visitObjectList'));
 
 	$.nette.init();
 
