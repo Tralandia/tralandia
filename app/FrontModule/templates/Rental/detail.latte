@@ -6,53 +6,6 @@
 
 {block content}
 
-
-{*
-<div class="span12">
-	<div class="innerPadding baseRadius baseBorder overflow">
-		<div id="content noPadding">
-			
-			<div class="detailSlider favoriteSlider">
-				<div class="header">
-					<a href="#" class="entypo-prev">Navrat na vysledky</a>
-					<h3>Vysledky vzhladavania</h3>
-				</div>
-
-				<div class="leftArrow entypo-prev"></div>
-				<div class="content">
-					<ul>
-						<li></li>
-						<li></li>
-						<li></li>
-						<li></li>
-						<li class="current"></li>
-						<li><div class="checked entypo-ok"></div></li>
-						<li></li>
-						<li></li>
-						<li></li>
-						<li></li>
-						<li></li>
-					</ul>
-				</div>
-				<div class="rightArrow entypo-slider-right"></div>
-				<div class="clearfix"></div>
-			</div>
-
-		</div>
-	</div>
-</div>
-
-
-
-
-*}
-
-
-
-
-
-
-
 <div class="span12">
 	<div class="innerPadding baseRadius baseBorder marginBottom overflow">
 		<div id="content" class="nopadding">
@@ -67,19 +20,15 @@
 		<img alt="{_$rental->name}" n:fakeImg="" class="marginBottom" />
 		<img alt="{_$rental->name}" n:fakeImg="" class="marginBottom" />
 		<img alt="{_$rental->name}" n:fakeImg="" class="marginBottom" />
-
-
 		
 		 <img class="mapsImg" src="https://maps.googleapis.com/maps/api/staticmap?center={$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&markers=color:blue%7C{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&zoom=10&size=288x170&sensor=false" /> 
 		
 	</div>
 
 
-
 	<div class="span5">
 
 		<h1 class="addToViewList" id="{$rental->id}">{_$rental->name}</h1>
-
 
 		<p class="marginBottom nopadding">
 		<a class="brown"  href="{link Rental:list location => $rental->address->locality , rentalType => $rental->type }">{_$rental->type->name|firstUpper} {_$rental->address->locality->name , null , [case=>locative]}</a>
@@ -168,7 +117,7 @@
 				{var $board = $rental->getAmenitiesByType(array('board'))}
 				{if $board}
 				   <li class="monitor">
-				   <strong>{_o1010}</strong>
+				   <strong>#Vybavenie</strong>
 					   <div class="content">
 						{foreach $board  as $amenities}					
 							{foreach $amenities as $amenity}
@@ -185,25 +134,6 @@
 
 
 <div class="clearfix"></div>
-
-{*}
-	<h3 class="amenitiesTitle">{_o1059}</h3>
-
-	
-	<div class="amenitiesContent">
-	{foreach $rental->getAmenitiesByType(array('important','kitchen','bathroom','heating','parking','children','room','relax','service','owner-availability','wellness','congress','other')) as $amenities}
-		
-		{foreach $amenities as $amenity}
-			{if $iterator->first}				
-				<b>{_$amenity->type->name}: </b>				
-			{/if}
-
-			{_$amenity->name}{if !$iterator->last}, {/if}
-		{/foreach}
-		
-	{/foreach}
-	</div>
-	*}
 
 	{var $noPriceTable = true}
 
@@ -249,16 +179,16 @@
 	{/if}					
 
 	<a href="#" class="btn btn-green btn-text-wrap btn-pricelist">
-	<i class="entypo-download"></i> tetetet </a>
+	<i class="entypo-download"></i> #lorem ipsum </a>
 
 	<a href="#" class="btn btn-green btn-text-wrap btn-pricelist">
-	<i class="entypo-download"></i> tetetet </a>
+	<i class="entypo-download"></i> #lorem ipsum </a>
 
 	<a href="#" class="btn btn-green btn-text-wrap btn-pricelist">
-	<i class="entypo-download"></i> tetetet </a>
+	<i class="entypo-download"></i> #lorem ipsum </a>
 
 	<a href="#" class="btn btn-green btn-text-wrap btn-pricelist">
-	<i class="entypo-download"></i> tetetet </a>
+	<i class="entypo-download"></i> #lorem ipsum </a>
 
 	<div class="clearfix"></div>	
 
@@ -270,11 +200,10 @@
 	<!-- right sidebar -->
 	<div class="span3 sidebarRightDetail">
 
-						{if $mainImage = $rental->getMainImage()}
-							<button class="marginTop btn btn-compare addToFavorites currentObject" rel="{$rental->id}" link="{link Rental:detail $rental}" data-title="{_$rental->name}" thumb="{$basePath}{$mainImage|rentalImageSrc}"><span class="entypo-heart">{_o12334}</span></button>
-						{/if}
+			{if $mainImage = $rental->getMainImage()}
+				<button class="marginTop btn btn-compare addToFavorites currentObject" rel="{$rental->id}" link="{link Rental:detail $rental}" data-title="{_$rental->name}" thumb="{$basePath}{$mainImage|rentalImageSrc}"><span class="entypo-heart">{_o12334}</span></button>
+			{/if}
 	
-
 			<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
 
 		<div class="socialIconTable marginBottom marginTop socialIconsDetail">
@@ -460,22 +389,7 @@ $(document).ready(function(){
 
 
 </script>
-{*	
-		<div class="sidebarContact">
-			<div class="sidebarTitle">{_o1049}</div>
-			<div class="sidebarInner">
 
-				<form>
-					<input type="text" placeholder="{_o1034}" />
-					<input type="text" placeholder="{_o1053}" />
-
-					<textarea placeholder="{_o1054}"></textarea>
-					<button class="btn btn-green"> <span class="entypo-send">{_o1719}</span> </button>
-				</form>
-
-			</div>
-		</div>
-*}
 	</div>
 	<!-- right sidebar -->
 </div>
