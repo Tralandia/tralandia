@@ -35,6 +35,9 @@
 
 				//this.visitList = appObject.storageDelete('favoritesList');
 
+
+
+
 				this.favoritesData = appObject.storageGet('favoritesList');
 				
 				this.visitList = appObject.storageGet('visitObjectList');

@@ -168,9 +168,17 @@ App.prototype.storageDelete = function(key){
 
 App.prototype.removeObjectFromFavorites = function(id){
 
+	console.log('call remove '+id)
+
 	var self = new App;
 
-	var list = self.storageGet('favoritesList');
+	var list = $.cookie('favoritesList');
+
+	if(typeof list != 'undefined'){
+		list = list.split(',');
+	} else {
+		list = false;
+	}
 
 	var favoriteSlider = $('#compareList');
 
@@ -187,9 +195,9 @@ App.prototype.removeObjectFromFavorites = function(id){
 		// save new list to local storage 
 
 		if(newList.length == 0){
-			self.storageDelete('favoritesList');
+			$.removeCookie('favoritesList');
 		} else {
-			self.storageSet('favoritesList' , newList);
+			$.cookie('favoritesList' , newList.join());
 		}
 
 		
@@ -222,10 +230,18 @@ App.prototype.addToFavorites = function(){
 
 	var self = new App;
 
-	var list = self.storageGet('favoritesList');
+	//var list = self.storageGet('favoritesList');
+	var list = $.cookie('favoritesList');
 
-$('#favoritesStatisContainerPlaceholder').removeClass('inactive');
+	if(typeof list != 'undefined'){
+		list = list.split(',');
+	} else {
+		list = false;
+	}
+ 
+ 	console.log(list);
 
+	$('#favoritesStatisContainerPlaceholder').removeClass('inactive');
 
 	var data = {
 		id: parseInt($(this).attr('rel')),
@@ -258,19 +274,17 @@ $('#favoritesStatisContainerPlaceholder').removeClass('inactive');
 
 	} else {
 
-		var removeLink = $('<a></a>').attr({
-			href: '#',
-			rel: data.id
-		}).addClass('removeLink');
+		if(!list){
 
-		if(typeof list == 'undefined' || list == null){
 			// if favorites dont exist 
-			var list = new Array();
-			list[0] = data;
+			// write id to cookie
 
-			self.storageSet('favoritesList',list);
+			$.cookie('favoritesList',data.id);
+
+			// show slider
 			favoriteSlider.parent().parent().parent().slideDown(300);
 
+			// create new li element and append to favorites slider list
 			var newLi = $('<li></li>').css('background-image','url('+data.thumb+')');
 				
 				newLi.addClass('rel-'+data.id);
@@ -282,30 +296,32 @@ $('#favoritesStatisContainerPlaceholder').removeClass('inactive');
 				removeLink.appendTo(newLi);
 				newLink.appendTo(newLi);
 			
+						// change default css width favoritest slider ul
 						var newWidth = sliderList.width();
-							newWidth += 125;
-							// set new width 
+							newWidth += 125;							
 							sliderList.css({
 								width: newWidth+'px'
 							});
 							
 							newLi.appendTo(sliderList);
 							
+				// change button class
 				$(this).addClass('selected');
 				
 
 		} else {			
 
 			if(!self._checkIdInObject(list,data.id)){
-				// write unique data
-				list.push(data);
-				self.storageSet('favoritesList',list);
+				
+				list.push(data.id);
+
+				$.cookie('favoritesList',list.join());
+
 				$(this).addClass('selected');
 
 				// append to favorites slider (if exist)
 
 				if(favoriteSlider.length > 0){
-
 
 					var newLi = $('<li></li>').css('background-image','url('+data.thumb+')');
 						
