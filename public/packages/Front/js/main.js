@@ -436,6 +436,7 @@ $(document).ready(function(){
 
 $.removeCookie('favoritesList');
 
+console.log($.cookie('visitObjectList'));
 
 	$.nette.init();
 
