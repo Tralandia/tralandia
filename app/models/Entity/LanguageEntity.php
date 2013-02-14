@@ -96,6 +96,14 @@ class Language extends \Entity\BaseEntityDetails {
 		return $this->getDefaultPluralName();
 	}
 
+	public function getPluralName($plural)
+	{
+		if(isset($this->plurals['names'][$plural])) {
+			return $this->plurals['names'][$plural];
+		}
+		return NULL;
+	}
+
 	public function getDefaultPluralName()
 	{
 		return array(self::DEFAULT_PLURAL => 'default');

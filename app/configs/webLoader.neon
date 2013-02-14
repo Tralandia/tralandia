@@ -213,10 +213,13 @@ parameters:
 				- %webloader.packages.bootstrap%
 
 			Admin:
+				-  %webloader.packages.jQuery%
+				-  %webloader.packages.JqueryCookie%
 				-  %webloader.packages.Front%
-				-  %webloader.packages.bootstrap%
 				-  %webloader.packages.Select2%
 				-  %webloader.packages.Texyla%
+				-  %webloader.packages.bootstrap%
+				-  %webloader.packages.nette%
 				-  %webloader.packages.gMap%
 
 			Front:

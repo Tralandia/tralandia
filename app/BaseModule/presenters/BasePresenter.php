@@ -260,41 +260,67 @@ abstract class BasePresenter extends Presenter {
 
 	public function actionValidateAddress()
 	{
+
 		$json = [];
-//		$address = $this->getParameter('address');
-//		$locality = $this->getParameter('locality');
-//		$postalCode = $this->getParameter('postalCode');
-//		$primaryLocation = $this->getParameter('primaryLocation');
-		$json = [
-			'status' => false,
-			'elements' => [
-				'address' => [
-					'status' => false,
-					'value' => 'ajax q value',
-					'message' => 'ajax error mesage'
-				],
-				'locality' => [
-					'status' => false,
-					'value' => 'ajax q value',
-					'message' => 'ajax error mesage'
-				],
-				'postalCode' => [
-					'status' => false,
-					'value' => 'ajax q value',
-					'message' => 'ajax error mesage'
-				],
-				'location' => [
-					'status' => false,
-					'value' => 'ajax q value',
-					'message' => 'ajax error mesage'
-				]
+		$address = $this->getParameter('address');
+		$locality = $this->getParameter('locality');
+		$postalCode = $this->getParameter('postalCode');
+		$primaryLocation = $this->getParameter('primaryLocation');
+		$latitude = $this->getParameter('latitude');
+		$longitude = $this->getParameter('longitude');
+
+		/** @var $addressEntity \Entity\Contact\Address */
+		$addressEntity = $this->getContext()->contactAddressRepositoryAccessor->get()->createNew();
+
+
+		$addressEntity->setAddress($address);
+		$addressEntity->setLocality($locality);
+		$addressEntity->setPostalCode($postalCode);
+		$addressEntity->setPrimaryLocation($primaryLocation);
+		if($latitude && $longitude) {
+			$gps = new \Extras\Types\Latlong($latitude, $longitude);
+			if($gps->isValid()) {
+				$addressEntity->setGps($gps);
+			}
+		}
+
+		/** @var $addressNormalizer Service\Contact\AddressNormalizer */
+		$addressNormalizer = $this->getContext()->addressNormalizerFactory->create($address);
+
+		$addressNormalizer->update(TRUE);
+
+		$jsonElements = [
+			'address' => [
+				'value' => $addressEntity->getAddress(),
 			],
-			'gps' => [
-				'lat' => '48.166326426',
-				'lng' => '17.102033625'
-			]
+			'locality' => [
+				'value' => $addressEntity->getLocality(),
+			],
+			'postalCode' => [
+				'value' => $addressEntity->getPostalCode(),
+			],
+			'location' => [
+				'value' => $addressEntity->getPrimaryLocation(),
+			],
+			'latitude' => [
+				'value' => $addressEntity->getGps()->getLatitude(),
+			],
+			'longitude' => [
+				'value' => $addressEntity->getGps()->getLongitude(),
+			],
+		];
+
+		$json = [
+			'status' => TRUE,
+			'elements' => $jsonElements,
 		];
 
 		$this->sendJson($json);
 	}
+
+	/**
+	 * @param Extras\Types\Latlong $latLong
+	 * @return array
+	 */
+	public function methodName(\Extras\Types\Latlong $latLong){}
 }

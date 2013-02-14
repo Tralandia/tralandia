@@ -355,7 +355,7 @@
 	{foreach $container->getComponents() as $plural}
         <tr>
 			{if $phrase->type->pluralVariationsRequired}
-                <td>{$language->plurals[$plural->getName()]['name']}</td>
+                <td>{$language->getPluralName($plural->getName())}</td>
 			{/if}
 			{foreach $plural->getComponents() as $genders}
                 <td>

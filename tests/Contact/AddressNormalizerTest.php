@@ -6,6 +6,7 @@ use Service\Contact;
 
 /**
  * @backupGlobals disabled
+ * @author Radoslav Toth
  */
 class AddressNormalizerTest extends \Tests\TestCase
 {
