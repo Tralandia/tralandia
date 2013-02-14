@@ -35,6 +35,74 @@
 
 				//this.visitList = appObject.storageDelete('favoritesList');
 
+					var liWidth = 122;
+
+					
+					var listCount = 0;
+					$(this).find('ul li').each(function(index) {						
+						++listCount;
+					});
+
+					var sumPx = (listCount*liWidth)+(listCount*6);
+
+					this.list.css('width',sumPx+'px');
+
+					// set nav links action
+
+					var animationOfset = 200;
+					var animationSpeed = 200;
+
+					$rigthArrow = $('#favorites-right-button');
+					$lefthArrow = $('#favorites-left-button');
+
+					var self = this;
+
+					var leftOfset = parseInt(self.list.css('left'));
+					
+					$rigthArrow.click(function(){
+
+						listCount = 0;
+						$(this).parent().find('ul li').each(function(index) {						
+							++listCount;
+						});
+
+						sumPx = (listCount*liWidth)+(listCount*6);
+						
+
+						if( (leftOfset+1220) < sumPx){
+							leftOfset += animationOfset;
+						  self.list.animate({
+							
+							left: '-='+animationOfset,
+							
+						  }, animationSpeed, function() {
+							// Animation complete.
+							
+						  });
+
+						}
+
+
+					});
+
+					$lefthArrow.click(function(){
+
+						if(leftOfset > 0){
+							leftOfset -= animationOfset;
+							  self.list.animate({
+								
+								left: '+='+animationOfset,
+								
+							  }, animationSpeed, function() {
+								// Animation complete.
+								
+							  });
+						}
+
+
+					}); // ---------
+
+
 				this.favoritesData = appObject.storageGet('favoritesList');
 				
 				this.visitList = appObject.storageGet('visitObjectList');
@@ -87,74 +155,9 @@
 
 					// full real width list
 
-					var liWidth = 122;
-
-					
-					var listCount = 0;
-					$(this).find('ul li').each(function(index) {						
-						++listCount;
-					});
-
-					var sumPx = (listCount*liWidth)+(listCount*6);
-
-					this.list.css('width',sumPx+'px');
-
-					// set nav links action
-
-					var animationOfset = 200;
-					var animationSpeed = 200;
-
-					$rigthArrow = $(this).find('.rightArrow');
-					$lefthArrow = $(this).find('.leftArrow');
-
-					var self = this;
-
-					var leftOfset = parseInt(self.list.css('left'));
-					
-
-					$rigthArrow.click(function(){
 
 
-						listCount = 0;
-						$(this).parent().find('ul li').each(function(index) {						
-							++listCount;
-						});
 
-						sumPx = (listCount*liWidth)+(listCount*6);
-						
-
-						if( (leftOfset+920) < sumPx){
-							leftOfset += animationOfset;
-						  self.list.animate({
-							
-							left: '-='+animationOfset,
-							
-						  }, animationSpeed, function() {
-							// Animation complete.
-							
-						  });
-
-						}
-
-
-					});
-
-					$lefthArrow.click(function(){
-
-						if(leftOfset > 0){
-							leftOfset -= animationOfset;
-							  self.list.animate({
-								
-								left: '+='+animationOfset,
-								
-							  }, animationSpeed, function() {
-								// Animation complete.
-								
-							  });
-						}
-
-
-					});
 
 
 					

@@ -11,16 +11,7 @@
 		
 	</div>
 
-{*
-	<div class="span12">
-		<ul class="breadcrumb">
-		  <li><a href="#">Home</a></li>
-		  <li><a href="#">Library</a></li>
-		  <li class="active">Data</li>
-		</ul>
-	</div>
 
-*}
 
 </div>
 	<div class="row-fluid">
@@ -51,11 +42,9 @@
 		        		
 
 		        		{if $mainImage = $rental->getMainImage()}
-
 		        			<img src="{$basePath}{$mainImage|rentalImageSrc}" />
 		        		{else}
-		        			<img src="http://www.tralandia.com/u/32/13539183882248.jpg" />
-
+		        			<img alt="{_$rental->name}" n:fakeImg="" class="marginBottom" />
 		        		{/if}
 
 		        		</a>
@@ -63,7 +52,13 @@
 		        	<div class="span8">
 		        		<h2><a href="{link Rental:detail $rental}">{_$rental->name}</a></h2>
 		        		
-		        		<button rel="{$rental->id}" data-title="{_$rental->name}" link="{link Rental:detail $rental}" thumb="{$basePath}{$mainImage|rentalImageSrc}" class="addToFavorites btn btn-mini listCompareBtn active"><span class="entypo-heart">{_o12334}</span> </button>		        				        				        	
+		        		{if $mainImage = $rental->getMainImage()}
+		        			<button rel="{$rental->id}" data-title="{_$rental->name}" link="{link Rental:detail $rental}" thumb="{$basePath}{$mainImage|rentalImageSrc}" class="addToFavorites btn btn-mini listCompareBtn active"><span class="entypo-heart">{_o12334}</span> </button>
+		        		{else}
+		        			<button rel="{$rental->id}" data-title="{_$rental->name}" link="{link Rental:detail $rental}" thumb="http://www.tralandia.com/u/32/13539183882248.jpg" class="addToFavorites btn btn-mini listCompareBtn active"><span class="entypo-heart">{_o12334}</span> </button>
+		        		{/if}
+
+		        		
 		        		
 		        		<div class="clearfix"></div>
 
