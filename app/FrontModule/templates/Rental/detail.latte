@@ -30,7 +30,7 @@
 
 		<h1 class="addToViewList" id="{$rental->id}">{_$rental->name}</h1>
 
-		<p class="marginBottom nopadding">
+		<p class="locality nopadding">
 		<a class="brown"  href="{link Rental:list location => $rental->address->locality , rentalType => $rental->type }">{_$rental->type->name|firstUpper} {_$rental->address->locality->name , null , [case=>locative]}</a>
 		</p>
 
@@ -82,6 +82,7 @@
 		<div class="detailInfoBox">
 			<i class="entypo-info2"></i>
 			<div class="content">
+				<span>
 				{var $separateGroups = $rental->getAmenitiesByType(array('separate-groups'))}
 				{if $separateGroups}
 					{foreach $separateGroups as $amenities}					
@@ -91,6 +92,7 @@
 					{/foreach}
 				{/if}
 				 #rooms lorem ipsum text #rooms lorem ipsum text
+				 </span>
 			</div>
 		</div>
 </div>
@@ -140,8 +142,12 @@
 	{if count($rental->pricelistRows) > 0}
 	{var $noPriceTable = false}
 		<ul class="detailPriceList">
-			<li>
+			<li><h3>Cenniky</h3>
 				<ul>
+					<li>3x Apartmán <span>(5x postel, 2x pristelka)</span><span class="price">78 eur</span></li>
+					<li>3x Apartmán <span>(2x postel)</span><span class="price">32 eur</span></li>
+					<li>3x Apartmán <span>(3x postel, 1x pristelka)</span><span class="price">50 eur</span></li>
+					{*
 					{foreach $rental->pricelistRows as $pricelistRow}
 					<li>	
 					{$pricelistRow->roomCount}x {_$pricelistRow->roomType->name}
@@ -156,6 +162,8 @@
 						</span>
 					</li>
 					{/foreach}
+					*}
+
 				</ul>
 			</li>
 		</ul>
