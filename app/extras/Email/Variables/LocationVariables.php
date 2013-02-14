@@ -23,12 +23,3 @@ class LocationVariables extends Nette\Object {
 	}
 
 }
-
-interface ILocationVariablesFactory {
-	/**
-	 * @param \Entity\Location\Location $location
-	 *
-	 * @return LocationVariables
-	 */
-	function create(\Entity\Location\Location $location);
-}

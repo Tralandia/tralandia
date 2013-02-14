@@ -310,6 +310,16 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 		});
 	}
 
+
+	/**
+	 * Alias to getUser()
+	 * @return \Entity\User\User|NULL
+	 */
+	public function getOwner()
+	{
+		return $this->getUser();
+	}
+
 	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		

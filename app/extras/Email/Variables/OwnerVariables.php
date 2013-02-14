@@ -4,10 +4,10 @@ namespace Extras\Email\Variables;
 use Nette;
 
 /**
- * VisitorVariables class
+ * OwnerVariables class
  *
  * @author Dávid Ďurika
  */
-class VisitorVariables extends BaseUserVariables {
+class OwnerVariables extends BaseUserVariables {
 
 }

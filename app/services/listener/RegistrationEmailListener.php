@@ -15,12 +15,14 @@ class RegistrationEmailListener extends BaseEmailListener implements \Kdyby\Even
 	{
 		$message = new \Nette\Mail\Message();
 
+		$receiver = $rental->getOwner();
+
 		$emailCompiler = $this->emailCompiler;
 		$emailCompiler->setTemplate($this->getTemplate(7));
 		$emailCompiler->setLayout($this->getLayout());
 		$emailCompiler->setEnvironment($receiver->getPrimaryLocation(), $receiver->getLanguage());
 		$emailCompiler->addRental('rental', $rental);
-		$emailCompiler->addVisitor('sender', $sender);
+		$emailCompiler->addOwner('owner', $rental);
 		$emailCompiler->addCustomVariable('message', 'Toto je sprava pre teba!');
 		$html = $emailCompiler->compile();
 
