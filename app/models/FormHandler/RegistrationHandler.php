@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityManager;
 
 class RegistrationHandler extends FormHandler
 {
+	public $onSuccess = [];
 
 	/**
 	 * @var \Service\Rental\RentalCreator
@@ -100,6 +101,9 @@ class RegistrationHandler extends FormHandler
 
 		//$this->model->save($values);
 		$this->rental = $rental;
+
+		$this->onSuccess($rental);
+
 		return $rental;
 	}
 

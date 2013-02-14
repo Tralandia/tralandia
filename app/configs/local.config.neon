@@ -2,6 +2,12 @@ php:
 	max_execution_time: 0
 	memory_limit: 1024M
 
+nette:
+	debugger:
+		bar: [JanDrabek\MailPanel\MailPanel]
+
+
+
 parameters:
 	envOptions:
 		sendEmail: FASLE
@@ -17,3 +23,9 @@ parameters:
 
 	router:
 		hostMask: '<language>.<country>.<domain>.com'
+
+services:
+
+	nette.mailer:
+		class: JanDrabek\MailPanel\SessionDumpMailer
+

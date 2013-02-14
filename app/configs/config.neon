@@ -57,6 +57,7 @@ presenter:
 
 services:
 
+
 	# STORAGE
 	rentalImageStorage: Extras\RentalImageStorage(%wwwDir%%rentalImageDir%)
 	rentalImagePipe: Extras\ImagePipe(%wwwDir%, %rentalImageDir%)

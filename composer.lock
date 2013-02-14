@@ -1,5 +1,5 @@
 {
-    "hash": "428b9c0c5063b9f7a4303e34aca94e39",
+    "hash": "d4d43a5032ef944d98b3b491216ea2da",
     "packages": [
         {
             "name": "hosiplan/nette-autowire-properties",
@@ -100,12 +100,12 @@
             "source": {
                 "type": "git",
                 "url": "http://github.com/nette/nette",
-                "reference": "b203f1bb8b5e4a5cae3932b85d2dc1e17e65a679"
+                "reference": "1a51cb6f3e331cb958051b5859128642532fc406"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/nette/zipball/b203f1bb8b5e4a5cae3932b85d2dc1e17e65a679",
-                "reference": "b203f1bb8b5e4a5cae3932b85d2dc1e17e65a679",
+                "url": "https://api.github.com/repos/nette/nette/zipball/1a51cb6f3e331cb958051b5859128642532fc406",
+                "reference": "1a51cb6f3e331cb958051b5859128642532fc406",
                 "shasum": ""
             },
             "require": {
@@ -123,7 +123,7 @@
                 "ext-memcache": "*",
                 "ext-pdo": "*"
             },
-            "time": "2013-02-07 10:40:20",
+            "time": "2013-02-14 00:57:31",
             "type": "library",
             "extra": {
                 "branch-alias": {

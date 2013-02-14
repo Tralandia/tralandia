@@ -7,4 +7,5 @@ services:
 
 
 	- [class: Listener\ForgotPasswordEmailListener, tags: [kdyby.subscriber]]
+	- [class: Listener\RegistrationEmailListener, tags: [kdyby.subscriber]]
 
