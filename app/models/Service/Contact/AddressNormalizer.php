@@ -53,6 +53,8 @@ class AddressNormalizer extends \Nette\Object {
 		} else {
 			$this->updateUsingAddress($this->getFormattedAddress());
 		}
+
+		return $this->address->status;
 	}
 
 	private function getFormattedAddress() {
@@ -91,7 +93,6 @@ class AddressNormalizer extends \Nette\Object {
 	}
 
 	protected function updateAddressData($response, $override) {
-
 		$info = array();
 		$components = array(
 			\GoogleGeocodeResponseV3::ACT_ROUTE,
@@ -150,12 +151,18 @@ class AddressNormalizer extends \Nette\Object {
 			}
 		}
 
-		//d($info);
+		$l = $response->getLocation();
+		if (isset($l->lat) && isset($l->lng)) {
+			$info['latitude'] = $l->lat;
+			$info['longitude'] = $l->lng;
+		}
 
+		//d(Strings::lower($info[\GoogleGeocodeResponseV3::ACT_COUNTRY]) );
+
+		//d($info);
 		// If the location is outside the primaryLocation, return false
 		if (Strings::lower($info[\GoogleGeocodeResponseV3::ACT_COUNTRY]) != $this->address->primaryLocation->iso) {
 			$this->address->status = \Entity\Contact\Address::STATUS_MISPLACED;
-			return \Entity\Contact\Address::STATUS_MISPLACED;
 		} else if (isset($info[\GoogleGeocodeResponseV3::ACT_LOCALITY])) {
 			$this->address->status = \Entity\Contact\Address::STATUS_OK;
 		} else {
