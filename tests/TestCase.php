@@ -28,7 +28,10 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
 	 */
 	private $context;
 
-
+	/**
+	 * @var \Doctrine\ORM\EntityManager
+	 */
+	private $em;
 
 	/**
 	 * @param string $name
@@ -38,6 +41,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
 	public function __construct($name = NULL, array $data = array(), $dataName = '')
 	{
 		$this->context = Nette\Environment::getContext();
+		$this->em = $this->context->getByType('\Doctrine\ORM\EntityManager');
 
 		parent::__construct($name, $data, $dataName);
 	}
@@ -50,6 +54,14 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
 	public function getContext()
 	{
 		return $this->context;
+	}
+
+	/**
+	 * @return \Doctrine\ORM\EntityManager
+	 */
+	public function getEm()
+	{
+		return $this->em;
 	}
 
 

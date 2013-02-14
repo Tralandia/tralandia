@@ -230,7 +230,7 @@ class Compiler {
 	 * Vrati html emailu uz aj s dosadenymi premennymi
 	 * @return mixed
 	 */
-	public function compile()
+	public function compileBody()
 	{
 		$template = $this->getTemplate();
 		$layout = $this->getLayout();

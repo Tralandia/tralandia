@@ -6,6 +6,6 @@ services:
 		tags: [kdyby.subscriber]
 
 
-	- [class: Listener\ForgotPasswordEmailListener, tags: [kdyby.subscriber]]
-	- [class: Listener\RegistrationEmailListener, tags: [kdyby.subscriber]]
+	forgotPasswordEmailListener: [class: Listener\ForgotPasswordEmailListener, tags: [kdyby.subscriber]]
+	registrationEmailListener: [class: Listener\RegistrationEmailListener, tags: [kdyby.subscriber]]
 

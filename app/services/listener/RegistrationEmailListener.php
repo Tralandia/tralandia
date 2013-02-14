@@ -15,6 +15,21 @@ class RegistrationEmailListener extends BaseEmailListener implements \Kdyby\Even
 	{
 		$message = new \Nette\Mail\Message();
 
+		$emailCompiler = $this->prepareCompiler($rental);
+		$body = $emailCompiler->compileBody();
+
+		$message->setHtmlBody($body);
+
+		$this->mailer->send($message);
+	}
+
+	/**
+	 * @param \Entity\Rental\Rental $rental
+	 *
+	 * @return \Extras\Email\Compiler
+	 */
+	public function prepareCompiler(\Entity\Rental\Rental $rental)
+	{
 		$receiver = $rental->getOwner();
 
 		$emailCompiler = $this->emailCompiler;
@@ -22,10 +37,9 @@ class RegistrationEmailListener extends BaseEmailListener implements \Kdyby\Even
 		$emailCompiler->setLayout($this->getLayout());
 		$emailCompiler->setEnvironment($receiver->getPrimaryLocation(), $receiver->getLanguage());
 		$emailCompiler->addRental('rental', $rental);
-		$emailCompiler->addOwner('owner', $rental);
-		$emailCompiler->addCustomVariable('message', 'Toto je sprava pre teba!');
-		$html = $emailCompiler->compile();
+		$emailCompiler->addOwner('owner', $receiver);
 
+		return $emailCompiler;
 	}
 
 }
