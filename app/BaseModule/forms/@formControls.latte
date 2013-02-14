@@ -245,28 +245,26 @@
     
 
     <div class="span2">
-        <label for="phraseType"><b>{label $container['phraseType'] /}</b></label>
+        {label $container['phraseType'] /}
         {input $container['phraseType'] , class => 'select2'}       
     </div>
 
 
     <div class="span3">
-        <label for="sourceLanguage"><b>{label $container['sourceLanguage'] /}</b></label>
+        {label $container['sourceLanguage'] /}
         {input $container['sourceLanguage'], class => 'select2'}
     </div>
 
-    <div class="span2">
-        <label class="topLabel checkbox">
+    <div class="span2">        
           {input $container['ready']}
-          {label $container['ready'] /}
-        </label>
-        <label for="phraseLanguage"><b>Translation | <span id="phraseTranslateCurrent"></b></label>
+          {label $container['ready'] /}        
+        <b>Translation | <span id="phraseTranslateCurrent"></b>
     </div>
     <div class="span2">
-        <label class="topLabel checkbox">
+        
           {input $container['corrected']}
           {label $container['corrected'] /}
-        </label>
+        
 
         {input $container['changeToLanguage'] , class => 'select2 pull-right' , id => 'phraseLanguage'} 
 
@@ -290,12 +288,12 @@
         {include #translationVatiations, control => $languageContainer['variations']}
 
         <div class="pull-left">
-        <label for="phraseGender"><b>{label $languageContainer['gender'] /}</b></label>
+        {label $languageContainer['gender'] /}
         {input $languageContainer['gender'] , class => 'select2'}
         </div>
 
         <div class="pull-right">
-        <label for="phrasePosition"><b>{label $languageContainer['position'] /}</b></label> 
+        {label $languageContainer['position'] /}
         {input $languageContainer['position'] , class => 'select2'}
         </div>
         <div class="clearfix"></div>
