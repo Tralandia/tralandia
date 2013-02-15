@@ -1,0 +1,77 @@
+@import './less-functions.less';
+
+.rentaletailNavigaton {
+
+	background: #fafafa;
+	border: 1px solid #eee;
+	height: 32px;
+	line-height: 32px;
+	text-align: center;
+	width: 934px;
+	margin: 0 auto;
+	font-size: 13px;
+	position: relative;
+	bottom: -10px;
+	.top-border-radius(5px);
+	color: #777;
+	overflow: hidden;
+
+	a {
+		color: @darkGreen;
+	}
+
+	.prev , .next {
+		background: #eee;
+		color: rgb(104, 104, 104);
+		float: left;
+		display: block;
+		height: 32px;
+		
+		width: 160px;
+
+		i {
+			float: left;
+			height:0;
+			&:before {
+				height:0;
+			}
+		}
+
+		.info {
+			display: block;
+			width: 138px;			
+			float: left;		
+			white-space: nowrap;			
+			overflow: hidden;
+			text-overflow: ellipsis;			
+		}
+
+		&:hover {
+			background: rgb(221, 221, 221);
+		}
+
+	}
+
+	.prev {
+		padding-left: 10px;
+		i {
+			&:before {
+
+			}
+		}
+
+		.info {
+			float: right;
+		}
+	}
+
+	.next {
+		float: right;
+		padding-right: 10px;
+		i {
+			float: right;
+			margin-left: 10px;
+			display: block;
+		}
+	}
+}

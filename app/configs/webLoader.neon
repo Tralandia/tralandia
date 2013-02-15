@@ -43,6 +43,7 @@ parameters:
 					- texyla/texyla/languages/cs.js
 					- texyla/texyla/languages/en.js
 					- texyla/texyla/languages/sk.js
+					- texyla/main.js
 					# plugins
 					# - texyla/texyla/plugins/keys/keys.js
 					# - texyla/texyla/plugins/resizableTextarea/resizableTextarea.js
@@ -85,7 +86,8 @@ parameters:
 					- Front/reservation-form.less
 					- Front/main.css.less
 					- Front/object-list.less
-					- Front/homepage-list.less					
+					- Front/homepage-list.less	
+					- Front/rental-detail-navigation.less				
 				js:
 					- FileUpload/js/vendor/jquery.ui.widget.js
 					- FileUpload/js/jquery.iframe-transport.js

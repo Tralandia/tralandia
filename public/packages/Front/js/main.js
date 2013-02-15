@@ -25,6 +25,8 @@ function executeFunctionByName(functionName, context /*, args */) {
   return context[func].apply(this, args);
 }
 
+
+
 /*
 * App class 
 */
@@ -438,61 +440,6 @@ $(document).ready(function(){
 
 //console.log($.cookie('visitObjectList'));
 
-
-/*
-$.nette.ext('snippets', false);
-
-	$.nette.ext('snippets', {
-	    success: function(data){
-	    	alert('geci');
-	    }
-	}, {
-	    // ... sdílený kontext všech callbacků (dostupný přes this)
-	});
-
-	
-*/
-
-
-
-/* AJAXové odeslání formulářů 
-$("form.ajax").live("submit", function () {
-    $(this).ajaxSubmit();
-    return false;
-});
-
-$("form.ajax :submit").live("click", function () {
-    $(this).ajaxSubmit();
-    return false;
-});*/
-
-	$.texyla.setDefaults({
-		texyCfg: "admin",
-		baseDir: '/packages/texyla/texyla',
-		previewPath: "preview.php",
-		filesPath: null,
-		filesThumbPath: null,
-		filesUploadPath: null
-	});
-
-    $("textarea.texyla").texyla({
-				toolbar: [
-					'h1', 'h2', 'h3', 'h4',
-					null,
-					'bold', 'italic',
-					null,
-					'center', 'left', 'right', 'justify',
-					null,
-					'ul', 'ol',
-			
-					
-				],
-				texyCfg: "admin",
-				bottomLeftToolbar: ['edit', 'preview', 'htmlPreview'],
-				buttonType: "button",
-				tabs: true
-			});
-   
 
 	var A = new App();
 
