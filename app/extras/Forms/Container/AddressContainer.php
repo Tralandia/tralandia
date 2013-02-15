@@ -12,7 +12,11 @@ class AddressContainer extends BaseContainer
 	 */
 	protected $address;
 
-	public function __construct($locations, \Entity\Contact\Address $address)
+	/**
+	 * @param array|\Traversable $locations
+	 * @param \Entity\Contact\Address $address
+	 */
+	public function __construct($locations, \Entity\Contact\Address $address = NULL)
 	{
 		parent::__construct();
 
@@ -24,6 +28,8 @@ class AddressContainer extends BaseContainer
 		$this->addSelect('location', '#Primary location', $locations);
 		$this->addHidden('latitude');
 		$this->addHidden('longitude');
+
+		$this->setDefaultValues();
 	}
 
 	public function getMainControl()
@@ -31,17 +37,19 @@ class AddressContainer extends BaseContainer
 		return $this['address'];
 	}
 
-	public function setDefaultValues()
+	protected function setDefaultValues()
 	{
-		$locality = $this->getForm()->getTranslator()->translate($this->address->getLocality()->getName());
-		$this->setDefaults([
-			'address' => $this->address->getAddress(),
-			'locality' => $locality,
-			'postalCode' => $this->address->getPostalCode(),
-			'primaryLocation' => $this->address->getPrimaryLocation()->getId(),
-			'latitude' => $this->address->getGps()->getLatitude(),
-			'longitude' => $this->address->getGps()->getLongitude(),
-		]);
+		if($this->address) {
+			$locality = $this->getForm()->getTranslator()->translate($this->address->getLocality()->getName());
+			$this->setDefaults([
+				'address' => $this->address->getAddress(),
+				'locality' => $locality,
+				'postalCode' => $this->address->getPostalCode(),
+				'primaryLocation' => $this->address->getPrimaryLocation()->getId(),
+				'latitude' => $this->address->getGps()->getLatitude(),
+				'longitude' => $this->address->getGps()->getLongitude(),
+			]);
+		}
 	}
 
 	/**

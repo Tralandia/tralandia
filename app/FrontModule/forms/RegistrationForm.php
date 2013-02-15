@@ -74,8 +74,7 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 		$this->addPassword('password', 'Password');
 		$this->addPassword('password2', 'Confirm Password');
 
-//		$this->addText('rentalAddress', 'Address');
-//		$this->addText('rentalGps', 'GPS');
+		$this['address'] = new \Extras\Forms\Container\AddressContainer($countries);
 
 		$this->addText('rentalName', 'Rental Name');
 		$this->addSelect('rentalType', 'Rental Type', $rentalTypes);

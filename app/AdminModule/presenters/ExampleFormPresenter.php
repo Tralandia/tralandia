@@ -65,7 +65,6 @@ class ExampleFormPresenter extends BasePresenter {
 		$locations = $this->locationRepository->getCountriesForSelect();
 		$address = $this->addressRepository->find(1);
 		$form['address'] = new \Extras\Forms\Container\AddressContainer($locations, $address);
-		$form['address']->setDefaultValues();
 
 		$form['phrase'] = new \Extras\Forms\Container\PhraseContainer($phrase, $this->languageRepository);
 		$form['phrase']->setDefaultValues();
