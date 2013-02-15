@@ -1,4 +1,3 @@
-
 /**
  * AJAX Nette Framework plugin for jQuery
  *
@@ -10,7 +9,7 @@
  * @version 1.2.1
  */
 
-(function($, undefined) {
+(function(window, $, undefined) {
 
 if (typeof $ != 'function') {
 	return console.error('nette.ajax.js: jQuery is missing, load it please');
@@ -89,7 +88,7 @@ var nette = function () {
 		} else if (callbacks === undefined) {
 			return inner.contexts[name];
 		} else if (!callbacks) {
-			$.each(['init', 'load', 'before', 'start', 'success', 'complete', 'error'], function (index, event) {
+			$.each(['init', 'load', 'prepare', 'before', 'start', 'success', 'complete', 'error'], function (index, event) {
 				inner.on[event][name] = undefined;
 			});
 			inner.contexts[name] = undefined;
@@ -163,7 +162,6 @@ var nette = function () {
 				isImage: $el.is('input[type=image]'),
 				form: null
 			};
-			
 
 			if (analyze.isSubmit || analyze.isImage) {
 				analyze.form = analyze.el.closest('form');
@@ -172,7 +170,7 @@ var nette = function () {
 			}
 
 			if (!settings.url) {
-				settings.url = analyze.form ? analyze.form.attr('action') : ui.href;				
+				settings.url = analyze.form ? analyze.form.attr('action') : ui.href;
 			}
 			if (!settings.type) {
 				settings.type = analyze.form ? analyze.form.attr('method') : 'get';
@@ -206,7 +204,7 @@ var nette = function () {
 
 		xhr = $.ajax(settings);
 
-		if (xhr && xhr.status > 0) {
+		if (xhr && (typeof xhr.statusText === 'undefined' || xhr.statusText !== 'canceled')) {
 			xhr.done(function (payload, status, xhr) {
 				inner.fire({
 					name: 'success',
@@ -239,6 +237,10 @@ $.nette = new ($.extend(nette, $.nette ? $.nette : {}));
 
 $.fn.netteAjax = function (e, options) {
 	return $.nette.ajax(options || {}, this[0], e);
+};
+
+$.fn.netteAjaxOff = function () {
+	return this.off('.nette');
 };
 
 $.nette.ext('validation', {
@@ -387,6 +389,7 @@ $.nette.ext('snippets', {
 		} else {
 			this.applySnippet($el, html, back);
 		}
+
 	},
 	getElement: function (id) {
 		return $('#' + this.escapeSelector(id));
@@ -477,4 +480,4 @@ $.nette.ext('init', {
 	buttonSelector: 'input.ajax[type="submit"], button.ajax[type="submit"], input.ajax[type="image"]'
 });
 
-})(window.jQuery);
+})(window, window.jQuery);
