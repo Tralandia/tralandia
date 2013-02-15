@@ -318,9 +318,4 @@ abstract class BasePresenter extends Presenter {
 		$this->sendJson($json);
 	}
 
-	/**
-	 * @param Extras\Types\Latlong $latLong
-	 * @return array
-	 */
-	public function methodName(\Extras\Types\Latlong $latLong){}
 }
