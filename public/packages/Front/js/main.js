@@ -434,11 +434,22 @@ App.prototype.closeForgottenPasswordForm = function(){
 
 $(document).ready(function(){
 
-$.removeCookie('favoritesList');
+//$.removeCookie('favoritesList');
 
-console.log($.cookie('visitObjectList'));
+//console.log($.cookie('visitObjectList'));
 
 	$.nette.init();
+
+/* AJAXové odeslání formulářů */
+$("form.ajax").live("submit", function () {
+    $(this).ajaxSubmit();
+    return false;
+});
+
+$("form.ajax :submit").live("click", function () {
+    $(this).ajaxSubmit();
+    return false;
+});
 
 	$.texyla.setDefaults({
 		texyCfg: "admin",
@@ -475,6 +486,11 @@ console.log($.cookie('visitObjectList'));
 	$('.socialIconsDetail').socialIconsDetail();
 
 	$("select.select2").select2(); 
+
+	$('select.select2').load(function() {
+			$(this).select2(); 
+	  	console.log('load selectbox');
+	});
 
 	$('.searchForm').searchFormSuggest();
 

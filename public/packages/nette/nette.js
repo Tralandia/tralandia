@@ -31,9 +31,13 @@ jQuery.extend({
 		},
 
 		success: function (payload) {
+
+			//console.log(payload);
+
 			if (payload) {
 				// redirect
 				if (payload.redirect) {
+					//console.log('payload.redirect');
 					window.location.href = payload.redirect;
 					return;
 				}
@@ -41,8 +45,12 @@ jQuery.extend({
 				// snippets
 				if (payload.snippets) {
 					for (var i in payload.snippets) {
-						jQuery.nette.updateSnippet(i, payload.snippets[i]);
+						//jQuery.nette.updateSnippet(i, payload.snippets[i]);
+						$("#" + i).html(payload.snippets[i]);
 					}
+
+					$("select.select2").select2(); 
+
 				}
 			}
 		}
