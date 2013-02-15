@@ -289,5 +289,4 @@ class User extends \Entity\BaseEntityDetails {
 	{
 		return $this->newsletter;
 	}
-
 }

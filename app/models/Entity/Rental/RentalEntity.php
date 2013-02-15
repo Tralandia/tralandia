@@ -832,7 +832,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 	{
 		return $this->amenities;
 	}
-
+		
 	/**
 	 * @param integer
 	 * @return \Entity\Rental\Rental
@@ -909,7 +909,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 	{
 		return $this->pricesUponRequest;
 	}
-
+		
 	/**
 	 * @return \Entity\Rental\Rental
 	 */
@@ -1201,6 +1201,35 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 	public function getMaxCapacity()
 	{
 		return $this->maxCapacity;
+	}
+		
+	/**
+	 * @param integer
+	 * @return \Entity\Rental\Rental
+	 */
+	public function setBedroomCount($bedroomCount)
+	{
+		$this->bedroomCount = $bedroomCount;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Rental\Rental
+	 */
+	public function unsetBedroomCount()
+	{
+		$this->bedroomCount = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return integer|NULL
+	 */
+	public function getBedroomCount()
+	{
+		return $this->bedroomCount;
 	}
 		
 	/**

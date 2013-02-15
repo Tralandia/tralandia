@@ -7,8 +7,15 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="email_layout")
+ * @EA\Generator(skip="{setSlug}")
  */
 class Layout extends \Entity\BaseEntity {
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true, unique=true)
+	 */
+	protected $slug;
 
 	/**
 	 * @var string
@@ -22,6 +29,16 @@ class Layout extends \Entity\BaseEntity {
 	 */
 	protected $html;
 
+	/**
+	 * @param string
+	 * @return \Entity\Rental\Rental
+	 */
+	public function setSlug($slug)
+	{
+		$this->slug = \Nette\Utils\Strings::webalize($slug);
+
+		return $this;
+	}		
 
 	//@entity-generator-code --- NEMAZAT !!!
 
@@ -29,6 +46,24 @@ class Layout extends \Entity\BaseEntity {
 	public function __construct()
 	{
 		parent::__construct();
+	}
+		
+	/**
+	 * @return \Entity\Email\Layout
+	 */
+	public function unsetSlug()
+	{
+		$this->slug = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getSlug()
+	{
+		return $this->slug;
 	}
 		
 	/**

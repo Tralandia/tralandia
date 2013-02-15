@@ -10,8 +10,15 @@ use	Extras\Annotation as EA;
  * @ORM\Entity()
  * @ORM\Table(name="email_template")
  * @EA\Primary(key="id", value="domain")
+ * @EA\Generator(skip="{setSlug}")
  */
 class Template extends \Entity\BaseEntity {
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true, unique=true)
+	 */
+	protected $slug;
 
 	/**
 	 * @var string
@@ -32,12 +39,41 @@ class Template extends \Entity\BaseEntity {
 	 */
 	protected $body;
 
+	/**
+	 * @param string
+	 * @return \Entity\Rental\Rental
+	 */
+	public function setSlug($slug)
+	{
+		$this->slug = \Nette\Utils\Strings::webalize($slug);
+
+		return $this;
+	}		
+
 	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()
 	{
 		parent::__construct();
+	}
+		
+	/**
+	 * @return \Entity\Email\Template
+	 */
+	public function unsetSlug()
+	{
+		$this->slug = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getSlug()
+	{
+		return $this->slug;
 	}
 		
 	/**
