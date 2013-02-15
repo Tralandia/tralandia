@@ -1,5 +1,5 @@
 {includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
-{form reservationForm , class => 'reservationform' }
+{form reservationForm , class => 'reservationform ajax' }
 
 	{* add class invalid to input *}
 
@@ -27,16 +27,22 @@
 
 	
 
-
+	<div class="control-group">
 	<div class="input-append">
-		{input from, class => "datepicker" ,data-validation-message => "error-msg-reservation" }
+		{input from, class => "datepicker" ,data-validation-message => "error-msg-reservation-from" }
 	  	<span class="add-on datepickerIcon entypo-calendar"></span>
 	</div>
+	<span class="control-error" id="error-msg-reservation-from"></span>
+	</div>	
 
+	<div class="control-group">
 	<div class="input-append">
-		{input from, class => "datepickerto" , data-validation-message => "error-msg-reservation"}
+		{input from, class => "datepickerto" , data-validation-message => "error-msg-reservation-to"}
 		<span class="add-on datepickerIcon entypo-calendar"></span>
 	</div>
+	<span class="control-error" id="error-msg-reservation-to"></span>
+	</div>		
+
 
 	{input message , data-validation-message => "error-msg-reservation"}
 	

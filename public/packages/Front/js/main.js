@@ -25,6 +25,8 @@ function executeFunctionByName(functionName, context /*, args */) {
   return context[func].apply(this, args);
 }
 
+
+
 /*
 * App class 
 */
@@ -434,39 +436,10 @@ App.prototype.closeForgottenPasswordForm = function(){
 
 $(document).ready(function(){
 
-$.removeCookie('favoritesList');
+//$.removeCookie('favoritesList');
 
-console.log($.cookie('visitObjectList'));
+//console.log($.cookie('visitObjectList'));
 
-	$.nette.init();
-
-	$.texyla.setDefaults({
-		texyCfg: "admin",
-		baseDir: '/packages/texyla/texyla',
-		previewPath: "preview.php",
-		filesPath: null,
-		filesThumbPath: null,
-		filesUploadPath: null
-	});
-
-    $("textarea.texyla").texyla({
-				toolbar: [
-					'h1', 'h2', 'h3', 'h4',
-					null,
-					'bold', 'italic',
-					null,
-					'center', 'left', 'right', 'justify',
-					null,
-					'ul', 'ol',
-			
-					
-				],
-				texyCfg: "admin",
-				bottomLeftToolbar: ['edit', 'preview', 'htmlPreview'],
-				buttonType: "button",
-				tabs: true
-			});
-   
 
 	var A = new App();
 
@@ -475,6 +448,11 @@ console.log($.cookie('visitObjectList'));
 	$('.socialIconsDetail').socialIconsDetail();
 
 	$("select.select2").select2(); 
+
+	$('select.select2').load(function() {
+			$(this).select2(); 
+	  	console.log('load selectbox');
+	});
 
 	$('.searchForm').searchFormSuggest();
 
