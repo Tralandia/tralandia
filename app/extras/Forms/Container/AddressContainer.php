@@ -21,7 +21,7 @@ class AddressContainer extends BaseContainer
 		$this->addText('address', '#Address');
 		$this->addText('locality', '#Locality');
 		$this->addText('postalCode', '#Postal Code');
-		$this->addSelect('primaryLocation', '#Primary location', $locations);
+		$this->addSelect('location', '#Primary location', $locations);
 		$this->addHidden('latitude');
 		$this->addHidden('longitude');
 	}

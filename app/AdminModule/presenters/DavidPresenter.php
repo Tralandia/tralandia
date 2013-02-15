@@ -12,7 +12,6 @@ class DavidPresenter extends BasePresenter {
 
 	protected $rentalRepositoryAccessor;
 	protected $rentalImageRepositoryAccessor;
-	protected $locationRepositoryAccessor;
 	protected $rentalPricelistRepositoryAccessor;
 	protected $contactAddressRepositoryAccessor;
 
@@ -41,7 +40,6 @@ class DavidPresenter extends BasePresenter {
 	public function injectDic(\Nette\DI\Container $dic) {
 		$this->rentalRepositoryAccessor = $dic->rentalRepositoryAccessor;
 		$this->rentalImageRepositoryAccessor = $dic->rentalImageRepositoryAccessor;
-		$this->locationRepositoryAccessor = $dic->locationRepositoryAccessor;
 		$this->rentalPricelistRepositoryAccessor = $dic->rentalPricelistRepositoryAccessor;
 		$this->contactAddressRepositoryAccessor = $dic->contactAddressRepositoryAccessor;
 	}

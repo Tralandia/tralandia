@@ -210,7 +210,7 @@
 			{label $container['postalCode'] /}
         </div>
         <div class="span2">
-			{label $container['primaryLocation'] /}
+			{label $container['location'] /}
         </div>
     </div>
 
@@ -226,7 +226,7 @@
 			{input $container['postalCode'], data-name => "postalCode", data-validation-message => "gps-validation-message"}
 		</div>
         <div class="span3">
-			{input $container['primaryLocation'], data-name => "primaryLocation", class => 'select2', data-validation-message =>
+			{input $container['location'], data-name => "primaryLocation", class => 'select2', data-validation-message =>
 			"gps-validation-message"}
         </div>
 		{input $container['latitude'], data-name => "latitude", class => "latitude"}

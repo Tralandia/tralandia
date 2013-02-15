@@ -7,7 +7,3 @@ parameters:
 
 	useTemplateCache: false
 
-nette:
-	debugger:
-		editor: 'http://127.0.0.1:8091?message=%file:%line'
-

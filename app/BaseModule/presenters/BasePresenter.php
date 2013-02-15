@@ -1,6 +1,7 @@
 <?php
 
 use Nette\Environment;
+use Nette\Utils\Arrays;
 use Nette\Utils\Finder;
 use Nette\Utils\Strings;
 use Nette\Security\User;
@@ -38,6 +39,28 @@ abstract class BasePresenter extends Presenter {
 	 * @var \Extras\ImagePipe
 	 */
 	protected $rentalImagePipe;
+
+	/**
+	 * @autowire
+	 * @var \Service\Contact\AddressNormalizer
+	 */
+	protected $addressNormalizer;
+
+	/**
+	 * @var \Repository\LanguageRepository
+	 */
+	protected $languageRepositoryAccessor;
+
+	/**
+	 * @var \Repository\Location\LocationRepository
+	 */
+	protected $locationRepositoryAccessor;
+
+	public function injectLLRepositories(\Nette\DI\Container $dic) {
+		$this->languageRepositoryAccessor = $dic->languageRepositoryAccessor;
+		$this->locationRepositoryAccessor = $dic->locationRepositoryAccessor;
+	}
+
 
 	protected function startup() {
 		parent::startup();
@@ -265,54 +288,49 @@ abstract class BasePresenter extends Presenter {
 		$address = $this->getParameter('address');
 		$locality = $this->getParameter('locality');
 		$postalCode = $this->getParameter('postalCode');
-		$primaryLocation = $this->getParameter('primaryLocation');
+		$primaryLocation = $this->getParameter('location');
 		$latitude = $this->getParameter('latitude');
 		$longitude = $this->getParameter('longitude');
 
-		/** @var $addressEntity \Entity\Contact\Address */
-		$addressEntity = $this->getContext()->contactAddressRepositoryAccessor->get()->createNew();
+		$addressNormalizer = $this->addressNormalizer;
 
-
-		$addressEntity->setAddress($address);
-		$addressEntity->setLocality($locality);
-		$addressEntity->setPostalCode($postalCode);
-		$addressEntity->setPrimaryLocation($primaryLocation);
+		$info = [];
 		if($latitude && $longitude) {
 			$gps = new \Extras\Types\Latlong($latitude, $longitude);
 			if($gps->isValid()) {
-				$addressEntity->setGps($gps);
+				$info = $addressNormalizer->getInfoUsingGps($gps);
 			}
+		} else {
+			$primaryLocation = $this->locationRepositoryAccessor->get()->find($primaryLocation);
+			$info = $addressNormalizer->getInfoUsingAddress($primaryLocation, $address, '', $locality, $postalCode);
 		}
 
-		/** @var $addressNormalizer Service\Contact\AddressNormalizer */
-		$addressNormalizer = $this->getContext()->addressNormalizerFactory->create($address);
 
-		$addressNormalizer->update(TRUE);
 
 		$jsonElements = [
 			'address' => [
-				'value' => $addressEntity->getAddress(),
+				'value' => Arrays::get($info, 'address', NULL),
 			],
 			'locality' => [
-				'value' => $addressEntity->getLocality(),
+				'value' => Arrays::get($info, 'locality', NULL),
 			],
 			'postalCode' => [
-				'value' => $addressEntity->getPostalCode(),
+				'value' => Arrays::get($info, 'postalCode', NULL),
 			],
 			'location' => [
-				'value' => $addressEntity->getPrimaryLocation(),
+				'value' => array_key_exists('location', $info) ? $info['location']->getId() : NULL,
 			],
 			'latitude' => [
-				'value' => $addressEntity->getGps()->getLatitude(),
+				'value' => Arrays::get($info, 'latitude', NULL),
 			],
 			'longitude' => [
-				'value' => $addressEntity->getGps()->getLongitude(),
+				'value' => Arrays::get($info, 'longitude', NULL),
 			],
 		];
 
 		$json = [
 			'status' => TRUE,
-			'elements' => $jsonElements,
+			'elements' => $jsonElements
 		];
 
 		$this->sendJson($json);
