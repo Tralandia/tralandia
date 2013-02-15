@@ -127,4 +127,23 @@ class Amenity extends \Entity\BaseEntityDetails {
 	{
 		return $this->name;
 	}
+		
+	/**
+	 * @param boolean
+	 * @return \Entity\Rental\Amenity
+	 */
+	public function setImportant($important)
+	{
+		$this->important = $important;
+
+		return $this;
+	}
+		
+	/**
+	 * @return boolean|NULL
+	 */
+	public function getImportant()
+	{
+		return $this->important;
+	}
 }
