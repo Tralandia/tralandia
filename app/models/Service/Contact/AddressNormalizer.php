@@ -7,6 +7,14 @@ use Nette\Utils\Strings;
 
 class AddressNormalizer extends \Nette\Object {
 
+	const ADDRESS = 'address';
+	const LOCALITY = 'locality';
+	const SUBLOCALITY = 'subLocality';
+	const POSTAL_CODE = 'postalCode';
+	const PRIMARY_LOCATION = 'location';
+	const LATITUDE = 'latitude';
+	const LONGITUDE = 'longitude';
+
 	protected $address;
 	protected $geocodeService;
 
@@ -28,14 +36,24 @@ class AddressNormalizer extends \Nette\Object {
 		$this->locationDecoratorFactory = $factory;
 	}
 
+	/**
+	 * @param \GoogleGeocodeServiceV3 $googleGeocodeService
+	 */
 	public function __construct(\GoogleGeocodeServiceV3 $googleGeocodeService) {
 		$this->geocodeService = $googleGeocodeService;
 	}
 
+	/**
+	 * @param \Entity\Contact\Address $address
+	 * @param bool $override
+	 *
+	 * @return string
+	 * @throws \Exception
+	 */
 	public function update(\Entity\Contact\Address $address, $override = FALSE) {
 		$this->address = $address;
 		if (!$this->address->primaryLocation) {
-			throw new \Exception("\Entity\Contact\Address has no primaryLocation", 1);
+			throw new \Exception('\Entity\Contact\Address has no primaryLocation');
 		}
 
 		$this->geocodeService->setRequestDefaults(array(
@@ -51,7 +69,7 @@ class AddressNormalizer extends \Nette\Object {
 				$this->address->primaryLocation, 
 				$this->address->address, 
 				$this->address->subLocality, 
-				$this->address->locality->name->getTranslationText($this->address->primaryLocation->defaultLanguage, TRUE), 
+				$this->address->locality->name->getTranslationText($this->address->primaryLocation->defaultLanguage, TRUE),
 				$this->address->postalCode
 			);
 		}
@@ -61,6 +79,11 @@ class AddressNormalizer extends \Nette\Object {
 		return $this->address->status;
 	}
 
+	/**
+	 * @param \Extras\Types\Latlong $latLong
+	 *
+	 * @return array|bool
+	 */
 	public function getInfoUsingGps(\Extras\Types\Latlong $latLong) {
 		$latitude = $latLong->getLatitude();
 		$longitude = $latLong->getLongitude();
@@ -71,10 +94,19 @@ class AddressNormalizer extends \Nette\Object {
 			return FALSE;
 		}
 
-		return $this->parseReponse($response);
+		return $this->parseResponse($response);
 
 	}
 
+	/**
+	 * @param \Entity\Location\Location $primaryLocation
+	 * @param string $address
+	 * @param string $subLocality
+	 * @param string $locality
+	 * @param string $postalCode
+	 *
+	 * @return array|bool
+	 */
 	public function getInfoUsingAddress(\Entity\Location\Location $primaryLocation, $address = '', $subLocality = '', $locality = '', $postalCode = '') {
 
 		$formattedAddress = implode(', ', array_filter(array(
@@ -87,21 +119,26 @@ class AddressNormalizer extends \Nette\Object {
 			return FALSE;
 		}
 		
-		return $this->parseReponse($response);
+		return $this->parseResponse($response);
 	}
 
-	private function parseReponse($response) {
+	/**
+	 * @param \GoogleGeocodeResponseV3 $response
+	 *
+	 * @return array
+	 */
+	private function parseResponse(\GoogleGeocodeResponseV3 $response) {
 		$info = array();
 		$components = array(
-			\GoogleGeocodeResponseV3::ACT_ROUTE,
-			\GoogleGeocodeResponseV3::ACT_STREET_NUMBER,
-			\GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_1,
-			\GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_2,
-			\GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_3,
-			\GoogleGeocodeResponseV3::ACT_LOCALITY,
-			\GoogleGeocodeResponseV3::ACT_SUBLOCALITY,
-			\GoogleGeocodeResponseV3::ACT_POSTAL_CODE,
-			\GoogleGeocodeResponseV3::ACT_COUNTRY,
+			\GoogleGeocodeResponseV3::ACT_ROUTE => NULL,
+			\GoogleGeocodeResponseV3::ACT_STREET_NUMBER => NULL,
+			\GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_1 => NULL,
+			\GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_2 => NULL,
+			\GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_3 => NULL,
+			\GoogleGeocodeResponseV3::ACT_LOCALITY => self::LOCALITY,
+			\GoogleGeocodeResponseV3::ACT_SUBLOCALITY => self::SUBLOCALITY,
+			\GoogleGeocodeResponseV3::ACT_POSTAL_CODE => self::POSTAL_CODE,
+			\GoogleGeocodeResponseV3::ACT_COUNTRY => self::PRIMARY_LOCATION,
 		);
 
 		$lowerCased = array(
@@ -110,13 +147,14 @@ class AddressNormalizer extends \Nette\Object {
 		);
 		while ( $response->valid() ) {
 			foreach ($components as $key => $value) {
-				if (!isset($info[$value])) {
-					$t = $response->getAddressComponentName($value, \GoogleGeocodeResponseV3::NAME_SHORT);
+				$infoKey = $value ?: $key;
+				if (!isset($info[$infoKey])) {
+					$t = $response->getAddressComponentName($key, \GoogleGeocodeResponseV3::NAME_SHORT);
 					if ($t !== NULL) {
-						if (in_array($value, $lowerCased)) {
+						if (in_array($key, $lowerCased)) {
 							$t = Strings::lower($t);
 						}
-						$info[$value] = $t;
+						$info[$infoKey] = $t;
 					}
 	 			}
 			}
@@ -124,44 +162,60 @@ class AddressNormalizer extends \Nette\Object {
 		}
 
 		// If we don't have LOCALITY, try to use ADMINISTRATIVE LEVEL 3
-		if (!isset($info[\GoogleGeocodeResponseV3::ACT_LOCALITY]) && isset($info[\GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_3])) {
-			$info[\GoogleGeocodeResponseV3::ACT_LOCALITY] = $info[\GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_3];
+		if (!isset($info[self::LOCALITY]) && isset($info[\GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_3])) {
+			$info[self::LOCALITY] = $info[\GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_3];
 		}
 
 		// If we still don't have LOCALITY, try to use ADMINISTRATIVE LEVEL 2
-		if (!isset($info[\GoogleGeocodeResponseV3::ACT_LOCALITY]) && isset($info[\GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_2])) {
-			$info[\GoogleGeocodeResponseV3::ACT_LOCALITY] = $info[\GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_2];
+		if (!isset($info[self::LOCALITY]) && isset($info[\GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_2])) {
+			$info[self::LOCALITY] = $info[\GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_2];
 		}
 
 		// If we still don't have LOCALITY, try to use ADMINISTRATIVE LEVEL 1
-		if (!isset($info[\GoogleGeocodeResponseV3::ACT_LOCALITY]) && isset($info[\GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_1])) {
-			$info[\GoogleGeocodeResponseV3::ACT_LOCALITY] = $info[\GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_1];
+		if (!isset($info[self::LOCALITY]) && isset($info[\GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_1])) {
+			$info[self::LOCALITY] = $info[\GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_1];
 		}
 
 		// IF it's in USA, create a 4-letter ISO code
-		if (isset($info[\GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_1]) && isset($info[\GoogleGeocodeResponseV3::ACT_COUNTRY]) && Strings::lower($info[\GoogleGeocodeResponseV3::ACT_COUNTRY]) == 'us') {
-			$info[\GoogleGeocodeResponseV3::ACT_COUNTRY] = $info[\GoogleGeocodeResponseV3::ACT_COUNTRY].$info[\GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_1];
+		if (isset($info[\GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_1]) && isset($info[self::PRIMARY_LOCATION]) && Strings::lower($info[self::PRIMARY_LOCATION]) == 'us') {
+			$info[self::PRIMARY_LOCATION] = $info[self::PRIMARY_LOCATION] . $info[\GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_1];
 		}
 
-		if (isset($info[\GoogleGeocodeResponseV3::ACT_LOCALITY]) && isset($info[\GoogleGeocodeResponseV3::ACT_SUBLOCALITY])) {
-			if ($info[\GoogleGeocodeResponseV3::ACT_LOCALITY] == $info[\GoogleGeocodeResponseV3::ACT_SUBLOCALITY]) {
-				unset($info[\GoogleGeocodeResponseV3::ACT_SUBLOCALITY]);
+		$info[self::PRIMARY_LOCATION] = $this->locationRepositoryAccessor->get()->findOneByIso($info[self::PRIMARY_LOCATION]);
+
+		if (isset($info[self::LOCALITY]) && isset($info[self::SUBLOCALITY])) {
+			if ($info[self::LOCALITY] == $info[self::SUBLOCALITY]) {
+				unset($info[self::SUBLOCALITY]);
 			}
 		}
 
 		$l = $response->getLocation();
 		if (isset($l->lat) && isset($l->lng)) {
-			$info['latitude'] = $l->lat;
-			$info['longitude'] = $l->lng;
+			$info[self::LATITUDE] = $l->lat;
+			$info[self::LONGITUDE] = $l->lng;
 		}
+
+		$address = [
+			Arrays::get($info, \GoogleGeocodeResponseV3::ACT_ROUTE, NULL),
+			Arrays::get($info, \GoogleGeocodeResponseV3::ACT_STREET_NUMBER, NULL),
+		];
+
+		$info[self::ADDRESS] = implode(' ', array_filter($address));
 
 		return $info;
 	}
-	protected function updateAddressData($info, $override) {
+
+	/**
+	 * @param array $info
+	 * @param $override
+	 */
+	protected function updateAddressData(array $info, $override) {
 		// If the location is outside the primaryLocation, return false
-		if (Strings::lower($info[\GoogleGeocodeResponseV3::ACT_COUNTRY]) != $this->address->primaryLocation->iso) {
+		if ($info[self::PRIMARY_LOCATION] instanceof \Entity\Location\Location
+			&& $info[self::PRIMARY_LOCATION]->getId() != $this->address->primaryLocation->getId())
+		{
 			$this->address->status = \Entity\Contact\Address::STATUS_MISPLACED;
-		} else if (isset($info[\GoogleGeocodeResponseV3::ACT_LOCALITY])) {
+		} else if (isset($info[self::LOCALITY])) {
 			$this->address->status = \Entity\Contact\Address::STATUS_OK;
 		} else {
 			$this->address->status = \Entity\Contact\Address::STATUS_INCOMPLETE;
@@ -170,53 +224,39 @@ class AddressNormalizer extends \Nette\Object {
 		// Set the Address Entity details
 
 		// Latitude / Longitude
-		$latlong = new \Extras\Types\Latlong($info['latitude'], $info['longitude']);
+		$latlong = new \Extras\Types\Latlong($info[self::LATITUDE], $info[self::LONGITUDE]);
 		$this->address->setGps($latlong);
 
 		// Address
-		if ((!$this->address->address || $override === TRUE) && isset($info[\GoogleGeocodeResponseV3::ACT_ROUTE])) {
-			$t = $info[\GoogleGeocodeResponseV3::ACT_ROUTE].' ';
-			if (isset($info[\GoogleGeocodeResponseV3::ACT_STREET_NUMBER])) {
-				$t.=$info[\GoogleGeocodeResponseV3::ACT_STREET_NUMBER];
-			}
-			$t = trim($t);
-			if (strlen($t) > 0) {
-				$this->address->address = $t;
-			} else {
-				$this->address->address = NULL;
-			}
+		if (!$this->address->address || $override === TRUE) {
+			$this->address->address = Arrays::get($info, self::ADDRESS, NULL);
 		}
 
-		// Sublocality
+		// Sub locality
 		if (!$this->address->subLocality || $override === TRUE) {
-			if (isset($info[\GoogleGeocodeResponseV3::ACT_SUBLOCALITY])) {
-				$this->address->subLocality = $info[\GoogleGeocodeResponseV3::ACT_SUBLOCALITY];
-			} else {
-				$this->address->subLocality = NULL;
-			}
+			$this->address->subLocality = Arrays::get($info, self::SUBLOCALITY, NULL);
 		}
 
 		// Postal Code
-		if (isset($info[\GoogleGeocodeResponseV3::ACT_POSTAL_CODE])) {
-			$this->address->postalCode = $info[\GoogleGeocodeResponseV3::ACT_POSTAL_CODE];
-		} else {
-			$this->address->postalCode = NULL;
-		}
+		$this->address->postalCode = Arrays::get($info, self::POSTAL_CODE, NULL);
 
 		// Locality
-		if (isset($info[\GoogleGeocodeResponseV3::ACT_LOCALITY])) {
-			$this->setLocality($info[\GoogleGeocodeResponseV3::ACT_LOCALITY]);
-		} else {
-			$this->setLocality(NULL);
-		}
+		$locality = Arrays::get($info, self::LOCALITY, NULL);
+		$this->setLocality($locality);
 	}
 
+	/**
+	 * @param $locality
+	 *
+	 * @throws \Exception
+	 */
 	protected function setLocality($locality) {
 		if ($locality === NULL) {
 			$this->address->locality = NULL;
 		} else if ($locality instanceof \Entity\Location\Location) {
 			if ($locality->parent != $this->address->primaryLocation) {
-				throw new Exception("AddressNormalizer - can't set the locality, because it is outside the primaryLocation", 1);
+				throw new \Exception("AddressNormalizer - can't set the locality,
+				because it is outside the primaryLocation", 1);
 			} else {
 				$this->address->locality = $locality;
 			}

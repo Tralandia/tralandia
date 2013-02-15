@@ -76,6 +76,8 @@ class ExampleFormPresenter extends BasePresenter {
 
 		$form['calendar'] = new \Extras\Forms\Container\CalendarContainer();
 
+		$form->addTextArea('texyla', 'Texyla');
+
 /*
 		$form->addTextArea('textArea', 'Text Area')
 			->setRequired();

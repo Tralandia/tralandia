@@ -11,7 +11,6 @@ use Service\Robot\IUpdateRentalSearchCacheRobotFactory;
 class RunRobotPresenter extends BasePresenter {
 
 	private $rentalRepositoryAccessor;
-	private $locationRepositoryAccessor;
 	private $locationTypeRepositoryAccessor;
 
 	private $rentalSearchCacheRobotFactory;
