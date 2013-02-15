@@ -191,6 +191,16 @@ class Address extends \Entity\BaseEntity {
 	}
 		
 	/**
+	 * @return \Entity\Contact\Address
+	 */
+	public function unsetAddress()
+	{
+		$this->address = NULL;
+
+		return $this;
+	}
+		
+	/**
 	 * @return string|NULL
 	 */
 	public function getAddress()
