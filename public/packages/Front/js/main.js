@@ -438,9 +438,24 @@ $(document).ready(function(){
 
 //console.log($.cookie('visitObjectList'));
 
-	$.nette.init();
 
-/* AJAXové odeslání formulářů */
+/*
+$.nette.ext('snippets', false);
+
+	$.nette.ext('snippets', {
+	    success: function(data){
+	    	alert('geci');
+	    }
+	}, {
+	    // ... sdílený kontext všech callbacků (dostupný přes this)
+	});
+
+	
+*/
+
+
+
+/* AJAXové odeslání formulářů 
 $("form.ajax").live("submit", function () {
     $(this).ajaxSubmit();
     return false;
@@ -449,7 +464,7 @@ $("form.ajax").live("submit", function () {
 $("form.ajax :submit").live("click", function () {
     $(this).ajaxSubmit();
     return false;
-});
+});*/
 
 	$.texyla.setDefaults({
 		texyCfg: "admin",
