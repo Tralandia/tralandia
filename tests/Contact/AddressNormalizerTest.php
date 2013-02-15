@@ -39,6 +39,8 @@ class AddressNormalizerTest extends \Tests\TestCase
 	}
 
 	public function testNormalizer() {
+		$normalizer = $this->getContext()->addressNormalizer;
+
 		// Testing using proper address
 		$address = $this->createAddress(array(
 			'primaryLocation' => $this->location['sk'],
@@ -47,8 +49,7 @@ class AddressNormalizerTest extends \Tests\TestCase
 			'locality' => $this->getContext()->locationRepositoryAccessor->get()->findOneBy(array('slug' => 'nesvady', 'parent' => $this->location)),
 		));
 
-		$normalizer = $this->getContext()->addressNormalizerFactory->create($address);
-		$normalizer->update(true);
+		$normalizer->update($address, true);
 		
 		$gps = $address->getGps();
 		$this->assertSame($gps->getLatitude(), 47.9241334);
@@ -62,8 +63,7 @@ class AddressNormalizerTest extends \Tests\TestCase
 			'longitude' => 18.1274789,
 		));
 
-		$normalizer = $this->getContext()->addressNormalizerFactory->create($address);
-		$normalizer->update(true);
+		$normalizer->update($address, true);
 		
 		$this->assertSame($address->primaryLocation, $this->location['sk']);
 		$this->assertSame($address->postalCode, '94651');
@@ -80,8 +80,7 @@ class AddressNormalizerTest extends \Tests\TestCase
 			'longitude' => 15.996094,
 		));
 
-		$normalizer = $this->getContext()->addressNormalizerFactory->create($address);
-		$result = $normalizer->update(true);
+		$result = $normalizer->update($address, true);
 		
 		$this->assertSame($result, \Entity\Contact\Address::STATUS_MISPLACED);
 
@@ -94,8 +93,7 @@ class AddressNormalizerTest extends \Tests\TestCase
 		));
 
 
-		$normalizer = $this->getContext()->addressNormalizerFactory->create($address);
-		$result = $normalizer->update(true);
+		$result = $normalizer->update($address, true);
 
 		$this->assertSame($address->primaryLocation, $this->location['usal']);
 		$this->assertSame($address->postalCode, '35213');
@@ -110,8 +108,7 @@ class AddressNormalizerTest extends \Tests\TestCase
 			'longitude' => -63.865585,
 		));
 
-		$normalizer = $this->getContext()->addressNormalizerFactory->create($address);
-		$result = $normalizer->update(true);
+		$result = $normalizer->update($address, true);
 
 		$this->assertSame($address->primaryLocation, $this->location['ve']);
 		$this->assertSame($address->postalCode, NULL);
@@ -127,8 +124,7 @@ class AddressNormalizerTest extends \Tests\TestCase
 			'longitude' => 18.1274789,
 		));
 
-		$normalizer = $this->getContext()->addressNormalizerFactory->create($address);
-		$result = $normalizer->update(true);
+		$result = $normalizer->update($address, true);
 
 		$this->assertSame($address->primaryLocation, $this->location['sk']);
 		$this->assertSame($address->postalCode, '94651');
