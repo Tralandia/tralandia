@@ -21,7 +21,7 @@ class ImportLanguages extends BaseLanguagesImport {
 		$r = q('select * from languages order by id');
 
 		$nameDicIds = array();
-		$defaulOptions = $this->languageOptions['en'];
+		$defaultOptions = $this->languageOptions['en'];
 		while($x = mysql_fetch_array($r)) {
 			$e = $this->context->languageEntityFactory->create();
 
@@ -34,7 +34,7 @@ class ImportLanguages extends BaseLanguagesImport {
 			if(array_key_exists($x['iso'], $this->languageOptions)) {
 				$options = $this->languageOptions[$x['iso']];
 			} else {
-				$options = $defaulOptions;
+				$options = $defaultOptions;
 			}
 
 			foreach ($options as $key => $value) {

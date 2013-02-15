@@ -53,14 +53,32 @@
 {*
 	Select Control -------------------------------------------
 	@param $control \Nette\Forms\Controls\SelectControl
-	@param $prepend array
-	@param $append array
+	@param $controlClass string
 *}
 {define #select}
-	{default $prepend = NULL}
-	{default $append = NULL}
-	{include #baseControl, control => $control, prepend => $prepend, append => $append}
+	{default $controlClass = 'select2'}
+	{include #baseControl, control => $control, controlClass => $controlClass}
 {/define #select}
+
+{*
+	Texyla Control -------------------------------------------
+	@param $control \Nette\Forms\Controls\TextAreaControl
+	@param $controlClass string
+*}
+{define #texyla}
+<div class="control-group ">
+    <div class="form-label">
+		{label $control /}
+        <small>{$control->getOption('description')}</small>
+    </div>
+    <div class="controls">
+		{input $control , class => "texyla"}
+        <i class="validation"></i>
+		{include #controlErrors, errors => $control->getErrors()}
+    </div>
+    <div class="clearfix"></div>
+</div>
+{/define #texyla}
 
 
 {*
@@ -68,6 +86,7 @@
 	@param $control \Nette\Forms\Controls\BaseControl
 	@param $prepend array
 	@param $append array
+	@param $controlClass string
 *}
 {define #baseControl}
 <div class="control-group ">
@@ -77,11 +96,11 @@
     </div>
     <div class="controls">
 		{capture $input}
-			{if $control instanceof \Nette\Forms\Controls\SelectBox}
-				{input $control, class => 'select2'}
+			{ifset $controlClass}
+				{input $control, class => $controlClass}
 			{else}
 				{input $control}
-			{/if}
+			{/ifset}
 		{/capture}
 
 		{ifset $prepend}
@@ -191,7 +210,7 @@
 			{label $container['postalCode'] /}
         </div>
         <div class="span2">
-			{label $container['primaryLocation'] /}
+			{label $container['location'] /}
         </div>
     </div>
 
@@ -207,7 +226,7 @@
 			{input $container['postalCode'], data-name => "postalCode", data-validation-message => "gps-validation-message"}
 		</div>
         <div class="span3">
-			{input $container['primaryLocation'], data-name => "primaryLocation", class => 'select2', data-validation-message =>
+			{input $container['location'], data-name => "primaryLocation", class => 'select2', data-validation-message =>
 			"gps-validation-message"}
         </div>
 		{input $container['latitude'], data-name => "latitude", class => "latitude"}
@@ -336,7 +355,7 @@
 	{foreach $container->getComponents() as $plural}
         <tr>
 			{if $phrase->type->pluralVariationsRequired}
-                <td>{$language->plurals[$plural->getName()]['name']}</td>
+                <td>{$language->getPluralName($plural->getName())}</td>
 			{/if}
 			{foreach $plural->getComponents() as $genders}
                 <td>

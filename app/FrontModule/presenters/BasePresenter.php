@@ -5,9 +5,6 @@ namespace FrontModule;
 use Nette;
 
 abstract class BasePresenter extends \BasePresenter {
-	
-	protected $languageRepositoryAccessor;
-	protected $locationRepositoryAccessor;
 	/**
 	 * @var \Extras\Models\Repository\RepositoryAccessor
 	 */
@@ -37,8 +34,6 @@ abstract class BasePresenter extends \BasePresenter {
 	public $pageSeo;
 
 	public function injectBaseRepositories(\Nette\DI\Container $dic) {
-		$this->languageRepositoryAccessor = $dic->languageRepositoryAccessor;
-		$this->locationRepositoryAccessor = $dic->locationRepositoryAccessor;
 		$this->rentalTypeRepositoryAccessor = $dic->rentalTypeRepositoryAccessor;
 		$this->rentalRepositoryAccessor = $dic->rentalRepositoryAccessor;
 	}
