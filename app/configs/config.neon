@@ -148,6 +148,8 @@ services:
 			- registerVariableFactory(visitor, @visitorEmailVariableFactory)
 			- registerVariableFactory(environment, @environmentEmailVariableFactory)
 
+	addressNormalizer: Service\Contact\AddressNormalizer
+
 	# ==============================
 	# ==================== FORMS HANDLERS
 	# ==============================
@@ -266,10 +268,6 @@ factories:
 	# ==============================
 	# ==================== SERVICES
 	# ==============================
-	addressNormalizerFactory: 
-		class: Service\Contact\AddressNormalizer(%address%)
-		implement: Service\Contact\IAddressNormalizerFactory
-
 	rentalSearchServiceFactory: 
 		class: Service\Rental\RentalSearchService(%location%, @rentalSearchCache)
 		implement: Service\Rental\IRentalSearchServiceFactory

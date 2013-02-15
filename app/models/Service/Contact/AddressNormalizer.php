@@ -13,7 +13,6 @@ class AddressNormalizer extends \Nette\Object {
 	protected $locationRepositoryAccessor;
 	protected $locationTypeRepositoryAccessor;
 	protected $locationDecoratorFactory;
-	protected $phraseDecoratorFactory;
 
 	protected $phraseRepositoryAccessor;
 	protected $phraseTypeRepositoryAccessor;
@@ -29,48 +28,40 @@ class AddressNormalizer extends \Nette\Object {
 		$this->locationDecoratorFactory = $factory;
 	}
 
-	public function injectPhrase(\Model\Phrase\IPhraseDecoratorFactory $factory) {
-		$this->phraseDecoratorFactory = $factory;
+	public function __construct(\GoogleGeocodeServiceV3 $googleGeocodeService) {
+		$this->geocodeService = $googleGeocodeService;
 	}
 
-	public function __construct(\Entity\Contact\Address $address, \GoogleGeocodeServiceV3 $googleGeocodeService) {
+	public function update(\Entity\Contact\Address $address, $override = FALSE) {
 		$this->address = $address;
 		if (!$this->address->primaryLocation) {
 			throw new \Exception("\Entity\Contact\Address has no primaryLocation", 1);
 		}
 
-		$this->geocodeService = $googleGeocodeService;
 		$this->geocodeService->setRequestDefaults(array(
 			'region' => $this->address->primaryLocation->iso,
 			'language' => $this->address->primaryLocation->defaultLanguage->iso,
 		));
-	}
 
-	public function update($override = FALSE) {
 		$latLong = $this->address->getGps();
 		if ($latLong->isValid()) {
-			$this->updateUsingGPS($latLong, $override);
+			$info = $this->getInfoUsingGps($latLong);
 		} else {
-			$this->updateUsingAddress($this->getFormattedAddress());
+			$info = $this->getInfoUsingAddress(
+				$this->address->primaryLocation, 
+				$this->address->address, 
+				$this->address->subLocality, 
+				$this->address->locality->name->getTranslationText($this->address->primaryLocation->defaultLanguage, TRUE), 
+				$this->address->postalCode
+			);
 		}
+
+		$this->updateAddressData($info, TRUE);
 
 		return $this->address->status;
 	}
 
-	private function getFormattedAddress() {
-		$t = array();
-		$t[] = $this->address->address;
-		$t[] = $this->address->subLocality;
-		$t[] = $this->address->locality->name->getTranslationText($this->address->primaryLocation->defaultLanguage, TRUE);
-		$t[] = $this->address->primaryLocation->name->getTranslationText($this->address->primaryLocation->defaultLanguage, TRUE);
-		$t = array_filter($t);
-		$t = implode(', ', $t);
-
-		return $t;
-
-	}
-
-	private function updateUsingGPS(\Extras\Types\Latlong $latLong, $override = FALSE) {
+	public function getInfoUsingGps(\Extras\Types\Latlong $latLong) {
 		$latitude = $latLong->getLatitude();
 		$longitude = $latLong->getLongitude();
 
@@ -80,19 +71,26 @@ class AddressNormalizer extends \Nette\Object {
 			return FALSE;
 		}
 
-		return $this->updateAddressData($response, $override);
+		return $this->parseReponse($response);
+
 	}
 
-	private function updateUsingAddress($address) {
-		$response = $this->geocodeService->geocode($address);
+	public function getInfoUsingAddress(\Entity\Location\Location $primaryLocation, $address = '', $subLocality = '', $locality = '', $postalCode = '') {
+
+		$formattedAddress = implode(', ', array_filter(array(
+			$address, $subLocality, $locality, $postalCode,
+			$primaryLocation->name->getTranslationText($primaryLocation->defaultLanguage, TRUE)
+		)));
+
+		$response = $this->geocodeService->geocode($formattedAddress);
 		if (!$response->hasResults() || !$response->isValid()) {
 			return FALSE;
 		}
 		
-		return $this->updateAddressData($response, TRUE);
+		return $this->parseReponse($response);
 	}
 
-	protected function updateAddressData($response, $override) {
+	private function parseReponse($response) {
 		$info = array();
 		$components = array(
 			\GoogleGeocodeResponseV3::ACT_ROUTE,
@@ -157,9 +155,9 @@ class AddressNormalizer extends \Nette\Object {
 			$info['longitude'] = $l->lng;
 		}
 
-		//d(Strings::lower($info[\GoogleGeocodeResponseV3::ACT_COUNTRY]) );
-
-		//d($info);
+		return $info;
+	}
+	protected function updateAddressData($info, $override) {
 		// If the location is outside the primaryLocation, return false
 		if (Strings::lower($info[\GoogleGeocodeResponseV3::ACT_COUNTRY]) != $this->address->primaryLocation->iso) {
 			$this->address->status = \Entity\Contact\Address::STATUS_MISPLACED;
@@ -172,7 +170,7 @@ class AddressNormalizer extends \Nette\Object {
 		// Set the Address Entity details
 
 		// Latitude / Longitude
-		$latlong = new \Extras\Types\Latlong($response->getLocation()->lat, $response->getLocation()->lng);
+		$latlong = new \Extras\Types\Latlong($info['latitude'], $info['longitude']);
 		$this->address->setGps($latlong);
 
 		// Address
@@ -216,7 +214,7 @@ class AddressNormalizer extends \Nette\Object {
 	protected function setLocality($locality) {
 		if ($locality === NULL) {
 			$this->address->locality = NULL;
-		} else if ($locality instanceof \Entity\Locality\Locality) {
+		} else if ($locality instanceof \Entity\Location\Location) {
 			if ($locality->parent != $this->address->primaryLocation) {
 				throw new Exception("AddressNormalizer - can't set the locality, because it is outside the primaryLocation", 1);
 			} else {
@@ -243,8 +241,7 @@ class AddressNormalizer extends \Nette\Object {
 				$namePhrase->type = $phraseType;
 				$namePhrase->sourceLanguage = $this->address->primaryLocation->defaultLanguage;
 
-				$namePhraseDecorator = $this->phraseDecoratorFactory->create($namePhrase);
-				$namePhraseDecorator->createTranslation($this->address->primaryLocation->defaultLanguage, $locality);
+				$namePhrase->createTranslation($this->address->primaryLocation->defaultLanguage, $locality);
 
 				$newLocality->parent = $this->address->primaryLocation;
 				$newLocality->type = $locationType;
