@@ -56,6 +56,10 @@ class ImportRentalTypes extends BaseImport {
 		'log cabin' => array('drevenica', 'drevenice'),
 	);
 
+	protected $oldEnRentalTypes = array(
+
+	);
+
 	public function doImport($subsection = NULL) {
 
 		$phrase = $this->createPhraseType('\Rental\Type', 'name', 'ACTIVE');
@@ -86,6 +90,8 @@ class ImportRentalTypes extends BaseImport {
 					$enTypeId = qc('select id from objects_types_new where language_id = 38 and associations like "%,'.$skTypeId.',%" order by id asc');
 				}
 			}
+
+			if ($this->oldEnRentalTypes[$enTypeId]) $enTypeId = $this->oldEnRentalTypes[$enTypeId];
 			q('update objects_types_new set trax_en_type_id = '.$enTypeId.' where id = '.$x['id']);
 		}
 
