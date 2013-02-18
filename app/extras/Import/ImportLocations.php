@@ -60,6 +60,7 @@ class ImportLocations extends BaseImport {
 		$s->name = $namePhrase;
 		$s->type = $worldType;
 		$s->slug = 'world';
+		$s->localName = 'world';
 		$this->model->persist($s);
 		$this->model->flush();
 
@@ -77,7 +78,8 @@ class ImportLocations extends BaseImport {
 			$s = $this->context->locationEntityFactory->create();
 			$s->name = $this->createNewPhrase($this->dictionaryTypeName, $x['name_dic_id']);
 			$s->type = $locationType;
-			$s->slug = qc('select text from z_en where id = '.$x['name_dic_id']);
+			$s->localName = qc('select text from z_en where id = '.$x['name_dic_id']);
+			$s->slug = $s->localName;
 			$s->parent = $world;
 			$s->oldId = $x['id'];
 
@@ -97,6 +99,7 @@ class ImportLocations extends BaseImport {
 		$s->name = $namePhrase;
 		$s->type = $locationType;
 		$s->slug = 'usa';
+		$s->localName = 'usa';
 		$s->iso = 'us';
 		$s->parent = $world;
 		$s->defaultLanguage = $language;
@@ -115,6 +118,7 @@ class ImportLocations extends BaseImport {
 		$s->name = $namePhrase;
 		$s->type = $locationType;
 		$s->slug = 'canada';
+		$s->localName = 'canada';
 		$s->iso = 'ca';
 		$s->parent = $world;
 		$s->defaultLanguage = $language;
@@ -133,6 +137,7 @@ class ImportLocations extends BaseImport {
 		$s->name = $namePhrase;
 		$s->type = $locationType;
 		$s->slug = 'australia';
+		$s->localName = 'australia';
 		$s->iso = 'au';
 		$s->parent = $world;
 		$s->defaultLanguage = $language;
@@ -197,7 +202,8 @@ class ImportLocations extends BaseImport {
 
 			$location->type = $locationTypeCountry;
 			$languageTemp = $this->context->languageRepositoryAccessor->get()->findOneBy(array('iso' => 'en'));
-			$location->slug = $namePhraseService->getTranslation($languageTemp)->translation;
+			$location->localName = $namePhraseService->getTranslation($languageTemp)->translation;
+			$location->slug = $location->localName;
 			
 			$location->polygons = NULL;
 			if ($x['latitude'] != 0 && $x['longitude'] != 0) {
@@ -274,6 +280,7 @@ class ImportLocations extends BaseImport {
 			//d($namePhrase); exit;
 			$location->name = $namePhrase;
 			$location->type = $locationType;
+			$location->localName = $x['name'];
 			$location->slug = $x['name_url'];
 
 			$location->oldId = $x['id'];
@@ -341,6 +348,7 @@ class ImportLocations extends BaseImport {
 
 			$location->name = $namePhrase;
 			$location->type = $locationType;
+			$location->localName = $x['name'];			
 			$location->slug = $x['name_url'];			
 
 			$location->oldId = $x['id'];
