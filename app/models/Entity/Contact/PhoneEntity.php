@@ -36,9 +36,9 @@ class Phone extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Rental\Rental", inversedBy="phones")
+	 * @ORM\OneToOne(targetEntity="Entity\Rental\Rental")
 	 */
-	protected $rentals;
+	protected $rental;
 
 	//@entity-generator-code --- NEMAZAT !!!
 

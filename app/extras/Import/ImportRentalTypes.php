@@ -15,45 +15,45 @@ use Nette\Application as NA,
 class ImportRentalTypes extends BaseImport {
 
 	protected $skPlurals = array(
-		'apartment' => 'apartmány',
-		'mountain hotel' => 'horské hotely',
-		'hostel' => 'hostely',
-		'hotel' => 'hotely',
-		'houseboat' => 'hausbóty',
-		'chalet' => 'chaty',
-		'campsite' => 'kempingy',
-		'spas' => 'kúpele',
-		'motel' => 'motely',
-		'guesthouse' => 'ubytovne',
-		'private lodging' => 'priváty',
-		'ranch' => 'ranče',
-		'recreational home' => 'ubytovne',
-		'mansion' => '',
-		'studio' => 'štúdiá',
-		'dormitory' => 'internáty',
-		'villa' => 'vily',
-		'apartment house' => 'apartmánové domy',
-		'cottage' => 'chaty',
-		'timbered house' => 'drevenice',
-		'cabin' => 'chaty',
-		'holiday home' => 'výletné domy',
-		'tourist dormitory' => '',
-		'boat' => 'lode',
-		'barn' => 'stodoly',
-		'bungalow' => 'bungalovy',
-		'castle' => 'zámky',
-		'condo' => '',
-		'estate' => '',
-		'farmhouse' => 'farmy',
-		'house' => 'domy',
-		'townhome' => 'mestské domy',
-		'yacht' => 'jachty',
-		'B&B' => '',
-		'caravan' => 'karavany',
-		'cave house' => 'jaskynné domy',
-		'chateau' => 'chaty',
-		'manor' => '',
-		'log cabin' => 'drevenice',
+		'apartment' => array('apartmán', 'apartmány'),
+		'mountain hotel' => array('horský hotel', 'horské hotely'),
+		'hostel' => array('hostel', 'hostely'),
+		'hotel' => array('hotel', 'hotely'),
+		'houseboat' => array('hausbót', 'hausbóty'),
+		'chalet' => array('chata', 'chaty'),
+		'campsite' => array('kemping', 'kempingy'),
+		'spas' => array('kúpele', 'kúpele'),
+		'motel' => array('motel', 'motely'),
+		'guesthouse' => array('ubytovňa', 'ubytovne'),
+		'private lodging' => array('privát', 'priváty'),
+		'ranch' => array('ranč', 'ranče'),
+		'recreational home' => array('ubytovňa', 'ubytovne'),
+		'mansion' => array('', ''),
+		'studio' => array('štúdio', 'štúdiá'),
+		'dormitory' => array('internát', 'internáty'),
+		'villa' => array('vila', 'vily'),
+		'apartment house' => array('apartmánový dom', 'apartmánové domy'),
+		'cottage' => array('chata', 'chaty'),
+		'timbered house' => array('drevenica', 'drevenice'),
+		'cabin' => array('chata', 'chaty'),
+		'holiday home' => array('výletný dom', 'výletné domy'),
+		'tourist dormitory' => array('', ''),
+		'boat' => array('loď', 'lode'),
+		'barn' => array('stodola', 'stodoly'),
+		'bungalow' => array('bungalov', 'bungalovy'),
+		'castle' => array('zámok', 'zámky'),
+		'condo' => array('', ''),
+		'estate' => array('', ''),
+		'farmhouse' => array('farma', 'farmy'),
+		'house' => array('dom', 'domy'),
+		'townhome' => array('mestský dom', 'mestské domy'),
+		'yacht' => array('jachta', 'jachty'),
+		'B&B' => array('', ''),
+		'caravan' => array('karavan', 'karavany'),
+		'cave house' => array('jaskynný dom', 'jaskynné domy'),
+		'chateau' => array('chata', 'chaty'),
+		'manor' => array('', ''),
+		'log cabin' => array('drevenica', 'drevenice'),
 	);
 
 	public function doImport($subsection = NULL) {
@@ -96,9 +96,10 @@ class ImportRentalTypes extends BaseImport {
 			$rentalType = $this->context->rentalTypeEntityFactory->create();
 			$rentalType->name = $this->createPhraseFromString('\Rental\Type', 'name', 'ACTIVE', $x['name'], 'en');
 			
-			if (strlen($this->skPlurals[$x['name']]) != 0) {
+			if (strlen($this->skPlurals[$x['name']][0]) != 0) {
 				$skTranslation = $rentalType->name->createTranslation($sk);
-				$variations[1][0]['nominative'] = $this->skPlurals[$x['name']];
+				$variations[0][0]['nominative'] = $this->skPlurals[$x['name']][0];
+				$variations[1][0]['nominative'] = $this->skPlurals[$x['name']][1];
 				$skTranslation->updateVariations($variations);
 			}
 			$rentalType->oldId = $x['id'];

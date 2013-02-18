@@ -100,21 +100,21 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Contact\Phone", mappedBy="rentals", cascade={"persist"})
+	 * @ORM\OneToOne(targetEntity="Entity\Contact\Phone", cascade={"persist", "remove"})
 	 */
-	protected $phones;
+	protected $phone;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Contact\Email", mappedBy="rentals", cascade={"persist"})
+	 * @ORM\OneToOne(targetEntity="Entity\Contact\Email", cascade={"persist", "remove"})
 	 */
-	protected $emails;
+	protected $email;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Contact\Url", mappedBy="rentals", cascade={"persist"})
+	 * @ORM\OneToOne(targetEntity="Entity\Contact\Url", cascade={"persist", "remove"})
 	 */
-	protected $urls;
+	protected $url;
 
 	/**
 	 * @var Collection
