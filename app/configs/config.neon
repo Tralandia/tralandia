@@ -172,7 +172,7 @@ factories:
 		implement: FrontModule\Forms\Rental\IReservationFormFactory
 
 	registrationFormFactory:
-		class: FrontModule\Forms\RegistrationForm(%country%, @locationRepositoryAccessor::get(), @languageRepositoryAccessor::get(), @rentalTypeRepositoryAccessor::get(), @currencyRepositoryAccessor::get())
+		class: FrontModule\Forms\RegistrationForm(%country%)
 		implement: FrontModule\Forms\IRegistrationFormFactory
 
 	# ==============================

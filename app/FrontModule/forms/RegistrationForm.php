@@ -2,6 +2,7 @@
 
 namespace FrontModule\Forms;
 
+use Doctrine\ORM\EntityManager;
 use Nette;
 use Nette\Localization\ITranslator;
 use Entity\Location\Location;
@@ -9,6 +10,8 @@ use Repository\Location\LocationRepository;
 use Repository\LanguageRepository;
 use Repository\CurrencyRepository;
 use Repository\BaseRepository;
+use Extras\Forms\Container\AddressContainer;
+use Extras\Forms\Container\PhoneContainer;
 
 /**
  * RegistrationForm class
@@ -39,17 +42,16 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 	private $rentalTypeRepository;
 
 	/**
-	 * @var \Repository\CurrencyRepository
+	 * @param \Entity\Location\Location $country
+	 * @param \Doctrine\ORM\EntityManager $em
+	 * @param \Nette\Localization\ITranslator $translator
 	 */
-	private $currencyRepository;
-
-	public function __construct(Location $country, LocationRepository $locationRepository, LanguageRepository $languageRepository, BaseRepository $rentalTypeRepository, CurrencyRepository $currencyRepository, ITranslator $translator)
+	public function __construct(Location $country, EntityManager $em, ITranslator $translator)
 	{
 		$this->country = $country;
-		$this->locationRepository = $locationRepository;
-		$this->languageRepository = $languageRepository;
-		$this->rentalTypeRepository = $rentalTypeRepository;
-		$this->currencyRepository = $currencyRepository;
+		$this->locationRepository = $em->getRepository('\Entity\Location\Location');
+		$this->languageRepository = $em->getRepository('\Entity\Language');
+		$this->rentalTypeRepository = $em->getRepository('\Entity\Rental\Type');
 		parent::__construct($translator);
 	}
 
@@ -57,24 +59,23 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 	public function buildForm()
 	{
 		$countries = $this->locationRepository->getCountriesForSelect();
-		$languages = $this->languageRepository->getForSelect();
 		$phonePrefixes = $this->locationRepository->getCountriesPhonePrefixes();
+		$languages = $this->languageRepository->getForSelect();
 		$rentalTypes = $this->rentalTypeRepository->getForSelect();
-		$currencies = $this->currencyRepository->getForSelect();
 
 		$this->addSelect('country', 'Country', $countries);
 		$this->addSelect('language', 'Language', $languages);
 		$this->addText('referrer', 'Referrer');
 		$this->addText('email', 'Email');
 
-		$this['phone'] = new \Extras\Forms\Container\PhoneContainer('Phone', $phonePrefixes);
+		$this['phone'] = new PhoneContainer('Phone', $phonePrefixes);
 
 		$this->addText('url', 'WWW');
 
 		$this->addPassword('password', 'Password');
 		$this->addPassword('password2', 'Confirm Password');
 
-		$this['address'] = new \Extras\Forms\Container\AddressContainer($countries);
+		$this['address'] = new AddressContainer($countries);
 
 		$this->addText('rentalName', 'Rental Name');
 		$this->addSelect('rentalType', 'Rental Type', $rentalTypes);
