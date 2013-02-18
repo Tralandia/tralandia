@@ -154,6 +154,7 @@
 					<li>3x Apartmán <span>(5x postel, 2x pristelka)</span><span class="price">78 eur</span></li>
 					<li>3x Apartmán <span>(2x postel)</span><span class="price">32 eur</span></li>
 					<li>3x Apartmán <span>(3x postel, 1x pristelka)</span><span class="price">50 eur</span></li>
+					<li>Veľkonočný cenník <span>anglicky, 15kB</span><a href="#"><span class="price">stiahnuť</span></a></li>
 					{*
 					{foreach $rental->pricelistRows as $pricelistRow}
 					<li>	
@@ -172,19 +173,20 @@
 					*}
 
 				</ul>
+				{*
+				{if count($rental->pricelists) > 0}
+				{var $noPriceTable = false}
+					{foreach $rental->pricelists as $pricelist}
+						<a href="{$pricelist->filePath}" class="btn btn-green btn-text-wrap btn-pricelist">
+							<i class="entypo-download"></i> {if $pricelist->name}{_o957} {$pricelist->name}{/if} {_$pricelist->language->name}
+						</a>
+					{/foreach}
+				{/if}
+				*}
 			</li>
 		</ul>
 	{/if}
 
-
-	{if count($rental->pricelists) > 0}
-	{var $noPriceTable = false}
-		{foreach $rental->pricelists as $pricelist}
-			<a href="{$pricelist->filePath}" class="btn btn-green btn-text-wrap btn-pricelist">
-				<i class="entypo-download"></i> {if $pricelist->name}{_o957} {$pricelist->name}{/if} {_$pricelist->language->name}
-			</a>
-		{/foreach}
-	{/if}
 	{if $noPriceTable}
 		{if $rental->pricesUponRequest}
 			#len na dotaz
@@ -192,18 +194,6 @@
 			#Übytovatel neuvadza detailne ceny. Orientacna cena ubytovania je {$rental->price} Eur / osoba / noc"	
 		{/if}								
 	{/if}					
-
-	<a href="#" class="btn btn-green btn-text-wrap btn-pricelist">
-	<i class="entypo-download"></i> #lorem ipsum </a>
-
-	<a href="#" class="btn btn-green btn-text-wrap btn-pricelist">
-	<i class="entypo-download"></i> #lorem ipsum </a>
-
-	<a href="#" class="btn btn-green btn-text-wrap btn-pricelist">
-	<i class="entypo-download"></i> #lorem ipsum </a>
-
-	<a href="#" class="btn btn-green btn-text-wrap btn-pricelist">
-	<i class="entypo-download"></i> #lorem ipsum </a>
 
 	<div class="clearfix"></div>	
 
@@ -291,7 +281,7 @@
 						</td>
 					</tr>	
 		
-					<tr>						
+{* 					<tr>						
 						<td class="iconcover"><i class="entypo-location"></i></td>
 						<td>
 						<strong>#gps:</strong>
@@ -304,7 +294,7 @@
 
 						</td>
 					</tr>
-
+ *}
 					<tr>
 						<td class="iconcover"><i class="entypo-www"></i></td>
 						<td>
