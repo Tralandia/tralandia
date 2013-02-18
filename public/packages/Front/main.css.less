@@ -1176,10 +1176,33 @@ ul.arrows {
 			}	
 
 			&.answer {
-				
-				padding: 10px;
-				padding-left: 20px;
-				padding-top: 0;
+				padding: 20px;
+				background: #eee;
+				line-height: 17px;
+				i {
+					color: #ccc;
+					float: left;
+					margin-right: 10px;
+
+						position: relative;
+						top: -10px;
+
+					&:last-child {
+						float: right;
+
+					}
+
+					&:before {
+						font-size: 50px;
+					}
+				}
+
+				.content {
+					display: block;
+					width: 839px;
+					margin: 0 auto;
+
+				}
 			}					
 		}
 
