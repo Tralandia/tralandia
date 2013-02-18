@@ -1,3 +1,4 @@
+@import './less-functions.less';
 #favoritesStatisContainerPlaceholder {
 	height: 84px;	
 	clear: both;
@@ -8,9 +9,18 @@
 	z-index: 300000;
 }
 
+.shareLinkContent {
+	background: #526ea8;
+	width: 900px;
+	margin: 0 auto;
+	padding: 2px 10px;
+}
+
 .detailSlider {
 
 	
+
+
 	background-image: linear-gradient(bottom, #688308 82%, #AFC13B 97%);
 	background-image: -o-linear-gradient(bottom, #688308 82%, #AFC13B 97%);
 	background-image: -moz-linear-gradient(bottom, #688308 82%, #AFC13B 97%);
@@ -27,45 +37,13 @@
 
 
 	&.compare {
-		background-image: linear-gradient(bottom, #334C83 83%, #526EA8 100%);
-		background-image: -o-linear-gradient(bottom, #334C83 83%, #526EA8 100%);
-		background-image: -moz-linear-gradient(bottom, #334C83 83%, #526EA8 100%);
-		background-image: -webkit-linear-gradient(bottom, #334C83 83%, #526EA8 100%);
-		background-image: -ms-linear-gradient(bottom, #334C83 83%, #526EA8 100%);
 
-		background-image: -webkit-gradient(
-			linear,
-			left bottom,
-			left top,
-			color-stop(0.83, #334C83),
-			color-stop(1, #526EA8)
-		);
+		width: 650px;
+		float: right;
 
 
-		
-			.leftArrow , .rightArrow {
-				
-				&.disabled {
-					&:hover {
-						background-image: linear-gradient(left bottom, #D9DFEB 0%, #FEFEFE 100%);
-						background-image: -o-linear-gradient(left bottom, #D9DFEB 0%, #FEFEFE 100%);
-						background-image: -moz-linear-gradient(left bottom, #D9DFEB 0%, #FEFEFE 100%);
-						background-image: -webkit-linear-gradient(left bottom, #D9DFEB 0%, #FEFEFE 100%);
-						background-image: -ms-linear-gradient(left bottom, #D9DFEB 0%, #FEFEFE 100%);
 
-						background-image: -webkit-gradient(
-							linear,
-							left bottom,
-							right top,
-							color-stop(0, #D9DFEB),
-							color-stop(1, #FEFEFE)
-						);
-
-						color: #213875;
-					}
-				}
-			}
-		
+.basic-gradient(#334c83,#526ea8);
 
 		.leftArrow , .rightArrow {
 
@@ -152,7 +130,7 @@
 
 
 	.content {
-		width: 920px;
+		width: 606px;
 		height:75px;
 		float: left;		
 		background: #fff;
@@ -304,6 +282,8 @@
 		}
 	}
 
+
+
 	.leftArrow , .rightArrow {
 		height: 73px;
 		width: 20px;
@@ -400,4 +380,78 @@
 		border-top-right-radius: 6px;
 		border-bottom-right-radius: 6px;
 	}
+
+
+
+
 }
+
+.social {
+	width: 314px;
+	height: 75px;
+	float: left;
+	color: #fff;
+	.basic-gradient(#334c83,#526ea8);
+
+		ul {
+			
+			display: block;		
+			margin:0;
+			padding: 0;		
+			height: 200px;
+
+
+
+			li {
+
+				display: block;
+				font-size: 12px;
+				float: left;
+				width: auto;
+				height: 50px;
+				border-right: 1px solid rgb(38, 67, 129);
+				padding: 0 ;
+
+				a {
+					color: #ffffff;
+					display: block;
+					height: 30px;
+					width: 61px;
+					padding-top: 7px;
+					font-size: 11px;
+					text-align: center;
+
+					span {
+						display: block;
+						position: relative;
+						top: -7px;						
+					}
+
+					i {
+						display: block;
+						height: 21px;
+						overflow: hidden;
+						margin-bottom: 6px;						
+					}
+				}
+
+				a:hover i {
+					text-decoration: none;
+				}
+
+				&:last-child {
+					border: none;
+				}
+
+			}
+		}	
+
+		.header {
+			font-size: 14px;
+			padding: 3px;
+			border-bottom: 1px solid #264381;			
+		}		
+}
+
+
+
