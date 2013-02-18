@@ -16,6 +16,7 @@ h1,h2,h3,h4,h5 {
 h1 span {
 	color: #999;
 	font-size: 18px;
+	font-weight: normal;
 }
 
 a , a:hover , .btn-link , .btn-link:hover {
@@ -458,7 +459,7 @@ ul.arrows {
 
 		margin-top: 10px;
 		h1 {
-			margin: 0 0 5px 0;
+			margin: 4px 0 5px 0;
 			padding: 0;
 			
 			height: 24px;
@@ -1138,26 +1139,6 @@ ul.arrows {
 	text-overflow: ellipsis;	
 }
 
-.btn-pricelist {
-	width: 192px;
-	.box-size();
-	float: left;
-	margin-bottom: 5px;	
-	font-weight: normal;
-	padding: 2px;
-	text-align: left;
-	padding-left: 14px;
-
-	i {
-		left: -4px;		
-		font-size: 15px;
-	}
-}
-
-.btn-pricelist:nth-child(odd) {
-  margin-right: 11px;
-}
-
 /****************************************************************************************
 /* page content  
 /***************************************************************************************/
@@ -1297,10 +1278,10 @@ ul.arrows {
 	float: left;
 	color: @darkGreen;
 	font-weight: bold;
-	background: #fafafa;
+	background: @grayBg;
 	padding: 10px;
 	.basic-border-radius (5px);
-	border: 1px solid #eee;
+	border: 1px solid @grayBorder;
 	height: 33px;
 
 	i {
@@ -1308,11 +1289,20 @@ ul.arrows {
 	}
 
 	i:before {
-		font-size: 33px;
+		font-size: 40px;
 		position: relative;
 		top: 0px;
 		color: @brown;
 		font-weight: normal;
+		left: -1px;
+	}
+
+	i.entypo-bell:before {
+		left: 1px;
+	}
+
+	i.entypo-info2:before {
+		left: 2px;
 	}
 
 	span {
@@ -1336,8 +1326,8 @@ ul.arrows {
 .socialIconTable {
 	height: auto;
 	.basic-border-radius(5px);
-	background: #f9f9f9;
-	border: 1px solid #ddd;	
+	background: @grayBg;
+	border: 1px solid @grayBorder;	
 	padding: 5px ;
 	#___plusone_0 {
 		position: relative;
@@ -1502,11 +1492,11 @@ ul.arrows {
 
 		li h3 {
 			margin: 0;
-			padding: 0 15px;
-			background: #eeeeee;
-			font-weight: normal;
-			font-size: 17px;
-			line-height: 34px;
+			padding: 0 10px;
+			background: @grayBorder;
+			font-weight: bold;
+			font-size: 15px;
+			line-height: 27px;
 			color: @darkGreen;
 			.top-border-radius(5px);
 		}
@@ -1514,19 +1504,20 @@ ul.arrows {
 		li , ul {
 			list-style: none;
 			margin: 0;
-			padding: 0;		
+			padding: 0;
+			font-size: 13px;
 		}
 
 		ul {
-			padding: 5px 15px;
+			padding: 5px 10px;
 			box-sizing: border-box;
 			display: block;
-			background: #fafafa;
-			border: 1px solid #eee;	
+			background: @grayBg;
+			border: 1px solid @grayBorder;	
 			.bottom-border-radius(5px);
 			
 			li {
-				border-bottom: 1px solid #ddd;
+				border-bottom: 1px solid @grayBorder;
 
 				&:last-child {
 					border: none;
@@ -1541,8 +1532,17 @@ ul.arrows {
 
 		li span.price {
 			color: @brown;
-			font-size: 14px;
+			font-size: 13px;
+			font-weight: bold;
 			float: right;
+		}
+
+		li a span.price {
+			color: @darkGreen;
+			font-weight: normal;
+			&:hover {
+				text-decoration: underline!Important;
+			}
 		}
 
 	}
@@ -1563,7 +1563,7 @@ ul.arrows {
 		width: 381px;
 		.box-size();
 		color: @brown;
-		margin-left: 29px;	
+		margin-left: 27px;	
 			
 		font-size: 13px;
 		line-height: 15px;
@@ -3025,8 +3025,9 @@ form#contactFormCover {
 
 						&:before {
 							content: '\2713';
-							left: -11px;
-							font-size: 20px;							
+							left: -12px;
+							font-size: 25px;							
+							top: -1px
 						}
 					}
 
@@ -3064,6 +3065,6 @@ form#contactFormCover {
 
 
 			#socialIcons ul.dropdown-menu {
-				left: -357px;
+				left: -328px;
 				top: 37px;
 			}
