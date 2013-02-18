@@ -108,8 +108,8 @@
 				this.visitList = appObject.storageGet('visitObjectList');
 
 				if(typeof this.favoritesData == 'undefined' || this.favoritesData == null){
-					$(this).parent().parent().parent().hide();
-					$('#favoritesStatisContainerPlaceholder').addClass('inactive');
+					//$(this).parent().parent().parent().hide();
+					//$('#favoritesStatisContainerPlaceholder').addClass('inactive');
 				} else {
 					$(this).parent().parent().parent().show();
 					var self = this;
