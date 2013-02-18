@@ -108,6 +108,7 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 			'rentalMaxCapacity' => 15,
 		];
 		$this->setDefaults($defaults);
+		$this['address']->setDefaultValues();
 	}
 
 }

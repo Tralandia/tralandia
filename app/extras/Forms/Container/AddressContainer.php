@@ -28,8 +28,6 @@ class AddressContainer extends BaseContainer
 		$this->addSelect('location', '#Primary location', $locations);
 		$this->addHidden('latitude');
 		$this->addHidden('longitude');
-
-		$this->setDefaultValues();
 	}
 
 	public function getMainControl()
@@ -37,19 +35,31 @@ class AddressContainer extends BaseContainer
 		return $this['address'];
 	}
 
-	protected function setDefaultValues()
+	public function getZoom()
+	{
+		return $this->address->getPrimaryLocation()->getDefaultZoom();
+	}
+
+	public function setDefaultValues()
 	{
 		if($this->address) {
 			$locality = $this->getForm()->getTranslator()->translate($this->address->getLocality()->getName());
-			$this->setDefaults([
+			$defaults = [
 				'address' => $this->address->getAddress(),
 				'locality' => $locality,
 				'postalCode' => $this->address->getPostalCode(),
 				'primaryLocation' => $this->address->getPrimaryLocation()->getId(),
 				'latitude' => $this->address->getGps()->getLatitude(),
 				'longitude' => $this->address->getGps()->getLongitude(),
-			]);
+			];
+		} else {
+			$defaults = [
+				'latitude' => $this->address->getPrimaryLocation()->getGps()->getLatitude(),
+				'longitude' => $this->address->getPrimaryLocation()->getGps()->getLongitude(),
+			];
 		}
+
+		$this->setDefaults($defaults);
 	}
 
 	/**
