@@ -386,14 +386,10 @@ Nette.addError = function(elem, message) {
 		return o;
 
 	}
-
-
 	
 	$.fn.traMapControll = function(options){
 		return this.each(function(){
 			(new $.traMapControll(this, options));
-
-
 
 			var self = this;
 			var $self = $(this);
@@ -410,16 +406,8 @@ Nette.addError = function(elem, message) {
 
 				var coordinates = $mapDiv.attr('data-value').split(',');
 
-				/*
-				var lat = parseFloat(coordinates[0]);
-				var lng = parseFloat(coordinates[1]);
-				*/
-				//console.log('init maops plugin'+lat+' '+lng+' '+zoom);
-
 				var lat = parseFloat($inputLat.val());
 				var lng = parseFloat($inputLng.val());
-
-//console.log('init maops plugin'+lat+' '+lng+' '+zoom);
 
 				var myLatlng = new google.maps.LatLng(lat,lng);
 				var mapOptions = {
@@ -448,28 +436,18 @@ Nette.addError = function(elem, message) {
 				  
 
 				  $('#gps_position').html(lat+' '+lng);
-				  //map.setCenter(event.latLng);
-
 
 					v = $.traMapControll.validateInputs($self);
-					
-					
-					// send data
 						
 					$.traMapControll.ajax(requestUrl,v.data , function(data){
 					
 						if(!data.status){
 							$.traMapControll.responseValidation(data);
-							
-							//var newPosition = new google.maps.LatLng(data.gps.lat,data.gps.lng);
-							//	marker.setPosition(newPosition);
 						}
 					});
 					
 
 			  });  
-
-
 
 				var inputs = {};
 
