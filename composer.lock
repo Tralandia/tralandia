@@ -1,5 +1,5 @@
 {
-    "hash": "f226ed204699c887477be94cea85a9f5",
+    "hash": "428b9c0c5063b9f7a4303e34aca94e39",
     "packages": [
         {
             "name": "hosiplan/nette-autowire-properties",
@@ -11,7 +11,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/HosipLan/Nette-AutowireProperties/archive/v0.1.1.zip",
+                "url": "https://api.github.com/repos/HosipLan/Nette-AutowireProperties/zipball/v0.1.1",
                 "reference": "v0.1.1",
                 "shasum": ""
             },
@@ -52,7 +52,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/Kdyby/Events/archive/e4fe5617f05273ba98bd94f4394eeef0c516a88e.zip",
+                "url": "https://api.github.com/repos/Kdyby/Events/zipball/e4fe5617f05273ba98bd94f4394eeef0c516a88e",
                 "reference": "e4fe5617f05273ba98bd94f4394eeef0c516a88e",
                 "shasum": ""
             },
@@ -95,66 +95,17 @@
             ]
         },
         {
-            "name": "kdyby/nette-session-panel",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/HosipLan/Nette-Session-DebugBar.git",
-                "reference": "d3b1ad2352a060388f4618467e937bbc1ee666ff"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/HosipLan/Nette-Session-DebugBar/zipball/d3b1ad2352a060388f4618467e937bbc1ee666ff",
-                "reference": "d3b1ad2352a060388f4618467e937bbc1ee666ff",
-                "shasum": ""
-            },
-            "require": {
-                "nette/nette": "*",
-                "php": ">=5.3.2"
-            },
-            "time": "2013-02-09 15:14:19",
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Kdyby": "libs/"
-                }
-            },
-            "notification-url": "http://packagist.org/downloads/",
-            "license": [
-                "BSD-3",
-                "GPLv2",
-                "GPLv3"
-            ],
-            "authors": [
-                {
-                    "name": "Filip Procházka",
-                    "homepage": "http://filip-prochazka.com/"
-                },
-                {
-                    "name": "Pavel Železný",
-                    "homepage": "http://pavelzelezny.cz/"
-                }
-            ],
-            "description": "Nette DebugBar panel, that allows you inspect your sessions.",
-            "homepage": "http://kdyby.org",
-            "keywords": [
-                "nette",
-                "panel",
-                "session"
-            ]
-        },
-        {
             "name": "nette/nette",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/nette.git",
-                "reference": "0622617df91e648e7a0d948b21b33afb7ae08793"
+                "reference": "1ca2838d423c919c41a79a23dc70738f3ce21bed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/nette/zipball/0622617df91e648e7a0d948b21b33afb7ae08793",
-                "reference": "0622617df91e648e7a0d948b21b33afb7ae08793",
+                "url": "https://api.github.com/repos/nette/nette/zipball/1ca2838d423c919c41a79a23dc70738f3ce21bed",
+                "reference": "1ca2838d423c919c41a79a23dc70738f3ce21bed",
                 "shasum": ""
             },
             "require": {
@@ -172,7 +123,7 @@
                 "ext-memcache": "*",
                 "ext-pdo": "*"
             },
-            "time": "2013-02-19 19:28:21",
+            "time": "2013-02-14 17:38:27",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -226,7 +177,6 @@
     "stability-flags": {
         "nette/nette": 20,
         "kdyby/events": 20,
-        "kdyby/nette-session-panel": 20,
         "hosiplan/nette-autowire-properties": 20,
         "nette/tester": 20
     }
