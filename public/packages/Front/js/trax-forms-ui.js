@@ -11,7 +11,7 @@ Nette.addError = function(elem, message) {
 	if (elem.focus) {
 		elem.focus();
 	}
-	if (message) {		
+	if (message) {      
 		
 			var errorMessageDiv = $('#'+elem.getAttribute('data-validation-message-div-id'));
 			var controllGroup = $('#'+elem.getAttribute('data-validation-controll-div-id'));
@@ -20,7 +20,7 @@ Nette.addError = function(elem, message) {
 
 			if(!controllGroup.hasClass('error')){
 				controllGroup.addClass('error');
-			}		
+			}       
 		
 	}
 };
@@ -110,36 +110,36 @@ Nette.addError = function(elem, message) {
 			var conditionsText = $self.attr('data-conditions-text');
 
 			$('#serachSidebar').select2({
-			    placeholder: placeholder,
-			    minimumInputLength: 1,
-			    ajax: { 
-			        url: url,
-			        dataType: 'json',
-			        data: function (term, page) {
-			            return {
-			                string: term, 
-			            };
-			        },
-			        results: function (data, page) { 
-			            return {results: data.counties};
-			        }
-			    },
-			    formatResult: function(r){
-			    	return '<img class="flag" src="'+r.flag+'"> '+r.name;
-			    }, 
+				placeholder: placeholder,
+				minimumInputLength: 1,
+				ajax: { 
+					url: url,
+					dataType: 'json',
+					data: function (term, page) {
+						return {
+							string: term, 
+						};
+					},
+					results: function (data, page) { 
+						return {results: data.counties};
+					}
+				},
+				formatResult: function(r){
+					return '<img class="flag" src="'+r.flag+'"> '+r.name;
+				}, 
 
-			    formatSelection: function(r){
-			    	return r.name;
-			    },
+				formatSelection: function(r){
+					return r.name;
+				},
 			   
-			    
-			    escapeMarkup: function (m) { return m; } ,
-			    formatInputTooShort: function (input, min) { 
-			    	var n = min - input.length; 
-			    	//conditionsText = conditionsText.split('%');
-			    	return '';
-			    	//return conditionsText[0] + n + conditionsText[1] + (n == 1? "" : "s"); 
-			    }
+				
+				escapeMarkup: function (m) { return m; } ,
+				formatInputTooShort: function (input, min) { 
+					var n = min - input.length; 
+					//conditionsText = conditionsText.split('%');
+					return '';
+					//return conditionsText[0] + n + conditionsText[1] + (n == 1? "" : "s"); 
+				}
 
 			});
 
@@ -322,7 +322,7 @@ Nette.addError = function(elem, message) {
 
 		if(controllGroup.hasClass('error')){
 			controllGroup.removeClass('error');
-		}		 
+		}        
 
 	}
 
@@ -336,23 +336,22 @@ Nette.addError = function(elem, message) {
 
 		if(!controllGroup.hasClass('error')){
 			controllGroup.addClass('error');
-		}		
+		}       
 	}
 
 	// before ajax request validation
 	$.traMapControll.responseValidation = function(data){
-		$.each(data.elements,function(k,v){
-			if(!v.status){
+
+
+		$.each(data.elements,function(k,v){							
 				
-				$input = $($("[name='"+k+"']"));
+				$input = $($("[data-name='"+k+"']"));
 				$input.val(v.value);
 	
 				if(v.message){
 					$.traMapControll.addError($input,v.message);
 				}
-				
-
-			}
+							
 		});
 	}
 
@@ -369,15 +368,15 @@ Nette.addError = function(elem, message) {
 			// nette validation
 			var inputName = $(this).attr('data-name');
 
-			if(typeof inputName != 'undefined'){
-
+			if(typeof inputName != 'undefined' && inputName != 'latitude' && inputName != 'longitude'){
+			
 				if(!Nette.validateControl(this)){
 					o.valid = false;
 				} else {
 					$.traMapControll.removeError(this);
 				}
 
-				o.data[inputName] = $(this).val();		
+				o.data[inputName] = $(this).val();      
 
 			}
 
@@ -402,9 +401,9 @@ Nette.addError = function(elem, message) {
 			var $inputLat = $self.find('input.latitude');
 			var $inputLng = $self.find('input.longitude');
 
-            var zoom = parseInt($mapDiv.attr('data-zoom')) || 12;
+			var zoom = parseInt($mapDiv.attr('data-zoom')) || 12;
 
-				var coordinates = $mapDiv.attr('data-value').split(',');
+			//var mapRequestUrl = $mapDiv.attr('data-url');
 
 				var lat = parseFloat($inputLat.val());
 				var lng = parseFloat($inputLng.val());
@@ -428,20 +427,26 @@ Nette.addError = function(elem, message) {
 				$.traMapControll.call();
 
 				  marker.setPosition(event.latLng);
+				  var myLatLng = event.latLng;
 
-				  var lat = event.latLng.gb;
-				  var lng = event.latLng.hb;
+				  var lat = myLatLng.lat();
+				  var lng = myLatLng.lng();
+
 				  $inputLat.val(lat);
 				  $inputLng.val(lng);
 				  
-
 				  $('#gps_position').html(lat+' '+lng);
 
-					v = $.traMapControll.validateInputs($self);
+					//v = $.traMapControll.validateInputs($self);
 						
-					$.traMapControll.ajax(requestUrl,v.data , function(data){
+					var data = {
+						latitude: lat,
+						longitude: lng
+					};	
+
+					$.traMapControll.ajax(requestUrl,data , function(data){
 					
-						if(!data.status){
+						if(data.status){							
 							$.traMapControll.responseValidation(data);
 						}
 					});
@@ -460,7 +465,7 @@ Nette.addError = function(elem, message) {
 						
 						$.traMapControll.ajax(requestUrl,v.data , function(data){
 							//console.log(data);
-							if(!data.status){
+							if(data.status){
 								$.traMapControll.responseValidation(data);
 								
 								var newPosition = new google.maps.LatLng(data.gps.lat,data.gps.lng);
@@ -513,7 +518,7 @@ Nette.addError = function(elem, message) {
 
 	$.calendarEdit.conteiner = [];
 
-	$.calendarEdit.addToInput = function(a,$elem){		
+	$.calendarEdit.addToInput = function(a,$elem){      
 
 		$elem.val(a.toString());
 
@@ -524,7 +529,7 @@ Nette.addError = function(elem, message) {
 		$.calendarEdit.conteiner.push(d);
 
 		$.calendarEdit.addToInput($.calendarEdit.conteiner,$elem);
-	};	
+	};  
 
 	$.calendarEdit.removeDate = function(d,$elem){
 	
@@ -532,7 +537,7 @@ Nette.addError = function(elem, message) {
 
 		$.calendarEdit.conteiner.splice(p,1);
 		$.calendarEdit.addToInput($.calendarEdit.conteiner,$elem);
-	};		
+	};      
 
 	$.fn.calendarEdit = function(options){
 		return this.each(function(){
@@ -607,7 +612,7 @@ Nette.addError = function(elem, message) {
 
 						return false;
 						
-					});			   
+					});            
 
 			});
 
@@ -698,7 +703,7 @@ Nette.addError = function(elem, message) {
 			});
 
 			// remove image function 
-			$removeLinkElement.live('click',function(){						
+			$removeLinkElement.live('click',function(){                     
 				
 				var $el = $(this);
 
@@ -711,12 +716,12 @@ Nette.addError = function(elem, message) {
 				}
 
 				setTimeout(function(){
-				  	$el.parent().fadeOut({
-				  		complete: function(){
-				  			$(this).remove();
-				  			$.galleryControl.saveSortableValues($sortInput,$listGallery);
-				  		}
-				  	});					
+					$el.parent().fadeOut({
+						complete: function(){
+							$(this).remove();
+							$.galleryControl.saveSortableValues($sortInput,$listGallery);
+						}
+					});                 
 				},1000);
 
 				return false;
@@ -726,7 +731,7 @@ Nette.addError = function(elem, message) {
 			// sort images function
 			$listGallery.sortable({
 			  stop: function( event, ui ) {
-			  	$.galleryControl.saveSortableValues($sortInput,$listGallery);
+				$.galleryControl.saveSortableValues($sortInput,$listGallery);
 			  }
 			});
 			$listGallery.disableSelection();
@@ -742,7 +747,7 @@ Nette.addError = function(elem, message) {
 					if(!firstStart){
 
 						var html = '';
-						$.each(data.originalFiles,function(k,v){							
+						$.each(data.originalFiles,function(k,v){                            
 							html+= '<li class="loading" id="+divId+"></li>';
 						});
 
