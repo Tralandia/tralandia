@@ -8,7 +8,7 @@ use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity(repositoryClass="Repository\Location\LocationRepository")
- * @ORM\Table(name="location", indexes={@ORM\index(name="name", columns={"name_id"}), @ORM\index(name="slug", columns={"slug"}), @ORM\index(name="latitude", columns={"latitude"}), @ORM\index(name="longitude", columns={"longitude"})})
+ * @ORM\Table(name="location", indexes={@ORM\index(name="name", columns={"name_id"}), @ORM\index(name="slug", columns={"slug"}), @ORM\index(name="localName", columns={"localName"}), @ORM\index(name="latitude", columns={"latitude"}), @ORM\index(name="longitude", columns={"longitude"})})
  * @EA\Primary(key="id", value="slug")
  * @EA\Generator(skip="{setSlug, getParent, setLatitude, unsetLatitude, getLatitude, setLongitude, unsetLongitude, getLongitude}")
 */
@@ -19,6 +19,12 @@ class Location extends \Entity\BaseEntityDetails {
 	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"}, fetch="EAGER")
 	 */
 	protected $name;
+
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
+	 */
+	protected $localName;
 
 	/**
 	 * @var string
@@ -235,6 +241,35 @@ class Location extends \Entity\BaseEntityDetails {
 	public function getName()
 	{
 		return $this->name;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Location\Location
+	 */
+	public function setLocalName($localName)
+	{
+		$this->localName = $localName;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Location\Location
+	 */
+	public function unsetLocalName()
+	{
+		$this->localName = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getLocalName()
+	{
+		return $this->localName;
 	}
 		
 	/**

@@ -18,9 +18,9 @@ class Url extends \Entity\BaseEntity {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Rental\Rental", inversedBy="urls")
+	 * @ORM\OneToOne(targetEntity="Entity\Rental\Rental")
 	 */
-	protected $rentals;
+	protected $rental;
 		
 	//@entity-generator-code --- NEMAZAT !!!
 
@@ -28,8 +28,6 @@ class Url extends \Entity\BaseEntity {
 	public function __construct()
 	{
 		parent::__construct();
-
-		$this->rentals = new \Doctrine\Common\Collections\ArrayCollection;
 	}
 		
 	/**
@@ -55,31 +53,18 @@ class Url extends \Entity\BaseEntity {
 	 * @param \Entity\Rental\Rental
 	 * @return \Entity\Contact\Url
 	 */
-	public function addRental(\Entity\Rental\Rental $rental)
+	public function setRental(\Entity\Rental\Rental $rental)
 	{
-		if(!$this->rentals->contains($rental)) {
-			$this->rentals->add($rental);
-		}
+		$this->rental = $rental;
 
 		return $this;
 	}
 		
 	/**
-	 * @param \Entity\Rental\Rental
-	 * @return \Entity\Contact\Url
+	 * @return \Entity\Rental\Rental|NULL
 	 */
-	public function removeRental(\Entity\Rental\Rental $rental)
+	public function getRental()
 	{
-		$this->rentals->removeElement($rental);
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Rental\Rental[]
-	 */
-	public function getRentals()
-	{
-		return $this->rentals;
+		return $this->rental;
 	}
 }

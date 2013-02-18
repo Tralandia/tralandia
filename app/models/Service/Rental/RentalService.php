@@ -129,21 +129,21 @@ class RentalService extends Service\BaseService
 		}
 
 		// Contact Phones
-		if (count($r->phones) > 0) {
+		if ($r->phone) {
 			$rank['points'] += 2;
 		} else {
 			$rank['missing'][] = 'phones';
 		}
 
 		// Contact Emails
-		if (count($r->emails) > 0) {
+		if ($r->email) {
 			$rank['points'] += 1;
 		} else {
 			$rank['missing'][] = 'emails';
 		}
 
 		// Contact Urls
-		if (count($r->urls) > 0) {
+		if ($r->url) {
 			$rank['points'] += 1;
 		} else {
 			$rank['missing'][] = 'urls';
