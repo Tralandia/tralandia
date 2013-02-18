@@ -126,6 +126,7 @@ class ImportRentals extends BaseImport {
 			$rental->primaryLocation = $context->locationRepositoryAccessor->get()->findOneBy(array('oldId' => $x['country_id'], 'type' => $locationTypes['country']));
 
 			$rental->slug = $x['name_url'];
+			$truncatedName = Strings::truncate($x['name'], 60);
 			$rental->name = $this->createPhraseFromString('\Rental\Rental', 'name', 'NATIVE', $x['name'], $rental->editLanguage);
 			
 			$rental->teaser = $this->createNewPhrase($teaserDictionaryType, $x['marketing_dic_id'], NULL, NULL, $rental->editLanguage);
@@ -138,20 +139,21 @@ class ImportRentals extends BaseImport {
 			foreach ($phones as $key => $value) {
 				if (strlen($value)) {
 					if ($tempPhone = $this->context->phoneBook->getOrCreate($value)) {
-						$rental->addPhone($tempPhone);
+						$rental->setPhone($tempPhone);
+						break; // Importujeme len prve cislo
 					}	
 				}
 			}
 
-			// Contact Emails
-			$rental->addEmail($context->contactEmailRepositoryAccessor->get()->createNew(FALSE)->setValue($x['contact_email']));
+			// Contact Email
+			$rental->setEmail($context->contactEmailRepositoryAccessor->get()->createNew(FALSE)->setValue($x['contact_email']));
 
-			// Contact Urls
+			// Contact Url
 			if (\Nette\Utils\Validators::isUrl($x['contact_url'])) {
-				$rental->addUrl($context->contactUrlRepositoryAccessor->get()->createNew(FALSE)->setValue($x['contact_url']));
+				$rental->setUrl($context->contactUrlRepositoryAccessor->get()->createNew(FALSE)->setValue($x['contact_url']));
 			}
-			if (\Nette\Utils\Validators::isUrl($x['url'])) {
-				$rental->addUrl($context->contactUrlRepositoryAccessor->get()->createNew(FALSE)->setValue($x['url']));
+			if (!$rental->url && \Nette\Utils\Validators::isUrl($x['url'])) {
+				$rental->setUrl($context->contactUrlRepositoryAccessor->get()->createNew(FALSE)->setValue($x['url']));
 			}
 			// Spoken Languages
 			$spokenLanguages = array_unique(array_filter(explode(',', $x['languages_spoken'])));
