@@ -49,7 +49,7 @@
 
 					// set nav links action
 
-					var animationOfset = 200;
+					var animationOfset = 100;
 					var animationSpeed = 200;
 
 					$rigthArrow = $('#favorites-right-button');
@@ -69,7 +69,7 @@
 						sumPx = (listCount*liWidth)+(listCount*6);
 						
 
-						if( (leftOfset+1220) < sumPx){
+						if( (leftOfset+760) < sumPx){
 							leftOfset += animationOfset;
 						  self.list.animate({
 							
