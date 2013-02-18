@@ -391,7 +391,7 @@ App.prototype.initMapsObjectDetail = function(){
 	$.scrollTo('#objectDetailListMap',800);	
 
 	setTimeout(function(){
-		maplodader();
+		//maplodader();
 	},800);
 	
 }
@@ -441,9 +441,9 @@ $(document).ready(function(){
 //console.log($.cookie('visitObjectList'));
 
 
-	var A = new App();
+	var A = new App();	
 
-	//$('.ajaxForm').ajaxForm();
+	$('#objectDetailMap').traMap();
 
 	$('.socialIconsDetail').socialIconsDetail();
 
