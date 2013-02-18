@@ -2,25 +2,41 @@
 
 namespace Extras\Forms\Container;
 
-use Nette\Application\UI\Link;
+use Entity\Contact\Address;
+use Entity\Location\Location;
+use Nette\InvalidArgumentException;
 
 class AddressContainer extends BaseContainer
 {
 
 	/**
-	 * @var \Entity\Contact\Address
+	 * @var Address
 	 */
 	protected $address;
 
 	/**
-	 * @param array|\Traversable $locations
-	 * @param \Entity\Contact\Address $address
+	 * @var Location
 	 */
-	public function __construct($locations, \Entity\Contact\Address $address = NULL)
+	protected $location;
+
+	/**
+	 * @param array|\Traversable $locations
+	 * @param Address|Location $addressOrLocation
+	 *
+	 * @throws \Nette\InvalidArgumentException
+	 */
+	public function __construct($locations, $addressOrLocation)
 	{
 		parent::__construct();
 
-		$this->address = $address;
+		if($addressOrLocation instanceof Address) {
+			$this->address = $addressOrLocation;
+		} else if($addressOrLocation instanceof Location) {
+			$this->location = $addressOrLocation;
+		} else {
+			throw new InvalidArgumentException;
+		}
+
 
 		$this->addText('address', '#Address');
 		$this->addText('locality', '#Locality');
@@ -37,7 +53,11 @@ class AddressContainer extends BaseContainer
 
 	public function getZoom()
 	{
-		return $this->address->getPrimaryLocation()->getDefaultZoom();
+		if($this->address) {
+			return $this->address->getPrimaryLocation()->getDefaultZoom();
+		} else {
+			return $this->location->getDefaultZoom();
+		}
 	}
 
 	public function setDefaultValues()
@@ -48,14 +68,15 @@ class AddressContainer extends BaseContainer
 				'address' => $this->address->getAddress(),
 				'locality' => $locality,
 				'postalCode' => $this->address->getPostalCode(),
-				'primaryLocation' => $this->address->getPrimaryLocation()->getId(),
+				'location' => $this->address->getPrimaryLocation()->getId(),
 				'latitude' => $this->address->getGps()->getLatitude(),
 				'longitude' => $this->address->getGps()->getLongitude(),
 			];
 		} else {
 			$defaults = [
-				'latitude' => $this->address->getPrimaryLocation()->getGps()->getLatitude(),
-				'longitude' => $this->address->getPrimaryLocation()->getGps()->getLongitude(),
+				'location' => $this->location->getId(),
+				'latitude' => $this->location->getGps()->getLatitude(),
+				'longitude' => $this->location->getGps()->getLongitude(),
 			];
 		}
 

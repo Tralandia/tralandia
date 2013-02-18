@@ -139,6 +139,7 @@ services:
 	polygonService: Service\PolygonService
 	rentalRegistrationsStats: Service\Statistics\RentalRegistrations(@rentalRepositoryAccessor::get(), @locationRepositoryAccessor::get())
 	rentalCreator: Service\Rental\RentalCreator(@rentalRepositoryAccessor::get())
+	addressCreator: Service\Contact\AddressCreator
 
 	emailCompiler:
 		class: Extras\Email\Compiler

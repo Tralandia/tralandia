@@ -49,6 +49,7 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 	public function __construct(Location $country, EntityManager $em, ITranslator $translator)
 	{
 		$this->country = $country;
+		d($country);
 		$this->locationRepository = $em->getRepository('\Entity\Location\Location');
 		$this->languageRepository = $em->getRepository('\Entity\Language');
 		$this->rentalTypeRepository = $em->getRepository('\Entity\Rental\Type');
@@ -75,11 +76,11 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 		$this->addPassword('password', 'Password');
 		$this->addPassword('password2', 'Confirm Password');
 
-		$this['address'] = new AddressContainer($countries);
 
 		$this->addText('rentalName', 'Rental Name');
 		$this->addSelect('rentalType', 'Rental Type', $rentalTypes);
 		$this->addSelect('rentalClassification', 'Classification', array('*', '**', '***', '****', '*****'));
+		$this['rentalAddress'] = new AddressContainer($countries, $this->country);
 
 		$this->addText('rentalPrice', 'Price category');
 
@@ -101,14 +102,21 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 			'www' => 'google.com',
 			'password' => 'adsfasdf',
 			'password2' => 'adsfasdf',
-			'rentalAddress' => 'Nesvady',
 			'rentalGps' => '1423345',
 			'rentalName' => 'Chata Test',
 			'rentalPrice' => '3',
 			'rentalMaxCapacity' => 15,
+			'rentalAddress' => [
+				'address' => 'Puskinova 9',
+				'locality' => 'Nesvady',
+				'postalCode' => '94651',
+				'location' => $this->country->getId(),
+				'latitude' => $this->country->getGps()->getLatitude(),
+				'longitude' => $this->country->getGps()->getLongitude(),
+			],
 		];
 		$this->setDefaults($defaults);
-		$this['address']->setDefaultValues();
+		$this['rentalAddress']->setDefaultValues();
 	}
 
 }

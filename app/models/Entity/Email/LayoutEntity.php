@@ -3,6 +3,7 @@
 namespace Entity\Email;
 
 use Doctrine\ORM\Mapping as ORM;
+use Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
