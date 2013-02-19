@@ -19,6 +19,7 @@ class RegistrationEmailListener extends BaseEmailListener implements \Kdyby\Even
 		$body = $emailCompiler->compileBody();
 
 		$message->setHtmlBody($body);
+		$message->addTo($rental->getOwner()->getLogin());
 
 		$this->mailer->send($message);
 	}

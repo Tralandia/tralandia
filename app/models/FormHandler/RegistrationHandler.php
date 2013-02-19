@@ -108,7 +108,7 @@ class RegistrationHandler extends FormHandler
 		$rental->setType($values->rentalType)
 			->setEditLanguage($values->language)
 			->addSpokenLanguage($values->language)
-			->addEmail($email)
+			->setEmail($email)
 			->setClassification($values->rentalClassification)
 			->setMaxCapacity($values->rentalMaxCapacity)
 			->setFloatPrice($values->rentalPrice);

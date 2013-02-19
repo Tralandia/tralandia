@@ -85,13 +85,12 @@ class Compiler {
 	 **
 	 * @return Compiler
 	 */
-	public function setEnvironment(\Entity\Location\Location $location, \Entity\Language $language)
+	public function setEnvironment(\Entity\Location\Location $location, \Entity\Language $language = NULL)
 	{
-		$locationFactory = $this->getVariableFactory('location');
-		$location = $locationFactory->create($location);
+		if(!$language) $language = $location->getDefaultLanguage();
 
-		$languageFactory = $this->getVariableFactory('language');
-		$language = $languageFactory->create($language);
+		$location = new Variables\LocationVariables($location);
+		$language = new Variables\LanguageVariables($language);
 
 		$this->variables['env'] = new Variables\EnvironmentVariables($location, $language);
 		return $this;
