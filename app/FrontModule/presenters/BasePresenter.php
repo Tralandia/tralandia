@@ -67,6 +67,7 @@ abstract class BasePresenter extends \BasePresenter {
 		$this->template->supportedLanguages = array_chunk($supportedLanguages,round(count($supportedLanguages)/3));
 
 		$this->template->pageH1 = $this->pageSeo->getH1();
+		$this->template->homepageUrl = $this->link('//Home:');
 		$this->template->pageTitle = $this->pageSeo->getTitle();
 		$this->template->countryCountObjects =  $this->environment->primaryLocation->rentalCount;
 		//d($this->environment);
