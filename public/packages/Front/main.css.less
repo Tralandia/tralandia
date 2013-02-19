@@ -13,6 +13,7 @@ h1,h2,h3,h4,h5 {
 	color: @brown;
 }
 
+
 h1 span {
 	color: #999;
 	font-size: 16px;
@@ -1676,6 +1677,12 @@ ul.arrows {
 			}			
 		}		
 
+		&.clock {
+			&:before {
+				content:'\1F554';
+			}			
+		}	
+
 		&.board {			
 			&:before {
 				font-family: 'FontAwesome';
@@ -1863,6 +1870,35 @@ ul.arrows {
 		}
 
 	}
+
+
+	.select2-container {
+
+		&.select2-drop-above {
+			a {
+				.basic-gradient(rgb(241, 250, 209),rgb(186, 196, 148));
+			}
+		}
+
+		a {			
+			.basic-gradient(rgb(241, 250, 209),rgb(186, 196, 148));
+			border: 1px solid rgb(141, 155, 88);
+
+			div {
+				.basic-gradient(rgb(215, 224, 182),rgb(160, 173, 108));
+				border-left: 1px solid rgb(126, 145, 52);
+			}
+		}
+
+
+	}
+
+		.select2-search {
+			display: none;
+		}
+		.select2-drop {
+			background: #000;
+		}	
 
 }
 
@@ -2999,9 +3035,28 @@ form#contactFormCover {
 
 
 .leftSidebarObjectDetail  {
-	img {
-		&:first-child {
+
+	.imgFirst {
+
+		height: 180px;
+
+		.clasification {
+			position: absolute;
+			z-index: 300;
+			height: 23px;
+			margin-left: 10px;
+			width: auto;
+			padding: 5px 10px;
+			background: rgba(0,0,0,0.67);
+			margin-top: 10px;
+			color: #fff;
+			.basic-border-radius(5px);
+		}
+
+		img {
 			.top-border-radius(5px);
+			position: relative;
+			
 		}
 	}
 }
@@ -3182,3 +3237,20 @@ form#contactFormCover {
 		color: #ccc;
 	}
 }			
+
+#content {
+	.metaObjectInfo {
+		h3 {
+
+
+			span {
+				font-weight: normal;
+				font-size: 14px;
+				color: #999;
+			}
+		}
+
+		margin: 0 10px;
+	}	
+}
+
