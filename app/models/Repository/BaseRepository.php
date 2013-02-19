@@ -9,7 +9,7 @@ class BaseRepository extends EntityRepository {
 	/**
 	 * @param bool $createPhrases tento param je to len docasne koly importu
 	 *
-	 * @return mixed
+	 * @return \Entity\BaseEntity
 	 * @throws \Nette\InvalidArgumentException
 	 */
 	public function createNew($createPhrases = TRUE) {

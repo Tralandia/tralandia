@@ -2,16 +2,23 @@
 
 namespace FormHandler;
 
+use Service\Contact\AddressCreator;
 use Service\Rental\RentalCreator;
 use Doctrine\ORM\EntityManager;
 
 class RegistrationHandler extends FormHandler
 {
+	public $onSuccess = [];
 
 	/**
 	 * @var \Service\Rental\RentalCreator
 	 */
 	protected $rentalCreator;
+
+	/**
+	 * @var \Service\Contact\AddressCreator
+	 */
+	protected $addressCreator;
 
 	/**
 	 * @var \Doctrine\ORM\EntityManager
@@ -26,11 +33,13 @@ class RegistrationHandler extends FormHandler
 
 	/**
 	 * @param \Service\Rental\RentalCreator $rentalCreator
+	 * @param \Service\Contact\AddressCreator $addressCreator
 	 * @param \Doctrine\ORM\EntityManager $em
 	 */
-	public function __construct(RentalCreator $rentalCreator, EntityManager $em)
+	public function __construct(RentalCreator $rentalCreator, AddressCreator $addressCreator, EntityManager $em)
 	{
 		$this->rentalCreator = $rentalCreator;
+		$this->addressCreator = $addressCreator;
 		$this->em = $em;
 	}
 
@@ -41,7 +50,6 @@ class RegistrationHandler extends FormHandler
 		$languageRepository = $this->em->getRepository('\Entity\Language');
 		$rentalTypeRepository = $this->em->getRepository('\Entity\Rental\Type');
 		$emailRepository = $this->em->getRepository('\Entity\Contact\Email');
-		$addressRepository = $this->em->getRepository('\Entity\Contact\Address');
 
 		$error = new ValidationError;
 
@@ -72,6 +80,7 @@ class RegistrationHandler extends FormHandler
 		$user = $userRepository->createNew();
 		$user->setLogin($values->email);
 		$user->setPassword($values->password);
+		$user->setPrimaryLocation($values->country);
 		$user->setLanguage($values->language);
 
 
@@ -81,10 +90,17 @@ class RegistrationHandler extends FormHandler
 
 		$rentalCreator = $this->rentalCreator;
 
+		$rentalAddress = $values->rentalAddress;
+
 		/** @var $address \Entity\Contact\Address */
-		$address = $addressRepository->createNew();
-		$address->setPrimaryLocation($values->country);
-		$address->setAddress($values->rentalAddress);
+		$address = $this->addressCreator->create(
+			$values->country,
+			$rentalAddress->address,
+			$rentalAddress->locality,
+			$rentalAddress->postalCode,
+			$rentalAddress->latitude,
+			$rentalAddress->longitude
+		);
 
 
 		/** @var $rental \Entity\Rental\Rental */
@@ -93,13 +109,16 @@ class RegistrationHandler extends FormHandler
 		$rental->setType($values->rentalType)
 			->setEditLanguage($values->language)
 			->addSpokenLanguage($values->language)
-			->addEmail($email)
+			->setEmail($email)
 			->setClassification($values->rentalClassification)
 			->setMaxCapacity($values->rentalMaxCapacity)
 			->setFloatPrice($values->rentalPrice);
 
 		//$this->model->save($values);
 		$this->rental = $rental;
+
+		$this->onSuccess($rental);
+
 		return $rental;
 	}
 

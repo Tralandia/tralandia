@@ -27,13 +27,3 @@ class RentalVariables extends Nette\Object {
 	}
 
 }
-
-
-interface IRentalVariablesFactory {
-	/**
-	 * @param \Entity\Rental\Rental $rental
-	 *
-	 * @return RentalVariables
-	 */
-	function create(\Entity\Rental\Rental $rental);
-}

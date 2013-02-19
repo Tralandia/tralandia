@@ -34,21 +34,21 @@ Extension::register($configurator);
 Extras\Config\PresenterExtension::register($configurator);
 
 $configurator->addConfig(APP_DIR . '/configs/config.neon', FALSE);
-$configurator->addConfig(APP_DIR . '/configs/local.config.neon');
+$configurator->addConfig(APP_DIR . '/configs/local.config.neon', FALSE);
 
 if (isset($_SERVER['REDIRECT_URL']) && ($_SERVER['REDIRECT_URL'] == '/import' || $_SERVER['REDIRECT_URL'] == '/import/import/default')) {
 	$section = 'import';
 }
 
 if ($section) {
-	$configurator->addConfig(APP_DIR . '/configs/'.$section.'.config.neon');
+	$configurator->addConfig(APP_DIR . '/configs/'.$section.'.config.neon', FALSE);
 }
 $configurator->onCompile[] = function ($configurator, $compiler) {
-	$compiler->addExtension('gpspicker', new VojtechDobes\NetteForms\GpsPickerExtension);
 	$compiler->addExtension('events', new Kdyby\Events\DI\EventsExtension);
 };
 $container = $configurator->createContainer();
 // Debugger::$editor = $container->parameters['editor'];
+
 
 // @todo toto niekam schovat
 // Panel\Todo::register($container->parameters['appDir']);

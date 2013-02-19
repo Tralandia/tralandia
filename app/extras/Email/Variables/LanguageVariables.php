@@ -30,12 +30,3 @@ class LanguageVariables extends Nette\Object {
 	}
 
 }
-
-interface ILanguageVariablesFactory {
-	/**
-	 * @param \Entity\Language $language
-	 *
-	 * @return LanguageVariables
-	 */
-	function create(\Entity\Language $language);
-}

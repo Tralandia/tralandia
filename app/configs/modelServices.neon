@@ -39,7 +39,10 @@ services:
 
 	#location
 	#----------
-	locationRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Location\Location')
+	locationRepositoryAccessor:
+		factory: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Location\Location')
+		setup:
+			- setParameters(@locationDecoratorFactory)
 	locationTypeRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Location\Type')
 
 
@@ -78,9 +81,7 @@ services:
 
 	#rental
 	#----------
-	rentalRepositoryAccessor: 
-		class: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Rental\Rental')
-
+	rentalRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Rental\Rental')
 	rentalAmenityRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Rental\Amenity')
 	rentalAmenityTypeRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Rental\AmenityType')
 	rentalInformationRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Rental\Information')
