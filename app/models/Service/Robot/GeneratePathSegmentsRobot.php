@@ -112,7 +112,7 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 				$entity = $this->routingPathSegmentRepositoryAccessor->get()->createNew();
 				$entity->primaryLocation = NULL;
 				$entity->language = $language;
-				$entity->pathSegment = $this->translate($type->name, $language);
+				$entity->pathSegment = $this->translate($type->name, $language, 1, 0, 'nominative');
 				$entity->type = PathSegment::RENTAL_TYPE;
 				$entity->entityId = $type->id;
 
@@ -121,11 +121,15 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 		}
 	}
 
-	protected function translate($phrase, $language)
+	protected function translate($phrase, $language, $plural = NULL, $gender = NULL, $case = NULL)
 	{
-		$phrase = $this->phraseDecoratorFactory->create($phrase);
 		$translation = $phrase->getTranslation($language);
-		return $translation ? Strings::webalize($translation->translation) : $phrase->id.'_'.$language->id;
+		if ($plural && is_object($translation)) {
+			$variation = $translation->getVariation($plural, $gender, $case);
+			return $variation ? Strings::webalize($variation) : $phrase->id.'_'.$language->id;
+		} else {
+			return $translation ? Strings::webalize($translation->translation) : $phrase->id.'_'.$language->id;
+		}
 	}
 
 
