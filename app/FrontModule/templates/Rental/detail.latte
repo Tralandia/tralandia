@@ -18,13 +18,23 @@
 		<div id="content" class="nopadding">
 			
 
+
+
 <div class="row-fluid objectDetailContent">
 	<div class="span4 marginBottom marginTop marginLeft leftSidebarObjectDetail">
 		{foreach $rental->getImages(3) as $photo}
+
+			{if $iterator->first}
+				weiufewiugf 
+			{/if}
 			<img alt="{_$rental->name}" n:img="$photo" class="marginBottom" />
 		{/foreach}
 
-		<img alt="{_$rental->name}" n:fakeImg="" class="marginBottom" />
+		<div class="imgFirst">
+			<div class="clasification"></div>
+			<img alt="{_$rental->name}" n:fakeImg="" class="marginBottom" />
+		</div>
+		
 		<img alt="{_$rental->name}" n:fakeImg="" class="marginBottom" />
 		<img alt="{_$rental->name}" n:fakeImg="" class="marginBottom" />
 		
@@ -41,13 +51,14 @@
 		<a class="brown"  href="{link Rental:list location => $rental->address->locality , rentalType => $rental->type }">{_$rental->type->name|firstUpper} {_$rental->address->locality->name , null , [case=>locative]}</a>
 		</p>
 
-
+		{if $rental->teaser}
 		<table class="teaser">
 			<tr>
-				<td class="icon"><i class="entypo-new"></i></td>
+				<td class="icon"><i class="entypo-megaphone"></i></td>
 				<td class="content">{_$rental->teaser|firstUpper}</td>
 			</tr>			
 		</table>
+		{/if}
 
 <div class="detailInfoBoxCover">
 
@@ -149,7 +160,7 @@
 	{if count($rental->pricelistRows) > 0}
 	{var $noPriceTable = false}
 		<ul class="detailPriceList">
-			<li><h3>Cenniky</h3>
+			<li><h3><span>$ </span>Cenniky</h3>
 				<ul>
 					<li>3x Apartmán <span>(5x postel, 2x pristelka)</span><span class="price">78 eur</span></li>
 					<li>3x Apartmán <span>(2x postel)</span><span class="price">32 eur</span></li>
@@ -242,16 +253,17 @@
 			<div class="sidebarInner paddingTop">
 
 				<table>
+					{if $rental->contactName}
 					<tr>
 						<td class="iconcover"><i class="entypo-contact"></i></td>
 						<td>	
 						<strong>{$rental->contactName}</strong>
 						</td>
 					</tr>
-
+					{/if}
 
 				
-
+					{if $rental->phone->international}
 					<tr>
 						<td class="iconcover"><i class="entypo-phone"></i></td>
 						<td>
@@ -260,8 +272,9 @@
 
 						</td>
 					</tr>
+					{/if}
 
-
+					{if $rental->address->address}
 					<tr>						
 						<td class="iconcover"><i class="entypo-adress"></i></td>
 						<td>
@@ -276,7 +289,8 @@
 
 						</td>
 					</tr>	
-		
+					{/if}
+
 {* 					<tr>						
 						<td class="iconcover"><i class="entypo-location"></i></td>
 						<td>
@@ -291,14 +305,17 @@
 						</td>
 					</tr>
  *}
+
+ 					{if $rental->url->value}
 					<tr>
 						<td class="iconcover"><i class="entypo-www"></i></td>
 						<td>
 							<strong><a target="_blank" href="{$rental->url->value}">{_o1666}</a><strong>
 						</td>
 					</tr>
+					{/if}
 
-
+					{if $rental->spokenLanguages}
 					<tr>						
 						<td class="iconcover"><i class="entypo-language"></i></td>
 						<td>
@@ -313,6 +330,7 @@
 
 						</td>
 					</tr>	
+					{/if}
 
 				</table>
 
@@ -451,6 +469,13 @@ $(document).ready(function(){
 				</div>
 
 		<div class="clearfix"></div>
+	</div>
+</div>
+
+
+<div class="row-fluid">
+	<div class="span12">
+		<div class="moreOption"><a href="#">edit object</a> <span class="separator">|</span> <span> Last updatet 12.06.2012 </span> <span class="separator">|</span> <a href="#">edit object</a> <span class="separator">|</span> <a href="#">send </a></div>
 	</div>
 </div>
 
