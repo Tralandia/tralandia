@@ -70,8 +70,9 @@ class RankCalculatorTest extends \Tests\TestCase
 
 		$gps = new \Extras\Types\LatLong(47.924237, 18.127506);
 		$address->setGps($gps);
-		
+
 		$this->rental = $this->rentalCreator->create($address, $this->user, $this->rentalName);
+		d($this->rental->getPrimaryLocation());
 
 		$this->assertRank(\Entity\Rental\Rental::STATUS_DRAFT, 0);
 
