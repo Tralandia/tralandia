@@ -592,15 +592,18 @@ $(document).ready(function(){
     var socialIconsMenu = false;
     $('#socialIcons').click(function(){
 
+    	var $arrow = $(this).find('span');
+
+
 
     	if(!socialIconsMenu){
-    		    	console.log('click open');
-
+    		    	
+    		$arrow.html('&#59231;');
     		$('#socialIconsMenu').show();
     		socialIconsMenu = true;
     	} else {
-    		    	console.log('click close');
-
+    		    	
+    		$arrow.html('&#59228;');
     		$('#socialIconsMenu').hide();
     		socialIconsMenu = false;
     	}
@@ -615,6 +618,7 @@ $(document).ready(function(){
     		langmenuOpen = false;
     	}  	
     	if(socialIconsMenu){
+    		$('#socialIcons').find('span').html('&#59228;');
     		$('#socialIconsMenu').hide();
     		socialIconsMenu = false;
     	}      	

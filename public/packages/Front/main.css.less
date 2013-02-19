@@ -336,6 +336,10 @@ ul.arrows {
 	margin-bottom: 0;	
 }
 
+.sitePadding {
+	margin: 0 10px;
+}
+
 .innerPaddingRitgh {
 	margin-left: 0;
 }
@@ -1585,6 +1589,22 @@ ul.arrows {
 
 	}
 
+}
+
+#placesImg {
+	list-style: none;
+	width: 344px;
+	margin: 0;
+	float: left;
+	li {
+		height: 95px;
+		width: 111px;
+		margin: 1px;
+		display: block;
+		float: left;
+		background-repeat: no-repeat;
+		background-size: cover;
+	}
 }
 
 
@@ -3127,4 +3147,25 @@ form#contactFormCover {
 			#socialIcons ul.dropdown-menu {
 				left: -328px;
 				top: 37px;
+				width: 367px;
+				left: -192px;
+				
+					li {
+						width: 100%;
+
+						ul {
+							padding: 4px 0;
+							margin-left: 10px;
+						}
+					}
+				
+
+				li ul li {
+					float: left;
+					width: auto;
+
+					a:before {
+						content: '';
+					}
+				}
 			}
