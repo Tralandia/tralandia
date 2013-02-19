@@ -56,9 +56,9 @@ class RankCalculatorTest extends \Tests\TestCase
 		$this->languages['en'] = $this->getContext()->languageRepositoryAccessor->get()->findOneByIso('en');
 		$this->languages['hu'] = $this->getContext()->languageRepositoryAccessor->get()->findOneByIso('hu');
 
-		$this->amenities[1] = $this->getContext()->languageRepositoryAccessor->get()->findOneById(1);
-		$this->amenities[2] = $this->getContext()->languageRepositoryAccessor->get()->findOneById(2);
-		$this->amenities[3] = $this->getContext()->languageRepositoryAccessor->get()->findOneById(3);
+		$this->amenities[1] = $this->getContext()->rentalAmenityRepositoryAccessor->get()->findOneById(1);
+		$this->amenities[2] = $this->getContext()->rentalAmenityRepositoryAccessor->get()->findOneById(2);
+		$this->amenities[3] = $this->getContext()->rentalAmenityRepositoryAccessor->get()->findOneById(3);
 	}
 
 	public function testRank() {
@@ -77,8 +77,8 @@ class RankCalculatorTest extends \Tests\TestCase
 
 		$this->rental->classification = 3;
 		$this->rental->type = $this->getContext()->rentalTypeRepositoryAccessor->get()->findOneByOldId('103');
-		//$this->rental->name->setTranslationText($this->languages['sk'], 'Chata Mrož') ;
-		$this->rental->teaser->setTranslationText($this->languages['sk'], 'Nádherná chata uprostred lesa pri potôčiku.');
+		//$this->rental->name->createTranslation($this->languages['sk'], 'Chata Mrož') ;
+		$this->rental->teaser->createTranslation($this->languages['sk'], 'Nádherná chata uprostred lesa pri potôčiku.');
 		$this->rental->contactName = 'Ja som kontakt';
 		$this->rental->phone = $this->getContext()->phoneBook->getOrCreate('+421 902 318 926');
 		$this->rental->email = $this->getContext()->contactEmailRepositoryAccessor->get()->createNew()->setValue('toth.radoslav@gmail.com');
@@ -86,15 +86,15 @@ class RankCalculatorTest extends \Tests\TestCase
 		$this->rental->addSpokenLanguage($this->languages['sk']);
 		$this->rental->addSpokenLanguage($this->languages['hu']);
 		$this->rental->addSpokenLanguage($this->languages['en']);
-		$this->rental->addAmenity($this->amenity[1]);
-		$this->rental->addAmenity($this->amenity[2]);
-		$this->rental->addAmenity($this->amenity[3]);
+		$this->rental->addAmenity($this->amenities[1]);
+		$this->rental->addAmenity($this->amenities[2]);
+		$this->rental->addAmenity($this->amenities[3]);
 		$this->rental->checkIn = 14;
 		$this->rental->checkOut = 10;
 		$this->rental->price = new \Extras\Types\Price(15, $this->getContext()->currencyRepositoryAccessor->get()->findOneByIso('EUR'));
 
 		$this->rental->maxCapacity = 42;
-		$this->rental->bedroomsCount = 6;
+		$this->rental->bedroomCount = 6;
 		$this->rental->rooms = '3xAPT (2x3+1)';
 		
 		// Pricelist Row
@@ -119,8 +119,8 @@ class RankCalculatorTest extends \Tests\TestCase
 
 		// Interview
 		$answer = $this->getContext()->rentalInterviewAnswerRepositoryAccessor->get()->createNew();
-		$answer->setQuestion($this->getContext()->rentalInterviewAnswerRepositoryAccessor->get()->findOneById(1));
-		$answer->answer->setTranslation($this->languages['sk'], 'Toto je odpoved na prvu otazku, viac vam k tomu neviem dodat.');
+		$answer->setQuestion($this->getContext()->rentalInterviewQuestionRepositoryAccessor->get()->findOneById(1));
+		$answer->answer->createTranslation($this->languages['sk'], 'Toto je odpoved na prvu otazku, viac vam k tomu neviem dodat.');
 
 		$this->rental->addInterviewAnswer($answer);
 
@@ -138,7 +138,7 @@ class RankCalculatorTest extends \Tests\TestCase
 	protected function assertRank($status, $points) {
 		$rentalDecorator = $this->getContext()->rentalDecoratorFactory->create($this->rental);
 		$rank = $rentalDecorator->calculateRank();
-		d($rank);
+		d($rank['missing']);
 		// $this->assertSame($rank['status'], $status, 'Status nesedi...');
 		// $this->assertSame($rank['points'], $points, 'Points nesedi...');
 	}
