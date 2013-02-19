@@ -46,11 +46,12 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 			->getControlPrototype()
 				->setPlaceholder('o1034');
 
-		$this->addText('from')
+		$date = $this->addContainer('date');
+		$date->addText('from')
 			->getControlPrototype()
 				->setPlaceholder('o1043');
 
-		$this->addText('to')
+		$date->addText('to')
 			->getControlPrototype()
 				->setPlaceholder('o1044');
 
