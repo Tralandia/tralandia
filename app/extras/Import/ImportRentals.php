@@ -282,7 +282,7 @@ class ImportRentals extends BaseImport {
 				$temp = array_chunk($temp, 6);
 				foreach ($temp as $key => $value) {
 					$row = $context->rentalPricelistRowRepositoryAccessor->get()->createNew(FALSE);
-					$row->sort; $sort++;
+					$row->sort = $sort; $sort++;
 					$row->roomCount = $value[0];
 					if(isset($roomTypes[$value[1]])) $row->roomType = $roomTypes[$value[1]];
 					$row->bedCount = $value[2];

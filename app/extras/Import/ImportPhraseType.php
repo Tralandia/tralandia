@@ -350,6 +350,29 @@ class ImportPhraseType extends BaseImport {
 			// ->setIldId(1)
 			->setCheckingRequired(NULL);
 
+		$this->createPhraseType('\Entity\Rental\InterviewQuestion', 'question')
+			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED)
+			->setPluralVariationsRequired(0)
+			->setGenderRequired(0)
+			->setGenderVariationsRequired(0)
+			->setLocativesRequired(0)
+			->setPositionRequired(0)
+			// ->setHelpForTranslator('')
+			// ->setMonthlyBudget(0)
+			// ->setIldId(1)
+			->setCheckingRequired(NULL);
+
+		$this->createPhraseType('\Entity\Rental\InterviewAnswer', 'answer')
+			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_NONE)
+			->setPluralVariationsRequired(0)
+			->setGenderRequired(0)
+			->setGenderVariationsRequired(0)
+			->setLocativesRequired(0)
+			->setPositionRequired(0)
+			// ->setHelpForTranslator('')
+			// ->setMonthlyBudget(0)
+			// ->setIldId(1)
+			->setCheckingRequired(NULL);
 
 		$this->model->flush();
 
