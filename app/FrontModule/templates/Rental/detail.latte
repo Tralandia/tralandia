@@ -76,7 +76,7 @@
 			<i class="entypo-users"></i>
 			<div class="content">
 				{_o1008} {$rental->maxCapacity} {_o925,null,[count=>$rental->maxCapacity]}
-				<span>{$rental->rooms} #rooms</span>
+				<span>{$rental->rooms} {if $rental->bedroomCount}{$rental->bedroomCount}{/if} #badroom</span>
 			</div>
 		</div>
 
@@ -138,19 +138,46 @@
 				   </li>			   
 			   {/if}
 
-				{var $board = $rental->getAmenitiesByType(array('board'))}
+
+				{var $board = $rental->getAmenitiesByType(array('wellness'))}
 				{if $board}
 				   <li class="monitor">
 				   <strong>#Vybavenie</strong>
-					   <div class="content">
+					   <div class="amenitiesStart">					   
 						{foreach $board  as $amenities}					
-							{foreach $amenities as $amenity}
+							{foreach $amenities as $amenity}							
 								{_$amenity->name}{if !$iterator->last}, {/if}
 							{/foreach}					
-						{/foreach}
-					</div>
+						{/foreach}											
+						</div>
+						<a class="toogle showMoreAmenities" href="#">More</a>
+
+						<ul class="moreAmenities">
+							{var $board = $rental->getAmenitiesByType(array('wellness','relax','important','activity','children','room','kitchen','bathroom','heating','parking','service','congress','room-type','separate-groups','animal','other'))}
+							{if $board}
+							   			   
+								   
+									{foreach $board  as $amenities}		
+									<li>			
+										{foreach $amenities as $amenity}
+											
+												{if $iterator->first}				
+													<b>{_$amenity->type->name}: </b>				
+												{/if}							
+												{_$amenity->name}{if !$iterator->last}, {/if}
+											
+										{/foreach}	
+										</li>				
+									{/foreach}
+									
+							   			   
+						   {/if}	
+						</ul>
+
 				   </li>			   
-			   {/if}			   
+			   {/if}
+
+		   
 
 			   {if $rental->checkIn}
 				   <li class="clock">
@@ -159,6 +186,8 @@
 					</div>
 				   </li>
 			   {/if}
+
+
 
 
 			</ul>
@@ -174,14 +203,11 @@
 		<ul class="detailPriceList">
 			<li><h3><span>$ </span>Cenniky</h3>
 				<ul>
-					<li>3x Apartmán <span>(5x postel, 2x pristelka)</span><span class="price">78 eur</span></li>
-					<li>3x Apartmán <span>(2x postel)</span><span class="price">32 eur</span></li>
-					<li>3x Apartmán <span>(3x postel, 1x pristelka)</span><span class="price">50 eur</span></li>
-					<li>Veľkonočný cenník <span>anglicky, 15kB</span><a href="#"><i class="entypo-save"></i><span class="price">stiahnuť</span> </a></li>
-					
+
 					{foreach $rental->pricelistRows as $pricelistRow}
 					<li>	
-					{$pricelistRow->roomCount} {_$pricelistRow->roomType->name}
+					{dump $pricelistRow->roomType}
+					{$pricelistRow->roomCount} {_$pricelistRow->roomType->name, null , [count => $pricelistRow->bedCount]}
 						<span>
 							{$pricelistRow->bedCount} {_o940 , null , [count => $pricelistRow->bedCount]}
 							{if $pricelistRow->extraBedCount}{$pricelistRow->extraBedCount} {_o1158 , null , [count => $pricelistRow->extraBedCount]}{/if}							
