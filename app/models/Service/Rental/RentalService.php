@@ -45,6 +45,7 @@ class RentalService extends Service\BaseService
 
 		$rank = array(
 			'points' => 0,
+			'complete' => array(),
 			'missing' => array(),
 			'status' => NULL,
 		);
@@ -52,6 +53,7 @@ class RentalService extends Service\BaseService
 		// Primary location
 		if ($r->getPrimaryLocation()) {
 			$rank['points'] += 1;
+			$rank['complete'][] = 'primaryLocation';
 		} else {
 			$rank['missing'][] = 'primaryLocation';
 		}
@@ -59,6 +61,7 @@ class RentalService extends Service\BaseService
 		// Rental Type
 		if ($r->type) {
 			$rank['points'] += 1;
+			$rank['complete'][] = 'type';
 		} else {
 			$rank['missing'][] = 'type';
 		}
@@ -67,6 +70,7 @@ class RentalService extends Service\BaseService
 		$name = $r->name;
 		if ($name->getValidTranslationsCount() > 0) {
 			$rank['points'] += 1;
+			$rank['complete'][] = 'name';
 		} else {
 			$rank['missing'][] = 'name';
 		}
@@ -75,6 +79,7 @@ class RentalService extends Service\BaseService
 		$teaser = $r->teaser;
 		if ($teaser->getValidTranslationsCount() > 0) {
 			$rank['points'] += 3;
+			$rank['complete'][] = 'teaser';
 		} else {
 			$rank['missing'][] = 'teaser';
 		}
@@ -89,13 +94,16 @@ class RentalService extends Service\BaseService
 
 		if ($t > 0) {
 			$rank['points'] += $t;
+			$rank['complete'][] = 'interviewAnswers';
 		} else {
 			$rank['missing'][] = 'interviewAnswers';
 		}
 
 		// Address -> GPS
-		if ($r->address->latitude !== NULL && $r->address->longitude !== NULL) {
+		$gps = $r->address->getGps();
+		if ($gps->latitude !== NULL && $gps->longitude !== NULL) {
 			$rank['points'] += 4;
+			$rank['complete'][] = 'addressGps';
 		} else {
 			$rank['missing'][] = 'addressGps';
 		}
@@ -103,6 +111,7 @@ class RentalService extends Service\BaseService
 		// Address -> Locality
 		if ($r->address->locality instanceof \Entity\Location\Location) {
 			$rank['points'] += 1;
+			$rank['complete'][] = 'addressLocality';
 		} else {
 			$rank['missing'][] = 'addressLocality';
 		}
@@ -110,6 +119,7 @@ class RentalService extends Service\BaseService
 		// Address -> Address
 		if (Strings::length($r->address->address) > 0) {
 			$rank['points'] += 1;
+			$rank['complete'][] = 'addressAddress';
 		} else {
 			$rank['missing'][] = 'addressAddress';
 		}
@@ -117,6 +127,7 @@ class RentalService extends Service\BaseService
 		// Address -> Postal Code
 		if (Strings::length($r->address->postalCode) > 0) {
 			$rank['points'] += 1;
+			$rank['complete'][] = 'addressPostalCode';
 		} else {
 			$rank['missing'][] = 'addressPostalCode';
 		}
@@ -124,6 +135,7 @@ class RentalService extends Service\BaseService
 		// Contact Name
 		if (Strings::length($r->contactName) > 0) {
 			$rank['points'] += 1;
+			$rank['complete'][] = 'contactName';
 		} else {
 			$rank['missing'][] = 'contactName';
 		}
@@ -131,28 +143,32 @@ class RentalService extends Service\BaseService
 		// Contact Phones
 		if ($r->phone) {
 			$rank['points'] += 2;
+			$rank['complete'][] = 'phone';
 		} else {
-			$rank['missing'][] = 'phones';
+			$rank['missing'][] = 'phone';
 		}
 
 		// Contact Emails
 		if ($r->email) {
 			$rank['points'] += 1;
+			$rank['complete'][] = 'email';
 		} else {
-			$rank['missing'][] = 'emails';
+			$rank['missing'][] = 'email';
 		}
 
-		// Contact Urls
+		// Contact Url
 		if ($r->url) {
 			$rank['points'] += 1;
+			$rank['complete'][] = 'url';
 		} else {
-			$rank['missing'][] = 'urls';
+			$rank['missing'][] = 'url';
 		}
 
 		// Amenities
 		$t = count($r->amenities);
 		if ($t > 0) {
 			$rank['points'] += ($t > 25 ? 25 : $t);
+			$rank['complete'][] = 'amenities';
 		} else {
 			$rank['missing'][] = 'amenities';
 		}
@@ -161,6 +177,7 @@ class RentalService extends Service\BaseService
 		$t = count($r->spokenLanguages);
 		if ($t > 0) {
 			$rank['points'] += ($t > 3 ? 3 : $t);
+			$rank['complete'][] = 'spokenLanguages';
 		} else {
 			$rank['missing'][] = 'spokenLanguages';
 		}
@@ -168,6 +185,7 @@ class RentalService extends Service\BaseService
 		// Check In
 		if ($r->checkIn) {
 			$rank['points'] += 1;
+			$rank['complete'][] = 'checkIn';
 		} else {
 			$rank['missing'][] = 'checkIn';
 		}
@@ -175,6 +193,7 @@ class RentalService extends Service\BaseService
 		// Check Out
 		if ($r->checkOut) {
 			$rank['points'] += 1;
+			$rank['complete'][] = 'checkOut';
 		} else {
 			$rank['missing'][] = 'checkOut';
 		}
@@ -182,13 +201,15 @@ class RentalService extends Service\BaseService
 		// Max Capacity
 		if ($r->maxCapacity > 0) {
 			$rank['points'] += 1;
+			$rank['complete'][] = 'maxCapacity';
 		} else {
 			$rank['missing'][] = 'maxCapacity';
 		}
 
-		// Prices Season
+		// Prices
 		if ($r->getPrice()->getSourceAmount() > 0) {
 			$rank['points'] += 3;
+			$rank['complete'][] = 'price';
 		} else {
 			if ($pricesCompulsory) {
 				$rank['missing'][] = 'price';
@@ -200,28 +221,62 @@ class RentalService extends Service\BaseService
 		// Classification
 		if ($r->classification !== NULL) {
 			$rank['points'] += 1;
+			$rank['complete'][] = 'classification';
 		} else {
 			$rank['missing'][] = 'classification';
 		}
 
-		// Prices - //@todo
-		// $t = count($r->priceLists);
-		// if ($t > 0) {
-		// 	$rank['points'] += ($t > 35 ? 35 : $t);
-		// } else {
-		// 	if ($pricesCompulsory) {
-		// 		$rank['missing'][] = 'priceLists';
-		// 	} else {
-		// 		$rank['missing'][] = 'priceLists';
-		// 	}
-		// }
+		//Prices - //@todo
+		$t = count($r->pricelists);
+		if ($t > 0) {
+			$rank['points'] += ($t > 5 ? 5 : $t)*5;
+			$rank['complete'][] = 'pricelists';
+		} else {
+			if ($pricesCompulsory) {
+				$rank['missing'][] = 'pricelists';
+			} else {
+				$rank['missing'][] = 'pricelists';
+			}
+		}
+
+		//PricelistRows
+		$t = count($r->pricelistRows);
+		if ($t > 0) {
+			$rank['points'] += ($t > 5 ? 5 : $t)*5;
+			$rank['complete'][] = 'pricelistRows';
+		} else {
+			if ($pricesCompulsory) {
+				$rank['missing'][] = 'pricelistRows';
+			} else {
+				$rank['missing'][] = 'pricelistRows';
+			}
+		}
+
+
 
 		// Images
 		$t = count($r->images)*2;
 		if ($t > 0) {
 			$rank['points'] += ($t > 40 ? 40 : $t);
+			$rank['complete'][] = 'images';
 		} else {
 			$rank['missing'][] = 'images';
+		}
+
+		// Rooms
+		if (Strings::length($r->rooms) > 0) {
+			$rank['points'] += 1;
+			$rank['complete'][] = 'rooms';
+		} else {
+			$rank['missing'][] = 'rooms';
+		}
+
+		// Bedroom count
+		if ($r->bedroomCount > 0) {
+			$rank['points'] += 1;
+			$rank['complete'][] = 'bedroomCount';
+		} else {
+			$rank['missing'][] = 'bedroomCount';
 		}
 
 		// Update Rental
