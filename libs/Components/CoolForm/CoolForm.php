@@ -74,6 +74,7 @@ abstract class CoolForm extends Form {
 //			$this->parent->flashMessage($error, 'error');
 //		}
 		$this->presenter->invalidateControl($this->getName());
+		d($this->getAllErrors());
 	}
 
 	public function addSubmit($name, $caption = NULL, $nospam = TRUE) {
