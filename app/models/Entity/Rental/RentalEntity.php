@@ -100,21 +100,21 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Contact\Phone", mappedBy="rentals", cascade={"persist"})
+	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Phone", cascade={"persist"})
 	 */
-	protected $phones;
+	protected $phone;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Contact\Email", mappedBy="rentals", cascade={"persist"})
+	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Email", cascade={"persist"})
 	 */
-	protected $emails;
+	protected $email;
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Contact\Url", mappedBy="rentals", cascade={"persist"})
+	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Url", cascade={"persist"})
 	 */
-	protected $urls;
+	protected $url;
 
 	/**
 	 * @var Collection
@@ -318,9 +318,6 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 		parent::__construct();
 
 		$this->missingInformation = new \Doctrine\Common\Collections\ArrayCollection;
-		$this->phones = new \Doctrine\Common\Collections\ArrayCollection;
-		$this->emails = new \Doctrine\Common\Collections\ArrayCollection;
-		$this->urls = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->spokenLanguages = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->amenities = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->images = new \Doctrine\Common\Collections\ArrayCollection;
@@ -667,102 +664,87 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 	 * @param \Entity\Contact\Phone
 	 * @return \Entity\Rental\Rental
 	 */
-	public function addPhone(\Entity\Contact\Phone $phone)
+	public function setPhone(\Entity\Contact\Phone $phone)
 	{
-		if(!$this->phones->contains($phone)) {
-			$this->phones->add($phone);
-		}
-		$phone->addRental($this);
+		$this->phone = $phone;
 
 		return $this;
 	}
 		
 	/**
-	 * @param \Entity\Contact\Phone
 	 * @return \Entity\Rental\Rental
 	 */
-	public function removePhone(\Entity\Contact\Phone $phone)
+	public function unsetPhone()
 	{
-		$this->phones->removeElement($phone);
-		$phone->removeRental($this);
+		$this->phone = NULL;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Contact\Phone[]
+	 * @return \Entity\Contact\Phone|NULL
 	 */
-	public function getPhones()
+	public function getPhone()
 	{
-		return $this->phones;
+		return $this->phone;
 	}
 		
 	/**
 	 * @param \Entity\Contact\Email
 	 * @return \Entity\Rental\Rental
 	 */
-	public function addEmail(\Entity\Contact\Email $email)
+	public function setEmail(\Entity\Contact\Email $email)
 	{
-		if(!$this->emails->contains($email)) {
-			$this->emails->add($email);
-		}
-		$email->addRental($this);
+		$this->email = $email;
 
 		return $this;
 	}
 		
 	/**
-	 * @param \Entity\Contact\Email
 	 * @return \Entity\Rental\Rental
 	 */
-	public function removeEmail(\Entity\Contact\Email $email)
+	public function unsetEmail()
 	{
-		$this->emails->removeElement($email);
-		$email->removeRental($this);
+		$this->email = NULL;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Contact\Email[]
+	 * @return \Entity\Contact\Email|NULL
 	 */
-	public function getEmails()
+	public function getEmail()
 	{
-		return $this->emails;
+		return $this->email;
 	}
 		
 	/**
 	 * @param \Entity\Contact\Url
 	 * @return \Entity\Rental\Rental
 	 */
-	public function addUrl(\Entity\Contact\Url $url)
+	public function setUrl(\Entity\Contact\Url $url)
 	{
-		if(!$this->urls->contains($url)) {
-			$this->urls->add($url);
-		}
-		$url->addRental($this);
+		$this->url = $url;
 
 		return $this;
 	}
 		
 	/**
-	 * @param \Entity\Contact\Url
 	 * @return \Entity\Rental\Rental
 	 */
-	public function removeUrl(\Entity\Contact\Url $url)
+	public function unsetUrl()
 	{
-		$this->urls->removeElement($url);
-		$url->removeRental($this);
+		$this->url = NULL;
 
 		return $this;
 	}
 		
 	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Contact\Url[]
+	 * @return \Entity\Contact\Url|NULL
 	 */
-	public function getUrls()
+	public function getUrl()
 	{
-		return $this->urls;
+		return $this->url;
 	}
 		
 	/**

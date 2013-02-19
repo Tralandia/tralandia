@@ -254,14 +254,10 @@
 
 					<tr>
 						<td class="iconcover"><i class="entypo-phone"></i></td>
-						<td>		
-							
-						{foreach $rental->phones as $phone }
-							{if !$iterator->first}
-								<strong>{$phone->international} </strong><br/>
-							{/if}														
-						{/foreach}
-						
+						<td>
+
+						<strong>{$rental->phone->international} </strong>
+
 						</td>
 					</tr>
 
@@ -298,9 +294,7 @@
 					<tr>
 						<td class="iconcover"><i class="entypo-www"></i></td>
 						<td>
-						{foreach $rental->urls as $url }
-							<strong><a target="_blank" href="{$url->value}">{_o1666}</a><strong> {if !$iterator->last}<br/>{/if}
-						{/foreach}						
+							<strong><a target="_blank" href="{$rental->url->value}">{_o1666}</a><strong>
 						</td>
 					</tr>
 
