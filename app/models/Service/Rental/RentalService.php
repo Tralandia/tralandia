@@ -50,7 +50,7 @@ class RentalService extends Service\BaseService
 		);
 
 		// Primary location
-		if ($r->primaryLocation) {
+		if ($r->getPrimaryLocation()) {
 			$rank['points'] += 1;
 		} else {
 			$rank['missing'][] = 'primaryLocation';

@@ -78,7 +78,7 @@ class PhraseCreator extends Nette\Object
 		}
 
 		if(!$phraseType instanceof \Entity\Phrase\Type) {
-			throw new \Nette\InvalidArgumentException();
+			throw new \Nette\InvalidArgumentException('Neexistujuci Phrase Type v DB.');
 		}
 
 		return $phraseType;
