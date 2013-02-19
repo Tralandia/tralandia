@@ -149,7 +149,8 @@ services:
 	# ==============================
 	# ==================== FORMS HANDLERS
 	# ==============================
-	registrationHandler: FormHandler\RegistrationHandler
+	registrationHandler:
+		class: FormHandler\RegistrationHandler
 
 
 factories: 

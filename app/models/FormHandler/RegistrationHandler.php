@@ -80,6 +80,7 @@ class RegistrationHandler extends FormHandler
 		$user = $userRepository->createNew();
 		$user->setLogin($values->email);
 		$user->setPassword($values->password);
+		$user->setPrimaryLocation($values->country);
 		$user->setLanguage($values->language);
 
 
