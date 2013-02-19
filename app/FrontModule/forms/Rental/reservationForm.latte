@@ -6,7 +6,6 @@
 	<div class="control-group">
 	{input name ,data-validation-message => "error-msg-reservation-name"}
 	<span class="control-error" id="error-msg-reservation-name">
-		{dump $form['name']->getErrors()}
 		{foreach $form['name']->getErrors() as $error}{$error}{/foreach}
 	</span>
 	</div>
@@ -16,9 +15,10 @@
 	<span class="control-error" id="error-msg-reservation-email"></span>
 	</div>
 
+	{var $phoneContainer = $form['phone']}
 	<div class="control-group">
-	{input $form['phone']['prefix'] , class => 'tel select2' , data-validation-message => "error-msg-reservation-tel"}
-	{input $form['phone']['number'], class => "telnum" , data-validation-message => "error-msg-reservation-tel"}
+	{input $phoneContainer['prefix'] , class => 'tel select2' , data-validation-message => "error-msg-reservation-tel"}
+	{input $phoneContainer['number'], class => "telnum" , data-validation-message => "error-msg-reservation-tel"}
 	<span class="control-error" id="error-msg-reservation-tel"></span>
 	</div>
 
@@ -29,10 +29,10 @@
 	</div>
 
 	
-
+	{var $dateContainer = $form['date']}
 	<div class="control-group">
 	<div class="input-append">
-		{input from, class => "datepicker" ,data-validation-message => "error-msg-reservation-from" }
+		{input $dateContainer['from'], class => "datepicker" ,data-validation-message => "error-msg-reservation-from" }
 	  	<span class="add-on datepickerIcon entypo-calendar"></span>
 	</div>
 	<span class="control-error" id="error-msg-reservation-from"></span>
@@ -40,7 +40,7 @@
 
 	<div class="control-group">
 	<div class="input-append">
-		{input from, class => "datepickerto" , data-validation-message => "error-msg-reservation-to"}
+		{input $dateContainer['to'], class => "datepickerto" , data-validation-message => "error-msg-reservation-to"}
 		<span class="add-on datepickerIcon entypo-calendar"></span>
 	</div>
 	<span class="control-error" id="error-msg-reservation-to"></span>
