@@ -138,19 +138,46 @@
 				   </li>			   
 			   {/if}
 
-				{var $board = $rental->getAmenitiesByType(array('wellness','relax','important','activity','children','room','kitchen','bathroom','heating','parking','service','congress','room-type','separate-groups','animal','other'))}
+
+				{var $board = $rental->getAmenitiesByType(array('wellness'))}
 				{if $board}
 				   <li class="monitor">
 				   <strong>#Vybavenie</strong>
-					   <div class="content">
+					   <div class="amenitiesStart">					   
 						{foreach $board  as $amenities}					
-							{foreach $amenities as $amenity}
+							{foreach $amenities as $amenity}							
 								{_$amenity->name}{if !$iterator->last}, {/if}
 							{/foreach}					
-						{/foreach}
-					</div>
+						{/foreach}											
+						</div>
+						<a class="toogle showMoreAmenities" href="#">More</a>
+
+						<ul class="moreAmenities">
+							{var $board = $rental->getAmenitiesByType(array('wellness','relax','important','activity','children','room','kitchen','bathroom','heating','parking','service','congress','room-type','separate-groups','animal','other'))}
+							{if $board}
+							   			   
+								   
+									{foreach $board  as $amenities}		
+									<li>			
+										{foreach $amenities as $amenity}
+											
+												{if $iterator->first}				
+													<b>{_$amenity->type->name}: </b>				
+												{/if}							
+												{_$amenity->name}{if !$iterator->last}, {/if}
+											
+										{/foreach}	
+										</li>				
+									{/foreach}
+									
+							   			   
+						   {/if}	
+						</ul>
+
 				   </li>			   
-			   {/if}			   
+			   {/if}
+
+		   
 
 			   {if $rental->checkIn}
 				   <li class="clock">

@@ -1632,14 +1632,47 @@ ul.arrows {
 			display: block;
 		}
 
-		.content {
+		.content , .amenitiesStart {
 			width: 345px;
 			float: right;
 			margin-bottom: 10px;
 			padding-right: 25px;
+
+
 		}
 
+		.amenitiesStart {
+			height: 20px;
+			overflow: hidden;
+			width: 283px;
+			float: left;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			margin: 0;
+			margin-left: 11px;	
+				
+		}
+
+		.showMoreAmenities {
+			float: right;
+			margin-right: 20px;
+		}
 		
+
+		ul.moreAmenities {
+			margin: 0 11px;
+			padding: 0;
+			list-style: none;
+
+			li {
+				margin: 0;
+				padding: 0;
+				width: 359px;
+				&:before {
+					content: '';
+				}
+			}
+		}
 
 		strong {
 			color: @darkGreen;
