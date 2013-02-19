@@ -1632,14 +1632,47 @@ ul.arrows {
 			display: block;
 		}
 
-		.content {
+		.content , .amenitiesStart {
 			width: 345px;
 			float: right;
 			margin-bottom: 10px;
 			padding-right: 25px;
+
+
 		}
 
+		.amenitiesStart {
+			height: 20px;
+			overflow: hidden;
+			width: 283px;
+			float: left;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			margin: 0;
+			margin-left: 11px;	
+				
+		}
+
+		.showMoreAmenities {
+			float: right;
+			margin-right: 20px;
+		}
 		
+
+		ul.moreAmenities {
+			margin: 0 11px;
+			padding: 0;
+			list-style: none;
+
+			li {
+				margin: 0;
+				padding: 0;
+				width: 359px;
+				&:before {
+					content: '';
+				}
+			}
+		}
 
 		strong {
 			color: @darkGreen;
@@ -1876,16 +1909,16 @@ ul.arrows {
 
 		&.select2-drop-above {
 			a {
-				.basic-gradient(rgb(241, 250, 209),rgb(186, 196, 148));
+				.basic-gradient(rgb(251, 255, 239),rgb(229, 236, 199));
 			}
 		}
 
 		a {			
-			.basic-gradient(rgb(241, 250, 209),rgb(186, 196, 148));
+			.basic-gradient(rgb(251, 255, 239),rgb(229, 236, 199));
 			border: 1px solid rgb(141, 155, 88);
 
 			div {
-				.basic-gradient(rgb(215, 224, 182),rgb(160, 173, 108));
+				.basic-gradient(rgb(241, 250, 209),rgb(186, 196, 148));
 				border-left: 1px solid rgb(126, 145, 52);
 			}
 		}

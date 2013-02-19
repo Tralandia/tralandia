@@ -227,9 +227,9 @@ parameters:
 			Front:
 				
 				-  %webloader.packages.jQuery%
-				-  %webloader.packages.JqueryCookie%				
-				-  %webloader.packages.Front%				
+				-  %webloader.packages.JqueryCookie%									
 				-  %webloader.packages.Select2%
+				-  %webloader.packages.Front%
 				-  %webloader.packages.Texyla%
 				-  %webloader.packages.bootstrap%
 				-  %webloader.packages.nette%								

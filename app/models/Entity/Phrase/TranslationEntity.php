@@ -161,7 +161,8 @@ class Translation extends \Entity\BaseEntity {
 
 	public function getVariation($plural = NULL, $gender = NULL, $case = NULL) {
 		list($defaultPlural, $defaultGender, $defaultCase) = $this->getDefaultVariationPath();
-		$variation = $this->variations[$plural === NULL ? $defaultPlural : $plural][$gender === NULL ? $defaultGender : $gender][$case === NULL ? $defaultCase : $case];
+		$variation = Arrays::get($this->variations, [$plural === NULL ? $defaultPlural : $plural, $gender === NULL ? $defaultGender : $gender, $case === NULL ? $defaultCase : $case], NULL);
+		//$variation = $this->variations[$plural === NULL ? $defaultPlural : $plural][$gender === NULL ? $defaultGender : $gender][$case === NULL ? $defaultCase : $case];
 		return strlen($variation) ? $variation : sprintf('{%d|%s:%s:%s:%s}', $this->getPhrase()->getId(),
 		$this->getLanguage()->getIso(), $plural, $gender, $case ? substr($case, 0, 1) : NULL);
 	}
