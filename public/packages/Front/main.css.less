@@ -15,7 +15,7 @@ h1,h2,h3,h4,h5 {
 
 h1 span {
 	color: #999;
-	font-size: 18px;
+	font-size: 16px;
 	font-weight: normal;
 }
 
@@ -467,7 +467,8 @@ ul.arrows {
 			white-space: nowrap;
 			width: 100%;
 			overflow: hidden;
-			text-overflow: ellipsis;			
+			text-overflow: ellipsis;
+			font-weight: normal;		
 		}
 	}
 
@@ -1516,7 +1517,9 @@ ul.arrows {
 		li h3 {
 			margin: 0;
 			padding: 0 10px;
-			background: @grayBorder;
+			background: #eee;
+			border: 1px solid @grayBorder;
+			border-bottom-width: 0px;
 			font-weight: bold;
 			font-size: 15px;
 			line-height: 27px;
@@ -1536,7 +1539,8 @@ ul.arrows {
 			box-sizing: border-box;
 			display: block;
 			background: @grayBg;
-			border: 1px solid @grayBorder;	
+			border: 1px solid @grayBorder;
+			border-top-width: 0px;	
 			.bottom-border-radius(5px);
 			
 			li {
