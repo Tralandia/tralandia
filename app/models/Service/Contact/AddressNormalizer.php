@@ -2,6 +2,7 @@
 
 namespace Service\Contact;
 
+use Entity\Contact\Address;
 use Nette\Utils\Arrays;
 use Nette\Utils\Strings;
 
@@ -51,32 +52,31 @@ class AddressNormalizer extends \Nette\Object {
 	 * @throws \Exception
 	 */
 	public function update(\Entity\Contact\Address $address, $override = FALSE) {
-		$this->address = $address;
-		if (!$this->address->primaryLocation) {
+		if (!$address->primaryLocation) {
 			throw new \Exception('\Entity\Contact\Address has no primaryLocation');
 		}
 
 		$this->geocodeService->setRequestDefaults(array(
-			'region' => $this->address->primaryLocation->iso,
-			'language' => $this->address->primaryLocation->defaultLanguage->iso,
+			'region' => $address->primaryLocation->iso,
+			'language' => $address->primaryLocation->defaultLanguage->iso,
 		));
 
-		$latLong = $this->address->getGps();
+		$latLong = $address->getGps();
 		if ($latLong->isValid()) {
 			$info = $this->getInfoUsingGps($latLong);
 		} else {
 			$info = $this->getInfoUsingAddress(
-				$this->address->primaryLocation, 
-				$this->address->address, 
-				$this->address->subLocality, 
-				$this->address->locality->name->getTranslationText($this->address->primaryLocation->defaultLanguage, TRUE),
-				$this->address->postalCode
+				$address->primaryLocation,
+				$address->address,
+				$address->subLocality,
+				$address->locality->name->getTranslationText($address->primaryLocation->defaultLanguage, TRUE),
+				$address->postalCode
 			);
 		}
 
-		$this->updateAddressData($info, TRUE);
+		$this->updateAddressData($address, $info, TRUE);
 
-		return $this->address->status;
+		return $address->status;
 	}
 
 	/**
@@ -177,7 +177,7 @@ class AddressNormalizer extends \Nette\Object {
 		}
 
 		// IF it's in USA, create a 4-letter ISO code
-		if (isset($info[\GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_1]) && isset($info[self::PRIMARY_LOCATION]) && Strings::lower($info[self::PRIMARY_LOCATION]) == 'us') {
+		if ($this->itsInUsa()) {
 			$info[self::PRIMARY_LOCATION] = $info[self::PRIMARY_LOCATION] . $info[\GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_1];
 		}
 
@@ -206,95 +206,78 @@ class AddressNormalizer extends \Nette\Object {
 	}
 
 	/**
+	 * @param $address
 	 * @param array $info
 	 * @param $override
 	 */
-	protected function updateAddressData(array $info, $override) {
+	protected function updateAddressData($address, array $info, $override) {
 		// If the location is outside the primaryLocation, return false
 		if ($info[self::PRIMARY_LOCATION] instanceof \Entity\Location\Location
-			&& $info[self::PRIMARY_LOCATION]->getId() != $this->address->primaryLocation->getId())
+			&& $info[self::PRIMARY_LOCATION]->getId() != $address->primaryLocation->getId())
 		{
-			$this->address->status = \Entity\Contact\Address::STATUS_MISPLACED;
+			$address->status = \Entity\Contact\Address::STATUS_MISPLACED;
 		} else if (isset($info[self::LOCALITY])) {
-			$this->address->status = \Entity\Contact\Address::STATUS_OK;
+			$address->status = \Entity\Contact\Address::STATUS_OK;
 		} else {
-			$this->address->status = \Entity\Contact\Address::STATUS_INCOMPLETE;
+			$address->status = \Entity\Contact\Address::STATUS_INCOMPLETE;
 		}
 
 		// Set the Address Entity details
 
 		// Latitude / Longitude
 		$latlong = new \Extras\Types\Latlong($info[self::LATITUDE], $info[self::LONGITUDE]);
-		$this->address->setGps($latlong);
+		$address->setGps($latlong);
 
 		// Address
-		if (!$this->address->address || $override === TRUE) {
-			$this->address->address = Arrays::get($info, self::ADDRESS, NULL);
+		if (!$address->address || $override === TRUE) {
+			$address->address = Arrays::get($info, self::ADDRESS, NULL);
 		}
 
 		// Sub locality
-		if (!$this->address->subLocality || $override === TRUE) {
-			$this->address->subLocality = Arrays::get($info, self::SUBLOCALITY, NULL);
+		if (!$address->subLocality || $override === TRUE) {
+			$address->subLocality = Arrays::get($info, self::SUBLOCALITY, NULL);
 		}
 
 		// Postal Code
-		$this->address->postalCode = Arrays::get($info, self::POSTAL_CODE, NULL);
+		$address->postalCode = Arrays::get($info, self::POSTAL_CODE, NULL);
 
 		// Locality
 		$locality = Arrays::get($info, self::LOCALITY, NULL);
-		$this->setLocality($locality);
+		$this->setLocality($address, $locality);
 	}
 
 	/**
+	 * @param $address
 	 * @param $locality
 	 *
 	 * @throws \Exception
 	 */
-	protected function setLocality($locality) {
+	protected function setLocality(Address $address, $locality) {
 		if ($locality === NULL) {
-			$this->address->locality = NULL;
+			$address->locality = NULL;
 		} else if ($locality instanceof \Entity\Location\Location) {
-			if ($locality->parent != $this->address->primaryLocation) {
+			if ($locality->parent != $address->primaryLocation) {
 				throw new \Exception("AddressNormalizer - can't set the locality,
 				because it is outside the primaryLocation", 1);
 			} else {
-				$this->address->locality = $locality;
+				$address->locality = $locality;
 			}
 		} else {
-			$locationType = $this->locationTypeRepositoryAccessor->get()->findOneBySlug('locality');
-			$webalizedName = Strings::webalize($locality);
-			$existingLocality = $this->locationRepositoryAccessor->get()->findOneBy(array(
-				'type' => $locationType,
-				'parent' => $this->address->primaryLocation,
-				'slug' => $webalizedName
-			));
+			$locationRepository = $this->locationRepositoryAccessor->get();
+			$locality = $locationRepository->findOrCreateLocality($locality, $address->getPrimaryLocation());
 
-			if ($existingLocality) {
-				$this->address->locality = $existingLocality;
-			} else {
-				$newLocality = $this->locationRepositoryAccessor->get()->createNew();
-				$newLocalityDecorator = $this->locationDecoratorFactory->create($newLocality);
-
-				$namePhrase = $this->phraseRepositoryAccessor->get()->createNew();
-				$phraseType = $this->phraseTypeRepositoryAccessor->get()->findOneBy(array('entityName' => '\Entity\Location\Location'));
-
-				$namePhrase->type = $phraseType;
-				$namePhrase->sourceLanguage = $this->address->primaryLocation->defaultLanguage;
-
-				$namePhrase->createTranslation($this->address->primaryLocation->defaultLanguage, $locality);
-
-				$newLocality->parent = $this->address->primaryLocation;
-				$newLocality->type = $locationType;
-
-				// We must save the new location to be able to work on it's slug
-				$this->locationRepositoryAccessor->get()->persist($newLocality);
-				$this->locationRepositoryAccessor->get()->flush($newLocality);
-
-				$newLocalityDecorator->setName($namePhrase);
-				$this->address->locality = $newLocality;
-				$this->locationRepositoryAccessor->get()->persist($newLocality);
-				$this->locationRepositoryAccessor->get()->flush($newLocality);
-			}
-		}		
+			$address->locality = $locality;
+		}
 	}
+
+	/**
+	 * @return bool
+	 */
+	private function itsInUsa()
+	{
+		return isset($info[\GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_1])
+			&& isset($info[self::PRIMARY_LOCATION])
+			&& Strings::lower($info[self::PRIMARY_LOCATION]) == 'us';
+	}
+
 }

@@ -27,13 +27,3 @@ class EnvironmentVariables extends Nette\Object {
 	} 
 
 }
-
-interface IEnvironmentVariablesFactory {
-	/**
-	 * @param LocationVariables $locationVariables
-	 * @param LanguageVariables $languageVariables
-	 *
-	 * @return EnvironmentVariables
-	 */
-	function create(LocationVariables $locationVariables, LanguageVariables $languageVariables);
-}

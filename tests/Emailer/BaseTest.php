@@ -39,7 +39,7 @@ class BaseTest extends \Tests\TestCase
 		$emailCompiler->addRental('rental', $rental);
 		$emailCompiler->addVisitor('sender', $sender);
 		$emailCompiler->addCustomVariable('message', 'Toto je sprava pre teba!');
-		$html = $emailCompiler->compile();
+		$html = $emailCompiler->compileBody();
 
 		$i = 1;
 	}

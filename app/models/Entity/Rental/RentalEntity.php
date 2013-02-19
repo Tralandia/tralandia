@@ -13,7 +13,7 @@ use Extras\Annotation as EA;
  * @ORM\Entity(repositoryClass="Repository\Rental\RentalRepository")
  * @ORM\Table(name="rental", indexes={@ORM\index(name="status", columns={"status"}), @ORM\index(name="slug", columns={"slug"}), @ORM\index(name="calendarUpdated", columns={"calendarUpdated"})})
  * @EA\Primary(key="id", value="slug")
- * @EA\Generator(skip="{getImages,getPrice,setPrice,setSlug}")
+ * @EA\Generator(skip="{getImages,getPrice,setPrice,setSlug,setPrimaryLocation,unsetPrimaryLocation}")
  */
 class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
@@ -310,6 +310,28 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 		});
 	}
 
+
+	/**
+	 * Alias to getUser()
+	 * @return \Entity\User\User|NULL
+	 */
+	public function getOwner()
+	{
+		return $this->getUser();
+	}
+
+	/**
+	 * @return \Entity\Location\Location|NULL
+	 */
+	public function getPrimaryLocation()
+	{
+		if($address = $this->getAddress()) {
+			return $address->getPrimaryLocation();
+		}
+		return NULL;
+	}
+
+
 	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -525,35 +547,6 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 	public function getMissingInformation()
 	{
 		return $this->missingInformation;
-	}
-		
-	/**
-	 * @param \Entity\Location\Location
-	 * @return \Entity\Rental\Rental
-	 */
-	public function setPrimaryLocation(\Entity\Location\Location $primaryLocation)
-	{
-		$this->primaryLocation = $primaryLocation;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Rental\Rental
-	 */
-	public function unsetPrimaryLocation()
-	{
-		$this->primaryLocation = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Location\Location|NULL
-	 */
-	public function getPrimaryLocation()
-	{
-		return $this->primaryLocation;
 	}
 		
 	/**

@@ -4,6 +4,7 @@ namespace Extras\Email;
 
 use Entity\Email;
 use Nette\Utils\Strings;
+use Extras\Email\Variables;
 /**
  * Compiler class
  *
@@ -84,15 +85,14 @@ class Compiler {
 	 **
 	 * @return Compiler
 	 */
-	public function setEnvironment(\Entity\Location\Location $location, \Entity\Language $language)
+	public function setEnvironment(\Entity\Location\Location $location, \Entity\Language $language = NULL)
 	{
-		$locationFactory = $this->getVariableFactory('location');
-		$location = $locationFactory->create($location);
+		if(!$language) $language = $location->getDefaultLanguage();
 
-		$languageFactory = $this->getVariableFactory('language');
-		$language = $languageFactory->create($language);
+		$location = new Variables\LocationVariables($location);
+		$language = new Variables\LanguageVariables($language);
 
-		$this->variables['env'] = $this->getVariableFactory('environment')->create($location, $language);
+		$this->variables['env'] = new Variables\EnvironmentVariables($location, $language);
 		return $this;
 	}
 
@@ -104,7 +104,7 @@ class Compiler {
 	 */
 	public function addLanguage($variableName, \Entity\Language $language)
 	{
-		$this->variables[$variableName] = $this->getVariableFactory('language')->create($language);
+		$this->variables[$variableName] = new Variables\LanguageVariables($language);
 		return $this;
 	}
 
@@ -116,7 +116,7 @@ class Compiler {
 	 */
 	public function addLocation($variableName, \Entity\Location\Location $location)
 	{
-		$this->variables[$variableName] = $this->getVariableFactory('location')->create($location);
+		$this->variables[$variableName] = new Variables\LocationVariables($location);
 		return $this;
 	}
 
@@ -128,13 +128,43 @@ class Compiler {
 	 */
 	public function addRental($variableName, \Entity\Rental\Rental $rental)
 	{
-		$this->variables[$variableName] = $this->getVariableFactory('rental')->create($rental);
+		$this->variables[$variableName] = new Variables\RentalVariables($rental);
 		return $this;
 	}
 
-	public function addVisitor($variableName, \Entity\User\User $visitor)
+	/**
+	 * @param string $variableName
+	 * @param \Entity\User\User $user
+	 *
+	 * @return Compiler
+	 */
+	public function addVisitor($variableName, \Entity\User\User $user)
 	{
-		$this->variables[$variableName] = $this->getVariableFactory('visitor')->create($visitor);
+		$this->variables[$variableName] = new Variables\VisitorVariables($user);
+		return $this;
+	}
+
+	/**
+	 * @param string $variableName
+	 * @param \Entity\User\User $user
+	 *
+	 * @return Compiler
+	 */
+	public function addOwner($variableName, \Entity\User\User $user)
+	{
+		$this->variables[$variableName] = new Variables\OwnerVariables($user);
+		return $this;
+	}
+
+	/**
+	 * @param $name
+	 * @param $value
+	 *
+	 * @return Compiler
+	 */
+	public function addCustomVariable($name, $value)
+	{
+		$this->customVariables[$name] = $value;
 		return $this;
 	}
 
@@ -150,19 +180,7 @@ class Compiler {
 			throw new \Nette\InvalidArgumentException("Variable '$name' does not exist.");
 		}
 
-		return $this->variables[$name];		
-	}
-
-	/**
-	 * @param $name
-	 * @param $value
-	 *
-	 * @return Compiler
-	 */
-	public function addCustomVariable($name, $value)
-	{
-		$this->customVariables[$name] = $value;
-		return $this;
+		return $this->variables[$name];
 	}
 
 	/**
@@ -211,7 +229,7 @@ class Compiler {
 	 * Vrati html emailu uz aj s dosadenymi premennymi
 	 * @return mixed
 	 */
-	public function compile()
+	public function compileBody()
 	{
 		$template = $this->getTemplate();
 		$layout = $this->getLayout();

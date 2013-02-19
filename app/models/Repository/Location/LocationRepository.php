@@ -2,11 +2,28 @@
 namespace Repository\Location;
 
 use Doctrine\ORM\Query\Expr;
+use Entity\Location\Location;
+use Model\Location\ILocationDecoratorFactory;
+use Nette\InvalidArgumentException;
+use Nette\Utils\Strings;
 
 /**
  * LocationRepository class
  */
 class LocationRepository extends \Repository\BaseRepository {
+
+	/**
+	 * @var ILocationDecoratorFactory
+	 */
+	protected $locationDecoratorFactory;
+
+	/**
+	 * @param \Model\Location\ILocationDecoratorFactory $locationDecoratorFactory
+	 */
+	public function inject(ILocationDecoratorFactory $locationDecoratorFactory)
+	{
+		$this->locationDecoratorFactory = $locationDecoratorFactory;
+	}
 
 	/**
 	 * DataSource pre grid
@@ -21,6 +38,49 @@ class LocationRepository extends \Repository\BaseRepository {
 			->leftJoin('e.type', 't')
 			->where('t.slug = :slug')->setParameter('slug', $type)
 			->groupBy('e.id');
+	}
+
+	/**
+	 * @param string $locality
+	 * @param Location $primaryLocation
+	 *
+	 * @throws \Nette\InvalidArgumentException
+	 * @return Location
+	 */
+	public function findOrCreateLocality($locality, Location $primaryLocation)
+	{
+		if(!$primaryLocation->isPrimary()) {
+			throw new InvalidArgumentException;
+		}
+
+		$locationType = $this->related('type')->findOneBySlug('locality');
+		$webalizedName = Strings::webalize($locality);
+		$localityEntity = $this->findOneBy(array(
+			'type' => $locationType,
+			'parent' => $primaryLocation,
+			'slug' => $webalizedName
+		));
+
+		if (!$localityEntity) {
+			/** @var $localityEntity \Entity\Location\Location */
+			$localityEntity = $this->createNew();
+			$newLocalityDecorator = $this->locationDecoratorFactory->create($localityEntity);
+
+			$namePhrase = $localityEntity->getName();
+			$namePhrase->createTranslation($primaryLocation->getDefaultLanguage(), $locality);
+
+			$localityEntity->parent = $primaryLocation;
+			$localityEntity->type = $locationType;
+
+			// We must save the new location to be able to work on it's slug
+			$this->save($localityEntity);
+
+			$newLocalityDecorator->setName($namePhrase);
+
+			$this->save($localityEntity); // ?? neviem naco to tu je...
+		}
+
+		return $localityEntity;
 	}
 
 	public function getItems() {
