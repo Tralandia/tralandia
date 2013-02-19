@@ -87,7 +87,8 @@ parameters:
 					- Front/main.css.less
 					- Front/object-list.less
 					- Front/homepage-list.less	
-					- Front/rental-detail-navigation.less				
+					- Front/rental-detail-navigation.less
+					- Front/calendarWidgetControl.less				
 				js:
 					- FileUpload/js/vendor/jquery.ui.widget.js
 					- FileUpload/js/jquery.iframe-transport.js
@@ -104,6 +105,7 @@ parameters:
 					- Front/js/ui-localization-datepicker.js
 					- Front/js/trax-forms-ui.js					
 					- Front/js/main.js
+					- 'https://apis.google.com/js/plusone.js'
 
 			FavoriteScroll:
 				js:
