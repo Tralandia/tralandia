@@ -14,6 +14,7 @@ class FrontRoute extends BaseRoute
 
 	const HASH = 'hash';
 	const RENTAL = 'rental';
+	const FAVORITE_LIST = 'favoriteList';
 
 	const SPOKEN_LANGUAGE = 'flanguage';
 	const CAPACITY = 'fcapacity';
@@ -33,6 +34,7 @@ class FrontRoute extends BaseRoute
 	public $routingPathSegmentRepositoryAccessor;
 	public $domainRepositoryAccessor;
 	public $rentalAmenityRepositoryAccessor;
+	public $favoriteListRepositoryAccessor;
 	public $pageRepositoryAccessor;
 	public $phraseDecoratorFactory;
 
@@ -80,15 +82,21 @@ class FrontRoute extends BaseRoute
 				$pathSegment = reset($pathSegments);
 				if($match = Strings::match($pathSegment, '~\.*-([0-9]+)~')) {
 					if($rental = $this->rentalRepositoryAccessor->get()->findOneByOldId($match[1])) {
-						$params['rental'] = $rental;
+						$params[self::RENTAL] = $rental;
 						$presenter = 'Rental';
 						$params['action'] = 'detail';
 					}
 				} else if ($match = Strings::match($pathSegment, '~\.*-r([0-9]+)~')) {
 					if($rental = $this->rentalRepositoryAccessor->get()->find($match[1])) {
-						$params['rental'] = $rental;
+						$params[self::RENTAL] = $rental;
 						$presenter = 'Rental';
 						$params['action'] = 'detail';
+					}
+				} else if ($match = Strings::match($pathSegment, '~f([0-9]+)~')) {
+					if($favoriteList = $this->favoriteListRepositoryAccessor->get()->find($match[1])) {
+						$params[self::FAVORITE_LIST] = $favoriteList;
+						$presenter = 'Rental';
+						$params['action'] = 'list';
 					}
 				}
 			}
@@ -200,6 +208,11 @@ class FrontRoute extends BaseRoute
 		if(isset($params[self::RENTAL])) {
 			$segments[self::RENTAL] = $params[self::RENTAL]->slug . '-r' . $params[self::RENTAL]->id;
 			unset($params[self::RENTAL]);
+		}
+
+		if(isset($params[self::FAVORITE_LIST])) {
+			$segments[self::FAVORITE_LIST] = 'f' . $params[self::FAVORITE_LIST]->id;
+			unset($params[self::FAVORITE_LIST]);
 		}
 
 		if(isset($params[self::SPOKEN_LANGUAGE])) {

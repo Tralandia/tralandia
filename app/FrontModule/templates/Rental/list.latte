@@ -22,6 +22,10 @@
 
 
 		    	{foreach $rentals as $rentalId}
+					{if $rentalId instanceof \Entity\Rental\Rental}
+						{var $rental = $rentalId}
+						{var $rentalId = $rentalId->getId()}
+					{/if}
 					{cache 'rental-list-box-'.$rentalId, if => $useTemplateCache, expire => '+1 day'}
 
 					{var $rentalService = $findRental($rentalId); }
