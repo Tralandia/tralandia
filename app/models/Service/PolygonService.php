@@ -30,8 +30,8 @@ class PolygonService {
 
 		$gps =$rental->getAddress()->getGps();
 		if($gps->isValid()) {
-			$latitude = $gps->getLatitudeAsString();
-			$longitude = $gps->getLongitudeAsString();
+			$latitude = $gps->getLatitude();
+			$longitude = $gps->getLongitude();
 		} else {
 			return FALSE;
 		}
@@ -71,16 +71,16 @@ class PolygonService {
 
 		// This is only done for regions, not localities or countries
 		// Return false if no latitude, longitude or missing polygons
-		if ($location->type != $locationType || !$location->latitude || !$location->longitude || !$location->polygons) {
+		if ($location->type != $locationType || !$location->polygons) {
+			$location->clearAddresses();
 			return FALSE;
 		}
-		
 		foreach ($rentals as $rental) {
 			$matches = array();
-			$gps = $rental->getAddress()->getGps();
-			if($gps->isValid()) {
-				$latitude = $gps->getLatitudeAsString();
-				$longitude = $gps->getLongitudeAsString();
+			$rentalGps = $rental->getAddress()->getGps();
+			if($rentalGps->isValid()) {
+				$latitude = $rentalGps->getLatitude();
+				$longitude = $rentalGps->getLongitude();
 			} else {
 				continue;
 			}
@@ -98,7 +98,7 @@ class PolygonService {
 					}
 				}
 			}
-			d($rental->id, $latitude, $longitude, $matches);
+			//d($rental->id, $latitude, $longitude, $matches);
 			$rental->address->setLocations($matches);
 		}
 		return TRUE;
