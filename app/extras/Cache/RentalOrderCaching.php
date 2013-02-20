@@ -79,13 +79,12 @@ class RentalOrderCaching extends \Nette\Object {
 	}
 
 	protected function createOrderList() {
-		d('ts');
 		$this->createFeaturedList();
 
 		$featured = $this->cacheContent['featured'];
 
 		$notFeatured = array();
-		$rentals = $this->rentalRepositoryAccessor->get()->findBy(array('primaryLocation' => $this->location, 'status' => \Entity\Rental\Rental::STATUS_LIVE));
+		$rentals = $this->rentalRepositoryAccessor->get()->findByPrimaryLocation($this->location, \Entity\Rental\Rental::STATUS_LIVE);
 		foreach ($rentals as $key => $value) {
 			$notFeatured[$value->id] = $value->id;
 		}

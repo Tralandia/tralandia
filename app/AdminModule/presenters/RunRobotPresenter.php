@@ -45,7 +45,6 @@ class RunRobotPresenter extends BasePresenter {
 			d(Strings::upper($location->iso).': Done');
 		}
 		
-		
 		//$searchCaching->getOrderList();
 		
 		$this->sendResponse(new TextResponse('done'));
@@ -56,7 +55,8 @@ class RunRobotPresenter extends BasePresenter {
 		foreach ($rentals as $rental) {
 			$rentalDecorator = $this->rentalDecoratorFactory->create($rental);
 			$rentalDecorator->calculateRank();
-		}		
+		}	
+		$this->rentalRepositoryAccessor->get()->flush();
 		$this->sendResponse(new TextResponse('done'));
 	}
 }
