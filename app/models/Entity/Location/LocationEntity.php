@@ -212,6 +212,21 @@ class Location extends \Entity\BaseEntityDetails {
 		return $this;
 	}
 
+	/**
+	 * @param NULL
+	 * @return \Entity\Location\Location
+	 */
+	public function clearAddresses()
+	{
+		foreach ($this->addresses as $key => $value) {
+			$value->removeLocation($this);
+		}
+		$this->addresses->clear();
+
+		return $this;
+	}
+
+
 	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
