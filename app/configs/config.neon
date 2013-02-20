@@ -218,6 +218,7 @@ factories:
 			- $domainRepositoryAccessor(@domainRepositoryAccessor)
 			- $pageRepositoryAccessor(@pageRepositoryAccessor)
 			- $rentalAmenityRepositoryAccessor(@rentalAmenityRepositoryAccessor)
+			- $favoriteListRepositoryAccessor(@favoriteListRepositoryAccessor)
 			- $pageRepositoryAccessor(@pageRepositoryAccessor)
 			- $phraseDecoratorFactory(@phraseDecoratorFactory)
 		implement: Routers\IFrontRouteFactory
