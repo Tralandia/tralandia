@@ -15,8 +15,9 @@ class RentalRepository extends \Repository\BaseRepository {
 
 		$qb->select('r.id')
 			->from($this->_entityName, 'r')
+			->join('r.address', 'a')
 			->join('r.services', 's')
-			->where($qb->expr()->eq('r.primaryLocation', $location->id))
+			->where($qb->expr()->eq('a.primaryLocation', $location->id))
 			->andWhere($qb->expr()->eq('r.status', \Entity\Rental\Rental::STATUS_LIVE))
 			->andWhere($qb->expr()->eq('s.serviceType', '?1'))
 			->andWhere($qb->expr()->lte('s.dateFrom', '?2'))
@@ -24,6 +25,21 @@ class RentalRepository extends \Repository\BaseRepository {
 			->setParameter(1, 'featured')
 			->setParameter(2, new \Nette\DateTime(), \Doctrine\DBAL\Types\Type::DATETIME)
 			;
+
+		return $qb->getQuery()->getResult();
+	}
+
+	public function findByPrimaryLocation(\Entity\Location\Location $location, $status = NULL) {
+		$qb = $this->_em->createQueryBuilder();
+
+		$qb->select('r')
+			->from($this->_entityName, 'r')
+			->join('r.address', 'a')
+			->where($qb->expr()->eq('a.primaryLocation', $location->id));
+
+		if ($status != NULL) {
+			$qb->andWhere($qb->expr()->eq('r.status', $status));
+		}
 
 		return $qb->getQuery()->getResult();
 	}
@@ -50,9 +66,10 @@ class RentalRepository extends \Repository\BaseRepository {
 
 		$qb->select('l.id locationId', 'COUNT(r.id) as c')
 			->from($this->_entityName, 'r')
-			->join('r.primaryLocation', 'l');
+			->join('r.address', 'a')
+			->join('a.primaryLocation', 'l');
 		if ($primaryLocation) {
-			$qb->where($qb->expr()->eq('r.primaryLocation', $location->id));
+			$qb->where($qb->expr()->eq('a.primaryLocation', $location->id));
 		}
 		if ($live) {
 			$qb->andWhere($qb->expr()->eq('r.status', \Entity\Rental\Rental::STATUS_LIVE));
@@ -64,7 +81,7 @@ class RentalRepository extends \Repository\BaseRepository {
 			$qb->setParameter(2, $dateTo, \Doctrine\DBAL\Types\Type::DATETIME);
 		}
 		if (!$primaryLocation) {
-			$qb->groupBy('r.primaryLocation');
+			$qb->groupBy('a.primaryLocation');
 		}
 
 		$result = $qb->getQuery()->getResult();

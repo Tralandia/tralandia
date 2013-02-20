@@ -82,12 +82,6 @@ class Location extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Entity\Rental\Rental", mappedBy="primaryLocation")
-	 */
-	protected $primaryRentals;
-
-	/**
-	 * @var Collection
 	 * @ORM\ManyToMany(targetEntity="Entity\Contact\Address", inversedBy="locations")
 	 */
 	protected $addresses;
@@ -135,7 +129,6 @@ class Location extends \Entity\BaseEntityDetails {
 	 * @ORM\Column(type="integer", nullable=true)
 	 */
 	protected $rentalCount;
-
 
 	/**
 	 * @return bool
@@ -469,40 +462,6 @@ class Location extends \Entity\BaseEntityDetails {
 	public function getDomain()
 	{
 		return $this->domain;
-	}
-		
-	/**
-	 * @param \Entity\Rental\Rental
-	 * @return \Entity\Location\Location
-	 */
-	public function addPrimaryRental(\Entity\Rental\Rental $primaryRental)
-	{
-		if(!$this->primaryRentals->contains($primaryRental)) {
-			$this->primaryRentals->add($primaryRental);
-		}
-		$primaryRental->setPrimaryLocation($this);
-
-		return $this;
-	}
-		
-	/**
-	 * @param \Entity\Rental\Rental
-	 * @return \Entity\Location\Location
-	 */
-	public function removePrimaryRental(\Entity\Rental\Rental $primaryRental)
-	{
-		$this->primaryRentals->removeElement($primaryRental);
-		$primaryRental->unsetPrimaryLocation();
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Rental\Rental[]
-	 */
-	public function getPrimaryRentals()
-	{
-		return $this->primaryRentals;
 	}
 		
 	/**
