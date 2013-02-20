@@ -685,8 +685,6 @@ the specific language governing permissions and limitations under the Apache Lic
                             disabled = (result.disabled === true);
                             selectable = (!disabled) && (id(result) !== undefined);
 
-                            selectable  = true;
-
                             compound=result.children && result.children.length > 0;
 
                             node=$("<li></li>");

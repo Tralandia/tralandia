@@ -58,11 +58,21 @@ Nette.addError = function(elem, message) {
 			var self = this;
 			var $self = $(this);
 
+			var $close = $(this).find('a.close');
+
+			
+
 			$self.click(function(){
 				$self.find('.socialBtnContent').removeClass('hide');
-				$self.find('.socialBtnHeader').addClass('hide');
+				$self.find('.socialBtnHeader').addClass('hide');				
 			});
 
+
+			$close.click(function(){				
+				$self.find('.socialBtnContent').addClass('hide');
+				$self.find('.socialBtnHeader').removeClass('hide');	
+				return false;			
+			});
 
 		});
 	};
