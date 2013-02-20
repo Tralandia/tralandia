@@ -388,7 +388,7 @@
         <div class="span12">
             <ul id="sortable" class="ui-sortable" n:inner-foreach="$container->getImages() as $image">
                 <li data-id="{$image->getId()}" class="ui-state-default">
-					<img n:img="$image">
+					<img n:image="$image">
                     <a href="#" class="remove">#delete</a>
                 </li>
 			</ul>

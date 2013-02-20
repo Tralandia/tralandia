@@ -5,7 +5,12 @@ services:
 	contactCacheRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\ContactCache')
 
 	#currency
+	#----------
 	currencyRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Currency')
+
+	#currency
+	#----------
+	favoriteListRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\FavoriteList')
 
 
 	#domain

@@ -101,6 +101,8 @@ class BaseEntity extends \Extras\Models\Entity\Entity implements \Nette\Security
 
 	/**
 	 * @ORM\prePersist
+	 * @param \Nette\DateTime $created
+	 *
 	 * @return \Entity\BaseEntity
 	 */
 	public function setCreated(\Nette\DateTime $created = NULL){

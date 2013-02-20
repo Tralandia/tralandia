@@ -15,6 +15,8 @@ abstract class BasePresenter extends \BasePresenter {
 	 */
 	protected $rentalRepositoryAccessor;
 
+	protected $favoriteListRepositoryAccessor;
+
 	/**
 	 * @autowire
 	 * @var \Extras\Environment
@@ -27,6 +29,12 @@ abstract class BasePresenter extends \BasePresenter {
 	 */
 	protected $seoFactory;
 
+	/**
+	 * @autowire
+	 * @var \FavoriteList
+	 */
+	protected $favoriteList;
+
 
 	/**
 	 * @var \Service\Seo\SeoService
@@ -36,6 +44,7 @@ abstract class BasePresenter extends \BasePresenter {
 	public function injectBaseRepositories(\Nette\DI\Container $dic) {
 		$this->rentalTypeRepositoryAccessor = $dic->rentalTypeRepositoryAccessor;
 		$this->rentalRepositoryAccessor = $dic->rentalRepositoryAccessor;
+		$this->favoriteListRepositoryAccessor = $dic->favoriteListRepositoryAccessor;
 	}
 
 	protected function startup() {
@@ -46,7 +55,6 @@ abstract class BasePresenter extends \BasePresenter {
 
 
 	public function beforeRender() {
-
 		$this->template->currentLanguage = NULL;
 		$this->template->currentLocation = NULL;
 
@@ -66,6 +74,9 @@ abstract class BasePresenter extends \BasePresenter {
 		$supportedLanguages = $this->languageRepositoryAccessor->get()->getSupportedSortedByName();
 		$this->template->supportedLanguages = array_chunk($supportedLanguages,round(count($supportedLanguages)/3));
 
+		$this->template->favoriteRentals = $this->favoriteList->getRentalList();
+		$this->template->favoriteVisitedRentals = $this->favoriteList->getVisitedRentals();
+
 		$this->template->pageH1 = $this->pageSeo->getH1();
 		$this->template->homepageUrl = $this->link('//Home:');
 		$this->template->pageTitle = $this->pageSeo->getTitle();
@@ -76,6 +87,7 @@ abstract class BasePresenter extends \BasePresenter {
 
 		$this->template->homeCacheId = 'home'.$this->template->envPrimaryLocation->id.'-'.$this->template->envLanguage->id;
 		$this->template->footerCountriesCacheId = 'footerCountries'.$this->template->envLanguage->id;
+
 
 		$header = $this->getComponent('header');
 		$header->addTitle($this->pageSeo->getTitle());
@@ -105,6 +117,22 @@ abstract class BasePresenter extends \BasePresenter {
 			}
 			$this->sendJson($return);
 		}
+	}
+
+	public function actionGenerateFavoriteLink()
+	{
+		$json = [];
+		$rentals = $this->favoriteList->getRentalList();
+		if(count($rentals)) {
+			$favoriteListRepository = $this->favoriteListRepositoryAccessor->get();
+			/** @var $favoriteList \Entity\FavoriteList */
+			$favoriteList = $favoriteListRepository->createNew();
+			$favoriteList->addRentals($rentals);
+			$favoriteListRepository->save($favoriteList);
+
+			$json['link'] = $this->link('//Rental:list', ['favoriteList' => $favoriteList]);
+		}
+		$this->sendJson($json);
 	}
 
 

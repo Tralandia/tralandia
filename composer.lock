@@ -1,12 +1,12 @@
 {
-    "hash": "d4d43a5032ef944d98b3b491216ea2da",
+    "hash": "f226ed204699c887477be94cea85a9f5",
     "packages": [
         {
             "name": "hosiplan/nette-autowire-properties",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/HosipLan/Nette-AutowireProperties",
+                "url": "https://github.com/HosipLan/Nette-AutowireProperties.git",
                 "reference": "v0.1.1"
             },
             "dist": {
@@ -95,6 +95,55 @@
             ]
         },
         {
+            "name": "kdyby/nette-session-panel",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/HosipLan/Nette-Session-DebugBar.git",
+                "reference": "d3b1ad2352a060388f4618467e937bbc1ee666ff"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/HosipLan/Nette-Session-DebugBar/zipball/d3b1ad2352a060388f4618467e937bbc1ee666ff",
+                "reference": "d3b1ad2352a060388f4618467e937bbc1ee666ff",
+                "shasum": ""
+            },
+            "require": {
+                "nette/nette": "*",
+                "php": ">=5.3.2"
+            },
+            "time": "2013-02-09 15:14:19",
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Kdyby": "libs/"
+                }
+            },
+            "notification-url": "http://packagist.org/downloads/",
+            "license": [
+                "BSD-3",
+                "GPLv2",
+                "GPLv3"
+            ],
+            "authors": [
+                {
+                    "name": "Filip Procházka",
+                    "homepage": "http://filip-prochazka.com/"
+                },
+                {
+                    "name": "Pavel Železný",
+                    "homepage": "http://pavelzelezny.cz/"
+                }
+            ],
+            "description": "Nette DebugBar panel, that allows you inspect your sessions.",
+            "homepage": "http://kdyby.org",
+            "keywords": [
+                "nette",
+                "panel",
+                "session"
+            ]
+        },
+        {
             "name": "nette/nette",
             "version": "dev-master",
             "source": {
@@ -177,6 +226,7 @@
     "stability-flags": {
         "nette/nette": 20,
         "kdyby/events": 20,
+        "kdyby/nette-session-panel": 20,
         "hosiplan/nette-autowire-properties": 20,
         "nette/tester": 20
     }

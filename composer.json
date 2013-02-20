@@ -16,7 +16,8 @@
 		"php": ">= 5.3.0",
 		"nette/nette": "@dev",
 		"kdyby/events": "dev-master",
-		"hosiplan/nette-autowire-properties": "dev-master"
+        "kdyby/nette-session-panel": "dev-master",
+        "hosiplan/nette-autowire-properties": "dev-master"
 	},
 	"require-dev": {
 		"nette/tester": "@dev"

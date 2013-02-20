@@ -18,9 +18,9 @@
 				<a n:href=":Front:Rental:detail $rental['entity']" title="{_$rental['entity']->name}" >
 				<div class="position">TOP</div>
 				{if $mainImage = $rental['entity']->getMainImage()}
-					<img alt="{_$rental['entity']->name}" n:img="{$mainImage}" />
+					<img alt="{_$rental['entity']->name}" n:image="{$mainImage}" />
 				{else}
-					<img alt="{_$rental['entity']->name}" n:fakeImg="" />
+					<img alt="{_$rental['entity']->name}" n:fakeImage="" />
 				{/if}
 
 				{foreach $rental['entity']->address->getLocations() as $location}

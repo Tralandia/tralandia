@@ -2,53 +2,76 @@
 <div class="span12" id="favoritesStatisContainer" style="display: block;">
 	<div class="sitePadding baseRadius borderBlue overflow">
 
-		
 
 		<div class="social">
-		<div class="header">Share your favorites</div>
+			<div class="header">Share your favorites</div>
 			<ul>
 				<li><a rel="facebook" href="#"><i class="entypo-facebook"></i>
-				</a>
+					</a>
 				</li>
 				<li><a rel="gplus" href="#"><i class="entypo-gplus"></i>
-				</a>
+					</a>
 				</li>
 				<li><a rel="twitter" href="#"><i class="entypo-twitter"></i>
-				</a>
+					</a>
 				</li>
-				<li><a rel="email" href="#"><i class="entypo-mail"></i>
-				</a>
+				<li>
+					<a rel="email" href="#"><i class="entypo-mail"></i></a>
 				</li>
-				<li><a rel="link" href="#"><i class="entypo-www"></i>
-				</a>
+				<li>
+					<a rel="link" href="#"><i class="entypo-www"></i></a>
 				</li>
-				
-				
+
+
 			</ul>
 		</div>
 
 		<div class="content noPadding">
-			
+
 			<div class="detailSlider favoriteSlider compare" id="compareList">
-				
+
 				<div class="leftArrow entypo-prev" id="favorites-left-button"></div>
 				<div class="content">
 					<ul>
+						<li class="template hide" rel="~id~" style="background-image: url(~photo~);">
+							<a href="#" class="removeLink"></a>
+							<a n:href="~url~" class="link">
+								<div class="checked entypo-eye"></div>
+							</a>
+						</li>
+						{foreach $favoriteRentals as $rental}
+							{var $image = $rental->getMainImage()}
+							{var $seen = in_array($rental->getId(), $favoriteVisitedRentals)}
+							<li rel="179" style="background-image: url({fakeImage});">
+								<a href="#" class="removeLink"></a>
+								<a n:href="Rental:detail $rental" class="link">
+									<div n:if="$seen" class="checked entypo-eye"></div>
+								</a>
+							</li>
+						{/foreach}
 					</ul>
 				</div>
 
 				<div class="rightArrow entypo-slider-right" id="favorites-right-button"></div>
 
-				
+
 				<div class="clearfix"></div>
 			</div>
 
 		</div>
 	</div>
-	
+
 	<div class="shareLinkContent hide">
-		<div class="email shareConteiner"><label>Send via email from </label><form class="shareObjectForm"><input type="text" /> to <input type="text" /> <button type="submit" class="btn" >Send</button></form></div>
+		<div class="email shareConteiner">
+			<label>Send via email from </label>
+
+			<form class="shareObjectForm">
+				<input type="text"/> to <input type="text"/>
+				<button type="submit" class="btn">Send</button>
+			</form>
+		</div>
 		<a class="shareConteinerClose" href="#"><i class="entypo-upp2"></i></a>
+
 		<div class="clearfix"></div>
 	</div>
 
