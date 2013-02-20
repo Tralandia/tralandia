@@ -76,7 +76,7 @@
 			<i class="entypo-users"></i>
 			<div class="content">
 				{_o1008} {$rental->maxCapacity} {_o925,null,[count=>$rental->maxCapacity]}
-				<span>{$rental->rooms} {if $rental->bedroomCount}{$rental->bedroomCount}{/if} #badroom</span>
+				<span>{if $rental->bedroomCount}{$rental->bedroomCount} #badroom, {/if}{$rental->rooms}</span>
 			</div>
 		</div>
 
