@@ -154,7 +154,11 @@ class EntityGeneratorPresenter extends BasePresenter {
 				} else if($property->association == ORM\ClassMetadataInfo::MANY_TO_MANY) {
 					$collections[] = $property;
 
-					if($targetedEntityProperty->association == ORM\ClassMetadataInfo::MANY_TO_MANY) { 	// Many To Many Bi
+					if($targetedEntityProperty === NULL) {
+						$this->addMethod('add2', $newClass, $property, $targetEntity->name);
+						$this->addMethod('remove2', $newClass, $property, $targetEntity->name);
+						$this->addMethod('get', $newClass, $property, $targetEntity->name);
+					} else if ($targetedEntityProperty->association == ORM\ClassMetadataInfo::MANY_TO_MANY) { // MtM Bi
 						
 						if(isset($property->mappedBy)) {
 							$this->addMethod('add', $newClass, $property, $targetedEntityProperty);

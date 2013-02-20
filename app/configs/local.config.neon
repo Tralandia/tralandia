@@ -7,6 +7,8 @@ nette:
 		bar: [JanDrabek\MailPanel\MailPanel]
 
 
+extensions:
+	debugger.session: Kdyby\Diagnostics\SessionPanel\SessionPanelExtension
 
 parameters:
 	envOptions:
@@ -25,6 +27,13 @@ parameters:
 		hostMask: '<language>.<country>.<domain>.com'
 
 services:
+	debugger.session.panel:
+		setup:
+			- hideSection('Nette.Http.UserStorage/')
+			- hideSection('Nette.Application/requests')
+			- hideSection('Nette.Forms.Form/CSRF')
+			- hideSection('TwiGrid\DataGrid-dataGrid')
+			- hideSection('DumpMailerStorage')
 
 	nette.mailer:
 		class: JanDrabek\MailPanel\SessionDumpMailer
