@@ -485,12 +485,17 @@ $(document).ready(function(){
 				{if count($interviewAnswers) > 0}
 				<div class="metaObjectInfo" id="interviewAnswers">
 				<h3>{_o25231}</h3>
+				<ul class="interviewList">
 					{foreach $interviewAnswers as $interviewAnswer}
 						{if !empty($interviewAnswer->answer)}
-							<p class="question"><i class="entypo-question"></i> {_$interviewAnswer->question->question|firstUpper}</p>
-							<p class="answer"><i class="entypo-quote"></i> <span class="content">{_$interviewAnswer->answer|firstUpper} </span> <i class="entypo-quote"></i><div class="clearfix"></div></p>
+							<li>
+								<h4>{_$interviewAnswer->question->question|firstUpper}</h4>
+								<p>{_$interviewAnswer->answer|firstUpper}</p>
+							</li>
 						{/if}			
 					{/foreach}
+				</ul>
+				<div class="clearfix"></div>
 				</div>
 				{/if}
 
