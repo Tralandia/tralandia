@@ -21,7 +21,7 @@
 		color: @darkGreen;
 	}
 
-
+	
 
 	.prev , .next , .menu {
 		background: #eee;
@@ -126,6 +126,15 @@
 				opacity: 0.7;
 				&:hover {
 					opacity: 1;
+				}
+			}
+
+			&.current {
+				a {
+					img {
+						border: 2px solid red;
+						max-height: 26px;
+					}
 				}
 			}
 		}
