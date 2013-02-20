@@ -123,7 +123,7 @@ class ImportRentals extends BaseImport {
 
 			$rental->address = $address;
 
-			$rental->primaryLocation = $context->locationRepositoryAccessor->get()->findOneBy(array('oldId' => $x['country_id'], 'type' => $locationTypes['country']));
+			//$rental->primaryLocation = $context->locationRepositoryAccessor->get()->findOneBy(array('oldId' => $x['country_id'], 'type' => $locationTypes['country']));
 
 			$rental->slug = $x['name_url'];
 			$truncatedName = Strings::truncate($x['name'], 60);

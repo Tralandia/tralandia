@@ -35,30 +35,7 @@ class Change extends \Entity\BaseEntityDetails {
 	 */
 	protected $entityId;
 
- 
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-								//@entity-generator-code --- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()
