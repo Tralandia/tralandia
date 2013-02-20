@@ -36,7 +36,7 @@
 		            map: map
 		        });
 
-		        console.log(lat+' '+lng);
+		        //console.log(lat+' '+lng);
 
 		        var delta = 0.4;
 

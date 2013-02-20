@@ -109,7 +109,9 @@ parameters:
 					- Front/js/ui-localization-datepicker.js
 					- Front/js/trax-forms-ui.js					
 					- Front/js/main.js
+					- Front/js/detail-navigation.js
 					- 'https://apis.google.com/js/plusone.js'
+
 
 			FavoriteScroll:
 				js:
@@ -152,8 +154,8 @@ parameters:
 					#- bootstrap/bootstrap-collapse.js
 					- bootstrap/bootstrap-dropdown.js
 					- bootstrap/bootstrap-modal.js
-					#- bootstrap/bootstrap-tooltip.js
-					#- bootstrap/bootstrap-popover.js
+					- bootstrap/bootstrap-tooltip.js
+					- bootstrap/bootstrap-popover.js
 					#- bootstrap/bootstrap-scrollspy.js
 					- bootstrap/bootstrap-tab.js
 					#- bootstrap/bootstrap-transition.js
