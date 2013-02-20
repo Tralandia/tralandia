@@ -10,6 +10,7 @@ use	Extras\Annotation as EA;
  * @ORM\Entity()
  * @ORM\Table(name="rental_amenity")
  * @EA\Primary(key="id", value="id")
+ * @EA\Generator(skip="{setSlug}")
  */
 class Amenity extends \Entity\BaseEntityDetails {
 
@@ -26,6 +27,12 @@ class Amenity extends \Entity\BaseEntityDetails {
 	protected $rentals;
 
 	/**
+	 * @var string
+	 * @ORM\Column(type="string")
+	 */
+	protected $slug;
+	
+	/**
 	 * @var Collection
 	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
 	 */
@@ -37,6 +44,17 @@ class Amenity extends \Entity\BaseEntityDetails {
 	 */
 	protected $important = FALSE;
 
+
+	/**
+	 * @param string
+	 * @return \Entity\Rental\AmenityType
+	 */
+	public function setSlug($slug)
+	{
+		$this->slug = \Nette\Utils\Strings::webalize($slug);
+
+		return $this;
+	}
 
 	//@entity-generator-code --- NEMAZAT !!!
 
@@ -107,6 +125,14 @@ class Amenity extends \Entity\BaseEntityDetails {
 	public function getRentals()
 	{
 		return $this->rentals;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getSlug()
+	{
+		return $this->slug;
 	}
 		
 	/**
