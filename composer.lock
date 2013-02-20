@@ -11,7 +11,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/HosipLan/Nette-AutowireProperties/zipball/v0.1.1",
+                "url": "https://github.com/HosipLan/Nette-AutowireProperties/archive/v0.1.1.zip",
                 "reference": "v0.1.1",
                 "shasum": ""
             },
@@ -52,7 +52,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kdyby/Events/zipball/e4fe5617f05273ba98bd94f4394eeef0c516a88e",
+                "url": "https://github.com/Kdyby/Events/archive/e4fe5617f05273ba98bd94f4394eeef0c516a88e.zip",
                 "reference": "e4fe5617f05273ba98bd94f4394eeef0c516a88e",
                 "shasum": ""
             },
@@ -99,13 +99,13 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "http://github.com/nette/nette",
-                "reference": "1a51cb6f3e331cb958051b5859128642532fc406"
+                "url": "https://github.com/nette/nette.git",
+                "reference": "0622617df91e648e7a0d948b21b33afb7ae08793"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/nette/zipball/1a51cb6f3e331cb958051b5859128642532fc406",
-                "reference": "1a51cb6f3e331cb958051b5859128642532fc406",
+                "url": "https://api.github.com/repos/nette/nette/zipball/0622617df91e648e7a0d948b21b33afb7ae08793",
+                "reference": "0622617df91e648e7a0d948b21b33afb7ae08793",
                 "shasum": ""
             },
             "require": {
@@ -123,7 +123,7 @@
                 "ext-memcache": "*",
                 "ext-pdo": "*"
             },
-            "time": "2013-02-14 00:57:31",
+            "time": "2013-02-19 19:28:21",
             "type": "library",
             "extra": {
                 "branch-alias": {

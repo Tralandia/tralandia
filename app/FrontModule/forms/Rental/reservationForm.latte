@@ -3,23 +3,43 @@
 
 	{* add class invalid to input *}
 
-	<div class="control-group">
+	{var $message = ''}
+	{if count($form['name']->getErrors()) > 0}
+	{var $message = 'error'}
+	{/if}
+
+	<div class="control-group {$message}">
 	{input name ,data-validation-message => "error-msg-reservation-name"}
 	<span class="control-error" id="error-msg-reservation-name">
 		{foreach $form['name']->getErrors() as $error}{$error}{/foreach}
 	</span>
 	</div>
 
-	<div class="control-group">
+	{var $message = ''}
+	{if count($form['email']->getErrors()) > 0}
+	{var $message = 'error'}
+	{/if}
+
+	<div class="control-group {$message}">
 	{input email , data-validation-message => "error-msg-reservation-email"}
-	<span class="control-error" id="error-msg-reservation-email"></span>
+	<span class="control-error" id="error-msg-reservation-email">
+		{foreach $form['email']->getErrors() as $error}{$error}{/foreach}
+	</span>
 	</div>
 
 	{var $phoneContainer = $form['phone']}
-	<div class="control-group">
+	{var $message = ''}
+	{if count($phoneContainer['number']->getErrors()) > 0}
+	{var $message = 'error'}
+	{/if}
+
+	<div class="control-group {$message}">
 	{input $phoneContainer['prefix'] , class => 'tel select2' , data-validation-message => "error-msg-reservation-tel"}
 	{input $phoneContainer['number'], class => "telnum" , data-validation-message => "error-msg-reservation-tel"}
-	<span class="control-error" id="error-msg-reservation-tel"></span>
+	<div class="clearfix"></div>
+	<span class="control-error" id="error-msg-reservation-tel">
+		{foreach $phoneContainer['number']->getErrors() as $error}{$error}{/foreach}
+	</span>
 	</div>
 
 	<div class="marginBottom">
@@ -28,27 +48,51 @@
 	<div class="clearfix"></div>
 	</div>
 
-	
+
+
 	{var $dateContainer = $form['date']}
-	<div class="control-group">
+	{var $message = ''}
+	{if count($dateContainer['from']->getErrors()) > 0}
+	{var $message = 'error'}
+	{/if}
+
+	<div class="control-group {$message}">
 	<div class="input-append">
 		{input $dateContainer['from'], class => "datepicker" ,data-validation-message => "error-msg-reservation-from" }
 	  	<span class="add-on datepickerIcon entypo-calendar"></span>
 	</div>
-	<span class="control-error" id="error-msg-reservation-from"></span>
+	<span class="control-error" id="error-msg-reservation-from">
+		{foreach $dateContainer['from']->getErrors() as $error}{$error}{/foreach}
+	</span>
 	</div>	
 
-	<div class="control-group">
+
+	{var $message = ''}
+	{if count($dateContainer['to']->getErrors()) > 0}
+	{var $message = 'error'}
+	{/if}
+
+	<div class="control-group {$message}">
 	<div class="input-append">
 		{input $dateContainer['to'], class => "datepickerto" , data-validation-message => "error-msg-reservation-to"}
 		<span class="add-on datepickerIcon entypo-calendar"></span>
 	</div>
-	<span class="control-error" id="error-msg-reservation-to"></span>
+	<span class="control-error" id="error-msg-reservation-to">
+		{foreach $dateContainer['to']->getErrors() as $error}{$error}{/foreach}
+	</span>
 	</div>		
 
+	{var $message = ''}
+	{if count($form['message']->getErrors()) > 0}
+	{var $message = 'error'}
+	{/if}
 
+	<div class="control-group {$message}">
 	{input message , data-validation-message => "error-msg-reservation"}
-	
+	<span class="control-error" id="error-msg-reservation-to">
+		{foreach $form['message']->getErrors() as $error}{$error}{/foreach}
+	</span>
+	</div>		
 	
 	{input submit, class => "btn btn-orange"}
 {/form}
