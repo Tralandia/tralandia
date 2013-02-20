@@ -33,6 +33,10 @@ p {
 	text-transform: capitalize;
 }
 
+ul {
+	list-style: none;
+}
+
 .brown {
 	color: @brown;
 
@@ -48,6 +52,10 @@ p {
 	margin: 10px 0;
 	border-bottom: 1px solid @lightGreen;
 
+}
+
+.relative {
+	position: relative;
 }
 
 a.toogle {
@@ -1155,7 +1163,7 @@ ul.arrows {
 
 @contentH1color : #A0B325;
 @contentH2color : #A0B325;
-@contentH3color : #A0B325;
+@contentH3color : #174a90;
 @contentH4color : #A0B325;
 @contentH5color : #A0B325;
 
@@ -1174,41 +1182,9 @@ ul.arrows {
 				padding: 0;
 			}
 
-			&.question {
-				font-weight: bold;
-				padding: 10px;
-				border-left: 10px solid #dfe6b1;
-			}	
 
-			&.answer {
-				padding: 20px;
-				background: #eee;
-				line-height: 17px;
-				i {
-					color: #ccc;
-					float: left;
-					margin-right: 10px;
 
-						position: relative;
-						top: -10px;
-
-					&:last-child {
-						float: right;
-
-					}
-
-					&:before {
-						font-size: 50px;
-					}
-				}
-
-				.content {
-					display: block;
-					width: 839px;
-					margin: 0 auto;
-
-				}
-			}					
+					
 		}
 
 	}
@@ -1246,7 +1222,9 @@ ul.arrows {
 
 	h3 {
 		font-size: @contentH3size;
-		color: @contentH3color;		
+		color: @contentH3color;	
+
+		font-weight: normal;			
 	}
 
 	h4 {
@@ -1855,6 +1833,10 @@ ul.arrows {
 	margin-top: 10px;
 	line-height: 15px;
 	
+	.error .input-append {
+		margin-bottom: 0;
+	}
+
 	.input-append .add-on {
 		background: #eaf0d7;
 	}

@@ -91,8 +91,13 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 
 
 	public function validation(ReservationForm $form){
-		$form->addError('yle');
-		$form['name']->addError('bar');
+		//$form->addError('yle');
+		//$form['name']->addError('bar');
+		//$form['email']->addError('bar');
+		//$form['phone']['number']->addError('bar');
+		//$form['date']['from']->addError('bar');
+		//$form['date']['to']->addError('bar');
+		//$form['message']->addError('bar');
 	}
 
 	public function setDefaultsValues() 

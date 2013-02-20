@@ -3,23 +3,28 @@
 
 	{* add class invalid to input *}
 
-	<div class="control-group">
+	<div n:class="$form['name']->hasErrors() ? 'control-group error' : 'control-group' ">
 	{input name ,data-validation-message => "error-msg-reservation-name"}
 	<span class="control-error" id="error-msg-reservation-name">
 		{foreach $form['name']->getErrors() as $error}{$error}{/foreach}
 	</span>
 	</div>
 
-	<div class="control-group">
+	<div n:class="$form['email']->hasErrors() ? 'control-group error' : 'control-group' ">
 	{input email , data-validation-message => "error-msg-reservation-email"}
-	<span class="control-error" id="error-msg-reservation-email"></span>
+	<span class="control-error" id="error-msg-reservation-email">
+		{foreach $form['email']->getErrors() as $error}{$error}{/foreach}
+	</span>
 	</div>
 
 	{var $phoneContainer = $form['phone']}
-	<div class="control-group">
+	<div n:class="$phoneContainer['number']->hasErrors() ? 'control-group error' : 'control-group' ">
 	{input $phoneContainer['prefix'] , class => 'tel select2' , data-validation-message => "error-msg-reservation-tel"}
 	{input $phoneContainer['number'], class => "telnum" , data-validation-message => "error-msg-reservation-tel"}
-	<span class="control-error" id="error-msg-reservation-tel"></span>
+	<div class="clearfix"></div>
+	<span class="control-error" id="error-msg-reservation-tel">
+		{foreach $phoneContainer['number']->getErrors() as $error}{$error}{/foreach}
+	</span>
 	</div>
 
 	<div class="marginBottom">
@@ -28,27 +33,33 @@
 	<div class="clearfix"></div>
 	</div>
 
-	
 	{var $dateContainer = $form['date']}
-	<div class="control-group">
+	<div n:class="$dateContainer['from']->hasErrors() ? 'control-group error' : 'control-group' ">
 	<div class="input-append">
 		{input $dateContainer['from'], class => "datepicker" ,data-validation-message => "error-msg-reservation-from" }
 	  	<span class="add-on datepickerIcon entypo-calendar"></span>
 	</div>
-	<span class="control-error" id="error-msg-reservation-from"></span>
+	<span class="control-error" id="error-msg-reservation-from">
+		{foreach $dateContainer['from']->getErrors() as $error}{$error}{/foreach}
+	</span>
 	</div>	
 
-	<div class="control-group">
+	<div n:class="$dateContainer['to']->hasErrors() ? 'control-group error' : 'control-group' ">
 	<div class="input-append">
 		{input $dateContainer['to'], class => "datepickerto" , data-validation-message => "error-msg-reservation-to"}
 		<span class="add-on datepickerIcon entypo-calendar"></span>
 	</div>
-	<span class="control-error" id="error-msg-reservation-to"></span>
+	<span class="control-error" id="error-msg-reservation-to">
+		{foreach $dateContainer['to']->getErrors() as $error}{$error}{/foreach}
+	</span>
 	</div>		
 
-
+	<div n:class="$form['message']->hasErrors() ? 'control-group error' : 'control-group' ">
 	{input message , data-validation-message => "error-msg-reservation"}
-	
+	<span class="control-error" id="error-msg-reservation-to">
+		{foreach $form['message']->getErrors() as $error}{$error}{/foreach}
+	</span>
+	</div>		
 	
 	{input submit, class => "btn btn-orange"}
 {/form}

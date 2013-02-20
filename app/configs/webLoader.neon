@@ -91,7 +91,8 @@ parameters:
 					- Front/object-list.less
 					- Front/homepage-list.less	
 					- Front/rental-detail-navigation.less
-					- Front/calendarWidgetControl.less				
+					- Front/calendarWidgetControl.less	
+					- Front/interview-list.less			
 				js:
 					- FileUpload/js/vendor/jquery.ui.widget.js
 					- FileUpload/js/jquery.iframe-transport.js
