@@ -53,27 +53,36 @@ class RentalPresenter extends BasePresenter {
 	}
 
 
-	public function actionList($primaryLocation, $location, $rentalType) {
+	public function actionList($primaryLocation, $location, $rentalType, $favoriteList) {
 
-		$search = $this->rentalSearchFactory->create($this->environment->primaryLocation);
-		$orderCache = $this->rentalOrderCachingFactory->create($primaryLocation);
+		if($favoriteList) {
+			$rentals = $favoriteList->getRentals();
+			$itemCount = $rentals->count();
+		} else {
+			$search = $this->rentalSearchFactory->create($this->environment->primaryLocation);
+			$orderCache = $this->rentalOrderCachingFactory->create($primaryLocation);
 
-		if ($location) {
-			$search->setLocationCriterium($location);
-		}
+			if ($location) {
+				$search->setLocationCriterium($location);
+			}
 
-		if ($rentalType) {
-			$search->setRentalTypeCriterium($rentalType);
+			if ($rentalType) {
+				$search->setRentalTypeCriterium($rentalType);
+			}
+
+			$itemCount = $search->getRentalsCount();
 		}
 
 		$vp = $this['p'];
 		$paginator = $vp->getPaginator();
 		$paginator->itemsPerPage = \Service\Rental\RentalSearchService::COUNT_PER_PAGE;
-		$paginator->itemCount = $search->getRentalsCount();
+		$paginator->itemCount = $itemCount;
 
 		$this->template->totalResultsCount = $paginator->itemCount;
 
-		$rentals = $search->getRentalsIds($paginator->getPage());//@todo
+		if(isset($search)) {
+			$rentals = $search->getRentalsIds($paginator->getPage());//@todo
+		}
 
 
 		//d($rentalsEntities);
@@ -91,7 +100,12 @@ class RentalPresenter extends BasePresenter {
 	public function findRental($id)
 	{
 		//d($id);
-		$rental = $this->rentalRepositoryAccessor->get()->find($id);
+		if($id instanceof \Entity\Rental\Rental) {
+			$rental = $id;
+		} else {
+			$rental = $this->rentalRepositoryAccessor->get()->find($id);
+		}
+		
 		return $this->rentalDecoratorFactory->create($rental);
 	}
 
