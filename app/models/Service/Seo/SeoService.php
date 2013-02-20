@@ -200,7 +200,7 @@ class SeoService extends Nette\Object {
 
 interface ISeoServiceFactory {
 	/**
-	 * @param $url
+	 * @param string $url
 	 * @param \Nette\Application\Request $request
 	 *
 	 * @return SeoService

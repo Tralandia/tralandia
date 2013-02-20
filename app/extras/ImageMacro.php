@@ -35,8 +35,8 @@ class ImageMacro extends Nette\Latte\Macros\MacroSet
 		/**
 		 * {img} je obecně pro jakýkoliv obrázek, který je veřejný na webu.
 		 */
-		$me->addMacro('img', array($me, 'macroImg'), NULL, array($me, 'macroAttrImg'));
-		$me->addMacro('fakeImg', array($me, 'macroFakeImg'), NULL, array($me, 'macroFakeAttrImg'));
+		$me->addMacro('image', array($me, 'macroImage'), NULL, array($me, 'macroAttrImage'));
+		$me->addMacro('fakeImage', array($me, 'macroFakeImage'), NULL, array($me, 'macroFakeAttrImage'));
 
 		return $me;
 	}
@@ -48,7 +48,7 @@ class ImageMacro extends Nette\Latte\Macros\MacroSet
 	 * @param \Nette\Latte\PhpWriter $writer
 	 * @return string
 	 */
-	public function macroImg(MacroNode $node, PhpWriter $writer)
+	public function macroImage(MacroNode $node, PhpWriter $writer)
 	{
 		$this->isUsed = TRUE;
 		return $writer->write('echo %escape($_imagePipe->request(%node.word))');
@@ -61,21 +61,21 @@ class ImageMacro extends Nette\Latte\Macros\MacroSet
 	 * @param \Nette\Latte\PhpWriter $writer
 	 * @return string
 	 */
-	public function macroAttrImg(MacroNode $node, PhpWriter $writer)
+	public function macroAttrImage(MacroNode $node, PhpWriter $writer)
 	{
 		$this->isUsed = TRUE;
 		return $writer->write('?>src="<?php echo %escape($_imagePipe->request(%node.word))?>" <?php');
 	}
 
 	/* ------------------ Fake image macros ------------------ */
-	public function macroFakeImg(MacroNode $node, PhpWriter $writer)
+	public function macroFakeImage(MacroNode $node, PhpWriter $writer)
 	{
 		$this->isUsed = TRUE;
-		return $writer->write('echo %escape($_imagePipe->request(%node.word))');
+		return $writer->write('echo %escape($_imagePipe->requestFake(%node.word))');
 	}
 
 
-	public function macroFakeAttrImg(MacroNode $node, PhpWriter $writer)
+	public function macroFakeAttrImage(MacroNode $node, PhpWriter $writer)
 	{
 		$this->isUsed = TRUE;
 		return $writer->write('?>src="<?php echo %escape($_imagePipe->requestFake())?>" <?php');

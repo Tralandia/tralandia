@@ -12,7 +12,8 @@ require_once VENDOR_DIR . '/autoload.php';
 require_once LIBS_DIR . '/rado_functions.php';
 
 // Enable Nette\Debug for error visualisation & logging
-Debugger::enable(Debugger::PRODUCTION);
+//Debugger::enable(Debugger::PRODUCTION);
+Debugger::enable();
 //Debugger::$strictMode = TRUE;
 
 $section = isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : null;
@@ -34,7 +35,9 @@ Extension::register($configurator);
 Extras\Config\PresenterExtension::register($configurator);
 
 $configurator->addConfig(APP_DIR . '/configs/config.neon', FALSE);
-$configurator->addConfig(APP_DIR . '/configs/local.config.neon', FALSE);
+if(!Debugger::$productionMode) {
+	$configurator->addConfig(APP_DIR . '/configs/local.config.neon', FALSE);
+}
 
 if (isset($_SERVER['REDIRECT_URL']) && ($_SERVER['REDIRECT_URL'] == '/import' || $_SERVER['REDIRECT_URL'] == '/import/import/default')) {
 	$section = 'import';

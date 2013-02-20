@@ -44,7 +44,7 @@
 		        		{if $mainImage = $rental->getMainImage()}
 		        			<img src="{$basePath}{$mainImage|rentalImageSrc}" />
 		        		{else}
-		        			<img alt="{_$rental->name}" n:fakeImg="" class="marginBottom" />
+		        			<img alt="{_$rental->name}" n:fakeImage="" class="marginBottom" />
 		        		{/if}
 
 		        		</a>

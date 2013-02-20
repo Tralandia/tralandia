@@ -11,6 +11,11 @@ class CountriesFooterControl extends \BaseModule\Components\BaseControl {
 
 	protected $seoFactory;
 
+	public function __construct()
+	{
+		parent::__construct();
+	}
+
 	public function injectSeo(ISeoServiceFactory $seoFactory)
 	{
 		$this->seoFactory = $seoFactory;

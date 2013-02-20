@@ -29,11 +29,11 @@
 
 		<div class="imgFirst">
 			<span class="clasification"><i class="entypo-star"></i><i class="entypo-star"></i><i class="entypo-star"></i><i class="entypo-star"></i></span>
-			<img alt="{_$rental->name}" n:fakeImg="" class="marginBottom" />
+			<img alt="{_$rental->name}" n:fakeImage="" class="marginBottom" />
 		</div>
 		
-		<img alt="{_$rental->name}" n:fakeImg="" class="marginBottom" />
-		<img alt="{_$rental->name}" n:fakeImg="" class="marginBottom" />
+		<img alt="{_$rental->name}" n:fakeImage="" class="marginBottom" />
+		<img alt="{_$rental->name}" n:fakeImage="" class="marginBottom" />
 		
 		 <img class="mapsImg" src="https://maps.googleapis.com/maps/api/staticmap?center={$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&markers=color:blue%7C{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&zoom=10&size=288x170&sensor=false" /> 
 		

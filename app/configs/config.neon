@@ -14,6 +14,7 @@ nette:
 	latte:
 		macros: [Extras\ImageMacro, Extras\Macros]
 
+
 parameters:
 
 	security:
@@ -57,7 +58,6 @@ presenter:
 
 services:
 
-
 	# STORAGE
 	rentalImageStorage: Extras\RentalImageStorage(%wwwDir%%rentalImageDir%)
 	rentalImagePipe: Extras\ImagePipe(%wwwDir%, %rentalImageDir%)
@@ -76,6 +76,8 @@ services:
 	# SEARCH
 	rentalSearchService:
 		factory: @rentalSearchServiceFactory::create(@environment::getPrimaryLocation())
+
+	favoriteList: FavoriteList(@rentalRepositoryAccessor)
 
 	# ROUTER
 
