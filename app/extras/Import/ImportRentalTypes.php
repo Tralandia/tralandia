@@ -91,7 +91,7 @@ class ImportRentalTypes extends BaseImport {
 				}
 			}
 
-			if ($this->oldEnRentalTypes[$enTypeId]) $enTypeId = $this->oldEnRentalTypes[$enTypeId];
+			if (isset($this->oldEnRentalTypes[$enTypeId])) $enTypeId = $this->oldEnRentalTypes[$enTypeId];
 			q('update objects_types_new set trax_en_type_id = '.$enTypeId.' where id = '.$x['id']);
 		}
 
@@ -101,6 +101,7 @@ class ImportRentalTypes extends BaseImport {
 		while($x = mysql_fetch_array($r)) {
 			$rentalType = $this->context->rentalTypeEntityFactory->create();
 			$rentalType->name = $this->createPhraseFromString('\Rental\Type', 'name', 'ACTIVE', $x['name'], 'en');
+			$rentalType->slug = $x['name'];
 			
 			if (strlen($this->skPlurals[$x['name']][0]) != 0) {
 				$skTranslation = $rentalType->name->createTranslation($sk);

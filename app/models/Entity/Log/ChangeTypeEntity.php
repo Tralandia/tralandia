@@ -7,9 +7,16 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="log_changetype")
+ * @EA\Generator(skip="{setSlug}")
  */
 class ChangeType extends \Entity\BaseEntity {
 
+	/**
+	 * @var string
+	 * @ORM\Column(type="string")
+	 */
+	protected $slug;
+	
 	/**
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
@@ -22,35 +29,31 @@ class ChangeType extends \Entity\BaseEntity {
 	 */
 	protected $important;
 
+	/**
+	 * @param string
+	 * @return \Entity\Rental\AmenityType
+	 */
+	public function setSlug($slug)
+	{
+		$this->slug = \Nette\Utils\Strings::webalize($slug);
 
-    
+		return $this;
+	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-								//@entity-generator-code --- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()
 	{
 		parent::__construct();
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getSlug()
+	{
+		return $this->slug;
 	}
 		
 	/**

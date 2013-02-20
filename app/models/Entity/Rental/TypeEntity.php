@@ -10,9 +10,16 @@ use	Extras\Annotation as EA;
  * @ORM\Entity(repositoryClass="Repository\Rental\TypeRepository")
  * @ORM\Table(name="rental_type")
  * @EA\Primary(key="id", value="id")
+ * @EA\Generator(skip="{setSlug}")
  */
 class Type extends \Entity\BaseEntity {
 
+	/**
+	 * @var string
+	 * @ORM\Column(type="string")
+	 */
+	protected $slug;
+	
 	/**
 	 * @var Collection
 	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
@@ -25,6 +32,17 @@ class Type extends \Entity\BaseEntity {
 	 */
 	protected $rentals;
 
+	/**
+	 * @param string
+	 * @return \Entity\Rental\AmenityType
+	 */
+	public function setSlug($slug)
+	{
+		$this->slug = \Nette\Utils\Strings::webalize($slug);
+
+		return $this;
+	}
+
 	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -33,6 +51,14 @@ class Type extends \Entity\BaseEntity {
 		parent::__construct();
 
 		$this->rentals = new \Doctrine\Common\Collections\ArrayCollection;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getSlug()
+	{
+		return $this->slug;
 	}
 		
 	/**

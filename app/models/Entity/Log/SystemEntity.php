@@ -7,9 +7,16 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="log_system")
+ * @EA\Generator(skip="{setSlug}")
  */
 class System extends \Entity\BaseEntityDetails {
 
+	/**
+	 * @var string
+	 * @ORM\Column(type="string")
+	 */
+	protected $slug;
+	
 	/**
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
@@ -21,14 +28,32 @@ class System extends \Entity\BaseEntityDetails {
 	 * @ORM\Column(type="text", nullable=true)
 	 */
 	protected $comment;
+	
+	/**
+	 * @param string
+	 * @return \Entity\Rental\AmenityType
+	 */
+	public function setSlug($slug)
+	{
+		$this->slug = \Nette\Utils\Strings::webalize($slug);
 
+		return $this;
+	}
 
-								//@entity-generator-code --- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()
 	{
 		parent::__construct();
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getSlug()
+	{
+		return $this->slug;
 	}
 		
 	/**

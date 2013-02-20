@@ -62,6 +62,7 @@ class ImportAmenities extends BaseImport {
 			$amenity = $this->context->rentalAmenityEntityFactory->create();
 			$amenity->type = $amenityType;
 			$amenity->name = $this->createNewPhrase($nameDictionaryType, $x['name_dic_id']);
+			$amenity->slug = qc('select text from z_en where id = '.$x['name_dic_id']);
 			$amenity->oldId = $x['id'];
 			$this->model->persist($amenity);
 		}
@@ -76,6 +77,7 @@ class ImportAmenities extends BaseImport {
 				$amenity = $this->context->rentalAmenityEntityFactory->create();
 				$amenity->type = $amenityType;
 				$amenity->name = $this->createNewPhrase($nameDictionaryType, $x['name_dic_id']);
+			$amenity->slug = qc('select text from z_en where id = '.$x['name_dic_id']);
 				$amenity->oldId = $x['id'];
 				$this->model->persist($amenity);
 			}
@@ -89,6 +91,7 @@ class ImportAmenities extends BaseImport {
 			$amenity = $this->context->rentalAmenityEntityFactory->create();
 			$amenity->type = $amenityType;
 			$amenity->name = $this->createNewPhrase($nameDictionaryType, $x['name_dic_id']);
+			$amenity->slug = qc('select text from z_en where id = '.$x['name_dic_id']);
 			$amenity->oldId = $x['id'];
 			$this->model->persist($amenity);
 		}
@@ -101,6 +104,7 @@ class ImportAmenities extends BaseImport {
 			$amenity = $this->context->rentalAmenityEntityFactory->create();
 			$amenity->type = $amenityType;
 			$amenity->name = $this->createNewPhrase($nameDictionaryType, $x['name_dic_id']);
+			$amenity->slug = qc('select text from z_en where id = '.$x['name_dic_id']);
 			$amenity->oldId = $x['id'];
 			$this->model->persist($amenity);
 		}
@@ -113,6 +117,7 @@ class ImportAmenities extends BaseImport {
 			$amenity = $this->context->rentalAmenityEntityFactory->create();
 			$amenity->type = $amenityType;
 			$amenity->name = $this->createNewPhrase($nameDictionaryType, $x['name_dic_id']);
+			$amenity->slug = qc('select text from z_en where id = '.$x['name_dic_id']);
 			$amenity->oldId = $x['id'];
 			$this->model->persist($amenity);
 		}
@@ -125,6 +130,7 @@ class ImportAmenities extends BaseImport {
 			$amenity = $this->context->rentalAmenityEntityFactory->create();
 			$amenity->type = $amenityType;
 			$amenity->name = $this->createNewPhrase($nameDictionaryType, $x['name_dic_id']);
+			$amenity->slug = qc('select text from z_en where id = '.$x['name_dic_id']);
 			$amenity->oldId = $x['id'];
 			$this->model->persist($amenity);
 		}
@@ -137,6 +143,7 @@ class ImportAmenities extends BaseImport {
 			$amenity = $this->context->rentalAmenityEntityFactory->create();
 			$amenity->type = $amenityType;
 			$amenity->name = $this->createNewPhrase($nameDictionaryType, $x['name_dic_id']);
+			$amenity->slug = qc('select text from z_en where id = '.$x['name_dic_id']);
 			$amenity->oldId = $x['id'];
 			$this->model->persist($amenity);
 		}
@@ -147,6 +154,7 @@ class ImportAmenities extends BaseImport {
 		$amenity = $this->context->rentalAmenityEntityFactory->create();
 		$amenity->type = $amenityType;
 		$amenity->name = $this->createNewPhrase($nameDictionaryType, 1011);
+		$amenity->slug = 'separate-groups';
 		$this->model->persist($amenity);
 		$this->model->flush();
 
@@ -155,6 +163,7 @@ class ImportAmenities extends BaseImport {
 		$amenity = $this->context->rentalAmenityEntityFactory->create();
 		$amenity->type = $amenityType;
 		$amenity->name = $this->createPhraseFromString('\Rental\Amenity', 'name', 'ACTIVE', 'small dog allowed', $en);
+		$amenity->slug = 'small-dog';
 		$this->model->persist($amenity);
 		$this->model->flush();
 

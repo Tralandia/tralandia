@@ -10,6 +10,7 @@ use	Extras\Annotation as EA;
  * @ORM\Entity()
  * @ORM\Table(name="medium_type")
  * @EA\Primary(key="id", value="name")
+ * @EA\Generator(skip="{setSlug}")
  */
 class Type extends \Entity\BaseEntityDetails {
 
@@ -17,7 +18,24 @@ class Type extends \Entity\BaseEntityDetails {
 	 * @var string
 	 * @ORM\Column(type="string")
 	 */
+	protected $slug;
+	
+	/**
+	 * @var string
+	 * @ORM\Column(type="string")
+	 */
 	protected $name;
+
+	/**
+	 * @param string
+	 * @return \Entity\Rental\AmenityType
+	 */
+	public function setSlug($slug)
+	{
+		$this->slug = \Nette\Utils\Strings::webalize($slug);
+
+		return $this;
+	}
 
 	//@entity-generator-code --- NEMAZAT !!!
 
@@ -25,6 +43,14 @@ class Type extends \Entity\BaseEntityDetails {
 	public function __construct()
 	{
 		parent::__construct();
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getSlug()
+	{
+		return $this->slug;
 	}
 		
 	/**
