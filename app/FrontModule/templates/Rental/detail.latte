@@ -5,16 +5,13 @@
  *}
 
 {block content}
-<div class="span12">
-	<div class="rentaletailNavigaton">
-	<a href="#" class="prev"><i class="entypo-prev"></i> <span class="info">Predošlé ubytovanie</span></a>
-	Ubytovanie 24 z 52 výsledkov | Apartmány + Liptovský Mikuláš + Pre 6 osôb | <a href="#">späť na výsledky</a>
-	<a href="#" class="next"><span class="info">Ďaľšie ubytovanie </span><i class="entypo-slider-right"></i></a>
-	</div>
-</div>
+
+{include detail-navigation.latte}
+
+
 
 <div class="span12">
-	<div class="innerPadding baseRadius baseBorder marginBottom overflow">
+	<div class="innerPadding baseRadius baseBorder marginBottom overflow relative">
 		<div id="content" class="nopadding">
 			
 
@@ -485,12 +482,17 @@ $(document).ready(function(){
 				{if count($interviewAnswers) > 0}
 				<div class="metaObjectInfo" id="interviewAnswers">
 				<h3>{_o25231}</h3>
+				<ul class="interviewList">
 					{foreach $interviewAnswers as $interviewAnswer}
 						{if !empty($interviewAnswer->answer)}
-							<p class="question"><i class="entypo-question"></i> {_$interviewAnswer->question->question|firstUpper}</p>
-							<p class="answer"><i class="entypo-quote"></i> <span class="content">{_$interviewAnswer->answer|firstUpper} </span> <i class="entypo-quote"></i><div class="clearfix"></div></p>
+							<li>
+								<h4>{_$interviewAnswer->question->question|firstUpper}</h4>
+								<p>{_$interviewAnswer->answer|firstUpper}</p>
+							</li>
 						{/if}			
 					{/foreach}
+				</ul>
+				<div class="clearfix"></div>
 				</div>
 				{/if}
 
