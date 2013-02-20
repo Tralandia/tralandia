@@ -227,7 +227,6 @@ class Location extends \Entity\BaseEntityDetails {
 	{
 		parent::__construct();
 
-		$this->primaryRentals = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->addresses = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->backLinks = new \Doctrine\Common\Collections\ArrayCollection;
 	}
