@@ -108,19 +108,26 @@ App.prototype.ticketMesageCannedSelect = function(){
 
 App.prototype.uiToogleClick = function(){
 	var span  = $(this).find('span');
-
+	var $b  = $(this).find('b');
 	var forClass = '#'+$(this).attr('for');
+
+	var openText = $(this).attr('data-opentext');
+	var closeText = $(this).attr('data-closetext');
+
+
 
 	if($(this).hasClass('active')){
 		$(forClass).slideUp('fast');
 		$(this).removeClass('active').html($(this).attr('close'));
 		$(this).parent().parent().find('i').addClass('entypo-open');
 		$(this).parent().parent().find('i').removeClass('entypo-close');
+		$b.html(openText);
 	} else {
 		$(forClass).slideDown('fast');
 		$(this).addClass('active').html($(this).attr('opened'));
 		$(this).parent().parent().find('i').addClass('entypo-close');
 		$(this).parent().parent().find('i').removeClass('entypo-open');
+		$b.html(closeText);		
 	}
 
 	return false;
@@ -441,18 +448,22 @@ $(document).ready(function(){
 //console.log($.cookie('visitObjectList'));
 
 
+	$("select.select2").select2(); 
+
 	var A = new App();	
 
 	$('#objectDetailMap').traMap();
 
 	$('.socialIconsDetail').socialIconsDetail();
 
-	$("select.select2").select2(); 
+	
 
+	/*
 	$('select.select2').load(function() {
 			$(this).select2(); 
 	  	console.log('load selectbox');
 	});
+*/
 
 	$('.searchForm').searchFormSuggest();
 
@@ -613,6 +624,9 @@ $(document).ready(function(){
 
 
     $('body').click(function(){
+
+    	//$("select.select2").select2('close');
+
     	if(langmenuOpen){
     		$('#langMenuOptions').hide();
     		langmenuOpen = false;

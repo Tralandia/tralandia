@@ -1366,6 +1366,20 @@ ul.arrows {
 	.socialBtnHeader {
 
 	}
+
+	a.close {
+		display: block;
+		height: 15px;
+		width: 15px;
+		color: #888;
+		float: right;
+
+
+		i {
+			position: relative;
+			left: -2px;			
+		}
+	}
 }
 
 .objectDetailsOccupancyTab {
@@ -1641,21 +1655,34 @@ ul.arrows {
 
 		}
 
-		.amenitiesStart {
-			height: 20px;
+		#moreAmenities {
+			display: none;
 			overflow: hidden;
-			width: 283px;
+			clear: both;
+		}
+
+		.amenitiesStart {
+			
+			overflow: hidden;
+			
+			padding-right: 0;
 			float: left;
-			white-space: nowrap;
-			text-overflow: ellipsis;
+
 			margin: 0;
 			margin-left: 11px;	
 				
 		}
 
 		.showMoreAmenities {
-			float: right;
-			margin-right: 20px;
+			
+			width: auto;
+			b {
+				font-weight: normal;
+			}
+
+			i {
+				float: right;
+			}
 		}
 		
 
@@ -1667,7 +1694,7 @@ ul.arrows {
 			li {
 				margin: 0;
 				padding: 0;
-				width: 359px;
+				width: 340px;
 				&:before {
 					content: '';
 				}
@@ -1711,6 +1738,8 @@ ul.arrows {
 		}		
 
 		&.clock {
+			margin-top: 10px;
+			clear: both;
 			&:before {
 				content:'\1F554';
 			}			
@@ -1926,14 +1955,15 @@ ul.arrows {
 
 	}
 
-		.select2-search {
-			display: none;
-		}
+
 		.select2-drop {
 			background: #000;
 		}	
 
 }
+
+
+
 
 
 		.position , .addons {

@@ -70,6 +70,9 @@ parameters:
 				js:
 					- JqueryCookie/jquery.cookie.js
 
+			Select2HideInputText:
+				css: 
+					- Front/select2-hide-inputtext.less
 			Front:
 				css:
 					- Front/custom-icon.less					
@@ -158,7 +161,7 @@ parameters:
 				js: liveQuery/livequery.js
 			jQuery:
 				js: 
-					- jQuery/jquery.js
+					- jQuery/jquery.js					
 					- jQuery/jquery.livequery.js
 					- jQuery/jquery.textarea.js
 					- jQuery/jquery.neon.js
@@ -234,6 +237,17 @@ parameters:
 				-  %webloader.packages.bootstrap%
 				-  %webloader.packages.nette%								
 				-  %webloader.packages.gMap%
+			'Front:Rental:detail':
+				-  %webloader.packages.jQuery%
+				-  %webloader.packages.bootstrap%
+				-  %webloader.packages.JqueryCookie%									
+				-  %webloader.packages.Select2%
+				-  %webloader.packages.Front%
+				-  %webloader.packages.Texyla%
+				
+				-  %webloader.packages.nette%								
+				-  %webloader.packages.gMap%			
+				-  %webloader.packages.Select2HideInputText%			
 
 			'Front:Rental:list':
 				-  %webloader.packages.jQuery%
