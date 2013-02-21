@@ -2,77 +2,86 @@ parameters:
 	webloader:
 		packages:
 
-			customui:
-				css:
-					- BootstrapCustomUI/ui.css
-
-			phrase:
-				js:
-					- phrase/phrase.js
-
-				css:
-					- phrase/phrase.css
-			admin:
-				js:
-					- admin/admin.js
-					- admin/main.js
-				css:
-					- admin/_bootstrap.less
-
-			AdminFront:
+			adminFront:
 				css:					
 					- Front/datagrid.less
-
 				js:
 
-			Texyla:
+			texyla:
 				css:
-					- texyla/texyla/css/style.css
-					- texyla/themes/default/theme.css
+					- texyla/lib/texyla/css/style.css
+					- texyla/lib/themes/default/theme.css
 				js:
 					# Texyla core
-					- texyla/texyla/js/texyla.js
-					- texyla/texyla/js/selection.js
-					- texyla/texyla/js/texy.js
-					- texyla/texyla/js/buttons.js
-					- texyla/texyla/js/dom.js
-					- texyla/texyla/js/view.js
-					- texyla/texyla/js/ajaxupload.js
-					- texyla/texyla/js/window.js
+					- texyla/lib/texyla/js/texyla.js
+					- texyla/lib/texyla/js/selection.js
+					- texyla/lib/texyla/js/texy.js
+					- texyla/lib/texyla/js/buttons.js
+					- texyla/lib/texyla/js/dom.js
+					- texyla/lib/texyla/js/view.js
+					- texyla/lib/texyla/js/ajaxupload.js
+					- texyla/lib/texyla/js/window.js
 					# languages
-					- texyla/texyla/languages/cs.js
-					- texyla/texyla/languages/en.js
-					- texyla/texyla/languages/sk.js
-					- texyla/main.js
+					- texyla/lib/texyla/languages/cs.js
+					- texyla/lib/texyla/languages/en.js
+					- texyla/lib/texyla/languages/sk.js
 					# plugins
-					# - texyla/texyla/plugins/keys/keys.js
-					# - texyla/texyla/plugins/resizableTextarea/resizableTextarea.js
-					# - texyla/texyla/plugins/img/img.js
-					# - texyla/texyla/plugins/table/table.js
-					# - texyla/texyla/plugins/link/link.js
-					# - texyla/texyla/plugins/emoticon/emoticon.js
-					# - texyla/texyla/plugins/symbol/symbol.js
-					# - texyla/texyla/plugins/files/files.js
-					# - texyla/texyla/plugins/color/color.js
-					# - texyla/texyla/plugins/textTransform/textTransform.js
-					# - texyla/texyla/plugins/youtube/youtube.js
-					# - texyla/texyla/plugins/gravatar/gravatar.js
+					#- texyla/lib/texyla/plugins/keys/keys.js
+					#- texyla/lib/texyla/plugins/resizableTextarea/resizableTextarea.js
+					#- texyla/lib/texyla/plugins/img/img.js
+					#- texyla/lib/texyla/plugins/table/table.js
+					#- texyla/lib/texyla/plugins/link/link.js
+					#- texyla/lib/texyla/plugins/emoticon/emoticon.js
+					#- texyla/lib/texyla/plugins/symbol/symbol.js
+					#- texyla/lib/texyla/plugins/files/files.js
+					#- texyla/lib/texyla/plugins/color/color.js
+					#- texyla/lib/texyla/plugins/textTransform/textTransform.js
+					#- texyla/lib/texyla/plugins/youtube/youtube.js
+					#- texyla/lib/texyla/plugins/gravatar/gravatar.js
+					- texyla/custom/js/custom.js
 
 
-
-			Select2:
+			select2:
 				css:
-					- Select2/css/select2.css
+					- select2/lib/css/select2.css
 				js:
-					- Select2/js/select2.js
+					- select2/lib/js/select2.js
 
-			JqueryCookie:
-				js:
-					- JqueryCookie/jquery.cookie.js
-
-			Select2HideInputText:
+			select2HideInputText:
 				css: 
-					- Front/select2-hide-inputtext.less
+					- select2/custom/less/select2HideInputText.less
+
+			jqueryCookie:
+				js:
+					- jqueryCookie/lib/jquery.cookie.js
+			jstorage:
+				js:
+					- jstorage/lib/js/jstorage.min.js
+			jqueryScrollTo:
+				js:
+					- jqueryScrollTo/lib/js/jquery.scrollTo-1.4.3.1-min.js
+			jqueryUi:
+				js:
+					- jqueryUi/lib/js/jquery-ui-1.9.1.custom.min.js
+				css:
+					- jqueryUi/lib/css/tralandia/jquery-ui-1.9.1.custom.css
+
+			fileUpload:
+				js:
+					- fileUpload/lib/js/vendor/jquery.ui.widget.js
+					- fileUpload/lib/js/jquery.iframe-transport.js
+					- fileUpload/lib/js/jquery.fileupload.js
+
+					#- fileUpload/lib/js/tmpl.min.js
+					#- fileUpload/lib/js/load-image.min.js
+					#- fileUpload/lib/js/canvas-to-blob.min.js					
+					#- fileUpload/lib/js/jquery.fileupload-fp.js
+					#- fileUpload/lib/js/jquery.fileupload-ui.js
+					#- fileUpload/lib/js/locale.js
+					#- fileUpload/lib/js/main.js
+				css:
+					- fileUpload/lib/css/jquery.fileupload-ui.css
+
 			Front:
 				css:
 					- Front/custom-icon.less					
@@ -81,11 +90,9 @@ parameters:
 					- Front/sidebar.less
 					- Front/contact-page.less
 					- Front/object-detail-favorites.less
-					- FrontJqUi/css/tralandia/jquery-ui-1.9.1.custom.css
 					- Front/ticket.less
 					- Front/adminMenuAside.less
-					- Front/less/font-awesome.less
-					- FileUpload/css/jquery.fileupload-ui.css
+					- Front/less/font-awesome.less					
 					- Front/reservation-form.less
 					- Front/main.css.less
 					- Front/object-list.less
@@ -94,17 +101,11 @@ parameters:
 					- Front/calendarWidgetControl.less	
 					- Front/interview-list.less			
 				js:
-					- FileUpload/js/vendor/jquery.ui.widget.js
-					- FileUpload/js/jquery.iframe-transport.js
-					- FileUpload/js/jquery.fileupload.js
-					- jqueryScrollTo/jquery.scrollTo-1.4.3.1-min.js
-					- FrontJqUi/js/jquery-ui-1.9.1.custom.min.js
 					- Front/js/jquery-tra-map.js
 					- Front/js/object-register-to-view-list.js
 					- Front/js/favorite-active-links.js
 					- Front/js/favorite-slider.js
 					- Front/js/show-favorite-slider.js
-					- jstorage/jstorage.min.js
 					- Front/js/jquery.jcarousel.min.js
 					- Front/js/ui-localization-datepicker.js
 					- Front/js/trax-forms-ui.js					
@@ -112,42 +113,15 @@ parameters:
 					- Front/js/detail-navigation.js
 					- 'https://apis.google.com/js/plusone.js'
 
-					
-
-
 			FavoriteScroll:
 				js:
 					- Front/favorites-scroll.js	
 
-			front:
-				css:
-					- front/default.css
-					- front/mainHeader.css
-					- front/mainFooter.css
-					- front/search.css
-					- front/clickMap.css
-					- front/home.css
-					- front/objectsList.css
-					- front/objectDetails.css
-					- front/calendar.css
-					- front/forms.css
-					- front/listPanel.css
-					- skinnedcombo/skin.css
-				js:
-					- jQuery/jquery.js
-					- skinnedcombo/jquery.skinned-combo.pack.js
-			autopilot:
-				js: 
-					- admin/admin.js
-					- admin/main.js
-					- autopilot/autopilot.js
-				css: autopilot/_bootstrap.less
 			nette:
 				js: 
-					#- nette/nette.js
-					- nette/netteForms.js
-					- nette/nette.ajax.js
-					- nette/main.js
+					- nette/lib/netteForms.js
+					- nette/lib/nette.ajax.js
+					- nette/custom/js/custom.js
 			bootstrap:
 				js: 
 					#- bootstrap/bootstrap-alert.js
@@ -162,74 +136,24 @@ parameters:
 					- bootstrap/bootstrap-tab.js
 					#- bootstrap/bootstrap-transition.js
 					#- bootstrap/bootstrap-typeahead.js
-			liveQuery:
-				js: liveQuery/livequery.js
+
 			jQuery:
 				js: 
-					- jQuery/jquery.js					
-					- jQuery/jquery.livequery.js
-					- jQuery/jquery.textarea.js
-					- jQuery/jquery.neon.js
-			
-
-			jQueryCalendar:
-				js: jQueryCalendar/jquery.calendar.js
-				css: jQueryCalendar/jquery.calendar.css
-			jQueryUI:
-				js: 
-					- jQueryUI/jquery.ui.js
-					- jQueryUI/multiselect/ui.multiselect.js
-					- jQueryUI/jquery.checkbox.js
-				css: 
-					- jQueryUI/jquery.ui.css
-					- jQueryUI/ui.multiselect.css
-					- jQueryUI/jquery.checkbox.css
-					- jQueryUI/jquery-ui-1.8.20.custom.css
-			fileUpload:
-				js:
-					- FileUpload/js/vendor/jquery.ui.widget.js
-					- FileUpload/js/tmpl.min.js
-					- FileUpload/js/load-image.min.js
-					- FileUpload/js/canvas-to-blob.min.js
-					- FileUpload/js/jquery.iframe-transport.js
-					- FileUpload/js/jquery.fileupload.js
-					- FileUpload/js/jquery.fileupload-fp.js
-					- FileUpload/js/jquery.fileupload-ui.js
-					- FileUpload/js/locale.js
-					- FileUpload/js/main.js
-				css:
-					- FileUpload/css/jquery.fileupload-ui.css
-			phraseControl:
-				js: PhraseControl/jquery.phraseControl.js
-			liveWysi:
-				js: LiveWysi/jquery.liveWysi.js
-			contactsControl:
-				js: ContactsControl/jquery.contactsControl.js
-			dateInput:
-				css: 
-					- DateInput/dateInput.css
-					- DateInput/jquery-ui-timepicker-addon.css
-				js: 
-					- DateInput/timepicker.js
-					- DateInput/dateInput.js
-
+					- jQuery/lib/jquery.js
 			gMap:
 				js: "https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"
 		sets:
 
 			'Admin:Ap':
-				- %webloader.packages.jQuery%
-				- %webloader.packages.jQueryCalendar%
-				- %webloader.packages.dateInput%
-				- %webloader.packages.autopilot%
+				- %webloader.packages.jQuery%							
 				- %webloader.packages.bootstrap%
 
 			Admin:
 				-  %webloader.packages.jQuery%
-				-  %webloader.packages.JqueryCookie%
+				-  %webloader.packages.jqueryCookie%
 				-  %webloader.packages.Front%
-				-  %webloader.packages.Select2%
-				-  %webloader.packages.Texyla%
+				-  %webloader.packages.select2%
+				-  %webloader.packages.texyla%
 				-  %webloader.packages.bootstrap%
 				-  %webloader.packages.nette%
 				-  %webloader.packages.gMap%
@@ -237,31 +161,33 @@ parameters:
 			Front:
 				
 				-  %webloader.packages.jQuery%
-				-  %webloader.packages.JqueryCookie%									
-				-  %webloader.packages.Select2%
+				-  %webloader.packages.jqueryCookie%									
+				-  %webloader.packages.select2%
 				-  %webloader.packages.Front%
-				-  %webloader.packages.Texyla%
+				-  %webloader.packages.texyla%
 				-  %webloader.packages.bootstrap%
 				-  %webloader.packages.nette%								
 				-  %webloader.packages.gMap%
 			'Front:Rental:detail':
 				-  %webloader.packages.jQuery%
 				-  %webloader.packages.bootstrap%
-				-  %webloader.packages.JqueryCookie%									
-				-  %webloader.packages.Select2%
+				-  %webloader.packages.jqueryUi%
+				-  %webloader.packages.jqueryCookie%									
+				-  %webloader.packages.select2%
 				-  %webloader.packages.Front%
-				-  %webloader.packages.Texyla%
+				-  %webloader.packages.texyla%
 				
 				-  %webloader.packages.nette%								
 				-  %webloader.packages.gMap%			
-				-  %webloader.packages.Select2HideInputText%			
+				-  %webloader.packages.select2HideInputText%			
 
 			'Front:Rental:list':
 				-  %webloader.packages.jQuery%
-				-  %webloader.packages.JqueryCookie%
+				-  %webloader.packages.jqueryCookie%
+				-  %webloader.packages.jqueryUi%
 				-  %webloader.packages.Front%				
-				-  %webloader.packages.Select2%
-				-  %webloader.packages.Texyla%
+				-  %webloader.packages.select2%
+				-  %webloader.packages.texyla%
 				-  %webloader.packages.bootstrap%
 				-  %webloader.packages.nette%
 				-  %webloader.packages.gMap%			
