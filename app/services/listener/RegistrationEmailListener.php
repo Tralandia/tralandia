@@ -29,7 +29,7 @@ class RegistrationEmailListener extends BaseEmailListener implements \Kdyby\Even
 	 *
 	 * @return \Extras\Email\Compiler
 	 */
-	public function prepareCompiler(\Entity\Rental\Rental $rental)
+	private function prepareCompiler(\Entity\Rental\Rental $rental)
 	{
 		$receiver = $rental->getOwner();
 

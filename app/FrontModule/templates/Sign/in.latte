@@ -12,10 +12,23 @@
 	</div>
 </div>
 
-{control signInForm}
-{control forgotPasswordForm}
+{includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
+{form signInForm, class => "traform dashboard"}
+	{include #text, control => $form['login']}
+	{include #password, control => $form['password']}
+	{include #submit, control => $form['submit']}
+	<button class="btn btn-link marginBottom" id="forgottenPasswordOpen">{_o1091}</button>
+{/form}
 
+{form forgotPasswordForm, class => "traform dashboard"}
+	{include #email, control => $form['email']}
+	{include #submit, control => $form['submit']}
+	<button class="btn cancel marginBottom" id="closeForgottenPasswordForm">#Zatvor</button>
+{/form}
+
+{*
 <form class="traform loginform">
+
 
 <div class="row-fluid">
 	<div class="span4">
@@ -47,7 +60,7 @@
 
 <div class="row-fluid">
 <div class="span4">&nbsp;</div>
-<div class="span7">							
+<div class="span7">
 		<button class="btn btn-green marginBottom">#Prihlásit</button>
 		<button class="btn btn-link marginBottom" id="forgottenPasswordOpen">{_o1091}</button>
 	</div>
@@ -82,10 +95,10 @@
 
 <div class="row-fluid">
 <div class="span4">&nbsp;</div>
-<div class="span7">						
+<div class="span7">
 	<button class="btn btn-green marginBottom">{_o1103}</button>
 	<button class="btn cancel marginBottom" id="closeForgottenPasswordForm">#Zatvor</button>
 </div>
 </div>
 
-</form>
+</form>*}
