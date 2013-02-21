@@ -29,7 +29,8 @@ class BaseImport {
 			'entities' => array(
 				'\Phrase\Phrase' => array(),
 			),
-			'subsections' => array(),
+			'subsections' => array('importPhrases', 'importNewPhrases'),
+			'saveImportStatus' => FALSE,
 		),
 		'amenities' => array(
 			'entities' => array(
@@ -213,6 +214,7 @@ class BaseImport {
 		$allTables = qNew('SHOW tables');
 		while ($table = mysql_fetch_array($allTables)) {
 			if ($table[0] == '__importVariables') continue;
+			if ($table[0] == '__importPhrases') continue;
 			qNew('drop table '.$table[0]);
 		}
 		qNew('SET FOREIGN_KEY_CHECKS = 1;');

@@ -17,6 +17,9 @@ class ImportHtmlPhrases extends BaseImport {
 	protected $multiIds = array(12277, 2443, 940, 925);
 
 	public function doImport($subsection = NULL) {
+		$this->{$subsection}();
+	}
+	public function importPhrases() {
 
 		$dictionaryType = $this->createPhraseType('Html', 'Html', 'MARKETING');
 		$dictionaryTypeMulti = $this->createPhraseType('HtmlMulti', 'HtmlMulti', 'MARKETING');
@@ -46,4 +49,44 @@ class ImportHtmlPhrases extends BaseImport {
 		$this->savedVariables['importedSections']['htmlPhrases'] = 1;
 	}
 
+	public function importNewPhrases() {
+		$languageRepository = $this->context->languageRepositoryAccessor->get();
+		$phraseRepository = $this->context->phraseRepositoryAccessor->get();
+
+		$en = $languageRepository->findOneByIso('en');
+		$sk = $languageRepository->findOneByIso('sk');
+		$phraseType = $this->context->phraseTypeRepositoryAccessor->get()->findOneByEntityAttribute('Html');
+		$phraseTypeMulti = $this->context->phraseTypeRepositoryAccessor->get()->findOneByEntityAttribute('HtmlMulti');
+
+		$phraseCreator = new \Service\Phrase\PhraseCreator($phraseRepository, $languageRepository);
+
+		$r = qNew('select * from __importPhrases order by id');
+		while ($x = mysql_fetch_array($r)) {
+			if ($this->context->phraseRepositoryAccessor->get()->findOneByOldId($x['id'])) continue;
+
+			$thisType = $x['isMulti'] ? $phraseTypeMulti : $phraseType;
+			//d($thisType);
+			$thisPhrase = $phraseCreator->create($thisType);
+			$thisPhrase->oldId = $x['id'];
+
+			$thisPhrase->setTranslationText($en, $x['en0']);
+			$thisPhrase->setTranslationText($sk, $x['sk0']);
+			if ($x['isMulti']) {
+				$variations = array();
+				$variations[0][0]['nominative'] = $x['en0'];
+				$variations[1][0]['nominative'] = $x['en1'];
+				$thisPhrase->getTranslation($en)->setVariations($variations);
+
+				$variations = array();
+				$variations[0][0]['nominative'] = $x['sk0'];
+				$variations[1][0]['nominative'] = $x['sk1'];
+				$variations[2][0]['nominative'] = $x['sk2'];
+				d($variations);
+				$thisPhrase->getTranslation($sk)->setVariations($variations);
+			}
+			$languageRepository->persist($thisPhrase); 
+			break;
+		}
+		$languageRepository->flush();
+	}
 }

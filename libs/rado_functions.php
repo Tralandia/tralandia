@@ -28,6 +28,12 @@ function qNew($query, $show = 0) {
 
 	if (!$link1) {
 		$link1=mysql_connect('127.0.0.1', 'root', 'root');
+		q("SET NAMES utf8");
+		q("SET character_set_client = utf8;");
+		q("SET character_set_connection = utf8;");
+		q("SET character_set_results = utf8;"); 
+		q("SET character_set_database = utf8;");
+		q("SET character_set_server = utf8;");
 	}
 	mysql_select_db('tralandia', $link1);
 
