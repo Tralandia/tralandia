@@ -25,7 +25,7 @@
 			{*{control footer}*}
 			{if isset($isHome)}
 				{cache $footerCountriesCacheId, if => $useTemplateCache, expire => '+1 day'}
-					{control countriesFooter}
+					{*{control countriesFooter}*}
 				{/cache}
 			{/if}
 		</div>
