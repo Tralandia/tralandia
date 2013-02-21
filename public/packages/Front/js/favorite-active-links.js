@@ -28,20 +28,23 @@
 
 			(new $.favoriteActiveLinks(this, options));
 			
+			var list = $.cookie('favoritesList');
 
-			var list = appObject.storageGet('favoritesList');
-			
-
-			if(typeof list == 'undefined' || list == null){
-
+			if(typeof list != 'undefined'){
+				list = list.split(',');
 			} else {
+				list = false;
+			}			
+
+
+			if(list){
 				var currentId = parseInt($(this).attr('rel'));
 
-				if(appObject._checkIdInObject(list,currentId)){
+				if(appObject.in_array(list,currentId)){
 					
 					$(this).addClass('selected');
-				}                
-			}
+				} 
+			} 
 
 		});
 	};

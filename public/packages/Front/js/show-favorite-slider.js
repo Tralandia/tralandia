@@ -31,6 +31,12 @@
 			
 			this.list = $(this).find('ul');
 
+
+
+
+
+
+
 				//appObject.storageDelete('favoritesList');
 
 				//this.visitList = appObject.storageDelete('favoritesList');
@@ -102,7 +108,7 @@
 
 					}); // ---------
 
-
+				/*
 				this.favoritesData = appObject.storageGet('favoritesList');
 				
 				this.visitList = appObject.storageGet('visitObjectList');
@@ -111,7 +117,7 @@
 					//$(this).parent().parent().parent().hide();
 					//$('#favoritesStatisContainerPlaceholder').addClass('inactive');
 				} else {
-					$(this).parent().parent().parent().show();
+					//$(this).parent().parent().parent().show();
 					var self = this;
 
 					this.currentId = $('#content').find('h1.addToViewList');
@@ -163,6 +169,8 @@
 					
 
 				}
+
+				*/
 
 		});
 	};
