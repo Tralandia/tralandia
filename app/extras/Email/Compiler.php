@@ -157,6 +157,18 @@ class Compiler {
 	}
 
 	/**
+	 * @param $variableName
+	 * @param \Entity\User\RentalReservation $reservation
+	 *
+	 * @return Compiler
+	 */
+	public function addReservation($variableName, \Entity\User\RentalReservation $reservation)
+	{
+		$this->variables[$variableName] = new Variables\ReservationVariables($reservation);
+		return $this;
+	}
+
+	/**
 	 * @param $name
 	 * @param $value
 	 *
