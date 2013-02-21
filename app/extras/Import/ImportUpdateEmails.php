@@ -36,7 +36,7 @@ class ImportUpdateEmails extends BaseImport {
 
 			$replaceMerge = array_merge(
 				$replace['default'],
-				\Nette\Utils\Arrays::get($replace, $email->getOldId(), array())
+				\Nette\Utils\Arrays::get($replace, $email->getSlug(), array())
 			);
 
 			$replaceTemp = array();

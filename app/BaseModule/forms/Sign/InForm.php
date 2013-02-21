@@ -10,7 +10,7 @@ class InForm extends \BaseModule\Forms\BaseForm {
 		$this->addText('login', 'Login:');
 		$this->addPassword('password', 'Password');
 
-		$this->addSubmit('signIn', 'SignIn');
+		$this->addSubmit('submit', 'SignIn');
 
 		$this->onSuccess[] = callback($this, 'onSuccess');
 	}
