@@ -162,3 +162,9 @@ factories:
 	locationDecoratorFactory: 
 		class: Service\Location\LocationService(..., %entity%)
 		implement: Model\Location\ILocationDecoratorFactory
+
+	attachmentDecoratorFactory:
+		class: Service\Ticket\AttachmentDecorator(..., %entity%)
+		setup:
+			- setStorage(@ticketMessageAttachmentStorage)
+		implement: Service\Ticket\IAttachmentDecoratorFactory

@@ -60,6 +60,11 @@ class User extends \Entity\BaseEntityDetails {
 	 */
 	protected $newsletter;
 
+	public function hasRole(array $roles)
+	{
+		return $this->getRole() && in_array($this->getRole()->getSlug(), $roles);
+	}
+
 
 	public function getIdentity()
 	{

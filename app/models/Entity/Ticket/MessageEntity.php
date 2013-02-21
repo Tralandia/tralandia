@@ -42,6 +42,14 @@ class Message extends \Entity\BaseEntity {
 	 */
 	protected $attachments;
 
+	/**
+	 * @return bool
+	 */
+	public function hasAttachments()
+	{
+		return $this->getAttachments()->count() > 0;
+	}
+
 
 	//@entity-generator-code --- NEMAZAT !!!
 

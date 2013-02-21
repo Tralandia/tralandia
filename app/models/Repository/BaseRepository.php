@@ -38,22 +38,23 @@ class BaseRepository extends EntityRepository {
 
 	public function persist($entity) {
 		$this->_em->persist($entity);
+		return $this;
 	}
 
 	public function flush($entity = NULL) {
 		$this->_em->flush($entity);
+		return $this;
+	}
+
+	public function save($entity) {
+		$this->persist($entity)->flush($entity);
+		return $this;
 	}
 	
 	public function remove($entity) {
 		$this->_em->remove($entity);
 	}
 
-	public function save($entity)
-	{
-		$this->persist($entity);
-		$this->flush($entity);
-	}
-	
 	public function getDataSource() {
 		$query = $this->_em->createQueryBuilder();
 		$query->select('e')->from($this->_entityName, 'e');
