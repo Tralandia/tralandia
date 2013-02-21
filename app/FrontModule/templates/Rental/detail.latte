@@ -11,7 +11,7 @@
 
 
 <div class="span12">
-	<div class="innerPadding baseRadius baseBorder marginBottom overflow relative">
+	<div class="sitePadding baseRadius baseBorder marginBottom overflow relative">
 		<div id="content" class="nopadding">
 			
 
@@ -118,6 +118,56 @@
 
 <div class="clearfix"></div>
 
+	{var $noPriceTable = true}
+
+	{if count($rental->pricelistRows) > 0}
+	{var $noPriceTable = false}
+		<ul class="detailPriceList">
+			<li><h3><span>$ </span>Cenniky</h3>
+				<ul>
+
+					{foreach $rental->pricelistRows as $pricelistRow}
+					<li>	
+					{dump $pricelistRow->roomType}
+					{$pricelistRow->roomCount} {_$pricelistRow->roomType->name, null , [count => $pricelistRow->bedCount]}
+						<span>
+							{$pricelistRow->bedCount} {_o940 , null , [count => $pricelistRow->bedCount]}
+							{if $pricelistRow->extraBedCount}{$pricelistRow->extraBedCount} {_o1158 , null , [count => $pricelistRow->extraBedCount]}{/if}							
+						</span>
+
+						<span class="price">
+							{$pricelistRow->price} #mena
+						</span>
+					</li>
+					{/foreach}
+					
+				
+					{if count($rental->pricelists) > 0}
+					{var $noPriceTable = false}
+						{foreach $rental->pricelists as $pricelist}
+						<li>							
+							{if $pricelist->name} {$pricelist->name} {/if} {_$pricelist->language->name} <i class="entypo-save"></i> <a href="{$pricelist->filePath}" class="btn btn-green btn-text-wrap btn-pricelist">{_o955}</a>							
+						</li>
+						{/foreach}
+					{/if}					
+
+				</ul>
+
+				
+			</li>
+		</ul>
+	{/if}
+
+	{if $noPriceTable}
+		{if $rental->pricesUponRequest}
+			#len na dotaz
+			{else}
+			#Übytovatel neuvadza detailne ceny. Orientacna cena ubytovania je {$rental->price} Eur / osoba / noc"	
+		{/if}								
+	{/if}					
+
+	<div class="clearfix"></div>	
+
 		<div class="detailAmanities">
 			<ul class="objectDetailServicesIconList list">
 
@@ -192,60 +242,6 @@
 
 			</ul>
 		</div>
-
-
-<div class="clearfix"></div>
-
-	{var $noPriceTable = true}
-
-	{if count($rental->pricelistRows) > 0}
-	{var $noPriceTable = false}
-		<ul class="detailPriceList">
-			<li><h3><span>$ </span>Cenniky</h3>
-				<ul>
-
-					{foreach $rental->pricelistRows as $pricelistRow}
-					<li>	
-					{dump $pricelistRow->roomType}
-					{$pricelistRow->roomCount} {_$pricelistRow->roomType->name, null , [count => $pricelistRow->bedCount]}
-						<span>
-							{$pricelistRow->bedCount} {_o940 , null , [count => $pricelistRow->bedCount]}
-							{if $pricelistRow->extraBedCount}{$pricelistRow->extraBedCount} {_o1158 , null , [count => $pricelistRow->extraBedCount]}{/if}							
-						</span>
-
-						<span class="price">
-							{$pricelistRow->price} #mena
-						</span>
-					</li>
-					{/foreach}
-					
-				
-					{if count($rental->pricelists) > 0}
-					{var $noPriceTable = false}
-						{foreach $rental->pricelists as $pricelist}
-						<li>							
-							{if $pricelist->name} {$pricelist->name} {/if} {_$pricelist->language->name} <i class="entypo-save"></i> <a href="{$pricelist->filePath}" class="btn btn-green btn-text-wrap btn-pricelist">{_o955}</a>							
-						</li>
-						{/foreach}
-					{/if}					
-
-				</ul>
-
-				
-			</li>
-		</ul>
-	{/if}
-
-	{if $noPriceTable}
-		{if $rental->pricesUponRequest}
-			#len na dotaz
-			{else}
-			#Übytovatel neuvadza detailne ceny. Orientacna cena ubytovania je {$rental->price} Eur / osoba / noc"	
-		{/if}								
-	{/if}					
-
-	<div class="clearfix"></div>	
-
 
 </div>
 
@@ -471,6 +467,16 @@ $(document).ready(function(){
 							<li><img alt="{_$rental->name} {$ii}" src="{$basePath}{$photo|rentalImageSrc}" /></li>
 							{var $ii = $ii + 1}
 						{/foreach}
+							<li><img alt="" n:fakeImage=""/></li>
+							<li><img alt="" n:fakeImage=""/></li>
+							<li><img alt="" n:fakeImage=""/></li>
+							<li><img alt="" n:fakeImage=""/></li>
+							<li><img alt="" n:fakeImage=""/></li>
+							<li><img alt="" n:fakeImage=""/></li>
+							<li><img alt="" n:fakeImage=""/></li>
+							<li><img alt="" n:fakeImage=""/></li>
+							<li><img alt="" n:fakeImage=""/></li>
+							<li><img alt="" n:fakeImage=""/></li>
 					</ul>
 					<div class="clearfix"></div>
 				</div>				
