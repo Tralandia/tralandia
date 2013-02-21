@@ -1,16 +1,24 @@
 <?php
 
-namespace Extras\Email;
+namespace Mail;
 
 use Entity\Email;
+use Entity\Language;
+use Entity\Location\Location;
+use Nette\Application\Application;
 use Nette\Utils\Strings;
-use Extras\Email\Variables;
+use Mail\Variables;
 /**
  * Compiler class
  *
  * @author Dávid Ďurika
  */
 class Compiler {
+
+	/**
+	 * @var \Nette\Application\Application
+	 */
+	protected $application;
 
 	/**
 	 * @var \Entity\Email\Template
@@ -36,6 +44,17 @@ class Compiler {
 	 * @var array
 	 */
 	protected $customVariables = array();
+
+	/**
+	 * @param \Entity\Location\Location $location
+	 * @param \Entity\Language $language
+	 * @param \Nette\Application\Application $application
+	 */
+	public function __construct(Location $location, Language $language, Application $application)
+	{
+		$this->application = $application;
+		$this->setEnvironment($location, $language);
+	}
 
 	/**
 	 * @param \Entity\Email\Template $template
@@ -85,14 +104,14 @@ class Compiler {
 	 **
 	 * @return Compiler
 	 */
-	public function setEnvironment(\Entity\Location\Location $location, \Entity\Language $language = NULL)
+	private function setEnvironment(\Entity\Location\Location $location, \Entity\Language $language = NULL)
 	{
 		if(!$language) $language = $location->getDefaultLanguage();
 
 		$location = new Variables\LocationVariables($location);
 		$language = new Variables\LanguageVariables($language);
 
-		$this->variables['env'] = new Variables\EnvironmentVariables($location, $language);
+		$this->variables['env'] = new Variables\EnvironmentVariables($location, $language, $this->application);
 		return $this;
 	}
 
@@ -102,7 +121,7 @@ class Compiler {
 	 *
 	 * @return Compiler
 	 */
-	public function addLanguage($variableName, \Entity\Language $language)
+	private function addLanguage($variableName, \Entity\Language $language)
 	{
 		$this->variables[$variableName] = new Variables\LanguageVariables($language);
 		return $this;
@@ -114,7 +133,7 @@ class Compiler {
 	 *
 	 * @return Compiler
 	 */
-	public function addLocation($variableName, \Entity\Location\Location $location)
+	private function addLocation($variableName, \Entity\Location\Location $location)
 	{
 		$this->variables[$variableName] = new Variables\LocationVariables($location);
 		return $this;
@@ -128,7 +147,7 @@ class Compiler {
 	 */
 	public function addRental($variableName, \Entity\Rental\Rental $rental)
 	{
-		$this->variables[$variableName] = new Variables\RentalVariables($rental);
+		$this->variables[$variableName] = new Variables\RentalVariables($rental, $this->application);
 		return $this;
 	}
 
@@ -302,4 +321,14 @@ class Compiler {
 		return str_replace(array_keys($replace), array_values($replace), $html);
 	}
 
+}
+
+interface ICompilerFactory {
+	/**
+	 * @param \Entity\Location\Location $location
+	 * @param \Entity\Language $language
+	 *
+	 * @return Compiler
+	 */
+	public function create(Location $location, Language $language);
 }

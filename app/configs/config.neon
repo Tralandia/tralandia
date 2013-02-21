@@ -145,9 +145,6 @@ services:
 	rentalCreator: Service\Rental\RentalCreator(@rentalRepositoryAccessor::get())
 	addressCreator: Service\Contact\AddressCreator
 
-	emailCompiler:
-		class: Extras\Email\Compiler
-
 	addressNormalizer: Service\Contact\AddressNormalizer
 
 	# ==============================
@@ -269,6 +266,10 @@ factories:
 	translatorFactory:
 		class: Extras\Translator(%language%, @phraseRepositoryAccessor, @translatorCache)
 		implement: Extras\ITranslatorFactory
+
+	emailCompilerFactory:
+		class: Mail\Compiler(%location%, %language%)
+		implement: Mail\ICompilerFactory
 
 	itemMapFactory: Extras\FormMask\Items\Foctories\MapFactory
 	itemEmailFactory: Extras\FormMask\Items\Foctories\EmailFactory
