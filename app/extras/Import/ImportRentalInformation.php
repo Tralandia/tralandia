@@ -47,8 +47,8 @@ class ImportRentalInformation extends BaseImport {
 			'pricelists' => array('compulsory' => FALSE),
 			'pricelistRows' => array('compulsory' => FALSE),
 			'classification' => array('compulsory' => FALSE),
-			'rooms' => array('compulsory' => TRUE),
-			'bedroomCount' => array('compulsory' => TRUE),
+			'rooms' => array('compulsory' => FALSE),
+			'bedroomCount' => array('compulsory' => FALSE),
 			'images' => array('compulsory' => FALSE), // toto je tu docasne pocas DEV
 		);
 
