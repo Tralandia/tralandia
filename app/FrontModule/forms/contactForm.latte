@@ -1,5 +1,14 @@
-{control contactForm}
+{includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
+{form contactForm}
+	{ifset $form['rental']}
+		{include #select, control => $form['rental']}
+	{/ifset}
 
+	{include #email, control => $form['email']}
+	{include #textArea, control => $form['message']}
+	{include #submit, control => $form['submit']}
+	{include #button, control => $form['cancel']}
+{/form}
 
 
 {*

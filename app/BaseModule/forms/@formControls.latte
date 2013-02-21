@@ -12,6 +12,17 @@
 
 
 {*
+	Text Area Control -------------------------------------------
+	@param $control \Nette\Forms\Controls\BaseControl
+	@param $prepend array
+	@param $append array
+*}
+{define #textArea}
+	{include #baseControl, control => $control}
+{/define #textArea}
+
+
+{*
 	Password Control -------------------------------------------
 	@param $control \Nette\Forms\Controls\BaseControl
 	@param $prepend array
@@ -466,3 +477,15 @@
 	<i n:ifset="$icon" class="{$icon}"></i> {$control->caption}
 </button>
 {/define #submit}
+
+
+{*
+	Button Container -------------------------------------------
+	@param $control \Nette\Forms\Controls\SubmitButton
+	@param $icon string
+*}
+{define #button}
+<button type="button" class="btn" name="{$control->getHtmlName()}" id="{$control->getHtmlId()}">
+	<i n:ifset="$icon" class="{$icon}"></i> {$control->caption}
+</button>
+{/define #button}
