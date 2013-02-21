@@ -179,6 +179,8 @@ App.prototype.removeObjectFromFavorites = function(id){
 
 	var self = new App;
 
+
+
 	var list = $.cookie('favoritesList');
 
 	if(typeof list != 'undefined'){
@@ -207,23 +209,25 @@ App.prototype.removeObjectFromFavorites = function(id){
 		// remove from favorites slider 		
 		// if page is Rental:detai 
 
+		/*
 		var newWidth = sliderList.width();
 			newWidth -= 125;
 			// set new width 
 			sliderList.css({
 				width: newWidth+'px'
 			});
+		*/
+
+		favoriteSlider.find('ul li[rel^="'+id+'"]').remove();
 
 		if(list.length == 0){
 
 			$('#compareList').parent().parent().parent().slideUp(300,function(){
-				favoriteSlider.find('ul li.rel-'+id).remove();
+				
 				$('#favoritesStatisContainerPlaceholder').addClass('inactive');
 				$('#favoritesStatisContainerPlaceholder').addClass('hide');
 			});
-		} else {
-			favoriteSlider.find('ul li.rel-'+id).remove();
-		}
+		} 
 }
 
 
@@ -248,20 +252,22 @@ App.prototype.addToFavorites = function(){
 		title: $(this).attr('data-title')
 	}
 
-	var removeLink = $('<a></a>').attr({
-		href: '#',
-		rel: data.id
-	}).addClass('removeLink');
-
-
-	var newLink = $('<a></a>').attr({
-		href: data.link,
-		title: data.title
-	}).addClass('link');
-
 	var favoriteSlider = $('#compareList');
 
 	var sliderList = favoriteSlider.find('ul');
+
+		$pattern = sliderList.find('li.template');
+		var patternText = $pattern[0].outerHTML.toString();
+
+		//console.log($pattern[0].outerHTML);
+
+		patternText = patternText.replace("~id~",data.id);
+		patternText = patternText.replace("~photo~",data.thumb);		
+		patternText = patternText.replace("~title~",data.title);
+		patternText = patternText.replace("~url~",data.link)
+		patternText = patternText.replace("template","")
+
+		//console.log(patternText);
 
 	if($(this).hasClass('selected')){
 		// remove from list
@@ -283,25 +289,20 @@ App.prototype.addToFavorites = function(){
 			favoriteSlider.parent().parent().parent().slideDown(300);
 
 			// create new li element and append to favorites slider list
-			var newLi = $('<li></li>').css('background-image','url('+data.thumb+')');
-				
-				newLi.addClass('rel-'+data.id);
+			var newLi = $(patternText);
 
 				if($(this).hasClass('currentObject')){
 					newLi.addClass('current');
 				}
 				
-				removeLink.appendTo(newLi);
-				newLink.appendTo(newLi);
-			
-						// change default css width favoritest slider ul
-						var newWidth = sliderList.width();
-							newWidth += 125;							
-							sliderList.css({
-								width: newWidth+'px'
-							});
-							
-							newLi.appendTo(sliderList);
+			// change default css width favoritest slider ul
+			var newWidth = sliderList.width();
+				newWidth += 125;							
+				sliderList.css({
+					width: newWidth+'px'
+				});
+				
+				newLi.appendTo(sliderList);
 							
 				// change button class
 				$(this).addClass('selected');
@@ -311,6 +312,8 @@ App.prototype.addToFavorites = function(){
 
 			if(!self._checkIdInObject(list,data.id)){
 				
+				console.log(list);
+
 				list.push(data.id);
 
 				$.cookie('favoritesList',list.join());
@@ -321,26 +324,21 @@ App.prototype.addToFavorites = function(){
 
 				if(favoriteSlider.length > 0){
 
-					var newLi = $('<li></li>').css('background-image','url('+data.thumb+')');
+					var newLi = $(patternText);
+
+
+					if($(this).hasClass('currentObject')){
+						newLi.addClass('current');
+					}
+	
+					var newWidth = sliderList.width();
+						newWidth += 125;
+						// set new width 
+						sliderList.css({
+							width: newWidth+'px'
+						});
 						
-						newLi.addClass('rel-'+data.id);
-
-						if($(this).hasClass('currentObject')){
-							newLi.addClass('current');
-						}
-
-						removeLink.appendTo(newLi);
-						newLink.appendTo(newLi);
-
-						
-						var newWidth = sliderList.width();
-							newWidth += 125;
-							// set new width 
-							sliderList.css({
-								width: newWidth+'px'
-							});
-							
-							newLi.appendTo(sliderList);
+						newLi.appendTo(sliderList);
 
 				}
 
@@ -444,7 +442,7 @@ App.prototype.closeForgottenPasswordForm = function(){
 $(document).ready(function(){
 
 //$.removeCookie('favoritesList');
-
+console.log($.cookie('favoritesList'));
 //console.log($.cookie('visitObjectList'));
 
 
@@ -640,7 +638,8 @@ $(document).ready(function(){
 
     // remove object from favorites list 
     $('.removeLink').live('click',function(){  
-    	id = $(this).attr('rel');
+    	id = $(this).parent().attr('rel');
+
     	A.removeObjectFromFavorites(id);
     	$('.addToFavorites[rel='+id+']').removeClass('selected');
     	return false;

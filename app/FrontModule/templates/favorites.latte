@@ -1,5 +1,5 @@
-<div id="favoritesStatisContainerPlaceholder" class="hide"></div>
-<div class="span12" id="favoritesStatisContainer" style="display: block;">
+<div id="favoritesStaticContainerPlaceholder" class="hide"></div>
+<div n:class="$favoriteRentals ? 'span12' : 'span12 hide' " id="favoritesStatisContainer">
 	<div class="sitePadding baseRadius borderBlue overflow">
 
 
@@ -33,9 +33,9 @@
 				<div class="leftArrow entypo-prev" id="favorites-left-button"></div>
 				<div class="content">
 					<ul>
-						<li class="template hide" rel="~id~" style="background-image: url(~photo~);">
+						<li class="template" rel="~id~" style="background-image: url(~photo~);">
 							<a href="#" class="removeLink"></a>
-							<a n:href="~url~" class="link">
+							<a href="~url~" title="~title~" class="link">
 								<div class="checked entypo-eye"></div>
 							</a>
 						</li>
@@ -70,7 +70,7 @@
 				<button type="submit" class="btn">Send</button>
 			</form>
 		</div>
-		<a class="shareConteinerClose" href="#"><i class="entypo-upp2"></i></a>
+		<a class="shareContainerClose" href="#"><i class="entypo-upp2"></i></a>
 
 		<div class="clearfix"></div>
 	</div>
