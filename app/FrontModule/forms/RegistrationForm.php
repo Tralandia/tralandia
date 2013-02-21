@@ -121,8 +121,8 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 
 }
 
-interface IRegistrationFormFactory
-{
+
+interface IRegistrationFormFactory {
 	/**
 	 * @param \Entity\Location\Location $country
 	 *
@@ -130,3 +130,4 @@ interface IRegistrationFormFactory
 	 */
 	public function create(\Entity\Location\Location $country);
 }
+

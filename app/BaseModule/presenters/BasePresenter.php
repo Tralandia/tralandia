@@ -23,6 +23,9 @@ abstract class BasePresenter extends Presenter {
 	public $page;
 
 
+	public $userRepositoryAccessor;
+
+
 	public $cssFiles;
 	public $cssRemoteFiles;
 	public $jsFiles;
@@ -62,6 +65,8 @@ abstract class BasePresenter extends Presenter {
 	}
 
 
+	public $loggedUser;
+
 	protected function startup() {
 		parent::startup();
 		// odstranuje neplatne _fid s url
@@ -89,6 +94,16 @@ abstract class BasePresenter extends Presenter {
 			$environmentSection->previousLink = $environmentSection->actualLink;
 			$environmentSection->actualLink = $backLink;
 		}
+
+		$this->loggedUser = $this->userRepositoryAccessor->get()->find(5);
+		$this->loggedUser = $this->userRepositoryAccessor->get()->find(643);
+		if($this->user->isLoggedIn()) {
+			$this->loggedUser = $this->userRepositoryAccessor->get()->find($this->user->getId());
+		}
+	}
+
+	public function injectUserRepository(\Nette\DI\Container $dic) {
+		$this->userRepositoryAccessor = $dic->userRepositoryAccessor;
 	}
 
 	public function initCallbackPanel()
@@ -123,6 +138,7 @@ abstract class BasePresenter extends Presenter {
 		$this->template->setTranslator($this->getService('translator'));
 		$this->template->registerHelper('image', callback('Tools::helperImage'));
 		$this->template->useTemplateCache = $parameters['useTemplateCache'];
+		$this->template->loggedUser = $this->loggedUser;
 	}
 
 	protected function createTemplate($class = NULL) {
