@@ -218,7 +218,7 @@ App.prototype.removeObjectFromFavorites = function(id){
 			});
 		*/
 
-		favoriteSlider.find('ul li[rel^="'+id+'"]').remove();
+		favoriteSlider.find('ul li[rel="'+id+'"]').remove();
 
 		if(list.length == 0){
 
@@ -230,19 +230,22 @@ App.prototype.removeObjectFromFavorites = function(id){
 		} 
 }
 
+App.prototype.arrayFromList = function(list){
+	if(typeof list != 'undefined'){
+		return list.split(',');
+	} else {
+		return false;
+	}	
+}
 
 App.prototype.addToFavorites = function(){
 
 	var self = new App;
 
-	var list = $.cookie('favoritesList');
-
-	if(typeof list != 'undefined'){
-		list = list.split(',');
-	} else {
-		list = false;
-	}
+	var list = self.arrayFromList($.cookie('favoritesList'));
  
+	var favoritesVisitedList = self.arrayFromList($.cookie('favoritesVisitedList'));
+		
 	$('#favoritesStatisContainerPlaceholder').removeClass('inactive');
 
 	var data = {
@@ -257,17 +260,19 @@ App.prototype.addToFavorites = function(){
 	var sliderList = favoriteSlider.find('ul');
 
 		$pattern = sliderList.find('li.template');
-		var patternText = $pattern[0].outerHTML.toString();
+		var patternText = $pattern[0].outerHTML;
 
-		//console.log($pattern[0].outerHTML);
+		patternText = patternText.replace("~id~",data.id)
+						.replace("~photo~",data.thumb)		
+						.replace("~title~",data.title)
+						.replace("~url~",data.link)
+						.replace("template","");
 
-		patternText = patternText.replace("~id~",data.id);
-		patternText = patternText.replace("~photo~",data.thumb);		
-		patternText = patternText.replace("~title~",data.title);
-		patternText = patternText.replace("~url~",data.link)
-		patternText = patternText.replace("template","")
+		var newLi = $(patternText);
 
-		//console.log(patternText);
+			if(!self.in_array(favoritesVisitedList,data.id)){				
+				newLi.find('.checked').remove();
+			}
 
 	if($(this).hasClass('selected')){
 		// remove from list
@@ -279,72 +284,31 @@ App.prototype.addToFavorites = function(){
 	} else {
 
 		if(!list){
-
 			// if favorites dont exist 
 			// write id to cookie
-
 			$.cookie('favoritesList',data.id);
-
 			// show slider
 			favoriteSlider.parent().parent().parent().slideDown(300);
-
-			// create new li element and append to favorites slider list
-			var newLi = $(patternText);
-
-				if($(this).hasClass('currentObject')){
-					newLi.addClass('current');
-				}
-				
-			// change default css width favoritest slider ul
-			var newWidth = sliderList.width();
-				newWidth += 125;							
-				sliderList.css({
-					width: newWidth+'px'
-				});
-				
-				newLi.appendTo(sliderList);
-							
-				// change button class
-				$(this).addClass('selected');
-				
-
 		} else {			
+			list.push(data.id);
+			$.cookie('favoritesList',list.join());			
+		}	
 
-			if(!self._checkIdInObject(list,data.id)){
-				
-				console.log(list);
+		if($(this).hasClass('currentObject')){
+			newLi.addClass('current');
+		}
 
-				list.push(data.id);
+		var newWidth = sliderList.width();
+			newWidth += 125;
+			// set new width 
+			sliderList.css({
+				width: newWidth+'px'
+			});
+			
+			newLi.appendTo(sliderList);
 
-				$.cookie('favoritesList',list.join());
+			$(this).addClass('selected');
 
-				$(this).addClass('selected');
-
-				// append to favorites slider (if exist)
-
-				if(favoriteSlider.length > 0){
-
-					var newLi = $(patternText);
-
-
-					if($(this).hasClass('currentObject')){
-						newLi.addClass('current');
-					}
-	
-					var newWidth = sliderList.width();
-						newWidth += 125;
-						// set new width 
-						sliderList.css({
-							width: newWidth+'px'
-						});
-						
-						newLi.appendTo(sliderList);
-
-				}
-
-			}
-
-		}		
 	}
 
 }
@@ -442,7 +406,7 @@ App.prototype.closeForgottenPasswordForm = function(){
 $(document).ready(function(){
 
 //$.removeCookie('favoritesList');
-console.log($.cookie('favoritesList'));
+//console.log($.cookie('favoritesList'));
 //console.log($.cookie('visitObjectList'));
 
 
