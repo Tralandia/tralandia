@@ -53,7 +53,7 @@ class TicketForm extends BaseForm {
 		$this->addTextArea('message', '#Message');
 		$this->addUpload('attachment', '#Attachment');
 
-		$this->addSubmit('send', '#Send');
+		$this->addSubmit('submit', '#Send');
 
 		$this->onSuccess[] = callback($this, 'process');
 	}
