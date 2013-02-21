@@ -28,10 +28,9 @@ class ForgotPasswordEmailListener extends BaseEmailListener implements \Kdyby\Ev
 	private function prepareCompiler(\Entity\User\User $user)
 	{
 
-		$emailCompiler = $this->emailCompiler;
+		$emailCompiler = $this->emailCompilerFactory->create($user->getPrimaryLocation(), $user->getLanguage());
 		$emailCompiler->setTemplate($this->getTemplate('forgotten-password'));
 		$emailCompiler->setLayout($this->getLayout());
-		$emailCompiler->setEnvironment($user->getPrimaryLocation(), $user->getLanguage());
 
 		return $emailCompiler;
 	}

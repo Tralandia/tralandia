@@ -1,5 +1,5 @@
 <?php
-namespace Extras\Email\Variables;
+namespace Mail\Variables;
 
 use Entity\User\RentalReservation;
 use Nette;

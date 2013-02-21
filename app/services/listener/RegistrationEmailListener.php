@@ -27,16 +27,15 @@ class RegistrationEmailListener extends BaseEmailListener implements \Kdyby\Even
 	/**
 	 * @param \Entity\Rental\Rental $rental
 	 *
-	 * @return \Extras\Email\Compiler
+	 * @return \Mail\Compiler
 	 */
 	private function prepareCompiler(\Entity\Rental\Rental $rental)
 	{
 		$receiver = $rental->getOwner();
 
-		$emailCompiler = $this->emailCompiler;
+		$emailCompiler = $this->emailCompilerFactory->create($receiver->getPrimaryLocation(), $receiver->getLanguage());
 		$emailCompiler->setTemplate($this->getTemplate(7));
 		$emailCompiler->setLayout($this->getLayout());
-		$emailCompiler->setEnvironment($receiver->getPrimaryLocation(), $receiver->getLanguage());
 		$emailCompiler->addRental('rental', $rental);
 		$emailCompiler->addOwner('owner', $receiver);
 
