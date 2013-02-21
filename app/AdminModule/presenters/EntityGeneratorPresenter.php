@@ -285,6 +285,8 @@ class EntityGeneratorPresenter extends BasePresenter {
 			$name = "medium";
 		} else if(Strings::endsWith($name, 'ies')) {
 			$name = substr($name, 0 , -3).'y';
+		} else if (Strings::endsWith($name, 'es')) {
+			$name = substr($name, 0 , -2);
 		} else if (Strings::endsWith($name, 's')) {
 			$name = substr($name, 0 , -1);
 		}
