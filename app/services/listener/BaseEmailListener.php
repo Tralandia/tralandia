@@ -1,6 +1,7 @@
 <?php
 namespace Listener;
 
+use Mail\ICompilerFactory;
 use Nette;
 use Nette\Mail\IMailer;
 use Doctrine\ORM\EntityManager;
@@ -19,20 +20,20 @@ abstract class BaseEmailListener extends Nette\Object implements \Kdyby\Events\S
 	protected $mailer;
 
 	/**
-	 * @var \Extras\Email\Compiler
+	 * @var ICompilerFactory
 	 */
-	protected $emailCompiler;
+	protected $emailCompilerFactory;
 
 	/**
 	 * @param \Doctrine\ORM\EntityManager $em
 	 * @param \Nette\Mail\IMailer $mailer
-	 * @param \Extras\Email\Compiler $emailCompiler
+	 * @param ICompilerFactory $emailCompilerFactory
 	 */
-	public function __construct(EntityManager $em, IMailer $mailer, \Extras\Email\Compiler $emailCompiler)
+	public function __construct(EntityManager $em, IMailer $mailer, ICompilerFactory $emailCompilerFactory)
 	{
 		$this->em = $em;
 		$this->mailer = $mailer;
-		$this->emailCompiler = $emailCompiler;
+		$this->emailCompilerFactory = $emailCompilerFactory;
 	}
 
 	/**

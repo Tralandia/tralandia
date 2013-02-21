@@ -1,5 +1,5 @@
 <?php
-namespace Extras\Email\Variables;
+namespace Mail\Variables;
 
 use Nette;
 

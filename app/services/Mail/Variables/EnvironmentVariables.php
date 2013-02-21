@@ -1,7 +1,8 @@
 <?php
-namespace Extras\Email\Variables;
+namespace Mail\Variables;
 
 use Nette;
+use Nette\Application\Application;
 
 /**
  * EnvironmentVariables class
@@ -21,12 +22,19 @@ class EnvironmentVariables extends Nette\Object {
 	private $languageVariables;
 
 	/**
+	 * @var \Nette\Application\Application
+	 */
+	private $application;
+
+	/**
 	 * @param LocationVariables $locationVariables
 	 * @param LanguageVariables $languageVariables
+	 * @param Application $application
 	 */
-	public function __construct(LocationVariables $locationVariables, LanguageVariables $languageVariables) {
+	public function __construct(LocationVariables $locationVariables, LanguageVariables $languageVariables, Application $application) {
 		$this->locationVariables = $locationVariables;
 		$this->languageVariables = $languageVariables;
+		$this->application = $application;
 	}
 
 	/**
@@ -47,7 +55,19 @@ class EnvironmentVariables extends Nette\Object {
 	 * @return string
 	 */
 	public function getVariableLoginLink() {
-		return 'sk.tralandia.com';
+		return $this->getLink('//Sign:in');
 	}
+
+	/**
+	 * @param string $destination
+	 * @param array $arguments
+	 *
+	 * @return string
+	 */
+	protected function getLink($destination, array $arguments = NULL)
+	{
+		return $this->application->getPresenter()->link($destination, $arguments);
+	}
+
 
 }

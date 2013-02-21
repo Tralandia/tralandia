@@ -1,5 +1,5 @@
 <?php
-namespace Extras\Email\Variables;
+namespace Mail\Variables;
 
 use Nette;
 
@@ -22,8 +22,24 @@ class RentalVariables extends Nette\Object {
 		$this->rental = $rental;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getVariableLink() {
-		return 'http://www.tralandia.sk/moderne-apartmany-riviera-s-vynikajucou-polohou-na-liptove-6642';
+		return $this->getLink('//Rental:detail', ['rental' => $this->rental]);
 	}
+
+
+	/**
+	 * @param string $destination
+	 * @param array $arguments
+	 *
+	 * @return string
+	 */
+	protected function getLink($destination, array $arguments = NULL)
+	{
+		return $this->application->getPresenter()->link($destination, $arguments);
+	}
+
 
 }
