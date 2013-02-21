@@ -7,7 +7,7 @@
 
 	  	var visitList = new Array();
 	  	
-	  	var objectList = $.cookie('visitObjectList');
+	  	var objectList = $.cookie('favoritesVisitedList');
 	  		if(typeof objectList != 'undefined'){
 	  			objectList = objectList.split(',');
 	  		} else {
@@ -17,7 +17,7 @@
 	  	var currentId = parseInt($(this).attr('id'));  	
 
 	  		if(!objectList){
-	  				$.cookie('visitObjectList' , currentId);
+	  				$.cookie('favoritesVisitedList' , currentId);
 	  		} else {
 
 	  			// chech if index not exist 
@@ -25,7 +25,7 @@
 	  				if(appObject.in_array(objectList,currentId) == false){
 			  			visitList = objectList;
 			  			visitList.push(currentId); 
-			  			$.cookie('visitObjectList' , visitList);					
+			  			$.cookie('favoritesVisitedList' , visitList);					
 	  				}
 
 	  		}
