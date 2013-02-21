@@ -1,4 +1,13 @@
-{control ticketForm}
+{includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
+{form ticketForm}
+	{ifset $form['canned']}
+		{include #select, control => $form['canned']}
+	{/ifset}
+
+	{include #textArea, control => $form['message']}
+	{include #upload, control => $form['attachment']}
+	{include #submit, control => $form['submit']}
+{/form}
 
 
 
