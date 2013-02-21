@@ -1,22 +1,18 @@
 @import './less-functions.less';
 
-.rentaletailNavigaton {
+.rentalDetailNavigaton {
 
 	background: #eee;
 	border: 1px solid rgb(213, 213, 213);
-	height: 41px;
-	line-height: 32px;
+	line-height: 33px;
 	text-align: center;
 	width: 964px;
-	margin: 0 auto;
+	margin: 0px auto 10px auto;
 	font-size: 13px;
-	position: relative;
-	bottom: -10px;
-	.top-border-radius(5px);
+	border-radius: 5px;
 	color: #777;
 	overflow: hidden;
 	
-	margin-bottom: -10px;
 	a {
 		color: @darkGreen;
 	}
@@ -43,7 +39,7 @@
 		color: rgb(104, 104, 104);
 		float: left;
 		display: block;
-		height: 32px;
+		height: 34px;
 		
 		width:23px;
 
@@ -64,6 +60,8 @@
 
 	.prev {
 		padding-left: 10px;
+		border-left: 1px solid rgb(213, 213, 213);
+		border-right: 1px solid rgb(213, 213, 213);
 
 		i {
 			&:before {
@@ -90,8 +88,6 @@
 	.menu {
 		padding-left: 10px;
 		padding-right: 5px;
-		border-left: 1px solid rgb(213, 213, 213);
-		border-right: 1px solid rgb(213, 213, 213);
 		i {
 			font-size: 19px;
 			position: relative;
@@ -104,28 +100,27 @@
 	}
 
 	.content {
-		width: 857px;		
+		width: 855px;		
 		height: 32px;
 		float: left;
 		overflow: hidden;
 		background: #fff;
-		padding-top: 1px;
+		padding: 2px 0px 0px 2px;
 	}
 
 	ul {
 		margin: 0;
 		padding: 0;
 		li {
-			display: inline;
+			float: left;
+			margin-right: 2px;
 
 			img {
 				max-height: 30px;
 			}
 
 			a {
-				opacity: 0.7;
 				&:hover {
-					opacity: 1;
 				}
 			}
 
