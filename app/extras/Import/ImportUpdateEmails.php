@@ -23,10 +23,21 @@ class ImportUpdateEmails extends BaseImport {
 				'siteName' => 'env_siteName',
 				'message' => 'message',
 				'objectLink' => 'rental_link',
+				'objectName' => 'rental_name',
 				'loginLink' => 'env_loginLink',
 				'email' => 'owner_email',
 				'password' => 'owner_password',
 				'RID' => self::DELETE,
+			],
+			'reservation-form' => [
+				'name' => 'reservation_senderName',
+				'email' => 'reservation_senderEmail',
+				'phone' => 'reservation_senderPhone',
+				'date_from' => 'reservation_arrivalDate',
+				'date_to' => 'reservation_departureDate',
+				'people' => 'reservation_people',
+				'children' => 'reservation_children',
+				'details' => 'reservation_message',
 			],
 		);
 
@@ -36,7 +47,7 @@ class ImportUpdateEmails extends BaseImport {
 
 			$replaceMerge = array_merge(
 				$replace['default'],
-				\Nette\Utils\Arrays::get($replace, $email->getOldId(), array())
+				\Nette\Utils\Arrays::get($replace, $email->getSlug(), array())
 			);
 
 			$replaceTemp = array();
