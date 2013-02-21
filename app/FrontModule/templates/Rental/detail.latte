@@ -11,7 +11,7 @@
 
 
 <div class="span12">
-	<div class="innerPadding baseRadius baseBorder marginBottom overflow relative">
+	<div class="sitePadding baseRadius baseBorder marginBottom overflow relative">
 		<div id="content" class="nopadding">
 			
 
@@ -118,6 +118,56 @@
 
 <div class="clearfix"></div>
 
+	{var $noPriceTable = true}
+
+	{if count($rental->pricelistRows) > 0}
+	{var $noPriceTable = false}
+		<ul class="detailPriceList">
+			<li><h3><span>$ </span>Cenniky</h3>
+				<ul>
+
+					{foreach $rental->pricelistRows as $pricelistRow}
+					<li>	
+					{dump $pricelistRow->roomType}
+					{$pricelistRow->roomCount} {_$pricelistRow->roomType->name, null , [count => $pricelistRow->bedCount]}
+						<span>
+							{$pricelistRow->bedCount} {_o940 , null , [count => $pricelistRow->bedCount]}
+							{if $pricelistRow->extraBedCount}{$pricelistRow->extraBedCount} {_o1158 , null , [count => $pricelistRow->extraBedCount]}{/if}							
+						</span>
+
+						<span class="price">
+							{$pricelistRow->price} #mena
+						</span>
+					</li>
+					{/foreach}
+					
+				
+					{if count($rental->pricelists) > 0}
+					{var $noPriceTable = false}
+						{foreach $rental->pricelists as $pricelist}
+						<li>							
+							{if $pricelist->name} {$pricelist->name} {/if} {_$pricelist->language->name} <i class="entypo-save"></i> <a href="{$pricelist->filePath}" class="btn btn-green btn-text-wrap btn-pricelist">{_o955}</a>							
+						</li>
+						{/foreach}
+					{/if}					
+
+				</ul>
+
+				
+			</li>
+		</ul>
+	{/if}
+
+	{if $noPriceTable}
+		{if $rental->pricesUponRequest}
+			#len na dotaz
+			{else}
+			#Übytovatel neuvadza detailne ceny. Orientacna cena ubytovania je {$rental->price} Eur / osoba / noc"	
+		{/if}								
+	{/if}					
+
+	<div class="clearfix"></div>	
+
 		<div class="detailAmanities">
 			<ul class="objectDetailServicesIconList list">
 
@@ -193,60 +243,6 @@
 			</ul>
 		</div>
 
-
-<div class="clearfix"></div>
-
-	{var $noPriceTable = true}
-
-	{if count($rental->pricelistRows) > 0}
-	{var $noPriceTable = false}
-		<ul class="detailPriceList">
-			<li><h3><span>$ </span>Cenniky</h3>
-				<ul>
-
-					{foreach $rental->pricelistRows as $pricelistRow}
-					<li>	
-					{dump $pricelistRow->roomType}
-					{$pricelistRow->roomCount} {_$pricelistRow->roomType->name, null , [count => $pricelistRow->bedCount]}
-						<span>
-							{$pricelistRow->bedCount} {_o940 , null , [count => $pricelistRow->bedCount]}
-							{if $pricelistRow->extraBedCount}{$pricelistRow->extraBedCount} {_o1158 , null , [count => $pricelistRow->extraBedCount]}{/if}							
-						</span>
-
-						<span class="price">
-							{$pricelistRow->price} #mena
-						</span>
-					</li>
-					{/foreach}
-					
-				
-					{if count($rental->pricelists) > 0}
-					{var $noPriceTable = false}
-						{foreach $rental->pricelists as $pricelist}
-						<li>							
-							{if $pricelist->name} {$pricelist->name} {/if} {_$pricelist->language->name} <i class="entypo-save"></i> <a href="{$pricelist->filePath}" class="btn btn-green btn-text-wrap btn-pricelist">{_o955}</a>							
-						</li>
-						{/foreach}
-					{/if}					
-
-				</ul>
-
-				
-			</li>
-		</ul>
-	{/if}
-
-	{if $noPriceTable}
-		{if $rental->pricesUponRequest}
-			#len na dotaz
-			{else}
-			#Übytovatel neuvadza detailne ceny. Orientacna cena ubytovania je {$rental->price} Eur / osoba / noc"	
-		{/if}								
-	{/if}					
-
-	<div class="clearfix"></div>	
-
-
 </div>
 
 
@@ -255,19 +251,36 @@
 	<div class="span3 sidebarRightDetail">
 
 
-						{if $mainImage = $rental->getMainImage()}
-							<button class="marginTop btn btn-compare addToFavorites currentObject" rel="{$rental->id}" link="{link Rental:detail $rental}" data-title="{_$rental->name}" thumb="{$basePath}{$mainImage|rentalImageSrc}"><span class="entypo-heart">{_o12334}</span></button>
-						{else}
-							<button class="marginTop btn btn-compare addToFavorites currentObject" rel="{$rental->id}" link="{link Rental:detail $rental}" data-title="{_$rental->name}" thumb="http://www.tralandia.com/u/32/13539183882248.jpg"><span class="entypo-heart">{_o12334}</span></button>
+		{if $mainImage = $rental->getMainImage()}
+			<button class="marginTop btn btn-compare addToFavorites currentObject" rel="{$rental->id}" link="{link Rental:detail $rental}" data-title="{_$rental->name}" thumb="{$basePath}{$mainImage|rentalImageSrc}"><span class="entypo-heart">{_o12334}</span></button>
+		{else}
+			<button class="marginTop btn btn-compare addToFavorites currentObject" rel="{$rental->id}" link="{link Rental:detail $rental}" data-title="{_$rental->name}" thumb="http://www.tralandia.com/u/32/13539183882248.jpg"><span class="entypo-heart">{_o12334}</span></button>
 
-						{/if}
-
-	
-			
-
+		{/if}
 	
 		{* <button class="btn btn-compare addToFavorites" rel="{$rental->id}" link="{link Rental:detail $rental}" thumb="{$rental->getMainImage()->getThumbnail()}"><span class="entypo-star">{_o12334}</span></button> *}
 
+		<div class="socialIconTable marginBottom marginTop socialIconsDetail">
+			<div class="socialBtnHeader">
+
+				<strong class="facebook">&#62220;</strong> <strong class="gplus">&#62223;</strong> <strong class="twitter">&#62217;</strong> <strong class="pinterest">&#62226;</strong> 
+			</div>
+			<div class="clearfix"></div>
+			<div class="socialBtnContent hide">
+
+				<a class="close"><i class="icon-remove-sign"></i></a>
+
+				<iframe src="http://www.facebook.com/plugins/like.php?href={link Rental:detail $rental}&amp;locale=sk_SK&amp;layout=button_count&amp;show_faces=false&amp;width=130&amp;action=like&amp;colorscheme=light&amp;height=80" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:20px; width:130px;" allowTransparency="true"></iframe>
+				
+				<g:plusone size="small" href="{link Rental:detail $rental}"  style="margin-top:2px;"></g:plusone>
+				
+				<a href="https://twitter.com/share" class="twitter-share-button" data-lang="en">Tweet</a>
+
+				<a href="http://pinterest.com/pin/create/button/?url={link Rental:detail $rental}&media=&description={_$rental->name}" class="pin-it-button" count-layout="horizontal"><img border="0" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" /></a>
+				<script type="text/javascript" src="http://assets.pinterest.com/js/pinit.js"></script>
+
+			</div>
+		</div>
 
 		<div class="sidebarContact">
 			<div class="sidebarTitle">{_o12275}</div>
@@ -375,31 +388,7 @@
 			{/snippet}
 
 			</div>
-		</div>
-
-
-		<div class="socialIconTable marginBottom marginTop socialIconsDetail">
-			<div class="socialBtnHeader">
-
-				<strong class="facebook">&#62220;</strong> <strong class="gplus">&#62223;</strong> <strong class="twitter">&#62217;</strong> <strong class="pinterest">&#62226;</strong> 
-			</div>
-			<div class="clearfix"></div>
-			<div class="socialBtnContent hide">
-
-				<a class="close"><i class="icon-remove-sign"></i></a>
-
-				<iframe src="http://www.facebook.com/plugins/like.php?href={link Rental:detail $rental}&amp;locale=sk_SK&amp;layout=button_count&amp;show_faces=false&amp;width=130&amp;action=like&amp;colorscheme=light&amp;height=80" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:20px; width:130px;" allowTransparency="true"></iframe>
-				
-				<g:plusone size="small" href="{link Rental:detail $rental}"  style="margin-top:2px;"></g:plusone>
-				
-				<a href="https://twitter.com/share" class="twitter-share-button" data-lang="en">Tweet</a>
-
-				<a href="http://pinterest.com/pin/create/button/?url={link Rental:detail $rental}&media=&description={_$rental->name}" class="pin-it-button" count-layout="horizontal"><img border="0" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" /></a>
-				<script type="text/javascript" src="http://assets.pinterest.com/js/pinit.js"></script>
-
-			</div>
-		</div>
-		
+		</div>		
 
 <script>
 
@@ -471,6 +460,16 @@ $(document).ready(function(){
 							<li><img alt="{_$rental->name} {$ii}" src="{$basePath}{$photo|rentalImageSrc}" /></li>
 							{var $ii = $ii + 1}
 						{/foreach}
+							<li><img alt="" n:fakeImage=""/></li>
+							<li><img alt="" n:fakeImage=""/></li>
+							<li><img alt="" n:fakeImage=""/></li>
+							<li><img alt="" n:fakeImage=""/></li>
+							<li><img alt="" n:fakeImage=""/></li>
+							<li><img alt="" n:fakeImage=""/></li>
+							<li><img alt="" n:fakeImage=""/></li>
+							<li><img alt="" n:fakeImage=""/></li>
+							<li><img alt="" n:fakeImage=""/></li>
+							<li><img alt="" n:fakeImage=""/></li>
 					</ul>
 					<div class="clearfix"></div>
 				</div>				

@@ -19,7 +19,8 @@ $(function(){
 										
 					return c;
 				},
-				delay: 500,
+				delay: {show: 250, hide: 0},
+				animation: false,
 				placement: 'bottom'
 			});
 
