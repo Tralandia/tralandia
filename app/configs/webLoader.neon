@@ -112,6 +112,8 @@ parameters:
 					- Front/js/detail-navigation.js
 					- 'https://apis.google.com/js/plusone.js'
 
+					
+
 
 			FavoriteScroll:
 				js:
@@ -168,6 +170,8 @@ parameters:
 					- jQuery/jquery.livequery.js
 					- jQuery/jquery.textarea.js
 					- jQuery/jquery.neon.js
+			
+
 			jQueryCalendar:
 				js: jQueryCalendar/jquery.calendar.js
 				css: jQueryCalendar/jquery.calendar.css

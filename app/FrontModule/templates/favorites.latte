@@ -32,7 +32,7 @@
 
 				<div class="leftArrow entypo-prev" id="favorites-left-button"></div>
 				<div class="content">
-					<ul>
+					<ul id="scrollInnerContent">
 						<li class="template" rel="~id~" style="background-image: url(~photo~);">
 							<a href="#" class="removeLink"></a>
 							<a href="~url~" title="~title~" class="link">
@@ -42,7 +42,7 @@
 						{foreach $favoriteRentals as $rental}
 							{var $image = $rental->getMainImage()}
 							{var $seen = in_array($rental->getId(), $favoriteVisitedRentals)}
-							<li rel="179" style="background-image: url({fakeImage});">
+							<li rel="{$rental->getId()}" style="background-image: url({fakeImage});">
 								<a href="#" class="removeLink"></a>
 								<a n:href="Rental:detail $rental" class="link">
 									<div n:if="$seen" class="checked entypo-eye"></div>
