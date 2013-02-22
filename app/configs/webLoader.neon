@@ -109,9 +109,29 @@ parameters:
 					#- front/interview-list.less	
 
 					# _base
-					- front/_base/less/fonts.less
-					- front/_base/less/main.less
-
+					- front/_base/less/fonts.less					
+					- front/_base/less/base.less					
+					- front/_base/less/calendar.less
+					# header 
+					- front/header/less/header.less
+					# favorites
+					- front/favorites/less/favorites.less
+					# rental detail 
+					- front/rentalDetail/less/rentalDetail.less
+					# rental navigation
+					- front/rentalNavigation/less/rentalNavigation.less					
+					#list 
+					- front/rentalList/less/rentalList.less
+					#home
+					- front/home/less/home.less
+					# rental registration
+					- front/rentalRegistration/less/rentalRegistration.less
+					# search sidebar 
+					- front/search/less/search.less
+					# contact page
+					- front/contact/less/contact.less
+					# ticket
+					- front/ticket/less/ticket.less		
 				js:
 					#- front/js/jquery-tra-map.js
 					#- front/js/object-register-to-view-list.js
@@ -125,9 +145,22 @@ parameters:
 					#- front/js/detail-navigation.js
 					#- 'https://apis.google.com/js/plusone.js'
 
-			FavoriteScroll:
+					# _base 
+					- front/_base/js/main.js
+					- front/_base/js/forms.js
+					# favorites 
+					- front/favorites/js/favorites.js
+					# rental detail
+					- front/rentalDetail/js/rentalDetail.js
+					# search sidebar
+					- front/search/js/search.js
+					# rental navigation
+					- front/rentalNavigation/js/rentalNavigation.js
+
+
+			favoriteScroll:
 				js:
-					- front/favorites/js/favorites-scroll.js	
+					- front/favorites/js/favoritesScroll.js	
 
 			nette:
 				js: 
@@ -165,22 +198,23 @@ parameters:
 			Admin:
 				-  %webloader.packages.jQuery%
 				-  %webloader.packages.jqueryCookie%
+				-  %webloader.packages.bootstrap%
 				-  %webloader.packages.Front%
 				-  %webloader.packages.select2%
-				-  %webloader.packages.texyla%
-				-  %webloader.packages.bootstrap%
+				-  %webloader.packages.texyla%				
 				-  %webloader.packages.nette%
 				-  %webloader.packages.gMap%
 
 			Front:				
 				-  %webloader.packages.jQuery%
+				-  %webloader.packages.jqueryUi%
 				-  %webloader.packages.jqueryCookie%									
 				-  %webloader.packages.select2%
 				-  %webloader.packages.fontEntypo%
 				-  %webloader.packages.fontAwesome%
-				-  %webloader.packages.Front%
-				-  %webloader.packages.texyla%
 				-  %webloader.packages.bootstrap%
+				-  %webloader.packages.Front%
+				-  %webloader.packages.texyla%				
 				-  %webloader.packages.nette%								
 				-  %webloader.packages.gMap%
 
@@ -191,7 +225,8 @@ parameters:
 				-  %webloader.packages.jqueryCookie%									
 				-  %webloader.packages.select2%
 				-  %webloader.packages.fontEntypo%
-				-  %webloader.packages.fontAwesome%				
+				-  %webloader.packages.fontAwesome%	
+				-  %webloader.packages.bootstrap%			
 				-  %webloader.packages.Front%
 				-  %webloader.packages.texyla%
 				-  %webloader.packages.nette%								
@@ -204,13 +239,13 @@ parameters:
 				-  %webloader.packages.jqueryUi%				
 				-  %webloader.packages.fontEntypo%
 				-  %webloader.packages.fontAwesome%
+				-  %webloader.packages.bootstrap%
 				-  %webloader.packages.Front%			
 				-  %webloader.packages.select2%
-				-  %webloader.packages.texyla%
-				-  %webloader.packages.bootstrap%
+				-  %webloader.packages.texyla%				
 				-  %webloader.packages.nette%
 				-  %webloader.packages.gMap%			
-				-  %webloader.packages.FavoriteScroll%		
+				-  %webloader.packages.favoriteScroll%		
 			Owner: 
 				-  %webloader.packages.Front%
 				-  %webloader.packages.gMap%

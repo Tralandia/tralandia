@@ -7,7 +7,7 @@ $(document).ready(function(){
 
     	var offset = parseInt($(this).scrollTop());
     	if(offset > 155){
-    		$('#favoritesStatisContainer').css({
+    		$('#favoritesStaticContainer').css({
     			position: 'fixed',
     			top:'-10px'
     		});
@@ -15,7 +15,7 @@ $(document).ready(function(){
             favoritesPlaceholder('show');
 
     	} else {
-    		$('#favoritesStatisContainer').css({
+    		$('#favoritesStaticContainer').css({
     			position: 'static'
     		});    	
             
@@ -27,15 +27,15 @@ $(document).ready(function(){
 
 function favoritesPlaceholder(action){
 
-    if($('#favoritesStatisContainerPlaceholder').hasClass('inactive')){
+    if($('#favoritesStaticContainerPlaceholder').hasClass('inactive')){
 
     } else {
         switch(action){
             case 'show':
-                $('#favoritesStatisContainerPlaceholder').removeClass('hide');
+                $('#favoritesStaticContainerPlaceholder').removeClass('hide');
             break;
             case 'hide':
-                $('#favoritesStatisContainerPlaceholder').addClass('hide'); 
+                $('#favoritesStaticContainerPlaceholder').addClass('hide'); 
             break;            
         }
     }

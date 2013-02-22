@@ -1,26 +1,4 @@
-
-.basic-border-radius (@radius) {
-	-webkit-border-radius: @radius;
-	-moz-border-radius: @radius;
-	border-radius: @radius;
-}
-
-.basic-gradient ( @topCollor , @bottomCollor ){
-	background-image: linear-gradient(bottom, @bottomCollor 0%, @topCollor 100%);
-	background-image: -o-linear-gradient(bottom, @bottomCollor 0%, @topCollor 100%);
-	background-image: -moz-linear-gradient(bottom, @bottomCollor 0%, @topCollor 100%);
-	background-image: -webkit-linear-gradient(bottom, @bottomCollor 0%, @topCollor 100%);
-	background-image: -ms-linear-gradient(bottom, @bottomCollor 0%, @topCollor 100%);
-
-	background-image: -webkit-gradient(
-		linear,
-		left bottom,
-		left top,
-		color-stop(0, @bottomCollor),
-		color-stop(1, @topCollor)
-	);
-}
-
+@import '../../_base/less/lessFunctions.less';
 
 
 /****************************************************************************************
