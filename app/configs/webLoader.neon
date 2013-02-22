@@ -84,40 +84,83 @@ parameters:
 			fontEntypo:
 				css: 
 					- fontEntypo/custom/less/entypoIcon.less
+			fontAwesome:
+				css: 
+					- fontAwesome/lib/less/font-awesome.less
+
 			Front:
 				css:
-										
-					- Front/form-registration.less
-					- Front/calendar.less					
-					- Front/sidebar.less
-					- Front/contact-page.less
-					- Front/object-detail-favorites.less
-					- Front/ticket.less
-					- Front/adminMenuAside.less
-					- Front/less/font-awesome.less					
-					- Front/reservation-form.less
-					- Front/main.css.less
-					- Front/object-list.less
-					- Front/homepage-list.less	
-					- Front/rental-detail-navigation.less
-					- Front/calendarWidgetControl.less	
-					- Front/interview-list.less			
-				js:
-					- Front/js/jquery-tra-map.js
-					- Front/js/object-register-to-view-list.js
-					- Front/js/favorite-active-links.js
-					- Front/js/favorite-slider.js
-					- Front/js/show-favorite-slider.js
-					- Front/js/jquery.jcarousel.min.js
-					- Front/js/ui-localization-datepicker.js
-					- Front/js/trax-forms-ui.js					
-					- Front/js/main.js
-					- Front/js/detail-navigation.js
-					- 'https://apis.google.com/js/plusone.js'
+					#- front/_base/less/fonts.less
+#
+					#- front/form-registration.less
+					#- front/calendar.less					
+					#- front/sidebar.less
+					#- front/contact-page.less
+					#- front/object-detail-favorites.less
+					#- front/ticket.less
+					#- front/adminMenuAside.less
+#
+					#- front/reservation-form.less
+					#- front/main.css.less
+					#- front/object-list.less
+					#- front/homepage-list.less	
+					#- front/rental-detail-navigation.less
+					#- front/calendarWidgetControl.less	
+					#- front/interview-list.less	
 
-			FavoriteScroll:
+					# _base
+					- front/_base/less/fonts.less					
+					- front/_base/less/base.less					
+					- front/_base/less/calendar.less
+					# header 
+					- front/header/less/header.less
+					# favorites
+					- front/favorites/less/favorites.less
+					# rental detail 
+					- front/rentalDetail/less/rentalDetail.less
+					# rental navigation
+					- front/rentalNavigation/less/rentalNavigation.less					
+					#list 
+					- front/rentalList/less/rentalList.less
+					#home
+					- front/home/less/home.less
+					# rental registration
+					- front/rentalRegistration/less/rentalRegistration.less
+					# search sidebar 
+					- front/search/less/search.less
+					# contact page
+					- front/contact/less/contact.less
+					# ticket
+					- front/ticket/less/ticket.less		
 				js:
-					- Front/favorites-scroll.js	
+					#- front/js/jquery-tra-map.js
+					#- front/js/object-register-to-view-list.js
+					#- front/js/favorite-active-links.js
+					#- front/js/favorite-slider.js
+					#- front/js/show-favorite-slider.js
+					##- front/js/jquery.jcarousel.min.js
+					#- front/js/ui-localization-datepicker.js
+					#- front/js/trax-forms-ui.js					
+					#- front/js/main.js
+					#- front/js/detail-navigation.js
+					#- 'https://apis.google.com/js/plusone.js'
+
+					# _base 
+					- front/_base/js/main.js
+					- front/_base/js/forms.js
+					# favorites 
+					- front/favorites/js/favorites.js
+					# rental detail
+					- front/rentalDetail/js/rentalDetail.js
+					# search sidebar
+					- front/search/js/search.js
+					# rental navigation
+					- front/rentalNavigation/js/rentalNavigation.js
+
+
+			favoriteScroll:
+				js:
+					- front/favorites/js/favoritesScroll.js	
 
 			nette:
 				js: 
@@ -138,6 +181,8 @@ parameters:
 					- bootstrap/lib/js/bootstrap-tab.js
 					#- bootstrap/lib/js/bootstrap-transition.js
 					#- bootstrap/lib/js/bootstrap-typeahead.js
+				css:
+					- bootstrap/lib/less/bootstrap.less
 
 			jQuery:
 				js: 
@@ -153,24 +198,26 @@ parameters:
 			Admin:
 				-  %webloader.packages.jQuery%
 				-  %webloader.packages.jqueryCookie%
+				-  %webloader.packages.bootstrap%
 				-  %webloader.packages.Front%
 				-  %webloader.packages.select2%
-				-  %webloader.packages.texyla%
-				-  %webloader.packages.bootstrap%
+				-  %webloader.packages.texyla%				
 				-  %webloader.packages.nette%
 				-  %webloader.packages.gMap%
 
-			Front:
-				
+			Front:				
 				-  %webloader.packages.jQuery%
+				-  %webloader.packages.jqueryUi%
 				-  %webloader.packages.jqueryCookie%									
 				-  %webloader.packages.select2%
 				-  %webloader.packages.fontEntypo%
-				-  %webloader.packages.Front%
-				-  %webloader.packages.texyla%
+				-  %webloader.packages.fontAwesome%
 				-  %webloader.packages.bootstrap%
+				-  %webloader.packages.Front%
+				-  %webloader.packages.texyla%				
 				-  %webloader.packages.nette%								
 				-  %webloader.packages.gMap%
+
 			'Front:Rental:detail':
 				-  %webloader.packages.jQuery%
 				-  %webloader.packages.bootstrap%
@@ -178,6 +225,8 @@ parameters:
 				-  %webloader.packages.jqueryCookie%									
 				-  %webloader.packages.select2%
 				-  %webloader.packages.fontEntypo%
+				-  %webloader.packages.fontAwesome%	
+				-  %webloader.packages.bootstrap%			
 				-  %webloader.packages.Front%
 				-  %webloader.packages.texyla%
 				-  %webloader.packages.nette%								
@@ -187,16 +236,16 @@ parameters:
 			'Front:Rental:list':
 				-  %webloader.packages.jQuery%
 				-  %webloader.packages.jqueryCookie%
-				-  %webloader.packages.jqueryUi%
-				
+				-  %webloader.packages.jqueryUi%				
 				-  %webloader.packages.fontEntypo%
+				-  %webloader.packages.fontAwesome%
+				-  %webloader.packages.bootstrap%
 				-  %webloader.packages.Front%			
 				-  %webloader.packages.select2%
-				-  %webloader.packages.texyla%
-				-  %webloader.packages.bootstrap%
+				-  %webloader.packages.texyla%				
 				-  %webloader.packages.nette%
 				-  %webloader.packages.gMap%			
-				-  %webloader.packages.FavoriteScroll%		
+				-  %webloader.packages.favoriteScroll%		
 			Owner: 
 				-  %webloader.packages.Front%
 				-  %webloader.packages.gMap%
