@@ -39,6 +39,9 @@ class ImportUpdateEmails extends BaseImport {
 				'children' => 'reservation_children',
 				'details' => 'reservation_message',
 			],
+			'ticket-system-new-ticket' => [
+				'link' => 'ticket_link',
+			],
 		);
 
 		$emails = $this->context->emailTemplateRepositoryAccessor->get()->findAll();

@@ -93,7 +93,7 @@ class TicketForm extends BaseForm {
 
 	protected function userIsAdmin()
 	{
-		return $this->user->hasRole(['admin']);
+		return $this->user->hasRole(['admin', 'superadmin']);
 	}
 
 }

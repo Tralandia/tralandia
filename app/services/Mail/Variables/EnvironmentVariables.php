@@ -38,6 +38,13 @@ class EnvironmentVariables extends Nette\Object {
 	}
 
 	/**
+	 * @return \Entity\Location\Location
+	 */
+	public function getLocationEntity() {
+		return $this->locationVariables->getEntity();
+	}
+
+	/**
 	 * @return \Entity\Language
 	 */
 	public function getLanguageEntity() {
@@ -55,7 +62,7 @@ class EnvironmentVariables extends Nette\Object {
 	 * @return string
 	 */
 	public function getVariableLoginLink() {
-		return $this->getLink('//Sign:in');
+		return $this->link('//Sign:in');
 	}
 
 	/**
@@ -64,8 +71,12 @@ class EnvironmentVariables extends Nette\Object {
 	 *
 	 * @return string
 	 */
-	protected function getLink($destination, array $arguments = NULL)
+	public function link($destination, array $arguments = NULL)
 	{
+		$arguments = array_merge(
+			['primaryLocation' => $this->getLocationEntity(), 'language' => $this->getLanguageEntity()],
+			$arguments
+		);
 		return $this->application->getPresenter()->link($destination, $arguments);
 	}
 
