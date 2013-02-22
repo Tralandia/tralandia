@@ -247,8 +247,19 @@ parameters:
 				-  %webloader.packages.gMap%			
 				-  %webloader.packages.favoriteScroll%		
 			Owner: 
+				-  %webloader.packages.jQuery%
+				-  %webloader.packages.bootstrap%
+				-  %webloader.packages.jqueryUi%
+				-  %webloader.packages.jqueryCookie%									
+				-  %webloader.packages.select2%
+				-  %webloader.packages.fontEntypo%
+				-  %webloader.packages.fontAwesome%	
+				-  %webloader.packages.bootstrap%			
 				-  %webloader.packages.Front%
-				-  %webloader.packages.gMap%
+				-  %webloader.packages.texyla%
+				-  %webloader.packages.nette%								
+				-  %webloader.packages.gMap%			
+				
 			Gregor:
 				-  %webloader.packages.Front%
 
