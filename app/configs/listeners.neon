@@ -1,11 +1,7 @@
 services:
 
-	# forgot password form
-	foo:
-		class: TestListener
-		tags: [kdyby.subscriber]
-
-
 	forgotPasswordEmailListener: [class: Listener\ForgotPasswordEmailListener, tags: [kdyby.subscriber]]
 	registrationEmailListener: [class: Listener\RegistrationEmailListener, tags: [kdyby.subscriber]]
+	reservationOwnerEmailListener: [class: Listener\ReservationOwnerEmailListener, tags: [kdyby.subscriber]]
+	newTicketEmailListener: [class: Listener\NewTicketEmailListener, tags: [kdyby.subscriber]]
 
