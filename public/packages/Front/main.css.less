@@ -1277,64 +1277,55 @@ ul.arrows {
 /****************************************************************************************
 /***************************************************************************************/
 
-.detailInfoBoxCover {
-	margin-top: 15px;
-	
-}
-
-.detailInfoBox {
-
-	font-size: 15px;
-	margin-bottom: 10px;
-	line-height: 18px;
-	width: 170px;
-	float: left;
-	color: @darkGreen;
-	font-weight: bold;
-	background: @grayBg;
-	padding: 10px;
+table.detailInfoBox {
 	.basic-border-radius (5px);
 	border: 1px solid @grayBorder;
-	height: 33px;
+	background: @grayBg;
+	width: 100%;
+	margin-bottom: 10px;
+	border-collapse: separate;
 
-	i {
-		float: left;
+
+
+	td {
+		font-size: 15px;
+		margin-bottom: 10px;
+		line-height: 18px;
+		width: 50%;
+		color: @darkGreen;
+		font-weight: bold;
+		padding: 10px;
+
+		i {
+			float: left;
+		}
+
+		i:before {
+			font-size: 40px;
+			position: relative;
+			top: 0px;
+			color: @brown;
+			font-weight: normal;
+			left: -3px;
+		}
+
+		i.entypo-bell:before {
+			left: -1px;
+		}
+
+		i.entypo-info2:before {
+			left: 0px;
+		}
+
+		span {
+			display: block;
+			font-size: 12px;
+			line-height: 14px;
+			color: @brown;
+			font-weight: normal;
+		}
 	}
 
-	i:before {
-		font-size: 40px;
-		position: relative;
-		top: 0px;
-		color: @brown;
-		font-weight: normal;
-		left: -1px;
-	}
-
-	i.entypo-bell:before {
-		left: 1px;
-	}
-
-	i.entypo-info2:before {
-		left: 2px;
-	}
-
-	span {
-		display: block;
-		font-size: 12px;
-		line-height: 14px;
-		color: @brown;
-		font-weight: normal;
-	}
-
-	&.first {
-		margin-right: 10px;
-		width: 171px;
-	}
-
-	.content {
-		width: 143px;
-		float: right;
-	}
 }
 
 .socialIconTable {
@@ -1529,6 +1520,16 @@ ul.arrows {
 			line-height: 27px;
 			color: @darkGreen;
 			.top-border-radius(5px);
+
+			span {
+				float: right;
+				font-weight: normal;
+				color: @brown;
+
+				strong {
+					font-size: 15px;
+				}
+			}
 		}
 
 		li , ul {
@@ -1927,17 +1928,17 @@ ul.arrows {
 
 		&.select2-drop-above {
 			a {
-				.basic-gradient(rgb(251, 255, 239),rgb(229, 236, 199));
+				.basic-gradient(rgb(255, 255, 255),rgb(229, 236, 199));
 			}
 		}
 
 		a {			
-			.basic-gradient(rgb(251, 255, 239),rgb(229, 236, 199));
-			border: 1px solid rgb(141, 155, 88);
+			.basic-gradient(rgb(255, 255, 255),rgb(229, 236, 199));
+			border: 1px solid #b0c13b;
 
 			div {
 				.basic-gradient(rgb(241, 250, 209),rgb(186, 196, 148));
-				border-left: 1px solid rgb(126, 145, 52);
+				border-left: 1px solid #b0c13b;
 			}
 		}
 
@@ -2242,7 +2243,6 @@ form.traform {
 
 	input[type=text] , input[type=password] , textarea , select{
 		width: 100%;
-		.box-size();
 		margin: 0;	
 		border: 1px solid @inputPureBorderColor;
 		color: @inputColor;	
