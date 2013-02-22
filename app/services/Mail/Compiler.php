@@ -115,6 +115,11 @@ class Compiler {
 		return $this;
 	}
 
+	private function getEnvironment()
+	{
+		return $this->variables['env'];
+	}
+
 	/**
 	 * @param string $variableName
 	 * @param \Entity\Language $language
@@ -184,6 +189,18 @@ class Compiler {
 	public function addReservation($variableName, \Entity\User\RentalReservation $reservation)
 	{
 		$this->variables[$variableName] = new Variables\ReservationVariables($reservation);
+		return $this;
+	}
+
+	/**
+	 * @param $variableName
+	 * @param \Entity\Ticket\Ticket $ticket
+	 *
+	 * @return $this
+	 */
+	public function addTicket($variableName, \Entity\Ticket\Ticket $ticket)
+	{
+		$this->variables[$variableName] = new Variables\ReservationVariables($ticket);
 		return $this;
 	}
 
@@ -311,7 +328,12 @@ class Compiler {
 
 			if(array_key_exists('prefix', $variable)) {
 				$methodName = 'getVariable'.ucfirst($variable['name']);
-				$val = $this->getVariable($variable['prefix'])->{$methodName}();
+				if(\Tra\Utils\Strings::contains($methodName, 'link')) {
+					$environment = $this->getEnvironment();
+					$val = $this->getVariable($variable['prefix'])->{$methodName}($environment);
+				} else {
+					$val = $this->getVariable($variable['prefix'])->{$methodName}();
+				}
 			} else {
 				$val = $this->getCustomVariable($variable['name']);
 			}

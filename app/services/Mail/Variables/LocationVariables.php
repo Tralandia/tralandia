@@ -22,4 +22,9 @@ class LocationVariables extends Nette\Object {
 		$this->location = $location;
 	}
 
+	public function getEntity()
+	{
+		return $this->location;
+	}
+
 }

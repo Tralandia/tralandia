@@ -14,6 +14,11 @@ use	Extras\Annotation as EA;
  */
 class Role extends \Entity\BaseEntity {
 
+	const SUPERADMIN = 'superadmin';
+	const TRANSLATOR = 'translator';
+	const OWNER = 'owner';
+	const GUEST = 'guest';
+
 	/**
 	 * @var string
 	 * @ORM\Column(type="string")
