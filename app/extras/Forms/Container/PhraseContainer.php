@@ -2,8 +2,16 @@
 
 namespace Extras\Forms\Container;
 
+use Entity\Phrase\Phrase;
+use Nette\Security\User;
+
 class PhraseContainer extends BaseContainer
 {
+
+	/**
+	 * @var \Entity\User\User
+	 */
+	protected $user;
 
 	/**
 	 * @var \Entity\Phrase\Phrase
@@ -11,19 +19,20 @@ class PhraseContainer extends BaseContainer
 	protected $phrase;
 
 	/**
-	 * @var \Repository\LanguageRepository
+	 * @var array
 	 */
-	protected $languageRepository;
+	protected $sourceLanguages;
 
 	/**
 	 * @var \Entity\Language|NULL
 	 */
 	protected $fromLanguage;
 
-	public function __construct(\Entity\Phrase\Phrase $phrase, \Repository\LanguageRepository $languageRepository)
+	public function __construct(User $user, Phrase $phrase, array $sourceLanguages)
 	{
+		$this->user = $user;
 		$this->phrase = $phrase;
-		$this->languageRepository = $languageRepository;
+		$this->sourceLanguages = $sourceLanguages;
 
 		# @todo nie stale sa to ma prekladat zo sourceLanguage
 		$this->fromLanguage = $phrase->getSourceLanguage();
@@ -43,23 +52,23 @@ class PhraseContainer extends BaseContainer
 			->setPrompt($phrase->getType()->getEntityName() . '.' . $phrase->getType()->getEntityAttribute())
 			->setDisabled();
 
-		$languageList = $this->languageRepository->fetchPairs('id', 'iso');
-		$this->addSelect('sourceLanguage', 'Source Language:', $languageList);
+		$this->addSelect('sourceLanguage', 'Source Language:', $this->sourceLanguages);
 
 		$this->addCheckbox('ready', 'Ready');
 		$this->addCheckbox('corrected', 'Corrected');
 
 		$this['fromVariations'] = new TranslationVariationContainer($phrase->getTranslation($this->fromLanguage), TRUE);
 
-		$this->addSelect('changeToLanguage', 'changeToLanguage', $languageList);
 
 		$positionList = array(
 			'before' => 'Before',
 			'after' => 'After',
 		);
 
+		$changeToLanguageList = [];
 		$to = $this->addContainer('to');
 		foreach($phrase->getTranslations() as $translation) {
+			if(!$this->user->isAllowed($translation, 'translate')) continue;
 			$language = $translation->getLanguage();
 			$languageContainer = $to->addContainer($language->getIso());
 			$languageContainer['variations'] = new TranslationVariationContainer($translation, TRUE);
@@ -71,7 +80,10 @@ class PhraseContainer extends BaseContainer
 
 			$languageContainer->addSelect('position', 'Position', $positionList)
 				->setDefaultValue($translation->getPosition());
+
+			$changeToLanguageList[$language->getId()] = $language->getName()->getTranslationText($language);
 		}
+		$this->addSelect('changeToLanguage', 'changeToLanguage', $changeToLanguageList);
 
 		$this->addSubmit('save', 'Save');
 	}
