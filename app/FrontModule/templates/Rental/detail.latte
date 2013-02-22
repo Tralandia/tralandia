@@ -48,82 +48,65 @@
 		<a class="brown"  href="{link Rental:list location => $rental->address->locality , rentalType => $rental->type }">{_$rental->type->name|firstUpper} {_$rental->address->locality->name , null , [case=>locative]}</a>
 		</p>
 
-		{if $rental->teaser}
+		{if $rental->teaser || !empty($interviewAnswers[0]->answer) > 0}
 		<table class="teaser">
+			{if $rental->teaser}
 			<tr>
 				<td class="icon"><i class="entypo-megaphone"></i></td>
 				<td class="content">{_$rental->teaser|firstUpper}</td>
-			</tr>			
+			</tr>
+			{/if}
+			{if count($interviewAnswers) > 0}
+			<tr>
+				<td class="firstAnswer" colspan="2">{_$interviewAnswers[0]->answer|firstUpper}</td>
+			</tr>
+			{/if}
 		</table>
 		{/if}
 
-{dump $rental}
+		<table class="detailInfoBox">
+			<tr>
+				<td>
+					<i class="entypo-new-circle"></i>
+					{$rental->price}
+					<span>#/ osoba / noc</span>
+				</td>
+				<td>
+					<i class="entypo-users"></i>
+					{_o1008} {$rental->maxCapacity} {_o925,null,[count=>$rental->maxCapacity]}
+					<span>{if $rental->bedroomCount}{$rental->bedroomCount} #badroom, {/if}{$rental->rooms}</span>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<i class="entypo-bell"></i>	
+					{_o1012}	
 
-<div class="detailInfoBoxCover">
+					{var $ownerAvailability = $rental->getAmenitiesByType(array('owner-availability'))}		
+					<span>#ubytovatel byva 
+						{if $ownerAvailability}
+							{foreach $ownerAvailability as $amenities}					
+								{foreach $amenities as $amenity}
+									{_$amenity->name}{if !$iterator->last}, {/if}
+								{/foreach}				
+							{/foreach}
+						{/if}
+				</td>
+				<td>
+					<i class="entypo-info2"></i>
+					{var $separateGroups = $rental->getAmenitiesByType(array('separate-groups'))}
+				</td>
+			</tr>
+		</table>
 
-		<div class="detailInfoBox first">
-			<i class="entypo-new-circle"></i>
-			<div class="content">
-				{$rental->price} #Eur
-				<span>#/ osoba / noc</span>
-			</div>
-		</div>
-
-		<div class="detailInfoBox">
-			<i class="entypo-users"></i>
-			<div class="content">
-				{_o1008} {$rental->maxCapacity} {_o925,null,[count=>$rental->maxCapacity]}
-				<span>{if $rental->bedroomCount}{$rental->bedroomCount} #badroom, {/if}{$rental->rooms}</span>
-			</div>
-		</div>
-
-
-
-
-		<div class="detailInfoBox first">		
-			<i class="entypo-bell"></i>	
-			<div class="content">	
-				{_o1012}	
-
-				{var $ownerAvailability = $rental->getAmenitiesByType(array('owner-availability'))}		
-				<span>#ubytovatel byva 
-					{if $ownerAvailability}
-						{foreach $ownerAvailability as $amenities}					
-							{foreach $amenities as $amenity}
-								{_$amenity->name}{if !$iterator->last}, {/if}
-							{/foreach}				
-						{/foreach}
-					{/if}
-				</span>
-			</div>
-		</div>
-
-		<div class="detailInfoBox">
-			<i class="entypo-info2"></i>
-			<div class="content">
-				<span>
-				{var $separateGroups = $rental->getAmenitiesByType(array('separate-groups'))}
-				{if $separateGroups}
-					{foreach $separateGroups as $amenities}					
-						{foreach $amenities as $amenity}
-							{_$amenity->name}{if !$iterator->last}, {/if}
-						{/foreach}					
-					{/foreach}
-				{/if}
-				 #rooms lorem ipsum text #rooms lorem ipsum text
-				 </span>
-			</div>
-		</div>
-</div>
-
-<div class="clearfix"></div>
+	<div class="clearfix"></div>
 
 	{var $noPriceTable = true}
 
 	{if count($rental->pricelistRows) > 0}
 	{var $noPriceTable = false}
 		<ul class="detailPriceList">
-			<li><h3><span>$ </span>Cenniky</h3>
+			<li><h3>Cenniky <span>approx. <strong>15 EUR</strong></span></h3>
 				<ul>
 
 					{foreach $rental->pricelistRows as $pricelistRow}
