@@ -163,7 +163,7 @@ class Language extends \Entity\BaseEntityDetails {
 	}
 		
 	/**
-	 * @return \Entity\Phrase\Phrase|NULL
+	 * @return \Entity\Phrase\Phrase
 	 */
 	public function getName()
 	{

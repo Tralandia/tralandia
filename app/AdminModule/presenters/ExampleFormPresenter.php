@@ -66,7 +66,11 @@ class ExampleFormPresenter extends BasePresenter {
 		$address = $this->addressRepository->find(1);
 		$form['address'] = new \Extras\Forms\Container\AddressContainer($locations, $address);
 
-		$form['phrase'] = new \Extras\Forms\Container\PhraseContainer($phrase, $this->languageRepository);
+		$form['phrase'] = new \Extras\Forms\Container\PhraseContainer(
+			$this->user,
+			$phrase,
+			$this->languageRepository->getPairs('id', 'iso')
+		);
 		$form['phrase']->setDefaultValues();
 
 		$imageStorage = $this->getContext()->getService('rentalImageStorage');
