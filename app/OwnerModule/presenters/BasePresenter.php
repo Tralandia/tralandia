@@ -42,13 +42,9 @@ abstract class BasePresenter extends \SecuredPresenter {
 
 		$this->template->envLanguage = $this->environment->getLanguage();
 		$this->template->envPrimaryLocation = $this->environment->getPrimaryLocation();
+
+		$this->template->rentalList = $this->loggedUser->getRentals();
 		parent::beforeRender();
-	}
-
-
-	public function createComponentBreadcrumb($name) {
-		
-		return new \FrontModule\Breadcrumb\Breadcrumb($this, $name);
 	}
 
 	public function createComponentFooter($name) {
