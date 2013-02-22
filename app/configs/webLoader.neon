@@ -81,10 +81,12 @@ parameters:
 					#- fileUpload/lib/js/main.js
 				css:
 					- fileUpload/lib/css/jquery.fileupload-ui.css
-
+			fontEntypo:
+				css: 
+					- fontEntypo/custom/less/entypoIcon.less
 			Front:
 				css:
-					- Front/custom-icon.less					
+										
 					- Front/form-registration.less
 					- Front/calendar.less					
 					- Front/sidebar.less
@@ -124,18 +126,18 @@ parameters:
 					- nette/custom/js/custom.js
 			bootstrap:
 				js: 
-					#- bootstrap/bootstrap-alert.js
-					#- bootstrap/bootstrap-button.js
-					#- bootstrap/bootstrap-carousel.js
-					#- bootstrap/bootstrap-collapse.js
-					- bootstrap/bootstrap-dropdown.js
-					- bootstrap/bootstrap-modal.js
-					- bootstrap/bootstrap-tooltip.js
-					- bootstrap/bootstrap-popover.js
-					#- bootstrap/bootstrap-scrollspy.js
-					- bootstrap/bootstrap-tab.js
-					#- bootstrap/bootstrap-transition.js
-					#- bootstrap/bootstrap-typeahead.js
+					#- bootstrap/lib/js/bootstrap-alert.js
+					#- bootstrap/lib/js/bootstrap-button.js
+					#- bootstrap/lib/js/bootstrap-carousel.js
+					#- bootstrap/lib/js/bootstrap-collapse.js
+					- bootstrap/lib/js/bootstrap-dropdown.js
+					- bootstrap/lib/js/bootstrap-modal.js
+					- bootstrap/lib/js/bootstrap-tooltip.js
+					- bootstrap/lib/js/bootstrap-popover.js
+					#- bootstrap/lib/js/bootstrap-scrollspy.js
+					- bootstrap/lib/js/bootstrap-tab.js
+					#- bootstrap/lib/js/bootstrap-transition.js
+					#- bootstrap/lib/js/bootstrap-typeahead.js
 
 			jQuery:
 				js: 
@@ -163,6 +165,7 @@ parameters:
 				-  %webloader.packages.jQuery%
 				-  %webloader.packages.jqueryCookie%									
 				-  %webloader.packages.select2%
+				-  %webloader.packages.fontEntypo%
 				-  %webloader.packages.Front%
 				-  %webloader.packages.texyla%
 				-  %webloader.packages.bootstrap%
@@ -174,9 +177,9 @@ parameters:
 				-  %webloader.packages.jqueryUi%
 				-  %webloader.packages.jqueryCookie%									
 				-  %webloader.packages.select2%
+				-  %webloader.packages.fontEntypo%
 				-  %webloader.packages.Front%
 				-  %webloader.packages.texyla%
-				
 				-  %webloader.packages.nette%								
 				-  %webloader.packages.gMap%			
 				-  %webloader.packages.select2HideInputText%			
@@ -185,7 +188,9 @@ parameters:
 				-  %webloader.packages.jQuery%
 				-  %webloader.packages.jqueryCookie%
 				-  %webloader.packages.jqueryUi%
-				-  %webloader.packages.Front%				
+				
+				-  %webloader.packages.fontEntypo%
+				-  %webloader.packages.Front%			
 				-  %webloader.packages.select2%
 				-  %webloader.packages.texyla%
 				-  %webloader.packages.bootstrap%
