@@ -2,6 +2,7 @@
 
 namespace Security;
 
+use Nette\InvalidArgumentException;
 use Nette\Security\Permission;
 
 class MyAssertion {
@@ -35,5 +36,16 @@ class MyAssertion {
 		}
 		
 		return FALSE;
+	}
+
+	public function translate(Permission $acl, $role, $resource, $privilege)
+	{
+		$translation = $acl->getQueriedResource();
+
+		if(!$translation instanceof \Entity\Phrase\Translation) {
+			throw new InvalidArgumentException;
+		}
+
+		return TRUE;
 	}
 }
