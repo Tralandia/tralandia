@@ -9,6 +9,7 @@
 #favoritesStaticContainer {
 	z-index: 300000;
 	margin-bottom: 10px;
+	position: relative;
 }
 
 .favoritesShareLinkContent {
@@ -463,7 +464,7 @@
 					color: #ffffff;
 					display: block;
 					height: 34px;
-					width: 44px;
+					width: 228px;
 					
 					font-size: 11px;
 					text-align: center;
@@ -471,7 +472,8 @@
 					i {
 						display: block;
 						height: 36px;
-						padding-top: 7px;
+						float: left;
+						padding: 7px 8px;
 						overflow: hidden;
 						margin-bottom: 6px;						
 					}
@@ -502,4 +504,87 @@
 
 
 }
+
+#favoriteShareContent {
+display: block;
+width: 500px;
+height: 102px;
+left: 10px;
+}
+
+
+#favoriteShareContent {
+
+
+	.favoriteSocialIcons ul {
+		margin: 0;
+		margin-left: 10px;
+	}
+
+	.favoriteSocialIcons ul li {
+		float: left;
+
+		&.facebook {
+width: 97px;
+overflow: hidden;			
+		}
+
+		&.twitter {
+			width: 58px;
+			overflow: hidden;
+		}
+		&.pinterest {
+
+		}
+		&.gplus {
+overflow: hidden;
+width: 27px;
+		}
+	}
+
+	.shareOrder {
+		border-top: 1px solid #ddd;
+		clear: both;
+
+		input[type=text] {
+			margin: 5px;
+		}
+
+		label {
+			float: left;
+			width: 144px;
+			line-height: 35px;
+			padding-left: 10px;
+		}
+	}
+}
+
+#favoriteShareContent  {
+	border: 1px solid #b0c13b;
+}
+#favoriteShareContent:after, #favoriteShareContent:before {
+	bottom: 100%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+#favoriteShareContent:after {
+	border-color: rgba(255, 255, 255, 0);
+	border-bottom-color: #ffffff;
+	border-width: 8px;
+	left: 24%;
+	margin-left: -8px;
+}
+#favoriteShareContent:before {
+	border-color: rgba(176, 193, 59, 0);
+	border-bottom-color: #b0c13b;
+	border-width: 9px;
+	left: 24%;
+	margin-left: -9px;
+}
+
 

@@ -202,6 +202,7 @@ parameters:
 				-  %webloader.packages.fontEntypo%
 				-  %webloader.packages.jQuery%
 				-  %webloader.packages.jqueryCookie%
+				-  %webloader.packages.fileUpload%
 				-  %webloader.packages.bootstrap%
 				-  %webloader.packages.Front%
 				-  %webloader.packages.select2%
