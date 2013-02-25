@@ -1,12 +1,23 @@
 {includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
 {form ticketForm}
+    <div class="ticketMesageEntity">
+    
 	{ifset $form['canned']}
-		{include #select, control => $form['canned']}
+        <div class="header">
+		  {include #select, control => $form['canned']}
+        </div>
 	{/ifset}
+    
+    <div class="content">
+	   {include #textArea, control => $form['message']}
+    </div>
+    <div class="footer">
+    	{include #upload, control => $form['attachment']}
+    	{include #submit, control => $form['submit'] , class => 'btn-green'}
+        <div class="clearfix"></div>
+    </div>
 
-	{include #textArea, control => $form['message']}
-	{include #upload, control => $form['attachment']}
-	{include #submit, control => $form['submit']}
+    </div>
 {/form}
 
 
