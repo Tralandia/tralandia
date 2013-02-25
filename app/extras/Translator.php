@@ -52,15 +52,7 @@ class Translator implements \Nette\Localization\ITranslator {
 			$phraseId = $phrase;
 		}
 
-		if($variation === NULL) {
-			$translationKey = $phraseId.'_'.$this->language->id;
-		} else {
-			if (!isset($variation['count'])) $variation['count'] = NULL;
-			if (!isset($variation['gender'])) $variation['gender'] = NULL;
-			if (!isset($variation['case'])) $variation['case'] = NULL;
-			$translationKey = $phraseId.'_'.$this->language->id.'_'.implode('_', $variation);
-		}
-
+		$translationKey = $this->getCacheKey($phraseId, $variation);
 
 		$translation = $this->cache->load($translationKey);
 		if($translation === NULL) {
@@ -78,7 +70,6 @@ class Translator implements \Nette\Localization\ITranslator {
 
 			if(!$phrase) {
 				$translation = '{!'.$phraseId.'!}';
-			} else {
 			}
 
 			if (!$translation && $translation = $phrase->getTranslation($this->language, TRUE)) {
@@ -92,7 +83,22 @@ class Translator implements \Nette\Localization\ITranslator {
 			if($translation === NULL) $translation = '{'.$phraseId.'|'.$this->language->iso.'}';
 			$this->cache->save($translationKey, $translation);
 		}
+
 		return $translation;
+	}
+
+	private function getCacheKey($phraseId, array $variation = NULL)
+	{
+		if($variation === NULL) {
+			$translationKey = $phraseId.'_'.$this->language->id;
+		} else {
+			if (!isset($variation['count'])) $variation['count'] = NULL;
+			if (!isset($variation['gender'])) $variation['gender'] = NULL;
+			if (!isset($variation['case'])) $variation['case'] = NULL;
+			$translationKey = $phraseId.'_'.$this->language->id.'_'.implode('_', $variation);
+		}
+
+		return $translationKey;
 	}
 
 }
