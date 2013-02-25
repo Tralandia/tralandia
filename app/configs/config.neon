@@ -163,7 +163,7 @@ factories:
 		implement: OwnerModule\Forms\IRentalEditFormFactory
 
 	signInFormFactory:
-		class: BaseModule\Forms\Sign\InForm()
+		class: BaseModule\Forms\Sign\InForm(@userRepositoryAccessor)
 		implement: BaseModule\Forms\Sign\IInFormFactory
 
 	forgotPasswordFormFactory:

@@ -65,6 +65,10 @@ class User extends \Entity\BaseEntityDetails {
 		return $this->getRole() && in_array($this->getRole()->getSlug(), $roles);
 	}
 
+	public function isOwner()
+	{
+		return $this->getRole() == Role::OWNER;
+	}
 
 	public function getIdentity()
 	{
@@ -75,6 +79,11 @@ class User extends \Entity\BaseEntityDetails {
 		];
 
 		return $identity;
+	}
+
+	public function getFirstRental()
+	{
+		return $this->rentals->slice(0,1);
 	}
 
 	//@entity-generator-code --- NEMAZAT !!!

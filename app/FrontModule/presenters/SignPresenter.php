@@ -43,7 +43,7 @@ class SignPresenter extends BasePresenter {
 	}
 
 	public function actionOut() {
-		$this->user->logout();
+		$this->user->logout(TRUE);
 		$this->redirect('Home:default');
 	}
 
