@@ -267,6 +267,21 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 		return $return;
 	}
 
+	public function getImportantAmenities($important = TRUE)
+	{
+
+		$return = array();
+		$i = 0;
+		foreach ($this->getAmenities() as $amenity) {
+			if($amenity->important == $important) {
+				$return[$amenity->type->slug][] = $amenity;
+				$i++;
+			}
+		}
+
+		return $return;
+	}
+
 	/**
 	 * @return \Extras\Types\Price
 	 */

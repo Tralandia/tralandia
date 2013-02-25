@@ -48,6 +48,12 @@ class RentalPresenter extends BasePresenter {
 		$this->template->locality = $localitySeo;
 		$this->template->interviewAnswers = $interviewAnswers;
 
+		$this->template->teaser = $this->translate($rental->teaser);
+		$this->template->firstAnswer = $this->translate($rental->interviewAnswers[0]->answer);
+
+		$separateGroups = $rental->getAmenitiesByType(array('separate-groups'));
+		$this->template->separateGroups = (bool) count($separateGroups) == 1;
+
 		$this->setLayout('detailLayout');
 		//$t = $this['reservationForm'];
 	}
