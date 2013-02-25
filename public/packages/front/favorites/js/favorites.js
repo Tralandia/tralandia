@@ -161,3 +161,28 @@
     };
     
 })(jQuery);
+
+$(function(){
+	$('#favoritesShareList li a').toggle(function(){
+		
+		var forconteiner = $(this).attr('rel');
+		var $shareConteiner = $('.favoritesShareLinkContent');
+		$shareConteiner.slideDown();
+		$shareConteiner.find('div.'+forconteiner).removeClass('hide');
+		
+		return false;
+	} , function(){
+		var forconteiner = $(this).attr('rel');
+		var $shareConteiner = $('.favoritesShareLinkContent');
+		$shareConteiner.slideUp();
+		$shareConteiner.find('div.'+forconteiner).addClass('hide');
+		
+		return false;		
+	});
+});
+
+
+
+
+
+
