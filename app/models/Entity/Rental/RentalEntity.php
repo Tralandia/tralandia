@@ -267,6 +267,21 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 		return $return;
 	}
 
+	public function getImportantAmenities($important = TRUE)
+	{
+
+		$return = array();
+		$i = 0;
+		foreach ($this->getAmenities() as $amenity) {
+			if($amenity->important == $important) {
+				$return[$amenity->type->slug][] = $amenity;
+				$i++;
+			}
+		}
+
+		return $return;
+	}
+
 	/**
 	 * @return \Extras\Types\Price
 	 */
@@ -329,6 +344,26 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 			return $address->getPrimaryLocation();
 		}
 		return NULL;
+	}
+
+	/**
+	 * @return \Entity\Rental\InterviewAnswer|NULL
+	 */
+	public function getFirstInterviewAnswer()
+	{
+		if(isset($this->interviewAnswers[0])) {
+			return $this->interviewAnswers[0];
+		}
+		return NULL;
+	}
+
+	/**
+	 * @return Bool
+	 */
+	public function getSeparateGroups()
+	{
+		$separateGroups = $this->getAmenitiesByType(array('separate-groups'));
+		return (bool) count($separateGroups) == 1;
 	}
 
 

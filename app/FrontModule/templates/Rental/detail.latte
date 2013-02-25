@@ -13,52 +13,48 @@
 <div class="span12">
 	<div class="sitePadding baseRadius baseBorder marginBottom overflow relative">
 		<div id="content" class="nopadding">
-			
-
 
 
 <div class="row-fluid objectDetailContent">
 	<div class="span4 marginBottom marginTop marginLeft leftSidebarObjectDetail">
 		{foreach $rental->getImages(3) as $photo}
-
 			{if $iterator->first}
-				weiufewiugf 
+			<div class="imgFirst">
 			{/if}
-			
+				<img alt="{_$rental->name} - {_o100008} {$iterator->getCounter()}" n:fakeImage="" class="marginBottom" />
+			{if $iterator->first}
+			</div>
+			{/if}
 		{/foreach}
 
 		<div class="imgFirst">
-			<span class="clasification"><i class="entypo-star"></i><i class="entypo-star"></i><i class="entypo-star"></i><i class="entypo-star"></i></span>
-			<img alt="{_$rental->name}" n:fakeImage="" class="marginBottom" />
+			<img alt="{_$rental->name} - {_o100008} 1" n:fakeImage="" class="marginBottom" />
 		</div>
-		
-		<img alt="{_$rental->name}" n:fakeImage="" class="marginBottom" />
-		<img alt="{_$rental->name}" n:fakeImage="" class="marginBottom" />
-		
-		 <img class="mapsImg" src="https://maps.googleapis.com/maps/api/staticmap?center={$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&markers=color:blue%7C{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&zoom=10&size=288x170&sensor=false" /> 
-		
-	</div>
+		<img alt="{_$rental->name} - {_o100008} 2" n:fakeImage="" class="marginBottom" />
+		<img alt="{_$rental->name} - {_o100008} 3" n:fakeImage="" class="marginBottom" />
 
+		<img class="mapsImg" src="https://maps.googleapis.com/maps/api/staticmap?center={$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&markers=color:blue%7C{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&zoom=10&size=288x170&sensor=false" />
+	</div>
 
 	<div class="span5">
 
-		<h1 class="addToViewList" id="{$rental->id}">{_$rental->name}</h1>
+		<h1 class="addToViewList" id="{$rental->id}">{_$rental->name}{if $rental->classification > 0 }&nbsp;{for $i = 0; $i < $rental->classification; $i++}<span class="clasification"><i class="entypo-star"></i>{/for}{/if}</h1>
 
 		<p class="locality nopadding">
 		<a class="brown"  href="{link Rental:list location => $rental->address->locality , rentalType => $rental->type }">{_$rental->type->name|firstUpper} {_$rental->address->locality->name , null , [case=>locative]}</a>
 		</p>
 
-		{if $rental->teaser || !empty($interviewAnswers[0]->answer) > 0}
+		{if $teaser || $firstAnswer}
 		<table class="teaser">
-			{if $rental->teaser}
+			{if $teaser}
 			<tr>
 				<td class="icon"><i class="entypo-megaphone"></i></td>
-				<td class="content">{_$rental->teaser|firstUpper}</td>
+				<td class="content">{$teaser}</td>
 			</tr>
 			{/if}
-			{if count($interviewAnswers) > 0}
+			{if $firstAnswer}
 			<tr>
-				<td class="firstAnswer" colspan="2">{_$interviewAnswers[0]->answer|firstUpper}</td>
+				<td class="firstAnswer" colspan="2">{$firstAnswer|firstUpper}</td>
 			</tr>
 			{/if}
 		</table>
@@ -69,21 +65,19 @@
 				<td>
 					<i class="entypo-new-circle"></i>
 					{$rental->price}
-					<span>#/ osoba / noc</span>
+					<span>{_o100004}</span>
 				</td>
 				<td>
 					<i class="entypo-users"></i>
-					{_o1008} {$rental->maxCapacity} {_o925,null,[count=>$rental->maxCapacity]}
-					<span>{if $rental->bedroomCount}{$rental->bedroomCount} #badroom, {/if}{$rental->rooms}</span>
+					{_o100005} {$rental->maxCapacity} {_o925,null,[count=>$rental->maxCapacity]}
+					<span>{if $rental->bedroomCount}{$rental->bedroomCount} {_o100009}, {/if}{$rental->rooms}</span>
 				</td>
 			</tr>
 			<tr>
 				<td>
 					<i class="entypo-bell"></i>	
-					{_o1012}	
-
-					{var $ownerAvailability = $rental->getAmenitiesByType(array('owner-availability'))}		
-					<span>#ubytovatel byva 
+					{var $ownerAvailability = $rental->getAmenitiesByType(array('owner-availability'))}	
+					<span> 
 						{if $ownerAvailability}
 							{foreach $ownerAvailability as $amenities}					
 								{foreach $amenities as $amenity}
@@ -94,42 +88,45 @@
 				</td>
 				<td>
 					<i class="entypo-info2"></i>
-					{var $separateGroups = $rental->getAmenitiesByType(array('separate-groups'))}
+						{if $separateGroups}
+							{_o100011}
+						{else}
+							{_o100010}
+						{/if}
 				</td>
 			</tr>
 		</table>
 
 	<div class="clearfix"></div>
 
-	{var $noPriceTable = true}
+	{var $pricesAvailable = false}
 
 	{if count($rental->pricelistRows) > 0}
-	{var $noPriceTable = false}
+		{var $pricesAvailable = true}
 		<ul class="detailPriceList">
-			<li><h3>Cenniky <span>approx. <strong>15 EUR</strong></span></h3>
+			<li><h3>{_o100012} <span>{_o100007} <strong>{$rental->price}</strong></span></h3>
 				<ul>
 
 					{foreach $rental->pricelistRows as $pricelistRow}
 					<li>	
-					{dump $pricelistRow->roomType}
-					{$pricelistRow->roomCount} {_$pricelistRow->roomType->name, null , [count => $pricelistRow->bedCount]}
+					{$pricelistRow->roomCount} {_$pricelistRow->roomType->name, null , [count => $pricelistRow->roomCount]}
 						<span>
-							{$pricelistRow->bedCount} {_o940 , null , [count => $pricelistRow->bedCount]}
-							{if $pricelistRow->extraBedCount}{$pricelistRow->extraBedCount} {_o1158 , null , [count => $pricelistRow->extraBedCount]}{/if}							
+							{$pricelistRow->bedCount} {_o100006 , null , [count => $pricelistRow->bedCount]}
+							{if $pricelistRow->extraBedCount}{$pricelistRow->extraBedCount} {_o100000 , null , [count => $pricelistRow->extraBedCount]}{/if}							
 						</span>
 
 						<span class="price">
-							{$pricelistRow->price} #mena
+							{$pricelistRow->price}
 						</span>
 					</li>
 					{/foreach}
 					
 				
 					{if count($rental->pricelists) > 0}
-					{var $noPriceTable = false}
+					{var $pricesAvailable = true}
 						{foreach $rental->pricelists as $pricelist}
 						<li>							
-							{if $pricelist->name} {$pricelist->name} {/if} {_$pricelist->language->name} <i class="entypo-save"></i> <a href="{$pricelist->filePath}" class="btn btn-green btn-text-wrap btn-pricelist">{_o955}</a>							
+							{if $pricelist->name} {$pricelist->name} {/if} {_$pricelist->language->name} <i class="entypo-save"></i> <a href="{$pricelist->filePath}" class="btn btn-green btn-text-wrap btn-pricelist">{_o955}</a>
 						</li>
 						{/foreach}
 					{/if}					
@@ -141,7 +138,7 @@
 		</ul>
 	{/if}
 
-	{if $noPriceTable}
+	{if !$pricesAvailable}
 		{if $rental->pricesUponRequest}
 			#len na dotaz
 			{else}
@@ -169,27 +166,26 @@
 			   {/if}
 
 
-				{var $board = $rental->getAmenitiesByType(array('wellness'))}
 				{if $board}
-					{var $board = $rental->getAmenitiesByType(array('important'))}
+					{var $importantAmenities = $rental->getImportantAmenities(true)}
 				   <li class="monitor">
-				   <strong>#Vybavenie</strong>
+				   <strong>{_o100013}</strong>
 					   <div class="amenitiesStart">					   
-						{foreach $board  as $amenities}					
+						{foreach $importantAmenities  as $amenities}					
 							{foreach $amenities as $amenity}							
 								{_$amenity->name}{if !$iterator->last}, {/if}
 							{/foreach}					
 						{/foreach}
-						<a class="toogle showMoreAmenities" data-opentext="#view all" data-closetext="#view less" for="moreAmenities" href="#"><b>#view all</b> </a>
+						<a class="toogle showMoreAmenities" data-opentext="{_o100001}" data-closetext="{_o100014}" for="moreAmenities" href="#"><b>{_o100001}</b></a>
 						</div>
 						
 						<div id="moreAmenities">
 						<ul class="moreAmenities">
-							{var $board = $rental->getAmenitiesByType(array('wellness','relax','activity','children','room','kitchen','bathroom','heating','parking','service','congress','room-type','separate-groups','animal','other'))}
-							{if $board}
+							{var $otherAmenities = $rental->getImportantAmenities(false)}
+							{if $otherAmenities}
 							   			   
 								   
-									{foreach $board  as $amenities}		
+									{foreach $otherAmenities  as $amenities}		
 									<li>			
 										{foreach $amenities as $amenity}
 											
@@ -215,7 +211,7 @@
 			   {if $rental->checkIn}
 				   <li class="clock">
 				   <div class="content">
-				   		<strong>{_o1586} {$rental->checkIn} , {_o1588} {$rental->checkOut}</strong>
+				   		<strong>{_o1586} {$rental->checkIn}:00 , {_o1588} {$rental->checkOut}:00</strong>
 					</div>
 				   </li>
 			   {/if}
@@ -241,8 +237,6 @@
 
 		{/if}
 	
-		{* <button class="btn btn-compare addToFavorites" rel="{$rental->id}" link="{link Rental:detail $rental}" thumb="{$rental->getMainImage()->getThumbnail()}"><span class="entypo-star">{_o12334}</span></button> *}
-
 		<div class="socialIconTable marginBottom marginTop socialIconsDetail">
 			<div class="socialBtnHeader">
 
@@ -291,37 +285,21 @@
 					</tr>
 					{/if}
 
-					{if $rental->address->address}
+					{if $rental->address->status == \Entity\Contact\Address::STATUS_OK}
 					<tr>						
 						<td class="iconcover"><i class="entypo-adress"></i></td>
 						<td>
 						<strong>{_o2431} </strong><br/> 
 						
 						
-							{$rental->address->address} <br/> {$rental->address->postalCode} {_$rental->address->locality->name} 
+							{$rental->address->address} 
 							{if $rental->address->subLocality}
 							({$rental->address->subLocality} )
 							{/if}
-								
-
+							<br/> {$rental->address->postalCode} {_$rental->address->locality->name} 
 						</td>
 					</tr>	
 					{/if}
-
-{* 					<tr>						
-						<td class="iconcover"><i class="entypo-location"></i></td>
-						<td>
-						<strong>#gps:</strong>
-						
-						<a class="mapsImg">
-						
-						{$rental->address->getGps()}
-						
-							</a>	
-
-						</td>
-					</tr>
- *}
 
  					{if $rental->url->value}
 					<tr>
@@ -332,40 +310,19 @@
 					</tr>
 					{/if}
 
-					{if $rental->spokenLanguages}
+					{if count($rental->spokenLanguages) > 0}
 					<tr>						
 						<td class="iconcover"><i class="entypo-language"></i></td>
 						<td>
-						<strong>#Ubytovatel rozumie </strong><br/> 
-						
-						
-						
+						<strong>{_o100015}</strong><br/> 
 						{foreach $rental->spokenLanguages as $language}
 							{_$language->name}{if !$iterator->last}, {/if}
 						{/foreach}
-							
-
 						</td>
 					</tr>	
 					{/if}
 
 				</table>
-
-				
-				<div  id="moreInfoContactTable" class="">
-
-				</div>
-				{*
-				<table>
-					<tr>						
-						<td class="iconcover"><i class="entypo-open"></i></td>
-						<td>
-						<a href="#" class="toogle" opened="#less option" close="{_o1701}" for="moreInfoContactTable">{_o1701}</a>
-						</td>
-					</tr>
-				</table>
-				*}
-
 			{snippet reservationForm}
 			{include '../../forms/Rental/reservationForm.latte'}
 			{/snippet}
@@ -438,10 +395,8 @@ $(document).ready(function(){
 				<div class="metaObjectInfo" id="gallery">
 				
 					<ul class="biggall">	
-						{var $ii = 1}
 						{foreach $rental->getImages() as $photo}
-							<li><img alt="{_$rental->name} {$ii}" src="{$basePath}{$photo|rentalImageSrc}" /></li>
-							{var $ii = $ii + 1}
+							<li><img alt="{_$rental->name} - {_o100008} {$iterator->getCounter()}" src="{$basePath}{$photo|rentalImageSrc}" /></li>
 						{/foreach}
 							<li><img alt="" n:fakeImage=""/></li>
 							<li><img alt="" n:fakeImage=""/></li>
@@ -506,7 +461,12 @@ $(document).ready(function(){
 
 <div class="row-fluid">
 	<div class="span12">
-		<div class="moreOption"><a href="#">edit object</a> <span class="separator">|</span> <span> Last updatet 12.06.2012 </span> <span class="separator">|</span> <a href="#">edit object</a> <span class="separator">|</span> <a href="#">send </a></div>
+		<div class="moreOption">
+			<span> Rental ID: 1234 </span> <span class="separator">&nbsp;|&nbsp;</span>
+			<span> Last update: 12.06.2012 </span> <span class="separator">&nbsp;|&nbsp;</span>
+			<a href="#">Report a problem</a> <span class="separator">&nbsp;|&nbsp;</span> 
+			<a href="#">Are you the owner? Edit your rental</a>
+		</div>
 	</div>
 </div>
 

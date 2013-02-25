@@ -11,11 +11,12 @@ $(function(){
 						var info = {
 							title: $(this).attr('data-title'),
 							thumb: $(this).attr('data-thumb'),
-							type: $(this).attr('data-type'),
-							location: $(this).attr('data-location')
+							location: $(this).attr('data-location'),
+							price: $(this).attr('data-price'),
+							capacity: $(this).attr('data-capacity')
 						};
 
-						var c = '<img src="'+info.thumb+'" /><b>'+info.type+' </b><br/><b>'+info.location+'</b>';	
+						var c = '<img src="'+info.thumb+'" /><p>'+info.location+'</br>'+info.price+' '+info.capacity+'</p>';	
 										
 					return c;
 				},
