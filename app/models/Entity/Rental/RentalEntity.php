@@ -346,6 +346,26 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 		return NULL;
 	}
 
+	/**
+	 * @return \Entity\Rental\InterviewAnswer|NULL
+	 */
+	public function getFirstInterviewAnswer()
+	{
+		if(isset($this->interviewAnswers[0])) {
+			return $this->interviewAnswers[0];
+		}
+		return NULL;
+	}
+
+	/**
+	 * @return Bool
+	 */
+	public function getSeparateGroups()
+	{
+		$separateGroups = $this->getAmenitiesByType(array('separate-groups'));
+		return (bool) count($separateGroups) == 1;
+	}
+
 
 	//@entity-generator-code --- NEMAZAT !!!
 

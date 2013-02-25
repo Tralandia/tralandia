@@ -49,10 +49,15 @@ class RentalPresenter extends BasePresenter {
 		$this->template->interviewAnswers = $interviewAnswers;
 
 		$this->template->teaser = $this->translate($rental->teaser);
-		$this->template->firstAnswer = $this->translate($rental->interviewAnswers[0]->answer);
 
-		$separateGroups = $rental->getAmenitiesByType(array('separate-groups'));
-		$this->template->separateGroups = (bool) count($separateGroups) == 1;
+		$firstAnswer = $rental->getFirstInterviewAnswer();
+		if ($firstAnswer) {
+			$this->template->firstAnswer = $this->translate($firstAnswer->answer);		
+		} else {
+			$this->template->firstAnswer = NULL;
+		}
+
+		$this->template->separateGroups = $rental->getSeparateGroups();
 
 		$this->setLayout('detailLayout');
 		//$t = $this['reservationForm'];

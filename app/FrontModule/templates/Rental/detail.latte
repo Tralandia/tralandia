@@ -17,23 +17,21 @@
 
 <div class="row-fluid objectDetailContent">
 	<div class="span4 marginBottom marginTop marginLeft leftSidebarObjectDetail">
-		{var $i = 1}
 		{foreach $rental->getImages(3) as $photo}
 			{if $iterator->first}
 			<div class="imgFirst">
 			{/if}
-				<img alt="{_$rental->name} - {_o100008} {$i}" n:fakeImage="" class="marginBottom" />
+				<img alt="{_$rental->name} - {_o100008} {$iterator->getCounter()}" n:fakeImage="" class="marginBottom" />
 			{if $iterator->first}
 			</div>
 			{/if}
-			{var $i++}
 		{/foreach}
 
 		<div class="imgFirst">
-			<img alt="{_$rental->name} - {_o100008} {$i}" n:fakeImage="" class="marginBottom" />
+			<img alt="{_$rental->name} - {_o100008} 1" n:fakeImage="" class="marginBottom" />
 		</div>
-		<img alt="{_$rental->name} - {_o100008} {$i}" n:fakeImage="" class="marginBottom" />
-		<img alt="{_$rental->name} - {_o100008} {$i}" n:fakeImage="" class="marginBottom" />
+		<img alt="{_$rental->name} - {_o100008} 2" n:fakeImage="" class="marginBottom" />
+		<img alt="{_$rental->name} - {_o100008} 3" n:fakeImage="" class="marginBottom" />
 
 		<img class="mapsImg" src="https://maps.googleapis.com/maps/api/staticmap?center={$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&markers=color:blue%7C{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&zoom=10&size=288x170&sensor=false" />
 	</div>
@@ -56,7 +54,7 @@
 			{/if}
 			{if $firstAnswer}
 			<tr>
-				<td class="firstAnswer" colspan="2">{_$interviewAnswers[0]->answer|firstUpper}</td>
+				<td class="firstAnswer" colspan="2">{$firstAnswer|firstUpper}</td>
 			</tr>
 			{/if}
 		</table>
@@ -397,10 +395,8 @@ $(document).ready(function(){
 				<div class="metaObjectInfo" id="gallery">
 				
 					<ul class="biggall">	
-						{var $ii = 1}
 						{foreach $rental->getImages() as $photo}
-							<li><img alt="{_$rental->name} - {_o100008} {$ii}" src="{$basePath}{$photo|rentalImageSrc}" /></li>
-							{var $ii++}
+							<li><img alt="{_$rental->name} - {_o100008} {$iterator->getCounter()}" src="{$basePath}{$photo|rentalImageSrc}" /></li>
 						{/foreach}
 							<li><img alt="" n:fakeImage=""/></li>
 							<li><img alt="" n:fakeImage=""/></li>
