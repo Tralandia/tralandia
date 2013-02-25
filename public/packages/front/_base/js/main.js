@@ -431,7 +431,7 @@ $(document).ready(function(){
 
 	$('.calendarEdit').calendarEdit();
 
-	$('.traMapControll').traMapControll();
+	$('.traMapcontrol').traMapcontrol();
 
 	$('.phraseForm').phraseForm();
 

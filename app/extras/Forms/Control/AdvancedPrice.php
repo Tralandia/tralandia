@@ -55,7 +55,7 @@ class AdvancedPrice extends SelectBox {
 		
 		$name = $control->name;
 		$id = $control->id;
-		$control->class .= 'pricecontroll';
+		$control->class .= 'pricecontrol';
 
 		$control->name .= '[currency]';
 		$control->id .= '-currency';

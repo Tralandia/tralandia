@@ -111,6 +111,7 @@ parameters:
 					# _base
 					- front/_base/less/fonts.less					
 					- front/_base/less/base.less					
+					- front/_base/less/forms.less					
 					- front/_base/less/calendar.less
 					# header 
 					- front/header/less/header.less
@@ -196,6 +197,8 @@ parameters:
 				- %webloader.packages.bootstrap%
 
 			Admin:
+
+				-  %webloader.packages.fontEntypo%
 				-  %webloader.packages.jQuery%
 				-  %webloader.packages.jqueryCookie%
 				-  %webloader.packages.bootstrap%

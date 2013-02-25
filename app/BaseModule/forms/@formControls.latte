@@ -166,7 +166,7 @@
 	$mainControl = $container->getMainControl()
 }
 {?unset($control)}
-<div class="control-group  pricecontroll">
+<div class="control-group  pricecontrol">
     <div class="form-label">
 		{label $mainControl /}
         <small>{$container->getDescription()}</small>
@@ -218,7 +218,7 @@
 	$mainControl = $container->getMainControl()
 }
 {?unset($control)}
-<div class="control-group traMapControll" data-link="{plink validateAddress}">
+<div class="control-group traMapcontrol" data-link="{plink validateAddress}">
 
     <div class="row-fluid">
         <div class="span2">
@@ -322,7 +322,7 @@
         
     {foreach $container['to']->getComponents() as $languageContainer}
     {var $language = $languageContainer['variations']->getLanguage()}
-    <div class="phraseControll hide" id="{$language->getId()}_phrase"> 
+    <div class="phrasecontrol hide" id="{$language->getId()}_phrase"> 
 
 
         {include #translationVatiations, control => $languageContainer['variations']}
@@ -401,7 +401,7 @@
 	$container = $control;
 }
 {?unset($control)}
-<div class="control-photo"><!-- controll photo start -->
+<div class="control-photo"><!-- control photo start -->
 
     <div class="row-fluid">
 
