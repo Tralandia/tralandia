@@ -65,6 +65,7 @@ parameters:
 					- jqueryUi/lib/js/jquery-ui-1.9.1.custom.min.js
 				css:
 					- jqueryUi/lib/css/tralandia/jquery-ui-1.9.1.custom.css
+					- jqueryUi/custom/datepicker.css.less
 
 			fileUpload:
 				js:
@@ -144,7 +145,7 @@ parameters:
 					#- front/js/trax-forms-ui.js					
 					#- front/js/main.js
 					#- front/js/detail-navigation.js
-					#- 'https://apis.google.com/js/plusone.js'
+					- 'https://apis.google.com/js/plusone.js'
 
 					# _base 
 					- front/_base/js/main.js

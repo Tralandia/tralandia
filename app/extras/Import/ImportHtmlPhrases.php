@@ -62,11 +62,12 @@ class ImportHtmlPhrases extends BaseImport {
 
 		$r = qNew('select * from __importPhrases order by id');
 		while ($x = mysql_fetch_array($r)) {
-			if ($this->context->phraseRepositoryAccessor->get()->findOneByOldId($x['id'])) continue;
-
-			$thisType = $x['isMulti'] ? $phraseTypeMulti : $phraseType;
-			//d($thisType);
-			$thisPhrase = $phraseCreator->create($thisType);
+			$thisPhrase = $this->context->phraseRepositoryAccessor->get()->findOneByOldId($x['id']);
+			if (!$thisPhrase) {
+				$thisType = $x['isMulti'] ? $phraseTypeMulti : $phraseType;
+				//d($thisType);
+				$thisPhrase = $phraseCreator->create($thisType);
+			}
 			$thisPhrase->oldId = $x['id'];
 
 			$thisPhrase->setTranslationText($en, $x['en0']);
@@ -81,11 +82,10 @@ class ImportHtmlPhrases extends BaseImport {
 				$variations[0][0]['nominative'] = $x['sk0'];
 				$variations[1][0]['nominative'] = $x['sk1'];
 				$variations[2][0]['nominative'] = $x['sk2'];
-				d($variations);
 				$thisPhrase->getTranslation($sk)->setVariations($variations);
 			}
+			d($thisPhrase->getTranslation($sk)->translation);
 			$languageRepository->persist($thisPhrase); 
-			break;
 		}
 		$languageRepository->flush();
 	}

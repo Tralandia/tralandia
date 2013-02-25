@@ -52,6 +52,9 @@ class Translator implements \Nette\Localization\ITranslator {
 			$phraseId = $phrase;
 		}
 
+		if ($variation !== NULL) {
+			$variation = array_merge(array('count' => NULL, 'gender' => NULL, 'case' => NULL), $variation);
+		}
 		$translationKey = $this->getCacheKey($phraseId, $variation);
 
 		$translation = $this->cache->load($translationKey);
@@ -92,9 +95,9 @@ class Translator implements \Nette\Localization\ITranslator {
 		if($variation === NULL) {
 			$translationKey = $phraseId.'_'.$this->language->id;
 		} else {
-			if (!isset($variation['count'])) $variation['count'] = NULL;
-			if (!isset($variation['gender'])) $variation['gender'] = NULL;
-			if (!isset($variation['case'])) $variation['case'] = NULL;
+			// if (!isset($variation['count'])) $variation['count'] = NULL;
+			// if (!isset($variation['gender'])) $variation['gender'] = NULL;
+			// if (!isset($variation['case'])) $variation['case'] = NULL;
 			$translationKey = $phraseId.'_'.$this->language->id.'_'.implode('_', $variation);
 		}
 
