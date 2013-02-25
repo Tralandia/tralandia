@@ -42,7 +42,7 @@
 					//console.log(visibleID);
 
 					$('#phraseTranslateCurrent').html($('#phraseLanguage option:selected').text());
-					$self.find('.phraseControll').addClass('hide');
+					$self.find('.phrasecontrol').addClass('hide');
 					$(visibleID).removeClass('hide');
 			});
 
@@ -111,10 +111,10 @@
 
 
 
-// gps map controll
+// gps map control
 
 (function($){
-	$.traMapControll = function(el, options){
+	$.traMapcontrol = function(el, options){
 		// To avoid scope issues, use 'base' instead of 'this'
 		// to reference this class from internal events and functions.
 		var base = this;
@@ -124,11 +124,11 @@
 		base.el = el;
 		
 		// Add a reverse reference to the DOM object
-		base.$el.data("traMapControll", base);
+		base.$el.data("traMapcontrol", base);
 		
 		base.init = function(){
 			
-			base.options = $.extend({},$.traMapControll.defaultOptions, options);            
+			base.options = $.extend({},$.traMapcontrol.defaultOptions, options);            
 
 		};
 
@@ -138,11 +138,11 @@
 		base.init();
 	};
 	
-	$.traMapControll.defaultOptions = {
+	$.traMapcontrol.defaultOptions = {
 
 	};
 
-	$.traMapControll.ajax = function(url,data,callback){
+	$.traMapcontrol.ajax = function(url,data,callback){
 
 		$.ajax({
 			  type: "POST",
@@ -159,34 +159,34 @@
 
 	}
 
-	$.traMapControll.removeError = function(elem){
+	$.traMapcontrol.removeError = function(elem){
 		
 		var errorMessageDiv = $('#'+$(elem).attr('data-validation-message-div-id'));
-		var controllGroup = $('#'+$(elem).attr('data-validation-controll-div-id'));
+		var controlGroup = $('#'+$(elem).attr('data-validation-control-div-id'));
 
 		errorMessageDiv.html('');
 
-		if(controllGroup.hasClass('error')){
-			controllGroup.removeClass('error');
+		if(controlGroup.hasClass('error')){
+			controlGroup.removeClass('error');
 		}		 
 
 	}
 
 	// add error message 
-	$.traMapControll.addError = function(elem,message){
+	$.traMapcontrol.addError = function(elem,message){
 		
 		var errorMessageDiv = $('#'+elem.attr('data-validation-message-div-id'));
-		var controllGroup = $('#'+elem.attr('data-validation-controll-div-id'));
+		var controlGroup = $('#'+elem.attr('data-validation-control-div-id'));
 
 		errorMessageDiv.html(message);
 
-		if(!controllGroup.hasClass('error')){
-			controllGroup.addClass('error');
+		if(!controlGroup.hasClass('error')){
+			controlGroup.addClass('error');
 		}		
 	}
 
 	// before ajax request validation
-	$.traMapControll.responseValidation = function(data){
+	$.traMapcontrol.responseValidation = function(data){
 		$.each(data.elements,function(k,v){
 			if(!v.status){
 				
@@ -194,7 +194,7 @@
 				$input.val(v.value);
 	
 				if(v.message){
-					$.traMapControll.addError($input,v.message);
+					$.traMapcontrol.addError($input,v.message);
 				}
 				
 
@@ -204,7 +204,7 @@
 
 	// js validation client site with Nette validator
 	// using after send ajax request
-	$.traMapControll.validateInputs = function(p){
+	$.traMapcontrol.validateInputs = function(p){
 	
 		var o = {
 			valid : true,
@@ -220,7 +220,7 @@
 				if(!Nette.validateControl(this)){
 					o.valid = false;
 				} else {
-					$.traMapControll.removeError(this);
+					$.traMapcontrol.removeError(this);
 				}
 
 				o.data[inputName] = $(this).val();		
@@ -235,9 +235,9 @@
 
 
 	
-	$.fn.traMapControll = function(options){
+	$.fn.traMapcontrol = function(options){
 		return this.each(function(){
-			(new $.traMapControll(this, options));
+			(new $.traMapcontrol(this, options));
 
 
 
@@ -282,7 +282,7 @@
 
 			  google.maps.event.addListener(map, 'click', function(event) {
 				
-				$.traMapControll.call();
+				$.traMapcontrol.call();
 
 				  marker.setPosition(event.latLng);
 
@@ -296,15 +296,15 @@
 				  //map.setCenter(event.latLng);
 
 
-					v = $.traMapControll.validateInputs($self);
+					v = $.traMapcontrol.validateInputs($self);
 					
 					
 					// send data
 						
-					$.traMapControll.ajax(requestUrl,v.data , function(data){
+					$.traMapcontrol.ajax(requestUrl,v.data , function(data){
 					
 						if(!data.status){
-							$.traMapControll.responseValidation(data);
+							$.traMapcontrol.responseValidation(data);
 							
 							//var newPosition = new google.maps.LatLng(data.gps.lat,data.gps.lng);
 							//	marker.setPosition(newPosition);
@@ -320,15 +320,15 @@
 
 				$self.find('button').click(function(){
 
-					v = $.traMapControll.validateInputs($self);
+					v = $.traMapcontrol.validateInputs($self);
 					
 					if(v.valid){
 						// send data
 						
-						$.traMapControll.ajax(requestUrl,v.data , function(data){
+						$.traMapcontrol.ajax(requestUrl,v.data , function(data){
 							//console.log(data);
 							if(!data.status){
-								$.traMapControll.responseValidation(data);
+								$.traMapcontrol.responseValidation(data);
 								
 								var newPosition = new google.maps.LatLng(data.gps.lat,data.gps.lng);
 									marker.setPosition(newPosition);
@@ -490,7 +490,7 @@
 
 
 
-// photo controll
+// photo control
 (function($){
 	$.galleryControl = function(el, options){
 
