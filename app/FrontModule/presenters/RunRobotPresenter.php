@@ -1,6 +1,6 @@
 <?php
 
-namespace AdminModule;
+namespace FrontModule;
 
 use Nette;
 use Nette\Utils\Strings;
@@ -10,7 +10,6 @@ use Service\Robot\IUpdateRentalSearchCacheRobotFactory;
 
 class RunRobotPresenter extends BasePresenter {
 
-	private $rentalRepositoryAccessor;
 	private $locationTypeRepositoryAccessor;
 
 	private $rentalSearchCacheRobotFactory;
@@ -30,7 +29,6 @@ class RunRobotPresenter extends BasePresenter {
 	}
 
 	public function inject(\Nette\DI\Container $dic) {
-		$this->rentalRepositoryAccessor = $dic->rentalRepositoryAccessor;
 		$this->locationRepositoryAccessor = $dic->locationRepositoryAccessor;
 		$this->locationTypeRepositoryAccessor = $dic->locationTypeRepositoryAccessor;
 	}
@@ -41,7 +39,6 @@ class RunRobotPresenter extends BasePresenter {
 		d(count($primaryLocations));
 		foreach ($primaryLocations as $key => $location) {
 			$this->rentalSearchCacheRobotFactory->create($location)->run();
-			//$this->sendResponse(new TextResponse(Strings::upper($location->iso).': Done'));
 			d(Strings::upper($location->iso).': Done');
 		}
 		
