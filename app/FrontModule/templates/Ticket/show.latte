@@ -1,8 +1,8 @@
 {block content}
 
-<div class="ticletConteiner">
+<div class="ticketConteiner">
 
-    <div class="ticketEntity"><h1>#Ticket <span>#{$ticket->getId()}</span></h1></div>
+    <div class="ticketEntity marginLeft"><h1>#Ticket <span>#{$ticket->getId()}</span></h1></div>
 
 	{foreach $ticket->getMessages() as $message}
         <div n:class="$message->getFrom()->hasRole(['admin']) ? 'admin ticketMesageEntity' : 'ticketMesageEntity'">
@@ -14,7 +14,7 @@
             <div class="content">
 				{if $loggedUser->hasRole(['admin'])}
                     <div class="half">{$message->getMessage()}</div>
-                    <div class="half">{$message->getMessageEn()}</div>
+                    <div class="half">{$message->getMess§ageEn()}</div>
                     <div class="clearfix"></div>
 				{else}
 					{$message->getMessage() ? $message->getMessage() : $message->getMessageEn()}
