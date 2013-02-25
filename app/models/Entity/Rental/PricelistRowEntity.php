@@ -14,7 +14,8 @@ use Nette\Http\FileUpload;
  * @ORM\Entity()
  * @ORM\Table(name="rental_pricelistrow")
  * @EA\Primary(key="id", value="name")
- */
+ * @EA\Generator(skip="{getPrice,setPrice}")
+*/
 class PricelistRow extends \Entity\BaseEntity {
 
 	/**
@@ -58,6 +59,30 @@ class PricelistRow extends \Entity\BaseEntity {
 	 * @ORM\Column(type="float")
 	 */
 	protected $price;
+
+	/**
+	 * @return \Extras\Types\Price
+	 */
+	public function getPrice()
+	{
+		return new \Extras\Types\Price($this->price, $this->getCurrency());
+	}
+
+	public function setPrice(\Extras\Types\Price $price)
+	{
+		$this->price = $price->convertToFloat($this->getCurrency());
+
+		return $this;
+	}
+
+	public function setFloatPrice($price)
+	{
+		$this->setPrice(new \Extras\Types\Price($price, $this->getCurrency()));
+	}
+
+	public function getCurrency() {
+		return $this->rental->getAddress()->getPrimaryLocation()->getDefaultCurrency();
+	}
 
 	//@entity-generator-code --- NEMAZAT !!!
 
@@ -209,24 +234,5 @@ class PricelistRow extends \Entity\BaseEntity {
 	public function getExtraBedCount()
 	{
 		return $this->extraBedCount;
-	}
-		
-	/**
-	 * @param float
-	 * @return \Entity\Rental\PricelistRow
-	 */
-	public function setPrice($price)
-	{
-		$this->price = $price;
-
-		return $this;
-	}
-		
-	/**
-	 * @return float|NULL
-	 */
-	public function getPrice()
-	{
-		return $this->price;
 	}
 }

@@ -167,15 +167,22 @@ class ImportRentals extends BaseImport {
 			// Amenities
 			$allAmenities = array();
 			$r1 = qNew('select * from rental_amenity');
+			$specialAmenities = array('activity', 'food', 'owner-availability', 'congress', 'wellness');
 			while ($x1 = mysql_fetch_array($r1)) {
-				$allAmenities[$x1['oldId']] = $context->rentalAmenityRepositoryAccessor->get()->find($x1['id']);
+				$thisAmenity = $context->rentalAmenityRepositoryAccessor->get()->find($x1['id']);
+				if (in_array($thisAmenity->type->slug, $specialAmenities)) {
+					$thisId = $thisAmenity->type->slug.'-'.$x1['oldId'];
+				} else {				
+					$thisId = $x1['oldId'];
+				}
+				$allAmenities[$thisId] = $thisAmenity;
 			}
 
 			// Activities
 			$temp = array_unique(array_filter(explode(',,', $x['activities'])));
 			if (is_array($temp) && count($temp)) {
 				foreach ($temp as $key => $value) {
-					if (isset($allAmenities[$value])) $rental->addAmenity($allAmenities[$value]);
+					if (isset($allAmenities['activity-'.$value])) $rental->addAmenity($allAmenities['activity-'.$value]);
 				}
 			}
 
@@ -183,7 +190,7 @@ class ImportRentals extends BaseImport {
 			$temp = array_unique(array_filter(explode(',,', $x['food'])));
 			if (is_array($temp) && count($temp)) {
 				foreach ($temp as $key => $value) {
-					if (isset($allAmenities[$value])) $rental->addAmenity($allAmenities[$value]);
+					if (isset($allAmenities['food-'.$value])) $rental->addAmenity($allAmenities['food-'.$value]);
 				}
 			}
 
@@ -191,7 +198,7 @@ class ImportRentals extends BaseImport {
 			$temp = array_unique(array_filter(explode(',,', $x['owner'])));
 			if (is_array($temp) && count($temp)) {
 				foreach ($temp as $key => $value) {
-					if (isset($allAmenities[$value])) $rental->addAmenity($allAmenities[$value]);
+					if (isset($allAmenities['owner-availability-'.$value])) $rental->addAmenity($allAmenities['owner-availability-'.$value]);
 				}
 			}
 
@@ -207,7 +214,7 @@ class ImportRentals extends BaseImport {
 			$temp = array_unique(array_filter(explode(',,', $x['amenities_congress'])));
 			if (is_array($temp) && count($temp)) {
 				foreach ($temp as $key => $value) {
-					if (isset($allAmenities[$value])) $rental->addAmenity($allAmenities[$value]);
+					if (isset($allAmenities['congress-'.$value])) $rental->addAmenity($allAmenities['congress-'.$value]);
 				}
 			}
 
@@ -215,9 +222,12 @@ class ImportRentals extends BaseImport {
 			$temp = array_unique(array_filter(explode(',,', $x['amenities_wellness'])));
 			if (is_array($temp) && count($temp)) {
 				foreach ($temp as $key => $value) {
-					if (isset($allAmenities[$value])) $rental->addAmenity($allAmenities[$value]);
+					if (isset($allAmenities['wellness-'.$value])) $rental->addAmenity($allAmenities['wellness-'.$value]);
 				}
 			}
+
+			// Amenities Separate Groups
+			if ($x['separate_groups'] == 1) $rental->addAmenity($context->rentalAmenityRepositoryAccessor->get()->findOneBySlug('separate-groups'));
 
 			// Interview
 			$temp = unserialize(stripslashes($x['interview']));
@@ -297,11 +307,10 @@ class ImportRentals extends BaseImport {
 						$t = new \Extras\Types\Price($value[4], $rental->primaryLocation->defaultCurrency);
 					}
 
-					$row->price = $t->convertToFloat($rental->primaryLocation->defaultCurrency);
 					$rental->addPricelistRow($row);
+					$row->price = $t;
 				}
 			}
-			
 			$model->persist($rental);
 
 			// Pricelists
@@ -337,8 +346,10 @@ class ImportRentals extends BaseImport {
 			// }
 
 			// Classification
-			if ($x['classification'] !== NULL) {
+			if ($x['classification'] > 0 && $x['classification'] != 9 ) {
 				$rental->classification = (float)$x['classification'];
+			} else if ($x['classification'] == 9) {
+				$rental->classification = (float)0;
 			}
 		
 			// Calendar
