@@ -1,16 +1,16 @@
 <?php
 
-use Nette\Templating\Helpers,
-	Nette\Application\UI\Form,
-	Nette\Forms\Container as FormContainer,
-	Nette\Diagnostics\Debugger,
-	Nette\Environment,
-	Nette\Database\Table\Selection,
-	Nette\Image;
+use Nette\Templating\Helpers;
+use Nette\Application\UI\Form;
+use Nette\Forms\Container as FormContainer;
+use Nette\Diagnostics\Debugger;
+use Nette\Environment;
+use Nette\Image;
+use Nette\Forms\Container;
+use Nextras\Forms\Controls;
 
 Helpers::$dateFormat = Tools::$datetimeFormat;
 FormContainer::extensionMethod('addComboSelect', 'Tools::addComboSelect');
-Selection::extensionMethod('fetchTree', 'Tools::selectionTree');
 Image::extensionMethod('resizeCrop', 'Tools::resizeCrop');
 
 
@@ -35,6 +35,13 @@ Extras\Forms\Controls\AdvancedTextarea::register();
 Extras\Forms\Controls\AdvancedTinymce::register();
 Extras\Forms\Controls\AdvancedUpload::register();
 Extras\Forms\Controls\ReadOnlyPhrase::register();
+
+Container::extensionMethod('addOptionList', function (Container $container, $name, $label = NULL, array $items = NULL) {
+	return $container[$name] = new Controls\OptionList($label, $items);
+});
+Container::extensionMethod('addMultiOptionList', function (Container $container, $name, $label = NULL, array $items = NULL) {
+	return $container[$name] = new Controls\MultiOptionList($label, $items);
+});
 
 
 function d() {

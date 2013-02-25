@@ -1,17 +1,17 @@
 {
-    "hash": "f226ed204699c887477be94cea85a9f5",
+    "hash": "c4023612139b93b95a0fe084dd825d88",
     "packages": [
         {
             "name": "hosiplan/nette-autowire-properties",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/HosipLan/Nette-AutowireProperties",
+                "url": "https://github.com/HosipLan/Nette-AutowireProperties.git",
                 "reference": "v0.1.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/HosipLan/Nette-AutowireProperties/archive/v0.1.1.zip",
+                "url": "https://api.github.com/repos/HosipLan/Nette-AutowireProperties/zipball/v0.1.1",
                 "reference": "v0.1.1",
                 "shasum": ""
             },
@@ -149,12 +149,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/nette.git",
-                "reference": "0622617df91e648e7a0d948b21b33afb7ae08793"
+                "reference": "c07074cd76234c1081c3f1bf50273812182858b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/nette/zipball/0622617df91e648e7a0d948b21b33afb7ae08793",
-                "reference": "0622617df91e648e7a0d948b21b33afb7ae08793",
+                "url": "https://api.github.com/repos/nette/nette/zipball/c07074cd76234c1081c3f1bf50273812182858b7",
+                "reference": "c07074cd76234c1081c3f1bf50273812182858b7",
                 "shasum": ""
             },
             "require": {
@@ -172,7 +172,7 @@
                 "ext-memcache": "*",
                 "ext-pdo": "*"
             },
-            "time": "2013-02-19 19:28:21",
+            "time": "2013-02-25 11:06:48",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -216,6 +216,53 @@
                 "neon",
                 "templating"
             ]
+        },
+        {
+            "name": "nextras/forms",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nextras/forms.git",
+                "reference": "v1.0.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nextras/forms/zipball/v1.0.0",
+                "reference": "v1.0.0",
+                "shasum": ""
+            },
+            "require": {
+                "nette/nette": ">=2.0.0",
+                "php": ">=5.3.0"
+            },
+            "time": "2013-02-18 12:08:36",
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Nextras\\Forms": ""
+                }
+            },
+            "notification-url": "http://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause",
+                "GPL-2.0",
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "David Grudl",
+                    "homepage": "http://davidgrudl.com"
+                },
+                {
+                    "name": "Nextras Community",
+                    "homepage": "https://github.com/nextras/forms/graphs/contributors"
+                }
+            ],
+            "description": "Extra form components for Nette Framework.",
+            "keywords": [
+                "form",
+                "nette"
+            ]
         }
     ],
     "packages-dev": null,
@@ -225,9 +272,9 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "nette/nette": 20,
+        "nextras/forms": 20,
         "kdyby/events": 20,
         "kdyby/nette-session-panel": 20,
-        "hosiplan/nette-autowire-properties": 20,
-        "nette/tester": 20
+        "hosiplan/nette-autowire-properties": 20
     }
 }
