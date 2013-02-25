@@ -2,6 +2,7 @@
 <div class="page-header"><h1>Example Form</h1></div>
 
 {form baseForm, class => "traform dashboard"}
+	{include #checkboxList, control => $form['list']}
 	{include #texyla, control => $form['texyla']}
 	{include #text, control => $form['text']}
 	{include #text, control => $form['text'], prepend => ['text' => 'http://']}

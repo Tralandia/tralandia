@@ -87,7 +87,7 @@
 	@param $controlClass string
 *}
 {define #texyla}
-<div class="control-group ">
+<div class="control-group " xmlns="http://www.w3.org/1999/html">
     <div class="form-label">
 		{label $control /}
         <small>{$control->getOption('description')}</small>
@@ -154,6 +154,24 @@
 	{foreach $errors as $error}{$error}{/foreach}
 </div>
 {/define #controlErrors}
+
+
+{*
+	Checkbox List -------------------------------------------
+	@param $control \Nextras\Forms\Container\MultiOptionList
+*}
+{define #checkboxList}
+<div>{label $control /}</div>
+<div>
+	{foreach $control as $key => $label}
+		{!$control->getLabelItem($key)->addAttributes(['class' => 'checkbox'])->startTag()} {* <label ...> *}
+		{$control->getControlItem($key)}
+		{$label}
+		</label>
+	{/foreach}
+</div>
+{/define #checkboxList}
+
 
 
 {*
