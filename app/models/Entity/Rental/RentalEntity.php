@@ -366,6 +366,14 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 		return (bool) count($separateGroups) == 1;
 	}
 
+	/**
+	 * @return Bool
+	 */
+	public function getAnimalsAllowed()
+	{
+		$animals = $this->getAmenitiesByType(array('animal'));
+		return (bool) count($animals) == 1;
+	}
 
 	//@entity-generator-code --- NEMAZAT !!!
 

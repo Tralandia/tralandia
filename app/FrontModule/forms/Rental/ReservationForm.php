@@ -70,7 +70,7 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 
 		for($i = 0 ; $i < 21 ; ++$i) {
 			$parents[$i] = $i . ' ' . $this->translate('o12277', NULL, ['count' => $i]);
-			$children[$i] = $i . ' ' . $this->translate('o2443', NULL, ['count' => $i]);
+			$children[$i] = $i . ' ' . $this->translate('o100016', NULL, ['count' => $i]);
 		}
 
 		$this->addSelect('parents','',$parents)->setPrompt('o12277');
@@ -81,7 +81,7 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 				->setPlaceholder('o12279');
 
 
-		$this->addSubmit('submit', '#send');
+		$this->addSubmit('submit', 'o100017');
 
 		$this->onSuccess[] = callback($this, 'process');
 		$this->onValidate[] = callback($this, 'validation');
