@@ -120,6 +120,13 @@ class ImportRentals extends BaseImport {
 				$gps = new \Extras\Types\Latlong($x['latitude'], $x['longitude']);
 				$address->setGps($gps);
 			}
+			if ($x['locality_status'] == 'OK') {
+				$address->status = \Entity\Contact\Address::STATUS_OK;
+			} else if ($x['locality_status'] == 'localityNotFound') {
+				$address->status = \Entity\Contact\Address::STATUS_INCOMPLETE;
+			} else if ($x['locality_status'] == 'outsideCountry') {
+				$address->status = \Entity\Contact\Address::STATUS_MISPLACED;
+			}
 
 			$rental->address = $address;
 
