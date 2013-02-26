@@ -58,6 +58,7 @@ class RentalPresenter extends BasePresenter {
 		}
 
 		$this->template->separateGroups = $rental->getSeparateGroups();
+		$this->template->animalsAllowed = $rental->getAnimalsAllowed();
 
 		$this->setLayout('detailLayout');
 		//$t = $this['reservationForm'];
