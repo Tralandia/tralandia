@@ -399,6 +399,16 @@ App.prototype.closeForgottenPasswordForm = function(){
 }
 
 /****************************************************************************************************
+*	AUTO SELECT TEXTAREA
+****************************************************************************************************/
+
+App.prototype.autoselect = function(){
+	$(this).select();
+}
+
+
+
+/****************************************************************************************************
 *	RUNN APPS
 ****************************************************************************************************/
 
@@ -408,11 +418,15 @@ $(document).ready(function(){
 //$.removeCookie('favoritesList');
 //console.log($.cookie('favoritesList'));
 //console.log($.cookie('visitObjectList'));
+	
+
 
 
 	$("select.select2").select2(); 
 
 	var A = new App();	
+
+	$('.autoselect').click(A.autoselect);
 
 	$('#objectDetailMap').traMap();
 
@@ -567,7 +581,7 @@ $(document).ready(function(){
 
     	var $arrow = $(this).find('span');
 
-
+    	initAllSocialPlugins();
 
     	if(!socialIconsMenu){
     		    	

@@ -49,13 +49,8 @@
 
             <div id="pageTitle">
                 <div id="logo">
-                    <a n:href=":Front:Home:default" title="{$pageTitle}">
-					{*<img src="http://www.tralandia.sk/trax_html/images/logo.png" alt=""/>*}
-									{*<object  data="http://www.tra.com/images/tra-logo-icon.svg" type="image/svg+xml"></object>*}
-									{*<embed src="http://www.tra.com/images/tra-logo-icon.svg" type="image/svg+xml" />*}
-                    </a>
-                </div>
-			{*<img src="http://www.tralandia.sk/trax_html/images/sk.domain.png" />*}
+                    <a n:href=":Front:Home:default" title="{$pageTitle}"></a>
+                </div>			
                 <div id="siteName"><a href="{link :Front:Home:default language => $language}">Tralandia.<span>com</span></a>
                 </div>
                 <h1><a href="{link :Front:Home:default language => $language}">{$slogan}</a></h1>
@@ -64,22 +59,17 @@
 
             <div class="clearfix"></div>
 
-
-
-            <div class="socialIcons" id="socialIcons">
+            <div class="socialIcons socialPluginsInit" id="socialIcons">
                 &#62220; &#62223; &#62217; &#62226; <span>&#59228;</span>
 
                 <ul class="dropdown-menu" role="menu" id="socialIconsMenu">
                     <li>
                         <ul>
-                            <li>
-                                <iframe src="http://www.facebook.com/plugins/like.php?href={$homepageUrl}&amp;locale=sk_SK&amp;layout=button_count&amp;show_faces=false&amp;width=130&amp;action=like&amp;colorscheme=light&amp;height=80" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:20px; width:130px;" allowTransparency="true"></iframe>    
-                            </li>
+                            <li id="headerFacbookLikeContainer" class="facbookLikeButtonContainer" data-facebook-locate="sk_SK" data-facebook-src="{$homepageUrl}"></li>                            
                             <li><g:plusone size="medium" href="{$homepageUrl}"  style="margin-top:2px;"></g:plusone></li>
-                            <li><a href="https://twitter.com/share" class="twitter-share-button" data-lang="en">Tweet</a></li>
+                            <li><a href="https://twitter.com/share" class="twitter-share-button" data-url="{$homepageUrl}" data-via="Tralandia" data-text="data text" data-hashtags="ubytovanie" data-lang="en">Tweet</a></li>
                             <li>
                                 <a href="http://pinterest.com/pin/create/button/?url={$homepageUrl}" class="pin-it-button" count-layout="horizontal"><img border="0" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" /></a>
-                                <script type="text/javascript" src="http://assets.pinterest.com/js/pinit.js"></script> 
                             </li>
                         </ul>
                     </li>

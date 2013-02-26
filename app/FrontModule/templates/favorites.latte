@@ -5,24 +5,17 @@
 
 		<div class="social">
 			<div class="header">Share your favorites</div>
-			<ul>
-				<li><a rel="facebook" href="#"><i class="entypo-facebook"></i>
-					</a>
-				</li>
-				<li><a rel="gplus" href="#"><i class="entypo-gplus"></i>
-					</a>
-				</li>
-				<li><a rel="twitter" href="#"><i class="entypo-twitter"></i>
-					</a>
-				</li>
+			<ul id="favoritesShareList" class="socialPluginsInit">
 				<li>
-					<a rel="email" href="#"><i class="entypo-mail"></i></a>
-				</li>
-				<li>
-					<a rel="link" href="#"><i class="entypo-www"></i></a>
-				</li>
-
-
+					<a href="#" class="socialPluginsInit">
+						<i class="entypo-share"></i>									
+						<i class="entypo-facebook"></i>					
+						<i class="entypo-gplus"></i>									
+						<i class="entypo-twitter"></i>					
+						<i class="entypo-mail"></i>
+						<i class="entypo-www"></i>		
+					</a>
+				</li>	
 			</ul>
 		</div>
 
@@ -33,21 +26,21 @@
 				<div class="leftArrow entypo-prev" id="favorites-left-button"></div>
 				<div class="content">
 					<ul id="scrollInnerContent">
-						<li class="template" rel="~id~" style="background-image: url(~photo~);">
+						<li class="template" rel="~id~" >
 							<a href="#" class="removeLink"></a>
 							<a href="~url~" title="~title~" class="link">
 								<div class="checked entypo-eye"></div>
 							</a>
 						</li>
 						{foreach $favoriteRentals as $rental}
-							{var $image = $rental->getMainImage()}
-							{var $seen = in_array($rental->getId(), $favoriteVisitedRentals)}
-							<li rel="{$rental->getId()}" style="background-image: url({fakeImage});">
-								<a href="#" class="removeLink"></a>
-								<a n:href="Rental:detail $rental" class="link">
-									<div n:if="$seen" class="checked entypo-eye"></div>
-								</a>
-							</li>
+						{var $image = $rental->getMainImage()}
+						{var $seen = in_array($rental->getId(), $favoriteVisitedRentals)}
+						<li rel="{$rental->getId()}" style="background-image: url({fakeImage});">
+							<a href="#" class="removeLink"></a>
+							<a n:href="Rental:detail $rental" class="link">
+								<div n:if="$seen" class="checked entypo-eye"></div>
+							</a>
+						</li>
 						{/foreach}
 					</ul>
 				</div>
@@ -61,18 +54,29 @@
 		</div>
 	</div>
 
-	<div class="shareLinkContent hide">
-		<div class="email shareConteiner">
-			<label>Send via email from </label>
-
-			<form class="shareObjectForm">
-				<input type="text"/> to <input type="text"/>
-				<button type="submit" class="btn">Send</button>
-			</form>
-		</div>
-		<a class="shareContainerClose" href="#"><i class="entypo-upp2"></i></a>
-
-		<div class="clearfix"></div>
-	</div>
+	
+	<ul class="dropdown-menu" role="menu" id="favoriteShareContent" style="display: none;">
+		<li class="favoriteSocialIcons">
+			
+            <ul>
+                <li class="facebook facbookLikeButtonContainer" data-facebook-locate="sk_SK" data-facebook-src="{$homepageUrl}">
+                    <iframe src="http://www.facebook.com/plugins/like.php?href={$homepageUrl}&amp;locale=sk_SK&amp;layout=button_count&amp;show_faces=false&amp;width=130&amp;action=like&amp;colorscheme=light&amp;height=80" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:20px; width:130px;" allowTransparency="true"></iframe>    
+                </li>
+                <li class="gplus"><g:plusone size="small" href="{$homepageUrl}"  style="margin-top:2px;"></g:plusone></li>
+                <li class="twitter"><a href="https://twitter.com/share" class="twitter-share-button" data-url="{$homepageUrl}" data-via="Tralandia" data-text="data text" data-hashtags="ubytovanie" data-lang="en">Tweet</a></li>
+                <li class="pinterest">
+                    <a href="http://pinterest.com/pin/create/button/?url={$homepageUrl}" class="pin-it-button" count-layout="horizontal"><img border="0" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" /></a>                    
+                </li>
+            </ul>
+        
+		</li>
+		<li class="shareOrder">
+			<label>Via Email</label><input placeholder="enter email" type="text" /><button class="btn btn-green">#Send email</button>
+		</li>
+		<li class="shareOrder">
+			<label>Direct Link</label><input type="text" /><button class="btn btn-green">#copy link</button>
+		</li>
+	</ul>
+	
 
 </div>
