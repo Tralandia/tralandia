@@ -157,3 +157,68 @@
 	
 })(jQuery);
 
+
+
+
+
+
+								$(document).ready(function(){
+
+
+									var fromDateOrigin = {
+										year: 0,
+										month: 0,
+										day:0,
+										date: new Date(),
+										dayPlus:0,
+									}
+
+									$('.datepicker').click(function(){
+										$(this).addClass('focus');
+									});
+
+									var lang = $( "html" ).attr('lang');
+
+									//console.log(lang);
+
+									$.datepicker.setDefaults(  $.datepicker.regional[ lang ] );
+
+									$( ".datepicker" ).datepicker({ minDate: 0, maxDate: "+12M +10D" });	
+
+
+									$( ".datepickerto" ).datepicker({ 
+										minDate: new Date(2013, 1, 28), 
+										maxDate: "+12M +10D" ,
+										beforeShow: function(){
+
+											var fromValues = $('.datepicker').val().split('.');
+
+											if ( fromValues.length > 1 ) {
+
+												fromDateOrigin.year = parseInt(fromValues[2]);
+												fromDateOrigin.month = parseInt(fromValues[1])-1;
+												fromDateOrigin.day = parseInt(fromValues[0]);
+												
+												fromDateOrigin.date.setYear(fromDateOrigin.year);
+												fromDateOrigin.date.setMonth(fromDateOrigin.month);
+												fromDateOrigin.date.setDate(fromDateOrigin.day);
+
+												fromDateOrigin.dayPlus = new Date(fromDateOrigin.date.getFullYear(), fromDateOrigin.date.getMonth(), fromDateOrigin.date.getDate()+1);
+
+												$( this ).datepicker("option",{ minDate: fromDateOrigin.dayPlus, maxDate: "+12M +10D" });	
+
+											} else {
+												$( this ).datepicker("option",{ minDate: 1 , maxDate: "+12M +10D" });
+											}
+
+
+										}
+									});	
+
+
+
+
+									});
+
+
+
