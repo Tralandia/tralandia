@@ -63,6 +63,8 @@ parameters:
 			jqueryUi:
 				js:
 					- jqueryUi/lib/js/jquery-ui-1.9.1.custom.min.js
+					- jqueryUi/vendors/ui-localization-datepicker.js
+
 				css:
 					- jqueryUi/lib/css/tralandia/jquery-ui-1.9.1.custom.css
 					- jqueryUi/custom/datepicker.css.less
@@ -116,8 +118,6 @@ parameters:
 					- front/_base/less/calendar.less
 					# header 
 					- front/header/less/header.less
-					# favorites
-					- front/favorites/less/favorites.less
 					# rental detail 
 					- front/rentalDetail/less/rentalDetail.less
 					# rental navigation
@@ -133,7 +133,9 @@ parameters:
 					# contact page
 					- front/contact/less/contact.less
 					# ticket
-					- front/ticket/less/ticket.less		
+					- front/ticket/less/ticket.less	
+					# favorites
+					- front/favorites/less/favorites.less						
 				js:
 					#- front/js/jquery-tra-map.js
 					#- front/js/object-register-to-view-list.js
@@ -145,11 +147,13 @@ parameters:
 					#- front/js/trax-forms-ui.js					
 					#- front/js/main.js
 					#- front/js/detail-navigation.js
-					- 'https://apis.google.com/js/plusone.js'
+					#- 'https://apis.google.com/js/plusone.js'
 
 					# _base 
 					- front/_base/js/main.js
 					- front/_base/js/forms.js
+					# social shit loader
+					- front/_base/js/socialShitLoader.js					
 					# favorites 
 					- front/favorites/js/favorites.js
 					# rental detail
@@ -158,6 +162,7 @@ parameters:
 					- front/search/js/search.js
 					# rental navigation
 					- front/rentalNavigation/js/rentalNavigation.js
+
 
 
 			favoriteScroll:
@@ -190,7 +195,11 @@ parameters:
 				js: 
 					- jQuery/lib/jquery.js
 			gMap:
-				js: "https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"
+				js: 
+					#- "https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"
+
+
+
 		sets:
 
 			'Admin:Ap':
@@ -202,6 +211,7 @@ parameters:
 				-  %webloader.packages.fontEntypo%
 				-  %webloader.packages.jQuery%
 				-  %webloader.packages.jqueryCookie%
+				-  %webloader.packages.fileUpload%
 				-  %webloader.packages.bootstrap%
 				-  %webloader.packages.Front%
 				-  %webloader.packages.select2%
@@ -217,10 +227,11 @@ parameters:
 				-  %webloader.packages.fontEntypo%
 				-  %webloader.packages.fontAwesome%
 				-  %webloader.packages.bootstrap%
-				-  %webloader.packages.Front%
 				-  %webloader.packages.texyla%				
 				-  %webloader.packages.nette%								
-				-  %webloader.packages.gMap%
+				-  %webloader.packages.gMap%				
+				-  %webloader.packages.Front%
+
 
 			'Front:Rental:detail':
 				-  %webloader.packages.jQuery%

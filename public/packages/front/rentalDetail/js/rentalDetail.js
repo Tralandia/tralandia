@@ -16,7 +16,7 @@
   		} else {
 
 
-
+/*
 	  			var coordinates = $(this).attr('value').split(',');
 
 				var lat = parseFloat(coordinates[0]);
@@ -57,7 +57,7 @@
 		        	maxx: MaxLng,
 		        	size: 'medium',
 		        	mapfilter: true
-		        };
+		        };*/
 
 
   		}
@@ -104,7 +104,7 @@
 })(jQuery);
 
 /* tweet button */
-!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+//!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
 
 // social shit 
 (function($){
@@ -141,6 +141,7 @@
 			
 
 			$self.click(function(){
+				initAllSocialPlugins();
 				$self.find('.socialBtnContent').removeClass('hide');
 				$self.find('.socialBtnHeader').addClass('hide');				
 			});
@@ -156,4 +157,69 @@
 	};
 	
 })(jQuery);
+
+
+
+
+
+
+								$(document).ready(function(){
+
+
+									var fromDateOrigin = {
+										year: 0,
+										month: 0,
+										day:0,
+										date: new Date(),
+										dayPlus:0,
+									}
+
+									$('.datepicker').click(function(){
+										$(this).addClass('focus');
+									});
+
+									var lang = $( "html" ).attr('lang');
+
+									//console.log(lang);
+
+									$.datepicker.setDefaults(  $.datepicker.regional[ lang ] );
+
+									$( ".datepicker" ).datepicker({ minDate: 0, maxDate: "+12M +10D" });	
+
+
+									$( ".datepickerto" ).datepicker({ 
+										minDate: new Date(2013, 1, 28), 
+										maxDate: "+12M +10D" ,
+										beforeShow: function(){
+
+											var fromValues = $('.datepicker').val().split('.');
+
+											if ( fromValues.length > 1 ) {
+
+												fromDateOrigin.year = parseInt(fromValues[2]);
+												fromDateOrigin.month = parseInt(fromValues[1])-1;
+												fromDateOrigin.day = parseInt(fromValues[0]);
+												
+												fromDateOrigin.date.setYear(fromDateOrigin.year);
+												fromDateOrigin.date.setMonth(fromDateOrigin.month);
+												fromDateOrigin.date.setDate(fromDateOrigin.day);
+
+												fromDateOrigin.dayPlus = new Date(fromDateOrigin.date.getFullYear(), fromDateOrigin.date.getMonth(), fromDateOrigin.date.getDate()+1);
+
+												$( this ).datepicker("option",{ minDate: fromDateOrigin.dayPlus, maxDate: "+12M +10D" });	
+
+											} else {
+												$( this ).datepicker("option",{ minDate: 1 , maxDate: "+12M +10D" });
+											}
+
+
+										}
+									});	
+
+
+
+
+									});
+
+
 

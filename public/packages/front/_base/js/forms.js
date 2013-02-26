@@ -255,6 +255,7 @@
             var zoom = parseInt($mapDiv.attr('data-zoom')) || 12;
 
 
+
 				/*
 				var lat = parseFloat(coordinates[0]);
 				var lng = parseFloat(coordinates[1]);
@@ -264,7 +265,7 @@
 				var lat = parseFloat($inputLat.val());
 				var lng = parseFloat($inputLng.val());
 
-//console.log('init maops plugin'+lat+' '+lng+' '+zoom);
+				//console.log('init maops plugin'+lat+' '+lng+' '+zoom);
 
 				var myLatlng = new google.maps.LatLng(lat,lng);
 				var mapOptions = {
