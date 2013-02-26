@@ -16,7 +16,7 @@
   		} else {
 
 
-
+/*
 	  			var coordinates = $(this).attr('value').split(',');
 
 				var lat = parseFloat(coordinates[0]);
@@ -57,7 +57,7 @@
 		        	maxx: MaxLng,
 		        	size: 'medium',
 		        	mapfilter: true
-		        };
+		        };*/
 
 
   		}
@@ -104,7 +104,7 @@
 })(jQuery);
 
 /* tweet button */
-!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+//!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
 
 // social shit 
 (function($){

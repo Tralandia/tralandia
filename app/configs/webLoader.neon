@@ -147,7 +147,7 @@ parameters:
 					#- front/js/trax-forms-ui.js					
 					#- front/js/main.js
 					#- front/js/detail-navigation.js
-					- 'https://apis.google.com/js/plusone.js'
+					#- 'https://apis.google.com/js/plusone.js'
 
 					# _base 
 					- front/_base/js/main.js
@@ -192,7 +192,8 @@ parameters:
 				js: 
 					- jQuery/lib/jquery.js
 			gMap:
-				js: "https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"
+				js: 
+					#- "https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"
 		sets:
 
 			'Admin:Ap':
