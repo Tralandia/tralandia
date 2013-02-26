@@ -210,7 +210,7 @@
 
 		{/if}
 	
-		<div class="socialIconTable marginBottom marginTop socialIconsDetail">
+		<div class="socialIconTable marginBottom marginTop socialIconsDetail socialPluginsInit">
 			<div class="socialBtnHeader">
 
 				<strong class="facebook">&#62220;</strong> <strong class="gplus">&#62223;</strong> <strong class="twitter">&#62217;</strong> <strong class="pinterest">&#62226;</strong> 
@@ -220,14 +220,13 @@
 
 				<a class="close"><i class="icon-remove-sign"></i></a>
 
-				<iframe src="http://www.facebook.com/plugins/like.php?href={link Rental:detail $rental}&amp;locale=sk_SK&amp;layout=button_count&amp;show_faces=false&amp;width=130&amp;action=like&amp;colorscheme=light&amp;height=80" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:20px; width:130px;" allowTransparency="true"></iframe>
+				<span class="facbookLikeButtonContainer" data-facebook-locate="sk_SK" data-facebook-src="{link Rental:detail $rental}"></span>
 				
 				<g:plusone size="small" href="{link Rental:detail $rental}"  style="margin-top:2px;"></g:plusone>
 				
-				<a href="https://twitter.com/share" class="twitter-share-button" data-lang="en">Tweet</a>
+				<a href="https://twitter.com/share" class="twitter-share-button" data-url="{$homepageUrl}" data-via="Tralandia" data-text="data text" data-hashtags="ubytovanie" data-lang="en">Tweet</a>
 
 				<a href="http://pinterest.com/pin/create/button/?url={link Rental:detail $rental}&media=&description={_$rental->name}" class="pin-it-button" count-layout="horizontal"><img border="0" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" /></a>
-				<script type="text/javascript" src="http://assets.pinterest.com/js/pinit.js"></script>
 
 			</div>
 		</div>

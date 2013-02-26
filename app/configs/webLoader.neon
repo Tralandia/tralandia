@@ -145,11 +145,12 @@ parameters:
 					#- front/js/trax-forms-ui.js					
 					#- front/js/main.js
 					#- front/js/detail-navigation.js
-					- 'https://apis.google.com/js/plusone.js'
+					#- 'https://apis.google.com/js/plusone.js'
 
 					# _base 
 					- front/_base/js/main.js
 					- front/_base/js/forms.js
+					- front/_base/js/socialShitLoader.js
 					# favorites 
 					- front/favorites/js/favorites.js
 					# rental detail
