@@ -141,6 +141,7 @@
 			
 
 			$self.click(function(){
+				initAllSocialPlugins();
 				$self.find('.socialBtnContent').removeClass('hide');
 				$self.find('.socialBtnHeader').addClass('hide');				
 			});

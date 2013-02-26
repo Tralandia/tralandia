@@ -152,6 +152,8 @@ parameters:
 					# _base 
 					- front/_base/js/main.js
 					- front/_base/js/forms.js
+					# social shit loader
+					- front/_base/js/socialShitLoader.js					
 					# favorites 
 					- front/favorites/js/favorites.js
 					# rental detail
@@ -160,6 +162,7 @@ parameters:
 					- front/search/js/search.js
 					# rental navigation
 					- front/rentalNavigation/js/rentalNavigation.js
+
 
 
 			favoriteScroll:
@@ -194,6 +197,9 @@ parameters:
 			gMap:
 				js: 
 					#- "https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"
+
+
+
 		sets:
 
 			'Admin:Ap':

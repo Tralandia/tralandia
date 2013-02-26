@@ -168,6 +168,8 @@ $(function(){
 
 	$('#favoritesShareList li a').click(function(){
 		
+initAllSocialPlugins();
+		
 		if($(this).hasClass('open')){
 			
 			$('#favoriteShareContent').hide();

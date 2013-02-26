@@ -581,7 +581,7 @@ $(document).ready(function(){
 
     	var $arrow = $(this).find('span');
 
-
+    	initAllSocialPlugins();
 
     	if(!socialIconsMenu){
     		    	
