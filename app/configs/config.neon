@@ -154,6 +154,12 @@ services:
 		class: FormHandler\RegistrationHandler
 
 
+	# ==============================
+	# ==================== Components
+	# ==============================
+	calendarControl: BaseModule\Components\CalendarControl
+
+
 factories: 
 	# ==============================
 	# ==================== FORMS
@@ -186,6 +192,13 @@ factories:
 	registrationFormFactory:
 		class: FrontModule\Forms\RegistrationForm(%country%)
 		implement: FrontModule\Forms\IRegistrationFormFactory
+
+	# ==============================
+	# ==================== FORMS CONTROLS
+	# ==============================
+	calendarContainerFactory:
+		class: Extras\Forms\Container\CalendarContainer(%label%)
+		implement: Extras\Forms\Container\ICalendarContainerFactory
 
 	# ==============================
 	# ==================== COMPONENTS
