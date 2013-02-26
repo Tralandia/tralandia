@@ -2,397 +2,430 @@
 	$rental        Entity\Rental\Rental
 	$rentalService Service\Rental\RentalService
 	$locality      Service\Seo\SeoService
-	*}
+ *}
 
-	{block content}
+{block content}
 
-	{include detailNavigation.latte}
-
-
-
-	<div class="span12">
-		<div class="sitePadding baseRadius baseBorder marginBottom overflow relative">
-			<div id="content" class="nopadding">
+{include detailNavigation.latte}
 
 
-				<div class="row-fluid objectDetailContent">
-					<div class="span4 marginBottom marginTop marginLeft leftSidebarObjectDetail">
-						{foreach $rental->getImages(3) as $photo}
-						{if $iterator->first}
-						<div class="imgFirst">
-							{/if}
-							<img alt="{_$rental->name} - {_o100008} {$iterator->getCounter()}" n:fakeImage="" class="marginBottom" />
-							{if $iterator->first}
-						</div>
-						{/if}
+
+<div class="span12">
+	<div class="sitePadding baseRadius baseBorder marginBottom overflow relative">
+		<div id="content" class="nopadding">
+
+
+<div class="row-fluid objectDetailContent">
+	<div class="span4 marginBottom marginTop marginLeft leftSidebarObjectDetail">
+		{foreach $rental->getImages(3) as $photo}
+			{if $iterator->first}
+			<div class="imgFirst">
+			{/if}
+				<img alt="{_$rental->name} - {_o100008} {$iterator->getCounter()}" n:fakeImage="" class="marginBottom" />
+			{if $iterator->first}
+			</div>
+			{/if}
+		{/foreach}
+
+		<div class="imgFirst">
+			<img alt="{_$rental->name} - {_o100008} 1" n:fakeImage="" class="marginBottom" />
+		</div>
+		<img alt="{_$rental->name} - {_o100008} 2" n:fakeImage="" class="marginBottom" />
+		<img alt="{_$rental->name} - {_o100008} 3" n:fakeImage="" class="marginBottom" />
+
+		<img class="mapsImg" src="https://maps.googleapis.com/maps/api/staticmap?center={$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&markers=color:blue%7C{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&zoom=10&size=288x170&sensor=false" />
+	</div>
+
+	<div class="span5">
+
+		<h1 class="addToViewList" id="{$rental->id}">{_$rental->name}{if $rental->classification > 0 }&nbsp;{for $i = 0; $i < $rental->classification; $i++}<span class="clasification"><i class="entypo-star"></i>{/for}{/if}</h1>
+
+		<p class="locality nopadding">
+		<a class="brown"  href="{link Rental:list location => $rental->address->locality , rentalType => $rental->type }">{_$rental->type->name|firstUpper} {_$rental->address->locality->name , null , [case=>locative]}</a>
+		</p>
+
+		{if $teaser || $firstAnswer}
+		<table class="teaser">
+			{if $teaser}
+			<tr>
+				<td class="icon"><i class="entypo-megaphone"></i></td>
+				<td class="content">{$teaser}</td>
+			</tr>
+			{/if}
+			{if $firstAnswer}
+			<tr>
+				<td class="firstAnswer" colspan="2">{$firstAnswer|firstUpper}</td>
+			</tr>
+			{/if}
+		</table>
+		{/if}
+
+
+		<table class="detailInfoBox">
+			<tr>
+				<td>
+					<i class="entypo-users"></i>
+				</td>
+				<td>					
+					{_o100005} {$rental->maxCapacity} {_o925,null,[count=>$rental->maxCapacity]}
+					{if $rental->bedroomCount}{$rental->bedroomCount} {_o100009}, {/if}
+					{$rental->rooms}
+					<span>{if $separateGroups}{_o100011}{else}{_o100010}{/if}</span>
+				</td>
+			</tr>
+		</table>
+
+	<div class="clearfix"></div>
+
+	{var $pricesAvailable = false}
+
+	{if count($rental->pricelistRows) > 0}
+		{var $pricesAvailable = true}
+		<ul class="detailPriceList">
+			<li><h3>{_o100012} <span>{_o100007} <strong>{$rental->price}</strong></span></h3>
+				<ul>
+
+					{foreach $rental->pricelistRows as $pricelistRow}
+					<li>	
+					{$pricelistRow->roomCount} {_$pricelistRow->roomType->name, null , [count => $pricelistRow->roomCount]}
+						<span>
+							{$pricelistRow->bedCount} {_o100006 , null , [count => $pricelistRow->bedCount]}
+							{if $pricelistRow->extraBedCount}{$pricelistRow->extraBedCount} {_o100000 , null , [count => $pricelistRow->extraBedCount]}{/if}							
+						</span>
+
+						<span class="price">
+							{$pricelistRow->price}
+						</span>
+					</li>
+					{/foreach}
+					
+				
+					{if count($rental->pricelists) > 0}
+					{var $pricesAvailable = true}
+						{foreach $rental->pricelists as $pricelist}
+						<li>							
+							{if $pricelist->name} {$pricelist->name} {/if} {_$pricelist->language->name} <i class="entypo-save"></i> <a href="{$pricelist->filePath}" class="btn btn-green btn-text-wrap btn-pricelist">{_o955}</a>
+						</li>
+						{/foreach}
+					{/if}					
+
+				</ul>
+
+				
+			</li>
+		</ul>
+	{/if}
+
+	{if !$pricesAvailable}
+		{if $rental->pricesUponRequest}
+			#len na dotaz
+			{else}
+			#Übytovatel neuvadza detailne ceny. Orientacna cena ubytovania je {$rental->price} Eur / osoba / noc"	
+		{/if}								
+	{/if}					
+
+	<div class="clearfix"></div>	
+
+		<div class="detailAmanities">
+			<ul class="objectDetailServicesIconList list">
+
+				{var $board = $rental->getAmenitiesByType(array('board'))}
+				{if $board}
+				   <li class="board">
+				   <strong>{_o1010}</strong>
+					   <div class="content">
+						{foreach $board  as $amenities}					
+							{foreach $amenities as $amenity}
+								{_$amenity->name}{if !$iterator->last}, {/if}
+							{/foreach}					
+						{/foreach}
+					</div>
+				   </li>			   
+			   {/if}
+
+
+				{if count($rental->amenities) > 0}
+					{var $importantAmenities = $rental->getImportantAmenities(true)}
+				   <li class="monitor">
+				   <strong>{_o100013}</strong>
+					   <div class="amenitiesStart">					   
+						{foreach $importantAmenities  as $amenities}					
+							{foreach $amenities as $amenity}							
+								{_$amenity->name}{if !$iterator->last}, {/if}
+							{/foreach}					
 						{/foreach}
 
-						<div class="imgFirst">
-							<img alt="{_$rental->name} - {_o100008} 1" n:fakeImage="" class="marginBottom" />
-						</div>
-						<img alt="{_$rental->name} - {_o100008} 2" n:fakeImage="" class="marginBottom" />
-						<img alt="{_$rental->name} - {_o100008} 3" n:fakeImage="" class="marginBottom" />
-
-						<img class="mapsImg" src="https://maps.googleapis.com/maps/api/staticmap?center={$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&markers=color:blue%7C{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&zoom=10&size=288x170&sensor=false" />
-					</div>
-
-					<div class="span5">
-
-						<h1 class="addToViewList" id="{$rental->id}">{_$rental->name}{if $rental->classification > 0 }&nbsp;{for $i = 0; $i < $rental->classification; $i++}<span class="clasification"><i class="entypo-star"></i>{/for}{/if}</h1>
-
-						<p class="locality nopadding">
-							<a class="brown"  href="{link Rental:list location => $rental->address->locality , rentalType => $rental->type }">{_$rental->type->name|firstUpper} {_$rental->address->locality->name , null , [case=>locative]}</a>
-						</p>
-
-						{if $teaser || $firstAnswer}
-						<table class="teaser">
-							{if $teaser}
-							<tr>
-								<td class="icon"><i class="entypo-megaphone"></i></td>
-								<td class="content">{$teaser}</td>
-							</tr>
-							{/if}
-							{if $firstAnswer}
-							<tr>
-								<td class="firstAnswer" colspan="2">{$firstAnswer|firstUpper}</td>
-							</tr>
-							{/if}
-						</table>
-						{/if}
-
-						<table class="detailInfoBox">
-							<tr>
-								<td>
-									<i class="entypo-new-circle"></i>
-									{$rental->price}
-									<span>{_o100004}</span>
-								</td>
-								<td>
-									<i class="entypo-users"></i>
-									{_o100005} {$rental->maxCapacity} {_o925,null,[count=>$rental->maxCapacity]}
-									<span>{if $rental->bedroomCount}{$rental->bedroomCount} {_o100009}, {/if}{$rental->rooms}</span>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<i class="entypo-bell"></i>	
-									{var $ownerAvailability = $rental->getAmenitiesByType(array('owner-availability'))}	
-									<span> 
-										{if $ownerAvailability}
-										{foreach $ownerAvailability as $amenities}					
-										{foreach $amenities as $amenity}
-										{_$amenity->name}{if !$iterator->last}, {/if}
-										{/foreach}				
-										{/foreach}
-										{/if}
-									</td>
-									<td>
-										<i class="entypo-info2"></i>
-										{if $separateGroups}
-										{_o100011}
-										{else}
-										{_o100010}
-										{/if}
-									</td>
-								</tr>
-							</table>
-
-							<div class="clearfix"></div>
-
-							{var $pricesAvailable = false}
-
-							{if count($rental->pricelistRows) > 0}
-							{var $pricesAvailable = true}
-							<ul class="detailPriceList">
-								<li><h3>{_o100012} <span>{_o100007} <strong>{$rental->price}</strong></span></h3>
-									<ul>
-
-										{foreach $rental->pricelistRows as $pricelistRow}
-										<li>	
-											{$pricelistRow->roomCount} {_$pricelistRow->roomType->name, null , [count => $pricelistRow->roomCount]}
-											<span>
-												{$pricelistRow->bedCount} {_o100006 , null , [count => $pricelistRow->bedCount]}
-												{if $pricelistRow->extraBedCount}{$pricelistRow->extraBedCount} {_o100000 , null , [count => $pricelistRow->extraBedCount]}{/if}							
-											</span>
-
-											<span class="price">
-												{$pricelistRow->price}
-											</span>
-										</li>
-										{/foreach}
-										
-										
-										{if count($rental->pricelists) > 0}
-										{var $pricesAvailable = true}
-										{foreach $rental->pricelists as $pricelist}
-										<li>							
-											{if $pricelist->name} {$pricelist->name} {/if} {_$pricelist->language->name} <i class="entypo-save"></i> <a href="{$pricelist->filePath}" class="btn btn-green btn-text-wrap btn-pricelist">{_o955}</a>
-										</li>
-										{/foreach}
-										{/if}					
-
-									</ul>
-
-									
-								</li>
-							</ul>
-							{/if}
-
-							{if !$pricesAvailable}
-							{if $rental->pricesUponRequest}
-							#len na dotaz
-							{else}
-							#Übytovatel neuvadza detailne ceny. Orientacna cena ubytovania je {$rental->price} Eur / osoba / noc"	
-							{/if}								
-							{/if}					
-
-							<div class="clearfix"></div>	
-
-							<div class="detailAmanities">
-								<ul class="objectDetailServicesIconList list">
-
-									{var $board = $rental->getAmenitiesByType(array('board'))}
-									{if $board}
-									<li class="board">
-										<strong>{_o1010}</strong>
-										<div class="content">
-											{foreach $board  as $amenities}					
-											{foreach $amenities as $amenity}
-											{_$amenity->name}{if !$iterator->last}, {/if}
-											{/foreach}					
-											{/foreach}
-										</div>
-									</li>			   
-									{/if}
-
-
-									{if $board}
-									{var $importantAmenities = $rental->getImportantAmenities(true)}
-									<li class="monitor">
-										<strong>{_o100013}</strong>
-										<div class="amenitiesStart">					   
-											{foreach $importantAmenities  as $amenities}					
-											{foreach $amenities as $amenity}							
-											{_$amenity->name}{if !$iterator->last}, {/if}
-											{/foreach}					
-											{/foreach}
-											<a class="toogle showMoreAmenities" data-opentext="{_o100001}" data-closetext="{_o100014}" for="moreAmenities" href="#"><b>{_o100001}</b></a>
-										</div>
-										
-										<div id="moreAmenities">
-											<ul class="moreAmenities">
-												{var $otherAmenities = $rental->getImportantAmenities(false)}
-												{if $otherAmenities}
-												
-												
-												{foreach $otherAmenities  as $amenities}		
-												<li>			
-													{foreach $amenities as $amenity}
-													
-													{if $iterator->first}				
-													<b>{_$amenity->type->name}: </b>				
-													{/if}							
-													{_$amenity->name}{if !$iterator->last}, {/if}
-													
-													{/foreach}	
-												</li>				
-												{/foreach}
-												
-												
-												{/if}	
-											</ul>
-										</div>
-
-									</li>			   
-									{/if}
-
-									<div class="clearfix"></div>
-
-									{if $rental->checkIn}
-									<li class="clock">
-										<div class="content">
-											<strong>{_o1586} {$rental->checkIn}:00 , {_o1588} {$rental->checkOut}:00</strong>
-										</div>
-									</li>
-									{/if}
-
-
-
-
-								</ul>
-							</div>
-
-						</div>
-
-
-
-						<!-- right sidebar -->
-						<div class="span3 sidebarRightDetail">
-
-
-							{if $mainImage = $rental->getMainImage()}
-							<button class="marginTop btn btn-compare addToFavorites currentObject" rel="{$rental->id}" link="{link Rental:detail $rental}" data-title="{_$rental->name}" thumb="{$basePath}{$mainImage|rentalImageSrc}"><span class="entypo-heart">{_o12334}</span></button>
-							{else}
-							<button class="marginTop btn btn-compare addToFavorites currentObject" rel="{$rental->id}" link="{link Rental:detail $rental}" data-title="{_$rental->name}" thumb="http://www.tralandia.com/u/32/13539183882248.jpg"><span class="entypo-heart">{_o12334}</span></button>
-
-							{/if}
-							
-							<div class="socialIconTable marginBottom marginTop socialIconsDetail socialPluginsInit">
-								<div class="socialBtnHeader">
-
-									<strong class="facebook">&#62220;</strong> <strong class="gplus">&#62223;</strong> <strong class="twitter">&#62217;</strong> <strong class="pinterest">&#62226;</strong> 
-								</div>
-								<div class="clearfix"></div>
-								<div class="socialBtnContent hide">
-
-									<a class="close"><i class="icon-remove-sign"></i></a>
-
-									<span class="facbookLikeButtonContainer" data-facebook-locate="sk_SK" data-facebook-src="{link Rental:detail $rental}"></span>
+						{var $otherAmenities = $rental->getImportantAmenities(false)}
+						{if $otherAmenities}
 						
-									<g:plusone size="small" href="{link Rental:detail $rental}"  style="margin-top:2px;"></g:plusone>
+						<a class="toogle showMoreAmenities" data-opentext="{_o100001}" data-closetext="{_o100014}" for="moreAmenities" href="#"><b>{_o100001}</b></a>
+						</div>
+						<div id="moreAmenities">
+						<ul class="moreAmenities">
+							{foreach $otherAmenities  as $amenities}		
+							<li>			
+								{foreach $amenities as $amenity}
 									
-									<a href="https://twitter.com/share" class="twitter-share-button" data-url="{$homepageUrl}" data-via="Tralandia" data-text="data text" data-hashtags="ubytovanie" data-lang="en">Tweet</a>
+										{if $iterator->first}				
+											<b>{_$amenity->type->name}: </b>				
+										{/if}							
+										{_$amenity->name}{if !$iterator->last}, {/if}
+									
+								{/foreach}
+								</li>				
+							{/foreach}
+						</ul>
+						</div>
+					   {/if}	
 
-									<a href="http://pinterest.com/pin/create/button/?url={link Rental:detail $rental}&media=&description={_$rental->name}" class="pin-it-button" count-layout="horizontal"><img border="0" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" /></a>
-									 
+				   </li>			   
+			   {/if}
 
-								</div>
-							</div>
+		   		<div class="clearfix"></div>
 
-							<div class="sidebarContact">
-								<div class="sidebarTitle">{_o12275}</div>
-								<div class="sidebarInner paddingTop">
+			   {if $rental->checkIn || $rental->checkOut}
+				   <li class="clock">
+			   		<strong>{if $rental->checkIn}{_o1586} {$rental->checkIn}:00 , {/if}{_o1588} {if $rental->checkOut}{$rental->checkOut}:00{/if}</strong>
+				   </li>
+			   {/if}
 
-									<table>
-										{if $rental->contactName}
-										<tr>
-											<td class="iconcover"><i class="entypo-contact"></i></td>
-											<td>	
-												<strong>{$rental->contactName}</strong>
-											</td>
-										</tr>
-										{/if}
+		   		<div class="clearfix"></div>
 
-										
-										{if $rental->phone->international}
-										<tr>
-											<td class="iconcover"><i class="entypo-phone"></i></td>
-											<td>
-
-												<strong>{$rental->phone->international} </strong>
-
-											</td>
-										</tr>
-										{/if}
-
-										{if $rental->address->status == \Entity\Contact\Address::STATUS_OK}
-										<tr>						
-											<td class="iconcover"><i class="entypo-adress"></i></td>
-											<td>
-												<strong>{_o2431} </strong><br/> 
-												
-												
-												{$rental->address->address} 
-												{if $rental->address->subLocality}
-												({$rental->address->subLocality} )
-												{/if}
-												<br/> {$rental->address->postalCode} {_$rental->address->locality->name} 
-											</td>
-										</tr>	
-										{/if}
-
-										{if $rental->url->value}
-										<tr>
-											<td class="iconcover"><i class="entypo-www"></i></td>
-											<td>
-												<strong><a target="_blank" href="{$rental->url->value}">{_o1666}</a><strong>
-												</td>
-											</tr>
-											{/if}
-
-											{if count($rental->spokenLanguages) > 0}
-											<tr>						
-												<td class="iconcover"><i class="entypo-language"></i></td>
-												<td>
-													<strong>{_o100015}</strong><br/> 
-													{foreach $rental->spokenLanguages as $language}
-													{_$language->name}{if !$iterator->last}, {/if}
-													{/foreach}
-												</td>
-											</tr>	
-											{/if}
-
-										</table>
-										{snippet reservationForm}
-										{include '../../forms/Rental/reservationForm.latte'}
-										{/snippet}
-
-									</div>
-								</div>
+			   <li class="clock">
+		   		<strong>{if $animalsAllowed}{_o100018}{else}{_o100019}{/if}</strong>
+			   </li>
+			</ul>
+		</div>
+	</div>
 
 
-</div>
-<!-- right sidebar -->
+	<!-- right sidebar -->
+	<div class="span3 sidebarRightDetail">
+
+
+		{if $mainImage = $rental->getMainImage()}
+			<button class="marginTop btn btn-compare addToFavorites currentObject" rel="{$rental->id}" link="{link Rental:detail $rental}" data-title="{_$rental->name}" thumb="{$basePath}{$mainImage|rentalImageSrc}"><span class="entypo-heart">{_o12334}</span></button>
+		{else}
+			<button class="marginTop btn btn-compare addToFavorites currentObject" rel="{$rental->id}" link="{link Rental:detail $rental}" data-title="{_$rental->name}" thumb="http://www.tralandia.com/u/32/13539183882248.jpg"><span class="entypo-heart">{_o12334}</span></button>
+
+		{/if}
+	
+		<div class="socialIconTable marginBottom marginTop socialIconsDetail">
+			<div class="socialBtnHeader">
+
+				<strong class="facebook">&#62220;</strong> <strong class="gplus">&#62223;</strong> <strong class="twitter">&#62217;</strong> <strong class="pinterest">&#62226;</strong> 
+			</div>
+			<div class="clearfix"></div>
+			<div class="socialBtnContent hide">
+
+				<a class="close"><i class="icon-remove-sign"></i></a>
+
+				<iframe src="http://www.facebook.com/plugins/like.php?href={link Rental:detail $rental}&amp;locale=sk_SK&amp;layout=button_count&amp;show_faces=false&amp;width=130&amp;action=like&amp;colorscheme=light&amp;height=80" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:20px; width:130px;" allowTransparency="true"></iframe>
+				
+				<g:plusone size="small" href="{link Rental:detail $rental}"  style="margin-top:2px;"></g:plusone>
+				
+				<a href="https://twitter.com/share" class="twitter-share-button" data-lang="en">Tweet</a>
+
+				<a href="http://pinterest.com/pin/create/button/?url={link Rental:detail $rental}&media=&description={_$rental->name}" class="pin-it-button" count-layout="horizontal"><img border="0" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" /></a>
+				<script type="text/javascript" src="http://assets.pinterest.com/js/pinit.js"></script>
+
+			</div>
+		</div>
+
+		<div class="sidebarContact">
+			<div class="sidebarTitle">{_o12275}</div>
+			<div class="sidebarInner paddingTop">
+
+				<table>
+					{if $rental->contactName}
+					<tr>
+						<td class="iconcover"><i class="entypo-contact"></i></td>
+						<td>	
+						<strong>{$rental->contactName}</strong>
+						</td>
+					</tr>
+					{/if}
+
+				
+					{if $rental->phone->international}
+					<tr>
+						<td class="iconcover"><i class="entypo-phone"></i></td>
+						<td>
+
+						<strong>{$rental->phone->international} </strong>
+
+						</td>
+					</tr>
+					{/if}
+
+					{if $rental->address->status == \Entity\Contact\Address::STATUS_OK}
+					<tr>						
+						<td class="iconcover"><i class="entypo-adress"></i></td>
+						<td>
+						<strong>{_o2431} </strong><br/> 
+						
+						
+							{$rental->address->address} 
+							{if $rental->address->subLocality}
+							({$rental->address->subLocality} )
+							{/if}
+							<br/> {$rental->address->postalCode} {_$rental->address->locality->name} 
+						</td>
+					</tr>	
+					{/if}
+
+ 					{if $rental->url->value}
+					<tr>
+						<td class="iconcover"><i class="entypo-www"></i></td>
+						<td>
+							<strong><a target="_blank" href="{$rental->url->value}">{_o1666}</a><strong>
+						</td>
+					</tr>
+					{/if}
+
+					{if count($rental->spokenLanguages) > 0}
+					<tr>						
+						<td class="iconcover"><i class="entypo-language"></i></td>
+						<td>
+						<strong>{_o100015}</strong><br/> 
+						{foreach $rental->spokenLanguages as $language}
+							{_$language->name}{if !$iterator->last}, {/if}
+						{/foreach}
+						</td>
+					</tr>	
+					{/if}
+
+				</table>
+			{snippet reservationForm}
+			{include '../../forms/Rental/reservationForm.latte'}
+			{/snippet}
+
+			</div>
+		</div>		
+
+<script>
+
+$(document).ready(function(){
+
+
+	var fromDateOrigin = {
+		year: 0,
+		month: 0,
+		day:0,
+		date: new Date(),
+		dayPlus:0,
+	}
+
+	$('.datepicker').click(function(){
+		$(this).addClass('focus');
+	});
+
+
+	$.datepicker.setDefaults(  $.datepicker.regional[ {$envLanguage->iso} ] );
+	$( ".datepicker" ).datepicker({ minDate: 0, maxDate: "+12M +10D" });	
+
+
+	$( ".datepickerto" ).datepicker({ 
+			minDate: new Date(2013, 1, 28), 
+			maxDate: "+12M +10D" ,
+			beforeShow: function(){
+
+				var fromValues = $('.datepicker').val().split('.');
+
+				if ( fromValues.length > 1 ) {
+
+					fromDateOrigin.year = parseInt(fromValues[2]);
+					fromDateOrigin.month = parseInt(fromValues[1])-1;
+					fromDateOrigin.day = parseInt(fromValues[0]);
+							
+					fromDateOrigin.date.setYear(fromDateOrigin.year);
+					fromDateOrigin.date.setMonth(fromDateOrigin.month);
+					fromDateOrigin.date.setDate(fromDateOrigin.day);
+
+					fromDateOrigin.dayPlus = new Date(fromDateOrigin.date.getFullYear(), fromDateOrigin.date.getMonth(), fromDateOrigin.date.getDate()+1);
+
+					$( this ).datepicker("option",{ minDate: fromDateOrigin.dayPlus, maxDate: "+12M +10D" });	
+
+				} else {
+					$( this ).datepicker("option",{ minDate: 1 , maxDate: "+12M +10D" });
+				}
+
+
+			}
+		});	
+});
+
+
+</script>
+
+	</div>
+	<!-- right sidebar -->
 </div>
 
 <div class="row-fluid">
 	<div class="span12">
 
-		<div class="metaObjectInfo" id="gallery">
-			
-			<ul class="biggall">	
-				{foreach $rental->getImages() as $photo}
-				<li><img alt="{_$rental->name} - {_o100008} {$iterator->getCounter()}" src="{$basePath}{$photo|rentalImageSrc}" /></li>
-				{/foreach}
-				<li><img alt="" n:fakeImage=""/></li>
-				<li><img alt="" n:fakeImage=""/></li>
-				<li><img alt="" n:fakeImage=""/></li>
-				<li><img alt="" n:fakeImage=""/></li>
-				<li><img alt="" n:fakeImage=""/></li>
-				<li><img alt="" n:fakeImage=""/></li>
-				<li><img alt="" n:fakeImage=""/></li>
-				<li><img alt="" n:fakeImage=""/></li>
-				<li><img alt="" n:fakeImage=""/></li>
-				<li><img alt="" n:fakeImage=""/></li>
-			</ul>
-			<div class="clearfix"></div>
-		</div>				
+				<div class="metaObjectInfo" id="gallery">
+				
+					<ul class="biggall">	
+						{foreach $rental->getImages() as $photo}
+							<li><img alt="{_$rental->name} - {_o100008} {$iterator->getCounter()}" src="{$basePath}{$photo|rentalImageSrc}" /></li>
+						{/foreach}
+							<li><img alt="" n:fakeImage=""/></li>
+							<li><img alt="" n:fakeImage=""/></li>
+							<li><img alt="" n:fakeImage=""/></li>
+							<li><img alt="" n:fakeImage=""/></li>
+							<li><img alt="" n:fakeImage=""/></li>
+							<li><img alt="" n:fakeImage=""/></li>
+							<li><img alt="" n:fakeImage=""/></li>
+							<li><img alt="" n:fakeImage=""/></li>
+							<li><img alt="" n:fakeImage=""/></li>
+							<li><img alt="" n:fakeImage=""/></li>
+					</ul>
+					<div class="clearfix"></div>
+				</div>				
+
+				<div class="metaObjectInfo" id="pricetable">
+
+				</div>
+
+				{if count($interviewAnswers) > 0}
+				<div class="metaObjectInfo" id="interviewAnswers">
+				<h3>{_o25231}</h3>
+				<ul class="interviewList">
+					{foreach $interviewAnswers as $interviewAnswer}
+						{if !empty($interviewAnswer->answer)}
+							<li>
+								<h4>{_$interviewAnswer->question->question|firstUpper}</h4>
+								<p>{_$interviewAnswer->answer|firstUpper}</p>
+							</li>
+						{/if}			
+					{/foreach}
+				</ul>
+				<div class="clearfix"></div>
+				</div>
+				{/if}
 
 
-		{if count($interviewAnswers) > 0}
-		<div class="metaObjectInfo" id="interviewAnswers">
-			<h3>{_o25231}</h3>
-			<ul class="interviewList">
-				{foreach $interviewAnswers as $interviewAnswer}
-				{if !empty($interviewAnswer->answer)}
-				<li>
-					<h4>{_$interviewAnswer->question->question|firstUpper}</h4>
-					<p>{_$interviewAnswer->answer|firstUpper}</p>
-				</li>
-				{/if}			
-				{/foreach}
-			</ul>
-			<div class="clearfix"></div>
-		</div>
-		{/if}
+				<div class="metaObjectInfo" id="tabs-2">
+					
+					<div id="objectDetailMap" zoom="13" value="{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}" style="width:100%;float:left;height:400px;"></div>
+					{* <ul id="placesImg"></ul> *}
+				</div>
 
-		<div class="metaObjectInfo">					
-			<div id="objectDetailMap" zoom="13" value="{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}" style="width:100%;float:left;height:400px;"></div>					
-		</div>
-
-		<div class="metaObjectInfo" id="calendar">
-			<h3>#Calendar <span>(Last Updated: 18/02/2013)</span></h3>
-			<div class="objectDetailsOccupancyTab">
-				<div class="calendar"><div class="monthName">August 2011</div><div class="day dayName">Mon</div><div class="day dayName">Tue</div><div class="day dayName">Wed</div><div class="day dayName">Thur</div><div class="day dayName">Fri</div><div class="day dayName">Sat</div><div class="day dayName">Sun</div><div class="day active ro status00" id="1312149600_id" title="Free dates">01</div><div class="day active ro status01" id="1312236000_id" title="Free dates">02</div><div class="day active ro status11" id="1312322400_id" title="Free dates">03</div><div class="day active ro status10" id="1312408800_id" title="Free dates">04</div><div class="day active ro status00" id="1312495200_id" title="Free dates">05</div><div class="day active ro status00" id="1312581600_id" title="Free dates">06</div><div class="day active ro status00" id="1312668000_id" title="Free dates">07</div><div class="day active ro status00" id="1312754400_id" title="Free dates">08</div><div class="day active ro status00" id="1312840800_id" title="Free dates">09</div><div class="day active ro status00" id="1312927200_id" title="Free dates">10</div><div class="day active ro status00" id="1313013600_id" title="Free dates">11</div><div class="day active ro status00" id="1313100000_id" title="Free dates">12</div><div class="day active ro status00" id="1313186400_id" title="Free dates">13</div><div class="day active ro status00" id="1313272800_id" title="Free dates">14</div><div class="day active ro status00" id="1313359200_id" title="Free dates">15</div><div class="day active ro status00" id="1313445600_id" title="Free dates">16</div><div class="day active ro status00" id="1313532000_id" title="Free dates">17</div><div class="day active ro status00" id="1313618400_id" title="Free dates">18</div><div class="day active ro status00" id="1313704800_id" title="Free dates">19</div><div class="day active ro status00" id="1313791200_id" title="Free dates">20</div><div class="day active ro status00" id="1313877600_id" title="Free dates">21</div><div class="day active ro status00" id="1313964000_id" title="Free dates">22</div><div class="day active ro status00" id="1314050400_id" title="Free dates">23</div><div class="day active ro status00" id="1314136800_id" title="Free dates">24</div><div class="day active ro status00" id="1314223200_id" title="Free dates">25</div><div class="day active ro status00" id="1314309600_id" title="Free dates">26</div><div class="day active ro status00" id="1314396000_id" title="Free dates">27</div><div class="day active ro status00" id="1314482400_id" title="Free dates">28</div><div class="day active ro status00" id="1314568800_id" title="Free dates">29</div><div class="day active ro status00" id="1314655200_id" title="Free dates">30</div><div class="day active ro status00" id="1314741600_id" title="Free dates">31</div><div class="day inactive ro" title="Free dates">01</div><div class="day inactive ro" title="Free dates">02</div><div class="day inactive ro" title="Free dates">03</div><div class="day inactive ro" title="Free dates">04</div></div>
-				<div class="calendar"><div class="monthName">September 2011</div><div class="day dayName">Mon</div><div class="day dayName">Tue</div><div class="day dayName">Wed</div><div class="day dayName">Thur</div><div class="day dayName">Fri</div><div class="day dayName">Sat</div><div class="day dayName">Sun</div><div class="day inactive ro" title="Free dates">29</div><div class="day inactive ro" title="Free dates">30</div><div class="day inactive ro" title="Free dates">31</div><div class="day active ro status00" id="1314828000_id" title="Free dates">01</div><div class="day active ro status00" id="1314914400_id" title="Free dates">02</div><div class="day active ro status00" id="1315000800_id" title="Free dates">03</div><div class="day active ro status00" id="1315087200_id" title="Free dates">04</div><div class="day active ro status00" id="1315173600_id" title="Free dates">05</div><div class="day active ro status00" id="1315260000_id" title="Free dates">06</div><div class="day active ro status00" id="1315346400_id" title="Free dates">07</div><div class="day active ro status00" id="1315432800_id" title="Free dates">08</div><div class="day active ro status00" id="1315519200_id" title="Free dates">09</div><div class="day active ro status00" id="1315605600_id" title="Free dates">10</div><div class="day active ro status00" id="1315692000_id" title="Free dates">11</div><div class="day active ro status00" id="1315778400_id" title="Free dates">12</div><div class="day active ro status00" id="1315864800_id" title="Free dates">13</div><div class="day active ro status00" id="1315951200_id" title="Free dates">14</div><div class="day active ro status00" id="1316037600_id" title="Free dates">15</div><div class="day active ro status00" id="1316124000_id" title="Free dates">16</div><div class="day active ro status00" id="1316210400_id" title="Free dates">17</div><div class="day active ro status00" id="1316296800_id" title="Free dates">18</div><div class="day active ro status00" id="1316383200_id" title="Free dates">19</div><div class="day active ro status00" id="1316469600_id" title="Free dates">20</div><div class="day active ro status00" id="1316556000_id" title="Free dates">21</div><div class="day active ro status00" id="1316642400_id" title="Free dates">22</div><div class="day active ro status00" id="1316728800_id" title="Free dates">23</div><div class="day active ro status00" id="1316815200_id" title="Free dates">24</div><div class="day active ro status00" id="1316901600_id" title="Free dates">25</div><div class="day active ro status00" id="1316988000_id" title="Free dates">26</div><div class="day active ro status00" id="1317074400_id" title="Free dates">27</div><div class="day active ro status00" id="1317160800_id" title="Free dates">28</div><div class="day active ro status00" id="1317247200_id" title="Free dates">29</div><div class="day active ro status00" id="1317333600_id" title="Free dates">30</div><div class="day inactive ro" title="Free dates">01</div><div class="day inactive ro" title="Free dates">02</div></div>
-				<div class="calendar"><div class="monthName">October 2011</div><div class="day dayName">Mon</div><div class="day dayName">Tue</div><div class="day dayName">Wed</div><div class="day dayName">Thur</div><div class="day dayName">Fri</div><div class="day dayName">Sat</div><div class="day dayName">Sun</div><div class="day inactive ro" title="Free dates">26</div><div class="day inactive ro" title="Free dates">27</div><div class="day inactive ro" title="Free dates">28</div><div class="day inactive ro" title="Free dates">29</div><div class="day inactive ro" title="Free dates">30</div><div class="day active ro status00" id="1317420000_id" title="Free dates">01</div><div class="day active ro status00" id="1317506400_id" title="Free dates">02</div><div class="day active ro status00" id="1317592800_id" title="Free dates">03</div><div class="day active ro status00" id="1317679200_id" title="Free dates">04</div><div class="day active ro status00" id="1317765600_id" title="Free dates">05</div><div class="day active ro status00" id="1317852000_id" title="Free dates">06</div><div class="day active ro status00" id="1317938400_id" title="Free dates">07</div><div class="day active ro status00" id="1318024800_id" title="Free dates">08</div><div class="day active ro status00" id="1318111200_id" title="Free dates">09</div><div class="day active ro status00" id="1318197600_id" title="Free dates">10</div><div class="day active ro status00" id="1318284000_id" title="Free dates">11</div><div class="day active ro status00" id="1318370400_id" title="Free dates">12</div><div class="day active ro status00" id="1318456800_id" title="Free dates">13</div><div class="day active ro status00" id="1318543200_id" title="Free dates">14</div><div class="day active ro status00" id="1318629600_id" title="Free dates">15</div><div class="day active ro status00" id="1318716000_id" title="Free dates">16</div><div class="day active ro status00" id="1318802400_id" title="Free dates">17</div><div class="day active ro status00" id="1318888800_id" title="Free dates">18</div><div class="day active ro status00" id="1318975200_id" title="Free dates">19</div><div class="day active ro status00" id="1319061600_id" title="Free dates">20</div><div class="day active ro status00" id="1319148000_id" title="Free dates">21</div><div class="day active ro status00" id="1319234400_id" title="Free dates">22</div><div class="day active ro status00" id="1319320800_id" title="Free dates">23</div><div class="day active ro status00" id="1319407200_id" title="Free dates">24</div><div class="day active ro status00" id="1319493600_id" title="Free dates">25</div><div class="day active ro status00" id="1319580000_id" title="Free dates">26</div><div class="day active ro status00" id="1319666400_id" title="Free dates">27</div><div class="day active ro status00" id="1319752800_id" title="Free dates">28</div><div class="day active ro status00" id="1319839200_id" title="Free dates">29</div><div class="day active ro status00" id="1319925600_id" title="Free dates">30</div><div class="day active ro status00" id="1320015600_id" title="Free dates">31</div><div class="day inactive ro" title="Free dates">01</div><div class="day inactive ro" title="Free dates">02</div><div class="day inactive ro" title="Free dates">03</div><div class="day inactive ro" title="Free dates">04</div><div class="day inactive ro" title="Free dates">05</div><div class="day inactive ro" title="Free dates">06</div></div>
-				<div class="calendar"><div class="monthName">November 2011</div><div class="day dayName">Mon</div><div class="day dayName">Tue</div><div class="day dayName">Wed</div><div class="day dayName">Thur</div><div class="day dayName">Fri</div><div class="day dayName">Sat</div><div class="day dayName">Sun</div><div class="day inactive ro" title="Free dates">31</div><div class="day active ro status00" id="1320102000_id" title="Free dates">01</div><div class="day active ro status00" id="1320188400_id" title="Free dates">02</div><div class="day active ro status00" id="1320274800_id" title="Free dates">03</div><div class="day active ro status00" id="1320361200_id" title="Free dates">04</div><div class="day active ro status00" id="1320447600_id" title="Free dates">05</div><div class="day active ro status00" id="1320534000_id" title="Free dates">06</div><div class="day active ro status00" id="1320620400_id" title="Free dates">07</div><div class="day active ro status00" id="1320706800_id" title="Free dates">08</div><div class="day active ro status00" id="1320793200_id" title="Free dates">09</div><div class="day active ro status00" id="1320879600_id" title="Free dates">10</div><div class="day active ro status00" id="1320966000_id" title="Free dates">11</div><div class="day active ro status00" id="1321052400_id" title="Free dates">12</div><div class="day active ro status00" id="1321138800_id" title="Free dates">13</div><div class="day active ro status00" id="1321225200_id" title="Free dates">14</div><div class="day active ro status00" id="1321311600_id" title="Free dates">15</div><div class="day active ro status00" id="1321398000_id" title="Free dates">16</div><div class="day active ro status00" id="1321484400_id" title="Free dates">17</div><div class="day active ro status00" id="1321570800_id" title="Free dates">18</div><div class="day active ro status00" id="1321657200_id" title="Free dates">19</div><div class="day active ro status00" id="1321743600_id" title="Free dates">20</div><div class="day active ro status00" id="1321830000_id" title="Free dates">21</div><div class="day active ro status00" id="1321916400_id" title="Free dates">22</div><div class="day active ro status00" id="1322002800_id" title="Free dates">23</div><div class="day active ro status00" id="1322089200_id" title="Free dates">24</div><div class="day active ro status00" id="1322175600_id" title="Free dates">25</div><div class="day active ro status00" id="1322262000_id" title="Free dates">26</div><div class="day active ro status00" id="1322348400_id" title="Free dates">27</div><div class="day active ro status00" id="1322434800_id" title="Free dates">28</div><div class="day active ro status00" id="1322521200_id" title="Free dates">29</div><div class="day active ro status00" id="1322607600_id" title="Free dates">30</div><div class="day inactive ro" title="Free dates">01</div><div class="day inactive ro" title="Free dates">02</div><div class="day inactive ro" title="Free dates">03</div><div class="day inactive ro" title="Free dates">04</div></div>
-				<div class="calendar"><div class="monthName">December 2011</div><div class="day dayName">Mon</div><div class="day dayName">Tue</div><div class="day dayName">Wed</div><div class="day dayName">Thur</div><div class="day dayName">Fri</div><div class="day dayName">Sat</div><div class="day dayName">Sun</div><div class="day inactive ro" title="Free dates">28</div><div class="day inactive ro" title="Free dates">29</div><div class="day inactive ro" title="Free dates">30</div><div class="day active ro status00" id="1322694000_id" title="Free dates">01</div><div class="day active ro status00" id="1322780400_id" title="Free dates">02</div><div class="day active ro status00" id="1322866800_id" title="Free dates">03</div><div class="day active ro status00" id="1322953200_id" title="Free dates">04</div><div class="day active ro status00" id="1323039600_id" title="Free dates">05</div><div class="day active ro status00" id="1323126000_id" title="Free dates">06</div><div class="day active ro status00" id="1323212400_id" title="Free dates">07</div><div class="day active ro status00" id="1323298800_id" title="Free dates">08</div><div class="day active ro status00" id="1323385200_id" title="Free dates">09</div><div class="day active ro status00" id="1323471600_id" title="Free dates">10</div><div class="day active ro status00" id="1323558000_id" title="Free dates">11</div><div class="day active ro status00" id="1323644400_id" title="Free dates">12</div><div class="day active ro status00" id="1323730800_id" title="Free dates">13</div><div class="day active ro status00" id="1323817200_id" title="Free dates">14</div><div class="day active ro status00" id="1323903600_id" title="Free dates">15</div><div class="day active ro status00" id="1323990000_id" title="Free dates">16</div><div class="day active ro status00" id="1324076400_id" title="Free dates">17</div><div class="day active ro status00" id="1324162800_id" title="Free dates">18</div><div class="day active ro status00" id="1324249200_id" title="Free dates">19</div><div class="day active ro status00" id="1324335600_id" title="Free dates">20</div><div class="day active ro status00" id="1324422000_id" title="Free dates">21</div><div class="day active ro status00" id="1324508400_id" title="Free dates">22</div><div class="day active ro status00" id="1324594800_id" title="Free dates">23</div><div class="day active ro status00" id="1324681200_id" title="Free dates">24</div><div class="day active ro status00" id="1324767600_id" title="Free dates">25</div><div class="day active ro status00" id="1324854000_id" title="Free dates">26</div><div class="day active ro status00" id="1324940400_id" title="Free dates">27</div><div class="day active ro status00" id="1325026800_id" title="Free dates">28</div><div class="day active ro status00" id="1325113200_id" title="Free dates">29</div><div class="day active ro status00" id="1325199600_id" title="Free dates">30</div><div class="day active ro status00" id="1325286000_id" title="Free dates">31</div><div class="day inactive ro" title="Free dates">01</div></div>
-				<div class="calendar"><div class="monthName">January 2012</div><div class="day dayName">Mon</div><div class="day dayName">Tue</div><div class="day dayName">Wed</div><div class="day dayName">Thur</div><div class="day dayName">Fri</div><div class="day dayName">Sat</div><div class="day dayName">Sun</div><div class="day inactive ro" title="Free dates">26</div><div class="day inactive ro" title="Free dates">27</div><div class="day inactive ro" title="Free dates">28</div><div class="day inactive ro" title="Free dates">29</div><div class="day inactive ro" title="Free dates">30</div><div class="day inactive ro" title="Free dates">31</div><div class="day active ro status00" id="1325372400_id" title="Free dates">01</div><div class="day active ro status00" id="1325458800_id" title="Free dates">02</div><div class="day active ro status00" id="1325545200_id" title="Free dates">03</div><div class="day active ro status00" id="1325631600_id" title="Free dates">04</div><div class="day active ro status00" id="1325718000_id" title="Free dates">05</div><div class="day active ro status00" id="1325804400_id" title="Free dates">06</div><div class="day active ro status00" id="1325890800_id" title="Free dates">07</div><div class="day active ro status00" id="1325977200_id" title="Free dates">08</div><div class="day active ro status00" id="1326063600_id" title="Free dates">09</div><div class="day active ro status00" id="1326150000_id" title="Free dates">10</div><div class="day active ro status00" id="1326236400_id" title="Free dates">11</div><div class="day active ro status00" id="1326322800_id" title="Free dates">12</div><div class="day active ro status00" id="1326409200_id" title="Free dates">13</div><div class="day active ro status00" id="1326495600_id" title="Free dates">14</div><div class="day active ro status00" id="1326582000_id" title="Free dates">15</div><div class="day active ro status00" id="1326668400_id" title="Free dates">16</div><div class="day active ro status00" id="1326754800_id" title="Free dates">17</div><div class="day active ro status00" id="1326841200_id" title="Free dates">18</div><div class="day active ro status00" id="1326927600_id" title="Free dates">19</div><div class="day active ro status00" id="1327014000_id" title="Free dates">20</div><div class="day active ro status00" id="1327100400_id" title="Free dates">21</div><div class="day active ro status00" id="1327186800_id" title="Free dates">22</div><div class="day active ro status00" id="1327273200_id" title="Free dates">23</div><div class="day active ro status00" id="1327359600_id" title="Free dates">24</div><div class="day active ro status00" id="1327446000_id" title="Free dates">25</div><div class="day active ro status00" id="1327532400_id" title="Free dates">26</div><div class="day active ro status00" id="1327618800_id" title="Free dates">27</div><div class="day active ro status00" id="1327705200_id" title="Free dates">28</div><div class="day active ro status00" id="1327791600_id" title="Free dates">29</div><div class="day active ro status00" id="1327878000_id" title="Free dates">30</div><div class="day active ro status00" id="1327964400_id" title="Free dates">31</div><div class="day inactive ro" title="Free dates">01</div><div class="day inactive ro" title="Free dates">02</div><div class="day inactive ro" title="Free dates">03</div><div class="day inactive ro" title="Free dates">04</div><div class="day inactive ro" title="Free dates">05</div></div>
-				<div class="cleaner"></div>
-			</div>
-			
-		</div>
+				<div class="metaObjectInfo" id="calendar">
+				<h3>#Calendar <span>(Last Updated: 18/02/2013)</span></h3>
+				<div class="objectDetailsOccupancyTab">
+					<div class="calendar"><div class="monthName">August 2011</div><div class="day dayName">Mon</div><div class="day dayName">Tue</div><div class="day dayName">Wed</div><div class="day dayName">Thur</div><div class="day dayName">Fri</div><div class="day dayName">Sat</div><div class="day dayName">Sun</div><div class="day active ro status00" id="1312149600_id" title="Free dates">01</div><div class="day active ro status01" id="1312236000_id" title="Free dates">02</div><div class="day active ro status11" id="1312322400_id" title="Free dates">03</div><div class="day active ro status10" id="1312408800_id" title="Free dates">04</div><div class="day active ro status00" id="1312495200_id" title="Free dates">05</div><div class="day active ro status00" id="1312581600_id" title="Free dates">06</div><div class="day active ro status00" id="1312668000_id" title="Free dates">07</div><div class="day active ro status00" id="1312754400_id" title="Free dates">08</div><div class="day active ro status00" id="1312840800_id" title="Free dates">09</div><div class="day active ro status00" id="1312927200_id" title="Free dates">10</div><div class="day active ro status00" id="1313013600_id" title="Free dates">11</div><div class="day active ro status00" id="1313100000_id" title="Free dates">12</div><div class="day active ro status00" id="1313186400_id" title="Free dates">13</div><div class="day active ro status00" id="1313272800_id" title="Free dates">14</div><div class="day active ro status00" id="1313359200_id" title="Free dates">15</div><div class="day active ro status00" id="1313445600_id" title="Free dates">16</div><div class="day active ro status00" id="1313532000_id" title="Free dates">17</div><div class="day active ro status00" id="1313618400_id" title="Free dates">18</div><div class="day active ro status00" id="1313704800_id" title="Free dates">19</div><div class="day active ro status00" id="1313791200_id" title="Free dates">20</div><div class="day active ro status00" id="1313877600_id" title="Free dates">21</div><div class="day active ro status00" id="1313964000_id" title="Free dates">22</div><div class="day active ro status00" id="1314050400_id" title="Free dates">23</div><div class="day active ro status00" id="1314136800_id" title="Free dates">24</div><div class="day active ro status00" id="1314223200_id" title="Free dates">25</div><div class="day active ro status00" id="1314309600_id" title="Free dates">26</div><div class="day active ro status00" id="1314396000_id" title="Free dates">27</div><div class="day active ro status00" id="1314482400_id" title="Free dates">28</div><div class="day active ro status00" id="1314568800_id" title="Free dates">29</div><div class="day active ro status00" id="1314655200_id" title="Free dates">30</div><div class="day active ro status00" id="1314741600_id" title="Free dates">31</div><div class="day inactive ro" title="Free dates">01</div><div class="day inactive ro" title="Free dates">02</div><div class="day inactive ro" title="Free dates">03</div><div class="day inactive ro" title="Free dates">04</div></div>
+					<div class="calendar"><div class="monthName">September 2011</div><div class="day dayName">Mon</div><div class="day dayName">Tue</div><div class="day dayName">Wed</div><div class="day dayName">Thur</div><div class="day dayName">Fri</div><div class="day dayName">Sat</div><div class="day dayName">Sun</div><div class="day inactive ro" title="Free dates">29</div><div class="day inactive ro" title="Free dates">30</div><div class="day inactive ro" title="Free dates">31</div><div class="day active ro status00" id="1314828000_id" title="Free dates">01</div><div class="day active ro status00" id="1314914400_id" title="Free dates">02</div><div class="day active ro status00" id="1315000800_id" title="Free dates">03</div><div class="day active ro status00" id="1315087200_id" title="Free dates">04</div><div class="day active ro status00" id="1315173600_id" title="Free dates">05</div><div class="day active ro status00" id="1315260000_id" title="Free dates">06</div><div class="day active ro status00" id="1315346400_id" title="Free dates">07</div><div class="day active ro status00" id="1315432800_id" title="Free dates">08</div><div class="day active ro status00" id="1315519200_id" title="Free dates">09</div><div class="day active ro status00" id="1315605600_id" title="Free dates">10</div><div class="day active ro status00" id="1315692000_id" title="Free dates">11</div><div class="day active ro status00" id="1315778400_id" title="Free dates">12</div><div class="day active ro status00" id="1315864800_id" title="Free dates">13</div><div class="day active ro status00" id="1315951200_id" title="Free dates">14</div><div class="day active ro status00" id="1316037600_id" title="Free dates">15</div><div class="day active ro status00" id="1316124000_id" title="Free dates">16</div><div class="day active ro status00" id="1316210400_id" title="Free dates">17</div><div class="day active ro status00" id="1316296800_id" title="Free dates">18</div><div class="day active ro status00" id="1316383200_id" title="Free dates">19</div><div class="day active ro status00" id="1316469600_id" title="Free dates">20</div><div class="day active ro status00" id="1316556000_id" title="Free dates">21</div><div class="day active ro status00" id="1316642400_id" title="Free dates">22</div><div class="day active ro status00" id="1316728800_id" title="Free dates">23</div><div class="day active ro status00" id="1316815200_id" title="Free dates">24</div><div class="day active ro status00" id="1316901600_id" title="Free dates">25</div><div class="day active ro status00" id="1316988000_id" title="Free dates">26</div><div class="day active ro status00" id="1317074400_id" title="Free dates">27</div><div class="day active ro status00" id="1317160800_id" title="Free dates">28</div><div class="day active ro status00" id="1317247200_id" title="Free dates">29</div><div class="day active ro status00" id="1317333600_id" title="Free dates">30</div><div class="day inactive ro" title="Free dates">01</div><div class="day inactive ro" title="Free dates">02</div></div>
+					<div class="calendar"><div class="monthName">October 2011</div><div class="day dayName">Mon</div><div class="day dayName">Tue</div><div class="day dayName">Wed</div><div class="day dayName">Thur</div><div class="day dayName">Fri</div><div class="day dayName">Sat</div><div class="day dayName">Sun</div><div class="day inactive ro" title="Free dates">26</div><div class="day inactive ro" title="Free dates">27</div><div class="day inactive ro" title="Free dates">28</div><div class="day inactive ro" title="Free dates">29</div><div class="day inactive ro" title="Free dates">30</div><div class="day active ro status00" id="1317420000_id" title="Free dates">01</div><div class="day active ro status00" id="1317506400_id" title="Free dates">02</div><div class="day active ro status00" id="1317592800_id" title="Free dates">03</div><div class="day active ro status00" id="1317679200_id" title="Free dates">04</div><div class="day active ro status00" id="1317765600_id" title="Free dates">05</div><div class="day active ro status00" id="1317852000_id" title="Free dates">06</div><div class="day active ro status00" id="1317938400_id" title="Free dates">07</div><div class="day active ro status00" id="1318024800_id" title="Free dates">08</div><div class="day active ro status00" id="1318111200_id" title="Free dates">09</div><div class="day active ro status00" id="1318197600_id" title="Free dates">10</div><div class="day active ro status00" id="1318284000_id" title="Free dates">11</div><div class="day active ro status00" id="1318370400_id" title="Free dates">12</div><div class="day active ro status00" id="1318456800_id" title="Free dates">13</div><div class="day active ro status00" id="1318543200_id" title="Free dates">14</div><div class="day active ro status00" id="1318629600_id" title="Free dates">15</div><div class="day active ro status00" id="1318716000_id" title="Free dates">16</div><div class="day active ro status00" id="1318802400_id" title="Free dates">17</div><div class="day active ro status00" id="1318888800_id" title="Free dates">18</div><div class="day active ro status00" id="1318975200_id" title="Free dates">19</div><div class="day active ro status00" id="1319061600_id" title="Free dates">20</div><div class="day active ro status00" id="1319148000_id" title="Free dates">21</div><div class="day active ro status00" id="1319234400_id" title="Free dates">22</div><div class="day active ro status00" id="1319320800_id" title="Free dates">23</div><div class="day active ro status00" id="1319407200_id" title="Free dates">24</div><div class="day active ro status00" id="1319493600_id" title="Free dates">25</div><div class="day active ro status00" id="1319580000_id" title="Free dates">26</div><div class="day active ro status00" id="1319666400_id" title="Free dates">27</div><div class="day active ro status00" id="1319752800_id" title="Free dates">28</div><div class="day active ro status00" id="1319839200_id" title="Free dates">29</div><div class="day active ro status00" id="1319925600_id" title="Free dates">30</div><div class="day active ro status00" id="1320015600_id" title="Free dates">31</div><div class="day inactive ro" title="Free dates">01</div><div class="day inactive ro" title="Free dates">02</div><div class="day inactive ro" title="Free dates">03</div><div class="day inactive ro" title="Free dates">04</div><div class="day inactive ro" title="Free dates">05</div><div class="day inactive ro" title="Free dates">06</div></div>
+					<div class="calendar"><div class="monthName">November 2011</div><div class="day dayName">Mon</div><div class="day dayName">Tue</div><div class="day dayName">Wed</div><div class="day dayName">Thur</div><div class="day dayName">Fri</div><div class="day dayName">Sat</div><div class="day dayName">Sun</div><div class="day inactive ro" title="Free dates">31</div><div class="day active ro status00" id="1320102000_id" title="Free dates">01</div><div class="day active ro status00" id="1320188400_id" title="Free dates">02</div><div class="day active ro status00" id="1320274800_id" title="Free dates">03</div><div class="day active ro status00" id="1320361200_id" title="Free dates">04</div><div class="day active ro status00" id="1320447600_id" title="Free dates">05</div><div class="day active ro status00" id="1320534000_id" title="Free dates">06</div><div class="day active ro status00" id="1320620400_id" title="Free dates">07</div><div class="day active ro status00" id="1320706800_id" title="Free dates">08</div><div class="day active ro status00" id="1320793200_id" title="Free dates">09</div><div class="day active ro status00" id="1320879600_id" title="Free dates">10</div><div class="day active ro status00" id="1320966000_id" title="Free dates">11</div><div class="day active ro status00" id="1321052400_id" title="Free dates">12</div><div class="day active ro status00" id="1321138800_id" title="Free dates">13</div><div class="day active ro status00" id="1321225200_id" title="Free dates">14</div><div class="day active ro status00" id="1321311600_id" title="Free dates">15</div><div class="day active ro status00" id="1321398000_id" title="Free dates">16</div><div class="day active ro status00" id="1321484400_id" title="Free dates">17</div><div class="day active ro status00" id="1321570800_id" title="Free dates">18</div><div class="day active ro status00" id="1321657200_id" title="Free dates">19</div><div class="day active ro status00" id="1321743600_id" title="Free dates">20</div><div class="day active ro status00" id="1321830000_id" title="Free dates">21</div><div class="day active ro status00" id="1321916400_id" title="Free dates">22</div><div class="day active ro status00" id="1322002800_id" title="Free dates">23</div><div class="day active ro status00" id="1322089200_id" title="Free dates">24</div><div class="day active ro status00" id="1322175600_id" title="Free dates">25</div><div class="day active ro status00" id="1322262000_id" title="Free dates">26</div><div class="day active ro status00" id="1322348400_id" title="Free dates">27</div><div class="day active ro status00" id="1322434800_id" title="Free dates">28</div><div class="day active ro status00" id="1322521200_id" title="Free dates">29</div><div class="day active ro status00" id="1322607600_id" title="Free dates">30</div><div class="day inactive ro" title="Free dates">01</div><div class="day inactive ro" title="Free dates">02</div><div class="day inactive ro" title="Free dates">03</div><div class="day inactive ro" title="Free dates">04</div></div>
+					<div class="calendar"><div class="monthName">December 2011</div><div class="day dayName">Mon</div><div class="day dayName">Tue</div><div class="day dayName">Wed</div><div class="day dayName">Thur</div><div class="day dayName">Fri</div><div class="day dayName">Sat</div><div class="day dayName">Sun</div><div class="day inactive ro" title="Free dates">28</div><div class="day inactive ro" title="Free dates">29</div><div class="day inactive ro" title="Free dates">30</div><div class="day active ro status00" id="1322694000_id" title="Free dates">01</div><div class="day active ro status00" id="1322780400_id" title="Free dates">02</div><div class="day active ro status00" id="1322866800_id" title="Free dates">03</div><div class="day active ro status00" id="1322953200_id" title="Free dates">04</div><div class="day active ro status00" id="1323039600_id" title="Free dates">05</div><div class="day active ro status00" id="1323126000_id" title="Free dates">06</div><div class="day active ro status00" id="1323212400_id" title="Free dates">07</div><div class="day active ro status00" id="1323298800_id" title="Free dates">08</div><div class="day active ro status00" id="1323385200_id" title="Free dates">09</div><div class="day active ro status00" id="1323471600_id" title="Free dates">10</div><div class="day active ro status00" id="1323558000_id" title="Free dates">11</div><div class="day active ro status00" id="1323644400_id" title="Free dates">12</div><div class="day active ro status00" id="1323730800_id" title="Free dates">13</div><div class="day active ro status00" id="1323817200_id" title="Free dates">14</div><div class="day active ro status00" id="1323903600_id" title="Free dates">15</div><div class="day active ro status00" id="1323990000_id" title="Free dates">16</div><div class="day active ro status00" id="1324076400_id" title="Free dates">17</div><div class="day active ro status00" id="1324162800_id" title="Free dates">18</div><div class="day active ro status00" id="1324249200_id" title="Free dates">19</div><div class="day active ro status00" id="1324335600_id" title="Free dates">20</div><div class="day active ro status00" id="1324422000_id" title="Free dates">21</div><div class="day active ro status00" id="1324508400_id" title="Free dates">22</div><div class="day active ro status00" id="1324594800_id" title="Free dates">23</div><div class="day active ro status00" id="1324681200_id" title="Free dates">24</div><div class="day active ro status00" id="1324767600_id" title="Free dates">25</div><div class="day active ro status00" id="1324854000_id" title="Free dates">26</div><div class="day active ro status00" id="1324940400_id" title="Free dates">27</div><div class="day active ro status00" id="1325026800_id" title="Free dates">28</div><div class="day active ro status00" id="1325113200_id" title="Free dates">29</div><div class="day active ro status00" id="1325199600_id" title="Free dates">30</div><div class="day active ro status00" id="1325286000_id" title="Free dates">31</div><div class="day inactive ro" title="Free dates">01</div></div>
+					<div class="calendar"><div class="monthName">January 2012</div><div class="day dayName">Mon</div><div class="day dayName">Tue</div><div class="day dayName">Wed</div><div class="day dayName">Thur</div><div class="day dayName">Fri</div><div class="day dayName">Sat</div><div class="day dayName">Sun</div><div class="day inactive ro" title="Free dates">26</div><div class="day inactive ro" title="Free dates">27</div><div class="day inactive ro" title="Free dates">28</div><div class="day inactive ro" title="Free dates">29</div><div class="day inactive ro" title="Free dates">30</div><div class="day inactive ro" title="Free dates">31</div><div class="day active ro status00" id="1325372400_id" title="Free dates">01</div><div class="day active ro status00" id="1325458800_id" title="Free dates">02</div><div class="day active ro status00" id="1325545200_id" title="Free dates">03</div><div class="day active ro status00" id="1325631600_id" title="Free dates">04</div><div class="day active ro status00" id="1325718000_id" title="Free dates">05</div><div class="day active ro status00" id="1325804400_id" title="Free dates">06</div><div class="day active ro status00" id="1325890800_id" title="Free dates">07</div><div class="day active ro status00" id="1325977200_id" title="Free dates">08</div><div class="day active ro status00" id="1326063600_id" title="Free dates">09</div><div class="day active ro status00" id="1326150000_id" title="Free dates">10</div><div class="day active ro status00" id="1326236400_id" title="Free dates">11</div><div class="day active ro status00" id="1326322800_id" title="Free dates">12</div><div class="day active ro status00" id="1326409200_id" title="Free dates">13</div><div class="day active ro status00" id="1326495600_id" title="Free dates">14</div><div class="day active ro status00" id="1326582000_id" title="Free dates">15</div><div class="day active ro status00" id="1326668400_id" title="Free dates">16</div><div class="day active ro status00" id="1326754800_id" title="Free dates">17</div><div class="day active ro status00" id="1326841200_id" title="Free dates">18</div><div class="day active ro status00" id="1326927600_id" title="Free dates">19</div><div class="day active ro status00" id="1327014000_id" title="Free dates">20</div><div class="day active ro status00" id="1327100400_id" title="Free dates">21</div><div class="day active ro status00" id="1327186800_id" title="Free dates">22</div><div class="day active ro status00" id="1327273200_id" title="Free dates">23</div><div class="day active ro status00" id="1327359600_id" title="Free dates">24</div><div class="day active ro status00" id="1327446000_id" title="Free dates">25</div><div class="day active ro status00" id="1327532400_id" title="Free dates">26</div><div class="day active ro status00" id="1327618800_id" title="Free dates">27</div><div class="day active ro status00" id="1327705200_id" title="Free dates">28</div><div class="day active ro status00" id="1327791600_id" title="Free dates">29</div><div class="day active ro status00" id="1327878000_id" title="Free dates">30</div><div class="day active ro status00" id="1327964400_id" title="Free dates">31</div><div class="day inactive ro" title="Free dates">01</div><div class="day inactive ro" title="Free dates">02</div><div class="day inactive ro" title="Free dates">03</div><div class="day inactive ro" title="Free dates">04</div><div class="day inactive ro" title="Free dates">05</div></div>
+					<div class="cleaner"></div>
+				</div>
+				
+				</div>
 
 		<div class="clearfix"></div>
 	</div>
@@ -410,6 +443,6 @@
 	</div>
 </div>
 
-</div>
-</div>
+		</div>
+	</div>
 </div>
