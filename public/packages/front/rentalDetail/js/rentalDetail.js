@@ -61,9 +61,6 @@
 			        };
 
 			        $('body').attr('data-googleMapRender',true);
-
-
-
 		        
 		        $.ajax({
 					  dataType: "jsonp",
@@ -95,10 +92,6 @@
 
 						$('#placesImg').html(html);
 					});
-
-			
-
-
 		
 		}
 
