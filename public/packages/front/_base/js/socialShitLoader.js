@@ -59,7 +59,7 @@ function initFacebookLikePlugin(elementId){
 }
 
 function isInitSocialPlugins(){
-	console.log();
+	
 
 	if(typeof $('body').attr('data-socialPluginsInit') != 'undefined' ){
 		return true;
