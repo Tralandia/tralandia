@@ -365,9 +365,10 @@ class ImportRentals extends BaseImport {
 			if (is_array($temp) && count($temp)) {
 				foreach ($temp as $key => $value) {
 					if ($value < $now) continue;
-					$temp[$key] = date('dmy', $value);
+					$temp[$key] = date('z', $value);
 				}
 			}
+			
 			$rental->calendar = implode(',', $temp);
 
 			$rental->calendarUpdated = fromStamp($x['calendar_updated']);

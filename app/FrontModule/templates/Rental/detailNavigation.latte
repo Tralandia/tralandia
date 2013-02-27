@@ -14,7 +14,13 @@
 
 		<div class="content">
 		<ul id="objectDetailNavBar">
-			<li><a data-title="Object title 1" data-location="Demanovská dolina" data-capacity="14 people" data-price="15 EUR" data-thumb="http://www.tralandia.sk/u/06/13481350326739.jpg" href="#"><img alt="{_$rental->name}" n:fakeImage="" class="marginBottom" /></a></li>
+			{foreach $barRentals as $navRental}
+			{if $navRental == FALSE} 
+			<li class="placeholder"><a href="#"></a></li>
+			{else}
+			<li n:class="$navRental->id == $rental->id ? 'current'"><a data-title="{_$navRental->name}" data-location="{_$navRental->address->locality->name}" data-capacity="{$navRental->maxCapacity} {_o925,null,[count=>$navRental->maxCapacity]}" data-price="{$navRental->price}" data-thumb="http://www.tralandia.sk/u/06/13481350326739.jpg" href="{link Rental:detail $navRental}"><img alt="{_$navRental->name}" n:fakeImage="" class="marginBottom" /></a></li>
+			{/if}
+			{/foreach}
 		</ul> 
 		</div>
 

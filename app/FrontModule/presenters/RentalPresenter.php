@@ -60,7 +60,36 @@ class RentalPresenter extends BasePresenter {
 		$this->template->separateGroups = $rental->getSeparateGroups();
 		$this->template->animalsAllowed = $rental->getAnimalsAllowed();
 
+		$dateUpdated = new \Nette\DateTime();
+		$dateUpdated->from($rental->updated);
+		$this->template->dateUpdated = $dateUpdated->__toString();
 		$this->setLayout('detailLayout');
+
+		// Navigation Bar data
+		$visitorSession = $this->context->session->getSection('visitor');
+		$bar = array();
+		$bar['all'] = $visitorSession->lastSearchResults;
+		$bar['currentKey'] = array_search($rental->id, $bar['all']);
+		$bar['firstKey'] = $bar['currentKey'] < 9 ? 0 : $bar['currentKey'] - 8;
+		if ($bar['firstKey'] < 0) $bar['firstKey'] = 0;
+
+		$bar['placeholderCount'] = $bar['currentKey'] < 8 ? 8 - $bar['currentKey'] : 0;
+		
+		$barRentals = array();
+		for ($i = 0; $i < $bar['placeholderCount']; $i++) {
+			$barRentals[] = FALSE;
+		}
+		$i = $bar['firstKey'];
+		
+		while (count($barRentals) < 18) {
+			if (!isset($bar['all'][$i])) break;
+			$barRentals[] = $this->context->rentalRepositoryAccessor->get()->find($bar['all'][$i]);
+			$i++;
+		}
+		
+		$this->template->bar['rentals'] = $barRentals;
+		$this->template->bar['searchLink'] = $visitorSession->lastSearchUrl;
+
 		//$t = $this['reservationForm'];
 	}
 
@@ -83,6 +112,11 @@ class RentalPresenter extends BasePresenter {
 			}
 
 			$itemCount = $search->getRentalsCount();
+
+			$session = $this->context->session->getSection('visitor');
+			$session->lastSearchResults = $search->getRentalsIds(NULL);
+			$session->lastSearchUrl = $this->link('//this');
+			d($session->lastSearchResults);
 		}
 
 		$vp = $this['p'];
@@ -93,7 +127,7 @@ class RentalPresenter extends BasePresenter {
 		$this->template->totalResultsCount = $paginator->itemCount;
 
 		if(isset($search)) {
-			$rentals = $search->getRentalsIds($paginator->getPage());//@todo
+			$rentals = $search->getRentalsIds($paginator->getPage());
 		}
 
 
