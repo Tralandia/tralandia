@@ -11,14 +11,10 @@ class CountriesFooterControl extends \BaseModule\Components\BaseControl {
 
 	protected $seoFactory;
 
-	public function __construct()
-	{
-		parent::__construct();
-	}
-
-	public function injectSeo(ISeoServiceFactory $seoFactory)
+	public function __construct(ISeoServiceFactory $seoFactory)
 	{
 		$this->seoFactory = $seoFactory;
+		parent::__construct();
 	}
 
 	public function inject(\Nette\DI\Container $dic) {
@@ -78,6 +74,12 @@ class CountriesFooterControl extends \BaseModule\Components\BaseControl {
 		$template->render();
 	}
 
+}
 
 
+interface ICountriesFooterControlFactory {
+	/**
+	 * @return CountriesFooterControl
+	 */
+	public function create();
 }

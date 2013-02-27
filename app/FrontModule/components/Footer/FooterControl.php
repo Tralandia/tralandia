@@ -1,8 +1,6 @@
 <?php 
 namespace FrontModule\Components\Footer;
 
-use Nette\Application\UI\Control;
-
 class FooterControl extends \BaseModule\Components\BaseControl {
 
 	public $userSiteReviewRepositoryAccessor;
@@ -32,6 +30,13 @@ class FooterControl extends \BaseModule\Components\BaseControl {
 		$template->render();
 	}
 
+}
 
-
+interface IFooterControlFactory {
+	/**
+	 * @param \Entity\Location\Location $location
+	 *
+	 * @return FooterControl
+	 */
+	public function create(\Entity\Location\Location $location);
 }
