@@ -36,7 +36,7 @@
 
 	.prev , .next , .menu {
 		background: #eee;
-
+		text-align: center;
 		background-image: linear-gradient(bottom, #E8E8E8 0%, #FAFAFA 100%);
 		background-image: -o-linear-gradient(bottom, #E8E8E8 0%, #FAFAFA 100%);
 		background-image: -moz-linear-gradient(bottom, #E8E8E8 0%, #FAFAFA 100%);
@@ -58,7 +58,7 @@
 		width: 29px;
 
 		i {
-			float: left;
+			
 			height:0;
 			&:before {
 				height:0;
@@ -72,10 +72,13 @@
 			cursor: default;
 			color: #ddd;
 		}
+		&:hover {
+			text-decoration: none;
+		}
 	}
 
 	.prev {
-		padding-left: 10px;
+		
 		border-right: 1px solid rgb(213, 213, 213);
 
 		i {
@@ -91,10 +94,10 @@
 
 	.next {
 		float: right;
-		padding-right: 10px;
+		
 		border-left: 1px solid rgb(213, 213, 213);
 		i {
-			float: right;
+			padding-right: 10px;
 			margin-left: 10px;
 			display: block;
 		}
