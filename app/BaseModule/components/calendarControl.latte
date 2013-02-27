@@ -11,7 +11,21 @@
 		<div class="day inactive">{$day->day}</div>
 	{/foreach}
 	{foreach $month->days as $day}
-		<div class="day active" data-day="{$key}-{$day->day}">{$day->day}</div>
+		{var $selected = ''}
+		{var $status = 'status'}
+		{ifset $day->selected}{var $selected = 'selected'}{/ifset}
+
+		{ifset $day->status->end}
+			{var $status .= '1'}
+		{else}
+			{var $status .= '0'}
+		{/ifset}
+		{ifset $day->status->start}
+			{var $status .= '1'}
+		{else}
+			{var $status .= '0'}
+		{/ifset}
+		<div class="day active {$selected} {$status}" data-day="{$key}-{$day->day}">{$day->day}</div>
 	{/foreach}
 	{foreach $month->daysAfter as $day}
 		<div class="day inactive">{$day->day}</div>

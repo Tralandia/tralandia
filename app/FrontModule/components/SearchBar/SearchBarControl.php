@@ -45,8 +45,6 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		$this->setSelectedCriteria();
 
 		$template = $this->template;
-		$template->setFile(dirname(__FILE__) . '/sidebar.latte');
-		$template->setTranslator($this->translator);
 
 		// template variables
 		$template->criteria = array();

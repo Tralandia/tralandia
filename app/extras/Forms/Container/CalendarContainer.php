@@ -17,11 +17,11 @@ class CalendarContainer extends BaseContainer
 	 */
 	protected $months = [];
 
-	public function __construct($label = NULL, CalendarControl $calendarControl)
+	public function __construct($label = NULL)
 	{
 		parent::__construct();
 
-		$this->calendarControl = $calendarControl;
+		$this->calendarControl = new CalendarControl;
 		$this->addHidden('data');
 
 	}
@@ -46,13 +46,4 @@ class CalendarContainer extends BaseContainer
 		return $comp;
 	}
 
-}
-
-interface ICalendarContainerFactory {
-	/**
-	 * @param $label
-	 *
-	 * @return CalendarContainer
-	 */
-	public function create($label = NULL);
 }

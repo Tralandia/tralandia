@@ -1,19 +1,21 @@
 <?php 
 namespace BaseModule\Components;
 
+use Nette\DateTime;
+
 class CalendarControl extends \BaseModule\Components\BaseControl {
 
 	public function __construct() {
 		parent::__construct();
 	}
 
-	public function render($monthsCount) {
+	public function render($monthsCount, array $selectedDays = NULL) {
 
 		$template = $this->template;
 
 		$fromDate = new \Nette\DateTime(date('Y-m-01'));
 		$months = [];
-		for($i=0;$i<$monthsCount;$i++) {
+		for($i=0; $i<$monthsCount; $i++) {
 			$month = [];
 			$start = clone $fromDate;
 			$key = $start->format('Y-m');
@@ -35,8 +37,12 @@ class CalendarControl extends \BaseModule\Components\BaseControl {
 			$lastDayOfMonth = $start->modifyClone('last day of this month');
 
 			while ($start <= $lastDayOfMonth) {
-				$month['days'][] = [
-					'day' => $start->format('d'),
+				$day = $start->format('d');
+				if(isset($selectedDays["$key-$day"])) {
+
+				}
+				$month['days'][$day] = [
+					'day' => $day,
 				];
 				$start->modify('+1 day');
 			}
@@ -52,13 +58,46 @@ class CalendarControl extends \BaseModule\Components\BaseControl {
 				}
 			}
 
-			$months[$key] = \Nette\ArrayHash::from($month);
+			$months[$key] = $month;
 			$fromDate->modify('first day of next month');
 		}
 
-		$this->template->months = $months;
+		$months = $this->markSelectedDays($months, $selectedDays);
+
+		$this->template->months = \Nette\ArrayHash::from($months);
 
 		$template->render();
 	}
+
+	/**
+	 * @param array $months
+	 * @param array $selectedDays
+	 *
+	 * @return array
+	 */
+	protected function markSelectedDays(array $months, array $selectedDays = NULL)
+	{
+		if($selectedDays === NULL) return $months;
+
+		foreach($selectedDays as $date) {
+			$yearMonth = $date->format('Y-m');
+			$day = $date->format('d');
+			if(isset($months[$yearMonth]['days'][$day])) {
+				$months[$yearMonth]['days'][$day]['selected'] = TRUE;
+				$months[$yearMonth]['days'][$day]['status']['start'] = TRUE;
+			}
+
+			$nextDay = $date->modifyClone('+1 day');
+			$yearMonth = $nextDay->format('Y-m');
+			$day = $nextDay->format('d');
+			if(isset($months[$yearMonth]['days'][$day])) {
+				$months[$yearMonth]['days'][$day]['selected'] = TRUE;
+				$months[$yearMonth]['days'][$day]['status']['end'] = TRUE;
+			}
+		}
+
+		return $months;
+	}
+
 
 }

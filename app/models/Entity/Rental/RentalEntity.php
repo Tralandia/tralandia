@@ -8,12 +8,14 @@ use Entity\Medium;
 use Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 use Extras\Annotation as EA;
+use Nette\DateTime;
 
 /**
  * @ORM\Entity(repositoryClass="Repository\Rental\RentalRepository")
  * @ORM\Table(name="rental", indexes={@ORM\index(name="status", columns={"status"}), @ORM\index(name="slug", columns={"slug"}), @ORM\index(name="calendarUpdated", columns={"calendarUpdated"})})
  * @EA\Primary(key="id", value="slug")
- * @EA\Generator(skip="{getImages,getPrice,setPrice,setSlug,getPrimaryLocation,setPrimaryLocation,unsetPrimaryLocation}")
+ * @EA\Generator(skip="{getImages,getPrice,setPrice,setSlug,getPrimaryLocation,setPrimaryLocation,
+ * unsetPrimaryLocation, getCalendar, setCalendar}")
  */
 class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
@@ -375,6 +377,37 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 		return (bool) count($animals) == 1;
 	}
 
+	/**
+	 * @param array|\DateTime[]
+	 * @return \Entity\Rental\Rental
+	 */
+	public function setCalendar(array $calendar)
+	{
+		foreach($calendar as $key => $date) {
+			$calendar[$key] = $date->format('z');
+		}
+		$this->calendar = ',' . (implode(',', $calendar)) . ',';
+
+		return $this;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getCalendar()
+	{
+		$days = array_filter(explode(',', $this->calendar));
+		$todayZ = date('z');
+		$calendarUpdatedZ = $this->getCalendarUpdated()->format('z');
+		$thisYear = $this->getCalendarUpdated()->format('Y');
+		$nextYear = $thisYear + 1;
+		foreach($days as $key => $day) {
+			if($calendarUpdatedZ <= $day && $todayZ > $day) continue;
+			$year = $calendarUpdatedZ <= $day ? $thisYear : $nextYear;
+			$days[$key] = DateTime::createFromFormat('z Y', "$day $year");
+		}
+		return array_filter($days);
+	}
 	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -1064,35 +1097,6 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 	public function getInterviewAnswers()
 	{
 		return $this->interviewAnswers;
-	}
-		
-	/**
-	 * @param string
-	 * @return \Entity\Rental\Rental
-	 */
-	public function setCalendar($calendar)
-	{
-		$this->calendar = $calendar;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Rental\Rental
-	 */
-	public function unsetCalendar()
-	{
-		$this->calendar = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return string|NULL
-	 */
-	public function getCalendar()
-	{
-		return $this->calendar;
 	}
 		
 	/**
