@@ -220,7 +220,7 @@
 
 				<a class="close"><i class="icon-remove-sign"></i></a>
 
-				<span class="facbookLikeButtonContainer" data-facebook-locate="sk_SK" data-facebook-src="{link Rental:detail $rental}"></span>
+				<span class="facbookLikeButtonContainer" data-facebook-locate="{$localeCode}" data-facebook-src="{link Rental:detail $rental}"></span>
 				
 				<g:plusone size="small" href="{link Rental:detail $rental}"  style="margin-top:2px;"></g:plusone>
 				
@@ -357,8 +357,8 @@
 
 				<div class="metaObjectInfo" id="tabs-2">
 					
-					<div id="objectDetailMap" zoom="13" value="{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}" style="width:100%;float:left;height:400px;"><i class="icon-spinner icon-spin"></i></div>
-					{* <ul id="placesImg"></ul> *}
+					<div id="objectDetailMap" zoom="13" value="{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}" style="width:600px;float:left;height:400px;"><i class="icon-spinner icon-spin"></i></div>
+					<ul id="placesImg"></ul>
 				</div>
 
 				<div class="metaObjectInfo" id="calendar">
