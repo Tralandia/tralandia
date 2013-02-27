@@ -65,6 +65,9 @@ abstract class BasePresenter extends Presenter {
 	}
 
 
+	/**
+	 * @var \Entity\User\User
+	 */
 	public $loggedUser;
 
 	protected function startup() {

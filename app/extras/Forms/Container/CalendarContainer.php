@@ -2,8 +2,15 @@
 
 namespace Extras\Forms\Container;
 
+use BaseModule\Components\CalendarControl;
+
 class CalendarContainer extends BaseContainer
 {
+
+	/**
+	 * @var \BaseModule\Components\CalendarControl
+	 */
+	protected $calendarControl;
 
 	/**
 	 * @var array
@@ -14,52 +21,8 @@ class CalendarContainer extends BaseContainer
 	{
 		parent::__construct();
 
+		$this->calendarControl = new CalendarControl;
 		$this->addHidden('data');
-		$fromDate = new \Nette\DateTime(date('Y-m-01'));
-		$months = 6;
-
-		for($i=0;$i<$months;$i++) {
-			$month = [];
-			$start = clone $fromDate;
-			$key = $start->format('Y-m');
-
-			$month['title'] = $start->format('F Y');
-
-			$month['daysBefore'] = [];
-			$firstDayOfMonth = $start->modifyClone()->format('N');
-			if($firstDayOfMonth--) {
-				$before = $start->modifyClone("-$firstDayOfMonth days");
-				for( $b=0 ; $b<$firstDayOfMonth ; $b++ ) {
-					$month['daysBefore'][] = [
-						'day' => $before->format('d'),
-					];
-					$before->modify('+1 day');
-				}
-			}
-
-			$lastDayOfMonth = $start->modifyClone('last day of this month');
-
-			while ($start <= $lastDayOfMonth) {
-				$month['days'][] = [
-					'day' => $start->format('d'),
-				];
-				$start->modify('+1 day');
-			}
-
-			$month['daysAfter'] = [];
-			$lastDayOfMonthN = $lastDayOfMonth->format('N');
-			if($lastDayOfMonthN < 7) {
-				for( $a=$lastDayOfMonthN ; $a<7 ; $a++ ) {
-					$lastDayOfMonth->modify('+1 day');
-					$month['daysAfter'][] = [
-						'day' => $lastDayOfMonth->format('d'),
-					];
-				}
-			}
-
-			$this->months[$key] = \Nette\ArrayHash::from($month);
-			$fromDate->modify('first day of next month');
-		}
 
 	}
 
@@ -75,4 +38,12 @@ class CalendarContainer extends BaseContainer
 	{
 		return $this->months;
 	}
+
+	protected function createComponentCalendar()
+	{
+		$comp = $this->calendarControl;
+
+		return $comp;
+	}
+
 }

@@ -15,7 +15,6 @@ class Navigation extends BaseControl {
 
 	public function render() {
 		$template = $this->template;
-		$template->setFile(dirname(__FILE__) . '/template.latte');
 
 		$this->autopilotRegime = Strings::endsWith($this->getPresenter()->name, ':Ap');
 
