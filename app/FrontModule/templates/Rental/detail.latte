@@ -226,7 +226,7 @@
 				
 				<a href="https://twitter.com/share" class="twitter-share-button" data-url="{$homepageUrl}" data-via="Tralandia" data-text="data text" data-hashtags="ubytovanie" data-lang="en">Tweet</a>
 
-				<a href="http://pinterest.com/pin/create/button/?url={link Rental:detail $rental}&media=&description={_$rental->name}" class="pin-it-button" count-layout="horizontal"><img border="0" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" /></a>
+				<a href="http://pinterest.com/pin/create/button/?url={link Rental:detail $rental}&media=&description={_$rental->name}" class="pin-it-button" count-layout="horizontal"></a>
 
 			</div>
 		</div>
@@ -302,60 +302,8 @@
 			</div>
 		</div>		
 
-<script>
 
-$(document).ready(function(){
-
-
-	var fromDateOrigin = {
-		year: 0,
-		month: 0,
-		day:0,
-		date: new Date(),
-		dayPlus:0,
-	}
-
-	$('.datepicker').click(function(){
-		$(this).addClass('focus');
-	});
-
-
-	$.datepicker.setDefaults(  $.datepicker.regional[ {$envLanguage->iso} ] );
-	$( ".datepicker" ).datepicker({ minDate: 0, maxDate: "+12M +10D" });	
-
-
-	$( ".datepickerto" ).datepicker({ 
-			minDate: new Date(2013, 1, 28), 
-			maxDate: "+12M +10D" ,
-			beforeShow: function(){
-
-				var fromValues = $('.datepicker').val().split('.');
-
-				if ( fromValues.length > 1 ) {
-
-					fromDateOrigin.year = parseInt(fromValues[2]);
-					fromDateOrigin.month = parseInt(fromValues[1])-1;
-					fromDateOrigin.day = parseInt(fromValues[0]);
-							
-					fromDateOrigin.date.setYear(fromDateOrigin.year);
-					fromDateOrigin.date.setMonth(fromDateOrigin.month);
-					fromDateOrigin.date.setDate(fromDateOrigin.day);
-
-					fromDateOrigin.dayPlus = new Date(fromDateOrigin.date.getFullYear(), fromDateOrigin.date.getMonth(), fromDateOrigin.date.getDate()+1);
-
-					$( this ).datepicker("option",{ minDate: fromDateOrigin.dayPlus, maxDate: "+12M +10D" });	
-
-				} else {
-					$( this ).datepicker("option",{ minDate: 1 , maxDate: "+12M +10D" });
-				}
-
-
-			}
-		});	
-});
-
-
-</script>
+		
 
 	</div>
 	<!-- right sidebar -->
