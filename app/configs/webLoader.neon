@@ -159,7 +159,9 @@ parameters:
 					- front/search/js/search.js
 					# rental navigation
 					- front/rentalNavigation/js/rentalNavigation.js
-
+			jqueryAppear:
+				js: 
+					- jqueryAppear/lib/js/jquery.appear.js
 
 			favoriteScroll:
 				js:
@@ -191,7 +193,8 @@ parameters:
 				js: 
 					- jQuery/lib/jquery.js
 			gMap:
-				js: "https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"
+				js: 
+					#- "https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"
 		sets:
 
 			'Admin:Ap':
@@ -211,7 +214,7 @@ parameters:
 				-  %webloader.packages.gMap%
 
 			Front:				
-				-  %webloader.packages.jQuery%
+				-  %webloader.packages.jQuery%				
 				-  %webloader.packages.jqueryUi%
 				-  %webloader.packages.jqueryCookie%									
 				-  %webloader.packages.select2%
@@ -225,6 +228,7 @@ parameters:
 
 			'Front:Rental:detail':
 				-  %webloader.packages.jQuery%
+				-  %webloader.packages.jqueryAppear%
 				-  %webloader.packages.bootstrap%
 				-  %webloader.packages.jqueryUi%
 				-  %webloader.packages.jqueryCookie%									
