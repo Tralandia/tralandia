@@ -32,7 +32,7 @@ class ImportInteractions extends BaseImport {
 	public function importRentalReservations() {
 
 		if ($this->developmentMode == TRUE) {
-			$r = q('select * from visitors_contact_object limit 300 order by rand');
+			$r = q('select * from visitors_contact_object order by rand() limit 300');
 		} else {
 			$r = q('select * from visitors_contact_object order by id');
 		}

@@ -12,6 +12,8 @@ use Nette\Application as NA,
 
 class ImportAmenities extends BaseImport {
 
+	private $importantAmenities = array('air-conditioning', 'fitness', 'fitness-centrum', 'indoor-pool', 'indoor-swimming-pool', 'internet', 'jacuzzi', 'kids-corner', 'pizzeria', 'sauna', 'sauna-finnish', 'sauna-infrared', 'sauna-steam', 'solarium', 'swimming-pool', 'tennis-court', 'wireless-internet-wifi');
+
 	public function doImport($subsection = NULL) {
 
 		//$this->undoSection('amenities');
@@ -39,8 +41,6 @@ class ImportAmenities extends BaseImport {
 			array('other', 'other', 'other'),
 		);
 
-		$importantAmenities = array('air-conditioning', 'fitness', 'fitness-centrum', 'indoor-pool', 'indoor-swimming-pool', 'internet', 'jacuzzi', 'kids-corner', 'pizzeria', 'sauna', 'sauna-finnish', 'sauna-infrared', 'sauna-steam', 'solarium', 'swimming-pool', 'tennis-court', 'wireless-internet-wifi');
-
 		$en = $this->context->languageRepositoryAccessor->get()->findOneByIso('en');
 
 		$nameDictionaryType = $this->createPhraseType('\Rental\Amenity', 'name', 'ACTIVE', array('pluralsRequired' => TRUE));
@@ -66,7 +66,7 @@ class ImportAmenities extends BaseImport {
 			$amenity->name = $this->createNewPhrase($nameDictionaryType, $x['name_dic_id']);
 			$amenity->slug = qc('select text from z_en where id = '.$x['name_dic_id']);
 			$amenity->oldId = $x['id'];
-			if (in_array($amenity-slug, $this->importantAmenities)) $amenity->important = TRUE;
+			if (in_array($amenity->slug, $this->importantAmenities)) $amenity->important = TRUE;
 			$this->model->persist($amenity);
 		}
 		$this->model->flush();
@@ -82,7 +82,7 @@ class ImportAmenities extends BaseImport {
 				$amenity->name = $this->createNewPhrase($nameDictionaryType, $x['name_dic_id']);
 				$amenity->slug = qc('select text from z_en where id = '.$x['name_dic_id']);
 				$amenity->oldId = $x['id'];
-				if (in_array($amenity-slug, $this->importantAmenities)) $amenity->important = TRUE;
+				if (in_array($amenity->slug, $this->importantAmenities)) $amenity->important = TRUE;
 				$this->model->persist($amenity);
 			}
 		}
@@ -97,7 +97,7 @@ class ImportAmenities extends BaseImport {
 			$amenity->name = $this->createNewPhrase($nameDictionaryType, $x['name_dic_id']);
 			$amenity->slug = qc('select text from z_en where id = '.$x['name_dic_id']);
 			$amenity->oldId = $x['id'];
-			if (in_array($amenity-slug, $this->importantAmenities)) $amenity->important = TRUE;
+			if (in_array($amenity->slug, $this->importantAmenities)) $amenity->important = TRUE;
 			$this->model->persist($amenity);
 		}
 		$this->model->flush();
@@ -111,7 +111,7 @@ class ImportAmenities extends BaseImport {
 			$amenity->name = $this->createNewPhrase($nameDictionaryType, $x['name_dic_id']);
 			$amenity->slug = qc('select text from z_en where id = '.$x['name_dic_id']);
 			$amenity->oldId = $x['id'];
-			if (in_array($amenity-slug, $this->importantAmenities)) $amenity->important = TRUE;
+			if (in_array($amenity->slug, $this->importantAmenities)) $amenity->important = TRUE;
 			$this->model->persist($amenity);
 		}
 		$this->model->flush();
@@ -125,7 +125,7 @@ class ImportAmenities extends BaseImport {
 			$amenity->name = $this->createNewPhrase($nameDictionaryType, $x['name_dic_id']);
 			$amenity->slug = qc('select text from z_en where id = '.$x['name_dic_id']);
 			$amenity->oldId = $x['id'];
-			if (in_array($amenity-slug, $this->importantAmenities)) $amenity->important = TRUE;
+			if (in_array($amenity->slug, $this->importantAmenities)) $amenity->important = TRUE;
 			$this->model->persist($amenity);
 		}
 		$this->model->flush();
@@ -139,7 +139,7 @@ class ImportAmenities extends BaseImport {
 			$amenity->name = $this->createNewPhrase($nameDictionaryType, $x['name_dic_id']);
 			$amenity->slug = qc('select text from z_en where id = '.$x['name_dic_id']);
 			$amenity->oldId = $x['id'];
-			if (in_array($amenity-slug, $this->importantAmenities)) $amenity->important = TRUE;
+			if (in_array($amenity->slug, $this->importantAmenities)) $amenity->important = TRUE;
 			$this->model->persist($amenity);
 		}
 		$this->model->flush();
@@ -153,7 +153,7 @@ class ImportAmenities extends BaseImport {
 			$amenity->name = $this->createNewPhrase($nameDictionaryType, $x['name_dic_id']);
 			$amenity->slug = qc('select text from z_en where id = '.$x['name_dic_id']);
 			$amenity->oldId = $x['id'];
-			if (in_array($amenity-slug, $this->importantAmenities)) $amenity->important = TRUE;
+			if (in_array($amenity->slug, $this->importantAmenities)) $amenity->important = TRUE;
 			$this->model->persist($amenity);
 		}
 		$this->model->flush();
@@ -164,7 +164,7 @@ class ImportAmenities extends BaseImport {
 		$amenity->type = $amenityType;
 		$amenity->name = $this->createNewPhrase($nameDictionaryType, 1011);
 		$amenity->slug = 'separate-groups';
-		if (in_array($amenity-slug, $this->importantAmenities)) $amenity->important = TRUE;
+		if (in_array($amenity->slug, $this->importantAmenities)) $amenity->important = TRUE;
 		$this->model->persist($amenity);
 		$this->model->flush();
 
@@ -174,7 +174,7 @@ class ImportAmenities extends BaseImport {
 		$amenity->type = $amenityType;
 		$amenity->name = $this->createPhraseFromString('\Rental\Amenity', 'name', 'ACTIVE', 'small dog allowed', $en);
 		$amenity->slug = 'small-dog';
-		if (in_array($amenity-slug, $this->importantAmenities)) $amenity->important = TRUE;
+		if (in_array($amenity->slug, $this->importantAmenities)) $amenity->important = TRUE;
 		$this->model->persist($amenity);
 		$this->model->flush();
 
