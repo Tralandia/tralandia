@@ -25,7 +25,7 @@
 	
 	$.fn.searchFormSuggest = function(options){
 		return this.each(function(){
-
+			(new $.searchFormSuggest(this, options));
 			var self = this;
 			var $self = $(this);
 
@@ -76,3 +76,6 @@
 	
 })(jQuery);
 
+$(function(){
+	$('.searchForm').searchFormSuggest();
+});
