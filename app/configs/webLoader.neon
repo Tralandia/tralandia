@@ -159,6 +159,8 @@ parameters:
 					- front/search/js/search.js
 					# rental navigation
 					- front/rentalNavigation/js/rentalNavigation.js
+					# calendar widget
+					- front/calendarWidget/js/calendarWidget.js					
 			jqueryAppear:
 				js: 
 					- jqueryAppear/lib/js/jquery.appear.js
