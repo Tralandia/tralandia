@@ -51,7 +51,10 @@
                 <div id="logo">
                     <a n:href=":Front:Home:default" title="{$pageTitle}"></a>
                 </div>			
-                <div id="siteName"><a href="{link :Front:Home:default language => $language}">Tralandia.<span>com</span></a>
+                <div id="siteName">
+					<a href="{link :Front:Home:default language => $language}">
+						{$domainHost}<span>{$domainExtension}</span>
+					</a>
                 </div>
                 <h1><a href="{link :Front:Home:default language => $language}">{$slogan}</a></h1>
             </div>
