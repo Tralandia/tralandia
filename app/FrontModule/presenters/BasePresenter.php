@@ -70,9 +70,13 @@ abstract class BasePresenter extends \BasePresenter {
 
 		$language =$this->environment->getLanguage();
 		$primaryLocation = $this->environment->getPrimaryLocation();
+		$domain = $primaryLocation->getDomain()->getDomain();
 		$this->template->envLanguage = $language;
 		$this->template->envPrimaryLocation = $primaryLocation;
 		$this->template->localeCode = $language->getIso() . '_' . strtoupper($primaryLocation->getIso());
+		$this->template->domain = ucfirst($domain);
+		$this->template->domainHost = ucfirst(strstr($domain, '.', TRUE));
+		$this->template->domainExtension = strstr($domain, '.');
 
 		$supportedLanguages = $this->languageRepositoryAccessor->get()->getSupportedSortedByName();
 		$this->template->supportedLanguages = array_chunk($supportedLanguages,round(count($supportedLanguages)/3));
