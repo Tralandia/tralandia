@@ -32,21 +32,23 @@ class ImportInteractions extends BaseImport {
 	public function importRentalReservations() {
 
 		if ($this->developmentMode == TRUE) {
-			$r = q('select * from visitors_contact_object limit 100');
+			$r = q('select * from visitors_contact_object limit 300 order by rand');
 		} else {
 			$r = q('select * from visitors_contact_object order by id');
 		}
 
 		while($x = mysql_fetch_array($r)) {
+			$t = $this->context->rentalRepositoryAccessor->get()->findOneByOldId($x['object_id']);
+			if (!$t) {
+				continue;
+			}
+
 			$interaction = $this->context->userRentalReservationEntityFactory->create();
 			if (isset($this->languagesByOldId[$x['language']])) {
 				$interaction->language = $this->context->languageRepositoryAccessor->get()->find($this->languagesByOldId[$x['language']]);			
 			}
 
-			$t = $this->context->rentalRepositoryAccessor->get()->findOneByOldId($x['object_id']);
-			if ($t) {
 				$interaction->rental = $t;
-			}
 			$interaction->senderEmail = $x['email'];
 			$interaction->senderName = $x['name'];
 

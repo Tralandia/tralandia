@@ -2,7 +2,7 @@
 
 namespace Security;
 
-use Entity\User\Role;
+use Entity\User\Role as RoleEntity;
 use Nette\Caching\Cache,
 	Nette\Utils\Finder,
 	Nette\Utils\Strings,
@@ -30,12 +30,12 @@ class SimpleAcl extends Permission {
 			$this->addResource($resource);
 		}
 
-		$this->allow(Role::OWNER, $ownerModule);
-		$this->allow(Role::OWNER, $rentalEntity, self::ALL, [$assertion, 'owner']);
+		$this->allow(RoleEntity::OWNER, $ownerModule);
+		$this->allow(RoleEntity::OWNER, $rentalEntity, self::ALL, [$assertion, 'owner']);
 
-		$this->allow(Role::TRANSLATOR, $translationEntity, 'translate', [$assertion, 'translate']);
+		$this->allow(RoleEntity::TRANSLATOR, $translationEntity, 'translate', [$assertion, 'translate']);
 
-		$this->allow(Role::SUPERADMIN);
+		$this->allow(RoleEntity::SUPERADMIN);
 	}
 
 }
