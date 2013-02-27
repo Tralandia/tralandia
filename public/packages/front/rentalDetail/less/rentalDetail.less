@@ -265,6 +265,7 @@ table.detailInfoBox {
 
 		i {
 			float: left;
+			width: 0px;
 		}
 
 		i:before {
@@ -292,8 +293,17 @@ table.detailInfoBox {
 			color: @brown;
 			font-weight: normal;
 		}
-		&:first-child {
+		&:nth-child(2) {
+			padding-left: 0px;
+		}
+
+		&.entypoIconUsers {
 			width: 40px;
+			font-size: 48px;
+			font-family: entypo;
+			text-align: center;
+			padding-right: 4px;
+			color: @brown;
 		}
 
 	}
