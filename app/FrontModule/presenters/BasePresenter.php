@@ -68,8 +68,15 @@ abstract class BasePresenter extends \BasePresenter {
 		$this->template->slogan = $this->translate('o21083').' '.$this->translate($this->environment->getPrimaryLocation()->getName() , NULL, array('case' => \Entity\Language::LOCATIVE));
 
 
-		$this->template->envLanguage = $this->environment->getLanguage();
-		$this->template->envPrimaryLocation = $this->environment->getPrimaryLocation();
+		$language =$this->environment->getLanguage();
+		$primaryLocation = $this->environment->getPrimaryLocation();
+		$domain = $primaryLocation->getDomain()->getDomain();
+		$this->template->envLanguage = $language;
+		$this->template->envPrimaryLocation = $primaryLocation;
+		$this->template->localeCode = $language->getIso() . '_' . strtoupper($primaryLocation->getIso());
+		$this->template->domain = ucfirst($domain);
+		$this->template->domainHost = ucfirst(strstr($domain, '.', TRUE));
+		$this->template->domainExtension = strstr($domain, '.');
 
 		$supportedLanguages = $this->languageRepositoryAccessor->get()->getSupportedSortedByName();
 		$this->template->supportedLanguages = array_chunk($supportedLanguages,round(count($supportedLanguages)/3));

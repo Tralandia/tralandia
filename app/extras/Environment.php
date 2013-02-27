@@ -34,6 +34,9 @@ class Environment extends Nette\Object {
 		return $this->primaryLocation;
 	}
 
+	/**
+	 * @return \Entity\Language
+	 */
 	public function getLanguage()
 	{
 		if(!$this->language) {
