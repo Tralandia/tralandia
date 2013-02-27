@@ -8,10 +8,26 @@ class CalendarControl extends \BaseModule\Components\BaseControl {
 	public function __construct() {
 		parent::__construct();
 	}
+	
+	public function renderIframe($monthsCount, array $selectedDays = NULL){
+		$template = $this->template;
+		$template->containerClass = 'iframe';
+		$this->render($monthsCount,$selectedDays);
+	}
+
+	public function renderEditable($monthsCount, array $selectedDays = NULL){
+		$template = $this->template;
+		$template->containerClass = 'editable';
+		$this->render($monthsCount,$selectedDays);
+	}
 
 	public function render($monthsCount, array $selectedDays = NULL) {
 
 		$template = $this->template;
+		if(!isset($template->containerClass)){
+			$template->containerClass = 'rentalDetail';
+		}
+		 
 
 		$fromDate = new \Nette\DateTime(date('Y-m-01'));
 		$months = [];
