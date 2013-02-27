@@ -72,11 +72,9 @@
 					  }
 					}).done(function(d){
 						
-
 						var html = '';
 						$.each(d.photos,function(k,v){
 							console.log(v);
-
 							
 							var myLatlng = new google.maps.LatLng(v.latitude,v.longitude);
 
@@ -85,7 +83,6 @@
 					            map: map
 					        });
 							
-
 							html+= '<li style="background-image:url('+v.photo_file_url+');"></li>';
 
 						});
