@@ -421,6 +421,10 @@ $(document).ready(function(){
 	
 
 
+	// Prevent "empty" links to "click"
+	$("a[href='#']").click(function() {
+		return false;
+	}); 
 
 	$("select.select2").select2(); 
 
