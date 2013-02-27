@@ -25,6 +25,7 @@ class RentalSearchService extends Nette\Object
 	protected $orderCacheData;
 
 	protected $results;
+	protected $resultsOrdered = FALSE;
 
 	protected $rentalSearchCache;
 	protected $rentalOrderCaching;
@@ -121,6 +122,7 @@ class RentalSearchService extends Nette\Object
 
 	protected function resetResults() {
 		$this->results = NULL;
+		$this->resultsOrdered = FALSE;
 	}
 
 	protected function loadCache() {
@@ -165,6 +167,7 @@ class RentalSearchService extends Nette\Object
 	}
 
 	protected function reorderResults() {
+		if ($this->resultsOrdered === TRUE) return TRUE;
 		$order = $this->rentalOrderCaching->getOrderList();
 		
 		$t = array();
@@ -175,5 +178,6 @@ class RentalSearchService extends Nette\Object
 		asort($t);
 
 		$this->results = array_keys($t);
+		$this->resultsOrdered = TRUE;
 	}
 }

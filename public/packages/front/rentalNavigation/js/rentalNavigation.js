@@ -1,7 +1,7 @@
 $(function(){
 	
 
-			$('#objectDetailNavBar li a').popover({
+			$('#objectDetailNavBar li:not(.placeholder) a').popover({
 				title: function(){
 					return 'strinf';
 				},
