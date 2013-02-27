@@ -38,6 +38,7 @@ class BaseImport {
 				'\Rental\Amenity' => array(),
 			),
 			'subsections' => array(),
+			'saveImportStatus' => FALSE,
 		),
 		'currencies' => array(
 			'entities' => array(

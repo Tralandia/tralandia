@@ -6,6 +6,7 @@ use Nette\Application as NA,
 	Nette\Environment,
 	Nette\Diagnostics\Debugger,
 	Nette\Utils\Html,
+	Nette\DateTime,
 	Nette\Utils\Strings,
 	Extras\Models\Service,
 	Service\Dictionary as D,
@@ -361,15 +362,17 @@ class ImportRentals extends BaseImport {
 		
 			// Calendar
 			$temp = array_unique(array_filter(explode(',', $x['calendar'])));
-
 			if (is_array($temp) && count($temp)) {
 				foreach ($temp as $key => $value) {
-					if ($value < $now) continue;
-					$temp[$key] = date('z', $value);
+					//if ($value < $now) continue;
+					$t = new \Nette\DateTime;
+					$t->from($value);
+					$temp[$key] = $t;
+					d('tu som');
 				}
 			}
-			
-			$rental->calendar = implode(',', $temp);
+
+			$rental->calendar = $temp;
 
 			$rental->calendarUpdated = fromStamp($x['calendar_updated']);
 
