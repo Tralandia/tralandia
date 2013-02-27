@@ -428,7 +428,7 @@ $(document).ready(function(){
 
 	$('.autoselect').click(A.autoselect);
 
-	$('#objectDetailMap').traMap();
+	
 
 	$('.socialIconsDetail').socialIconsDetail();
 
@@ -441,7 +441,7 @@ $(document).ready(function(){
 	});
 */
 
-	$('.searchForm').searchFormSuggest();
+	
 
 	$('.calendarEdit').calendarEdit();
 
