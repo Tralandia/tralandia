@@ -154,6 +154,12 @@ services:
 		class: FormHandler\RegistrationHandler
 
 
+	# ==============================
+	# ==================== Components
+	# ==============================
+	calendarControl: BaseModule\Components\CalendarControl
+
+
 factories: 
 	# ==============================
 	# ==================== FORMS
