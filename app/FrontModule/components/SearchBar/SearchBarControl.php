@@ -262,3 +262,12 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 	}
 
 }
+
+interface ISearchBarControlFactory {
+	/**
+	 * @param \Entity\Location\Location $location
+	 *
+	 * @return SearchBarControl
+	 */
+	public function create(\Entity\Location\Location $location);
+}
