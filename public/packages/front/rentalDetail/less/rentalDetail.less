@@ -216,24 +216,27 @@ form.reservationform {
 	width: 100%;
 
 	td {
-		padding: 5px;
+		padding: 10px;
 		
-		&:first-child {
-			padding-left: 10px;
+		&:nth-child(2) {
+			padding-left: 0;
 
-			i:before {
-				font-size: 50px;
-				line-height: 38px;
-			}
+
 		}
 
 		&.icon {
-			width: 1%;
-			padding-right: 0;
+			
+width: 40px;
+font-size: 58px;
+line-height: 30px;
+font-family: entypo;
+text-align: center;
+padding-right: 5px;
+color: @brown;	
 		}
 
 		&.content {
-			width: 90%;
+			
 			line-height: 15px;
 		}
 		&.firstAnswer {
@@ -431,11 +434,12 @@ table.detailInfoBox {
 		}
 
 		i {
-float: left;
-font-size: 18px;
-line-height: 31px;
-color: @brown;
-margin-right: 5px;			
+			float: left;
+			font-size: 26px;
+			line-height: 31px;
+			padding-left: 2px;
+			color: @brown;
+			margin-right: 9px;		
 		}
 
 		li a span.price {
