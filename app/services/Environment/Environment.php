@@ -22,17 +22,25 @@ class Environment extends Nette\Object {
 	protected $request;
 
 	/**
+	 * @var \Extras\ITranslatorFactory
+	 */
+	protected $translator;
+
+	/**
 	 * @var Locale
 	 */
 	protected $locale;
 
-
 	/**
 	 * @param Nette\Application\Request[] $request
+	 * @param \Extras\ITranslatorFactory $translatorFactory
 	 */
-	public function __construct(array $request)
+	public function __construct(array $request, \Extras\ITranslatorFactory $translatorFactory)
 	{
 		$this->request = reset($request);
+		$this->primaryLocation = $this->getRequestParameter('primaryLocation');
+		$this->language = $this->getRequestParameter('language');
+		$this->translator = $translatorFactory->create($this->getLanguage());
 	}
 
 	/**
@@ -40,9 +48,6 @@ class Environment extends Nette\Object {
 	 */
 	public function getPrimaryLocation()
 	{
-		if(!$this->primaryLocation) {
-			$this->primaryLocation = $this->getRequestParameter('primaryLocation');
-		}
 		return $this->primaryLocation;
 	}
 
@@ -51,10 +56,15 @@ class Environment extends Nette\Object {
 	 */
 	public function getLanguage()
 	{
-		if(!$this->language) {
-			$this->language = $this->getRequestParameter('language');
-		}
 		return $this->language;
+	}
+
+	/**
+	 * @return \Extras\Translator
+	 */
+	public function getTranslator()
+	{
+		return $this->translator;
 	}
 
 	/**

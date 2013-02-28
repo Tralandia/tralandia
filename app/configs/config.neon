@@ -107,7 +107,7 @@ services:
 	environment: 
 		class: Environment\Environment(@application::getRequests())
 
-	translator: @translatorFactory::create(@environment::getLanguage())
+	translator: @environment::getTranslator()
 
 	# --------------------------------
 
