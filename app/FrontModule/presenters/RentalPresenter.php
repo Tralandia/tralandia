@@ -146,6 +146,7 @@ class RentalPresenter extends BasePresenter {
 		$bar = array();
 		$bar['all'] = $lastSearch->getRentals();
 		$bar['currentKey'] = array_search($rental->id, $bar['all']);
+		if (!$bar['currentKey']) return FALSE;
 		$bar['firstKey'] = $bar['currentKey'] < 9 ? 0 : $bar['currentKey'] - 8;
 		if ($bar['firstKey'] < 0) $bar['firstKey'] = 0;
 
