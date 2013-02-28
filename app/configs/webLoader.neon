@@ -168,7 +168,13 @@ parameters:
 			favoriteScroll:
 				js:
 					- front/favorites/js/favoritesScroll.js	
-
+			jscrollPane:
+				js:
+					- jscrollPane/lib/js/jquery.mousewheel.js
+					- jscrollPane/lib/js/jquery.jscrollpane.js
+				css:
+					- jscrollpane/lib/css/jquery.jscrollpane.css
+					- jscrollpane/custom/css/main.css
 			nette:
 				js: 
 					- nette/lib/netteForms.js
@@ -223,10 +229,12 @@ parameters:
 				-  %webloader.packages.fontEntypo%
 				-  %webloader.packages.fontAwesome%
 				-  %webloader.packages.bootstrap%
+				-  %webloader.packages.jscrollPane%
 				-  %webloader.packages.Front%
 				#-  %webloader.packages.texyla%				
 				-  %webloader.packages.nette%								
 				-  %webloader.packages.gMap%
+				
 
 			'Front:Rental:detail':
 				-  %webloader.packages.jQuery%
@@ -237,7 +245,8 @@ parameters:
 				-  %webloader.packages.select2%
 				-  %webloader.packages.fontEntypo%
 				-  %webloader.packages.fontAwesome%	
-				-  %webloader.packages.bootstrap%			
+				-  %webloader.packages.bootstrap%
+				-  %webloader.packages.jscrollPane%			
 				-  %webloader.packages.Front%
 				#-  %webloader.packages.texyla%
 				-  %webloader.packages.nette%								
@@ -246,11 +255,13 @@ parameters:
 
 			'Front:Rental:list':
 				-  %webloader.packages.jQuery%
+				-  %webloader.packages.jqueryAppear%
 				-  %webloader.packages.jqueryCookie%
 				-  %webloader.packages.jqueryUi%				
 				-  %webloader.packages.fontEntypo%
 				-  %webloader.packages.fontAwesome%
 				-  %webloader.packages.bootstrap%
+				-  %webloader.packages.jscrollPane%
 				-  %webloader.packages.Front%			
 				-  %webloader.packages.select2%
 				-  %webloader.packages.texyla%				
