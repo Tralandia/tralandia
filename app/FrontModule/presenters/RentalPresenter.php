@@ -31,6 +31,12 @@ class RentalPresenter extends BasePresenter {
 	 */
 	protected $reservationFormFactory;
 
+	/**
+	 * @autowire
+	 * @var \LastSearch
+	 */
+	protected $lastSearch;
+
 	public function actionDetail($rental) {
 		if (!$rental) {
 			throw new \Nette\InvalidArgumentException('$id argument does not match with the expected value');
@@ -89,11 +95,10 @@ class RentalPresenter extends BasePresenter {
 
 			$itemCount = $search->getRentalsCount();
 
-			$session = $this->context->session->getSection('visitor');
-			$session->lastSearchResults = $search->getRentalsIds(NULL);
-			$session->lastSearchUrl = $this->link('//this');
-			$session->lastSearchHeading = $this->pageSeo->getH1();
-			d($session->lastSearchResults);
+			$lastSearch = $this->lastSearch;
+			$lastSearch->setRentals($search->getRentalsIds(NULL));
+			$lastSearch->setUrl($this->pageSeo->getUrl());
+			$lastSearch->setHeading($this->pageSeo->getH1());
 		}
 
 		$vp = $this['p'];
@@ -133,14 +138,14 @@ class RentalPresenter extends BasePresenter {
 	}
 
 	protected function getNavigationBar($rental) {
-		$visitorSession = $this->context->session->getSection('visitor');
+		$lastSearch = $this->lastSearch;
 
-		if (!isset($visitorSession->lastSearchResults) || count($visitorSession->lastSearchResults) == 0) {
+		if (!$lastSearch->exists()) {
 			return FALSE;
 		}
 
 		$bar = array();
-		$bar['all'] = $visitorSession->lastSearchResults;
+		$bar['all'] = $lastSearch->getRentals();
 		$bar['currentKey'] = array_search($rental->id, $bar['all']);
 		$bar['firstKey'] = $bar['currentKey'] < 9 ? 0 : $bar['currentKey'] - 8;
 		if ($bar['firstKey'] < 0) $bar['firstKey'] = 0;
@@ -161,8 +166,8 @@ class RentalPresenter extends BasePresenter {
 		
 		$navBar = array();
 		$navBar['rentals'] = $barRentals;
-		$navBar['searchLink'] = $visitorSession->lastSearchUrl;
-		$navBar['heading'] = $visitorSession->lastSearchHeading;
+		$navBar['searchLink'] = $lastSearch->getUrl();
+		$navBar['heading'] = $lastSearch->getHeading();
 		$navBar['currentIndex'] = $bar['currentKey']+1;
 		$navBar['totalCount'] = count($bar['all']);
 
