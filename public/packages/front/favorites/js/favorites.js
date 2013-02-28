@@ -30,7 +30,20 @@
 			
 			this.list = $(this).find('ul');
 
-					$rigthArrow = $('#favorites-right-button');
+			$('.jscrollPane').jScrollPane({showArrows: true});
+
+			$rigthArrow = $('#favorites-right-button');
+			$lefthArrow = $('#favorites-left-button');
+
+
+			$lefthArrow.click(function(){
+				$('.jspArrowLeft').trigger('click');
+			});
+			
+
+			//this.list.jScrollPane({showArrows: true});
+
+/*					$rigthArrow = $('#favorites-right-button');
 					$lefthArrow = $('#favorites-left-button');
 
 					var $innerrList = this.list;
@@ -61,7 +74,7 @@
 						
 						$innerrList.animate({left: '+=180'}, 800);
 
-					}); 
+					});*/ 
 
 		});
 	};

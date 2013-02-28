@@ -1,0 +1,7 @@
+.jspHorizontalBar , .jspTrack , .jspDrag {
+	background: transparent;
+}
+
+.jspDrag {
+	visibility: hidden;
+}

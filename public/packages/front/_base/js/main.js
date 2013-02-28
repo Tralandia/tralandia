@@ -1,5 +1,3 @@
-
-
 var $class = function(definition) {
 	var constructor = definition.constructor;        
 	var parent = definition.Extends;
@@ -255,15 +253,19 @@ App.prototype.addToFavorites = function(){
 		title: $(this).attr('data-title')
 	}
 
+	//console.log(data);
+
 	var favoriteSlider = $('#compareList');
 
 	var sliderList = favoriteSlider.find('ul');
 
+		sliderList.find('li.template').css('background-image','url('+data.thumb+')');
+
 		$pattern = sliderList.find('li.template');
+
 		var patternText = $pattern[0].outerHTML;
 
-		patternText = patternText.replace("~id~",data.id)
-						.replace("~photo~",data.thumb)		
+		patternText = patternText.replace("~id~",data.id)							
 						.replace("~title~",data.title)
 						.replace("~url~",data.link)
 						.replace("template","");
@@ -619,13 +621,32 @@ $(document).ready(function(){
     });
 
     // remove object from favorites list 
-    $('.removeLink').live('click',function(){  
+    $('a.removeLink').bind('click',function(){
+
+    	console.log('remove');
+
     	id = $(this).parent().attr('rel');
+
+				var api = $('.jscrollPane').jScrollPane(
+					{
+						showArrows:true,
+						maintainPosition: false
+					}).data('jsp');
+
+
+					api.reinitialise();
 
     	A.removeObjectFromFavorites(id);
     	$('.addToFavorites[rel='+id+']').removeClass('selected');
     	return false;
     });
+
+
+
+
+
+
+
 
 
 
