@@ -1,3 +1,4 @@
+var global = {};
 var $class = function(definition) {
 	var constructor = definition.constructor;        
 	var parent = definition.Extends;
@@ -177,8 +178,6 @@ App.prototype.removeObjectFromFavorites = function(id){
 
 	var self = new App;
 
-
-
 	var list = $.cookie('favoritesList');
 
 	if(typeof list != 'undefined'){
@@ -204,19 +203,11 @@ App.prototype.removeObjectFromFavorites = function(id){
 			$.cookie('favoritesList' , list.join());
 		}
 		
-		// remove from favorites slider 		
-		// if page is Rental:detai 
-
-		/*
-		var newWidth = sliderList.width();
-			newWidth -= 125;
-			// set new width 
-			sliderList.css({
-				width: newWidth+'px'
-			});
-		*/
 
 		favoriteSlider.find('ul li[rel="'+id+'"]').remove();
+
+		global.jscrollPaneApi.reinitialise();
+
 
 		if(list.length == 0){
 
@@ -300,16 +291,17 @@ App.prototype.addToFavorites = function(){
 			newLi.addClass('current');
 		}
 
-		var newWidth = sliderList.width();
-			newWidth += 125;
-			// set new width 
-			sliderList.css({
-				width: newWidth+'px'
-			});
-			
-			newLi.appendTo(sliderList);
 
-			$(this).addClass('selected');
+
+
+		newLi.appendTo(sliderList);
+
+		console.log(sliderList.prop('outerHTML'));
+
+       global.jscrollPaneApi.reinitialise();
+
+        	        
+		$(this).addClass('selected');
 
 	}
 
@@ -620,7 +612,8 @@ $(document).ready(function(){
     	}      	
     });
 
-    // remove object from favorites list 
+    // remove object from favorites list     
+
     $('a.removeLink').bind('click',function(){
 
     	console.log('remove');
@@ -641,14 +634,25 @@ $(document).ready(function(){
     	return false;
     });
 
+    $('a.removeLink').live('click',function(){
+
+    	console.log('remove');
+
+    	id = $(this).parent().attr('rel');
+
+				var api = $('.jscrollPane').jScrollPane(
+					{
+						showArrows:true,
+						maintainPosition: false
+					}).data('jsp');
 
 
+					api.reinitialise();
 
-
-
-
-
-
+    	A.removeObjectFromFavorites(id);
+    	$('.addToFavorites[rel='+id+']').removeClass('selected');
+    	return false;
+    });
 
 
     $('.pricePhrase').pricePhrase();

@@ -171,7 +171,7 @@ parameters:
 			jscrollPane:
 				js:
 					- jscrollPane/lib/js/jquery.mousewheel.js
-					- jscrollPane/lib/js/jquery.jscrollpane.min.js
+					- jscrollPane/lib/js/jquery.jscrollpane.js
 				css:
 					- jscrollpane/lib/css/jquery.jscrollpane.css
 					- jscrollpane/custom/css/main.css

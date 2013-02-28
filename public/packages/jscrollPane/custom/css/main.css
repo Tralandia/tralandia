@@ -5,3 +5,11 @@
 .jspDrag {
 	visibility: hidden;
 }
+
+.jspArrow {
+	text-indent:0;
+}
+
+.jspHorizontalBar .jspArrow {
+	visibility: hidden;
+}

@@ -1,4 +1,6 @@
 
+
+
 // showFavoriteSlider
 (function($){
 	$.showFavoriteSlider = function( el, appObject, options ){
@@ -28,53 +30,31 @@
 
 			(new $.showFavoriteSlider(this, options));
 			
+			var self = this;
+
 			this.list = $(this).find('ul');
 
 			$('.jscrollPane').jScrollPane({showArrows: true});
 
 			$rigthArrow = $('#favorites-right-button');
-			$lefthArrow = $('#favorites-left-button');
-
-
-			$lefthArrow.click(function(){
-				$('.jspArrowLeft').trigger('click');
-			});
+			$leftArrow = $('#favorites-left-button');
 			
+			var pane = $('.jscrollPane');
+			global.jscrollPaneApi = pane.data('jsp');
 
-			//this.list.jScrollPane({showArrows: true});
+			$leftArrow .bind('click',function(){				
+			
+					global.jscrollPaneApi.scrollBy(-40,0);
+					return false;
 
-/*					$rigthArrow = $('#favorites-right-button');
-					$lefthArrow = $('#favorites-left-button');
+			});
 
-					var $innerrList = this.list;
+			$rigthArrow.bind('click',function(){				
+					
+					global.jscrollPaneApi.scrollBy(40,0);
+					return false;
 
-					var speed = 500;
-
-
-					var ulWidth = $innerrList.width();
-
-
-					$rigthArrow.click(function(){
-						
-						var leftOffset = parseInt($innerrList.css('left').replace('px','').replace('auto','0'));
-
-
-						var delta = (ulWidth - 692 + leftOffset);
-
-						console.log(leftOffset);
-						console.log(delta);
-
-						if(delta >0){
-							$innerrList.animate({left:  '-=180'}, 800);
-						}
-
-					});
-
-					$lefthArrow.click(function(){
-						
-						$innerrList.animate({left: '+=180'}, 800);
-
-					});*/ 
+			});	
 
 		});
 	};
@@ -206,6 +186,10 @@ initAllSocialPlugins();
 			$('#favoritesShareList li a').removeClass('open');
 		}
 	});
+
+
+
+
 });
 
 

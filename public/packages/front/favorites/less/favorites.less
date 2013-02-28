@@ -170,7 +170,7 @@
 
 
 	.content {
-		width: 736px;
+		width: 692px;
 		height:75px;
 		float: left;
 
@@ -188,20 +188,12 @@
 		height: 50px;
 
 		white-space: nowrap;
-		display: table-row;
-
-		
-		
-		
+		display: table-row;		
 
 		li {
 
-			&:nth-child(2)  {
-				margin-left:30px;
-			}
-
 			&:last-child {
-				margin-right: 30px;
+				margin-right: 6px;
 			}
 
 			display: block;
@@ -343,12 +335,9 @@
 		}
 	}
 
-.jspArrowLeft , .jspArrowRight {
-	position: relative;
-	top: -59px;
-}
 
-	.leftArrow , .rightArrow , .jspArrowLeft , .jspArrowRight {
+
+	.leftArrow , .rightArrow {
 		height: 73px;
 		width: 20px;
 		
@@ -363,12 +352,8 @@
 
 
 color: #213875;
-background-image: linear-gradient(left bottom,#d9dfeb 0%,#fefefe 100%);
-background-image: -o-linear-gradient(left bottom,#d9dfeb 0%,#fefefe 100%);
-background-image: -moz-linear-gradient(left bottom,#d9dfeb 0%,#fefefe 100%);
-background-image: -webkit-linear-gradient(left bottom,#d9dfeb 0%,#fefefe 100%);
-background-image: -ms-linear-gradient(left bottom,#d9dfeb 0%,#fefefe 100%);
-background-image: -webkit-gradient(linear,left bottom,right top,color-stop(0,#d9dfeb),color-stop(1,#fefefe));
+
+		.basic-gradient(#fefefe,#d9dfeb);
 
 		-webkit-border-top-left-radius: 6px;
 		-webkit-border-bottom-left-radius: 6px;
@@ -378,7 +363,9 @@ background-image: -webkit-gradient(linear,left bottom,right top,color-stop(0,#d9
 		border-bottom-left-radius: 6px;
 
 		&:hover {
-
+			.basic-gradient(#526ea8,#334c83);
+			text-decoration: none;
+			color: #fff;
 		}
 
 		&.disabled {
@@ -396,7 +383,7 @@ background-image: -webkit-gradient(linear,left bottom,right top,color-stop(0,#d9
 
 	
 
-	.rightArrow , .jspArrowRight {
+	.rightArrow  {
 
 		-webkit-border-top-left-radius: 0;
 		-webkit-border-bottom-left-radius: 0;
@@ -414,7 +401,6 @@ background-image: -webkit-gradient(linear,left bottom,right top,color-stop(0,#d9
 		border-bottom-right-radius: 6px;
 
 	}
-
 
 
 
