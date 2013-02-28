@@ -208,7 +208,6 @@ App.prototype.removeObjectFromFavorites = function(id){
 
 		global.jscrollPaneApi.reinitialise();
 
-
 		if(list.length == 0){
 
 			$('#compareList').parent().parent().parent().slideUp(300,function(){
@@ -295,12 +294,11 @@ App.prototype.addToFavorites = function(){
 
 
 		newLi.appendTo(sliderList);
+		
 
-		console.log(sliderList.prop('outerHTML'));
+		global.jscrollPaneApi.reinitialise();
 
-       global.jscrollPaneApi.reinitialise();
-
-        	        
+					
 		$(this).addClass('selected');
 
 	}
@@ -382,7 +380,7 @@ App.prototype.cancelContactForm = function(){
 
 App.prototype.forgottenPasswordOpen = function(){
   $('#forgottenPassword').slideDown('fast', function() {
-    // Animation complete.
+	// Animation complete.
   });
   return false;	
 }
@@ -435,7 +433,7 @@ $(document).ready(function(){
 	/*
 	$('select.select2').load(function() {
 			$(this).select2(); 
-	  	console.log('load selectbox');
+		console.log('load selectbox');
 	});
 */
 
@@ -508,15 +506,15 @@ $(document).ready(function(){
 
 
 	/* ui tabs */
-    $('.nav-tabs a').click(function (e) {
-      
-      e.preventDefault();
-      var id = $(this).attr('id');
-      var href = $(this).attr('href');
+	$('.nav-tabs a').click(function (e) {
+	  
+	  e.preventDefault();
+	  var id = $(this).attr('id');
+	  var href = $(this).attr('href');
 
-      //$(this).tab('show');
-      $('.nav-tabs li').removeClass('active');
-      $(this).parent().addClass('active');
+	  //$(this).tab('show');
+	  $('.nav-tabs li').removeClass('active');
+	  $(this).parent().addClass('active');
 
 		var scrollmem = $('body').scrollTop();
 		var newHref = href.replace("#","#_");
@@ -524,19 +522,19 @@ $(document).ready(function(){
 		window.location.hash = newHref;
 		$('html,body').scrollTop(scrollmem);
 
-      if(id = 'objectDetailListMap'){
-      	mapLoader();
-      }
-      
-      $('.tab-content .tab-pane').hide();
-      $('.tab-content .tab-pane'+href).show();
+	  if(id = 'objectDetailListMap'){
+		mapLoader();
+	  }
+	  
+	  $('.tab-content .tab-pane').hide();
+	  $('.tab-content .tab-pane'+href).show();
 
-      return false;
-    });
+	  return false;
+	});
 
-    // nastavenie default tabu
-        
-    if(window.location.hash.length > 1){
+	// nastavenie default tabu
+		
+	if(window.location.hash.length > 1){
 
 		var currentId  = window.location.hash;
 			currentId=currentId.replace("#_","#");
@@ -555,107 +553,85 @@ $(document).ready(function(){
 				mapLoader();
 			}
 
-    } else {
-    	$('.nav-tabs a:first').tab('show');
-    }
+	} else {
+		$('.nav-tabs a:first').tab('show');
+	}
 
- 	// nahrada pre zobrazenie lang menu
-    var langmenuOpen = false;
-    $('#langMenuOptionsOpen').click(function(){
-    	if(!langmenuOpen){
-    		$('#langMenuOptions').show();
-    		langmenuOpen = true;
-    	} else {
-    		$('#langMenuOptions').hide();
-    		langmenuOpen = false;
-    	}
-    	
-    	return false;
-    });
+	// nahrada pre zobrazenie lang menu
+	var langmenuOpen = false;
+	$('#langMenuOptionsOpen').click(function(){
+		if(!langmenuOpen){
+			$('#langMenuOptions').show();
+			langmenuOpen = true;
+		} else {
+			$('#langMenuOptions').hide();
+			langmenuOpen = false;
+		}
+		
+		return false;
+	});
 
- 	// nahrada pre zobrazenie lang menu
-    var socialIconsMenu = false;
-    $('#socialIcons').click(function(){
+	// nahrada pre zobrazenie lang menu
+	var socialIconsMenu = false;
+	$('#socialIcons').click(function(){
 
-    	var $arrow = $(this).find('span');
+		var $arrow = $(this).find('span');
 
-    	initAllSocialPlugins();
+		initAllSocialPlugins();
 
-    	if(!socialIconsMenu){
-    		    	
-    		$arrow.html('&#59231;');
-    		$('#socialIconsMenu').show();
-    		socialIconsMenu = true;
-    	} else {
-    		    	
-    		$arrow.html('&#59228;');
-    		$('#socialIconsMenu').hide();
-    		socialIconsMenu = false;
-    	}
-    	
-    	return false;
-    });
-
-
-    $('body').click(function(){
-
-    	//$("select.select2").select2('close');
-
-    	if(langmenuOpen){
-    		$('#langMenuOptions').hide();
-    		langmenuOpen = false;
-    	}  	
-    	if(socialIconsMenu){
-    		$('#socialIcons').find('span').html('&#59228;');
-    		$('#socialIconsMenu').hide();
-    		socialIconsMenu = false;
-    	}      	
-    });
-
-    // remove object from favorites list     
-
-    $('a.removeLink').bind('click',function(){
-
-    	console.log('remove');
-
-    	id = $(this).parent().attr('rel');
-
-				var api = $('.jscrollPane').jScrollPane(
-					{
-						showArrows:true,
-						maintainPosition: false
-					}).data('jsp');
+		if(!socialIconsMenu){
+					
+			$arrow.html('&#59231;');
+			$('#socialIconsMenu').show();
+			socialIconsMenu = true;
+		} else {
+					
+			$arrow.html('&#59228;');
+			$('#socialIconsMenu').hide();
+			socialIconsMenu = false;
+		}
+		
+		return false;
+	});
 
 
-					api.reinitialise();
+	$('body').click(function(){
 
-    	A.removeObjectFromFavorites(id);
-    	$('.addToFavorites[rel='+id+']').removeClass('selected');
-    	return false;
-    });
+		//$("select.select2").select2('close');
 
-    $('a.removeLink').live('click',function(){
+		if(langmenuOpen){
+			$('#langMenuOptions').hide();
+			langmenuOpen = false;
+		}  	
+		if(socialIconsMenu){
+			$('#socialIcons').find('span').html('&#59228;');
+			$('#socialIconsMenu').hide();
+			socialIconsMenu = false;
+		}      	
+	});
 
-    	console.log('remove');
+	// remove object from favorites list     
 
-    	id = $(this).parent().attr('rel');
+	$('a.removeLink').bind('click',function(){
 
-				var api = $('.jscrollPane').jScrollPane(
-					{
-						showArrows:true,
-						maintainPosition: false
-					}).data('jsp');
+		id = $(this).parent().attr('rel');
+
+		A.removeObjectFromFavorites(id);
+		$('.addToFavorites[rel='+id+']').removeClass('selected');
+		return false;
+	});
+
+	$('a.removeLink').live('click',function(){
+
+		id = $(this).parent().attr('rel');
+
+		A.removeObjectFromFavorites(id);
+		$('.addToFavorites[rel='+id+']').removeClass('selected');
+		return false;
+	});
 
 
-					api.reinitialise();
-
-    	A.removeObjectFromFavorites(id);
-    	$('.addToFavorites[rel='+id+']').removeClass('selected');
-    	return false;
-    });
-
-
-    $('.pricePhrase').pricePhrase();
+	$('.pricePhrase').pricePhrase();
 
 
 
