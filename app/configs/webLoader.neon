@@ -222,7 +222,8 @@ parameters:
 				-  %webloader.packages.gMap%
 
 			Front:				
-				-  %webloader.packages.jQuery%				
+				-  %webloader.packages.jQuery%	
+				-  %webloader.packages.jqueryAppear%			
 				-  %webloader.packages.jqueryUi%
 				-  %webloader.packages.jqueryCookie%									
 				-  %webloader.packages.select2%

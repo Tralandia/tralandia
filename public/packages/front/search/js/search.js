@@ -37,7 +37,7 @@
 
 			$('#serachSidebar').select2({
 			    placeholder: placeholder,
-			    minimumInputLength: 1,
+			    minimumInputLength: 3,
 			    ajax: { 
 			        url: url,
 			        dataType: 'json',
