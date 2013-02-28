@@ -1,4 +1,6 @@
 
+
+
 // showFavoriteSlider
 (function($){
 	$.showFavoriteSlider = function( el, appObject, options ){
@@ -28,40 +30,31 @@
 
 			(new $.showFavoriteSlider(this, options));
 			
+			var self = this;
+
 			this.list = $(this).find('ul');
 
-					$rigthArrow = $('#favorites-right-button');
-					$lefthArrow = $('#favorites-left-button');
+			$('.jscrollPane').jScrollPane({showArrows: true});
 
-					var $innerrList = this.list;
+			$rigthArrow = $('#favorites-right-button');
+			$leftArrow = $('#favorites-left-button');
+			
+			var pane = $('.jscrollPane');
+			global.jscrollPaneApi = pane.data('jsp');
 
-					var speed = 500;
+			$leftArrow .bind('click',function(){				
+			
+					global.jscrollPaneApi.scrollBy(-40,0);
+					return false;
 
+			});
 
-					var ulWidth = $innerrList.width();
+			$rigthArrow.bind('click',function(){				
+					
+					global.jscrollPaneApi.scrollBy(40,0);
+					return false;
 
-
-					$rigthArrow.click(function(){
-						
-						var leftOffset = parseInt($innerrList.css('left').replace('px','').replace('auto','0'));
-
-
-						var delta = (ulWidth - 692 + leftOffset);
-
-						console.log(leftOffset);
-						console.log(delta);
-
-						if(delta >0){
-							$innerrList.animate({left:  '-=180'}, 800);
-						}
-
-					});
-
-					$lefthArrow.click(function(){
-						
-						$innerrList.animate({left: '+=180'}, 800);
-
-					}); 
+			});	
 
 		});
 	};
@@ -193,6 +186,10 @@ initAllSocialPlugins();
 			$('#favoritesShareList li a').removeClass('open');
 		}
 	});
+
+
+
+
 });
 
 
