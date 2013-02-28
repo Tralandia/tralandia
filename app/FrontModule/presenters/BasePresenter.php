@@ -89,8 +89,22 @@ abstract class BasePresenter extends \BasePresenter {
 		$header = $this->getComponent('head');
 		$header->addTitle($this->pageSeo->getTitle());
 
-
-
+		$this->template->og = array();
+		$this->template->og['title'] = $this->pageSeo->getH1();
+		$this->template->og['type'] = 'hotel';
+		$this->template->og['url'] = $this->link('//this');
+		if ($this->name == 'Front:Rental' && $this->action == 'detail') {
+			$image = $this->template->rental->getMainImage();
+			if ($image instanceof \Entity\Rental\Image) {
+				$this->template->og['image'] = $this->rentalImagePipe->request($image);
+			} else {
+				$this->template->og['image'] = $this->rentalImagePipe->requestFake();
+			}
+		} else {
+			$this->template->og['image'] = 'http://www.sk.tra.com/images/logo.png'; //@todo
+		}
+		$this->template->og['site_name'] = 'Tralandia';
+		
 		parent::beforeRender();
 	}
 

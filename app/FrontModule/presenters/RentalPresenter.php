@@ -72,7 +72,6 @@ class RentalPresenter extends BasePresenter {
 		$this->setLayout('detailLayout');
 
 		$this->template->navBar = $this->getNavigationBar($rental);
-		d($this->template->navBar);
 	}
 
 
