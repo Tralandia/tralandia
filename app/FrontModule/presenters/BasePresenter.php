@@ -19,7 +19,7 @@ abstract class BasePresenter extends \BasePresenter {
 
 	/**
 	 * @autowire
-	 * @var \Extras\Environment
+	 * @var \Environment\Environment
 	 */
 	protected $environment;
 
@@ -72,7 +72,7 @@ abstract class BasePresenter extends \BasePresenter {
 		$domain = $primaryLocation->getDomain()->getDomain();
 		$this->template->envLanguage = $language;
 		$this->template->envPrimaryLocation = $primaryLocation;
-		$this->template->localeCode = $language->getIso() . '_' . strtoupper($primaryLocation->getIso());
+		$this->template->localeCode = $this->environment->getLocale()->getCode();
 		$this->template->domain = ucfirst($domain);
 		$this->template->domainHost = ucfirst(strstr($domain, '.', TRUE));
 		$this->template->domainExtension = strstr($domain, '.');

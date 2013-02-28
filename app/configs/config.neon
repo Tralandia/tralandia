@@ -105,8 +105,9 @@ services:
 		class: Security\SimpleAcl(..., @userRoleRepositoryAccessor::get())
 
 	environment: 
-		class: Extras\Environment(@application::getRequests(), @languageRepositoryAccessor, @locationRepositoryAccessor)
-	translator: @translatorFactory::create(@environment::getLanguage())
+		class: Environment\Environment(@application::getRequests())
+
+	translator: @environment::getTranslator()
 
 	# --------------------------------
 
