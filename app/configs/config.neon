@@ -80,6 +80,7 @@ services:
 		factory: @rentalSearchServiceFactory::create(@environment::getPrimaryLocation())
 
 	favoriteList: FavoriteList(@rentalRepositoryAccessor)
+	lastSearch: LastSearch(@session::getSection('lastSearch'))
 
 	# ROUTER
 
