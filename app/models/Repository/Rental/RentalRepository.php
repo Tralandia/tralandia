@@ -44,6 +44,27 @@ class RentalRepository extends \Repository\BaseRepository {
 		return $qb->getQuery()->getResult();
 	}
 
+	/**
+	 * @param string $search
+	 * @param \Entity\Location\Location $primaryLocation
+	 * @return array
+	 */
+	public function findSuggestForSearch($search, \Entity\Location\Location $primaryLocation)
+	{
+		$qb = $this->_em->createQueryBuilder();
+
+		$qb->select('r.id, t.translation as name')
+			->from($this->_entityName, 'r')
+			->join('r.address', 'a')
+			->join('r.name', 'n')
+			->join('n.translations', 't')
+			->andWhere($qb->expr()->eq('a.primaryLocation', $primaryLocation->getId()))
+			->andWhere($qb->expr()->like('t.translation', '?1'))->setParameter(1, "%$search%")
+			->setMaxResults(20);
+
+		return $qb->getQuery()->getResult();
+	}
+
 	public function isFeatured(\Entity\Rental\Rental $rental) {
 		$qb = $this->_em->createQueryBuilder();
 
