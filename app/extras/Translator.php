@@ -40,7 +40,13 @@ class Translator implements \Nette\Localization\ITranslator {
 
 		return $translation;
 	}
-	
+
+	/**
+	 * @param $phrase
+	 * @param array $variation
+	 *
+	 * @return bool|float|int|mixed|NULL|string
+	 */
 	protected function getTranslation($phrase, array $variation = NULL)
 	{
 		//d($phrase);
@@ -79,7 +85,27 @@ class Translator implements \Nette\Localization\ITranslator {
 				if ($variation === NULL) {
 					$translation = $translation->translation;
 				} else {
-					$translation = $translation->getVariation($translation->language->getPlural($variation['count']), $variation['gender'], $variation['case']);
+					$plural = $translation->language->getPlural($variation['count']);
+					$gender = $variation['gender'];
+					$case = $variation['case'];
+					$translationText = $translation->getVariation(
+						$plural,
+						$gender,
+						$case
+					);
+					if(!$translationText) {
+						$translationText = $translation->getDefaultVariation();
+					}
+					if(!$translationText) {
+						$translationText = sprintf('{%d|%s:%s:%s:%s}',
+							$translation->getPhrase()->getId(),
+							$translation->getLanguage()->getIso(),
+							$plural,
+							$gender,
+							$case ? substr($case, 0, 1) : NULL
+						);
+					}
+					$translation = $translationText;
 				}
 			}
 
@@ -90,6 +116,12 @@ class Translator implements \Nette\Localization\ITranslator {
 		return $translation;
 	}
 
+	/**
+	 * @param $phraseId
+	 * @param array $variation
+	 *
+	 * @return string
+	 */
 	private function getCacheKey($phraseId, array $variation = NULL)
 	{
 		if($variation === NULL) {

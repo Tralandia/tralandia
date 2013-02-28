@@ -219,6 +219,13 @@ class Location extends \Entity\BaseEntityDetails {
 		return $this;
 	}
 
+	public function getFlagName()
+	{
+		$parentIso = $this->getParent()->getIso();
+		$name = $parentIso ? : $this->getIso();
+		return $name . '.gif';
+	}
+
 
 	//@entity-generator-code --- NEMAZAT !!!
 

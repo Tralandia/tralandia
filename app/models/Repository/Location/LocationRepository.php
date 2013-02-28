@@ -124,8 +124,10 @@ class LocationRepository extends \Repository\BaseRepository {
 		$qb->select('e')
 			->from($this->_entityName, 'e')
 			->leftJoin('e.type', 't')
+			->join('e.name', 'n')
+			->join('n.translations', 'tt')
 			->andWhere($qb->expr()->eq('t.slug', ':type'))->setParameter('type', 'country')
-			->andWhere($qb->expr()->like('e.slug', ':slug'))->setParameter('slug', '%'.$search.'%');
+			->andWhere($qb->expr()->like('tt.translation', '?1'))->setParameter(1, "%$search%");
 
 		return $qb->getQuery()->getResult();
 	}
@@ -136,9 +138,11 @@ class LocationRepository extends \Repository\BaseRepository {
 		$qb->select('e')
 			->from($this->_entityName, 'e')
 			->leftJoin('e.type', 't')
+			->join('e.name', 'n')
+			->join('n.translations', 'tt')
 			->andWhere($qb->expr()->in('t.slug', ':type'))->setParameter('type', ['locality', 'region'])
 			->andWhere($qb->expr()->eq('e.parent', ':parent'))->setParameter('parent', $location)
-			->andWhere($qb->expr()->like('e.slug', ':slug'))->setParameter('slug', '%'.$search.'%');
+			->andWhere($qb->expr()->like('tt.translation', '?1'))->setParameter(1, "%$search%");
 
 		return $qb->getQuery()->getResult();
 	}
