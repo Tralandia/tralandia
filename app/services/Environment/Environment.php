@@ -1,26 +1,38 @@
 <?php
 
-namespace Extras;
+namespace Environment;
 
 use Nette;
 
 class Environment extends Nette\Object {
 
+	/**
+	 * @var \Entity\Location\Location
+	 */
 	protected $primaryLocation;
+
+	/**
+	 * @var \Entity\Language
+	 */
 	protected $language;
 
+	/**
+	 * @var Nette\Application\Request
+	 */
 	protected $request;
-	protected $currency;
+
+	/**
+	 * @var Locale
+	 */
 	protected $locale;
 
-	public $languageRepositoryAccessor;
-	public $locationRepositoryAccessor;
 
-	public function __construct(array $request, $languageRepositoryAccessor, $locationRepositoryAccessor)
+	/**
+	 * @param Nette\Application\Request[] $request
+	 */
+	public function __construct(array $request)
 	{
 		$this->request = reset($request);
-		$this->languageRepositoryAccessor = $languageRepositoryAccessor;
-		$this->locationRepositoryAccessor = $locationRepositoryAccessor;
 	}
 
 	/**
@@ -45,11 +57,31 @@ class Environment extends Nette\Object {
 		return $this->language;
 	}
 
-	public function getRequest()
+	/**
+	 * @return Locale
+	 */
+	public function getLocale()
+	{
+		if(!$this->locale) {
+			$this->locale = new Locale($this);
+		}
+
+		return $this->locale;
+	}
+
+	/**
+	 * @return \Nette\Application\Request
+	 */
+	protected function getRequest()
 	{
 		return $this->request;
 	}
-	
+
+	/**
+	 * @param $name
+	 *
+	 * @return mixed|null
+	 */
 	protected function getRequestParameter($name)
 	{
 		$parameters = $this->request->getParameters();
