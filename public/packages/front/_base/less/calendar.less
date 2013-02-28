@@ -1,3 +1,16 @@
+@import './lessFunctions.less';
+body {
+    background-color: #FBFCF3;
+    margin: 0;
+    margin-top: 10px;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+    margin: 2px;
+    font-size: 17px;
+}
 
 div.calendar {
     float: left;
@@ -7,44 +20,85 @@ div.calendar {
     text-align: center;
     width: 168px;
     margin-left: 10px;
+
+    /*iframe calendar*/
+    &.iframe {
+        width: 126px;
+        height: 150px;
+    }    
 }
 
-div.calendar:nth-child(5){
+
+
+div.calendar  {
+
+    div.day {
+        border: 1px solid #CBD2A0;
+        float: left;
+        height: 18px;
+        margin-bottom: 1px;
+        margin-right: 1px;
+        padding-top: 3px;
+        text-align: center;
+        width: 20px;        
+    }
+
+    /*iframe calendar*/
+    &.iframe {
+        div.day {
+            width: 15px;  
+            height: 13px;
+        }
+    }
+
+}
+div.calendar  {
+
+    .active {
+        background-color: #FBFBF3;
+        color: #663300 !important;
+        cursor: pointer;        
+    }
+
+}
+div.calendar {
+    .ro {
+        cursor: default !important;
+    }
     
 }
+div.calendar  {
+    .inactive {
+        border: 1px solid #EEEEEE !important;
+        color: #999;
+        cursor: default !important;        
+    }
 
-div.calendar div.day {
-    border: 1px solid #CBD2A0;
-    float: left;
-    height: 18px;
-    margin-bottom: 1px;
-    margin-right: 1px;
-    padding-top: 3px;
-    text-align: center;
-    width: 20px;
 }
-div.calendar .active {
-    background-color: #FBFBF3;
-    color: #663300 !important;
-    cursor: pointer;
+div.calendar {
+    .dayName {
+        border: 1px solid transparent !important;
+        color: #91A136;        
+     }
+
 }
-div.calendar .ro {
-    cursor: default !important;
-}
-div.calendar .inactive {
-    border: 1px solid #EEEEEE !important;
-    color: #999;
-    cursor: default !important;
-}
-div.calendar .dayName {
-    border: 1px solid transparent !important;
-    color: #91A136;
-}
-div.calendar .monthName {
-    color: #663300;
-    font-size: 12px;
-    font-weight: bold;
+div.calendar  {
+    .monthName {
+        color: @brown;
+        font-size: 12px;
+        font-weight: bold;        
+    }
+
+    &.iframe {
+        .monthName {
+
+        }
+    }
+
 }
 div.calendar .selected {
+    
+}
+div.calendar:nth-child(5){
     
 }
