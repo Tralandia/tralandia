@@ -61,7 +61,7 @@
 			        };
 
 			        $('body').attr('data-googleMapRender',true);
-		        
+/*		        
 		        $.ajax({
 					  dataType: "jsonp",
 					  crossDomain: true,
@@ -88,7 +88,7 @@
 						});
 
 						$('#placesImg').html(html);
-					});
+					});*/
 		
 		}
 
