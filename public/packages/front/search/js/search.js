@@ -51,7 +51,7 @@
 			        }
 			    },
 			    formatResult: function(r){
-			    	return '<img class="flag" src="'+r.flag+'"> '+r.name;
+			    	return '<img class="flag" src="'+r.icon+'"> '+r.name;
 			    }, 
 
 			    formatSelection: function(r){
