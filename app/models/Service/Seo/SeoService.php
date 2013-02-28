@@ -59,6 +59,7 @@ class SeoService extends Nette\Object {
 	/**
 	 * @param string                    $url
 	 * @param Nette\Application\Request $request
+	 * @param $pageRepositoryAccessor
 	 */
 	public function __construct($url, Nette\Application\Request $request, $pageRepositoryAccessor)
 	{
