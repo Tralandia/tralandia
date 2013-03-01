@@ -4,7 +4,6 @@ namespace Entity\Rental;
 
 use Entity\Phrase;
 use Entity\Location;
-use Entity\Medium;
 use Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 use Extras\Annotation as EA;
@@ -156,12 +155,6 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Image", mappedBy="rental", cascade={"persist"})
-	 */
-	protected $images;
-
-	/**
-	 * @var Collection
 	 * @ORM\OneToMany(targetEntity="PricelistRow", mappedBy="rental", cascade={"persist", "remove"})
 	 */
 	protected $pricelistRows;
@@ -189,6 +182,12 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 	 * @ORM\Column(type="datetime", nullable=true)
 	 */
 	protected $calendarUpdated;
+
+	/**
+	 * @var Collection
+	 * @ORM\OneToMany(targetEntity="Image", mappedBy="rental", cascade={"persist"})
+	 */
+	protected $images;
 
 	/**
 	 * @var Collection

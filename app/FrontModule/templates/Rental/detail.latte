@@ -22,17 +22,17 @@
 			{if $iterator->first}
 			<div class="imgFirst">
 			{/if}
-				<img alt="{_$rental->name} - {_o100008} {$iterator->getCounter()}" n:fakeImage="" class="marginBottom" />
+				<img alt="{_$rental->name} - {_o100008} {$iterator->getCounter()}" n:fakeImage=""/>
 			{if $iterator->first}
 			</div>
 			{/if}
 		{/foreach}
 
 		<div class="imgFirst">
-			<img alt="{_$rental->name} - {_o100008} 1" n:fakeImage="" class="marginBottom" />
+			<img alt="{_$rental->name} - {_o100008} 1" n:fakeImage="" />
 		</div>
-		<img alt="{_$rental->name} - {_o100008} 2" n:fakeImage="" class="marginBottom" />
-		<img alt="{_$rental->name} - {_o100008} 3" n:fakeImage="" class="marginBottom" />
+		<img alt="{_$rental->name} - {_o100008} 2" n:fakeImage="" />
+		<img alt="{_$rental->name} - {_o100008} 3" n:fakeImage=""  />
 
 		<img class="mapsImg" src="https://maps.googleapis.com/maps/api/staticmap?center={$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&markers=color:blue%7C{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&zoom=10&size=288x170&sensor=false" />
 	</div>
@@ -187,26 +187,30 @@
 
 		   		<div class="clearfix"></div>
 
-			   {if $rental->checkIn || $rental->checkOut}
+				{if $rental->checkIn}
 				   <li class="clock">
-			   		<strong>{if $rental->checkIn}{_o1586} {$rental->checkIn}:00 , {/if}{_o1588} {if $rental->checkOut}{$rental->checkOut}:00{/if}</strong>
+			   		<strong>{_o1586} {$rental->checkIn}:00</strong>
 				   </li>
-			   {/if}
+				{/if}
 
 		   		<div class="clearfix"></div>
 
-			   <li class="clock">
-		   		<strong>{if $animalsAllowed}{_o100018}{else}{_o100019}{/if}</strong>
-			   </li>
+				{if $rental->checkOut}
+				   <li class="clock">
+			   		<strong>{_o1588} {$rental->checkOut}:00</strong>
+				   </li>
+				{/if}
+				
+		   		<div class="clearfix"></div>
 
 			   <li class="dog">
 		   		<strong>{if $animalsAllowed}{_o100018}{else}{_o100019}{/if}</strong>
 			   </li>
 
-			   <li class="bell">
+{* 			   <li class="bell">
 		   		<strong>{if $animalsAllowed}{_o100018}{else}{_o100019}{/if}</strong>
 			   </li>			   
-
+ *}
 			</ul>
 		</div>
 	</div>
