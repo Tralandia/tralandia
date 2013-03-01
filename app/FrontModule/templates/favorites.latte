@@ -56,7 +56,7 @@
 	</div>
 
 	
-	<ul class="dropdown-menu" role="menu" id="favoriteShareContent" style="display: none;">
+{* 	<ul class="dropdown-menu" role="menu" id="favoriteShareContent" style="display: none;">
 		<li class="favoriteSocialIcons">
 			
             <ul>
@@ -78,7 +78,36 @@
 		<li class="shareOrder">
 			<label>Direct Link</label><input type="text" /><button class="btn btn-green">#copy link</button>
 		</li>
-	</ul>
+	</ul> *}
+
+
+	<ul class="dropdown-menu" role="menu" id="favoriteShareContent" style="display: none;">
+		<li class="favoriteSocialIcons">
+			<table>
+				<tr>
+				<td>Via social</td>
+					<td colspan="2">
+		                <span class="facebook FacebookLikeButtonContainer" data-facebook-locate="{$localeCode}" data-facebook-src="{$homepageUrl}">                    
+		                </span>
+		                <g:plusone size="medium" href="{$homepageUrl}"  style="margin-top:2px;"></g:plusone>
+		                <a href="https://twitter.com/share" class="twitter-share-button" data-url="{$homepageUrl}" data-via="Tralandia" data-text="data text" data-hashtags="ubytovanie" data-lang="en">Tweet</a>                
+		                <a href="http://pinterest.com/pin/create/button/?url={$homepageUrl}" class="pin-it-button" count-layout="horizontal"></a> 
+	                </td>		                			
+				</tr>
+				<tr>
+					<td><label>Via Email</label></td>
+					<td><input placeholder="enter email" type="text" /></td>
+					<td><button class="btn btn-green">#Send email</button></td>
+				</tr>				
+				<tr>
+					<td><label>Direct Link</label></td>
+					<td><input type="text" /></td>
+					<td><button class="btn btn-green">#copy link</button></td>
+				</tr>
+			</table>
+ 
+		</li>
+	</ul>	
 	
 
 </div>
