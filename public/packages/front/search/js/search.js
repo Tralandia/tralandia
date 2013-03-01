@@ -37,7 +37,7 @@
 
 			$('#serachSidebar').select2({
 			    placeholder: placeholder,
-			    minimumInputLength: 1,
+			    minimumInputLength: 3,
 			    ajax: { 
 			        url: url,
 			        dataType: 'json',
@@ -51,7 +51,7 @@
 			        }
 			    },
 			    formatResult: function(r){
-			    	return '<img class="flag" src="'+r.flag+'"> '+r.name;
+			    	return '<img class="flag" src="'+r.icon+'"> '+r.name;
 			    }, 
 
 			    formatSelection: function(r){

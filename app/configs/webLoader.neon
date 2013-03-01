@@ -89,6 +89,10 @@ parameters:
 				css: 
 					- fontAwesome/lib/less/font-awesome.less
 
+			calendarIframe:
+				css:
+					- front/_base/less/calendar.less
+
 			Front:
 				css:
 					#- front/_base/less/fonts.less
@@ -212,7 +216,8 @@ parameters:
 			Admin:
 
 				-  %webloader.packages.fontEntypo%
-				-  %webloader.packages.jQuery%
+				-  %webloader.packages.jQuery%				
+				-  %webloader.packages.jqueryUi%
 				-  %webloader.packages.jqueryCookie%
 				-  %webloader.packages.bootstrap%
 				-  %webloader.packages.Front%
@@ -221,8 +226,10 @@ parameters:
 				-  %webloader.packages.nette%
 				-  %webloader.packages.gMap%
 
+
 			Front:				
-				-  %webloader.packages.jQuery%				
+				-  %webloader.packages.jQuery%	
+				-  %webloader.packages.jqueryAppear%			
 				-  %webloader.packages.jqueryUi%
 				-  %webloader.packages.jqueryCookie%									
 				-  %webloader.packages.select2%
@@ -234,8 +241,8 @@ parameters:
 				#-  %webloader.packages.texyla%				
 				-  %webloader.packages.nette%								
 				-  %webloader.packages.gMap%
-				
-
+			'Front:CalendarIframe':
+				-  %webloader.packages.calendarIframe%
 			'Front:Rental:detail':
 				-  %webloader.packages.jQuery%
 				-  %webloader.packages.jqueryAppear%
@@ -270,6 +277,7 @@ parameters:
 				-  %webloader.packages.favoriteScroll%		
 			Owner: 
 				-  %webloader.packages.jQuery%
+				-  %webloader.packages.jqueryAppear%
 				-  %webloader.packages.bootstrap%
 				-  %webloader.packages.jqueryUi%
 				-  %webloader.packages.jqueryCookie%									
