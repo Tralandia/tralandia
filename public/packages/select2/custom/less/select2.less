@@ -3,6 +3,7 @@
 		div {
 			b {
 				background-image: none;
+				background: none;
 				&:before {
 					font-family: entypo;
 					content:'\E75C';
@@ -43,8 +44,12 @@
 }
 
 input[type=text].select2-input {
-	background-image: none;
+	background-image: none;	
+	
+}
 
-	
-	
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5) {
+	.select2-search input, .select2-search-choice-close, .select2-container .select2-choice abbr, .select2-container .select2-choice div b {
+		background-image: none;
+	}
 }
