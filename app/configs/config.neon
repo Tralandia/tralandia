@@ -202,6 +202,10 @@ factories:
 	# ==============================
 	# ==================== COMPONENTS
 	# ==============================
+	headerControlFactory:
+		class: BaseModule\Components\HeaderControl(%pageSeo%)
+		implement: BaseModule\Components\IHeaderControlFactory
+
 	footerControlFactory:
 		class: FrontModule\Components\Footer\FooterControl(%location%)
 		implement: FrontModule\Components\Footer\IFooterControlFactory

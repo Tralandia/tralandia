@@ -35,6 +35,11 @@ abstract class BasePresenter extends \BasePresenter {
 	 */
 	protected $favoriteList;
 
+	/**
+	 * @autowire
+	 * @var \BaseModule\Components\IHeaderControlFactory
+	 */
+	protected $headerControlFactory;
 
 	/**
 	 * @var \Service\Seo\SeoService
@@ -60,46 +65,38 @@ abstract class BasePresenter extends \BasePresenter {
 
 		$this->template->mainMenuItems = $this->rentalTypeRepositoryAccessor->get()->findBy(array(),NULL,8);
 
-		$this->template->slogan = $this->translate('o21083').' '.$this->translate(
-			$this->environment->getPrimaryLocation()->getName(),
-			NULL,
-			array('case' => \Entity\Language::LOCATIVE)
-		);
 
 
-		$language =$this->environment->getLanguage();
+		$this->template->localeCode = $this->environment->getLocale()->getCode();
+
 		$primaryLocation = $this->environment->getPrimaryLocation();
 		$domain = $primaryLocation->getDomain()->getDomain();
-		$this->template->envLanguage = $language;
-		$this->template->envPrimaryLocation = $primaryLocation;
-		$this->template->localeCode = $this->environment->getLocale()->getCode();
 		$this->template->domain = ucfirst($domain);
-		$this->template->domainHost = ucfirst(strstr($domain, '.', TRUE));
-		$this->template->domainExtension = strstr($domain, '.');
-
-		$supportedLanguages = $this->languageRepositoryAccessor->get()->getSupportedSortedByName();
-		$this->template->supportedLanguages = array_chunk($supportedLanguages,round(count($supportedLanguages)/3));
 
 		$this->template->favoriteRentals = $this->favoriteList->getRentalList();
 		$this->template->favoriteVisitedRentals = $this->favoriteList->getVisitedRentals();
 
 		$this->template->pageH1 = $this->pageSeo->getH1();
-		$this->template->homepageUrl = $this->link('//Home:');
-		$this->template->pageTitle = $this->pageSeo->getTitle();
 		$this->template->countryCountObjects =  $this->environment->primaryLocation->rentalCount;
-		//d($this->environment);
 
 		$this->template->worldwideCount = $this->locationRepositoryAccessor->get()->getWorldwideRentalCount();
 
-		$this->template->homeCacheId = 'home'.$this->template->envPrimaryLocation->id.'-'.$this->template->envLanguage->id;
-		$this->template->footerCountriesCacheId = 'footerCountries'.$this->template->envLanguage->id;
+		$this->template->homeCacheId = 'home' .
+			$this->environment->getPrimaryLocation()->getId() . '-' .
+			$this->environment->getLanguage()->getId();
+		$this->template->footerCountriesCacheId = 'footerCountries' . $this->environment->getLanguage()->getId();
 
-		$header = $this->getComponent('header');
+		$header = $this->getComponent('head');
 		$header->addTitle($this->pageSeo->getTitle());
 
 
-		
+
 		parent::beforeRender();
+	}
+
+	public function createComponentHeader()
+	{
+		return $this->headerControlFactory->create($this->pageSeo);
 	}
 
 

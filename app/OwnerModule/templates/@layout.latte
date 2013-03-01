@@ -1,16 +1,13 @@
-{control header:begin}
+{control head:begin}
 	{control css}
 	{control js}
-{control header:end}
+{control head:end}
 <body>
 	<div class="container baseRadius" id="container">
 		<div class="row">
 
-{*
-			{include '../../FrontModule/templates/header.latte'}
+			{control header}
 
-			{control searchBar}
-*}
 			<div class="span3">{include @navigation.latte}</div>
 
 			<div class="span9">
