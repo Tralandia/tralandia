@@ -52,6 +52,14 @@
 			        	var r = [];
 
 			        	$.each(data,function(k,v){
+
+			        		var sep = {
+			        			name :k,
+			        			type : 'separator'
+			        		};
+
+			        		r.push(sep);
+
 			        		$.each(v,function(key,val){
 			        			val.type = k;
 			        			if(typeof val.id != 'number'){
@@ -79,6 +87,9 @@
 			    		case 'rentals':
 			    			return r.name;
 			    			break;
+			    		case 'separator':
+			    			return '<h4>'+r.name+'</h4>';
+			    			break;			    			
 
 			    	}
 			    	
