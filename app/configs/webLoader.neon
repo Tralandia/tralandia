@@ -44,6 +44,7 @@ parameters:
 			select2:
 				css:
 					- select2/lib/css/select2.css
+					- select2/custom/less/select2.less
 				js:
 					- select2/lib/js/select2.js
 
