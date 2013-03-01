@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Repository\Rental\AmenityRepository")
  * @ORM\Table(name="rental_amenity")
  * @EA\Primary(key="id", value="id")
  * @EA\Generator(skip="{setSlug}")

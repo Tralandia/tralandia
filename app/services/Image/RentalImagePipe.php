@@ -1,6 +1,6 @@
 <?php
 
-namespace Extras;
+namespace Image;
 
 use Kdyby;
 use Entity\Rental\Image;
@@ -12,7 +12,7 @@ use Nette;
 /**
  * @author Filip Procházka <filip@prochazka.su>
  */
-class ImagePipe extends Nette\Object
+class RentalImagePipe extends Nette\Object implements IImagePipe
 {
 
 	const TEMP = 1;

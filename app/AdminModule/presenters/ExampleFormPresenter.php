@@ -75,9 +75,8 @@ class ExampleFormPresenter extends BasePresenter {
 		);
 		$form['phrase']->setDefaultValues();
 
-		$imageStorage = $this->getContext()->getService('rentalImageStorage');
-		$imagePipe = $this->getContext()->getService('rentalImagePipe');
-		$form['photos'] = new \Extras\Forms\Container\RentalPhotosContainer($rental, $this->rentalImageRepository, $imageStorage, $imagePipe);
+		$imageManager = $this->getContext()->getService('rentalImageManager');
+		$form['photos'] = new \Extras\Forms\Container\RentalPhotosContainer($rental, $imageManager);
 
 		$form['calendar'] = new \Extras\Forms\Container\CalendarContainer();
 

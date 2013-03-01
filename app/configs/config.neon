@@ -60,8 +60,6 @@ presenter:
 services:
 
 	# STORAGE
-	rentalImageStorage: Extras\RentalImageStorage(%wwwDir%%rentalImageDir%)
-	rentalImagePipe: Extras\ImagePipe(%wwwDir%, %rentalImageDir%)
 	rentalPricelistStorage: Extras\FileStorage(%wwwDir%%rentalPricelistDir%)
 	ticketMessageAttachmentStorage: Extras\FileStorage(%wwwDir%%ticketMessageAttachmentDir%)
 
@@ -148,6 +146,12 @@ services:
 	addressCreator: Service\Contact\AddressCreator
 
 	addressNormalizer: Service\Contact\AddressNormalizer
+
+
+	rentalImageStorage: Image\RentalImageStorage(%wwwDir%%rentalImageDir%)
+	rentalImagePipe: Image\RentalImagePipe(%wwwDir%, %rentalImageDir%)
+	rentalImageManager: Image\RentalImageManager(@rentalImageRepositoryAccessor)
+
 
 	# ==============================
 	# ==================== FORMS HANDLERS

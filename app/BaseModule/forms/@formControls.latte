@@ -161,14 +161,19 @@
 	@param $control \Nextras\Forms\Container\MultiOptionList
 *}
 {define #checkboxList}
-<div>{label $control /}</div>
-<div>
-	{foreach $control as $key => $label}
-		{!$control->getLabelItem($key)->addAttributes(['class' => 'checkbox'])->startTag()} {* <label ...> *}
-		{$control->getControlItem($key)}
-		{$label}
-		</label>
-	{/foreach}
+<div class="control-group ">
+	<div class="form-label">
+		{label $control /}
+		<small>{$control->getOption('description')}</small>
+	</div>
+	<div class="controls">
+		{foreach $control as $key => $label}
+			{!$control->getLabelItem($key)->addAttributes(['class' => 'checkbox'])->startTag()} {* <label ...> *}
+			{$control->getControlItem($key)}
+			{_$label}
+			</label>
+		{/foreach}
+	</div>
 </div>
 {/define #checkboxList}
 
