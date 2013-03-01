@@ -33,7 +33,7 @@ class LastSearch {
 	 * @return mixed|null
 	 */
 	public function getRentals()
-	{
+	{	
 		if(isset($this->section->rentals)) {
 			$rentals = $this->section->rentals;
 
