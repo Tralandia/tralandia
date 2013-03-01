@@ -198,6 +198,15 @@
 			   <li class="clock">
 		   		<strong>{if $animalsAllowed}{_o100018}{else}{_o100019}{/if}</strong>
 			   </li>
+
+			   <li class="dog">
+		   		<strong>{if $animalsAllowed}{_o100018}{else}{_o100019}{/if}</strong>
+			   </li>
+
+			   <li class="bell">
+		   		<strong>{if $animalsAllowed}{_o100018}{else}{_o100019}{/if}</strong>
+			   </li>			   
+
 			</ul>
 		</div>
 	</div>
@@ -359,8 +368,8 @@
 				{/if}
 
 
-				<div class="metaObjectInfo" id="tabs-2">
-					
+				<div class="metaObjectInfo">
+					<h3>#Map</h3>
 					<div id="objectDetailMap" zoom="13" value="{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}" style="width:100%;float:left;height:400px;"><i class="icon-spinner icon-spin"></i></div>
 					<!-- <ul id="placesImg"></ul> -->
 				</div>
