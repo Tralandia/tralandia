@@ -15,12 +15,24 @@ abstract class BasePresenter extends \SecuredPresenter {
 	protected $environment;
 	protected $seoFactory;
 
+	/**
+	 * @autowire
+	 * @var \BaseModule\Components\IHeaderControlFactory
+	 */
+	protected $headerControlFactory;
+
+	/**
+	 * @var \Service\Seo\SeoService
+	 */
+	public $pageSeo;
+
+
 	public function injectSeo(ISeoServiceFactory $seoFactory)
 	{
 		$this->seoFactory = $seoFactory;
 	}
 
-	public function injectEnvironment(\Extras\Environment $environment) 
+	public function injectEnvironment(\Environment\Environment $environment)
 	{
 		$this->environment = $environment;
 	}
@@ -30,6 +42,12 @@ abstract class BasePresenter extends \SecuredPresenter {
 		$this->locationRepositoryAccessor = $dic->locationRepositoryAccessor;
 		$this->rentalTypeRepositoryAccessor = $dic->rentalTypeRepositoryAccessor;
 		$this->rentalRepositoryAccessor = $dic->rentalRepositoryAccessor;
+	}
+
+	protected function startup() {
+		parent::startup();
+
+		$this->pageSeo = $this->seoFactory->create($this->link('//this'), $this->getRequest());
 	}
 
 	public function beforeRender() {
@@ -45,6 +63,11 @@ abstract class BasePresenter extends \SecuredPresenter {
 
 		$this->template->rentalList = $this->loggedUser->getRentals();
 		parent::beforeRender();
+	}
+
+	public function createComponentHeader()
+	{
+		return $this->headerControlFactory->create($this->pageSeo);
 	}
 
 	public function createComponentFooter($name) {

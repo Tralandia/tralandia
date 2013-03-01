@@ -1,14 +1,14 @@
-{control header:begin}
+{control head:begin}
 	{control css}
 	{control js}
-{control header:end}
+{control head:end}
 <body>
 	<div class="container baseRadius" id="container">
 		<div class="row">
 
 
 			{cache $homeCacheId, if => $useTemplateCache, expire => '+1 day'}
-			{include header.latte}
+			{control header}
 			{/cache}
 			{include favorites.latte}
 			{cache homeSearchBar, if => isset($isHome) && $useTemplateCache, expire => '+1 day'}
