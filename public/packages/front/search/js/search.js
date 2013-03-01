@@ -47,25 +47,66 @@
 			            };
 			        },
 			        results: function (data, page) { 
-			            return {results: data.counties};
+			        	
+
+			        	var r = [];
+
+			        	$.each(data,function(k,v){
+
+			        		var sep = {
+			        			name :k,
+			        			type : 'separator'
+			        		};
+
+			        		r.push(sep);
+
+			        		$.each(v,function(key,val){
+			        			val.type = k;
+			        			if(typeof val.id != 'number'){
+			        				val.id = k;
+			        			}
+			        			r.push(val);
+			        		});
+
+			        	});
+
+			        	//console.log(r);
+
+			            return {results:r};
 			        }
 			    },
 			    formatResult: function(r){
-			    	return '<img class="flag" src="'+r.icon+'"> '+r.name;
+
+			    	switch(r.type){
+			    		case 'counties':
+			    			return '<img class="flag" src="'+r.icon+'"> '+r.name;
+			    			break;
+			    		case 'other':
+			    			return r.name;
+			    			break;			    		
+			    		case 'rentals':
+			    			return r.name;
+			    			break;
+			    		case 'separator':
+			    			return '<h4>'+r.name+'</h4>';
+			    			break;			    			
+
+			    	}
+			    	
 			    }, 
 
 			    formatSelection: function(r){
-			    	return r.name;
+
+			    	//console.log(r);
+			    	if(typeof r.icon == 'string'){
+			    		return '<img class="flag" src="'+r.icon+'"> '+r.name;	
+			    	} else {
+			    		return r.name;
+			    	}
 			    },
 			   
 			    
-			    escapeMarkup: function (m) { return m; } ,
-			    formatInputTooShort: function (input, min) { 
-			    	var n = min - input.length; 
-			    	//conditionsText = conditionsText.split('%');
-			    	return '';
-			    	//return conditionsText[0] + n + conditionsText[1] + (n == 1? "" : "s"); 
-			    }
+			    escapeMarkup: function (m) { return m; }
 
 			});
 
