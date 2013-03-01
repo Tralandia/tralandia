@@ -39,7 +39,7 @@ abstract class BasePresenter extends Presenter {
 
 	/**
 	 * @autowire
-	 * @var \Extras\ImagePipe
+	 * @var \Image\RentalImagePipe
 	 */
 	protected $rentalImagePipe;
 

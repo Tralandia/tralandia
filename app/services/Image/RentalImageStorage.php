@@ -1,9 +1,9 @@
 <?php
-namespace Extras;
+namespace Image;
 
+use Extras\FileStorage;
 use Nette;
 use Entity\Rental\Image;
-use Nette\Http\FileUpload;
 use Nette\Utils\Finder;
 use Nette\Utils\Strings;
 

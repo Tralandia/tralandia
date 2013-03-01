@@ -2,17 +2,31 @@
 {form registrationForm, class => "traform dashboard"}
 	{include #select, control => $form['country']}
 	{include #select, control => $form['language']}
-	{include #text, control => $form['referrer']}
+	<hr/>
 	{include #email, control => $form['email']}
-	{include #phone, control => $form['phone']}
-	{include #url, control => $form['url']}
 	{include #password, control => $form['password']}
 	{include #password, control => $form['password2']}
-	{include #text, control => $form['rentalName']}
-	{include #select, control => $form['rentalType']}
-	{include #address, control => $form['rentalAddress']}
-	{include #select, control => $form['rentalClassification']}
-	{include #text, control => $form['rentalPrice'], append => ['text' => 'EUR / noc']}
-	{include #text, control => $form['rentalMaxCapacity']}
+	<hr/>
+	{include #text, control => $form['name']}
+	{include #phone, control => $form['phone']}
+	{include #url, control => $form['url']}
+	<hr/>
+	{var $rental = $form['rental']}
+	{include #address, control => $rental['address']}
+	{include #checkboxList, control => $rental['amenityLocation']}
+	<hr/>
+	{include #text, control => $rental['name']}
+	{include #select, control => $rental['type']}
+	{include #select, control => $rental['classification']}
+	{include #text, control => $rental['price'], append => ['text' => 'EUR / noc']}
+	{include #text, control => $rental['maxCapacity']}
+	<hr/>
+	{include #select, control => $rental['classification']}
+	{include #checkboxList, control => $rental['board']}
+	{include #checkboxList, control => $rental['important']}
+	{include #checkboxList, control => $rental['ownerAvailability']}
+	<hr/>
+	{include #rentalPhotos, control => $rental['photos']}
+	<hr/>
 	{include #submit, control => $form['submit'], icon => 'icon-trash'}
 {/form}
