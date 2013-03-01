@@ -3,6 +3,7 @@
 namespace FrontModule\Forms;
 
 use Doctrine\ORM\EntityManager;
+use Image\RentalImageManager;
 use Nette;
 use Nette\Localization\ITranslator;
 use Entity\Location\Location;
@@ -24,35 +25,48 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 	/**
 	 * @var \Entity\Location\Location
 	 */
-	private $country;
+	protected $country;
 
 	/**
 	 * @var \Repository\Location\LocationRepository
 	 */
-	private $locationRepository;
+	protected $locationRepository;
 
 	/**
 	 * @var \Repository\LanguageRepository
 	 */
-	private $languageRepository;
+	protected $languageRepository;
 
 	/**
 	 * @var \Repository\Rental\TypeRepository
 	 */
-	private $rentalTypeRepository;
+	protected $rentalTypeRepository;
+
+	/**
+	 * @var \Image\RentalImageManager
+	 */
+	protected $imageManager;
+
+	/**
+	 * @var \Repository\Rental\AmenityRepository
+	 */
+	protected $amenityRepository;
 
 	/**
 	 * @param \Entity\Location\Location $country
 	 * @param \Doctrine\ORM\EntityManager $em
+	 * @param \Image\RentalImageManager $imageManager
 	 * @param \Nette\Localization\ITranslator $translator
 	 */
-	public function __construct(Location $country, EntityManager $em, ITranslator $translator)
+	public function __construct(Location $country, EntityManager $em, RentalImageManager $imageManager,
+								ITranslator $translator)
 	{
 		$this->country = $country;
-		d($country);
+		$this->imageManager = $imageManager;
 		$this->locationRepository = $em->getRepository('\Entity\Location\Location');
 		$this->languageRepository = $em->getRepository('\Entity\Language');
 		$this->rentalTypeRepository = $em->getRepository('\Entity\Rental\Type');
+		$this->amenityRepository = $em->getRepository('\Entity\Rental\Amenity');
 		parent::__construct($translator);
 	}
 
@@ -66,25 +80,52 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 
 		$this->addSelect('country', 'Country', $countries);
 		$this->addSelect('language', 'Language', $languages);
-		$this->addText('referrer', 'Referrer');
+
+
 		$this->addText('email', 'Email');
-
-		$this['phone'] = new PhoneContainer('Phone', $phonePrefixes);
-
-		$this->addText('url', 'WWW');
-
 		$this->addPassword('password', 'Password');
 		$this->addPassword('password2', 'Confirm Password');
 
+		$this->addText('name', 'Name');
+		$this['phone'] = new PhoneContainer('Phone', $phonePrefixes);
+		$this->addText('url', 'WWW');
 
-		$this->addText('rentalName', 'Rental Name');
-		$this->addSelect('rentalType', 'Rental Type', $rentalTypes);
-		$this->addSelect('rentalClassification', 'Classification', array('*', '**', '***', '****', '*****'));
-		$this['rentalAddress'] = new AddressContainer($countries, $this->country);
+		$rentalContainer = $this->addContainer('rental');
 
-		$this->addText('rentalPrice', 'Price category');
+		$rentalContainer['address'] = new AddressContainer($countries, $this->country);
+		$amenityLocation = $this->amenityRepository->findByLocationTypeForSelect();
 
-		$this->addText('rentalMaxCapacity', 'Max Capacity');
+		$rentalContainer->addMultiOptionList('amenityLocation', 'Amenity Location', $amenityLocation);
+
+
+		$rentalContainer->addText('name', 'Rental Name');
+		$rentalContainer->addSelect('type', 'Rental Type', $rentalTypes);
+		$rentalContainer->addSelect('classification', 'Classification', array('*', '**', '***', '****', '*****'));
+
+		$check = ['dohoda', 'hocikedy', '8:00', '10:00', '15:00', '21:00'];
+		$rentalContainer->addSelect('checkIn', 'Check In', $check);
+		$rentalContainer->addSelect('checkOut', 'Check Out', $check);
+
+		$rentalContainer->addText('maxCapacity', 'Max Capacity')
+			->addRule(self::RANGE, 'zadaj coslo od %d do %d', [1, 1000]);
+
+		$rentalContainer->addText('bedroomCount', 'Bedroom Count')
+			->addRule(self::RANGE, 'zadaj coslo od %d do %d', [1, 1000]);
+
+		$rentalContainer->addCheckbox('separateGroups', 'Separate groups');
+
+		$rentalContainer->addText('price', 'Price category');
+
+		$pet = ['Luzbo', 'je', 'super!'];
+		$rentalContainer->addSelect('pet', 'Pet', $pet);
+
+		$amenityBoard = $this->amenityRepository->findByBoardTypeForSelect();
+		$rentalContainer->addMultiOptionList('board', 'Amenity board', $amenityBoard);
+		$rentalContainer->addMultiOptionList('important', 'important amenities', $amenityBoard);
+		$rentalContainer->addMultiOptionList('ownerAvailability', 'availability', $amenityBoard);
+
+
+		$rentalContainer['photos'] = new \Extras\Forms\Container\RentalPhotosContainer(NULL, $this->imageManager);
 
 		$this->addSubmit('submit', 'OK let\'s do this shit');
 
@@ -116,7 +157,7 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 			],
 		];
 		$this->setDefaults($defaults);
-		$this['rentalAddress']->setDefaultValues();
+		$this['rental']['address']->setDefaultValues();
 	}
 
 }

@@ -117,7 +117,7 @@ class ImageMacro extends Nette\Latte\Macros\MacroSet
 	public static function validateTemplateParams(Nette\Templating\Template $template)
 	{
 		$params = $template->getParameters();
-		if (!isset($params['_imagePipe']) || !$params['_imagePipe'] instanceof ImagePipe) {
+		if (!isset($params['_imagePipe']) || !$params['_imagePipe'] instanceof \Image\IImagePipe) {
 			$where = isset($params['control']) ?
 				" of component " . get_class($params['control']) . '(' . $params['control']->getName() . ')'
 				: NULL;

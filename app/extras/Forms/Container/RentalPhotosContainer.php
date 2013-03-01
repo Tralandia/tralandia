@@ -3,8 +3,7 @@
 namespace Extras\Forms\Container;
 
 use Extras\Forms\Control\MfuControl;
-use Extras\ImagePipe;
-use Extras\RentalImageStorage;
+use Image\RentalImageManager;
 
 class RentalPhotosContainer extends BaseContainer
 {
@@ -14,26 +13,17 @@ class RentalPhotosContainer extends BaseContainer
 	 */
 	protected $rental;
 
-	protected $imageRepository;
-
 	/**
-	 * @var \Extras\RentalImageStorage
+	 * @var \Image\RentalImageManager
 	 */
-	protected $imageStorage;
+	protected $imageManager;
 
-	/**
-	 * @var \Extras\ImagePipe
-	 */
-	protected $imagePipe;
 
-	public function __construct(\Entity\Rental\Rental $rental, $imageRepository, RentalImageStorage $imageStorage,
-								ImagePipe $imagePipe)
+	public function __construct(\Entity\Rental\Rental $rental = NULL, RentalImageManager $imageManager)
 	{
 		parent::__construct();
 		$this->rental = $rental;
-		$this->imageRepository = $imageRepository;
-		$this->imageStorage = $imageStorage;
-		$this->imagePipe = $imagePipe;
+		$this->imageManager = $imageManager;
 
 		$this['upload'] = $upload = new MfuControl();
 		$upload->allowMultiple()->onUpload[] = $this->processUpload;
@@ -46,8 +36,12 @@ class RentalPhotosContainer extends BaseContainer
 		return $this['upload'];
 	}
 
+	/**
+	 * @return array|null
+	 */
 	public function getImages()
 	{
+		if(!$this->rental) return [];
 		return $this->rental->getImages();
 	}
 
@@ -60,16 +54,10 @@ class RentalPhotosContainer extends BaseContainer
 		$payload = [];
 		foreach($files as $file) {
 			if($file->isOk() && $file->isImage()) {
-				$path = $this->imageStorage->saveImage($file->toImage());
-
-				/** @var $image \Entity\Rental\Image */
-				$image = $this->imageRepository->createNew();
-				$image->setFilePath($path);
-				$this->imageRepository->save($image);
-
+				$image = $this->imageManager->save($file->toImage());
 				$payload[] = [
 					'id' => $image->getId(),
-					'path' => $this->imagePipe->request($image),
+					'path' => $this->imageManager->getImageRelativePath($image),
 				];
 			}
 		}
