@@ -493,7 +493,7 @@ table.detailInfoBox {
 		.content , .amenitiesStart {
 			width: 345px;
 			float: right;
-			margin-bottom: 10px;
+			
 			padding-right: 25px;
 
 
@@ -585,8 +585,10 @@ width: 345px;
 			}			
 		}		
 
+padding-top: 10px;
+
 		&.clock {
-			padding-top: 10px;
+			
 			clear: both;
 			&:before {
 				content:'\1F554';
@@ -600,12 +602,30 @@ width: 345px;
 				content:'\f0f4';
 			}			
 		}
+		&.dog {			
+			padding-top: 10px;
+			&:before {
+				font-family: 'FontAwesome';
+				font-size: 15px;
+				left: -14px;
+				content: "\f113";
+			}			
+		}
 
 		&.monitor {			
 			&:before {
 				font-family: 'entypo';
 				font-size: 27px;
 				content:'\1F4BB';
+			}			
+		}		
+
+		&.bell {			
+			&:before {
+				font-family: 'entypo';
+				font-size: 32px;
+				content:'\1F514';
+				left: -14px;				
 			}			
 		}		
 
