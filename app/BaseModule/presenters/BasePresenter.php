@@ -1,11 +1,8 @@
 <?php
 
-use Nette\Environment;
 use Nette\Utils\Arrays;
 use Nette\Utils\Finder;
 use Nette\Utils\Strings;
-use Nette\Security\User;
-use Nette\Reflection\Property;
 use Nette\Application\UI\Presenter;
 
 
@@ -78,8 +75,6 @@ abstract class BasePresenter extends Presenter {
 			$this->redirect(301, 'this');
 		}
 
-		//$this->initCallbackPanel();
-
 		if($autologin = $this->getParameter(\Routers\OwnerRouteList::AUTOLOGIN)) {
 			try{
 				$identity = $this->authenticator->autologin($autologin);
@@ -107,20 +102,6 @@ abstract class BasePresenter extends Presenter {
 
 	public function injectUserRepository(\Nette\DI\Container $dic) {
 		$this->userRepositoryAccessor = $dic->userRepositoryAccessor;
-	}
-
-	public function initCallbackPanel()
-	{
-		d($this->link(':Admin:RunRobot:searchCache', array('language' => $this->language->getId(),
-			'primaryLocation' => $this->primaryLocation->getId())));
-		$self = $this;
-		$callbacks = array();
-		$callbacks['test'] = array(
-			'name' => "test",
-			'function' => function () use($self) {$self->redirect(':Admin:RunRobot:searchCache');},
-		);
-
-		\Addons\Panels\Callback::register($this->getContext(), $callbacks);
 	}
 
 	public function getPreviousBackLink() {
@@ -190,7 +171,7 @@ abstract class BasePresenter extends Presenter {
 	/**
 	 * @return HeaderControl
 	 */
-	protected function createComponentHeader() {
+	protected function createComponentHead() {
 		list($modul, $presenter) = explode(':', $this->name, 2);
 		$action = $this->action;
 
