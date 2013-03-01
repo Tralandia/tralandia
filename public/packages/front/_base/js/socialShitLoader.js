@@ -23,7 +23,7 @@ function initSocialPlugins(){
 }
 
 function initAllFacebookLikeButtons(){
-	$('.facbookLikeButtonContainer').each(function(){
+	$('.FacebookLikeButtonContainer').each(function(){
 		initFacebookLikePlugin(this);
 	});
 }
