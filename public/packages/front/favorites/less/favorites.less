@@ -481,13 +481,45 @@ color: #213875;
 #favoriteShareContent {
 display: block;
 width: 500px;
-height: 102px;
+height: 82px;
 left: 10px;
 }
 
 
 #favoriteShareContent {
 
+
+	table {
+		width: 100%;
+
+		tr {
+			border-bottom: 1px solid #ddd;
+			padding: 0 10px;
+
+			td {
+				&:first-child {
+					padding-left:10px;
+				}
+			}
+
+			&:last-child {
+				border: none;
+			}
+		}
+
+		input {
+			margin: 0;
+			height: 16px;
+			width: 94%;
+		}
+
+		button {
+height: 25px;
+line-height: 14px;
+		}
+
+
+	}
 
 	.favoriteSocialIcons ul {
 		margin: 0;
