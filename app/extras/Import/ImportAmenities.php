@@ -21,6 +21,7 @@ class ImportAmenities extends BaseImport {
 
 		$groups = array(
 			array('activity', 'activities', 'activity'),
+			array('location', 'locations', 'location'),
 			array('important', 'important', 'important'),
 			array('children', 'children', 'children'),
 			array('room', 'room', 'room'),
