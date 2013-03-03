@@ -449,6 +449,10 @@ table.detailInfoBox {
 				&:last-child {
 					border: none;
 				}
+
+				&:hover {
+					background-color: #fafafa;
+				}
 			}	
 		}
 
@@ -569,7 +573,7 @@ table.detailInfoBox {
 			list-style: none;
 
 			li {
-				margin: 0;
+				margin: 5px 0 0 0;
 				padding: 0;
 				width: 340px;
 				&:before {
@@ -705,7 +709,6 @@ padding-top: 10px;
 	line-height:32px;
 	border-bottom: 1px solid #9daa5a;
 	.top-border-radius(5px);
-	text-shadow: -1px -1px 0px #7d9506;
 	font-size: 14px;
 }
 
@@ -750,6 +753,9 @@ padding-top: 10px;
 				margin-right: 3px;
 				position: relative;
 				top: -1px;
+			}
+			&.icon-globe:before {
+				font-size: 18px;
 			}
 		}
 

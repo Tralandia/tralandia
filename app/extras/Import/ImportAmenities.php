@@ -20,23 +20,23 @@ class ImportAmenities extends BaseImport {
 
 
 		$groups = array(
-			array('activity', 'activities', 'activity'),
-			array('location', 'locations', 'location'),
 			array('important', 'important', 'important'),
+			array('location', 'locations', 'location'),
 			array('children', 'children', 'children'),
-			array('room', 'room', 'room'),
-			array('kitchen', 'kitchens', 'kitchen'),
-			array('bathroom', 'bathrooms', 'bathroom'),
-			array('heating', 'heating', 'heating'),
-			array('parking', 'parking', 'parking'),
+			array('activity', 'activities', 'activity'),
 			array('relax', 'relax', 'relax'),
+			array('board', 'board', 'board'),
 			array('service', 'services', 'service'),
 			array('wellness', 'wellness', 'wellness'),
 			array('congress', 'congress', 'congress'),
+			array('kitchen', 'kitchens', 'kitchen'),
+			array('bathroom', 'bathrooms', 'bathroom'),
+			array('room', 'room', 'room'),
+			array('heating', 'heating', 'heating'),
+			array('parking', 'parking', 'parking'),
 			// array('tag', 'tags', 'tag'),
 			array('room type', 'room types', 'room-type'),
 			array('owner availability', 'owner availability', 'owner-availability'),
-			array('board', 'board', 'board'),
 			array('separate group', 'separate groups', 'separate-groups'),
 			array('animal', 'animals', 'animal'),
 			array('other', 'other', 'other'),
@@ -53,6 +53,7 @@ class ImportAmenities extends BaseImport {
 			$g = $this->context->rentalAmenityTypeEntityFactory->create();
 			$g->name = $this->createPhraseFromString('\Rental\AmenityType', 'name', 'ACTIVE', $value[0], $en);
 			$g->slug = $value[2];
+			$g->sort = $key;
 			$this->model->persist($g);
 		}
 		$this->model->flush();

@@ -474,10 +474,10 @@ class Location extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Contact\Address
 	 * @return \Entity\Location\Location
 	 */
-	public function addAddresse(\Entity\Contact\Address $addresse)
+	public function addAddress(\Entity\Contact\Address $address)
 	{
-		if(!$this->addresses->contains($addresse)) {
-			$this->addresses->add($addresse);
+		if(!$this->addresses->contains($address)) {
+			$this->addresses->add($address);
 		}
 
 		return $this;
@@ -487,9 +487,9 @@ class Location extends \Entity\BaseEntityDetails {
 	 * @param \Entity\Contact\Address
 	 * @return \Entity\Location\Location
 	 */
-	public function removeAddresse(\Entity\Contact\Address $addresse)
+	public function removeAddress(\Entity\Contact\Address $address)
 	{
-		$this->addresses->removeElement($addresse);
+		$this->addresses->removeElement($address);
 
 		return $this;
 	}

@@ -15,15 +15,14 @@
 					*}
 
 					<li class="home topicon"><a href="{plink :Front:Home:default}"><i class="entypo-home"></i>
-					Home</a></li>
-					<li class="topicon edit"><a href="{plink :Owner:Rental:edit}"><i class="entypo-edit"></i> Real
-					Text</a>
+					{_o100042}</a></li>
+					<li class="topicon edit"><a href="{plink :Owner:Rental:edit}"><i class="entypo-edit"></i>{_o100043}</a>
 					</li>
-					<li class="topicon"><a href="{plink :Owner:Rental:add}" class="red"><i class="entypo-plus2"></i><strong>Real text</strong></a></li>
+					<li class="topicon"><a href="{plink :Owner:Rental:add}" class="red"><i class="entypo-plus2"></i><strong>{_o100044}</strong></a></li>
 
 					<li>
 						<div class="dropdown lang">
-							<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="langMenuOptionsOpen"><i class="entypo-language"></i> #Slovencina </a>
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="langMenuOptionsOpen"><i class="icon-globe"></i>{_$environment->getLanguage()->name}</a>
 						</div>
 					</li>
 
@@ -70,7 +69,7 @@
 						<ul>
 							<li id="headerFacbookLikeContainer" class="facbookLikeButtonContainer" data-facebook-src="{$homepageUrl}"></li>
 							<li><g:plusone size="medium" href="{$homepageUrl}"  style="margin-top:2px;"></g:plusone></li>
-							<li><a href="https://twitter.com/share" class="twitter-share-button" data-url="{$homepageUrl}" data-via="Tralandia" data-text="data text" data-hashtags="ubytovanie" data-lang="en">Tweet</a></li>
+							<li><a href="https://twitter.com/share" class="twitter-share-button" data-url="{$homepageUrl}" data-via="Tralandia" data-text="{_o100036}" data-hashtags="{_o100034}" data-lang="{$environment->getLanguage()->getIso()}">Tweet</a></li>
 							<li>
 								<a href="http://pinterest.com/pin/create/button/?url={$homepageUrl}" class="pin-it-button" count-layout="horizontal"></a>
 							</li>

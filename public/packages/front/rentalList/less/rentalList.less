@@ -140,8 +140,6 @@
 		}
 
 		img {
-			position: relative;
-			top: -32px;
 			width: 245px;
 			height: 145px;
 			z-index: 1;
@@ -190,10 +188,23 @@
 		max-width: 370px;
 		padding-top: 2px;
 
-	white-space: nowrap;
-	
-	overflow: hidden;
-	text-overflow: ellipsis;		
+		white-space: nowrap;
+		
+		overflow: hidden;
+		text-overflow: ellipsis;		
+
+		.clasification {
+			i::before {
+				font-size: 20px;
+				color: @darkGreen;
+				top: -1px;
+				text-decoration: none;
+			}
+			i:hover::before {
+				text-decoration: none!Important;
+			}
+		}
+
 
 	}
 
