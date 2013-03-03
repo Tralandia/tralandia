@@ -65,8 +65,6 @@ abstract class BasePresenter extends \BasePresenter {
 
 		$this->template->mainMenuItems = $this->rentalTypeRepositoryAccessor->get()->findBy(array(),NULL,8);
 
-
-
 		$this->template->localeCode = $this->environment->getLocale()->getCode();
 
 		$primaryLocation = $this->environment->getPrimaryLocation();
@@ -84,7 +82,10 @@ abstract class BasePresenter extends \BasePresenter {
 		$this->template->homeCacheId = 'home' .
 			$this->environment->getPrimaryLocation()->getId() . '-' .
 			$this->environment->getLanguage()->getId();
+		
 		$this->template->footerCountriesCacheId = 'footerCountries' . $this->environment->getLanguage()->getId();
+
+		$this->template->currentLanguage = $this->environment->getLanguage();
 
 		$header = $this->getComponent('head');
 		$header->addTitle($this->pageSeo->getTitle());

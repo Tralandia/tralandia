@@ -65,7 +65,7 @@ class FavoriteList extends \Entity\BaseEntity {
 
 		$this->rentals = new \Doctrine\Common\Collections\ArrayCollection;
 	}
-
+		
 	/**
 	 * @return \DateTime|NULL
 	 */
@@ -73,7 +73,7 @@ class FavoriteList extends \Entity\BaseEntity {
 	{
 		return $this->lastUsed;
 	}
-
+		
 	/**
 	 * @param \Entity\Rental\Rental
 	 * @return \Entity\FavoriteList

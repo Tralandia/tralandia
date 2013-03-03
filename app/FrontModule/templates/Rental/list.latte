@@ -41,8 +41,8 @@
 		        <div class="row-fluid objecList {$lastClass}">
 		        	<div class="span4">
 		        		<a href="{link Rental:detail $rental}" n:class="$featured ? top , clasic">
-		        		<div class="price">{$rental->price} <span>EUR</span></div>
-		        		<!--<div class="addons btn">icon</div>--><div class="position">TOP</div>
+		        		{* <div class="price">{$rental->price} <span>EUR</span></div> *}
+		        		{* <<div class="addons btn">icon</div><div class="position">TOP</div> *}
 		        		
 
 		        		{if $mainImage = $rental->getMainImage()}
@@ -54,7 +54,7 @@
 		        		</a>
 		        	</div>
 		        	<div class="span8">
-		        		<h2><a href="{link Rental:detail $rental}">{_$rental->name}</a></h2>
+		        		<h2><a href="{link Rental:detail $rental}">{_$rental->name}{if $rental->classification > 0 }&nbsp;{for $i = 0; $i < $rental->classification; $i++}<span class="clasification"><i class="entypo-star"></i>{/for}{/if}</a></h2>
 		        		
 		        		{if $mainImage = $rental->getMainImage()}
 		        			<button rel="{$rental->id}" data-title="{_$rental->name}" link="{link Rental:detail $rental}" thumb="{$basePath}{$mainImage|rentalImageSrc}" class="addToFavorites btn btn-mini listCompareBtn active"><span class="entypo-heart">{_o12334}</span> </button>
@@ -98,8 +98,8 @@
                             <table class="holder">
                                 <tbody><tr>
                                     <td width="90%">
-                                    	<b>#Cena od: {$rental->price} #€</b> #osoba/noc, 
-                                        <b>{_o924}</b> {$rental->maxCapacity} #osob
+                                    	<b>{_o100041} {$rental->price}</b> {_o100004}, 
+                                        <b>{_o924}</b> {$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}
                                         
                                     </td>
                                
@@ -110,9 +110,12 @@
                                 </tr>
                             </tbody></table>
                             <p class="accessories">
-                            	{foreach $rental->amenities as $amenity}
-                            		{_$amenity->name}{if !$iterator->last}, {/if}
-                            	{/foreach}
+       						{var $importantAmenities = $rental->getImportantAmenities(true)}
+								{foreach $importantAmenities  as $amenities}					
+									{foreach $amenities as $amenity}							
+										{if $iterator->first}{_$amenity->name|firstUpper}{else}{_$amenity->name}{/if}{if !$iterator->last}, {/if}
+									{/foreach}					
+								{/foreach}
                             </p>
                         </div>
 
