@@ -333,7 +333,7 @@ class Address extends \Entity\BaseEntity {
 		if(!$this->locations->contains($location)) {
 			$this->locations->add($location);
 		}
-		$location->addAddresse($this);
+		$location->addAddress($this);
 
 		return $this;
 	}
@@ -345,7 +345,7 @@ class Address extends \Entity\BaseEntity {
 	public function removeLocation(\Entity\Location\Location $location)
 	{
 		$this->locations->removeElement($location);
-		$location->removeAddresse($this);
+		$location->removeAddress($this);
 
 		return $this;
 	}

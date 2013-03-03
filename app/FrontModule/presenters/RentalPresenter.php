@@ -4,6 +4,7 @@ namespace FrontModule;
 
 use Model\Rental\IRentalDecoratorFactory;
 use FrontModule\Forms\Rental\IReservationFormFactory;
+use Nette\Utils\Strings;
 
 class RentalPresenter extends BasePresenter {
 
@@ -58,7 +59,7 @@ class RentalPresenter extends BasePresenter {
 
 		$firstAnswer = $rental->getFirstInterviewAnswer();
 		if ($firstAnswer) {
-			$this->template->firstAnswer = $this->translate($firstAnswer->answer);		
+			$this->template->firstAnswer = \Nette\Utils\Strings::truncate($this->translate($firstAnswer->answer), 200);		
 		} else {
 			$this->template->firstAnswer = NULL;
 		}
@@ -69,6 +70,10 @@ class RentalPresenter extends BasePresenter {
 		$dateUpdated = new \Nette\DateTime();
 		$dateUpdated->from($rental->updated);
 		$this->template->dateUpdated = $dateUpdated->__toString();
+
+		$calendarUpdated = new \Nette\DateTime();
+		$calendarUpdated->from($rental->calendarUpdated);
+		$this->template->calendarUpdated = $calendarUpdated->__toString();
 		$this->setLayout('detailLayout');
 
 		$this->template->navBar = $this->getNavigationBar($rental);

@@ -33,6 +33,12 @@ class AmenityType extends \Entity\BaseEntity {
 	protected $slug;
 	
 	/**
+	 * @var integer
+	 * @ORM\Column(type="integer")
+	 */
+	protected $sorting;
+
+	/**
 	 * @param string
 	 * @return \Entity\Rental\AmenityType
 	 */
@@ -112,5 +118,24 @@ class AmenityType extends \Entity\BaseEntity {
 	public function getSlug()
 	{
 		return $this->slug;
+	}
+		
+	/**
+	 * @param integer
+	 * @return \Entity\Rental\AmenityType
+	 */
+	public function setSorting($sorting)
+	{
+		$this->sorting = $sorting;
+
+		return $this;
+	}
+		
+	/**
+	 * @return integer|NULL
+	 */
+	public function getSorting()
+	{
+		return $this->sorting;
 	}
 }
