@@ -57,6 +57,7 @@ class HeaderControl extends \BaseModule\Components\BaseControl {
 
 
 		$template->localeCode = $this->environment->getLocale()->getCode();
+		$template->localeGoogleCode = $this->environment->getLocale()->getGooglePlusLangCode();
 
 		$template->homepageUrl = $this->presenter->link('//:Front:Home:');
 		$template->homepageSeo = $this->seoFactory->create($template->homepageUrl, $this->presenter->getLastCreatedRequest());
