@@ -90,7 +90,7 @@
 				<ul>
 
 					{foreach $rental->pricelistRows as $pricelistRow}
-					<li title="{_o100040} {_$pricelistRow->roomType->name, null , [count => 1]}">	
+					<li tooltip="true" title="{_o100040} {_$pricelistRow->roomType->name, null , [count => 1]}">	
 					{$pricelistRow->roomCount} {_$pricelistRow->roomType->name, null , [count => $pricelistRow->roomCount]}
 						<span>
 							{$pricelistRow->bedCount} {_o100006 , null , [count => $pricelistRow->bedCount]}
@@ -238,7 +238,7 @@
 				<a class="close"><i class="icon-remove-sign"></i></a>
 
 
-				<span class="facbookLikeButtonContainer" data-facebook-src="{link Rental:detail $rental}"></span>
+				<span class="facebookLikeButtonContainer" data-facebook-src="{link Rental:detail $rental}"></span>
 
 				
 				<g:plusone size="medium" href="{link Rental:detail $rental}"  style="margin-top:2px;"></g:plusone>

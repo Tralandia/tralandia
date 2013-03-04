@@ -119,4 +119,8 @@
 
 $(function(){
 	$('.searchForm').searchFormSuggest();
+
+	$('#serachSidebar').on('change',function(e){
+		console.log($(this).val());
+	});
 });

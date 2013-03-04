@@ -112,7 +112,7 @@
 		}
 	}
 
-	#pageTitle , .gradientEnd {
+	#pageTitle , .gradiendEnd {
 		padding: 10px;				
 		height:50px;	
 		position: relative;
@@ -149,7 +149,7 @@
 
 	}
 
-	.gradientEnd {			
+	.gradiendEnd {			
 		width: 412px;
 		background: url('../packages/front/_base/img/gradient.png') repeat-y;				
 	}
@@ -424,7 +424,8 @@
 					&.dropdown-toggle {
 						
 						position: relative;
-						top: -3px;
+						top: 0;
+						height: 19px;
 
 						&:hover {
 							text-decoration: none;
@@ -433,14 +434,15 @@
 						i {
 							position: relative;
 							top: 6px;
-							color: @darkGreen;
-
+							color: @brown;
+							float: left;
 							&.entypo-language {
 
 								&:before {
 									color: @brown;
 									position: relative;
 									top: -3px;
+
 									font-size: 30px;									
 								}
 

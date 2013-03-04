@@ -16,7 +16,7 @@ $(document).ready(function(){
 
     	} else {
     		$('#favoritesStaticContainer').css({
-    			position: 'static'
+    			position: 'relative'
     		});    	
             
             favoritesPlaceholder('hide');
