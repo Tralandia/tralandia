@@ -27,7 +27,7 @@ class Environment extends Nette\Object {
 	protected $translator;
 
 	/**
-	 * @var Locale
+	 * @var \Environment\Locale
 	 */
 	protected $locale;
 
@@ -68,14 +68,13 @@ class Environment extends Nette\Object {
 	}
 
 	/**
-	 * @return Locale
+	 * @return \Environment\Locale
 	 */
 	public function getLocale()
 	{
 		if(!$this->locale) {
 			$this->locale = new Locale($this);
 		}
-
 		return $this->locale;
 	}
 

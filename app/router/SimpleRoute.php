@@ -60,7 +60,7 @@ class SimpleRoute extends BaseRoute
 		$url = $this->route->constructUrl($appRequest, $refUrl);
 
 		// @todo @hack
-		if(\Tra\Utils\Strings::endsWith($url, '/front/')) {
+		if(\Nette\Utils\Strings::endsWith($url, '/front/')) {
 			$url = substr($url, 0, -6);
 		}
 

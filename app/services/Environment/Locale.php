@@ -94,7 +94,7 @@ class Locale {
 	 */
 	public function getDateFormat()
 	{
-		return '%Y/%m/%d';
+		return 'Y-m-d';
 	}
 
 	/**
@@ -102,7 +102,7 @@ class Locale {
 	 */
 	public function getTimeFormat()
 	{
-		return '%H:%M';
+		return 'H:i';
 	}
 
 	/**
