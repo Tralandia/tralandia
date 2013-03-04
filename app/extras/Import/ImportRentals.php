@@ -134,7 +134,16 @@ class ImportRentals extends BaseImport {
 			//$rental->primaryLocation = $context->locationRepositoryAccessor->get()->findOneBy(array('oldId' => $x['country_id'], 'type' => $locationTypes['country']));
 
 			$rental->slug = $x['name_url'];
-			$truncatedName = Strings::truncate($x['name'], 60);
+			//$truncatedName = Strings::truncate($x['name'], 60);
+			
+			if (preg_match('/[*]{2,6}/', $x['name'], $matches)) {
+				$classification = strlen($matches[0]);
+				if ($classification > 0) {
+					$x['name'] = str_replace($matches[0], '', $x['name']);
+					$x['classification'] = $classification;
+				}
+			}
+
 			$rental->name = $this->createPhraseFromString('\Rental\Rental', 'name', 'NATIVE', $x['name'], $rental->editLanguage);
 			
 			$rental->teaser = $this->createNewPhrase($teaserDictionaryType, $x['marketing_dic_id'], NULL, NULL, $rental->editLanguage);

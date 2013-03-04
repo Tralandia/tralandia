@@ -44,8 +44,13 @@ class Locale {
 	 */
 	public function getGooglePlusLangCode()
 	{
-		$environment = $this->environment;
-		return $environment->getLanguage()->getIso() . '_' . strtoupper($environment->getPrimaryLocation()->getIso());
+		$currentCode = $this->getCode();
+		$languageCodes = array('zh-HK', 'zh-CN', 'zh-TW', 'en-GB', 'en-US', 'fr-CA', 'pt-BR', 'pt-PT', 'es-419');
+		if (in_array($currentCode, $languageCodes)) {
+			return $currentCode;
+		} else {
+			return substr($currentCode, 0, 2);
+		}
 	}
 
 	/**
