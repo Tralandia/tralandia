@@ -10,7 +10,7 @@
 					font-size: 30px;
 					line-height: 27px;	
 					position: relative;
-					left: 3px;				
+					left: 0px;				
 				}
 			}
 		}
@@ -30,18 +30,23 @@
 	}
 }
 
+.select2-drop {
+	border: 0px;
+}
+
 .select2-drop.select2-drop-active {
 	&:before {
-					font-family: entypo;
-					content:'\1F50D';
-					font-size: 30px;
-					line-height: 27px;		
-					height: 0;
-					float: right;
-					position: relative;
-					right: 10px;
-					top: 1px;
-					z-index: 9000;	
+		font-family: entypo;
+		content:'\1F50D';
+		font-size: 30px;
+		line-height: 27px;		
+		height: 0;
+		float: right;
+		position: relative;
+		right: 10px;
+		top: -2px;
+		z-index: 9000;	
+		color: #999;
 	}	
 }
 
@@ -57,5 +62,18 @@ input[type=text].select2-input {
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5) {
 	.select2-search input, .select2-search-choice-close, .select2-container .select2-choice abbr, .select2-container .select2-choice div b {
 		background-image: none;
+	}
+}
+.select2-results {
+	max-height: 300px;
+}
+.select2-results .select2-result-label {
+	padding: 3px 5px 2px;
+	margin-bottom: 3px;
+	line-height: 13px;
+
+	h4 {
+		font-size: 13px;
+		margin-bottom: 0px;
 	}
 }
