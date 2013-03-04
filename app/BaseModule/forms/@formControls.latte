@@ -103,6 +103,22 @@
 
 
 {*
+	Texyla Control -------------------------------------------
+	@param $control \Nette\Forms\Controls\TextAreaControl
+	@param $controlClass string
+*}
+{define #checkbox}
+	<div class="control-group " xmlns="http://www.w3.org/1999/html">
+		{label $control /}
+		{input $control}
+		{include #controlErrors, errors => $control->getErrors()}
+		<div class="clearfix"></div>
+	</div>
+{/define #checkbox}
+
+
+
+{*
 	Base Control -------------------------------------------
 	@param $control \Nette\Forms\Controls\BaseControl
 	@param $prepend array
@@ -452,8 +468,12 @@
         </div>
     </div>
     <div class="row-fluid">
-        <p>#Vyberte súbory alebo ich potiahnite z inej aplikácie sem. Nahrať môžete aj viac fotografií naraz. Maximálny rozmer je 1500 x 1500 pixelov. Minimálna šírka fotografie je 450px.
-            Pridanie fotografie trvá niekoľko sekúnd v závislosti od rýchlosti vášho pripojenia.</p>
+        <p>
+			#Vyberte súbory alebo ich potiahnite z inej aplikácie sem.
+			Nahrať môžete aj viac fotografií naraz. Maximálny rozmer je 1500 x 1500 pixelov.
+			Minimálna šírka fotografie je 450px.
+            Pridanie fotografie trvá niekoľko sekúnd v závislosti od rýchlosti vášho pripojenia.
+		</p>
     </div>
 
 

@@ -72,7 +72,7 @@ class LastSearch {
 	 */
 	public function getHeading()
 	{
-		$this->section->heading;
+		return $this->section->heading;
 	}
 
 }
