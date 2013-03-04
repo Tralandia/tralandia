@@ -53,7 +53,7 @@ class ImportAmenities extends BaseImport {
 			$g = $this->context->rentalAmenityTypeEntityFactory->create();
 			$g->name = $this->createPhraseFromString('\Rental\AmenityType', 'name', 'ACTIVE', $value[0], $en);
 			$g->slug = $value[2];
-			$g->sort = $key;
+			$g->sorting = $key;
 			$this->model->persist($g);
 		}
 		$this->model->flush();

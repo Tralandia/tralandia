@@ -59,7 +59,7 @@ class Price extends \Nette\Object {
 	 * @return string
 	 */
 	public function convertTo(\Entity\Currency $currency, $format = '%f %s') {
-		if(isset($this->amounts[$currency->getId()])) {
+		if(!isset($this->amounts[$currency->getId()])) {
 			if (!isset($this->amounts[1])) {
 				if ($this->sourceCurrency->exchangeRate == 0) {
 					$this->amounts[1] = 0;
