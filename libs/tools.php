@@ -109,7 +109,7 @@ class Tools {
 
 	public static $dateFormat = '%d.%m.%Y';
 	public static $timeFormat = '%H:%M';
-	public static $datetimeFormat = '%d.%m.%Y %H:%M';
+	public static $datetimeFormat = '%Y-%m-%d %H:%M';
 
 	public static function dump() {
 		$params = func_get_args();
