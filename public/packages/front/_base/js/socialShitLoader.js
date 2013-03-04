@@ -23,7 +23,7 @@ function initSocialPlugins(){
 }
 
 function initAllFacebookLikeButtons(){
-	$('.FacebookLikeButtonContainer').each(function(){
+	$('.facebookLikeButtonContainer').each(function(){
 		initFacebookLikePlugin(this);
 	});
 }
@@ -33,7 +33,7 @@ function initFacebookLikePlugin(elementId){
 	var $elem = $(elementId);
 	var params = {
 		href:$elem.attr('data-facebook-src'),
-		locate: $elem.attr('data-facebook-locate'),
+		locate: $('body').attr('data-localecode'),
 		layout: 'button_count',
 		show_faces: false,
 		width: 130,

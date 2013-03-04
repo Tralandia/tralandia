@@ -201,6 +201,7 @@ parameters:
 					#- bootstrap/lib/js/bootstrap-typeahead.js
 				css:
 					- bootstrap/lib/less/bootstrap.less
+					- bootstrap/custom/less/bootstrap.less
 
 			jQuery:
 				js: 
@@ -246,16 +247,15 @@ parameters:
 				-  %webloader.packages.calendarIframe%
 			'Front:Rental:detail':
 				-  %webloader.packages.jQuery%
-				-  %webloader.packages.jqueryAppear%
-				-  %webloader.packages.bootstrap%
+				-  %webloader.packages.jqueryAppear%				
 				-  %webloader.packages.jqueryUi%
 				-  %webloader.packages.jqueryCookie%									
 				-  %webloader.packages.select2%
 				-  %webloader.packages.fontEntypo%
-				-  %webloader.packages.fontAwesome%	
-				-  %webloader.packages.bootstrap%
+				-  %webloader.packages.fontAwesome%					
 				-  %webloader.packages.jscrollPane%			
 				-  %webloader.packages.Front%
+				-  %webloader.packages.bootstrap%
 				#-  %webloader.packages.texyla%
 				-  %webloader.packages.nette%								
 				-  %webloader.packages.gMap%			

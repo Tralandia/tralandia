@@ -428,14 +428,30 @@ $(document).ready(function(){
 
 	$('.socialIconsDetail').socialIconsDetail();
 
-	
+	$('li[tooltip="true"]').hover(function(){
+		var $self = $(this);
 
-	/*
-	$('select.select2').load(function() {
-			$(this).select2(); 
-		console.log('load selectbox');
-	});
-*/
+		var attr = $(this).attr('tooltip-location');
+
+		var position = 'top';
+
+		if (typeof attr !== 'undefined' && attr !== false) {
+		    position = attr;
+		}
+
+		$(this).tooltip({
+			animation: false,
+			placement: position,
+			trigger: 'manual'
+		});		
+
+		$(this).tooltip('show');
+	} , function(){
+		$(this).tooltip('hide');
+	})
+
+
+
 
 	
 
@@ -595,9 +611,9 @@ $(document).ready(function(){
 	});
 
 
-	$('body').click(function(){
 
-		//$("select.select2").select2('close');
+
+	$('body').click(function(){
 
 		if(langmenuOpen){
 			$('#langMenuOptions').hide();
@@ -608,7 +624,11 @@ $(document).ready(function(){
 			$('#socialIconsMenu').hide();
 			socialIconsMenu = false;
 		}      	
-	});
+		
+	});	
+
+
+
 
 	// remove object from favorites list     
 
