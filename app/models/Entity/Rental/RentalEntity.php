@@ -834,7 +834,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 	 * @param \Entity\Language
 	 * @return \Entity\Rental\Rental
 	 */
-	public function addSpokenLanguag(\Entity\Language $spokenLanguag)
+	public function addSpokenLanguage(\Entity\Language $spokenLanguag)
 	{
 		if(!$this->spokenLanguages->contains($spokenLanguag)) {
 			$this->spokenLanguages->add($spokenLanguag);
@@ -848,7 +848,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 	 * @param \Entity\Language
 	 * @return \Entity\Rental\Rental
 	 */
-	public function removeSpokenLanguag(\Entity\Language $spokenLanguag)
+	public function removeSpokenLanguage(\Entity\Language $spokenLanguag)
 	{
 		$this->spokenLanguages->removeElement($spokenLanguag);
 		$spokenLanguag->removeRental($this);

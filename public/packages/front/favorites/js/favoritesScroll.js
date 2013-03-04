@@ -9,7 +9,7 @@ $(document).ready(function(){
     	if(offset > 155){
     		$('#favoritesStaticContainer').css({
     			position: 'fixed',
-    			top:'-10px'
+    			top:'0px'
     		});
 
             favoritesPlaceholder('show');

@@ -40,6 +40,15 @@ class Locale {
 	}
 
 	/**
+	 * @return string
+	 */
+	public function getGooglePlusLangCode()
+	{
+		$environment = $this->environment;
+		return $environment->getLanguage()->getIso() . '_' . strtoupper($environment->getPrimaryLocation()->getIso());
+	}
+
+	/**
 	 * @return Collator
 	 */
 	public function getCollator()
