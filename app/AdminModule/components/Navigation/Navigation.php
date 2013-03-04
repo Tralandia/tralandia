@@ -5,7 +5,7 @@ namespace AdminModule\Components;
 use BaseModule\Components\BaseControl,
 	Nette\ArrayHash,
 	Nette\Utils\Arrays,
-	Tra\Utils\Strings;
+	Nette\Utils\Strings;
 
 class Navigation extends BaseControl {
 
