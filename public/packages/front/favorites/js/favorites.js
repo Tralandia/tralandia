@@ -157,11 +157,15 @@
 
 $(function(){
 
-
+	$('li.favoriteSocialIcons').click(function(){  
+		$('body').attr({
+			socialshareOpen: true
+		});		
+	});
 
 	$('#favoritesShareList li a').click(function(){
 		
-initAllSocialPlugins();
+		initAllSocialPlugins();
 		
 		if($(this).hasClass('open')){
 			
@@ -179,12 +183,22 @@ initAllSocialPlugins();
 	});
 
 
+
+
 	$('body').click(function(){
 
-		if($('#favoritesShareList li a').hasClass('open')){
-			$('#favoriteShareContent').hide();
-			$('#favoritesShareList li a').removeClass('open');
+		var attr = $('body').attr('socialshareOpen');	
+
+		if (typeof attr == 'undefined' || attr == false) {
+			if($('#favoritesShareList li a').hasClass('open')){
+				$('#favoriteShareContent').hide();
+				$('#favoritesShareList li a').removeClass('open');
+			}		  
+
 		}
+
+		$('body').removeAttr('socialshareOpen');  
+
 	});
 
 
