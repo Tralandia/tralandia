@@ -54,7 +54,7 @@
 		        		</a>
 		        	</div>
 		        	<div class="span8">
-		        		<h2><a href="{link Rental:detail $rental}">{_$rental->name}{if $rental->classification > 0 }&nbsp;{for $i = 0; $i < $rental->classification; $i++}<span class="clasification"><i class="entypo-star"></i>{/for}{/if}</a></h2>
+		        		<h2><a href="{link Rental:detail $rental}">{_$rental->name}</a>{if $rental->classification > 0 }&nbsp;{for $i = 0; $i < $rental->classification; $i++}<span class="clasification"><i class="entypo-star"></i>{/for}{/if}</h2>
 		        		
 		        		{if $mainImage = $rental->getMainImage()}
 		        			<button rel="{$rental->id}" data-title="{_$rental->name}" link="{link Rental:detail $rental}" thumb="{$basePath}{$mainImage|rentalImageSrc}" class="addToFavorites btn btn-mini listCompareBtn active"><span class="entypo-heart">{_o12334}</span> </button>
