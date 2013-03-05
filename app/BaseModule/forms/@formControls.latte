@@ -104,11 +104,11 @@
 
 
 {define #texyla}
-	<tr class="control-group " xmlns="http://www.w3.org/1999/html">
-		<td class="form-label">
+	<tr xmlns="http://www.w3.org/1999/html">
+		<td>
 			{label $control /}        
 		</td>
-		<td class="controls">
+		<td>
 			{input $control , class => "texyla"}
 		<td>
 		
@@ -144,11 +144,11 @@
 	@param $controlClass string
 *}
 {define #checkbox}
-	<tr class="control-group " xmlns="http://www.w3.org/1999/html">
-		<td class="form-label">
+	<tr xmlns="http://www.w3.org/1999/html">
+		<td>
 			{label $control /}        
 		</td>
-		<td class="controls">
+		<td>
 			{input $control}
 		<td>
 		
@@ -168,11 +168,11 @@
 	@param $controlClass string
 *}
 {define #baseControl}
-<tr class="control-group ">
-	<td class="form-label">
+<tr>
+	<td>
 		{label $control /}        
 	</td>
-	<td class="controls">
+	<td>
 		{capture $input}
 			{ifset $controlClass}
 				{input $control, class => $controlClass}
@@ -193,9 +193,7 @@
 			</div>
 		{else}
 			{!$input}
-		{/ifset}
-		<i class="validation"></i>
-	
+		{/ifset}	
 	</td>
 	<td>
 		<span class="help">{$control->getOption('description')}</span>
@@ -220,24 +218,43 @@
 	Checkbox List -------------------------------------------
 	@param $control \Nextras\Forms\Container\MultiOptionList
 *}
-{define #checkboxList}
-<div class="control-group ">
+{* {define #checkboxList}
+<div class="control-group" xmlns="http://www.w3.org/1999/html">
 	<div class="form-label">
 		{label $control /}
 		<small>{$control->getOption('description')}</small>
 	</div>
 	<div class="controls">
 		{foreach $control as $key => $label}
-			{!$control->getLabelItem($key)->addAttributes(['class' => 'checkbox'])->startTag()} {* <label ...> *}
+			{!$control->getLabelItem($key)->addAttributes(['class' => 'checkbox'])->startTag()}
 			{$control->getControlItem($key)}
 			{_$label}
 			</label>
 		{/foreach}
 	</div>
 </div>
+{/define #checkboxList} *}
+
+{define #checkboxList}
+	<tr xmlns="http://www.w3.org/1999/html">
+		<td>
+			{label $control /}        
+		</td>
+		<td>
+			{foreach $control as $key => $label}
+				{!$control->getLabelItem($key)->addAttributes(['class' => 'checkbox'])->startTag()} {* <label ...> *}
+				{$control->getControlItem($key)}
+				{_$label}
+				</label>
+			{/foreach}
+		<td>
+		
+		<td>
+			<span class="help">{$control->getOption('description')}</span>
+			<span class="alert">{include #controlErrors, errors => $control->getErrors()}</span>
+		</td>
+	</tr>
 {/define #checkboxList}
-
-
 
 
 
@@ -251,19 +268,21 @@
 	$mainControl = $container->getMainControl()
 }
 {?unset($control)}
-<div class="control-group  pricecontrol">
-	<div class="form-label">
-		{label $mainControl /}
-		<small>{$container->getDescription()}</small>
-	</div>
-	<div class="controls">
+
+	<tr xmlns="http://www.w3.org/1999/html">
+		<td>
+			{label $mainControl /}        
+		</td>
+		<td>
 		{input $container['amount']}
 		{input $container['currency'], class => 'select2'}
-		<i class="validation"></i>
-		{include #controlErrors, errors => $container->getAllErrors()}
-	</div>
-	<div class="clearfix"></div>
-</div>
+		<td>
+		
+		<td>
+			<span class="help">{$container->getDescription('description')}</span>
+			<span class="alert">{include #controlErrors, errors => $container->getAllErrors()}</span>
+		</td>
+	</tr>
 {/define #price}
 
 

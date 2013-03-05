@@ -1,6 +1,6 @@
 {includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
 {form registrationForm, class => "traform dashboard"}
-<table>
+<table class="formsTable">
 	{include #select, control => $form['country']}
 	{include #select, control => $form['language']}
 	{* <hr/> *}
