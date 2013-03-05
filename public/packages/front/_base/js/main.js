@@ -232,6 +232,8 @@ App.prototype.addToFavorites = function(){
 
 	var list = self.arrayFromList($.cookie('favoritesList'));
  
+	var localStorageList = $.jStorage.get('favoritesList');
+
 	var favoritesVisitedList = self.arrayFromList($.cookie('favoritesVisitedList'));
 		
 	$('#favoritesStatisContainerPlaceholder').removeClass('inactive');
@@ -279,25 +281,33 @@ App.prototype.addToFavorites = function(){
 			// if favorites dont exist 
 			// write id to cookie
 			$.cookie('favoritesList',data.id);
+
+			// write to localstorage 
+			var localStorageList = [];
+				//localStorageList[data.id] = data;
+				localStorageList.push(data);
+
+				$.jStorage.set('favoritesList',localStorageList);
+
 			// show slider
 			favoriteSlider.parent().parent().parent().slideDown(300);
 		} else {			
 			list.push(data.id);
-			$.cookie('favoritesList',list.join());			
+			$.cookie('favoritesList',list.join());	
+
+			// write to localstorage 
+			
+			localStorageList.push(data);
+			$.jStorage.set('favoritesList',localStorageList);					
 		}	
 
 		if($(this).hasClass('currentObject')){
 			newLi.addClass('current');
 		}
 
-
-
-
 		newLi.appendTo(sliderList);
 		
-
 		global.jscrollPaneApi.reinitialise();
-
 					
 		$(this).addClass('selected');
 
