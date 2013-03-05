@@ -81,8 +81,10 @@ class ImportRentals extends BaseImport {
 			}
 		}
 
+		$rentalIdIncrement = 100;
 		while ($x = mysql_fetch_array($r)) {
 			$rental = $context->rentalEntityFactory->create();
+			$rental->id = $rentalIdIncrement++;
 			$rental->oldId = $x['id'];
 
 			$user = $context->userRepositoryAccessor->get()->findOneByLogin(qc('select email from members where id = '.$x['member_id']));
