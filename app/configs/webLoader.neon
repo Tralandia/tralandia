@@ -232,6 +232,7 @@ parameters:
 			Front:				
 				-  %webloader.packages.jQuery%	
 				-  %webloader.packages.jqueryAppear%			
+				-  %webloader.packages.jstorage%			
 				-  %webloader.packages.jqueryUi%
 				-  %webloader.packages.jqueryCookie%									
 				-  %webloader.packages.select2%
@@ -247,7 +248,8 @@ parameters:
 				-  %webloader.packages.calendarIframe%
 			'Front:Rental:detail':
 				-  %webloader.packages.jQuery%
-				-  %webloader.packages.jqueryAppear%				
+				-  %webloader.packages.jqueryAppear%
+				-  %webloader.packages.jstorage%				
 				-  %webloader.packages.jqueryUi%
 				-  %webloader.packages.jqueryCookie%									
 				-  %webloader.packages.select2%
@@ -264,6 +266,7 @@ parameters:
 			'Front:Rental:list':
 				-  %webloader.packages.jQuery%
 				-  %webloader.packages.jqueryAppear%
+				-  %webloader.packages.jstorage%
 				-  %webloader.packages.jqueryCookie%
 				-  %webloader.packages.jqueryUi%				
 				-  %webloader.packages.fontEntypo%
@@ -279,6 +282,7 @@ parameters:
 			Owner: 
 				-  %webloader.packages.jQuery%
 				-  %webloader.packages.jqueryAppear%
+				-  %webloader.packages.jstorage%
 				-  %webloader.packages.bootstrap%
 				-  %webloader.packages.jqueryUi%
 				-  %webloader.packages.jqueryCookie%									
