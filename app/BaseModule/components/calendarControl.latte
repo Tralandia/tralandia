@@ -1,12 +1,12 @@
 <div class="calendar {$containerClass}" n:foreach="$months as $key => $month">
 	<div class="monthName">{$month->title}</div>
-	<div class="day dayName">P</div>
-	<div class="day dayName">U</div>
-	<div class="day dayName">S</div>
-	<div class="day dayName">S</div>
-	<div class="day dayName">P</div>
-	<div class="day dayName">S</div>
-	<div class="day dayName">N</div>
+	<div class="day dayName">{_o100053}</div>
+	<div class="day dayName">{_o100054}</div>
+	<div class="day dayName">{_o100055}</div>
+	<div class="day dayName">{_o100056}</div>
+	<div class="day dayName">{_o100057}</div>
+	<div class="day dayName">{_o100058}</div>
+	<div class="day dayName">{_o100059}</div>
 	{foreach $month->daysBefore as $day}
 		<div class="day inactive">{$day->day}</div>
 	{/foreach}

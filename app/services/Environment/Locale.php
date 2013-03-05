@@ -23,6 +23,16 @@ class Locale {
 	protected $months = [1 => '100020', '100021', '100022', '100023', '100024', '100025', '100026', '100027', '100028', '100029', '100030', '100031'];
 
 	/**
+	 * @var array
+	 */
+	protected $daysLong = [1 => '100046', '100047', '100048', '100049', '100050', '100051', '100052'];
+
+	/**
+	 * @var array
+	 */
+	protected $daysShort = [1 => '100053', '100054', '100055', '100056', '100057', '100058', '100059'];
+
+	/**
 	 * @param Environment $environment
 	 */
 	public function __construct(Environment $environment)
@@ -158,4 +168,23 @@ class Locale {
 		return $this->environment->getTranslator()->translate('o' . $this->months[$month]);
 	}
 
+	/**
+	 * @param int $day (1-7)
+	 *
+	 * @return bool|float|int|mixed|NULL|string
+	 */
+	public function getDayShort($day)
+	{
+		return $this->environment->getTranslator()->translate('o' . $this->daysShort[$day]);
+	}
+
+	/**
+	 * @param int $day (1-7)
+	 *
+	 * @return bool|float|int|mixed|NULL|string
+	 */
+	public function getDayLong($day)
+	{
+		return $this->environment->getTranslator()->translate('o' . $this->daysLong[$day]);
+	}
 }
