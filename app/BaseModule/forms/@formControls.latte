@@ -155,7 +155,7 @@
 {define #baseControl}
 <tr>
 	<td>
-		{label $control /}        
+		{_$control->caption}       
 	</td>
 	<td>
 		{capture $input}
@@ -219,9 +219,9 @@
 {/define #checkboxList} *}
 
 {define #checkboxList}
-	<tr xmlns="http://www.w3.org/1999/html">
+	<tr>
 		<td>
-			{label $control /}        
+			{_$control->caption}
 		</td>
 		<td>
 			{foreach $control as $key => $label}
@@ -282,7 +282,7 @@
 
 <tr xmlns="http://www.w3.org/1999/html">
 	<td>
-		{label $mainControl /}        
+		{_$mainControl->caption}     
 	</td>
 	<td>
 		{input $container['prefix'], class => 'select2'}
