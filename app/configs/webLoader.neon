@@ -235,12 +235,13 @@ parameters:
 				-  %webloader.packages.jstorage%			
 				-  %webloader.packages.jqueryUi%
 				-  %webloader.packages.jqueryCookie%									
-				-  %webloader.packages.select2%
+				
 				-  %webloader.packages.fontEntypo%
 				-  %webloader.packages.fontAwesome%
 				-  %webloader.packages.bootstrap%
 				-  %webloader.packages.jscrollPane%
 				-  %webloader.packages.Front%
+				-  %webloader.packages.select2%
 				#-  %webloader.packages.texyla%				
 				-  %webloader.packages.nette%								
 				-  %webloader.packages.gMap%
@@ -252,11 +253,12 @@ parameters:
 				-  %webloader.packages.jstorage%				
 				-  %webloader.packages.jqueryUi%
 				-  %webloader.packages.jqueryCookie%									
-				-  %webloader.packages.select2%
+				
 				-  %webloader.packages.fontEntypo%
 				-  %webloader.packages.fontAwesome%					
 				-  %webloader.packages.jscrollPane%			
 				-  %webloader.packages.Front%
+				-  %webloader.packages.select2%
 				-  %webloader.packages.bootstrap%
 				#-  %webloader.packages.texyla%
 				-  %webloader.packages.nette%								
