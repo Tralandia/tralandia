@@ -1,5 +1,6 @@
 {includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
 {form registrationForm, class => "traform dashboard"}
+<table>
 	{include #select, control => $form['country']}
 	{include #select, control => $form['language']}
 	<hr/>
@@ -29,4 +30,5 @@
 	{include #rentalPhotos, control => $rental['photos']}
 	<hr/>
 	{include #submit, control => $form['submit'], icon => 'icon-trash'}
+</table>
 {/form}
