@@ -87,21 +87,6 @@
 	@param $control \Nette\Forms\Controls\TextAreaControl
 	@param $controlClass string
 *}
-{* {define #texyla}
-<div class="control-group " xmlns="http://www.w3.org/1999/html">
-	<div class="form-label">
-		{label $control /}
-		<small>{$control->getOption('description')}</small>
-	</div>
-	<div class="controls">
-		{input $control , class => "texyla"}
-		<i class="validation"></i>
-		{include #controlErrors, errors => $control->getErrors()}
-	</div>
-	<div class="clearfix"></div>
-</div>
-{/define #texyla} *}
-
 
 {define #texyla}
 	<tr xmlns="http://www.w3.org/1999/html">
@@ -208,9 +193,7 @@
 	@param $errors array
 *}
 {define #controlErrors}
-<div class="control-error">
 	{foreach $errors as $error}{$error}{/foreach}
-</div>
 {/define #controlErrors}
 
 
