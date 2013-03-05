@@ -3,32 +3,32 @@
 <table>
 	{include #select, control => $form['country']}
 	{include #select, control => $form['language']}
-	<hr/>
+	{* <hr/> *}
 	{include #email, control => $form['email']}
 	{include #password, control => $form['password']}
 	{include #password, control => $form['password2']}
-	<hr/>
+	{* <hr/> *}
 	{include #text, control => $form['name']}
 	{include #phone, control => $form['phone']}
 	{include #url, control => $form['url']}
-	<hr/>
+	{* <hr/> *}
 	{var $rental = $form['rental']}
 	{include #address, control => $rental['address']}
 	{include #checkboxList, control => $rental['amenityLocation']}
-	<hr/>
+	{* <hr/> *}
 	{include #text, control => $rental['name']}
 	{include #select, control => $rental['type']}
 	{include #select, control => $rental['classification']}
 	{include #text, control => $rental['price'], append => ['text' => 'EUR / noc']}
 	{include #text, control => $rental['maxCapacity']}
-	<hr/>
+	{* <hr/> *}
 	{include #select, control => $rental['classification']}
 	{include #checkboxList, control => $rental['board']}
 	{include #checkboxList, control => $rental['important']}
 	{include #checkboxList, control => $rental['ownerAvailability']}
-	<hr/>
+	{* <hr/> *}
 	{include #rentalPhotos, control => $rental['photos']}
-	<hr/>
+	{* <hr/> *}
 	{include #submit, control => $form['submit'], icon => 'icon-trash'}
 </table>
 {/form}
