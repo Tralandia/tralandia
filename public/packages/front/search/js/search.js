@@ -48,7 +48,8 @@
 			        },
 			        results: function (data, page) { 
 			        	
-
+			        	console.log(data);
+			        	
 			        	var r = [];
 
 			        	$.each(data,function(k,v){
@@ -121,6 +122,41 @@ $(function(){
 	$('.searchForm').searchFormSuggest();
 
 	$('#serachSidebar').on('change',function(e){
-		console.log($(this).val());
+		var val = $(this).val();
+			if(val != ''){
+				$('.searchForm').find('a.btnSearchClose').show();
+				$('.searchForm').find('div.select2-container a div b').css({
+					left: '-30px',
+					position: 'relative'
+				});
+			}		
+	});
+
+	$('.btnSearchClose').click(function(){
+		$(this).hide();
+		
+		$("#serachSidebar").select2("data", {id: "", title: ""}); 
+
+		$('.searchForm').find('div.select2-container a div b').css({
+			left: '0px',
+			position: 'relative'
+		});		
+
+/*		$('.searchForm').find('.select2-container').css({
+			'border-radius': '4px'
+		});	*/	
 	});
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
