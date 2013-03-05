@@ -2,8 +2,8 @@
 
 namespace FrontModule;
 
-use Nette\Application\BadRequestException;
 use Nette\DateTime;
+use Nette\Application\BadRequestException;
 
 class CalendarIframePresenter extends BasePresenter {
 
