@@ -375,11 +375,10 @@ class ImportRentals extends BaseImport {
 			$temp = array_unique(array_filter(explode(',', $x['calendar'])));
 			if (is_array($temp) && count($temp)) {
 				foreach ($temp as $key => $value) {
-					//if ($value < $now) continue;
+					if ($value < $now) continue;
 					$t = new \Nette\DateTime;
-					$t->from($value);
+					$t->setTimestamp($value);
 					$temp[$key] = $t;
-					d('tu som');
 				}
 			}
 
