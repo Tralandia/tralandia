@@ -13,7 +13,7 @@
 	{include #url, control => $form['url']}
 	{* <hr/> *}
 	{var $rental = $form['rental']}
-	{include #address, control => $rental['address']}
+	{* {include #address, control => $rental['address']} *}
 	{include #checkboxList, control => $rental['amenityLocation']}
 	{* <hr/> *}
 	{include #text, control => $rental['name']}
@@ -27,7 +27,7 @@
 	{include #checkboxList, control => $rental['important']}
 	{include #checkboxList, control => $rental['ownerAvailability']}
 	{* <hr/> *}
-	{include #rentalPhotos, control => $rental['photos']}
+	{* {include #rentalPhotos, control => $rental['photos']} *}
 	{* <hr/> *}
 	{include #submit, control => $form['submit'], icon => 'icon-trash'}
 </table>

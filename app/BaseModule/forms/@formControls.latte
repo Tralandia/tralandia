@@ -296,19 +296,22 @@
 	$mainControl = $container->getMainControl()
 }
 {?unset($control)}
-<div class="control-group phonecontrol">
-	<div class="form-label">
-		{label $mainControl /}
-		<small>{$container->getDescription()}</small>
-	</div>
-	<div class="controls">
+
+<tr xmlns="http://www.w3.org/1999/html">
+	<td>
+		{label $mainControl /}        
+	</td>
+	<td>
 		{input $container['prefix'], class => 'select2'}
 		{input $container['number']}
-		<i class="validation"></i>
-		{include #controlErrors, errors => $container->getAllErrors()}
-	</div>
-	<div class="clearfix"></div>
-</div>
+	<td>
+	
+	<td>
+		<span class="help">{$container->getDescription('description')}</span>
+		<span class="alert">{include #controlErrors, errors => $container->getAllErrors()}</span>
+	</td>
+</tr>
+
 {/define #phone}
 
 
@@ -322,6 +325,7 @@
 	$mainControl = $container->getMainControl()
 }
 {?unset($control)}
+
 <div class="control-group traMapcontrol" data-link="{plink validateAddress}">
 
 	<div class="row-fluid">
@@ -371,6 +375,7 @@
 		</div>
 	</div>
 </div>
+
 {/define #address}
 
 {*
@@ -580,9 +585,16 @@
 *}
 {define #submit}
 {default $class = null}
-<button type="submit" n:class="$class ? 'btn ' .$class : btn" name="{$control->getHtmlName()}" id="{$control->getHtmlId()}">
-	<i n:ifset="$icon" class="{$icon}"></i> {$control->caption}
-</button>
+<tr xmlns="http://www.w3.org/1999/html">
+	<td>
+		      
+	</td>
+	<td colspan="2">
+		<button type="submit" n:class="$class ? 'btn ' .$class : btn" name="{$control->getHtmlName()}" id="{$control->getHtmlId()}">
+			<i n:ifset="$icon" class="{$icon}"></i> {$control->caption}
+		</button>
+	<td>
+</tr>
 {/define #submit}
 
 
