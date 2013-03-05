@@ -199,12 +199,107 @@ $(function(){
 
 		$('body').removeAttr('socialshareOpen');  
 
+
+
+
 	});
 
+//$.jStorage.flush();
+	var y = Favorites;
 
-
+		y.autoUpdate();
 
 });
+
+
+var Favorites = {
+
+};
+	Favorites.autoUpdate = function(){
+		console.log(Favorites.checkChanges());
+		console.log(Favorites.getLocalStorage());
+		if(!Favorites.checkChanges()){
+			Favorites.updateList();
+		}
+		setTimeout(Favorites.autoUpdate,3000);
+	};
+
+	// return favorites list in cookie
+	Favorites.getCookie = function(){
+
+		var r = $.cookie('favoritesList');
+
+			if(typeof r == 'undefined') {
+				return false;
+			} else {
+				return r ;
+			}
+		//return $.cookie('favoritesList');
+	};	
+
+	Favorites.updateList = function(){
+
+		this.cookieArray = this.getCookie().split();
+			console.log(this.cookieArray);
+			var self = this;
+
+			$.each(this.cookieArray,function(k,v){
+				self.list.find('li:not(.template)').each(function(k){			
+					//self.rentalIdsArray.push($(this).attr('rel'));
+				});	
+			});
+
+/*		this.list.find('li.template').css('background-image','url('+data.thumb+')');
+
+		$pattern = this.list.find('li.template');
+
+		var patternText = $pattern[0].outerHTML;
+
+		patternText = patternText.replace("~id~",data.id)							
+						.replace("~title~",data.title)
+						.replace("~url~",data.link)
+						.replace("template","");*/
+
+		//this.list.html('ymena');
+	};
+
+	Favorites.getLocalStorage = function(){
+		return $.jStorage.get('favoritesList');
+	};
+
+
+	Favorites.in_array = function(){
+		var r = false ;
+
+		$.each(array , function(k,v){
+			if(v == value) r = true;
+		});
+
+		return r; 		
+	};
+
+
+	Favorites.checkChanges = function(){
+		this.list = $('#scrollInnerContent');
+		var self = this;
+		self.rentalIdsArray = [];
+		self.rentalIdsString = false;
+
+		self.list.find('li:not(.template)').each(function(k){			
+			self.rentalIdsArray.push($(this).attr('rel'));
+		});
+
+		self.rentalIdsString = self.rentalIdsArray.join();
+		console.log(self.getCookie());
+		console.log(self.rentalIdsString);
+
+		if(self.getCookie() == self.rentalIdsString){
+			return true;
+		} else {
+			return false;
+		}
+	};
+
 
 
 
