@@ -139,7 +139,7 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 			'phone' => ['prefix' => $this->country->getIso()],
 
 			'referrer' => 'luzbo',
-			'email' => 'email@' . \Tra\Utils\Strings::random(6) . '.com',
+			'email' => 'email@' . \Nette\Utils\Strings::random(6) . '.com',
 			'www' => 'google.com',
 			'password' => 'adsfasdf',
 			'password2' => 'adsfasdf',
