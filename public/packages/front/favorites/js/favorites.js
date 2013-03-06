@@ -77,6 +77,7 @@ $(function(){
 
 var Favorites = {
 	cookieName : 'favoritesList',
+	visitedCookieName: 'favoritesVisitedList',
 	favoritesPluginDiv: '#favoritesStaticContainer',
 	favoritesPlacehoderDiv: '#favoritesStaticContainerPlaceholder',
 	favorietsShowSpeed: 300
@@ -92,6 +93,8 @@ var Favorites = {
 		this.eachSelectedRentalButtons();
 		this.autoUpdate();
 	};
+
+
 
 	Favorites.eachSelectedRentalButtons = function(){
 		
@@ -165,6 +168,13 @@ var Favorites = {
 		
 			if(this._getFavoritesLength() > 0){
 				this.pluginShow();
+			}			
+
+			if(this._getFavoritesLength() < 7){
+				var $container = $(this.favoritesPluginDiv).find('.jspContainer .jspPane');
+				$container.css({
+					left: 0
+				});
 			}
 		
 	}
@@ -287,6 +297,14 @@ var Favorites = {
 		return c;
 	};
 
+	Favorites._visitedRentalArray = function(){
+		var c = this.getVisitedCookie();		
+		if(c){
+			c = c.split(',');					
+		}
+		return c;		
+	}
+
 	Favorites.addToCookie = function(id){
 
 		var cookieArray = this._cookieArray() ? this._cookieArray() : [] ;
@@ -317,7 +335,7 @@ var Favorites = {
 		if(!Favorites.checkChanges()){
 			Favorites.sanitizePluginView();
 			Favorites.updateList();
-			Favorites.eachSelectedRentalButtons();
+			
 		}		
 		setTimeout(Favorites.autoUpdate,3000);
 	};
@@ -327,6 +345,17 @@ var Favorites = {
 	Favorites.getCookie = function(){
 
 		var r = $.cookie(this.cookieName);
+
+			if(typeof r == 'undefined') {
+				return false;
+			} else {
+				return r ;
+			}		
+	};	
+
+	Favorites.getVisitedCookie = function(){
+
+		var r = $.cookie(this.visitedCookieName);
 
 			if(typeof r == 'undefined') {
 				return false;
@@ -384,22 +413,28 @@ var Favorites = {
 									.replace("~title~",data.title)
 									.replace("~url~",data.link)
 									.replace("template","");
-					html+=patternText;
+					
+
+					var newLi = $(patternText);
+					var visited = self._visitedRentalArray();
+
+						if(visited){
+							if(!self.in_array(visited,data.id)){									
+								newLi.find('.checked').remove();
+							}					
+						}
+
+					//html+=patternText;
+					html += newLi[0].outerHTML;
 
 				
 			});
 
-			//var original = self.contentPane.find('ul');
-			// self.contentPane = self.pane.data('jsp').getContentPane();
-			// self.contentPane.html('<ul id="scrollInnerContent">'+html+'</ul>');
 
 			$('#scrollInnerContent').html(html);
 
-			//self.initJscrollpaneUi();
-
-			//global.jscrollPaneApi.reinitialise();
 			self.jscrollPaneApi.reinitialise();
-
+			self.eachSelectedRentalButtons();
 	};
 
 	Favorites.getLocalStorage = function(){
