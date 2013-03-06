@@ -109,13 +109,53 @@ table.formTable {
 			}
 		}
 	}
+	.select2-container.select2-dropdown-open .select2-choice {
+		background-image: none;
+		background-color: #fff;
+	}
+	.select2-container {
+
+		&.select2-drop-above {
+			a {
+				.basic-gradient(rgb(255, 255, 255),rgb(229, 236, 199));
+			}
+		}
+
+		a {			
+			.basic-gradient(rgb(255, 255, 255),rgb(229, 236, 199));
+			border: 1px solid #b0c13b;
+
+			div {
+				.basic-gradient(rgb(241, 250, 209),rgb(186, 196, 148));
+				border-left: 1px solid #b0c13b;
+			}
+		}
+	}
+
+	.select2-dropdown-open .select2-choice div {
+		background: transparent;
+		border-left: 1px solid transparent;
+	}
+
+	.input-append .add-on, .input-prepend .add-on {
+		background-color: #b0c13b;
+	}
+
 
 	textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
 		box-shadow: none;
 		margin: 0px;
+		border: 1px solid #b0c13b;
 	}
 
 	.input-append, .input-prepend {
 		margin: 0px;
 	}
+
 }
+.mainForm.select2-drop {
+	border: 1px solid #b0c13b;
+	border-top-width: 0px;
+}
+
+

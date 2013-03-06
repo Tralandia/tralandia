@@ -240,8 +240,8 @@ parameters:
 				-  %webloader.packages.fontAwesome%
 				-  %webloader.packages.bootstrap%
 				-  %webloader.packages.jscrollPane%
-				-  %webloader.packages.Front%
 				-  %webloader.packages.select2%
+				-  %webloader.packages.Front%
 				#-  %webloader.packages.texyla%				
 				-  %webloader.packages.nette%								
 				-  %webloader.packages.gMap%
