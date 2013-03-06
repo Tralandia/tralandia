@@ -133,11 +133,6 @@ App.prototype.uiToogleClick = function(){
 }
 
 
-
-
-
-
-
 App.prototype.in_array = function(array, value) {
 
 	var r = false ;
@@ -165,167 +160,6 @@ App.prototype.storageDelete = function(key){
 	$.jStorage.deleteKey(key);
 }
 
-
-/****************************************************************************************************
-*	RENTAL DETAIL + RENTALI LIST
-****************************************************************************************************/
-
-/*
-* add to favorites function
-*/ 
-
-App.prototype.removeObjectFromFavorites = function(id){
-
-	var self = new App;
-
-	var list = $.cookie('favoritesList');
-
-	if(typeof list != 'undefined'){
-		list = list.split(',');
-	} else {
-		list = false;
-	}
-
-	var favoriteSlider = $('#compareList');
-
-	var sliderList = favoriteSlider.find('ul');
-
-		
-		var p = list.indexOf(id);
-				list.splice(p,1);
-		
-
-		// save new list to local storage 
-
-		if(list.length == 0){
-			$.removeCookie('favoritesList');
-		} else {
-			$.cookie('favoritesList' , list.join());
-		}
-		
-
-		favoriteSlider.find('ul li[rel="'+id+'"]').remove();
-
-		global.jscrollPaneApi.reinitialise();
-
-		if(list.length == 0){
-
-			$('#compareList').parent().parent().parent().slideUp(300,function(){
-				
-				$('#favoritesStatisContainerPlaceholder').addClass('inactive');
-				$('#favoritesStatisContainerPlaceholder').addClass('hide');
-			});
-		} 
-}
-
-App.prototype.arrayFromList = function(list){
-	if(typeof list != 'undefined'){
-		return list.split(',');
-	} else {
-		return false;
-	}	
-}
-
-App.prototype.addToFavorites = function(){
-
-	var self = new App;
-
-	var list = self.arrayFromList($.cookie('favoritesList'));
- 
-	var localStorageList = $.jStorage.get('favoritesList');
-
-	var favoritesVisitedList = self.arrayFromList($.cookie('favoritesVisitedList'));
-		
-	$('#favoritesStatisContainerPlaceholder').removeClass('inactive');
-
-	var data = {
-		id: parseInt($(this).attr('rel')),
-		link: $(this).attr('link'),
-		thumb: $(this).attr('thumb'),
-		title: $(this).attr('data-title')
-	}
-
-	//console.log(data);
-
-	var favoriteSlider = $('#compareList');
-
-	var sliderList = favoriteSlider.find('ul');
-
-		sliderList.find('li.template').css('background-image','url('+data.thumb+')');
-
-		$pattern = sliderList.find('li.template');
-
-		var patternText = $pattern[0].outerHTML;
-
-		patternText = patternText.replace("~id~",data.id)							
-						.replace("~title~",data.title)
-						.replace("~url~",data.link)
-						.replace("template","");
-
-		var newLi = $(patternText);
-
-			if(!self.in_array(favoritesVisitedList,data.id)){				
-				newLi.find('.checked').remove();
-			}
-
-	if($(this).hasClass('selected')){
-		// remove from list
-
-		self.removeObjectFromFavorites(data.id);
-
-		$(this).removeClass('selected');
-
-	} else {
-
-		if(!list){
-			// if favorites dont exist 
-			// write id to cookie
-			$.cookie('favoritesList',data.id);
-
-			// write to localstorage 
-			var localStorageList = [];
-				//localStorageList[data.id] = data;
-				localStorageList.push(data);
-
-				$.jStorage.set('favoritesList',localStorageList);
-
-			// show slider
-			favoriteSlider.parent().parent().parent().slideDown(300);
-		} else {			
-			list.push(data.id);
-			$.cookie('favoritesList',list.join());	
-
-			// write to localstorage 
-			
-			localStorageList.push(data);
-			$.jStorage.set('favoritesList',localStorageList);					
-		}	
-
-		if($(this).hasClass('currentObject')){
-			newLi.addClass('current');
-		}
-
-		newLi.appendTo(sliderList);
-		
-		global.jscrollPaneApi.reinitialise();
-					
-		$(this).addClass('selected');
-
-	}
-
-}
-
-App.prototype._checkIdInObject = function( object , id ){
-	var r = false;
-		$.each(object , function(k,v){
-			
-			if(v.id == id){
-				r=true;
-			}
-		});	
-
-	return r;
-}
 
 /****************************************************************************************************
 *	RENTAL LIST
@@ -493,9 +327,7 @@ $(document).ready(function(){
 	/* http://www.sk.tra.com/ticket/ */
 	$('#ticketMesageCannedSelect').change(A.ticketMesageCannedSelect);
 
-	/* rental favorites list*/
-	$('.addToFavorites').click(A.addToFavorites);
-	$('.addToFavorites').favoriteActiveLinks(A);
+
 
 	/* rental open modal contact dialog */
 	$('.openContactForm').click(A.openContactForm);
@@ -507,8 +339,6 @@ $(document).ready(function(){
 	/* @todo */
 	//$('.favoriteSlider').favoriteSlider(A);
 
-	/* */
-	$('#compareList').showFavoriteSlider(A);
 
 	// closeForgottenPasswordForm
 	$('#forgottenPasswordOpen').click(A.forgottenPasswordOpen);
@@ -640,25 +470,9 @@ $(document).ready(function(){
 
 
 
-	// remove object from favorites list     
 
-	$('a.removeLink').bind('click',function(){
 
-		id = $(this).parent().attr('rel');
 
-		A.removeObjectFromFavorites(id);
-		$('.addToFavorites[rel='+id+']').removeClass('selected');
-		return false;
-	});
-
-	$('a.removeLink').live('click',function(){
-
-		id = $(this).parent().attr('rel');
-
-		A.removeObjectFromFavorites(id);
-		$('.addToFavorites[rel='+id+']').removeClass('selected');
-		return false;
-	});
 
 
 	$('.pricePhrase').pricePhrase();
