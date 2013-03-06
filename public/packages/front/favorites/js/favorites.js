@@ -1,13 +1,3 @@
-
-
-
-
-
-
-
-
-
-
 $(function(){
 
 	$('li.favoriteSocialIcons').click(function(){  
@@ -80,7 +70,8 @@ var Favorites = {
 	visitedCookieName: 'favoritesVisitedList',
 	favoritesPluginDiv: '#favoritesStaticContainer',
 	favoritesPlacehoderDiv: '#favoritesStaticContainerPlaceholder',
-	favorietsShowSpeed: 300
+	favorietsShowSpeed: 300,
+	autoupdateTime: 3000
 
 };
 
@@ -221,14 +212,12 @@ var Favorites = {
 		return false;
 	}
 
-	Favorites.addToFavorites = function(data){
-			console.log('add  '+data.id);
+	Favorites.addToFavorites = function(data){			
 			this.addToCookie(data.id);
 			this.addToLocalStorage(data);
 	};
 
-	Favorites.removeFromFavorites = function(data){
-			console.log('remove  '+data.id);
+	Favorites.removeFromFavorites = function(data){			
 			this.removeFromCookie(data.id);
 			this.removeFromLocalStorage(data.id);
 	};
@@ -252,9 +241,6 @@ var Favorites = {
 
 	Favorites.removeFromLocalStorage = function(id){
 		var storageArray = $.jStorage.get(this.cookieName);
-
-		//console.log(storageArray);
-
 		var newArray = [];
 
 		if(typeof storageArray != 'undefined' && storageArray != null){
@@ -337,7 +323,7 @@ var Favorites = {
 			Favorites.updateList();
 			
 		}		
-		setTimeout(Favorites.autoUpdate,3000);
+		setTimeout(Favorites.autoUpdate,Favorites.autoupdateTime);
 	};
 
 	// return favorites list in cookie
