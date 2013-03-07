@@ -197,7 +197,7 @@
 		{/ifset}	
 	</td>
 	<td>
-		<span class="help">{$control->getOption('description')}Select the country your rental is in. What if it was longer?</span>
+		<span class="help">{$control->getOption('description')}</span>
 		<span class="invalidAlert">{include #controlErrors, errors => $control->getErrors()}</span>
 	</td>
 </tr>
@@ -217,44 +217,46 @@
 	Checkbox List -------------------------------------------
 	@param $control \Nextras\Forms\Container\MultiOptionList
 *}
-{* {define #checkboxList}
-<div class="control-group">
-	<div class="form-label">
-		{label $control /}
-		<small>{$control->getOption('description')}</small>
-	</div>
-	<div class="controls">
-		{foreach $control as $key => $label}
-			{!$control->getLabelItem($key)->addAttributes(['class' => 'checkbox'])->startTag()}
-			{$control->getControlItem($key)}
-			{_$label}
-			</label>
-		{/foreach}
-	</div>
-</div>
-{/define #checkboxList} *}
 
 {define #checkboxList}
-	<tr>
-		<td colspan="3">
-			<table>
-				<tr>
-					<td>{_$control->caption}</td>
-				</tr>
-				<tr>
-					<td>
+	{default $colCount = 2}
+	{if $colCount == 1}
+		<tr>
+			<td>{_$control->caption}</td>
+			<td>
 			{foreach $control as $key => $label}
-				{!$control->getLabelItem($key)->addAttributes(['class' => 'checkbox'])->startTag()} {* <label ...> *}
+				{*!$control->getLabelItem($key)->addAttributes(['class' => 'checkbox'])->startTag()*} 
+				<label>
 				{$control->getControlItem($key)}
 				{_$label}
 				</label>
 			{/foreach}
+			</td>
+			<td></td>
+		</tr>
+	{else}
+		<tr>
+			<td colspan="3">
+				<table>
+					<tr>
+						<td>{_$control->caption}</td>
+					</tr>
+					<tr>
+						<td>
+						{foreach $control as $key => $label}
+							{*!$control->getLabelItem($key)->addAttributes(['class' => 'checkbox'])->startTag()*} 
+							<label>
+							{$control->getControlItem($key)}
+							{_$label}
+							</label>
+						{/foreach}
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
 
-					</td>
-				</tr>
-			</table>
-		</td>
-	</tr>
+	{/if}
 {/define #checkboxList}
 
 
@@ -281,7 +283,7 @@
 		
 		<td>
 			<span class="help">{$container->getDescription('description')}</span>
-			<span class="alert">{include #controlErrors, errors => $container->getAllErrors()}</span>
+			<span class="invalidAlert">{include #controlErrors, errors => $container->getAllErrors()}</span>
 		</td>
 	</tr>
 {/define #price}

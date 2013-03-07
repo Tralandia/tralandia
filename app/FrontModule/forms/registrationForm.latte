@@ -24,7 +24,7 @@
 
 	{include #fieldset, text => 'Rental location'}
 	{* {include #address, control => $rental['address']} *}
-	{include #checkboxList, control => $rental['amenityLocation']}
+	{include #checkboxList, control => $rental['amenityLocation'], colCount => 1}
 
 	{include #fieldset, text => 'Further details'}
 	{include #select, control => $rental['classification']}

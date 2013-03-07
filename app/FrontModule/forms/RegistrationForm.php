@@ -121,8 +121,12 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 
 		$amenityBoard = $this->amenityRepository->findByBoardTypeForSelect();
 		$rentalContainer->addMultiOptionList('board', 'Amenity board', $amenityBoard);
-		$rentalContainer->addMultiOptionList('important', 'important amenities', $amenityBoard);
-		$rentalContainer->addMultiOptionList('ownerAvailability', 'availability', $amenityBoard);
+
+		$amenityImportant = $this->amenityRepository->findImportantForSelect();
+		$rentalContainer->addMultiOptionList('important', 'important amenities', $amenityImportant);
+
+		$amenityAvailability = $this->amenityRepository->findByAvailabilityTypeForSelect();
+		$rentalContainer->addMultiOptionList('ownerAvailability', 'availability', $amenityAvailability);
 
 
 		$rentalContainer['photos'] = new \Extras\Forms\Container\RentalPhotosContainer(NULL, $this->imageManager);
