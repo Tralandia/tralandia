@@ -419,9 +419,11 @@ $(document).ready(function(){
 	$('#langMenuOptionsOpen').click(function(){
 		if(!langmenuOpen){
 			$('#langMenuOptions').show();
+			$(this).find('i.entypo-chevron-down').removeClass('entypo-chevron-down').addClass('entypo-chevron-up');
 			langmenuOpen = true;
 		} else {
 			$('#langMenuOptions').hide();
+			$(this).find('i.entypo-chevron-up').removeClass('entypo-chevron-up').addClass('entypo-chevron-down');
 			langmenuOpen = false;
 		}
 		
