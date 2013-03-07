@@ -525,8 +525,9 @@
 	$container = $control;
 }
 {?unset($control)}
-<div class="control-photo"><!-- control photo start -->
+<tr class="control-photo"><!-- control photo start -->
 
+	<td colspan="3">
 	<div class="row-fluid">
 
 
@@ -560,7 +561,7 @@
 			Pridanie fotografie trvá niekoľko sekúnd v závislosti od rýchlosti vášho pripojenia.
 		</p>
 	</div>
-
+	</td>
 
 
 
@@ -568,8 +569,8 @@
 	{*<input id="fileupload" type="file" name="files[]" data-url="server/php/" multiple="">*}
 	
 	{input $container['sort']}
-<div class="clearfix"></div>
-</div>
+
+</tr>
 {/define #rentalPhotos}
 
 
