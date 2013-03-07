@@ -68,10 +68,10 @@
 					&#128101;
 				</td>
 				<td>					
-					{_o100005} {$rental->maxCapacity} {_o925,null,[count=>$rental->maxCapacity]}
-					{if $rental->bedroomCount}{$rental->bedroomCount} {_o100009}, {/if}
-					{$rental->rooms}
-					<span>{if $separateGroups}{_o100011}{else}{_o100010}{/if}</span>
+					{_o100005} {$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}
+					<span>{if $rental->bedroomCount}{$rental->bedroomCount} {_o100009}, {/if}
+					{$rental->rooms}</span>
+					<div>{if $separateGroups}{_o100011}{else}{_o100010}{/if}</div>
 				</td>
 			</tr>
 		</table>
@@ -140,7 +140,7 @@
 					   <div class="content">
 						{foreach $board  as $amenities}					
 							{foreach $amenities as $amenity}
-								{_$amenity->name}{if !$iterator->last}, {/if}
+								{if $iterator->first}{_$amenity->name|firstUpper}{else}{_$amenity->name}{/if}{if !$iterator->last}, {/if}
 							{/foreach}					
 						{/foreach}
 					</div>
@@ -155,7 +155,7 @@
 					   <div class="amenitiesStart">					   
 						{foreach $importantAmenities  as $amenities}					
 							{foreach $amenities as $amenity}							
-								{_$amenity->name}{if !$iterator->last}, {/if}
+								{if $iterator->first}{_$amenity->name|firstUpper}{else}{_$amenity->name}{/if}{if !$iterator->last}, {/if}
 							{/foreach}					
 						{/foreach}
 
@@ -187,6 +187,12 @@
 
 		   		<div class="clearfix"></div>
 
+				{if $ownerAvailability}
+				<li class="bell">
+					<strong>{_$ownerAvailability->name}</strong>
+				</li>
+				{/if}		   
+
 				{if $rental->checkIn}
 				   <li class="clock">
 			   		<strong>{_o1586} {$rental->checkIn}:00</strong>
@@ -207,10 +213,6 @@
 		   		<strong>{if $animalsAllowed}{_o100018}{else}{_o100019}{/if}</strong>
 			   </li>
 
-{* 			   <li class="bell">
-		   		<strong>{if $animalsAllowed}{_o100018}{else}{_o100019}{/if}</strong>
-			   </li>			   
- *}
 			</ul>
 		</div>
 	</div>

@@ -99,7 +99,9 @@ class CalendarControl extends \BaseModule\Components\BaseControl {
 	{
 		if($selectedDays === NULL) return $months;
 
-		foreach($selectedDays as $date) {
+		foreach($selectedDays as $date1) {
+			$date = new \Nette\DateTime();
+			$date->from($date1);
 			$yearMonth = $date->format('Y-m');
 			$day = $date->format('d');
 			if(isset($months[$yearMonth]['days'][$day])) {

@@ -47,7 +47,7 @@ class TicketForm extends BaseForm {
 				());
 			}
 			$this->addSelect('canned', '#Canned', $items)
-				->setPrompt('#Direct');
+				->setPrompt('{_o100063}');
 		}
 
 		$this->addTextArea('message', '#Message');

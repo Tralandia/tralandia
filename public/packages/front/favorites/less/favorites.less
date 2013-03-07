@@ -478,24 +478,30 @@ color: #213875;
 }
 
 #favoriteShareContent {
-display: block;
-width: 500px;
-height: 85px;
-left: 10px;
-}
-
-
-#favoriteShareContent {
-
+	display: block;
+	width: 500px;
+	left: 10px;
+	border: 1px solid #b0c13b;
+	padding: 0px;
 
 	table {
 		width: 100%;
 
 		tr {
-			border-bottom: 1px solid #ddd;
+			
+			&:first-child {
+				border-bottom: 1px solid #ddd;
+				td {
+					padding-top: 10px;
+					height: 30px;
+				}
+			}
 			padding: 0 10px;
 
 			td {
+				height: 35px;
+				overflow: hidden;
+
 				&:first-child {
 					padding-left:10px;
 
@@ -508,19 +514,21 @@ left: 10px;
 			&:last-child {
 				border: none;
 			}
+
 		}
 
 		input {
 			margin: 0;
 			height: 16px;
 			width: 94%;
+			box-shadow: none;
 		}
 
 		button {
-height: 25px;
-line-height: 14px;
-font-size: 12px;
-font-weight: normal;
+			height: 25px;
+			line-height: 14px;
+			font-size: 12px;
+			font-weight: normal;
 		}
 
 
@@ -535,8 +543,8 @@ font-weight: normal;
 		float: left;
 
 		&.facebook {
-width: 97px;
-overflow: hidden;			
+			width: 97px;
+			overflow: hidden;			
 		}
 
 		&.twitter {
@@ -547,8 +555,8 @@ overflow: hidden;
 
 		}
 		&.gplus {
-overflow: hidden;
-width: 27px;
+			overflow: hidden;
+			width: 27px;
 		}
 	}
 
@@ -569,9 +577,6 @@ width: 27px;
 	}
 }
 
-#favoriteShareContent  {
-	border: 1px solid #b0c13b;
-}
 #favoriteShareContent:after, #favoriteShareContent:before {
 	bottom: 100%;
 	border: solid transparent;
