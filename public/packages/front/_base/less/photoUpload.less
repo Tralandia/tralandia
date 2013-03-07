@@ -1,0 +1,49 @@
+.control-photo {
+	.ui-sortable {
+		margin: 0;
+		padding: 0;
+
+		li {
+			width: 105px;
+			display: block;
+			float: left;
+			height: 70px;
+			overflow: hidden;
+			margin-bottom: 10px;
+			margin-right: 10px;
+			position: relative;
+
+			a.remove {
+				position: absolute;
+				top: 0;
+				right: 0;
+				display: block;
+				width: 20px;
+				height: 20px;
+				visibility: hidden;
+				&:before {
+					font-family: "entypo";
+					font-weight: normal;
+					font-style: normal;
+					font-size: 35px;
+					text-decoration: inherit;
+					color: #ffffff;
+					content: '\274C';
+					position: relative;
+					top: 1px;
+					left: 4px;					
+				}
+			}
+
+			&:hover {
+				a.remove {
+					visibility: visible;
+
+					&:hover {
+						background: #ee4a00; 
+					}
+				}
+			}
+		}
+	}
+}

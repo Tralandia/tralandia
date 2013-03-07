@@ -70,7 +70,7 @@ parameters:
 
 			fileUpload:
 				js:
-					- fileUpload/lib/js/vendor/jquery.ui.widget.js
+					#- fileUpload/lib/js/vendor/jquery.ui.widget.js
 					- fileUpload/lib/js/jquery.iframe-transport.js
 					- fileUpload/lib/js/jquery.fileupload.js
 
@@ -119,6 +119,7 @@ parameters:
 					- front/_base/less/base.less					
 					- front/_base/less/forms.less					
 					- front/_base/less/calendar.less
+					- front/_base/less/photoUpload.less
 					# header 
 					- front/header/less/header.less
 					# favorites
@@ -239,6 +240,7 @@ parameters:
 				-  %webloader.packages.fontAwesome%
 				-  %webloader.packages.bootstrap%
 				-  %webloader.packages.jscrollPane%
+				-  %webloader.packages.fileUpload%
 				-  %webloader.packages.select2%
 				-  %webloader.packages.Front%
 				#-  %webloader.packages.texyla%				
