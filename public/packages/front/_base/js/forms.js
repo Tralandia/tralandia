@@ -153,6 +153,7 @@
 
 
 		console.log(data);
+		console.log(url);
 
 
 		callback(data);

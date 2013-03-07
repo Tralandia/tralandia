@@ -3,105 +3,105 @@
 	@param $control \Nette\Forms\Controls\BaseControl
 	@param $prepend array
 	@param $append array
-*}
-{define #fieldset}
+	*}
+	{define #fieldset}
 	{default $text = ''}
 	<tr>
 		<td colspan="3" class="fieldset">{$text}</td>
 	</tr>
-{/define #fieldset}
+	{/define #fieldset}
 
-{*
+	{*
 	Text Control -------------------------------------------
 	@param $control \Nette\Forms\Controls\BaseControl
 	@param $prepend array
 	@param $append array
-*}
-{define #text}
+	*}
+	{define #text}
 	{default $prepend = NULL}
 	{default $append = NULL}
 	{include #baseControl, control => $control, prepend => $prepend, append => $append}
-{/define #text}
+	{/define #text}
 
 
-{*
+	{*
 	Text Area Control -------------------------------------------
 	@param $control \Nette\Forms\Controls\BaseControl
 	@param $prepend array
 	@param $append array
-*}
-{define #textArea}
+	*}
+	{define #textArea}
 	{include #baseControl, control => $control}
-{/define #textArea}
+	{/define #textArea}
 
 
-{*
+	{*
 	Password Control -------------------------------------------
 	@param $control \Nette\Forms\Controls\BaseControl
 	@param $prepend array
 	@param $append array
-*}
-{define #password}
+	*}
+	{define #password}
 	{default $prepend = ['text' => '<i class="icon-lock"></i>']}
 	{default $append = NULL}
 	{include #baseControl, control => $control, prepend => $prepend, append => $append}
-{/define #password}
+	{/define #password}
 
 
-{*
+	{*
 	Email Control -------------------------------------------
 	@param $control \Nette\Forms\Controls\BaseControl
 	@param $prepend array
 	@param $append array
-*}
-{define #email}
+	*}
+	{define #email}
 	{default $prepend = ['text' => '<i class="icon-envelope"></i>']}
 	{default $append = NULL}
 	{include #baseControl, control => $control, prepend => $prepend, append => $append}
-{/define #email}
+	{/define #email}
 
 
-{*
+	{*
 	Url Control -------------------------------------------
 	@param $control \Nette\Forms\Controls\BaseControl
 	@param $prepend array
 	@param $append array
-*}
-{define #url}
+	*}
+	{define #url}
 	{default $prepend = ['text' => 'http://']}
 	{default $append = NULL}
 	{include #baseControl, control => $control, prepend => $prepend, append => $append}
-{/define #url}
+	{/define #url}
 
 
-{*
+	{*
 	Select Control -------------------------------------------
 	@param $control \Nette\Forms\Controls\SelectControl
 	@param $controlClass string
-*}
-{define #select}
+	*}
+	{define #select}
 	{default $controlClass = 'select2'}
 	{include #baseControl, control => $control, controlClass => $controlClass}
-{/define #select}
+	{/define #select}
 
 
-{*
+	{*
 	Upload Control -------------------------------------------
 	@param $control \Nette\Forms\Controls\UploadControl
 	@param $controlClass string
-*}
-{define #upload}
+	*}
+	{define #upload}
 	{include #baseControl, control => $control}
-{/define #upload}
+	{/define #upload}
 
 
-{*
+	{*
 	Texyla Control -------------------------------------------
 	@param $control \Nette\Forms\Controls\TextAreaControl
 	@param $controlClass string
-*}
+	*}
 
-{define #texyla}
+	{define #texyla}
 	<tr>
 		<td>
 			{label $control /}        
@@ -115,24 +115,24 @@
 			<span class="alert">{include #controlErrors, errors => $control->getErrors()}</span>
 		</td>
 	</tr>
-{/define #texyla}
+	{/define #texyla}
 
 
-{* 
+	{* 
 	===========================================================================================================	
 	===========================================================================================================	
 	===========================================================================================================	
 	===========================================================================================================	
 	===========================================================================================================	
-*}
+	*}
 
 
-{*
+	{*
 	Texyla Control -------------------------------------------
 	@param $control \Nette\Forms\Controls\TextAreaControl
 	@param $controlClass string
-*}
-{define #checkbox}
+	*}
+	{define #checkbox}
 	<tr>
 		<td>
 			{_$control->caption}       
@@ -146,31 +146,31 @@
 			<span class="alert">{include #controlErrors, errors => $control->getErrors()}</span>
 		</td>
 	</tr>
-{/define #checkbox}
+	{/define #checkbox}
 
 
-{*
+	{*
 	Base Control -------------------------------------------
 	@param $control \Nette\Forms\Controls\BaseControl
 	@param $prepend array
 	@param $append array
 	@param $controlClass string
-*}
-{define #baseControl}
-<tr class="simpleInput">
-	<td>
-		{_$control->caption}       
-	</td>
-	<td>
-		{capture $input}
+	*}
+	{define #baseControl}
+	<tr class="simpleInput">
+		<td>
+			{_$control->caption}       
+		</td>
+		<td>
+			{capture $input}
 			{ifset $controlClass}
-				{input $control, class => $controlClass}
+			{input $control, class => $controlClass}
 			{else}
-				{input $control}
+			{input $control}
 			{/ifset}
-		{/capture}
+			{/capture}
 
-		{ifset $prepend}
+			{ifset $prepend}
 			<div class="input-prepend">
 				<table>
 					<tr>
@@ -179,7 +179,7 @@
 					</tr>
 				</table>
 			</div>
-		{elseifset $append}
+			{elseifset $append}
 			<div class="input-append">
 				<table>
 					<tr>
@@ -188,83 +188,83 @@
 					</tr>
 				</table>
 			</div>
-		{else}
-				<table>
-					<tr>
-						<td>{!$input}</td>
-					</tr>
-				</table>
-		{/ifset}	
-	</td>
-	<td>
-		<span class="help">{$control->getOption('description')} Temporary helper text for at least 2 lines.</span>
-		<span class="invalidAlert">{include #controlErrors, errors => $control->getErrors()}</span>
-	</td>
-</tr>
-{/define #baseControl}
+			{else}
+			<table>
+				<tr>
+					<td>{!$input}</td>
+				</tr>
+			</table>
+			{/ifset}	
+		</td>
+		<td>
+			<span class="help">{$control->getOption('description')} Temporary helper text for at least 2 lines.</span>
+			<span class="invalidAlert">{include #controlErrors, errors => $control->getErrors()}</span>
+		</td>
+	</tr>
+	{/define #baseControl}
 
 
-{*
+	{*
 	Errors -------------------------------------------
 	@param $errors array
-*}
-{define #controlErrors}
+	*}
+	{define #controlErrors}
 	{foreach $errors as $error}{$error}{/foreach}
-{/define #controlErrors}
+	{/define #controlErrors}
 
 
-{*
+	{*
 	Checkbox List -------------------------------------------
 	@param $control \Nextras\Forms\Container\MultiOptionList
-*}
+	*}
 
-{define #checkboxList}
+	{define #checkboxList}
 	{default $colCount = 1}
 	{if $colCount == 1}
-		<tr class="simpleInput">
-			<td style="vertical-align: top; padding-top: 4px;">{_$control->caption}</td>
-			<td>
+	<tr class="simpleInput">
+		<td style="vertical-align: top; padding-top: 4px;">{_$control->caption}</td>
+		<td>
 			{foreach $control as $key => $label}
-				{*!$control->getLabelItem($key)->addAttributes(['class' => 'checkbox'])->startTag()*} 
-				<label>
+			{*!$control->getLabelItem($key)->addAttributes(['class' => 'checkbox'])->startTag()*} 
+			<label>
 				{$control->getControlItem($key)}
 				{_$label}
-				</label>
+			</label>
 			{/foreach}
-			</td>
-			<td></td>
-		</tr>
+		</td>
+		<td></td>
+	</tr>
 	{else}
 	{var $countPerCol = ceil(count($control->items)/$colCount)}
 	{dump count($control->items), $countPerCol}
-		<tr>
-			<td colspan="3">
-				<table class="checkboxes" style="width: 100%;">
-					<tr>
-						<td colspan="{$colCount}">{_$control->caption}</td>
-					</tr>
-					<tr>
-						<td width="{(int)(100/$colCount)}%">
+	<tr>
+		<td colspan="3">
+			<table class="checkboxes" style="width: 100%;">
+				<tr>
+					<td colspan="{$colCount}">{_$control->caption}</td>
+				</tr>
+				<tr>
+					<td width="{(int)(100/$colCount)}%">
 						{var $i = 1}
 						{foreach $control as $key => $label}
-							{*!$control->getLabelItem($key)->addAttributes(['class' => 'checkbox'])->startTag()*} 
-							<label>
+						{*!$control->getLabelItem($key)->addAttributes(['class' => 'checkbox'])->startTag()*} 
+						<label>
 							{$control->getControlItem($key)}
 							{_$label}
-							</label>
-							{if $i == $countPerCol}
-								</td><td width="{(int)(100/$colCount)}%">
-								{var $i = 0}
-							{/if}
-							{var $i++}
-						{/foreach}
-						</td>
-					</tr>
-				</table>
-			</td>
-		</tr>
+						</label>
+						{if $i == $countPerCol}
+					</td><td width="{(int)(100/$colCount)}%">
+					{var $i = 0}
+					{/if}
+					{var $i++}
+					{/foreach}
+				</td>
+			</tr>
+		</table>
+	</td>
+</tr>
 
-	{/if}
+{/if}
 {/define #checkboxList}
 
 
@@ -272,37 +272,37 @@
 {*
 	Price Container -------------------------------------------
 	@param $control \Extras\Forms\Container\PriceContainer
-*}
-{define #price}
-{var
+	*}
+	{define #price}
+	{var
 	$container = $control;
 	$mainControl = $container->getMainControl()
 }
 {?unset($control)}
 
-	<tr>
-		<td>
-			{label $mainControl /}        
-		</td>
-		<td>
+<tr>
+	<td>
+		{label $mainControl /}        
+	</td>
+	<td>
 		{input $container['amount']}
 		{input $container['currency'], class => 'select2'}
-		</td>
-		
-		<td>
-			<span class="help">{$container->getDescription('description')}</span>
-			<span class="invalidAlert">{include #controlErrors, errors => $container->getAllErrors()}</span>
-		</td>
-	</tr>
+	</td>
+
+	<td>
+		<span class="help">{$container->getDescription('description')}</span>
+		<span class="invalidAlert">{include #controlErrors, errors => $container->getAllErrors()}</span>
+	</td>
+</tr>
 {/define #price}
 
 
 {*
 	Phone Container -------------------------------------------
 	@param $control \Extras\Forms\Container\PhoneContainer
-*}
-{define #phone}
-{var
+	*}
+	{define #phone}
+	{var
 	$container = $control;
 	$mainControl = $container->getMainControl()
 }
@@ -333,72 +333,50 @@
 {*
 	Address Container -------------------------------------------
 	@param $control \Extras\Forms\Container\AddressContainer
-*}
-{define #address}
-{var
+	*}
+	{define #address}
+	{var
 	$container = $control;
 	$mainControl = $container->getMainControl()
 }
 {?unset($control)}
 
-<div class="control-group traMapcontrol" data-link="{plink validateAddress}">
+<tr class="traMapControl" data-link="{plink validateAddress}">
+	<td colspan="3">
 
-	<div class="row-fluid">
-		<div class="span2">
-			{label $container['address'] /}
-		</div>
-		<div class="span2">
-			{label $container['locality'] /}
-		</div>
-		<div class="span2">
-			{label $container['postalCode'] /}
-		</div>
-		<div class="span2">
-			{label $container['location'] /}
-		</div>
-	</div>
+		<table>
+			<tr>
+			<td colspan="5">Text message about input method</td>
+			</tr>
+			<tr>				
+				<td>{input $container['address'], data-name => "address", placeholder => 'placeholder adress' , data-validation-message => "gps-validation-message"}</td>
+				<td>{input $container['locality'], data-name => "locality", placeholder => 'placeholder locality' , data-validation-message => "gps-validation-message"}</td>
+				<td>{input $container['postalCode'], data-name => "postalCode", placeholder => 'placeholder postal code' , data-validation-message => "gps-validation-message"}</td>
+				<td>{input $container['location'], data-name => "primaryLocation", class => 'select2', data-validation-message =>"gps-validation-message"}</td>
+				<td><button class="btn btn-orange"><i class="entypo-location"></i> #check</button>
+					{input $container['latitude'], data-name => "latitude", class => "latitude"}
+					{input $container['longitude'], data-name => "longitude", class => "longitude"}
+				</td>
+			</tr>
 
-
-	<div class="row-fluid marginBottom">
-		<div class="span2">
-			{input $container['address'], data-name => "address", data-validation-message => "gps-validation-message"}
-		</div>
-		<div class="span2">
-			{input $container['locality'], data-name => "locality", data-validation-message => "gps-validation-message"}
-		</div>
-		<div class="span2">
-			{input $container['postalCode'], data-name => "postalCode", data-validation-message => "gps-validation-message"}
-		</div>
-		<div class="span3">
-			{input $container['location'], data-name => "primaryLocation", class => 'select2', data-validation-message =>
-			"gps-validation-message"}
-		</div>
-		{input $container['latitude'], data-name => "latitude", class => "latitude"}
-		{input $container['longitude'], data-name => "longitude", class => "longitude"}
-			  
-		<div class="span2">
-			<button class="btn btn-orange"><i class="entypo-location"></i> #check</button>
-		</div>
-							   
+		</table>
+		   
 		<div class="span12 control-error" id="gps-validation-message"></div>
-	</div>
 
-	<div class="row-fluid">
-		<div class="span12">
-			<div class="mapRender" id="map_canvas" data-zoom="{$container->getZoom()}" style="width:100%;height:400px;"></div>
-			<div id="gps_position"></div>
-		</div>
-	</div>
-</div>
+		<div class="mapRender" id="map_canvas" data-zoom="{$container->getZoom()}" style="width:100%;height:400px;"></div>
+		<div id="gps_position"></div>
+
+	</td>
+</tr>
 
 {/define #address}
 
 {*
 	Phrase Container -------------------------------------------
 	@param $control \Extras\Forms\Container\PhraseContainer
-*}
-{define #phrase}
-{var
+	*}
+	{define #phrase}
+	{var
 	$container = $control;
 	$phrase = $container->getPhrase();
 }
@@ -406,66 +384,66 @@
 <div class="row-fluid phraseForm">
 
 	<div class="span12">
-	
-
-	<div class="span2">
-		{label $container['phraseType'] /}
-		{input $container['phraseType'] , class => 'select2'}       
-	</div>
 
 
-	<div class="span3">
-		{label $container['sourceLanguage'] /}
-		{input $container['sourceLanguage'], class => 'select2'}
-	</div>
+		<div class="span2">
+			{label $container['phraseType'] /}
+			{input $container['phraseType'] , class => 'select2'}       
+		</div>
 
-	<div class="span2">        
-		  {input $container['ready']}
-		  {label $container['ready'] /}        
-		<b>Translation | <span id="phraseTranslateCurrent"></b>
-	</div>
-	<div class="span2">
-		
-		  {input $container['corrected']}
-		  {label $container['corrected'] /}
-		
 
-		{input $container['changeToLanguage'] , class => 'select2 pull-right' , id => 'phraseLanguage'} 
+		<div class="span3">
+			{label $container['sourceLanguage'] /}
+			{input $container['sourceLanguage'], class => 'select2'}
+		</div>
 
-	</div>  
+		<div class="span2">        
+			{input $container['ready']}
+			{label $container['ready'] /}        
+			<b>Translation | <span id="phraseTranslateCurrent"></b>
+		</div>
+		<div class="span2">
+
+			{input $container['corrected']}
+			{label $container['corrected'] /}
+
+
+			{input $container['changeToLanguage'] , class => 'select2 pull-right' , id => 'phraseLanguage'} 
+
+		</div>  
 
 	</div>
 	<hr />
 	<div class="span6">
 		
-	{include #translationVatiations, control => $container['fromVariations']}
+		{include #translationVatiations, control => $container['fromVariations']}
 
 	</div>
 	<div class="span6">
 
 		
-	{foreach $container['to']->getComponents() as $languageContainer}
-	{var $language = $languageContainer['variations']->getLanguage()}
-	<div class="phrasecontrol hide" id="{$language->getId()}_phrase"> 
+		{foreach $container['to']->getComponents() as $languageContainer}
+		{var $language = $languageContainer['variations']->getLanguage()}
+		<div class="phrasecontrol hide" id="{$language->getId()}_phrase"> 
 
 
-		{include #translationVatiations, control => $languageContainer['variations']}
+			{include #translationVatiations, control => $languageContainer['variations']}
 
-		<div class="pull-left">
-		{label $languageContainer['gender'] /}
-		{input $languageContainer['gender'] , class => 'select2'}
+			<div class="pull-left">
+				{label $languageContainer['gender'] /}
+				{input $languageContainer['gender'] , class => 'select2'}
+			</div>
+
+			<div class="pull-right">
+				{label $languageContainer['position'] /}
+				{input $languageContainer['position'] , class => 'select2'}
+			</div>
+			<div class="clearfix"></div>
+
+
+
 		</div>
-
-		<div class="pull-right">
-		{label $languageContainer['position'] /}
-		{input $languageContainer['position'] , class => 'select2'}
-		</div>
-		<div class="clearfix"></div>
-
-
-
-	</div>
-	{/foreach}
+		{/foreach}
 
 
 	</div>
@@ -478,9 +456,9 @@
 {*
 	Translation Variations Container -------------------------------------------
 	@param $control \Extras\Forms\Container\TranslationVariationsContainer
-*}
-{define #translationVatiations}
-{var
+	*}
+	{define #translationVatiations}
+	{var
 	$container = $control;
 	$phrase = $container->getPhrase();
 	$language = $container->getLanguage();
@@ -489,27 +467,27 @@
 <table class="phraseTable table-striped table">
 	<tr>
 		{if $phrase->type->pluralVariationsRequired}
-			<th>Count</th>
+		<th>Count</th>
 		{/if}
 		{if $phrase->type->genderVariationsRequired}
-			{foreach $language->genders as $genderName}
-				<th>{$genderName}</th>
-			{/foreach}
+		{foreach $language->genders as $genderName}
+		<th>{$genderName}</th>
+		{/foreach}
 		{/if}
 	</tr>
 	{foreach $container->getComponents() as $plural}
-		<tr>
-			{if $phrase->type->pluralVariationsRequired}
-				<td>{$language->getPluralName($plural->getName())}</td>
-			{/if}
-			{foreach $plural->getComponents() as $genders}
-				<td>
-					{foreach $genders->getComponents() as $gender}
-						{$gender->getControl()}
-					{/foreach}
-				</td>
+	<tr>
+		{if $phrase->type->pluralVariationsRequired}
+		<td>{$language->getPluralName($plural->getName())}</td>
+		{/if}
+		{foreach $plural->getComponents() as $genders}
+		<td>
+			{foreach $genders->getComponents() as $gender}
+			{$gender->getControl()}
 			{/foreach}
-		</tr>
+		</td>
+		{/foreach}
+	</tr>
 	{/foreach}
 </table>
 
@@ -519,30 +497,30 @@
 {*
 	Rental Photos Container -------------------------------------------
 	@param $control \Extras\Forms\Container\RentalPhotosContainer
-*}
-{define #rentalPhotos}
-{var
+	*}
+	{define #rentalPhotos}
+	{var
 	$container = $control;
 }
 {?unset($control)}
 <tr class="control-photo"><!-- control photo start -->
 
 	<td colspan="3">
-	<div class="row-fluid">
+		<div class="row-fluid">
 
 
-		<div class="span12">
-			<ul id="sortable" class="ui-sortable" n:inner-foreach="$container->getImages() as $image">
-				<li data-id="{$image->getId()}" class="ui-state-default">
-					<img n:image="$image">
-					<a href="#" class="remove">#delete</a>
-				</li>
-			</ul>
+			<div class="span12">
+				<ul id="sortable" class="ui-sortable" n:inner-foreach="$container->getImages() as $image">
+					<li data-id="{$image->getId()}" class="ui-state-default">
+						<img n:image="$image">
+						<a href="#" class="remove">#delete</a>
+					</li>
+				</ul>
+			</div>
+
 		</div>
-
-	</div>
-	<div class="row-fluid text">
-		<div class="span12">
+		<div class="row-fluid text">
+			<div class="span12">
 
 
 				<span class="btn btn-green fileinput-button">
@@ -550,17 +528,17 @@
 					<span>Add files...</span>
 					{input $container['upload']}
 				</span>
-					
+
+			</div>
 		</div>
-	</div>
-	<div class="row-fluid">
-		<p>
-			#Vyberte súbory alebo ich potiahnite z inej aplikácie sem.
-			Nahrať môžete aj viac fotografií naraz. Maximálny rozmer je 1500 x 1500 pixelov.
-			Minimálna šírka fotografie je 450px.
-			Pridanie fotografie trvá niekoľko sekúnd v závislosti od rýchlosti vášho pripojenia.
-		</p>
-	</div>
+		<div class="row-fluid">
+			<p>
+				#Vyberte súbory alebo ich potiahnite z inej aplikácie sem.
+				Nahrať môžete aj viac fotografií naraz. Maximálny rozmer je 1500 x 1500 pixelov.
+				Minimálna šírka fotografie je 450px.
+				Pridanie fotografie trvá niekoľko sekúnd v závislosti od rýchlosti vášho pripojenia.
+			</p>
+		</div>
 	</td>
 
 
@@ -577,9 +555,9 @@
 {*
 	Calendar Container -------------------------------------------
 	@param $control \Nette\Forms\Controls\CalendarButton
-*}
-{define #calendar}
-{var
+	*}
+	{define #calendar}
+	{var
 	$_control = $control;
 	$container = $control;
 	$months = $container->getMonths();
@@ -598,29 +576,29 @@
 	@param $control \Nette\Forms\Controls\SubmitButton
 	@param $icon string
 	@param $class string
-*}
-{define #submit}
-{default $class = null}
-<tr>
-	<td>
-		      
-	</td>
-	<td colspan="2">
-		<button type="submit" n:class="$class ? 'btn ' .$class : btn" name="{$control->getHtmlName()}" id="{$control->getHtmlId()}">
-			<i n:ifset="$icon" class="{$icon}"></i> {$control->caption}
-		</button>
-	</td>
-</tr>
-{/define #submit}
+	*}
+	{define #submit}
+	{default $class = null}
+	<tr>
+		<td>
+
+		</td>
+		<td colspan="2">
+			<button type="submit" n:class="$class ? 'btn ' .$class : btn" name="{$control->getHtmlName()}" id="{$control->getHtmlId()}">
+				<i n:ifset="$icon" class="{$icon}"></i> {$control->caption}
+			</button>
+		</td>
+	</tr>
+	{/define #submit}
 
 
-{*
+	{*
 	Button Container -------------------------------------------
 	@param $control \Nette\Forms\Controls\SubmitButton
 	@param $icon string
-*}
-{define #button}
-<button type="button" class="btn" name="{$control->getHtmlName()}" id="{$control->getHtmlId()}">
-	<i n:ifset="$icon" class="{$icon}"></i> {$control->caption}
-</button>
-{/define #button}
+	*}
+	{define #button}
+	<button type="button" class="btn" name="{$control->getHtmlName()}" id="{$control->getHtmlId()}">
+		<i n:ifset="$icon" class="{$icon}"></i> {$control->caption}
+	</button>
+	{/define #button}

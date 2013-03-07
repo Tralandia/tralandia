@@ -209,7 +209,7 @@ parameters:
 					- jQuery/lib/jquery.js
 			gMap:
 				js: 
-					#- "https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"
+					- "https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"
 		sets:
 
 			'Admin:Ap':
@@ -227,7 +227,8 @@ parameters:
 				-  %webloader.packages.select2%
 				-  %webloader.packages.texyla%				
 				-  %webloader.packages.nette%
-				-  %webloader.packages.gMap%
+				
+				
 
 
 			Front:				
@@ -242,10 +243,11 @@ parameters:
 				-  %webloader.packages.jscrollPane%
 				-  %webloader.packages.fileUpload%
 				-  %webloader.packages.select2%
+				-  %webloader.packages.gMap%
 				-  %webloader.packages.Front%
 				#-  %webloader.packages.texyla%				
 				-  %webloader.packages.nette%								
-				-  %webloader.packages.gMap%
+				
 			'Front:CalendarIframe':
 				-  %webloader.packages.calendarIframe%
 			'Front:Rental:detail':
@@ -262,7 +264,7 @@ parameters:
 				-  %webloader.packages.bootstrap%
 				#-  %webloader.packages.texyla%
 				-  %webloader.packages.nette%								
-				-  %webloader.packages.gMap%			
+							
 				-  %webloader.packages.select2HideInputText%			
 
 			'Front:Rental:list':
@@ -279,7 +281,7 @@ parameters:
 				-  %webloader.packages.select2%
 				-  %webloader.packages.texyla%				
 				-  %webloader.packages.nette%
-				-  %webloader.packages.gMap%			
+							
 				-  %webloader.packages.favoriteScroll%		
 			Owner: 
 				-  %webloader.packages.jQuery%
@@ -296,7 +298,7 @@ parameters:
 				-  %webloader.packages.Front%
 				-  %webloader.packages.texyla%
 				-  %webloader.packages.nette%								
-				-  %webloader.packages.gMap%			
+							
 				
 			Gregor:
 				-  %webloader.packages.Front%
