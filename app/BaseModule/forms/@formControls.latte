@@ -157,7 +157,7 @@
 	@param $controlClass string
 *}
 {define #baseControl}
-<tr>
+<tr class="simpleInput">
 	<td>
 		{_$control->caption}       
 	</td>
@@ -197,7 +197,7 @@
 		{/ifset}	
 	</td>
 	<td>
-		<span class="help">{$control->getOption('description')}</span>
+		<span class="help">{$control->getOption('description')} Temporary helper text for at least 2 lines.</span>
 		<span class="invalidAlert">{include #controlErrors, errors => $control->getErrors()}</span>
 	</td>
 </tr>
@@ -219,10 +219,10 @@
 *}
 
 {define #checkboxList}
-	{default $colCount = 2}
+	{default $colCount = 1}
 	{if $colCount == 1}
-		<tr>
-			<td>{_$control->caption}</td>
+		<tr class="simpleInput">
+			<td style="vertical-align: top; padding-top: 4px;">{_$control->caption}</td>
 			<td>
 			{foreach $control as $key => $label}
 				{*!$control->getLabelItem($key)->addAttributes(['class' => 'checkbox'])->startTag()*} 
@@ -235,20 +235,28 @@
 			<td></td>
 		</tr>
 	{else}
+	{var $countPerCol = ceil(count($control->items)/$colCount)}
+	{dump count($control->items), $countPerCol}
 		<tr>
 			<td colspan="3">
-				<table>
+				<table class="checkboxes" style="width: 100%;">
 					<tr>
-						<td>{_$control->caption}</td>
+						<td colspan="{$colCount}">{_$control->caption}</td>
 					</tr>
 					<tr>
-						<td>
+						<td width="{(int)(100/$colCount)}%">
+						{var $i = 1}
 						{foreach $control as $key => $label}
 							{*!$control->getLabelItem($key)->addAttributes(['class' => 'checkbox'])->startTag()*} 
 							<label>
 							{$control->getControlItem($key)}
 							{_$label}
 							</label>
+							{if $i == $countPerCol}
+								</td><td width="{(int)(100/$colCount)}%">
+								{var $i = 0}
+							{/if}
+							{var $i++}
 						{/foreach}
 						</td>
 					</tr>
@@ -300,7 +308,7 @@
 }
 {?unset($control)}
 
-<tr>
+<tr class="simpleInput">
 	<td>
 		{_$mainControl->caption}     
 	</td>

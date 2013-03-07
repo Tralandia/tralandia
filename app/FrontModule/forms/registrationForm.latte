@@ -24,13 +24,13 @@
 
 	{include #fieldset, text => 'Rental location'}
 	{* {include #address, control => $rental['address']} *}
-	{include #checkboxList, control => $rental['amenityLocation'], colCount => 1}
+	{include #checkboxList, control => $rental['amenityLocation'], colCount => 3}
 
 	{include #fieldset, text => 'Further details'}
 	{include #select, control => $rental['classification']}
-	{include #checkboxList, control => $rental['board']}
-	{include #checkboxList, control => $rental['important']}
-	{include #checkboxList, control => $rental['ownerAvailability']}
+	{include #checkboxList, control => $rental['board'], colCount => 2}
+	{include #checkboxList, control => $rental['important'], colCount => 3}
+	{include #checkboxList, control => $rental['ownerAvailability'], colCount => 1}
 
 	{include #fieldset, text => 'Photos'}
 	{* {include #rentalPhotos, control => $rental['photos']} *}
