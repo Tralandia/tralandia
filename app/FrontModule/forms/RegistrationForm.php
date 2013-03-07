@@ -84,7 +84,7 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 
 		$this->addText('email', 'Email');
 		$this->addPassword('password', 'Password');
-		$this->addPassword('password2', 'Confirm Password');
+		//$this->addPassword('password2', 'Confirm Password');
 
 		$this->addText('name', 'Name');
 		$this['phone'] = new PhoneContainer('Phone', $phonePrefixes);
@@ -146,7 +146,7 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 			'email' => 'email@' . \Nette\Utils\Strings::random(6) . '.com',
 			'www' => 'google.com',
 			'password' => 'adsfasdf',
-			'password2' => 'adsfasdf',
+			//'password2' => 'adsfasdf',
 			'rentalGps' => '1423345',
 			'rentalName' => 'Chata Test',
 			'rentalPrice' => '3',
