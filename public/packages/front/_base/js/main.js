@@ -261,7 +261,9 @@ $(document).ready(function(){
 		return false;
 	}); 
 
-	$("select.select2").select2(); 
+	$("table.formTable select.select2").select2({dropdownCssClass: "mainForm"}); 
+	$(".reservationform select.select2").select2({dropdownCssClass: "reservationForm"}); 
+	//$("#sidebar select.select2").select2(); 
 
 	var A = new App();	
 

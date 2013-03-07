@@ -1,4 +1,17 @@
 {*
+	Fieldset -------------------------------------------
+	@param $control \Nette\Forms\Controls\BaseControl
+	@param $prepend array
+	@param $append array
+*}
+{define #fieldset}
+	{default $text = ''}
+	<tr>
+		<td colspan="3" class="fieldset">{$text}</td>
+	</tr>
+{/define #fieldset}
+
+{*
 	Text Control -------------------------------------------
 	@param $control \Nette\Forms\Controls\BaseControl
 	@param $prepend array
@@ -89,13 +102,13 @@
 *}
 
 {define #texyla}
-	<tr xmlns="http://www.w3.org/1999/html">
+	<tr>
 		<td>
 			{label $control /}        
 		</td>
 		<td>
 			{input $control , class => "texyla"}
-		<td>
+		</td>
 		
 		<td>
 			<span class="help">{$control->getOption('description')}</span>
@@ -112,30 +125,21 @@
 	===========================================================================================================	
 	===========================================================================================================	
 *}
-{* {define #baseHtml}
-<tr>
-	<td>Toto je label:</td>
-	<td><input type="text" name="" value="" /></td>
-	<td>
-		<span class="help">Toto je sivy text ak je vsetko OK alebo este nic nepisal.</span>
-		<span class="alert">Toto je cerveny text ak je nieco ZLE.</span>
-	</td>
-</tr>
-{/define baseHtml}
- *}
+
+
 {*
 	Texyla Control -------------------------------------------
 	@param $control \Nette\Forms\Controls\TextAreaControl
 	@param $controlClass string
 *}
 {define #checkbox}
-	<tr xmlns="http://www.w3.org/1999/html">
+	<tr>
 		<td>
-			{label $control /}        
+			{_$control->caption}       
 		</td>
 		<td>
 			{input $control}
-		<td>
+		</td>
 		
 		<td>
 			<span class="help">{$control->getOption('description')}</span>
@@ -155,7 +159,7 @@
 {define #baseControl}
 <tr>
 	<td>
-		{label $control /}        
+		{_$control->caption}       
 	</td>
 	<td>
 		{capture $input}
@@ -168,21 +172,33 @@
 
 		{ifset $prepend}
 			<div class="input-prepend">
-				<span class="add-on">{!$prepend['text']}</span>
-				{!$input}
+				<table>
+					<tr>
+						<td class="prepend"><span class="add-on">{!$prepend['text']}</span></td>
+						<td>{!$input}</td>
+					</tr>
+				</table>
 			</div>
 		{elseifset $append}
 			<div class="input-append">
-				{!$input}
-				<span class="add-on">{!$append['text']}</span>
+				<table>
+					<tr>
+						<td>{!$input}</td>
+						<td class="append"><span class="add-on">{!$append['text']}</span></td>
+					</tr>
+				</table>
 			</div>
 		{else}
-			{!$input}
+				<table>
+					<tr>
+						<td>{!$input}</td>
+					</tr>
+				</table>
 		{/ifset}	
 	</td>
 	<td>
 		<span class="help">{$control->getOption('description')}</span>
-		<span class="alert">{include #controlErrors, errors => $control->getErrors()}</span>
+		<span class="invalidAlert">{include #controlErrors, errors => $control->getErrors()}</span>
 	</td>
 </tr>
 {/define #baseControl}
@@ -201,42 +217,46 @@
 	Checkbox List -------------------------------------------
 	@param $control \Nextras\Forms\Container\MultiOptionList
 *}
-{* {define #checkboxList}
-<div class="control-group" xmlns="http://www.w3.org/1999/html">
-	<div class="form-label">
-		{label $control /}
-		<small>{$control->getOption('description')}</small>
-	</div>
-	<div class="controls">
-		{foreach $control as $key => $label}
-			{!$control->getLabelItem($key)->addAttributes(['class' => 'checkbox'])->startTag()}
-			{$control->getControlItem($key)}
-			{_$label}
-			</label>
-		{/foreach}
-	</div>
-</div>
-{/define #checkboxList} *}
 
 {define #checkboxList}
-	<tr xmlns="http://www.w3.org/1999/html">
-		<td>
-			{label $control /}        
-		</td>
-		<td>
+	{default $colCount = 2}
+	{if $colCount == 1}
+		<tr>
+			<td>{_$control->caption}</td>
+			<td>
 			{foreach $control as $key => $label}
-				{!$control->getLabelItem($key)->addAttributes(['class' => 'checkbox'])->startTag()} {* <label ...> *}
+				{*!$control->getLabelItem($key)->addAttributes(['class' => 'checkbox'])->startTag()*} 
+				<label>
 				{$control->getControlItem($key)}
 				{_$label}
 				</label>
 			{/foreach}
-		<td>
-		
-		<td>
-			<span class="help">{$control->getOption('description')}</span>
-			<span class="alert">{include #controlErrors, errors => $control->getErrors()}</span>
-		</td>
-	</tr>
+			</td>
+			<td></td>
+		</tr>
+	{else}
+		<tr>
+			<td colspan="3">
+				<table>
+					<tr>
+						<td>{_$control->caption}</td>
+					</tr>
+					<tr>
+						<td>
+						{foreach $control as $key => $label}
+							{*!$control->getLabelItem($key)->addAttributes(['class' => 'checkbox'])->startTag()*} 
+							<label>
+							{$control->getControlItem($key)}
+							{_$label}
+							</label>
+						{/foreach}
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+
+	{/if}
 {/define #checkboxList}
 
 
@@ -252,18 +272,18 @@
 }
 {?unset($control)}
 
-	<tr xmlns="http://www.w3.org/1999/html">
+	<tr>
 		<td>
 			{label $mainControl /}        
 		</td>
 		<td>
 		{input $container['amount']}
 		{input $container['currency'], class => 'select2'}
-		<td>
+		</td>
 		
 		<td>
 			<span class="help">{$container->getDescription('description')}</span>
-			<span class="alert">{include #controlErrors, errors => $container->getAllErrors()}</span>
+			<span class="invalidAlert">{include #controlErrors, errors => $container->getAllErrors()}</span>
 		</td>
 	</tr>
 {/define #price}
@@ -280,14 +300,18 @@
 }
 {?unset($control)}
 
-<tr xmlns="http://www.w3.org/1999/html">
+<tr>
 	<td>
-		{label $mainControl /}        
+		{_$mainControl->caption}     
 	</td>
 	<td>
-		{input $container['prefix'], class => 'select2'}
-		{input $container['number']}
-	<td>
+		<table>
+			<tr>
+				<td class="prepend">{input $container['prefix'], class => 'select2'}</td>
+				<td>{input $container['number']}</td>
+			</tr>
+		</table>		
+	</td>
 	
 	<td>
 		<span class="help">{$container->getDescription('description')}</span>
@@ -568,7 +592,7 @@
 *}
 {define #submit}
 {default $class = null}
-<tr xmlns="http://www.w3.org/1999/html">
+<tr>
 	<td>
 		      
 	</td>
@@ -576,7 +600,7 @@
 		<button type="submit" n:class="$class ? 'btn ' .$class : btn" name="{$control->getHtmlName()}" id="{$control->getHtmlId()}">
 			<i n:ifset="$icon" class="{$icon}"></i> {$control->caption}
 		</button>
-	<td>
+	</td>
 </tr>
 {/define #submit}
 

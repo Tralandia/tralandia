@@ -5,8 +5,11 @@ use Nette\DateTime;
 
 class CalendarControl extends \BaseModule\Components\BaseControl {
 
-	public function __construct() {
+	protected $locale;
+
+	public function __construct(\Environment\Locale $locale) {
 		parent::__construct();
+		$this->locale = $locale;
 	}
 	
 	public function renderIframe($monthsCount, array $selectedDays = NULL){
@@ -36,7 +39,8 @@ class CalendarControl extends \BaseModule\Components\BaseControl {
 			$start = clone $fromDate;
 			$key = $start->format('Y-m');
 
-			$month['title'] = $start->format('F Y');
+			$monthName = $this->locale->getMonth($start->format('n'));
+			$month['title'] = $monthName.' '.$start->format('Y');
 
 			$month['daysBefore'] = [];
 			$firstDayOfMonth = $start->modifyClone()->format('N');
@@ -103,7 +107,8 @@ class CalendarControl extends \BaseModule\Components\BaseControl {
 				$months[$yearMonth]['days'][$day]['status']['start'] = TRUE;
 			}
 
-			$nextDay = $date->modifyClone('+1 day');
+			//$nextDay = $date->modifyClone('+1 day');
+			$nextDay = c($date)->modify('+1 day');
 			$yearMonth = $nextDay->format('Y-m');
 			$day = $nextDay->format('d');
 			if(isset($months[$yearMonth]['days'][$day])) {

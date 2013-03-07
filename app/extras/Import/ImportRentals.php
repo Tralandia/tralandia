@@ -81,8 +81,10 @@ class ImportRentals extends BaseImport {
 			}
 		}
 
+		$rentalIdIncrement = 100;
 		while ($x = mysql_fetch_array($r)) {
 			$rental = $context->rentalEntityFactory->create();
+			$rental->id = $rentalIdIncrement++;
 			$rental->oldId = $x['id'];
 
 			$user = $context->userRepositoryAccessor->get()->findOneByLogin(qc('select email from members where id = '.$x['member_id']));
@@ -373,11 +375,10 @@ class ImportRentals extends BaseImport {
 			$temp = array_unique(array_filter(explode(',', $x['calendar'])));
 			if (is_array($temp) && count($temp)) {
 				foreach ($temp as $key => $value) {
-					//if ($value < $now) continue;
+					if ($value < $now) continue;
 					$t = new \Nette\DateTime;
-					$t->from($value);
+					$t->setTimestamp($value);
 					$temp[$key] = $t;
-					d('tu som');
 				}
 			}
 

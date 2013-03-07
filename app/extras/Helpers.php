@@ -95,4 +95,18 @@ class Helpers {
 		return $this->locale->formatTime($time);
 	}
 
+	/**
+	 * Date/time formatting.
+	 * @param  string|int|DateTime
+	 * @param  string
+	 * @return string
+	 */
+	public function monthName($month)
+	{
+		if ($month == NULL) { // intentionally ==
+			return NULL;
+		}
+
+		return $this->locale->getMonth($month);
+	}
 }
