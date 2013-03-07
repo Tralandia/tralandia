@@ -302,7 +302,7 @@ $(document).ready(function(){
 
 	$('.calendarEdit').calendarEdit();
 
-	$('.traMapcontrol').traMapcontrol();
+	//$('.traMapcontrol').traMapcontrol();
 
 	$('.phraseForm').phraseForm();
 

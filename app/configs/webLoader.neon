@@ -209,7 +209,8 @@ parameters:
 					- jQuery/lib/jquery.js
 			gMap:
 				js: 
-					- "https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"
+					# - "https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"
+					- "https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"
 		sets:
 
 			'Admin:Ap':
@@ -227,9 +228,6 @@ parameters:
 				-  %webloader.packages.select2%
 				-  %webloader.packages.texyla%				
 				-  %webloader.packages.nette%
-				
-				
-
 
 			Front:				
 				-  %webloader.packages.jQuery%	
@@ -246,8 +244,7 @@ parameters:
 				-  %webloader.packages.gMap%
 				-  %webloader.packages.Front%
 				#-  %webloader.packages.texyla%				
-				-  %webloader.packages.nette%								
-				
+				-  %webloader.packages.nette%
 			'Front:CalendarIframe':
 				-  %webloader.packages.calendarIframe%
 			'Front:Rental:detail':
