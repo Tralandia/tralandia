@@ -93,7 +93,6 @@ parameters:
 			calendarIframe:
 				css:
 					- front/_base/less/calendar.less
-
 			Front:
 				css:
 					#- front/_base/less/fonts.less
@@ -256,9 +255,9 @@ parameters:
 				-  %webloader.packages.fontEntypo%
 				-  %webloader.packages.fontAwesome%					
 				-  %webloader.packages.jscrollPane%			
-				-  %webloader.packages.Front%
 				-  %webloader.packages.select2%
 				-  %webloader.packages.bootstrap%
+				-  %webloader.packages.Front%
 				#-  %webloader.packages.texyla%
 				-  %webloader.packages.nette%								
 							
