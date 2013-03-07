@@ -545,7 +545,7 @@
 			var $uploadButton = $self.find('button');
 			var $uploadButtonReal = $self.find('input[type=file]');
 
-			var $sortInput = $self.find('#frm-baseForm-photos-sort');
+			var $sortInput = $self.find('#frm-registrationForm-rental-photos-sort');
 
 			var $listGallery = $self.find('#sortable');
 
@@ -578,15 +578,14 @@
 					id: $el.parent().attr('data-id')
 				}
 
-				setTimeout(function(){
-				  	$el.parent().fadeOut({
-				  		complete: function(){
-				  			$(this).remove();
-				  			$.galleryControl.saveSortableValues($sortInput,$listGallery);
-				  		}
-				  	});					
-				},1000);
-
+			  	$el.parent().fadeOut(
+			  		150,
+			  		function(){
+			  			$(this).remove();
+			  			$.galleryControl.saveSortableValues($sortInput,$listGallery);
+			  		}
+			  	);					
+				
 				return false;
 			});
 
@@ -611,13 +610,16 @@
 
 						var html = '';
 						$.each(data.originalFiles,function(k,v){							
-							html+= '<li class="loading" id="+divId+"></li>';
-						});
+							html+= '<li class="loading" id="+divId+"><i class="icon-spinner icon-spin"></i></li>';
+
+						});						
+
+
 
 						console.log(data.originalFiles);
 
 						$listGallery.append(html);
-
+						//return false;
 						firstStart = true;
 					}
 
