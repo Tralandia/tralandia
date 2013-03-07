@@ -735,9 +735,14 @@ function initialize() {
         setupClickListener('changetype-establishment', ['establishment']);
         setupClickListener('changetype-geocode', ['geocode']);
       }
-      google.maps.event.addDomListener(window, 'load', initialize);
+      
 
 
      $(function(){
-     	initialize();
+
+		if ($("#frm-registrationForm-rental-address-address").length > 0){
+     		google.maps.event.addDomListener(window, 'load', initialize);
+     		initialize();
+		}
+     	
      });

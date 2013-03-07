@@ -206,6 +206,7 @@ parameters:
 			jQuery:
 				js: 
 					- jQuery/lib/jquery.js
+					# - "http://code.jquery.com/jquery-1.9.1.min.js"
 			gMap:
 				js: 
 					# - "https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"
@@ -255,12 +256,10 @@ parameters:
 				-  %webloader.packages.fontEntypo%
 				-  %webloader.packages.fontAwesome%					
 				-  %webloader.packages.jscrollPane%			
-				-  %webloader.packages.select2%
 				-  %webloader.packages.bootstrap%
-				-  %webloader.packages.Front%
-				#-  %webloader.packages.texyla%
+				-  %webloader.packages.select2%
+				-  %webloader.packages.Front%					
 				-  %webloader.packages.nette%								
-							
 				-  %webloader.packages.select2HideInputText%			
 
 			'Front:Rental:list':
@@ -277,7 +276,6 @@ parameters:
 				-  %webloader.packages.select2%
 				-  %webloader.packages.texyla%				
 				-  %webloader.packages.nette%
-							
 				-  %webloader.packages.favoriteScroll%		
 			Owner: 
 				-  %webloader.packages.jQuery%

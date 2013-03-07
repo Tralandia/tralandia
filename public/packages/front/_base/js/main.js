@@ -456,6 +456,8 @@ $(document).ready(function(){
 
 	$('body').click(function(){
 
+		//$('.select2').select2('close');
+
 		if(langmenuOpen){
 			$('#langMenuOptions').hide();
 			langmenuOpen = false;
