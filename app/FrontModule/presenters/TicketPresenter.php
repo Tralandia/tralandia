@@ -1,6 +1,8 @@
 <?php 
 namespace FrontModule;
 
+use Nette;
+use Extras;
 
 class TicketPresenter extends BasePresenter {
 

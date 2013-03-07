@@ -1,13 +1,13 @@
-{control header:begin}
+{control head:begin}
 	{control css}
 	{control js}
-{control header:end}
+{control head:end}
 <body data-localeCode="{$localeCode}">
 	<div class="container baseRadius" id="container">
 		<div class="row">
 
 
-			{include ../header.latte}
+			{control header}
 			{*
 			{control searchBar}
 			*}
@@ -22,26 +22,10 @@
 			</div>
 
 	
-			{control countriesFooter}
 		</div>		
 	</div>	
 
-	<div class="container">
-
-		<div class="row smallFooterSignature">
-			<div class="span12">
-			{var $now = date('Y')}
-				<p>
-				<a href="{plink :Front:Home:default}">@2006–{$now} Tralandia.sk</a> | 
-				<a href="{plink :Front:Contact:default#aboutUs}">{_o23011}</a> | 
-				<a href="{plink :Front:Contact:default#tabs-2}">#napisali onas</a> |
-				<a href="{plink :Front:Contact:default#TermsOfUse}">{_o795}</a> |
-				<a href="{plink :Front:Contact:default#faq}">{_o741}</a>
-				</p>
-			</div>
-		</div>
-
-	</div>
+	{include ../smallFooter.latte}
 
 </body>
 
