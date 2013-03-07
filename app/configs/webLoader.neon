@@ -234,8 +234,7 @@ parameters:
 				-  %webloader.packages.jqueryAppear%			
 				-  %webloader.packages.jstorage%			
 				-  %webloader.packages.jqueryUi%
-				-  %webloader.packages.jqueryCookie%									
-				
+				-  %webloader.packages.jqueryCookie%													
 				-  %webloader.packages.fontEntypo%
 				-  %webloader.packages.fontAwesome%
 				-  %webloader.packages.bootstrap%
@@ -252,8 +251,7 @@ parameters:
 				-  %webloader.packages.jqueryAppear%
 				-  %webloader.packages.jstorage%				
 				-  %webloader.packages.jqueryUi%
-				-  %webloader.packages.jqueryCookie%									
-				
+				-  %webloader.packages.jqueryCookie%													
 				-  %webloader.packages.fontEntypo%
 				-  %webloader.packages.fontAwesome%					
 				-  %webloader.packages.jscrollPane%			
@@ -286,6 +284,7 @@ parameters:
 				-  %webloader.packages.jqueryAppear%
 				-  %webloader.packages.jstorage%
 				-  %webloader.packages.bootstrap%
+				-  %webloader.packages.jscrollPane%
 				-  %webloader.packages.jqueryUi%
 				-  %webloader.packages.jqueryCookie%									
 				-  %webloader.packages.select2%

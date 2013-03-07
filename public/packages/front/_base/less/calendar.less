@@ -26,6 +26,22 @@ div.calendar {
         width: 126px;
         height: 150px;
     }    
+
+    .day.active {
+        
+        &.status01 {
+
+            .skew-gradient( #FDFDF8,#B0C23C  , 21 , 21 );     
+        }
+
+        &.status10 {
+            .skew-gradient( #B0C23C,#FDFDF8  , 21 , 21 );           
+        } 
+
+        &.status11 {
+            background: #B0C23C;
+        }       
+    }
 }
 
 
@@ -49,6 +65,24 @@ div.calendar  {
             width: 15px;  
             height: 13px;
         }
+
+        div.day.active {
+            
+            &.status01 {
+
+                .skew-gradient( #FDFDF8,#B0C23C  , 17 , 15 );     
+            }
+
+            &.status10 {
+                .skew-gradient( #B0C23C,#FDFDF8  , 18 , 15 );           
+            } 
+
+            &.status11 {
+                background: #B0C23C;
+            }       
+        }
+
+
     }
 
 }

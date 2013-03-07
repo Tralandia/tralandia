@@ -71,7 +71,9 @@ var Favorites = {
 	favoritesPluginDiv: '#favoritesStaticContainer',
 	favoritesPlacehoderDiv: '#favoritesStaticContainerPlaceholder',
 	favorietsShowSpeed: 300,
-	autoupdateTime: 3000
+	autoupdateTime: 3000,
+	jscrollPaneClassName: '.jscrollPane',
+	addToFavoritesButtonClass: '.addToFavorites'
 
 };
 
@@ -80,9 +82,12 @@ var Favorites = {
 		//$.removeCookie(this.cookieName);
 		// console.log(this._cookieArray());
 		// console.log($.jStorage.get(this.cookieName));
-		this.initJscrollpaneUi();
-		this.eachSelectedRentalButtons();
-		this.autoUpdate();
+		if($(this.jscrollPaneClassName).length != 0){
+			this.initJscrollpaneUi();
+			this.eachSelectedRentalButtons();
+			this.autoUpdate();
+		}
+
 	};
 
 
@@ -92,7 +97,7 @@ var Favorites = {
 		var self = this ;
 		var array = this._cookieArray();
 
-		$('.addToFavorites').each(function(index){
+		$(self.addToFavoritesButtonClass).each(function(index){
 			var id = $(this).attr('rel');
 			if(self._idInArray(array,id)){
 				$(this).addClass('selected');
@@ -419,8 +424,9 @@ var Favorites = {
 
 			$('#scrollInnerContent').html(html);
 
-			self.jscrollPaneApi.reinitialise();
+			//self.initJscrollpaneUi();
 			self.eachSelectedRentalButtons();
+			self.jscrollPaneApi.reinitialise();
 	};
 
 	Favorites.getLocalStorage = function(){

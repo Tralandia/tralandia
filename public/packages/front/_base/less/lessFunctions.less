@@ -68,6 +68,22 @@
 	);
 }
 
+.skew-gradient( @leftColor , @rightColor , @topStart , @leftStart ){
+	background-image: linear-gradient(@topStart @leftStart, @rightColor 50%, @leftColor 50%);
+	background-image: -o-linear-gradient(@topStart @leftStart, @rightColor 50%, @leftColor 50%);
+	background-image: -moz-linear-gradient(@topStart @leftStart, @rightColor 50%, @leftColor 50%);
+	background-image: -webkit-linear-gradient(@topStart @leftStart, @rightColor 50%, @leftColor 50%);
+	background-image: -ms-linear-gradient(@topStart @leftStart, @rightColor 50%, @leftColor 50%);
+
+	background-image: -webkit-gradient(
+		linear,
+		@topStart @leftStart,
+		left top,
+		color-stop(0.5, @rightColor),
+		color-stop(0.5, @leftColor)
+	);
+}
+
 .drop-shadow(@color){
 	-webkit-box-shadow: 0 8px 6px -6px @color;
 	-moz-box-shadow: 0 8px 6px -6px @color;
