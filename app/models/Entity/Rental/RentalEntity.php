@@ -418,7 +418,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 		foreach($days as $key => $day) {
 			if($calendarUpdatedZ <= $day && $todayZ > $day) continue;
 			$year = $calendarUpdatedZ <= $day ? $thisYear : $nextYear;
-			$days[$key] = DateTime::createFromFormat('z Y', "$day $year");
+			$days[$key] = \Nette\DateTime::createFromFormat('z Y', "$day $year");
 		}
 		return array_filter($days);
 	}

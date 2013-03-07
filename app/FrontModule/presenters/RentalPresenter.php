@@ -38,6 +38,12 @@ class RentalPresenter extends BasePresenter {
 	 */
 	protected $lastSearch;
 
+	/**
+	 * @autowire
+	 * @var \BaseModule\Components\CalendarControl
+	 */
+	protected $calendarControl;
+
 	public function actionDetail($rental) {
 		if (!$rental) {
 			throw new \Nette\InvalidArgumentException('$id argument does not match with the expected value');
@@ -210,5 +216,12 @@ class RentalPresenter extends BasePresenter {
 		$vp = new \VisualPaginator();
 		$vp->templateFile = APP_DIR.'/FrontModule/components/VisualPaginator/paginator.latte';
 		return $vp;
+	}
+
+	protected function createComponentCalendar()
+	{
+		$comp = $this->calendarControl;
+
+		return $comp;
 	}
 }

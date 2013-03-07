@@ -1,7 +1,12 @@
 {block title}{include #parent} | {$settings->title}{/block}
 {block content}
 
-<h1>{$settings->h1}</h1>
+<div class="row-fluid">
+	<div class="span12">
+		<h1 class="marginLeft">{$settings->h1}</h1>
+	</div>
+</div>
+<div class="row-fluid">
 
 
 {control registrationForm}
