@@ -23,7 +23,7 @@
 	{include #text, control => $rental['maxCapacity']}
 
 	{include #fieldset, text => 'Rental location'}
-	{* {include #address, control => $rental['address']} *}
+	{include #address, control => $rental['address']}
 	{include #checkboxList, control => $rental['amenityLocation'], colCount => 3}
 
 	{include #fieldset, text => 'Further details'}
@@ -35,6 +35,6 @@
 	{include #fieldset, text => 'Photos'}
 	{include #rentalPhotos, control => $rental['photos']}
 
-	{include #submit, control => $form['submit'], icon => 'icon-trash'}
+	{include #submit, control => $form['submit'], icon => 'icon-trash' , class => 'btn-green'}
 </table>
 {/form}

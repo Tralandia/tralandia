@@ -144,7 +144,7 @@ table.formTable {
 		}
 	}
 
-	table.checkboxes {
+	table.checkboxes , .simpleInput {
 		width: 100%;
 		.box-size();
 		tr:nth-child(1) {
@@ -157,6 +157,22 @@ table.formTable {
 		tr:nth-child(2) {
 			td {
 				vertical-align: top;
+			}
+		}
+
+		label {
+			margin-left: 15px;
+			cursor: pointer;
+			input[type=checkbox]{
+				position: relative;
+				left: -15px;
+				top: -2px;
+				width: 0;
+			}
+
+			&:hover {
+				text-decoration: underline;
+				color: @darkGreen;
 			}
 		}
 	}
@@ -181,6 +197,48 @@ table.formTable {
 
 	.input-append, .input-prepend {
 		margin: 0px;
+	}
+
+	tr.traMapcontrol {
+		table {
+			width: 100%;
+
+				tr:nth-child(2){
+					td {
+						width: auto;
+						/*padding-right: 10px;*/	
+
+						&:nth-child(5) {
+							padding-right: 0;
+						}			
+					}				
+				}
+
+				input {
+					width: 100%;
+					.box-size();
+					height: 30px;
+					
+				}
+
+				.help {
+					background: rgb(134, 150, 60);
+					color: #fff;				
+					padding: 10px;
+					margin-bottom: 10px;
+					display: block;
+					.basic-border-radius(3px);
+				}
+
+			}
+
+		#gps_position {
+			background: #ffffff;
+			height: 30px;
+			line-height: 30px;
+			margin-bottom: 10px;
+			text-align: center;
+		}
 	}
 
 }

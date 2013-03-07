@@ -2,7 +2,7 @@
 
 <div class="ticketConteiner">
 
-    <div class="ticketEntity marginLeft"><h1>#Ticket <span>#{$ticket->getId()}</span></h1></div>
+    <div class="ticketEntity"><h1>#Ticket <span>#{$ticket->getId()}</span></h1></div>
 
 	{foreach $ticket->getMessages() as $message}
         <div n:class="$message->getFrom()->hasRole(['admin']) ? 'admin ticketMesageEntity' : 'ticketMesageEntity'">

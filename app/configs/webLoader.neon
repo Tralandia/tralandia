@@ -93,7 +93,6 @@ parameters:
 			calendarIframe:
 				css:
 					- front/_base/less/calendar.less
-
 			Front:
 				css:
 					#- front/_base/less/fonts.less
@@ -207,9 +206,11 @@ parameters:
 			jQuery:
 				js: 
 					- jQuery/lib/jquery.js
+					# - "http://code.jquery.com/jquery-1.9.1.min.js"
 			gMap:
 				js: 
-					#- "https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"
+					# - "https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"
+					- "https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"
 		sets:
 
 			'Admin:Ap':
@@ -227,8 +228,6 @@ parameters:
 				-  %webloader.packages.select2%
 				-  %webloader.packages.texyla%				
 				-  %webloader.packages.nette%
-				-  %webloader.packages.gMap%
-
 
 			Front:				
 				-  %webloader.packages.jQuery%	
@@ -242,10 +241,10 @@ parameters:
 				-  %webloader.packages.jscrollPane%
 				-  %webloader.packages.fileUpload%
 				-  %webloader.packages.select2%
+				-  %webloader.packages.gMap%
 				-  %webloader.packages.Front%
 				#-  %webloader.packages.texyla%				
-				-  %webloader.packages.nette%								
-				-  %webloader.packages.gMap%
+				-  %webloader.packages.nette%
 			'Front:CalendarIframe':
 				-  %webloader.packages.calendarIframe%
 			'Front:Rental:detail':
@@ -257,12 +256,10 @@ parameters:
 				-  %webloader.packages.fontEntypo%
 				-  %webloader.packages.fontAwesome%					
 				-  %webloader.packages.jscrollPane%			
-				-  %webloader.packages.Front%
-				-  %webloader.packages.select2%
 				-  %webloader.packages.bootstrap%
-				#-  %webloader.packages.texyla%
+				-  %webloader.packages.select2%
+				-  %webloader.packages.Front%					
 				-  %webloader.packages.nette%								
-				-  %webloader.packages.gMap%			
 				-  %webloader.packages.select2HideInputText%			
 
 			'Front:Rental:list':
@@ -279,7 +276,6 @@ parameters:
 				-  %webloader.packages.select2%
 				-  %webloader.packages.texyla%				
 				-  %webloader.packages.nette%
-				-  %webloader.packages.gMap%			
 				-  %webloader.packages.favoriteScroll%		
 			Owner: 
 				-  %webloader.packages.jQuery%
@@ -296,7 +292,7 @@ parameters:
 				-  %webloader.packages.Front%
 				-  %webloader.packages.texyla%
 				-  %webloader.packages.nette%								
-				-  %webloader.packages.gMap%			
+							
 				
 			Gregor:
 				-  %webloader.packages.Front%
