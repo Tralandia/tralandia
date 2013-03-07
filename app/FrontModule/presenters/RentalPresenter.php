@@ -72,6 +72,7 @@ class RentalPresenter extends BasePresenter {
 
 		$this->template->separateGroups = $rental->getSeparateGroups();
 		$this->template->animalsAllowed = $rental->getAnimalsAllowed();
+		$this->template->ownerAvailability = $rental->getOwnerAvailability();
 
 		$dateUpdated = new \Nette\DateTime();
 		$dateUpdated->from($rental->updated);

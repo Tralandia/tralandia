@@ -2,12 +2,12 @@
 
 <div class="ticketConteiner">
 
-    <div class="ticketEntity"><h1>#Ticket <span>#{$ticket->getId()}</span></h1></div>
+    <div class="ticketEntity"><h1>{_o100062} <span>#{$ticket->getId()}</span></h1></div>
 
 	{foreach $ticket->getMessages() as $message}
-        <div n:class="$message->getFrom()->hasRole(['admin']) ? 'admin ticketMesageEntity' : 'ticketMesageEntity'">
+        <div n:class="$message->getFrom()->hasRole(['admin']) ? 'admin ticketMessageEntity' : 'ticketMessageEntity'">
             <div class="header">
-				<span class="from">{_o948}</span>
+				<span class="from">{_o948|firstUpper}</span>
 				{$message->getFrom()->getLogin()}
 				<span class="time">{$message->getCreated()|date}</span>
 			</div>

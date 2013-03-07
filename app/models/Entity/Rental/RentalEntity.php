@@ -292,6 +292,9 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 				$t[$key] = $return[$key];
 			}
 
+			if (isset($t['separate-groups'])) unset($t['separate-groups']);
+			if (isset($t['owner-availability'])) unset($t['owner-availability']);
+
 			return $t;
 		}
 
@@ -389,6 +392,20 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 	{
 		$animals = $this->getAmenitiesByType(array('animal'));
 		return (bool) count($animals) == 1;
+	}
+
+	/**
+	 * @return \Entity\Rental\Amenity
+	 */
+	public function getOwnerAvailability()
+	{
+		$t = $this->getAmenitiesByType(array('owner-availability'));
+		d($t);
+		if (count($t['owner-availability']) > 0) {
+			return $t['owner-availability'][0];
+		} else {
+			return NULL;
+		}
 	}
 
 	/**
