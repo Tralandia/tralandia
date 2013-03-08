@@ -608,7 +608,7 @@
 	@param $icon string
 	*}
 	{define #button}
-	<button type="button" class="btn" name="{$control->getHtmlName()}" id="{$control->getHtmlId()}">
+	<button type="button" n:class="$class ? 'btn ' .$class : btn" name="{$control->getHtmlName()}" id="{$control->getHtmlId()}">
 		<i n:ifset="$icon" class="{$icon}"></i> {$control->caption}
 	</button>
 	{/define #button}
