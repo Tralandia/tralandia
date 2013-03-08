@@ -39,7 +39,7 @@
 
 			        //console.log(lat+' '+lng);
 
-			        var delta = 0.4;
+			        var delta = 0.05;
 
 			        var MinLat = lat - delta;
 			        var MaxLat = lat + delta;

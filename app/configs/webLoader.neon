@@ -119,6 +119,7 @@ parameters:
 					- front/_base/less/forms.less					
 					- front/_base/less/calendar.less
 					- front/_base/less/photoUpload.less
+					- front/_base/less/navTabs.less
 					# header 
 					- front/header/less/header.less
 					# favorites
