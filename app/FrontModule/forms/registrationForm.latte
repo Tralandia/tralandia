@@ -1,6 +1,74 @@
 {includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
 {form registrationForm, class => "traform dashboard"}
 <table class="formTable innerPadding">
+
+	<tr class="simpleInput">
+		<td colspan="2" class="fieldset">Text</td>
+		<td class="lang">
+			<select class="select2" name="country" id="frm-registrationForm-country" tabindex="-1"><option value="12">Zimbabwe</option><option value="13">Zambia</option><option value="14">Južná Afrika</option><option value="15">Mayotte</option><option value="16">Jemen</option><option value="17">Samoa</option><option value="18">Wallis a Futuna</option><option value="19">Vanuatu</option><option value="20">Vietnam</option><option value="21">Americké Panenské ostrovy</option><option value="22">Britské Panenské ostrovy</option><option value="23">Venezuela</option><option value="24">Svätý Vincent a Grenadíny</option><option value="25">Vatikán</option><option value="26">Uzbekistan</option><option value="27">Uruguaj</option><option value="28">Menšie odľahlé ostrovy USA</option><option value="29">Uganda</option><option value="30">Ukrajina</option><option value="31">Tanzánia</option><option value="32">Taiwan</option><option value="33">Tuvalu</option><option value="34">Trinidad a Tobago</option><option value="35">Turecko</option><option value="36">Tonga</option><option value="37">Tunisko</option><option value="38">Turkménsko</option><option value="39">Východný Timor</option><option value="40">Tokelau</option><option value="41">Tadžikistan</option><option value="42">Thajsko</option><option value="43">Togo</option><option value="44">Francúzske južné územia</option><option value="45">Čad</option><option value="46">Turks a Caicos</option><option value="47">Svazijsko</option><option value="48">Sýria</option><option value="49">Salvádor</option><option value="50">Svätý Tomáš a Princov ostrov</option><option value="51">Surinam</option><option value="52">Somálsko</option><option value="53">Senegal</option><option value="54">San Maríno</option><option value="55">Sierra Leone</option><option value="56" selected="">Slovensko</option><option value="57">Špicbergy a Jan Mayen</option><option value="58">Slovinsko</option><option value="59">Svätá Helena</option><option value="60">Singapur</option><option value="61">Švédsko</option><option value="62">Sudán</option><option value="63">Seychely</option><option value="64">Šalamúnove ostrovy</option><option value="65">Saudská Arábia</option><option value="66">Rwanda</option><option value="67">Rusko</option><option value="68">Srbsko</option><option value="69">Rumunsko</option><option value="70">Réunion</option><option value="71">Katar</option><option value="72">Paraguaj</option><option value="73">Palau</option><option value="74">Portugalsko</option><option value="75">Palestína</option><option value="76">Portoriko</option><option value="77">Pitcairnove ostrovy</option><option value="78">Svätý Peter a Michal</option><option value="79">Poľsko</option><option value="80">Pakistan</option><option value="81">Filipíny</option><option value="82">Papua-Nová Guinea</option><option value="83">Francúzska Polynézia</option><option value="84">Peru</option><option value="85">Panama</option><option value="86">Omán</option><option value="87">Nový Zéland</option><option value="88">Niue</option><option value="89">Nauru</option><option value="90">Nepál</option><option value="91">Nórsko</option><option value="92">Holandsko</option><option value="93">Nikaragua</option><option value="94">Nigéria</option><option value="95">Norfolk</option><option value="96">Niger</option><option value="97">Nová Kaledónia</option><option value="98">Namíbia</option><option value="99">Mozambik</option><option value="100">Malajzia</option><option value="101">Mexiko</option><option value="102">Malawi</option><option value="103">Maldivy</option><option value="104">Maurícius</option><option value="105">Malta</option><option value="106">Montserrat</option><option value="107">Mauritánia</option><option value="108">Martinik</option><option value="109">Severné Mariány</option><option value="110">Macao</option><option value="111">Mongolsko</option><option value="112">Mjanmarsko</option><option value="113">Mali</option><option value="114">FYROM</option><option value="115">Marshallove ostrovy</option><option value="116">Madagaskar</option><option value="117">Svätý Martin</option><option value="118">Čierna Hora</option><option value="119">Moldavsko</option><option value="120">Monako</option><option value="121">Maroko</option><option value="122">Líbya</option><option value="123">Lotyšsko</option><option value="124">Luxembursko</option><option value="125">Litva</option><option value="126">Lesotho</option><option value="127">Libéria</option><option value="128">Srí Lanka</option><option value="129">Lichtenštajnsko</option><option value="130">Svätá Lucia</option><option value="131">Libanon</option><option value="132">Laos</option><option value="133">Kazachstan</option><option value="134">Kajmanie ostrovy</option><option value="135">Kuvajt</option><option value="136">Kórejská republika</option><option value="137">Kórejská ľudovodemokratická republika</option><option value="138">Svätý Krištof a Nevis</option><option value="139">Komory</option><option value="140">Kiribati</option><option value="141">Kambodža</option><option value="142">Kirgizsko</option><option value="143">Keňa</option><option value="144">Japonsko</option><option value="145">Jordánsko</option><option value="146">Jamajka</option><option value="147">Jersey</option><option value="148">Taliansko</option><option value="149">Island</option><option value="150">Irán</option><option value="151">Irak</option><option value="152">Britské indickooceánske územie</option><option value="153">India</option><option value="154">Ostrov Man</option><option value="155">Izrael</option><option value="156">Írsko</option><option value="157">Indonézia</option><option value="158">Švajčiarsko</option><option value="159">Maďarsko</option><option value="160">Haiti</option><option value="161">Chorvátsko</option><option value="162">Honduras</option><option value="163">Heardov ostrov</option><option value="164">Hongkong</option><option value="165">Guyana</option><option value="166">Guinea-Bissau</option><option value="167">Guam</option><option value="168">Guatemala</option><option value="169">Južná Georgia a Južné Sandwichove ostrovy</option><option value="170">Grécko</option><option value="171">Rovníková Guinea</option><option value="172">Guadeloupe</option><option value="173">Guinea</option><option value="174">Gambia</option><option value="175">Grónsko</option><option value="176">Gibraltár</option><option value="177">Ghana</option><option value="178">Guernsey</option><option value="179">Francúzska Guyana</option><option value="180">Gruzínsko</option><option value="181">Grenada</option><option value="182">Spojené kráľovstvo</option><option value="183">Gabon</option><option value="184">Francúzsko</option><option value="185">Faerské ostrovy</option><option value="186">Mikronézia</option><option value="187">Falklandy</option><option value="188">Fidži</option><option value="189">Fínsko</option><option value="190">Etiópia</option><option value="191">Španielsko</option><option value="192">Eritrea</option><option value="193">Západná Sahara</option><option value="194">Egypt</option><option value="195">Estónsko</option><option value="196">Ekvádor</option><option value="197">Alžírsko</option><option value="198">Dominikánska republika</option><option value="199">Dominika</option><option value="200">Dánsko</option><option value="201">Džibutsko</option><option value="202">Nemecko</option><option value="203">Česko</option><option value="204">Cyprus</option><option value="205">Vianočný ostrov</option><option value="206">Kapverdy</option><option value="207">Kuba</option><option value="208">Kostarika</option><option value="209">Kolumbia</option><option value="210">Čína</option><option value="211">Kamerun</option><option value="212">Čile</option><option value="213">Cookove ostrovy</option><option value="214">Pobrežie Slonoviny</option><option value="215">Kongo</option><option value="216">Stredoafrická republika</option><option value="217">Kongo</option><option value="218">Kokosové ostrovy</option><option value="219">Belize</option><option value="220">Bielorusko</option><option value="221">Botswana</option><option value="222">Bouvetov ostrov</option><option value="223">Bhután</option><option value="224">Bahamy</option><option value="225">Brazília</option><option value="226">Bolívia</option><option value="227">Brunej</option><option value="228">Bermudy</option><option value="229">Svätý Bartolomej</option><option value="230">Benin</option><option value="231">Burundi</option><option value="232">Bahrajn</option><option value="233">Bulharsko</option><option value="234">Burkina</option><option value="235">Belgicko</option><option value="236">Bangladéš</option><option value="237">Barbados</option><option value="238">Bosna a Hercegovina</option><option value="239">Azerbajdžan</option><option value="240">Alandy</option><option value="241">Aruba</option><option value="242">Rakúsko</option><option value="243">Americká Samoa</option><option value="244">Argentína</option><option value="245">Antarktída</option><option value="246">Angola</option><option value="247">Holandské Antily</option><option value="248">Arménsko</option><option value="249">Albánsko</option><option value="250">Anguilla</option><option value="251">Antigua a Barbuda</option><option value="252">Afganistan</option><option value="253">Spojené arabské emiráty</option><option value="254">Andorra</option><option value="255">Alberta</option><option value="256">Britská Kolumbia</option><option value="257">Manitoba</option><option value="258">New Brunswick</option><option value="259">Newfoundland a Labrador</option><option value="260">Nové Škótsko</option><option value="261">Severozápadné teritóriá</option><option value="262">Nunavut</option><option value="263">Ontário</option><option value="264">Ostrov Princa Edwarda</option><option value="265">Quebec</option><option value="266">Saskatchewan</option><option value="267">Yukon</option><option value="268">Aljaška</option><option value="269">Alabama</option><option value="270">Arkansas</option><option value="271">Americká Samoa</option><option value="272">Arizona</option><option value="273">Kalifornia</option><option value="274">Colorado</option><option value="275">Connecticut</option><option value="276">Washington D.C.</option><option value="277">Delaware</option><option value="278">Florida</option><option value="279">Georgia</option><option value="280">Havaj</option><option value="281">Iowa</option><option value="282">Idaho</option><option value="283">Illinois</option><option value="284">Indiana</option><option value="285">Kansas</option><option value="286">Kentucky</option><option value="287">Louisiana</option><option value="288">Massachusetts</option><option value="289">Maryland</option><option value="290">Maine</option><option value="291">Michigan</option><option value="292">Minnesota</option><option value="293">Missouri</option><option value="294">Severné Mariány</option><option value="295">Mississippi</option><option value="296">Montana</option><option value="297">Severná Karolína</option><option value="298">Severná Dakota</option><option value="299">Nebraska</option><option value="300">New Hampshire</option><option value="301">New Jersey</option><option value="302">Nové Mexiko</option><option value="303">Nevada</option><option value="304">New York</option><option value="305">Ohio</option><option value="306">Oklahoma</option><option value="307">Oregon</option><option value="308">Pensylvánia</option><option value="309">Rhode Island</option><option value="310">Južná Karolína</option><option value="311">Južná Dakota</option><option value="312">Tennessee</option><option value="313">Texas</option><option value="314">Menšie americké závislé ostrovy</option><option value="315">Utah</option><option value="316">Virginia</option><option value="317">Vermont</option><option value="318">Washington</option><option value="319">Wisconsin</option><option value="320">Západná Virgínia</option><option value="321">Wyoming</option><option value="322">Teritórium hlavného mesta</option><option value="323">Nový Južný Wales</option><option value="324">Severné teritórium</option><option value="325">Queensland</option><option value="326">Južná Austrália</option><option value="327">Tasmánia</option><option value="328">Victoria</option><option value="329">Západná Austrália</option></select>
+		</td>
+	</tr>
+
+	<tr data-lang="" class="simpleInput">
+		<td>name</td>
+		<td>
+			<table>
+				<tbody><tr>
+					<td><input type="text" name="name" id="frm-registrationForm-name" value=""></td>
+				</tr>
+			</tbody></table>
+		</td>
+		<td>
+			<span class="help"> Temporary helper text for at least 2 lines.</span>
+			<span class="invalidAlert">	
+			</span>
+		</td>
+	</tr>
+	<tr data-lang="" class="simpleInput">
+		<td>Slogan</td>
+		<td>
+			<table>
+				<tbody><tr>
+					<td><input type="text" name="name" id="frm-registrationForm-name" value=""></td>
+				</tr>
+			</tbody></table>
+		</td>
+		<td>
+			<span class="help"> Temporary helper text for at least 2 lines.</span>
+			<span class="invalidAlert">	
+			</span>
+		</td>
+	</tr>
+
+
+	<tr data-lang="" class="simpleInput">
+		<td>Label</td>
+		<td><textarea></textarea></td>
+		<td>
+			<span class="help"> Temporary helper text for at least 2 lines.</span>
+			<span class="invalidAlert">	
+			</span>
+		</td>
+	</tr>
+	<tr data-lang="" class="simpleInput hide">
+		<td>Label</td>
+		<td><textarea></textarea></td>
+		<td>
+			<span class="help"> Temporary helper text for at least 2 lines.</span>
+			<span class="invalidAlert">	
+			</span>
+		</td>
+	</tr>
+	<tr data-lang="" class="simpleInput hide">
+		<td>Label</td>
+		<td><textarea></textarea></td>
+		<td>
+			<span class="help"> Temporary helper text for at least 2 lines.</span>
+			<span class="invalidAlert">	
+			</span>
+		</td>
+	</tr>
+
 	{include #select, control => $form['country'], description => "Toto je moj description bez prekladov :)"}
 	{include #select, control => $form['language']}
 

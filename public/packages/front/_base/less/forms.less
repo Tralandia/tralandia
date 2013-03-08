@@ -61,8 +61,13 @@ table.formTable {
 			}
 		}
 
-		td:nth-child(2) {
+		td:nth-child(2)  {
 			width: 300px;
+
+			&.lang {
+				width: auto;
+			}
+
 			table {
 				border-collapse: collapse;
 				border-spacing: 0px;
@@ -142,6 +147,13 @@ table.formTable {
 				border-left: 1px solid transparent;
 			}
 
+		}
+
+		td.lang {
+			.select2-container, .select2-drop, .select2-search, .select2-search input , textarea {
+				width: 200px;
+				float: right;
+			}
 		}
 
 		td:nth-child(3) {
