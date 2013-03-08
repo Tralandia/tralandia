@@ -1,0 +1,15 @@
+@import './lessFunctions.less';
+
+.nav-tabs {
+
+	border-bottom: 1px solid @lightGreen;
+	li:first-child {
+		margin-left:10px;
+	}
+}
+
+.nav-tabs > .active > a, .nav-tabs > .active > a:hover , .nav > li > a:hover {
+	.basic-gradient(#fffffe,#f0f4dc);
+	border-color: @lightGreen;
+	border-bottom: 1px solid #f0f4dc;
+}
