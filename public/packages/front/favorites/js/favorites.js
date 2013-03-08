@@ -83,19 +83,42 @@ var Favorites = {
 		// console.log(this._cookieArray());
 		// console.log($.jStorage.get(this.cookieName));
 		if($(this.jscrollPaneClassName).length != 0){
+
+			this.cleanTrash();
 			this.initJscrollpaneUi();
 			this.eachSelectedRentalButtons();
 			this.autoUpdate();
+
 		}
 
 	};
 
+	// vycisti data ktore nepatria do local storage
+	Favorites.cleanTrash = function(){
+		var self = this ;
+		var array = this._cookieArray();
 
+		var localStorageArray  = this.getLocalStorage();
+		var newLocalStorageArray = [];
+
+			$.each(localStorageArray, function(k,v){
+				if(self._idInArray(array,v.id)){
+					newLocalStorageArray.push(v);					
+				}
+			});	
+
+		if(newLocalStorageArray.length > 0){
+			$.jStorage.set(this.cookieName,newLocalStorageArray);
+		} else {
+			$.jStorage.deleteKey(this.cookieName);
+		}			
+	}
 
 	Favorites.eachSelectedRentalButtons = function(){
 		
 		var self = this ;
 		var array = this._cookieArray();
+
 
 		$(self.addToFavoritesButtonClass).each(function(index){
 			var id = $(this).attr('rel');
@@ -188,6 +211,7 @@ var Favorites = {
 	Favorites.toggleAdd = function(e){
 		
 		var id = parseInt($(this).attr('rel'));
+		Favorites.cleanTrash();
 
 		var data = {
 			id: parseInt($(this).attr('rel')),
@@ -210,6 +234,7 @@ var Favorites = {
 
 	Favorites.removeLink = function(e){
 		var id = parseInt($(this).parents('li').attr('rel'));
+		Favorites.cleanTrash();
 		Favorites.removeFromLocalStorage(id);
 		Favorites.removeFromCookie(id);
 		Favorites.updateList();
