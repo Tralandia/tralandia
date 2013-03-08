@@ -456,12 +456,10 @@ $(document).ready(function(){
 
 
 
-	$('body').click(function(){
-
-		//$('.select2').select2('close');
-
+	$('body').click(function(){		
 		if(langmenuOpen){
 			$('#langMenuOptions').hide();
+			$('#langMenuOptionsOpen').find('i.entypo-chevron-up').removeClass('entypo-chevron-up').addClass('entypo-chevron-down');
 			langmenuOpen = false;
 		}  	
 		if(socialIconsMenu){
