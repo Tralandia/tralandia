@@ -17,14 +17,14 @@
 
 	.socialIcons , .socialBtnHeader {
 		list-style: none;
-		width: 150px;
+		width: 125px;
 		cursor: pointer;
 		color: #ffffff;
 		float: right;
 		margin-right: 10px;
 		position: relative;
 		top: -20px;
-		background: url('../packages/front/_base/img/page_title_bg.png') repeat;
+		background-color: rgba(0, 0, 0, 0.5);
 		height: 27px;
 		line-height: 29px;
 		font-size: 41px;
@@ -72,7 +72,7 @@
 	#siteName {
 		font-family: 'neosansbold';
 		
-		font-size: 35px;
+		font-size: 40px;
 		margin-top: 6px;
 		float: left;
 		margin-left: 10px;
@@ -123,16 +123,16 @@
 
 	#pageTitle {			
 				
-		background: url('../packages/front/_base/img/page_title_bg.png') repeat;		
+		// background: url('../packages/front/_base/img/page_title_bg.png') repeat;		
 		width: 448px;		
-		
+		text-shadow: 0px 0px 8px #000;
 
 		h1 {
-			font-size: 15px;
-			line-height: 20px;
+			font-size: 16px;
+			line-height: 23px;
 			margin: 0;
 			padding: 0;
-			margin-left: 10px;
+			margin-left: 16px;
 			float: left;
 			color: @white;
 			font-weight: normal;
@@ -151,7 +151,7 @@
 
 	.gradiendEnd {			
 		width: 412px;
-		background: url('../packages/front/_base/img/gradient.png') repeat-y;				
+		//background: url('../packages/front/_base/img/gradient.png') repeat-y;				
 	}
 
 
@@ -321,7 +321,7 @@
 		
 		height:27px;
 		line-height:27px;
-		font-size: 13px;
+		font-size: 12px;
 		position: relative;
 		z-index: 1000000;
 		top: -1px;
@@ -349,7 +349,7 @@
 					i {
 						&:before {
 							left:5px;
-							top: 0px;
+							top: -1px;
 							float: left;
 							font-size: 30px;
 							position: relative;
@@ -372,9 +372,9 @@
 					i {
 						&:before {
 							
-							top: -1px;
+							top: -2px;
 							margin-right: 0;
-							font-size: 26px;
+							font-size: 25px;
 							
 						}
 					}
@@ -393,7 +393,13 @@
 
 		ul {
 
-			background:@white;
+			&.withShadow {
+				background: -webkit-linear-gradient(top, #ffffff 0%,#f7f7f7 100%);
+				background: -ms-linear-gradient(top, #ffffff 0%,#f7f7f7 100%);
+				background: linear-gradient(to bottom, #ffffff 0%,#f7f7f7 100%);
+				box-shadow: -2px 2px 3px rgba(0, 0, 0, 0.21);
+			}
+
 			width: auto;
 
 			-webkit-border-top-right-radius: 7px;
@@ -405,7 +411,6 @@
 
 			float: right;
 			list-style: none;
-			
 
 			li {
 				display: block;
@@ -415,7 +420,7 @@
 					
 
 					padding: 0 6px;
-					color: @brown;
+					color: #444;
 
 					&.red {
 						color: #d32c16;
@@ -434,9 +439,7 @@
 						i {
 							position: relative;
 							top: 5px;
-							color: @brown;
 							float: left;
-							font-size: 15px;
 							&.entypo-language {
 
 								&:before {
@@ -521,6 +524,12 @@
 				}
 			}
 
+			.entypo-home, .entypo-edit, .entypo-plus2, .icon-globe, .entypo-chevron-down {
+				color: #aaa;
+			}
+			.entypo-chevron-down {
+				font-size: 10px;
+			}
 		}
 
 	}			
