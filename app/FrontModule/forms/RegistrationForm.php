@@ -78,7 +78,7 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 		$languages = $this->languageRepository->getForSelect();
 		$rentalTypes = $this->rentalTypeRepository->getForSelect();
 
-		$this->addSelect('country', 'Country', $countries);
+		$this->addSelect('country', 'o1094', $countries)->setOption('help', $this->translate('o5956'));
 		$this->addSelect('language', 'Language', $languages);
 
 
