@@ -17,7 +17,7 @@
 
 
   			if(typeof $('body').attr('data-googleMapRender') == 'undefined' ){
-  				
+
   				var coordinates = $(this).attr('value').split(',');
 
   				var lat = parseFloat(coordinates[0]);
@@ -109,7 +109,7 @@
 		if(this.length > 0){
 
 			var visitList = new Array();
-			
+
 			var objectList = $.cookie('favoritesVisitedList');
 			if(typeof objectList != 'undefined'){
 				objectList = objectList.split(',');
@@ -134,7 +134,7 @@
 	  		}
 
 	  	}
-	  	
+
 	  };
 	})(jQuery);
 
@@ -263,7 +263,6 @@ function lazyLoadMap() {
 		$('body').attr('data-googleMapinit',true);  
 	}  
 } 
-
 
 // lazy loading map
 $(function() {
