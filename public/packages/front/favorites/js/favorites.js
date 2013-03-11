@@ -85,6 +85,7 @@ var Favorites = {
 		if($(this.jscrollPaneClassName).length != 0){
 
 			this.cleanTrash();
+
 			this.initJscrollpaneUi();
 			this.eachSelectedRentalButtons();
 			this.autoUpdate();
@@ -101,17 +102,22 @@ var Favorites = {
 		var localStorageArray  = this.getLocalStorage();
 		var newLocalStorageArray = [];
 
+		if(localStorageArray != null){
 			$.each(localStorageArray, function(k,v){
 				if(self._idInArray(array,v.id)){
 					newLocalStorageArray.push(v);					
 				}
 			});	
 
-		if(newLocalStorageArray.length > 0){
-			$.jStorage.set(this.cookieName,newLocalStorageArray);
+			if(newLocalStorageArray.length > 0){
+				$.jStorage.set(this.cookieName,newLocalStorageArray);
+			} else {
+				$.jStorage.deleteKey(this.cookieName);
+			}				
 		} else {
 			$.jStorage.deleteKey(this.cookieName);
-		}			
+		}
+		
 	}
 
 	Favorites.eachSelectedRentalButtons = function(){
@@ -212,6 +218,8 @@ var Favorites = {
 		
 		var id = parseInt($(this).attr('rel'));
 		Favorites.cleanTrash();
+
+
 
 		var data = {
 			id: parseInt($(this).attr('rel')),
