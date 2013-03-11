@@ -36,7 +36,7 @@ table.formTable {
 	td.fieldset {
 		font-size: 15px;
 		padding-top: 20px;
-		color: @darkGreen;
+		color: @darkBlue;
 		font-weight: bold;
 	}
 
@@ -49,7 +49,6 @@ table.formTable {
 	tr.simpleInput {
 		height: 46px;
 		td:nth-child(1) {
-			font-weight: bold;
 			width: 180px;
 			font-size: 13px;
 			line-height: 15px;
@@ -57,7 +56,7 @@ table.formTable {
 			&.fieldset {
 				font-size: 15px;
 				padding-top: 20px;
-				color: @darkGreen
+				color: @darkBlue;
 			}
 		}
 
@@ -169,14 +168,19 @@ table.formTable {
 		.box-size();
 		tr:nth-child(1) {
 			font-weight: bold;
-			font-size: 13px;
+			font-size: 15px;
 			line-height: 15px;
-			height: 46px;		
+			height: 46px;
+			color: @darkBlue;		
+			td {
+				padding-top: 20px;
+			}
 		}
 
 		tr:nth-child(2) {
 			td {
 				vertical-align: top;
+				padding: 0px 10px ;
 			}
 		}
 
@@ -202,6 +206,7 @@ table.formTable {
 		background-color: #eaf0d7;
 		border-color: #b0c13b;
 		text-shadow: none;
+		color: @brown;
 	}
 
 	.input-append input {
