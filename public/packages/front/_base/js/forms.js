@@ -659,8 +659,58 @@
 
 
 
+(function($){
+    $.formMapControl = function(el, options){
 
-function initialize() {
+        var base = this;
+
+        base.$el = $(el);
+        base.el = el;
+
+        base.$el.data("formMapControl", base);
+        
+        base.init = function(){
+            
+            base.options = $.extend({},$.formMapControl.defaultOptions, options);
+
+        };
+        
+        base.init();
+    };
+    
+    $.formMapControl.defaultOptions = {        
+
+    };
+    
+    $.formMapControl.lazyLoadScript = function(url, callback) {
+
+        var script = document.createElement("script")
+        script.type = "text/javascript";
+
+        if (script.readyState) { //IE
+            script.onreadystatechange = function () {
+                if (script.readyState == "loaded" || script.readyState == "complete") {
+                    script.onreadystatechange = null;
+                    callback();
+                }
+            };
+        } else { //Others
+            script.onload = function () {
+                callback();
+            };
+        }
+
+        script.src = url;
+        document.getElementsByTagName("head")[0].appendChild(script);
+    }
+
+
+    $.fn.formMapControl = function( options){
+        return this.each(function(){
+            (new $.formMapControl(this,options));
+
+		// google.maps.event.addDomListener(window, 'load', initialize);
+
         var mapOptions = {
           center: new google.maps.LatLng(-33.8688, 151.2195),
           zoom: 13,
@@ -734,15 +784,34 @@ function initialize() {
         setupClickListener('changetype-all', []);
         setupClickListener('changetype-establishment', ['establishment']);
         setupClickListener('changetype-geocode', ['geocode']);
-      }
-      
+
+        });
+    };
+    
+})(jQuery);
 
 
-     $(function(){
+var maps = {};
 
-		if ($("#frm-registrationForm-rental-address-address").length > 0){
-     		google.maps.event.addDomListener(window, 'load', initialize);
-     		initialize();
+maps.mapInit = function(){
+	console.log('toto');
+	$("#frm-registrationForm-rental-address-address").formMapControl();
+}
+
+// lazy loading map
+$(function() {
+
+	$('#frm-registrationForm-rental-address-address').appear();
+	$(document.body).on('appear', '#frm-registrationForm-rental-address-address', function(e, $affected) {           
+		if(typeof $('body').attr('data-googleMapinit') == 'undefined' ){
+
+			var script = document.createElement("script"); 
+			script.src = "https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places&callback=maps.mapInit"; 
+			document.body.appendChild(script); 
+			$('body').attr('data-googleMapinit',true);  
 		}
-     	
-     });
+	});
+		
+
+});
+      
