@@ -1,6 +1,6 @@
 (function($) {
 	
-  $.fn.traMap = function() {
+	$.fn.traMap = function() {
 
   		// default map zoom level
   		var zoomVal = 4;
@@ -16,26 +16,26 @@
   		} else {
 
 
-		if(typeof $('body').attr('data-googleMapRender') == 'undefined' ){
-		    
-		  			var coordinates = $(this).attr('value').split(',');
+  			if(typeof $('body').attr('data-googleMapRender') == 'undefined' ){
+  				
+  				var coordinates = $(this).attr('value').split(',');
 
-					var lat = parseFloat(coordinates[0]);
-					var lng = parseFloat(coordinates[1]);
+  				var lat = parseFloat(coordinates[0]);
+  				var lng = parseFloat(coordinates[1]);
 
-			        var myLatlng = new google.maps.LatLng(lat,lng);
-			        var mapOptions = {
-			          zoom: zoomVal,
-			          scrollwheel: false,
-			          center: myLatlng,
-			          mapTypeId: google.maps.MapTypeId.ROADMAP
-			        }
-			        var map = new google.maps.Map(document.getElementById($(this).attr('id')), mapOptions);
+  				var myLatlng = new google.maps.LatLng(lat,lng);
+  				var mapOptions = {
+  					zoom: zoomVal,
+  					scrollwheel: false,
+  					center: myLatlng,
+  					mapTypeId: google.maps.MapTypeId.ROADMAP
+  				}
+  				var map = new google.maps.Map(document.getElementById($(this).attr('id')), mapOptions);
 
-			        var marker = new google.maps.Marker({
-			            position: myLatlng,
-			            map: map
-			        });
+  				var marker = new google.maps.Marker({
+  					position: myLatlng,
+  					map: map
+  				});
 
 			        //console.log(lat+' '+lng);
 
@@ -89,54 +89,54 @@
 
 						$('#placesImg').html(html);
 					});*/
-		
-		}
+
+}
 
 
 
 
-  		}
+}
 
-  };
+};
 })(jQuery);
 
 
 /* afret load Rental detail add object id to visit list array */
 (function($) {
 	
-  $.fn.objectVisitList = function(appObject) {  	
+	$.fn.objectVisitList = function(appObject) {  	
 
-  	if(this.length > 0){
+		if(this.length > 0){
 
-	  	var visitList = new Array();
-	  	
-	  	var objectList = $.cookie('favoritesVisitedList');
-	  		if(typeof objectList != 'undefined'){
-	  			objectList = objectList.split(',');
-	  		} else {
-	  			objectList = false;
-	  		}
+			var visitList = new Array();
+			
+			var objectList = $.cookie('favoritesVisitedList');
+			if(typeof objectList != 'undefined'){
+				objectList = objectList.split(',');
+			} else {
+				objectList = false;
+			}
 
-	  	var currentId = parseInt($(this).attr('id'));  	
+			var currentId = parseInt($(this).attr('id'));  	
 
-	  		if(!objectList){
-	  				$.cookie('favoritesVisitedList' , currentId);
-	  		} else {
+			if(!objectList){
+				$.cookie('favoritesVisitedList' , currentId);
+			} else {
 
 	  			// chech if index not exist 
 
-	  				if(appObject.in_array(objectList,currentId) == false){
-			  			visitList = objectList;
-			  			visitList.push(currentId); 
-			  			$.cookie('favoritesVisitedList' , visitList);					
-	  				}
+	  			if(appObject.in_array(objectList,currentId) == false){
+	  				visitList = objectList;
+	  				visitList.push(currentId); 
+	  				$.cookie('favoritesVisitedList' , visitList);					
+	  			}
 
 	  		}
 
-  	}
-	
-  };
-})(jQuery);
+	  	}
+	  	
+	  };
+	})(jQuery);
 
 
 // social shit 
@@ -251,26 +251,26 @@ $(document).ready(function(){
 
 var global = {};
 
-	global.mapInit = function(){
-		$('#objectDetailMap').traMap();
-	}
+global.mapInit = function(){
+	$('#objectDetailMap').traMap();
+}
 
-  function lazyLoadMap() { 
-  	if(typeof $('body').attr('data-googleMapinit') == 'undefined' ){
-	    var script = document.createElement("script"); 
-	    script.src = "https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=global.mapInit"; 
-	    document.body.appendChild(script); 
-	    $('body').attr('data-googleMapinit',true);  
-  	}  
-  } 
+function lazyLoadMap() { 
+	if(typeof $('body').attr('data-googleMapinit') == 'undefined' ){
+		var script = document.createElement("script"); 
+		script.src = "https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places&callback=global.mapInit"; 
+		document.body.appendChild(script); 
+		$('body').attr('data-googleMapinit',true);  
+	}  
+} 
 
 
 // lazy loading map
 $(function() {
-  $('#objectDetailMap').appear();
-  $(document.body).on('appear', '#objectDetailMap', function(e, $affected) {           
-    lazyLoadMap();
-  });
+	$('#objectDetailMap').appear();
+	$(document.body).on('appear', '#objectDetailMap', function(e, $affected) {           
+		lazyLoadMap();
+	});
 
 });
 
