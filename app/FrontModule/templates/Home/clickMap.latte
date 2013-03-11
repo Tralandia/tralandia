@@ -1,5 +1,5 @@
 <div class="clickMap sk">
-                    <img class="clickMapTitle" src="images/sk.sk.clickMapTitle.png">
+                    <span class="mapTitle">Slovensko</span>
 
                     <a href="#" class="clickMapBox rid200"><div>Stockholm</div></a>
                     <a href="#" class="clickMapBox rid201"><div>Goteborg</div></a>
@@ -30,10 +30,8 @@
                         <div class="clickMapRegion rid23"></div>
 
                         <div class="clickMapSmallRegion tempShow" style="top: 226px; left: 46px"></div>
-                        <table class="clickMapLabel holder tempShow" style="top: 206px; left: 24px">
-                            <tbody><tr><td>Bratislava</td></tr>
-                            <tr><td></td></tr>
-                        </tbody></table>
+                        <div class="clickMapLabel holder tempShow" style="top: 200px; left: 10px">
+                            Bratislava</div>
 
                         <img class="clickMapImgmap" usemap="#regions" src="images/spacer.gif" width="548" height="275" alt="">
                         <map name="regions">
@@ -72,7 +70,7 @@
                             <div class="iconHolder"><div class="icon tempShow"><img src="images/de.clickMapNavigator.png"></div><a href="#">Rakusko</a></div>
                             <div class="iconHolder"><div class="icon"><img src="images/de.clickMapNavigator.png"></div><a href="#">Polsko</a></div>
                         </div>
-                        <a class="more" href="#">dalsie<span>&nbsp;</span></a>
+                        <a class="more btn btn-green" href="#">dalsie</a>
                     </div>
 
                     <div class="clickMapTabs">
@@ -83,30 +81,45 @@
                         </div>-->
                         <div class="tabContent">
                             <ul>
-                                <li><span>&nbsp;</span><a href="#">Bojnice</a></li>
-                                <li><span>&nbsp;</span><a href="#">Bojnice</a></li>
-                                <li><span>&nbsp;</span><a href="#">Bojnice</a></li>
+                                <li><a href="#">Bojnice</a></li>
+                                <li><a href="#">Bojnice</a></li>
+                                <li><a href="#">Bojnice</a></li>
                             </ul>
                             <ul>
-                                <li><span>&nbsp;</span><a href="#">Bojnice</a></li>
-                                <li><span>&nbsp;</span><a href="#">Bojnice</a></li>
-                                <li><span>&nbsp;</span><a href="#">Bojnice</a></li>
+                                <li><a href="#">Bojnice</a></li>
+                                <li><a href="#">Bojnice</a></li>
+                                <li><a href="#">Bojnice</a></li>
                             </ul>
                             <ul>
-                                <li><span>&nbsp;</span><a href="#">Bojnice</a></li>
-                                <li><span>&nbsp;</span><a href="#">Bojnice</a></li>
-                                <li><span>&nbsp;</span><a href="#">Bojnice</a></li>
+                                <li><a href="#">Bojnice</a></li>
+                                <li><a href="#">Bojnice</a></li>
+                                <li><a href="#">Bojnice</a></li>
                             </ul>
                             <ul>
-                                <li><span>&nbsp;</span><a href="#">Bojnice</a></li>
-                                <li><span>&nbsp;</span><a href="#">Bojnice</a></li>
-                                <li><span>&nbsp;</span><a href="#">Bojnice</a></li>
+                                <li><a href="#">Bojnice</a></li>
+                                <li><a href="#">Bojnice</a></li>
+                                <li><a href="#">Bojnice</a></li>
                             </ul>
                             <ul>
-                                <li><span>&nbsp;</span><a href="#">Bojnice</a></li>
-                                <li><span>&nbsp;</span><a href="#">Bojnice</a></li>
-                                <li><span>&nbsp;</span><a href="#">Bojnice</a></li>
+                                <li><a href="#">Bojnice</a></li>
+                                <li><a href="#">Bojnice</a></li>
+                                <li><a href="#">Bojnice</a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
+
+
+
+<script>
+$(function(){
+    $('map area').hover(function(){
+
+        $('.rid'+$(this).attr('rid')).show();
+    } , function(){
+
+
+        $('.rid'+$(this).attr('rid')).hide();
+    })
+})
+</script>                
