@@ -123,42 +123,33 @@ $(function(){
 	$('.searchForm .select2').select2();
 
 	$('.searchForm .select2').on('change',function(e){
-		console.log($('.searchForm').serialize());
 
 		var url = $('#sidebar').attr('data-searchcount')+'&'+$('.searchForm').serialize();
-	
+		var select2Id = '#s2id_'+$(this).attr('id');
+			$select2 = $(select2Id);
+
+		if($(this).val()){
+			$select2.find('a span').css({
+				color: '#333'
+			})
+		} else {
+			$select2.find('a span').css({
+				color: '#999'
+			})
+		}
+
 		jQuery.getJSON(url,function(d){
-			console.log(d);
 			$('#getSearchCount').html(d.count);
-			// getSearchCount
 		});
 	});
 
-	$('#serachSidebar').on('change',function(e){
-		var val = $(this).val();
-			if(val != ''){
-				$('.searchForm').find('a.btnSearchClose').show();
-				$('.searchForm').find('div.select2-container a div b').css({
-					left: '-30px',
-					position: 'relative'
-				});
-			}		
-	});
 
-	$('.btnSearchClose').click(function(){
-		$(this).hide();
-		
-		$("#serachSidebar").select2("data", {id: "", title: ""}); 
 
-		$('.searchForm').find('div.select2-container a div b').css({
-			left: '0px',
-			position: 'relative'
-		});		
 
-/*		$('.searchForm').find('.select2-container').css({
-			'border-radius': '4px'
-		});	*/	
-	});
+
+
+
+
 });
 
 

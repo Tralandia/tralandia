@@ -27,6 +27,10 @@
 		margin-top: 10px;		
 	}
 
+
+
+
+
 	.widget {
 		border-bottom: 1px solid @lightGreen;
 	}	
@@ -98,7 +102,8 @@
 
 	#frm-searchBar-searchForm {
 			margin: 1px;			
-			background: #f26900;
+
+			.basic-gradient(@lightGreen,@darkGreen);
 			-webkit-border-top-left-radius: 6px;
 			-webkit-border-top-right-radius: 6px;
 			-moz-border-radius-topleft: 6px;
@@ -117,19 +122,25 @@
 	.input-filltext {
 		
 
-		margin: 0 auto;
+		margin: 0 0 10px 0;
 		padding: 0;
-		-webkit-border-radius: 6px;
-		-moz-border-radius: 6px;
-		border-radius: 6px;
+		.basic-border-radius(4px);
 		height: 28px;
-		
+		overflow: hidden;
 		background: #fff;
-		width: 200px;
+		width: 205px;
+
+		select.select2 {
+			visibility: hidden;
+			height: 18px;
+		}
 
 		.select2-container {
+			.basic-border-radius(4px);
+		width: 205px;
+		overflow: hidden;			
 			a {
-				width: 190px;
+				width: 205px;
 				border: 1px solid #fff;
 				background: #fff;
 
@@ -138,9 +149,47 @@
 					background: #fff;
 					border: none;
 				}
+
+				span {
+					color: #999;
+				}
+			}
+
+		}
+
+
+		&.price {
+
+			width: 98px;
+			float: left;	
+
+			&.pull-right {
+				float: right;
+			}
+
+			.select2-container  {
+				width: 98px;
+				float: left;
+				.basic-border-radius(4px);
+				&.pull-right {
+					float: right;
+				}			
+
+				a {
+					width: 98px;
+				}	
 			}
 		}
 
+		.select2-container .select2-choice {
+			border: none;
+			background: #fff;
+			.basic-border-radius(5px);
+		}
+
+		.select2-container .select2-choice div b:before {
+			left: -6px;
+		}
 
 
 		input[type=text] {
@@ -305,44 +354,29 @@
 
 
 		a.btnSearchClose {
-			display: block;
-			height: 28px;
-			background: #fff;
-			color: #999;
-			line-height: 31px;
-			text-align: center;
-			width: 24px;
-			float: right;
-			border-top-right-radius: 4px;
-			border-bottom-right-radius: 4px;
-			border-left: 1px solid #ddd;
-			position: relative;
-			top: -28px;
-			display: none;
+display: block;
+height: 30px;
+background: #ffffff;
+color: #999999;
+line-height: 33px;
+text-align: center;
+width: 24px;
+float: right;
+border-top-right-radius: 4px;
+border-bottom-right-radius: 4px;
+border-left: 1px solid #dddddd;
+position: relative;
+top: -28px;
 			&:hover {
 				text-decoration: none;
 				color: #f26900;
 			}
+			i:before {
+				font-size: 32px;
+			}
 		}
 
-.input-filltext {
-	width: 205px;
-	float: left;
-	.basic-border-radius(4px);
-	overflow: hidden;
-	.select2-container {
-		width: 205px;
-		overflow: hidden;
-
-		a {
-			width: 205px;
-		}
-	}
-
-	.select2-container .select2-choice div b:before {
-		left: -6px;
-	}
-}	
+	
 
 }
 
