@@ -17,6 +17,12 @@ class RentalPresenter extends BasePresenter {
 
 	/**
 	 * @autowire
+	 * @var \LastSearch
+	 */
+	protected $lastSearch;
+
+	/**
+	 * @autowire
 	 * @var \FrontModule\Forms\Rental\IReservationFormFactory
 	 */
 	protected $reservationFormFactory;
