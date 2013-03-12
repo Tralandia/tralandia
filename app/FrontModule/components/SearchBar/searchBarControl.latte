@@ -6,13 +6,31 @@
 
 	{form searchForm , class => 'searchForm' }
 
-		<div class="input-filltext">{input location , class => 'select2'}</div>
-		<div class="input-filltext">{input rentalType , class => 'select2'}</div>
-		<div class="input-filltext price">{input priceFrom , class => 'select2'} {input priceTo , class => 'select2 pull-right'}</div>
-		<div class="input-filltext">{input capacity , class => 'select2'}</div>
-		<div class="input-filltext">{input spokenLanguage , class => 'select2'}</div>
+		<div class="input-filltext">
+			{input location , class => 'select2'}
+			<a n:if="$template->removeLocation" href="{$template->removeLocation}" class="btnSearchClose"><i class="entypo-no"></i></a>
+		</div>
+		<div class="input-filltext">
+			{input rentalType , class => 'select2'}
+			<a n:if="$template->removeRentalType" href="#" class="btnSearchClose"><i class="entypo-no"></i></a>
+		</div>
+		<div class="input-filltext price">{input priceFrom , class => 'select2'}
+			<a n:if="$template->removePriceFrom" href="#" class="btnSearchClose"><i class="entypo-no"></i></a>
+		</div>	
+		<div class="input-filltext price">{input priceTo , class => 'select2 pull-right'}
+			<a n:if="$template->removePriceTo" href="#" class="btnSearchClose"><i class="entypo-no"></i></a>
+		</div>
+		<div class="input-filltext">
+			{input capacity , class => 'select2'}
+			<a n:if="$template->removeCapacity" href="#" class="btnSearchClose"><i class="entypo-no"></i></a>
+		</div>
+		<div class="input-filltext">
+			{input spokenLanguage , class => 'select2'}
+			<a n:if="$template->removeSpokenLanguage" href="#" class="btnSearchClose"><i class="entypo-no"></i></a>
+		</div>
 		
-		<div id="getSearchCount"></div>{input submit, class => "btn btn-orange"}		
+		<div id="getSearchCount" class="pull-left"></div>{input submit, class => "btn btn-orange pull-right"}		
+		
 	{/form}
 
 	{ifset $locations}

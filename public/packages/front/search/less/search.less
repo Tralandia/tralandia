@@ -129,10 +129,8 @@
 		overflow: hidden;
 		background: #fff;
 		width: 205px;
-
-
-
 		.select2-container {
+			.basic-border-radius(4px);
 		width: 205px;
 		overflow: hidden;			
 			a {
@@ -145,6 +143,10 @@
 					background: #fff;
 					border: none;
 				}
+
+				span {
+					color: #999;
+				}
 			}
 
 		}
@@ -152,6 +154,8 @@
 
 		&.price {
 			background:transparent;
+			width: 102px;
+			float: left;			
 			.select2-container  {
 				width: 95px;
 				float: left;
@@ -160,6 +164,12 @@
 					float: right;
 				}				
 			}
+		}
+
+		.select2-container .select2-choice {
+			border: none;
+			background: #fff;
+			.basic-border-radius(5px);
 		}
 
 		.select2-container .select2-choice div b:before {
@@ -342,10 +352,12 @@
 			border-left: 1px solid #ddd;
 			position: relative;
 			top: -28px;
-			display: none;
 			&:hover {
 				text-decoration: none;
 				color: #f26900;
+			}
+			i:before {
+				font-size: 32px;
 			}
 		}
 

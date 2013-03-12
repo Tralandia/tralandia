@@ -123,16 +123,29 @@ $(function(){
 	$('.searchForm .select2').select2();
 
 	$('.searchForm .select2').on('change',function(e){
-		console.log($('.searchForm').serialize());
 
 		var url = $('#sidebar').attr('data-searchcount')+'&'+$('.searchForm').serialize();
-	
+		var select2Id = '#s2id_'+$(this).attr('id');
+			$select2 = $(select2Id);
+
+		if($(this).val()){
+			$select2.find('a span').css({
+				color: '#333'
+			})
+		} else {
+			$select2.find('a span').css({
+				color: '#999'
+			})
+		}
+
 		jQuery.getJSON(url,function(d){
-			console.log(d);
 			$('#getSearchCount').html(d.count);
-			// getSearchCount
 		});
 	});
+
+
+
+
 
 	$('#serachSidebar').on('change',function(e){
 		var val = $(this).val();
