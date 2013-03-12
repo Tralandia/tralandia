@@ -55,7 +55,7 @@ class FrontRoute extends BaseRoute
 	public function __construct(LanguageRepository $languageRepository, LocationRepository $locationRepository)
 	{
 		$mask = '//[!<language ([a-z]{2}|www)>.<primaryLocation [a-z]{2,3}>.%domain%/][<hash .*>]';
-		$metadata = [ 'presenter' => 'Rental', 'action' => 'list' ];
+		$metadata = [ 'presenter' => 'RentalList', 'action' => 'default' ];
 		parent::__construct($mask, $metadata, $languageRepository, $locationRepository);
 	}
 
@@ -105,8 +105,8 @@ class FrontRoute extends BaseRoute
 				} else if ($match = Strings::match($pathSegment, '~f([0-9]+)~')) {
 					if($favoriteList = $this->favoriteListRepositoryAccessor->get()->find($match[1])) {
 						$params[self::FAVORITE_LIST] = $favoriteList;
-						$presenter = 'Rental';
-						$params['action'] = 'list';
+						$presenter = 'RentalList';
+						$params['action'] = 'default';
 					}
 				}
 			}
@@ -122,8 +122,8 @@ class FrontRoute extends BaseRoute
 						foreach ($segmentList as $key => $value) {
 							$params[$key] = $value;
 						}
-						$presenter = 'Rental';
-						$params['action'] = 'list';
+						$presenter = 'RentalList';
+						$params['action'] = 'default';
 					}
 				} else {
 					$segmentList = array();
@@ -139,8 +139,8 @@ class FrontRoute extends BaseRoute
 
 			//d($params); #@debug
 			if(!isset($params['action']) || !isset($presenter)) {
-				$presenter = 'Rental';
-				$params['action'] = 'list';
+				$presenter = 'RentalList';
+				$params['action'] = 'default';
 				// return NULL;
 			}
 
@@ -191,7 +191,7 @@ class FrontRoute extends BaseRoute
 		switch (TRUE) {
 			case $presenter == 'Home' && $action == 'default':
 			case $presenter == 'Rental' && $action == 'detail':
-			case $presenter == 'Rental' && $action == 'list':
+			case $presenter == 'RentalList' && $action == 'default':
 				unset($params['page']);
 		}
 
@@ -203,7 +203,7 @@ class FrontRoute extends BaseRoute
 			$params[self::HASH] = implode('/', $params[self::HASH]);
 		}
 
-		$params['action'] = 'list';
+		$params['action'] = $this->actionName;
 		$appRequest->setPresenterName($this->presenterName);
 
 		$appRequest->setParameters($params);

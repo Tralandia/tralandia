@@ -4,14 +4,14 @@
 	{ifset $locations}
 		<ul n:inner-foreach="$locations as $value">
 			<li>
-				<a href="{plink Rental:list, location => $value->entity}">{$value->name}</a>
+				<a href="{plink RentalList, location => $value->entity}">{$value->name}</a>
 			</li>
 		</ul>
 	{/ifset}
 	{ifset $rentalTypes}
 		<ul n:inner-foreach="$rentalTypes as $value">
 			<li>
-				<a href="{plink Rental:list, rentalType => $value->entity}">{$value->name}</a>
+				<a href="{plink RentalList, rentalType => $value->entity}">{$value->name}</a>
 			</li>
 		</ul>
 	{/ifset}
