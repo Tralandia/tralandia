@@ -119,7 +119,7 @@ parameters:
 					- front/_base/less/forms.less					
 					- front/_base/less/calendar.less
 					- front/_base/less/photoUpload.less
-					- front/_base/less/navTabs.less
+					- front/_base/less/navTabs.less					
 					# header 
 					- front/header/less/header.less
 					# favorites
@@ -132,6 +132,7 @@ parameters:
 					- front/rentalList/less/rentalList.less
 					#home
 					- front/home/less/home.less
+					- front/home/less/clickMap.less
 					# rental registration
 					- front/rentalRegistration/less/rentalRegistration.less
 					# search sidebar 
