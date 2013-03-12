@@ -42,6 +42,12 @@ abstract class BasePresenter extends \BasePresenter {
 	protected $headerControlFactory;
 
 	/**
+	 * @autowire
+	 * @var \FrontModule\Components\SearchBar\SearchBarControl
+	 */
+	protected $searchBarControl;
+
+	/**
 	 * @var \Service\Seo\SeoService
 	 */
 	public $pageSeo;
@@ -207,8 +213,8 @@ abstract class BasePresenter extends \BasePresenter {
 		return $this->getService('countriesFooterControlFactory')->create();
 	}
 
-	public function createComponentSearchBar($name) {
-		return $this->getService('searchBarControlFactory')->create($this->environment->getPrimaryLocation());
+	public function createComponentSearchBar() {
+		return $this->searchBarControl;
 	}
 
 }

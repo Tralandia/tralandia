@@ -153,6 +153,8 @@ services:
 	rentalImagePipe: Image\RentalImagePipe(%wwwDir%, %rentalImageDir%)
 	rentalImageManager: Image\RentalImageManager(@rentalImageRepositoryAccessor)
 
+	searchOptionGenerator: SearchGenerator\OptionGenerator
+	searchGeneratorTopLocations: SearchGenerator\TopLocations(@environment::getPrimaryLocation(), @rentalSearchCache)
 
 	# ==============================
 	# ==================== FORMS HANDLERS
@@ -166,6 +168,7 @@ services:
 	# ==============================
 	calendarControl: BaseModule\Components\CalendarControl
 
+	searchBarControl: FrontModule\Components\SearchBar\SearchBarControl()
 
 factories: 
 	# ==============================
@@ -204,6 +207,10 @@ factories:
 		class: FrontModule\Forms\RegistrationForm(%country%)
 		implement: FrontModule\Forms\IRegistrationFormFactory
 
+	searchFormFactory:
+		class: FrontModule\Forms\SearchForm
+		implement: FrontModule\Forms\ISearchFormFactory
+
 	# ==============================
 	# ==================== COMPONENTS
 	# ==============================
@@ -218,10 +225,6 @@ factories:
 	countriesFooterControlFactory:
 		class: FrontModule\Components\Footer\CountriesFooterControl
 		implement: FrontModule\Components\Footer\ICountriesFooterControlFactory
-
-	searchBarControlFactory:
-		class: FrontModule\Components\SearchBar\SearchBarControl(%location%)
-		implement: FrontModule\Components\SearchBar\ISearchBarControlFactory
 
 	# ==============================
 	# ==================== ROUTERS

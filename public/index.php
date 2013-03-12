@@ -26,6 +26,10 @@ define('VENDOR_DIR', ROOT_DIR . '/vendor');
 // absolute filesystem path to the libraries
 define('TEMP_DIR', ROOT_DIR . '/temp');
 
+define('LOCATION_ENTITY', '\Entity\Location\Location');
+define('LANGUAGE_ENTITY', '\Entity\Language');
+define('RENTAL_TYPE_ENTITY', '\Entity\Rental\Type');
+
 
 // load bootstrap file
 require APP_DIR . '/bootstrap.php';

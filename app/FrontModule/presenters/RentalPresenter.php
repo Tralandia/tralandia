@@ -87,22 +87,13 @@ class RentalPresenter extends BasePresenter {
 	}
 
 
-	public function actionList($primaryLocation, $location, $rentalType, $favoriteList) {
+	public function actionList($favoriteList) {
 
 		if($favoriteList) {
 			$rentals = $favoriteList->getRentals();
 			$itemCount = $rentals->count();
 		} else {
-			$search = $this->rentalSearchFactory->create($this->environment->primaryLocation);
-			$orderCache = $this->rentalOrderCachingFactory->create($primaryLocation);
-
-			if ($location) {
-				$search->setLocationCriterium($location);
-			}
-
-			if ($rentalType) {
-				$search->setRentalTypeCriterium($rentalType);
-			}
+			$search = $this['searchBar']->getSearch();
 
 			$itemCount = $search->getRentalsCount();
 
