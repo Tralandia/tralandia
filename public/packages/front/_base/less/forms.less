@@ -184,7 +184,7 @@ table.formTable {
 		tr:nth-child(2) {
 			td {
 				vertical-align: top;
-				padding: 0px 10px ;
+				/*padding: 0px 10px ;*/
 			}
 		}
 
@@ -255,14 +255,59 @@ table.formTable {
 					
 				}
 
+
 				.help {
-					background: rgb(134, 150, 60);
-					color: #fff;				
+					color: rgb(74, 110, 133);
 					padding: 10px;
 					margin-bottom: 10px;
 					display: block;
-					.basic-border-radius(3px);
+					-webkit-border-radius: 3px;
+					-moz-border-radius: 3px;
+					border-radius: 3px;
+					position: relative;
+					background: #c2e1f5;
+
+					background-image: linear-gradient(bottom, #C2E1F5 0%, #D2E8F5 100%);
+					background-image: -o-linear-gradient(bottom, #C2E1F5 0%, #D2E8F5 100%);
+					background-image: -moz-linear-gradient(bottom, #C2E1F5 0%, #D2E8F5 100%);
+					background-image: -webkit-linear-gradient(bottom, #C2E1F5 0%, #D2E8F5 100%);
+					background-image: -ms-linear-gradient(bottom, #C2E1F5 0%, #D2E8F5 100%);
+
+					background-image: -webkit-gradient(
+						linear,
+						left bottom,
+						left top,
+						color-stop(0, #C2E1F5),
+						color-stop(1, #D2E8F5)
+					);
+
+					border: 1px solid rgb(115, 158, 185);
 				}
+				.help:after, .help:before {
+					top: 100%;
+					border: solid transparent;
+					content: " ";
+					height: 0;
+					width: 0;
+					position: absolute;
+					pointer-events: none;
+				}
+
+				.help:after {
+border-color: rgba(136,183,213,0);
+border-top-color: #c2e1f5;
+border-width: 10px;
+left: 10%;
+margin-left: -10px;
+				}
+				.help:before {
+border-color: rgba(194,225,245,0);
+border-top-color: rgb(115, 158, 185);
+border-width: 11px;
+left: 10%;
+margin-left: -11px;
+				}
+
 
 			}
 
