@@ -1,3 +1,19 @@
+function importShareLink(fromUrl, callback){
+	jQuery.getJSON( fromUrl , callback );
+
+}
+
+
+function removejscssfile(filename, filetype){
+ var targetelement=(filetype=="js")? "script" : (filetype=="css")? "link" : "none" //determine element type to create nodelist from
+ var targetattr=(filetype=="js")? "src" : (filetype=="css")? "href" : "none" //determine corresponding attribute to test for
+ var allsuspects=document.getElementsByTagName(targetelement)
+ for (var i=allsuspects.length; i>=0; i--){ //search backwards within nodelist for matching elements to remove
+  if (allsuspects[i] && allsuspects[i].getAttribute(targetattr)!=null && allsuspects[i].getAttribute(targetattr).indexOf(filename)!=-1)
+   allsuspects[i].parentNode.removeChild(allsuspects[i]) //remove element by calling parentNode.removeChild()
+ }
+}
+
 $(function(){
 
 	$('li.favoriteSocialIcons').click(function(){  
@@ -8,20 +24,32 @@ $(function(){
 
 	$('#favoritesShareList li a').click(function(){
 		
-		initAllSocialPlugins();
+				removejscssfile('http://platform.twitter.com/widgets.js','js');
+				removejscssfile('https://apis.google.com/js/plusone.js','js');
 		
-		if($(this).hasClass('open')){
-			
-			$('#favoriteShareContent').hide();
-		} else {
-			
-			$('#favoriteShareContent').show();			
-		}
+		var shareUrl = $('#favoritesStaticContainer').attr('data-favoritesLink');
+			importShareLink(shareUrl , function(d){
+				var linkToShare = d.link;
+				var html = '<span class="facebook facebookLikeButtonContainer" data-facebook-src="'+linkToShare+'"></span><g:plusone size="medium" href="'+linkToShare+'" style="margin-top:2px;"></g:plusone><a href="https://twitter.com/share" class="twitter-share-button" data-url="'+linkToShare+'" data-via="Tralandia" data-text="{_o100036}" data-hashtags="{_o100034}" data-lang="{$currentLanguage->iso}">Tweet</a><a href="http://pinterest.com/pin/create/button/?url='+linkToShare+'" class="pin-it-button" count-layout="horizontal"></a>'
 
-		$(this).toggleClass('open');
+				$('#dynamicShareContainer').html(html);
+
+				$('body').removeAttr('data-socialPluginsInit');
+				initAllSocialPlugins();
+
+			});
+
+				if($(this).hasClass('open')){
+					
+					$('#favoriteShareContent').hide();
+				} else {
+					
+					$('#favoriteShareContent').show();			
+				}
+
+				$(this).toggleClass('open');
 
 		return false;
-		//var forconteiner = $(this).attr('rel');
 
 	});
 
