@@ -1,6 +1,7 @@
 <?php 
 namespace FrontModule\Components\SearchBar;
 
+use Doctrine\ORM\EntityManager;
 use FrontModule\Forms\ISearchFormFactory;
 use SearchGenerator\OptionGenerator;
 use Service\Rental\RentalSearchService;
@@ -49,6 +50,11 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 	protected $search;
 
 	/**
+	 * @var \Doctrine\ORM\EntityManager
+	 */
+	protected $em;
+
+	/**
 	 * @var OptionGenerator
 	 */
 	protected $searchOptionGenerator;
@@ -61,13 +67,15 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 
 	/**
 	 * @param \Service\Rental\RentalSearchService $search
+	 * @param \Doctrine\ORM\EntityManager $em
 	 * @param ISearchFormFactory $searchFormFactory
 	 * @param \SearchGenerator\OptionGenerator $searchOptionGenerator
 	 */
-	public function __construct(RentalSearchService $search, ISearchFormFactory $searchFormFactory, OptionGenerator $searchOptionGenerator)
+	public function __construct(RentalSearchService $search,EntityManager $em, ISearchFormFactory $searchFormFactory, OptionGenerator $searchOptionGenerator)
 	{
 		parent::__construct();
 		$this->search = $search;
+		$this->em = $em;
 		$this->searchFormFactory = $searchFormFactory;
 		$this->searchOptionGenerator = $searchOptionGenerator;
 	}
@@ -82,14 +90,44 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		} else if(!$this->rentalType) {
 			$rentalTypes = $this->searchOptionGenerator->generateRentalTypeLinks();
 			$template->rentalTypes = $rentalTypes;
-
 		}
+
+		$template->removeLocation = $this->link('this', ['location' => NULL]);
+		$template->removeRentalType = $this->link('this', ['rentalType' => NULL]);
+		$template->removePriceFrom = $this->link('this', ['priceFrom' => NULL]);
+		$template->removePriceTo = $this->link('this', ['priceTo' => NULL]);
+		$template->removeCapacity = $this->link('this', ['capacity' => NULL]);
+		$template->removeSpokenLanguage = $this->link('this', ['spokenLanguage' => NULL]);
 
 		$template->render();
 	}
 
 	public function handleGetSearchCount()
 	{
+		$em = $this->em;
+		$presenter = $this->getPresenter();
+
+		$location = $presenter->getParameter('location');
+		if($location) {
+			$this->location = $em->getRepository(LOCATION_ENTITY)->find($location);
+		}
+
+		$rentalType = $presenter->getParameter('rentalType');
+		if($rentalType) {
+			$this->rentalType = $em->getRepository(LOCATION_ENTITY)->find($rentalType);
+		}
+
+		$this->priceFrom = $presenter->getParameter('priceFrom', NULL);
+
+		$this->priceTo = $presenter->getParameter('priceTo', NULL);
+
+		$this->capacity = $presenter->getParameter('capacity', NULL);
+
+		$spokenLanguage = $presenter->getParameter('spokenLanguage');
+		if($spokenLanguage) {
+			$this->spokenLanguage = $em->getRepository(LANGUAGE_ENTITY)->find($spokenLanguage);
+		}
+
 		$search = $this->getSearch();
 
 		$count = $search->getRentalsCount();
@@ -122,7 +160,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 
 		$form->onSuccess[] = function ($form) {
 			$values = $form->getValues();
-			$form->presenter->redirect('this', (array) $values);
+			$form->presenter->redirect('RentalList', (array) $values);
 		};
 
 
