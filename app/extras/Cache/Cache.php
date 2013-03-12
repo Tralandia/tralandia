@@ -15,7 +15,9 @@ class Cache extends Nette\Caching\Cache
 	/**
 	 * Generates internal cache key.
 	 *
-	 * @param  string
+	 * @param $key
+	 *
+	 * @throws \Nette\InvalidArgumentException
 	 * @return string
 	 */
 	protected function generateKey($key)
