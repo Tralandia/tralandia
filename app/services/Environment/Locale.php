@@ -8,12 +8,12 @@ use Nette\DateTime;
 class Locale {
 
 	/**
-	 * @var Environment
+	 * @var \Environment\Environment
 	 */
 	protected $environment;
 
 	/**
-	 * @var Collator
+	 * @var \Environment\Collator
 	 */
 	protected $collator;
 
@@ -33,7 +33,7 @@ class Locale {
 	protected $daysShort = [1 => '100053', '100054', '100055', '100056', '100057', '100058', '100059'];
 
 	/**
-	 * @param Environment $environment
+	 * @param \Environment\Environment $environment
 	 */
 	public function __construct(Environment $environment)
 	{
@@ -64,7 +64,7 @@ class Locale {
 	}
 
 	/**
-	 * @return Collator
+	 * @return \Environment\Collator
 	 */
 	public function getCollator()
 	{
