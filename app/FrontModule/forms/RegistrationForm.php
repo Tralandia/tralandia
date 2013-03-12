@@ -3,6 +3,7 @@
 namespace FrontModule\Forms;
 
 use Doctrine\ORM\EntityManager;
+use Environment\Collator;
 use Image\RentalImageManager;
 use Nette;
 use Nette\Localization\ITranslator;
@@ -26,6 +27,16 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 	 * @var \Entity\Location\Location
 	 */
 	protected $country;
+
+	/**
+	 * @var \Environment\Collator
+	 */
+	protected $collator;
+
+	/**
+	 * @var \Nette\Localization\ITranslator
+	 */
+	protected $translator;
 
 	/**
 	 * @var \Repository\Location\LocationRepository
@@ -54,14 +65,17 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 
 	/**
 	 * @param \Entity\Location\Location $country
+	 * @param \Environment\Collator $collator
 	 * @param \Doctrine\ORM\EntityManager $em
 	 * @param \Image\RentalImageManager $imageManager
 	 * @param \Nette\Localization\ITranslator $translator
 	 */
-	public function __construct(Location $country, EntityManager $em, RentalImageManager $imageManager,
+	public function __construct(Location $country, Collator $collator, EntityManager $em, RentalImageManager $imageManager,
 								ITranslator $translator)
 	{
 		$this->country = $country;
+		$this->collator = $collator;
+		$this->translator = $translator;
 		$this->imageManager = $imageManager;
 		$this->locationRepository = $em->getRepository('\Entity\Location\Location');
 		$this->languageRepository = $em->getRepository('\Entity\Language');
@@ -73,10 +87,10 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 
 	public function buildForm()
 	{
-		$countries = $this->locationRepository->getCountriesForSelect();
+		$countries = $this->locationRepository->getCountriesForSelect($this->translator, $this->collator);
 		$phonePrefixes = $this->locationRepository->getCountriesPhonePrefixes();
-		$languages = $this->languageRepository->getForSelect();
-		$rentalTypes = $this->rentalTypeRepository->getForSelect();
+		$languages = $this->languageRepository->getForSelect($this->translator, $this->collator);
+		$rentalTypes = $this->rentalTypeRepository->getForSelect($this->translator, $this->collator);
 
 		$this->addSelect('country', 'o1094', $countries)->setOption('help', $this->translate('o5956'));
 		$this->addSelect('language', 'Language', $languages);
@@ -93,7 +107,7 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 		$rentalContainer = $this->addContainer('rental');
 
 		$rentalContainer['address'] = new AddressContainer($countries, $this->country);
-		$amenityLocation = $this->amenityRepository->findByLocationTypeForSelect();
+		$amenityLocation = $this->amenityRepository->findByLocationTypeForSelect($this->translator, $this->collator);
 
 		$rentalContainer->addMultiOptionList('amenityLocation', 'Amenity Location', $amenityLocation);
 
@@ -119,13 +133,13 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 		$pet = ['Luzbo', 'je', 'super!'];
 		$rentalContainer->addSelect('pet', 'Pet', $pet);
 
-		$amenityBoard = $this->amenityRepository->findByBoardTypeForSelect();
+		$amenityBoard = $this->amenityRepository->findByBoardTypeForSelect($this->translator, $this->collator);
 		$rentalContainer->addMultiOptionList('board', 'Amenity board', $amenityBoard);
 
-		$amenityImportant = $this->amenityRepository->findImportantForSelect();
+		$amenityImportant = $this->amenityRepository->findImportantForSelect($this->translator, $this->collator);
 		$rentalContainer->addMultiOptionList('important', 'important amenities', $amenityImportant);
 
-		$amenityAvailability = $this->amenityRepository->findByAvailabilityTypeForSelect();
+		$amenityAvailability = $this->amenityRepository->findByAvailabilityTypeForSelect($this->translator, $this->collator);
 		$rentalContainer->addMultiOptionList('ownerAvailability', 'availability', $amenityAvailability);
 
 

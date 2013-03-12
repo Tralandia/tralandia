@@ -92,12 +92,29 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 			$template->rentalTypes = $rentalTypes;
 		}
 
-		$template->removeLocation = $this->link('this', ['location' => NULL]);
-		$template->removeRentalType = $this->link('this', ['rentalType' => NULL]);
-		$template->removePriceFrom = $this->link('this', ['priceFrom' => NULL]);
-		$template->removePriceTo = $this->link('this', ['priceTo' => NULL]);
-		$template->removeCapacity = $this->link('this', ['capacity' => NULL]);
-		$template->removeSpokenLanguage = $this->link('this', ['spokenLanguage' => NULL]);
+		if($this->location) {
+			$template->removeLocation = $this->link('this', ['location' => NULL]);
+		}
+
+		if($this->rentalType) {
+			$template->removeRentalType = $this->link('this', ['rentalType' => NULL]);
+		}
+
+		if($this->priceFrom) {
+			$template->removePriceFrom = $this->link('this', ['priceFrom' => NULL]);
+		}
+
+		if($this->priceTo) {
+			$template->removePriceTo = $this->link('this', ['priceTo' => NULL]);
+		}
+
+		if($this->capacity) {
+			$template->removeCapacity = $this->link('this', ['capacity' => NULL]);
+		}
+
+		if($this->spokenLanguage) {
+			$template->removeSpokenLanguage = $this->link('this', ['spokenLanguage' => NULL]);
+		}
 
 		$template->render();
 	}

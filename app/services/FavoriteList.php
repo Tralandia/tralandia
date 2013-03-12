@@ -22,10 +22,23 @@ class FavoriteList extends \Nette\Object
 	public function getRentalList()
 	{
 		$ids = $this->getRentalIds();
+
 		if(count($ids)) {
 			$rentals = $this->rentalRepositoryAccessor->get()->findById($ids);
 		}
-		return isset($rentals) ? $rentals : [];
+
+		if(isset($rentals)) {
+			$sort = array_fill_keys($ids, NULL);
+			foreach($rentals as $rental) {
+				$id = $rental->getId();
+				$sort[$id] = $rental;
+			}
+			$rentals = array_filter($sort);
+
+			return $rentals;
+		} else {
+			return [];
+		}
 	}
 
 	public function getVisitedRentals()

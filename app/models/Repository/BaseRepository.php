@@ -3,6 +3,8 @@
 namespace Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Environment\Collator;
+use Nette\Localization\ITranslator;
 
 class BaseRepository extends EntityRepository {
 
@@ -98,6 +100,25 @@ class BaseRepository extends EntityRepository {
 		
 		return $collection;
 	}
+
+	/**
+	 * @param \Nette\Localization\ITranslator $translator
+	 * @param \Environment\Collator $collator
+	 *
+	 * @return array
+	 */
+	public function getForSelect(ITranslator $translator, Collator $collator)
+	{
+		$return = [];
+		$rows = $this->findAll();
+		foreach($rows as $row) {
+			$return[$row->id] = $translator->translate($row->name);
+		}
+		$collator->asort($return);
+
+		return $return;
+	}
+
 
 	public function deleteAll() {
 		$query = $this->_em->createQueryBuilder();

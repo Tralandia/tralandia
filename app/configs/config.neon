@@ -106,6 +106,8 @@ services:
 
 	locale: @environment::getLocale()
 
+	collator: @locale::getCollator()
+
 	translator: @environment::getTranslator()
 
 	# --------------------------------
