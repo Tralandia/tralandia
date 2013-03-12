@@ -8,25 +8,25 @@
 
 		<div class="input-filltext">
 			{input location , class => 'select2'}
-			<a n:if="$template->removeLocation" href="{$template->removeLocation}" class="btnSearchClose"><i class="entypo-no"></i></a>
+			<a n:ifset="$template->removeLocation" href="{$template->removeLocation}" class="btnSearchClose"><i class="entypo-no"></i></a>
 		</div>
 		<div class="input-filltext">
 			{input rentalType , class => 'select2'}
-			<a n:if="$template->removeRentalType" href="#" class="btnSearchClose"><i class="entypo-no"></i></a>
+			<a n:ifset="$template->removeRentalType" href="{$template->removeRentalType}" class="btnSearchClose"><i class="entypo-no"></i></a>
 		</div>
 		<div class="input-filltext price">{input priceFrom , class => 'select2'}
-			<a n:if="$template->removePriceFrom" href="#" class="btnSearchClose"><i class="entypo-no"></i></a>
+			<a n:ifset="$template->removePriceFrom" href="{$template->removePriceFrom}" class="btnSearchClose"><i class="entypo-no"></i></a>
 		</div>	
-		<div class="input-filltext price">{input priceTo , class => 'select2 pull-right'}
-			<a n:if="$template->removePriceTo" href="#" class="btnSearchClose"><i class="entypo-no"></i></a>
+		<div class="input-filltext price pull-right">{input priceTo , class => 'select2 pull-right'}
+			<a n:ifset="$template->removePriceTo" href="{$template->removePriceTo}" class="btnSearchClose"><i class="entypo-no"></i></a>
 		</div>
 		<div class="input-filltext">
 			{input capacity , class => 'select2'}
-			<a n:if="$template->removeCapacity" href="#" class="btnSearchClose"><i class="entypo-no"></i></a>
+			<a n:ifset="$template->removeCapacity" href="{$template->removeCapacity}" class="btnSearchClose"><i class="entypo-no"></i></a>
 		</div>
 		<div class="input-filltext">
 			{input spokenLanguage , class => 'select2'}
-			<a n:if="$template->removeSpokenLanguage" href="#" class="btnSearchClose"><i class="entypo-no"></i></a>
+			<a n:ifset="$template->removeSpokenLanguage" href="{$template->removeSpokenLanguage}" class="btnSearchClose"><i class="entypo-no"></i></a>
 		</div>
 		
 		<div id="getSearchCount" class="pull-left"></div>{input submit, class => "btn btn-orange pull-right"}		

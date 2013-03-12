@@ -147,31 +147,9 @@ $(function(){
 
 
 
-	$('#serachSidebar').on('change',function(e){
-		var val = $(this).val();
-			if(val != ''){
-				$('.searchForm').find('a.btnSearchClose').show();
-				$('.searchForm').find('div.select2-container a div b').css({
-					left: '-30px',
-					position: 'relative'
-				});
-			}		
-	});
 
-	$('.btnSearchClose').click(function(){
-		$(this).hide();
-		
-		$("#serachSidebar").select2("data", {id: "", title: ""}); 
 
-		$('.searchForm').find('div.select2-container a div b').css({
-			left: '0px',
-			position: 'relative'
-		});		
 
-/*		$('.searchForm').find('.select2-container').css({
-			'border-radius': '4px'
-		});	*/	
-	});
 });
 
 
