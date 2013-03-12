@@ -1,5 +1,19 @@
-<div class="span9" role="sidebar" id="sidebar">
-	{control searchForm}
+<div class="span3" role="sidebar" data-searchCount="{link getSearchCount!}" id="sidebar">
+<aside class="innerPadding baseRadius baseBorder innerPaddingLeft noTopMargin">
+	{* {control searchForm } *}
+
+
+
+	{form searchForm , class => 'searchForm' }
+		{input location , class => 'select2'}
+		{input rentalType , class => 'select2'}
+		{input priceFrom , class => 'select2 price'}
+		{input priceTo , class => 'select2 price'}
+		{input capacity , class => 'select2'}
+		{input spokenLanguage , class => 'select2'}
+		
+		<div id="getSearchCount"></div>{input submit, class => "btn btn-orange"}		
+	{/form}
 
 	{ifset $locations}
 		<ul n:inner-foreach="$locations as $value">
@@ -15,4 +29,5 @@
 			</li>
 		</ul>
 	{/ifset}
+	</aside>
 </div>

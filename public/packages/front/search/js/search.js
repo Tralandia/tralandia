@@ -120,6 +120,19 @@
 
 $(function(){
 	$('.searchForm').searchFormSuggest();
+	$('.searchForm .select2').select2();
+
+	$('.searchForm .select2').on('change',function(e){
+		console.log($('.searchForm').serialize());
+
+		var url = $('#sidebar').attr('data-searchcount')+'&'+$('.searchForm').serialize();
+	
+		jQuery.getJSON(url,function(d){
+			console.log(d);
+			$('#getSearchCount').html(d.count);
+			// getSearchCount
+		});
+	});
 
 	$('#serachSidebar').on('change',function(e){
 		var val = $(this).val();
