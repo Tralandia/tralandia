@@ -64,6 +64,10 @@ class SimpleRoute extends BaseRoute
 			$url = substr($url, 0, -6);
 		}
 
+		if(\Nette\Utils\Strings::endsWith($url, '/front/rental-list')) {
+			$url = substr($url, 0, -17);
+		}
+
 		if(!$url) {
 			return NULL;
 		} else {
