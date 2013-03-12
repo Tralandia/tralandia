@@ -27,6 +27,10 @@
 		margin-top: 10px;		
 	}
 
+
+
+
+
 	.widget {
 		border-bottom: 1px solid @lightGreen;
 	}	
@@ -98,7 +102,8 @@
 
 	#frm-searchBar-searchForm {
 			margin: 1px;			
-			background: #f26900;
+
+			.basic-gradient(@lightGreen,@darkGreen);
 			-webkit-border-top-left-radius: 6px;
 			-webkit-border-top-right-radius: 6px;
 			-moz-border-radius-topleft: 6px;
@@ -117,19 +122,21 @@
 	.input-filltext {
 		
 
-		margin: 0 auto;
+		margin: 0 0 10px 0;
 		padding: 0;
-		-webkit-border-radius: 6px;
-		-moz-border-radius: 6px;
-		border-radius: 6px;
+		.basic-border-radius(4px);
 		height: 28px;
-		
+		overflow: hidden;
 		background: #fff;
-		width: 200px;
+		width: 205px;
+
+
 
 		.select2-container {
+		width: 205px;
+		overflow: hidden;			
 			a {
-				width: 190px;
+				width: 205px;
 				border: 1px solid #fff;
 				background: #fff;
 
@@ -139,8 +146,25 @@
 					border: none;
 				}
 			}
+
 		}
 
+
+		&.price {
+			background:transparent;
+			.select2-container  {
+				width: 95px;
+				float: left;
+				.basic-border-radius(4px);
+				&.pull-right {
+					float: right;
+				}				
+			}
+		}
+
+		.select2-container .select2-choice div b:before {
+			left: -6px;
+		}
 
 
 		input[type=text] {
@@ -325,24 +349,7 @@
 			}
 		}
 
-.input-filltext {
-	width: 205px;
-	float: left;
-	.basic-border-radius(4px);
-	overflow: hidden;
-	.select2-container {
-		width: 205px;
-		overflow: hidden;
-
-		a {
-			width: 205px;
-		}
-	}
-
-	.select2-container .select2-choice div b:before {
-		left: -6px;
-	}
-}	
+	
 
 }
 

@@ -5,12 +5,12 @@
 
 
 	{form searchForm , class => 'searchForm' }
-		{input location , class => 'select2'}
-		{input rentalType , class => 'select2'}
-		{input priceFrom , class => 'select2 price'}
-		{input priceTo , class => 'select2 price'}
-		{input capacity , class => 'select2'}
-		{input spokenLanguage , class => 'select2'}
+
+		<div class="input-filltext">{input location , class => 'select2'}</div>
+		<div class="input-filltext">{input rentalType , class => 'select2'}</div>
+		<div class="input-filltext price">{input priceFrom , class => 'select2'} {input priceTo , class => 'select2 pull-right'}</div>
+		<div class="input-filltext">{input capacity , class => 'select2'}</div>
+		<div class="input-filltext">{input spokenLanguage , class => 'select2'}</div>
 		
 		<div id="getSearchCount"></div>{input submit, class => "btn btn-orange"}		
 	{/form}
