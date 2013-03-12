@@ -42,7 +42,7 @@
 		<h1 class="addToViewList" id="{$rental->id}">{_$rental->name}{if $rental->classification > 0 }&nbsp;<span class="clasification">{for $i = 0; $i < $rental->classification; $i++}<i class="entypo-star"></i>{/for}</span>{/if}</h1>
 
 		<p class="locality nopadding">
-		<a class="brown"  href="{link Rental:list location => $rental->address->locality , rentalType => $rental->type }">{_$rental->type->name|firstUpper} {_$rental->address->locality->name , null , [case=>locative]}</a>
+		<a class="brown"  href="{link RentalList location => $rental->address->locality , rentalType => $rental->type }">{_$rental->type->name|firstUpper} {_$rental->address->locality->name , null , [case=>locative]}</a>
 		</p>
 
 		{if $teaser || $firstAnswer}
