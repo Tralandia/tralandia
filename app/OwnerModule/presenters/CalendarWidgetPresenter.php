@@ -27,13 +27,21 @@ class CalendarWidgetPresenter extends BasePresenter {
 
 		$monthsCount = $columns * $rows;
 
+		$monthWidth = 136;
+		$monthHeight = 150;
+
+		$iFrameWidth = ($monthWidth * $columns)+ 10;
+		$iFrameHeight = ($monthHeight * ($monthsCount / $rows))+ 10;
+
 		$link = $this->link(
 			'//:Front:CalendarIframe:default',
 			['language' => $language, 'rentalId' => $rentalId, 'monthsCount' => $monthsCount]
 		);
 
 		$code = Html::el('iframe')
-			->src($link);
+			->src($link)
+			->scrolling('no')
+			->style("width: {$iFrameWidth}px ;height: {$iFrameHeight}px; border:none; margin:0 auto;");
 
 		$json = ['code' => "$code"];
 		$this->sendJson($json);
