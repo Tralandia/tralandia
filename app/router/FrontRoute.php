@@ -16,16 +16,26 @@ class FrontRoute extends BaseRoute
 	const RENTAL = 'rental';
 	const FAVORITE_LIST = 'favoriteList';
 
-	const SPOKEN_LANGUAGE = 'flanguage';
-	const CAPACITY = 'fcapacity';
-	const BOARD = 'fboard';
-	const PRICE = 'fprice';
+	const SPOKEN_LANGUAGE = 'spokenLanguage';
+	const CAPACITY = 'capacity';
+	const BOARD = 'board';
+	const PRICE_FROM = 'priceFrom';
+	const PRICE_TO = 'priceTo';
 
 	public static $pathSegmentTypes = array(
 		'page' => 2,
 		'location' => 6,
 		'rentalType' => 8,
 	);
+
+	protected $pathParametersMapper = [
+		'location' => 'searchBar-location',
+		'rentalType' => 'searchBar-rentalType',
+		self::PRICE_FROM => 'searchBar-priceFrom',
+		self::PRICE_TO => 'searchBar-priceTo',
+		self::CAPACITY => 'searchBar-capacity',
+		self::SPOKEN_LANGUAGE => 'searchBar-spokenLanguage',
+	];
 
 	public $locationRepositoryAccessor;
 	public $languageRepositoryAccessor;
@@ -45,7 +55,7 @@ class FrontRoute extends BaseRoute
 	public function __construct(LanguageRepository $languageRepository, LocationRepository $locationRepository)
 	{
 		$mask = '//[!<language ([a-z]{2}|www)>.<primaryLocation [a-z]{2,3}>.%domain%/][<hash .*>]';
-		$metadata = [ 'presenter' => 'Rental', 'action' => 'list' ];
+		$metadata = [ 'presenter' => 'RentalList', 'action' => 'default' ];
 		parent::__construct($mask, $metadata, $languageRepository, $locationRepository);
 	}
 
@@ -95,8 +105,8 @@ class FrontRoute extends BaseRoute
 				} else if ($match = Strings::match($pathSegment, '~f([0-9]+)~')) {
 					if($favoriteList = $this->favoriteListRepositoryAccessor->get()->find($match[1])) {
 						$params[self::FAVORITE_LIST] = $favoriteList;
-						$presenter = 'Rental';
-						$params['action'] = 'list';
+						$presenter = 'RentalList';
+						$params['action'] = 'default';
 					}
 				}
 			}
@@ -112,8 +122,8 @@ class FrontRoute extends BaseRoute
 						foreach ($segmentList as $key => $value) {
 							$params[$key] = $value;
 						}
-						$presenter = 'Rental';
-						$params['action'] = 'list';
+						$presenter = 'RentalList';
+						$params['action'] = 'default';
 					}
 				} else {
 					$segmentList = array();
@@ -129,13 +139,21 @@ class FrontRoute extends BaseRoute
 
 			//d($params); #@debug
 			if(!isset($params['action']) || !isset($presenter)) {
-				$presenter = 'Rental';
-				$params['action'] = 'list';
+				$presenter = 'RentalList';
+				$params['action'] = 'default';
 				// return NULL;
 			}
 
 
 			$appRequest->setPresenterName($presenter);
+
+			foreach($params as $key => $value) {
+				if(array_key_exists($key, $this->pathParametersMapper)) {
+					$params[$this->pathParametersMapper[$key]] = $value;
+					unset($params[$key]);
+				}
+			}
+
 			$appRequest->setParameters($params);
 
 			return $appRequest;
@@ -154,6 +172,17 @@ class FrontRoute extends BaseRoute
 	{
 		$appRequest = clone $appRequest;
 		$params = $appRequest->getParameters();
+
+		$pathParametersMapper = array_flip($this->pathParametersMapper);
+		foreach($params as $key => $value) {
+			if(isset($pathParametersMapper[$key])) {
+				if(!isset($params[$pathParametersMapper[$key]])) {
+					$params[$pathParametersMapper[$key]] = $value;
+				}
+				unset($params[$key]);
+			}
+		}
+
 		$params[self::HASH] = [];
 
 		$presenter = $appRequest->getPresenterName();
@@ -162,7 +191,7 @@ class FrontRoute extends BaseRoute
 		switch (TRUE) {
 			case $presenter == 'Home' && $action == 'default':
 			case $presenter == 'Rental' && $action == 'detail':
-			case $presenter == 'Rental' && $action == 'list':
+			case $presenter == 'RentalList' && $action == 'default':
 				unset($params['page']);
 		}
 
@@ -174,7 +203,7 @@ class FrontRoute extends BaseRoute
 			$params[self::HASH] = implode('/', $params[self::HASH]);
 		}
 
-		$params['action'] = 'list';
+		$params['action'] = $this->actionName;
 		$appRequest->setPresenterName($this->presenterName);
 
 		$appRequest->setParameters($params);

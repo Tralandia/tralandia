@@ -1,76 +1,18 @@
-<div class="span3" role="sidebar" id="sidebar">
-	<aside class="innerPadding baseRadius baseBorder innerPaddingLeft noTopMargin">
-		<div>
-			<form data-url="{plink searchSuggestion}" data-conditions-text="#Please enter % more character" data-placeholder="#Search" class="searchForm">                
-				<div class="input-filltext">
+<div class="span9" role="sidebar" id="sidebar">
+	{control searchForm}
 
-				<input type="hidden" class="suggestion" id="serachSidebar" name="serachSidebar"/>
-		   
-				</div>
-				<a href="#" class="btnSearchClose"><i class="entypo-no"></i></a>
-				<div class="clearfix"></div>
-			</form>
-			<div class="removeFilter">
-				<a href="#"><i class="entypo-no"></i> #remove filter</a>
-			</div>
-		</div>
-
-
-
-	{define #criteriaOptions}
-		{var $hasHidden = FALSE}
-		{var $hasVisible = FALSE}
-		{var $hasActive = FALSE}
-
-		{ifset $criteria[$type]}
-			{foreach $criteria[$type] as $link}
-				{if $link->active}{var $hasActive = TRUE}{/if}
-				{if $link->count > 0}{var $hasVisible = TRUE}{/if}
-			{/foreach}
-
-			{if $hasVisible}
-
-				<div class="widget">
-				{if !$hasActive}<h4>{_$title}</h4>{/if}					
-
-					<ul n:inner-foreach="$criteria[$type] as $link">
-
-						{if $link->hide || $link->count==0}{var $hasHidden=TRUE}{/if}
-						{if $link->active}
-							<li class="selected">
-								<a href="{$link->seo->getUrl()}">
-									{ifset $link->name}{$link->name|firstUpper}{else}{_$link->entity->name|firstUpper}{/ifset}
-									<span class="counter">{$link->count}</span><span class="close entypo-remove"></span>
-								</a>
-							</li>
-							{else}
-							<li class="{if $link->hide || $link->count==0}hidden hide{/if}{if $link->count==0} disabled{/if}">
-								{if $link->count==0}
-									{ifset $link->name}{$link->name|firstUpper}{else}{_$link->entity->name|firstUpper}{/ifset}
-									<span class="counter">{$link->count}</span>
-									{else}
-									<a href="{$link->seo->getUrl()}">
-										{ifset $link->name}{$link->name|firstUpper}{else}{_$link->entity->name|firstUpper}{/ifset}
-										<span class="counter">{$link->count}</span>
-									</a>
-								{/if}
-							</li>
-						{/if}
-						{if $iterator->last && $hasHidden}
-							<li class="more"><a href="#" data-open="#Fewer options" data-close="More option">#More
-								option </a></li>{/if}
-					</ul>
-				</div>
-			{/if}
-		{/ifset}
-	{/define}
-
-	{* Location *}
-	{include #criteriaOptions, title => 'o1070', type => 'location'}
-	{include #criteriaOptions, title => 'o20926', type => 'rentalType'}
-	{include #criteriaOptions, title => 'o20930', type => 'flanguage'}
-	{include #criteriaOptions, title => 'o20928', type => 'fcapacity'}
-	{* {include #criteriaOptions, title => 'o20931', type => 'fprice'} *}
-
-	</aside>
+	{ifset $locations}
+		<ul n:inner-foreach="$locations as $value">
+			<li>
+				<a href="{plink RentalList, location => $value->entity}">{$value->name}</a>
+			</li>
+		</ul>
+	{/ifset}
+	{ifset $rentalTypes}
+		<ul n:inner-foreach="$rentalTypes as $value">
+			<li>
+				<a href="{plink RentalList, rentalType => $value->entity}">{$value->name}</a>
+			</li>
+		</ul>
+	{/ifset}
 </div>
