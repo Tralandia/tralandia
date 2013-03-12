@@ -3,8 +3,10 @@ namespace Repository\Location;
 
 use Doctrine\ORM\Query\Expr;
 use Entity\Location\Location;
+use Environment\Collator;
 use Model\Location\ILocationDecoratorFactory;
 use Nette\InvalidArgumentException;
+use Nette\Localization\ITranslator;
 use Nette\Utils\Strings;
 
 /**
@@ -98,7 +100,7 @@ class LocationRepository extends \Repository\BaseRepository {
 		return $qb->getQuery()->getResult()[0]['total'];
 	}
 
-	public function getCountriesForSelect()
+	public function getCountriesForSelect(ITranslator $translator, Collator $collator)
 	{
 		$qb = $this->_em->createQueryBuilder();
 
@@ -112,8 +114,10 @@ class LocationRepository extends \Repository\BaseRepository {
 		$return = [];
 		$rows = $qb->getQuery()->getResult();
 		foreach($rows as $row) {
-			$return[$row['id']] = $row['name'];
+			$return[$row['id']] = $translator->translate($row['name']);
 		}
+
+		$collator->asort($return);
 
 		return $return;
 	}

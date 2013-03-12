@@ -53,7 +53,7 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 		$this->persistLocationsSegments();
 		$this->persistRentalTypesSegments($languageList);
 
-		$this->rentalTypeRepositoryAccessor->get()->flush();
+		$this->languageRepositoryAccessor->get()->flush();
 	}
 
 	protected function persistPagesSegments($languageList)
@@ -72,7 +72,7 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 				$entity->type = PathSegment::PAGE;
 				$entity->entityId = $page->id;
 
-				$this->rentalTypeRepositoryAccessor->get()->persist($entity);
+				$this->pageRepositoryAccessor->get()->persist($entity);
 			}
 		}
 	}
@@ -99,7 +99,7 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 			$entity->type = PathSegment::LOCATION;
 			$entity->entityId = $location->id;
 
-			$this->rentalTypeRepositoryAccessor->get()->persist($entity);
+			$this->locationRepositoryAccessor->get()->persist($entity);
 		}
 	}
 

@@ -11,16 +11,5 @@ use Doctrine\ORM\Query\Expr;
 class TypeRepository extends \Repository\BaseRepository
 {
 
-	public function getForSelect() {
-
-		$return = [];
-		$rows = $this->findAll();
-		foreach($rows as $row) {
-			$return[$row->id] = $row->name->id;
-		}
-
-		return $return;
-
-	}
 
 }
