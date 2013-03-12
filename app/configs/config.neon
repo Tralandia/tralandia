@@ -12,7 +12,9 @@ nette:
 		expiration: '+1 year'
 
 	latte:
-		macros: [Extras\ImageMacro, Extras\Macros]
+		macros:
+			- Extras\ImageMacro
+			- Extras\Macros
 
 
 parameters:
