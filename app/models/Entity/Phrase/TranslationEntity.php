@@ -116,8 +116,9 @@ class Translation extends \Entity\BaseEntity {
 	}
 
 	protected function _updateVariations($option, array $variations) {
+
 		if($option == 'set') {
-			$foreach = $this->variations;
+			$foreach = $this->phrase->getTranslationVariationsMatrix($this->language);
 			$isset = $variations;
 			$variationsTemp = array();
 		} else {
