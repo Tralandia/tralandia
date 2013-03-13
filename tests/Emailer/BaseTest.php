@@ -10,12 +10,12 @@ use  Nette, Extras;
 class BaseTest extends \Tests\TestCase
 {
 	/**
-	 * @var \Extras\Email\Compiler
+	 * @var \Mail\ICompilerFactory
 	 */
-	public $emailCompiler;
+	public $emailCompilerFactory;
 
 	protected function setUp() {
-		$this->emailCompiler = $this->getContext()->emailCompiler;
+		$this->emailCompilerFactory = $this->getContext()->emailCompilerFactory;
 	}
 
 	public function testCompiler() {
@@ -32,10 +32,9 @@ class BaseTest extends \Tests\TestCase
 		/** @var $rental \Entity\Rental\Rental */
 		$rental = $this->getContext()->rentalRepositoryAccessor->get()->find(1);
 
-		$emailCompiler = $this->emailCompiler;
+		$emailCompiler = $this->emailCompilerFactory->create($receiver->getPrimaryLocation(), $receiver->getLanguage());
 		$emailCompiler->setTemplate($template);
 		$emailCompiler->setLayout($layout);
-		$emailCompiler->setEnvironment($receiver->getPrimaryLocation(), $receiver->getLanguage());
 		$emailCompiler->addRental('rental', $rental);
 		$emailCompiler->addVisitor('sender', $sender);
 		$emailCompiler->addCustomVariable('message', 'Toto je sprava pre teba!');

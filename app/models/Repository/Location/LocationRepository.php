@@ -69,7 +69,9 @@ class LocationRepository extends \Repository\BaseRepository {
 			$newLocalityDecorator = $this->locationDecoratorFactory->create($localityEntity);
 
 			$namePhrase = $localityEntity->getName();
-			$namePhrase->createTranslation($primaryLocation->getDefaultLanguage(), $locality);
+			$namePhrase->setSourceLanguage($primaryLocation->getDefaultLanguage());
+			$translation = $namePhrase->getTranslation($primaryLocation->getDefaultLanguage());
+			$translation->setTranslation($locality);
 
 			$localityEntity->parent = $primaryLocation;
 			$localityEntity->type = $locationType;

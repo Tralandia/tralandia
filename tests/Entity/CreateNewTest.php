@@ -5,6 +5,8 @@ use Nette, Extras;
 
 
 /**
+ * Testujem ci sa pri vytvoreni novej entity spravne vytvoria aj preklady (ak sa maju)\
+ *
  * @backupGlobals disabled
  */
 class CreateNewTest extends \Tests\TestCase

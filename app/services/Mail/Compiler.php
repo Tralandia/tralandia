@@ -296,7 +296,7 @@ class Compiler {
 	 */
 	protected function buildHtml(\Entity\Email\Layout $layout, \Entity\Email\Template $template)
 	{
-		/** @var $envVariables \Extras\Email\Variables\EnvironmentVariables */
+		/** @var $envVariables \Mail\Variables\EnvironmentVariables */
 		$envVariables = $this->getVariable('env');
 		$body = $template->getBody()->getTranslationText($envVariables->getLanguageEntity(), TRUE);
 		return str_replace('{include #content}', $body, $layout->getHtml());
@@ -328,7 +328,7 @@ class Compiler {
 
 			if(array_key_exists('prefix', $variable)) {
 				$methodName = 'getVariable'.ucfirst($variable['name']);
-				if(\Tra\Utils\Strings::contains($methodName, 'link')) {
+				if(Strings::contains($methodName, 'Link')) {
 					$environment = $this->getEnvironment();
 					$val = $this->getVariable($variable['prefix'])->{$methodName}($environment);
 				} else {
