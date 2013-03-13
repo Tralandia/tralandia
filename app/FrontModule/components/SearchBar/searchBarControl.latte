@@ -4,7 +4,7 @@
 
 
 	{form searchForm , class => 'searchForm' }
-
+		<strong><i class="icon-search"></i> Hladaj google </strong>
 		<div class="input-filltext">
 			<i class="icon-map-marker"></i>
 			{input location , class => 'select2'}
@@ -34,7 +34,7 @@
 			<a n:ifset="$template->removeSpokenLanguage" href="{$template->removeSpokenLanguage}" class="btnSearchClose"><i class="entypo-no"></i></a>
 		</div>
 		
-		<div id="getSearchCount" class="pull-left"></div>{input submit, class => "btn btn-orange pull-right"}		
+		<div id="getSearchCount" data-label="#label text" class="pull-left"></div>{input submit, class => "btn btn-orange pull-right"}		
 		
 	{/form}
 

@@ -119,24 +119,30 @@
 
 	}
 
+	strong {
+		color: rgb(59, 66, 29);
+		height: 28px;
+		font-weight: normal;
+		display: block;
+	}
+
 	.input-filltext {
 		
 
 		margin: 0 0 10px 0;
 		padding: 0;
-		.basic-border-radius(4px);
 		height: 28px;
 		overflow: hidden;
-		background: #fff;
 		width: 205px;
 
 		i[class*="icon-"] {
 			z-index: 300;
 			height: 26px;
 			text-align: center;
-			line-height: 26px;
+			line-height: 25px;
+			color: rgb(163, 163, 163);
 			position: absolute;
-			width: 20px;
+			width: 26px;
 		}
 
 		select.select2 {
@@ -145,13 +151,10 @@
 		}
 
 		.select2-container {
-			.basic-border-radius(4px);
-		width: 205px;
-		overflow: hidden;			
+			.basic-border-radius(0px);				
+			width: 205px;
 			a {
-				width: 205px;
-				border: 1px solid #fff;
-				background: #fff;
+
 
 				div {
 					width: 22px;
@@ -161,6 +164,20 @@
 
 				span {
 					color: #999;
+				}
+			}
+
+			&.select2-dropdown-open {
+				.select2-choice {
+					border: 1px solid #b0c13b;
+					border-bottom: 1px solid #fff;
+
+					-webkit-border-top-left-radius: 4px;
+					-webkit-border-top-right-radius: 4px;
+					-moz-border-radius-topleft: 4px;
+					-moz-border-radius-topright: 4px;
+					border-top-left-radius: 4px;
+					border-top-right-radius: 4px;					
 				}
 			}
 
@@ -185,7 +202,12 @@
 				}			
 
 				a {
-					width: 82px;
+					width: 73px;
+					div {
+						b:before {
+
+						}
+					}
 				}	
 			}
 		}
@@ -194,8 +216,8 @@
 			border: none;
 			background: #fff;
 			padding-left: 25px;
-			width: 188px;
-			.basic-border-radius(5px);
+			width: 180px;
+			.basic-border-radius(4px);
 
 			&:before {
 
@@ -203,7 +225,7 @@
 		}
 
 		.select2-container .select2-choice div b:before {
-			left: -6px;
+			left: 5px;
 		}
 
 
@@ -369,19 +391,19 @@
 
 
 		a.btnSearchClose {
-display: block;
-height: 30px;
-background: #ffffff;
-color: #999999;
-line-height: 33px;
-text-align: center;
-width: 24px;
-float: right;
-border-top-right-radius: 4px;
-border-bottom-right-radius: 4px;
-border-left: 1px solid #dddddd;
-position: relative;
-top: -28px;
+			display: block;
+			height: 26px;
+			background: #ffffff;
+			color: #999999;
+			line-height: 28px;
+			text-align: center;
+			width: 24px;
+			float: right;
+			border-top-right-radius: 4px;
+			border-bottom-right-radius: 4px;
+			border-left: 1px solid #dddddd;
+			position: relative;
+			top: -26px;
 			&:hover {
 				text-decoration: none;
 				color: #f26900;
@@ -395,3 +417,23 @@ top: -28px;
 
 }
 
+
+
+.select2-drop.searchSelect {
+	/*border: 1px solid #fff;*/
+}
+
+.select2-drop.searchSelect.select2-drop-active:before {
+	content: '';
+}
+
+#sidebar .input-filltext .select2-container.select2-dropdown-open .select2-choice {
+	border-radius: 0;
+	border: none;
+-webkit-border-top-left-radius: 4px;
+-webkit-border-top-right-radius: 4px;
+-moz-border-radius-topleft: 4px;
+-moz-border-radius-topright: 4px;
+border-top-left-radius: 4px;
+border-top-right-radius: 4px;	
+}

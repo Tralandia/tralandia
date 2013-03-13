@@ -120,7 +120,14 @@
 
 $(function(){
 	$('.searchForm').searchFormSuggest();
-	$('.searchForm .select2').select2();
+	$('.searchForm .select2:not(#frm-searchBar-searchForm-location)').select2({
+		dropdownCssClass: 'searchSelect',
+		allowClear: true,
+		minimumResultsForSearch: 'X',
+	});	
+	$('.searchForm #frm-searchBar-searchForm-location').select2({
+		dropdownCssClass: 'searchSelect',
+	});
 
 	$('.searchForm .select2').on('change',function(e){
 
@@ -139,7 +146,8 @@ $(function(){
 		}
 
 		jQuery.getJSON(url,function(d){
-			$('#getSearchCount').html(d.count);
+			var label = $('#getSearchCount').attr('data-label');
+			$('#getSearchCount').html(d.count+' '+label);
 		});
 	});
 
