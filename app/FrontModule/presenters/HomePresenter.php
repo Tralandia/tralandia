@@ -20,7 +20,7 @@ class HomePresenter extends BasePresenter {
 	public function renderDefault() {
 
 		$search = $this->rentalSearchFactory->create($this->environment->primaryLocation);
-		$featuredIds = $search->getFeaturedRentals();
+		$featuredIds = $search->getFeaturedRentals(99);
 
 		$rentals = array();
 		foreach ($featuredIds as $rental) {
