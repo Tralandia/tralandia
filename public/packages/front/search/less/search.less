@@ -20,7 +20,7 @@
 	h4 {
 		font-size: 14px;
 		margin: 0;
-		padding: 0 10px;
+		padding: 0 15px;
 		margin-bottom: 5px;
 
 	
@@ -28,7 +28,13 @@
 	}
 
 
-
+	#getSearchCount {
+		color: #ffffff;
+		height: 26px;
+		font-size: 11px;
+		line-height: 26px;
+		padding-left: 7px;
+	}
 
 
 	.widget {
@@ -103,13 +109,8 @@
 	#frm-searchBar-searchForm {
 			margin: 1px;			
 
-			.basic-gradient(@lightGreen,@darkGreen);
-			-webkit-border-top-left-radius: 6px;
-			-webkit-border-top-right-radius: 6px;
-			-moz-border-radius-topleft: 6px;
-			-moz-border-radius-topright: 6px;
-			border-top-left-radius: 6px;
-			border-top-right-radius: 6px;
+			.basic-gradient(rgb(142, 175, 18),rgb(116, 145, 8));
+			.basic-border-radius(6px);
 			margin-bottom: 0;
 			padding: 10px;
 			overflow: hidden;
@@ -119,13 +120,32 @@
 
 	}
 
+
 	strong {
-		color: rgb(59, 66, 29);
-		height: 28px;
+		color: #ffffff;
+		height: 19px;
+		margin: 0 0 10px 0;
 		font-weight: normal;
+		font-size: 17px;
 		display: block;
+		text-align: center;
 	}
 
+
+	.btn {
+		height: 26px;
+		padding: 0 10px;
+		line-height: 19px;
+
+		i {
+			left: -3px;
+		}
+
+		i:before {
+			font-size:30px;
+			
+		}
+	}
 	.input-filltext {
 		
 
@@ -140,10 +160,16 @@
 			height: 26px;
 			text-align: center;
 			line-height: 25px;
-			color: rgb(163, 163, 163);
+			color: rgb(104, 104, 104);
 			position: absolute;
 			width: 26px;
 		}
+
+	i.icon-money22 {
+		font-weight: bold;
+		width: 28px;
+	}
+
 
 		select.select2 {
 			visibility: hidden;
@@ -420,7 +446,12 @@
 
 
 .select2-drop.searchSelect {
-	/*border: 1px solid #fff;*/
+	border: 1px solid #fff;
+
+-webkit-box-shadow: 0 4px 5px rgba(0, 0, 0, .3);
+-moz-box-shadow: 0 4px 5px rgba(0, 0, 0, .3);
+-o-box-shadow: 0 4px 5px rgba(0, 0, 0, .3);
+box-shadow: 0 4px 5px rgba(0, 0, 0, 0.3);	
 }
 
 .select2-drop.searchSelect.select2-drop-active:before {

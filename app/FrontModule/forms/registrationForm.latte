@@ -7,72 +7,6 @@
 		</td>
 	</tr>
 
-{* 	<tr class="simpleInput">
-		<td colspan="2" class="fieldset">Text</td>
-		<td class="lang">
-			<select class="select2" name="country" id="frm-registrationForm-country" tabindex="-1"><option value="12">Zimbabwe</option></select>
-		</td>
-	</tr>
-
-	<tr data-lang="" class="simpleInput">
-		<td>name</td>
-		<td>
-			<table>
-				<tbody><tr>
-					<td><input type="text" name="name" id="frm-registrationForm-name" value=""></td>
-				</tr>
-			</tbody></table>
-		</td>
-		<td>
-			<span class="help"> Temporary helper text for at least 2 lines.</span>
-			<span class="invalidAlert">	
-			</span>
-		</td>
-	</tr>
-	<tr data-lang="" class="simpleInput">
-		<td>Slogan</td>
-		<td>
-			<table>
-				<tbody><tr>
-					<td><input type="text" name="name" id="frm-registrationForm-name" value=""></td>
-				</tr>
-			</tbody></table>
-		</td>
-		<td>
-			<span class="help"> Temporary helper text for at least 2 lines.</span>
-			<span class="invalidAlert">	
-			</span>
-		</td>
-	</tr>
-
-
-	<tr data-lang="" class="simpleInput">
-		<td>Label</td>
-		<td><textarea></textarea></td>
-		<td>
-			<span class="help"> Temporary helper text for at least 2 lines.</span>
-			<span class="invalidAlert">	
-			</span>
-		</td>
-	</tr>
-	<tr data-lang="" class="simpleInput hide">
-		<td>Label</td>
-		<td><textarea></textarea></td>
-		<td>
-			<span class="help"> Temporary helper text for at least 2 lines.</span>
-			<span class="invalidAlert">	
-			</span>
-		</td>
-	</tr>
-	<tr data-lang="" class="simpleInput hide">
-		<td>Label</td>
-		<td><textarea></textarea></td>
-		<td>
-			<span class="help"> Temporary helper text for at least 2 lines.</span>
-			<span class="invalidAlert">	
-			</span>
-		</td>
-	</tr> *}
 
 	{include #select, control => $form['country']}
 	{include #select, control => $form['language']}
@@ -106,6 +40,6 @@
 	{include #fieldset, text => 'o980'}
 	{include #rentalPhotos, control => $rental['photos']}
 
-	{include #submit, control => $form['submit'], icon => 'icon-trash' , class => 'btn-green'}
+	{include #submit, control => $form['submit'], icon => 'entypo-ok' , class => 'btn-green'}
 </table>
 {/form}
