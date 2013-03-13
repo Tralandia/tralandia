@@ -24,6 +24,7 @@ class BaseImport {
 				'\Language' => array(),
 			),
 			'subsections' => array(),
+			'saveImportStatus' => FALSE,
 		),
 		'htmlPhrases' => array(
 			'entities' => array(

@@ -577,8 +577,6 @@
 {*
 	Submit Button Container -------------------------------------------
 	@param $control \Nette\Forms\Controls\SubmitButton
-	@param $icon string
-	@param $class string
 	*}
 	{define #submit}
 	{default $class = null}
@@ -587,8 +585,11 @@
 
 		</td>
 		<td colspan="2">
-			<button type="submit" n:class="$class ? 'btn ' .$class : btn" name="{$control->getHtmlName()}" id="{$control->getHtmlId()}">
-				<i n:ifset="$icon" class="{$icon}"></i> {$control->caption}
+			<button type="submit" class="btn-orange" name="{$control->getHtmlName()}" id="{$control->getHtmlId()}">
+				<i class="icon"></i> {$control->caption}
+			</button>
+			<button type="button" class="btn-cancel" name="cancel">
+				<i class="icon-trash"></i> {_o100089}
 			</button>
 		</td>
 	</tr>
