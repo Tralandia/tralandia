@@ -119,6 +119,7 @@ table.formTable {
 				}
 				div {
 					width: 24px;
+					.basic-border-radius(0px);
 					b:before {
 						left: 5px;
 					}
@@ -130,11 +131,6 @@ table.formTable {
 			}
 			.select2-container {
 
-				&.select2-drop-above {
-					a {
-						.basic-gradient(rgb(255, 255, 255),rgb(229, 236, 199));
-					}
-				}
 
 				a {			
 					.basic-gradient(rgb(255, 255, 255),rgb(229, 236, 199));
@@ -145,6 +141,14 @@ table.formTable {
 						border-left: 1px solid #b0c13b;
 					}
 				}
+
+
+				&.select2-drop-above {
+					a {
+						.basic-gradient(rgb(255, 255, 255),rgb(229, 236, 199));
+						border-top: none;
+					}
+				}				
 			}
 
 			.select2-dropdown-open .select2-choice div {
@@ -297,18 +301,18 @@ table.formTable {
 				}
 
 				.help:after {
-border-color: rgba(136,183,213,0);
-border-top-color: #c2e1f5;
-border-width: 10px;
-left: 10%;
-margin-left: -10px;
-				}
-				.help:before {
-border-color: rgba(194,225,245,0);
-border-top-color: rgb(115, 158, 185);
-border-width: 11px;
-left: 10%;
-margin-left: -11px;
+					border-color: rgba(136,183,213,0);
+					border-top-color: #c2e1f5;
+					border-width: 10px;
+					left: 10%;
+					margin-left: -10px;
+									}
+									.help:before {
+					border-color: rgba(194,225,245,0);
+					border-top-color: rgb(115, 158, 185);
+					border-width: 11px;
+					left: 10%;
+					margin-left: -11px;
 				}
 
 
@@ -327,6 +331,15 @@ margin-left: -11px;
 .mainForm.select2-drop {
 	border: 1px solid #b0c13b;
 	border-top-width: 0px;
+
+	&.select2-drop-above {
+		border-bottom: none;
+		border-top-width: 1px;
+	}
+
 }
 
 
+.select2-drop.select2-drop-above.select2-drop-active:before {
+	top: 2px;
+}

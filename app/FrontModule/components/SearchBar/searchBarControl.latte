@@ -4,7 +4,7 @@
 
 
 	{form searchForm , class => 'searchForm' }
-
+		<strong>#Vyhladavanie </strong>
 		<div class="input-filltext">
 			<i class="icon-map-marker"></i>
 			{input location , class => 'select2'}
@@ -16,11 +16,11 @@
 			<a n:ifset="$template->removeRentalType" href="{$template->removeRentalType}" class="btnSearchClose"><i class="entypo-no"></i></a>
 		</div>
 		<div class="input-filltext price">
-			<i class="icon-money"></i>{input priceFrom , class => 'select2'}
+			<i class="icon-money22">$</i>{input priceFrom , class => 'select2'}
 			<a n:ifset="$template->removePriceFrom" href="{$template->removePriceFrom}" class="btnSearchClose"><i class="entypo-no"></i></a>
 		</div>	
 		<div class="input-filltext price pull-right">
-			<i class="icon-money"></i>{input priceTo , class => 'select2 pull-right'}
+			<i class="icon-money22">$</i>{input priceTo , class => 'select2 pull-right'}
 			<a n:ifset="$template->removePriceTo" href="{$template->removePriceTo}" class="btnSearchClose"><i class="entypo-no"></i></a>
 		</div>
 		<div class="input-filltext">
@@ -34,11 +34,14 @@
 			<a n:ifset="$template->removeSpokenLanguage" href="{$template->removeSpokenLanguage}" class="btnSearchClose"><i class="entypo-no"></i></a>
 		</div>
 		
-		<div id="getSearchCount" class="pull-left"></div>{input submit, class => "btn btn-orange pull-right"}		
+		<div id="getSearchCount" data-label="#label text" class="pull-left">25 ubytovani</div>
+		{* {input submit,value => '#Search' , icon => 'entypo-search', class => "btn btn-white pull-right"}	 *}
+		<button class="btn btn-white pull-right"><i class="entypo-search"></i> #Search</button>	
 		
 	{/form}
 
 	{ifset $locations}
+	<h4><i class="icon-map-marker"></i>{_o1070}</h4>
 		<ul n:inner-foreach="$locations as $value">
 			<li>
 				<a href="{plink RentalList, location => $value->entity}">{$value->name}</a>
@@ -46,6 +49,7 @@
 		</ul>
 	{/ifset}
 	{ifset $rentalTypes}
+	<h4><i class="icon-home"></i>{_o20926}</h4>
 		<ul n:inner-foreach="$rentalTypes as $value">
 			<li>
 				<a href="{plink RentalList, rentalType => $value->entity}">{$value->name}</a>
