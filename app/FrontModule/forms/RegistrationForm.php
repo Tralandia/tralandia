@@ -166,17 +166,17 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 			//->setOption('help', $this->translate('o5956'))
 			;
 
-		$amenityBoard = $this->amenityRepository->findByBoardTypeForSelect();
+		$amenityBoard = $this->amenityRepository->findByBoardTypeForSelect($this->translator, $this->collator);
 		$rentalContainer->addMultiOptionList('board', 'o100080', $amenityBoard)
 			//->setOption('help', $this->translate('o5956'))
 			;
 
-		$amenityImportant = $this->amenityRepository->findImportantForSelect();
+		$amenityImportant = $this->amenityRepository->findImportantForSelect($this->translator, $this->collator);
 		$rentalContainer->addMultiOptionList('important', 'o100081', $amenityImportant)
 			//->setOption('help', $this->translate('o5956'))
 			;
 
-		$amenityAvailability = $this->amenityRepository->findByAvailabilityTypeForSelect();
+		$amenityAvailability = $this->amenityRepository->findByAvailabilityTypeForSelect($this->translator, $this->collator);
 		$rentalContainer->addMultiOptionList('ownerAvailability', 'o100082', $amenityAvailability)
 			//->setOption('help', $this->translate('o5956'))
 			;
