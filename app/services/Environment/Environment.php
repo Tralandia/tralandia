@@ -2,6 +2,8 @@
 
 namespace Environment;
 
+use Entity\Language;
+use Entity\Location\Location;
 use Nette;
 
 class Environment extends Nette\Object {
@@ -24,6 +26,11 @@ class Environment extends Nette\Object {
 	/**
 	 * @var \Extras\ITranslatorFactory
 	 */
+	protected $translatorFactory;
+
+	/**
+	 * @var \Extras\Translator
+	 */
 	protected $translator;
 
 	/**
@@ -32,15 +39,15 @@ class Environment extends Nette\Object {
 	protected $locale;
 
 	/**
-	 * @param Nette\Application\Request[] $request
+	 * @param \Entity\Location\Location $primaryLocation
+	 * @param \Entity\Language $language
 	 * @param \Extras\ITranslatorFactory $translatorFactory
 	 */
-	public function __construct(array $request, \Extras\ITranslatorFactory $translatorFactory)
+	public function __construct(Location $primaryLocation, Language $language, \Extras\ITranslatorFactory $translatorFactory)
 	{
-		$this->request = reset($request);
-		$this->primaryLocation = $this->getRequestParameter('primaryLocation');
-		$this->language = $this->getRequestParameter('language');
-		$this->translator = $translatorFactory->create($this->getLanguage());
+		$this->primaryLocation = $primaryLocation;
+		$this->language = $language;
+		$this->translatorFactory = $translatorFactory;
 	}
 
 	/**
@@ -64,6 +71,9 @@ class Environment extends Nette\Object {
 	 */
 	public function getTranslator()
 	{
+		if(!$this->translator) {
+			$this->translator = $this->translatorFactory->create($this->language);
+		}
 		return $this->translator;
 	}
 
@@ -96,4 +106,19 @@ class Environment extends Nette\Object {
 		$parameters = $this->request->getParameters();
 		return isset($parameters[$name]) ? $parameters[$name] : NULL;
 	}
+
+
+	/**
+	 * @param Nette\Application\Request[] $request
+	 * @param \Extras\ITranslatorFactory $translatorFactory
+	 * @return \Environment\Environment
+	 */
+	public static function createFromRequest(array $request, \Extras\ITranslatorFactory $translatorFactory) {
+		$request = reset($request);
+		$parameters = $request->getParameters();
+		$primaryLocation = $parameters['primaryLocation'];
+		$language = $parameters['language'];
+		return new self($primaryLocation, $language, $translatorFactory);
+	}
+
 }
