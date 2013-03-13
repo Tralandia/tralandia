@@ -2,29 +2,33 @@
 <aside class="innerPadding baseRadius baseBorder innerPaddingLeft noTopMargin">
 	{* {control searchForm } *}
 
-
-
 	{form searchForm , class => 'searchForm' }
 
 		<div class="input-filltext">
+			<i class="icon-map-marker"></i>
 			{input location , class => 'select2'}
 			<a n:ifset="$template->removeLocation" href="{$template->removeLocation}" class="btnSearchClose"><i class="entypo-no"></i></a>
 		</div>
 		<div class="input-filltext">
+			<i class="icon-home"></i>
 			{input rentalType , class => 'select2'}
 			<a n:ifset="$template->removeRentalType" href="{$template->removeRentalType}" class="btnSearchClose"><i class="entypo-no"></i></a>
 		</div>
-		<div class="input-filltext price">{input priceFrom , class => 'select2'}
+		<div class="input-filltext price">
+			<i class="icon-money"></i>{input priceFrom , class => 'select2'}
 			<a n:ifset="$template->removePriceFrom" href="{$template->removePriceFrom}" class="btnSearchClose"><i class="entypo-no"></i></a>
 		</div>	
-		<div class="input-filltext price pull-right">{input priceTo , class => 'select2 pull-right'}
+		<div class="input-filltext price pull-right">
+			<i class="icon-money"></i>{input priceTo , class => 'select2 pull-right'}
 			<a n:ifset="$template->removePriceTo" href="{$template->removePriceTo}" class="btnSearchClose"><i class="entypo-no"></i></a>
 		</div>
 		<div class="input-filltext">
+			<i class="icon-user"></i>
 			{input capacity , class => 'select2'}
 			<a n:ifset="$template->removeCapacity" href="{$template->removeCapacity}" class="btnSearchClose"><i class="entypo-no"></i></a>
 		</div>
 		<div class="input-filltext">
+			<i class="icon-globe"></i>
 			{input spokenLanguage , class => 'select2'}
 			<a n:ifset="$template->removeSpokenLanguage" href="{$template->removeSpokenLanguage}" class="btnSearchClose"><i class="entypo-no"></i></a>
 		</div>

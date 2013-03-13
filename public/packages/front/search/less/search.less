@@ -130,6 +130,15 @@
 		background: #fff;
 		width: 205px;
 
+		i[class*="icon-"] {
+			z-index: 300;
+			height: 26px;
+			text-align: center;
+			line-height: 26px;
+			position: absolute;
+			width: 20px;
+		}
+
 		select.select2 {
 			visibility: hidden;
 			height: 18px;
@@ -176,7 +185,7 @@
 				}			
 
 				a {
-					width: 98px;
+					width: 82px;
 				}	
 			}
 		}
@@ -184,7 +193,13 @@
 		.select2-container .select2-choice {
 			border: none;
 			background: #fff;
+			padding-left: 25px;
+			width: 188px;
 			.basic-border-radius(5px);
+
+			&:before {
+
+			}
 		}
 
 		.select2-container .select2-choice div b:before {

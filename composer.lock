@@ -6,12 +6,12 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/HosipLan/Nette-AutowireProperties.git",
+                "url": "https://github.com/HosipLan/Nette-AutowireProperties",
                 "reference": "v0.1.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/HosipLan/Nette-AutowireProperties/zipball/v0.1.1",
+                "url": "https://github.com/HosipLan/Nette-AutowireProperties/archive/v0.1.1.zip",
                 "reference": "v0.1.1",
                 "shasum": ""
             },
@@ -149,12 +149,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/nette.git",
-                "reference": "6945e5094bc3b8ae04a30b7a5b076eff4dbea98f"
+                "reference": "e200ae7ed93694de033626b367581c7982cd7688"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/nette/zipball/6945e5094bc3b8ae04a30b7a5b076eff4dbea98f",
-                "reference": "6945e5094bc3b8ae04a30b7a5b076eff4dbea98f",
+                "url": "https://api.github.com/repos/nette/nette/zipball/e200ae7ed93694de033626b367581c7982cd7688",
+                "reference": "e200ae7ed93694de033626b367581c7982cd7688",
                 "shasum": ""
             },
             "require": {
@@ -172,7 +172,7 @@
                 "ext-memcache": "*",
                 "ext-pdo": "*"
             },
-            "time": "2013-03-11 22:11:46",
+            "time": "2013-03-13 00:53:26",
             "type": "library",
             "extra": {
                 "branch-alias": {
