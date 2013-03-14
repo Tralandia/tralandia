@@ -111,6 +111,7 @@ class Environment extends Nette\Object {
 	/**
 	 * @param Nette\Application\Request[] $request
 	 * @param \Extras\ITranslatorFactory $translatorFactory
+	 *
 	 * @return \Environment\Environment
 	 */
 	public static function createFromRequest(array $request, \Extras\ITranslatorFactory $translatorFactory) {

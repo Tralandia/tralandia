@@ -69,8 +69,8 @@ class RegistrationHandler extends FormHandler
 			$error->addError("Email exists", 'email');
 		}
 
-		$values->rentalType = $rentalTypeRepository->find($values->rentalType);
-		if(!$values->rentalType) {
+		$values->rental->type = $rentalTypeRepository->find($values->rental->type);
+		if(!$values->rental->type) {
 			$error->addError("Invalid rental type", 'rentalType');
 		}
 
@@ -90,29 +90,20 @@ class RegistrationHandler extends FormHandler
 
 		$rentalCreator = $this->rentalCreator;
 
-		$rentalAddress = $values->rentalAddress;
-
 		/** @var $address \Entity\Contact\Address */
-		$address = $this->addressCreator->create(
-			$values->country,
-			$rentalAddress->address,
-			$rentalAddress->locality,
-			$rentalAddress->postalCode,
-			$rentalAddress->latitude,
-			$rentalAddress->longitude
-		);
+		$address = $this->addressCreator->create($values->rental->address);
 
 
 		/** @var $rental \Entity\Rental\Rental */
-		$rental = $rentalCreator->create($address, $user, $values->rentalName);
+		$rental = $rentalCreator->create($address, $user, $values->rental->name);
 
-		$rental->setType($values->rentalType)
+		$rental->setType($values->rental->type)
 			->setEditLanguage($values->language)
 			->addSpokenLanguage($values->language)
 			->setEmail($email)
-			->setClassification($values->rentalClassification)
-			->setMaxCapacity($values->rentalMaxCapacity)
-			->setFloatPrice($values->rentalPrice);
+			->setClassification($values->rental->classification)
+			->setMaxCapacity($values->rental->maxCapacity)
+			->setFloatPrice($values->rental->price);
 
 		//$this->model->save($values);
 		$this->rental = $rental;

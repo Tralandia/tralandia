@@ -104,7 +104,9 @@ services:
 	authorizator: 
 		class: Security\SimpleAcl(..., @userRoleRepositoryAccessor::get())
 
-	environment: Environment\Environment::createFromRequest(@application::getRequests())
+	environment:
+		class: Environment\Environment
+		factory: Environment\Environment::createFromRequest(@application::getRequests())
 
 	locale: @environment::getLocale()
 

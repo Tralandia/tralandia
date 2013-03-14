@@ -52,7 +52,7 @@ class LocationRepository extends \Repository\BaseRepository {
 	public function findOrCreateLocality($locality, Location $primaryLocation)
 	{
 		if(!$primaryLocation->isPrimary()) {
-			throw new InvalidArgumentException;
+			throw new InvalidArgumentException('$primaryLocation nie je primarna krajina!');
 		}
 
 		$locationType = $this->related('type')->findOneBySlug('locality');

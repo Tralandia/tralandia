@@ -186,17 +186,19 @@ class AddressNormalizer extends \Nette\Object {
 		}
 
 		// IF it's in USA, create a 4-letter ISO code
-		if ($this->itsInUsa()) {
+		if ($this->itsInUsa($info)) {
 			$info[self::PRIMARY_LOCATION] = $info[self::PRIMARY_LOCATION] . $info[\GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_1];
 		}
-
-		$info[self::PRIMARY_LOCATION] = $this->locationRepositoryAccessor->get()->findOneByIso($info[self::PRIMARY_LOCATION]);
 
 		if (isset($info[self::LOCALITY]) && isset($info[self::SUBLOCALITY])) {
 			if ($info[self::LOCALITY] == $info[self::SUBLOCALITY]) {
 				unset($info[self::SUBLOCALITY]);
 			}
 		}
+
+		$locationRepository = $this->locationRepositoryAccessor->get();
+		$info[self::PRIMARY_LOCATION] = $locationRepository->findOneByIso($info[self::PRIMARY_LOCATION]);
+		$info[self::LOCALITY] = $locationRepository->findOrCreateLocality($info[self::LOCALITY], $info[self::PRIMARY_LOCATION]);
 
 		$l = $response->getLocation();
 		if (isset($l->lat) && isset($l->lng)) {
@@ -252,21 +254,25 @@ class AddressNormalizer extends \Nette\Object {
 
 		// Locality
 		$locality = Arrays::get($info, self::LOCALITY, NULL);
-		$this->setLocality($address, $locality);
+		try {
+			$this->setLocality($address, $locality);
+		} catch (WrongCountryException $e) {
+		}
+
 	}
 
 	/**
-	 * @param $address
+	 * @param \Entity\Contact\Address $address
 	 * @param $locality
 	 *
-	 * @throws \Exception
+	 * @throws WrongCountryException
 	 */
 	protected function setLocality(Address $address, $locality) {
 		if ($locality === NULL) {
 			$address->locality = NULL;
 		} else if ($locality instanceof \Entity\Location\Location) {
 			if ($locality->parent != $address->primaryLocation) {
-				throw new \Exception("AddressNormalizer - can't set the locality,
+				throw new WrongCountryException("AddressNormalizer - can't set the locality,
 				because it is outside the primaryLocation", 1);
 			} else {
 				$address->locality = $locality;
@@ -280,13 +286,19 @@ class AddressNormalizer extends \Nette\Object {
 	}
 
 	/**
+	 * @param $info
+	 *
 	 * @return bool
 	 */
-	private function itsInUsa()
+	private function itsInUsa($info)
 	{
 		return isset($info[\GoogleGeocodeResponseV3::ACT_ADMINISTRATIVE_AREA_LEVEL_1])
 			&& isset($info[self::PRIMARY_LOCATION])
 			&& Strings::lower($info[self::PRIMARY_LOCATION]) == 'us';
 	}
+
+}
+
+class WrongCountryException extends \Exception {
 
 }
