@@ -145,14 +145,25 @@ $(function(){
 			})
 		}
 
-		jQuery.getJSON(url,function(d){
-			var label = $('#getSearchCount').attr('data-label');
-			$('#getSearchCount').html(d.count+' '+label);
+		var label = $('#getSearchCount').attr('data-label');
+
+		$.ajax({
+		  url: $('#sidebar').attr('data-searchcount'),
+		  data: $('.searchForm').serialize(),
+		  type: 'POST',
+		}).done(function(d) {
+		  $('#getSearchCount').html(d.count+' '+label);
 		});
+
 	});
 
 
-
+	$('.btnSearchClose').on('click',function(){
+		$(this).parent().removeClass('selected');
+		$(this).parent().find('.select2').select2('val','default');
+		$(this).remove();
+		return false;
+	});
 
 
 
