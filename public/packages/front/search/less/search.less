@@ -19,12 +19,19 @@
 
 	h4 {
 		font-size: 14px;
-		margin: 0;
+		margin: 19px 0 5px 0px;
 		padding: 0 15px;
-		margin-bottom: 5px;
+		
+		i {
+			font-size: 20px;
 
-	
-		margin-top: 10px;		
+			&.icon-home {
+				margin-left: -5px;
+				width: 20px;
+				display: block;
+				float: left;
+			}
+		}
 	}
 
 
@@ -252,6 +259,7 @@
 
 		.select2-container .select2-choice div b:before {
 			left: 5px;
+			color: #999;
 		}
 
 
@@ -296,6 +304,12 @@
 			border: none;
 			height:30px;
 			background: transparent;
+		}
+
+		&.selected {
+			.select2-container a span {
+				color: #444;
+			}
 		}
 	}
 
@@ -448,10 +462,34 @@
 .select2-drop.searchSelect {
 	border: 1px solid #fff;
 
--webkit-box-shadow: 0 4px 5px rgba(0, 0, 0, .3);
--moz-box-shadow: 0 4px 5px rgba(0, 0, 0, .3);
--o-box-shadow: 0 4px 5px rgba(0, 0, 0, .3);
-box-shadow: 0 4px 5px rgba(0, 0, 0, 0.3);	
+	-webkit-box-shadow: 0 4px 5px rgba(0, 0, 0, .3);
+	-moz-box-shadow: 0 4px 5px rgba(0, 0, 0, .3);
+	-o-box-shadow: 0 4px 5px rgba(0, 0, 0, .3);
+	box-shadow: 0 4px 5px rgba(0, 0, 0, 0.3);	
+
+	.select2-search {
+		&:before {
+			font-family: entypo;
+			content: '\1F50D';
+			font-size: 30px;
+			line-height: 27px;
+			height: 0;
+			float: right;
+			position: relative;
+			right: 10px;
+			top: -2px;
+			z-index: 9000;
+			color: #999999;
+		}
+	}
+
+
+}
+
+.select2-drop.searchSelectOrder , .select2-drop.searchSelect{
+	.select2-results li:first-child {
+		display: none;
+	}
 }
 
 .select2-drop.searchSelect.select2-drop-active:before {

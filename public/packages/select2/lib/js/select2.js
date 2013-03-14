@@ -1032,8 +1032,12 @@ the specific language governing permissions and limitations under the Apache Lic
             // show the elements
             mask.css({
                 width: document.documentElement.scrollWidth,
-                height: document.documentElement.scrollHeight});
-            mask.show();
+                height: document.documentElement.scrollHeight
+              });
+            // mask.show();
+            // @gregor change to 
+            mask.hide();
+            // end change
             this.dropdown.show();
             this.positionDropdown();
 
