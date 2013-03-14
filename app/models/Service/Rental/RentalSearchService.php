@@ -9,7 +9,7 @@ use Nette\Utils\Arrays;
 class RentalSearchService extends Nette\Object 
 {
 
-	const COUNT_PER_PAGE			= 10;
+	const COUNT_PER_PAGE			= 50;
 	const CRITERIA_LOCATION  		= 'location';
 	const CRITERIA_RENTAL_TYPE 		= 'rentalType';
 
