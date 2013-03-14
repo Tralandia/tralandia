@@ -138,7 +138,11 @@ $(function(){
 			$select2 = $(select2Id);
 
 		if($(this).val()){
-			$(this).parent().append('<a href="/" class="btnSearchClose"><i class="entypo-no"></i></a>');
+
+		if ($(this).parent().find('.btnSearchClose').length == 0){
+		  $(this).parent().append('<a href="/" class="btnSearchClose"><i class="entypo-no"></i></a>');
+		}			
+			
 			$(this).parent().addClass('selected');
 		} else {
 			$(this).parent().find('.btnSearchClose').remove();
