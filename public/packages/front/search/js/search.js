@@ -119,7 +119,9 @@
 })(jQuery);
 
 $(function(){
-	$('.searchForm').searchFormSuggest();
+	$('.searchForm').searchFormSuggest({
+		dropdownCssClass: 'searchSelectOrder'
+	});
 	$('.searchForm .select2:not(#frm-searchBar-searchForm-location)').select2({
 		dropdownCssClass: 'searchSelect',
 		allowClear: true,
@@ -136,13 +138,11 @@ $(function(){
 			$select2 = $(select2Id);
 
 		if($(this).val()){
-			$select2.find('a span').css({
-				color: '#333'
-			})
+			$(this).parent().append('<a href="/" class="btnSearchClose"><i class="entypo-no"></i></a>');
+			$(this).parent().addClass('selected');
 		} else {
-			$select2.find('a span').css({
-				color: '#999'
-			})
+			$(this).parent().find('.btnSearchClose').remove();
+			$(this).parent().removeClass('selected');
 		}
 
 		var label = $('#getSearchCount').attr('data-label');
@@ -152,6 +152,7 @@ $(function(){
 		  data: $('.searchForm').serialize(),
 		  type: 'POST',
 		}).done(function(d) {
+			console.log(d);
 		  $('#getSearchCount').html(d.count+' '+label);
 		});
 
@@ -165,7 +166,12 @@ $(function(){
 		return false;
 	});
 
-
+	$('.btnSearchClose').live('click',function(){
+		$(this).parent().removeClass('selected');
+		$(this).parent().find('.select2').select2('val','default');
+		$(this).remove();
+		return false;
+	});
 
 
 
