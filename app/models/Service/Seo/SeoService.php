@@ -4,6 +4,8 @@ namespace Service\Seo;
 
 use Nette, Extras, Service, Doctrine, Entity;
 use Nette\Utils\Strings;
+use Routers\FrontRoute;
+use Extras\Translator;
 
 /**
  * @author Dávid Ďurika
@@ -16,6 +18,8 @@ class SeoService extends Nette\Object {
 	protected $url;
 	protected $phraseDecoratorFactory;
 	protected $pageRepositoryAccessor;
+
+	protected $pathSegmentParameters;
 
 	protected $replacements = array(
 		'primaryLocation' => array(
@@ -34,7 +38,7 @@ class SeoService extends Nette\Object {
 			'location', 
 			'name',
 			array(
-				'case' => \Entity\Language::LOCATIVE,
+				Translator::VARIATION_CASE => \Entity\Language::LOCATIVE,
 			),
 		),
 		'rentalTypePlural' => array(
@@ -52,8 +56,8 @@ class SeoService extends Nette\Object {
 
 	protected $defaultVariation = array(
 		'plural' => \Entity\Language::DEFAULT_PLURAL,
-		'gender' => \Entity\Language::DEFAULT_GENDER,
-		'case' => \Entity\Language::DEFAULT_CASE,
+		Translator::VARIATION_GENDER => \Entity\Language::DEFAULT_GENDER,
+		Translator::VARIATION_CASE => \Entity\Language::DEFAULT_CASE,
 	);
 
 	/**
@@ -67,6 +71,11 @@ class SeoService extends Nette\Object {
 		$this->request = $request;
 		$this->pageRepositoryAccessor = $pageRepositoryAccessor;
 		$this->requestParameters = $this->request->getParameters();
+
+		$this->pathSegmentParameters = [
+			FrontRoute::LOCATION => FrontRoute::$pathParametersMapper[FrontRoute::LOCATION],
+			FrontRoute::RENTAL_TYPE => FrontRoute::$pathParametersMapper[FrontRoute::RENTAL_TYPE],
+		];
 	}
 
 	/**
@@ -108,11 +117,10 @@ class SeoService extends Nette\Object {
 	public function getPage() {
 		if (!$this->page) {
 			$destination = ':' . $this->request->getPresenterName() . ':' . $this->getParameter('action');
-			if ($destination == ':Front:Rental:list') {
+			if ($destination == ':Front:RentalList:default') {
 				$hash = array();
-				foreach (\Routers\FrontRoute::$pathSegmentTypes as $key => $value) {
-					if ($value == 2) continue;
-					if ($this->existsParameter($key)) {
+				foreach ($this->pathSegmentParameters as $key => $value) {
+					if ($this->existsParameter($value)) {
 						$hash[] = '/'.$key;
 					}
 				}
@@ -133,7 +141,8 @@ class SeoService extends Nette\Object {
 	 * @return Entity\BaseEntity|string
 	 */
 	public function getParameter($name) {
-		return $this->requestParameters[$name];
+		$alias = Nette\Utils\Arrays::get($this->pathSegmentParameters, $name, NULL);
+		return $this->requestParameters[$alias ?: $name];
 	}
 
 	public function getParameters() {
@@ -183,7 +192,10 @@ class SeoService extends Nette\Object {
 			if($translation) {
 				if (array_key_exists(2, $replacement) && is_array($replacement[2])) {
 					$variationPath = array_merge($this->defaultVariation, $replacement[2]);
-					$texts[$textKey] = $translation->getVariation($variationPath['plural'], $variationPath['gender'], $variationPath['case']);
+					$texts[$textKey] = $translation->getVariation(
+						$variationPath['plural'],
+						$variationPath[Translator::VARIATION_GENDER],
+						$variationPath[Translator::VARIATION_CASE]);
 				} else {
 					$texts[$textKey] = (string) $translation;
 				}
