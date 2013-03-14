@@ -26,7 +26,7 @@ class LatlongTest extends \Tests\TestCase
 
 		foreach ($testValues as $value) {
 			$t = new \Extras\Types\Latlong($value[0], $value[1]);
-			echo("\n".$value[0].' : '.$value[1]);
+			//echo("\n".$value[0].' : '.$value[1]);
 			$this->assertSame("40°26′46″S 79°56′55″E", (string)$t);
 		}
 

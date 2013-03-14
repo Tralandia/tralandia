@@ -12,7 +12,7 @@ class AddressNormalizerTest extends \Tests\TestCase
 {
 
 	/**
-	 * @var \Entity\Location\Location
+	 * @var \Entity\Location\Location[]
 	 */
 	public $location = array();
 

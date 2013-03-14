@@ -206,12 +206,13 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 				'name' => 'Chata Test',
 				'price' => '3',
 				'maxCapacity' => 15,
-				
+				'type' => 3,
 				'pet' => [1],
+
+				//'address' => 'Ľ. Štúra 8, Nové Zámky, Slovakia',
 			],
 		];
 		$this->setDefaults($defaults);
-		$this['rental']['address']->setDefaultValues();
 	}
 
 }

@@ -2,6 +2,7 @@
 
 namespace Tests\Emailer;
 
+use Environment\Environment;
 use  Nette, Extras;
 
 /**
@@ -9,14 +10,6 @@ use  Nette, Extras;
  */
 class BaseTest extends \Tests\TestCase
 {
-	/**
-	 * @var \Extras\Email\Compiler
-	 */
-	public $emailCompiler;
-
-	protected function setUp() {
-		$this->emailCompiler = $this->getContext()->emailCompiler;
-	}
 
 	public function testCompiler() {
 
@@ -32,16 +25,31 @@ class BaseTest extends \Tests\TestCase
 		/** @var $rental \Entity\Rental\Rental */
 		$rental = $this->getContext()->rentalRepositoryAccessor->get()->find(1);
 
-		$emailCompiler = $this->emailCompiler;
+		$presenter = $this->mockista->create('Nette\Application\UI\Presenter', [
+			'link' => function($destination, $arguments) {
+				return $destination;
+			}
+		]);
+
+		$application = $this->mockista->create('Nette\Application\Application', [
+			'getPresenter' => $presenter,
+		]);
+
+		$reflectionProperty = Nette\Reflection\ClassType::from('Nette\Application\Application')->getProperty('presenter');
+		$reflectionProperty->setAccessible(TRUE);
+		$reflectionProperty->setValue($application, $presenter);
+
+		$environment = new Environment($receiver->getPrimaryLocation(), $receiver->getLanguage(), $this->getContext()->translatorFactory);
+		$emailCompiler = new \Mail\Compiler($environment, $application);
 		$emailCompiler->setTemplate($template);
 		$emailCompiler->setLayout($layout);
-		$emailCompiler->setEnvironment($receiver->getPrimaryLocation(), $receiver->getLanguage());
 		$emailCompiler->addRental('rental', $rental);
 		$emailCompiler->addVisitor('sender', $sender);
 		$emailCompiler->addCustomVariable('message', 'Toto je sprava pre teba!');
 		$html = $emailCompiler->compileBody();
 
-		$i = 1;
+
+		$this->assertGreaterThan(100, strlen($html));
 	}
 
 }

@@ -5,6 +5,9 @@ use Nette\DateTime;
 
 class CalendarControl extends \BaseModule\Components\BaseControl {
 
+	/**
+	 * @var \Environment\Locale
+	 */
 	protected $locale;
 
 	public function __construct(\Environment\Locale $locale) {

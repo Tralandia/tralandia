@@ -5,6 +5,7 @@ namespace Mail;
 use Entity\Email;
 use Entity\Language;
 use Entity\Location\Location;
+use Environment\Environment;
 use Nette\Application\Application;
 use Nette\Utils\Strings;
 use Mail\Variables;
@@ -46,14 +47,13 @@ class Compiler {
 	protected $customVariables = array();
 
 	/**
-	 * @param \Entity\Location\Location $location
-	 * @param \Entity\Language $language
+	 * @param \Environment\Environment $environment
 	 * @param \Nette\Application\Application $application
 	 */
-	public function __construct(Location $location, Language $language, Application $application)
+	public function __construct(Environment $environment, Application $application)
 	{
 		$this->application = $application;
-		$this->setEnvironment($location, $language);
+		$this->setEnvironment($environment);
 	}
 
 	/**
@@ -99,17 +99,14 @@ class Compiler {
 	}
 
 	/**
-	 * @param \Entity\Location\Location $location
-	 * @param \Entity\Language $language
-	 **
+	 * @param \Environment\Environment $environment
+	 *
 	 * @return Compiler
 	 */
-	private function setEnvironment(\Entity\Location\Location $location, \Entity\Language $language = NULL)
+	private function setEnvironment(Environment $environment)
 	{
-		if(!$language) $language = $location->getDefaultLanguage();
-
-		$location = new Variables\LocationVariables($location);
-		$language = new Variables\LanguageVariables($language);
+		$location = new Variables\LocationVariables($environment->getPrimaryLocation());
+		$language = new Variables\LanguageVariables($environment->getLanguage());
 
 		$this->variables['env'] = new Variables\EnvironmentVariables($location, $language, $this->application);
 		return $this;
@@ -296,7 +293,7 @@ class Compiler {
 	 */
 	protected function buildHtml(\Entity\Email\Layout $layout, \Entity\Email\Template $template)
 	{
-		/** @var $envVariables \Extras\Email\Variables\EnvironmentVariables */
+		/** @var $envVariables \Mail\Variables\EnvironmentVariables */
 		$envVariables = $this->getVariable('env');
 		$body = $template->getBody()->getTranslationText($envVariables->getLanguageEntity(), TRUE);
 		return str_replace('{include #content}', $body, $layout->getHtml());
@@ -328,7 +325,7 @@ class Compiler {
 
 			if(array_key_exists('prefix', $variable)) {
 				$methodName = 'getVariable'.ucfirst($variable['name']);
-				if(\Tra\Utils\Strings::contains($methodName, 'link')) {
+				if(Strings::contains($methodName, 'Link')) {
 					$environment = $this->getEnvironment();
 					$val = $this->getVariable($variable['prefix'])->{$methodName}($environment);
 				} else {
