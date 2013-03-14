@@ -22,15 +22,18 @@ class FrontRoute extends BaseRoute
 	const PRICE_FROM = 'priceFrom';
 	const PRICE_TO = 'priceTo';
 
+	const LOCATION = 'location';
+	const RENTAL_TYPE = 'rentalType';
+
 	public static $pathSegmentTypes = array(
 		'page' => 2,
-		'location' => 6,
-		'rentalType' => 8,
+		self::LOCATION => 6,
+		self::RENTAL_TYPE => 8,
 	);
 
-	protected $pathParametersMapper = [
-		'location' => 'searchBar-location',
-		'rentalType' => 'searchBar-rentalType',
+	public static $pathParametersMapper = [
+		self::LOCATION => 'searchBar-location',
+		self::RENTAL_TYPE => 'searchBar-rentalType',
 		self::PRICE_FROM => 'searchBar-priceFrom',
 		self::PRICE_TO => 'searchBar-priceTo',
 		self::CAPACITY => 'searchBar-capacity',
@@ -148,8 +151,8 @@ class FrontRoute extends BaseRoute
 			$appRequest->setPresenterName($presenter);
 
 			foreach($params as $key => $value) {
-				if(array_key_exists($key, $this->pathParametersMapper)) {
-					$params[$this->pathParametersMapper[$key]] = $value;
+				if(array_key_exists($key, self::$pathParametersMapper)) {
+					$params[self::$pathParametersMapper[$key]] = $value;
 					unset($params[$key]);
 				}
 			}
@@ -173,7 +176,7 @@ class FrontRoute extends BaseRoute
 		$appRequest = clone $appRequest;
 		$params = $appRequest->getParameters();
 
-		$pathParametersMapper = array_flip($this->pathParametersMapper);
+		$pathParametersMapper = array_flip(self::$pathParametersMapper);
 		foreach($params as $key => $value) {
 			if(isset($pathParametersMapper[$key])) {
 				if(!isset($params[$pathParametersMapper[$key]])) {
