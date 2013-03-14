@@ -65,13 +65,7 @@ class AddressNormalizer extends \Nette\Object {
 		if ($latLong->isValid()) {
 			$info = $this->getInfoUsingGps($latLong);
 		} else {
-			$info = $this->getInfoUsingAddress(
-				$address->primaryLocation,
-				$address->address,
-				$address->subLocality,
-				$address->locality->name->getTranslationText($address->primaryLocation->defaultLanguage, TRUE),
-				$address->postalCode
-			);
+			$info = $this->getInfoUsingAddress($address);
 		}
 
 		$this->updateAddressData($address, $info, TRUE);
@@ -98,28 +92,43 @@ class AddressNormalizer extends \Nette\Object {
 
 	}
 
+
 	/**
-	 * @param \Entity\Location\Location $primaryLocation
-	 * @param string $address
-	 * @param string $subLocality
-	 * @param string $locality
-	 * @param string $postalCode
+	 * @param \Entity\Contact\Address|string $address
 	 *
 	 * @return array|bool
 	 */
-	public function getInfoUsingAddress(\Entity\Location\Location $primaryLocation, $address = '', $subLocality = '', $locality = '', $postalCode = '') {
+	public function getInfoUsingAddress($address) {
 
-		$formattedAddress = implode(', ', array_filter(array(
-			$address, $subLocality, $locality, $postalCode,
-			$primaryLocation->name->getTranslationText($primaryLocation->defaultLanguage, TRUE)
-		)));
+		if($address instanceof Address) {
+			$address = $this->formatAddress($address);
+		}
 
-		$response = $this->geocodeService->geocode($formattedAddress);
+		$response = $this->geocodeService->geocode($address);
 		if (!$response->hasResults() || !$response->isValid()) {
 			return FALSE;
 		}
 		
 		return $this->parseResponse($response);
+	}
+
+	/**
+	 * @param \Entity\Contact\Address $address
+	 *
+	 * @return string
+	 */
+	private function formatAddress(Address $address)
+	{
+		$primaryLocation = $address->getPrimaryLocation();
+		$formattedAddress = implode(', ', array_filter(array(
+			$address->getAddress(),
+			$address->getSubLocality(),
+			$address->getLocality()->getName()->getTranslationText($address->getPrimaryLocation()->getDefaultLanguage(), TRUE),
+			$address->getPostalCode(),
+			$primaryLocation->getName()->getTranslationText($primaryLocation->getDefaultLanguage(), TRUE)
+		)));
+
+		return $formattedAddress;
 	}
 
 	/**
