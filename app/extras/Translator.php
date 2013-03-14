@@ -11,6 +11,10 @@ class Translator implements \Nette\Localization\ITranslator {
 
 	const DEFAULT_LANGUAGE = 38;
 
+	const VARIATION_COUNT = 'count';
+	const VARIATION_GENDER = 'gender';
+	const VARIATION_CASE = 'case';
+
 	protected $language;
 	protected $cache;
 	protected $phraseRepositoryAccessor;
@@ -59,7 +63,7 @@ class Translator implements \Nette\Localization\ITranslator {
 		}
 
 		if ($variation !== NULL) {
-			$variation = array_merge(array('count' => NULL, 'gender' => NULL, 'case' => NULL), $variation);
+			$variation = array_merge([self::VARIATION_COUNT => NULL, self::VARIATION_GENDER => NULL, self::VARIATION_CASE => NULL], $variation);
 		}
 		$translationKey = $this->getCacheKey($phraseId, $variation);
 
@@ -85,9 +89,9 @@ class Translator implements \Nette\Localization\ITranslator {
 				if ($variation === NULL) {
 					$translation = $translation->translation;
 				} else {
-					$plural = $translation->language->getPlural($variation['count']);
-					$gender = $variation['gender'];
-					$case = $variation['case'];
+					$plural = $translation->language->getPlural($variation[self::VARIATION_COUNT]);
+					$gender = $variation[self::VARIATION_GENDER];
+					$case = $variation[self::VARIATION_CASE];
 					$translationText = $translation->getVariation(
 						$plural,
 						$gender,

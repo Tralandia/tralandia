@@ -5,6 +5,7 @@ namespace SearchGenerator;
 use Doctrine\ORM\EntityManager;
 use Entity\Location\Location;
 use Environment\Environment;
+use Extras\Translator;
 use Nette\Application\Application;
 use Nette\ArrayHash;
 use Service\Rental\RentalSearchService;
@@ -36,8 +37,7 @@ class OptionGenerator {
 	 * @param TopLocations $topLocations
 	 * @param \Doctrine\ORM\EntityManager $em
 	 */
-	public function __construct(Environment $environment, TopLocations $topLocations,
-								EntityManager $em)
+	public function __construct(Environment $environment, TopLocations $topLocations, EntityManager $em)
 	{
 		$this->environment = $environment;
 		$this->translator = $environment->getTranslator();
@@ -53,7 +53,7 @@ class OptionGenerator {
 	{
 		$rentalTypes = $this->em->getRepository(RENTAL_TYPE_ENTITY)->findAll();
 
-		return $this->generateFromEntities($rentalTypes);
+		return $this->generateFromEntities($rentalTypes, [Translator::VARIATION_COUNT => 2]);
 	}
 
 	/**
@@ -67,7 +67,7 @@ class OptionGenerator {
 		foreach($rentalTypes as $value) {
 			$links[$value->getId()] = [
 				'entity' => $value,
-				'name' => $this->translator->translate($value->getName()),
+				'name' => $this->translator->translate($value->getName(), NULL, [Translator::VARIATION_COUNT => 2]),
 			];
 		}
 
@@ -150,14 +150,15 @@ class OptionGenerator {
 
 	/**
 	 * @param $data
+	 * @param array $variation
 	 *
 	 * @return \Nette\ArrayHash
 	 */
-	protected function generateFromEntities($data)
+	protected function generateFromEntities($data, array $variation = NULL)
 	{
 		$options = [];
 		foreach($data as $value) {
-			$options[$value->getId()] = $this->translator->translate($value->getName());
+			$options[$value->getId()] = $this->translator->translate($value->getName(), NULL, $variation);
 		}
 
 		$options = $this->sort($options);

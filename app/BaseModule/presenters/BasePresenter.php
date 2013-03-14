@@ -16,10 +16,6 @@ abstract class BasePresenter extends Presenter {
 	/** @persistent */
 	public $primaryLocation;
 
-	/** @persistent */
-	public $page;
-
-
 	public $userRepositoryAccessor;
 
 
