@@ -181,7 +181,7 @@ class Phrase extends \Entity\BaseEntityDetails {
 
 	public function getSourceTranslation() {
 		foreach ($this->getTranslations() as $value) {
-			if ($this->sourceLanguage && $value->language->id == $this->sourceLanguage->id) {
+			if ($this->getSourceLanguage() && $value->getLanguage()->getId() == $this->getSourceLanguage()->getId()) {
 				return $value;
 			}
 		}

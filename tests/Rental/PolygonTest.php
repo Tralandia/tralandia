@@ -7,7 +7,7 @@ use Nette, Extras;
 /**
  * @backupGlobals disabled
  */
-class RankCalculatorTest extends \Tests\TestCase
+class PolygonTest extends \Tests\TestCase
 {
 
 	/**

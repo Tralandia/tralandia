@@ -3,6 +3,7 @@ namespace Service\Contact;
 
 
 use Doctrine\ORM\EntityManager;
+use Nette\Utils\Arrays;
 
 class AddressCreator
 {
@@ -29,34 +30,31 @@ class AddressCreator
 
 
 	/**
-	 * @param \Entity\Location\Location $primaryLocation
 	 * @param string $address
-	 * @param string $locality
-	 * @param string $postalCode
-	 * @param string $latitude
-	 * @param string $longitude
-	 * @param string $subLocality
 	 *
 	 * @return \Entity\Contact\Address
 	 */
-	public function create(\Entity\Location\Location $primaryLocation, $address = '', $locality = '',
-						   $postalCode = '', $latitude = '', $longitude = '', $subLocality = '')
+	public function create($address)
 	{
+		$info = $this->addressNormalizer->getInfoUsingAddress($address);
+
 		$addressRepository = $this->em->getRepository('\Entity\Contact\Address');
 		/** @var $locationRepository \Repository\Location\LocationRepository */
 		$locationRepository = $this->em->getRepository('\Entity\Location\Location');
 
 		/** @var $addressEntity \Entity\Contact\Address */
 		$addressEntity = $addressRepository->createNew();
-		$addressEntity->setPrimaryLocation($primaryLocation);
-		$addressEntity->setAddress($address);
-		$addressEntity->setPostalCode($postalCode);
+		$addressEntity->setPrimaryLocation($info[AddressNormalizer::PRIMARY_LOCATION]);
+		$addressEntity->setAddress($info[AddressNormalizer::ADDRESS]);
+		$addressEntity->setPostalCode($info[AddressNormalizer::POSTAL_CODE]);
 
-		$locality = $locationRepository->findOrCreateLocality($locality, $primaryLocation);
-		$addressEntity->setLocality($locality);
+		$addressEntity->setLocality($info[AddressNormalizer::LOCALITY]);
+		$subLocality = Arrays::get($info, AddressNormalizer::SUBLOCALITY, NULL);
 		$addressEntity->setSubLocality($subLocality);
 
-		$this->addressNormalizer->update($addressEntity, TRUE);
+		$gps = new \Extras\Types\Latlong($info[AddressNormalizer::LATITUDE], $info[AddressNormalizer::LONGITUDE]);
+		$addressEntity->setGps($gps);
+
 
 		return $addressEntity;
 	}

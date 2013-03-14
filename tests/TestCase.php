@@ -33,6 +33,9 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
 	 */
 	private $em;
 
+	/** @var \Mockista\Registry */
+	protected $mockista;
+
 	/**
 	 * @param string $name
 	 * @param array $data
@@ -42,6 +45,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
 	{
 		$this->context = Nette\Environment::getContext();
 		$this->em = $this->context->getByType('\Doctrine\ORM\EntityManager');
+		$this->mockista = new \Mockista\Registry();
 
 		parent::__construct($name, $data, $dataName);
 	}
@@ -63,6 +67,13 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
 	{
 		return $this->em;
 	}
+
+	protected function tearDown()
+	{
+		parent::tearDown();
+		$this->mockista->assertExpectations();
+	}
+
 
 
 	/********************* Exceptions handling *********************/

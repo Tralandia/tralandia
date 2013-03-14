@@ -37,9 +37,12 @@ class LocationService extends Service\BaseService {
 	}
 
 	public function updateSlug() {
-		$namePhraseDecorator = $this->phraseDecoratorFactory->create($this->getEntity()->name);
+		$namePhrase = $this->getEntity()->name;
 
-		$translation = $namePhraseDecorator->getSourceTranslation();
+		$translation = $namePhrase->getSourceTranslation();
+		if(!$translation) {
+			throw new \Exception('Nenasiel som zdrojovy preklad pre frazu!');
+		}
 		$newSlug = Strings::webalize($translation->translation);
 
 		$oldSlug = $this->getEntity()->slug;

@@ -18,7 +18,8 @@
         "nextras/forms": "@dev",
         "kdyby/events": "dev-master",
         "kdyby/nette-session-panel": "dev-master",
-        "hosiplan/nette-autowire-properties": "dev-master"
+        "hosiplan/nette-autowire-properties": "dev-master",
+        "janmarek/mockista": "dev-master"
 	},
 	"minimum-stability": "dev"
 }

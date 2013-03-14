@@ -29,27 +29,31 @@ class RegistrationHandlerTest extends \Tests\TestCase
 	 * @return \Nette\ArrayHash
 	 */
 	public function getValidData() {
+		$data = [
+			'country' => 46,
+			'language' => 144,
 
-		$data = [];
+			//'referrer' => 'luzbo',
+			'email' => Nette\Utils\Strings::random(5).'@email.com',
+			'url' => 'google.com',
+			'password' => 'adsfasdf',
+			'name' => 'Harlem Shake',
+			'phone' => [
+				'prefix' => '421',
+				'number' => '908 123 789'
+			],
+			'rental' => [
+				'name' => 'Chata Test',
+				'price' => '3',
+				'maxCapacity' => 15,
+				'type' => 4,
+				'classification' => 3,
+				'pet' => [1],
 
-		$data['country'] = 46;
-		$data['language'] = 144;
+				'address' => 'Ľ. Štúra 8, Nové Zámky, Slovakia',
+			],
+		];
 
-		$data['referrer'] = 'david@gmail.sk';
-
-		$data['email'] = 'test@email.com';
-		$data['phone']['prefix'] = '+421';
-		$data['phone']['number'] = '908123456';
-		$data['url'] = 'www.google.com';
-		$data['password'] = 'df34kdj4se4jr33';
-
-		$data['rentalAddress'] = 'Nesvady';
-		$data['rentalGps'] = '23345234';
-		$data['rentalName'] = 'Chata pri lese';
-		$data['rentalType'] = 1;
-		$data['rentalClassification'] = 3;
-		$data['rentalPrice'] = 5;
-		$data['rentalMaxCapacity'] = 22;
 
 		$data = \Nette\ArrayHash::from($data);
 		return $data;
