@@ -25,8 +25,6 @@ class CreateNewTest extends \Tests\TestCase
 		$location = $this->locationRepository->createNew();
 
 		$this->assertInstanceOf('\Entity\Phrase\Phrase', $location->getName());
-		$this->assertInstanceOf('\Entity\Phrase\Phrase', $location->getNameOfficial());
-		$this->assertInstanceOf('\Entity\Phrase\Phrase', $location->getNameShort());
 
 		$nameType = $location->getName()->getType();
 		$this->assertInstanceOf('\Entity\Phrase\Type', $nameType);
@@ -42,8 +40,6 @@ class CreateNewTest extends \Tests\TestCase
 		$location = $this->locationRepository->createNew(FALSE);
 
 		$this->assertNull($location->getName());
-		$this->assertNull($location->getNameOfficial());
-		$this->assertNull($location->getNameShort());
 	}
 
 }

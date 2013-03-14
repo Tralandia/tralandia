@@ -99,7 +99,7 @@ class Address extends \Entity\BaseEntity {
 	public function clearLocations()
 	{
 		foreach ($this->locations as $key => $value) {
-			$value->removeAddresse($this);
+			$value->removeAddress($this);
 		}
 		$this->locations->clear();
 

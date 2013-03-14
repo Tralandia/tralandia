@@ -64,10 +64,10 @@ class PolygonService {
 
 		$locationType = $this->locationTypeRepositoryAccessor->get()->findOneBy(array('slug' => 'region'));
 
-		$rentals = $this->rentalRepositoryAccessor->get()->findBy(array(
-			'primaryLocation' => $location->parent,
-			'status' => \Entity\Rental\Rental::STATUS_LIVE,
-		));
+		$rentals = $this->rentalRepositoryAccessor->get()->findByPrimaryLocation(
+			$location->getPrimaryParent(),
+			\Entity\Rental\Rental::STATUS_LIVE
+		);
 
 		// This is only done for regions, not localities or countries
 		// Return false if no latitude, longitude or missing polygons
