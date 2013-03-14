@@ -3,6 +3,7 @@
 namespace Extras;
 
 use Nette\Caching;
+use Nette\Utils\Arrays;
 use Nette\Utils\Strings;
 use Entity\Language;
 use Model\Phrase\IPhraseDecoratorFactory;
@@ -11,12 +12,21 @@ class Translator implements \Nette\Localization\ITranslator {
 
 	const DEFAULT_LANGUAGE = 38;
 
+	const VARIATION_PLURAL = 'plural';
 	const VARIATION_COUNT = 'count';
 	const VARIATION_GENDER = 'gender';
 	const VARIATION_CASE = 'case';
 
+	/**
+	 * @var \Entity\Language
+	 */
 	protected $language;
+
+	/**
+	 * @var \Nette\Caching\Cache
+	 */
 	protected $cache;
+
 	protected $phraseRepositoryAccessor;
 
 
@@ -34,6 +44,9 @@ class Translator implements \Nette\Localization\ITranslator {
 	
 	public function translate($phrase, $note = NULL, array $variation = NULL, array $variables = NULL)
 	{
+		if($phrase == 'o925') {
+			$r = 3;
+		}
 		$translation = $this->getTranslation($phrase, $variation);
 
 		if($translation && count($variables)) {
@@ -63,12 +76,26 @@ class Translator implements \Nette\Localization\ITranslator {
 		}
 
 		if ($variation !== NULL) {
-			$variation = array_merge([self::VARIATION_COUNT => NULL, self::VARIATION_GENDER => NULL, self::VARIATION_CASE => NULL], $variation);
+			$variationCount = Arrays::get($variation, self::VARIATION_COUNT, NULL);
+			if(array_key_exists(self::VARIATION_COUNT, $variation)) {
+				unset($variation[self::VARIATION_COUNT]);
+			}
+
+			$variation[self::VARIATION_PLURAL] = $this->language->getPlural($variationCount);
+			$variation = array_merge(
+				[
+					self::VARIATION_PLURAL => $this->language->getPlural(NULL),
+					self::VARIATION_GENDER => NULL,
+					self::VARIATION_CASE => NULL
+				],
+				$variation);
 		}
+
+
 		$translationKey = $this->getCacheKey($phraseId, $variation);
 
 		$translation = $this->cache->load($translationKey);
-		if($translation === NULL) {
+		if(1 || $translation === NULL) {
 
 			if(is_scalar($phrase)) {
 				if(Strings::startsWith($phrase, 'o')) {
@@ -89,7 +116,7 @@ class Translator implements \Nette\Localization\ITranslator {
 				if ($variation === NULL) {
 					$translation = $translation->translation;
 				} else {
-					$plural = $translation->language->getPlural($variation[self::VARIATION_COUNT]);
+					$plural = $variation[self::VARIATION_PLURAL];
 					$gender = $variation[self::VARIATION_GENDER];
 					$case = $variation[self::VARIATION_CASE];
 					$translationText = $translation->getVariation(
