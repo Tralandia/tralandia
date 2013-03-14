@@ -192,24 +192,22 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 		$defaults = [
 			'country' => $this->country->getId(),
 			'language' => $this->country->getDefaultLanguage()->getId(),
-			'phone' => ['prefix' => $this->country->getIso()],
 
 			//'referrer' => 'luzbo',
-			'email' => '',
-			'www' => 'google.com',
+			'email' => Nette\Utils\Strings::random(5).'@email.com',
+			'url' => 'google.com',
 			'password' => 'adsfasdf',
-			//'password2' => 'adsfasdf',
-			'rentalGps' => '1423345',
-			'rentalName' => 'Chata Test',
-			'rentalPrice' => '3',
-			'rentalMaxCapacity' => 15,
-			'rentalAddress' => [
-				'address' => 'Puskinova 9',
-				'locality' => 'Nesvady',
-				'postalCode' => '94651',
-				'location' => $this->country->getId(),
-				'latitude' => $this->country->getGps()->getLatitude(),
-				'longitude' => $this->country->getGps()->getLongitude(),
+			'name' => 'Harlem Shake',
+			'phone' => [
+				'prefix' => '421',
+				'number' => '908 123 789'
+			],
+			'rental' => [
+				'name' => 'Chata Test',
+				'price' => '3',
+				'maxCapacity' => 15,
+				
+				'pet' => [1],
 			],
 		];
 		$this->setDefaults($defaults);
