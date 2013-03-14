@@ -107,7 +107,7 @@ class ImportPage extends BaseImport {
 
 		# search
 		array(
-			'destination' => ':Front:Rental:list', 
+			'destination' => ':Front:RentalList:default', 
 			'hash' => '/location',
 			'h1Pattern' => array(
 				'sk' => 'Ubytovanie [locationLocative]', 
@@ -119,7 +119,7 @@ class ImportPage extends BaseImport {
 			)
 		),
 		array(
-			'destination' => ':Front:Rental:list', 
+			'destination' => ':Front:RentalList:default', 
 			'hash' => '/location/rentalType',
 			'h1Pattern' => array(
 				'sk' => '[rentalTypePlural] [locationLocative]', 
@@ -131,7 +131,7 @@ class ImportPage extends BaseImport {
 			)
 		),
 		array(
-			'destination' => ':Front:Rental:list', 
+			'destination' => ':Front:RentalList:default', 
 			'hash' => '/rentalType',
 			'h1Pattern' => array(
 				'sk' => '[rentalTypePlural] [locationLocative]', 
@@ -143,7 +143,7 @@ class ImportPage extends BaseImport {
 			)
 		),
 		array(
-			'destination' => ':Front:Rental:list', 
+			'destination' => ':Front:RentalList:default', 
 			'hash' => '/attractionType',
 			'h1Pattern' => array(
 				'sk' => '[attractionTypePlural] [locationLocative]', 
@@ -155,7 +155,7 @@ class ImportPage extends BaseImport {
 			)
 		),
 		array(
-			'destination' => ':Front:Rental:list', 
+			'destination' => ':Front:RentalList:default', 
 			'hash' => '/attractionType/location',
 			'h1Pattern' => array(
 				'sk' => '[attractionTypePlural] [locationLocative]', 
