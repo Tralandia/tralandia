@@ -9,7 +9,7 @@ use Nette\Utils\Arrays;
 class RentalSearchService extends Nette\Object 
 {
 
-	const COUNT_PER_PAGE			= 10;
+	const COUNT_PER_PAGE			= 50;
 	const CRITERIA_LOCATION  		= 'location';
 	const CRITERIA_RENTAL_TYPE 		= 'rentalType';
 
@@ -103,16 +103,24 @@ class RentalSearchService extends Nette\Object
 	}
 
 	public function getFeaturedRentalIds($limit = NULL) {
+
 		$featured = $this->rentalOrderCaching->getFeaturedList();
 		if ($limit === NULL) {
-			return $featured;
+			$return =  $featured;
 		} else {
-			return array_slice($featured, 0, $limit);
+			$return =  array_slice($featured, 0, $limit);
 		}
+
+		if ($limit !== NULL && count($return) < $limit) {
+			$order = $this->rentalOrderCaching->getOrderList();
+			$order = array_flip($order);
+			$return = array_slice(array_unique(array_merge($return, $order)), 0, $limit);
+		}
+		return $return;
 	}
 
-	public function getFeaturedRentals($page = NULL) {
-		$results = $this->getFeaturedRentalIds($page);
+	public function getFeaturedRentals($limit = NULL) {
+		$results = $this->getFeaturedRentalIds($limit);
 
 		return $this->rentalRepositoryAccessor->get()->findById($results);
 	}

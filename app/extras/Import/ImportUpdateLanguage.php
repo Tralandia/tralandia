@@ -17,7 +17,7 @@ class ImportUpdateLanguage extends BaseLanguagesImport {
 		$languageRepository = $this->context->languageRepositoryAccessor->get();
 
 		foreach ($this->languageOptions as $iso => $data) {
-			$e = $languageRepository->findOneByIso('sk');
+			$e = $languageRepository->findOneByIso($iso);
 			foreach ($data as $key => $value) {
 				$e->{$key} = $value;
 			}

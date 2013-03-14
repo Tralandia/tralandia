@@ -31,7 +31,6 @@ class ImportLanguages extends BaseLanguagesImport {
 			$e->defaultCollation = $x['default_collation'];
 			$e->details = explode2Levels(';', ':', $x['attributes']);
 			
-			d($x['iso'], isset($this->languageOptions[$x['iso']]));
 			if(isset($this->languageOptions[$x['iso']])) {
 				$options = $this->languageOptions[$x['iso']];
 			} else {
