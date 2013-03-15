@@ -12,12 +12,14 @@ use Nette\Application as NA,
 
 class ImportAmenities extends BaseImport {
 
-	private $importantAmenities = array('air-conditioning', 'fitness', 'fitness-centrum', 'indoor-pool', 'indoor-swimming-pool', 'internet', 'jacuzzi', 'kids-corner', 'pizzeria', 'sauna', 'sauna-finnish', 'sauna-infrared', 'sauna-steam', 'solarium', 'swimming-pool', 'tennis-court', 'wireless-internet-wifi');
+	private $importantAmenities = array('air-conditioning', 'fitness', 'fitness-centrum', 'indoor-pool', 'indoor-swimming-pool', 'internet', 'jacuzzi', 'kids-corner', 'pizzeria', 'sauna', 'sauna-finnish', 'sauna-infrared', 'sauna-steam', 'solarium', 'swimming-pool', 'tennis-court', 'wireless-internet-wifi', 'small-pets', 'medium-pets', 'any-pets');
 
 	public function doImport($subsection = NULL) {
 
 		//$this->undoSection('amenities');
 
+		$en = $this->context->languageRepositoryAccessor->get()->findOneByIso('en');
+		$sk = $this->context->languageRepositoryAccessor->get()->findOneByIso('sk');
 
 		$groups = array(
 			array('important', 'important', 'important'),
@@ -135,14 +137,33 @@ class ImportAmenities extends BaseImport {
 		// Owner availabilities
 		$amenityType = $this->context->rentalAmenityTypeRepositoryAccessor->get()->findOneBySlug('owner-availability');
 		$r = q('select * from owner');
-		while ($x = mysql_fetch_array($r)) {
+		$ownerOptions = array(
+			array('Owner is available at check-in and check-out.', 'Majiteľ je dostupný pri príchode a odchode.', 6),
+			array('Owner is available by phone.', 'Majiteľ je dostupný na telefóne.', 5),
+			array('Owner is available during your stay.', 'Majiteľ je dostupný počas pobytu.', 0),
+			array('Owner lives nearby.', 'Majiteľ býva v blízkosti.', 4),
+			array('Owner lives on premises.', 'Majiteľ býva v objekte.', 3),
+
+			array('Property manager is available at check-in and check-out.', 'Manažér je dostupný pri príchode a odchode.', 0),
+			array('Property manager is available by phone.', 'Manažér je dostupný na telefóne.', 0),
+			array('Property manager is available during your stay.', 'Manažér je dostupný počas pobytu.', 0),
+
+			array('Reception is available.', 'Recepcia.', 8),
+			array('Reception is available 24/7.', 'Recepcia 24/7.', 9),
+		);
+		foreach ($ownerOptions as $key => $value) {
+			$name = $this->context->phraseEntityFactory->create();
+			$name->type = $nameDictionaryType;
+			$name->createTranslation($en, $value[0]);
+			$name->createTranslation($sk, $value[1]);
+
 			$amenity = $this->context->rentalAmenityEntityFactory->create();
 			$amenity->type = $amenityType;
-			$amenity->name = $this->createNewPhrase($nameDictionaryType, $x['name_dic_id']);
-			$amenity->slug = qc('select text from z_en where id = '.$x['name_dic_id']);
-			$amenity->oldId = $x['id'];
-			if (in_array($amenity->slug, $this->importantAmenities)) $amenity->important = TRUE;
+			$amenity->name = $name;
+			$amenity->slug = $value[0];
+			$amenity->oldId = $value[2];
 			$this->model->persist($amenity);
+			d($amenity, $name);
 		}
 		$this->model->flush();
 
@@ -172,14 +193,30 @@ class ImportAmenities extends BaseImport {
 
 		// Animals
 		$amenityType = $this->context->rentalAmenityTypeRepositoryAccessor->get()->findOneBySlug('animal');
+		$animalOptions = array(
+			array('Pets are not allowed.', 'Domáce zvierá nie sú povolené.', 'no-pets'),
+			array('Small pets are allowed.', 'Malé domáce zvieratá sú povolené.', 'small-pets'),
+			array('Small or medium size pets are allowed.', 'Malé a stredne veľké domáce zvieratá sú povolené.', 'medium-pets'),
+			array('All pets are allowed.', 'Všetky domáce zvieratá sú povolené.', 'any-pets'),
+		);
 		$amenity = $this->context->rentalAmenityEntityFactory->create();
-		$amenity->type = $amenityType;
-		$amenity->name = $this->createPhraseFromString('\Rental\Amenity', 'name', 'ACTIVE', 'small dog allowed', $en);
-		$amenity->slug = 'small-dog';
-		if (in_array($amenity->slug, $this->importantAmenities)) $amenity->important = TRUE;
-		$this->model->persist($amenity);
-		$this->model->flush();
 
+		foreach ($animalOptions as $key => $value) {
+			$name = $this->context->phraseEntityFactory->create();
+			$name->type = $nameDictionaryType;
+			$name->createTranslation($en, $value[0]);
+			$name->createTranslation($sk, $value[1]);
+
+			$amenity = $this->context->rentalAmenityEntityFactory->create();
+			$amenity->type = $amenityType;
+			$amenity->name = $name;
+			$amenity->slug = $value[2];
+			$amenity->important = TRUE;
+			$this->model->persist($amenity);
+			d($amenity, $name);
+		}
+
+		$this->model->flush();
 	}
 
 }
