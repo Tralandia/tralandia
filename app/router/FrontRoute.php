@@ -135,6 +135,11 @@ class FrontRoute extends BaseRoute
 				$segmentList = array();
 			}
 
+			if(isset($params[self::CAPACITY]) || isset($params[self::PRICE_FROM]) || isset($params[self::PRICE_TO])) {
+				$presenter = 'RentalList';
+				$params['action'] = 'default';
+			}
+
 			if(count($segmentList) != count($pathSegments)) {
 				// @todo pocet najdenych pathsegmentov je mensi
 				// ak nejake chybaju tak ich skus najst v PathSegmentsOld
