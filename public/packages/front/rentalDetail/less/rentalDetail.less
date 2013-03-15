@@ -345,6 +345,11 @@ table.detailInfoBox {
 
 	cursor:pointer;
 
+.socialBtnHeader {
+	margin: 0 auto;
+	float: none;
+}
+
 	&:hover {
 	.socialBtnHeader {
 
@@ -853,8 +858,9 @@ padding-top: 10px;
 	li {
 		display: block;
 		width: 467px;
+		height: 276px;
 		float: left;
-		
+		position: relative;
 		margin-bottom: 10px;
 		
 		&:nth-child(odd) {
@@ -868,6 +874,50 @@ padding-top: 10px;
 
 		p {
 			text-align: center;
+		}
+
+		.pinterestShare {
+			width: 30px;
+			height: 30px;
+			position: absolute;
+			bottom: 10px;
+			text-align: center;
+			font-size: 40px;
+			line-height: 33px;
+			color: #fff;
+			cursor: pointer;
+			background: rgba(0,0,0,0.5);
+			border: 1px solid transparent;
+			right: 10px;
+			.basic-border-radius(5px);
+			font-family: 'entypo-social';
+
+			&:hover {
+				border: 1px solid #fff;
+			}
+
+			.content {
+				visibility: hidden;
+			}
+
+			&.opened {
+				background: transparent;
+				width: 42px;
+
+				&:hover {
+					border: 1px solid transparent;
+				}
+
+				.content {
+					visibility: visible;
+				}
+			} 
+
+			img {
+				width: auto;
+				height: auto;
+			}
+			
 		}
 	}
 }
