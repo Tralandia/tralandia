@@ -45,12 +45,15 @@ class SearchForm extends BaseForm {
 
 	public function buildForm()
 	{
+		$countries = $this->searchOptionGenerator->generateCountries();
 		$locations = $this->searchOptionGenerator->generateLocation();
 		$rentalTypes = $this->searchOptionGenerator->generateRentalType();
 		$prices = $this->searchOptionGenerator->generatePrice($this->environment->getPrimaryLocation());
 		$capacity = $this->searchOptionGenerator->generateCapacity();
 		$languages = $this->searchOptionGenerator->generateLanguage();
 
+		$this->addSelect('country', 'o1070', $countries)
+			->setPrompt('o1070');
 		$this->addSelect('location', 'o1070', $locations)
 			->setPrompt('o1070');
 		$this->addSelect('rentalType', 'o20926', $rentalTypes)

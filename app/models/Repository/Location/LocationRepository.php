@@ -102,7 +102,10 @@ class LocationRepository extends \Repository\BaseRepository {
 		return $qb->getQuery()->getResult()[0]['total'];
 	}
 
-	public function getCountriesForSelect(ITranslator $translator, Collator $collator)
+	/**
+	 * @return array
+	 */
+	public function findCountries()
 	{
 		$qb = $this->_em->createQueryBuilder();
 
@@ -113,8 +116,19 @@ class LocationRepository extends \Repository\BaseRepository {
 			->where($qb->expr()->eq('t.slug', ':country'))
 			->setParameter('country', 'country');
 
+		return $qb->getQuery()->getResult();
+	}
+
+	/**
+	 * @param \Nette\Localization\ITranslator $translator
+	 * @param \Environment\Collator $collator
+	 *
+	 * @return mixed
+	 */
+	public function getCountriesForSelect(ITranslator $translator, Collator $collator)
+	{
+		$rows = $this->findCountries();
 		$return = [];
-		$rows = $qb->getQuery()->getResult();
 		foreach($rows as $row) {
 			$return[$row['id']] = $translator->translate($row['name']);
 		}

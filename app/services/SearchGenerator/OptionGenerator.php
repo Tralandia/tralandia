@@ -45,6 +45,14 @@ class OptionGenerator {
 		$this->em = $em;
 	}
 
+	/**
+	 * @return \Environment\Collator
+	 */
+	protected function getCollator()
+	{
+		return $this->environment->getLocale()->getCollator();
+	}
+
 
 	/**
 	 * @return array
@@ -74,6 +82,17 @@ class OptionGenerator {
 		$links = $this->sort($links);
 
 		return ArrayHash::from($links);
+	}
+
+	/**
+	 * @return array
+	 */
+	public function generateCountries()
+	{
+		$locations = $this->em->getRepository(LOCATION_ENTITY)
+			->getCountriesForSelect($this->translator, $this->getCollator());
+
+		return $locations;
 	}
 
 	/**
