@@ -136,7 +136,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 
 		$rentalType = $presenter->getParameter('rentalType');
 		if($rentalType) {
-			$this->rentalType = $em->getRepository(LOCATION_ENTITY)->find($rentalType);
+			$this->rentalType = $em->getRepository(RENTAL_TYPE_ENTITY)->find($rentalType);
 		}
 
 		$this->priceFrom = $presenter->getParameter('priceFrom', NULL);
@@ -153,6 +153,8 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		$search = $this->getSearch();
 
 		$count = $search->getRentalsCount();
+
+		$count = $count . ' ' . $this->getPresenter()->translate('o100002', $count);
 
 		$this->presenter->sendJson(['count' => $count]);
 	}
