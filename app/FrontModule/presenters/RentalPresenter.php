@@ -63,13 +63,8 @@ class RentalPresenter extends BasePresenter {
 		$this->template->animalsAllowed = $rental->getAnimalsAllowed();
 		$this->template->ownerAvailability = $rental->getOwnerAvailability();
 
-		$dateUpdated = new \Nette\DateTime();
-		$dateUpdated->from($rental->updated);
-		$this->template->dateUpdated = $dateUpdated->__toString();
+		$this->template->dateUpdated = $rental->updated;
 
-		$calendarUpdated = new \Nette\DateTime();
-		$calendarUpdated->from($rental->calendarUpdated);
-		$this->template->calendarUpdated = $calendarUpdated->__toString();
 		$this->setLayout('detailLayout');
 
 		$this->template->navBar = $this->getNavigationBar($rental);

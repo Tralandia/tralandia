@@ -158,7 +158,7 @@
 						{foreach $importantAmenities  as $amenities}					
 							{foreach $amenities as $amenity}							
 								{if $iterator->first}{_$amenity->name|firstUpper}{else}{_$amenity->name}{/if}{if !$iterator->last}, {/if}
-							{/foreach}					
+							{/foreach}
 						{/foreach}
 
 						{var $otherAmenities = $rental->getImportantAmenities(false)}
@@ -444,18 +444,15 @@
 					<ul id="placesImg"></ul>
 				</div>
 
+				{if count($rental->calendar) > 0}
 				<div class="metaObjectInfo" id="calendar">
-				<h3>{_o100039} <span>({_o100038} {$calendarUpdated})</span></h3>
-				<div class="objectDetailsOccupancyTab">
-					{control calendar, 12, $rental->calendar}
-
-{* 					<div class="calendar"><div class="monthName">August 2011</div><div class="day dayName">Mon</div><div class="day dayName">Tue</div><div class="day dayName">Wed</div><div class="day dayName">Thur</div><div class="day dayName">Fri</div><div class="day dayName">Sat</div><div class="day dayName">Sun</div><div class="day active ro status00" id="1312149600_id" title="Free dates">01</div><div class="day active ro status01" id="1312236000_id" title="Free dates">02</div><div class="day active ro status11" id="1312322400_id" title="Free dates">03</div><div class="day active ro status10" id="1312408800_id" title="Free dates">04</div><div class="day active ro status00" id="1312495200_id" title="Free dates">05</div><div class="day active ro status00" id="1312581600_id" title="Free dates">06</div><div class="day active ro status00" id="1312668000_id" title="Free dates">07</div><div class="day active ro status00" id="1312754400_id" title="Free dates">08</div><div class="day active ro status00" id="1312840800_id" title="Free dates">09</div><div class="day active ro status00" id="1312927200_id" title="Free dates">10</div><div class="day active ro status00" id="1313013600_id" title="Free dates">11</div><div class="day active ro status00" id="1313100000_id" title="Free dates">12</div><div class="day active ro status00" id="1313186400_id" title="Free dates">13</div><div class="day active ro status00" id="1313272800_id" title="Free dates">14</div><div class="day active ro status00" id="1313359200_id" title="Free dates">15</div><div class="day active ro status00" id="1313445600_id" title="Free dates">16</div><div class="day active ro status00" id="1313532000_id" title="Free dates">17</div><div class="day active ro status00" id="1313618400_id" title="Free dates">18</div><div class="day active ro status00" id="1313704800_id" title="Free dates">19</div><div class="day active ro status00" id="1313791200_id" title="Free dates">20</div><div class="day active ro status00" id="1313877600_id" title="Free dates">21</div><div class="day active ro status00" id="1313964000_id" title="Free dates">22</div><div class="day active ro status00" id="1314050400_id" title="Free dates">23</div><div class="day active ro status00" id="1314136800_id" title="Free dates">24</div><div class="day active ro status00" id="1314223200_id" title="Free dates">25</div><div class="day active ro status00" id="1314309600_id" title="Free dates">26</div><div class="day active ro status00" id="1314396000_id" title="Free dates">27</div><div class="day active ro status00" id="1314482400_id" title="Free dates">28</div><div class="day active ro status00" id="1314568800_id" title="Free dates">29</div><div class="day active ro status00" id="1314655200_id" title="Free dates">30</div><div class="day active ro status00" id="1314741600_id" title="Free dates">31</div><div class="day inactive ro" title="Free dates">01</div><div class="day inactive ro" title="Free dates">02</div><div class="day inactive ro" title="Free dates">03</div><div class="day inactive ro" title="Free dates">04</div></div>
- *}
-					<div class="cleaner"></div>
+					<h3>{_o100039} <span>({_o100038} {$rental->calendarUpdated|date})</span></h3>
+					<div class="objectDetailsOccupancyTab">
+						{control calendar, 12, $rental->calendar}
+						<div class="cleaner"></div>
+					</div>
 				</div>
-				
-				</div>
-
+				{/if}
 
 		<div class="clearfix"></div>
 	</div>
