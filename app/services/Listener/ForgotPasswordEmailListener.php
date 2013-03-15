@@ -1,6 +1,7 @@
 <?php
 namespace Listener;
 
+use Environment\Environment;
 use Nette;
 
 class ForgotPasswordEmailListener extends BaseEmailListener implements \Kdyby\Events\Subscriber
@@ -27,8 +28,7 @@ class ForgotPasswordEmailListener extends BaseEmailListener implements \Kdyby\Ev
 
 	private function prepareCompiler(\Entity\User\User $user)
 	{
-
-		$emailCompiler = $this->emailCompilerFactory->create($user->getPrimaryLocation(), $user->getLanguage());
+		$emailCompiler = $this->getCompiler($user->getPrimaryLocation(), $user->getLanguage());
 		$emailCompiler->setTemplate($this->getTemplate('forgotten-password'));
 		$emailCompiler->setLayout($this->getLayout());
 

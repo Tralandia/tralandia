@@ -328,4 +328,12 @@ abstract class BasePresenter extends Presenter {
 		$this->sendJson($json);
 	}
 
+
+	public function login($id = NULL, $password = NULL)
+	{
+		$user = $this->getUser();
+		$user->setExpiration('+ 30 days', FALSE);
+		$user->login($id, $password);
+	}
+
 }
