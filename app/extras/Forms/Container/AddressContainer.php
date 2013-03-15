@@ -20,12 +20,11 @@ class AddressContainer extends BaseContainer
 	protected $location;
 
 	/**
-	 * @param array|\Traversable $locations
 	 * @param Address|Location $addressOrLocation
 	 *
 	 * @throws \Nette\InvalidArgumentException
 	 */
-	public function __construct($locations, $addressOrLocation)
+	public function __construct($addressOrLocation)
 	{
 		parent::__construct();
 
@@ -39,9 +38,7 @@ class AddressContainer extends BaseContainer
 
 
 		$this->addText('address', '#Address');
-		$this->addText('locality', '#Locality');
-		$this->addText('postalCode', '#Postal Code');
-		$this->addSelect('location', '#Primary location', $locations);
+		$this->addHidden('location');
 		$this->addHidden('latitude');
 		$this->addHidden('longitude');
 	}
@@ -60,20 +57,21 @@ class AddressContainer extends BaseContainer
 		}
 	}
 
-	public function setDefaultValues()
+	/**
+	 * @param $address
+	 */
+	public function setDefaultValues($address = NULL)
 	{
 		if($this->address) {
-			$locality = $this->getForm()->getTranslator()->translate($this->address->getLocality()->getName());
 			$defaults = [
 				'address' => $this->address->getAddress(),
-				'locality' => $locality,
-				'postalCode' => $this->address->getPostalCode(),
 				'location' => $this->address->getPrimaryLocation()->getId(),
 				'latitude' => $this->address->getGps()->getLatitude(),
 				'longitude' => $this->address->getGps()->getLongitude(),
 			];
 		} else {
 			$defaults = [
+				'address' => $address,
 				'location' => $this->location->getId(),
 				'latitude' => $this->location->getGps()->getLatitude(),
 				'longitude' => $this->location->getGps()->getLongitude(),

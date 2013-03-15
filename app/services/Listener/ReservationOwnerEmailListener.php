@@ -34,7 +34,7 @@ class ReservationOwnerEmailListener extends BaseEmailListener implements \Kdyby\
 	{
 		$receiver = $reservation->getRental()->getOwner();
 
-		$emailCompiler = $this->emailCompilerFactory->create($receiver->getPrimaryLocation(), $receiver->getLanguage());
+		$emailCompiler = $this->getCompiler($receiver->getPrimaryLocation(), $receiver->getLanguage());
 		$emailCompiler->setTemplate($this->getTemplate('reservation-form'));
 		$emailCompiler->setLayout($this->getLayout());
 		$emailCompiler->addRental('rental', $reservation->getRental());

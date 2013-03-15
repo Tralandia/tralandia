@@ -116,7 +116,7 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 
 		$rentalContainer = $this->addContainer('rental');
 
-		$rentalContainer['address'] = new AddressContainer($countries, $this->country);
+		$rentalContainer['address'] = new AddressContainer($this->country);
 		$amenityLocation = $this->amenityRepository->findByLocationTypeForSelect($this->translator, $this->collator);
 
 		$rentalContainer->addMultiOptionList('amenityLocation', 'Amenity Location')
@@ -147,10 +147,10 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 			->setOption('help', $this->translate('o100073'))
 			;
 
-		$rentalContainer->addText('bedroomCount', 'o100075')
-			->addRule(self::RANGE, $this->translate('o100074'), [1, 1000])
-			//->setOption('help', $this->translate('o5956'))
-			;
+//		$rentalContainer->addText('bedroomCount', 'o100075')
+//			->addRule(self::RANGE, $this->translate('o100074'), [1, 1000])
+//			//->setOption('help', $this->translate('o5956'))
+//			;
 
 		$rentalContainer->addCheckbox('separateGroups', 'o100076')
 			->setOption('help', $this->translate('o100077'))
@@ -209,7 +209,9 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 				'type' => 3,
 				'pet' => [1],
 
-				//'address' => 'Ľ. Štúra 8, Nové Zámky, Slovakia',
+				'address' => [
+					'address' => 'Ľ. Štúra 8, Nové Zámky, Slovakia',
+				],
 			],
 		];
 		$this->setDefaults($defaults);

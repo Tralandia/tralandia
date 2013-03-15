@@ -36,7 +36,7 @@ class NewTicketEmailListener extends BaseEmailListener implements \Kdyby\Events\
 	{
 		$receiver = $ticketMessage->getFrom();
 
-		$emailCompiler = $this->emailCompilerFactory->create($receiver->getPrimaryLocation(), $receiver->getLanguage());
+		$emailCompiler = $this->getCompiler($receiver->getPrimaryLocation(), $receiver->getLanguage());
 		$emailCompiler->setTemplate($this->getTemplate('reservation-form'));
 		$emailCompiler->setLayout($this->getLayout());
 		$emailCompiler->addTicket('ticket', $ticketMessage->getTicket());

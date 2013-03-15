@@ -78,7 +78,7 @@ class EnvironmentVariables extends Nette\Object {
 	 *
 	 * @return string
 	 */
-	public function link($destination, array $arguments = NULL)
+	public function link($destination, array $arguments = array())
 	{
 		$arguments = array_merge(
 			['primaryLocation' => $this->getLocationEntity(), 'language' => $this->getLanguageEntity()],

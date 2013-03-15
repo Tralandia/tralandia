@@ -33,7 +33,7 @@ class RegistrationEmailListener extends BaseEmailListener implements \Kdyby\Even
 	{
 		$receiver = $rental->getOwner();
 
-		$emailCompiler = $this->emailCompilerFactory->create($receiver->getPrimaryLocation(), $receiver->getLanguage());
+		$emailCompiler = $this->getCompiler($receiver->getPrimaryLocation(), $receiver->getLanguage());
 		$emailCompiler->setTemplate($this->getTemplate(7));
 		$emailCompiler->setLayout($this->getLayout());
 		$emailCompiler->addRental('rental', $rental);

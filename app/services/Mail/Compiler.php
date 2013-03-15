@@ -344,10 +344,9 @@ class Compiler {
 
 interface ICompilerFactory {
 	/**
-	 * @param \Entity\Location\Location $location
-	 * @param \Entity\Language $language
+	 * @param \Environment\Environment $environment
 	 *
 	 * @return Compiler
 	 */
-	public function create(Location $location, Language $language);
+	public function create(Environment $environment);
 }

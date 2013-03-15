@@ -50,7 +50,9 @@ class RegistrationHandlerTest extends \Tests\TestCase
 				'classification' => 3,
 				'pet' => [1],
 
-				'address' => 'Ľ. Štúra 8, Nové Zámky, Slovakia',
+				'address' => [
+					'address' => 'Ľ. Štúra 8, Nové Zámky, Slovakia',
+				],
 			],
 		];
 

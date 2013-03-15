@@ -1,6 +1,9 @@
 <?php
 namespace Listener;
 
+use Entity\Language;
+use Entity\Location\Location;
+use Environment\IEnvironmentFactory;
 use Mail\ICompilerFactory;
 use Nette;
 use Nette\Mail\IMailer;
@@ -25,15 +28,22 @@ abstract class BaseEmailListener extends Nette\Object implements \Kdyby\Events\S
 	protected $emailCompilerFactory;
 
 	/**
+	 * @var \Environment\IEnvironmentFactory
+	 */
+	protected $environmentFactory;
+	/**
 	 * @param \Doctrine\ORM\EntityManager $em
 	 * @param \Nette\Mail\IMailer $mailer
 	 * @param ICompilerFactory $emailCompilerFactory
+	 * @param \Environment\IEnvironmentFactory $environmentFactory
 	 */
-	public function __construct(EntityManager $em, IMailer $mailer, ICompilerFactory $emailCompilerFactory)
+	public function __construct(EntityManager $em, IMailer $mailer,
+								ICompilerFactory $emailCompilerFactory, IEnvironmentFactory $environmentFactory)
 	{
 		$this->em = $em;
 		$this->mailer = $mailer;
 		$this->emailCompilerFactory = $emailCompilerFactory;
+		$this->environmentFactory = $environmentFactory;
 	}
 
 	/**
@@ -55,4 +65,12 @@ abstract class BaseEmailListener extends Nette\Object implements \Kdyby\Events\S
 	{
 		return $this->em->getRepository('Entity\Email\Layout')->find($id);
 	}
+
+	protected function getCompiler(Location $location, Language $language)
+	{
+		$environment = $this->environmentFactory->create($location, $language);
+		$emailCompiler = $this->emailCompilerFactory->create($environment);
+		return $emailCompiler;
+	}
+
 }
