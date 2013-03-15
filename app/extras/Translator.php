@@ -42,10 +42,10 @@ class Translator implements \Nette\Localization\ITranslator {
 		return $this;
 	}
 	
-	public function translate($phrase, $note = NULL, array $variation = NULL, array $variables = NULL)
+	public function translate($phrase, $count = NULL, array $variation = NULL, array $variables = NULL)
 	{
-		if($phrase == 'o925') {
-			$r = 3;
+		if(is_numeric($count) && !isset($variation[self::VARIATION_COUNT])) {
+			$variation[self::VARIATION_COUNT] = $count;
 		}
 		$translation = $this->getTranslation($phrase, $variation);
 
