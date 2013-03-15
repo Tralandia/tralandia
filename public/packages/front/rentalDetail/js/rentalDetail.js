@@ -197,7 +197,24 @@
 $(document).ready(function(){
 
 
+	$('.pinterestShare').click(function(){
 
+		if(!$(this).hasClass('opened')){
+			$(this).find('.content img').attr('src','//assets.pinterest.com/images/pidgets/pin_it_button.png');
+
+			var attr = $('body').attr('data-pinterestInitJs');
+
+removejscssfile('http://assets.pinterest.com/js/pinit.js','js');
+addScript('http://assets.pinterest.com/js/pinit.js');
+
+
+			var html = $(this).find('.content').html();
+				$(this).html(html);
+				$(this).addClass('opened');
+			return false;			
+		}
+
+	});
 
 	var fromDateOrigin = {
 		year: 0,
