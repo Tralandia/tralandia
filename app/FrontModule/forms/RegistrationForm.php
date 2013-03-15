@@ -130,7 +130,7 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 		$rentalContainer->addSelect('type', 'o883', $rentalTypes)
 			//->setOption('help', $this->translate('o5956'))
 			;
-		$rentalContainer->addSelect('classification', 'o25137', array('*', '**', '***', '****', '*****'))
+		$rentalContainer->addSelect('classification', 'o25137', array('★', '★ ★', '★ ★ ★', '★ ★ ★ ★', '★ ★ ★ ★ ★'))
 			//->setOption('help', $this->translate('o5956'))
 			;
 
