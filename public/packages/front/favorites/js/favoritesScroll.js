@@ -3,24 +3,27 @@ $(document).ready(function(){
 
     $(document).scroll(function(){
 
+        var c = $('#favoritesStaticContainer').css('display');
 
+        if(c == 'block'){
+            var offset = parseInt($(this).scrollTop());
+            if(offset > 155){
+                $('#favoritesStaticContainer').css({
+                    position: 'fixed',
+                    top:'0px'
+                });
 
-    	var offset = parseInt($(this).scrollTop());
-    	if(offset > 155){
-    		$('#favoritesStaticContainer').css({
-    			position: 'fixed',
-    			top:'0px'
-    		});
+                favoritesPlaceholder('show');
 
-            favoritesPlaceholder('show');
+            } else {
+                $('#favoritesStaticContainer').css({
+                    position: 'relative'
+                });     
+                
+                favoritesPlaceholder('hide');
+            }            
+        }
 
-    	} else {
-    		$('#favoritesStaticContainer').css({
-    			position: 'relative'
-    		});    	
-            
-            favoritesPlaceholder('hide');
-    	}   	
     });
     
 });
