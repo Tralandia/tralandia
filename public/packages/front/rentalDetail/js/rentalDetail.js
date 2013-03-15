@@ -39,56 +39,58 @@
 
 			        //console.log(lat+' '+lng);
 
-			        var delta = 0.05;
+			  //       var delta = 0.05;
 
-			        var MinLat = lat - delta;
-			        var MaxLat = lat + delta;
+			  //       var MinLat = lat - delta;
+			  //       var MaxLat = lat + delta;
 
-			        var MinLng = lng - delta;
-			        var MaxLng = lng + delta;
+			  //       var MinLng = lng - delta;
+			  //       var MaxLng = lng + delta;
 
 
-			        var findPanoramio = {
-			        	set: 'public',
-			        	from: 0,
-			        	to: 12,
-			        	minx: MinLng,
-			        	miny: MinLat,
-			        	maxy: MaxLat,
-			        	maxx: MaxLng,
-			        	size: 'medium',
-			        	mapfilter: true
-			        };
+			  //       var findPanoramio = {
+			  //       	set: 'public',
+			  //       	from: 0,
+			  //       	to: 12,
+			  //       	minx: MinLng,
+			  //       	miny: MinLat,
+			  //       	maxy: MaxLat,
+			  //       	maxx: MaxLng,
+			  //       	size: 'medium',
+			  //       	mapfilter: true
+			  //       };
+		        
+		   //      $.ajax({
+					//   dataType: "jsonp",
+					//   crossDomain: true,
+					//   data: findPanoramio,
+					//   url: 'http://www.panoramio.com/map/get_panoramas.php',					  
+					//   success: function(data){
+
+					//   }
+					// }).done(function(d){
+						
+					// 	var html = '';
+					// 	$.each(d.photos,function(k,v){
+					// 		console.log(v);
+							
+					// 		var myLatlng = new google.maps.LatLng(v.latitude,v.longitude);
+
+					//         var marker = new google.maps.Marker({
+					//             position: myLatlng,
+					//             map: map
+					//         });
+							
+					// 		html+= '<li style="background-image:url('+v.photo_file_url+');"></li>';
+
+					// 	});
+
+					// 	$('#placesImg').html(html);
+					// });	
+
 
 			        $('body').attr('data-googleMapRender',true);
-/*		        
-		        $.ajax({
-					  dataType: "jsonp",
-					  crossDomain: true,
-					  data: findPanoramio,
-					  url: 'http://www.panoramio.com/map/get_panoramas.php',					  
-					  success: function(data){
 
-					  }
-					}).done(function(d){
-						
-						var html = '';
-						$.each(d.photos,function(k,v){
-							console.log(v);
-							
-							var myLatlng = new google.maps.LatLng(v.latitude,v.longitude);
-
-					        var marker = new google.maps.Marker({
-					            position: myLatlng,
-					            map: map
-					        });
-							
-							html+= '<li style="background-image:url('+v.photo_file_url+');"></li>';
-
-						});
-
-						$('#placesImg').html(html);
-					});*/
 
 }
 
@@ -270,6 +272,63 @@ $(function() {
 	$(document.body).on('appear', '#objectDetailMap', function(e, $affected) {           
 		lazyLoadMap();
 	});
+
+	$('#placesImg').appear();
+	$(document.body).on('appear','#placesImg' , function(e,$affected){
+		console.log('vidimeee');
+
+  				var coordinates = $('#objectDetailMap').attr('value').split(',');
+
+  				var lat = parseFloat(coordinates[0]);
+  				var lng = parseFloat(coordinates[1]);
+
+			        var delta = 0.05;
+
+			        var MinLat = lat - delta;
+			        var MaxLat = lat + delta;
+
+			        var MinLng = lng - delta;
+			        var MaxLng = lng + delta;
+
+
+			        var findPanoramio = {
+			        	set: 'public',
+			        	from: 0,
+			        	to: 16,
+			        	minx: MinLng,
+			        	miny: MinLat,
+			        	maxy: MaxLat,
+			        	maxx: MaxLng,
+			        	size: 'medium',
+			        	mapfilter: true
+			        };
+
+		        
+		        $.ajax({
+					  dataType: "jsonp",
+					  crossDomain: true,
+					  data: findPanoramio,
+					  url: 'http://www.panoramio.com/map/get_panoramas.php',					  
+					  success: function(data){
+
+					  }
+					}).done(function(d){
+						
+						var html = '';
+						$.each(d.photos,function(k,v){
+							console.log(v);
+							
+							var myLatlng = new google.maps.LatLng(v.latitude,v.longitude);
+
+		
+							
+							html+= '<li style="background-image:url('+v.photo_file_url+');"></li>';
+
+						});
+
+						$('#placesImg').html(html);
+					});		
+	})
 
 });
 
