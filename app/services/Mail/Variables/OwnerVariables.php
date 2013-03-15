@@ -10,4 +10,8 @@ use Nette;
  */
 class OwnerVariables extends BaseUserVariables {
 
+	public function getVariablePassword()
+	{
+		$this->getUser()->getPassword();
+	}
 }

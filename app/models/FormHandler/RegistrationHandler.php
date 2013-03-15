@@ -2,6 +2,7 @@
 
 namespace FormHandler;
 
+use Entity\User\Role;
 use Service\Contact\AddressCreator;
 use Service\Rental\RentalCreator;
 use Doctrine\ORM\EntityManager;
@@ -45,11 +46,12 @@ class RegistrationHandler extends FormHandler
 
 	public function handleSuccess($values)
 	{
-		$userRepository = $this->em->getRepository('\Entity\User\User');
-		$locationRepository = $this->em->getRepository('\Entity\Location\Location');
-		$languageRepository = $this->em->getRepository('\Entity\Language');
-		$rentalTypeRepository = $this->em->getRepository('\Entity\Rental\Type');
-		$emailRepository = $this->em->getRepository('\Entity\Contact\Email');
+		$userRepository = $this->em->getRepository(USER_ENTITY);
+		$userRoleRepository = $this->em->getRepository(USER_ROLE_ENTITY);
+		$locationRepository = $this->em->getRepository(LOCATION_ENTITY);
+		$languageRepository = $this->em->getRepository(LANGUAGE_ENTITY);
+		$rentalTypeRepository = $this->em->getRepository(RENTAL_TYPE_ENTITY);
+		$emailRepository = $this->em->getRepository(CONTACT_EMAIL_ENTITY);
 
 		$error = new ValidationError;
 
@@ -76,8 +78,12 @@ class RegistrationHandler extends FormHandler
 
 		$error->assertValid();
 
+		/** @var $role \Entity\User\Role */
+		$role = $userRoleRepository->findOneBySlug(Role::OWNER);
+
 		/** @var $user \Entity\User\User */
 		$user = $userRepository->createNew();
+		$user->setRole($role);
 		$user->setLogin($values->email);
 		$user->setPassword($values->password);
 		$user->setPrimaryLocation($values->country);
@@ -91,7 +97,7 @@ class RegistrationHandler extends FormHandler
 		$rentalCreator = $this->rentalCreator;
 
 		/** @var $address \Entity\Contact\Address */
-		$address = $this->addressCreator->create($values->rental->address);
+		$address = $this->addressCreator->create($values->rental->address->address);
 
 
 		/** @var $rental \Entity\Rental\Rental */

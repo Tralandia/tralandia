@@ -25,6 +25,8 @@ class RegistrationPresenter extends BasePresenter {
 		$form->onSuccess[] = function ($form) use ($self) {
 			$rental = $self->registrationHandler->getRental();
 			$self->rentalRepositoryAccessor->get()->save($rental);
+			$owner = $rental->getOwner();
+			$self->login($owner);
 			$form->presenter->redirect(':Owner:Rental:edit', array('id' => $rental->getId()));
 		};
 

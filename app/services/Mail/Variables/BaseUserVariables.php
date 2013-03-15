@@ -23,9 +23,18 @@ abstract class BaseUserVariables extends Nette\Object {
 	}
 
 	/**
+	 * @return \Entity\User\User
+	 */
+	public function getUser()
+	{
+		return $this->user;
+	}
+
+	/**
 	 * @return string
 	 */
 	public function getVariableEmail() {
 		return 'janko@hrasko.com';
 	}
+
 }

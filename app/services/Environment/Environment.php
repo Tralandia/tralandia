@@ -123,3 +123,13 @@ class Environment extends Nette\Object {
 	}
 
 }
+
+interface IEnvironmentFactory {
+	/**
+	 * @param \Entity\Location\Location $location
+	 * @param \Entity\Language $language
+	 *
+	 * @return Environment
+	 */
+	public function create(Location $location, Language $language);
+}

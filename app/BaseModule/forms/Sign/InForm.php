@@ -42,8 +42,7 @@ class InForm extends \BaseModule\Forms\BaseForm {
 			$presenter = $this->getPresenter();
 			/** @var $user \Nette\Security\User */
 			$user = $presenter->getUser();
-			$user->setExpiration('+ 30 days', FALSE);
-			$user->login($values->login, $values->password);
+			$presenter->login($values->login, $values->password);
 			if($user->isInRole(Role::OWNER)) {
 				/** @var $userEntity \Entity\User\User */
 				$userEntity = $this->userRepositoryAccessor->get()->find($user->getId());

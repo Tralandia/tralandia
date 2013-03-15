@@ -108,7 +108,9 @@ services:
 		class: Environment\Environment
 		factory: Environment\Environment::createFromRequest(@application::getRequests())
 
-	locale: @environment::getLocale()
+	locale:
+		class: Environment\Locale
+		factory: @environment::getLocale()
 
 	collator: @locale::getCollator()
 
@@ -297,8 +299,12 @@ factories:
 		class: Extras\Translator(%language%, @phraseRepositoryAccessor, @translatorCache)
 		implement: Extras\ITranslatorFactory
 
+	environmentFactory:
+		class: Environment\Environment(%location%, %language%)
+		implement: Environment\IEnvironmentFactory
+
 	emailCompilerFactory:
-		class: Mail\Compiler(%location%, %language%)
+		class: Mail\Compiler(%environment%)
 		implement: Mail\ICompilerFactory
 
 	itemMapFactory: Extras\FormMask\Items\Foctories\MapFactory
