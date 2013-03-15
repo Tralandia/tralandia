@@ -40,7 +40,7 @@ class RentalOrderCaching extends \Nette\Object {
 	}
 
 	public function getOrderList() {
-		if ($this->cacheContent['order'] === NULL) {
+		if (!isset($this->cacheContent['order']) || $this->cacheContent['order'] === NULL) {
 			$order = $this->createOrderList();
 		} else {
 			$order = $this->cacheContent['order'];

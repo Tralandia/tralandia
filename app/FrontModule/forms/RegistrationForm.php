@@ -157,8 +157,8 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 			;
 
 		$rentalContainer->addText('price', 'o100078')
-			->setOption('help', $this->translate('o5956'))
 			->setOption('append', $this->country->defaultCurrency->iso.' '.$this->translate('o100004'))
+			//->setOption('help', $this->translate('o5956'))
 			;
 
 		$pet = ['Luzbo', 'je', 'super!'];

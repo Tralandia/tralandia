@@ -359,10 +359,10 @@
 
 		<table>
 			<tr>
-				<td colspan="5"><span class="help"><i class="icon-globe"></i> Text message about input method</span></td>
+				<td colspan="5"><span class="help"><i class="icon-globe"></i> {_o100090}</span></td>
 			</tr>
 			<tr>				
-				<td>{input $container['address'], data-name => "address", placeholder => 'placeholder adress' , data-validation-message => "gps-validation-message"}</td>
+				<td>{input $container['address'], data-name => "address", placeholder => 'o100091' , data-validation-message => "gps-validation-message"}</td>
 			</tr>
 
 		</table>
@@ -577,8 +577,6 @@
 {*
 	Submit Button Container -------------------------------------------
 	@param $control \Nette\Forms\Controls\SubmitButton
-	@param $icon string
-	@param $class string
 	*}
 	{define #submit}
 	{default $class = null}
@@ -587,8 +585,11 @@
 
 		</td>
 		<td colspan="2">
-			<button type="submit" n:class="$class ? 'btn ' .$class : btn" name="{$control->getHtmlName()}" id="{$control->getHtmlId()}">
-				<i n:ifset="$icon" class="{$icon}"></i> {$control->caption}
+			<button type="submit" class="btn-orange" name="{$control->getHtmlName()}" id="{$control->getHtmlId()}">
+				<i class="icon"></i> {$control->caption}
+			</button>
+			<button type="button" class="btn-cancel" name="cancel">
+				<i class="icon-trash"></i> {_o100089}
 			</button>
 		</td>
 	</tr>

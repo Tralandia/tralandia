@@ -17,8 +17,6 @@
 <div class="span12">
 <div class=" mytabUi ui-tabs">
 
-	{cache homeTop, expire => '+1 day'}
-
 	<div id="tabs-1" class="ui-tabs-panel">
 		<ul n:inner-foreach="$rentals as $rental" class="row-fluid hp-list">
 			<li class="span4">
@@ -37,14 +35,13 @@
 				{/if}
 
 				{/foreach}
-				<div class="label">{_$rental['entity']->address->locality->name} – {$rental['entity']->maxCapacity} {_o925,null,[count=>$rental['entity']->maxCapacity]}</div>
+				<div class="label">{_$rental['entity']->address->locality->name} – {$rental['entity']->maxCapacity} {_o490,null,[count=>$rental['entity']->maxCapacity]}</div>
 				
 				</a>
 			</li>
 		</ul>
 
 	</div>
-	{/cache}
 
 </div>
 </div>

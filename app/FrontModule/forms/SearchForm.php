@@ -51,22 +51,22 @@ class SearchForm extends BaseForm {
 		$capacity = $this->searchOptionGenerator->generateCapacity();
 		$languages = $this->searchOptionGenerator->generateLanguage();
 
-		$this->addSelect('location', '#location', $locations)
-			->setPrompt('#je mi to jedno');
-		$this->addSelect('rentalType', '#Rental type', $rentalTypes)
-			->setPrompt('#je mi to jedno');
+		$this->addSelect('location', 'o1070', $locations)
+			->setPrompt('o1070');
+		$this->addSelect('rentalType', 'o20926', $rentalTypes)
+			->setPrompt('o20926');
 
-		$this->addSelect('priceFrom', '#price from', $prices)
-			->setPrompt('#nezalezi, som milionar');
-		$this->addSelect('priceTo', '#price to', $prices)
-			->setPrompt('#nezalezi, som milionar');
+		$this->addSelect('priceFrom', 'o100093', $prices)
+			->setPrompt('o100093');
+		$this->addSelect('priceTo', '100094', $prices)
+			->setPrompt('o100094');
 
-		$this->addSelect('capacity', '#capacity', $capacity)
-			->setPrompt('#je mi to jedno');
-		$this->addSelect('spokenLanguage', '#spokenLanguage', $languages)
-			->setPrompt('#je mi to jedno');
+		$this->addSelect('capacity', 'o20928', $capacity)
+			->setPrompt('o20928');
+		$this->addSelect('spokenLanguage', 'o20930', $languages)
+			->setPrompt('o20930');
 
-		$this->addSubmit('submit', '#GO');
+		$this->addSubmit('submit', 'o100092');
 	}
 
 	public function setDefaultsValues() 
