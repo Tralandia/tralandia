@@ -24,7 +24,7 @@
 	{var $rental = $form['rental']}
 	{include #text, control => $rental['name']}
 	{include #select, control => $rental['type']}
-	{include #select, control => $rental['classification']}
+	{include #select, control => $rental['classification'] , class => 'classification' }
 	{include #text, control => $rental['price']}
 	{include #text, control => $rental['maxCapacity']}
 
