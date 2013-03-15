@@ -28,7 +28,7 @@ class AmenityRepository extends \Repository\BaseRepository
 		return $this->findByTypeForSelect('owner-availability', $translator, $collator);
 	}
 
-	protected function findByTypeForSelect($type, ITranslator $translator, Collator $collator)
+	public function findByTypeForSelect($type, ITranslator $translator, Collator $collator)
 	{
 		$type = $this->related('type')->findBySlug($type);
 		$return = [];

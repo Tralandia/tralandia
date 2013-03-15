@@ -161,8 +161,8 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 			//->setOption('help', $this->translate('o5956'))
 			;
 
-		$pet = ['Luzbo', 'je', 'super!'];
-		$rentalContainer->addMultiOptionList('pet', 'o100079', $pet)
+		$amenityPets = $this->amenityRepository->findByTypeForSelect('animal', $this->translator, $this->collator);
+		$rentalContainer->addSelect('pet', 'o100079', $amenityPets)
 			//->setOption('help', $this->translate('o5956'))
 			;
 
@@ -177,7 +177,7 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 			;
 
 		$amenityAvailability = $this->amenityRepository->findByAvailabilityTypeForSelect($this->translator, $this->collator);
-		$rentalContainer->addMultiOptionList('ownerAvailability', 'o100082', $amenityAvailability)
+		$rentalContainer->addSelect('ownerAvailability', 'o100082', $amenityAvailability)
 			//->setOption('help', $this->translate('o5956'))
 			;
 
