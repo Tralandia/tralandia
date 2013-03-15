@@ -167,11 +167,11 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		$search = $this->search;
 
 		if ($this->location) {
-			$search->setLocationCriterium($this->location);
+			$search->setLocationCriterion($this->location);
 		}
 
 		if ($this->rentalType) {
-			$search->setRentalTypeCriterium($this->rentalType);
+			$search->setRentalTypeCriterion($this->rentalType);
 		}
 
 		return $search;

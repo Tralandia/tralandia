@@ -42,9 +42,9 @@ class RentalSearchService extends Nette\Object
 		$this->rentalRepositoryAccessor = $container->rentalRepositoryAccessor;
 	}
 
-	public function getCriteriumOptions($criterium) {
+	public function getCriterionOptions($criterion) {
 		$this->loadCache();
-		return array_keys($this->searchCacheData[$criterium]);
+		return array_keys($this->searchCacheData[$criterion]);
 	}
 
 	// Criteria
@@ -54,27 +54,27 @@ class RentalSearchService extends Nette\Object
 		$this->resetResults();
 	}
 
-	public function setLocationCriterium(Entity\Location\Location $location = NULL) {
+	public function setLocationCriterion(Entity\Location\Location $location = NULL) {
 		$this->criteria[self::CRITERIA_LOCATION] = $location;
 		$this->resetResults();
 	}
 
-	public function setRentalTypeCriterium(Entity\Rental\Type $rentalType = NULL) {
+	public function setRentalTypeCriterion(Entity\Rental\Type $rentalType = NULL) {
 		$this->criteria[self::CRITERIA_RENTAL_TYPE] = $rentalType;
 		$this->resetResults();
 	}
 
-	public function setFcapacityCriterium($capacity = NULL) {
+	public function setCapacityCriterion($capacity = NULL) {
 		$this->criteria[self::CRITERIA_CAPACITY] = $capacity;
 		$this->resetResults();
 	}
 
-	public function setFpriceCriterium($price = NULL) {
+	public function setPriceCriterion($price = NULL) {
 		$this->criteria[self::CRITERIA_PRICE] = $price;
 		$this->resetResults();
 	}
 
-	public function setFlanguageCriterium(Entity\Language $spokenLanguage = NULL) {
+	public function setSpokenLanguageCriterion(Entity\Language $spokenLanguage = NULL) {
 		$this->criteria[self::CRITERIA_SPOKEN_LANGUAGE] = $spokenLanguage;
 		$this->resetResults();
 	}
