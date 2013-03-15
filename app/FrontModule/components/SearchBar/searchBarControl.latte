@@ -34,10 +34,9 @@
 			<a n:ifset="$template->removeSpokenLanguage" href="{$template->removeSpokenLanguage}" class="btnSearchClose"><i class="entypo-no"></i></a>
 		</div>
 		
-		<div id="getSearchCount" data-label="#label text" class="pull-left">25 ubytovani</div>
+		<div id="getSearchCount" data-label="#label text" class="pull-left">{$totalResultsCount} ubytovani</div>
 		{* {input submit,value => '#Search' , icon => 'entypo-search', class => "btn btn-white pull-right"}	 *}
-		<button class="btn btn-white pull-right"><i class="entypo-search"></i>{_o100092}</button>	
-		
+		<button class="btn btn-white pull-right"><i class="entypo-search"></i>{_o100092}</button>
 	{/form}
 
 	{ifset $locations}

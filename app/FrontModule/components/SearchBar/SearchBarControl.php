@@ -71,7 +71,8 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 	 * @param ISearchFormFactory $searchFormFactory
 	 * @param \SearchGenerator\OptionGenerator $searchOptionGenerator
 	 */
-	public function __construct(RentalSearchService $search,EntityManager $em, ISearchFormFactory $searchFormFactory, OptionGenerator $searchOptionGenerator)
+	public function __construct(RentalSearchService $search,EntityManager $em,
+								ISearchFormFactory $searchFormFactory, OptionGenerator $searchOptionGenerator)
 	{
 		parent::__construct();
 		$this->search = $search;
@@ -116,6 +117,10 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 			$template->removeSpokenLanguage = $this->link('this', ['spokenLanguage' => NULL]);
 		}
 
+		$search = $this->getSearch();
+
+		$template->totalResultsCount = $search->getRentalsCount();
+
 		$template->render();
 	}
 
@@ -131,7 +136,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 
 		$rentalType = $presenter->getParameter('rentalType');
 		if($rentalType) {
-			$this->rentalType = $em->getRepository(LOCATION_ENTITY)->find($rentalType);
+			$this->rentalType = $em->getRepository(RENTAL_TYPE_ENTITY)->find($rentalType);
 		}
 
 		$this->priceFrom = $presenter->getParameter('priceFrom', NULL);
@@ -149,9 +154,14 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 
 		$count = $search->getRentalsCount();
 
+		$count = $count . ' ' . $this->getPresenter()->translate('o100002', $count);
+
 		$this->presenter->sendJson(['count' => $count]);
 	}
 
+	/**
+	 * @return \Service\Rental\RentalSearchService
+	 */
 	public function getSearch()
 	{
 		$search = $this->search;
@@ -179,8 +189,6 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 			$values = $form->getValues();
 			$form->presenter->redirect('RentalList', (array) $values);
 		};
-
-
 
 		if($this->location) {
 			$form['location']->setDefaultValue($this->location->getId());
