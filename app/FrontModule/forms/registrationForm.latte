@@ -32,10 +32,10 @@
 	{include #address, control => $rental['address']}
 	{include #checkboxList, control => $rental['amenityLocation'], colCount => 3}
 
+	{include #select, control => $rental['ownerAvailability']}
+	{include #select, control => $rental['pet']}
 	{include #checkboxList, control => $rental['board'], colCount => 3}
 	{include #checkboxList, control => $rental['important'], colCount => 3}
-	{include #checkboxList, control => $rental['ownerAvailability'], colCount => 3}
-	{include #checkboxList, control => $rental['pet'], colCount => 3}
 
 	{include #fieldset, text => 'o980'}
 	{include #rentalPhotos, control => $rental['photos']}

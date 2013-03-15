@@ -283,6 +283,18 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 			}
 		}
 
+		if ($important === TRUE && $i < 5) {
+			foreach ($this->getAmenities() as $amenity) {
+				if($amenity->important == FALSE) {
+					$return[$amenity->type->slug][] = $amenity;
+					//d($amenity->type); exit;
+					$sort[$amenity->type->slug] = $amenity->type->sorting;
+					$i++;
+				}
+				if ($i == 5) break;
+			}
+		}
+
 		if ($important == FALSE) {
 			asort($sort); 
 
