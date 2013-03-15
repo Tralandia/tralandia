@@ -49,7 +49,9 @@ class SimpleRoute extends BaseRoute
 		//$params['action'] = $this->actionName;
 		//$appRequest->setPresenterName($this->presenterName);
 
-		foreach($params as $param) {
+		$searchParametersName = FrontRoute::$pathParametersMapper;
+		foreach($params as $paramName => $param) {
+			if(in_array($paramName, $searchParametersName)) return NULL;
 			if(!is_scalar($param) && !is_bool($param) && $param !== NULL) {
 				return NULL;
 			}
