@@ -190,6 +190,8 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 			$form->presenter->redirect('RentalList', (array) $values);
 		};
 
+		$form['country']->setDefaultValue($this->search->getPrimaryLocation()->getId());
+
 		if($this->location) {
 			$form['location']->setDefaultValue($this->location->getId());
 		}

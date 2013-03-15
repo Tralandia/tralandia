@@ -5,6 +5,10 @@
 
 	{form searchForm , class => 'searchForm' }
 		<strong>{_o100003}</strong>
+		<div class="input-filltext selected">
+			<i class="icon-flag"></i>
+			{input country , class => 'select2'}
+		</div>
 		<div n:class="isset($template->removeLocation) ? 'input-filltext selected' : input-filltext">
 			<i class="icon-map-marker"></i>
 			{input location , class => 'select2'}
