@@ -118,6 +118,19 @@
 	
 })(jQuery);
 
+function updateCriteriaCount(){
+		var label = $('#getSearchCount').attr('data-label');
+
+		$.ajax({
+		  url: $('#sidebar').attr('data-searchcount'),
+		  data: $('.searchForm').serialize(),
+		  type: 'POST',
+		}).done(function(d) {
+			console.log(d);
+		  $('#getSearchCount').html(d.count+' '+label);
+		});	
+}
+
 $(function(){
 	$('.searchForm').searchFormSuggest({
 		dropdownCssClass: 'searchSelectOrder'
@@ -139,9 +152,9 @@ $(function(){
 
 		if($(this).val()){
 
-		if ($(this).parent().find('.btnSearchClose').length == 0){
-		  $(this).parent().append('<a href="/" class="btnSearchClose"><i class="entypo-no"></i></a>');
-		}			
+			if ($(this).parent().find('.btnSearchClose').length == 0){
+			  $(this).parent().append('<a href="/" class="btnSearchClose"><i class="entypo-no"></i></a>');
+			}			
 			
 			$(this).parent().addClass('selected');
 		} else {
@@ -149,31 +162,26 @@ $(function(){
 			$(this).parent().removeClass('selected');
 		}
 
-		var label = $('#getSearchCount').attr('data-label');
-
-		$.ajax({
-		  url: $('#sidebar').attr('data-searchcount'),
-		  data: $('.searchForm').serialize(),
-		  type: 'POST',
-		}).done(function(d) {
-			console.log(d);
-		  $('#getSearchCount').html(d.count+' '+label);
-		});
+		updateCriteriaCount();
 
 	});
 
 
 	$('.btnSearchClose').on('click',function(){
+		
 		$(this).parent().removeClass('selected');
-		$(this).parent().find('.select2').select2('val','default');
+		$(this).parent().find('.select2').select2('val','');
 		$(this).remove();
+		updateCriteriaCount();
 		return false;
 	});
 
 	$('.btnSearchClose').live('click',function(){
+		
 		$(this).parent().removeClass('selected');
-		$(this).parent().find('.select2').select2('val','default');
+		$(this).parent().find('.select2').select2('val','');
 		$(this).remove();
+		updateCriteriaCount();
 		return false;
 	});
 

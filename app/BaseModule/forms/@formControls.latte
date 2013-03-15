@@ -239,7 +239,11 @@
 		<td colspan="3">
 			<table class="checkboxes" style="width: 100%;">
 				<tr>
-					<td colspan="{$colCount}">{_$control->caption}</td>
+					<td colspan="{$colCount-1}">{_$control->caption}</td>
+					<td>
+						<span class="help">{$control->getOption('help')}</span>
+						<span class="invalidAlert">{include #controlErrors, errors => $control->getErrors()}</span>
+					</td>
 				</tr>
 				<tr>
 					<td width="{(int)(100/$colCount)}%">
