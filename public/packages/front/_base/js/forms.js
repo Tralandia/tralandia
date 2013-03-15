@@ -730,6 +730,32 @@
           map: map
         });
 
+        var marker = false;
+        geocoder.getLocations(latlng, function(r){
+        	console.log(r);
+        });
+
+		google.maps.event.addListener(map, 'click', function(event) {
+			
+			//set marker 
+			if(!marker){
+				marker = new google.maps.Marker({
+						      position: event.latLng,
+						      map: map
+						  });
+			} else {
+				marker.setPosition(event.latLng);
+			}		 
+
+			// set geocoder
+        	var geocoder = new google.maps.Geocoder();
+        	geocoder.geocode({ 'address': address} , function(results, status){
+        		console.log(results);
+        		console.log(status);
+        	});
+
+		});
+
         google.maps.event.addListener(autocomplete, 'place_changed', function() {
           infowindow.close();
           marker.setVisible(false);
