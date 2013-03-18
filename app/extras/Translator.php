@@ -95,10 +95,10 @@ class Translator implements \Nette\Localization\ITranslator {
 		$translationKey = $this->getCacheKey($phraseId, $variation);
 
 		$translation = $this->cache->load($translationKey);
-		if(1 || $translation === NULL) {
+		if($translation === NULL) {
 
 			if(is_scalar($phrase)) {
-				if(Strings::startsWith($phrase, 'o')) {
+				if(Strings::match($phrase, '~o[0-9]+~')) {
 					$phrase = $this->phraseRepositoryAccessor->get()->findOneByOldId(substr($phrase, 1));
 				} else if(is_numeric($phrase)) {
 					$phrase = $this->phraseRepositoryAccessor->get()->find($phrase);

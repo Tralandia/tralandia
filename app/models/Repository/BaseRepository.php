@@ -4,7 +4,9 @@ namespace Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Environment\Collator;
+use Nette\Application\UI\Presenter;
 use Nette\Localization\ITranslator;
+use Routers\BaseRoute;
 
 class BaseRepository extends EntityRepository {
 
@@ -104,15 +106,21 @@ class BaseRepository extends EntityRepository {
 	/**
 	 * @param \Nette\Localization\ITranslator $translator
 	 * @param \Environment\Collator $collator
+	 * @param Presenter $presenter
 	 *
 	 * @return array
 	 */
-	public function getForSelect(ITranslator $translator, Collator $collator)
+	public function getForSelectWithLinks(ITranslator $translator, Collator $collator, Presenter $presenter = NULL)
 	{
 		$return = [];
 		$rows = $this->findAll();
 		foreach($rows as $row) {
-			$return[$row->id] = $translator->translate($row->name);
+			if($presenter) {
+				$key = $presenter->link('Registration:default', [BaseRoute::LANGUAGE => $row]);
+			} else {
+				$key = $row->getId();
+			}
+			$return[$key] = $translator->translate($row->getName());
 		}
 		$collator->asort($return);
 
