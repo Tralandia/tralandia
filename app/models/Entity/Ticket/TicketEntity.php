@@ -132,12 +132,12 @@ class Ticket extends \Entity\BaseEntity {
 	 * @param \Entity\Ticket\Message
 	 * @return \Entity\Ticket\Ticket
 	 */
-	public function addMessag(\Entity\Ticket\Message $messag)
+	public function addMessage(\Entity\Ticket\Message $message)
 	{
-		if(!$this->messages->contains($messag)) {
-			$this->messages->add($messag);
+		if(!$this->messages->contains($message)) {
+			$this->messages->add($message);
 		}
-		$messag->setTicket($this);
+		$message->setTicket($this);
 
 		return $this;
 	}
@@ -146,10 +146,10 @@ class Ticket extends \Entity\BaseEntity {
 	 * @param \Entity\Ticket\Message
 	 * @return \Entity\Ticket\Ticket
 	 */
-	public function removeMessag(\Entity\Ticket\Message $messag)
+	public function removeMessage(\Entity\Ticket\Message $message)
 	{
-		$this->messages->removeElement($messag);
-		$messag->unsetTicket();
+		$this->messages->removeElement($message);
+		$message->unsetTicket();
 
 		return $this;
 	}

@@ -22,6 +22,7 @@ class EntityGeneratorPresenter extends BasePresenter {
 	// }
 
 	public function actionDefault($id) {
+		$tempId = $id;
 		$id = str_replace('-', '\\', $id);
 		$entityDir = APP_DIR . '/models/Entity/';
 		$menu = array();
@@ -48,7 +49,7 @@ class EntityGeneratorPresenter extends BasePresenter {
 		$mainEntityReflector = $this->getEntityReflection($id);
 		$newClass = $this->generateNewClass($mainEntityReflector);
 
-		list($a, $nameTemp) = explode('-', $this->parameter['id'],2);
+		list($a, $nameTemp) = explode('-', $tempId, 2);
 		$filename = $entityDir.str_replace('-', '/', $nameTemp).'.php';
 		$newFileContent = $this->generateNewCode($filename, $newClass);
 
@@ -56,7 +57,7 @@ class EntityGeneratorPresenter extends BasePresenter {
 			$newFileContent = "V subore:\n$id\nchyba riadok:\n//@entity-generator-code\ndopln to tam a refresni stranku";
 		}
 
-		if(isset($this->parameter['force']) && $this->parameter['force'] == 1) {
+		if($this->getParameter('force') == 1) {
 			$this->writeNewCode($filename, $newFileContent);
 
 			$this->flashMessage('done');
