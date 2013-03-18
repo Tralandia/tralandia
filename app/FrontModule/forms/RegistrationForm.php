@@ -4,6 +4,7 @@ namespace FrontModule\Forms;
 
 use Doctrine\ORM\EntityManager;
 use Environment\Collator;
+use Extras\Forms\Container\RentalTypeContainer;
 use Image\RentalImageManager;
 use Nette;
 use Nette\Localization\ITranslator;
@@ -130,12 +131,9 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 		$rentalContainer->addText('name', 'o886')
 			->setOption('help', $this->translate('o100071'))
 			;
-		$rentalContainer->addSelect('type', 'o883', $rentalTypes)
-			//->setOption('help', $this->translate('o5956'))
-			;
-		$rentalContainer->addSelect('classification', 'o25137', array('★', '★ ★', '★ ★ ★', '★ ★ ★ ★', '★ ★ ★ ★ ★'))
-			//->setOption('help', $this->translate('o5956'))
-			;
+
+
+		$rentalContainer['type'] = new RentalTypeContainer($rentalTypes);
 
 		$check = ['dohoda', 'hocikedy', '8:00', '10:00', '15:00', '21:00'];
 		$rentalContainer->addSelect('checkIn', 'o1586', $check)
@@ -165,7 +163,7 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 			//->setOption('help', $this->translate('o5956'))
 			;
 
-		$amenityPets = $this->amenityRepository->findByTypeForSelect('animal', $this->translator, $this->collator);
+		$amenityPets = $this->amenityRepository->findByAnimalTypeForSelect($this->translator, $this->collator);
 		$rentalContainer->addSelect('pet', 'o100079', $amenityPets)
 			//->setOption('help', $this->translate('o5956'))
 			;
@@ -210,7 +208,10 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 				'name' => 'Chata Test',
 				'price' => '3',
 				'maxCapacity' => 15,
-				'type' => 3,
+				'type' => [
+					'type' => 3,
+					'classification' => 2,
+				],
 				'pet' => [1],
 
 				'address' => [

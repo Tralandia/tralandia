@@ -3,6 +3,7 @@
 namespace Extras\Forms\Container;
 
 use BaseModule\Components\CalendarControl;
+use Environment\Locale;
 
 class CalendarContainer extends BaseContainer
 {
@@ -17,11 +18,15 @@ class CalendarContainer extends BaseContainer
 	 */
 	protected $months = [];
 
-	public function __construct($label = NULL)
+	/**
+	 * @param null $label
+	 * @param \Environment\Locale $locale
+	 */
+	public function __construct($label = NULL, Locale $locale)
 	{
 		parent::__construct();
 
-		$this->calendarControl = new CalendarControl;
+		$this->calendarControl = new CalendarControl($locale);
 		$this->addHidden('data');
 
 	}
