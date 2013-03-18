@@ -141,7 +141,8 @@ class ImportPresenter extends Presenter {
 			$this->flashMessage('{_'.$newPhrase->id.', \''.$this->params['getPhraseMacro'].' '.$newTranslation->translation.'\'}');
 			$redirect = TRUE;
 		}
-
+		//$this->sendJson(array());
+		
 		if ($redirect) {
 			$this->redirect('Import:default');
 		}
