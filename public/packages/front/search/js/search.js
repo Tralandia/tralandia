@@ -135,12 +135,12 @@ $(function(){
 	$('.searchForm').searchFormSuggest({
 		dropdownCssClass: 'searchSelectOrder'
 	});
-	$('.searchForm .select2:not(#frm-searchBar-searchForm-location)').select2({
+	$('.searchForm .select2:not(#frm-searchBar-searchForm-location , #frm-searchBar-searchForm-country)').select2({
 		dropdownCssClass: 'searchSelect',
 		allowClear: true,
 		minimumResultsForSearch: 'X',
 	});	
-	$('.searchForm #frm-searchBar-searchForm-location').select2({
+	$('.searchForm #frm-searchBar-searchForm-location,.searchForm #frm-searchBar-searchForm-country').select2({
 		dropdownCssClass: 'searchSelect',
 	});
 
