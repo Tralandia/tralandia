@@ -8,6 +8,7 @@ use Model\Location\ILocationDecoratorFactory;
 use Nette\Application\UI\Presenter;
 use Nette\InvalidArgumentException;
 use Nette\Localization\ITranslator;
+use Nette\Utils\Html;
 use Nette\Utils\Strings;
 use Routers\BaseRoute;
 
@@ -114,7 +115,6 @@ class LocationRepository extends \Repository\BaseRepository {
 		$qb->select('l')
 			->from($this->_entityName, 'l')
 			->join('l.type', 't')
-			->join('l.name', 'n')
 			->where($qb->expr()->eq('t.slug', ':country'))
 			->setParameter('country', 'country');
 
@@ -132,16 +132,39 @@ class LocationRepository extends \Repository\BaseRepository {
 	{
 		$rows = $this->findCountries();
 		$return = [];
+		$sort = [];
+		$elTemplate = Html::el('option');
 		foreach($rows as $row) {
-			if($presenter) {
-				$key = $presenter->link('Registration:default', [BaseRoute::PRIMARY_LOCATION => $row]);
-			} else {
-				$key = $row->getId();
+			/** @var $row \Entity\Location\Location */
+
+			$parent = $row->getParent();
+			$prefix = NULL;
+			if($parent && $parent->getIso()) {
+				$prefix = $translator->translate($parent->getName());
 			}
-			$return[$key] = $translator->translate($row->getName());
+
+			$text = ($prefix ? $prefix . ' - ' : '') . $translator->translate($row->getName());
+
+			$key = $row->getId();
+			if($presenter) {
+				$link = $presenter->link('Registration:default', [BaseRoute::PRIMARY_LOCATION => $row]);
+				$el = clone $elTemplate;
+				$return[$key] = $text;
+				$sort[$key] = $el->value($key)->addAttributes(['data-redirect' => $link])->setText($text);
+			} else {
+				$return[$key] = $text;
+			}
 		}
 
-		$collator->asort($return);
+
+		if($presenter) {
+			$collator->asort($return);
+			foreach($return as $key => $value) {
+				$return[$key] = $sort[$key];
+			}
+		} else {
+			$collator->asort($return);
+		}
 
 		return $return;
 	}
