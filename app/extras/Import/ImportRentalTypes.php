@@ -56,6 +56,8 @@ class ImportRentalTypes extends BaseImport {
 		'log cabin' => array('drevenica', 'drevenice'),
 	);
 
+	protected $haveClassification = array('apartment', 'hotel', 'motel', 'mountain-hotel');
+
 	protected $oldEnRentalTypes = array(
 
 	);
@@ -102,6 +104,11 @@ class ImportRentalTypes extends BaseImport {
 			$rentalType = $this->context->rentalTypeEntityFactory->create();
 			$rentalType->name = $this->createPhraseFromString('\Rental\Type', 'name', 'ACTIVE', $x['name'], 'en');
 			$rentalType->slug = $x['name'];
+
+			// hasClassification
+			if (in_array($rentalType->slug, $this->haveClassification)) {
+				$rentalType->hasClassification = 1;
+			}
 			
 			if (strlen($this->skPlurals[$x['name']][0]) != 0) {
 				$skTranslation = $rentalType->name->createTranslation($sk);

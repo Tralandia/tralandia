@@ -10,14 +10,17 @@ class ContactPresenter extends BasePresenter {
 	protected $contactFormFactory;
 
 	protected $faqCategoryRepositoryAccessor;
+	protected $userSiteReviewRepositoryAccessor;
 
 	public function injectDic(\Nette\DI\Container $dic) {
 		$this->faqCategoryRepositoryAccessor = $dic->faqCategoryRepositoryAccessor;
+		$this->userSiteReviewRepositoryAccessor = $dic->userSiteReviewRepositoryAccessor;
 	}
 
 	public function renderDefault() {
 
 		$this->template->categories = $this->faqCategoryRepositoryAccessor->get()->findAll();
+		$this->template->testimonials = $this->userSiteReviewRepositoryAccessor->get()->findAll();
 
 	}
 
