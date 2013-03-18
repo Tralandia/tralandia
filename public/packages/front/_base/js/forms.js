@@ -730,11 +730,6 @@
           map: map
         });
 
-        var marker = false;
-        geocoder.getLocations(latlng, function(r){
-        	console.log(r);
-        });
-
 		google.maps.event.addListener(map, 'click', function(event) {
 			
 			//set marker 
@@ -744,14 +739,20 @@
 						      map: map
 						  });
 			} else {
+
 				marker.setPosition(event.latLng);
 			}		 
 
 			// set geocoder
         	var geocoder = new google.maps.Geocoder();
-        	geocoder.geocode({ 'address': address} , function(results, status){
-        		console.log(results);
-        		console.log(status);
+        	geocoder.geocode({ 'latLng': event.latLng} , function(r, status){
+        		if(status == 'OK'){
+
+        			$('#frm-registrationForm-rental-address-address').val(r[0].formatted_address);
+
+        		} else {
+        			alert('address error');
+        		}
         	});
 
 		});
@@ -774,43 +775,13 @@
             map.setCenter(place.geometry.location);
             map.setZoom(17);  // Why 17? Because it looks good.
           }
-          var image = {
-            url: place.icon,
-            size: new google.maps.Size(71, 71),
-            origin: new google.maps.Point(0, 0),
-            anchor: new google.maps.Point(17, 34),
-            scaledSize: new google.maps.Size(35, 35)
-          };
-          marker.setIcon(image);
+
           marker.setPosition(place.geometry.location);
           marker.setVisible(true);
-
-          // var address = '';
-          // if (place.address_components) {
-          //   address = [
-          //     (place.address_components[0] && place.address_components[0].short_name || ''),
-          //     (place.address_components[1] && place.address_components[1].short_name || ''),
-          //     (place.address_components[2] && place.address_components[2].short_name || '')
-          //   ].join(' ');
-          // }
-
-          // infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
-          // infowindow.open(map, marker);
+          
         });
 
-        // Sets a listener on a radio button to change the filter type on Places
-        // Autocomplete.
-        function setupClickListener(id, types) {
-          var radioButton = document.getElementById(id);
-          google.maps.event.addDomListener(radioButton, 'click', function() {
-            autocomplete.setTypes(types);
-          });
-        }
-
-        setupClickListener('changetype-all', []);
-        setupClickListener('changetype-establishment', ['establishment']);
-        setupClickListener('changetype-geocode', ['geocode']);
-
+        return false;
         });
     };
     
@@ -820,7 +791,6 @@
 var maps = {};
 
 maps.mapInit = function(){
-	console.log('toto');
 	$("#frm-registrationForm-rental-address-address").formMapControl();
 }
 
