@@ -183,12 +183,19 @@ class ImportAmenities extends BaseImport {
 
 		// Separate Group
 		$amenityType = $this->context->rentalAmenityTypeRepositoryAccessor->get()->findOneBySlug('separate-groups');
-		$amenity = $this->context->rentalAmenityEntityFactory->create();
-		$amenity->type = $amenityType;
-		$amenity->name = $this->createNewPhrase($nameDictionaryType, 1011);
-		$amenity->slug = 'separate-groups';
-		if (in_array($amenity->slug, $this->importantAmenities)) $amenity->important = TRUE;
-		$this->model->persist($amenity);
+
+		$separateOptions = array(
+			array(100077, 'separate-groups-yes'),
+			array(100100, 'separate-groups-no'),
+		);
+
+		foreach ($separateOptions as $key => $value) {
+			$amenity = $this->context->rentalAmenityEntityFactory->create();
+			$amenity->type = $amenityType;
+			$amenity->name = $this->createNewPhrase($nameDictionaryType, $value[0]);
+			$amenity->slug = $value[1];
+			$this->model->persist($amenity);
+		}
 		$this->model->flush();
 
 		// Animals
@@ -199,7 +206,6 @@ class ImportAmenities extends BaseImport {
 			array('Small or medium size pets are allowed.', 'Malé a stredne veľké domáce zvieratá sú povolené.', 'medium-pets'),
 			array('All pets are allowed.', 'Všetky domáce zvieratá sú povolené.', 'any-pets'),
 		);
-		$amenity = $this->context->rentalAmenityEntityFactory->create();
 
 		foreach ($animalOptions as $key => $value) {
 			$name = $this->context->phraseEntityFactory->create();
