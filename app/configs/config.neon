@@ -212,7 +212,7 @@ factories:
 		implement: FrontModule\Forms\ITicketFormFactory
 
 	registrationFormFactory:
-		class: FrontModule\Forms\RegistrationForm(%country%)
+		class: FrontModule\Forms\RegistrationForm(%country%, %presenter%)
 		implement: FrontModule\Forms\IRegistrationFormFactory
 
 	searchFormFactory:

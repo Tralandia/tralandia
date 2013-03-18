@@ -5,9 +5,11 @@ use Doctrine\ORM\Query\Expr;
 use Entity\Location\Location;
 use Environment\Collator;
 use Model\Location\ILocationDecoratorFactory;
+use Nette\Application\UI\Presenter;
 use Nette\InvalidArgumentException;
 use Nette\Localization\ITranslator;
 use Nette\Utils\Strings;
+use Routers\BaseRoute;
 
 /**
  * LocationRepository class
@@ -109,7 +111,7 @@ class LocationRepository extends \Repository\BaseRepository {
 	{
 		$qb = $this->_em->createQueryBuilder();
 
-		$qb->select('l.id, n.id AS name')
+		$qb->select('l')
 			->from($this->_entityName, 'l')
 			->join('l.type', 't')
 			->join('l.name', 'n')
@@ -122,15 +124,21 @@ class LocationRepository extends \Repository\BaseRepository {
 	/**
 	 * @param \Nette\Localization\ITranslator $translator
 	 * @param \Environment\Collator $collator
+	 * @param \Nette\Application\UI\Presenter $presenter
 	 *
 	 * @return mixed
 	 */
-	public function getCountriesForSelect(ITranslator $translator, Collator $collator)
+	public function getCountriesForSelect(ITranslator $translator, Collator $collator, Presenter $presenter = NULL)
 	{
 		$rows = $this->findCountries();
 		$return = [];
 		foreach($rows as $row) {
-			$return[$row['id']] = $translator->translate($row['name']);
+			if($presenter) {
+				$key = $presenter->link('Registration:default', [BaseRoute::PRIMARY_LOCATION => $row]);
+			} else {
+				$key = $row->getId();
+			}
+			$return[$key] = $translator->translate($row->getName());
 		}
 
 		$collator->asort($return);

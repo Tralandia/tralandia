@@ -30,14 +30,14 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 	protected $country;
 
 	/**
+	 * @var \Nette\Application\UI\Presenter
+	 */
+	protected $uiPresenter;
+
+	/**
 	 * @var \Environment\Collator
 	 */
 	protected $collator;
-
-	/**
-	 * @var \Nette\Localization\ITranslator
-	 */
-	protected $translator;
 
 	/**
 	 * @var \Repository\Location\LocationRepository
@@ -66,17 +66,19 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 
 	/**
 	 * @param \Entity\Location\Location $country
+	 * @param \Nette\Application\UI\Presenter $presenter
 	 * @param \Environment\Collator $collator
 	 * @param \Doctrine\ORM\EntityManager $em
 	 * @param \Image\RentalImageManager $imageManager
 	 * @param \Nette\Localization\ITranslator $translator
 	 */
-	public function __construct(Location $country, Collator $collator, EntityManager $em, RentalImageManager $imageManager,
-								ITranslator $translator)
+	public function __construct(Location $country, Nette\Application\UI\Presenter $presenter,
+								Collator $collator, EntityManager $em,
+								RentalImageManager $imageManager, ITranslator $translator)
 	{
 		$this->country = $country;
+		$this->uiPresenter = $presenter;
 		$this->collator = $collator;
-		$this->translator = $translator;
 		$this->imageManager = $imageManager;
 		$this->locationRepository = $em->getRepository('\Entity\Location\Location');
 		$this->languageRepository = $em->getRepository('\Entity\Language');
@@ -88,9 +90,9 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 
 	public function buildForm()
 	{
-		$countries = $this->locationRepository->getCountriesForSelect($this->translator, $this->collator);
+		$countries = $this->locationRepository->getCountriesForSelect($this->translator, $this->collator, $this->uiPresenter);
+		$languages = $this->languageRepository->getForSelectWithLinks($this->translator, $this->collator, $this->uiPresenter);
 		$phonePrefixes = $this->locationRepository->getCountriesPhonePrefixes();
-		$languages = $this->languageRepository->getForSelect($this->translator, $this->collator);
 		$rentalTypes = $this->rentalTypeRepository->getForSelect($this->translator, $this->collator);
 
 		$this->addSelect('country', 'o1094', $countries)->setOption('help', $this->translate('o5956'));
@@ -163,22 +165,22 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 			//->setOption('help', $this->translate('o5956'))
 			;
 
-		$amenityPets = $this->amenityRepository->findByAnimalTypeForSelect($this->translator, $this->collator);
+		$amenityPets = $this->amenityRepository->findByAnimalTypeForSelect($this->getTranslator(), $this->collator);
 		$rentalContainer->addSelect('pet', 'o100079', $amenityPets)
 			//->setOption('help', $this->translate('o5956'))
 			;
 
-		$amenityBoard = $this->amenityRepository->findByBoardTypeForSelect($this->translator, $this->collator);
+		$amenityBoard = $this->amenityRepository->findByBoardTypeForSelect($this->getTranslator(), $this->collator);
 		$rentalContainer->addMultiOptionList('board', 'o100080', $amenityBoard)
 			//->setOption('help', $this->translate('o5956'))
 			;
 
-		$amenityImportant = $this->amenityRepository->findImportantForSelect($this->translator, $this->collator);
+		$amenityImportant = $this->amenityRepository->findImportantForSelect($this->getTranslator(), $this->collator);
 		$rentalContainer->addMultiOptionList('important', 'o100081', $amenityImportant)
 			//->setOption('help', $this->translate('o5956'))
 			;
 
-		$amenityAvailability = $this->amenityRepository->findByAvailabilityTypeForSelect($this->translator, $this->collator);
+		$amenityAvailability = $this->amenityRepository->findByAvailabilityTypeForSelect($this->getTranslator(), $this->collator);
 		$rentalContainer->addSelect('ownerAvailability', 'o100082', $amenityAvailability)
 			//->setOption('help', $this->translate('o5956'))
 			;
@@ -228,9 +230,10 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 interface IRegistrationFormFactory {
 	/**
 	 * @param \Entity\Location\Location $country
+	 * @param \Nette\Application\UI\Presenter $presenter
 	 *
 	 * @return RegistrationForm
 	 */
-	public function create(\Entity\Location\Location $country);
+	public function create(\Entity\Location\Location $country, Nette\Application\UI\Presenter $presenter);
 }
 

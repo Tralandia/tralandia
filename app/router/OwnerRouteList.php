@@ -2,6 +2,7 @@
 
 namespace Routers;
 
+use Entity\Location\Location;
 use Kdyby;
 use Nette;
 use Nette\Application\Routers\Route;
