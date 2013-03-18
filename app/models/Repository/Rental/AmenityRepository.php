@@ -44,6 +44,7 @@ class AmenityRepository extends \Repository\BaseRepository
 	public function findImportantForSelect(ITranslator $translator, Collator $collator) {
 		$rows = $this->findByImportant(TRUE);
 		foreach($rows as $row) {
+			if ($row->type->slug == 'animal') continue;
 			$return[$row->id] = $translator->translate($row->name);
 		}
 		$collator->asort($return);

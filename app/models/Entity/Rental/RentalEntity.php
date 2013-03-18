@@ -863,12 +863,12 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 	 * @param \Entity\Language
 	 * @return \Entity\Rental\Rental
 	 */
-	public function addSpokenLanguage(\Entity\Language $spokenLanguag)
+	public function addSpokenLanguage(\Entity\Language $spokenLanguage)
 	{
-		if(!$this->spokenLanguages->contains($spokenLanguag)) {
-			$this->spokenLanguages->add($spokenLanguag);
+		if(!$this->spokenLanguages->contains($spokenLanguage)) {
+			$this->spokenLanguages->add($spokenLanguage);
 		}
-		$spokenLanguag->addRental($this);
+		$spokenLanguage->addRental($this);
 
 		return $this;
 	}
@@ -877,10 +877,10 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 	 * @param \Entity\Language
 	 * @return \Entity\Rental\Rental
 	 */
-	public function removeSpokenLanguage(\Entity\Language $spokenLanguag)
+	public function removeSpokenLanguage(\Entity\Language $spokenLanguage)
 	{
-		$this->spokenLanguages->removeElement($spokenLanguag);
-		$spokenLanguag->removeRental($this);
+		$this->spokenLanguages->removeElement($spokenLanguage);
+		$spokenLanguage->removeRental($this);
 
 		return $this;
 	}
@@ -1159,12 +1159,12 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 	 * @param \Entity\Rental\Image
 	 * @return \Entity\Rental\Rental
 	 */
-	public function addImag(\Entity\Rental\Image $imag)
+	public function addImage(\Entity\Rental\Image $image)
 	{
-		if(!$this->images->contains($imag)) {
-			$this->images->add($imag);
+		if(!$this->images->contains($image)) {
+			$this->images->add($image);
 		}
-		$imag->setRental($this);
+		$image->setRental($this);
 
 		return $this;
 	}
@@ -1173,10 +1173,10 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 	 * @param \Entity\Rental\Image
 	 * @return \Entity\Rental\Rental
 	 */
-	public function removeImag(\Entity\Rental\Image $imag)
+	public function removeImage(\Entity\Rental\Image $image)
 	{
-		$this->images->removeElement($imag);
-		$imag->unsetRental();
+		$this->images->removeElement($image);
+		$image->unsetRental();
 
 		return $this;
 	}
@@ -1340,12 +1340,12 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 	 * @param \Entity\Rental\Service
 	 * @return \Entity\Rental\Rental
 	 */
-	public function addServic(\Entity\Rental\Service $servic)
+	public function addService(\Entity\Rental\Service $service)
 	{
-		if(!$this->services->contains($servic)) {
-			$this->services->add($servic);
+		if(!$this->services->contains($service)) {
+			$this->services->add($service);
 		}
-		$servic->setRental($this);
+		$service->setRental($this);
 
 		return $this;
 	}
@@ -1354,10 +1354,10 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 	 * @param \Entity\Rental\Service
 	 * @return \Entity\Rental\Rental
 	 */
-	public function removeServic(\Entity\Rental\Service $servic)
+	public function removeService(\Entity\Rental\Service $service)
 	{
-		$this->services->removeElement($servic);
-		$servic->unsetRental();
+		$this->services->removeElement($service);
+		$service->unsetRental();
 
 		return $this;
 	}
