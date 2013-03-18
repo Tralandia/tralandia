@@ -13,6 +13,11 @@ use Nette\Localization\ITranslator;
 class AmenityRepository extends \Repository\BaseRepository
 {
 
+	public function findByAnimalTypeForSelect(ITranslator $translator, Collator $collator)
+	{
+		return $this->findByTypeForSelect('animal', $translator, $collator);
+	}
+
 	public function findByLocationTypeForSelect(ITranslator $translator, Collator $collator)
 	{
 		return $this->findByTypeForSelect('other', $translator, $collator);
