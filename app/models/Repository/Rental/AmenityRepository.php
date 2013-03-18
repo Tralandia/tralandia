@@ -15,7 +15,21 @@ class AmenityRepository extends \Repository\BaseRepository
 
 	public function findByAnimalTypeForSelect(ITranslator $translator, Collator $collator)
 	{
-		return $this->findByTypeForSelect('animal', $translator, $collator);
+		$qb = $this->_em->createQueryBuilder();
+		
+		$qb->select('e')
+			->from($this->_entityName, 'e')
+			->leftJoin('e.type', 't')
+			->andWhere($qb->expr()->eq('t.slug', ':type'))->setParameter('type', 'animal')
+			->orderBy('e.sorting', 'ASC');
+
+		$rows = $qb->getQuery()->getResult();
+		$return = [];
+		foreach($rows as $row) {
+			$return[$row->id] = $translator->translate($row->name);
+		}
+
+		return $return;
 	}
 
 	public function findByLocationTypeForSelect(ITranslator $translator, Collator $collator)
