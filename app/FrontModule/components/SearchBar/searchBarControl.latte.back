@@ -2,7 +2,7 @@
     <aside class="innerPadding baseRadius baseBorder innerPaddingLeft noTopMargin">
         <div class="">
             <form data-url="{plink searchSuggestion}" data-conditions-text="#Please enter % more character" data-placeholder="#Search" class="searchForm">                
-                <div class="input-filltext">
+                <div class="inputfilterSearch">
 
                 <input type="hidden" class="suggestion" id="serachSidebar" name="serachSidebar"/>
            

@@ -53,21 +53,32 @@ class SearchForm extends BaseForm {
 		$languages = $this->searchOptionGenerator->generateLanguage();
 
 		$this->addSelect('country', 'o1070', $countries)
-			->setPrompt('o1070');
+			->setPrompt('o1070')
+			->setAttribute('data-placeholder',$this->translate('o1070'));
+
 		$this->addSelect('location', 'o1070', $locations)
-			->setPrompt('o1070');
+			->setPrompt('')
+			->setAttribute('data-placeholder',$this->translate('o1070'));
+
 		$this->addSelect('rentalType', 'o20926', $rentalTypes)
-			->setPrompt('o20926');
+			->setPrompt('')
+			->setAttribute('data-placeholder',$this->translate('o20926'));
 
 		$this->addSelect('priceFrom', 'o100093', $prices)
-			->setPrompt('o100093');
-		$this->addSelect('priceTo', '100094', $prices)
-			->setPrompt('o100094');
+			->setPrompt('')
+			->setAttribute('data-placeholder',$this->translate('o100093'));
+
+		$this->addSelect('priceTo', 'o100094', $prices)
+			->setPrompt('')
+			->setAttribute('data-placeholder',$this->translate('o100094'));
 
 		$this->addSelect('capacity', 'o20928', $capacity)
-			->setPrompt('o20928');
+			->setPrompt('')
+			->setAttribute('data-placeholder',$this->translate('o20928'));
+
 		$this->addSelect('spokenLanguage', 'o20930', $languages)
-			->setPrompt('o20930');
+			->setPrompt('')
+			->setAttribute('data-placeholder',$this->translate('o20930'));
 
 		$this->addSubmit('submit', 'o100092');
 	}
