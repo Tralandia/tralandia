@@ -20,8 +20,7 @@
 
 	{include #fieldset, text => 'o100085'}
 	{var $rental = $form['rental']}
-	{include #select, control => $rental['type']}
-	{include #select, control => $rental['classification'] , class => 'classification' }
+	{include #rentalType, control => $rental['type']}
 	{include #text, control => $rental['price']}
 	{include #text, control => $rental['maxCapacity']}
 	{include #select, control => $rental['ownerAvailability']}

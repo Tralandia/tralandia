@@ -49,6 +49,14 @@ class Type extends \Entity\BaseEntity {
 		return $this;
 	}
 
+	/**
+	 * @return bool
+	 */
+	public function hasClassification()
+	{
+		return $this->hasClassification;
+	}
+
 	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		

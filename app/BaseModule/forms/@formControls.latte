@@ -607,3 +607,17 @@
 		<i n:ifset="$icon" class="{$icon}"></i> {$control->caption}
 	</button>
 	{/define #button}
+
+{*
+	Calendar Container -------------------------------------------
+	@param $control \Nette\Forms\Controls\CalendarButton
+*}
+{define #rentalType}
+	{var
+		$_control = $control;
+		$container = $control;
+	}
+	{?unset($control)}
+	{include #select, control => $container['type']}
+	{include #select, control => $container['classification'] , class => 'classification' }
+{/define #rentalType}
