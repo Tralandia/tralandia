@@ -46,7 +46,7 @@ class ImportAmenities extends BaseImport {
 
 		$en = $this->context->languageRepositoryAccessor->get()->findOneByIso('en');
 
-		$nameDictionaryType = $this->createPhraseType('\Rental\Amenity', 'name', 'ACTIVE', array('pluralsRequired' => TRUE));
+		$nameDictionaryType = $this->createPhraseType('\Rental\Amenity', 'name', 'ACTIVE', array('pluralVariationsRequired' => TRUE));
 		$this->createPhraseType('\Rental\AmenityType', 'name', 'ACTIVE');
 		$this->model->flush();
 
