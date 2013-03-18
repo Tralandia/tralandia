@@ -16,6 +16,7 @@ class AmenityRepository extends \Repository\BaseRepository
 	public function findByAnimalTypeForSelect(ITranslator $translator, Collator $collator)
 	{
 		$qb = $this->_em->createQueryBuilder();
+		
 		$qb->select('e')
 			->from($this->_entityName, 'e')
 			->leftJoin('e.type', 't')
