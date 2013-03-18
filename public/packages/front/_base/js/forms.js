@@ -731,9 +731,9 @@
         });
 
         var marker = false;
-        geocoder.getLocations(latlng, function(r){
-        	console.log(r);
-        });
+        // geocoder.getLocations(latlng, function(r){
+        // 	console.log(r);
+        // });
 
 		google.maps.event.addListener(map, 'click', function(event) {
 			
@@ -749,9 +749,25 @@
 
 			// set geocoder
         	var geocoder = new google.maps.Geocoder();
-        	geocoder.geocode({ 'address': address} , function(results, status){
-        		console.log(results);
-        		console.log(status);
+        	geocoder.geocode({ 'latLng': event.latLng} , function(r, status){
+        		if(status == 'OK'){
+
+        			$('#frm-registrationForm-rental-address-address').val(r[0].formatted_address);
+        			// console.log(r);
+			        //   var address = '';
+
+			        //     address = [
+			        //       (r[0].address_components[0] && r[0].address_components[0].short_name || ''),
+			        //       (r[0].address_components[1] && r[0].address_components[1].short_name || ''),
+			        //       (r[0].address_components[2] && r[0].address_components[2].short_name || '')
+			        //     ].join(' ');
+
+			        //   infowindow.setContent('<div><strong>' + r[0].name + '</strong><br>' + address);
+			        //   infowindow.open(map, marker);
+
+        		} else {
+        			alert('address error');
+        		}
         	});
 
 		});
