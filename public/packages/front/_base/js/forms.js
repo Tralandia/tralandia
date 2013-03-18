@@ -730,8 +730,6 @@
           map: map
         });
 
-
-
 		google.maps.event.addListener(map, 'click', function(event) {
 			
 			//set marker 
@@ -780,10 +778,10 @@
 
           marker.setPosition(place.geometry.location);
           marker.setVisible(true);
-
+          
         });
 
-
+        return false;
         });
     };
     
