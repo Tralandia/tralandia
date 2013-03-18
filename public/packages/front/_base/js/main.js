@@ -261,9 +261,15 @@ $(document).ready(function(){
 		return false;
 	}); 
 
-	$("table.formTable select.select2").select2({dropdownCssClass: "mainForm"}); 
-	$(".reservationform select.select2").select2({dropdownCssClass: "reservationForm"}); 
-	//$("#sidebar select.select2").select2(); 
+
+	$(".reservationform select.select2:not(#frm-registrationForm-rental-type)").select2({dropdownCssClass: "reservationForm"}); 
+	$('#frm-registrationForm-rental-type,#frm-registrationForm-rental-classification,#frm-registrationForm-rental-pet,#frm-registrationForm-rental-ownerAvailability').select2({
+		dropdownCssClass: "mainForm",
+		allowClear: true,
+		minimumResultsForSearch: 'X',
+	}); 
+
+	$("table.formTable select.select2:not(#frm-registrationForm-rental-type,#frm-registrationForm-rental-classification,#frm-registrationForm-rental-pet,#frm-registrationForm-rental-ownerAvailability)").select2({dropdownCssClass: "mainForm"}); 
 
 	var A = new App();	
 
