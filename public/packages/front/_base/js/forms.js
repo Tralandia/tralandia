@@ -709,14 +709,19 @@
         return this.each(function(){
             (new $.formMapControl(this,options));
 
-		// google.maps.event.addDomListener(window, 'load', initialize);
+
+        var lat = -33.8688,
+        	lng = 151.2195,
+        	latlng = new google.maps.LatLng(lat, lng),
+        	image = 'http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png'; 
 
         var mapOptions = {
-          center: new google.maps.LatLng(-33.8688, 151.2195),
+          center: latlng,
           zoom: 13,
           scrollwheel: false,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         };
+        
         var map = new google.maps.Map(document.getElementById('map_canvas'),
           mapOptions);
 
@@ -730,32 +735,32 @@
           map: map
         });
 
-		google.maps.event.addListener(map, 'click', function(event) {
+		// google.maps.event.addListener(map, 'click', function(event) {
 			
-			//set marker 
-			if(!marker){
-				marker = new google.maps.Marker({
-						      position: event.latLng,
-						      map: map
-						  });
-			} else {
+		// 	//set marker 
+		// 	if(!marker){
+		// 		marker = new google.maps.Marker({
+		// 				      position: event.latLng,
+		// 				      map: map
+		// 				  });
+		// 	} else {
 
-				marker.setPosition(event.latLng);
-			}		 
+		// 		marker.setPosition(event.latLng);
+		// 	}		 
 
-			// set geocoder
-        	var geocoder = new google.maps.Geocoder();
-        	geocoder.geocode({ 'latLng': event.latLng} , function(r, status){
-        		if(status == 'OK'){
+		// 	// set geocoder
+  //       	var geocoder = new google.maps.Geocoder();
+  //       	geocoder.geocode({ 'latLng': event.latLng} , function(r, status){
+  //       		if(status == 'OK'){
 
-        			$('#frm-registrationForm-rental-address-address').val(r[0].formatted_address);
+  //       			$('#frm-registrationForm-rental-address-address').val(r[0].formatted_address);
 
-        		} else {
-        			alert('address error');
-        		}
-        	});
+  //       		} else {
+  //       			alert('address error');
+  //       		}
+  //       	});
 
-		});
+		// });
 
         google.maps.event.addListener(autocomplete, 'place_changed', function() {
           infowindow.close();
