@@ -162,6 +162,7 @@ class ImportAmenities extends BaseImport {
 			$amenity->name = $name;
 			$amenity->slug = $value[0];
 			$amenity->oldId = $value[2];
+			$amenity->sorting = $key;
 			$this->model->persist($amenity);
 			d($amenity, $name);
 		}
@@ -218,6 +219,7 @@ class ImportAmenities extends BaseImport {
 			$amenity->name = $name;
 			$amenity->slug = $value[2];
 			$amenity->important = TRUE;
+			$amenity->sorting = $key;
 			$this->model->persist($amenity);
 			d($amenity, $name);
 		}

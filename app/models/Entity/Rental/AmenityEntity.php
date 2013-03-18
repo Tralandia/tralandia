@@ -44,6 +44,11 @@ class Amenity extends \Entity\BaseEntityDetails {
 	 */
 	protected $important = FALSE;
 
+	/**
+	 * @var integer
+	 * @ORM\Column(type="integer")
+	 */
+	protected $sorting = 10000;
 
 	/**
 	 * @param string
@@ -171,5 +176,24 @@ class Amenity extends \Entity\BaseEntityDetails {
 	public function getImportant()
 	{
 		return $this->important;
+	}
+		
+	/**
+	 * @param integer
+	 * @return \Entity\Rental\Amenity
+	 */
+	public function setSorting($sorting)
+	{
+		$this->sorting = $sorting;
+
+		return $this;
+	}
+		
+	/**
+	 * @return integer|NULL
+	 */
+	public function getSorting()
+	{
+		return $this->sorting;
 	}
 }
