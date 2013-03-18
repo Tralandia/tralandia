@@ -33,6 +33,12 @@ class Type extends \Entity\BaseEntity {
 	protected $rentals;
 
 	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean")
+	 */
+	protected $hasClassification = FALSE;
+
+	/**
 	 * @param string
 	 * @return \Entity\Rental\AmenityType
 	 */
@@ -112,5 +118,24 @@ class Type extends \Entity\BaseEntity {
 	public function getRentals()
 	{
 		return $this->rentals;
+	}
+		
+	/**
+	 * @param boolean
+	 * @return \Entity\Rental\Type
+	 */
+	public function setHasClassification($hasClassification)
+	{
+		$this->hasClassification = $hasClassification;
+
+		return $this;
+	}
+		
+	/**
+	 * @return boolean|NULL
+	 */
+	public function getHasClassification()
+	{
+		return $this->hasClassification;
 	}
 }

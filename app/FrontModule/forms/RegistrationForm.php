@@ -98,10 +98,12 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 
 		$this->addText('email', 'o1096')
 			->setOption('help', $this->translate('o3095'))
+			->setOption('prepend', '<i class="icon-envelope"></i>')
 			->setAttribute('placeholder', 'email@email.com')
 			;
 		$this->addPassword('password', 'o997')
 			->setOption('help', $this->translate('o3096'))
+			->setOption('prepend', '<i class="icon-lock"></i>')
 			;
 
 		$this->addText('name', 'o100070')
@@ -112,6 +114,7 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 		
 		$this->addText('url', 'o977')
 			->setOption('help', $this->translate('o978'))
+			->setOption('prepend', 'http://')
 			;
 
 		$rentalContainer = $this->addContainer('rental');
@@ -120,7 +123,7 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 		$amenityLocation = $this->amenityRepository->findByLocationTypeForSelect($this->translator, $this->collator);
 
 		$rentalContainer->addMultiOptionList('amenityLocation', 'Amenity Location')
-			->setOption('help', $this->translate('o5956'))
+			->setOption('help', '')
 		;
 
 
@@ -145,6 +148,7 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 		$rentalContainer->addText('maxCapacity', 'o100072')
 			->addRule(self::RANGE, $this->translate('o100074'), [1, 1000])
 			->setOption('help', $this->translate('o100073'))
+			->setOption('prepend', $this->translate('o490', 2).':')
 			;
 
 //		$rentalContainer->addText('bedroomCount', 'o100075')

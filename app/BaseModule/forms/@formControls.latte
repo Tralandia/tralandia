@@ -1,8 +1,6 @@
 {*
 	Fieldset -------------------------------------------
 	@param $control \Nette\Forms\Controls\BaseControl
-	@param $prepend array
-	@param $append array
 	*}
 	{define #fieldset}
 	{default $text = ''}
@@ -14,12 +12,8 @@
 	{*
 	Text Control -------------------------------------------
 	@param $control \Nette\Forms\Controls\BaseControl
-	@param $prepend array
-	@param $append array
 	*}
 	{define #text}
-	{default $prepend = NULL}
-	{default $append = NULL}
 	{include #baseControl, control => $control}
 	{/define #text}
 
@@ -27,8 +21,6 @@
 	{*
 	Text Area Control -------------------------------------------
 	@param $control \Nette\Forms\Controls\BaseControl
-	@param $prepend array
-	@param $append array
 	*}
 	{define #textArea}
 	{include #baseControl, control => $control}
@@ -38,12 +30,8 @@
 	{*
 	Password Control -------------------------------------------
 	@param $control \Nette\Forms\Controls\BaseControl
-	@param $prepend array
-	@param $append array
 	*}
 	{define #password}
-	{default $prepend = ['text' => '<i class="icon-lock"></i>']}
-	{default $append = NULL}
 	{include #baseControl, control => $control}
 	{/define #password}
 
@@ -51,12 +39,8 @@
 	{*
 	Email Control -------------------------------------------
 	@param $control \Nette\Forms\Controls\BaseControl
-	@param $prepend array
-	@param $append array
 	*}
 	{define #email}
-	{default $prepend = ['text' => '<i class="icon-envelope"></i>']}
-	{default $append = NULL}
 	{include #baseControl, control => $control}
 	{/define #email}
 
@@ -64,12 +48,8 @@
 	{*
 	Url Control -------------------------------------------
 	@param $control \Nette\Forms\Controls\BaseControl
-	@param $prepend array
-	@param $append array
 	*}
 	{define #url}
-	{default $prepend = ['text' => 'http://']}
-	{default $append = NULL}
 	{include #baseControl, control => $control}
 	{/define #url}
 
@@ -289,7 +269,7 @@
 	</td>
 
 	<td>
-		<span class="help">{$container->getDescription('description')}</span>
+		<span class="help">{$container->getOption('help')}</span>
 		<span class="invalidAlert">{include #controlErrors, errors => $container->getAllErrors()}</span>
 	</td>
 </tr>
@@ -542,7 +522,7 @@
 			</div>
 
 			<div class="span9">
-			<p>{_o1657}</p>
+			<p>{_o100097}</p>
 			</div>
 
 		</div>
@@ -592,13 +572,30 @@
 			<button type="submit" class="btn-orange" name="{$control->getHtmlName()}" id="{$control->getHtmlId()}">
 				<i class="icon"></i> {$control->caption}
 			</button>
+		</td>
+	</tr>
+	{/define #submit}
+
+{*
+	Submit / Cancel Button Container -------------------------------------------
+	@param $control \Nette\Forms\Controls\SubmitButton
+	*}
+	{define #submitCancel}
+	{default $class = null}
+	<tr>
+		<td>
+
+		</td>
+		<td colspan="2">
+			<button type="submit" class="btn-orange" name="{$control->getHtmlName()}" id="{$control->getHtmlId()}">
+				<i class="icon"></i> {$control->caption}
+			</button>
 			<button type="button" class="btn-cancel" name="cancel">
 				<i class="icon-trash"></i> {_o100089}
 			</button>
 		</td>
 	</tr>
-	{/define #submit}
-
+	{/define #submitCancel}
 
 	{*
 	Button Container -------------------------------------------
