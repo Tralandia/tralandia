@@ -28,7 +28,6 @@ class AmenityRepository extends \Repository\BaseRepository
 			$return[$row->id] = $translator->translate($row->name);
 		}
 
-
 		return $return;
 	}
 
