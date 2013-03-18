@@ -1,0 +1,45 @@
+<div class="span12" id="favoritesStaticContainer">
+	<div class="favorites2">
+		<ul class="nav nav-tabs" id="myTab">
+			<li class="active"><a href="#favoritesNavFavorites">Favorites</a></li>
+			<li><a href="#favoritesNavLastSeen">last seen </a></li>
+			<li><a href="#favoritesNavSerchResults">Search results</a></li>
+			<li class="pull-right"><a href="#"><i class="entypo-share"></i></a></li>
+		</ul>
+		
+		<div class="cover">
+			<a href="#" class="leftArrow entypo-prev"></a>
+			<div class="tab-content">
+
+
+				<div class="tab-pane active" id="favoritesNavFavorites">
+					<div class="content jscrollPane">
+						<ul id="scrollInnerContent">
+							<li class="template" rel="~id~" >
+								<a href="#" class="removeLink"></a>
+								<a href="~url~" title="~title~" class="link">
+									<div class="checked entypo-eye"></div>
+								</a>
+							</li>
+							{foreach $favoriteRentals as $rental}
+							{var $image = $rental->getMainImage()}
+							{var $seen = in_array($rental->getId(), $favoriteVisitedRentals)}
+							<li rel="{$rental->getId()}" style="background-image: url({fakeImage});">
+								<a href="#" class="removeLink"></a>
+								<a n:href="Rental:detail $rental" class="link">
+									<div n:if="$seen" class="checked entypo-eye"></div>
+								</a>
+							</li>
+							{/foreach}
+						</ul>
+					</div>
+				</div>
+
+
+				<div class="tab-pane" id="favoritesNavLastSeen">rthryjty</div>
+				<div class="tab-pane" id="favoritesNavSerchResults">tynhfgb</div>
+			</div>
+			<a href="#" class="rightArrow entypo-slider-right"></a>
+		</div>
+	</div>
+</div>

@@ -125,6 +125,7 @@ parameters:
 					- front/header/less/header.less
 					# favorites
 					- front/favorites/less/favorites.less
+					- front/favorites/less/favorites2.less
 					# rental detail 
 					- front/rentalDetail/less/rentalDetail.less
 					# rental navigation
