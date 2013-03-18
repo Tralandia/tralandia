@@ -41,6 +41,8 @@ class AddressContainer extends BaseContainer
 		$this->addHidden('location');
 		$this->addHidden('latitude');
 		$this->addHidden('longitude');
+
+		$this->setDefaultValues();
 	}
 
 	public function getMainControl()
