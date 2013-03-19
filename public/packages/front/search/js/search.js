@@ -127,7 +127,7 @@ function updateCriteriaCount(){
 		  type: 'POST',
 		}).done(function(d) {
 			console.log(d);
-		  $('#getSearchCount').html(d.count+' '+label);
+		  $('#getSearchCount').html(d.count);
 		});	
 }
 
@@ -182,6 +182,7 @@ $(function(){
 		$(this).parent().removeClass('selected');
 		$(this).parent().find('.select2').select2('val','');
 		$(this).remove();
+		$('#select2-drop').remove();
 		updateCriteriaCount();
 		return false;
 	});
@@ -191,6 +192,7 @@ $(function(){
 		$(this).parent().removeClass('selected');
 		$(this).parent().find('.select2').select2('val','');
 		$(this).remove();
+		$('#select2-drop').remove();
 		updateCriteriaCount();
 		return false;
 	});
@@ -198,6 +200,7 @@ $(function(){
 
 
 });
+
 
 
 
