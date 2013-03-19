@@ -302,13 +302,21 @@ class ImportRentals extends BaseImport {
 				$sort = 0;
 				$temp = array_chunk($temp, 6);
 				foreach ($temp as $key => $value) {
-					$row = $context->rentalPricelistRowRepositoryAccessor->get()->createNew(FALSE);
-					$row->sort = $sort; $sort++;
-					$row->roomCount = $value[0];
-					if(isset($roomTypes[$value[1]])) $row->roomType = $roomTypes[$value[1]];
-					$row->bedCount = $value[2];
-					$row->extraBedCount = $value[3];
+					$value[4] = isset($value[4]) ? $value[4] : 0;
+					$value[5] = isset($value[5]) ? $value[5] : 0;
 
+					if (!$value[4]) continue;
+
+					$row = $context->rentalPricelistRowRepositoryAccessor->get()->createNew(FALSE);
+					$rental->addPricelistRow($row);
+					$row->sort = $sort; $sort++;
+					$row->roomCount = isset($value[0]) ? $value[0] : 0;
+					if(isset($roomTypes[$value[1]])) $row->roomType = $roomTypes[$value[1]];
+					$row->bedCount = isset($value[2]) ? $value[2] : 0;
+					$row->extraBedCount = isset($value[3]) ? $value[3] : 0;
+
+
+					$t = NULL;
 					if ($value[5] != $rental->primaryLocation->defaultCurrency->oldId) {
 						$oldCurrency = $context->currencyRepositoryAccessor->get()->findOneByOldId($value[5]);
 						if ($oldCurrency) {
@@ -318,8 +326,13 @@ class ImportRentals extends BaseImport {
 						$t = new \Extras\Types\Price($value[4], $rental->primaryLocation->defaultCurrency);
 					}
 
-					$rental->addPricelistRow($row);
-					$row->price = $t;
+					if ($t !== NULL) {
+						$row->price = $t;
+					}
+
+					if (!$row->price) {
+						d($row, $rental->oldId); exit;
+					}
 				}
 			}
 			$model->persist($rental);
@@ -387,7 +400,6 @@ class ImportRentals extends BaseImport {
 			$rentalDecorator->calculateRank();
 			//d($rental->phones);
 			$model->persist($rental);
-			$this->savedVariables['lastRentalImported'] = $x['id'];
 		}
 		$model->flush();
 		$this->saveVariables();

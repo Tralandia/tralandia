@@ -32,7 +32,9 @@ class ImportPresenter extends Presenter {
 		'http://www.sk.tra.com/import?importSection=users&subsection=importAdmins',
 		'http://www.sk.tra.com/import?importSection=users&subsection=importManagers',
 		'http://www.sk.tra.com/import?importSection=users&subsection=importTranslators',
-		'http://www.sk.tra.com/import?importSection=users&subsection=importOwners',
+		'http://www.sk.tra.com/import?importSection=users&subsection=importOwners&countryIso=sk',
+		'http://www.sk.tra.com/import?importSection=users&subsection=importOwners&countryIso=cz',
+		'http://www.sk.tra.com/import?importSection=users&subsection=importOwners&countryIso=hu',
 		'http://www.sk.tra.com/import?importSection=users&subsection=importVisitors',
 		'http://www.sk.tra.com/import?importSection=rentalTypes',
 		'http://www.sk.tra.com/import?importSection=rentalInformation',
@@ -155,7 +157,6 @@ class ImportPresenter extends Presenter {
 			$import = new $className($this->context, $this);
 			if(!$import->savedVariables['importedSections'][$section] || !Arrays::get($import->sections, array($section, 'saveImportStatus'), TRUE)) {
 				$import->developmentMode = (bool)$this->session->developmentMode;
-
 			
 				if (isset($this->params['subsection'])) {
 					$subsection = $this->params['subsection'];
