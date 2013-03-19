@@ -63,22 +63,12 @@ class ImportRentals extends BaseImport {
 		$now = time();
 
 		if ($this->developmentMode == TRUE) {
-			//$r = q('select * from objects where id = 7116');
-			//$r = q('select * from objects where country_id = 46 order by rand() limit 3');
-			$existingIds = array();
-			if (count($existingIds)) {
-
-			} else {
-
-			}
-			$r = q('select * from objects where country_id = 46 order by id');
+			$countryId = qc('select id from countries where iso = "'.$this->presenter->getParameter('countryIso').'"');
+			//d($this->presenter->getParameter('countryIso'), $countryId); exit;
+			$r = q('select * from objects where country_id = '.$countryId.' order by id limit 500');
 		} else {
 			$existingIds = array();
-			if (count($existingIds)) {
-				$r = q('select * from objects where id id > '.$this->savedVariables['lastRentalImported'].' order by id asc limit 500');
-			} else {
-				$r = q('select * from objects order by id asc limit 500');
-			}
+			exit('dorobit liveImport do ImportRentals.php');
 		}
 
 		$rentalIdIncrement = 100;
@@ -246,7 +236,9 @@ class ImportRentals extends BaseImport {
 			}
 
 			// Amenities Separate Groups
-			if ($x['separate_groups'] == 1) $rental->addAmenity($context->rentalAmenityRepositoryAccessor->get()->findOneBySlug('separate-groups'));
+			if ($x['separate_groups'] == 1) {
+				$rental->addAmenity($context->rentalAmenityRepositoryAccessor->get()->findOneBySlug('separate-groups-yes'));
+			}
 
 			// Interview
 			$temp = unserialize(stripslashes($x['interview']));
