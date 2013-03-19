@@ -106,27 +106,20 @@ class BaseRepository extends EntityRepository {
 	/**
 	 * @param \Nette\Localization\ITranslator $translator
 	 * @param \Environment\Collator $collator
-	 * @param Presenter $presenter
 	 *
 	 * @return array
 	 */
-	public function getForSelectWithLinks(ITranslator $translator, Collator $collator, Presenter $presenter = NULL)
+	public function getForSelect(ITranslator $translator, Collator $collator)
 	{
 		$return = [];
 		$rows = $this->findAll();
 		foreach($rows as $row) {
-			if($presenter) {
-				$key = $presenter->link('Registration:default', [BaseRoute::LANGUAGE => $row]);
-			} else {
-				$key = $row->getId();
-			}
-			$return[$key] = $translator->translate($row->getName());
+			$return[$row->id] = $translator->translate($row->name);
 		}
 		$collator->asort($return);
 
 		return $return;
 	}
-
 
 	public function deleteAll() {
 		$query = $this->_em->createQueryBuilder();

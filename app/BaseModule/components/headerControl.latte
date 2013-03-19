@@ -14,17 +14,37 @@
 						<li class="topicon"><a n:href=":Owner:Rental:add" class="red"><i class="entypo-plus"></i><strong> {_o793}</strong></a> </li>
 					*}
 
-					<li class="home topicon"><a href="{plink :Front:Home:default}"><i class="entypo-home"></i>
-					{_o100042}</a></li>
-					<li class="topicon edit"><a href="{plink :Owner:Rental:edit}"><i class="entypo-edit"></i>{_o100043}</a>
-					</li>
-					<li class="topicon"><a href="{plink :Owner:Rental:add}" class="red"><i class="entypo-plus2"></i><strong>{_o100044}</strong></a></li>
+					{if $loggedUser}
+						<li class="topicon">
+							<a href="{plink :Owner:Rental:firstRental}"><i class="entypo-edit"></i><b>{$loggedUser->getLogin()}</b></a>
+						</li>
+						<li class="topicon">
+							{$loggedUser->getRole()->getName()}</a>
+						</li>
+						<li class="topicon">
+							<a href="{plink Sign:out}"><i class="entypo-edit"></i>#logout</a>
+						</li>
+					{else}
+						<li class="home topicon">
+							<a href="{$homepageUrl}"><i class="entypo-home"></i> {_o100042}</a>
+						</li>
+						<li class="topicon edit">
+							<a href="{plink Sign:in}"><i class="entypo-edit"></i>{_o100043}</a>
+						</li>
+						<li class="topicon">
+							<a href="{plink Registration:}" class="red">
+								<i class="entypo-plus2"></i><strong>{_o100044}</strong>
+							</a>
+						</li>
 
-					<li>
-						<div class="dropdown lang">
-							<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="langMenuOptionsOpen">{_$environment->getLanguage()->name} <i class="entypo-chevron-down"></i></a>
-						</div>
-					</li>
+						<li>
+							<div class="dropdown lang">
+								<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="langMenuOptionsOpen">
+									{_$environment->getLanguage()->name} <i class="entypo-chevron-down"></i>
+								</a>
+							</div>
+						</li>
+					{/if}
 
 				</ul>
 
@@ -51,11 +71,10 @@
 					<a href="{$homepageUrl}" title="{_$homepageSeo->getTitle()}"></a>
 				</div>
 				<div id="siteName">
-					<a href="{plink :Front:Home:default language => $language}">
-						{$domainHost}<span>{$domainExtension}</span>
+					<a href="{$homepageUrl}"> {$domainHost}<span>{$domainExtension}</span>
 					</a>
 				</div>
-				<h1><a href="{plink :Front:Home:default language => $language}">{$slogan}</a></h1>
+				<h1><a href="{$homepageUrl}">{$slogan}</a></h1>
 			</div>
 			<div class="gradiendEnd"></div>
 

@@ -84,6 +84,8 @@ class RouterFactory
 
 		$router[] = $frontRouter = new RouteList('Front');
 
+		$frontRouter[] = $this->frontRouteFactory->create();
+
 		$mask = '//[!<language ([a-z]{2}|www)>.<primaryLocation [a-z]{2,3}>.%domain%/]front/<presenter>[/<action>[/<id>]]';
 		$metadata = [
 			BaseRoute::PRIMARY_LOCATION => 'sk',
@@ -93,7 +95,6 @@ class RouterFactory
 		];
 		$frontRouter[] = $this->simpleRouteFactory->create($mask, $metadata);
 
-		$frontRouter[] = $this->frontRouteFactory->create();
 		//$frontRouter[] = $this->frontRouteFactory->create();
 
 
