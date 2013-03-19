@@ -125,10 +125,11 @@ class LocationRepository extends \Repository\BaseRepository {
 	 * @param \Nette\Localization\ITranslator $translator
 	 * @param \Environment\Collator $collator
 	 * @param \Nette\Application\UI\Presenter $presenter
+	 * @param string $destination
 	 *
 	 * @return mixed
 	 */
-	public function getCountriesForSelect(ITranslator $translator, Collator $collator, Presenter $presenter = NULL)
+	public function getCountriesForSelect(ITranslator $translator, Collator $collator, Presenter $presenter = NULL, $destination = 'this')
 	{
 		$rows = $this->findCountries();
 		$return = [];
@@ -147,7 +148,7 @@ class LocationRepository extends \Repository\BaseRepository {
 
 			$key = $row->getId();
 			if($presenter) {
-				$link = $presenter->link('Registration:default', [BaseRoute::PRIMARY_LOCATION => $row]);
+				$link = $presenter->link($destination, [BaseRoute::PRIMARY_LOCATION => $row]);
 				$el = clone $elTemplate;
 				$return[$key] = $text;
 				$sort[$key] = $el->value($key)->addAttributes(['data-redirect' => $link])->setText($text);

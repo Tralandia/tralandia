@@ -7,6 +7,7 @@ use Entity\Location\Location;
 use Environment\Environment;
 use Extras\Translator;
 use Nette\Application\Application;
+use Nette\Application\UI\Presenter;
 use Nette\ArrayHash;
 use Service\Rental\RentalSearchService;
 
@@ -61,7 +62,7 @@ class OptionGenerator {
 	{
 		$rentalTypes = $this->em->getRepository(RENTAL_TYPE_ENTITY)->findAll();
 
-		return $this->generateFromEntities($rentalTypes, [Translator::VARIATION_COUNT => 2]);
+		return $this->generateFromEntities($rentalTypes, 'Slug', [Translator::VARIATION_COUNT => 2]);
 	}
 
 	/**
@@ -85,12 +86,14 @@ class OptionGenerator {
 	}
 
 	/**
-	 * @return array
+	 * @param \Nette\Application\UI\Presenter $presenter
+	 *
+	 * @return mixed
 	 */
-	public function generateCountries()
+	public function generateCountries(Presenter $presenter)
 	{
 		$locations = $this->em->getRepository(LOCATION_ENTITY)
-			->getCountriesForSelect($this->translator, $this->getCollator());
+			->getCountriesForSelect($this->translator, $this->getCollator(), $presenter, ':Front:Home:');
 
 		return $locations;
 	}
@@ -130,11 +133,11 @@ class OptionGenerator {
 	/**
 	 * @return array
 	 */
-	public function generateLanguage()
+	public function generateSpokenLanguage()
 	{
 		$languages = $this->em->getRepository(LANGUAGE_ENTITY)->findAll();
 
-		return $this->generateFromEntities($languages);
+		return $this->generateFromEntities($languages, 'Id');
 	}
 
 	/**
@@ -169,15 +172,17 @@ class OptionGenerator {
 
 	/**
 	 * @param $data
+	 * @param string $key
 	 * @param array $variation
 	 *
 	 * @return \Nette\ArrayHash
 	 */
-	protected function generateFromEntities($data, array $variation = NULL)
+	protected function generateFromEntities($data, $key = 'Slug', array $variation = NULL)
 	{
 		$options = [];
 		foreach($data as $value) {
-			$options[$value->getId()] = $this->translator->translate($value->getName(), NULL, $variation);
+			$methodName = "get$key";
+			$options[$value->{$methodName}()] = $this->translator->translate($value->getName(), NULL, $variation);
 		}
 
 		$options = $this->sort($options);

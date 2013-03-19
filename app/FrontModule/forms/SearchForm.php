@@ -15,6 +15,11 @@ use SearchGenerator\OptionGenerator;
 class SearchForm extends BaseForm {
 
 	/**
+	 * @var \Nette\Application\UI\Presenter
+	 */
+	protected $presenter;
+
+	/**
 	 * @var OptionGenerator
 	 */
 	protected $searchOptionGenerator;
@@ -35,8 +40,10 @@ class SearchForm extends BaseForm {
 	 * @param \Doctrine\ORM\EntityManager $em
 	 * @param \Nette\Localization\ITranslator $translator
 	 */
-	public function __construct(OptionGenerator $searchOptionGenerator, Environment $environment, EntityManager $em,  Nette\Localization\ITranslator $translator)
+	public function __construct(Nette\Application\UI\Presenter $presenter, OptionGenerator $searchOptionGenerator,
+								Environment $environment, EntityManager $em,  Nette\Localization\ITranslator $translator)
 	{
+		$this->presenter = $presenter;
 		$this->searchOptionGenerator = $searchOptionGenerator;
 		$this->environment = $environment;
 		$this->em = $em;
@@ -45,12 +52,12 @@ class SearchForm extends BaseForm {
 
 	public function buildForm()
 	{
-		$countries = $this->searchOptionGenerator->generateCountries();
+		$countries = $this->searchOptionGenerator->generateCountries($this->presenter);
 		$locations = $this->searchOptionGenerator->generateLocation();
 		$rentalTypes = $this->searchOptionGenerator->generateRentalType();
 		$prices = $this->searchOptionGenerator->generatePrice($this->environment->getPrimaryLocation());
 		$capacity = $this->searchOptionGenerator->generateCapacity();
-		$languages = $this->searchOptionGenerator->generateLanguage();
+		$languages = $this->searchOptionGenerator->generateSpokenLanguage();
 
 		$this->addSelect('country', 'o1070', $countries)
 			->setPrompt('o1070')
@@ -83,9 +90,9 @@ class SearchForm extends BaseForm {
 		$this->addSubmit('submit', 'o100092');
 	}
 
-	public function setDefaultsValues() 
+	public function setDefaultsValues()
 	{
-		
+
 	}
 
 	public function getValues($asArray = FALSE) {
@@ -113,7 +120,9 @@ class SearchForm extends BaseForm {
 
 interface ISearchFormFactory {
 	/**
+	 * @param \Nette\Application\UI\Presenter $presenter
+	 *
 	 * @return SearchForm
 	 */
-	public function create();
+	public function create(Nette\Application\UI\Presenter $presenter);
 }

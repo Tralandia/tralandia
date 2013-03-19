@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace FrontModule\Components\SearchBar;
 
 use Doctrine\ORM\EntityManager;
@@ -182,7 +182,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 	 */
 	protected function createComponentSearchForm()
 	{
-		$form = $this->searchFormFactory->create();
+		$form = $this->searchFormFactory->create($this->presenter);
 		//$form->buildForm();
 
 		$form->onSuccess[] = function ($form) {
