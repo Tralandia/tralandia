@@ -11,7 +11,7 @@
 			{cache $homeCacheId, if => $useTemplateCache, expire => '+1 day'}
 			{control header}
 			{/cache}
-			{include favorites.latte}
+			{* {include favorites.latte} *}
 			{include favorites2.latte}
 			
 			{cache homeSearchBar, if => isset($isHome) && $useTemplateCache, expire => '+1 day'}

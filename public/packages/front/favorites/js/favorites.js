@@ -15,8 +15,6 @@ function removejscssfile(filename, filetype){
 }
 
 
-
-
 $(function(){
 
 	$('li.favoriteSocialIcons').click(function(){  
@@ -84,6 +82,26 @@ $(function(){
 
 
 	});
+
+
+
+		// tabs nav
+		$('#favoritesTabs.nav-tabs li:not(.pull-right)').click(function () {
+			var currentId = $(this).attr('for');
+			var contentId = "#favoritesTabContent";
+			var activeClassName = 'active';
+
+			$(this).parent().find('li.'+activeClassName).removeClass(activeClassName);
+			$(this).addClass(activeClassName);
+
+			$(contentId).find('.tab-pane.'+activeClassName).removeClass(activeClassName);
+			$(contentId).find(currentId).addClass(activeClassName).css({
+				width:'881px'
+			});
+
+			var cookieName = 'navbarTab';
+			$.cookie(cookieName,currentId);
+		});
 
 
 
@@ -257,7 +275,8 @@ var Favorites = {
 		var id = parseInt($(this).attr('rel'));
 		Favorites.cleanTrash();
 
-
+		// open favorites tab
+		$('li[for=#favoritesNavFavorites]').trigger('click');
 
 		var data = {
 			id: parseInt($(this).attr('rel')),
@@ -288,7 +307,7 @@ var Favorites = {
 		return false;
 	}
 
-	Favorites.addToFavorites = function(data){			
+	Favorites.addToFavorites = function(data){	
 			this.addToCookie(data.id);
 			this.addToLocalStorage(data);
 	};
@@ -463,20 +482,20 @@ var Favorites = {
 
 				var html = $pattern[0].outerHTML;
 
+
 			$.each(this.cookieArray,function(k,v){				
 				var data = self.getObjectById(self.getLocalStorageArray,v);					
 				allForView.push(data);
 
 					sliderList.find('li.template').css('background-image','url('+data.thumb+')');
 					$pattern = sliderList.find('li.template');
-					var patternText = $pattern[0].outerHTML;
+					var patternText = $pattern[0].outerHTML;					
 
 					patternText = patternText.replace("~id~",data.id)							
 									.replace("~title~",data.title)
 									.replace("~url~",data.link)
 									.replace("template","");
 					
-
 					var newLi = $(patternText);
 					var visited = self._visitedRentalArray();
 
@@ -488,16 +507,14 @@ var Favorites = {
 
 					//html+=patternText;
 					html += newLi[0].outerHTML;
-
 				
 			});
-
 
 			$('#scrollInnerContent').html(html);
 
 			//self.initJscrollpaneUi();
-			self.eachSelectedRentalButtons();
 			self.jscrollPaneApi.reinitialise();
+			self.eachSelectedRentalButtons();
 	};
 
 	Favorites.getLocalStorage = function(){
