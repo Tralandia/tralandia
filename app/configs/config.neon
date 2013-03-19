@@ -223,7 +223,7 @@ factories:
 	# ==================== COMPONENTS
 	# ==============================
 	headerControlFactory:
-		class: BaseModule\Components\HeaderControl(%pageSeo%)
+		class: BaseModule\Components\HeaderControl(%pageSeo%, %user%)
 		implement: BaseModule\Components\IHeaderControlFactory
 
 	footerControlFactory:
