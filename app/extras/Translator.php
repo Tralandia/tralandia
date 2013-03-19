@@ -68,9 +68,9 @@ class Translator implements \Nette\Localization\ITranslator {
 	{
 		//d($phrase);
 		if($phrase instanceof \Service\Phrase\PhraseService) {
-			$phraseId = $phrase->getEntity()->id;
+			$phraseId = $phrase->getEntity()->getId();
 		} else if ($phrase instanceof \Entity\Phrase\Phrase){
-			$phraseId = $phrase->id;
+			$phraseId = $phrase->getId();
 		} else {
 			$phraseId = $phrase;
 		}
@@ -95,7 +95,7 @@ class Translator implements \Nette\Localization\ITranslator {
 		$translationKey = $this->getCacheKey($phraseId, $variation);
 
 		$translation = $this->cache->load($translationKey);
-		if(1 || $translation === NULL) {
+		if($translation === NULL) {
 
 			if(is_scalar($phrase)) {
 				if(Strings::match($phrase, '~o[0-9]+~')) {
