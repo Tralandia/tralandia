@@ -65,7 +65,7 @@ services:
 	rentalPricelistStorage: Extras\FileStorage(%wwwDir%%rentalPricelistDir%)
 	ticketMessageAttachmentStorage: Extras\FileStorage(%wwwDir%%ticketMessageAttachmentDir%)
 
-	cacheStorage: 
+	cacheStorage:
 		class: Nette\Caching\Storages\MemcachedStorage('127.0.0.1', '11211', 'tralandia_')
 
 	# CACHE
@@ -101,7 +101,7 @@ services:
 
 	authenticator: Security\Authenticator(@userRepositoryAccessor::get())
 
-	authorizator: 
+	authorizator:
 		class: Security\SimpleAcl(..., @userRoleRepositoryAccessor::get())
 
 	environment:
@@ -178,11 +178,11 @@ services:
 
 	searchBarControl: FrontModule\Components\SearchBar\SearchBarControl()
 
-factories: 
+factories:
 	# ==============================
 	# ==================== FORMS
 	# ==============================
-	rentalEditFormFactory: 
+	rentalEditFormFactory:
 		class: OwnerModule\Forms\RentalEditForm(%rental%)
 		implement: OwnerModule\Forms\IRentalEditFormFactory
 
@@ -216,7 +216,7 @@ factories:
 		implement: FrontModule\Forms\IRegistrationFormFactory
 
 	searchFormFactory:
-		class: FrontModule\Forms\SearchForm
+		class: FrontModule\Forms\SearchForm(%presenter%)
 		implement: FrontModule\Forms\ISearchFormFactory
 
 	# ==============================
@@ -271,18 +271,18 @@ factories:
 	# 	class: Extras\Cache\Cache(@cacheStorage, %namespace%)
 	# 	implement: Extras\Cache\ISearchCacheFactory
 
-	rentalSearchCachingFactory: 
+	rentalSearchCachingFactory:
 		class: Extras\Cache\RentalSearchCaching(%location%, @rentalSearchCache)
 		implement: Extras\Cache\IRentalSearchCachingFactory
 
-	rentalOrderCachingFactory: 
+	rentalOrderCachingFactory:
 		class: Extras\Cache\RentalOrderCaching(%location%, @rentalOrderCache)
 		implement: Extras\Cache\IRentalOrderCachingFactory
 
 	# ==============================
 	# ==================== SERVICES
 	# ==============================
-	rentalSearchServiceFactory: 
+	rentalSearchServiceFactory:
 		class: Service\Rental\RentalSearchService(%location%, @rentalSearchCache)
 		implement: Service\Rental\IRentalSearchServiceFactory
 
