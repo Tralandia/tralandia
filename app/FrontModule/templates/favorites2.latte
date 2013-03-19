@@ -1,4 +1,4 @@
-<div class="span12" id="favoritesStaticContainer">
+<div n:class="$favoriteRentals ? 'span12' : 'span12 hide' " data-favoritesLink="{link generateFavoriteLink}" id="favoritesStaticContainer">
 	<div class="favorites2">
 		<ul class="nav nav-tabs" id="myTab">
 			<li class="active"><a href="#favoritesNavFavorites"><i class="icon-heart"></i> Favorites</a></li>
@@ -9,8 +9,8 @@
 			<li class="pull-right"><a href="#">10vysledkov na dotaz </a></li>
 		</ul>
 		
-		<div class="cover">
-			<a href="#" class="leftArrow entypo-prev"></a>
+		<div class="cover" id="compareList">
+			<a href="#" class="leftArrow entypo-prev" id="favorites-left-button"></a>
 			<div class="tab-content">
 
 
@@ -41,7 +41,7 @@
 				<div class="tab-pane" id="favoritesNavLastSeen">rthryjty</div>
 				<div class="tab-pane" id="favoritesNavSerchResults">tynhfgb</div>
 			</div>
-			<a href="#" class="rightArrow entypo-slider-right"></a>
+			<a href="#" class="rightArrow entypo-slider-right" id="favorites-right-button"></a>
 		</div>
 	</div>
 </div>
