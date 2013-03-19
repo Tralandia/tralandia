@@ -171,6 +171,11 @@ $(function(){
 
 	});
 
+	// coutry redirect
+	$('#frm-searchBar-searchForm-country').on('change',function(){
+		var locationRedirect = $('#frm-searchBar-searchForm-country option[value="'+$(this).val()+'"]').attr('data-redirect');
+		window.location = locationRedirect;
+	});
 
 	$('.btnSearchClose').on('click',function(){
 		
