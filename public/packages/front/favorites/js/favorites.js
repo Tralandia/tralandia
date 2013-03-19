@@ -275,7 +275,8 @@ var Favorites = {
 		var id = parseInt($(this).attr('rel'));
 		Favorites.cleanTrash();
 
-
+		// open favorites tab
+		$('li[for=#favoritesNavFavorites]').trigger('click');
 
 		var data = {
 			id: parseInt($(this).attr('rel')),
