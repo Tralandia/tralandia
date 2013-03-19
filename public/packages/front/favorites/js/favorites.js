@@ -15,8 +15,6 @@ function removejscssfile(filename, filetype){
 }
 
 
-
-
 $(function(){
 
 	$('li.favoriteSocialIcons').click(function(){  
@@ -81,7 +79,11 @@ $(function(){
 		$('body').removeAttr('socialshareOpen');  
 
 
-
+// tabs nav
+  $('.nav-tabs a').on('shown', function (e) {
+    //save the latest tab; use cookies if you like 'em better:
+    console.log('save to cookies');
+  });
 
 	});
 
