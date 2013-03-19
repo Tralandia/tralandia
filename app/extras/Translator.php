@@ -95,7 +95,7 @@ class Translator implements \Nette\Localization\ITranslator {
 		$translationKey = $this->getCacheKey($phraseId, $variation);
 
 		$translation = $this->cache->load($translationKey);
-		if($translation === NULL) {
+		if(1 || $translation === NULL) {
 
 			if(is_scalar($phrase)) {
 				if(Strings::match($phrase, '~o[0-9]+~')) {
@@ -140,7 +140,7 @@ class Translator implements \Nette\Localization\ITranslator {
 				}
 			}
 
-			if($translation === NULL) $translation = '{'.$phraseId.'|'.$this->language->iso.'}';
+			if(!$translation) $translation = '{?'.$translationKey.'?}';
 			$this->cache->save($translationKey, $translation);
 		}
 
