@@ -385,6 +385,8 @@ $(document).ready(function(){
 		window.location.hash = newHref;
 		$('html,body').scrollTop(scrollmem);
 
+		console.log(this);
+
 	  if(id = 'objectDetailListMap'){
 		mapLoader();
 	  }

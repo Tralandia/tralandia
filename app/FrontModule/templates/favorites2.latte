@@ -1,15 +1,17 @@
-<div class="span12" id="favoritesStaticContainer">
+<div n:class="$favoriteRentals ? 'span12' : 'span12 hide' " data-favoritesLink="{link generateFavoriteLink}" id="favoritesStaticContainer">
 	<div class="favorites2">
-		<ul class="nav nav-tabs" id="myTab">
-			<li class="active"><a href="#favoritesNavFavorites">Favorites</a></li>
-			<li><a href="#favoritesNavLastSeen">last seen </a></li>
-			<li><a href="#favoritesNavSerchResults">Search results</a></li>
-			<li class="pull-right"><a href="#"><i class="entypo-share"></i></a></li>
+		<ul class="nav nav-tabs" id="favoritesTabs">
+			<li class="active" for="#favoritesNavFavorites"><i class="icon-heart"></i> Favorites</li>
+			<li for="#favoritesNavLastSeen"><i class="icon-eye-open"></i> last seen </li>
+			<li for="#favoritesNavSerchResults"><i class="icon-reorder"></i> Search results</li>
+			<li class="pull-right"><i class="entypo-share"></i> Share</li>
+			<li class="pull-right">Iny link</li>
+			<li class="pull-right">10vysledkov na dotaz 	</li>
 		</ul>
 		
-		<div class="cover">
-			<a href="#" class="leftArrow entypo-prev"></a>
-			<div class="tab-content">
+		<div class="cover" id="compareList">
+			<a href="#" class="leftArrow entypo-prev" id="favorites-left-button"></a>
+			<div class="tab-content" id="favoritesTabContent">
 
 
 				<div class="tab-pane active" id="favoritesNavFavorites">
@@ -39,7 +41,7 @@
 				<div class="tab-pane" id="favoritesNavLastSeen">rthryjty</div>
 				<div class="tab-pane" id="favoritesNavSerchResults">tynhfgb</div>
 			</div>
-			<a href="#" class="rightArrow entypo-slider-right"></a>
+			<a href="#" class="rightArrow entypo-slider-right" id="favorites-right-button"></a>
 		</div>
 	</div>
 </div>
