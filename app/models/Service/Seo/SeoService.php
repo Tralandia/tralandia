@@ -23,8 +23,8 @@ class SeoService extends Nette\Object {
 
 	protected $replacements = array(
 		'primaryLocation' => array(
-			'primaryLocation', 
-			'name', 
+			'primaryLocation',
+			'name',
 		),
 		'primaryLocationLocative' => array(
 			'primaryLocation',
@@ -35,7 +35,7 @@ class SeoService extends Nette\Object {
 			'name', // entity attribute
 		),
 		'locationLocative' => array(
-			'location', 
+			'location',
 			'name',
 			array(
 				Translator::VARIATION_CASE => \Entity\Language::LOCATIVE,
@@ -93,7 +93,9 @@ class SeoService extends Nette\Object {
 	public function getH1() {
 		$page = $this->getPage();
 		if(!$page) return '';
-		else return $this->compilePattern($page->h1Pattern);
+
+		$h1 = $this->compilePattern($page->h1Pattern);
+		return Strings::firstUpper($h1);
 	}
 
 	/**
@@ -103,7 +105,9 @@ class SeoService extends Nette\Object {
 	public function getTitle() {
 		$page = $this->getPage();
 		if(!$page) return '';
-		else return $this->compilePattern($page->titlePattern);
+
+		$title = $this->compilePattern($page->titlePattern);
+		return Strings::firstUpper($title);
 	}
 
 	/**
@@ -175,10 +179,12 @@ class SeoService extends Nette\Object {
 		}
 
 		$variables = Strings::matchAll($patternTranslation, '/\[(?P<replacement>[a-zA-Z]+)\]/');
-		
+
 		$texts = array();
 		foreach ($variables as $value) {
-			if( ($value['replacement'] == 'location' || $value['replacement'] == 'locationLocative') && !$this->existsParameter('location') ) {
+			if( ($value['replacement'] == 'location' || $value['replacement'] == 'locationLocative')
+				&& !$this->existsParameter(FrontRoute::$pathParametersMapper[FrontRoute::LOCATION]) )
+			{
 				$replacement = $this->replacements['primary'.ucfirst($value['replacement'])];
 			} else {
 				$replacement = $this->replacements[$value['replacement']];
