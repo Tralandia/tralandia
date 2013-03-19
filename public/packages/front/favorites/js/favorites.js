@@ -79,11 +79,18 @@ $(function(){
 		$('body').removeAttr('socialshareOpen');  
 
 
-// tabs nav
-  $('.nav-tabs a').on('shown', function (e) {
-    //save the latest tab; use cookies if you like 'em better:
-    console.log('save to cookies');
-  });
+		// tabs nav
+		$('#favoritesTabs.nav-tabs li:not(.pull-right)').click(function () {
+			var currentId = $(this).attr('for');
+			$(this).parent().find('li.active').removeClass('active');
+			$(this).addClass('active');
+			$('#favoritesTabContent').find('.tab-pane.active').hide().removeClass('active');
+			$('#favoritesTabContent').find('#'+currentId).addClass('active').show();
+
+			var cookieName = 'navbarTab';
+			$.cookie(cookieName,currentId);
+			console.log($.cookie(cookieName));
+		});
 
 	});
 

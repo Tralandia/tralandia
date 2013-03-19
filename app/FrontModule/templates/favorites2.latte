@@ -1,6 +1,6 @@
 <div n:class="$favoriteRentals ? 'span12' : 'span12 hide' " data-favoritesLink="{link generateFavoriteLink}" id="favoritesStaticContainer">
 	<div class="favorites2">
-		<ul class="nav nav-tabs" id="myTab">
+		<ul class="nav nav-tabs" id="favoritesTabs">
 			<li class="active" for="#favoritesNavFavorites"><i class="icon-heart"></i> Favorites</li>
 			<li for="#favoritesNavLastSeen"><i class="icon-eye-open"></i> last seen </li>
 			<li for="#favoritesNavSerchResults"><i class="icon-reorder"></i> Search results</li>
@@ -11,7 +11,7 @@
 		
 		<div class="cover" id="compareList">
 			<a href="#" class="leftArrow entypo-prev" id="favorites-left-button"></a>
-			<div class="tab-content">
+			<div class="tab-content" id="favoritesTabContent">
 
 
 				<div class="tab-pane active" id="favoritesNavFavorites">
