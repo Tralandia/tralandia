@@ -1,16 +1,16 @@
-{* 
+{*
 	$rentals array of Entity\Rental
  *}
 
 {block content}
 
 	<h1>{$pageH1} <span class="counter">({$totalResultsCount} {_o100002,null,[count=>$totalResultsCount]})</span></h1>
-		
+
 	<div class="row-fluid">
 	<div class="span12">
 		<div class="mytabUi ui-tabs-nav ui-tabs">
-
-		    <div id="tabs-1" class="ui-tabs-panel" n:if="count($rentals)">
+			{if count($rentals)}
+		    <div id="tabs-1" class="ui-tabs-panel">
 
 
 		    	{foreach $rentals as $rentalId}
@@ -36,7 +36,7 @@
 		        		<a href="{link Rental:detail $rental}" n:class="$featured ? top , clasic">
 		        		{* <div class="price">{$rental->price} <span>EUR</span></div> *}
 		        		{* <<div class="addons btn">icon</div><div class="position">TOP</div> *}
-		        		
+
 
 		        		{if $mainImage = $rental->getMainImage()}
 		        			<img src="{$basePath}{$mainImage|rentalImageSrc}" />
@@ -48,15 +48,15 @@
 		        	</div>
 		        	<div class="span8">
 		        		<h2><a href="{link Rental:detail $rental}">{_$rental->name}</a>{if $rental->classification > 0 }&nbsp;{for $i = 0; $i < $rental->classification; $i++}<span class="clasification"><i class="entypo-star"></i>{/for}{/if}</h2>
-		        		
+
 		        		{if $mainImage = $rental->getMainImage()}
 		        			<button rel="{$rental->id}" data-title="{_$rental->name}" link="{link Rental:detail $rental}" thumb="{$basePath}{$mainImage|rentalImageSrc}" class="addToFavorites btn btn-mini listCompareBtn active"><span class="entypo-heart">{_o12334}</span> </button>
 		        		{else}
 		        			<button rel="{$rental->id}" data-title="{_$rental->name}" link="{link Rental:detail $rental}" thumb="http://www.tralandia.com/u/32/13539183882248.jpg" class="addToFavorites btn btn-mini listCompareBtn active"><span class="entypo-heart">{_o12334}</span> </button>
 		        		{/if}
 
-		        		
-		        		
+
+
 		        		<div class="clearfix"></div>
 
 		        		<p class="locations">
@@ -67,7 +67,7 @@
 		        		{if count($rental->address->getLocations()) > 0}
 		        		(
 						{foreach $rental->address->getLocations() as $location}
-							<a href="{link Rental:list location => $location}">{_$location->name}</a>{if !$iterator->last}, {/if}							
+							<a href="{link Rental:list location => $location}">{_$location->name}</a>{if !$iterator->last}, {/if}
 						{/foreach}
 						)
 						{/if}
@@ -81,38 +81,38 @@
 							{if !empty($interviewAnswer->answer)}
 								{if $iterator->first}
 									{_$interviewAnswer->answer|firstUpper}
-								{/if}																
-							{/if}			
+								{/if}
+							{/if}
 						{/foreach}
 						</p>
-		        		
+
 
 						<div class="panel baseBorder ">
                             <table class="holder">
                                 <tbody><tr>
                                     <td width="90%">
-                                    	<b>{_o100041} {$rental->price}</b> {_o100004}, 
+                                    	<b>{_o100041} {$rental->price}</b> {_o100004},
                                         <b>{_o924}</b> {$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}
-                                        
+
                                     </td>
-                               
+
                                         {*
                                         {if $rental->rank}<span class="entypo-discusion"></span><a href="#">{$rental->rank} hodnoteni</a>{/if}
                                         *}
-                                    
+
                                 </tr>
                             </tbody></table>
                             <p class="accessories">
        						{var $importantAmenities = $rental->getImportantAmenities(true)}
-								{foreach $importantAmenities  as $amenities}					
-									{foreach $amenities as $amenity}							
+								{foreach $importantAmenities  as $amenities}
+									{foreach $amenities as $amenity}
 										{if $iterator->first}{_$amenity->name|firstUpper}{else}{_$amenity->name}{/if}{if !$iterator->last}, {/if}
-									{/foreach}					
+									{/foreach}
 								{/foreach}
                             </p>
                         </div>
 
-		        	</div>		        	
+		        	</div>
 		        </div>
 
 					{/cache}
@@ -120,7 +120,9 @@
 		    	{control p}
 
 		    </div>
-
+			{else}
+				#ninto ziadny objekt...
+			{/if}
 		</div>
 	</div>
 
