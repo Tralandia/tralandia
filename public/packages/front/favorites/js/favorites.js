@@ -88,17 +88,16 @@ $(function(){
 		// tabs nav
 		$('#favoritesTabs.nav-tabs li:not(.pull-right)').click(function () {
 			var currentId = $(this).attr('for');
-			
-			$(this).parent().find('li.active').removeClass('active');
-			$(this).addClass('active');
+			var contentId = "#favoritesTabContent";
+			var activeClassName = 'active';
 
-			$('#favoritesTabContent').find('.tab-pane.active').removeClass('active');
-			$('#favoritesTabContent').find(currentId).addClass('active');
-			$('#favoritesTabContent').find(currentId).addClass('active').css({
+			$(this).parent().find('li.'+activeClassName).removeClass(activeClassName);
+			$(this).addClass(activeClassName);
+
+			$(contentId).find('.tab-pane.'+activeClassName).removeClass(activeClassName);
+			$(contentId).find(currentId).addClass(activeClassName).css({
 				width:'881px'
 			});
-
-			// console.log(currentId);
 
 			var cookieName = 'navbarTab';
 			$.cookie(cookieName,currentId);
