@@ -79,20 +79,30 @@ $(function(){
 		$('body').removeAttr('socialshareOpen');  
 
 
+
+
+	});
+
+
+
 		// tabs nav
 		$('#favoritesTabs.nav-tabs li:not(.pull-right)').click(function () {
 			var currentId = $(this).attr('for');
+			
 			$(this).parent().find('li.active').removeClass('active');
 			$(this).addClass('active');
-			$('#favoritesTabContent').find('.tab-pane.active').hide().removeClass('active');
-			$('#favoritesTabContent').find('#'+currentId).addClass('active').show();
+
+			$('#favoritesTabContent').find('.tab-pane.active').removeClass('active');
+			$('#favoritesTabContent').find(currentId).addClass('active');
+			$('#favoritesTabContent').find(currentId).addClass('active').css({
+				width:'881px'
+			});
+
+			// console.log(currentId);
 
 			var cookieName = 'navbarTab';
 			$.cookie(cookieName,currentId);
-			console.log($.cookie(cookieName));
 		});
-
-	});
 
 
 
