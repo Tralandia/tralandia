@@ -1,7 +1,8 @@
-<?php 
+<?php
 namespace BaseModule\Components;
 
 use Doctrine\ORM\EntityManager;
+use Entity\User\User;
 use Environment\Environment;
 use Nette\DateTime;
 use Service\Seo\ISeoServiceFactory;
@@ -29,10 +30,16 @@ class HeaderControl extends \BaseModule\Components\BaseControl {
 	 */
 	protected $seoFactory;
 
-	public function __construct(SeoService $pageSeo, Environment $environment, EntityManager $em,
+	/**
+	 * @var \Entity\User\User
+	 */
+	protected $user;
+
+	public function __construct(SeoService $pageSeo, User $user = NULL, Environment $environment, EntityManager $em,
 								ISeoServiceFactory $seoFactory) {
 		parent::__construct();
 		$this->pageSeo = $pageSeo;
+		$this->user = $user;
 		$this->environment = $environment;
 		$this->em = $em;
 		$this->seoFactory = $seoFactory;
@@ -55,7 +62,6 @@ class HeaderControl extends \BaseModule\Components\BaseControl {
 			array('case' => \Entity\Language::LOCATIVE)
 		);
 
-
 		$template->localeCode = $this->environment->getLocale()->getCode();
 		$template->localeGoogleCode = $this->environment->getLocale()->getGooglePlusLangCode();
 
@@ -69,6 +75,7 @@ class HeaderControl extends \BaseModule\Components\BaseControl {
 
 		$template->environment = $this->environment;
 		$template->pageSeo = $this->pageSeo;
+		$template->loggedUser = $this->user;
 
 		$template->render();
 	}
@@ -79,8 +86,9 @@ class HeaderControl extends \BaseModule\Components\BaseControl {
 interface IHeaderControlFactory {
 	/**
 	 * @param SeoService $pageSeo
+	 * @param \Entity\User\User $user
 	 *
 	 * @return HeaderControl
 	 */
-	public function create(SeoService $pageSeo);
+	public function create(SeoService $pageSeo, User $user = NULL);
 }

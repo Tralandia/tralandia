@@ -4,6 +4,7 @@ namespace OwnerModule;
 
 use Model\Rental\IRentalDecoratorFactory;
 use FrontModule\Forms\Rental\IReservationFormFactory;
+use Nette\Application\BadRequestException;
 
 class RentalPresenter extends BasePresenter {
 
@@ -24,8 +25,16 @@ class RentalPresenter extends BasePresenter {
 		$this->rentalRepositoryAccessor = $dic->rentalRepositoryAccessor;
 	}
 
+	public function actionFirstRental() {
+		$rental = $this->loggedUser->getFirstRental();
+		if(!$rental) {
+			throw new BadRequestException('Nenasiel som ziadny objekt');
+		}
+		$this->redirect('edit', ['id' => $rental->getId()]);
+	}
+
 	public function actionAdd(){
-		
+
 	}
 
 	public function actionEdit($id) {

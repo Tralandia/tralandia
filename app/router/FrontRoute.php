@@ -2,6 +2,7 @@
 
 namespace Routers;
 
+use Entity\Page;
 use Nette;
 use Repository\LanguageRepository;
 use Repository\Location\LocationRepository;
@@ -22,11 +23,12 @@ class FrontRoute extends BaseRoute
 	const PRICE_FROM = 'priceFrom';
 	const PRICE_TO = 'priceTo';
 
+	const PAGE = 'page';
 	const LOCATION = 'location';
 	const RENTAL_TYPE = 'rentalType';
 
 	public static $pathSegmentTypes = array(
-		'page' => 2,
+		self::PAGE => 2,
 		self::LOCATION => 6,
 		self::RENTAL_TYPE => 8,
 	);
@@ -63,7 +65,7 @@ class FrontRoute extends BaseRoute
 	}
 
 
-		/**
+	/**
 	 * @param \Nette\Http\IRequest $httpRequest
 	 * @return \Nette\Application\Request|NULL
 	 */
@@ -117,10 +119,10 @@ class FrontRoute extends BaseRoute
 			if(count($pathSegments)) {
 				$segmentList = $this->getPathSegmentList($pathSegments, $params);
 				if(count($segmentList)) {
-					if(array_key_exists('page', $segmentList)) {
-						$page = $segmentList['page'];
+					if(array_key_exists(self::PAGE, $segmentList)) {
+						$page = $segmentList[self::PAGE];
 						list( , , $presenter, $params['action']) = array_filter(explode(':', $page->destination));
-						$params['page'] = $segmentList['page'];
+						$params[self::PAGE] = $segmentList[self::PAGE];
 					} else {
 						foreach ($segmentList as $key => $value) {
 							$params[$key] = $value;
@@ -200,7 +202,14 @@ class FrontRoute extends BaseRoute
 			case $presenter == 'Home' && $action == 'default':
 			case $presenter == 'Rental' && $action == 'detail':
 			case $presenter == 'RentalList' && $action == 'default':
-				unset($params['page']);
+				unset($params[self::PAGE]);
+				break;
+			default:
+				$destination = ':Front:'.$presenter.':'.$action;
+				$page = $this->pageRepositoryAccessor->get()->findOneByDestination($destination);
+				if($page) {
+					$params[self::PAGE] = $page;
+				}
 		}
 
 		$params = $this->filterOut($params);
@@ -254,6 +263,10 @@ class FrontRoute extends BaseRoute
 
 		if(isset($params[self::SPOKEN_LANGUAGE])) {
 			$params[self::SPOKEN_LANGUAGE] = $params[self::SPOKEN_LANGUAGE]->getId();
+		}
+
+		if(isset($params[self::PAGE]) && $params[self::PAGE] instanceof Page) {
+			$params[self::PAGE] = $params[self::PAGE]->getId();
 		}
 
 		foreach (static::$pathSegmentTypes as $key => $value) {

@@ -117,7 +117,7 @@ abstract class BasePresenter extends \BasePresenter {
 
 	public function createComponentHeader()
 	{
-		return $this->headerControlFactory->create($this->pageSeo);
+		return $this->headerControlFactory->create($this->pageSeo, $this->loggedUser);
 	}
 
 

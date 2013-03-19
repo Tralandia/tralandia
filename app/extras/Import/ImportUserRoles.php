@@ -21,10 +21,12 @@ class ImportUserRoles extends BaseImport {
 			$role = $this->context->userRoleEntityFactory->create();
 			$role->name = ucfirst($value);
 			$role->slug = $value;
-			$this->model->persist($role);
 			if (in_array($value, array(Role::TRANSLATOR, Role::SUPERADMIN))) {
-				$this->homePage = ':Admin:Home:default';
+				$role->homePage = ':Admin:Home:default';
+			} else if($value == Role::OWNER) {
+				$role->homePage = ':Owner:Rental:firstRental';
 			}
+			$this->model->persist($role);
 		}
 		$this->model->flush();
 		$this->savedVariables['importedSections']['userRoles'] = 1;
