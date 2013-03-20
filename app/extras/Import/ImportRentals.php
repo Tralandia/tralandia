@@ -302,10 +302,13 @@ class ImportRentals extends BaseImport {
 				$sort = 0;
 				$temp = array_chunk($temp, 6);
 				foreach ($temp as $key => $value) {
+					//d($value); exit;
 					$value[4] = isset($value[4]) ? $value[4] : 0;
 					$value[5] = isset($value[5]) ? $value[5] : 0;
 
-					if (!$value[4]) continue;
+					if (!$value[4] || !$value[5]) {
+						continue;
+					}
 
 					$row = $context->rentalPricelistRowRepositoryAccessor->get()->createNew(FALSE);
 					$rental->addPricelistRow($row);
