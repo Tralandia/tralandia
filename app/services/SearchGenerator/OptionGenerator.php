@@ -4,6 +4,7 @@ namespace SearchGenerator;
 
 use Doctrine\ORM\EntityManager;
 use Entity\Currency;
+use Entity\Language;
 use Entity\Location\Location;
 use Environment\Environment;
 use Extras\Translator;
@@ -78,8 +79,23 @@ class OptionGenerator {
 	public function generateRentalType()
 	{
 		$rentalTypes = $this->em->getRepository(RENTAL_TYPE_ENTITY)->findAll();
+		$pathSegments = $this->em->getRepository(PATH_SEGMENT_ENTITY)->findRentalTypes($this->environment->getLanguage());
 
-		return $this->generateFromEntities($rentalTypes, 'Slug', [Translator::VARIATION_COUNT => 2]);
+		$typeSegments = [];
+		foreach($pathSegments as $pathSegment) {
+			$typeSegments[$pathSegment->getEntityId()] = $pathSegment->getPathSegment();
+		}
+
+		$options = [];
+		foreach($rentalTypes as $value) {
+			$key = $typeSegments[$value->getId()];
+			$options[$key] = $this->translate($value->getName(), NULL, [Translator::VARIATION_COUNT => 2]);
+		}
+
+		$options = $this->sort($options);
+
+		return $options;
+
 	}
 
 	/**

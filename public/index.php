@@ -32,6 +32,7 @@ define('RENTAL_TYPE_ENTITY', '\Entity\Rental\Type');
 define('USER_ENTITY', '\Entity\User\User');
 define('USER_ROLE_ENTITY', '\Entity\User\Role');
 define('CONTACT_EMAIL_ENTITY', '\Entity\Contact\Email');
+define('PATH_SEGMENT_ENTITY', '\Entity\Routing\PathSegment');
 
 
 // load bootstrap file

@@ -127,29 +127,29 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 
 	public function handleGetSearchCount()
 	{
-		$em = $this->em;
-		$presenter = $this->getPresenter();
-
-		$location = $presenter->getParameter('location');
-		if($location) {
-			$this->location = $em->getRepository(LOCATION_ENTITY)->find($location);
-		}
-
-		$rentalType = $presenter->getParameter('rentalType');
-		if($rentalType) {
-			$this->rentalType = $em->getRepository(RENTAL_TYPE_ENTITY)->find($rentalType);
-		}
-
-		$this->priceFrom = $presenter->getParameter('priceFrom', NULL);
-
-		$this->priceTo = $presenter->getParameter('priceTo', NULL);
-
-		$this->capacity = $presenter->getParameter('capacity', NULL);
-
-		$spokenLanguage = $presenter->getParameter('spokenLanguage');
-		if($spokenLanguage) {
-			$this->spokenLanguage = $em->getRepository(LANGUAGE_ENTITY)->find($spokenLanguage);
-		}
+//		$em = $this->em;
+//		$presenter = $this->getPresenter();
+//
+//		$location = $presenter->getParameter('location');
+//		if($location) {
+//			$this->location = $em->getRepository(LOCATION_ENTITY)->find($location);
+//		}
+//
+//		$rentalType = $presenter->getParameter('rentalType');
+//		if($rentalType) {
+//			$this->rentalType = $em->getRepository(RENTAL_TYPE_ENTITY)->find($rentalType);
+//		}
+//
+//		$this->priceFrom = $presenter->getParameter('priceFrom', NULL);
+//
+//		$this->priceTo = $presenter->getParameter('priceTo', NULL);
+//
+//		$this->capacity = $presenter->getParameter('capacity', NULL);
+//
+//		$spokenLanguage = $presenter->getParameter('spokenLanguage');
+//		if($spokenLanguage) {
+//			$this->spokenLanguage = $em->getRepository(LANGUAGE_ENTITY)->find($spokenLanguage);
+//		}
 
 		$search = $this->getSearch();
 
