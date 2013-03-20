@@ -7,7 +7,7 @@
 		<strong>{_o100003}</strong>
 		<div class="inputfilterSearch selected">
 			<i class="icon-flag"></i>
-			{input country , class => 'select2'}
+			{input country , class => 'select2 selectRedirect'}
 		</div>
 		<div n:class="isset($template->removeLocation) ? 'inputfilterSearch selected' : inputfilterSearch">
 			<i class="icon-map-marker"></i>
@@ -41,7 +41,7 @@
 		<div id="getSearchCount" data-label="#label text" class="pull-left">{$totalResultsCount} ubytovani</div>
 		{* {input submit,value => '#Search' , icon => 'entypo-search', class => "btn btn-white pull-right"}	 *}
 		{* <button class="btn btn-white pull-right"><i class="entypo-search"></i>{_o100092}</button> *}
-		<a href="/" id="searchControlLink" class="btn btn-white pull-right"><i class="entypo-search"></i>{_o100092}</a>
+		<a href="#" id="searchControlLink" class="btn btn-white pull-right"><i class="entypo-search"></i>{_o100092}</a>
 	{/form}
 
 	{ifset $locations}
