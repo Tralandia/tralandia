@@ -242,7 +242,7 @@ class ImportLocations extends BaseImport {
 	private function importRegions() {
 		$locationType = $this->context->locationTypeRepositoryAccessor->get()->findOneBy(array('slug' => 'region'));
 		if (!$locationType) {
-			d('Vytvaram region locationType');
+			//d('Vytvaram region locationType');
 			$locationType = $this->context->locationTypeEntityFactory->create();
 			$locationType->name = $this->createPhraseFromString('\Location\Location', 'name', 'NATIVE', 'region', 'en');
 			$locationType->slug = 'region';
@@ -256,6 +256,8 @@ class ImportLocations extends BaseImport {
 		} else {
 			$r = q('select * from regions order by id');
 		}
+
+		//d(mysql_num_rows($r)); exit;
 
 		while($x = mysql_fetch_array($r)) {
 			$location = $this->context->locationEntityFactory->create();				
