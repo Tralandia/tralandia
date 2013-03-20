@@ -3,6 +3,7 @@ namespace FrontModule\Components\SearchBar;
 
 use Doctrine\ORM\EntityManager;
 use FrontModule\Forms\ISearchFormFactory;
+use Routers\FrontRoute;
 use SearchGenerator\OptionGenerator;
 use Service\Rental\RentalSearchService;
 
@@ -85,11 +86,11 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 	{
 		$template = $this->template;
 
-		if(!$this->location) {
+		if(!$this->hasSearchCriteria()) {
 			$locations = $this->searchOptionGenerator->generateLocationLinks();
 			$template->locations = $locations;
-		} else if(!$this->rentalType) {
-			$rentalTypes = $this->searchOptionGenerator->generateRentalTypeLinks();
+		} else if($this->hasOnlyLocationCriterion()) {
+			$rentalTypes = $this->searchOptionGenerator->generateRentalTypeLinks($this->location);
 			$template->rentalTypes = $rentalTypes;
 		}
 
@@ -175,6 +176,26 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		}
 
 		return $search;
+	}
+
+	protected function hasSearchCriteria()
+	{
+		return (bool) count($this->getSearchCriteria());
+	}
+
+	protected function hasOnlyLocationCriterion()
+	{
+		$searchCriteria = $this->getSearchCriteria();
+		return count($searchCriteria) == 1 && array_key_exists(FrontRoute::LOCATION ,$searchCriteria);
+	}
+
+	public function getSearchCriteria()
+	{
+		$criteria = [];
+		foreach($this->getPersistentParams() as $parameterName) {
+			$criteria[$parameterName] = $this->{$parameterName};
+		}
+		return array_filter($criteria);
 	}
 
 	/**

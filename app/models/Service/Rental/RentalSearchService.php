@@ -172,6 +172,17 @@ class RentalSearchService extends Nette\Object
 		return $this->rentalRepositoryAccessor->get()->findById($results);
 	}
 
+	public function getCollectedResults($criterionType)
+	{
+		$results = $this->getResults();
+
+		$collection = [];
+		foreach($this->searchCacheData[$criterionType] as $key => $value) {
+			$collection[$key] = array_intersect($results, $value);
+		}
+		return array_filter($collection);
+	}
+
 
 	//=================================
 

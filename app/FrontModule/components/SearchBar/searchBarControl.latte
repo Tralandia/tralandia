@@ -55,7 +55,11 @@
 	<h4><i class="icon-home"></i>{_o20926}</h4>
 		<ul n:inner-foreach="$rentalTypes as $value">
 			<li>
-				<a href="{plink RentalList, rentalType => $value->entity}">{$value->name} ({$value->count})</a>
+				{if $value->count}
+					<a href="{plink RentalList, rentalType => $value->entity}">{$value->name} ({$value->count})</a>
+				{else}
+					<span>{$value->name} ({$value->count})</span>
+				{/if}
 			</li>
 		</ul>
 	{/ifset}

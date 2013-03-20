@@ -10,6 +10,7 @@ use Extras\Translator;
 use Nette\Application\Application;
 use Nette\Application\UI\Presenter;
 use Nette\ArrayHash;
+use Service\Rental\IRentalSearchServiceFactory;
 use Service\Rental\RentalSearchService;
 
 class OptionGenerator {
@@ -18,6 +19,11 @@ class OptionGenerator {
 	 * @var \Environment\Environment
 	 */
 	protected $environment;
+
+	/**
+	 * @var \Service\Rental\IRentalSearchServiceFactory
+	 */
+	protected $searchFactory;
 
 	/**
 	 * @var \Doctrine\ORM\EntityManager
@@ -43,11 +49,14 @@ class OptionGenerator {
 	 * @param \Environment\Environment $environment
 	 * @param TopLocations $topLocations
 	 * @param SpokenLanguages $spokenLanguages
+	 * @param \Service\Rental\IRentalSearchServiceFactory $searchFactory
 	 * @param \Doctrine\ORM\EntityManager $em
 	 */
-	public function __construct(Environment $environment, TopLocations $topLocations, SpokenLanguages $spokenLanguages, EntityManager $em)
+	public function __construct(Environment $environment, TopLocations $topLocations, SpokenLanguages $spokenLanguages,
+								IRentalSearchServiceFactory $searchFactory, EntityManager $em)
 	{
 		$this->environment = $environment;
+		$this->searchFactory = $searchFactory;
 		$this->translator = $environment->getTranslator();
 		$this->topLocations = $topLocations;
 		$this->spokenLanguages = $spokenLanguages;
@@ -74,18 +83,23 @@ class OptionGenerator {
 	}
 
 	/**
+	 * @param \Entity\Location\Location $location
+	 *
 	 * @return array
 	 */
-	public function generateRentalTypeLinks()
+	public function generateRentalTypeLinks(Location $location)
 	{
 		$rentalTypes = $this->em->getRepository(RENTAL_TYPE_ENTITY)->findAll();
+		$search = $this->searchFactory->create($location->getPrimaryParent());
+		$search->setLocationCriterion($location);
+		$collection = $search->getCollectedResults(RentalSearchService::CRITERIA_RENTAL_TYPE);
 
 		$links = [];
 		foreach($rentalTypes as $value) {
 			$links[$value->getId()] = [
 				'entity' => $value,
 				'name' => $this->translator->translate($value->getName(), NULL, [Translator::VARIATION_COUNT => 2]),
-				'count' => count($top[$value->getId()]),
+				'count' => isset($collection[$value->getId()]) ? count($collection[$value->getId()]) : 0,
 			];
 		}
 
