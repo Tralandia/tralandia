@@ -479,7 +479,11 @@ $(document).ready(function(){
 	});	
 
 
-
+	$('a').live('click',function(){
+		if($(this).attr('href') == '#'){
+			return false;
+		}
+	});
 
 
 

@@ -61,7 +61,8 @@
 	*}
 	{define #select}
 	{default $controlClass = 'select2'}
-	{include #baseControl, control => $control, controlClass => $controlClass}
+	{default $class = ''}
+	{include #baseControl, control => $control, controlClass => $controlClass , class => $class}
 	{/define #select}
 
 
@@ -133,9 +134,13 @@
 	Base Control -------------------------------------------
 	@param $control \Nette\Forms\Controls\BaseControl
 	@param $controlClass string
+	@param $class string
 	*}
+
+
 	{define #baseControl}
-	<tr class="simpleInput">
+	{default $class = ''}
+	<tr class="simpleInput {$class}">
 		<td>
 			{_$control->caption}       
 		</td>
@@ -153,7 +158,7 @@
 				<table>
 					<tr>
 						<td class="prepend"><span class="add-on">{!$control->getOption('prepend')}</span></td>
-						<td>{!$input}</td>
+						<td>{!$input} </td>
 					</tr>
 				</table>
 			</div>
@@ -603,6 +608,7 @@
 	@param $control \Nette\Forms\Controls\SubmitButton
 	@param $icon string
 	*}
+
 	{define #button}
 	<button type="button" n:class="$class ? 'btn ' .$class : btn" name="{$control->getHtmlName()}" id="{$control->getHtmlId()}">
 		<i n:ifset="$icon" class="{$icon}"></i> {$control->caption}
@@ -619,6 +625,14 @@
 		$container = $control;
 	}
 	{?unset($control)}
-	{include #select, control => $container['type']}
+	{include #select, control => $container['type'] , class => 'rentalType'}
 	{include #select, control => $container['classification'] , class => 'classification' }
 {/define #rentalType}
+
+
+
+
+
+
+
+
