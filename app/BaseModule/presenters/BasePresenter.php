@@ -107,7 +107,7 @@ abstract class BasePresenter extends Presenter {
 		$environmentSection = $this->context->session->getSection('environment');
 		return $environmentSection->previousLink;
 	}
-	
+
 	public function accessDeny()
 	{
 		$this->flashMessage('Hey dude! You don\'t have permissions to view that page.', 'warning');
@@ -155,8 +155,10 @@ abstract class BasePresenter extends Presenter {
 		return $this->getEntityManager();
 	}
 
-	public function translate($phrase, $node = NULL, $count = NULL, array $variables = NULL) {
-		return $this->context->translator->translate($phrase, $node, $count, $variables);
+	public function translate()
+	{
+		$args = func_get_args();
+		return call_user_func_array(array($this->context->translator, 'translate'), $args);
 	}
 
 	public function getEnvironment() {
@@ -225,7 +227,7 @@ abstract class BasePresenter extends Presenter {
 
 		$header->setDocType(HeaderControl::HTML_5);
 		$header->setLanguage(HeaderControl::SLOVAK);
-		
+
 		$header->setTitle('Tralandia');
 
 		// facebook xml namespace
@@ -243,7 +245,7 @@ abstract class BasePresenter extends Presenter {
 		return $header;
 	}
 
-	public function createComponentCss() {		
+	public function createComponentCss() {
 		$files = new \WebLoader\FileCollection(WWW_DIR . '/packages');
 		$files->addFiles($this->cssFiles);
 
