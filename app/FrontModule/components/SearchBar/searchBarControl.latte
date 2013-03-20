@@ -22,7 +22,7 @@
 		<div n:class="isset($template->removePriceFrom) ? 'inputfilterSearch selected price' : 'inputfilterSearch price'">
 			<i class="icon-money22">$</i>{input priceFrom , class => 'select2'}
 			<a n:ifset="$template->removePriceFrom" href="{$template->removePriceFrom}" class="btnSearchClose"><i class="entypo-no"></i></a>
-		</div>	
+		</div>
 		<div n:class="isset($template->removePriceFrom) ? 'inputfilterSearch selected price pull-right' : 'inputfilterSearch price pull-right'">
 			<i class="icon-money22">$</i>{input priceTo , class => 'select2 pull-right'}
 			<a n:ifset="$template->removePriceTo" href="{$template->removePriceTo}" class="btnSearchClose"><i class="entypo-no"></i></a>
@@ -37,7 +37,7 @@
 			{input spokenLanguage , class => 'select2'}
 			<a n:ifset="$template->removeSpokenLanguage" href="{$template->removeSpokenLanguage}" class="btnSearchClose"><i class="entypo-no"></i></a>
 		</div>
-		
+
 		<div id="getSearchCount" data-label="#label text" class="pull-left">{$totalResultsCount} ubytovani</div>
 		{* {input submit,value => '#Search' , icon => 'entypo-search', class => "btn btn-white pull-right"}	 *}
 		{* <button class="btn btn-white pull-right"><i class="entypo-search"></i>{_o100092}</button> *}
@@ -48,7 +48,7 @@
 	<h4><i class="icon-map-marker"></i>{_o100098}</h4>
 		<ul n:inner-foreach="$locations as $value">
 			<li>
-				<a href="{plink RentalList, location => $value->entity}">{$value->name}</a>
+				<a href="{plink RentalList, location => $value->entity}">{$value->name} ({$value->count})</a>
 			</li>
 		</ul>
 	{/ifset}
@@ -56,7 +56,11 @@
 	<h4><i class="icon-home"></i>{_o20926}</h4>
 		<ul n:inner-foreach="$rentalTypes as $value">
 			<li>
-				<a href="{plink RentalList, rentalType => $value->entity}">{$value->name}</a>
+				{if $value->count}
+					<a href="{plink RentalList, rentalType => $value->entity}">{$value->name} ({$value->count})</a>
+				{else}
+					<span>{$value->name} ({$value->count})</span>
+				{/if}
 			</li>
 		</ul>
 	{/ifset}
