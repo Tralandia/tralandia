@@ -149,9 +149,9 @@ class FrontRoute extends BaseRoute
 
 			//d($params); #@debug
 			if(!isset($params['action']) || !isset($presenter)) {
-				$presenter = 'RentalList';
-				$params['action'] = 'default';
-				// return NULL;
+				//$presenter = 'RentalList';
+				//$params['action'] = 'default';
+				return NULL;
 			}
 
 
