@@ -9,26 +9,31 @@
 
 				<ul class="withShadow">
 					{*
-						<li class="home topicon"><a n:href=":Front:Home:default"><i class="entypo-home"></i> {_o823}</a></li>
-						<li class="topicon"><a n:href=":Owner:Rental:edit"><i class="entypo-edit"></i> {_o749}</a></li>
-						<li class="topicon"><a n:href=":Owner:Rental:add" class="red"><i class="entypo-plus"></i><strong> {_o793}</strong></a> </li>
+						<li class="home headerIcon"><a n:href=":Front:Home:default"><i class="entypo-home"></i> {_o823}</a></li>
+						<li class="headerIcon"><a n:href=":Owner:Rental:edit"><i class="entypo-edit"></i> {_o749}</a></li>
+						<li class="headerIcon"><a n:href=":Owner:Rental:add" class="red"><i class="entypo-plus"></i><strong> {_o793}</strong></a> </li>
 					*}
 
 					{if $loggedUser}
-						<li class="topicon">
+						<li class="headerIcon">
 							<a href="{plink :Owner:Rental:firstRental}"><i class="entypo-edit"></i><b>{$loggedUser->getLogin()}</b></a>
 						</li>
-						<li class="topicon">
+
+						<li class="headerIcon">
+							{$loggedUser->getRole()->getName()}</a>
+						</li>
+						<li class="headerIcon">
+
 							<a href="{plink Sign:out}"><i class="entypo-edit"></i>#logout</a>
 						</li>
 					{else}
-						<li class="home topicon">
+						<li class="home headerIcon">
 							<a href="{$homepageUrl}"><i class="entypo-home"></i> {_o100042}</a>
 						</li>
-						<li class="topicon edit">
+						<li class="headerIcon edit">
 							<a href="{plink Sign:in}"><i class="entypo-edit"></i>{_o100043}</a>
 						</li>
-						<li class="topicon">
+						<li class="headerIcon">
 							<a href="{plink Registration:}" class="red">
 								<i class="entypo-plus2"></i><strong>{_o100044}</strong>
 							</a>
