@@ -148,7 +148,8 @@ class ImportUsers extends BaseImport {
 		$locationTypeCountry = $this->context->locationTypeRepositoryAccessor->get()->findOneBySlug('country');
 
 		if ($this->developmentMode == TRUE) {
-			$r = q('select * from members where country_id = 46');		
+			$countryId = qc('select id from countries where iso = "'.$this->presenter->getParameter('countryIso').'"');	
+			$r = q('select * from members where country_id  = '.$countryId);		
 		} else {
 			$r = q('select * from members');		
 		}

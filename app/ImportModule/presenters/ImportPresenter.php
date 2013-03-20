@@ -16,6 +16,42 @@ use Nette\Application as NA,
 use Nette\Application\UI\Presenter;
 
 class ImportPresenter extends Presenter {
+	public $automaticUrls = array(
+		'http://www.sk.tra.com/import?importSection=phraseType',
+		'http://www.sk.tra.com/import?importSection=languages',
+		'http://www.sk.tra.com/import?importSection=htmlPhrases&subsection=importPhrases',
+		'http://www.sk.tra.com/import?importSection=htmlPhrases&subsection=importNewPhrases',
+		'http://www.sk.tra.com/import?importSection=amenities',
+		'http://www.sk.tra.com/import?importSection=currencies',
+		'http://www.sk.tra.com/import?importSection=userRoles',
+		'http://www.sk.tra.com/import?importSection=domains',
+		'http://www.sk.tra.com/import?importSection=locations&subsection=importContinents',
+		'http://www.sk.tra.com/import?importSection=locations&subsection=importRegions',
+		'http://www.sk.tra.com/import?importSection=locations&subsection=importLocalities',
+		'http://www.sk.tra.com/import?importSection=users&subsection=importSuperAdmins',
+		'http://www.sk.tra.com/import?importSection=users&subsection=importAdmins',
+		'http://www.sk.tra.com/import?importSection=users&subsection=importManagers',
+		'http://www.sk.tra.com/import?importSection=users&subsection=importTranslators',
+		'http://www.sk.tra.com/import?importSection=users&subsection=importOwners&countryIso=sk',
+		'http://www.sk.tra.com/import?importSection=users&subsection=importOwners&countryIso=cz',
+		'http://www.sk.tra.com/import?importSection=users&subsection=importOwners&countryIso=hu',
+		'http://www.sk.tra.com/import?importSection=users&subsection=importVisitors',
+		'http://www.sk.tra.com/import?importSection=rentalTypes',
+		'http://www.sk.tra.com/import?importSection=rentalInformation',
+		'http://www.sk.tra.com/import?importSection=rentals&countryIso=sk',
+		'http://www.sk.tra.com/import?importSection=rentals&countryIso=cz',
+		'http://www.sk.tra.com/import?importSection=rentals&countryIso=hu',
+		'http://www.sk.tra.com/import?importSection=invoice',
+		'http://www.sk.tra.com/import?importSection=interactions&subsection=importRentalReservations',
+		'http://www.sk.tra.com/import?importSection=interactions&subsection=importRentalToFriend',
+		'http://www.sk.tra.com/import?importSection=interactions&subsection=importSiteReviews',
+		'http://www.sk.tra.com/import?importSection=email',
+		'http://www.sk.tra.com/import?importSection=updateLanguage',
+		'http://www.sk.tra.com/import?importSection=updateEmails',
+		'http://www.sk.tra.com/import?importSection=faq',
+		'http://www.sk.tra.com/import?importSection=page',
+		'http://www.sk.tra.com/import?importSection=pathsegments',
+	);
 
 	public $session;
 
@@ -64,6 +100,21 @@ class ImportPresenter extends Presenter {
 		Debugger::$maxDepth = 3;
 
 		$redirect = FALSE;
+
+		if (isset($this->params['autoStart'])) {
+			$this->session->automaticNextKey = 0;
+			$this->session->automaticOn = 1;
+			//d($this->automaticUrls[0]); exit;
+			$this->redirectUrl($this->automaticUrls[0]);
+		}
+
+		if (isset($this->params['autoStop'])) {
+			$this->session->automaticNextKey = 0;
+			$this->session->automaticOn = 0;
+			$this->redirect('Import:default');
+		}
+
+
 		if (isset($this->params['toggleDevelopmentMode'])) {
 			$this->session->developmentMode = !$this->session->developmentMode;
 			$this->flashMessage('Development Mode Toggled');
@@ -71,7 +122,7 @@ class ImportPresenter extends Presenter {
 		}
 
 		if (isset($this->params['dropAllTables'])) {
-			$import = new I\BaseImport($this->context);
+			$import = new I\BaseImport($this->context, $this);
 			$import->developmentMode = (bool)$this->session->developmentMode;
 			$import->dropAllTables();
 
@@ -79,7 +130,7 @@ class ImportPresenter extends Presenter {
 			$redirect = TRUE;
 		}
 		if (isset($this->params['undoSection'])) {
-			$import = new I\BaseImport($this->context);
+			$import = new I\BaseImport($this->context, $this);
 			$import->developmentMode = (bool)$this->session->developmentMode;
 			$import->undoSection($this->params['undoSection']);
 			$this->flashMessage('Section UNDONE');
@@ -103,10 +154,9 @@ class ImportPresenter extends Presenter {
 		if (isset($this->params['importSection'])) {
 			$section = $this->params['importSection'];
 			$className = 'Extras\Import\Import'.ucfirst($section);
-			$import = new $className($this->context);
+			$import = new $className($this->context, $this);
 			if(!$import->savedVariables['importedSections'][$section] || !Arrays::get($import->sections, array($section, 'saveImportStatus'), TRUE)) {
 				$import->developmentMode = (bool)$this->session->developmentMode;
-
 			
 				if (isset($this->params['subsection'])) {
 					$subsection = $this->params['subsection'];
@@ -141,7 +191,19 @@ class ImportPresenter extends Presenter {
 			$this->flashMessage('{_'.$newPhrase->id.', \''.$this->params['getPhraseMacro'].' '.$newTranslation->translation.'\'}');
 			$redirect = TRUE;
 		}
-
+		//$this->sendJson(array());
+		
+		if (isset($this->session->automaticOn) && $this->session->automaticOn == 1) {
+			if (isset($this->automaticUrls[$this->session->automaticNextKey+1])) {
+				$this->session->automaticNextKey++;
+				$script = 'Next step: '.$this->automaticUrls[$this->session->automaticNextKey].'<script>document.location.href="'.$this->automaticUrls[$this->session->automaticNextKey].'"</script>';
+				$this->sendResponse(new \Nette\Application\Responses\TextResponse($script));
+			} else {
+				$this->session->automaticOn = 0;
+				d('Full import finished.');
+				$this->redirect('Import:default');
+			}
+		}
 		if ($redirect) {
 			$this->redirect('Import:default');
 		}
@@ -151,7 +213,7 @@ class ImportPresenter extends Presenter {
 		// $this->template->sections = '';
 		// $t = \Services\Location\LocationService::get(848); $t->delete(); return;
 
-		$import = new I\BaseImport($this->context);
+		$import = new I\BaseImport($this->context, $this);
 		$import->developmentMode = (bool)$this->session->developmentMode;
 
 		$this->template->sections = $import->createNavigation();
