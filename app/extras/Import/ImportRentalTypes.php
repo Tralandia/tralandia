@@ -105,9 +105,9 @@ class ImportRentalTypes extends BaseImport {
 			$rentalType->name = $this->createPhraseFromString('\Rental\Type', 'name', 'ACTIVE', $x['name'], 'en');
 			$rentalType->slug = $x['name'];
 
-			// hasClassification
+			// classification
 			if (in_array($rentalType->slug, $this->haveClassification)) {
-				$rentalType->hasClassification = 1;
+				$rentalType->classification = 1;
 			}
 			
 			if (strlen($this->skPlurals[$x['name']][0]) != 0) {
