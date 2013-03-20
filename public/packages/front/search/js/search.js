@@ -136,7 +136,6 @@ function updateCriteriaCount(){
 function removeEmpty(o){
 	var r = {};
 	$.each(o,function(k,v){
-		console.log(k);
 		if (v != ''){
 			r[k] = v;			
 		}
