@@ -29,6 +29,9 @@ class SeoService extends Nette\Object {
 		'primaryLocationLocative' => array(
 			'primaryLocation',
 			'name',
+			array(
+				Translator::VARIATION_CASE => \Entity\Language::LOCATIVE,
+			),
 		),
 		'location' => array(
 			'location', // request parameter's name
