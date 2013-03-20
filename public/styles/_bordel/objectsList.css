@@ -16,7 +16,7 @@
 .objectListItem .dogIcon.no {
     background-position: -770px -950px;
 }
-.objectListItem .topIcon {
+.objectListItem .headerIcon {
     position: absolute;
     width: 33px;
     height: 23px;

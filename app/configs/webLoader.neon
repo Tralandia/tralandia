@@ -137,6 +137,7 @@ parameters:
 					- front/home/less/clickMap.less
 					# rental registration
 					- front/rentalRegistration/less/rentalRegistration.less
+					
 					# search sidebar 
 					- front/search/less/search.less
 					# contact page
@@ -160,6 +161,8 @@ parameters:
 					- front/_base/js/main.js
 					- front/_base/js/forms.js
 					- front/_base/js/socialShitLoader.js
+					# registration
+					- front/rentalRegistration/js/rentalRegistration.js
 					# favorites 
 					- front/favorites/js/favorites.js
 					# rental detail

@@ -126,7 +126,7 @@ function updateCriteriaCount(){
 	var url = generateRedirectUrl();
 
 		$.ajax({
-		  url: url+'&searchCount=1',
+		  url: url+'&do=searchBar-getSearchCount',
 		}).done(function(d) {
 		  $('#getSearchCount').html(d.count);
 		});	
@@ -136,7 +136,6 @@ function updateCriteriaCount(){
 function removeEmpty(o){
 	var r = {};
 	$.each(o,function(k,v){
-		console.log(k);
 		if (v != ''){
 			r[k] = v;			
 		}
@@ -179,21 +178,24 @@ function generateRedirectUrl(){
 function updateSerachLinkUrl(){
 
 		var url = '/'+generateRedirectUrl();
+		if(url == '/' ){
+			url = '#';
+		}
+
 		$('#searchControlLink').attr('href',url);
+		var link = $('#searchControlLink')[0].outerHTML;
+		var parent = $('#searchControlLink').parent();
+			$('#searchControlLink').remove();
+			parent.append(link);
+			
 }
 
 
-function resetSelectCountry(){
-	console.log();
-	var val = $('select#frm-searchBar-searchForm-country option[selected]').val();
-	$('select#frm-searchBar-searchForm-country').val(val);
-	
-}
 
 $(function(){
 
 
-resetSelectCountry();
+
 // $('#frm-searchBar-searchForm-rentalType').select2();
 
 	$('.searchForm').searchFormSuggest({
@@ -231,11 +233,7 @@ resetSelectCountry();
 
 	});
 
-	// coutry redirect
-	$('#frm-searchBar-searchForm-country').on('change',function(){
-		var locationRedirect = $('#frm-searchBar-searchForm-country option[value="'+$(this).val()+'"]').attr('data-redirect');
-		window.location = locationRedirect;
-	});
+
 
 	$('.btnSearchClose').on('click',function(){
 		
