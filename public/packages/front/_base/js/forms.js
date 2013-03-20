@@ -803,6 +803,14 @@ maps.mapInit = function(){
 // lazy loading map
 $(function() {
 
+	$('input').keypress(function(e) {
+	    if(e.which == 13) {
+	        return false;
+	    }
+	});
+
+
+
 	$('#frm-registrationForm-rental-address-address').appear();
 	$(document.body).on('appear', '#frm-registrationForm-rental-address-address', function(e, $affected) {           
 		if(typeof $('body').attr('data-googleMapinit') == 'undefined' ){
