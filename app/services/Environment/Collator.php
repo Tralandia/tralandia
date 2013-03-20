@@ -12,6 +12,23 @@ use Nette;
 class Collator extends \Collator
 {
 
+	public function asortByKey(array &$array, $keyName, $sort_flag = null)
+	{
+		$temp = [];
+		foreach($array as $key => $value) {
+			$temp[$key] = Nette\Utils\Arrays::get($value, $keyName, NULL);
+		}
+
+		$this->asort($temp, $sort_flag);
+
+		$final = [];
+		foreach($temp as $key => $value) {
+			$final[$key] = $array[$key];
+		}
+
+		$array = $final;
+	}
+
 	public function ksort(array &$array)
 	{
 		$keys = array_keys($array);

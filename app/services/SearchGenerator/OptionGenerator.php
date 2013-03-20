@@ -3,12 +3,14 @@
 namespace SearchGenerator;
 
 use Doctrine\ORM\EntityManager;
+use Entity\Currency;
 use Entity\Location\Location;
 use Environment\Environment;
 use Extras\Translator;
 use Nette\Application\Application;
 use Nette\Application\UI\Presenter;
 use Nette\ArrayHash;
+use Service\Rental\IRentalSearchServiceFactory;
 use Service\Rental\RentalSearchService;
 
 class OptionGenerator {
@@ -17,6 +19,11 @@ class OptionGenerator {
 	 * @var \Environment\Environment
 	 */
 	protected $environment;
+
+	/**
+	 * @var \Service\Rental\IRentalSearchServiceFactory
+	 */
+	protected $searchFactory;
 
 	/**
 	 * @var \Doctrine\ORM\EntityManager
@@ -29,6 +36,11 @@ class OptionGenerator {
 	protected $topLocations;
 
 	/**
+	 * @var SpokenLanguages
+	 */
+	protected $spokenLanguages;
+
+	/**
 	 * @var \Extras\Translator
 	 */
 	protected $translator;
@@ -36,13 +48,18 @@ class OptionGenerator {
 	/**
 	 * @param \Environment\Environment $environment
 	 * @param TopLocations $topLocations
+	 * @param SpokenLanguages $spokenLanguages
+	 * @param \Service\Rental\IRentalSearchServiceFactory $searchFactory
 	 * @param \Doctrine\ORM\EntityManager $em
 	 */
-	public function __construct(Environment $environment, TopLocations $topLocations, EntityManager $em)
+	public function __construct(Environment $environment, TopLocations $topLocations, SpokenLanguages $spokenLanguages,
+								IRentalSearchServiceFactory $searchFactory, EntityManager $em)
 	{
 		$this->environment = $environment;
+		$this->searchFactory = $searchFactory;
 		$this->translator = $environment->getTranslator();
 		$this->topLocations = $topLocations;
+		$this->spokenLanguages = $spokenLanguages;
 		$this->em = $em;
 	}
 
@@ -66,21 +83,27 @@ class OptionGenerator {
 	}
 
 	/**
+	 * @param \Entity\Location\Location $location
+	 *
 	 * @return array
 	 */
-	public function generateRentalTypeLinks()
+	public function generateRentalTypeLinks(Location $location)
 	{
 		$rentalTypes = $this->em->getRepository(RENTAL_TYPE_ENTITY)->findAll();
+		$search = $this->searchFactory->create($location->getPrimaryParent());
+		$search->setLocationCriterion($location);
+		$collection = $search->getCollectedResults(RentalSearchService::CRITERIA_RENTAL_TYPE);
 
 		$links = [];
 		foreach($rentalTypes as $value) {
 			$links[$value->getId()] = [
 				'entity' => $value,
 				'name' => $this->translator->translate($value->getName(), NULL, [Translator::VARIATION_COUNT => 2]),
+				'count' => isset($collection[$value->getId()]) ? count($collection[$value->getId()]) : 0,
 			];
 		}
 
-		$links = $this->sort($links);
+		$links = $this->sort($links, 'name');
 
 		return ArrayHash::from($links);
 	}
@@ -114,19 +137,19 @@ class OptionGenerator {
 	 */
 	public function generateLocationLinks()
 	{
-		$top = $this->topLocations->getResults(20);
+		$top = $this->topLocations->getResults(200);
 		$locations = $this->em->getRepository(LOCATION_ENTITY)->findById(array_keys($top));
-
 
 		$links = [];
 		foreach($locations as $value) {
 			$links[$value->getId()] = [
 				'entity' => $value,
 				'name' => $this->translator->translate($value->getName()),
+				'count' => count($top[$value->getId()]),
 			];
 		}
 
-		$links = $this->sort($links);
+		$links = $this->sort($links, 'name');
 		return ArrayHash::from($links);
 	}
 
@@ -135,25 +158,27 @@ class OptionGenerator {
 	 */
 	public function generateSpokenLanguage()
 	{
-		$languages = $this->em->getRepository(LANGUAGE_ENTITY)->findAll();
+		$languagesIds = $this->spokenLanguages->getUsed();
+		$languages = $this->em->getRepository(LANGUAGE_ENTITY)->findById($languagesIds);
 
 		return $this->generateFromEntities($languages, 'Id');
 	}
 
 	/**
-	 * @param \Entity\Location\Location $location
+	 * @param \Entity\Currency $currency
 	 *
 	 * @return array
 	 */
-	public function generatePrice(Location $location)
+	public function generatePrice(Currency $currency)
 	{
-		$searchInterval = $location->defaultCurrency->searchInterval;
+		$searchInterval = $currency->getSearchInterval();
 
 		$options = array();
+		$iso = $currency->getIso();
 		for ($i=1; $i < 10; $i++) {
 			$key = $i * $searchInterval;
 
-			$options[$key] = "$key ";
+			$options[$key] = "$key $iso";
 		}
 		return $options;
 	}
@@ -165,7 +190,7 @@ class OptionGenerator {
 	{
 		$options = array();
 		for ($i=1; $i <= RentalSearchService::CAPACITY_MAX; $i++) {
-			$options[$i] = "$i ";
+			$options[$i] = $i . ' ' . $this->translate('o490', $i);
 		}
 		return $options;
 	}
@@ -182,7 +207,7 @@ class OptionGenerator {
 		$options = [];
 		foreach($data as $value) {
 			$methodName = "get$key";
-			$options[$value->{$methodName}()] = $this->translator->translate($value->getName(), NULL, $variation);
+			$options[$value->{$methodName}()] = $this->translate($value->getName(), NULL, $variation);
 		}
 
 		$options = $this->sort($options);
@@ -192,12 +217,28 @@ class OptionGenerator {
 
 	/**
 	 * @param $data
+	 * @param null $key
 	 *
 	 * @return mixed
 	 */
-	protected function sort($data)
+	protected function sort($data, $key = NULL)
 	{
+		$collator = $this->environment->getLocale()->getCollator();
+		if($key) {
+			$collator->asortByKey($data, $key);
+		} else {
+			$collator->asort($data);
+		}
 		return $data;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function translate()
+	{
+		$args = func_get_args();
+		return call_user_func_array(array($this->translator, 'translate'), $args);
 	}
 
 }
