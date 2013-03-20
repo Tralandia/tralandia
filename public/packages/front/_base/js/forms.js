@@ -708,10 +708,10 @@
     $.fn.formMapControl = function( options){
         return this.each(function(){
             (new $.formMapControl(this,options));
+            
 
-
-        var lat = -33.8688,
-        	lng = 151.2195,
+        var lat = $('#map_canvas').attr('data-latitude'),
+        	lng = $('#map_canvas').attr('data-longitude'),
         	latlng = new google.maps.LatLng(lat, lng),
         	image = 'http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png'; 
 
@@ -732,7 +732,8 @@
 
         var infowindow = new google.maps.InfoWindow();
         var marker = new google.maps.Marker({
-          map: map
+          map: map,
+          position:latlng
         });
 
 		// google.maps.event.addListener(map, 'click', function(event) {
