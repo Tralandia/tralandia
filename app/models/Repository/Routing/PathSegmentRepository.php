@@ -4,6 +4,7 @@ namespace Repository\Routing;
 use Doctrine\ORM\Query\Expr;
 use Entity\Language;
 use Entity\Location\Location;
+use Entity\Rental\Type;
 use Routers\FrontRoute;
 
 /**
@@ -43,6 +44,23 @@ class PathSegmentRepository extends \Repository\BaseRepository {
 		$qb->andWhere($qb->expr()->eq('e.type', FrontRoute::$pathSegmentTypes[FrontRoute::RENTAL_TYPE]));
 
 		$t = $qb->getQuery()->getResult();
+		return $t;
+	}
+
+	/**
+	 * @param \Entity\Language $language
+	 * @param \Entity\Rental\Type $rentalType
+	 *
+	 * @return array
+	 */
+	public function findRentalType(Language $language, Type $rentalType)
+	{
+		$qb = $this->getBasicQB($language);
+
+		$qb->andWhere($qb->expr()->eq('e.type', FrontRoute::$pathSegmentTypes[FrontRoute::RENTAL_TYPE]))
+			->andWhere($qb->expr()->eq('e.entityId', $rentalType->getId()));
+
+		$t = $qb->getQuery()->getOneOrNullResult();
 		return $t;
 	}
 

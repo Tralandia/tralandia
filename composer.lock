@@ -6,19 +6,18 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/HosipLan/Nette-AutowireProperties",
+                "url": "https://github.com/HosipLan/Nette-AutowireProperties.git",
                 "reference": "v0.1.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/HosipLan/Nette-AutowireProperties/archive/v0.1.1.zip",
+                "url": "https://api.github.com/repos/HosipLan/Nette-AutowireProperties/zipball/v0.1.1",
                 "reference": "v0.1.1",
                 "shasum": ""
             },
             "require": {
                 "nette/nette": "*"
             },
-            "time": "2012-12-21 13:52:10",
             "type": "library",
             "autoload": {
                 "classmap": [
@@ -40,7 +39,8 @@
             "description": "Lazy-Autowire of properties for Nette PresenterComponents.",
             "keywords": [
                 "nette"
-            ]
+            ],
+            "time": "2012-12-21 13:52:10"
         },
         {
             "name": "janmarek/mockista",
@@ -56,7 +56,6 @@
                 "reference": "e53eb003525f57b3cd3c48b5630a898b5a078251",
                 "shasum": ""
             },
-            "time": "2013-02-25 22:33:22",
             "type": "library",
             "autoload": {
                 "psr-0": {
@@ -91,7 +90,8 @@
                 "phpunit",
                 "testing",
                 "tests"
-            ]
+            ],
+            "time": "2013-02-25 22:33:22"
         },
         {
             "name": "kdyby/events",
@@ -113,7 +113,6 @@
             "require-dev": {
                 "nette/tester": "@dev"
             },
-            "time": "2013-02-20 16:16:13",
             "type": "library",
             "autoload": {
                 "psr-0": {
@@ -143,7 +142,8 @@
             "keywords": [
                 "kdyby",
                 "nette"
-            ]
+            ],
+            "time": "2013-02-20 16:16:13"
         },
         {
             "name": "kdyby/nette-session-panel",
@@ -163,7 +163,6 @@
                 "nette/nette": "*",
                 "php": ">=5.3.2"
             },
-            "time": "2013-02-09 15:14:19",
             "type": "library",
             "autoload": {
                 "psr-0": {
@@ -192,7 +191,8 @@
                 "nette",
                 "panel",
                 "session"
-            ]
+            ],
+            "time": "2013-02-09 15:14:19"
         },
         {
             "name": "nette/nette",
@@ -223,7 +223,6 @@
                 "ext-memcache": "*",
                 "ext-pdo": "*"
             },
-            "time": "2013-03-18 15:35:58",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -266,7 +265,8 @@
                 "mvc",
                 "neon",
                 "templating"
-            ]
+            ],
+            "time": "2013-03-18 15:35:58"
         },
         {
             "name": "nextras/forms",
@@ -286,7 +286,6 @@
                 "nette/nette": ">=2.0.0",
                 "php": ">=5.3.0"
             },
-            "time": "2013-03-04 18:27:47",
             "type": "library",
             "autoload": {
                 "psr-0": {
@@ -313,10 +312,13 @@
             "keywords": [
                 "form",
                 "nette"
-            ]
+            ],
+            "time": "2013-03-04 18:27:47"
         }
     ],
-    "packages-dev": null,
+    "packages-dev": [
+
+    ],
     "aliases": [
 
     ],
@@ -328,5 +330,11 @@
         "kdyby/nette-session-panel": 20,
         "hosiplan/nette-autowire-properties": 20,
         "janmarek/mockista": 20
-    }
+    },
+    "platform": {
+        "php": ">= 5.3.0"
+    },
+    "platform-dev": [
+
+    ]
 }
