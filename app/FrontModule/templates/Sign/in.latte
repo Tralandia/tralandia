@@ -14,91 +14,23 @@
 
 {includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
 {form signInForm, class => "traform dashboard"}
-	{include #text, control => $form['login']}
-	{include #password, control => $form['password']}
-	{include #submit, control => $form['submit']}
-	<button class="btn btn-link marginBottom" id="forgottenPasswordOpen">{_o1091}</button>
+	<table class="formTable innerPadding">
+		{include #text, control => $form['login']}
+		{include #password, control => $form['password']}
+		{include #submit, control => $form['submit']}
+
+{* 		<tr class="simpleimput">
+		<td></td>
+		<td colspan="2"><button class="btn btn-link marginBottom" id="forgottenPasswordOpen">{_o1091}</button></td>
+		</tr> *}
+	</table>
 {/form}
 
 {form forgotPasswordForm, class => "traform dashboard"}
-	{include #email, control => $form['email']}
-	{include #submit, control => $form['submit']}
-	<button class="btn cancel marginBottom" id="closeForgottenPasswordForm">#Zatvor</button>
+	<table class="formTable innerPadding">
+		{include #email, control => $form['email']}
+		{include #submit, control => $form['submit']}
+		<button class="btn cancel marginBottom" id="closeForgottenPasswordForm">#Zatvor</button>
+	</table>
 {/form}
 
-{*
-<form class="traform loginform">
-
-
-<div class="row-fluid">
-	<div class="span4">
-			<label for="frm-rentalEditForm-basicInfo-bg-name"><strong>{_o994}</strong></label>
-			<small>#(Some lehper text lorem ipsum Blah)</small>
-	</div>
-
-	<div class="span7">
-		<input type="text" name="email" placeholder="{_o966}">
-	</div>
-	<div class="span1 validation"><i class="entypo-invalid"></i></div>
-	<div class="span12 error-mesage">#ValidationError</div>
-
-</div>
-
-<div class="row-fluid">
-	<div class="span4">
-			<label for="frm-rentalEditForm-basicInfo-bg-name"><strong>{_o997}</strong></label>
-			<small>#(Some lehper text lorem ipsum Blah)</small>
-	</div>
-
-	<div class="span7">
-		<input type="password" name="password" placeholder="{_o999}">
-	</div>
-	<div class="span1 validation"><i class="entypo-invalid"></i></div>
-	<div class="span12 error-mesage">#ValidationError</div>
-
-</div>
-
-<div class="row-fluid">
-<div class="span4">&nbsp;</div>
-<div class="span7">
-		<button class="btn btn-green marginBottom">#Prihlásit</button>
-		<button class="btn btn-link marginBottom" id="forgottenPasswordOpen">{_o1091}</button>
-	</div>
-</div>
-
-</form>
-
-
-
-<form class="traform hide loginform" id="forgottenPassword">
-
-<div class="row-fluid">
-	<div class="span12 marginBottom">
-		{_o1102}
-	</div>
-</div>
-
-<div class="row-fluid">
-	<div class="span4">
-			<label for="frm-rentalEditForm-basicInfo-bg-name"><strong>{_o966}</strong></label>
-			<small>#(Some lehper text lorem ipsum Blah)</small>
-	</div>
-
-	<div class="span7">
-		<input type="text" name="basicInfo[bg][name]" value="">
-	</div>
-	<div class="span1 validation"><i class="entypo-invalid"></i></div>
-	<div class="span12 error-mesage">#ValidationError</div>
-
-</div>
-
-
-<div class="row-fluid">
-<div class="span4">&nbsp;</div>
-<div class="span7">
-	<button class="btn btn-green marginBottom">{_o1103}</button>
-	<button class="btn cancel marginBottom" id="closeForgottenPasswordForm">#Zatvor</button>
-</div>
-</div>
-
-</form>*}
