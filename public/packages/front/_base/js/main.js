@@ -496,7 +496,7 @@ $(document).ready(function(){
 
 });
 
-
+// replace js variables
 
 function jsVariablesReplace() {
 
@@ -537,7 +537,11 @@ function jsVariablesReplace() {
 			$(elem).attr('data-selected', v.value);
 		}
 
-
+		switch(elem.prop('tagName')){
+			case 'SELECT':
+				_setSelectValueFromVariables(elem,v.value);
+				break;
+		}
 
 	});
 
@@ -545,20 +549,11 @@ function jsVariablesReplace() {
 
 
 function _setSelectValueFromVariables(element , value){
-
+	$(element).val(value);
+	$(element).find('option').each(function(){
+		$(this).attr('selected',false);	
+	});
+	$(element).find('option[value="'+value+'"]').attr('selected',true);	
 }
 
-var tramapInit = false;
-
-function mapLoader(){	
-
-	if(!tramapInit){
-		setTimeout(function(){
-			$('#map_canvas').traMap();
-		},1000);
-		tramapInit = true;
-	}
-
-
-}
 
