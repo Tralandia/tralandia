@@ -292,7 +292,6 @@ $(function() {
 
 	$('#placesImg').appear();
 	$(document.body).on('appear','#placesImg' , function(e,$affected){
-		console.log('vidimeee');
 
   				var coordinates = $('#objectDetailMap').attr('value').split(',');
 
