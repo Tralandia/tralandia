@@ -103,17 +103,17 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 			->setOption('help', $this->translate('o3095'))
 			->setOption('prepend', '<i class="icon-envelope"></i>')
 			->setAttribute('placeholder', 'email@email.com')
-	        ->addRule(Form::EMAIL, 'o407');
+	        //->addRule(Form::EMAIL, 'o407');
 			;
 		$this->addPassword('password', 'o997')
 			->setOption('help', $this->translate('o3096'))
 			->setOption('prepend', '<i class="icon-lock"></i>')
-	        ->addRule(Form::MIN_LENGTH, 'o856', 6);
+	        //->addRule(Form::MIN_LENGTH, 'o856', 6);
 			;
 
 		$this->addText('name', 'o100070')
 			->setOption('help', $this->translate('o100071'))
-	        ->addRule(Form::MAX_LENGTH, 'o100101', 70);
+	        //->addRule(Form::MAX_LENGTH, 'o100101', 70);
 			;
 
 		$this['phone'] = new PhoneContainer('o10899', $phonePrefixes);
@@ -121,7 +121,7 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 		$this->addText('url', 'o977')
 			->setOption('help', $this->translate('o978'))
 			->setOption('prepend', 'http://')
-	        ->addRule(Form::URL, 'o100102');
+	        //->addRule(Form::URL, 'o100102');
 			;
 
 		$rentalContainer = $this->addContainer('rental');
@@ -141,7 +141,7 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 
 		$rentalContainer['type'] = new RentalTypeContainer($rentalTypes);
 
-		$check = ['dohoda', 'hocikedy', '8:00', '10:00', '15:00', '21:00'];
+		$check = ['dohoda', 'hocikedy', '8:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00'];
 		$rentalContainer->addSelect('checkIn', 'o1586', $check)
 			//->setOption('help', $this->translate('o5956'))
 			;
@@ -150,13 +150,13 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 			;
 
 		$rentalContainer->addText('maxCapacity', 'o100072')
-			->addRule(self::RANGE, $this->translate('o100074'), [1, 1000])
+			//->addRule(self::RANGE, $this->translate('o100074'), [1, 1000])
 			->setOption('help', $this->translate('o100073'))
 			->setOption('prepend', $this->translate('o490', 2).':')
 			;
 
 //		$rentalContainer->addText('bedroomCount', 'o100075')
-//			->addRule(self::RANGE, $this->translate('o100074'), [1, 1000])
+//			//->addRule(self::RANGE, $this->translate('o100074'), [1, 1000])
 //			//->setOption('help', $this->translate('o5956'))
 //			;
 
