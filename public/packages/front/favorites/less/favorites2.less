@@ -14,25 +14,27 @@
 		background: #fff;
 	}
 
-.cover {
-	border: 1px solid #d5d5d5;
-	height: 52px;
-	background: #fff;
-	.bottom-border-radius(4px);
-}
+	.cover {
+		border: 1px solid #d5d5d5;
+		height: 48px;
+		background: #fff;
+		-webkit-border-radius: 4px;
+		-webkit-border-top-left-radius: 0;
+		-moz-border-radius: 4px;
+		-moz-border-radius-topleft: 0;
+		border-radius: 4px;
+		border-top-left-radius: 0;
+		overflow: hidden;
+	}
 
 	.rightArrow , .leftArrow {
-		width: 40px;
-		height: 52px;
+		width: 41px;
+		height: 48px;
 		float: left;
 		color: #686868;	
 		text-align: center;
-		line-height: 50px;
+		line-height: 48px;
 		.basic-gradient(#fafafa,#e8e8e8);	
-				
-		-webkit-border-bottom-left-radius: 4px;
-		-moz-border-radius-bottomleft: 4px;
-		border-bottom-left-radius: 4px;
 		border-right: 1px solid #d5d5d5;
 		&:hover {
 		text-decoration:none;
@@ -41,14 +43,7 @@
 	}
 
 	.rightArrow {
-		float: right;
-
-		-webkit-border-radius: 0;
-		-moz-border-radius: 0;
-		border-radius: 0;		
-		-webkit-border-bottom-right-radius: 4px;
-		-moz-border-radius-bottomright: 4px;
-		border-bottom-right-radius: 4px;
+		float: right;	
 		border-right: none;
 		border-left: 1px solid #d5d5d5;
 
@@ -58,73 +53,110 @@
 		width: 880px;
 		float: left;
 		background: #fafafa;
-		height: 52px;		
+		height: 48px;		
 	}
 
-	.nav-tabs > .active , .nav-tabs > .active:hover {
+	.nav > .active , .nav > .active:hover {
 		.basic-gradient(#526ea8,#334c83);
 		color: #fff;
+		cursor: default;
 		border: none;
 	}
 
-	.nav-tabs > li  {
+	.nav > li  {
 		padding: 1px 8px;
 		.basic-border-radius(0);
-		color: #666;
+		.top-border-radius(4px);
+		color: #333;
 		border: none;
+		display: block;
+		float: left;
 		cursor: pointer;
+		border: 1px solid #d5d5d5;
 		margin-right:  2px;
-		font-size: 12px;
-		background: #ccc;
-		.top-border-radius(2px);
-		i.entypo-share {
-			float: left;
-			&:before {
-				font-size: 30px;
+		font-size: 11px;
+		.basic-gradient(#fafafa,#e8e8e8);	
+
+		&:hover {
+			background: #dddddd;	
+		}
+
+		i {
+			position: relative;
+			top: -1px;
+
+			&.icon-eye-open {
+				top: -2px;
 			}
 		}
 
-		i[class^="icon-"],
-		i[class*=" icon-"]  {
-			font-size: 10px;
-			position: relative;
-			top: 1px;
+		i.entypo-share {
+			float: left;
+			top: 0;
+			left: -1px;			
+			&:before {
+				font-size: 20px;
+			}
 		}
+
+
 	}
 
 		li.pull-right {
 
-
-				background: transparent;
-				a {
+			background: transparent;
+			border: none;
+			padding: 0;
+			float: right;
+			a {
 				padding: 0 7px;
 				margin-top: 5px;
 				line-height: 12px;
 				border-left: 1px solid #dddddd;					
-		.basic-border-radius(0);
-		color: #666;
-		border: none;
-		cursor: pointer;
-		margin-right:  2px;
-		font-size: 12px;
+				.basic-border-radius(0);
+				color: #666;
+				cursor: pointer;
+				margin-right:  2px;
+				
+				i  {
+					font-size: 10px;
+	
 				}
 
+				&:hover {
+					text-decoration: underline;
+					background: transparent;
+				}				
 
-				&:last-child {
-						border:none;
-				}			
+			}
+
+			&:hover {
+				text-decoration: underline;
+				background: transparent;
+			}
+
+
+			&:last-child {
+				a {
+					border:none;
+				}
+			}		
+
+			&.hide {
+				display: none;
+			}	
 		}
 
 		.content {
-			height: 52px;
-			width: 882px;
+			height: 48px;
+			width: 880px;
 		}
 
 	#scrollInnerContent {
 		list-style: none;
 		margin: 0;
 		padding: 0;
-		height: 50px;
+		height: 48px;
 		white-space: nowrap;
 		display: table-row;
 
@@ -135,7 +167,7 @@
 			border: 2px solid #ffffff;
 			background-size: cover;
 			float: left;
-			margin: 4px 0 4px 2px;
+			margin: 2px 0 ;
 			overflow: hidden;
 			position: relative;
 			cursor: pointer;
@@ -197,6 +229,10 @@
 
 			&.template {
 				display: none;
+			}
+
+			&:nth-child(2) {
+				margin-left: 2px;
 			}
 		}
 	}
