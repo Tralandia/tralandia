@@ -496,6 +496,33 @@ $(document).ready(function(){
 
 });
 
+  $.fn.replaceText = function( search, replace, text_only ) {
+    return this.each(function(){
+      var node = this.firstChild,
+        val,
+        new_val,
+        remove = [];
+      if ( node ) {
+        do {
+          if ( node.nodeType === 3 ) {
+            val = node.nodeValue;
+            new_val = val.replace( search, replace );
+            if ( new_val !== val ) {
+              if ( !text_only && /</.test( new_val ) ) {
+                $(node).before( new_val );
+                remove.push( node );
+              } else {
+                node.nodeValue = new_val;
+              }
+            }
+          }
+        } while ( node = node.nextSibling );
+      }
+      remove.length && $(remove).remove();
+    });
+  };  
+
+
 // replace js variables
 
 function jsVariablesReplace() {
@@ -503,57 +530,25 @@ function jsVariablesReplace() {
 	var variables = [];
 
 	$('variables').each(function(i){
-
-		var el = this;
-		var arr = [];
-		for (var i=0, attrs=el.attributes, l=attrs.length; i<l; i++){
-		    arr.push(attrs.item(i).nodeName);
-		}
-
-		var findPrefix = 'data';
-
-		$.each(arr , function(k,v){
-			if(v.match(findPrefix)){
-
-				var varname = v.split('-');
-
-				var data = {
-					value : $(el).attr(v),
-					selector : $(el).attr('for'),
-					variable: '~'+varname[1]+'~'
-				}
-
-				variables.push(data);
-
-			}
-		});
-
-	});
-
-	// replace elements 
-	$.each(variables ,function(k,v){
-		var elem = $(v.selector).find('[data-selected]');
-		if($(elem).attr('data-selected') == v.variable){
-			$(elem).attr('data-selected', v.value);
-		}
-
-		switch(elem.prop('tagName')){
-			case 'SELECT':
-				_setSelectValueFromVariables(elem,v.value);
-				break;
-		}
+		var selector = $(this).attr('for');
+		$.each($(this).data() , function(k,v){
+			console.log('~'+k+'~');
+			console.log(selector);
+			console.log(v);
+			$(selector).replaceText('~'+k+'~',v);
+		})
 
 	});
 
 }
 
 
-function _setSelectValueFromVariables(element , value){
-	$(element).val(value);
-	$(element).find('option').each(function(){
-		$(this).attr('selected',false);	
-	});
-	$(element).find('option[value="'+value+'"]').attr('selected',true);	
-}
+// function _setSelectValueFromVariables(element , value){
+// 	$(element).val(value);
+// 	$(element).find('option').each(function(){
+// 		$(this).attr('selected',false);	
+// 	});
+// 	$(element).find('option[value="'+value+'"]').attr('selected',true);	
+// }
 
 
