@@ -339,54 +339,6 @@
 			padding: 0 5px;
 		}
 
-
-		li {
-
-
-			&.headerIcon {
-
-				a {
-					i {
-						&:before {
-							left:5px;
-							top: -1px;
-							float: left;
-							font-size: 30px;
-							position: relative;
-						}
-					}
-				}
-
-				&.edit {
-					a {
-						i {
-							&:before {
-								font-size: 28px;
-							}
-						}
-					}					
-				}
-
-			&.home {
-				a {
-					i {
-						&:before {
-							
-							top: -2px;
-							margin-right: 0;
-							font-size: 25px;
-							
-						}
-					}
-				}				
-			}
-
-
-			}
-
-
-		}
-
 		a:hover {
 			text-decoration: underline;
 		}
@@ -421,6 +373,12 @@
 
 					padding: 0 6px;
 					color: #444;
+					line-height: 26px;
+					border-right: 1px solid #bbb;
+
+					&.last {
+						border-right: none;
+					}
 
 					&.red {
 						color: #d32c16;
@@ -469,8 +427,11 @@
 			#langMenuOptionsOpen {
 				i.entypo-chevron-down ,i.entypo-chevron-up {
 					float: right;
-					top: -24px;
+					top: -25px;
 					right: -5px;					
+					&:before {
+						font-size: 30px;
+					}
 				}
 			}
 
