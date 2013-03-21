@@ -140,7 +140,7 @@
 
 	{define #baseControl}
 	{default $class = ''}
-	<tr class="simpleInput invalid {$class}">
+	<tr class="simpleInput {$class}">
 		<td>
 			{_$control->caption}       
 		</td>
@@ -589,9 +589,7 @@
 	{define #submitCancel}
 	{default $class = null}
 	<tr>
-		<td>
-
-		</td>
+		<td></td>
 		<td colspan="2">
 			<button type="submit" class="btn-orange" name="{$control->getHtmlName()}" id="{$control->getHtmlId()}">
 				<i class="icon"></i> {$control->caption}
