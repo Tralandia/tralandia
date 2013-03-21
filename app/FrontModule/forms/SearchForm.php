@@ -35,6 +35,7 @@ class SearchForm extends BaseForm {
 	protected $em;
 
 	/**
+	 * @param \Nette\Application\UI\Presenter $presenter
 	 * @param \SearchGenerator\OptionGenerator $searchOptionGenerator
 	 * @param \Environment\Environment $environment
 	 * @param \Doctrine\ORM\EntityManager $em

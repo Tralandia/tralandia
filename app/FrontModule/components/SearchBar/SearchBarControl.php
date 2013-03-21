@@ -2,6 +2,7 @@
 namespace FrontModule\Components\SearchBar;
 
 use Doctrine\ORM\EntityManager;
+use Environment\Environment;
 use FrontModule\Forms\ISearchFormFactory;
 use Routers\FrontRoute;
 use SearchGenerator\OptionGenerator;
@@ -51,6 +52,11 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 	protected $search;
 
 	/**
+	 * @var \Environment\Environment
+	 */
+	protected $environment;
+
+	/**
 	 * @var \Doctrine\ORM\EntityManager
 	 */
 	protected $em;
@@ -68,15 +74,17 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 
 	/**
 	 * @param \Service\Rental\RentalSearchService $search
+	 * @param \Environment\Environment $environment
 	 * @param \Doctrine\ORM\EntityManager $em
 	 * @param ISearchFormFactory $searchFormFactory
 	 * @param \SearchGenerator\OptionGenerator $searchOptionGenerator
 	 */
-	public function __construct(RentalSearchService $search,EntityManager $em,
+	public function __construct(RentalSearchService $search,Environment $environment ,EntityManager $em,
 								ISearchFormFactory $searchFormFactory, OptionGenerator $searchOptionGenerator)
 	{
 		parent::__construct();
 		$this->search = $search;
+		$this->environment = $environment;
 		$this->em = $em;
 		$this->searchFormFactory = $searchFormFactory;
 		$this->searchOptionGenerator = $searchOptionGenerator;
@@ -214,11 +222,14 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		$form['country']->setDefaultValue($this->search->getPrimaryLocation()->getId());
 
 		if($this->location) {
-			$form['location']->setDefaultValue($this->location->getId());
+			$form['location']->setDefaultValue($this->location->getSlug());
 		}
 
 		if($this->rentalType) {
-			$form['rentalType']->setDefaultValue($this->rentalType->getId());
+			$pathSegment = $this->em->getRepository(PATH_SEGMENT_ENTITY)
+				->findRentalType($this->environment->getLanguage(), $this->rentalType);
+
+			$form['rentalType']->setDefaultValue($pathSegment->getPathSegment());
 		}
 
 		if($this->priceFrom) {
