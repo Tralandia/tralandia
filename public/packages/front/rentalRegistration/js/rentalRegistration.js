@@ -12,16 +12,30 @@ $(function(){
 
 	});
 
+	rentalTypeOnLoad();
+
 	$('.rentalType select').on('change',function(){
-		var clasification = $('.rentalType select option[value="'+$(this).val()+'"]').attr('data-classification');
-		if(typeof clasification != 'undefined'){
-			$('.classification').show();
-		} else {
-			$('.classification').hide();
-		}
+		_rentalTypeClasification(this);
 	});
 
 });
+
+function _rentalTypeClasification(elem){
+	var clasification = $('.rentalType select option[value="'+$(elem).val()+'"]').attr('data-classification');
+	if(typeof clasification != 'undefined'){
+		$('.classification').show();
+	} else {
+		$('.classification').hide();
+	}		
+}
+
+function rentalTypeOnLoad(){
+	$('.rentalType select').each(function(){
+		_rentalTypeClasification(this);
+	});
+}
+
+
 
 function resetSelectRedirect(elem){
 	var id = '#'+$(elem).attr('id');

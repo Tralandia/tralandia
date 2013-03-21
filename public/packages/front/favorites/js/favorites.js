@@ -86,10 +86,16 @@ $(function(){
 
 
 		// tabs nav
-		$('#favoritesTabs.nav-tabs li:not(.pull-right)').click(function () {
-			var currentId = $(this).attr('for');
+
+
+
+		$('#favoritesTabs.nav li:not(.pull-right)').click(function () {
+			var currentId = '#'+$(this).attr('for');
 			var contentId = "#favoritesTabContent";
 			var activeClassName = 'active';
+
+			$('#favoritesTabs.nav').find('li.pull-right.share').hide();
+			$('#favoritesTabs.nav').find('li.pull-right.'+$(this).attr('for')).show();
 
 			$(this).parent().find('li.'+activeClassName).removeClass(activeClassName);
 			$(this).addClass(activeClassName);

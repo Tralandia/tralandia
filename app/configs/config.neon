@@ -192,7 +192,7 @@ factories:
 		implement: OwnerModule\Forms\IUserEditFormFactory
 
 	signInFormFactory:
-		class: BaseModule\Forms\Sign\InForm(@userRepositoryAccessor)
+		class: BaseModule\Forms\Sign\InForm
 		implement: BaseModule\Forms\Sign\IInFormFactory
 
 	forgotPasswordFormFactory:

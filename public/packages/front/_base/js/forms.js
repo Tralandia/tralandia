@@ -736,32 +736,23 @@
           position:latlng
         });
 
-		// google.maps.event.addListener(map, 'click', function(event) {
+		google.maps.event.addListener(map, 'click', function(event) {
 			
-		// 	//set marker 
-		// 	if(!marker){
-		// 		marker = new google.maps.Marker({
-		// 				      position: event.latLng,
-		// 				      map: map
-		// 				  });
-		// 	} else {
+			marker.setPosition(event.latLng);
+				 
+			// set geocoder
+        	var geocoder = new google.maps.Geocoder();
+        	geocoder.geocode({ 'latLng': event.latLng} , function(r, status){
+        		if(status == 'OK'){
 
-		// 		marker.setPosition(event.latLng);
-		// 	}		 
+        			$('#frm-registrationForm-rental-address-address').val(r[0].formatted_address);
 
-		// 	// set geocoder
-  //       	var geocoder = new google.maps.Geocoder();
-  //       	geocoder.geocode({ 'latLng': event.latLng} , function(r, status){
-  //       		if(status == 'OK'){
+        		} else {
+        			alert('address error');
+        		}
+        	});
 
-  //       			$('#frm-registrationForm-rental-address-address').val(r[0].formatted_address);
-
-  //       		} else {
-  //       			alert('address error');
-  //       		}
-  //       	});
-
-		// });
+		});
 
         google.maps.event.addListener(autocomplete, 'place_changed', function() {
           infowindow.close();

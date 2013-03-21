@@ -19,7 +19,8 @@
 /* input type text setting */
 @inputPureBorderColor : #a0b325;
 @inputErrorBorderColor : #ff0000;
-@inputErrorBackgroundColor : #fef7f1;
+@inputErrorBackgroundColor : #fff;
+@inputErrorBackgroundPrepend : rgb(253, 221, 215);
 @inputHeight : 38px;
 @inputColor: #873300;
 @inputFontSize : 16px;
@@ -63,6 +64,27 @@ table.formTable {
 				padding-top: 20px;
 				padding-bottom: 15px;
 				color: @darkBlue;
+			}
+		}
+
+		&.invalid {
+			td:nth-child(2) {
+				.select2-container {
+					a {
+						border-color: @inputErrorBorderColor;
+						background: @inputErrorBackgroundColor;
+						color: @inputErrorBorderColor;
+
+						div {
+							border-color: @inputErrorBorderColor;
+							b {
+								background: @inputErrorBackgroundPrepend;
+							}							
+						}
+
+
+					}
+				}
 			}
 		}
 
@@ -230,6 +252,14 @@ table.formTable {
 	}
 
 
+	.invalid {
+		.input-append .add-on, .input-prepend .add-on {
+			background-color: @inputErrorBackgroundPrepend;
+			border-color: @inputErrorBorderColor;
+			color:@inputErrorBorderColor;
+		}						
+	}
+
 	.input-append .add-on, .input-prepend .add-on {
 		background-color: #eaf0d7;
 		border-color: #b0c13b;
@@ -241,11 +271,18 @@ table.formTable {
 		text-align: right;
 	}
 
-
 	textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
 		box-shadow: none;
 		margin: 0px;
 		border: 1px solid #b0c13b;
+	}
+
+	.invalid {
+		textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+			border-color: @inputErrorBorderColor;
+			background-color: @inputErrorBackgroundColor;
+			color: @inputErrorBorderColor;
+		}		
 	}
 
 	textarea {
