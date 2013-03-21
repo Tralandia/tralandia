@@ -19,7 +19,8 @@
 /* input type text setting */
 @inputPureBorderColor : #a0b325;
 @inputErrorBorderColor : #ff0000;
-@inputErrorBackgroundColor : #fef7f1;
+@inputErrorBackgroundColor : #fff;
+@inputErrorBackgroundPrepend : rgb(253, 221, 215);
 @inputHeight : 38px;
 @inputColor: #873300;
 @inputFontSize : 16px;
@@ -77,7 +78,7 @@ table.formTable {
 						div {
 							border-color: @inputErrorBorderColor;
 							b {
-								background: @inputErrorBackgroundColor;
+								background: @inputErrorBackgroundPrepend;
 							}							
 						}
 
@@ -253,7 +254,7 @@ table.formTable {
 
 	.invalid {
 		.input-append .add-on, .input-prepend .add-on {
-			background-color: @inputErrorBackgroundColor;
+			background-color: @inputErrorBackgroundPrepend;
 			border-color: @inputErrorBorderColor;
 			color:@inputErrorBorderColor;
 		}						
