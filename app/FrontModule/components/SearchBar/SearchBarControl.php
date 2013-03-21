@@ -4,6 +4,7 @@ namespace FrontModule\Components\SearchBar;
 use Doctrine\ORM\EntityManager;
 use Environment\Environment;
 use FrontModule\Forms\ISearchFormFactory;
+use Nette\Utils\Html;
 use Routers\FrontRoute;
 use SearchGenerator\OptionGenerator;
 use Service\Rental\RentalSearchService;
@@ -102,29 +103,37 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 			$template->rentalTypes = $rentalTypes;
 		}
 
+		$jsVariables = [];
+		$jsVariables['data-country'] = $this->search->getPrimaryLocation()->getId();
+
 		if($this->location) {
-			$template->removeLocation = $this->link('this', ['location' => NULL]);
+			$jsVariables['data-location'] = $this->location->getSlug();
 		}
 
 		if($this->rentalType) {
-			$template->removeRentalType = $this->link('this', ['rentalType' => NULL]);
+			$pathSegment = $this->em->getRepository(PATH_SEGMENT_ENTITY)
+				->findRentalType($this->environment->getLanguage(), $this->rentalType);
+
+			$jsVariables['data-rentalType'] = $pathSegment->getPathSegment();
 		}
 
 		if($this->priceFrom) {
-			$template->removePriceFrom = $this->link('this', ['priceFrom' => NULL]);
+			$jsVariables['data-priceFrom'] = $this->priceFrom;
 		}
 
 		if($this->priceTo) {
-			$template->removePriceTo = $this->link('this', ['priceTo' => NULL]);
+			$jsVariables['data-priceTo'] = $this->priceTo;
 		}
 
 		if($this->capacity) {
-			$template->removeCapacity = $this->link('this', ['capacity' => NULL]);
+			$jsVariables['data-capacity'] = $this->capacity;
 		}
 
 		if($this->spokenLanguage) {
-			$template->removeSpokenLanguage = $this->link('this', ['spokenLanguage' => NULL]);
+			$jsVariables['data-spokenLanguage'] = $this->spokenLanguage->getId();
 		}
+
+		$template->jsVariables = Html::el('variables')->addAttributes($jsVariables);
 
 		$search = $this->getSearch();
 
@@ -218,35 +227,6 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 			$values = $form->getValues();
 			$form->presenter->redirect('RentalList', (array) $values);
 		};
-
-		$form['country']->setDefaultValue($this->search->getPrimaryLocation()->getId());
-
-		if($this->location) {
-			$form['location']->setDefaultValue($this->location->getSlug());
-		}
-
-		if($this->rentalType) {
-			$pathSegment = $this->em->getRepository(PATH_SEGMENT_ENTITY)
-				->findRentalType($this->environment->getLanguage(), $this->rentalType);
-
-			$form['rentalType']->setDefaultValue($pathSegment->getPathSegment());
-		}
-
-		if($this->priceFrom) {
-			$form['priceFrom']->setDefaultValue($this->priceFrom);
-		}
-
-		if($this->priceTo) {
-			$form['priceTo']->setDefaultValue($this->priceTo);
-		}
-
-		if($this->capacity) {
-			$form['capacity']->setDefaultValue($this->capacity);
-		}
-
-		if($this->spokenLanguage) {
-			$form['spokenLanguage']->setDefaultValue($this->spokenLanguage->getId());
-		}
 
 		return $form;
 	}
