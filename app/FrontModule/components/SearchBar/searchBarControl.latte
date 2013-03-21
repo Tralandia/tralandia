@@ -49,7 +49,7 @@
 	<h4><i class="icon-map-marker"></i>{_o100098}</h4>
 		<ul n:inner-foreach="$locations as $value">
 			<li>
-				<a href="{plink RentalList, location => $value->entity}">{$value->name} ({$value->count})</a>
+				<a href="{plink RentalList, location => $value->entity}">{$value->name} <span class="counter">{$value->count}</span></a>
 			</li>
 		</ul>
 	{/ifset}
@@ -58,9 +58,9 @@
 		<ul n:inner-foreach="$rentalTypes as $value">
 			<li>
 				{if $value->count}
-					<a href="{plink RentalList, rentalType => $value->entity}">{$value->name} ({$value->count})</a>
+					<a href="{plink RentalList, rentalType => $value->entity}">{$value->name} <span class="counter">{$value->count}</span></a>
 				{else}
-					<span>{$value->name} ({$value->count})</span>
+					<span>{$value->name} {$value->count}</span>
 				{/if}
 			</li>
 		</ul>
