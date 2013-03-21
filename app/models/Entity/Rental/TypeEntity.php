@@ -36,7 +36,7 @@ class Type extends \Entity\BaseEntity {
 	 * @var boolean
 	 * @ORM\Column(type="boolean")
 	 */
-	protected $hasClassification = FALSE;
+	protected $classification = FALSE;
 
 	/**
 	 * @param string
@@ -132,9 +132,9 @@ class Type extends \Entity\BaseEntity {
 	 * @param boolean
 	 * @return \Entity\Rental\Type
 	 */
-	public function setHasClassification($hasClassification)
+	public function setClassification($classification)
 	{
-		$this->hasClassification = $hasClassification;
+		$this->classification = $classification;
 
 		return $this;
 	}
@@ -142,8 +142,8 @@ class Type extends \Entity\BaseEntity {
 	/**
 	 * @return boolean|NULL
 	 */
-	public function getHasClassification()
+	public function getClassification()
 	{
-		return $this->hasClassification;
+		return $this->classification;
 	}
 }
