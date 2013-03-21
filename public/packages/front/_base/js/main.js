@@ -254,7 +254,7 @@ $(document).ready(function(){
 //console.log($.cookie('favoritesList'));
 //console.log($.cookie('visitObjectList'));
 	
-
+	jsVariablesReplace();
 
 	// Prevent "empty" links to "click"
 	$("a[href='#']").click(function() {
@@ -495,6 +495,58 @@ $(document).ready(function(){
 
 
 });
+
+
+
+function jsVariablesReplace() {
+
+	var variables = [];
+
+	$('variables').each(function(i){
+
+		var el = this;
+		var arr = [];
+		for (var i=0, attrs=el.attributes, l=attrs.length; i<l; i++){
+		    arr.push(attrs.item(i).nodeName);
+		}
+
+		var findPrefix = 'data';
+
+		$.each(arr , function(k,v){
+			if(v.match(findPrefix)){
+
+				var varname = v.split('-');
+
+				var data = {
+					value : $(el).attr(v),
+					selector : $(el).attr('for'),
+					variable: '~'+varname[1]+'~'
+				}
+
+				variables.push(data);
+
+			}
+		});
+
+	});
+
+	// replace elements 
+	$.each(variables ,function(k,v){
+		var elem = $(v.selector).find('[data-selected]');
+		if($(elem).attr('data-selected') == v.variable){
+			$(elem).attr('data-selected', v.value);
+		}
+
+
+
+	});
+
+}
+
+
+function _setSelectValueFromVariables(element , value){
+
+}
 
 var tramapInit = false;
 
