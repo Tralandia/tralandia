@@ -85,12 +85,12 @@
 	{define #texyla}
 	<tr>
 		<td>
-			{label $control /}        
+			{label $control /}
 		</td>
 		<td>
 			{input $control , class => "texyla"}
 		</td>
-		
+
 		<td>
 			<span class="help">{$control->getOption('description')}</span>
 			<span class="alert">{include #controlErrors, errors => $control->getErrors()}</span>
@@ -99,12 +99,12 @@
 	{/define #texyla}
 
 
-	{* 
-	===========================================================================================================	
-	===========================================================================================================	
-	===========================================================================================================	
-	===========================================================================================================	
-	===========================================================================================================	
+	{*
+	===========================================================================================================
+	===========================================================================================================
+	===========================================================================================================
+	===========================================================================================================
+	===========================================================================================================
 	*}
 
 
@@ -116,12 +116,12 @@
 	{define #checkbox}
 	<tr>
 		<td>
-			{_$control->caption}       
+			{_$control->caption}
 		</td>
 		<td>
 			{input $control}
 		</td>
-		
+
 		<td>
 			<span class="help">{$control->getOption('description')}</span>
 			<span class="alert">{include #controlErrors, errors => $control->getErrors()}</span>
@@ -142,7 +142,7 @@
 	{default $class = ''}
 	<tr class="simpleInput {$class}">
 		<td>
-			{_$control->caption}       
+			{_$control->caption}
 		</td>
 		<td>
 			{capture $input}
@@ -177,7 +177,7 @@
 					<td>{!$input}</td>
 				</tr>
 			</table>
-			{/if}	
+			{/if}
 		</td>
 		<td>
 			<span class="help">{$control->getOption('help')}</span>
@@ -208,7 +208,7 @@
 		<td style="vertical-align: top; padding-top: 4px;">{_$control->caption}</td>
 		<td>
 			{foreach $control as $key => $label}
-			{*!$control->getLabelItem($key)->addAttributes(['class' => 'checkbox'])->startTag()*} 
+			{*!$control->getLabelItem($key)->addAttributes(['class' => 'checkbox'])->startTag()*}
 			<label>
 				{$control->getControlItem($key)}
 				{_$label}
@@ -219,7 +219,6 @@
 	</tr>
 	{else}
 	{var $countPerCol = ceil(count($control->items)/$colCount)}
-	{dump count($control->items), $countPerCol}
 	<tr>
 		<td colspan="3">
 			<table class="checkboxes" style="width: 100%;">
@@ -234,7 +233,7 @@
 					<td width="{(int)(100/$colCount)}%">
 						{var $i = 1}
 						{foreach $control as $key => $label}
-						{*!$control->getLabelItem($key)->addAttributes(['class' => 'checkbox'])->startTag()*} 
+						{*!$control->getLabelItem($key)->addAttributes(['class' => 'checkbox'])->startTag()*}
 						<label>{$control->getControlItem($key)}{_$label}</label>
 						{if $i == $countPerCol}
 					</td><td width="{(int)(100/$colCount)}%">
@@ -266,7 +265,7 @@
 
 <tr>
 	<td>
-		{label $mainControl /}        
+		{label $mainControl /}
 	</td>
 	<td>
 		{input $container['amount']}
@@ -294,7 +293,7 @@
 
 <tr class="simpleInput">
 	<td>
-		{_$mainControl->caption}     
+		{_$mainControl->caption}
 	</td>
 	<td>
 		<table>
@@ -302,9 +301,9 @@
 				<td class="prepend">{input $container['prefix'], class => 'select2'}</td>
 				<td>{input $container['number']}</td>
 			</tr>
-		</table>		
+		</table>
 	</td>
-	
+
 	<td>
 		<span class="help">{$container->getDescription('description')}</span>
 		<span class="alert">{include #controlErrors, errors => $container->getAllErrors()}</span>
@@ -332,7 +331,7 @@
 			<tr>
 				<td colspan="5"><span class="help">Text message about input method</span></td>
 			</tr>
-			<tr>				
+			<tr>
 				<td>{input $container['address'], data-name => "address", placeholder => 'placeholder adress' , data-validation-message => "gps-validation-message"}</td>
 				<td>{input $container['locality'], data-name => "locality", placeholder => 'placeholder locality' , data-validation-message => "gps-validation-message"}</td>
 				<td>{input $container['postalCode'], data-name => "postalCode", placeholder => 'placeholder postal code' , data-validation-message => "gps-validation-message"}</td>
@@ -350,13 +349,12 @@
 			<tr>
 				<td colspan="5"><span class="help"><i class="icon-globe"></i> {_o100090}</span></td>
 			</tr>
-			<tr>				
+			<tr>
 				<td>{input $container['address'], data-name => "address", placeholder => 'o100091' , data-validation-message => "gps-validation-message"}</td>
 			</tr>
 
 		</table>
 
-		{dump $container['latitude']}
 <!-- 		<div class="span12 control-error" id="gps-validation-message"></div> -->
 
 		<div class="mapRender" id="map_canvas" data-zoom="{$container->getZoom()}" data-latitude="{$container['latitude']->getValue()}" data-longitude="{$container['longitude']->getValue()}" style="width:100%;height:400px;margin-top:10px;"><i class="icon-spin icon-spinner"></i></div>
@@ -384,7 +382,7 @@
 
 		<div class="span2">
 			{label $container['phraseType'] /}
-			{input $container['phraseType'] , class => 'select2'}       
+			{input $container['phraseType'] , class => 'select2'}
 		</div>
 
 
@@ -393,9 +391,9 @@
 			{input $container['sourceLanguage'], class => 'select2'}
 		</div>
 
-		<div class="span2">        
+		<div class="span2">
 			{input $container['ready']}
-			{label $container['ready'] /}        
+			{label $container['ready'] /}
 			<b>Translation | <span id="phraseTranslateCurrent"></b>
 		</div>
 		<div class="span2">
@@ -404,23 +402,23 @@
 			{label $container['corrected'] /}
 
 
-			{input $container['changeToLanguage'] , class => 'select2 pull-right' , id => 'phraseLanguage'} 
+			{input $container['changeToLanguage'] , class => 'select2 pull-right' , id => 'phraseLanguage'}
 
-		</div>  
+		</div>
 
 	</div>
 	<hr />
 	<div class="span6">
-		
+
 		{include #translationVatiations, control => $container['fromVariations']}
 
 	</div>
 	<div class="span6">
 
-		
+
 		{foreach $container['to']->getComponents() as $languageContainer}
 		{var $language = $languageContainer['variations']->getLanguage()}
-		<div class="phrasecontrol hide" id="{$language->getId()}_phrase"> 
+		<div class="phrasecontrol hide" id="{$language->getId()}_phrase">
 
 
 			{include #translationVatiations, control => $languageContainer['variations']}
@@ -538,7 +536,7 @@
 
 
 	{*<input id="fileupload" type="file" name="files[]" data-url="server/php/" multiple="">*}
-	
+
 	{input $container['sort']}
 
 </tr>

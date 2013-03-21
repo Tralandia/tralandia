@@ -19,6 +19,10 @@ class RentalPhotosContainer extends BaseContainer
 	protected $imageManager;
 
 
+	/**
+	 * @param \Entity\Rental\Rental|NULL $rental
+	 * @param \Image\RentalImageManager $imageManager
+	 */
 	public function __construct(\Entity\Rental\Rental $rental = NULL, RentalImageManager $imageManager)
 	{
 		parent::__construct();
@@ -66,6 +70,20 @@ class RentalPhotosContainer extends BaseContainer
 			$this->getForm()->getPresenter()->sendJson($payload);
 		}
 	}
+
+	public function getValues($asArray = FALSE)
+	{
+
+		$phone = $this['prefix']->getValue() . $this['number']->getValue();
+		$phone = $this->phoneBook->getOrCreate($phone);
+
+		$values = $asArray ? array() : new \Nette\ArrayHash;
+		$sort = $this['sort']->getValue();
+		$values['sort'] = array_filter(explode(',', $sort));
+
+		return $values;
+	}
+
 
 
 }
