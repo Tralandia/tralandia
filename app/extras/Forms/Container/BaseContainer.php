@@ -12,4 +12,5 @@ abstract class BaseContainer extends Nette\Forms\Container
 	{
 		return $this->getMainControl()->getOption('description');
 	}
+
 }
