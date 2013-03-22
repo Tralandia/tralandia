@@ -496,46 +496,20 @@ $(document).ready(function(){
 
 });
 
-  $.fn.replaceText = function( search, replace, text_only ) {
-    return this.each(function(){
-      var node = this.firstChild,
-        val,
-        new_val,
-        remove = [];
-      if ( node ) {
-        do {
-          if ( node.nodeType === 3 ) {
-            val = node.nodeValue;
-            new_val = val.replace( search, replace );
-            if ( new_val !== val ) {
-              if ( !text_only && /</.test( new_val ) ) {
-                $(node).before( new_val );
-                remove.push( node );
-              } else {
-                node.nodeValue = new_val;
-              }
-            }
-          }
-        } while ( node = node.nextSibling );
-      }
-      remove.length && $(remove).remove();
-    });
-  };  
 
 
 // replace js variables
 
 function jsVariablesReplace() {
 
-	var variables = [];
+	var dataPrefix = 'data-js-';
 
 	$('variables').each(function(i){
 		var selector = $(this).attr('for');
 		$.each($(this).data() , function(k,v){
-			console.log('~'+k+'~');
-			console.log(selector);
-			console.log(v);
-			$(selector).replaceText('~'+k+'~',v);
+			var currentElement = $(selector+' ['+dataPrefix+k+']');
+			var dataAttrName = 'data-'+currentElement.attr(dataPrefix+k);
+			currentElement.attr(dataAttrName,v);
 		})
 
 	});
