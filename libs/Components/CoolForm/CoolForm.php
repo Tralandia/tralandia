@@ -29,13 +29,12 @@ abstract class CoolForm extends Form {
 
 		$this->onError[] = callback($this, 'onInvalid');
 
-		# @todo brano toto je tu naco? ja som zrusil tu metodu getParam 
+		# @todo brano toto je tu naco? ja som zrusil tu metodu getParam
 		// if ($this->getParam('invalidate', false)) {
 		// 	$this->valid = FALSE;
 		// }
-	
-	}
 
+	}
 
 	/**
 	 * Abstract function which handles the form creation.

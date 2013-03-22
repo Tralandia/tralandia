@@ -96,7 +96,12 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		$template = $this->template;
 
 		if(!$this->hasSearchCriteria()) {
-			$locations = $this->searchOptionGenerator->generateLocationLinks();
+			if($this->getPresenter()->isLinkCurrent(':Front:Home:default')) {
+				$count = 300;
+			} else {
+				$count = 30;
+			}
+			$locations = $this->searchOptionGenerator->generateLocationLinks($count);
 			$template->locations = $locations;
 		} else if($this->hasOnlyLocationCriterion()) {
 			$rentalTypes = $this->searchOptionGenerator->generateRentalTypeLinks($this->location);

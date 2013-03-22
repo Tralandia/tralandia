@@ -50,14 +50,14 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 	protected $languageRepository;
 
 	/**
+	 * @var \Repository\User\UserRepository
+	 */
+	protected $userRepository;
+
+	/**
 	 * @var \Repository\Rental\TypeRepository
 	 */
 	protected $rentalTypeRepository;
-
-	/**
-	 * @var \Image\RentalImageManager
-	 */
-	protected $imageManager;
 
 	/**
 	 * @var \Repository\Rental\AmenityRepository
@@ -69,21 +69,19 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 	 * @param \Nette\Application\UI\Presenter $presenter
 	 * @param \Environment\Collator $collator
 	 * @param \Doctrine\ORM\EntityManager $em
-	 * @param \Image\RentalImageManager $imageManager
 	 * @param \Nette\Localization\ITranslator $translator
 	 */
 	public function __construct(Location $country, Nette\Application\UI\Presenter $presenter,
-								Collator $collator, EntityManager $em,
-								RentalImageManager $imageManager, ITranslator $translator)
+								Collator $collator, EntityManager $em, ITranslator $translator)
 	{
 		$this->country = $country;
 		$this->uiPresenter = $presenter;
 		$this->collator = $collator;
-		$this->imageManager = $imageManager;
-		$this->locationRepository = $em->getRepository('\Entity\Location\Location');
-		$this->languageRepository = $em->getRepository('\Entity\Language');
-		$this->rentalTypeRepository = $em->getRepository('\Entity\Rental\Type');
-		$this->amenityRepository = $em->getRepository('\Entity\Rental\Amenity');
+		$this->locationRepository = $em->getRepository(LOCATION_ENTITY);
+		$this->languageRepository = $em->getRepository(LANGUAGE_ENTITY);
+		$this->rentalTypeRepository = $em->getRepository(RENTAL_TYPE_ENTITY);
+		$this->amenityRepository = $em->getRepository(RENTAL_AMENITY_ENTITY);
+		$this->userRepository = $em->getRepository(USER_ENTITY);
 		parent::__construct($translator);
 	}
 
@@ -103,25 +101,26 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 			->setOption('help', $this->translate('o3095'))
 			->setOption('prepend', '<i class="icon-envelope"></i>')
 			->setAttribute('placeholder', 'email@email.com')
-	        //->addRule(Form::EMAIL, 'o407');
+	        ->addRule(self::EMAIL, $this->translate('o407'));
 			;
 		$this->addPassword('password', 'o997')
 			->setOption('help', $this->translate('o3096'))
 			->setOption('prepend', '<i class="icon-lock"></i>')
-	        //->addRule(Form::MIN_LENGTH, 'o856', 6);
+	        ->addRule(self::MIN_LENGTH, $this->translate('o856'), 6);
 			;
 
-		$this->addText('name', 'o100070')
-			->setOption('help', $this->translate('o100071'))
-	        //->addRule(Form::MAX_LENGTH, 'o100101', 70);
-			;
+//		$this->addText('name', 'o100070')
+//			->setOption('help', $this->translate('o100071'))
+//	        //->addRule(Form::MAX_LENGTH, 'o100101', 70);
+//			;
+//
+		$this->addPhoneContainer('phone', 'o10899', $phonePrefixes);
 
-		$this['phone'] = new PhoneContainer('o10899', $phonePrefixes);
-		
+
 		$this->addText('url', 'o977')
 			->setOption('help', $this->translate('o978'))
 			->setOption('prepend', 'http://')
-	        //->addRule(Form::URL, 'o100102');
+	        ->addRule(self::URL, $this->translate('o100102'));
 			;
 
 		$rentalContainer = $this->addContainer('rental');
@@ -136,10 +135,11 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 
 		$rentalContainer->addText('name', 'o886')
 			->setOption('help', $this->translate('o100071'))
+			->addRule(self::LENGTH, $this->translate('o100101'), [2, 70])
 			;
 
 
-		$rentalContainer['type'] = new RentalTypeContainer($rentalTypes);
+		$rentalContainer->addRentalTypeContainer('type', $rentalTypes);
 
 		$check = ['dohoda', 'hocikedy', '8:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00'];
 		$rentalContainer->addSelect('checkIn', 'o1586', $check)
@@ -153,6 +153,8 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 			//->addRule(self::RANGE, $this->translate('o100074'), [1, 1000])
 			->setOption('help', $this->translate('o100073'))
 			->setOption('prepend', $this->translate('o490', 2).':')
+			->addRule(self::INTEGER, $this->translate('o100106'))
+			->addRule(self::RANGE, $this->translate('o100106'), [0, 999999999999999])
 			;
 
 //		$rentalContainer->addText('bedroomCount', 'o100075')
@@ -167,15 +169,20 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 		$rentalContainer->addText('price', 'o100078')
 			->setOption('append', $this->country->defaultCurrency->iso.' '.$this->translate('o100004'))
 			->setOption('help', $this->translate('o100073'))
+			->addRule(self::INTEGER, $this->translate('o100105'))
+			->addRule(self::RANGE, $this->translate('o100105'), [0, 999999999999999])
 			;
 
 		$amenityPets = $this->amenityRepository->findByAnimalTypeForSelect($this->getTranslator(), $this->collator);
 		$rentalContainer->addSelect('pet', 'o100079', $amenityPets)
+			->setPrompt('o854')
+			->setRequired($this->translate('o100108'))
 			//->setOption('help', $this->translate('o5956'))
 			;
 
 		$amenityBoard = $this->amenityRepository->findByBoardTypeForSelect($this->getTranslator(), $this->collator);
 		$rentalContainer->addMultiOptionList('board', 'o100080', $amenityBoard)
+			->addRule(self::FILLED, $this->translate('o100109'))
 			//->setOption('help', $this->translate('o5956'))
 			;
 
@@ -186,13 +193,16 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 
 		$amenityAvailability = $this->amenityRepository->findByAvailabilityTypeForSelect($this->getTranslator(), $this->collator);
 		$rentalContainer->addSelect('ownerAvailability', 'o100082', $amenityAvailability)
+			->setPrompt('o854')
+			->setRequired($this->translate('o100107'));
 			//->setOption('help', $this->translate('o5956'))
 			;
 
-		$rentalContainer['photos'] = new \Extras\Forms\Container\RentalPhotosContainer(NULL, $this->imageManager);
+		$rentalContainer->addRentalPhotosContainer('photos');
 
 		$this->addSubmit('submit', $this->translate('o100083'));
 
+		$this->onValidate[] = callback($this, 'validation');
 	}
 
 	public function setDefaultsValues()
@@ -227,6 +237,31 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 		];
 		$this->setDefaults($defaults);
 	}
+
+	public function validation(RegistrationForm $form){
+		$values = $form->getValues();
+
+		$email = $values->email;
+		if($email && !$form['email']->hasErrors()) {
+			$emailIsOccupied = $this->userRepository->findOneByLogin($email);
+			if($emailIsOccupied) {
+				$form['email']->addError($this->translate('o852'));
+			}
+		}
+
+		$phone = $values->phone;
+		if(!$phone->phone instanceof \Entity\Contact\Phone) {
+			$form['phone']->addError($this->translate('o1039'));
+		}
+
+		$rentalValues = $values->rental;
+		$photosSort = $rentalValues->photos->sort;
+		if(count($photosSort) < 3) {
+			$form['rentals']['photos']->addError($this->translate('o100111'));
+		}
+
+	}
+
 
 }
 

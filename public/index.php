@@ -29,6 +29,7 @@ define('TEMP_DIR', ROOT_DIR . '/temp');
 define('LOCATION_ENTITY', '\Entity\Location\Location');
 define('LANGUAGE_ENTITY', '\Entity\Language');
 define('RENTAL_TYPE_ENTITY', '\Entity\Rental\Type');
+define('RENTAL_AMENITY_ENTITY', '\Entity\Rental\Amenity');
 define('USER_ENTITY', '\Entity\User\User');
 define('USER_ROLE_ENTITY', '\Entity\User\Role');
 define('CONTACT_EMAIL_ENTITY', '\Entity\Contact\Email');

@@ -3,6 +3,7 @@
 namespace Extras\Forms\Container;
 
 
+use Nette\Localization\ITranslator;
 use Nette\Utils\Html;
 
 class RentalTypeContainer extends BaseContainer
@@ -15,8 +16,9 @@ class RentalTypeContainer extends BaseContainer
 
 	/**
 	 * @param array $rentalTypes
+	 * @param \Nette\Localization\ITranslator $translator
 	 */
-	public function __construct(array $rentalTypes)
+	public function __construct(array $rentalTypes, ITranslator $translator)
 	{
 		parent::__construct();
 
@@ -34,7 +36,7 @@ class RentalTypeContainer extends BaseContainer
 		;
 		// @todo prerobit ★ na html znak
 		$this->addSelect('classification', 'o25137', array('★', '★ ★', '★ ★ ★', '★ ★ ★ ★', '★ ★ ★ ★ ★'))
-			->getControlPrototype()->addClass('classification')
+			->setRequired($translator->translate('o100104'))
 			//->setOption('help', $this->translate('o5956'))
 		;
 

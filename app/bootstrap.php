@@ -4,6 +4,7 @@ use Nette\Diagnostics\Debugger,
 	Nette\Environment,
 	Nette\Application\Routers\Route,
 	Nella\Addons\Doctrine\Config\Extension;
+use Nette\Forms\Container as FormContainer;
 
 
 // Load Nette Framework
@@ -16,7 +17,7 @@ require_once LIBS_DIR . '/rado_functions.php';
 Debugger::enable();
 //Debugger::$strictMode = TRUE;
 
-$section = isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : null;
+$section = isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : NULL;
 
 // Configure application
 $configurator = new Nette\Config\Configurator;
@@ -49,8 +50,27 @@ if ($section) {
 $configurator->onCompile[] = function ($configurator, $compiler) {
 	$compiler->addExtension('events', new Kdyby\Events\DI\EventsExtension);
 };
-$container = $configurator->createContainer();
+$dic = $container = $configurator->createContainer();
 // Debugger::$editor = $container->parameters['editor'];
+
+FormContainer::extensionMethod('addPhoneContainer',
+	function (FormContainer $container, $name, $label, $phonePrefixes) use ($dic) {
+		$translator = $dic->getService('translator');
+		$phoneBook = $dic->getService('phoneBook');
+		return $container[$name] = new \Extras\Forms\Container\PhoneContainer($label, $phonePrefixes, $phoneBook, $translator);
+});
+
+FormContainer::extensionMethod('addRentalTypeContainer',
+	function (FormContainer $container, $name, $rentalTypes) use ($dic) {
+		$translator = $dic->getService('translator');
+		return $container[$name] = new \Extras\Forms\Container\RentalTypeContainer($rentalTypes, $translator);
+});
+
+FormContainer::extensionMethod('addRentalPhotosContainer',
+	function (FormContainer $container, $name, $rental = NULL) use ($dic) {
+		$rentalImageManager = $dic->getService('rentalImageManager');
+		return $container[$name] = new \Extras\Forms\Container\RentalPhotosContainer($rental, $rentalImageManager);
+});
 
 
 // @todo toto niekam schovat

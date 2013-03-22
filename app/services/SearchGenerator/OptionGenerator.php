@@ -112,10 +112,11 @@ class OptionGenerator {
 
 		$links = [];
 		foreach($rentalTypes as $value) {
+			if(!isset($collection[$value->getId()])) continue;
 			$links[$value->getId()] = [
 				'entity' => $value,
 				'name' => $this->translator->translate($value->getName(), NULL, [Translator::VARIATION_COUNT => 2]),
-				'count' => isset($collection[$value->getId()]) ? count($collection[$value->getId()]) : 0,
+				'count' => count($collection[$value->getId()]),
 			];
 		}
 
@@ -149,11 +150,13 @@ class OptionGenerator {
 	}
 
 	/**
+	 * @param $count
+	 *
 	 * @return array
 	 */
-	public function generateLocationLinks()
+	public function generateLocationLinks($count)
 	{
-		$top = $this->topLocations->getResults(200);
+		$top = $this->topLocations->getResults($count);
 		$locations = $this->em->getRepository(LOCATION_ENTITY)->findById(array_keys($top));
 
 		$links = [];
