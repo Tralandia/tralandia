@@ -182,6 +182,18 @@ class ImportPage extends BaseImport {
 				'en' => '[attractionTypePlural] [location]'
 			)
 		),
+		array(
+			'destination' => ':Front:Destinations:default', 
+			'hash' => '',
+			'h1Pattern' => array(
+				'sk' => 'Destinácie [locationLocative]', 
+				'en' => 'Destinations in [location]'
+			), 
+			'titlePattern' => array(
+				'sk' => 'Destinácie [locationLocative]', 
+				'en' => 'Destinations in [location]'
+			)
+		),
 	);
 
 	public function doImport($subsection = NULL) {

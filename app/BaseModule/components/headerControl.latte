@@ -16,26 +16,23 @@
 
 					{if $loggedUser}
 						<li class="headerIcon">
-							<a href="{plink :Owner:Rental:firstRental}"><i class="entypo-edit"></i><b>{$loggedUser->getLogin()}</b></a>
+							<a href="{plink :Owner:Rental:firstRental}">{$loggedUser->getLogin()}</a>
 						</li>
 
 						<li class="headerIcon">
-							{$loggedUser->getRole()->getName()}</a>
-						</li>
-						<li class="headerIcon">
 
-							<a href="{plink Sign:out}"><i class="entypo-edit"></i>#logout</a>
+							<a href="{plink Sign:out}" class="last">{_o1594}</a>
 						</li>
 					{else}
-						<li class="home headerIcon">
-							<a href="{$homepageUrl}"><i class="entypo-home"></i> {_o100042}</a>
+						<li class="headerIcon">
+							<a href="{$homepageUrl}">{_o100042}</a>
 						</li>
-						<li class="headerIcon edit">
-							<a href="{plink Sign:in}"><i class="entypo-edit"></i>{_o100043}</a>
+						<li class="headerIcon">
+							<a href="{plink Sign:in}">{_o100043}</a>
 						</li>
 						<li class="headerIcon">
 							<a href="{plink Registration:}" class="red">
-								<i class="entypo-plus2"></i><strong>{_o100044}</strong>
+								<strong>{_o100044}</strong>
 							</a>
 						</li>
 
