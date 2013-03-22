@@ -314,6 +314,13 @@ factories:
 	itemPhoneFactory: Extras\FormMask\Items\Foctories\PhoneFactory
 	itemUrlFactory: Extras\FormMask\Items\Foctories\UrlFactory
 
+	# ==============================
+	# ==================== G R I D S
+	# ==============================
+	currencyGridFactory:
+		class: AdminModule\Grids\CurrencyGrid(@currencyRepositoryAccessor::get())
+		implement: AdminModule\Grids\ICurrencyGridFactory
+
 	#dataGrid:
 		#class: TwiGrid\DataGrid
 		#factory: TwiGrid\DataGrid

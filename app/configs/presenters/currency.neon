@@ -4,7 +4,7 @@ parameters:
 	title: Currencies
 	h1: 'Currency -> %name%'
 
-grid: AdminModule\Grids\CurrencyGrid
+gridFactory: @currencyGridFactory
 
 form:
 	fields:

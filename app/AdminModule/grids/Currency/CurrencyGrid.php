@@ -2,25 +2,36 @@
 
 namespace AdminModule\Grids;
 
-use AdminModule\Components\Grid;
+use AdminModule\Components\AdminGridControl;
 
-class CurrencyGrid extends Grid {
+class CurrencyGrid extends AdminGridControl {
+
+	public function __construct($repository) {
+		$this->repository = $repository;
+	}
 
 	public function render() {
-		$this->grid->setTemplateFile(__DIR__ . '/../../components/Grid/grid.latte');
 
-		$this->grid->addColumn('name', 'Name');
-		$this->grid->addColumn('iso', 'Iso');
-		$this->grid->addColumn('rounding', 'Rounding');
-
-		$this->grid->setPrimaryKey('id');
-		$this->grid->setDataLoader($this->dataLoader);
-		$this->grid->setRecordValueGetter($this->recordValueGetter);
-		$this->grid->setTimelineBehavior(true);
-
-		$this->grid->addRowAction('edit', 'Edit', $this->editRecord);
-		$this->grid->addRowAction('delete', 'Smazat', $this->deleteRecord, 'Opravdu chcete smazat tento záznam?');
-
-		return $this->grid;
+		$this->template->render();
 	}
+
+	public function createComponentGrid()
+	{
+		$grid = $this->getGrid();
+
+		$grid->addColumn('id');
+		$grid->addColumn('name', 'Name');
+		$grid->addColumn('iso', 'Iso');
+		$grid->addColumn('rounding', 'Rounding');
+
+		return $grid;
+	}
+}
+
+interface ICurrencyGridFactory {
+
+	/**
+	 * @return ICurrencyGridFactory
+	 */
+	public function create();
 }
