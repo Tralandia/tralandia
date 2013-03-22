@@ -235,6 +235,20 @@ $(function(){
 		dropdownCssClass: 'searchSelect',
 	});
 
+
+	$('div.select2 a , form.searchForm .select2 a').click(function(){
+		var id = $(this).parent().attr('id');
+		$('div.select2:not(#'+id+')').select2('close');
+		if($('#select2-drop').length == 1){
+			$('body').attr('data-openSelect',true);
+		} else {
+			$('body').removeAttr('data-openSelect');
+		}
+	});
+
+
+
+
 	$('.searchForm .select2').on('change',function(e){
 
 		updateSerachLinkUrl();

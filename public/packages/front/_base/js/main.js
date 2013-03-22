@@ -256,6 +256,10 @@ $(document).ready(function(){
 	
 	jsVariablesReplace();
 
+
+
+
+
 	// Prevent "empty" links to "click"
 	$("a[href='#']").click(function() {
 		return false;
@@ -476,7 +480,12 @@ $(document).ready(function(){
 			socialIconsMenu = false;
 		}      	
 		
+		// console.log('allaaaa');
+		
+
 	});	
+
+
 
 
 	$('a').live('click',function(){
@@ -484,8 +493,6 @@ $(document).ready(function(){
 			return false;
 		}
 	});
-
-
 
 
 
