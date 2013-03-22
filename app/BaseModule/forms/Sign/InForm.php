@@ -16,7 +16,10 @@ class InForm extends \BaseModule\Forms\BaseForm {
 
 	protected function buildForm() {
 		$this->addText('login', 'Login:');
-		$this->addPassword('password', 'Password');
+
+		$this->addPassword('password', 'Password')
+			->setOption('help', '<a href="#">#Zabudol som heslo</a>')
+			;
 
 		$this->addSubmit('submit', 'SignIn');
 

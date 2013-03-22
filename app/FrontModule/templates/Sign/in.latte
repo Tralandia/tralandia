@@ -18,19 +18,13 @@
 		{include #text, control => $form['login']}
 		{include #password, control => $form['password']}
 		{include #submit, control => $form['submit']}
-
-{* 		<tr class="simpleimput">
-		<td></td>
-		<td colspan="2"><button class="btn btn-link marginBottom" id="forgottenPasswordOpen">{_o1091}</button></td>
-		</tr> *}
 	</table>
 {/form}
 
 {form forgotPasswordForm, class => "traform dashboard"}
-	<table class="formTable innerPadding">
+	<table class="formTable innerPadding hide">
 		{include #email, control => $form['email']}
 		{include #submit, control => $form['submit']}
-		<button class="btn cancel marginBottom" id="closeForgottenPasswordForm">#Zatvor</button>
 	</table>
 {/form}
 
