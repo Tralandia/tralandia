@@ -15,13 +15,13 @@ class InForm extends \BaseModule\Forms\BaseForm {
 	}
 
 	protected function buildForm() {
-		$this->addText('login', 'Login:');
+		$this->addText('login', 'o1096');
 
-		$this->addPassword('password', 'Password')
-			->setOption('help', '<a href="#">#Zabudol som heslo</a>')
+		$this->addPassword('password', 'o997')
+			->setOption('help', '<a href="#">{_o8826}</a>')
 			;
 
-		$this->addSubmit('submit', 'SignIn');
+		$this->addSubmit('submit', 'o1101');
 
 		$this->onSuccess[] = callback($this, 'onSuccess');
 	}
