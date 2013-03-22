@@ -496,64 +496,33 @@ $(document).ready(function(){
 
 });
 
+
+
 // replace js variables
 
 function jsVariablesReplace() {
 
-	var variables = [];
+	var dataPrefix = 'data-js-';
 
 	$('variables').each(function(i){
-
-		var el = this;
-		var arr = [];
-		for (var i=0, attrs=el.attributes, l=attrs.length; i<l; i++){
-		    arr.push(attrs.item(i).nodeName);
-		}
-
-		var findPrefix = 'data';
-
-		$.each(arr , function(k,v){
-			if(v.match(findPrefix)){
-
-				var varname = v.split('-');
-
-				var data = {
-					value : $(el).attr(v),
-					selector : $(el).attr('for'),
-					variable: '~'+varname[1]+'~'
-				}
-
-				variables.push(data);
-
-			}
-		});
-
-	});
-
-	// replace elements 
-	$.each(variables ,function(k,v){
-		var elem = $(v.selector).find('[data-selected]');
-		if($(elem).attr('data-selected') == v.variable){
-			$(elem).attr('data-selected', v.value);
-		}
-
-		switch(elem.prop('tagName')){
-			case 'SELECT':
-				_setSelectValueFromVariables(elem,v.value);
-				break;
-		}
+		var selector = $(this).attr('for');
+		$.each($(this).data() , function(k,v){
+			var currentElement = $(selector+' ['+dataPrefix+k+']');
+			var dataAttrName = 'data-'+currentElement.attr(dataPrefix+k);
+			currentElement.attr(dataAttrName,v);
+		})
 
 	});
 
 }
 
 
-function _setSelectValueFromVariables(element , value){
-	$(element).val(value);
-	$(element).find('option').each(function(){
-		$(this).attr('selected',false);	
-	});
-	$(element).find('option[value="'+value+'"]').attr('selected',true);	
-}
+// function _setSelectValueFromVariables(element , value){
+// 	$(element).val(value);
+// 	$(element).find('option').each(function(){
+// 		$(this).attr('selected',false);	
+// 	});
+// 	$(element).find('option[value="'+value+'"]').attr('selected',true);	
+// }
 
 
