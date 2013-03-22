@@ -493,7 +493,7 @@ $(document).ready(function(){
 	$('.pricePhrase').pricePhrase();
 
 	_selectSetSelectedValue();
-
+	
 });
 
 // replace js variables
@@ -511,7 +511,6 @@ function jsVariablesReplace() {
 		})
 
 	});
-
 }
 
 function _selectSetSelectedValue(){
@@ -519,5 +518,19 @@ function _selectSetSelectedValue(){
 		$(this).val($(this).attr('data-selected'));
 	});
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
