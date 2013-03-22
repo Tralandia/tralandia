@@ -2,13 +2,13 @@
 
 <div class="row-fluid">
 	<div class="span12 marginBottom">
-		<h1>#Login</h1>
+		<h1>{_o1090}</h1>
 	</div>
 </div>
 
 <div class="row-fluid">
 	<div class="span12 marginBottom">
-		<p>#Phasellus tempus placerat mi id pharetra. Sed et mi quis tellus sodales lobortis porttitor vitae tortor. Sed magna elit, tempor sed scelerisque sed,</p>
+		<p>{_o1100}</p>
 	</div>
 </div>
 
@@ -18,19 +18,13 @@
 		{include #text, control => $form['login']}
 		{include #password, control => $form['password']}
 		{include #submit, control => $form['submit']}
-
-{* 		<tr class="simpleimput">
-		<td></td>
-		<td colspan="2"><button class="btn btn-link marginBottom" id="forgottenPasswordOpen">{_o1091}</button></td>
-		</tr> *}
 	</table>
 {/form}
 
 {form forgotPasswordForm, class => "traform dashboard"}
-	<table class="formTable innerPadding">
+	<table class="formTable innerPadding hide">
 		{include #email, control => $form['email']}
 		{include #submit, control => $form['submit']}
-		<button class="btn cancel marginBottom" id="closeForgottenPasswordForm">#Zatvor</button>
 	</table>
 {/form}
 
