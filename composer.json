@@ -16,10 +16,17 @@
 		"php": ">= 5.3.0",
 		"nette/nette": "@dev",
         "nextras/forms": "@dev",
+        "nextras/datagrid": "dev-master",
         "kdyby/events": "dev-master",
         "kdyby/nette-session-panel": "dev-master",
         "hosiplan/nette-autowire-properties": "dev-master",
         "janmarek/mockista": "dev-master"
 	},
-	"minimum-stability": "dev"
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/Achtan/datagrid.git"
+        }
+    ],
+    "minimum-stability": "dev"
 }
