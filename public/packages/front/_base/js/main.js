@@ -496,8 +496,6 @@ $(document).ready(function(){
 
 });
 
-
-
 // replace js variables
 
 function jsVariablesReplace() {
