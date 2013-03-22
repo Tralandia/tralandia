@@ -33,7 +33,7 @@ class AdminPresenter extends BasePresenter {
 	 */
 	public function startup() {
 		parent::startup();
-		
+
 		$this->settings = $this->getService('presenter.' . $this->getConfigName() . '.settings');
 		$this->template->settings = $this->settings;
 		$this->repository = $this->context->model->getRepository($this->settings->getEntityClass());
@@ -72,7 +72,7 @@ class AdminPresenter extends BasePresenter {
 		$presenter = $this;
 		$model = $this->getService('model');
 		$form = $this->getService("presenter.$name.form")->create($entity);
-		$form->onSuccess[] = function($form) use ($model, $entity, $presenter) {	
+		$form->onSuccess[] = function($form) use ($model, $entity, $presenter) {
 			$model->flush();
 			$presenter->redirect('edit', $entity->id);
 		};
@@ -84,11 +84,8 @@ class AdminPresenter extends BasePresenter {
 	 * Komponenta data gridu
 	 */
 	protected function createComponentDataGrid() {
-		$renderMethod = "render$this->gridRenderType";
-		$grid = $this->getService('presenter.' . $this->getConfigName() . '.grid')->create($this, $this->repository);
-		if (!method_exists($grid, $renderMethod)) {
-			throw new Nette\NotImplementedException("Grid {$this->getConfigName()} nema definovanu renderovaciu metodu pre typ {$this->gridRenderType}");
-		}
-		return $grid->$renderMethod();
+		$grid = $this->getService('presenter.' . $this->getConfigName() . '.gridFactory')->create();
+
+		return $grid;
 	}
 }

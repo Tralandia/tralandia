@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace BaseModule\Components;
 
 use Nette\Application\UI\Control;
@@ -11,9 +11,12 @@ abstract class BaseControl extends Control {
 		$template = parent::createTemplate($class);
 
 		$path = dirname(ClassType::from($this)->getFileName()) . '/' . lcfirst( ClassType::from($this)->getShortName() ) . '.latte';
-		$template->setFile($path); // automatické nastavení šablony
 
-		 $template->setTranslator($this->presenter->getService('translator'));
+		$template->setTranslator($this->presenter->getService('translator'));
+
+		if(is_file($path)) {
+			$template->setFile($path); // automatické nastavení šablony
+		}
 
 		return $template;
 	}
