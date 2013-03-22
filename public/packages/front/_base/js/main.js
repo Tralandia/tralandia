@@ -492,7 +492,7 @@ $(document).ready(function(){
 
 	$('.pricePhrase').pricePhrase();
 
-
+	_selectSetSelectedValue();
 
 });
 
@@ -516,13 +516,10 @@ function jsVariablesReplace() {
 
 }
 
-
-// function _setSelectValueFromVariables(element , value){
-// 	$(element).val(value);
-// 	$(element).find('option').each(function(){
-// 		$(this).attr('selected',false);	
-// 	});
-// 	$(element).find('option[value="'+value+'"]').attr('selected',true);	
-// }
+function _selectSetSelectedValue(){
+	$('[data-selected]').each(function(){
+		$(this).val($(this).attr('data-selected'));
+	});
+}
 
 
