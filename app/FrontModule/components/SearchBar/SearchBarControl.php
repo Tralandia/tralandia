@@ -4,6 +4,7 @@ namespace FrontModule\Components\SearchBar;
 use Doctrine\ORM\EntityManager;
 use Environment\Environment;
 use FrontModule\Forms\ISearchFormFactory;
+use Nette\ArrayHash;
 use Nette\Utils\Html;
 use Routers\FrontRoute;
 use SearchGenerator\OptionGenerator;
@@ -93,20 +94,9 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 
 	public function render()
 	{
-		$template = $this->template;
+		$this->directLinks();
 
-		if(!$this->hasSearchCriteria()) {
-			if($this->getPresenter()->isLinkCurrent(':Front:Home:default')) {
-				$count = 300;
-			} else {
-				$count = 30;
-			}
-			$locations = $this->searchOptionGenerator->generateLocationLinks($count);
-			$template->locations = $locations;
-		} else if($this->hasOnlyLocationCriterion()) {
-			$rentalTypes = $this->searchOptionGenerator->generateRentalTypeLinks($this->location);
-			$template->rentalTypes = $rentalTypes;
-		}
+		$template = $this->template;
 
 		$jsVariables = [];
 		$jsVariables['data-country'] = $this->search->getPrimaryLocation()->getId();
@@ -145,6 +135,55 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		$template->totalResultsCount = $search->getRentalsCount();
 
 		$template->render();
+	}
+
+	public function directLinks()
+	{
+		$template = $this->template;
+
+		$bottomLinks = [];
+		if(!$this->location) {
+			if($this->getPresenter()->isLinkCurrent(':Front:Home:default')) {
+				$count = 300;
+			} else {
+				$count = 30;
+			}
+			$links = $this->searchOptionGenerator->generateLocationLinks($count);
+			$bottomLinks['linkArgument'] = FrontRoute::LOCATION;
+			$bottomLinks['title'] = 'o100098';
+			$bottomLinks['iconClass'] = 'icon-map-marker';
+		} else if(!$this->rentalType) {
+			$links = $this->searchOptionGenerator->generateRentalTypeLinks($this->location);
+			$bottomLinks['linkArgument'] = FrontRoute::RENTAL_TYPE;
+			$bottomLinks['title'] = 'o20926';
+			$bottomLinks['iconClass'] = 'icon-home';
+		} else if(!$this->priceFrom) {
+			$links = $this->searchOptionGenerator->generatePriceLinks($this->environment->getCurrency(), $this->getSearch());
+			$bottomLinks['linkArgument'] = FrontRoute::PRICE_FROM;
+			$bottomLinks['title'] = 'o100098';
+			$bottomLinks['iconClass'] = 'icon-map-marker';
+		} else if(!$this->priceTo) {
+			$links = $this->searchOptionGenerator->generatePriceLinks($this->environment->getCurrency(), $this->getSearch());
+			$bottomLinks['linkArgument'] = FrontRoute::PRICE_TO;
+			$bottomLinks['title'] = 'o100098';
+			$bottomLinks['iconClass'] = 'icon-map-marker';
+		} else if(!$this->capacity) {
+			$links = $this->searchOptionGenerator->generateCapacityLinks($this->getSearch());
+			$bottomLinks['linkArgument'] = FrontRoute::CAPACITY;
+			$bottomLinks['title'] = 'o100098';
+			$bottomLinks['iconClass'] = 'icon-map-marker';
+		} else if(!$this->spokenLanguage) {
+			$links = $this->searchOptionGenerator->generateSpokenLanguageLinks($this->getSearch());
+			$bottomLinks['linkArgument'] = FrontRoute::SPOKEN_LANGUAGE;
+			$bottomLinks['title'] = 'o100098';
+			$bottomLinks['iconClass'] = 'icon-map-marker';
+		} else {
+			return NULL;
+		}
+
+		$bottomLinks['links'] = $links;
+
+		$template->bottomLinks = ArrayHash::from($bottomLinks);
 	}
 
 	public function handleGetSearchCount()
