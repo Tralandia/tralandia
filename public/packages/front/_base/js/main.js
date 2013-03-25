@@ -249,15 +249,13 @@ App.prototype.autoselect = function(){
 
 
 $(document).ready(function(){
-
-//$.removeCookie('favoritesList');
-//console.log($.cookie('favoritesList'));
-//console.log($.cookie('visitObjectList'));
 	
 	jsVariablesReplace();
 
 
+// var lang = navigator.language || navigator.userLanguage;
 
+// 	console.log(lang);
 
 
 	// Prevent "empty" links to "click"
