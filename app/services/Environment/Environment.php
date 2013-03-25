@@ -58,6 +58,15 @@ class Environment extends Nette\Object {
 		return $this->primaryLocation;
 	}
 
+
+	/**
+	 * @return \Entity\Currency|NULL
+	 */
+	public function getCurrency()
+	{
+		return $this->primaryLocation->getDefaultCurrency();
+	}
+
 	/**
 	 * @return \Entity\Language
 	 */
