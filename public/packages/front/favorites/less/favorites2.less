@@ -3,27 +3,30 @@
 
 .favorites2 {
 	margin: 0 10px;
-	height: 76px;
+	height: 73px;
 	overflow: hidden;
+	padding: 1px;
+	background: @white;
+	border: 1px solid #cbd2a0;
+	.basic-border-radius( 5px );
 
 	> ul {
 		margin: 0;
-		height: 22px;
+		height: 24px;
 		overflow: hidden;
-		border-bottom: none;
 		background: #fff;
+		.basic-gradient(#526ea8,#334c83);
+		.basic-border-radius(4px 4px 0 0);
 	}
 
 	.cover {
-		border: 1px solid #d5d5d5;
+		border: 1px solid #526ea8;
+		border-top: none;
 		height: 48px;
 		background: #fff;
-		-webkit-border-radius: 4px;
-		-webkit-border-top-left-radius: 0;
-		-moz-border-radius: 4px;
-		-moz-border-radius-topleft: 0;
-		border-radius: 4px;
-		border-top-left-radius: 0;
+		-webkit-border-radius: 0 0 4px 4px;
+		-moz-border-radius: 0 0 4px 4px;
+		border-radius: 0 0 4px 4px;
 		overflow: hidden;
 	}
 
@@ -31,54 +34,55 @@
 		width: 41px;
 		height: 48px;
 		float: left;
-		color: #686868;	
+		color: #686868;
 		text-align: center;
 		line-height: 48px;
-		.basic-gradient(#fafafa,#e8e8e8);	
+		.basic-gradient(#fafafa,#e8e8e8);
 		border-right: 1px solid #d5d5d5;
 		&:hover {
 		text-decoration:none;
-		background: #dddddd;	
+		background: #dddddd;
 		}
 	}
 
 	.rightArrow {
-		float: right;	
+		float: right;
 		border-right: none;
 		border-left: 1px solid #d5d5d5;
 
 	}
 
 	.tab-content {
-		width: 880px;
+		width: 876px;
 		float: left;
 		background: #fafafa;
-		height: 48px;		
+		height: 48px;
+		overflow: hidden;
 	}
 
 	.nav > .active , .nav > .active:hover {
-		.basic-gradient(#526ea8,#334c83);
-		color: #fff;
+		.basic-gradient(#e8e8e8,#fff);
+		color: #526ea8;
 		cursor: default;
 		border: none;
+		border: 1px solid #526ea8;
+		border-bottom: 1px solid #DDD;
 	}
 
 	.nav > li  {
 		padding: 1px 8px;
 		.basic-border-radius(0);
 		.top-border-radius(4px);
-		color: #333;
+		color: rgba(255, 255, 255, 0.7);
 		border: none;
 		display: block;
 		float: left;
 		cursor: pointer;
-		border: 1px solid #d5d5d5;
-		margin-right:  2px;
+		margin-right: 0px;
 		font-size: 11px;
-		.basic-gradient(#fafafa,#e8e8e8);	
 
 		&:hover {
-			background: #dddddd;	
+			color: #fff;
 		}
 
 		i {
@@ -93,7 +97,7 @@
 		i.entypo-share {
 			float: left;
 			top: 0;
-			left: -1px;			
+			left: -1px;
 			&:before {
 				font-size: 20px;
 			}
@@ -109,24 +113,25 @@
 			padding: 0;
 			float: right;
 			a {
-				padding: 0 7px;
-				margin-top: 5px;
+				padding: 6px 10px;
+				margin-top: 0;
 				line-height: 12px;
-				border-left: 1px solid #dddddd;					
+				border-left: 1px solid rgba(0, 0, 0, 0.2);
 				.basic-border-radius(0);
-				color: #666;
+				color: #fff;
 				cursor: pointer;
-				margin-right:  2px;
-				
+				margin-right: 0;
+				background: #334C83;
+
 				i  {
 					font-size: 10px;
-	
+
 				}
 
 				&:hover {
 					text-decoration: underline;
 					background: transparent;
-				}				
+				}
 
 			}
 
@@ -138,13 +143,13 @@
 
 			&:last-child {
 				a {
-					border:none;
+
 				}
-			}		
+			}
 
 			&.hide {
 				display: none;
-			}	
+			}
 		}
 
 		.content {
@@ -162,15 +167,16 @@
 
 		li {
 			display: block;
-			height: 40px;
+			height: 42px;
 			width: 69px;
-			border: 2px solid #ffffff;
+			border: 1px solid #fff;
 			background-size: cover;
 			float: left;
 			margin: 2px 0 ;
 			overflow: hidden;
 			position: relative;
 			cursor: pointer;
+			.basic-border-radius(3px);
 			a {
 				display: block;
 				height: 100%;
@@ -188,7 +194,7 @@
 				&:before {
 					font-size: 30px;
 					position: relative;
-					top: -1px;					
+					top: -1px;
 				}
 			}
 
@@ -211,12 +217,12 @@
 					content: '\274C';
 					position: relative;
 					top: -1px;
-					left: 3px;									
-				}		
+					left: 3px;
+				}
 			}
 
 			&:hover {
-				border: 2px solid #b0c13b;
+				border: 1px solid #334C83;
 				a.removeLink {
 					visibility: visible;
 					background: rgba(0,0,0,0.7);
