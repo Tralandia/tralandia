@@ -320,6 +320,8 @@ class ImportLocations extends BaseImport {
 			$r = q('select * from localities order by id');
 		}
 		while($x = mysql_fetch_array($r)) {
+			$x['name'] = Strings::firstUpper($x['name']);
+
 			$location = $this->context->locationEntityFactory->create();
 
 			$namePhrase = $this->context->phraseRepositoryAccessor->get()->createNew(FALSE);
