@@ -235,16 +235,16 @@ $(function(){
 
 
 	$('.searchForm #frm-searchBar-searchForm-location,.searchForm #frm-searchBar-searchForm-country').select2({
-		dropdownCssClass: 'searchSelect',
-	   matcher: function(term, text, opt) {
+		dropdownCssClass: 'searchSelect'
+	   // matcher: function(term, text, opt) {
 
-	   	// console.log(this.attr('id'));
-	   	console.log(text);
-	   	console.log(opt);
+	   // 	// console.log(this.attr('id'));
+	   // 	console.log(text);
+	   // 	console.log(opt);
 
-	       return text.toUpperCase().indexOf(term.toUpperCase())>=0
-	           || opt.attr("alt").toUpperCase().indexOf(term.toUpperCase())>=0;
-	   }		
+	   //     return text.toUpperCase().indexOf(term.toUpperCase())>=0
+	   //         || opt.attr("alt").toUpperCase().indexOf(term.toUpperCase())>=0;
+	   // }		
 	});
 
 
