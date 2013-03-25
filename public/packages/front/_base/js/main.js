@@ -249,12 +249,14 @@ App.prototype.autoselect = function(){
 
 
 $(document).ready(function(){
-
-//$.removeCookie('favoritesList');
-//console.log($.cookie('favoritesList'));
-//console.log($.cookie('visitObjectList'));
 	
 	jsVariablesReplace();
+
+
+// var lang = navigator.language || navigator.userLanguage;
+
+// 	console.log(lang);
+
 
 	// Prevent "empty" links to "click"
 	$("a[href='#']").click(function() {
@@ -476,7 +478,12 @@ $(document).ready(function(){
 			socialIconsMenu = false;
 		}      	
 		
+		// console.log('allaaaa');
+		
+
 	});	
+
+
 
 
 	$('a').live('click',function(){
@@ -488,15 +495,11 @@ $(document).ready(function(){
 
 
 
-
-
 	$('.pricePhrase').pricePhrase();
 
-
-
+	_selectSetSelectedValue();
+	
 });
-
-
 
 // replace js variables
 
@@ -513,16 +516,26 @@ function jsVariablesReplace() {
 		})
 
 	});
+}
 
+function _selectSetSelectedValue(){
+	$('[data-selected]').each(function(){
+		$(this).val($(this).attr('data-selected'));
+	});
 }
 
 
-// function _setSelectValueFromVariables(element , value){
-// 	$(element).val(value);
-// 	$(element).find('option').each(function(){
-// 		$(this).attr('selected',false);	
-// 	});
-// 	$(element).find('option[value="'+value+'"]').attr('selected',true);	
-// }
+
+
+
+
+
+
+
+
+
+
+
+
 
 

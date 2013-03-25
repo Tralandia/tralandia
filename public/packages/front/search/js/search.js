@@ -191,10 +191,33 @@ function updateSerachLinkUrl(){
 }
 
 
+function _searchSelect2() {
+	$('form.searchForm select').each(function(){
+		var attr = $(this).attr('data-selected');
+			if (typeof attr !== 'undefined' && attr !== false) {
+				searchCriteriumSetActive(this);
+			}			
+	});
+}
+
+function searchCriteriumSetActive(select){
+	$(select).parent().addClass('selected');
+
+	if(!$(select).hasClass('selectRedirect')){
+		if ($(select).parent().find('.btnSearchClose').length == 0){
+			$(select).parent().append('<a href="/" class="btnSearchClose"><i class="entypo-no"></i></a>');
+		}
+	}		
+}
+
+function searchCriteriumSetInactive(select){
+	$(select).parent().find('.btnSearchClose').remove();
+	$(select).parent().removeClass('selected');		
+}
 
 $(function(){
 
-
+	_searchSelect2();
 
 // $('#frm-searchBar-searchForm-rentalType').select2();
 
@@ -208,9 +231,35 @@ $(function(){
 		minimumResultsForSearch: 'X',
 	});	
 	
+
+
+
 	$('.searchForm #frm-searchBar-searchForm-location,.searchForm #frm-searchBar-searchForm-country').select2({
-		dropdownCssClass: 'searchSelect',
+		dropdownCssClass: 'searchSelect'
+	   // matcher: function(term, text, opt) {
+
+	   // 	// console.log(this.attr('id'));
+	   // 	console.log(text);
+	   // 	console.log(opt);
+
+	   //     return text.toUpperCase().indexOf(term.toUpperCase())>=0
+	   //         || opt.attr("alt").toUpperCase().indexOf(term.toUpperCase())>=0;
+	   // }		
 	});
+
+
+	$('div.select2 a , form.searchForm .select2 a').click(function(){
+		var id = $(this).parent().attr('id');
+		$('div.select2:not(#'+id+')').select2('close');
+		if($('#select2-drop').length == 1){
+			$('body').attr('data-openSelect',true);
+		} else {
+			$('body').removeAttr('data-openSelect');
+		}
+	});
+
+
+
 
 	$('.searchForm .select2').on('change',function(e){
 
@@ -219,21 +268,13 @@ $(function(){
 
 		if($(this).attr('id') != 'frm-searchBar-searchForm-country'){
 			if($(this).val()){
-
-				if ($(this).parent().find('.btnSearchClose').length == 0){
-					$(this).parent().append('<a href="/" class="btnSearchClose"><i class="entypo-no"></i></a>');
-				}			
-				
-				$(this).parent().addClass('selected');
+				searchCriteriumSetActive(this);
 			} else {
-				$(this).parent().find('.btnSearchClose').remove();
-				$(this).parent().removeClass('selected');
+				searchCriteriumSetInactive(this);
 			}			
 		}
 
 	});
-
-
 
 	$('.btnSearchClose').on('click',function(){
 		
