@@ -16,7 +16,7 @@
 		overflow: hidden;
 		background: #fff;
 		.basic-gradient(#526ea8,#334c83);
-		.basic-border-radius(5px 5px 0 0);
+		.basic-border-radius(4px 4px 0 0);
 	}
 
 	.cover {
@@ -78,11 +78,11 @@
 		display: block;
 		float: left;
 		cursor: pointer;
-		margin-right:  2px;
+		margin-right: 0px;
 		font-size: 11px;
 
 		&:hover {
-			background: #dddddd;
+			color: #fff;
 		}
 
 		i {
@@ -113,14 +113,15 @@
 			padding: 0;
 			float: right;
 			a {
-				padding: 0 7px;
-				margin-top: 5px;
+				padding: 6px 10px;
+				margin-top: 0;
 				line-height: 12px;
-				border-left: 1px solid #dddddd;
+				border-left: 1px solid rgba(0, 0, 0, 0.2);
 				.basic-border-radius(0);
-				color: #666;
+				color: #fff;
 				cursor: pointer;
-				margin-right:  2px;
+				margin-right: 0;
+				background: #334C83;
 
 				i  {
 					font-size: 10px;
@@ -142,7 +143,7 @@
 
 			&:last-child {
 				a {
-					border:none;
+
 				}
 			}
 
@@ -166,15 +167,16 @@
 
 		li {
 			display: block;
-			height: 40px;
+			height: 42px;
 			width: 69px;
-			border: 2px solid #ffffff;
+			border: 1px solid #fff;
 			background-size: cover;
 			float: left;
 			margin: 2px 0 ;
 			overflow: hidden;
 			position: relative;
 			cursor: pointer;
+			.basic-border-radius(3px);
 			a {
 				display: block;
 				height: 100%;
@@ -220,7 +222,7 @@
 			}
 
 			&:hover {
-				border: 2px solid #b0c13b;
+				border: 1px solid #334C83;
 				a.removeLink {
 					visibility: visible;
 					background: rgba(0,0,0,0.7);
