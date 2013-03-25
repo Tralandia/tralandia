@@ -14,7 +14,8 @@ use Nette\ArrayHash;
 use Service\Rental\IRentalSearchServiceFactory;
 use Service\Rental\RentalSearchService;
 
-class OptionGenerator {
+class OptionGenerator
+{
 
 	/**
 	 * @var \Environment\Environment
@@ -46,6 +47,7 @@ class OptionGenerator {
 	 */
 	protected $translator;
 
+
 	/**
 	 * @param \Environment\Environment $environment
 	 * @param TopLocations $topLocations
@@ -63,6 +65,7 @@ class OptionGenerator {
 		$this->spokenLanguages = $spokenLanguages;
 		$this->em = $em;
 	}
+
 
 	/**
 	 * @return \Environment\Collator
@@ -82,12 +85,12 @@ class OptionGenerator {
 		$pathSegments = $this->em->getRepository(PATH_SEGMENT_ENTITY)->findRentalTypes($this->environment->getLanguage());
 
 		$typeSegments = [];
-		foreach($pathSegments as $pathSegment) {
+		foreach ($pathSegments as $pathSegment) {
 			$typeSegments[$pathSegment->getEntityId()] = $pathSegment->getPathSegment();
 		}
 
 		$options = [];
-		foreach($rentalTypes as $value) {
+		foreach ($rentalTypes as $value) {
 			$key = $typeSegments[$value->getId()];
 			$options[$key] = $this->translate($value->getName(), NULL, [Translator::VARIATION_COUNT => 2]);
 		}
@@ -97,6 +100,7 @@ class OptionGenerator {
 		return $options;
 
 	}
+
 
 	/**
 	 * @param \Entity\Location\Location $location
@@ -111,11 +115,11 @@ class OptionGenerator {
 		$collection = $search->getCollectedResults(RentalSearchService::CRITERIA_RENTAL_TYPE);
 
 		$links = [];
-		foreach($rentalTypes as $value) {
-			if(!isset($collection[$value->getId()])) continue;
+		foreach ($rentalTypes as $value) {
+			if (!isset($collection[$value->getId()])) continue;
 			$links[$value->getId()] = [
 				'entity' => $value,
-				'name' => $this->translator->translate($value->getName(), NULL, [Translator::VARIATION_COUNT => 2]),
+				'name' => $this->translator->translate($value->getName(), 2),
 				'count' => count($collection[$value->getId()]),
 			];
 		}
@@ -124,6 +128,7 @@ class OptionGenerator {
 
 		return ArrayHash::from($links);
 	}
+
 
 	/**
 	 * @param \Nette\Application\UI\Presenter $presenter
@@ -138,6 +143,7 @@ class OptionGenerator {
 		return $locations;
 	}
 
+
 	/**
 	 * @return array
 	 */
@@ -148,6 +154,7 @@ class OptionGenerator {
 
 		return $this->generateFromEntities($locations);
 	}
+
 
 	/**
 	 * @param $count
@@ -160,7 +167,7 @@ class OptionGenerator {
 		$locations = $this->em->getRepository(LOCATION_ENTITY)->findById(array_keys($top));
 
 		$links = [];
-		foreach($locations as $value) {
+		foreach ($locations as $value) {
 			$links[$value->getId()] = [
 				'entity' => $value,
 				'name' => $this->translator->translate($value->getName()),
@@ -169,19 +176,48 @@ class OptionGenerator {
 		}
 
 		$links = $this->sort($links, 'name');
+
 		return ArrayHash::from($links);
 	}
+
 
 	/**
 	 * @return array
 	 */
 	public function generateSpokenLanguage()
 	{
-		$languagesIds = $this->spokenLanguages->getUsed();
-		$languages = $this->em->getRepository(LANGUAGE_ENTITY)->findById($languagesIds);
+		$languages = $this->spokenLanguages->getUsed();
 
 		return $this->generateFromEntities($languages, 'Id');
 	}
+
+
+	/**
+	 * @param \Service\Rental\RentalSearchService $search
+	 *
+	 * @return array
+	 */
+	public function generateSpokenLanguageLinks(RentalSearchService $search)
+	{
+		$languages = $this->spokenLanguages->getUsed();
+
+		$collection = $search->getCollectedResults(RentalSearchService::CRITERIA_SPOKEN_LANGUAGE);
+
+		$links = [];
+		foreach ($languages as $value) {
+			if (!isset($collection[$value->getId()])) continue;
+			$links[$value->getId()] = [
+				'entity' => $value,
+				'name' => $this->translator->translate($value->getId()),
+				'count' => count($collection[$value->getId()]),
+			];
+		}
+
+		$links = $this->sort($links, 'name');
+
+		return ArrayHash::from($links);
+	}
+
 
 	/**
 	 * @param \Entity\Currency $currency
@@ -194,13 +230,44 @@ class OptionGenerator {
 
 		$options = array();
 		$iso = $currency->getIso();
-		for ($i=1; $i < 10; $i++) {
+		for ($i = 1; $i < 10; $i++) {
 			$key = $i * $searchInterval;
 
 			$options[$key] = "$key $iso";
 		}
+
 		return $options;
 	}
+
+
+	/**
+	 * @param \Entity\Currency $currency
+	 * @param \Service\Rental\RentalSearchService $search
+	 *
+	 * @return array
+	 */
+	public function generatePriceLinks(Currency $currency, RentalSearchService $search)
+	{
+		$searchInterval = $currency->getSearchInterval();
+
+		$collection = $search->getCollectedResults(RentalSearchService::CRITERIA_PRICE);
+
+		$options = array();
+		$iso = $currency->getIso();
+		for ($i = 1; $i < 10; $i++) {
+			$key = $i * $searchInterval;
+			if (!isset($collection[$key])) continue;
+
+			$options[$i] = [
+				'entity' => $i,
+				'name' => "$key $iso",
+				'count' => count($collection[$key]),
+			];
+		}
+
+		return ArrayHash::from($options);
+	}
+
 
 	/**
 	 * @return array
@@ -208,11 +275,37 @@ class OptionGenerator {
 	public function generateCapacity()
 	{
 		$options = array();
-		for ($i=1; $i <= RentalSearchService::CAPACITY_MAX; $i++) {
+		for ($i = 1; $i <= RentalSearchService::CAPACITY_MAX; $i++) {
 			$options[$i] = $i . ' ' . $this->translate('o490', $i);
 		}
+
 		return $options;
 	}
+
+
+	/**
+	 * @param \Service\Rental\RentalSearchService $search
+	 *
+	 * @return array
+	 */
+	public function generateCapacityLinks(RentalSearchService $search)
+	{
+		$collection = $search->getCollectedResults(RentalSearchService::CRITERIA_CAPACITY);
+
+		$options = array();
+		for ($i = 1; $i <= RentalSearchService::CAPACITY_MAX; $i++) {
+			if (!isset($collection[$i])) continue;
+
+			$options[$i] = [
+				'entity' => $i,
+				'name' => $i . ' ' . $this->translate('o490', $i),
+				'count' => count($collection[$i]),
+			];
+		}
+
+		return ArrayHash::from($options);
+	}
+
 
 	/**
 	 * @param $data
@@ -224,7 +317,7 @@ class OptionGenerator {
 	protected function generateFromEntities($data, $key = 'Slug', array $variation = NULL)
 	{
 		$options = [];
-		foreach($data as $value) {
+		foreach ($data as $value) {
 			$methodName = "get$key";
 			$options[$value->{$methodName}()] = $this->translate($value->getName(), NULL, $variation);
 		}
@@ -233,6 +326,7 @@ class OptionGenerator {
 
 		return $options;
 	}
+
 
 	/**
 	 * @param $data
@@ -243,13 +337,15 @@ class OptionGenerator {
 	protected function sort($data, $key = NULL)
 	{
 		$collator = $this->environment->getLocale()->getCollator();
-		if($key) {
+		if ($key) {
 			$collator->asortByKey($data, $key);
 		} else {
 			$collator->asort($data);
 		}
+
 		return $data;
 	}
+
 
 	/**
 	 * @return string
@@ -257,6 +353,7 @@ class OptionGenerator {
 	public function translate()
 	{
 		$args = func_get_args();
+
 		return call_user_func_array(array($this->translator, 'translate'), $args);
 	}
 
