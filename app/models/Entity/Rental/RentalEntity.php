@@ -76,6 +76,12 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 	protected $address;
 
 	/**
+	 * @var Collection
+	 * @ORM\ManyToMany(targetEntity="Placement", mappedBy="rentals", cascade={"persist"})
+	 */
+	protected $placements;
+
+	/**
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
 	 */
@@ -459,6 +465,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 		parent::__construct();
 
 		$this->missingInformation = new \Doctrine\Common\Collections\ArrayCollection;
+		$this->placements = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->spokenLanguages = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->amenities = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->pricelistRows = new \Doctrine\Common\Collections\ArrayCollection;
@@ -685,6 +692,40 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 	public function getAddress()
 	{
 		return $this->address;
+	}
+		
+	/**
+	 * @param \Entity\Rental\Placement
+	 * @return \Entity\Rental\Rental
+	 */
+	public function addPlacement(\Entity\Rental\Placement $placement)
+	{
+		if(!$this->placements->contains($placement)) {
+			$this->placements->add($placement);
+		}
+		$placement->addRental($this);
+
+		return $this;
+	}
+		
+	/**
+	 * @param \Entity\Rental\Placement
+	 * @return \Entity\Rental\Rental
+	 */
+	public function removePlacement(\Entity\Rental\Placement $placement)
+	{
+		$this->placements->removeElement($placement);
+		$placement->removeRental($this);
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Rental\Placement[]
+	 */
+	public function getPlacements()
+	{
+		return $this->placements;
 	}
 		
 	/**
