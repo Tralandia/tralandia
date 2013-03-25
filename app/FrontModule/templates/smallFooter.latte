@@ -1,14 +1,18 @@
 	<div class="container">
 
 		<div class="row smallFooterSignature">
-			<div class="span12">
-			{var $now = date('Y')}
+			<div class="span6">
+				{var $now = date('Y')}
 				<p>
-				<a href="{plink :Front:Home:default}">@2006–{$now} {$domain}</a> <span class="separator">&nbsp;|&nbsp;</span>
-				<a href="{plink :Front:Contact:default#aboutUs}">{_o23011}</a> <span class="separator">&nbsp;|&nbsp;</span>
-				<a href="{plink :Front:Contact:default#TermsOfUse}">{_o795}</a> <span class="separator">&nbsp;|&nbsp;</span>
-				<a href="{plink :Front:Contact:default#faq}">{_o741}</a>
+					&copy; 2006–{$now} <a href="{plink :Front:Home:default}">{$domain}</a>
 				</p>
+			</div>
+			<div class="span6">
+				<ul>
+					<li><a href="{plink :Front:Contact:default#aboutUs}">{_o23011}</a></li>
+					<li><a href="{plink :Front:Contact:default#TermsOfUse}">{_o795}</a></li>
+					<li><a href="{plink :Front:Contact:default#faq}">{_o741}</a></li>
+				</ul>
 			</div>
 		</div>
 
