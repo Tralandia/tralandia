@@ -225,6 +225,29 @@ class ImportAmenities extends BaseImport {
 		}
 
 		$this->model->flush();
+
+
+		// Placements
+		$placementOptions = array(
+			array('in town', 'v meste', 'in-town'),
+		);
+		$placementDictionaryType = $this->createPhraseType('\Rental\Placement', 'name', 'ACTIVE', array());
+
+		foreach ($placementOptions as $key => $value) {
+			$name = $this->context->phraseEntityFactory->create();
+			$name->type = $placementDictionaryType;
+			$name->createTranslation($en, $value[0]);
+			$name->createTranslation($sk, $value[1]);
+
+			$placement = $this->context->rentalPlacementEntityFactory->create();
+			$placement->type = $amenityType;
+			$placement->name = $name;
+			$placement->slug = $value[2];
+			$this->model->persist($placement);
+			d($placement, $name);
+		}
+		$this->model->flush();
+
 	}
 
 }
