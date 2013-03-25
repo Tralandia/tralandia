@@ -1650,6 +1650,7 @@ the specific language governing permissions and limitations under the Apache Lic
             }));
 
             selection.bind("keydown", this.bind(function(e) {
+              
                 if (!this.enabled) return;
 
                 if (e.which == KEY.DOWN || e.which == KEY.UP
