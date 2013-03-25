@@ -1,10 +1,10 @@
 
 @import './lessFunctions.less';
 /****************************************************************************************
-/* base html elements 
+/* base html elements
 /***************************************************************************************/
 body {
-	background: #eef2d1;	
+	background: #eef2d1;
 	font-family: Arial,Helvetica,sans-serif;
 	font-size: 14px;
 }
@@ -42,20 +42,20 @@ ul {
 	color: @brown;
 
 	a {
-		color: @brown;		
+		color: @brown;
 	}
 }
 
 a.brown {
-	color: @brown;	
+	color: @brown;
 	&:hover {
-		color: @brown;	
+		color: @brown;
 	}
 }
 
 
 /****************************************************************************************
-/* helper class 
+/* helper class
 /***************************************************************************************/
 
 .borderSeparator {
@@ -76,15 +76,15 @@ a.toogle {
 	i {
 		height: 12px;
 		overflow: hidden;
-		display: block;		
+		display: block;
 		float: left;
-		margin-right: 3px;	
+		margin-right: 3px;
 		&:before {
 			position:relative;
 			top: 2px;
 			font-size: 28px;
 
-		}		
+		}
 	}
 
 }
@@ -125,7 +125,7 @@ ul.arrows {
 }
 
 	.red:hover {
-		color: #d32c16;		
+		color: #d32c16;
 	}
 
 
@@ -174,7 +174,7 @@ ul.arrows {
 
 	.green-inner-shadow {
 		.inner-shadow(20px,#4c5718);
-	}	
+	}
 
 .yellow {
 	color: #fdbe33;
@@ -194,7 +194,7 @@ ul.arrows {
 .btn.btn-orange {
 	.basic-gradient(#fdbe33,#f68703);
 	border: 1px solid #f68703;
-	color: @brown;	
+	color: @brown;
 	&:hover {
 		.basic-gradient(#f68703,#fdbe33);
 	}
@@ -203,7 +203,7 @@ ul.arrows {
 .btn.btn-silver {
 	.basic-gradient(#e8e8e8,#adadad);
 	border: 1px solid #adadad;
-	color: #333;	
+	color: #333;
 	&:hover {
 		.basic-gradient(#adadad,#e8e8e8);
 	}
@@ -212,7 +212,7 @@ ul.arrows {
 .btn.btn-cancel {
 	.basic-gradient(rgb(255, 255, 255),rgb(230, 230, 230));
 	border: 1px solid rgb(206, 206, 206);
-	color: rgb(114, 114, 114);	
+	color: rgb(114, 114, 114);
 	padding: 2px 10px;
 	&:hover {
 		.basic-gradient(rgb(230, 230, 230),rgb(255, 255, 255));
@@ -263,7 +263,7 @@ ul.arrows {
 }
 
 .baseRadius {
-	.basic-border-radius(8px);	
+	.basic-border-radius(8px);
 }
 
 .overflow {
@@ -276,7 +276,7 @@ ul.arrows {
 
 .baseBorder {
 	border: 1px solid #cbd2a0;
-	
+
 	.inner {
 		border: 1px solid @white;
 		-webkit-border-radius: 7px;
@@ -295,7 +295,7 @@ ul.arrows {
 
 .innerPadding {
 	margin: 10px;
-	margin-bottom: 0;	
+	margin-bottom: 0;
 }
 
 .sitePadding {
@@ -317,7 +317,7 @@ ul.arrows {
 
 .gadientGreen {
 	.basic-gradient( @lightGreen , @darkGreen );
-	color: @white;	
+	color: @white;
 }
 
 .radiusSeparator {
@@ -407,7 +407,7 @@ ul.arrows {
 }
 
 .marginLeft , .row-fluid > [class*="span"]:first-child.marginLeft {
-	margin-left: 10px;	
+	margin-left: 10px;
 }
 
 .row-fluid > [class*="span"]:first-child.marginLeft.leftSidebarObjectDetail {
@@ -431,11 +431,11 @@ ul.arrows {
 		h1 {
 			margin: 4px 0 5px 0;
 			padding: 0;
-			
-			
+
+
 			width: 100%;
 			overflow: hidden;
-			font-weight: normal;		
+			font-weight: normal;
 			font-size: 26px;
 			line-height: 30px;
 		}
@@ -450,7 +450,7 @@ ul.arrows {
 	margin: 0;
 	li {
 		margin-bottom: 5px;
-		margin-left: 20px;		
+		margin-left: 20px;
 		color: @darkGreen;
 	}
 
@@ -473,7 +473,7 @@ ul.arrows {
 }
 
 /****************************************************************************************
-/* base layout design temlape 
+/* base layout design temlape
 /***************************************************************************************/
 /* header , mainmenu , logo , container*/
 
@@ -498,7 +498,7 @@ ul.arrows {
 		list-style: none;
 
 		li {
-			
+
 			&:before {
 			content:'\E4AE';
 			  font-family: "entypo";
@@ -537,22 +537,33 @@ ul.arrows {
 }
 
 .smallFooterSignature {
-	p {
-		text-align: center;
-		font-size: 13px;
-		margin: 5px 0 0 0;
-		padding: 0;	
+	color: #777;
+	font-size: 13px;
+	margin-top: 5px;
+	line-height: 13px;
 
-		.separator {
-			color: #ccc;
-			font-size: 14px;
-		}
+	p, ul {
+		margin: 0 20px;
 	}
+
+	ul li {
+		list-style: none;
+		float:right;
+		margin: 0 0 0 10px;
+		padding: 0 10px 0 0;
+		border-right: 1px solid #CBD2A0;
+		line-height: 13px;
+	}
+	ul li:first-child {
+		border: none;
+		padding: 0;
+	}
+
 }
 
 
 /****************************************************************************************
-/* frontend buttons 
+/* frontend buttons
 /***************************************************************************************/
 /* red button */
 @btnRedBorderColor : #900d07 ;
@@ -572,8 +583,8 @@ ul.arrows {
 	.basic-gradient(@btnRedGradientStartColor,@btnRedGradientStopColor);
 	color: #fff;
 	text-shadow:0 0 3px @btnRedGradientStopColor;
-	&:hover {		
-		color: #fff;		
+	&:hover {
+		color: #fff;
 		.basic-gradient(@btnRedGradientStopColor,@btnRedGradientStartColor);
 	}
 }
@@ -584,25 +595,25 @@ ul.arrows {
 @btnGreenGradientStopColor : #4c6505 ;
 
 .btn-green {
-	border: 1px solid @btnGreenBorderColor;	
+	border: 1px solid @btnGreenBorderColor;
 	.basic-gradient(@btnGreenGradientStartColor,@btnGreenGradientStopColor);
 	color: #fff;
 	text-shadow:0 0 3px @btnGreenGradientStopColor;
-	&:hover , &.active {		
-		color: #fff;		
+	&:hover , &.active {
+		color: #fff;
 		.basic-gradient(@btnGreenGradientStopColor,@btnGreenGradientStartColor);
-	}	
+	}
 }
 
 .btn-text-wrap {
 	white-space: nowrap;
 	overflow: hidden;
 	padding-right: 30px;
-	text-overflow: ellipsis;	
+	text-overflow: ellipsis;
 }
 
 /****************************************************************************************
-/* page content  
+/* page content
 /***************************************************************************************/
 @contentH1size : 20px;
 @contentH2size : 18px;
@@ -617,12 +628,12 @@ ul.arrows {
 @contentH5color : #A0B325;
 
 #content {
-	background: @contentBackground;	
+	background: @contentBackground;
 	color: @brown;
 	padding: 0 10px;
 
 	&.nopadding {
-		padding: 0;	
+		padding: 0;
 
 		p {
 			padding:0 10px;
@@ -633,7 +644,7 @@ ul.arrows {
 
 
 
-					
+
 		}
 
 	}
@@ -654,7 +665,7 @@ ul.arrows {
 	h2 {
 		font-size: @contentH2size;
 		line-height: @contentH2size;
-		color: @contentH2color;		
+		color: @contentH2color;
 	}
 
 	&.nopadding {
@@ -666,19 +677,19 @@ ul.arrows {
 
 	h3 {
 		font-size: @contentH3size;
-		color: @contentH3color;	
+		color: @contentH3color;
 
-		font-weight: normal;			
+		font-weight: normal;
 	}
 
 	h4 {
 		font-size: @contentH4size;
-		color: @contentH4color;		
+		color: @contentH4color;
 	}
 
 	h5 {
 		font-size: @contentH5size;
-		color: @contentH5color;		
+		color: @contentH5color;
 	}
 
 	/* forms */
@@ -709,9 +720,9 @@ ul.arrows {
 	border: 1px solid rgb(147, 172, 218);
 	width: 100%;
 	font-size: 14px;
-	
+
 	&:hover {
-		
+
 		.basic-gradient(#D9DFEB,#FEFEFE);
 	}
 
@@ -728,10 +739,10 @@ ul.arrows {
 
 	&.selected {
 		span {
-			&:before {				
+			&:before {
 				color: #f68905;
-				
-			}			
+
+			}
 		}
 	}
 }
@@ -767,7 +778,7 @@ ul.arrows {
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 	border-radius: 4px;
-	
+
 	font-weight: bold;
 
 	background-image: -webkit-gradient(
