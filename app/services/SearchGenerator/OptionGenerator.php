@@ -230,8 +230,9 @@ class OptionGenerator
 	 */
 	public function generateBoard()
 	{
-		$boards = $this->em->getRepository(RENTAL_AMENITY_ENTITY)->findAll();
+		$boards = $this->em->getRepository(RENTAL_AMENITY_ENTITY)->findByBoardTypeForSelect($this->translator, $this->getCollator());
 
+		return $boards;
 		return $this->generateFromEntities($boards, 'Id');
 	}
 
