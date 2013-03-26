@@ -13,7 +13,7 @@ class RentalSearchCaching extends \Nette\Object {
 	protected $cacheLoaded = FALSE;
 	protected $location;
 	protected $rentalRepositoryAccessor;
-	
+
 	public function inject(\Nette\DI\Container $dic) {
 		$this->rentalRepositoryAccessor = $dic->rentalRepositoryAccessor;
 	}
@@ -30,13 +30,13 @@ class RentalSearchCaching extends \Nette\Object {
 			if ($this->cacheContent === NULL) {
 				$this->cacheContent = array();
 			}
-			$this->cacheLoaded = TRUE;			
+			$this->cacheLoaded = TRUE;
 		}
 	}
 
 	public function save() {
 		if ($this->cacheLoaded) {
-			$this->cache->save($this->location->id, $this->cacheContent);		
+			$this->cache->save($this->location->id, $this->cacheContent);
 		}
 	}
 
@@ -45,7 +45,6 @@ class RentalSearchCaching extends \Nette\Object {
 			foreach ($value as $key2 => $value2) {
 				if (isset($value2[$rental->id])) unset($this->cacheContent[$key][$key2][$rental->id]);
 				if (count($this->cacheContent[$key][$key2]) == 0) unset($this->cacheContent[$key][$key2]);
-
 			}
 		}
 	}
@@ -90,6 +89,15 @@ class RentalSearchCaching extends \Nette\Object {
 			$t = ceil($rental->price->getSourceAmount() / $searchInterval)*$searchInterval;
 			$this->cacheContent[RentalSearchService::CRITERIA_PRICE][$t][$rental->id] = $rental->id;
 		}
+
+		// Set Board
+		$boards = $rental->getBoardAmenities();
+		if(is_array($boards)) {
+			foreach($boards as $board) {
+				$this->cacheContent[RentalSearchService::CRITERIA_BOARD][$board->getId()][$rental->getId()] = $rental->getId();
+			}
+		}
+
 		$this->save();
 	}
 }

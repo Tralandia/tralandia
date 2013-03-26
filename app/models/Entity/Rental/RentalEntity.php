@@ -8,6 +8,7 @@ use Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 use Extras\Annotation as EA;
 use Nette\DateTime;
+use Nette\Utils\Arrays;
 
 /**
  * @ORM\Entity(repositoryClass="Repository\Rental\RentalRepository")
@@ -16,9 +17,11 @@ use Nette\DateTime;
  * @EA\Generator(skip="{getImages,getPrice,setPrice,setSlug,getPrimaryLocation,setPrimaryLocation,
  * unsetPrimaryLocation, getCalendar, setCalendar}")
  */
-class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
+class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
+{
 
 	const STATUS_DRAFT = 0;
+
 	const STATUS_LIVE = 6;
 
 	/**
@@ -231,25 +234,48 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 	 */
 	protected $services;
 
+
 	public function getOwnerId()
 	{
 		return $this->getUser()->getId();
 	}
 
-	public function getMainImage() {
+
+	public function getMainImage()
+	{
 		$t = $this->images->first();
+
 		return $t;
 	}
 
-	public function getImages($limit = NULL, $offset = 0) {
+
+	public function getImages($limit = NULL, $offset = 0)
+	{
 		$images = $this->images->slice($offset, $limit);
+
 		return $images;
 	}
 
+
+	/**
+	 * @return \Entity\Rental\Amenity[]
+	 */
+	public function getBoardAmenities()
+	{
+		return $this->getAmenitiesByType('board');
+	}
+
+
+	/**
+	 * @param $types
+	 * @param null $limit
+	 *
+	 * @return \Entity\Rental\Amenity[]
+	 */
 	public function getAmenitiesByType($types, $limit = NULL)
 	{
 		$returnJustOneType = NULL;
-		if(!is_array($types)) {
+		if (!is_array($types)) {
 			$returnJustOneType = $types;
 			$types = array($types);
 		}
@@ -257,22 +283,23 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 		$return = array();
 		$i = 0;
 		foreach ($this->getAmenities() as $amenity) {
-			if(in_array($amenity->type->slug, $types)) {
+			if (in_array($amenity->type->slug, $types)) {
 				$return[$amenity->type->slug][] = $amenity;
 				$i++;
 			}
 
-			if(is_numeric($limit)) {
-				if($i == $limit) break;
+			if (is_numeric($limit)) {
+				if ($i == $limit) break;
 			}
 		}
 
-		if($returnJustOneType) {
-			$return = Arrays::get($return,$returnJustOneType,array());
+		if ($returnJustOneType) {
+			$return = Arrays::get($return, $returnJustOneType, array());
 		}
 
 		return $return;
 	}
+
 
 	public function getImportantAmenities($important = TRUE)
 	{
@@ -281,7 +308,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 		$sort = array();
 		$i = 0;
 		foreach ($this->getAmenities() as $amenity) {
-			if($amenity->important == $important) {
+			if ($amenity->important == $important) {
 				$return[$amenity->type->slug][] = $amenity;
 				//d($amenity->type); exit;
 				$sort[$amenity->type->slug] = $amenity->type->sorting;
@@ -291,7 +318,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 		if ($important === TRUE && $i < 5) {
 			foreach ($this->getAmenities() as $amenity) {
-				if($amenity->important == FALSE) {
+				if ($amenity->important == FALSE) {
 					$return[$amenity->type->slug][] = $amenity;
 					//d($amenity->type); exit;
 					$sort[$amenity->type->slug] = $amenity->type->sorting;
@@ -302,7 +329,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 		}
 
 		if ($important == FALSE) {
-			asort($sort); 
+			asort($sort);
 
 			$t = array();
 			foreach ($sort as $key => $value) {
@@ -319,6 +346,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 		return $return;
 	}
 
+
 	/**
 	 * @return \Extras\Types\Price
 	 */
@@ -327,6 +355,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 		return new \Extras\Types\Price($this->price, $this->getCurrency());
 	}
 
+
 	public function setPrice(\Extras\Types\Price $price)
 	{
 		$this->price = $price->convertToFloat($this->getCurrency());
@@ -334,17 +363,22 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 		return $this;
 	}
 
+
 	public function setFloatPrice($price)
 	{
 		$this->setPrice(new \Extras\Types\Price($price, $this->getCurrency()));
 	}
 
-	public function getCurrency() {
+
+	public function getCurrency()
+	{
 		return $this->getAddress()->getPrimaryLocation()->getDefaultCurrency();
 	}
 
+
 	/**
 	 * @param string
+	 *
 	 * @return \Entity\Rental\Rental
 	 */
 	public function setSlug($slug)
@@ -352,11 +386,12 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 		$this->slug = \Nette\Utils\Strings::webalize($slug);
 
 		return $this;
-	}		
+	}
+
 
 	public function getCompulsoryMissingInformation()
 	{
-		return $this->missingInformation->filter(function($e){
+		return $this->missingInformation->filter(function ($e) {
 			/** @var $e \Entity\Rental\Information */
 			return $e->getCompulsory();
 		});
@@ -372,27 +407,32 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 		return $this->getUser();
 	}
 
+
 	/**
 	 * @return \Entity\Location\Location|NULL
 	 */
 	public function getPrimaryLocation()
 	{
-		if($address = $this->getAddress()) {
+		if ($address = $this->getAddress()) {
 			return $address->getPrimaryLocation();
 		}
+
 		return NULL;
 	}
+
 
 	/**
 	 * @return \Entity\Rental\InterviewAnswer|NULL
 	 */
 	public function getFirstInterviewAnswer()
 	{
-		if(isset($this->interviewAnswers[0])) {
+		if (isset($this->interviewAnswers[0])) {
 			return $this->interviewAnswers[0];
 		}
+
 		return NULL;
 	}
+
 
 	/**
 	 * @return Bool
@@ -400,8 +440,10 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 	public function getSeparateGroups()
 	{
 		$separateGroups = $this->getAmenitiesByType(array('separate-groups'));
-		return (bool) count($separateGroups) == 1;
+
+		return (bool)count($separateGroups) == 1;
 	}
+
 
 	/**
 	 * @return Bool
@@ -409,8 +451,10 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 	public function getAnimalsAllowed()
 	{
 		$animals = $this->getAmenitiesByType(array('animal'));
-		return (bool) count($animals) == 1;
+
+		return (bool)count($animals) == 1;
 	}
+
 
 	/**
 	 * @return \Entity\Rental\Amenity
@@ -426,19 +470,22 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 		}
 	}
 
+
 	/**
 	 * @param array|\DateTime[]
+	 *
 	 * @return \Entity\Rental\Rental
 	 */
 	public function setCalendar(array $calendar)
 	{
-		foreach($calendar as $key => $date) {
+		foreach ($calendar as $key => $date) {
 			$calendar[$key] = $date->format('z');
 		}
 		$this->calendar = ',' . (implode(',', $calendar)) . ',';
 
 		return $this;
 	}
+
 
 	/**
 	 * @return array
@@ -450,16 +497,19 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 		$calendarUpdatedZ = $this->getCalendarUpdated()->format('z');
 		$thisYear = $this->getCalendarUpdated()->format('Y');
 		$nextYear = $thisYear + 1;
-		foreach($days as $key => $day) {
-			if($calendarUpdatedZ <= $day && $todayZ > $day) continue;
+		foreach ($days as $key => $day) {
+			if ($calendarUpdatedZ <= $day && $todayZ > $day) continue;
 			$year = $calendarUpdatedZ <= $day ? $thisYear : $nextYear;
 			$days[$key] = \Nette\DateTime::createFromFormat('z Y', "$day $year");
 		}
+
 		return array_filter($days);
 	}
+
+
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
+	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
 		parent::__construct();
@@ -476,9 +526,11 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 		$this->backLinks = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->services = new \Doctrine\Common\Collections\ArrayCollection;
 	}
-		
+
+
 	/**
 	 * @param \Entity\User\User
+	 *
 	 * @return \Entity\Rental\Rental
 	 */
 	public function setUser(\Entity\User\User $user)
@@ -487,7 +539,8 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Entity\Rental\Rental
 	 */
@@ -497,7 +550,8 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Entity\User\User|NULL
 	 */
@@ -505,9 +559,11 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 	{
 		return $this->user;
 	}
-		
+
+
 	/**
 	 * @param \Entity\Language
+	 *
 	 * @return \Entity\Rental\Rental
 	 */
 	public function setEditLanguage(\Entity\Language $editLanguage)
@@ -516,7 +572,8 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Entity\Rental\Rental
 	 */
@@ -526,7 +583,8 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Entity\Language|NULL
 	 */
@@ -534,9 +592,11 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 	{
 		return $this->editLanguage;
 	}
-		
+
+
 	/**
 	 * @param integer
+	 *
 	 * @return \Entity\Rental\Rental
 	 */
 	public function setStatus($status)
@@ -545,7 +605,8 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return integer|NULL
 	 */
@@ -553,9 +614,11 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 	{
 		return $this->status;
 	}
-		
+
+
 	/**
 	 * @param \Entity\Rental\Type
+	 *
 	 * @return \Entity\Rental\Rental
 	 */
 	public function setType(\Entity\Rental\Type $type)
@@ -564,7 +627,8 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Entity\Rental\Rental
 	 */
@@ -574,7 +638,8 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Entity\Rental\Type|NULL
 	 */
@@ -582,9 +647,11 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 	{
 		return $this->type;
 	}
-		
+
+
 	/**
 	 * @param float
+	 *
 	 * @return \Entity\Rental\Rental
 	 */
 	public function setClassification($classification)
@@ -593,7 +660,8 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Entity\Rental\Rental
 	 */
@@ -603,7 +671,8 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return float|NULL
 	 */
@@ -611,9 +680,11 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 	{
 		return $this->classification;
 	}
-		
+
+
 	/**
 	 * @param integer
+	 *
 	 * @return \Entity\Rental\Rental
 	 */
 	public function setRank($rank)
@@ -622,7 +693,8 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Entity\Rental\Rental
 	 */
@@ -632,7 +704,8 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return integer|NULL
 	 */
@@ -640,23 +713,27 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 	{
 		return $this->rank;
 	}
-		
+
+
 	/**
 	 * @param \Entity\Rental\Information
+	 *
 	 * @return \Entity\Rental\Rental
 	 */
 	public function addMissingInformation(\Entity\Rental\Information $missingInformation)
 	{
-		if(!$this->missingInformation->contains($missingInformation)) {
+		if (!$this->missingInformation->contains($missingInformation)) {
 			$this->missingInformation->add($missingInformation);
 		}
 		$missingInformation->addRental($this);
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @param \Entity\Rental\Information
+	 *
 	 * @return \Entity\Rental\Rental
 	 */
 	public function removeMissingInformation(\Entity\Rental\Information $missingInformation)
@@ -666,7 +743,8 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Rental\Information[]
 	 */
@@ -674,9 +752,11 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 	{
 		return $this->missingInformation;
 	}
-		
+
+
 	/**
 	 * @param \Entity\Contact\Address
+	 *
 	 * @return \Entity\Rental\Rental
 	 */
 	public function setAddress(\Entity\Contact\Address $address)
@@ -685,7 +765,8 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Entity\Contact\Address|NULL
 	 */
@@ -693,7 +774,8 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 	{
 		return $this->address;
 	}
-		
+
+
 	/**
 	 * @param \Entity\Rental\Placement
 	 * @return \Entity\Rental\Rental
@@ -737,7 +819,8 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return string|NULL
 	 */
@@ -745,9 +828,11 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 	{
 		return $this->slug;
 	}
-		
+
+
 	/**
 	 * @param \Entity\Phrase\Phrase
+	 *
 	 * @return \Entity\Rental\Rental
 	 */
 	public function setName(\Entity\Phrase\Phrase $name)
@@ -756,7 +841,8 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Entity\Phrase\Phrase|NULL
 	 */
@@ -764,9 +850,11 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 	{
 		return $this->name;
 	}
-		
+
+
 	/**
 	 * @param \Entity\Phrase\Phrase
+	 *
 	 * @return \Entity\Rental\Rental
 	 */
 	public function setTeaser(\Entity\Phrase\Phrase $teaser)
@@ -775,7 +863,8 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Entity\Phrase\Phrase|NULL
 	 */
@@ -783,9 +872,11 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 	{
 		return $this->teaser;
 	}
-		
+
+
 	/**
 	 * @param string
+	 *
 	 * @return \Entity\Rental\Rental
 	 */
 	public function setContactName($contactName)
@@ -794,7 +885,8 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Entity\Rental\Rental
 	 */
@@ -804,7 +896,8 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return string|NULL
 	 */
@@ -812,9 +905,11 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 	{
 		return $this->contactName;
 	}
-		
+
+
 	/**
 	 * @param \Entity\Contact\Phone
+	 *
 	 * @return \Entity\Rental\Rental
 	 */
 	public function setPhone(\Entity\Contact\Phone $phone)
@@ -823,7 +918,8 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Entity\Rental\Rental
 	 */
@@ -833,7 +929,8 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Entity\Contact\Phone|NULL
 	 */
@@ -841,9 +938,11 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 	{
 		return $this->phone;
 	}
-		
+
+
 	/**
 	 * @param \Entity\Contact\Email
+	 *
 	 * @return \Entity\Rental\Rental
 	 */
 	public function setEmail(\Entity\Contact\Email $email)
@@ -852,7 +951,8 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Entity\Rental\Rental
 	 */
@@ -862,7 +962,8 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Entity\Contact\Email|NULL
 	 */
@@ -870,9 +971,11 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 	{
 		return $this->email;
 	}
-		
+
+
 	/**
 	 * @param \Entity\Contact\Url
+	 *
 	 * @return \Entity\Rental\Rental
 	 */
 	public function setUrl(\Entity\Contact\Url $url)
@@ -881,7 +984,8 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Entity\Rental\Rental
 	 */
@@ -891,7 +995,8 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Entity\Contact\Url|NULL
 	 */
@@ -899,23 +1004,27 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 	{
 		return $this->url;
 	}
-		
+
+
 	/**
 	 * @param \Entity\Language
+	 *
 	 * @return \Entity\Rental\Rental
 	 */
 	public function addSpokenLanguage(\Entity\Language $spokenLanguage)
 	{
-		if(!$this->spokenLanguages->contains($spokenLanguage)) {
+		if (!$this->spokenLanguages->contains($spokenLanguage)) {
 			$this->spokenLanguages->add($spokenLanguage);
 		}
 		$spokenLanguage->addRental($this);
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @param \Entity\Language
+	 *
 	 * @return \Entity\Rental\Rental
 	 */
 	public function removeSpokenLanguage(\Entity\Language $spokenLanguage)
@@ -925,7 +1034,8 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Language[]
 	 */
@@ -933,23 +1043,27 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 	{
 		return $this->spokenLanguages;
 	}
-		
+
+
 	/**
 	 * @param \Entity\Rental\Amenity
+	 *
 	 * @return \Entity\Rental\Rental
 	 */
 	public function addAmenity(\Entity\Rental\Amenity $amenity)
 	{
-		if(!$this->amenities->contains($amenity)) {
+		if (!$this->amenities->contains($amenity)) {
 			$this->amenities->add($amenity);
 		}
 		$amenity->addRental($this);
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @param \Entity\Rental\Amenity
+	 *
 	 * @return \Entity\Rental\Rental
 	 */
 	public function removeAmenity(\Entity\Rental\Amenity $amenity)
@@ -959,7 +1073,8 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Rental\Amenity[]
 	 */
@@ -967,9 +1082,11 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 	{
 		return $this->amenities;
 	}
-		
+
+
 	/**
 	 * @param integer
+	 *
 	 * @return \Entity\Rental\Rental
 	 */
 	public function setCheckIn($checkIn)
@@ -978,7 +1095,8 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Entity\Rental\Rental
 	 */
@@ -988,7 +1106,8 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return integer|NULL
 	 */
@@ -996,9 +1115,11 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 	{
 		return $this->checkIn;
 	}
-		
+
+
 	/**
 	 * @param integer
+	 *
 	 * @return \Entity\Rental\Rental
 	 */
 	public function setCheckOut($checkOut)
@@ -1007,7 +1128,8 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Entity\Rental\Rental
 	 */
@@ -1017,7 +1139,8 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return integer|NULL
 	 */
@@ -1025,9 +1148,11 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 	{
 		return $this->checkOut;
 	}
-		
+
+
 	/**
 	 * @param boolean
+	 *
 	 * @return \Entity\Rental\Rental
 	 */
 	public function setPricesUponRequest($pricesUponRequest)
@@ -1036,7 +1161,8 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return boolean|NULL
 	 */
@@ -1044,7 +1170,8 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 	{
 		return $this->pricesUponRequest;
 	}
-		
+
+
 	/**
 	 * @return \Entity\Rental\Rental
 	 */
@@ -1054,23 +1181,27 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @param \Entity\Rental\PricelistRow
+	 *
 	 * @return \Entity\Rental\Rental
 	 */
 	public function addPricelistRow(\Entity\Rental\PricelistRow $pricelistRow)
 	{
-		if(!$this->pricelistRows->contains($pricelistRow)) {
+		if (!$this->pricelistRows->contains($pricelistRow)) {
 			$this->pricelistRows->add($pricelistRow);
 		}
 		$pricelistRow->setRental($this);
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @param \Entity\Rental\PricelistRow
+	 *
 	 * @return \Entity\Rental\Rental
 	 */
 	public function removePricelistRow(\Entity\Rental\PricelistRow $pricelistRow)
@@ -1080,7 +1211,8 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Rental\PricelistRow[]
 	 */
@@ -1088,23 +1220,27 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 	{
 		return $this->pricelistRows;
 	}
-		
+
+
 	/**
 	 * @param \Entity\Rental\Pricelist
+	 *
 	 * @return \Entity\Rental\Rental
 	 */
 	public function addPricelist(\Entity\Rental\Pricelist $pricelist)
 	{
-		if(!$this->pricelists->contains($pricelist)) {
+		if (!$this->pricelists->contains($pricelist)) {
 			$this->pricelists->add($pricelist);
 		}
 		$pricelist->setRental($this);
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @param \Entity\Rental\Pricelist
+	 *
 	 * @return \Entity\Rental\Rental
 	 */
 	public function removePricelist(\Entity\Rental\Pricelist $pricelist)
@@ -1114,7 +1250,8 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Rental\Pricelist[]
 	 */
@@ -1122,23 +1259,27 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 	{
 		return $this->pricelists;
 	}
-		
+
+
 	/**
 	 * @param \Entity\Rental\InterviewAnswer
+	 *
 	 * @return \Entity\Rental\Rental
 	 */
 	public function addInterviewAnswer(\Entity\Rental\InterviewAnswer $interviewAnswer)
 	{
-		if(!$this->interviewAnswers->contains($interviewAnswer)) {
+		if (!$this->interviewAnswers->contains($interviewAnswer)) {
 			$this->interviewAnswers->add($interviewAnswer);
 		}
 		$interviewAnswer->setRental($this);
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @param \Entity\Rental\InterviewAnswer
+	 *
 	 * @return \Entity\Rental\Rental
 	 */
 	public function removeInterviewAnswer(\Entity\Rental\InterviewAnswer $interviewAnswer)
@@ -1148,7 +1289,8 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Rental\InterviewAnswer[]
 	 */
@@ -1156,7 +1298,8 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 	{
 		return $this->interviewAnswers;
 	}
-		
+
+
 	/**
 	 * @return \Entity\Rental\Rental
 	 */
@@ -1166,9 +1309,11 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @param \DateTime
+	 *
 	 * @return \Entity\Rental\Rental
 	 */
 	public function setCalendarUpdated(\DateTime $calendarUpdated)
@@ -1177,7 +1322,8 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Entity\Rental\Rental
 	 */
@@ -1187,7 +1333,8 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \DateTime|NULL
 	 */
@@ -1195,23 +1342,27 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 	{
 		return $this->calendarUpdated;
 	}
-		
+
+
 	/**
 	 * @param \Entity\Rental\Image
+	 *
 	 * @return \Entity\Rental\Rental
 	 */
 	public function addImage(\Entity\Rental\Image $image)
 	{
-		if(!$this->images->contains($image)) {
+		if (!$this->images->contains($image)) {
 			$this->images->add($image);
 		}
 		$image->setRental($this);
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @param \Entity\Rental\Image
+	 *
 	 * @return \Entity\Rental\Rental
 	 */
 	public function removeImage(\Entity\Rental\Image $image)
@@ -1221,23 +1372,27 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @param \Entity\Rental\Fulltext
+	 *
 	 * @return \Entity\Rental\Rental
 	 */
 	public function addFulltext(\Entity\Rental\Fulltext $fulltext)
 	{
-		if(!$this->fulltexts->contains($fulltext)) {
+		if (!$this->fulltexts->contains($fulltext)) {
 			$this->fulltexts->add($fulltext);
 		}
 		$fulltext->setRental($this);
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @param \Entity\Rental\Fulltext
+	 *
 	 * @return \Entity\Rental\Rental
 	 */
 	public function removeFulltext(\Entity\Rental\Fulltext $fulltext)
@@ -1247,7 +1402,8 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Rental\Fulltext[]
 	 */
@@ -1255,23 +1411,27 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 	{
 		return $this->fulltexts;
 	}
-		
+
+
 	/**
 	 * @param \Entity\Seo\BackLink
+	 *
 	 * @return \Entity\Rental\Rental
 	 */
 	public function addBackLink(\Entity\Seo\BackLink $backLink)
 	{
-		if(!$this->backLinks->contains($backLink)) {
+		if (!$this->backLinks->contains($backLink)) {
 			$this->backLinks->add($backLink);
 		}
 		$backLink->setRental($this);
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @param \Entity\Seo\BackLink
+	 *
 	 * @return \Entity\Rental\Rental
 	 */
 	public function removeBackLink(\Entity\Seo\BackLink $backLink)
@@ -1281,7 +1441,8 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Seo\BackLink[]
 	 */
@@ -1289,9 +1450,11 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 	{
 		return $this->backLinks;
 	}
-		
+
+
 	/**
 	 * @param integer
+	 *
 	 * @return \Entity\Rental\Rental
 	 */
 	public function setMaxCapacity($maxCapacity)
@@ -1300,7 +1463,8 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Entity\Rental\Rental
 	 */
@@ -1310,7 +1474,8 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return integer|NULL
 	 */
@@ -1318,9 +1483,11 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 	{
 		return $this->maxCapacity;
 	}
-		
+
+
 	/**
 	 * @param integer
+	 *
 	 * @return \Entity\Rental\Rental
 	 */
 	public function setBedroomCount($bedroomCount)
@@ -1329,7 +1496,8 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Entity\Rental\Rental
 	 */
@@ -1339,7 +1507,8 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return integer|NULL
 	 */
@@ -1347,9 +1516,11 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 	{
 		return $this->bedroomCount;
 	}
-		
+
+
 	/**
 	 * @param string
+	 *
 	 * @return \Entity\Rental\Rental
 	 */
 	public function setRooms($rooms)
@@ -1358,7 +1529,8 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Entity\Rental\Rental
 	 */
@@ -1368,7 +1540,8 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return string|NULL
 	 */
@@ -1376,23 +1549,27 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 	{
 		return $this->rooms;
 	}
-		
+
+
 	/**
 	 * @param \Entity\Rental\Service
+	 *
 	 * @return \Entity\Rental\Rental
 	 */
 	public function addService(\Entity\Rental\Service $service)
 	{
-		if(!$this->services->contains($service)) {
+		if (!$this->services->contains($service)) {
 			$this->services->add($service);
 		}
 		$service->setRental($this);
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @param \Entity\Rental\Service
+	 *
 	 * @return \Entity\Rental\Rental
 	 */
 	public function removeService(\Entity\Rental\Service $service)
@@ -1402,7 +1579,8 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Rental\Service[]
 	 */

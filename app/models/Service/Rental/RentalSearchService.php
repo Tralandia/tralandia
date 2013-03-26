@@ -16,6 +16,7 @@ class RentalSearchService extends Nette\Object
 	const CRITERIA_CAPACITY = 'fcapacity';
 	const CRITERIA_SPOKEN_LANGUAGE = 'flanguage';
 	const CRITERIA_PRICE = 'fprice';
+	const CRITERIA_BOARD = 'board';
 
 	const CAPACITY_MAX = 50;
 
@@ -106,15 +107,26 @@ class RentalSearchService extends Nette\Object
 		$this->resetResults();
 	}
 
-	public function setPriceCriterion($price = NULL)
+	public function setPriceCriterion($from = NULL, $to = NULL)
 	{
-		$this->criteria[self::CRITERIA_PRICE] = $price;
-		$this->resetResults();
+		$from == NULL && $from = $to;
+		$to == NULL && $to = $from;
+
+		if($from >= $to) {
+			$this->criteria[self::CRITERIA_PRICE] = ['from' => $from, 'to' => $to];
+			$this->resetResults();
+		}
 	}
 
 	public function setSpokenLanguageCriterion(Entity\Language $spokenLanguage = NULL)
 	{
 		$this->criteria[self::CRITERIA_SPOKEN_LANGUAGE] = $spokenLanguage;
+		$this->resetResults();
+	}
+
+	public function setBoardCriterion(Entity\Rental\Amenity $board = NULL)
+	{
+		$this->criteria[self::CRITERIA_BOARD] = $board;
 		$this->resetResults();
 	}
 
@@ -211,8 +223,21 @@ class RentalSearchService extends Nette\Object
 
 		$results = array();
 		foreach ($this->criteria as $key => $value) {
-			if ($value === NULL) continue;
-			$results[$key] = Arrays::get($this->searchCacheData, array($key, (is_object($value) ? $value->id : $value)), NULL);
+			if ($value === NULL || (is_array($value) && !count(array_filter($value)))) continue;
+
+			if ($key == self::CRITERIA_PRICE) {
+				$byPrice = [];
+				$priceOptions = $this->getCriterionOptions(self::CRITERIA_PRICE);
+				foreach($priceOptions as $priceOption) {
+					if($priceOption >= $value['from'] && $priceOption <= $value['to']) {
+						$byPrice += Arrays::get($this->searchCacheData, array($key, $priceOption), NULL);
+					}
+				}
+				$results[$key] = $byPrice;
+			} else {
+				$results[$key] = Arrays::get($this->searchCacheData, array($key, (is_object($value) ? $value->id : $value)), NULL);
+			}
+
 			if (count($results[$key]) == 0) {
 				$this->results = array();
 

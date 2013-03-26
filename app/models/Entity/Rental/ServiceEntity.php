@@ -5,7 +5,7 @@ namespace Entity\Rental;
 use Entity\Phrase;
 use Doctrine\ORM\Mapping as ORM;
 
-use	Extras\Annotation as EA;
+use    Extras\Annotation as EA;
 use Extras\FileStorage;
 
 /**
@@ -13,7 +13,8 @@ use Extras\FileStorage;
  * @ORM\Table(name="rental_service")
  * @EA\Primary(key="id", value="name")
  */
-class Service extends \Entity\BaseEntity {
+class Service extends \Entity\BaseEntity
+{
 
 	/**
 	 * @var Collection
@@ -45,16 +46,19 @@ class Service extends \Entity\BaseEntity {
 	 */
 	protected $dateTo;
 
+
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
+	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
 		parent::__construct();
 	}
-		
+
+
 	/**
 	 * @param \Entity\Rental\Rental
+	 *
 	 * @return \Entity\Rental\Service
 	 */
 	public function setRental(\Entity\Rental\Rental $rental)
@@ -63,7 +67,8 @@ class Service extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Entity\Rental\Service
 	 */
@@ -73,7 +78,8 @@ class Service extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Entity\Rental\Rental|NULL
 	 */
@@ -81,9 +87,11 @@ class Service extends \Entity\BaseEntity {
 	{
 		return $this->rental;
 	}
-		
+
+
 	/**
 	 * @param string
+	 *
 	 * @return \Entity\Rental\Service
 	 */
 	public function setGivenFor($givenFor)
@@ -92,7 +100,8 @@ class Service extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return string|NULL
 	 */
@@ -100,9 +109,11 @@ class Service extends \Entity\BaseEntity {
 	{
 		return $this->givenFor;
 	}
-		
+
+
 	/**
 	 * @param string
+	 *
 	 * @return \Entity\Rental\Service
 	 */
 	public function setServiceType($serviceType)
@@ -111,7 +122,8 @@ class Service extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return string|NULL
 	 */
@@ -119,9 +131,11 @@ class Service extends \Entity\BaseEntity {
 	{
 		return $this->serviceType;
 	}
-		
+
+
 	/**
 	 * @param \DateTime
+	 *
 	 * @return \Entity\Rental\Service
 	 */
 	public function setDateFrom(\DateTime $dateFrom)
@@ -130,7 +144,8 @@ class Service extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \DateTime|NULL
 	 */
@@ -138,9 +153,11 @@ class Service extends \Entity\BaseEntity {
 	{
 		return $this->dateFrom;
 	}
-		
+
+
 	/**
 	 * @param \DateTime
+	 *
 	 * @return \Entity\Rental\Service
 	 */
 	public function setDateTo(\DateTime $dateTo)
@@ -149,7 +166,8 @@ class Service extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \DateTime|NULL
 	 */
