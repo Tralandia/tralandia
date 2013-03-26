@@ -1,37 +1,64 @@
 @import './less-functions.less';
 
 
-.twigrid {
+.datagrid {
 	table {
+
+		border-color: #CBD2A0;
+		border-left: none;
+		border-right: none;
+		-webkit-border-radius:0;
+		-moz-border-radius:0;
+		border-radius:0;
+
+		tr:nth-child(odd) td {
+			background: #fff;
+
+		}
+
+		tr:hover td {
+			background: #F5F7EA;
+		}
 
 		td {
 			padding: 3px 8px;
 			line-height: 17px;
 			font-size: 13px;
+			border-color: #CBD2A0;
 		}
 
 		th {
 			padding: 0 8px;
-			.basic-gradient(#b7c546,#869c19);
-			text-shadow:-1px -1px 0px #7d9506;
-			color: @white;
 			height: 32px;
 			line-height: 32px;
-			border-left: 1px solid #869c19;
+			border-color: #CBD2A0;
+		}
+
+		th:first-child, td:first-child {
+			border-left: none;
 		}
 
 		.btn {
 			padding: 2px 6px;
 			font-size: 10px;
 			line-height: 13px;
-			&.btn-info {
-				.basic-gradient(#e8e8e8,#adadad);
-				border: 1px solid @darkGreen;
-				color: #333333;
-				border: 1px solid #adadad;
+
+			&.btn-primary {
+				.basic-gradient(#04C,#08C);
+				border: none;
+				color: #fff;
 
 				&:hover {
-					.basic-gradient(#adadad,#e8e8e8);
+					background: #006DCC;
+				}
+			}
+
+			&.btn-danger {
+				border: none;
+				color: #fff;
+
+				&:hover {
+					background: #DA4F49;
 				}
 			}
 		}
