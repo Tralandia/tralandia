@@ -4,44 +4,56 @@
 .datagrid {
 	table {
 
-		border-color: #CBD2A0;
+		border-color: #E4E8CF;
 		border-left: none;
 		border-right: none;
 		-webkit-border-radius:0;
 		-moz-border-radius:0;
 		border-radius:0;
 
-		tr:nth-child(odd) td {
-			background: #fff;
-
-		}
-
-		tr:hover td {
-			background: #F5F7EA;
+		tr {
+			td {
+				cursor: pointer;
+				text-align: right;
+				&:last-child {
+					cursor: default;
+				}
+			}
+			&:hover td {
+				background: #F5F7EA;
+			}
 		}
 
 		td {
 			padding: 3px 8px;
 			line-height: 17px;
 			font-size: 13px;
-			border-color: #CBD2A0;
+			border-color: #e4e8cf;
 		}
 
 		th {
 			padding: 0 8px;
 			height: 32px;
 			line-height: 32px;
-			border-color: #CBD2A0;
+			border-color: #E4E8CF;
+			background: #f7f8ef;
 		}
 
 		th:first-child, td:first-child {
 			border-left: none;
 		}
 
+		thead:first-child tr:first-child th:first-child, thead:first-child tr:first-child th:last-child {
+			border-radius: 0;
+			-moz-border-radius: 0;
+			-webkit-border-radius: 0;
+		}
+
 		.btn {
 			padding: 2px 6px;
 			font-size: 10px;
 			line-height: 13px;
+			font-weight: normal;
 
 			&.btn-primary {
 				.basic-gradient(#04C,#08C);
@@ -49,7 +61,7 @@
 				color: #fff;
 
 				&:hover {
-					background: #006DCC;
+					background: #04C;
 				}
 			}
 
@@ -58,7 +70,7 @@
 				color: #fff;
 
 				&:hover {
-					background: #DA4F49;
+					background: #BD362F;
 				}
 			}
 		}
@@ -66,13 +78,5 @@
 		.btn-group {
 			float: right;
 		}
-	}
-}
-
-.btn.add-new {
-	.basic-gradient(#fdbe33,#f68703);
-	color: #7d3300;
-	&:hover {
-		.basic-gradient(#f68703,#fdbe33);
 	}
 }
