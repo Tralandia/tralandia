@@ -506,10 +506,16 @@ $(document).ready(function(){
 function jsVariablesReplace() {
 
 	var dataPrefix = 'data-js-';
+	var rmultiDash = /([a-z])([A-Z])/g;
 
 	$('variables').each(function(i){
 		var selector = $(this).attr('for');
+
 		$.each($(this).data() , function(k,v){
+
+			k = k.replace( rmultiDash, "$1-$2" ).toLowerCase();
+
+			// console.log(v);
 			var currentElement = $(selector+' ['+dataPrefix+k+']');
 			var dataAttrName = 'data-'+currentElement.attr(dataPrefix+k);
 			currentElement.attr(dataAttrName,v);
