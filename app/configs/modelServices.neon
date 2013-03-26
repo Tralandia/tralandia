@@ -71,12 +71,12 @@ services:
 
 	#phrase
 	#----------
-	phraseRepositoryAccessor: 
+	phraseRepositoryAccessor:
 		factory: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Phrase\Phrase')
 		setup:
 			- setParameters(%centralLanguage%, @languageRepositoryAccessor)
 
-	phraseTranslationRepositoryAccessor: 
+	phraseTranslationRepositoryAccessor:
 		factory: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Phrase\Translation')
 		setup:
 			- setParameters(%centralLanguage%)
@@ -99,9 +99,10 @@ services:
 	rentalRoomTypeRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Rental\RoomType')
 	rentalPricelistRowRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Rental\PricelistRow')
 	rentalPricelistRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Rental\Pricelist')
+	rentalPlacementRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Rental\Placement')
 
 	#FAQ
-	#----------	
+	#----------
 	faqCategoryRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Faq\Category')
 	faqQuestionRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Faq\Question')
 
@@ -135,31 +136,31 @@ services:
 
 factories:
 
-	rentalDecoratorFactory: 
+	rentalDecoratorFactory:
 		class: Service\Rental\RentalService(..., %entity%)
 		implement: Model\Rental\IRentalDecoratorFactory
 
-	rentalImageDecoratorFactory: 
+	rentalImageDecoratorFactory:
 		class: Service\Rental\ImageDecorator(..., %entity%)
 		setup:
 			- setStorage(@rentalImageStorage)
 		implement: Model\Rental\IImageDecoratorFactory
 
-	rentalPricelistDecoratorFactory: 
+	rentalPricelistDecoratorFactory:
 		class: Service\Rental\PricelistDecorator(..., %entity%)
 		setup:
 			- setStorage(@rentalPricelistStorage)
 		implement: Model\Rental\IPricelistDecoratorFactory
 
-	mediumDecoratorFactory: 
+	mediumDecoratorFactory:
 		class: Service\Medium\MediumService(..., %entity%)
 		implement: Model\Medium\IMediumDecoratorFactory
 
-	phraseDecoratorFactory: 
+	phraseDecoratorFactory:
 		class: Service\Phrase\PhraseService(..., %entity%)
 		implement: Model\Phrase\IPhraseDecoratorFactory
 
-	locationDecoratorFactory: 
+	locationDecoratorFactory:
 		class: Service\Location\LocationService(..., %entity%)
 		implement: Model\Location\ILocationDecoratorFactory
 

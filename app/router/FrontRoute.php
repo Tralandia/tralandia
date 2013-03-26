@@ -22,6 +22,7 @@ class FrontRoute extends BaseRoute
 	const PRICE_FROM = 'priceFrom';
 	const PRICE_TO = 'priceTo';
 	const BOARD = 'board';
+	const PLACEMENT = 'placement';
 
 	const PAGE = 'page';
 	const LOCATION = 'location';
@@ -36,6 +37,7 @@ class FrontRoute extends BaseRoute
 	public static $pathParametersMapper = [
 		self::LOCATION => 'searchBar-location',
 		self::RENTAL_TYPE => 'searchBar-rentalType',
+		self::PLACEMENT => 'searchBar-placement',
 		self::PRICE_FROM => 'searchBar-priceFrom',
 		self::PRICE_TO => 'searchBar-priceTo',
 		self::CAPACITY => 'searchBar-capacity',
@@ -47,9 +49,10 @@ class FrontRoute extends BaseRoute
 	public $languageRepositoryAccessor;
 	public $rentalRepositoryAccessor;
 	public $rentalTypeRepositoryAccessor;
+	public $rentalAmenityRepositoryAccessor;
+	public $rentalPlacementRepositoryAccessor;
 	public $routingPathSegmentRepositoryAccessor;
 	public $domainRepositoryAccessor;
-	public $rentalAmenityRepositoryAccessor;
 	public $favoriteListRepositoryAccessor;
 	public $pageRepositoryAccessor;
 	public $phraseDecoratorFactory;
@@ -249,6 +252,10 @@ class FrontRoute extends BaseRoute
 			$params[self::BOARD] = $this->rentalAmenityRepositoryAccessor->find($params[self::BOARD]);
 		}
 
+		if(isset($params[self::PLACEMENT])) {
+			$params[self::PLACEMENT] = $this->rentalPlacementRepositoryAccessor->find($params[self::PLACEMENT]);
+		}
+
 		return $params;
 	}
 
@@ -272,6 +279,10 @@ class FrontRoute extends BaseRoute
 
 		if(isset($params[self::BOARD])) {
 			$params[self::BOARD] = $params[self::BOARD]->getId();
+		}
+
+		if(isset($params[self::PLACEMENT])) {
+			$params[self::PLACEMENT] = $params[self::PLACEMENT]->getId();
 		}
 
 		if(isset($params[self::PAGE]) && $params[self::PAGE] instanceof Page) {

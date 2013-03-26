@@ -103,16 +103,14 @@ class OptionGenerator
 
 
 	/**
-	 * @param \Entity\Location\Location $location
+	 * @param RentalSearchService $search
 	 *
-	 * @return array
+	 * @return ArrayHash
 	 */
-	public function generateRentalTypeLinks(Location $location)
+	public function generateRentalTypeLinks(RentalSearchService $search)
 	{
-		$rentalTypes = $this->em->getRepository(RENTAL_TYPE_ENTITY)->findAll();
-		$search = $this->searchFactory->create($location->getPrimaryParent());
-		$search->setLocationCriterion($location);
 		$collection = $search->getCollectedResults(RentalSearchService::CRITERIA_RENTAL_TYPE);
+		$rentalTypes = $this->em->getRepository(RENTAL_TYPE_ENTITY)->findById(array_keys($collection));
 
 		$links = [];
 		foreach ($rentalTypes as $value) {
@@ -127,6 +125,46 @@ class OptionGenerator
 		$links = $this->sort($links, 'name');
 
 		return ArrayHash::from($links);
+	}
+
+
+	/**
+	 * @param RentalSearchService $search
+	 *
+	 * @return ArrayHash
+	 */
+	public function generatePlacementLinks(RentalSearchService $search)
+	{
+		$collection = $search->getCollectedResults(RentalSearchService::CRITERIA_PLACEMENT);
+
+		if(!count($collection)) return ArrayHash::from([]);
+
+		$rentalTypes = $this->em->getRepository(RENTAL_PLACEMENT_ENTITY)->findById(array_keys($collection));
+
+		$links = [];
+		foreach ($rentalTypes as $value) {
+			if (!isset($collection[$value->getId()])) continue;
+			$links[$value->getId()] = [
+				'entity' => $value,
+				'name' => $this->translator->translate($value->getName(), 2),
+				'count' => count($collection[$value->getId()]),
+			];
+		}
+
+		$links = $this->sort($links, 'name');
+
+		return ArrayHash::from($links);
+	}
+
+
+	/**
+	 * @return array
+	 */
+	public function generatePlacement()
+	{
+		$placement = $this->em->getRepository(RENTAL_PLACEMENT_ENTITY)->findAll();
+
+		return $this->generateFromEntities($placement, 'Id');
 	}
 
 
@@ -154,7 +192,7 @@ class OptionGenerator
 		$top = $this->topLocations->getResults(20);
 
 		$ids = array_keys($top);
-		if($defaultLocation) $ids[] = $defaultLocation->getId();
+		if ($defaultLocation) $ids[] = $defaultLocation->getId();
 
 		$locations = $this->em->getRepository(LOCATION_ENTITY)->findById($ids);
 
@@ -165,7 +203,7 @@ class OptionGenerator
 	/**
 	 * @param $count
 	 *
-	 * @return array
+	 * @return ArrayHash
 	 */
 	public function generateLocationLinks($count)
 	{
@@ -206,7 +244,6 @@ class OptionGenerator
 	public function generateSpokenLanguageLinks(RentalSearchService $search)
 	{
 		$languages = $this->spokenLanguages->getUsed();
-
 		$collection = $search->getCollectedResults(RentalSearchService::CRITERIA_SPOKEN_LANGUAGE);
 
 		$links = [];
@@ -233,7 +270,6 @@ class OptionGenerator
 		$boards = $this->em->getRepository(RENTAL_AMENITY_ENTITY)->findByBoardTypeForSelect($this->translator, $this->getCollator());
 
 		return $boards;
-		return $this->generateFromEntities($boards, 'Id');
 	}
 
 
