@@ -28,6 +28,7 @@ class ImageDecorator extends Service\BaseService {
 
 		$this->entity->oldUrl = $uri;
 		$this->entity->filePath = $path;
+		return $path;
 	}
 
 }
