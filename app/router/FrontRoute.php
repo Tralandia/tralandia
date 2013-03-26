@@ -19,9 +19,9 @@ class FrontRoute extends BaseRoute
 
 	const SPOKEN_LANGUAGE = 'spokenLanguage';
 	const CAPACITY = 'capacity';
-	const BOARD = 'board';
 	const PRICE_FROM = 'priceFrom';
 	const PRICE_TO = 'priceTo';
+	const BOARD = 'board';
 
 	const PAGE = 'page';
 	const LOCATION = 'location';
@@ -40,6 +40,7 @@ class FrontRoute extends BaseRoute
 		self::PRICE_TO => 'searchBar-priceTo',
 		self::CAPACITY => 'searchBar-capacity',
 		self::SPOKEN_LANGUAGE => 'searchBar-spokenLanguage',
+		self::BOARD => 'searchBar-board',
 	];
 
 	public $locationRepositoryAccessor;
@@ -244,6 +245,10 @@ class FrontRoute extends BaseRoute
 			$params[self::SPOKEN_LANGUAGE] = $this->languageRepository->find($params[self::SPOKEN_LANGUAGE]);
 		}
 
+		if(isset($params[self::BOARD])) {
+			$params[self::BOARD] = $this->rentalAmenityRepositoryAccessor->find($params[self::BOARD]);
+		}
+
 		return $params;
 	}
 
@@ -263,6 +268,10 @@ class FrontRoute extends BaseRoute
 
 		if(isset($params[self::SPOKEN_LANGUAGE])) {
 			$params[self::SPOKEN_LANGUAGE] = $params[self::SPOKEN_LANGUAGE]->getId();
+		}
+
+		if(isset($params[self::BOARD])) {
+			$params[self::BOARD] = $params[self::BOARD]->getId();
 		}
 
 		if(isset($params[self::PAGE]) && $params[self::PAGE] instanceof Page) {

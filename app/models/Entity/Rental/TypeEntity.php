@@ -4,7 +4,7 @@ namespace Entity\Rental;
 
 use Entity\Phrase;
 use Doctrine\ORM\Mapping as ORM;
-use	Extras\Annotation as EA;
+use    Extras\Annotation as EA;
 
 /**
  * @ORM\Entity(repositoryClass="Repository\Rental\TypeRepository")
@@ -12,14 +12,15 @@ use	Extras\Annotation as EA;
  * @EA\Primary(key="id", value="id")
  * @EA\Generator(skip="{setSlug}")
  */
-class Type extends \Entity\BaseEntity {
+class Type extends \Entity\BaseEntity
+{
 
 	/**
 	 * @var string
 	 * @ORM\Column(type="string")
 	 */
 	protected $slug;
-	
+
 	/**
 	 * @var Collection
 	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
@@ -38,8 +39,10 @@ class Type extends \Entity\BaseEntity {
 	 */
 	protected $classification = FALSE;
 
+
 	/**
 	 * @param string
+	 *
 	 * @return \Entity\Rental\AmenityType
 	 */
 	public function setSlug($slug)
@@ -49,6 +52,7 @@ class Type extends \Entity\BaseEntity {
 		return $this;
 	}
 
+
 	/**
 	 * @return bool
 	 */
@@ -57,16 +61,18 @@ class Type extends \Entity\BaseEntity {
 		return $this->hasClassification;
 	}
 
+
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
+	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
 		parent::__construct();
 
 		$this->rentals = new \Doctrine\Common\Collections\ArrayCollection;
 	}
-		
+
+
 	/**
 	 * @return string|NULL
 	 */
@@ -74,9 +80,11 @@ class Type extends \Entity\BaseEntity {
 	{
 		return $this->slug;
 	}
-		
+
+
 	/**
 	 * @param \Entity\Phrase\Phrase
+	 *
 	 * @return \Entity\Rental\Type
 	 */
 	public function setName(\Entity\Phrase\Phrase $name)
@@ -85,7 +93,8 @@ class Type extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Entity\Phrase\Phrase|NULL
 	 */
@@ -93,23 +102,27 @@ class Type extends \Entity\BaseEntity {
 	{
 		return $this->name;
 	}
-		
+
+
 	/**
 	 * @param \Entity\Rental\Rental
+	 *
 	 * @return \Entity\Rental\Type
 	 */
 	public function addRental(\Entity\Rental\Rental $rental)
 	{
-		if(!$this->rentals->contains($rental)) {
+		if (!$this->rentals->contains($rental)) {
 			$this->rentals->add($rental);
 		}
 		$rental->setType($this);
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @param \Entity\Rental\Rental
+	 *
 	 * @return \Entity\Rental\Type
 	 */
 	public function removeRental(\Entity\Rental\Rental $rental)
@@ -119,7 +132,8 @@ class Type extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Rental\Rental[]
 	 */
@@ -127,9 +141,11 @@ class Type extends \Entity\BaseEntity {
 	{
 		return $this->rentals;
 	}
-		
+
+
 	/**
 	 * @param boolean
+	 *
 	 * @return \Entity\Rental\Type
 	 */
 	public function setClassification($classification)
@@ -138,7 +154,8 @@ class Type extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return boolean|NULL
 	 */

@@ -4,7 +4,7 @@ namespace Entity\Rental;
 
 use Entity\Phrase;
 use Doctrine\ORM\Mapping as ORM;
-use	Extras\Annotation as EA;
+use    Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
@@ -12,8 +12,9 @@ use	Extras\Annotation as EA;
  * @EA\Primary(key="id", value="id")
  * @EA\Generator(skip="{setSlug}")
  */
-class RoomType extends \Entity\BaseEntity {
-	
+class RoomType extends \Entity\BaseEntity
+{
+
 	/**
 	 * @var Collection
 	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
@@ -26,9 +27,10 @@ class RoomType extends \Entity\BaseEntity {
 	 */
 	protected $slug;
 
-		
+
 	/**
 	 * @param string
+	 *
 	 * @return \Entity\Rental\RoomType
 	 */
 	public function setSlug($slug)
@@ -38,16 +40,19 @@ class RoomType extends \Entity\BaseEntity {
 		return $this;
 	}
 
+
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
+	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
 		parent::__construct();
 	}
-		
+
+
 	/**
 	 * @param \Entity\Phrase\Phrase
+	 *
 	 * @return \Entity\Rental\RoomType
 	 */
 	public function setName(\Entity\Phrase\Phrase $name)
@@ -56,7 +61,8 @@ class RoomType extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Entity\Phrase\Phrase|NULL
 	 */
@@ -64,7 +70,8 @@ class RoomType extends \Entity\BaseEntity {
 	{
 		return $this->name;
 	}
-		
+
+
 	/**
 	 * @return string|NULL
 	 */

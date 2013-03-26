@@ -5,7 +5,7 @@ namespace Entity\Rental;
 use Entity\Phrase;
 use Doctrine\ORM\Mapping as ORM;
 
-use	Extras\Annotation as EA;
+use    Extras\Annotation as EA;
 use Extras\FileStorage;
 
 use Nette\Http\FileUpload;
@@ -15,8 +15,9 @@ use Nette\Http\FileUpload;
  * @ORM\Table(name="rental_pricelistrow")
  * @EA\Primary(key="id", value="name")
  * @EA\Generator(skip="{getPrice,setPrice}")
-*/
-class PricelistRow extends \Entity\BaseEntity {
+ */
+class PricelistRow extends \Entity\BaseEntity
+{
 
 	/**
 	 * @var Collection
@@ -60,6 +61,7 @@ class PricelistRow extends \Entity\BaseEntity {
 	 */
 	protected $price;
 
+
 	/**
 	 * @return \Extras\Types\Price
 	 */
@@ -68,6 +70,7 @@ class PricelistRow extends \Entity\BaseEntity {
 		return new \Extras\Types\Price($this->price, $this->getCurrency());
 	}
 
+
 	public function setPrice(\Extras\Types\Price $price)
 	{
 		$this->price = $price->convertToFloat($this->getCurrency());
@@ -75,25 +78,31 @@ class PricelistRow extends \Entity\BaseEntity {
 		return $this;
 	}
 
+
 	public function setFloatPrice($price)
 	{
 		$this->setPrice(new \Extras\Types\Price($price, $this->getCurrency()));
 	}
 
-	public function getCurrency() {
+
+	public function getCurrency()
+	{
 		return $this->rental->getAddress()->getPrimaryLocation()->getDefaultCurrency();
 	}
 
+
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
+	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
 		parent::__construct();
 	}
-		
+
+
 	/**
 	 * @param \Entity\Rental\Rental
+	 *
 	 * @return \Entity\Rental\PricelistRow
 	 */
 	public function setRental(\Entity\Rental\Rental $rental)
@@ -102,7 +111,8 @@ class PricelistRow extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Entity\Rental\PricelistRow
 	 */
@@ -112,7 +122,8 @@ class PricelistRow extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Entity\Rental\Rental|NULL
 	 */
@@ -120,9 +131,11 @@ class PricelistRow extends \Entity\BaseEntity {
 	{
 		return $this->rental;
 	}
-		
+
+
 	/**
 	 * @param integer
+	 *
 	 * @return \Entity\Rental\PricelistRow
 	 */
 	public function setSort($sort)
@@ -131,7 +144,8 @@ class PricelistRow extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Entity\Rental\PricelistRow
 	 */
@@ -141,7 +155,8 @@ class PricelistRow extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return integer|NULL
 	 */
@@ -149,9 +164,11 @@ class PricelistRow extends \Entity\BaseEntity {
 	{
 		return $this->sort;
 	}
-		
+
+
 	/**
 	 * @param integer
+	 *
 	 * @return \Entity\Rental\PricelistRow
 	 */
 	public function setRoomCount($roomCount)
@@ -160,7 +177,8 @@ class PricelistRow extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return integer|NULL
 	 */
@@ -168,9 +186,11 @@ class PricelistRow extends \Entity\BaseEntity {
 	{
 		return $this->roomCount;
 	}
-		
+
+
 	/**
 	 * @param \Entity\Rental\RoomType
+	 *
 	 * @return \Entity\Rental\PricelistRow
 	 */
 	public function setRoomType(\Entity\Rental\RoomType $roomType)
@@ -179,7 +199,8 @@ class PricelistRow extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Entity\Rental\PricelistRow
 	 */
@@ -189,7 +210,8 @@ class PricelistRow extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Entity\Rental\RoomType|NULL
 	 */
@@ -197,9 +219,11 @@ class PricelistRow extends \Entity\BaseEntity {
 	{
 		return $this->roomType;
 	}
-		
+
+
 	/**
 	 * @param integer
+	 *
 	 * @return \Entity\Rental\PricelistRow
 	 */
 	public function setBedCount($bedCount)
@@ -208,7 +232,8 @@ class PricelistRow extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return integer|NULL
 	 */
@@ -216,9 +241,11 @@ class PricelistRow extends \Entity\BaseEntity {
 	{
 		return $this->bedCount;
 	}
-		
+
+
 	/**
 	 * @param integer
+	 *
 	 * @return \Entity\Rental\PricelistRow
 	 */
 	public function setExtraBedCount($extraBedCount)
@@ -227,7 +254,8 @@ class PricelistRow extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return integer|NULL
 	 */
