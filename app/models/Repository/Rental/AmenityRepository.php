@@ -13,14 +13,26 @@ use Nette\Localization\ITranslator;
 class AmenityRepository extends \Repository\BaseRepository
 {
 
-	public function findByAnimalTypeForSelect(ITranslator $translator, Collator $collator)
+	public function findByAnimalTypeForSelect(ITranslator $translator)
+	{
+		return $this->findByTypeForSortBySortingSelect('animal', $translator);
+	}
+
+
+	/**
+	 * @param $type
+	 * @param ITranslator $translator
+	 *
+	 * @return array
+	 */
+	protected function findByTypeForSortBySortingSelect($type, ITranslator $translator)
 	{
 		$qb = $this->_em->createQueryBuilder();
 
 		$qb->select('e')
 			->from($this->_entityName, 'e')
 			->leftJoin('e.type', 't')
-			->andWhere($qb->expr()->eq('t.slug', ':type'))->setParameter('type', 'animal')
+			->andWhere($qb->expr()->eq('t.slug', ':type'))->setParameter('type', $type)
 			->orderBy('e.sorting', 'ASC');
 
 		$rows = $qb->getQuery()->getResult();
@@ -37,9 +49,9 @@ class AmenityRepository extends \Repository\BaseRepository
 		return $this->findByTypeForSelect('other', $translator, $collator);
 	}
 
-	public function findByBoardTypeForSelect(ITranslator $translator, Collator $collator)
+	public function findByBoardTypeForSelect(ITranslator $translator)
 	{
-		return $this->findByTypeForSelect('board', $translator, $collator);
+		return $this->findByTypeForSortBySortingSelect('board', $translator);
 	}
 
 	public function findByAvailabilityTypeForSelect(ITranslator $translator, Collator $collator)
@@ -47,7 +59,7 @@ class AmenityRepository extends \Repository\BaseRepository
 		return $this->findByTypeForSelect('owner-availability', $translator, $collator);
 	}
 
-	public function findByTypeForSelect($type, ITranslator $translator, Collator $collator)
+	protected  function findByTypeForSelect($type, ITranslator $translator, Collator $collator)
 	{
 		$type = $this->related('type')->findBySlug($type);
 		$return = [];
