@@ -19,8 +19,10 @@ class AdminGridControl extends BaseGridControl {
 	 */
 	protected function getCellsTemplatesFiles()
 	{
-		$files = parent::getCellsTemplatesFiles();
+
+		$files = array();
 		$files[] = __DIR__ . '/@adminGridCellsTemplate.latte';
+		$files = array_merge($files, parent::getCellsTemplatesFiles());
 		return $files;
 	}
 
