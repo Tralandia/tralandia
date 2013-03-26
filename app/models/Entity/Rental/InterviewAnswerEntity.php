@@ -4,14 +4,15 @@ namespace Entity\Rental;
 
 use Entity\Phrase;
 use Doctrine\ORM\Mapping as ORM;
-use	Extras\Annotation as EA;
+use    Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="rental_interviewanswer")
  * @EA\Primary(key="id", value="id")
  */
-class InterviewAnswer extends \Entity\BaseEntityDetails {
+class InterviewAnswer extends \Entity\BaseEntityDetails
+{
 
 	/**
 	 * @var Collection
@@ -34,14 +35,16 @@ class InterviewAnswer extends \Entity\BaseEntityDetails {
 
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
+	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
 		parent::__construct();
 	}
-		
+
+
 	/**
 	 * @param \Entity\Rental\Rental
+	 *
 	 * @return \Entity\Rental\InterviewAnswer
 	 */
 	public function setRental(\Entity\Rental\Rental $rental)
@@ -50,7 +53,8 @@ class InterviewAnswer extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Entity\Rental\InterviewAnswer
 	 */
@@ -60,7 +64,8 @@ class InterviewAnswer extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Entity\Rental\Rental|NULL
 	 */
@@ -68,9 +73,11 @@ class InterviewAnswer extends \Entity\BaseEntityDetails {
 	{
 		return $this->rental;
 	}
-		
+
+
 	/**
 	 * @param \Entity\Rental\InterviewQuestion
+	 *
 	 * @return \Entity\Rental\InterviewAnswer
 	 */
 	public function setQuestion(\Entity\Rental\InterviewQuestion $question)
@@ -79,7 +86,8 @@ class InterviewAnswer extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Entity\Rental\InterviewAnswer
 	 */
@@ -89,7 +97,8 @@ class InterviewAnswer extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Entity\Rental\InterviewQuestion|NULL
 	 */
@@ -97,9 +106,11 @@ class InterviewAnswer extends \Entity\BaseEntityDetails {
 	{
 		return $this->question;
 	}
-		
+
+
 	/**
 	 * @param \Entity\Phrase\Phrase
+	 *
 	 * @return \Entity\Rental\InterviewAnswer
 	 */
 	public function setAnswer(\Entity\Phrase\Phrase $answer)
@@ -108,7 +119,8 @@ class InterviewAnswer extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Entity\Phrase\Phrase|NULL
 	 */

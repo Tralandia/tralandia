@@ -217,7 +217,7 @@ factories:
 		implement: FrontModule\Forms\IRegistrationFormFactory
 
 	searchFormFactory:
-		class: FrontModule\Forms\SearchForm(%presenter%)
+		class: FrontModule\Forms\SearchForm(%defaults%, %presenter%)
 		implement: FrontModule\Forms\ISearchFormFactory
 
 	# ==============================

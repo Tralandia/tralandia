@@ -145,12 +145,18 @@ class OptionGenerator
 
 
 	/**
+	 * @param Location $defaultLocation
+	 *
 	 * @return array
 	 */
-	public function generateLocation()
+	public function generateLocation(Location $defaultLocation = NULL)
 	{
 		$top = $this->topLocations->getResults(20);
-		$locations = $this->em->getRepository(LOCATION_ENTITY)->findById(array_keys($top));
+
+		$ids = array_keys($top);
+		if($defaultLocation) $ids[] = $defaultLocation->getId();
+
+		$locations = $this->em->getRepository(LOCATION_ENTITY)->findById($ids);
 
 		return $this->generateFromEntities($locations);
 	}
@@ -208,7 +214,45 @@ class OptionGenerator
 			if (!isset($collection[$value->getId()])) continue;
 			$links[$value->getId()] = [
 				'entity' => $value,
-				'name' => $this->translator->translate($value->getId()),
+				'name' => $this->translator->translate($value->getName()),
+				'count' => count($collection[$value->getId()]),
+			];
+		}
+
+		$links = $this->sort($links, 'name');
+
+		return ArrayHash::from($links);
+	}
+
+
+	/**
+	 * @return array
+	 */
+	public function generateBoard()
+	{
+		$boards = $this->em->getRepository(RENTAL_AMENITY_ENTITY)->findAll();
+
+		return $this->generateFromEntities($boards, 'Id');
+	}
+
+
+	/**
+	 * @param RentalSearchService $search
+	 *
+	 * @return ArrayHash
+	 */
+	public function generateBoardLinks(RentalSearchService $search)
+	{
+		$boards = $this->em->getRepository(RENTAL_AMENITY_ENTITY)->findAll();
+
+		$collection = $search->getCollectedResults(RentalSearchService::CRITERIA_BOARD);
+
+		$links = [];
+		foreach ($boards as $value) {
+			if (!isset($collection[$value->getId()])) continue;
+			$links[$value->getId()] = [
+				'entity' => $value,
+				'name' => $this->translator->translate($value->getName()),
 				'count' => count($collection[$value->getId()]),
 			];
 		}
@@ -259,7 +303,7 @@ class OptionGenerator
 			if (!isset($collection[$key])) continue;
 
 			$options[$i] = [
-				'entity' => $i,
+				'entity' => $key,
 				'name' => "$key $iso",
 				'count' => count($collection[$key]),
 			];
@@ -312,7 +356,7 @@ class OptionGenerator
 	 * @param string $key
 	 * @param array $variation
 	 *
-	 * @return \Nette\ArrayHash
+	 * @return array
 	 */
 	protected function generateFromEntities($data, $key = 'Slug', array $variation = NULL)
 	{

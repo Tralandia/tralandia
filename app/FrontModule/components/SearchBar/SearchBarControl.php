@@ -49,6 +49,12 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 	public $spokenLanguage;
 
 	/**
+	 * @persistent
+	 * @var string
+	 */
+	public $board;
+
+	/**
 	 * @var \Service\Rental\RentalSearchService
 	 */
 	protected $search;
@@ -109,15 +115,15 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 			$pathSegment = $this->em->getRepository(PATH_SEGMENT_ENTITY)
 				->findRentalType($this->environment->getLanguage(), $this->rentalType);
 
-			$jsVariables['data-rentalType'] = $pathSegment->getPathSegment();
+			$jsVariables['data-rental-type'] = $pathSegment->getPathSegment();
 		}
 
 		if($this->priceFrom) {
-			$jsVariables['data-priceFrom'] = $this->priceFrom;
+			$jsVariables['data-price-from'] = $this->priceFrom;
 		}
 
 		if($this->priceTo) {
-			$jsVariables['data-priceTo'] = $this->priceTo;
+			$jsVariables['data-price-to'] = $this->priceTo;
 		}
 
 		if($this->capacity) {
@@ -125,7 +131,11 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		}
 
 		if($this->spokenLanguage) {
-			$jsVariables['data-spokenLanguage'] = $this->spokenLanguage->getId();
+			$jsVariables['data-spoken-language'] = $this->spokenLanguage->getId();
+		}
+
+		if($this->board) {
+			$jsVariables['data-board'] = $this->board->getId();
 		}
 
 		$template->jsVariables = Html::el('variables')->addAttributes($jsVariables);
@@ -160,23 +170,28 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		} else if(!$this->priceFrom) {
 			$links = $this->searchOptionGenerator->generatePriceLinks($this->environment->getCurrency(), $this->getSearch());
 			$bottomLinks['linkArgument'] = FrontRoute::PRICE_FROM;
-			$bottomLinks['title'] = 'o100098';
-			$bottomLinks['iconClass'] = 'icon-map-marker';
+			$bottomLinks['title'] = 'o100093';
+			$bottomLinks['iconClass'] = 'icon-money22';
 		} else if(!$this->priceTo) {
 			$links = $this->searchOptionGenerator->generatePriceLinks($this->environment->getCurrency(), $this->getSearch());
 			$bottomLinks['linkArgument'] = FrontRoute::PRICE_TO;
-			$bottomLinks['title'] = 'o100098';
-			$bottomLinks['iconClass'] = 'icon-map-marker';
+			$bottomLinks['title'] = 'o100094';
+			$bottomLinks['iconClass'] = 'icon-money22';
 		} else if(!$this->capacity) {
 			$links = $this->searchOptionGenerator->generateCapacityLinks($this->getSearch());
 			$bottomLinks['linkArgument'] = FrontRoute::CAPACITY;
-			$bottomLinks['title'] = 'o100098';
-			$bottomLinks['iconClass'] = 'icon-map-marker';
+			$bottomLinks['title'] = 'o20928';
+			$bottomLinks['iconClass'] = 'icon-user';
+		} else if(!$this->board) {
+			$links = $this->searchOptionGenerator->generateBoardLinks($this->getSearch());
+			$bottomLinks['linkArgument'] = FrontRoute::BOARD;
+			$bottomLinks['title'] = 'o100080';
+			$bottomLinks['iconClass'] = 'icon-food';
 		} else if(!$this->spokenLanguage) {
 			$links = $this->searchOptionGenerator->generateSpokenLanguageLinks($this->getSearch());
 			$bottomLinks['linkArgument'] = FrontRoute::SPOKEN_LANGUAGE;
-			$bottomLinks['title'] = 'o100098';
-			$bottomLinks['iconClass'] = 'icon-map-marker';
+			$bottomLinks['title'] = 'o20930';
+			$bottomLinks['iconClass'] = 'icon-globe';
 		} else {
 			return NULL;
 		}
@@ -236,6 +251,20 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 			$search->setRentalTypeCriterion($this->rentalType);
 		}
 
+		$search->setPriceCriterion($this->priceFrom, $this->priceTo);
+
+		if ($this->capacity) {
+			$search->setCapacityCriterion($this->capacity);
+		}
+
+		if ($this->board) {
+			$search->setBoardCriterion($this->board);
+		}
+
+		if ($this->spokenLanguage) {
+			$search->setSpokenLanguageCriterion($this->spokenLanguage);
+		}
+
 		return $search;
 	}
 
@@ -264,7 +293,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 	 */
 	protected function createComponentSearchForm()
 	{
-		$form = $this->searchFormFactory->create($this->presenter);
+		$form = $this->searchFormFactory->create($this->getSearchCriteria(), $this->presenter);
 		//$form->buildForm();
 
 		$form->onSuccess[] = function ($form) {

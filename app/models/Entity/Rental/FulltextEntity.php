@@ -4,14 +4,15 @@ namespace Entity\Rental;
 
 use Entity\Phrase;
 use Doctrine\ORM\Mapping as ORM;
-use	Extras\Annotation as EA;
+use    Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="rental_fulltext")
  * @EA\Primary(key="id", value="value")
  */
-class Fulltext extends \Entity\BaseEntity {
+class Fulltext extends \Entity\BaseEntity
+{
 
 	/**
 	 * @var Collection
@@ -32,16 +33,18 @@ class Fulltext extends \Entity\BaseEntity {
 	protected $value;
 
 
-					//@entity-generator-code --- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
+	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
 		parent::__construct();
 	}
-		
+
+
 	/**
 	 * @param \Entity\Rental\Rental
+	 *
 	 * @return \Entity\Rental\Fulltext
 	 */
 	public function setRental(\Entity\Rental\Rental $rental)
@@ -50,7 +53,8 @@ class Fulltext extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Entity\Rental\Fulltext
 	 */
@@ -60,7 +64,8 @@ class Fulltext extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Entity\Rental\Rental|NULL
 	 */
@@ -68,9 +73,11 @@ class Fulltext extends \Entity\BaseEntity {
 	{
 		return $this->rental;
 	}
-		
+
+
 	/**
 	 * @param \Entity\Language
+	 *
 	 * @return \Entity\Rental\Fulltext
 	 */
 	public function setLanguage(\Entity\Language $language)
@@ -79,7 +86,8 @@ class Fulltext extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Entity\Rental\Fulltext
 	 */
@@ -89,7 +97,8 @@ class Fulltext extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Entity\Language|NULL
 	 */
@@ -97,9 +106,11 @@ class Fulltext extends \Entity\BaseEntity {
 	{
 		return $this->language;
 	}
-		
+
+
 	/**
 	 * @param string
+	 *
 	 * @return \Entity\Rental\Fulltext
 	 */
 	public function setValue($value)
@@ -108,7 +119,8 @@ class Fulltext extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return string|NULL
 	 */

@@ -4,7 +4,7 @@ namespace Entity\Rental;
 
 use Entity\Phrase;
 use Doctrine\ORM\Mapping as ORM;
-use	Extras\Annotation as EA;
+use    Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
@@ -12,7 +12,8 @@ use	Extras\Annotation as EA;
  * @EA\Primary(key="id", value="slug")
  * @EA\Generator(skip="{setSlug}")
  */
-class AmenityType extends \Entity\BaseEntity {
+class AmenityType extends \Entity\BaseEntity
+{
 
 	/**
 	 * @var Collection
@@ -31,15 +32,17 @@ class AmenityType extends \Entity\BaseEntity {
 	 * @ORM\Column(type="string")
 	 */
 	protected $slug;
-	
+
 	/**
 	 * @var integer
 	 * @ORM\Column(type="integer")
 	 */
 	protected $sorting;
 
+
 	/**
 	 * @param string
+	 *
 	 * @return \Entity\Rental\AmenityType
 	 */
 	public function setSlug($slug)
@@ -49,32 +52,37 @@ class AmenityType extends \Entity\BaseEntity {
 		return $this;
 	}
 
+
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
+	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
 		parent::__construct();
 
 		$this->amenities = new \Doctrine\Common\Collections\ArrayCollection;
 	}
-		
+
+
 	/**
 	 * @param \Entity\Rental\Amenity
+	 *
 	 * @return \Entity\Rental\AmenityType
 	 */
 	public function addAmenity(\Entity\Rental\Amenity $amenity)
 	{
-		if(!$this->amenities->contains($amenity)) {
+		if (!$this->amenities->contains($amenity)) {
 			$this->amenities->add($amenity);
 		}
 		$amenity->setType($this);
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @param \Entity\Rental\Amenity
+	 *
 	 * @return \Entity\Rental\AmenityType
 	 */
 	public function removeAmenity(\Entity\Rental\Amenity $amenity)
@@ -84,7 +92,8 @@ class AmenityType extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Rental\Amenity[]
 	 */
@@ -92,9 +101,11 @@ class AmenityType extends \Entity\BaseEntity {
 	{
 		return $this->amenities;
 	}
-		
+
+
 	/**
 	 * @param \Entity\Phrase\Phrase
+	 *
 	 * @return \Entity\Rental\AmenityType
 	 */
 	public function setName(\Entity\Phrase\Phrase $name)
@@ -103,7 +114,8 @@ class AmenityType extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return \Entity\Phrase\Phrase|NULL
 	 */
@@ -111,7 +123,8 @@ class AmenityType extends \Entity\BaseEntity {
 	{
 		return $this->name;
 	}
-		
+
+
 	/**
 	 * @return string|NULL
 	 */
@@ -119,9 +132,11 @@ class AmenityType extends \Entity\BaseEntity {
 	{
 		return $this->slug;
 	}
-		
+
+
 	/**
 	 * @param integer
+	 *
 	 * @return \Entity\Rental\AmenityType
 	 */
 	public function setSorting($sorting)
@@ -130,7 +145,8 @@ class AmenityType extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
+
 	/**
 	 * @return integer|NULL
 	 */

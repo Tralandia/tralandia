@@ -5,6 +5,7 @@ namespace FrontModule\Forms;
 use Doctrine\ORM\EntityManager;
 use Environment\Environment;
 use Nette;
+use Routers\FrontRoute;
 use SearchGenerator\OptionGenerator;
 
 /**
@@ -13,6 +14,12 @@ use SearchGenerator\OptionGenerator;
  * @author Dávid Ďurika
  */
 class SearchForm extends BaseForm {
+
+
+	/**
+	 * @var array
+	 */
+	protected $defaults;
 
 	/**
 	 * @var \Nette\Application\UI\Presenter
@@ -34,16 +41,19 @@ class SearchForm extends BaseForm {
 	 */
 	protected $em;
 
+
 	/**
+	 * @param array $defaults
 	 * @param \Nette\Application\UI\Presenter $presenter
 	 * @param \SearchGenerator\OptionGenerator $searchOptionGenerator
 	 * @param \Environment\Environment $environment
 	 * @param \Doctrine\ORM\EntityManager $em
 	 * @param \Nette\Localization\ITranslator $translator
 	 */
-	public function __construct(Nette\Application\UI\Presenter $presenter, OptionGenerator $searchOptionGenerator,
+	public function __construct(array $defaults, Nette\Application\UI\Presenter $presenter, OptionGenerator $searchOptionGenerator,
 								Environment $environment, EntityManager $em,  Nette\Localization\ITranslator $translator)
 	{
+		$this->defaults = $defaults;
 		$this->presenter = $presenter;
 		$this->searchOptionGenerator = $searchOptionGenerator;
 		$this->environment = $environment;
@@ -54,37 +64,45 @@ class SearchForm extends BaseForm {
 	public function buildForm()
 	{
 		$countries = $this->searchOptionGenerator->generateCountries($this->presenter);
-		$locations = $this->searchOptionGenerator->generateLocation();
+
+		$defaultLocation = Nette\Utils\Arrays::get($this->defaults, FrontRoute::LOCATION, NULL);
+		$locations = $this->searchOptionGenerator->generateLocation($defaultLocation);
+
 		$rentalTypes = $this->searchOptionGenerator->generateRentalType();
-		$prices = $this->searchOptionGenerator->generatePrice($this->environment->getPrimaryLocation()->getDefaultCurrency());
+		$prices = $this->searchOptionGenerator->generatePrice($this->environment->getCurrency());
 		$capacity = $this->searchOptionGenerator->generateCapacity();
 		$languages = $this->searchOptionGenerator->generateSpokenLanguage();
+		$boards = $this->searchOptionGenerator->generateBoard();
 
 		$this->addSelect('country', 'o1070', $countries)
 			->setPrompt('o1070')
 			->setAttribute('data-placeholder',$this->translate('o1070'));
 
-		$this->addSelect('location', 'o1070', $locations)
+		$this->addSelect(FrontRoute::LOCATION, 'o1070', $locations)
 			->setPrompt('')
 			->setAttribute('data-placeholder',$this->translate('o1070'));
 
-		$this->addSelect('rentalType', 'o20926', $rentalTypes)
+		$this->addSelect(FrontRoute::RENTAL_TYPE, 'o20926', $rentalTypes)
 			->setPrompt('')
 			->setAttribute('data-placeholder',$this->translate('o20926'));
 
-		$this->addSelect('priceFrom', 'o100093', $prices)
+		$this->addSelect(FrontRoute::PRICE_FROM, 'o100093', $prices)
 			->setPrompt('')
 			->setAttribute('data-placeholder',$this->translate('o100093'));
 
-		$this->addSelect('priceTo', 'o100094', $prices)
+		$this->addSelect(FrontRoute::PRICE_TO, 'o100094', $prices)
 			->setPrompt('')
 			->setAttribute('data-placeholder',$this->translate('o100094'));
 
-		$this->addSelect('capacity', 'o20928', $capacity)
+		$this->addSelect(FrontRoute::CAPACITY, 'o20928', $capacity)
 			->setPrompt('')
 			->setAttribute('data-placeholder',$this->translate('o20928'));
 
-		$this->addSelect('spokenLanguage', 'o20930', $languages)
+		$this->addSelect(FrontRoute::BOARD, 'o20930', $boards)
+			->setPrompt('')
+			->setAttribute('data-placeholder',$this->translate('o100080'));
+
+		$this->addSelect(FrontRoute::SPOKEN_LANGUAGE, 'o20930', $languages)
 			->setPrompt('')
 			->setAttribute('data-placeholder',$this->translate('o20930'));
 
@@ -120,10 +138,12 @@ class SearchForm extends BaseForm {
 }
 
 interface ISearchFormFactory {
+
 	/**
+	 * @param array $defaults
 	 * @param \Nette\Application\UI\Presenter $presenter
 	 *
 	 * @return SearchForm
 	 */
-	public function create(Nette\Application\UI\Presenter $presenter);
+	public function create(array $defaults, Nette\Application\UI\Presenter $presenter);
 }
