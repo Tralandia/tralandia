@@ -14,6 +14,12 @@ use Nette\Application as NA,
 class BaseImport {
 
 	public $sections = array(
+		'rentalImages' => array(
+			'entities' => array(
+			),
+			'subsections' => array('importTodos', 'importImages'),
+			'saveImportStatus' => FALSE,
+		),
 		'phraseType' => array(
 			'entities' => array(
 			),
@@ -220,6 +226,7 @@ class BaseImport {
 		while ($table = mysql_fetch_array($allTables)) {
 			if ($table[0] == '__importVariables') continue;
 			if ($table[0] == '__importPhrases') continue;
+			if ($table[0] == '__importImages') continue;
 			qNew('drop table '.$table[0]);
 		}
 		qNew('SET FOREIGN_KEY_CHECKS = 1;');
