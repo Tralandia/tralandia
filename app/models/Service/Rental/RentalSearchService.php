@@ -12,6 +12,7 @@ class RentalSearchService extends Nette\Object
 	const COUNT_PER_PAGE = 50;
 	const CRITERIA_LOCATION = 'location';
 	const CRITERIA_RENTAL_TYPE = 'rentalType';
+	const CRITERIA_PLACEMENT = 'placement';
 
 	const CRITERIA_CAPACITY = 'fcapacity';
 	const CRITERIA_SPOKEN_LANGUAGE = 'flanguage';
@@ -101,6 +102,12 @@ class RentalSearchService extends Nette\Object
 		$this->resetResults();
 	}
 
+	public function setPlacementCriterion(Entity\Rental\Placement $placement = NULL)
+	{
+		$this->criteria[self::CRITERIA_PLACEMENT] = $placement;
+		$this->resetResults();
+	}
+
 	public function setCapacityCriterion($capacity = NULL)
 	{
 		$this->criteria[self::CRITERIA_CAPACITY] = $capacity;
@@ -184,8 +191,15 @@ class RentalSearchService extends Nette\Object
 		return $this->rentalRepositoryAccessor->get()->findById($results);
 	}
 
+
+	/**
+	 * @param $criterionType
+	 *
+	 * @return array
+	 */
 	public function getCollectedResults($criterionType)
 	{
+		if(!array_key_exists($criterionType, $this->searchCacheData)) return [];
 		$results = $this->getResults();
 
 		$collection = [];

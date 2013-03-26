@@ -217,7 +217,7 @@ factories:
 		implement: FrontModule\Forms\IRegistrationFormFactory
 
 	searchFormFactory:
-		class: FrontModule\Forms\SearchForm(%defaults%, %presenter%)
+		class: FrontModule\Forms\SearchForm(%defaults%, %search%, %presenter%)
 		implement: FrontModule\Forms\ISearchFormFactory
 
 	# ==============================
@@ -255,10 +255,11 @@ factories:
 			- $languageRepositoryAccessor(@languageRepositoryAccessor)
 			- $rentalRepositoryAccessor(@rentalRepositoryAccessor)
 			- $rentalTypeRepositoryAccessor(@rentalTypeRepositoryAccessor)
+			- $rentalAmenityRepositoryAccessor(@rentalAmenityRepositoryAccessor)
+			- $rentalPlacementRepositoryAccessor(@rentalPlacementRepositoryAccessor)
 			- $routingPathSegmentRepositoryAccessor(@routingPathSegmentRepositoryAccessor)
 			- $domainRepositoryAccessor(@domainRepositoryAccessor)
 			- $pageRepositoryAccessor(@pageRepositoryAccessor)
-			- $rentalAmenityRepositoryAccessor(@rentalAmenityRepositoryAccessor)
 			- $favoriteListRepositoryAccessor(@favoriteListRepositoryAccessor)
 			- $pageRepositoryAccessor(@pageRepositoryAccessor)
 			- $phraseDecoratorFactory(@phraseDecoratorFactory)

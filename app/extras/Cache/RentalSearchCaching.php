@@ -62,13 +62,18 @@ class RentalSearchCaching extends \Nette\Object {
 		$this->cacheContent[RentalSearchService::CRITERIA_LOCATION][$rental->address->locality->id][$rental->id] = $rental->id;
 
 		// Set Locations
-		foreach ($rental->address->locations as $key => $value) {
+		foreach ($rental->address->locations as $value) {
 			$this->cacheContent[RentalSearchService::CRITERIA_LOCATION][$value->id][$rental->id] = $rental->id;
 		}
 
 		// Set rental Type
 		if ($rental->type) {
 			$this->cacheContent[RentalSearchService::CRITERIA_RENTAL_TYPE][$rental->type->id][$rental->id] = $rental->id;
+		}
+
+		// Set Placement
+		foreach ($rental->getPlacements() as $value) {
+			$this->cacheContent[RentalSearchService::CRITERIA_PLACEMENT][$value->getId()][$rental->getId()] = $rental->getId();
 		}
 
 		// Set Max Capacity
@@ -79,7 +84,7 @@ class RentalSearchCaching extends \Nette\Object {
 		}
 
 		// Set Languages Spoken
-		foreach ($rental->spokenLanguages as $key => $value) {
+		foreach ($rental->spokenLanguages as $value) {
 			$this->cacheContent[RentalSearchService::CRITERIA_SPOKEN_LANGUAGE][$value->id][$rental->id] = $rental->id;
 		}
 

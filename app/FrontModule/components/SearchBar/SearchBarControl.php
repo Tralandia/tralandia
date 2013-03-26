@@ -14,43 +14,49 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 
 	/**
 	 * @persistent
-	 * @var string
-	 */
-	public $rentalType;
-
-	/**
-	 * @persistent
-	 * @var string
+	 * @var \Entity\Location\Location|NULL
 	 */
 	public $location;
 
 	/**
 	 * @persistent
-	 * @var string
+	 * @var \Entity\Rental\Type|NULL
+	 */
+	public $rentalType;
+
+	/**
+	 * @persistent
+	 * @var \Entity\Rental\Placement|NULL
+	 */
+	public $placement;
+
+	/**
+	 * @persistent
+	 * @var integer
 	 */
 	public $priceFrom;
 
 	/**
 	 * @persistent
-	 * @var string
+	 * @var integer
 	 */
 	public $priceTo;
 
 	/**
 	 * @persistent
-	 * @var string
+	 * @var integer
 	 */
 	public $capacity;
 
 	/**
 	 * @persistent
-	 * @var string
+	 * @var \Entity\Language|NULL
 	 */
 	public $spokenLanguage;
 
 	/**
 	 * @persistent
-	 * @var string
+	 * @var \Entity\Rental\Amenity|NULL
 	 */
 	public $board;
 
@@ -118,6 +124,10 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 			$jsVariables['data-rental-type'] = $pathSegment->getPathSegment();
 		}
 
+		if($this->placement) {
+			$jsVariables['data-placement'] = $this->placement;
+		}
+
 		if($this->priceFrom) {
 			$jsVariables['data-price-from'] = $this->priceFrom;
 		}
@@ -158,25 +168,20 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 			} else {
 				$count = 30;
 			}
-			$links = $this->searchOptionGenerator->generateLocationLinks($count);
+			$links = $this->searchOptionGenerator->generateLocationLinks($count, $this->getSearch());
 			$bottomLinks['linkArgument'] = FrontRoute::LOCATION;
 			$bottomLinks['title'] = 'o100098';
 			$bottomLinks['iconClass'] = 'icon-map-marker';
 		} else if(!$this->rentalType) {
-			$links = $this->searchOptionGenerator->generateRentalTypeLinks($this->location);
+			$links = $this->searchOptionGenerator->generateRentalTypeLinks($this->getSearch());
 			$bottomLinks['linkArgument'] = FrontRoute::RENTAL_TYPE;
 			$bottomLinks['title'] = 'o20926';
 			$bottomLinks['iconClass'] = 'icon-home';
-		} else if(!$this->priceFrom) {
-			$links = $this->searchOptionGenerator->generatePriceLinks($this->environment->getCurrency(), $this->getSearch());
-			$bottomLinks['linkArgument'] = FrontRoute::PRICE_FROM;
-			$bottomLinks['title'] = 'o100093';
-			$bottomLinks['iconClass'] = 'icon-money22';
-		} else if(!$this->priceTo) {
-			$links = $this->searchOptionGenerator->generatePriceLinks($this->environment->getCurrency(), $this->getSearch());
-			$bottomLinks['linkArgument'] = FrontRoute::PRICE_TO;
-			$bottomLinks['title'] = 'o100094';
-			$bottomLinks['iconClass'] = 'icon-money22';
+		} else if(!$this->placement) {
+			$links = $this->searchOptionGenerator->generatePlacementLinks($this->getSearch());
+			$bottomLinks['linkArgument'] = FrontRoute::PLACEMENT;
+			$bottomLinks['title'] = 'o100113';
+			$bottomLinks['iconClass'] = 'icon-picture';
 		} else if(!$this->capacity) {
 			$links = $this->searchOptionGenerator->generateCapacityLinks($this->getSearch());
 			$bottomLinks['linkArgument'] = FrontRoute::CAPACITY;
@@ -192,6 +197,16 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 			$bottomLinks['linkArgument'] = FrontRoute::SPOKEN_LANGUAGE;
 			$bottomLinks['title'] = 'o20930';
 			$bottomLinks['iconClass'] = 'icon-globe';
+		} else if(!$this->priceFrom) {
+			$links = $this->searchOptionGenerator->generatePriceLinks($this->environment->getCurrency(), $this->getSearch());
+			$bottomLinks['linkArgument'] = FrontRoute::PRICE_FROM;
+			$bottomLinks['title'] = 'o100093';
+			$bottomLinks['iconClass'] = 'icon-money22';
+		} else if(!$this->priceTo) {
+			$links = $this->searchOptionGenerator->generatePriceLinks($this->environment->getCurrency(), $this->getSearch());
+			$bottomLinks['linkArgument'] = FrontRoute::PRICE_TO;
+			$bottomLinks['title'] = 'o100094';
+			$bottomLinks['iconClass'] = 'icon-money22';
 		} else {
 			return NULL;
 		}
@@ -293,7 +308,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 	 */
 	protected function createComponentSearchForm()
 	{
-		$form = $this->searchFormFactory->create($this->getSearchCriteria(), $this->presenter);
+		$form = $this->searchFormFactory->create($this->getSearchCriteria(), $this->getSearch(), $this->presenter);
 		//$form->buildForm();
 
 		$form->onSuccess[] = function ($form) {
