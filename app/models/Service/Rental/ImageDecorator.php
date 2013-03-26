@@ -22,7 +22,11 @@ class ImageDecorator extends Service\BaseService {
 	}
 
 	public function setContentFromFile($uri) {
-		$image = Image::fromFile($uri);
+		try {
+			$image = Image::fromFile($uri);	
+		} catch (Nette\UnknownImageFileException $e) {
+			return false;
+		}
 
 		$path = $this->storage->saveImage($image);
 

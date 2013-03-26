@@ -69,11 +69,12 @@ class ImportRentalImages extends BaseImport {
 			$imageEntity = $context->rentalImageRepositoryAccessor->get()->createNew(FALSE);
 			$image = $context->rentalImageDecoratorFactory->create($imageEntity);
 			$path = $image->setContentFromFile('http://www.tralandia.com/u/'.$x['oldPath']);
-			$model->persist($imageEntity);
 			if ($path) {
 				qNew('update __importImages set status = "imported", newPath = "'.$path.'" where id = '.$x['id']);
+				$model->persist($imageEntity);
 			} else {
 				qNew('update __importImages set status = "error" where id = '.$x['id']);
+				unset($imageEntity);
 			}
 		}
 		$model->flush();
@@ -86,39 +87,15 @@ class ImportRentalImages extends BaseImport {
 		$context = $this->context;
 		$model = $this->model;
 
-		if ($this->developmentMode == TRUE) {
-			$countryId = qc('select id from countries where iso = "'.$this->presenter->getParameter('countryIso').'"');
-			//d($this->presenter->getParameter('countryIso'), $countryId); exit;
-			$r = q('select * from objects where country_id = '.$countryId.' order by id limit 500');
-		} else {
-			$existingIds = array();
-			exit('dorobit liveImport do ImportRentals.php');
-		}
+		$r = qNew('select * from __importImages where status = "toRemove"');
 
 		while ($x = mysql_fetch_array($r)) {
-
-
-			// // Images
-			// $temp = array_unique(array_filter(explode(',', $x['photos'])));
-			// if (is_array($temp) && count($temp)) {
-			// 	if ($this->developmentMode == TRUE) $temp = array_slice($temp, 0, 6);
-			// 	foreach ($temp as $key => $value) {
-			// 		$image = $context->rentalImageRepositoryAccessor->get()->findOneByOldUrl('http://www.tralandia.com/u/'.$value);
-			// 		if (!$image) {
-			// 			$imageEntity = $context->rentalImageRepositoryAccessor->get()->createNew(FALSE);
-			// 			$image = $context->rentalImageDecoratorFactory->create($imageEntity);
-			// 			$image->setContentFromFile('http://www.tralandia.com/u/'.$value);
-			// 			$rental->addImage($imageEntity);
-			// 		} else {
-			// 			$rental->addImage($image);
-			// 		}
-			// 	}
-			// }
-
-			$model->persist($rental);
+			$image = $context->rentalImageRepositoryAccessor->get()->findOneByOldUrl('http://www.tralandia.com/u/'.$oldPath);
+			exit('Tu treba pridat tu remove fciu.');
 		}
 		$model->flush();
 		$this->saveVariables();
+		exit;
 	}
 
 }
