@@ -157,30 +157,35 @@ function generateRedirectUrl(){
 
 	path = path.join('/');
 
-
-	var p = {
-		priceFrom: $('#frm-searchBar-searchForm-priceFrom').val(),
-		priceTo: $('#frm-searchBar-searchForm-priceTo').val(),
-		capacity: $('#frm-searchBar-searchForm-capacity').val(),
-		spokenLanguage: $('#frm-searchBar-searchForm-spokenLanguage').val()
-	};
-
-	p = removeEmpty(p);
-
-	p = decodeURIComponent($.param(p));
+	var p = $('.searchForm').find("select[value][value!='']:not(.path)").serialize();
 
 	var url = path+(p != '' ? '?'+p : '');
 
 	return url;
-	// console.log(url);
+	// 
 }
+
+
+
+function extractDomainUrl(url){
+
+}
+
 
 function updateSerachLinkUrl(){
 
 		var url = '/'+generateRedirectUrl();
+
+	
+
+
 		if(url == '/' ){
-			url = '#';
+		
 		}
+
+			if('http://'+document.domain+'/'+generateRedirectUrl() == location.href) {
+				url = '#';
+			} 	
 
 		$('#searchControlLink').attr('href',url);
 		var link = $('#searchControlLink')[0].outerHTML;
@@ -225,7 +230,7 @@ $(function(){
 		dropdownCssClass: 'searchSelectOrder'
 	});
 
-	$('.searchForm .select2:not(#frm-searchBar-searchForm-location , #frm-searchBar-searchForm-country)').select2({
+	$('.searchForm .select2.disabledFulltext').select2({
 		dropdownCssClass: 'searchSelect',
 		allowClear: true,
 		minimumResultsForSearch: 'X',
@@ -234,7 +239,7 @@ $(function(){
 
 
 
-	$('.searchForm #frm-searchBar-searchForm-location,.searchForm #frm-searchBar-searchForm-country').select2({
+	$('.searchForm .select2:not(.disabledFulltext)').select2({
 		dropdownCssClass: 'searchSelect'
 	   // matcher: function(term, text, opt) {
 
