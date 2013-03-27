@@ -123,12 +123,15 @@
 
 function updateCriteriaCount(){
 
-	var url = generateRedirectUrl();
+	var url = generateRedirectUrl(true);
 
 		$.ajax({
-		  url: url+'&do=searchBar-getSearchCount',
+		  url: url,
 		}).done(function(d) {
-		  $('#getSearchCount').html(d.count);
+		  $('#getSearchCount').html(d.label);
+			  if(d.count == 0){
+			  	$('#searchControlLink').attr('href','#');
+			  }
 		});	
 }
 
@@ -143,11 +146,11 @@ function removeEmpty(o){
 	return r;
 }
 
-function generateRedirectUrl(){
+function generateRedirectUrl(count){
 
 	var path = [
-		$('#frm-searchBar-searchForm-location').val(),
-		$('#frm-searchBar-searchForm-rentalType').val()
+		$('select.sidebarLocation').val(),
+		$('select.sidebarRentalType').val()
 	];
 
 	// remove empty eements from array
@@ -159,7 +162,17 @@ function generateRedirectUrl(){
 
 	var p = $('.searchForm').find("select[value][value!='']:not(.path)").serialize();
 
+	console.log(p);
+
 	var url = path+(p != '' ? '?'+p : '');
+
+	if(count){
+		if(p.length == 0){
+			url+='?do=searchBar-getSearchCount'
+		} else {
+			url+='&do=searchBar-getSearchCount';
+		}
+	}
 
 	return url;
 	// 
@@ -174,18 +187,15 @@ function extractDomainUrl(url){
 
 function updateSerachLinkUrl(){
 
-		var url = '/'+generateRedirectUrl();
-
-	
-
+		var url = '/'+generateRedirectUrl(false);
 
 		if(url == '/' ){
 		
 		}
 
-			if('http://'+document.domain+'/'+generateRedirectUrl() == location.href) {
-				url = '#';
-			} 	
+		if('http://'+document.domain+'/'+generateRedirectUrl(false) == location.href) {
+			url = '#';
+		} 	
 
 		$('#searchControlLink').attr('href',url);
 		var link = $('#searchControlLink')[0].outerHTML;
@@ -220,10 +230,30 @@ function searchCriteriumSetInactive(select){
 	$(select).parent().removeClass('selected');		
 }
 
+function _updatePriceTo(){	
+	var priceFromValue = $('select.sidebarPriceFrom').val();
+
+	var priceToValue = $('select.sidebarPriceTo').val();
+
+	if(priceToValue > 0 ){
+		if(priceFromValue > priceToValue){
+			 $('select.sidebarPriceTo').select2('val','');
+		}
+	}
+
+	$('select.sidebarPriceTo option').each(function(k,v){
+		$(this).attr('disabled',false);
+		if($(this).val() <= priceFromValue){
+			$(this).attr('disabled',true);
+		}
+	});
+	
+}
+
 $(function(){
 
 	_searchSelect2();
-
+	_updatePriceTo();
 // $('#frm-searchBar-searchForm-rentalType').select2();
 
 	$('.searchForm').searchFormSuggest({
@@ -280,6 +310,13 @@ $(function(){
 		}
 
 	});
+
+
+	$('.searchForm .select2.sidebarPriceFrom').on('change',function(e){
+		_updatePriceTo();
+	});	
+
+	
 
 	$('.btnSearchClose').on('click',function(){
 		
