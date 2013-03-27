@@ -574,7 +574,7 @@
 		</td>
 		<td colspan="2">
 			<button type="submit" class="btn-orange" name="{$control->getHtmlName()}" id="{$control->getHtmlId()}">
-				<i class="icon"></i> {$control->caption}
+				<i class="icon"></i> {_$control->caption}
 			</button>
 		</td>
 	</tr>
@@ -590,7 +590,7 @@
 		<td></td>
 		<td colspan="2">
 			<button type="submit" class="btn-orange" name="{$control->getHtmlName()}" id="{$control->getHtmlId()}">
-				<i class="icon"></i> {$control->caption}
+				<i class="icon"></i> {_$control->caption}
 			</button>
 			<button type="button" class="btn-cancel" name="cancel">
 				<i class="icon-trash"></i> {_o100089}
@@ -607,7 +607,7 @@
 
 	{define #button}
 	<button type="button" n:class="$class ? 'btn ' .$class : btn" name="{$control->getHtmlName()}" id="{$control->getHtmlId()}">
-		<i n:ifset="$icon" class="{$icon}"></i> {$control->caption}
+		<i n:ifset="$icon" class="{$icon}"></i> {_$control->caption}
 	</button>
 	{/define #button}
 
