@@ -31,17 +31,17 @@
 	}
 
 	.rightArrow , .leftArrow {
-		width: 41px;
+		width: 40px;
 		height: 48px;
 		float: left;
 		color: #686868;
 		text-align: center;
 		line-height: 48px;
-		.basic-gradient(#fafafa,#e8e8e8);
+		.basic-gradient(#fefefe,#D9DFEB);
 		border-right: 1px solid #d5d5d5;
 		&:hover {
-		text-decoration:none;
-		background: #dddddd;
+			text-decoration:none;
+			.basic-gradient(#D9DFEB,#fefefe);
 		}
 	}
 
@@ -61,12 +61,12 @@
 	}
 
 	.nav > .active , .nav > .active:hover {
-		.basic-gradient(#e8e8e8,#fff);
+		background: #fff;
 		color: #526ea8;
 		cursor: default;
 		border: none;
 		border: 1px solid #526ea8;
-		border-bottom: 1px solid #DDD;
+		border-bottom: 1px solid #fefefe;
 	}
 
 	.nav > li  {
@@ -102,8 +102,6 @@
 				font-size: 20px;
 			}
 		}
-
-
 	}
 
 		li.pull-right {
@@ -166,15 +164,20 @@
 		li {
 			display: block;
 			height: 42px;
-			width: 69px;
+			width: 70px;
 			border: 1px solid #fff;
 			background-size: cover;
 			float: left;
-			margin: 2px 0 ;
+			margin: 2px 1px 2px 0;
 			overflow: hidden;
 			position: relative;
 			cursor: pointer;
 			.basic-border-radius(3px);
+
+			&.active {
+				border: 1px solid #f00;
+			}
+
 			a {
 				display: block;
 				height: 100%;
@@ -185,6 +188,12 @@
 
 				&:hover {
 					text-decoration:none;
+				}
+
+				&.link {
+					display: block;
+					left: 0;
+					right: 0;
 				}
 			}
 

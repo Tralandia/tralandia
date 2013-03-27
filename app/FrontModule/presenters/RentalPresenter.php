@@ -37,7 +37,7 @@ class RentalPresenter extends BasePresenter {
 		if (!$rental) {
 			throw new \Nette\InvalidArgumentException('$id argument does not match with the expected value');
 		}
-		
+
 		$rentalService = $this->rentalDecoratorFactory->create($rental);
 		$interviewAnswers = $rentalService->getInterviewAnswers($this->environment->primaryLocation->defaultLanguage);
 
@@ -54,7 +54,7 @@ class RentalPresenter extends BasePresenter {
 
 		$firstAnswer = $rental->getFirstInterviewAnswer();
 		if ($firstAnswer) {
-			$this->template->firstAnswer = \Nette\Utils\Strings::truncate($this->translate($firstAnswer->answer), 200);		
+			$this->template->firstAnswer = \Nette\Utils\Strings::truncate($this->translate($firstAnswer->answer), 200);
 		} else {
 			$this->template->firstAnswer = NULL;
 		}
@@ -67,10 +67,10 @@ class RentalPresenter extends BasePresenter {
 
 		$this->setLayout('detailLayout');
 
-		$this->template->navBar = $this->getNavigationBar($rental);
+		$this->template->lastSearchResults = $this->getLastSearchResults($rental);
 	}
 
-	protected function getNavigationBar($rental) {
+	protected function getLastSearchResults($rental) {
 		$lastSearch = $this->lastSearch;
 
 		if (!$lastSearch->exists()) {
@@ -79,42 +79,33 @@ class RentalPresenter extends BasePresenter {
 
 		$bar = array();
 		$bar['all'] = $lastSearch->getRentals();
-		if (count($bar['all']) < 2) return FALSE;
 		$bar['currentKey'] = array_search($rental->id, $bar['all']);
+
+		$start = $bar['currentKey']>5 ? ($bar['currentKey']-5) : 0;
+		$bar['all'] = array_slice($bar['all'], $start, (($start ? 7 : 12)+$bar['currentKey']));
 		if (!isset($bar['currentKey'])) return FALSE;
-		$bar['firstKey'] = $bar['currentKey'] < 9 ? 0 : $bar['currentKey'] - 8;
-		if ($bar['firstKey'] < 0) $bar['firstKey'] = 0;
 
-		$bar['placeholderCount'] = $bar['currentKey'] < 8 ? 8 - $bar['currentKey'] : 0;
-		
 		$barRentals = array();
-		for ($i = 0; $i < $bar['placeholderCount']; $i++) {
-			$barRentals[] = FALSE;
-		}
-		$i = $bar['firstKey'];
-		
-		while (count($barRentals) < 18) {
-			if (!isset($bar['all'][$i])) break;
-			$barRentals[] = $this->context->rentalRepositoryAccessor->get()->find($bar['all'][$i]);
-			$i++;
-		}
-		
-		$navBar = array();
-		$navBar['rentals'] = $barRentals;
-		$navBar['searchLink'] = $lastSearch->getUrl();
-		$navBar['heading'] = $lastSearch->getHeading();
-		$navBar['currentIndex'] = $bar['currentKey']+1;
-		$navBar['totalCount'] = count($bar['all']);
-
-		if (isset($bar['all'][$bar['currentKey']-1])) {
-			$navBar['prevRental'] = $this->context->rentalRepositoryAccessor->get()->find($bar['all'][$bar['currentKey']-1]);
+		foreach($bar['all'] as $rental) {
+			$barRentals[] = $this->context->rentalRepositoryAccessor->get()->find($rental);
 		}
 
-		if (isset($bar['all'][$bar['currentKey']+1])) {
-			$navBar['nextRental'] = $this->context->rentalRepositoryAccessor->get()->find($bar['all'][$bar['currentKey']+1]);
+		$lastSearchResults = array();
+		$lastSearchResults['rentals'] = $barRentals;
+		$lastSearchResults['currentKey'] = $bar['currentKey']-$start;
+		$lastSearchResults['searchLink'] = $lastSearch->getUrl();
+		$lastSearchResults['heading'] = $lastSearch->getHeading();
+		$lastSearchResults['totalCount'] = count($bar['all']);
+
+		if (isset($bar['all'][$lastSearchResults['currentKey']-1])) {
+			$lastSearchResults['prevRental'] = $this->context->rentalRepositoryAccessor->get()->find($bar['all'][$lastSearchResults['currentKey']-1]);
 		}
 
-		return $navBar;
+		if (isset($bar['all'][$lastSearchResults['currentKey']+1])) {
+			$lastSearchResults['nextRental'] = $this->context->rentalRepositoryAccessor->get()->find($bar['all'][$lastSearchResults['currentKey']+1]);
+		}
+
+		return $lastSearchResults;
 	}
 
 	//
@@ -126,13 +117,13 @@ class RentalPresenter extends BasePresenter {
 		$form = $this->reservationFormFactory->create($this->getParameter('rental'));
 		//$form->buildForm();
 
-		$form->onSuccess[] = function ($form) { 
+		$form->onSuccess[] = function ($form) {
 
 			$form->presenter->redirect('this');
 			//$form->presenter->invalidateControl('reservationForm');
 			//$form->presenter->sendPayload();
 		};
-	
+
 		return $form;
 	}
 
