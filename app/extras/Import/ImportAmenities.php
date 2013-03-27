@@ -239,8 +239,7 @@ class ImportAmenities extends BaseImport {
 			$name->createTranslation($en, $value[0]);
 			$name->createTranslation($sk, $value[1]);
 
-			$placement = $this->context->rentalPlacementEntityFactory->create();
-			$placement->type = $amenityType;
+			$placement = $this->context->rentalPlacementRepositoryAccessor->get()->createNew(False);
 			$placement->name = $name;
 			$placement->slug = $value[2];
 			$this->model->persist($placement);
