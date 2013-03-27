@@ -1,16 +1,10 @@
-{* 
+{*
 	$rental        Entity\Rental\Rental
 	$rentalService Service\Rental\RentalService
 	$locality      Service\Seo\SeoService
  *}
 
 {block content}
-
-{if $navBar !== FALSE}
-{include detailNavigation.latte}
-{/if}
-
-
 
 
 <div class="span12">
@@ -69,7 +63,7 @@
 				<td class="entypoIconUsers">
 					&#128101;
 				</td>
-				<td>					
+				<td>
 					{_o100005} {$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}
 					<span>{if $rental->bedroomCount}{$rental->bedroomCount} {_o100009}, {/if}
 					{$rental->rooms}</span>
@@ -92,11 +86,11 @@
 				<ul>
 
 					{foreach $rental->pricelistRows as $pricelistRow}
-					<li tooltip="true" title="{_o100040} {_$pricelistRow->roomType->name, null , [count => 1]}">	
+					<li tooltip="true" title="{_o100040} {_$pricelistRow->roomType->name, null , [count => 1]}">
 					{$pricelistRow->roomCount} {_$pricelistRow->roomType->name, null , [count => $pricelistRow->roomCount]}
 						<span>
 							{$pricelistRow->bedCount} {_o100006 , null , [count => $pricelistRow->bedCount]}
-							{if $pricelistRow->extraBedCount}{$pricelistRow->extraBedCount} {_o100000 , null , [count => $pricelistRow->extraBedCount]}{/if}							
+							{if $pricelistRow->extraBedCount}{$pricelistRow->extraBedCount} {_o100000 , null , [count => $pricelistRow->extraBedCount]}{/if}
 						</span>
 
 						<span class="price">
@@ -104,20 +98,20 @@
 						</span>
 					</li>
 					{/foreach}
-					
-				
+
+
 					{if count($rental->pricelists) > 0}
 					{var $pricesAvailable = true}
 						{foreach $rental->pricelists as $pricelist}
-						<li>							
+						<li>
 							{if $pricelist->name} {$pricelist->name} {/if} {_$pricelist->language->name} <i class="entypo-save"></i> <a href="{$pricelist->filePath}" class="btn btn-green btn-text-wrap btn-pricelist">{_o955}</a>
 						</li>
 						{/foreach}
-					{/if}					
+					{/if}
 
 				</ul>
 
-				
+
 			</li>
 		</ul>
 	{/if}
@@ -126,11 +120,11 @@
 		{if $rental->pricesUponRequest}
 			#len na dotaz
 			{else}
-			#Übytovatel neuvadza detailne ceny. Orientacna cena ubytovania je {$rental->price} Eur / osoba / noc"	
-		{/if}								
-	{/if}					
+			#Übytovatel neuvadza detailne ceny. Orientacna cena ubytovania je {$rental->price} Eur / osoba / noc"
+		{/if}
+	{/if}
 
-	<div class="clearfix"></div>	
+	<div class="clearfix"></div>
 
 		<div class="detailAmanities">
 			<ul class="objectDetailServicesIconList list">
@@ -140,13 +134,13 @@
 				   <li class="board">
 				   <strong>{_o1010}</strong>
 					   <div class="content">
-						{foreach $board  as $amenities}					
+						{foreach $board  as $amenities}
 							{foreach $amenities as $amenity}
 								{if $iterator->first}{_$amenity->name|firstUpper}{else}{_$amenity->name}{/if}{if !$iterator->last}, {/if}
-							{/foreach}					
+							{/foreach}
 						{/foreach}
 					</div>
-				   </li>			   
+				   </li>
 			   {/if}
 
 
@@ -154,37 +148,37 @@
 					{var $importantAmenities = $rental->getImportantAmenities(true)}
 				   <li class="monitor">
 				   <strong>{_o100013}</strong>
-					   <div class="amenitiesStart">					   
-						{foreach $importantAmenities  as $amenities}					
-							{foreach $amenities as $amenity}							
+					   <div class="amenitiesStart">
+						{foreach $importantAmenities  as $amenities}
+							{foreach $amenities as $amenity}
 								{if $iterator->first}{_$amenity->name|firstUpper}{else}{_$amenity->name}{/if}{if !$iterator->last}, {/if}
 							{/foreach}
 						{/foreach}
 
 						{var $otherAmenities = $rental->getImportantAmenities(false)}
 						{if $otherAmenities}
-						
+
 						<a class="toogle showMoreAmenities" data-opentext="{_o100001}" data-closetext="{_o100014}" for="moreAmenities" href="#"><b>{_o100001}</b></a>
 						</div>
 						<div id="moreAmenities">
 						<ul class="moreAmenities">
-							{foreach $otherAmenities  as $amenities}		
-							<li>			
+							{foreach $otherAmenities  as $amenities}
+							<li>
 								{foreach $amenities as $amenity}
-									
-										{if $iterator->first}				
-											<b>{_$amenity->type->name|firstUpper}: </b>				
-										{/if}							
+
+										{if $iterator->first}
+											<b>{_$amenity->type->name|firstUpper}: </b>
+										{/if}
 										{_$amenity->name}{if !$iterator->last}, {/if}
-									
+
 								{/foreach}
-								</li>				
+								</li>
 							{/foreach}
 						</ul>
 						</div>
-					   {/if}	
+					   {/if}
 
-				   </li>			   
+				   </li>
 			   {/if}
 
 		   		<div class="clearfix"></div>
@@ -193,7 +187,7 @@
 				<li class="bell">
 					<strong>{_$ownerAvailability->name}</strong>
 				</li>
-				{/if}		   
+				{/if}
 
 				{if $rental->checkIn}
 				   <li class="clock">
@@ -208,7 +202,7 @@
 			   		<strong>{_o1588} {$rental->checkOut}:00</strong>
 				   </li>
 				{/if}
-				
+
 		   		<div class="clearfix"></div>
 
 			   <li class="dog">
@@ -230,11 +224,11 @@
 			<button class="marginTop btn btn-compare addToFavorites currentObject" rel="{$rental->id}" link="{link Rental:detail $rental}" data-title="{_$rental->name}" thumb="http://www.tralandia.com/u/32/13539183882248.jpg"><span class="entypo-heart">{_o12334}</span></button>
 
 		{/if}
-	
+
 		<div class="socialIconTable marginBottom marginTop socialIconsDetail socialPluginsInit">
 			<div class="socialBtnHeader">
 
-				<strong class="facebook">&#62220;</strong> <strong class="gplus">&#62223;</strong> <strong class="twitter">&#62217;</strong> <strong class="pinterest">&#62226;</strong> 
+				<strong class="facebook">&#62220;</strong> <strong class="gplus">&#62223;</strong> <strong class="twitter">&#62217;</strong> <strong class="pinterest">&#62226;</strong>
 			</div>
 			<div class="clearfix"></div>
 			<div class="socialBtnContent hide">
@@ -244,9 +238,9 @@
 
 				<span class="facebookLikeButtonContainer" data-facebook-src="{link Rental:detail $rental}"></span>
 
-				
+
 				<g:plusone size="medium" href="{link Rental:detail $rental}"  style="margin-top:2px;"></g:plusone>
-				
+
 				<a href="https://twitter.com/share" class="twitter-share-button" data-url="{link Rental:detail $rental}" data-via="Tralandia" data-text="{_$rental->name}" data-hashtags="{_o100034}" data-lang="{$currentLanguage->iso}">Tweet</a>
 
 				<a href="http://pinterest.com/pin/create/button/?url={link Rental:detail $rental}&media=&description={_$rental->name}" class="pin-it-button" count-layout="horizontal"></a>
@@ -262,13 +256,13 @@
 					{if $rental->contactName}
 					<tr>
 						<td class="iconcover"><i class="entypo-contact"></i></td>
-						<td>	
+						<td>
 						<strong>{$rental->contactName}</strong>
 						</td>
 					</tr>
 					{/if}
 
-				
+
 					{if $rental->phone->international}
 					<tr>
 						<td class="iconcover"><i class="entypo-phone"></i></td>
@@ -281,19 +275,19 @@
 					{/if}
 
 					{if $rental->address->status == \Entity\Contact\Address::STATUS_OK}
-					<tr>						
+					<tr>
 						<td class="iconcover"><i class="entypo-adress"></i></td>
 						<td>
-						<strong>{_o2431} </strong><br/> 
-						
-						
-							{$rental->address->address} 
+						<strong>{_o2431} </strong><br/>
+
+
+							{$rental->address->address}
 							{if $rental->address->subLocality}
 							({$rental->address->subLocality} )
 							{/if}
-							<br/> {$rental->address->postalCode} {_$rental->address->locality->name} 
+							<br/> {$rental->address->postalCode} {_$rental->address->locality->name}
 						</td>
-					</tr>	
+					</tr>
 					{/if}
 
  					{if $rental->url->value}
@@ -306,15 +300,15 @@
 					{/if}
 
 					{if count($rental->spokenLanguages) > 0}
-					<tr>						
+					<tr>
 						<td class="iconcover"><i class="icon-globe"></i></td>
 						<td>
-						<strong>{_o100015}</strong><br/> 
+						<strong>{_o100015}</strong><br/>
 						{foreach $rental->spokenLanguages as $language}
 							{_$language->name}{if !$iterator->last}, {/if}
 						{/foreach}
 						</td>
-					</tr>	
+					</tr>
 					{/if}
 
 				</table>
@@ -323,10 +317,10 @@
 			{/snippet}
 
 			</div>
-		</div>		
+		</div>
 
 
-		
+
 
 	</div>
 	<!-- right sidebar -->
@@ -337,8 +331,8 @@
 
 
 				<div class="metaObjectInfo" id="gallery">
-				
-					<ul class="biggall">	
+
+					<ul class="biggall">
 						{foreach $rental->getImages() as $photo}
 							<li><img alt="{_$rental->name} - {_o100008} {$iterator->getCounter()}" src="{$basePath}{$photo|rentalImageSrc}" /></li>
 						{/foreach}
@@ -414,7 +408,7 @@
 							</li>
 					</ul>
 					<div class="clearfix"></div>
-				</div>				
+				</div>
 
 				<div class="metaObjectInfo" id="pricetable">
 
@@ -430,7 +424,7 @@
 								<h4>{_$interviewAnswer->question->question|firstUpper}</h4>
 								<p>{_$interviewAnswer->answer|firstUpper}</p>
 							</li>
-						{/if}			
+						{/if}
 					{/foreach}
 				</ul>
 				<div class="clearfix"></div>
@@ -464,7 +458,7 @@
 		<div class="moreOption">
 			<span> {_o100037} #{$rental->id} </span> <span class="separator">&nbsp;|&nbsp;</span>
 			<span> {_o100038} {$dateUpdated|dateTime} </span> <span class="separator">&nbsp;|&nbsp;</span>
-{* 			<a href="#">Report a problem</a> <span class="separator">&nbsp;|&nbsp;</span> 
+{* 			<a href="#">Report a problem</a> <span class="separator">&nbsp;|&nbsp;</span>
  *}			<a href="{link :Owner:Rental:edit $rental->id}">Are you the owner? Edit your rental</a>
 		</div>
 	</div>

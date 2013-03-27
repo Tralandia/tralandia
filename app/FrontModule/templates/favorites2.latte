@@ -1,25 +1,23 @@
 <div n:class="$favoriteRentals ? 'span12' : 'span12 hide' " data-favoritesLink="{link generateFavoriteLink}" id="favoritesStaticContainer">
 	<div class="favorites2">
 		<ul class="nav" id="favoritesTabs">
-			<li class="active" for="favoritesNavFavorites"><i class="icon-heart"></i> Favorites</li>
+			<li for="favoritesNavFavorites"><i class="icon-heart"></i> Favorites</li>
 			<li for="favoritesNavLastSeen"><i class="icon-eye-open"></i> last seen </li>
-			<li for="favoritesNavSerchResults"><i class="icon-search"></i> Search results</li>
-
+			{ifset $lastSearchResults}
+			<li class="active" for="favoritesNavSerchResults"><i class="icon-search"></i> {$lastSearchResults['heading']}</li>
+			{/ifset}
 
 			<li class="share pull-right hide favoritesNavFavorites"><a href="/">Share Favorites</a></li>
-			<li class="share pull-right hide favoritesNavLastSeen"><a href="/">Share last seen</a></li>
 			<li class="share pull-right favoritesNavSerchResults"><a href="/">Share Search results</a></li>
 
-			<li class="pull-right"><a href="/">Iny link</a></li>
-			<li class="pull-right"><a href="/">Iny link</a>	</li>
 		</ul>
-		
+
 		<div class="cover" id="compareList">
 			<a href="#" class="leftArrow entypo-prev" id="favorites-left-button"></a>
 			<div class="tab-content" id="favoritesTabContent">
 
-
-				<div class="tab-pane active" id="favoritesNavFavorites">
+				{* Favorites *}
+				<div class="tab-pane" id="favoritesNavFavorites">
 					<div class="content jscrollPane">
 						<ul id="scrollInnerContent">
 							<li class="template" rel="~id~" >
@@ -42,9 +40,35 @@
 					</div>
 				</div>
 
-
+				{* Last seen objects *}
 				<div class="tab-pane" id="favoritesNavLastSeen">rthryjty</div>
-				<div class="tab-pane" id="favoritesNavSerchResults">tynhfgb</div>
+
+				{* Last search results *}
+				{ifset $lastSearchResults}
+				<div class="tab-pane active" id="favoritesNavSerchResults">
+					<div class="content jscrollPane">
+						<ul id="scrollInnerContent">
+							<li class="template" rel="~id~" >
+								<a href="#" class="removeLink"></a>
+								<a href="~url~" title="~title~" class="link">
+									<div class="checked entypo-eye"></div>
+								</a>
+							</li>
+							{foreach $lastSearchResults['rentals'] as $rental}
+								{var $image = $rental->getMainImage()}
+								{var $seen = in_array($rental->getId(), $favoriteVisitedRentals)}
+								{var $isCurrent = ($iterator->counter-1)==$lastSearchResults['currentKey']}
+								<li rel="{$rental->getId()}" style="background-image: url({fakeImage});" class="{if $isCurrent}active{/if}">
+									<a href="#" class="removeLink"></a>
+									<a n:href="Rental:detail $rental" class="link">
+										<div n:if="$seen" class="checked entypo-eye"></div>
+									</a>
+								</li>
+							{/foreach}
+						</ul>
+					</div>
+				</div>
+				{/ifset}
 			</div>
 			<a href="#" class="rightArrow entypo-slider-right" id="favorites-right-button"></a>
 		</div>
