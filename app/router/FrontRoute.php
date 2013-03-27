@@ -141,7 +141,13 @@ class FrontRoute extends BaseRoute
 				$segmentList = array();
 			}
 
-			if(isset($params[self::CAPACITY]) || isset($params[self::PRICE_FROM]) || isset($params[self::PRICE_TO])) {
+			if(isset($params[self::CAPACITY])
+				|| isset($params[self::SPOKEN_LANGUAGE])
+				|| isset($params[self::BOARD])
+				|| isset($params[self::PLACEMENT])
+				|| isset($params[self::PRICE_FROM])
+				|| isset($params[self::PRICE_TO]))
+			{
 				$presenter = 'RentalList';
 				$params['action'] = 'default';
 			}
