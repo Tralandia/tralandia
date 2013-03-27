@@ -146,8 +146,8 @@ function removeEmpty(o){
 function generateRedirectUrl(){
 
 	var path = [
-		$('#frm-searchBar-searchForm-location').val(),
-		$('#frm-searchBar-searchForm-rentalType').val()
+		$('select.sidebarLocation').val(),
+		$('select.sidebarRentalType').val()
 	];
 
 	// remove empty eements from array
@@ -220,10 +220,30 @@ function searchCriteriumSetInactive(select){
 	$(select).parent().removeClass('selected');		
 }
 
+function _updatePriceTo(){	
+	var priceFromValue = $('select.sidebarPriceFrom').val();
+
+	var priceToValue = $('select.sidebarPriceTo').val();
+
+	if(priceToValue > 0 ){
+		if(priceFromValue > priceToValue){
+			 $('select.sidebarPriceTo').select2('val','');
+		}
+	}
+
+	$('select.sidebarPriceTo option').each(function(k,v){
+		$(this).attr('disabled',false);
+		if($(this).val() <= priceFromValue){
+			$(this).attr('disabled',true);
+		}
+	});
+	
+}
+
 $(function(){
 
 	_searchSelect2();
-
+	_updatePriceTo();
 // $('#frm-searchBar-searchForm-rentalType').select2();
 
 	$('.searchForm').searchFormSuggest({
@@ -280,6 +300,13 @@ $(function(){
 		}
 
 	});
+
+
+	$('.searchForm .select2.sidebarPriceFrom').on('change',function(e){
+		_updatePriceTo();
+	});	
+
+	
 
 	$('.btnSearchClose').on('click',function(){
 		
