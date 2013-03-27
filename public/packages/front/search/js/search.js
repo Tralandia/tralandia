@@ -123,10 +123,10 @@
 
 function updateCriteriaCount(){
 
-	var url = generateRedirectUrl();
+	var url = generateRedirectUrl(true);
 
 		$.ajax({
-		  url: url+'&do=searchBar-getSearchCount',
+		  url: url,
 		}).done(function(d) {
 		  $('#getSearchCount').html(d.count);
 		});	
@@ -143,7 +143,7 @@ function removeEmpty(o){
 	return r;
 }
 
-function generateRedirectUrl(){
+function generateRedirectUrl(count){
 
 	var path = [
 		$('select.sidebarLocation').val(),
@@ -159,7 +159,17 @@ function generateRedirectUrl(){
 
 	var p = $('.searchForm').find("select[value][value!='']:not(.path)").serialize();
 
+	console.log(p);
+
 	var url = path+(p != '' ? '?'+p : '');
+
+	if(count = true){
+		if(p.length == 0){
+			url+='?do=searchBar-getSearchCount'
+		} else {
+			url+='&do=searchBar-getSearchCount';
+		}
+	}
 
 	return url;
 	// 
@@ -176,16 +186,13 @@ function updateSerachLinkUrl(){
 
 		var url = '/'+generateRedirectUrl();
 
-	
-
-
 		if(url == '/' ){
 		
 		}
 
-			if('http://'+document.domain+'/'+generateRedirectUrl() == location.href) {
-				url = '#';
-			} 	
+		if('http://'+document.domain+'/'+generateRedirectUrl() == location.href) {
+			url = '#';
+		} 	
 
 		$('#searchControlLink').attr('href',url);
 		var link = $('#searchControlLink')[0].outerHTML;
