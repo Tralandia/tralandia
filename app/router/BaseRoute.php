@@ -7,7 +7,7 @@ use Nette\Application\Routers\Route;
 use Repository\LanguageRepository;
 use Repository\Location\LocationRepository;
 
-abstract class BaseRoute extends Nette\Object implements Nette\Application\IRouter
+class BaseRoute extends Nette\Object implements Nette\Application\IRouter
 {
 
 	const LANGUAGE = 'language';
@@ -44,7 +44,7 @@ abstract class BaseRoute extends Nette\Object implements Nette\Application\IRout
 	 * @param \Repository\Location\LocationRepository $locationRepository
 	 */
 	public function __construct($mask, $metadata, LanguageRepository $languageRepository,
-LocationRepository $locationRepository)
+								LocationRepository $locationRepository)
 	{
 		$this->languageRepository = $languageRepository;
 		$this->locationRepository = $locationRepository;
@@ -59,7 +59,54 @@ LocationRepository $locationRepository)
 
 	}
 
+
 	/**
+	 * @param Nette\Http\IRequest $httpRequest
+	 *
+	 * @return Nette\Application\Request|NULL
+	 */
+	public function match(Nette\Http\IRequest $httpRequest)
+	{
+
+		$appRequest = $this->route->match($httpRequest);
+
+		if ($appRequest) {
+			$params = $appRequest->getParameters();
+			$params = $this->filterIn($params);
+			//$appRequest->setPresenterName($presenter);
+			$appRequest->setParameters($params);
+
+			return $appRequest;
+		}
+
+		return NULL;
+	}
+
+
+	/**
+	 * @param Nette\Application\Request $appRequest
+	 * @param Nette\Http\Url $refUrl
+	 *
+	 * @return NULL|string
+	 */
+	public function constructUrl(Nette\Application\Request $appRequest, Nette\Http\Url $refUrl)
+	{
+		$appRequest = clone $appRequest;
+		$params = $appRequest->getParameters();
+		$params = $this->filterOut($params);
+		$appRequest->setParameters($params);
+
+		$url = $this->route->constructUrl($appRequest, $refUrl);
+
+		if($url) {
+			return $url;
+		}
+
+		return NULL;
+	}
+
+
+		/**
 	 * @param array $params
 	 *
 	 * @return array
@@ -95,4 +142,15 @@ LocationRepository $locationRepository)
 		return $params;
 	}
 
+}
+
+interface IBaseRouteFactory {
+
+	/**
+	 * @param $mask
+	 * @param $metadata
+	 *
+	 * @return BaseRoute
+	 */
+	public function create($mask, $metadata);
 }
