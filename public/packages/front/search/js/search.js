@@ -128,7 +128,10 @@ function updateCriteriaCount(){
 		$.ajax({
 		  url: url,
 		}).done(function(d) {
-		  $('#getSearchCount').html(d.count);
+		  $('#getSearchCount').html(d.label);
+			  if(d.count == 0){
+			  	$('#searchControlLink').attr('href','#');
+			  }
 		});	
 }
 
