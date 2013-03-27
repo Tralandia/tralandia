@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Extras\Annotation as EA;
 use Nette\DateTime;
 use Nette\Utils\Arrays;
+use Nette\Utils\Strings;
 
 /**
  * @ORM\Entity(repositoryClass="Repository\Rental\RentalRepository")
@@ -383,7 +384,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 */
 	public function setSlug($slug)
 	{
-		$this->slug = \Nette\Utils\Strings::webalize($slug);
+		$this->slug = Strings::webalize(Strings::truncate($slug, 40, ''));
 
 		return $this;
 	}
@@ -789,7 +790,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @param \Entity\Rental\Placement
 	 * @return \Entity\Rental\Rental
@@ -801,7 +802,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Rental\Placement[]
 	 */
@@ -809,7 +810,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	{
 		return $this->placements;
 	}
-		
+
 	/**
 	 * @return \Entity\Rental\Rental
 	 */
