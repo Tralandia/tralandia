@@ -246,9 +246,9 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 
 		$count = $search->getRentalsCount();
 
-		$count = $count . ' ' . $this->getPresenter()->translate('o100002', $count);
+		$label = $count . ' ' . $this->getPresenter()->translate('o100002', $count);
 
-		$this->presenter->sendJson(['count' => $count]);
+		$this->presenter->sendJson(['count' => $count, 'label' => $label]);
 	}
 
 	/**

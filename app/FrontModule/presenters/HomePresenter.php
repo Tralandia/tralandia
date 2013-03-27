@@ -24,7 +24,7 @@ class HomePresenter extends BasePresenter {
 
 		$rentals = array();
 		foreach ($featuredIds as $rental) {
-			$rentals[$rental->id]['service'] = $this->rentalDecoratorFactory->create($rental);			
+			$rentals[$rental->id]['service'] = $this->rentalDecoratorFactory->create($rental);
 			$rentals[$rental->id]['entity'] = $rental;
 		}
 
