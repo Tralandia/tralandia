@@ -80,7 +80,9 @@ class RentalSearchCaching extends \Nette\Object {
 		if ($rental->maxCapacity) {
 			$t = $rental->maxCapacity >= RentalSearchService::CAPACITY_MAX ? RentalSearchService::CAPACITY_MAX : $rental->maxCapacity;
 
-			$this->cacheContent[RentalSearchService::CRITERIA_CAPACITY][$t][$rental->id] = $rental->id;
+			for($i = 1; $i <= $t; $i++) {
+				$this->cacheContent[RentalSearchService::CRITERIA_CAPACITY][$i][$rental->id] = $rental->id;
+			}
 		}
 
 		// Set Languages Spoken

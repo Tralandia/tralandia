@@ -249,11 +249,11 @@ class FrontRoute extends BaseRoute
 		}
 
 		if(isset($params[self::BOARD])) {
-			$params[self::BOARD] = $this->rentalAmenityRepositoryAccessor->find($params[self::BOARD]);
+			$params[self::BOARD] = $this->rentalAmenityRepositoryAccessor->get()->find($params[self::BOARD]);
 		}
 
 		if(isset($params[self::PLACEMENT])) {
-			$params[self::PLACEMENT] = $this->rentalPlacementRepositoryAccessor->find($params[self::PLACEMENT]);
+			$params[self::PLACEMENT] = $this->rentalPlacementRepositoryAccessor->get()->find($params[self::PLACEMENT]);
 		}
 
 		return $params;
