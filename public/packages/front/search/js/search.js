@@ -163,7 +163,7 @@ function generateRedirectUrl(count){
 
 	var url = path+(p != '' ? '?'+p : '');
 
-	if(count = true){
+	if(count){
 		if(p.length == 0){
 			url+='?do=searchBar-getSearchCount'
 		} else {
@@ -184,13 +184,13 @@ function extractDomainUrl(url){
 
 function updateSerachLinkUrl(){
 
-		var url = '/'+generateRedirectUrl();
+		var url = '/'+generateRedirectUrl(false);
 
 		if(url == '/' ){
 		
 		}
 
-		if('http://'+document.domain+'/'+generateRedirectUrl() == location.href) {
+		if('http://'+document.domain+'/'+generateRedirectUrl(false) == location.href) {
 			url = '#';
 		} 	
 
