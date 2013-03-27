@@ -47,9 +47,6 @@ if (isset($_SERVER['REDIRECT_URL']) && ($_SERVER['REDIRECT_URL'] == '/import' ||
 if ($section) {
 	$configurator->addConfig(APP_DIR . '/configs/'.$section.'.config.neon', FALSE);
 }
-$configurator->onCompile[] = function ($configurator, $compiler) {
-	$compiler->addExtension('events', new Kdyby\Events\DI\EventsExtension);
-};
 $dic = $container = $configurator->createContainer();
 // Debugger::$editor = $container->parameters['editor'];
 

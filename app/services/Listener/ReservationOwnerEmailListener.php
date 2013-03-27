@@ -4,7 +4,7 @@ namespace Listener;
 use Entity\User\RentalReservation;
 use Nette;
 
-class ReservationOwnerEmailListener extends BaseEmailListener implements \Kdyby\Events\Subscriber
+class ReservationOwnerEmailListener extends BaseEmailListener
 {
 
 	public function getSubscribedEvents()

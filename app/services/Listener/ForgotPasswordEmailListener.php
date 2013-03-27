@@ -4,7 +4,7 @@ namespace Listener;
 use Environment\Environment;
 use Nette;
 
-class ForgotPasswordEmailListener extends BaseEmailListener implements \Kdyby\Events\Subscriber
+class ForgotPasswordEmailListener extends BaseEmailListener
 {
 
 	public function getSubscribedEvents()
