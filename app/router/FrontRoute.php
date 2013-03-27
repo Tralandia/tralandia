@@ -99,19 +99,19 @@ class FrontRoute extends BaseRoute
 
 			if(count($pathSegments) == 1) {
 				$pathSegment = reset($pathSegments);
-				if($match = Strings::match($pathSegment, '~\.*-([0-9]+)~')) {
+				if($match = Strings::match($pathSegment, '~\.*-([0-9]+)$~')) {
 					if($rental = $this->rentalRepositoryAccessor->get()->findOneByOldId($match[1])) {
 						$params[self::RENTAL] = $rental;
 						$presenter = 'Rental';
 						$params['action'] = 'detail';
 					}
-				} else if ($match = Strings::match($pathSegment, '~\.*-r([0-9]+)~')) {
+				} else if ($match = Strings::match($pathSegment, '~\.*-r([0-9]+)$~')) {
 					if($rental = $this->rentalRepositoryAccessor->get()->find($match[1])) {
 						$params[self::RENTAL] = $rental;
 						$presenter = 'Rental';
 						$params['action'] = 'detail';
 					}
-				} else if ($match = Strings::match($pathSegment, '~f([0-9]+)~')) {
+				} else if ($match = Strings::match($pathSegment, '~f([0-9]+)$~')) {
 					if($favoriteList = $this->favoriteListRepositoryAccessor->get()->find($match[1])) {
 						$params[self::FAVORITE_LIST] = $favoriteList;
 						$presenter = 'RentalList';
@@ -270,7 +270,7 @@ class FrontRoute extends BaseRoute
 		$segments = [];
 
 		if(isset($params[self::RENTAL])) {
-			$segments[self::RENTAL] = $params[self::RENTAL]->slug . '-r' . $params[self::RENTAL]->id;
+			$segments[self::RENTAL] = $params[self::RENTAL]->getSlug() . '-r' . $params[self::RENTAL]->id;
 			unset($params[self::RENTAL]);
 		}
 
