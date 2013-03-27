@@ -9,21 +9,52 @@ use Service, Doctrine, Entity;
  */
 class PolygonService {
 
-	protected $locationRepositoryAccessor;
-	protected $locationTypeRepositoryAccessor;
-	protected $rentalRepositoryAccessor;
+	/**
+	 * @var \Repository\Location\LocationRepository
+	 */
+	protected $locationRepository;
 
-	public function injectBaseRepositories(\Nette\DI\Container $dic) {
-		$this->rentalRepositoryAccessor = $dic->rentalRepositoryAccessor;
-		$this->locationRepositoryAccessor = $dic->locationRepositoryAccessor;
-		$this->locationTypeRepositoryAccessor = $dic->locationTypeRepositoryAccessor;
+	/**
+	 * @var \Repository\Location\TypeRepository
+	 */
+	protected $locationTypeRepository;
+
+	/**
+	 * @var \Repository\Rental\RentalRepository
+	 */
+	protected $rentalRepository;
+
+
+	/**
+	 * @param Doctrine\ORM\EntityManager $em
+	 */
+	public function __construct(Doctrine\ORM\EntityManager $em)
+	{
+		$this->rentalRepository = $em->getRepository(RENTAL_ENTITY);
+		$this->locationRepository = $em->getRepository(LOCATION_ENTITY);
+		$this->locationTypeRepository = $em->getRepository(LOCATION_TYPE_ENTITY);
 	}
-	
+
+
+	/**
+	 * @param null $entity
+	 */
+	public function update($entity = NULL)
+	{
+		$this->rentalRepository->update($entity);
+	}
+
+
+	/**
+	 * @param Entity\Rental\Rental $rental
+	 *
+	 * @return bool
+	 */
 	public function setLocationsForRental(\Entity\Rental\Rental $rental){
 		$matches = array();
-		$locationType = $this->locationTypeRepositoryAccessor->get()->findOneBy(array('slug' => 'region'));
-		
-		$locations = $this->locationRepositoryAccessor->get()->findBy(array(
+		$locationType = $this->locationTypeRepository->findOneBy(array('slug' => 'region'));
+
+		$locations = $this->locationRepository->findBy(array(
 			'parent' => $rental->primaryLocation,
 			'type' => $locationType,
 		));
@@ -36,7 +67,7 @@ class PolygonService {
 			return FALSE;
 		}
 
-		foreach ($locations as $location) {			
+		foreach ($locations as $location) {
 			foreach ($location->polygons as $key2 => $val2) {
 				if(count($val2) == 4){
 					if($val2[0] <= $latitude && $val2[2] >= $latitude && $val2[1]<=$longitude && $val2[3] >= $longitude){
@@ -59,12 +90,17 @@ class PolygonService {
 		return TRUE;
 	}
 
-	//david - ako zabezpecit, ze sem moze prist len "region", nie hociaky location?
-	function setRentalsForLocation(\Entity\Location\Location $location){
 
-		$locationType = $this->locationTypeRepositoryAccessor->get()->findOneBy(array('slug' => 'region'));
+	/**
+	 * @param Entity\Location\Location $location
+	 *
+	 * @return bool
+	 */
+	public function setRentalsForLocation(\Entity\Location\Location $location){
 
-		$rentals = $this->rentalRepositoryAccessor->get()->findByPrimaryLocation(
+		$locationType = $this->locationTypeRepository->findOneBy(array('slug' => 'region'));
+
+		$rentals = $this->rentalRepository->findByPrimaryLocation(
 			$location->getPrimaryParent(),
 			\Entity\Rental\Rental::STATUS_LIVE
 		);

@@ -13,6 +13,9 @@ define('INCLUDE_DIR', TESTS_DIR . '/include');
 define('CENTRAL_LANGUAGE', 38);
 define('VENDOR_DIR', ROOT_DIR . '/vendor');
 
+require APP_DIR . '/entityConstants.php';
+
+
 $_SERVER['HTTP_HOST'] = 'localhost';
 
 // Load Nette Framework
@@ -36,12 +39,10 @@ Extension::register($configurator);
 Extras\Config\PresenterExtension::register($configurator);
 
 $configurator->addConfig(APP_DIR . '/configs/config.neon', FALSE);
-$configurator->addConfig(APP_DIR . '/configs/test.config.neon');
-$configurator->onCompile[] = function ($configurator, $compiler) {
-	$compiler->addExtension('gpspicker', new VojtechDobes\NetteForms\GpsPickerExtension);
-};
-$container = $configurator->createContainer();
+$configurator->addConfig(APP_DIR . '/configs/test.config.neon', FALSE);
 
+$container = $configurator->createContainer();
+require_once APP_DIR . '/extras/EntityAnnotation.php';
 \Doctrine\Common\Annotations\AnnotationRegistry::registerFile(__DIR__ . '/../app/extras/EntityAnnotation.php');
 \Doctrine\Common\Annotations\AnnotationRegistry::registerLoader(callback('class_exists'));
 

@@ -16,6 +16,9 @@ nette:
 			- Extras\ImageMacro
 			- Extras\Macros
 
+extensions:
+	events: Kdyby\Events\DI\EventsExtension
+
 
 parameters:
 

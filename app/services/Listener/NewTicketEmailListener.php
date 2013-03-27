@@ -6,7 +6,7 @@ use Entity\Ticket\Ticket;
 use Entity\User\RentalReservation;
 use Nette;
 
-class NewTicketEmailListener extends BaseEmailListener implements \Kdyby\Events\Subscriber
+class NewTicketEmailListener extends BaseEmailListener
 {
 
 	public function getSubscribedEvents()
