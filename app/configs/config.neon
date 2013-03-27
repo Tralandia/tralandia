@@ -250,6 +250,11 @@ factories:
 		arguments: [%mask%, %metadata%, @languageRepositoryAccessor::get(), @locationRepositoryAccessor::get()]
 		implement: Routers\ISimpleRouteFactory
 
+	baseRouteFactory:
+		class: Routers\BaseRoute
+		arguments: [%mask%, %metadata%, @languageRepositoryAccessor::get(), @locationRepositoryAccessor::get() ]
+		implement: Routers\IBaseRouteFactory
+
 	frontRouteFactory:
 		class: Routers\FrontRoute
 		arguments: [ @languageRepositoryAccessor::get(), @locationRepositoryAccessor::get() ]

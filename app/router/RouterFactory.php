@@ -14,6 +14,11 @@ class RouterFactory
 {
 	protected $defaultLanguage;
 	protected $defaultPrimaryLocation;
+
+	/**
+	 * @var IBaseRouteFactory
+	 */
+	protected $baseRouteFactory;
 	/**
 	 * @var ISimpleRouteFactory
 	 */
@@ -31,11 +36,13 @@ class RouterFactory
 	public $locationRepositoryAccessor;
 
 	public function __construct(array $options, ISimpleRouteFactory $simpleRouteFactory,
+								IBaseRouteFactory $baseRouteFactory,
 								IFrontRouteFactory $frontRouteFactory,
 								IOwnerRouteListFactory $ownerRouteListFactory)
 	{
 		$this->defaultLanguage = $options['defaultLanguage'];
 		$this->defaultPrimaryLocation = $options['defaultPrimaryLocation'];
+		$this->baseRouteFactory = $baseRouteFactory;
 		$this->simpleRouteFactory = $simpleRouteFactory;
 		$this->frontRouteFactory = $frontRouteFactory;
 		$this->ownerRouteListFactory = $ownerRouteListFactory;
@@ -56,22 +63,23 @@ class RouterFactory
 			'presenter' => 'Page',
 			'action' =>  'home',
 			'primaryLocation' => $this->defaultPrimaryLocation,
-			'language' => $this->defaultLanguage,			
+			'language' => $this->defaultLanguage,
 		));
 
 		$router[] = $adminRouter = new RouteList('Admin');
 		$adminRouter[] = new Route('index.php', 'Admin:Rental:list', Route::ONE_WAY);
-		$adminRouter[] = new Route('admin/<presenter>/<id [0-9]+>', array(
+		$adminRouter[] = $this->baseRouteFactory->create('admin/<presenter>/<id [0-9]+>', array(
 			'presenter' => NULL,
 			'action' =>  'edit',
-			'primaryLocation' => $this->defaultPrimaryLocation,
-			'language' => $this->defaultLanguage,
+			BaseRoute::PRIMARY_LOCATION => 'sk',
+			BaseRoute::LANGUAGE => 'www',
 		));
-		$adminRouter[] = new Route('admin/<presenter>[/<action>[/<id>]]', array(
+
+		$adminRouter[] = $this->baseRouteFactory->create('admin/<presenter>[/<action>[/<id>]]', array(
 			'presenter' => NULL,
 			'action' =>  'list',
-			'primaryLocation' => $this->defaultPrimaryLocation,
-			'language' => $this->defaultLanguage,
+			BaseRoute::PRIMARY_LOCATION => 'sk',
+			BaseRoute::LANGUAGE => 'www',
 		));
 	/*	$adminRouter[] = new Route('admin/<presenter>[/<action list|add|registration>]', array(
 			'presenter' => 'Admin',
