@@ -13,6 +13,12 @@ class HomePresenter extends BasePresenter {
 
 	/**
 	 * @autowire
+	 * @var \LastSeen
+	 */
+	protected $lastSeen;
+
+	/**
+	 * @autowire
 	 * @var \Service\Rental\IRentalSearchServiceFactory
 	 */
 	protected $rentalSearchFactory;
@@ -29,6 +35,7 @@ class HomePresenter extends BasePresenter {
 		}
 
 		$this->template->rentals = $rentals;
+		$this->template->lastSeenRentals = $this->lastSeen->getSeenRentals(12);
 		$this->template->isHome = TRUE;
 
 	}
