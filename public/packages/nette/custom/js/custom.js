@@ -1,5 +1,7 @@
 
 
+var Nette = Nette || {};
+
 Nette.addError = function(elem, message) {
 
 	if (elem.focus) {
@@ -67,20 +69,20 @@ $(document).ready(function(){
 
 $.nette.init();
 
-var c = $.nette.ext('snippets');
-	c.updateSnippet = function($el, html, back){
-		if (typeof $el == 'string') {
-			$el = this.getElement($el);
-		}
-		// Fix for setting document title in IE
-		if ($el.is('title')) {
-			document.title = html;
-		} else {
-			this.applySnippet($el, html, back);
-		}
+// var c = $.nette.ext('snippets');
+// 	c.updateSnippet = function($el, html, back){
+// 		if (typeof $el == 'string') {
+// 			$el = this.getElement($el);
+// 		}
+// 		// Fix for setting document title in IE
+// 		if ($el.is('title')) {
+// 			document.title = html;
+// 		} else {
+// 			this.applySnippet($el, html, back);
+// 		}
 
-		$("select.select2").select2();
-	}	
+// 		$("select.select2").select2();
+// 	}	
 });
 
 

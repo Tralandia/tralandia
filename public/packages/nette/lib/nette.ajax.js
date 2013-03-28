@@ -151,6 +151,9 @@ var nette = function () {
 	 * @return {jqXHR|null}
 	 */
 	this.ajax = function (settings, ui, e) {
+
+		// 
+
 		if (!settings.nette && ui && e) {
 			var $el = $(ui), xhr, originalBeforeSend;
 			var analyze = settings.nette = {
@@ -181,6 +184,7 @@ var nette = function () {
 				if (typeof settings.off == 'string') settings.off = [settings.off];
 			}
 		}
+
 
 		inner.fire({
 			name: 'prepare',
