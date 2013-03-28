@@ -155,10 +155,11 @@ function removeEmpty(o){
 
 function generateRedirectUrl(count){
 
-	var path = [
-		$('select.sidebarLocation').val(),
-		$('select.sidebarRentalType').val()
-	];
+	var path = [];
+
+	$.each($('.searchForm select.path:not(.selectRedirect)').serializeArray(),function(k,v){
+		path.push(v.value);
+	});
 
 	// remove empty eements from array
 	path = $.grep(path,function(n){
