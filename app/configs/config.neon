@@ -84,6 +84,7 @@ services:
 
 	favoriteList: FavoriteList(@rentalRepositoryAccessor)
 	lastSearch: LastSearch(@session::getSection('lastSearch'))
+	lastSeen: LastSeen(@rentalRepositoryAccessor)
 
 	# ROUTER
 
