@@ -23,6 +23,12 @@ class RentalPresenter extends BasePresenter {
 
 	/**
 	 * @autowire
+	 * @var \LastSeen
+	 */
+	protected $lastSeen;
+
+	/**
+	 * @autowire
 	 * @var \FrontModule\Forms\Rental\IReservationFormFactory
 	 */
 	protected $reservationFormFactory;
@@ -37,6 +43,8 @@ class RentalPresenter extends BasePresenter {
 		if (!$rental) {
 			throw new \Nette\InvalidArgumentException('$id argument does not match with the expected value');
 		}
+
+
 
 		$rentalService = $this->rentalDecoratorFactory->create($rental);
 		$interviewAnswers = $rentalService->getInterviewAnswers($this->environment->primaryLocation->defaultLanguage);
@@ -68,6 +76,7 @@ class RentalPresenter extends BasePresenter {
 		$this->setLayout('detailLayout');
 
 		$this->template->lastSearchResults = $this->getLastSearchResults($rental);
+		$this->template->lastSeenRentals = $this->lastSeen->visit($rental)->getSeenRentals(12);
 	}
 
 	protected function getLastSearchResults($rental) {
@@ -82,7 +91,11 @@ class RentalPresenter extends BasePresenter {
 		$bar['currentKey'] = array_search($rental->id, $bar['all']);
 
 		$start = $bar['currentKey']>5 ? ($bar['currentKey']-5) : 0;
-		$bar['all'] = array_slice($bar['all'], $start, (($start ? 7 : 12)+$bar['currentKey']));
+		if (($left = count($bar['all']) - $start) < 12) {
+			$start = $start - (12-$left);
+		}
+
+		$bar['all'] = array_slice($bar['all'], $start, 12);
 		if (!isset($bar['currentKey'])) return FALSE;
 
 		$barRentals = array();

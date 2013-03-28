@@ -1,46 +1,84 @@
 <?php
 
+use Nette\Http\Request;
+use Nette\Http\Response;
+
 class LastSeen {
 
+	const COOKIE_VAR_NAME = 'visitedList';
+
+	const COOKIE_EXPIRATION = '1+ week';
+
 	/**
-	 * @var Nette\Http\SessionSection
+	 * @var Nette\Http\Request
 	 */
-	protected $section;
+	protected $httpRequest;
 
+	/**
+	 * @var Nette\Http\Response
+	 */
+	protected $httpResponse;
 
-	public function __construct(\Nette\Http\SessionSection $section)
+	/**
+	 * @var string
+	 */
+	protected $seen;
+
+	protected $rentalRepositoryAccessor;
+
+	public function __construct($rentalRepositoryAccessor, Request $httpRequest, Response $httpResponse)
 	{
-		$this->section = $section;
+		$this->rentalRepositoryAccessor = $rentalRepositoryAccessor;
+		$this->httpRequest = $httpRequest;
+		$this->httpResponse = $httpResponse;
+	}
+
+	public function visit(\Entity\Rental\Rental $rental)
+	{
+		$seen = $this->getSeen();
+		array_push($seen, $rental->id);
+		$this->setSeen($seen);
+
+		return $this;
 	}
 
 	/**
-	 * @return bool
+	 * @param int $limit
+	 *
+	 * @return array|null
 	 */
-	public function exists()
+	public function getSeen($limit=NULL)
 	{
-		return is_array($this->getRentals());
-	}
+		$this->seen = $this->httpRequest->getCookie(self::COOKIE_VAR_NAME);
+		$seen = explode(',', $this->seen);
 
-	/**
-	 * @param array $rentals
-	 */
-	public function setRentals(array $rentals)
-	{
-		$this->section->rentals = $rentals;
-	}
-
-	/**
-	 * @return mixed|null
-	 */
-	public function getRentals()
-	{
-		if(isset($this->section->rentals)) {
-			$rentals = $this->section->rentals;
-
-			return count($rentals) ? $rentals : NULL;
+		if ($limit && count($seen)>$limit) {
+			$start = count($seen) - $limit - 1;
+			$seen = array_slice($seen, $start, $limit);
 		}
 
-		return NULL;
+		return $seen;
+	}
+
+	public function getSeenRentals($limit)
+	{
+		$rentals = array();
+		foreach($this->getSeen($limit) as $rentalId) {
+			$rental = $this->rentalRepositoryAccessor->get()->findOneById($rentalId);
+			if (!$rental) continue;
+
+			$rentals[] = $rental;
+		}
+
+		return $rentals;
+	}
+
+	public function setSeen($seen=array())
+	{
+		$this->seen = implode(',', array_unique($seen));
+		$this->httpResponse->setCookie(self::COOKIE_VAR_NAME, $this->seen, strtotime(self::COOKIE_EXPIRATION));
+
+		return $this;
 	}
 
 }

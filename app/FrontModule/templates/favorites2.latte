@@ -13,7 +13,7 @@
 		</ul>
 
 		<div class="cover" id="compareList">
-			<a href="#" class="leftArrow entypo-prev" id="favorites-left-button"></a>
+			<a n:href="Rental:detail $lastSearchResults['prevRental']" class="leftArrow entypo-prev"></a>
 			<div class="tab-content" id="favoritesTabContent">
 
 				{* Favorites *}
@@ -41,7 +41,28 @@
 				</div>
 
 				{* Last seen objects *}
-				<div class="tab-pane" id="favoritesNavLastSeen">rthryjty</div>
+				<div class="tab-pane" id="favoritesNavLastSeen">
+					<div class="content jscrollPane">
+						<ul id="scrollInnerContent">
+							<li class="template" rel="~id~" >
+								<a href="#" class="removeLink"></a>
+								<a href="~url~" title="~title~" class="link">
+									<div class="checked entypo-eye"></div>
+								</a>
+							</li>
+							{dump $lastSeenRentals}
+							{foreach $lastSeenRentals as $rental}
+								{var $image = $rental->getMainImage()}
+								{var $seen = in_array($rental->getId(), $favoriteVisitedRentals)}
+								<li rel="{$rental->getId()}" style="background-image: url({fakeImage});">
+									<a n:href="Rental:detail $rental" class="link">
+										<div n:if="$seen" class="checked entypo-eye"></div>
+									</a>
+								</li>
+							{/foreach}
+						</ul>
+					</div>
+				</div>
 
 				{* Last search results *}
 				{ifset $lastSearchResults}
@@ -59,7 +80,6 @@
 								{var $seen = in_array($rental->getId(), $favoriteVisitedRentals)}
 								{var $isCurrent = ($iterator->counter-1)==$lastSearchResults['currentKey']}
 								<li rel="{$rental->getId()}" style="background-image: url({fakeImage});" class="{if $isCurrent}active{/if}">
-									<a href="#" class="removeLink"></a>
 									<a n:href="Rental:detail $rental" class="link">
 										<div n:if="$seen" class="checked entypo-eye"></div>
 									</a>
@@ -70,7 +90,7 @@
 				</div>
 				{/ifset}
 			</div>
-			<a href="#" class="rightArrow entypo-slider-right" id="favorites-right-button"></a>
+			<a n:href="Rental:detail $lastSearchResults['nextRental']" class="rightArrow entypo-slider-right"></a>
 		</div>
 	</div>
 </div>
