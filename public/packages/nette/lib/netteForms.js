@@ -108,6 +108,7 @@ Nette.validateControl = function(elem, rules, onlyCheck) {
  * Validates whole form.
  */
 Nette.validateForm = function(sender) {
+
 	var form = sender.form || sender;
 	if (form['nette-submittedBy'] && form['nette-submittedBy'].getAttribute('formnovalidate') !== null) {
 		return true;
@@ -320,9 +321,13 @@ Nette.toggle = function(id, visible) {
  * Setup handlers.
  */
 Nette.initForm = function(form) {
+
 	form.noValidate = 'novalidate';
 
 	Nette.addEvent(form, 'submit', function(e) {
+
+	// console.log('validattion');
+
 		if (!Nette.validateForm(form)) {
 			e = e || event;
 			e.cancelBubble = true;
@@ -331,6 +336,7 @@ Nette.initForm = function(form) {
 			}
 			return false;
 		}
+		
 	});
 
 	Nette.addEvent(form, 'click', function(e) {

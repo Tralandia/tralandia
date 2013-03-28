@@ -190,9 +190,9 @@ parameters:
 					- jscrollpane/custom/css/main.css
 			nette:
 				js:
-					- nette/lib/netteForms.js
+					#- nette/lib/netteForms.js
 					- nette/lib/nette.ajax.js
-					- nette/custom/js/custom.js
+					#- nette/custom/js/custom.js
 			bootstrap:
 				js:
 					#- bootstrap/lib/js/bootstrap-alert.js
