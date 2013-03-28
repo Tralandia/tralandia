@@ -11,6 +11,7 @@ Nette.addError = function(elem, message) {
 	if (message) {
 		var msgId = '#'+$(elem).attr('data-validation-message');
 		$(msgId).html(message);
+		
 	}
 };
 
@@ -27,6 +28,12 @@ Nette.removeError = function(elem) {
 
 
 Nette.validateControl = function(elem, rules, onlyCheck) {
+
+	console.log('validattion');
+
+	// @todo docasne vypnuta validacia
+	return true;
+
 	rules = rules || eval('[' + (elem.getAttribute('data-nette-rules') || '') + ']');
 	for (var id = 0, len = rules.length; id < len; id++) {
 		var rule = rules[id], op = rule.op.match(/(~)?([^?]+)/);
