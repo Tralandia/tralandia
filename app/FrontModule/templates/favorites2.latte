@@ -1,7 +1,7 @@
 <div n:class="$favoriteRentals ? 'span12' : 'span12 hide' " data-favoritesLink="{link generateFavoriteLink}" id="favoritesStaticContainer">
 	<div class="favorites2">
 		<ul class="nav" id="favoritesTabs">
-			<li n:ifset="$lastSearchResults" class="active" for="favoritesNavSerchResults"><i class="icon-search"></i> {$lastSearchResults['heading']}</li>
+			<li n:ifset="$lastSearchResults" class="active" for="favoritesNavSerchResults"><i class="icon-search"></i> {$lastSearchResults['heading']} ({$lastSearchResults['totalCount']})</li>
 			<li for="favoritesNavFavorites"><i class="icon-heart"></i> Favorites</li>
 			<li n:ifset="$lastSeenRentals" for="favoritesNavLastSeen"><i class="icon-eye-open"></i> last seen </li>
 
@@ -12,7 +12,9 @@
 
 		<div class="cover" id="compareList">
 			{ifset $lastSearchResults['prevRental']}
-			<a n:href="Rental:detail $lastSearchResults['prevRental']" class="leftArrow entypo-prev"></a>
+				<a n:href="Rental:detail $lastSearchResults['prevRental']" class="leftArrow entypo-prev"></a>
+			{else}
+				<span class="leftArrow entypo-prev"></span>
 			{/ifset}
 			<div class="tab-content" id="favoritesTabContent">
 
@@ -91,6 +93,8 @@
 			</div>
 			{ifset $lastSearchResults['nextRental']}
 			<a n:href="Rental:detail $lastSearchResults['nextRental']" class="rightArrow entypo-slider-right"></a>
+			{else}
+			<span class="rightArrow entypo-slider-right"></span>
 			{/ifset}
 		</div>
 	</div>

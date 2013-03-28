@@ -32,30 +32,30 @@ $(function(){
 
 	$('#favoritesShareList li a').click(function(){
 		
-				removejscssfile('http://platform.twitter.com/widgets.js','js');
-				removejscssfile('https://apis.google.com/js/plusone.js','js');
+		removejscssfile('http://platform.twitter.com/widgets.js','js');
+		removejscssfile('https://apis.google.com/js/plusone.js','js');
 		
 		var shareUrl = $('#favoritesStaticContainer').attr('data-favoritesLink');
-			importShareLink(shareUrl , function(d){
-				var linkToShare = d.link;
-				var html = '<span class="facebook facebookLikeButtonContainer" data-facebook-src="'+linkToShare+'"></span><g:plusone size="medium" href="'+linkToShare+'" style="margin-top:2px;"></g:plusone><a href="https://twitter.com/share" class="twitter-share-button" data-url="'+linkToShare+'" data-via="Tralandia" data-text="{_o100036}" data-hashtags="{_o100034}" data-lang="{$currentLanguage->iso}">Tweet</a><a href="http://pinterest.com/pin/create/button/?url='+linkToShare+'" class="pin-it-button" count-layout="horizontal"></a>'
+		importShareLink(shareUrl , function(d){
+			var linkToShare = d.link;
+			var html = '<span class="facebook facebookLikeButtonContainer" data-facebook-src="'+linkToShare+'"></span><g:plusone size="medium" href="'+linkToShare+'" style="margin-top:2px;"></g:plusone><a href="https://twitter.com/share" class="twitter-share-button" data-url="'+linkToShare+'" data-via="Tralandia" data-text="{_o100036}" data-hashtags="{_o100034}" data-lang="{$currentLanguage->iso}">Tweet</a><a href="http://pinterest.com/pin/create/button/?url='+linkToShare+'" class="pin-it-button" count-layout="horizontal"></a>'
 
-				$('#dynamicShareContainer').html(html);
-				$('#clipboardLinkShare').val(d.link);
-				$('body').removeAttr('data-socialPluginsInit');
-				initAllSocialPlugins();
+			$('#dynamicShareContainer').html(html);
+			$('#clipboardLinkShare').val(d.link);
+			$('body').removeAttr('data-socialPluginsInit');
+			initAllSocialPlugins();
 
-			});
+		});
 
-				if($(this).hasClass('open')){
-					
-					$('#favoriteShareContent').hide();
-				} else {
-					
-					$('#favoriteShareContent').show();			
-				}
+		if($(this).hasClass('open')){
+			
+			$('#favoriteShareContent').hide();
+		} else {
+			
+			$('#favoriteShareContent').show();			
+		}
 
-				$(this).toggleClass('open');
+		$(this).toggleClass('open');
 
 		return false;
 
@@ -129,7 +129,7 @@ $(function(){
 
 var Favorites = {
 	cookieName : 'favoritesList',
-	visitedCookieName: 'favoritesVisitedList',
+	visitedCookieName: 'visitedList',
 	favoritesPluginDiv: '#favoritesStaticContainer',
 	favoritesPlacehoderDiv: '#favoritesStaticContainerPlaceholder',
 	favorietsShowSpeed: 300,
@@ -148,7 +148,7 @@ var Favorites = {
 
 			this.cleanTrash();
 
-			this.initJscrollpaneUi();
+			// this.initJscrollpaneUi();
 			this.eachSelectedRentalButtons();
 			this.autoUpdate();
 
@@ -198,37 +198,37 @@ var Favorites = {
 		});
 	}
 
-	Favorites.initJscrollpaneUi = function(){			
+	// Favorites.initJscrollpaneUi = function(){			
 
-			var self = this;
+	// 		var self = this;
 
-			var settings = {
-				showArrows: true
-			};
+	// 		var settings = {
+	// 			showArrows: true
+	// 		};
 
-			self.pane = $('.jscrollPane');
+	// 		self.pane = $('.jscrollPane');
 
-			self.pane.jScrollPane(settings);
+	// 		self.pane.jScrollPane(settings);
 
-			self.contentPane = self.pane.data('jsp').getContentPane();
+	// 		self.contentPane = self.pane.data('jsp').getContentPane();
 
-			$rigthArrow = $('#favorites-right-button');
-			$leftArrow = $('#favorites-left-button');
+	// 		$rigthArrow = $('#favorites-right-button');
+	// 		$leftArrow = $('#favorites-left-button');
 			
-			//var pane = $('.jscrollPane');
-			self.jscrollPaneApi = self.pane.data('jsp');
+	// 		//var pane = $('.jscrollPane');
+	// 		self.jscrollPaneApi = self.pane.data('jsp');
 
-			$leftArrow .bind('click',function(){							
-					self.jscrollPaneApi.scrollBy(-40,0);
-					return false;
-			});
+	// 		$leftArrow .bind('click',function(){							
+	// 				self.jscrollPaneApi.scrollBy(-40,0);
+	// 				return false;
+	// 		});
 
-			$rigthArrow.bind('click',function(){									
-					self.jscrollPaneApi.scrollBy(40,0);
-					return false;
+	// 		$rigthArrow.bind('click',function(){									
+	// 				self.jscrollPaneApi.scrollBy(40,0);
+	// 				return false;
 
-			});	
-	};
+	// 		});	
+	// };
 
 	Favorites.pluginShow = function(){		
 		$(this.favoritesPluginDiv).slideDown(this.favorietsShowSpeed,function(){
@@ -314,13 +314,13 @@ var Favorites = {
 	}
 
 	Favorites.addToFavorites = function(data){	
-			this.addToCookie(data.id);
-			this.addToLocalStorage(data);
+		this.addToCookie(data.id);
+		this.addToLocalStorage(data);
 	};
 
 	Favorites.removeFromFavorites = function(data){			
-			this.removeFromCookie(data.id);
-			this.removeFromLocalStorage(data.id);
+		this.removeFromCookie(data.id);
+		this.removeFromLocalStorage(data.id);
 	};
 
 	/*
@@ -329,14 +329,14 @@ var Favorites = {
 
 	Favorites.addToLocalStorage = function(data){
 		var storageArray = $.jStorage.get(this.cookieName);
-			if(storageArray == null){
-				storageArray  = [];
-			}
+		if(storageArray == null){
+			storageArray  = [];
+		}
 
-			if(!this.getObjectById(storageArray,data.id)){
-				storageArray.push(data);
-				$.jStorage.set(this.cookieName,storageArray);				
-			}
+		if(!this.getObjectById(storageArray,data.id)){
+			storageArray.push(data);
+			$.jStorage.set(this.cookieName,storageArray);				
+		}
 			
 	};
 
@@ -519,7 +519,7 @@ var Favorites = {
 			$('#scrollInnerContent').html(html);
 
 			//self.initJscrollpaneUi();
-			self.jscrollPaneApi.reinitialise();
+			// self.jscrollPaneApi.reinitialise();
 			self.eachSelectedRentalButtons();
 	};
 
