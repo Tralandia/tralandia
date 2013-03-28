@@ -124,6 +124,18 @@ class ImportPage extends BaseImport {
 		# search
 		array(
 			'destination' => ':Front:RentalList:default', 
+			'hash' => '',
+			'h1Pattern' => array(
+				'sk' => 'Výsledky vyhľadávania', 
+				'en' => 'Search results'
+			), 
+			'titlePattern' => array(
+				'sk' => 'Výsledky vyhľadávania', 
+				'en' => 'Search results'
+			)
+		),
+		array(
+			'destination' => ':Front:RentalList:default', 
 			'hash' => '/location',
 			'h1Pattern' => array(
 				'sk' => 'Ubytovanie [locationLocative]', 

@@ -22,7 +22,7 @@ class ImportUserRoles extends BaseImport {
 			$role->name = ucfirst($value);
 			$role->slug = $value;
 			if (in_array($value, array(Role::TRANSLATOR, Role::SUPERADMIN))) {
-				$role->homePage = ':Admin:Home:default';
+				$role->homePage = ':Admin:Rental:list';
 			} else if($value == Role::OWNER) {
 				$role->homePage = ':Owner:Rental:firstRental';
 			}
