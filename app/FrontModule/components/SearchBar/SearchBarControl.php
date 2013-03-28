@@ -154,7 +154,8 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 
 		$count = $search->getRentalsCount();
 		$template->totalResultsCount = $count;
-		$template->totalResultsCountLabel = $this->getPresenter()->translate('o100002', $count, ['count' => $count]);
+		$presenter = $this->getPresenter();
+		$template->totalResultsCountLabel = $presenter->translate('o100002', $count, NULL, ['count' => $count]);
 
 		$template->render();
 	}
@@ -205,7 +206,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 			$bottomLinks['title'] = 'o100093';
 			$bottomLinks['iconClass'] = 'icon-money22';
 		} else if(!$this->priceTo) {
-			$links = $this->searchOptionGenerator->generatePriceLinks($this->environment->getCurrency(), $this->getSearch());
+			$links = $this->searchOptionGenerator->generatePriceLinks($this->environment->getCurrency(), $this->getSearch(), $this->priceFrom);
 			$bottomLinks['linkArgument'] = FrontRoute::PRICE_TO;
 			$bottomLinks['title'] = 'o100094';
 			$bottomLinks['iconClass'] = 'icon-money22';
@@ -248,7 +249,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 
 		$count = $search->getRentalsCount();
 
-		$label = $this->getPresenter()->translate('o100002', $count, ['count' => $count]);
+		$label = $this->getPresenter()->translate('o100002', $count, NULL, ['count' => $count]);
 
 		$this->presenter->sendJson(['count' => $count, 'label' => $label]);
 	}

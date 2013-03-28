@@ -44,9 +44,10 @@
 
 
 		<div id="getSearchCount" data-label="#label text" class="pull-left">
-			{if $totalResultsCount}
+			{ifCurrent :Front:Home:default}
+			{else}
 				{$totalResultsCountLabel}
-			{/if}
+			{/ifCurrent}
 		</div>
 		{* {input submit,value => '#Search' , icon => 'entypo-search', class => "btn btn-white pull-right"}	 *}
 		{* <button class="btn btn-white pull-right"><i class="entypo-search"></i>{_o100092}</button> *}
