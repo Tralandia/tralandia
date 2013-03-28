@@ -13,7 +13,9 @@
 		</ul>
 
 		<div class="cover" id="compareList">
+			{ifset $lastSearchResults['prevRental']}
 			<a n:href="Rental:detail $lastSearchResults['prevRental']" class="leftArrow entypo-prev"></a>
+			{/ifset}
 			<div class="tab-content" id="favoritesTabContent">
 
 				{* Favorites *}
@@ -90,7 +92,9 @@
 				</div>
 				{/ifset}
 			</div>
+			{ifset $lastSearchResults['nextRental']}
 			<a n:href="Rental:detail $lastSearchResults['nextRental']" class="rightArrow entypo-slider-right"></a>
+			{/ifset}
 		</div>
 	</div>
 </div>
