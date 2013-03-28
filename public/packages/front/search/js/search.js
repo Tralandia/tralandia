@@ -125,6 +125,7 @@ function updateCriteriaCount(){
 
 	var url = generateRedirectUrl(true);
 
+	if($('.searchForm').find("select[value][value!='']:not(.sidebarCountry)").serialize().length > 0){
 		$.ajax({
 		  url: url,
 		}).done(function(d) {
@@ -132,7 +133,13 @@ function updateCriteriaCount(){
 			  if(d.count == 0){
 			  	$('#searchControlLink').attr('href','#');
 			  }
-		});	
+		});			
+	} else {
+		$('#getSearchCount').html('');
+		$('#searchControlLink').attr('href','#');
+	}
+
+
 }
 
 // remove empty attributes from object
@@ -162,7 +169,7 @@ function generateRedirectUrl(count){
 
 	var p = $('.searchForm').find("select[value][value!='']:not(.path)").serialize();
 
-	console.log(p);
+	// console.log(p);
 
 	var url = path+(p != '' ? '?'+p : '');
 
