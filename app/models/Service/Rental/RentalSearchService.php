@@ -121,7 +121,7 @@ class RentalSearchService extends Nette\Object
 		$from == NULL && $from = $to;
 		$to == NULL && $to = $from;
 
-		if($from >= $to) {
+		if($from >= $to && $from !== NULL) {
 			$this->criteria[self::CRITERIA_PRICE] = ['from' => $from, 'to' => $to];
 			$this->resetResults();
 		}
