@@ -236,7 +236,7 @@ parameters:
 				-  %webloader.packages.adminFront%
 				-  %webloader.packages.select2%
 				-  %webloader.packages.texyla%
-				-  %webloader.packages.nette%
+				#-  %webloader.packages.nette%
 
 			Front:
 				-  %webloader.packages.jQuery%
@@ -253,7 +253,7 @@ parameters:
 				-  %webloader.packages.gMap%
 				-  %webloader.packages.Front%
 				#-  %webloader.packages.texyla%
-				-  %webloader.packages.nette%
+				#-  %webloader.packages.nette%
 			'Front:CalendarIframe':
 				-  %webloader.packages.calendarIframe%
 			'Front:Rental:detail':
@@ -268,7 +268,7 @@ parameters:
 				-  %webloader.packages.bootstrap%
 				-  %webloader.packages.select2%
 				-  %webloader.packages.Front%
-				-  %webloader.packages.nette%
+				#-  %webloader.packages.nette%
 				-  %webloader.packages.select2HideInputText%
 			'Front:RentalList':
 				-  %webloader.packages.jQuery%
@@ -283,7 +283,7 @@ parameters:
 				-  %webloader.packages.Front%
 				-  %webloader.packages.select2%
 				-  %webloader.packages.texyla%
-				-  %webloader.packages.nette%
+				#-  %webloader.packages.nette%
 				-  %webloader.packages.favoriteScroll%
 			Owner:
 				-  %webloader.packages.jQuery%
@@ -299,7 +299,7 @@ parameters:
 				-  %webloader.packages.bootstrap%
 				-  %webloader.packages.Front%
 				-  %webloader.packages.texyla%
-				-  %webloader.packages.nette%
+				#-  %webloader.packages.nette%
 
 
 			Gregor:
