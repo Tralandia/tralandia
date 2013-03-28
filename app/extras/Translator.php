@@ -41,7 +41,7 @@ class Translator implements \Nette\Localization\ITranslator {
         $this->language = $language;
 		return $this;
 	}
-	
+
 	public function translate($phrase, $count = NULL, array $variation = NULL, array $variables = NULL)
 	{
 		if(is_numeric($count) && !isset($variation[self::VARIATION_COUNT])) {
@@ -104,7 +104,7 @@ class Translator implements \Nette\Localization\ITranslator {
 					$phrase = $this->phraseRepositoryAccessor->get()->find($phrase);
 				} else {
 					return $phrase;
-//					throw new \Nette\InvalidArgumentException('Argument "$phrase" does not match with the expected value');
+					//throw new \Nette\InvalidArgumentException('Argument "$phrase" does not match with the expected value');
 				}
 			}
 
@@ -112,31 +112,30 @@ class Translator implements \Nette\Localization\ITranslator {
 				$translation = '{!'.$phraseId.'!}';
 			}
 
-			if (!$translation && $translation = $phrase->getTranslation($this->language, TRUE)) {
-				if ($variation === NULL) {
-					$translation = $translation->translation;
-				} else {
-					$plural = $variation[self::VARIATION_PLURAL];
-					$gender = $variation[self::VARIATION_GENDER];
-					$case = $variation[self::VARIATION_CASE];
-					$translationText = $translation->getVariation(
-						$plural,
-						$gender,
-						$case
-					);
-					if(!$translationText) {
-						$translationText = $translation->getDefaultVariation();
-					}
-					if(!$translationText) {
-						$translationText = sprintf('{%d|%s:%s:%s:%s}',
-							$translation->getPhrase()->getId(),
-							$translation->getLanguage()->getIso(),
+			if (!$translation && $translations = $phrase->getMainTranslations($this->language)) {
+				foreach($translations as $translationEntity) {
+					/** @var $translationEntity \Entity\Phrase\Translation */
+					$translationText = NULL;
+					if ($variation === NULL) {
+						$translationText = $translationEntity->getDefaultVariation();
+					} else {
+						$plural = $variation[self::VARIATION_PLURAL];
+						$gender = $variation[self::VARIATION_GENDER];
+						$case = $variation[self::VARIATION_CASE];
+						$translationText = $translationEntity->getVariation(
 							$plural,
 							$gender,
-							$case ? substr($case, 0, 1) : NULL
+							$case
 						);
+						if(!$translationText) {
+							$translationText = $translationText->getDefaultVariation();
+						}
 					}
-					$translation = $translationText;
+
+					if($translationText) {
+						$translation = $translationText;
+						break;
+					}
 				}
 			}
 
