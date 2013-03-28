@@ -10,6 +10,8 @@ class RentalSearchService extends Nette\Object
 {
 
 	const COUNT_PER_PAGE = 50;
+
+	const ALL = 'all';
 	const CRITERIA_LOCATION = 'location';
 	const CRITERIA_RENTAL_TYPE = 'rentalType';
 	const CRITERIA_PLACEMENT = 'placement';
@@ -199,6 +201,8 @@ class RentalSearchService extends Nette\Object
 	 */
 	public function getCollectedResults($criterionType)
 	{
+		$this->loadCache();
+
 		if(!array_key_exists($criterionType, $this->searchCacheData)) return [];
 		$results = $this->getResults();
 
@@ -206,6 +210,7 @@ class RentalSearchService extends Nette\Object
 		foreach($this->searchCacheData[$criterionType] as $key => $value) {
 			$collection[$key] = array_intersect($results, $value);
 		}
+
 		return array_filter($collection);
 	}
 
@@ -236,39 +241,45 @@ class RentalSearchService extends Nette\Object
 		}
 
 		$results = array();
-		foreach ($this->criteria as $key => $value) {
-			if ($value === NULL || (is_array($value) && !count(array_filter($value)))) continue;
+		if (count($this->criteria)) {
+			foreach ($this->criteria as $key => $value) {
+				if ($value === NULL || (is_array($value) && !count(array_filter($value)))) continue;
 
-			if ($key == self::CRITERIA_PRICE) {
-				$byPrice = [];
-				$priceOptions = $this->getCriterionOptions(self::CRITERIA_PRICE);
-				foreach($priceOptions as $priceOption) {
-					if($priceOption >= $value['from'] && $priceOption <= $value['to']) {
-						$byPrice += Arrays::get($this->searchCacheData, array($key, $priceOption), NULL);
+				if ($key == self::CRITERIA_PRICE) {
+					$byPrice = [];
+					$priceOptions = $this->getCriterionOptions(self::CRITERIA_PRICE);
+					foreach($priceOptions as $priceOption) {
+						if($priceOption >= $value['from'] && $priceOption <= $value['to']) {
+							$byPrice += Arrays::get($this->searchCacheData, array($key, $priceOption), NULL);
+						}
 					}
+					$results[$key] = $byPrice;
+				} else {
+					$results[$key] = Arrays::get($this->searchCacheData, array($key, (is_object($value) ? $value->id : $value)), NULL);
 				}
-				$results[$key] = $byPrice;
+
+				if (count($results[$key]) == 0) {
+					$this->results = array();
+
+					return $this->results;
+				}
+			}
+
+			$results = array_filter($results);
+
+			if (count($results) > 1) {
+				$results = call_user_func_array('array_intersect', $results);
 			} else {
-				$results[$key] = Arrays::get($this->searchCacheData, array($key, (is_object($value) ? $value->id : $value)), NULL);
+				$results = reset($results);
 			}
 
-			if (count($results[$key]) == 0) {
-				$this->results = array();
-
-				return $this->results;
-			}
-		}
-
-		$results = array_filter($results);
-
-		if (count($results) > 1) {
-			$tempResults = call_user_func_array('array_intersect', $results);
 		} else {
-			$tempResults = reset($results);
+			$results = Arrays::get($this->searchCacheData, self::ALL, NULL);
 		}
 
-		if (is_array($tempResults)) {
-			$this->results = $tempResults;
+
+		if (is_array($results)) {
+			$this->results = $results;
 		} else {
 			$this->results = array();
 		}

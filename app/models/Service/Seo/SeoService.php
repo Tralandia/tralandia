@@ -14,7 +14,7 @@ class SeoService extends Nette\Object {
 
 	protected $request;
 	protected $requestParameters;
-	protected $page;
+	protected $page = NULL;
 	protected $url;
 	protected $phraseDecoratorFactory;
 	protected $pageRepositoryAccessor;
@@ -122,7 +122,7 @@ class SeoService extends Nette\Object {
 	}
 
 	public function getPage() {
-		if (!$this->page) {
+		if ($this->page === NULL) {
 			$destination = ':' . $this->request->getPresenterName() . ':' . $this->getParameter('action');
 			if ($destination == ':Front:RentalList:default') {
 				$hash = array();
@@ -131,13 +131,19 @@ class SeoService extends Nette\Object {
 						$hash[] = '/'.$key;
 					}
 				}
+
 				$hash = implode('', $hash);
 			} else if($destination == ':Front:Rental:detail') {
 				$hash = '/rental';
 			} else {
 				$hash = '';
 			}
-			$this->page = $this->pageRepositoryAccessor->get()->findOneBy(array('hash' => $hash, 'destination' => $destination));
+			$page = $this->pageRepositoryAccessor->get()->findOneBy(array('hash' => $hash, 'destination' => $destination));
+			if(!$page) {
+				$page = FALSE;
+			}
+
+			$this->page = $page;
 		}
 		return $this->page;
 	}

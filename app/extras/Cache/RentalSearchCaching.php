@@ -105,6 +105,8 @@ class RentalSearchCaching extends \Nette\Object {
 			}
 		}
 
+		$this->cacheContent[RentalSearchService::ALL][$rental->getId()] = $rental->getId();
+
 		$this->save();
 	}
 }

@@ -202,12 +202,15 @@ class OptionGenerator
 
 	/**
 	 * @param $count
+	 * @param \Service\Rental\RentalSearchService $search
 	 *
 	 * @return ArrayHash
 	 */
-	public function generateLocationLinks($count)
+	public function generateLocationLinks($count, RentalSearchService $search)
 	{
-		$top = $this->topLocations->getResults($count);
+		$topLocation = $this->topLocations;
+		$topLocation->setSearch($search);
+		$top = $topLocation->getResults($count);
 		$locations = $this->em->getRepository(LOCATION_ENTITY)->findById(array_keys($top));
 
 		$links = [];

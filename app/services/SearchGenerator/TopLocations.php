@@ -5,22 +5,62 @@ namespace SearchGenerator;
 
 use Entity\Location\Location;
 use Extras\Cache\Cache;
+use Service\Rental\IRentalSearchServiceFactory;
 use Service\Rental\RentalSearchService;
 
-class TopLocations {
+class TopLocations
+{
 
 	/**
-	 * @var mixed|NULL
+	 * @var \Entity\Location\Location
 	 */
-	protected $cacheData;
+	protected $primaryLocation;
+
+
+	/**
+	 * @var \Service\Rental\IRentalSearchServiceFactory
+	 */
+	protected $rentalSearchFactory;
+
+
+	/**
+	 * @var \Service\Rental\RentalSearchService
+	 */
+	protected $search;
+
 
 	/**
 	 * @param \Entity\Location\Location $primaryLocation
-	 * @param \Extras\Cache\Cache $rentalSearchCache
+	 * @param \Service\Rental\IRentalSearchServiceFactory $rentalSearchFactory
 	 */
-	public function __construct(Location $primaryLocation, Cache $rentalSearchCache) {
-		$this->cacheData = $rentalSearchCache->load($primaryLocation->getId());
+	public function __construct(Location $primaryLocation, IRentalSearchServiceFactory $rentalSearchFactory)
+	{
+		$this->primaryLocation = $primaryLocation;
+		$this->rentalSearchFactory = $rentalSearchFactory;
 	}
+
+
+	/**
+	 * @param RentalSearchService $search
+	 */
+	public function setSearch(RentalSearchService $search)
+	{
+		$this->search = $search;
+	}
+
+
+	/**
+	 * @return \Service\Rental\RentalSearchService
+	 */
+	public function getSearch()
+	{
+		if (!$this->search) {
+			$this->search = $this->rentalSearchFactory->create($this->primaryLocation);
+		}
+
+		return $this->search;
+	}
+
 
 	/**
 	 * @param null $maxResults
@@ -29,16 +69,18 @@ class TopLocations {
 	 */
 	public function getResults($maxResults = NULL)
 	{
-		$locations = $this->cacheData[RentalSearchService::CRITERIA_LOCATION];
+		$search = $this->getSearch();
+		$locations = $search->getCollectedResults(RentalSearchService::CRITERIA_LOCATION);
 
 		$locations = $this->sortArrayByNumberOfItems($locations);
 
-		if(is_numeric($maxResults)) {
+		if (is_numeric($maxResults)) {
 			$locations = array_chunk($locations, $maxResults, TRUE)[0];
 		}
 
 		return $locations;
 	}
+
 
 	/**
 	 * @param $array
@@ -47,7 +89,10 @@ class TopLocations {
 	 */
 	protected function sortArrayByNumberOfItems($array)
 	{
-		uasort($array, function($a, $b) { return count($b) - count($a); });
+		uasort($array, function ($a, $b) {
+			return count($b) - count($a);
+		});
+
 		return $array;
 	}
 
