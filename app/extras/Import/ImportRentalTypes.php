@@ -14,129 +14,83 @@ use Nette\Application as NA,
 
 class ImportRentalTypes extends BaseImport {
 
-	protected $skPlurals = array(
-		'apartment' => array('apartmán', 'apartmány'),
-		'mountain hotel' => array('horský hotel', 'horské hotely'),
-		'hostel' => array('hostel', 'hostely'),
-		'hotel' => array('hotel', 'hotely'),
-		'houseboat' => array('hausbót', 'hausbóty'),
-		'chalet' => array('chata', 'chaty'),
-		'campsite' => array('kemping', 'kempingy'),
-		'spas' => array('kúpele', 'kúpele'),
-		'motel' => array('motel', 'motely'),
-		'guesthouse' => array('ubytovňa', 'ubytovne'),
-		'private lodging' => array('privát', 'priváty'),
-		'ranch' => array('ranč', 'ranče'),
-		'recreational home' => array('ubytovňa', 'ubytovne'),
-		'mansion' => array('', ''),
-		'studio' => array('štúdio', 'štúdiá'),
-		'dormitory' => array('internát', 'internáty'),
-		'villa' => array('vila', 'vily'),
-		'apartment house' => array('apartmánový dom', 'apartmánové domy'),
-		'cottage' => array('chata', 'chaty'),
-		'timbered house' => array('drevenica', 'drevenice'),
-		'cabin' => array('chata', 'chaty'),
-		'holiday home' => array('výletný dom', 'výletné domy'),
-		'tourist dormitory' => array('', ''),
-		'boat' => array('loď', 'lode'),
-		'barn' => array('stodola', 'stodoly'),
-		'bungalow' => array('bungalov', 'bungalovy'),
-		'castle' => array('zámok', 'zámky'),
-		'condo' => array('', ''),
-		'estate' => array('', ''),
-		'farmhouse' => array('farma', 'farmy'),
-		'house' => array('dom', 'domy'),
-		'townhome' => array('mestský dom', 'mestské domy'),
-		'yacht' => array('jachta', 'jachty'),
-		'B&B' => array('', ''),
-		'caravan' => array('karavan', 'karavany'),
-		'cave house' => array('jaskynný dom', 'jaskynné domy'),
-		'chateau' => array('chata', 'chaty'),
-		'manor' => array('', ''),
-		'log cabin' => array('drevenica', 'drevenice'),
+	protected $rentalTypes = array(
+		array('hotel', 'hotels', 'hotel', 'hotely', array(2, 4, 412)),
+		array('spa', 'spas', 'kupele', 'kupele', array(8)),
+		array('villa', 'villas', 'vila', 'vily', array(17)),
+		array('castle', 'castles', 'zámok', 'zámky', array(347, 348, 349)),
+		array('camp', 'camps', 'kemp', 'kempy', array(7, 351)),
+		array('apartment', 'apartments', 'apartmán', 'apartmány', array(1, 19)),
+		array('pension', 'pensions', 'penzión', 'penzióny', array(10)),
+		array('motel', 'motels', 'motel', 'motely', array(9)),
+		array('hostel', 'hostels', 'hostel', 'hostely', array(3)),
+		array('cottage', 'cottages', 'chata', 'chaty', array(6, 20, 21, 22, 409)),
+		array('condo', 'condos', 'byt', 'byty', array(11, 15, 410)),
+		array('house', 'houses', 'dom', 'domy', array(13, 14, 16, 23, 24, 358, 359, 405, 411)),
+		array('farmhouse', 'farmhouses', 'farma', 'farmy', array(12, 406, 407, 408)),
+		array('other', 'others', 'iné', 'iné', array(5, 350)),
 	);
 
-	protected $haveClassification = array('apartment', 'hotel', 'motel', 'mountain-hotel');
+	protected $rentalPairing = array();
 
-	protected $oldEnRentalTypes = array(
-
-	);
+	protected $haveClassification = array('apartment', 'hotel', 'motel');
 
 	public function doImport($subsection = NULL) {
+
+		$context = $this->context;
+		$model = $this->model;
+
+		$sk = $context->languageRepositoryAccessor->get()->findOneByIso('sk');
+		$en = $context->languageRepositoryAccessor->get()->findOneByIso('en');
 
 		$phrase = $this->createPhraseType('\Rental\Type', 'name', 'ACTIVE');
 		$questionPhraseType = $this->createPhraseType('\Rental\interviewQuestion', 'question', 'ACTIVE');
 		$this->model->persist($phrase);
 		$this->model->flush();
 
-		$r = qf('select * from objects_types_new limit 1');
-		if (!isset($r['trax_en_type_id'])) {
-			q('ALTER TABLE `objects_types_new` ADD `trax_en_type_id` INT(10)  UNSIGNED  NULL  DEFAULT NULL  AFTER `ppc_enabled`');
-			q('ALTER TABLE `objects_types_new` ADD INDEX (`trax_en_type_id`)');
-		}
-
-		q('update objects_types_new set trax_en_type_id = 0');
-
-		$r = q('select * from objects_types_new');
-		while($x = mysql_fetch_array($r)) {
-			$enTypeId = 0;
-			if ($x['language_id'] == 144) {
-				$enTypeId = qc('select id from objects_types_new where language_id = 38 and associations like "%,'.$x['id'].',%" order by id asc');
-			} else if ($x['language_id'] == 38) {
-				$enTypeId = $x['id'];
-			} else {
-				$skTypeId = array_unique(array_filter(explode(',', $x['associations'])));
-				sort($skTypeId);
-				if (is_array($skTypeId) && count($skTypeId)) {
-					$skTypeId = $skTypeId[0];
-					$enTypeId = qc('select id from objects_types_new where language_id = 38 and associations like "%,'.$skTypeId.',%" order by id asc');
-				}
-			}
-
-			if (isset($this->oldEnRentalTypes[$enTypeId])) $enTypeId = $this->oldEnRentalTypes[$enTypeId];
-			q('update objects_types_new set trax_en_type_id = '.$enTypeId.' where id = '.$x['id']);
-		}
-
-		$sk = $this->context->languageRepositoryAccessor->get()->findOneByIso('sk');
-
-		$r = q('select * from objects_types_new where language_id = 38');
-		while($x = mysql_fetch_array($r)) {
+		foreach ($this->rentalTypes as $key => $value) {
 			$rentalType = $this->context->rentalTypeEntityFactory->create();
-			$rentalType->name = $this->createPhraseFromString('\Rental\Type', 'name', 'ACTIVE', $x['name'], 'en');
-			$rentalType->slug = $x['name'];
+			$rentalType->name = $this->createPhraseFromString('\Rental\Type', 'name', 'ACTIVE', $value[0], 'en');
+			$rentalType->slug = $value[0];
 
 			// classification
 			if (in_array($rentalType->slug, $this->haveClassification)) {
 				$rentalType->classification = 1;
 			}
-			
-			if (strlen($this->skPlurals[$x['name']][0]) != 0) {
-				$skTranslation = $rentalType->name->createTranslation($sk);
-				$variations[0][0]['nominative'] = $this->skPlurals[$x['name']][0];
-				$variations[1][0]['nominative'] = $this->skPlurals[$x['name']][1];
-				$skTranslation->updateVariations($variations);
-			}
-			$rentalType->oldId = $x['id'];
+
+			$variations = array();
+			$enTranslation = $rentalType->name->createTranslation($en);
+			$variations[0][0]['nominative'] = $value[0];
+			$variations[1][0]['nominative'] = $value[1];
+			$enTranslation->updateVariations($variations);
+
+			$variations = array();
+			$skTranslation = $rentalType->name->createTranslation($sk);
+			$variations[0][0]['nominative'] = $value[2];
+			$variations[1][0]['nominative'] = $value[3];
+			$skTranslation->updateVariations($variations);
+
 			$this->model->persist($rentalType);
 		}
 		$this->model->flush();
 
-		$r = q('select * from objects_types_new where language_id <> 38 && trax_en_type_id > 0');
+		$r = q('select * from objects_types_new');
 		while($x = mysql_fetch_array($r)) {
-			$rentalType = $this->context->rentalTypeRepositoryAccessor->get()->findOneByOldId($x['trax_en_type_id']);
-			
-			if (!$rentalType) throw new \Nette\UnexpectedValueException('nenasiel som EN rental Type oldID: '.$x['trax_en_type_id']); 
-			
-			$thisLanguage = $this->context->languageRepositoryAccessor->get()->findOneByOldId($x['language_id']);
-			if (!$thisLanguage) continue;
-
-			$thisPhrase = $this->context->phraseDecoratorFactory->create($rentalType->name);
-			if (!$thisPhrase->hasTranslation($thisLanguage)) {
-				$thisTranslation = $thisPhrase->createTranslation($thisLanguage, $x['name']);
+			$newTypeId = NULL;
+			if ($x['language_id'] == 144) {
+				$newTypeId = $this->findSkInNew($x['id']);
+			} else {
+				$skTypeId = array_unique(array_filter(explode(',', $x['associations'])));
+				sort($skTypeId);
+				if (isset($skTypeId[0])) $newTypeId = $this->findSkInNew($skTypeId[0]);
 			}
-			$this->model->persist($rentalType);
+
+			if ($newTypeId !== NULL) {
+				$this->rentalPairing[$x['id']] = $this->rentalTypes[$newTypeId][0];
+			}
 		}
-		$this->model->flush();
+
+		$this->saveRentalPairing();
 
 		// Rental Interview Questions
 		$r = q('select * from interview_questions');
@@ -148,6 +102,17 @@ class ImportRentalTypes extends BaseImport {
 		}
 		$this->model->flush();
 
+	}
+
+	protected function findSkInNew($oldId) {
+		foreach ($this->rentalTypes as $key => $value) {
+			if (in_array($oldId, $value[4])) return $key;
+		}
+		return NULL;
+	}
+
+	public function saveRentalPairing() {
+		qNew('update __importVariables set value ="'.mysql_real_escape_string(\Nette\Utils\Json::encode($this->rentalPairing)).'"  where id = 2');
 	}
 
 }

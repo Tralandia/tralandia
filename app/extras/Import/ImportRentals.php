@@ -15,8 +15,13 @@ use Nette\Application as NA,
 
 class ImportRentals extends BaseImport {
 
+	protected $rentalPairing = array();
+
 	public function doImport($subsection = NULL) {
 		//\Extras\Models\Service::flush(TRUE);
+
+		$this->loadRentalPairing();
+		//d($this->rentalPairing); exit;
 
 		$context = $this->context;
 		$model = $this->model;
@@ -29,12 +34,6 @@ class ImportRentals extends BaseImport {
 		$interviewQuestionPhraseType = $this->createPhraseType('\Rental\InterviewQuestion', 'question');
 
 		$model->flush();
-
-
-		$r = q('select * from objects_types_new where trax_en_type_id > 0');
-		while($x = mysql_fetch_array($r)) {
-			$oldRentalTypesEn[$x['id']] = $x['trax_en_type_id'];
-		}
 
 		$locationTypes = array();
 		$locationTypes['country'] = $context->locationTypeRepositoryAccessor->get()->findOneBySlug('country');
@@ -95,9 +94,8 @@ class ImportRentals extends BaseImport {
 
 			$rental->status = $x['live'] == 1 ? $rental::STATUS_LIVE : $rental::STATUS_DRAFT;
 			$oldRentalType = current(explode(',,', substr($x['objects_types_new'], 2, -2)));
-			
-			if (isset($oldRentalTypesEn[$oldRentalType])) {
-				$rental->setType($context->rentalTypeRepositoryAccessor->get()->findOneByOldId($oldRentalTypesEn[$oldRentalType]));
+			if (isset($this->rentalPairing[$oldRentalType])) {
+				$rental->setType($context->rentalTypeRepositoryAccessor->get()->findOneBySlug($this->rentalPairing[$oldRentalType]));
 			}
 
 			// Address
@@ -406,6 +404,13 @@ class ImportRentals extends BaseImport {
 		}
 		$model->flush();
 		$this->saveVariables();
+	}
+
+	public function loadRentalPairing() {
+		$t = qNew('select value from __importVariables where id = 2');
+		$t = mysql_fetch_array($t);
+		$t = $t[0];
+		$this->rentalPairing = \Nette\Utils\Json::decode($t, TRUE);
 	}
 
 }
