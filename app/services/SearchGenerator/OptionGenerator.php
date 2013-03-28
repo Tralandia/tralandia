@@ -209,8 +209,10 @@ class OptionGenerator
 	public function generateLocationLinks($count, RentalSearchService $search)
 	{
 		$topLocation = $this->topLocations;
-		$topLocation->setSearch($search);
-		$top = $topLocation->getResults($count);
+		$top = $topLocation->getResults($count, $search);
+
+		if(!count($top)) return ArrayHash::from([]);
+
 		$locations = $this->em->getRepository(LOCATION_ENTITY)->findById(array_keys($top));
 
 		$links = [];
@@ -330,7 +332,7 @@ class OptionGenerator
 	 *
 	 * @return array
 	 */
-	public function generatePriceLinks(Currency $currency, RentalSearchService $search)
+	public function generatePriceLinks(Currency $currency, RentalSearchService $search, $from = NULL)
 	{
 		$searchInterval = $currency->getSearchInterval();
 
@@ -338,7 +340,7 @@ class OptionGenerator
 
 		$options = array();
 		$iso = $currency->getIso();
-		for ($i = 1; $i < 10; $i++) {
+		for ($i = $from ? : 1; $i < 10; $i++) {
 			$key = $i * $searchInterval;
 			if (!isset($collection[$key])) continue;
 

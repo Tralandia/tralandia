@@ -39,16 +39,6 @@ class TopLocations
 		$this->rentalSearchFactory = $rentalSearchFactory;
 	}
 
-
-	/**
-	 * @param RentalSearchService $search
-	 */
-	public function setSearch(RentalSearchService $search)
-	{
-		$this->search = $search;
-	}
-
-
 	/**
 	 * @return \Service\Rental\RentalSearchService
 	 */
@@ -64,18 +54,24 @@ class TopLocations
 
 	/**
 	 * @param null $maxResults
+	 * @param \Service\Rental\RentalSearchService $search
 	 *
 	 * @return mixed
 	 */
-	public function getResults($maxResults = NULL)
+	public function getResults($maxResults = NULL, RentalSearchService $search = NULL)
 	{
-		$search = $this->getSearch();
+		if(!$search) {
+			$search = $this->getSearch();
+		}
+
 		$locations = $search->getCollectedResults(RentalSearchService::CRITERIA_LOCATION);
 
-		$locations = $this->sortArrayByNumberOfItems($locations);
+		if (count($locations)) {
+			$locations = $this->sortArrayByNumberOfItems($locations);
 
-		if (is_numeric($maxResults)) {
-			$locations = array_chunk($locations, $maxResults, TRUE)[0];
+			if (is_numeric($maxResults)) {
+				$locations = array_chunk($locations, $maxResults, TRUE)[0];
+			}
 		}
 
 		return $locations;
