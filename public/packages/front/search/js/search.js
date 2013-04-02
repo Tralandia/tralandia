@@ -42,8 +42,11 @@
 					 callback({id:0,name:$(element).attr('data-placeholder')});
 				},
 
+
 			    placeholder: placeholder,
-			    minimumInputLength: 3,			    
+			    minimumInputLength: 3,
+			 	// data:[{id:0,type:'other',name:'enhancement'},{id:1,type:'other',name:'bug'},{id:2,type:'other',name:'duplicate'},{id:3,type:'other',name:'invalid'},{id:4,type:'other',name:'wontfix'}],
+
 			    ajax: { 
 			        url: url,
 			        dataType: 'json',
@@ -54,7 +57,6 @@
 			        },
 			        results: function (data, page) { 
 			        	
-			        	console.log(data);
 			        	
 			        	var r = [];
 
@@ -115,8 +117,7 @@
 			    },
 			   
 			    
-			    escapeMarkup: function (m) { return m; }	    
-
+			    escapeMarkup: function (m) { return m; }
 			});
 
 
@@ -271,7 +272,7 @@ $(function(){
 	_updatePriceTo();
 // $('#frm-searchBar-searchForm-rentalType').select2();
 
-	// $('.select2[data-autocomplete-url]').searchFormSuggest();
+	$('.select2[data-autocomplete-url]').searchFormSuggest();
 
 
 
