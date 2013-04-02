@@ -16,9 +16,11 @@
 
 					{if $loggedUser}
 						<li class="headerIcon">
-							<a href="{plink :Owner:Rental:firstRental}">{$loggedUser->getLogin()}</a>
+							<a href="{plink :Owner:User:edit}">{$loggedUser->getLogin()}</a>
 						</li>
-
+						<li class="headerIcon">
+							<a href="{plink :Owner:Rental:firstRental}">{_o100117}</a>
+						</li>
 						<li class="headerIcon">
 
 							<a href="{plink Sign:out}" class="last">{_o1594}</a>
