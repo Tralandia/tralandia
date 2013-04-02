@@ -93,11 +93,24 @@ class ImportRentalTypes extends BaseImport {
 		$this->saveRentalPairing();
 
 		// Rental Interview Questions
-		$r = q('select * from interview_questions');
+		$r = q('select * from interview_questions where id < 11');
+		$newFeQuestions = array(
+			1 => 100124,
+			2 => 100125,
+			3 => 100126,
+			4 => 100127,
+			5 => 100128,
+			6 => 100129,
+			7 => 100130,
+			8 => 100131,
+			9 => 100132,
+			10 => 100133,
+		);
 		while ($x = mysql_fetch_array($r)) {
 			$question = $this->context->rentalInterviewQuestionRepositoryAccessor->get()->createNew(FALSE);
 			$question->oldId = $x['id'];
 			$question->question = $this->createNewPhrase($questionPhraseType, $x['name_dic_id']);
+			$question->questionEn = $context->phraseRepositoryAccessor->get()->findOneByOldId($newFeQuestions[$x['id']]);;
 			$this->model->persist($question);
 		}
 		$this->model->flush();
