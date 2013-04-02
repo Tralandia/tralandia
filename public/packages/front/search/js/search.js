@@ -29,15 +29,21 @@
 			var self = this;
 			var $self = $(this);
 
-			var url = $self.attr('data-url');
+			var url = $(this).attr('data-autocomplete-url');
 
-			var placeholder = $self.attr('data-placeholder');
+			var placeholder = $(this).attr('data-placeholder');
 
-			var conditionsText = $self.attr('data-conditions-text');
+			// var conditionsText = $('.sidebarLocation').attr('data-conditions-text');
 
-			$('#serachSidebar').select2({
+
+			$(this).select2({
+
+				initSelection: function(element, callback) {					        		
+					 callback({id:0,name:$(element).attr('data-placeholder')});
+				},
+
 			    placeholder: placeholder,
-			    minimumInputLength: 3,
+			    minimumInputLength: 3,			    
 			    ajax: { 
 			        url: url,
 			        dataType: 'json',
@@ -80,7 +86,8 @@
 
 			    	switch(r.type){
 			    		case 'counties':
-			    			return '<img class="flag" src="'+r.icon+'"> '+r.name;
+			    			return r.name;
+			    			// return '<img class="flag" src="'+r.icon+'"> '+r.name;
 			    			break;
 			    		case 'other':
 			    			return r.name;
@@ -100,17 +107,17 @@
 
 			    	//console.log(r);
 			    	if(typeof r.icon == 'string'){
-			    		return '<img class="flag" src="'+r.icon+'"> '+r.name;	
+			    		return r.name;	
+			    		// return '<img class="flag" src="'+r.icon+'"> '+r.name;	
 			    	} else {
 			    		return r.name;
 			    	}
 			    },
 			   
 			    
-			    escapeMarkup: function (m) { return m; }
+			    escapeMarkup: function (m) { return m; }	    
 
 			});
-
 
 
 		});
@@ -264,9 +271,9 @@ $(function(){
 	_updatePriceTo();
 // $('#frm-searchBar-searchForm-rentalType').select2();
 
-	$('.searchForm').searchFormSuggest({
-		dropdownCssClass: 'searchSelectOrder'
-	});
+	// $('.select2[data-autocomplete-url]').searchFormSuggest();
+
+
 
 	$('.searchForm .select2.disabledFulltext').select2({
 		dropdownCssClass: 'searchSelect',
