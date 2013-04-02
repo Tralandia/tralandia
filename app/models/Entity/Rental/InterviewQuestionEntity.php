@@ -35,16 +35,14 @@ class InterviewQuestion extends \Entity\BaseEntityDetails
 
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */
+	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()
 	{
 		parent::__construct();
 	}
-
-
+		
 	/**
 	 * @param \Entity\Phrase\Phrase
-	 *
 	 * @return \Entity\Rental\InterviewQuestion
 	 */
 	public function setQuestion(\Entity\Phrase\Phrase $question)
@@ -53,8 +51,7 @@ class InterviewQuestion extends \Entity\BaseEntityDetails
 
 		return $this;
 	}
-
-
+		
 	/**
 	 * @return \Entity\Phrase\Phrase|NULL
 	 */
@@ -62,11 +59,28 @@ class InterviewQuestion extends \Entity\BaseEntityDetails
 	{
 		return $this->question;
 	}
+		
+	/**
+	 * @param \Entity\Phrase\Phrase
+	 * @return \Entity\Rental\InterviewQuestion
+	 */
+	public function setQuestionFe(\Entity\Phrase\Phrase $questionFe)
+	{
+		$this->questionFe = $questionFe;
 
-
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Phrase\Phrase|NULL
+	 */
+	public function getQuestionFe()
+	{
+		return $this->questionFe;
+	}
+		
 	/**
 	 * @param integer
-	 *
 	 * @return \Entity\Rental\InterviewQuestion
 	 */
 	public function setSort($sort)
@@ -75,8 +89,7 @@ class InterviewQuestion extends \Entity\BaseEntityDetails
 
 		return $this;
 	}
-
-
+		
 	/**
 	 * @return integer|NULL
 	 */

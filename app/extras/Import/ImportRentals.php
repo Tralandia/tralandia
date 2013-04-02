@@ -250,6 +250,7 @@ class ImportRentals extends BaseImport {
 				}
 
 				foreach ($answersNew as $oldQuestionId => $answers) {
+					if ($oldQuestionId == 11) continue;
 
 					$answerEntity = $context->rentalInterviewAnswerRepositoryAccessor->get()->createNew(FALSE);
 					$answerEntity->setQuestion($interviewQuestions[$oldQuestionId]);

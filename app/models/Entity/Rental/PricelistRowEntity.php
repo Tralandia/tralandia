@@ -93,16 +93,14 @@ class PricelistRow extends \Entity\BaseEntity
 
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */
+	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()
 	{
 		parent::__construct();
 	}
-
-
+		
 	/**
 	 * @param \Entity\Rental\Rental
-	 *
 	 * @return \Entity\Rental\PricelistRow
 	 */
 	public function setRental(\Entity\Rental\Rental $rental)
@@ -111,8 +109,7 @@ class PricelistRow extends \Entity\BaseEntity
 
 		return $this;
 	}
-
-
+		
 	/**
 	 * @return \Entity\Rental\PricelistRow
 	 */
@@ -122,8 +119,7 @@ class PricelistRow extends \Entity\BaseEntity
 
 		return $this;
 	}
-
-
+		
 	/**
 	 * @return \Entity\Rental\Rental|NULL
 	 */
@@ -131,11 +127,9 @@ class PricelistRow extends \Entity\BaseEntity
 	{
 		return $this->rental;
 	}
-
-
+		
 	/**
 	 * @param integer
-	 *
 	 * @return \Entity\Rental\PricelistRow
 	 */
 	public function setSort($sort)
@@ -144,8 +138,7 @@ class PricelistRow extends \Entity\BaseEntity
 
 		return $this;
 	}
-
-
+		
 	/**
 	 * @return \Entity\Rental\PricelistRow
 	 */
@@ -155,8 +148,7 @@ class PricelistRow extends \Entity\BaseEntity
 
 		return $this;
 	}
-
-
+		
 	/**
 	 * @return integer|NULL
 	 */
@@ -164,11 +156,9 @@ class PricelistRow extends \Entity\BaseEntity
 	{
 		return $this->sort;
 	}
-
-
+		
 	/**
 	 * @param integer
-	 *
 	 * @return \Entity\Rental\PricelistRow
 	 */
 	public function setRoomCount($roomCount)
@@ -177,8 +167,7 @@ class PricelistRow extends \Entity\BaseEntity
 
 		return $this;
 	}
-
-
+		
 	/**
 	 * @return integer|NULL
 	 */
@@ -186,11 +175,9 @@ class PricelistRow extends \Entity\BaseEntity
 	{
 		return $this->roomCount;
 	}
-
-
+		
 	/**
 	 * @param \Entity\Rental\RoomType
-	 *
 	 * @return \Entity\Rental\PricelistRow
 	 */
 	public function setRoomType(\Entity\Rental\RoomType $roomType)
@@ -199,8 +186,7 @@ class PricelistRow extends \Entity\BaseEntity
 
 		return $this;
 	}
-
-
+		
 	/**
 	 * @return \Entity\Rental\PricelistRow
 	 */
@@ -210,8 +196,7 @@ class PricelistRow extends \Entity\BaseEntity
 
 		return $this;
 	}
-
-
+		
 	/**
 	 * @return \Entity\Rental\RoomType|NULL
 	 */
@@ -219,11 +204,9 @@ class PricelistRow extends \Entity\BaseEntity
 	{
 		return $this->roomType;
 	}
-
-
+		
 	/**
 	 * @param integer
-	 *
 	 * @return \Entity\Rental\PricelistRow
 	 */
 	public function setBedCount($bedCount)
@@ -232,8 +215,7 @@ class PricelistRow extends \Entity\BaseEntity
 
 		return $this;
 	}
-
-
+		
 	/**
 	 * @return integer|NULL
 	 */
@@ -241,11 +223,9 @@ class PricelistRow extends \Entity\BaseEntity
 	{
 		return $this->bedCount;
 	}
-
-
+		
 	/**
 	 * @param integer
-	 *
 	 * @return \Entity\Rental\PricelistRow
 	 */
 	public function setExtraBedCount($extraBedCount)
@@ -254,8 +234,7 @@ class PricelistRow extends \Entity\BaseEntity
 
 		return $this;
 	}
-
-
+		
 	/**
 	 * @return integer|NULL
 	 */

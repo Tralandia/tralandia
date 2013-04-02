@@ -110,7 +110,7 @@ class ImportRentalTypes extends BaseImport {
 			$question = $this->context->rentalInterviewQuestionRepositoryAccessor->get()->createNew(FALSE);
 			$question->oldId = $x['id'];
 			$question->question = $this->createNewPhrase($questionPhraseType, $x['name_dic_id']);
-			$question->questionEn = $context->phraseRepositoryAccessor->get()->findOneByOldId($newFeQuestions[$x['id']]);;
+			$question->questionFe = $context->phraseRepositoryAccessor->get()->findOneByOldId($newFeQuestions[$x['id']]);;
 			$this->model->persist($question);
 		}
 		$this->model->flush();
