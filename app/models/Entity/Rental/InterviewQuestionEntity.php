@@ -21,6 +21,12 @@ class InterviewQuestion extends \Entity\BaseEntityDetails
 	protected $question;
 
 	/**
+	 * @var Collection
+	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
+	 */
+	protected $questionFe;
+
+	/**
 	 * @var integer
 	 * @ORM\Column(type="integer")
 	 */
