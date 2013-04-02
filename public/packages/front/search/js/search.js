@@ -272,7 +272,7 @@ $(function(){
 	_updatePriceTo();
 // $('#frm-searchBar-searchForm-rentalType').select2();
 
-	$('.select2[data-autocomplete-url]').searchFormSuggest();
+	$('[data-autocomplete-url]').searchFormSuggest();
 
 
 
