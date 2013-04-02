@@ -20,6 +20,9 @@ class ImportRentalInformation extends BaseImport {
 		$context = $this->context;
 		$model = $this->model;
 
+		$en = $context->languageRepositoryAccessor->get()->findOneByIso('en');
+		$sk = $context->languageRepositoryAccessor->get()->findOneByIso('sk');
+
 
 		$nameDictionaryType = $this->createPhraseType('\Rental\Information', 'name', 'NATIVE', array());
 		$model->flush();
@@ -62,19 +65,19 @@ class ImportRentalInformation extends BaseImport {
 		}
 
 		// Import Room types
-		$nameDictionaryType = $this->createPhraseType('\Rental\RoomType', 'name', 'NATIVE', array());
+		$nameDictionaryType = $this->createPhraseType('\Rental\RoomType', 'name', 'NATIVE', array('pluralVariationsRequired' => TRUE));
 		$model->flush();
 
 		$roomTypes = array(
-			'room' => array('en' => 'room'),
-			'apartment' => array('en' => 'apartment'),
-			'building' => array('en' => 'building'),
+			'room' => 100118,
+			'apartment' => 100119,
+			'building' => 100120,
 		);
 
 		foreach ($roomTypes as $key => $value) {
 			$t = $context->rentalRoomTypeRepositoryAccessor->get()->createNew(FALSE);
 
-			$t->name = $this->createNewPhrase($nameDictionaryType);
+			$t->name = $context->phraseRepositoryAccessor->get()->findOneByOldId($value);
 			$t->slug = $key;
 			$model->persist($t);
 		}
