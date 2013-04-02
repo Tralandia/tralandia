@@ -38,7 +38,7 @@ class Role extends \Entity\BaseEntity {
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\User\Role", cascade={"persist"})
 	 */
-	protected $parent;
+//	protected $parent;
 
 	/**
 	 * @var string

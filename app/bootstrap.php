@@ -65,8 +65,9 @@ FormContainer::extensionMethod('addRentalTypeContainer',
 
 FormContainer::extensionMethod('addRentalPhotosContainer',
 	function (FormContainer $container, $name, $rental = NULL) use ($dic) {
-		$rentalImageManager = $dic->getService('rentalImageManager');
-		return $container[$name] = new \Extras\Forms\Container\RentalPhotosContainer($rental, $rentalImageManager);
+		$imageManager = $dic->getService('rentalImageManager');
+		$imageRepository = $dic->getService('rentalImageRepositoryAccessor')->get();
+		return $container[$name] = new \Extras\Forms\Container\RentalPhotosContainer($rental, $imageManager, $imageRepository);
 });
 
 

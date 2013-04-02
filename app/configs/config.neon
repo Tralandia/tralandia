@@ -157,6 +157,8 @@ services:
 	rentalRegistrationsStats: Service\Statistics\RentalRegistrations(@rentalRepositoryAccessor::get(), @locationRepositoryAccessor::get())
 	rentalCreator: Service\Rental\RentalCreator(@rentalRepositoryAccessor::get())
 	addressCreator: Service\Contact\AddressCreator
+	userCreator: User\UserCreator
+	findOrCreateUser: User\FindOrCreateUser(@userRepositoryAccessor::get())
 
 	addressNormalizer: Service\Contact\AddressNormalizer
 
@@ -168,6 +170,7 @@ services:
 	searchOptionGenerator: SearchGenerator\OptionGenerator
 	searchGeneratorTopLocations: SearchGenerator\TopLocations(@environment::getPrimaryLocation())
 	searchGeneratorSpokenLanguages: SearchGenerator\SpokenLanguages(@environment::getPrimaryLocation(), @rentalSearchCache)
+
 
 	# ==============================
 	# ==================== FORMS HANDLERS
