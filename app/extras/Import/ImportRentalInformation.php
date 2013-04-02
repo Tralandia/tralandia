@@ -69,17 +69,15 @@ class ImportRentalInformation extends BaseImport {
 		$model->flush();
 
 		$roomTypes = array(
-			'room' => array('en' => 'room', 'sk' => 'izba'),
-			'apartment' => array('en' => 'apartment', 'sk' => 'apartmán'),
-			'building' => array('en' => 'building', 'sk' => 'budova'),
+			'room' => 100118,
+			'apartment' => 100119,
+			'building' => 100120,
 		);
 
 		foreach ($roomTypes as $key => $value) {
 			$t = $context->rentalRoomTypeRepositoryAccessor->get()->createNew(FALSE);
 
-			$t->name = $this->createNewPhrase($nameDictionaryType);
-			$t->name->createTranslation($en, $value['en']);
-			$t->name->createTranslation($sk, $value['sk']);
+			$t->name = $context->phraseRepositoryAccessor->get()->findOneByOldId($value);;
 			$t->slug = $key;
 			$model->persist($t);
 		}
