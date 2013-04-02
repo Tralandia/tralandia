@@ -14,14 +14,22 @@ class SimpleAcl extends Permission {
 	{
 		$assertion = new MyAssertion($user);
 
-		$roles = $roleRepository->forAcl();
+		$roles = $roleRepository->findAll();
 		foreach($roles as $role) {
-			$this->addRole($role);
+			$parent = NULL;
+			if($role->hasParent()) {
+				$parent = $role->getParent()->getSlug();
+			}
+			$slug = $role->getSlug();
+			$this->addRole($slug, $parent);
 		}
 
 		$resources = [];
 		$resources[] = $ownerModule = 'OwnerModule';
 		$resources[] = $adminModule = 'AdminModule';
+
+		$resources[] = $signPresenter = 'Sign';
+		$resources[] = $registrationPresenter = 'Registration';
 
 		$resources[] = $rentalEntity = 'Entity\Rental\Rental';
 		$resources[] = $translationEntity = 'Entity\Phrase\Translation';
@@ -32,6 +40,9 @@ class SimpleAcl extends Permission {
 
 		$this->allow(RoleEntity::OWNER, $ownerModule);
 		$this->allow(RoleEntity::OWNER, $rentalEntity, self::ALL, [$assertion, 'owner']);
+
+		$this->deny(RoleEntity::LOGGED, [$signPresenter, $registrationPresenter], self::ALL);
+		$this->allow(RoleEntity::LOGGED, $signPresenter, 'out');
 
 		$this->allow(RoleEntity::TRANSLATOR, $translationEntity, 'translate', [$assertion, 'translate']);
 
