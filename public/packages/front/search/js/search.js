@@ -133,7 +133,7 @@ function updateCriteriaCount(){
 
 	var url = generateRedirectUrl(true);
 
-	if($('.searchForm').find("select[value][value!='']:not(.sidebarCountry)").serialize().length > 0){
+	if($('.searchForm').find("select[value][value!='']:not(.sidebarCountry),input[type=hidden]").serialize().length > 0){
 		$.ajax({
 		  url: url,
 		}).done(function(d) {
@@ -165,9 +165,12 @@ function generateRedirectUrl(count){
 
 	var path = [];
 
-	$.each($('.searchForm select.path:not(.selectRedirect)').serializeArray(),function(k,v){
+	$.each($('.searchForm select.path:not(.selectRedirect),input[type=hidden]').serializeArray(),function(k,v){
 		path.push(v.value);
 	});
+
+
+
 
 	// remove empty eements from array
 	path = $.grep(path,function(n){
@@ -189,6 +192,7 @@ function generateRedirectUrl(count){
 			url+='&do=searchBar-getSearchCount';
 		}
 	}
+	
 
 	return url;
 	// 
@@ -203,21 +207,25 @@ function extractDomainUrl(url){
 
 function updateSerachLinkUrl(){
 
+
+
 		var url = '/'+generateRedirectUrl(false);
 
 		if(url == '/' ){
-		
+			
 		}
 
 		if('http://'+document.domain+'/'+generateRedirectUrl(false) == location.href) {
 			url = '#';
 		} 	
 
+
 		$('#searchControlLink').attr('href',url);
 		var link = $('#searchControlLink')[0].outerHTML;
 		var parent = $('#searchControlLink').parent();
 			$('#searchControlLink').remove();
 			parent.append(link);
+
 			
 }
 
@@ -311,8 +319,7 @@ $(function(){
 
 
 
-
-	$('.searchForm .select2').on('change',function(e){
+	$('.searchForm .select2 , input[data-autocomplete-url]').on('change',function(e){
 
 		updateSerachLinkUrl();
 		updateCriteriaCount();
@@ -337,7 +344,7 @@ $(function(){
 	$('.btnSearchClose').on('click',function(){
 		
 		$(this).parent().removeClass('selected');
-		$(this).parent().find('.select2').select2('val','');
+		$(this).parent().find('.select2 , input[data-autocomplete-url]').select2('val','');
 		$(this).remove();
 		$('#select2-drop').remove();
 		updateCriteriaCount();
@@ -348,7 +355,7 @@ $(function(){
 	$('.btnSearchClose').live('click',function(){
 		
 		$(this).parent().removeClass('selected');
-		$(this).parent().find('.select2').select2('val','');
+		$(this).parent().find('.select2 , input[data-autocomplete-url]').select2('val','');
 		$(this).remove();
 		$('#select2-drop').remove();
 		updateCriteriaCount();
