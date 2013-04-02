@@ -35,16 +35,14 @@ class Fulltext extends \Entity\BaseEntity
 
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */
+	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()
 	{
 		parent::__construct();
 	}
-
-
+		
 	/**
 	 * @param \Entity\Rental\Rental
-	 *
 	 * @return \Entity\Rental\Fulltext
 	 */
 	public function setRental(\Entity\Rental\Rental $rental)
@@ -53,8 +51,7 @@ class Fulltext extends \Entity\BaseEntity
 
 		return $this;
 	}
-
-
+		
 	/**
 	 * @return \Entity\Rental\Fulltext
 	 */
@@ -64,8 +61,7 @@ class Fulltext extends \Entity\BaseEntity
 
 		return $this;
 	}
-
-
+		
 	/**
 	 * @return \Entity\Rental\Rental|NULL
 	 */
@@ -73,11 +69,9 @@ class Fulltext extends \Entity\BaseEntity
 	{
 		return $this->rental;
 	}
-
-
+		
 	/**
 	 * @param \Entity\Language
-	 *
 	 * @return \Entity\Rental\Fulltext
 	 */
 	public function setLanguage(\Entity\Language $language)
@@ -86,8 +80,7 @@ class Fulltext extends \Entity\BaseEntity
 
 		return $this;
 	}
-
-
+		
 	/**
 	 * @return \Entity\Rental\Fulltext
 	 */
@@ -97,8 +90,7 @@ class Fulltext extends \Entity\BaseEntity
 
 		return $this;
 	}
-
-
+		
 	/**
 	 * @return \Entity\Language|NULL
 	 */
@@ -106,11 +98,9 @@ class Fulltext extends \Entity\BaseEntity
 	{
 		return $this->language;
 	}
-
-
+		
 	/**
 	 * @param string
-	 *
 	 * @return \Entity\Rental\Fulltext
 	 */
 	public function setValue($value)
@@ -119,8 +109,7 @@ class Fulltext extends \Entity\BaseEntity
 
 		return $this;
 	}
-
-
+		
 	/**
 	 * @return string|NULL
 	 */

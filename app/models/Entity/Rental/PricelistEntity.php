@@ -52,16 +52,14 @@ class Pricelist extends \Entity\BaseEntity
 
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */
+	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()
 	{
 		parent::__construct();
 	}
-
-
+		
 	/**
 	 * @param string
-	 *
 	 * @return \Entity\Rental\Pricelist
 	 */
 	public function setName($name)
@@ -70,8 +68,7 @@ class Pricelist extends \Entity\BaseEntity
 
 		return $this;
 	}
-
-
+		
 	/**
 	 * @return string|NULL
 	 */
@@ -79,11 +76,9 @@ class Pricelist extends \Entity\BaseEntity
 	{
 		return $this->name;
 	}
-
-
+		
 	/**
 	 * @param \Entity\Rental\Rental
-	 *
 	 * @return \Entity\Rental\Pricelist
 	 */
 	public function setRental(\Entity\Rental\Rental $rental)
@@ -92,8 +87,7 @@ class Pricelist extends \Entity\BaseEntity
 
 		return $this;
 	}
-
-
+		
 	/**
 	 * @return \Entity\Rental\Pricelist
 	 */
@@ -103,8 +97,7 @@ class Pricelist extends \Entity\BaseEntity
 
 		return $this;
 	}
-
-
+		
 	/**
 	 * @return \Entity\Rental\Rental|NULL
 	 */
@@ -112,11 +105,9 @@ class Pricelist extends \Entity\BaseEntity
 	{
 		return $this->rental;
 	}
-
-
+		
 	/**
 	 * @param \Entity\Language
-	 *
 	 * @return \Entity\Rental\Pricelist
 	 */
 	public function setLanguage(\Entity\Language $language)
@@ -125,8 +116,7 @@ class Pricelist extends \Entity\BaseEntity
 
 		return $this;
 	}
-
-
+		
 	/**
 	 * @return \Entity\Rental\Pricelist
 	 */
@@ -136,8 +126,7 @@ class Pricelist extends \Entity\BaseEntity
 
 		return $this;
 	}
-
-
+		
 	/**
 	 * @return \Entity\Language|NULL
 	 */
@@ -145,11 +134,9 @@ class Pricelist extends \Entity\BaseEntity
 	{
 		return $this->language;
 	}
-
-
+		
 	/**
 	 * @param string
-	 *
 	 * @return \Entity\Rental\Pricelist
 	 */
 	public function setFilePath($filePath)
@@ -158,8 +145,7 @@ class Pricelist extends \Entity\BaseEntity
 
 		return $this;
 	}
-
-
+		
 	/**
 	 * @return string|NULL
 	 */
@@ -167,11 +153,9 @@ class Pricelist extends \Entity\BaseEntity
 	{
 		return $this->filePath;
 	}
-
-
+		
 	/**
 	 * @param string
-	 *
 	 * @return \Entity\Rental\Pricelist
 	 */
 	public function setOldUrl($oldUrl)
@@ -180,8 +164,7 @@ class Pricelist extends \Entity\BaseEntity
 
 		return $this;
 	}
-
-
+		
 	/**
 	 * @return \Entity\Rental\Pricelist
 	 */
@@ -191,8 +174,7 @@ class Pricelist extends \Entity\BaseEntity
 
 		return $this;
 	}
-
-
+		
 	/**
 	 * @return string|NULL
 	 */

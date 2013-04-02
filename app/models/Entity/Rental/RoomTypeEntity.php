@@ -43,16 +43,14 @@ class RoomType extends \Entity\BaseEntity
 
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */
+	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()
 	{
 		parent::__construct();
 	}
-
-
+		
 	/**
 	 * @param \Entity\Phrase\Phrase
-	 *
 	 * @return \Entity\Rental\RoomType
 	 */
 	public function setName(\Entity\Phrase\Phrase $name)
@@ -61,8 +59,7 @@ class RoomType extends \Entity\BaseEntity
 
 		return $this;
 	}
-
-
+		
 	/**
 	 * @return \Entity\Phrase\Phrase|NULL
 	 */
@@ -70,8 +67,7 @@ class RoomType extends \Entity\BaseEntity
 	{
 		return $this->name;
 	}
-
-
+		
 	/**
 	 * @return string|NULL
 	 */

@@ -67,18 +67,16 @@ class Amenity extends \Entity\BaseEntityDetails
 
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */
+	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()
 	{
 		parent::__construct();
 
 		$this->rentals = new \Doctrine\Common\Collections\ArrayCollection;
 	}
-
-
+		
 	/**
 	 * @param \Entity\Rental\AmenityType
-	 *
 	 * @return \Entity\Rental\Amenity
 	 */
 	public function setType(\Entity\Rental\AmenityType $type)
@@ -87,8 +85,7 @@ class Amenity extends \Entity\BaseEntityDetails
 
 		return $this;
 	}
-
-
+		
 	/**
 	 * @return \Entity\Rental\Amenity
 	 */
@@ -98,8 +95,7 @@ class Amenity extends \Entity\BaseEntityDetails
 
 		return $this;
 	}
-
-
+		
 	/**
 	 * @return \Entity\Rental\AmenityType|NULL
 	 */
@@ -107,26 +103,22 @@ class Amenity extends \Entity\BaseEntityDetails
 	{
 		return $this->type;
 	}
-
-
+		
 	/**
 	 * @param \Entity\Rental\Rental
-	 *
 	 * @return \Entity\Rental\Amenity
 	 */
 	public function addRental(\Entity\Rental\Rental $rental)
 	{
-		if (!$this->rentals->contains($rental)) {
+		if(!$this->rentals->contains($rental)) {
 			$this->rentals->add($rental);
 		}
 
 		return $this;
 	}
-
-
+		
 	/**
 	 * @param \Entity\Rental\Rental
-	 *
 	 * @return \Entity\Rental\Amenity
 	 */
 	public function removeRental(\Entity\Rental\Rental $rental)
@@ -135,8 +127,7 @@ class Amenity extends \Entity\BaseEntityDetails
 
 		return $this;
 	}
-
-
+		
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Rental\Rental[]
 	 */
@@ -144,8 +135,7 @@ class Amenity extends \Entity\BaseEntityDetails
 	{
 		return $this->rentals;
 	}
-
-
+		
 	/**
 	 * @return string|NULL
 	 */
@@ -153,11 +143,9 @@ class Amenity extends \Entity\BaseEntityDetails
 	{
 		return $this->slug;
 	}
-
-
+		
 	/**
 	 * @param \Entity\Phrase\Phrase
-	 *
 	 * @return \Entity\Rental\Amenity
 	 */
 	public function setName(\Entity\Phrase\Phrase $name)
@@ -166,8 +154,7 @@ class Amenity extends \Entity\BaseEntityDetails
 
 		return $this;
 	}
-
-
+		
 	/**
 	 * @return \Entity\Phrase\Phrase|NULL
 	 */
@@ -175,11 +162,9 @@ class Amenity extends \Entity\BaseEntityDetails
 	{
 		return $this->name;
 	}
-
-
+		
 	/**
 	 * @param boolean
-	 *
 	 * @return \Entity\Rental\Amenity
 	 */
 	public function setImportant($important)
@@ -188,8 +173,7 @@ class Amenity extends \Entity\BaseEntityDetails
 
 		return $this;
 	}
-
-
+		
 	/**
 	 * @return boolean|NULL
 	 */
@@ -197,11 +181,9 @@ class Amenity extends \Entity\BaseEntityDetails
 	{
 		return $this->important;
 	}
-
-
+		
 	/**
 	 * @param integer
-	 *
 	 * @return \Entity\Rental\Amenity
 	 */
 	public function setSorting($sorting)
@@ -210,8 +192,7 @@ class Amenity extends \Entity\BaseEntityDetails
 
 		return $this;
 	}
-
-
+		
 	/**
 	 * @return integer|NULL
 	 */

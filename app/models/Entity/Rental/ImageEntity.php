@@ -58,16 +58,14 @@ class Image extends \Entity\BaseEntity
 
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */
+	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()
 	{
 		parent::__construct();
 	}
-
-
+		
 	/**
 	 * @param \Entity\Phrase\Phrase
-	 *
 	 * @return \Entity\Rental\Image
 	 */
 	public function setName(\Entity\Phrase\Phrase $name)
@@ -76,8 +74,7 @@ class Image extends \Entity\BaseEntity
 
 		return $this;
 	}
-
-
+		
 	/**
 	 * @return \Entity\Phrase\Phrase|NULL
 	 */
@@ -85,11 +82,9 @@ class Image extends \Entity\BaseEntity
 	{
 		return $this->name;
 	}
-
-
+		
 	/**
 	 * @param \Entity\Rental\Rental
-	 *
 	 * @return \Entity\Rental\Image
 	 */
 	public function setRental(\Entity\Rental\Rental $rental)
@@ -98,8 +93,7 @@ class Image extends \Entity\BaseEntity
 
 		return $this;
 	}
-
-
+		
 	/**
 	 * @return \Entity\Rental\Image
 	 */
@@ -109,8 +103,7 @@ class Image extends \Entity\BaseEntity
 
 		return $this;
 	}
-
-
+		
 	/**
 	 * @return \Entity\Rental\Rental|NULL
 	 */
@@ -118,11 +111,9 @@ class Image extends \Entity\BaseEntity
 	{
 		return $this->rental;
 	}
-
-
+		
 	/**
 	 * @param string
-	 *
 	 * @return \Entity\Rental\Image
 	 */
 	public function setFilePath($filePath)
@@ -131,8 +122,7 @@ class Image extends \Entity\BaseEntity
 
 		return $this;
 	}
-
-
+		
 	/**
 	 * @return string|NULL
 	 */
@@ -140,11 +130,9 @@ class Image extends \Entity\BaseEntity
 	{
 		return $this->filePath;
 	}
-
-
+		
 	/**
 	 * @param string
-	 *
 	 * @return \Entity\Rental\Image
 	 */
 	public function setOldUrl($oldUrl)
@@ -153,8 +141,7 @@ class Image extends \Entity\BaseEntity
 
 		return $this;
 	}
-
-
+		
 	/**
 	 * @return \Entity\Rental\Image
 	 */
@@ -164,8 +151,7 @@ class Image extends \Entity\BaseEntity
 
 		return $this;
 	}
-
-
+		
 	/**
 	 * @return string|NULL
 	 */
@@ -173,11 +159,9 @@ class Image extends \Entity\BaseEntity
 	{
 		return $this->oldUrl;
 	}
-
-
+		
 	/**
 	 * @param integer
-	 *
 	 * @return \Entity\Rental\Image
 	 */
 	public function setSort($sort)
@@ -186,8 +170,7 @@ class Image extends \Entity\BaseEntity
 
 		return $this;
 	}
-
-
+		
 	/**
 	 * @return \Entity\Rental\Image
 	 */
@@ -197,8 +180,7 @@ class Image extends \Entity\BaseEntity
 
 		return $this;
 	}
-
-
+		
 	/**
 	 * @return integer|NULL
 	 */
