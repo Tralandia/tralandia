@@ -219,6 +219,8 @@ class FrontRoute extends BaseRoute
 				$page = $this->pageRepositoryAccessor->get()->findOneByDestination($destination);
 				if($page) {
 					$params[self::PAGE] = $page;
+				} else {
+					return NULL;
 				}
 		}
 
