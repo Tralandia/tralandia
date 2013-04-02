@@ -89,7 +89,7 @@ class SearchForm extends BaseForm
 			->setPrompt('o1070')
 			->setAttribute('data-placeholder', $this->translate('o1070'));
 
-		$this->addHidden(FrontRoute::LOCATION, 'o1070')			
+		$this->addHidden(FrontRoute::LOCATION)			
 			->setAttribute('data-placeholder', $this->translate('o1070'))
 			->setAttribute('data-defaults', json_encode($locations));
 

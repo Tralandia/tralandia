@@ -244,7 +244,7 @@ function searchCriteriumSetActive(select){
 
 	if(!$(select).hasClass('selectRedirect')){
 		if ($(select).parent().find('.btnSearchClose').length == 0){
-			$(select).parent().append('<a href="/" class="btnSearchClose"><i class="entypo-no"></i></a>');
+			$(select).parent().append('<a href="#" class="btnSearchClose"><i class="entypo-no"></i></a>');
 		}
 	}		
 }
@@ -346,20 +346,23 @@ $(function(){
 		$(this).parent().removeClass('selected');
 		$(this).parent().find('.select2 , input[data-autocomplete-url]').select2('val','');
 		$(this).remove();
-		$('#select2-drop').remove();
 		updateCriteriaCount();
-		updateSerachLinkUrl();
+		updateSerachLinkUrl();		
+		$('#select2-drop').remove();
+
 		return false;
 	});
 
 	$('.btnSearchClose').live('click',function(){
 		
+
 		$(this).parent().removeClass('selected');
 		$(this).parent().find('.select2 , input[data-autocomplete-url]').select2('val','');
 		$(this).remove();
-		$('#select2-drop').remove();
 		updateCriteriaCount();
-		updateSerachLinkUrl();
+		updateSerachLinkUrl();		
+		$('#select2-drop').remove();
+
 		return false;
 	});
 
