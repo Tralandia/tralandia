@@ -14,6 +14,11 @@ class SeoService extends Nette\Object {
 
 	protected $request;
 	protected $requestParameters;
+
+	/**
+	 * @var \Nette\Localization\ITranslator
+	 */
+	protected $translator;
 	protected $page = NULL;
 	protected $url;
 	protected $phraseDecoratorFactory;
@@ -63,17 +68,21 @@ class SeoService extends Nette\Object {
 		Translator::VARIATION_CASE => \Entity\Language::DEFAULT_CASE,
 	);
 
+
 	/**
-	 * @param string                    $url
+	 * @param string $url
 	 * @param Nette\Application\Request $request
 	 * @param $pageRepositoryAccessor
+	 * @param \Nette\Localization\ITranslator $translator
 	 */
-	public function __construct($url, Nette\Application\Request $request, $pageRepositoryAccessor)
+	public function __construct($url, Nette\Application\Request $request, $pageRepositoryAccessor,
+								Nette\Localization\ITranslator $translator)
 	{
 		$this->url = $url;
 		$this->request = $request;
 		$this->pageRepositoryAccessor = $pageRepositoryAccessor;
 		$this->requestParameters = $this->request->getParameters();
+		$this->translator = $translator;
 
 		$this->pathSegmentParameters = [
 			FrontRoute::LOCATION => FrontRoute::$pathParametersMapper[FrontRoute::LOCATION],
@@ -182,7 +191,8 @@ class SeoService extends Nette\Object {
 
 	protected function compilePattern($pattern) {
 
-		$patternTranslation = $pattern->getTranslationText($this->getParameter('language'), TRUE);
+//		$patternTranslation = $pattern->getTranslationText($this->getParameter('language'), TRUE);
+		$patternTranslation = $this->translator->translate($pattern);
 		if (!$patternTranslation) {
 			return NULL;
 		}
@@ -201,22 +211,14 @@ class SeoService extends Nette\Object {
 
 			/** @var $phrase \Entity\Phrase\Phrase */
 			$phrase = $this->getParameter($replacement[0])->{$replacement[1]};
-			$translation = $phrase->getTranslation($this->getParameter('language'), TRUE);
 
 			$textKey = '['.$value['replacement'].']';
-			if($translation) {
-				if (array_key_exists(2, $replacement) && is_array($replacement[2])) {
-					$variationPath = array_merge($this->defaultVariation, $replacement[2]);
-					$texts[$textKey] = $translation->getVariation(
-						$variationPath['plural'],
-						$variationPath[Translator::VARIATION_GENDER],
-						$variationPath[Translator::VARIATION_CASE]);
-				} else {
-					$texts[$textKey] = (string) $translation;
-				}
+			if (array_key_exists(2, $replacement) && is_array($replacement[2])) {
+				$texts[$textKey] = $this->translator->translate($phrase, NULL, $replacement[2]);
 			} else {
-				$texts[$textKey] = '';
+				$texts[$textKey] = $this->translator->translate($phrase);
 			}
+
 
 		}
 
