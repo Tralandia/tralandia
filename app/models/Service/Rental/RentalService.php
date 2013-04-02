@@ -5,10 +5,9 @@ namespace Service\Rental;
 use Service, Doctrine, Entity;
 use Nette\Utils\Arrays;
 use Nette\Utils\Strings;
-/**
- * @author Dávid Ďurika
- */
-class RentalService extends Service\BaseService 
+
+
+class RentalService extends Service\BaseService
 {
 	protected $rentalRepositoryAccessor;
 	protected $rentalInformationRepositoryAccessor;
@@ -36,6 +35,7 @@ class RentalService extends Service\BaseService
 
 	}
 
+	# @todo vyclenit positanie ranku do zvlast calssi
 	public function calculateRank() {
 		/** @var $r \Entity\Rental\Rental */
 		$r = $this->entity;

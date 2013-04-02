@@ -46,8 +46,10 @@ class RegistrationHandlerTest extends \Tests\TestCase
 				'name' => 'Chata Test',
 				'price' => '3',
 				'maxCapacity' => 15,
-				'type' => 4,
-				'classification' => 3,
+				'type' => [
+					'type' => 3,
+					'classification' => 2,
+				],
 				'pet' => [1],
 
 				'address' => [

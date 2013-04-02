@@ -73,10 +73,6 @@ class RentalPhotosContainer extends BaseContainer
 
 	public function getValues($asArray = FALSE)
 	{
-
-		$phone = $this['prefix']->getValue() . $this['number']->getValue();
-		$phone = $this->phoneBook->getOrCreate($phone);
-
 		$values = $asArray ? array() : new \Nette\ArrayHash;
 		$sort = $this['sort']->getValue();
 		$values['sort'] = array_filter(explode(',', $sort));
