@@ -28,7 +28,7 @@ class SignPresenter extends BasePresenter {
 	protected function createComponentSignInForm()
 	{
 		$comp = $this->signInFormFactory->create();
-	
+
 		return $comp;
 	}
 

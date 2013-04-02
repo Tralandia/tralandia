@@ -54,11 +54,13 @@
 		<a href="#" id="searchControlLink" class="btn btn-white pull-right"><i class="entypo-search"></i>{_o100092}</a>
 	{/form}
 
-	{if $bottomLinks && count($bottomLinks->links)}
+	{if isset($bottomLinks) && count($bottomLinks->links)}
 	<h4><i class="{$bottomLinks->iconClass}"></i>{_$bottomLinks->title}</h4>
 		<ul n:inner-foreach="$bottomLinks->links as $value">
 			<li>
-				<a href="{plink RentalList, $bottomLinks->linkArgument => $value->entity}">{$value->name} <span class="counter">{$value->count}</span></a>
+				<a href="{plink RentalList:, $bottomLinks->linkArgument => $value->entity}">
+					{$value->name} <span class="counter">{$value->count}</span>
+				</a>
 			</li>
 		</ul>
 	{/if}

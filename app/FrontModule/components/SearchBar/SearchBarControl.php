@@ -125,7 +125,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		}
 
 		if($this->placement) {
-			$jsVariables['data-placement'] = $this->placement;
+			$jsVariables['data-placement'] = $this->placement->getId();
 		}
 
 		if($this->priceFrom) {
@@ -165,6 +165,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		$template = $this->template;
 
 		$bottomLinks = [];
+		$links = [];
 		if(!$this->location) {
 			if($this->getPresenter()->isLinkCurrent(':Front:Home:default')) {
 				$count = 300;
@@ -175,43 +176,48 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 			$bottomLinks['linkArgument'] = FrontRoute::LOCATION;
 			$bottomLinks['title'] = 'o100098';
 			$bottomLinks['iconClass'] = 'icon-map-marker';
-		} else if(!$this->rentalType) {
+		}
+		if(!count($links) && !$this->rentalType) {
 			$links = $this->searchOptionGenerator->generateRentalTypeLinks($this->getSearch());
 			$bottomLinks['linkArgument'] = FrontRoute::RENTAL_TYPE;
 			$bottomLinks['title'] = 'o20926';
 			$bottomLinks['iconClass'] = 'icon-home';
-		} else if(!$this->placement) {
+		}
+		if(!count($links) && !$this->placement) {
 			$links = $this->searchOptionGenerator->generatePlacementLinks($this->getSearch());
 			$bottomLinks['linkArgument'] = FrontRoute::PLACEMENT;
 			$bottomLinks['title'] = 'o100113';
 			$bottomLinks['iconClass'] = 'icon-picture';
-		} else if(!$this->capacity) {
+		}
+		if(!count($links) && !$this->capacity) {
 			$links = $this->searchOptionGenerator->generateCapacityLinks($this->getSearch());
 			$bottomLinks['linkArgument'] = FrontRoute::CAPACITY;
 			$bottomLinks['title'] = 'o20928';
 			$bottomLinks['iconClass'] = 'icon-user';
-		} else if(!$this->board) {
+		}
+		if(!count($links) && !$this->board) {
 			$links = $this->searchOptionGenerator->generateBoardLinks($this->getSearch());
 			$bottomLinks['linkArgument'] = FrontRoute::BOARD;
 			$bottomLinks['title'] = 'o100080';
 			$bottomLinks['iconClass'] = 'icon-food';
-		} else if(!$this->spokenLanguage) {
+		}
+		if(!count($links) && !$this->spokenLanguage) {
 			$links = $this->searchOptionGenerator->generateSpokenLanguageLinks($this->getSearch());
 			$bottomLinks['linkArgument'] = FrontRoute::SPOKEN_LANGUAGE;
 			$bottomLinks['title'] = 'o20930';
 			$bottomLinks['iconClass'] = 'icon-globe';
-		} else if(!$this->priceFrom) {
+		}
+		if(!count($links) && !$this->priceFrom) {
 			$links = $this->searchOptionGenerator->generatePriceLinks($this->environment->getCurrency(), $this->getSearch());
 			$bottomLinks['linkArgument'] = FrontRoute::PRICE_FROM;
 			$bottomLinks['title'] = 'o100093';
 			$bottomLinks['iconClass'] = 'icon-money22';
-		} else if(!$this->priceTo) {
+		}
+		if(!count($links) && !$this->priceTo) {
 			$links = $this->searchOptionGenerator->generatePriceLinks($this->environment->getCurrency(), $this->getSearch(), $this->priceFrom);
 			$bottomLinks['linkArgument'] = FrontRoute::PRICE_TO;
 			$bottomLinks['title'] = 'o100094';
 			$bottomLinks['iconClass'] = 'icon-money22';
-		} else {
-			return NULL;
 		}
 
 		$bottomLinks['links'] = $links;
