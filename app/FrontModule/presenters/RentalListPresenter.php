@@ -12,6 +12,11 @@ use Nette\Utils\Strings;
 class RentalListPresenter extends BasePresenter {
 
 	/**
+	 * @var array
+	 */
+	public $onSendFavoriteList = [];
+
+	/**
 	 * @autowire
 	 * @var \Model\Rental\IRentalDecoratorFactory
 	 */
@@ -23,9 +28,22 @@ class RentalListPresenter extends BasePresenter {
 	 */
 	protected $lastSearch;
 
-	public function actionDefault($favoriteList) {
+	/**
+	 * @autowire
+	 * @var \User\FindOrCreateUser
+	 */
+	protected $findOrCreateUser;
+
+
+
+	public function actionDefault($favoriteList, $email) {
 
 		if($favoriteList) {
+			if(isset($email)) {
+				$receiver = $this->findOrCreateUser->getUser($email, $this->environment);
+				$this->onSendFavoriteList($favoriteList, $receiver);
+				$this->sendJson(['success' => TRUE]);
+			}
 			$rentals = $favoriteList->getRentals();
 			$itemCount = $rentals->count();
 		} else {

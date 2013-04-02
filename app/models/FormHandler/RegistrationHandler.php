@@ -3,12 +3,18 @@
 namespace FormHandler;
 
 use Entity\User\Role;
+use Environment\Environment;
 use Service\Contact\AddressCreator;
 use Service\Rental\RentalCreator;
 use Doctrine\ORM\EntityManager;
+use User\UserCreator;
 
 class RegistrationHandler extends FormHandler
 {
+
+	/**
+	 * @var array
+	 */
 	public $onSuccess = [];
 
 	/**
@@ -20,6 +26,16 @@ class RegistrationHandler extends FormHandler
 	 * @var \Service\Contact\AddressCreator
 	 */
 	protected $addressCreator;
+
+	/**
+	 * @var \User\UserCreator
+	 */
+	protected $userCreator;
+
+	/**
+	 * @var \Environment\Environment
+	 */
+	protected $environment;
 
 	/**
 	 * @var \Doctrine\ORM\EntityManager
@@ -35,19 +51,23 @@ class RegistrationHandler extends FormHandler
 	/**
 	 * @param \Service\Rental\RentalCreator $rentalCreator
 	 * @param \Service\Contact\AddressCreator $addressCreator
+	 * @param \User\UserCreator $userCreator
+	 * @param \Environment\Environment $environment
 	 * @param \Doctrine\ORM\EntityManager $em
 	 */
-	public function __construct(RentalCreator $rentalCreator, AddressCreator $addressCreator, EntityManager $em)
+	public function __construct(RentalCreator $rentalCreator, AddressCreator $addressCreator,
+								UserCreator $userCreator, Environment $environment, EntityManager $em)
 	{
 		$this->rentalCreator = $rentalCreator;
 		$this->addressCreator = $addressCreator;
+		$this->userCreator = $userCreator;
+		$this->environment = $environment;
 		$this->em = $em;
 	}
 
 	public function handleSuccess($values)
 	{
 		$userRepository = $this->em->getRepository(USER_ENTITY);
-		$userRoleRepository = $this->em->getRepository(USER_ROLE_ENTITY);
 		$locationRepository = $this->em->getRepository(LOCATION_ENTITY);
 		$languageRepository = $this->em->getRepository(LANGUAGE_ENTITY);
 		$rentalTypeRepository = $this->em->getRepository(RENTAL_TYPE_ENTITY);
@@ -78,16 +98,8 @@ class RegistrationHandler extends FormHandler
 
 		$error->assertValid();
 
-		/** @var $role \Entity\User\Role */
-		$role = $userRoleRepository->findOneBySlug(Role::OWNER);
-
-		/** @var $user \Entity\User\User */
-		$user = $userRepository->createNew();
-		$user->setRole($role);
-		$user->setLogin($values->email);
+		$user = $this->userCreator->create($values->email, $this->environment, Role::OWNER);
 		$user->setPassword($values->password);
-		$user->setPrimaryLocation($values->country);
-		$user->setLanguage($values->language);
 
 
 		/** @var $email \Entity\Contact\Email */
@@ -111,7 +123,7 @@ class RegistrationHandler extends FormHandler
 			->setMaxCapacity($values->rental->maxCapacity)
 			->setFloatPrice($values->rental->price);
 
-		//$this->model->save($values);
+
 		$this->rental = $rental;
 
 		//$this->em->persist($rental);
