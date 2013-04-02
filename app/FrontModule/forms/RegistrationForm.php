@@ -228,7 +228,9 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 					'type' => 3,
 					'classification' => 2,
 				],
-				'pet' => [1],
+				'board' => [287],
+				'ownerAvailability' => 275,
+				'pet' => 296,
 
 				'address' => [
 					'address' => 'Ľ. Štúra 8, Nové Zámky, Slovakia',
