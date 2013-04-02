@@ -95,6 +95,7 @@ class Translator implements \Nette\Localization\ITranslator {
 		$translationKey = $this->getCacheKey($phraseId, $variation);
 
 		$translation = $this->cache->load($translationKey);
+		//$translation = NULL;
 		if($translation === NULL) {
 
 			if(is_scalar($phrase)) {
