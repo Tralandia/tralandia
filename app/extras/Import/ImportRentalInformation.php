@@ -20,6 +20,9 @@ class ImportRentalInformation extends BaseImport {
 		$context = $this->context;
 		$model = $this->model;
 
+		$en = $context->languageRepositoryAccessor->get()->findOneByIso('en');
+		$sk = $context->languageRepositoryAccessor->get()->findOneByIso('sk');
+
 
 		$nameDictionaryType = $this->createPhraseType('\Rental\Information', 'name', 'NATIVE', array());
 		$model->flush();
@@ -62,19 +65,21 @@ class ImportRentalInformation extends BaseImport {
 		}
 
 		// Import Room types
-		$nameDictionaryType = $this->createPhraseType('\Rental\RoomType', 'name', 'NATIVE', array());
+		$nameDictionaryType = $this->createPhraseType('\Rental\RoomType', 'name', 'NATIVE', array('pluralVariationsRequired' => TRUE));
 		$model->flush();
 
 		$roomTypes = array(
-			'room' => array('en' => 'room'),
-			'apartment' => array('en' => 'apartment'),
-			'building' => array('en' => 'building'),
+			'room' => array('en' => 'room', 'sk' => 'izba'),
+			'apartment' => array('en' => 'apartment', 'sk' => 'apartmán'),
+			'building' => array('en' => 'building', 'sk' => 'budova'),
 		);
 
 		foreach ($roomTypes as $key => $value) {
 			$t = $context->rentalRoomTypeRepositoryAccessor->get()->createNew(FALSE);
 
 			$t->name = $this->createNewPhrase($nameDictionaryType);
+			$t->name->createTranslation($en, $value['en']);
+			$t->name->createTranslation($sk, $value['sk']);
 			$t->slug = $key;
 			$model->persist($t);
 		}
