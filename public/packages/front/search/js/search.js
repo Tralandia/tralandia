@@ -29,15 +29,24 @@
 			var self = this;
 			var $self = $(this);
 
-			var url = $self.attr('data-url');
+			var url = $(this).attr('data-autocomplete-url');
 
-			var placeholder = $self.attr('data-placeholder');
+			var placeholder = $(this).attr('data-placeholder');
 
-			var conditionsText = $self.attr('data-conditions-text');
+			// var conditionsText = $('.sidebarLocation').attr('data-conditions-text');
 
-			$('#serachSidebar').select2({
+
+			$(this).select2({
+
+				initSelection: function(element, callback) {					        		
+					 callback({id:0,name:$(element).attr('data-placeholder')});
+				},
+
+
 			    placeholder: placeholder,
 			    minimumInputLength: 3,
+			 	// data:[{id:0,type:'other',name:'enhancement'},{id:1,type:'other',name:'bug'},{id:2,type:'other',name:'duplicate'},{id:3,type:'other',name:'invalid'},{id:4,type:'other',name:'wontfix'}],
+
 			    ajax: { 
 			        url: url,
 			        dataType: 'json',
@@ -48,7 +57,6 @@
 			        },
 			        results: function (data, page) { 
 			        	
-			        	console.log(data);
 			        	
 			        	var r = [];
 
@@ -80,7 +88,8 @@
 
 			    	switch(r.type){
 			    		case 'counties':
-			    			return '<img class="flag" src="'+r.icon+'"> '+r.name;
+			    			return r.name;
+			    			// return '<img class="flag" src="'+r.icon+'"> '+r.name;
 			    			break;
 			    		case 'other':
 			    			return r.name;
@@ -100,7 +109,8 @@
 
 			    	//console.log(r);
 			    	if(typeof r.icon == 'string'){
-			    		return '<img class="flag" src="'+r.icon+'"> '+r.name;	
+			    		return r.name;	
+			    		// return '<img class="flag" src="'+r.icon+'"> '+r.name;	
 			    	} else {
 			    		return r.name;
 			    	}
@@ -108,9 +118,7 @@
 			   
 			    
 			    escapeMarkup: function (m) { return m; }
-
 			});
-
 
 
 		});
@@ -125,7 +133,7 @@ function updateCriteriaCount(){
 
 	var url = generateRedirectUrl(true);
 
-	if($('.searchForm').find("select[value][value!='']:not(.sidebarCountry)").serialize().length > 0){
+	if($('.searchForm').find("select[value][value!='']:not(.sidebarCountry),input[type=hidden]").serialize().length > 0){
 		$.ajax({
 		  url: url,
 		}).done(function(d) {
@@ -157,9 +165,12 @@ function generateRedirectUrl(count){
 
 	var path = [];
 
-	$.each($('.searchForm select.path:not(.selectRedirect)').serializeArray(),function(k,v){
+	$.each($('.searchForm select.path:not(.selectRedirect),input[type=hidden]').serializeArray(),function(k,v){
 		path.push(v.value);
 	});
+
+
+
 
 	// remove empty eements from array
 	path = $.grep(path,function(n){
@@ -181,6 +192,7 @@ function generateRedirectUrl(count){
 			url+='&do=searchBar-getSearchCount';
 		}
 	}
+	
 
 	return url;
 	// 
@@ -195,21 +207,25 @@ function extractDomainUrl(url){
 
 function updateSerachLinkUrl(){
 
+
+
 		var url = '/'+generateRedirectUrl(false);
 
 		if(url == '/' ){
-		
+			
 		}
 
 		if('http://'+document.domain+'/'+generateRedirectUrl(false) == location.href) {
 			url = '#';
 		} 	
 
+
 		$('#searchControlLink').attr('href',url);
 		var link = $('#searchControlLink')[0].outerHTML;
 		var parent = $('#searchControlLink').parent();
 			$('#searchControlLink').remove();
 			parent.append(link);
+
 			
 }
 
@@ -228,7 +244,7 @@ function searchCriteriumSetActive(select){
 
 	if(!$(select).hasClass('selectRedirect')){
 		if ($(select).parent().find('.btnSearchClose').length == 0){
-			$(select).parent().append('<a href="/" class="btnSearchClose"><i class="entypo-no"></i></a>');
+			$(select).parent().append('<a href="#" class="btnSearchClose"><i class="entypo-no"></i></a>');
 		}
 	}		
 }
@@ -264,9 +280,9 @@ $(function(){
 	_updatePriceTo();
 // $('#frm-searchBar-searchForm-rentalType').select2();
 
-	$('.searchForm').searchFormSuggest({
-		dropdownCssClass: 'searchSelectOrder'
-	});
+	$('[data-autocomplete-url]').searchFormSuggest();
+
+
 
 	$('.searchForm .select2.disabledFulltext').select2({
 		dropdownCssClass: 'searchSelect',
@@ -303,8 +319,7 @@ $(function(){
 
 
 
-
-	$('.searchForm .select2').on('change',function(e){
+	$('.searchForm .select2 , input[data-autocomplete-url]').on('change',function(e){
 
 		updateSerachLinkUrl();
 		updateCriteriaCount();
@@ -329,22 +344,25 @@ $(function(){
 	$('.btnSearchClose').on('click',function(){
 		
 		$(this).parent().removeClass('selected');
-		$(this).parent().find('.select2').select2('val','');
+		$(this).parent().find('.select2 , input[data-autocomplete-url]').select2('val','');
 		$(this).remove();
-		$('#select2-drop').remove();
 		updateCriteriaCount();
-		updateSerachLinkUrl();
+		updateSerachLinkUrl();		
+		$('#select2-drop').remove();
+
 		return false;
 	});
 
 	$('.btnSearchClose').live('click',function(){
 		
+
 		$(this).parent().removeClass('selected');
-		$(this).parent().find('.select2').select2('val','');
+		$(this).parent().find('.select2 , input[data-autocomplete-url]').select2('val','');
 		$(this).remove();
-		$('#select2-drop').remove();
 		updateCriteriaCount();
-		updateSerachLinkUrl();
+		updateSerachLinkUrl();		
+		$('#select2-drop').remove();
+
 		return false;
 	});
 
