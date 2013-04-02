@@ -123,13 +123,17 @@ class RegistrationHandler extends FormHandler
 			->setMaxCapacity($values->rental->maxCapacity)
 			->setFloatPrice($values->rental->price);
 
+		foreach($values->rental->photos->images as $image) {
+			$rental->addImage($image);
+		}
+
 
 		$this->rental = $rental;
 
-		//$this->em->persist($rental);
-		//$this->em->flush($rental);
+		$this->em->persist($rental);
+		$this->em->flush();
 
-		//$this->onSuccess($rental);
+		$this->onSuccess($rental);
 
 		return $rental;
 	}
