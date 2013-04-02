@@ -122,13 +122,11 @@ class Translator implements \Nette\Localization\ITranslator {
 						$plural = $variation[self::VARIATION_PLURAL];
 						$gender = $variation[self::VARIATION_GENDER];
 						$case = $variation[self::VARIATION_CASE];
-						$translationText = $translationEntity->getVariation(
-							$plural,
-							$gender,
-							$case
-						);
+
+						$translationText = $translationEntity->getVariation($plural, $gender, $case);
+
 						if(!$translationText) {
-							$translationText = $translationText->getDefaultVariation();
+							$translationText = $translationEntity->getDefaultVariation();
 						}
 					}
 

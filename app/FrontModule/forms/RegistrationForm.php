@@ -228,7 +228,9 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 					'type' => 3,
 					'classification' => 2,
 				],
-				'pet' => [1],
+				'board' => [287],
+				'ownerAvailability' => 275,
+				'pet' => 296,
 
 				'address' => [
 					'address' => 'Ľ. Štúra 8, Nové Zámky, Slovakia',
@@ -251,13 +253,13 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 
 		$phone = $values->phone;
 		if(!$phone->phone instanceof \Entity\Contact\Phone) {
-			$form['phone']->addError($this->translate('o1039'));
+			$form['phone']->getMainControl()->addError($this->translate('o1039'));
 		}
 
 		$rentalValues = $values->rental;
 		$photosSort = $rentalValues->photos->sort;
 		if(count($photosSort) < 3) {
-			$form['rentals']['photos']->addError($this->translate('o100111'));
+			$form['rental']['photos']->getMainControl()->addError($this->translate('o100111'));
 		}
 
 	}
