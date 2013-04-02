@@ -64,15 +64,14 @@ class Type extends \Entity\BaseEntity
 
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */
+	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()
 	{
 		parent::__construct();
 
 		$this->rentals = new \Doctrine\Common\Collections\ArrayCollection;
 	}
-
-
+		
 	/**
 	 * @return string|NULL
 	 */
@@ -80,11 +79,9 @@ class Type extends \Entity\BaseEntity
 	{
 		return $this->slug;
 	}
-
-
+		
 	/**
 	 * @param \Entity\Phrase\Phrase
-	 *
 	 * @return \Entity\Rental\Type
 	 */
 	public function setName(\Entity\Phrase\Phrase $name)
@@ -93,8 +90,7 @@ class Type extends \Entity\BaseEntity
 
 		return $this;
 	}
-
-
+		
 	/**
 	 * @return \Entity\Phrase\Phrase|NULL
 	 */
@@ -102,27 +98,23 @@ class Type extends \Entity\BaseEntity
 	{
 		return $this->name;
 	}
-
-
+		
 	/**
 	 * @param \Entity\Rental\Rental
-	 *
 	 * @return \Entity\Rental\Type
 	 */
 	public function addRental(\Entity\Rental\Rental $rental)
 	{
-		if (!$this->rentals->contains($rental)) {
+		if(!$this->rentals->contains($rental)) {
 			$this->rentals->add($rental);
 		}
 		$rental->setType($this);
 
 		return $this;
 	}
-
-
+		
 	/**
 	 * @param \Entity\Rental\Rental
-	 *
 	 * @return \Entity\Rental\Type
 	 */
 	public function removeRental(\Entity\Rental\Rental $rental)
@@ -132,8 +124,7 @@ class Type extends \Entity\BaseEntity
 
 		return $this;
 	}
-
-
+		
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Rental\Rental[]
 	 */
@@ -141,11 +132,9 @@ class Type extends \Entity\BaseEntity
 	{
 		return $this->rentals;
 	}
-
-
+		
 	/**
 	 * @param boolean
-	 *
 	 * @return \Entity\Rental\Type
 	 */
 	public function setClassification($classification)
@@ -154,8 +143,7 @@ class Type extends \Entity\BaseEntity
 
 		return $this;
 	}
-
-
+		
 	/**
 	 * @return boolean|NULL
 	 */
