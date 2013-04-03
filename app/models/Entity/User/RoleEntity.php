@@ -111,35 +111,6 @@ class Role extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\User\Role
-	 * @return \Entity\User\Role
-	 */
-	public function setParent(\Entity\User\Role $parent)
-	{
-		$this->parent = $parent;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\User\Role
-	 */
-	public function unsetParent()
-	{
-		$this->parent = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\User\Role|NULL
-	 */
-	public function getParent()
-	{
-		return $this->parent;
-	}
-		
-	/**
 	 * @param string
 	 * @return \Entity\User\Role
 	 */
