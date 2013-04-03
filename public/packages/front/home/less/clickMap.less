@@ -140,10 +140,25 @@ div.clickMap.sk div.clickMapCountry {
     float: left;
     position: relative;
     height: 300px;
-    background: url(../images/matrix_sk.clickMapCountry.png);
+    background: url(../temp/maps/map-sk-l.png);
     top: 0;
     left: 10px;
 }
+
+div.clickMap.sk div.clickMapCountry .point {
+    position: absolute;
+    top: 170px;
+    left: 60px;
+
+}
+
+div.clickMap.sk div.clickMapCountry .point div {
+    background: red;
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;    
+}
+
 div.clickMap.sk img.clickMapImgmap {
     position: absolute;
     z-index: 250;
@@ -492,6 +507,10 @@ div.clickMapNavigator .holder a:hover {
 div.clickMapNavigator a.top {
     font-weight: bold;
     border-bottom: 1px solid #878f93;
+}
+
+div.clickMapNavigator a.top:last-child {
+    border: none;
 }
 div.clickMapNavigator .iconHolder {
     position: relative;

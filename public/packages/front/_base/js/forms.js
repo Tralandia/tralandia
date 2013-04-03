@@ -806,8 +806,11 @@ $(function() {
 	$(document.body).on('appear', '#frm-registrationForm-rental-address-address', function(e, $affected) {           
 		if(typeof $('body').attr('data-googleMapinit') == 'undefined' ){
 
+			var lang = $('html').attr('lang');
+			
+
 			var script = document.createElement("script"); 
-			script.src = "https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places&callback=maps.mapInit"; 
+			script.src = "https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places&callback=maps.mapInit&language="+lang; 
 			document.body.appendChild(script); 
 			$('body').attr('data-googleMapinit',true);  
 		}
