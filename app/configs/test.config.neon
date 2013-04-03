@@ -9,3 +9,6 @@ parameters:
 		dbname: tralandia_test
 		charset: utf8
 		driver: pdo_mysql
+
+services:
+	session: Kdyby\Tests\Http\FakeSession
