@@ -29,6 +29,12 @@ abstract class BasePresenter extends Presenter {
 
 	/**
 	 * @autowire
+	 * @var \Environment\Environment
+	 */
+	protected $environment;
+
+	/**
+	 * @autowire
 	 * @var \Security\Authenticator
 	 */
 	protected $authenticator;

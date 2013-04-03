@@ -80,11 +80,15 @@ class RentalPhotosContainer extends BaseContainer
 		$values = $asArray ? array() : new \Nette\ArrayHash;
 		$sort = $this['sort']->getValue();
 		$values['sort'] = array_filter(explode(',', $sort));
-		$images = $this->imageRepository->findById($values['sort']);
 
-		$imagesTemp = array_flip($values['sort']);
-		foreach($images as $image) {
-			$imagesTemp[$image->getId()] = $image;
+		$imagesTemp = [];
+		if(count($values['sort'])) {
+			$images = $this->imageRepository->findById($values['sort']);
+
+			$imagesTemp = array_flip($values['sort']);
+			foreach($images as $image) {
+				$imagesTemp[$image->getId()] = $image;
+			}
 		}
 		$values['images'] = $imagesTemp;
 

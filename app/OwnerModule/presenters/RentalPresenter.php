@@ -2,8 +2,7 @@
 
 namespace OwnerModule;
 
-use Model\Rental\IRentalDecoratorFactory;
-use FrontModule\Forms\Rental\IReservationFormFactory;
+
 use Nette\Application\BadRequestException;
 
 class RentalPresenter extends BasePresenter {
@@ -17,7 +16,7 @@ class RentalPresenter extends BasePresenter {
 
 	/**
 	 * @autowire
-	 * @var Forms\IRentalEditFormFactory
+	 * @var \FrontModule\Forms\Rental\IRentalEditFormFactory
 	 */
 	protected $rentalEditFormFactory;
 
@@ -50,7 +49,7 @@ class RentalPresenter extends BasePresenter {
 	}
 
 	protected function createComponentRentalEditForm(){
-		$form = $this->rentalEditFormFactory->create($this->rental);
+		$form = $this->rentalEditFormFactory->create($this->rental, $this->environment);
 
 		return $form ;
 	}

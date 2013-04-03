@@ -192,9 +192,9 @@ factories:
 	# ==============================
 	# ==================== FORMS
 	# ==============================
-	rentalEditFormFactory:
-		class: OwnerModule\Forms\RentalEditForm(%rental%)
-		implement: OwnerModule\Forms\IRentalEditFormFactory
+#	rentalEditFormFactory:
+#		class: OwnerModule\Forms\RentalEditForm(%rental%)
+#		implement: OwnerModule\Forms\IRentalEditFormFactory
 
 	userEditFormFactory:
 		class: OwnerModule\Forms\UserEditForm(%user%, @userRepositoryAccessor)
@@ -222,12 +222,20 @@ factories:
 		implement: FrontModule\Forms\ITicketFormFactory
 
 	registrationFormFactory:
-		class: FrontModule\Forms\RegistrationForm(%country%, %presenter%)
+		class: FrontModule\Forms\RegistrationForm(%$environment%, %presenter%)
 		implement: FrontModule\Forms\IRegistrationFormFactory
+
+	rentalEditFormFactory:
+		class: FrontModule\Forms\Rental\RentalEditForm(%rental%, %environment%)
+		implement: FrontModule\Forms\Rental\IRentalEditFormFactory
 
 	searchFormFactory:
 		class: FrontModule\Forms\SearchForm(%defaults%, %search%, %presenter%)
 		implement: FrontModule\Forms\ISearchFormFactory
+
+	rentalContainerFactory:
+		class: Extras\Forms\Container\RentalContainer(%environment%)
+		implement: Extras\Forms\Container\IRentalContainerFactory
 
 	# ==============================
 	# ==================== COMPONENTS

@@ -18,7 +18,7 @@ class RegistrationPresenter extends BasePresenter {
 
 	public function createComponentRegistrationForm()
 	{
-		$form = $this->registrationFormFactory->create($this->primaryLocation, $this);
+		$form = $this->registrationFormFactory->create($this->environment, $this);
 		$this->registrationHandler->attach($form);
 
 		$self = $this;

@@ -19,12 +19,6 @@ abstract class BasePresenter extends \BasePresenter {
 
 	/**
 	 * @autowire
-	 * @var \Environment\Environment
-	 */
-	protected $environment;
-
-	/**
-	 * @autowire
 	 * @var \Service\Seo\ISeoServiceFactory
 	 */
 	protected $seoFactory;
@@ -88,7 +82,7 @@ abstract class BasePresenter extends \BasePresenter {
 		$this->template->homeCacheId = 'home' .
 			$this->environment->getPrimaryLocation()->getId() . '-' .
 			$this->environment->getLanguage()->getId();
-		
+
 		$this->template->footerCountriesCacheId = 'footerCountries' . $this->environment->getLanguage()->getId();
 
 		$this->template->currentLanguage = $this->environment->getLanguage();
@@ -111,7 +105,7 @@ abstract class BasePresenter extends \BasePresenter {
 			$this->template->og['image'] = 'http://www.sk.tra.com/images/logo.png'; //@todo
 		}
 		$this->template->og['site_name'] = 'Tralandia';
-		
+
 		parent::beforeRender();
 	}
 
@@ -201,7 +195,7 @@ abstract class BasePresenter extends \BasePresenter {
 
 
 	public function createComponentBreadcrumb($name) {
-		
+
 //		return new \FrontModule\Breadcrumb\Breadcrumb($this, $name);
 	}
 
