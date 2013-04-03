@@ -35,11 +35,17 @@
 
 			// var conditionsText = $('.sidebarLocation').attr('data-conditions-text');
 
+			var minimumInputLengthtext = $(this).attr('data-formatInputTooShort');
 
 			$(this).select2({
 
-				initSelection: function(element, callback) {					        		
-					 callback({id:0,name:$(element).attr('data-placeholder')});
+				dropdownCssClass: 'searchSelect',
+				formatInputTooShort: function(w,v){
+					return minimumInputLengthtext;
+				},
+				initSelection: function(element, callback) {					
+					this.self = element;        		
+					callback({id:0,name:$(element).attr('data-placeholder')});
 				},
 
 

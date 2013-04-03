@@ -305,7 +305,8 @@ $(document).ready(function(){
 
 
 
-
+	// click map tooltip
+	$('.point').tooltip();
 	
 
 	$('.calendarEdit').calendarEdit();
