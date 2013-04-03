@@ -89,9 +89,9 @@ class SearchForm extends BaseForm
 			->setPrompt('o1070')
 			->setAttribute('data-placeholder', $this->translate('o1070'));
 
-		$this->addSelect(FrontRoute::LOCATION, 'o1070', $locations)
-			->setPrompt('')
-			->setAttribute('data-placeholder', $this->translate('o1070'));
+		$this->addHidden(FrontRoute::LOCATION)			
+			->setAttribute('data-placeholder', $this->translate('o1070'))
+			->setAttribute('data-defaults', json_encode($locations));
 
 		$this->addSelect(FrontRoute::RENTAL_TYPE, 'o20926', $rentalTypes)
 			->setPrompt('')
