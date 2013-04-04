@@ -241,7 +241,7 @@ abstract class BasePresenter extends Presenter {
 
 		$header->setTitleSeparator(' - ')
 				->setTitlesReverseOrder(TRUE)
-				->setFavicon('favicon.ico')
+				->setFavicon('/favicon.ico')
 				->addKeywords(array())
 				->setDescription('')
 				->setRobots('index,follow')
