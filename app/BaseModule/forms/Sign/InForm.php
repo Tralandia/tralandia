@@ -18,7 +18,11 @@ class InForm extends \BaseModule\Forms\BaseForm {
 		$this->addText('login', 'o1096');
 
 		$helpText = $this->translate('o8826');
-		$help = Nette\Utils\Html::el('a')->href('#')->setText($helpText);
+		$help = Nette\Utils\Html::el('a')
+				->href('#')->setText($helpText)
+				->class('toggle')
+				->for('forgotPasswordForm');
+
 		$this->addPassword('password', 'o997')
 			->setOption('help', $help)
 			;

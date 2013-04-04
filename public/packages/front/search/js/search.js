@@ -61,53 +61,25 @@
 			                string: term, 
 			            };
 			        },
-			        results: function (data, page) { 
-			        	
-			        	
-			        	var r = [];
+			        results: function (data, page) {
 
-			        	$.each(data,function(k,v){
+			        	var r =[];
 
-			        		var sep = {
-			        			name :k,
-			        			type : 'separator'
-			        		};
+			        	$.each(data.localitiesAndRegions,function(k,v){
 
-			        		r.push(sep);
-
-			        		$.each(v,function(key,val){
-			        			val.type = k;
-			        			if(typeof val.id != 'number'){
-			        				val.id = k;
-			        			}
-			        			r.push(val);
+			        		r.push({
+			        			id: v.slug,
+			        			name: v.name
 			        		});
 
 			        	});
-
-			        	//console.log(r);
 
 			            return {results:r};
 			        }
 			    },
 			    formatResult: function(r){
 
-			    	switch(r.type){
-			    		case 'counties':
-			    			return r.name;
-			    			// return '<img class="flag" src="'+r.icon+'"> '+r.name;
-			    			break;
-			    		case 'other':
-			    			return r.name;
-			    			break;			    		
-			    		case 'rentals':
-			    			return r.name;
-			    			break;
-			    		case 'separator':
-			    			return '<h4>'+r.name+'</h4>';
-			    			break;			    			
-
-			    	}
+			    	return r.name;
 			    	
 			    }, 
 
@@ -125,6 +97,24 @@
 			    
 			    escapeMarkup: function (m) { return m; }
 			});
+
+
+			var attr = $(this).attr('data-location-name');
+
+			if (typeof attr !== 'undefined' && attr !== false) {
+
+				$(this).select2('data',{
+					name:attr,
+					id: $(this).attr('data-location-slug')
+				});
+
+				// $(this).parent().addClass('selected');
+
+				searchCriteriumSetActive(this);
+
+
+			}
+
 
 
 		});

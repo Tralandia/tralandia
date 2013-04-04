@@ -164,10 +164,12 @@
 						{var $otherAmenities = $rental->getImportantAmenities(false)}
 						{if $otherAmenities}
 
-						<a class="toogle showMoreAmenities" data-opentext="{_o100001}" data-closetext="{_o100014}"
+
+						<a class="toggle showMoreAmenities" data-opentext="{_o100001}" data-closetext="{_o100014}"
 						   for="moreAmenities" href="#"><b>{_o100001}</b></a>
 					</div>
 					<div id="moreAmenities">
+
 						<ul class="moreAmenities">
 							{foreach $otherAmenities  as $amenity}
 								<li> {_$amenity->name} </li>
