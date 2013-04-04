@@ -71,7 +71,7 @@
 
 				{* Last search results *}
 				<div n:class="$navBarLastActive=='navBarSerchResults' ? active, tab-pane" id="navBarSerchResults">
-					<div n:ifset="$lastSearchResults" class="content jscrollPane">
+					<div n:ifset="$lastSearchResults['rentals']" class="content jscrollPane">
 						<ul id="scrollInnerContent">
 							<li class="template"></li>
 							{foreach $lastSearchResults['rentals'] as $rental}
