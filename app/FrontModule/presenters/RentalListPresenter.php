@@ -68,7 +68,6 @@ class RentalListPresenter extends BasePresenter {
 
 		$this->template->lastSeenRentals = $this->lastSeen->getSeenRentals(12);
 		$this->template->totalResultsCount = $paginator->itemCount;
-		$this->template->navBarLastActive = $this->getActiveNavbarTab();
 
 		if(isset($search)) {
 			$rentals = $search->getRentalsIds($paginator->getPage());
