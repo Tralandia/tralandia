@@ -57,6 +57,7 @@
 				<div n:class="$navBarLastActive=='navBarLastSeen' ? active, tab-pane" id="navBarLastSeen">
 					<div n:ifset="$lastSeenRentals" class="content jscrollPane">
 						<ul id="scrollInnerContent">
+							<li class="template"></li>
 							{foreach $lastSeenRentals as $rental}
 								{var $image = $rental->getMainImage()}
 								{var $isCurrent = isset($currentRental) ? $rental->id==$currentRental->id : false}
@@ -72,6 +73,7 @@
 				<div n:class="$navBarLastActive=='navBarSerchResults' ? active, tab-pane" id="navBarSerchResults">
 					<div n:ifset="$lastSearchResults" class="content jscrollPane">
 						<ul id="scrollInnerContent">
+							<li class="template"></li>
 							{foreach $lastSearchResults['rentals'] as $rental}
 								{var $image = $rental->getMainImage()}
 								{var $seen = in_array($rental->getId(), $favoriteVisitedRentals)}
