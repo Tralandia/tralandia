@@ -1,6 +1,6 @@
 var global = {};
 var $class = function(definition) {
-	var constructor = definition.constructor;        
+	var constructor = definition.constructor;
 	var parent = definition.Extends;
 	if (parent) {
 		var F = function() { };
@@ -27,11 +27,11 @@ function executeFunctionByName(functionName, context /*, args */) {
 
 
 /*
-* App class 
+* App class
 */
 
 var App = $class({
-	
+
 	constructor: function (){
 		this._traMapInit = false;
 
@@ -53,9 +53,9 @@ App.prototype._getLocationUrl = function(withAnchor){
 	if(typeof withAnchor == 'undefined' || withAnchor == false){
 		var hash = window.location.hash;
 		var url = document.location.toString();
-			url = url.replace(hash,''); 
-		
-		return url;		
+			url = url.replace(hash,'');
+
+		return url;
 	}
 
 	if(withAnchor == true) {
@@ -73,14 +73,14 @@ App.prototype._getLocationUrlAnchor = function(){
 }
 
 /**
-* set url anchor 
+* set url anchor
 */
 
 App.prototype._setLocationUrlAnchor = function(anchorName){
 	//location.replace(this._getLocationUrl()+anchorName);
 
 	var scrollmem = $('body').scrollTop();
-	
+
 	document.location.hash = anchorName;
 	$('html,body').scrollTop(scrollmem);
 	//window.location.href = this._getLocationUrl()+anchorName;
@@ -99,7 +99,7 @@ App.prototype.attachment = function(){
 	return false;
 }
 
-App.prototype.ticketMesageCannedSelect = function(){	
+App.prototype.ticketMesageCannedSelect = function(){
 	$(this).parent().find('textarea').remove();
 	$(this).parent().parent().find('a').remove();
 	return false;
@@ -126,7 +126,7 @@ App.prototype.uiToogleClick = function(){
 		$(this).addClass('active').html($(this).attr('opened'));
 		$(this).parent().parent().find('i').addClass('entypo-close');
 		$(this).parent().parent().find('i').removeClass('entypo-open');
-		$b.html(closeText);		
+		$b.html(closeText);
 	}
 
 	return false;
@@ -141,7 +141,7 @@ App.prototype.in_array = function(array, value) {
 		if(v == value) r = true;
 	});
 
-	return r; 
+	return r;
 }
 
 /****************************************************************************************************
@@ -191,13 +191,13 @@ App.prototype.datepickerIcon = function(){
 
 App.prototype.initMapsObjectDetail = function(){
 	$('#objectDetailListMap').trigger('click');
-	
-	$.scrollTo('#objectDetailListMap',800);	
+
+	$.scrollTo('#objectDetailListMap',800);
 
 	setTimeout(function(){
 		//maplodader();
 	},800);
-	
+
 }
 
 /****************************************************************************************************
@@ -206,7 +206,7 @@ App.prototype.initMapsObjectDetail = function(){
 
 
 App.prototype.loadContactForm = function(){
-	
+
 	$('#contentForForm').hide();
 	$('#contactFormCover').show();
 
@@ -214,7 +214,7 @@ App.prototype.loadContactForm = function(){
 }
 
 App.prototype.cancelContactForm = function(){
-	
+
 	$('#contentForForm').show();
 	$('#contactFormCover').hide();
 
@@ -225,12 +225,12 @@ App.prototype.forgottenPasswordOpen = function(){
   $('#forgottenPassword').slideDown('fast', function() {
 	// Animation complete.
   });
-  return false;	
+  return false;
 }
 
 App.prototype.closeForgottenPasswordForm = function(){
 	$('#forgottenPassword').slideUp();
-	return false;		
+	return false;
 }
 
 /****************************************************************************************************
@@ -249,7 +249,7 @@ App.prototype.autoselect = function(){
 
 
 $(document).ready(function(){
-	
+
 	jsVariablesReplace();
 
 
@@ -261,23 +261,23 @@ $(document).ready(function(){
 	// Prevent "empty" links to "click"
 	$("a[href='#']").click(function() {
 		return false;
-	}); 
+	});
 
 
-	$(".reservationform select.select2:not(#frm-registrationForm-rental-type)").select2({dropdownCssClass: "reservationForm"}); 
+	$(".reservationform select.select2:not(#frm-registrationForm-rental-type)").select2({dropdownCssClass: "reservationForm"});
 	$('#frm-registrationForm-rental-type,#frm-registrationForm-rental-classification,#frm-registrationForm-rental-pet,#frm-registrationForm-rental-ownerAvailability').select2({
 		dropdownCssClass: "mainForm",
 		allowClear: true,
 		minimumResultsForSearch: 'X',
-	}); 
+	});
 
-	$("table.formTable select.select2:not(#frm-registrationForm-rental-type,#frm-registrationForm-rental-classification,#frm-registrationForm-rental-pet,#frm-registrationForm-rental-ownerAvailability)").select2({dropdownCssClass: "mainForm"}); 
+	$("table.formTable select.select2:not(#frm-registrationForm-rental-type,#frm-registrationForm-rental-classification,#frm-registrationForm-rental-pet,#frm-registrationForm-rental-ownerAvailability)").select2({dropdownCssClass: "mainForm"});
 
-	var A = new App();	
+	var A = new App();
 
 	$('.autoselect').click(A.autoselect);
 
-	
+
 
 	$('.socialIconsDetail').socialIconsDetail();
 
@@ -296,7 +296,7 @@ $(document).ready(function(){
 			animation: false,
 			placement: position,
 			trigger: 'manual'
-		});		
+		});
 
 		$(this).tooltip('show');
 	} , function(){
@@ -307,7 +307,7 @@ $(document).ready(function(){
 
 	// click map tooltip
 	$('.point').tooltip();
-	
+
 
 	$('.calendarEdit').calendarEdit();
 
@@ -326,11 +326,11 @@ $(document).ready(function(){
 
 
 	$('.loadContactForm').click(A.loadContactForm);
-	
+
 	/* UI calendar */
 	$(".datepickerIcon").click(A.datepickerIcon);
 	$('.accordion').accordion({ autoHeight: false , active: false , navigation: true, collapsible: true });
-	
+
 	/* add attachment file  */
 	$('.attachment').click(A.attachment);
 
@@ -354,12 +354,12 @@ $(document).ready(function(){
 	$('#forgottenPasswordOpen').click(A.forgottenPasswordOpen);
 	$('#closeForgottenPasswordForm').click(A.closeForgottenPasswordForm);
 
-	// sidebar show hide more options	
+	// sidebar show hide more options
 	$('ul li.more a').click(function(e) {
 		e.preventDefault();
 		$ul = $(this).parents('ul');
 		$ul.find('li.hidden').toggleClass('hide');
-		
+
 		$(this).parent().toggleClass('open');
 
 		if($(this).parent().hasClass('open')){
@@ -373,7 +373,7 @@ $(document).ready(function(){
 
 	/* ui tabs */
 	$('.nav-tabs a').click(function (e) {
-	  
+
 	  e.preventDefault();
 	  var id = $(this).attr('id');
 	  var href = $(this).attr('href');
@@ -393,7 +393,7 @@ $(document).ready(function(){
 	  if(id = 'objectDetailListMap'){
 		mapLoader();
 	  }
-	  
+
 	  $('.tab-content .tab-pane').hide();
 	  $('.tab-content .tab-pane'+href).show();
 
@@ -401,7 +401,7 @@ $(document).ready(function(){
 	});
 
 	// nastavenie default tabu
-		
+
 	if(window.location.hash.length > 1){
 
 		var currentId  = window.location.hash;
@@ -413,10 +413,10 @@ $(document).ready(function(){
 
 		$('.nav-tabs a[href$="'+currentId+'"]').tab('show');
 
-		//$.scrollTo('0px',1);	
-	
+		//$.scrollTo('0px',1);
+
 		// pokial obsahuje otvoreny div mapu
-		var haveMapContent = $(currentId).find("#map_canvas");			
+		var haveMapContent = $(currentId).find("#map_canvas");
 			if(haveMapContent.length != 0){
 				mapLoader();
 			}
@@ -437,7 +437,7 @@ $(document).ready(function(){
 			$(this).find('i.entypo-chevron-up').removeClass('entypo-chevron-up').addClass('entypo-chevron-down');
 			langmenuOpen = false;
 		}
-		
+
 		return false;
 	});
 
@@ -450,39 +450,39 @@ $(document).ready(function(){
 		initAllSocialPlugins();
 
 		if(!socialIconsMenu){
-					
+
 			$arrow.html('&#59231;');
 			$('#socialIconsMenu').show();
 			socialIconsMenu = true;
 		} else {
-					
+
 			$arrow.html('&#59228;');
 			$('#socialIconsMenu').hide();
 			socialIconsMenu = false;
 		}
-		
+
 		return false;
 	});
 
 
 
 
-	$('body').click(function(){		
+	$('body').click(function(){
 		if(langmenuOpen){
 			$('#langMenuOptions').hide();
 			$('#langMenuOptionsOpen').find('i.entypo-chevron-up').removeClass('entypo-chevron-up').addClass('entypo-chevron-down');
 			langmenuOpen = false;
-		}  	
+		}
 		if(socialIconsMenu){
 			$('#socialIcons').find('span').html('&#59228;');
 			$('#socialIconsMenu').hide();
 			socialIconsMenu = false;
-		}      	
-		
-		// console.log('allaaaa');
-		
+		}
 
-	});	
+		// console.log('allaaaa');
+
+
+	});
 
 
 
@@ -499,7 +499,7 @@ $(document).ready(function(){
 	$('.pricePhrase').pricePhrase();
 
 	_selectSetSelectedValue();
-	
+
 });
 
 // replace js variables
@@ -516,7 +516,6 @@ function jsVariablesReplace() {
 
 			k = k.replace( rmultiDash, "$1-$2" ).toLowerCase();
 
-			// console.log(v);
 			var currentElement = $(selector+' ['+dataPrefix+k+']');
 			var dataAttrName = 'data-'+currentElement.attr(dataPrefix+k);
 			currentElement.attr(dataAttrName,v);

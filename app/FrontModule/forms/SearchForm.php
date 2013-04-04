@@ -75,9 +75,6 @@ class SearchForm extends BaseForm
 	{
 		$countries = $this->searchOptionGenerator->generateCountries($this->presenter);
 
-		$defaultLocation = Nette\Utils\Arrays::get($this->defaults, FrontRoute::LOCATION, NULL);
-		$locations = $this->searchOptionGenerator->generateLocation($defaultLocation, $this->search);
-
 		$rentalTypes = $this->searchOptionGenerator->generateRentalType();
 		$placement = $this->searchOptionGenerator->generatePlacement();
 		$prices = $this->searchOptionGenerator->generatePrice($this->environment->getCurrency());
@@ -89,9 +86,8 @@ class SearchForm extends BaseForm
 			->setPrompt('o1070')
 			->setAttribute('data-placeholder', $this->translate('o1070'));
 
-		$this->addHidden(FrontRoute::LOCATION)			
-			->setAttribute('data-placeholder', $this->translate('o1070'))
-			->setAttribute('data-defaults', json_encode($locations));
+		$this->addHidden(FrontRoute::LOCATION)
+			->setAttribute('data-placeholder', $this->translate('o1070'));
 
 		$this->addSelect(FrontRoute::RENTAL_TYPE, 'o20926', $rentalTypes)
 			->setPrompt('')
