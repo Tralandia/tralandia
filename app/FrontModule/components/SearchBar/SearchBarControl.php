@@ -109,12 +109,14 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		$this->directLinks();
 
 		$template = $this->template;
+		$presenter = $this->getPresenter();
 
 		$jsVariables = [];
 		$jsVariables['data-country'] = $this->search->getPrimaryLocation()->getId();
 
 		if($this->location) {
-			$jsVariables['data-location'] = $this->location->getSlug();
+			$jsVariables['data-location-slug'] = $this->location->getSlug();
+			$jsVariables['data-location-name'] = $presenter->translate($this->location->getName());
 		}
 
 		if($this->rentalType) {
@@ -154,7 +156,6 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 
 		$count = $search->getRentalsCount();
 		$template->totalResultsCount = $count;
-		$presenter = $this->getPresenter();
 		$template->totalResultsCountLabel = $presenter->translate('o100002', $count, NULL, ['count' => $count]);
 		$template->autocompleteUrl = $presenter->link(':Front:Rental:locationSuggestion');
 
