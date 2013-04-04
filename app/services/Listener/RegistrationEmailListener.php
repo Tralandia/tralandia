@@ -8,10 +8,11 @@ class RegistrationEmailListener extends BaseEmailListener implements \Kdyby\Even
 
 	public function getSubscribedEvents()
 	{
-		return ['FormHandler\RegistrationHandler::onSuccess'];
+		return ['FrontModule\RegistrationPresenter::onSuccessRegistration'];
 	}
 
-	public function onSuccess(\Entity\Rental\Rental $rental)
+
+	public function onSuccessRegistration(\Entity\Rental\Rental $rental)
 	{
 		$message = new \Nette\Mail\Message();
 
@@ -23,6 +24,7 @@ class RegistrationEmailListener extends BaseEmailListener implements \Kdyby\Even
 
 		$this->mailer->send($message);
 	}
+
 
 	/**
 	 * @param \Entity\Rental\Rental $rental

@@ -6,13 +6,13 @@ use Nette;
 use Service\Seo\ISeoServiceFactory;
 
 abstract class BasePresenter extends \SecuredPresenter {
-	
+
 	protected $languageRepositoryAccessor;
 	protected $locationRepositoryAccessor;
 	protected $rentalTypeRepositoryAccessor;
 	protected $rentalRepositoryAccessor;
-	
-	protected $environment;
+
+
 	protected $seoFactory;
 
 	/**
@@ -30,11 +30,6 @@ abstract class BasePresenter extends \SecuredPresenter {
 	public function injectSeo(ISeoServiceFactory $seoFactory)
 	{
 		$this->seoFactory = $seoFactory;
-	}
-
-	public function injectEnvironment(\Environment\Environment $environment)
-	{
-		$this->environment = $environment;
 	}
 
 	public function injectBaseRepositories(\Nette\DI\Container $dic) {

@@ -10,11 +10,6 @@ class RentalTypeContainer extends BaseContainer
 {
 
 	/**
-	 * @var array
-	 */
-	protected $months = [];
-
-	/**
 	 * @param array $rentalTypes
 	 * @param \Nette\Localization\ITranslator $translator
 	 */

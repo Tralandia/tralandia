@@ -1,186 +1,196 @@
-<?php 
+<?php
 
 namespace OwnerModule\Forms;
 
+use Doctrine\ORM\EntityManager;
 use Entity\Rental\Rental;
-use Nette\Forms\Form;
+use Environment\Collator;
+use Environment\Environment;
+use Extras\Forms\Container\IRentalContainerFactory;
+use Nette;
+use Nette\Localization\ITranslator;
+use Entity\Location\Location;
+use Repository\Location\LocationRepository;
+use Repository\LanguageRepository;
 
-class RentalEditForm extends BaseForm {
-	
-	protected $languageRepository;
-	protected $locationRepository;
-	protected $rentalTypeRepository;
-	protected $locationTypeRepository;
-	protected $rentalAmenityRepository;
-	protected $rentalAmenityTypeRepository;
+/**
+ * RegistrationForm class
+ *
+ * @author Dávid Ďurika
+ */
+class RentalEditForm extends \FrontModule\Forms\BaseForm
+{
 
+	/**
+	 * @var \Entity\Rental\Rental
+	 */
 	protected $rental;
 
+	/**
+	 * @var \Environment\Environment
+	 */
+	protected $environment;
 
-	public function __construct(Rental $rental, \Doctrine\ORM\EntityManager $em){
+	/**
+	 * @var \Entity\Location\Location
+	 */
+	protected $country;
+
+	/**
+	 * @var \Environment\Collator
+	 */
+	protected $collator;
+
+	/**
+	 * @var IRentalContainerFactory
+	 */
+	protected $rentalContainerFactory;
+
+	/**
+	 * @var \Repository\Location\LocationRepository
+	 */
+	protected $locationRepository;
+
+	/**
+	 * @var \Repository\LanguageRepository
+	 */
+	protected $languageRepository;
+
+	/**
+	 * @var \Repository\User\UserRepository
+	 */
+	protected $userRepository;
+
+
+	/**
+	 * @param \Entity\Rental\Rental $rental
+	 * @param \Environment\Environment $environment
+	 * @param IRentalContainerFactory $rentalContainerFactory
+	 * @param EntityManager $em
+	 * @param ITranslator $translator
+	 */
+	public function __construct(Rental $rental, Environment $environment, IRentalContainerFactory $rentalContainerFactory,
+								EntityManager $em, ITranslator $translator)
+	{
 		$this->rental = $rental;
-		$this->languageRepository = $em->getRepository('\Entity\Language');
-		$this->locationRepository = $em->getRepository('\Entity\Location\Location');
-		$this->rentalTypeRepository = $em->getRepository('\Entity\Rental\Type');
-		$this->locationTypeRepository = $em->getRepository('\Entity\Location\Type');
-		$this->rentalAmenityRepository = $em->getRepository('\Entity\Rental\Amenity');
-		$this->rentalAmenityTypeRepository = $em->getRepository('\Entity\Rental\AmenityType');
-		parent::__construct();
+		$this->environment = $environment;
+		$this->country = $environment->getPrimaryLocation();
+		$this->collator = $environment->getLocale()->getCollator();
+		$this->rentalContainerFactory = $rentalContainerFactory;
+
+		$this->locationRepository = $em->getRepository(LOCATION_ENTITY);
+		$this->languageRepository = $em->getRepository(LANGUAGE_ENTITY);
+		$this->userRepository = $em->getRepository(USER_ENTITY);
+		parent::__construct($translator);
 	}
 
 
-	public function buildForm() {
+	public function buildForm()
+	{
+		$phonePrefixes = $this->locationRepository->getCountriesPhonePrefixes();
 
-		$allCountries = array();
-		$phonePrefixes = array();
-		$locationType = $this->locationTypeRepository->findOneBySlug('country');
-		foreach ($this->locationRepository->findBy(array('type' => $locationType), array('iso'=>'ASC')) as $location) {
-			$language = $this->rental->editLanguage;
-			$allCountries[$location->iso] = $location->name->getTranslationText($language, TRUE);
-			if ($location->phonePrefix) $phonePrefixes[$location->iso] = strtoupper($location->iso) . ' (+'.$location->phonePrefix.')';
-		}
-		$allCountries = array_reverse($allCountries);
+		$this->addText('email', 'o1096')
+			->setOption('help', $this->translate('o3095'))
+			->setOption('prepend', '<i class="icon-envelope"></i>')
+			->setAttribute('placeholder', 'email@email.com')
+			->addRule(self::EMAIL, $this->translate('o407'));
+		;
+		$this->addPassword('password', 'o997')
+			->setOption('help', $this->translate('o3096'))
+			->setOption('prepend', '<i class="icon-lock"></i>')
+			->addRule(self::MIN_LENGTH, $this->translate('o856'), 6);
+		;
 
-
-		/*
-		 * FORM
-		 * Contact info
-		 */
-
-		$formName = $this->addText('user','_o962');
-		$formName->setAttribute('class', 'testclass');
-		$formName->setAttribute('placeholder', 'Meno Priezvysko');
-
-		$formEmail = $this->addText('email','_o965');				
-		$formEmail->setAttribute('placeholder', 'example@domain.com');
-		$formEmail->setValue($this->rental->user->login);
-
-		$formPhonePresets1 = $this->addSelect('phonePresets1', '', $phonePrefixes);
-		$formPhonePresets2 = $this->addSelect('phonePresets2', '', $phonePrefixes);
-
-		$formPhone1 = $this->addText('phone1','_o968');
-		$formPhone1->setAttribute('placeholder','09XX XXX XXX');
-
-		$formPhone2 = $this->addText('phone2','_o971');
-		$formPhone2->setAttribute('placeholder','09XX XXX XXX');
-
-		$formSite = $this->addText('siteWWW','_o977');
-		$formSite->setAttribute('placeholder','www.neco.co');		
+//		$this->addText('name', 'o100070')
+//			->setOption('help', $this->translate('o100071'))
+//	        //->addRule(Form::MAX_LENGTH, 'o100101', 70);
+//			;
+//
+		$this->addPhoneContainer('phone', 'o10899', $phonePrefixes);
 
 
-		/*
-		 * Rental photos
-		 * @todo: dorobit form pre fotky
-		 */
+		$this->addText('url', 'o977')
+			->setOption('help', $this->translate('o978'))
+			->setOption('prepend', 'http://')
+			->addRule(self::URL, $this->translate('o100102'));
+		;
 
-		$formPhotos;
+		$rentalContainer = $this->rentalContainerFactory->create($this->environment);
+		$this['rental'] = $rentalContainer;
 
+		$this->addSubmit('submit', 'o100083');
 
-		/*
-		 * Rental location
-		 */
-
-		$formLatitude = $this->addText('lat');
-
-		$formLongitude = $this->addText('lng');		
-	
-		$formLocation1 = $this->addText('location1');
-		$formLocation2 = $this->addText('location2');
-		$formLocation3 = $this->addTextArea('location3');
-		$formLocation4 = $this->addText('location4');
-
-
-
-		/*
-		 * Rental basic info
-		 */
-
-		$formCountry = $this->addSelect('country', 'Země:', $allCountries);
-		$formCountry->setPrompt('Zvolte zemi');
-		$formCountry->setAttribute('class','span9');
-
-		$basicInfo = $this->addContainer('basicInfo');
-		$languages = $this->languageRepository->findSupported();
-		foreach ($languages as $language) {
-
-			$rentalTypes = array();
-			foreach ($this->rentalTypeRepository->findAll() as $entity) {
-				$rentalTypes[$entity->id] = $entity->name->getTranslationText($language, TRUE);
-			}
-
-			$formContainer = $basicInfo->addContainer($language->iso);
-			$formContainer->addText('name', '_o886');
-			$formContainer->addSelect('type', 'Rental type', $rentalTypes);
-			$formContainer->addText('teaser', 'Rental teaser');
-
-		}
-
-
-		/*
-		 * Rental Amenities
-		 */
-
-		// Amenities
-		foreach ($this->rentalAmenityTypeRepository->findAll() as $amenityType) {
-			$container = $this->addContainer(str_replace('-', '_', $amenityType->slug));
-			foreach ($this->rentalAmenityRepository->findByType($amenityType) as $amenity) {
-				$container->addCheckbox($amenity->id, $amenity->name->getTranslationText($this->rental->editLanguage, TRUE));
-			}
-		}
-
-
-		/*
-		 * Check in & Check out
-		 */
-		$time = array();
-		for ($i=0; $i < 24; $i++) { 
-			$time[$i] = $i.':00';
-		}
-		$checkIn = $this->addSelect('checkin', 'Prichod', $time);
-		$checkOut = $this->addSelect('checkout', 'Odchod', $time);
-		
-		// Owner-availability
-		$ownerAvailability = $this->addCheckbox('ownerAvailability', 'Je možné ubytovať viaceré nezávislé skupiny naraz.');
-
-		// Price upon Request
-		$ownerAvailability = $this->addCheckbox('priceUponRequest', '');
-
-		/*
-		 * Rental Interview
-		 */
-
-		$formInterview1 = $this->addTextArea('interview1');
-		$formInterview1->setAttribute('class','marginBottom');
-
-		$formInterview2 = $this->addTextArea('interview2');
-		$formInterview2->setAttribute('class','marginBottom');
-
-		$formInterview3 = $this->addTextArea('interview3');
-		$formInterview1->setAttribute('class','marginBottom');
-
-		$formInterview4 = $this->addTextArea('interview4');
-		$formInterview4->setAttribute('class','marginBottom');
-
-		$formInterview5 = $this->addTextArea('interview5');
-		$formInterview5->setAttribute('class','marginBottom');
-
-
-		/*
-		 * Form agree, submit
-		 */
-
-		$formAgree = $this->addCheckbox('agree', 'Souhlasím s podmínkami');
-		$formAgree->addRule(Form::EQUAL, 'Je potřeba souhlasit s podmínkami', TRUE);
-
-		$formSubmit = $this->addButton('sbumit', '_o985');
-		$formSubmit->setAttribute('onclick', 'send()');
-		$formSubmit->setAttribute('class','btn btn-green marginBottom');
-
+		$this->onValidate[] = callback($this, 'validation');
+		$this->onValidate[] = $rentalContainer->validation;
 	}
+
 
 	public function setDefaultsValues()
 	{
+		$rental = $this->rental;
+		$places = [];
+		foreach ($rental->getPlacements() as $place) {
+			$places[] = $place->getId();
+		}
+		$defaults = [
 
+			//'referrer' => 'luzbo',
+			'email' => $rental->getEmail(),
+			'url' => $rental->getUrl(),
+
+			'phone' => $rental->getPhone(),
+			'rental' => [
+				'name' => $this->translate($rental->getName()),
+				'price' => $rental->getPrice()->getSourceAmount(),
+				'maxCapacity' => $rental->getMaxCapacity(),
+				'type' => [
+					'type' => $rental->getType()->getId(),
+					'classification' => $rental->getClassification(),
+				],
+				'board' => array_map(function ($a) {
+					return $a->getId();
+				}, $rental->getBoardAmenities()),
+				'important' => array_map(function ($a) {
+					return $a->getId();
+				}, $rental->getImportantAmenities()),
+				'ownerAvailability' => $rental->getOwnerAvailability()->getId(),
+				'pet' => $rental->getPetAmenity()->getId(),
+				'placement' => $places,
+
+				'address' => $rental->getAddress(),
+			],
+		];
+		d($defaults);
+		$this->setDefaults($defaults);
 	}
 
+
+	public function validation(RegistrationForm $form)
+	{
+		$values = $form->getValues();
+
+		$email = $values->email;
+		if ($email && !$form['email']->hasErrors()) {
+			$emailIsOccupied = $this->userRepository->findOneByLogin($email);
+			if ($emailIsOccupied) {
+				$form['email']->addError($this->translate('o852'));
+			}
+		}
+	}
+
+
 }
+
+
+interface IRentalEditFormFactory
+{
+
+	/**
+	 * @param \Entity\Rental\Rental $rental
+	 * @param \Environment\Environment $environment
+	 *
+	 * @return RentalEditForm
+	 */
+	public function create(Rental $rental, Environment $environment);
+}
+

@@ -91,7 +91,7 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 		$this->onSuccess[] = callback($this, 'process');
 		$this->onValidate[] = callback($this, 'validation');
 
-		
+
 	}
 
 
@@ -105,9 +105,9 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 		//$form['message']->addError('bar');
 	}
 
-	public function setDefaultsValues() 
+	public function setDefaultsValues()
 	{
-		
+
 	}
 
 	public function process(ReservationForm $form)

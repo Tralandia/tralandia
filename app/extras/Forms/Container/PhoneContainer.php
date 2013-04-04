@@ -13,6 +13,7 @@ class PhoneContainer extends BaseContainer
 	 */
 	protected $phoneBook;
 
+
 	/**
 	 * @param \Nette\ComponentModel\IContainer $label
 	 * @param null $phonePrefixes
@@ -27,11 +28,23 @@ class PhoneContainer extends BaseContainer
 		$this->addSelect('prefix', NULL, $phonePrefixes);
 
 		$this->addText('number', $label)
-			->setOption('help', $translator->translate('o1038'))
-			;
+			->setOption('help', $translator->translate('o1038'));
 
 	}
 
+
+	public function setValues($values, $erase = FALSE)
+	{
+		if (!$values) return NULL;
+
+		if ($values instanceof \Entity\Contact\Phone) {
+			$valuesTemp = [];
+			$valuesTemp['prefix'] = $values->getPrimaryLocation()->getPhonePrefix();
+			$valuesTemp['number'] = str_replace('+' . $valuesTemp['prefix'], '', $values->getInternational());
+			$values = $valuesTemp;
+		}
+		parent::setValues($values, $erase);
+	}
 
 
 	public function getValues($asArray = FALSE)
