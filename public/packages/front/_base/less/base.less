@@ -53,6 +53,9 @@ a.brown {
 	}
 }
 
+.hide {
+	overflow: hidden;
+}
 
 /****************************************************************************************
 /* helper class
@@ -69,7 +72,7 @@ a.brown {
 	position: relative;
 }
 
-a.toogle {
+a.toggle {
 	font-size: 13px;
 	line-height: 15px;
 
@@ -197,6 +200,42 @@ ul.arrows {
 	color: @brown;
 	&:hover {
 		.basic-gradient(#f68703,#fdbe33);
+	}
+}
+
+
+
+.btn.btn-orangeDark {
+	.basic-gradient(#F68903,#AD6A18);
+	border: 1px solid rgb(163, 93, 9);
+	color: @white;
+	&:hover {
+		.basic-gradient(#AD6A18,#F68903);
+	}	
+
+	i.icon-spinner {
+		display: none;
+	}
+
+	&.active {
+		background: #AD6A18;
+
+
+color: #F68903;
+cursor: default;
+
+		i.icon-spinner {
+			display: block;
+			width: 14px;
+			line-height: 16px;
+			text-align: center;
+			height: 14px;
+			margin-top: 2px;
+		}
+
+		i.entypo-send {
+			display: none;
+		}
 	}
 }
 
@@ -749,7 +788,7 @@ ul.arrows {
 
 
 
-.toogle {
+.toggle {
 	font-weight: bold;
 }
 

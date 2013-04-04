@@ -105,14 +105,13 @@ App.prototype.ticketMesageCannedSelect = function(){
 	return false;
 }
 
-App.prototype.uiToogleClick = function(){
+App.prototype.uitoggleOldClick = function(){
 	var span  = $(this).find('span');
 	var $b  = $(this).find('b');
 	var forClass = '#'+$(this).attr('for');
 
 	var openText = $(this).attr('data-opentext');
 	var closeText = $(this).attr('data-closetext');
-
 
 
 	if($(this).hasClass('active')){
@@ -127,6 +126,31 @@ App.prototype.uiToogleClick = function(){
 		$(this).parent().parent().find('i').addClass('entypo-close');
 		$(this).parent().parent().find('i').removeClass('entypo-open');
 		$b.html(closeText);
+	}
+
+	return false;
+}
+
+App.prototype.uitoggleClick = function(){
+
+	var forClass = '.'+$(this).attr('for');
+	console.log(forClass);
+
+	var openText = $(this).attr('data-opentext');
+	var closeText = $(this).attr('data-closetext');
+
+
+
+	if($(this).hasClass('active')){
+		$(forClass).slideUp('fast');
+		$(this).removeClass('active').html($(this).attr('close'));
+
+		$(this).html(openText);
+	} else {
+		$(forClass).slideDown('fast');
+		$(this).addClass('active').html($(this).attr('opened'));
+
+		$(this).html(closeText);		
 	}
 
 	return false;
@@ -318,8 +342,8 @@ $(document).ready(function(){
 	$('.control-photo').galleryControl();
 
 	/* register listeners */
-	/* UI toogle function */
-	$('.toogle').click(A.uiToogleClick);
+	/* UI toggle function */
+	$('.toggle').click(A.uitoggleClick);
 
 	/* object detail init large map after small map click */
 	$('.mapsImg').click(A.initMapsObjectDetail);
@@ -494,7 +518,9 @@ $(document).ready(function(){
 	});
 
 
-
+	$('button[type=submit]').click(function(){
+		$(this).addClass('active');
+	})
 
 	$('.pricePhrase').pricePhrase();
 
@@ -524,10 +550,45 @@ function jsVariablesReplace() {
 	});
 }
 
+
+
 function _selectSetSelectedValue(){
-	$('[data-selected]').each(function(){
-		$(this).val($(this).attr('data-selected'));
+
+	$('variables').each(function(i){
+		var selector = $(this).attr('for');
+
+		$(selector+' select,'+selector+' input').each(function(k,v){
+
+			var dataSelector = '';
+
+			switch($(this).prop('tagName')){
+				case 'SELECT':					
+					dataSelector = 'data-selected';
+					break;				
+				case 'INPUT':
+					dataSelector = 'data-'+$(this).attr('name')+'-name';
+					break;
+
+			}
+
+			
+
+			var attr = $(this).attr(dataSelector);
+
+			if (typeof attr !== 'undefined' && attr !== false) {
+
+
+
+				$(this).val(attr);
+
+				// console.log(attr);
+			}
+
+
+		})
+
 	});
+
 }
 
 

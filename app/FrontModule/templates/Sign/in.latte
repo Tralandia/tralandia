@@ -17,14 +17,16 @@
 	<table class="formTable innerPadding">
 		{include #text, control => $form['login']}
 		{include #password, control => $form['password']}
-		{include #submit, control => $form['submit']}
+		{include #submit, control => $form['submit'] , class => 'btn orangeDark' , icon => 'entypo-send'}
 	</table>
 {/form}
 
+<div class="forgotPasswordForm hide">
 {form forgotPasswordForm, class => "traform dashboard"}
-	<table class="formTable innerPadding hide">
+	<table class="formTable innerPadding">
 		{include #email, control => $form['email']}
 		{include #submit, control => $form['submit']}
 	</table>
 {/form}
-
+</div>
+<div class="clearfix"></div>
