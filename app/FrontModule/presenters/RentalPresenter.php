@@ -76,7 +76,6 @@ class RentalPresenter extends BasePresenter {
 
 		$this->template->lastSearchResults = $this->getLastSearchResults($rental);
 		$this->template->lastSeenRentals = $this->lastSeen->visit($rental)->getSeenRentals(12);
-		$this->template->navBarLastActive = $this->getActiveNavbarTab();
 	}
 
 	protected function getLastSearchResults($rental) {
