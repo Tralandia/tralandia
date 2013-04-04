@@ -1,6 +1,7 @@
 $(function(){
 	
-	$('#navbarTabContent li:not(.placeholder)').popover({
+	$('body').popover({
+		selector: '#navbarTabContent li:not(.placeholder)',
 		title: function(){
 			return 'strinf';
 		},
@@ -9,6 +10,7 @@ $(function(){
 
 				var info = {
 					title: $(this).attr('data-title'),
+					link: $(this).attr('data-link'),
 					thumb: $(this).attr('data-thumb'),
 					location: $(this).attr('data-location'),
 					price: $(this).attr('data-price'),

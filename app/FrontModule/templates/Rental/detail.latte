@@ -217,16 +217,10 @@
 <!-- right sidebar -->
 <div class="span3 sidebarRightDetail">
 
-
 	{if $mainImage = $rental->getMainImage()}
-		<button class="marginTop btn btn-compare addToFavorites currentObject" rel="{$rental->id}"
-				link="{link Rental:detail $rental}" data-title="{_$rental->name}"
-				thumb="{$basePath}{$mainImage|rentalImageSrc}"><span class="entypo-heart">{_o12334}</span></button>
+		<button class="marginTop btn btn-compare addToFavorites currentObject" rel="{$rental->id}" data-title="{_$rental->name}" data-thumb="{fakeImage}" data-location="{_$rental->address->locality->name}" data-price="{$rental->price}" data-capacity="{$rental->maxCapacity}" data-link="{link Rental:detail $rental}" data-thumb="{$basePath}{$mainImage|rentalImageSrc}"><span class="entypo-heart">{_o12334}</span></button>
 	{else}
-		<button class="marginTop btn btn-compare addToFavorites currentObject" rel="{$rental->id}"
-				link="{link Rental:detail $rental}" data-title="{_$rental->name}"
-				thumb="http://www.tralandia.com/u/32/13539183882248.jpg"><span class="entypo-heart">{_o12334}</span>
-		</button>
+		<button class="marginTop btn btn-compare addToFavorites currentObject" rel="{$rental->id}" data-title="{_$rental->name}" data-thumb="{fakeImage}" data-location="{_$rental->address->locality->name}" data-price="{$rental->price}" data-capacity="{$rental->maxCapacity}" data-link="{link Rental:detail $rental}" data-thumb="http://www.tralandia.com/u/32/13539183882248.jpg"><span class="entypo-heart">{_o12334}</span></button>
 	{/if}
 
 	<div class="socialIconTable marginBottom marginTop socialIconsDetail socialPluginsInit">

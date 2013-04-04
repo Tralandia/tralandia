@@ -103,11 +103,8 @@ var Favorites = {
 
 };
 
-Favorites.init = function(){
-	//console.log($.jStorage.deleteKey(this.cookieName));
-	//$.removeCookie(this.cookieName);
-	// console.log(this._cookieArray());
-	// console.log($.jStorage.get(this.cookieName));
+Favorites.init = function()
+{
 	if($(this.jscrollPaneClassName).length != 0){
 
 		this.cleanTrash();
@@ -117,11 +114,11 @@ Favorites.init = function(){
 		this.autoUpdate();
 
 	}
-
 };
 
 // vycisti data ktore nepatria do local storage
-Favorites.cleanTrash = function(){
+Favorites.cleanTrash = function()
+{
 	var self = this ;
 	var array = this._cookieArray();
 
@@ -146,7 +143,8 @@ Favorites.cleanTrash = function(){
 	
 }
 
-Favorites.eachSelectedRentalButtons = function(){
+Favorites.eachSelectedRentalButtons = function()
+{
 	
 	var self = this ;
 	var array = this._cookieArray();
@@ -162,40 +160,8 @@ Favorites.eachSelectedRentalButtons = function(){
 	});
 }
 
-// Favorites.initJscrollpaneUi = function(){			
-
-// 		var self = this;
-
-// 		var settings = {
-// 			showArrows: true
-// 		};
-
-// 		self.pane = $('.jscrollPane');
-
-// 		self.pane.jScrollPane(settings);
-
-// 		self.contentPane = self.pane.data('jsp').getContentPane();
-
-// 		$rigthArrow = $('#favorites-right-button');
-// 		$leftArrow = $('#favorites-left-button');
-		
-// 		//var pane = $('.jscrollPane');
-// 		self.jscrollPaneApi = self.pane.data('jsp');
-
-// 		$leftArrow .bind('click',function(){							
-// 				self.jscrollPaneApi.scrollBy(-40,0);
-// 				return false;
-// 		});
-
-// 		$rigthArrow.bind('click',function(){									
-// 				self.jscrollPaneApi.scrollBy(40,0);
-// 				return false;
-
-// 		});	
-// };
-
-
-Favorites._getFavoritesLength = function(){
+Favorites._getFavoritesLength = function()
+{
 	var c = this._cookieArray();
 	if(c){
 		return c.length;
@@ -205,33 +171,40 @@ Favorites._getFavoritesLength = function(){
 	
 }
 
-Favorites.toggleAdd = function(e, obj){
-	
-	var id = parseInt($(obj).attr('rel'));
+Favorites.toggleAdd = function(e, obj)
+{
+
+	$obj = $(obj);
+	var id = parseInt($obj.attr('rel'));
 	Favorites.cleanTrash();
 
 	// open favorites tab
 	$('li[for=#favoritesNavFavorites]').trigger('click');
 
 	var data = {
-		id: parseInt($(obj).attr('rel')),
-		link: $(obj).attr('link'),
-		thumb: $(obj).attr('thumb'),
-		title: $(obj).attr('data-title')
+		id: 		parseInt($obj.attr('rel')),
+		title: 		$obj.attr('data-title'),
+		link: 		$obj.attr('data-link'),
+		thumb: 		$obj.attr('data-thumb'),
+		location: 	$obj.attr('data-location'),
+		price: 		$obj.attr('data-price'),
+		capacity: 	$obj.attr('data-capacity')
 	}
 
-	if($(obj).hasClass('selected')){			
+	if($obj.hasClass('selected')){			
 		Favorites.removeFromFavorites(data);
-		$(obj).removeClass('selected');
+		$obj.removeClass('selected');
 	} else {
 		Favorites.addToFavorites(data);
-		$(obj).addClass('selected');
+		$obj.addClass('selected');
 	}
 
 	Favorites.updateList();	
 };
 
-Favorites.removeLink = function(e, obj){
+Favorites.removeLink = function(e, obj)
+{
+	$(obj).parents('li').popover('hide');
 	var id = parseInt($(obj).parents('li').attr('rel'));
 	Favorites.cleanTrash();
 	Favorites.removeFromLocalStorage(id);
@@ -240,21 +213,24 @@ Favorites.removeLink = function(e, obj){
 	return false;
 }
 
-Favorites.addToFavorites = function(data){	
+Favorites.addToFavorites = function(data)
+{	
 	this.addToCookie(data.id);
 	this.addToLocalStorage(data);
 };
 
-Favorites.removeFromFavorites = function(data){			
+Favorites.removeFromFavorites = function(data)
+{			
 	this.removeFromCookie(data.id);
 	this.removeFromLocalStorage(data.id);
 };
 
+
 /*
 *	local storage control favorites
 */
-
-Favorites.addToLocalStorage = function(data){
+Favorites.addToLocalStorage = function(data)
+{
 	var storageArray = $.jStorage.get(this.cookieName);
 	if(storageArray == null){
 		storageArray  = [];
@@ -267,7 +243,8 @@ Favorites.addToLocalStorage = function(data){
 		
 };
 
-Favorites.removeFromLocalStorage = function(id){
+Favorites.removeFromLocalStorage = function(id)
+{
 	var storageArray = $.jStorage.get(this.cookieName);
 	var newArray = [];
 
@@ -287,12 +264,12 @@ Favorites.removeFromLocalStorage = function(id){
 		
 };
 
+
 /*
 *	cookie control favorites
 */
-
-Favorites._idInArray = function(array,id){
-	
+Favorites._idInArray = function(array,id)
+{
 	var r = false;
 	$.each(array,function(k,v){
 		if(v == id){
@@ -303,7 +280,8 @@ Favorites._idInArray = function(array,id){
 	return r;
 }
 
-Favorites._cookieArray = function(){
+Favorites._cookieArray = function()
+{
 	var c = this.getCookie();		
 	if(c){
 		c = c.split(',');					
@@ -311,7 +289,8 @@ Favorites._cookieArray = function(){
 	return c;
 };
 
-Favorites._visitedRentalArray = function(){
+Favorites._visitedRentalArray = function()
+{
 	var c = this.getVisitedCookie();		
 	if(c){
 		c = c.split(',');					
@@ -319,8 +298,8 @@ Favorites._visitedRentalArray = function(){
 	return c;		
 }
 
-Favorites.addToCookie = function(id){
-
+Favorites.addToCookie = function(id)
+{
 	var cookieArray = this._cookieArray() ? this._cookieArray() : [] ;
 	
 	if(!this._idInArray(cookieArray,id)){
@@ -331,7 +310,8 @@ Favorites.addToCookie = function(id){
 	
 };
 
-Favorites.removeFromCookie = function(id){
+Favorites.removeFromCookie = function(id)
+{
 	var cookieArray = this._cookieArray();
 	id = id.toString();
 	if(this._idInArray(cookieArray,id)){
@@ -344,8 +324,8 @@ Favorites.removeFromCookie = function(id){
 
 };
 
-Favorites.autoUpdate = function(){
-
+Favorites.autoUpdate = function()
+{
 	if(!Favorites.checkChanges()){
 		Favorites.updateList();
 	}		
@@ -354,8 +334,8 @@ Favorites.autoUpdate = function(){
 
 // return favorites list in cookie
 
-Favorites.getCookie = function(){
-
+Favorites.getCookie = function()
+{
 	var r = $.cookie(this.cookieName);
 
 		if(typeof r == 'undefined') {
@@ -365,8 +345,8 @@ Favorites.getCookie = function(){
 		}		
 };	
 
-Favorites.getVisitedCookie = function(){
-
+Favorites.getVisitedCookie = function()
+{
 	var r = $.cookie(this.visitedCookieName);
 
 		if(typeof r == 'undefined') {
@@ -376,7 +356,8 @@ Favorites.getVisitedCookie = function(){
 		}		
 };	
 
-Favorites.getObjectById = function(arrayObjects,id){
+Favorites.getObjectById = function(arrayObjects,id)
+{
 	if (!arrayObjects) return [];
 
 	var r = false;
@@ -390,15 +371,13 @@ Favorites.getObjectById = function(arrayObjects,id){
 	return r;
 };
 
-Favorites.updateList = function(){
-
+Favorites.updateList = function()
+{
 	this.cookieArray = this._cookieArray();
 	//_cookieArray
-	//console.log(this.cookieArray);
 	var self = this;
 
 	this.getLocalStorageArray = self.getLocalStorage();
-	//console.log(this.getLocalStorageArray);
 	var allForView = [];
 
 	var favoriteSlider = $('#navBarFavorites');
@@ -421,10 +400,14 @@ Favorites.updateList = function(){
 			$pattern = sliderList.find('li.template');
 			var patternText = $pattern[0].outerHTML;					
 
-			patternText = patternText.replace("~id~",data.id)							
-							.replace("~title~",data.title)
-							.replace("~url~",data.link)
-							.replace("template","");
+			patternText = patternText.replace("~id~", data.id)							
+							.replace("~title~", data.title)
+							.replace("~link~", data.link)
+							.replace("~thumb~", data.thumb)
+							.replace("~location~", data.location)
+							.replace("~price~", data.price)
+							.replace("~capacity~", data.capacity)
+							.replace("template", "");
 			
 			var newLi = $(patternText);
 			var visited = self._visitedRentalArray();
@@ -445,12 +428,14 @@ Favorites.updateList = function(){
 	self.eachSelectedRentalButtons();
 };
 
-Favorites.getLocalStorage = function(){
+Favorites.getLocalStorage = function()
+{
 	return $.jStorage.get(this.cookieName);
 };
 
 
-Favorites.in_array = function(array,value){
+Favorites.in_array = function(array,value)
+{
 	var r = false ;
 
 	$.each(array , function(k,v){
@@ -461,7 +446,8 @@ Favorites.in_array = function(array,value){
 };
 
 
-Favorites.checkChanges = function(){
+Favorites.checkChanges = function()
+{
 	this.list = $('#scrollInnerContent');
 	var self = this;
 	self.rentalIdsArray = [];
@@ -472,8 +458,6 @@ Favorites.checkChanges = function(){
 	});
 
 	self.rentalIdsString = self.rentalIdsArray.join();
-/*		console.log(self.getCookie());
-	console.log(self.rentalIdsString);*/
 
 	if(self.getCookie() == self.rentalIdsString){
 		return true;
@@ -481,10 +465,4 @@ Favorites.checkChanges = function(){
 		return false;
 	}
 };
-
-
-
-
-
-
 

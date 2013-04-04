@@ -104,7 +104,7 @@ class RentalPresenter extends BasePresenter {
 
 		$lastSearchResults = array();
 		$lastSearchResults['rentals'] = $barRentals;
-		$lastSearchResults['currentKey'] = $bar['currentKey']-$start;
+		$lastSearchResults['currentKey'] = $bar['currentKey']-($start > 0 ? $start : 0);
 		$lastSearchResults['searchLink'] = $lastSearch->getUrl();
 		$lastSearchResults['heading'] = $lastSearch->getHeading();
 		$lastSearchResults['totalCount'] = count($bar['all']);

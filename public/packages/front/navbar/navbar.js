@@ -14,19 +14,23 @@
 		base.el 		= el;
 		base.$el 		= $(el);
 		base.$tabs 		= base.$el.find('#navBarTabs');
+		base.$prevLink	= base.$el.find('a.leftArrow');
+		base.$nextLink	= base.$el.find('a.rightArrow');
 		base.$contents 	= base.$el.find('#navbarTabContent');
 
 		// vars
 		base.activeTabName 	= null;
+		base.currentRental	= null;
 
 		/**
 		 * Instalation
 		 */
 		base.init = function()
 		{
+			base.currentRental = base.$el.attr('current-rental');
 			base.bindTabs();
 			base.bindFavorites();
-			base.setActive();	
+			base.$tabs.find('li.active').trigger('click');
 		}
 
 		/**
@@ -36,19 +40,21 @@
 		{
 			if (typeof obj == 'object') {
 				base.activeTabName = $(obj.target).attr('for');
+			} else if (typeof obj == 'string') {
+				base.activeTabName = obj;
 			} else {
-				if (!options.autoSetTabs) return false;
-				base.activeTabName = base.getLastActive();
+				return false;
 			}
 
 			base.setActiveTab();
 			base.setActiveContent();
 			base.setLastActive();
+			base.updateNav();
 		}
 
 		base.setFirstActive = function()
 		{
-			base.setActive(base.$tabs.find('li').not(':hidden').first().attr('for'));
+			base.$tabs.find('li').not(':hidden').first().trigger('click');
 		}
 
 		base.setActiveTab = function()
@@ -69,16 +75,27 @@
 
 		base.hideTab = function(tabName)
 		{
-			base.$tabs.find('li[for='+tabName+']').addClass('hide');
-			base.$contents.find('div#'+tabName).addClass('hide');
-			base.setFirstActive();
+			base.$tabs.find('li[for='+tabName+']').addClass('hide').removeClass('active');
+			base.$contents.find('div#'+tabName).addClass('hide').removeClass('active');
+			if (!base.hasActive()) {
+				base.setFirstActive();
+			}
 		}
 
-		base.showTab= function(tabName)
+		base.showTab = function(tabName)
 		{
 			base.$tabs.find('li[for='+tabName+']').removeClass('hide');
 			base.$contents.find('div#'+tabName).removeClass('hide');
-			base.setFirstActive();
+			if (!Favorites._getFavoritesLength()) {
+				base.hideTab('navBarFavorites');
+			}
+			base.setActive(tabName);
+		}
+
+		base.hasActive = function(tabName)
+		{
+			active = this.$tabs.find('li.active').attr('for');
+			return (tabName ? (active==tabName ? true : false) : (active ? true : false));
 		}
 
 		/**
@@ -90,14 +107,33 @@
 			if (!Favorites._getFavoritesLength()) {
 				base.hideTab('navBarFavorites');
 			}
+			base.setActiveRental();
 		}
 
-		base.addFavorite = function(e)
+		base.toggleAddFavorite = function(e)
 		{
 			Favorites.toggleAdd(e, this);
-			if (Favorites._getFavoritesLength()) {
-				base.showTab('navBarFavorites');
+			base.showTab('navBarFavorites');
+			base.setActiveRental();
+		}
+
+		base.setActiveRental = function()
+		{
+			base.$contents.find('li').removeClass('active');
+			base.$contents.find('li[rel='+base.currentRental+']').addClass('active');
+		}
+
+		base.updateNav = function()
+		{
+			$active = base.$contents.find('div#'+base.activeTabName+' ul li.active');
+			if (!$active[0]) {
+				$active = base.$contents.find('div#'+base.activeTabName+' ul li:first-child');
 			}
+
+			prevLink = $active.prev('li').find('a.link').attr('href');
+			nextLink = $active.next('li').find('a.link').attr('href');
+			base.$prevLink.attr('href', prevLink);
+			base.$nextLink.attr('href', nextLink);
 		}
 
 		/**
@@ -113,7 +149,7 @@
 		{
 			$('a.removeLink').live('click', base.removeFavorite);
 			$('a.removeLink').on('click', base.removeFavorite);
-			$('.addToFavorites').on('click', base.addFavorite);
+			$('.addToFavorites').on('click', base.toggleAddFavorite);
 		}
 
 		/**
@@ -152,8 +188,6 @@ $(function() {
 
 	// init navbar
 	$('#navBar').navBar({
-		cookieExpiration: 7, // in days
-		autoSetTabs: false,
-		debug: true
+		cookieExpiration: 7 // in days
 	});
 });
