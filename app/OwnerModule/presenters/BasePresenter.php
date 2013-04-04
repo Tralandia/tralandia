@@ -62,7 +62,7 @@ abstract class BasePresenter extends \SecuredPresenter {
 
 	public function createComponentHeader()
 	{
-		return $this->headerControlFactory->create($this->pageSeo);
+		return $this->headerControlFactory->create($this->pageSeo, $this->loggedUser);
 	}
 
 	public function createComponentFooter($name) {
