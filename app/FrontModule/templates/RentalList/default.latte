@@ -11,8 +11,6 @@
 		<div class="mytabUi ui-tabs-nav ui-tabs">
 			{if count($rentals)}
 				<div id="tabs-1" class="ui-tabs-panel">
-
-
 					{foreach $rentals as $rentalId}
 
 						{if $rentalId instanceof \Entity\Rental\Rental}
@@ -50,21 +48,11 @@
 										<a href="{link Rental:detail $rental}">{_$rental->name}</a>{if $rental->classification > 0 }&nbsp;{for $i = 0; $i < $rental->classification; $i++}
 										<span class="clasification"><i class="entypo-star"></i>{/for}{/if}</h2>
 
-									{if $mainImage = $rental->getMainImage()}
-										<button rel="{$rental->id}" data-title="{_$rental->name}"
-												link="{link Rental:detail $rental}"
-												thumb="{$basePath}{$mainImage|rentalImageSrc}"
-												class="addToFavorites btn btn-mini listCompareBtn active"><span
-													class="entypo-heart">{_o12334}</span></button>
-									{else}
-										<button rel="{$rental->id}" data-title="{_$rental->name}"
-												link="{link Rental:detail $rental}"
-												thumb="http://www.tralandia.com/u/32/13539183882248.jpg"
-												class="addToFavorites btn btn-mini listCompareBtn active"><span
-													class="entypo-heart">{_o12334}</span></button>
-									{/if}
-
-
+						        		{if $mainImage = $rental->getMainImage()}
+											<button rel="{$rental->id}" data-title="{_$rental->name}" data-thumb="{fakeImage}" data-location="{_$rental->address->locality->name}" data-price="{$rental->price}" data-capacity="{$rental->maxCapacity}" data-link="{link Rental:detail $rental}" data-thumb="{$basePath}{$mainImage|rentalImageSrc}" class="addToFavorites btn btn-mini listCompareBtn active"><span class="entypo-heart">{_o12334}</span> </button>
+						        		{else}
+											<button rel="{$rental->id}" data-title="{_$rental->name}" data-thumb="{fakeImage}" data-location="{_$rental->address->locality->name}" data-price="{$rental->price}" data-capacity="{$rental->maxCapacity}" data-link="{link Rental:detail $rental}" data-thumb="http://www.tralandia.com/u/32/13539183882248.jpg" class="addToFavorites btn btn-mini listCompareBtn active"><span class="entypo-heart">{_o12334}</span> </button>
+						        		{/if}
 
 									<div class="clearfix"></div>
 
