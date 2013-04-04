@@ -550,10 +550,45 @@ function jsVariablesReplace() {
 	});
 }
 
+
+
 function _selectSetSelectedValue(){
-	$('[data-selected]').each(function(){
-		$(this).val($(this).attr('data-selected'));
+
+	$('variables').each(function(i){
+		var selector = $(this).attr('for');
+
+		$(selector+' select,'+selector+' input').each(function(k,v){
+
+			var dataSelector = '';
+
+			switch($(this).prop('tagName')){
+				case 'SELECT':					
+					dataSelector = 'data-selected';
+					break;				
+				case 'INPUT':
+					dataSelector = 'data-'+$(this).attr('name')+'-name';
+					break;
+
+			}
+
+			
+
+			var attr = $(this).attr(dataSelector);
+
+			if (typeof attr !== 'undefined' && attr !== false) {
+
+
+
+				$(this).val(attr);
+
+				// console.log(attr);
+			}
+
+
+		})
+
 	});
+
 }
 
 
