@@ -142,9 +142,9 @@ abstract class BasePresenter extends \BasePresenter {
 		$suggestLocations = [];
 		/** @var $locationRepository \Repository\Location\LocationRepository */
 		$locationRepository = $this->locationRepositoryAccessor->get();
-		$suggestLocations['counties'] = $locationRepository->findSuggestForCountries($string);
+		//$suggestLocations['counties'] = $locationRepository->findSuggestForCountries($string);
 
-		$suggestLocations['other'] = $locationRepository->findSuggestForLocalityAndRegion(
+		$suggestLocations['localitiesAndRegions'] = $locationRepository->findSuggestForLocalityAndRegion(
 			$string,
 			$this->primaryLocation
 		);
@@ -167,6 +167,7 @@ abstract class BasePresenter extends \BasePresenter {
 				foreach($group as $location) {
 					$temp = [];
 					$temp['name'] = $location->getName()->getTranslationText($this->language);
+					$temp['slug'] = $location->getSlug();
 					if($location->isPrimary()) {
 						$temp['icon'] = '/images/flags/' . $location->getFlagName();
 					}
