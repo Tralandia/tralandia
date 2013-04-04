@@ -24,7 +24,10 @@ class ReservationProtector {
 	 */
 	public function __construct(\Nette\Http\Session $session)
 	{
-		$this->section = $session->getSection('reservationProtector');
+		$section = $session->getSection('reservationProtector');
+		$section->setExpiration(60 * 60 * 24, 'sentReservationCountInRow');
+		$section->setExpiration(10, 'sentReservationCountInRow');
+		$this->section = $section;
 	}
 
 
@@ -92,7 +95,11 @@ class ReservationProtector {
 		if(!$email) {
 			return $this->section->sentReservationCountByEmail;
 		} else {
-			return $this->section->sentReservationCountByEmail[$email];
+			if(isset($this->section->sentReservationCountByEmail[$email])) {
+				return $this->section->sentReservationCountByEmail[$email];
+			} else {
+				return 0;
+			}
 		}
 	}
 
