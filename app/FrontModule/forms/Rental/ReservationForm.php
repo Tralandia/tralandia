@@ -22,15 +22,23 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 	protected $locationRepository;
 
 	/**
+	 * @var \ReservationProtector
+	 */
+	protected $reservationProtector;
+
+
+	/**
 	 * @param \Entity\Rental\Rental $rental
 	 * @param \Repository\Location\LocationRepository $locationRepository
+	 * @param \ReservationProtector $reservationProtector
 	 * @param \Nette\Localization\ITranslator $translator
 	 */
 	public function __construct(\Entity\Rental\Rental $rental, \Repository\Location\LocationRepository
-	$locationRepository, Nette\Localization\ITranslator $translator)
+	$locationRepository, \ReservationProtector $reservationProtector, Nette\Localization\ITranslator $translator)
 	{
 		$this->rental = $rental;
 		$this->locationRepository = $locationRepository;
+		$this->reservationProtector = $reservationProtector;
 
 		parent::__construct($translator);
 	}
@@ -73,7 +81,7 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 			if($i > 0){
 				$parents[$i] = $i . ' ' . $this->translate('o12277', NULL, ['count' => $i]);
 			}
-			
+
 			$children[$i] = $i . ' ' . $this->translate('o100016', NULL, ['count' => $i]);
 
 		}
@@ -96,6 +104,14 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 
 
 	public function validation(ReservationForm $form){
+		$values = $form->getValues();
+		try {
+			$this->reservationProtector->canSendReservation($values->email);
+		} catch (\TooManyReservationException $e) {
+			$form->addError('o100112');
+		} catch (\InfringeMinIntervalReservationException $e) {
+			$form->addError('o100111');
+		}
 		//$form->addError('yle');
 		//$form['name']->addError('bar');
 		//$form['email']->addError('bar');
@@ -113,7 +129,9 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 	public function process(ReservationForm $form)
 	{
 		$values = $form->getValues();
+		$this->reservationProtector->newReservationSent($values->email);
 	}
+
 
 }
 

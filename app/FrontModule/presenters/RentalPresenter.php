@@ -39,6 +39,7 @@ class RentalPresenter extends BasePresenter {
 	 */
 	protected $calendarControl;
 
+
 	public function actionDetail($rental) {
 		if (!$rental) {
 			throw new \Nette\InvalidArgumentException('$id argument does not match with the expected value');
