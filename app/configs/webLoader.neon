@@ -219,6 +219,9 @@ parameters:
 				js:
 					# - "https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"
 					#- "https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"
+			navBar:
+				js:
+					- front/navbar/navbar.js
 		sets:
 
 			'Admin:Ap':
@@ -250,6 +253,7 @@ parameters:
 				-  %webloader.packages.jscrollPane%
 				-  %webloader.packages.fileUpload%
 				-  %webloader.packages.select2%
+				-  %webloader.packages.navBar%
 				-  %webloader.packages.gMap%
 				-  %webloader.packages.Front%
 				#-  %webloader.packages.texyla%
@@ -267,6 +271,7 @@ parameters:
 				-  %webloader.packages.jscrollPane%
 				-  %webloader.packages.bootstrap%
 				-  %webloader.packages.select2%
+				-  %webloader.packages.navBar%
 				-  %webloader.packages.Front%
 				-  %webloader.packages.nette%
 				-  %webloader.packages.select2HideInputText%
@@ -282,6 +287,7 @@ parameters:
 				-  %webloader.packages.jscrollPane%
 				-  %webloader.packages.Front%
 				-  %webloader.packages.select2%
+				-  %webloader.packages.navBar%
 				-  %webloader.packages.texyla%
 				-  %webloader.packages.nette%
 				-  %webloader.packages.favoriteScroll%

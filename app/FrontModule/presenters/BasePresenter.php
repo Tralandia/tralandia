@@ -137,6 +137,26 @@ abstract class BasePresenter extends \BasePresenter {
 		}
 	}
 
+	public function getActiveNavbarTab()
+	{
+		$tabsShow = array(
+			'Rental:detail' => array('navBarSerchResults', 'navBarFavorites', 'navBarLastSeen'),
+			'RentalList:default' => array('navBarFavorites', 'navBarLastSeen'),
+			'Home:default' => array('navBarFavorites', 'navBarLastSeen')
+		);
+
+		$request = $this->getHttpRequest();
+		$cookies = $request->getCookies();
+		
+		foreach ($tabsShow as $presenter => $tabs) {
+			if (!$this->isLinkCurrent($presenter)) continue;
+			if (!isset($cookies['navBarActive'])) break;
+			return (in_array($cookies['navBarActive'], $tabs) ? $cookies['navBarActive'] : current($tabs));
+		}
+
+		return 'navBarFavorites';
+	}
+
 	protected function getSuggestionForLocation($string)
 	{
 		$suggestLocations = [];

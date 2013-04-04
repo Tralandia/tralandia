@@ -44,8 +44,6 @@ class RentalPresenter extends BasePresenter {
 			throw new \Nette\InvalidArgumentException('$id argument does not match with the expected value');
 		}
 
-
-
 		$rentalService = $this->rentalDecoratorFactory->create($rental);
 		$interviewAnswers = $rentalService->getInterviewAnswers($this->environment->primaryLocation->defaultLanguage);
 
@@ -77,6 +75,7 @@ class RentalPresenter extends BasePresenter {
 
 		$this->template->lastSearchResults = $this->getLastSearchResults($rental);
 		$this->template->lastSeenRentals = $this->lastSeen->visit($rental)->getSeenRentals(12);
+		$this->template->navBarLastActive = $this->getActiveNavbarTab();
 	}
 
 	protected function getLastSearchResults($rental) {

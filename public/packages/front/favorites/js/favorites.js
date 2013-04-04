@@ -1,3 +1,5 @@
+var favorites;
+
 function importShareLink(fromUrl, callback){
 	jQuery.getJSON( fromUrl , callback );
 
@@ -78,55 +80,17 @@ $(function(){
 
 		$('body').removeAttr('socialshareOpen');  
 
-
-
-
 	});
-
-
-
-		// tabs nav
-
-
-
-		$('#favoritesTabs.nav li:not(.pull-right)').click(function () {
-			var currentId = '#'+$(this).attr('for');
-			var contentId = "#favoritesTabContent";
-			var activeClassName = 'active';
-
-			$('#favoritesTabs.nav').find('li.pull-right.share').hide();
-			$('#favoritesTabs.nav').find('li.pull-right.'+$(this).attr('for')).show();
-
-			$(this).parent().find('li.'+activeClassName).removeClass(activeClassName);
-			$(this).addClass(activeClassName);
-
-			$(contentId).find('.tab-pane.'+activeClassName).removeClass(activeClassName);
-			$(contentId).find(currentId).addClass(activeClassName).css({
-				width:'881px'
-			});
-
-			var cookieName = 'navbarTab';
-			$.cookie(cookieName,currentId);
-		});
-
-
-
-	// remove object from favorites list     
-
-	$('a.removeLink').live('click',Favorites.removeLink);
-	$('a.removeLink').on('click',Favorites.removeLink);
-
-	$('.addToFavorites').click(Favorites.toggleAdd);
-	//$('.addToFavorites').favoriteActiveLinks(A);
-
-
-	var y = Favorites;
-		y.init();
-		//y.checkChanges();
 
 });
 
 
+
+
+
+/*
+* Favorites
+*/
 var Favorites = {
 	cookieName : 'favoritesList',
 	visitedCookieName: 'visitedList',
@@ -139,426 +103,384 @@ var Favorites = {
 
 };
 
-	Favorites.init = function(){
-		//console.log($.jStorage.deleteKey(this.cookieName));
-		//$.removeCookie(this.cookieName);
-		// console.log(this._cookieArray());
-		// console.log($.jStorage.get(this.cookieName));
-		if($(this.jscrollPaneClassName).length != 0){
+Favorites.init = function(){
+	//console.log($.jStorage.deleteKey(this.cookieName));
+	//$.removeCookie(this.cookieName);
+	// console.log(this._cookieArray());
+	// console.log($.jStorage.get(this.cookieName));
+	if($(this.jscrollPaneClassName).length != 0){
 
-			this.cleanTrash();
+		this.cleanTrash();
 
-			// this.initJscrollpaneUi();
-			this.eachSelectedRentalButtons();
-			this.autoUpdate();
+		// this.initJscrollpaneUi();
+		this.eachSelectedRentalButtons();
+		this.autoUpdate();
 
-		}
+	}
 
-	};
+};
 
-	// vycisti data ktore nepatria do local storage
-	Favorites.cleanTrash = function(){
-		var self = this ;
-		var array = this._cookieArray();
+// vycisti data ktore nepatria do local storage
+Favorites.cleanTrash = function(){
+	var self = this ;
+	var array = this._cookieArray();
 
-		var localStorageArray  = this.getLocalStorage();
-		var newLocalStorageArray = [];
+	var localStorageArray  = this.getLocalStorage();
+	var newLocalStorageArray = [];
 
-		if(localStorageArray != null){
-			$.each(localStorageArray, function(k,v){
-				if(self._idInArray(array,v.id)){
-					newLocalStorageArray.push(v);					
-				}
-			});	
+	if(localStorageArray != null){
+		$.each(localStorageArray, function(k,v){
+			if(self._idInArray(array,v.id)){
+				newLocalStorageArray.push(v);					
+			}
+		});	
 
-			if(newLocalStorageArray.length > 0){
-				$.jStorage.set(this.cookieName,newLocalStorageArray);
-			} else {
-				$.jStorage.deleteKey(this.cookieName);
-			}				
+		if(newLocalStorageArray.length > 0){
+			$.jStorage.set(this.cookieName,newLocalStorageArray);
 		} else {
 			$.jStorage.deleteKey(this.cookieName);
-		}
-		
+		}				
+	} else {
+		$.jStorage.deleteKey(this.cookieName);
 	}
+	
+}
 
-	Favorites.eachSelectedRentalButtons = function(){
-		
-		var self = this ;
-		var array = this._cookieArray();
+Favorites.eachSelectedRentalButtons = function(){
+	
+	var self = this ;
+	var array = this._cookieArray();
 
 
-		$(self.addToFavoritesButtonClass).each(function(index){
-			var id = $(this).attr('rel');
-			if(self._idInArray(array,id)){
-				$(this).addClass('selected');
-			} else {
-				$(this).removeClass('selected');
-			}
-		});
-	}
-
-	// Favorites.initJscrollpaneUi = function(){			
-
-	// 		var self = this;
-
-	// 		var settings = {
-	// 			showArrows: true
-	// 		};
-
-	// 		self.pane = $('.jscrollPane');
-
-	// 		self.pane.jScrollPane(settings);
-
-	// 		self.contentPane = self.pane.data('jsp').getContentPane();
-
-	// 		$rigthArrow = $('#favorites-right-button');
-	// 		$leftArrow = $('#favorites-left-button');
-			
-	// 		//var pane = $('.jscrollPane');
-	// 		self.jscrollPaneApi = self.pane.data('jsp');
-
-	// 		$leftArrow .bind('click',function(){							
-	// 				self.jscrollPaneApi.scrollBy(-40,0);
-	// 				return false;
-	// 		});
-
-	// 		$rigthArrow.bind('click',function(){									
-	// 				self.jscrollPaneApi.scrollBy(40,0);
-	// 				return false;
-
-	// 		});	
-	// };
-
-	Favorites.pluginShow = function(){		
-		$(this.favoritesPluginDiv).slideDown(this.favorietsShowSpeed,function(){
-			$(this.favoritesPluginDiv).removeClass('hide');
-		});
-	};
-
-	Favorites.pluginHide = function(){
-		$(this.favoritesPluginDiv).slideUp(this.favorietsShowSpeed,function(){
-			$(this.favoritesPluginDiv).addClass('hide');
-		});
-		
-	};
-
-	Favorites.isShow = function(){
-		return !$(this.favoritesPluginDiv).hasClass('hide');
-	}
-
-	Favorites.sanitizePluginView = function(){
-		
-			if(this._getFavoritesLength() == 0){
-				this.pluginHide();
-			}
-		
-			if(this._getFavoritesLength() > 0){
-				this.pluginShow();
-			}			
-
-			if(this._getFavoritesLength() < 7){
-				var $container = $(this.favoritesPluginDiv).find('.jspContainer .jspPane');
-				$container.css({
-					left: 0
-				});
-			}
-		
-	}
-
-	Favorites._getFavoritesLength = function(){
-		var c = this._cookieArray();
-		if(c){
-			return c.length;
-		} else {
-			return 0;
-		}
-		
-	}
-
-	Favorites.toggleAdd = function(e){
-		
-		var id = parseInt($(this).attr('rel'));
-		Favorites.cleanTrash();
-
-		// open favorites tab
-		$('li[for=#favoritesNavFavorites]').trigger('click');
-
-		var data = {
-			id: parseInt($(this).attr('rel')),
-			link: $(this).attr('link'),
-			thumb: $(this).attr('thumb'),
-			title: $(this).attr('data-title')
-		}
-
-		if($(this).hasClass('selected')){			
-			Favorites.removeFromFavorites(data);
-			$(this).removeClass('selected');
-		} else {
-			Favorites.addToFavorites(data);
+	$(self.addToFavoritesButtonClass).each(function(index){
+		var id = $(this).attr('rel');
+		if(self._idInArray(array,id)){
 			$(this).addClass('selected');
+		} else {
+			$(this).removeClass('selected');
 		}
+	});
+}
 
-		Favorites.updateList();
-		Favorites.sanitizePluginView();		
-	};
+// Favorites.initJscrollpaneUi = function(){			
 
-	Favorites.removeLink = function(e){
-		var id = parseInt($(this).parents('li').attr('rel'));
-		Favorites.cleanTrash();
-		Favorites.removeFromLocalStorage(id);
-		Favorites.removeFromCookie(id);
+// 		var self = this;
+
+// 		var settings = {
+// 			showArrows: true
+// 		};
+
+// 		self.pane = $('.jscrollPane');
+
+// 		self.pane.jScrollPane(settings);
+
+// 		self.contentPane = self.pane.data('jsp').getContentPane();
+
+// 		$rigthArrow = $('#favorites-right-button');
+// 		$leftArrow = $('#favorites-left-button');
+		
+// 		//var pane = $('.jscrollPane');
+// 		self.jscrollPaneApi = self.pane.data('jsp');
+
+// 		$leftArrow .bind('click',function(){							
+// 				self.jscrollPaneApi.scrollBy(-40,0);
+// 				return false;
+// 		});
+
+// 		$rigthArrow.bind('click',function(){									
+// 				self.jscrollPaneApi.scrollBy(40,0);
+// 				return false;
+
+// 		});	
+// };
+
+
+Favorites._getFavoritesLength = function(){
+	var c = this._cookieArray();
+	if(c){
+		return c.length;
+	} else {
+		return 0;
+	}
+	
+}
+
+Favorites.toggleAdd = function(e, obj){
+	
+	var id = parseInt($(obj).attr('rel'));
+	Favorites.cleanTrash();
+
+	// open favorites tab
+	$('li[for=#favoritesNavFavorites]').trigger('click');
+
+	var data = {
+		id: parseInt($(obj).attr('rel')),
+		link: $(obj).attr('link'),
+		thumb: $(obj).attr('thumb'),
+		title: $(obj).attr('data-title')
+	}
+
+	if($(obj).hasClass('selected')){			
+		Favorites.removeFromFavorites(data);
+		$(obj).removeClass('selected');
+	} else {
+		Favorites.addToFavorites(data);
+		$(obj).addClass('selected');
+	}
+
+	Favorites.updateList();	
+};
+
+Favorites.removeLink = function(e, obj){
+	var id = parseInt($(obj).parents('li').attr('rel'));
+	Favorites.cleanTrash();
+	Favorites.removeFromLocalStorage(id);
+	Favorites.removeFromCookie(id);
+	Favorites.updateList();
+	return false;
+}
+
+Favorites.addToFavorites = function(data){	
+	this.addToCookie(data.id);
+	this.addToLocalStorage(data);
+};
+
+Favorites.removeFromFavorites = function(data){			
+	this.removeFromCookie(data.id);
+	this.removeFromLocalStorage(data.id);
+};
+
+/*
+*	local storage control favorites
+*/
+
+Favorites.addToLocalStorage = function(data){
+	var storageArray = $.jStorage.get(this.cookieName);
+	if(storageArray == null){
+		storageArray  = [];
+	}
+
+	if(!this.getObjectById(storageArray,data.id)){
+		storageArray.push(data);
+		$.jStorage.set(this.cookieName,storageArray);				
+	}
+		
+};
+
+Favorites.removeFromLocalStorage = function(id){
+	var storageArray = $.jStorage.get(this.cookieName);
+	var newArray = [];
+
+	if(typeof storageArray != 'undefined' && storageArray != null){
+		$.each(storageArray,function(k,v){
+			if(v.id != id){
+				newArray.push(v);
+			}
+		});				
+	}
+
+	if(newArray.length > 0){
+		$.jStorage.set(this.cookieName,newArray);
+	} else {
+		$.jStorage.deleteKey(this.cookieName);
+	}
+		
+};
+
+/*
+*	cookie control favorites
+*/
+
+Favorites._idInArray = function(array,id){
+	
+	var r = false;
+	$.each(array,function(k,v){
+		if(v == id){
+			r = true;
+		}
+	});
+
+	return r;
+}
+
+Favorites._cookieArray = function(){
+	var c = this.getCookie();		
+	if(c){
+		c = c.split(',');					
+	}
+	return c;
+};
+
+Favorites._visitedRentalArray = function(){
+	var c = this.getVisitedCookie();		
+	if(c){
+		c = c.split(',');					
+	}
+	return c;		
+}
+
+Favorites.addToCookie = function(id){
+
+	var cookieArray = this._cookieArray() ? this._cookieArray() : [] ;
+	
+	if(!this._idInArray(cookieArray,id)){
+		cookieArray.push(id);
+		cookieArray.join();
+		$.cookie(this.cookieName,cookieArray);
+	}		
+	
+};
+
+Favorites.removeFromCookie = function(id){
+	var cookieArray = this._cookieArray();
+	id = id.toString();
+	if(this._idInArray(cookieArray,id)){
+		var p = cookieArray.indexOf(id);
+				cookieArray.splice(p,1);
+				cookieArray.join();
+
+		$.cookie(this.cookieName,cookieArray);
+	}				
+
+};
+
+Favorites.autoUpdate = function(){
+
+	if(!Favorites.checkChanges()){
 		Favorites.updateList();
-		Favorites.sanitizePluginView();
+	}		
+	setTimeout(Favorites.autoUpdate,Favorites.autoupdateTime);
+};
+
+// return favorites list in cookie
+
+Favorites.getCookie = function(){
+
+	var r = $.cookie(this.cookieName);
+
+		if(typeof r == 'undefined') {
+			return false;
+		} else {
+			return r ;
+		}		
+};	
+
+Favorites.getVisitedCookie = function(){
+
+	var r = $.cookie(this.visitedCookieName);
+
+		if(typeof r == 'undefined') {
+			return false;
+		} else {
+			return r ;
+		}		
+};	
+
+Favorites.getObjectById = function(arrayObjects,id){
+	if (!arrayObjects) return [];
+
+	var r = false;
+	id = parseInt(id);
+
+	$.each(arrayObjects,function(k,v){
+		if(v.id == id){
+			r = v;
+		}
+	});
+	return r;
+};
+
+Favorites.updateList = function(){
+
+	this.cookieArray = this._cookieArray();
+	//_cookieArray
+	//console.log(this.cookieArray);
+	var self = this;
+
+	this.getLocalStorageArray = self.getLocalStorage();
+	//console.log(this.getLocalStorageArray);
+	var allForView = [];
+
+	var favoriteSlider = $('#navBarFavorites');
+
+	var sliderList = favoriteSlider.find('ul');
+
+	$pattern = sliderList.find('li.template');
+
+	sliderList.html('');
+
+	$pattern.appendTo(sliderList);
+
+	var html = $pattern[0].outerHTML;
+
+	$.each(this.cookieArray,function(k,v){
+		var data = self.getObjectById(self.getLocalStorageArray,v);					
+		allForView.push(data);
+
+			sliderList.find('li.template').css('background-image','url('+data.thumb+')');
+			$pattern = sliderList.find('li.template');
+			var patternText = $pattern[0].outerHTML;					
+
+			patternText = patternText.replace("~id~",data.id)							
+							.replace("~title~",data.title)
+							.replace("~url~",data.link)
+							.replace("template","");
+			
+			var newLi = $(patternText);
+			var visited = self._visitedRentalArray();
+
+			if(visited){
+				if(!self.in_array(visited,data.id)) {
+					newLi.find('.checked').remove();
+				}					
+			}
+
+			html += newLi[0].outerHTML;
+	});
+
+	$('#scrollInnerContent').html(html);
+
+	//self.initJscrollpaneUi();
+	// self.jscrollPaneApi.reinitialise();
+	self.eachSelectedRentalButtons();
+};
+
+Favorites.getLocalStorage = function(){
+	return $.jStorage.get(this.cookieName);
+};
+
+
+Favorites.in_array = function(array,value){
+	var r = false ;
+
+	$.each(array , function(k,v){
+		if(v == value) r = true;
+	});
+
+	return r; 		
+};
+
+
+Favorites.checkChanges = function(){
+	this.list = $('#scrollInnerContent');
+	var self = this;
+	self.rentalIdsArray = [];
+	self.rentalIdsString = false;
+
+	self.list.find('li:not(.template)').each(function(k){			
+		self.rentalIdsArray.push($(this).attr('rel'));
+	});
+
+	self.rentalIdsString = self.rentalIdsArray.join();
+/*		console.log(self.getCookie());
+	console.log(self.rentalIdsString);*/
+
+	if(self.getCookie() == self.rentalIdsString){
+		return true;
+	} else {
 		return false;
 	}
-
-	Favorites.addToFavorites = function(data){	
-		this.addToCookie(data.id);
-		this.addToLocalStorage(data);
-	};
-
-	Favorites.removeFromFavorites = function(data){			
-		this.removeFromCookie(data.id);
-		this.removeFromLocalStorage(data.id);
-	};
-
-	/*
-	*	local storage control favorites
-	*/
-
-	Favorites.addToLocalStorage = function(data){
-		var storageArray = $.jStorage.get(this.cookieName);
-		if(storageArray == null){
-			storageArray  = [];
-		}
-
-		if(!this.getObjectById(storageArray,data.id)){
-			storageArray.push(data);
-			$.jStorage.set(this.cookieName,storageArray);				
-		}
-			
-	};
-
-	Favorites.removeFromLocalStorage = function(id){
-		var storageArray = $.jStorage.get(this.cookieName);
-		var newArray = [];
-
-		if(typeof storageArray != 'undefined' && storageArray != null){
-			$.each(storageArray,function(k,v){
-				if(v.id != id){
-					newArray.push(v);
-				}
-			});				
-		}
-
-		if(newArray.length > 0){
-			$.jStorage.set(this.cookieName,newArray);
-		} else {
-			$.jStorage.deleteKey(this.cookieName);
-		}
-			
-	};
-
-	/*
-	*	cookie control favorites
-	*/
-
-	Favorites._idInArray = function(array,id){
-		
-		var r = false;
-		$.each(array,function(k,v){
-			if(v == id){
-				r = true;
-			}
-		});
-
-		return r;
-	}
-
-	Favorites._cookieArray = function(){
-		var c = this.getCookie();		
-		if(c){
-			c = c.split(',');					
-		}
-		return c;
-	};
-
-	Favorites._visitedRentalArray = function(){
-		var c = this.getVisitedCookie();		
-		if(c){
-			c = c.split(',');					
-		}
-		return c;		
-	}
-
-	Favorites.addToCookie = function(id){
-
-		var cookieArray = this._cookieArray() ? this._cookieArray() : [] ;
-		
-		if(!this._idInArray(cookieArray,id)){
-			cookieArray.push(id);
-			cookieArray.join();
-			$.cookie(this.cookieName,cookieArray);
-		}		
-		
-	};
-
-	Favorites.removeFromCookie = function(id){
-		var cookieArray = this._cookieArray();
-		id = id.toString();
-		if(this._idInArray(cookieArray,id)){
-			var p = cookieArray.indexOf(id);
-					cookieArray.splice(p,1);
-					cookieArray.join();
-
-			$.cookie(this.cookieName,cookieArray);
-		}				
-
-	};
-
-	Favorites.autoUpdate = function(){
-
-		if(!Favorites.checkChanges()){
-			Favorites.sanitizePluginView();
-			Favorites.updateList();
-			
-		}		
-		setTimeout(Favorites.autoUpdate,Favorites.autoupdateTime);
-	};
-
-	// return favorites list in cookie
-
-	Favorites.getCookie = function(){
-
-		var r = $.cookie(this.cookieName);
-
-			if(typeof r == 'undefined') {
-				return false;
-			} else {
-				return r ;
-			}		
-	};	
-
-	Favorites.getVisitedCookie = function(){
-
-		var r = $.cookie(this.visitedCookieName);
-
-			if(typeof r == 'undefined') {
-				return false;
-			} else {
-				return r ;
-			}		
-	};	
-
-	Favorites.getObjectById = function(arrayObjects,id){
-
-		var r = false;
-		id = parseInt(id);
-
-		$.each(arrayObjects,function(k,v){
-			
-			if(v.id == id){
-				r = v;				
-			}
-		});
-		return r;
-	};
-
-	Favorites.updateList = function(){
-
-		this.cookieArray = this._cookieArray();
-			//_cookieArray
-			//console.log(this.cookieArray);
-			var self = this;
-
-			this.getLocalStorageArray = self.getLocalStorage();
-			//console.log(this.getLocalStorageArray);
-			var allForView = [];
-
-			var favoriteSlider = $('#compareList');
-
-			var sliderList = favoriteSlider.find('ul');
-
-				$pattern = sliderList.find('li.template');
-
-				sliderList.html('');
-
-				$pattern.appendTo(sliderList);
-
-				var html = $pattern[0].outerHTML;
-
-
-			$.each(this.cookieArray,function(k,v){				
-				var data = self.getObjectById(self.getLocalStorageArray,v);					
-				allForView.push(data);
-
-					sliderList.find('li.template').css('background-image','url('+data.thumb+')');
-					$pattern = sliderList.find('li.template');
-					var patternText = $pattern[0].outerHTML;					
-
-					patternText = patternText.replace("~id~",data.id)							
-									.replace("~title~",data.title)
-									.replace("~url~",data.link)
-									.replace("template","");
-					
-					var newLi = $(patternText);
-					var visited = self._visitedRentalArray();
-
-						if(visited){
-							if(!self.in_array(visited,data.id)){									
-								newLi.find('.checked').remove();
-							}					
-						}
-
-					//html+=patternText;
-					html += newLi[0].outerHTML;
-				
-			});
-
-			$('#scrollInnerContent').html(html);
-
-			//self.initJscrollpaneUi();
-			// self.jscrollPaneApi.reinitialise();
-			self.eachSelectedRentalButtons();
-	};
-
-	Favorites.getLocalStorage = function(){
-		return $.jStorage.get(this.cookieName);
-	};
-
-
-	Favorites.in_array = function(array,value){
-		var r = false ;
-
-		$.each(array , function(k,v){
-			if(v == value) r = true;
-		});
-
-		return r; 		
-	};
-
-
-	Favorites.checkChanges = function(){
-		this.list = $('#scrollInnerContent');
-		var self = this;
-		self.rentalIdsArray = [];
-		self.rentalIdsString = false;
-
-		self.list.find('li:not(.template)').each(function(k){			
-			self.rentalIdsArray.push($(this).attr('rel'));
-		});
-
-		self.rentalIdsString = self.rentalIdsArray.join();
-/*		console.log(self.getCookie());
-		console.log(self.rentalIdsString);*/
-
-		if(self.getCookie() == self.rentalIdsString){
-			return true;
-		} else {
-			return false;
-		}
-	};
+};
 
 
 
