@@ -37,34 +37,32 @@ class AmenityRepository extends \Repository\BaseRepository
 
 		$rows = $qb->getQuery()->getResult();
 		$return = [];
-		foreach($rows as $row) {
+		foreach ($rows as $row) {
 			$return[$row->id] = $translator->translate($row->name);
 		}
 
 		return $return;
 	}
 
-	public function findByLocationTypeForSelect(ITranslator $translator, Collator $collator)
-	{
-		return $this->findByTypeForSelect('other', $translator, $collator);
-	}
 
 	public function findByBoardTypeForSelect(ITranslator $translator)
 	{
 		return $this->findByTypeForSortBySortingSelect('board', $translator);
 	}
 
+
 	public function findByAvailabilityTypeForSelect(ITranslator $translator, Collator $collator)
 	{
 		return $this->findByTypeForSelect('owner-availability', $translator, $collator);
 	}
 
-	protected  function findByTypeForSelect($type, ITranslator $translator, Collator $collator)
+
+	protected function findByTypeForSelect($type, ITranslator $translator, Collator $collator)
 	{
 		$type = $this->related('type')->findBySlug($type);
 		$return = [];
 		$rows = $this->findByType($type);
-		foreach($rows as $row) {
+		foreach ($rows as $row) {
 			$return[$row->id] = $translator->translate($row->name);
 		}
 		$collator->asort($return);
@@ -72,9 +70,11 @@ class AmenityRepository extends \Repository\BaseRepository
 		return $return;
 	}
 
-	public function findImportantForSelect(ITranslator $translator, Collator $collator) {
+
+	public function findImportantForSelect(ITranslator $translator, Collator $collator)
+	{
 		$rows = $this->findByImportant(TRUE);
-		foreach($rows as $row) {
+		foreach ($rows as $row) {
 			if ($row->type->slug == 'animal') continue;
 			$return[$row->id] = $translator->translate($row->name);
 		}

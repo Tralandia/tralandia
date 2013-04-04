@@ -83,6 +83,24 @@ class AddressContainer extends BaseContainer
 		$this->setDefaults($defaults);
 	}
 
+
+	public function setValues($values, $erase = FALSE)
+	{
+		if(!$values) return NULL;
+
+		if($values instanceof Address) {
+			$valuesTemp = [
+				'address' => $values->getAddress(),
+				'location' => $values->getPrimaryLocation()->getId(),
+				'latitude' => $values->getGps()->getLatitude(),
+				'longitude' => $values->getGps()->getLongitude(),
+			];
+			$values = $valuesTemp;
+		}
+		parent::setValues($values, $erase);
+	}
+
+
 	/**
 	 * @return \Entity\Location\Location|NULL
 	 */

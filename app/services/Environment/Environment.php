@@ -2,11 +2,13 @@
 
 namespace Environment;
 
+use Doctrine\ORM\EntityManager;
 use Entity\Language;
 use Entity\Location\Location;
 use Nette;
 
-class Environment extends Nette\Object {
+class Environment extends Nette\Object
+{
 
 	/**
 	 * @var \Entity\Location\Location
@@ -38,6 +40,7 @@ class Environment extends Nette\Object {
 	 */
 	protected $locale;
 
+
 	/**
 	 * @param \Entity\Location\Location $primaryLocation
 	 * @param \Entity\Language $language
@@ -49,6 +52,7 @@ class Environment extends Nette\Object {
 		$this->language = $language;
 		$this->translatorFactory = $translatorFactory;
 	}
+
 
 	/**
 	 * @return \Entity\Location\Location
@@ -67,6 +71,7 @@ class Environment extends Nette\Object {
 		return $this->primaryLocation->getDefaultCurrency();
 	}
 
+
 	/**
 	 * @return \Entity\Language
 	 */
@@ -75,27 +80,32 @@ class Environment extends Nette\Object {
 		return $this->language;
 	}
 
+
 	/**
 	 * @return \Extras\Translator
 	 */
 	public function getTranslator()
 	{
-		if(!$this->translator) {
+		if (!$this->translator) {
 			$this->translator = $this->translatorFactory->create($this->language);
 		}
+
 		return $this->translator;
 	}
+
 
 	/**
 	 * @return \Environment\Locale
 	 */
 	public function getLocale()
 	{
-		if(!$this->locale) {
+		if (!$this->locale) {
 			$this->locale = new Locale($this);
 		}
+
 		return $this->locale;
 	}
+
 
 	/**
 	 * @return \Nette\Application\Request
@@ -105,6 +115,7 @@ class Environment extends Nette\Object {
 		return $this->request;
 	}
 
+
 	/**
 	 * @param $name
 	 *
@@ -113,6 +124,7 @@ class Environment extends Nette\Object {
 	protected function getRequestParameter($name)
 	{
 		$parameters = $this->request->getParameters();
+
 		return isset($parameters[$name]) ? $parameters[$name] : NULL;
 	}
 
@@ -123,17 +135,42 @@ class Environment extends Nette\Object {
 	 *
 	 * @return \Environment\Environment
 	 */
-	public static function createFromRequest(array $request, \Extras\ITranslatorFactory $translatorFactory) {
+	public static function createFromRequest(array $request, \Extras\ITranslatorFactory $translatorFactory)
+	{
 		$request = reset($request);
 		$parameters = $request->getParameters();
 		$primaryLocation = $parameters['primaryLocation'];
 		$language = $parameters['language'];
+
+		return new self($primaryLocation, $language, $translatorFactory);
+	}
+
+
+	/**
+	 * @param $location
+	 * @param $language
+	 * @param EntityManager $em
+	 * @param \Extras\ITranslatorFactory $translatorFactory
+	 *
+	 * @return Environment
+	 */
+	public static function createFromIds($location, $language, EntityManager $em, \Extras\ITranslatorFactory $translatorFactory)
+	{
+		$locationRepository = $em->getRepository(LOCATION_ENTITY);
+		$languageRepository = $em->getRepository(LANGUAGE_ENTITY);
+
+		$primaryLocation = $locationRepository->find($location);
+		$language = $languageRepository->find($language);
+
 		return new self($primaryLocation, $language, $translatorFactory);
 	}
 
 }
 
-interface IEnvironmentFactory {
+
+interface IEnvironmentFactory
+{
+
 	/**
 	 * @param \Entity\Location\Location $location
 	 * @param \Entity\Language $language

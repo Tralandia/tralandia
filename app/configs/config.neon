@@ -171,6 +171,8 @@ services:
 	searchGeneratorTopLocations: SearchGenerator\TopLocations(@environment::getPrimaryLocation())
 	searchGeneratorSpokenLanguages: SearchGenerator\SpokenLanguages(@environment::getPrimaryLocation(), @rentalSearchCache)
 
+	reservationProtector: ReservationProtector(@session)
+
 
 	# ==============================
 	# ==================== FORMS HANDLERS
@@ -190,9 +192,9 @@ factories:
 	# ==============================
 	# ==================== FORMS
 	# ==============================
-	rentalEditFormFactory:
-		class: OwnerModule\Forms\RentalEditForm(%rental%)
-		implement: OwnerModule\Forms\IRentalEditFormFactory
+#	rentalEditFormFactory:
+#		class: OwnerModule\Forms\RentalEditForm(%rental%)
+#		implement: OwnerModule\Forms\IRentalEditFormFactory
 
 	userEditFormFactory:
 		class: OwnerModule\Forms\UserEditForm(%user%, @userRepositoryAccessor)
@@ -220,12 +222,20 @@ factories:
 		implement: FrontModule\Forms\ITicketFormFactory
 
 	registrationFormFactory:
-		class: FrontModule\Forms\RegistrationForm(%country%, %presenter%)
+		class: FrontModule\Forms\RegistrationForm(%environment%, %presenter%)
 		implement: FrontModule\Forms\IRegistrationFormFactory
+
+	rentalEditFormFactory:
+		class: OwnerModule\Forms\RentalEditForm(%rental%, %environment%)
+		implement: OwnerModule\Forms\IRentalEditFormFactory
 
 	searchFormFactory:
 		class: FrontModule\Forms\SearchForm(%defaults%, %search%, %presenter%)
 		implement: FrontModule\Forms\ISearchFormFactory
+
+	rentalContainerFactory:
+		class: Extras\Forms\Container\RentalContainer(%environment%)
+		implement: Extras\Forms\Container\IRentalContainerFactory
 
 	# ==============================
 	# ==================== COMPONENTS

@@ -65,34 +65,39 @@ class RegistrationHandler extends FormHandler
 		$this->em = $em;
 	}
 
+
 	public function handleSuccess($values)
 	{
 		$userRepository = $this->em->getRepository(USER_ENTITY);
 		$locationRepository = $this->em->getRepository(LOCATION_ENTITY);
 		$languageRepository = $this->em->getRepository(LANGUAGE_ENTITY);
 		$rentalTypeRepository = $this->em->getRepository(RENTAL_TYPE_ENTITY);
+		$amenityRepository = $this->em->getRepository(RENTAL_AMENITY_ENTITY);
+		$placementRepository = $this->em->getRepository(RENTAL_PLACEMENT_ENTITY);
 		$emailRepository = $this->em->getRepository(CONTACT_EMAIL_ENTITY);
+
+		$rentalValues = $values->rental;
 
 		$error = new ValidationError;
 
 		$values->country = $locationRepository->find($values->country);
-		if(!$values->country || !$values->country->isPrimary()) {
+		if (!$values->country || !$values->country->isPrimary()) {
 			$error->addError("Invalid country", 'country');
 		}
 
 		$values->language = $languageRepository->find($values->language);
-		if(!$values->language) {
+		if (!$values->language) {
 			$error->addError("Invalid language", 'language');
 		}
 
 		// User
 		$user = $userRepository->findByLogin($values->email);
-		if($user) {
+		if ($user) {
 			$error->addError("Email exists", 'email');
 		}
 
-		$values->rental->type->type = $rentalTypeRepository->find($values->rental->type->type);
-		if(!$values->rental->type->type) {
+		$rentalValues->type->type = $rentalTypeRepository->find($rentalValues->type->type);
+		if (!$rentalValues->type->type) {
 			$error->addError("Invalid rental type", 'rentalType');
 		}
 
@@ -109,22 +114,42 @@ class RegistrationHandler extends FormHandler
 		$rentalCreator = $this->rentalCreator;
 
 		/** @var $address \Entity\Contact\Address */
-		$address = $this->addressCreator->create($values->rental->address->address);
+		$address = $this->addressCreator->create($rentalValues->address->address);
 
 
 		/** @var $rental \Entity\Rental\Rental */
-		$rental = $rentalCreator->create($address, $user, $values->rental->name);
+		$rental = $rentalCreator->create($address, $user, $rentalValues->name);
 
-		$rental->setType($values->rental->type->type)
+		$url = new \Entity\Contact\Url;
+		$url->setValue($values->url);
+
+		$rental->setType($rentalValues->type->type)
 			->setEditLanguage($values->language)
 			->addSpokenLanguage($values->language)
 			->setEmail($email)
-			->setClassification($values->rental->type->classification)
-			->setMaxCapacity($values->rental->maxCapacity)
-			->setFloatPrice($values->rental->price);
+			->setUrl($url)
+			->setPhone($values->phone->phone)
+			->setClassification($rentalValues->type->classification)
+			->setMaxCapacity($rentalValues->maxCapacity)
+			->setFloatPrice($rentalValues->price);
 
-		foreach($values->rental->photos->images as $image) {
-			$rental->addImage($image);
+		$board = is_object($rentalValues->board) ? ((array)$rentalValues->board->getIterator()) : $rentalValues->board;
+		$important = is_object($rentalValues->important) ? ((array)$rentalValues->important->getIterator()) : $rentalValues->important;
+		$amenityIds = array_merge($important, $board, [$rentalValues->ownerAvailability, $rentalValues->pet]);
+		$amenities = $amenityRepository->findById($amenityIds);
+		foreach ($amenities as $amenity) {
+			$rental->addAmenity($amenity);
+		}
+
+		$placements = $placementRepository->findById($rentalValues->placement);
+		foreach ($placements as $placement) {
+			$rental->addPlacement($placement);
+		}
+
+		if (isset($rentalValues->photos)) {
+			foreach ($rentalValues->photos->images as $image) {
+				$rental->addImage($image);
+			}
 		}
 
 
@@ -137,6 +162,7 @@ class RegistrationHandler extends FormHandler
 
 		return $rental;
 	}
+
 
 	public function getRental()
 	{

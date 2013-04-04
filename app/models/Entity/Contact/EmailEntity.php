@@ -22,14 +22,19 @@ class Email extends \Entity\BaseEntity {
 	 */
 	protected $rental;
 
+	public function __toString()
+	{
+		return "$this->value";
+	}
+
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
+	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
 		parent::__construct();
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\Contact\Email
@@ -40,7 +45,7 @@ class Email extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -48,7 +53,7 @@ class Email extends \Entity\BaseEntity {
 	{
 		return $this->value;
 	}
-		
+
 	/**
 	 * @param \Entity\Rental\Rental
 	 * @return \Entity\Contact\Email
@@ -59,7 +64,7 @@ class Email extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Rental\Rental|NULL
 	 */

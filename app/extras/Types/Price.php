@@ -29,6 +29,10 @@ class Price extends \Nette\Object {
 		$amounts[$currency->id] = $amount;
 	}
 
+
+	/**
+	 * @return bool
+	 */
 	public function isNull() {
 		return !($this->sourceAmount > 0);
 	}
@@ -38,6 +42,9 @@ class Price extends \Nette\Object {
 		return $this->sourceAmount;
 	}
 
+	/**
+	 * @return \Entity\Currency
+	 */
 	public function getSourceCurrency()
 	{
 		return $this->sourceCurrency;
