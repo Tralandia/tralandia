@@ -5,7 +5,8 @@ namespace OwnerModule;
 
 use Nette\Application\BadRequestException;
 
-class RentalPresenter extends BasePresenter {
+class RentalPresenter extends BasePresenter
+{
 
 	public $rentalRepositoryAccessor;
 
@@ -16,30 +17,38 @@ class RentalPresenter extends BasePresenter {
 
 	/**
 	 * @autowire
-	 * @var \FrontModule\Forms\Rental\IRentalEditFormFactory
+	 * @var \OwnerModule\Forms\IRentalEditFormFactory
 	 */
 	protected $rentalEditFormFactory;
 
-	public function injectDic(\Nette\DI\Container $dic) {
+
+	public function injectDic(\Nette\DI\Container $dic)
+	{
 		$this->rentalRepositoryAccessor = $dic->rentalRepositoryAccessor;
 	}
 
-	public function actionFirstRental() {
+
+	public function actionFirstRental()
+	{
 		$rental = $this->loggedUser->getFirstRental();
-		if(!$rental) {
+		if (!$rental) {
 			throw new BadRequestException('Nenasiel som ziadny objekt');
 		}
 		$this->redirect('edit', ['id' => $rental->getId()]);
 	}
 
-	public function actionAdd(){
+
+	public function actionAdd()
+	{
 
 	}
 
-	public function actionEdit($id) {
+
+	public function actionEdit($id)
+	{
 		$this->rental = $this->rentalRepositoryAccessor->get()->find($id);
 
-		if(!$this->getUser()->isAllowed($this->rental, 'edit')) $this->accessDeny();
+		if (!$this->getUser()->isAllowed($this->rental, 'edit')) $this->accessDeny();
 
 		//$rentalService = $this->rentalDecoratorFactory->create($this->rental);
 
@@ -48,10 +57,12 @@ class RentalPresenter extends BasePresenter {
 
 	}
 
-	protected function createComponentRentalEditForm(){
+
+	protected function createComponentRentalEditForm()
+	{
 		$form = $this->rentalEditFormFactory->create($this->rental, $this->environment);
 
-		return $form ;
+		return $form;
 	}
 
 }

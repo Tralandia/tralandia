@@ -100,13 +100,13 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 			->setOption('help', $this->translate('o3095'))
 			->setOption('prepend', '<i class="icon-envelope"></i>')
 			->setAttribute('placeholder', 'email@email.com')
-	        ->addRule(self::EMAIL, $this->translate('o407'));
-			;
+			->addRule(self::EMAIL, $this->translate('o407'));
+		;
 		$this->addPassword('password', 'o997')
 			->setOption('help', $this->translate('o3096'))
 			->setOption('prepend', '<i class="icon-lock"></i>')
-	        ->addRule(self::MIN_LENGTH, $this->translate('o856'), 6);
-			;
+			->addRule(self::MIN_LENGTH, $this->translate('o856'), 6);
+		;
 
 //		$this->addText('name', 'o100070')
 //			->setOption('help', $this->translate('o100071'))
@@ -119,26 +119,27 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 		$this->addText('url', 'o977')
 			->setOption('help', $this->translate('o978'))
 			->setOption('prepend', 'http://')
-	        ->addRule(self::URL, $this->translate('o100102'));
-			;
+			->addRule(self::URL, $this->translate('o100102'));
+		;
 
 		$rentalContainer = $this->rentalContainerFactory->create($this->environment);
 		$this['rental'] = $rentalContainer;
 
-		$this->addSubmit('submit', $this->translate('o100083'));
+		$this->addSubmit('submit', 'o1099');
 
 		$this->onValidate[] = callback($this, 'validation');
 		$this->onValidate[] = $rentalContainer->validation;
 	}
 
+
 	public function setDefaultsValues()
 	{
 		$defaults = [
 			'country' => $this->country->getId(),
-			'language' => $this->country->getDefaultLanguage()->getId(),
+			'language' => $this->environment->getLanguage()->getId(),
 
 			//'referrer' => 'luzbo',
-			'email' => Nette\Utils\Strings::random(5).'@email.com',
+			'email' => Nette\Utils\Strings::random(5) . '@email.com',
 			'url' => 'google.com',
 			'password' => 'adsfasdf',
 			'name' => 'Harlem Shake',
@@ -157,6 +158,8 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 				'board' => [287],
 				'ownerAvailability' => 275,
 				'pet' => 296,
+				'placement' => [1],
+				'important' => [50, 188],
 
 				'address' => [
 					'address' => 'Ľ. Štúra 8, Nové Zámky, Slovakia',
@@ -166,13 +169,15 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 		$this->setDefaults($defaults);
 	}
 
-	public function validation(RegistrationForm $form){
+
+	public function validation(RegistrationForm $form)
+	{
 		$values = $form->getValues();
 
 		$email = $values->email;
-		if($email && !$form['email']->hasErrors()) {
+		if ($email && !$form['email']->hasErrors()) {
 			$emailIsOccupied = $this->userRepository->findOneByLogin($email);
-			if($emailIsOccupied) {
+			if ($emailIsOccupied) {
 				$form['email']->addError($this->translate('o852'));
 			}
 		}
@@ -182,7 +187,8 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 }
 
 
-interface IRegistrationFormFactory {
+interface IRegistrationFormFactory
+{
 
 	/**
 	 * @param \Environment\Environment $environment

@@ -12,3 +12,8 @@ parameters:
 
 services:
 	session: Kdyby\Tests\Http\FakeSession
+
+	environment:
+		class: Environment\Environment
+		factory: Environment\Environment::createFromIds(56, 144)
+

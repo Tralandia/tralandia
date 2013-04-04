@@ -1,43 +1,43 @@
 {includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
 {form registrationForm, class => "traform dashboard"}
-<table class="formTable innerPadding">
-	<tr class="formHeading	">
-		<td colspan="3">{_o100096}</td>
-	</tr>
+	<table class="formTable innerPadding">
+		<tr class="formHeading	">
+			<td colspan="3">{_o100096}</td>
+		</tr>
 
 
-	{include #select, control => $form['country'] , controlClass => 'select2 selectRedirect'}
-	{include #select, control => $form['language'] , controlClass => 'select2 selectRedirect'}
+		{include #select, control => $form['country'] , controlClass => 'select2 selectRedirect'}
+		{include #select, control => $form['language'] , controlClass => 'select2 selectRedirect'}
 
-	{include #fieldset, text => 'o100084'}
-	{include #email, control => $form['email']}
-	{include #password, control => $form['password']}
+		{include #fieldset, text => 'o100084'}
+		{include #email, control => $form['email']}
+		{include #password, control => $form['password']}
 
-	{include #fieldset, text => 'o960'}
-	{*{include #text, control => $form['name']}*}
-	{include #phone, control => $form['phone']}
-	{include #url, control => $form['url']}
+		{include #fieldset, text => 'o960'}
+		{*{include #text, control => $form['name']}*}
+		{include #phone, control => $form['phone']}
+		{include #url, control => $form['url']}
 
-	{include #fieldset, text => 'o100085'}
-	{var $rental = $form['rental']}
-	{include #text, control => $rental['name']}
-	{include #rentalType, control => $rental['type']}
-	{include #text, control => $rental['price']}
-	{include #text, control => $rental['maxCapacity']}
-	{include #select, control => $rental['ownerAvailability']}
-	{include #select, control => $rental['pet']}
+		{include #fieldset, text => 'o100085'}
+		{var $rental = $form['rental']}
+		{include #text, control => $rental['name']}
+		{include #rentalType, control => $rental['type']}
+		{include #text, control => $rental['price']}
+		{include #text, control => $rental['maxCapacity']}
+		{include #select, control => $rental['ownerAvailability']}
+		{include #select, control => $rental['pet']}
 
-	{include #fieldset, text => 'o100086'}
-	{include #address, control => $rental['address']}
-	{include #checkboxList, control => $rental['amenityLocation'], colCount => 3}
+		{include #fieldset, text => 'o100086'}
+		{include #address, control => $rental['address']}
+		{include #checkboxList, control => $rental['placement'], colCount => 3}
 
-	{include #checkboxList, control => $rental['board'], colCount => 3}
-	{include #checkboxList, control => $rental['important'], colCount => 3}
+		{include #checkboxList, control => $rental['board'], colCount => 3}
+		{include #checkboxList, control => $rental['important'], colCount => 3}
 
-	{include #fieldset, text => 'o980'}
-	{include #rentalPhotos, control => $rental['photos']}
+		{include #fieldset, text => 'o980'}
+		{include #rentalPhotos, control => $rental['photos']}
 
-	{include #submit, control => $form['submit'], icon => 'entypo-ok' , class => 'btn-green'}
-</table>
-	{dump $form->getAllErrors()}
+		{include #submit, control => $form['submit'], icon => 'entypo-ok' , class => 'btn-green'}
+	</table>
+{dump $form->getAllErrors()}
 {/form}

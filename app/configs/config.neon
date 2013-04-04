@@ -222,12 +222,12 @@ factories:
 		implement: FrontModule\Forms\ITicketFormFactory
 
 	registrationFormFactory:
-		class: FrontModule\Forms\RegistrationForm(%$environment%, %presenter%)
+		class: FrontModule\Forms\RegistrationForm(%environment%, %presenter%)
 		implement: FrontModule\Forms\IRegistrationFormFactory
 
 	rentalEditFormFactory:
-		class: FrontModule\Forms\Rental\RentalEditForm(%rental%, %environment%)
-		implement: FrontModule\Forms\Rental\IRentalEditFormFactory
+		class: OwnerModule\Forms\RentalEditForm(%rental%, %environment%)
+		implement: OwnerModule\Forms\IRentalEditFormFactory
 
 	searchFormFactory:
 		class: FrontModule\Forms\SearchForm(%defaults%, %search%, %presenter%)
