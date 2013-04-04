@@ -36,6 +36,7 @@ class HomePresenter extends BasePresenter {
 
 		$this->template->rentals = $rentals;
 		$this->template->lastSeenRentals = $this->lastSeen->getSeenRentals(12);
+		$this->template->navBarLastActive = $this->getActiveNavbarTab();
 		$this->template->isHome = TRUE;
 
 	}

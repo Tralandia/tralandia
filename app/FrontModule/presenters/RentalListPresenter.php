@@ -30,14 +30,18 @@ class RentalListPresenter extends BasePresenter {
 
 	/**
 	 * @autowire
+	 * @var \LastSeen
+	 */
+	protected $lastSeen;
+
+	/**
+	 * @autowire
 	 * @var \User\FindOrCreateUser
 	 */
 	protected $findOrCreateUser;
 
-
-
-	public function actionDefault($favoriteList, $email) {
-
+	public function actionDefault($favoriteList, $email)
+	{
 		if($favoriteList) {
 			if(isset($email)) {
 				$receiver = $this->findOrCreateUser->getUser($email, $this->environment);
@@ -62,7 +66,9 @@ class RentalListPresenter extends BasePresenter {
 		$paginator->itemsPerPage = \Service\Rental\RentalSearchService::COUNT_PER_PAGE;
 		$paginator->itemCount = $itemCount;
 
+		$this->template->lastSeenRentals = $this->lastSeen->getSeenRentals(12);
 		$this->template->totalResultsCount = $paginator->itemCount;
+		$this->template->navBarLastActive = $this->getActiveNavbarTab();
 
 		if(isset($search)) {
 			$rentals = $search->getRentalsIds($paginator->getPage());
