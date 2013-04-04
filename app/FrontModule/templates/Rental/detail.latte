@@ -157,10 +157,8 @@
 					<strong>{_o100013}</strong>
 
 					<div class="amenitiesStart">
-						{foreach $importantAmenities  as $amenities}
-							{foreach $amenities as $amenity}
+						{foreach $importantAmenities  as $amenity}
 								{if $iterator->first}{_$amenity->name|firstUpper}{else}{_$amenity->name}{/if}{if !$iterator->last}, {/if}
-							{/foreach}
 						{/foreach}
 
 						{var $otherAmenities = $rental->getImportantAmenities(false)}

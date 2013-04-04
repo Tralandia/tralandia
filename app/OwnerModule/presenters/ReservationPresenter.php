@@ -24,8 +24,6 @@ class ReservationPresenter extends BasePresenter {
 
 		$reservations = $this->userRentalReservationRepositoryAccessor->get()->findByRental($rental);
 
-		d($reservations);
-
 		$this->template->reservations = $reservations;
 
 	}
