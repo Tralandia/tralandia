@@ -67,22 +67,27 @@ Nette.validateControl = function(elem, rules, onlyCheck) {
 
 $(document).ready(function(){
 
-$.nette.init();
+// $.nette.init();
 
-// var c = $.nette.ext('snippets');
-// 	c.updateSnippet = function($el, html, back){
-// 		if (typeof $el == 'string') {
-// 			$el = this.getElement($el);
-// 		}
-// 		// Fix for setting document title in IE
-// 		if ($el.is('title')) {
-// 			document.title = html;
-// 		} else {
-// 			this.applySnippet($el, html, back);
-// 		}
+$.nette.init(function (netteAjaxHandler) {
+    $('form.ajax').submit(netteAjaxHandler);
+    $('form.ajax').live('submit',netteAjaxHandler);
+});
 
-// 		$("select.select2").select2();
-// 	}	
+var c = $.nette.ext('snippets');
+	c.updateSnippet = function($el, html, back){
+		if (typeof $el == 'string') {
+			$el = this.getElement($el);
+		}
+		// Fix for setting document title in IE
+		if ($el.is('title')) {
+			document.title = html;
+		} else {
+			this.applySnippet($el, html, back);
+		}
+
+		$("select.select2").select2();
+	}	
 });
 
 
