@@ -5,6 +5,7 @@ namespace Extras\Forms\Container;
 use Entity\Contact\Address;
 use Entity\Location\Location;
 use Nette\InvalidArgumentException;
+use Service\Contact\AddressCreator;
 
 class AddressContainer extends BaseContainer
 {
@@ -20,13 +21,21 @@ class AddressContainer extends BaseContainer
 	protected $location;
 
 	/**
+	 * @var \Service\Contact\AddressCreator
+	 */
+	protected $addressCreator;
+
+
+	/**
 	 * @param Address|Location $addressOrLocation
+	 * @param \Service\Contact\AddressCreator $addressCreator
 	 *
 	 * @throws \Nette\InvalidArgumentException
 	 */
-	public function __construct($addressOrLocation)
+	public function __construct($addressOrLocation, AddressCreator $addressCreator)
 	{
 		parent::__construct();
+		$this->addressCreator = $addressCreator;
 
 		if($addressOrLocation instanceof Address) {
 			$this->address = $addressOrLocation;
@@ -37,7 +46,10 @@ class AddressContainer extends BaseContainer
 		}
 
 
-		$this->addText('address', '#Address');
+		$this->addText('address', '#Address')
+			->getControlPrototype()
+				->setPlaceholder('o100091');
+
 		$this->addHidden('location');
 		$this->addHidden('latitude');
 		$this->addHidden('longitude');
@@ -57,6 +69,11 @@ class AddressContainer extends BaseContainer
 		} else {
 			return $this->location->getDefaultZoom();
 		}
+	}
+
+	public function shouldShowMarker()
+	{
+		return (int) $this->address;
 	}
 
 	/**
@@ -98,6 +115,22 @@ class AddressContainer extends BaseContainer
 			$values = $valuesTemp;
 		}
 		parent::setValues($values, $erase);
+	}
+
+
+	public function getValues($asArray = FALSE)
+	{
+
+		$values = parent::getValues($asArray);
+		$address = $values['address'];
+		if($address) {
+			$address = $this->addressCreator->create($address);
+			$values['addressEntity'] = $address;
+		} else {
+			$values['addressEntity'] = NULL;
+		}
+
+		return $values;
 	}
 
 

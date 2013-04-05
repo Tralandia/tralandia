@@ -50,17 +50,16 @@ class LanguageRepository extends \Repository\BaseRepository {
 	 */
 	public function getForSelectWithLinks(ITranslator $translator, Collator $collator, Presenter $presenter = NULL)
 	{
-		$rows = $this->findAll();
+		$rows = $this->findSupported();
 		$return = [];
 		$sort = [];
 		$elTemplate = Html::el('option');
 		foreach($rows as $row) {
 			/** @var $row \Entity\Language */
-
 			$key = $row->getId();
 			$name = $translator->translate($row->getName());
-			$localName = $row->getName()->getTranslationText($row);
-			$text = $name == $localName ? $name : $name . ' (' . Strings::lower($localName) . ')';
+			$localName = $row->getName()->hasTranslationText($row) ? $row->getName()->getTranslationText($row) : NULL;
+			$text = (!$localName || $name == $localName) ? $name : $name . ' (' . Strings::lower($localName) . ')';
 			$return[$key] = $text;
 
 			if($presenter) {

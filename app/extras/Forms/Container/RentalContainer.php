@@ -4,6 +4,7 @@ namespace Extras\Forms\Container;
 
 
 use Doctrine\ORM\EntityManager;
+use Entity\Contact\Address;
 use Entity\Rental\Rental;
 use Environment\Environment;
 use FrontModule\Forms\RegistrationForm;
@@ -75,7 +76,7 @@ class RentalContainer extends BaseContainer
 		$rentalTypes = $this->rentalTypeRepository->getForSelect($this->translator, $this->collator);
 
 
-		$this['address'] = new AddressContainer($this->country);
+		$this->addAddressContainer('address', $this->country);
 		$placement = $this->placementRepository->getForSelect($this->translator, $this->collator);
 
 		$this->addMultiOptionList('placement', 'Placement', $placement)
@@ -165,6 +166,11 @@ class RentalContainer extends BaseContainer
 		$photosSort = $rentalValues->photos->sort;
 		if (count($photosSort) < 3) {
 			$form['rental']['photos']->getMainControl()->addError($this->translate('o100111'));
+		}
+
+		$address = $rentalValues->address;
+		if(!$address->addressEntity instanceof Address) {
+			$form['rental']['address']->getMainControl()->addError($this->translate('o100134'));
 		}
 
 	}

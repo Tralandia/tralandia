@@ -23,11 +23,6 @@ class RegistrationHandler extends FormHandler
 	protected $rentalCreator;
 
 	/**
-	 * @var \Service\Contact\AddressCreator
-	 */
-	protected $addressCreator;
-
-	/**
 	 * @var \User\UserCreator
 	 */
 	protected $userCreator;
@@ -50,16 +45,14 @@ class RegistrationHandler extends FormHandler
 
 	/**
 	 * @param \Service\Rental\RentalCreator $rentalCreator
-	 * @param \Service\Contact\AddressCreator $addressCreator
 	 * @param \User\UserCreator $userCreator
 	 * @param \Environment\Environment $environment
 	 * @param \Doctrine\ORM\EntityManager $em
 	 */
-	public function __construct(RentalCreator $rentalCreator, AddressCreator $addressCreator,
+	public function __construct(RentalCreator $rentalCreator,
 								UserCreator $userCreator, Environment $environment, EntityManager $em)
 	{
 		$this->rentalCreator = $rentalCreator;
-		$this->addressCreator = $addressCreator;
 		$this->userCreator = $userCreator;
 		$this->environment = $environment;
 		$this->em = $em;
@@ -114,7 +107,7 @@ class RegistrationHandler extends FormHandler
 		$rentalCreator = $this->rentalCreator;
 
 		/** @var $address \Entity\Contact\Address */
-		$address = $this->addressCreator->create($rentalValues->address->address);
+		$address = $rentalValues->address->addressEntity;
 
 
 		/** @var $rental \Entity\Rental\Rental */
