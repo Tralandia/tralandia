@@ -112,7 +112,16 @@ common:
 							link: ':Admin:SeoTitleSuffix:list'
 				location: 
 					label: Locations
-					link: ':Admin:Location:list'
+					items: 
+						country: 
+							label: Country
+							link: ':Admin:Country:list'
+						region:
+							label: Region
+							link: ':Admin:Region:list'
+						locality:
+							label: Locality
+							link: ':Admin:Locality:list'
 				locationType: 
 					label: Location Types
 					link: ':Admin:LocationType:list'

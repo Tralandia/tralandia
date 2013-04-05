@@ -32,6 +32,7 @@ abstract class BaseGridControl extends BaseControl {
 	{
 		if(!$this->grid) {
 			$grid = new Datagrid;
+			$grid->setRowPrimaryKey('id');
 
 			$grid->setTranslator($this->presenter->getService('translator'));
 

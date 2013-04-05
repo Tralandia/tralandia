@@ -115,8 +115,40 @@ class LocationRepository extends \Repository\BaseRepository {
 		$qb->select('l')
 			->from($this->_entityName, 'l')
 			->join('l.type', 't')
-			->where($qb->expr()->eq('t.slug', ':country'))
-			->setParameter('country', 'country');
+			->where($qb->expr()->eq('t.slug', ':type'))
+			->setParameter('type', 'country');
+
+		return $qb->getQuery()->getResult();
+	}
+
+	/**
+	 * @return array
+	 */
+	public function findRegions()
+	{
+		$qb = $this->_em->createQueryBuilder();
+
+		$qb->select('l')
+			->from($this->_entityName, 'l')
+			->join('l.type', 't')
+			->where($qb->expr()->eq('t.slug', ':type'))
+			->setParameter('type', 'region');
+
+		return $qb->getQuery()->getResult();
+	}
+
+	/**
+	 * @return array
+	 */
+	public function findLocalities()
+	{
+		$qb = $this->_em->createQueryBuilder();
+
+		$qb->select('l')
+			->from($this->_entityName, 'l')
+			->join('l.type', 't')
+			->where($qb->expr()->eq('t.slug', ':type'))
+			->setParameter('type', 'locality');
 
 		return $qb->getQuery()->getResult();
 	}

@@ -1,0 +1,25 @@
+{define #col-required}
+	{var $required = array()}
+	{if $row->pluralVariationsRequired}
+		{var $required[] = 'Plural variations'}
+	{/if}
+	{if $row->genderRequired}
+		{var $required[] = 'Gender'}
+	{/if}
+	{if $row->genderVariationsRequired}
+		{var $required[] = 'Gender variations'}
+	{/if}
+	{if $row->locativesRequired}
+		{var $required[] = 'Locatives'}
+	{/if}
+	{if $row->positionRequired}
+		{var $required[] = 'Position'}
+	{/if}
+	{if $row->checkingRequired}
+		{var $required[] = 'Checking'}
+	{/if}
+	
+	<td>
+		{$required|implode:', '}
+	</td>
+{/define}

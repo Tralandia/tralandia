@@ -1,0 +1,10 @@
+entity: Entity\Location\Location
+
+parameters:
+	title: Locality
+	h1: 'Locality -> %name%'
+
+gridFactory: @localityGridFactory
+
+form:
+	fields:
