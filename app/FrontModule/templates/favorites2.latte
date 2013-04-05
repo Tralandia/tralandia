@@ -5,7 +5,7 @@
 <div n:class="$favoriteRentals ? 'span12' : 'span12' " data-favoritesLink="{link generateFavoriteLink}" id="favoritesStaticContainer"{ifset $currentRental} current-rental="$currentRental->id"{/ifset}>
 	<div class="favorites2" id="navBar">
 		<ul class="nav" id="navBarTabs">
-			<li n:class="$navBarLastActive=='navBarSerchResults' ? active" n:ifset="$lastSearchResults" for="navBarSerchResults">
+			<li n:class="$navBarLastActive=='navBarSerchResults' ? active" n:ifset="$lastSearchResults['rentals']" for="navBarSerchResults">
 				<i class="icon-search"></i> {$lastSearchResults['heading']} ({$lastSearchResults['totalCount']})
 			</li>
 			<li n:class="$navBarLastActive=='navBarFavorites' ? active" for="navBarFavorites">
