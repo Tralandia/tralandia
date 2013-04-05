@@ -70,6 +70,12 @@ FormContainer::extensionMethod('addRentalPhotosContainer',
 		return $container[$name] = new \Extras\Forms\Container\RentalPhotosContainer($rental, $imageManager, $imageRepository);
 });
 
+FormContainer::extensionMethod('addAddressContainer',
+	function (FormContainer $container, $name, $addressOrLocation) use ($dic) {
+		$addressCreator = $dic->getService('addressCreator');
+		return $container[$name] = new \Extras\Forms\Container\AddressContainer($addressOrLocation, $addressCreator);
+});
+
 
 // @todo toto niekam schovat
 // Panel\Todo::register($container->parameters['appDir']);
