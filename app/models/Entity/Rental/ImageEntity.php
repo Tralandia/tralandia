@@ -27,12 +27,6 @@ class Image extends \Entity\BaseEntity
 
 	/**
 	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Phrase\Phrase", cascade={"persist", "remove"})
-	 */
-	protected $name;
-
-	/**
-	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Rental", inversedBy="images")
 	 */
 	protected $rental;
@@ -62,25 +56,6 @@ class Image extends \Entity\BaseEntity
 	public function __construct()
 	{
 		parent::__construct();
-	}
-		
-	/**
-	 * @param \Entity\Phrase\Phrase
-	 * @return \Entity\Rental\Image
-	 */
-	public function setName(\Entity\Phrase\Phrase $name)
-	{
-		$this->name = $name;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Phrase\Phrase|NULL
-	 */
-	public function getName()
-	{
-		return $this->name;
 	}
 		
 	/**
