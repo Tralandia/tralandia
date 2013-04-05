@@ -1,6 +1,7 @@
 {form reservationForm , class => 'reservationform ajax' }
 
 	{* add class invalid to input *}
+	{foreach $form->getErrors() as $error}{$error}{/foreach}
 
 	<div n:class="$form['name']->hasErrors() ? 'control-group error' : 'control-group' ">
 	{input name ,data-validation-message => "error-msg-reservation-name"}
@@ -41,7 +42,7 @@
 	<span class="control-error" id="error-msg-reservation-from">
 		{foreach $dateContainer['from']->getErrors() as $error}{$error}{/foreach}
 	</span>
-	</div>	
+	</div>
 
 	<div n:class="$dateContainer['to']->hasErrors() ? 'control-group error' : 'control-group' ">
 	<div class="input-append">
@@ -51,14 +52,14 @@
 	<span class="control-error" id="error-msg-reservation-to">
 		{foreach $dateContainer['to']->getErrors() as $error}{$error}{/foreach}
 	</span>
-	</div>		
+	</div>
 
 	<div n:class="$form['message']->hasErrors() ? 'control-group error' : 'control-group' ">
 	{input message , data-validation-message => "error-msg-reservation"}
 	<span class="control-error" id="error-msg-reservation-to">
 		{foreach $form['message']->getErrors() as $error}{$error}{/foreach}
 	</span>
-	</div>		
+	</div>
 	<button class="btn btn-orange" type="submit"><i class="entypo-send"></i> {_o100017}</button>
 	{* {input submit, class => "btn btn-orange" , icon => 'entypo-send'} *}
 {/form}

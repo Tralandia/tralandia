@@ -9,6 +9,7 @@ define('RENTAL_AMENITY_ENTITY', '\Entity\Rental\Amenity');
 define('RENTAL_PLACEMENT_ENTITY', '\Entity\Rental\Placement');
 define('USER_ENTITY', '\Entity\User\User');
 define('USER_ROLE_ENTITY', '\Entity\User\Role');
+define('RESERVATION_ENTITY', '\Entity\User\RentalReservation');
 define('CONTACT_EMAIL_ENTITY', '\Entity\Contact\Email');
 define('PATH_SEGMENT_ENTITY', '\Entity\Routing\PathSegment');
 

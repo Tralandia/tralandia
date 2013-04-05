@@ -33,6 +33,18 @@ class PhoneContainer extends BaseContainer
 	}
 
 
+	public function getPrefixControl()
+	{
+		return $this['prefix'];
+	}
+
+
+	public function getNumberControl()
+	{
+		return $this['number'];
+	}
+
+
 	public function setValues($values, $erase = FALSE)
 	{
 		if (!$values) return NULL;

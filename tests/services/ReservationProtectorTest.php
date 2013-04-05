@@ -30,7 +30,8 @@ class ReservationProtectorTest extends TestCase
 	public function testBase()
 	{
 		$email = 'foo@bar.com';
-		$reservationProtector = clone $this->reservationProtector;
+		$reservationProtector = $this->reservationProtector;
+		$reservationProtector->reset();
 
 		$this->assertEquals(TRUE, $reservationProtector->canSendReservation($email));
 	}
@@ -39,7 +40,9 @@ class ReservationProtectorTest extends TestCase
 	public function testThrowTooManyForEmail()
 	{
 		$email = 'foo@bar.com';
-		$reservationProtector = clone $this->reservationProtector;
+		$email2 = 'baz@bar.com';
+		$reservationProtector = $this->reservationProtector;
+		$reservationProtector->reset();
 
 		for( $i = 1; $i < $this->maxCount; $i++ ) {
 			$reservationProtector->newReservationSent($email);
@@ -48,6 +51,8 @@ class ReservationProtectorTest extends TestCase
 		$this->assertEquals(TRUE, $reservationProtector->canSendReservation($email));
 
 		$reservationProtector->newReservationSent($email);
+
+		$this->assertEquals(TRUE, $reservationProtector->canSendReservation($email2));
 
 		try {
 			$reservationProtector->canSendReservation($email);
@@ -60,35 +65,11 @@ class ReservationProtectorTest extends TestCase
 	}
 
 
-	public function testThrowTooManyInRow()
-	{
-		$email = 'foo@bar.com';
-		$email2 = 'baz@bar.com';
-		$reservationProtector = clone $this->reservationProtector;
-
-		for( $i = 1; $i < $this->maxCount; $i++ ) {
-			$reservationProtector->newReservationSent($email);
-		}
-
-		$this->assertEquals(TRUE, $reservationProtector->canSendReservation($email));
-
-		$reservationProtector->newReservationSent($email2);
-
-		try {
-			$reservationProtector->canSendReservation($email);
-		} catch (\TooManyReservationInRowException $e) {
-			$e->getCode();
-			return;
-		}
-
-		$this->fail('An expected exception has not been raised.');
-	}
-
-
 	public function testTimeInterval()
 	{
 		$email = 'foo@bar.com';
-		$reservationProtector = clone $this->reservationProtector;
+		$reservationProtector = $this->reservationProtector;
+		$reservationProtector->reset();
 		$reservationProtector->setMinInterval(1);
 
 		$reservationProtector->newReservationSent($email);

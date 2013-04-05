@@ -9,7 +9,7 @@ class ReservationOwnerEmailListener extends BaseEmailListener
 
 	public function getSubscribedEvents()
 	{
-		return ['FormHandler\RegistrationHandler::onSuccess'];
+		return [];
 	}
 
 	public function onSuccess(RentalReservation $reservation)
