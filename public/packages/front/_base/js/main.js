@@ -216,7 +216,7 @@ App.prototype.datepickerIcon = function(){
 App.prototype.initMapsObjectDetail = function(){
 	$('#objectDetailListMap').trigger('click');
 
-	$.scrollTo('#objectDetailListMap',800);
+	$.scrollTo('#objectDetailMap',800);
 
 	setTimeout(function(){
 		//maplodader();
