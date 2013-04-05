@@ -12,9 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class RentalReservation extends \Entity\BaseEntity {
 
-	// static const STATUS_PENDING = 0;
-	// static const STATUS_APROVED = 1;
-
 	/**
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\Language")
@@ -58,11 +55,16 @@ class RentalReservation extends \Entity\BaseEntity {
 	protected $departureDate;
 
 	/**
-	 * @var json
-	 * @ORM\Column(type="json")
-	 * all details about people / children / rooms will be here
+	 * @var integer
+	 * @ORM\Column(type="integer")
 	 */
-	protected $capacity;
+	protected $adultsCount;
+
+	/**
+	 * @var integer
+	 * @ORM\Column(type="integer", nullable=true)
+	 */
+	protected $childrenCount;
 
 	/**
 	 * @var string
@@ -263,22 +265,51 @@ class RentalReservation extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param json
+	 * @param integer
 	 * @return \Entity\User\RentalReservation
 	 */
-	public function setCapacity($capacity)
+	public function setAdultsCount($adultsCount)
 	{
-		$this->capacity = $capacity;
+		$this->adultsCount = $adultsCount;
 
 		return $this;
 	}
 		
 	/**
-	 * @return json|NULL
+	 * @return integer|NULL
 	 */
-	public function getCapacity()
+	public function getAdultsCount()
 	{
-		return $this->capacity;
+		return $this->adultsCount;
+	}
+		
+	/**
+	 * @param integer
+	 * @return \Entity\User\RentalReservation
+	 */
+	public function setChildrenCount($childrenCount)
+	{
+		$this->childrenCount = $childrenCount;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\User\RentalReservation
+	 */
+	public function unsetChildrenCount()
+	{
+		$this->childrenCount = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return integer|NULL
+	 */
+	public function getChildrenCount()
+	{
+		return $this->childrenCount;
 	}
 		
 	/**

@@ -209,7 +209,7 @@ factories:
 		implement: BaseModule\Forms\IForgotPasswordFormFactory
 
 	rentalReservationFormFactory:
-		class: FrontModule\Forms\Rental\ReservationForm(%rental%, @locationRepositoryAccessor::get())
+		class: FrontModule\Forms\Rental\ReservationForm(%rental%)
 		implement: FrontModule\Forms\Rental\IReservationFormFactory
 
 	contactFormFactory:

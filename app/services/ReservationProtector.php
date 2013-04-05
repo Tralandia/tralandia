@@ -24,7 +24,9 @@ class ReservationProtector {
 	 */
 	public function __construct(\Nette\Http\Session $session)
 	{
-		$this->section = $session->getSection('reservationProtector');
+		$section = $session->getSection('reservationProtector');
+
+		$this->section = $section;
 	}
 
 
@@ -33,9 +35,9 @@ class ReservationProtector {
 	 */
 	public function newReservationSent($email)
 	{
-		$this->setLastReservationTime(new \DateTime);
-		$this->increaseSentReservationCountInRow();
-		$this->increaseSentReservationCountForEmail($email);
+		$date = new \DateTime;
+		$this->setLastReservationTime($date);
+		$this->newSentReservationForEmail($email, $date);
 	}
 
 
@@ -44,17 +46,16 @@ class ReservationProtector {
 	 *
 	 * @return bool
 	 * @throws InfringeMinIntervalReservationException
-	 * @throws TooManyReservationInRowException
 	 * @throws TooManyReservationForEmailException
 	 */
 	public function canSendReservation($email)
 	{
-		if($this->getSentReservationCountForEmail($email) >= $this->maxCount) {
-			throw new TooManyReservationForEmailException;
-		}
+		$lastReservationTimeForEmail = $this->getLastSentReservationForEmail($email);
+		$oneMonthAgo = (new DateTime)->modify("-1 month");
+		$sentReservationCountForEmail = count($this->getSentReservationForEmail($email));
 
-		if($this->getSentReservationCountInRow() >= $this->maxCount) {
-			throw new TooManyReservationInRowException;
+		if($sentReservationCountForEmail >= $this->maxCount && $lastReservationTimeForEmail >= $oneMonthAgo) {
+			throw new TooManyReservationForEmailException;
 		}
 
 		$lastReservationTime = $this->getLastReservationTime();
@@ -67,18 +68,9 @@ class ReservationProtector {
 	}
 
 
-	/**
-	 * @return int
-	 */
-	protected function getSentReservationCountInRow()
+	public function reset()
 	{
-		return (int) $this->section->sentReservationCountInRow;
-	}
-
-
-	protected function increaseSentReservationCountInRow()
-	{
-		$this->section->sentReservationCountInRow++;
+		$this->section->remove();
 	}
 
 
@@ -87,25 +79,42 @@ class ReservationProtector {
 	 *
 	 * @return mixed
 	 */
-	protected function getSentReservationCountForEmail($email = NULL)
+	protected function getSentReservationForEmail($email = NULL)
 	{
 		if(!$email) {
-			return $this->section->sentReservationCountByEmail;
+			return $this->section->sentReservationByEmail;
 		} else {
-			return $this->section->sentReservationCountByEmail[$email];
+			if(isset($this->section->sentReservationByEmail[$email])) {
+				return $this->section->sentReservationByEmail[$email];
+			} else {
+				return [];
+			}
 		}
 	}
 
 
 	/**
 	 * @param $email
+	 *
+	 * @return mixed
 	 */
-	protected function increaseSentReservationCountForEmail($email)
+	protected function getLastSentReservationForEmail($email)
 	{
-		if(isset($this->section->sentReservationCountByEmail[$email])) {
-			$this->section->sentReservationCountByEmail[$email]++;
-		} else {
-			$this->section->sentReservationCountByEmail[$email] = 1;
+		$list = $this->getSentReservationForEmail($email);
+		return end($list);
+	}
+
+
+	/**
+	 * @param $email
+	 * @param DateTime $date
+	 */
+	protected function newSentReservationForEmail($email, DateTime $date)
+	{
+		$this->section->sentReservationByEmail[$email][] = $date;
+		if(count($this->section->sentReservationByEmail[$email]) > $this->maxCount) {
+			$slice = array_slice($this->section->sentReservationByEmail[$email], 0, $this->maxCount);
+			$this->section->sentReservationByEmail[$email] = $slice;
 		}
 	}
 
@@ -164,7 +173,5 @@ class ReservationProtector {
 	}
 }
 
-class TooManyReservationInRowException extends \TooManyReservationException { }
-class TooManyReservationForEmailException extends \TooManyReservationException { }
-class TooManyReservationException extends \Exception { }
+class TooManyReservationForEmailException extends \Exception { }
 class InfringeMinIntervalReservationException extends \Exception { }
