@@ -110,7 +110,7 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 		} catch (\TooManyReservationException $e) {
 			$form->addError('o100112');
 		} catch (\InfringeMinIntervalReservationException $e) {
-			$form->addError('o100111');
+			$form->addError('o100135');
 		}
 		//$form->addError('yle');
 		//$form['name']->addError('bar');
