@@ -2,7 +2,9 @@
 	{var $currentRental = $rental}
 {/ifset}
 
-<div n:class="$favoriteRentals ? 'span12' : 'span12' " data-favoritesLink="{link generateFavoriteLink}" id="favoritesStaticContainer"{ifset $currentRental} current-rental="$currentRental->id"{/ifset}>
+{var $showNavbar = (!(isset($lastSearchResults) && count($lastSearchResults['rentals'])) && !count($favoriteRentals) && !count($lastSeenRentals))}
+
+<div n:class="$showNavbar ? 'hide', span12" data-favoritesLink="{link generateFavoriteLink}" id="favoritesStaticContainer"{ifset $currentRental} current-rental="$currentRental->id"{/ifset}>
 	<div class="favorites2" id="navBar">
 		<ul class="nav" id="navBarTabs">
 			<li n:class="$navBarLastActive=='navBarSerchResults' ? active" n:ifset="$lastSearchResults['rentals']" for="navBarSerchResults">
@@ -15,6 +17,7 @@
 				<i class="icon-eye-open"></i> {_o100114} 
 			</li>
 
+			{* links right *}
 			<li n:class="$navBarLastActive!='navBarFavorites' ? hide, share, pull-right" for="navBarFavorites">
 				<a href="/">{_o100115}</a>
 			</li>

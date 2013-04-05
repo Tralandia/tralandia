@@ -30,7 +30,10 @@
 			base.currentRental = base.$el.attr('current-rental');
 			base.bindTabs();
 			base.bindFavorites();
+
 			base.$tabs.find('li.active').trigger('click');
+
+			base.checkTabs();
 		}
 
 		/**
@@ -77,7 +80,7 @@
 		{
 			base.$tabs.find('li[for='+tabName+']').addClass('hide').removeClass('active');
 			base.$contents.find('div#'+tabName).addClass('hide').removeClass('active');
-			if (!base.hasActive()) {
+			if (!base.hasActiveTab()) {
 				base.setFirstActive();
 			}
 		}
@@ -92,10 +95,46 @@
 			base.setActive(tabName);
 		}
 
-		base.hasActive = function(tabName)
+		base.hasActiveTab = function(tabName)
 		{
 			active = this.$tabs.find('li.active').attr('for');
 			return (tabName ? (active==tabName ? true : false) : (active ? true : false));
+		}
+
+		base.checkTabs = function()
+		{
+			hasRentals = false;
+			base.$contents.find('.tab-pane ul').each(function() {
+				$this = $(this);
+				tabName = $this.parents('.tab-pane').attr('id');
+				if (!base.hasRental(tabName)) {
+					base.hideTab(tabName);
+				} else {
+					hasRentals = true;
+				}
+			});
+
+			if (!hasRentals) {
+				base.hide();
+			} else {
+				base.show();
+			}
+			base.setActiveRental();
+		}
+
+		base.hide = function()
+		{
+			base.$el.parent().addClass('hide');
+		}
+
+		base.show = function()
+		{
+			base.$el.parent().removeClass('hide');
+		}
+
+		base.hasRental = function(tabName)
+		{
+			return base.$contents.find('#'+tabName+' ul li').not('.template').length;
 		}
 
 		/**
@@ -107,14 +146,14 @@
 			if (!Favorites._getFavoritesLength()) {
 				base.hideTab('navBarFavorites');
 			}
-			base.setActiveRental();
+			base.checkTabs();
 		}
 
 		base.toggleAddFavorite = function(e)
 		{
 			Favorites.toggleAdd(e, this);
 			base.showTab('navBarFavorites');
-			base.setActiveRental();
+			base.checkTabs();
 		}
 
 		base.setActiveRental = function()
