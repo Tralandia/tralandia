@@ -6,6 +6,7 @@ use Environment\Collator;
 use Nette\Application\UI\Presenter;
 use Nette\Localization\ITranslator;
 use Nette\Utils\Html;
+use Nette\Utils\Strings;
 use Routers\BaseRoute;
 
 /**
@@ -54,19 +55,18 @@ class LanguageRepository extends \Repository\BaseRepository {
 		$sort = [];
 		$elTemplate = Html::el('option');
 		foreach($rows as $row) {
-			/** @var $row \Entity\Location\Location */
-
-
-			$text = $translator->translate($row->getName());
+			/** @var $row \Entity\Language */
 
 			$key = $row->getId();
+			$name = $translator->translate($row->getName());
+			$localName = $row->getName()->getTranslationText($row);
+			$text = $name == $localName ? $name : $name . ' (' . Strings::lower($localName) . ')';
+			$return[$key] = $text;
+
 			if($presenter) {
 				$link = $presenter->link('Registration:default', [BaseRoute::LANGUAGE => $row]);
 				$el = clone $elTemplate;
-				$return[$key] = $text;
 				$sort[$key] = $el->value($key)->addAttributes(['data-redirect' => $link])->setText($text);
-			} else {
-				$return[$key] = $text;
 			}
 		}
 
