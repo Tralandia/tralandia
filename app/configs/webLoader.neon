@@ -268,7 +268,8 @@ parameters:
 				-  %webloader.packages.jqueryCookie%
 				-  %webloader.packages.fontEntypo%
 				-  %webloader.packages.fontAwesome%
-				-  %webloader.packages.jscrollPane%
+				# -  %webloader.packages.jscrollPane%
+				-  %webloader.packages.jqueryScrollTo%
 				-  %webloader.packages.bootstrap%
 				-  %webloader.packages.select2%
 				-  %webloader.packages.navBar%
