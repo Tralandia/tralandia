@@ -234,7 +234,7 @@ factories:
 		implement: FrontModule\Forms\ISearchFormFactory
 
 	rentalContainerFactory:
-		class: Extras\Forms\Container\RentalContainer(%environment%)
+		class: Extras\Forms\Container\RentalContainer(%environment%, %rental%)
 		implement: Extras\Forms\Container\IRentalContainerFactory
 
 	# ==============================

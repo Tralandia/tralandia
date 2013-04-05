@@ -120,14 +120,11 @@ class RegistrationHandler extends FormHandler
 		/** @var $rental \Entity\Rental\Rental */
 		$rental = $rentalCreator->create($address, $user, $rentalValues->name);
 
-		$url = new \Entity\Contact\Url;
-		$url->setValue($values->url);
-
 		$rental->setType($rentalValues->type->type)
 			->setEditLanguage($values->language)
 			->addSpokenLanguage($values->language)
 			->setEmail($email)
-			->setUrl($url)
+			->setUrl($values->url)
 			->setPhone($values->phone->phone)
 			->setClassification($rentalValues->type->classification)
 			->setMaxCapacity($rentalValues->maxCapacity)

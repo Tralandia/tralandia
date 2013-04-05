@@ -491,9 +491,9 @@
 {*
 	Rental Photos Container -------------------------------------------
 	@param $control \Extras\Forms\Container\RentalPhotosContainer
-	*}
-	{define #rentalPhotos}
-	{var
+*}
+{define #rentalPhotos}
+{var
 	$container = $control;
 }
 {?unset($control)}
@@ -505,6 +505,7 @@
 
 			<div class="span12">
 				<ul id="sortable" class="ui-sortable" n:inner-foreach="$container->getImages() as $image">
+					{dump $image}
 					<li data-id="{$image->getId()}" class="ui-state-default">
 						<img n:image="$image">
 						<a href="#" class="remove">{_o100088}</a>

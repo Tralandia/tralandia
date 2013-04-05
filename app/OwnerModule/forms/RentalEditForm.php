@@ -115,7 +115,7 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 			->addRule(self::URL, $this->translate('o100102'));
 		;
 
-		$rentalContainer = $this->rentalContainerFactory->create($this->environment);
+		$rentalContainer = $this->rentalContainerFactory->create($this->environment, $this->rental);
 		$this['rental'] = $rentalContainer;
 
 		$this->addSubmit('submit', 'o100083');
