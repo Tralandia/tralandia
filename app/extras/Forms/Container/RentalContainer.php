@@ -4,6 +4,7 @@ namespace Extras\Forms\Container;
 
 
 use Doctrine\ORM\EntityManager;
+use Entity\Rental\Rental;
 use Environment\Environment;
 use FrontModule\Forms\RegistrationForm;
 use Nette\Application\UI\Form;
@@ -11,6 +12,11 @@ use Nette\Localization\ITranslator;
 
 class RentalContainer extends BaseContainer
 {
+
+	/**
+	 * @var \Entity\Rental\Rental
+	 */
+	protected $rental;
 
 	/**
 	 * @var \Entity\Location\Location
@@ -45,11 +51,12 @@ class RentalContainer extends BaseContainer
 	protected $placementRepository;
 
 
-	public function __construct(Environment $environment,
+	public function __construct(Environment $environment, Rental $rental = NULL,
 								EntityManager $em, ITranslator $translator)
 	{
 		parent::__construct();
 		$this->translator = $translator;
+		$this->rental = $rental;
 		$this->country = $environment->getPrimaryLocation();
 		$this->collator = $environment->getLocale()->getCollator();
 
@@ -131,7 +138,7 @@ class RentalContainer extends BaseContainer
 		//->setOption('help', $this->translate('o5956'))
 		;
 
-		$this->addRentalPhotosContainer('photos');
+		$this->addRentalPhotosContainer('photos', $this->rental);
 
 	}
 
@@ -191,8 +198,9 @@ interface IRentalContainerFactory
 
 	/**
 	 * @param Environment $environment
+	 * @param \Entity\Rental\Rental $rental
 	 *
 	 * @return RentalContainer
 	 */
-	public function create(Environment $environment);
+	public function create(Environment $environment, Rental $rental = NULL);
 }
