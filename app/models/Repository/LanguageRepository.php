@@ -59,8 +59,8 @@ class LanguageRepository extends \Repository\BaseRepository {
 
 			$key = $row->getId();
 			$name = $translator->translate($row->getName());
-			$localName = $row->getName()->getTranslationText($row);
-			$text = $name == $localName ? $name : $name . ' (' . Strings::lower($localName) . ')';
+			$localName = $row->getName()->hasTranslationText($row) ? $row->getName()->getTranslationText($row) : NULL;
+			$text = (!$localName || $name == $localName) ? $name : $name . ' (' . Strings::lower($localName) . ')';
 			$return[$key] = $text;
 
 			if($presenter) {
