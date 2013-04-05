@@ -89,18 +89,6 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 	{
 		$phonePrefixes = $this->locationRepository->getCountriesPhonePrefixes();
 
-		$this->addText('email', 'o1096')
-			->setOption('help', $this->translate('o3095'))
-			->setOption('prepend', '<i class="icon-envelope"></i>')
-			->setAttribute('placeholder', 'email@email.com')
-			->addRule(self::EMAIL, $this->translate('o407'));
-		;
-		$this->addPassword('password', 'o997')
-			->setOption('help', $this->translate('o3096'))
-			->setOption('prepend', '<i class="icon-lock"></i>')
-			->addRule(self::MIN_LENGTH, $this->translate('o856'), 6);
-		;
-
 //		$this->addText('name', 'o100070')
 //			->setOption('help', $this->translate('o100071'))
 //	        //->addRule(Form::MAX_LENGTH, 'o100101', 70);
