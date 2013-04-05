@@ -50,12 +50,12 @@ class Phone extends \Entity\BaseEntity {
 
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */
+	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()
 	{
 		parent::__construct();
 	}
-
+		
 	/**
 	 * @param string
 	 * @return \Entity\Contact\Phone
@@ -66,7 +66,7 @@ class Phone extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return string|NULL
 	 */
@@ -74,7 +74,7 @@ class Phone extends \Entity\BaseEntity {
 	{
 		return $this->value;
 	}
-
+		
 	/**
 	 * @param string
 	 * @return \Entity\Contact\Phone
@@ -85,7 +85,7 @@ class Phone extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return string|NULL
 	 */
@@ -93,7 +93,7 @@ class Phone extends \Entity\BaseEntity {
 	{
 		return $this->international;
 	}
-
+		
 	/**
 	 * @param string
 	 * @return \Entity\Contact\Phone
@@ -104,7 +104,7 @@ class Phone extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return string|NULL
 	 */
@@ -112,7 +112,7 @@ class Phone extends \Entity\BaseEntity {
 	{
 		return $this->national;
 	}
-
+		
 	/**
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Contact\Phone
@@ -123,7 +123,7 @@ class Phone extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Contact\Phone
 	 */
@@ -133,7 +133,7 @@ class Phone extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Location\Location|NULL
 	 */
@@ -141,7 +141,7 @@ class Phone extends \Entity\BaseEntity {
 	{
 		return $this->primaryLocation;
 	}
-
+		
 	/**
 	 * @param \Entity\Rental\Rental
 	 * @return \Entity\Contact\Phone
@@ -152,7 +152,7 @@ class Phone extends \Entity\BaseEntity {
 
 		return $this;
 	}
-
+		
 	/**
 	 * @return \Entity\Rental\Rental|NULL
 	 */

@@ -223,12 +223,14 @@ class BaseImport {
 	public function dropAllTables() {
 		qNew('SET FOREIGN_KEY_CHECKS = 0;');
 		$allTables = qNew('SHOW tables');
+		$skipTables = array('__importVariables', '__importPhrases', '__importImages', 'rental_image');
 		while ($table = mysql_fetch_array($allTables)) {
-			if ($table[0] == '__importVariables') continue;
-			if ($table[0] == '__importPhrases') continue;
-			if ($table[0] == '__importImages') continue;
+			if (in_array($table[0], $skipTables)) continue;
 			qNew('drop table '.$table[0]);
 		}
+		// Clear rental image relations
+		qNew('UPDATE rental_image SET rental_id = NULL');
+
 		qNew('SET FOREIGN_KEY_CHECKS = 1;');
 		foreach ($this->savedVariables['importedSections'] as $key => $value) {
 			$this->savedVariables['importedSections'][$key] = 0;

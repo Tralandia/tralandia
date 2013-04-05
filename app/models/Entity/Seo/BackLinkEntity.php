@@ -55,8 +55,8 @@ class BackLink extends \Entity\BaseEntity {
 	protected $status;
 
 	/**
-	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Contact\Url", cascade={"persist"})
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $url;
 
@@ -229,10 +229,10 @@ class BackLink extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Contact\Url
+	 * @param string
 	 * @return \Entity\Seo\BackLink
 	 */
-	public function setUrl(\Entity\Contact\Url $url)
+	public function setUrl($url)
 	{
 		$this->url = $url;
 
@@ -240,7 +240,17 @@ class BackLink extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @return \Entity\Contact\Url|NULL
+	 * @return \Entity\Seo\BackLink
+	 */
+	public function unsetUrl()
+	{
+		$this->url = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
 	 */
 	public function getUrl()
 	{

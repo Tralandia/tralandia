@@ -157,10 +157,10 @@ class ImportRentals extends BaseImport {
 
 			// Contact Url
 			if (\Nette\Utils\Validators::isUrl($x['contact_url'])) {
-				$rental->setUrl($context->contactUrlRepositoryAccessor->get()->createNew(FALSE)->setValue($x['contact_url']));
+				$rental->setUrl($x['contact_url']);
 			}
 			if (!$rental->url && \Nette\Utils\Validators::isUrl($x['url'])) {
-				$rental->setUrl($context->contactUrlRepositoryAccessor->get()->createNew(FALSE)->setValue($x['url']));
+				$rental->setUrl($x['url']);
 			}
 			// Spoken Languages
 			$spokenLanguages = array_unique(array_filter(explode(',', $x['languages_spoken'])));
