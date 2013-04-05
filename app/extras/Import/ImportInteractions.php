@@ -60,11 +60,10 @@ class ImportInteractions extends BaseImport {
 
 			$interaction->arrivalDate = fromStamp($x['date_from']);
 			$interaction->departureDate = fromStamp($x['date_to']);
-			$interaction->capacity = array(
-				'version' => 1,
-				'peopleCount' => $x['people'],
-				'childrenCount' => $x['children'],
-			);
+
+			$interaction->adultsCount = (int)$x['people'];
+			$interaction->childrenCount = (int)$x['children'];
+
 			$interaction->message = $x['details'];
 
 			$interaction->oldId = $x['id'];

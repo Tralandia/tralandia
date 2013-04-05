@@ -38,7 +38,7 @@ class Role extends \Entity\BaseEntity {
 	 * @var Collection
 	 * @ORM\ManyToOne(targetEntity="Entity\User\Role", cascade={"persist"})
 	 */
-//	protected $parent;
+	protected $parent;
 
 	/**
 	 * @var string
@@ -108,6 +108,35 @@ class Role extends \Entity\BaseEntity {
 	public function getSlug()
 	{
 		return $this->slug;
+	}
+		
+	/**
+	 * @param \Entity\User\Role
+	 * @return \Entity\User\Role
+	 */
+	public function setParent(\Entity\User\Role $parent)
+	{
+		$this->parent = $parent;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\User\Role
+	 */
+	public function unsetParent()
+	{
+		$this->parent = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\User\Role|NULL
+	 */
+	public function getParent()
+	{
+		return $this->parent;
 	}
 		
 	/**
