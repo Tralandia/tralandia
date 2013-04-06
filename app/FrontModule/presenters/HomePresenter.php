@@ -2,6 +2,7 @@
 
 namespace FrontModule;
 use Model\Rental\IRentalDecoratorFactory;
+use Routers\FrontRoute;
 
 class HomePresenter extends BasePresenter {
 

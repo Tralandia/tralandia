@@ -190,7 +190,7 @@ class RentalSearchService extends Nette\Object
 	{
 		$results = $this->getFeaturedRentalIds($limit);
 
-		return $this->rentalRepositoryAccessor->get()->findById($results);
+		return count($results) ? $this->rentalRepositoryAccessor->get()->findById($results) : [];
 	}
 
 

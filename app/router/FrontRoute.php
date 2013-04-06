@@ -83,11 +83,12 @@ class FrontRoute extends BaseRoute
 			$pathSegments = [];
 
 			$params = $appRequest->getParameters();
+			if(isset($params[self::HASH])) {
+				$params[self::HASH] = array_filter(explode('/', $params[self::HASH]));
+			}
 			$params = $this->filterIn($params);
 
-			if(isset($params[self::HASH])) {
-				$pathSegments = array_filter(explode('/', $params[self::HASH]));
-			}
+			$pathSegments = $params[self::HASH];
 			unset($params[self::HASH]);
 
 			$tmp = $params;
@@ -250,6 +251,12 @@ class FrontRoute extends BaseRoute
 
 	public function filterIn(array $params)
 	{
+
+		if($params[self::PRIMARY_LOCATION] == self::ROOT_DOMAIN) {
+			$params[self::PRIMARY_LOCATION] = array_shift($params[self::HASH]);
+			$params[self::PRIMARY_LOCATION] = $this->locationRepository->findOneBySlug($params[self::PRIMARY_LOCATION]);
+		}
+
 		$params = parent::filterIn($params);
 
 		if(isset($params[self::SPOKEN_LANGUAGE])) {
@@ -309,6 +316,12 @@ class FrontRoute extends BaseRoute
 		$params[self::HASH] = array_merge($params[self::HASH], $segments);
 
 		$params = parent::filterOut($params);
+
+		if(isset($params[self::USE_ROOT_DOMAIN])) {
+			array_unshift($params[self::HASH], $params[self::PRIMARY_LOCATION]);
+			$params[self::PRIMARY_LOCATION] = self::ROOT_DOMAIN;
+		}
+		unset($params[self::USE_ROOT_DOMAIN]);
 
 		return $params;
 	}
