@@ -2,6 +2,7 @@
 
 namespace Entity\Location;
 
+use Entity\Domain;
 use Entity\Phrase;
 use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
@@ -227,9 +228,26 @@ class Location extends \Entity\BaseEntityDetails {
 	}
 
 
+	/**
+	 * @return bool
+	 */
+	public function hasDomain()
+	{
+		return $this->getDomain() instanceof Domain;
+	}
+
+	/**
+	 * @return \Entity\Domain
+	 */
+	public function getFirstDomain()
+	{
+		return $this->hasDomain() ? $this->getDomain() : $this->getParent()->getFirstDomain();
+	}
+
+
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
+	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
 		parent::__construct();
@@ -237,7 +255,7 @@ class Location extends \Entity\BaseEntityDetails {
 		$this->addresses = new \Doctrine\Common\Collections\ArrayCollection;
 		$this->backLinks = new \Doctrine\Common\Collections\ArrayCollection;
 	}
-		
+
 	/**
 	 * @param \Entity\Phrase\Phrase
 	 * @return \Entity\Location\Location
@@ -248,7 +266,7 @@ class Location extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Phrase\Phrase|NULL
 	 */
@@ -256,7 +274,7 @@ class Location extends \Entity\BaseEntityDetails {
 	{
 		return $this->name;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\Location\Location
@@ -267,7 +285,7 @@ class Location extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Location\Location
 	 */
@@ -277,7 +295,7 @@ class Location extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -285,7 +303,7 @@ class Location extends \Entity\BaseEntityDetails {
 	{
 		return $this->localName;
 	}
-		
+
 	/**
 	 * @return \Entity\Location\Location
 	 */
@@ -295,7 +313,7 @@ class Location extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -303,7 +321,7 @@ class Location extends \Entity\BaseEntityDetails {
 	{
 		return $this->slug;
 	}
-		
+
 	/**
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Location\Location
@@ -314,7 +332,7 @@ class Location extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Location\Location
 	 */
@@ -324,7 +342,7 @@ class Location extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @param \Entity\Location\Type
 	 * @return \Entity\Location\Location
@@ -335,7 +353,7 @@ class Location extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Location\Location
 	 */
@@ -345,7 +363,7 @@ class Location extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Location\Type|NULL
 	 */
@@ -353,7 +371,7 @@ class Location extends \Entity\BaseEntityDetails {
 	{
 		return $this->type;
 	}
-		
+
 	/**
 	 * @param json
 	 * @return \Entity\Location\Location
@@ -364,7 +382,7 @@ class Location extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Location\Location
 	 */
@@ -374,7 +392,7 @@ class Location extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return json|NULL
 	 */
@@ -382,7 +400,7 @@ class Location extends \Entity\BaseEntityDetails {
 	{
 		return $this->polygons;
 	}
-		
+
 	/**
 	 * @param integer
 	 * @return \Entity\Location\Location
@@ -393,7 +411,7 @@ class Location extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Location\Location
 	 */
@@ -403,7 +421,7 @@ class Location extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return integer|NULL
 	 */
@@ -411,7 +429,7 @@ class Location extends \Entity\BaseEntityDetails {
 	{
 		return $this->defaultZoom;
 	}
-		
+
 	/**
 	 * @param json
 	 * @return \Entity\Location\Location
@@ -422,7 +440,7 @@ class Location extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Location\Location
 	 */
@@ -432,7 +450,7 @@ class Location extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return json|NULL
 	 */
@@ -440,7 +458,7 @@ class Location extends \Entity\BaseEntityDetails {
 	{
 		return $this->clickMapData;
 	}
-		
+
 	/**
 	 * @param \Entity\Domain
 	 * @return \Entity\Location\Location
@@ -451,7 +469,7 @@ class Location extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Location\Location
 	 */
@@ -461,7 +479,7 @@ class Location extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Domain|NULL
 	 */
@@ -469,7 +487,7 @@ class Location extends \Entity\BaseEntityDetails {
 	{
 		return $this->domain;
 	}
-		
+
 	/**
 	 * @param \Entity\Contact\Address
 	 * @return \Entity\Location\Location
@@ -482,7 +500,7 @@ class Location extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @param \Entity\Contact\Address
 	 * @return \Entity\Location\Location
@@ -493,7 +511,7 @@ class Location extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Contact\Address[]
 	 */
@@ -501,7 +519,7 @@ class Location extends \Entity\BaseEntityDetails {
 	{
 		return $this->addresses;
 	}
-		
+
 	/**
 	 * @param \Entity\Seo\BackLink
 	 * @return \Entity\Location\Location
@@ -515,7 +533,7 @@ class Location extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @param \Entity\Seo\BackLink
 	 * @return \Entity\Location\Location
@@ -527,7 +545,7 @@ class Location extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Seo\BackLink[]
 	 */
@@ -535,7 +553,7 @@ class Location extends \Entity\BaseEntityDetails {
 	{
 		return $this->backLinks;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\Location\Location
@@ -546,7 +564,7 @@ class Location extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Location\Location
 	 */
@@ -556,7 +574,7 @@ class Location extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -564,7 +582,7 @@ class Location extends \Entity\BaseEntityDetails {
 	{
 		return $this->iso;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\Location\Location
@@ -575,7 +593,7 @@ class Location extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Location\Location
 	 */
@@ -585,7 +603,7 @@ class Location extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -593,7 +611,7 @@ class Location extends \Entity\BaseEntityDetails {
 	{
 		return $this->iso3;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\Location\Location
@@ -604,7 +622,7 @@ class Location extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Location\Location
 	 */
@@ -614,7 +632,7 @@ class Location extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -622,7 +640,7 @@ class Location extends \Entity\BaseEntityDetails {
 	{
 		return $this->phonePrefix;
 	}
-		
+
 	/**
 	 * @param \Entity\Currency
 	 * @return \Entity\Location\Location
@@ -633,7 +651,7 @@ class Location extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Location\Location
 	 */
@@ -643,7 +661,7 @@ class Location extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Currency|NULL
 	 */
@@ -651,7 +669,7 @@ class Location extends \Entity\BaseEntityDetails {
 	{
 		return $this->defaultCurrency;
 	}
-		
+
 	/**
 	 * @param \Entity\Language
 	 * @return \Entity\Location\Location
@@ -662,7 +680,7 @@ class Location extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Location\Location
 	 */
@@ -672,7 +690,7 @@ class Location extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Language|NULL
 	 */
@@ -680,7 +698,7 @@ class Location extends \Entity\BaseEntityDetails {
 	{
 		return $this->defaultLanguage;
 	}
-		
+
 	/**
 	 * @param integer
 	 * @return \Entity\Location\Location
@@ -691,7 +709,7 @@ class Location extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Location\Location
 	 */
@@ -701,7 +719,7 @@ class Location extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return integer|NULL
 	 */

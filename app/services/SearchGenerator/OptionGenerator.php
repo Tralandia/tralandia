@@ -110,6 +110,9 @@ class OptionGenerator
 	public function generateRentalTypeLinks(RentalSearchService $search)
 	{
 		$collection = $search->getCollectedResults(RentalSearchService::CRITERIA_RENTAL_TYPE);
+
+		if(!count($collection)) return ArrayHash::from([]);
+
 		$rentalTypes = $this->em->getRepository(RENTAL_TYPE_ENTITY)->findById(array_keys($collection));
 
 		$links = [];
@@ -237,6 +240,8 @@ class OptionGenerator
 	{
 		$languages = $this->spokenLanguages->getUsed();
 
+		if(!$languages) return [];
+
 		return $this->generateFromEntities($languages, 'Id');
 	}
 
@@ -249,6 +254,9 @@ class OptionGenerator
 	public function generateSpokenLanguageLinks(RentalSearchService $search)
 	{
 		$languages = $this->spokenLanguages->getUsed();
+
+		if(!$languages) return ArrayHash::from([]);
+
 		$collection = $search->getCollectedResults(RentalSearchService::CRITERIA_SPOKEN_LANGUAGE);
 
 		$links = [];

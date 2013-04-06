@@ -54,7 +54,7 @@ class HeaderControl extends \BaseModule\Components\BaseControl {
 
 		$primaryLocation = $this->environment->getPrimaryLocation();
 
-		$domain = $primaryLocation->getDomain()->getDomain();
+		$domain = $primaryLocation->getFirstDomain()->getDomain();
 
 		$template->slogan = $template->translate('o21083').' '.$template->translate(
 			$primaryLocation->getName(),
