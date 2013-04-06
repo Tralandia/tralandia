@@ -113,8 +113,10 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 //	        //->addRule(Form::MAX_LENGTH, 'o100101', 70);
 //			;
 //
-		$this->addPhoneContainer('phone', 'o10899', $phonePrefixes);
+		$phoneContainer = $this->addPhoneContainer('phone', 'o10899', $phonePrefixes);
 
+		$phoneContainer->getPrefixControl()
+			->setDefaultValue($this->environment->getPrimaryLocation()->getPhonePrefix());
 
 		$this->addText('url', 'o977')
 			->setOption('help', $this->translate('o978'))
@@ -135,7 +137,7 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 	public function setDefaultsValues()
 	{
 		$defaults = [
-			'country' => $this->country->getId(),
+			'country' => $this->environment->getPrimaryLocation()->getId(),
 			'language' => $this->environment->getLanguage()->getId(),
 
 			//'referrer' => 'luzbo',
