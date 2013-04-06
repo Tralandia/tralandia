@@ -64,7 +64,8 @@ class ImportRentals extends BaseImport {
 		if ($this->developmentMode == TRUE) {
 			$countryId = qc('select id from countries where iso = "'.$this->presenter->getParameter('countryIso').'"');
 			//d($this->presenter->getParameter('countryIso'), $countryId); exit;
-			$r = q('select * from objects where country_id = '.$countryId.' order by id limit 500');
+			//$r = q('select * from objects where country_id = '.$countryId.' order by id limit 500');
+			$r = q('select * from objects where id = 6609');
 		} else {
 			$existingIds = array();
 			exit('dorobit liveImport do ImportRentals.php');
@@ -174,7 +175,7 @@ class ImportRentals extends BaseImport {
 			// Amenities
 			$allAmenities = array();
 			$r1 = qNew('select * from rental_amenity');
-			$specialAmenities = array('activity', 'food', 'owner-availability', 'congress', 'wellness');
+			$specialAmenities = array('activity', 'board', 'owner-availability', 'congress', 'wellness');
 			while ($x1 = mysql_fetch_array($r1)) {
 				$thisAmenity = $context->rentalAmenityRepositoryAccessor->get()->find($x1['id']);
 				if (in_array($thisAmenity->type->slug, $specialAmenities)) {
@@ -197,7 +198,7 @@ class ImportRentals extends BaseImport {
 			$temp = array_unique(array_filter(explode(',,', $x['food'])));
 			if (is_array($temp) && count($temp)) {
 				foreach ($temp as $key => $value) {
-					if (isset($allAmenities['food-'.$value])) $rental->addAmenity($allAmenities['food-'.$value]);
+					if (isset($allAmenities['board-'.$value])) $rental->addAmenity($allAmenities['board-'.$value]);
 				}
 			}
 
@@ -343,16 +344,18 @@ class ImportRentals extends BaseImport {
 			$temp = unserialize(stripslashes($x['prices_upload']));
 			if (is_array($temp) && count($temp)) {
 				foreach ($temp as $key => $value) {
-					if (!is_file('http://www.tralandia.sk/u/'.$value[4])) continue;
+					if (strlen(file_get_contents('http://www.tralandia.sk/u/'.$value[4])) == 0) continue;
 					$pricelist = $context->rentalPricelistRepositoryAccessor->get()->createNew(FALSE);
 					$pricelistDecorator = $context->rentalPricelistDecoratorFactory->create($pricelist);
 					$pricelistDecorator->setContentFromFile('http://www.tralandia.sk/u/'.$value[4]);
 					$pricelistDecorator->getEntity()->name = $value[2];
 					$pricelistDecorator->getEntity()->rental = $rental;
 					$pricelistDecorator->getEntity()->language = $context->languageRepositoryAccessor->get()->findOneByOldId($value[1]);
-					//d($pricelistDecorator);
 				}
 			}
+
+			d($pricelist);
+			exit;
 
 			// // Images
 			// $temp = array_unique(array_filter(explode(',', $x['photos'])));
