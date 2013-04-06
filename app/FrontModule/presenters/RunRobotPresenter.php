@@ -15,7 +15,7 @@ class RunRobotPresenter extends BasePresenter {
 	private $rentalSearchCacheRobotFactory;
 	private $rentalSearchCachingFactory;
 	private $rentalOrderCachingFactory;
-	
+
 	/**
 	 * @autowire
 	 * @var \Model\Rental\IRentalDecoratorFactory
@@ -41,9 +41,9 @@ class RunRobotPresenter extends BasePresenter {
 			$this->rentalSearchCacheRobotFactory->create($location)->run();
 			d(Strings::upper($location->iso).': Done');
 		}
-		
+
 		//$searchCaching->getOrderList();
-		
+
 		$this->sendResponse(new TextResponse('done'));
 	}
 
@@ -52,7 +52,7 @@ class RunRobotPresenter extends BasePresenter {
 		foreach ($rentals as $rental) {
 			$rentalDecorator = $this->rentalDecoratorFactory->create($rental);
 			$rentalDecorator->calculateRank();
-		}	
+		}
 		$this->rentalRepositoryAccessor->get()->flush();
 		$this->sendResponse(new TextResponse('done'));
 	}

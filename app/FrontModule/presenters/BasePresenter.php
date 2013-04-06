@@ -68,7 +68,7 @@ abstract class BasePresenter extends \BasePresenter {
 		$this->template->localeCode = $this->environment->getLocale()->getCode();
 
 		$primaryLocation = $this->environment->getPrimaryLocation();
-		$domain = $primaryLocation->getDomain()->getDomain();
+		$domain = $primaryLocation->getFirstDomain()->getDomain();
 		$this->template->domain = ucfirst($domain);
 
 		$this->template->favoriteRentals = $this->favoriteList->getRentalList();
@@ -86,7 +86,7 @@ abstract class BasePresenter extends \BasePresenter {
 		$this->template->footerCountriesCacheId = 'footerCountries' . $this->environment->getLanguage()->getId();
 
 		$this->template->currentLanguage = $this->environment->getLanguage();
-		
+
 		$this->template->navBarLastActive = $this->getActiveNavbarTab();
 
 		$header = $this->getComponent('head');
@@ -149,7 +149,7 @@ abstract class BasePresenter extends \BasePresenter {
 
 		$request = $this->getHttpRequest();
 		$cookies = $request->getCookies();
-		
+
 		foreach ($tabsShow as $presenter => $tabs) {
 			if (!$this->isLinkCurrent($presenter)) continue;
 			if (!isset($cookies['navBarActive'])) break;

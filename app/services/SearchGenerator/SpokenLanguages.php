@@ -33,10 +33,12 @@ class SpokenLanguages {
 
 
 	/**
-	 * @return array
+	 * @return array|bool
 	 */
 	public function getUsed()
 	{
+		if(!array_key_exists(RentalSearchService::CRITERIA_SPOKEN_LANGUAGE, $this->cacheData)) return NULL;
+
 		$languagesIds = array_keys($this->cacheData[RentalSearchService::CRITERIA_SPOKEN_LANGUAGE]);
 		return $this->em->getRepository(LANGUAGE_ENTITY)->findById($languagesIds);
 	}
