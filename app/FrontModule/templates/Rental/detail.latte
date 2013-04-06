@@ -41,8 +41,9 @@
 			</span>{/if}</h1>
 
 	<p class="locality nopadding">
-		<a class="brown"
-		   href="{link RentalList location => $rental->address->locality , rentalType => $rental->type }">{_$rental->type->name|firstUpper} {_$rental->address->locality->name , null , [case=>locative]}</a>
+		<a class="brown" href="{link RentalList: location => $rental->address->locality , rentalType => $rental->type }">
+			{_$rental->type->name|firstUpper} {_$rental->address->locality->name , null , [case=>locative]}
+		</a>
 	</p>
 
 	{if $teaser || $firstAnswer}

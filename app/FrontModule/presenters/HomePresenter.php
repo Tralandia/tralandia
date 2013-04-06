@@ -2,6 +2,7 @@
 
 namespace FrontModule;
 use Model\Rental\IRentalDecoratorFactory;
+use Routers\FrontRoute;
 
 class HomePresenter extends BasePresenter {
 
@@ -24,10 +25,6 @@ class HomePresenter extends BasePresenter {
 	protected $rentalSearchFactory;
 
 	public function renderDefault() {
-
-		$a = $this->locationRepositoryAccessor->get()->find(269);
-		$t = $this->link(':Front:Home:default', ['primaryLocation' => $a]);
-		d($t);
 
 		$search = $this->rentalSearchFactory->create($this->environment->primaryLocation);
 		$featuredIds = $search->getFeaturedRentals(99);
