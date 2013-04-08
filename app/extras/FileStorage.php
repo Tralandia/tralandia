@@ -70,7 +70,9 @@ class FileStorage extends Nette\Object
 
 	public function saveFromFile($filePath)
 	{
-		if (!is_file($filePath)) return FALSE;
+		if (!is_file($filePath)) {
+			throw new Nette\FileNotFoundException("$filePath");
+		}
 
 		$content = file_get_contents($filePath);
 		$extension = get_file_extension($filePath);
@@ -102,12 +104,12 @@ class FileStorage extends Nette\Object
 		throw new FileNotFoundException("File $param not found.");
 	}
 
-	protected function getRelativePath($path) 
+	protected function getRelativePath($path)
 	{
 		return str_replace($this->filesDir, '', $path);
 	}
 
-	protected function generateFilePath($filename) 
+	protected function generateFilePath($filename)
 	{
 		do {
 			$randString = Strings::random(10);

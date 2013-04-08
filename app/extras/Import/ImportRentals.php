@@ -40,7 +40,7 @@ class ImportRentals extends BaseImport {
 		$locationTypes['continent'] = $context->locationTypeRepositoryAccessor->get()->findOneBySlug('continent');
 		$locationTypes['region'] = $context->locationTypeRepositoryAccessor->get()->findOneBySlug('region');
 		$locationTypes['locality'] = $context->locationTypeRepositoryAccessor->get()->findOneBySlug('locality');
-		
+
 		$roomTypes = array();
 		$roomTypes[1] = $context->rentalRoomTypeRepositoryAccessor->get()->findOneBySlug('building');
 		$roomTypes[2] = $context->rentalRoomTypeRepositoryAccessor->get()->findOneBySlug('apartment');
@@ -76,9 +76,34 @@ class ImportRentals extends BaseImport {
 		while ($x = mysql_fetch_array($r)) {
 			$updateTimes[$x['id']] = $x['date_updated'];
 
+			/** @var $rental \Entity\Rental\Rental */
 			$rental = $context->rentalEntityFactory->create();
 			$rental->id = $rentalIdIncrement++;
 			$rental->oldId = $x['id'];
+
+			// Pricelists
+			$temp = unserialize(stripslashes($x['prices_upload']));
+			if (is_array($temp) && count($temp)) {
+				foreach ($temp as $key => $value) {
+					if (strlen(file_get_contents('http://www.tralandia.sk/u/'.$value[4])) == 0) continue;
+					/** @var $pricelist \Entity\Rental\PriceList */
+					$pricelist = $context->rentalPriceListManager->save('http://www.tralandia.sk/u/'.$value[4]);
+					$pricelist->setName($value[2]);
+					$pricelist->setRental($rental);
+					$pricelist->setLanguage($context->languageRepositoryAccessor->get()->findOneByOldId($value[1]));
+					$rental->addPricelist($pricelist);
+
+//					$pricelistDecorator = $context->rentalPricelistDecoratorFactory->create($pricelist);
+//					$pricelistDecorator->setContentFromFile('http://www.tralandia.sk/u/'.$value[4]);
+//					$pricelistDecorator->getEntity()->name = $value[2];
+//					$pricelistDecorator->getEntity()->rental = $rental;
+//					$pricelistDecorator->getEntity()->language = $context->languageRepositoryAccessor->get()->findOneByOldId($value[1]);
+				}
+			}
+
+			d($pricelist);
+			exit;
+
 
 
 			$user = $context->userRepositoryAccessor->get()->findOneByLogin(qc('select email from members where id = '.$x['member_id']));
@@ -130,7 +155,7 @@ class ImportRentals extends BaseImport {
 
 			$rental->slug = $x['name_url'];
 			//$truncatedName = Strings::truncate($x['name'], 60);
-			
+
 			if (preg_match('/[*]{2,6}/', $x['name'], $matches)) {
 				$classification = strlen($matches[0]);
 				if ($classification > 0) {
@@ -140,7 +165,7 @@ class ImportRentals extends BaseImport {
 			}
 
 			$rental->name = $this->createPhraseFromString('\Rental\Rental', 'name', 'NATIVE', $x['name'], $rental->editLanguage);
-			
+
 			$rental->teaser = $this->createNewPhrase($teaserDictionaryType, $x['marketing_dic_id'], NULL, NULL, $rental->editLanguage);
 
 			// Contact Name
@@ -153,7 +178,7 @@ class ImportRentals extends BaseImport {
 					if ($tempPhone = $this->context->phoneBook->getOrCreate($value)) {
 						$rental->setPhone($tempPhone);
 						break; // Importujeme len prve cislo
-					}	
+					}
 				}
 			}
 
@@ -184,7 +209,7 @@ class ImportRentals extends BaseImport {
 				$thisAmenity = $context->rentalAmenityRepositoryAccessor->get()->find($x1['id']);
 				if (in_array($thisAmenity->type->slug, $specialAmenities)) {
 					$thisId = $thisAmenity->type->slug.'-'.$x1['oldId'];
-				} else {				
+				} else {
 					$thisId = $x1['oldId'];
 				}
 				$allAmenities[$thisId] = $thisAmenity;
@@ -327,7 +352,7 @@ class ImportRentals extends BaseImport {
 					if ($value[5] != $rental->primaryLocation->defaultCurrency->oldId) {
 						$oldCurrency = $context->currencyRepositoryAccessor->get()->findOneByOldId($value[5]);
 						if ($oldCurrency) {
-							$t = new \Extras\Types\Price($value[4], $oldCurrency);						
+							$t = new \Extras\Types\Price($value[4], $oldCurrency);
 						}
 					} else {
 						$t = new \Extras\Types\Price($value[4], $rental->primaryLocation->defaultCurrency);
@@ -344,22 +369,6 @@ class ImportRentals extends BaseImport {
 			}
 			$model->persist($rental);
 
-			// Pricelists
-			$temp = unserialize(stripslashes($x['prices_upload']));
-			if (is_array($temp) && count($temp)) {
-				foreach ($temp as $key => $value) {
-					if (strlen(file_get_contents('http://www.tralandia.sk/u/'.$value[4])) == 0) continue;
-					$pricelist = $context->rentalPricelistRepositoryAccessor->get()->createNew(FALSE);
-					$pricelistDecorator = $context->rentalPricelistDecoratorFactory->create($pricelist);
-					$pricelistDecorator->setContentFromFile('http://www.tralandia.sk/u/'.$value[4]);
-					$pricelistDecorator->getEntity()->name = $value[2];
-					$pricelistDecorator->getEntity()->rental = $rental;
-					$pricelistDecorator->getEntity()->language = $context->languageRepositoryAccessor->get()->findOneByOldId($value[1]);
-				}
-			}
-
-			d($pricelist);
-			exit;
 
 			// // Images
 			// $temp = array_unique(array_filter(explode(',', $x['photos'])));
@@ -384,7 +393,7 @@ class ImportRentals extends BaseImport {
 			} else if ($x['classification'] == 9) {
 				$rental->classification = (float)0;
 			}
-		
+
 			// Calendar
 			$temp = array_unique(array_filter(explode(',', $x['calendar'])));
 			if (is_array($temp) && count($temp)) {
