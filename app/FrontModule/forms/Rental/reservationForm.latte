@@ -60,6 +60,13 @@
 		{foreach $form['message']->getErrors() as $error}{$error}{/foreach}
 	</span>
 	</div>
+
+	{if $form->hasErrors()}
+		<div>{_"o100136"}</div>
+	{/if}
+	{ifset $fromSuccessMessage}
+		<div>{_$fromSuccessMessage}</div>
+	{/ifset}
 	<button class="btn btn-orange" type="submit"><i class="entypo-send"></i> {_o100017}</button>
 	{* {input submit, class => "btn btn-orange" , icon => 'entypo-send'} *}
 {/form}
