@@ -86,7 +86,7 @@ class RegistrationHandler extends FormHandler
 		// User
 		$user = $userRepository->findByLogin($values->email);
 		if ($user) {
-			$error->addError("Email exists", 'email');
+			$error->addError('o2610', 'email');
 		}
 
 		$rentalValues->type->type = $rentalTypeRepository->find($rentalValues->type->type);

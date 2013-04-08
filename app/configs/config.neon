@@ -166,6 +166,7 @@ services:
 	rentalImageStorage: Image\RentalImageStorage(%wwwDir%%rentalImageDir%)
 	rentalImagePipe: Image\RentalImagePipe(%wwwDir%, %rentalImageDir%)
 	rentalImageManager: Image\RentalImageManager(@rentalImageRepositoryAccessor)
+	rentalPriceListManager: Image\RentalPriceListManager(@rentalPricelistRepositoryAccessor::get(), @rentalPricelistStorage)
 
 	searchOptionGenerator: SearchGenerator\OptionGenerator
 	searchGeneratorTopLocations: SearchGenerator\TopLocations(@environment::getPrimaryLocation())
