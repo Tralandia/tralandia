@@ -737,25 +737,24 @@
 
         var infowindow = new google.maps.InfoWindow();
 
-
+        var marker = false; 
 
         if(parseInt($('#map_canvas').attr('data-show-marker')) == 1){
 
-	        var marker = new google.maps.Marker({
+	        marker = new google.maps.Marker({
 	          map: map,
 	          position:latlng
 	        });       
 	
-        }
-
+        } 
 		google.maps.event.addListener(map, 'click', function(event) {
 			
-			if(typeof marker != 'undefined' || typeof marker != null){
+			if(marker){
 				marker.setPosition(event.latLng);
 			} else {
-		        var marker = new google.maps.Marker({
+		        marker = new google.maps.Marker({
 		          map: map,
-		          position:latlng
+		          position:event.latLng
 		        }); 				
 			}
 				 
