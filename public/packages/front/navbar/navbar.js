@@ -46,6 +46,7 @@
 			} else if (typeof obj == 'string') {
 				base.activeTabName = obj;
 			} else {
+				base.$tabs.find('li').not(':hidden').first().trigger('click');
 				return false;
 			}
 
@@ -53,11 +54,6 @@
 			base.setActiveContent();
 			base.setLastActive();
 			base.updateNav();
-		}
-
-		base.setFirstActive = function()
-		{
-			base.$tabs.find('li').not(':hidden').first().trigger('click');
 		}
 
 		base.setActiveTab = function()
@@ -81,7 +77,7 @@
 			base.$tabs.find('li[for='+tabName+']').addClass('hide').removeClass('active');
 			base.$contents.find('div#'+tabName).addClass('hide').removeClass('active');
 			if (!base.hasActiveTab()) {
-				base.setFirstActive();
+				base.setActive();
 			}
 		}
 
@@ -124,17 +120,26 @@
 
 		base.hide = function()
 		{
-			base.$el.parent().addClass('hide');
+			base.$el.parent().slideUp(200, function() {
+				$(this).addClass('hide');
+			});
 		}
 
 		base.show = function()
 		{
-			base.$el.parent().removeClass('hide');
+			base.$el.parent().slideDown(200, function() {
+				$(this).removeClass('hide');
+			});
 		}
 
 		base.hasRental = function(tabName)
 		{
 			return base.$contents.find('#'+tabName+' ul li').not('.template').length;
+		}
+
+		base.share = function()
+		{
+			
 		}
 
 		/**

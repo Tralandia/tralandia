@@ -25,14 +25,12 @@ $(function(){
 		});		
 	});
 
-
-// var clip = new ZeroClipboard($('#clipboardLinkShareButton'));
 	$('#clipboardLinkShareButton').click(function(){
 		$('#clipboardLinkShare').select();
 		return false;
 	});
 
-	$('#favoritesShareList li a').click(function(){
+	$('#navBar li.share a').click(function(){
 		
 		removejscssfile('http://platform.twitter.com/widgets.js','js');
 		removejscssfile('https://apis.google.com/js/plusone.js','js');
@@ -50,10 +48,8 @@ $(function(){
 		});
 
 		if($(this).hasClass('open')){
-			
 			$('#favoriteShareContent').hide();
 		} else {
-			
 			$('#favoriteShareContent').show();			
 		}
 
@@ -74,8 +70,7 @@ $(function(){
 			if($('#favoritesShareList li a').hasClass('open')){
 				$('#favoriteShareContent').hide();
 				$('#favoritesShareList li a').removeClass('open');
-			}		  
-
+			}
 		}
 
 		$('body').removeAttr('socialshareOpen');  

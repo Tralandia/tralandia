@@ -4,17 +4,18 @@
 
 {var $showNavbar = (!(isset($lastSearchResults) && count($lastSearchResults['rentals'])) && !count($favoriteRentals) && !count($lastSeenRentals))}
 
-<div n:class="$showNavbar ? 'hide', span12" data-favoritesLink="{link generateFavoriteLink}" id="favoritesStaticContainer"{ifset $currentRental} current-rental="$currentRental->id"{/ifset}>
-	<div class="favorites2" id="navBar">
+<div id="favoritesStaticContainerPlaceholder" class="hide"></div>
+<div n:class="$showNavbar ? 'hide', span12" data-favoritesLink="{link generateFavoriteLink}" id="favoritesStaticContainer">
+	<div class="favorites2" id="navBar"{ifset $currentRental} current-rental="{$currentRental->id}"{/ifset}>
 		<ul class="nav" id="navBarTabs">
 			<li n:class="$navBarLastActive=='navBarSerchResults' ? active" n:ifset="$lastSearchResults['rentals']" for="navBarSerchResults">
 				<i class="icon-search"></i> {$lastSearchResults['heading']} ({$lastSearchResults['totalCount']})
 			</li>
-			<li n:class="$navBarLastActive=='navBarFavorites' ? active" for="navBarFavorites">
+			<li n:class="$navBarLastActive=='navBarFavorites' ? active, !count($favoriteRentals) ? 'hide'" for="navBarFavorites">
 				<i class="icon-heart"></i> {_o100035}
 			</li>
-			<li n:class="$navBarLastActive=='navBarLastSeen' ? active" n:ifset="$lastSeenRentals" for="navBarLastSeen">
-				<i class="icon-eye-open"></i> {_o100114} 
+			<li n:class="$navBarLastActive=='navBarLastSeen' ? active, !count($lastSeenRentals) ? 'hide'" n:ifset="$lastSeenRentals" for="navBarLastSeen">
+				<i class="icon-eye-open"></i> {_o100114}
 			</li>
 
 			{* links right *}
@@ -93,5 +94,29 @@
 			</div>
 			<a class="rightArrow entypo-slider-right"></a>
 		</div>
+		<ul class="dropdown-menu" role="menu" id="favoriteShareContent" style="display: none;">
+			<li class="favoriteSocialIcons">
+				<table>
+					<tr>
+						<td id="dynamicShareContainer" colspan="3">
+							<span class="facebook facebookLikeButtonContainer" data-facebook-src="http://google.com"></span>
+							<g:plusone size="medium" href=""  style="margin-top:2px;"></g:plusone>
+							<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://google.com" data-via="Tralandia" data-text="{_o100036}" data-hashtags="{_o100034}" data-lang="{$currentLanguage->iso}">Tweet</a>                
+							<a href="http://pinterest.com/pin/create/button/?url=http://google.com" class="pin-it-button" count-layout="horizontal"></a> 
+						</td>		                			
+					</tr>
+					<tr>
+						<td><label>{_o100067}</label></td>
+						<td><input placeholder="{_o100064}" type="text" /></td>
+						<td><button class="btn btn-green">{_o100065}</button></td>
+					</tr>				
+					<tr>
+						<td><label>{_o100068}</label></td>
+						<td><input id="clipboardLinkShare" type="text" /></td>
+						<td><button id="clipboardLinkShareButton" class="btn btn-green" data-alert-text="{_o100069}">{_o100066}</button></td>
+					</tr>
+				</table>
+			</li>
+		</ul>
 	</div>
 </div>
