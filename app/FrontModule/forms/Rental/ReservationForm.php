@@ -41,21 +41,29 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 	 */
 	protected $reservationProtector;
 
+	/**
+	 * @var \LastReservation
+	 */
+	protected $lastReservation;
+
 
 	/**
 	 * @param \Entity\Rental\Rental $rental
 	 * @param \Doctrine\ORM\EntityManager $em
 	 * @param \ReservationProtector $reservationProtector
+	 * @param \LastReservation $lastReservation
 	 * @param \Environment\Environment $environment
 	 */
 	public function __construct(\Entity\Rental\Rental $rental, EntityManager $em,
-								\ReservationProtector $reservationProtector, Environment $environment)
+								\ReservationProtector $reservationProtector, \LastReservation $lastReservation,
+								Environment $environment)
 	{
 		$this->rental = $rental;
 		$this->environment = $environment;
 		$this->locationRepository = $em->getRepository(LOCATION_ENTITY);
 		$this->reservationRepository = $em->getRepository(RESERVATION_ENTITY);
 		$this->reservationProtector = $reservationProtector;
+		$this->lastReservation = $lastReservation;
 
 		parent::__construct($environment->getTranslator());
 	}
@@ -78,11 +86,12 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 		$date = $this->addContainer('date');
 		$today = (new DateTime)->modify('today');
 		$date->addAdvancedDatePicker('from')
-			->addRule(self::RANGE, '#Vstup neni validni', [$today, $today->modifyClone('+3 years')])
+			->addRule(self::RANGE, '#Vstup neni validni', [$today, $today->modifyClone('+1 years')])
 			->getControlPrototype()
-				->setPlaceholder('o1043');
+			->setPlaceholder('o1043');
 
 		$date->addAdvancedDatePicker('to')
+			->addRule(self::RANGE, '#Vstup neni validni', [$today, $today->modifyClone('+1 years')])
 			->getControlPrototype()
 				->setPlaceholder('o1044');
 
@@ -116,6 +125,7 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 		$this->addSelect('children','',$children)->setPrompt('o100016');
 
 		$this->addTextArea('message')
+			->addRule(self::MIN_LENGTH, '#sprava min 3 znaky', 3)
 			->getControlPrototype()
 				->setPlaceholder('o12279');
 
@@ -133,11 +143,15 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 	{
 		$values = $form->getValues();
 
-		$from = $values->date->from;
+		$from = DateTime::from($values->date->from);
 		$to = $values->date->to;
 
-		if($to > $from) {
-			$form['date']['to']->addError($this->translate('#datu "do" je nespravny'));
+		if(!($to > $from)) {
+			$form['date']['to']->addError($this->translate('#datum "do" je nespravny'));
+		}
+
+		if(!$this->rental->isAvailable($from, $to)) {
+			$form->addError($this->translate('#objekt je obsadeny'));
 		}
 
 		try {
@@ -158,12 +172,17 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 
 	public function setDefaultsValues()
 	{
-
+		$defaultData = $this->lastReservation->getData();
+		if($defaultData) {
+			$this->setDefaults($defaultData);
+		}
 	}
 
 	public function process(ReservationForm $form)
 	{
 		$values = $form->getValues();
+
+		$this->lastReservation->setData($form->getValues(TRUE));
 
 		/** @var $reservation \Entity\User\RentalReservation */
 		$reservation = $this->reservationRepository->createNew();
@@ -173,8 +192,8 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 		$reservation->setSenderEmail($values->email);
 		$reservation->setSenderName($values->name);
 		$reservation->setSenderPhone($values->phone->phone);
-		$reservation->setArrivalDate(Nette\DateTime::from($values->date->from));
-		$reservation->setDepartureDate(Nette\DateTime::from($values->date->to));
+		$reservation->setArrivalDate($values->date->from);
+		$reservation->setDepartureDate($values->date->to);
 		$reservation->setAdultsCount($values->parents);
 		$reservation->setChildrenCount($values->children);
 		$reservation->setMessage($values->message);

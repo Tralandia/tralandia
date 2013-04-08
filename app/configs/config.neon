@@ -171,7 +171,8 @@ services:
 	searchGeneratorTopLocations: SearchGenerator\TopLocations(@environment::getPrimaryLocation())
 	searchGeneratorSpokenLanguages: SearchGenerator\SpokenLanguages(@environment::getPrimaryLocation(), @rentalSearchCache)
 
-	reservationProtector: ReservationProtector(@session)
+	reservationProtector: ReservationProtector
+	lastReservation: LastReservation
 
 
 	# ==============================

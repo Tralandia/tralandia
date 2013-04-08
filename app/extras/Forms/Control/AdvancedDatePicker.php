@@ -16,7 +16,7 @@ class AdvancedDatePicker extends \Nextras\Forms\Controls\DatePicker {
 	public function __construct($label = NULL)
 	{
 		parent::__construct($label);
-		$this->control->type = 'input';
+		$this->control->type = 'text';
 	}
 
 

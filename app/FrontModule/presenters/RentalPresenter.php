@@ -131,6 +131,7 @@ class RentalPresenter extends BasePresenter {
 
 		$form->onSuccess[] = function ($form) {
 			//$form->presenter->redirect('this');
+			$form->presenter->template->fromSuccessMessage = 'o1029';
 			$form->presenter->invalidateControl('reservationForm');
 		};
 
