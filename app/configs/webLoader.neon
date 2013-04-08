@@ -296,21 +296,17 @@ parameters:
 				-  %webloader.packages.jQuery%
 				-  %webloader.packages.jqueryAppear%
 				-  %webloader.packages.jstorage%
-				-  %webloader.packages.bootstrap%
-				-  %webloader.packages.jscrollPane%
 				-  %webloader.packages.jqueryUi%
 				-  %webloader.packages.jqueryCookie%
-				-  %webloader.packages.select2%
 				-  %webloader.packages.fontEntypo%
 				-  %webloader.packages.fontAwesome%
 				-  %webloader.packages.bootstrap%
+				-  %webloader.packages.jscrollPane%
+				-  %webloader.packages.fileUpload%
+				-  %webloader.packages.select2%			
+				-  %webloader.packages.gMap%
 				-  %webloader.packages.Front%
-				-  %webloader.packages.texyla%
+				#-  %webloader.packages.texyla%
 				-  %webloader.packages.nette%
 
-
-			Gregor:
-				-  %webloader.packages.Front%
-
-			'Gregor:Admin': %webloader.sets.Admin%
 
