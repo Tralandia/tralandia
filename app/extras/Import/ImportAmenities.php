@@ -229,7 +229,19 @@ class ImportAmenities extends BaseImport {
 
 		// Placements
 		$placementOptions = array(
+			array('in village', 'na dedine', 'in-village'),
 			array('in town', 'v meste', 'in-town'),
+			array('in downtown', 'v centre mesta', 'in-downtown'),
+			array('remote', 'na-samote', 'remote'),
+			array('on beach', 'na pláži', 'on-beach'),
+			array('by ocean', 'pri oceáne', 'by-ocean'),
+			array('by sea', 'pri mori', 'by-sea'),
+			array('by lake', 'pri jazere', 'by-lake'),
+			array('by river', 'pri rieke', 'by-river'),
+			array('on island', 'na ostrove', 'on-island'),
+			array('on waterfront', 'pri vode', 'on-waterfront'),
+			array('in mountains', 'na horách', 'in-mountains'),
+			array('in woods', 'v lese', 'in-woods'),
 		);
 		$placementDictionaryType = $this->createPhraseType('\Rental\Placement', 'name', 'ACTIVE', array());
 
@@ -246,7 +258,5 @@ class ImportAmenities extends BaseImport {
 			d($placement, $name);
 		}
 		$this->model->flush();
-
 	}
-
 }

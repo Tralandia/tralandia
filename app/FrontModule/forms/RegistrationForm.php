@@ -140,7 +140,7 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 			'country' => $this->environment->getPrimaryLocation()->getId(),
 			'language' => $this->environment->getLanguage()->getId(),
 
-			//'referrer' => 'luzbo',
+/*
 			'email' => Nette\Utils\Strings::random(5) . '@email.com',
 			'url' => 'google.com',
 			'password' => 'adsfasdf',
@@ -167,8 +167,9 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 					'address' => 'Ľ. Štúra 8, Nové Zámky, Slovakia',
 				],
 			],
+*/
 		];
-		//$this->setDefaults($defaults);
+		$this->setDefaults($defaults);
 	}
 
 
