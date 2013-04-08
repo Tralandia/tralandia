@@ -24,8 +24,8 @@
 		{include #rentalType, control => $rental['type']}
 		{include #text, control => $rental['price']}
 		{include #text, control => $rental['maxCapacity']}
-		{include #select, control => $rental['ownerAvailability']}
-		{include #select, control => $rental['pet']}
+		{include #select, control => $rental['ownerAvailability'] , controlClass => 'select2 ownerAvailability'}
+		{include #select, control => $rental['pet'] , controlClass => 'select2 pet'}
 
 		{include #fieldset, text => 'o100086'}
 		{include #address, control => $rental['address']}
