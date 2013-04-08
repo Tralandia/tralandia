@@ -65,6 +65,7 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 
 
 		$this->addText('name')
+			->setRequired()
 			->getControlPrototype()
 				->setPlaceholder('o1031');
 
@@ -96,7 +97,7 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 		$parents = array();
 		$children = array();
 
-		for($i = 0 ; $i < 21 ; ++$i) {
+		for($i = 0 ; $i < 50 ; ++$i) {
 
 			if($i > 0){
 				$parents[$i] = $i . ' ' . $this->translate('o12277', NULL, ['count' => $i]);
@@ -106,7 +107,9 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 
 		}
 
-		$this->addSelect('parents','',$parents)->setPrompt('o12277');
+		$this->addSelect('parents','',$parents)->setPrompt('o12277')
+			->setRequired();
+
 		$this->addSelect('children','',$children)->setPrompt('o100016');
 
 		$this->addTextArea('message')
@@ -123,8 +126,15 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 	}
 
 
-	public function validation(ReservationForm $form){
+	public function validation(ReservationForm $form)
+	{
 		$values = $form->getValues();
+
+		$phone = $values->phone;
+		if (!$phone->phone instanceof \Entity\Contact\Phone) {
+			$form['phone']->getMainControl()->addError($this->translate('o1039'));
+		}
+
 		try {
 			$this->reservationProtector->canSendReservation($values->email);
 		} catch (\TooManyReservationForEmailException $e) {
