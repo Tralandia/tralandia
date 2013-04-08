@@ -5,6 +5,7 @@ namespace FrontModule\Forms\Rental;
 use Doctrine\ORM\EntityManager;
 use Environment\Environment;
 use Nette;
+use Nette\DateTime;
 
 /**
  * ReservationForm class
@@ -40,21 +41,29 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 	 */
 	protected $reservationProtector;
 
+	/**
+	 * @var \LastReservation
+	 */
+	protected $lastReservation;
+
 
 	/**
 	 * @param \Entity\Rental\Rental $rental
 	 * @param \Doctrine\ORM\EntityManager $em
 	 * @param \ReservationProtector $reservationProtector
+	 * @param \LastReservation $lastReservation
 	 * @param \Environment\Environment $environment
 	 */
 	public function __construct(\Entity\Rental\Rental $rental, EntityManager $em,
-								\ReservationProtector $reservationProtector, Environment $environment)
+								\ReservationProtector $reservationProtector, \LastReservation $lastReservation,
+								Environment $environment)
 	{
 		$this->rental = $rental;
 		$this->environment = $environment;
 		$this->locationRepository = $em->getRepository(LOCATION_ENTITY);
 		$this->reservationRepository = $em->getRepository(RESERVATION_ENTITY);
 		$this->reservationProtector = $reservationProtector;
+		$this->lastReservation = $lastReservation;
 
 		parent::__construct($environment->getTranslator());
 	}
@@ -65,6 +74,7 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 
 
 		$this->addText('name')
+			->setRequired()
 			->getControlPrototype()
 				->setPlaceholder('o1031');
 
@@ -74,11 +84,14 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 				->setPlaceholder('o1034');
 
 		$date = $this->addContainer('date');
-		$date->addText('from')
+		$today = (new DateTime)->modify('today');
+		$date->addAdvancedDatePicker('from')
+			->addRule(self::RANGE, '#Vstup neni validni', [$today, $today->modifyClone('+1 years')])
 			->getControlPrototype()
-				->setPlaceholder('o1043');
+			->setPlaceholder('o1043');
 
-		$date->addText('to')
+		$date->addAdvancedDatePicker('to')
+			->addRule(self::RANGE, '#Vstup neni validni', [$today, $today->modifyClone('+1 years')])
 			->getControlPrototype()
 				->setPlaceholder('o1044');
 
@@ -96,7 +109,7 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 		$parents = array();
 		$children = array();
 
-		for($i = 0 ; $i < 21 ; ++$i) {
+		for($i = 0 ; $i < 50 ; ++$i) {
 
 			if($i > 0){
 				$parents[$i] = $i . ' ' . $this->translate('o12277', NULL, ['count' => $i]);
@@ -106,10 +119,13 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 
 		}
 
-		$this->addSelect('parents','',$parents)->setPrompt('o12277');
+		$this->addSelect('parents','',$parents)->setPrompt('o12277')
+			->setRequired();
+
 		$this->addSelect('children','',$children)->setPrompt('o100016');
 
 		$this->addTextArea('message')
+			->addRule(self::MIN_LENGTH, '#sprava min 3 znaky', 3)
 			->getControlPrototype()
 				->setPlaceholder('o12279');
 
@@ -123,8 +139,21 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 	}
 
 
-	public function validation(ReservationForm $form){
+	public function validation(ReservationForm $form)
+	{
 		$values = $form->getValues();
+
+		$from = DateTime::from($values->date->from);
+		$to = $values->date->to;
+
+		if(!($to > $from)) {
+			$form['date']['to']->addError($this->translate('#datum "do" je nespravny'));
+		}
+
+		if(!$this->rental->isAvailable($from, $to)) {
+			$form->addError($this->translate('#objekt je obsadeny'));
+		}
+
 		try {
 			$this->reservationProtector->canSendReservation($values->email);
 		} catch (\TooManyReservationForEmailException $e) {
@@ -143,12 +172,17 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 
 	public function setDefaultsValues()
 	{
-
+		$defaultData = $this->lastReservation->getData();
+		if($defaultData) {
+			$this->setDefaults($defaultData);
+		}
 	}
 
 	public function process(ReservationForm $form)
 	{
 		$values = $form->getValues();
+
+		$this->lastReservation->setData($form->getValues(TRUE));
 
 		/** @var $reservation \Entity\User\RentalReservation */
 		$reservation = $this->reservationRepository->createNew();
@@ -158,8 +192,8 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 		$reservation->setSenderEmail($values->email);
 		$reservation->setSenderName($values->name);
 		$reservation->setSenderPhone($values->phone->phone);
-		$reservation->setArrivalDate(Nette\DateTime::from($values->date->from));
-		$reservation->setDepartureDate(Nette\DateTime::from($values->date->to));
+		$reservation->setArrivalDate($values->date->from);
+		$reservation->setDepartureDate($values->date->to);
 		$reservation->setAdultsCount($values->parents);
 		$reservation->setChildrenCount($values->children);
 		$reservation->setMessage($values->message);
