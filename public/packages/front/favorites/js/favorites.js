@@ -30,7 +30,7 @@ $(function(){
 		return false;
 	});
 
-	$('#navBar li.share a').click(function(){
+	$('#navBar li a.share').click(function(){
 		
 		removejscssfile('http://platform.twitter.com/widgets.js','js');
 		removejscssfile('https://apis.google.com/js/plusone.js','js');

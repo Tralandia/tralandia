@@ -53,7 +53,7 @@
 			base.setActiveTab();
 			base.setActiveContent();
 			base.setLastActive();
-			base.updateNav();
+			// base.updateNav();
 		}
 
 		base.setActiveTab = function()
