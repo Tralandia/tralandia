@@ -93,7 +93,7 @@
 
 		<td>
 			<span class="help">{$control->getOption('description')}</span>
-			<span class="alert">{include #controlErrors, errors => $control->getErrors()}</span>
+			<span class="invalidAlert">{include #controlErrors, errors => $control->getErrors()}</span>
 		</td>
 	</tr>
 	{/define #texyla}
@@ -124,7 +124,7 @@
 
 		<td>
 			<span class="help">{$control->getOption('description')}</span>
-			<span class="alert">{include #controlErrors, errors => $control->getErrors()}</span>
+			<span class="invalidAlert">{include #controlErrors, errors => $control->getErrors()}</span>
 		</td>
 	</tr>
 	{/define #checkbox}
@@ -306,7 +306,7 @@
 
 	<td>
 		<span class="help">{$container->getDescription('description')}</span>
-		<span class="alert">{include #controlErrors, errors => $container->getAllErrors()}</span>
+		<span class="invalidAlert">{include #controlErrors, errors => $container->getAllErrors()}</span>
 	</td>
 </tr>
 
