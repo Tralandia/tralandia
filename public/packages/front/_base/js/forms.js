@@ -716,11 +716,13 @@
         var lat = $('#map_canvas').attr('data-latitude'),
         	lng = $('#map_canvas').attr('data-longitude'),
         	latlng = new google.maps.LatLng(lat, lng),
-        	image = 'http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png'; 
+        	image = 'http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png',
+        	zoom = $('#map_canvas').attr('data-zoom') || 12;
 
+        	
         var mapOptions = {
           center: latlng,
-          zoom: 13,
+          zoom: parseInt(zoom),
           scrollwheel: false,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         };
@@ -734,14 +736,28 @@
         autocomplete.bindTo('bounds', map);
 
         var infowindow = new google.maps.InfoWindow();
-        var marker = new google.maps.Marker({
-          map: map,
-          position:latlng
-        });
+
+
+
+        if(parseInt($('#map_canvas').attr('data-show-marker')) == 1){
+
+	        var marker = new google.maps.Marker({
+	          map: map,
+	          position:latlng
+	        });       
+	
+        }
 
 		google.maps.event.addListener(map, 'click', function(event) {
 			
-			marker.setPosition(event.latLng);
+			if(typeof marker != 'undefined' || typeof marker != null){
+				marker.setPosition(event.latLng);
+			} else {
+		        var marker = new google.maps.Marker({
+		          map: map,
+		          position:latlng
+		        }); 				
+			}
 				 
 			// set geocoder
         	var geocoder = new google.maps.Geocoder();
