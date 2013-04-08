@@ -30,8 +30,8 @@ class UserEditForm extends BaseForm {
 
 
 	public function buildForm() {
-		$this->addText('login', '#login');
-		$this->addPassword('password', '#pass');
+		$this->addText('login', 'o1096');
+		$this->addPassword('password', 'o997');
 
 		$this->addPassword('confirmPassword', '#confirm_password')
 			->addConditionOn($this["password"], self::FILLED)

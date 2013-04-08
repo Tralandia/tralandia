@@ -289,13 +289,14 @@ $(document).ready(function(){
 
 
 	$(".reservationform select.select2:not(#frm-registrationForm-rental-type)").select2({dropdownCssClass: "reservationForm"});
-	$('#frm-registrationForm-rental-type,#frm-registrationForm-rental-classification,#frm-registrationForm-rental-pet,#frm-registrationForm-rental-ownerAvailability').select2({
-		dropdownCssClass: "mainForm",
+
+	$('.select2.rentalType,.select2.classification,.select2.pet,.select2.ownerAvailability').select2({
+		dropdownCssClass: "notFulltext",
 		allowClear: true,
 		minimumResultsForSearch: 'X',
 	});
 
-	$("table.formTable select.select2:not(#frm-registrationForm-rental-type,#frm-registrationForm-rental-classification,#frm-registrationForm-rental-pet,#frm-registrationForm-rental-ownerAvailability)").select2({dropdownCssClass: "mainForm"});
+	$("table.formTable select.select2:not(.select2.classification,.select2.rentalType,.select2.pet,.select2.ownerAvailability)").select2({dropdownCssClass: "mainForm"});
 
 	var A = new App();
 
