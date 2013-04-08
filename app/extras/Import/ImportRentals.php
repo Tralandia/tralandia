@@ -71,11 +71,15 @@ class ImportRentals extends BaseImport {
 			exit('dorobit liveImport do ImportRentals.php');
 		}
 
+		$updateTimes = array();
 		$rentalIdIncrement = 100;
 		while ($x = mysql_fetch_array($r)) {
+			$updateTimes[$x['id']] = $x['date_updated'];
+
 			$rental = $context->rentalEntityFactory->create();
 			$rental->id = $rentalIdIncrement++;
 			$rental->oldId = $x['id'];
+
 
 			$user = $context->userRepositoryAccessor->get()->findOneByLogin(qc('select email from members where id = '.$x['member_id']));
 			if (!$user) {
@@ -407,6 +411,11 @@ class ImportRentals extends BaseImport {
 			$model->persist($rental);
 		}
 		$model->flush();
+
+		foreach ($updateTimes as $key => $value) {
+			qNew('update rental set updated = '.date("Y-m-d H:i:s", $value);.' where oldId = '.$key);
+		}
+
 		$this->saveVariables();
 	}
 
