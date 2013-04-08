@@ -774,25 +774,32 @@
 
         google.maps.event.addListener(autocomplete, 'place_changed', function() {
           infowindow.close();
-          marker.setVisible(false);
+          // marker.setVisible(false);
           input.className = '';
           var place = autocomplete.getPlace();
           if (!place.geometry) {
-            // Inform the user that the place was not found and return.
             input.className = 'notfound';
             return;
           }
 
-          // If the place has a geometry, then present it on a map.
           if (place.geometry.viewport) {
             map.fitBounds(place.geometry.viewport);
           } else {
             map.setCenter(place.geometry.location);
-            map.setZoom(17);  // Why 17? Because it looks good.
+            map.setZoom(17);  
           }
 
-          marker.setPosition(place.geometry.location);
-          marker.setVisible(true);
+			if(marker){
+				marker.setPosition(place.geometry.location);
+			} else {
+		        marker = new google.maps.Marker({
+		          map: map,
+		          position:place.geometry.location
+		        }); 				
+			}
+
+          // marker.setPosition(place.geometry.location);
+          // marker.setVisible(true);
           
         });
 
