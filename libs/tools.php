@@ -20,7 +20,6 @@ Extras\Forms\Controls\AdvancedAddress::register();
 Extras\Forms\Controls\AdvancedBricksList::register();
 Extras\Forms\Controls\AdvancedCheckbox::register();
 Extras\Forms\Controls\AdvancedCheckboxList::register();
-Extras\Forms\Controls\AdvancedDatePicker::register();
 Extras\Forms\Controls\AdvancedFileManager::register();
 Extras\Forms\Controls\AdvancedJson::register();
 Extras\Forms\Controls\AdvancedMultiSelect::register();
@@ -39,9 +38,19 @@ Extras\Forms\Controls\ReadOnlyPhrase::register();
 Container::extensionMethod('addOptionList', function (Container $container, $name, $label = NULL, array $items = NULL) {
 	return $container[$name] = new Controls\OptionList($label, $items);
 });
+
 Container::extensionMethod('addMultiOptionList', function (Container $container, $name, $label = NULL, array $items = NULL) {
 	return $container[$name] = new Controls\MultiOptionList($label, $items);
 });
+
+Container::extensionMethod('addDateTimePicker', function (Container $container, $name, $label = NULL) {
+	return $container[$name] = new Controls\DateTimePicker($label);
+});
+
+Container::extensionMethod('addAdvancedDatePicker', function (Container $container, $name, $label = NULL) {
+	return $container[$name] = new \Extras\Forms\Controls\AdvancedDatePicker($label);
+});
+
 
 
 function d() {
@@ -138,7 +147,7 @@ class Tools {
 		$params = func_get_args();
 		$trace = debug_backtrace();
 
-		if (isset($params) && is_array($params)) {	
+		if (isset($params) && is_array($params)) {
 			foreach ($params as $array) {
 				echo "\n{$trace[1]['file']} ({$trace[1]['line']})\n";
 				print_r($array);
@@ -195,11 +204,11 @@ class Tools {
 			}
 		}
 	}
-	
+
 	public static function link($control, $params) {
 		$a = \Nette\Utils\Html::el('a');
 		debug($control, $params);
-				
+
 		isset($params['link']) ? $a->href($control->link($params['link'])) : null;
 		isset($params['text']) ? $a->setText($params['text']) : $a->setText($params['link']);
 		isset($params['title']) ? $a->title($params['title']) : $a->title($params['text']);
@@ -211,7 +220,7 @@ class Tools {
 	public static function reorganizeArray($list, $columnCount = 3) {
 		//$list = array(1, 2, 3, 4, 5, 6, 7, 8, 9);
 		//$columnCount = 4;
-		
+
 		$newList = array();
 		foreach ($list as $key => $value) {
 			$newList[] = array($key, $value);
@@ -240,10 +249,10 @@ class Tools {
 
 		$organizedList = array();
 		$row = 0;
-		for ($row=0; $row < $totalRowCount; $row++) { 
+		for ($row=0; $row < $totalRowCount; $row++) {
 			$index = 0;
 			$organizedList[] = $newList[$row];
-			for ($ii=0; $ii < ($columnCount-1); $ii++) { 
+			for ($ii=0; $ii < ($columnCount-1); $ii++) {
 				$index = ($index + $columns[$ii]);
 				if (isset($newList[$row + $index])) {
 					$organizedList[] = $newList[$row + $index];

@@ -5,6 +5,7 @@ namespace FrontModule\Forms\Rental;
 use Doctrine\ORM\EntityManager;
 use Environment\Environment;
 use Nette;
+use Nette\DateTime;
 
 /**
  * ReservationForm class
@@ -75,11 +76,13 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 				->setPlaceholder('o1034');
 
 		$date = $this->addContainer('date');
-		$date->addText('from')
+		$today = (new DateTime)->modify('today');
+		$date->addAdvancedDatePicker('from')
+			->addRule(self::RANGE, '#Vstup neni validni', [$today, $today->modifyClone('+3 years')])
 			->getControlPrototype()
 				->setPlaceholder('o1043');
 
-		$date->addText('to')
+		$date->addAdvancedDatePicker('to')
 			->getControlPrototype()
 				->setPlaceholder('o1044');
 
@@ -130,9 +133,11 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 	{
 		$values = $form->getValues();
 
-		$phone = $values->phone;
-		if (!$phone->phone instanceof \Entity\Contact\Phone) {
-			$form['phone']->getMainControl()->addError($this->translate('o1039'));
+		$from = $values->date->from;
+		$to = $values->date->to;
+
+		if($to > $from) {
+			$form['date']['to']->addError($this->translate('#datu "do" je nespravny'));
 		}
 
 		try {
