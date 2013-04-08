@@ -146,11 +146,11 @@ factories:
 			- setStorage(@rentalImageStorage)
 		implement: Model\Rental\IImageDecoratorFactory
 
-	rentalPricelistDecoratorFactory:
-		class: Service\Rental\PricelistDecorator(..., %entity%)
-		setup:
-			- setStorage(@rentalPricelistStorage)
-		implement: Model\Rental\IPricelistDecoratorFactory
+#	rentalPricelistDecoratorFactory:
+#		class: Service\Rental\PricelistDecorator(..., %entity%)
+#		setup:
+#			- setStorage(@rentalPricelistStorage)
+#		implement: Model\Rental\IPricelistDecoratorFactory
 
 	mediumDecoratorFactory:
 		class: Service\Medium\MediumService(..., %entity%)
