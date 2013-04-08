@@ -413,7 +413,7 @@ class ImportRentals extends BaseImport {
 		$model->flush();
 
 		foreach ($updateTimes as $key => $value) {
-			qNew('update rental set updated = '.date("Y-m-d H:i:s", $value);.' where oldId = '.$key);
+			qNew('update rental set updated = '.date("Y-m-d H:i:s", $value).' where oldId = '.$key);
 		}
 
 		$this->saveVariables();
