@@ -28,7 +28,7 @@ class ForgotPasswordForm extends \BaseModule\Forms\BaseForm {
 		$this->addText('email', 'o1096')
 			->addRule(self::EMAIL);
 
-		$this->addSubmit('submit', 'o100138');
+		$this->addSubmit('submit', 'o100141');
 		$this->addButton('cancel', '#Cancel');
 
 		$this->onSuccess[] = callback($this, 'onSuccess');
