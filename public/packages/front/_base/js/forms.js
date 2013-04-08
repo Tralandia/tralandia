@@ -264,9 +264,12 @@
 				//console.log('init maops plugin'+lat+' '+lng+' '+zoom);
 
 				var lat = parseFloat($inputLat.val());
-				var lng = parseFloat($inputLng.val());
+				var lng = parseFloat($inputLng.val());				
 
-				//console.log('init maops plugin'+lat+' '+lng+' '+zoom);
+				// var lat = parseFloat($(this).attr('data-latitude'));
+				// var lng = parseFloat($(this).attr('data-longitude'));
+
+				console.log('init maops plugin'+lat+' '+lng+' '+zoom);
 
 				var myLatlng = new google.maps.LatLng(lat,lng);
 				var mapOptions = {
@@ -788,7 +791,7 @@
 var maps = {};
 
 maps.mapInit = function(){
-	$("#frm-registrationForm-rental-address-address").formMapControl();
+	$(".traMapcontrol").formMapControl();
 }
 
 // lazy loading map
@@ -800,15 +803,10 @@ $(function() {
 	    }
 	});
 
-
-
-	$('#frm-registrationForm-rental-address-address').appear();
-	$(document.body).on('appear', '#frm-registrationForm-rental-address-address', function(e, $affected) {           
+	$('.traMapcontrol').appear();
+	$(document.body).on('appear', '.traMapcontrol', function(e, $affected) {
 		if(typeof $('body').attr('data-googleMapinit') == 'undefined' ){
-
 			var lang = $('html').attr('lang');
-			
-
 			var script = document.createElement("script"); 
 			script.src = "https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places&callback=maps.mapInit&language="+lang; 
 			document.body.appendChild(script); 

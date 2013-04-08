@@ -19,7 +19,8 @@ class RentalTypeContainer extends BaseContainer
 
 		$typesOptions = [];
 		$elTemplate = Html::el('option');
-		foreach($rentalTypes as $typeId => $type) {
+
+		foreach($rentalTypes as $typeId => $type) {			
 			$el = clone $elTemplate;
 			$el->value($typeId)->setText($type['label']);
 			$el->addAttributes(['data-classification' => $type['entity']->hasClassification()]);
