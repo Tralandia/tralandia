@@ -23,9 +23,6 @@ parameters:
 		driver: pdo_mysql
 		debugger: true
 
-	router:
-		hostMask: '<language>.<country>.<domain>.com'
-
 services:
 	debugger.session.panel:
 		setup:

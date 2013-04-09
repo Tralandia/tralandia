@@ -175,6 +175,8 @@ services:
 	reservationProtector: ReservationProtector
 	lastReservation: LastReservation
 
+	html2texy: Html2texy
+
 
 	# ==============================
 	# ==================== FORMS HANDLERS
