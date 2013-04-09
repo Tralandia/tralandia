@@ -82,12 +82,6 @@ class Language extends \Entity\BaseEntityDetails {
 	 */
 	protected $rentals;
 
-	/**
-	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Entity\Seo\BackLink", mappedBy="language")
-	 */
-	protected $backLinks;
-
 	public function getPluralsNames()
 	{
 		if(isset($this->plurals['names'])) {
@@ -148,7 +142,6 @@ class Language extends \Entity\BaseEntityDetails {
 		parent::__construct();
 
 		$this->rentals = new \Doctrine\Common\Collections\ArrayCollection;
-		$this->backLinks = new \Doctrine\Common\Collections\ArrayCollection;
 	}
 		
 	/**
@@ -403,39 +396,5 @@ class Language extends \Entity\BaseEntityDetails {
 	public function getRentals()
 	{
 		return $this->rentals;
-	}
-		
-	/**
-	 * @param \Entity\Seo\BackLink
-	 * @return \Entity\Language
-	 */
-	public function addBackLink(\Entity\Seo\BackLink $backLink)
-	{
-		if(!$this->backLinks->contains($backLink)) {
-			$this->backLinks->add($backLink);
-		}
-		$backLink->setLanguage($this);
-
-		return $this;
-	}
-		
-	/**
-	 * @param \Entity\Seo\BackLink
-	 * @return \Entity\Language
-	 */
-	public function removeBackLink(\Entity\Seo\BackLink $backLink)
-	{
-		$this->backLinks->removeElement($backLink);
-		$backLink->unsetLanguage();
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Seo\BackLink[]
-	 */
-	public function getBackLinks()
-	{
-		return $this->backLinks;
 	}
 }

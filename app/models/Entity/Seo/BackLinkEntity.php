@@ -11,15 +11,10 @@ use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="seo_backlink", indexes={@ORM\index(name="rental", columns={"rental_id"}), @ORM\index(name="location", columns={"location_id"}), @ORM\index(name="language", columns={"language_id"})})
+ * @ORM\Table(name="seo_backlink", indexes={@ORM\index(name="rental", columns={"rental_id"})})
  * @EA\Primary(key="id", value="id")
  */
 class BackLink extends \Entity\BaseEntity {
-
-	const STATUS_OK = 'OK';
-	const STATUS_NOT_FOUND = 'Not Found';
-	const STATUS_PENDING = 'Pending';
-	const STATUS_INCORRECT = 'Incorrect';
 
 	/**
 	 * @var Collection
@@ -29,69 +24,12 @@ class BackLink extends \Entity\BaseEntity {
 	protected $rental;
 
 	/**
-	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Location\Location")
-	 * @ORM\JoinColumn(onDelete="SET NULL")
-	 */
-	protected $location;
-
-	/**
-	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Language")
-	 * @ORM\JoinColumn(onDelete="SET NULL")
-	 */
-	protected $language;
-
-	/**
-	 * @var datetime
-	 * @ORM\Column(type="datetime")
-	 */
-	protected $lastChecked;
-
-	/**
-	 * @var string
-	 * @ORM\Column(type="string", nullable=true)
-	 */
-	protected $status;
-
-	/**
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $url;
 
-	/**
-	 * @var string
-	 * @ORM\Column(type="string", nullable=true)
-	 */
-	protected $linkAnchor;
-
-	/**
-	 * @var string
-	 * @ORM\Column(type="string", nullable=true)
-	 */
-	protected $linkTitle;
-
-	/**
-	 * @var integer
-	 * @ORM\Column(type="integer", nullable=true)
-	 */
-	protected $pageRank;
-
-	/**
-	 * @var text
-	 * @ORM\Column(type="text")
-	 */
-	protected $htmlCode;
-
-	/**
-	 * @var text
-	 * @ORM\Column(type="text")
-	 */
-	protected $notes;
-
-
-			//@entity-generator-code --- NEMAZAT !!!
+	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
 	public function __construct()
@@ -129,112 +67,6 @@ class BackLink extends \Entity\BaseEntity {
 	}
 		
 	/**
-	 * @param \Entity\Location\Location
-	 * @return \Entity\Seo\BackLink
-	 */
-	public function setLocation(\Entity\Location\Location $location)
-	{
-		$this->location = $location;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Seo\BackLink
-	 */
-	public function unsetLocation()
-	{
-		$this->location = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Location\Location|NULL
-	 */
-	public function getLocation()
-	{
-		return $this->location;
-	}
-		
-	/**
-	 * @param \Entity\Language
-	 * @return \Entity\Seo\BackLink
-	 */
-	public function setLanguage(\Entity\Language $language)
-	{
-		$this->language = $language;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Seo\BackLink
-	 */
-	public function unsetLanguage()
-	{
-		$this->language = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Language|NULL
-	 */
-	public function getLanguage()
-	{
-		return $this->language;
-	}
-		
-	/**
-	 * @param \DateTime
-	 * @return \Entity\Seo\BackLink
-	 */
-	public function setLastChecked(\DateTime $lastChecked)
-	{
-		$this->lastChecked = $lastChecked;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \DateTime|NULL
-	 */
-	public function getLastChecked()
-	{
-		return $this->lastChecked;
-	}
-		
-	/**
-	 * @param string
-	 * @return \Entity\Seo\BackLink
-	 */
-	public function setStatus($status)
-	{
-		$this->status = $status;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Seo\BackLink
-	 */
-	public function unsetStatus()
-	{
-		$this->status = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return string|NULL
-	 */
-	public function getStatus()
-	{
-		return $this->status;
-	}
-		
-	/**
 	 * @param string
 	 * @return \Entity\Seo\BackLink
 	 */
@@ -261,130 +93,5 @@ class BackLink extends \Entity\BaseEntity {
 	public function getUrl()
 	{
 		return $this->url;
-	}
-		
-	/**
-	 * @param string
-	 * @return \Entity\Seo\BackLink
-	 */
-	public function setLinkAnchor($linkAnchor)
-	{
-		$this->linkAnchor = $linkAnchor;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Seo\BackLink
-	 */
-	public function unsetLinkAnchor()
-	{
-		$this->linkAnchor = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return string|NULL
-	 */
-	public function getLinkAnchor()
-	{
-		return $this->linkAnchor;
-	}
-		
-	/**
-	 * @param string
-	 * @return \Entity\Seo\BackLink
-	 */
-	public function setLinkTitle($linkTitle)
-	{
-		$this->linkTitle = $linkTitle;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Seo\BackLink
-	 */
-	public function unsetLinkTitle()
-	{
-		$this->linkTitle = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return string|NULL
-	 */
-	public function getLinkTitle()
-	{
-		return $this->linkTitle;
-	}
-		
-	/**
-	 * @param integer
-	 * @return \Entity\Seo\BackLink
-	 */
-	public function setPageRank($pageRank)
-	{
-		$this->pageRank = $pageRank;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Seo\BackLink
-	 */
-	public function unsetPageRank()
-	{
-		$this->pageRank = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return integer|NULL
-	 */
-	public function getPageRank()
-	{
-		return $this->pageRank;
-	}
-		
-	/**
-	 * @param string
-	 * @return \Entity\Seo\BackLink
-	 */
-	public function setHtmlCode($htmlCode)
-	{
-		$this->htmlCode = $htmlCode;
-
-		return $this;
-	}
-		
-	/**
-	 * @return string|NULL
-	 */
-	public function getHtmlCode()
-	{
-		return $this->htmlCode;
-	}
-		
-	/**
-	 * @param string
-	 * @return \Entity\Seo\BackLink
-	 */
-	public function setNotes($notes)
-	{
-		$this->notes = $notes;
-
-		return $this;
-	}
-		
-	/**
-	 * @return string|NULL
-	 */
-	public function getNotes()
-	{
-		return $this->notes;
 	}
 }

@@ -87,12 +87,6 @@ class Location extends \Entity\BaseEntityDetails {
 	 */
 	protected $addresses;
 
-	/**
-	 * @var Collection
-	 * @ORM\OneToMany(targetEntity="Entity\Seo\BackLink", mappedBy="location")
-	 */
-	protected $backLinks;
-
 	/* ----------------------------- attributes from country ----------------------------- */
 
 	/**
@@ -253,7 +247,6 @@ class Location extends \Entity\BaseEntityDetails {
 		parent::__construct();
 
 		$this->addresses = new \Doctrine\Common\Collections\ArrayCollection;
-		$this->backLinks = new \Doctrine\Common\Collections\ArrayCollection;
 	}
 		
 	/**
@@ -518,40 +511,6 @@ class Location extends \Entity\BaseEntityDetails {
 	public function getAddresses()
 	{
 		return $this->addresses;
-	}
-		
-	/**
-	 * @param \Entity\Seo\BackLink
-	 * @return \Entity\Location\Location
-	 */
-	public function addBackLink(\Entity\Seo\BackLink $backLink)
-	{
-		if(!$this->backLinks->contains($backLink)) {
-			$this->backLinks->add($backLink);
-		}
-		$backLink->setLocation($this);
-
-		return $this;
-	}
-		
-	/**
-	 * @param \Entity\Seo\BackLink
-	 * @return \Entity\Location\Location
-	 */
-	public function removeBackLink(\Entity\Seo\BackLink $backLink)
-	{
-		$this->backLinks->removeElement($backLink);
-		$backLink->unsetLocation();
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Seo\BackLink[]
-	 */
-	public function getBackLinks()
-	{
-		return $this->backLinks;
 	}
 		
 	/**
