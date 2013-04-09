@@ -81,6 +81,13 @@ class BaseImport {
 		// 	),
 		// 	'subsections' => array(),
 		// ),
+		'phones' => array(
+			'entities' => array(
+				'\Contact\Phone' => array(),
+			),
+			'subsections' => array(),
+			'saveImportStatus' => FALSE,
+		),
 		'users' => array(
 			'entities' => array(
 				'\User\User' => array(),
@@ -156,6 +163,13 @@ class BaseImport {
 		// 	'subsections' => array(),
 		// 	'saveImportStatus' => FALSE,
 		// ),
+		'backLinks' => array(
+			'entities' => array(
+				'\Seo\BackLink' => array(),
+			),
+			'subsections' => array(),
+			'saveImportStatus' => FALSE,
+		),
 		'updateLanguage' => array(
 			'entities' => array(
 			),

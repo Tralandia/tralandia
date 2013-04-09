@@ -73,6 +73,12 @@ class BackLink extends \Entity\BaseEntity {
 	protected $linkTitle;
 
 	/**
+	 * @var integer
+	 * @ORM\Column(type="integer", nullable=true)
+	 */
+	protected $pageRank;
+
+	/**
 	 * @var text
 	 * @ORM\Column(type="text")
 	 */
@@ -313,6 +319,35 @@ class BackLink extends \Entity\BaseEntity {
 	public function getLinkTitle()
 	{
 		return $this->linkTitle;
+	}
+		
+	/**
+	 * @param integer
+	 * @return \Entity\Seo\BackLink
+	 */
+	public function setPageRank($pageRank)
+	{
+		$this->pageRank = $pageRank;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Seo\BackLink
+	 */
+	public function unsetPageRank()
+	{
+		$this->pageRank = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return integer|NULL
+	 */
+	public function getPageRank()
+	{
+		return $this->pageRank;
 	}
 		
 	/**
