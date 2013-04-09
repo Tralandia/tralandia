@@ -52,31 +52,32 @@ class LanguageRepository extends \Repository\BaseRepository {
 	{
 		$rows = $this->findSupported();
 		$return = [];
-		$sort = [];
+		$htmlOptions = [];
 		$elTemplate = Html::el('option');
 		foreach($rows as $row) {
+			$attributes = [];
 			/** @var $row \Entity\Language */
 			$key = $row->getId();
+
 			$name = $translator->translate($row->getName());
 			$localName = $row->getName()->hasTranslationText($row) ? $row->getName()->getTranslationText($row) : NULL;
 			$text = (!$localName || $name == $localName) ? $name : $name . ' (' . Strings::lower($localName) . ')';
 			$return[$key] = $text;
 
+			$el = clone $elTemplate;
+			$el->value($key)->setText($text);
+
 			if($presenter) {
 				$link = $presenter->link('Registration:default', [BaseRoute::LANGUAGE => $row]);
-				$el = clone $elTemplate;
-				$sort[$key] = $el->value($key)->addAttributes(['data-redirect' => $link])->setText($text);
+				$attributes['data-redirect'] = $link;
 			}
+			$attributes['data-webalized-text'] = Strings::webalize($text);
+			$htmlOptions[$key] = $el->addAttributes($attributes);
 		}
 
-
-		if($presenter) {
-			$collator->asort($return);
-			foreach($return as $key => $value) {
-				$return[$key] = $sort[$key];
-			}
-		} else {
-			$collator->asort($return);
+		$collator->asort($return);
+		foreach($return as $key => $value) {
+			$return[$key] = $htmlOptions[$key];
 		}
 
 		return $return;
