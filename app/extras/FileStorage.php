@@ -70,7 +70,8 @@ class FileStorage extends Nette\Object
 
 	public function saveFromFile($filePath)
 	{
-		if (!is_file($filePath)) {
+		// if (strlen(get_file_contents($filePath) == 0) {
+		if (file_exists($filePath)) {
 			throw new Nette\FileNotFoundException("$filePath");
 		}
 
