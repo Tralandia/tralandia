@@ -14,9 +14,10 @@
 		base.el 		= el;
 		base.$el 		= $(el);
 		base.$tabs 		= base.$el.find('#navBarTabs');
-		base.$prevLink	= base.$el.find('a.leftArrow');
-		base.$nextLink	= base.$el.find('a.rightArrow');
+		// base.$prevLink	= base.$el.find('a.leftArrow');
+		// base.$nextLink	= base.$el.find('a.rightArrow');
 		base.$contents 	= base.$el.find('#navbarTabContent');
+		base.$shareContent = base.$el.find('#shareContent')
 
 		// vars
 		base.activeTabName 	= null;
@@ -53,6 +54,7 @@
 			base.setActiveTab();
 			base.setActiveContent();
 			base.setLastActive();
+			base.hideShare();
 			// base.updateNav();
 		}
 
@@ -139,7 +141,38 @@
 
 		base.share = function()
 		{
+			removejscssfile('http://platform.twitter.com/widgets.js','js');
+			removejscssfile('https://apis.google.com/js/plusone.js','js');
+
+			$this = $(this);
+			tabName = $this.attr('for');
 			
+			if (tabName=='navBarFavorites') {
+				var shareUrl = $('#favoritesStaticContainer').attr('data-favoritesLink');
+				importShareLink(shareUrl , function(d){
+					initNavBarShare(d.link);
+				});
+			} else if (tabName=='navBarSerchResults') {
+				initNavBarShare($this.attr('data-href'));
+			}
+
+			if($this.hasClass('open')){
+				base.hideShare();
+			} else {
+				base.showShare();
+			}
+
+			$this.toggleClass('open');
+		}
+
+		base.showShare = function()
+		{
+			base.$shareContent.show();			
+		}
+
+		base.hideShare = function()
+		{
+			base.$shareContent.hide();
 		}
 
 		/**
@@ -194,6 +227,7 @@
 			$('a.removeLink').live('click', base.removeFavorite);
 			$('a.removeLink').on('click', base.removeFavorite);
 			$('.addToFavorites').on('click', base.toggleAddFavorite);
+			base.$tabs.on('click', 'a.share', base.share);
 		}
 
 		/**

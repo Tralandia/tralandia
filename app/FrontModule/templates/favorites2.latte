@@ -22,23 +22,18 @@
 
 			{* links right *}
 			<li n:class="$navBarLastActive!='navBarFavorites' ? hide, share, pull-right" for="navBarFavorites">
-				<a data-href="/" class="share">{_o100115}</a>
+				<a data-href="#" class="share" for="navBarFavorites">{_o100115}</a>
 			</li>
 			<li n:class="$navBarLastActive!='navBarSerchResults' ? hide, share, pull-right" n:ifset="$lastSearchResults" for="navBarSerchResults">
 				<a href="{$lastSearchResults['searchLink']}"><i class="icon-arrow-left"></i> Back to list</a>
-				<a data-href="/" class="share">{_o100116}</a>
+				<a data-href="{$lastSearchResults['searchLink']}" class="share" for="navBarSerchResults">{_o100116}</a>
 			</li>
 		</ul>
-		<ul class="dropdown-menu" role="menu" id="favoriteShareContent" style="display: none;">
+		<ul class="dropdown-menu" role="menu" id="shareContent" style="display: none;">
 			<li class="favoriteSocialIcons">
 				<table>
 					<tr>
-						<td id="dynamicShareContainer" colspan="3">
-							<span class="facebook facebookLikeButtonContainer" data-facebook-src="http://google.com"></span>
-							<g:plusone size="medium" href=""  style="margin-top:2px;"></g:plusone>
-							<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://google.com" data-via="Tralandia" data-text="{_o100036}" data-hashtags="{_o100034}" data-lang="{$currentLanguage->iso}">Tweet</a>                
-							<a href="http://pinterest.com/pin/create/button/?url=http://google.com" class="pin-it-button" count-layout="horizontal"></a> 
-						</td>		                			
+						<td id="dynamicShareContainer" colspan="3"></td>		                			
 					</tr>
 					<tr>
 						<td><label>{_o100067}</label></td>
@@ -72,7 +67,7 @@
 							{var $image = $rental->getMainImage()}
 							{var $seen = in_array($rental->getId(), $favoriteVisitedRentals)}
 							{var $isCurrent = isset($currentRental) ? $rental->id==$currentRental->id : false}
-							<li rel="{$rental->getId()}" data-title="{_$rental->name}" data-thumb="{fakeImage}" data-location="{_$rental->address->locality->name}" data-price="{$rental->price}" data-capacity="{$rental->maxCapacity}" style="background-image: url({fakeImage});" class="{if $isCurrent}active{/if}">
+							<li rel="{$rental->getId()}" data-title="{_$rental->name}" data-thumb="{fakeImage}" data-location="{_$rental->address->locality->name}" data-price="{$rental->price}" data-capacity="{$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}" style="background-image: url({fakeImage});" class="{if $isCurrent}active{/if}">
 								<a href="#" class="removeLink"></a>
 								<a n:href="Rental:detail $rental" class="link">
 									<div n:if="$seen" class="checked entypo-eye"></div>
@@ -91,7 +86,7 @@
 							{foreach $lastSeenRentals as $rental}
 								{var $image = $rental->getMainImage()}
 								{var $isCurrent = isset($currentRental) ? $rental->id==$currentRental->id : false}
-								<li rel="{$rental->getId()}" data-title="{_$rental->name}" data-thumb="{fakeImage}" data-location="{_$rental->address->locality->name}" data-price="{$rental->price}" data-capacity="{$rental->maxCapacity}" style="background-image: url({fakeImage});" class="{if $isCurrent}active{/if}">
+								<li rel="{$rental->getId()}" data-title="{_$rental->name}" data-thumb="{fakeImage}" data-location="{_$rental->address->locality->name}" data-price="{$rental->price}" data-capacity="{$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}" style="background-image: url({fakeImage});" class="{if $isCurrent}active{/if}">
 									<a n:href="Rental:detail $rental" class="link"></a>
 								</li>
 							{/foreach}
@@ -109,7 +104,7 @@
 								{var $image = $rental->getMainImage()}
 								{var $seen = in_array($rental->getId(), $favoriteVisitedRentals)}
 								{var $isCurrent = isset($currentRental) ? $rental->id==$currentRental->id : false}
-								<li rel="{$rental->getId()}" data-title="{_$rental->name}" data-thumb="{fakeImage}" data-location="{_$rental->address->locality->name}" data-price="{$rental->price}" data-capacity="{$rental->maxCapacity}" style="background-image: url({fakeImage});" class="{if $isCurrent}active{/if}">
+								<li rel="{$rental->getId()}" data-title="{_$rental->name}" data-thumb="{fakeImage}" data-location="{_$rental->address->locality->name}" data-price="{$rental->price}" data-capacity="{$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}" style="background-image: url({fakeImage});" class="{if $isCurrent}active{/if}">
 									<a n:href="Rental:detail $rental" class="link">
 										<div n:if="$seen" class="checked entypo-eye"></div>
 									</a>

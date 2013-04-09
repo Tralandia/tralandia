@@ -21,7 +21,7 @@ $(function(){
 								
 			return c;
 		},
-		delay: {show: 250, hide: 0},
+		delay: {show: 500, hide: 0},
 		animation: false,
 		placement: 'bottom'
 	});
