@@ -64,8 +64,8 @@ class ImportRentals extends BaseImport {
 		if ($this->developmentMode == TRUE) {
 			$countryId = qc('select id from countries where iso = "'.$this->presenter->getParameter('countryIso').'"');
 			//d($this->presenter->getParameter('countryIso'), $countryId); exit;
-			//$r = q('select * from objects where country_id = '.$countryId.' order by id limit 500');
-			$r = q('select * from objects where id = 6609');
+			$r = q('select * from objects where country_id = '.$countryId.' order by id limit 100');
+			//$r = q('select * from objects where id = 6609');
 		} else {
 			$existingIds = array();
 			exit('dorobit liveImport do ImportRentals.php');
@@ -80,31 +80,6 @@ class ImportRentals extends BaseImport {
 			$rental = $context->rentalEntityFactory->create();
 			$rental->id = $rentalIdIncrement++;
 			$rental->oldId = $x['id'];
-
-			// Pricelists
-			$temp = unserialize(stripslashes($x['prices_upload']));
-			if (is_array($temp) && count($temp)) {
-				foreach ($temp as $key => $value) {
-					if (strlen(file_get_contents('http://www.tralandia.sk/u/'.$value[4])) == 0) continue;
-					/** @var $pricelist \Entity\Rental\PriceList */
-					$pricelist = $context->rentalPriceListManager->save('http://www.tralandia.sk/u/'.$value[4]);
-					$pricelist->setName($value[2]);
-					$pricelist->setRental($rental);
-					$pricelist->setLanguage($context->languageRepositoryAccessor->get()->findOneByOldId($value[1]));
-					$rental->addPricelist($pricelist);
-
-//					$pricelistDecorator = $context->rentalPricelistDecoratorFactory->create($pricelist);
-//					$pricelistDecorator->setContentFromFile('http://www.tralandia.sk/u/'.$value[4]);
-//					$pricelistDecorator->getEntity()->name = $value[2];
-//					$pricelistDecorator->getEntity()->rental = $rental;
-//					$pricelistDecorator->getEntity()->language = $context->languageRepositoryAccessor->get()->findOneByOldId($value[1]);
-				}
-			}
-
-			d($pricelist);
-			exit;
-
-
 
 			$user = $context->userRepositoryAccessor->get()->findOneByLogin(qc('select email from members where id = '.$x['member_id']));
 			if (!$user) {
@@ -392,6 +367,20 @@ class ImportRentals extends BaseImport {
 				$rental->classification = (float)$x['classification'];
 			} else if ($x['classification'] == 9) {
 				$rental->classification = (float)0;
+			}
+
+			// Pricelists
+			$temp = unserialize(stripslashes($x['prices_upload']));
+			if (is_array($temp) && count($temp)) {
+				foreach ($temp as $key => $value) {
+					if (!file_exists('http://www.tralandia.sk/u/'.$value[4])) continue;
+
+					$pricelist = $context->rentalPriceListManager->save('http://www.tralandia.sk/u/'.$value[4]);
+					$pricelist->setName($value[2]);
+					$pricelist->setRental($rental);
+					$pricelist->setLanguage($context->languageRepositoryAccessor->get()->findOneByOldId($value[1]));
+					$rental->addPricelist($pricelist);
+				}
 			}
 
 			// Calendar
