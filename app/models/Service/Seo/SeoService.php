@@ -63,7 +63,7 @@ class SeoService extends Nette\Object {
 	);
 
 	protected $defaultVariation = array(
-		'plural' => \Entity\Language::DEFAULT_PLURAL,
+		Translator::VARIATION_PLURAL => \Entity\Language::DEFAULT_PLURAL,
 		Translator::VARIATION_GENDER => \Entity\Language::DEFAULT_GENDER,
 		Translator::VARIATION_CASE => \Entity\Language::DEFAULT_CASE,
 	);
