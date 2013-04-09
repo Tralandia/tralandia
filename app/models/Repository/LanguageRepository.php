@@ -55,33 +55,32 @@ class LanguageRepository extends \Repository\BaseRepository {
 		$htmlOptions = [];
 		$elTemplate = Html::el('option');
 		foreach($rows as $row) {
-			$attributes = [];
 			/** @var $row \Entity\Language */
 			$key = $row->getId();
+			$el = clone $elTemplate;
 
 			$name = $translator->translate($row->getName());
 			$localName = $row->getName()->hasTranslationText($row) ? $row->getName()->getTranslationText($row) : NULL;
 			$text = (!$localName || $name == $localName) ? $name : $name . ' (' . Strings::lower($localName) . ')';
 			$return[$key] = $text;
 
-			$el = clone $elTemplate;
-			$el->value($key)->setText($text);
-
 			if($presenter) {
 				$link = $presenter->link('Registration:default', [BaseRoute::LANGUAGE => $row]);
-				$attributes['data-redirect'] = $link;
+				$htmlOptions[$key] = $el->value($key)->addAttributes(['data-redirect' => $link])->setText($text);
 			}
-			$attributes['data-webalized-text'] = Strings::webalize($text);
-			$htmlOptions[$key] = $el->addAttributes($attributes);
 		}
 
-		$collator->asort($return);
-		foreach($return as $key => $value) {
-			$return[$key] = $htmlOptions[$key];
+
+		if($presenter) {
+			$collator->asort($return);
+			foreach($return as $key => $value) {
+				$return[$key] = $htmlOptions[$key];
+			}
+		} else {
+			$collator->asort($return);
 		}
 
 		return $return;
 	}
-
 
 }
