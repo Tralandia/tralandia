@@ -1,4 +1,9 @@
-{*
+	{define #opentag}
+	{default $class = ''}
+	{default $dataLink = ''}
+	<tr data-link="{$dataLink}" n:class="$control->hasErrors() ? 'invalid '.$class : $class">
+	{/define #opentag}	 
+	{*
 	Fieldset -------------------------------------------
 	@param $control \Nette\Forms\Controls\BaseControl
 	*}
@@ -114,7 +119,7 @@
 	@param $controlClass string
 	*}
 	{define #checkbox}
-	<tr>
+	{include #opentag , class => $controlClass , control => $control}
 		<td>
 			{_$control->caption}
 		</td>
@@ -140,7 +145,7 @@
 
 	{define #baseControl}
 	{default $class = ''}
-	<tr class="simpleInput {$class}">
+	{include #opentag , class => 'simpleInput '.$class , control => $control}
 		<td>
 			{_$control->caption}
 		</td>
@@ -204,7 +209,7 @@
 	{define #checkboxList}
 	{default $colCount = 1}
 	{if $colCount == 1}
-	<tr class="simpleInput">
+	{include #opentag , class => 'simpleInput' , control => $control}
 		<td style="vertical-align: top; padding-top: 4px;">{_$control->caption}</td>
 		<td>
 			{foreach $control as $key => $label}
@@ -291,7 +296,7 @@
 }
 {?unset($control)}
 
-<tr class="simpleInput">
+{include #opentag , class => 'simpleInput ' , control => $mainControl}
 	<td>
 		{_$mainControl->caption}
 	</td>
@@ -324,7 +329,12 @@
 }
 {?unset($control)}
 
-<tr class="traMapcontrol" data-link="{plink validateAddress}">
+{capture $datalink}
+{plink validateAddress}
+{/capture}
+
+{include #opentag , class => 'traMapcontrol' , dataLink => $datalink , control => $mainControl}
+
 	<td colspan="3">
 
 {* 		<table>
@@ -347,7 +357,10 @@
 
 		<table>
 			<tr>
-				<td colspan="5"><span class="help">{_o100090}</span></td>
+				<td colspan="5">
+					<span class="invalidAlert">{include #controlErrors, errors => $mainControl->getErrors()}</span>
+					<span class="help">{_o100090}</span>
+				</td>
 			</tr>
 			<tr>
 				<td>{input $container['address'], data-name => "address", data-validation-message => "gps-validation-message"}</td>
@@ -502,17 +515,18 @@
 {define #rentalPhotos}
 {var
 	$container = $control;
+	$mainControl = $container->getMainControl()
 }
 {?unset($control)}
-<tr class="control-photo"><!-- control photo start -->
+{include #opentag , class => 'control-photo' , control => $mainControl}
+<!-- control photo start -->
 
 	<td colspan="3">
 		<div class="row-fluid">
 
-
 			<div class="span12">
 
-				<div class="help">#toto je error text</div>
+				<div class="help">{include #controlErrors, errors => $mainControl->getErrors()}</div>			
 
 				<ul id="sortable" class="ui-sortable" n:inner-foreach="$container->getImages() as $image">
 					{dump $image}
