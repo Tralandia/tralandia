@@ -14,11 +14,11 @@ function q($query, $show = 0) {
 	}
 	mysql_select_db('tralandia_old', $link);
 
-	if ($show == 1) debug($query);
+	if ($show == 1) d($query);
 	if ($r =@mysql_query($query, $link)) {
 		return $r;
 	} else {
-		debug($query." ---> mySQL Error: ".mysql_error($link));
+		d($query." ---> mySQL Error: ".mysql_error($link));
 		return FALSE;
 	}
 }
@@ -37,11 +37,11 @@ function qNew($query, $show = 0) {
 	}
 	mysql_select_db('tralandia', $link1);
 
-	if ($show == 1) debug($query);
+	if ($show == 1) d($query);
 	if ($r = @mysql_query($query, $link1)) {
 		return $r;
 	} else {
-		debug($query." ---> mySQL Error: ".mysql_error($link1));
+		d($query." ---> mySQL Error: ".mysql_error($link1));
 		return FALSE;
 	}
 }

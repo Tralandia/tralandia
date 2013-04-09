@@ -34,13 +34,6 @@ class Phone extends \Entity\BaseEntity {
 	 */
 	protected $primaryLocation;
 
-	/**
-	 * @var Collection
-	 * @ORM\OneToOne(targetEntity="Entity\Rental\Rental")
-	 */
-	protected $rental;
-
-
 	public function __toString()
 	{
 		return "$this->value";
@@ -140,24 +133,5 @@ class Phone extends \Entity\BaseEntity {
 	public function getPrimaryLocation()
 	{
 		return $this->primaryLocation;
-	}
-		
-	/**
-	 * @param \Entity\Rental\Rental
-	 * @return \Entity\Contact\Phone
-	 */
-	public function setRental(\Entity\Rental\Rental $rental)
-	{
-		$this->rental = $rental;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Rental\Rental|NULL
-	 */
-	public function getRental()
-	{
-		return $this->rental;
 	}
 }
