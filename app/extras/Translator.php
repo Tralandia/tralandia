@@ -77,11 +77,12 @@ class Translator implements \Nette\Localization\ITranslator {
 
 		if ($variation !== NULL) {
 			$variationCount = Arrays::get($variation, self::VARIATION_COUNT, NULL);
-			if(array_key_exists(self::VARIATION_COUNT, $variation)) {
-				unset($variation[self::VARIATION_COUNT]);
+			unset($variation[self::VARIATION_COUNT]);
+
+			if($variationCount !== NULL) {
+				$variation[self::VARIATION_PLURAL] = $this->language->getPlural($variationCount);
 			}
 
-			$variation[self::VARIATION_PLURAL] = $this->language->getPlural($variationCount);
 			$variation = array_merge(
 				[
 					self::VARIATION_PLURAL => $this->language->getPlural(NULL),
