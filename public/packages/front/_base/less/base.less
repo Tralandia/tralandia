@@ -215,15 +215,7 @@ ul.arrows {
 	}
 }
 
-
-
-.btn.btn-orangeDark {
-	.basic-gradient(#F68903,#AD6A18);
-	border: 1px solid rgb(163, 93, 9);
-	color: @white;
-	&:hover {
-		.basic-gradient(#AD6A18,#F68903);
-	}	
+.btn.btn-orange , .btn.btn-orangeDark {
 
 	i.icon-spinner {
 		display: none;
@@ -232,9 +224,8 @@ ul.arrows {
 	&.active {
 		background: #AD6A18;
 
-
-color: #F68903;
-cursor: default;
+		color: #F68903;
+		cursor: default;
 
 		i.icon-spinner {
 			display: block;
@@ -249,6 +240,18 @@ cursor: default;
 			display: none;
 		}
 	}
+}
+
+.btn.btn-orangeDark {
+	.basic-gradient(#F68903,#AD6A18);
+	border: 1px solid rgb(163, 93, 9);
+	color: @white;
+	&:hover {
+		.basic-gradient(#AD6A18,#F68903);
+	}	
+
+
+
 }
 
 .btn.btn-silver {
