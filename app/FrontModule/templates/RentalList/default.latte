@@ -49,9 +49,9 @@
 										<span class="clasification"><i class="entypo-star"></i>{/for}{/if}</h2>
 
 						        		{if $mainImage = $rental->getMainImage()}
-											<button rel="{$rental->id}" data-title="{_$rental->name}" data-thumb="{fakeImage}" data-location="{_$rental->address->locality->name}" data-price="{$rental->price}" data-capacity="{$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}" data-link="{link Rental:detail $rental}" data-thumb="{$basePath}{$mainImage|rentalImageSrc}" class="addToFavorites btn btn-mini listCompareBtn active"><span class="entypo-heart">{_o12334}</span> </button>
+											<button rel="{$rental->id}" data-title="{_$rental->name}" data-thumb="{fakeImage}" data-location="{_$rental->address->locality->name}" data-price="{$rental->price}" data-capacity="{$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}" data-link="{link Rental:detail $rental}" data-thumb="{$basePath}{$mainImage|rentalImageSrc}" class="addToFavorites btn btn-mini listCompareBtn active"><span class="entypo-heart">{_o100140}</span> </button>
 						        		{else}
-											<button rel="{$rental->id}" data-title="{_$rental->name}" data-thumb="{fakeImage}" data-location="{_$rental->address->locality->name}" data-price="{$rental->price}" data-capacity="{$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}" data-link="{link Rental:detail $rental}" data-thumb="http://www.tralandia.com/u/32/13539183882248.jpg" class="addToFavorites btn btn-mini listCompareBtn active"><span class="entypo-heart">{_o12334}</span> </button>
+											<button rel="{$rental->id}" data-title="{_$rental->name}" data-thumb="{fakeImage}" data-location="{_$rental->address->locality->name}" data-price="{$rental->price}" data-capacity="{$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}" data-link="{link Rental:detail $rental}" data-thumb="http://www.tralandia.com/u/32/13539183882248.jpg" class="addToFavorites btn btn-mini listCompareBtn active"><span class="entypo-heart">{_o100140}</span> </button>
 						        		{/if}
 
 									<div class="clearfix"></div>
@@ -119,7 +119,8 @@
 				</div>
 			{else}
 				<div class="noSearchResults">
-					<h2><i class="entypo-search"></i> Nenašiel som žiadne ubytovacie zariadenia.</h2>
+					<i class="entypo-search"></i>
+					<h2>Nenašiel som žiadne ubytovacie zariadenia.</h2>
 					<p>Skúste iné vyhľadávanie, jemnejšie kritériá.</p>
 				</div>
 			{/if}
