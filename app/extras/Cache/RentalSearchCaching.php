@@ -71,10 +71,12 @@ class RentalSearchCaching extends \Nette\Object {
 			$this->cacheContent[RentalSearchService::CRITERIA_RENTAL_TYPE][$rental->type->id][$rental->id] = $rental->id;
 		}
 
+		/*placement
 		// Set Placement
 		foreach ($rental->getPlacements() as $value) {
 			$this->cacheContent[RentalSearchService::CRITERIA_PLACEMENT][$value->getId()][$rental->getId()] = $rental->getId();
 		}
+		placement*/
 
 		// Set Max Capacity
 		if ($rental->maxCapacity) {
