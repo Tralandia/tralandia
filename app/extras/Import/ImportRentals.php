@@ -107,7 +107,7 @@ class ImportRentals extends BaseImport {
 			$address = $context->contactAddressRepositoryAccessor->get()->createNew(FALSE);
 			$address->status = \Entity\Contact\Address::STATUS_UNCHECKED;
 
-			$address->address = implode('\n', array_filter(array($x['address'])));
+			$address->address = implode('\n', array_filter(array(trim($x['address']))));
 			$address->subLocality = $x['sublocality'];
 			$address->postalCode = $x['post_code'];
 			$address->primaryLocation = $context->locationRepositoryAccessor->get()->findOneBy(array('oldId' => $x['country_id'], 'type' => $locationTypes['country']));
