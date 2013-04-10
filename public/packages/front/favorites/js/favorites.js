@@ -373,7 +373,7 @@ Favorites.updateList = function()
 			var patternText = $pattern[0].outerHTML;					
 
 			patternText = patternText.replace("~id~", data.id)							
-							.replace("~title~", data.title)
+							.replace("~name~", data.name)
 							.replace("~link~", data.link)
 							.replace("~thumb~", data.thumb)
 							.replace("~location~", data.location)

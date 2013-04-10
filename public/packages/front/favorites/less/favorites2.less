@@ -1,6 +1,10 @@
 
 @import '../../_base/less/lessFunctions.less';
 
+#favoritesStaticContainer {
+	z-index: 999;
+}
+
 .favorites2 {
 	margin: 0 10px;
 	height: 73px;
@@ -276,13 +280,28 @@
 		width: 500px;
 		right: -1px;
 		left: initial;
-		top: 25px;
+		top: 28px;
 		border: 1px solid #ccc;
 		padding: 0px;
 		height: auto;
 		position: absolute;
 		background: #fff;
 		.basic-border-radius( 5px );
+
+		a.close {
+			position: absolute;
+			right: 8px;
+			top: 12px;
+			padding: 0;
+
+			&:hover {
+				background: none;
+
+				i {
+					color: #000;
+				}
+			}
+		}
 
 		table {
 			width: 100%;
@@ -325,10 +344,11 @@
 			}
 
 			button {
-				height: 25px;
-				line-height: 14px;
+				height: 26px;
+				line-height: 12px;
 				font-size: 12px;
 				font-weight: normal;
+				margin-left: 5px;
 			}
 
 
