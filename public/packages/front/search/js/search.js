@@ -127,7 +127,15 @@
 
 function updateCriteriaCount(){
 
-	var url = '/'+generateRedirectUrl(true);
+	var url = generateRedirectUrl(true);
+
+	if(url){
+		url = '/'+url;
+	} else {
+		$('#getSearchCount').html('');
+		$('#searchControlLink').attr('href','#');
+		return false;		
+	}
 
 	console.log(url);
 
@@ -167,9 +175,6 @@ function generateRedirectUrl(count){
 		path.push(v.value);
 	});
 
-
-
-
 	// remove empty eements from array
 	path = $.grep(path,function(n){
 	    return(n);
@@ -179,13 +184,18 @@ function generateRedirectUrl(count){
 
 	var p = $('.searchForm').find("select[value][value!='']:not(.path)").serialize();
 
-	// console.log(p);
+	var allParameetrs = p+path;
+		allParameetrs = allParameetrs.length;
+
+		if(allParameetrs == 0){
+			return false;
+		}
 
 	var url = path+(p != '' ? '?'+p : '');
 
 	if(count){
-		if(p.length == 0){
-			url+='?do=searchBar-getSearchCount'
+		if(p.length == 0){			
+			url+='?do=searchBar-getSearchCount';
 		} else {
 			url+='&do=searchBar-getSearchCount';
 		}
@@ -197,33 +207,24 @@ function generateRedirectUrl(count){
 }
 
 
-
-function extractDomainUrl(url){
-
-}
-
-
 function updateSerachLinkUrl(){
 
+	var url = generateRedirectUrl(false);
+	if(url) {
+		url = '/'+url;
+	} else {
+		url = '#';
+	}
 
+	if('http://'+document.domain+'/'+generateRedirectUrl(false) == location.href) {
+		url = '#';
+	} 	
 
-		var url = '/'+generateRedirectUrl(false);
-
-		if(url == '/' ){
-			
-		}
-
-		if('http://'+document.domain+'/'+generateRedirectUrl(false) == location.href) {
-			url = '#';
-		} 	
-
-
-		$('#searchControlLink').attr('href',url);
-		var link = $('#searchControlLink')[0].outerHTML;
-		var parent = $('#searchControlLink').parent();
-			$('#searchControlLink').remove();
-			parent.append(link);
-
+	$('#searchControlLink').attr('href',url);
+	var link = $('#searchControlLink')[0].outerHTML;
+	var parent = $('#searchControlLink').parent();
+		$('#searchControlLink').remove();
+		parent.append(link);
 			
 }
 
@@ -280,16 +281,12 @@ $(function(){
 
 	$('[data-autocomplete-url]').searchFormSuggest();
 
-
-
 	$('.searchForm .select2.disabledFulltext').select2({
 		dropdownCssClass: 'searchSelect',
 		allowClear: true,
 		minimumResultsForSearch: 'X',
 	});	
 	
-
-
 
 	$('.searchForm .select2:not(.disabledFulltext)').select2({
 		dropdownCssClass: 'searchSelect'
