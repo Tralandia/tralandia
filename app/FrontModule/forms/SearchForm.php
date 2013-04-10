@@ -76,7 +76,7 @@ class SearchForm extends BaseForm
 		$countries = $this->searchOptionGenerator->generateCountries($this->presenter);
 
 		$rentalTypes = $this->searchOptionGenerator->generateRentalType();
-		$placement = $this->searchOptionGenerator->generatePlacement();
+		/*placement $placement = $this->searchOptionGenerator->generatePlacement(); placement*/
 		$prices = $this->searchOptionGenerator->generatePrice($this->environment->getCurrency());
 		$capacity = $this->searchOptionGenerator->generateCapacity();
 		$languages = $this->searchOptionGenerator->generateSpokenLanguage();
@@ -93,9 +93,11 @@ class SearchForm extends BaseForm
 			->setPrompt('')
 			->setAttribute('data-placeholder', $this->translate('o20926'));
 
+		/*placement
 		$this->addSelect(FrontRoute::PLACEMENT, 'o100113', $placement)
 			->setPrompt('')
 			->setAttribute('data-placeholder', $this->translate('o100113'));
+		placement*/
 
 		$this->addSelect(FrontRoute::PRICE_FROM, 'o100093', $prices)
 			->setPrompt('')
@@ -141,10 +143,12 @@ class SearchForm extends BaseForm
 			$values->rentalType = $rentalTypeRepository->find($values->rentalType);
 		}
 
+		/*placement
 		if (isset($values->placement)) {
 			$repository = $this->em->getRepository(RENTAL_PLACEMENT_ENTITY);
 			$values->placement = $repository->find($values->placement);
 		}
+		placement*/
 
 		if (isset($values->spokenLanguage)) {
 			$languageRepository = $this->em->getRepository(LANGUAGE_ENTITY);

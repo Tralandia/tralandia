@@ -104,11 +104,13 @@ class RentalSearchService extends Nette\Object
 		$this->resetResults();
 	}
 
+	/*placement
 	public function setPlacementCriterion(Entity\Rental\Placement $placement = NULL)
 	{
 		$this->criteria[self::CRITERIA_PLACEMENT] = $placement;
 		$this->resetResults();
 	}
+	placement*/
 
 	public function setCapacityCriterion($capacity = NULL)
 	{

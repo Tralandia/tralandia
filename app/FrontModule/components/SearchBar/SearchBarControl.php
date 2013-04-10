@@ -24,11 +24,12 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 	 */
 	public $rentalType;
 
+
 	/**
 	 * @persistent
 	 * @var \Entity\Rental\Placement|NULL
 	 */
-	public $placement;
+	/*placement public $placement; placement*/
 
 	/**
 	 * @persistent
@@ -126,9 +127,11 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 			$jsVariables['data-rental-type'] = $pathSegment->getPathSegment();
 		}
 
+		/*placement
 		if($this->placement) {
 			$jsVariables['data-placement'] = $this->placement->getId();
 		}
+		placement*/
 
 		if($this->priceFrom) {
 			$jsVariables['data-price-from'] = $this->priceFrom;
@@ -185,12 +188,14 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 			$bottomLinks['title'] = 'o20926';
 			$bottomLinks['iconClass'] = 'icon-home';
 		}
+		/*placement
 		if(!count($links) && !$this->placement) {
 			$links = $this->searchOptionGenerator->generatePlacementLinks($this->getSearch());
 			$bottomLinks['linkArgument'] = FrontRoute::PLACEMENT;
 			$bottomLinks['title'] = 'o100113';
 			$bottomLinks['iconClass'] = 'icon-picture';
 		}
+		placement*/
 		if(!count($links) && !$this->capacity) {
 			$links = $this->searchOptionGenerator->generateCapacityLinks($this->getSearch());
 			$bottomLinks['linkArgument'] = FrontRoute::CAPACITY;
@@ -286,6 +291,12 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		if ($this->board) {
 			$search->setBoardCriterion($this->board);
 		}
+
+		/*placement
+		if ($this->placement) {
+			$search->setPlacementCriterion($this->placement);
+		}
+		placement*/
 
 		if ($this->spokenLanguage) {
 			$search->setSpokenLanguageCriterion($this->spokenLanguage);
