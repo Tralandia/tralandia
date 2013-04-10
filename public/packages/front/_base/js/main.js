@@ -13,6 +13,7 @@ var $class = function(definition) {
 	constructor.prototype.constructor = constructor;
 	return constructor;
 };
+var navBarShare = false;
 
 function executeFunctionByName(functionName, context /*, args */) {
   var args = Array.prototype.slice.call(arguments).splice(2);
@@ -490,9 +491,8 @@ $(document).ready(function(){
 	});
 
 
+	$('body').click(function(event){
 
-
-	$('body').click(function(){
 		if(langmenuOpen){
 			$('#langMenuOptions').hide();
 			$('#langMenuOptionsOpen').find('i.entypo-chevron-up').removeClass('entypo-chevron-up').addClass('entypo-chevron-down');
@@ -503,9 +503,12 @@ $(document).ready(function(){
 			$('#socialIconsMenu').hide();
 			socialIconsMenu = false;
 		}
-
-		// console.log('allaaaa');
-
+		// if(navBarShare){
+		// 	if (!$(event.target).parents('[for=navBarFavorites]').length) {
+		// 		$('#navBar #shareContent').hide();
+		// 		navBarShare = false;
+		// 	}
+		// }
 
 	});
 

@@ -20,8 +20,9 @@
 		base.$shareContent = base.$el.find('#shareContent')
 
 		// vars
-		base.activeTabName 	= null;
-		base.currentRental	= null;
+		base.activeTabName 		= null;
+		base.currentRental		= null;
+		base.navBarShareShown 	= false;
 
 		/**
 		 * Instalation
@@ -54,7 +55,6 @@
 			base.setActiveTab();
 			base.setActiveContent();
 			base.setLastActive();
-			base.hideShare();
 			// base.updateNav();
 		}
 
@@ -141,6 +141,7 @@
 
 		base.share = function()
 		{
+			console.log('share');
 			removejscssfile('http://platform.twitter.com/widgets.js','js');
 			removejscssfile('https://apis.google.com/js/plusone.js','js');
 
@@ -167,12 +168,16 @@
 
 		base.showShare = function()
 		{
-			base.$shareContent.show();			
+			console.log('show');
+			base.$shareContent.show();
+			base.navBarShareShown = true;
 		}
 
 		base.hideShare = function()
 		{
+			console.log('hide share');
 			base.$shareContent.hide();
+			base.navBarShareShown = false;
 		}
 
 		/**
@@ -228,6 +233,14 @@
 			$('a.removeLink').on('click', base.removeFavorite);
 			$('.addToFavorites').on('click', base.toggleAddFavorite);
 			base.$tabs.on('click', 'a.share', base.share);
+			$('body').on('click', base.bodyActions);
+		}
+
+		base.bodyActions = function()
+		{
+			if (base.navBarShareShown) {
+				base.hideShare();
+			}
 		}
 
 		/**
