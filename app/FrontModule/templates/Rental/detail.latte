@@ -154,6 +154,10 @@
 
 			{if count($rental->amenities) > 0}
 				{var $importantAmenities = $rental->getImportantAmenities(true)}
+				{var $i = $rental->getImportantAmenitiesGroupByType()}
+				{var $ni = $rental->getNotImportantAmenitiesGroupByType()}
+				{dump $i}
+				{dump $ni}
 				<li class="monitor">
 					<strong>{_o100013}</strong>
 
