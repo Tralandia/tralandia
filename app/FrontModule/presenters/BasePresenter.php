@@ -211,7 +211,7 @@ abstract class BasePresenter extends \BasePresenter {
 			$favoriteList->addRentals($rentals);
 			$favoriteListRepository->save($favoriteList);
 
-			$json['link'] = $this->link('//Rental:list', ['favoriteList' => $favoriteList]);
+			$json['link'] = $this->link('//RentalList:default', ['favoriteList' => $favoriteList]);
 		}
 		$this->sendJson($json);
 	}

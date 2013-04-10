@@ -154,22 +154,7 @@
 		//background: url('../packages/front/_base/img/gradient.png') repeat-y;
 	}
 
-	#siteOptions ul.dropdown-menu, #socialIcons ul.dropdown-menu {
-
-		border: none;
-		top: 28px;
-		right: -1px;
-		left: initial;
-		background: @white;
-		height: auto;
-		width: 350px;
-		display: none;
-		.basic-border-radius(5px);
-
-		border: 1px solid #ccc;
-
-		z-index: 9000000;
-
+	ul.dropdown-menu {
 		&:after, &:before {
 			bottom: 100%;
 			border: solid transparent;
@@ -194,6 +179,23 @@
 			left: 86%;
 			margin-left: -8px;
 		}
+	}
+
+	#siteOptions ul.dropdown-menu, #socialIcons ul.dropdown-menu {
+
+		border: none;
+		top: 28px;
+		right: -1px;
+		left: initial;
+		background: @white;
+		height: auto;
+		width: 350px;
+		display: none;
+		.basic-border-radius(5px);
+
+		border: 1px solid #ccc;
+
+		z-index: 9000000;
 
 		li {
 
