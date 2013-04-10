@@ -125,6 +125,7 @@ class EntityGeneratorPresenter extends BasePresenter {
 			if(in_array($property->name, array('details')) && $mainEntity->name != 'Entity\BaseEntityDetails') continue;
 
 			$property = $this->getPropertyInfo($property);
+			if ($property === NULL) continue;
 
 			if($property->isCollection) {
 
@@ -347,6 +348,8 @@ class EntityGeneratorPresenter extends BasePresenter {
 
 		} else {
 			$return['isCollection'] = FALSE;
+			if (!isset($annotations['ORM\Column'])) return NULL;
+
 			$return['type'] = $annotations['ORM\Column'][0]['type'];
 			
 			if($return['type'] == 'text') $return['type'] = 'string';
