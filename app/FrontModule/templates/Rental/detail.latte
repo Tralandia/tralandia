@@ -36,9 +36,12 @@
 
 <div class="span5">
 
-	<h1 class="addToViewList" id="{$rental->id}">{_$rental->name}{if $rental->classification > 0 }&nbsp;<span
-				class="clasification">{for $i = 0; $i < $rental->classification; $i++}<i class="entypo-star"></i>{/for}
-			</span>{/if}</h1>
+	<h1 class="addToViewList" id="{$rental->id}">
+		{_$rental->name}
+		{if $rental->classification > 0 }
+		&nbsp;<span class="clasification">{for $i = 0; $i < $rental->classification; $i++}<i class="entypo-star"></i>{/for}</span>
+		{/if}
+	</h1>
 
 	<p class="locality nopadding">
 		<a class="brown" href="{link RentalList: location => $rental->address->locality , rentalType => $rental->type }">
@@ -225,9 +228,9 @@
 <div class="span3 sidebarRightDetail">
 
 	{if $mainImage = $rental->getMainImage()}
-		<button class="marginTop btn btn-compare addToFavorites currentObject" rel="{$rental->id}" data-title="{_$rental->name}" data-thumb="{fakeImage}" data-location="{_$rental->address->locality->name}" data-price="{$rental->price}" data-capacity="{$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}" data-link="{link Rental:detail $rental}" data-thumb="{$basePath}{$mainImage|rentalImageSrc}"><span class="entypo-heart">{_o100140}</span></button>
+		<button class="marginTop btn btn-compare addToFavorites currentObject" rel="{$rental->id}" data-name="{_$rental->name}{if $rental->classification > 0 } {for $i = 0; $i < $rental->classification; $i++}~star~{/for}{/if}" data-thumb="{fakeImage}" data-location="{_$rental->address->locality->name}" data-price="{$rental->price}" data-capacity="{$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}" data-link="{link Rental:detail $rental}" data-thumb="{$basePath}{$mainImage|rentalImageSrc}"><span class="entypo-heart">{_o100140}</span></button>
 	{else}
-		<button class="marginTop btn btn-compare addToFavorites currentObject" rel="{$rental->id}" data-title="{_$rental->name}" data-thumb="{fakeImage}" data-location="{_$rental->address->locality->name}" data-price="{$rental->price}" data-capacity="{$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}" data-link="{link Rental:detail $rental}" data-thumb="http://www.tralandia.com/u/32/13539183882248.jpg"><span class="entypo-heart">{_o100140}</span></button>
+		<button class="marginTop btn btn-compare addToFavorites currentObject" rel="{$rental->id}" data-name="{_$rental->name}{if $rental->classification > 0 } {for $i = 0; $i < $rental->classification; $i++}~star~{/for}{/if}" data-thumb="{fakeImage}" data-location="{_$rental->address->locality->name}" data-price="{$rental->price}" data-capacity="{$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}" data-link="{link Rental:detail $rental}" data-thumb="http://www.tralandia.com/u/32/13539183882248.jpg"><span class="entypo-heart">{_o100140}</span></button>
 	{/if}
 
 	<div class="socialIconTable marginBottom marginTop socialIconsDetail socialPluginsInit">
