@@ -17,11 +17,11 @@ $(function(){
 					capacity: $(this).attr('data-capacity')
 				};
 
-				var c = '<img src="'+info.thumb+'" /><p>'+info.location+'</br>'+info.price+'&nbsp;|&nbsp;'+info.capacity+'</p>';	
+				var c = '<img src="'+info.thumb+'" /><p><span class="location">'+info.location+'</span></br>'+info.price+'&nbsp;|&nbsp;'+info.capacity+'</p>';	
 								
 			return c;
 		},
-		delay: {show: 250, hide: 0},
+		delay: {show: 500, hide: 0},
 		animation: false,
 		placement: 'bottom'
 	});

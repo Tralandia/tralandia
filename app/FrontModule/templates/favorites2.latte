@@ -2,30 +2,55 @@
 	{var $currentRental = $rental}
 {/ifset}
 
-<div n:class="$favoriteRentals ? 'span12' : 'span12' " data-favoritesLink="{link generateFavoriteLink}" id="favoritesStaticContainer"{ifset $currentRental} current-rental="$currentRental->id"{/ifset}>
-	<div class="favorites2" id="navBar">
+{var $showNavbar = (!(isset($lastSearchResults) && count($lastSearchResults['rentals'])) && !count($favoriteRentals) && !count($lastSeenRentals))}
+
+<div id="favoritesStaticContainerPlaceholder" class="hide"></div>
+<div n:class="$showNavbar ? 'hide', span12" data-favoritesLink="{link generateFavoriteLink}" id="favoritesStaticContainer">
+	<div class="favorites2" id="navBar"{ifset $currentRental} current-rental="{$currentRental->id}"{/ifset}>
 		<ul class="nav" id="navBarTabs">
-			<li n:class="$navBarLastActive=='navBarSerchResults' ? active" n:ifset="$lastSearchResults['rentals']" for="navBarSerchResults">
+			{if isset($lastSearchResults['rentals']) && $lastSearchResults['totalCount']>1}
+			<li n:class="$navBarLastActive=='navBarSerchResults' ? active" for="navBarSerchResults">
 				<i class="icon-search"></i> {$lastSearchResults['heading']} ({$lastSearchResults['totalCount']})
 			</li>
-			<li n:class="$navBarLastActive=='navBarFavorites' ? active" for="navBarFavorites">
+			{/if}
+			<li n:class="$navBarLastActive=='navBarFavorites' ? active, !count($favoriteRentals) ? 'hide'" for="navBarFavorites">
 				<i class="icon-heart"></i> {_o100035}
 			</li>
-			<li n:class="$navBarLastActive=='navBarLastSeen' ? active" n:ifset="$lastSeenRentals" for="navBarLastSeen">
-				<i class="icon-eye-open"></i> {_o100114} 
+			<li n:class="$navBarLastActive=='navBarLastSeen' ? active, !count($lastSeenRentals) ? 'hide'" n:ifset="$lastSeenRentals" for="navBarLastSeen">
+				<i class="icon-eye-open"></i> {_o100114}
 			</li>
 
+			{* links right *}
 			<li n:class="$navBarLastActive!='navBarFavorites' ? hide, share, pull-right" for="navBarFavorites">
-				<a href="/">{_o100115}</a>
+				<a data-href="#" class="share" for="navBarFavorites">{_o100115}</a>
 			</li>
 			<li n:class="$navBarLastActive!='navBarSerchResults' ? hide, share, pull-right" n:ifset="$lastSearchResults" for="navBarSerchResults">
 				<a href="{$lastSearchResults['searchLink']}"><i class="icon-arrow-left"></i> Back to list</a>
-				<a href="/">{_o100116}</a>
+				<a data-href="{$lastSearchResults['searchLink']}" class="share" for="navBarSerchResults">{_o100116}</a>
+			</li>
+		</ul>
+		<ul class="dropdown-menu" role="menu" id="shareContent" style="display: none;">
+			<li class="favoriteSocialIcons">
+				<table>
+					<tr>
+						<td id="dynamicShareContainer" colspan="3"></td>		                			
+					</tr>
+					<tr>
+						<td><label>{_o100067}</label></td>
+						<td><input placeholder="{_o100064}" type="text" /></td>
+						<td><button class="btn btn-green">{_o100065}</button></td>
+					</tr>				
+					<tr>
+						<td><label>{_o100068}</label></td>
+						<td><input id="clipboardLinkShare" type="text" /></td>
+						<td><button id="clipboardLinkShareButton" class="btn btn-green" data-alert-text="{_o100069}">{_o100066}</button></td>
+					</tr>
+				</table>
 			</li>
 		</ul>
 
 		<div class="cover" id="compareList">
-			<a class="leftArrow entypo-prev"></a>
+			{* <a class="leftArrow entypo-prev"></a> *}
 			<div class="tab-content" id="navbarTabContent">
 
 				{* Favorites *}
@@ -42,7 +67,7 @@
 							{var $image = $rental->getMainImage()}
 							{var $seen = in_array($rental->getId(), $favoriteVisitedRentals)}
 							{var $isCurrent = isset($currentRental) ? $rental->id==$currentRental->id : false}
-							<li rel="{$rental->getId()}" data-title="{_$rental->name}" data-thumb="{fakeImage}" data-location="{_$rental->address->locality->name}" data-price="{$rental->price}" data-capacity="{$rental->maxCapacity}" style="background-image: url({fakeImage});" class="{if $isCurrent}active{/if}">
+							<li rel="{$rental->getId()}" data-title="{_$rental->name}" data-thumb="{fakeImage}" data-location="{_$rental->address->locality->name}" data-price="{$rental->price}" data-capacity="{$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}" style="background-image: url({fakeImage});" class="{if $isCurrent}active{/if}">
 								<a href="#" class="removeLink"></a>
 								<a n:href="Rental:detail $rental" class="link">
 									<div n:if="$seen" class="checked entypo-eye"></div>
@@ -61,7 +86,7 @@
 							{foreach $lastSeenRentals as $rental}
 								{var $image = $rental->getMainImage()}
 								{var $isCurrent = isset($currentRental) ? $rental->id==$currentRental->id : false}
-								<li rel="{$rental->getId()}" data-title="{_$rental->name}" data-thumb="{fakeImage}" data-location="{_$rental->address->locality->name}" data-price="{$rental->price}" data-capacity="{$rental->maxCapacity}" style="background-image: url({fakeImage});" class="{if $isCurrent}active{/if}">
+								<li rel="{$rental->getId()}" data-title="{_$rental->name}" data-thumb="{fakeImage}" data-location="{_$rental->address->locality->name}" data-price="{$rental->price}" data-capacity="{$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}" style="background-image: url({fakeImage});" class="{if $isCurrent}active{/if}">
 									<a n:href="Rental:detail $rental" class="link"></a>
 								</li>
 							{/foreach}
@@ -71,14 +96,15 @@
 
 				{* Last search results *}
 				<div n:class="$navBarLastActive=='navBarSerchResults' ? active, tab-pane" id="navBarSerchResults">
-					<div n:ifset="$lastSearchResults['rentals']" class="content jscrollPane">
+					{if isset($lastSearchResults['rentals']) && $lastSearchResults['totalCount']>1}
+					<div class="content jscrollPane">
 						<ul id="scrollInnerContent">
 							<li class="template"></li>
 							{foreach $lastSearchResults['rentals'] as $rental}
 								{var $image = $rental->getMainImage()}
 								{var $seen = in_array($rental->getId(), $favoriteVisitedRentals)}
 								{var $isCurrent = isset($currentRental) ? $rental->id==$currentRental->id : false}
-								<li rel="{$rental->getId()}" data-title="{_$rental->name}" data-thumb="{fakeImage}" data-location="{_$rental->address->locality->name}" data-price="{$rental->price}" data-capacity="{$rental->maxCapacity}" style="background-image: url({fakeImage});" class="{if $isCurrent}active{/if}">
+								<li rel="{$rental->getId()}" data-title="{_$rental->name}" data-thumb="{fakeImage}" data-location="{_$rental->address->locality->name}" data-price="{$rental->price}" data-capacity="{$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}" style="background-image: url({fakeImage});" class="{if $isCurrent}active{/if}">
 									<a n:href="Rental:detail $rental" class="link">
 										<div n:if="$seen" class="checked entypo-eye"></div>
 									</a>
@@ -86,9 +112,10 @@
 							{/foreach}
 						</ul>
 					</div>
+					{/if}
 				</div>
 			</div>
-			<a class="rightArrow entypo-slider-right"></a>
+			{* <a class="rightArrow entypo-slider-right"></a> *}
 		</div>
 	</div>
 </div>
