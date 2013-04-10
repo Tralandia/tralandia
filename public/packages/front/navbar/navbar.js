@@ -141,7 +141,6 @@
 
 		base.share = function()
 		{
-			console.log('share');
 			removejscssfile('http://platform.twitter.com/widgets.js','js');
 			removejscssfile('https://apis.google.com/js/plusone.js','js');
 
@@ -168,14 +167,12 @@
 
 		base.showShare = function()
 		{
-			console.log('show');
 			base.$shareContent.show();
 			base.navBarShareShown = true;
 		}
 
 		base.hideShare = function()
 		{
-			console.log('hide share');
 			base.$shareContent.hide();
 			base.navBarShareShown = false;
 		}
@@ -233,15 +230,15 @@
 			$('a.removeLink').on('click', base.removeFavorite);
 			$('.addToFavorites').on('click', base.toggleAddFavorite);
 			base.$tabs.on('click', 'a.share', base.share);
-			$('body').on('click', base.bodyActions);
+			// $('body').on('click', base.bodyActions);
 		}
 
-		base.bodyActions = function()
-		{
-			if (base.navBarShareShown) {
-				base.hideShare();
-			}
-		}
+		// base.bodyActions = function()
+		// {
+		// 	if (base.navBarShareShown) {
+		// 		base.hideShare();
+		// 	}
+		// }
 
 		/**
 		 * cookies
