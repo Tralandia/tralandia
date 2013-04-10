@@ -10,6 +10,11 @@ abstract class BasePresenter extends Presenter {
 
 	use \Kdyby\AutowireProperties;
 
+	const FLASH_INFO = 'info';
+	const FLASH_WARNING = 'warning';
+	const FLASH_SUCCESS = 'success';
+	const FLASH_ERROR = 'error';
+
 	/** @persistent */
 	public $language;
 
@@ -122,6 +127,12 @@ abstract class BasePresenter extends Presenter {
 
 	public function beforeRender() {
 		parent::beforeRender();
+
+		$this->flashMessage('Microsoft a Nokia sa sťažujú EÚ na Android a Google', self::FLASH_ERROR);
+		$this->flashMessage('Slovákov na Google najviac zaujímalo, čo je láska a ACTA', self::FLASH_INFO);
+		$this->flashMessage('„Nie som fešák, ale hrám fér!“ -- Robert Fico', self::FLASH_SUCCESS);
+		$this->flashMessage('Predstavené Ubuntu pre smartphony, aj s klasickým desktopom');
+
 		$parameters = $this->getContext()->getParameters();
 		$this->template->staticPath = '/';
 		$this->template->setTranslator($this->getService('translator'));
@@ -144,7 +155,12 @@ abstract class BasePresenter extends Presenter {
 		return new FlashesControl($this, $name);
 	}
 
-	public function flashMessage($message, $type = 'warning') {
+	public function flashMessage($message, $type = self::FLASH_WARNING) {
+		if(is_string($message)) {
+			$message = $this->translate($message);
+		} else if(is_array($message)) {
+			$message = call_user_func_array([$this, 'translate'], $message);
+		}
 		parent::flashMessage($message, $type);
 		$this->getComponent('flashes')->invalidateControl();
 	}
@@ -164,7 +180,7 @@ abstract class BasePresenter extends Presenter {
 	public function translate()
 	{
 		$args = func_get_args();
-		return call_user_func_array(array($this->context->translator, 'translate'), $args);
+		return call_user_func_array([$this->context->translator, 'translate'], $args);
 	}
 
 	public function getEnvironment() {

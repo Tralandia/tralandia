@@ -9,6 +9,7 @@ use Extras\Forms\Container\IRentalContainerFactory;
 use Nette;
 use Nette\Localization\ITranslator;
 use Entity\Location\Location;
+use OwnerModule\BasePresenter;
 use Repository\Location\LocationRepository;
 use Repository\LanguageRepository;
 use Extras\Forms\Container\AddressContainer;
@@ -181,7 +182,8 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 		if ($email && !$form['email']->hasErrors()) {
 			$emailIsOccupied = $this->userRepository->findOneByLogin($email);
 			if ($emailIsOccupied) {
-				$form['email']->addError($this->translate('o852'));
+				$form['email']->addError($this->translate('o2610'));
+				$form->presenter->flashMessage('o2610', BasePresenter::FLASH_ERROR);
 			}
 		}
 	}

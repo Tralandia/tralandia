@@ -84,7 +84,7 @@ class RegistrationHandler extends FormHandler
 		}
 
 		// User
-		$user = $userRepository->findByLogin($values->email);
+		$user = $userRepository->findOneByLogin($values->email);
 		if ($user) {
 			$error->addError('o2610', 'email');
 		}
