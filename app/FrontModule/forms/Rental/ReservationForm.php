@@ -119,15 +119,17 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 
 		}
 
-		$this->addSelect('parents','',$parents)->setPrompt('o12277')
-			->setRequired();
+		$this->addSelect('parents','',$parents)
+			->setRequired()
+			->setValue(2);
 
-		$this->addSelect('children','',$children)->setPrompt('o100016');
+		$this->addSelect('children','',$children)
+			->setValue(0);
 
 		$this->addTextArea('message')
 			->addRule(self::MIN_LENGTH, '#sprava min 3 znaky', 3)
 			->getControlPrototype()
-				->setPlaceholder('o12279');
+			->setPlaceholder('o12279');
 
 
 		$this->addSubmit('submit', 'o100017');
