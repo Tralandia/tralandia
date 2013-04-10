@@ -1,4 +1,11 @@
+
+// rental edit and refistration
 $(function(){
+
+
+	$('select.rentalType').on('change',function(){
+		_rentalTypeClasification(this);
+	});
 
 	$('select.selectRedirect').each(function(){
 		resetSelectRedirect(this);
@@ -14,14 +21,17 @@ $(function(){
 
 	rentalTypeOnLoad();
 
-	$('.rentalType select').on('change',function(){
-		_rentalTypeClasification(this);
-	});
 
 });
 
 function _rentalTypeClasification(elem){
-	var clasification = $('.rentalType select option[value="'+$(elem).val()+'"]').attr('data-classification');
+
+	var clasification = $('select.rentalType  option[value="'+$(elem).val()+'"]').attr('data-classification');
+	// var clasification = $('select.rentalType  option[value="'+$(elem).val()+'"]').html();
+
+	// console.log($(elem).val());
+
+
 	if(typeof clasification != 'undefined'){
 		$('.classification').show();
 	} else {
@@ -30,7 +40,7 @@ function _rentalTypeClasification(elem){
 }
 
 function rentalTypeOnLoad(){
-	$('.rentalType select').each(function(){
+	$('select.rentalType').each(function(){
 		_rentalTypeClasification(this);
 	});
 }

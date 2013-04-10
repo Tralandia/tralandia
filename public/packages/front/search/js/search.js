@@ -127,7 +127,9 @@
 
 function updateCriteriaCount(){
 
-	var url = generateRedirectUrl(true);
+	var url = '/'+generateRedirectUrl(true);
+
+	console.log(url);
 
 	if($('.searchForm').find("select[value][value!='']:not(.sidebarCountry),input[type=hidden]").serialize().length > 0){
 		$.ajax({

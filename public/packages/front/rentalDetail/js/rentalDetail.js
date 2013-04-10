@@ -234,21 +234,22 @@ addScript('http://assets.pinterest.com/js/pinit.js');
 
 	$.datepicker.setDefaults(  $.datepicker.regional[ lang ] );
 
-	$( ".datepicker" ).datepicker({ minDate: 0, maxDate: "+12M +10D" });	
+	$( ".datepicker" ).datepicker({ minDate: 0, maxDate: "+12M +10D" , dateFormat: "yy-mm-dd" });	
 
 
 	$( ".datepickerto" ).datepicker({ 
 		minDate: new Date(2013, 1, 28), 
 		maxDate: "+12M +10D" ,
+		dateFormat: "yy-mm-dd" ,
 		beforeShow: function(){
 
-			var fromValues = $('.datepicker').val().split('.');
+			var fromValues = $('.datepicker').val().split('-');
 
 			if ( fromValues.length > 1 ) {
 
-				fromDateOrigin.year = parseInt(fromValues[2]);
+				fromDateOrigin.year = parseInt(fromValues[0]);
 				fromDateOrigin.month = parseInt(fromValues[1])-1;
-				fromDateOrigin.day = parseInt(fromValues[0]);
+				fromDateOrigin.day = parseInt(fromValues[2]);
 				
 				fromDateOrigin.date.setYear(fromDateOrigin.year);
 				fromDateOrigin.date.setMonth(fromDateOrigin.month);
