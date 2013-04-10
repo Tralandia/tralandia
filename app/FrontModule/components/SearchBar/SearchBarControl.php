@@ -160,7 +160,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		$count = $search->getRentalsCount();
 		$template->totalResultsCount = $count;
 		$template->totalResultsCountLabel = $presenter->translate('o100002', $count, NULL, ['count' => $count]);
-		$template->autocompleteUrl = $presenter->link(':Front:Rental:locationSuggestion');
+		$template->autocompleteUrl = $presenter->link(':Front:RentalList:locationSuggestion', ['page' => NULL]);
 
 		$template->render();
 	}
