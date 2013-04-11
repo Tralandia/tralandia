@@ -73,7 +73,7 @@
 			</td>
 			<td>
 				{_o100005} {$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}
-				<span>{if $rental->bedroomCount}{$rental->bedroomCount} {_o100009}, {/if}
+				<span>{if $rental->bedroomCount} ({$rental->bedroomCount} {_o100009,null,[count=>$rental->bedroomCount]}){/if}
 					{$rental->rooms}</span>
 
 				<div>{if $separateGroups}{_o100011}{else}{_o100010}{/if}</div>
