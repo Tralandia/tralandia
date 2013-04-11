@@ -47,6 +47,9 @@ class PhraseCreator extends Nette\Object
 		$phrase = $this->phraseRepository->createNew();
 		$phrase->setType($phraseType);
 
+		$en = $this->languageRepository->find(CENTRAL_LANGUAGE);
+		$phrase->setSourceLanguage($en);
+
 		if($phraseType->getTranslateTo() == \Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED) {
 			$supportedLanguages = $this->languageRepository->findSupported();
 			foreach($supportedLanguages as $language) {

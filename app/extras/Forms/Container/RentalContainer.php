@@ -79,7 +79,7 @@ class RentalContainer extends BaseContainer
 		$this->addAddressContainer('address', $this->country);
 		$placement = $this->placementRepository->getForSelect($this->translator, $this->collator);
 
-		$this->addMultiOptionList('placement', 'Placement', $placement)
+		$this->addSelect('placement', 'Placement', $placement)
 			->setOption('help', '');
 
 
