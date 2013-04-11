@@ -579,6 +579,25 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 		return TRUE;
 	}
 
+	/**
+	 * @return \Entity\Rental\Placement|NULL
+	 */
+	public function getPlacement()
+	{
+		if ($this->hasPlacement()) {
+			return $this->getPlacements()->first();
+		}
+		return NULL;
+	}
+
+	/**
+	 * @return true|false
+	 */
+	public function hasPlacement()
+	{
+		return count($this->placements) ? true : false;
+	}
+
 
 	//@entity-generator-code --- NEMAZAT !!!
 

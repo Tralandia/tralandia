@@ -58,7 +58,9 @@
 
 									<p class="locations">
 										{*<a href="{link Rental:list location => $rental->address->locality , rentalType => $rental->type}">{_$rental->type->name|firstUpper} {_$rental->address->locality->name}</a>*}
-										{_$rental->type->name|firstUpper} {_$rental->address->locality->name}
+										{_$rental->type->name|firstUpper}
+										{if $rental->hasPlacement()}{_$rental->getPlacement()->name}, {/if}
+										{_$rental->address->locality->name}
 
 										{*
 										{if count($rental->address->getLocations()) > 0}
