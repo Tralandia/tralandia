@@ -45,7 +45,9 @@
 
 	<p class="locality nopadding">
 		<a class="brown" href="{link RentalList: location => $rental->address->locality , rentalType => $rental->type }">
-			{_$rental->type->name|firstUpper} {_$rental->address->locality->name , null , [case=>locative]}
+			{_$rental->type->name|firstUpper}
+			{if $rental->hasPlacement()}{_$rental->getPlacement()->name}{/if}
+			{_$rental->address->locality->name , null , [case=>locative]}
 		</a>
 	</p>
 
