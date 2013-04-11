@@ -77,7 +77,6 @@ Favorites.init = function()
 
 		// this.initJscrollpaneUi();
 		this.eachSelectedRentalButtons();
-		this.autoUpdate();
 
 	}
 };
@@ -288,14 +287,6 @@ Favorites.removeFromCookie = function(id)
 		$.cookie(this.cookieName,cookieArray);
 	}				
 
-};
-
-Favorites.autoUpdate = function()
-{
-	if(!Favorites.checkChanges()){
-		Favorites.updateList();
-	}		
-	setTimeout(Favorites.autoUpdate,Favorites.autoupdateTime);
 };
 
 // return favorites list in cookie

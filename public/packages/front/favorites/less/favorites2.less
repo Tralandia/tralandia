@@ -31,6 +31,15 @@
 
 	ul.dropdown-menu {
 		overflow: visible;
+
+		i.icon-copy {
+			margin-top: -1px;
+		}
+
+		i.entypo-send:before {
+			font-size: 26px;
+		}
+
 	}
 
 	.cover {
@@ -80,7 +89,8 @@
 		cursor: default;
 		border: none;
 		border: 1px solid #526ea8;
-		border-bottom: 1px solid #fefefe;
+		border-bottom: none;
+		padding-bottom: 2px;
 	}
 
 	.nav > li  {
@@ -140,7 +150,8 @@
 
 			i  {
 				font-size: 10px;
-
+				margin: 0 2px 0 0;
+				text-decoration: none;
 			}
 
 			&:hover {
@@ -247,7 +258,8 @@
 				height: 17px;
 				width: 17px;
 				position: absolute;
-				left: 52px;
+				left: initial;
+				right: 0;
 				top: 0px;
 				visibility: hidden;
 				z-index: 30000;
@@ -369,6 +381,7 @@
 		.favoriteSocialIcons ul {
 			margin: 0;
 			margin-left: 10px;
+
 		}
 
 		.favoriteSocialIcons ul li {
