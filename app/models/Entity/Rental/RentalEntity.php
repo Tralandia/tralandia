@@ -33,7 +33,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Language", cascade={"persist"})
+	 * @ORM\ManyToOne(targetEntity="Entity\Language")
 	 */
 	protected $editLanguage;
 
@@ -81,7 +81,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Placement", mappedBy="rentals", cascade={"persist"})
+	 * @ORM\ManyToMany(targetEntity="Placement", mappedBy="rentals")
 	 */
 	protected $placements;
 
@@ -129,7 +129,7 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 	/**
 	 * @var Collection
-	 * @ORM\ManyToMany(targetEntity="Entity\Language", mappedBy="rentals", cascade={"persist"})
+	 * @ORM\ManyToMany(targetEntity="Entity\Language", mappedBy="rentals")
 	 */
 	protected $spokenLanguages;
 
