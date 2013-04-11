@@ -58,7 +58,13 @@
 
 									<p class="locations">
 										{*<a href="{link Rental:list location => $rental->address->locality , rentalType => $rental->type}">{_$rental->type->name|firstUpper} {_$rental->address->locality->name}</a>*}
-										{_$rental->type->name|firstUpper} {_$rental->address->locality->name}
+										{_$rental->type->name|firstUpper}
+										{if count($rental->placements)}
+											{foreach $rental->placements as $placement}
+												{_$placement->name}, 
+											{/foreach}
+										{/if}
+										{_$rental->address->locality->name}
 
 										{*
 										{if count($rental->address->getLocations()) > 0}

@@ -45,7 +45,13 @@
 
 	<p class="locality nopadding">
 		<a class="brown" href="{link RentalList: location => $rental->address->locality , rentalType => $rental->type }">
-			{_$rental->type->name|firstUpper} {_$rental->address->locality->name , null , [case=>locative]}
+			{_$rental->type->name|firstUpper}
+			{if count($rental->placements)}
+				{foreach $rental->placements as $placement}
+					{_$placement->name} 
+				{/foreach}
+			{/if}
+			{_$rental->address->locality->name , null , [case=>locative]}
 		</a>
 	</p>
 
