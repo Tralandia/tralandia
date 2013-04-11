@@ -852,6 +852,26 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	}
 
 	/**
+	 * @return \Entity\Rental\Placement
+	 */
+	public function getPlacement()
+	{
+		if ($this->hasPlacement()) {
+			foreach ($this->placements as $placement) {
+				return $placement;
+			}
+		}
+	}
+
+	/**
+	 * @return true|false
+	 */
+	public function hasPlacement()
+	{
+		return count($this->placements) ? true : false;
+	}
+
+	/**
 	 * @return \Entity\Rental\Rental
 	 */
 	public function unsetSlug()
