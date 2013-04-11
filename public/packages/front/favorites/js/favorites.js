@@ -13,12 +13,6 @@ function initNavBarShare(linkToShare)
 	initAllSocialPlugins();
 }
 
-function importShareLink(fromUrl, callback)
-{
-	jQuery.getJSON( fromUrl , callback );
-}
-
-
 function removejscssfile(filename, filetype)
 {
 	var targetelement=(filetype=="js")? "script" : (filetype=="css")? "link" : "none" //determine element type to create nodelist from
@@ -155,7 +149,7 @@ Favorites.toggleAdd = function(e, obj)
 
 	var data = {
 		id: 		parseInt($obj.attr('rel')),
-		title: 		$obj.attr('data-title'),
+		name: 		$obj.attr('data-name'),
 		link: 		$obj.attr('data-link'),
 		thumb: 		$obj.attr('data-thumb'),
 		location: 	$obj.attr('data-location'),
