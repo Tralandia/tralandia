@@ -86,7 +86,7 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 		$date = $this->addContainer('date');
 		$today = (new DateTime)->modify('today');
 		$date->addAdvancedDatePicker('from')
-			->addRule(self::RANGE, '#Vstup neni validni', [$today, $today->modifyClone('+1 years')])
+			->addRule(self::RANGE, '#datum udaj v rozsahu %s do %s ', [$today, $today->modifyClone('+1 years')])
 			->getControlPrototype()
 			->setPlaceholder('o1043');
 
@@ -143,15 +143,20 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 	{
 		$values = $form->getValues();
 
-		$from = DateTime::from($values->date->from);
+		$from = $values->date->from;
 		$to = $values->date->to;
 
 		if(!($to > $from)) {
-			$form['date']['to']->addError($this->translate('#datum "do" je nespravny'));
+			$form['date']['to']->addError($this->translate('#datum "do" je musi byt vacsi!'));
 		}
 
 		if(!$this->rental->isAvailable($from, $to)) {
 			$form->addError($this->translate('#objekt je obsadeny'));
+		}
+
+		$phone = $values->phone->phone;
+		if(!$phone) {
+			$form['phone']['number']->addError('cislo nieje validne');
 		}
 
 		try {
