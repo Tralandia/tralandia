@@ -7,7 +7,7 @@ $(document).ready(function(){
 
         if(c == 'block'){
             var offset = parseInt($(this).scrollTop());
-            if(offset > 155){
+            if(offset > 152){
                 $('#favoritesStaticContainer').css({
                     position: 'fixed',
                     top:'0px'

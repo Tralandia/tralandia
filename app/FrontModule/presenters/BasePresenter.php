@@ -88,8 +88,6 @@ abstract class BasePresenter extends \BasePresenter {
 		$this->template->currentLanguage = $this->environment->getLanguage();
 
 		$this->template->navBarLastActive = $this->getActiveNavbarTab();
-		
-		$this->template->isLogged = $this->loggedUser;
 
 		$header = $this->getComponent('head');
 		$header->addTitle($this->pageSeo->getTitle());
