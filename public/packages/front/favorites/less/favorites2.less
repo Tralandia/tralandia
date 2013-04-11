@@ -1,6 +1,10 @@
 
 @import '../../_base/less/lessFunctions.less';
 
+#favoritesStaticContainerPlaceholder {
+	height: 231px;
+}
+
 #favoritesStaticContainer {
 	z-index: 999;
 }
@@ -182,7 +186,7 @@
 		li {
 			display: block;
 			height: 42px;
-			width: 70px;
+			width: 77px;
 			border: 1px solid #fff;
 			background-size: cover;
 			float: left;
@@ -192,10 +196,18 @@
 			cursor: pointer;
 			.basic-border-radius(3px);
 
+			&:nth-child(13) {
+				width: 74px;
+			}
+
 			&.active {
 				border: 2px solid #f00;
 				height:40px;
-				width: 68px;
+				width: 75px;
+
+				&:nth-child(13) {
+					width: 72px;
+				}
 
 				&:hover {
 					border: 2px solid #f00;

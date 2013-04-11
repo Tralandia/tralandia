@@ -87,6 +87,7 @@ class RentalPresenter extends BasePresenter {
 
 		$bar = array();
 		$bar['all'] = $lastSearch->getRentals();
+		$bar['totalCount'] = count($bar['all']);
 		$bar['currentKey'] = array_search($rental->id, $bar['all']);
 
 		$start = $bar['currentKey']>5 ? ($bar['currentKey']-5) : 0;
@@ -107,7 +108,7 @@ class RentalPresenter extends BasePresenter {
 		$lastSearchResults['currentKey'] = $bar['currentKey']-($start > 0 ? $start : 0);
 		$lastSearchResults['searchLink'] = $lastSearch->getUrl();
 		$lastSearchResults['heading'] = $lastSearch->getHeading();
-		$lastSearchResults['totalCount'] = count($bar['all']);
+		$lastSearchResults['totalCount'] = $bar['totalCount'];
 
 		if (isset($bar['all'][$lastSearchResults['currentKey']-1])) {
 			$lastSearchResults['prevRental'] = $this->context->rentalRepositoryAccessor->get()->find($bar['all'][$lastSearchResults['currentKey']-1]);

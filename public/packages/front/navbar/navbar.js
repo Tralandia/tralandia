@@ -14,8 +14,6 @@
 		base.el 		= el;
 		base.$el 		= $(el);
 		base.$tabs 		= base.$el.find('#navBarTabs');
-		// base.$prevLink	= base.$el.find('a.leftArrow');
-		// base.$nextLink	= base.$el.find('a.rightArrow');
 		base.$contents 	= base.$el.find('#navbarTabContent');
 		base.$shareContent = base.$el.find('#shareContent')
 
@@ -23,6 +21,7 @@
 		base.activeTabName 		= null;
 		base.currentRental		= null;
 		base.navBarShareShown 	= false;
+		base.favoritesLink 		= null;
 
 		/**
 		 * Instalation
@@ -54,7 +53,6 @@
 			base.setActiveTab();
 			base.setActiveContent();
 			base.setLastActive();
-			// base.updateNav();
 		}
 
 		base.setActiveTab = function()
@@ -140,10 +138,7 @@
 
 		base.share = function()
 		{
-			console.log('base.share');
-			$this.toggleClass('open');
-
-			if (!$this.hasClass('open')){
+			if (base.navBarShareShown){
 				base.hideShare();
 				return false;
 			}
@@ -155,10 +150,15 @@
 			tabName = $this.attr('for');
 			
 			if (tabName=='navBarFavorites') {
-				var shareUrl = $('#favoritesStaticContainer').attr('data-favoritesLink');
-				importShareLink(shareUrl , function(d){
-					initNavBarShare(d.link);
-				});
+				if (base.favoritesLink) {
+					initNavBarShare(base.favoritesLink);
+				} else {
+					var shareUrl = $('#favoritesStaticContainer').attr('data-favoritesLink');
+					base.importShareLink(shareUrl, function(d){
+						initNavBarShare(d.link);
+						base.favoritesLink = d.link;
+					});
+				}
 			} else if (tabName=='navBarSerchResults') {
 				initNavBarShare($this.attr('data-href'));
 			}
@@ -168,6 +168,7 @@
 
 		base.showShare = function()
 		{
+			console.log('showShare');
 			base.$shareContent.show();
 			base.navBarShareShown = true;
 			base.innerClick = true;
@@ -175,9 +176,15 @@
 
 		base.hideShare = function()
 		{
+			console.log('hideShare');
 			base.$shareContent.hide();
 			base.navBarShareShown = false;
-			base.innerClick = true;
+			base.innerClick = false;
+		}
+
+		base.importShareLink = function(fromUrl, callback)
+		{
+			jQuery.getJSON(fromUrl, callback);
 		}
 
 		/**
@@ -185,6 +192,7 @@
 		 */
 		base.removeFavorite = function(e)
 		{
+			base.favoritesLink = null;
 			Favorites.removeLink(e, this);
 			if (!Favorites._getFavoritesLength()) {
 				base.hideTab('navBarFavorites');
@@ -194,6 +202,7 @@
 
 		base.toggleAddFavorite = function(e)
 		{
+			base.favoritesLink = null;
 			Favorites.toggleAdd(e, this);
 			base.showTab('navBarFavorites');
 			base.checkTabs();
@@ -205,26 +214,15 @@
 			base.$contents.find('li[rel='+base.currentRental+']').addClass('active');
 		}
 
-		// base.updateNav = function()
-		// {
-		// 	$active = base.$contents.find('div#'+base.activeTabName+' ul li.active');
-		// 	if (!$active[0]) {
-		// 		$active = base.$contents.find('div#'+base.activeTabName+' ul li:first-child');
-		// 	}
-
-		// 	prevLink = $active.prev('li').find('a.link').attr('href');
-		// 	nextLink = $active.next('li').find('a.link').attr('href');
-		// 	base.$prevLink.attr('href', prevLink);
-		// 	base.$nextLink.attr('href', nextLink);
-		// }
-
 		base.bodyActions = function(event)
 		{
 			if (base.innerClick) {
+				console.log('innerClick');
 				base.innerClick = false;
 				return false;
 			}
 			if (base.navBarShareShown) {
+				console.log('bodyActions hide navbar');
 				if (!$(event.target).parents('#shareContent').length) base.hideShare();
 			}
 		}

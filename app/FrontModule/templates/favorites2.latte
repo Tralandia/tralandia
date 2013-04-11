@@ -9,15 +9,11 @@
 	)
 }
 
-{if $isLogged && !count($favoriteRentals)}
-	{var $hideNavbar = true}
-{/if}
-
 <div id="favoritesStaticContainerPlaceholder" class="hide"></div>
-<div n:class="$hideNavbar ? 'hide', span12" data-favoritesLink="{link generateFavoriteLink}" id="favoritesStaticContainer">
+<div n:class="$hideNavbar ? 'hide', span12" data-favoritesLink="{link Rental:generateFavoriteLink}" id="favoritesStaticContainer">
 	<div class="favorites2" id="navBar"{ifset $currentRental} current-rental="{$currentRental->id}"{/ifset}>
 		<ul class="nav" id="navBarTabs">
-			{if isset($lastSearchResults['rentals']) && $lastSearchResults['totalCount']>1 && !$isLogged}
+			{if isset($lastSearchResults['rentals']) && $lastSearchResults['totalCount']>1}
 			<li n:class="$navBarLastActive=='navBarSerchResults' ? active" for="navBarSerchResults">
 				<i class="icon-search"></i> {$lastSearchResults['heading']} ({$lastSearchResults['totalCount']})
 			</li>
@@ -25,7 +21,7 @@
 			<li n:class="$navBarLastActive=='navBarFavorites' ? active, !count($favoriteRentals) ? 'hide'" for="navBarFavorites">
 				<i class="icon-heart"></i> {_o100035}
 			</li>
-			<li n:class="$navBarLastActive=='navBarLastSeen' ? active, !count($lastSeenRentals) || $isLogged ? 'hide'" n:ifset="$lastSeenRentals" for="navBarLastSeen">
+			<li n:class="$navBarLastActive=='navBarLastSeen' ? active, !count($lastSeenRentals) ? 'hide'" n:ifset="$lastSeenRentals" for="navBarLastSeen">
 				<i class="icon-eye-open"></i> {_o100114}
 			</li>
 
@@ -86,7 +82,7 @@
 
 				{* Last seen objects *}
 				<div n:class="$navBarLastActive=='navBarLastSeen' ? active, tab-pane" id="navBarLastSeen">
-					{if isset($lastSeenRentals) && !$isLogged}
+					{if isset($lastSeenRentals)}
 					<div class="content jscrollPane">
 						<ul id="scrollInnerContent">
 							<li class="template"></li>
@@ -104,7 +100,7 @@
 
 				{* Last search results *}
 				<div n:class="$navBarLastActive=='navBarSerchResults' ? active, tab-pane" id="navBarSerchResults">
-					{if isset($lastSearchResults['rentals']) && $lastSearchResults['totalCount']>1 && !$isLogged}
+					{if isset($lastSearchResults['rentals']) && $lastSearchResults['totalCount']>1}
 					<div class="content jscrollPane">
 						<ul id="scrollInnerContent">
 							<li class="template"></li>
