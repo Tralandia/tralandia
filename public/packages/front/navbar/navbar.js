@@ -34,6 +34,7 @@
 			base.$tabs.find('li.active').trigger('click');
 
 			base.checkTabs();
+			base.favoritesSync();
 		}
 
 		/**
@@ -96,6 +97,11 @@
 			return (tabName ? (active==tabName ? true : false) : (active ? true : false));
 		}
 
+		base.isVisible = function(tabName)
+		{
+			return this.$tabs.find('li[for='+tabName+']').is(':visible');
+		}
+
 		base.checkTabs = function()
 		{
 			hasRentals = false;
@@ -105,6 +111,7 @@
 				if (!base.hasRental(tabName)) {
 					base.hideTab(tabName);
 				} else {
+					if (!base.isVisible(tabName)) base.showTab(tabName);
 					hasRentals = true;
 				}
 			});
@@ -225,6 +232,16 @@
 				console.log('bodyActions hide navbar');
 				if (!$(event.target).parents('#shareContent').length) base.hideShare();
 			}
+		}
+
+		base.favoritesSync = function()
+		{
+			if(!Favorites.checkChanges()){
+				console.log('sync');
+				Favorites.updateList();
+				base.checkTabs();
+			}		
+			setTimeout(base.favoritesSync,Favorites.autoupdateTime);
 		}
 
 		/**
