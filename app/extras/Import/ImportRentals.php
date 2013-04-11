@@ -64,7 +64,7 @@ class ImportRentals extends BaseImport {
 		if ($this->developmentMode == TRUE) {
 			$countryId = qc('select id from countries where iso = "'.$this->presenter->getParameter('countryIso').'"');
 			//d($this->presenter->getParameter('countryIso'), $countryId); exit;
-			$r = q('select * from objects where country_id = '.$countryId.' order by id limit 100');
+			$r = q('select * from objects where country_id = '.$countryId.' order by id limit 300');
 			//$r = q('select * from objects where id = 6609');
 		} else {
 			$existingIds = array();

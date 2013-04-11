@@ -253,7 +253,7 @@ class ImportLocations extends BaseImport {
 		$countryLocationType = $this->context->locationTypeRepositoryAccessor->get()->findOneBy(array('slug' => 'country'));
 
 		if ($this->developmentMode == TRUE) {
-			$r = q('select * from regions where country_id = 46 order by id');
+			$r = q('select * from regions where country_id in (46, 193, 149) order by id');
 		} else {
 			$r = q('select * from regions order by id');
 		}
@@ -319,7 +319,7 @@ class ImportLocations extends BaseImport {
 		$countryLocationType = $this->context->locationTypeRepositoryAccessor->get()->findOneBy(array('slug' => 'country'));
 
 		if ($this->developmentMode == TRUE) {
-			$r = q('select * from localities where country_id = 46 order by id');
+			$r = q('select * from localities where country_id in (46, 193, 149) order by id');
 		} else {
 			$r = q('select * from localities order by id');
 		}
@@ -335,7 +335,7 @@ class ImportLocations extends BaseImport {
 
 			$countryLocation = $this->context->locationRepositoryAccessor->get()->findOneBy(array('oldId'=>$x['country_id'], 'type'=>$countryLocationType));
 
-			$namePhrase->sourceLanguage = $location->parent->defaultLanguage;
+			$namePhrase->sourceLanguage = $countryLocation->defaultLanguage;
 
 			$r1 = q('select * from localities_translations where location_id = '.$x['id']);
 			$translationsCount = 0;
