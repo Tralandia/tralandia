@@ -75,7 +75,7 @@ class RentalPresenter extends BasePresenter {
 		$this->setLayout('detailLayout');
 
 		$this->template->lastSearchResults = $this->getLastSearchResults($rental);
-		$this->template->lastSeenRentals = $this->lastSeen->visit($rental)->getSeenRentals(12);
+		$this->lastSeen->visit($rental);
 	}
 
 	protected function getLastSearchResults($rental) {
