@@ -30,12 +30,6 @@ class RentalListPresenter extends BasePresenter {
 
 	/**
 	 * @autowire
-	 * @var \LastSeen
-	 */
-	protected $lastSeen;
-
-	/**
-	 * @autowire
 	 * @var \User\FindOrCreateUser
 	 */
 	protected $findOrCreateUser;
@@ -66,7 +60,6 @@ class RentalListPresenter extends BasePresenter {
 		$paginator->itemsPerPage = \Service\Rental\RentalSearchService::COUNT_PER_PAGE;
 		$paginator->itemCount = $itemCount;
 
-		$this->template->lastSeenRentals = $this->lastSeen->getSeenRentals(12);
 		$this->template->totalResultsCount = $paginator->itemCount;
 
 		if(isset($search)) {
