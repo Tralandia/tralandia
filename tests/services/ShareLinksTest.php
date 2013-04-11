@@ -27,11 +27,11 @@ class ShareLinksTest extends TestCase
 		$shareLinks = $this->shareLinks;
 
 		$tag = $shareLinks->getGooglePlusShareTag('http:://www.tralandia.com');
-		$expected = '<g:plusone href="http:://www.tralandia.com" size="medium" lang="sk"></g:plusone>';
+		$expected = '<a class="socialite googleplus-one" href="https://plus.google.com/share?url=http:://www.tralandia.com" data-size="medium" rel="nofollow" target="_blank"></a>';
 		$this->assertEquals($expected, "$tag");
 
 		$tag = $shareLinks->getGooglePlusProfileShareTag();
-		$expected = '<g:plusone href="https://plus.google.com/115691730730719504032/posts" size="medium" lang="sk"></g:plusone>';
+		$expected = '<a class="socialite googleplus-one" href="https://plus.google.com/share?url=https://plus.google.com/115691730730719504032/posts" data-size="medium" rel="nofollow" target="_blank"></a>';
 		$this->assertEquals($expected, "$tag");
 	}
 

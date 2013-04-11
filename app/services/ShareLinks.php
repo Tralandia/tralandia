@@ -1,5 +1,7 @@
 <?php
 
+use Nette\Utils\Html;
+
 class ShareLinks {
 
 	/**
@@ -43,10 +45,26 @@ class ShareLinks {
 	}
 
 
+	public function getFacebookPageShareTag()
+	{
+		return $this->getFacebookShareTag($this->facebookPage);
+	}
+
+
 	public function getFacebookShareTag($link)
 	{
-		$el = \Nette\Utils\Html::el('div');
-		$el->{"data-facebook-src"}($link);
+		$el = Html::el('a');
+		$el->addAttributes([
+			'class' => 'socialite facebook-like',
+			'href' => 'http://www.facebook.com/sharer.php?u='.$link,
+			'data-href' => $link,
+			'data-send' => 'false',
+			'data-layout' => 'box_count',
+			'data-width' => '60',
+			'data-show-faces' => 'false',
+			'rel' => 'nofollow',
+			'target' => '_blank',
+		]);
 
 		return $el;
 	}
@@ -60,10 +78,51 @@ class ShareLinks {
 
 	public function getGooglePlusShareTag($link)
 	{
-		$el = \Nette\Utils\Html::el('g:plusone');
-		$el->href($link);
-		$el->size('medium');
-		$el->lang($this->environment->getLocale()->getGooglePlusLangCode());
+		$el = Html::el('a');
+		$el->addAttributes([
+			'class' => 'socialite googleplus-one',
+			'href' => 'https://plus.google.com/share?url='.$link,
+			'data-size' => 'medium',
+			'rel' => 'nofollow',
+			'target' => '_blank',
+		]);
+
+		return $el;
+	}
+
+
+	public function getTwitterProfileShareTag()
+	{
+		return $this->getTwitterShareTag($this->twitterProfile);
+	}
+
+
+	public function getTwitterShareTag($link)
+	{
+		$el = Html::el('a');
+		$el->addAttributes([
+			'class' => 'socialite twitter-share',
+			'href' => 'http://twitter.com/share',
+			'data-text' => 'Socialite.js',
+			'data-url' => $link,
+			'data-count' => 'vertical',
+			'rel' => 'nofollow',
+			'target' => '_blank',
+		]);
+
+		return $el;
+	}
+
+
+	public function getPinterestShareTag($link)
+	{
+		$el = Html::el('a');
+		$el->addAttributes([
+			'class' => 'socialite pinterest-pinit',
+			'href' => $link,
+			'rel' => 'nofollow',
+			'target' => '_blank',
+		]);
 
 		return $el;
 	}
