@@ -12,7 +12,7 @@ class Phone extends \Entity\BaseEntity {
 
 	/**
 	 * @var string
-	 * @ORM\Column(type="string", length=20)
+	 * @ORM\Column(type="string", length=20, unique=true)
 	 */
 	protected $value;
 

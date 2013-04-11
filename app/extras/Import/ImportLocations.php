@@ -295,6 +295,9 @@ class ImportLocations extends BaseImport {
 				'oldId' => $x['country_id'], 
 				'type' => $countryLocationType
 			));
+			
+			$namePhrase->sourceLanguage = $location->parent->defaultLanguage;
+
 
 			//debug($location); exit;
 			$this->model->persist($location);
@@ -331,6 +334,9 @@ class ImportLocations extends BaseImport {
 			$namePhrase->ready = TRUE;
 
 			$countryLocation = $this->context->locationRepositoryAccessor->get()->findOneBy(array('oldId'=>$x['country_id'], 'type'=>$countryLocationType));
+
+			$namePhrase->sourceLanguage = $location->parent->defaultLanguage;
+
 			$r1 = q('select * from localities_translations where location_id = '.$x['id']);
 			$translationsCount = 0;
 			while ($x1 = mysql_fetch_array($r1)) {

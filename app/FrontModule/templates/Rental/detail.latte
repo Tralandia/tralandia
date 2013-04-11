@@ -73,7 +73,7 @@
 			</td>
 			<td>
 				{_o100005} {$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}
-				<span>{if $rental->bedroomCount}{$rental->bedroomCount} {_o100009}, {/if}
+				<span>{if $rental->bedroomCount} ({$rental->bedroomCount} {_o100009,null,[count=>$rental->bedroomCount]}){/if}
 					{$rental->rooms}</span>
 
 				<div>{if $separateGroups}{_o100011}{else}{_o100010}{/if}</div>
@@ -97,8 +97,7 @@
 						<li tooltip="true" title="{_o100040} {_$pricelistRow->roomType->name, null , [count => 1]}">
 							{$pricelistRow->roomCount} {_$pricelistRow->roomType->name, null , [count => $pricelistRow->roomCount]}
 							<span>
-							{$pricelistRow->bedCount} {_o100006 , null , [count => $pricelistRow->bedCount]}
-								{if $pricelistRow->extraBedCount}{$pricelistRow->extraBedCount} {_o100000 , null , [count => $pricelistRow->extraBedCount]}{/if}
+							({$pricelistRow->bedCount} {_o100006 , null , [count => $pricelistRow->bedCount]}{if $pricelistRow->extraBedCount} + {$pricelistRow->extraBedCount} {_o100000 , null , [count => $pricelistRow->extraBedCount]}{/if})
 						</span>
 
 						<span class="price">
