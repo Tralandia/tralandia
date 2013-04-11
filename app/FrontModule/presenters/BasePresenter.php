@@ -31,6 +31,12 @@ abstract class BasePresenter extends \BasePresenter {
 
 	/**
 	 * @autowire
+	 * @var \LastSeen
+	 */
+	protected $lastSeen;
+
+	/**
+	 * @autowire
 	 * @var \BaseModule\Components\IHeaderControlFactory
 	 */
 	protected $headerControlFactory;
@@ -88,6 +94,7 @@ abstract class BasePresenter extends \BasePresenter {
 		$this->template->currentLanguage = $this->environment->getLanguage();
 
 		$this->template->navBarLastActive = $this->getActiveNavbarTab();
+		$this->template->lastSeenRentals = $this->lastSeen->getSeenRentals(12);
 
 		$header = $this->getComponent('head');
 		$header->addTitle($this->pageSeo->getTitle());
