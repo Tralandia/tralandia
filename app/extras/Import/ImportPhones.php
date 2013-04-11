@@ -25,7 +25,5 @@ class ImportPhones extends BaseImport {
 		while($x = mysql_fetch_array($r)) {
 			qNew('insert into contact_phone set value = "'.$x['id'].'", international = "'.$x['format_int'].'", national = "'.$x['format_national'].'", primaryLocation_id = '.$countries[$x['country_id_new']], 1);
 		}
-
-		exit;
 	}
 }

@@ -28,7 +28,7 @@ class ImportPresenter extends Presenter {
 		'http://www.sk.tra.com/import?importSection=locations&subsection=importContinents',
 		'http://www.sk.tra.com/import?importSection=locations&subsection=importRegions',
 		'http://www.sk.tra.com/import?importSection=locations&subsection=importLocalities',
-		'http://www.sk.tra.com/import?importSection=phones',
+		//'http://www.sk.tra.com/import?importSection=phones',
 		'http://www.sk.tra.com/import?importSection=users&subsection=importSuperAdmins',
 		'http://www.sk.tra.com/import?importSection=users&subsection=importAdmins',
 		'http://www.sk.tra.com/import?importSection=users&subsection=importManagers',
