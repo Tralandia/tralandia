@@ -209,12 +209,18 @@ class BaseImport {
 	public $context;
 	public $presenter;
 
+	/**
+	 * @var \Html2texy
+	 */
+	protected $html2texy;
+
 	public function __construct($context, $presenter) {
 		$this->context = $context;
 		$this->presenter = $presenter;
 		$this->model = $context->model;
 		$this->loadVariables();
 
+		$this->html2texy = $this->context->html2texy;
 	}
 
 	public function setSubsections($section = NULL) {
@@ -340,7 +346,7 @@ class BaseImport {
 
 			if($oldPhraseId) {
 				$oldTranslation = qf('select * from z_'.$language->iso.' where id = '.$oldPhraseId);
-				$oldTranslationText = $oldTranslation['text'];
+				$oldTranslationText = $this->processTranslation($oldTranslation['text']);
 				$oldTranslationUpdated = fromStamp($oldTranslation['updated']);
 			} else {
 				$oldTranslationText = '';
@@ -386,7 +392,7 @@ class BaseImport {
 
 		$phrase->sourceLanguage = $textLanguage;
 
-		$translation = $phraseService->createTranslation($textLanguage, $text);
+		$translation = $phraseService->createTranslation($this->processTranslation($textLanguage), $text);
 
 		return $phrase;
 	}
@@ -493,5 +499,14 @@ class BaseImport {
 		$serviceName = $this->getServiceFactoryName($namespace);
 		$repositoryName = str_replace('ServiceFactory', '', $serviceName);
 		return $repositoryName . 'Repository';
+	}
+
+	public function processTranslation($text) {
+		$text = preg_replace('/\{_([0-9a-zA-Z]{1,25})\}/', '[$1]', $text);
+		if ($text != strip_tags($text)) {
+			$text = $this->html2texy->convert($text);
+		}
+
+		return $text;
 	}
 }
