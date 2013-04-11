@@ -99,10 +99,13 @@ class RegistrationHandler extends FormHandler
 		$user = $this->userCreator->create($values->email, $this->environment, Role::OWNER);
 		$user->setPassword($values->password);
 
+		$this->em->persist($user);
+
 
 		/** @var $email \Entity\Contact\Email */
 		$email = $emailRepository->createNew();
 		$email->setValue($user->getLogin());
+		$this->em->persist($email);
 
 		$rentalCreator = $this->rentalCreator;
 
