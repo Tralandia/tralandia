@@ -36,7 +36,13 @@ class RentalPhotosContainer extends BaseContainer
 		$this['upload'] = $upload = new MfuControl();
 		$upload->allowMultiple()->onUpload[] = $this->processUpload;
 
-		$this->addHidden('sort');
+		$images = $rental->getImages();
+		$sort = [];
+		foreach($images as $image) {
+			$sort[] = $image->getId();
+		}
+
+		$this->addHidden('sort')->setDefaultValue(implode(',', $sort));
 	}
 
 	public function getMainControl()
@@ -49,9 +55,11 @@ class RentalPhotosContainer extends BaseContainer
 	 */
 	public function getImages()
 	{
-		if(!$this->rental) return [];
-		return $this->rental->getImages();
+		$images = $this->getValues()->images;
+		if(!count($images)) return [];
+		return $images;
 	}
+
 
 	/**
 	 * @param \Extras\Forms\Control\MfuControl $upload

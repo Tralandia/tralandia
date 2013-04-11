@@ -62,19 +62,40 @@ class AddressContainer extends BaseContainer
 		return $this['address'];
 	}
 
+
+	/**
+	 * @return int
+	 */
 	public function getZoom()
 	{
-		if($this->address) {
-			return $this->address->getPrimaryLocation()->getDefaultZoom();
+		$address = $this->getAddressEntity();
+		if($address) {
+			$zoom = $address->getLocality()->getDefaultZoom();
+			return $zoom ? : 14;
 		} else {
 			return $this->location->getDefaultZoom();
 		}
 	}
 
+
+	/**
+	 * @return int
+	 */
 	public function shouldShowMarker()
 	{
-		return (int) $this->address;
+		return (int) ($this->getAddressEntity() instanceof Address);
 	}
+
+
+	/**
+	 * @return Address
+	 */
+	public function getAddressEntity()
+	{
+		$address = $this->getValues()->addressEntity;
+		return $address ? $address : $this->address;
+	}
+
 
 	/**
 	 * @param $address
