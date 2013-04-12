@@ -1,4 +1,23 @@
-
-{foreach $rentalList as $rental}
-	{_$rental->getName()}<br>
-{/foreach}
+<div class="span3" id="sidebar">
+	<aside class="innerPadding baseRadius baseBorder innerPaddingLeft noTopMargin">
+		{* <div class="loggedUser">
+			<strong>{$owner->login}</strong>
+		</div> *}
+		{if isset($rentalList)}
+		<h4><i class="icon-cog"></i> #Vase menu</h4>
+		<ul>
+			<li><a n:href=":Owner:User:edit">#Porfil</a></li>
+			<li>
+				<a n:href=":Owner:Rental:list">#Objekty</a>
+				<ul n:inner-foreach="$rentalList as $rental">
+					<li>
+						<a n:href=":Owner:Rental:edit, id => $rental->id">{_$rental->getName()}</a>
+					</li>
+				</ul>
+			</li>
+			<li><a n:href=":Owner:CalendarWidget:">#Vlozte si kalendar</a></li>
+			<li><a n:href=":Front:Sign:out">#Odhlasit</a></li>
+		</ul>
+		{/if}
+	</aside>
+</div>

@@ -57,6 +57,7 @@ abstract class BasePresenter extends \SecuredPresenter {
 		$this->template->envPrimaryLocation = $this->environment->getPrimaryLocation();
 
 		$this->template->rentalList = $this->loggedUser->getRentals();
+		$this->template->owner = $this->loggedUser;
 		parent::beforeRender();
 	}
 
