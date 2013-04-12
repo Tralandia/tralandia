@@ -1,0 +1,10 @@
+entity: Entity\Language
+
+parameters:
+	title: Language types
+	h1: 'Language type -> %name%'
+
+gridFactory: @languageGridFactory
+
+form:
+	fields:
