@@ -36,10 +36,10 @@ class RunRobotPresenter extends BasePresenter {
 	public function actionSearchCache() {
 		$primaryLocationType = $this->locationTypeRepositoryAccessor->get()->findOneBySlug('country');
 		$primaryLocations = $this->locationRepositoryAccessor->get()->findByType($primaryLocationType);
-		d(count($primaryLocations));
+		//$primaryLocations = $this->locationRepositoryAccessor->get()->findById(159);
+		d('Idem importovat ' . count($primaryLocations) . ' krajin.');
 		foreach ($primaryLocations as $key => $location) {
 			$this->rentalSearchCacheRobotFactory->create($location)->run();
-			d(Strings::upper($location->iso).': Done');
 		}
 
 		//$searchCaching->getOrderList();

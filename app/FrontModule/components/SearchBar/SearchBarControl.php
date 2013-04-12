@@ -24,7 +24,6 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 	 */
 	public $rentalType;
 
-
 	/**
 	 * @persistent
 	 * @var \Entity\Rental\Placement|NULL
@@ -160,7 +159,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		$count = $search->getRentalsCount();
 		$template->totalResultsCount = $count;
 		$template->totalResultsCountLabel = $presenter->translate('o100002', $count, NULL, ['count' => $count]);
-		$template->autocompleteUrl = $presenter->link(':Front:RentalList:locationSuggestion', ['page' => NULL]);
+		$template->autocompleteUrl = $presenter->link(':Front:Rental:locationSuggestion', ['page' => NULL]);
 
 		$template->render();
 	}
