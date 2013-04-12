@@ -62,6 +62,7 @@ class ImportLocations extends BaseImport {
 		$s->slug = 'world';
 		$s->localName = 'world';
 		$s->domain = $this->context->domainRepositoryAccessor->get()->findOneBy(array('domain' => 'tralandia.com'));
+		$s->defaultLanguage = $this->context->languageRepositoryAccessor->get()->findByIso('en');
 		$this->model->persist($s);
 		$this->model->flush();
 

@@ -4,19 +4,12 @@
 			<strong>{$owner->login}</strong>
 		</div> *}
 		{if isset($rentalList)}
-		<h4><i class="icon-cog"></i> #Vase menu</h4>
+		<h4><i class="icon-cog"></i> {_o100152}</h4>
 		<ul>
-			<li><a n:href=":Owner:User:edit">#Porfil</a></li>
-			<li>
-				<a n:href=":Owner:Rental:list">#Objekty</a>
-				<ul n:inner-foreach="$rentalList as $rental">
-					<li>
-						<a n:href=":Owner:Rental:edit, id => $rental->id">{_$rental->getName()}</a>
-					</li>
-				</ul>
-			</li>
-			<li><a n:href=":Owner:CalendarWidget:">#Vlozte si kalendar</a></li>
-			<li><a n:href=":Front:Sign:out">#Odhlasit</a></li>
+			<li><a n:href=":Owner:User:edit">{_100146}</a></li>
+			<li n:foreach="$rentalList as $rental"><a n:href=":Owner:Rental:edit, id => $rental->id">{_$rental->getName()}</a></li>
+			<li><a n:href=":Owner:CalendarWidget:">{_o100153}</a></li>
+			<li><a n:href=":Front:Sign:out">{_o100154}</a></li>
 		</ul>
 		{/if}
 	</aside>
