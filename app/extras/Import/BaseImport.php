@@ -340,6 +340,8 @@ class BaseImport {
 		$phrase->oldId = $oldPhraseId;
 		$phrase->sourceLanguage = $sourceLanguage;
 
+		$allSupportedLanguagesRequired = (bool)$phrase->type->translateTo == \Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED;
+
 		$allLanguages = getSupportedLanguages();
 		foreach ($allLanguages as $key => $value) {
 			$language = $this->context->languageRepositoryAccessor->get()->find($value);
@@ -361,6 +363,9 @@ class BaseImport {
 			// 		$variations[$locativeKeys[0]][$locativeKeys[1]]['locative'] = $oldTranslationLocative['text'];
 			// 	}
 			// }
+
+			if (!$allSupportedLanguagesRequired && strlen($oldTranslationText) == 0) continue;
+
 			$translation = $phraseService->createTranslation($language, (string)$oldTranslationText);
 			$translation->timeTranslated = $oldTranslationUpdated;
 		}
