@@ -18,6 +18,11 @@ class Locale {
 	protected $collator;
 
 	/**
+	 * @var \Environment\NumberFormatter
+	 */
+	protected $numberFormatter;
+
+	/**
 	 * @var array
 	 */
 	protected $months = [1 => '100020', '100021', '100022', '100023', '100024', '100025', '100026', '100027', '100028', '100029', '100030', '100031'];
@@ -76,6 +81,19 @@ class Locale {
 	}
 
 
+	/**
+	 * @return \Environment\NumberFormatter
+	 */
+	public function getNumberFormatter()
+	{
+		if(!$this->numberFormatter) {
+			$this->numberFormatter = new NumberFormatter($this->getCode(), NumberFormatter::PATTERN_DECIMAL);
+		}
+
+		return $this->numberFormatter;
+	}
+
+
 
 	/********************* number tools *********************/
 
@@ -96,7 +114,8 @@ class Locale {
 	 */
 	public function formatPrice(Price $price)
 	{
-		return $price->convertTo($price->getSourceCurrency(), $this->getPriceFormat());
+		$amount = $price->getAmount($price->getSourceCurrency());
+		return $this->getNumberFormatter()->formatCurrency($amount, 'EUR') . ' ' . $price->getSourceCurrency()->getIso();
 	}
 
 
