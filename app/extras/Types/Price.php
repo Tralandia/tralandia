@@ -2,6 +2,8 @@
 
 namespace Extras\Types;
 
+use Entity\Currency;
+
 class Price extends \Nette\Object {
 
 	const AMOUNT = 'amount';
@@ -15,11 +17,11 @@ class Price extends \Nette\Object {
 	protected $sourceAmount;
 	protected $sourceCurrency;
 
-	public function __construct($amount, \Entity\Currency $currency) {
+	public function __construct($amount, Currency $currency) {
 		$this->setAmount($amount, $currency);
 	}
 
-	public function setAmount($amount, \Entity\Currency $currency) {
+	public function setAmount($amount, Currency $currency) {
 		if ($amount === NULL) $amount = 0;
 
 		$this->amounts = array();
@@ -43,7 +45,7 @@ class Price extends \Nette\Object {
 	}
 
 	/**
-	 * @return \Entity\Currency
+	 * @return Currency
 	 */
 	public function getSourceCurrency()
 	{
@@ -51,21 +53,38 @@ class Price extends \Nette\Object {
 	}
 
 	/**
-	 * @param \Entity\Currency $currency
+	 * @param Currency $currency
 	 *
 	 * @return string
 	 */
-	public function convertToFloat(\Entity\Currency $currency) {
+	public function convertToFloat(Currency $currency) {
 		return $this->convertTo($currency, self::FORMAT_FLOAT);
 	}
 
 	/**
-	 * @param \Entity\Currency $currency
+	 * @param Currency $currency
 	 * @param string $format
 	 *
 	 * @return string
 	 */
-	public function convertTo(\Entity\Currency $currency, $format = '%f %s') {
+	public function convertTo(Currency $currency, $format = '%f %s') {
+		$value = $this->getAmount($currency);
+
+		if ($format === self::FORMAT_FLOAT) {
+			return $value;
+		} else {
+			return sprintf($format, $value, $currency->getIso());
+		}
+	}
+
+
+	/**
+	 * @param Currency $currency
+	 *
+	 * @return mixed
+	 */
+	public function getAmount(Currency $currency)
+	{
 		if(!isset($this->amounts[$currency->getId()])) {
 			if (!isset($this->amounts[1])) {
 				if ($this->sourceCurrency->exchangeRate == 0) {
@@ -82,12 +101,9 @@ class Price extends \Nette\Object {
 			$value = $this->amounts[$currency->getId()];
 		}
 
-		if ($format === self::FORMAT_FLOAT) {
-			return $value;
-		} else {
-			return sprintf($format, $value, $currency->getIso());
-		}
+		return $value;
 	}
+
 
 	/**
 	 * @return string

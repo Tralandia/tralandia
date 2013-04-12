@@ -2,6 +2,7 @@
 namespace Extras;
 
 use Environment\Locale;
+use Extras\Types\Price;
 use Nette;
 
 /**
@@ -37,10 +38,16 @@ class Helpers {
 	public function rentalImageSrc($image, $size = 'thumbnail')
 	{
 		if (is_object($image)) {
-			return $this->rentalImageDir . $image->filePath . DIRECTORY_SEPARATOR . $size . '.jpeg';		
+			return $this->rentalImageDir . $image->filePath . DIRECTORY_SEPARATOR . $size . '.jpeg';
 		} else {
 			return $image;
 		}
+	}
+
+
+	public function price(Price $price)
+	{
+		return $this->locale->formatPrice($price);
 	}
 
 
