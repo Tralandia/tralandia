@@ -1,4 +1,12 @@
-
-{foreach $rentalList as $rental}
-	{_$rental->getName()}<br>
-{/foreach}
+<div class="span3" id="sidebar">
+	<aside class="innerPadding baseRadius baseBorder innerPaddingLeft noTopMargin">
+		{if isset($rentalList)}
+		{* <h4><i class="{$bottomLinks->iconClass}"></i>{_$bottomLinks->title}</h4> *}
+		<ul n:inner-foreach="$rentalList as $rental">
+			<li>
+				<a href="#">{_$rental->getName()}</a>
+			</li>
+		</ul>
+		{/if}
+	</aside>
+</div>

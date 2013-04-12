@@ -114,12 +114,12 @@
 
 
 	{*
-	Texyla Control -------------------------------------------
-	@param $control \Nette\Forms\Controls\TextAreaControl
+	Checkbox Control -------------------------------------------
+	@param $control \Nette\Forms\Controls\CheckboxControl
 	@param $controlClass string
 	*}
 	{define #checkbox}
-	{include #opentag , class => $controlClass , control => $control}
+	{include #opentag , control => $control}
 		<td>
 			{_$control->caption}
 		</td>
