@@ -5,6 +5,7 @@ namespace Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Proxy\Proxy;
 use Extras;
+use Nette\Utils\Strings;
 
 /**
  * @ORM\MappedSuperclass(repositoryClass="\Repository\BaseRepository")
@@ -45,12 +46,17 @@ class BaseEntity extends \Extras\Models\Entity\Entity implements \Nette\Security
 
 	public function getResourceId()
 	{
-		return get_class($this);
+		return $this->getClass();
 	}
 
 	public function getClass()
 	{
-		return get_class($this);
+		$class = get_class($this);
+		if(Strings::contains($class, '\Proxies\\')) {
+			$class = get_parent_class($this);
+		}
+
+		return $class;
 	}
 
 	/**

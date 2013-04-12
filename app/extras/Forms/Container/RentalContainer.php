@@ -111,11 +111,6 @@ class RentalContainer extends BaseContainer
 		$this->addCheckbox('separateGroups', 'o100076')
 			->setOption('help', $this->translate('o100077'));
 
-		$this->addText('price', 'o100078')
-			->setOption('append', $this->country->defaultCurrency->iso . ' ' . $this->translate('o100004'))
-			->setOption('help', $this->translate('o100073'))
-			->addRule(Form::INTEGER, $this->translate('o100105'))
-			->addRule(Form::RANGE, $this->translate('o100105'), [0, 999999999999999]);
 
 		$amenityPets = $this->amenityRepository->findByAnimalTypeForSelect($this->getTranslator(), $this->collator);
 		$this->addSelect('pet', 'o100079', $amenityPets)

@@ -57,6 +57,12 @@ FormContainer::extensionMethod('addPhoneContainer',
 		return $container[$name] = new \Extras\Forms\Container\PhoneContainer($label, $phonePrefixes, $phoneBook, $translator);
 });
 
+FormContainer::extensionMethod('addPriceContainer',
+	function (FormContainer $container, $name, $label, $currencies) use ($dic) {
+		$translator = $dic->getService('translator');
+		return $container[$name] = new \Extras\Forms\Container\PriceContainer($label, $currencies, $translator);
+});
+
 FormContainer::extensionMethod('addRentalTypeContainer',
 	function (FormContainer $container, $name, $rentalTypes) use ($dic) {
 		$translator = $dic->getService('translator');
