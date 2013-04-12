@@ -11,7 +11,7 @@ use Nette\Utils\Strings;
  *
  * @author Dávid Ďurika
  */
-class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot 
+class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 {
 
 	protected $phraseDecoratorFactory;
@@ -49,7 +49,6 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 		$languageList = $this->languageRepositoryAccessor->get()->findBySupported(TRUE);
 
 		$this->persistPagesSegments($languageList);
-		//$this->persistAtractionTypesSegments($languageList);
 		$this->persistLocationsSegments();
 		$this->persistRentalTypesSegments($languageList);
 
