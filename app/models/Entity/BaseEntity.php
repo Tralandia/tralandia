@@ -48,6 +48,11 @@ class BaseEntity extends \Extras\Models\Entity\Entity implements \Nette\Security
 		return get_class($this);
 	}
 
+	public function getClass()
+	{
+		return get_class($this);
+	}
+
 	/**
 	 * @param integer
 	 * @return \Entity\BaseEntity

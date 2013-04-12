@@ -88,6 +88,7 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 	public function buildForm()
 	{
 		$phonePrefixes = $this->locationRepository->getCountriesPhonePrefixes();
+		//$supportedLanguages = $this->languageRepository->getSupportedSortedByName();
 
 //		$this->addText('name', 'o100070')
 //			->setOption('help', $this->translate('o100071'))

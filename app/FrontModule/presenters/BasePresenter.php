@@ -66,6 +66,11 @@ abstract class BasePresenter extends \BasePresenter {
 
 
 	public function beforeRender() {
+		$primaryLocation = $this->environment->getPrimaryLocation();
+
+		$this->template->showSearchBar = !$primaryLocation->isWorld();
+
+
 		$this->template->currentLanguage = NULL;
 		$this->template->currentLocation = NULL;
 
@@ -73,7 +78,6 @@ abstract class BasePresenter extends \BasePresenter {
 
 		$this->template->localeCode = $this->environment->getLocale()->getCode();
 
-		$primaryLocation = $this->environment->getPrimaryLocation();
 		$domain = $primaryLocation->getFirstDomain()->getDomain();
 		$this->template->domain = ucfirst($domain);
 

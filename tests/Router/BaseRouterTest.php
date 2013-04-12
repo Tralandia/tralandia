@@ -1,6 +1,7 @@
 <?php
 namespace Tests\Router;
 
+use Entity\BaseEntity;
 use Nette, Extras;
 
 
@@ -10,9 +11,13 @@ use Nette, Extras;
 abstract class BaseRouterTest extends \Tests\TestCase
 {
 
-	protected function routeIn(Nette\Application\IRouter $route, $url, $expectedPresenter=NULL, $expectedParams=NULL, $expectedUrl=NULL)
+	protected function routeIn(Nette\Application\IRouter $route, $url, $expectedPresenter=NULL, $expectedParams=NULL, $expectedUrl=TRUE)
 	{
 		// ==> $url
+
+		if($expectedUrl === TRUE) {
+			$expectedUrl = $url;
+		}
 
 		$url = new Nette\Http\UrlScript($url);
 		// $url->appendQuery(array(
@@ -26,24 +31,25 @@ abstract class BaseRouterTest extends \Tests\TestCase
 
 		if ($request) { // matched
 			$params = $request->getParameters();
-			//asort($params);
-			//d($request); #@debug
-			$this->assertSame( $expectedPresenter, $request->getPresenterName() );
+
+			$this->assertSame($expectedPresenter, $request->getPresenterName(), 'Nazov prezenteru sa nezhoduje!');
+
 			foreach($params as $paramName => $param) {
-				$this->assertArrayHasKey( $paramName, $expectedParams );
-				if($param instanceof \Entity\BaseEntity) {
-					$param = $param->getId();
+				$this->assertArrayHasKey($paramName, $expectedParams);
+				if($expectedParams[$paramName] instanceof BaseEntity) {
+					$this->assertEntities($expectedParams[$paramName], $param);
+				} else {
+					$this->assertSame($expectedParams[$paramName], $param);
 				}
-				$this->assertEquals( $expectedParams[$paramName], $param );
 			}
 
 			foreach($expectedParams as $paramName => $value) {
-				$this->assertArrayHasKey( $paramName, $params );
-				$param = $params[$paramName];
-				if($param instanceof \Entity\BaseEntity) {
-					$param = $param->getId();
+				$this->assertArrayHasKey($paramName, $params);
+				if($value instanceof BaseEntity) {
+					$this->assertEntities($value, $params[$paramName]);
+				} else {
+					$this->assertSame($value, $params[$paramName]);
 				}
-				$this->assertEquals( $value, $param );
 			}
 
 			//unset($params['extra']);
@@ -65,5 +71,11 @@ abstract class BaseRouterTest extends \Tests\TestCase
 		$url = new Nette\Http\Url('http://example.com');
 		$request = new Nette\Application\Request($presenter, 'GET', $params);
 		return $route->constructUrl($request, $url);
+	}
+
+	public function assertEntities(BaseEntity $expected,BaseEntity $actual, $message = NULL)
+	{
+		$this->assertSame($expected->getClass(), $actual->getClass(), $message);
+		$this->assertSame($expected->getId(), $actual->getId(), $message);
 	}
 }
