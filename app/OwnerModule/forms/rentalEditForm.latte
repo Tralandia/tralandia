@@ -10,9 +10,10 @@
 		{include #phone, control => $form['phone']}
 		{include #url, control => $form['url']}
 
+		{include #fieldset, text => '#text'}
+		{include #text, control => $rental['name']}
 		{include #fieldset, text => 'o100085'}
 		{var $rental = $form['rental']}
-		{include #text, control => $rental['name']}
 		{include #rentalType, control => $rental['type']}
 		{include #text, control => $rental['price']}
 		{include #text, control => $rental['maxCapacity']}
