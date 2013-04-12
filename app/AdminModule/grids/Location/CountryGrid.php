@@ -22,11 +22,8 @@ class CountryGrid extends AdminGridControl {
 
 		$grid->addColumn('name');
 		$grid->addColumn('slug');
-		// $grid->addColumn('continent');
-		// $grid->addColumn('domain');
-		// $grid->addColumn('currency');
-		// $grid->addColumn('language');
-		// $grid->addColumn('phonePrefix');
+		$grid->addColumn('parent', 'Continent');
+		$grid->addColumn('domain');
 
 		return $grid;
 	}

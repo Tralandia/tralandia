@@ -114,13 +114,13 @@ common:
 					label: Locations
 					items: 
 						country: 
-							label: Country
+							label: Countries
 							link: ':Admin:Country:list'
 						region:
-							label: Region
+							label: Regions
 							link: ':Admin:Region:list'
 						locality:
-							label: Locality
+							label: Localities
 							link: ':Admin:Locality:list'
 				locationType: 
 					label: Location Types

@@ -22,7 +22,7 @@ class LocalityGrid extends AdminGridControl {
 
 		$grid->addColumn('name');
 		$grid->addColumn('slug');
-		// $grid->addColumn('country');
+		$grid->addColumn('parent', 'Country');
 
 		return $grid;
 	}

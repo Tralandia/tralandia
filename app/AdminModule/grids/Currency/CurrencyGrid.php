@@ -19,10 +19,11 @@ class CurrencyGrid extends AdminGridControl {
 	{
 		$grid = $this->getGrid();
 
-		$grid->addColumn('id');
 		$grid->addColumn('name', 'Name');
 		$grid->addColumn('iso', 'Iso');
+		$grid->addColumn('exchangeRate', 'Exchange rate');
 		$grid->addColumn('rounding', 'Rounding');
+		$grid->addColumn('searchInterval', 'Search interval');
 
 		return $grid;
 	}

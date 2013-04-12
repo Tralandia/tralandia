@@ -1,0 +1,11 @@
+{define #col-parent}
+	<td>
+		{ifset $row->parent->name}{_$row->parent->name}{/ifset}
+	</td>
+{/define}
+
+{define #col-hasPolygons}
+	<td>
+		{$row->polygons ? 'Yes' : 'No'}
+	</td>
+{/define}

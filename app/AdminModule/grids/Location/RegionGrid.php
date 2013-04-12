@@ -22,8 +22,8 @@ class RegionGrid extends AdminGridControl {
 
 		$grid->addColumn('name');
 		$grid->addColumn('slug');
-		// $grid->addColumn('country');
-		// $grid->addColumn('has polygons');
+		$grid->addColumn('parent', 'Country');
+		$grid->addColumn('hasPolygons', 'Has polygons');
 
 
 		return $grid;

@@ -1,7 +1,7 @@
 entity: Entity\Location\Location
 
 parameters:
-	title: Locality
+	title: Localities
 	h1: 'Locality -> %name%'
 
 gridFactory: @localityGridFactory

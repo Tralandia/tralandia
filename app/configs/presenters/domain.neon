@@ -1,0 +1,10 @@
+entity: Entity\Domain
+
+parameters:
+	title: Domains
+	h1: 'Domain -> %name%'
+
+gridFactory: @domainGridFactory
+
+form:
+	fields:

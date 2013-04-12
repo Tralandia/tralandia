@@ -1,1 +1,40 @@
+{define #col-name}
+	<td>
+		{_$row->name}
+		{var $language = $row->getDefaultLanguage()}
+		{var $currency = $row->getDefaultCurrency()}
+		{var $bracket = array()}
 
+		{ifset $row->iso}{var $bracket[] = strtoupper($row->iso)}{/ifset}
+		{ifset $language->iso}{var $bracket[] = $language->iso}{/ifset}
+		{ifset $currency->iso}{var $bracket[] = $currency->iso}{/ifset}
+
+		{if count($bracket)}
+			({$bracket|implode, ', '})
+		{/if}
+	</td>
+{/define}
+
+{define #col-parent}
+	<td>
+		{ifset $row->parent->name}{_$row->parent->name}{/ifset}
+	</td>
+{/define}
+
+{define #col-domain}
+	<td>
+		{var $domain = $row->getDomain()}
+		{ifset $domain}
+			{$domain->domain}
+		{/ifset}
+	</td>
+{/define}
+
+{define #col-language}
+	<td>
+		{var $language = $row->getDefaultLanguage()}
+		{ifset $language}
+			{_$language->name}
+		{/ifset}
+	</td>
+{/define}
