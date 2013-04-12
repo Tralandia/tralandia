@@ -22,7 +22,7 @@
 		{var $rental = $form['rental']}
 		{include #text, control => $rental['name']}
 		{include #rentalType, control => $rental['type']}
-		{include #text, control => $rental['price']}
+		{include #price, control => $rental['price']}
 		{include #text, control => $rental['maxCapacity']}
 		{include #select, control => $rental['ownerAvailability'] , controlClass => 'select2 ownerAvailability'}
 		{include #select, control => $rental['pet'] , controlClass => 'select2 pet'}

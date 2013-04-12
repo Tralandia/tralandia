@@ -62,6 +62,11 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 	 */
 	protected $userRepository;
 
+	/**
+	 * @var \Repository\CurrencyRepository
+	 */
+	protected $currencyRepository;
+
 
 	/**
 	 * @param Environment $environment
@@ -83,6 +88,7 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 		$this->locationRepository = $em->getRepository(LOCATION_ENTITY);
 		$this->languageRepository = $em->getRepository(LANGUAGE_ENTITY);
 		$this->userRepository = $em->getRepository(USER_ENTITY);
+		$this->currencyRepository = $em->getRepository(CURRENCY_ENTITY);
 		parent::__construct($translator);
 	}
 
@@ -125,8 +131,22 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 			->addRule(self::URL, $this->translate('o100102'));
 		;
 
+
 		$rentalContainer = $this->rentalContainerFactory->create($this->environment);
 		$this['rental'] = $rentalContainer;
+
+		$currency = $this->country->getDefaultCurrency();
+		if($currency) {
+			$rentalContainer->addText('price', 'o100078')
+				->setOption('append', $currency->getIso . ' ' . $this->translate('o100004'))
+				->setOption('help', $this->translate('o100073'))
+				->addRule(self::INTEGER, $this->translate('o100105'))
+				->addRule(self::RANGE, $this->translate('o100105'), [0, 999999999999999]);
+		} else {
+			$currencies = $this->currencyRepository->getForSelect($this->translator, $this->collator);
+			$rentalContainer->addPriceContainer('price', 'o100078', $currencies);
+		}
+
 
 		$this->addSubmit('submit', 'o1099');
 
@@ -152,7 +172,6 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 			],
 			'rental' => [
 				'name' => 'Chata Test',
-				'price' => '3',
 				'maxCapacity' => 15,
 				'type' => [
 					'type' => 3,

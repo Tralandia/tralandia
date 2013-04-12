@@ -232,13 +232,25 @@ class FrontRoute extends BaseRoute
 				}
 		}
 
+		$page = NULL;
+		if(isset($params[self::PAGE])) {
+			$page = $params[self::PAGE];
+		}
 		$params = $this->filterOut($params);
+
+		if(isset($params[self::USE_ROOT_DOMAIN])) {
+			if(!$page && $params[self::PRIMARY_LOCATION] != self::ROOT_DOMAIN) {
+				array_unshift($params[self::HASH], $params[self::PRIMARY_LOCATION]);
+			}
+			$params[self::PRIMARY_LOCATION] = self::ROOT_DOMAIN;
+		}
 
 		if(!count($params[self::HASH])) {
 			$params[self::HASH] = '';
 		} else {
 			$params[self::HASH] = implode('/', $params[self::HASH]);
 		}
+		unset($params[self::USE_ROOT_DOMAIN]);
 
 		$params['action'] = $this->actionName;
 		$appRequest->setPresenterName($this->presenterName);
@@ -335,12 +347,6 @@ class FrontRoute extends BaseRoute
 		$params[self::HASH] = array_merge($params[self::HASH], $segments);
 
 		$params = parent::filterOut($params);
-
-		if(isset($params[self::USE_ROOT_DOMAIN]) && $params[self::PRIMARY_LOCATION] != self::ROOT_DOMAIN) {
-			array_unshift($params[self::HASH], $params[self::PRIMARY_LOCATION]);
-			$params[self::PRIMARY_LOCATION] = self::ROOT_DOMAIN;
-		}
-		unset($params[self::USE_ROOT_DOMAIN]);
 
 		return $params;
 	}

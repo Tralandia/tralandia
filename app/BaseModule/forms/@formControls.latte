@@ -2,7 +2,7 @@
 	{default $class = ''}
 	{default $dataLink = ''}
 	<tr data-link="{$dataLink}" n:class="$control->hasErrors() ? 'invalid '.$class : $class">
-	{/define #opentag}	 
+	{/define #opentag}
 	{*
 	Fieldset -------------------------------------------
 	@param $control \Nette\Forms\Controls\BaseControl
@@ -278,7 +278,7 @@
 	</td>
 
 	<td>
-		<span class="help">{$container->getOption('help')}</span>
+		<span class="help">{$mainControl->getOption('help')}</span>
 		<span class="invalidAlert">{include #controlErrors, errors => $container->getAllErrors()}</span>
 	</td>
 </tr>
@@ -526,7 +526,7 @@
 
 			<div class="span12">
 
-				<div class="help">{include #controlErrors, errors => $mainControl->getErrors()}</div>			
+				<div class="help">{include #controlErrors, errors => $mainControl->getErrors()}</div>
 
 				<ul id="sortable" class="ui-sortable" n:inner-foreach="$container->getImages() as $image">
 					{dump $image}
