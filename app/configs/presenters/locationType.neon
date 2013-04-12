@@ -1,0 +1,10 @@
+entity: Entity\Location\Location
+
+parameters:
+	title: Location Types
+	h1: 'Location type -> %name%'
+
+gridFactory: @locationTypeGridFactory
+
+form:
+	fields:

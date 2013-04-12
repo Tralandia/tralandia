@@ -355,9 +355,45 @@ factories:
 	# ==============================
 	# ==================== G R I D S
 	# ==============================
+	amenityGridFactory:
+		class: AdminModule\Grids\AmenityGrid(@rentalAmenityRepositoryAccessor::get())
+		implement: AdminModule\Grids\IAmenityGridFactory
+
+	amenityTypeGridFactory:
+		class: AdminModule\Grids\AmenityTypeGrid(@rentalAmenityTypeRepositoryAccessor::get())
+		implement: AdminModule\Grids\IAmenityTypeGridFactory
+
 	currencyGridFactory:
 		class: AdminModule\Grids\CurrencyGrid(@currencyRepositoryAccessor::get())
 		implement: AdminModule\Grids\ICurrencyGridFactory
+
+	domainGridFactory:
+		class: AdminModule\Grids\DomainGrid(@domainRepositoryAccessor::get())
+		implement: AdminModule\Grids\IDomainGridFactory
+
+	languageGridFactory:
+		class: AdminModule\Grids\LanguageGrid(@languageRepositoryAccessor::get())
+		implement: AdminModule\Grids\ILanguageGridFactory
+
+	countryGridFactory:
+		class: AdminModule\Grids\countryGrid(@locationRepositoryAccessor::get())
+		implement: AdminModule\Grids\ICountryGridFactory
+
+	regionGridFactory:
+		class: AdminModule\Grids\RegionGrid(@locationRepositoryAccessor::get())
+		implement: AdminModule\Grids\IRegionGridFactory
+
+	localityGridFactory:
+		class: AdminModule\Grids\LocalityGrid(@locationRepositoryAccessor::get())
+		implement: AdminModule\Grids\ILocalityGridFactory
+
+	locationTypeGridFactory:
+		class: AdminModule\Grids\LocationTypeGrid(@locationTypeRepositoryAccessor::get())
+		implement: AdminModule\Grids\ILocationTypeGridFactory
+
+	phraseTypeGridFactory:
+		class: AdminModule\Grids\PhraseTypeGrid(@phraseTypeRepositoryAccessor::get())
+		implement: AdminModule\Grids\IPhraseTypeGridFactory
 
 	#dataGrid:
 		#class: TwiGrid\DataGrid

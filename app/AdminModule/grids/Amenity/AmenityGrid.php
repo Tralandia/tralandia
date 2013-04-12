@@ -4,7 +4,7 @@ namespace AdminModule\Grids;
 
 use AdminModule\Components\AdminGridControl;
 
-class CurrencyGrid extends AdminGridControl {
+class AmenityGrid extends AdminGridControl {
 
 	public function __construct($repository) {
 		$this->repository = $repository;
@@ -19,20 +19,19 @@ class CurrencyGrid extends AdminGridControl {
 	{
 		$grid = $this->getGrid();
 
+		$grid->addColumn('slug', 'Slug');
 		$grid->addColumn('name', 'Name');
-		$grid->addColumn('iso', 'Iso');
-		$grid->addColumn('exchangeRate', 'Exchange rate');
-		$grid->addColumn('rounding', 'Rounding');
-		$grid->addColumn('searchInterval', 'Search interval');
+		$grid->addColumn('important', 'Important');
+		$grid->addColumn('sorting', 'Sorting');
 
 		return $grid;
 	}
 }
 
-interface ICurrencyGridFactory {
+interface IAmenityGridFactory {
 
 	/**
-	 * @return ICurrencyGridFactory
+	 * @return IAmenityGridFactory
 	 */
 	public function create();
 }

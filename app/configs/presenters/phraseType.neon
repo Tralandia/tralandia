@@ -1,0 +1,10 @@
+entity: Entity\Phrase\Type
+
+parameters:
+	title: Phrase types
+	h1: 'Phrase type -> %name%'
+
+gridFactory: @phraseTypeGridFactory
+
+form:
+	fields:

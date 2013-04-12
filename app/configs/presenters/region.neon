@@ -1,0 +1,10 @@
+entity: Entity\Location\Location
+
+parameters:
+	title: Regions
+	h1: 'Region -> %name%'
+
+gridFactory: @regionGridFactory
+
+form:
+	fields:

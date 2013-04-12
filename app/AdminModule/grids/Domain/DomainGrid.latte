@@ -1,0 +1,13 @@
+{define #col-locations}
+	<td>
+		{foreach $row->locations as $location}
+			{_$location->name}{if !$iterator->last}, {/if}
+		{/foreach}
+	</td>
+{/define}
+
+{define #col-expires}
+	<td>
+		{$row->expires|date, 'd.m.Y'}
+	</td>
+{/define}

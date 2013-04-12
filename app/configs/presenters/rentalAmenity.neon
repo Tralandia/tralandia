@@ -1,0 +1,10 @@
+entity: Entity\Rental\Amenity
+
+parameters:
+	title: Amenities
+	h1: 'Amenity -> %name%'
+
+gridFactory: @amenityGridFactory
+
+form:
+	fields:
