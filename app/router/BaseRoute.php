@@ -14,6 +14,7 @@ class BaseRoute extends Nette\Object implements Nette\Application\IRouter
 	const PRIMARY_LOCATION = 'primaryLocation';
 	const USE_ROOT_DOMAIN = 'useRootDomain';
 	const ROOT_DOMAIN = 'com';
+	const ROOT_LOCATION_SLUG = 'world';
 
 	/**
 	 * @var \Entity\Language
@@ -142,6 +143,9 @@ class BaseRoute extends Nette\Object implements Nette\Application\IRouter
 		if($parent && in_array($parent->getId(), [9, 10, 11])) {
 			$params[self::USE_ROOT_DOMAIN] = TRUE;
 			$params[self::PRIMARY_LOCATION] = $primaryLocation->getSlug();
+		} else if($primaryLocation->getSlug() == self::ROOT_LOCATION_SLUG) {
+			$params[self::USE_ROOT_DOMAIN] = TRUE;
+			$params[self::PRIMARY_LOCATION] = self::ROOT_DOMAIN;
 		} else {
 			$params[self::PRIMARY_LOCATION] = $primaryLocation->getIso();
 		}

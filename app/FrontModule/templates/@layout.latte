@@ -16,7 +16,9 @@
 			{control flashes}
 
 			{cache homeSearchBar, if => isset($isHome) && $useTemplateCache, expire => '+1 day'}
-				{control searchBar}
+				{if $showSearchBar}
+					{control searchBar}
+				{/if}
 			{/cache}
 			<div class="span9">
 				<div class="innerPadding baseRadius marginBottom baseBorder innerPaddingRitgh overflow noTopMargin">

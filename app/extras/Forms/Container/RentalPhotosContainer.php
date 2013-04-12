@@ -36,10 +36,12 @@ class RentalPhotosContainer extends BaseContainer
 		$this['upload'] = $upload = new MfuControl();
 		$upload->allowMultiple()->onUpload[] = $this->processUpload;
 
-		$images = $rental->getImages();
 		$sort = [];
-		foreach($images as $image) {
-			$sort[] = $image->getId();
+		if($rental) {
+			$images = $rental->getImages();
+			foreach($images as $image) {
+				$sort[] = $image->getId();
+			}
 		}
 
 		$this->addHidden('sort')->setDefaultValue(implode(',', $sort));
