@@ -3,6 +3,8 @@
 namespace Service\Robot;
 
 
+use Nette\Utils\Strings;
+
 /**
  * UpdateRentalSearchCacheRobot class
  *
@@ -23,13 +25,17 @@ class UpdateRentalSearchCacheRobot extends \Nette\Object implements IRobot {
 	}
 
 	public function needToRun() {
-		return true;
+		return TRUE;
 	}
 
 	public function run() {
 		$rentals = $this->rentalRepository->findByPrimaryLocation($this->primaryLocation, \Entity\Rental\Rental::STATUS_LIVE);
 
 		$cache = $this->rentalSearchFactory->create($this->primaryLocation);
+		if(count($rentals)) {
+			d(Strings::upper($this->primaryLocation->getIso()).': '.count($rentals) . ' objektov');
+		}
+
 		foreach ($rentals as $rental) {
 			$cache->addRental($rental);
 		}
