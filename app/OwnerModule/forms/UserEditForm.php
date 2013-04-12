@@ -33,13 +33,13 @@ class UserEditForm extends BaseForm {
 		$this->addText('login', 'o1096');
 		$this->addPassword('password', 'o997');
 
-		$this->addPassword('confirmPassword', '#confirm_password')
+		$this->addPassword('confirmPassword', 'o100148')
 			->addConditionOn($this["password"], self::FILLED)
-				->addRule(self::EQUAL, "Hesla se musí shodovat !", $this["password"]);
+				->addRule(self::EQUAL, 'o100149', $this["password"]);
 
-		$this->addCheckbox('newsletter', '#Newsletter');
+		$this->addCheckbox('newsletter', 'o100150');
 
-		$this->addSubmit('submit', '#save');
+		$this->addSubmit('submit', 'o100151');
 
 		$this->onSuccess[] = [$this, 'process'];
 	}
