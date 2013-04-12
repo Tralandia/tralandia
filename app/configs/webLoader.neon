@@ -305,6 +305,7 @@ parameters:
 				-  %webloader.packages.select2%			
 				-  %webloader.packages.gMap%
 				-  %webloader.packages.Front%
+				-  %webloader.packages.adminFront%
 				#-  %webloader.packages.texyla%
 				-  %webloader.packages.nette%
 
