@@ -6,6 +6,7 @@ use Entity\Domain;
 use Entity\Phrase;
 use Doctrine\ORM\Mapping as ORM;
 use	Extras\Annotation as EA;
+use Routers\FrontRoute;
 
 /**
  * @ORM\Entity(repositoryClass="Repository\Location\LocationRepository")
@@ -131,6 +132,15 @@ class Location extends \Entity\BaseEntityDetails {
 	public function isPrimary() {
 		return (bool)($this->getType()->slug == 'country');
 	}
+
+
+	/**
+	 * @return bool
+	 */
+	public function isWorld() {
+		return $this->getSlug() == FrontRoute::ROOT_LOCATION_SLUG;
+	}
+
 
 	/**
 	 * @param \Extras\Types\Latlong

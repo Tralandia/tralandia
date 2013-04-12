@@ -92,11 +92,17 @@ class FrontRoute extends BaseRoute
 			unset($params[self::HASH]);
 
 			$tmp = $params;
-			unset($tmp[self::LANGUAGE], $tmp[self::PRIMARY_LOCATION], $tmp['action']);
+			unset($tmp[self::LANGUAGE], $tmp[self::PRIMARY_LOCATION], $tmp[self::USE_ROOT_DOMAIN], $tmp['action']);
 			if(!count($tmp) && !count($pathSegments)) {
-				$presenter = 'Home';
+				if(isset($params[self::USE_ROOT_DOMAIN])) {
+					$presenter = 'RootHome';
+				} else {
+					$presenter = 'Home';
+				}
 				$params['action'] = 'default';
 			}
+
+			unset($params[self::USE_ROOT_DOMAIN]);
 
 			if(count($pathSegments) == 1) {
 				$pathSegment = reset($pathSegments);
@@ -211,6 +217,7 @@ class FrontRoute extends BaseRoute
 
 		switch (TRUE) {
 			case $presenter == 'Home' && $action == 'default':
+			case $presenter == 'RootHome' && $action == 'default':
 			case $presenter == 'Rental' && $action == 'detail':
 			case $presenter == 'RentalList' && $action == 'default':
 				unset($params[self::PAGE]);
@@ -253,8 +260,20 @@ class FrontRoute extends BaseRoute
 	{
 
 		if($params[self::PRIMARY_LOCATION] == self::ROOT_DOMAIN) {
-			$params[self::PRIMARY_LOCATION] = array_shift($params[self::HASH]);
-			$params[self::PRIMARY_LOCATION] = $this->locationRepository->findOneBySlug($params[self::PRIMARY_LOCATION]);
+			$params[self::USE_ROOT_DOMAIN] = TRUE;
+
+			if(is_array($params[self::HASH])) {
+				$locationSlug = reset($params[self::HASH]);
+				$params[self::PRIMARY_LOCATION] = $this->locationRepository->findOneBySlug($locationSlug);
+			} else {
+				$params[self::PRIMARY_LOCATION] = NULL;
+			}
+
+			if($params[self::PRIMARY_LOCATION]) {
+				array_shift($params[self::HASH]);
+			} else {
+				$params[self::PRIMARY_LOCATION] = $this->locationRepository->findOneBySlug(self::ROOT_LOCATION_SLUG);
+			}
 		}
 
 		$params = parent::filterIn($params);
@@ -317,7 +336,7 @@ class FrontRoute extends BaseRoute
 
 		$params = parent::filterOut($params);
 
-		if(isset($params[self::USE_ROOT_DOMAIN])) {
+		if(isset($params[self::USE_ROOT_DOMAIN]) && $params[self::PRIMARY_LOCATION] != self::ROOT_DOMAIN) {
 			array_unshift($params[self::HASH], $params[self::PRIMARY_LOCATION]);
 			$params[self::PRIMARY_LOCATION] = self::ROOT_DOMAIN;
 		}
