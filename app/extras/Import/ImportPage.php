@@ -14,14 +14,17 @@ class ImportPage extends BaseImport {
 			'h1Pattern' => array(
 				'sk' => 'Registrácia ubytovacieho zariadenia', 
 				'en' => 'Add your rental'
+				'cs' => 'Registrace ubytovacího zařízení'
 			), 
 			'titlePattern' => array(
 				'sk' => 'Registrácia', 
 				'en' => 'Registration'
+				'cs' => 'Registrace'
 			),
 			'name' => array(
 				'sk' => 'Registrácia', 
 				'en' => 'Registration'
+				'cs' => 'Registrace'
 			),
 		),
 		array(
@@ -30,14 +33,17 @@ class ImportPage extends BaseImport {
 			'h1Pattern' => array(
 				'sk' => 'Kontakty', 
 				'en' => 'Contacts'
+				'cs' => 'Kontakty'
 			), 
 			'titlePattern' => array(
 				'sk' => 'Kontakty', 
 				'en' => 'Contacts'
+				'cs' => 'Kontakty'
 			),
 			'name' => array(
 				'sk' => 'Kontakty', 
 				'en' => 'Contacts'
+				'cs' => 'Kontakty'
 			),
 		),
 		array(
@@ -46,14 +52,17 @@ class ImportPage extends BaseImport {
 			'h1Pattern' => array(
 				'sk' => 'Prihlásenie', 
 				'en' => 'Login'
+				'cs' => 'Přihlásení'
 			), 
 			'titlePattern' => array(
 				'sk' => 'Prihlásenie', 
 				'en' => 'Login'
+				'cs' => 'Přihlásení'
 			),
 			'name' => array(
 				'sk' => 'Prihlásenie', 
 				'en' => 'Login'
+				'cs' => 'Přihlásení'
 			),
 		),
 		array(
@@ -62,14 +71,17 @@ class ImportPage extends BaseImport {
 			'h1Pattern' => array(
 				'sk' => 'Odhlásenie', 
 				'en' => 'Logout'
+				'cs' => 'Odhlásení'
 			), 
 			'titlePattern' => array(
 				'sk' => 'Odhlásenie', 
 				'en' => 'Logout'
+				'cs' => 'Odhlásení'
 			),
 			'name' => array(
 				'sk' => 'Odhlásenie', 
 				'en' => 'Logout'
+				'cs' => 'Odhlásení'
 			)
 		),
 		array(
@@ -78,10 +90,12 @@ class ImportPage extends BaseImport {
 			'h1Pattern' => array(
 				'sk' => 'Ubytovanie a Dovolenky [locationLocative]', 
 				'en' => 'Accommodation in [location]'
+				'cs' => 'Ubytování a Dovolené [locationLocative]'
 			), 
 			'titlePattern' => array(
 				'sk' => 'Ubytovanie a Dovolenky [location]', 
 				'en' => 'Accommodation [location]'
+				'cs' => 'Ubytování a Dovolené [locationLocative]'
 			)
 		),
 		array(
@@ -90,10 +104,12 @@ class ImportPage extends BaseImport {
 			'h1Pattern' => array(
 				'sk' => 'Ubytovanie a Dovolenky na celom svete', 
 				'en' => 'Worldwide rentals'
+				'cs' => 'Ubytování a Dovolené na celém světě'
 			), 
 			'titlePattern' => array(
 				'sk' => 'Ubytovanie a Dovolenky',
 				'en' => 'Worldwide entals'
+				'cs' => 'Ubytování a Dovolené'
 			)
 		),
 		// array(
@@ -114,10 +130,12 @@ class ImportPage extends BaseImport {
 			'h1Pattern' => array(
 				'sk' => '[rental]', 
 				'en' => '[rental]'
+				'cs' => '[rental]'
 			), 
 			'titlePattern' => array(
 				'sk' => '[rental], [location]', 
 				'en' => '[rental], [location]'
+				'cs' => '[rental], [location]'
 			)
 		),
 
@@ -128,10 +146,12 @@ class ImportPage extends BaseImport {
 			'h1Pattern' => array(
 				'sk' => 'Výsledky vyhľadávania', 
 				'en' => 'Search results'
+				'cs' => 'Výsledky vyhledávání'
 			), 
 			'titlePattern' => array(
 				'sk' => 'Výsledky vyhľadávania', 
 				'en' => 'Search results'
+				'cs' => 'Výsledky vyhledávání'
 			)
 		),
 		array(
@@ -140,10 +160,12 @@ class ImportPage extends BaseImport {
 			'h1Pattern' => array(
 				'sk' => 'Ubytovanie [locationLocative]', 
 				'en' => '[location] rentals'
+				'cs' => 'Ubytování [locationLocative]', 
 			), 
 			'titlePattern' => array(
 				'sk' => 'Ubytovanie [location]', 
 				'en' => 'Rentals in [location]'
+				'cs' => 'Ubytování [locationLocative]', 
 			)
 		),
 		array(
@@ -152,10 +174,12 @@ class ImportPage extends BaseImport {
 			'h1Pattern' => array(
 				'sk' => '[rentalTypePlural] [locationLocative]', 
 				'en' => '[rentalTypePlural] in [location]'
+				'cs' => '[rentalTypePlural] [locationLocative]', 
 			), 
 			'titlePattern' => array(
 				'sk' => '[rentalTypePlural] [location]', 
 				'en' => '[rentalTypePlural] [location]'
+				'cs' => '[rentalTypePlural] [locationLocative]', 
 			)
 		),
 		array(
@@ -164,10 +188,12 @@ class ImportPage extends BaseImport {
 			'h1Pattern' => array(
 				'sk' => '[rentalTypePlural] [locationLocative]', 
 				'en' => '[rentalTypePlural] in [location]'
+				'cs' => '[rentalTypePlural] [locationLocative]', 
 			), 
 			'titlePattern' => array(
 				'sk' => '[rentalTypePlural] [location]', 
 				'en' => '[rentalTypePlural] [location]'
+				'cs' => '[rentalTypePlural] [locationLocative]', 
 			)
 		),
 		array(
@@ -176,10 +202,12 @@ class ImportPage extends BaseImport {
 			'h1Pattern' => array(
 				'sk' => '[attractionTypePlural] [locationLocative]', 
 				'en' => '[attractionTypePlural] in [location]'
+				'cs' => '[attractionTypePlural] [locationLocative]', 
 			), 
 			'titlePattern' => array(
 				'sk' => '[attractionTypePlural] [location]', 
 				'en' => '[attractionTypePlural] [location]'
+				'cs' => '[attractionTypePlural] [locationLocative]', 
 			)
 		),
 		array(
@@ -188,10 +216,12 @@ class ImportPage extends BaseImport {
 			'h1Pattern' => array(
 				'sk' => '[attractionTypePlural] [locationLocative]', 
 				'en' => '[attractionTypePlural] in [location]'
+				'cs' => '[attractionTypePlural] [locationLocative]', 
 			), 
 			'titlePattern' => array(
 				'sk' => '[attractionTypePlural] [location]', 
 				'en' => '[attractionTypePlural] [location]'
+				'cs' => '[attractionTypePlural] [locationLocative]', 
 			)
 		),
 		array(
@@ -200,10 +230,12 @@ class ImportPage extends BaseImport {
 			'h1Pattern' => array(
 				'sk' => 'Destinácie [locationLocative]', 
 				'en' => 'Destinations in [location]'
+				'cs' => 'Destinace [locationLocative]', 
 			), 
 			'titlePattern' => array(
 				'sk' => 'Destinácie [locationLocative]', 
 				'en' => 'Destinations in [location]'
+				'cs' => 'Destinace [locationLocative]', 
 			)
 		),
 	);
