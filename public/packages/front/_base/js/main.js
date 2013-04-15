@@ -335,6 +335,10 @@ $(document).ready(function(){
 	// click map tooltip
 	$('.point').tooltip();
 
+	// alerts
+	$(".alert").alert();
+	$('.alert:not(.alert-error)').customAlert();
+
 
 	$('.calendarEdit').calendarEdit();
 
