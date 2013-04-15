@@ -115,11 +115,10 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 			->addRule(self::MIN_LENGTH, $this->translate('o100145'), 5);
 		;
 
-//		$this->addText('name', 'o100070')
-//			->setOption('help', $this->translate('o100071'))
-//	        //->addRule(Form::MAX_LENGTH, 'o100101', 70);
-//			;
-//
+		$this->addText('name', 'o886')
+			->setOption('help', $this->translate('o100071'))
+			->addRule(Form::LENGTH, $this->translate('o100101'), [2, 70]);
+
 		$phoneContainer = $this->addPhoneContainer('phone', 'o10899', $phonePrefixes);
 
 		$phoneContainer->getPrefixControl()
