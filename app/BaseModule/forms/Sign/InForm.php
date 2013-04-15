@@ -2,6 +2,7 @@
 
 namespace BaseModule\Forms\Sign;
 
+use AdminModule\BasePresenter;
 use Nette;
 
 class InForm extends \BaseModule\Forms\BaseForm {
@@ -42,15 +43,14 @@ class InForm extends \BaseModule\Forms\BaseForm {
 		try {
 			/** @var $presenter \BasePresenter */
 			$presenter = $this->getPresenter();
-			/** @var $user \Nette\Security\User */
-			$user = $presenter->getUser();
+
 			$presenter->redirectToCorrectDomain($values->login, $values->password);
 			$presenter->login($values->login, $values->password);
 
 			$presenter->actionAfterLogin();
 
 		} catch(\Nette\Security\AuthenticationException $e) {
-			$form->addError('#zle prihlasovacie udaje');
+			$form->presenter->flashMessage($this->translate('o1119'), BasePresenter::FLASH_ERROR);
 		}
 	}
 
