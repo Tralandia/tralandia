@@ -61,6 +61,8 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 	 */
 	protected $userRepository;
 
+	protected $interviewQuestionRepository;
+
 
 	/**
 	 * @param \Entity\Rental\Rental $rental
@@ -81,6 +83,7 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 		$this->locationRepository = $em->getRepository(LOCATION_ENTITY);
 		$this->languageRepository = $em->getRepository(LANGUAGE_ENTITY);
 		$this->userRepository = $em->getRepository(USER_ENTITY);
+		$this->interviewQuestionRepository = $em->getRepository(INTERVIEW_QUESTION_ENTITY);
 		parent::__construct($translator);
 	}
 
@@ -88,7 +91,9 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 	public function buildForm()
 	{
 		$phonePrefixes = $this->locationRepository->getCountriesPhonePrefixes();
-		//$supportedLanguages = $this->languageRepository->getSupportedSortedByName();
+		$supportedLanguages = $this->languageRepository->getSupportedSortedByName();
+		$supportedLanguagesForSelect = $this->languageRepository->getSupportedForSelect($this->translator, $this->collator);
+		$questions = $this->interviewQuestionRepository->findAll();
 
 //		$this->addText('name', 'o100070')
 //			->setOption('help', $this->translate('o100071'))
@@ -115,6 +120,26 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 			->addRule(self::RANGE, $this->translate('o100105'), [0, 999999999999999]);
 
 
+		$rentalContainer->addSelect('translationLanguage', '##', $supportedLanguagesForSelect);
+
+
+		$nameContainer = $rentalContainer->addContainer('name');
+		$teaserContainer = $rentalContainer->addContainer('teaser');
+		$interviewContainer = $rentalContainer->addContainer('interview');
+		foreach($questions as $question) {
+			$interviewContainer->addContainer($question->getId());
+		}
+
+		foreach($supportedLanguages as $language) {
+			$iso = $language->getIso();
+			$nameContainer->addText($iso, '#name');
+			$teaserContainer->addText($iso, '#teaser');
+			foreach($questions as $question) {
+				$interviewContainer[$question->getId()]->addTextArea($iso, $question->getQuestion());
+			}
+		}
+
+
 		$this->addSubmit('submit', 'o100083');
 
 		$this->onValidate[] = callback($this, 'validation');
@@ -137,7 +162,6 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 
 			'phone' => $rental->getPhone(),
 			'rental' => [
-				'name' => $this->translate($rental->getName()),
 				'price' => $rental->getPrice()->getSourceAmount(),
 				'maxCapacity' => $rental->getMaxCapacity(),
 				'type' => [

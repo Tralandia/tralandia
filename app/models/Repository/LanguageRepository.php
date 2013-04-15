@@ -22,10 +22,10 @@ class LanguageRepository extends \Repository\BaseRepository {
 	}
 
 	public function getSupportedSortedByName() {
-		$supporded = $this->findSupported();
+		$supported = $this->findSupported();
 
 		$sort = array();
-		foreach ($supporded as $key => $language) {
+		foreach ($supported as $key => $language) {
 			$sort[$language->name->getTranslation($language)->getDefaultVariation()] = $key;
 		}
 
@@ -34,8 +34,28 @@ class LanguageRepository extends \Repository\BaseRepository {
 
 		$return = array();
 		foreach ($sort as $name => $key) {
-			$return[] = $supporded[$key];
+			$return[] = $supported[$key];
 		}
+
+		return $return;
+
+	}
+
+
+	/**
+	 * @param ITranslator $translator
+	 * @param Collator $collator
+	 *
+	 * @return array
+	 */
+	public function getSupportedForSelect(ITranslator $translator, Collator $collator)
+	{
+		$return = [];
+		$rows = $this->findSupported();
+		foreach($rows as $row) {
+			$return[$row->id] = $translator->translate($row->name);
+		}
+		$collator->asort($return);
 
 		return $return;
 

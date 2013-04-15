@@ -12,8 +12,21 @@
 
 		{var $rentalContainer = $form['rental']}
 
-		{include #fieldset, text => '#text'}
-		{include #text, control => $rentalContainer['name']}
+		{include #fieldset, text => 'o100137'}
+		{include #select, control => $rentalContainer['translationLanguage'] , controlClass => 'select2 notFulltext'}
+		{foreach $rentalContainer['name']->getControls() as $control}
+			{include #text, control => $control}
+		{/foreach}
+
+		{foreach $rentalContainer['teaser']->getControls() as $control}
+			{include #text, control => $control}
+		{/foreach}
+
+		{foreach $rentalContainer['interview']->getComponents() as $container}
+			{foreach $container->getControls() as $control}
+				{include #text, control => $control}
+			{/foreach}
+		{/foreach}
 
 		{include #fieldset, text => 'o100085'}
 		{include #rentalType, control => $rentalContainer['type']}
