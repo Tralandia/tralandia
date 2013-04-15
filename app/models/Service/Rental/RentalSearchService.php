@@ -5,6 +5,7 @@ namespace Service\Rental;
 use Service, Doctrine, Entity, Nette;
 use Extras\Cache\Cache;
 use Nette\Utils\Arrays;
+use Service\Robot\IUpdateRentalSearchCacheRobotFactory;
 
 class RentalSearchService extends Nette\Object
 {
@@ -33,7 +34,7 @@ class RentalSearchService extends Nette\Object
 	 */
 	protected $criteria = array();
 
-	protected $searchCacheData;
+	protected $searchCacheData = NULL;
 	protected $orderCacheData;
 
 	protected $results;
@@ -45,17 +46,24 @@ class RentalSearchService extends Nette\Object
 	protected $rentalSearchCache;
 
 	/**
+	 * @var \Service\Robot\IUpdateRentalSearchCacheRobotFactory
+	 */
+	protected $rentalSearchCacheRobotFactory;
+
+	/**
 	 * @var \Extras\Cache\RentalOrderCaching
 	 */
 	protected $rentalOrderCaching;
 	protected $rentalRepositoryAccessor;
 
 	public function __construct(\Entity\Location\Location $primaryLocation, Cache $rentalSearchCache,
-								\Extras\Cache\IRentalOrderCachingFactory $rentalOrderCachingFactory)
+								\Extras\Cache\IRentalOrderCachingFactory $rentalOrderCachingFactory,
+								IUpdateRentalSearchCacheRobotFactory $rentalSearchCacheRobotFactory)
 	{
 		$this->primaryLocation = $primaryLocation;
 
 		$this->rentalSearchCache = $rentalSearchCache;
+		$this->rentalSearchCacheRobotFactory = $rentalSearchCacheRobotFactory;
 		$this->rentalOrderCaching = $rentalOrderCachingFactory->create($primaryLocation);
 	}
 
@@ -228,8 +236,15 @@ class RentalSearchService extends Nette\Object
 	protected function loadCache()
 	{
 		// Load the cache data when first needed (lazy)
-		if (!$this->searchCacheData) {
-			$this->searchCacheData = $this->rentalSearchCache->load($this->primaryLocation->id);
+		if ($this->searchCacheData === NULL) {
+			$searchCacheData = $this->rentalSearchCache->load($this->getPrimaryLocation()->getId());
+
+			if(!$searchCacheData || !count($searchCacheData)) {
+				$this->rentalSearchCacheRobotFactory->create($this->getPrimaryLocation())->run();
+				$searchCacheData = $this->rentalSearchCache->load($this->getPrimaryLocation()->getId());
+			}
+
+			$this->searchCacheData = $searchCacheData;
 		}
 	}
 

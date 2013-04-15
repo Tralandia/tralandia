@@ -22,7 +22,9 @@ class RunRobotPresenter extends BasePresenter {
 	 */
 	protected $rentalDecoratorFactory;
 
-	public function injectCache(\Extras\Cache\IRentalSearchCachingFactory $rentalSearchCachingFactory, \Extras\Cache\IRentalOrderCachingFactory $rentalOrderCachingFactory, IUpdateRentalSearchCacheRobotFactory $rentalSearchCacheRobotFactory) {
+	public function injectCache(\Extras\Cache\IRentalSearchCachingFactory $rentalSearchCachingFactory,
+								\Extras\Cache\IRentalOrderCachingFactory $rentalOrderCachingFactory,
+								IUpdateRentalSearchCacheRobotFactory $rentalSearchCacheRobotFactory) {
 		$this->rentalSearchCacheRobotFactory = $rentalSearchCacheRobotFactory;
 		$this->rentalSearchCachingFactory = $rentalSearchCachingFactory;
 		$this->rentalOrderCachingFactory = $rentalOrderCachingFactory;
