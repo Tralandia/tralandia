@@ -39,12 +39,14 @@ class ImportUsers extends BaseImport {
 		);
 
 		$en = $this->context->languageRepositoryAccessor->get()->findOneByIso('en');
+		$world = $this->context->locationRepositoryAccessor->get()->findOneBySlug('world');
 		foreach ($admins as $key => $value) {
 			// Rado
 			$user = $this->context->userEntityFactory->create();
 			$user->login = $value[0];
 			$user->password = $value[1];
 			$user->role = $role;
+			$user->primaryLocation = $world;
 
 			$user->language = $en;
 
@@ -60,6 +62,9 @@ class ImportUsers extends BaseImport {
 
 		$role = $this->context->userRoleRepositoryAccessor->get()->findOneBySlug('admin');
 
+		$en = $this->context->languageRepositoryAccessor->get()->findOneByIso('en');
+		$world = $this->context->locationRepositoryAccessor->get()->findOneBySlug('world');
+
 		$r = q('select * from members_admins');
 		while($x = mysql_fetch_array($r)) {
 			$user = $this->context->userRepositoryAccessor->get()->findOneByLogin($x['email']);
@@ -74,8 +79,10 @@ class ImportUsers extends BaseImport {
 			$user->password = $x['password'];
 			$user->oldId = $x['id'];
 			$user->role = $role;
-			
-			$user->language = $this->context->languageRepositoryAccessor->get()->findOneByIso('en');
+
+			$user->primaryLocation = $world;			
+			$user->language = $en;
+
 			$this->model->persist($user);
 		}
 		$this->model->flush();
@@ -87,6 +94,9 @@ class ImportUsers extends BaseImport {
 		$role = $this->context->userRoleRepositoryAccessor->get()->findOneBySlug('admin');
 
 		$countryLocationType = $this->context->locationTypeRepositoryAccessor->get()->findOneBySlug('country');
+
+		$en = $this->context->languageRepositoryAccessor->get()->findOneByIso('en');
+		$world = $this->context->locationRepositoryAccessor->get()->findOneBySlug('world');
 
 		$r = q('select * from members_managers');
 		while($x = mysql_fetch_array($r)) {
@@ -103,7 +113,9 @@ class ImportUsers extends BaseImport {
 			$user->oldId = $x['id'];
 			$user->role = $role;
 			
-			$user->language = $this->context->languageRepositoryAccessor->get()->findOneByIso('en');
+			$user->primaryLocation = $world;			
+			$user->language = $en;
+
 			$this->model->persist($user);
 		}
 		$this->model->flush();
@@ -112,6 +124,9 @@ class ImportUsers extends BaseImport {
 	private function importTranslators() {
 
 		$role = $this->context->userRoleRepositoryAccessor->get()->findOneBySlug('translator');
+
+		$en = $this->context->languageRepositoryAccessor->get()->findOneByIso('en');
+		$world = $this->context->locationRepositoryAccessor->get()->findOneBySlug('world');
 
 		$r = q('select * from members_translators');
 		while($x = mysql_fetch_array($r)) {
@@ -129,7 +144,8 @@ class ImportUsers extends BaseImport {
 			$user->role = $role;
 			// $user->invoicingData = @todo;
 			
-			$user->language = $this->context->languageRepositoryAccessor->get()->findOneByIso('en');
+			$user->primaryLocation = $world;			
+			$user->language = $en;
 
 			$details = array(
 				'language' => $this->context->languageRepositoryAccessor->get()->findOneByOldId($x['language_to']),
