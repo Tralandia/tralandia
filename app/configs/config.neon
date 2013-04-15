@@ -180,7 +180,7 @@ services:
 
 	searchOptionGenerator: SearchGenerator\OptionGenerator
 	searchGeneratorTopLocations: SearchGenerator\TopLocations(@environment::getPrimaryLocation())
-	searchGeneratorSpokenLanguages: SearchGenerator\SpokenLanguages(@environment::getPrimaryLocation(), @rentalSearchCache)
+	searchGeneratorSpokenLanguages: SearchGenerator\SpokenLanguages(@environment::getPrimaryLocation())
 
 	reservationProtector: ReservationProtector
 	lastReservation: LastReservation
