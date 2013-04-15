@@ -153,7 +153,7 @@ abstract class BasePresenter extends \BasePresenter {
 	public function getActiveNavbarTab()
 	{
 		$tabsShow = array(
-			'Rental:detail' => array('navBarSerchResults', 'navBarFavorites', 'navBarLastSeen'),
+			'Rental:detail' => array('navBarSearchResults', 'navBarFavorites', 'navBarLastSeen'),
 			'RentalList:default' => array('navBarFavorites', 'navBarLastSeen'),
 			'Home:default' => array('navBarFavorites', 'navBarLastSeen')
 		);

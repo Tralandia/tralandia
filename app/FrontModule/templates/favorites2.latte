@@ -14,7 +14,7 @@
 	<div class="favorites2" id="navBar"{ifset $currentRental} current-rental="{$currentRental->id}"{/ifset}>
 		<ul class="nav" id="navBarTabs">
 			{if isset($lastSearchResults['rentals']) && $lastSearchResults['totalCount']>1}
-			<li n:class="$navBarLastActive=='navBarSerchResults' ? active" for="navBarSerchResults">
+			<li n:class="$navBarLastActive=='navBarSearchResults' ? active" for="navBarSearchResults">
 				<i class="icon-search"></i> {$lastSearchResults['heading']} ({$lastSearchResults['totalCount']})
 			</li>
 			{/if}
@@ -29,9 +29,9 @@
 			<li n:class="$navBarLastActive!='navBarFavorites' ? hide, share, pull-right" for="navBarFavorites">
 				<a data-href="#" class="share" for="navBarFavorites">{_o100115}</a>
 			</li>
-			<li n:class="$navBarLastActive!='navBarSerchResults' ? hide, share, pull-right" n:ifset="$lastSearchResults" for="navBarSerchResults">
+			<li n:class="$navBarLastActive!='navBarSearchResults' ? hide, share, pull-right" n:ifset="$lastSearchResults" for="navBarSearchResults">
 				<a href="{$lastSearchResults['searchLink']}"><i class="icon-arrow-left"></i>Back to list</a>
-				<a data-href="{$lastSearchResults['searchLink']}" class="share" for="navBarSerchResults">{_o100116}</a>
+				<a data-href="{$lastSearchResults['searchLink']}" class="share" for="navBarSearchResults">{_o100116}</a>
 			</li>
 		</ul>
 		<ul class="dropdown-menu" role="menu" id="shareContent" style="display: none;">
@@ -99,7 +99,7 @@
 				</div>
 
 				{* Last search results *}
-				<div n:class="$navBarLastActive=='navBarSerchResults' ? active, tab-pane" id="navBarSerchResults">
+				<div n:class="$navBarLastActive=='navBarSearchResults' ? active, tab-pane" id="navBarSearchResults">
 					{if isset($lastSearchResults['rentals']) && $lastSearchResults['totalCount']>1}
 					<div class="content jscrollPane">
 						<ul id="scrollInnerContent">
