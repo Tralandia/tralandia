@@ -87,7 +87,7 @@ class Locale {
 	public function getNumberFormatter()
 	{
 		if(!$this->numberFormatter) {
-			$this->numberFormatter = new NumberFormatter($this->getCode(), NumberFormatter::PATTERN_DECIMAL);
+			$this->numberFormatter = new NumberFormatter($this->getCode(), NumberFormatter::DECIMAL);
 		}
 
 		return $this->numberFormatter;
@@ -115,7 +115,13 @@ class Locale {
 	public function formatPrice(Price $price)
 	{
 		$amount = $price->getAmount($price->getSourceCurrency());
-		return $this->getNumberFormatter()->formatCurrency($amount, 'EUR') . ' ' . $price->getSourceCurrency()->getIso();
+		$numberFormatter = $this->getNumberFormatter();
+		if (is_integer($amount)) {
+			$numberFormatter->setAttribute(NumberFormatter::FRACTION_DIGITS, 0);
+		} else {
+			$numberFormatter->setAttribute(NumberFormatter::FRACTION_DIGITS, 2);
+		}
+		return $numberFormatter->format($amount) . ' ' . $price->getSourceCurrency()->getIso();
 	}
 
 
