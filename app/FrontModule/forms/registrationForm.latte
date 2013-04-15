@@ -33,7 +33,7 @@
 
 		{include #fieldset, text => 'o100086'}
 		{include #address, control => $rental['address']}
-		{include #select, control => $rental['placement']}
+		{include #select, control => $rental['placement'], controlClass => 'select2 placement notFulltext'}
 
 		{include #checkboxList, control => $rental['board'], colCount => 3}
 		{include #checkboxList, control => $rental['important'], colCount => 3}
