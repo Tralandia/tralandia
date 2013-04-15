@@ -343,7 +343,7 @@ $(function(){
 		$(this).remove();
 		updateCriteriaCount();
 		updateSerachLinkUrl();		
-		$('#select2-drop').remove();
+		$('#select2-drop').hide();
 
 		return false;
 	});
@@ -356,7 +356,7 @@ $(function(){
 		$(this).remove();
 		updateCriteriaCount();
 		updateSerachLinkUrl();		
-		$('#select2-drop').remove();
+		$('#select2-drop').hide();
 
 		return false;
 	});
