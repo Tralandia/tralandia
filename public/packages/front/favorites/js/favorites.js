@@ -10,7 +10,7 @@ function initNavBarShare(linkToShare)
 	$('#dynamicShareContainer').html(html);
 	$('#clipboardLinkShare').val(linkToShare);
 	$('body').removeAttr('data-socialPluginsInit');
-	initAllSocialPlugins();
+	// initAllSocialPlugins();
 }
 
 function removejscssfile(filename, filetype)

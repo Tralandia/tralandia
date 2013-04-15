@@ -60,36 +60,36 @@
 			  //       	mapfilter: true
 			  //       };
 		        
-		   //      $.ajax({
-					//   dataType: "jsonp",
-					//   crossDomain: true,
-					//   data: findPanoramio,
-					//   url: 'http://www.panoramio.com/map/get_panoramas.php',					  
-					//   success: function(data){
+   //      $.ajax({
+			//   dataType: "jsonp",
+			//   crossDomain: true,
+			//   data: findPanoramio,
+			//   url: 'http://www.panoramio.com/map/get_panoramas.php',					  
+			//   success: function(data){
 
-					//   }
-					// }).done(function(d){
-						
-					// 	var html = '';
-					// 	$.each(d.photos,function(k,v){
-					// 		console.log(v);
-							
-					// 		var myLatlng = new google.maps.LatLng(v.latitude,v.longitude);
+			//   }
+			// }).done(function(d){
+				
+			// 	var html = '';
+			// 	$.each(d.photos,function(k,v){
+			// 		console.log(v);
+					
+			// 		var myLatlng = new google.maps.LatLng(v.latitude,v.longitude);
 
-					//         var marker = new google.maps.Marker({
-					//             position: myLatlng,
-					//             map: map
-					//         });
-							
-					// 		html+= '<li style="background-image:url('+v.photo_file_url+');"></li>';
+			//         var marker = new google.maps.Marker({
+			//             position: myLatlng,
+			//             map: map
+			//         });
+					
+			// 		html+= '<li style="background-image:url('+v.photo_file_url+');"></li>';
 
-					// 	});
+			// 	});
 
-					// 	$('#placesImg').html(html);
-					// });	
+			// 	$('#placesImg').html(html);
+			// });	
 
 
-			        $('body').attr('data-googleMapRender',true);
+	        $('body').attr('data-googleMapRender',true);
 
 
 }
@@ -142,59 +142,75 @@
 
 
 // social shit 
-(function($){
-	$.socialIconsDetail = function(el, options){
+// (function($){
+// 	$.socialIconsDetail = function(el, options){
 
-		var base = this;
+// 		var base = this;
 
-		base.$el = $(el);
-		base.el = el;
+// 		base.$el = $(el);
+// 		base.el = el;
 
-		base.$el.data("socialIconsDetail", base);
+// 		base.$el.data("socialIconsDetail", base);
 		
-		base.init = function(){
+// 		base.init = function(){
 			
-			base.options = $.extend({},$.socialIconsDetail.defaultOptions, options);            
+// 			base.options = $.extend({},$.socialIconsDetail.defaultOptions, options);            
 
-		};
+// 		};
 		
-		base.init();
-	};
+// 		base.init();
+// 	};
 	
-	$.socialIconsDetail.defaultOptions = {
+// 	$.socialIconsDetail.defaultOptions = {
 		
-	};
+// 	};
 	
-	$.fn.socialIconsDetail = function(options){
-		return this.each(function(){
+// 	$.fn.socialIconsDetail = function(options){
+// 		return this.each(function(){
 
-			var self = this;
-			var $self = $(this);
+// 			var self = this;
+// 			var $self = $(this);
 
-			var $close = $(this).find('a.close');
+// 			var $close = $(this).find('a.close');
 
 			
 
-			$self.click(function(){
-				initAllSocialPlugins();
-				$self.find('.socialBtnContent').removeClass('hide');
-				$self.find('.socialBtnHeader').addClass('hide');				
-			});
+// 			$self.click(function(){
+// 				// initAllSocialPlugins();
+// 				$self.find('.socialBtnContent').removeClass('hide');
+// 				$self.find('.socialBtnHeader').addClass('hide');				
+// 			});
 
 
-			$close.click(function(){				
-				$self.find('.socialBtnContent').addClass('hide');
-				$self.find('.socialBtnHeader').removeClass('hide');	
-				return false;			
-			});
+// 			$close.click(function(){				
+// 				$self.find('.socialBtnContent').addClass('hide');
+// 				$self.find('.socialBtnHeader').removeClass('hide');	
+// 				return false;			
+// 			});
 
-		});
-	};
+// 		});
+// 	};
 	
-})(jQuery);
+// })(jQuery);
 
 
 $(document).ready(function(){
+
+
+	// load social icons 
+	$('.socialBtnHeader').on('click',function(){
+		console.log('open menu');
+		Socialite.load($('.socialIconsDetail'));
+		$('.socialIconsDetail').find('.socialBtnHeader').hide();
+		$('.socialIconsDetail').find('.socialBtnContent').show();
+	});
+
+	$('.socialBtnContent .close').on('click',function(){
+
+		$('.socialIconsDetail').find('.socialBtnHeader').show();
+		$('.socialIconsDetail').find('.socialBtnContent').hide();
+
+	});
 
 
 	$('.pinterestShare').click(function(){
@@ -204,8 +220,8 @@ $(document).ready(function(){
 
 			var attr = $('body').attr('data-pinterestInitJs');
 
-removejscssfile('http://assets.pinterest.com/js/pinit.js','js');
-addScript('http://assets.pinterest.com/js/pinit.js');
+			removejscssfile('http://assets.pinterest.com/js/pinit.js','js');
+			addScript('http://assets.pinterest.com/js/pinit.js');
 
 
 			var html = $(this).find('.content').html();
