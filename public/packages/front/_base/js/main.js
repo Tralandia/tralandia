@@ -306,7 +306,7 @@ $(document).ready(function(){
 
 
 
-	$('.socialIconsDetail').socialIconsDetail();
+	// $('.socialIconsDetail').socialIconsDetail();
 
 	$('li[tooltip="true"]').hover(function(){
 		var $self = $(this);
@@ -475,26 +475,26 @@ $(document).ready(function(){
 
 	// nahrada pre zobrazenie lang menu
 	var socialIconsMenu = false;
-	$('#socialIcons').click(function(){
+	// $('#socialIcons').click(function(){
 
-		var $arrow = $(this).find('span');
+	// 	var $arrow = $(this).find('span');
 
-		initAllSocialPlugins();
+	// 	initAllSocialPlugins();
 
-		if(!socialIconsMenu){
+	// 	if(!socialIconsMenu){
 
-			$arrow.html('&#59231;');
-			$('#socialIconsMenu').show();
-			socialIconsMenu = true;
-		} else {
+	// 		$arrow.html('&#59231;');
+	// 		$('#socialIconsMenu').show();
+	// 		socialIconsMenu = true;
+	// 	} else {
 
-			$arrow.html('&#59228;');
-			$('#socialIconsMenu').hide();
-			socialIconsMenu = false;
-		}
+	// 		$arrow.html('&#59228;');
+	// 		$('#socialIconsMenu').hide();
+	// 		socialIconsMenu = false;
+	// 	}
 
-		return false;
-	});
+	// 	return false;
+	// });
 
 
 	$('body').click(function(event){
