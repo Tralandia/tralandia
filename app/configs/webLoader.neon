@@ -6,6 +6,7 @@ parameters:
 				css:
 					- front/admin/less/base.less
 					- front/admin/less/datagrid.less
+					- front/admin/less/adminMenuAside.less
 				js:
 
 			texyla:
@@ -105,7 +106,6 @@ parameters:
 					#- front/contact-page.less
 					#- front/object-detail-favorites.less
 					#- front/ticket.less
-					#- front/adminMenuAside.less
 #
 					#- front/reservation-form.less
 					#- front/main.css.less
