@@ -6,29 +6,47 @@ namespace SearchGenerator;
 use Doctrine\ORM\EntityManager;
 use Entity\Location\Location;
 use Extras\Cache\Cache;
+use Service\Rental\IRentalSearchServiceFactory;
 use Service\Rental\RentalSearchService;
 
 class SpokenLanguages {
 
 	/**
-	 * @var mixed|NULL
+	 * @var \Entity\Location\Location
 	 */
-	protected $cacheData;
-
-	/**
-	 * @var \Doctrine\ORM\EntityManager
-	 */
-	protected $em;
+	protected $primaryLocation;
 
 
 	/**
-	 * @param \Entity\Location\Location $primaryLocation
-	 * @param \Extras\Cache\Cache $rentalSearchCache
-	 * @param \Doctrine\ORM\EntityManager $em
+	 * @var \Service\Rental\IRentalSearchServiceFactory
 	 */
-	public function __construct(Location $primaryLocation, Cache $rentalSearchCache, EntityManager $em) {
-		$this->cacheData = $rentalSearchCache->load($primaryLocation->getId());
+	protected $rentalSearchFactory;
+
+
+	/**
+	 * @var \Service\Rental\RentalSearchService
+	 */
+	protected $search;
+
+
+	public function __construct(Location $primaryLocation, IRentalSearchServiceFactory $rentalSearchFactory, EntityManager $em) {
+		$this->primaryLocation = $primaryLocation;
+		$this->rentalSearchFactory = $rentalSearchFactory;
+
 		$this->em = $em;
+	}
+
+
+	/**
+	 * @return \Service\Rental\RentalSearchService
+	 */
+	public function getSearch()
+	{
+		if (!$this->search) {
+			$this->search = $this->rentalSearchFactory->create($this->primaryLocation);
+		}
+
+		return $this->search;
 	}
 
 
@@ -37,10 +55,11 @@ class SpokenLanguages {
 	 */
 	public function getUsed()
 	{
-		if(!array_key_exists(RentalSearchService::CRITERIA_SPOKEN_LANGUAGE, $this->cacheData)) return NULL;
+		$search = $this->getSearch();
 
-		$languagesIds = array_keys($this->cacheData[RentalSearchService::CRITERIA_SPOKEN_LANGUAGE]);
-		return $this->em->getRepository(LANGUAGE_ENTITY)->findById($languagesIds);
+		$languages = $search->getCollectedResults(RentalSearchService::CRITERIA_SPOKEN_LANGUAGE);
+
+		return $this->em->getRepository(LANGUAGE_ENTITY)->findById(array_keys($languages));
 	}
 
 }
