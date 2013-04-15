@@ -245,7 +245,14 @@
 
 			<a class="close"><i class="icon-remove-sign"></i></a>
 
+			<ul class="social-buttons cf">
+				<li><a href="http://twitter.com/share" class="socialite twitter-share" data-text="{_$rental->name}" data-url="{link Rental:detail $rental}" data-count="none" rel="nofollow" target="_blank"><span class="vhidden">Share on Twitter</span></a></li>
+				<li><a href="https://plus.google.com/share?url={link Rental:detail $rental}" class="socialite googleplus-one" data-size="medium" data-href="{link Rental:detail $rental}" rel="nofollow" target="_blank"><span class="vhidden">Share on Google+</span></a></li>
+				<li><a href="http://www.facebook.com/sharer.php?u={link Rental:detail $rental}&amp;t={_$rental->name}" data-layout="button_count" class="socialite facebook-like" data-href="{link Rental:detail $rental}" data-send="false" data-width="60" data-show-faces="false" rel="nofollow" target="_blank"><span class="vhidden">Share on Facebook</span></a></li>
+	        	<li><a href="http://pinterest.com/pin/create/button/?url={link Rental:detail $rental}&amp;media={$basePath}{$mainImage|rentalImageSrc}&amp;description={_$rental->name}" class="socialite pinterest-pinit" data-count-layout="horizontal"><span class="vhidden">Pin It!</span></a></li>
+			</ul>
 
+{* 
 			<span class="facebookLikeButtonContainer" data-facebook-src="{link Rental:detail $rental}"></span>
 
 
@@ -253,10 +260,10 @@
 
 			<a href="https://twitter.com/share" class="twitter-share-button" data-url="{link Rental:detail $rental}"
 			   data-via="Tralandia" data-text="{_$rental->name}" data-hashtags="{_o100034}"
-			   data-lang="{$currentLanguage->iso}">Tweet</a>
-
+			   data-lang="{$currentLanguage->iso}">Tweet</a> *}
+{* 
 			<a href="http://pinterest.com/pin/create/button/?url={link Rental:detail $rental}&media=&description={_$rental->name}"
-			   class="pin-it-button" count-layout="horizontal"></a>
+			   class="pin-it-button" count-layout="horizontal"></a> *}
 
 		</div>
 	</div>

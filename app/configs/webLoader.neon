@@ -71,6 +71,10 @@ parameters:
 				css:
 					- jqueryUi/lib/css/tralandia/jquery-ui-1.9.1.custom.css
 					- jqueryUi/custom/datepicker.css.less
+			socialite:
+				js:
+					- socialite/lib/socialite.min.js
+					- socialite/lib/extensions/socialite.pinterest.js
 
 			fileUpload:
 				js:
@@ -161,7 +165,7 @@ parameters:
 					# _base
 					- front/_base/js/main.js
 					- front/_base/js/forms.js
-					- front/_base/js/socialShitLoader.js
+					# - front/_base/js/socialShitLoader.js
 					# customAlert
 					- front/_base/js/customAlerts.js
 					# registration
@@ -271,6 +275,7 @@ parameters:
 				-  %webloader.packages.jqueryCookie%
 				-  %webloader.packages.fontEntypo%
 				-  %webloader.packages.fontAwesome%
+				-  %webloader.packages.socialite%
 				# -  %webloader.packages.jscrollPane%
 				-  %webloader.packages.jqueryScrollTo%
 				-  %webloader.packages.bootstrap%
