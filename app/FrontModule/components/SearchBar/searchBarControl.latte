@@ -17,7 +17,7 @@
 				data-js-location-name => 'location-name',
 				data-js-location-slug => 'location-slug',
 				data-autocomplete-url => $autocompleteUrl,
-				data-formatInputTooShort => 'o100134' }
+				data-formatInputTooShort => $formatInputTooShort }
 		</div>
 		<div class="inputfilterSearch">
 			<i class="icon-home"></i>
@@ -41,8 +41,6 @@
 			<i class="icon-globe"></i>
 			{input spokenLanguage , class => 'select2 disabledFulltext', data-js-spoken-language => 'selected'}
 		</div>
-
-
 
 		<div id="getSearchCount" data-label="#label text" class="pull-left">
 			{ifCurrent :Front:Home:default}
