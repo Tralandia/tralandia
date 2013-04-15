@@ -17,12 +17,12 @@
 		{include #rentalType, control => $rental['type']}
 		{include #text, control => $rental['price']}
 		{include #text, control => $rental['maxCapacity']}
-		{include #select, control => $rental['ownerAvailability']}
-		{include #select, control => $rental['pet']}
+		{include #select, control => $rental['ownerAvailability'] , controlClass => 'select2 ownerAvailability notFulltext'}
+		{include #select, control => $rental['pet'] , controlClass => 'select2 pet notFulltext'}
 
 		{include #fieldset, text => 'o100086'}
 		{include #address, control => $rental['address']}
-		{include #select, control => $rental['placement']}
+		{include #select, control => $rental['placement'], controlClass => 'select2 placement notFulltext'}
 
 		{include #checkboxList, control => $rental['board'], colCount => 3}
 		{include #checkboxList, control => $rental['important'], colCount => 3}
