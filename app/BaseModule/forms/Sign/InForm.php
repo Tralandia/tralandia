@@ -43,8 +43,7 @@ class InForm extends \BaseModule\Forms\BaseForm {
 		try {
 			/** @var $presenter \BasePresenter */
 			$presenter = $this->getPresenter();
-			/** @var $user \Nette\Security\User */
-			$user = $presenter->getUser();
+
 			$presenter->redirectToCorrectDomain($values->login, $values->password);
 			$presenter->login($values->login, $values->password);
 
