@@ -15,7 +15,10 @@ $(function(){
 		
 		var id = $(this).attr('id');
 		var locationRedirect = $('#'+id+' option[value="'+$(this).val()+'"]').attr('data-redirect');
-		window.location = locationRedirect;
+		
+		if(window.location.href.toString() != locationRedirect){
+			window.location = locationRedirect;
+		}
 
 	});
 
