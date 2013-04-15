@@ -8,16 +8,29 @@ use Nette\Caching\Cache,
 	Nette\Utils\Strings,
 	Nette\Security\Permission;
 
-class SimpleAcl extends Permission {
+class SimpleAcl extends Permission
+{
 
-	public function __construct(\Nette\Security\User $user,\Repository\User\RoleRepository $roleRepository)
+	/**
+	 * @var \Repository\User\RoleRepository
+	 */
+	protected $roleRepository;
+
+
+	public function __construct(\Repository\User\RoleRepository $roleRepository)
+	{
+		$this->roleRepository = $roleRepository;
+	}
+
+
+	public function buildAssertions(\Nette\Security\User $user)
 	{
 		$assertion = new MyAssertion($user);
 
-		$roles = $roleRepository->findAll();
-		foreach($roles as $role) {
+		$roles = $this->roleRepository->findAll();
+		foreach ($roles as $role) {
 			$parent = NULL;
-			if($role->hasParent()) {
+			if ($role->hasParent()) {
 				$parent = $role->getParent()->getSlug();
 			}
 			$slug = $role->getSlug();
@@ -34,7 +47,7 @@ class SimpleAcl extends Permission {
 		$resources[] = $rentalEntity = 'Entity\Rental\Rental';
 		$resources[] = $translationEntity = 'Entity\Phrase\Translation';
 
-		foreach($resources as $resource) {
+		foreach ($resources as $resource) {
 			$this->addResource($resource);
 		}
 
@@ -47,6 +60,7 @@ class SimpleAcl extends Permission {
 		$this->allow(RoleEntity::TRANSLATOR, $translationEntity, 'translate', [$assertion, 'translate']);
 
 		$this->allow(RoleEntity::SUPERADMIN);
+
 	}
 
 }

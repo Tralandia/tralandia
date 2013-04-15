@@ -108,10 +108,14 @@ services:
 		factory: Extras\Presenter\Factory::factory(%appDir%, %tempDir%/presenters, @container)
 		class: Extras\Presenter\Factory
 
+
+	user:
+		setup:
+			- "?->getAuthorizator()->buildAssertions(?);"(@self, @self)
+
 	authenticator: Security\Authenticator(@userRepositoryAccessor::get())
 
-#	authorizator:
-#		class: Security\SimpleAcl(..., @userRoleRepositoryAccessor::get())
+	authorizator: Security\SimpleAcl(@userRoleRepositoryAccessor::get())
 
 	environment:
 		class: Environment\Environment
