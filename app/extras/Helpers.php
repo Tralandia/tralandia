@@ -19,12 +19,21 @@ class Helpers {
 	 */
 	private $locale;
 
+
+	/**
+	 * @var \TranslationTexy
+	 */
+	protected $translationTexy;
+
+
 	/**
 	 * @param \Environment\Locale $locale
+	 * @param \TranslationTexy $translationTexy
 	 */
-	public function __construct(Locale $locale)
+	public function __construct(Locale $locale, \TranslationTexy $translationTexy)
 	{
 		$this->locale = $locale;
+		$this->translationTexy = $translationTexy;
 	}
 
 	public function loader($helper)
@@ -35,13 +44,9 @@ class Helpers {
 	}
 
 
-	public function rentalImageSrc($image, $size = 'thumbnail')
+	public function texy($s)
 	{
-		if (is_object($image)) {
-			return $this->rentalImageDir . $image->filePath . DIRECTORY_SEPARATOR . $size . '.jpeg';
-		} else {
-			return $image;
-		}
+		return $this->translationTexy->process($s);
 	}
 
 

@@ -1,5 +1,5 @@
 {
-    "hash": "1773db481fcb976e5b48eefaf7c96c46",
+    "hash": "27772d0fe98e5e672203568d16dab65d",
     "packages": [
         {
             "name": "hosiplan/nette-autowire-properties",
@@ -99,12 +99,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Kdyby/Events.git",
-                "reference": "95980d4360f76383d2f8c06b5de028511a574652"
+                "reference": "0c6bac20807789583ce8b4d5ccae8de158d79e85"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kdyby/Events/zipball/95980d4360f76383d2f8c06b5de028511a574652",
-                "reference": "95980d4360f76383d2f8c06b5de028511a574652",
+                "url": "https://api.github.com/repos/Kdyby/Events/zipball/0c6bac20807789583ce8b4d5ccae8de158d79e85",
+                "reference": "0c6bac20807789583ce8b4d5ccae8de158d79e85",
                 "shasum": ""
             },
             "require": {
@@ -143,7 +143,7 @@
                 "kdyby",
                 "nette"
             ],
-            "time": "2013-02-20 16:16:13"
+            "time": "2013-04-11 14:29:28"
         },
         {
             "name": "kdyby/nette-session-panel",
@@ -200,12 +200,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/nette.git",
-                "reference": "67f5e1c75afa000ac36d22ca71a7352c4e6f60ca"
+                "reference": "23f692af8f04cdc69e9c87b4de6c4294b6274200"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/nette/zipball/67f5e1c75afa000ac36d22ca71a7352c4e6f60ca",
-                "reference": "67f5e1c75afa000ac36d22ca71a7352c4e6f60ca",
+                "url": "https://api.github.com/repos/nette/nette/zipball/23f692af8f04cdc69e9c87b4de6c4294b6274200",
+                "reference": "23f692af8f04cdc69e9c87b4de6c4294b6274200",
                 "shasum": ""
             },
             "require": {
@@ -266,7 +266,7 @@
                 "neon",
                 "templating"
             ],
-            "time": "2013-03-18 15:35:58"
+            "time": "2013-04-15 07:58:26"
         },
         {
             "name": "nextras/datagrid",
@@ -274,7 +274,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Achtan/datagrid.git",
-                "reference": "071ebda0da545bcae239e535105dcee92ea64eb4"
+                "reference": "15ef6a2e5482244924eb3336cd1aec0ace677cca"
             },
             "require": {
                 "nette/nette": ">=2.0.0",
@@ -302,7 +302,7 @@
                 "nette",
                 "nextras"
             ],
-            "time": "2013-03-22 14:41:35"
+            "time": "2013-03-22 15:03:49"
         },
         {
             "name": "nextras/forms",
@@ -310,12 +310,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nextras/forms.git",
-                "reference": "c14424a8b77d7cbae3e07f50923078db8eaec40a"
+                "reference": "1acbac741b0c46851fa83daa49cabb5fa64b6f0d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nextras/forms/zipball/c14424a8b77d7cbae3e07f50923078db8eaec40a",
-                "reference": "c14424a8b77d7cbae3e07f50923078db8eaec40a",
+                "url": "https://api.github.com/repos/nextras/forms/zipball/1acbac741b0c46851fa83daa49cabb5fa64b6f0d",
+                "reference": "1acbac741b0c46851fa83daa49cabb5fa64b6f0d",
                 "shasum": ""
             },
             "require": {
@@ -349,7 +349,54 @@
                 "form",
                 "nette"
             ],
-            "time": "2013-03-04 18:27:47"
+            "time": "2013-04-09 14:26:20"
+        },
+        {
+            "name": "texy/texy",
+            "version": "dev-release-2.x",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dg/texy.git",
+                "reference": "v2.2.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dg/texy/zipball/v2.2.0",
+                "reference": "v2.2.0",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "Texy/"
+                ]
+            },
+            "notification-url": "http://packagist.org/downloads/",
+            "license": [
+                "BSD-3",
+                "GPLv2",
+                "GPLv3"
+            ],
+            "authors": [
+                {
+                    "name": "David Grudl",
+                    "homepage": "http://davidgrudl.com"
+                }
+            ],
+            "description": "Texy converts plain text in easy to read Texy syntax into structurally valid (X)HTML. It supports adding of images, links, nested lists, tables and has full support for CSS. Texy supports hyphenation of long words (which reflects language rules), clickable emails and URL (emails are obfuscated against spambots), national typographic single and double quotation marks, ellipses, em dashes, dimension sign, nonbreakable spaces (e.g. in phone numbers), acronyms, arrows and many others. Texy code can optionally contain HTML tags.",
+            "homepage": "http://texy.info",
+            "keywords": [
+                "html",
+                "markdown",
+                "markup language",
+                "plain text",
+                "text",
+                "textile",
+                "texy",
+                "wiki",
+                "xhtml"
+            ],
+            "time": "2013-04-03 11:37:41"
         }
     ],
     "packages-dev": [
@@ -366,6 +413,7 @@
         "kdyby/events": 20,
         "kdyby/nette-session-panel": 20,
         "hosiplan/nette-autowire-properties": 20,
+        "texy/texy": 20,
         "janmarek/mockista": 20
     },
     "platform": {

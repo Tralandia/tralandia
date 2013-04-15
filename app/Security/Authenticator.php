@@ -58,18 +58,6 @@ class Authenticator extends Object implements NS\IAuthenticator {
 
 
 	/**
-	 * @param $login
-	 *
-	 * @return \Entity\User\User
-	 */
-	private function findUser($login) {
-
-		/** @var $user \Entity\User\User */
-
-		return $user;
-	}
-
-	/**
 	 * Computes salted password hash.
 	 * @param  string
 	 * @return string

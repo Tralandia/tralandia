@@ -20,6 +20,7 @@
         "kdyby/events": "dev-master",
         "kdyby/nette-session-panel": "dev-master",
         "hosiplan/nette-autowire-properties": "dev-master",
+        "texy/texy": "dev-release-2.x",
         "janmarek/mockista": "dev-master"
 	},
     "repositories": [
