@@ -125,8 +125,8 @@ parameters:
 					- front/_base/less/navTabs.less
 					# header
 					- front/header/less/header.less
-					# favorites
-					- front/favorites/less/favorites2.less
+					# navbar
+					- front/navbar/less/navbar.less
 					# rental detail
 					- front/rentalDetail/less/rentalDetail.less
 					# rental navigation

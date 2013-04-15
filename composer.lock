@@ -200,12 +200,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/nette.git",
-                "reference": "23f692af8f04cdc69e9c87b4de6c4294b6274200"
+                "reference": "3ea232c78a3498fae6a8560969f6c9f604f72e4f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/nette/zipball/23f692af8f04cdc69e9c87b4de6c4294b6274200",
-                "reference": "23f692af8f04cdc69e9c87b4de6c4294b6274200",
+                "url": "https://api.github.com/repos/nette/nette/zipball/3ea232c78a3498fae6a8560969f6c9f604f72e4f",
+                "reference": "3ea232c78a3498fae6a8560969f6c9f604f72e4f",
                 "shasum": ""
             },
             "require": {
@@ -266,7 +266,7 @@
                 "neon",
                 "templating"
             ],
-            "time": "2013-04-15 07:58:26"
+            "time": "2013-04-15 10:39:20"
         },
         {
             "name": "nextras/datagrid",

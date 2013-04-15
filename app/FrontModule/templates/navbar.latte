@@ -11,7 +11,7 @@
 
 <div id="favoritesStaticContainerPlaceholder" class="hide"></div>
 <div n:class="$hideNavbar ? 'hide', span12" data-favoritesLink="{link Rental:generateFavoriteLink}" id="favoritesStaticContainer">
-	<div class="favorites2" id="navBar"{ifset $currentRental} current-rental="{$currentRental->id}"{/ifset}>
+	<div class="navbar" id="navBar"{ifset $currentRental} current-rental="{$currentRental->id}"{/ifset}>
 		<ul class="nav" id="navBarTabs">
 			{if isset($lastSearchResults['rentals']) && $lastSearchResults['totalCount']>1}
 			<li n:class="$navBarLastActive=='navBarSearchResults' ? active" for="navBarSearchResults">
