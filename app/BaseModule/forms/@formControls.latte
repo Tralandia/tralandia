@@ -37,7 +37,8 @@
 	@param $control \Nette\Forms\Controls\BaseControl
 	*}
 	{define #password}
-	{include #baseControl, control => $control}
+	{default $class = 'form-row'}
+	{include #baseControl, control => $control, class => $class}
 	{/define #password}
 
 
@@ -119,7 +120,8 @@
 	@param $controlClass string
 	*}
 	{define #checkbox}
-	{include #opentag , control => $control}
+	{default $class = 'simpleInput'}
+	{include #opentag , control => $control, class => $class}
 		<td>
 			{_$control->caption}
 		</td>
@@ -592,8 +594,8 @@
 	@param $control \Nette\Forms\Controls\SubmitButton
 	*}
 	{define #submit}
-	{default $class = null}
-	<tr>
+	{default $class = 'simpleInput'}
+	{include #opentag , class => $class , control => $control}
 		<td>
 
 		</td>
