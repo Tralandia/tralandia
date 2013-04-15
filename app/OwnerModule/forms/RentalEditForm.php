@@ -107,6 +107,14 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 		$rentalContainer = $this->rentalContainerFactory->create($this->environment, $this->rental);
 		$this['rental'] = $rentalContainer;
 
+		$currency = $this->country->getDefaultCurrency();
+		$rentalContainer->addText('price', 'o100078')
+			->setOption('append', $currency->getIso() . ' ' . $this->translate('o100004'))
+			->setOption('help', $this->translate('o100073'))
+			->addRule(self::INTEGER, $this->translate('o100105'))
+			->addRule(self::RANGE, $this->translate('o100105'), [0, 999999999999999]);
+
+
 		$this->addSubmit('submit', 'o100083');
 
 		$this->onValidate[] = callback($this, 'validation');

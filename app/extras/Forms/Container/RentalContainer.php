@@ -91,10 +91,9 @@ class RentalContainer extends BaseContainer
 		$this->addRentalTypeContainer('type', $rentalTypes);
 
 		$check = ['dohoda', 'hocikedy', '8:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00'];
-		$this->addSelect('checkIn', 'o1586', $check)//->setOption('help', $this->translate('o5956'))
-		;
-		$this->addSelect('checkOut', 'o1588', $check)
-			->setOption('help', $this->translate('o5956'));
+		$this->addSelect('checkIn', 'o1586', $check);
+
+		$this->addSelect('checkOut', 'o1588', $check);
 
 		$this->addText('maxCapacity', 'o100072')
 			//->addRule(self::RANGE, $this->translate('o100074'), [1, 1000])
