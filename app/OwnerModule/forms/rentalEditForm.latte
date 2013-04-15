@@ -10,25 +10,29 @@
 		{include #phone, control => $form['phone']}
 		{include #url, control => $form['url']}
 
+		{var $rentalContainer = $form['rental']}
+
 		{include #fieldset, text => '#text'}
-		{include #text, control => $rental['name']}
+		{include #text, control => $rentalContainer['name']}
+
 		{include #fieldset, text => 'o100085'}
-		{var $rental = $form['rental']}
-		{include #rentalType, control => $rental['type']}
-		{include #text, control => $rental['price']}
-		{include #text, control => $rental['maxCapacity']}
-		{include #select, control => $rental['ownerAvailability'] , controlClass => 'select2 ownerAvailability notFulltext'}
-		{include #select, control => $rental['pet'] , controlClass => 'select2 pet notFulltext'}
+		{include #rentalType, control => $rentalContainer['type']}
+		{include #text, control => $rentalContainer['price']}
+		{include #text, control => $rentalContainer['maxCapacity']}
+		{include #select, control => $rentalContainer['checkIn'] , controlClass => 'select2 notFulltext'}
+		{include #select, control => $rentalContainer['checkOut'] , controlClass => 'select2 notFulltext'}
+		{include #select, control => $rentalContainer['ownerAvailability'] , controlClass => 'select2 ownerAvailability notFulltext'}
+		{include #select, control => $rentalContainer['pet'] , controlClass => 'select2 pet notFulltext'}
 
 		{include #fieldset, text => 'o100086'}
-		{include #address, control => $rental['address']}
-		{include #select, control => $rental['placement'], controlClass => 'select2 placement notFulltext'}
+		{include #address, control => $rentalContainer['address']}
+		{include #select, control => $rentalContainer['placement'], controlClass => 'select2 placement notFulltext'}
 
-		{include #checkboxList, control => $rental['board'], colCount => 3}
-		{include #checkboxList, control => $rental['important'], colCount => 3}
+		{include #checkboxList, control => $rentalContainer['board'], colCount => 3}
+		{include #checkboxList, control => $rentalContainer['important'], colCount => 3}
 
 		{include #fieldset, text => 'o980'}
-		{include #rentalPhotos, control => $rental['photos']}
+		{include #rentalPhotos, control => $rentalContainer['photos']}
 
 		{include #submit, control => $form['submit'], icon => 'entypo-ok' , class => 'btn-green'}
 	</table>
