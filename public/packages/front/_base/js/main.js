@@ -294,7 +294,9 @@ $(document).ready(function(){
 		minimumResultsForSearch: 'X',
 	});
 
-	$("table.formTable select.select2:not(.select2.notFulltext)").select2({dropdownCssClass: "mainForm"});
+	// $('.select2:not()')
+
+	$("select.select2:not(.select2.notFulltext)").select2({dropdownCssClass: "mainForm"});
 
 	// $('.select2.sidebarCountry').select2({
 	// 	dropdownCssClass: 'searchSelect'

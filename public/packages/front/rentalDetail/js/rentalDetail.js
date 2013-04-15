@@ -199,7 +199,6 @@ $(document).ready(function(){
 
 	// load social icons 
 	$('.socialBtnHeader').on('click',function(){
-		console.log('open menu');
 		Socialite.load($('.socialIconsDetail'));
 		$('.socialIconsDetail').find('.socialBtnHeader').hide();
 		$('.socialIconsDetail').find('.socialBtnContent').show();

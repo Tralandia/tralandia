@@ -819,7 +819,7 @@ maps.mapInit = function(){
 // lazy loading map
 $(function() {
 
-	$('input').keypress(function(e) {
+	$('form:not(.allowEnterSubmit) input').keypress(function(e) {
 	    if(e.which == 13) {
 	        return false;
 	    }
