@@ -7,6 +7,7 @@ define('RENTAL_ENTITY', '\Entity\Rental\Rental');
 define('RENTAL_TYPE_ENTITY', '\Entity\Rental\Type');
 define('RENTAL_AMENITY_ENTITY', '\Entity\Rental\Amenity');
 define('RENTAL_PLACEMENT_ENTITY', '\Entity\Rental\Placement');
+define('INTERVIEW_QUESTION_ENTITY', '\Entity\Rental\InterviewQuestion');
 define('USER_ENTITY', '\Entity\User\User');
 define('USER_ROLE_ENTITY', '\Entity\User\Role');
 define('RESERVATION_ENTITY', '\Entity\User\RentalReservation');
