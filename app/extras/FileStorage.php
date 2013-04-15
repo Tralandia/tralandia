@@ -67,6 +67,14 @@ class FileStorage extends Nette\Object
 		file_put_contents($path, $content);
 		return $this->getRelativePath($path);
 	}
+	
+	/**
+	 * @return TRUE|FALSE
+	 */
+	public function delete($filePath)
+	{
+		return unlink($filePath);
+	}
 
 	public function saveFromFile($filePath)
 	{
