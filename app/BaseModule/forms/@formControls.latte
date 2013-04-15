@@ -646,8 +646,8 @@
 		$container = $control;
 	}
 	{?unset($control)}
-	{include #select, control => $container['type'] , class => 'rentalType' , controlClass => 'select2 rentalType'}
-	{include #select, control => $container['classification'] , class => 'classification' , controlClass => 'select2 classification' }
+	{include #select, control => $container['type'] , class => 'rentalType' , controlClass => 'select2 notFulltext rentalType'}
+	{include #select, control => $container['classification'] , class => 'classification' , controlClass => 'select2 notFulltext classification' }
 {/define #rentalType}
 
 

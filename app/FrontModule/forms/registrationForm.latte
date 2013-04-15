@@ -6,8 +6,8 @@
 		</tr>
 
 
-		{include #select, control => $form['country'] , controlClass => 'select2 country selectRedirect'}
-		{include #select, control => $form['language'] , controlClass => 'select2 language selectRedirect'}
+		{include #select, control => $form['country'] , controlClass => 'select2 country selectRedirect notFulltext'}
+		{include #select, control => $form['language'] , controlClass => 'select2 language selectRedirect notFulltext'}
 
 		{include #fieldset, text => 'o100084'}
 		{include #email, control => $form['email']}
@@ -28,8 +28,8 @@
 			{include #price, control => $rental['price']}
 		{/if}
 		{include #text, control => $rental['maxCapacity']}
-		{include #select, control => $rental['ownerAvailability'] , controlClass => 'select2 ownerAvailability'}
-		{include #select, control => $rental['pet'] , controlClass => 'select2 pet'}
+		{include #select, control => $rental['ownerAvailability'] , controlClass => 'select2 ownerAvailability notFulltext'}
+		{include #select, control => $rental['pet'] , controlClass => 'select2 pet notFulltext'}
 
 		{include #fieldset, text => 'o100086'}
 		{include #address, control => $rental['address']}
