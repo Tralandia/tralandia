@@ -114,7 +114,7 @@
 // gps map control
 
 (function($){
-	$.traMapcontrol = function(el, options){
+	$.mapControl = function(el, options){
 		// To avoid scope issues, use 'base' instead of 'this'
 		// to reference this class from internal events and functions.
 		var base = this;
@@ -124,11 +124,11 @@
 		base.el = el;
 		
 		// Add a reverse reference to the DOM object
-		base.$el.data("traMapcontrol", base);
+		base.$el.data("mapControl", base);
 		
 		base.init = function(){
 			
-			base.options = $.extend({},$.traMapcontrol.defaultOptions, options);            
+			base.options = $.extend({},$.mapControl.defaultOptions, options);            
 
 		};
 
@@ -138,11 +138,11 @@
 		base.init();
 	};
 	
-	$.traMapcontrol.defaultOptions = {
+	$.mapControl.defaultOptions = {
 
 	};
 
-	$.traMapcontrol.ajax = function(url,data,callback){
+	$.mapControl.ajax = function(url,data,callback){
 
 		$.ajax({
 			  type: "POST",
@@ -160,7 +160,7 @@
 
 	}
 
-	$.traMapcontrol.removeError = function(elem){
+	$.mapControl.removeError = function(elem){
 		
 		var errorMessageDiv = $('#'+$(elem).attr('data-validation-message-div-id'));
 		var controlGroup = $('#'+$(elem).attr('data-validation-control-div-id'));
@@ -174,7 +174,7 @@
 	}
 
 	// add error message 
-	$.traMapcontrol.addError = function(elem,message){
+	$.mapControl.addError = function(elem,message){
 		
 		var errorMessageDiv = $('#'+elem.attr('data-validation-message-div-id'));
 		var controlGroup = $('#'+elem.attr('data-validation-control-div-id'));
@@ -187,7 +187,7 @@
 	}
 
 	// before ajax request validation
-	$.traMapcontrol.responseValidation = function(data){
+	$.mapControl.responseValidation = function(data){
 		$.each(data.elements,function(k,v){
 			if(!v.status){
 				
@@ -195,7 +195,7 @@
 				$input.val(v.value);
 	
 				if(v.message){
-					$.traMapcontrol.addError($input,v.message);
+					$.mapControl.addError($input,v.message);
 				}
 				
 
@@ -205,7 +205,7 @@
 
 	// js validation client site with Nette validator
 	// using after send ajax request
-	$.traMapcontrol.validateInputs = function(p){
+	$.mapControl.validateInputs = function(p){
 	
 		var o = {
 			valid : true,
@@ -221,7 +221,7 @@
 				if(!Nette.validateControl(this)){
 					o.valid = false;
 				} else {
-					$.traMapcontrol.removeError(this);
+					$.mapControl.removeError(this);
 				}
 
 				o.data[inputName] = $(this).val();		
@@ -236,9 +236,9 @@
 
 
 	
-	$.fn.traMapcontrol = function(options){
+	$.fn.mapControl = function(options){
 		return this.each(function(){
-			(new $.traMapcontrol(this, options));
+			(new $.mapControl(this, options));
 
 
 
@@ -287,7 +287,7 @@
 
 			  google.maps.event.addListener(map, 'click', function(event) {
 				
-				$.traMapcontrol.call();
+				$.mapControl.call();
 
 				  marker.setPosition(event.latLng);
 
@@ -301,15 +301,15 @@
 				  //map.setCenter(event.latLng);
 
 
-					v = $.traMapcontrol.validateInputs($self);
+					v = $.mapControl.validateInputs($self);
 					
 					
 					// send data
 						
-					$.traMapcontrol.ajax(requestUrl,v.data , function(data){
+					$.mapControl.ajax(requestUrl,v.data , function(data){
 					
 						if(!data.status){
-							$.traMapcontrol.responseValidation(data);
+							$.mapControl.responseValidation(data);
 							
 							//var newPosition = new google.maps.LatLng(data.gps.lat,data.gps.lng);
 							//	marker.setPosition(newPosition);
@@ -325,15 +325,15 @@
 
 				$self.find('button').click(function(){
 
-					v = $.traMapcontrol.validateInputs($self);
+					v = $.mapControl.validateInputs($self);
 					
 					if(v.valid){
 						// send data
 						
-						$.traMapcontrol.ajax(requestUrl,v.data , function(data){
+						$.mapControl.ajax(requestUrl,v.data , function(data){
 							//console.log(data);
 							if(!data.status){
-								$.traMapcontrol.responseValidation(data);
+								$.mapControl.responseValidation(data);
 								
 								var newPosition = new google.maps.LatLng(data.gps.lat,data.gps.lng);
 									marker.setPosition(newPosition);
@@ -813,7 +813,7 @@
 var maps = {};
 
 maps.mapInit = function(){
-	$(".traMapcontrol").formMapControl();
+	$(".mapControl").formMapControl();
 }
 
 // lazy loading map
@@ -825,8 +825,8 @@ $(function() {
 	    }
 	});
 
-	$('.traMapcontrol').appear();
-	$(document.body).on('appear', '.traMapcontrol', function(e, $affected) {
+	$('.mapControl').appear();
+	$(document.body).on('appear', '.mapControl', function(e, $affected) {
 		if(typeof $('body').attr('data-googleMapinit') == 'undefined' ){
 			var lang = $('html').attr('lang');
 			var script = document.createElement("script"); 

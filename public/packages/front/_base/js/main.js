@@ -288,16 +288,13 @@ $(document).ready(function(){
 		return false;
 	});
 
-
-	$(".reservationform select.select2:not(#frm-registrationForm-rental-type)").select2({dropdownCssClass: "reservationForm"});
-
-	$('.select2.rentalType,.select2.classification,.select2.pet,.select2.ownerAvailability , .select2.language , .select2.country').select2({
+	$('.select2.notFulltext').select2({
 		dropdownCssClass: "notFulltext",
 		allowClear: true,
 		minimumResultsForSearch: 'X',
 	});
 
-	$("table.formTable select.select2:not(.select2.classification,.select2.rentalType,.select2.pet,.select2.ownerAvailability, .select2.language , .select2.country)").select2({dropdownCssClass: "mainForm"});
+	$("table.formTable select.select2:not(.select2.notFulltext)").select2({dropdownCssClass: "mainForm"});
 
 	// $('.select2.sidebarCountry').select2({
 	// 	dropdownCssClass: 'searchSelect'
@@ -338,10 +335,14 @@ $(document).ready(function(){
 	// click map tooltip
 	$('.point').tooltip();
 
+	// alerts
+	$(".alert").alert();
+	$('.alert:not(.alert-error)').customAlert();
+
 
 	$('.calendarEdit').calendarEdit();
 
-	//$('.traMapcontrol').traMapcontrol();
+	//$('.mapControl').mapControl();
 
 	$('.phraseForm').phraseForm();
 
