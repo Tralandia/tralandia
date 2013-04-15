@@ -31,6 +31,7 @@ class UserEditForm extends BaseForm {
 
 	public function buildForm() {
 		$this->addText('login', 'o1096');
+		$this->addPassword('passwordOld', '#Aktualne heslo');
 		$this->addPassword('password', 'o997');
 
 		$this->addPassword('confirmPassword', 'o100148')

@@ -8,6 +8,7 @@ parameters:
 					- front/admin/less/datagrid.less
 					- front/admin/less/adminMenuAside.less
 				js:
+					- front/admin/js/admin.js
 
 			texyla:
 				css:

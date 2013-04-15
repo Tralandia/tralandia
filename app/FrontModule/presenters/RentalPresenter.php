@@ -123,7 +123,7 @@ class RentalPresenter extends BasePresenter {
 			$lastSearchResults['nextRental'] = $this->context->rentalRepositoryAccessor->get()->find($bar['all'][$lastSearchResults['currentKey']+1]);
 		}
 
-		if (!$lastSearchResults['totalCount']>1 && $this->template->navBarLastActive=='navBarSerchResults') {
+		if (!$lastSearchResults['totalCount']>1 && $this->template->navBarLastActive=='navBarSearchResults') {
 			$this->template->navBarLastActive = 'navBarLastSeen';
 		}
 
