@@ -82,7 +82,6 @@ abstract class BasePresenter extends \BasePresenter {
 		$this->template->domain = ucfirst($domain);
 
 		$this->template->favoriteRentals = $this->favoriteList->getRentalList();
-		$this->template->favoriteVisitedRentals = $this->favoriteList->getVisitedRentals();
 
 		$this->template->pageH1 = $this->pageSeo->getH1();
 		$this->template->countryCountObjects =  $this->environment->primaryLocation->rentalCount;
@@ -98,6 +97,7 @@ abstract class BasePresenter extends \BasePresenter {
 		$this->template->currentLanguage = $this->environment->getLanguage();
 
 		$this->template->navBarLastActive = $this->getActiveNavbarTab();
+		$this->template->seenRentals = $this->lastSeen->getSeen();
 		$this->template->lastSeenRentals = $this->lastSeen->getSeenRentals(12);
 
 		$header = $this->getComponent('head');

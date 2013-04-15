@@ -41,12 +41,6 @@ class FavoriteList extends \Nette\Object
 		}
 	}
 
-	public function getVisitedRentals()
-	{
-		$list = $this->httpRequest->getCookie('favoritesVisitedList');
-		return array_unique(array_filter(explode(',', $list)));
-	}
-
 	protected function getRentalIds()
 	{
 		$list = $this->httpRequest->getCookie('favoritesList');
