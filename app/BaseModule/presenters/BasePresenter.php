@@ -1,5 +1,6 @@
 <?php
 
+use Entity\User\User;
 use Nette\Utils\Arrays;
 use Nette\Utils\Finder;
 use Nette\Utils\Strings;
@@ -73,7 +74,7 @@ abstract class BasePresenter extends Presenter {
 
 
 	/**
-	 * @var \Entity\User\User
+	 * @var User
 	 */
 	public $loggedUser;
 
@@ -92,7 +93,7 @@ abstract class BasePresenter extends Presenter {
 			} catch(\Nette\Security\AuthenticationException $e) {
 			}
 			$parameters = $this->getParameters();
-			unset($parameters['l'], $parameters['primaryLocation'], $parameters['language']);
+			unset($parameters[\Routers\OwnerRouteList::AUTOLOGIN], $parameters['primaryLocation'], $parameters['language']);
 			$this->redirect('this', $parameters);
 		}
 
@@ -353,6 +354,37 @@ abstract class BasePresenter extends Presenter {
 		];
 
 		$this->sendJson($json);
+	}
+
+	public function redirectToCorrectDomain($login, $password)
+	{
+		$identity = $this->authenticator->authenticate([$login, $password]);
+
+		/** @var $user \Entity\User\User */
+		$user = $this->userRepositoryAccessor->get()->find($identity->getId());
+
+		if($this->primaryLocation->getId() != $user->getPrimaryLocation()->getId()
+			|| $this->language->getId() != $user->getLanguage()->getId())
+		{
+			$hash = $this->authenticator->calculateAutoLoginHash($user);
+			$parameters = [
+				\Routers\BaseRoute::PRIMARY_LOCATION => $user->getPrimaryLocation(),
+				\Routers\BaseRoute::LANGUAGE => $user->getLanguage(),
+				\Routers\OwnerRouteList::AUTOLOGIN => $hash,
+				\Routers\FrontRoute::PAGE => NULL,
+			];
+			$this->redirect(':Front:Sign:afterLogin', $parameters);
+		}
+	}
+
+
+	public function actionAfterLogin()
+	{
+		$user = $this->getUser();
+		if ($homepage = $user->getIdentity()->homepage){
+			$this->redirect($homepage);
+		}
+		$this->redirect('this');
 	}
 
 

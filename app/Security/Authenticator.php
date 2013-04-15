@@ -38,7 +38,6 @@ class Authenticator extends Object implements NS\IAuthenticator {
 	public function authenticate(array $credentials) {
 		list($email, $password) = $credentials;
 
-		/** @var $user \Entity\User\User */
 		if($email instanceof \Entity\User\User) {
 			$user = $email;
 		} else {
@@ -55,6 +54,19 @@ class Authenticator extends Object implements NS\IAuthenticator {
 
 
 		return new NS\Identity($user->getId(), array($user->getRole()->getSlug()), $user->getIdentity());
+	}
+
+
+	/**
+	 * @param $login
+	 *
+	 * @return \Entity\User\User
+	 */
+	private function findUser($login) {
+
+		/** @var $user \Entity\User\User */
+
+		return $user;
 	}
 
 	/**
@@ -86,6 +98,10 @@ class Authenticator extends Object implements NS\IAuthenticator {
 	{
 		list($userId, ) = explode(self::$autoLoginDelimiter, $autologin, 2);
 		if(!$user = $this->userRepository->find($userId)) {
+			throw new NS\AuthenticationException("Invalid autologin link.");
+		}
+		$autologinHash = $this->calculateAutoLoginHash($user);
+		if($autologin != $autologinHash) {
 			throw new NS\AuthenticationException("Invalid autologin link.");
 		}
 		return $this->authenticate([$user, NULL]);
