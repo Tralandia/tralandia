@@ -13,7 +13,7 @@
 </div>
 
 {includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
-{form signInForm, class => "traform dashboard"}
+{form signInForm, class => "traform dashboard allowEnterSubmit"}
 	<table class="formTable innerPadding">
 		{include #text, control => $form['login']}
 		{include #password, control => $form['password']}
