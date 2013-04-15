@@ -40,15 +40,15 @@ class InForm extends \BaseModule\Forms\BaseForm {
 	public function onSuccess(InForm $form) {
 		$values = $form->getValues();
 		try {
+			/** @var $presenter \BasePresenter */
 			$presenter = $this->getPresenter();
 			/** @var $user \Nette\Security\User */
 			$user = $presenter->getUser();
+			$presenter->redirectToCorrectDomain($values->login, $values->password);
 			$presenter->login($values->login, $values->password);
 
-			if ($homepage = $user->getIdentity()->homepage){
-				$presenter->redirect($homepage);
-			}
-			$presenter->redirect('this');
+			$presenter->actionAfterLogin();
+
 		} catch(\Nette\Security\AuthenticationException $e) {
 			$form->addError('#zle prihlasovacie udaje');
 		}

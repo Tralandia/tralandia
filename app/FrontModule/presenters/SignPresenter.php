@@ -2,7 +2,8 @@
 
 namespace FrontModule;
 
-class SignPresenter extends BasePresenter {
+class SignPresenter extends BasePresenter
+{
 
 	/**
 	 * @autowire
@@ -16,11 +17,21 @@ class SignPresenter extends BasePresenter {
 	 */
 	protected $forgotPasswordFormFactory;
 
-	public function actionIn() {
-		if($this->user->isLoggedIn()) {
+
+	public function actionIn()
+	{
+		if ($this->user->isLoggedIn()) {
 			$this->redirect('Home:default');
 		}
 	}
+
+
+	public function actionOut()
+	{
+		$this->user->logout(TRUE);
+		$this->redirect('Home:default');
+	}
+
 
 	/**
 	 * @return \BaseModule\Forms\Sign\InForm
@@ -32,6 +43,7 @@ class SignPresenter extends BasePresenter {
 		return $comp;
 	}
 
+
 	/**
 	 * @return \BaseModule\Forms\ForgotPasswordForm
 	 */
@@ -40,11 +52,6 @@ class SignPresenter extends BasePresenter {
 		$comp = $this->forgotPasswordFormFactory->create();
 
 		return $comp;
-	}
-
-	public function actionOut() {
-		$this->user->logout(TRUE);
-		$this->redirect('Home:default');
 	}
 
 }
