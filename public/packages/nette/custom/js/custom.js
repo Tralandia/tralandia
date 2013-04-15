@@ -86,6 +86,7 @@ var c = $.nette.ext('snippets');
 			this.applySnippet($el, html, back);
 		}
 
+		rentalDetailDatepickerInit();
 		$("select.select2").select2();
 	}	
 });
