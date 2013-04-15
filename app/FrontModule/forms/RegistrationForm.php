@@ -138,7 +138,7 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 		$currency = $this->country->getDefaultCurrency();
 		if($currency) {
 			$rentalContainer->addText('price', 'o100078')
-				->setOption('append', $currency->getIso . ' ' . $this->translate('o100004'))
+				->setOption('append', $currency->getIso() . ' ' . $this->translate('o100004'))
 				->setOption('help', $this->translate('o100073'))
 				->addRule(self::INTEGER, $this->translate('o100105'))
 				->addRule(self::RANGE, $this->translate('o100105'), [0, 999999999999999]);

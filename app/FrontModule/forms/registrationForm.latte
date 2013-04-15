@@ -22,7 +22,11 @@
 		{var $rental = $form['rental']}
 		{include #text, control => $rental['name']}
 		{include #rentalType, control => $rental['type']}
-		{include #price, control => $rental['price']}
+		{if $rental['price'] instanceof \Nette\Forms\Controls\TextInput}
+			{include #text, control => $rental['price']}
+		{else}
+			{include #price, control => $rental['price']}
+		{/if}
 		{include #text, control => $rental['maxCapacity']}
 		{include #select, control => $rental['ownerAvailability'] , controlClass => 'select2 ownerAvailability'}
 		{include #select, control => $rental['pet'] , controlClass => 'select2 pet'}
