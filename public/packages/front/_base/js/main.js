@@ -359,6 +359,7 @@ $(document).ready(function(){
 
 	/* UI calendar */
 	$(".datepickerIcon").click(A.datepickerIcon);
+	$(".datepickerIcon").live('click',A.datepickerIcon);
 	$('.accordion').accordion({ autoHeight: false , active: false , navigation: true, collapsible: true });
 
 	/* add attachment file  */
