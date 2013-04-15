@@ -213,6 +213,7 @@
 			Favorites.toggleAdd(e, this);
 			base.showTab('navBarFavorites');
 			base.checkTabs();
+			$(document).trigger('scroll');
 		}
 
 		base.setActiveRental = function()

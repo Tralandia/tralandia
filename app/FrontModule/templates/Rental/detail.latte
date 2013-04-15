@@ -96,8 +96,8 @@
 				<ul>
 
 					{foreach $rental->pricelistRows as $pricelistRow}
-						<li tooltip="true" title="{_o100040} {_$pricelistRow->roomType->name, null , [count => 1]}">
-							{$pricelistRow->roomCount} {_$pricelistRow->roomType->name, null , [count => $pricelistRow->roomCount]}
+						<li tooltip="true" title="{_o100040} {if $pricelistRow->roomType}{_$pricelistRow->roomType->name, null , [count => 1]}{/if}">
+							{$pricelistRow->roomCount} {if $pricelistRow->roomType}{_$pricelistRow->roomType->name, null , [count => $pricelistRow->roomCount]}{/if}
 							<span>
 							({$pricelistRow->bedCount} {_o100006 , null , [count => $pricelistRow->bedCount]}{if $pricelistRow->extraBedCount} + {$pricelistRow->extraBedCount} {_o100000 , null , [count => $pricelistRow->extraBedCount]}{/if})
 						</span>
