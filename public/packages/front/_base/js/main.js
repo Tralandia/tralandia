@@ -338,7 +338,7 @@ $(document).ready(function(){
 
 	$('.calendarEdit').calendarEdit();
 
-	//$('.traMapcontrol').traMapcontrol();
+	//$('.mapControl').mapControl();
 
 	$('.phraseForm').phraseForm();
 
