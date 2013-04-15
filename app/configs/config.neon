@@ -93,7 +93,6 @@ services:
 	lastSeen: LastSeen(@rentalRepositoryAccessor)
 
 	# ROUTER
-
 	routerFactory:
 		class: Routers\RouterFactory([defaultLanguage: %centralLanguage%, defaultPrimaryLocation: 46])
 		setup:
@@ -109,10 +108,14 @@ services:
 		factory: Extras\Presenter\Factory::factory(%appDir%, %tempDir%/presenters, @container)
 		class: Extras\Presenter\Factory
 
+
+	user:
+		setup:
+			- "?->getAuthorizator()->buildAssertions(?);"(@self, @self)
+
 	authenticator: Security\Authenticator(@userRepositoryAccessor::get())
 
-	authorizator:
-		class: Security\SimpleAcl(..., @userRoleRepositoryAccessor::get())
+	authorizator: Security\SimpleAcl(@userRoleRepositoryAccessor::get())
 
 	environment:
 		class: Environment\Environment
@@ -125,6 +128,7 @@ services:
 	collator: @locale::getCollator()
 
 	translator: @environment::getTranslator()
+
 
 	# --------------------------------
 
@@ -182,6 +186,7 @@ services:
 	lastReservation: LastReservation
 
 	html2texy: Html2texy
+	translationTexy: TranslationTexy
 
 	shareLinks:
 		class: ShareLinks
@@ -213,6 +218,7 @@ factories:
 
 	userEditFormFactory:
 		class: OwnerModule\Forms\UserEditForm(%user%, @userRepositoryAccessor)
+		parameters: [Entity\User\User user]
 		implement: OwnerModule\Forms\IUserEditFormFactory
 
 	signInFormFactory:
@@ -225,31 +231,38 @@ factories:
 
 	rentalReservationFormFactory:
 		class: FrontModule\Forms\Rental\ReservationForm(%rental%)
+		parameters: [Entity\Rental\Rental rental]
 		implement: FrontModule\Forms\Rental\IReservationFormFactory
 
 	contactFormFactory:
 		class: FrontModule\Forms\ContactForm(%user%, %language%, @ticketRepositoryAccessor::get())
+		parameters: [\Entity\User\User user = NULL, \Entity\Language language = NULL]
 		implement: FrontModule\Forms\IContactFormFactory
 
 	ticketFormFactory:
 		class: FrontModule\Forms\TicketForm(%user%, %ticket%, @ticketMessageRepositoryAccessor::get(),
 		@faqQuestionRepositoryAccessor::get())
+		parameters: [Entity\User\User user, Entity\Ticket\Ticket ticket]
 		implement: FrontModule\Forms\ITicketFormFactory
 
 	registrationFormFactory:
 		class: FrontModule\Forms\RegistrationForm(%environment%, %presenter%)
+		parameters: [Environment\Environment environment, Nette\Application\UI\Presenter presenter]
 		implement: FrontModule\Forms\IRegistrationFormFactory
 
 	rentalEditFormFactory:
 		class: OwnerModule\Forms\RentalEditForm(%rental%, %environment%)
+		parameters: [Entity\Rental\Rental rental, Environment\Environment environment]
 		implement: OwnerModule\Forms\IRentalEditFormFactory
 
 	searchFormFactory:
 		class: FrontModule\Forms\SearchForm(%defaults%, %search%, %presenter%)
+		parameters: [array defaults, Service\Rental\RentalSearchService search, Nette\Application\UI\Presenter presenter]
 		implement: FrontModule\Forms\ISearchFormFactory
 
 	rentalContainerFactory:
 		class: Extras\Forms\Container\RentalContainer(%environment%, %rental%)
+		parameters: [Environment\Environment environment, Entity\Rental\Rental rental = NULL]
 		implement: Extras\Forms\Container\IRentalContainerFactory
 
 	# ==============================
@@ -257,10 +270,12 @@ factories:
 	# ==============================
 	headerControlFactory:
 		class: BaseModule\Components\HeaderControl(%pageSeo%, %user%)
+		parameters: [Service\Seo\SeoService pageSeo, Entity\User\User user = NULL]
 		implement: BaseModule\Components\IHeaderControlFactory
 
 	footerControlFactory:
 		class: FrontModule\Components\Footer\FooterControl(%location%)
+		parameters: [Entity\Location\Location location]
 		implement: FrontModule\Components\Footer\IFooterControlFactory
 
 	countriesFooterControlFactory:
@@ -277,11 +292,13 @@ factories:
 	simpleRouteFactory:
 		class: Routers\SimpleRoute
 		arguments: [%mask%, %metadata%, @languageRepositoryAccessor::get(), @locationRepositoryAccessor::get()]
+		parameters: [mask, metadata]
 		implement: Routers\ISimpleRouteFactory
 
 	baseRouteFactory:
 		class: Routers\BaseRoute
 		arguments: [%mask%, %metadata%, @languageRepositoryAccessor::get(), @locationRepositoryAccessor::get() ]
+		parameters: [mask, metadata]
 		implement: Routers\IBaseRouteFactory
 
 	frontRouteFactory:
@@ -312,10 +329,12 @@ factories:
 
 	rentalSearchCachingFactory:
 		class: Extras\Cache\RentalSearchCaching(%location%, @rentalSearchCache)
+		parameters: [Entity\Location\Location location]
 		implement: Extras\Cache\IRentalSearchCachingFactory
 
 	rentalOrderCachingFactory:
 		class: Extras\Cache\RentalOrderCaching(%location%, @rentalOrderCache)
+		parameters: [Entity\Location\Location location]
 		implement: Extras\Cache\IRentalOrderCachingFactory
 
 	# ==============================
@@ -323,27 +342,33 @@ factories:
 	# ==============================
 	rentalSearchServiceFactory:
 		class: Service\Rental\RentalSearchService(%location%, @rentalSearchCache)
+		parameters: [Entity\Location\Location location]
 		implement: Service\Rental\IRentalSearchServiceFactory
 
 	seoServiceFactory:
 		class: Service\Seo\SeoService
 		arguments: [%url%, %request%, @pageRepositoryAccessor]
+		parameters: [url, Nette\Application\Request request]
 		implement: Service\Seo\ISeoServiceFactory
 
 	updateRentalSearchCacheRobotFactory:
 		class: Service\Robot\UpdateRentalSearchCacheRobot(%location%)
+		parameters: [Entity\Location\Location location]
 		implement: Service\Robot\IUpdateRentalSearchCacheRobotFactory
 
 	translatorFactory:
 		class: Extras\Translator(%language%, @phraseRepositoryAccessor, @translatorCache)
+		parameters: [Entity\Language language]
 		implement: Extras\ITranslatorFactory
 
 	environmentFactory:
 		class: Environment\Environment(%location%, %language%)
+		parameters: [Entity\Location\Location location, Entity\Language language]
 		implement: Environment\IEnvironmentFactory
 
 	emailCompilerFactory:
 		class: Mail\Compiler(%environment%)
+		parameters: [Environment\Environment environment]
 		implement: Mail\ICompilerFactory
 
 	itemMapFactory: Extras\FormMask\Items\Foctories\MapFactory

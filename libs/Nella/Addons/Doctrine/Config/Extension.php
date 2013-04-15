@@ -17,6 +17,7 @@ use Nette\Config\Configurator,
 	Nette\DI\Container,
 	Nette\Utils\Strings;
 
+use Nette\PhpGenerator as Code;
 /**
  * Doctrine Nella Framework services.
  *
@@ -85,7 +86,7 @@ class Extension extends \Nette\Config\CompilerExtension
 			->setClass('Doctrine\DBAL\Connection')
 			->setParameters(array('config', 'configuration', 'eventManager' => NULL))
 			->setFactory(get_called_class().'::createConnection', array(
-				'%config%', '%eventManager%'
+				new Code\PhpLiteral('$config'), new Code\PhpLiteral('$eventManager')
 			));
 
 		// cache
@@ -96,11 +97,11 @@ class Extension extends \Nette\Config\CompilerExtension
 		$annotationReaderFactory = $builder->addDefinition($this->prefix('annotationReader'))
 			->setClass('Doctrine\Common\Annotations\CachedReader')
 			->setParameters(array('cache', 'useAnnotationNamespace' => FALSE))
-			->setFactory(get_called_class().'::createAnnotationReader', array('%cache%', '%useAnnotationNamespace%'));
+			->setFactory(get_called_class().'::createAnnotationReader', array(new Code\PhpLiteral('$cache'), new Code\PhpLiteral('$useAnnotationNamespace')));
 
 		// metadata driver factory
 		$metadataDriverFactory = $builder->addDefinition($this->prefix('metadataDriver'))
-			->setClass('Nella\Doctrine\Mapping\Driver\AnnotationDriver', array('%annotationReader%','%entityDirs%'))
+			->setClass('Nella\Doctrine\Mapping\Driver\AnnotationDriver', array(new Code\PhpLiteral('$annotationReader'),new Code\PhpLiteral('$entityDirs')))
 			->setParameters(array('annotationReader','entityDirs'));
 
 		// entity manager factory
@@ -108,7 +109,7 @@ class Extension extends \Nette\Config\CompilerExtension
 			->setClass('Doctrine\ORM\EntityManager')
 			->setParameters(array('connection', 'configuration', 'eventManager' => NULL))
 			->setFactory('Doctrine\ORM\EntityManager::create', array(
-				'%connection%', '%configuration%', '%eventManager%'
+				new Code\PhpLiteral('$connection'), new Code\PhpLiteral('$configuration'), new Code\PhpLiteral('$eventManager')
 			));
 
 		// process custom doctrine services
@@ -150,12 +151,12 @@ class Extension extends \Nette\Config\CompilerExtension
 					$builder->addDefinition($this->configurationsPrefix($name.'MetadataDriver'))
 						->setClass($metadataDriverFactory->class)
 						->setFactory($metadataDriverFactory, array(
-							$this->configurationsPrefix('@'.$name.'AnnotationReader'), $cfg['entityDirs']
+							$this->configurationsPrefix('@'.$name.'AnnotationReader'), $builder->expand($cfg['entityDirs'])
 						))->setAutowired(FALSE);
 				}
 
 				$proxy = array(
-					'dir' => $cfg['proxyDir'],
+					'dir' => $builder->expand($cfg['proxyDir']),
 					'namespace' => $cfg['proxyNamespace'],
 					'autogenerate' => $cfg['proxyAutogenerate'] !== NULL ?
 						$cfg['proxyAutogenerate'] : $builder->parameters['productionMode'],
