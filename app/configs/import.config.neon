@@ -11,3 +11,4 @@ parameters:
 services:
 	routerFactory: 
 		class: Routers\ImportRouterFactory
+	authorizator: Security\FakeAcl
