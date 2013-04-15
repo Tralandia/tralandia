@@ -138,13 +138,15 @@ factories:
 
 	rentalDecoratorFactory:
 		class: Service\Rental\RentalService(..., %entity%)
+		parameters: [Entity\Rental\Rental entity]
 		implement: Model\Rental\IRentalDecoratorFactory
 
-	rentalImageDecoratorFactory:
-		class: Service\Rental\ImageDecorator(..., %entity%)
-		setup:
-			- setStorage(@rentalImageStorage)
-		implement: Model\Rental\IImageDecoratorFactory
+#	rentalImageDecoratorFactory:
+#		class: Service\Rental\ImageDecorator(..., %entity%)
+#		parameters: [Entity\Rental\Rental entity]
+#		setup:
+#			- setStorage(@rentalImageStorage)
+#		implement: Model\Rental\IImageDecoratorFactory
 
 #	rentalPricelistDecoratorFactory:
 #		class: Service\Rental\PricelistDecorator(..., %entity%)
@@ -152,20 +154,24 @@ factories:
 #			- setStorage(@rentalPricelistStorage)
 #		implement: Model\Rental\IPricelistDecoratorFactory
 
-	mediumDecoratorFactory:
-		class: Service\Medium\MediumService(..., %entity%)
-		implement: Model\Medium\IMediumDecoratorFactory
+#	mediumDecoratorFactory:
+#		class: Service\Medium\MediumService(..., %entity%)
+#		parameters: [entity]
+#		implement: Model\Medium\IMediumDecoratorFactory
 
 	phraseDecoratorFactory:
 		class: Service\Phrase\PhraseService(..., %entity%)
+		parameters: [Entity\Phrase\Phrase entity]
 		implement: Model\Phrase\IPhraseDecoratorFactory
 
 	locationDecoratorFactory:
 		class: Service\Location\LocationService(..., %entity%)
+		parameters: [Entity\Location\Location entity]
 		implement: Model\Location\ILocationDecoratorFactory
 
-	attachmentDecoratorFactory:
-		class: Service\Ticket\AttachmentDecorator(..., %entity%)
-		setup:
-			- setStorage(@ticketMessageAttachmentStorage)
-		implement: Service\Ticket\IAttachmentDecoratorFactory
+#	attachmentDecoratorFactory:
+#		class: Service\Ticket\AttachmentDecorator(..., %entity%)
+#		parameters: [entity]
+#		setup:
+#			- setStorage(@ticketMessageAttachmentStorage)
+#		implement: Service\Ticket\IAttachmentDecoratorFactory

@@ -22,7 +22,9 @@ $section = isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : NULL;
 // Configure application
 $configurator = new Nette\Config\Configurator;
 $configurator->setTempDirectory(TEMP_DIR);
-$configurator->addParameters(array('centralLanguage' => CENTRAL_LANGUAGE));
+$configurator->addParameters([
+	'centralLanguage' => CENTRAL_LANGUAGE,
+]);
 $configurator->enableDebugger(ROOT_DIR . '/log');
 $robotLoader = $configurator->createRobotLoader();
 $robotLoader->addDirectory(APP_DIR)

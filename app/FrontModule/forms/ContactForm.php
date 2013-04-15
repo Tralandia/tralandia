@@ -61,9 +61,9 @@ class ContactForm extends BaseForm {
 		$this->onSuccess[] = callback($this, 'process');
 	}
 
-	public function setDefaultsValues() 
+	public function setDefaultsValues()
 	{
-		
+
 	}
 
 	public function process(ContactForm $form)
