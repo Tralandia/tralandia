@@ -216,6 +216,13 @@ addScript('http://assets.pinterest.com/js/pinit.js');
 
 	});
 
+	rentalDetailDatepickerInit();
+
+});
+
+
+function rentalDetailDatepickerInit(){
+
 	var fromDateOrigin = {
 		year: 0,
 		month: 0,
@@ -265,9 +272,8 @@ addScript('http://assets.pinterest.com/js/pinit.js');
 
 
 		}
-	});	
-
-});
+	});		
+}
 
 var global = {};
 
