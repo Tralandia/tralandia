@@ -177,9 +177,9 @@ parameters:
 				js:
 					- jqueryAppear/lib/js/jquery.appear.js
 
-			favoriteScroll:
+			navbarScroll:
 				js:
-					- front/favorites/js/favoritesScroll.js
+					- front/navbar/js/navbarScroll.js
 			jscrollPane:
 				js:
 					- jscrollPane/lib/js/jquery.mousewheel.js
@@ -220,7 +220,7 @@ parameters:
 					#- "https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"
 			navBar:
 				js:
-					- front/navbar/navbar.js
+					- front/navbar/js/navbar.js
 		sets:
 
 			'Admin:Ap':
@@ -290,7 +290,7 @@ parameters:
 				-  %webloader.packages.navBar%
 				-  %webloader.packages.texyla%
 				-  %webloader.packages.nette%
-				-  %webloader.packages.favoriteScroll%
+				-  %webloader.packages.navbarScroll%
 			Owner:
 				-  %webloader.packages.jQuery%
 				-  %webloader.packages.jqueryAppear%
