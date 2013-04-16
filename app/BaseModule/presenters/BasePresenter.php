@@ -184,10 +184,6 @@ abstract class BasePresenter extends Presenter {
 		return call_user_func_array([$this->context->translator, 'translate'], $args);
 	}
 
-	public function getEnvironment() {
-		return $this->getService('environment');
-	}
-
 	/**
 	 * @return HeaderControl
 	 */
