@@ -48,6 +48,12 @@ abstract class BasePresenter extends \BasePresenter {
 	protected $searchBarControl;
 
 	/**
+	 * @autowire
+	 * @var \ShareLinks
+	 */
+	protected $shareLinks;
+
+	/**
 	 * @var \Service\Seo\SeoService
 	 */
 	public $pageSeo;
@@ -84,7 +90,7 @@ abstract class BasePresenter extends \BasePresenter {
 		$this->template->favoriteRentals = $this->favoriteList->getRentalList();
 
 		$this->template->pageH1 = $this->pageSeo->getH1();
-		$this->template->countryCountObjects =  $this->environment->primaryLocation->rentalCount;
+		$this->template->countryCountObjects =  $this->environment->getPrimaryLocation()->getRentalCount();
 
 		$this->template->worldwideCount = $this->locationRepositoryAccessor->get()->getWorldwideRentalCount();
 
@@ -102,6 +108,7 @@ abstract class BasePresenter extends \BasePresenter {
 
 		$header = $this->getComponent('head');
 		$header->addTitle($this->pageSeo->getTitle());
+
 
 		$this->template->og = array();
 		$this->template->og['title'] = $this->pageSeo->getH1();
@@ -222,7 +229,16 @@ abstract class BasePresenter extends \BasePresenter {
 			$favoriteList->addRentals($rentals);
 			$favoriteListRepository->save($favoriteList);
 
-			$json['link'] = $this->link('//RentalList:default', ['favoriteList' => $favoriteList]);
+			$shareLink = $this->link('//RentalList:default', ['favoriteList' => $favoriteList]);
+			$shareText = '#favorites';
+			// @todo toto je tu len docasne lebo sa neimportuju obrazky
+			//$shareImage = $this->rentalImagePipe->request($rental->getMainImage());
+			$shareImage = $this->rentalImagePipe->requestFake();
+			$shareLinks = $this->shareLinks;
+			$json['twitterShare'] = (string) $shareLinks->getTwitterShareTag($shareLink, $shareText);
+			$json['googlePlusShare'] = (string) $shareLinks->getGooglePlusShareTag($shareLink);
+			$json['facebookShare'] = (string) $shareLinks->getFacebookShareTag($shareLink, $shareText);
+			$json['pinterestShare'] = (string) $shareLinks->getPinterestShareTag($shareLink, $shareText, $shareImage);
 		}
 		$this->sendJson($json);
 	}

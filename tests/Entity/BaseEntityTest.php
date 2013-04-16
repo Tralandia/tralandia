@@ -10,7 +10,7 @@ use Nette, Extras;
  *
  * @backupGlobals disabled
  */
-class CreateNewTest extends \Tests\TestCase
+class BaseEntityTest extends \Tests\TestCase
 {
 
 	/**
