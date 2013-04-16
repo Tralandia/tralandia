@@ -192,7 +192,7 @@ abstract class BasePresenter extends Presenter {
 	 * @return HeaderControl
 	 */
 	protected function createComponentHead() {
-		list($modul, $presenter) = explode(':', $this->name, 2);
+		list($module, $presenter) = explode(':', $this->name, 2);
 		$action = $this->action;
 
 		$wlSets = $this->context->parameters['webloader']['sets'];
@@ -203,8 +203,8 @@ abstract class BasePresenter extends Presenter {
 			$wlSet = $wlSets[$this->name.':'.$action];
 		} else if(isset($wlSets[$this->name])) {
 			$wlSet = $wlSets[$this->name];
-		} else if(isset($wlSets[$modul])) {
-			$wlSet = $wlSets[$modul];
+		} else if(isset($wlSets[$module])) {
+			$wlSet = $wlSets[$module];
 		}
 
 		$cssFiles = array();

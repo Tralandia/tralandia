@@ -41,6 +41,7 @@ class RentalPresenter extends BasePresenter {
 
 
 	public function actionDetail($rental) {
+		/** @var $rental \Entity\Rental\Rental */
 		if (!$rental) {
 			throw new \Nette\InvalidArgumentException('$id argument does not match with the expected value');
 		}
@@ -76,6 +77,18 @@ class RentalPresenter extends BasePresenter {
 		$this->template->ownerAvailability = $rental->getOwnerAvailability();
 
 		$this->template->dateUpdated = $rental->updated;
+
+		$shareLinks = $this->shareLinks;
+
+		$shareLink = $this->link('//Rental:detail', [$rental]);
+		$shareText = $this->translate($rental->getName());
+		// @todo toto je tu len docasne lebo sa neimportuju obrazky
+		//$shareImage = $this->rentalImagePipe->request($rental->getMainImage());
+		$shareImage = $this->rentalImagePipe->requestFake();
+		$this->template->twitterShareTag = $shareLinks->getTwitterShareTag($shareLink, $shareText);
+		$this->template->googlePlusShareTag = $shareLinks->getGooglePlusShareTag($shareLink);
+		$this->template->facebookShareTag = $shareLinks->getFacebookShareTag($shareLink, $shareText);
+		$this->template->pinterestShareTag = $shareLinks->getPinterestShareTag($shareLink, $shareText, $shareImage);
 
 		$this->setLayout('detailLayout');
 

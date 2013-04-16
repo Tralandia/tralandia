@@ -181,7 +181,7 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 				'address' => $rental->getAddress(),
 			],
 		];
-		d($defaults);
+
 		$this->setDefaults($defaults);
 	}
 
