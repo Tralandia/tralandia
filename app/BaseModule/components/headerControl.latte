@@ -1,7 +1,7 @@
 <div class="span12">
 	<header class="innerPadding baseRadius baseBorder" id="header">
 		<div class="inner" id="topWidget"
-			 style="background-image: url({$basePath}/images/headerBanner/{$environment->getPrimaryLocation()->getIso()}.jpg);">
+			 style="background-image: url({$basePath}/images/headerBanner/{$environment->getPrimaryLocation()->getIso() ? : 'default'}.jpg);">
 
 
 		<div id="siteOptions">
