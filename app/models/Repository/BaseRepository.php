@@ -62,6 +62,11 @@ class BaseRepository extends EntityRepository {
 	public function remove($entity) {
 		$this->_em->remove($entity);
 	}
+	
+	public function delete($entity) {
+		$this->remove($entity);
+		$this->flush();
+	}
 
 	public function getDataSource() {
 		$query = $this->_em->createQueryBuilder();

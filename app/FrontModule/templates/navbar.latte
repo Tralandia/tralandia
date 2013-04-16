@@ -9,15 +9,6 @@
 	)
 }
 
-
-<ul n:ifset="$navigationBarShareLinks" class="social-buttons">
-	<li>{$navigationBarShareLinks->twitterTag}</li>
-	<li>{$navigationBarShareLinks->googlePlusTag}</li>
-	<li>{$navigationBarShareLinks->facebookTag}</li>
-	<li>{$navigationBarShareLinks->pinterestTag}</li>
-</ul>
-
-
 <div id="favoritesStaticContainerPlaceholder" class="hide"></div>
 <div n:class="$hideNavbar ? 'hide', span12" data-favoritesLink="{link Rental:generateFavoriteLink}" id="favoritesStaticContainer">
 	<div class="navbar" id="navBar"{ifset $currentRental} current-rental="{$currentRental->id}"{/ifset}>
@@ -41,6 +32,12 @@
 			<li n:class="$navBarLastActive!='navBarSearchResults' ? hide, share, pull-right" n:ifset="$lastSearchResults" for="navBarSearchResults">
 				<a href="{$lastSearchResults['searchLink']}"><i class="icon-arrow-left"></i>Back to list</a>
 				<a data-href="{$lastSearchResults['searchLink']}" class="share" for="navBarSearchResults">{_o100116}</a>
+				<ul n:ifset="$navigationBarShareLinks" class="social-buttons">
+					<li>{$navigationBarShareLinks->twitterTag}</li>
+					<li>{$navigationBarShareLinks->googlePlusTag}</li>
+					<li>{$navigationBarShareLinks->facebookTag}</li>
+					<li>{$navigationBarShareLinks->pinterestTag}</li>
+				</ul>
 			</li>
 		</ul>
 		<ul class="dropdown-menu" role="menu" id="shareContent" style="display: none;">
