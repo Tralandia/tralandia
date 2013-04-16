@@ -19,7 +19,8 @@
 	@param $control \Nette\Forms\Controls\BaseControl
 	*}
 	{define #text}
-	{include #baseControl, control => $control}
+	{default $class = ''}
+	{include #baseControl, control => $control , class => $class}
 	{/define #text}
 
 
