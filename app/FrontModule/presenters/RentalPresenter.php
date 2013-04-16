@@ -4,6 +4,7 @@ namespace FrontModule;
 
 use Model\Rental\IRentalDecoratorFactory;
 use FrontModule\Forms\Rental\IReservationFormFactory;
+use Nette\ArrayHash;
 use Nette\Utils\Strings;
 
 
@@ -90,10 +91,25 @@ class RentalPresenter extends BasePresenter {
 		$this->template->facebookShareTag = $shareLinks->getFacebookShareTag($shareLink, $shareText);
 		$this->template->pinterestShareTag = $shareLinks->getPinterestShareTag($shareLink, $shareText, $shareImage);
 
-		$this->setLayout('detailLayout');
+		$lastSearchResults = $this->getLastSearchResults($rental);
 
-		$this->template->lastSearchResults = $this->getLastSearchResults($rental);
+		$shareLink = $lastSearchResults['searchLink'];
+		$shareText = $lastSearchResults['heading'];
+		// @todo toto je tu len docasne lebo sa neimportuju obrazky
+		//$shareImage = $this->rentalImagePipe->request($rental->getMainImage());
+		$shareImage = $this->rentalImagePipe->requestFake();
+		$navigationBarShareLinks = [
+			'twitterTag' => $shareLinks->getTwitterShareTag($shareLink, $shareText),
+			'googlePlusTag' => $shareLinks->getGooglePlusShareTag($shareLink),
+			'facebookTag' => $shareLinks->getFacebookShareTag($shareLink, $shareText),
+			'pinterestTag' => $shareLinks->getPinterestShareTag($shareLink, $shareText, $shareImage),
+		];
+
+		$this->template->lastSearchResults = $lastSearchResults;
+		$this->template->navigationBarShareLinks = ArrayHash::from($navigationBarShareLinks);
 		$this->lastSeen->visit($rental);
+
+		$this->setLayout('detailLayout');
 	}
 
 	protected function getLastSearchResults($rental) {
