@@ -53,6 +53,7 @@ class RentalPresenter extends BasePresenter
 		//$rentalService = $this->rentalDecoratorFactory->create($this->rental);
 
 		$this->template->rental = $this->rental;
+		$this->template->environmentLanguage = $this->environment->getLanguage();
 		//$this->template->rentalService = $rentalService;
 
 	}

@@ -16,16 +16,31 @@
 		{include #select, control => $rentalContainer['translationLanguage'] , controlClass => 'select2 selectLanguage notFulltext'}
 
 		{foreach $rentalContainer['name']->getControls() as $control}
-			{include #text, control => $control , class => $control->getName().' name'}
+			{if $control->getName() == $environmentLanguage->getIso()}
+				{var $hide = ''}
+			{else}
+				{var $hide = 'hide'}
+			{/if}
+			{include #text, control => $control , class => $control->getName().' name '.$hide}
 		{/foreach}
 
 		{foreach $rentalContainer['teaser']->getControls() as $control}
-			{include #text, control => $control, class => $control->getName().' teaser'}
+			{if $control->getName() == $environmentLanguage->getIso()}
+				{var $hide = ''}
+			{else}
+				{var $hide = 'hide'}
+			{/if}
+			{include #text, control => $control, class => $control->getName().' teaser '.$hide}
 		{/foreach}
 
 		{foreach $rentalContainer['interview']->getComponents() as $container}
 			{foreach $container->getControls() as $control}
-				{include #text, control => $control, class => $control->getName().' interview'}
+				{if $control->getName() == $environmentLanguage->getIso()}
+					{var $hide = ''}
+				{else}
+					{var $hide = 'hide'}
+				{/if}
+				{include #text, control => $control, class => $control->getName().' interview '.$hide}
 			{/foreach}
 		{/foreach}
 

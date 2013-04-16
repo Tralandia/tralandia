@@ -76,7 +76,6 @@ abstract class BasePresenter extends \BasePresenter {
 
 		$this->template->showSearchBar = !$primaryLocation->isWorld();
 
-
 		$this->template->currentLanguage = NULL;
 		$this->template->currentLocation = NULL;
 
