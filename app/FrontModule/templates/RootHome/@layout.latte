@@ -1,0 +1,30 @@
+{control head:begin}
+	{control css}
+	{control js}
+	{include ../og.latte}
+{control head:end}
+
+<body data-localeCode="{$localeCode}">
+	<div class="container baseRadius" id="container">
+		<div class="row">
+
+			{control header}
+			
+			{include ../navbar.latte}
+
+			{include ../rootHomeCountries.latte}
+
+			{include #content}
+
+			{*
+			{control footer}
+			*}
+
+		</div>
+	</div>
+
+	{include ../smallFooter.latte}
+
+</body>
+
+</html>

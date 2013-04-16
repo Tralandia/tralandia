@@ -202,6 +202,32 @@ class LocationRepository extends \Repository\BaseRepository {
 		return $return;
 	}
 
+	/**
+	 * @param \Nette\Localization\ITranslator $translator
+	 * @param \Environment\Collator $collator
+	 *
+	 * @return mixed
+	 */
+	public function getCountriesOrdered(ITranslator $translator, Collator $collator)
+	{
+		$sort = [];
+		$locations = array();
+		foreach($this->findCountries() as $row) {
+			/** @var $row \Entity\Location\Location */
+			$text = $translator->translate($row->getName());
+			$sort[$text] = $row->id;
+			$locations[$row->id] = $row;
+		}
+
+		$collator->ksort($sort);
+		$return = [];
+		foreach($sort as $key => $id) {
+			$return[$id] = $locations[$id];
+		}
+
+		return $return;
+	}
+
 	public function findSuggestForCountries($search)
 	{
 		$qb = $this->_em->createQueryBuilder();

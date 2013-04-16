@@ -79,8 +79,6 @@ abstract class BasePresenter extends \BasePresenter {
 		$this->template->currentLanguage = NULL;
 		$this->template->currentLocation = NULL;
 
-		$this->template->mainMenuItems = $this->rentalTypeRepositoryAccessor->get()->findBy(array(),NULL,8);
-
 		$this->template->localeCode = $this->environment->getLocale()->getCode();
 
 		$domain = $primaryLocation->getFirstDomain()->getDomain();
