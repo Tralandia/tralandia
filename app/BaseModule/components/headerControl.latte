@@ -90,13 +90,11 @@
 
 				<ul class="dropdown-menu" role="menu" id="socialIconsMenu">
 					<li>
-						<ul>
-							<li><div id="headerFacbookLikeContainer" class="facebookLikeButtonContainer" data-facebook-src="{$homepageUrl}"></div></li>
-							<li><g:plusone size="medium" href="{$homepageUrl}"  style="margin-top:2px;" lang="{$localeGoogleCode}"></g:plusone></li>
-							<li><a href="https://twitter.com/share" class="twitter-share-button" data-url="{$homepageUrl}" data-via="Tralandia" data-text="{_o100036}" data-hashtags="{_o100034}" data-lang="{$environment->getLanguage()->getIso()}">Tweet</a></li>
-							<li>
-								<a href="http://pinterest.com/pin/create/button/?url={$homepageUrl}" class="pin-it-button" count-layout="horizontal"></a>
-							</li>
+						<ul class="social-buttons">
+							<li>{$twitterShareTag}</li>
+							<li>{$googlePlusShareTag}</li>
+							<li>{$facebookShareTag}</li>
+							<li>{$pinterestShareTag}</li>
 						</ul>
 					</li>
 				</ul>

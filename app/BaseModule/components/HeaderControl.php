@@ -35,14 +35,20 @@ class HeaderControl extends \BaseModule\Components\BaseControl {
 	 */
 	protected $user;
 
+	/**
+	 * @var \ShareLinks
+	 */
+	protected $shareLinks;
+
 	public function __construct(SeoService $pageSeo, User $user = NULL, Environment $environment, EntityManager $em,
-								ISeoServiceFactory $seoFactory) {
+								ISeoServiceFactory $seoFactory, \ShareLinks $shareLinks) {
 		parent::__construct();
 		$this->pageSeo = $pageSeo;
 		$this->user = $user;
 		$this->environment = $environment;
 		$this->em = $em;
 		$this->seoFactory = $seoFactory;
+		$this->shareLinks = $shareLinks;
 	}
 
 	public function render() {
@@ -65,7 +71,8 @@ class HeaderControl extends \BaseModule\Components\BaseControl {
 		$template->localeCode = $this->environment->getLocale()->getCode();
 		$template->localeGoogleCode = $this->environment->getLocale()->getGooglePlusLangCode();
 
-		$template->homepageUrl = $this->presenter->link('//:Front:Home:');
+		$homepageUrl = $this->presenter->link('//:Front:Home:');
+		$template->homepageUrl = $homepageUrl;
 		$template->homepageSeo = $this->seoFactory->create($template->homepageUrl, $this->presenter->getLastCreatedRequest());
 		$template->domainHost = ucfirst(strstr($domain, '.', TRUE));
 		$template->domainExtension = strstr($domain, '.');
@@ -76,6 +83,19 @@ class HeaderControl extends \BaseModule\Components\BaseControl {
 		$template->environment = $this->environment;
 		$template->pageSeo = $this->pageSeo;
 		$template->loggedUser = $this->user;
+
+
+		$shareLinks = $this->shareLinks;
+
+		$shareLink = $homepageUrl;
+		$shareText = $template->translate('o100036');
+		// @todo toto je tu len docasne lebo sa neimportuju obrazky
+		//$shareImage = $this->rentalImagePipe->request($rental->getMainImage());
+		$shareImage = '';
+		$template->twitterShareTag = $shareLinks->getTwitterShareTag($shareLink, $shareText);
+		$template->googlePlusShareTag = $shareLinks->getGooglePlusShareTag($shareLink);
+		$template->facebookShareTag = $shareLinks->getFacebookShareTag($shareLink, $shareText);
+		$template->pinterestShareTag = $shareLinks->getPinterestShareTag($shareLink, $shareText, $shareImage);
 
 		$template->render();
 	}
