@@ -113,4 +113,15 @@ class RentalRepository extends \Repository\BaseRepository {
 		return $myResult;
 	}
 
+	public function getFeaturedRentals($limit=99)
+	{
+		$qb = $this->_em->createQueryBuilder();
+		$qb->select('r')
+			->from($this->_entityName, 'r')
+			->orderBy('r.rank', 'ASC')
+			->setMaxResults($limit);
+
+		return $qb->getQuery()->getResult();
+	}
+
 }
