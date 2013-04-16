@@ -92,7 +92,7 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 	{
 		$phonePrefixes = $this->locationRepository->getCountriesPhonePrefixes();
 		$supportedLanguages = $this->languageRepository->getSupportedSortedByName();
-		$supportedLanguagesForSelect = $this->languageRepository->getSupportedForSelect($this->translator, $this->collator);
+		$supportedLanguagesForSelect = $this->languageRepository->getSupportedSortedByName($this->translator, $this->collator);
 		$questions = $this->interviewQuestionRepository->findAll();
 
 //		$this->addText('name', 'o100070')
@@ -119,8 +119,13 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 			->addRule(self::INTEGER, $this->translate('o100105'))
 			->addRule(self::RANGE, $this->translate('o100105'), [0, 999999999999999]);
 
+		$languages = array();
 
-		$rentalContainer->addSelect('translationLanguage', '##', $supportedLanguagesForSelect);
+		foreach($supportedLanguagesForSelect as $language){
+			$languages[$language->getIso()] = $this->translate($language->getName()); 
+		}
+
+		$rentalContainer->addSelect('translationLanguage', '##', $languages);
 
 
 		$nameContainer = $rentalContainer->addContainer('name');

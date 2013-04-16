@@ -13,18 +13,19 @@
 		{var $rentalContainer = $form['rental']}
 
 		{include #fieldset, text => 'o100137'}
-		{include #select, control => $rentalContainer['translationLanguage'] , controlClass => 'select2 notFulltext'}
+		{include #select, control => $rentalContainer['translationLanguage'] , controlClass => 'select2 selectLanguage notFulltext'}
+
 		{foreach $rentalContainer['name']->getControls() as $control}
-			{include #text, control => $control}
+			{include #text, control => $control , class => $control->getName().' name'}
 		{/foreach}
 
 		{foreach $rentalContainer['teaser']->getControls() as $control}
-			{include #text, control => $control}
+			{include #text, control => $control, class => $control->getName().' teaser'}
 		{/foreach}
 
 		{foreach $rentalContainer['interview']->getComponents() as $container}
 			{foreach $container->getControls() as $control}
-				{include #text, control => $control}
+				{include #text, control => $control, class => $control->getName().' interview'}
 			{/foreach}
 		{/foreach}
 
