@@ -2,6 +2,8 @@
 
 namespace FrontModule;
 
+use Entity\Rental\Image;
+use Entity\Rental\Rental;
 use Model\Rental\IRentalDecoratorFactory;
 use FrontModule\Forms\Rental\IReservationFormFactory;
 use Nette\ArrayHash;
@@ -90,6 +92,7 @@ class RentalPresenter extends BasePresenter {
 		$this->template->googlePlusShareTag = $shareLinks->getGooglePlusShareTag($shareLink);
 		$this->template->facebookShareTag = $shareLinks->getFacebookShareTag($shareLink, $shareText);
 		$this->template->pinterestShareTag = $shareLinks->getPinterestShareTag($shareLink, $shareText, $shareImage);
+		$this->template->pinterestShare = $this->pinterestShare;
 
 		$lastSearchResults = $this->getLastSearchResults($rental);
 
@@ -111,6 +114,17 @@ class RentalPresenter extends BasePresenter {
 
 		$this->setLayout('detailLayout');
 	}
+
+
+	public function pinterestShare(Rental $rental, Image $image) {
+		$shareLink = $this->link('//Rental:detail', [$rental]);
+		$shareText = $this->translate($rental->getName());
+		// @todo toto je tu len docasne lebo sa neimportuju obrazky
+		//$shareImage = $this->rentalImagePipe->request($image);
+		$shareImage = $this->rentalImagePipe->requestFake();
+		return $this->shareLinks->getPinterestShareTag($shareLink, $shareText, $shareImage);
+	}
+
 
 	protected function getLastSearchResults($rental) {
 		$lastSearch = $this->lastSearch;
