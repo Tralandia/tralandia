@@ -176,6 +176,7 @@ parameters:
 					- front/rentalDetail/js/rentalDetail.js
 					# search sidebar
 					- front/search/js/search.js
+					- front/_base/js/rentalEditFormLocalize.js
 					# rental navigation
 					- front/rentalNavigation/js/rentalNavigation.js
 					# calendar widget
