@@ -223,8 +223,8 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 		foreach ($rental->getPlacements() as $place) {
 			$places[] = $place->getId();
 		}
+		$pet = $rental->getPetAmenity();
 		$defaults = [
-
 			//'referrer' => 'luzbo',
 			'email' => $rental->getEmail(),
 			'url' => $rental->getUrl(),
@@ -244,7 +244,7 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 					return $a->getId();
 				}, $rental->getImportantAmenities()),
 				'ownerAvailability' => $rental->getOwnerAvailability()->getId(),
-				'pet' => $rental->getPetAmenity()->getId(),
+				'pet' => $pet ? $pet->getId() : NULL,
 				'placement' => $places,
 
 				'address' => $rental->getAddress(),

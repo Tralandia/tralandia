@@ -2,6 +2,7 @@
 
 namespace FrontModule;
 
+
 class RegistrationPresenter extends BasePresenter
 {
 
@@ -34,8 +35,10 @@ class RegistrationPresenter extends BasePresenter
 			$self->onSuccessRegistration($rental);
 			$owner = $rental->getOwner();
 			$self->login($owner);
+			$this->presenter->flashMessage('o100165', RegistrationPresenter::FLASH_SUCCESS);
 			$form->presenter->redirect(':Owner:Rental:edit', array('id' => $rental->getId()));
 		};
+
 
 		return $form;
 	}
