@@ -94,10 +94,11 @@ class RouterFactory
 
 		$frontRouter[] = $this->frontRouteFactory->create();
 
-		$mask = '//[!<language ([a-z]{2}|www)>.<primaryLocation [a-z]{2,3}>.%domain%/]front/<presenter>[/<action>[/<id>]]';
+		$mask = '//[!<language ([a-z]{2}|www)>.<primaryLocation [a-z]{2,3}>.%domain%/][<location>/]front/<presenter>[/<action>[/<id>]]';
 		$metadata = [
 			BaseRoute::PRIMARY_LOCATION => 'sk',
 			BaseRoute::LANGUAGE => 'www',
+			'location' => NULL,
 			'presenter' => 'Home',
 			'action' => 'default',
 		];
