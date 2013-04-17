@@ -266,6 +266,7 @@ parameters:
 				-  %webloader.packages.Front%
 				#-  %webloader.packages.texyla%
 				-  %webloader.packages.nette%
+				-  %webloader.packages.socialite%
 			'Front:CalendarIframe':
 				-  %webloader.packages.calendarIframe%
 			'Front:Rental:detail':

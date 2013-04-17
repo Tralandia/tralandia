@@ -34,7 +34,7 @@ class RootHomePresenter extends BasePresenter {
 	}
 
 	public function renderDefault() {
-		$featuredIds = $this->rentalRepositoryAccessor->get()->getFeaturedRentals(99);
+		$featuredIds = $this->rentalRepositoryAccessor->get()->getFeaturedRentals(135);
 
 		$rentals = array();
 		foreach ($featuredIds as $rental) {
@@ -43,11 +43,6 @@ class RootHomePresenter extends BasePresenter {
 		}
 
 		$this->template->rentals = $rentals;
-
-		$this->template->countries = $this->locationRepositoryAccessor->get()->getCountriesOrdered(
-			$this->translator, 
-			$this->environment->getLocale()->getCollator()
-		);
 	}
 
 }

@@ -214,9 +214,19 @@ class LocationRepository extends \Repository\BaseRepository {
 		$locations = array();
 		foreach($this->findCountries() as $row) {
 			/** @var $row \Entity\Location\Location */
-			$text = $translator->translate($row->getName());
+			$parent = $row->getParent();
+			$prefix = NULL;
+			if($parent && $parent->getIso()) {
+				$prefix = $translator->translate($parent->getName());
+			}
+
+			$text = ($prefix ? $prefix . ' - ' : '') . $translator->translate($row->getName());
+
 			$sort[$text] = $row->id;
-			$locations[$row->id] = $row;
+			$locations[$row->id] = [
+				'entity' => $row,
+				'name' => $text
+			];
 		}
 
 		$collator->ksort($sort);
