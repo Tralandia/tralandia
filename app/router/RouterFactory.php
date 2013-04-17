@@ -58,51 +58,21 @@ class RouterFactory
 
 		$router = new RouteList();
 
-		$router[] = $gregor = new RouteList('gregor');
-		$gregor[] = new Route('gregor[/<presenter>[/<action>[/<id>]]]', array(
-			'presenter' => 'Page',
-			'action' =>  'home',
-			'primaryLocation' => $this->defaultPrimaryLocation,
-			'language' => $this->defaultLanguage,
-		));
 
-		$router[] = $adminRouter = new RouteList('Admin');
-		$adminRouter[] = new Route('index.php', 'Admin:Rental:list', Route::ONE_WAY);
-		$adminRouter[] = $this->baseRouteFactory->create('admin/<presenter>/<id [0-9]+>', array(
-			'presenter' => NULL,
-			'action' =>  'edit',
+		$mask = '//[!<language ([a-z]{2}|www)>.<primaryLocation [a-z]{2,4}>.%domain%/]<module (front|owner|admin)>/<presenter>[/<action>[/<id>]]';
+		$metadata = [
 			BaseRoute::PRIMARY_LOCATION => 'sk',
 			BaseRoute::LANGUAGE => 'www',
-		));
+			'presenter' => 'Home',
+			'action' => 'list',
+		];
 
-		$adminRouter[] = $this->baseRouteFactory->create('admin/<presenter>[/<action>[/<id>]]', array(
-			'presenter' => NULL,
-			'action' =>  'list',
-			BaseRoute::PRIMARY_LOCATION => 'sk',
-			BaseRoute::LANGUAGE => 'www',
-		));
-	/*	$adminRouter[] = new Route('admin/<presenter>[/<action list|add|registration>]', array(
-			'presenter' => 'Admin',
-			'action' =>  'list'
-		));
-	*/
-
-		$router[] = $this->ownerRouteListFactory->create();
-
+		$router[] = $this->simpleRouteFactory->create($mask, $metadata);
 
 		$router[] = $frontRouter = new RouteList('Front');
 
 		$frontRouter[] = $this->frontRouteFactory->create();
 
-		$mask = '//[!<language ([a-z]{2}|www)>.<primaryLocation [a-z]{2,3}>.%domain%/][<location>/]front/<presenter>[/<action>[/<id>]]';
-		$metadata = [
-			BaseRoute::PRIMARY_LOCATION => 'sk',
-			BaseRoute::LANGUAGE => 'www',
-			'location' => NULL,
-			'presenter' => 'Home',
-			'action' => 'default',
-		];
-		$frontRouter[] = $this->simpleRouteFactory->create($mask, $metadata);
 
 		//$frontRouter[] = $this->frontRouteFactory->create();
 
