@@ -58,6 +58,7 @@ class ImportLocations extends BaseImport {
 		// Create location World
 		$s = $this->context->locationEntityFactory->create();
 		$s->name = $namePhrase;
+		$s->iso = 'com';
 		$s->type = $worldType;
 		$s->slug = 'world';
 		$s->localName = 'world';
