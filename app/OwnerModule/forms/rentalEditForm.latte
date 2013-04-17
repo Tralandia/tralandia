@@ -21,7 +21,7 @@
 			{else}
 				{var $hide = 'hide'}
 			{/if}
-			{include #text, control => $control , class => $control->getName().' name '.$hide}
+			{include #text, control => $control , class => $control->getName().' toggleLanguage '.$hide}
 		{/foreach}
 
 		{foreach $rentalContainer['teaser']->getControls() as $control}
@@ -30,7 +30,7 @@
 			{else}
 				{var $hide = 'hide'}
 			{/if}
-			{include #text, control => $control, class => $control->getName().' teaser '.$hide}
+			{include #text, control => $control, class => $control->getName().' toggleLanguage '.$hide}
 		{/foreach}
 
 		{foreach $rentalContainer['interview']->getComponents() as $container}
@@ -40,7 +40,7 @@
 				{else}
 					{var $hide = 'hide'}
 				{/if}
-				{include #text, control => $control, class => $control->getName().' interview '.$hide}
+				{include #text, control => $control, class => $control->getName().' toggleLanguage '.$hide}
 			{/foreach}
 		{/foreach}
 
