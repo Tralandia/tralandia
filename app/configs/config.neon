@@ -208,6 +208,8 @@ services:
 
 	searchBarControl: FrontModule\Components\SearchBar\SearchBarControl()
 
+	rootCountriesControl: FrontModule\Components\RootCountries\RootCountriesControl(@translator)
+
 factories:
 	# ==============================
 	# ==================== FORMS

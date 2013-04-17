@@ -49,6 +49,12 @@ abstract class BasePresenter extends \BasePresenter {
 
 	/**
 	 * @autowire
+	 * @var \FrontModule\Components\RootCountries\RootCountriesControl
+	 */
+	protected $rootCountriesControl;
+
+	/**
+	 * @autowire
 	 * @var \ShareLinks
 	 */
 	protected $shareLinks;
@@ -74,6 +80,7 @@ abstract class BasePresenter extends \BasePresenter {
 	public function beforeRender() {
 		$primaryLocation = $this->environment->getPrimaryLocation();
 
+		$this->template->isWorld = $primaryLocation->isWorld();
 		$this->template->showSearchBar = !$primaryLocation->isWorld();
 
 		$this->template->currentLanguage = NULL;
@@ -256,6 +263,10 @@ abstract class BasePresenter extends \BasePresenter {
 
 	public function createComponentSearchBar() {
 		return $this->searchBarControl;
+	}
+
+	public function createComponentRootCountries() {
+		return $this->rootCountriesControl;
 	}
 
 }

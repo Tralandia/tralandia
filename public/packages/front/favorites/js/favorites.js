@@ -1,16 +1,21 @@
 var favorites;
 
-function initNavBarShare(linkToShare)
+function initNavBarShare(data)
 {
-	var html = '<span class="facebook facebookLikeButtonContainer" data-facebook-src="'+linkToShare+'"></span>'+
-		'<g:plusone size="medium" href="'+linkToShare+'"  style="margin-top:2px;"></g:plusone>'+
-		'<a href="https://twitter.com/share" class="twitter-share-button" data-url="'+linkToShare+'" data-via="Tralandia" data-text="{_o100036}" data-hashtags="{_o100034}" data-lang="{$currentLanguage->iso}">Tweet</a>'+
-		'<a href="http://pinterest.com/pin/create/button/?url='+linkToShare+'" class="pin-it-button" count-layout="horizontal"></a>';
+	var html = '<ul class="social-buttons">'+
+		'<li>'+data.twitterShare+'</li>'+
+		'<li>'+data.googlePlusShare+'</li>'+
+		'<li>'+data.facebookShare+'</li>'+
+		'<li>'+data.pinterestShare+'</li>'+
+	'</ul>';
 
-	$('#dynamicShareContainer').html(html);
-	$('#clipboardLinkShare').val(linkToShare);
+	$shareContainer = $('#dynamicShareContainer').html(html);
+	Socialite.load($shareContainer);
+
+	if (data.linkToShare) {
+		$('#clipboardLinkShare').val(data.linkToShare);
+	}
 	$('body').removeAttr('data-socialPluginsInit');
-	// initAllSocialPlugins();
 }
 
 function removejscssfile(filename, filetype)
