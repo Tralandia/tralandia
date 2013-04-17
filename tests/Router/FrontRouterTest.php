@@ -21,6 +21,13 @@ class FrontRouterTest extends BaseRouterTest
 		//$this->routeIn($route, 'http://www.sk.tra.com/front/invoices/forms', NULL);
 		//$this->routeIn($route, 'http://www.sk.tra.com/ticket', NULL);
 
+		$this->routeIn($route, 'http://www.sk.tra.com/prihlasenie', 'Sign', array(
+			'action' => 'in',
+			'primaryLocation' => $this->findLocation(56),
+			'language' => $this->findLanguage(144),
+			'page' => $this->findPage(3),
+		));
+
 		$this->routeIn($route, 'http://www.com.tra.com/', 'RootHome', array(
 			'action' => 'default',
 			'primaryLocation' => $this->findLocation(1),

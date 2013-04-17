@@ -10,6 +10,9 @@ use Nette\Utils\Arrays;
 class SimpleRoute extends BaseRoute
 {
 
+	public $pageRepositoryAccessor;
+
+
 	/**
 	 * @param \Nette\Http\IRequest $httpRequest
 	 * @return \Nette\Application\Request|NULL
@@ -58,7 +61,7 @@ class SimpleRoute extends BaseRoute
 			}
 		}
 
-		if($this->skipLink($presenterName, $params)) return NULL;
+		if($this->skipLink($presenterName, $params['action'])) return NULL;
 
 		$appRequest->setParameters($params);
 
@@ -71,15 +74,14 @@ class SimpleRoute extends BaseRoute
 		}
 	}
 
-	protected function skipLink($presenter, $params)
+	protected function skipLink($presenter, $action)
 	{
-		return $this->isHomeLink($presenter, $params) || $params['action'] == 'default';
+		$destination = ':'.$presenter.':'.$action;
+		$page = $this->pageRepositoryAccessor->get()->findOneByDestination($destination);
+
+		return $page != NULL;
 	}
 
-	protected function isHomeLink($presenter, $params)
-	{
-		return $presenter == 'Front:Home' && $params['action'] == 'default';
-	}
 
 }
 

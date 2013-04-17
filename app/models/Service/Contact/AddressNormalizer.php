@@ -83,7 +83,7 @@ class AddressNormalizer extends \Nette\Object {
 		$longitude = $latLong->getLongitude();
 
 		$response = $this->geocodeService->reverseGeocode($latitude, $longitude);
-		
+
 		if (!$response->hasResults() || !$response->isValid()) {
 			return FALSE;
 		}
@@ -108,7 +108,7 @@ class AddressNormalizer extends \Nette\Object {
 		if (!$response->hasResults() || !$response->isValid()) {
 			return FALSE;
 		}
-		
+
 		return $this->parseResponse($response);
 	}
 
@@ -213,7 +213,20 @@ class AddressNormalizer extends \Nette\Object {
 
 		$info[self::ADDRESS] = implode(' ', array_filter($address));
 
+		// nepovinne polia, ak neexistuju tak ich nastavim na NULL
+		$info[self::POSTAL_CODE] = Arrays::get($info, AddressNormalizer::POSTAL_CODE, NULL);
+		$info[self::SUBLOCALITY] = Arrays::get($info, AddressNormalizer::SUBLOCALITY, NULL);
+
+		if(!$this->isInfoValid($info)) {
+			throw new WrongAddressInfoException;
+		}
+
 		return $info;
+	}
+
+	protected function isInfoValid(array $info)
+	{
+		return isset($info[self::PRIMARY_LOCATION], $info[self::LOCALITY], $info[self::LATITUDE], $info[self::LONGITUDE]);
 	}
 
 	/**
@@ -299,6 +312,6 @@ class AddressNormalizer extends \Nette\Object {
 
 }
 
-class WrongCountryException extends \Exception {
-
-}
+class AddressNormalizerException extends \Exception {}
+class WrongCountryException extends AddressNormalizerException {}
+class WrongAddressInfoException extends AddressNormalizerException {}
