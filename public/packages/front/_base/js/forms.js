@@ -730,7 +730,11 @@
 			var map = new google.maps.Map(document.getElementById('map_canvas'),
 				mapOptions);
 
-			var input = document.getElementById('frm-registrationForm-rental-address-address');
+			var input = $('.rentalAutocompleteAddress').get(0);
+				currentId = '#'+$('.rentalAutocompleteAddress').attr('id');
+				// console.log(currentId);
+
+
 			var autocomplete = new google.maps.places.Autocomplete(input);
 
 			autocomplete.bindTo('bounds', map);
@@ -746,7 +750,8 @@
 					position:latlng
 				});       
 				
-			} 
+			}
+			
 			google.maps.event.addListener(map, 'click', function(event) {
 				
 				if(marker){
@@ -762,9 +767,7 @@
 			var geocoder = new google.maps.Geocoder();
 			geocoder.geocode({ 'latLng': event.latLng} , function(r, status){
 				if(status == 'OK'){
-
-					$('#frm-registrationForm-rental-address-address').val(r[0].formatted_address);
-
+					$(currentId).val(r[0].formatted_address);
 				} else {
 					alert('address error');
 				}
@@ -797,9 +800,6 @@
 				position:place.geometry.location
 			}); 				
 		  }
-
-		  // marker.setPosition(place.geometry.location);
-		  // marker.setVisible(true);
 		  
 	  });
 

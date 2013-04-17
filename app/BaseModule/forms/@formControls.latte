@@ -136,7 +136,7 @@
 		</td>
 
 		<td>
-			<span class="help">{$control->getOption('description')}</span>
+			<span class="help">{$control->getOption('help')}</span>
 			<span class="invalidAlert">{include #controlErrors, errors => $control->getErrors()}</span>
 		</td>
 	</tr>
@@ -371,7 +371,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td>{input $container['address'], data-name => "address", data-validation-message => "gps-validation-message"}</td>
+				<td>{input $container['address'], data-name => "address", class => 'rentalAutocompleteAddress' , data-validation-message => "gps-validation-message"}</td>
 			</tr>
 
 		</table>
@@ -611,7 +611,7 @@
 
 				<span class="btn btn-green fileinput-button">
 					<i class="entypo-upload"></i>
-					<span>{_o100087}</span>
+					<span>{_o100167}</span>
 					{input $container['upload']}
 				</span>
 
@@ -650,12 +650,12 @@
 
 	<td colspan="3">
 		{foreach $container->getComponents() as $component}
-			{input $component['roomCount']}
-			{input $component['roomType']}
-			{input $component['bedCount']}
-			{input $component['extraBedCount']}
-			{input $component['price']['amount']}
-			{input $component['price']['currency']}
+			{input $component['roomCount'] , class => 'select2'}
+			{input $component['roomType'] , class => 'select2'}
+			{input $component['bedCount'] , class => 'select2'}
+			{input $component['extraBedCount'] , class => 'select2'}
+			{input $component['price']['amount'] , class => 'select2'}
+			{input $component['price']['currency'] , class => 'select2'}
 			<hr>
 		{/foreach}
 	</td>
