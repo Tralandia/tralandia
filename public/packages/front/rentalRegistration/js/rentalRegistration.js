@@ -4,7 +4,7 @@ $(function(){
 
 
 	$('select.rentalType').on('change',function(){
-		_rentalTypeclassification(this);
+		_rentalTypeClassification(this);
 	});
 
 	$('select.selectRedirect').each(function(){
@@ -27,7 +27,7 @@ $(function(){
 
 });
 
-function _rentalTypeclassification(elem){
+function _rentalTypeClassification(elem){
 
 	var classification = $('select.rentalType  option[value="'+$(elem).val()+'"]').attr('data-classification');
 	// var classification = $('select.rentalType  option[value="'+$(elem).val()+'"]').html();
@@ -44,7 +44,7 @@ function _rentalTypeclassification(elem){
 
 function rentalTypeOnLoad(){
 	$('select.rentalType').each(function(){
-		_rentalTypeclassification(this);
+		_rentalTypeClassification(this);
 	});
 }
 
