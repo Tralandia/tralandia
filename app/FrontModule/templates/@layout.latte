@@ -18,6 +18,8 @@
 			{cache homeSearchBar, if => isset($isHome) && $useTemplateCache, expire => '+1 day'}
 				{if $showSearchBar}
 					{control searchBar}
+				{elseif $isWorld}
+					{control rootCountries}
 				{/if}
 			{/cache}
 			<div class="span9">

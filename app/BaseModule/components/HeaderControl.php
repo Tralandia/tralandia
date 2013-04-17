@@ -62,11 +62,15 @@ class HeaderControl extends \BaseModule\Components\BaseControl {
 
 		$domain = $primaryLocation->getFirstDomain()->getDomain();
 
-		$template->slogan = $template->translate('o21083').' '.$template->translate(
-			$primaryLocation->getName(),
-			NULL,
-			array('case' => \Entity\Language::LOCATIVE)
-		);
+		if ($primaryLocation->slug == 'world') {
+			$template->slogan = $template->translate('o100163');
+		} else {
+			$template->slogan = $template->translate('o21083').' '.$template->translate(
+				$primaryLocation->getName(),
+				NULL,
+				array(\Extras\Translator::VARIATION_CASE => \Entity\Language::LOCATIVE)
+			);
+		}
 
 		$template->localeCode = $this->environment->getLocale()->getCode();
 		$template->localeGoogleCode = $this->environment->getLocale()->getGooglePlusLangCode();

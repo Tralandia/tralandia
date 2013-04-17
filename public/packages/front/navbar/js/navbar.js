@@ -161,13 +161,16 @@
 					initNavBarShare(base.favoritesLink);
 				} else {
 					var shareUrl = $('#favoritesStaticContainer').attr('data-favoritesLink');
-					base.importShareLink(shareUrl, function(d){
-						initNavBarShare(d.link);
-						base.favoritesLink = d.link;
+					base.importShareLink(shareUrl, function(data){
+						initNavBarShare(data);
+						base.favoritesLink = data.link;
 					});
 				}
-			} else if (tabName=='navBarSerchResults') {
-				initNavBarShare($this.attr('data-href'));
+			} else if (tabName=='navBarSearchResults') {
+				html = base.$tabs.find('li.share[for="navBarSearchResults"] ul')[0].outerHTML;
+				$socialLinks = base.$shareContent.find('#dynamicShareContainer').html(html);
+				Socialite.load($socialLinks);
+				$('body').removeAttr('data-socialPluginsInit');
 			}
 
 			base.showShare();
@@ -175,7 +178,6 @@
 
 		base.showShare = function()
 		{
-			console.log('showShare');
 			base.$shareContent.show();
 			base.navBarShareShown = true;
 			base.innerClick = true;
@@ -183,7 +185,6 @@
 
 		base.hideShare = function()
 		{
-			console.log('hideShare');
 			base.$shareContent.hide();
 			base.navBarShareShown = false;
 			base.innerClick = false;
@@ -225,12 +226,10 @@
 		base.bodyActions = function(event)
 		{
 			if (base.innerClick) {
-				console.log('innerClick');
 				base.innerClick = false;
 				return false;
 			}
 			if (base.navBarShareShown) {
-				console.log('bodyActions hide navbar');
 				if (!$(event.target).parents('#shareContent').length) base.hideShare();
 			}
 		}
@@ -238,7 +237,6 @@
 		base.favoritesSync = function()
 		{
 			if(!Favorites.checkChanges()){
-				console.log('sync');
 				Favorites.updateList();
 				base.checkTabs();
 			}		
