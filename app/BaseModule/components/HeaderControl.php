@@ -68,7 +68,7 @@ class HeaderControl extends \BaseModule\Components\BaseControl {
 			$template->slogan = $template->translate('o21083').' '.$template->translate(
 				$primaryLocation->getName(),
 				NULL,
-				array('case' => \Entity\Language::LOCATIVE)
+				array(\Extras\Translator::VARIATION_CASE => \Entity\Language::LOCATIVE)
 			);
 		}
 

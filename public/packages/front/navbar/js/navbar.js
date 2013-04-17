@@ -161,9 +161,9 @@
 					initNavBarShare(base.favoritesLink);
 				} else {
 					var shareUrl = $('#favoritesStaticContainer').attr('data-favoritesLink');
-					base.importShareLink(shareUrl, function(d){
-						initNavBarShare(d.link);
-						base.favoritesLink = d.link;
+					base.importShareLink(shareUrl, function(data){
+						initNavBarShare(data);
+						base.favoritesLink = data.link;
 					});
 				}
 			} else if (tabName=='navBarSearchResults') {

@@ -2,6 +2,7 @@
 namespace FrontModule\Components\RootCountries;
 
 use Environment\Environment;
+use Doctrine\ORM\EntityManager;
 
 class RootCountriesControl extends \BaseModule\Components\BaseControl {
 
@@ -11,24 +12,21 @@ class RootCountriesControl extends \BaseModule\Components\BaseControl {
 	protected $environment;
 
 	/** 
-	 * @var Extras\Translator 
+	 * @var \Extras\Translator 
 	 */
 	protected $translator;
 
 	/**
-	 * @var \Entity\Location\Location
+	 * @var \Repository\Location\LocationRepository
 	 */
-	public $locationRepositoryAccessor;
-	
-	public function injectDic(\Nette\DI\Container $dic) {
-		$this->locationRepositoryAccessor = $dic->locationRepositoryAccessor;
-	}
+	public $locationRepository;
 
-	public function __construct(\Extras\Translator $translator, Environment $environment)
+	public function __construct(\Extras\Translator $translator, Environment $environment, EntityManager $em)
 	{
 		parent::__construct();
 		$this->environment = $environment;
 		$this->translator = $translator;
+		$this->locationRepository = $em->getRepository(LOCATION_ENTITY);
 	}
 
 	public function render()
@@ -43,7 +41,7 @@ class RootCountriesControl extends \BaseModule\Components\BaseControl {
 
 	private function getCountries()
 	{
-		return $this->locationRepositoryAccessor->get()->getCountriesOrdered(
+		return $this->locationRepository->get()->getCountriesOrdered(
 			$this->translator, 
 			$this->environment->getLocale()->getCollator()
 		);

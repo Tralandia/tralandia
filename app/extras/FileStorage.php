@@ -73,6 +73,9 @@ class FileStorage extends Nette\Object
 	 */
 	public function delete($filePath)
 	{
+		if (!file_exists($filePath)) {
+			throw new Nette\FileNotFoundException("$filePath");
+		}
 		return unlink($filePath);
 	}
 
