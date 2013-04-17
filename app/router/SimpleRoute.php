@@ -34,22 +34,6 @@ class SimpleRoute extends BaseRoute
 	}
 
 
-	public function filterIn(array $params)
-	{
-		if($params[self::PRIMARY_LOCATION] == self::ROOT_DOMAIN) {
-			if(isset($params['location'])) {
-				$params[self::PRIMARY_LOCATION] = $this->locationRepository->findOneBySlug($params['location']);
-			} else {
-				$params[self::PRIMARY_LOCATION] = $this->locationRepository->findOneBySlug(self::ROOT_LOCATION_SLUG);
-			}
-		}
-
-		$params = parent::filterIn($params);
-
-		return $params;
-	}
-
-
 	/**
 	 * @param \Nette\Application\Request $appRequest
 	 * @param \Nette\Http\Url $refUrl
@@ -59,6 +43,7 @@ class SimpleRoute extends BaseRoute
 	{
 		$appRequest = clone $appRequest;
 
+		$presenterName = $appRequest->getPresenterName();
 		$params = $appRequest->getParameters();
 		$params = $this->filterOut($params);
 
@@ -73,24 +58,27 @@ class SimpleRoute extends BaseRoute
 			}
 		}
 
+		if($this->skipLink($presenterName, $params)) return NULL;
+
 		$appRequest->setParameters($params);
 
 		$url = $this->route->constructUrl($appRequest, $refUrl);
-
-		// @todo @hack
-		if(\Nette\Utils\Strings::endsWith($url, '/front/')) {
-			$url = substr($url, 0, -6);
-		}
-
-		if(\Nette\Utils\Strings::endsWith($url, '/front/rental-list')) {
-			$url = substr($url, 0, -17);
-		}
 
 		if(!$url) {
 			return NULL;
 		} else {
 			return $url;
 		}
+	}
+
+	protected function skipLink($presenter, $params)
+	{
+		return $this->isHomeLink($presenter, $params) || $params['action'] == 'default';
+	}
+
+	protected function isHomeLink($presenter, $params)
+	{
+		return $presenter == 'Front:Home' && $params['action'] == 'default';
 	}
 
 }

@@ -63,7 +63,7 @@ class FrontRoute extends BaseRoute
 	 */
 	public function __construct(LanguageRepository $languageRepository, LocationRepository $locationRepository)
 	{
-		$mask = '//[!<language ([a-z]{2}|www)>.<primaryLocation [a-z]{2,3}>.%domain%/][<hash .*>]';
+		$mask = '//[!<language ([a-z]{2}|www)>.<primaryLocation [a-z]{2,4}>.%domain%/][<hash .*>]';
 		$metadata = [ 'presenter' => 'RentalList', 'action' => 'default' ];
 		parent::__construct($mask, $metadata, $languageRepository, $locationRepository);
 	}
@@ -94,7 +94,7 @@ class FrontRoute extends BaseRoute
 			$tmp = $params;
 			unset($tmp[self::LANGUAGE], $tmp[self::PRIMARY_LOCATION], $tmp[self::USE_ROOT_DOMAIN], $tmp['action']);
 			if(!count($tmp) && !count($pathSegments)) {
-				if(isset($params[self::USE_ROOT_DOMAIN])) {
+				if($params[self::PRIMARY_LOCATION]->getIso() == self::ROOT_DOMAIN) {
 					$presenter = 'RootHome';
 				} else {
 					$presenter = 'Home';
@@ -270,24 +270,6 @@ class FrontRoute extends BaseRoute
 
 	public function filterIn(array $params)
 	{
-
-		if($params[self::PRIMARY_LOCATION] == self::ROOT_DOMAIN) {
-			$params[self::USE_ROOT_DOMAIN] = TRUE;
-
-			if(is_array($params[self::HASH])) {
-				$locationSlug = reset($params[self::HASH]);
-				$params[self::PRIMARY_LOCATION] = $this->locationRepository->findOneBySlug($locationSlug);
-			} else {
-				$params[self::PRIMARY_LOCATION] = NULL;
-			}
-
-			if($params[self::PRIMARY_LOCATION]) {
-				array_shift($params[self::HASH]);
-			} else {
-				$params[self::PRIMARY_LOCATION] = $this->locationRepository->findOneBySlug(self::ROOT_LOCATION_SLUG);
-			}
-		}
-
 		$params = parent::filterIn($params);
 
 		if(isset($params[self::SPOKEN_LANGUAGE])) {

@@ -66,11 +66,13 @@ abstract class BaseRouterTest extends \Tests\TestCase
 
 
 
-	protected function routeOut(Nette\Application\Routers\Route $route, $presenter, $params = array())
+	protected function routeOut(Nette\Application\IRouter $route, $presenter, $params = array(), $expectUrl = NULL)
 	{
 		$url = new Nette\Http\Url('http://example.com');
 		$request = new Nette\Application\Request($presenter, 'GET', $params);
-		return $route->constructUrl($request, $url);
+		$url = $route->constructUrl($request, $url);
+
+		$this->assertEquals($expectUrl, $url);
 	}
 
 	public function assertEntities(BaseEntity $expected,BaseEntity $actual, $message = NULL)
@@ -78,4 +80,31 @@ abstract class BaseRouterTest extends \Tests\TestCase
 		$this->assertSame($expected->getClass(), $actual->getClass(), $message);
 		$this->assertSame($expected->getId(), $actual->getId(), $message);
 	}
+
+
+	public function findLocation($id)
+	{
+		return $this->getEm()->getRepository(LOCATION_ENTITY)->find($id);
+	}
+
+	public function findLanguage($id)
+	{
+		return $this->getEm()->getRepository(LANGUAGE_ENTITY)->find($id);
+	}
+
+	public function findPage($id)
+	{
+		return $this->getEm()->getRepository(PAGE_ENTITY)->find($id);
+	}
+
+	public function findRental($id)
+	{
+		return $this->getEm()->getRepository(RENTAL_ENTITY)->find($id);
+	}
+
+	public function findRentalType($id)
+	{
+		return $this->getEm()->getRepository(RENTAL_TYPE_ENTITY)->find($id);
+	}
+
 }
