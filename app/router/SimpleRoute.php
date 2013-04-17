@@ -34,6 +34,22 @@ class SimpleRoute extends BaseRoute
 	}
 
 
+	public function filterIn(array $params)
+	{
+		if($params[self::PRIMARY_LOCATION] == self::ROOT_DOMAIN) {
+			if(isset($params['location'])) {
+				$params[self::PRIMARY_LOCATION] = $this->locationRepository->findOneBySlug($params['location']);
+			} else {
+				$params[self::PRIMARY_LOCATION] = $this->locationRepository->findOneBySlug(self::ROOT_LOCATION_SLUG);
+			}
+		}
+
+		$params = parent::filterIn($params);
+
+		return $params;
+	}
+
+
 	/**
 	 * @param \Nette\Application\Request $appRequest
 	 * @param \Nette\Http\Url $refUrl
