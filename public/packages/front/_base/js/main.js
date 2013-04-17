@@ -16,13 +16,13 @@ var $class = function(definition) {
 var navBarShare = false;
 
 function executeFunctionByName(functionName, context /*, args */) {
-  var args = Array.prototype.slice.call(arguments).splice(2);
-  var namespaces = functionName.split(".");
-  var func = namespaces.pop();
-  for(var i = 0; i < namespaces.length; i++) {
-	context = context[namespaces[i]];
-  }
-  return context[func].apply(this, args);
+	var args = Array.prototype.slice.call(arguments).splice(2);
+	var namespaces = functionName.split(".");
+	var func = namespaces.pop();
+	for(var i = 0; i < namespaces.length; i++) {
+		context = context[namespaces[i]];
+	}
+	return context[func].apply(this, args);
 }
 
 
@@ -54,7 +54,7 @@ App.prototype._getLocationUrl = function(withAnchor){
 	if(typeof withAnchor == 'undefined' || withAnchor == false){
 		var hash = window.location.hash;
 		var url = document.location.toString();
-			url = url.replace(hash,'');
+		url = url.replace(hash,'');
 
 		return url;
 	}
@@ -247,10 +247,10 @@ App.prototype.cancelContactForm = function(){
 }
 
 App.prototype.forgottenPasswordOpen = function(){
-  $('#forgottenPassword').slideDown('fast', function() {
+	$('#forgottenPassword').slideDown('fast', function() {
 	// Animation complete.
-  });
-  return false;
+});
+	return false;
 }
 
 App.prototype.closeForgottenPasswordForm = function(){
@@ -302,9 +302,9 @@ $(document).ready(function(){
 	// 	dropdownCssClass: 'searchSelect'
 	// });
 
-	var A = new App();
+var A = new App();
 
-	$('.autoselect').click(A.autoselect);
+$('.autoselect').click(A.autoselect);
 
 
 
@@ -318,7 +318,7 @@ $(document).ready(function(){
 		var position = 'top';
 
 		if (typeof attr !== 'undefined' && attr !== false) {
-		    position = attr;
+			position = attr;
 		}
 
 		$(this).tooltip({
@@ -355,7 +355,7 @@ $(document).ready(function(){
 	$('.toggle').click(A.uitoggleClick);
 
 	/* object detail init large map after small map click */
-	$('.mapsImg').click(A.initMapsObjectDetail);
+	$('.mapsImage').click(A.initMapsObjectDetail);
 
 
 	$('.loadContactForm').click(A.loadContactForm);
@@ -408,24 +408,24 @@ $(document).ready(function(){
 	/* ui tabs */
 	$('.nav-tabs a').click(function (e) {
 
-	  e.preventDefault();
-	  var id = $(this).attr('id');
-	  var href = $(this).attr('href');
+		e.preventDefault();
+		var id = $(this).attr('id');
+		var href = $(this).attr('href');
 
 	  //$(this).tab('show');
 	  $('.nav-tabs li').removeClass('active');
 	  $(this).parent().addClass('active');
 
-		var scrollmem = $('body').scrollTop();
-		var newHref = href.replace("#","#_");
+	  var scrollmem = $('body').scrollTop();
+	  var newHref = href.replace("#","#_");
 
-		window.location.hash = newHref;
-		$('html,body').scrollTop(scrollmem);
+	  window.location.hash = newHref;
+	  $('html,body').scrollTop(scrollmem);
 
-		console.log(this);
+	  console.log(this);
 
 	  if(id = 'objectDetailListMap'){
-		mapLoader();
+	  	mapLoader();
 	  }
 
 	  $('.tab-content .tab-pane').hide();
@@ -439,7 +439,7 @@ $(document).ready(function(){
 	if(window.location.hash.length > 1){
 
 		var currentId  = window.location.hash;
-			currentId=currentId.replace("#_","#");
+		currentId=currentId.replace("#_","#");
 
 		var scrollmem = $('.objectDetailContent').height();
 
@@ -451,9 +451,9 @@ $(document).ready(function(){
 
 		// pokial obsahuje otvoreny div mapu
 		var haveMapContent = $(currentId).find("#map_canvas");
-			if(haveMapContent.length != 0){
-				mapLoader();
-			}
+		if(haveMapContent.length != 0){
+			mapLoader();
+		}
 
 	} else {
 		$('.nav-tabs a:first').tab('show');
@@ -498,18 +498,18 @@ $(document).ready(function(){
 	});
 
 
-	$('body').click(function(event){
+$('body').click(function(event){
 
-		if(langmenuOpen){
-			$('#langMenuOptions').hide();
-			$('#langMenuOptionsOpen').find('i.entypo-chevron-up').removeClass('entypo-chevron-up').addClass('entypo-chevron-down');
-			langmenuOpen = false;
-		}
-		if(socialIconsMenu){
-			$('#socialIcons').find('span').html('&#59228;');
-			$('#socialIconsMenu').hide();
-			socialIconsMenu = false;
-		}
+	if(langmenuOpen){
+		$('#langMenuOptions').hide();
+		$('#langMenuOptionsOpen').find('i.entypo-chevron-up').removeClass('entypo-chevron-up').addClass('entypo-chevron-down');
+		langmenuOpen = false;
+	}
+	if(socialIconsMenu){
+		$('#socialIcons').find('span').html('&#59228;');
+		$('#socialIconsMenu').hide();
+		socialIconsMenu = false;
+	}
 		// if(navBarShare){
 		// 	if (!$(event.target).parents('[for=navBarFavorites]').length) {
 		// 		$('#navBar #shareContent').hide();
@@ -522,20 +522,20 @@ $(document).ready(function(){
 
 
 
-	$('a').live('click',function(){
-		if($(this).attr('href') == '#'){
-			return false;
-		}
-	});
+$('a').live('click',function(){
+	if($(this).attr('href') == '#'){
+		return false;
+	}
+});
 
 
-	$('button[type=submit]').click(function(){
-		$(this).addClass('active');
-	})
+$('button[type=submit]').click(function(){
+	$(this).addClass('active');
+})
 
-	$('.pricePhrase').pricePhrase();
+$('.pricePhrase').pricePhrase();
 
-	_selectSetSelectedValue();
+_selectSetSelectedValue();
 
 });
 
@@ -574,11 +574,11 @@ function _selectSetSelectedValue(){
 
 			switch($(this).prop('tagName')){
 				case 'SELECT':					
-					dataSelector = 'data-selected';
-					break;				
+				dataSelector = 'data-selected';
+				break;				
 				case 'INPUT':
-					dataSelector = 'data-'+$(this).attr('name')+'-name';
-					break;
+				dataSelector = 'data-'+$(this).attr('name')+'-name';
+				break;
 
 			}
 

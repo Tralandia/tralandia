@@ -32,8 +32,8 @@
 			var $self = $(this);
 
 			var current = $self.find('#phraseLanguage').val();
-				current = '#'+current+'_phrase';
-				$(current).removeClass('hide');
+			current = '#'+current+'_phrase';
+			$(current).removeClass('hide');
 			//console.log(current);
 
 			$self.find('#phraseLanguage').on('change',function(){
@@ -44,7 +44,7 @@
 					$('#phraseTranslateCurrent').html($('#phraseLanguage option:selected').text());
 					$self.find('.phrasecontrol').addClass('hide');
 					$(visibleID).removeClass('hide');
-			});
+				});
 
 		});
 	};
@@ -91,7 +91,7 @@
 
 					var currentVal = $(this).val();
 					var forId = '#'+$(this).attr('rel');
-						
+					
 					$(this).find('option').each(function(i){
 						
 						if(currentVal == $(this).val()){
@@ -145,11 +145,11 @@
 	$.mapControl.ajax = function(url,data,callback){
 
 		$.ajax({
-			  type: "POST",
-			  url: url,
-			  data: data,
-			  dataType: 'json',
-			}).done(callback);
+			type: "POST",
+			url: url,
+			data: data,
+			dataType: 'json',
+		}).done(callback);
 
 
 		console.log(data);
@@ -193,7 +193,7 @@
 				
 				$input = $($("[name='"+k+"']"));
 				$input.val(v.value);
-	
+				
 				if(v.message){
 					$.mapControl.addError($input,v.message);
 				}
@@ -206,7 +206,7 @@
 	// js validation client site with Nette validator
 	// using after send ajax request
 	$.mapControl.validateInputs = function(p){
-	
+		
 		var o = {
 			valid : true,
 			data: {}
@@ -253,7 +253,7 @@
 			var $inputLat = $self.find('input.latitude');
 			var $inputLng = $self.find('input.longitude');
 
-            var zoom = parseInt($mapDiv.attr('data-zoom')) || 12;
+			var zoom = parseInt($mapDiv.attr('data-zoom')) || 12;
 
 
 
@@ -273,10 +273,10 @@
 
 				var myLatlng = new google.maps.LatLng(lat,lng);
 				var mapOptions = {
-				  zoom: zoom,
-				  scrollwheel: false,
-				  center: myLatlng,
-				  mapTypeId: google.maps.MapTypeId.ROADMAP
+					zoom: zoom,
+					scrollwheel: false,
+					center: myLatlng,
+					mapTypeId: google.maps.MapTypeId.ROADMAP
 				}
 				var map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
 
@@ -285,29 +285,29 @@
 					map: map
 				});
 
-			  google.maps.event.addListener(map, 'click', function(event) {
-				
-				$.mapControl.call();
+				google.maps.event.addListener(map, 'click', function(event) {
+					
+					$.mapControl.call();
 
-				  marker.setPosition(event.latLng);
+					marker.setPosition(event.latLng);
 
-				  var lat = event.latLng.gb;
-				  var lng = event.latLng.hb;
-				  $inputLat.val(lat);
-				  $inputLng.val(lng);
-				  
+					var lat = event.latLng.gb;
+					var lng = event.latLng.hb;
+					$inputLat.val(lat);
+					$inputLng.val(lng);
+					
 
-				  $('#gps_position').html(lat+' '+lng);
+					$('#gps_position').html(lat+' '+lng);
 				  //map.setCenter(event.latLng);
 
 
-					v = $.mapControl.validateInputs($self);
-					
-					
+				  v = $.mapControl.validateInputs($self);
+				  
+				  
 					// send data
-						
-					$.mapControl.ajax(requestUrl,v.data , function(data){
 					
+					$.mapControl.ajax(requestUrl,v.data , function(data){
+						
 						if(!data.status){
 							$.mapControl.responseValidation(data);
 							
@@ -317,7 +317,7 @@
 					});
 					
 
-			  });  
+				});  
 
 
 
@@ -336,19 +336,19 @@
 								$.mapControl.responseValidation(data);
 								
 								var newPosition = new google.maps.LatLng(data.gps.lat,data.gps.lng);
-									marker.setPosition(newPosition);
+								marker.setPosition(newPosition);
 							}
 						});
 					}
-			
+					
 					return false;
 				});
-		  
+				
 
 
-		});
-	};
-	
+			});
+};
+
 })(jQuery);
 
 
@@ -399,7 +399,7 @@
 	};	
 
 	$.calendarEdit.removeDate = function(d,$elem){
-	
+		
 		var p = $.calendarEdit.conteiner.indexOf(d);
 
 		$.calendarEdit.conteiner.splice(p,1);
@@ -425,68 +425,68 @@
 
 				var calendar = this;
 				var $calendar = $(this);
-								
-					$calendar.find('.day.active').click(function(){
-						
-						var currentTime = $(this).attr('data-date');
-						
-						if(!$(this).hasClass('selected')){
+				
+				$calendar.find('.day.active').click(function(){
+					
+					var currentTime = $(this).attr('data-date');
+					
+					if(!$(this).hasClass('selected')){
 
-							$(this).addClass('selected');
-													
-							$.calendarEdit.addDate(currentTime,$input);
+						$(this).addClass('selected');
+						
+						$.calendarEdit.addDate(currentTime,$input);
 
-						} else {
-							$(this).removeClass('selected');
-							
-							$.calendarEdit.removeDate(currentTime,$input);
-							
+					} else {
+						$(this).removeClass('selected');
+						
+						$.calendarEdit.removeDate(currentTime,$input);
+						
+					}
+
+					var statusClass = {
+						first: 'status01',
+						last: 'status10',
+						middle: 'status11'
+					}
+
+					var stats = 0 ;
+
+					$calendar.find('.day.active').each(function(ii){
+
+						$(this).removeClass(statusClass.last);
+						$(this).removeClass(statusClass.middle);
+						$(this).removeClass(statusClass.first);                            
+
+						if($(this).hasClass('selected') && stats == 0 ){
+							$(this).addClass(statusClass.first);
+
+							stats = 1;
 						}
 
-						var statusClass = {
-							first: 'status01',
-							last: 'status10',
-							middle: 'status11'
+						else if($(this).hasClass('selected') && (stats == 1 || stats == 2) ){
+							$(this).addClass(statusClass.middle);
+							
+							stats = 2;
 						}
 
-						var stats = 0 ;
+						else if(!$(this).hasClass('selected') && (stats == 2 || stats == 1) ){
+							$(this).addClass(statusClass.last);
+							
+							stats = 0;
+						}
 
-						$calendar.find('.day.active').each(function(ii){
+					});
 
-							$(this).removeClass(statusClass.last);
-							$(this).removeClass(statusClass.middle);
-							$(this).removeClass(statusClass.first);                            
+					return false;
+					
+				});			   
 
-							if($(this).hasClass('selected') && stats == 0 ){
-								$(this).addClass(statusClass.first);
-
-								stats = 1;
-							}
-
-							else if($(this).hasClass('selected') && (stats == 1 || stats == 2) ){
-								$(this).addClass(statusClass.middle);
-						  
-								stats = 2;
-							}
-
-							else if(!$(this).hasClass('selected') && (stats == 2 || stats == 1) ){
-								$(this).addClass(statusClass.last);
-							   
-								stats = 0;
-							}
-
-						});
-
-						return false;
-						
-					});			   
-
-			});
+});
 
 
-		});
-	};
-	
+});
+};
+
 })(jQuery);
 
 
@@ -582,13 +582,13 @@
 					id: $el.parent().attr('data-id')
 				}
 
-			  	$el.parent().fadeOut(
-			  		150,
-			  		function(){
-			  			$(this).remove();
-			  			$.galleryControl.saveSortableValues($sortInput,$listGallery);
-			  		}
-			  	);					
+				$el.parent().fadeOut(
+					150,
+					function(){
+						$(this).remove();
+						$.galleryControl.saveSortableValues($sortInput,$listGallery);
+					}
+					);					
 				
 				return false;
 			});
@@ -596,9 +596,9 @@
 
 			// sort images function
 			$listGallery.sortable({
-			  stop: function( event, ui ) {
-			  	$.galleryControl.saveSortableValues($sortInput,$listGallery);
-			  }
+				stop: function( event, ui ) {
+					$.galleryControl.saveSortableValues($sortInput,$listGallery);
+				}
 			});
 			$listGallery.disableSelection();
 
@@ -635,9 +635,9 @@
 						
 						if(index == 0){
 							$(this).attr({
-									class: 'ui-state-default',
-									'data-id': data.result[0].id
-								}).html('<img src="'+data.result[0].path+'" /><a href="#" class="remove"></a>');
+								class: 'ui-state-default',
+								'data-id': data.result[0].id
+							}).html('<img src="'+data.result[0].path+'" /><a href="#" class="remove"></a>');
 						} else {
 							return false;
 						}
@@ -652,8 +652,8 @@
 
 
 		});
-	};
-	
+};
+
 })(jQuery);
 
 
@@ -663,150 +663,150 @@
 
 
 (function($){
-    $.formMapControl = function(el, options){
+	$.formMapControl = function(el, options){
 
-        var base = this;
+		var base = this;
 
-        base.$el = $(el);
-        base.el = el;
+		base.$el = $(el);
+		base.el = el;
 
-        base.$el.data("formMapControl", base);
-        
-        base.init = function(){
-            
-            base.options = $.extend({},$.formMapControl.defaultOptions, options);
-
-        };
-        
-        base.init();
-    };
-    
-    $.formMapControl.defaultOptions = {        
-
-    };
-    
-    $.formMapControl.lazyLoadScript = function(url, callback) {
-
-        var script = document.createElement("script")
-        script.type = "text/javascript";
-
-        if (script.readyState) { //IE
-            script.onreadystatechange = function () {
-                if (script.readyState == "loaded" || script.readyState == "complete") {
-                    script.onreadystatechange = null;
-                    callback();
-                }
-            };
-        } else { //Others
-            script.onload = function () {
-                callback();
-            };
-        }
-
-        script.src = url;
-        document.getElementsByTagName("head")[0].appendChild(script);
-    }
-
-
-    $.fn.formMapControl = function( options){
-        return this.each(function(){
-            (new $.formMapControl(this,options));
-            
-
-        var lat = $('#map_canvas').attr('data-latitude'),
-        	lng = $('#map_canvas').attr('data-longitude'),
-        	latlng = new google.maps.LatLng(lat, lng),
-        	image = 'http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png',
-        	zoom = $('#map_canvas').attr('data-zoom') || 12;
-
-        	
-        var mapOptions = {
-          center: latlng,
-          zoom: parseInt(zoom),
-          scrollwheel: false,
-          mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
-        
-        var map = new google.maps.Map(document.getElementById('map_canvas'),
-          mapOptions);
-
-        var input = document.getElementById('frm-registrationForm-rental-address-address');
-        var autocomplete = new google.maps.places.Autocomplete(input);
-
-        autocomplete.bindTo('bounds', map);
-
-        var infowindow = new google.maps.InfoWindow();
-
-        var marker = false; 
-
-        if(parseInt($('#map_canvas').attr('data-show-marker')) == 1){
-
-	        marker = new google.maps.Marker({
-	          map: map,
-	          position:latlng
-	        });       
-	
-        } 
-		google.maps.event.addListener(map, 'click', function(event) {
+		base.$el.data("formMapControl", base);
+		
+		base.init = function(){
 			
-			if(marker){
-				marker.setPosition(event.latLng);
-			} else {
-		        marker = new google.maps.Marker({
-		          map: map,
-		          position:event.latLng
-		        }); 				
+			base.options = $.extend({},$.formMapControl.defaultOptions, options);
+
+		};
+		
+		base.init();
+	};
+	
+	$.formMapControl.defaultOptions = {        
+
+	};
+	
+	$.formMapControl.lazyLoadScript = function(url, callback) {
+
+		var script = document.createElement("script")
+		script.type = "text/javascript";
+
+		if (script.readyState) { //IE
+			script.onreadystatechange = function () {
+				if (script.readyState == "loaded" || script.readyState == "complete") {
+					script.onreadystatechange = null;
+					callback();
+				}
+			};
+		} else { //Others
+			script.onload = function () {
+				callback();
+			};
+		}
+
+		script.src = url;
+		document.getElementsByTagName("head")[0].appendChild(script);
+	}
+
+
+	$.fn.formMapControl = function( options){
+		return this.each(function(){
+			(new $.formMapControl(this,options));
+			
+
+			var lat = $('#map_canvas').attr('data-latitude'),
+			lng = $('#map_canvas').attr('data-longitude'),
+			latlng = new google.maps.LatLng(lat, lng),
+			image = 'http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png',
+			zoom = $('#map_canvas').attr('data-zoom') || 12;
+
+			
+			var mapOptions = {
+				center: latlng,
+				zoom: parseInt(zoom),
+				scrollwheel: false,
+				mapTypeId: google.maps.MapTypeId.ROADMAP
+			};
+			
+			var map = new google.maps.Map(document.getElementById('map_canvas'),
+				mapOptions);
+
+			var input = $('.rentalAutocompleteAddress').get(0);
+				currentId = '#'+$('.rentalAutocompleteAddress').attr('id');
+				// console.log(currentId);
+
+
+			var autocomplete = new google.maps.places.Autocomplete(input);
+
+			autocomplete.bindTo('bounds', map);
+
+			var infowindow = new google.maps.InfoWindow();
+
+			var marker = false; 
+
+			if(parseInt($('#map_canvas').attr('data-show-marker')) == 1){
+
+				marker = new google.maps.Marker({
+					map: map,
+					position:latlng
+				});       
+				
 			}
-				 
+			
+			google.maps.event.addListener(map, 'click', function(event) {
+				
+				if(marker){
+					marker.setPosition(event.latLng);
+				} else {
+					marker = new google.maps.Marker({
+						map: map,
+						position:event.latLng
+					}); 				
+				}
+				
 			// set geocoder
-        	var geocoder = new google.maps.Geocoder();
-        	geocoder.geocode({ 'latLng': event.latLng} , function(r, status){
-        		if(status == 'OK'){
-
-        			$('#frm-registrationForm-rental-address-address').val(r[0].formatted_address);
-
-        		} else {
-        			alert('address error');
-        		}
-        	});
+			var geocoder = new google.maps.Geocoder();
+			geocoder.geocode({ 'latLng': event.latLng} , function(r, status){
+				if(status == 'OK'){
+					$(currentId).val(r[0].formatted_address);
+				} else {
+					alert('address error');
+				}
+			});
 
 		});
 
-        google.maps.event.addListener(autocomplete, 'place_changed', function() {
-          infowindow.close();
-          // marker.setVisible(false);
-          input.className = '';
-          var place = autocomplete.getPlace();
-          if (!place.geometry) {
-            input.className = 'notfound';
-            return;
-          }
+			google.maps.event.addListener(autocomplete, 'place_changed', function() {
+				infowindow.close();
+		  // marker.setVisible(false);
+		  input.className = '';
+		  var place = autocomplete.getPlace();
+		  if (!place.geometry) {
+			input.className = 'notfound';
+			return;
+		  }
 
-          if (place.geometry.viewport) {
-            map.fitBounds(place.geometry.viewport);
-          } else {
-            map.setCenter(place.geometry.location);
-            map.setZoom(17);  
-          }
+		  if (place.geometry.viewport) {
+			map.fitBounds(place.geometry.viewport);
+		  } else {
+			map.setCenter(place.geometry.location);
+			map.setZoom(17);  
+		  }
 
-			if(marker){
-				marker.setPosition(place.geometry.location);
-			} else {
-		        marker = new google.maps.Marker({
-		          map: map,
-		          position:place.geometry.location
-		        }); 				
-			}
+		  if(marker){
+			marker.setPosition(place.geometry.location);
+		  } else {
+			marker = new google.maps.Marker({
+				map: map,
+				position:place.geometry.location
+			}); 				
+		  }
+		  
+	  });
 
-          // marker.setPosition(place.geometry.location);
-          // marker.setVisible(true);
-          
-        });
+			return false;
+		});
+};
 
-        return false;
-        });
-    };
-    
 })(jQuery);
 
 
@@ -820,22 +820,21 @@ maps.mapInit = function(){
 $(function() {
 
 	$('form:not(.allowEnterSubmit) input').keypress(function(e) {
-	    if(e.which == 13) {
-	        return false;
-	    }
+		if(e.which == 13) {
+			return false;
+		}
 	});
 
 	$('.mapControl').appear();
 	$(document.body).on('appear', '.mapControl', function(e, $affected) {
-		if(typeof $('body').attr('data-googleMapinit') == 'undefined' ){
+		if(typeof $('body').attr('data-google-map-init') == 'undefined' ){
 			var lang = $('html').attr('lang');
 			var script = document.createElement("script"); 
 			script.src = "https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places&callback=maps.mapInit&language="+lang; 
 			document.body.appendChild(script); 
-			$('body').attr('data-googleMapinit',true);  
+			$('body').attr('data-google-map-init',true);  
 		}
 	});
-		
+	
 
 });
-      
