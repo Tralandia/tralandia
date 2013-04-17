@@ -8,16 +8,9 @@ use Nette;
 use Nette\Application\Routers\Route;
 
 
-class OwnerRouteList extends Nette\Application\Routers\RouteList
+class OwnerRouteList extends BaseRoute
 {
 
-	const AUTOLOGIN = 'l';
-
-	const PARAM_LANGUAGE = 'language';
-	const PARAM_PRIMARY_LOCATION = 'primaryLocation';
-
-	protected $languageRepositoryAccessor;
-	protected $locationRepositoryAccessor;
 
 	public function __construct($languageRepositoryAccessor, $locationRepositoryAccessor)
 	{
@@ -25,7 +18,7 @@ class OwnerRouteList extends Nette\Application\Routers\RouteList
 		$this->locationRepositoryAccessor = $locationRepositoryAccessor;
 		parent::__construct('Owner');
 
-		$this[] = new Route('//<language ([a-z]{2}|www)>.<primaryLocation [a-z]{2,3}>.%domain%/owner/<presenter>[/<action>[/<id>]]', array(
+		$this[] = new Route('', array(
 			self::PARAM_PRIMARY_LOCATION => 'sk',
 			self::PARAM_LANGUAGE => 'www',
 		));

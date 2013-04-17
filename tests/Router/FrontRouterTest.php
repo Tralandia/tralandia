@@ -9,24 +9,23 @@ use Nette, Extras;
  */
 class FrontRouterTest extends BaseRouterTest
 {
-	public $frontRouteFactory;
+	public $route;
 
 	protected function setUp() {
-		$this->frontRouteFactory = $this->getContext()->frontRouteFactory;
+		$this->route = $this->getContext()->frontRouteFactory->create();
 	}
 
 	public function testCompiler() {
-		$route = $this->frontRouteFactory->create();
+		$route = $this->route;
 
 		//$this->routeIn($route, 'http://www.sk.tra.com/front/invoices/forms', NULL);
 		//$this->routeIn($route, 'http://www.sk.tra.com/ticket', NULL);
 
-		$this->routeIn($route, 'http://sk.com.tra.com/alabama/registracia', 'Registration', array(
+		$this->routeIn($route, 'http://www.com.tra.com/', 'RootHome', array(
 			'action' => 'default',
-			'primaryLocation' => $this->findLocation(269),
-			'language' => $this->findLanguage(144),
-			'page' => $this->findPage(1),
-		), 'http://sk.com.tra.com/registracia');
+			'primaryLocation' => $this->findLocation(1),
+			'language' => $this->findLanguage(38),
+		));
 
 		$this->routeIn($route, 'http://www.com.tra.com/contacts', 'Contact', array(
 			'action' => 'default',
@@ -35,10 +34,11 @@ class FrontRouterTest extends BaseRouterTest
 			'page' => $this->findPage(2),
 		));
 
-		$this->routeIn($route, 'http://www.com.tra.com/', 'RootHome', array(
+		$this->routeIn($route, 'http://sk.usal.tra.com/registracia', 'Registration', array(
 			'action' => 'default',
-			'primaryLocation' => $this->findLocation(1),
-			'language' => $this->findLanguage(38),
+			'primaryLocation' => $this->findLocation(269),
+			'language' => $this->findLanguage(144),
+			'page' => $this->findPage(1),
 		));
 
 		$this->routeIn($route, 'http://www.com.tra.com/registration', 'Registration', array(
@@ -102,31 +102,6 @@ class FrontRouterTest extends BaseRouterTest
 //		), 'http://www.sk.tra.com/pozicovna');
 
 
-	}
-
-	public function findLocation($id)
-	{
-		return $this->getEm()->getRepository(LOCATION_ENTITY)->find($id);
-	}
-
-	public function findLanguage($id)
-	{
-		return $this->getEm()->getRepository(LANGUAGE_ENTITY)->find($id);
-	}
-
-	public function findPage($id)
-	{
-		return $this->getEm()->getRepository(PAGE_ENTITY)->find($id);
-	}
-
-	public function findRental($id)
-	{
-		return $this->getEm()->getRepository(RENTAL_ENTITY)->find($id);
-	}
-
-	public function findRentalType($id)
-	{
-		return $this->getEm()->getRepository(RENTAL_TYPE_ENTITY)->find($id);
 	}
 
 }

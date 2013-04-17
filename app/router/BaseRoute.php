@@ -10,6 +10,7 @@ use Repository\Location\LocationRepository;
 class BaseRoute extends Nette\Object implements Nette\Application\IRouter
 {
 
+	const AUTOLOGIN = 'l';
 	const LANGUAGE = 'language';
 	const PRIMARY_LOCATION = 'primaryLocation';
 	const USE_ROOT_DOMAIN = 'useRootDomain';
@@ -116,11 +117,14 @@ class BaseRoute extends Nette\Object implements Nette\Application\IRouter
 	 */
 	public function filterIn(array $params)
 	{
-		$primaryLocationIso = $params[self::PRIMARY_LOCATION];
-		if(is_scalar($primaryLocationIso)) {
-			$primaryLocation = $this->locationRepository->findOneByIso($primaryLocationIso);
-			$params[self::PRIMARY_LOCATION] = $primaryLocation;
+		$primaryLocation = $params[self::PRIMARY_LOCATION];
+
+		if($params[self::PRIMARY_LOCATION] == self::ROOT_DOMAIN) {
+			$params[self::PRIMARY_LOCATION] = self::ROOT_DOMAIN;
 		}
+
+		$primaryLocation = $this->locationRepository->findOneByIso($primaryLocation);
+		$params[self::PRIMARY_LOCATION] = $primaryLocation;
 
 		$languageIso = $params[self::LANGUAGE];
 		$language = $languageIso == 'www' ? $params[self::PRIMARY_LOCATION]->defaultLanguage : $this->languageRepository->findOneByIso($languageIso);
@@ -138,17 +142,7 @@ class BaseRoute extends Nette\Object implements Nette\Application\IRouter
 	{
 		/** @var $primaryLocation \Entity\Location\Location */
 		$primaryLocation = $params[self::PRIMARY_LOCATION];
-
-		$parent = $primaryLocation->getParent();
-		if($parent && in_array($parent->getId(), [9, 10, 11])) {
-			$params[self::USE_ROOT_DOMAIN] = TRUE;
-			$params[self::PRIMARY_LOCATION] = $primaryLocation->getSlug();
-		} else if($primaryLocation->getSlug() == self::ROOT_LOCATION_SLUG) {
-			$params[self::USE_ROOT_DOMAIN] = TRUE;
-			$params[self::PRIMARY_LOCATION] = self::ROOT_DOMAIN;
-		} else {
-			$params[self::PRIMARY_LOCATION] = $primaryLocation->getIso();
-		}
+		$params[self::PRIMARY_LOCATION] = $primaryLocation->getIso();
 
 
 		$language = $params[self::LANGUAGE];
