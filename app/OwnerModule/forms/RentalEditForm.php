@@ -65,6 +65,12 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 
 
 	/**
+	 * @var \Repository\Rental\AmenityRepository
+	 */
+	protected $amenityRepository;
+
+
+	/**
 	 * @param \Entity\Rental\Rental $rental
 	 * @param \Environment\Environment $environment
 	 * @param IRentalContainerFactory $rentalContainerFactory
@@ -84,6 +90,7 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 		$this->languageRepository = $em->getRepository(LANGUAGE_ENTITY);
 		$this->userRepository = $em->getRepository(USER_ENTITY);
 		$this->interviewQuestionRepository = $em->getRepository(INTERVIEW_QUESTION_ENTITY);
+		$this->amenityRepository = $em->getRepository(RENTAL_AMENITY_ENTITY);
 		parent::__construct($translator);
 	}
 
@@ -100,17 +107,23 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 //	        //->addRule(Form::MAX_LENGTH, 'o100101', 70);
 //			;
 //
-		$this->addPhoneContainer('phone', 'o10899', $phonePrefixes);
+		$rental = $this->rental;
+		$rentalContainer = $this->rentalContainerFactory->create($this->environment, $this->rental);
+		$this['rental'] = $rentalContainer;
+
+		$rentalContainer->addRentalPriceListContainer('priceList');
+		$rentalContainer->addRentalPriceUploadContainer('priceUpload', $rental);
+
+		$rentalContainer->addPhoneContainer('phone', 'o10899', $phonePrefixes);
 
 
-		$this->addText('url', 'o977')
+		$rentalContainer->addText('url', 'o977')
 			->setOption('help', $this->translate('o978'))
 			->setOption('prepend', 'http://')
 			->addRule(self::URL, $this->translate('o100102'));
 		;
 
-		$rentalContainer = $this->rentalContainerFactory->create($this->environment, $this->rental);
-		$this['rental'] = $rentalContainer;
+
 
 		$currency = $this->country->getDefaultCurrency();
 		$rentalContainer->addText('price', 'o100078')
@@ -122,7 +135,7 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 		$languages = array();
 
 		foreach($supportedLanguagesForSelect as $language){
-			$languages[$language->getIso()] = $this->translate($language->getName()); 
+			$languages[$language->getIso()] = $this->translate($language->getName());
 		}
 
 		$rentalContainer->addSelect('translationLanguage', '##', $languages);
@@ -144,6 +157,57 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 			}
 		}
 
+		$rentalContainer->addText('bedroomCount', '#bedroomCount');
+
+		$rentalContainer->addText('roomsLayout', '#rooms layout');
+
+		$amenities = $this->amenityRepository->findByChildrenTypeForSelect($this->getTranslator(), $this->collator);
+		$rentalContainer->addMultiOptionList('children', '#children', $amenities)
+			->addRule(self::FILLED, $this->translate('o100109'));
+
+		$amenities = $this->amenityRepository->findByActivityTypeForSelect($this->getTranslator(), $this->collator);
+		$rentalContainer->addMultiOptionList('activity', '#activity', $amenities)
+			->addRule(self::FILLED, $this->translate('o100109'));
+
+		$amenities = $this->amenityRepository->findByRelaxTypeForSelect($this->getTranslator(), $this->collator);
+		$rentalContainer->addMultiOptionList('relax', '#relax', $amenities)
+			->addRule(self::FILLED, $this->translate('o100109'));
+
+		$amenities = $this->amenityRepository->findByServiceTypeForSelect($this->getTranslator(), $this->collator);
+		$rentalContainer->addMultiOptionList('service', '#service', $amenities)
+			->addRule(self::FILLED, $this->translate('o100109'));
+
+		$amenities = $this->amenityRepository->findByWellnessTypeForSelect($this->getTranslator(), $this->collator);
+		$rentalContainer->addMultiOptionList('wellness', '#wellness', $amenities)
+			->addRule(self::FILLED, $this->translate('o100109'));
+
+		$amenities = $this->amenityRepository->findByCongressTypeForSelect($this->getTranslator(), $this->collator);
+		$rentalContainer->addMultiOptionList('congress', '#congress', $amenities)
+			->addRule(self::FILLED, $this->translate('o100109'));
+
+		$amenities = $this->amenityRepository->findByKitchenTypeForSelect($this->getTranslator(), $this->collator);
+		$rentalContainer->addMultiOptionList('kitchen', '#kitchen', $amenities)
+			->addRule(self::FILLED, $this->translate('o100109'));
+
+		$amenities = $this->amenityRepository->findByBathroomTypeForSelect($this->getTranslator(), $this->collator);
+		$rentalContainer->addMultiOptionList('bathroom', '#bathroom', $amenities)
+			->addRule(self::FILLED, $this->translate('o100109'));
+
+		$amenities = $this->amenityRepository->findByHeatingTypeForSelect($this->getTranslator(), $this->collator);
+		$rentalContainer->addMultiOptionList('heating', '#heating', $amenities)
+			->addRule(self::FILLED, $this->translate('o100109'));
+
+		$amenities = $this->amenityRepository->findByParkingTypeForSelect($this->getTranslator(), $this->collator);
+		$rentalContainer->addMultiOptionList('parking', '#parking', $amenities)
+			->addRule(self::FILLED, $this->translate('o100109'));
+
+		$amenities = $this->amenityRepository->findByRoomTypeForSelect($this->getTranslator(), $this->collator);
+		$rentalContainer->addMultiOptionList('room', '#room', $amenities)
+			->addRule(self::FILLED, $this->translate('o100109'));
+
+		$amenities = $this->amenityRepository->findByOtherTypeForSelect($this->getTranslator(), $this->collator);
+		$rentalContainer->addMultiOptionList('other', '#other', $amenities)
+			->addRule(self::FILLED, $this->translate('o100109'));
 
 		$this->addSubmit('submit', 'o100083');
 

@@ -51,6 +51,96 @@ class AmenityRepository extends \Repository\BaseRepository
 	}
 
 
+	public function findByChildrenTypeForSelect(ITranslator $translator)
+	{
+		return $this->findByTypeForSortBySortingSelect('children', $translator);
+	}
+
+
+	public function findByActivityTypeForSelect(ITranslator $translator)
+	{
+		return $this->findByTypeForSortBySortingSelect('activity', $translator);
+	}
+
+
+	public function findByRelaxTypeForSelect(ITranslator $translator)
+	{
+		return $this->findByTypeForSortBySortingSelect('relax', $translator);
+	}
+
+
+	public function findByServiceTypeForSelect(ITranslator $translator)
+	{
+		return $this->findByTypeForSortBySortingSelect('service', $translator);
+	}
+
+
+	public function findByWellnessTypeForSelect(ITranslator $translator)
+	{
+		return $this->findByTypeForSortBySortingSelect('wellness', $translator);
+	}
+
+
+	public function findByCongressTypeForSelect(ITranslator $translator)
+	{
+		return $this->findByTypeForSortBySortingSelect('congress', $translator);
+	}
+
+
+	public function findByKitchenTypeForSelect(ITranslator $translator)
+	{
+		return $this->findByTypeForSortBySortingSelect('kitchen', $translator);
+	}
+
+
+	public function findByBathroomTypeForSelect(ITranslator $translator)
+	{
+		return $this->findByTypeForSortBySortingSelect('bathroom', $translator);
+	}
+
+
+	public function findByRoomTypeForSelect(ITranslator $translator)
+	{
+		return $this->findByTypeForSortBySortingSelect('room', $translator);
+	}
+
+
+	public function findByHeatingTypeForSelect(ITranslator $translator)
+	{
+		return $this->findByTypeForSortBySortingSelect('heating', $translator);
+	}
+
+
+	public function findByParkingTypeForSelect(ITranslator $translator)
+	{
+		return $this->findByTypeForSortBySortingSelect('parking', $translator);
+	}
+
+
+	public function findByRoomTypeTypeForSelect(ITranslator $translator)
+	{
+		return $this->findByTypeForSortBySortingSelect('room-type', $translator);
+	}
+
+
+	public function findBySeparateGroupsTypeForSelect(ITranslator $translator)
+	{
+		return $this->findByTypeForSortBySortingSelect('separate-groups', $translator);
+	}
+
+
+	public function findByOtherTypeForSelect(ITranslator $translator)
+	{
+		return $this->findByTypeForSortBySortingSelect('other', $translator);
+	}
+
+
+	public function findByLocationTypeForSelect(ITranslator $translator)
+	{
+		return $this->findByTypeForSortBySortingSelect('location', $translator);
+	}
+
+
 	public function findByAvailabilityTypeForSelect(ITranslator $translator, Collator $collator)
 	{
 		return $this->findByTypeForSelect('owner-availability', $translator, $collator);

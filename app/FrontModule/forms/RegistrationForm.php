@@ -67,6 +67,10 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 	 */
 	protected $currencyRepository;
 
+	/**
+	 * @var \Repository\Rental\AmenityRepository
+	 */
+	protected $amenityRepository;
 
 	/**
 	 * @param Environment $environment
@@ -89,6 +93,7 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 		$this->languageRepository = $em->getRepository(LANGUAGE_ENTITY);
 		$this->userRepository = $em->getRepository(USER_ENTITY);
 		$this->currencyRepository = $em->getRepository(CURRENCY_ENTITY);
+		$this->amenityRepository = $em->getRepository(RENTAL_AMENITY_ENTITY);
 		parent::__construct($translator);
 	}
 
@@ -145,6 +150,10 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 			$currencies = $this->currencyRepository->getForSelect($this->translator, $this->collator);
 			$rentalContainer->addPriceContainer('price', 'o100078', $currencies);
 		}
+
+		$amenityImportant = $this->amenityRepository->findImportantForSelect($this->getTranslator(), $this->collator);
+		$rentalContainer->addMultiOptionList('important', 'o100081', $amenityImportant)//->setOption('help', $this->translate('o5956'))
+		;
 
 
 		$this->addSubmit('submit', 'o1099');
