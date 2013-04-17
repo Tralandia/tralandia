@@ -78,6 +78,21 @@ FormContainer::extensionMethod('addRentalPhotosContainer',
 		return $container[$name] = new \Extras\Forms\Container\RentalPhotosContainer($rental, $imageManager, $imageRepository);
 });
 
+FormContainer::extensionMethod('addRentalPriceUploadContainer',
+	function (FormContainer $container, $name, $rental = NULL) use ($dic) {
+		$manager = $dic->getService('rentalPriceListManager');
+		$repository = $dic->getService('rentalPricelistRepositoryAccessor')->get();
+		return $container[$name] = new \Extras\Forms\Container\RentalPriceUploadContainer($rental, $manager, $repository);
+});
+
+FormContainer::extensionMethod('addRentalPriceListContainer',
+	function (FormContainer $container, $name, $rental = NULL) use ($dic) {
+		$em = $dic->getService('model');
+		$translator = $dic->getService('translator');
+		$collator = $dic->getService('environment')->getLocale()->getCollator();
+		return $container[$name] = new \Extras\Forms\Container\RentalPriceListContainer($em, $translator, $collator);
+});
+
 FormContainer::extensionMethod('addAddressContainer',
 	function (FormContainer $container, $name, $addressOrLocation) use ($dic) {
 		$addressCreator = $dic->getService('addressCreator');

@@ -1,7 +1,12 @@
 	{define #opentag}
 	{default $class = ''}
 	{default $dataLink = ''}
-	<tr data-link="{$dataLink}" n:class="$control->hasErrors() ? 'invalid '.$class : $class">
+	{if $control instanceof \Nette\Forms\Container}
+		{var $hasErrors = count($control->getAllErrors())}
+	{else}
+		{var $hasErrors = $control->hasErrors()}
+	{/if}
+	<tr data-link="{$dataLink}" n:class="$hasErrors ? 'invalid '.$class : $class">
 	{/define #opentag}
 	{*
 	Fieldset -------------------------------------------
@@ -299,7 +304,7 @@
 }
 {?unset($control)}
 
-{include #opentag , class => 'simpleInput ' , control => $mainControl}
+{include #opentag , class => 'simpleInput ' , control => $container}
 	<td>
 		{_$mainControl->caption}
 	</td>
@@ -336,7 +341,7 @@
 {plink validateAddress}
 {/capture}
 
-{include #opentag , class => 'mapControl' , dataLink => $datalink , control => $mainControl}
+{include #opentag , class => 'mapControl' , dataLink => $datalink , control => $container}
 
 	<td colspan="3">
 
@@ -521,7 +526,7 @@
 	$mainControl = $container->getMainControl()
 }
 {?unset($control)}
-{include #opentag , class => 'control-photo' , control => $mainControl}
+{include #opentag , class => 'control-photo' , control => $container}
 <!-- control photo start -->
 
 	<td colspan="3">
@@ -569,6 +574,94 @@
 
 </tr>
 {/define #rentalPhotos}
+
+
+{*
+	Rental Price List Container -------------------------------------------
+	@param $control \Extras\Forms\Container\RentalPriceUploadContainer
+*}
+{define #rentalPriceUpload}
+{var
+	$container = $control;
+	$mainControl = $container->getMainControl()
+}
+{?unset($control)}
+{include #opentag , class => '' , control => $container}
+<!-- control photo start -->
+
+	<td colspan="3">
+		<div class="row-fluid">
+
+			<div class="span12">
+
+				<div class="help">{include #controlErrors, errors => $mainControl->getErrors()}</div>
+
+				<ul id="sortable" class="ui-sortable" n:inner-foreach="$container->getPriceList() as $row">
+					<li data-id="{$row->getId()}" class="ui-state-default">
+						<span>{$row->getName()}</span>
+						<a href="#" class="remove">{_o100088}</a>
+					</li>
+				</ul>
+			</div>
+
+		</div>
+		<div class="row-fluid text">
+			<div class="span3">
+
+
+				<span class="btn btn-green fileinput-button">
+					<i class="entypo-upload"></i>
+					<span>{_o100087}</span>
+					{input $container['upload']}
+				</span>
+
+			</div>
+
+			<div class="span9">
+			<p>{_o100097}</p>
+			</div>
+
+		</div>
+	</td>
+
+
+
+
+	{*<input id="fileupload" type="file" name="files[]" data-url="server/php/" multiple="">*}
+
+	{input $container['sort']}
+
+</tr>
+{/define #rentalPriceUpload}
+
+
+{*
+	Rental Price List Container -------------------------------------------
+	@param $control \Extras\Forms\Container\RentalPriceUploadContainer
+*}
+{define #rentalPriceList}
+{var
+	$container = $control;
+	$mainControl = $container->getMainControl()
+}
+{?unset($control)}
+{include #opentag , class => '' , control => $container}
+<!-- control photo start -->
+
+	<td colspan="3">
+		{foreach $container->getComponents() as $component}
+			{input $component['roomCount']}
+			{input $component['roomType']}
+			{input $component['bedCount']}
+			{input $component['extraBedCount']}
+			{input $component['price']['amount']}
+			{input $component['price']['currency']}
+			<hr>
+		{/foreach}
+	</td>
+
+</tr>
+{/define #rentalPriceList}
 
 
 {*

@@ -117,10 +117,6 @@ class RentalContainer extends BaseContainer
 			->addRule(Form::FILLED, $this->translate('o100109'))//->setOption('help', $this->translate('o5956'))
 		;
 
-		$amenityImportant = $this->amenityRepository->findImportantForSelect($this->getTranslator(), $this->collator);
-		$this->addMultiOptionList('important', 'o100081', $amenityImportant)//->setOption('help', $this->translate('o5956'))
-		;
-
 		$amenityAvailability = $this->amenityRepository->findByAvailabilityTypeForSelect($this->getTranslator(), $this->collator);
 		$this->addSelect('ownerAvailability', 'o100082', $amenityAvailability)
 			->setPrompt('o854')

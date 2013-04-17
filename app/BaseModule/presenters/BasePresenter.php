@@ -129,11 +129,6 @@ abstract class BasePresenter extends Presenter {
 	public function beforeRender() {
 		parent::beforeRender();
 
-		$this->flashMessage('Microsoft a Nokia sa sťažujú EÚ na Android a Google', self::FLASH_ERROR);
-		$this->flashMessage('Slovákov na Google najviac zaujímalo, čo je láska a ACTA', self::FLASH_INFO);
-		$this->flashMessage('„Nie som fešák, ale hrám fér!“ -- Robert Fico', self::FLASH_SUCCESS);
-		$this->flashMessage('Predstavené Ubuntu pre smartphony, aj s klasickým desktopom');
-
 		$parameters = $this->getContext()->getParameters();
 		$this->template->staticPath = '/';
 		$this->template->setTranslator($this->getService('translator'));
