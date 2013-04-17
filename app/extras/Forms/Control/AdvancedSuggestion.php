@@ -32,7 +32,7 @@ class AdvancedSuggestion extends BaseControl {
 						->class($control->class)
 						->addClass('typeahead')
 						->addAttributes(array(
-							'data-serviceList' => $this->getOption('serviceList'),
+							'data-service-list' => $this->getOption('serviceList'),
 							'data-property' => $this->getOption('property'),
 							'data-language' => 0,
 							'data-default-id' => $value,

@@ -9,7 +9,7 @@ function initNavBarShare(linkToShare)
 
 	$('#dynamicShareContainer').html(html);
 	$('#clipboardLinkShare').val(linkToShare);
-	$('body').removeAttr('data-socialPluginsInit');
+	$('body').removeAttr('data-social-plugins-init');
 	// initAllSocialPlugins();
 }
 

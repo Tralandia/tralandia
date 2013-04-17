@@ -2,527 +2,527 @@
 	$rental        Entity\Rental\Rental
 	$rentalService Service\Rental\RentalService
 	$locality      Service\Seo\SeoService
- *}
+	*}
 
-{block content}
+	{block content}
 
 
-<div class="span12">
-<div class="sitePadding baseRadius baseBorder marginBottom overflow relative">
-<div id="content" class="nopadding">
+	<div class="span12">
+		<div class="sitePadding baseRadius baseBorder marginBottom overflow relative">
+			<div id="content" class="noPadding">
 
 
-<div class="row-fluid objectDetailContent">
-<div class="span4 marginBottom marginTop marginLeft leftSidebarObjectDetail">
-	{foreach $rental->getImages(3) as $photo}
-		{if $iterator->first}
-			<div class="imgFirst">
-		{/if}
-		<img alt="{_$rental->name} - {_o100008} {$iterator->getCounter()}" n:fakeImage=""/>
-		{if $iterator->first}
-			</div>
-		{/if}
-	{/foreach}
-
-	<div class="imgFirst">
-		<img alt="{_$rental->name} - {_o100008} 1" n:fakeImage=""/>
-	</div>
-	<img alt="{_$rental->name} - {_o100008} 2" n:fakeImage=""/>
-	<img alt="{_$rental->name} - {_o100008} 3" n:fakeImage=""/>
-
-	<img class="mapsImg"
-		 src="https://maps.googleapis.com/maps/api/staticmap?center={$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&markers=color:blue%7C{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&zoom=10&size=288x170&sensor=false"/>
-</div>
-
-<div class="span5">
-
-	<h1 class="addToViewList" id="{$rental->id}">
-		{_$rental->name}
-		{if $rental->classification > 0 }
-		&nbsp;<span class="clasification">{for $i = 0; $i < $rental->classification; $i++}<i class="entypo-star"></i>{/for}</span>
-		{/if}
-	</h1>
-
-	<p class="locality nopadding">
-		<a class="brown" href="{link RentalList: location => $rental->address->locality , rentalType => $rental->type }">
-			{_$rental->type->name|firstUpper}
-			{if $rental->hasPlacement()}{_$rental->getPlacement()->name}{/if}
-			{_$rental->address->locality->name , null , [case=>locative]}
-		</a>
-	</p>
-
-	{if $teaser || $firstAnswer}
-		<table class="teaser">
-			{if $teaser}
-				<tr>
-					<td class="icon">&#128227;</td>
-					<td class="content">{$teaser}</td>
-				</tr>
-			{/if}
-			{if $firstAnswer}
-				<tr>
-					<td class="firstAnswer" colspan="2">{$firstAnswer|firstUpper}</td>
-				</tr>
-			{/if}
-		</table>
-	{/if}
-
-
-	<table class="detailInfoBox">
-		<tr>
-			<td class="entypoIconUsers">
-				&#128101;
-			</td>
-			<td>
-				{_o100005} {$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}
-				<span>{if $rental->bedroomCount} ({$rental->bedroomCount} {_o100009,null,[count=>$rental->bedroomCount]}){/if}
-					{$rental->rooms}</span>
-
-				<div>{if $separateGroups}{_o100011}{else}{_o100010}{/if}</div>
-			</td>
-		</tr>
-	</table>
-
-
-	<div class="clearfix"></div>
-
-	{var $pricesAvailable = false}
-
-	{if count($rental->pricelistRows) > 0}
-		{var $pricesAvailable = true}
-		<ul class="detailPriceList">
-			<li><h3><i class="icon-money"></i> {_o100012} <span>{_o100007} <strong>{$rental->price|price}</strong> {_o100004}</span>
-				</h3>
-				<ul>
-
-					{foreach $rental->pricelistRows as $pricelistRow}
-						<li tooltip="true" title="{_o100040} {if $pricelistRow->roomType}{_$pricelistRow->roomType->name, null , [count => 1]}{/if}">
-							{$pricelistRow->roomCount} {if $pricelistRow->roomType}{_$pricelistRow->roomType->name, null , [count => $pricelistRow->roomCount]}{/if}
-							<span>
-							({$pricelistRow->bedCount} {_o100006 , null , [count => $pricelistRow->bedCount]}{if $pricelistRow->extraBedCount} + {$pricelistRow->extraBedCount} {_o100000 , null , [count => $pricelistRow->extraBedCount]}{/if})
-						</span>
-
-						<span class="price">
-							{$pricelistRow->price}
-						</span>
-						</li>
-					{/foreach}
-
-
-					{if count($rental->pricelists) > 0}
-						{var $pricesAvailable = true}
-						{foreach $rental->pricelists as $pricelist}
-							<li>
-								{if $pricelist->name} {$pricelist->name} {/if} {_$pricelist->language->name} <i
-										class="entypo-save"></i> <a href="{$pricelist->filePath}"
-																	class="btn btn-green btn-text-wrap btn-pricelist">{_o955}</a>
-							</li>
-						{/foreach}
-					{/if}
-
-				</ul>
-
-
-			</li>
-		</ul>
-	{/if}
-
-	{if !$pricesAvailable}
-		{if $rental->pricesUponRequest}
-			#len na dotaz
-		{else}
-			#Übytovatel neuvadza detailne ceny. Orientacna cena ubytovania je {$rental->price} Eur / osoba / noc"
-		{/if}
-	{/if}
-
-	<div class="clearfix"></div>
-
-	<div class="detailAmanities">
-		<ul class="objectDetailServicesIconList list">
-
-			{var $board = $rental->getAmenitiesByType(array('board'))}
-			{if $board}
-				<li class="board">
-					<strong>{_o1010}</strong>
-
-					<div class="content">
-						{foreach $board  as $amenities}
-							{foreach $amenities as $amenity}
-								{if $iterator->first}{_$amenity->name|firstUpper}{else}{_$amenity->name}{/if}{if !$iterator->last}, {/if}
-							{/foreach}
-						{/foreach}
-					</div>
-				</li>
-			{/if}
-
-
-			{if count($rental->amenities) > 0}
-				{var $importantAmenities = $rental->getImportantAmenitiesGroupByType()}
-				{var $notImportantAmenities = $rental->getNotImportantAmenitiesGroupByType()}
-				<li class="monitor">
-					<strong>{_o100013}</strong>
-
-					<div class="amenitiesStart">
-
-						{foreach $importantAmenities  as $amenities}
-								{foreach $amenities as $amenity}
-									{if $iterator->first}{_$amenity->name|firstUpper}{else}{_$amenity->name}{/if}{if !$iterator->last}, {/if}
-								{/foreach}
-						{/foreach}
-
-						{if $notImportantAmenities}
-						{dump $notImportantAmenities}
-
-
-						<a class="toggle showMoreAmenities" data-opentext="{_o100001}" data-closetext="{_o100014}"
-						   for="moreAmenities" href="#"><b>{_o100001}</b></a>
-						</div>
-
-						<div class="moreAmenities">
-
-								{foreach $notImportantAmenities  as $amenities}
-									{foreach $amenities as $amenity}
-										{_$amenity->name}
-									{/foreach}
-								{/foreach}
-
-						</div>
-						{/if}
-
-				</li>
-			{/if}
-
-			<div class="clearfix"></div>
-
-			{if $ownerAvailability}
-				<li class="bell">
-					<strong>{_$ownerAvailability->name}</strong>
-				</li>
-			{/if}
-
-			{if $rental->checkIn}
-				<li class="clock">
-					<strong>{_o1586} {$rental->checkIn}:00</strong>
-				</li>
-			{/if}
-
-			<div class="clearfix"></div>
-
-			{if $rental->checkOut}
-				<li class="clock">
-					<strong>{_o1588} {$rental->checkOut}:00</strong>
-				</li>
-			{/if}
-
-			<div class="clearfix"></div>
-
-			<li class="dog">
-				<strong>{if $animalsAllowed}{_o100018}{else}{_o100019}{/if}</strong>
-			</li>
-
-		</ul>
-	</div>
-</div>
-
-
-<!-- right sidebar -->
-<div class="span3 sidebarRightDetail">
-
-	{if $mainImage = $rental->getMainImage()}
-		<button class="marginTop btn btn-compare addToFavorites currentObject" rel="{$rental->id}" data-name="{_$rental->name}{if $rental->classification > 0 } {for $i = 0; $i < $rental->classification; $i++}~star~{/for}{/if}" data-thumb="{fakeImage}" data-location="{_$rental->address->locality->name}" data-price="{$rental->price}" data-capacity="{$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}" data-link="{link Rental:detail $rental}" data-thumb="{$basePath}{$mainImage|rentalImageSrc}"><span class="entypo-heart">{_o100140}</span></button>
-	{else}
-		<button class="marginTop btn btn-compare addToFavorites currentObject" rel="{$rental->id}" data-name="{_$rental->name}{if $rental->classification > 0 } {for $i = 0; $i < $rental->classification; $i++}~star~{/for}{/if}" data-thumb="{fakeImage}" data-location="{_$rental->address->locality->name}" data-price="{$rental->price}" data-capacity="{$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}" data-link="{link Rental:detail $rental}" data-thumb="http://www.tralandia.com/u/32/13539183882248.jpg"><span class="entypo-heart">{_o100140}</span></button>
-	{/if}
-
-	<div class="socialIconTable marginBottom marginTop socialIconsDetail socialPluginsInit">
-		<div class="socialBtnHeader">
-
-			<strong class="facebook">&#62220;</strong> <strong class="gplus">&#62223;</strong> <strong
-					class="twitter">&#62217;</strong> <strong class="pinterest">&#62226;</strong>
-		</div>
-		<div class="clearfix"></div>
-		<div class="socialBtnContent hide">
-
-			<a class="close"><i class="icon-remove-sign"></i></a>
-			<ul class="social-buttons">
-				<li>{$twitterShareTag}</li>
-				<li>{$googlePlusShareTag}</li>
-				<li>{$facebookShareTag}</li>
-				<li>{$pinterestShareTag}</li>
-			</ul>
-
-{*
-			<span class="facebookLikeButtonContainer" data-facebook-src="{link Rental:detail $rental}"></span>
-
-
-			<g:plusone size="medium" href="{link Rental:detail $rental}" style="margin-top:2px;"></g:plusone>
-
-			<a href="https://twitter.com/share" class="twitter-share-button" data-url="{link Rental:detail $rental}"
-			   data-via="Tralandia" data-text="{_$rental->name}" data-hashtags="{_o100034}"
-			   data-lang="{$currentLanguage->iso}">Tweet</a> *}
-{*
-			<a href="http://pinterest.com/pin/create/button/?url={link Rental:detail $rental}&media=&description={_$rental->name}"
-			   class="pin-it-button" count-layout="horizontal"></a> *}
-
-		</div>
-	</div>
-
-	<div class="sidebarContact">
-		<div class="sidebarTitle">{_o12275}</div>
-		<div class="sidebarInner paddingTop">
-
-			<table>
-				{if $rental->contactName}
-					<tr>
-						<td class="iconcover"><i class="entypo-contact"></i></td>
-						<td>
-							<strong>{$rental->contactName}</strong>
-						</td>
-					</tr>
-				{/if}
-
-
-				{if $rental->phone->international}
-					<tr>
-						<td class="iconcover"><i class="entypo-phone"></i></td>
-						<td>
-
-							<strong>{$rental->phone->international} </strong>
-
-						</td>
-					</tr>
-				{/if}
-
-				{if $rental->address->status == \Entity\Contact\Address::STATUS_OK}
-					<tr>
-						<td class="iconcover"><i class="entypo-adress"></i></td>
-						<td>
-							<strong>{_o2431} </strong><br/>
-
-
-							{$rental->address->address}
-							{if $rental->address->subLocality}
-								({$rental->address->subLocality} )
+				<div class="row-fluid objectDetailContent">
+					<div class="span4 marginBottom marginTop marginLeft leftSidebarObjectDetail">
+						{foreach $rental->getImages(3) as $photo}
+						{if $iterator->first}
+						<div class="imageFirst">
 							{/if}
-							<br/> {$rental->address->postalCode} {_$rental->address->locality->name}
-						</td>
-					</tr>
-				{/if}
-
-				{if $rental->url}
-					<tr>
-						<td class="iconcover"><i class="entypo-www"></i></td>
-						<td>
-							<strong><a target="_blank" href="{$rental->url}">{_o1666}</a><strong>
-						</td>
-					</tr>
-				{/if}
-
-				{if count($rental->spokenLanguages) > 0}
-					<tr>
-						<td class="iconcover"><i class="icon-globe"></i></td>
-						<td>
-							<strong>{_o100015}</strong><br/>
-							{foreach $rental->spokenLanguages as $language}
-								{_$language->name}{if !$iterator->last}, {/if}
-							{/foreach}
-						</td>
-					</tr>
-				{/if}
-
-			</table>
-			{snippet reservationForm}
-				{include '../../forms/Rental/reservationForm.latte'}
-			{/snippet}
-
-		</div>
-	</div>
-
-
-</div>
-<!-- right sidebar -->
-</div>
-
-<div class="row-fluid">
-	<div class="span12">
-
-
-		<div class="metaObjectInfo" id="gallery">
-
-			<ul class="biggall">
-				{foreach $rental->getImages() as $photo}
-					<li>
-						<img alt="{_$rental->name} - {_o100008} {$iterator->getCounter()}" src="{$basePath}{$photo|rentalImageSrc}"/>
-						{$pinterestShare($rental, $photo)}
-					</li>
-				{/foreach}
-				<li>
-					<img alt="" n:fakeImage=""/>
-					<div class="pinterestShare" data-shareUrl="" data-shareTitle="">&#62226;
-						<div class="content">
-
+							<img alt="{_$rental->name} - {_o100008} {$iterator->getCounter()}" n:fakeImage=""/>
+							{if $iterator->first}
 						</div>
-					</div>
-				</li>
-				<li>
-					<img alt="" n:fakeImage=""/>
-					<div class="pinterestShare" data-shareUrl="" data-shareTitle="">&#62226;
-						<div class="content">
-							<a data-pin-config="none"
-							   href="//pinterest.com/pin/create/button/?url=http%3A%2F%2Fwww.flickr.com%2Fphotos%2Fkentbrew%2F6851755809%2F&media=http%3A%2F%2Ffarm8.staticflickr.com%2F7027%2F6851755809_df5b2051c9_z.jpg&description=Next%20stop%3A%20Pinterest"
-							   data-pin-do="buttonPin">
-							</a>
-						</div>
-					</div>
-				</li>
-				<li>
-					<img alt="" n:fakeImage=""/>
-					<div class="pinterestShare" data-shareUrl="" data-shareTitle="">&#62226;
-						<div class="content">
-							<a data-pin-config="none"
-							   href="//pinterest.com/pin/create/button/?url=http%3A%2F%2Fwww.flickr.com%2Fphotos%2Fkentbrew%2F6851755809%2F&media=http%3A%2F%2Ffarm8.staticflickr.com%2F7027%2F6851755809_df5b2051c9_z.jpg&description=Next%20stop%3A%20Pinterest"
-							   data-pin-do="buttonPin">
-							</a>
-						</div>
-					</div>
-				</li>
-				<li>
-					<img alt="" n:fakeImage=""/>
-					<div class="pinterestShare" data-shareUrl="" data-shareTitle="">&#62226;
-						<div class="content">
-							<a data-pin-config="none"
-							   href="//pinterest.com/pin/create/button/?url=http%3A%2F%2Fwww.flickr.com%2Fphotos%2Fkentbrew%2F6851755809%2F&media=http%3A%2F%2Ffarm8.staticflickr.com%2F7027%2F6851755809_df5b2051c9_z.jpg&description=Next%20stop%3A%20Pinterest"
-							   data-pin-do="buttonPin">
-							</a>
-						</div>
-					</div>
-				</li>
-				<li>
-					<img alt="" n:fakeImage=""/>
-					<div class="pinterestShare" data-shareUrl="" data-shareTitle="">&#62226;
-						<div class="content">
-							<a data-pin-config="none"
-							   href="//pinterest.com/pin/create/button/?url=http%3A%2F%2Fwww.flickr.com%2Fphotos%2Fkentbrew%2F6851755809%2F&media=http%3A%2F%2Ffarm8.staticflickr.com%2F7027%2F6851755809_df5b2051c9_z.jpg&description=Next%20stop%3A%20Pinterest"
-							   data-pin-do="buttonPin">
-							</a>
-						</div>
-					</div>
-				</li>
-				<li>
-					<img alt="" n:fakeImage=""/>
-					<div class="pinterestShare" data-shareUrl="" data-shareTitle="">&#62226;
-						<div class="content">
-							<a data-pin-config="none"
-							   href="//pinterest.com/pin/create/button/?url=http%3A%2F%2Fwww.flickr.com%2Fphotos%2Fkentbrew%2F6851755809%2F&media=http%3A%2F%2Ffarm8.staticflickr.com%2F7027%2F6851755809_df5b2051c9_z.jpg&description=Next%20stop%3A%20Pinterest"
-							   data-pin-do="buttonPin">
-							</a>
-						</div>
-					</div>
-				</li>
-				<li>
-					<img alt="" n:fakeImage=""/>
-					<div class="pinterestShare" data-shareUrl="" data-shareTitle="">&#62226;
-						<div class="content">
-							<a data-pin-config="none"
-							   href="//pinterest.com/pin/create/button/?url=http%3A%2F%2Fwww.flickr.com%2Fphotos%2Fkentbrew%2F6851755809%2F&media=http%3A%2F%2Ffarm8.staticflickr.com%2F7027%2F6851755809_df5b2051c9_z.jpg&description=Next%20stop%3A%20Pinterest"
-							   data-pin-do="buttonPin">
-							</a>
-						</div>
-					</div>
-				</li>
-				<li>
-					<img alt="" n:fakeImage=""/>
-					<div class="pinterestShare" data-shareUrl="" data-shareTitle="">&#62226;
-						<div class="content">
-							<a data-pin-config="none"
-							   href="//pinterest.com/pin/create/button/?url=http%3A%2F%2Fwww.flickr.com%2Fphotos%2Fkentbrew%2F6851755809%2F&media=http%3A%2F%2Ffarm8.staticflickr.com%2F7027%2F6851755809_df5b2051c9_z.jpg&description=Next%20stop%3A%20Pinterest"
-							   data-pin-do="buttonPin">
-							</a>
-						</div>
-					</div>
-				</li>
-				<li>
-					<img alt="" n:fakeImage=""/>
-					<div class="pinterestShare" data-shareUrl="" data-shareTitle="">&#62226;
-						<div class="content">
-							<a data-pin-config="none"
-							   href="//pinterest.com/pin/create/button/?url=http%3A%2F%2Fwww.flickr.com%2Fphotos%2Fkentbrew%2F6851755809%2F&media=http%3A%2F%2Ffarm8.staticflickr.com%2F7027%2F6851755809_df5b2051c9_z.jpg&description=Next%20stop%3A%20Pinterest"
-							   data-pin-do="buttonPin">
-							</a>
-						</div>
-					</div>
-				</li>
-				<li>
-					<img alt="" n:fakeImage=""/>
-					<div class="pinterestShare" data-shareUrl="" data-shareTitle="">&#62226;
-						<div class="content">
-							<a data-pin-config="none"
-							   href="//pinterest.com/pin/create/button/?url=http%3A%2F%2Fwww.flickr.com%2Fphotos%2Fkentbrew%2F6851755809%2F&media=http%3A%2F%2Ffarm8.staticflickr.com%2F7027%2F6851755809_df5b2051c9_z.jpg&description=Next%20stop%3A%20Pinterest"
-							   data-pin-do="buttonPin">
-							</a>
-						</div>
-					</div>
-				</li>
-			</ul>
-			<div class="clearfix"></div>
-		</div>
-
-		<div class="metaObjectInfo" id="pricetable">
-
-		</div>
-
-		{if count($interviewAnswers) > 0}
-			<div class="metaObjectInfo" id="interviewAnswers">
-				<h3>{_o25231}</h3>
-				<ul class="interviewList">
-					{foreach $interviewAnswers as $interviewAnswer}
-						{if !empty($interviewAnswer->answer)}
-							<li>
-								<h4>{_$interviewAnswer->question->question|firstUpper}</h4>
-
-								<p>{_$interviewAnswer->answer|firstUpper}</p>
-							</li>
 						{/if}
-					{/foreach}
-				</ul>
-				<div class="clearfix"></div>
-			</div>
-		{/if}
+						{/foreach}
 
-				<div class="metaObjectInfo">
-					<h3>{_o100045}</h3>
-					<div id="objectDetailMap" zoom="13" value="{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}" style="width:100%;float:left;height:400px;"><i class="icon-spinner icon-spin"></i></div>
-					<ul id="placesImg"></ul>
+						<div class="imageFirst">
+							<img alt="{_$rental->name} - {_o100008} 1" n:fakeImage=""/>
+						</div>
+						<img alt="{_$rental->name} - {_o100008} 2" n:fakeImage=""/>
+						<img alt="{_$rental->name} - {_o100008} 3" n:fakeImage=""/>
+
+						<img class="mapsImage"
+						src="https://maps.googleapis.com/maps/api/staticmap?center={$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&markers=color:blue%7C{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&zoom=10&size=288x170&sensor=false"/>
+					</div>
+
+					<div class="span5">
+
+						<h1 class="addToViewList" id="{$rental->id}">
+							{_$rental->name}
+							{if $rental->classification > 0 }
+							&nbsp;<span class="classification">{for $i = 0; $i < $rental->classification; $i++}<i class="entypo-star"></i>{/for}</span>
+							{/if}
+						</h1>
+
+						<p class="locality noPadding">
+							<a class="brown" href="{link RentalList: location => $rental->address->locality , rentalType => $rental->type }">
+								{_$rental->type->name|firstUpper}
+								{if $rental->hasPlacement()}{_$rental->getPlacement()->name}{/if}
+								{_$rental->address->locality->name , null , [case=>locative]}
+							</a>
+						</p>
+
+						{if $teaser || $firstAnswer}
+						<table class="teaser">
+							{if $teaser}
+							<tr>
+								<td class="icon">&#128227;</td>
+								<td class="content">{$teaser}</td>
+							</tr>
+							{/if}
+							{if $firstAnswer}
+							<tr>
+								<td class="firstAnswer" colspan="2">{$firstAnswer|firstUpper}</td>
+							</tr>
+							{/if}
+						</table>
+						{/if}
+
+
+						<table class="detailInfoBox">
+							<tr>
+								<td class="entypoIconUsers">
+									&#128101;
+								</td>
+								<td>
+									{_o100005} {$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}
+									<span>{if $rental->bedroomCount} ({$rental->bedroomCount} {_o100009,null,[count=>$rental->bedroomCount]}){/if}
+										{$rental->rooms}</span>
+
+										<div>{if $separateGroups}{_o100011}{else}{_o100010}{/if}</div>
+									</td>
+								</tr>
+							</table>
+
+
+							<div class="clearfix"></div>
+
+							{var $pricesAvailable = false}
+
+							{if count($rental->pricelistRows) > 0}
+							{var $pricesAvailable = true}
+							<ul class="detailPriceList">
+								<li><h3><i class="icon-money"></i> {_o100012} <span>{_o100007} <strong>{$rental->price|price}</strong> {_o100004}</span>
+								</h3>
+								<ul>
+
+									{foreach $rental->pricelistRows as $pricelistRow}
+									<li tooltip="true" title="{_o100040} {if $pricelistRow->roomType}{_$pricelistRow->roomType->name, null , [count => 1]}{/if}">
+										{$pricelistRow->roomCount} {if $pricelistRow->roomType}{_$pricelistRow->roomType->name, null , [count => $pricelistRow->roomCount]}{/if}
+										<span>
+											({$pricelistRow->bedCount} {_o100006 , null , [count => $pricelistRow->bedCount]}{if $pricelistRow->extraBedCount} + {$pricelistRow->extraBedCount} {_o100000 , null , [count => $pricelistRow->extraBedCount]}{/if})
+										</span>
+
+										<span class="price">
+											{$pricelistRow->price}
+										</span>
+									</li>
+									{/foreach}
+
+
+									{if count($rental->pricelists) > 0}
+									{var $pricesAvailable = true}
+									{foreach $rental->pricelists as $pricelist}
+									<li>
+										{if $pricelist->name} {$pricelist->name} {/if} {_$pricelist->language->name} <i
+										class="entypo-save"></i> <a href="{$pricelist->filePath}"
+										class="btn btn-green btn-text-wrap btn-pricelist">{_o955}</a>
+									</li>
+									{/foreach}
+									{/if}
+
+								</ul>
+
+
+							</li>
+						</ul>
+						{/if}
+
+						{if !$pricesAvailable}
+						{if $rental->pricesUponRequest}
+						#len na dotaz
+						{else}
+						#Übytovatel neuvadza detailne ceny. Orientacna cena ubytovania je {$rental->price} Eur / osoba / noc"
+						{/if}
+						{/if}
+
+						<div class="clearfix"></div>
+
+						<div class="detailAmenities">
+							<ul class="objectDetailServicesIconList list">
+
+								{var $board = $rental->getAmenitiesByType(array('board'))}
+								{if $board}
+								<li class="board">
+									<strong>{_o1010}</strong>
+
+									<div class="content">
+										{foreach $board  as $amenities}
+										{foreach $amenities as $amenity}
+										{if $iterator->first}{_$amenity->name|firstUpper}{else}{_$amenity->name}{/if}{if !$iterator->last}, {/if}
+										{/foreach}
+										{/foreach}
+									</div>
+								</li>
+								{/if}
+
+
+								{if count($rental->amenities) > 0}
+								{var $importantAmenities = $rental->getImportantAmenitiesGroupByType()}
+								{var $notImportantAmenities = $rental->getNotImportantAmenitiesGroupByType()}
+								<li class="monitor">
+									<strong>{_o100013}</strong>
+
+									<div class="amenitiesStart">
+
+										{foreach $importantAmenities  as $amenities}
+										{foreach $amenities as $amenity}
+										{if $iterator->first}{_$amenity->name|firstUpper}{else}{_$amenity->name}{/if}{if !$iterator->last}, {/if}
+										{/foreach}
+										{/foreach}
+
+										{if $notImportantAmenities}
+										{dump $notImportantAmenities}
+
+
+										<a class="toggle showMoreAmenities" data-opentext="{_o100001}" data-closetext="{_o100014}"
+										for="moreAmenities" href="#"><b>{_o100001}</b></a>
+									</div>
+
+									<div class="moreAmenities">
+
+										{foreach $notImportantAmenities  as $amenities}
+										{foreach $amenities as $amenity}
+										{_$amenity->name}
+										{/foreach}
+										{/foreach}
+
+									</div>
+									{/if}
+
+								</li>
+								{/if}
+
+								<div class="clearfix"></div>
+
+								{if $ownerAvailability}
+								<li class="bell">
+									<strong>{_$ownerAvailability->name}</strong>
+								</li>
+								{/if}
+
+								{if $rental->checkIn}
+								<li class="clock">
+									<strong>{_o1586} {$rental->checkIn}:00</strong>
+								</li>
+								{/if}
+
+								<div class="clearfix"></div>
+
+								{if $rental->checkOut}
+								<li class="clock">
+									<strong>{_o1588} {$rental->checkOut}:00</strong>
+								</li>
+								{/if}
+
+								<div class="clearfix"></div>
+
+								<li class="dog">
+									<strong>{if $animalsAllowed}{_o100018}{else}{_o100019}{/if}</strong>
+								</li>
+
+							</ul>
+						</div>
+					</div>
+
+
+					<!-- right sidebar -->
+					<div class="span3 sidebarRightDetail">
+
+						{if $mainImage = $rental->getMainImage()}
+						<button class="marginTop btn btn-compare addToFavorites currentObject" rel="{$rental->id}" data-name="{_$rental->name}{if $rental->classification > 0 } {for $i = 0; $i < $rental->classification; $i++}~star~{/for}{/if}" data-thumb="{fakeImage}" data-location="{_$rental->address->locality->name}" data-price="{$rental->price}" data-capacity="{$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}" data-link="{link Rental:detail $rental}" data-thumb="{$basePath}{$mainImage|rentalImageSrc}"><span class="entypo-heart">{_o100140}</span></button>
+						{else}
+						<button class="marginTop btn btn-compare addToFavorites currentObject" rel="{$rental->id}" data-name="{_$rental->name}{if $rental->classification > 0 } {for $i = 0; $i < $rental->classification; $i++}~star~{/for}{/if}" data-thumb="{fakeImage}" data-location="{_$rental->address->locality->name}" data-price="{$rental->price}" data-capacity="{$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}" data-link="{link Rental:detail $rental}" data-thumb="http://www.tralandia.com/u/32/13539183882248.jpg"><span class="entypo-heart">{_o100140}</span></button>
+						{/if}
+
+						<div class="socialIconTable marginBottom marginTop socialIconsDetail socialPluginsInit">
+							<div class="socialBtnHeader">
+
+								<strong class="facebook">&#62220;</strong> <strong class="gplus">&#62223;</strong> <strong
+								class="twitter">&#62217;</strong> <strong class="pinterest">&#62226;</strong>
+							</div>
+							<div class="clearfix"></div>
+							<div class="socialBtnContent hide">
+
+								<a class="close"><i class="icon-remove-sign"></i></a>
+								<ul class="social-buttons">
+									<li>{$twitterShareTag}</li>
+									<li>{$googlePlusShareTag}</li>
+									<li>{$facebookShareTag}</li>
+									<li>{$pinterestShareTag}</li>
+								</ul>
+
+								{*
+								<span class="facebookLikeButtonContainer" data-facebook-src="{link Rental:detail $rental}"></span>
+
+
+								<g:plusone size="medium" href="{link Rental:detail $rental}" style="margin-top:2px;"></g:plusone>
+
+								<a href="https://twitter.com/share" class="twitter-share-button" data-url="{link Rental:detail $rental}"
+								data-via="Tralandia" data-text="{_$rental->name}" data-hashtags="{_o100034}"
+								data-lang="{$currentLanguage->iso}">Tweet</a> *}
+								{*
+								<a href="http://pinterest.com/pin/create/button/?url={link Rental:detail $rental}&media=&description={_$rental->name}"
+									class="pin-it-button" count-layout="horizontal"></a> *}
+
+								</div>
+							</div>
+
+							<div class="sidebarContact">
+								<div class="sidebarTitle">{_o12275}</div>
+								<div class="sidebarInner paddingTop">
+
+									<table>
+										{if $rental->contactName}
+										<tr>
+											<td class="iconCover"><i class="entypo-contact"></i></td>
+											<td>
+												<strong>{$rental->contactName}</strong>
+											</td>
+										</tr>
+										{/if}
+
+
+										{if $rental->phone->international}
+										<tr>
+											<td class="iconCover"><i class="entypo-phone"></i></td>
+											<td>
+
+												<strong>{$rental->phone->international} </strong>
+
+											</td>
+										</tr>
+										{/if}
+
+										{if $rental->address->status == \Entity\Contact\Address::STATUS_OK}
+										<tr>
+											<td class="iconCover"><i class="entypo-adress"></i></td>
+											<td>
+												<strong>{_o2431} </strong><br/>
+
+
+												{$rental->address->address}
+												{if $rental->address->subLocality}
+												({$rental->address->subLocality} )
+												{/if}
+												<br/> {$rental->address->postalCode} {_$rental->address->locality->name}
+											</td>
+										</tr>
+										{/if}
+
+										{if $rental->url}
+										<tr>
+											<td class="iconCover"><i class="entypo-www"></i></td>
+											<td>
+												<strong><a target="_blank" href="{$rental->url}">{_o1666}</a><strong>
+												</td>
+											</tr>
+											{/if}
+
+											{if count($rental->spokenLanguages) > 0}
+											<tr>
+												<td class="iconCover"><i class="icon-globe"></i></td>
+												<td>
+													<strong>{_o100015}</strong><br/>
+													{foreach $rental->spokenLanguages as $language}
+													{_$language->name}{if !$iterator->last}, {/if}
+													{/foreach}
+												</td>
+											</tr>
+											{/if}
+
+										</table>
+										{snippet reservationForm}
+										{include '../../forms/Rental/reservationForm.latte'}
+										{/snippet}
+
+									</div>
+								</div>
+
+
+							</div>
+							<!-- right sidebar -->
+						</div>
+
+						<div class="row-fluid">
+							<div class="span12">
+
+
+								<div class="metaObjectInfo" id="gallery">
+
+									<ul class="bigGallery">
+										{foreach $rental->getImages() as $photo}
+										<li>
+											<img alt="{_$rental->name} - {_o100008} {$iterator->getCounter()}" src="{$basePath}{$photo|rentalImageSrc}"/>
+											{$pinterestShare($rental, $photo)}
+										</li>
+										{/foreach}
+										<li>
+											<img alt="" n:fakeImage=""/>
+											<div class="pinterestShare" data-share-url="" data-share-title="">&#62226;
+												<div class="content">
+
+												</div>
+											</div>
+										</li>
+										<li>
+											<img alt="" n:fakeImage=""/>
+												<div class="pinterestShare" data-share-url="" data-share-title="">&#62226;
+													<div class="content">
+														<a data-pin-config="none"
+														href="//pinterest.com/pin/create/button/?url=http%3A%2F%2Fwww.flickr.com%2Fphotos%2Fkentbrew%2F6851755809%2F&media=http%3A%2F%2Ffarm8.staticflickr.com%2F7027%2F6851755809_df5b2051c9_z.jpg&description=Next%20stop%3A%20Pinterest"
+														data-pin-do="buttonPin">
+													</a>
+												</div>
+											</div>
+										</li>
+									<li>
+										<img alt="" n:fakeImage=""/>
+											<div class="pinterestShare" data-share-url="" data-share-title="">&#62226;
+												<div class="content">
+													<a data-pin-config="none"
+													href="//pinterest.com/pin/create/button/?url=http%3A%2F%2Fwww.flickr.com%2Fphotos%2Fkentbrew%2F6851755809%2F&media=http%3A%2F%2Ffarm8.staticflickr.com%2F7027%2F6851755809_df5b2051c9_z.jpg&description=Next%20stop%3A%20Pinterest"
+													data-pin-do="buttonPin">
+												</a>
+											</div>
+										</div>
+									</li>
+									<li>
+										<img alt="" n:fakeImage=""/>
+											<div class="pinterestShare" data-share-url="" data-share-title="">&#62226;
+												<div class="content">
+													<a data-pin-config="none"
+													href="//pinterest.com/pin/create/button/?url=http%3A%2F%2Fwww.flickr.com%2Fphotos%2Fkentbrew%2F6851755809%2F&media=http%3A%2F%2Ffarm8.staticflickr.com%2F7027%2F6851755809_df5b2051c9_z.jpg&description=Next%20stop%3A%20Pinterest"
+													data-pin-do="buttonPin">
+												</a>
+											</div>
+										</div>
+									</li>
+									<li>
+										<img alt="" n:fakeImage=""/>
+											<div class="pinterestShare" data-share-url="" data-share-title="">&#62226;
+												<div class="content">
+													<a data-pin-config="none"
+													href="//pinterest.com/pin/create/button/?url=http%3A%2F%2Fwww.flickr.com%2Fphotos%2Fkentbrew%2F6851755809%2F&media=http%3A%2F%2Ffarm8.staticflickr.com%2F7027%2F6851755809_df5b2051c9_z.jpg&description=Next%20stop%3A%20Pinterest"
+													data-pin-do="buttonPin">
+												</a>
+											</div>
+										</div>
+									</li>
+									<li>
+										<img alt="" n:fakeImage=""/>
+											<div class="pinterestShare" data-share-url="" data-share-title="">&#62226;
+												<div class="content">
+													<a data-pin-config="none"
+													href="//pinterest.com/pin/create/button/?url=http%3A%2F%2Fwww.flickr.com%2Fphotos%2Fkentbrew%2F6851755809%2F&media=http%3A%2F%2Ffarm8.staticflickr.com%2F7027%2F6851755809_df5b2051c9_z.jpg&description=Next%20stop%3A%20Pinterest"
+													data-pin-do="buttonPin">
+												</a>
+											</div>
+										</div>
+									</li>
+									<li>
+										<img alt="" n:fakeImage=""/>
+											<div class="pinterestShare" data-share-url="" data-share-title="">&#62226;
+												<div class="content">
+													<a data-pin-config="none"
+													href="//pinterest.com/pin/create/button/?url=http%3A%2F%2Fwww.flickr.com%2Fphotos%2Fkentbrew%2F6851755809%2F&media=http%3A%2F%2Ffarm8.staticflickr.com%2F7027%2F6851755809_df5b2051c9_z.jpg&description=Next%20stop%3A%20Pinterest"
+													data-pin-do="buttonPin">
+												</a>
+											</div>
+										</div>
+									</li>
+									<li>
+										<img alt="" n:fakeImage=""/>
+											<div class="pinterestShare" data-share-url="" data-share-title="">&#62226;
+												<div class="content">
+													<a data-pin-config="none"
+													href="//pinterest.com/pin/create/button/?url=http%3A%2F%2Fwww.flickr.com%2Fphotos%2Fkentbrew%2F6851755809%2F&media=http%3A%2F%2Ffarm8.staticflickr.com%2F7027%2F6851755809_df5b2051c9_z.jpg&description=Next%20stop%3A%20Pinterest"
+													data-pin-do="buttonPin">
+												</a>
+											</div>
+										</div>
+									</li>
+									<li>
+										<img alt="" n:fakeImage=""/>
+											<div class="pinterestShare" data-share-url="" data-share-title="">&#62226;
+												<div class="content">
+													<a data-pin-config="none"
+													href="//pinterest.com/pin/create/button/?url=http%3A%2F%2Fwww.flickr.com%2Fphotos%2Fkentbrew%2F6851755809%2F&media=http%3A%2F%2Ffarm8.staticflickr.com%2F7027%2F6851755809_df5b2051c9_z.jpg&description=Next%20stop%3A%20Pinterest"
+													data-pin-do="buttonPin">
+												</a>
+											</div>
+										</div>
+									</li>
+									<li>
+										<img alt="" n:fakeImage=""/>
+											<div class="pinterestShare" data-share-url="" data-share-title="">&#62226;
+												<div class="content">
+													<a data-pin-config="none"
+													href="//pinterest.com/pin/create/button/?url=http%3A%2F%2Fwww.flickr.com%2Fphotos%2Fkentbrew%2F6851755809%2F&media=http%3A%2F%2Ffarm8.staticflickr.com%2F7027%2F6851755809_df5b2051c9_z.jpg&description=Next%20stop%3A%20Pinterest"
+													data-pin-do="buttonPin">
+												</a>
+											</div>
+										</div>
+									</li>
+								</ul>
+								<div class="clearfix"></div>
+							</div>
+
+							<div class="metaObjectInfo" id="priceTable">
+
+						</div>
+
+						{if count($interviewAnswers) > 0}
+						<div class="metaObjectInfo" id="interviewAnswers">
+							<h3>{_o25231}</h3>
+							<ul class="interviewList">
+								{foreach $interviewAnswers as $interviewAnswer}
+								{if !empty($interviewAnswer->answer)}
+								<li>
+									<h4>{_$interviewAnswer->question->question|firstUpper}</h4>
+
+									<p>{_$interviewAnswer->answer|firstUpper}</p>
+								</li>
+								{/if}
+								{/foreach}
+							</ul>
+							<div class="clearfix"></div>
+						</div>
+						{/if}
+
+						<div class="metaObjectInfo">
+							<h3>{_o100045}</h3>
+							<div id="objectDetailMap" zoom="13" value="{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}" style="width:100%;float:left;height:400px;"><i class="icon-spinner icon-spin"></i></div>
+							<ul id="placesImage"></ul>
+						</div>
+
+
+						{if count($rental->calendar) > 0}
+						<div class="metaObjectInfo" id="calendar">
+							<h3>{_o100039} <span>({_o100038} {$rental->calendarUpdated|date})</span></h3>
+
+							<div class="objectDetailsOccupancyTab">
+								{control calendar, 12, $rental->calendar}
+								<div class="cleaner"></div>
+							</div>
+						</div>
+						{/if}
+
+						<div class="clearfix"></div>
+					</div>
 				</div>
 
 
-		{if count($rental->calendar) > 0}
-			<div class="metaObjectInfo" id="calendar">
-				<h3>{_o100039} <span>({_o100038} {$rental->calendarUpdated|date})</span></h3>
-
-				<div class="objectDetailsOccupancyTab">
-					{control calendar, 12, $rental->calendar}
-					<div class="cleaner"></div>
+				<div class="row-fluid">
+					<div class="span12">
+						<div class="moreOption">
+							<span> {_o100037} #{$rental->id} </span> <span class="separator">&nbsp;|&nbsp;</span>
+							<span> {_o100038} {$dateUpdated|dateTime} </span> <span class="separator">&nbsp;|&nbsp;</span>
+							{* 			<a href="#">Report a problem</a> <span class="separator">&nbsp;|&nbsp;</span>
+							*}            <a href="{link :Owner:Rental:edit $rental->id}">{_o100121}</a>
+						</div>
+					</div>
 				</div>
+
 			</div>
-		{/if}
-
-		<div class="clearfix"></div>
-	</div>
-</div>
-
-
-<div class="row-fluid">
-	<div class="span12">
-		<div class="moreOption">
-			<span> {_o100037} #{$rental->id} </span> <span class="separator">&nbsp;|&nbsp;</span>
-			<span> {_o100038} {$dateUpdated|dateTime} </span> <span class="separator">&nbsp;|&nbsp;</span>
-			{* 			<a href="#">Report a problem</a> <span class="separator">&nbsp;|&nbsp;</span>
-			 *}            <a href="{link :Owner:Rental:edit $rental->id}">{_o100121}</a>
 		</div>
-	</div>
-</div>
-
-</div>
-</div>
 </div>
