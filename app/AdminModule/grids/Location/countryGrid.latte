@@ -17,7 +17,9 @@
 
 {define #col-parent}
 	<td>
-		{ifset $row->parent->name}{_$row->parent->name}{/ifset}
+		{ifset $row->parent->name}
+			<a n:href=":Home:default, Routers\BaseRoute::PRIMARY_LOCATION => $row->parent">{_$row->parent->name}</a>
+		{/ifset}
 	</td>
 {/define}
 
