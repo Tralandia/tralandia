@@ -295,6 +295,8 @@ factories:
 		class: Routers\SimpleRoute
 		arguments: [%mask%, %metadata%, @languageRepositoryAccessor::get(), @locationRepositoryAccessor::get()]
 		parameters: [mask, metadata]
+		setup:
+			- $pageRepositoryAccessor(@pageRepositoryAccessor)
 		implement: Routers\ISimpleRouteFactory
 
 	baseRouteFactory:

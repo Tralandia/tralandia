@@ -27,6 +27,19 @@ class SimpleRouterTest extends BaseRouterTest
 	public function testCompiler() {
 		$route = $this->route;
 
+		$this->routeOut($route, 'Front:Sign', array(
+			'action' => 'in',
+			'primaryLocation' => $this->findLocation(56),
+			'language' => $this->findLanguage(144),
+		));
+
+		$this->routeIn($route, 'http://www.sk.tra.com/owner/rental/first-rental', 'Owner:Rental', array(
+			'action' => 'firstRental',
+			'id' => NULL,
+			'primaryLocation' => $this->findLocation(56),
+			'language' => $this->findLanguage(144),
+		));
+
 		$this->routeOut($route, 'Front:Registration', array(
 			'action' => 'default',
 			'primaryLocation' => $this->findLocation(1),

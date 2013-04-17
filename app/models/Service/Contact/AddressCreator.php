@@ -49,8 +49,7 @@ class AddressCreator
 		$addressEntity->setPostalCode($info[AddressNormalizer::POSTAL_CODE]);
 
 		$addressEntity->setLocality($info[AddressNormalizer::LOCALITY]);
-		$subLocality = Arrays::get($info, AddressNormalizer::SUBLOCALITY, NULL);
-		$addressEntity->setSubLocality($subLocality);
+		$addressEntity->setSubLocality($info[AddressNormalizer::SUBLOCALITY]);
 
 		$gps = new \Extras\Types\Latlong($info[AddressNormalizer::LATITUDE], $info[AddressNormalizer::LONGITUDE]);
 		$addressEntity->setGps($gps);
