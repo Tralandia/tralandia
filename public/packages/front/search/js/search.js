@@ -35,7 +35,7 @@
 
 			// var conditionsText = $('.sidebarLocation').attr('data-conditions-text');
 
-			var minimumInputLengthtext = $(this).attr('data-formatInputTooShort');
+			var minimumInputLengthtext = $(this).attr('data-format-input-too-short');
 
 			$(this).select2({
 
@@ -306,9 +306,9 @@ $(function(){
 		var id = $(this).parent().attr('id');
 		$('div.select2:not(#'+id+')').select2('close');
 		if($('#select2-drop').length == 1){
-			$('body').attr('data-openSelect',true);
+			$('body').attr('data-open-select',true);
 		} else {
-			$('body').removeAttr('data-openSelect');
+			$('body').removeAttr('data-open-select');
 		}
 	});
 

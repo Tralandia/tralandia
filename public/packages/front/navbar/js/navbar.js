@@ -160,7 +160,7 @@
 				if (base.favoritesLink) {
 					initNavBarShare(base.favoritesLink);
 				} else {
-					var shareUrl = $('#favoritesStaticContainer').attr('data-favoritesLink');
+					var shareUrl = $('#favoritesStaticContainer').attr('data-favorites-link');
 					base.importShareLink(shareUrl, function(d){
 						initNavBarShare(d.link);
 						base.favoritesLink = d.link;
