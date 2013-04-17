@@ -2,6 +2,7 @@ var favorites;
 
 function initNavBarShare(data)
 {
+
 	var html = '<ul class="social-buttons">'+
 		'<li>'+data.twitterShare+'</li>'+
 		'<li>'+data.googlePlusShare+'</li>'+
@@ -16,6 +17,7 @@ function initNavBarShare(data)
 		$('#clipboardLinkShare').val(data.linkToShare);
 	}
 	$('body').removeAttr('data-socialPluginsInit');
+
 }
 
 function removejscssfile(filename, filetype)

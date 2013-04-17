@@ -16,7 +16,7 @@
   		} else {
 
 
-  			if(typeof $('body').attr('data-googleMapRender') == 'undefined' ){
+  			if(typeof $('body').attr('data-google-map-render') == 'undefined' ){
 
   				var coordinates = $(this).attr('value').split(',');
 
@@ -85,11 +85,11 @@
 
 			// 	});
 
-			// 	$('#placesImg').html(html);
+			// 	$('#placesImage').html(html);
 			// });	
 
 
-	        $('body').attr('data-googleMapRender',true);
+	        $('body').attr('data-google-map-render',true);
 
 
 }
@@ -217,7 +217,7 @@ $(document).ready(function(){
 		if(!$(this).hasClass('opened')){
 			$(this).find('.content img').attr('src','//assets.pinterest.com/images/pidgets/pin_it_button.png');
 
-			var attr = $('body').attr('data-pinterestInitJs');
+			var attr = $('body').attr('data-pinterest-init-js');
 
 			removejscssfile('http://assets.pinterest.com/js/pinit.js','js');
 			addScript('http://assets.pinterest.com/js/pinit.js');
@@ -297,11 +297,11 @@ global.mapInit = function(){
 }
 
 function lazyLoadMap() { 
-	if(typeof $('body').attr('data-googleMapinit') == 'undefined' ){
+	if(typeof $('body').attr('data-google-map-init') == 'undefined' ){
 		var script = document.createElement("script"); 
 		script.src = "https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places&callback=global.mapInit"; 
 		document.body.appendChild(script); 
-		$('body').attr('data-googleMapinit',true);  
+		$('body').attr('data-google-map-init',true);  
 	}  
 } 
 
@@ -312,8 +312,8 @@ $(function() {
 		lazyLoadMap();
 	});
 
-	$('#placesImg').appear();
-	$(document.body).on('appear','#placesImg' , function(e,$affected){
+	$('#placesImage').appear();
+	$(document.body).on('appear','#placesImage' , function(e,$affected){
 
   				var coordinates = $('#objectDetailMap').attr('value').split(',');
 
@@ -364,7 +364,7 @@ $(function() {
 
 					// 	});
 
-					// 	$('#placesImg').html(html);
+					// 	$('#placesImage').html(html);
 					// });		
 	})
 

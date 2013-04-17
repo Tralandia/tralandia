@@ -79,8 +79,9 @@ class RentalContainer extends BaseContainer
 		$this->addAddressContainer('address', $this->country);
 		$placement = $this->placementRepository->getForSelect($this->translator, $this->collator);
 
-		$this->addSelect('placement', 'Placement', $placement)
-			->setOption('help', '');
+		$this->addSelect('placement', 'o100143', $placement)
+			->setOption('help', '')
+			->setPrompt('#vyberte prosim');
 
 
 		$this->addRentalTypeContainer('type', $rentalTypes);
