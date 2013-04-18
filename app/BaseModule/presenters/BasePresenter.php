@@ -239,7 +239,7 @@ abstract class BasePresenter extends Presenter {
 
 
 		$header->setDocType(HeaderControl::HTML_5);
-		$header->setLanguage(HeaderControl::SLOVAK);
+		$header->setLanguage(HeaderControl::ENGLISH);
 
 		$header->setTitle('Tralandia');
 
@@ -253,6 +253,11 @@ abstract class BasePresenter extends Presenter {
 				->setDescription('')
 				->setRobots('index,follow')
 				->setAuthor('Tralandia ltd.');
+
+
+		if(count($this->getHttpRequest()->getQuery())) {
+			$header->setRobots('noindex,follow');
+		}
 
 
 		return $header;
