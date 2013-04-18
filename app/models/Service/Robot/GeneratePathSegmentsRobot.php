@@ -50,6 +50,16 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 
 		$this->persistPagesSegments($languageList);
 		$this->persistLocationsSegments();
+		//$this->persistRentalTypesSegments($languageList);
+
+		$this->languageRepositoryAccessor->get()->flush();
+	}
+
+	public function runTypes()
+	{
+
+		$languageList = $this->languageRepositoryAccessor->get()->findBySupported(TRUE);
+
 		$this->persistRentalTypesSegments($languageList);
 
 		$this->languageRepositoryAccessor->get()->flush();

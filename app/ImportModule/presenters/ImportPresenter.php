@@ -37,6 +37,7 @@ class ImportPresenter extends Presenter {
 		'http://www.sk.tra.com/import?importSection=users&subsection=importOwners&countryIso=cz',
 		'http://www.sk.tra.com/import?importSection=users&subsection=importOwners&countryIso=hu',
 		'http://www.sk.tra.com/import?importSection=users&subsection=importVisitors',
+		//'http://www.sk.tra.com/import?importSection=pathsegments&subsection=typesOnly',
 		'http://www.sk.tra.com/import?importSection=rentalTypes',
 		'http://www.sk.tra.com/import?importSection=rentalInformation',
 		'http://www.sk.tra.com/import?importSection=rentals&countryIso=sk',
