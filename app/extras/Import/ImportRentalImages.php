@@ -87,11 +87,13 @@ class ImportRentalImages extends BaseImport {
 		$context = $this->context;
 		$model = $this->model;
 
+		$imageManager = $context->rentalImageManagerAccessor->get()->createNew(FALSE);
+
 		$r = qNew('select * from __importImages where status = "toRemove"');
 
 		while ($x = mysql_fetch_array($r)) {
 			$image = $context->rentalImageRepositoryAccessor->get()->findOneByOldUrl('http://www.tralandia.com/u/'.$oldPath);
-			exit('Tu treba pridat tu remove fciu.');
+			$imageManager->delete($image);
 		}
 		$model->flush();
 		$this->saveVariables();
