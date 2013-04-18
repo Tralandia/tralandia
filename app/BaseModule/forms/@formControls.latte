@@ -8,6 +8,8 @@
 	{/if}
 	<tr data-link="{$dataLink}" n:class="$hasErrors ? 'invalid '.$class : $class">
 	{/define #opentag}
+
+
 	{*
 	Fieldset -------------------------------------------
 	@param $control \Nette\Forms\Controls\BaseControl
@@ -27,7 +29,6 @@
 	{default $class = ''}
 	{include #baseControl, control => $control , class => $class}
 	{/define #text}
-
 
 	{*
 	Text Area Control -------------------------------------------
@@ -104,7 +105,7 @@
 		</td>
 
 		<td>
-			<span class="help">{$control->getOption('description')}</span>
+			<span class="help">{$control->getOption('help')}</span>
 			<span class="invalidAlert">{include #controlErrors, errors => $control->getErrors()}</span>
 		</td>
 	</tr>
@@ -136,12 +137,56 @@
 		</td>
 
 		<td>
-			<span class="help">{$control->getOption('help')}</span>
+			<span class="help">
+				<label for="{$control->getHtmlId()}">
+					{$control->getOption('help')}
+				</label>
+			</span>			
 			<span class="invalidAlert">{include #controlErrors, errors => $control->getErrors()}</span>
 		</td>
 	</tr>
 	{/define #checkbox}
 
+
+
+
+	{*
+	Teaser Control -------------------------------------------
+	@param $control \Nette\Forms\Controls\BaseControl
+	@param $controlClass string
+	@param $class string
+	*}
+
+
+	{define #interview}
+	{default $class = ''}
+	{capture $input}
+	{ifset $controlClass}
+	{input $control, class => $controlClass}
+	{else}
+	{input $control}
+	{/ifset}
+	{/capture}	
+	{include #opentag , class => 'simpleInput '.$class , control => $control}
+		<td colspan="3">
+			<table>
+				<tr>
+					<td>{_$control->caption}</td>
+				</tr>
+				<tr>
+					<td>{!$input}</td>
+				</tr>
+				<tr>
+					<td>
+						<span class="help">{$control->getOption('help')}</span>
+						<span class="invalidAlert">{include #controlErrors, errors => $control->getErrors()}</span>
+					</td>
+				</tr>								
+			</table>			
+		</td>
+
+	</tr>
+	{/define #interview}
 
 	{*
 	Base Control -------------------------------------------
@@ -318,7 +363,7 @@
 	</td>
 
 	<td>
-		<span class="help">{$container->getDescription('description')}</span>
+		<span class="help">{$mainControl->getOption('help')}</span>
 		<span class="invalidAlert">{include #controlErrors, errors => $container->getAllErrors()}</span>
 	</td>
 </tr>
@@ -648,18 +693,27 @@
 {include #opentag , class => '' , control => $container}
 <!-- control photo start -->
 
-	<td colspan="3">
+	<td class="pricelistControl" colspan="3">
 		{foreach $container->getComponents() as $component}
-			{input $component['roomCount'] , class => 'select2'}
-			{input $component['roomType'] , class => 'select2'}
-			{input $component['bedCount'] , class => 'select2'}
-			{input $component['extraBedCount'] , class => 'select2'}
-			{input $component['price']['amount'] , class => 'select2'}
-			{input $component['price']['currency'] , class => 'select2'}
-			<hr>
+			<div class="priceList">
+				{input $component['roomCount'] , class => 'select2 notFulltext'}
+				{input $component['roomType'] , class => 'select2 notFulltext string'}
+				{input $component['bedCount'] , class => 'select2 notFulltext string'}
+				{input $component['extraBedCount'] , class => 'select2 notFulltext string'}
+				
+				{* {input $component['price']['currency'] , class => 'select2'} *}
+				<span class="input-append">
+					{input $component['price']['amount'] , class => 'price' }
+					<span class="add-on">mena</span>
+				</span>
+
+				<a href="#" class="remove"><i class="icon-remove"></i></a>
+			</div>
 		{/foreach}
 	</td>
-
+</tr>
+<tr class="pricelistControlButton">
+	<td colspan="3"><a href="#" class="btn btn-green btn-mini createNewLine"><i class="icon-plus"></i> {_o100168} </a></td>
 </tr>
 {/define #rentalPriceList}
 
