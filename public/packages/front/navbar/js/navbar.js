@@ -21,7 +21,7 @@
 		base.activeTabName 		= null;
 		base.currentRental		= null;
 		base.navBarShareShown 	= false;
-		base.favoritesLink 		= null;
+		base.favoritesLinks 	= null;
 
 		/**
 		 * Instalation
@@ -157,14 +157,14 @@
 			tabName = $this.attr('for');
 			
 			if (tabName=='navBarFavorites') {
-				if (base.favoritesLink) {
-					initNavBarShare(base.favoritesLink);
+				if (base.favoritesLinks) {
+					initNavBarShare(base.favoritesLinks);
 				} else {
 
 					var shareUrl = $('#favoritesStaticContainer').attr('data-favorites-link');
-					base.importShareLink(shareUrl, function(d){
-						initNavBarShare(d.link);
-						base.favoritesLink = d.link;
+					base.importShareLink(shareUrl, function(data){
+						initNavBarShare(data);
+						base.favoritesLinks = data;
 
 					});
 				}
@@ -202,7 +202,7 @@
 		 */
 		base.removeFavorite = function(e)
 		{
-			base.favoritesLink = null;
+			base.favoritesLinks = null;
 			Favorites.removeLink(e, this);
 			if (!Favorites._getFavoritesLength()) {
 				base.hideTab('navBarFavorites');
@@ -212,7 +212,7 @@
 
 		base.toggleAddFavorite = function(e)
 		{
-			base.favoritesLink = null;
+			base.favoritesLinks = null;
 			Favorites.toggleAdd(e, this);
 			base.showTab('navBarFavorites');
 			base.checkTabs();

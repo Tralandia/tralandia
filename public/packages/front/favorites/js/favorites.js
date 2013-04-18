@@ -2,12 +2,11 @@ var favorites;
 
 function initNavBarShare(data)
 {
-
 	var html = '<ul class="social-buttons">'+
-		'<li>'+data.twitterShare+'</li>'+
-		'<li>'+data.googlePlusShare+'</li>'+
-		'<li>'+data.facebookShare+'</li>'+
-		'<li>'+data.pinterestShare+'</li>'+
+		(data.twitterShare ? '<li>'+data.twitterShare+'</li>' : null)+
+		(data.googlePlusShare ? '<li>'+data.googlePlusShare+'</li>' : null)+
+		(data.facebookShare ? '<li>'+data.facebookShare+'</li>' : null)+
+		(data.pinterestShare ? '<li>'+data.pinterestShare+'</li>' : null)+
 	'</ul>';
 
 	$shareContainer = $('#dynamicShareContainer').html(html);
