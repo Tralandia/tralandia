@@ -74,24 +74,24 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 
 
 		$this->addText('name')
-			->setRequired()
+			->setRequired('o100158')
 			->getControlPrototype()
 				->setPlaceholder('o1031');
 
 		$this->addText('email')
-			->addRule(self::EMAIL)
+			->addRule(self::EMAIL, 'o100144')
 			->getControlPrototype()
 				->setPlaceholder('o1034');
 
 		$date = $this->addContainer('date');
 		$today = (new DateTime)->modify('today');
 		$date->addAdvancedDatePicker('from')
-			->addRule(self::RANGE, '#datum udaj v rozsahu %s do %s ', [$today, $today->modifyClone('+1 years')])
+			->addRule(self::RANGE, 'o100160', [$today, $today->modifyClone('+1 years')])
 			->getControlPrototype()
 			->setPlaceholder('o1043');
 
 		$date->addAdvancedDatePicker('to')
-			->addRule(self::RANGE, '#Vstup neni validni', [$today, $today->modifyClone('+1 years')])
+			->addRule(self::RANGE, 'o100160', [$today, $today->modifyClone('+1 years')])
 			->getControlPrototype()
 				->setPlaceholder('o1044');
 
@@ -127,7 +127,7 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 			->setValue(0);
 
 		$this->addTextArea('message')
-			->addRule(self::MIN_LENGTH, '#sprava min 3 znaky', 3)
+			->addRule(self::MIN_LENGTH, 'o100162', 3)
 			->getControlPrototype()
 			->setPlaceholder('o12279');
 
@@ -149,16 +149,16 @@ class ReservationForm extends \FrontModule\Forms\BaseForm {
 		$to = $values->date->to;
 
 		if(!($to > $from)) {
-			$form['date']['to']->addError($this->translate('#datum "do" je musi byt vacsi!'));
+			$form['date']['to']->addError($this->translate('o100160'));
 		}
 
-		if(!$this->rental->isAvailable($from, $to)) {
-			$form->addError($this->translate('#objekt je obsadeny'));
+		if($from && $to && !$this->rental->isAvailable($from, $to)) {
+			$form->addError($this->translate('o100161'));
 		}
 
 		$phone = $values->phone->phone;
 		if(!$phone) {
-			$form['phone']['number']->addError('cislo nieje validne');
+			$form['phone']['number']->addError($form->translate('o100159'));
 		}
 
 		try {
