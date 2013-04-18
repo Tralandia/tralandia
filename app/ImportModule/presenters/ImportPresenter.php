@@ -16,46 +16,6 @@ use Nette\Application as NA,
 use Nette\Application\UI\Presenter;
 
 class ImportPresenter extends Presenter {
-	public $automaticUrls = array(
-		'http://www.sk.tra.com/import?importSection=phraseType',
-		'http://www.sk.tra.com/import?importSection=languages',
-		'http://www.sk.tra.com/import?importSection=htmlPhrases&subsection=importPhrases',
-		'http://www.sk.tra.com/import?importSection=htmlPhrases&subsection=importNewPhrases',
-		'http://www.sk.tra.com/import?importSection=amenities',
-		'http://www.sk.tra.com/import?importSection=currencies',
-		'http://www.sk.tra.com/import?importSection=userRoles',
-		'http://www.sk.tra.com/import?importSection=domains',
-		'http://www.sk.tra.com/import?importSection=locations&subsection=importContinents',
-		'http://www.sk.tra.com/import?importSection=locations&subsection=importRegions',
-		'http://www.sk.tra.com/import?importSection=locations&subsection=importLocalities',
-		//'http://www.sk.tra.com/import?importSection=phones',
-		'http://www.sk.tra.com/import?importSection=users&subsection=importSuperAdmins',
-		'http://www.sk.tra.com/import?importSection=users&subsection=importAdmins',
-		'http://www.sk.tra.com/import?importSection=users&subsection=importManagers',
-		'http://www.sk.tra.com/import?importSection=users&subsection=importTranslators',
-		'http://www.sk.tra.com/import?importSection=users&subsection=importOwners&countryIso=sk',
-		'http://www.sk.tra.com/import?importSection=users&subsection=importOwners&countryIso=cz',
-		'http://www.sk.tra.com/import?importSection=users&subsection=importOwners&countryIso=hu',
-		'http://www.sk.tra.com/import?importSection=users&subsection=importVisitors',
-		//'http://www.sk.tra.com/import?importSection=pathsegments&subsection=typesOnly',
-		'http://www.sk.tra.com/import?importSection=rentalTypes',
-		'http://www.sk.tra.com/import?importSection=rentalInformation',
-		'http://www.sk.tra.com/import?importSection=rentals&countryIso=sk',
-		'http://www.sk.tra.com/import?importSection=rentals&countryIso=cz',
-		'http://www.sk.tra.com/import?importSection=rentals&countryIso=hu',
-		'http://www.sk.tra.com/import?importSection=invoice',
-		'http://www.sk.tra.com/import?importSection=interactions&subsection=importRentalReservations',
-		'http://www.sk.tra.com/import?importSection=interactions&subsection=importRentalToFriend',
-		'http://www.sk.tra.com/import?importSection=interactions&subsection=importSiteReviews',
-		'http://www.sk.tra.com/import?importSection=email',
-		'http://www.sk.tra.com/import?importSection=backLinks',
-		'http://www.sk.tra.com/import?importSection=updateLanguage',
-		'http://www.sk.tra.com/import?importSection=updateEmails',
-		'http://www.sk.tra.com/import?importSection=faq',
-		'http://www.sk.tra.com/import?importSection=page',
-		'http://www.sk.tra.com/import?importSection=pathsegments',
-	);
-
 	public $session;
 
 	public function startup() {
@@ -152,6 +112,49 @@ class ImportPresenter extends Presenter {
 				}
 			}
 			q('SET FOREIGN_KEY_CHECKS = 1;');
+		}
+
+		if (isset($this->params['createAutoLinks'])) {
+			public $automaticUrls = array(
+				'http://www.sk.tra.com/import?importSection=phraseType',
+				'http://www.sk.tra.com/import?importSection=languages',
+				'http://www.sk.tra.com/import?importSection=htmlPhrases&subsection=importPhrases',
+				'http://www.sk.tra.com/import?importSection=htmlPhrases&subsection=importNewPhrases',
+				'http://www.sk.tra.com/import?importSection=amenities',
+				'http://www.sk.tra.com/import?importSection=currencies',
+				'http://www.sk.tra.com/import?importSection=userRoles',
+				'http://www.sk.tra.com/import?importSection=domains',
+				'http://www.sk.tra.com/import?importSection=locations&subsection=importContinents',
+				'http://www.sk.tra.com/import?importSection=locations&subsection=importRegions',
+				'http://www.sk.tra.com/import?importSection=locations&subsection=importLocalities',
+				//'http://www.sk.tra.com/import?importSection=phones',
+				'http://www.sk.tra.com/import?importSection=users&subsection=importSuperAdmins',
+				'http://www.sk.tra.com/import?importSection=users&subsection=importAdmins',
+				'http://www.sk.tra.com/import?importSection=users&subsection=importManagers',
+				'http://www.sk.tra.com/import?importSection=users&subsection=importTranslators',
+				'http://www.sk.tra.com/import?importSection=users&subsection=importOwners&countryIso=sk',
+				'http://www.sk.tra.com/import?importSection=users&subsection=importOwners&countryIso=cz',
+				'http://www.sk.tra.com/import?importSection=users&subsection=importOwners&countryIso=hu',
+				'http://www.sk.tra.com/import?importSection=users&subsection=importVisitors',
+				//'http://www.sk.tra.com/import?importSection=pathsegments&subsection=typesOnly',
+				'http://www.sk.tra.com/import?importSection=rentalTypes',
+				'http://www.sk.tra.com/import?importSection=rentalInformation',
+				'http://www.sk.tra.com/import?importSection=rentals&countryIso=sk',
+				'http://www.sk.tra.com/import?importSection=rentals&countryIso=cz',
+				'http://www.sk.tra.com/import?importSection=rentals&countryIso=hu',
+				'http://www.sk.tra.com/import?importSection=invoice',
+				'http://www.sk.tra.com/import?importSection=interactions&subsection=importRentalReservations',
+				'http://www.sk.tra.com/import?importSection=interactions&subsection=importRentalToFriend',
+				'http://www.sk.tra.com/import?importSection=interactions&subsection=importSiteReviews',
+				'http://www.sk.tra.com/import?importSection=email',
+				'http://www.sk.tra.com/import?importSection=backLinks',
+				'http://www.sk.tra.com/import?importSection=updateLanguage',
+				'http://www.sk.tra.com/import?importSection=updateEmails',
+				'http://www.sk.tra.com/import?importSection=faq',
+				'http://www.sk.tra.com/import?importSection=page',
+				'http://www.sk.tra.com/import?importSection=pathsegments',
+			);
+
 		}
 
 		if (isset($this->params['importSection'])) {
