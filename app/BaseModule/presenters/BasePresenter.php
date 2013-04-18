@@ -1,6 +1,7 @@
 <?php
 
 use Entity\User\User;
+use Nette\Security\IAuthorizator;
 use Nette\Utils\Arrays;
 use Nette\Utils\Finder;
 use Nette\Utils\Strings;
@@ -117,6 +118,11 @@ abstract class BasePresenter extends Presenter {
 	public function getPreviousBackLink() {
 		$environmentSection = $this->context->session->getSection('environment');
 		return $environmentSection->previousLink;
+	}
+
+	public function checkPermission($resource = IAuthorizator::ALL, $privilege = IAuthorizator::ALL)
+	{
+		if (!$this->getUser()->isAllowed($resource, $privilege)) $this->accessDeny();
 	}
 
 	public function accessDeny()
