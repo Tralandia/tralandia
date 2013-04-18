@@ -5,11 +5,11 @@
 
 	margin-bottom: 10px;
 
-#searchControlLink[href="#"] {
-	background: rgb(233, 233, 233);
-	color: rgb(160, 160, 160);
-	cursor: default;
-}
+	#searchControlLink[href="#"] {
+		background: rgb(233, 233, 233);
+		color: rgb(160, 160, 160);
+		cursor: default;
+	}
 
 	.removeFilter {
 		text-align: center;
@@ -335,7 +335,18 @@
 		font-size: 13px;
 		li {
 
-			padding: 0 10px 0 25px;
+			ul li {
+
+				&:before {
+					left: 30px;
+				}
+
+				a {
+					padding: 0 10px 0 45px;
+				}
+			}
+
+			padding: 0;
 
 			&.disabled {
 
@@ -370,7 +381,7 @@
 			a {
 				display: block;	
 				
-				padding: 0 5px;
+				padding: 0 10px 0 30px;
 				&:hover {
 					text-decoration: none;
 
@@ -382,16 +393,15 @@
 				span.entypo-remove {
 					visibility: hidden;
 				}
+
+				&:hover {
+					background: #f5f7ea;
+					text-decoration: none;
+				}
 			}
 
 			&:last-child {
 				margin-bottom: 10px;
-			}
-
-			&:hover {
-				background: #f5f7ea;
-				color: @white;
-				text-decoration: none;
 			}
 			
 			&:before {
@@ -408,7 +418,7 @@
 				  line-height: 19px;
 				  height: 20px;
 				  position: relative;
-				  left: -9px;
+				  left: 15px;
 				  width: 0;
 
 			}

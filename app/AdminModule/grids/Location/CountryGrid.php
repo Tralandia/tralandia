@@ -7,8 +7,10 @@ use Nette\Utils\Paginator;
 
 class CountryGrid extends AdminGridControl {
 
-	public function __construct($repository) {
+	public function __construct($repository, \Extras\Translator $translator, \Environment\Collator $collator) {
 		$this->repository = $repository;
+
+		parent::__construct($translator, $collator);
 	}
 
 	public function render() {
@@ -20,9 +22,9 @@ class CountryGrid extends AdminGridControl {
 	{
 		$grid = $this->getGrid();
 
+		$grid->addColumn('parent', 'Continent');
 		$grid->addColumn('name');
 		$grid->addColumn('slug');
-		$grid->addColumn('parent', 'Continent');
 		$grid->addColumn('domain');
 
 		return $grid;
@@ -37,7 +39,7 @@ class CountryGrid extends AdminGridControl {
 	 */
 	public function getDataSource($filter, $order, Paginator $paginator = NULL)
 	{
-		return $this->repository->findCountries();
+		return $this->getTranslatedAndOrderedBy($this->repository->findCountries(), 'parent->name');
 	}
 }
 

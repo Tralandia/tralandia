@@ -4,6 +4,16 @@
 	</td>
 {/define}
 
+{define #col-name}
+	<td>
+		{if $row->important}
+			<b>{_$row->name}</b>
+		{else}
+			{_$row->name}
+		{/if}
+	</td>
+{/define}
+
 {define #col-sorting}
 	<td>
 		{$row->sorting}
