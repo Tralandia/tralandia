@@ -10,8 +10,8 @@ nette:
 	session:
 		autoStart: smart
 		expiration: '+1 year'
-		#cookie_path: '/'
-		#cookie_domain: '.tra.com'
+		cookie_path: '/'
+		cookie_domain: '.tra.com'
 
 	latte:
 		macros:
