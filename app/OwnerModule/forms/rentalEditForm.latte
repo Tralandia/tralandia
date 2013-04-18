@@ -45,7 +45,7 @@
 				{else}
 					{var $hide = 'hide'}
 				{/if}
-				{include #interviewText, control => $control, class => $control->getName().' toggleLanguage interview '.$hide}
+				{include #interviewControl, control => $control, class => $control->getName().' toggleLanguage interview '.$hide}
 			{/foreach}
 		{/foreach}
 
