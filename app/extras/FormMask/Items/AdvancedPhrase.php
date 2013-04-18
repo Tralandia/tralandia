@@ -2,23 +2,23 @@
 
 namespace Extras\FormMask\Items;
 
-use Nette, Entity, Extras;
+use Nette, Entity, Extras, Environment;
 
 /**
  * Phrase polozka masky
  */
 class AdvancedPhrase extends Text {
 
-	/** @var Extras\Environment */
+	/** @var Environment\Environment */
 	protected $environment;
 
 	/**
 	 * @param string
 	 * @param string
 	 * @param Extras\Models\Entity\IEntity
-	 * @param Extras\Environment
+	 * @param Environment\Environment
 	 */
-	public function __construct($name, $label, Extras\Models\Entity\IEntity $entity, Extras\Environment $environment) {
+	public function __construct($name, $label, Extras\Models\Entity\IEntity $entity, Environment\Environment $environment) {
 		parent::__construct($name, $label, $entity);
 		$this->environment = $environment;
 		$this->setValueSetter(new Extras\Callback($this, 'phraseSetter', array($entity->{$this->name})));
