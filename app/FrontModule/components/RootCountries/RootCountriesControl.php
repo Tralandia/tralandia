@@ -41,7 +41,7 @@ class RootCountriesControl extends \BaseModule\Components\BaseControl {
 
 	private function getCountries()
 	{
-		return $this->locationRepository->get()->getCountriesOrdered(
+		return $this->locationRepository->getCountriesOrdered(
 			$this->translator, 
 			$this->environment->getLocale()->getCollator()
 		);

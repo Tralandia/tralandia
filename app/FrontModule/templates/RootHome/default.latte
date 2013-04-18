@@ -11,7 +11,7 @@
 						<a n:href=":Front:Rental:detail $rental['entity'], Routers\BaseRoute::PRIMARY_LOCATION => $rental['entity']->primaryLocation" title="{_$rental['entity']->name}" >
 						<div class="position">TOP</div>
 						{if $mainImage = $rental['entity']->getMainImage()}
-							<img alt="{_$rental['entity']->name}" n:image="{$mainImage}" />
+							<img alt="{_$rental['entity']->name}" n:image="$mainImage" />
 						{else}
 							<img alt="{_$rental['entity']->name}" n:fakeImage="" />
 						{/if}

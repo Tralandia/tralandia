@@ -22,7 +22,6 @@ class ImportAmenities extends BaseImport {
 		$sk = $this->context->languageRepositoryAccessor->get()->findOneByIso('sk');
 
 		$groups = array(
-			array('important', 'important', 'important'),
 			array('location', 'locations', 'location'),
 			array('children', 'children', 'children'),
 			array('activity', 'activities', 'activity'),
@@ -76,17 +75,28 @@ class ImportAmenities extends BaseImport {
 		$this->model->flush();
 
 		// General Amenities
+		$alteredTypes = array(
+			'non-smoking-facility' => 'other',
+			'credit-debit-cards-accepted' => 'service',
+			'access-for-the-disabled' => 'other',
+			'gsm-access' => 'other',
+		);
+
 		$subGroups = explode(',', 'other,important,children,room,kitchen,bathroom,heating,parking,relax,service');
 		foreach ($subGroups as $key => $value) {
 			$amenityType = $this->context->rentalAmenityTypeRepositoryAccessor->get()->findOneBySlug($value);
 			$r = q('select * from amenities_general where type_id = '.$key);
 			while ($x = mysql_fetch_array($r)) {
 				$amenity = $this->context->rentalAmenityEntityFactory->create();
-				$amenity->type = $amenityType;
 				$amenity->name = $this->createNewPhrase($nameDictionaryType, $x['name_dic_id']);
 				$amenity->slug = qc('select text from z_en where id = '.$x['name_dic_id']);
 				$amenity->oldId = $x['id'];
 				if (in_array($amenity->slug, $this->importantAmenities)) $amenity->important = TRUE;
+				if (isset($alteredTypes[$amenity->slug])) {
+					$amenity->type = $this->context->rentalAmenityTypeRepositoryAccessor->get()->findOneBySlug($alteredTypes[$amenity->slug]);
+				} else {
+					$amenity->type = $amenityType;				
+				}
 				$this->model->persist($amenity);
 			}
 		}

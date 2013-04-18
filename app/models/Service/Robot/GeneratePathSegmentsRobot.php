@@ -88,11 +88,7 @@ class GeneratePathSegmentsRobot extends \Nette\Object implements IRobot
 			$entity->language = NULL;
 
 			$parent = $location->parent;
-			if(in_array($location->type->slug, array('region', 'locality')) && $parent && !$parent->domain) {
-				$slug = $parent->slug . '-' . $location->slug;
-			} else {
-				$slug = $location->slug;
-			}
+			$slug = $location->slug;
 
 			$entity->pathSegment = $slug;
 			$entity->type = PathSegment::LOCATION;
