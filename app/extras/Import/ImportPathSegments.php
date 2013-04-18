@@ -21,7 +21,11 @@ class ImportPathSegments extends BaseImport {
 
 	public function doImport($subsection = NULL) {
 
-		$this->context->generatePathSegmentsRobot->run();
+		if ($subsection === NULL) {
+			$this->context->generatePathSegmentsRobot->run();
+		} else {
+			$this->context->generatePathSegmentsRobot->runTypes();
+		}
 		return;
 	}
 

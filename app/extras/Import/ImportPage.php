@@ -85,6 +85,25 @@ class ImportPage extends BaseImport {
 			)
 		),
 		array(
+			'destination' => ':Front:CalendarIframe:default', 
+			'hash' => '',
+			'h1Pattern' => array(
+				'sk' => 'Kalendár obsadenosti', 
+				'en' => 'Occupancy calendar',
+				'cs' => 'kalendář obsazenosti'
+			), 
+			'titlePattern' => array(
+				'sk' => 'Kalendár obsadenosti', 
+				'en' => 'Occupancy calendar',
+				'cs' => 'kalendář obsazenosti'
+			),
+			'name' => array(
+				'sk' => 'Kalendár obsadenosti', 
+				'en' => 'Occupancy calendar',
+				'cs' => 'kalendář obsazenosti'
+			)
+		),
+		array(
 			'destination' => ':Front:Home:default', 
 			'hash' => '',
 			'h1Pattern' => array(

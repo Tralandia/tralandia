@@ -74,6 +74,11 @@ class ImportRentalTypes extends BaseImport {
 		}
 		$this->model->flush();
 
+		$this->context->generatePathSegmentsRobot->runTypes();
+
+		$this->model->flush();
+
+		$c = 0;
 		$r = q('select * from objects_types_new');
 		while($x = mysql_fetch_array($r)) {
 			$newTypeId = NULL;
@@ -86,9 +91,43 @@ class ImportRentalTypes extends BaseImport {
 			}
 
 			if ($newTypeId !== NULL) {
-				$this->rentalPairing[$x['id']] = $this->rentalTypes[$newTypeId][0];
+				$this->rentalPairing[$x['id']] = $this->rentalTypes[$newTypeId-1][0];
+
+				$thisLanguage = $context->languageRepositoryAccessor->get()->findOneByOldId($x['language_id']);
+				
+				$newPathSegment = $context->routingPathSegmentRepositoryAccessor->get()->findOneBy(
+					array(
+						'type' => 8,
+						'entityId' => $newTypeId,
+						'language' => $thisLanguage,
+					)
+				);
+
+
+
+				if (isset($newPathSegment) && is_object($newPathSegment) && $newPathSegment->pathSegment != $x['name_url']) {
+					//d($x);
+					//d($newTypeId);
+					//d($newPathSegment);
+					$oldPathSegment = $this->context->routingPathSegmentOldRepositoryAccessor->get()->createNew();
+					$oldPathSegment->pathSegmentNew = $newPathSegment;
+					$oldPathSegment->language = $thisLanguage;
+					$oldPathSegment->type = 8;
+					$oldPathSegment->entityId = $newTypeId;
+					$oldPathSegment->pathSegment = $x['name_url'];
+		
+					$this->model->persist($oldPathSegment);
+					$c++;
+					//d($oldPathSegment);					
+				} else {
+					//d('je to rovnake: '.$x['name_url']);
+				}
 			}
 		}
+
+		$this->model->flush();
+		d($c);
+
 
 		$this->saveRentalPairing();
 
@@ -119,7 +158,7 @@ class ImportRentalTypes extends BaseImport {
 
 	protected function findSkInNew($oldId) {
 		foreach ($this->rentalTypes as $key => $value) {
-			if (in_array($oldId, $value[4])) return $key;
+			if (in_array($oldId, $value[4])) return ($key+1);
 		}
 		return NULL;
 	}
