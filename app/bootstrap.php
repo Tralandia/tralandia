@@ -12,10 +12,6 @@ require_once LIBS_DIR . '/Doctrine/Common/EventManager.php';
 require_once VENDOR_DIR . '/autoload.php';
 require_once LIBS_DIR . '/rado_functions.php';
 
-// Enable Nette\Debug for error visualisation & logging
-//Debugger::enable(Debugger::PRODUCTION);
-Debugger::enable();
-//Debugger::$strictMode = TRUE;
 
 $section = isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : NULL;
 
@@ -27,6 +23,7 @@ $configurator->addParameters([
 ]);
 $configurator->enableDebugger(ROOT_DIR . '/log');
 $robotLoader = $configurator->createRobotLoader();
+$robotLoader->autoRebuild = TRUE;
 $robotLoader->addDirectory(APP_DIR)
 	->addDirectory(LIBS_DIR)
 	->addDirectory(TEMP_DIR . '/presenters')

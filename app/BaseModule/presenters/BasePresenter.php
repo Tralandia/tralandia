@@ -57,6 +57,12 @@ abstract class BasePresenter extends Presenter {
 	protected $addressNormalizer;
 
 	/**
+	 * @autowire
+	 * @var \Extras\Translator
+	 */
+	protected $translator;
+
+	/**
 	 * @var \Repository\LanguageRepository
 	 */
 	protected $languageRepositoryAccessor;
@@ -130,11 +136,12 @@ abstract class BasePresenter extends Presenter {
 
 		$parameters = $this->getContext()->getParameters();
 		$this->template->staticPath = '/';
-		$this->template->setTranslator($this->getService('translator'));
+		$this->template->setTranslator($this->translator);
 		$this->template->registerHelper('image', callback('Tools::helperImage'));
 		$this->template->useTemplateCache = $parameters['useTemplateCache'];
 		$this->template->loggedUser = $this->loggedUser;
 	}
+
 
 	protected function createTemplate($class = NULL) {
 		/** @var \Nette\Templating\FileTemplate|\stdClass $template */

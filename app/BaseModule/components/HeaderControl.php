@@ -5,6 +5,7 @@ use Doctrine\ORM\EntityManager;
 use Entity\User\User;
 use Environment\Environment;
 use Nette\DateTime;
+use Nette\Localization\ITranslator;
 use Service\Seo\ISeoServiceFactory;
 use Service\Seo\SeoService;
 
@@ -42,7 +43,7 @@ class HeaderControl extends \BaseModule\Components\BaseControl {
 
 	public function __construct(SeoService $pageSeo, User $user = NULL, Environment $environment, EntityManager $em,
 								ISeoServiceFactory $seoFactory, \ShareLinks $shareLinks) {
-		parent::__construct();
+		parent::__construct($environment->getTranslator());
 		$this->pageSeo = $pageSeo;
 		$this->user = $user;
 		$this->environment = $environment;

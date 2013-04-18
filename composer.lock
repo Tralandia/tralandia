@@ -6,7 +6,7 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/HosipLan/Nette-AutowireProperties",
+                "url": "https://github.com/HosipLan/Nette-AutowireProperties.git",
                 "reference": "v0.1.1"
             },
             "dist": {
@@ -200,12 +200,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/nette.git",
-                "reference": "3ea232c78a3498fae6a8560969f6c9f604f72e4f"
+                "reference": "a9050a99fcaa5f1e1fbeb208cd36953eccb75020"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/nette/zipball/3ea232c78a3498fae6a8560969f6c9f604f72e4f",
-                "reference": "3ea232c78a3498fae6a8560969f6c9f604f72e4f",
+                "url": "https://api.github.com/repos/nette/nette/zipball/a9050a99fcaa5f1e1fbeb208cd36953eccb75020",
+                "reference": "a9050a99fcaa5f1e1fbeb208cd36953eccb75020",
                 "shasum": ""
             },
             "require": {
@@ -266,7 +266,7 @@
                 "neon",
                 "templating"
             ],
-            "time": "2013-04-15 10:39:20"
+            "time": "2013-04-17 23:53:48"
         },
         {
             "name": "nextras/datagrid",
