@@ -288,19 +288,19 @@ $(document).ready(function(){
 		return false;
 	});
 
-	$('.select2.notFulltext').select2({
+
+
+	$('form:not(.searchForm) .select2.notFulltext').select2({
 		dropdownCssClass: "notFulltext",
 		allowClear: true,
 		minimumResultsForSearch: 'X',
 	});
 
-	// $('.select2:not()')
+	$("form:not(.searchForm) select.select2:not(.select2.notFulltext)").select2({dropdownCssClass: "mainForm"});
 
-	$("select.select2:not(.select2.notFulltext)").select2({dropdownCssClass: "mainForm"});
-
-	// $('.select2.sidebarCountry').select2({
-	// 	dropdownCssClass: 'searchSelect'
-	// });
+	$('form:not(.searchForm) .select2.sidebarCountry').select2({
+		dropdownCssClass: 'searchSelect'
+	});
 
 var A = new App();
 
