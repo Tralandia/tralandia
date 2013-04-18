@@ -96,7 +96,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 	public function __construct(RentalSearchService $search,Environment $environment ,EntityManager $em,
 								ISearchFormFactory $searchFormFactory, OptionGenerator $searchOptionGenerator)
 	{
-		parent::__construct();
+		parent::__construct($environment->getTranslator());
 		$this->search = $search;
 		$this->environment = $environment;
 		$this->em = $em;

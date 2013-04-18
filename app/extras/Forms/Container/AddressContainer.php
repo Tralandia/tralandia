@@ -122,7 +122,7 @@ class AddressContainer extends BaseContainer
 	}
 
 
-	public function setValues($values, $erase = FALSE)
+	public function setValues($values, $erase = FALSE, $onlyDisabled = FALSE)
 	{
 		if(!$values) return NULL;
 
@@ -135,7 +135,7 @@ class AddressContainer extends BaseContainer
 			];
 			$values = $valuesTemp;
 		}
-		parent::setValues($values, $erase);
+		parent::setValues($values, $erase, $onlyDisabled);
 	}
 
 

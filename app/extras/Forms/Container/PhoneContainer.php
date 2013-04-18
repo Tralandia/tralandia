@@ -45,7 +45,7 @@ class PhoneContainer extends BaseContainer
 	}
 
 
-	public function setValues($values, $erase = FALSE)
+	public function setValues($values, $erase = FALSE, $onlyDisabled = FALSE)
 	{
 		if (!$values) return NULL;
 
@@ -55,7 +55,7 @@ class PhoneContainer extends BaseContainer
 			$valuesTemp['number'] = str_replace('+' . $valuesTemp['prefix'], '', $values->getInternational());
 			$values = $valuesTemp;
 		}
-		parent::setValues($values, $erase);
+		parent::setValues($values, $erase, $onlyDisabled);
 	}
 
 

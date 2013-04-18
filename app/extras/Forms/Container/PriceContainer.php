@@ -17,7 +17,7 @@ class PriceContainer extends BaseContainer
 		$this->addSelect('currency', NULL, $currencies);
 	}
 
-	public function setValues($values, $erase = FALSE)
+	public function setValues($values, $erase = FALSE, $onlyDisabled = FALSE)
 	{
 		if(!$values) return NULL;
 
@@ -27,7 +27,7 @@ class PriceContainer extends BaseContainer
 			$valuesTemp['currency'] = $values->getSourceCurrency()->getId();
 			$values = $valuesTemp;
 		}
-		parent::setValues($values, $erase);
+		parent::setValues($values, $erase, $onlyDisabled);
 	}
 
 
