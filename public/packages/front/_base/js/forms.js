@@ -837,4 +837,43 @@ $(function() {
 	});
 	
 
+	// $('.priceList a.remove').on('click',removePriceLine);
+	// $('.priceList a.remove').live('click',removePriceLine);
+
+	// $('.pricelistControlButton a.createNewLine').on('click',createNewLineInPriceList);
+
 });
+
+// function removePriceLine(){
+// 		$(this).parents('.priceList').remove();
+// 		console.log($('.priceList').length);	
+// }
+
+// function createNewLineInPriceList(){
+
+// 	 // var pattern = $('.priceListPattern.hide').clone().wrap('<p>').parent().html();
+// 	 var pattern = $('.priceListPattern.hide').clone();
+	 	
+// 	 	pattern.removeClass('hide')
+// 	 			.removeClass('priceListPattern')
+// 	 			.addClass('priceList')
+// 	 			.find('select,input')
+// 	 			.removeAttr('id');
+
+// 	 	pattern.find('select,input').each(function(){
+// 	 		var originName = $(this).attr('name');
+// 	 			$(this).attr('name',originName.replace("[1]","[]"));	 			
+// 	 	})
+
+// 	 	pattern.find('select').addClass('select2').select2({
+// 			dropdownCssClass: "notFulltext",
+// 			allowClear: true,
+// 			minimumResultsForSearch: 'X',
+// 		});
+
+// 	 	console.log($('#frm-rentalEditForm').serialize());
+
+// 	 	$('.pricelistControl').append(pattern);
+// 	 	// $('.select2').select2();
+// 	return false;
+// }

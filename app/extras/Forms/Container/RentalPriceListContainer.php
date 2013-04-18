@@ -25,20 +25,25 @@ class RentalPriceListContainer extends BaseContainer
 
 
 		$roomCount = [];
-		$maxCount = 50;
+		$maxCount = 51;
 		for($i=1;$i<$maxCount;$i++) {
+			$extraBedCount[$i] = "{$i} ".$translator->translate('o100000',$i);
 			$roomCount[$i] = "{$i}x";
+			$bedCount[$i] = "{$i} ".$translator->translate('o100006',$i);
 		}
-		$roomCount[$maxCount] = "{$maxCount}+";
+		// $roomCount[$maxCount] = "{$maxCount}+";
 
-		for($i=1;$i<6;$i++) {
+		for($i=1;$i<4;$i++) {
 			$rowContainer = $this->addContainer($i);
 			$rowContainer->addSelect('roomCount', '', $roomCount);
 			$rowContainer->addSelect('roomType', '', $roomTypes);
-			$rowContainer->addSelect('bedCount', '', $roomCount);
-			$rowContainer->addSelect('extraBedCount', '', $roomCount);
+			$rowContainer->addSelect('bedCount', '', $bedCount);
+			$rowContainer->addSelect('extraBedCount', '', $extraBedCount);
 			$rowContainer->addPriceContainer('price', '', $currencies);
 		}
+
+		// $rowContainer = $this->addContainer();
+		// $rowContainer->addHidden('jsonPriceList');
 
 	}
 

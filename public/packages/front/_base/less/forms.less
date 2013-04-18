@@ -52,6 +52,38 @@ table.formTable {
 		padding: 10px 0px 15px 0px;
 	}
 
+	tr td.pricelistControl {
+		.priceList {
+			margin-bottom: 10px;
+		}
+
+		.select2 {
+			margin-right: 10px;
+
+			&.string {
+				width: 162px;
+			}
+		}
+
+		input[type=text].price {
+			width: 40px;
+		}
+
+		a.remove {
+			display: block;
+			height: 30px;
+			width: 20px;
+			float: right;
+			text-align: center;
+			color: red;
+			text-decoration: none;
+			line-height: 30px;				
+			i {
+			
+			}
+		}
+	}
+
 	tr.simpleInput {
 		height: 46px;
 		td:nth-child(1) {
@@ -64,6 +96,15 @@ table.formTable {
 				padding-top: 20px;
 				padding-bottom: 15px;
 				color: @darkBlue;
+			}
+		}
+
+		&.interview {
+			table , textarea {
+				width: 100%;
+				-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+				-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+				box-sizing: border-box;         /* Opera/IE 8+ */				
 			}
 		}
 
