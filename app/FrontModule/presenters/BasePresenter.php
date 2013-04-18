@@ -243,6 +243,7 @@ abstract class BasePresenter extends \BasePresenter {
 			$json['googlePlusShare'] = (string) $shareLinks->getGooglePlusShareTag($shareLink);
 			$json['facebookShare'] = (string) $shareLinks->getFacebookShareTag($shareLink, $shareText);
 			$json['pinterestShare'] = (string) $shareLinks->getPinterestShareTag($shareLink, $shareText, $shareImage);
+			$json['linkToShare'] = $shareLink;
 		}
 		$this->sendJson($json);
 	}

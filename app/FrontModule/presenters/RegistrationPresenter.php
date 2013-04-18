@@ -24,6 +24,12 @@ class RegistrationPresenter extends BasePresenter
 	protected $registrationFormFactory;
 
 
+	public function actionDefault()
+	{
+		$this->checkPermission($this->getName(), $this->getAction());
+	}
+
+
 	public function createComponentRegistrationForm()
 	{
 		$form = $this->registrationFormFactory->create($this->environment, $this);

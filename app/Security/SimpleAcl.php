@@ -41,8 +41,8 @@ class SimpleAcl extends Permission
 		$resources[] = $ownerModule = 'OwnerModule';
 		$resources[] = $adminModule = 'AdminModule';
 
-		$resources[] = $signPresenter = 'Sign';
-		$resources[] = $registrationPresenter = 'Registration';
+		$resources[] = $signPresenter = 'Front:Sign';
+		$resources[] = $registrationPresenter = 'Front:Registration';
 
 		$resources[] = $rentalEntity = 'Entity\Rental\Rental';
 		$resources[] = $translationEntity = 'Entity\Phrase\Translation';
@@ -50,6 +50,8 @@ class SimpleAcl extends Permission
 		foreach ($resources as $resource) {
 			$this->addResource($resource);
 		}
+
+		$this->allow(self::ALL, [$signPresenter, $registrationPresenter], self::ALL);
 
 		$this->allow(RoleEntity::OWNER, $ownerModule);
 		$this->allow(RoleEntity::OWNER, $rentalEntity, self::ALL, [$assertion, 'owner']);
