@@ -7,8 +7,10 @@ use Nette\Utils\Paginator;
 
 class LocalityGrid extends AdminGridControl {
 
-	public function __construct($repository) {
+	public function __construct($repository, \Extras\Translator $translator, \Environment\Collator $collator) {
 		$this->repository = $repository;
+
+		parent::__construct($translator, $collator);
 	}
 
 	public function render() {
@@ -20,13 +22,12 @@ class LocalityGrid extends AdminGridControl {
 	{
 		$grid = $this->getGrid();
 
+		$grid->addColumn('parent', 'Country');
 		$grid->addColumn('name');
 		$grid->addColumn('slug');
-		$grid->addColumn('parent', 'Country');
 
 		return $grid;
 	}
-
 	/**
 	 * @param $filter
 	 * @param $order
@@ -36,8 +37,9 @@ class LocalityGrid extends AdminGridControl {
 	 */
 	public function getDataSource($filter, $order, Paginator $paginator = NULL)
 	{
-		return $this->repository->findLocalities();
+		return $this->getTranslatedAndOrderedBy($this->repository->findLocalities(), 'parent->name');
 	}
+
 }
 
 interface ILocalityGridFactory {

@@ -1,6 +1,6 @@
 {define #col-name}
 	<td>
-		{_$row->name}
+		<a href="{plink :Front:Home:default, \Routers\BaseRoute::PRIMARY_LOCATION => $row}" target="_blank">{_$row->name}</a>
 		{var $language = $row->getDefaultLanguage()}
 		{var $currency = $row->getDefaultCurrency()}
 		{var $bracket = array()}
@@ -17,7 +17,9 @@
 
 {define #col-parent}
 	<td>
-		{ifset $row->parent->name}{_$row->parent->name}{/ifset}
+		{ifset $row->parent->name}
+			{_$row->parent->name}
+		{/ifset}
 	</td>
 {/define}
 
