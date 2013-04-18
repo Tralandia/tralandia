@@ -52,6 +52,7 @@ class FrontRoute extends BaseRoute
 	public $rentalAmenityRepositoryAccessor;
 	public $rentalPlacementRepositoryAccessor;
 	public $routingPathSegmentRepositoryAccessor;
+	public $routingPathSegmentOldRepositoryAccessor;
 	public $domainRepositoryAccessor;
 	public $favoriteListRepositoryAccessor;
 	public $pageRepositoryAccessor;
@@ -343,11 +344,21 @@ class FrontRoute extends BaseRoute
 		$pathSegmentList = $this->routingPathSegmentRepositoryAccessor->get()
 			->findForRouter($params['language'], $params['primaryLocation'], $pathSegments);
 
-		foreach ($pathSegmentList as $value) {
-			$keyTemp = $pathSegmentTypesFlip[$value->type];
+		$pathSegmentRepository = $this->routingPathSegmentRepositoryAccessor->get();
+		$pathSegmentOldRepository = $this->routingPathSegmentOldRepositoryAccessor->get();
+
+		foreach ($pathSegments as $value) {
+			$pathSegment = $pathSegmentRepository->findOneForRouter($params['language'], $params['primaryLocation'], $value);
+			if(!$pathSegment) {
+				$pathSegment = $pathSegmentOldRepository->findOneForRouter($params['language'], $params['primaryLocation'], $value);
+				if(!$pathSegment) continue;
+			}
+			$keyTemp = $pathSegmentTypesFlip[$pathSegment->getType()];
 			$accessor = $keyTemp.'RepositoryAccessor';
-			$pathSegmentListNew[$keyTemp] = $this->{$accessor}->get()->find($value->entityId);
+			$pathSegmentListNew[$keyTemp] = $this->{$accessor}->get()->find($pathSegment->getEntityId());
 		}
+
+
 		return $pathSegmentListNew;
 	}
 

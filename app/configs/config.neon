@@ -316,6 +316,7 @@ factories:
 			- $rentalAmenityRepositoryAccessor(@rentalAmenityRepositoryAccessor)
 			- $rentalPlacementRepositoryAccessor(@rentalPlacementRepositoryAccessor)
 			- $routingPathSegmentRepositoryAccessor(@routingPathSegmentRepositoryAccessor)
+			- $routingPathSegmentOldRepositoryAccessor(@routingPathSegmentOldRepositoryAccessor)
 			- $domainRepositoryAccessor(@domainRepositoryAccessor)
 			- $pageRepositoryAccessor(@pageRepositoryAccessor)
 			- $favoriteListRepositoryAccessor(@favoriteListRepositoryAccessor)
