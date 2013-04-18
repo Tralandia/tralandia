@@ -29,9 +29,9 @@ class AdminGridControl extends BaseGridControl {
 	public function getTranslatedAndOrderedBy($entities, $by)
 	{
 		$order = [];
-		foreach ($entities as $key => $country) {
-			if (isset($country->{$by})) {
-				$name = $this->translator->translate($country->{$by});
+		foreach ($entities as $key => $entity) {
+			if (isset($entity->{$by})) {
+				$name = $this->translator->translate($entity->{$by});
 				$order[$name . $key] = $key;
 			} else {
 				$order[$key] = $key;
