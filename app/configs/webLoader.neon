@@ -174,13 +174,13 @@ parameters:
 					- front/favorites/js/favorites.js
 					# rental detail
 					- front/rentalDetail/js/rentalDetail.js
-					# search sidebar
-					- front/search/js/search.js
 					- front/_base/js/rentalEditFormLocalize.js
 					# rental navigation
 					- front/rentalNavigation/js/rentalNavigation.js
 					# calendar widget
 					- front/calendarWidget/js/calendarWidget.js
+					# search sidebar
+					- front/search/js/search.js					
 			jqueryAppear:
 				js:
 					- jqueryAppear/lib/js/jquery.appear.js

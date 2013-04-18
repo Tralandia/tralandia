@@ -17,7 +17,6 @@
 		{include #phone, control => $rentalContainer['phone']}
 		{include #url, control => $rentalContainer['url']}
 
-
 		{include #fieldset, text => 'o100137'}
 		{include #select, control => $rentalContainer['translationLanguage'] , controlClass => 'select2 selectLanguage notFulltext'}
 
@@ -46,7 +45,7 @@
 				{else}
 					{var $hide = 'hide'}
 				{/if}
-				{include #text, control => $control, class => $control->getName().' toggleLanguage '.$hide}
+				{include #interview, control => $control, class => $control->getName().' toggleLanguage interview '.$hide}
 			{/foreach}
 		{/foreach}
 
