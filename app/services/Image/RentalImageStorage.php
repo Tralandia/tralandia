@@ -14,6 +14,19 @@ use Nette\Utils\Strings;
 class RentalImageStorage extends FileStorage
 {
 
+	protected $paths = [
+		Image::ORIGINAL => [
+			'width' => 1200,
+			'height' => NULL,
+			'flag' => Nette\Image::SHRINK_ONLY
+		],
+		Image::MEDIUM => [
+			'width' => 467,
+			'height' => 276,
+			'flag' => Nette\Image::FIT
+		]
+	];
+
 	/**
 	 * @param Nette\Image $image
 	 *
@@ -30,15 +43,24 @@ class RentalImageStorage extends FileStorage
 
 	protected function createMiniatures($path, Nette\Image $image)
 	{
-		$imageFull = clone $image;
-
-		$image->resize(1200, NULL, Nette\Image::SHRINK_ONLY);
-		$image->save($path . DIRECTORY_SEPARATOR . Image::ORIGINAL . '.' . Image::EXTENSION);
-
-		$imageFull->resizeCrop(467, 276);
-		$imageFull->save($path . DIRECTORY_SEPARATOR . Image::MEDIUM . '.' . Image::EXTENSION);
+		foreach ($this->paths as $key => $params) {
+			if (!$imageCopy) {
+				$imageCopy = clone $image;
+				$img = $image;
+			} else {
+				$img = $imageCopy;
+			}
+			$img->resize($params['width'], $params['height'], $params['flag']);
+			$img->save($path . DIRECTORY_SEPARATOR . $key . '.' . Image::EXTENSION);
+		}
 	}
-
+	
+	public function delete($imagePath)
+	{
+		foreach ($this->paths as $key => $params) {
+			parent::delete($imagePath . DIRECTORY_SEPARATOR . $key . '.' . Image::EXTENSION);
+		}
+	}
 
 	protected function createFolder() 
 	{
