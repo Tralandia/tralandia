@@ -81,7 +81,7 @@ class RentalContainer extends BaseContainer
 
 		$this->addSelect('placement', 'o100143', $placement)
 			->setOption('help', '')
-			->setPrompt('#vyberte prosim');
+			->setPrompt('o854');
 
 
 		$this->addRentalTypeContainer('type', $rentalTypes);
