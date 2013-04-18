@@ -54,7 +54,7 @@ class ReservationProtector {
 		$oneMonthAgo = (new DateTime)->modify("-1 month");
 		$sentReservationCountForEmail = count($this->getSentReservationForEmail($email));
 
-		if($sentReservationCountForEmail >= $this->maxCount && $lastReservationTimeForEmail >= $oneMonthAgo) {
+		if($sentReservationCountForEmail >= $this->maxCount && $lastReservationTimeForEmail && $lastReservationTimeForEmail >= $oneMonthAgo) {
 			throw new TooManyReservationForEmailException;
 		}
 
@@ -101,6 +101,7 @@ class ReservationProtector {
 	protected function getLastSentReservationForEmail($email)
 	{
 		$list = $this->getSentReservationForEmail($email);
+		if(!is_array($list)) return NULL;
 		return end($list);
 	}
 
