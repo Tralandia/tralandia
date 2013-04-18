@@ -8,7 +8,7 @@ use Entity\Routing;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Repository\Routing\PathSegmentOldRepository")
  * @ORM\Table(name="routing_pathsegmentold", indexes={@ORM\index(name="pathSegment", columns={"pathSegment"}), @ORM\index(name="type", columns={"type"}), @ORM\index(name="entityId", columns={"entityId"})})
  */
 class PathSegmentOld extends \Entity\BaseEntity {
@@ -49,7 +49,7 @@ class PathSegmentOld extends \Entity\BaseEntity {
 	 */
 	protected $entityId;
 
-	
+
 
 
 
@@ -71,12 +71,12 @@ class PathSegmentOld extends \Entity\BaseEntity {
 
 			//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
+	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
 		parent::__construct();
 	}
-		
+
 	/**
 	 * @param \Entity\Routing\PathSegment
 	 * @return \Entity\Routing\PathSegmentOld
@@ -87,7 +87,7 @@ class PathSegmentOld extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Routing\PathSegmentOld
 	 */
@@ -97,7 +97,7 @@ class PathSegmentOld extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Routing\PathSegment|NULL
 	 */
@@ -105,7 +105,7 @@ class PathSegmentOld extends \Entity\BaseEntity {
 	{
 		return $this->pathSegmentNew;
 	}
-		
+
 	/**
 	 * @param \Entity\Location\Location
 	 * @return \Entity\Routing\PathSegmentOld
@@ -116,7 +116,7 @@ class PathSegmentOld extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Routing\PathSegmentOld
 	 */
@@ -126,7 +126,7 @@ class PathSegmentOld extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Location\Location|NULL
 	 */
@@ -134,7 +134,7 @@ class PathSegmentOld extends \Entity\BaseEntity {
 	{
 		return $this->primaryLocation;
 	}
-		
+
 	/**
 	 * @param \Entity\Language
 	 * @return \Entity\Routing\PathSegmentOld
@@ -145,7 +145,7 @@ class PathSegmentOld extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Routing\PathSegmentOld
 	 */
@@ -155,7 +155,7 @@ class PathSegmentOld extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Language|NULL
 	 */
@@ -163,7 +163,7 @@ class PathSegmentOld extends \Entity\BaseEntity {
 	{
 		return $this->language;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\Routing\PathSegmentOld
@@ -174,7 +174,7 @@ class PathSegmentOld extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -182,7 +182,7 @@ class PathSegmentOld extends \Entity\BaseEntity {
 	{
 		return $this->pathSegment;
 	}
-		
+
 	/**
 	 * @param integer
 	 * @return \Entity\Routing\PathSegmentOld
@@ -193,7 +193,7 @@ class PathSegmentOld extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return integer|NULL
 	 */
@@ -201,7 +201,7 @@ class PathSegmentOld extends \Entity\BaseEntity {
 	{
 		return $this->type;
 	}
-		
+
 	/**
 	 * @param integer
 	 * @return \Entity\Routing\PathSegmentOld
@@ -212,7 +212,7 @@ class PathSegmentOld extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return integer|NULL
 	 */

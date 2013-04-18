@@ -12,6 +12,6 @@ use Routers\FrontRoute;
  *
  * @author Dávid Ďurika
  */
-class PathSegmentRepository extends BasePathSegmentRepository {
+class PathSegmentOldRepository extends BasePathSegmentRepository {
 
 }
