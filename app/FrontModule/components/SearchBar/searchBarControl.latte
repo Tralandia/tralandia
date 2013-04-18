@@ -57,10 +57,7 @@
 	<h4><i class="{$bottomLinks->iconClass}"></i>{_$bottomLinks->title}</h4>
 		<ul n:inner-foreach="$bottomLinks->links as $value">
 			<li>
-				{capture $link}{plink RentalList:, $bottomLinks->linkArgument => $value->entity}{/capture}
-				{var $rel = NULL}
-				{if strpos($link, '?')}{var $rel = "noindex,follow"}{/if}
-				<a href="{$link}" n:attr="rel => $rel">
+				<a href="{plink RentalList:, $bottomLinks->linkArgument => $value->entity}">
 					{$value->name} <span class="counter">{$value->count}</span>
 				</a>
 			</li>
