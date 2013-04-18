@@ -281,11 +281,11 @@ $(function(){
 
 	$('[data-autocomplete-url]').searchFormSuggest();
 
-	// $('.searchForm .select2.disabledFulltext').select2({
-	// 	dropdownCssClass: 'searchSelect',
-	// 	allowClear: true,
-	// 	minimumResultsForSearch: 'X',
-	// });	
+	$('.searchForm .select2.disabledFulltext').select2({
+		dropdownCssClass: 'searchSelect',
+		allowClear: true,
+		minimumResultsForSearch: 'X',
+	});	
 	
 	$('.searchForm .select2:not(.disabledFulltext)').select2({
 		dropdownCssClass: 'searchSelect'
