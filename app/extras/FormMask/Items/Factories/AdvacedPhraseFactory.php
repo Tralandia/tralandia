@@ -2,20 +2,20 @@
 
 namespace Extras\FormMask\Items\Foctories;
 
-use Extras, Entity;
+use Extras, Entity, Environment;
 
 /**
  * @author Branislav Vaculčiak
  */
 class AdvancedPhraseFactory implements IFactory {
 
-	/** @var Extras\Environment */
+	/** @var Environment\Environment */
 	protected $environment;
 
 	/**
-	 * @param Extras\Environment
+	 * @param Environment\Environment
 	 */
-	public function __construct(Extras\Environment $environment) {
+	public function __construct(Environment\Environment $environment) {
 		$this->environment = $environment;
 	}
 
