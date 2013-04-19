@@ -92,6 +92,15 @@ class FrontRoute extends BaseRoute
 			$pathSegments = $params[self::HASH];
 			unset($params[self::HASH]);
 
+			if(is_array($pathSegments) && 'external/calendar/calendar.php' == join('/',$pathSegments)) {
+				if(isset($params['id']) && $rental = $this->rentalRepositoryAccessor->get()->find($params['id'])) {
+					$params[self::RENTAL] = $rental;
+					$presenter = 'CalendarIframe';
+					$params['action'] = 'default';
+					unset($params['id']);
+				}
+			}
+
 			$tmp = $params;
 			unset($tmp[self::LANGUAGE], $tmp[self::PRIMARY_LOCATION], $tmp[self::USE_ROOT_DOMAIN], $tmp['action']);
 			if(!count($tmp) && !count($pathSegments)) {
@@ -167,9 +176,9 @@ class FrontRoute extends BaseRoute
 
 			//d($params); #@debug
 			if(!isset($params['action']) || !isset($presenter)) {
-				//$presenter = 'RentalList';
-				//$params['action'] = 'default';
-				return NULL;
+				$presenter = 'Home';
+				$params['action'] = 'default';
+				//return NULL;
 			}
 
 
@@ -249,6 +258,9 @@ class FrontRoute extends BaseRoute
 		if(!count($params[self::HASH])) {
 			$params[self::HASH] = '';
 		} else {
+			if($presenter == 'CalendarIframe') {
+				krsort($params[self::HASH]);
+			}
 			$params[self::HASH] = implode('/', $params[self::HASH]);
 		}
 		unset($params[self::USE_ROOT_DOMAIN]);
@@ -291,6 +303,11 @@ class FrontRoute extends BaseRoute
 	public function filterOut(array $params)
 	{
 		$segments = [];
+
+		if(isset($params[self::RENTAL]) && isset($params[self::PAGE]) && ':Front:CalendarIframe:default' == $params[self::PAGE]->getDestination()) {
+			$segments[self::RENTAL] = $params[self::RENTAL]->id;
+			unset($params[self::RENTAL]);
+		}
 
 		if(isset($params[self::RENTAL])) {
 			$segments[self::RENTAL] = $params[self::RENTAL]->getSlug() . '-r' . $params[self::RENTAL]->id;
