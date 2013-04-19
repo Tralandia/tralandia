@@ -1,22 +1,16 @@
 {block content}
-
-
 	<h1 class="marginLeft pull-left">Calendar widget</h1>
 
-
-
-
-
-	<select class="select2 pull-right marginTop marginRight">
-		<option>Ine chalupa moja</option>
-		<option>Ine</option>
-		<option>Ine</option>
-		<option>Ine</option>
+	{* {if count($rentals)>1} *}
+	<select n:inner-foreach="$rentals as $rental" class="select2 pull-right marginTop marginRight">
+		{var selected = ($thisRental->id == $rental->id ? 'selected' : null)}
+		<option n:attr="selected => $selected" redirect="{plink :Owner:CalendarWidget:, id => $rental->id}">{_$rental->name}</option>
 	</select>
+	{* {/if} *}
 
 <div class="clearfix"></div>
 
-<p>#Vyberte si formát a veľkosť kalendára obsadenosti Vášho objektu a potom skopírujte kód, ktorý sa nachádza pod ukážkou (v spodnej časti), do Vašej webovej stránky.</p>
+<p>{_o2544}</p>
 <p>Kalendár obsadenosti bude vždy aktuálny. Prvý zobrazený mesiac bude vždy aktuálny mesiac v roku.</p>
 
 <form data-id="1" id="calendarWidgetControl">
@@ -68,7 +62,7 @@
 	</div>
 
 
-<p>#Nasledovný kód si skopírujte do Vašej webovej stránky. Po presnom skopírovaní sa Vám bude kalendár zobrazovať. Kalendár obsadenosti sa aktualizuje vždy cez Vaše konto na Tralandia.sk.</p>
+<p>{_o2547}</p>
 
 	<textarea id="htmlOutputFromViewer" class="calendarWidgetLink autoselect"></textarea>
 

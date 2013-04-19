@@ -8,9 +8,17 @@ use Nette\Utils\Html;
 
 class CalendarWidgetPresenter extends BasePresenter {
 
-	public function actionDefault()
-	{
+	/**
+	 * @var \Extras\Models\Repository\RepositoryAccessor
+	 */
+	public $rentalRepositoryAccessor;
 
+	public function injectBaseRepositories(\Nette\DI\Container $dic) {
+		$this->rentalRepositoryAccessor = $dic->rentalRepositoryAccessor;
+	}
+	public function actionDefault($id)
+	{
+		$this->template->thisRental = $this->rentalRepositoryAccessor->get()->find($id);
 		$this->template->rentals = $this->loggedUser->getRentals();
 		$this->template->linkTemplate = $this->link(
 			':generateCode',
