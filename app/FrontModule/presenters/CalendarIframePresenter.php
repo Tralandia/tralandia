@@ -13,14 +13,8 @@ class CalendarIframePresenter extends BasePresenter {
 	 */
 	protected $calendarControl;
 
-	public function actionDefault($rentalId, $monthsCount)
+	public function actionDefault($rental, $months)
 	{
-		/** @var $rental \Entity\Rental\Rental */
-		$rental = $this->rentalRepositoryAccessor->get()->find($rentalId);
-		if(!$rental) {
-			throw new BadRequestException;
-		}
-
 		//$selectedData = $rental->getCalendar();
 		$selectedData = [
 			new DateTime('2013-03-14'),
@@ -30,7 +24,7 @@ class CalendarIframePresenter extends BasePresenter {
 		];
 
 		$this->template->rental = $rental;
-		$this->template->monthsCount = $monthsCount;
+		$this->template->monthsCount = $months;
 		$this->template->selectedData = $selectedData;
 	}
 
