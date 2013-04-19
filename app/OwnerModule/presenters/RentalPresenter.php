@@ -32,7 +32,7 @@ class RentalPresenter extends BasePresenter
 	{
 		$rental = $this->loggedUser->getFirstRental();
 		if (!$rental) {
-			throw new BadRequestException('Nenasiel som ziadny objekt');
+			$this->redirect('User:edit');
 		}
 		$this->redirect('edit', ['id' => $rental->getId()]);
 	}
