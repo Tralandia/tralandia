@@ -106,7 +106,7 @@ abstract class BasePresenter extends \BasePresenter {
 
 		$this->template->currentLanguage = $this->environment->getLanguage();
 
-		$this->template->navBarLastActive = $this->getActiveNavbarTab();
+		$this->template->navigationBarLastActive = $this->getActiveNavbarTab();
 		$this->template->seenRentals = $this->lastSeen->getSeen();
 		$this->template->lastSeenRentals = $this->lastSeen->getSeenRentals(12);
 
@@ -164,9 +164,9 @@ abstract class BasePresenter extends \BasePresenter {
 	public function getActiveNavbarTab()
 	{
 		$tabsShow = array(
-			'Rental:detail' => array('navBarSearchResults', 'navBarFavorites', 'navBarLastSeen'),
-			'RentalList:default' => array('navBarFavorites', 'navBarLastSeen'),
-			'Home:default' => array('navBarFavorites', 'navBarLastSeen')
+			'Rental:detail' => array('navigationBarSearchResults', 'navigationBarFavorites', 'navigationBarLastSeen'),
+			'RentalList:default' => array('navigationBarFavorites', 'navigationBarLastSeen'),
+			'Home:default' => array('navigationBarFavorites', 'navigationBarLastSeen')
 		);
 
 		$request = $this->getHttpRequest();
@@ -174,11 +174,11 @@ abstract class BasePresenter extends \BasePresenter {
 
 		foreach ($tabsShow as $presenter => $tabs) {
 			if (!$this->isLinkCurrent($presenter)) continue;
-			if (!isset($cookies['navBarActive'])) break;
-			return (in_array($cookies['navBarActive'], $tabs) ? $cookies['navBarActive'] : current($tabs));
+			if (!isset($cookies['navigationBarActive'])) break;
+			return (in_array($cookies['navigationBarActive'], $tabs) ? $cookies['navigationBarActive'] : current($tabs));
 		}
 
-		return 'navBarFavorites';
+		return 'navigationBarFavorites';
 	}
 
 	protected function getSuggestionForLocation($string)

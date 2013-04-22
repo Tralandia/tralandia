@@ -1,12 +1,12 @@
 <div class="span12">
 	<div class="rentalDetailNavigationHeader">
-		{$navBar['heading']}&nbsp;&nbsp;|&nbsp;&nbsp;{_o100032} {$navBar['currentIndex']} / {$navBar['totalCount']}&nbsp;&nbsp;|&nbsp;&nbsp;<a class="menu" href="{$navBar['searchLink']}">{_o100033}</a>
+		{$navigationBar['heading']}&nbsp;&nbsp;|&nbsp;&nbsp;{_o100032} {$navigationBar['currentIndex']} / {$navigationBar['totalCount']}&nbsp;&nbsp;|&nbsp;&nbsp;<a class="menu" href="{$navigationBar['searchLink']}">{_o100033}</a>
 	</div>
 
 	<div class="rentalDetailNavigation">
 
-		{ifset $navBar['prevRental']}
-		<a href="{link Rental:detail $navBar['prevRental']}" class="prev">
+		{ifset $navigationBar['prevRental']}
+		<a href="{link Rental:detail $navigationBar['prevRental']}" class="prev">
 			<i class="entypo-prev"></i> 
 		</a>
 		{else}
@@ -17,7 +17,7 @@
 
 		<div class="content">
 		<ul id="objectDetailNavBar">
-			{foreach $navBar['rentals'] as $navRental}
+			{foreach $navigationBar['rentals'] as $navRental}
 			{if $navRental == FALSE} 
 			<li class="placeholder"><a href="#"></a></li>
 			{else}
@@ -32,8 +32,8 @@
 		</div>
 
 
-		{ifset $navBar['nextRental']}
-		<a href="{link Rental:detail $navBar['nextRental']}" class="next">
+		{ifset $navigationBar['nextRental']}
+		<a href="{link Rental:detail $navigationBar['nextRental']}" class="next">
 			<i class="entypo-slider-right"></i> 
 		</a>
 		{else}

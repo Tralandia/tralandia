@@ -12,7 +12,7 @@
 			{control header}
 			{/cache}
 			{* {include favorites.latte} *}
-			{include navbar.latte}
+			{include navigationBar.latte}
 			{control flashes}
 
 			{cache homeSearchBar, if => isset($isHome) && $useTemplateCache, expire => '+1 day'}
