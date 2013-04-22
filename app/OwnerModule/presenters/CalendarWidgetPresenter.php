@@ -8,12 +8,44 @@ use Nette\Utils\Html;
 
 class CalendarWidgetPresenter extends BasePresenter {
 
-	public function actionDefault()
+	/**
+	 * @var \Extras\Models\Repository\RepositoryAccessor
+	 */
+	public $rentalRepositoryAccessor;
+
+	/**
+	 * @var \Extras\Models\Repository\RepositoryAccessor
+	 */
+	public $languageRepositoryAccessor;
+
+	/**
+	 * @autowire
+	 * @var \Extras\Translator
+	 */
+	protected $translator;
+
+	/**
+	 * @autowire
+	 * @var \Environment\Collator
+	 */
+	protected $collator;
+
+	public function injectBaseRepositories(\Nette\DI\Container $dic) {
+		$this->rentalRepositoryAccessor = $dic->rentalRepositoryAccessor;
+		$this->languageRepositoryAccessor = $dic->languageRepositoryAccessor;
+	}
+	public function actionDefault($id)
 	{
+		$this->template->environment = $this->environment;
+		$this->template->thisRental = $this->rentalRepositoryAccessor->get()->find($id);
+		$this->template->languages = $this->languageRepositoryAccessor->get()->getSupportedForSelect(
+			$this->translator, 
+			$this->collator
+		);
 
 		$this->template->rentals = $this->loggedUser->getRentals();
 		$this->template->linkTemplate = $this->link(
-			':generateCode',
+			':Owner:CalendarWidget:generateCode',
 			['rentalId' => '__rentalId__', 'wLanguage' => '__language__', 'columns' => '__columns__', 'rows' => '__rows__']
 		);
 	}
@@ -31,7 +63,7 @@ class CalendarWidgetPresenter extends BasePresenter {
 		$monthHeight = 150;
 
 		$iFrameWidth = ($monthWidth * $columns)+ 10;
-		$iFrameHeight = ($monthHeight * ($monthsCount / $rows))+ 10;
+		$iFrameHeight = ($monthHeight * $rows)+ 10;
 
 		$link = $this->link(
 			'//:Front:CalendarIframe:default',
@@ -43,7 +75,7 @@ class CalendarWidgetPresenter extends BasePresenter {
 			->scrolling('no')
 			->style("width: {$iFrameWidth}px ;height: {$iFrameHeight}px; border:none; margin:0 auto;");
 
-		$json = ['code' => "$code"];
+		$json = ['code' => htmlspecialchars_decode("$code")];
 		$this->sendJson($json);
 	}
 

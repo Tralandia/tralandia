@@ -23,7 +23,6 @@ class CalendarIframePresenter extends BasePresenter {
 			new DateTime('2013-04-21'),
 		];
 
-		$this->template->rental = $rental;
 		$this->template->monthsCount = $months;
 		$this->template->selectedData = $selectedData;
 	}

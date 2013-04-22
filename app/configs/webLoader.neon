@@ -7,6 +7,7 @@ parameters:
 					- front/admin/less/base.less
 					- front/admin/less/datagrid.less
 					- front/admin/less/adminMenuAside.less
+					- front/calendarWidget/less/calendarWidget.less
 				js:
 					- front/admin/js/admin.js
 
@@ -117,7 +118,7 @@ parameters:
 					#- front/object-list.less
 					#- front/homepage-list.less
 					#- front/rental-detail-navigation.less
-					#- front/calendarWidgetControl.less
+					- front/admin/less/calendarWidgetControl.less
 					#- front/interview-list.less
 
 					# _base
