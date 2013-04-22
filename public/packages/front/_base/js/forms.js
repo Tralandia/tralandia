@@ -837,6 +837,13 @@ $(function() {
 	});
 	
 
+$('button[type=submit]').click(function(){
+	$(this).addClass('active');
+});
+$('button[type=submit]').live('click',function(){
+	$(this).addClass('active');
+});	
+
 	// $('.priceList a.remove').on('click',removePriceLine);
 	// $('.priceList a.remove').live('click',removePriceLine);
 
