@@ -1,7 +1,7 @@
 $(function(){
 	
 	$('body').popover({
-		selector: '#navbarTabContent li:not(.placeholder)',
+		selector: '#navigationBarTabContent li:not(.placeholder)',
 		trigger: 'hover',
 		title: function(){
 			return $(this).attr('data-name').replace(/~star~/g, '<i class="icon-star"></i>');

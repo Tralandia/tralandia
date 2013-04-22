@@ -5,22 +5,22 @@
 
 (function($) {
 
-	$.navBar = function(el, options) {
+	$.navigationBar = function(el, options) {
 
 		/**
-		 * navBar Elements
+		 * navigationBar Elements
 		 */
 		var base 		= this;
 		base.el 		= el;
 		base.$el 		= $(el);
-		base.$tabs 		= base.$el.find('#navBarTabs');
-		base.$contents 	= base.$el.find('#navbarTabContent');
+		base.$tabs 		= base.$el.find('#navigationBarTabs');
+		base.$contents 	= base.$el.find('#navigationBarTabContent');
 		base.$shareContent = base.$el.find('#shareContent')
 
 		// vars
 		base.activeTabName 		= null;
 		base.currentRental		= null;
-		base.navBarShareShown 	= false;
+		base.navigationBarShareShown 	= false;
 		base.favoritesLinks 	= null;
 
 		/**
@@ -38,7 +38,7 @@
 		}
 
 		/**
-		 * navBar actions
+		 * navigationBar actions
 		 */
 		base.setActive = function(obj)
 		{
@@ -86,7 +86,7 @@
 			base.$tabs.find('li[for='+tabName+']').removeClass('hide');
 			base.$contents.find('div#'+tabName).removeClass('hide');
 			if (!Favorites._getFavoritesLength()) {
-				base.hideTab('navBarFavorites');
+				base.hideTab('navigationBarFavorites');
 			}
 			base.setActive(tabName);
 		}
@@ -145,7 +145,7 @@
 
 		base.share = function()
 		{
-			if (base.navBarShareShown){
+			if (base.navigationBarShareShown){
 				base.hideShare();
 				return false;
 			}
@@ -156,7 +156,7 @@
 			$this = $(this);
 			tabName = $this.attr('for');
 			
-			if (tabName=='navBarFavorites') {
+			if (tabName=='navigationBarFavorites') {
 				if (base.favoritesLinks) {
 					initNavBarShare(base.favoritesLinks);
 				} else {
@@ -168,8 +168,8 @@
 
 					});
 				}
-			} else if (tabName=='navBarSearchResults') {
-				html = base.$tabs.find('li.share[for="navBarSearchResults"] ul')[0].outerHTML;
+			} else if (tabName=='navigationBarSearchResults') {
+				html = base.$tabs.find('li.share[for="navigationBarSearchResults"] ul')[0].outerHTML;
 				$socialLinks = base.$shareContent.find('#dynamicShareContainer').html(html);
 				Socialite.load($socialLinks);
 				$('body').removeAttr('data-socialPluginsInit');
@@ -181,14 +181,14 @@
 		base.showShare = function()
 		{
 			base.$shareContent.show();
-			base.navBarShareShown = true;
+			base.navigationBarShareShown = true;
 			base.innerClick = true;
 		}
 
 		base.hideShare = function()
 		{
 			base.$shareContent.hide();
-			base.navBarShareShown = false;
+			base.navigationBarShareShown = false;
 			base.innerClick = false;
 		}
 
@@ -198,14 +198,14 @@
 		}
 
 		/**
-		 * navBar favorites
+		 * navigationBar favorites
 		 */
 		base.removeFavorite = function(e)
 		{
 			base.favoritesLinks = null;
 			Favorites.removeLink(e, this);
 			if (!Favorites._getFavoritesLength()) {
-				base.hideTab('navBarFavorites');
+				base.hideTab('navigationBarFavorites');
 			}
 			base.checkTabs();
 		}
@@ -214,7 +214,7 @@
 		{
 			base.favoritesLinks = null;
 			Favorites.toggleAdd(e, this);
-			base.showTab('navBarFavorites');
+			base.showTab('navigationBarFavorites');
 			base.checkTabs();
 			$(document).trigger('scroll');
 		}
@@ -231,7 +231,7 @@
 				base.innerClick = false;
 				return false;
 			}
-			if (base.navBarShareShown) {
+			if (base.navigationBarShareShown) {
 				if (!$(event.target).parents('#shareContent').length) base.hideShare();
 			}
 		}
@@ -269,7 +269,7 @@
 		 */
 		base.setLastActive = function()
 		{
-			$.cookie("navBarActive", base.activeTabName, {
+			$.cookie("navigationBarActive", base.activeTabName, {
 				expires: options.cookieExpiration,
 				path: '/'
 			});
@@ -277,7 +277,7 @@
 
 		base.getLastActive = function()
 		{
-			return $.cookie("navBarActive");
+			return $.cookie("navigationBarActive");
 		}
 
 		/**
@@ -286,8 +286,8 @@
 		base.init();
 	}
 
-	$.fn.navBar = function(options, params) {
-		return (new $.navBar(this, options));
+	$.fn.navigationBar = function(options, params) {
+		return (new $.navigationBar(this, options));
 	};
 
 })(jQuery);
@@ -298,8 +298,8 @@ $(function() {
 	favorites = Favorites;
 	favorites.init();
 
-	// init navbar
-	$('#navBar').navBar({
+	// init navigationBar
+	$('#navigationBar').navigationBar({
 		cookieExpiration: 7 // in days
 	});
 });
