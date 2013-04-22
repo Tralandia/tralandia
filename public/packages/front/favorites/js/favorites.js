@@ -343,7 +343,7 @@ Favorites.updateList = function()
 	this.getLocalStorageArray = self.getLocalStorage();
 	var allForView = [];
 
-	var favoriteSlider = $('#navBarFavorites');
+	var favoriteSlider = $('#navigationBarFavorites');
 
 	var sliderList = favoriteSlider.find('ul');
 
