@@ -1,12 +1,12 @@
 {
-    "hash": "27772d0fe98e5e672203568d16dab65d",
+    "hash": "bd5ce0ba92f16c534cb7fd269dc9d5e3",
     "packages": [
         {
             "name": "hosiplan/nette-autowire-properties",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/HosipLan/Nette-AutowireProperties",
+                "url": "https://github.com/HosipLan/Nette-AutowireProperties.git",
                 "reference": "v0.1.1"
             },
             "dist": {
@@ -146,6 +146,55 @@
             "time": "2013-04-11 14:29:28"
         },
         {
+            "name": "kdyby/forms-replicator",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Kdyby/Replicator.git",
+                "reference": "040ac3c959473f2c78832bafc5475089751b44db"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Kdyby/Replicator/zipball/040ac3c959473f2c78832bafc5475089751b44db",
+                "reference": "040ac3c959473f2c78832bafc5475089751b44db",
+                "shasum": ""
+            },
+            "require": {
+                "nette/nette": "@dev"
+            },
+            "require-dev": {
+                "nette/tester": "@dev"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Kdyby\\Replicator\\": "src/"
+                }
+            },
+            "notification-url": "http://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause",
+                "GPL-2.0",
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Filip Procházka",
+                    "homepage": "http://filip-prochazka.com"
+                }
+            ],
+            "description": "Nette forms container replicator aka addDynamic",
+            "homepage": "http://kdyby.org",
+            "keywords": [
+                "Forms",
+                "addDynamic",
+                "kdyby",
+                "nette",
+                "replicator"
+            ],
+            "time": "2013-04-03 12:35:12"
+        },
+        {
             "name": "kdyby/nette-session-panel",
             "version": "dev-master",
             "source": {
@@ -200,12 +249,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/nette.git",
-                "reference": "3ea232c78a3498fae6a8560969f6c9f604f72e4f"
+                "reference": "52143b225f1ae539b1d59a4bdc8a8af8d3a3a9bb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/nette/zipball/3ea232c78a3498fae6a8560969f6c9f604f72e4f",
-                "reference": "3ea232c78a3498fae6a8560969f6c9f604f72e4f",
+                "url": "https://api.github.com/repos/nette/nette/zipball/f4b94a513840cf664f3a1a914a626cd1a0197a14",
+                "reference": "52143b225f1ae539b1d59a4bdc8a8af8d3a3a9bb",
                 "shasum": ""
             },
             "require": {
@@ -266,7 +315,7 @@
                 "neon",
                 "templating"
             ],
-            "time": "2013-04-15 10:39:20"
+            "time": "2013-04-15 14:43:07"
         },
         {
             "name": "nextras/datagrid",
@@ -403,7 +452,12 @@
 
     ],
     "aliases": [
-
+        {
+            "alias": "@dev",
+            "alias_normalized": "dev-@",
+            "version": "9999999-dev",
+            "package": "nette/nette"
+        }
     ],
     "minimum-stability": "dev",
     "stability-flags": {
@@ -412,6 +466,7 @@
         "nextras/datagrid": 20,
         "kdyby/events": 20,
         "kdyby/nette-session-panel": 20,
+        "kdyby/forms-replicator": 20,
         "hosiplan/nette-autowire-properties": 20,
         "texy/texy": 20,
         "janmarek/mockista": 20

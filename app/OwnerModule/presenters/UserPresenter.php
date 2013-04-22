@@ -3,8 +3,6 @@
 namespace OwnerModule;
 
 
-use Nette\InvalidArgumentException;
-
 class UserPresenter extends BasePresenter {
 
 	/**
