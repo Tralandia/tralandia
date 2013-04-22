@@ -69,6 +69,8 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 	 */
 	protected $amenityRepository;
 
+	protected $phraseRepository;
+
 
 	/**
 	 * @param \Entity\Rental\Rental $rental
@@ -91,6 +93,7 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 		$this->userRepository = $em->getRepository(USER_ENTITY);
 		$this->interviewQuestionRepository = $em->getRepository(INTERVIEW_QUESTION_ENTITY);
 		$this->amenityRepository = $em->getRepository(RENTAL_AMENITY_ENTITY);
+		$this->phraseRepository = $em->getRepository(PHRASE_ENTITY);
 		parent::__construct($translator);
 	}
 
@@ -101,6 +104,7 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 		$supportedLanguages = $this->languageRepository->getSupportedSortedByName();
 		$supportedLanguagesForSelect = $this->languageRepository->getSupportedSortedByName($this->translator, $this->collator);
 		$questions = $this->interviewQuestionRepository->findAll();
+		$currency = $this->country->getDefaultCurrency();
 
 //		$this->addText('name', 'o100070')
 //			->setOption('help', $this->translate('o100071'))
@@ -111,7 +115,7 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 		$rentalContainer = $this->rentalContainerFactory->create($this->environment, $this->rental);
 		$this['rental'] = $rentalContainer;
 
-		$rentalContainer->addRentalPriceListContainer('priceList');
+		$rentalContainer->addRentalPriceListContainer('priceList', $currency);
 		$rentalContainer->addRentalPriceUploadContainer('priceUpload', $rental);
 
 		$rentalContainer->addPhoneContainer('phone', 'o10899', $phonePrefixes);
@@ -125,11 +129,9 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 
 
 
-		$currency = $this->country->getDefaultCurrency();
 		$rentalContainer->addText('price', 'o100078')
 			->setOption('append', $currency->getIso() . ' ' . $this->translate('o100004'))
 			->setOption('help', $this->translate('o100073'))
-			->addRule(self::INTEGER, $this->translate('o100105'))
 			->addRule(self::RANGE, $this->translate('o100105'), [0, 999999999999999]);
 
 		$languages = array();
@@ -150,16 +152,18 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 			$interviewContainer->addContainer($question->getId());
 		}
 
+		$namePhrase = $this->phraseRepository->findOneByOldId('886');
+		$teaserPhrase = $this->phraseRepository->findOneByOldId('890');
 		foreach($supportedLanguages as $language) {
 			$iso = $language->getIso();
-			$nameContainer->addText($iso, 'o886')
+			$nameContainer->addText($iso, $namePhrase->getTranslationText($language))
 							->setOption('prepend', $iso)
 							->setOption('help', $this->translate('o100071'))
 							->addRule(self::LENGTH, $this->translate('o100101'), [2, 70]);
 
-			$teaserContainer->addText($iso, 'o890')
+			$teaserContainer->addText($iso, $teaserPhrase->getTranslationText($language))
 							->setOption('prepend', $iso)
-							->setOption('help', $iso);
+							->setOption('help', '');
 			$i = 1;
 			foreach($questions as $question) {
 				$interviewContainer[$question->getId()]->addTextArea($iso, $i.'. '.$question->getQuestion()->getTranslationText($language));
@@ -265,17 +269,9 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 	}
 
 
-	public function validation(RegistrationForm $form)
+	public function validation(RentalEditForm $form)
 	{
 		$values = $form->getValues();
-
-		$email = $values->email;
-		if ($email && !$form['email']->hasErrors()) {
-			$emailIsOccupied = $this->userRepository->findOneByLogin($email);
-			if ($emailIsOccupied) {
-				$form['email']->addError($this->translate('o852'));
-			}
-		}
 	}
 
 

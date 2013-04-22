@@ -2,6 +2,7 @@
 
 namespace Extras\Forms\Container;
 
+use AdminModule\Forms\Form;
 use Extras\Types\Price;
 use Nette\Localization\ITranslator;
 
@@ -13,7 +14,9 @@ class PriceContainer extends BaseContainer
 		parent::__construct();
 
 		$this->addText('amount', $label)
-			->setOption('help', $translator->translate('o100073'));
+			->setOption('help', $translator->translate('o100073'))
+			->addRule(Form::RANGE, $translator->translate('o100105'), [0, 999999999999999]);
+
 		$this->addSelect('currency', NULL, $currencies);
 	}
 

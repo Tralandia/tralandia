@@ -54,7 +54,6 @@ class RentalPresenter extends BasePresenter
 
 		$this->template->rental = $this->rental;
 		$this->template->environmentLanguage = $this->environment->getLanguage();
-		//$this->template->rentalService = $rentalService;
 
 	}
 
