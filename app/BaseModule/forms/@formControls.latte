@@ -127,21 +127,21 @@
 	@param $controlClass string
 	*}
 	{define #checkbox}
-	{default $class = 'simpleInput'}
+	{default $class = 'simpleInput checkbox'}
 	{include #opentag , control => $control, class => $class}
 		<td>
 			{_$control->caption}
 		</td>
 		<td>
 			{input $control}
-		</td>
-
-		<td>
-			<span class="help">
+			
 				<label for="{$control->getHtmlId()}">
 					{$control->getOption('help')}
 				</label>
-			</span>			
+						
+		</td>
+
+		<td>		
 			<span class="invalidAlert">{include #controlErrors, errors => $control->getErrors()}</span>
 		</td>
 	</tr>
