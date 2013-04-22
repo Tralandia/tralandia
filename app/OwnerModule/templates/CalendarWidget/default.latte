@@ -1,60 +1,48 @@
-{block content}
-	<h1 class="marginLeft pull-left">Calendar widget</h1>
 
-	{* {if count($rentals)>1} *}
-	<select n:inner-foreach="$rentals as $rental" class="select2 pull-right marginTop marginRight">
-		{var selected = ($thisRental->id == $rental->id ? 'selected' : null)}
-		<option n:attr="selected => $selected" redirect="{plink :Owner:CalendarWidget:, id => $rental->id}">{_$rental->name}</option>
+{block content}
+
+{var $currentIso = $environment->getPrimaryLocation()->getIso()}
+<h1 class="marginLeft pull-left">Calendar widget</h1>
+
+{if count($rentals)>1}
+	<select class="select2 pull-right marginTop marginRight" id="rentalSelect">
+	<option>selct</option>
+		<option n:foreach="$rentals as $rental" n:attr="selected => ($thisRental->id == $rental->id ? 'selected')" redirect="{plink //CalendarWidget:, id => $rental->id}">{_$rental->name}</option>
 	</select>
-	{* {/if} *}
+{/if}
 
 <div class="clearfix"></div>
 
 <p>{_o2544}</p>
 <p>Kalendár obsadenosti bude vždy aktuálny. Prvý zobrazený mesiac bude vždy aktuálny mesiac v roku.</p>
 
-<form data-id="1" id="calendarWidgetControl">
+<form data-id="{$thisRental->id}" id="calendarWidgetControl" data-link-template="{!$linkTemplate}">
 
 	<div class="control-group calendarWidgetControl clearfix">
 		
 		<div class="controls">
 			
 			<select name="rows" class="select2">
-				<option value="0">Počet riadkov</option>
-				<option n:for="$i = 1; $i <= 4; $i++" value="$i">{$i} {_o100180,null,[count=>$i]}</option>
+				<option n:for="$i = 1; $i <= 4; $i++" value="{$i}" n:attr="selected => ($i==4 ? 'selected')">{$i} {_o100180,null,[count=>$i]}</option>
 			</select>
 			<i class="icon-remove"></i>
 		</div> 
 		
 		<div class="controls">
-		
-			<select name="cells" class="select2">
-				<option value="0">Počet stlpcov</option>
-				<option n:for="$i = 1; $i <= 4; $i++" value="$i">{$i} {_o100181,null,[count=>$i]}</option>
+			<select name="columns" class="select2">
+				<option n:for="$i = 1; $i <= 4; $i++" value="{$i}" n:attr="selected => ($i==4 ? 'selected')">{$i} {_o100181,null,[count=>$i]}</option>
 			</select>
 		</div>
 
 		<div class="controls">		
 			<select name="iso" class="select2">
-				<option value="0">Výber jazyka</option>
-				<option n:foreach="$languages as $language" value="$language->iso">{_$language->name}</option>
+				<option n:foreach="$languages as $iso => $languageName" n:attr="selected => ($iso==$currentIso ? 'selected')" value="{$iso}">{$languageName}</option>
 			</select>
 		</div>
 	</div>
 
 </form>
 
-	<div style="text-align:center">
-	<iframe id="calendarIframeViewer" scrolling="no" style="width:554px ;height:500px; border:1px solid #eee; margin:0 auto;" src="http://www.sk.tra.com/front/calendar-iframe?rentalId=1&monthsCount=12"></iframe>
-	</div>
-
-
+<div id="calendarIframeViewer"></div>
 <p>{_o2547}</p>
-
-	<textarea id="htmlOutputFromViewer" class="calendarWidgetLink autoselect"></textarea>
-
-
-	
-
-
-{$linkTemplate}
+<textarea id="htmlOutputFromViewer" class="calendarWidgetLink autoselect" rows="3"></textarea>

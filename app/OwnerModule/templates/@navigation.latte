@@ -7,8 +7,11 @@
 		<h4><i class="icon-cog"></i> {_o100152}</h4>
 		<ul>
 			<li><a n:href=":Owner:User:edit">{_100146}</a></li>
-			<li n:foreach="$rentalList as $rental"><a n:href=":Owner:Rental:edit, id => $rental->id">{_$rental->getName()}</a></li>
-			<li><a n:href=":Owner:CalendarWidget:">{_o100153}</a></li>
+			{foreach $rentalList as $rental}
+				{if $iterator->first}{var $firstRental = $rental}{/if}
+				<li><a n:href=":Owner:Rental:edit, id => $rental->id">{_$rental->getName()}</a></li>
+			{/foreach}
+			<li><a n:href=":Owner:CalendarWidget:, id => $firstRental->id">{_o100153}</a></li>
 			<li><a n:href=":Front:Sign:out">{_o100154}</a></li>
 		</ul>
 		{/if}

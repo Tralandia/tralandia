@@ -13,7 +13,7 @@ class CalendarIframePresenter extends BasePresenter {
 	 */
 	protected $calendarControl;
 
-	public function actionDefault($rental, $months)
+	public function actionDefault($rentalId, $monthsCount)
 	{
 		//$selectedData = $rental->getCalendar();
 		$selectedData = [
@@ -23,8 +23,7 @@ class CalendarIframePresenter extends BasePresenter {
 			new DateTime('2013-04-21'),
 		];
 
-		$this->template->rental = $rental;
-		$this->template->monthsCount = $months;
+		$this->template->monthsCount = $monthsCount;
 		$this->template->selectedData = $selectedData;
 	}
 

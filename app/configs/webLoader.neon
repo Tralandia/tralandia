@@ -7,6 +7,7 @@ parameters:
 					- front/admin/less/base.less
 					- front/admin/less/datagrid.less
 					- front/admin/less/adminMenuAside.less
+					- front/calendarWidget/less/calendarWidget.less
 				js:
 					- front/admin/js/admin.js
 
