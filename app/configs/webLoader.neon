@@ -117,7 +117,7 @@ parameters:
 					#- front/object-list.less
 					#- front/homepage-list.less
 					#- front/rental-detail-navigation.less
-					#- front/calendarWidgetControl.less
+					- front/admin/less/calendarWidgetControl.less
 					#- front/interview-list.less
 
 					# _base

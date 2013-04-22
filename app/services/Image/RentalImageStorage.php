@@ -44,14 +44,9 @@ class RentalImageStorage extends FileStorage
 	protected function createMiniatures($path, Nette\Image $image)
 	{
 		foreach ($this->paths as $key => $params) {
-			if (!$imageCopy) {
-				$imageCopy = clone $image;
-				$img = $image;
-			} else {
-				$img = $imageCopy;
-			}
-			$img->resize($params['width'], $params['height'], $params['flag']);
-			$img->save($path . DIRECTORY_SEPARATOR . $key . '.' . Image::EXTENSION);
+			$imageCopy = clone $image;
+			$imageCopy->resize($params['width'], $params['height'], $params['flag']);
+			$imageCopy->save($path . DIRECTORY_SEPARATOR . $key . '.' . Image::EXTENSION);
 		}
 	}
 	

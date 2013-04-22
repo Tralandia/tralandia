@@ -50,7 +50,6 @@ abstract class BasePresenter extends \SecuredPresenter {
 		$this->template->currentLanguage = NULL;
 		$this->template->currentLocation = NULL;
 
-		$this->template->mainMenuItems = $this->rentalTypeRepositoryAccessor->get()->findBy(array(),null,8);
 		$this->template->slogan = $this->translate('o21083').' '.$this->translate($this->environment->getPrimaryLocation()->name, NULL, array('case' => \Entity\Language::LOCATIVE));
 
 		$this->template->envLanguage = $this->environment->getLanguage();

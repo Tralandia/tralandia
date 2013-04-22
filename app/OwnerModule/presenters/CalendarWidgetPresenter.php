@@ -13,12 +13,28 @@ class CalendarWidgetPresenter extends BasePresenter {
 	 */
 	public $rentalRepositoryAccessor;
 
+	/**
+	 * @var \Extras\Models\Repository\RepositoryAccessor
+	 */
+	public $languageRepositoryAccessor;
+
+	/**
+	 * @autowire
+	 * @var \Extras\Translator
+	 */
+	protected $translator;
+
 	public function injectBaseRepositories(\Nette\DI\Container $dic) {
 		$this->rentalRepositoryAccessor = $dic->rentalRepositoryAccessor;
+		$this->languageRepositoryAccessor = $dic->languageRepositoryAccessor;
 	}
 	public function actionDefault($id)
 	{
 		$this->template->thisRental = $this->rentalRepositoryAccessor->get()->find($id);
+		$this->template->languages = $this->languageRepositoryAccessor->get()->getSupportedForSelect(
+			$this->translator, 
+			$this->environment->getLocale()->getCollator()
+		);
 		$this->template->rentals = $this->loggedUser->getRentals();
 		$this->template->linkTemplate = $this->link(
 			':generateCode',

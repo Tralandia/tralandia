@@ -15,42 +15,29 @@
 
 <form data-id="1" id="calendarWidgetControl">
 
-	<div class="control-group calendarWidgetControl">
+	<div class="control-group calendarWidgetControl clearfix">
 		
 		<div class="controls">
 			
 			<select name="rows" class="select2">
-				
 				<option value="0">Počet riadkov</option>
-				<option value="1">1 riadkov</option>
-				<option value="2">2 riadkov</option>
-				<option value="3">3 riadkov</option>
-				<option value="4">4 riadkov</option>
+				<option n:for="$i = 1; $i <= 4; $i++" value="$i">{$i} {_o100180,null,[count=>$i]}</option>
 			</select>
-			X 
-		</div>  
+			<i class="icon-remove"></i>
+		</div> 
 		
 		<div class="controls">
 		
 			<select name="cells" class="select2">
-				
 				<option value="0">Počet stlpcov</option>
-				<option value="1">1 stlpcov</option>
-				<option value="2">2 stlpcov</option>
-				<option value="3">3 stlpcov</option>
-				<option value="4">4 stlpcov</option>
+				<option n:for="$i = 1; $i <= 4; $i++" value="$i">{$i} {_o100181,null,[count=>$i]}</option>
 			</select>
-		</div>  
-		
-
+		</div>
 
 		<div class="controls">		
 			<select name="iso" class="select2">
 				<option value="0">Výber jazyka</option>
-				<option value="sk">Slovencina</option>
-				<option value="cs">Cestina</option>
-				<option value="en">Anglictina</option>
-				<option value="hu">Madarcina</option>
+				<option n:foreach="$languages as $language" value="$language->iso">{_$language->name}</option>
 			</select>
 		</div>
 	</div>
