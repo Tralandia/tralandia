@@ -529,9 +529,7 @@ $('a').live('click',function(){
 });
 
 
-$('button[type=submit]').click(function(){
-	$(this).addClass('active');
-})
+
 
 $('.pricePhrase').pricePhrase();
 
