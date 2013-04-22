@@ -36,6 +36,7 @@ $robotLoader->addDirectory(APP_DIR)
 require_once LIBS_DIR . '/tools.php';
 Extension::register($configurator);
 Extras\Config\PresenterExtension::register($configurator);
+Kdyby\Replicator\Container::register();
 
 $configurator->addConfig(APP_DIR . '/configs/config.neon', FALSE);
 if(!Debugger::$productionMode) {
@@ -86,11 +87,11 @@ FormContainer::extensionMethod('addRentalPriceUploadContainer',
 });
 
 FormContainer::extensionMethod('addRentalPriceListContainer',
-	function (FormContainer $container, $name, $rental = NULL) use ($dic) {
+	function (FormContainer $container, $name, $currency) use ($dic) {
 		$em = $dic->getService('model');
 		$translator = $dic->getService('translator');
 		$collator = $dic->getService('environment')->getLocale()->getCollator();
-		return $container[$name] = new \Extras\Forms\Container\RentalPriceListContainer($em, $translator, $collator);
+		return $container[$name] = new \Extras\Forms\Container\RentalPriceListContainer($currency, $em, $translator, $collator);
 });
 
 FormContainer::extensionMethod('addAddressContainer',

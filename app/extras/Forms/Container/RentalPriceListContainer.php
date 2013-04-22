@@ -2,8 +2,11 @@
 
 namespace Extras\Forms\Container;
 
+use AdminModule\Forms\Form;
 use Doctrine\ORM\EntityManager;
+use Entity\Currency;
 use Environment\Collator;
+use Nette\Forms\Container;
 use Nette\Localization\ITranslator;
 
 class RentalPriceListContainer extends BaseContainer
@@ -14,43 +17,63 @@ class RentalPriceListContainer extends BaseContainer
 	 */
 	protected $em;
 
+	/**
+	 * @var \Nette\Localization\ITranslator
+	 */
+	protected $translator;
 
-	public function __construct(EntityManager $em, ITranslator $translator, Collator $collator)
+	/**
+	 * @var \Entity\Currency
+	 */
+	protected $currency;
+	protected $roomTypes;
+
+	protected $roomCount = [];
+	protected $bedCount = [];
+	protected $extraBedCount = [];
+
+
+	public function __construct(Currency $currency, EntityManager $em, ITranslator $translator, Collator $collator)
 	{
 		parent::__construct();
 		$this->em = $em;
 
-		$roomTypes = $em->getRepository(RENTAL_AMENITY_ENTITY)->findByRoomTypeTypeForSelect($translator);
-		$currencies = $em->getRepository(CURRENCY_ENTITY)->getForSelect($translator, $collator);
+		$this->translator = $translator;
+		$this->currency = $currency;
+		$this->roomTypes = $em->getRepository(RENTAL_AMENITY_ENTITY)->findByRoomTypeTypeForSelect($translator);
 
-
-		$roomCount = [];
 		$maxCount = 51;
+
 		for($i=1;$i<$maxCount;$i++) {
-			$extraBedCount[$i] = "{$i} ".$translator->translate('o100000',$i);
-			$roomCount[$i] = "{$i}x";
-			$bedCount[$i] = "{$i} ".$translator->translate('o100006',$i);
-		}
-		// $roomCount[$maxCount] = "{$maxCount}+";
-
-		for($i=1;$i<4;$i++) {
-			$rowContainer = $this->addContainer($i);
-			$rowContainer->addSelect('roomCount', '', $roomCount);
-			$rowContainer->addSelect('roomType', '', $roomTypes);
-			$rowContainer->addSelect('bedCount', '', $bedCount);
-			$rowContainer->addSelect('extraBedCount', '', $extraBedCount);
-			$rowContainer->addPriceContainer('price', '', $currencies);
+			$this->roomCount[$i] = "{$i}x";
+			$this->bedCount[$i] = "{$i} ".$translator->translate('o100006',$i);
+			$this->extraBedCount[$i] = "{$i} ".$translator->translate('o100000',$i);
 		}
 
-		// $rowContainer = $this->addContainer();
-		// $rowContainer->addHidden('jsonPriceList');
 
+		$list = $this->addDynamic('list', $this->containerBuilder,2);
+		$list->addSubmit('add', 'o100168')->setValidationScope(FALSE)->addCreateOnClick();
+	}
+
+
+	public function containerBuilder(Container $container)
+	{
+		$container->addSelect('roomCount', '', $this->roomCount);
+		$container->addSelect('roomType', '', $this->roomTypes);
+		$container->addSelect('bedCount', '', $this->bedCount);
+		$container->addSelect('extraBedCount', '', $this->extraBedCount);
+
+		$container->addText('price', 'o100078')
+			->setOption('append', $this->currency->getIso() . ' ' . $this->translator->translate('o100004'))
+			->addRule(Form::RANGE, $this->translator->translate('o100105'), [0, 999999999999999]);
+
+		$container->addSubmit('remove', 'Smazat')->addRemoveOnClick();
 	}
 
 
 	public function getMainControl()
 	{
-		return $this['1']['roomCount'];
+		return NULL;
 	}
 
 

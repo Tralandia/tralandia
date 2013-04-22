@@ -1,13 +1,14 @@
-	{define #opentag}
+{define #opentag}
 	{default $class = ''}
-	{default $dataLink = ''}
+	{default $dataLink = NULL}
 	{if $control instanceof \Nette\Forms\Container}
 		{var $hasErrors = count($control->getAllErrors())}
 	{else}
 		{var $hasErrors = $control->hasErrors()}
 	{/if}
-	<tr data-link="{$dataLink}" n:class="$hasErrors ? 'invalid '.$class : $class">
-	{/define #opentag}
+
+	<tr n:attr="data-link => $dataLink" n:class="$hasErrors ? 'invalid '.$class : $class">
+{/define #opentag}
 
 
 	{*
@@ -134,14 +135,13 @@
 		</td>
 		<td>
 			{input $control}
-			
+
 				<label for="{$control->getHtmlId()}">
 					{$control->getOption('help')}
 				</label>
-						
 		</td>
 
-		<td>		
+		<td>
 			<span class="invalidAlert">{include #controlErrors, errors => $control->getErrors()}</span>
 		</td>
 	</tr>
@@ -166,7 +166,7 @@
 	{else}
 	{input $control}
 	{/ifset}
-	{/capture}	
+	{/capture}
 	{include #opentag , class => 'simpleInput '.$class , control => $control}
 		<td colspan="3">
 			<table>
@@ -181,8 +181,8 @@
 						<span class="help">{$control->getOption('help')}</span>
 						<span class="invalidAlert">{include #controlErrors, errors => $control->getErrors()}</span>
 					</td>
-				</tr>								
-			</table>			
+				</tr>
+			</table>
 		</td>
 
 	</tr>
@@ -639,7 +639,7 @@
 
 			<div class="span12">
 
-				<div class="help">{include #controlErrors, errors => $mainControl->getErrors()}</div>
+				<div class="help">{include #controlErrors, errors => $container->getAllErrors()}</div>
 
 				<ul id="sortable" class="ui-sortable" n:inner-foreach="$container->getPriceList() as $row">
 					<li data-id="{$row->getId()}" class="ui-state-default">
@@ -687,33 +687,34 @@
 {define #rentalPriceList}
 {var
 	$container = $control;
-	$mainControl = $container->getMainControl()
 }
 {?unset($control)}
 {include #opentag , class => '' , control => $container}
-<!-- control photo start -->
+	<!-- control photo start -->
 
 	<td class="pricelistControl" colspan="3">
-		{foreach $container->getComponents() as $component}
+		{var $replicator = $container->getComponent('list')}
+		{foreach $replicator->getComponents() as $component}
+			{continueIf $component->getName() == 'add'}
 			<div class="priceList">
 				{input $component['roomCount'] , class => 'select2 notFulltext'}
 				{input $component['roomType'] , class => 'select2 notFulltext string'}
 				{input $component['bedCount'] , class => 'select2 notFulltext string'}
 				{input $component['extraBedCount'] , class => 'select2 notFulltext string'}
-				
+
 				{* {input $component['price']['currency'] , class => 'select2'} *}
+				{input $component['price'] , class => 'price' }
 				<span class="input-append">
-					{input $component['price']['amount'] , class => 'price' }
-					<span class="add-on">mena</span>
+					{$component['price']->getOption('append')}
 				</span>
 
-				<a href="#" class="remove"><i class="icon-remove"></i></a>
+				{input $component['remove']}
 			</div>
 		{/foreach}
 	</td>
 </tr>
 <tr class="pricelistControlButton">
-	<td colspan="3"><a href="#" class="btn btn-green btn-mini createNewLine"><i class="icon-plus"></i> {_o100168} </a></td>
+	<td colspan="3">{input $container['list']['add']}</td>
 </tr>
 {/define #rentalPriceList}
 

@@ -144,7 +144,6 @@ class RegistrationForm extends \FrontModule\Forms\BaseForm
 			$rentalContainer->addText('price', 'o100078')
 				->setOption('append', $currency->getIso() . ' ' . $this->translate('o100004'))
 				->setOption('help', $this->translate('o100073'))
-				->addRule(self::INTEGER, $this->translate('o100105'))
 				->addRule(self::RANGE, $this->translate('o100105'), [0, 999999999999999]);
 		} else {
 			$currencies = $this->currencyRepository->getForSelect($this->translator, $this->collator);

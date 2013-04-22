@@ -137,16 +137,11 @@ class RentalContainer extends BaseContainer
 
 
 	/**
-	 * @param RegistrationForm $form
+	 * @param \Nette\Forms\Form $form
 	 */
-	public function validation(RegistrationForm $form)
+	public function validation(\Nette\Forms\Form $form)
 	{
 		$values = $form->getValues();
-
-		$phone = $values->phone;
-		if (!$phone->phone instanceof \Entity\Contact\Phone) {
-			$form['phone']->getMainControl()->addError($this->translate('o1039'));
-		}
 
 		$rentalValues = $values->rental;
 		$photosSort = $rentalValues->photos->sort;
