@@ -6,6 +6,8 @@ use Nette\Utils\Arrays;
 use Nette\Utils\Finder;
 use Nette\Utils\Strings;
 use Nette\Application\UI\Presenter;
+use Routers\FrontRoute;
+use Routers\OwnerRouteList;
 
 
 abstract class BasePresenter extends Presenter {
@@ -67,16 +69,23 @@ abstract class BasePresenter extends Presenter {
 	 */
 	protected $locationRepositoryAccessor;
 
-	public function injectLLRepositories(\Nette\DI\Container $dic) {
-		$this->languageRepositoryAccessor = $dic->languageRepositoryAccessor;
-		$this->locationRepositoryAccessor = $dic->locationRepositoryAccessor;
-	}
-
+	/**
+	 * @autowire
+	 * @var \Device
+	 */
+	protected $device;
 
 	/**
 	 * @var User
 	 */
 	public $loggedUser;
+
+
+	public function injectLLRepositories(\Nette\DI\Container $dic) {
+		$this->languageRepositoryAccessor = $dic->languageRepositoryAccessor;
+		$this->locationRepositoryAccessor = $dic->locationRepositoryAccessor;
+	}
+
 
 	protected function startup() {
 		parent::startup();
@@ -86,14 +95,23 @@ abstract class BasePresenter extends Presenter {
 			$this->redirect(301, 'this');
 		}
 
-		if($autologin = $this->getParameter(\Routers\OwnerRouteList::AUTOLOGIN)) {
+		if($device = $this->getParameter(FrontRoute::DEVICE)) {
+			if(in_array($device, [Device::MOBILE, Device::DESKTOP])) {
+				$this->device->setDevice($device);
+			}
+			$parameters = $this->getParameters();
+			unset($parameters[FrontRoute::DEVICE], $parameters['primaryLocation'], $parameters['language']);
+			$this->redirect('this', $parameters);
+		}
+
+		if($autologin = $this->getParameter(OwnerRouteList::AUTOLOGIN)) {
 			try{
 				$identity = $this->authenticator->autologin($autologin);
 				$this->login($identity);
 			} catch(\Nette\Security\AuthenticationException $e) {
 			}
 			$parameters = $this->getParameters();
-			unset($parameters[\Routers\OwnerRouteList::AUTOLOGIN], $parameters['primaryLocation'], $parameters['language']);
+			unset($parameters[OwnerRouteList::AUTOLOGIN], $parameters['primaryLocation'], $parameters['language']);
 			$this->redirect('this', $parameters);
 		}
 
@@ -140,6 +158,7 @@ abstract class BasePresenter extends Presenter {
 		$this->template->registerHelper('image', callback('Tools::helperImage'));
 		$this->template->useTemplateCache = $parameters['useTemplateCache'];
 		$this->template->loggedUser = $this->loggedUser;
+		$this->template->isMobile = $this->device->isMobile();
 	}
 
 	protected function createTemplate($class = NULL) {
@@ -371,8 +390,8 @@ abstract class BasePresenter extends Presenter {
 			$parameters = [
 				\Routers\BaseRoute::PRIMARY_LOCATION => $user->getPrimaryLocation(),
 				\Routers\BaseRoute::LANGUAGE => $user->getLanguage(),
-				\Routers\OwnerRouteList::AUTOLOGIN => $hash,
-				\Routers\FrontRoute::PAGE => NULL,
+				OwnerRouteList::AUTOLOGIN => $hash,
+				FrontRoute::PAGE => NULL,
 			];
 			$this->redirect(':Front:Sign:afterLogin', $parameters);
 		}

@@ -9,6 +9,11 @@
 			</div>
 			<div class="span6">
 				<ul>
+					{if $isMobile}
+						<li><a href="{plink this, \Routers\FrontRoute::DEVICE => \Device::DESKTOP}">#Desktopova verzia</a></li>
+					{else}
+						<li><a href="{plink this, \Routers\FrontRoute::DEVICE => \Device::MOBILE}">#Mobilna verzia</a></li>
+					{/if}
 					<li><a href="{plink :Front:Contact:default#aboutUs}">{_o23011}</a></li>
 					<li><a href="{plink :Front:Contact:default#TermsOfUse}">{_o100123}</a></li>
 					<li><a href="{plink :Front:Contact:default#faq}">{_o100122}</a></li>

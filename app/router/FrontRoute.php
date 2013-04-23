@@ -13,6 +13,8 @@ use Nette\Utils\Arrays;
 class FrontRoute extends BaseRoute
 {
 
+	const DEVICE = 'device';
+
 	const HASH = 'hash';
 	const RENTAL = 'rental';
 	const FAVORITE_LIST = 'favoriteList';

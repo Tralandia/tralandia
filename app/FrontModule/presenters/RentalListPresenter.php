@@ -36,6 +36,20 @@ class RentalListPresenter extends BasePresenter {
 
 	public function actionDefault($favoriteList, $email)
 	{
+		if($this->device->isMobile()) {
+			$this->mobileDefault($favoriteList, $email);
+		} else {
+			$this->desktopDefault($favoriteList, $email);
+		}
+	}
+
+	public function mobileDefault($favoriteList, $email)
+	{
+		$this->setView('mobileDefault');
+	}
+
+	public function desktopDefault($favoriteList, $email)
+	{
 		if($favoriteList) {
 			if(isset($email)) {
 				$receiver = $this->findOrCreateUser->getUser($email, $this->environment);
@@ -77,6 +91,7 @@ class RentalListPresenter extends BasePresenter {
 
 		$this->template->rentals = $rentals;
 		$this->template->findRental = array($this, 'findRental');
+
 	}
 
 	public function findRental($id)

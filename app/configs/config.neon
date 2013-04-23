@@ -198,6 +198,9 @@ services:
 
 	dictionary.updateTranslationStatus: DictionaryManager\UpdateTranslationStatus
 
+	device: Device
+	deviceDetect: Mobile_Detect
+
 
 	# ==============================
 	# ==================== FORMS HANDLERS
