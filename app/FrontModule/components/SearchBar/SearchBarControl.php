@@ -171,8 +171,8 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 
 		$bottomLinks = [];
 		$links = [];
-		if(!$this->location) {
-			if($this->getPresenter()->isLinkCurrent(':Front:Home:default')) {
+		if(!$this->location && !$this->getPresenter()->isLinkCurrent(':Front:Destination:')) {
+			if ($this->getPresenter()->isLinkCurrent(':Front:Home:default')) {
 				$count = 300;
 			} else {
 				$count = 30;

@@ -55,13 +55,18 @@
 
 	{if isset($bottomLinks) && count($bottomLinks->links)}
 	<h4><i class="{$bottomLinks->iconClass}"></i>{_$bottomLinks->title}</h4>
-		<ul n:inner-foreach="$bottomLinks->links as $value">
-			<li>
-				<a href="{plink RentalList:, $bottomLinks->linkArgument => $value->entity}">
-					{$value->name} <span class="counter">{$value->count}</span>
-				</a>
-			</li>
-		</ul>
+	<ul>
+		<li n:foreach="$bottomLinks->links as $value">
+			<a href="{plink RentalList:, $bottomLinks->linkArgument => $value->entity}">
+				{$value->name} <span class="counter">{$value->count}</span>
+			</a>
+		</li>
+		{ifCurrent :Front:Home:default}
+		<li class="more"><a href="{plink :Front:Destination:}">#Show more</a></li>
+		{/ifCurrent}
+	</ul>
 	{/if}
+
+
 	</aside>
 </div>
