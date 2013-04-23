@@ -2,6 +2,7 @@
 namespace Repository\Phrase;
 
 use Doctrine\ORM\Query\Expr;
+use Entity\Language;
 
 /**
  * TranslationRepository class
@@ -10,30 +11,24 @@ use Doctrine\ORM\Query\Expr;
  */
 class TranslationRepository extends \Repository\BaseRepository {
 
-	protected $centralLanguage;
-
-	public function inject($centralLanguage) {
-		$this->centralLanguage = $centralLanguage;
-	}
-
 	/**
 	 * Vyberie preklady kt. treba prelozit (aktualizovat)
 	 * @return array
 	 */
-	public function toTranslate() {
-		$rsm = new \Doctrine\ORM\Query\ResultSetMapping;
-		$rsm->addEntityResult('\Entity\Phrase\Translation', 't');
-		$rsm->addFieldResult('t', 'id', 'id');
-		$rsm->addMetaResult('t', 'language_id', 'language_id');
+	public function toTranslate($languages = NULL) {
+		if($languages !== NULL && !is_array($languages)) {
+			$languages = [$languages];
+		}
+		$qb = $this->_em->createQueryBuilder();
 
-		$query = 'select t.id, t.language_id
-				FROM phrase_translation AS t
-				JOIN phrase_translation AS s ON t.phrase_id = s.phrase_id AND s.language_id = '.$this->centralLanguage.'
-				WHERE s.timeTranslated > t.timeTranslated';
-		$query = $this->_em->createNativeQuery($query, $rsm);
+		$qb->select('e')->from($this->_entityName, 'e')
+			->where($qb->expr()->eq('e.upToDate', 0));
 
+		if($languages) {
+			$qb->andWhere($qb->expr()->in('r.languages', $languages));
+		}
 
-		return $query->getArrayResult();
+		return $qb->getQuery()->getResult();
 	}
 
 }
