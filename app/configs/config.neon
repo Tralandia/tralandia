@@ -196,6 +196,8 @@ services:
 	statistics.dictionary:
 		class: Statistics\Dictionary
 
+	dictionary.updateTranslationStatus: DictionaryManager\UpdateTranslationStatus
+
 
 	# ==============================
 	# ==================== FORMS HANDLERS

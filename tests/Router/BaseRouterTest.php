@@ -81,30 +81,4 @@ abstract class BaseRouterTest extends \Tests\TestCase
 		$this->assertSame($expected->getId(), $actual->getId(), $message);
 	}
 
-
-	public function findLocation($id)
-	{
-		return $this->getEm()->getRepository(LOCATION_ENTITY)->find($id);
-	}
-
-	public function findLanguage($id)
-	{
-		return $this->getEm()->getRepository(LANGUAGE_ENTITY)->find($id);
-	}
-
-	public function findPage($id)
-	{
-		return $this->getEm()->getRepository(PAGE_ENTITY)->find($id);
-	}
-
-	public function findRental($id)
-	{
-		return $this->getEm()->getRepository(RENTAL_ENTITY)->find($id);
-	}
-
-	public function findRentalType($id)
-	{
-		return $this->getEm()->getRepository(RENTAL_TYPE_ENTITY)->find($id);
-	}
-
 }
