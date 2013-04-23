@@ -195,6 +195,8 @@ services:
 
 	statistics.dictionary:
 		class: Statistics\Dictionary
+	statistics.registrations:
+		class: Statistics\Registrations
 
 	dictionary.updateTranslationStatus: DictionaryManager\UpdateTranslationStatus
 
@@ -433,6 +435,10 @@ factories:
 	statisticsDictionaryGridFactory:
 		class: AdminModule\Grids\Statistics\DictionaryGrid(@statistics.dictionary)
 		implement: AdminModule\Grids\Statistics\IDictionaryGridFactory
+
+	statisticsRegistrationsGridFactory:
+		class: AdminModule\Grids\Statistics\RegistrationsGrid(@statistics.registrations)
+		implement: AdminModule\Grids\Statistics\IRegistrationsGridFactory
 
 
 	#dataGrid:
