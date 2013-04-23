@@ -1,0 +1,10 @@
+entity: Entity\Phrase\Translation
+
+parameters:
+	title: Dictionary statistics
+	h1: 'Currency -> %name%'
+
+gridFactory: @statisticsDictionaryGridFactory
+
+form:
+	fields:

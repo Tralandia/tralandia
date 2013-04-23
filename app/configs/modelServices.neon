@@ -78,8 +78,6 @@ services:
 
 	phraseTranslationRepositoryAccessor:
 		factory: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Phrase\Translation')
-		setup:
-			- setParameters(%centralLanguage%)
 
 	phraseTypeRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\Phrase\Type')
 
