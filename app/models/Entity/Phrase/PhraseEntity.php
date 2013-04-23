@@ -65,7 +65,6 @@ class Phrase extends \Entity\BaseEntityDetails {
 		$translation = new \Entity\Phrase\Translation;
 
 		$this->addTranslation($translation);
-		$translation->setTimeTranslated(new \Nette\DateTime());
 		$translation->setLanguage($language);
 		$translation->setVariations($this->getTranslationVariationsMatrix($language));
 		if($translationText !== NULL) $translation->setTranslation($translationText);
@@ -210,20 +209,39 @@ class Phrase extends \Entity\BaseEntityDetails {
 		return Strings::length($this->getCentralTranslationText()) > 0;
 	}
 
+
+	/**
+	 * @return NULL|string
+	 */
 	public function getCentralTranslationText() {
-		$mainTranslations = $this->getMainTranslations();
-		return array_key_exists(self::CENTRAL, $mainTranslations) ? $mainTranslations[self::CENTRAL]->translation : '';
+		return $this->getCentralTranslation()->getTranslation();
 	}
 
+
+	/**
+	 * @return Translation|null
+	 */
+	public function getCentralTranslation() {
+		$mainTranslations = $this->getMainTranslations();
+		return array_key_exists(self::CENTRAL, $mainTranslations) ? $mainTranslations[self::CENTRAL] : NULL;
+	}
+
+
+	/**
+	 * @return bool
+	 */
 	public function hasSourceTranslation() {
 		$mainTranslations = $this->getMainTranslations();
-		if (Strings::length($mainTranslations[self::SOURCE]->translation) > 0) {
-			return TRUE;
-		} else {
-			return FALSE;
-		}
+		return Strings::length($mainTranslations[self::SOURCE]->translation) > 0;
 	}
 
+
+	/**
+	 * @param \Entity\Language $language
+	 * @param $value
+	 *
+	 * @return $this
+	 */
 	public function setTranslationText(\Entity\Language $language, $value) {
 		$this->getTranslation($language)->translation = $value;
 		return $this;

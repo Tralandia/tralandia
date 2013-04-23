@@ -12,6 +12,7 @@ use Nette\Utils\Arrays;
  * 				indexes={
  * 					@ORM\index(name="timeTranslated", columns={"timeTranslated"}),
  * 					@ORM\index(name="translation", columns={"translation"}),
+ * 					@ORM\index(name="translationStatus", columns={"translationStatus"}),
  * 					@ORM\index(name="checked", columns={"checked"})
  * 				}
  * 			)
@@ -20,8 +21,14 @@ use Nette\Utils\Arrays;
  */
 class Translation extends \Entity\BaseEntity {
 
+	/* Position constants */
 	const AFTER = 'After';
 	const BEFORE = 'Before';
+
+	/* Translation status constants */
+	const UP_TO_DATE = 'upToDate';
+	const WAITING_FOR_TRANSLATION = 'waitingForTranslation';
+	const WAITING_FOR_CENTRAL = 'waitingForCentral';
 
 	/**
 	 * @var Collection
@@ -67,9 +74,15 @@ class Translation extends \Entity\BaseEntity {
 
 	/**
 	 * @var boolean
+	 * @ORM\Column(type="boolean", nullable=true)
+	 */
+	protected $translationStatus;
+
+	/**
+	 * @var boolean
 	 * @ORM\Column(type="boolean")
 	 */
-	protected $upToDate = TRUE;
+	protected $paid = TRUE;
 
 	/**
 	 * @var boolean
@@ -358,6 +371,54 @@ class Translation extends \Entity\BaseEntity {
 	public function getTimeTranslated()
 	{
 		return $this->timeTranslated;
+	}
+
+	/**
+	 * @param boolean
+	 * @return \Entity\Phrase\Translation
+	 */
+	public function setTranslationStatus($translationStatus)
+	{
+		$this->translationStatus = $translationStatus;
+
+		return $this;
+	}
+
+	/**
+	 * @return \Entity\Phrase\Translation
+	 */
+	public function unsetTranslationStatus()
+	{
+		$this->translationStatus = NULL;
+
+		return $this;
+	}
+
+	/**
+	 * @return boolean|NULL
+	 */
+	public function getTranslationStatus()
+	{
+		return $this->translationStatus;
+	}
+
+	/**
+	 * @param boolean
+	 * @return \Entity\Phrase\Translation
+	 */
+	public function setPaid($paid)
+	{
+		$this->paid = $paid;
+
+		return $this;
+	}
+
+	/**
+	 * @return boolean|NULL
+	 */
+	public function getPaid()
+	{
+		return $this->paid;
 	}
 
 	/**
