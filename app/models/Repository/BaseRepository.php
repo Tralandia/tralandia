@@ -19,7 +19,7 @@ class BaseRepository extends EntityRepository {
 	public function createNew($createPhrases = TRUE) {
 		$class = $this->getEntityName();
 		if($class == 'Entity\Phrase\Translation') {
-			throw new \Nette\InvalidArgumentException('Nemozes vitvorit translation len tak kedy sa ti zachce! Toto nieje holubnik! Pouzi na to $phrase->createTranslation()');
+			throw new \Nette\InvalidArgumentException('Nemozes vytvorit translation len tak kedy sa ti zachce! Toto nieje holubnik! Pouzi na to $phrase->createTranslation()');
 		}
 
 		$newEntity = new $class;
@@ -30,8 +30,9 @@ class BaseRepository extends EntityRepository {
 				if($mapping['targetEntity'] == 'Entity\Phrase\Phrase') {
 					$fieldName = $mapping['fieldName'];
 					# @todo hack, porusenie DI
-					$languageRepository = $this->getEntityManager()->getRepository('Entity\Language');
-					$phraseCreator = new \Service\Phrase\PhraseCreator($this->related($fieldName), $languageRepository);
+					$languageRepository = $this->getEntityManager()->getRepository(LANGUAGE_ENTITY);
+					$phraseRepository = $this->getEntityManager()->getRepository(PHRASE_ENTITY);
+					$phraseCreator = new \Service\Phrase\PhraseCreator($phraseRepository, $languageRepository);
 					$phraseTypeName = '\\'.$class.':'.$fieldName;
 					$newEntity->{$fieldName} = $phraseCreator->create($phraseTypeName);
 				}
@@ -58,11 +59,11 @@ class BaseRepository extends EntityRepository {
 		$this->persist($entity)->flush($entity);
 		return $this;
 	}
-	
+
 	public function remove($entity) {
 		$this->_em->remove($entity);
 	}
-	
+
 	public function delete($entity) {
 		$this->remove($entity);
 		$this->flush();
@@ -73,12 +74,12 @@ class BaseRepository extends EntityRepository {
 		$query->select('e')->from($this->_entityName, 'e');
 		return $query;
 	}
-	
+
 	// public function findAll() {
 	// 	$query = $this->_em->createQueryBuilder();
 	// 	$query->select('e')->from($this->_entityName, 'e');
 	// 	$query = $query->getQuery();
-		
+
 	// 	//$query->setResultCacheDriver(new \Doctrine\Common\Cache\ApcCache());
 	// 	//$query->useResultCache(true, 5, 'ooo');
 	// 	return $query->getResult();
@@ -87,24 +88,24 @@ class BaseRepository extends EntityRepository {
 	public function fetchPairs($key, $value = NULL) {
 		$collection = array();
 		//debug($this->findAll());
-		
+
 		foreach ($this->findAll() as $entity) {
 			//debug($entity);
-			
-			
+
+
 			// if (isset($entity->country))
 			// 	debug($entity->country);
-		
+
 			// if (isset($entity->rentals))
 			// 	debug($entity->rentals);
-			
+
 			if ($value instanceof \Closure) {
 				$collection[$entity->$key] = $value($entity);
 			} else {
 				$collection[$entity->$key] = !empty($value) ? $entity->$value : $entity;
 			}
 		}
-		
+
 		return $collection;
 	}
 
@@ -134,24 +135,24 @@ class BaseRepository extends EntityRepository {
 
 
 
-	/** 
+	/**
 	 * return array
 	 */
 	public function getPairs($keyName, $valueName = NULL, $criteria = NULL, $orderBy = NULL, $limit = NULL, $offset = NULL) {
 		$serviceList = $this->_getPairs($keyName, $valueName, $criteria, $orderBy, $limit, $offset);
 		$return = array();
- 
+
 		foreach($serviceList as $item) {
 			$key = array_shift($item);
 			$value = array_shift($item);
- 
+
 			$return[$key] = $value;
 		}
- 
+
 		return $return;
 	}
- 
-	// /** 
+
+	// /**
 	//  * return array
 	//  */
 	// public function getTranslatedPairs($keyName, $valueName, $criteria = NULL, $orderBy = NULL, $limit = NULL, $offset = NULL) {
@@ -159,24 +160,24 @@ class BaseRepository extends EntityRepository {
 		//  else $orderByName = false;
 		//  $valueName = array($valueName, 'id');
 		//  $serviceList = self::_getPairs($keyName, $valueName, $criteria, $orderBy, $limit, $offset);
- 
+
 		//  $translator = Service::getTranslator();
 		//  $return = array();
 		//  foreach($serviceList as $item) {
 		// 	$return[$item['key']] = $translator->translate($item['value']);
 		//  }
- 
+
 		//  if($orderByName) asort($return);
- 
+
 		//  return $return;
 	// }
-  
+
 	protected function _getPairs($keyName, $valueName = NULL, $criteria = NULL, $orderBy = NULL, $limit = NULL, $offset = NULL) {
 		$valuePropertyName = NULL;
 		$entityName = $this->_entityName;
- 
+
 		$qb = $this->_em->createQueryBuilder();
- 
+
 		if(is_array($valueName) || $valueName instanceof \Traversable) {
 			$valueName = (array) $valueName;
 			if(reset($valueName) == 'CONCAT') {
@@ -188,7 +189,7 @@ class BaseRepository extends EntityRepository {
 				$valuePropertyName = array_shift($valueNameTemp);
 			}
 		}
- 
+
 		if($valuePropertyName) {
 			$select = array("e.$keyName AS key", "p.$valuePropertyName AS value");
 		} else if($valueName instanceof \Doctrine\ORM\Query\Expr\Func) {
@@ -198,9 +199,9 @@ class BaseRepository extends EntityRepository {
 		}
 		$qb->select($select)
 			->from($entityName, 'e');
- 
+
 		if($valuePropertyName) $qb->join('e.'.$valueName, 'p');
- 
+
 		if(is_array($criteria) || $criteria instanceof \Traversable) {
 			foreach ($this->prepareCriteria($criteria) as $key => $value) {
 				if(is_array($value) || $value instanceof \Traversable) {
@@ -211,8 +212,8 @@ class BaseRepository extends EntityRepository {
 				}
 			}
 		}
- 
- 
+
+
 		if($orderBy) {
 			foreach ($orderBy as $key => $value) {
 				$qb->addOrderBy('e.'.$key, $value);
@@ -220,7 +221,7 @@ class BaseRepository extends EntityRepository {
 		}
 		if($limit) $qb->setMaxResults($limit);
 		if($offset) $qb->setFirstResult($offset);
-  
+
 		return $qb->getQuery()->getResult();
 	}
 
