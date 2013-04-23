@@ -110,6 +110,8 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 
 		$template = $this->template;
 		$presenter = $this->getPresenter();
+		
+		$template->isHome = ($presenter->name == 'Front:Home' ? TRUE : FALSE);
 
 		$jsVariables = [];
 		$jsVariables['data-country'] = $this->search->getPrimaryLocation()->getId();
