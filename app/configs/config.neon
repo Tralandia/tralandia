@@ -193,6 +193,9 @@ services:
 		setup:
 			- setPages(%facebookPage%, %twitterProfile%, %googlePlusProfile%)
 
+	statistics.dictionary:
+		class: Statistics\Dictionary
+
 
 	# ==============================
 	# ==================== FORMS HANDLERS
@@ -424,6 +427,11 @@ factories:
 	phraseTypeGridFactory:
 		class: AdminModule\Grids\PhraseTypeGrid(@phraseTypeRepositoryAccessor::get())
 		implement: AdminModule\Grids\IPhraseTypeGridFactory
+
+	statisticsDictionaryGridFactory:
+		class: AdminModule\Grids\Statistics\DictionaryGrid(@statistics.dictionary)
+		implement: AdminModule\Grids\Statistics\IDictionaryGridFactory
+
 
 	#dataGrid:
 		#class: TwiGrid\DataGrid

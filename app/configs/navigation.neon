@@ -3,43 +3,47 @@ common:
 		support:
 			label: Support
 			items:
-				pendingTicket: 
+				pendingTicket:
 					label: Pending Tickets
 					link: ':Admin:Ticket:list'
 					linkArgs:
 						filter: pending
-				ticket: 
+				ticket:
 					label: All Tickets
 					link: ':Admin:Ticket:list'
 					separator: true
 
-				faqCategory: 
+				faqCategory:
 					label: FAQ Categories
 					link: ':Admin:FaqCategory:list'
-				faqQuestion: 
+				faqQuestion:
 					label: FAQ Questions
 					link: ':Admin:FaqQuestion:list'
 
 		statistics:
 			label: Statistics #@todo
 			items:
-				one: 
+				one:
 					label: Pending Tickets
 					link: ':Admin:Ticket:list'
+
+				dictionary:
+					label: Dictionary
+					link: ':Admin:StatisticsDictionary:list'
 
 		user:
 			label: Users
 			items:
-				user: 
+				user:
 					label: All Users
 					link: ':Admin:UserUser:list'
-				testimonial: 
+				testimonial:
 					label: 'Testimonials (by owners)'
 					link: ':Admin:UserTestimonial:list'
-				role: 
+				role:
 					label: Roles
 					link: ':Admin:UserRole:list'
-				acl: 
+				acl:
 					label: Acl
 					link: ':Admin:Acl:list'
 
@@ -47,53 +51,53 @@ common:
 		rental:
 			label: Rentals
 			items:
-				rental: 
+				rental:
 					label: All Rentals
 					link: ':Admin:RentalRental:list'
-				information: 
+				information:
 					label: Rental Information
 					link: ':Admin:RentalInformation:list'
-				interviewQuestion: 
+				interviewQuestion:
 					label: Interview Questions
 					link: ':Admin:RentalInterviewQuestion:list'
-				interviewAnswer: 
+				interviewAnswer:
 					label: Interview Answers
 					link: ':Admin:RentalInterviewAnswer:list'
-				reservation: 
+				reservation:
 					label: Reservations
 					link: ':Admin:VisitorInteraction:list'
 					linkArgs:
 						filter: reservation
-				review: 
+				review:
 					label: Reviews
 					link: ':Admin:VisitorInteraction:list'
 					linkArgs:
 						filter: review
-				rentalType: 
+				rentalType:
 					label: Rental Types
 					link: ':Admin:RentalType:list'
 					separator: true
-				roomType: 
+				roomType:
 					label: Room Types
 					link: ':Admin:RentalRoomType:list'
 					separator: true
-				interactionType: 
+				interactionType:
 					label: Interaction Types
 					link: ':Admin:VisitorType:list'
 
 		phrase:
 			label: Dictionary
 			items:
-				phrase: 
+				phrase:
 					label: Phrases
 					link: ':Admin:Phrase:list'
-				phraseType: 
+				phraseType:
 					label: Phrase Types
 					link: ':Admin:PhraseType:list'
-				addPhrase: 
+				addPhrase:
 					label: Add Phrase
 					link: ':Admin:Phrase:add'
-				language: 
+				language:
 					separator: true
 					label: Languages
 					link: ':Admin:Language:list'
@@ -101,19 +105,19 @@ common:
 		siteContent:
 			label: Site Content
 			items:
-				seo: 
+				seo:
 					label: SEO
 					items:
-						backlink: 
+						backlink:
 							label: Backlinks
 							link: ':Admin:SeoBacklink:list'
-						titleSuffix: 
+						titleSuffix:
 							label: Title Suffixes
 							link: ':Admin:SeoTitleSuffix:list'
-				location: 
+				location:
 					label: Locations
-					items: 
-						country: 
+					items:
+						country:
 							label: Countries
 							link: ':Admin:Country:list'
 						region:
@@ -122,47 +126,47 @@ common:
 						locality:
 							label: Localities
 							link: ':Admin:Locality:list'
-				locationType: 
+				locationType:
 					label: Location Types
 					link: ':Admin:LocationType:list'
 					separator: true
 				amenity:
 					label: Amenities
 					link: ':Admin:RentalAmenity:list'
-				amenityType: 
+				amenityType:
 					label: Amenity Types
 					link: ':Admin:RentalAmenityType:list'
 					separator: true
-				currency: 
+				currency:
 					label: Currencies
 					link: ':Admin:Currency:list'
-				domain: 
+				domain:
 					label: Domains
 					link: ':Admin:Domain:list'
 		email:
 			label: Email
 			items:
-				template: 
+				template:
 					label: Templates
 					link: ':Admin:EmailTemplate:list'
-				layout: 
+				layout:
 					label: Layouts
 					link: ':Admin:EmailLayout:list'
 
 		admin:
 			label: Admin
 			items:
-				import: 
+				import:
 					label: Import
 					link: ':Admin:Import:default'
-				entityGenerator: 
+				entityGenerator:
 					label: Entity Generator
 					link: ':Admin:EntityGenerator:default'
-				searchCache: 
+				searchCache:
 					label: Update Search Cache
 					link: ':Admin:RunRobot:searchCache'
 					target: _blank
-				memCache: 
+				memCache:
 					label: Memcache Viewer
 					link: ':Admin:Memcache:default'
 					target: _blank

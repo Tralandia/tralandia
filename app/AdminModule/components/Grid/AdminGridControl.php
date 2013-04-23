@@ -23,7 +23,11 @@ class AdminGridControl extends BaseGridControl {
 		$this->collator = $collator;
 	}
 
+
 	/**
+	 * @param $entities
+	 * @param $by
+	 *
 	 * @return array
 	 */
 	public function getTranslatedAndOrderedBy($entities, $by)

@@ -89,7 +89,7 @@ abstract class BasePresenter extends Presenter {
 		if($autologin = $this->getParameter(\Routers\OwnerRouteList::AUTOLOGIN)) {
 			try{
 				$identity = $this->authenticator->autologin($autologin);
-				$this->getUser()->login($identity);
+				$this->login($identity);
 			} catch(\Nette\Security\AuthenticationException $e) {
 			}
 			$parameters = $this->getParameters();

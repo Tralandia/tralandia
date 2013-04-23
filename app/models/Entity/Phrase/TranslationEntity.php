@@ -67,6 +67,12 @@ class Translation extends \Entity\BaseEntity {
 
 	/**
 	 * @var boolean
+	 * @ORM\Column(type="boolean")
+	 */
+	protected $upToDate = TRUE;
+
+	/**
+	 * @var boolean
 	 * @ORM\Column(type="boolean", nullable=true)
 	 */
 	protected $checked;
@@ -79,6 +85,16 @@ class Translation extends \Entity\BaseEntity {
 		}
 		return strlen($translation) ? $translation : '{!!' . $this->id . '}';
 	}
+
+
+	/**
+	 * @return bool
+	 */
+	public function isUpToData()
+	{
+		return $this->upToDate;
+	}
+
 
 	/**
 	 * @param string

@@ -34,7 +34,7 @@ abstract class BaseGridControl extends BaseControl {
 			$grid = new Datagrid;
 			$grid->setRowPrimaryKey('id');
 
-			$grid->setTranslator($this->presenter->getService('translator'));
+			$grid->setTranslator($this->presenter->getContext()->getService('translator'));
 
 			foreach($this->getCellsTemplatesFiles() as $value) {
 				$grid->addCellsTemplate($value);
