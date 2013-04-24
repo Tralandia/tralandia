@@ -1,0 +1,21 @@
+
+{block #content}
+
+<h1>
+	#Destinations
+	{* <span class="counter">({_o100002, $locationRentalsCount ,null,[count=>$locationRentalsCount]})</span> *}
+</h1>
+
+<div class=" mytabUi ui-tabs">
+	<div id="tabs-1" class="ui-tabs-panel">
+		<div class="row-fluid">
+			<div n:foreach="$links as $link" class="span4">
+				<ul n:inner-foreach="$link as $row" class="hp-list arrows">
+					<li>
+						<a n:href="RentalList:, \Routers\FrontRoute::LOCATION => $row->entity" title="{_$row['entity']->name}">{_$row['entity']->name} <span>({$row['count']})</span></a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>

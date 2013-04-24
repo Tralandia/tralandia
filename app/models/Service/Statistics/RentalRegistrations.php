@@ -37,15 +37,18 @@ class RentalRegistrations {
 
 		$finalResults = array();
 		foreach ($periods as $period => $value) {
+			$finalResults['total']['key'] = $key;
 			$finalResults['total'][$period]['total'] = 0;
 			$finalResults['total'][$period]['live'] = 0;
 		}
 		foreach ($results as $period => $value) {
 			foreach ($value['total'] as $country => $countInCountry) {
+				$finalResults[$country]['key'] = $country;
 				$finalResults[$country][$period]['total'] = $countInCountry;
 				$finalResults['total'][$period]['total'] += $countInCountry;
 			}
 			foreach ($value['live'] as $country => $countInCountry) {
+				$finalResults[$country]['key'] = $country;
 				$finalResults[$country][$period]['live'] = $countInCountry;
 				$finalResults['total'][$period]['live'] += $countInCountry;
 			}

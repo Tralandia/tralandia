@@ -43,10 +43,10 @@
 		</div>
 
 		<div id="getSearchCount" data-label="#label text" class="pull-left">
-			{ifCurrent :Front:Home:default}
+			{if $isHome}
 			{else}
 				{$totalResultsCountLabel}
-			{/ifCurrent}
+			{/if}
 		</div>
 		{* {input submit,value => '#Search' , icon => 'entypo-search', class => "btn btn-white pull-right"}	 *}
 		{* <button class="btn btn-white pull-right"><i class="entypo-search"></i>{_o100092}</button> *}
@@ -55,13 +55,18 @@
 
 	{if isset($bottomLinks) && count($bottomLinks->links)}
 	<h4><i class="{$bottomLinks->iconClass}"></i>{_$bottomLinks->title}</h4>
-		<ul n:inner-foreach="$bottomLinks->links as $value">
-			<li>
-				<a href="{plink RentalList:, $bottomLinks->linkArgument => $value->entity}">
-					{$value->name} <span class="counter">{$value->count}</span>
-				</a>
-			</li>
-		</ul>
+	<ul>
+		<li n:foreach="$bottomLinks->links as $value">
+			<a href="{plink RentalList:, $bottomLinks->linkArgument => $value->entity}">
+				{$value->name} <span class="counter">{$value->count}</span>
+			</a>
+		</li>
+		{if $isHome}
+		<li class="more"><a href="{plink :Front:Destination:}">#Show more</a></li>
+		{/if}
+	</ul>
 	{/if}
+
+
 	</aside>
 </div>
