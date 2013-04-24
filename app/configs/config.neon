@@ -436,11 +436,11 @@ factories:
 		implement: AdminModule\Grids\IPhraseTypeGridFactory
 
 	statisticsDictionaryGridFactory:
-		class: AdminModule\Grids\Statistics\DictionaryGrid(@statistics.dictionary)
+		class: AdminModule\Grids\Statistics\DictionaryGrid
 		implement: AdminModule\Grids\Statistics\IDictionaryGridFactory
 
 	statisticsRegistrationsGridFactory:
-		class: AdminModule\Grids\Statistics\RegistrationsGrid(@statistics.registrations)
+		class: AdminModule\Grids\Statistics\RegistrationsGrid
 		implement: AdminModule\Grids\Statistics\IRegistrationsGridFactory
 
 
