@@ -115,7 +115,7 @@ class ImportPresenter extends Presenter {
 		}
 
 		if (isset($this->params['createAutoLinks'])) {
-			public $automaticUrls = array(
+			$automaticUrls = array(
 				'http://www.sk.tra.com/import?importSection=phraseType',
 				'http://www.sk.tra.com/import?importSection=languages',
 				'http://www.sk.tra.com/import?importSection=htmlPhrases&subsection=importPhrases',
