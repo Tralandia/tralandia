@@ -73,8 +73,8 @@ class Translation extends \Entity\BaseEntity {
 	protected $timeTranslated;
 
 	/**
-	 * @var boolean
-	 * @ORM\Column(type="boolean", nullable=true)
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $translationStatus;
 

@@ -21,8 +21,8 @@ class Dictionary implements IDataSource {
 
 	public function getData($filter, $order, Paginator $paginator = NULL)
 	{
+		/** @var $translatorRepository \Repository\Phrase\TranslationRepository */
 		$translatorRepository = $this->em->getRepository(TRANSLATION_ENTITY);
-		$languageRepository = $this->em->getRepository(LANGUAGE_ENTITY);
 		$data = $translatorRepository->toTranslate();
 		$return = [];
 		/** @var $translation \Entity\Phrase\Translation */

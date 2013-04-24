@@ -3,6 +3,7 @@ namespace Repository\Phrase;
 
 use Doctrine\ORM\Query\Expr;
 use Entity\Language;
+use Entity\Phrase\Translation;
 
 /**
  * TranslationRepository class
@@ -13,6 +14,9 @@ class TranslationRepository extends \Repository\BaseRepository {
 
 	/**
 	 * Vyberie preklady kt. treba prelozit (aktualizovat)
+	 *
+	 * @param array|null $languages
+	 *
 	 * @return array
 	 */
 	public function toTranslate($languages = NULL) {
@@ -22,7 +26,8 @@ class TranslationRepository extends \Repository\BaseRepository {
 		$qb = $this->_em->createQueryBuilder();
 
 		$qb->select('e')->from($this->_entityName, 'e')
-			->where($qb->expr()->eq('e.upToDate', 0));
+			->where($qb->expr()->eq('e.translationStatus', ':status'))
+			->setParameter('status', Translation::WAITING_FOR_TRANSLATION);
 
 		if($languages) {
 			$qb->andWhere($qb->expr()->in('r.languages', $languages));
