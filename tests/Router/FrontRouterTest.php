@@ -20,9 +20,25 @@ class FrontRouterTest extends BaseRouterTest
 		$this->route = $this->getContext()->frontRouteFactory->create();
 	}
 
+	public function testMobile() {
+		$route = $this->route;
+
+		/** @var $device \Device */
+		$device = $this->getContext()->device;
+		$device->setDevice(\Device::MOBILE);
+
+		$this->routeOut($route, 'Home', array(
+			'action' => 'default',
+			FrontRoute::PRIMARY_LOCATION => $this->findLocation(56),
+			FrontRoute::LANGUAGE => $this->findLanguage(144),
+		), 'http://www.sk.tra.com/?device=mobile', 'http://www.hu.tra.com/');
+	}
+
+
 	public function testCompiler() {
 		$route = $this->route;
 
+		// ak objekt uz neexistuje
 		$this->routeIn($route, 'http://www.sk.tra.com/external/calendar/calendar.php?id=test&months=8', 'Home', array(
 			'action' => 'default',
 			FrontRoute::PRIMARY_LOCATION => $this->findLocation(56),

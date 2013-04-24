@@ -1,5 +1,5 @@
 {
-    "hash": "bd5ce0ba92f16c534cb7fd269dc9d5e3",
+    "hash": "336476f95caefa0c01881dcd90baee3b",
     "packages": [
         {
             "name": "hosiplan/nette-autowire-properties",
@@ -99,12 +99,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Kdyby/Events.git",
-                "reference": "0c6bac20807789583ce8b4d5ccae8de158d79e85"
+                "reference": "6bddb42cf77bb5571fc7217ac8b7b504d8d34fb6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kdyby/Events/zipball/0c6bac20807789583ce8b4d5ccae8de158d79e85",
-                "reference": "0c6bac20807789583ce8b4d5ccae8de158d79e85",
+                "url": "https://api.github.com/repos/Kdyby/Events/zipball/6bddb42cf77bb5571fc7217ac8b7b504d8d34fb6",
+                "reference": "6bddb42cf77bb5571fc7217ac8b7b504d8d34fb6",
                 "shasum": ""
             },
             "require": {
@@ -143,7 +143,7 @@
                 "kdyby",
                 "nette"
             ],
-            "time": "2013-04-11 14:29:28"
+            "time": "2013-04-21 21:33:36"
         },
         {
             "name": "kdyby/forms-replicator",
@@ -244,6 +244,52 @@
             "time": "2013-02-09 15:14:19"
         },
         {
+            "name": "mobiledetect/mobiledetectlib",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/serbanghita/Mobile-Detect.git",
+                "reference": "b1c8f714b613233f6fc42e73337d5e472db8b609"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/serbanghita/Mobile-Detect/zipball/b1c8f714b613233f6fc42e73337d5e472db8b609",
+                "reference": "b1c8f714b613233f6fc42e73337d5e472db8b609",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.0.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "Mobile_Detect.php"
+                ]
+            },
+            "notification-url": "http://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Serban Ghita",
+                    "email": "serbanghita@gmail.com",
+                    "homepage": "http://ghita.org",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Mobile_Detect is a lightweight PHP class for detecting mobile devices. It uses the User-Agent string combined with specific HTTP headers to detect the mobile environment.",
+            "homepage": "https://github.com/serbanghita/Mobile-Detect",
+            "keywords": [
+                "detect mobile devices",
+                "mobile",
+                "mobile detect",
+                "mobile detector",
+                "php mobile detect"
+            ],
+            "time": "2013-04-17 13:24:56"
+        },
+        {
             "name": "nette/nette",
             "version": "dev-master",
             "source": {
@@ -253,7 +299,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/nette/zipball/f4b94a513840cf664f3a1a914a626cd1a0197a14",
+                "url": "https://api.github.com/repos/nette/nette/zipball/a711f29c0ddbc233633632e21963b997d7fb1826",
                 "reference": "52143b225f1ae539b1d59a4bdc8a8af8d3a3a9bb",
                 "shasum": ""
             },
@@ -468,6 +514,7 @@
         "kdyby/nette-session-panel": 20,
         "kdyby/forms-replicator": 20,
         "hosiplan/nette-autowire-properties": 20,
+        "mobiledetect/mobiledetectlib": 20,
         "texy/texy": 20,
         "janmarek/mockista": 20
     },

@@ -59,11 +59,18 @@ class FrontRoute extends BaseRoute
 	public $phraseDecoratorFactory;
 
 	/**
+	 * @var \Device
+	 */
+	protected $device;
+
+	/**
 	 * @param \Repository\LanguageRepository $languageRepository
 	 * @param \Repository\Location\LocationRepository $locationRepository
+	 * @param \Device $device
 	 */
-	public function __construct(LanguageRepository $languageRepository, LocationRepository $locationRepository)
+	public function __construct(LanguageRepository $languageRepository, LocationRepository $locationRepository, \Device $device)
 	{
+		$this->device = $device;
 		$mask = '//[!<language ([a-z]{2}|www)>.<primaryLocation [a-z]{2,4}>.%domain%/][<hash .*>]';
 		$metadata = [ 'presenter' => 'RentalList', 'action' => 'default' ];
 		parent::__construct($mask, $metadata, $languageRepository, $locationRepository);
@@ -266,12 +273,20 @@ class FrontRoute extends BaseRoute
 		unset($params[self::USE_ROOT_DOMAIN]);
 
 		$params['action'] = $this->actionName;
+
 		$appRequest->setPresenterName($this->presenterName);
 
 		$appRequest->setParameters($params);
 
 
 		$url = $this->route->constructUrl($appRequest, $refUrl);
+
+		$referenceUrlDomain = $refUrl->getScheme() . '://' . $refUrl->getAuthority() . '/';
+		if(!Strings::startsWith($url, $referenceUrlDomain) && $this->device->isSetManually()) {
+			$params[self::DEVICE] = $this->device->getDevice();
+			$appRequest->setParameters($params);
+			$url = $this->route->constructUrl($appRequest, $refUrl);
+		}
 
 		if(!$url) {
 			return NULL;
