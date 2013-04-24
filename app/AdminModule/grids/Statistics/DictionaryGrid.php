@@ -8,6 +8,9 @@ use Nette\Utils\Paginator;
 
 class DictionaryGrid extends AdminGridControl {
 
+	/** 
+	 * @var \Statistics\Dictionary 
+	 */
 	protected $dataSource;
 
 	public function __construct($dataSource) {
