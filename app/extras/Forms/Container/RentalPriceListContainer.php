@@ -50,9 +50,7 @@ class RentalPriceListContainer extends BaseContainer
 			$this->extraBedCount[$i] = "{$i} ".$translator->translate('o100000',$i);
 		}
 
-
-		$list = $this->addDynamic('list', $this->containerBuilder,2);
-		$list->addSubmit('add', 'o100168')->setValidationScope(FALSE)->addCreateOnClick();
+		$this->addDynamic('list', $this->containerBuilder,2);
 	}
 
 
@@ -66,8 +64,6 @@ class RentalPriceListContainer extends BaseContainer
 		$container->addText('price', 'o100078')
 			->setOption('append', $this->currency->getIso() . ' ' . $this->translator->translate('o100004'))
 			->addRule(Form::RANGE, $this->translator->translate('o100105'), [0, 999999999999999]);
-
-		$container->addSubmit('remove', 'Smazat')->addRemoveOnClick();
 	}
 
 

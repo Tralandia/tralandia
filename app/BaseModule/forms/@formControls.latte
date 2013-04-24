@@ -690,12 +690,10 @@
 }
 {?unset($control)}
 {include #opentag , class => '' , control => $container}
-	<!-- control photo start -->
 
 	<td class="pricelistControl" colspan="3">
 		{var $replicator = $container->getComponent('list')}
 		{foreach $replicator->getComponents() as $component}
-			{continueIf $component->getName() == 'add'}
 			<div class="priceList">
 				{input $component['roomCount'] , class => 'select2 notFulltext'}
 				{input $component['roomType'] , class => 'select2 notFulltext string'}
@@ -707,14 +705,13 @@
 				<span class="input-append">
 					{$component['price']->getOption('append')}
 				</span>
-
-				{input $component['remove']}
+				<span>X</span>
 			</div>
 		{/foreach}
 	</td>
 </tr>
 <tr class="pricelistControlButton">
-	<td colspan="3">{input $container['list']['add']}</td>
+	<td colspan="3">Add</td>
 </tr>
 {/define #rentalPriceList}
 
