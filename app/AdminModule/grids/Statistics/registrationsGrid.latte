@@ -1,0 +1,46 @@
+{define #col-total}
+	<td>
+		{ifset $cell->total}{$cell->total}{else}-{/ifset}
+		{ifset $cell->live} / {$cell->live}{/ifset}
+	</td>
+{/define}
+
+{define #col-today}
+	<td>
+		{ifset $cell->total}{$cell->total}{else}-{/ifset}
+		{ifset $cell->live} / {$cell->live}{/ifset}
+	</td>
+{/define}
+
+{define #col-yesterday}
+	<td>
+		{ifset $cell->total}{$cell->total}{else}-{/ifset}
+		{ifset $cell->live} / {$cell->live}{/ifset}
+	</td>
+{/define}
+
+{define #col-this_week}
+	<td>
+		{ifset $cell->total}{$cell->total}{else}-{/ifset}
+		{ifset $cell->live} / {$cell->live}{/ifset}
+	</td>
+{/define}
+
+{define #col-last_week}
+	<td>
+		{ifset $cell->total}{$cell->total}{else}-{/ifset}
+		{ifset $cell->live} / {$cell->live}{/ifset}
+	</td>
+{/define}
+{define #col-this_month}
+	<td>
+		{ifset $cell->total}{$cell->total}{else}-{/ifset}
+		{ifset $cell->live} / {$cell->live}{/ifset}
+	</td>
+{/define}
+{define #col-last_month}
+	<td>
+		{ifset $cell->total}{$cell->total}{else}-{/ifset}
+		{ifset $cell->live} / {$cell->live}{/ifset}
+	</td>
+{/define}

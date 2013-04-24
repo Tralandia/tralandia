@@ -388,23 +388,6 @@ $('.autoselect').click(A.autoselect);
 	$('#forgottenPasswordOpen').click(A.forgottenPasswordOpen);
 	$('#closeForgottenPasswordForm').click(A.closeForgottenPasswordForm);
 
-	// sidebar show hide more options
-	$('ul li.more a').click(function(e) {
-		e.preventDefault();
-		$ul = $(this).parents('ul');
-		$ul.find('li.hidden').toggleClass('hide');
-
-		$(this).parent().toggleClass('open');
-
-		if($(this).parent().hasClass('open')){
-			$(this).html($(this).attr('data-open'));
-		} else {
-			$(this).html($(this).attr('data-close'));
-		}
-
-	});
-
-
 	/* ui tabs */
 	$('.nav-tabs a').click(function (e) {
 

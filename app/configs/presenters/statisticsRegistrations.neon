@@ -1,0 +1,10 @@
+entity: Entity\Rental\Rental
+
+parameters:
+	title: Registrations statistics
+	h1: 'Registration -> %name%'
+
+gridFactory: @statisticsRegistrationsGridFactory
+
+form:
+	fields:

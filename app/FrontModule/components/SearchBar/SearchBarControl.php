@@ -110,6 +110,8 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 
 		$template = $this->template;
 		$presenter = $this->getPresenter();
+		
+		$template->isHome = ($presenter->name == 'Front:Home' ? TRUE : FALSE);
 
 		$jsVariables = [];
 		$jsVariables['data-country'] = $this->search->getPrimaryLocation()->getId();
@@ -171,8 +173,8 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 
 		$bottomLinks = [];
 		$links = [];
-		if(!$this->location) {
-			if($this->getPresenter()->isLinkCurrent(':Front:Home:default')) {
+		if(!$this->location && !$this->getPresenter()->isLinkCurrent(':Front:Destination:')) {
+			if ($this->getPresenter()->isLinkCurrent(':Front:Home:default')) {
 				$count = 300;
 			} else {
 				$count = 30;
