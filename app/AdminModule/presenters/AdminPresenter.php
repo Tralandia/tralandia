@@ -43,6 +43,7 @@ class AdminPresenter extends BasePresenter {
 	 * Akcia zoznam
 	 */
 	public function actionList($type = null) {
+		$this->template->hideAddNewButton = true;
 		$this->gridRenderType = $type;
 	}
 
