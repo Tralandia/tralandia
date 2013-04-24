@@ -10,6 +10,7 @@ use Repository\Location\LocationRepository;
 class BaseRoute extends Nette\Object implements Nette\Application\IRouter
 {
 
+	const DEVICE = 'device';
 	const AUTOLOGIN = 'l';
 	const LANGUAGE = 'language';
 	const PRIMARY_LOCATION = 'primaryLocation';

@@ -66,9 +66,9 @@ abstract class BaseRouterTest extends \Tests\TestCase
 
 
 
-	protected function routeOut(Nette\Application\IRouter $route, $presenter, $params = array(), $expectUrl = NULL)
+	protected function routeOut(Nette\Application\IRouter $route, $presenter, $params = array(), $expectUrl = NULL, $referenceUrl = 'http://example.com')
 	{
-		$url = new Nette\Http\Url('http://example.com');
+		$url = new Nette\Http\Url($referenceUrl);
 		$request = new Nette\Application\Request($presenter, 'GET', $params);
 		$url = $route->constructUrl($request, $url);
 

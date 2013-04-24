@@ -33,6 +33,18 @@ class Device {
 	}
 
 
+	public function getDevice()
+	{
+		return $this->section->device;
+	}
+
+
+	public function isSetManually()
+	{
+		return $this->section->device !== NULL;
+	}
+
+
 	/**
 	 * @return bool
 	 */
