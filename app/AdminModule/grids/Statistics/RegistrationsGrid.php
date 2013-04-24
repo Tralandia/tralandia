@@ -8,12 +8,12 @@ use Nette\Utils\Paginator;
 
 class RegistrationsGrid extends AdminGridControl {
 
-	/** 
+	/**
 	 * @var \Statistics\Registrations
 	 */
 	protected $dataSource;
 
-	public function __construct($dataSource) {
+	public function __construct(\Statistics\Registrations $dataSource) {
 		$this->dataSource = $dataSource;
 	}
 

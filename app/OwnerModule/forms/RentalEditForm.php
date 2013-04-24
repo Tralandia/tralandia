@@ -176,52 +176,40 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 		$rentalContainer->addText('roomsLayout', '#rooms layout');
 
 		$amenities = $this->amenityRepository->findByChildrenTypeForSelect($this->getTranslator(), $this->collator);
-		$rentalContainer->addMultiOptionList('children', 'o100169', $amenities)
-			->addRule(self::FILLED, $this->translate('o100109'));
+		$rentalContainer->addMultiOptionList('children', 'o100169', $amenities);
 
 		$amenities = $this->amenityRepository->findByActivityTypeForSelect($this->getTranslator(), $this->collator);
-		$rentalContainer->addMultiOptionList('activity', '#activity', $amenities)
-			->addRule(self::FILLED, $this->translate('o100109'));
+		$rentalContainer->addMultiOptionList('activity', '#activity', $amenities);
 
 		$amenities = $this->amenityRepository->findByRelaxTypeForSelect($this->getTranslator(), $this->collator);
-		$rentalContainer->addMultiOptionList('relax', 'o100170', $amenities)
-			->addRule(self::FILLED, $this->translate('o100109'));
+		$rentalContainer->addMultiOptionList('relax', 'o100170', $amenities);
 
 		$amenities = $this->amenityRepository->findByServiceTypeForSelect($this->getTranslator(), $this->collator);
-		$rentalContainer->addMultiOptionList('service', 'o100171', $amenities)
-			->addRule(self::FILLED, $this->translate('o100109'));
+		$rentalContainer->addMultiOptionList('service', 'o100171', $amenities);
 
 		$amenities = $this->amenityRepository->findByWellnessTypeForSelect($this->getTranslator(), $this->collator);
-		$rentalContainer->addMultiOptionList('wellness', 'o100172', $amenities)
-			->addRule(self::FILLED, $this->translate('o100109'));
+		$rentalContainer->addMultiOptionList('wellness', 'o100172', $amenities);
 
 		$amenities = $this->amenityRepository->findByCongressTypeForSelect($this->getTranslator(), $this->collator);
-		$rentalContainer->addMultiOptionList('congress', 'o100173', $amenities)
-			->addRule(self::FILLED, $this->translate('o100109'));
+		$rentalContainer->addMultiOptionList('congress', 'o100173', $amenities);
 
 		$amenities = $this->amenityRepository->findByKitchenTypeForSelect($this->getTranslator(), $this->collator);
-		$rentalContainer->addMultiOptionList('kitchen', 'o100174', $amenities)
-			->addRule(self::FILLED, $this->translate('o100109'));
+		$rentalContainer->addMultiOptionList('kitchen', 'o100174', $amenities);
 
 		$amenities = $this->amenityRepository->findByBathroomTypeForSelect($this->getTranslator(), $this->collator);
-		$rentalContainer->addMultiOptionList('bathroom', 'o100175', $amenities)
-			->addRule(self::FILLED, $this->translate('o100109'));
+		$rentalContainer->addMultiOptionList('bathroom', 'o100175', $amenities);
 
 		$amenities = $this->amenityRepository->findByHeatingTypeForSelect($this->getTranslator(), $this->collator);
-		$rentalContainer->addMultiOptionList('heating', 'o100177', $amenities)
-			->addRule(self::FILLED, $this->translate('o100109'));
+		$rentalContainer->addMultiOptionList('heating', 'o100177', $amenities);
 
 		$amenities = $this->amenityRepository->findByParkingTypeForSelect($this->getTranslator(), $this->collator);
-		$rentalContainer->addMultiOptionList('parking', 'o100178', $amenities)
-			->addRule(self::FILLED, $this->translate('o100109'));
+		$rentalContainer->addMultiOptionList('parking', 'o100178', $amenities);
 
 		$amenities = $this->amenityRepository->findByRoomTypeForSelect($this->getTranslator(), $this->collator);
-		$rentalContainer->addMultiOptionList('room', 'o100176', $amenities)
-			->addRule(self::FILLED, $this->translate('o100109'));
+		$rentalContainer->addMultiOptionList('room', 'o100176', $amenities);
 
 		$amenities = $this->amenityRepository->findByOtherTypeForSelect($this->getTranslator(), $this->collator);
-		$rentalContainer->addMultiOptionList('other', 'o100179', $amenities)
-			->addRule(self::FILLED, $this->translate('o100109'));
+		$rentalContainer->addMultiOptionList('other', 'o100179', $amenities);
 
 		$this->addSubmit('submit', 'o100083');
 
@@ -272,6 +260,7 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 	public function validation(RentalEditForm $form)
 	{
 		$values = $form->getValues();
+		d($values);
 	}
 
 
