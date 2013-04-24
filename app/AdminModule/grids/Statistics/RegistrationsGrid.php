@@ -8,6 +8,9 @@ use Nette\Utils\Paginator;
 
 class RegistrationsGrid extends AdminGridControl {
 
+	/** 
+	 * @var \Statistics\Registrations
+	 */
 	protected $dataSource;
 
 	public function __construct($dataSource) {
@@ -39,7 +42,6 @@ class RegistrationsGrid extends AdminGridControl {
 	public function getDataSource($filter, $order, Paginator $paginator = NULL)
 	{
 		$data = $this->dataSource->getData($filter, $order, $paginator);
-		d($data);
 		return $data;
 	}
 
