@@ -441,9 +441,9 @@
 {*
 	Phrase Container -------------------------------------------
 	@param $control \Extras\Forms\Container\PhraseContainer
-	*}
-	{define #phrase}
-	{var
+*}
+{define #phrase}
+{var
 	$container = $control;
 	$phrase = $container->getPhrase();
 }
@@ -490,26 +490,26 @@
 
 
 		{foreach $container['to']->getComponents() as $languageContainer}
-		{var $language = $languageContainer['variations']->getLanguage()}
-		<div class="phrasecontrol hide" id="{$language->getId()}_phrase">
+			{var $language = $languageContainer['variations']->getLanguage()}
+			<div class="phrasecontrol hide" id="{$language->getId()}_phrase">
 
 
-			{include #translationVatiations, control => $languageContainer['variations']}
+				{include #translationVatiations, control => $languageContainer['variations']}
 
-			<div class="pull-left">
-				{label $languageContainer['gender'] /}
-				{input $languageContainer['gender'] , class => 'select2'}
+				<div class="pull-left">
+					{label $languageContainer['gender'] /}
+					{input $languageContainer['gender'] , class => 'select2'}
+				</div>
+
+				<div class="pull-right">
+					{label $languageContainer['position'] /}
+					{input $languageContainer['position'] , class => 'select2'}
+				</div>
+				<div class="clearfix"></div>
+
+
+
 			</div>
-
-			<div class="pull-right">
-				{label $languageContainer['position'] /}
-				{input $languageContainer['position'] , class => 'select2'}
-			</div>
-			<div class="clearfix"></div>
-
-
-
-		</div>
 		{/foreach}
 
 

@@ -53,38 +53,45 @@ if ($section) {
 $dic = $container = $configurator->createContainer();
 // Debugger::$editor = $container->parameters['editor'];
 
+FormContainer::extensionMethod('addPhraseContainer',
+	function (FormContainer $container, $name, $user, $phrase) use ($dic) {
+		$languageRepository = $dic->getService('languageRepositoryAccessor')->get();
+		$environment = $dic->getService('environment');
+		return $container[$name] = new \Extras\Forms\Container\PhraseContainer($user, $phrase, $environment, $languageRepository);
+	});
+
 FormContainer::extensionMethod('addPhoneContainer',
 	function (FormContainer $container, $name, $label, $phonePrefixes) use ($dic) {
 		$translator = $dic->getService('translator');
 		$phoneBook = $dic->getService('phoneBook');
 		return $container[$name] = new \Extras\Forms\Container\PhoneContainer($label, $phonePrefixes, $phoneBook, $translator);
-});
-
-FormContainer::extensionMethod('addPriceContainer',
-	function (FormContainer $container, $name, $label, $currencies) use ($dic) {
-		$translator = $dic->getService('translator');
-		return $container[$name] = new \Extras\Forms\Container\PriceContainer($label, $currencies, $translator);
-});
+	});
 
 FormContainer::extensionMethod('addRentalTypeContainer',
 	function (FormContainer $container, $name, $rentalTypes) use ($dic) {
 		$translator = $dic->getService('translator');
 		return $container[$name] = new \Extras\Forms\Container\RentalTypeContainer($rentalTypes, $translator);
-});
+	});
 
 FormContainer::extensionMethod('addRentalPhotosContainer',
 	function (FormContainer $container, $name, $rental = NULL) use ($dic) {
 		$imageManager = $dic->getService('rentalImageManager');
 		$imageRepository = $dic->getService('rentalImageRepositoryAccessor')->get();
 		return $container[$name] = new \Extras\Forms\Container\RentalPhotosContainer($rental, $imageManager, $imageRepository);
-});
+	});
+
+FormContainer::extensionMethod('addPriceContainer',
+	function (FormContainer $container, $name, $label, $currencies) use ($dic) {
+		$translator = $dic->getService('translator');
+		return $container[$name] = new \Extras\Forms\Container\PriceContainer($label, $currencies, $translator);
+	});
 
 FormContainer::extensionMethod('addRentalPriceUploadContainer',
 	function (FormContainer $container, $name, $rental = NULL) use ($dic) {
 		$manager = $dic->getService('rentalPriceListManager');
 		$repository = $dic->getService('rentalPricelistRepositoryAccessor')->get();
 		return $container[$name] = new \Extras\Forms\Container\RentalPriceUploadContainer($rental, $manager, $repository);
-});
+	});
 
 FormContainer::extensionMethod('addRentalPriceListContainer',
 	function (FormContainer $container, $name, $currency) use ($dic) {
@@ -92,13 +99,13 @@ FormContainer::extensionMethod('addRentalPriceListContainer',
 		$translator = $dic->getService('translator');
 		$collator = $dic->getService('environment')->getLocale()->getCollator();
 		return $container[$name] = new \Extras\Forms\Container\RentalPriceListContainer($currency, $em, $translator, $collator);
-});
+	});
 
 FormContainer::extensionMethod('addAddressContainer',
 	function (FormContainer $container, $name, $addressOrLocation) use ($dic) {
 		$addressCreator = $dic->getService('addressCreator');
 		return $container[$name] = new \Extras\Forms\Container\AddressContainer($addressOrLocation, $addressCreator);
-});
+	});
 
 
 // @todo toto niekam schovat
