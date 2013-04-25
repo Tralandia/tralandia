@@ -35,6 +35,7 @@ class TranslationVariationContainer extends BaseContainer
 						$field = $gender->addText($caseKey, $caseValue);
 					} else {
 						$field = $gender->addTextArea($caseKey, $caseValue);
+						$field->getControlPrototype()->class('texyla');
 					}
 					if($setDisabled) $field->setDisabled();
 				}

@@ -39,6 +39,12 @@ class FrontRouterTest extends BaseRouterTest
 		$route = $this->route;
 
 		// ak objekt uz neexistuje
+		$this->routeIn($route, 'http://www.sk.tra.com/f', 'RentalList', array(
+			'action' => 'redirectToFavorites',
+			FrontRoute::PRIMARY_LOCATION => $this->findLocation(56),
+			FrontRoute::LANGUAGE => $this->findLanguage(144),
+		));
+
 		$this->routeIn($route, 'http://www.sk.tra.com/external/calendar/calendar.php?id=test&months=8', 'Home', array(
 			'action' => 'default',
 			FrontRoute::PRIMARY_LOCATION => $this->findLocation(56),

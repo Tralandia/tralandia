@@ -3,7 +3,9 @@
 namespace Extras\Forms\Container;
 
 use Entity\Phrase\Phrase;
-use Nette\Security\User;
+use Environment\Environment;
+use Entity\User\User;
+use Repository\LanguageRepository;
 
 class PhraseContainer extends BaseContainer
 {
@@ -28,11 +30,12 @@ class PhraseContainer extends BaseContainer
 	 */
 	protected $fromLanguage;
 
-	public function __construct(User $user, Phrase $phrase, array $sourceLanguages)
+	public function __construct(User $user, Phrase $phrase, Environment $environment, LanguageRepository $languageRepository)
 	{
 		$this->user = $user;
 		$this->phrase = $phrase;
-		$this->sourceLanguages = $sourceLanguages;
+		$collator = $environment->getLocale()->getCollator();
+		$this->sourceLanguages = $languageRepository->getSupportedForSelect($environment->getTranslator(), $collator);
 
 		# @todo nie stale sa to ma prekladat zo sourceLanguage
 		$this->fromLanguage = $phrase->getSourceLanguage();
@@ -68,7 +71,7 @@ class PhraseContainer extends BaseContainer
 		$changeToLanguageList = [];
 		$to = $this->addContainer('to');
 		foreach($phrase->getTranslations() as $translation) {
-			if(!$this->user->isAllowed($translation, 'translate')) continue;
+			//if(!$this->user->isAllowed($translation, 'translate')) continue;
 			$language = $translation->getLanguage();
 			$languageContainer = $to->addContainer($language->getIso());
 			$languageContainer['variations'] = new TranslationVariationContainer($translation, TRUE);
