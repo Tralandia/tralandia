@@ -15,7 +15,8 @@ class RentalReservationRepository extends \Repository\BaseRepository {
 		$qb = $this->_em->createQueryBuilder();
 		$qb->select('e')
 			->from($this->_entityName, 'e')
-			->andWhere($qb->expr()->eq('e.rental', ':rental'))->setParameter('rental', $rental);
+			->andWhere($qb->expr()->eq('e.rental', ':rental'))
+			->setParameter('rental', $rental);
 
 		return $qb->getQuery()->getResult();
 

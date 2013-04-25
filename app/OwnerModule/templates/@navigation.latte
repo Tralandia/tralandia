@@ -12,6 +12,7 @@
 				<li><a n:href=":Owner:Rental:edit, id => $rental->id">{_$rental->getName()}</a></li>
 			{/foreach}
 			<li><a n:href=":Owner:CalendarWidget:, id => $firstRental->id">{_o100153}</a></li>
+			<li><a n:href=":Owner:Reservation:list, rental => $firstRental->id">#Rezervacie</a></li>
 			<li><a n:href=":Front:Sign:out">{_o100154}</a></li>
 		</ul>
 		{/if}

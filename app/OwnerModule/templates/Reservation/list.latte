@@ -2,18 +2,23 @@
 
 <h1>Toto je zoznam rezervacii</h1>
 
-<table>
-	{foreach $reservations as $reservation}	
-	<tr>
-		<td>{$reservation->senderName} (<a href="mailto:{$reservation->senderEmail}">{$reservation->senderEmail}</a>, {$reservation->senderPhone->value})</td>
-		<td>{$reservation->arrivalDate} - {$reservation->departureDate}</td>
-		<td>
-			{$reservation->capacity->peopleCount} {_o100060,null,[count=>$reservation->capacity->peopleCount]}, 
-			{$reservation->capacity->childrenCount} {_o100061,null,[count=>$reservation->capacity->childrenCount]}, 
-		</td>
-	</tr>
-	<tr>
-		<td colspan="2">({_$reservation->language->name}) {$reservation->message}</td>
-	</tr>
-	{/foreach}
-</table>
+
+<div class="datagrid">
+	<table class="table table-bordered">
+		{foreach $reservations as $reservation}
+		<tr>
+			<td>
+				<div class="pull-right">
+					{$reservation->arrivalDate|date} <i class="entypo-next"></i> {$reservation->departureDate|date}, 
+					{$reservation->adultsCount} {_o100060,null,[count=>$reservation->adultsCount]}, 
+					{$reservation->childrenCount} {_o100061,null,[count=>$reservation->childrenCount]}, 
+				</div>
+				{$reservation->senderName} (<a href="mailto:{$reservation->senderEmail}">{$reservation->senderEmail}</a>, {$reservation->senderPhone->value})
+				<p>
+					({_$reservation->language->name}) {$reservation->message}
+				</p>
+			</td>
+		</tr>
+		{/foreach}
+	</table>
+</div>
