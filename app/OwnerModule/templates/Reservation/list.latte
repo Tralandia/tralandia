@@ -4,19 +4,23 @@
 
 
 <div class="datagrid">
-	<table class="table table-bordered">
+	<table class="table table-bordered reservations">
 		{foreach $reservations as $reservation}
 		<tr>
 			<td>
-				<div class="pull-right">
+				<div class="info pull-right">
 					{$reservation->arrivalDate|date} <i class="entypo-next"></i> {$reservation->departureDate|date}, 
 					{$reservation->adultsCount} {_o100060,null,[count=>$reservation->adultsCount]}, 
-					{$reservation->childrenCount} {_o100061,null,[count=>$reservation->childrenCount]}, 
+					{$reservation->childrenCount} {_o100061,null,[count=>$reservation->childrenCount]}
 				</div>
-				{$reservation->senderName} (<a href="mailto:{$reservation->senderEmail}">{$reservation->senderEmail}</a>, {$reservation->senderPhone->value})
-				<p>
-					({_$reservation->language->name}) {$reservation->message}
+				<p class="sender">
+					<b>{$reservation->senderName}</b> 
+					(
+						<a href="mailto:{$reservation->senderEmail}">{$reservation->senderEmail}</a>
+						{if $reservation->senderPhone}, {$reservation->senderPhone|phone}{/if}
+					)
 				</p>
+				<p class="message">({_$reservation->language->name}) {$reservation->message}</p>
 			</td>
 		</tr>
 		{/foreach}

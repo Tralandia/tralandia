@@ -75,6 +75,21 @@ class Helpers {
 
 
 	/**
+	 * Phone formatting.
+	 * @param  \Entity\Contact\Phone
+	 * @return string
+	 */
+	public function phone(\Entity\Contact\Phone $phone)
+	{
+		if ($phone == NULL) { // intentionally ==
+			return NULL;
+		}
+
+		return $phone->getInternational();
+	}
+
+
+	/**
 	 * Date/time formatting.
 	 * @param  string|int|DateTime
 	 * @param  string
