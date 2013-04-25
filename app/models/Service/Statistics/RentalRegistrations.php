@@ -5,14 +5,15 @@ namespace Service\Statistics;
 use Doctrine, Entity;
 
 /**
- * @author 
+ * @author
  */
 class RentalRegistrations {
 
 	protected $rentalRepository;
 	protected $locationRepository;
 
-	public function __construct(\Repository\Rental\RentalRepository $rentalRepository, \Repository\Location\LocationRepository $locationRepository) {
+	public function __construct(\Repository\Rental\RentalRepository $rentalRepository,
+								\Repository\Location\LocationRepository $locationRepository) {
 
 		$this->rentalRepository = $rentalRepository;
 		$this->locationRepository = $locationRepository;
@@ -25,13 +26,15 @@ class RentalRegistrations {
 
 		$periods = $this->getPeriods();
 		foreach ($periods as $key => $value) {
-			$from = new \Nette\DateTime();
+			$from = new \DateTime();
 			$from->setTimestamp($value[0]);
-			$to = new \Nette\DateTime();
+			$to = new \DateTime();
 			$to->setTimestamp($value[1]);
 
-			$results[$key]['total'] = $this->rentalRepository->getCounts(NULL, TRUE, $from, $to);
-			$results[$key]['live'] = $this->rentalRepository->getCounts(NULL, TRUE, $from, $to);
+			$total = $this->rentalRepository->getCounts(NULL, NULL, $from, $to);
+			$live = $this->rentalRepository->getCounts(NULL, TRUE, $from, $to);
+			$results[$key]['total'] = $total;
+			$results[$key]['live'] = $live;
 
 		}
 

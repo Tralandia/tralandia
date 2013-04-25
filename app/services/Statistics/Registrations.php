@@ -10,7 +10,7 @@ use Nette\Utils\Paginator;
 class Registrations implements IDataSource {
 
 	/**
-	 * @var Service\Statistics\RentalRegistrations
+	 * @var \Service\Statistics\RentalRegistrations
 	 */
 	protected $rentalRegistrationsStats;
 

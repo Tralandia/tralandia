@@ -37,16 +37,9 @@ class RentalListPresenter extends BasePresenter {
 	public function actionDefault($favoriteList, $email)
 	{
 		if($this->device->isMobile()) {
-			$this->mobileDefault($favoriteList, $email);
-		} else {
-			$this->desktopDefault($favoriteList, $email);
+			$this->setLayout("layoutMobile");
+			$this->setView('mobileDefault');
 		}
-	}
-
-	public function mobileDefault($favoriteList, $email)
-	{
-		$this->setLayout("layoutMobile");			
-		$this->setView('mobileDefault');
 
 		if($favoriteList) {
 			if(isset($email)) {
@@ -91,51 +84,6 @@ class RentalListPresenter extends BasePresenter {
 		$this->template->findRental = array($this, 'findRental');
 	}
 
-	public function desktopDefault($favoriteList, $email)
-	{
-		if($favoriteList) {
-			if(isset($email)) {
-				$receiver = $this->findOrCreateUser->getUser($email, $this->environment);
-				$this->onSendFavoriteList($favoriteList, $receiver);
-				$this->sendJson(['success' => TRUE]);
-			}
-			$rentals = $favoriteList->getRentals();
-			$itemCount = $rentals->count();
-		} else {
-			$search = $this['searchBar']->getSearch();
-
-			$itemCount = $search->getRentalsCount();
-
-			$lastSearch = $this->lastSearch;
-			$lastSearch->setRentals($search->getRentalsIds(NULL));
-			$lastSearch->setUrl($this->pageSeo->getUrl());
-			$lastSearch->setHeading($this->pageSeo->getH1());
-		}
-
-		$vp = $this['p'];
-		$paginator = $vp->getPaginator();
-		$paginator->itemsPerPage = \Service\Rental\RentalSearchService::COUNT_PER_PAGE;
-		$paginator->itemCount = $itemCount;
-
-		$this->template->totalResultsCount = $paginator->itemCount;
-
-		if(isset($search)) {
-			$rentals = $search->getRentalsIds($paginator->getPage());
-		}
-
-
-		//d($rentalsEntities);
-//		$rentals = array();
-//		foreach ($rentalsEntities as $rental) {
-//			$rentals[$rental->id]['service'] = $this->rentalDecoratorFactory->create($rental);
-//			$rentals[$rental->id]['entity'] = $rental;
-//			$rentals[$rental->id]['featured'] = $orderCache->isFeatured($rental);
-//		}
-
-		$this->template->rentals = $rentals;
-		$this->template->findRental = array($this, 'findRental');
-
-	}
 
 	public function actionRedirectToFavorites()
 	{
