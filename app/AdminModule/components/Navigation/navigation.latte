@@ -2,6 +2,25 @@
 	<aside class="innerPadding baseRadius baseBorder innerPaddingLeft">
 
 		<div class="widget">
+
+
+			<input type="text" class="adminSerach" data-redirect="http://www.sk.tra.com/admin/currency/?q=__%q%__" placeholder="Search rental" />
+			<input type="text" class="adminSerach" data-redirect="http://www.sk.tra.com/admin/currency/?q=__%q%__" placeholder="Search user" />
+			
+			<div class="input-prepend">
+				<span class="add-on select">
+					<select class="select2 dictionaryLanguage">
+						<option>all</option>
+						<option value="sk">sk</option>
+						<option value="hu">hu</option>
+						<option value="en">en</option>
+						<option value="pl">pl</option>
+					</select>
+				</span>
+				<input type="text" class="adminSerach adminSearchDictionary" data-redirect="http://www.sk.tra.com/admin/currency/?q=__%q%__&iso=__%iso%__" placeholder="Search dictionary" />
+			</div>
+
+
 			{foreach $leftItems as $itemL1}
 			{if isset($itemL1->items) && count($itemL1->items)}
 

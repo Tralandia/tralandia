@@ -24,3 +24,34 @@ $(function() {
 		return false;
 	});
 });
+
+$(function(){
+
+	$('input.adminSerach').keypress(function(e) {
+		if(e.which == 13) {
+			
+			var patternQ = '__%q%__';
+			var patternIso = '__%iso%__';
+
+			var url = '-- ';
+
+			if($(this).hasClass('adminSearchDictionary')){
+				url = $(this).attr('data-redirect').replace(patternQ,encodeURIComponent($(this).val())).replace(patternIso,encodeURIComponent($('select.dictionaryLanguage').val()));
+			} else {
+				url = $(this).attr('data-redirect').replace(patternQ,encodeURIComponent($(this).val()));
+			}
+
+			
+			console.log(url);
+
+		}
+	});
+
+});
+
+
+$(function(){
+	$('.select2').select2();
+})
+
+

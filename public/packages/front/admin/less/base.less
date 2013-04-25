@@ -32,6 +32,10 @@
 		margin-top: 10px;
 	}
 
+	ul {
+		position: relative;
+	}
+
 	.loggedUser {
 		.basic-gradient(rgb(142, 175, 18),rgb(116, 145, 8));
 		.basic-border-radius(6px);
@@ -44,5 +48,26 @@
 			line-height: 14px;
 			height: auto;
 		}
+	}
+
+	input[type=text] , .input-prepend {
+		margin: 5px 10px;
+		width: 193px;
+	}
+
+	.input-prepend {
+		input[type=text] {
+			margin: 0;
+			width: 143px;
+		}
+	}
+}
+
+.input-prepend {
+	.add-on.select {
+		width: 51px;
+		background: none;
+		border: none;
+		padding: 0;
 	}
 }
