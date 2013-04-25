@@ -240,12 +240,13 @@ parameters:
 			Admin:
 
 				-  %webloader.packages.fontEntypo%
+				-  %webloader.packages.fontAwesome%
 				-  %webloader.packages.jQuery%
 				-  %webloader.packages.jqueryUi%
 				-  %webloader.packages.jqueryCookie%
 				-  %webloader.packages.bootstrap%
-				-  %webloader.packages.Front%
 				-  %webloader.packages.adminFront%
+				-  %webloader.packages.Front%				
 				-  %webloader.packages.select2%
 				-  %webloader.packages.texyla%
 				-  %webloader.packages.nette%

@@ -816,6 +816,8 @@ maps.mapInit = function(){
 	$(".mapControl").formMapControl();
 }
 
+
+
 // lazy loading map
 $(function() {
 
@@ -844,43 +846,49 @@ $('button[type=submit]').live('click',function(){
 	$(this).addClass('active');
 });	
 
-	// $('.priceList a.remove').on('click',removePriceLine);
-	// $('.priceList a.remove').live('click',removePriceLine);
+	$('.priceList .remove').on('click',removePriceLine);
+	$('.priceList .remove').live('click',removePriceLine);
 
-	// $('.pricelistControlButton a.createNewLine').on('click',createNewLineInPriceList);
+	$('.pricelistControlButton a.createNewLine').on('click',createNewLineInPriceList);
 
 });
 
-// function removePriceLine(){
-// 		$(this).parents('.priceList').remove();
-// 		console.log($('.priceList').length);	
-// }
 
-// function createNewLineInPriceList(){
 
-// 	 // var pattern = $('.priceListPattern.hide').clone().wrap('<p>').parent().html();
-// 	 var pattern = $('.priceListPattern.hide').clone();
+
+// 
+
+function removePriceLine(){
+		$(this).parents('.priceList').remove();
+		console.log($('.priceList').length);	
+}
+
+function createNewLineInPriceList(){
+
+	 var pattern = $('.priceListPattern.hide').clone();
 	 	
-// 	 	pattern.removeClass('hide')
-// 	 			.removeClass('priceListPattern')
-// 	 			.addClass('priceList')
-// 	 			.find('select,input')
-// 	 			.removeAttr('id');
+	 	pattern.removeClass('hide')
+	 			.removeClass('priceListPattern')
+	 			.addClass('priceList')
+	 			.find('select,input')
+	 			.removeAttr('id');
 
-// 	 	pattern.find('select,input').each(function(){
-// 	 		var originName = $(this).attr('name');
-// 	 			$(this).attr('name',originName.replace("[1]","[]"));	 			
-// 	 	})
+	 	var lastExistNameIterator = $('.pricelistControl').find('input[type=text].price');
+	 		lastExistNameIterator = lastExistNameIterator.length-2; // minus jeden hidden input minus 1 pretoze counter array zacina nulou
+	 		console.log(lastExistNameIterator);
 
-// 	 	pattern.find('select').addClass('select2').select2({
-// 			dropdownCssClass: "notFulltext",
-// 			allowClear: true,
-// 			minimumResultsForSearch: 'X',
-// 		});
+	 	pattern.find('select,input').each(function(){
+	 		var originName = $(this).attr('name');
+	 			$(this).attr('name',originName.replace("[1]","["+(lastExistNameIterator+1)+"]"));	 			
+	 	})
 
-// 	 	console.log($('#frm-rentalEditForm').serialize());
+	 	pattern.find('select').addClass('select2').select2({
+			dropdownCssClass: "notFulltext",
+			allowClear: true,
+			minimumResultsForSearch: 'X',
+		});	 	
 
-// 	 	$('.pricelistControl').append(pattern);
-// 	 	// $('.select2').select2();
-// 	return false;
-// }
+	 	$('.pricelistControl').append(pattern);
+	 	
+	return false;
+}
