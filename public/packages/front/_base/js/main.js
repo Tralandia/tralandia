@@ -399,6 +399,9 @@ $('.autoselect').click(A.autoselect);
 	  $('.nav-tabs li').removeClass('active');
 	  $(this).parent().addClass('active');
 
+	  $('.tab-content .tab-pane').hide();
+	  $('.tab-content .tab-pane'+href).show();
+
 	  var scrollmem = $('body').scrollTop();
 	  var newHref = href.replace("#","#_");
 
@@ -411,8 +414,7 @@ $('.autoselect').click(A.autoselect);
 	  	mapLoader();
 	  }
 
-	  $('.tab-content .tab-pane').hide();
-	  $('.tab-content .tab-pane'+href).show();
+
 
 	  return false;
 	});
