@@ -61,7 +61,7 @@
 				{$value->name} <span class="counter">{$value->count}</span>
 			</a>
 		</li>
-		{if $isHome}
+		{if !$hasLocation}
 		<li class="more"><a href="{plink :Front:Destination:}">#Show more</a></li>
 		{/if}
 	</ul>
