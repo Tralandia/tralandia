@@ -5,7 +5,7 @@
 				{var $now = date('Y')}
 				<p>
 					&copy; 2006–{$now} <a href="{plink :Front:Home:default}">{$domain}</a>
-				
+
 				</p>
 			</div>
 			<div class="span9">
@@ -15,13 +15,13 @@
 						<li class="siteVersion"><a href="{plink this, \Routers\FrontRoute::DEVICE => \Device::DESKTOP}">#Desktopova verzia</a></li>
 					{else}
 						<li class="siteVersion"><a href="{plink this, \Routers\FrontRoute::DEVICE => \Device::MOBILE}">#Mobilna verzia</a></li>
-					{/if}	
+					{/if}
 
-					<li><a class="contactLinks" href="{plink :Front:Contact:default#faq}">#kontakty</a></li>
-					<li><a class="contactLinks" href="{plink :Front:Contact:default#aboutUs}">{_o23011}</a></li>
-					<li><a class="contactLinks" href="{plink :Front:Contact:default#termsOfUse}">{_o100123}</a></li>
-					<li><a class="contactLinks" href="{plink :Front:Contact:default#faq}">{_o100122}</a></li>
-					
+					<li><a class="contactLinks" href="{plink :Front:AboutUs:default}">{_o23011}</a></li>
+					<li><a class="contactLinks" href="{plink :Front:SupportUs:default}">#support us</a></li>
+					<li><a class="contactLinks" href="{plink :Front:Tou:default}">{_o100123}</a></li>
+					<li><a class="contactLinks" href="{plink :Front:Faq:default}">{_o100122}</a></li>
+
 				</ul>
 			</div>
 		</div>
