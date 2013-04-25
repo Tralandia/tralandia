@@ -705,13 +705,29 @@
 				<span class="input-append">
 					{$component['price']->getOption('append')}
 				</span>
-				<span>X</span>
+				<span class="remove">X</span>
 			</div>
+
+			{if $iterator->last}
+				<div class="priceListPattern hide">
+					{input $component['roomCount'] , class => 'notFulltext'}
+					{input $component['roomType'] , class => 'notFulltext string'}
+					{input $component['bedCount'] , class => 'notFulltext string'}
+					{input $component['extraBedCount'] , class => 'notFulltext string'}
+
+					{* {input $component['price']['currency'] , class => 'select2'} *}
+					{input $component['price'] , class => 'price' }
+					<span class="input-append">
+						{$component['price']->getOption('append')}
+					</span>
+					<span class="remove">X</span>
+				</div>						
+			{/if}			
 		{/foreach}
 	</td>
 </tr>
 <tr class="pricelistControlButton">
-	<td colspan="3">Add</td>
+	<td colspan="3"><a class="createNewLine">Add</a></td>
 </tr>
 {/define #rentalPriceList}
 
