@@ -1,0 +1,500 @@
+/*
+ * HTML5 Boilerplate
+ *
+ * What follows is the result of much research on cross-browser styling.
+ * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
+ * Kroc Camen, and the H5BP dev community and team.
+ */
+
+/* ==========================================================================
+   Base styles: opinionated defaults
+   ========================================================================== */
+
+html,
+button,
+input,
+select,
+textarea {
+	color: #222;
+}
+
+body {
+	font-size: 1em;
+	line-height: 1.1;
+}
+
+a {
+	color: #00e;
+}
+
+a:visited {
+	color: #551a8b;
+}
+
+a:hover {
+	color: #06e;
+}
+
+/*
+ * Remove the gap between images and the bottom of their containers: h5bp.com/i/440
+ */
+
+img {
+	vertical-align: middle;
+-webkit-border-radius: 3px;
+-moz-border-radius: 3px;
+border-radius: 3px;    
+}
+
+/*
+ * Remove default fieldset styles.
+ */
+
+fieldset {
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
+
+/*
+ * Allow only vertical resizing of textareas.
+ */
+
+textarea {
+	resize: vertical;
+}
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+
+body {    
+ background: #eef2d1;
+ color: #7d3300;
+}
+
+ul , ol , ul li , ol li {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+p {
+	margin: 10px;
+}
+
+.hide {
+	display: none;
+}
+
+.fix {
+	position: fixed;
+	width: 100%;
+	display: block;
+	left: 0;
+	top: 0;
+}
+
+.pull-right {
+	float: right;
+}
+
+.color-green , btn.color-green , a.color-green {
+	color: #698308;
+}
+
+#pageHeader {
+	height: 80px;
+	background: #fff url(../img/it.jpg);
+	background-size: cover;
+}
+
+	#pageHeader a.logo {
+		height: 60px;
+		width: 60px;
+		margin: 10px 10px 10px;
+		float: left;
+		background: url(tra-logo-icon.svg) no-repeat;
+		background-size: cover;
+		text-decoration: none;
+		display: block;
+	}
+
+	#pageHeader h1 {
+		margin: 0;
+		padding: 0;
+		color: #fff;
+		font-weight: bold;
+		background: transparent;
+		text-shadow: 0px 0px 8px #000000;
+		font-size: 1.8em;
+		padding-top: 15px;
+	}
+
+		#pageHeader h1 span {
+			font-size: .6em;
+			font-weight: normal;
+			display: block;
+		}
+
+input[type=range] {
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */    
+	width: 100%;
+	
+}
+
+input[type=text] , input[type=email] , input[type=number], input[type=date], input[type=tel] , textarea {
+	box-shadow: none;
+	box-shadow: inset 0 0 0 #fff;
+	-webkit-appearance: none;
+	border: 1px solid #ddd;
+	line-height: 30px;
+	height: 30px;
+	padding: 0 10px;
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */    
+	width: 100%;
+	margin-bottom: 10px;
+}
+
+textarea {
+	height: 120px;
+}
+
+input#searchTextField {
+	width: 73%;
+	padding: 0 5px;
+	height: 30px;
+	line-height: 30px;
+	box-shadow: none;
+	box-shadow: inset 0 0 0 #fff;
+	-webkit-appearance: none;
+	display: block;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;        
+
+ 
+	float: left;
+	border: 1px solid rgb(201, 198, 198);
+	
+}
+
+	/*input#searchTextField::-webkit-input-placeholder {
+	   color: red;
+	}
+
+	input#searchTextField:-moz-placeholder {  Firefox 18- 
+	   color: red;  
+	}
+
+	input#searchTextField::-moz-placeholder {   Firefox 19+ 
+	   color: red;  
+	}
+
+	input#searchTextField:-ms-input-placeholder {  
+	   color: red;  
+	}*/
+
+
+	#pageHeader form {
+		margin-top: 14px;
+	}
+
+	#pageHeader button.btn {
+		width: 15%;
+		position: relative;
+		padding: 0;
+		height: 32px;
+		line-height: 32px;
+		display: block;
+		float: left;
+		margin: 0;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px; 
+	}
+	
+
+
+		#pageHeader button.btn:last-child {
+
+		margin-left: 10px;
+		}
+
+		#pageHeader button.btn i {
+			border: none;
+			box-shadow: none;
+
+		}
+
+
+
+#pageHeader nav ul li.pull-right a {
+	float: right;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;    
+
+
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-bottom-left-radius: 5px;
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-bottomleft: 5px;
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+	margin-right: 0;
+}
+
+
+#subnav {
+	z-index: 300;
+	height: 45px;
+	position: relative;
+	color: #333;
+	box-shadow: 0 8px 6px -6px rgb(179, 179, 179);
+	background-image: linear-gradient(bottom,#e6e6e6 0%,#ffffff 100%);
+	background-image: -o-linear-gradient(bottom,#e6e6e6 0%,#ffffff 100%);
+	background-image: -moz-linear-gradient(bottom,#e6e6e6 0%,#ffffff 100%);
+	background-image: -webkit-linear-gradient(bottom,#e6e6e6 0%,#ffffff 100%);
+	background-image: -ms-linear-gradient(bottom,#e6e6e6 0%,#ffffff 100%);
+	background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0,#e6e6e6),color-stop(1,#ffffff));    
+}
+
+#subnavPlaceholder {
+	height: 30px;
+}
+
+	#subnav ul li {
+		display: block;
+		float: left;
+	}
+	
+	#subnav ul li.search {
+		width: 84%;
+	}
+	
+		#subnav ul li form input[type=text] {
+			width: 96%;
+			border: 1px solid #ccc;
+			border-radius: 3px;
+			margin: 5px 3px;
+			margin-left: 10px;
+			padding: 0 10px;
+			height: 35px;
+			line-height: 35px;            
+		}
+		
+		
+
+		
+	
+	
+		#subnav ul li.pull-right {
+			float: right;
+		}
+
+		#subnav ul li a , #subnav ul li button {
+			display: block;
+			height: 45px;
+			margin: 0;
+			line-height: 45px;
+			padding: 0 20px;
+			text-decoration: none;
+			color: #d32c16;
+
+		}
+		
+		#subnav ul li button.color-green {
+			color: #698308;
+		}
+
+			#subnav ul li a i:last-child {
+				float: right;
+				margin-top: 5px;
+			}
+
+			#subnav ul li a i:first-child {
+				color: rgb(223, 111, 23);
+			}
+
+			#subnav ul li a span {
+				color: #888;
+				font-size: 12px;
+			}
+
+				#subnav ul li a span:after{
+					content: ')';
+				}
+
+				#subnav ul li a span:before{
+					content: '(';
+				}
+				
+
+body.favorites #subnav ul li.search {
+		width: 70%;
+	}
+				
+#pageTitle {
+	background: transparent;
+	padding: 0;
+	border: none;
+	text-shadow: none;
+	font-family: 'neosansbold' , Arial;
+}
+
+#pageTitle span {
+	padding: .7em 0;
+	display: block;
+	float: left;
+	color: #7d3300;
+}
+
+#pageTitle i {
+	height: 40px ;
+	display: block;
+	width: 40px;
+	margin: 0 auto;
+	background: url(tra-logo-icon.svg) no-repeat;
+	background-size: cover;
+}
+
+
+
+
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+
+/* Prevent callout */
+
+.nocallout {
+	-webkit-touch-callout: none;
+}
+
+.pressed {
+	background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* A hack for HTML5 contenteditable attribute on mobile */
+
+textarea[contenteditable] {
+	-webkit-appearance: none;
+}
+
+/* A workaround for S60 3.x and 5.0 devices which do not animated gif images if
+   they have been set as display: none */
+
+.gifhidden {
+	position: absolute;
+	left: -100%;
+}
+
+/*
+ * Image replacement
+ */
+
+.ir {
+	background-color: transparent;
+	background-repeat: no-repeat;
+	border: 0;
+	direction: ltr;
+	display: block;
+	overflow: hidden;
+	text-align: left;
+	text-indent: -999em;
+}
+
+.ir br {
+	display: none;
+}
+
+/*
+ * Hide from both screenreaders and browsers: h5bp.com/u
+ */
+
+.hidden {
+	display: none !important;
+	visibility: hidden;
+}
+
+/*
+ * Hide only visually, but have it available for screenreaders: h5bp.com/v
+ */
+
+.visuallyhidden {
+	border: 0;
+	clip: rect(0 0 0 0);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+}
+
+/*
+ * Extends the .visuallyhidden class to allow the element to be focusable
+ * when navigated to via the keyboard: h5bp.com/p
+ */
+
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+	clip: auto;
+	height: auto;
+	margin: 0;
+	overflow: visible;
+	position: static;
+	width: auto;
+}
+
+/*
+ * Hide visually and from screenreaders, but maintain layout
+ */
+
+.invisible {
+	visibility: hidden;
+}
+
+/**
+ * Clearfix helper
+ * Used to contain floats: h5bp.com/q
+ */
+
+.clearfix:before,
+.clearfix:after {
+	content: "";
+	display: table;
+}
+
+.clearfix:after {
+	clear: both;
+}
+
+/*
+ * For IE 6/7 only
+ * Include this rule to trigger hasLayout and contain floats.
+ */
+
+.clearfix {
+	*zoom: 1;
+}
+
+/* ==========================================================================
+   EXAMPLE Media Queries for Responsive Design.
+   Theses examples override the primary ('mobile first') styles.
+   Modify as content requires.
+   ========================================================================== */
+
+@media only screen and (min-width: 800px) {
+	/* Style adjustments for viewports that meet the condition */
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5),
+	   only screen and (min-resolution: 144dpi) {
+	/* Style adjustments for viewports that meet the condition */
+}

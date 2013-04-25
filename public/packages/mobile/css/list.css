@@ -1,0 +1,94 @@
+.list h1 {
+    font-size: 1.2em;
+    margin: 0;
+    padding: 10px 10px 0 10px;
+    font-weight: normal;
+    background: #fdfdf8;
+    color:#174a90;
+}
+
+/* rental list*/
+.rentalList {
+    
+}
+
+    .rentalList article {
+        
+        
+
+    }
+
+        .rentalList article a {
+            text-decoration: none;
+            color: #7d3300;
+            padding: 10px 0;
+            background: #fdfdf8;
+            display: block;
+            border-bottom: 1px solid rgb(209, 209, 209);
+            border-top: 1px solid rgb(255, 255, 255);            
+        }
+    
+    
+        .rentalList article a h2 , .rentalList article a p  {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding-right: 1em;    
+            font-weight: normal;
+        }    
+
+        .rentalList article a h2 {
+            font-size: 1em;
+            line-height: 1.4em;
+            margin: 0; 
+            padding: 0;
+            color: #698308;
+        }
+
+
+
+        .rentalList article span {
+            font-size: .8em;
+        }
+
+        .rentalList article a .priceInfo span {
+            color: rgb(173, 173, 173);
+        }
+
+        .rentalList article a p {
+            font-size: .78em;
+            padding-right: 1em;
+            line-height: 1.4em;
+            margin: 0;
+            color: #888;
+        }
+
+        .capacity , .price {
+            float: left;
+            font-size: .9em;
+
+        }
+
+        .capacity span , .price span {
+            color: #888;
+        }
+
+        .capacity {
+            float: right;
+            margin-right: .5em;
+        }
+
+        .rentalList article p.slogan {
+             color: #d32c16;
+        }
+
+        .rentalList article img {
+            width: 120px;
+            height: 71px;
+            height: auto;
+            float: left;
+            margin: 0 .5em;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;    
+        }
