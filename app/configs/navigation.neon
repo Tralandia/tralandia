@@ -31,6 +31,10 @@ common:
 					label: Dictionary
 					link: ':Admin:StatisticsDictionary:list'
 
+				registrations:
+					label: Registrations
+					link: ':Admin:StatisticsRegistrations:list'
+
 		user:
 			label: Users
 			items:

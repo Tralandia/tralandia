@@ -17,6 +17,11 @@ class AdminGridControl extends BaseGridControl {
 	 */
 	public $collator;
 
+	/**
+	 * @var TRUE|FALSE
+	 */
+	public $showActions = true;
+
 	public function __construct(\Extras\Translator $translator, \Environment\Collator $collator)
 	{
 		$this->translator = $translator;
@@ -68,6 +73,9 @@ class AdminGridControl extends BaseGridControl {
 		$files = array();
 		$files[] = dirname(ClassType::from($this)->getFileName()) . '/' . lcfirst( ClassType::from($this)->getShortName() ) . '.latte';
 		$files[] = __DIR__ . '/@adminGridCellsTemplate.latte';
+		if ($this->showActions) {
+			$files[] = __DIR__ . '/@adminGridActionsTemplate.latte';
+		}
 		$files = array_merge($files, parent::getCellsTemplatesFiles());
 		return $files;
 	}

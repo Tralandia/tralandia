@@ -18,12 +18,14 @@ class RegistrationsGrid extends AdminGridControl {
 	}
 
 	public function render() {
-
+		$this->template->hideActions = false;
 		$this->template->render();
 	}
 
 	public function createComponentGrid()
 	{
+		$this->showActions = false;
+
 		$grid = $this->getGrid();
 		$grid->setRowPrimaryKey('key');
 

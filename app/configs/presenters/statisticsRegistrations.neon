@@ -3,6 +3,7 @@ entity: Entity\Rental\Rental
 parameters:
 	title: Registrations statistics
 	h1: 'Registration -> %name%'
+	hideAddNewButton: true
 
 gridFactory: @statisticsRegistrationsGridFactory
 
