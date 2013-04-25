@@ -36,7 +36,7 @@ $(function(){
 			var url = '-- ';
 
 			if($(this).hasClass('adminSearchDictionary')){
-				url = $(this).attr('data-redirect').replace(patternQ,encodeURIComponent($(this).val())).replace(patternIso,encodeURIComponent($('select.DictionaryLanguage').val()));
+				url = $(this).attr('data-redirect').replace(patternQ,encodeURIComponent($(this).val())).replace(patternIso,encodeURIComponent($('select.dictionaryLanguage').val()));
 			} else {
 				url = $(this).attr('data-redirect').replace(patternQ,encodeURIComponent($(this).val()));
 			}
