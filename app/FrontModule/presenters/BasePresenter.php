@@ -222,9 +222,8 @@ abstract class BasePresenter extends \BasePresenter {
 		$this->sendJson($json);
 	}
 
-	public function actionGenerateFavoriteLink()
+	protected function generateFavoriteLink()
 	{
-		$json = [];
 		$rentals = $this->favoriteList->getRentalList();
 		if(count($rentals)) {
 			$favoriteListRepository = $this->favoriteListRepositoryAccessor->get();
@@ -234,6 +233,18 @@ abstract class BasePresenter extends \BasePresenter {
 			$favoriteListRepository->save($favoriteList);
 
 			$shareLink = $this->link('//RentalList:default', ['favoriteList' => $favoriteList]);
+
+			return $shareLink;
+		} else {
+			return NULL;
+		}
+	}
+
+	public function actionGenerateFavoriteLink()
+	{
+		$json = [];
+		$shareLink = $this->generateFavoriteLink();
+		if($shareLink) {
 			$shareText = '#favorites';
 			// @todo toto je tu len docasne lebo sa neimportuju obrazky
 			//$shareImage = $this->rentalImagePipe->request($rental->getMainImage());

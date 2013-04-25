@@ -224,6 +224,11 @@ factories:
 	# ==============================
 	# ==================== FORMS
 	# ==============================
+
+	simpleForm:
+		class: BaseModule\Forms\SimpleForm
+		implement: BaseModule\Forms\ISimpleFormFactory
+
 #	rentalEditFormFactory:
 #		class: OwnerModule\Forms\RentalEditForm(%rental%)
 #		implement: OwnerModule\Forms\IRentalEditFormFactory
