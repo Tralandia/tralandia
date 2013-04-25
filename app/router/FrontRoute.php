@@ -135,11 +135,14 @@ class FrontRoute extends BaseRoute
 						$presenter = 'Rental';
 						$params['action'] = 'detail';
 					}
-				} else if ($match = Strings::match($pathSegment, '~f([0-9]+)$~')) {
-					if($favoriteList = $this->favoriteListRepositoryAccessor->get()->find($match[1])) {
+				} else if ($match = Strings::match($pathSegment, '~f([0-9]*)$~')) {
+					if(is_numeric($match[1]) && $favoriteList = $this->favoriteListRepositoryAccessor->get()->find($match[1])) {
 						$params[self::FAVORITE_LIST] = $favoriteList;
 						$presenter = 'RentalList';
 						$params['action'] = 'default';
+					} else if($match[1] === '') {
+						$presenter = 'RentalList';
+						$params['action'] = 'redirectToFavorites';
 					}
 				}
 			}
@@ -233,6 +236,8 @@ class FrontRoute extends BaseRoute
 		$action = $params['action'];
 
 		switch (TRUE) {
+			case $presenter == 'RentalList' && $action == 'redirectToFavorites':
+				$params[self::HASH][] = 'f';
 			case $presenter == 'Home' && $action == 'default':
 			case $presenter == 'RootHome' && $action == 'default':
 			case $presenter == 'Rental' && $action == 'detail':

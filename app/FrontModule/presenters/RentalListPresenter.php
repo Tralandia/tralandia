@@ -94,6 +94,16 @@ class RentalListPresenter extends BasePresenter {
 
 	}
 
+	public function actionRedirectToFavorites()
+	{
+		$link = $this->generateFavoriteLink();
+		if($link) {
+			$this->redirectUrl($link);
+		} else {
+			$this->redirect('Home:');
+		}
+	}
+
 	public function findRental($id)
 	{
 		//d($id);
