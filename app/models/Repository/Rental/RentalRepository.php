@@ -82,7 +82,7 @@ class RentalRepository extends \Repository\BaseRepository {
 		return $qb->getQuery()->getOneOrNullResult();
 	}
 
-	public function getCounts(\Entity\Location\Location $primaryLocation = NULL, $live = FALSE, \Nette\DateTime $dateFrom = NULL, \Nette\DateTime $dateTo = NULL) {
+	public function getCounts(\Entity\Location\Location $primaryLocation = NULL, $live = NULL, \DateTime $dateFrom = NULL, \DateTime $dateTo = NULL) {
 		$qb = $this->_em->createQueryBuilder();
 
 		$qb->select('l.id locationId', 'COUNT(r.id) as c')
@@ -90,7 +90,7 @@ class RentalRepository extends \Repository\BaseRepository {
 			->join('r.address', 'a')
 			->join('a.primaryLocation', 'l');
 		if ($primaryLocation) {
-			$qb->where($qb->expr()->eq('a.primaryLocation', $location->id));
+			$qb->where($qb->expr()->eq('a.primaryLocation', $primaryLocation->id));
 		}
 		if ($live) {
 			$qb->andWhere($qb->expr()->eq('r.status', \Entity\Rental\Rental::STATUS_LIVE));
