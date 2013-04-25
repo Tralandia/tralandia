@@ -3,15 +3,15 @@ common:
 		support:
 			label: Support
 			items:
-				pendingTicket:
-					label: Pending Tickets
-					link: ':Admin:Ticket:list'
-					linkArgs:
-						filter: pending
-				ticket:
-					label: All Tickets
-					link: ':Admin:Ticket:list'
-					separator: true
+				# pendingTicket:
+				# 	label: Pending Tickets
+				# 	link: ':Admin:Ticket:list'
+				# 	linkArgs:
+				# 		filter: pending
+				# ticket:
+				# 	label: All Tickets
+				# 	link: ':Admin:Ticket:list'
+				# 	separator: true
 
 				faqCategory:
 					label: FAQ Categories
@@ -23,13 +23,13 @@ common:
 		statistics:
 			label: Statistics #@todo
 			items:
-				one:
-					label: Pending Tickets
-					link: ':Admin:Ticket:list'
+				# one:
+				# 	label: Pending Tickets
+				# 	link: ':Admin:Ticket:list'
 
-				dictionary:
-					label: Dictionary
-					link: ':Admin:StatisticsDictionary:list'
+				# dictionary:
+				# 	label: Dictionary
+				# 	link: ':Admin:StatisticsDictionary:list'
 
 				registrations:
 					label: Registrations
@@ -47,9 +47,9 @@ common:
 				role:
 					label: Roles
 					link: ':Admin:UserRole:list'
-				acl:
-					label: Acl
-					link: ':Admin:Acl:list'
+				# acl:
+				# 	label: Acl
+				# 	link: ':Admin:Acl:list'
 
 
 		rental:
@@ -157,52 +157,52 @@ common:
 					label: Layouts
 					link: ':Admin:EmailLayout:list'
 
-		admin:
-			label: Admin
-			items:
-				import:
-					label: Import
-					link: ':Admin:Import:default'
-				entityGenerator:
-					label: Entity Generator
-					link: ':Admin:EntityGenerator:default'
-				searchCache:
-					label: Update Search Cache
-					link: ':Admin:RunRobot:searchCache'
-					target: _blank
-				memCache:
-					label: Memcache Viewer
-					link: ':Admin:Memcache:default'
-					target: _blank
+		# admin:
+		# 	label: Admin
+		# 	items:
+		# 		import:
+		# 			label: Import
+		# 			link: ':Admin:Import:default'
+		# 		entityGenerator:
+		# 			label: Entity Generator
+		# 			link: ':Admin:EntityGenerator:default'
+		# 		searchCache:
+		# 			label: Update Search Cache
+		# 			link: ':Admin:RunRobot:searchCache'
+		# 			target: _blank
+		# 		memCache:
+		# 			label: Memcache Viewer
+		# 			link: ':Admin:Memcache:default'
+		# 			target: _blank
 
 	right: # parave strana
 		account:
 			items:
-				wtt:
-					icon: icon-time
-					link: #@todo external URL, maybe use key "href"
-				autopilot:
-					label: Turn Autopilot ON
-					separator: true
-					icon: icon-plane
-				taskee:
-					icon: icon-ok
-					link: #@todo external URL, maybe use key "href"
-				wiki:
-					icon: icon-book
-					link: #@todo external URL, maybe use key "href"
-				docs:
-					label: Google Docs
-					icon: icon-file
-					link: #@todo external URL, maybe use key "href"
-				gmail:
-					separator: true
-					icon: icon-inbox
-					link: #@todo external URL, maybe use key "href"
-				settings:
-					label: Account Settings
-					icon: icon-cog
-					link: ':Admin:Settings' #@todo
+				# wtt:
+				# 	icon: icon-time
+				# 	link: #@todo external URL, maybe use key "href"
+				# autopilot:
+				# 	label: Turn Autopilot ON
+				# 	separator: true
+				# 	icon: icon-plane
+				# taskee:
+				# 	icon: icon-ok
+				# 	link: #@todo external URL, maybe use key "href"
+				# wiki:
+				# 	icon: icon-book
+				# 	link: #@todo external URL, maybe use key "href"
+				# docs:
+				# 	label: Google Docs
+				# 	icon: icon-file
+				# 	link: #@todo external URL, maybe use key "href"
+				# gmail:
+				# 	separator: true
+				# 	icon: icon-inbox
+				# 	link: #@todo external URL, maybe use key "href"
+				# settings:
+				# 	label: Account Settings
+				# 	icon: icon-cog
+				# 	link: ':Admin:Settings' #@todo
 				logout:
 					icon: icon-off
 					link: ':Front:Sign:out'

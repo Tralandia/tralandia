@@ -816,6 +816,8 @@ maps.mapInit = function(){
 	$(".mapControl").formMapControl();
 }
 
+
+
 // lazy loading map
 $(function() {
 
@@ -850,6 +852,11 @@ $('button[type=submit]').live('click',function(){
 	// $('.pricelistControlButton a.createNewLine').on('click',createNewLineInPriceList);
 
 });
+
+
+
+
+
 
 // function removePriceLine(){
 // 		$(this).parents('.priceList').remove();
