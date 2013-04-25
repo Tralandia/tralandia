@@ -1,2 +1,80 @@
 {block content}
-<h3>Toto je list pre mobil</h3>
+
+<section id="pageContent"  class="rentalList contentContainer">
+
+	<h1>{$pageH1} <span class="counter">({_o100002, $totalResultsCount ,null,[count=>$totalResultsCount]})</span></h1>
+
+	{foreach $rentals as $rentalId}
+
+
+		{if $rentalId instanceof \Entity\Rental\Rental}
+			{var $rental = $rentalId}
+			{var $rentalId = $rentalId->getId()}
+		{/if}
+		{cache 'rental-list-box-'.$rentalId, if => $useTemplateCache, expire => '+1 day'}
+
+		{var $rentalService = $findRental($rentalId); }
+		{var $rental = $rentalService->getEntity(); }
+		{var $featured = $rentalService->isFeatured(); }
+
+		{var $lastClass = ''}
+		{if $iterator->last}
+			{var $lastClass = 'last'}
+		{/if}
+
+		<article>
+			<a href="{link Rental:detail $rental}">
+				
+				{if $mainImage = $rental->getMainImage()}
+					<img src="{$basePath}{$mainImage|rentalImageSrc}"/>
+				{else}
+					<img alt="{_$rental->name}" n:fakeImage="" class="marginBottom"/>
+				{/if}
+
+				<h2>{_$rental->name}</h2>
+
+				<p class="rentalAddress">
+					{_$rental->type->name|firstUpper}
+					{if $rental->hasPlacement()}{_$rental->getPlacement()->name}, {/if}
+					{_$rental->address->locality->name}
+				</p>
+
+				<p class="slogan">
+					{_$rental->teaser|firstUpper}
+				</p>
+
+				<div class="price">{$rental->price}<span> {_o100004}</span></div>
+
+				<div class="capacity">
+					{$rental->maxCapacity} 
+					<span>{_o490,null,[count=>$rental->maxCapacity]}</span>
+				</div>
+
+				<div class="clearfix"></div>
+
+			</a>
+		</article> 
+		{/cache}
+	{/foreach}
+
+</section>
+
+
+<ul class="pagination">
+	<li>
+		<a href="#">
+			<i class="icon-angle-left"></i>
+		</a>
+	</li>
+	<li class="counter">
+		<span>Stranka 1 z 20</span>
+	</li>              
+	<li>
+		<a href="#">
+			<i class="icon-angle-right"></i>
+		</a>
+	</li>            
+</ul>
+
+
+<div class="clearfix"></div>

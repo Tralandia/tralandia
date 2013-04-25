@@ -399,6 +399,9 @@ $('.autoselect').click(A.autoselect);
 	  $('.nav-tabs li').removeClass('active');
 	  $(this).parent().addClass('active');
 
+	  $('.tab-content .tab-pane').hide();
+	  $('.tab-content .tab-pane'+href).show();
+
 	  var scrollmem = $('body').scrollTop();
 	  var newHref = href.replace("#","#_");
 
@@ -411,18 +414,30 @@ $('.autoselect').click(A.autoselect);
 	  	mapLoader();
 	  }
 
-	  $('.tab-content .tab-pane').hide();
-	  $('.tab-content .tab-pane'+href).show();
-
 	  return false;
+	});
+
+	// footer linky na kontakt tabs ak mam otvorene kontakty
+	$(window).on('hashchange', function() {
+		if(!(window.location.hash.match("#_")))
+		{
+
+			var href = window.location.hash;
+
+			$('.tab-content .tab-pane').hide();
+			$('.tab-content .tab-pane'+href).show();
+
+			window.location.hash = window.location.hash.replace("#","#_");
+		}	
 	});
 
 	// nastavenie default tabu
 
 	if(window.location.hash.length > 1){
 
-		var currentId  = window.location.hash;
-		currentId=currentId.replace("#_","#");
+		var currentId = window.location.hash;
+			// console.log(currentId);
+			currentId = currentId.replace("#_","#");
 
 		var scrollmem = $('.objectDetailContent').height();
 
