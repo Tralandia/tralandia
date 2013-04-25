@@ -1,0 +1,62 @@
+.pagination {
+    margin: 10px;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;         /* Opera/IE 8+ */    
+    height: 40px;
+}
+
+.pagination li {
+    display: block;
+    height: 40px;
+    line-height: 40px;
+    background: #fdfdf8;
+    float: left;
+    width: 20%;
+    font-size: .8em;
+    text-align: center;
+}
+
+.pagination li:first-child , .pagination li:last-child {
+    font-size: 20px;
+    font-size: 1.6em;
+}
+
+.pagination li:first-child {
+    box-shadow: 1px 0 0 #ddd;
+    position: relative;
+    -webkit-border-top-left-radius: 3px;
+    -webkit-border-bottom-left-radius: 3px;
+    -moz-border-radius-topleft: 3px;
+    -moz-border-radius-bottomleft: 3px;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;    
+}
+
+.pagination li:last-child {
+    box-shadow: -1px 0 0 #ddd;
+    -webkit-border-top-right-radius: 3px;
+    -webkit-border-bottom-right-radius: 3px;
+    -moz-border-radius-topright: 3px;
+    -moz-border-radius-bottomright: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;    
+}
+
+
+
+.pagination li.counter {
+    width: 60%;
+}
+
+.pagination li a {
+    color: #333;
+    text-decoration: none;
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+
+.pagination li.previous , .pagination li.next {
+    
+}

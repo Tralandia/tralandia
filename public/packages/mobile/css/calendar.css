@@ -1,0 +1,105 @@
+/* ľšč*/
+div.calendar {
+font-size: .9em;
+margin: 1em 0;
+text-align: center;
+width: 48%;
+max-width: 300px;
+float: right;
+}
+
+div.calendar.first {
+    margin-right: 10px;
+    float: left;
+}
+
+div.calendar div.day {
+float: left;
+height: 1.4em;
+background: rgb(255, 255, 255);
+line-height: 1.3em;
+box-shadow: inset 1px 1px 0px rgb(193, 207, 168);
+padding-top: 3px;
+font-size: .75em;
+text-align: center;
+width: 14.183%;
+}
+
+div.calendar div.day:nth-child(8), 
+div.calendar div.day:nth-child(15),
+div.calendar div.day:nth-child(22),
+div.calendar div.day:nth-child(29),
+div.calendar div.day:nth-child(36),
+div.calendar div.day:nth-child(43){
+    border-right: 1px solid rgb(193, 207, 168);
+}
+
+div.calendar div.day:nth-child(43),
+div.calendar div.day:nth-child(42),
+div.calendar div.day:nth-child(41),
+div.calendar div.day:nth-child(40),
+div.calendar div.day:nth-child(39),
+div.calendar div.day:nth-child(38),
+div.calendar div.day:nth-child(37) {
+    border-bottom: 1px solid rgb(193, 207, 168);
+}
+
+div.calendar .active {
+    background-color: #FBFBF3;
+    color: #663300 !important;
+    cursor: pointer;
+}
+div.calendar .ro {
+    cursor: default !important;
+}
+div.calendar .inactive {
+    color: #EEEEEE;
+    cursor: default !important;
+}
+div.calendar .dayName {
+    color: #91A136;
+}
+div.calendar .monthName {
+color: #663300;
+margin-bottom: 5px;
+font-size: 1em;
+font-weight: bold;
+}
+div.calendar .selected {
+    background-color: #C5D279;
+}
+div.calendar .day.status11 {
+    background: #ddd;
+    color: #333;
+}
+div.calendar .day.status01 {
+background-image: linear-gradient(right bottom, #DDDDDD 50%, #FFFFFF 50%);
+background-image: -o-linear-gradient(right bottom, #DDDDDD 50%, #FFFFFF 50%);
+background-image: -moz-linear-gradient(right bottom, #DDDDDD 50%, #FFFFFF 50%);
+background-image: -webkit-linear-gradient(right bottom, #DDDDDD 50%, #FFFFFF 50%);
+background-image: -ms-linear-gradient(right bottom, #DDDDDD 50%, #FFFFFF 50%);
+
+background-image: -webkit-gradient(
+	linear,
+	right bottom,
+	left top,
+	color-stop(0.5, #DDDDDD),
+	color-stop(0.5, #FFFFFF)
+);
+/*background: red;*/
+}
+div.calendar .day.status10 {
+background-image: linear-gradient(right bottom, #FFFFFF 50%, #DDDDDD 50%);
+background-image: -o-linear-gradient(right bottom, #FFFFFF 50%, #DDDDDD 50%);
+background-image: -moz-linear-gradient(right bottom, #FFFFFF 50%, #DDDDDD 50%);
+background-image: -webkit-linear-gradient(right bottom, #FFFFFF 50%, #DDDDDD 50%);
+background-image: -ms-linear-gradient(right bottom, #FFFFFF 50%, #DDDDDD 50%);
+
+background-image: -webkit-gradient(
+	linear,
+	right bottom,
+	left top,
+	color-stop(0.5, #FFFFFF),
+	color-stop(0.5, #DDDDDD)
+);
+}
