@@ -1,1 +1,19 @@
 {block content}
+
+<h1>{_o827}</h1>
+<div class="faqPage">
+	{foreach $categories as $category}
+	<div class="category">
+		<h2>{_$category->name}</h2>		
+			{foreach $category->questions as $question}
+			<h3>{_$question->question}</h3>
+				<p>{_$question->answer} </p>
+				<a class="loadContactForm" href="#">#openForm</a>
+			{/foreach}
+	</div>		
+	{/foreach}
+</div>
+
+<div id="contactFormCover" class="hide">
+	{include '../../forms/contactForm.latte'}
+</div>
