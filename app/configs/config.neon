@@ -18,6 +18,9 @@ nette:
 			- Extras\ImageMacro
 			- Extras\Macros
 
+	security:
+		frames:
+
 extensions:
 	events: Kdyby\Events\DI\EventsExtension
 

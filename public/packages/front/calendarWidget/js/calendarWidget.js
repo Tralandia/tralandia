@@ -48,7 +48,7 @@
 					rows: $self.find('[name=rows]').val(),
 					columns: $self.find('[name=columns]').val(),
 					language: $self.find('[name=iso]').val(),
-					rentalId: $form.attr('data-id')
+					id: $form.attr('data-id')
 				};
 
 				// console.log(data);
@@ -56,7 +56,7 @@
 				if(data.columns > 0 & data.rows > 0 & data.iso != 0){
 
 					url = linkTemplate
-						.replace('__rentalId__', data.rentalId)
+						.replace('__rental__', data.id)
 						.replace('__language__', data.language)
 						.replace('__columns__', data.columns)
 						.replace('__rows__', data.rows);
@@ -71,7 +71,7 @@
 					
 			});
 			
-			$self.find('select').trigger('change');
+			$self.find('select[name=iso]').trigger('change');
 
 		});
 	};
