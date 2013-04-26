@@ -364,7 +364,21 @@ body.favorites #subnav ul li.search {
 }
 
 
+/* footer */
+#footer {	
+	padding: 10px;
+	padding-top: 0;
+}
 
+	#footer ul {
+
+	}
+
+		#footer ul li {}
+
+			#footer ul li a {
+				color: #698308;
+			}
 
 /* ==========================================================================
    Helper classes

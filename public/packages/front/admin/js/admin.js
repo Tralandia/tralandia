@@ -27,11 +27,11 @@ $(function() {
 
 $(function(){
 
-	$('input.adminSerach').keypress(function(e) {
+	$('input.adminSearch').keypress(function(e) {
 		if(e.which == 13) {
 			
-			var patternQ = '__%q%__';
-			var patternIso = '__%iso%__';
+			var patternQ = '__query__';
+			var patternIso = '__languageId__';
 
 			var url = '-- ';
 
@@ -41,17 +41,12 @@ $(function(){
 				url = $(this).attr('data-redirect').replace(patternQ,encodeURIComponent($(this).val()));
 			}
 
+			window.location = url;
 			
-			console.log(url);
+			// console.log(url);
 
 		}
 	});
 
 });
-
-
-$(function(){
-	$('.select2').select2();
-})
-
 

@@ -1,1 +1,29 @@
 {block content}
+
+<h1>{_o826, NULL, NULL, ['siteName' => $domain]}</h1>
+
+{!_o830, NULL, NULL, ['siteName' => $domain]|texy}
+
+<ul class="aboutUs">
+	{foreach $testimonials as $testimonial}
+	<li>
+		{if $testimonial->rental !== NULL}<img src="{$testimonial->rental->getMainImage()}"/>{/if}
+
+		<div class="description">
+			<p>{$testimonial->testimonial}</p>
+
+			<div class="info">
+				{if $testimonial->senderName != ''}
+					{$testimonial->senderName}
+				{/if}
+				{$testimonial->created|date}
+				{if $testimonial->rental !== NULL}
+					<a href="{link Rental:detail $testimonial->rental}">{_$testimonial->rental->name}</a>
+				{/if}
+			</div>
+		</div>
+
+		<div class="clearfix"></div>
+	</li>
+	{/foreach}
+</ul>

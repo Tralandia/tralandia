@@ -180,7 +180,8 @@ parameters:
 					# calendar widget
 					- front/calendarWidget/js/calendarWidget.js
 					# search sidebar
-					- front/search/js/search.js					
+					- front/search/js/search.js	
+
 			jqueryAppear:
 				js:
 					- jqueryAppear/lib/js/jquery.appear.js
@@ -265,8 +266,10 @@ parameters:
 				-  %webloader.packages.navBar%
 				-  %webloader.packages.gMap%
 				-  %webloader.packages.Front%
+				
 				#-  %webloader.packages.texyla%
 				-  %webloader.packages.nette%
+				-  %webloader.packages.jqueryScrollTo%
 				-  %webloader.packages.socialite%
 			'Front:CalendarIframe':
 				-  %webloader.packages.calendarIframe%

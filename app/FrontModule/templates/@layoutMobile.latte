@@ -51,5 +51,15 @@
 
 
 		{include #content}
+
+		<div id="footer">
+			<ul>
+				{if $isMobile}
+					<li class="siteVersion"><a href="{plink this, \Routers\FrontRoute::DEVICE => \Device::DESKTOP}">#Desktopova verzia</a></li>
+				{else}
+					<li class="siteVersion"><a href="{plink this, \Routers\FrontRoute::DEVICE => \Device::MOBILE}">#Mobilna verzia</a></li>
+				{/if}	
+			</ul>
+		</div>
 	</body>
 </html>
