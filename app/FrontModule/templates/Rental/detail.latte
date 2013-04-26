@@ -484,7 +484,7 @@
 								{foreach $interviewAnswers as $interviewAnswer}
 								{if !empty($interviewAnswer->answer)}
 								<li>
-									<h4>{_$interviewAnswer->question->question|firstUpper}</h4>
+									<h4>{_$interviewAnswer->question->questionFe|firstUpper}</h4>
 
 									<p>{_$interviewAnswer->answer|firstUpper}</p>
 								</li>
