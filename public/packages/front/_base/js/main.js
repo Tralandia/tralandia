@@ -231,9 +231,10 @@ App.prototype.initMapsObjectDetail = function(){
 
 
 App.prototype.loadContactForm = function(){
-
-	$('#contentForForm').hide();
-	$('#contactFormCover').show();
+	
+	// $('#contactFormCover').removeClass('hide');
+	$('#contactFormCover').removeClass('hide');
+	$.scrollTo('#contactFormCover',800);
 
 	return false;
 }
@@ -388,74 +389,9 @@ $('.autoselect').click(A.autoselect);
 	$('#forgottenPasswordOpen').click(A.forgottenPasswordOpen);
 	$('#closeForgottenPasswordForm').click(A.closeForgottenPasswordForm);
 
-	/* ui tabs */
-	$('.nav-tabs a').click(function (e) {
 
-		e.preventDefault();
-		var id = $(this).attr('id');
-		var href = $(this).attr('href');
 
-	  //$(this).tab('show');
-	  $('.nav-tabs li').removeClass('active');
-	  $(this).parent().addClass('active');
 
-	  $('.tab-content .tab-pane').hide();
-	  $('.tab-content .tab-pane'+href).show();
-
-	  var scrollmem = $('body').scrollTop();
-	  var newHref = href.replace("#","#_");
-
-	  window.location.hash = newHref;
-	  $('html,body').scrollTop(scrollmem);
-
-	  console.log(this);
-
-	  if(id = 'objectDetailListMap'){
-	  	mapLoader();
-	  }
-
-	  return false;
-	});
-
-	// footer linky na kontakt tabs ak mam otvorene kontakty
-	$(window).on('hashchange', function() {
-		if(!(window.location.hash.match("#_")))
-		{
-
-			var href = window.location.hash;
-
-			$('.tab-content .tab-pane').hide();
-			$('.tab-content .tab-pane'+href).show();
-
-			window.location.hash = window.location.hash.replace("#","#_");
-		}	
-	});
-
-	// nastavenie default tabu
-
-	if(window.location.hash.length > 1){
-
-		var currentId = window.location.hash;
-			// console.log(currentId);
-			currentId = currentId.replace("#_","#");
-
-		var scrollmem = $('.objectDetailContent').height();
-
-		scrollmem = scrollmem + 80;
-
-		$('.nav-tabs a[href$="'+currentId+'"]').tab('show');
-
-		//$.scrollTo('0px',1);
-
-		// pokial obsahuje otvoreny div mapu
-		var haveMapContent = $(currentId).find("#map_canvas");
-		if(haveMapContent.length != 0){
-			mapLoader();
-		}
-
-	} else {
-		$('.nav-tabs a:first').tab('show');
-	}
 
 	// nahrada pre zobrazenie lang menu
 	var langmenuOpen = false;

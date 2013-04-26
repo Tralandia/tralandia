@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]>    <html class="no-js iem7"> <![endif]-->
+<!--[if (gt IEMobile 7)|!(IEMobile)]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="description" content="">
+		<meta name="HandheldFriendly" content="True" />
+		<meta name="MobileOptimized" content="320" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta http-equiv="cleartype" content="on" />
+
+
+		<!-- Tile icon for Win8 (144x144 + tile color) -->
+		<meta name="msapplication-TileImage" content="img/touch/apple-touch-icon-144x144-precomposed.png">
+		<meta name="msapplication-TileColor" content="#222222">
+
+
+
+
+
+        <link rel="stylesheet" href="/packages/mobile/css/normalize.css">
+        <link rel="stylesheet" href="/packages/mobile/css/main.css">
+        <link rel="stylesheet" href="/packages/mobile/css/detail.css">
+        <link rel="stylesheet" href="/packages/mobile/css/btn.css">
+        <link rel="stylesheet" href="/packages/mobile/css/calendar.css">
+        <link rel="stylesheet" href="/packages/mobile/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/packages/mobile/css/fonts.css">       
+        <link rel="stylesheet" href="/packages/mobile/css/vendor/jqueryUi/jquery-ui-1.10.2.custom.min.css">		
+
+	</head>
+	<body class="rentalDetail">
+
+		{include #content}
+
+		<div id="footer">
+			<ul>
+				{if $isMobile}
+					<li class="siteVersion"><a href="{plink this, \Routers\FrontRoute::DEVICE => \Device::DESKTOP}">#Desktopova verzia</a></li>
+				{else}
+					<li class="siteVersion"><a href="{plink this, \Routers\FrontRoute::DEVICE => \Device::MOBILE}">#Mobilna verzia</a></li>
+				{/if}	
+			</ul>
+		</div>
+	</body>
+</html>
