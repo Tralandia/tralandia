@@ -6,7 +6,14 @@ use Nette\Environment;
 use Nette\Security\User;
 
 abstract class BasePresenter extends \SecuredPresenter {
-	
+
+	/**
+	 * @autowire
+	 * @var \AdminModule\Components\INavigationControlFactory
+	 */
+	protected $navigationFactory;
+
+
 	protected function startup() {
 		// $this->autoCanonicalize = FALSE;
 		parent::startup();
@@ -48,7 +55,7 @@ abstract class BasePresenter extends \SecuredPresenter {
 		}
 	}
 
-	
+
 	public function formatTemplateFiles() {
 		$name = $this->getName();
 		$presenter = substr($name, strrpos(':' . $name, ':'));
@@ -61,7 +68,7 @@ abstract class BasePresenter extends \SecuredPresenter {
 			"$dir/templates/Admin/$this->view.latte"
 		);
 	}
-	
+
 	public function formatLayoutTemplateFiles() {
 		$name = $this->getName();
 		$presenter = substr($name, strrpos(':' . $name, ':'));
@@ -80,9 +87,8 @@ abstract class BasePresenter extends \SecuredPresenter {
 		return $list;
 	}
 
-	public function createComponentNavigation($name){
-		$navigation = new \AdminModule\Components\Navigation($this, $name);
-		$navigation->user = $this->user;
+	public function createComponentNavigation(){
+		$navigation = $this->navigationFactory->create($this->getUser());
 		return $navigation;
 	}
 

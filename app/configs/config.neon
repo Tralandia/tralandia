@@ -302,6 +302,11 @@ factories:
 		class: FrontModule\Components\Footer\CountriesFooterControl
 		implement: FrontModule\Components\Footer\ICountriesFooterControlFactory
 
+	navigationControlFactory:
+		class: AdminModule\Components\NavigationControl(%user%)
+		parameters: [Nette\Security\User user]
+		implement: AdminModule\Components\INavigationControlFactory
+
 	# ==============================
 	# ==================== ROUTERS
 	# ==============================
