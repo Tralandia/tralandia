@@ -61,6 +61,26 @@ class LanguageRepository extends \Repository\BaseRepository {
 
 	}
 
+
+	/**
+	 * @param Collator $collator
+	 *
+	 * @return array
+	 */
+	public function getForAdminSearch(Collator $collator)
+	{
+		$return = [];
+		$rows = $this->findSupported();
+		/** @var $row \Entity\Language */
+		foreach($rows as $row) {
+			$return[$row->getId()] = $row->getIso();
+		}
+		$collator->asort($return);
+
+		return $return;
+
+	}
+
 	/**
 	 * @param \Nette\Localization\ITranslator $translator
 	 * @param \Environment\Collator $collator
