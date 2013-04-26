@@ -42,8 +42,92 @@ class RentalPresenter extends BasePresenter {
 	 */
 	protected $calendarControl;
 
+	public function actionDetail($rental)
+	{
+		if($this->device->isMobile()) {
+			$this->mobileDetail($rental);
+		} else {
+			$this->desktopDetail($rental);
+		}		
+	}
 
-	public function actionDetail($rental) {
+	public function mobileDetail($rental)
+	{
+
+		/** @var $rental \Entity\Rental\Rental */
+		if (!$rental) {
+			throw new \Nette\InvalidArgumentException('$id argument does not match with the expected value');
+		}
+
+		$rentalService = $this->rentalDecoratorFactory->create($rental);
+		$interviewAnswers = $rentalService->getInterviewAnswers($this->environment->primaryLocation->defaultLanguage);
+		foreach ($interviewAnswers as $key => $answer) {
+			if (preg_match("/^{\?.+\?}$/", $this->translate($answer->answer))) {
+				unset($interviewAnswers[$key]);
+			}
+		}
+
+		$locality = $rental->address->locality;
+		$link = $this->link('//list', array('location' => $locality));
+		$localitySeo = $this->seoFactory->create($link, $this->getLastCreatedRequest());
+
+		$this->template->rental = $rental;
+		$this->template->rentalService = $rentalService;
+		$this->template->locality = $localitySeo;
+		$this->template->interviewAnswers = $interviewAnswers;
+
+		$this->template->teaser = $this->translate($rental->teaser);
+
+		$firstAnswer = $rental->getFirstInterviewAnswer();
+		if ($firstAnswer) {
+			$this->template->firstAnswer = \Nette\Utils\Strings::truncate($this->translate($firstAnswer->answer), 200);
+		} else {
+			$this->template->firstAnswer = NULL;
+		}
+
+		$this->template->separateGroups = $rental->getSeparateGroups();
+		$this->template->animalsAllowed = $rental->getAnimalsAllowed();
+		$this->template->ownerAvailability = $rental->getOwnerAvailability();
+
+		$this->template->dateUpdated = $rental->updated;
+
+		$shareLinks = $this->shareLinks;
+
+		$shareLink = $this->link('//Rental:detail', [$rental]);
+		$shareText = $this->translate($rental->getName());
+		// @todo toto je tu len docasne lebo sa neimportuju obrazky
+		//$shareImage = $this->rentalImagePipe->request($rental->getMainImage());
+		$shareImage = $this->rentalImagePipe->requestFake();
+		$this->template->twitterShareTag = $shareLinks->getTwitterShareTag($shareLink, $shareText);
+		$this->template->googlePlusShareTag = $shareLinks->getGooglePlusShareTag($shareLink);
+		$this->template->facebookShareTag = $shareLinks->getFacebookShareTag($shareLink, $shareText);
+		$this->template->pinterestShareTag = $shareLinks->getPinterestShareTag($shareLink, $shareText, $shareImage);
+		$this->template->pinterestShare = $this->pinterestShare;
+
+		$lastSearchResults = $this->getLastSearchResults($rental);
+
+		$shareLink = $lastSearchResults['searchLink'];
+		$shareText = $lastSearchResults['heading'];
+		// @todo toto je tu len docasne lebo sa neimportuju obrazky
+		//$shareImage = $this->rentalImagePipe->request($rental->getMainImage());
+		$shareImage = $this->rentalImagePipe->requestFake();
+		$navigationBarShareLinks = [
+			'twitterTag' => $shareLinks->getTwitterShareTag($shareLink, $shareText),
+			'googlePlusTag' => $shareLinks->getGooglePlusShareTag($shareLink),
+			'facebookTag' => $shareLinks->getFacebookShareTag($shareLink, $shareText),
+			'pinterestTag' => $shareLinks->getPinterestShareTag($shareLink, $shareText, $shareImage),
+		];
+
+		$this->template->lastSearchResults = $lastSearchResults;
+		$this->template->navigationBarShareLinks = ArrayHash::from($navigationBarShareLinks);
+		$this->lastSeen->visit($rental);
+
+
+		$this->setLayout("mobileDetailLayout");			
+		$this->setView('mobileDetail');		
+	}
+
+	public function desktopDetail($rental) {
 		/** @var $rental \Entity\Rental\Rental */
 		if (!$rental) {
 			throw new \Nette\InvalidArgumentException('$id argument does not match with the expected value');

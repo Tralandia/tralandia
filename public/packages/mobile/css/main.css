@@ -370,15 +370,15 @@ body.favorites #subnav ul li.search {
 	padding-top: 0;
 }
 
-#footer ul {
+	#footer ul {
 
-}
+	}
 
-#footer ul li {}
+		#footer ul li {}
 
-#footer ul li a {
-	color: #698308;
-}
+			#footer ul li a {
+				color: #698308;
+			}
 
 /* ==========================================================================
    Helper classes
