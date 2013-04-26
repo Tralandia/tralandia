@@ -24,7 +24,14 @@ class HomePresenter extends BasePresenter {
 	 */
 	protected $rentalSearchFactory;
 
+
+
 	public function renderDefault() {
+
+		if($this->device->isMobile()){
+			$this->setView('mobileHome');
+			$this->setLayout('layoutMobile');
+		}
 
 		$search = $this->rentalSearchFactory->create($this->environment->primaryLocation);
 		$featuredIds = $search->getFeaturedRentals(99);
