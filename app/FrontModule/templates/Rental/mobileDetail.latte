@@ -179,7 +179,7 @@
 			</ul>
 			
 		<div class="imagemap">
-			<a href="#">
+			<a target="_blank" href="https://maps.google.sk/maps?q={$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}">
 				<img class="mapsImage" src="https://maps.googleapis.com/maps/api/staticmap?center={$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&markers=color:blue%7C{$rental->address->getGps()->latitude},{$rental->address->getGps()->longitude}&zoom=10&size=288x170&sensor=false"/>		                
 			</a>
 		</div>    
