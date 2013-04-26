@@ -12,40 +12,37 @@
 		base.$el.data("phraseForm", base);
 		
 		base.init = function(){
-			
-			base.options = $.extend({},$.phraseForm.defaultOptions, options);            
-
+			base.defaultRender();
+			base.onChangeLanguage();
 		};
 		
+		base.defaultRender = function(){
+			var current = base.$el.find('#phraseLanguage').val();
+			current = '#'+current+'_phrase';
+			$(current).removeClass('hide');			
+		}
+
+		base.onChangeLanguage = function(){
+
+			base.$el.find('#phraseLanguage').on('change',function(){
+
+				var visibleID = '#'+$(this).val()+'_phrase';
+
+				$('#phraseTranslateCurrent').html($('#phraseLanguage option:selected').text());
+				$('.phrasecontrol').addClass('hide');
+				$(visibleID).removeClass('hide');
+
+			});
+		}
 
 		base.init();
 	};
 	
-	$.phraseForm.defaultOptions = {
-		
-	};
+
 	
 	$.fn.phraseForm = function(options){
 		return this.each(function(){
-
-			var self = this;
-			var $self = $(this);
-
-			var current = $self.find('#phraseLanguage').val();
-			current = '#'+current+'_phrase';
-			$(current).removeClass('hide');
-			//console.log(current);
-
-			$self.find('#phraseLanguage').on('change',function(){
-
-				var visibleID = '#'+$(this).val()+'_phrase';
-					//console.log(visibleID);
-
-					$('#phraseTranslateCurrent').html($('#phraseLanguage option:selected').text());
-					$self.find('.phrasecontrol').addClass('hide');
-					$(visibleID).removeClass('hide');
-				});
-
+			(new $.phraseForm(this, options));
 		});
 	};
 	
@@ -866,29 +863,29 @@ function removePriceLine(){
 function createNewLineInPriceList(){
 
 	 var pattern = $('.priceListPattern.hide').clone();
-	 	
-	 	pattern.removeClass('hide')
-	 			.removeClass('priceListPattern')
-	 			.addClass('priceList')
-	 			.find('select,input')
-	 			.removeAttr('id');
+		
+		pattern.removeClass('hide')
+				.removeClass('priceListPattern')
+				.addClass('priceList')
+				.find('select,input')
+				.removeAttr('id');
 
-	 	var lastExistNameIterator = $('.pricelistControl').find('input[type=text].price');
-	 		lastExistNameIterator = lastExistNameIterator.length-2; // minus jeden hidden input minus 1 pretoze counter array zacina nulou
-	 		console.log(lastExistNameIterator);
+		var lastExistNameIterator = $('.pricelistControl').find('input[type=text].price');
+			lastExistNameIterator = lastExistNameIterator.length-2; // minus jeden hidden input minus 1 pretoze counter array zacina nulou
+			console.log(lastExistNameIterator);
 
-	 	pattern.find('select,input').each(function(){
-	 		var originName = $(this).attr('name');
-	 			$(this).attr('name',originName.replace("[1]","["+(lastExistNameIterator+1)+"]"));	 			
-	 	})
+		pattern.find('select,input').each(function(){
+			var originName = $(this).attr('name');
+				$(this).attr('name',originName.replace("[1]","["+(lastExistNameIterator+1)+"]"));	 			
+		})
 
-	 	pattern.find('select').addClass('select2').select2({
+		pattern.find('select').addClass('select2').select2({
 			dropdownCssClass: "notFulltext",
 			allowClear: true,
 			minimumResultsForSearch: 'X',
 		});	 	
 
-	 	$('.pricelistControl').append(pattern);
-	 	
+		$('.pricelistControl').append(pattern);
+		
 	return false;
 }

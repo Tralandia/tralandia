@@ -1,3 +1,15 @@
 {block content}
 
-{control phraseEditForm}
+{includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
+{form phraseEditForm}
+	<table class="formTable innerPadding">
+		<tr class="formHeading	">
+			<td colspan="3">{_o100096}</td>
+		</tr>
+
+
+		{include #phrase, control => $form['phrase']}
+
+	</table>
+{dump $form->getAllErrors()}
+{/form}

@@ -4,7 +4,7 @@
     border-left: 1px solid rgb(201, 201, 201);
 }
 
-.btn-flat.btn-large {
+.btn-flat.btn-large , .reservationform .btn {
     border: 1px solid #ddd;
     width: 100%;
     height: 40px;
@@ -69,7 +69,7 @@
     height: 30px;
 }
 
-.btn.btn-large i {
+.btn.btn-large i ,   .reservationform .btn i {
     float: left;
     border-right: 1px solid #444;
     box-shadow: 1px 0 0 rgba(255, 255, 255, 0.19);
@@ -89,6 +89,7 @@
 
 /* orange button */
 .btn.btn.btn-orange , .btn-flat.btn-orange  {
+    height: 50px;
 background-image: linear-gradient(bottom,#f68703 0%,#fdbe33 100%);
 background-image: -o-linear-gradient(bottom,#f68703 0%,#fdbe33 100%);
 background-image: -moz-linear-gradient(bottom,#f68703 0%,#fdbe33 100%);
