@@ -448,6 +448,7 @@
 	$phrase = $container->getPhrase();
 }
 {?unset($control)}
+{include #opentag , class => 'row-fluid phraseForm' , control => $container}
 <div class="row-fluid phraseForm">
 
 	<div class="span12">
@@ -516,7 +517,7 @@
 	</div>
 
 </div>
-
+</tr>
 {/define #phrase}
 
 
