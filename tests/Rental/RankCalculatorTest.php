@@ -62,6 +62,7 @@ class RankCalculatorTest extends \Tests\TestCase
 		$this->amenities[3] = $this->getContext()->rentalAmenityRepositoryAccessor->get()->findOneById(3);
 	}
 
+
 	public function testRank() {
 		$address = $this->getContext()->contactAddressRepositoryAccessor->get()->createNew();
 		$address->primaryLocation = $this->location;
@@ -78,7 +79,7 @@ class RankCalculatorTest extends \Tests\TestCase
 		$this->rental->classification = 3;
 		$this->assertRank(\Entity\Rental\Rental::STATUS_DRAFT, 10);
 
-		$this->rental->type = $this->getContext()->rentalTypeRepositoryAccessor->get()->findOneByOldId('103');
+		$this->rental->type = $this->getContext()->rentalTypeRepositoryAccessor->get()->findOneBySlug('hotel');
 		$this->assertRank(\Entity\Rental\Rental::STATUS_DRAFT, 11);
 
 		$this->rental->teaser->createTranslation($this->languages['sk'], 'Nádherná chata uprostred lesa pri potôčiku.');
@@ -93,7 +94,7 @@ class RankCalculatorTest extends \Tests\TestCase
 		$this->rental->email = $this->getContext()->contactEmailRepositoryAccessor->get()->createNew()->setValue('toth.radoslav@gmail.com');
 		$this->assertRank(\Entity\Rental\Rental::STATUS_DRAFT, 18);
 
-		$this->rental->url = $this->getContext()->contactUrlRepositoryAccessor->get()->createNew()->setValue('http://www.unschooling.sk');
+		$this->rental->url = 'http://www.unschooling.sk';
 		$this->assertRank(\Entity\Rental\Rental::STATUS_DRAFT, 19);
 
 		$this->rental->addSpokenLanguage($this->languages['sk']);
@@ -136,7 +137,7 @@ class RankCalculatorTest extends \Tests\TestCase
 		$this->rental->rooms = '3xAPT (2x3+1)';
 		$this->assertRank(\Entity\Rental\Rental::STATUS_LIVE, 33);
 
-		
+
 		// Pricelist Row
 		$row = $this->getContext()->rentalPricelistRowRepositoryAccessor->get()->createNew();
 		$row->sort = 1;
