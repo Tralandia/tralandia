@@ -46,18 +46,18 @@ class CalendarWidgetPresenter extends BasePresenter {
 		$this->template->rentals = $this->loggedUser->getRentals();
 		$this->template->linkTemplate = $this->link(
 			':Owner:CalendarWidget:generateCode',
-			['rentalId' => '__rentalId__', 'wLanguage' => '__language__', 'columns' => '__columns__', 'rows' => '__rows__']
+			['id' => '__rental__', 'wLanguage' => '__language__', 'columns' => '__columns__', 'rows' => '__rows__']
 		);
 	}
 
-	public function actionGenerateCode($rentalId, $wLanguage, $columns, $rows)
+	public function actionGenerateCode($id, $wLanguage, $columns, $rows)
 	{
 		$language = $this->languageRepositoryAccessor->get()->find($wLanguage);
 		if(!$language) {
 			throw new BadRequestException;
 		}
 
-		$monthsCount = $columns * $rows;
+		$months = $columns * $rows;
 
 		$monthWidth = 136;
 		$monthHeight = 150;
@@ -67,7 +67,7 @@ class CalendarWidgetPresenter extends BasePresenter {
 
 		$link = $this->link(
 			'//:Front:CalendarIframe:default',
-			['language' => $language, 'rentalId' => $rentalId, 'monthsCount' => $monthsCount]
+			['language' => $language, 'id' => $id, 'months' => $months]
 		);
 
 		$code = Html::el('iframe')
