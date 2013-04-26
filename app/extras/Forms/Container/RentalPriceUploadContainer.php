@@ -3,6 +3,7 @@
 namespace Extras\Forms\Container;
 
 use Extras\Forms\Control\MfuControl;
+use Nette\Forms\Container;
 
 class RentalPriceUploadContainer extends BaseContainer
 {
@@ -27,78 +28,22 @@ class RentalPriceUploadContainer extends BaseContainer
 		$this->manager = $manager;
 		$this->pricelistRepository = $pricelistRepository;
 
-		$this['upload'] = $upload = new MfuControl();
-		$upload->allowMultiple()->onUpload[] = $this->processUpload;
 
-		$sort = [];
-		if($rental) {
-			$priceList = $rental->getPricelists();
-			foreach($priceList as $row) {
-				$sort[] = $row->getId();
-			}
-		}
+		$this->addDynamic('list', $this->containerBuilder,2);
 
-		$this->addHidden('sort')->setDefaultValue(implode(',', $sort));
+	}
+
+	public function containerBuilder(Container $container)
+	{
+		$container->addText('name', '#name');
+		$container->addSelect('language', '#language', [2,3,4,5]);
+		$container->addUpload('file', '#file');
 	}
 
 	public function getMainControl()
 	{
-		return $this['upload'];
+		return NULL;
 	}
-
-	/**
-	 * @return array|null
-	 */
-	public function getPriceList()
-	{
-		$priceList = $this->getValues()->priceList;
-		if(!count($priceList)) return [];
-		return $priceList;
-	}
-
-
-	/**
-	 * @param \Extras\Forms\Control\MfuControl $upload
-	 * @param array|\Nette\Http\FileUpload[] $files
-	 */
-	public function processUpload(MfuControl $upload, array $files)
-	{
-		$payload = [];
-		foreach($files as $file) {
-			if($file->isOk() && $file->isImage()) {
-				$image = $this->manager->upload($file);
-				$payload[] = [
-					'id' => $image->getId(),
-					'name' => $image->getName(),
-				];
-			}
-		}
-
-		if ($this->getForm()->getPresenter()->isAjax() && $payload) {
-			$this->getForm()->getPresenter()->sendJson($payload);
-		}
-	}
-
-	public function getValues($asArray = FALSE)
-	{
-		$values = $asArray ? array() : new \Nette\ArrayHash;
-		$sort = $this['sort']->getValue();
-		$values['sort'] = array_filter(explode(',', $sort));
-
-		$temp = [];
-		if(count($values['sort'])) {
-			$priceList = $this->pricelistRepository->findById($values['sort']);
-
-			$temp = array_flip($values['sort']);
-			foreach($priceList as $row) {
-				$temp[$row->getId()] = $row;
-			}
-		}
-		$values['priceList'] = $temp;
-
-		return $values;
-	}
-
 
 
 }
