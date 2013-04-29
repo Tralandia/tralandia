@@ -1,6 +1,7 @@
 $(function(){
     
-    
+
+
     $('.addToFavorites').on('click',function(){
        $(this).toggleClass('active'); 
     });
@@ -15,8 +16,8 @@ $(function(){
 
     $('.reservationform').on('submit',function(){
     	$(this).find('button').addClass('active');
-    	return false;
-    })
+    	// return false;
+    });
     
 //    $(document).on('scroll',function(){
 //        
