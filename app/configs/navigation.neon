@@ -80,6 +80,9 @@ common:
 				phrase:
 					label: Phrases
 					link: ':Admin:Phrase:list'
+				phraseChecking:
+					label: Phrases
+					link: ':Admin:PhraseChecking:list'
 				phraseType:
 					label: Phrase Types
 					link: ':Admin:PhraseType:list'
