@@ -78,6 +78,12 @@ class Language extends \Entity\BaseEntityDetails {
 
 	/**
 	 * @var Collection
+	 * @ORM\ManyToOne(targetEntity="Entity\User\User")
+	 */
+	protected $translator;
+
+	/**
+	 * @var Collection
 	 * @ORM\ManyToMany(targetEntity="Entity\Rental\Rental", inversedBy="spokenLanguages")
 	 */
 	protected $rentals;
@@ -364,6 +370,35 @@ class Language extends \Entity\BaseEntityDetails {
 	public function getVariationDetails()
 	{
 		return $this->variationDetails;
+	}
+		
+	/**
+	 * @param \Entity\User\User
+	 * @return \Entity\Language
+	 */
+	public function setTranslator(\Entity\User\User $translator)
+	{
+		$this->translator = $translator;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Language
+	 */
+	public function unsetTranslator()
+	{
+		$this->translator = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\User\User|NULL
+	 */
+	public function getTranslator()
+	{
+		return $this->translator;
 	}
 		
 	/**

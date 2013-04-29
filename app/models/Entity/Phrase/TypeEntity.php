@@ -32,7 +32,7 @@ class Type extends \Entity\BaseEntity {
 	 * @ORM\Column(type="string", nullable=true)
 	 */
 	protected $entityName;
-	
+
 	/**
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
@@ -84,6 +84,12 @@ class Type extends \Entity\BaseEntity {
 	protected $helpForTranslator;
 
 	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean")
+	 */
+	protected $html = FALSE;
+
+	/**
 	 * @var integer
 	 * @ORM\Column(type="integer")
 	 * in EUR
@@ -91,18 +97,24 @@ class Type extends \Entity\BaseEntity {
 	protected $monthlyBudget = 0;
 
 
-	public function isSimple() {
-		return $this->pluralVariationsRequired || $this->genderVariationsRequired || $this->locativesRequired || $this->positionRequired;
+	public function isSimple()
+	{
+		return !($this->pluralVariationsRequired || $this->genderVariationsRequired || $this->locativesRequired || $this->positionRequired);
+	}
+
+	public function isHtml()
+	{
+		return $this->html;
 	}
 
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
+	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
 		parent::__construct();
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\Phrase\Type
@@ -113,7 +125,7 @@ class Type extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Phrase\Type
 	 */
@@ -123,7 +135,7 @@ class Type extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -131,7 +143,7 @@ class Type extends \Entity\BaseEntity {
 	{
 		return $this->name;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\Phrase\Type
@@ -142,7 +154,7 @@ class Type extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -150,7 +162,7 @@ class Type extends \Entity\BaseEntity {
 	{
 		return $this->translateTo;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\Phrase\Type
@@ -161,7 +173,7 @@ class Type extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Phrase\Type
 	 */
@@ -171,7 +183,7 @@ class Type extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -179,7 +191,7 @@ class Type extends \Entity\BaseEntity {
 	{
 		return $this->entityName;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\Phrase\Type
@@ -190,7 +202,7 @@ class Type extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Phrase\Type
 	 */
@@ -200,7 +212,7 @@ class Type extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -208,7 +220,7 @@ class Type extends \Entity\BaseEntity {
 	{
 		return $this->entityAttribute;
 	}
-		
+
 	/**
 	 * @param boolean
 	 * @return \Entity\Phrase\Type
@@ -219,7 +231,7 @@ class Type extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return boolean|NULL
 	 */
@@ -227,7 +239,7 @@ class Type extends \Entity\BaseEntity {
 	{
 		return $this->pluralVariationsRequired;
 	}
-		
+
 	/**
 	 * @param boolean
 	 * @return \Entity\Phrase\Type
@@ -238,7 +250,7 @@ class Type extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return boolean|NULL
 	 */
@@ -246,7 +258,7 @@ class Type extends \Entity\BaseEntity {
 	{
 		return $this->genderRequired;
 	}
-		
+
 	/**
 	 * @param boolean
 	 * @return \Entity\Phrase\Type
@@ -257,7 +269,7 @@ class Type extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return boolean|NULL
 	 */
@@ -265,7 +277,7 @@ class Type extends \Entity\BaseEntity {
 	{
 		return $this->genderVariationsRequired;
 	}
-		
+
 	/**
 	 * @param boolean
 	 * @return \Entity\Phrase\Type
@@ -276,7 +288,7 @@ class Type extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return boolean|NULL
 	 */
@@ -284,7 +296,7 @@ class Type extends \Entity\BaseEntity {
 	{
 		return $this->locativesRequired;
 	}
-		
+
 	/**
 	 * @param boolean
 	 * @return \Entity\Phrase\Type
@@ -295,7 +307,7 @@ class Type extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return boolean|NULL
 	 */
@@ -303,7 +315,7 @@ class Type extends \Entity\BaseEntity {
 	{
 		return $this->positionRequired;
 	}
-		
+
 	/**
 	 * @param boolean
 	 * @return \Entity\Phrase\Type
@@ -314,7 +326,7 @@ class Type extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Phrase\Type
 	 */
@@ -324,7 +336,7 @@ class Type extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return boolean|NULL
 	 */
@@ -332,7 +344,7 @@ class Type extends \Entity\BaseEntity {
 	{
 		return $this->checkingRequired;
 	}
-		
+
 	/**
 	 * @param string
 	 * @return \Entity\Phrase\Type
@@ -343,7 +355,7 @@ class Type extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Phrase\Type
 	 */
@@ -353,7 +365,7 @@ class Type extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return string|NULL
 	 */
@@ -361,7 +373,7 @@ class Type extends \Entity\BaseEntity {
 	{
 		return $this->helpForTranslator;
 	}
-		
+
 	/**
 	 * @param integer
 	 * @return \Entity\Phrase\Type
@@ -372,7 +384,7 @@ class Type extends \Entity\BaseEntity {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return integer|NULL
 	 */
