@@ -57,10 +57,13 @@
 						<td class="detailmeta">
 							
 								<div class="type">
+								<strong>
 									{_$rental->type->name|firstUpper}
 									{if $rental->hasPlacement()}{_$rental->getPlacement()->name}{/if}
 									{_$rental->address->locality->name , null , [case=>locative]}
-									<span>#(32 km)</span></div>                                
+								</strong>									
+									<span>#(32 km)</span></div>
+
 								<div class="rooms"> {_o100005} {$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]} <span>{$rental->rooms} </span></div>                    
 													   
 						</td>

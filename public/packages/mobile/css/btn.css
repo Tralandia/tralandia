@@ -106,6 +106,10 @@
 	display: block;
 }
 
+.reservationform .btn.active i.entypo-send {
+	display: none;
+}
+
 .btn.btn-large strong,.btn.btn-large small {
 	height: 20px;
 	line-height: 30px;
