@@ -31,7 +31,7 @@ class TranslationVariationContainer extends BaseContainer
 			foreach ($genders as $genderKey => $genderValue) {
 				$gender = $plural->addContainer($genderKey);
 				foreach ($genderValue as $caseKey => $caseValue) {
-					if($phrase->getType()->isSimple()) {
+					if($phrase->getType()->isHtml()) {
 						$field = $gender->addText($caseKey, $caseValue);
 					} else {
 						$field = $gender->addTextArea($caseKey, $caseValue);
