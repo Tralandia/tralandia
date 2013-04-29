@@ -632,23 +632,30 @@
 	$mainControl = $container->getMainControl()
 }
 {?unset($control)}
-{include #opentag , class => '' , control => $container}
+{include #opentag , class => 'rentalPriceUpload' , control => $container}
 <!-- control photo start -->
 
 	<td colspan="3">
 		<div class="row-fluid">
 
-			<div class="span12">
+
 
 				<div class="help">{include #controlErrors, errors => $container->getAllErrors()}</div>
 
 				{var $replicator = $container->getComponent('list')}
+				<div class="priceListRowsContainer">
 				{foreach $replicator->getComponents() as $component}
-					{input $component['name']}
-					{input $component['language'] , class => 'select2 notFulltext'}
-					{input $component['file']}
+					<div class="rentalPriceRow">
+						{input $component['name']}
+						{input $component['language'] , class => 'select2 notFulltext'}
+						{input $component['file']}
+						<span class="remove">X</span>
+					</div>
 				{/foreach}
-			</div>
+				</div>
+				<a class="btn addLine btn-green">#Add</a>
+				
+
 
 		</div>
 	</td>
@@ -689,21 +696,6 @@
 				<span class="remove">X</span>
 			</div>
 
-			{if $iterator->last}
-				<div class="priceListPattern hide">
-					{input $component['roomCount'] , class => 'notFulltext'}
-					{input $component['roomType'] , class => 'notFulltext string'}
-					{input $component['bedCount'] , class => 'notFulltext string'}
-					{input $component['extraBedCount'] , class => 'notFulltext string'}
-
-					{* {input $component['price']['currency'] , class => 'select2'} *}
-					{input $component['price'] , class => 'price' }
-					<span class="input-append">
-						{$component['price']->getOption('append')}
-					</span>
-					<span class="remove">X</span>
-				</div>
-			{/if}
 		{/foreach}
 	</td>
 </tr>

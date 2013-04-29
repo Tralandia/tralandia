@@ -862,21 +862,17 @@ function removePriceLine(){
 
 function createNewLineInPriceList(){
 
-	 var pattern = $('.priceListPattern.hide').clone();
+	 var pattern = $('.priceList:first').clone();
 		
-		pattern.removeClass('hide')
-				.removeClass('priceListPattern')
-				.addClass('priceList')
-				.find('select,input')
-				.removeAttr('id');
+		pattern.find('select,input').removeAttr('id');
+		pattern.find('select').removeClass('select2').removeClass('select2-offscreen');
+		pattern.find('.select2-container').remove();
 
-		var lastExistNameIterator = $('.pricelistControl').find('input[type=text].price');
-			lastExistNameIterator = lastExistNameIterator.length-2; // minus jeden hidden input minus 1 pretoze counter array zacina nulou
-			console.log(lastExistNameIterator);
+		var lastExistNameIterator = $('.pricelistControl').find('input[type=text].price').length;
 
 		pattern.find('select,input').each(function(){
 			var originName = $(this).attr('name');
-				$(this).attr('name',originName.replace("[1]","["+(lastExistNameIterator+1)+"]"));	 			
+				$(this).attr('name',originName.replace("[0]","["+(lastExistNameIterator)+"]"));	 			
 		})
 
 		pattern.find('select').addClass('select2').select2({
@@ -889,3 +885,97 @@ function createNewLineInPriceList(){
 		
 	return false;
 }
+
+// rental price upload plugin
+
+(function($){
+	$.rentalPriceUpload = function(el, options){
+
+		var base = this;
+
+		base.$el = $(el);
+		base.el = el;
+
+		base.$el.data("rentalPriceUpload", base);
+		
+		base.init = function(){
+			base.initElementSelectors();
+			base.initElements();
+			base.bindElements();
+		};
+
+		base.initElementSelectors = function(){
+			base.removeButtonSelector = 'span.remove';
+			base.addButtonSelector = 'a.addLine';
+			base.firstRowSelector = '.rentalPriceRow:first';
+			base.listContainer = '.priceListRowsContainer';
+			base.select2Container = '.select2-container';
+			base.rowSelector = '.rentalPriceRow';
+			base.inputElements = 'select,input';
+		}
+
+		base.initElements = function(){
+			base.$addButton = base.$el.find(base.addButtonSelector);
+			base.$removeButton = base.$el.find(base.removeButtonSelector);
+		}
+
+		base.bindElements = function(){
+			base.$addButton.click(base.addRow);
+			base.$removeButton.click(base.removeRow);
+		}
+		
+		base.removeRow = function(){
+			console.log('remove');
+		}
+
+		base.createNewRow = function(){
+			// create pattern from first row
+			var pattern = base.$el.find(base.firstRowSelector).clone();
+				pattern.find(base.inputElements)
+						.removeAttr('id');
+				pattern.find('select').removeClass('select2').removeClass('select2-offscreen');
+
+				pattern.find(base.select2Container).remove();
+
+			// create input names
+			var count = (base.$el.find(base.rowSelector).length);
+
+			pattern.find(base.inputElements).each(function(){
+				var originName = $(this).attr('name');
+					$(this).attr('name',originName.replace("[0]","["+(count)+"]"));	 			
+			})
+
+			pattern.find('select').addClass('select2').select2({
+				dropdownCssClass: "notFulltext",
+				allowClear: true,
+				minimumResultsForSearch: 'X',
+			});	
+
+			base.$el.find(base.listContainer).append(pattern);
+
+		}
+
+		base.addRow = function(){
+			base.createNewRow();
+			return false;
+		}
+
+
+		base.init();
+	};
+	
+
+	
+	$.fn.rentalPriceUpload = function(options){
+		return this.each(function(){
+			(new $.rentalPriceUpload(this, options));
+		});
+	};
+	
+})(jQuery);
+
+
+
+$(function(){
+	$('.rentalPriceUpload').rentalPriceUpload();
+});
