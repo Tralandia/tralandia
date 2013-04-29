@@ -55,8 +55,11 @@ class HeaderControl extends \BaseModule\Components\BaseControl {
 
 		$template = $this->template;
 
+		/** @var $languageRepository \Repository\LanguageRepository */
 		$languageRepository = $this->em->getRepository('\Entity\Language');
-		$supportedLanguages = $languageRepository->getSupportedSortedByName();
+		$translator = $this->environment->getTranslator();
+		$collator = $this->environment->getLocale()->getCollator();
+		$supportedLanguages = $languageRepository->getSupportedSortedByName($translator, $collator);
 
 		$primaryLocation = $this->environment->getPrimaryLocation();
 
