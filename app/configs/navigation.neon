@@ -17,6 +17,13 @@ common:
 					label: Registrations
 					link: ':Admin:StatisticsRegistrations:list'
 
+		robot:
+			label: Robot #@todo
+			items:
+				registrations:
+					label: Updata Transaltion Status
+					link: ':Admin:RunRobot:updateTranslationStatus'
+
 		user:
 			label: Users
 			items:

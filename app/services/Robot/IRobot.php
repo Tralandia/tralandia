@@ -1,9 +1,9 @@
 <?php
 
-namespace Service\Robot;
+namespace Robot;
 
 /**
- * IScener interface
+ * IRobot interface
  *
  * @author Dávid Ďurika
  */

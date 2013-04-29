@@ -5,7 +5,7 @@ namespace Service\Rental;
 use Service, Doctrine, Entity, Nette;
 use Extras\Cache\Cache;
 use Nette\Utils\Arrays;
-use Service\Robot\IUpdateRentalSearchCacheRobotFactory;
+use Robot\IUpdateRentalSearchCacheRobotFactory;
 
 class RentalSearchService extends Nette\Object
 {
@@ -46,7 +46,7 @@ class RentalSearchService extends Nette\Object
 	protected $rentalSearchCache;
 
 	/**
-	 * @var \Service\Robot\IUpdateRentalSearchCacheRobotFactory
+	 * @var \Robot\IUpdateRentalSearchCacheRobotFactory
 	 */
 	protected $rentalSearchCacheRobotFactory;
 
