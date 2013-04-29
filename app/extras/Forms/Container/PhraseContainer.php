@@ -74,7 +74,7 @@ class PhraseContainer extends BaseContainer
 			//if(!$this->user->isAllowed($translation, 'translate')) continue;
 			$language = $translation->getLanguage();
 			$languageContainer = $to->addContainer($language->getIso());
-			$languageContainer['variations'] = new TranslationVariationContainer($translation, TRUE);
+			$languageContainer['variations'] = new TranslationVariationContainer($translation, FALSE);
 			$languageContainer['variations']->setDefaults($translation->getVariations());
 
 			$genderList = $language->getGenders();
