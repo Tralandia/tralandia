@@ -11,7 +11,6 @@ class CurrencyGrid extends AdminGridControl {
 	}
 
 	public function render() {
-
 		$this->template->render();
 	}
 
