@@ -45,6 +45,22 @@ background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0,#e6e
     text-shadow: none;
 }
 
+
+.reservationform {
+    padding: 10px;
+    background: rgb(245, 245, 245);
+    border: 1px solid rgb(190, 190, 190);
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;    
+}
+
+.reservationform input , .reservationform  select {
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;         /* Opera/IE 8+ */    
+}
+
 .reservationform select {
     width: 48%;
     height: 30px;
@@ -53,6 +69,20 @@ background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0,#e6e
     margin-bottom: 10px;
     line-height: 30px;
     border-radius: 3px;
+}
+
+.reservationform .control-group.error input , .reservationform .control-group.error select {
+    border: 1px solid #d32c16;
+}
+
+.reservationform .control-group.error span.control-error {
+background: #d32c16;
+display: block;
+padding: 10px;
+margin-top: -10px;
+line-height: 20px;
+color: #fff;
+margin-bottom: 10px;
 }
 
 .reservationform select.tel {
