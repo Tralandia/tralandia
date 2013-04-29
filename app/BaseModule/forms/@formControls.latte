@@ -453,14 +453,13 @@
 
 	<div class="span12">
 
-
 		<div class="span2">
 			{label $container['phraseType'] /}
 			{input $container['phraseType'] , class => 'select2'}
 		</div>
 
 
-		<div class="span3">
+		<div class="span2">
 			{label $container['sourceLanguage'] /}
 			{input $container['sourceLanguage'], class => 'select2'}
 		</div>
@@ -471,13 +470,9 @@
 			<b>Translation | <span id="phraseTranslateCurrent"></b>
 		</div>
 		<div class="span2">
-
 			{input $container['corrected']}
 			{label $container['corrected'] /}
-
-
 			{input $container['changeToLanguage'] , class => 'select2 pull-right' , id => 'phraseLanguage'}
-
 		</div>
 
 	</div>

@@ -11,6 +11,12 @@ $(function(){
         $('#country').focus();
         return false;
     });
+
+
+    $('.reservationform').on('submit',function(){
+    	$(this).find('button').addClass('active');
+    	return false;
+    })
     
 //    $(document).on('scroll',function(){
 //        
