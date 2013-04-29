@@ -22,13 +22,13 @@
 		
 		<div class="controls">
 			
-			<select name="rows" class="select2">
+			<select name="rows" class="select2 notFulltext">
 				<option n:for="$i = 1; $i <= 4; $i++" value="{$i}" n:attr="selected => ($i==4 ? 'selected')">{$i} {_o100180,null,[count=>$i]}</option>
 			</select>
 		</div> 
 		
 		<div class="controls">
-			<select name="columns" class="select2">
+			<select name="columns" class="select2 notFulltext">
 				<option n:for="$i = 1; $i <= 4; $i++" value="{$i}" n:attr="selected => ($i==4 ? 'selected')">{$i} {_o100181,null,[count=>$i]}</option>
 			</select>
 		</div>
