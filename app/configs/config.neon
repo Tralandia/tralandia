@@ -140,8 +140,8 @@ services:
 		setup:
 			- $rentalImageDir(%rentalImageDir%)
 
-	generatePathSegmentsRobot: Service\Robot\GeneratePathSegmentsRobot
-	createMissingTranslationsRobot: Service\Robot\CreateMissingTranslationsRobot
+	generatePathSegmentsRobot: Robot\GeneratePathSegmentsRobot
+	createMissingTranslationsRobot: Robot\CreateMissingTranslationsRobot
 
 	phoneBook: Extras\Books\Phone(@contactPhoneRepositoryAccessor, @locationRepositoryAccessor)
 	emailBook: Extras\Books\Email(@contactEmailRepositoryAccessor)
@@ -206,6 +206,8 @@ services:
 	device: Device
 	deviceDetect: Mobile_Detect
 
+
+	updateTranslationStatusRobot: Robot\UpdateTranslationStatusRobot
 
 	# ==============================
 	# ==================== FORMS HANDLERS
@@ -380,9 +382,9 @@ factories:
 		implement: Service\Seo\ISeoServiceFactory
 
 	updateRentalSearchCacheRobotFactory:
-		class: Service\Robot\UpdateRentalSearchCacheRobot(%location%)
+		class: Robot\UpdateRentalSearchCacheRobot(%location%)
 		parameters: [Entity\Location\Location location]
-		implement: Service\Robot\IUpdateRentalSearchCacheRobotFactory
+		implement: Robot\IUpdateRentalSearchCacheRobotFactory
 
 	translatorFactory:
 		class: Extras\Translator(%language%, @phraseRepositoryAccessor, @translatorCache)

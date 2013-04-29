@@ -90,6 +90,12 @@ class Type extends \Entity\BaseEntity {
 	protected $html = FALSE;
 
 	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean")
+	 */
+	protected $translated = FALSE;
+
+	/**
 	 * @var integer
 	 * @ORM\Column(type="integer")
 	 * in EUR

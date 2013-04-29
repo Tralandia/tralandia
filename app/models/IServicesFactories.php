@@ -25,19 +25,6 @@ namespace Service\Rental {
 	}
 }
 
-
-namespace Service\Robot {
-
-	interface IUpdateRentalSearchCacheRobotFactory {
-		/**
-		 * @param \Entity\Location\Location $location
-		 *
-		 * @return UpdateRentalSearchCacheRobot
-		 */
-		function create(\Entity\Location\Location $location);
-	}
-}
-
 namespace Extras {
 
 	interface ITranslatorFactory {

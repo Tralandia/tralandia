@@ -16,5 +16,6 @@ define('PATH_SEGMENT_ENTITY', '\Entity\Routing\PathSegment');
 define('CURRENCY_ENTITY', '\Entity\Currency');
 define('PAGE_ENTITY', '\Entity\Page');
 define('PHRASE_ENTITY', '\Entity\Phrase\Phrase');
+define('PHRASE_TYPE_ENTITY', '\Entity\Phrase\Type');
 define('TRANSLATION_ENTITY', '\Entity\Phrase\Translation');
 
