@@ -477,11 +477,13 @@
 
 	</div>
 	<hr />
-	<div class="span6">
+	<div class="span5">
 
 		{include #translationVatiations, control => $container['fromVariations']}
 
 	</div>
+
+
 	<div class="span6">
 
 
@@ -529,6 +531,7 @@
 {?unset($control)}
 <table class="phraseTable table-striped table">
 	<tr>
+
 		{if $phrase->type->pluralVariationsRequired}
 		<th>Count</th>
 		{/if}
