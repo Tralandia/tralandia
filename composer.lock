@@ -299,7 +299,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/nette/zipball/fbe64d112faf70495076061ba494d7de31a1cc47",
+                "url": "https://api.github.com/repos/nette/nette/zipball/e1983bb1cb5820097456be28b202264953fadfed",
                 "reference": "52143b225f1ae539b1d59a4bdc8a8af8d3a3a9bb",
                 "shasum": ""
             },
