@@ -1,0 +1,10 @@
+entity: Entity\Phrase\Phrase
+
+parameters:
+	title: Missing Supported Translations
+	h1: 'Phrase -> %name%'
+
+gridFactory: @phraseCheckingSupportedGridFactory
+
+form:
+	fields:

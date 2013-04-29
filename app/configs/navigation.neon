@@ -91,6 +91,16 @@ common:
 					label: Languages
 					link: ':Admin:Language:list'
 
+		phraseChecking:
+			label: Phrases Checking
+			items: 
+				missingCentral:
+					label: Missing Central Translations
+					link: ':Admin:PhraseCheckingCentral:list'
+				missingSupported:
+					label: Missing Supported Translations
+					link: ':Admin:PhraseCheckingSupported:list'
+
 		siteContent:
 			label: Site Content
 			items:

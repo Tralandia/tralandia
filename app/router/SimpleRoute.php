@@ -56,7 +56,7 @@ class SimpleRoute extends BaseRoute
 		$searchParametersName = FrontRoute::$pathParametersMapper;
 		foreach($params as $paramName => $param) {
 			if(in_array($paramName, $searchParametersName)) return NULL;
-			if(!is_scalar($param) && !is_bool($param) && $param !== NULL) {
+			if(!is_array($param) && !is_scalar($param) && !is_bool($param) && $param !== NULL) {
 				return NULL;
 			}
 		}
