@@ -7,6 +7,7 @@ use Service\Seo\ISeoServiceFactory;
 
 abstract class BasePresenter extends \SecuredPresenter {
 
+	protected $userRentalReservationRepositoryAccessor;
 	protected $languageRepositoryAccessor;
 	protected $locationRepositoryAccessor;
 	protected $rentalTypeRepositoryAccessor;
@@ -33,6 +34,7 @@ abstract class BasePresenter extends \SecuredPresenter {
 	}
 
 	public function injectBaseRepositories(\Nette\DI\Container $dic) {
+		$this->userRentalReservationRepositoryAccessor = $dic->userRentalReservationRepositoryAccessor;
 		$this->languageRepositoryAccessor = $dic->languageRepositoryAccessor;
 		$this->locationRepositoryAccessor = $dic->locationRepositoryAccessor;
 		$this->rentalTypeRepositoryAccessor = $dic->rentalTypeRepositoryAccessor;
@@ -54,6 +56,8 @@ abstract class BasePresenter extends \SecuredPresenter {
 
 		$this->template->envLanguage = $this->environment->getLanguage();
 		$this->template->envPrimaryLocation = $this->environment->getPrimaryLocation();
+
+		$this->template->reservationsCount = $this->userRentalReservationRepositoryAccessor->get()->getReservationsCountByUser($this->loggedUser);
 
 		$this->template->rentalList = $this->loggedUser->getRentals();
 		$this->template->owner = $this->loggedUser;

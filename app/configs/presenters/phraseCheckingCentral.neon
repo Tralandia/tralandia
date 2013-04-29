@@ -1,0 +1,10 @@
+entity: Entity\Phrase\Phrase
+
+parameters:
+	title: Missing Central Translations
+	h1: 'Phrase -> %name%'
+
+gridFactory: @phraseCheckingCentralGridFactory
+
+form:
+	fields:

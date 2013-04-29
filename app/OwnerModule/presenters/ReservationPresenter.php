@@ -7,13 +7,6 @@ use Nette\InvalidArgumentException;
 
 class ReservationPresenter extends BasePresenter {
 
-	protected $userRentalReservationRepositoryAccessor;
-
-	public function injectRepositories(\Nette\DI\Container $dic) {
-		$this->userRentalReservationRepositoryAccessor = $dic->userRentalReservationRepositoryAccessor;
-	}
-
-
 	public function actionList($rental)
 	{
 		/** @var $rental \Entity\Rental\Rental */
