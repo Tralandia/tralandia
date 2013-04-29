@@ -81,10 +81,6 @@ class Helpers {
 	 */
 	public function phone(\Entity\Contact\Phone $phone)
 	{
-		if ($phone == NULL) { // intentionally ==
-			return NULL;
-		}
-
 		return $phone->getInternational();
 	}
 

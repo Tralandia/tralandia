@@ -4,7 +4,7 @@ namespace AdminModule\Grids;
 
 use AdminModule\Components\AdminGridControl;
 
-class PhraseCheckingGrid extends AdminGridControl {
+class PhraseCheckingCentralGrid extends AdminGridControl {
 
 	public function __construct($repository) {
 		$this->repository = $repository;
@@ -26,12 +26,24 @@ class PhraseCheckingGrid extends AdminGridControl {
 		return $grid;
 	}
 
+	/**
+	 * @param $filter
+	 * @param $order
+	 * @param \Nette\Utils\Paginator $paginator
+	 *
+	 * @return mixed
+	 */
+	public function getDataSource($filter, $order, \Nette\Utils\Paginator $paginator = NULL)
+	{
+		return $this->repository->findMissingCentralTranslations();
+	}
+
 }
 
-interface IPhraseCheckingGridFactory {
+interface IPhraseCheckingCentralGridFactory {
 
 	/**
-	 * @return IPhraseCheckingGridFactory
+	 * @return IPhraseCheckingCentralGridFactory
 	 */
 	public function create();
 }

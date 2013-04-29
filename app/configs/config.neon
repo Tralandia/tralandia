@@ -450,9 +450,13 @@ factories:
 		class: AdminModule\Grids\PhraseTypeGrid(@phraseTypeRepositoryAccessor::get())
 		implement: AdminModule\Grids\IPhraseTypeGridFactory
 
-	phraseCheckingGridFactory:
-		class: AdminModule\Grids\PhraseCheckingGrid(@phraseRepositoryAccessor::get())
-		implement: AdminModule\Grids\IPhraseCheckingGridFactory
+	phraseCheckingCentralGridFactory:
+		class: AdminModule\Grids\PhraseCheckingCentralGrid(@phraseRepositoryAccessor::get())
+		implement: AdminModule\Grids\IPhraseCheckingCentralGridFactory
+
+	phraseCheckingSupportedGridFactory:
+		class: AdminModule\Grids\PhraseCheckingSupportedGrid(@phraseRepositoryAccessor::get(), @languageRepositoryAccessor, @translator, @collator)
+		implement: AdminModule\Grids\IPhraseCheckingSupportedGridFactory
 
 	statisticsDictionaryGridFactory:
 		class: AdminModule\Grids\Statistics\DictionaryGrid
