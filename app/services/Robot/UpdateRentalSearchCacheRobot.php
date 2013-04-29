@@ -1,7 +1,6 @@
 <?php
 
-namespace Service\Robot;
-
+namespace Robot;
 
 use Nette\Utils\Strings;
 
@@ -47,4 +46,13 @@ class UpdateRentalSearchCacheRobot extends \Nette\Object implements IRobot {
 		//d($cache->getFeaturedList());
 		$cache->save();
 	}
+}
+
+interface IUpdateRentalSearchCacheRobotFactory {
+	/**
+	 * @param \Entity\Location\Location $location
+	 *
+	 * @return UpdateRentalSearchCacheRobot
+	 */
+	function create(\Entity\Location\Location $location);
 }

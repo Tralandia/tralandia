@@ -1,6 +1,6 @@
 <?php
 
-namespace Service\Robot;
+namespace Robot;
 
 use Model;
 use Entity\Routing\PathSegment;

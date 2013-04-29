@@ -1,6 +1,6 @@
 <?php
 
-namespace Service\Robot;
+namespace Robot;
 
 
 /**
@@ -13,7 +13,7 @@ class RobotManager extends \Nette\Object {
 	private $robots = array();
 
 	public function __construct() {
-		
+
 	}
 
 	public function addScanner(IRobot $robot) {
@@ -27,6 +27,6 @@ class RobotManager extends \Nette\Object {
 			}
 		}
 	}
-	
+
 
 }
