@@ -21,7 +21,7 @@ common:
 			label: Robot #@todo
 			items:
 				registrations:
-					label: Updata Transaltion Status
+					label: Update Translations Status
 					link: ':Admin:RunRobot:updateTranslationStatus'
 
 		user:
