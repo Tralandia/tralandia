@@ -15,7 +15,7 @@ class LastReservation {
 	public function __construct(\Nette\Http\Session $session)
 	{
 		$section = $session->getSection('lastReservation');
-		$section->setExpiration('+1 week');
+		$section->setExpiration(NULL);
 
 		$this->section = $section;
 	}
