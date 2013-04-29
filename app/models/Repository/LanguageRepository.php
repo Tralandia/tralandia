@@ -21,21 +21,18 @@ class LanguageRepository extends \Repository\BaseRepository {
 		return $this->findBySupported($entityName::SUPPORTED);
 	}
 
-	public function getSupportedSortedByName() {
+	public function getSupportedSortedByName(ITranslator $translator, Collator $collator) {
 		$supported = $this->findSupported();
 
-		$sort = array();
+		$return = array();
 		foreach ($supported as $key => $language) {
-			$sort[$language->name->getTranslation($language)->getDefaultVariation()] = $key;
+			$return[$translator->translate($language->name)] = $language;
 		}
 
 		// TODO: Zoradit pomocou \Collator
-		ksort($sort);
+		$collator->asort($return);
 
-		$return = array();
-		foreach ($sort as $name => $key) {
-			$return[] = $supported[$key];
-		}
+
 
 		return $return;
 
