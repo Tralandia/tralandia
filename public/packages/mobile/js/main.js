@@ -1,17 +1,38 @@
 $(function(){
-    
-    
-    $('.addToFavorites').on('click',function(){
-       $(this).toggleClass('active'); 
-    });
-    
-    
-    
-    $('.changeCountry').on('click',function(){
-        $('#country').focus();
-        return false;
-    });
-    
+	
+// $("#geocomplete").geocomplete();    
+
+// navigator.geolocation.getCurrentPosition(GetLocation);
+// function GetLocation(location) {
+//     alert(location.coords.latitude);
+//     alert(location.coords.longitude);
+//     alert(location.coords.accuracy);
+// }
+
+$("#geocomplete")
+  .geocomplete()
+  .bind("geocode:result", function(event, result){
+	console.log(result);
+  });
+
+
+	$('.addToFavorites').on('click',function(){
+	   $(this).toggleClass('active'); 
+	});
+	
+	
+	
+	$('.changeCountry').on('click',function(){
+		$('#country').focus();
+		return false;
+	});
+
+
+	$('.reservationform').on('submit',function(){
+		$(this).find('button').addClass('active');
+		// return false;
+	});
+	
 //    $(document).on('scroll',function(){
 //        
 //        if($(this).scrollTop() > 56){			
@@ -23,94 +44,48 @@ $(function(){
 //        }
 //       
 //    });
-    
+
+	$('#getMyLocation').myPositionButton();
+	
 });
 
 
+(function($){
+	$.myPositionButton = function(el, options){
 
-//function initialize() {
-//
-//        
-//        var input = document.getElementById('searchTextField');
-//        //var options = {
-//        //  types: ['(cities)'],
-//        //  componentRestrictions: {country: 'fr'}
-//        //};
-//
-//        autocomplete = new google.maps.places.Autocomplete(input);
-//
-//        google.maps.event.addListener(autocomplete, 'place_changed', function() {
-//            var place = autocomplete.getPlace();
-//            console.log(place);
-//        });
-//        
-//        
-//        
-//
-//      }
-//      
-//google.maps.event.addDomListener(window, 'load', initialize);
-          
-      
+		var base = this;
 
-        
-        
-        
-        
-        
-        
-        
-        
-function loadImages(lat,lng , map){
+		base.$el = $(el);
+		base.el = el;
 
-//
-//var delta = 0.05;
-//
-//var MinLat = lat - delta;
-//var MaxLat = lat + delta;
-//
-//var MinLng = lng - delta;
-//var MaxLng = lng + delta;
-//
-//
-//var findPanoramio = {
-//        set: 'public',
-//        from: 0,
-//        to: 12,
-//        minx: MinLng,
-//        miny: MinLat,
-//        maxy: MaxLat,
-//        maxx: MaxLng,
-//        size: 'medium',
-//        mapfilter: true
-//};        
-//        
-//        
-//$.ajax({
-//    dataType: "jsonp",
-//    crossDomain: true,
-//    data: findPanoramio,
-//    url: 'http://www.panoramio.com/map/get_panoramas.php',					  
-//    success: function(data){
-//
-//    }
-//  }).done(function(d){
-//
-//          var html = '';
-//          $.each(d.photos,function(k,v){
-//         
-//
-//          var myLatlng = new google.maps.LatLng(v.latitude,v.longitude);
-//
-//          var marker = new google.maps.Marker({
-//              position: myLatlng,
-//              map: map
-//          });
-//
-//                  html+= '<li style="background-image:url('+v.photo_file_url+');"></li>';
-//
-//          });
-//
-//          $('#placesImg').html(html);
-//  });    
-}        
+		base.$el.data("myPositionButton", base);
+		
+		base.init = function(){
+			base.bind();
+		};
+		
+		base.bind = function(){
+			base.$el.click(base.getLocation);
+		}
+
+		base.getLocation = function(){
+			navigator.geolocation.getCurrentPosition(base.GetLocation);			
+		}
+
+		base.GetLocation = function(location) {
+			console.log(location.coords.latitude);
+			console.log(location.coords.longitude);
+			console.log(location.coords.accuracy);
+		}
+
+		base.init();
+	};
+
+	
+	$.fn.myPositionButton = function(options){
+		return this.each(function(){
+			(new $.myPositionButton(this, options));});
+	};
+	
+})(jQuery);
+

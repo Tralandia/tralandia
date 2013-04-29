@@ -57,10 +57,13 @@
 						<td class="detailmeta">
 							
 								<div class="type">
+								<strong>
 									{_$rental->type->name|firstUpper}
 									{if $rental->hasPlacement()}{_$rental->getPlacement()->name}{/if}
 									{_$rental->address->locality->name , null , [case=>locative]}
-									<span>#(32 km)</span></div>                                
+								</strong>									
+									<span>#(32 km)</span></div>
+
 								<div class="rooms"> {_o100005} {$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]} <span>{$rental->rooms} </span></div>                    
 													   
 						</td>
@@ -285,15 +288,11 @@
 <div class="clearfix"></div>
 
 
-
+<div id="reservationForm">
 		{snippet reservationForm}
 		{include '../../forms/Rental/reservationForm.latte'}
 		{/snippet}
-
+</div>
 		</div>
 
-		<script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
-		
-		<script src="js/main.js"></script> 
-		
-		<script src="js/forms.js"></script>         
+        

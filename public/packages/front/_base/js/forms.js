@@ -928,7 +928,18 @@ function createNewLineInPriceList(){
 			console.log('remove');
 		}
 
-		base.createNewRow = function(){
+		base._resetValue = function($input){
+			switch ($input[0].tagName){
+				case 'INPUT' :
+					$input.val('');
+					break;
+				case 'SELECT' :
+					$input.find('option').attr('selected',false);
+					break;					
+			}
+		}
+
+		base._createNewRow = function(){
 			// create pattern from first row
 			var pattern = base.$el.find(base.firstRowSelector).clone();
 				pattern.find(base.inputElements)
@@ -941,6 +952,11 @@ function createNewLineInPriceList(){
 			var count = (base.$el.find(base.rowSelector).length);
 
 			pattern.find(base.inputElements).each(function(){
+				
+				// console.log($(this)[0].tagName);
+
+				base._resetValue($(this));
+
 				var originName = $(this).attr('name');
 					$(this).attr('name',originName.replace("[0]","["+(count)+"]"));	 			
 			})
@@ -956,7 +972,7 @@ function createNewLineInPriceList(){
 		}
 
 		base.addRow = function(){
-			base.createNewRow();
+			base._createNewRow();
 			return false;
 		}
 
