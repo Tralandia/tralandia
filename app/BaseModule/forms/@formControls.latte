@@ -642,29 +642,12 @@
 
 				<div class="help">{include #controlErrors, errors => $container->getAllErrors()}</div>
 
-				<ul id="sortable" class="ui-sortable" n:inner-foreach="$container->getPriceList() as $row">
-					<li data-id="{$row->getId()}" class="ui-state-default">
-						<span>{$row->getName()}</span>
-						<a href="#" class="remove">{_o100088}</a>
-					</li>
-				</ul>
-			</div>
-
-		</div>
-		<div class="row-fluid text">
-			<div class="span3">
-
-
-				<span class="btn btn-green fileinput-button">
-					<i class="entypo-upload"></i>
-					<span>{_o100167}</span>
-					{input $container['upload']}
-				</span>
-
-			</div>
-
-			<div class="span9">
-			<p>{_o100097}</p>
+				{var $replicator = $container->getComponent('list')}
+				{foreach $replicator->getComponents() as $component}
+					{input $component['name']}
+					{input $component['language'] , class => 'select2 notFulltext'}
+					{input $component['file']}
+				{/foreach}
 			</div>
 
 		</div>
@@ -674,9 +657,6 @@
 
 
 	{*<input id="fileupload" type="file" name="files[]" data-url="server/php/" multiple="">*}
-
-	{input $container['sort']}
-
 </tr>
 {/define #rentalPriceUpload}
 
@@ -722,8 +702,8 @@
 						{$component['price']->getOption('append')}
 					</span>
 					<span class="remove">X</span>
-				</div>						
-			{/if}			
+				</div>
+			{/if}
 		{/foreach}
 	</td>
 </tr>

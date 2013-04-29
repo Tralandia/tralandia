@@ -146,7 +146,8 @@ class NavigationControl extends BaseControl
 				->data('redirect', $phraseLink);
 
 		$languages = $this->languageRepository->getForAdminSearch($this->collator);
-		$form->addSelect('languages', '', $languages);
+		$form->addSelect('languages', '', $languages)
+			->setPrompt('all');
 
 		return $form;
 	}
