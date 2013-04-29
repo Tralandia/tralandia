@@ -1,115 +1,149 @@
 .btn-flat {
-    border: none;
-    background: transparent;
-    border-left: 1px solid rgb(201, 201, 201);
+	border: none;
+	background: transparent;
+	border-left: 1px solid rgb(201, 201, 201);
 }
 
 .btn-flat.btn-large , .reservationform .btn {
-    border: 1px solid #ddd;
-    width: 100%;
-    height: 40px;
-    line-height: 37px;
+	border: 1px solid #ddd;
+	width: 100%;
+	height: 40px;
+	line-height: 37px;
 }
 
 .btn-flat.btn-green,.btn-green {
-    background-image: linear-gradient(bottom, #88A816 0%, #AFD134 100%);
-    background-image: -o-linear-gradient(bottom, #88A816 0%, #AFD134 100%);
-    background-image: -moz-linear-gradient(bottom, #88A816 0%, #AFD134 100%);
-    background-image: -webkit-linear-gradient(bottom, #88A816 0%, #AFD134 100%);
-    background-image: -ms-linear-gradient(bottom, #88A816 0%, #AFD134 100%);
+	background-image: linear-gradient(bottom, #88A816 0%, #AFD134 100%);
+	background-image: -o-linear-gradient(bottom, #88A816 0%, #AFD134 100%);
+	background-image: -moz-linear-gradient(bottom, #88A816 0%, #AFD134 100%);
+	background-image: -webkit-linear-gradient(bottom, #88A816 0%, #AFD134 100%);
+	background-image: -ms-linear-gradient(bottom, #88A816 0%, #AFD134 100%);
 
-    background-image: -webkit-gradient(
-            linear,
-            left bottom,
-            left top,
-            color-stop(0, #88A816),
-            color-stop(1, #AFD134)
-    );
-    border: 1px solid #88a816;   
-    
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    color: #fff;
+	background-image: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(0, #88A816),
+		color-stop(1, #AFD134)
+		);
+	border: 1px solid #88a816;   
+	
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	color: #fff;
 }
 
 
 .btn , a.btn {
-    display: block;
-    height: 30px;
-    line-height: 30px;
-    background: #ddd;
-    background-image: linear-gradient(bottom,#e6e6e6 0%,#ffffff 100%);
-    background-image: -o-linear-gradient(bottom,#e6e6e6 0%,#ffffff 100%);
-    background-image: -moz-linear-gradient(bottom,#e6e6e6 0%,#ffffff 100%);
-    background-image: -webkit-linear-gradient(bottom,#e6e6e6 0%,#ffffff 100%);
-    background-image: -ms-linear-gradient(bottom,#e6e6e6 0%,#ffffff 100%);
-    background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0,#e6e6e6),color-stop(1,#ffffff));    
-    color: #727272;
-    border: 1px solid rgb(201, 198, 198);
-    
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;    
-    
-    text-decoration: none;
-    margin: 10px;
-    padding: 0 10px;
+	display: block;
+	height: 30px;
+	line-height: 30px;
+	background: #ddd;
+	background-image: linear-gradient(bottom,#e6e6e6 0%,#ffffff 100%);
+	background-image: -o-linear-gradient(bottom,#e6e6e6 0%,#ffffff 100%);
+	background-image: -moz-linear-gradient(bottom,#e6e6e6 0%,#ffffff 100%);
+	background-image: -webkit-linear-gradient(bottom,#e6e6e6 0%,#ffffff 100%);
+	background-image: -ms-linear-gradient(bottom,#e6e6e6 0%,#ffffff 100%);
+	background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0,#e6e6e6),color-stop(1,#ffffff));    
+	color: #727272;
+	border: 1px solid rgb(201, 198, 198);
+	
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;    
+	
+	text-decoration: none;
+	margin: 10px;
+	padding: 0 10px;
 }
 
 .btn.btn-large {
-    height: 50px;
+	height: 50px;
 }
 
 .btn i {
-        display: block;
+	display: block;
 
-    border-right: 1px solid #fff;
-    box-shadow: 1px 0 0 rgb(201, 201, 201);
-    height: 30px;
+	border-right: 1px solid #fff;
+	box-shadow: 1px 0 0 rgb(201, 201, 201);
+	height: 30px;
 }
 
 .btn.btn-large i ,   .reservationform .btn i {
-    float: left;
-    border-right: 1px solid #444;
-    box-shadow: 1px 0 0 rgba(255, 255, 255, 0.19);
-    padding-right: 10px;
-    height: 50px;
-    line-height: 50px;
-    margin-right: 10px;
-    padding: 0 15px 0 5px;
-    font-size: 30px;
+	float: left;
+	border-right: 1px solid #444;
+	box-shadow: 1px 0 0 rgba(255, 255, 255, 0.19);
+	padding-right: 10px;
+	height: 50px;
+	line-height: 50px;
+	margin-right: 10px;
+	padding: 0 15px 0 5px;
+	font-size: 30px;
+}
+
+.reservationform .btn {
+	line-height: 50px;
+	padding: 0;
+	margin: 0;
+}
+
+.reservationform .btn i {
+	box-shadow: none;
+	border-right: none;
+	margin: 0;
+	padding: 0;
+	height: 50px;
+	width: 50px;
+	text-align: center;
+}
+
+.reservationform .btn i.icon-spinner {
+	display: none;
+}
+
+
+.reservationform .btn.active i.icon-spinner {
+	display: block;
+}
+
+.reservationform .btn.active i.entypo-send {
+	display: none;
 }
 
 .btn.btn-large strong,.btn.btn-large small {
-    height: 20px;
-    line-height: 30px;
-    display: block;
+	height: 20px;
+	line-height: 30px;
+	display: block;
 }
 
 /* orange button */
 .btn.btn.btn-orange , .btn-flat.btn-orange  {
-    height: 50px;
-background-image: linear-gradient(bottom,#f68703 0%,#fdbe33 100%);
-background-image: -o-linear-gradient(bottom,#f68703 0%,#fdbe33 100%);
-background-image: -moz-linear-gradient(bottom,#f68703 0%,#fdbe33 100%);
-background-image: -webkit-linear-gradient(bottom,#f68703 0%,#fdbe33 100%);
-background-image: -ms-linear-gradient(bottom,#f68703 0%,#fdbe33 100%);
-background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0,#f68703),color-stop(1,#fdbe33));
-border: 1px solid #f68703;
-border-bottom: 1px solid rgb(248, 172, 82);
-color: #7d3300;
-box-shadow: 0px 2px 5px rgba(163, 85, 24, 0.71);
+	height: 50px;
+	background-image: linear-gradient(bottom,#f68703 0%,#fdbe33 100%);
+	background-image: -o-linear-gradient(bottom,#f68703 0%,#fdbe33 100%);
+	background-image: -moz-linear-gradient(bottom,#f68703 0%,#fdbe33 100%);
+	background-image: -webkit-linear-gradient(bottom,#f68703 0%,#fdbe33 100%);
+	background-image: -ms-linear-gradient(bottom,#f68703 0%,#fdbe33 100%);
+	background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0,#f68703),color-stop(1,#fdbe33));
+	border: 1px solid #f68703;
+	border-bottom: 1px solid rgb(248, 172, 82);
+	color: #7d3300;
+	box-shadow: 0px 2px 5px rgba(163, 85, 24, 0.71);
 }
 
+.reservationform .btn.btn.btn-orange.active {  		
+	background: #F68903;
+}
+
+
 .btn-flat.btn-orange {
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;    
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;    
 }
 
 .btn.btn.btn-large i {
-    border-color: #f68703;
+	border-color: #f68703;
 }
 
 .arrow_box {

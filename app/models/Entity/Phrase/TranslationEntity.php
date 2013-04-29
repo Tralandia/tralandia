@@ -91,9 +91,11 @@ class Translation extends \Entity\BaseEntity {
 	protected $checked;
 
 	public function __toString() {
+		return '';
 		if($this->phrase->getType()->isSimple()) {
 			$translation = $this->translation;
 		} else {
+			//$translation = $this->translation;
 			$translation = $this->getDefaultVariation();
 		}
 		return strlen($translation) ? $translation : '{!!' . $this->id . '}';
