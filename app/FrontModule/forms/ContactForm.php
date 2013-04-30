@@ -69,7 +69,6 @@ class ContactForm extends BaseForm {
 	public function process(ContactForm $form)
 	{
 		$values = $form->getValues();
-		d($values);
 		$messageRepository = $this->ticketRepository->related('messages');
 
 		/** @var $user \Entity\User\User */
