@@ -30,7 +30,7 @@ height: 40px;
 }
 
 
-select , .inputfilterSearch i {
+select , .inputFilterSearch i {
 font-size: 1em;
 background: #fff;
 background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAAGCAYAAADOic7aAAAAGXRFW…AM+QbEusgKiDWIAarxM9SgEHRJUgwCAT8grsMmgc8ggAADAGY/m1aWUowGAAAAAElFTkSuQmCC) no-repeat 95% 50% rgba(255,255,255,0.5);
@@ -59,7 +59,7 @@ border-bottom-right-radius: 3px;
 	padding: 10px;
 }
 
-.inputfilterSearch {
+.inputFilterSearch {
 	clear: both;
 	height: 30px;
 	margin-bottom: 10px;
@@ -91,7 +91,7 @@ float: left;
 	float: left;
 }
 
-.inputfilterSearch i {
+.inputFilterSearch i {
 	background: #dadada;
 	float: left;
 	display: block;
