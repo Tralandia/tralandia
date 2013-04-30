@@ -6,16 +6,34 @@ use AdminModule\Components\AdminGridControl;
 
 class PhraseCheckingSupportedGrid extends AdminGridControl {
 
+	const FILTER_LANGUAGE = 'language';
+
+	/**
+	 * @var \Extras\Translator
+	 */
 	public $translator;
+
+	/**
+	 * @var \Environment\Collator
+	 */
 	public $collator;
 
+	/** 
+	 * @var \Repository\LanguageRepository
+	 */
 	protected $languageRepositoryAccessor;
 
-	public function __construct($repository, $languageRepositoryAccessor, $translator, $collator) {
+	/** 
+	 * @var \DictionaryManager\FindOutdatedTranslations
+	 */
+	protected $findOutdatedTranslations;
+
+	public function __construct($repository, $findOutdatedTranslations, $languageRepositoryAccessor, $translator, $collator) {
 		$this->languageRepositoryAccessor = $languageRepositoryAccessor;
+		$this->findOutdatedTranslations = $findOutdatedTranslations;
 		$this->translator = $translator;
-		$this->collator = $collator;
 		$this->repository = $repository;
+		$this->collator = $collator;
 	}
 
 	public function render() {
@@ -32,9 +50,10 @@ class PhraseCheckingSupportedGrid extends AdminGridControl {
 		$grid->addColumn('required');
 
 		$grid->setFilterFormFactory(function() {
+			$languages = $this->languageRepositoryAccessor->get()->getSupportedForSelect($this->translator, $this->collator);
+
 			$form = new \Nette\Forms\Container;
-			$form->addSelect('language', NULL, $this->languageRepositoryAccessor->get()->getSupportedForSelect($this->translator, $this->collator))
-				->setPrompt('---');
+			$form->addSelect(self::FILTER_LANGUAGE, NULL, $languages);
 
 			return $form;
 		});
@@ -51,13 +70,14 @@ class PhraseCheckingSupportedGrid extends AdminGridControl {
 	 */
 	public function getDataSource($filter, $order, \Nette\Utils\Paginator $paginator = NULL)
 	{
-		d($filter);
-		$languages = $this->languageRepositoryAccessor->get()->findSupported();
-
-		foreach ($languages as $key => $language) {
-			$data = $this->repository->findMissingTranslationsBy($language);
-			break;
+		$language = NULL;
+		if (isset($filter[self::FILTER_LANGUAGE])) {
+			$language = $this->languageRepositoryAccessor->get()->find($filter[self::FILTER_LANGUAGE]);
 		}
+
+		$limit = $paginator->itemsPerPage;
+		$offset = ($paginator->page - 1) * $paginator->itemsPerPage;
+		$data = $this->findOutdatedTranslations->getWaitingForTranslation($language, $limit, $offset);
 
 		return $data;
 	}

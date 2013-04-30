@@ -6,8 +6,14 @@ use AdminModule\Components\AdminGridControl;
 
 class PhraseCheckingCentralGrid extends AdminGridControl {
 
-	public function __construct($repository) {
+	/** 
+	 * @var \DictionaryManager\FindOutdatedTranslations
+	 */
+	protected $findOutdatedTranslations;
+
+	public function __construct($repository, \DictionaryManager\FindOutdatedTranslations $findOutdatedTranslations) {
 		$this->repository = $repository;
+		$this->findOutdatedTranslations = $findOutdatedTranslations;
 	}
 
 	public function render() {
@@ -35,7 +41,11 @@ class PhraseCheckingCentralGrid extends AdminGridControl {
 	 */
 	public function getDataSource($filter, $order, \Nette\Utils\Paginator $paginator = NULL)
 	{
-		return $this->repository->findMissingCentralTranslations();
+		$limit = $paginator->itemsPerPage;
+		$offset = ($paginator->page - 1) * $paginator->itemsPerPage;
+		$data = $this->findOutdatedTranslations->getWaitingForCentral(NULL, $limit, $offset);
+
+		return $data;
 	}
 
 }
