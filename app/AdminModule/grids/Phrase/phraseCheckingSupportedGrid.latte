@@ -1,7 +1,11 @@
-{define col-filter-location}
+{define col-filter-language}
 	<div class="input-group">
-		{* <span class="input-group-addon input-small">@</span> *}
-		{dump $column}
-		{input $column->name class => "input-small"}
+		{input $column->name class => "select2"}
 	</div>
+{/define}
+
+{define #col-language}
+	<td>
+		{_$row->language->name->id}
+	</td>
 {/define}

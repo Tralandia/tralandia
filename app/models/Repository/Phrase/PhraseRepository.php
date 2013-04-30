@@ -18,16 +18,17 @@ class PhraseRepository extends \Repository\BaseRepository {
 
 	/**
 	 * Vrati vnorene pole ID-cok fraz zoskupene podla jazyka ktore treba prelozit
+	 * @var TRUE|FALSE
 	 * @return array
 	 */
-	public function findMissingTranslations()
+	public function findMissingTranslations(\Nette\Utils\Paginator $paginator=NULL)
 	{
 		$languages = $this->languageRepositoryAccessor->get()->findSupported();
 
 		$array = array();
 		foreach ($languages as $language) {
-			$translations = $this->findMissingTranslationsBy($language);
-			$array[$language->id] = $qb->getQuery()->getResult();
+			$translations = $this->findMissingTranslationsBy($language, $paginator);
+			$array[$language->id] = $translations;
 		}
 
 		return $array;
@@ -37,7 +38,7 @@ class PhraseRepository extends \Repository\BaseRepository {
 	 * Vrati vnorene pole ID-cok fraz zoskupene podla jazyka ktore treba prelozit
 	 * @return array
 	 */
-	public function findMissingTranslationsBy(\Entity\Language $language)
+	public function findMissingTranslationsBy(\Entity\Language $language, \Nette\Utils\Paginator $paginator=NULL)
 	{
 		# vyberiem frazy ktore maju preklad v danom jazyku
 		$qb2 = $this->_em->createQueryBuilder();
@@ -57,29 +58,12 @@ class PhraseRepository extends \Repository\BaseRepository {
 			->where($qb->expr()->notIn('p.id', $qb2->getDQL()))
 			->andWhere('ttt.translateTo = :supported')
 			->setParameter('language', $language->id)
-			->setParameter('supported', \Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED)
-			->setMaxResults(10);
+			->setParameter('supported', \Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED);
 
-		$return = $qb->getQuery()->getResult();
-
-		return $return;
-	}
-
-	/**
-	 * Vrati vnorene pole ID-cok fraz zoskupene podla jazyka ktore treba prelozit
-	 * @return array
-	 */
-	public function findMissingCentralTranslations()
-	{
-		$return = array();
-
-		# vyberiem frazy ktore maju preklad v danom jazyku
-		$qb = $this->_em->createQueryBuilder();
-		$qb->select('e.id')
-			->from('\Entity\Phrase\Phrase', 'e')
-			->leftJoin('e.translations', 'translations')
-			->where('translations.translationStatus = :status')
-			->setParameter('status', \Entity\Phrase\Translation::WAITING_FOR_CENTRAL);
+		if ($paginator) {
+			$qb->setFirstResult(($paginator->page - 1) * $paginator->itemsPerPage);
+			$qb->setMaxResults($paginator->itemsPerPage);
+		}
 
 		$return = $qb->getQuery()->getResult();
 
