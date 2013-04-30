@@ -11,6 +11,8 @@ use Nette\Caching\Cache,
 class SimpleAcl extends Permission
 {
 
+	const FAKE_IDENTITY = 'fakeIdentity';
+
 	/**
 	 * @var \Repository\User\RoleRepository
 	 */
@@ -44,6 +46,7 @@ class SimpleAcl extends Permission
 		$resources[] = $signPresenter = 'Front:Sign';
 		$resources[] = $registrationPresenter = 'Front:Registration';
 
+		$resources[] = $userEntity = 'Entity\User\User';
 		$resources[] = $rentalEntity = 'Entity\Rental\Rental';
 		$resources[] = $translationEntity = 'Entity\Phrase\Translation';
 
@@ -60,6 +63,8 @@ class SimpleAcl extends Permission
 		$this->allow(RoleEntity::LOGGED, $signPresenter, 'out');
 
 		$this->allow(RoleEntity::TRANSLATOR, $translationEntity, 'translate', [$assertion, 'translate']);
+
+		//$this->allow(RoleEntity::ADMIN, $userEntity, self::FAKE_IDENTITY, [$assertion, 'fakeIdentity']);
 
 		$this->allow(RoleEntity::SUPERADMIN);
 
