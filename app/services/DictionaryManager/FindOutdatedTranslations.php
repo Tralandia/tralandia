@@ -22,7 +22,7 @@ class FindOutdatedTranslations {
 	{
 		$query = $this->getTranslationsQuery($language, $limit, $offset);
 		$query->select('e');
-		$query->andWhere('translations.translationStatus = :status');
+		$query->andWhere('e.translationStatus = :status');
 		$query->setParameter('status', \Entity\Phrase\Translation::WAITING_FOR_CENTRAL);
 
 		return $query->getQuery()->getResult();
@@ -32,7 +32,7 @@ class FindOutdatedTranslations {
 	{
 		$query = $this->getTranslationsQuery($language);
 		$query->select('count(e) as count');
-		$query->andWhere('translations.translationStatus = :status');
+		$query->andWhere('e.translationStatus = :status');
 		$query->setParameter('status', \Entity\Phrase\Translation::WAITING_FOR_CENTRAL);
 
 		return $query->getQuery()->getResult()[0]->count;
@@ -43,7 +43,7 @@ class FindOutdatedTranslations {
 	{
 		$query = $this->getTranslationsQuery($language);
 		$query->select('e');
-		$query->andWhere('translations.translationStatus = :status');
+		$query->andWhere('e.translationStatus = :status');
 		$query->setParameter('status', \Entity\Phrase\Translation::WAITING_FOR_TRANSLATION);
 
 		return $query->getQuery()->getResult();
@@ -53,7 +53,7 @@ class FindOutdatedTranslations {
 	{
 		$query = $this->getTranslationsQuery($language);
 		$query->select('count(e) as count');
-		$query->andWhere('translations.translationStatus = :status');
+		$query->andWhere('e.translationStatus = :status');
 		$query->setParameter('status', \Entity\Phrase\Translation::WAITING_FOR_TRANSLATION);
 
 		return $query->getQuery()->getResult()[0]->count;
@@ -62,16 +62,16 @@ class FindOutdatedTranslations {
 	private function getTranslationsQuery(\Entity\Language $language = NULL, $limit = NULL, $offset = NULL)
 	{
 		$query = $this->_em->createQueryBuilder();
-		$query->from('\Entity\Phrase\Phrase', 'e');
-		$query->leftJoin('e.translations', 'translations');
-		$query->leftJoin('e.type', 'type');
+		$query->from('\Entity\Phrase\Translation', 'e');
+		$query->leftJoin('e.phrase', 'phrase');
+		$query->leftJoin('phrase.type', 'type');
 
 		$query->andWhere('type.translated = :translated');
 		$query->setParameter('translated', TRUE);
 
 		if ($language) {
-			$query->andWhere('translations.language = :language');
-			$query->setParameter('language', $language->id);
+			$query->andWhere('e.language = :language');
+			$query->setParameter('language', $language);
 		}
 
 		if ($limit) $query->setMaxResults($limit);

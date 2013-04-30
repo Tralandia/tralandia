@@ -46,8 +46,6 @@ class PhraseCheckingSupportedGrid extends AdminGridControl {
 		$grid = $this->getGrid();
 
 		$grid->addColumn('language', 'Language');
-		$grid->addColumn('entityAttribute', 'Entity attribute');
-		$grid->addColumn('required');
 
 		$grid->setFilterFormFactory(function() {
 			$languages = $this->languageRepositoryAccessor->get()->getSupportedForSelect($this->translator, $this->collator);
