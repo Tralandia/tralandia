@@ -66,6 +66,11 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 	protected $search;
 
 	/**
+	 * @var \Device
+	 */
+	protected $device;
+
+	/**
 	 * @var \Environment\Environment
 	 */
 	protected $environment;
@@ -93,10 +98,11 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 	 * @param \SearchGenerator\OptionGenerator $searchOptionGenerator
 	 */
 	public function __construct(RentalSearchService $search,Environment $environment ,EntityManager $em,
-								ISearchFormFactory $searchFormFactory, OptionGenerator $searchOptionGenerator)
+								ISearchFormFactory $searchFormFactory, OptionGenerator $searchOptionGenerator, \Device $device)
 	{
 		parent::__construct();
 		$this->search = $search;
+		$this->device = $device;
 		$this->environment = $environment;
 		$this->em = $em;
 		$this->searchFormFactory = $searchFormFactory;
@@ -105,6 +111,11 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 
 	public function render()
 	{
+
+		if($this->device->isMobile()){
+			$this->template->setFile(APP_DIR.'/FrontModule/components/SearchBar/mobileSearchBarControl.latte');
+		}
+
 		$this->directLinks();
 
 		$template = $this->template;
