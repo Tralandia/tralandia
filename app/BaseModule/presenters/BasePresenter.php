@@ -376,6 +376,19 @@ abstract class BasePresenter extends Presenter {
 		$this->sendJson($json);
 	}
 
+	public function actionRestoreOriginalIdentity()
+	{
+		/** @var $identity \Security\Identity */
+		$identity = $this->getUser()->getIdentity();
+		if($identity->isFake()) {
+			/** @var $identity \Security\FakeIdentity */
+			$originalIdentity = $identity->getOriginalIdentity();
+			$this->login($originalIdentity);
+			$this->actionAfterLogin();
+		}
+	}
+
+
 	public function redirectToCorrectDomain($login, $password)
 	{
 		$identity = $this->authenticator->authenticate([$login, $password]);

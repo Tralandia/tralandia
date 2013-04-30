@@ -81,7 +81,6 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 	protected $searchOptionGenerator;
 
 	/**
-	 * @autowire
 	 * @var \FrontModule\Forms\ISearchFormFactory
 	 */
 	protected $searchFormFactory;
@@ -110,7 +109,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 
 		$template = $this->template;
 		$presenter = $this->getPresenter();
-		
+
 		$template->isHome = ($presenter->name == 'Front:Home' ? TRUE : FALSE);
 		$template->hasLocation = ($this->location ? TRUE : FALSE);
 

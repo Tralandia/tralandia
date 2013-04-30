@@ -2,6 +2,7 @@
 
 namespace Security;
 
+use Entity\User\User;
 use Nette\Object,
 	Nette\Security as NS,
 	Nette\Environment;
@@ -9,7 +10,8 @@ use Nette\Object,
 /**
  * Users authenticator.
  */
-class Authenticator extends Object implements NS\IAuthenticator {
+class Authenticator extends Object implements NS\IAuthenticator
+{
 
 	/**
 	 * @var \Repository\User\UserRepository
@@ -21,6 +23,7 @@ class Authenticator extends Object implements NS\IAuthenticator {
 	 */
 	protected static $autoLoginDelimiter = '-';
 
+
 	/**
 	 * @param \Repository\User\UserRepository $userRepository
 	 */
@@ -29,16 +32,18 @@ class Authenticator extends Object implements NS\IAuthenticator {
 		$this->userRepository = $userRepository;
 	}
 
+
 	/**
 	 * @param array $credentials
 	 *
 	 * @return \Nette\Security\Identity
 	 * @throws \Nette\Security\AuthenticationException
 	 */
-	public function authenticate(array $credentials) {
+	public function authenticate(array $credentials)
+	{
 		list($email, $password) = $credentials;
 
-		if($email instanceof \Entity\User\User) {
+		if ($email instanceof \Entity\User\User) {
 			$user = $email;
 		} else {
 			$user = $this->userRepository->findOneByLogin($email);
@@ -53,18 +58,28 @@ class Authenticator extends Object implements NS\IAuthenticator {
 		}
 
 
-		return new NS\Identity($user->getId(), array($user->getRole()->getSlug()), $user->getIdentity());
+		return Identity::createIdentity($user);
+	}
+
+
+	public function fakeAuthenticate(User $user, User $originalUser)
+	{
+		return FakeIdentity::createFakeIdentity($user, $originalUser);
 	}
 
 
 	/**
 	 * Computes salted password hash.
+	 *
 	 * @param  string
+	 *
 	 * @return string
 	 */
-	public static function calculatePasswordHash($password) {
+	public static function calculatePasswordHash($password)
+	{
 		return $password;
 	}
+
 
 	/**
 	 * @param \Entity\User\User $user
@@ -73,8 +88,9 @@ class Authenticator extends Object implements NS\IAuthenticator {
 	 */
 	public static function calculateAutoLoginHash(\Entity\User\User $user)
 	{
-		return $user->getId() . self::$autoLoginDelimiter . substr( sha1($user->getPassword() . 'dkh43k5h3k2o9'), 0, 16 );
+		return $user->getId() . self::$autoLoginDelimiter . substr(sha1($user->getPassword() . 'dkh43k5h3k2o9'), 0, 16);
 	}
+
 
 	/**
 	 * @param $autologin
@@ -84,14 +100,15 @@ class Authenticator extends Object implements NS\IAuthenticator {
 	 */
 	public function autologin($autologin)
 	{
-		list($userId, ) = explode(self::$autoLoginDelimiter, $autologin, 2);
-		if(!$user = $this->userRepository->find($userId)) {
+		list($userId,) = explode(self::$autoLoginDelimiter, $autologin, 2);
+		if (!$user = $this->userRepository->find($userId)) {
 			throw new NS\AuthenticationException("Invalid autologin link.");
 		}
 		$autologinHash = $this->calculateAutoLoginHash($user);
-		if($autologin != $autologinHash) {
+		if ($autologin != $autologinHash) {
 			throw new NS\AuthenticationException("Invalid autologin link.");
 		}
+
 		return $this->authenticate([$user, NULL]);
 	}
 }

@@ -2,8 +2,10 @@
 
 namespace AdminModule;
 
+use Nette\Application\BadRequestException;
 use Nette\Environment;
 use Nette\Security\User;
+use Security\SimpleAcl;
 
 abstract class BasePresenter extends \SecuredPresenter {
 
@@ -50,7 +52,7 @@ abstract class BasePresenter extends \SecuredPresenter {
 	public function setRenderMode() {
 		if(isset($this->params['display']) && $this->params['display'] == 'modal') {
 			// $this->formMask->form->addClass .= ' ajax';
-			$this->setLayout(false);
+			$this->setLayout(FALSE);
 			$this->template->display = 'modal';
 		}
 	}
@@ -92,6 +94,25 @@ abstract class BasePresenter extends \SecuredPresenter {
 		return $navigation;
 	}
 
+	public function actionFakeLogin($id)
+	{
+		$user = $this->userRepositoryAccessor->get()->find($id);
+		if(!$user) {
+			throw new BadRequestException;
+		}
+
+		$this->fakeLogin($user);
+		$this->actionAfterLogin();
+	}
+
+	public function fakeLogin(\Entity\User\User $user)
+	{
+		$this->checkPermission($user, SimpleAcl::FAKE_IDENTITY);
+
+		$fakeIdentity = $this->authenticator->fakeAuthenticate($user, $this->loggedUser);
+		$this->login($fakeIdentity);
+	}
+
 	/**
 	 * @acl(forPresenter=BasePresenter)
 	 */
@@ -99,7 +120,7 @@ abstract class BasePresenter extends \SecuredPresenter {
 		$input = $this->getHttpRequest()->getPost('input', '');
 		try {
 			$decoded = \Nette\Utils\Neon::decode($input);
-			$output = \Nette\Diagnostics\Debugger::dump($decoded, true);
+			$output = \Nette\Diagnostics\Debugger::dump($decoded, TRUE);
 		} catch(\Nette\Utils\NeonException $e) {
 			$output = $e->getMessage();
 		}
