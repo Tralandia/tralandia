@@ -4,10 +4,16 @@ namespace DictionaryManager;
 
 use Entity\Phrase\Phrase;
 use Entity\Phrase\Translation;
+use Doctrine\ORM\EntityManager;
 
 class FindOutdatedTranslations {
 
-	public function __construct(\Doctrine\ORM\EntityManager $entityManager)
+    /**
+     * @var EntityManager
+     */
+    protected $_em;
+
+	public function __construct(EntityManager $entityManager)
 	{
 		$this->_em = $entityManager;
 	}
@@ -45,7 +51,6 @@ class FindOutdatedTranslations {
 
 	public function getWaitingForTranslationCount(\Entity\Language $language = NULL)
 	{
-		
 		$query = $this->getTranslationsQuery($language);
 		$query->select('count(e) as count');
 		$query->andWhere('translations.translationStatus = :status');
