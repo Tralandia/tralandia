@@ -30,7 +30,7 @@ height: 40px;
 }
 
 
-select , .inputFilterSearch i {
+select , .inputfilterSearch i {
 font-size: 1em;
 background: #fff;
 background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAAGCAYAAADOic7aAAAAGXRFW…AM+QbEusgKiDWIAarxM9SgEHRJUgwCAT8grsMmgc8ggAADAGY/m1aWUowGAAAAAElFTkSuQmCC) no-repeat 95% 50% rgba(255,255,255,0.5);
@@ -59,7 +59,7 @@ border-bottom-right-radius: 3px;
 	padding: 10px;
 }
 
-.inputFilterSearch {
+.inputfilterSearch {
 	clear: both;
 	height: 30px;
 	margin-bottom: 10px;
@@ -91,7 +91,7 @@ float: left;
 	float: left;
 }
 
-.inputFilterSearch i {
+.inputfilterSearch i {
 	background: #dadada;
 	float: left;
 	display: block;
@@ -115,4 +115,12 @@ border-radius: 0;
 border-top-left-radius: 3px;
 border-bottom-left-radius: 3px;
 
+}
+
+#getSearchCount {
+	height: 30px;
+	line-height: 30px;
+	color: #333;
+	text-align: center;
+	background: #dadada;
 }
