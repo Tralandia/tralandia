@@ -29,8 +29,13 @@
 
 	</head>
 	<body class="list">
+{* 
+			{cache $homeCacheId, if => $useTemplateCache, expire => '+1 day'}
+			{control header}
+			{/cache} *}
 
         <header id="pageHeader">
+
             <a class="logo" href="#"></a>
             <h1>Tralandia.sk <span>Ubytovanie na Slovensku</span></h1>
 
@@ -68,6 +73,7 @@
 
 
 		<script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+		<script src="/packages/jqueryCookie/lib/jquery.cookie.js"></script>
 
 		<script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places"></script>
 

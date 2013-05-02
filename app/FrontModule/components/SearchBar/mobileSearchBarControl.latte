@@ -2,13 +2,21 @@
 {$jsVariables->for('form.' . $searchFormClass)}
 
 <header>
-	<a href="#" class="btn-back"><i class="icon-arrow-left"></i></a> <i class="icon-filter"></i> {_o100003}
+	<a href="#" class="btn-back back"><i class="icon-arrow-left"></i></a> <i class="icon-filter"></i> {_o100003}
 </header>
 
-<div class="span3" role="sidebar" data-searchCount="{link getSearchCount!}" id="searchControl">
+<div id="getSearchCount" data-label="#label text">
+	{if $isHome}
+	{else}
+		{$totalResultsCountLabel}
+	{/if}
+</div>	
+
+<div role="sidebar" data-searchCount="{link getSearchCount!}" id="searchControl">
 
 	{form searchForm , class => $searchFormClass }
 		
+	
 
 		<div class="inputfilterSearch">
 			<i class="icon-map-marker"></i>
@@ -18,18 +26,30 @@
 				data-js-location-slug => 'location-slug',
 				data-autocomplete-url => $autocompleteUrl,
 				data-format-input-too-short => $formatInputTooShort } *}
-				<input type="text" />
+				<input type="text" placeholder="Lokalita bude sa riesit az s vyhladavanim gps" />
 		</div>
 		<div class="inputfilterSearch">
 			<i class="icon-home"></i>
 			{input rentalType , class => 'select2 path disabledFulltext sidebarRentalType', data-js-rental-type => 'selected'}
 		</div>
+
 		<div class="inputfilterSearch">
+		<i class="icon-money22">$</i>
+			<select>				
+				<option>10 - 20 EUR</option>
+				<option>20 - 30 EUR</option>
+				<option>30 - 40 EUR</option>
+				<option>40 - 50 EUR</option>
+				<option>50 - 60 EUR</option>
+			</select>
+		</div>
+
+{* 		<div class="inputfilterSearch">
 			<i class="icon-money22">$</i>{input priceFrom , class => 'select2 disabledFulltext sidebarPriceFrom', data-js-price-from => 'selected'}
 		</div>
 		<div class="inputfilterSearch">
 			<i class="icon-money22">$</i>{input priceTo , class => 'select2 disabledFulltext pull-right sidebarPriceTo', data-js-price-to => 'selected'}
-		</div>
+		</div> *}
 		<div class="inputfilterSearch">
 			<i class="icon-user"></i>
 			{input capacity , class => 'select2 disabledFulltext', data-js-capacity => 'selected'}
@@ -43,12 +63,7 @@
 			{input spokenLanguage , class => 'select2 disabledFulltext', data-js-spoken-language => 'selected'}
 		</div>
 
-		<div id="getSearchCount" data-label="#label text" class="pull-left">
-			{if $isHome}
-			{else}
-				{$totalResultsCountLabel}
-			{/if}
-		</div>
+
 		{* {input submit,value => '#Search' , icon => 'entypo-search', class => "btn btn-white pull-right"}	 *}
 		{* <button class="btn btn-white pull-right"><i class="entypo-search"></i>{_o100092}</button> *}
 		<a href="#" id="searchControlLink" class="btn btn-white pull-right"><i class="entypo-search"></i>{_o100092}</a>

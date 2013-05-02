@@ -2,7 +2,10 @@
 
 <section id="pageContent"  class="rentalList contentContainer">
 
-	<h1>{$pageH1} <span class="counter">({_o100002, $totalResultsCount ,null,[count=>$totalResultsCount]})</span></h1>
+	<header class="filter">
+		<a href="{link Search:default }"><i class="icon-filter"></i>{$pageH1} <span class="counter">({_o100002, $totalResultsCount ,null,[count=>$totalResultsCount]})</span></a>
+	</header>
+
 
 	{foreach $rentals as $rentalId}
 
