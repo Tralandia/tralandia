@@ -274,11 +274,15 @@ input#searchTextField {
 	}
 	
 	#subnav ul li.search {
-		width: 84%;
+		width: 62%;
+	}
+
+	#subnav ul li a i {
+		line-height: 35px;
 	}
 	
 		#subnav ul li form input[type=text] {
-			width: 96%;
+			width: 100%;
 			border: 1px solid #ccc;
 			border-radius: 3px;
 			margin: 5px 3px;
@@ -371,13 +375,22 @@ body.favorites #subnav ul li.search {
 }
 
 	#footer ul {
-
+		margin: 10px 0;
 	}
 
-		#footer ul li {}
+		#footer ul li {
+			display: block;
+		}
 
 			#footer ul li a {
 				color: #698308;
+				display: block;
+				text-align: center;
+				background: #333;
+				color: #fff;
+				height: 30px;
+				line-height: 30px;
+
 			}
 
 /* ==========================================================================
