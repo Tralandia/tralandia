@@ -102,9 +102,5 @@
 })(jQuery);
 
 $(function(){
-
-
-
-
 	$('.searchForm').searchForm();
 })

@@ -15,12 +15,8 @@ $(function(){
 		console.log(result);
 	});
 
-
-	$('.addToFavorites').on('click',function(){
-	   $(this).toggleClass('active'); 
-	});
 	
-	
+	$('.addToFavorites').addToFavorites();
 	
 	$('.changeCountry').on('click',function(){
 		$('#country').focus();
@@ -42,6 +38,76 @@ $(function(){
 	$('.select2').selectPlaceholder();
 });
 
+
+(function($){
+
+	$.addToFavorites = function(el, options){
+
+		var base = this;
+		
+		base.$el = $(el);
+		base.el = el;
+
+		base.$el.data("addToFavorites", base);
+		base.favCookieName = 'favoritesList';
+		base.id = base.$el.attr('rel');
+
+		base.init = function()
+		{
+			base.bind();
+		};
+
+		base.bind = function(){
+
+			base.$el.on('click',function(){
+				
+				if(base.$el.hasClass('active')){
+					base.$el.removeClass('active');
+					base.removeFromFavorites();
+				} else {
+					base.addToFavorites();
+					base.$el.addClass('active');
+				}
+
+				// console.log(base.getCookieArray());
+
+				return false;
+
+			});
+		}
+
+		base.removeFromFavorites = function(){
+
+			var newCookies = [];
+
+			$.each(base.getCookieArray(), function(index, value) {
+				if(value != base.id){
+					newCookies.push(value);
+				}
+			});
+
+			$.cookie(base.favCookieName,newCookies.join());
+
+		}
+
+		base.addToFavorites = function(){
+			var exist = base.getCookieArray();
+				exist.push(base.id);
+				$.cookie(base.favCookieName,exist.join());
+
+		}
+
+		base.getCookieArray = function(){
+			return $.cookie(base.favCookieName).split(',');
+		}
+		  
+
+		base.init();
+	};
+
+	$.fn.addToFavorites = function(options){return this.each(function(){(new $.addToFavorites(this, options));});};
+		
+})(jQuery);
 
 
 
