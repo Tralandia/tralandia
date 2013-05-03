@@ -1,9 +1,6 @@
 parameters:
-	envOptions:
-		email: tralandia.david@gmail.com
 
 	database:
-		debugger: false
+		debugger: true
 
-	useTemplateCache: false
 

@@ -156,7 +156,32 @@ abstract class BasePresenter extends Presenter {
 		$this->template->staticPath = '/';
 		$this->template->setTranslator($this->getService('translator'));
 		$this->template->registerHelper('image', callback('Tools::helperImage'));
-		$this->template->useTemplateCache = $parameters['useTemplateCache'];
+
+		$language = 'language/' . $this->environment->getLanguage()->getIso();
+		$primaryLocation = 'primaryLocation/' . $this->environment->getPrimaryLocation()->getIso();
+		$templateCache = $parameters['templateCache'];
+		$templateCacheEnabled = $templateCache['enabled'];
+		unset($templateCache['enabled']);
+		foreach($templateCache as $optionName => $options) {
+			$propertyName = $optionName . 'CacheOptions';
+			$options['enabled'] = $templateCacheEnabled && $options['enabled'];
+			$options['key'] = str_replace(
+				['[name]', '[language]', '[primaryLocation]'],
+				[$optionName, $language, $primaryLocation],
+				$options['key']
+			);
+			if(is_array($options['tags'])) {
+				foreach($options['tags'] as $keyTag => $tag) {
+					$options['tags'][$keyTag] = str_replace(
+						['[name]', '[language]', '[primaryLocation]'],
+						[$optionName, $language, $primaryLocation],
+						$tag
+					);
+				}
+			}
+			$this->template->{$propertyName} = $options;
+		}
+
 		$this->template->loggedUser = $this->loggedUser;
 		$this->template->isMobile = $this->device->isMobile();
 	}

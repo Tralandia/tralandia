@@ -20,6 +20,7 @@
         "kdyby/events": "dev-master",
         "kdyby/nette-session-panel": "dev-master",
         "kdyby/forms-replicator": "@dev",
+        "kdyby/redis": "@dev",
         "hosiplan/nette-autowire-properties": "dev-master",
         "mobiledetect/mobiledetectlib": "dev-master",
         "texy/texy": "dev-release-2.x",

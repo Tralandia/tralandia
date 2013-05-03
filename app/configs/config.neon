@@ -51,11 +51,28 @@ parameters:
 		driver: pdo_mysql
 		debugger: false
 
-	useTemplateCache: FALSE
+	templateCache:
+		enabled: TRUE
+		searchBar:
+			enabled: TRUE
+			key: '[language]_[primaryLocation]'
+			expiration: '+1 month'
+			tags: ['[name]']
+		home:
+			enabled: TRUE
+			key: '[language]_[primaryLocation]'
+			expiration: 'tomorrow'
+			tags: ['[name]']
 
 	facebookPage: http://www.facebook.com/Tralandia
 	googlePlusProfile: https://plus.google.com/115691730730719504032/posts
 	twitterProfile: https://twitter.com/Tralandia
+
+redis:
+	storage: on
+	journal: on
+	database: 0
+	session: {database: 1}
 
 doctrine:
 	connections:
@@ -77,10 +94,11 @@ services:
 	rentalPricelistStorage: Extras\FileStorage(%wwwDir%%rentalPricelistDir%)
 	ticketMessageAttachmentStorage: Extras\FileStorage(%wwwDir%%ticketMessageAttachmentDir%)
 
-	cacheStorage:
-		class: Nette\Caching\Storages\MemcachedStorage('127.0.0.1', '11211', 'tralandia_')
+#	cacheStorage:
+#		class: Nette\Caching\Storages\MemcachedStorage('127.0.0.1', '11211', 'tralandia_')
 
 	# CACHE
+	templateCache: Nette\Caching\Cache(@cacheStorage, 'Nette.Templating.Cache')
 	aclCache: Nette\Caching\Cache(@cacheStorage, 'Acl')
 	routerCache: Nette\Caching\Cache(@cacheStorage, 'Router')
 	translatorCache: Nette\Caching\Cache(@cacheStorage, 'Translator')

@@ -11,7 +11,7 @@
 			{var $rental = $rentalId}
 			{var $rentalId = $rentalId->getId()}
 		{/if}
-		{cache 'rental-list-box-'.$rentalId, if => $useTemplateCache, expire => '+1 day'}
+		{cache 'rental-list-box-'.$rentalId, if => 0, expire => '+1 day'}
 
 		{var $rentalService = $findRental($rentalId); }
 		{var $rental = $rentalService->getEntity(); }
@@ -24,7 +24,7 @@
 
 		<article>
 			<a href="{link Rental:detail $rental}">
-				
+
 				{if $mainImage = $rental->getMainImage()}
 					<img src="{$basePath}{$mainImage|rentalImageSrc}"/>
 				{else}
@@ -46,14 +46,14 @@
 				<div class="price">{$rental->price}<span> {_o100004}</span></div>
 
 				<div class="capacity">
-					{$rental->maxCapacity} 
+					{$rental->maxCapacity}
 					<span>{_o490,null,[count=>$rental->maxCapacity]}</span>
 				</div>
 
 				<div class="clearfix"></div>
 
 			</a>
-		</article> 
+		</article>
 		{/cache}
 	{/foreach}
 
@@ -68,12 +68,12 @@
 	</li>
 	<li class="counter">
 		<span>Stranka 1 z 20</span>
-	</li>              
+	</li>
 	<li>
 		<a href="#">
 			<i class="icon-angle-right"></i>
 		</a>
-	</li>            
+	</li>
 </ul>
 
 

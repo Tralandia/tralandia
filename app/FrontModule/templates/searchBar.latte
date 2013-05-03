@@ -1,0 +1,8 @@
+{cache $searchBarCacheOptions['key'],
+	if => $searchBarCacheOptions['enabled'],
+	expire => $searchBarCacheOptions['expiration'],
+	tags => $searchBarCacheOptions['tags']}
+
+{control searchBar}
+
+{/cache}
