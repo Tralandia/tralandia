@@ -88,7 +88,6 @@ class PhraseContainer extends BaseContainer
 		}
 		$this->addSelect('changeToLanguage', 'changeToLanguage', $changeToLanguageList);
 
-		$this->addSubmit('save', 'Save');
 	}
 
 	/**

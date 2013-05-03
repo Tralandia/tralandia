@@ -1,15 +1,11 @@
 {block content}
 
 {includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
-{form phraseEditForm}
-	
-		<tr class="formHeading	">
-			<td colspan="3">{_o100096}</td>
-		</tr>
-
+{form phraseEditForm , class => 'phraseEditForm'}
 
 		{include #phrase, control => $form['phrase']}
 
+		{dump $form->getAllErrors()}
 
-{dump $form->getAllErrors()}
+		{include #submit, control => $form['save']}
 {/form}

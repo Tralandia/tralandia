@@ -33,6 +33,8 @@ class PhrasePresenter extends BasePresenter {
 		$form = $this->simpleFormFactory->create();
 
 		$form->addPhraseContainer('phrase', $this->loggedUser, $this->phrase);
+		
+		$form->addSubmit('save', 'o100151');
 
 		$form->onSuccess[] = callback($this, 'processPhraseEditForm');
 
