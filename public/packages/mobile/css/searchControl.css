@@ -30,7 +30,7 @@ height: 40px;
 }
 
 
-select , .inputfilterSearch i {
+select , .inputFilterSearch i {
 font-size: 1em;
 background: #fff;
 -webkit-appearance: none;
@@ -58,7 +58,7 @@ border-bottom-right-radius: 3px;
 	padding: 10px;
 }
 
-.inputfilterSearch {
+.inputFilterSearch {
 	clear: both;
 	height: 30px;
 	margin-bottom: 10px;
@@ -97,7 +97,7 @@ float: left;
 	float: left;
 }
 
-.inputfilterSearch i {
+.inputFilterSearch i {
 	background: #dadada;
 	float: left;
 	display: block;
