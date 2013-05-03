@@ -1,5 +1,9 @@
 {
-    "hash": "336476f95caefa0c01881dcd90baee3b",
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+    ],
+    "hash": "5250f40eac3bdbc30728a7de02b36731",
     "packages": [
         {
             "name": "hosiplan/nette-autowire-properties",
@@ -151,12 +155,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Kdyby/Replicator.git",
-                "reference": "040ac3c959473f2c78832bafc5475089751b44db"
+                "reference": "5dda68a37d33791a0682f8c48a125f439352e401"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kdyby/Replicator/zipball/040ac3c959473f2c78832bafc5475089751b44db",
-                "reference": "040ac3c959473f2c78832bafc5475089751b44db",
+                "url": "https://api.github.com/repos/Kdyby/Replicator/zipball/5dda68a37d33791a0682f8c48a125f439352e401",
+                "reference": "5dda68a37d33791a0682f8c48a125f439352e401",
                 "shasum": ""
             },
             "require": {
@@ -192,7 +196,7 @@
                 "nette",
                 "replicator"
             ],
-            "time": "2013-04-03 12:35:12"
+            "time": "2013-04-29 09:01:58"
         },
         {
             "name": "kdyby/nette-session-panel",
@@ -242,6 +246,61 @@
                 "session"
             ],
             "time": "2013-02-09 15:14:19"
+        },
+        {
+            "name": "kdyby/redis",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Kdyby/Redis.git",
+                "reference": "2b874b981b4ee2213fc90a7337565ab0cacec62f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Kdyby/Redis/zipball/2b874b981b4ee2213fc90a7337565ab0cacec62f",
+                "reference": "2b874b981b4ee2213fc90a7337565ab0cacec62f",
+                "shasum": ""
+            },
+            "require": {
+                "nette/nette": "@dev"
+            },
+            "require-dev": {
+                "nette/tester": "@dev"
+            },
+            "suggest": {
+                "ext-redis": "The php redis extension https://github.com/nicolasff/phpredis/ is required for connecting to redis server"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Kdyby\\Redis\\": "src/"
+                },
+                "classmap": [
+                    "src/Kdyby/Redis/exceptions.php"
+                ]
+            },
+            "notification-url": "http://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause",
+                "GPL-2.0",
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Filip Procházka",
+                    "homepage": "http://filip-prochazka.com"
+                }
+            ],
+            "description": "Redis storage for Nette Framework",
+            "homepage": "http://kdyby.org",
+            "keywords": [
+                "cache",
+                "client",
+                "kdyby",
+                "nette",
+                "redis"
+            ],
+            "time": "2013-04-29 09:23:40"
         },
         {
             "name": "mobiledetect/mobiledetectlib",
@@ -299,7 +358,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/nette/zipball/e1983bb1cb5820097456be28b202264953fadfed",
+                "url": "https://api.github.com/repos/nette/nette/zipball/7f98d090d707a8817775cd1e6d6823d04cad44b6",
                 "reference": "52143b225f1ae539b1d59a4bdc8a8af8d3a3a9bb",
                 "shasum": ""
             },
@@ -513,6 +572,7 @@
         "kdyby/events": 20,
         "kdyby/nette-session-panel": 20,
         "kdyby/forms-replicator": 20,
+        "kdyby/redis": 20,
         "hosiplan/nette-autowire-properties": 20,
         "mobiledetect/mobiledetectlib": 20,
         "texy/texy": 20,

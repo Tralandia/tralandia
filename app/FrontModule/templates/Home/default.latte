@@ -1,6 +1,9 @@
 {block content}
 
-
+{cache $homeCacheOptions['key'],
+	if => $homeCacheOptions['enabled'],
+	expire => $homeCacheOptions['expiration'],
+	tags => $homeCacheOptions['tags']}
 
 {* {include clickMap.latte} *}
 
@@ -45,3 +48,4 @@
 </div>
 
 	</div>
+{/cache}

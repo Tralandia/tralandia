@@ -2,7 +2,7 @@
 
 namespace Extras;
 
-use Nette\Caching;
+use Nette\Caching\Cache;
 use Nette\Utils\Arrays;
 use Nette\Utils\Strings;
 use Entity\Language;
@@ -30,7 +30,7 @@ class Translator implements \Nette\Localization\ITranslator {
 	protected $phraseRepositoryAccessor;
 
 
-	public function __construct(Language $language, $phraseRepositoryAccessor, Caching\Cache $translatorCache) {
+	public function __construct(Language $language, $phraseRepositoryAccessor, Cache $translatorCache) {
 		$this->language = $language;
 		$this->phraseRepositoryAccessor = $phraseRepositoryAccessor;
 		$this->cache = $translatorCache;
@@ -140,7 +140,9 @@ class Translator implements \Nette\Localization\ITranslator {
 			}
 
 			if(!$translation) $translation = '{?'.$translationKey.'?}';
-			$this->cache->save($translationKey, $translation);
+			$this->cache->save($translationKey, $translation, [
+				Cache::TAGS => ['translator', 'language/'.$this->language->getId()],
+			]);
 		}
 
 		return $translation;

@@ -12,11 +12,6 @@ require_once LIBS_DIR . '/Doctrine/Common/EventManager.php';
 require_once VENDOR_DIR . '/autoload.php';
 require_once LIBS_DIR . '/rado_functions.php';
 
-// Enable Nette\Debug for error visualisation & logging
-//Debugger::enable(Debugger::PRODUCTION);
-Debugger::enable();
-//Debugger::$strictMode = TRUE;
-
 $section = isset($_SERVER['APPENV']) ? $_SERVER['APPENV'] : NULL;
 
 // Configure application
@@ -25,6 +20,8 @@ $configurator->setTempDirectory(TEMP_DIR);
 $configurator->addParameters([
 	'centralLanguage' => CENTRAL_LANGUAGE,
 ]);
+
+//$configurator->setDebugMode(FALSE);
 $configurator->enableDebugger(ROOT_DIR . '/log');
 $robotLoader = $configurator->createRobotLoader();
 $robotLoader->addDirectory(APP_DIR)
@@ -37,6 +34,7 @@ require_once LIBS_DIR . '/tools.php';
 Extension::register($configurator);
 Extras\Config\PresenterExtension::register($configurator);
 Kdyby\Replicator\Container::register();
+Kdyby\Redis\DI\RedisExtension::register($configurator);
 
 $configurator->addConfig(APP_DIR . '/configs/config.neon', FALSE);
 if(!Debugger::$productionMode) {
