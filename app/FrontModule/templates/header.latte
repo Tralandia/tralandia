@@ -1,4 +1,8 @@
-{cache $homeCacheId, if => 0, expire => '+1 day'}
+{cache $headerCacheOptions['key'],
+	if => $headerCacheOptions['enabled'] && !$user->isLoggedIn(),
+	expire => $headerCacheOptions['expiration'],
+	tags => $headerCacheOptions['tags']}
+
 
 {control header}
 

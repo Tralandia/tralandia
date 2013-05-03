@@ -53,9 +53,36 @@ parameters:
 
 	templateCache:
 		enabled: TRUE
+		header:
+			enabled: TRUE
+			if: '[!userLoggedIn]'
+			key: '[language]_[primaryLocation]'
+			expiration: '+1 month'
+			tags: ['[name]']
+		footer:
+			enabled: TRUE
+			key: '[language]_[primaryLocation]'
+			expiration: '+1 month'
+			tags: ['[name]']
 		searchBar:
 			enabled: TRUE
 			key: '[language]_[primaryLocation]'
+			expiration: '+1 month'
+			tags: ['[name]']
+		searchLinks:
+			enabled: TRUE
+			if: '[!urlWithGet]'
+			key: '[url]'
+			expiration: 'tomorrow'
+			tags: ['[name]']
+		rentalBrick:
+			enabled: TRUE
+			key: '[language]_[rental]'
+			expiration: '+1 month'
+			tags: ['[name]']
+		rentalDetail:
+			enabled: TRUE
+			key: '[language]_[rental]'
 			expiration: '+1 month'
 			tags: ['[name]']
 		home:

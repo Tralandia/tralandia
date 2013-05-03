@@ -17,7 +17,16 @@
 							{var $rental = $rentalId}
 							{var $rentalId = $rentalId->getId()}
 						{/if}
-						{cache 'rental-list-box-'.$rentalId, if => 0, expire => '+1 day'}
+
+						{capture $rentalBrickCacheOptionsKey}
+							{$rentalBrickCacheOptions['key']|replace:'[rental]':'rental/'.$rentalId}
+						{/capture}
+
+						{cache $rentalBrickCacheOptionsKey,
+							if => $rentalBrickCacheOptions['enabled'],
+							expire => $rentalBrickCacheOptions['expiration'],
+							tags => $rentalBrickCacheOptions['tags']}
+
 
 						{var $rentalService = $findRental($rentalId); }
 						{var $rental = $rentalService->getEntity(); }

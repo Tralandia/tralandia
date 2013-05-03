@@ -17,14 +17,39 @@ class CachePresenter extends BasePresenter {
 		$this->invalidateCache('translatorCache', ['translator']);
 	}
 
+	public function actionInvalidateHeaderCache()
+	{
+		$this->invalidateCache('templateCache', ['header']);
+	}
+
+	public function actionInvalidateFooterCache()
+	{
+		$this->invalidateCache('templateCache', ['footer']);
+	}
+
 	public function actionInvalidateSearchBarCache()
 	{
 		$this->invalidateCache('templateCache', ['searchBar']);
 	}
 
+	public function actionInvalidateSearchLinksCache()
+	{
+		$this->invalidateCache('templateCache', ['searchLinks']);
+	}
+
 	public function actionInvalidateHomeCache()
 	{
 		$this->invalidateCache('templateCache', ['home']);
+	}
+
+	public function actionInvalidateRentalBrickCache()
+	{
+		$this->invalidateCache('templateCache', ['rentalBrick']);
+	}
+
+	public function actionInvalidateRentalDetailCache()
+	{
+		$this->invalidateCache('templateCache', ['rentalDetail']);
 	}
 
 	protected function invalidateCache($serviceName, $tags)

@@ -152,38 +152,56 @@ abstract class BasePresenter extends Presenter {
 	public function beforeRender() {
 		parent::beforeRender();
 
-		$parameters = $this->getContext()->getParameters();
 		$this->template->staticPath = '/';
 		$this->template->setTranslator($this->getService('translator'));
 		$this->template->registerHelper('image', callback('Tools::helperImage'));
+		$this->template->loggedUser = $this->loggedUser;
+		$this->template->isMobile = $this->device->isMobile();
+
+		$this->fillTemplateWithCacheOptions($this->template);
+	}
+
+	public function fillTemplateWithCacheOptions($template)
+	{
+		$parameters = $this->getContext()->getParameters();
 
 		$language = 'language/' . $this->environment->getLanguage()->getIso();
 		$primaryLocation = 'primaryLocation/' . $this->environment->getPrimaryLocation()->getIso();
+		$userLoggedIn = (integer) $this->getUser()->isLoggedIn();
+		$urlWithGet = (integer) count($this->getHttpRequest()->getQuery()) > 0;
+
 		$templateCache = $parameters['templateCache'];
 		$templateCacheEnabled = $templateCache['enabled'];
 		unset($templateCache['enabled']);
 		foreach($templateCache as $optionName => $options) {
+			$searchVariables = ['[name]', '[language]', '[primaryLocation]', '[url]'];
+			$replaceVariables = [$optionName, $language, $primaryLocation, $this->getHttpRequest()->getUrl()->getBaseUrl()];
+
 			$propertyName = $optionName . 'CacheOptions';
+
 			$options['enabled'] = $templateCacheEnabled && $options['enabled'];
-			$options['key'] = str_replace(
-				['[name]', '[language]', '[primaryLocation]'],
-				[$optionName, $language, $primaryLocation],
-				$options['key']
-			);
+			if(array_key_exists('if', $options)) {
+				$options['if'] = str_replace(
+					['[!userLoggedIn]', '[!urlWithGet]'],
+					[!$userLoggedIn, !$urlWithGet],
+					$options['if']
+				);
+				$options['enabled'] .= ' && (' . $options['if'] . ')';
+				unset($options['if']);
+			}
+
+			$options['key'] = str_replace($searchVariables, $replaceVariables, $options['key']);
+
 			if(is_array($options['tags'])) {
 				foreach($options['tags'] as $keyTag => $tag) {
-					$options['tags'][$keyTag] = str_replace(
-						['[name]', '[language]', '[primaryLocation]'],
-						[$optionName, $language, $primaryLocation],
-						$tag
-					);
+					$options['tags'][$keyTag] = str_replace($searchVariables, $replaceVariables, $tag);
 				}
 			}
-			$this->template->{$propertyName} = $options;
+
+			$template->{$propertyName} = $options;
+			//d($optionName, $options);
 		}
 
-		$this->template->loggedUser = $this->loggedUser;
-		$this->template->isMobile = $this->device->isMobile();
 	}
 
 	protected function createTemplate($class = NULL) {
