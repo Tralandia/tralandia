@@ -255,7 +255,7 @@ input#searchTextField {
 	height: 45px;
 	position: relative;
 	color: #333;
-	box-shadow: 0 8px 6px -6px rgb(179, 179, 179);
+	/*box-shadow: 0 8px 6px -6px rgb(179, 179, 179);*/
 	background-image: linear-gradient(bottom,#e6e6e6 0%,#ffffff 100%);
 	background-image: -o-linear-gradient(bottom,#e6e6e6 0%,#ffffff 100%);
 	background-image: -moz-linear-gradient(bottom,#e6e6e6 0%,#ffffff 100%);

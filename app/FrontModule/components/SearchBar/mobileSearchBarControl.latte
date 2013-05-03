@@ -26,7 +26,8 @@
 				data-js-location-slug => 'location-slug',
 				data-autocomplete-url => $autocompleteUrl,
 				data-format-input-too-short => $formatInputTooShort } *}
-				<input type="text" placeholder="Lokalita bude sa riesit az s vyhladavanim gps" />
+				<input type="hidden" name="gps" />
+				<input class="location" type="text" id="searchFormGeocomplete" placeholder="Lokalita bude sa riesit az s vyhladavanim gps" />
 		</div>
 		<div class="inputfilterSearch">
 			<i class="icon-home"></i>
@@ -35,21 +36,24 @@
 
 		<div class="inputfilterSearch">
 		<i class="icon-money22">$</i>
-			<select>				
-				<option>10 - 20 EUR</option>
-				<option>20 - 30 EUR</option>
-				<option>30 - 40 EUR</option>
-				<option>40 - 50 EUR</option>
-				<option>50 - 60 EUR</option>
+			<select class="none" name="priceRange">				
+				<option >#cena od do nemam preklad</option>
+				<option value="10-20">10 - 20 EUR</option>
+				<option value="20-30">20 - 30 EUR</option>
+				<option value="30-40">30 - 40 EUR</option>
+				<option value="40-50">40 - 50 EUR</option>
+				<option value="50-60">50 - 60 EUR</option>
+				<option value="60-70">60 - 70 EUR</option>
+				<option value="70-80">70 - 80 EUR</option>
+				<option value="80-90">80 - 90 EUR</option>
 			</select>
 		</div>
 
-{* 		<div class="inputfilterSearch">
-			<i class="icon-money22">$</i>{input priceFrom , class => 'select2 disabledFulltext sidebarPriceFrom', data-js-price-from => 'selected'}
-		</div>
-		<div class="inputfilterSearch">
-			<i class="icon-money22">$</i>{input priceTo , class => 'select2 disabledFulltext pull-right sidebarPriceTo', data-js-price-to => 'selected'}
-		</div> *}
+
+			{input priceFrom , class => 'priceRange select2 from', data-js-price-from => 'selected'}
+
+			{input priceTo , class => 'priceRange select2 to', data-js-price-to => 'selected'}
+
 		<div class="inputfilterSearch">
 			<i class="icon-user"></i>
 			{input capacity , class => 'select2 disabledFulltext', data-js-capacity => 'selected'}
