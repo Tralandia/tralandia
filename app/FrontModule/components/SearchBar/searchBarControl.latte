@@ -1,8 +1,15 @@
 {var $searchFormClass = 'searchForm'}
 {$jsVariables->for('form.' . $searchFormClass)}
 
+
+
 <div class="span3" role="sidebar" data-searchCount="{link getSearchCount!}" id="sidebar">
 <aside class="innerPadding baseRadius baseBorder innerPaddingLeft noTopMargin">
+
+	{cache $searchBarCacheOptions['key'],
+		if => $searchBarCacheOptions['enabled'],
+		expire => $searchBarCacheOptions['expiration'],
+		tags => $searchBarCacheOptions['tags']}
 
 	{form searchForm , class => $searchFormClass }
 		<strong>{_o100003}</strong>
@@ -53,6 +60,15 @@
 		<a href="#" id="searchControlLink" class="btn btn-white pull-right"><i class="entypo-search"></i>{_o100092}</a>
 	{/form}
 
+
+	{/cache}
+
+
+	{cache $searchLinksCacheOptions['key'],
+		if => $searchLinksCacheOptions['enabled'],
+		expire => $searchLinksCacheOptions['expiration'],
+		tags => $searchLinksCacheOptions['tags']}
+
 	{if isset($bottomLinks) && count($bottomLinks->links)}
 	<h4><i class="{$bottomLinks->iconClass}"></i>{_$bottomLinks->title}</h4>
 	<ul>
@@ -67,6 +83,6 @@
 	</ul>
 	{/if}
 
-
+	{/cache}
 	</aside>
 </div>

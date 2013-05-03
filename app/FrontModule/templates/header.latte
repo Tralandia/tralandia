@@ -1,0 +1,9 @@
+{cache $headerCacheOptions['key'],
+	if => $headerCacheOptions['enabled'] && !$user->isLoggedIn(),
+	expire => $headerCacheOptions['expiration'],
+	tags => $headerCacheOptions['tags']}
+
+
+{control header}
+
+{/cache}

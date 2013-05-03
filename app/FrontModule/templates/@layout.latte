@@ -8,31 +8,27 @@
 		<div class="row">
 
 
-			{cache $homeCacheId, if => $useTemplateCache, expire => '+1 day'}
-			{control header}
-			{/cache}
-			{* {include favorites.latte} *}
+			{include header.latte}
 			{include navigationBar.latte}
 			{control flashes}
 
-			{cache homeSearchBar, if => isset($isHome) && $useTemplateCache, expire => '+1 day'}
-				{if $showSearchBar}
-					{control searchBar}
-				{elseif $isWorld}
-					{control rootCountries}
-				{/if}
-			{/cache}
+			{if $showSearchBar}
+				{control searchBar}
+			{elseif $isWorld}
+				{control rootCountries}
+			{/if}
+
 			<div class="span9">
 				<div class="innerPadding baseRadius marginBottom baseBorder innerPaddingRitgh overflow noTopMargin">
 					<div id="content" class="noPadding">
-
 						{include #content}
 					</div>
 				</div>
 			</div>
+
 			{*{control footer}*}
 			{if isset($isHome)}
-				{cache $footerCountriesCacheId, if => $useTemplateCache, expire => '+1 day'}
+				{cache $footerCountriesCacheId, expire => '+1 day'}
 					{*{control countriesFooter}*}
 				{/cache}
 			{/if}

@@ -110,6 +110,8 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		$template = $this->template;
 		$presenter = $this->getPresenter();
 
+		$presenter->fillTemplateWithCacheOptions($template);
+
 		$template->isHome = ($presenter->name == 'Front:Home' ? TRUE : FALSE);
 		$template->hasLocation = ($this->location ? TRUE : FALSE);
 
