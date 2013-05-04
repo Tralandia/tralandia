@@ -1,0 +1,53 @@
+#!/bin/bash
+
+WORKING_DIR=`pwd`
+
+rm -rf $WORKING_DIR/temp
+mkdir -m 777 $WORKING_DIR/temp
+chmod -R 777 $WORKING_DIR/app/models/Entity
+
+if [ ! -d $WORKING_DIR/temp/sessions ]; then
+	mkdir -m 777 $WORKING_DIR/temp/sessions
+else
+	chmod 777 $WORKING_DIR/temp/sessions
+fi
+
+if [ ! -d $WORKING_DIR/temp/proxies ]; then
+	mkdir -m 777 $WORKING_DIR/temp/proxies
+else
+	chmod 777 $WORKING_DIR/temp/proxies
+fi
+
+if [ ! -d $WORKING_DIR/temp/presenters ]; then
+	mkdir -m 777 $WORKING_DIR/temp/presenters
+else
+	chmod 777 $WORKING_DIR/temp/presenters
+fi
+
+if [ ! -d $WORKING_DIR/log ]; then
+	mkdir -m 777 $WORKING_DIR/log
+else
+	chmod 777 $WORKING_DIR/log
+fi
+
+if [ ! -d $WORKING_DIR/public/webtemp ]; then
+	mkdir -m 777 $WORKING_DIR/public/webtemp
+else
+	chmod 777 $WORKING_DIR/public/webtemp
+	rm -rf $WORKING_DIR/public/webtemp/*
+fi
+
+if [ ! -d $WORKING_DIR/app/locale ]; then
+	mkdir -m 777 $WORKING_DIR/app/locale
+else
+	chmod -R 777 $WORKING_DIR/app/locale
+fi
+
+if [ ! -d $WORKING_DIR/public/storage ]; then
+	mkdir -m 777 $WORKING_DIR/public/storage
+else
+	chmod -R 777 $WORKING_DIR/public/storage
+fi
+
+rm -rf $WORKING_DIR/log/*
+php -f $WORKING_DIR/public/index.php orm:generate-proxies
