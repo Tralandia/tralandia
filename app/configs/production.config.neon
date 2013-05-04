@@ -11,3 +11,18 @@ parameters:
 		charset: utf8
 		driver: pdo_mysql
 		debugger: false
+
+extensions:
+	debugger.session: Kdyby\Diagnostics\SessionPanel\SessionPanelExtension
+
+services:
+	debugger.session.panel:
+		setup:
+			- hideSection('Nette.Http.UserStorage/')
+			- hideSection('Nette.Application/requests')
+			- hideSection('Nette.Forms.Form/CSRF')
+			- hideSection('TwiGrid\DataGrid-dataGrid')
+			- hideSection('DumpMailerStorage')
+
+	nette.mailer:
+		class: JanDrabek\MailPanel\SessionDumpMailer
