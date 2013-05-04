@@ -38,6 +38,8 @@ Kdyby\Redis\DI\RedisExtension::register($configurator);
 
 $configurator->addConfig(APP_DIR . '/configs/config.neon', FALSE);
 if(!Debugger::$productionMode) {
+	$configurator->addConfig(APP_DIR . '/configs/production.config.neon', FALSE);
+} else {
 	$configurator->addConfig(APP_DIR . '/configs/local.config.neon', FALSE);
 }
 
