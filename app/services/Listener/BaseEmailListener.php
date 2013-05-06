@@ -53,7 +53,7 @@ abstract class BaseEmailListener extends Nette\Object implements \Kdyby\Events\S
 	 */
 	protected function getTemplate($slug)
 	{
-		return $this->em->getRepository('Entity\Email\Template')->findOneByOldId($slug);
+		return $this->em->getRepository('Entity\Email\Template')->findOneBySlug($slug);
 	}
 
 	/**

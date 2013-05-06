@@ -31,7 +31,8 @@ class ForgotPasswordForm extends \BaseModule\Forms\BaseForm {
 		$this->addSubmit('submit', 'o100141');
 		$this->addButton('cancel', '#Cancel');
 
-		$this->onSuccess[] = callback($this, 'onSuccess');
+		$this->onSuccess[] = callback($this, 'process');
+		$this->onValidate[] = callback($this, 'validation');
 	}
 
 	public function setDefaultsValues()
@@ -39,18 +40,25 @@ class ForgotPasswordForm extends \BaseModule\Forms\BaseForm {
 
 	}
 
-	/**
-	 * @param ForgotPasswordForm $form
-	 */
-	public function onSuccess(ForgotPasswordForm $form)
+	public function validation(ForgotPasswordForm $form)
 	{
 		$values = $form->getValues();
-		if($user = $this->userRepositoryAccessor->get()->findOneByLogin($values->email)) {
-			$this->onAfterProcess($user);
-		} else {
+		if(!$this['email']->hasErrors() && !$user = $this->userRepositoryAccessor->get()->findOneByLogin($values->email)) {
 			$this['email']->addError('#zly email');
 		}
 	}
+
+
+	/**
+	 * @param ForgotPasswordForm $form
+	 */
+	public function process(ForgotPasswordForm $form)
+	{
+		$values = $form->getValues();
+		$user = $this->userRepositoryAccessor->get()->findOneByLogin($values->email);
+		$this->onAfterProcess($user);
+	}
+
 
 }
 
