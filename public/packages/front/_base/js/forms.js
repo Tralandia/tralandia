@@ -49,8 +49,52 @@
 })(jQuery);
 
 
+// form invalid scroll
+(function($){
+	$.invalidScroll = function(el, options){
 
+		var base = this;
 
+		base.$el = $(el);
+		base.el = el;
+
+		base.$el.data("invalidScroll", base);
+		
+		base.init = function(){
+			base.findInvalidInput();
+		};
+		
+		base.findInvalidInput = function(){
+			
+				var invalid = base.$el.find('.invalid:first');
+
+				if(invalid.length > 0){
+
+					var invalidInput = invalid.find('input,textarea,select,checkbox');
+
+					var invalidGenerateId = 'formInfalidScroll-'+invalidInput.attr('id');
+
+						invalid.attr('id',invalidGenerateId);
+
+					$.scrollTo('#'+invalidGenerateId,1200);
+					return false;
+				
+				}	
+
+		}
+
+		base.init();
+	};
+	
+
+	
+	$.fn.invalidScroll = function(options){
+		return this.each(function(){
+			(new $.invalidScroll(this, options));
+		});
+	};
+	
+})(jQuery);
 
 
 // small price phrase form
@@ -994,4 +1038,5 @@ function createNewLineInPriceList(){
 
 $(function(){
 	$('.rentalPriceUpload').rentalPriceUpload();
+	$('form').invalidScroll();
 });

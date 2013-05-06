@@ -1,7 +1,9 @@
 
 <table class="formTable innerPadding">
 {includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
-{form contactForm, class => 'ajax'}
+
+{form contactForm , class => 'ajax'}
+
 	{ifset $form['rental']}
 		{include #select, control => $form['rental']}
 	{/ifset}
