@@ -71,7 +71,7 @@
 
 	{var $bottomLinks = $bottomLinksCallback()}
 	{if isset($bottomLinks) && count($bottomLinks->links)}
-	<h4><i class="{$bottomLinks->iconClass}"></i>{_$bottomLinks->title}</h4>
+	<h4><i class="{$bottomLinks->iconClass}"></i>{_$bottomLinks->title} {$hhhh}</h4>
 	<ul>
 		<li n:foreach="$bottomLinks->links as $value">
 			<a href="{plink RentalList:, $bottomLinks->linkArgument => $value->entity}">

@@ -94,7 +94,7 @@ parameters:
 			tags: ['[name]']
 		registrationForm:
 			enabled: TRUE
-			if: '[formSubmitted]'
+			#if: '[formSubmitted]' nesa da to evelvovat
 			key: '[language]_[primaryLocation]'
 			expiration: '+1 month'
 			tags: ['[name]']
