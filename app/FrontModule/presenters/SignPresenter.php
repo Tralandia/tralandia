@@ -50,6 +50,10 @@ class SignPresenter extends BasePresenter
 	protected function createComponentForgotPasswordForm()
 	{
 		$comp = $this->forgotPasswordFormFactory->create();
+		$comp->onSuccess[] = function ($form) {
+			$form->presenter->redirect('this');
+		};
+
 
 		return $comp;
 	}
