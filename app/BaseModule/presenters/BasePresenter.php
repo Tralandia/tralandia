@@ -173,6 +173,8 @@ abstract class BasePresenter extends Presenter {
 		$templateCache = $parameters['templateCache'];
 		$templateCacheEnabled = $templateCache['enabled'];
 		unset($templateCache['enabled']);
+//		$url = $this->getHttpRequest()->getUrl();
+//		$path = $url->getBasePath();
 		foreach($templateCache as $optionName => $options) {
 			$searchVariables = ['[name]', '[language]', '[primaryLocation]', '[url]'];
 			$replaceVariables = [$optionName, $language, $primaryLocation, $this->getHttpRequest()->getUrl()->getBaseUrl()];
@@ -199,7 +201,7 @@ abstract class BasePresenter extends Presenter {
 			}
 
 			$template->{$propertyName} = $options;
-			//d($optionName, $options);
+			d($optionName, $options);
 		}
 
 	}
