@@ -42,6 +42,11 @@ class CachePresenter extends BasePresenter {
 		$this->invalidateCache('templateCache', ['home']);
 	}
 
+	public function actionInvalidateRegistrationFormCache()
+	{
+		$this->invalidateCache('templateCache', ['registrationForm']);
+	}
+
 	public function actionInvalidateRentalBrickCache()
 	{
 		$this->invalidateCache('templateCache', ['rentalBrick']);
