@@ -152,7 +152,9 @@ abstract class BasePresenter extends Presenter {
 	public function beforeRender() {
 		parent::beforeRender();
 
-		$this->template->staticPath = '/';
+		$parameters = $this->getContext()->getParameters();
+		$this->template->projectEmail = $parameters['projectEmail'];
+		$this->template->staticPath = '/'; #@todo toto tu je na co ?
 		$this->template->setTranslator($this->getService('translator'));
 		$this->template->registerHelper('image', callback('Tools::helperImage'));
 		$this->template->loggedUser = $this->loggedUser;
