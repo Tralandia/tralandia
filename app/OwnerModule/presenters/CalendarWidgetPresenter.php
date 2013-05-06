@@ -9,16 +9,6 @@ use Nette\Utils\Html;
 class CalendarWidgetPresenter extends BasePresenter {
 
 	/**
-	 * @var \Extras\Models\Repository\RepositoryAccessor
-	 */
-	public $rentalRepositoryAccessor;
-
-	/**
-	 * @var \Extras\Models\Repository\RepositoryAccessor
-	 */
-	public $languageRepositoryAccessor;
-
-	/**
 	 * @autowire
 	 * @var \Extras\Translator
 	 */
@@ -30,10 +20,6 @@ class CalendarWidgetPresenter extends BasePresenter {
 	 */
 	protected $collator;
 
-	public function injectBaseRepositories(\Nette\DI\Container $dic) {
-		$this->rentalRepositoryAccessor = $dic->rentalRepositoryAccessor;
-		$this->languageRepositoryAccessor = $dic->languageRepositoryAccessor;
-	}
 	public function actionDefault($id)
 	{
 		$this->template->environment = $this->environment;
