@@ -46,13 +46,18 @@
 }
 
 
-.reservationform {
+#reservationForm {
 	padding: 10px;
 	background: rgb(245, 245, 245);
 	border: 1px solid rgb(190, 190, 190);
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;    
+}
+
+#reservationForm h3 {
+	margin: 0;
+	margin-bottom: 10px;
 }
 
 .reservationform .btn i.entypo-send {
@@ -464,3 +469,5 @@ line-height: 50px;
 	border-bottom: 1px solid rgb(255, 122, 0);
 	font-size: 1em;
 }
+
+

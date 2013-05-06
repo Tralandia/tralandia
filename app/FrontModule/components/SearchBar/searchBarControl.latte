@@ -13,11 +13,11 @@
 
 	{form searchForm , class => $searchFormClass }
 		<strong>{_o100003}</strong>
-		<div class="inputfilterSearch selected">
+		<div class="inputFilterSearch selected">
 			<i class="icon-flag"></i>
 			{input country , class => 'select2 selectRedirect disabledFulltext path sidebarCountry', data-js-country => 'selected'}
 		</div>
-		<div class="inputfilterSearch">
+		<div class="inputFilterSearch">
 			<i class="icon-map-marker"></i>
 			{input location ,
 				class => 'path sidebarLocation',
@@ -26,25 +26,25 @@
 				data-autocomplete-url => $autocompleteUrl,
 				data-format-input-too-short => $formatInputTooShort }
 		</div>
-		<div class="inputfilterSearch">
+		<div class="inputFilterSearch">
 			<i class="icon-home"></i>
 			{input rentalType , class => 'select2 path disabledFulltext sidebarRentalType', data-js-rental-type => 'selected'}
 		</div>
-		<div class="inputfilterSearch price">
+		<div class="inputFilterSearch price">
 			<i class="icon-money22">$</i>{input priceFrom , class => 'select2 disabledFulltext sidebarPriceFrom', data-js-price-from => 'selected'}
 		</div>
-		<div class="inputfilterSearch price pull-right">
+		<div class="inputFilterSearch price pull-right">
 			<i class="icon-money22">$</i>{input priceTo , class => 'select2 disabledFulltext pull-right sidebarPriceTo', data-js-price-to => 'selected'}
 		</div>
-		<div class="inputfilterSearch">
+		<div class="inputFilterSearch">
 			<i class="icon-user"></i>
 			{input capacity , class => 'select2 disabledFulltext', data-js-capacity => 'selected'}
 		</div>
-		<div class="inputfilterSearch">
+		<div class="inputFilterSearch">
 			<i class="icon-food"></i>
 			{input board , class => 'select2 disabledFulltext', data-js-board => 'selected'}
 		</div>
-		<div class="inputfilterSearch">
+		<div class="inputFilterSearch">
 			<i class="icon-globe"></i>
 			{input spokenLanguage , class => 'select2 disabledFulltext', data-js-spoken-language => 'selected'}
 		</div>
