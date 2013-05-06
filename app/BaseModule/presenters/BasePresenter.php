@@ -169,17 +169,17 @@ abstract class BasePresenter extends Presenter {
 
 		$language = 'language/' . $this->environment->getLanguage()->getIso();
 		$primaryLocation = 'primaryLocation/' . $this->environment->getPrimaryLocation()->getIso();
-		$userLoggedIn = (integer) $this->getUser()->isLoggedIn();
-		$urlWithGet = (integer) count($this->getHttpRequest()->getQuery()) > 0;
+		$userLoggedIn = $this->getUser()->isLoggedIn();
+		$urlWithGet = count($this->getHttpRequest()->getQuery()) > 0;
 
 		$templateCache = $parameters['templateCache'];
 		$templateCacheEnabled = $templateCache['enabled'];
 		unset($templateCache['enabled']);
-//		$url = $this->getHttpRequest()->getUrl();
-//		$path = $url->getBasePath();
+		$url = $this->getHttpRequest()->getUrl();
+		$url = $url->getHostUrl() . $url->getPath();
 		foreach($templateCache as $optionName => $options) {
 			$searchVariables = ['[name]', '[language]', '[primaryLocation]', '[url]'];
-			$replaceVariables = [$optionName, $language, $primaryLocation, $this->getHttpRequest()->getUrl()->getBaseUrl()];
+			$replaceVariables = [$optionName, $language, $primaryLocation, $url];
 
 			$propertyName = $optionName . 'CacheOptions';
 
@@ -187,7 +187,7 @@ abstract class BasePresenter extends Presenter {
 			if(array_key_exists('if', $options)) {
 				$options['if'] = str_replace(
 					['[!userLoggedIn]', '[!urlWithGet]'],
-					[!$userLoggedIn, !$urlWithGet],
+					[$userLoggedIn ? 0 : 1, $urlWithGet ? 0 : 1],
 					$options['if']
 				);
 				$options['enabled'] .= ' && (' . $options['if'] . ')';
@@ -202,8 +202,10 @@ abstract class BasePresenter extends Presenter {
 				}
 			}
 
+			eval("\$options['enabled'] = {$options['enabled']};");
+
 			$template->{$propertyName} = $options;
-			// d($optionName, $options);
+			//d($optionName, $options);
 		}
 
 	}

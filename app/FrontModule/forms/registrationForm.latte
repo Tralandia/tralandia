@@ -1,14 +1,9 @@
 {includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
 
-{capture $registrationFormCacheOptionEnabled}
-	{$registrationFormCacheOptions['enabled']|replace:'[formSubmitted]':' && '.$registrationFormSubmitted}
-{/capture}
-
-
 {cache $registrationFormCacheOptions['key'],
-if => $registrationFormCacheOptionEnabled,
-expire => $registrationFormCacheOptions['expiration'],
-tags => $registrationFormCacheOptions['tags']}
+	if => $registrationFormCacheOptions['enabled'] && $registrationFormSubmitted,
+	expire => $registrationFormCacheOptions['expiration'],
+	tags => $registrationFormCacheOptions['tags']}
 
 
 {form registrationForm}
