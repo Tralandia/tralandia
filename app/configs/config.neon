@@ -22,7 +22,7 @@ nette:
 		frames:
 
 extensions:
-	events: Kdyby\Events\DI\EventsExtension
+	#events: Kdyby\Events\DI\EventsExtension
 
 
 parameters:
