@@ -1,6 +1,6 @@
 parameters:
 
 	database:
-		debugger: true
+		#debugger: true
 
 
