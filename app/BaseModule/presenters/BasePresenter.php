@@ -201,7 +201,7 @@ abstract class BasePresenter extends Presenter {
 			}
 
 			$template->{$propertyName} = $options;
-			d($optionName, $options);
+			// d($optionName, $options);
 		}
 
 	}
