@@ -1,7 +1,7 @@
 
 <table class="formTable innerPadding">
 {includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
-{form contactForm}
+{form contactForm, class => 'ajax'}
 	{ifset $form['rental']}
 		{include #select, control => $form['rental']}
 	{/ifset}
@@ -11,11 +11,6 @@
 {* 	{include #submit, control => $form['submit'] , class => 'btn-green'}
 	{include #button, control => $form['cancel'] , class => 'btn-green cancelContactForm'} *}
 
-    <tr>
-        <td></td>
-        <td><button class="btn btn-orange"><i class="entypo-send"></i> #submit</button><button class="btn btn-cancel cancelContactForm">#cancel</button></td>
-        <td></td>
-    </tr>
-
+    {include #submit, control => $form['submit']}
 {/form}
 </table>
