@@ -90,6 +90,12 @@ parameters:
 			key: '[language]_[primaryLocation]'
 			expiration: 'tomorrow'
 			tags: ['[name]']
+		registrationForm:
+			enabled: TRUE
+			if: '[formSubmitted]'
+			key: '[language]_[primaryLocation]'
+			expiration: '+1 month'
+			tags: ['[name]']
 
 	facebookPage: http://www.facebook.com/Tralandia
 	googlePlusProfile: https://plus.google.com/115691730730719504032/posts
