@@ -1,7 +1,6 @@
 
 {block content}
-
-{var $currentIso = $environment->getPrimaryLocation()->getIso()}
+{var $currentLanguageId = $environment->getPrimaryLocation()->defaultLanguage->id}
 <h1 class="marginLeft pull-left">Calendar widget</h1>
 
 {if count($rentals)>1}
@@ -33,9 +32,9 @@
 			</select>
 		</div>
 
-		<div class="controls">		
-			<select name="iso" class="select2">
-				<option n:foreach="$languages as $iso => $languageName" n:attr="selected => ($iso==$currentIso ? 'selected')" value="{$iso}">{$languageName}</option>
+		<div class="controls">
+			<select name="language" class="select2">
+				<option n:foreach="$languages as $id => $languageName" n:attr="selected => ($id==$currentLanguageId ? 'selected')" value="{$id}">{dump $id}{dump $currentLanguageId}{$languageName}</option>
 			</select>
 		</div>
 	</div>

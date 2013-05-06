@@ -47,13 +47,13 @@
 				var data = {
 					rows: $self.find('[name=rows]').val(),
 					columns: $self.find('[name=columns]').val(),
-					language: $self.find('[name=iso]').val(),
+					language: $self.find('[name=language]').val(),
 					id: $form.attr('data-id')
 				};
 
 				// console.log(data);
 
-				if(data.columns > 0 & data.rows > 0 & data.iso != 0){
+				if(data.columns > 0 & data.rows > 0 & data.language != 0){
 
 					url = linkTemplate
 						.replace('__rental__', data.id)
@@ -62,7 +62,6 @@
 						.replace('__rows__', data.rows);
 
 					$.get(url, function(response) {
-						console.log(response);
 						$viewer.html(response.code);
 						$outputUser.val(response.code);
 					});
@@ -71,7 +70,7 @@
 					
 			});
 			
-			$self.find('select[name=iso]').trigger('change');
+			$self.find('select[name=language]').trigger('change');
 
 		});
 	};
@@ -84,7 +83,6 @@ $(document).ready(function(){
 
 	$("#rentalSelect").on('change', function() {
 		redirect = $(this).find(":selected").attr('redirect');
-		console.log(redirect);
 		if (redirect) {
 			window.location.href = redirect;
 		}
