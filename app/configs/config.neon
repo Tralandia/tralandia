@@ -352,10 +352,6 @@ factories:
 		parameters: [Entity\Location\Location location]
 		implement: FrontModule\Components\Footer\IFooterControlFactory
 
-	countriesFooterControlFactory:
-		class: FrontModule\Components\Footer\CountriesFooterControl
-		implement: FrontModule\Components\Footer\ICountriesFooterControlFactory
-
 	navigationControlFactory:
 		class: AdminModule\Components\NavigationControl(%user%)
 		parameters: [Nette\Security\User user]

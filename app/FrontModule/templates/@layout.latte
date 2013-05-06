@@ -25,13 +25,6 @@
 					</div>
 				</div>
 			</div>
-
-			{*{control footer}*}
-			{if isset($isHome)}
-				{cache $footerCountriesCacheId, expire => '+1 day'}
-					{*{control countriesFooter}*}
-				{/cache}
-			{/if}
 		</div>
 	</div>
 
