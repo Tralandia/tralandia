@@ -214,18 +214,11 @@ $(document).ready(function(){
 
 	$('.pinterestShare').click(function(){
 
+		Socialite.load($(this)[0]);
+
 		if(!$(this).hasClass('opened')){
-			$(this).find('.content img').attr('src','//assets.pinterest.com/images/pidgets/pin_it_button.png');
-
-			var attr = $('body').attr('data-pinterest-init-js');
-
-			removejscssfile('http://assets.pinterest.com/js/pinit.js','js');
-			addScript('http://assets.pinterest.com/js/pinit.js');
-
-
-			var html = $(this).find('.content').html();
-				$(this).html(html);
-				$(this).addClass('opened');
+			$(this).addClass('opened');
+			$(this).find('i').remove();
 			return false;			
 		}
 
