@@ -97,6 +97,10 @@
 .filter {
 font-size: 1em;
 height: 40px;
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+color: #fff;
 line-height: 40px;
 font-weight: normal;
 margin: 0;
