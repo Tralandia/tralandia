@@ -233,10 +233,10 @@ App.prototype.initMapsObjectDetail = function(){
 App.prototype.loadContactForm = function(){
 	
 	// $('#contactFormCover').removeClass('hide');
-	$('#contactFormCover').removeClass('hide');
-	$.scrollTo('#contactFormCover',800);
+	// $('#contactFormCover').removeClass('hide');
+	// $.scrollTo('#contactFormCover',800);
 
-	return false;
+	// return false;
 }
 
 App.prototype.cancelContactForm = function(){
