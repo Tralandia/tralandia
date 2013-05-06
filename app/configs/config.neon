@@ -310,10 +310,10 @@ factories:
 		parameters: [Entity\Rental\Rental rental]
 		implement: FrontModule\Forms\Rental\IReservationFormFactory
 
-	contactFormFactory:
-		class: FrontModule\Forms\ContactForm(%user%, %language%, @ticketRepositoryAccessor::get())
-		parameters: [\Entity\User\User user = NULL, \Entity\Language language = NULL]
-		implement: FrontModule\Forms\IContactFormFactory
+#	contactFormFactory:
+#		class: FrontModule\Forms\ContactForm(%user%, %language%, @ticketRepositoryAccessor::get())
+#		parameters: [\Entity\User\User user = NULL, \Entity\Language language = NULL]
+#		implement: FrontModule\Forms\IContactFormFactory
 
 	ticketFormFactory:
 		class: FrontModule\Forms\TicketForm(%user%, %ticket%, @ticketMessageRepositoryAccessor::get(),
