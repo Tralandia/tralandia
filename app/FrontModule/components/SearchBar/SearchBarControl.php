@@ -90,12 +90,14 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 	 */
 	protected $searchFormFactory;
 
+
 	/**
 	 * @param \Service\Rental\RentalSearchService $search
 	 * @param \Environment\Environment $environment
 	 * @param \Doctrine\ORM\EntityManager $em
 	 * @param ISearchFormFactory $searchFormFactory
 	 * @param \SearchGenerator\OptionGenerator $searchOptionGenerator
+	 * @param \Device $device
 	 */
 	public function __construct(RentalSearchService $search,Environment $environment ,EntityManager $em,
 								ISearchFormFactory $searchFormFactory, OptionGenerator $searchOptionGenerator, \Device $device)
@@ -176,14 +178,13 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 		$template->totalResultsCountLabel = $presenter->translate('o100002', $count, NULL, ['count' => $count]);
 		$template->autocompleteUrl = $presenter->link(':Front:Rental:locationSuggestion', ['page' => NULL]);
 		$template->formatInputTooShort = $presenter->translate('o100142');
+		$template->bottomLinksCallback = $this->directLinks;
 
 		$template->render();
 	}
 
 	public function directLinks()
 	{
-		$template = $this->template;
-
 		$bottomLinks = [];
 		$links = [];
 		if(!$this->location && !$this->getPresenter()->isLinkCurrent(':Front:Destination:')) {
@@ -244,7 +245,7 @@ class SearchBarControl extends \BaseModule\Components\BaseControl {
 
 		$bottomLinks['links'] = $links;
 
-		$template->bottomLinks = ArrayHash::from($bottomLinks);
+		return ArrayHash::from($bottomLinks);
 	}
 
 	public function handleGetSearchCount()

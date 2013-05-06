@@ -6,23 +6,13 @@ parameters:
 	database:
 		user: tralandia
 		password: tralandia
-		host: 192.168.4.1
+		host: 192.168.4.13
 		dbname: tralandia
 		charset: utf8
 		driver: pdo_mysql
 		debugger: false
 
-extensions:
-	debugger.session: Kdyby\Diagnostics\SessionPanel\SessionPanelExtension
 
 services:
-	debugger.session.panel:
-		setup:
-			- hideSection('Nette.Http.UserStorage/')
-			- hideSection('Nette.Application/requests')
-			- hideSection('Nette.Forms.Form/CSRF')
-			- hideSection('TwiGrid\DataGrid-dataGrid')
-			- hideSection('DumpMailerStorage')
-
 	nette.mailer:
 		class: JanDrabek\MailPanel\SessionDumpMailer
