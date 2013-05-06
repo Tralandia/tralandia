@@ -34,6 +34,12 @@ class RootHomePresenter extends BasePresenter {
 	}
 
 	public function renderDefault() {
+
+		if($this->device->isMobile()){
+			$this->setView('mobileDefault');
+			$this->setLayout('layoutMobile');
+		}
+
 		$featuredIds = $this->rentalRepositoryAccessor->get()->getFeaturedRentals(135);
 
 		$rentals = array();

@@ -26,60 +26,21 @@
 		<link rel="stylesheet" href="/packages/mobile/css/pagination.css">
 		<link rel="stylesheet" href="/packages/mobile/css/list.css">
 		<link rel="stylesheet" href="/packages/mobile/css/home.css">
+		<link rel="stylesheet" href="/packages/mobile/css/searchControl.css">
 
 	</head>
-	<body class="list">
-{* 
-			{cache $homeCacheId, if => $useTemplateCache, expire => '+1 day'}
-			{control header}
-			{/cache} *}
-
-        <header id="pageHeader">
-
-            <a class="logo" href="#"></a>
-            <h1>Tralandia.sk <span>Ubytovanie na Slovensku</span></h1>
-
-            <div class="clearfix"></div>
-        </header> 
-        <div id="subnavPlaceholder" class="hide"></div>
-        <nav id="subnav">
-            <ul>
-                <li class="search">
-                    <form>
-                        <input id="geocomplete" type="text" placeholder="#Search city, location"/>
-                    </form>
-                </li>                  
-                <li class="pull-right">
-                    <button id="getMyLocation" class="btn-flat color-green"><i class="icon-map-marker"></i></button>
-                </li>                  
-                <li class="pull-right">
-                    <a href="{plink :Front:RentalList:redirectToFavorites}"><i class="icon-heart"></i></a>
-                </li>                                
-            </ul>
-        </nav> 
-
+	<body class="searchControl">
 
 		{include #content}
 
-		<div id="footer">
-			<ul>
-				{if $isMobile}
-					<li class="siteVersion"><a href="{plink this, \Routers\FrontRoute::DEVICE => \Device::DESKTOP}">#Desktopova verzia</a></li>
-				{else}
-					<li class="siteVersion"><a href="{plink this, \Routers\FrontRoute::DEVICE => \Device::MOBILE}">#Mobilna verzia</a></li>
-				{/if}	
-			</ul>
-		</div>
-
-
 		<script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
-		<script src="/packages/jqueryCookie/lib/jquery.cookie.js"></script>
 
 		<script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places"></script>
 
 		<script src="/packages/mobile/js/vendor/jquery.geocomplete.min.js"></script>
 		
 		<script src="/packages/mobile/js/main.js"></script> 
+		<script src="/packages/mobile/js/searchForm.js"></script> 
 		
 
 	</body>
