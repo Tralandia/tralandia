@@ -69,6 +69,7 @@
 		expire => $searchLinksCacheOptions['expiration'],
 		tags => $searchLinksCacheOptions['tags']}
 
+	{var $bottomLinks = $bottomLinksCallback()}
 	{if isset($bottomLinks) && count($bottomLinks->links)}
 	<h4><i class="{$bottomLinks->iconClass}"></i>{_$bottomLinks->title}</h4>
 	<ul>
