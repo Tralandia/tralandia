@@ -27,6 +27,7 @@ class RegistrationPresenter extends BasePresenter
 	public function actionDefault()
 	{
 		$this->checkPermission($this->getName(), $this->getAction());
+		$this->template->registrationFormSubmitted = $this->request->isPost();
 	}
 
 

@@ -225,7 +225,7 @@ abstract class BasePresenter extends Presenter {
 			$message = call_user_func_array([$this, 'translate'], $message);
 		}
 		parent::flashMessage($message, $type);
-		$this->getComponent('flashes')->invalidateControl();
+		$this->invalidateFlashMessage();
 	}
 
 	public function invalidateFlashMessage() {

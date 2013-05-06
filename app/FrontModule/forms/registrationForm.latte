@@ -1,5 +1,18 @@
 {includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
+
+{capture $registrationFormCacheOptionEnabled}
+	{$registrationFormCacheOptions['enabled']|replace:'[formSubmitted]':' && '.$registrationFormSubmitted}
+{/capture}
+
+
+{cache $registrationFormCacheOptions['key'],
+if => $registrationFormCacheOptionEnabled,
+expire => $registrationFormCacheOptions['expiration'],
+tags => $registrationFormCacheOptions['tags']}
+
+
 {form registrationForm}
+
 	<table class="formTable innerPadding">
 		<tr class="formHeading	">
 			<td colspan="3">{_o100096}</td>
@@ -50,3 +63,4 @@
 	</table>
 {dump $form->getAllErrors()}
 {/form}
+{/cache}
