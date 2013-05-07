@@ -61,15 +61,8 @@ class ImportRentals extends BaseImport {
 		$en = $context->languageRepositoryAccessor->get()->findOneByIso('en');
 		$now = time();
 
-		if ($this->developmentMode == TRUE) {
-			$countryId = qc('select id from countries where iso = "'.$this->presenter->getParameter('countryIso').'"');
-			//d($this->presenter->getParameter('countryIso'), $countryId); exit;
-			$r = q('select * from objects where country_id = '.$countryId.' order by id limit 300');
-			//$r = q('select * from objects where id = 6609');
-		} else {
-			$existingIds = array();
-			exit('dorobit liveImport do ImportRentals.php');
-		}
+		$countryId = qc('select id from countries where iso = "'.$this->presenter->getParameter('countryIso').'"');
+		$r = q('select * from objects where country_id = '.$countryId.' order by id limit '.$this->presenter->getParameter('limit'));
 
 		$updateTimes = array();
 		$rentalIdIncrement = 100;

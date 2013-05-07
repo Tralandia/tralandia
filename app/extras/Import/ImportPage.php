@@ -244,7 +244,7 @@ class ImportPage extends BaseImport {
 			)
 		),
 		array(
-			'destination' => ':Front:Destinations:default', 
+			'destination' => ':Front:Destination:default', 
 			'hash' => '',
 			'h1Pattern' => array(
 				'sk' => 'Destinácie [locationLocative]', 
@@ -255,6 +255,62 @@ class ImportPage extends BaseImport {
 				'sk' => 'Destinácie [locationLocative]', 
 				'en' => 'Destinations in [location]',
 				'cs' => 'Destinace [locationLocative]', 
+			)
+		),
+		array(
+			'destination' => ':Front:AboutUs:default', 
+			'hash' => '',
+			'h1Pattern' => array(
+				'sk' => 'O projekte Tralandia', 
+				'en' => 'About Tralandia',
+				'cs' => 'O projekte Tralandia', 
+			), 
+			'titlePattern' => array(
+				'sk' => 'O projekte Tralandia', 
+				'en' => 'About Tralandia',
+				'cs' => 'O projekte Tralandia', 
+			)
+		),
+		array(
+			'destination' => ':Front:SupportUs:default', 
+			'hash' => '',
+			'h1Pattern' => array(
+				'sk' => 'Podporte Tralandiu', 
+				'en' => 'Support Tralandia',
+				'cs' => 'Podpořte Tralandiu', 
+			), 
+			'titlePattern' => array(
+				'sk' => 'Podporte Tralandiu', 
+				'en' => 'Support Tralandia',
+				'cs' => 'Podpořte Tralandiu', 
+			)
+		),
+		array(
+			'destination' => ':Front:Faq:default', 
+			'hash' => '',
+			'h1Pattern' => array(
+				'sk' => 'Časté otázky', 
+				'en' => 'Frequently asked questions',
+				'cs' => 'Časté otázky', 
+			), 
+			'titlePattern' => array(
+				'sk' => 'Časté otázky', 
+				'en' => 'Frequently asked questions',
+				'cs' => 'Časté otázky', 
+			)
+		),
+		array(
+			'destination' => ':Front:Toc:default', 
+			'hash' => '',
+			'h1Pattern' => array(
+				'sk' => 'Podmienky používania', 
+				'en' => 'Terms of use',
+				'cs' => 'Podmínky používání', 
+			), 
+			'titlePattern' => array(
+				'sk' => 'Podmienky používania', 
+				'en' => 'Terms of use',
+				'cs' => 'Podmínky používání', 
 			)
 		),
 	);

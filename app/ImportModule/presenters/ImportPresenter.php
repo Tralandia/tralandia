@@ -16,46 +16,6 @@ use Nette\Application as NA,
 use Nette\Application\UI\Presenter;
 
 class ImportPresenter extends Presenter {
-	public $automaticUrls = array(
-		'http://www.sk.tra.com/import?importSection=phraseType',
-		'http://www.sk.tra.com/import?importSection=languages',
-		'http://www.sk.tra.com/import?importSection=htmlPhrases&subsection=importPhrases',
-		'http://www.sk.tra.com/import?importSection=htmlPhrases&subsection=importNewPhrases',
-		'http://www.sk.tra.com/import?importSection=amenities',
-		'http://www.sk.tra.com/import?importSection=currencies',
-		'http://www.sk.tra.com/import?importSection=userRoles',
-		'http://www.sk.tra.com/import?importSection=domains',
-		'http://www.sk.tra.com/import?importSection=locations&subsection=importContinents',
-		'http://www.sk.tra.com/import?importSection=locations&subsection=importRegions',
-		'http://www.sk.tra.com/import?importSection=locations&subsection=importLocalities',
-		//'http://www.sk.tra.com/import?importSection=phones',
-		'http://www.sk.tra.com/import?importSection=users&subsection=importSuperAdmins',
-		'http://www.sk.tra.com/import?importSection=users&subsection=importAdmins',
-		'http://www.sk.tra.com/import?importSection=users&subsection=importManagers',
-		'http://www.sk.tra.com/import?importSection=users&subsection=importTranslators',
-		'http://www.sk.tra.com/import?importSection=users&subsection=importOwners&countryIso=sk',
-		'http://www.sk.tra.com/import?importSection=users&subsection=importOwners&countryIso=cz',
-		'http://www.sk.tra.com/import?importSection=users&subsection=importOwners&countryIso=hu',
-		'http://www.sk.tra.com/import?importSection=users&subsection=importVisitors',
-		//'http://www.sk.tra.com/import?importSection=pathsegments&subsection=typesOnly',
-		'http://www.sk.tra.com/import?importSection=rentalTypes',
-		'http://www.sk.tra.com/import?importSection=rentalInformation',
-		'http://www.sk.tra.com/import?importSection=rentals&countryIso=sk',
-		'http://www.sk.tra.com/import?importSection=rentals&countryIso=cz',
-		'http://www.sk.tra.com/import?importSection=rentals&countryIso=hu',
-		'http://www.sk.tra.com/import?importSection=invoice',
-		'http://www.sk.tra.com/import?importSection=interactions&subsection=importRentalReservations',
-		'http://www.sk.tra.com/import?importSection=interactions&subsection=importRentalToFriend',
-		'http://www.sk.tra.com/import?importSection=interactions&subsection=importSiteReviews',
-		'http://www.sk.tra.com/import?importSection=email',
-		'http://www.sk.tra.com/import?importSection=backLinks',
-		'http://www.sk.tra.com/import?importSection=updateLanguage',
-		'http://www.sk.tra.com/import?importSection=updateEmails',
-		'http://www.sk.tra.com/import?importSection=faq',
-		'http://www.sk.tra.com/import?importSection=page',
-		'http://www.sk.tra.com/import?importSection=pathsegments',
-	);
-
 	public $session;
 
 	public function startup() {
@@ -107,8 +67,8 @@ class ImportPresenter extends Presenter {
 		if (isset($this->params['autoStart'])) {
 			$this->session->automaticNextKey = 0;
 			$this->session->automaticOn = 1;
-			//d($this->automaticUrls[0]); exit;
-			$this->redirectUrl($this->automaticUrls[0]);
+			//d($this->session->automaticUrls[0]); exit;
+			$this->redirectUrl($this->session->automaticUrls[0]);
 		}
 
 		if (isset($this->params['autoStop'])) {
@@ -154,6 +114,105 @@ class ImportPresenter extends Presenter {
 			q('SET FOREIGN_KEY_CHECKS = 1;');
 		}
 
+		if (isset($this->params['createAutoLinks'])) {
+			if ($this->session->developmentMode == TRUE) {
+				$allCountries = array(
+					46 => 'sk',
+					193 => 'cz',
+					149 => 'hu',
+				);
+			} else {
+				$r = q('select id, iso from countries order by iso');
+				$allCountries = array();
+
+				while ($x = mysql_fetch_array($r)) {
+					$allCountries[$x['id']] = $x['iso'];
+				}
+			}
+
+			$automaticUrls = array(
+				'http://www.sk.tra.com/import?importSection=phraseType',
+				'http://www.sk.tra.com/import?importSection=languages',
+				'http://www.sk.tra.com/import?importSection=htmlPhrases&subsection=importPhrases',
+				'http://www.sk.tra.com/import?importSection=htmlPhrases&subsection=importNewPhrases',
+				'http://www.sk.tra.com/import?importSection=amenities',
+				'http://www.sk.tra.com/import?importSection=currencies',
+				'http://www.sk.tra.com/import?importSection=userRoles',
+				'http://www.sk.tra.com/import?importSection=domains',
+				'http://www.sk.tra.com/import?importSection=locations&subsection=importContinents',
+			);
+			foreach ($allCountries as $key => $value) {
+				$automaticUrls[] = 'http://www.sk.tra.com/import?importSection=locations&subsection=importRegions&countryIso='.$value;
+			}
+
+			foreach ($allCountries as $key => $value) {
+				$automaticUrls[] = 'http://www.sk.tra.com/import?importSection=locations&subsection=importLocalities&countryIso='.$value;
+			}
+
+			$automaticUrls = array_merge($automaticUrls, array(
+				'http://www.sk.tra.com/import?importSection=phones',
+				'http://www.sk.tra.com/import?importSection=users&subsection=importSuperAdmins',
+				'http://www.sk.tra.com/import?importSection=users&subsection=importAdmins',
+				'http://www.sk.tra.com/import?importSection=users&subsection=importManagers',
+				'http://www.sk.tra.com/import?importSection=users&subsection=importTranslators',
+			));
+			
+			foreach ($allCountries as $key => $value) {
+				$automaticUrls[] = 'http://www.sk.tra.com/import?importSection=users&subsection=importOwners&countryIso='.$value;
+			}
+
+			//$automaticUrls[] = 	'http://www.sk.tra.com/import?importSection=users&subsection=importVisitors';
+			$automaticUrls[] = 	'http://www.sk.tra.com/import?importSection=rentalTypes';
+			$automaticUrls[] = 	'http://www.sk.tra.com/import?importSection=rentalInformation';
+
+			// Rentals
+			foreach ($allCountries as $key => $value) {
+				$countPerGroup = 300;
+				if ($this->session->developmentMode == TRUE) {
+					$c = 1;
+				}  else {
+					$c = qc('select count(*) from objects where country_id = '.$key);
+					$c = ceil($c/$countPerGroup);
+				}
+
+				for ($i=0; $i < $c; $i++) { 
+					$automaticUrls[] = 'http://www.sk.tra.com/import?importSection=rentals&countryIso='.$value.'&limit='.($i*$countPerGroup).','.$countPerGroup;				
+				}
+			}
+
+			$automaticUrls[] = 	'http://www.sk.tra.com/import?importSection=invoice';
+
+			// Reservations
+			$countPerGroup = 1000;
+			if ($this->session->developmentMode == TRUE) {
+				$c = 1;
+			}  else {
+				$c = qc('select count(*) from visitors_contact_object');
+				$c = ceil($c/$countPerGroup);
+			}
+
+			for ($i=0; $i < $c; $i++) { 
+				$automaticUrls[] = 'http://www.sk.tra.com/import?importSection=interactions&subsection=importRentalReservations&limit='.($i*$countPerGroup).','.$countPerGroup;				
+			}
+
+			$automaticUrls = array_merge($automaticUrls, array(
+				'http://www.sk.tra.com/import?importSection=interactions&subsection=importRentalToFriend',
+				'http://www.sk.tra.com/import?importSection=interactions&subsection=importSiteReviews',
+				'http://www.sk.tra.com/import?importSection=email',
+				'http://www.sk.tra.com/import?importSection=backLinks',
+				'http://www.sk.tra.com/import?importSection=updateLanguage',
+				'http://www.sk.tra.com/import?importSection=updateEmails',
+				'http://www.sk.tra.com/import?importSection=faq',
+				'http://www.sk.tra.com/import?importSection=page',
+				'http://www.sk.tra.com/import?importSection=pathsegments',
+			));
+
+			$this->session->automaticUrls = $automaticUrls;
+			//d($automaticUrls); exit;
+			$this->redirectUrl('http://www.sk.tra.com/import?autoStart=1');
+
+		}
+
 		if (isset($this->params['importSection'])) {
 			$section = $this->params['importSection'];
 			$className = 'Extras\Import\Import'.ucfirst($section);
@@ -197,9 +256,12 @@ class ImportPresenter extends Presenter {
 		//$this->sendJson(array());
 		
 		if (isset($this->session->automaticOn) && $this->session->automaticOn == 1) {
-			if (isset($this->automaticUrls[$this->session->automaticNextKey+1])) {
+			if (isset($this->session->automaticUrls[$this->session->automaticNextKey+1])) {
 				$this->session->automaticNextKey++;
-				$script = 'Next step: '.$this->automaticUrls[$this->session->automaticNextKey].'<script>document.location.href="'.$this->automaticUrls[$this->session->automaticNextKey].'"</script>';
+				$script = 'Current step: '.$this->session->automaticUrls[$this->session->automaticNextKey];
+				$script .= '<br>Step: '.$this->session->automaticNextKey.' of '.count($this->session->automaticUrls);
+				$script .= '<br>Next step: '.$this->session->automaticUrls[$this->session->automaticNextKey];
+				$script .= '<script>document.location.href="'.$this->session->automaticUrls[$this->session->automaticNextKey].'"</script>';
 				$this->sendResponse(new \Nette\Application\Responses\TextResponse($script));
 			} else {
 				$this->session->automaticOn = 0;

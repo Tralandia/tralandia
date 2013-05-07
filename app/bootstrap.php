@@ -37,7 +37,8 @@ Kdyby\Replicator\Container::register();
 Kdyby\Redis\DI\RedisExtension::register($configurator);
 
 $configurator->addConfig(APP_DIR . '/configs/config.neon', FALSE);
-if(\Nette\Utils\Strings::endsWith($_SERVER['HTTP_HOST'], '.tralandia.org')) {
+
+if(isset($_SERVER['HTTP_HOST']) && \Nette\Utils\Strings::endsWith($_SERVER['HTTP_HOST'], '.tralandia.org')) {
 	$configurator->addConfig(APP_DIR . '/configs/production.config.neon', FALSE);
 } else {
 	$configurator->addConfig(APP_DIR . '/configs/local.config.neon', FALSE);
