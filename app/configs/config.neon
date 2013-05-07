@@ -36,9 +36,6 @@ parameters:
 
 	projectEmail: 'info@tralandia.com'
 
-	router:
-		mode: development
-
 	settingsDir: %appDir%/configs
 	rentalImageDir: /storage/rental_images
 	rentalPricelistDir: /storage/rental_pricelists
