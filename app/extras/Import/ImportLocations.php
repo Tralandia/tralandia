@@ -254,11 +254,8 @@ class ImportLocations extends BaseImport {
 
 		$countryLocationType = $this->context->locationTypeRepositoryAccessor->get()->findOneBy(array('slug' => 'country'));
 
-		if ($this->developmentMode == TRUE) {
-			$r = q('select * from regions where country_id in (46, 193, 149) order by id');
-		} else {
-			$r = q('select * from regions order by id');
-		}
+		$countryId = qc('select id from countries where iso = "'.$this->presenter->getParameter('countryIso').'"');
+		$r = q('select * from regions where country_id = '.$countryId.' order by id');
 
 		//d(mysql_num_rows($r)); exit;
 
@@ -321,11 +318,9 @@ class ImportLocations extends BaseImport {
 
 		$countryLocationType = $this->context->locationTypeRepositoryAccessor->get()->findOneBy(array('slug' => 'country'));
 
-		if ($this->developmentMode == TRUE) {
-			$r = q('select * from localities where country_id in (46, 193, 149) order by id');
-		} else {
-			$r = q('select * from localities order by id');
-		}
+		$countryId = qc('select id from countries where iso = "'.$this->presenter->getParameter('countryIso').'"');
+		$r = q('select * from localities where country_id = '.$countryId.' order by id');
+
 		while($x = mysql_fetch_array($r)) {
 			$x['name'] = Strings::firstUpper($x['name']);
 

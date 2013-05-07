@@ -23,12 +23,7 @@ class ImportInvoice extends BaseImport {
 
 		$this->rentalsByOldId = getNewIdsByOld('\Rental\Rental');
 
-		// Import paid invoices
-		if ($this->developmentMode == TRUE) {
-			$r = q('select * from invoicing_invoices_paid where companies_id NOT IN (1,2) order by id');
-		} else {
-			$r = q('select * from invoicing_invoices_paid where companies_id NOT IN (1,2) order by id');
-		}
+		$r = q('select * from invoicing_invoices_paid where companies_id NOT IN (1,2) order by id');
 		
 		while($x = mysql_fetch_array($r)) {
 			$maxTimeTo = qc('select max(time_to) from invoicing_invoices_services_paid where invoices_id = '.$x['id']);

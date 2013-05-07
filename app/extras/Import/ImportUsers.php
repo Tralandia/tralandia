@@ -163,12 +163,9 @@ class ImportUsers extends BaseImport {
 		$role = $this->context->userRoleRepositoryAccessor->get()->findOneBySlug('owner');
 		$locationTypeCountry = $this->context->locationTypeRepositoryAccessor->get()->findOneBySlug('country');
 
-		if ($this->developmentMode == TRUE) {
-			$countryId = qc('select id from countries where iso = "'.$this->presenter->getParameter('countryIso').'"');	
-			$r = q('select * from members where country_id  = '.$countryId);		
-		} else {
-			$r = q('select * from members');		
-		}
+		$countryId = qc('select id from countries where iso = "'.$this->presenter->getParameter('countryIso').'"');	
+		$r = q('select * from members where country_id  = '.$countryId);		
+
 		while($x = mysql_fetch_array($r)) {
 			$user = $this->context->userRepositoryAccessor->get()->findOneByLogin($x['email']);
 

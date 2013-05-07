@@ -49,7 +49,7 @@ class ImportRentalTypes extends BaseImport {
 		$this->model->flush();
 
 		foreach ($this->rentalTypes as $key => $value) {
-			$rentalType = $this->context->rentalTypeEntityFactory->create();
+			$rentalType = $this->context->rentalTypeRepositoryAccessor->get()->createNew();
 			// vykomentovane, lebo EN bolo potom 2x
 			//$rentalType->name = $this->createPhraseFromString('\Rental\Type', 'name', 'ACTIVE', $value[0], 'en');
 			$rentalType->slug = $value[0];
@@ -59,6 +59,7 @@ class ImportRentalTypes extends BaseImport {
 				$rentalType->classification = 1;
 			}
 
+			//d($rentalType); exit;
 			$variations = array();
 			$enTranslation = $rentalType->name->createTranslation($en);
 			$variations[0][0]['nominative'] = $value[0];
