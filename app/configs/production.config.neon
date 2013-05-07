@@ -2,6 +2,11 @@ php:
 	max_execution_time: 10
 	memory_limit: 128M
 
+nette:
+	session:
+		cookie_domain: '.tralandia.org'
+
+
 parameters:
 	database:
 		user: tralandia
