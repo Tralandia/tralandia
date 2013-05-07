@@ -12,7 +12,7 @@
 			{if count($rentals)}
 				<div id="tabs-1" class="ui-tabs-panel">
 					{foreach $rentals as $rentalId}
-
+						{var $foreachIterator = $iterator}
 						{if $rentalId instanceof \Entity\Rental\Rental}
 							{var $rental = $rentalId}
 							{var $rentalId = $rentalId->getId()}
@@ -32,9 +32,8 @@
 						{var $rental = $rentalService->getEntity(); }
 						{var $featured = $rentalService->isFeatured(); }
 
-
 						{var $lastClass = ''}
-						{if $iterator->last}
+						{if $foreachIterator->last}
 							{var $lastClass = 'last'}
 						{/if}
 							<div class="row-fluid rentalList {$lastClass}">
