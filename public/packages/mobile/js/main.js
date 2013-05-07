@@ -110,7 +110,7 @@ $(function(){
 })(jQuery);
 
 
-
+// nastavi placeholdery nakolko nemame select2 v mob. verzii
 (function($){
 		$.selectPlaceholder = function(el, options){
 
@@ -138,6 +138,7 @@ $(function(){
 		};
 		
 })(jQuery);
+
 
 
 
