@@ -180,7 +180,7 @@ parameters:
 					# calendar widget
 					- front/calendarWidget/js/calendarWidget.js
 					# search sidebar
-					- front/search/js/search.js	
+					- front/search/js/search.js
 
 			jqueryAppear:
 				js:
@@ -194,8 +194,8 @@ parameters:
 					- jscrollPane/lib/js/jquery.mousewheel.js
 					- jscrollPane/lib/js/jquery.jscrollpane.js
 				css:
-					- jscrollpane/lib/css/jquery.jscrollpane.css
-					- jscrollpane/custom/css/main.css
+					- jscrollPane/lib/css/jquery.jscrollpane.css
+					- jscrollPane/custom/css/main.css
 			nette:
 				js:
 					#- nette/lib/netteForms.js
@@ -246,7 +246,7 @@ parameters:
 				-  %webloader.packages.jqueryCookie%
 				-  %webloader.packages.bootstrap%
 				-  %webloader.packages.adminFront%
-				-  %webloader.packages.Front%				
+				-  %webloader.packages.Front%
 				-  %webloader.packages.select2%
 				-  %webloader.packages.texyla%
 				-  %webloader.packages.nette%
@@ -266,7 +266,7 @@ parameters:
 				-  %webloader.packages.navBar%
 				-  %webloader.packages.gMap%
 				-  %webloader.packages.Front%
-				
+
 				#-  %webloader.packages.texyla%
 				-  %webloader.packages.nette%
 				-  %webloader.packages.jqueryScrollTo%
@@ -317,7 +317,7 @@ parameters:
 				-  %webloader.packages.bootstrap%
 				-  %webloader.packages.jscrollPane%
 				-  %webloader.packages.fileUpload%
-				-  %webloader.packages.select2%			
+				-  %webloader.packages.select2%
 				-  %webloader.packages.gMap%
 				-  %webloader.packages.Front%
 				-  %webloader.packages.adminFront%
