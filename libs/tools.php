@@ -271,4 +271,28 @@ class Tools {
 		return $finalList;
 	}
 
+
+	public static function sortArrayByArray(array $array, array $order, $keyCallback = NULL) {
+		$ordered = array();
+
+		if($keyCallback !== NULL) {
+			$keyCallback = new Nette\Callback($keyCallback);
+			$newArray = [];
+			foreach($array as $key => $values) {
+				$newKey = $keyCallback->invokeArgs([$values]);
+				$newArray[$newKey] = $values;
+			}
+			$array = $newArray;
+		}
+
+		foreach($order as $key) {
+			if (array_key_exists($key,$array)) {
+				$ordered[$key] = $array[$key];
+				unset($array[$key]);
+			}
+		}
+
+		return $ordered + $array;
+	}
+
 }

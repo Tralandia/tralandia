@@ -75,7 +75,6 @@
 							</li>
 							{foreach $favoriteRentals as $rental}
 							{var $image = $rental->getMainImage()}
-							{* {var $seen = in_array($rental->getId(), $seenRentals)} *}
 							{var $isCurrent = isset($currentRental) ? $rental->id==$currentRental->id : false}
 							<li rel="{$rental->getId()}" data-name="{_$rental->name}{if $rental->classification > 0 } {for $i = 0; $i < $rental->classification; $i++}~star~{/for}{/if}" data-thumb="{fakeImage}" data-location="{_$rental->address->locality->name}" data-price="{$rental->price}" data-capacity="{$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]}" style="background-image: url({fakeImage});" class="{if $isCurrent}active{/if}">
 								<a href="#" class="removeLink"></a>
