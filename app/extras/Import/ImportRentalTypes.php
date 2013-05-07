@@ -50,7 +50,8 @@ class ImportRentalTypes extends BaseImport {
 
 		foreach ($this->rentalTypes as $key => $value) {
 			$rentalType = $this->context->rentalTypeEntityFactory->create();
-			$rentalType->name = $this->createPhraseFromString('\Rental\Type', 'name', 'ACTIVE', $value[0], 'en');
+			// vykomentovane, lebo EN bolo potom 2x
+			//$rentalType->name = $this->createPhraseFromString('\Rental\Type', 'name', 'ACTIVE', $value[0], 'en');
 			$rentalType->slug = $value[0];
 
 			// classification

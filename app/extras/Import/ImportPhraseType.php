@@ -21,9 +21,8 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
-			// ->setHelpForTranslator('')
-			// ->setMonthlyBudget(0)
-			// ->setIldId(1)
+			->setHtml(FALSE)
+			->setTranslated(TRUE)
 			->setCheckingRequired(NULL);
 
 		$this->createPhraseType('Html', 'Html')
@@ -33,9 +32,8 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
-			// ->setHelpForTranslator('')
-			// ->setMonthlyBudget(0)
-			// ->setIldId(1)
+			->setHtml(TRUE)
+			->setTranslated(TRUE)
 			->setCheckingRequired(NULL);
 
 		$this->createPhraseType('HtmlMulti', 'HtmlMulti')
@@ -45,9 +43,8 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
-			// ->setHelpForTranslator('')
-			// ->setMonthlyBudget(0)
-			// ->setIldId(1)
+			->setHtml(TRUE)
+			->setTranslated(TRUE)
 			->setCheckingRequired(NULL);
 
 		$this->createPhraseType('\Entity\Currency', 'name')
@@ -57,9 +54,8 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
-			// ->setHelpForTranslator('')
-			// ->setMonthlyBudget(0)
-			// ->setIldId(1)
+			->setHtml(FALSE)
+			->setTranslated(TRUE)
 			->setCheckingRequired(NULL);
 
 		$this->createPhraseType('\Entity\Location\Location', 'name')
@@ -69,9 +65,8 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(1)
 			->setPositionRequired(0)
-			// ->setHelpForTranslator('')
-			// ->setMonthlyBudget(0)
-			// ->setIldId(1)
+			->setHtml(FALSE)
+			->setTranslated(FALSE)
 			->setCheckingRequired(1);
 
 		$this->createPhraseType('\Entity\Location\Type', 'name')
@@ -81,22 +76,9 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(1)
 			->setPositionRequired(0)
-			// ->setHelpForTranslator('')
-			// ->setMonthlyBudget(0)
-			// ->setIldId(1)
+			->setHtml(FALSE)
+			->setTranslated(TRUE)
 			->setCheckingRequired(NULL);
-
-		// $this->createPhraseType('\Entity\Company\Company', 'registrator')
-		// 	->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED)
-		// 	->setPluralVariationsRequired(0)
-		// 	->setGenderRequired(0)
-		// 	->setGenderVariationsRequired(0)
-		// 	->setLocativesRequired(0)
-		// 	->setPositionRequired(0)
-		// 	// ->setHelpForTranslator('')
-		// 	// ->setMonthlyBudget(0)
-		// 	// ->setIldId(1)
-		// 	->setCheckingRequired(NULL);
 
 		$this->createPhraseType('\Entity\Rental\Amenity', 'name')
 			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED)
@@ -105,9 +87,8 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
-			// ->setHelpForTranslator('')
-			// ->setMonthlyBudget(0)
-			// ->setIldId(1)
+			->setHtml(FALSE)
+			->setTranslated(TRUE)
 			->setCheckingRequired(NULL);
 
 		$this->createPhraseType('\Entity\Rental\AmenityType', 'name')
@@ -117,9 +98,8 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
-			// ->setHelpForTranslator('')
-			// ->setMonthlyBudget(0)
-			// ->setIldId(1)
+			->setHtml(FALSE)
+			->setTranslated(TRUE)
 			->setCheckingRequired(NULL);
 
 		$this->createPhraseType('\Entity\Rental\Type', 'name')
@@ -129,9 +109,8 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(1)
 			->setPositionRequired(0)
-			// ->setHelpForTranslator('')
-			// ->setMonthlyBudget(0)
-			// ->setIldId(1)
+			->setHtml(FALSE)
+			->setTranslated(TRUE)
 			->setCheckingRequired(NULL);
 
 		$this->createPhraseType('\Entity\Rental\Rental', 'name')
@@ -141,9 +120,8 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
-			// ->setHelpForTranslator('')
-			// ->setMonthlyBudget(0)
-			// ->setIldId(1)
+			->setHtml(FALSE)
+			->setTranslated(FALSE)
 			->setCheckingRequired(1);
 
 		$this->createPhraseType('\Entity\Rental\Rental', 'teaser')
@@ -153,46 +131,9 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
-			// ->setHelpForTranslator('')
-			// ->setMonthlyBudget(0)
-			// ->setIldId(1)
+			->setHtml(FALSE)
+			->setTranslated(FALSE)
 			->setCheckingRequired(1);
-
-		// $this->createPhraseType('\Entity\Attraction\Type', 'name')
-		// 	->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED)
-		// 	->setPluralVariationsRequired(1)
-		// 	->setGenderRequired(0)
-		// 	->setGenderVariationsRequired(0)
-		// 	->setLocativesRequired(0)
-		// 	->setPositionRequired(0)
-		// 	// ->setHelpForTranslator('')
-		// 	// ->setMonthlyBudget(0)
-		// 	// ->setIldId(1)
-		// 	->setCheckingRequired(NULL);
-
-		// $this->createPhraseType('\Entity\Attraction\Attraction', 'name')
-		// 	->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED)
-		// 	->setPluralVariationsRequired(0)
-		// 	->setGenderRequired(0)
-		// 	->setGenderVariationsRequired(0)
-		// 	->setLocativesRequired(0)
-		// 	->setPositionRequired(0)
-		// 	// ->setHelpForTranslator('')
-		// 	// ->setMonthlyBudget(0)
-		// 	// ->setIldId(1)
-		// 	->setCheckingRequired(NULL);
-
-		// $this->createPhraseType('\Entity\Attraction\Attraction', 'descrition')
-		// 	->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED)
-		// 	->setPluralVariationsRequired(0)
-		// 	->setGenderRequired(0)
-		// 	->setGenderVariationsRequired(0)
-		// 	->setLocativesRequired(0)
-		// 	->setPositionRequired(0)
-		// 	// ->setHelpForTranslator('')
-		// 	// ->setMonthlyBudget(0)
-		// 	// ->setIldId(1)
-		// 	->setCheckingRequired(NULL);
 
 		$this->createPhraseType('\Entity\Email\Template', 'subject')
 			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED)
@@ -201,9 +142,8 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
-			// ->setHelpForTranslator('')
-			// ->setMonthlyBudget(0)
-			// ->setIldId(1)
+			->setHtml(FALSE)
+			->setTranslated(TRUE)
 			->setCheckingRequired(NULL);
 
 		$this->createPhraseType('\Entity\Email\Template', 'body')
@@ -213,9 +153,8 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
-			// ->setHelpForTranslator('')
-			// ->setMonthlyBudget(0)
-			// ->setIldId(1)
+			->setHtml(FALSE)
+			->setTranslated(TRUE)
 			->setCheckingRequired(NULL);
 
 		$this->createPhraseType('\Entity\Seo\SeoUrl', 'title')
@@ -225,9 +164,8 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
-			// ->setHelpForTranslator('')
-			// ->setMonthlyBudget(0)
-			// ->setIldId(1)
+			->setHtml(FALSE)
+			->setTranslated(TRUE)
 			->setCheckingRequired(NULL);
 
 		$this->createPhraseType('\Entity\Seo\SeoUrl', 'heading')
@@ -237,9 +175,8 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
-			// ->setHelpForTranslator('')
-			// ->setMonthlyBudget(0)
-			// ->setIldId(1)
+			->setHtml(FALSE)
+			->setTranslated(TRUE)
 			->setCheckingRequired(NULL);
 
 		$this->createPhraseType('\Entity\Seo\SeoUrl', 'tabName')
@@ -249,9 +186,8 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
-			// ->setHelpForTranslator('')
-			// ->setMonthlyBudget(0)
-			// ->setIldId(1)
+			->setHtml(FALSE)
+			->setTranslated(TRUE)
 			->setCheckingRequired(NULL);
 
 		$this->createPhraseType('\Entity\Seo\SeoUrl', 'description')
@@ -261,9 +197,8 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
-			// ->setHelpForTranslator('')
-			// ->setMonthlyBudget(0)
-			// ->setIldId(1)
+			->setHtml(FALSE)
+			->setTranslated(TRUE)
 			->setCheckingRequired(NULL);
 
 		$this->createPhraseType('\Entity\Seo\SeoUrl', 'ppcKeywords')
@@ -273,9 +208,8 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
-			// ->setHelpForTranslator('')
-			// ->setMonthlyBudget(0)
-			// ->setIldId(1)
+			->setHtml(FALSE)
+			->setTranslated(TRUE)
 			->setCheckingRequired(NULL);
 
 		$this->createPhraseType('\Entity\Faq\Category', 'name')
@@ -285,9 +219,8 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
-			// ->setHelpForTranslator('')
-			// ->setMonthlyBudget(0)
-			// ->setIldId(1)
+			->setHtml(FALSE)
+			->setTranslated(TRUE)
 			->setCheckingRequired(NULL);
 
 		$this->createPhraseType('\Entity\Faq\Question', 'question')
@@ -297,9 +230,8 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
-			// ->setHelpForTranslator('')
-			// ->setMonthlyBudget(0)
-			// ->setIldId(1)
+			->setHtml(FALSE)
+			->setTranslated(TRUE)
 			->setCheckingRequired(NULL);
 
 		$this->createPhraseType('\Entity\Faq\Question', 'answer')
@@ -309,21 +241,8 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
-			// ->setHelpForTranslator('')
-			// ->setMonthlyBudget(0)
-			// ->setIldId(1)
-			->setCheckingRequired(NULL);
-
-		$this->createPhraseType('\Entity\Rental\Image', 'name')
-			->setTranslateTo(\Entity\Phrase\Type::TRANSLATE_TO_SUPPORTED)
-			->setPluralVariationsRequired(0)
-			->setGenderRequired(0)
-			->setGenderVariationsRequired(0)
-			->setLocativesRequired(0)
-			->setPositionRequired(0)
-			// ->setHelpForTranslator('')
-			// ->setMonthlyBudget(0)
-			// ->setIldId(1)
+			->setHtml(FALSE)
+			->setTranslated(TRUE)
 			->setCheckingRequired(NULL);
 
 		$this->createPhraseType('\Entity\Rental\InterviewQuestion', 'question')
@@ -333,9 +252,8 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
-			// ->setHelpForTranslator('')
-			// ->setMonthlyBudget(0)
-			// ->setIldId(1)
+			->setHtml(FALSE)
+			->setTranslated(TRUE)
 			->setCheckingRequired(NULL);
 
 		$this->createPhraseType('\Entity\Rental\InterviewQuestion', 'questionFe')
@@ -345,9 +263,8 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
-			// ->setHelpForTranslator('')
-			// ->setMonthlyBudget(0)
-			// ->setIldId(1)
+			->setHtml(FALSE)
+			->setTranslated(TRUE)
 			->setCheckingRequired(NULL);
 
 		$this->createPhraseType('\Entity\Rental\InterviewAnswer', 'answer')
@@ -357,13 +274,10 @@ class ImportPhraseType extends BaseImport {
 			->setGenderVariationsRequired(0)
 			->setLocativesRequired(0)
 			->setPositionRequired(0)
-			// ->setHelpForTranslator('')
-			// ->setMonthlyBudget(0)
-			// ->setIldId(1)
+			->setHtml(FALSE)
+			->setTranslated(TRUE)
 			->setCheckingRequired(NULL);
 
 		$this->model->flush();
-
 	}
-
 }
