@@ -62,7 +62,7 @@
 									{if $rental->hasPlacement()}{_$rental->getPlacement()->name}{/if}
 									{_$rental->address->locality->name , null , [case=>locative]}
 								</strong>									
-									<span>#(32 km)</span></div>
+									<span class="rentalDistanceMatrix" data-latitude="{$rental->address->getGps()->latitude}" data-longitude="{$rental->address->getGps()->longitude}"></span></div>
 
 								<div class="rooms"> {_o100005} {$rental->maxCapacity} {_o490,null,[count=>$rental->maxCapacity]} <span>{$rental->rooms} </span></div>                    
 													   
