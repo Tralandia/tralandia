@@ -255,7 +255,7 @@ services:
 		class: Statistics\Registrations
 
 	dictionary.updateTranslationStatus: DictionaryManager\UpdateTranslationStatus
-	findOutdatedTranslations: DictionaryManager\FindOutdatedTranslations()
+	findOutdatedTranslations: DictionaryManager\FindOutdatedTranslations
 
 	device: Device
 	deviceDetect: Mobile_Detect
