@@ -31,11 +31,8 @@ class ImportInteractions extends BaseImport {
 
 	public function importRentalReservations() {
 
-		if ($this->developmentMode == TRUE) {
-			$r = q('select * from visitors_contact_object order by rand() limit 300');
-		} else {
-			$r = q('select * from visitors_contact_object order by id');
-		}
+		$r = q('select * from visitors_contact_object order by id limit '.$this->presenter->getParameter('limit'));
+
 
 		while($x = mysql_fetch_array($r)) {
 			$t = $this->context->rentalRepositoryAccessor->get()->findOneByOldId($x['object_id']);

@@ -56,7 +56,7 @@ class ImportUserRoles extends BaseImport {
 		}
 
 		if (in_array($name, array(Role::TRANSLATOR, Role::SUPERADMIN))) {
-			$role->homePage = ':Admin:Rental:list';
+			$role->homePage = ':Admin:Currency:list';
 		} else if($name == Role::OWNER) {
 			$role->homePage = ':Owner:Rental:firstRental';
 		}
