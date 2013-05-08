@@ -9,110 +9,110 @@ class ImportPage extends BaseImport {
 
 	protected $pages = array(
 		array(
-			'destination' => ':Front:Registration:default', 
+			'destination' => ':Front:Registration:default',
 			'hash' => '',
 			'h1Pattern' => array(
-				'sk' => 'Registrácia ubytovacieho zariadenia', 
+				'sk' => 'Registrácia ubytovacieho zariadenia',
 				'en' => 'Add your rental',
 				'cs' => 'Registrace ubytovacího zařízení'
-			), 
+			),
 			'titlePattern' => array(
-				'sk' => 'Registrácia', 
+				'sk' => 'Registrácia',
 				'en' => 'Registration',
 				'cs' => 'Registrace'
 			),
 			'name' => array(
-				'sk' => 'Registrácia', 
+				'sk' => 'Registrácia',
 				'en' => 'Registration',
 				'cs' => 'Registrace'
 			),
 		),
 		array(
-			'destination' => ':Front:Contact:default', 
+			'destination' => ':Front:Contact:default',
 			'hash' => '',
 			'h1Pattern' => array(
-				'sk' => 'Kontakty', 
+				'sk' => 'Kontakty',
 				'en' => 'Contacts',
 				'cs' => 'Kontakty'
-			), 
+			),
 			'titlePattern' => array(
-				'sk' => 'Kontakty', 
+				'sk' => 'Kontakty',
 				'en' => 'Contacts',
 				'cs' => 'Kontakty'
 			),
 			'name' => array(
-				'sk' => 'Kontakty', 
+				'sk' => 'Kontakty',
 				'en' => 'Contacts',
 				'cs' => 'Kontakty'
 			),
 		),
 		array(
-			'destination' => ':Front:Sign:in', 
+			'destination' => ':Front:Sign:in',
 			'hash' => '',
 			'h1Pattern' => array(
-				'sk' => 'Prihlásenie', 
+				'sk' => 'Prihlásenie',
 				'en' => 'Login',
 				'cs' => 'Přihlásení'
-			), 
+			),
 			'titlePattern' => array(
-				'sk' => 'Prihlásenie', 
+				'sk' => 'Prihlásenie',
 				'en' => 'Login',
 				'cs' => 'Přihlásení'
 			),
 			'name' => array(
-				'sk' => 'Prihlásenie', 
+				'sk' => 'Prihlásenie',
 				'en' => 'Login',
 				'cs' => 'Přihlásení'
 			),
 		),
 		array(
-			'destination' => ':Front:Sign:out', 
+			'destination' => ':Front:Sign:out',
 			'hash' => '',
 			'h1Pattern' => array(
-				'sk' => 'Odhlásenie', 
+				'sk' => 'Odhlásenie',
 				'en' => 'Logout',
 				'cs' => 'Odhlásení'
-			), 
+			),
 			'titlePattern' => array(
-				'sk' => 'Odhlásenie', 
+				'sk' => 'Odhlásenie',
 				'en' => 'Logout',
 				'cs' => 'Odhlásení'
 			),
 			'name' => array(
-				'sk' => 'Odhlásenie', 
+				'sk' => 'Odhlásenie',
 				'en' => 'Logout',
 				'cs' => 'Odhlásení'
 			)
 		),
 		array(
-			'destination' => ':Front:CalendarIframe:default', 
+			'destination' => ':Front:CalendarIframe:default',
 			'hash' => '',
 			'h1Pattern' => array(
-				'sk' => 'Kalendár obsadenosti', 
+				'sk' => 'Kalendár obsadenosti',
 				'en' => 'Occupancy calendar',
 				'cs' => 'kalendář obsazenosti'
-			), 
+			),
 			'titlePattern' => array(
-				'sk' => 'Kalendár obsadenosti', 
+				'sk' => 'Kalendár obsadenosti',
 				'en' => 'Occupancy calendar',
 				'cs' => 'kalendář obsazenosti'
 			),
 			'name' => array(
-				'sk' => 'Kalendár obsadenosti', 
+				'sk' => 'Kalendár obsadenosti',
 				'en' => 'Occupancy calendar',
 				'cs' => 'kalendář obsazenosti'
 			)
 		),
 		array(
-			'destination' => ':Front:Home:default', 
+			'destination' => ':Front:Home:default',
 			'hash' => '',
 			'h1Pattern' => array(
-				'sk' => 'Ubytovanie a Dovolenky [locationLocative]', 
+				'sk' => 'Ubytovanie a Dovolenky [locationLocative]',
 				'en' => 'Accommodation in [location]',
 				'cs' => 'Ubytování a Dovolené [locationLocative]'
-			), 
+			),
 			'titlePattern' => array(
-				'sk' => 'Ubytovanie a Dovolenky [location]', 
+				'sk' => 'Ubytovanie a Dovolenky [location]',
 				'en' => 'Accommodation [location]',
 				'cs' => 'Ubytování a Dovolené [locationLocative]'
 			)
@@ -121,10 +121,10 @@ class ImportPage extends BaseImport {
 			'destination' => ':Front:Roothome:default',
 			'hash' => '',
 			'h1Pattern' => array(
-				'sk' => 'Ubytovanie a Dovolenky na celom svete', 
+				'sk' => 'Ubytovanie a Dovolenky na celom svete',
 				'en' => 'Worldwide rentals',
 				'cs' => 'Ubytování a Dovolené na celém světě'
-			), 
+			),
 			'titlePattern' => array(
 				'sk' => 'Ubytovanie a Dovolenky',
 				'en' => 'Worldwide entals',
@@ -132,27 +132,27 @@ class ImportPage extends BaseImport {
 			)
 		),
 		// array(
-		// 	'destination' => ':Front:Attraction:detail', 
+		// 	'destination' => ':Front:Attraction:detail',
 		// 	'hash' => '/attraction',
 		// 	'h1Pattern' => array(
-		// 		'sk' => '[attraction]', 
+		// 		'sk' => '[attraction]',
 		// 		'en' => '[attraction]',
-		// 	), 
+		// 	),
 		// 	'titlePattern' => array(
-		// 		'sk' => '[attraction]', 
+		// 		'sk' => '[attraction]',
 		// 		'en' => '[attraction]',
 		// 	)
 		// ),
 		array(
-			'destination' => ':Front:Rental:detail', 
+			'destination' => ':Front:Rental:detail',
 			'hash' => '/rental',
 			'h1Pattern' => array(
-				'sk' => '[rental]', 
+				'sk' => '[rental]',
 				'en' => '[rental]',
 				'cs' => '[rental]'
-			), 
+			),
 			'titlePattern' => array(
-				'sk' => '[rental], [location]', 
+				'sk' => '[rental], [location]',
 				'en' => '[rental], [location]',
 				'cs' => '[rental], [location]'
 			)
@@ -160,183 +160,183 @@ class ImportPage extends BaseImport {
 
 		# search
 		array(
-			'destination' => ':Front:RentalList:default', 
+			'destination' => ':Front:RentalList:default',
 			'hash' => '',
 			'h1Pattern' => array(
-				'sk' => 'Výsledky vyhľadávania', 
+				'sk' => 'Výsledky vyhľadávania',
 				'en' => 'Search results',
 				'cs' => 'Výsledky vyhledávání'
-			), 
+			),
 			'titlePattern' => array(
-				'sk' => 'Výsledky vyhľadávania', 
+				'sk' => 'Výsledky vyhľadávania',
 				'en' => 'Search results',
 				'cs' => 'Výsledky vyhledávání'
 			)
 		),
 		array(
-			'destination' => ':Front:RentalList:default', 
+			'destination' => ':Front:RentalList:default',
 			'hash' => '/location',
 			'h1Pattern' => array(
-				'sk' => 'Ubytovanie [locationLocative]', 
+				'sk' => 'Ubytovanie [locationLocative]',
 				'en' => '[location] rentals',
-				'cs' => 'Ubytování [locationLocative]', 
-			), 
+				'cs' => 'Ubytování [locationLocative]',
+			),
 			'titlePattern' => array(
-				'sk' => 'Ubytovanie [location]', 
+				'sk' => 'Ubytovanie [location]',
 				'en' => 'Rentals in [location]',
-				'cs' => 'Ubytování [locationLocative]', 
+				'cs' => 'Ubytování [locationLocative]',
 			)
 		),
 		array(
-			'destination' => ':Front:RentalList:default', 
+			'destination' => ':Front:RentalList:default',
 			'hash' => '/location/rentalType',
 			'h1Pattern' => array(
-				'sk' => '[rentalTypePlural] [locationLocative]', 
+				'sk' => '[rentalTypePlural] [locationLocative]',
 				'en' => '[rentalTypePlural] in [location]',
-				'cs' => '[rentalTypePlural] [locationLocative]', 
-			), 
+				'cs' => '[rentalTypePlural] [locationLocative]',
+			),
 			'titlePattern' => array(
-				'sk' => '[rentalTypePlural] [location]', 
+				'sk' => '[rentalTypePlural] [location]',
 				'en' => '[rentalTypePlural] [location]',
-				'cs' => '[rentalTypePlural] [locationLocative]', 
+				'cs' => '[rentalTypePlural] [locationLocative]',
 			)
 		),
 		array(
-			'destination' => ':Front:RentalList:default', 
+			'destination' => ':Front:RentalList:default',
 			'hash' => '/rentalType',
 			'h1Pattern' => array(
-				'sk' => '[rentalTypePlural] [locationLocative]', 
+				'sk' => '[rentalTypePlural] [locationLocative]',
 				'en' => '[rentalTypePlural] in [location]',
-				'cs' => '[rentalTypePlural] [locationLocative]', 
-			), 
+				'cs' => '[rentalTypePlural] [locationLocative]',
+			),
 			'titlePattern' => array(
-				'sk' => '[rentalTypePlural] [location]', 
+				'sk' => '[rentalTypePlural] [location]',
 				'en' => '[rentalTypePlural] [location]',
-				'cs' => '[rentalTypePlural] [locationLocative]', 
+				'cs' => '[rentalTypePlural] [locationLocative]',
 			)
 		),
 		array(
-			'destination' => ':Front:RentalList:default', 
+			'destination' => ':Front:RentalList:default',
 			'hash' => '/attractionType',
 			'h1Pattern' => array(
-				'sk' => '[attractionTypePlural] [locationLocative]', 
+				'sk' => '[attractionTypePlural] [locationLocative]',
 				'en' => '[attractionTypePlural] in [location]',
-				'cs' => '[attractionTypePlural] [locationLocative]', 
-			), 
+				'cs' => '[attractionTypePlural] [locationLocative]',
+			),
 			'titlePattern' => array(
-				'sk' => '[attractionTypePlural] [location]', 
+				'sk' => '[attractionTypePlural] [location]',
 				'en' => '[attractionTypePlural] [location]',
-				'cs' => '[attractionTypePlural] [locationLocative]', 
+				'cs' => '[attractionTypePlural] [locationLocative]',
 			)
 		),
 		array(
-			'destination' => ':Front:RentalList:default', 
+			'destination' => ':Front:RentalList:default',
 			'hash' => '/attractionType/location',
 			'h1Pattern' => array(
-				'sk' => '[attractionTypePlural] [locationLocative]', 
+				'sk' => '[attractionTypePlural] [locationLocative]',
 				'en' => '[attractionTypePlural] in [location]',
-				'cs' => '[attractionTypePlural] [locationLocative]', 
-			), 
+				'cs' => '[attractionTypePlural] [locationLocative]',
+			),
 			'titlePattern' => array(
-				'sk' => '[attractionTypePlural] [location]', 
+				'sk' => '[attractionTypePlural] [location]',
 				'en' => '[attractionTypePlural] [location]',
-				'cs' => '[attractionTypePlural] [locationLocative]', 
+				'cs' => '[attractionTypePlural] [locationLocative]',
 			)
 		),
 		array(
-			'destination' => ':Front:Destination:default', 
+			'destination' => ':Front:Destination:default',
 			'hash' => '',
 			'h1Pattern' => array(
-				'sk' => 'Destinácie [locationLocative]', 
+				'sk' => 'Destinácie [locationLocative]',
 				'en' => 'Destinations in [location]',
-				'cs' => 'Destinace [locationLocative]', 
-			), 
+				'cs' => 'Destinace [locationLocative]',
+			),
 			'titlePattern' => array(
-				'sk' => 'Destinácie [locationLocative]', 
+				'sk' => 'Destinácie [locationLocative]',
 				'en' => 'Destinations in [location]',
-				'cs' => 'Destinace [locationLocative]', 
-			)
+				'cs' => 'Destinace [locationLocative]',
+			),
 			'name' => array(
-				'sk' => 'Destinácie', 
+				'sk' => 'Destinácie',
 				'en' => 'Destinations',
-				'cs' => 'Destinace', 
-			), 
+				'cs' => 'Destinace',
+			),
 		),
 		array(
-			'destination' => ':Front:AboutUs:default', 
+			'destination' => ':Front:AboutUs:default',
 			'hash' => '',
 			'h1Pattern' => array(
-				'sk' => 'O projekte Tralandia', 
+				'sk' => 'O projekte Tralandia',
 				'en' => 'About Tralandia',
-				'cs' => 'O projekte Tralandia', 
-			), 
+				'cs' => 'O projekte Tralandia',
+			),
 			'titlePattern' => array(
-				'sk' => 'O projekte Tralandia', 
+				'sk' => 'O projekte Tralandia',
 				'en' => 'About Tralandia',
-				'cs' => 'O projekte Tralandia', 
-			)
+				'cs' => 'O projekte Tralandia',
+			),
 			'name' => array(
-				'sk' => 'O nás', 
+				'sk' => 'O nás',
 				'en' => 'About us',
-				'cs' => 'O nás', 
-			), 
+				'cs' => 'O nás',
+			),
 		),
 		array(
-			'destination' => ':Front:SupportUs:default', 
+			'destination' => ':Front:SupportUs:default',
 			'hash' => '',
 			'h1Pattern' => array(
-				'sk' => 'Podporte Tralandiu', 
+				'sk' => 'Podporte Tralandiu',
 				'en' => 'Support Tralandia',
-				'cs' => 'Podpořte Tralandiu', 
-			), 
+				'cs' => 'Podpořte Tralandiu',
+			),
 			'titlePattern' => array(
-				'sk' => 'Podporte Tralandiu', 
+				'sk' => 'Podporte Tralandiu',
 				'en' => 'Support Tralandia',
-				'cs' => 'Podpořte Tralandiu', 
-			)
+				'cs' => 'Podpořte Tralandiu',
+			),
 			'name' => array(
-				'sk' => 'Podporte Tralandiu', 
+				'sk' => 'Podporte Tralandiu',
 				'en' => 'Support Tralandia',
-				'cs' => 'Podpořte Tralandiu', 
-			), 
+				'cs' => 'Podpořte Tralandiu',
+			),
 		),
 		array(
-			'destination' => ':Front:Faq:default', 
+			'destination' => ':Front:Faq:default',
 			'hash' => '',
 			'h1Pattern' => array(
-				'sk' => 'Časté otázky', 
+				'sk' => 'Časté otázky',
 				'en' => 'Frequently asked questions',
-				'cs' => 'Časté otázky', 
-			), 
+				'cs' => 'Časté otázky',
+			),
 			'titlePattern' => array(
-				'sk' => 'Časté otázky', 
+				'sk' => 'Časté otázky',
 				'en' => 'Frequently asked questions',
-				'cs' => 'Časté otázky', 
-			)
+				'cs' => 'Časté otázky',
+			),
 			'name' => array(
-				'sk' => 'Časté otázky', 
+				'sk' => 'Časté otázky',
 				'en' => 'Frequently asked questions',
-				'cs' => 'Časté otázky', 
-			), 
+				'cs' => 'Časté otázky',
+			),
 		),
 		array(
-			'destination' => ':Front:Toc:default', 
+			'destination' => ':Front:Toc:default',
 			'hash' => '',
 			'h1Pattern' => array(
-				'sk' => 'Podmienky používania', 
+				'sk' => 'Podmienky používania',
 				'en' => 'Terms of use',
-				'cs' => 'Podmínky používání', 
-			), 
+				'cs' => 'Podmínky používání',
+			),
 			'titlePattern' => array(
-				'sk' => 'Podmienky používania', 
+				'sk' => 'Podmienky používania',
 				'en' => 'Terms of use',
-				'cs' => 'Podmínky používání', 
-			)
+				'cs' => 'Podmínky používání',
+			),
 			'name' => array(
-				'sk' => 'Podmienky používania', 
+				'sk' => 'Podmienky používania',
 				'en' => 'Terms of use',
-				'cs' => 'Podmínky používání', 
-			), 
+				'cs' => 'Podmínky používání',
+			),
 		),
 	);
 

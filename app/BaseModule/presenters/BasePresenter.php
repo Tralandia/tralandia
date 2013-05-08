@@ -126,6 +126,9 @@ abstract class BasePresenter extends Presenter {
 		//$this->loggedUser = $this->userRepositoryAccessor->get()->find(643);
 		if($this->user->isLoggedIn()) {
 			$this->loggedUser = $this->userRepositoryAccessor->get()->find($this->user->getId());
+			if(!$this->loggedUser && !$this->isLinkCurrent(':Front:Sign:out')) {
+				$this->redirect(':Front:Sign:out');
+			}
 		}
 	}
 

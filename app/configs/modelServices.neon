@@ -131,6 +131,7 @@ services:
 	userRentalToFriendRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\User\RentalToFriend')
 	userRoleRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\User\Role')
 	userSiteReviewRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\User\SiteReview')
+	userBlackListRepositoryAccessor: Extras\Models\Repository\RepositoryAccessor(@model, 'Entity\User\BlackList')
 
 factories:
 
