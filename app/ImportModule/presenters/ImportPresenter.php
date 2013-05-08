@@ -161,6 +161,8 @@ class ImportPresenter extends Presenter {
 				$automaticUrls[] = 'http://www.sk.tra.com/import?importSection=users&subsection=importOwners&countryIso='.$value;
 			}
 
+			$automaticUrls[] = 'http://www.sk.tra.com/import?importSection=users&subsection=importBlacklist';
+
 			//$automaticUrls[] = 	'http://www.sk.tra.com/import?importSection=users&subsection=importVisitors';
 			$automaticUrls[] = 	'http://www.sk.tra.com/import?importSection=rentalTypes';
 			$automaticUrls[] = 	'http://www.sk.tra.com/import?importSection=rentalInformation';
