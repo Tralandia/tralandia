@@ -49,6 +49,8 @@ abstract class BasePresenter extends \SecuredPresenter {
 
 	public function beforeRender() {
 
+		$this['head']->addTitle($this->translate('o100182'));
+
 		$this->template->currentLanguage = NULL;
 		$this->template->currentLocation = NULL;
 
