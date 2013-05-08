@@ -89,4 +89,22 @@ class ReservationProtectorTest extends TestCase
 
 	}
 
+	public function testBlackList()
+	{
+		$reservationProtector = $this->reservationProtector;
+		$reservationProtector->reset();
+
+		/** @var $blackListEntity \Entity\User\BlackList */
+		$blackListEntity = $this->getEm()->getRepository(BLACK_LIST_ENTITY)->find(1);
+
+		try {
+			$reservationProtector->canSendReservation($blackListEntity->getEmail());
+		} catch (\EmailIsOnBlackListException $e) {
+			$e->getCode();
+			return;
+		}
+		$this->fail('An expected exception has not been raised.');
+
+	}
+
 }
