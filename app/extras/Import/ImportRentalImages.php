@@ -24,13 +24,11 @@ class ImportRentalImages extends BaseImport {
 		$context = $this->context;
 		$model = $this->model;
 
-		if ($this->developmentMode == TRUE) {
-			$r = q('select id, photos from objects where country_id = 46 order by id limit 100');
-		} else {
-			$existingIds = array();
-			exit('dorobit liveImport do ImportRentalImages.php');
-		}
+		$r = q('select id, photos from objects');
 
+		$insertQuery = 'insert into __importImages (oldRentalId, oldPath, status) values '; 
+		$insert = array();
+		$i = 0;
 		while ($x = mysql_fetch_array($r)) {
 			$existingPhotos = array_unique(array_filter(explode(',', $x['photos'])));
 			$queuedPhotos = array();
@@ -43,14 +41,22 @@ class ImportRentalImages extends BaseImport {
 			$removeFromQueue = array_diff($queuedPhotos, $existingPhotos);
 
 			foreach ($addToQueue as $key => $value) {
-
-				qNew('insert into __importImages set oldRentalId = '.$x['id'].', oldPath = "'.$value.'", status = "toImport"');
+				$insert[] = '('.$x['id'].',"'.$value.'","toImport")';
 			}
 			foreach ($removeFromQueue as $key => $value) {
-
 				qNew('update __importImages set status = "toRemove" where oldRentalId = '.$x['id'].' and oldPath = "'.$value.'"');
 			}
+
+			$i++;
+			if ($i > 1000) {
+				qNew('insert into __importImages (oldRentalId, oldPath, status) values '.implode(',', $insert));
+				$i = 0;
+				$insert = array(); 
+			}
 		}
+
+		qNew('insert into __importImages (oldRentalId, oldPath, status) values '.implode(',', $insert));
+
 		$this->saveVariables();
 	}
 
@@ -59,22 +65,20 @@ class ImportRentalImages extends BaseImport {
 		$context = $this->context;
 		$model = $this->model;
 
-		if ($this->developmentMode == TRUE) {
-			$r = qNew('select * from __importImages where status = "toImport" limit 100');
-		} else {
-			$r = qNew('select * from __importImages where status = "toImport" limit 500');
-		}
+		for ($i=0; $i < 50; $i++) { 
+			$r = qNew('select * from __importImages where status = "toImport"  order by id limit 1');
+			$x = mysql_fetch_array($r);
 
-		while ($x = mysql_fetch_array($r)) {
-			$imageEntity = $context->rentalImageRepositoryAccessor->get()->createNew(FALSE);
-			$image = $context->rentalImageDecoratorFactory->create($imageEntity);
-			$path = $image->setContentFromFile('http://www.tralandia.com/u/'.$x['oldPath']);
-			if ($path) {
+			if (!$x) break;
+			qNew('update __importImages set status = "processing" where id = '.$x['id']);
+
+			try {
+				$imageEntity = $context->rentalImageManager->saveFromFile('http://www.tralandia.com/u/'.$x['oldPath']);
+				$path = $imageEntity->getFilePath();
 				qNew('update __importImages set status = "imported", newPath = "'.$path.'" where id = '.$x['id']);
 				$model->persist($imageEntity);
-			} else {
+			} catch (Nette\UnknownImageFileException $e) {
 				qNew('update __importImages set status = "error" where id = '.$x['id']);
-				unset($imageEntity);
 			}
 		}
 		$model->flush();

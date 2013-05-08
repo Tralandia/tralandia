@@ -49,6 +49,11 @@ class RentalImageManager {
 		return $image;
 	}
 
+	public function saveFromFile($uri) {
+		$image = Nette\Image::fromFile($uri);
+		return $this->save($image);
+	}
+
 	/**
 	 * @return TRUE|FALSE
 	 */

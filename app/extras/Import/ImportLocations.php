@@ -310,9 +310,13 @@ class ImportLocations extends BaseImport {
 	// ----------------------------------------------------------
 	private function importLocalities() {
 
-		$locationType = $this->context->locationTypeEntityFactory->create();
-		$locationType->name = $this->createPhraseFromString('\Location\Location', 'name', 'NATIVE', 'locality', 'en');
-		$locationType->slug = 'locality';
+		$locationType = $this->context->locationTypeRepositoryAccessor->get()->findOneBy(array('slug' => 'locality'));
+
+		if (!$locationType) {
+			$locationType = $this->context->locationTypeEntityFactory->create();
+			$locationType->name = $this->createPhraseFromString('\Location\Location', 'name', 'NATIVE', 'locality', 'en');
+			$locationType->slug = 'locality';
+		}
 		
 		$this->model->persist($locationType);
 

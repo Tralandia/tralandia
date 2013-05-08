@@ -169,7 +169,7 @@ class ImportPresenter extends Presenter {
 
 			// Rentals
 			foreach ($allCountries as $key => $value) {
-				$countPerGroup = 300;
+				$countPerGroup = 100;
 				if ($this->session->developmentMode == TRUE) {
 					$c = 1;
 				}  else {
