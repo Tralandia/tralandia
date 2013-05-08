@@ -18,15 +18,19 @@ class ReservationProtector {
 	 */
 	protected $section;
 
+	private $userBlackListRepository;
+
 
 	/**
+	 * @param $userBlackListRepository
 	 * @param \Nette\Http\Session $session
 	 */
-	public function __construct(\Nette\Http\Session $session)
+	public function __construct($userBlackListRepository, \Nette\Http\Session $session)
 	{
 		$section = $session->getSection('reservationProtector');
 
 		$this->section = $section;
+		$this->userBlackListRepository = $userBlackListRepository;
 	}
 
 
@@ -44,12 +48,17 @@ class ReservationProtector {
 	/**
 	 * @param $email
 	 *
-	 * @return bool
 	 * @throws InfringeMinIntervalReservationException
+	 * @throws EmailIsOnBlackListException
 	 * @throws TooManyReservationForEmailException
+	 * @return bool
 	 */
 	public function canSendReservation($email)
 	{
+		if($this->userBlackListRepository->findOneByEmail($email)) {
+			throw new EmailIsOnBlackListException;
+		}
+
 		$lastReservationTimeForEmail = $this->getLastSentReservationForEmail($email);
 		$oneMonthAgo = (new DateTime)->modify("-1 month");
 		$sentReservationCountForEmail = count($this->getSentReservationForEmail($email));
@@ -174,5 +183,6 @@ class ReservationProtector {
 	}
 }
 
+class EmailIsOnBlackListException extends \Exception { }
 class TooManyReservationForEmailException extends \Exception { }
 class InfringeMinIntervalReservationException extends \Exception { }

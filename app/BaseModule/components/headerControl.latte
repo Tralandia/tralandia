@@ -14,7 +14,7 @@
 						<li class="headerIcon"><a n:href=":Owner:Rental:add" class="red"><i class="entypo-plus"></i><strong> {_o793}</strong></a> </li>
 					*}
 
-					{if $loggedUser}
+					{if $user->isLoggedIn()}
 						<li class="headerIcon">
 							<a href="{plink :Owner:User:edit}">{$loggedUser->getLogin()}</a>
 						</li>

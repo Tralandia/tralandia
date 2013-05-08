@@ -17,4 +17,29 @@ class Blacklist extends \Entity\BaseEntity {
 	protected $email;
 
 	//@entity-generator-code --- NEMAZAT !!!
+
+	/* ----------------------------- Methods ----------------------------- */		
+	public function __construct()
+	{
+		parent::__construct();
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\User\Blacklist
+	 */
+	public function setEmail($email)
+	{
+		$this->email = $email;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getEmail()
+	{
+		return $this->email;
+	}
 }
