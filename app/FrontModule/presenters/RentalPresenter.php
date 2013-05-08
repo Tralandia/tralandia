@@ -48,7 +48,7 @@ class RentalPresenter extends BasePresenter {
 			$this->mobileDetail($rental);
 		} else {
 			$this->desktopDetail($rental);
-		}		
+		}
 	}
 
 	public function mobileDetail($rental)
@@ -123,8 +123,8 @@ class RentalPresenter extends BasePresenter {
 		$this->lastSeen->visit($rental);
 
 
-		$this->setLayout("mobileDetailLayout");			
-		$this->setView('mobileDetail');		
+		$this->setLayout("mobileDetailLayout");
+		$this->setView('mobileDetail');
 	}
 
 	public function desktopDetail($rental) {
@@ -223,17 +223,17 @@ class RentalPresenter extends BasePresenter {
 		$bar['currentKey'] = array_search($rental->id, $bar['all']);
 
 		$start = $bar['currentKey']>5 ? ($bar['currentKey']-5) : 0;
-		if (($left = count($bar['all']) - $start) < 12) {
-			$start = $start - (12-$left);
-		}
+//		if (($left = count($bar['all']) - $start) < 12) {
+//			$start = $start - (12-$left);
+//		}
 
 		$bar['all'] = array_slice($bar['all'], $start, 12);
 		if (!isset($bar['currentKey'])) return FALSE;
 
-		$barRentals = array();
-		foreach($bar['all'] as $rental) {
-			$barRentals[] = $this->context->rentalRepositoryAccessor->get()->find($rental);
-		}
+		$barRentals = $this->context->rentalRepositoryAccessor->get()->findById($bar['all']);
+
+		$barRentals = \Tools::sortArrayByArray($barRentals, $bar['all'], function($v) {return $v->getId();});
+
 
 		$lastSearchResults = array();
 		$lastSearchResults['rentals'] = $barRentals;

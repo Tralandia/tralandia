@@ -38,6 +38,13 @@ class FrontRouterTest extends BaseRouterTest
 	public function testCompiler() {
 		$route = $this->route;
 
+		$this->routeIn($route, 'http://sk.usal.tra.com/registracia', 'Registration', array(
+			'action' => 'default',
+			FrontRoute::PRIMARY_LOCATION => $this->findLocation(269),
+			FrontRoute::LANGUAGE => $this->findLanguage(144),
+			FrontRoute::PAGE => $this->findPage(1),
+		));
+
 		// ak objekt uz neexistuje
 		$this->routeIn($route, 'http://www.sk.tra.com/f', 'RentalList', array(
 			'action' => 'redirectToFavorites',
@@ -94,13 +101,6 @@ class FrontRouterTest extends BaseRouterTest
 			FrontRoute::PRIMARY_LOCATION => $this->findLocation(1),
 			FrontRoute::LANGUAGE => $this->findLanguage(38),
 			FrontRoute::PAGE => $this->findPage(2),
-		));
-
-		$this->routeIn($route, 'http://sk.usal.tra.com/registracia', 'Registration', array(
-			'action' => 'default',
-			FrontRoute::PRIMARY_LOCATION => $this->findLocation(269),
-			FrontRoute::LANGUAGE => $this->findLanguage(144),
-			FrontRoute::PAGE => $this->findPage(1),
 		));
 
 		$this->routeIn($route, 'http://www.com.tra.com/registration', 'Registration', array(
