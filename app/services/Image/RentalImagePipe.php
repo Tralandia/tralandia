@@ -35,14 +35,22 @@ class RentalImagePipe extends Nette\Object implements IImagePipe
 	private $fakeImages = ['13220628889049', '13609390897461', '13499812200862', '13310616760678', '13585213911982', '13376844217106', '13559275089209', '13492616958914'];
 
 	/**
+	 * @var string
+	 */
+	private $staticDomain;
+
+
+	/**
 	 * @param string $wwwDir
 	 * @param $imageDir
+	 * @param $staticDomain
 	 * @param \Nette\Http\Request $httpRequest
 	 */
-	public function __construct($wwwDir, $imageDir, Request $httpRequest)
+	public function __construct($wwwDir, $imageDir, $staticDomain, Request $httpRequest)
 	{
 		$this->wwwDir = $wwwDir;
 		$this->imageDir = $imageDir;
+		$this->staticDomain = $staticDomain;
 
 		// base of public url
 		$this->baseUrl = rtrim($httpRequest->url->baseUrl, '/');
@@ -74,7 +82,8 @@ class RentalImagePipe extends Nette\Object implements IImagePipe
 	 */
 	private function publicPath($file)
 	{
-		return $this->baseUrl . $this->imageDir . str_replace($this->wwwDir, '', $file);
+		$a = $this->staticDomain ? $this->staticDomain : $this->baseUrl;
+		return $a . $this->imageDir . str_replace($this->wwwDir, '', $file);
 	}
 
 }
