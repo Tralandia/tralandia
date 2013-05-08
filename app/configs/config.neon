@@ -252,8 +252,8 @@ services:
 	statistics.registrations:
 		class: Statistics\Registrations
 
-	dictionary.updateTranslationStatus: DictionaryManager\UpdateTranslationStatus
-	findOutdatedTranslations: DictionaryManager\FindOutdatedTranslations
+	dictionary.updateTranslationStatus: Dictionary\UpdateTranslationStatus
+	findOutdatedTranslations: Dictionary\FindOutdatedTranslations
 
 	device: Device
 	deviceDetect: Mobile_Detect
@@ -515,12 +515,9 @@ factories:
 		class: AdminModule\Grids\Statistics\RegistrationsGrid
 		implement: AdminModule\Grids\Statistics\IRegistrationsGridFactory
 
-
-	#dataGrid:
-		#class: TwiGrid\DataGrid
-		#factory: TwiGrid\DataGrid
-		#setup:
-		#	- setTranslator(@translator)
+	dictionaryManagerGridFactory:
+		class: AdminModule\Grids\Dictionary\ManagerGrid
+		implement: AdminModule\Grids\Dictionary\IManagerGridFactory
 
 includes:
 	- webLoader.neon

@@ -6,12 +6,12 @@ use AdminModule\Components\AdminGridControl;
 
 class PhraseCheckingCentralGrid extends AdminGridControl {
 
-	/** 
-	 * @var \DictionaryManager\FindOutdatedTranslations
+	/**
+	 * @var \Dictionary\FindOutdatedTranslations
 	 */
 	protected $findOutdatedTranslations;
 
-	public function __construct($repository, \DictionaryManager\FindOutdatedTranslations $findOutdatedTranslations) {
+	public function __construct($repository, \Dictionary\FindOutdatedTranslations $findOutdatedTranslations) {
 		$this->repository = $repository;
 		$this->findOutdatedTranslations = $findOutdatedTranslations;
 	}

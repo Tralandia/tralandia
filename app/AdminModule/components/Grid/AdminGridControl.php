@@ -26,6 +26,7 @@ class AdminGridControl extends BaseGridControl {
 	{
 		$this->translator = $translator;
 		$this->collator = $collator;
+		parent::__construct();
 	}
 
 

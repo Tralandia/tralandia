@@ -1,6 +1,6 @@
 <?php
 
-namespace DictionaryManager;
+namespace Dictionary;
 
 use Entity\Phrase\Phrase;
 use Entity\Phrase\Translation;
