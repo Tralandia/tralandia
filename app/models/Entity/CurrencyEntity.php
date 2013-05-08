@@ -10,7 +10,8 @@ use	Extras\Annotation as EA;
  * @ORM\Entity(repositoryClass="Repository\CurrencyRepository")
  * @ORM\Table(name="currency", indexes={@ORM\index(name="name", columns={"name_id"}), @ORM\index(name="iso", columns={"iso"})})
  * @EA\Primary(key="id", value="iso")
- */
+ * @EA\Generator(skip="{setExchangeRate}")
+*/
 class Currency extends \Entity\BaseEntity {
 
 	/**
@@ -42,6 +43,28 @@ class Currency extends \Entity\BaseEntity {
 	 * @ORM\Column(type="float")
 	 */
 	protected $searchInterval = 10;
+
+
+	/**
+	 * @param float
+	 * @return \Entity\Currency
+	 */
+	public function setExchangeRate($exchangeRate)
+	{
+		$this->exchangeRate = $exchangeRate;
+
+		if ($exchangeRate <= 10) {
+			$searchInterval = 10;
+		} else if ($exchangeRate <= 100) {
+			$searchInterval = 100;
+		} else {
+			$searchInterval = 1000;
+		}
+
+		$this->setSearchInterval($searchInterval);
+
+		return $this;
+	}
 
 	//@entity-generator-code --- NEMAZAT !!!
 
@@ -88,18 +111,7 @@ class Currency extends \Entity\BaseEntity {
 	{
 		return $this->iso;
 	}
-		
-	/**
-	 * @param float
-	 * @return \Entity\Currency
-	 */
-	public function setExchangeRate($exchangeRate)
-	{
-		$this->exchangeRate = $exchangeRate;
-
-		return $this;
-	}
-		
+				
 	/**
 	 * @return \Entity\Currency
 	 */

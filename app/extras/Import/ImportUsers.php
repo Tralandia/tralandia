@@ -190,6 +190,13 @@ class ImportUsers extends BaseImport {
 		$this->model->flush();
 	}
 
+	private function importBlacklist() {
+		$r = q('select * from blacklist');
+		while($x = mysql_fetch_array($r)) {
+			qNew('insert into user_blacklist set email = "'.$x['email'].'"');
+		}
+	}
+
 	private function importVisitors() {
 
 		return true; //@todo - toto treba opravit este nefunguje

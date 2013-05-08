@@ -258,7 +258,7 @@ class ImportPresenter extends Presenter {
 		if (isset($this->session->automaticOn) && $this->session->automaticOn == 1) {
 			if (isset($this->session->automaticUrls[$this->session->automaticNextKey+1])) {
 				$this->session->automaticNextKey++;
-				$script = 'Current step: '.$this->session->automaticUrls[$this->session->automaticNextKey];
+				$script = 'Current step: '.$this->session->automaticUrls[$this->session->automaticNextKey-1];
 				$script .= '<br>Step: '.$this->session->automaticNextKey.' of '.count($this->session->automaticUrls);
 				$script .= '<br>Next step: '.$this->session->automaticUrls[$this->session->automaticNextKey];
 				$script .= '<script>document.location.href="'.$this->session->automaticUrls[$this->session->automaticNextKey].'"</script>';
