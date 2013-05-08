@@ -256,6 +256,11 @@ class ImportPage extends BaseImport {
 				'en' => 'Destinations in [location]',
 				'cs' => 'Destinace [locationLocative]', 
 			)
+			'name' => array(
+				'sk' => 'Destinácie', 
+				'en' => 'Destinations',
+				'cs' => 'Destinace', 
+			), 
 		),
 		array(
 			'destination' => ':Front:AboutUs:default', 
@@ -270,6 +275,11 @@ class ImportPage extends BaseImport {
 				'en' => 'About Tralandia',
 				'cs' => 'O projekte Tralandia', 
 			)
+			'name' => array(
+				'sk' => 'O nás', 
+				'en' => 'About us',
+				'cs' => 'O nás', 
+			), 
 		),
 		array(
 			'destination' => ':Front:SupportUs:default', 
@@ -284,6 +294,11 @@ class ImportPage extends BaseImport {
 				'en' => 'Support Tralandia',
 				'cs' => 'Podpořte Tralandiu', 
 			)
+			'name' => array(
+				'sk' => 'Podporte Tralandiu', 
+				'en' => 'Support Tralandia',
+				'cs' => 'Podpořte Tralandiu', 
+			), 
 		),
 		array(
 			'destination' => ':Front:Faq:default', 
@@ -298,6 +313,11 @@ class ImportPage extends BaseImport {
 				'en' => 'Frequently asked questions',
 				'cs' => 'Časté otázky', 
 			)
+			'name' => array(
+				'sk' => 'Časté otázky', 
+				'en' => 'Frequently asked questions',
+				'cs' => 'Časté otázky', 
+			), 
 		),
 		array(
 			'destination' => ':Front:Toc:default', 
@@ -312,6 +332,11 @@ class ImportPage extends BaseImport {
 				'en' => 'Terms of use',
 				'cs' => 'Podmínky používání', 
 			)
+			'name' => array(
+				'sk' => 'Podmienky používania', 
+				'en' => 'Terms of use',
+				'cs' => 'Podmínky používání', 
+			), 
 		),
 	);
 
@@ -337,11 +362,11 @@ class ImportPage extends BaseImport {
 			if(array_key_exists('parameters', $pageData)) $page->parameters = $pageData['parameters'];
 
 			foreach ($page->titlePattern->getTranslations() as $translation) {
-				$translation->translation = Arrays::get($pageData, array('titlePattern', $translation->language->iso), '');
+				$translation->translation = Arrays::get($pageData, array('titlePattern', $translation->language->iso), $pageData['titlePattern']['sk']);
 			}
 
 			foreach ($page->h1Pattern->getTranslations() as $translation) {
-				$translation->translation = Arrays::get($pageData, array('h1Pattern', $translation->language->iso), '');
+				$translation->translation = Arrays::get($pageData, array('h1Pattern', $translation->language->iso), $pageData['h1Pattern']['sk']);
 			}
 
 			foreach ($page->name->getTranslations() as $translation) {
