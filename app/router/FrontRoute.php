@@ -378,9 +378,6 @@ class FrontRoute extends BaseRoute
 
 		$pathSegmentTypesFlip = array_flip(static::$pathSegmentTypes);
 
-		$pathSegmentList = $this->routingPathSegmentRepositoryAccessor->get()
-			->findForRouter($params['language'], $params['primaryLocation'], $pathSegments);
-
 		$pathSegmentRepository = $this->routingPathSegmentRepositoryAccessor->get();
 		$pathSegmentOldRepository = $this->routingPathSegmentOldRepositoryAccessor->get();
 
