@@ -3,14 +3,21 @@
 namespace AdminModule\Grids;
 
 use AdminModule\Components\AdminGridControl;
+use DataSource\Region;
 use Nette\Utils\Paginator;
 
 class RegionGrid extends AdminGridControl {
 
-	public function __construct($repository, \Extras\Translator $translator, \Environment\Collator $collator) {
-		$this->repository = $repository;
+	/**
+	 * @var \DataSource\Region
+	 */
+	private $dataSource;
 
-		parent::__construct($translator, $collator);
+
+	public function __construct(Region $dataSource) {
+
+		parent::__construct();
+		$this->dataSource = $dataSource;
 	}
 
 	public function render() {
@@ -27,21 +34,12 @@ class RegionGrid extends AdminGridControl {
 		$grid->addColumn('slug');
 		$grid->addColumn('hasPolygons', 'Has polygons');
 
+		$grid->setDataSourceCallback([$this->dataSource, 'getData']);
 
 		return $grid;
 	}
 
-	/**
-	 * @param $filter
-	 * @param $order
-	 * @param \Nette\Utils\Paginator $paginator
-	 *
-	 * @return mixed
-	 */
-	public function getDataSource($filter, $order, Paginator $paginator = NULL)
-	{
-		return $this->getTranslatedAndOrderedBy($this->repository->findRegions(), 'parent->name');
-	}
+
 }
 
 interface IRegionGridFactory {

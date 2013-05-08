@@ -261,6 +261,18 @@ services:
 
 	updateTranslationStatusRobot: Robot\UpdateTranslationStatusRobot
 
+	resultSorter: ResultSorter
+
+	# ==============================
+	# ==================== DATA SOURCES
+	# ==============================
+
+	amenityDataSource: DataSource\Amenity(@rentalAmenityRepositoryAccessor::get())
+	countryDataSource: DataSource\Country(@locationRepositoryAccessor::get())
+	localityDataSource: DataSource\Locality(@locationRepositoryAccessor::get())
+	regionDataSource: DataSource\Region(@locationRepositoryAccessor::get())
+
+
 	# ==============================
 	# ==================== FORMS HANDLERS
 	# ==============================
@@ -458,8 +470,9 @@ factories:
 	# ==============================
 	# ==================== G R I D S
 	# ==============================
+
 	amenityGridFactory:
-		class: AdminModule\Grids\AmenityGrid(@rentalAmenityRepositoryAccessor::get())
+		class: AdminModule\Grids\AmenityGrid
 		implement: AdminModule\Grids\IAmenityGridFactory
 
 	amenityTypeGridFactory:
@@ -479,15 +492,15 @@ factories:
 		implement: AdminModule\Grids\ILanguageGridFactory
 
 	countryGridFactory:
-		class: AdminModule\Grids\countryGrid(@locationRepositoryAccessor::get())
+		class: AdminModule\Grids\countryGrid
 		implement: AdminModule\Grids\ICountryGridFactory
 
 	regionGridFactory:
-		class: AdminModule\Grids\RegionGrid(@locationRepositoryAccessor::get())
+		class: AdminModule\Grids\RegionGrid
 		implement: AdminModule\Grids\IRegionGridFactory
 
 	localityGridFactory:
-		class: AdminModule\Grids\LocalityGrid(@locationRepositoryAccessor::get())
+		class: AdminModule\Grids\LocalityGrid
 		implement: AdminModule\Grids\ILocalityGridFactory
 
 	locationTypeGridFactory:

@@ -3,14 +3,21 @@
 namespace AdminModule\Grids;
 
 use AdminModule\Components\AdminGridControl;
+use DataSource\Country;
 use Nette\Utils\Paginator;
 
 class CountryGrid extends AdminGridControl {
 
-	public function __construct($repository, \Extras\Translator $translator, \Environment\Collator $collator) {
-		$this->repository = $repository;
+	/**
+	 * @var \DataSource\Country
+	 */
+	private $dataSource;
 
-		parent::__construct($translator, $collator);
+
+	public function __construct(Country $dataSource) {
+
+		parent::__construct();
+		$this->dataSource = $dataSource;
 	}
 
 	public function render() {
@@ -27,26 +34,17 @@ class CountryGrid extends AdminGridControl {
 		$grid->addColumn('slug');
 		$grid->addColumn('domain');
 
+		$grid->setDataSourceCallback([$this->dataSource, 'getData']);
+
 		return $grid;
 	}
 
-	/**
-	 * @param $filter
-	 * @param $order
-	 * @param \Nette\Utils\Paginator $paginator
-	 *
-	 * @return mixed
-	 */
-	public function getDataSource($filter, $order, Paginator $paginator = NULL)
-	{
-		return $this->getTranslatedAndOrderedBy($this->repository->findCountries(), 'parent->name');
-	}
 }
 
 interface ICountryGridFactory {
 
 	/**
-	 * @return ILocationGridFactory
+	 * @return CountryGrid
 	 */
 	public function create();
 }
