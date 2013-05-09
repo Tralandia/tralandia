@@ -104,6 +104,9 @@ class HeaderControl extends \BaseModule\Components\BaseControl {
 		$template->facebookShareTag = $shareLinks->getFacebookShareTag($shareLink, $shareText);
 		$template->pinterestShareTag = $shareLinks->getPinterestShareTag($shareLink, $shareText, $shareImage);
 
+		$template->facebookPageShageTag = $shareLinks->getFacebookPageShareTag();
+		$template->googlePlusProfileShareTag = $shareLinks->getGooglePlusProfileShareTag();
+
 		$template->render();
 	}
 
