@@ -32,8 +32,6 @@ class LanguageRepository extends \Repository\BaseRepository {
 		// TODO: Zoradit pomocou \Collator
 		// $collator->asort($return);
 
-
-
 		return $return;
 
 	}

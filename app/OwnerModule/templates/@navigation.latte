@@ -6,7 +6,7 @@
 		{if isset($rentalList)}
 		<h4><i class="icon-cog"></i> {_o100152}</h4>
 		<ul>
-			<li><a n:href=":Owner:User:edit">{_100146}</a></li>
+			<li><a n:href=":Owner:User:edit">{_o100146}</a></li>
 
 			{foreach $rentalList as $rental}
 				{if $iterator->first}{var $firstRental = $rental}{/if}
@@ -14,7 +14,7 @@
 			{/foreach}
 		
 			<li><a n:href=":Owner:CalendarWidget:, id => $firstRental->id">{_o100153}</a></li>
-			<li n:if="$reservationsCount > 0"><a n:href=":Owner:Reservation:list, rental => $firstRental->id">#Rezervacie <span class="counter">{$reservationsCount}</span></a></li>
+			<li n:if="$reservationsCount > 0"><a n:href=":Owner:Reservation:list, rental => $firstRental->id">{_o100184} <span class="counter">{$reservationsCount}</span></a></li>
 			<li><a n:href=":Front:Sign:out">{_o100154}</a></li>
 		
 		</ul>
