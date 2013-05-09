@@ -3,14 +3,21 @@
 namespace AdminModule\Grids;
 
 use AdminModule\Components\AdminGridControl;
+use DataSource\Locality;
 use Nette\Utils\Paginator;
 
 class LocalityGrid extends AdminGridControl {
 
-	public function __construct($repository, \Extras\Translator $translator, \Environment\Collator $collator) {
-		$this->repository = $repository;
+	/**
+	 * @var \DataSource\Locality
+	 */
+	private $dataSource;
 
-		parent::__construct($translator, $collator);
+
+	public function __construct(Locality $dataSource) {
+
+		parent::__construct();
+		$this->dataSource = $dataSource;
 	}
 
 	public function render() {
@@ -26,18 +33,9 @@ class LocalityGrid extends AdminGridControl {
 		$grid->addColumn('name');
 		$grid->addColumn('slug');
 
+		$grid->setDataSourceCallback([$this->dataSource, 'getData']);
+
 		return $grid;
-	}
-	/**
-	 * @param $filter
-	 * @param $order
-	 * @param \Nette\Utils\Paginator $paginator
-	 *
-	 * @return mixed
-	 */
-	public function getDataSource($filter, $order, Paginator $paginator = NULL)
-	{
-		return $this->getTranslatedAndOrderedBy($this->repository->findLocalities(), 'parent->name');
 	}
 
 }
@@ -45,7 +43,7 @@ class LocalityGrid extends AdminGridControl {
 interface ILocalityGridFactory {
 
 	/**
-	 * @return ILocationGridFactory
+	 * @return LocalityGrid
 	 */
 	public function create();
 }

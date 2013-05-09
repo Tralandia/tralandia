@@ -4,11 +4,16 @@ namespace Entity;
 
 use Entity\Phrase;
 use Doctrine\ORM\Mapping as ORM;
+use Entity\User\User;
 use	Extras\Annotation as EA;
 
 /**
  * @ORM\Entity(repositoryClass="Repository\LanguageRepository")
- * @ORM\Table(name="language", indexes={@ORM\index(name="iso", columns={"iso"}), @ORM\index(name="supported", columns={"supported"})})
+ * @ORM\Table(name="language", indexes={
+ * 		@ORM\index(name="iso", columns={"iso"}),
+ * 		@ORM\index(name="live", columns={"live"}),
+ * 		@ORM\index(name="supported", columns={"supported"})
+ * })
  * @EA\Primary(key="id", value="iso")
  */
 class Language extends \Entity\BaseEntityDetails {
@@ -40,6 +45,12 @@ class Language extends \Entity\BaseEntityDetails {
 	 * @ORM\Column(type="boolean", nullable=true)
 	 */
 	protected $supported;
+
+	/**
+	 * @var boolean
+	 * @ORM\Column(type="boolean", nullable=true)
+	 */
+	protected $live;
 
 	/**
 	 * @var string
@@ -140,6 +151,12 @@ class Language extends \Entity\BaseEntityDetails {
 		return $plural;
 	}
 
+	public function hasTranslator()
+	{
+		return $this->translator instanceof User;
+	}
+
+
 	//@entity-generator-code --- NEMAZAT !!!
 
 	/* ----------------------------- Methods ----------------------------- */		
@@ -225,6 +242,35 @@ class Language extends \Entity\BaseEntityDetails {
 	public function getSupported()
 	{
 		return $this->supported;
+	}
+		
+	/**
+	 * @param boolean
+	 * @return \Entity\Language
+	 */
+	public function setLive($live)
+	{
+		$this->live = $live;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Language
+	 */
+	public function unsetLive()
+	{
+		$this->live = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return boolean|NULL
+	 */
+	public function getLive()
+	{
+		return $this->live;
 	}
 		
 	/**

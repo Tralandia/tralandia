@@ -18,13 +18,13 @@ class PhraseCheckingSupportedGrid extends AdminGridControl {
 	 */
 	public $collator;
 
-	/** 
+	/**
 	 * @var \Repository\LanguageRepository
 	 */
 	protected $languageRepositoryAccessor;
 
-	/** 
-	 * @var \DictionaryManager\FindOutdatedTranslations
+	/**
+	 * @var \Dictionary\FindOutdatedTranslations
 	 */
 	protected $findOutdatedTranslations;
 
