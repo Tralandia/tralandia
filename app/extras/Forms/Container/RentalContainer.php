@@ -5,6 +5,7 @@ namespace Extras\Forms\Container;
 
 use Doctrine\ORM\EntityManager;
 use Entity\Contact\Address;
+use Entity\Contact\Phone;
 use Entity\Rental\Rental;
 use Environment\Environment;
 use FrontModule\Forms\RegistrationForm;
@@ -152,6 +153,21 @@ class RentalContainer extends BaseContainer
 		$address = $rentalValues->address;
 		if(!$address->addressEntity instanceof Address) {
 			$form['rental']['address']->getMainControl()->addError($this->translate('o100134'));
+		}
+		
+		// $url = $rentalValues->url;
+		// if ($url) {
+		// 	if ($url && !strpos('http://', $url)) {
+		// 		$url = 'http://'.$url;
+		// 	}
+		// 	if (!\Nette\Utils\Validators::isUrl($url)) {
+		// 		$form['rental']['url']->getMainControl()->addError('#invalid url');
+		// 	}
+		// }
+
+		$phone = $rentalValues->phone;
+		if ($phone->number && !$phone->phone instanceof Phone) {
+			$form['rental']['address']->getMainControl()->addError('#invalid phone number');
 		}
 
 	}

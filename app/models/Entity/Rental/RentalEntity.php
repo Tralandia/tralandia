@@ -465,9 +465,16 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 */
 	public function getSeparateGroups()
 	{
-		$separateGroups = $this->getAmenitiesByType(array('separate-groups'));
-
-		return (bool)count($separateGroups) == 1;
+		$separateGroups = $this->getAmenitiesByType('separate-groups');
+		if (count($separateGroups)) {
+			$group = current($separateGroups);
+			if ($group->slug=='separate-groups-no') {
+				return FALSE;
+			} elseif ($group->slug=='separate-groups-yes') {
+				return TRUE;
+			}
+		}
+		return NULL;
 	}
 
 
@@ -834,6 +841,23 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	public function getAddress()
 	{
 		return $this->address;
+	}
+		
+	/**
+	 * @param \Entity\Rental\Placement
+	 * @return \Entity\Rental\Rental
+	 */
+	public function setPlacement(\Entity\Rental\Placement $placement)
+	{
+		if ($this->hasPlacement()) {
+			foreach ($this->placements as $placementEntity) {
+				$this->removePlacement($placementEntity);
+			}
+		}
+		$this->placements->add($placement);
+		$placement->addRental($this);
+
+		return $this;
 	}
 		
 	/**

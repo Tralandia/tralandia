@@ -44,6 +44,38 @@ class AmenityRepository extends \Repository\BaseRepository
 		return $return;
 	}
 
+	/**
+	 * @param $type
+	 * @param ITranslator $translator
+	 *
+	 * @return array
+	 */
+	protected function findByType($type)
+	{
+		if ($type instanceof \Entity\Rental\AmenityType) {
+			return parent::findByType($type);
+		}
+
+		$qb = $this->_em->createQueryBuilder();
+		$qb->select('e')
+			->from($this->_entityName, 'e')
+			->leftJoin('e.type', 't')
+			->andWhere($qb->expr()->eq('t.slug', ':type'))->setParameter('type', $type)
+			->orderBy('e.sorting', 'ASC');
+
+		return $qb->getQuery()->getResult();
+	}
+
+	public function findBySeparateGroupsType()
+	{
+		return $this->findByType('separate-groups');
+	}
+
+	public function findByPetType()
+	{
+		return $this->findByType('animal');
+	}
+
 
 	public function findByBoardTypeForSelect(ITranslator $translator)
 	{
