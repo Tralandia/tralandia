@@ -1,8 +1,8 @@
 <div class="span12">
 	<header class="innerPadding baseRadius baseBorder" id="header">
 	<div id="socialMediaLinks">
-		<a class="facebook" href="#"><i class="icon-facebook-sign"></i></a>
-		<a class="googlePlus" href="#"><i class="icon-google-plus-sign"></i></a>
+		{$facebookPageShageTag->addClass('facebook')->add('<i class="icon-facebook-sign"></i>')}
+		{$googlePlusProfileShareTag->addClass('googlePlus')->add('<i class="icon-google-plus-sign"></i>')}
 	</div>
 		<div class="inner" id="topWidget"
 			 style="background-image: url({$basePath}/images/headerBanner/{$environment->getPrimaryLocation()->getIso()}.jpg);">
