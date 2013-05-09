@@ -43,7 +43,7 @@ class LocalityGrid extends AdminGridControl {
 interface ILocalityGridFactory {
 
 	/**
-	 * @return ILocationGridFactory
+	 * @return LocalityGrid
 	 */
 	public function create();
 }

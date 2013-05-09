@@ -1,7 +1,5 @@
 <?php
 
-use Doctrine\ORM\EntityManager;
-
 class ResultSorter {
 
 
@@ -15,22 +13,15 @@ class ResultSorter {
 	 */
 	private $collator;
 
-	/**
-	 * @var Doctrine\ORM\EntityManager
-	 */
-	private $em;
-
 
 	/**
-	 * @param EntityManager $em
 	 * @param \Extras\Translator $translator
 	 * @param \Environment\Collator $collator
 	 */
-	public function __construct(EntityManager $em, \Extras\Translator $translator, \Environment\Collator $collator) {
+	public function __construct(\Extras\Translator $translator, \Environment\Collator $collator) {
 
 		$this->translator = $translator;
 		$this->collator = $collator;
-		$this->em = $em;
 	}
 
 
@@ -40,10 +31,13 @@ class ResultSorter {
 	 *
 	 * @return array
 	 */
-	public function translateAndSortResult($result, $translatedValueCallback)
+	public function translateAndSort($result, $translatedValueCallback = NULL)
 	{
-		$translatedResult = $this->translateResult($result, $translatedValueCallback);
-		return $this->sortResult($result, $translatedResult);
+		if($translatedValueCallback === NULL) {
+			$translatedValueCallback = function($v) {return $v->getName();};
+		}
+		$translatedResult = $this->translate($result, $translatedValueCallback);
+		return $this->sort($result, $translatedResult);
 	}
 
 
@@ -53,7 +47,7 @@ class ResultSorter {
 	 *
 	 * @return array
 	 */
-	protected function translateResult($result, $translatedValueCallback)
+	protected function translate($result, $translatedValueCallback)
 	{
 		$return = [];
 		$translatedValueCallback = new Nette\Callback($translatedValueCallback);
@@ -72,7 +66,7 @@ class ResultSorter {
 	 *
 	 * @return array
 	 */
-	protected function sortResult($result, $translatedResult)
+	protected function sort($result, $translatedResult)
 	{
 		$return = [];
 		$this->collator->asort($translatedResult);

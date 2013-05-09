@@ -2,6 +2,7 @@
 namespace Repository\Phrase;
 
 use Doctrine\ORM\Query\Expr;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Entity\Language;
 use Entity\Phrase\Translation;
 
@@ -34,6 +35,18 @@ class TranslationRepository extends \Repository\BaseRepository {
 		}
 
 		return $qb->getQuery()->getResult();
+	}
+
+	public function toCheckCount(Language $language)
+	{
+		$qb = $this->_em->createQueryBuilder();
+
+		$qb->select('e')->from($this->_entityName, 'e')
+			->where($qb->expr()->eq('e.checked', ':checked'))->setParameter('checked', FALSE)
+			->andWhere($qb->expr()->eq('e.language', ':language'))->setParameter('language', $language);
+
+		$paginator = new Paginator($qb);
+		return $paginator->count();
 	}
 
 }

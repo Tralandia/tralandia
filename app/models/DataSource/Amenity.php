@@ -26,7 +26,7 @@ class Amenity extends BaseDataSource {
 	{
 		$result = $this->amenityRepository->findAll();
 		// najprv zoradim podla abecedy
-		$orderedAmenities = $this->resultSorter->translateAndSortResult($result, function($v) {return $v->getName();});
+		$orderedAmenities = $this->resultSorter->translateAndSort($result, function($v) {return $v->getName();});
 
 		// a potom podla important
 		$important = [];

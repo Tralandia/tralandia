@@ -30,7 +30,7 @@ class Region extends BaseDataSource {
 	{
 		$result = $this->repository->findRegions();
 
-		$orderedResult = $this->resultSorter->translateAndSortResult($result, function($v) {return $v->getParent()->getName();});
+		$orderedResult = $this->resultSorter->translateAndSort($result, function($v) {return $v->getParent()->getName();});
 
 		return $orderedResult;
 	}

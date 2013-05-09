@@ -30,7 +30,7 @@ class Locality extends BaseDataSource {
 	{
 		$result = $this->repository->findLocalities();
 
-		$orderedResult = $this->resultSorter->translateAndSortResult($result, function($v) {return $v->getParent()->getName();});
+		$orderedResult = $this->resultSorter->translateAndSort($result, function($v) {return $v->getParent()->getName();});
 
 		return $orderedResult;
 	}

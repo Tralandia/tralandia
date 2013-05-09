@@ -30,7 +30,7 @@ class Country extends BaseDataSource {
 	{
 		$result = $this->repository->findCountries();
 
-		$orderedResult = $this->resultSorter->translateAndSortResult($result, function($v) {return $v->getParent()->getName();});
+		$orderedResult = $this->resultSorter->translateAndSort($result, function($v) {return $v->getParent()->getName();});
 
 		return $orderedResult;
 	}

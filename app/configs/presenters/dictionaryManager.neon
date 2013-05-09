@@ -1,0 +1,10 @@
+entity: Entity\Language
+
+parameters:
+	title: Dictionary Manager
+	h1: 'Dictionary Manager'
+
+gridFactory: @dictionaryManagerGridFactory
+
+form:
+	fields:

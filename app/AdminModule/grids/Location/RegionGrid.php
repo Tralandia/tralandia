@@ -45,7 +45,7 @@ class RegionGrid extends AdminGridControl {
 interface IRegionGridFactory {
 
 	/**
-	 * @return ILocationGridFactory
+	 * @return RegionGrid
 	 */
 	public function create();
 }
