@@ -1,0 +1,37 @@
+{define #col-name}
+	<td>{_$row->language->getName()} ({$row->language->getIso()})</td>
+{/define}
+
+{define #col-lastTranslation}
+	<td>???</td>
+{/define}
+
+{define #col-toTranslate}
+	<td>{$cell}</td>
+{/define}
+
+{define #col-toCheck}
+	<td>{$cell}</td>
+{/define}
+
+{define #col-translator}
+	<td>{if $cell}{$cell->getLogin()}{/if}</td>
+{/define}
+
+
+{define #row-actions}
+		{if $row->language->live}
+			{var $buttonText = 'Live'; $buttonClass = 'btn-success'; $linkText = 'turn off'}
+		{else}
+			{var $buttonText = 'Not live'; $buttonClass = ''; $linkText = 'set LIVE'}
+		{/if}
+		<div class="btn-group">
+			<button class="btn btn-mini dropdown-toggle {$buttonClass}" data-toggle="dropdown">{$buttonText}<span class="caret"></span></button>
+			<ul class="dropdown-menu">
+				<li><a href="#">{$linkText}</a></li>
+			</ul>
+		</div>
+		<a href="#" class="ajax btn btn-small btn-warning">request</a>
+		<a href="#" class="ajax btn btn-small btn-warning">mark as paid</a>
+		<a href="{plink edit $primary}" data-datagrid-edit class="ajax btn btn-small btn-primary">Edit</a>
+{/define}

@@ -252,14 +252,33 @@ services:
 	statistics.registrations:
 		class: Statistics\Registrations
 
-	dictionary.updateTranslationStatus: DictionaryManager\UpdateTranslationStatus
-	findOutdatedTranslations: DictionaryManager\FindOutdatedTranslations
+	dictionary.updateTranslationStatus: Dictionary\UpdateTranslationStatus
+	findOutdatedTranslations: Dictionary\FindOutdatedTranslations
 
 	device: Device
 	deviceDetect: Mobile_Detect
 
 
 	updateTranslationStatusRobot: Robot\UpdateTranslationStatusRobot
+
+	resultSorter: ResultSorter
+
+	# ==============================
+	# ====================
+	# ==============================
+
+	supportedLanguages: SupportedLanguages
+
+	# ==============================
+	# ==================== DATA SOURCES
+	# ==============================
+
+	amenityDataSource: DataSource\Amenity(@rentalAmenityRepositoryAccessor::get())
+	countryDataSource: DataSource\Country(@locationRepositoryAccessor::get())
+	localityDataSource: DataSource\Locality(@locationRepositoryAccessor::get())
+	regionDataSource: DataSource\Region(@locationRepositoryAccessor::get())
+	dictionaryManagerDataSource: DataSource\DictionaryManager
+
 
 	# ==============================
 	# ==================== FORMS HANDLERS
@@ -458,8 +477,9 @@ factories:
 	# ==============================
 	# ==================== G R I D S
 	# ==============================
+
 	amenityGridFactory:
-		class: AdminModule\Grids\AmenityGrid(@rentalAmenityRepositoryAccessor::get())
+		class: AdminModule\Grids\AmenityGrid
 		implement: AdminModule\Grids\IAmenityGridFactory
 
 	amenityTypeGridFactory:
@@ -479,15 +499,15 @@ factories:
 		implement: AdminModule\Grids\ILanguageGridFactory
 
 	countryGridFactory:
-		class: AdminModule\Grids\countryGrid(@locationRepositoryAccessor::get())
+		class: AdminModule\Grids\countryGrid
 		implement: AdminModule\Grids\ICountryGridFactory
 
 	regionGridFactory:
-		class: AdminModule\Grids\RegionGrid(@locationRepositoryAccessor::get())
+		class: AdminModule\Grids\RegionGrid
 		implement: AdminModule\Grids\IRegionGridFactory
 
 	localityGridFactory:
-		class: AdminModule\Grids\LocalityGrid(@locationRepositoryAccessor::get())
+		class: AdminModule\Grids\LocalityGrid
 		implement: AdminModule\Grids\ILocalityGridFactory
 
 	locationTypeGridFactory:
@@ -515,12 +535,9 @@ factories:
 		class: AdminModule\Grids\Statistics\RegistrationsGrid
 		implement: AdminModule\Grids\Statistics\IRegistrationsGridFactory
 
-
-	#dataGrid:
-		#class: TwiGrid\DataGrid
-		#factory: TwiGrid\DataGrid
-		#setup:
-		#	- setTranslator(@translator)
+	dictionaryManagerGridFactory:
+		class: AdminModule\Grids\Dictionary\ManagerGrid
+		implement: AdminModule\Grids\Dictionary\IManagerGridFactory
 
 includes:
 	- webLoader.neon

@@ -2,7 +2,7 @@
 
 namespace Robot;
 
-use DictionaryManager\UpdateTranslationStatus;
+use Dictionary\UpdateTranslationStatus;
 use Doctrine\ORM\EntityManager;
 
 /**
@@ -14,7 +14,7 @@ class UpdateTranslationStatusRobot extends \Nette\Object implements IRobot
 {
 
 	/**
-	 * @var \DictionaryManager\UpdateTranslationStatus
+	 * @var \Dictionary\UpdateTranslationStatus
 	 */
 	protected $updateTranslationStatus;
 

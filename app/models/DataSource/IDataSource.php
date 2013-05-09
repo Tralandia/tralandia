@@ -1,6 +1,6 @@
 <?php
 
-namespace Statistics;
+namespace DataSource;
 
 
 use Nette\Utils\Paginator;
@@ -15,4 +15,5 @@ interface IDataSource {
 	 * @return mixed
 	 */
 	public function getData($filter, $order, Paginator $paginator = NULL);
+
 }

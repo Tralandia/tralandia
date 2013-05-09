@@ -8,6 +8,8 @@ use Nextras\Datagrid\Datagrid;
 
 abstract class BaseGridControl extends BaseControl {
 
+	const ITEMS_PER_PAGE = 30;
+
 	/**
 	 * @var \Repository\BaseRepository
 	 */
@@ -45,8 +47,6 @@ abstract class BaseGridControl extends BaseControl {
 
 			$grid->setDataSourceCallback($this->getDataSource);
 
-			$grid->setPagination(10, $this->getDataSourceCount);
-
 			$this->grid = $grid;
 		}
 
@@ -73,14 +73,6 @@ abstract class BaseGridControl extends BaseControl {
 		$query->setMaxResults($paginator->itemsPerPage);
 		return $query->getResult();
 	}
-
-
-	public function getDataSourceCount($filter, $order)
-	{
-		$count = count($this->repository->getDataSource()->getQuery()->getResult());
-		return $count;
-	}
-
 
 	/**
 	 * @return array

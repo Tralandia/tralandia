@@ -3,6 +3,7 @@
 namespace Statistics;
 
 
+use DataSource\IDataSource;
 use Doctrine\ORM\EntityManager;
 use Nette\ArrayHash;
 use Nette\Utils\Paginator;
