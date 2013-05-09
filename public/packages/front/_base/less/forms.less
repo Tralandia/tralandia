@@ -26,6 +26,10 @@
 @inputFontSize : 16px;
 
 
+input[type=text] , textarea {
+	box-shadow: none;
+}
+
 table.formTable {
 	// border: 1px solid black;
 	// td {
@@ -153,6 +157,18 @@ table.formTable {
 				}
 			}
 		}
+
+		&.inlineCheckbox {
+			td:nth-child(2){
+				input[type=checkbox] {
+					float:left;
+					position: relative;
+					top: -2px;
+					left: 0;
+
+				}		
+		}
+	}
 
 		td:nth-child(2)  {
 			width: 300px;

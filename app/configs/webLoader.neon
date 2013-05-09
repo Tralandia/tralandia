@@ -306,6 +306,7 @@ parameters:
 				-  %webloader.packages.texyla%
 				-  %webloader.packages.nette%
 				-  %webloader.packages.navigationBarScroll%
+				-  %webloader.packages.socialite%
 			Owner:
 				-  %webloader.packages.jQuery%
 				-  %webloader.packages.jqueryAppear%

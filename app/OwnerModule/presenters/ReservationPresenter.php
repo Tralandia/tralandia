@@ -15,8 +15,9 @@ class ReservationPresenter extends BasePresenter {
 			throw new InvalidArgumentException;
 		}
 
-		$reservations = $this->userRentalReservationRepositoryAccessor->get()->findByRental($rental);
+		$reservations = $this->userRentalReservationRepositoryAccessor->get()->findBy(['rental' => $rental ],['created' => 'DESC']);
 
+		$this->template->today = new \DateTime;
 		$this->template->reservations = $reservations;
 
 	}
