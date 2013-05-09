@@ -358,6 +358,11 @@ factories:
 		parameters: [Environment\Environment environment, Entity\Rental\Rental rental = NULL]
 		implement: Extras\Forms\Container\IRentalContainerFactory
 
+	rentalEditHandlerFactory:
+		class: FormHandler\RentalEditHandler(%rental%)
+		parameters: [Entity\Rental\Rental rental]
+		implement: FormHandler\IRentalEditHandlerFactory
+
 	# ==============================
 	# ==================== COMPONENTS
 	# ==============================
