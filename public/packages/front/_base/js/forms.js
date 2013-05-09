@@ -900,8 +900,9 @@ $('button[type=submit]').live('click',function(){
 // 
 
 function removePriceLine(){
-		$(this).parents('.priceList').remove();
-		console.log($('.priceList').length);	
+		if($('.priceList').length > 1){
+			$(this).parents('.priceList').remove();
+		}	
 }
 
 function createNewLineInPriceList(){
@@ -966,10 +967,15 @@ function createNewLineInPriceList(){
 		base.bindElements = function(){
 			base.$addButton.click(base.addRow);
 			base.$removeButton.click(base.removeRow);
+			base.$removeButton.live('click',base.removeRow);
 		}
 		
 		base.removeRow = function(){
-			console.log('remove');
+			var count = $(base.listContainer).find(base.rowSelector).length;
+			if(count > 1){
+				$(this).parents('.rentalPriceRow').remove();
+			}
+			
 		}
 
 		base._resetValue = function($input){

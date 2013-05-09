@@ -17,12 +17,6 @@ common:
 					label: Registrations
 					link: ':Admin:StatisticsRegistrations:list'
 
-		robot:
-			label: Robot #@todo
-			items:
-				registrations:
-					label: Update Translations Status
-					link: ':Admin:RunRobot:updateTranslationStatus'
 
 		user:
 			label: Users
@@ -91,16 +85,6 @@ common:
 					label: Languages
 					link: ':Admin:Language:list'
 
-		phraseChecking:
-			label: Phrases Checking
-			items: 
-				missingCentral:
-					label: Missing Central Translations
-					link: ':Admin:PhraseCheckingCentral:list'
-				missingSupported:
-					label: Missing Supported Translations
-					link: ':Admin:PhraseCheckingSupported:list'
-
 		siteContent:
 			label: Site Content
 			items:
@@ -151,6 +135,24 @@ common:
 				layout:
 					label: Layouts
 					link: ':Admin:EmailLayout:list'
+
+
+		phraseChecking:
+			label: Phrases Checking
+			items: 
+				missingCentral:
+					label: Missing Central Translations
+					link: ':Admin:PhraseCheckingCentral:list'
+				missingSupported:
+					label: Missing Supported Translations
+					link: ':Admin:PhraseCheckingSupported:list'
+
+		robot:
+			label: Robot #@todo
+			items:
+				registrations:
+					label: Update Translations Status
+					link: ':Admin:RunRobot:updateTranslationStatus'
 
 	right: # parave strana
 		account:
