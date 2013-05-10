@@ -36,6 +36,7 @@ class ImportLocations extends BaseImport {
 	// ----------------------------------------------------------
 	private function importContinents() {
 		$language = $this->context->languageRepositoryAccessor->get()->findOneBy(array('iso' => 'en'));
+		$en = $language;
 
 		// Create location type for world
 		$locationType = $this->context->locationTypeEntityFactory->create();
@@ -51,6 +52,7 @@ class ImportLocations extends BaseImport {
 		$namePhrase = $this->context->phraseRepositoryAccessor->get()->createNew(FALSE);
 		$namePhraseService = $this->context->phraseDecoratorFactory->create($namePhrase);
 		$namePhrase->type = $this->dictionaryTypeName;
+		$namePhrase->sourceLanguage = $en;
 		$namePhraseService->createTranslation($language, 'World');
 		$this->model->persist($namePhrase);
 		$this->model->flush();
@@ -80,6 +82,7 @@ class ImportLocations extends BaseImport {
 		while($x = mysql_fetch_array($r)) {
 			$s = $this->context->locationEntityFactory->create();
 			$s->name = $this->createNewPhrase($this->dictionaryTypeName, $x['name_dic_id']);
+			$s->name->sourceLanguage = $en;
 			$s->type = $locationType;
 			$s->localName = qc('select text from z_en where id = '.$x['name_dic_id']);
 			$s->slug = $s->localName;
@@ -100,6 +103,7 @@ class ImportLocations extends BaseImport {
 
 		$s = $this->context->locationEntityFactory->create();
 		$s->name = $namePhrase;
+		$s->name->sourceLanguage = $en;
 		$s->type = $locationType;
 		$s->slug = 'usa';
 		$s->localName = 'Usa';
@@ -119,6 +123,7 @@ class ImportLocations extends BaseImport {
 
 		$s = $this->context->locationEntityFactory->create();
 		$s->name = $namePhrase;
+		$s->name->sourceLanguage = $en;
 		$s->type = $locationType;
 		$s->slug = 'canada';
 		$s->localName = 'Canada';
@@ -138,6 +143,7 @@ class ImportLocations extends BaseImport {
 
 		$s = $this->context->locationEntityFactory->create();
 		$s->name = $namePhrase;
+		$s->name->sourceLanguage = $en;
 		$s->type = $locationType;
 		$s->slug = 'australia';
 		$s->localName = 'Australia';
