@@ -14,12 +14,12 @@ use Nette\Application as NA,
 class BaseImport {
 
 	public $sections = array(
-		// 'rentalImages' => array(
-		// 	'entities' => array(
-		// 	),
-		// 	'subsections' => array('importTodos', 'importImages', 'importClearImages'),
-		// 	'saveImportStatus' => FALSE,
-		// ),
+		'rentalImages' => array(
+			'entities' => array(
+			),
+			'subsections' => array('importTodos', 'importImages', 'importClearImages'),
+			'saveImportStatus' => FALSE,
+		),
 		'phraseType' => array(
 			'entities' => array(
 			),

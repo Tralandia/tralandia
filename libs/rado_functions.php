@@ -4,7 +4,11 @@ function q($query, $show = 0) {
 	static $link;
 
 	if (!$link) {
-		$link=mysql_connect('127.0.0.1', 'root', 'root');
+		if ($_SERVER['HTTP_HOST'] == 'tra.com') {
+			$link=mysql_connect('127.0.0.1', 'root', 'root');		
+		} else {
+			$link=mysql_connect('192.168.4.13', 'tralandia_old', '0987267789372');		
+		}
 		q("SET NAMES utf8");
 		q("SET character_set_client = utf8;");
 		q("SET character_set_connection = utf8;");
@@ -27,7 +31,11 @@ function qNew($query, $show = 0) {
 	static $link1;
 
 	if (!$link1) {
-		$link1=mysql_connect('127.0.0.1', 'root', 'root');
+		if ($_SERVER['HTTP_HOST'] == 'tra.com') {
+			$link=mysql_connect('127.0.0.1', 'root', 'root');		
+		} else {
+			$link1=mysql_connect('192.168.4.13', 'tralandia', 'tralandia');
+		}
 		q("SET NAMES utf8");
 		q("SET character_set_client = utf8;");
 		q("SET character_set_connection = utf8;");

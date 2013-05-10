@@ -28,6 +28,7 @@ class ImportLanguages extends BaseLanguagesImport {
 			$e->oldId = $x['id'];
 			$e->iso = $x['iso'];
 			$e->supported = (bool)$x['translated'];
+			$e->live = (bool)$x['translated'];
 			$e->defaultCollation = $x['default_collation'];
 			$e->details = explode2Levels(';', ':', $x['attributes']);
 			

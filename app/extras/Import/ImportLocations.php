@@ -36,6 +36,7 @@ class ImportLocations extends BaseImport {
 	// ----------------------------------------------------------
 	private function importContinents() {
 		$language = $this->context->languageRepositoryAccessor->get()->findOneBy(array('iso' => 'en'));
+		$en = $language;
 
 		// Create location type for world
 		$locationType = $this->context->locationTypeEntityFactory->create();
@@ -51,6 +52,7 @@ class ImportLocations extends BaseImport {
 		$namePhrase = $this->context->phraseRepositoryAccessor->get()->createNew(FALSE);
 		$namePhraseService = $this->context->phraseDecoratorFactory->create($namePhrase);
 		$namePhrase->type = $this->dictionaryTypeName;
+		$namePhrase->sourceLanguage = $en;
 		$namePhraseService->createTranslation($language, 'World');
 		$this->model->persist($namePhrase);
 		$this->model->flush();
@@ -80,6 +82,7 @@ class ImportLocations extends BaseImport {
 		while($x = mysql_fetch_array($r)) {
 			$s = $this->context->locationEntityFactory->create();
 			$s->name = $this->createNewPhrase($this->dictionaryTypeName, $x['name_dic_id']);
+			$s->name->sourceLanguage = $en;
 			$s->type = $locationType;
 			$s->localName = qc('select text from z_en where id = '.$x['name_dic_id']);
 			$s->slug = $s->localName;
@@ -100,9 +103,10 @@ class ImportLocations extends BaseImport {
 
 		$s = $this->context->locationEntityFactory->create();
 		$s->name = $namePhrase;
+		$s->name->sourceLanguage = $en;
 		$s->type = $locationType;
 		$s->slug = 'usa';
-		$s->localName = 'usa';
+		$s->localName = 'Usa';
 		$s->iso = 'us';
 		$s->parent = $world;
 		$s->defaultLanguage = $language;
@@ -119,9 +123,10 @@ class ImportLocations extends BaseImport {
 
 		$s = $this->context->locationEntityFactory->create();
 		$s->name = $namePhrase;
+		$s->name->sourceLanguage = $en;
 		$s->type = $locationType;
 		$s->slug = 'canada';
-		$s->localName = 'canada';
+		$s->localName = 'Canada';
 		$s->iso = 'ca';
 		$s->parent = $world;
 		$s->defaultLanguage = $language;
@@ -138,9 +143,10 @@ class ImportLocations extends BaseImport {
 
 		$s = $this->context->locationEntityFactory->create();
 		$s->name = $namePhrase;
+		$s->name->sourceLanguage = $en;
 		$s->type = $locationType;
 		$s->slug = 'australia';
-		$s->localName = 'australia';
+		$s->localName = 'Australia';
 		$s->iso = 'au';
 		$s->parent = $world;
 		$s->defaultLanguage = $language;
@@ -224,6 +230,8 @@ class ImportLocations extends BaseImport {
 				} else if (substr($x['iso'], 0, 2) == 'au') {
 					$location->parent = $australia;
 				}
+			} else if ($x['iso'] == 'pm') {
+				$location->parent = $canada;
 			} else {
 				$parent = $this->context->locationRepositoryAccessor->get()->findOneBy(array('oldId' => $x['continent']));
 				$location->parent = $parent;
@@ -310,9 +318,13 @@ class ImportLocations extends BaseImport {
 	// ----------------------------------------------------------
 	private function importLocalities() {
 
-		$locationType = $this->context->locationTypeEntityFactory->create();
-		$locationType->name = $this->createPhraseFromString('\Location\Location', 'name', 'NATIVE', 'locality', 'en');
-		$locationType->slug = 'locality';
+		$locationType = $this->context->locationTypeRepositoryAccessor->get()->findOneBy(array('slug' => 'locality'));
+
+		if (!$locationType) {
+			$locationType = $this->context->locationTypeEntityFactory->create();
+			$locationType->name = $this->createPhraseFromString('\Location\Location', 'name', 'NATIVE', 'locality', 'en');
+			$locationType->slug = 'locality';
+		}
 		
 		$this->model->persist($locationType);
 

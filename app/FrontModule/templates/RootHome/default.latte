@@ -17,6 +17,7 @@
 						{/if}
 						{foreach $rental['entity']->address->getLocations() as $location}
 						{/foreach}
+						{dump $rental['entity']->getId()}
 						<div class="label">{_$rental['entity']->address->locality->name}, {_$rental['entity']->primaryLocation->name}</div>
 						</a>
 					</li>
