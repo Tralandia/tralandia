@@ -1,0 +1,10 @@
+entity: Entity\Rental\Rental
+
+parameters:
+	title: Rentals
+	h1: 'Country -> %name%'
+
+gridFactory: @rentalGridFactory
+
+form:
+	fields:

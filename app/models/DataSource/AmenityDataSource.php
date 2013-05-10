@@ -5,7 +5,7 @@ namespace DataSource;
 
 use Nette\Utils\Paginator;
 
-class Amenity extends BaseDataSource {
+class AmenityDataSource extends BaseDataSource {
 
 	private $amenityRepository;
 
