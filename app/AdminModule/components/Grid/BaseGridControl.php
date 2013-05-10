@@ -69,8 +69,8 @@ abstract class BaseGridControl extends BaseControl {
 
 
 		$query = $builder->getQuery();
-		$query->setFirstResult(($paginator->page - 1) * $paginator->itemsPerPage);
-		$query->setMaxResults($paginator->itemsPerPage);
+		//$query->setFirstResult(($paginator->page - 1) * $paginator->itemsPerPage);
+		//$query->setMaxResults($paginator->itemsPerPage);
 		return $query->getResult();
 	}
 

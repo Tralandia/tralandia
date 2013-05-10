@@ -5,7 +5,7 @@ namespace DataSource;
 
 use Nette\Utils\Paginator;
 
-class Country extends BaseDataSource {
+class LocalityDataSource extends BaseDataSource {
 
 
 	/**
@@ -28,7 +28,7 @@ class Country extends BaseDataSource {
 
 	public function getData($filter, $order, Paginator $paginator = NULL)
 	{
-		$result = $this->repository->findCountries();
+		$result = $this->repository->findLocalities();
 
 		$orderedResult = $this->resultSorter->translateAndSort($result, function($v) {return $v->getParent()->getName();});
 

@@ -3,17 +3,17 @@
 namespace AdminModule\Grids;
 
 use AdminModule\Components\AdminGridControl;
-use DataSource\Amenity;
+use DataSource\AmenityDataSource;
 
 class AmenityGrid extends AdminGridControl {
 
 	/**
-	 * @var \DataSource\Amenity
+	 * @var \DataSource\AmenityDataSource
 	 */
 	private $dataSource;
 
 
-	public function __construct(Amenity $dataSource) {
+	public function __construct(AmenityDataSource $dataSource) {
 
 		parent::__construct();
 		$this->dataSource = $dataSource;

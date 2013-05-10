@@ -3,18 +3,17 @@
 namespace AdminModule\Grids;
 
 use AdminModule\Components\AdminGridControl;
-use DataSource\LocalityDataSource;
-use Nette\Utils\Paginator;
+use DataSource\RentalDataSource;
 
-class LocalityGrid extends AdminGridControl {
+class RentalGrid extends AdminGridControl {
 
 	/**
-	 * @var \DataSource\LocalityDataSource
+	 * @var \DataSource\RentalDataSource
 	 */
 	private $dataSource;
 
 
-	public function __construct(LocalityDataSource $dataSource) {
+	public function __construct(RentalDataSource $dataSource) {
 
 		parent::__construct();
 		$this->dataSource = $dataSource;
@@ -29,21 +28,24 @@ class LocalityGrid extends AdminGridControl {
 	{
 		$grid = $this->getGrid();
 
-		$grid->addColumn('parent', 'Country');
+		$grid->addColumn('id');
 		$grid->addColumn('name');
 		$grid->addColumn('slug');
+		$grid->addColumn('email');
 
 		$grid->setDataSourceCallback([$this->dataSource, 'getData']);
+
 
 		return $grid;
 	}
 
 }
 
-interface ILocalityGridFactory {
+interface IRentalGridFactory {
+
 
 	/**
-	 * @return LocalityGrid
+	 * @return RentalGrid
 	 */
 	public function create();
 }

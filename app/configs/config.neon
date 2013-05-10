@@ -273,11 +273,12 @@ services:
 	# ==================== DATA SOURCES
 	# ==============================
 
-	amenityDataSource: DataSource\Amenity(@rentalAmenityRepositoryAccessor::get())
-	countryDataSource: DataSource\Country(@locationRepositoryAccessor::get())
-	localityDataSource: DataSource\Locality(@locationRepositoryAccessor::get())
-	regionDataSource: DataSource\Region(@locationRepositoryAccessor::get())
-	dictionaryManagerDataSource: DataSource\DictionaryManager
+	amenityDataSource: DataSource\AmenityDataSource(@rentalAmenityRepositoryAccessor::get())
+	countryDataSource: DataSource\CountryDataSource(@locationRepositoryAccessor::get())
+	localityDataSource: DataSource\LocalityDataSource(@locationRepositoryAccessor::get())
+	regionDataSource: DataSource\RegionDataSource(@locationRepositoryAccessor::get())
+	dictionaryManagerDataSource: DataSource\DictionaryManagerDataSource
+	rentalDataSourceFactory: DataSource\RentalDataSource
 
 
 	# ==============================
@@ -479,9 +480,14 @@ factories:
 	itemPhoneFactory: Extras\FormMask\Items\Foctories\PhoneFactory
 	itemUrlFactory: Extras\FormMask\Items\Foctories\UrlFactory
 
+
 	# ==============================
 	# ==================== G R I D S
 	# ==============================
+
+	rentalGridFactory:
+		class: AdminModule\Grids\RentalGrid
+		implement: AdminModule\Grids\IRentalGridFactory
 
 	amenityGridFactory:
 		class: AdminModule\Grids\AmenityGrid
@@ -504,7 +510,7 @@ factories:
 		implement: AdminModule\Grids\ILanguageGridFactory
 
 	countryGridFactory:
-		class: AdminModule\Grids\countryGrid
+		class: AdminModule\Grids\CountryGrid
 		implement: AdminModule\Grids\ICountryGridFactory
 
 	regionGridFactory:

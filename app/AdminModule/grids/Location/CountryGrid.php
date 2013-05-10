@@ -3,18 +3,18 @@
 namespace AdminModule\Grids;
 
 use AdminModule\Components\AdminGridControl;
-use DataSource\Country;
+use DataSource\CountryDataSource;
 use Nette\Utils\Paginator;
 
 class CountryGrid extends AdminGridControl {
 
 	/**
-	 * @var \DataSource\Country
+	 * @var \DataSource\CountryDataSource
 	 */
 	private $dataSource;
 
 
-	public function __construct(Country $dataSource) {
+	public function __construct(CountryDataSource $dataSource) {
 
 		parent::__construct();
 		$this->dataSource = $dataSource;
