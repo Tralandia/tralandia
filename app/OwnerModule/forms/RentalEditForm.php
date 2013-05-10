@@ -61,8 +61,10 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 	 */
 	protected $userRepository;
 
+	/**
+	 * @var \Repository\InterviewQuestionRepository
+	 */
 	protected $interviewQuestionRepository;
-
 
 	/**
 	 * @var \Repository\Rental\AmenityRepository
@@ -101,7 +103,6 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 	public function buildForm()
 	{
 		$phonePrefixes = $this->locationRepository->getCountriesPhonePrefixes();
-		d($this->translator, $this->collator);
 		$supportedLanguages = $this->languageRepository->getSupportedSortedByName($this->translator, $this->collator);
 		$supportedLanguagesForSelect = $this->languageRepository->getSupportedSortedByName($this->translator, $this->collator);
 		$questions = $this->interviewQuestionRepository->findAll();
@@ -111,7 +112,7 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 //			->setOption('help', $this->translate('o100071'))
 //	        //->addRule(Form::MAX_LENGTH, 'o100101', 70);
 //			;
-//
+
 		$rental = $this->rental;
 		$rentalContainer = $this->rentalContainerFactory->create($this->environment, $this->rental);
 		$this['rental'] = $rentalContainer;
@@ -121,17 +122,10 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 
 		$rentalContainer->addPhoneContainer('phone', 'o10899', $phonePrefixes);
 
-
 		$rentalContainer->addText('url', 'o977')
 			->setOption('help', $this->translate('o978'))
 			->setOption('prepend', 'http://')
-			->addRule(self::URL, $this->translate('o100102'))
-			->addRule(function() {
-				
-			}, $this->translate('o100102'));
-		;
-
-
+			->addRule(self::URL, $this->translate('o100102'));
 
 		$rentalContainer->addText('price', 'o100078')
 			->setOption('append', $currency->getIso() . ' ' . $this->translate('o100004'))
@@ -147,7 +141,6 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 		$rentalContainer->addSelect('translationLanguage', '##', $languages)
 						->setDefaultValue($this->environment->getLanguage()->getIso());
 
-
 		$nameContainer = $rentalContainer->addContainer('name');
 		$teaserContainer = $rentalContainer->addContainer('teaser');
 		$interviewContainer = $rentalContainer->addContainer('interview');
@@ -161,13 +154,13 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 		foreach($supportedLanguages as $language) {
 			$iso = $language->getIso();
 			$nameContainer->addText($iso, $namePhrase->getTranslationText($language))
-							->setOption('prepend', $iso)
-							->setOption('help', $this->translate('o100071'))
-							->addRule(self::LENGTH, $this->translate('o100101'), [2, 70]);
+				->setOption('prepend', $iso)
+				->setOption('help', $this->translate('o100071'));
+				// ->addRule(self::LENGTH, $this->translate('o100101'), [2, 70]);
 
 			$teaserContainer->addText($iso, $teaserPhrase->getTranslationText($language))
-							->setOption('prepend', $iso)
-							->setOption('help', '');
+				->setOption('prepend', $iso)
+				->setOption('help', '');
 			$i = 1;
 			foreach($questions as $question) {
 				$interviewContainer[$question->getId()]->addTextArea($iso, $i.'. '.$question->getQuestion()->getTranslationText($language));
@@ -227,38 +220,117 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 	public function setDefaultsValues()
 	{
 		$rental = $this->rental;
-		$places = [];
+
+		$placement = 0;
 		foreach ($rental->getPlacements() as $place) {
-			$places[] = $place->getId();
+			$placement = $place->getId();
+			break;
 		}
 		$pet = $rental->getPetAmenity();
-		$rentalName = $this->translate($rental->name);
+
+		$name = [];
+		foreach ($rental->name->getTranslations() as $translation) {
+			$language = $translation->getLanguage();
+			$name[$language->iso] = $translation->translation;
+		}
+
+		$teaser = [];
+		foreach ($rental->teaser->getTranslations() as $translation) {
+			$language = $translation->getLanguage();
+			$teaser[$language->iso] = $translation->translation;
+		}
+
+		$interview = [];
+		foreach ($rental->interviewAnswers as $answer) {
+			$question = $answer->getQuestion();
+			$interview[$question->id] = [];
+			foreach ($answer->answer->getTranslations() as $translation) {
+				$language = $translation->language;
+				$interview[$question->id][$language->iso] = $translation->translation;
+			}
+		}
+
 		$defaults = [
-			//'referrer' => 'luzbo',
 			'email' => $rental->getEmail(),
 			'url' => $rental->getUrl(),
-
 			'phone' => $rental->getPhone(),
 			'rental' => [
-				// 'name' => $rentalName,
+				'name' => $name,
+				'teaser' => $teaser,
 				'price' => $rental->getPrice()->getSourceAmount(),
 				'maxCapacity' => $rental->getMaxCapacity(),
-				'type' => [
+				'interview' => $interview,
+				'bedroomCount' => $rental->bedroomCount,
+				'roomsLayout' => $rental->rooms,
+				'separateGroups' => $rental->getSeparateGroups(),
+ 				'type' => [
 					'type' => $rental->getType()->getId(),
 					'classification' => $rental->getClassification(),
 				],
-				'board' => array_map(function ($a) {
-					return $a->getId();
-				}, $rental->getBoardAmenities()),
-				'important' => array_map(function ($a) {
-					return $a->getId();
-				}, $rental->getImportantAmenities()),
+				'checkIn' => $rental->getCheckIn(),
+				'checkOut' => $rental->getCheckOut(),
 				'ownerAvailability' => $rental->getOwnerAvailability()->getId(),
-				'pet' => $pet ? $pet->getId() : NULL,
-				'placement' => $places,
-
+				'pet' => ($pet ? $pet->getId() : NULL),
+				'placement' => $placement,
 				'address' => $rental->getAddress(),
-			],
+
+				'important' => array_map(function ($a) {
+						return $a->getId();
+					}, $rental->getImportantAmenities()
+				),
+				'board' => array_map(function ($a) {
+						return $a->getId();
+					}, $rental->getBoardAmenities()
+				),
+				'children' => array_map(function ($a) {
+						return $a->getId();
+					}, $rental->getChildrenAmenities()
+				),
+				'activity' => array_map(function ($a) {
+						return $a->getId();
+					}, $rental->getActivityAmenities()
+				),
+				'relax' => array_map(function ($a) {
+						return $a->getId();
+					}, $rental->getRelaxAmenities()
+				),
+				'service' => array_map(function ($a) {
+						return $a->getId();
+					}, $rental->getServiceAmenities()
+				),
+				'wellness' => array_map(function ($a) {
+						return $a->getId();
+					}, $rental->getWellnessAmenities()
+				),
+				'congress' => array_map(function ($a) {
+						return $a->getId();
+					}, $rental->getCongressAmenities()
+				),
+				'kitchen' => array_map(function ($a) {
+						return $a->getId();
+					}, $rental->getKitchenAmenities()
+				),
+				'bathroom' => array_map(function ($a) {
+						return $a->getId();
+					}, $rental->getBathroomAmenities()
+				),
+				'heating' => array_map(function ($a) {
+						return $a->getId();
+					}, $rental->getHeatingAmenities()
+				),
+				'parking' => array_map(function ($a) {
+						return $a->getId();
+					}, $rental->getParkingAmenities()
+				),
+				'room' => array_map(function ($a) {
+						return $a->getId();
+					}, $rental->getRoomAmenities()
+				),
+				'other' => array_map(function ($a) {
+						return $a->getId();
+					}, $rental->getOtherAmenities()
+				)
+			]
 		];
 
 		$this->setDefaults($defaults);
@@ -269,18 +341,6 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 	{
 		$values = $form->getValues()->rental;
 		d($values);
-		
-		// Rental Name validation
-		if ($name = $values->name->{$this->country->defaultLanguage->iso}) {
-			if ($name !== $this->translate($this->rental->name)) {
-
-			}
-		}
-
-		// Phone
-		if ($values->phone->number && !$values->phone->phone) {
-			$errors[] = 'Wrong phone number';
-		}
 
 	}
 
