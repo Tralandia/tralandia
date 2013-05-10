@@ -129,18 +129,18 @@ class NavigationControl extends BaseControl
 	{
 		$form = $this->simpleFormFactory->create();
 
-		$rentalLink = $this->presenter->link(':Admin:Rental:search', ['query' => '__query__']);
+		$rentalLink = $this->presenter->link(':Admin:Rental:list', ['dataGrid-grid-filter' => ['search' => '__query__']]);
 		$form->addText('rental', '')
 			->getControlPrototype()
 				->data('redirect', $rentalLink);
 
-		$userLink = $this->presenter->link(':Admin:User:search', ['query' => '__query__']);
+		$userLink = $this->presenter->link(':Admin:User:list', ['dataGrid-grid-filter' => ['search' => '__query__']]);
 		$form->addText('user', '')
 			->getControlPrototype()
 				->data('redirect', $userLink);
 
 
-		$phraseLink = $this->presenter->link(':Admin:Phrase:search', ['query' => '__query__', 'languageId' => '__languageId__']);
+		$phraseLink = $this->presenter->link(':Admin:Phrase:list',['dataGrid-grid-filter' => ['search' => '__query__', 'languageId' => '__languageId__']]);
 		$form->addText('phrase', '')
 			->getControlPrototype()
 				->data('redirect', $phraseLink);

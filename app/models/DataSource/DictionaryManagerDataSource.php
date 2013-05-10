@@ -9,7 +9,7 @@ use Nette\ArrayHash;
 use Nette\Forms\Controls\SelectBox;
 use Nette\Utils\Paginator;
 
-class DictionaryManager extends BaseDataSource
+class DictionaryManagerDataSource extends BaseDataSource
 {
 
 	/**

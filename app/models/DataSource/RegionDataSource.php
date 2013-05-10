@@ -5,7 +5,7 @@ namespace DataSource;
 
 use Nette\Utils\Paginator;
 
-class Region extends BaseDataSource {
+class RegionDataSource extends BaseDataSource {
 
 
 	/**

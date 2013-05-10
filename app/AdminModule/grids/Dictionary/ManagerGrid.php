@@ -3,18 +3,17 @@
 namespace AdminModule\Grids\Dictionary;
 
 use AdminModule\Components\AdminGridControl;
-use DataSource\DictionaryManager;
-use Doctrine\ORM\EntityManager;
+use DataSource\DictionaryManagerDataSource;
 
 class ManagerGrid extends AdminGridControl {
 
 	/**
-	 * @var \DataSource\DictionaryManager
+	 * @var \DataSource\DictionaryManagerDataSource
 	 */
 	private $dataSource;
 
 
-	public function __construct(DictionaryManager $dataSource) {
+	public function __construct(DictionaryManagerDataSource $dataSource) {
 		$this->dataSource = $dataSource;
 	}
 
