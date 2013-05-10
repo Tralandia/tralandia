@@ -32,161 +32,159 @@ class RentalEditHandler extends FormHandler
 	}
 
 
-	public function handleSuccess($values)
+	public function handleSuccess($form)
 	{
+		$values = $form->getValues()->rental;
 		$rental = $this->rental;
 
-		foreach ($values as $key => $value) {
-			if ($value instanceof \Nette\ArrayHash) {
+		if ($value = $values['address']) {
+			$address = $value;
+			if ($address['addressEntity']) {
+				$rental->address = $address['addressEntity'];
+			}
+		}
 
-				if ($key=='address') {
-					$address = $value;
-					if ($address['addressEntity']) {
-						$rental->address = $address['addressEntity'];
-					}
-					continue;
-				}
+		if ($value = $values['placement']) {
+			$rental->placement = $value;
+		}
 
-				if ($key=='placement') {
-					$rental->placement = $value;
-					continue;
-				}
+		if ($value = $values['type']) {
+			$rental->type = $value->type;
+			$rental->classification = $value->classification;
+		}
 
-				if ($key=='type') {
-					$rental->type = $value->type;
-					$rental->classification = $value->classification;
-					continue;
-				}
+		if ($value = $values['photos']) {
+			// @TODO: nemame dorieseny upload obrazkov
+		}
 
-				if ($key=='photos') {
-					// @TODO: nemame dorieseny upload obrazkov
-					continue;
-				}
+		if ($value = $values['priceList']) {
+			$pricelistRows = $rental->getPricelistRows();
+			foreach ($pricelistRows as $pricelistRow) {
+				$rental->removePricelistRow($pricelistRow);
+			}
+			foreach ($value->list as $pricelistRow) {
+				if ($pricelistRow->entity) $rental->addPricelistRow($pricelistRow->entity);
+			}
+		}
 
-				if ($key=='priceList') {
-					$pricelistRows = $rental->getPricelistRows();
-					foreach ($pricelistRows as $pricelistRow) {
-						$rental->removePricelistRow($pricelistRow);
-					}
-					foreach ($value->list as $pricelistRow) {
-						if ($pricelistRow->entity) $rental->addPricelistRow($pricelistRow->entity);
-					}
-					continue;
-				}
+		if ($value = $values['priceUpload']) {
+			$pricelists = $rental->getPricelists();
+			foreach ($pricelists as $pricelist) {
+				$rental->removePricelist($pricelist);
+			}
+			foreach ($value->list as $pricelist) {
+				if ($pricelist->entity) $rental->addPricelist($pricelist->entity);
+			}
+		}
 
-				if ($key=='priceUpload') {
-					$pricelists = $rental->getPricelists();
-					foreach ($pricelists as $pricelist) {
-						$rental->removePricelist($pricelist);
-					}
-					foreach ($value->list as $pricelist) {
-						if ($pricelist->entity) $rental->addPricelist($pricelist->entity);
-					}
-					continue;
-				}
+		if ($value = $values['phone']) {
+			if ($phoneEntity = $values['phone']->entity) {
+				$rental->setPhone($phoneEntity);
+			}
+		}
 
-				if ($key=='phone' && $value->entity) {
-					$rental->setPhone($value->entity);
-					continue;
-				}
+		if ($value = $values['price']) {
+			if ($priceEntity = $values['price']->entity) {
+				$rental->setPrice($priceEntity);
+			}
+		}
 
-				if ($key=='price' && $priceEntity = $value->entity) {
-					$rental->setPrice($priceEntity);
-					continue;
-				}
-
-				if ($key=='name' || $key=='teaser') {
-					$languageRepository = $this->em->getRepository(LANGUAGE_ENTITY);
-					$phrase = $rental->{$key};
-					foreach ($value as $languageIso => $name) {
+		if ($value = $values['interview']) {
+			$languageRepository = $this->em->getRepository(LANGUAGE_ENTITY);
+			$answers = $rental->interviewAnswers;
+			foreach ($answers as $answer) {
+				if (isset($value->{$answer->question->id})) {
+					$phrase = $answer->answer;
+					foreach ($value[$answer->question->id] as $languageIso => $val) {
 						$language = $languageRepository->findByIso($languageIso);
 						$translation = $phrase->getTranslation($language[0]);
 						if ($translation) {
-							$translation->translation = $name;
-						} else if ($name) {
-							$phrase->createTranslation($language, $name);
+							$translation->translation = $val;
+						} else {
+							$phrase->createTranslation($language, $val);
 						}
 					}
-					continue;
 				}
-
-				if ($key=='interview') {
-					$languageRepository = $this->em->getRepository(LANGUAGE_ENTITY);
-					$answers = $rental->interviewAnswers;
-					foreach ($answers as $answer) {
-						if (isset($value->{$answer->question->id})) {
-							$phrase = $answer->answer;
-							foreach ($value[$answer->question->id] as $languageIso => $val) {
-								$language = $languageRepository->findByIso($languageIso);
-								$translation = $phrase->getTranslation($language[0]);
-								if ($translation) {
-									$translation->translation = $val;
-								} else {
-									$phrase->createTranslation($language, $val);
-								}
-							}	
-						}
-					}
-					continue;
-				}
-
-				$amenities = ['board', 'children', 'activity', 'relax', 'service', 'wellness', 'congress', 'kitchen', 'bathroom', 'heating', 'parking', 'room', 'other'];
-				if (in_array($key, $amenities)) {
-					$amenities = $rental->getAmenitiesByType($key);
-					foreach ($amenities as $amenity) {
-						$rental->removeAmenity($amenity);
-					}
-					foreach ($value as $amenity) {
-						$rental->addAmenity($amenity);
-					}
-					continue;
-				}
-
-			} else if ($key=='pet') {
-				$petAmenity = $this->em->getRepository(RENTAL_AMENITY_ENTITY)->findByPetType();
-
-				foreach($petAmenity as $amenity) { 
-					if ($value && $amenity->id == $value->id) {
-						$rental->addAmenity($amenity);
-					} else {
-						$rental->removeAmenity($amenity);
-					}
-				}
-				continue;
-			} else if ($key=='separateGroups') {
-				$groupsAmenity = $this->em->getRepository(RENTAL_AMENITY_ENTITY)->findBySeparateGroupsType();
-				if ($value===TRUE) {
-					$rental->addAmenity($groupsAmenity[0]);
-					$rental->removeAmenity($groupsAmenity[1]);
-				} else if ($value===FALSE) {
-					$rental->removeAmenity($groupsAmenity[0]);
-					$rental->addAmenity($groupsAmenity[1]);
-				} else if ($value===NULL) {
-					$rental->removeAmenity($groupsAmenity[0]);
-					$rental->removeAmenity($groupsAmenity[1]);
-				}
-				continue;
-			} else if ($key=='ownerAvailability') {
-				$availibilityAmenities = $rental->getAmenitiesByType('owner-availability');
-				foreach($availibilityAmenities as $amenity) {
-					if ($value && $value->id==$amenity->id) {
-						$rental->addAmenity($amenity);
-					} else {
-						$rental->removeAmenity($amenity);
-					}
-				}
-				continue;
-			} else if ($key=='url') {
-				if (preg_match("/^http:\/\//", $value)==0) {
-					$value = 'http://'.$value;
-				}
-				$rental->setUrl($value);
-				continue;
-			} else if ($value) {
-				$rental->{$key} = $value;
-				continue;
 			}
+		}
 
+		$rentalInfo = ['name', 'teaser'];
+		foreach ($rentalInfo as $infoName) {
+			$value = $values[$infoName];
+			$languageRepository = $this->em->getRepository(LANGUAGE_ENTITY);
+			$phrase = $rental->{$infoName};
+			foreach ($value as $languageIso => $name) {
+				$language = $languageRepository->findOneByIso($languageIso);
+				$translation = $phrase->getTranslation($language);
+				if ($translation) {
+					$translation->translation = $name;
+				} else if ($name) {
+					$phrase->createTranslation($language, $name);
+				}
+			}
+		}
+
+		$amenities = ['board', 'children', 'activity', 'relax', 'service', 'wellness', 'congress', 'kitchen', 'bathroom', 'heating', 'parking', 'room', 'other'];
+		foreach ($amenities as $amenityName) {
+			$value = $values[$amenityName];
+			$amenities = $rental->getAmenitiesByType($amenityName);
+			foreach ($amenities as $amenity) {
+				$rental->removeAmenity($amenity);
+			}
+			foreach ($value as $amenity) {
+				$rental->addAmenity($amenity);
+			}
+		}
+
+		if ($value = $values['pet']) {
+			$petAmenity = $this->em->getRepository(RENTAL_AMENITY_ENTITY)->findByPetType();
+
+			foreach($petAmenity as $amenity) {
+				if ($value && $amenity->id == $value->id) {
+					$rental->addAmenity($amenity);
+				} else {
+					$rental->removeAmenity($amenity);
+				}
+			}
+		}
+
+		if ($value = $values['separateGroups']) {
+			$groupsAmenity = $this->em->getRepository(RENTAL_AMENITY_ENTITY)->findBySeparateGroupsType();
+			if ($value===TRUE) {
+				$rental->addAmenity($groupsAmenity[0]);
+				$rental->removeAmenity($groupsAmenity[1]);
+			} else if ($value===FALSE) {
+				$rental->removeAmenity($groupsAmenity[0]);
+				$rental->addAmenity($groupsAmenity[1]);
+			} else if ($value===NULL) {
+				$rental->removeAmenity($groupsAmenity[0]);
+				$rental->removeAmenity($groupsAmenity[1]);
+			}
+		}
+
+		if ($value = $values['ownerAvailability']) {
+			$availibilityAmenities = $rental->getAmenitiesByType('owner-availability');
+			foreach($availibilityAmenities as $amenity) {
+				if ($value && $value->id==$amenity->id) {
+					$rental->addAmenity($amenity);
+				} else {
+					$rental->removeAmenity($amenity);
+				}
+			}
+		}
+
+		if ($value = $values['url']) {
+			if (preg_match("/^http:\/\//", $value)==0) {
+				$value = 'http://'.$value;
+			}
+			$rental->setUrl($value);
+		}
+
+		$simpleValues = ['checkIn', 'checkOut', 'maxCapacity', 'bedroomCount', 'rooms'];
+		foreach ($simpleValues as $valueName) {
+			if ($value = $values[$valueName]) {
+				$rental->{$valueName} = $value;
+			}
 		}
 
 		$rentalRepository = $this->em->getRepository(RENTAL_ENTITY);

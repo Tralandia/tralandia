@@ -312,6 +312,114 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 		return $this->getAmenitiesByType('board');
 	}
 
+	/**
+	 * @return Amenity|null
+	 */
+	public function getPetAmenity()
+	{
+		$pet = $this->getAmenitiesByType('animal', 1);
+		if (count($pet)) {
+			return $pet[0];
+		}
+
+		return NULL;
+	}
+
+	/**
+	 * @return \Entity\Rental\Amenity[]
+	 */
+	public function getChildrenAmenities()
+	{
+		return $this->getAmenitiesByType('children');
+	}
+
+	/**
+	 * @return \Entity\Rental\Amenity[]
+	 */
+	public function getActivityAmenities()
+	{
+		return $this->getAmenitiesByType('activity');
+	}
+
+	/**
+	 * @return \Entity\Rental\Amenity[]
+	 */
+	public function getRelaxAmenities()
+	{
+		return $this->getAmenitiesByType('relax');
+	}
+
+	/**
+	 * @return \Entity\Rental\Amenity[]
+	 */
+	public function getServiceAmenities()
+	{
+		return $this->getAmenitiesByType('service');
+	}
+
+	/**
+	 * @return \Entity\Rental\Amenity[]
+	 */
+	public function getWellnessAmenities()
+	{
+		return $this->getAmenitiesByType('wellness');
+	}
+
+	/**
+	 * @return \Entity\Rental\Amenity[]
+	 */
+	public function getCongressAmenities()
+	{
+		return $this->getAmenitiesByType('congress');
+	}
+
+	/**
+	 * @return \Entity\Rental\Amenity[]
+	 */
+	public function getKitchenAmenities()
+	{
+		return $this->getAmenitiesByType('kitchen');
+	}
+
+	/**
+	 * @return \Entity\Rental\Amenity[]
+	 */
+	public function getBathroomAmenities()
+	{
+		return $this->getAmenitiesByType('bathroom');
+	}
+
+	/**
+	 * @return \Entity\Rental\Amenity[]
+	 */
+	public function getHeatingAmenities()
+	{
+		return $this->getAmenitiesByType('heating');
+	}
+
+	/**
+	 * @return \Entity\Rental\Amenity[]
+	 */
+	public function getParkingAmenities()
+	{
+		return $this->getAmenitiesByType('parking');
+	}
+
+	/**
+	 * @return \Entity\Rental\Amenity[]
+	 */
+	public function getRoomAmenities()
+	{
+		return $this->getAmenitiesByType('room');
+	}
+
+	/**
+	 * @return \Entity\Rental\Amenity[]
+	 */
+	public function getOtherAmenities()
+	{
+		return $this->getAmenitiesByType('other');
+	}
 
 	public function getCheckInFormatted()
 	{
@@ -562,23 +670,6 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 
 		return (bool)count($animals) >= 1;
 	}
-
-
-
-	/**
-	 * @return Amenity|null
-	 */
-	public function getPetAmenity()
-	{
-		$pet = $this->getAmenitiesByType('animal', 1);
-		if (count($pet)) {
-			return $pet[0];
-		}
-
-		return NULL;
-	}
-
-
 
 
 
