@@ -102,7 +102,7 @@ class ImportLocations extends BaseImport {
 		$s->name = $namePhrase;
 		$s->type = $locationType;
 		$s->slug = 'usa';
-		$s->localName = 'usa';
+		$s->localName = 'Usa';
 		$s->iso = 'us';
 		$s->parent = $world;
 		$s->defaultLanguage = $language;
@@ -121,7 +121,7 @@ class ImportLocations extends BaseImport {
 		$s->name = $namePhrase;
 		$s->type = $locationType;
 		$s->slug = 'canada';
-		$s->localName = 'canada';
+		$s->localName = 'Canada';
 		$s->iso = 'ca';
 		$s->parent = $world;
 		$s->defaultLanguage = $language;
@@ -140,7 +140,7 @@ class ImportLocations extends BaseImport {
 		$s->name = $namePhrase;
 		$s->type = $locationType;
 		$s->slug = 'australia';
-		$s->localName = 'australia';
+		$s->localName = 'Australia';
 		$s->iso = 'au';
 		$s->parent = $world;
 		$s->defaultLanguage = $language;
@@ -224,6 +224,8 @@ class ImportLocations extends BaseImport {
 				} else if (substr($x['iso'], 0, 2) == 'au') {
 					$location->parent = $australia;
 				}
+			} else if ($x['iso'] == 'pm') {
+				$location->parent = $canada;
 			} else {
 				$parent = $this->context->locationRepositoryAccessor->get()->findOneBy(array('oldId' => $x['continent']));
 				$location->parent = $parent;

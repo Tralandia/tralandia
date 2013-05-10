@@ -28,25 +28,6 @@ class ImportPage extends BaseImport {
 			),
 		),
 		array(
-			'destination' => ':Front:Contact:default', 
-			'hash' => '',
-			'h1Pattern' => array(
-				'sk' => 'Kontakty', 
-				'en' => 'Contacts',
-				'cs' => 'Kontakty'
-			), 
-			'titlePattern' => array(
-				'sk' => 'Kontakty', 
-				'en' => 'Contacts',
-				'cs' => 'Kontakty'
-			),
-			'name' => array(
-				'sk' => 'Kontakty', 
-				'en' => 'Contacts',
-				'cs' => 'Kontakty'
-			),
-		),
-		array(
 			'destination' => ':Front:Sign:in', 
 			'hash' => '',
 			'h1Pattern' => array(
