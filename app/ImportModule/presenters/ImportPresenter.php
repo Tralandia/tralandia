@@ -161,13 +161,15 @@ class ImportPresenter extends Presenter {
 				$automaticUrls[] = 'http://www.sk.tra.com/import?importSection=users&subsection=importOwners&countryIso='.$value;
 			}
 
+			$automaticUrls[] = 'http://www.sk.tra.com/import?importSection=users&subsection=importBlacklist';
+
 			//$automaticUrls[] = 	'http://www.sk.tra.com/import?importSection=users&subsection=importVisitors';
 			$automaticUrls[] = 	'http://www.sk.tra.com/import?importSection=rentalTypes';
 			$automaticUrls[] = 	'http://www.sk.tra.com/import?importSection=rentalInformation';
 
 			// Rentals
 			foreach ($allCountries as $key => $value) {
-				$countPerGroup = 300;
+				$countPerGroup = 100;
 				if ($this->session->developmentMode == TRUE) {
 					$c = 1;
 				}  else {

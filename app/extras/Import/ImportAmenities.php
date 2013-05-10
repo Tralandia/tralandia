@@ -43,8 +43,6 @@ class ImportAmenities extends BaseImport {
 			array('other', 'other', 'other'),
 		);
 
-		$en = $this->context->languageRepositoryAccessor->get()->findOneByIso('en');
-
 		$nameDictionaryType = $this->createPhraseType('\Rental\Amenity', 'name', 'ACTIVE', array('pluralVariationsRequired' => TRUE));
 		$this->createPhraseType('\Rental\AmenityType', 'name', 'ACTIVE');
 		$this->model->flush();
@@ -67,6 +65,7 @@ class ImportAmenities extends BaseImport {
 			$amenity = $this->context->rentalAmenityEntityFactory->create();
 			$amenity->type = $amenityType;
 			$amenity->name = $this->createNewPhrase($nameDictionaryType, $x['name_dic_id']);
+			$amenity->name->sourceLanguage = $en;
 			$amenity->slug = qc('select text from z_en where id = '.$x['name_dic_id']);
 			$amenity->oldId = $x['id'];
 			if (in_array($amenity->slug, $this->importantAmenities)) $amenity->important = TRUE;
@@ -89,6 +88,7 @@ class ImportAmenities extends BaseImport {
 			while ($x = mysql_fetch_array($r)) {
 				$amenity = $this->context->rentalAmenityEntityFactory->create();
 				$amenity->name = $this->createNewPhrase($nameDictionaryType, $x['name_dic_id']);
+				$amenity->name->sourceLanguage = $en;
 				$amenity->slug = qc('select text from z_en where id = '.$x['name_dic_id']);
 				$amenity->oldId = $x['id'];
 				if (in_array($amenity->slug, $this->importantAmenities)) $amenity->important = TRUE;
@@ -109,6 +109,7 @@ class ImportAmenities extends BaseImport {
 			$amenity = $this->context->rentalAmenityEntityFactory->create();
 			$amenity->type = $amenityType;
 			$amenity->name = $this->createNewPhrase($nameDictionaryType, $x['name_dic_id']);
+			$amenity->name->sourceLanguage = $en;
 			$amenity->slug = qc('select text from z_en where id = '.$x['name_dic_id']);
 			$amenity->oldId = $x['id'];
 			if (in_array($amenity->slug, $this->importantAmenities)) $amenity->important = TRUE;
@@ -123,6 +124,7 @@ class ImportAmenities extends BaseImport {
 			$amenity = $this->context->rentalAmenityEntityFactory->create();
 			$amenity->type = $amenityType;
 			$amenity->name = $this->createNewPhrase($nameDictionaryType, $x['name_dic_id']);
+			$amenity->name->sourceLanguage = $en;
 			$amenity->slug = qc('select text from z_en where id = '.$x['name_dic_id']);
 			$amenity->oldId = $x['id'];
 			if (in_array($amenity->slug, $this->importantAmenities)) $amenity->important = TRUE;
@@ -137,6 +139,7 @@ class ImportAmenities extends BaseImport {
 			$amenity = $this->context->rentalAmenityEntityFactory->create();
 			$amenity->type = $amenityType;
 			$amenity->name = $this->createNewPhrase($nameDictionaryType, $x['name_dic_id']);
+			$amenity->name->sourceLanguage = $en;
 			$amenity->slug = qc('select text from z_en where id = '.$x['name_dic_id']);
 			$amenity->oldId = $x['id'];
 			if (in_array($amenity->slug, $this->importantAmenities)) $amenity->important = TRUE;
@@ -170,6 +173,8 @@ class ImportAmenities extends BaseImport {
 			$amenity = $this->context->rentalAmenityEntityFactory->create();
 			$amenity->type = $amenityType;
 			$amenity->name = $name;
+			$amenity->name->sourceLanguage = $en;
+
 			$amenity->slug = $value[0];
 			$amenity->oldId = $value[2];
 			$amenity->sorting = $key;
@@ -185,6 +190,7 @@ class ImportAmenities extends BaseImport {
 			$amenity = $this->context->rentalAmenityEntityFactory->create();
 			$amenity->type = $amenityType;
 			$amenity->name = $this->createNewPhrase($nameDictionaryType, $x['name_dic_id']);
+			$amenity->name->sourceLanguage = $en;
 			$amenity->slug = qc('select text from z_en where id = '.$x['name_dic_id']);
 			$amenity->oldId = $x['id'];
 			if (in_array($amenity->slug, $this->importantAmenities)) $amenity->important = TRUE;
@@ -204,6 +210,7 @@ class ImportAmenities extends BaseImport {
 			$amenity = $this->context->rentalAmenityEntityFactory->create();
 			$amenity->type = $amenityType;
 			$amenity->name = $this->createNewPhrase($nameDictionaryType, $value[0]);
+			$amenity->name->sourceLanguage = $en;
 			$amenity->slug = $value[1];
 			$this->model->persist($amenity);
 		}
@@ -227,6 +234,7 @@ class ImportAmenities extends BaseImport {
 			$amenity = $this->context->rentalAmenityEntityFactory->create();
 			$amenity->type = $amenityType;
 			$amenity->name = $name;
+			$amenity->name->sourceLanguage = $en;
 			$amenity->slug = $value[2];
 			$amenity->important = TRUE;
 			$amenity->sorting = $key;
@@ -263,6 +271,7 @@ class ImportAmenities extends BaseImport {
 
 			$placement = $this->context->rentalPlacementRepositoryAccessor->get()->createNew(False);
 			$placement->name = $name;
+			$placement->name->sourceLanguage = $en;
 			$placement->slug = $value[2];
 			$this->model->persist($placement);
 			d($placement, $name);

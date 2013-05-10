@@ -105,6 +105,7 @@ class ImportRentals extends BaseImport {
 			$address->postalCode = $x['post_code'];
 			$address->primaryLocation = $context->locationRepositoryAccessor->get()->findOneBy(array('oldId' => $x['country_id'], 'type' => $locationTypes['country']));
 			$address->locality = $context->locationRepositoryAccessor->get()->findOneBy(array('oldId' => $x['locality_id'], 'type' => $locationTypes['locality']));
+			
 			if ($x['latitude'] != 0 && $x['longitude'] != 0) {
 				$gps = new \Extras\Types\Latlong($x['latitude'], $x['longitude']);
 				$address->setGps($gps);
