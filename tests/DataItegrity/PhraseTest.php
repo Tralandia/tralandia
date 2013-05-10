@@ -23,7 +23,7 @@ class PhraseTest extends \Tests\TestCase
 
 	public function testCheckSourceLanguage() {
 		$entity = $this->phraseRepository->findOneBySourceLanguage(NULL);
-		$this->assertNull($entity, 'Niektory Phrase nema nastaveny SourceLanguage!');
+		$this->assertTrue(is_null($entity), 'Niektory Phrase nema nastaveny SourceLanguage!');
 	}
 
 }
