@@ -43,8 +43,8 @@ class UpdateTranslationStatusRobot extends \Nette\Object implements IRobot
 
 		foreach($phrases as $phrase) {
 			$this->updateTranslationStatus->updatePhrase($phrase);
+			$this->em->flush();
 		}
 
-		$this->em->flush();
 	}
 }

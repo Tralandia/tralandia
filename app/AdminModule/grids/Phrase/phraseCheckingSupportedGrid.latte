@@ -4,8 +4,26 @@
 	</div>
 {/define}
 
+{define #col-id}
+	<td>
+		{$row->phrase->id}
+	</td>
+{/define}
+
 {define #col-language}
 	<td>
-		{_$row->language->name->id}
+		{_$row->language->name}
 	</td>
+{/define}
+
+{define #col-translationId}
+	<td>
+		{$row->id}
+	</td>
+{/define}
+
+
+
+{define #row-actions}
+	<a href="{plink Phrase:edit $row->phrase->id}" data-datagrid-edit class="ajax btn btn-small btn-primary">Edit</a>
 {/define}
