@@ -46,16 +46,21 @@ class DictionaryManagerDataSource extends BaseDataSource
 		/** @var $language \Entity\Language */
 		foreach ($supportedLanguages as $key => $language) {
 
+			$lastTranslation = $translationRepository->findLastTranslationDate($language);
+			//$lastTranslation = new \DateTime($lastTranslation);
+
 			$row = new ArrayHash;
 			$row['id'] = $language->getId();
 			$row['language'] = $language;
+			$row['lastTranslation'] = $lastTranslation;
 			$row['toTranslate'] = $this->outdatedTranslations->getWaitingForTranslationCount($language);
 			$row['toCheck'] = $translationRepository->toCheckCount($language);
 			$row['translator'] = $language->getTranslator();
+			$row['wordsToPay'] = $translationRepository->calculateWordsCountToPay($language);
 
 			$return[$key] = $row;
 		}
-
+		d($return);
 		return $return;
 	}
 

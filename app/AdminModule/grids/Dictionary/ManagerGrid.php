@@ -30,6 +30,7 @@ class ManagerGrid extends AdminGridControl {
 		$grid->addColumn('lastTranslation', 'Last Tran.');
 		$grid->addColumn('toTranslate', 'To Tran.');
 		$grid->addColumn('toCheck', 'To check.');
+		$grid->addColumn('wordsToPay', 'To Pay');
 		$grid->addColumn('translator', 'Translator');
 
 		$grid->setDataSourceCallback([$this->dataSource, 'getData']);
