@@ -29,6 +29,8 @@ class PhraseCheckingCentralGrid extends AdminGridControl {
 		$grid->addColumn('entityAttribute', 'Entity attribute');
 		$grid->addColumn('required');
 
+		$grid->setPagination(self::ITEMS_PER_PAGE, $this->getDataSourceCount);
+
 		return $grid;
 	}
 
@@ -46,6 +48,12 @@ class PhraseCheckingCentralGrid extends AdminGridControl {
 		$data = $this->findOutdatedTranslations->getWaitingForCentral(NULL, $limit, $offset);
 
 		return $data;
+	}
+
+
+	public function getDataSourceCount($filter, $order)
+	{
+		return $this->findOutdatedTranslations->getWaitingForCentralCount();
 	}
 
 }
