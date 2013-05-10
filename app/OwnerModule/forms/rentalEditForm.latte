@@ -1,37 +1,22 @@
 {includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
-<h1>{_o100188}</h1>
 {form rentalEditForm, class => "traform dashboard"}
-	<table class="formTable innerPadding">	
+	<table class="formTable innerPadding">
 		<tr class="formHeading	">
-			<td colspan="3">{_o100189}</td>
+			<td colspan="3">{_o100096}</td>
 		</tr>
 
 		{var $rentalContainer = $form['rental']}
-		{include #fieldset, text => 'o980'}
-		{include #rentalPhotos, control => $rentalContainer['photos']}
+
+		{include #fieldset, text => 'o100166'}
+		{include #rentalPriceUpload, control => $rentalContainer['priceUpload']}
+		{include #fieldset, text => 'o933'}
+
+		{include #rentalPriceList, control => $rentalContainer['priceList']}
 
 		{include #fieldset, text => 'o960'}
 		{*{include #text, control => $form['name']}*}
 		{include #phone, control => $rentalContainer['phone']}
 		{include #url, control => $rentalContainer['url']}
-
-
-
-		{include #fieldset, text => 'o100085'}
-		{include #rentalType, control => $rentalContainer['type']}
-		{include #text, control => $rentalContainer['price']}
-		{include #text, control => $rentalContainer['maxCapacity']}
-		{include #text, control => $rentalContainer['bedroomCount']}
-		{include #text, control => $rentalContainer['roomsLayout']}
-		{include #checkbox, control => $rentalContainer['separateGroups']}
-		{include #select, control => $rentalContainer['checkIn'] , controlClass => 'select2 notFulltext'}
-		{include #select, control => $rentalContainer['checkOut'] , controlClass => 'select2 notFulltext'}
-		{include #select, control => $rentalContainer['ownerAvailability'] , controlClass => 'select2 ownerAvailability notFulltext'}
-		{include #select, control => $rentalContainer['pet'] , controlClass => 'select2 pet notFulltext'}
-		{include #select, control => $rentalContainer['placement'], controlClass => 'select2 placement notFulltext'}
-
-		{include #fieldset, text => 'o100086'}
-		{include #address, control => $rentalContainer['address']}
 
 		{include #fieldset, text => 'o100137'}
 		{include #select, control => $rentalContainer['translationLanguage'] , controlClass => 'select2 selectLanguage notFulltext'}
@@ -65,14 +50,25 @@
 			{/foreach}
 		{/foreach}
 
-		{include #fieldset, text => 'o100166'}
-		{include #rentalPriceUpload, control => $rentalContainer['priceUpload']}
-		{include #fieldset, text => 'o933'}
-		{include #rentalPriceList, control => $rentalContainer['priceList']}
+		{include #fieldset, text => 'o100085'}
+		{include #rentalType, control => $rentalContainer['type']}
+		{include #text, control => $rentalContainer['price']}
+		{include #text, control => $rentalContainer['maxCapacity']}
+		{include #text, control => $rentalContainer['bedroomCount']}
+		{include #text, control => $rentalContainer['roomsLayout']}
+		{include #checkbox, control => $rentalContainer['separateGroups']}
+		{include #select, control => $rentalContainer['checkIn'] , controlClass => 'select2 notFulltext'}
+		{include #select, control => $rentalContainer['checkOut'] , controlClass => 'select2 notFulltext'}
+		{include #select, control => $rentalContainer['ownerAvailability'] , controlClass => 'select2 ownerAvailability notFulltext'}
+		{include #select, control => $rentalContainer['pet'] , controlClass => 'select2 pet notFulltext'}
+
+		{include #fieldset, text => 'o100086'}
+		{include #address, control => $rentalContainer['address']}
+		{include #select, control => $rentalContainer['placement'], controlClass => 'select2 placement notFulltext'}
 
 		{include #checkboxList, control => $rentalContainer['board'], colCount => 3}
 		{include #checkboxList, control => $rentalContainer['children'], colCount => 3}
-		{* {include #checkboxList, control => $rentalContainer['activity'], colCount => 3} *}
+		{include #checkboxList, control => $rentalContainer['activity'], colCount => 3}
 		{include #checkboxList, control => $rentalContainer['relax'], colCount => 3}
 		{include #checkboxList, control => $rentalContainer['service'], colCount => 3}
 		{include #checkboxList, control => $rentalContainer['wellness'], colCount => 3}
@@ -84,7 +80,8 @@
 		{include #checkboxList, control => $rentalContainer['parking'], colCount => 3}
 		{include #checkboxList, control => $rentalContainer['other'], colCount => 3}
 
-		
+		{include #fieldset, text => 'o980'}
+		{* {include #rentalPhotos, control => $rentalContainer['photos']} *}
 
 		{include #submit, control => $form['submit'], icon => 'entypo-ok'}
 	</table>

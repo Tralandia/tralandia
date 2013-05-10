@@ -107,9 +107,9 @@ class EditFormHandlerTest extends \Tests\TestCase
 				'type' => $this->rentalTypeRepositoryAccessor->get()->find(1),
 				'classification' => 0,
 			],
-			'checkIn' => 10,
-			'checkOut' => 14,
-			'maxCapacity' => 8,
+			'checkIn' => rand(0, 23),
+			'checkOut' => rand(0, 23),
+			'maxCapacity' => rand(2, 4),
 			'separateGroups' => TRUE,
 			'ownerAvailability' => $this->rentalPricelistRowRepositoryAccessor->get()->find(277),
 			'pet' => $this->rentalPricelistRowRepositoryAccessor->get()->find(297),
@@ -287,7 +287,6 @@ class EditFormHandlerTest extends \Tests\TestCase
 
 		$this->assertInstanceOf('\Entity\Rental\Rental', $rental);
 		$rentalDecorator = $this->rentalDecoratorFactory->create($rental);
-		$rentalDecorator->calculateRank();
 
 		// @TODO: nejde to kvoli tomu limitu na geocoding api
 		// $this->assertEquals(
