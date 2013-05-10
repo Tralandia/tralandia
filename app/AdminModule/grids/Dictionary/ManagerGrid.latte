@@ -3,7 +3,7 @@
 {/define}
 
 {define #col-lastTranslation}
-	<td>???</td>
+	<td>{$cell}</td>
 {/define}
 
 {define #col-toTranslate}
@@ -14,8 +14,16 @@
 	<td>{$cell}</td>
 {/define}
 
+{define #col-wordsToPay}
+	<td>{$cell}</td>
+{/define}
+
 {define #col-translator}
-	<td>{if $cell}{$cell->getLogin()}{/if}</td>
+	<td>
+		{if $cell}
+			<a href="{plink Language:edit $primary}" class="btn btn-small btn-primary">{$cell->getLogin()}</a>
+		{/if}
+	</td>
 {/define}
 
 
@@ -33,5 +41,5 @@
 		</div>
 		<a href="#" class="ajax btn btn-small btn-warning">request</a>
 		<a href="#" class="ajax btn btn-small btn-warning">mark as paid</a>
-		<a href="{plink edit $primary}" data-datagrid-edit class="ajax btn btn-small btn-primary">Edit</a>
+		<a href="{plink Language:edit $primary}" class="btn btn-small btn-primary">Edit</a>
 {/define}

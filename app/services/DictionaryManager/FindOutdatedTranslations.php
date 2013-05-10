@@ -71,11 +71,8 @@ class FindOutdatedTranslations {
 		$query = $this->_em->createQueryBuilder();
 		$query->select('e');
 		$query->from('\Entity\Phrase\Translation', 'e');
-		$query->leftJoin('e.phrase', 'phrase');
-		$query->leftJoin('phrase.type', 'type');
 
-		$query->andWhere('type.translated = :translated');
-		$query->setParameter('translated', TRUE);
+		$query = $this->_em->getRepository(TRANSLATION_ENTITY)->filterTranslatedTypes($query);
 
 		if ($language) {
 			$query->andWhere('e.language = :language');

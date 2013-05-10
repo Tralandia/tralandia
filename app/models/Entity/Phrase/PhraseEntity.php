@@ -3,6 +3,7 @@
 namespace Entity\Phrase;
 
 use Doctrine\ORM\Mapping as ORM;
+use Entity\Language;
 use	Extras\Annotation as EA;
 use Nette\Utils\Strings;
 use Nette\Utils\Arrays;
@@ -136,6 +137,18 @@ class Phrase extends \Entity\BaseEntityDetails {
 		return $t;
 	}
 
+
+	public function getWordsCount(Language $language)
+	{
+		$sourceTranslationText = $this->getSourceTranslationText();
+		$defaultVariationWordsCount = str_word_count($sourceTranslationText);
+
+		$variationsCount = $language->getVariationsCount();
+
+		return $defaultVariationWordsCount * $variationsCount;
+	}
+
+
 	/**
 	 * @param \Entity\Language $language
 	 * @param bool $loose
@@ -186,6 +199,12 @@ class Phrase extends \Entity\BaseEntityDetails {
 		}
 		return FALSE;
 	}
+
+	public function getSourceTranslationText() {
+		$translation = $this->getSourceTranslation();
+		return $translation ? $translation->getTranslation() : NULL;
+	}
+
 
 	public function hasTranslation($language) {
 		return $this->getTranslation($language) instanceof \Entity\Phrase\Translation;
@@ -249,14 +268,14 @@ class Phrase extends \Entity\BaseEntityDetails {
 
 	//@entity-generator-code --- NEMAZAT !!!
 
-	/* ----------------------------- Methods ----------------------------- */		
+	/* ----------------------------- Methods ----------------------------- */
 	public function __construct()
 	{
 		parent::__construct();
 
 		$this->translations = new \Doctrine\Common\Collections\ArrayCollection;
 	}
-		
+
 	/**
 	 * @param \Entity\Phrase\Translation
 	 * @return \Entity\Phrase\Phrase
@@ -270,7 +289,7 @@ class Phrase extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @param \Entity\Phrase\Translation
 	 * @return \Entity\Phrase\Phrase
@@ -282,7 +301,7 @@ class Phrase extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Doctrine\Common\Collections\ArrayCollection|\Entity\Phrase\Translation[]
 	 */
@@ -290,7 +309,7 @@ class Phrase extends \Entity\BaseEntityDetails {
 	{
 		return $this->translations;
 	}
-		
+
 	/**
 	 * @param boolean
 	 * @return \Entity\Phrase\Phrase
@@ -301,7 +320,7 @@ class Phrase extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return boolean|NULL
 	 */
@@ -309,7 +328,7 @@ class Phrase extends \Entity\BaseEntityDetails {
 	{
 		return $this->ready;
 	}
-		
+
 	/**
 	 * @param boolean
 	 * @return \Entity\Phrase\Phrase
@@ -320,7 +339,7 @@ class Phrase extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return boolean|NULL
 	 */
@@ -328,7 +347,7 @@ class Phrase extends \Entity\BaseEntityDetails {
 	{
 		return $this->corrected;
 	}
-		
+
 	/**
 	 * @param \Entity\Phrase\Type
 	 * @return \Entity\Phrase\Phrase
@@ -339,7 +358,7 @@ class Phrase extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Phrase\Phrase
 	 */
@@ -349,7 +368,7 @@ class Phrase extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Phrase\Type|NULL
 	 */
@@ -357,7 +376,7 @@ class Phrase extends \Entity\BaseEntityDetails {
 	{
 		return $this->type;
 	}
-		
+
 	/**
 	 * @param \Entity\Language
 	 * @return \Entity\Phrase\Phrase
@@ -368,7 +387,7 @@ class Phrase extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Phrase\Phrase
 	 */
@@ -378,7 +397,7 @@ class Phrase extends \Entity\BaseEntityDetails {
 
 		return $this;
 	}
-		
+
 	/**
 	 * @return \Entity\Language|NULL
 	 */
