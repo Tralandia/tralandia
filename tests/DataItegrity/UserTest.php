@@ -22,8 +22,8 @@ class UserTest extends \Tests\TestCase
 	}
 
 	public function testCheckRoles() {
-		$user = $this->userRepository->findOneByRole(NULL);
-		$this->assertNull($user, 'Niektory User nema nastavenu Rolu!');
+		$entity = $this->userRepository->findOneByRole(NULL);
+		$this->assertTrue(is_null($entity), 'Niektory User nema nastavenu Rolu!');
 	}
 
 }
