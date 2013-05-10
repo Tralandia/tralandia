@@ -38,6 +38,8 @@ class AddressCreator
 	{
 		$info = $this->addressNormalizer->getInfoUsingAddress($address);
 
+		if (!$info) return NULL;
+
 		$addressRepository = $this->em->getRepository('\Entity\Contact\Address');
 		/** @var $locationRepository \Repository\Location\LocationRepository */
 		$locationRepository = $this->em->getRepository('\Entity\Location\Location');
@@ -53,7 +55,6 @@ class AddressCreator
 
 		$gps = new \Extras\Types\Latlong($info[AddressNormalizer::LATITUDE], $info[AddressNormalizer::LONGITUDE]);
 		$addressEntity->setGps($gps);
-
 
 		return $addressEntity;
 	}

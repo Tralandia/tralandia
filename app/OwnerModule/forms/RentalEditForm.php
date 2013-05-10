@@ -125,7 +125,10 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 		$rentalContainer->addText('url', 'o977')
 			->setOption('help', $this->translate('o978'))
 			->setOption('prepend', 'http://')
-			->addRule(self::URL, $this->translate('o100102'));
+			->addRule(self::URL, $this->translate('o100102'))
+			->addRule(function() {
+				
+			}, $this->translate('o100102'));
 		;
 
 
@@ -227,6 +230,7 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 			$places[] = $place->getId();
 		}
 		$pet = $rental->getPetAmenity();
+		$rentalName = $this->translate($rental->name);
 		$defaults = [
 			//'referrer' => 'luzbo',
 			'email' => $rental->getEmail(),
@@ -234,6 +238,7 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 
 			'phone' => $rental->getPhone(),
 			'rental' => [
+				// 'name' => $rentalName,
 				'price' => $rental->getPrice()->getSourceAmount(),
 				'maxCapacity' => $rental->getMaxCapacity(),
 				'type' => [
@@ -260,10 +265,22 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 
 	public function validation(RentalEditForm $form)
 	{
-		$values = $form->getValues();
+		$values = $form->getValues()->rental;
 		d($values);
-	}
+		
+		// Rental Name validation
+		if ($name = $values->name->{$this->country->defaultLanguage->iso}) {
+			if ($name !== $this->translate($this->rental->name)) {
 
+			}
+		}
+
+		// Phone
+		if ($values->phone->number && !$values->phone->phone) {
+			$errors[] = 'Wrong phone number';
+		}
+
+	}
 
 }
 
