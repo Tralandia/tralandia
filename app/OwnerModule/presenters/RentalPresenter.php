@@ -4,6 +4,7 @@ namespace OwnerModule;
 
 
 use Nette\Application\BadRequestException;
+use Nette\Environment;
 
 class RentalPresenter extends BasePresenter
 {
@@ -20,6 +21,12 @@ class RentalPresenter extends BasePresenter
 	 * @var \OwnerModule\Forms\IRentalEditFormFactory
 	 */
 	protected $rentalEditFormFactory;
+
+	/**
+	 * @autowire
+	 * @var \FormHandler\IRentalEditHandlerFactory
+	 */
+	protected $rentalEditHandlerFactory;
 
 
 	public function injectDic(\Nette\DI\Container $dic)
@@ -61,9 +68,7 @@ class RentalPresenter extends BasePresenter
 	protected function createComponentRentalEditForm()
 	{
 		$form = $this->rentalEditFormFactory->create($this->rental, $this->environment);
-		$form->onSuccess[] = function ($form) {
-			d($form->getValues());
-		};
+		$form->onSuccess[] = $this->rentalEditHandlerFactory->create($this->rental)->handleSuccess;
 		return $form;
 	}
 

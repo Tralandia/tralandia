@@ -181,7 +181,7 @@ class AmenityRepository extends \Repository\BaseRepository
 
 	protected function findByTypeForSelect($type, ITranslator $translator, Collator $collator)
 	{
-		$type = $this->related('type')->findBySlug($type);
+		$type = $this->related('type')->findOneBySlug($type);
 		$return = [];
 		$rows = $this->findByType($type);
 		foreach ($rows as $row) {

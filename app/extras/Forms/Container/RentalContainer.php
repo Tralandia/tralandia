@@ -126,7 +126,7 @@ class RentalContainer extends BaseContainer
 		//->setOption('help', $this->translate('o5956'))
 		;
 
-		$this->addRentalPhotosContainer('photos', $this->rental);
+		// $this->addRentalPhotosContainer('photos', $this->rental);
 
 	}
 
@@ -145,10 +145,10 @@ class RentalContainer extends BaseContainer
 		$values = $form->getValues();
 
 		$rentalValues = $values->rental;
-		$photosSort = $rentalValues->photos->sort;
-		if (count($photosSort) < 3) {
-			$form['rental']['photos']->getMainControl()->addError($this->translate('o100111'));
-		}
+		// $photosSort = $rentalValues->photos->sort;
+		// if (count($photosSort) < 3) {
+		// 	$form['rental']['photos']->getMainControl()->addError($this->translate('o100111'));
+		// }
 
 		$address = $rentalValues->address;
 		if(!$address->addressEntity instanceof Address) {
