@@ -45,13 +45,18 @@ class PhraseCheckingSupportedGrid extends AdminGridControl {
 	{
 		$grid = $this->getGrid();
 
-		$grid->addColumn('language', 'Language');
+		$grid->addColumn('id');
+		$grid->addColumn('language');
+		$grid->addColumn('translationId');
+
+		$grid->setPagination(self::ITEMS_PER_PAGE, $this->getDataSourceCount);
 
 		$grid->setFilterFormFactory(function() {
 			$languages = $this->languageRepositoryAccessor->get()->getSupportedForSelect($this->translator, $this->collator);
 
 			$form = new \Nette\Forms\Container;
-			$form->addSelect(self::FILTER_LANGUAGE, NULL, $languages);
+			$form->addSelect(self::FILTER_LANGUAGE, NULL, $languages)
+				->setPrompt('---');
 
 			return $form;
 		});
@@ -68,16 +73,31 @@ class PhraseCheckingSupportedGrid extends AdminGridControl {
 	 */
 	public function getDataSource($filter, $order, \Nette\Utils\Paginator $paginator = NULL)
 	{
-		$language = NULL;
-		if (isset($filter[self::FILTER_LANGUAGE])) {
-			$language = $this->languageRepositoryAccessor->get()->find($filter[self::FILTER_LANGUAGE]);
-		}
+		$language = $this->getLanguageFromFilter($filter);
 
 		$limit = $paginator->itemsPerPage;
 		$offset = ($paginator->page - 1) * $paginator->itemsPerPage;
 		$data = $this->findOutdatedTranslations->getWaitingForTranslation($language, $limit, $offset);
 
 		return $data;
+	}
+
+	public function getDataSourceCount($filter, $order)
+	{
+		$language = $this->getLanguageFromFilter($filter);
+
+		return $this->findOutdatedTranslations->getWaitingForTranslationCount($language);
+	}
+
+
+	protected function getLanguageFromFilter($filter)
+	{
+		$language = NULL;
+		if (isset($filter[self::FILTER_LANGUAGE])) {
+			$language = $this->languageRepositoryAccessor->get()->find($filter[self::FILTER_LANGUAGE]);
+		}
+
+		return $language;
 	}
 
 }
