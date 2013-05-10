@@ -1,5 +1,5 @@
 <?php
-namespace Tests\Router;
+namespace Tests\Entity;
 
 use Nette, Extras;
 
