@@ -43,6 +43,9 @@ parameters:
 	rentalImageDir: %storageDir%/rental_images
 	rentalPricelistDir: %storageDir%/rental_pricelists
 
+	webTempDir: /webtemp
+	webTempPath: /webtemp
+
 	database:
 		user: root
 		password: root
