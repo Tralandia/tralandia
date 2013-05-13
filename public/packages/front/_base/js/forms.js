@@ -920,11 +920,7 @@ function createNewLineInPriceList(){
 				$(this).attr('name',originName.replace("[0]","["+(lastExistNameIterator)+"]"));	 			
 		})
 
-		pattern.find('select').addClass('select2').select2({
-			dropdownCssClass: "notFulltext",
-			allowClear: true,
-			minimumResultsForSearch: 'X',
-		});	 	
+ 	
 
 		$('.pricelistControl').append(pattern);
 		
@@ -1011,11 +1007,7 @@ function createNewLineInPriceList(){
 					$(this).attr('name',originName.replace("[0]","["+(count)+"]"));	 			
 			})
 
-			pattern.find('select').addClass('select2').select2({
-				dropdownCssClass: "notFulltext",
-				allowClear: true,
-				minimumResultsForSearch: 'X',
-			});	
+
 
 			base.$el.find(base.listContainer).append(pattern);
 

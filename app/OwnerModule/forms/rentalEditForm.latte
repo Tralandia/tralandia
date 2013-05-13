@@ -1,17 +1,14 @@
 {includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
+<h1>#h1 title </h1>
 {form rentalEditForm, class => "traform dashboard"}
-	<table class="formTable innerPadding">
+	<table class="formTable innerPadding">	
 		<tr class="formHeading	">
-			<td colspan="3">{_o100096}</td>
+			<td colspan="3">#uvodny text</td>
 		</tr>
 
 		{var $rentalContainer = $form['rental']}
-
-		{include #fieldset, text => 'o100166'}
-		{include #rentalPriceUpload, control => $rentalContainer['priceUpload']}
-		{include #fieldset, text => 'o933'}
-
-		{include #rentalPriceList, control => $rentalContainer['priceList']}
+		{include #fieldset, text => 'o980'}
+		{include #rentalPhotos, control => $rentalContainer['photos']}
 
 		{include #fieldset, text => 'o960'}
 		{*{include #text, control => $form['name']}*}
@@ -61,10 +58,15 @@
 		{include #select, control => $rentalContainer['checkOut'] , controlClass => 'select2 notFulltext'}
 		{include #select, control => $rentalContainer['ownerAvailability'] , controlClass => 'select2 ownerAvailability notFulltext'}
 		{include #select, control => $rentalContainer['pet'] , controlClass => 'select2 pet notFulltext'}
+		{include #select, control => $rentalContainer['placement'], controlClass => 'select2 placement notFulltext'}
 
 		{include #fieldset, text => 'o100086'}
 		{include #address, control => $rentalContainer['address']}
-		{include #select, control => $rentalContainer['placement'], controlClass => 'select2 placement notFulltext'}
+
+		{include #fieldset, text => 'o100166'}
+		{include #rentalPriceUpload, control => $rentalContainer['priceUpload']}
+		{include #fieldset, text => 'o933'}
+		{include #rentalPriceList, control => $rentalContainer['priceList']}
 
 		{include #checkboxList, control => $rentalContainer['board'], colCount => 3}
 		{include #checkboxList, control => $rentalContainer['children'], colCount => 3}
@@ -80,8 +82,7 @@
 		{include #checkboxList, control => $rentalContainer['parking'], colCount => 3}
 		{include #checkboxList, control => $rentalContainer['other'], colCount => 3}
 
-		{include #fieldset, text => 'o980'}
-		{include #rentalPhotos, control => $rentalContainer['photos']}
+		
 
 		{include #submit, control => $form['submit'], icon => 'entypo-ok'}
 	</table>
