@@ -32,9 +32,10 @@ class RentalEditHandler extends FormHandler
 	}
 
 
-	public function handleSuccess($form)
+	public function handleSuccess($values)
 	{
-		$values = $form->getValues()->rental;
+		d($values);
+		$values = $values->rental;
 		$rental = $this->rental;
 
 		if ($value = $values['address']) {
@@ -53,9 +54,9 @@ class RentalEditHandler extends FormHandler
 			$rental->classification = $value->classification;
 		}
 
-		if ($value = $values['photos']) {
+//		if ($value = $values['photos']) {
 			// @TODO: nemame dorieseny upload obrazkov
-		}
+//		}
 
 		if ($value = $values['priceList']) {
 			$pricelistRows = $rental->getPricelistRows();
