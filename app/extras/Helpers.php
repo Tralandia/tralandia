@@ -118,9 +118,31 @@ class Helpers {
 		return $this->locale->formatTime($time);
 	}
 
+
+	/**
+	 * @param string|int|\DateTime $date
+	 * @param null $sort
+	 *
+	 * @return bool|float|int|mixed|NULL|string
+	 */
+	public function dayName($date, $sort = NULL)
+	{
+		if ($date == NULL) { // intentionally ==
+			return NULL;
+		}
+
+		$date = Nette\DateTime::from($date);
+		if($sort) {
+			return $this->locale->getDayShort($date->format('N'));
+		} else {
+			return $this->locale->getDayLong($date->format('N'));
+		}
+	}
+
+
 	/**
 	 * Date/time formatting.
-	 * @param  string|int|DateTime
+	 * @param  string|int|\DateTime
 	 * @param  string
 	 * @return string
 	 */
