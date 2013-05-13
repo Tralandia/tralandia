@@ -1,7 +1,7 @@
 {includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
 
 {cache $registrationFormCacheOptions['key'],
-	if => $registrationFormCacheOptions['enabled'] && $registrationFormSubmitted,
+	if => $registrationFormCacheOptions['enabled'] && !$registrationFormSubmitted,
 	expire => $registrationFormCacheOptions['expiration'],
 	tags => $registrationFormCacheOptions['tags']}
 
