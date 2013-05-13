@@ -31,6 +31,25 @@ input[type=text] , textarea {
 }
 
 table.formTable {
+	.priceListRowsContainer , .pricelistControl {
+		span.btn.remove {
+			height: 23px;
+			line-height: 20px;
+			float: right;
+			margin: 0;
+			i {
+				color: rgb(117, 117, 117);
+				top: 4px;
+				left: 0px;
+			}
+		}	
+	}	
+}
+
+
+
+
+table.formTable {
 	// border: 1px solid black;
 	// td {
 	// 	border: 1px solid black;
@@ -61,8 +80,10 @@ table.formTable {
 			margin-bottom: 10px;
 		}
 
-		.select2 {
+		select {
+			margin: 0;
 			margin-right: 10px;
+			width: 70px;
 
 			&.string {
 				width: 162px;
@@ -110,6 +131,11 @@ table.formTable {
 				-moz-box-sizing: border-box;    /* Firefox, other Gecko */
 				box-sizing: border-box;         /* Opera/IE 8+ */				
 			}
+
+			textarea {
+				height: 70px;
+				margin: 0;
+			}
 		}
 
 		&.invalid {
@@ -145,15 +171,16 @@ table.formTable {
 				input[type=checkbox] {
 					float:left;
 					position: relative;
-					top: 18px;
+					top: 4px;
 					left: 17px;
 
 				}
 
 				label {
-					margin: 16px 10px 0 0;
+					margin: 0 10px 0 18px;
 					width: 275px;
 					float: right;
+					line-height: 14px;
 				}
 			}
 		}
@@ -555,6 +582,22 @@ table.formTable {
 			margin-bottom: 10px;
 			select , input , .select2 {
 				margin-right: 10px;
+			}
+
+			span.fileinput-button {
+				float: none;
+				margin: 0;
+				width: 127px;
+			}
+
+			input[type=text] {
+				width: 366px;
+			}
+
+			select {
+				width: 100px;
+				margin: 0;
+				margin-right: 6px;
 			}
 		}	
 	}	
