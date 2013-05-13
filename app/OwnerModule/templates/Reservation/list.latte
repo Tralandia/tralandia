@@ -10,9 +10,7 @@
 		<tr n:class="$reservation->arrivalDate < $today ? old">
 			<td>
 				<div class="info pull-right">
-					{$reservation->arrivalDate|date} <i class="icon-arrow-right"></i> {$reservation->departureDate|date}, 
-					{$reservation->adultsCount} {_o100060,null,[count=>$reservation->adultsCount]}, 
-					{$reservation->childrenCount} {_o100061,null,[count=>$reservation->childrenCount]}
+					({$reservation->created|date}, {_$reservation->language->name})
 				</div>
 				<p class="sender">
 					<b>{$reservation->senderName}</b>, 
@@ -21,7 +19,13 @@
 						{if $reservation->senderPhone}, {$reservation->senderPhone|phone}{/if}
 					
 				</p>
-				<p class="message">({$reservation->created|date}, {_$reservation->language->name}) {$reservation->message}</p>
+
+				<p class="date">#nastup {$reservation->arrivalDate|date} (#day) <i class="icon-arrow-right"></i> #odchod {$reservation->departureDate|date} (day)</p>
+				<p class="count">
+					{$reservation->adultsCount} {_o100060,null,[count=>$reservation->adultsCount]}, 
+					{$reservation->childrenCount} {_o100061,null,[count=>$reservation->childrenCount]} 
+				</p>
+				<p class="message">{$reservation->message}</p>
 			</td>
 		</tr>
 		{/foreach}
