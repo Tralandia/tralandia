@@ -13,7 +13,7 @@ use Nette\Http\FileUpload;
 /**
  * @ORM\Entity()
  * @ORM\HasLifecycleCallbacks
- * @ORM\Table(name="rental_image", indexes={@ORM\index(name="oldUrl", columns={"oldUrl"}), @ORM\index(name="sort", columns={"sort"})})
+ * @ORM\Table(name="rental_image", indexes={@ORM\index(name="sort", columns={"sort"})})
  * @EA\Primary(key="id", value="name")
  */
 class Image extends \Entity\BaseEntity
@@ -36,12 +36,6 @@ class Image extends \Entity\BaseEntity
 	 * @ORM\Column(type="string")
 	 */
 	protected $filePath;
-
-	/**
-	 * @var text
-	 * @ORM\Column(type="string", nullable=true)
-	 */
-	protected $oldUrl;
 
 	/**
 	 * @var integer
@@ -105,36 +99,7 @@ class Image extends \Entity\BaseEntity
 	{
 		return $this->filePath;
 	}
-		
-	/**
-	 * @param string
-	 * @return \Entity\Rental\Image
-	 */
-	public function setOldUrl($oldUrl)
-	{
-		$this->oldUrl = $oldUrl;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Rental\Image
-	 */
-	public function unsetOldUrl()
-	{
-		$this->oldUrl = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return string|NULL
-	 */
-	public function getOldUrl()
-	{
-		return $this->oldUrl;
-	}
-		
+				
 	/**
 	 * @param integer
 	 * @return \Entity\Rental\Image
