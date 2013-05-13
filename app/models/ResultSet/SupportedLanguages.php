@@ -29,4 +29,11 @@ class SupportedLanguages {
 		return $result;
 	}
 
+
+	public function getSortedByIso()
+	{
+		$result = $this->em->getRepository(LANGUAGE_ENTITY)->findSupported(['iso' => 'ASC']);
+		return $result;
+	}
+
 }

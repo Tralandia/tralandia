@@ -16,9 +16,9 @@ use Routers\BaseRoute;
  */
 class LanguageRepository extends \Repository\BaseRepository {
 
-	public function findSupported() {
+	public function findSupported($order = NULL) {
 		$entityName = $this->_entityName;
-		return $this->findBySupported($entityName::SUPPORTED);
+		return $this->findBySupported($entityName::SUPPORTED, $order);
 	}
 
 	public function getSupportedSortedByName(ITranslator $translator, Collator $collator) {

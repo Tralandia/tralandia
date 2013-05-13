@@ -1,5 +1,5 @@
 {define #col-name}
-	<td>{_$row->language->getName()} ({$row->language->getIso()})</td>
+	<td>{$row->language->getIso()|upper}</td>
 {/define}
 
 {define #col-lastTranslation}
@@ -31,15 +31,14 @@
 		{if $row->language->live}
 			{var $buttonText = 'Live'; $buttonClass = 'btn-success'; $linkText = 'turn off'}
 		{else}
-			{var $buttonText = 'Not live'; $buttonClass = ''; $linkText = 'set LIVE'}
+			{var $buttonText = 'Not live'; $buttonClass = 'btn-danger'; $linkText = 'set LIVE'}
 		{/if}
 		<div class="btn-group">
-			<button class="btn btn-mini dropdown-toggle {$buttonClass}" data-toggle="dropdown">{$buttonText}<span class="caret"></span></button>
+			<button class="	btn btn-mini dropdown-toggle {$buttonClass}" data-toggle="dropdown">{$buttonText}<span class="caret"></span></button>
 			<ul class="dropdown-menu">
 				<li><a href="#">{$linkText}</a></li>
 			</ul>
 		</div>
-		<a href="#" class="ajax btn btn-small btn-warning">request</a>
-		<a href="#" class="ajax btn btn-small btn-warning">mark as paid</a>
-		<a href="{plink Language:edit $primary}" class="btn btn-small btn-primary">Edit</a>
+		<a href="#" class="ajax btn btn-small btn-warning"><i class="icon-envelope"></i></a>
+		<a href="#" class="ajax btn btn-small btn-warning">Mark as paid</a>
 {/define}
