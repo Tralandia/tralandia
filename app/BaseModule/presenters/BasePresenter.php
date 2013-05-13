@@ -355,7 +355,7 @@ abstract class BasePresenter extends Presenter {
 
 		$a = $parameters['staticDomain'] ? $parameters['staticDomain'] : $this->getBaseUrl();
 
-		return new \WebLoader\Nette\CssLoader($compiler, $a . $parameters['webTempDir']);
+		return new \WebLoader\Nette\CssLoader($compiler, $a . $parameters['webTempPath']);
 	}
 
 	public function createComponentJs() {
@@ -373,7 +373,7 @@ abstract class BasePresenter extends Presenter {
 
 		$a = $parameters['staticDomain'] ? $parameters['staticDomain'] : $this->getBaseUrl();
 
-		return new \WebLoader\Nette\JavaScriptLoader($compiler, $a . $parameters['webTempDir']);
+		return new \WebLoader\Nette\JavaScriptLoader($compiler, $a . $parameters['webTempPath']);
 	}
 
 	public function getBaseUrl() {

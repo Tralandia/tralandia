@@ -21,6 +21,7 @@ parameters:
 	storageDir: /../../static
 
 	webTempDir: /../../static/webtemp
+	webTempPath: /webtemp
 
 services:
 	nette.mailer:
