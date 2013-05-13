@@ -1,7 +1,7 @@
 
 {block content}
 {var $currentLanguageId = $environment->getPrimaryLocation()->defaultLanguage->id}
-<h1 class="marginLeft pull-left">Calendar widget</h1>
+<h1 class="marginLeft pull-left">{_o100186}</h1>
 
 {if count($rentals)>1}
 	<select class="select2 pull-right marginTop marginRight" id="rentalSelect">
@@ -12,15 +12,13 @@
 
 <div class="clearfix"></div>
 
-<p>{_o2544}</p>
-<p>Kalendár obsadenosti bude vždy aktuálny. Prvý zobrazený mesiac bude vždy aktuálny mesiac v roku.</p>
+<p>{_o100187}</p>
 
 <form data-id="{$thisRental->id}" id="calendarWidgetControl" data-link-template="{!$linkTemplate}">
 
 	<div class="control-group calendarWidgetControl clearfix">
 		
 		<div class="controls">
-			
 			<select name="rows" class="select2 notFulltext">
 				<option n:for="$i = 1; $i <= 4; $i++" value="{$i}" n:attr="selected => ($i==4 ? 'selected')">{$i} {_o100180,null,[count=>$i]}</option>
 			</select>
@@ -33,7 +31,7 @@
 		</div>
 
 		<div class="controls">
-			<select name="language" class="select2">
+			<select name="language" class="select2 notFulltext">
 				<option n:foreach="$languages as $id => $languageName" n:attr="selected => ($id==$currentLanguageId ? 'selected')" value="{$id}">{dump $id}{dump $currentLanguageId}{$languageName}</option>
 			</select>
 		</div>
