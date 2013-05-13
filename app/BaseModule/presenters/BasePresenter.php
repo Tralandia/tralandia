@@ -358,7 +358,8 @@ abstract class BasePresenter extends Presenter {
 //		];
 //		$compiler->addFileFilter(new \Webloader\Filter\VariablesFilter($cssVariables));
 
-		$a = $parameters['staticDomain'] ? $parameters['staticDomain'] : $this->getBaseUrl();
+//		$a = $parameters['staticDomain'] ? $parameters['staticDomain'] : $this->getBaseUrl();
+		$a = $this->getBaseUrl();
 
 		return new \WebLoader\Nette\CssLoader($compiler, $a . $parameters['webTempPath']);
 	}
@@ -376,7 +377,8 @@ abstract class BasePresenter extends Presenter {
 		$compiler = \WebLoader\Compiler::createJsCompiler($files, WWW_DIR . $parameters['webTempDir']);
 		$compiler->setJoinFiles(TRUE);
 
-		$a = $parameters['staticDomain'] ? $parameters['staticDomain'] : $this->getBaseUrl();
+//		$a = $parameters['staticDomain'] ? $parameters['staticDomain'] : $this->getBaseUrl();
+		$a = $this->getBaseUrl();
 
 		return new \WebLoader\Nette\JavaScriptLoader($compiler, $a . $parameters['webTempPath']);
 	}

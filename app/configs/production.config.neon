@@ -17,7 +17,7 @@ parameters:
 		driver: pdo_mysql
 		debugger: false
 
-	staticDomain: "http://tralandiastatic.com/"
+	staticDomain: "http://tralandiastatic.com"
 	storageDir: /../../static
 
 #	webTempDir: /../../static/webtemp
