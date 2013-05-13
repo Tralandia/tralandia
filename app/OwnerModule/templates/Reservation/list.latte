@@ -13,17 +13,17 @@
 					({$reservation->created|date}, {_$reservation->language->name})
 				</div>
 				<p class="sender">
-					<b>{$reservation->senderName}</b>, 
-					
+					<b>{$reservation->senderName}</b>,
+
 						<a href="mailto:{$reservation->senderEmail}">{$reservation->senderEmail}</a>
 						{if $reservation->senderPhone}, {$reservation->senderPhone|phone}{/if}
-					
+
 				</p>
 
-				<p class="date">#nastup {$reservation->arrivalDate|date} (#day) <i class="icon-arrow-right"></i> #odchod {$reservation->departureDate|date} (day)</p>
+				<p class="date">#nastup {$reservation->arrivalDate|date} ({$reservation->arrivalDate|dayName}) <i class="icon-arrow-right"></i> #odchod {$reservation->departureDate|date} ({$reservation->departureDate|dayName})</p>
 				<p class="count">
-					{$reservation->adultsCount} {_o100060,null,[count=>$reservation->adultsCount]}, 
-					{$reservation->childrenCount} {_o100061,null,[count=>$reservation->childrenCount]} 
+					{$reservation->adultsCount} {_o100060,null,[count=>$reservation->adultsCount]},
+					{$reservation->childrenCount} {_o100061,null,[count=>$reservation->childrenCount]}
 				</p>
 				<p class="message">{$reservation->message}</p>
 			</td>
