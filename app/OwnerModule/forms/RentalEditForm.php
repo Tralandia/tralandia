@@ -42,9 +42,9 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 	protected $collator;
 
 	/**
-	 * @var IRentalContainerFactory
+	 * @var \Extras\Forms\Container\RentalContainer
 	 */
-	protected $rentalContainerFactory;
+	protected $rentalContainer;
 
 	/**
 	 * @var \Repository\Location\LocationRepository
@@ -88,7 +88,7 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 		$this->environment = $environment;
 		$this->country = $environment->getPrimaryLocation();
 		$this->collator = $environment->getLocale()->getCollator();
-		$this->rentalContainerFactory = $rentalContainerFactory;
+		$this->rentalContainer = $rentalContainerFactory->create($this->environment, $this->rental);
 
 		$this->locationRepository = $em->getRepository(LOCATION_ENTITY);
 		$this->languageRepository = $em->getRepository(LANGUAGE_ENTITY);
@@ -114,7 +114,7 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 //			;
 
 		$rental = $this->rental;
-		$rentalContainer = $this->rentalContainerFactory->create($this->environment, $this->rental);
+		$rentalContainer = $this->rentalContainer;
 		$this['rental'] = $rentalContainer;
 
 		$rentalContainer->addRentalPriceListContainer('priceList', $currency);
@@ -216,132 +216,15 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 		$this->onValidate[] = $rentalContainer->validation;
 	}
 
-
 	public function setDefaultsValues()
 	{
-		$rental = $this->rental;
-
-		$placement = 0;
-		foreach ($rental->getPlacements() as $place) {
-			$placement = $place->getId();
-			break;
-		}
-		$pet = $rental->getPetAmenity();
-
-		$name = [];
-		foreach ($rental->name->getTranslations() as $translation) {
-			$language = $translation->getLanguage();
-			$name[$language->iso] = $translation->translation;
-		}
-
-		$teaser = [];
-		foreach ($rental->teaser->getTranslations() as $translation) {
-			$language = $translation->getLanguage();
-			$teaser[$language->iso] = $translation->translation;
-		}
-
-		$interview = [];
-		foreach ($rental->interviewAnswers as $answer) {
-			$question = $answer->getQuestion();
-			$interview[$question->id] = [];
-			foreach ($answer->answer->getTranslations() as $translation) {
-				$language = $translation->language;
-				$interview[$question->id][$language->iso] = $translation->translation;
-			}
-		}
-
-		$defaults = [
-			'email' => $rental->getEmail(),
-			'url' => $rental->getUrl(),
-			'phone' => $rental->getPhone(),
-			'rental' => [
-				'name' => $name,
-				'teaser' => $teaser,
-				'price' => $rental->getPrice()->getSourceAmount(),
-				'maxCapacity' => $rental->getMaxCapacity(),
-				'interview' => $interview,
-				'bedroomCount' => $rental->bedroomCount,
-				'roomsLayout' => $rental->rooms,
-				'separateGroups' => $rental->getSeparateGroups(),
- 				'type' => [
-					'type' => $rental->getType()->getId(),
-					'classification' => $rental->getClassification(),
-				],
-				'checkIn' => $rental->getCheckIn(),
-				'checkOut' => $rental->getCheckOut(),
-				'ownerAvailability' => $rental->getOwnerAvailability()->getId(),
-				'pet' => ($pet ? $pet->getId() : NULL),
-				'placement' => $placement,
-				'address' => $rental->getAddress(),
-
-				'important' => array_map(function ($a) {
-						return $a->getId();
-					}, $rental->getImportantAmenities()
-				),
-				'board' => array_map(function ($a) {
-						return $a->getId();
-					}, $rental->getBoardAmenities()
-				),
-				'children' => array_map(function ($a) {
-						return $a->getId();
-					}, $rental->getChildrenAmenities()
-				),
-				'activity' => array_map(function ($a) {
-						return $a->getId();
-					}, $rental->getActivityAmenities()
-				),
-				'relax' => array_map(function ($a) {
-						return $a->getId();
-					}, $rental->getRelaxAmenities()
-				),
-				'service' => array_map(function ($a) {
-						return $a->getId();
-					}, $rental->getServiceAmenities()
-				),
-				'wellness' => array_map(function ($a) {
-						return $a->getId();
-					}, $rental->getWellnessAmenities()
-				),
-				'congress' => array_map(function ($a) {
-						return $a->getId();
-					}, $rental->getCongressAmenities()
-				),
-				'kitchen' => array_map(function ($a) {
-						return $a->getId();
-					}, $rental->getKitchenAmenities()
-				),
-				'bathroom' => array_map(function ($a) {
-						return $a->getId();
-					}, $rental->getBathroomAmenities()
-				),
-				'heating' => array_map(function ($a) {
-						return $a->getId();
-					}, $rental->getHeatingAmenities()
-				),
-				'parking' => array_map(function ($a) {
-						return $a->getId();
-					}, $rental->getParkingAmenities()
-				),
-				'room' => array_map(function ($a) {
-						return $a->getId();
-					}, $rental->getRoomAmenities()
-				),
-				'other' => array_map(function ($a) {
-						return $a->getId();
-					}, $rental->getOtherAmenities()
-				)
-			]
-		];
-
-		$this->setDefaults($defaults);
+		return $this->rentalContainer->setDefaultsValues();
 	}
 
 
 	public function validation(RentalEditForm $form)
 	{
-		$values = $form->getValues()->rental;
-		d($values);
-
+//		$values = $form->getValues()->rental;
 	}
 
 }

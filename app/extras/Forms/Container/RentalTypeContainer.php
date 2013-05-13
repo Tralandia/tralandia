@@ -5,22 +5,32 @@ namespace Extras\Forms\Container;
 
 use Nette\Localization\ITranslator;
 use Nette\Utils\Html;
+use Repository\Rental\TypeRepository;
 
 class RentalTypeContainer extends BaseContainer
 {
 
 	/**
-	 * @param array $rentalTypes
-	 * @param \Nette\Localization\ITranslator $translator
+	 * @var \Repository\Rental\TypeRepository
 	 */
-	public function __construct(array $rentalTypes, ITranslator $translator)
+	protected $rentalTypeRepository;
+
+
+	/**
+	 * @param array $rentalTypes
+	 * @param ITranslator $translator
+	 * @param $rentalTypeRepository
+	 */
+	public function __construct(array $rentalTypes, ITranslator $translator, TypeRepository $rentalTypeRepository)
 	{
 		parent::__construct();
+
+		$this->rentalTypeRepository = $rentalTypeRepository;
 
 		$typesOptions = [];
 		$elTemplate = Html::el('option');
 
-		foreach($rentalTypes as $typeId => $type) {			
+		foreach($rentalTypes as $typeId => $type) {
 			$el = clone $elTemplate;
 			$el->value($typeId)->setText($type['label']);
 			$el->addAttributes(['data-classification' => $type['entity']->hasClassification()]);
@@ -37,6 +47,21 @@ class RentalTypeContainer extends BaseContainer
 			//->setOption('help', $this->translate('o5956'))
 		;
 
+	}
+
+	public function getValues($asArray = FALSE)
+	{
+		$values = $asArray ? array() : new \Nette\ArrayHash;
+		foreach ($this->getComponents() as $name => $control) {
+			if ($name=='type') {
+				$controlValue = $control->getValue();
+				$values[$name] = $controlValue ? $this->rentalTypeRepository->find($controlValue) : NULL;
+			}
+			if ($name=='classification') {
+				$values[$name] = $control->getValue();
+			}
+		}
+		return $values;
 	}
 
 	public function getMainControl()
