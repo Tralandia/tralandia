@@ -17,6 +17,8 @@ parameters:
 		driver: pdo_mysql
 		debugger: false
 
+	staticDomain: NULL
+	storageDir: /../../static
 
 services:
 	nette.mailer:
