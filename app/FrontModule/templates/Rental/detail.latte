@@ -174,35 +174,42 @@
 								{if count($rental->amenities) > 0}
 								{var $importantAmenities = $rental->getImportantAmenitiesGroupByType()}
 								{var $notImportantAmenities = $rental->getNotImportantAmenitiesGroupByType()}
+								{if !count($importantAmenities)}
+									{var
+										$importantAmenities = array_slice($notImportantAmenities,0, 2);
+										$notImportantAmenities = array_slice($notImportantAmenities, 2);
+									}
+								{/if}
 								<li class="monitor">
 									<strong>{_o100013}</strong>
 
 									<div class="amenitiesStart">
-
 										{foreach $importantAmenities  as $amenities}
-										{foreach $amenities as $amenity}
-										{if $iterator->first}{_$amenity->name|firstUpper}{else}{_$amenity->name}{/if}{if !$iterator->last}, {/if}
+											{var $firstAmenity = false}
+											{var $lastAmenity = false}
+											{if $iterator->first}{var $firstAmenity = true}{/if}
+											{if $iterator->last}{var $lastAmenity = true}{/if}
+											{foreach $amenities as $amenity}
+												{if $firstAmenity}
+													{_$amenity->name}
+												{else}
+													{_$amenity->name}
+												{/if}
+												{if !$lastAmenity}, {/if}
+											{/foreach}
 										{/foreach}
-										{/foreach}
-
-										{if $notImportantAmenities}
-										{dump $notImportantAmenities}
-
-
 										<a class="toggle showMoreAmenities" data-opentext="{_o100001}" data-closetext="{_o100014}"
 										for="moreAmenities" href="#"><b>{_o100001}</b></a>
 									</div>
 
 									<div class="moreAmenities">
-
 										{foreach $notImportantAmenities  as $amenities}
-										{foreach $amenities as $amenity}
-										{_$amenity->name}
+											{var $typesIterator = $iterator}
+											{foreach $amenities as $amenity}
+												{_$amenity->name}{if !$typesIterator->last}, {/if}
+											{/foreach}
 										{/foreach}
-										{/foreach}
-
 									</div>
-									{/if}
 
 								</li>
 								{/if}
