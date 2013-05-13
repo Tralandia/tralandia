@@ -17,7 +17,7 @@ parameters:
 		driver: pdo_mysql
 		debugger: false
 
-	staticDomain: NULL
+	staticDomain: "http://tralandiastatic.com/"
 	storageDir: /../../static
 
 services:
