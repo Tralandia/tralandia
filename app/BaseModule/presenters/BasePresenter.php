@@ -353,6 +353,11 @@ abstract class BasePresenter extends Presenter {
 		$compiler = \WebLoader\Compiler::createCssCompiler($files, WWW_DIR . $parameters['webTempDir']);
 		$compiler->addFileFilter(new \Webloader\Filter\LessFilter());
 
+//		$cssVariables = [
+//			''
+//		];
+//		$compiler->addFileFilter(new \Webloader\Filter\VariablesFilter($cssVariables));
+
 		$a = $parameters['staticDomain'] ? $parameters['staticDomain'] : $this->getBaseUrl();
 
 		return new \WebLoader\Nette\CssLoader($compiler, $a . $parameters['webTempPath']);

@@ -20,7 +20,8 @@ parameters:
 	staticDomain: "http://tralandiastatic.com/"
 	storageDir: /../../static
 
-	webTempDir: /../../static/webtemp
+#	webTempDir: /../../static/webtemp
+	webTempDir: /webtemp
 	webTempPath: /webtemp
 
 services:
