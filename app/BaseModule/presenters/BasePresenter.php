@@ -341,6 +341,8 @@ abstract class BasePresenter extends Presenter {
 	}
 
 	public function createComponentCss() {
+		$parameters = $this->getContext()->getParameters();
+
 		$files = new \WebLoader\FileCollection(WWW_DIR . '/packages');
 		$files->addFiles($this->cssFiles);
 
@@ -348,13 +350,17 @@ abstract class BasePresenter extends Presenter {
 			$files->addRemoteFiles($this->cssRemoteFiles);
 		}
 
-		$compiler = \WebLoader\Compiler::createCssCompiler($files, WWW_DIR . '/webtemp');
+		$compiler = \WebLoader\Compiler::createCssCompiler($files, WWW_DIR . $parameters['webTempDir']);
 		$compiler->addFileFilter(new \Webloader\Filter\LessFilter());
 
-		return new \WebLoader\Nette\CssLoader($compiler, $this->template->basePath . '/webtemp');
+		$a = $parameters['staticDomain'] ? $parameters['staticDomain'] : $this->getBaseUrl();
+
+		return new \WebLoader\Nette\CssLoader($compiler, $a . $parameters['webTempDir']);
 	}
 
 	public function createComponentJs() {
+		$parameters = $this->getContext()->getParameters();
+
 		$files = new \WebLoader\FileCollection(WWW_DIR . '/packages');
 		$files->addFiles($this->jsFiles);
 
@@ -362,10 +368,12 @@ abstract class BasePresenter extends Presenter {
 			$files->addRemoteFiles($this->jsRemoteFiles);
 		}
 
-		$compiler = \WebLoader\Compiler::createJsCompiler($files, WWW_DIR . '/webtemp');
+		$compiler = \WebLoader\Compiler::createJsCompiler($files, WWW_DIR . $parameters['webTempDir']);
 		$compiler->setJoinFiles(TRUE);
 
-		return new \WebLoader\Nette\JavaScriptLoader($compiler, $this->template->basePath . '/webtemp');
+		$a = $parameters['staticDomain'] ? $parameters['staticDomain'] : $this->getBaseUrl();
+
+		return new \WebLoader\Nette\JavaScriptLoader($compiler, $a . $parameters['webTempDir']);
 	}
 
 	public function getBaseUrl() {
