@@ -267,9 +267,9 @@ class EditFormHandlerTest extends \Tests\TestCase
 				1 => $this->rentalAmenityRepositoryAccessor->get()->find(43),
 			],
 			'other' => [
-				0 => $this->rentalAmenityRepositoryAccessor->get()->find(2), 
-				1 => $this->rentalAmenityRepositoryAccessor->get()->find(15), 
-				2 => $this->rentalAmenityRepositoryAccessor->get()->find(16), 
+				0 => $this->rentalAmenityRepositoryAccessor->get()->find(2),
+				1 => $this->rentalAmenityRepositoryAccessor->get()->find(15),
+				2 => $this->rentalAmenityRepositoryAccessor->get()->find(16),
 				3 => $this->rentalAmenityRepositoryAccessor->get()->find(22),
 				4 => $this->rentalAmenityRepositoryAccessor->get()->find(23)
 			],
@@ -286,56 +286,55 @@ class EditFormHandlerTest extends \Tests\TestCase
 		$rental = $handler->handleSuccess($data);
 
 		$this->assertInstanceOf('\Entity\Rental\Rental', $rental);
-		$rentalDecorator = $this->rentalDecoratorFactory->create($rental);
 
 		// @TODO: nejde to kvoli tomu limitu na geocoding api
 		// $this->assertEquals(
-			// $data['address']->address, 
+			// $data['address']->address,
 			// $rental->getAddress()->address
 		// );
 
 		$this->assertEquals(
-			$data['placement']->slug, 
+			$data['placement']->slug,
 			$rental->getPlacement()->slug
 		);
 
 		$this->assertEquals(
-			$data['type']->classification, 
+			$data['type']->classification,
 			$rental->getClassification()
 		);
 
 		$this->assertEquals(
-			$data['type']->type->slug, 
+			$data['type']->type->slug,
 			$rental->getType()->slug
 		);
 
 		$this->assertEquals(
-			$data['checkIn'], 
+			$data['checkIn'],
 			$rental->getCheckIn()
 		);
 
 		$this->assertEquals(
-			$data['checkOut'], 
+			$data['checkOut'],
 			$rental->getCheckOut()
 		);
 
 		$this->assertEquals(
-			$data['maxCapacity'], 
+			$data['maxCapacity'],
 			$rental->getMaxCapacity()
 		);
 
 		$this->assertEquals(
-			$data['separateGroups'], 
+			$data['separateGroups'],
 			$rental->getSeparateGroups()
 		);
 
 		$this->assertEquals(
-			$data['ownerAvailability']->id, 
+			$data['ownerAvailability']->id,
 			$rental->getOwnerAvailability()->id
 		);
 
 		$this->assertEquals(
-			$data['pet']->id, 
+			$data['pet']->id,
 			$rental->getPetAmenity()->id
 		);
 
@@ -343,7 +342,7 @@ class EditFormHandlerTest extends \Tests\TestCase
 		$firstPricelistRow2 = array_values($rental->getPricelistRows()->toArray());
 		$firstPricelistRow2 = array_shift($firstPricelistRow2);
 		$this->assertEquals(
-			$firstPricelistRow->entity->id, 
+			$firstPricelistRow->entity->id,
 			$firstPricelistRow2->id
 		);
 
@@ -351,39 +350,39 @@ class EditFormHandlerTest extends \Tests\TestCase
 		// $firstPricelist2 = array_values($rental->getPricelists()->toArray());
 		// $firstPricelist2 = array_shift($firstPricelist2);
 		// $this->assertEquals(
-		// 	$firstPricelist->name, 
+		// 	$firstPricelist->name,
 		// 	$firstPricelist2->name
 		// );
 
 		$this->assertEquals(
-			$data['phone']->entity->international, 
+			$data['phone']->entity->international,
 			$rental->getPhone()->international
 		);
 
 		$this->assertEquals(
-			$data['url'], 
+			$data['url'],
 			$rental->getUrl()
 		);
 
 		$this->assertEquals(
-			$data['price']->value, 
+			$data['price']->value,
 			$rental->getPrice()->sourceAmount
 		);
 
 		$language = $this->languageRepositoryAccessor->get()->find(144); // sk
 		$this->assertEquals(
-			$data['name']['sk'], 
+			$data['name']['sk'],
 			$rental->name->getTranslation($language)->translation
 		);
 
 		$this->assertEquals(
-			$data['teaser']['sk'], 
+			$data['teaser']['sk'],
 			$rental->teaser->getTranslation($language)->translation
 		);
 
-		foreach ($rental->interviewAnswers as $answer) {	
+		foreach ($rental->interviewAnswers as $answer) {
 			$this->assertEquals(
-				$data['interview'][$answer->question->id]['sk'], 
+				$data['interview'][$answer->question->id]['sk'],
 				$answer->answer->getTranslation($this->languageRepositoryAccessor->get()->find(144))->translation
 			);
 		}

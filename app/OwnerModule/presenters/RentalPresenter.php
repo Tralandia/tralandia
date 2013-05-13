@@ -68,7 +68,9 @@ class RentalPresenter extends BasePresenter
 	protected function createComponentRentalEditForm()
 	{
 		$form = $this->rentalEditFormFactory->create($this->rental, $this->environment);
-		$form->onSuccess[] = $this->rentalEditHandlerFactory->create($this->rental)->handleSuccess;
+		$rentalEditHandler = $this->rentalEditHandlerFactory->create($this->rental);
+		$rentalEditHandler->attach($form);
+
 		return $form;
 	}
 
