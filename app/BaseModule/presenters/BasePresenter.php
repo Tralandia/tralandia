@@ -186,7 +186,8 @@ abstract class BasePresenter extends Presenter {
 
 			$propertyName = $optionName . 'CacheOptions';
 
-			$options['enabled'] = $templateCacheEnabled && $options['enabled'];
+			$options['enabled'] = $templateCacheEnabled && $options['enabled'] ? 1 : 0;
+
 			if(array_key_exists('if', $options)) {
 				$options['if'] = str_replace(
 					['[!userLoggedIn]', '[!urlWithGet]'],
