@@ -1,0 +1,21 @@
+div.calendar {
+	div.day , .inactive  {
+		margin: 0;
+		border-bottom: none;
+		border-right: none;
+
+
+		&:nth-child(15),&:nth-child(22),&:nth-child(29),&:nth-child(36),&:nth-child(43),&:nth-child(50) {
+			border-right:1px solid #cbd2a0;
+		}
+	}	
+
+	.borderBottom {
+		height: 1px;
+		clear: both;
+		background: #cbd2a0;
+		width: 113px;		
+	}
+
+}
+
