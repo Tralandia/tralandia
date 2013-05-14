@@ -477,8 +477,8 @@
 	</div>
 
 	<div class="phraseFormSubHeader">
-			<b>Translation | <span id="phraseTranslateCurrent"></b>
-			{input $container['changeToLanguage']  , id => 'phraseLanguage'}
+			<b>Translation | <span class="phraseTranslateCurrent"></b>
+			{input $container['changeToLanguage']  , class => 'phraseLanguage'}
 
 	</div>
 
@@ -495,7 +495,7 @@
 
 		{foreach $container['to']->getComponents() as $languageContainer}
 			{var $language = $languageContainer['variations']->getLanguage()}
-			<div class="phrasecontrol hide" id="{$language->getId()}_phrase">
+			<div class="phrasecontrol hide {$language->getId()}_phrase">
 
 
 				{include #translationVatiations, control => $languageContainer['variations']}
