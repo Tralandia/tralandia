@@ -927,8 +927,6 @@ maps.mapInit = function(){
 	$(".mapControl").formMapControl();
 }
 
-
-
 // lazy loading map
 $(function() {
 
