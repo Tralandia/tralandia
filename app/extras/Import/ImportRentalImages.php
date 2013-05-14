@@ -66,6 +66,8 @@ class ImportRentalImages extends BaseImport {
 		$model = $this->model;
 		
 		$endBy = microtime(true) + 5;
+		d(microtime(true));
+		d($endBy);
 
 		while(microtime(true) < $endBy) {
 			$r = qNew('select * from __importImages where status = "toImport"  order by id limit 1');
