@@ -43,9 +43,12 @@ class SupportedLanguages {
 	 *
 	 * @return array
 	 */
-	public function getForSelect($key, $value)
+	public function getForSelect($key = NULL, $value = NULL)
 	{
 		$rows = $this->getSortedResult();
+
+		if($key === NULL) $key = function($key, $value){return $value->getId();};
+		if($value === NULL) $value = function($value) {return $value->getIso();};
 
 		return Tools::arrayMap($rows, $value, $key);
 

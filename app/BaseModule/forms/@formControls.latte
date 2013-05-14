@@ -453,13 +453,6 @@
 <div class="row-fluid phraseForm">
 
 	<div class="phraseFormHeader">
-
-		<div class="span3">
-			{label $container['phraseType'] /}
-			{input $container['phraseType'] }
-		</div>
-
-
 		<div class="span2">
 			{label $container['sourceLanguage'] /}
 			{input $container['sourceLanguage']}
@@ -473,13 +466,6 @@
 			{input $container['corrected']}
 			{label $container['corrected'] /}
 		</div>
-
-	</div>
-
-	<div class="phraseFormSubHeader">
-			<b>Translation | <span class="phraseTranslateCurrent"></b>
-			{input $container['changeToLanguage']  , class => 'phraseLanguage'}
-
 	</div>
 
 	<div class="clearfix"></div>
@@ -491,36 +477,24 @@
 
 
 	<div class="span6">
-
-
 		{foreach $container['to']->getComponents() as $languageContainer}
 			{var $language = $languageContainer['variations']->getLanguage()}
 			<div class="phrasecontrol hide {$language->getId()}_phrase">
-
-
-				{include #translationVatiations, control => $languageContainer['variations']}
-
-				<div class="phraseFormFooter">
-					<div class="pull-left" n:ifset="$languageContainer['gender']">
-						{label $languageContainer['gender'] /}
-						{input $languageContainer['gender'] }
-					</div>
-
-					<div class="pull-right" n:ifset="$languageContainer['position']">
-						{label $languageContainer['position'] /}
-						{input $languageContainer['position'] }
-					</div>
-					<div class="clearfix"></div>
+				<div class="pull-left" n:ifset="$languageContainer['gender']">
+					{label $languageContainer['gender'] /}
+					{input $languageContainer['gender'] }
 				</div>
 
+				<div class="pull-right" n:ifset="$languageContainer['position']">
+					{label $languageContainer['position'] /}
+					{input $languageContainer['position'] }
+				</div>
 
-
+				{include #translationVatiations, control => $languageContainer['variations']}
 			</div>
 		{/foreach}
-
-
 	</div>
-
+	{$container->getPhraseTypeString()}
 </div>
 
 

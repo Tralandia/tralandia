@@ -4,7 +4,9 @@ namespace Extras\Forms\Container;
 
 use Entity\Language;
 use Entity\Phrase\Phrase;
+use Entity\Phrase\Translation;
 use Environment\Environment;
+use Nette\Utils\Arrays;
 
 class PhraseContainer extends BaseContainer
 {
@@ -24,13 +26,15 @@ class PhraseContainer extends BaseContainer
 	 */
 	protected $fromLanguage;
 
+	/**
+	 * @var array
+	 */
+	protected $settings = [];
+
 	public function __construct(Phrase $phrase, \SupportedLanguages $supportedLanguages)
 	{
 		$this->phrase = $phrase;
-		$this->sourceLanguages = $supportedLanguages->getForSelect(
-			function($key, $value){return $value->getId();},
-			function($value) {return $value->getIso();}
-		);
+		$this->sourceLanguages = $supportedLanguages->getForSelect();
 
 		$this->fromLanguage = $phrase->getSourceLanguage();
 		parent::__construct();
@@ -52,18 +56,36 @@ class PhraseContainer extends BaseContainer
 	}
 
 
-	public function build() {
+	public function getPhraseTypeString()
+	{
+		$phraseType = $this->phrase->getType();
+		return $phraseType->getEntityName() . '.' . $phraseType->getEntityAttribute();
+	}
+
+
+	public function build($settings) {
+		$this->setSettings($settings);
 		$phrase = $this->phrase;
 		$phraseType = $phrase->getType();
 
-		$this->addText('phraseType', 'Phrase type')
-			->setDefaultValue($phrase->getType()->getEntityName() . '.' . $phrase->getType()->getEntityAttribute())
-			->setDisabled();
+		$sourceLanguage = $this->addSelect('sourceLanguage', 'Source Language:', $this->sourceLanguages);
 
-		$this->addSelect('sourceLanguage', 'Source Language:', $this->sourceLanguages);
+		$disableSourceLanguage = $this->getSettings('disableSourceLanguageInput');
+		if($disableSourceLanguage !== NULL) {
+			$sourceLanguage->setDisabled($disableSourceLanguage);
+		}
 
-		$this->addCheckbox('ready', 'Ready');
-		$this->addCheckbox('corrected', 'Corrected');
+		$readyControl = $this->addCheckbox('ready', 'Ready');
+		$disableReadyInput = $this->getSettings('disableReadyInput');
+		if($disableReadyInput !== NULL) {
+			$readyControl->setDisabled($disableReadyInput);
+		}
+
+		$correctedControl = $this->addCheckbox('corrected', 'Corrected');
+		$disableCorrectedInput = $this->getSettings('disableCorrectedInput');
+		if($disableCorrectedInput !== NULL) {
+			$correctedControl->setDisabled($disableCorrectedInput);
+		}
 
 		$fromTranslation = $phrase->getTranslation($this->fromLanguage);
 		$this['fromVariations'] = new TranslationVariationContainer($fromTranslation, TRUE);
@@ -75,9 +97,23 @@ class PhraseContainer extends BaseContainer
 			'after' => 'After',
 		);
 
-		$changeToLanguageList = [];
 		$to = $this->addContainer('to');
-		foreach($phrase->getTranslations() as $translation) {
+
+		$toLanguages = $this->getSettings('translatorLanguages');
+		if($toLanguages instanceof Language) {
+			$toLanguages = [$toLanguages];
+		}
+		if(is_array($toLanguages)) {
+			$translations = [];
+			foreach($toLanguages as $language) {
+				$translations[] = $phrase->getTranslation($language);
+			}
+ 		} else {
+			$translations = $phrase->getTranslations();
+		}
+
+		foreach($translations as $translation) {
+			if(!$translation instanceof Translation) continue;
 			$language = $translation->getLanguage();
 			$languageContainer = $to->addContainer($language->getIso());
 			$languageContainer['variations'] = new TranslationVariationContainer($translation, FALSE);
@@ -93,10 +129,7 @@ class PhraseContainer extends BaseContainer
 				$languageContainer->addSelect('position', 'Position', $positionList)
 					->setDefaultValue($translation->getPosition());
 			}
-
-			$changeToLanguageList[$language->getId()] = $language->getName()->getTranslationText($language);
 		}
-		$this->addSelect('changeToLanguage', 'changeToLanguage', $changeToLanguageList);
 
 	}
 
@@ -123,5 +156,35 @@ class PhraseContainer extends BaseContainer
 			'corrected' => $phrase->getCorrected(),
 			'fromTranslations' => $phrase->getTranslation($this->fromLanguage)->getVariations(),
 		));
+	}
+
+
+	/**
+	 * @param null $name
+	 *
+	 * @return array
+	 */
+	public function getSettings($name = NULL)
+	{
+		if($name === NULL) {
+			return $this->settings;
+		} else {
+			return Arrays::get($this->settings, $name, NULL);
+		}
+	}
+
+
+	/**
+	 * @param $name
+	 * @param null $value
+	 */
+	public function setSettings($name, $value = NULL)
+	{
+		if(is_array($name)) {
+			$this->settings = $name;
+		} else {
+			$this->settings[$name] = $value;
+		}
+
 	}
 }

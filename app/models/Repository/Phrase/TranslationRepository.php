@@ -2,6 +2,7 @@
 namespace Repository\Phrase;
 
 use Doctrine\ORM\Query\Expr;
+use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Entity\Language;
@@ -37,6 +38,20 @@ class TranslationRepository extends \Repository\BaseRepository {
 
 		return $qb->getQuery()->getResult();
 	}
+
+
+	/**
+	 * @return mixed
+	 */
+	public function haveDuplicates()
+	{
+		$dql = 'SELECT count(t) AS c FROM \Entity\Phrase\Translation AS t GROUP BY t.phrase, t.language HAVING c > 1';
+		$query = $this->getEntityManager()->createQuery($dql);
+		$query->setMaxResults(1);
+
+		return (bool) count($query->getResult());
+	}
+
 
 	public function toCheckCount(Language $language)
 	{

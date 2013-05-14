@@ -15,35 +15,6 @@ abstract class BasePresenter extends \SecuredPresenter {
 	 */
 	protected $navigationFactory;
 
-
-	protected function startup() {
-		// $this->autoCanonicalize = FALSE;
-		parent::startup();
-
-		// if (!$this->user->isLoggedIn()) {
-		// 	if ($this->user->getLogoutReason() === User::INACTIVITY) {
-		// 		$this->flashMessage('Session timeout, you have been logged out', 'warning');
-		// 	}
-		// 	$backlink = $this->storeRequest();
-		// 	$this->redirect(':Front:Sign:in', array('backlink' => $backlink));
-		// } else {
-		// 	list($model, ) = explode(':', $this->name, 2);
-		// 	if (!$this->user->isAllowed($this->name, $this->action) && !$this->user->isAllowed($model.':Base', $this->action)) {
-		// 		$this->flashMessage('Hey dude! You don\'t have permissions to view that page.', 'warning');
-		// 		$this->restoreRequest($this->getPreviousBackLink());
-		// 	}
-		// }
-
-	}
-
-/*
-	public function templatePrepareFilters($tpl) {
-		$tpl->registerFilter($latte = new \Nette\Latte\Engine);
-		$set = \Nette\Latte\Macros\MacroSet::install($latte->parser);
-		$set->addMacro('url', 'echo \Tools::link($control, %node.array);');
-	}
-*/
-
 	public function beforeRender() {
 		parent::beforeRender();
 		$this->setRenderMode();

@@ -46,6 +46,8 @@ class SimpleAcl extends Permission
 		$resources[] = $signPresenter = 'Front:Sign';
 		$resources[] = $registrationPresenter = 'Front:Registration';
 
+		$resources[] = $phrasePresenter = 'Admin:Phrase';
+
 		$resources[] = $userEntity = 'Entity\User\User';
 		$resources[] = $rentalEntity = 'Entity\Rental\Rental';
 		$resources[] = $translationEntity = 'Entity\Phrase\Translation';
@@ -62,6 +64,7 @@ class SimpleAcl extends Permission
 		$this->deny(RoleEntity::LOGGED, [$signPresenter, $registrationPresenter], self::ALL);
 		$this->allow(RoleEntity::LOGGED, $signPresenter, 'out');
 
+		$this->allow(RoleEntity::TRANSLATOR, $phrasePresenter, 'editList');
 		$this->allow(RoleEntity::TRANSLATOR, $translationEntity, 'translate', [$assertion, 'translate']);
 
 		//$this->allow(RoleEntity::ADMIN, $userEntity, self::FAKE_IDENTITY, [$assertion, 'fakeIdentity']);
