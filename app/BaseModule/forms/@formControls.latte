@@ -501,12 +501,12 @@
 				{include #translationVatiations, control => $languageContainer['variations']}
 
 				<div class="phraseFormFooter">
-					<div class="pull-left">
+					<div class="pull-left" n:ifset="$languageContainer['gender']">
 						{label $languageContainer['gender'] /}
 						{input $languageContainer['gender'] }
 					</div>
 
-					<div class="pull-right">
+					<div class="pull-right" n:ifset="$languageContainer['position']">
 						{label $languageContainer['position'] /}
 						{input $languageContainer['position'] }
 					</div>
@@ -656,7 +656,8 @@
 					</div>
 				{/foreach}
 			</div>
-			<a class="btn addLine btn-green">#Add</a>				
+			<a class="btn addLine btn-green">#Add</a>
+
 		</div>
 	</td>
 	{*<input id="fileupload" type="file" name="files[]" data-url="server/php/" multiple="">*}

@@ -40,7 +40,7 @@ class DictionaryManagerDataSource extends BaseDataSource
 	{
 		/** @var $translationRepository \Repository\Phrase\TranslationRepository */
 		$translationRepository = $this->em->getRepository(TRANSLATION_ENTITY);
-		$supportedLanguages = $this->supportedLanguages->getSortedResult();
+		$supportedLanguages = $this->supportedLanguages->getSortedByIso();
 
 		$return = [];
 		/** @var $language \Entity\Language */
