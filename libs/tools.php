@@ -130,7 +130,7 @@ class Tools {
 					Debugger::$maxDepth = 1;
 					echo "\n{$trace[1]['file']} ({$trace[1]['line']})\n";
 					foreach ($array as $value) {
-						echo Debugger::dump($value, true);
+						echo Debugger::dump($value, TRUE);
 					}
 				} elseif (!Environment::getHttpRequest()->isAjax()) {
 					Debugger::barDump($array, "{$trace[1]['file']} ({$trace[1]['line']})");
@@ -163,25 +163,25 @@ class Tools {
 		return number_format($price, $digit, ',', ' ');
 	}
 
-	public static function helperImage(\Service\Medium\Medium $image, $type = null) {
+	public static function helperImage(\Service\Medium\Medium $image, $type = NULL) {
 		return $image->getThumbnail($type);
 	}
 
 	public static function resizeCrop($image, $width, $height) {
 		if ($image->width < $image->height) {
 			$ratio = $width / $image->width;
-			$mod = $image->height * $ratio < $height ? false : true;
+			$mod = $image->height * $ratio < $height ? FALSE : TRUE;
 		} else {
 			$ratio = $height / $image->height;
-			$mod = $image->width * $ratio < $width ? true : false;
+			$mod = $image->width * $ratio < $width ? TRUE : FALSE;
 		}
 
-		if ($mod == true) {
-			$image->resize($width, null);
+		if ($mod == TRUE) {
+			$image->resize($width, NULL);
 			$offset = ($image->height - $height) / 2;
 			$image->crop(0, $offset, $width, $height);
 		} else {
-			$image->resize(null, $height);
+			$image->resize(NULL, $height);
 			$offset = ($image->width - $width) / 2;
 			$image->crop($offset, 0, $width, $height);
 		}
@@ -195,9 +195,9 @@ class Tools {
 
 	public static function getRemoteAddress() {
 		foreach (array('HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED', 'REMOTE_ADDR') as $key) {
-			if (array_key_exists($key, $_SERVER) === true) {
+			if (array_key_exists($key, $_SERVER) === TRUE) {
 				foreach (explode(',', $_SERVER[$key]) as $ip) {
-					if (filter_var($ip, FILTER_VALIDATE_IP) !== false) {
+					if (filter_var($ip, FILTER_VALIDATE_IP) !== FALSE) {
 						return $ip;
 					}
 				}
@@ -209,7 +209,7 @@ class Tools {
 		$a = \Nette\Utils\Html::el('a');
 		debug($control, $params);
 
-		isset($params['link']) ? $a->href($control->link($params['link'])) : null;
+		isset($params['link']) ? $a->href($control->link($params['link'])) : NULL;
 		isset($params['text']) ? $a->setText($params['text']) : $a->setText($params['link']);
 		isset($params['title']) ? $a->title($params['title']) : $a->title($params['text']);
 
@@ -272,6 +272,14 @@ class Tools {
 	}
 
 
+	/**
+	 * Zoradi pole podla $order parametru, dokaze zoradovat al podal vnorenych hodnout v poly
+	 * @param array $array
+	 * @param array $order
+	 * @param string|array|Nette\Callback|null $keyCallback
+	 *
+	 * @return array
+	 */
 	public static function sortArrayByArray(array $array, array $order, $keyCallback = NULL) {
 		$ordered = array();
 
@@ -293,6 +301,46 @@ class Tools {
 		}
 
 		return $ordered + $array;
+	}
+
+
+	/**
+	 * @param array $array
+	 * @param string|array|Nette\Callback $value
+	 * @param string|array|Nette\Callback|null $key
+	 *
+	 * @return array]
+	 */
+	public static function arrayMap(array $array, $value, $key = NULL)
+	{
+		if(!is_scalar($value)) {
+			$valueCallbac = new Nette\Callback($value);
+		}
+
+		if($key !== NULL && !is_scalar($key)) {
+			$keyCallback = new Nette\Callback($key);
+		}
+
+		$return = [];
+		foreach($array as $oldKey => $oldValue) {
+			if($key === NULL) {
+				$newKey = $oldKey;
+			} else if(isset($keyCallback)) {
+				$newKey = $keyCallback->invokeArgs([$oldKey, $oldValue]);
+			} else {
+				$newKey = $value[$key];
+			}
+
+			if(isset($valueCallbac)) {
+				$newValue = $valueCallbac->invokeArgs([$oldValue]);
+			} else {
+				$newValue = $oldValue[$value];
+			}
+
+			$return[$newKey] = $newValue;
+		}
+
+		return $return;
 	}
 
 }

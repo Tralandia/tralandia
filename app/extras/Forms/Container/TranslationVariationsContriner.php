@@ -12,16 +12,16 @@ class TranslationVariationContainer extends BaseContainer
 
 	/**
 	 * @param \Entity\Phrase\Translation $translation
-	 * @param bool $setDisabled
+	 * @param bool $disabled
 	 */
-	public function __construct(\Entity\Phrase\Translation $translation, $setDisabled = FALSE)
+	public function __construct(\Entity\Phrase\Translation $translation, $disabled = FALSE)
 	{
 		$this->translation = $translation;
 		parent::__construct();
-		$this->build($setDisabled);
+		$this->build($disabled);
 	}
 
-	protected function build($setDisabled)
+	protected function build($disabled)
 	{
 		$translation = $this->translation;
 		$phrase = $translation->getPhrase();
@@ -37,7 +37,7 @@ class TranslationVariationContainer extends BaseContainer
 						$field = $gender->addTextArea($caseKey, $caseValue);
 						$field->getControlPrototype()->class('texyla');
 					}
-					if($setDisabled) $field->setDisabled();
+					if($disabled) $field->setDisabled();
 				}
 			}
 		}

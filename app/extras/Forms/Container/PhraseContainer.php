@@ -2,18 +2,12 @@
 
 namespace Extras\Forms\Container;
 
+use Entity\Language;
 use Entity\Phrase\Phrase;
 use Environment\Environment;
-use Entity\User\User;
-use Repository\LanguageRepository;
 
 class PhraseContainer extends BaseContainer
 {
-
-	/**
-	 * @var \Entity\User\User
-	 */
-	protected $user;
 
 	/**
 	 * @var \Entity\Phrase\Phrase
@@ -30,29 +24,40 @@ class PhraseContainer extends BaseContainer
 	 */
 	protected $fromLanguage;
 
-	public function __construct(User $user, Phrase $phrase, Environment $environment, LanguageRepository $languageRepository)
+	public function __construct(Phrase $phrase, \SupportedLanguages $supportedLanguages)
 	{
-		$this->user = $user;
 		$this->phrase = $phrase;
-		$collator = $environment->getLocale()->getCollator();
-		$this->sourceLanguages = $languageRepository->getSupportedForSelect($environment->getTranslator(), $collator);
+		$this->sourceLanguages = $supportedLanguages->getForSelect(
+			function($key, $value){return $value->getId();},
+			function($value) {return $value->getIso();}
+		);
 
-		# @todo nie stale sa to ma prekladat zo sourceLanguage
 		$this->fromLanguage = $phrase->getSourceLanguage();
 		parent::__construct();
-		$this->build();
 	}
+
+
+	/**
+	 * @param Language $fromLanguage
+	 */
+	public function setTranslateFrom(Language $fromLanguage)
+	{
+		$this->fromLanguage = $fromLanguage;
+	}
+
 
 	public function getMainControl()
 	{
 		return $this['sourceLanguage'];
 	}
 
-	protected function build() {
-		$phrase = $this->phrase;
 
-		$this->addSelect('phraseType', '#Phrase type')
-			->setPrompt($phrase->getType()->getEntityName() . '.' . $phrase->getType()->getEntityAttribute())
+	public function build() {
+		$phrase = $this->phrase;
+		$phraseType = $phrase->getType();
+
+		$this->addText('phraseType', 'Phrase type')
+			->setDefaultValue($phrase->getType()->getEntityName() . '.' . $phrase->getType()->getEntityAttribute())
 			->setDisabled();
 
 		$this->addSelect('sourceLanguage', 'Source Language:', $this->sourceLanguages);
@@ -60,7 +65,9 @@ class PhraseContainer extends BaseContainer
 		$this->addCheckbox('ready', 'Ready');
 		$this->addCheckbox('corrected', 'Corrected');
 
-		$this['fromVariations'] = new TranslationVariationContainer($phrase->getTranslation($this->fromLanguage), TRUE);
+		$fromTranslation = $phrase->getTranslation($this->fromLanguage);
+		$this['fromVariations'] = new TranslationVariationContainer($fromTranslation, TRUE);
+		$this['fromVariations']->setDefaults($fromTranslation->getVariations());
 
 
 		$positionList = array(
@@ -71,18 +78,21 @@ class PhraseContainer extends BaseContainer
 		$changeToLanguageList = [];
 		$to = $this->addContainer('to');
 		foreach($phrase->getTranslations() as $translation) {
-			//if(!$this->user->isAllowed($translation, 'translate')) continue;
 			$language = $translation->getLanguage();
 			$languageContainer = $to->addContainer($language->getIso());
 			$languageContainer['variations'] = new TranslationVariationContainer($translation, FALSE);
 			$languageContainer['variations']->setDefaults($translation->getVariations());
 
-			$genderList = $language->getGenders();
-			$languageContainer->addSelect('gender', 'Gender', $genderList)
-				->setDefaultValue($translation->getGender());
+			if($phraseType->getGenderRequired()) {
+				$genderList = $language->getGenders();
+				$languageContainer->addSelect('gender', 'Gender', $genderList)
+					->setDefaultValue($translation->getGender());
+			}
 
-			$languageContainer->addSelect('position', 'Position', $positionList)
-				->setDefaultValue($translation->getPosition());
+			if($phraseType->getPositionRequired()) {
+				$languageContainer->addSelect('position', 'Position', $positionList)
+					->setDefaultValue($translation->getPosition());
+			}
 
 			$changeToLanguageList[$language->getId()] = $language->getName()->getTranslationText($language);
 		}
@@ -107,7 +117,7 @@ class PhraseContainer extends BaseContainer
 		$phrase = $this->phrase;
 
 		$this->setDefaults(array(
-			'phraseType' => $phrase->getType()->getId(),
+			//'phraseType' => $phrase->getType()->getId(),
 			'sourceLanguage' => $phrase->getSourceLanguage()->getId(),
 			'ready' => $phrase->getReady(),
 			'corrected' => $phrase->getCorrected(),
