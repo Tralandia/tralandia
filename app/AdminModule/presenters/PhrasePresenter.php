@@ -24,16 +24,26 @@ class PhrasePresenter extends BasePresenter {
 		$this->phrase = $this->phraseRepositoryAccessor->get()->find($id);
 	}
 
+	public function actionEditList()
+	{
 
-	/**
-	 * @return Forms\Dictionary\PhraseEditForm
-	 */
+	}
+
+
 	protected function createComponentPhraseEditForm()
 	{
+		$phrases = $this->phraseRepositoryAccessor->get()->findBy(['ready' => true], [], 5);
+
+
 		$form = $this->simpleFormFactory->create();
 
-		$form->addPhraseContainer('phrase', $this->loggedUser, $this->phrase);
-		
+		$listContainer = $form->addContainer('list');
+		foreach($phrases as $phrase) {
+			$phraseContainer = $listContainer->addPhraseContainer($phrase->getId(), $phrase);
+			$phraseContainer->build();
+			$phraseContainer->setDefaultValues();
+		}
+
 		$form->addSubmit('save', 'o100151');
 
 		$form->onSuccess[] = callback($this, 'processPhraseEditForm');
@@ -41,10 +51,7 @@ class PhrasePresenter extends BasePresenter {
 		return $form;
 	}
 
-	/**
-	 * @param Forms\Dictionary\PhraseEditForm
-	 */
-	public function processPhraseEditForm(Forms\Dictionary\PhraseEditForm $form)
+	public function processPhraseEditForm($form)
 	{
 		$values = $form->getValues(TRUE);
 		d($values);

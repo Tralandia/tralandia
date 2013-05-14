@@ -1,0 +1,14 @@
+{block content}
+
+{includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
+{form phraseEditForm , class => 'phraseEditForm'}
+
+	{foreach $form['list']->getComponents() as $phraseComponent}
+		{include #phrase, control => $phraseComponent}
+	{/foreach}
+
+	{dump $form->getAllErrors()}
+
+	{include #submit, control => $form['save']}
+
+{/form}

@@ -36,4 +36,19 @@ class SupportedLanguages {
 		return $result;
 	}
 
+
+	/**
+	 * @param $key
+	 * @param $value
+	 *
+	 * @return array
+	 */
+	public function getForSelect($key, $value)
+	{
+		$rows = $this->getSortedResult();
+
+		return Tools::arrayMap($rows, $value, $key);
+
+	}
+
 }
