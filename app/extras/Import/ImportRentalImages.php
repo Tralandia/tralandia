@@ -62,6 +62,8 @@ class ImportRentalImages extends BaseImport {
 
 	public function importImages() {
 
+		d($_SERVER['HTTP_HOST']); e
+
 		$context = $this->context;
 		$model = $this->model;
 		
