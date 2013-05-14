@@ -65,7 +65,7 @@ class ImportRentalImages extends BaseImport {
 		$context = $this->context;
 		$model = $this->model;
 		
-		$endBy = microtime(true) + 20;
+		$endBy = microtime(true) + 55;
 
 		$i = 0;
 		while(microtime(true) < $endBy) {
