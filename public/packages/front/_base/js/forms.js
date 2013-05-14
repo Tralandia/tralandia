@@ -1,3 +1,70 @@
+$(function(){
+	$('.priceListRowsContainer input[type=file]').fileInputUi();
+});
+
+
+
+// phrase form
+(function($){
+	$.fileInputUi = function(el, options){
+
+		var base = this;
+
+		base.$el = $(el);
+		base.el = el;
+
+		base.$button = base.$el.parents('.btn').find('span');
+
+		base.$el.data("fileInputUi", base);
+			
+		base.btnSelector = '.btn';
+		base.btnInactiveClass = 'btn-green';
+		base.btnActiveClass = 'btn-orange';
+
+		base.init = function()
+		{
+			base.bind();
+		};
+		
+		base.bind = function()
+		{
+			base.$el.on('change',base.change);
+		}
+
+		base.change = function()
+		{
+			if(base.$el.val().length > 0){
+				base.setSelectedButton(base.parseName(base.$el.val()),base.btnInactiveClass,base.btnActiveClass);
+			} else {
+				if(base.$el.parents(base.btnSelector).hasClass(base.btnActiveClass)){
+					base.setSelectedButton(base.$el.parents(base.btnSelector).data('placeholder'),base.btnActiveClass,base.btnInactiveClass);
+				}
+			}
+		}
+
+		base.setSelectedButton = function(buttonText,removeClass,buttonClass)
+		{
+			base.$button.html(buttonText).parents(base.btnSelector).removeClass(removeClass).addClass(buttonClass);
+		}
+
+		base.parseName = function(fileName)
+		{
+			var returnName = fileName.split('\\');
+				return returnName[returnName.length-1];
+		}
+
+		base.init();
+	};
+	
+
+	
+	$.fn.fileInputUi = function(options){
+		return this.each(function(){
+			(new $.fileInputUi(this, options));
+		});
+	};
+	
+})(jQuery);
 
 
 // phrase form
@@ -905,7 +972,9 @@ $('button[type=submit]').live('click',function(){
 function removePriceLine(){
 		if($('.priceList').length > 1){
 			$(this).parents('.priceList').remove();
-		}	
+		} else {
+			$(this).parents('.priceList').find('input,select').val('');
+		}
 }
 
 function createNewLineInPriceList(){
@@ -972,7 +1041,16 @@ function createNewLineInPriceList(){
 		base.removeRow = function(){
 			var count = $(base.listContainer).find(base.rowSelector).length;
 			if(count > 1){
-				$(this).parents('.rentalPriceRow').remove();
+				$(this).parents(base.rowSelector).remove();
+			} else {
+
+				$(this).parents(base.rowSelector).find(base.inputElements).val('');
+
+				var $uploadButton = $(this).parents(base.rowSelector).find('.btn');
+
+				if($uploadButton.hasClass('btn-orange')){
+					$uploadButton.removeClass('btn-orange').addClass('btn-green').find('span').html($uploadButton.data('placeholder'));
+				}
 			}
 			
 		}
@@ -981,6 +1059,14 @@ function createNewLineInPriceList(){
 			switch ($input[0].tagName){
 				case 'INPUT' :
 					$input.val('');
+					
+					if($input[0].type == 'file'){	
+						// console.log($input.parents('.btn'));
+						// console.log('tututututuu');
+						$input.parents('.btn').removeClass('btn-orange').addClass('btn-green').find('span').html($input.parents('.btn').data('placeholder'));
+						$input.fileInputUi();
+					}
+
 					break;
 				case 'SELECT' :
 					$input.find('option').attr('selected',false);
@@ -993,9 +1079,7 @@ function createNewLineInPriceList(){
 			var pattern = base.$el.find(base.firstRowSelector).clone();
 				pattern.find(base.inputElements)
 						.removeAttr('id');
-				pattern.find('select').removeClass('select2').removeClass('select2-offscreen');
 
-				pattern.find(base.select2Container).remove();
 
 			// create input names
 			var count = (base.$el.find(base.rowSelector).length);

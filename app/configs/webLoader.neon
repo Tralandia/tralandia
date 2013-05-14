@@ -325,5 +325,6 @@ parameters:
 				-  %webloader.packages.adminFront%
 				#-  %webloader.packages.texyla%
 				-  %webloader.packages.nette%
+				-  %webloader.packages.socialite%
 
 
