@@ -17,22 +17,25 @@
 		};
 		
 		base.defaultRender = function(){
-			var current = base.$el.find('#phraseLanguage').val();
-			current = '#'+current+'_phrase';
-			$(current).removeClass('hide');			
+			base.showCurrentLanguage();			
 		}
 
 		base.onChangeLanguage = function(){
 
-			base.$el.find('#phraseLanguage').on('change',function(){
+			base.$el.find('.phraseLanguage').on('change',function(){
 
-				var visibleID = '#'+$(this).val()+'_phrase';
-
-				$('#phraseTranslateCurrent').html($('#phraseLanguage option:selected').text());
-				$('.phrasecontrol').addClass('hide');
-				$(visibleID).removeClass('hide');
+				base.showCurrentLanguage();
 
 			});
+		}
+
+		base.showCurrentLanguage = function(){
+			var visibleID = base.$el.find('.phraseLanguage').val();
+			visibleID = '.'+visibleID+'_phrase';
+			$(base.$el).find('.phraseTranslateCurrent').html($(base.$el).find('.phraseLanguage option:selected').text());
+			$(base.$el).find('.phrasecontrol').addClass('hide');
+			$(base.$el).find(visibleID).removeClass('hide');
+
 		}
 
 		base.init();
