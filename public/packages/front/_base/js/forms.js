@@ -8,6 +8,7 @@
 
 		base.$el = $(el);
 		base.el = el;
+		base.select = $('.toLanguages');
 
 		base.$el.data("phraseForm", base);
 		
@@ -22,7 +23,7 @@
 
 		base.onChangeLanguage = function(){
 
-			base.$el.find('.phraseLanguage').on('change',function(){
+			base.select.on('change',function(){
 
 				base.showCurrentLanguage();
 
@@ -30,11 +31,11 @@
 		}
 
 		base.showCurrentLanguage = function(){
-			var visibleID = base.$el.find('.phraseLanguage').val();
+			var visibleID = base.select.val();
 			visibleID = '.'+visibleID+'_phrase';
-			$(base.$el).find('.phraseTranslateCurrent').html($(base.$el).find('.phraseLanguage option:selected').text());
-			$(base.$el).find('.phrasecontrol').addClass('hide');
-			$(base.$el).find(visibleID).removeClass('hide');
+			console.log(visibleID);
+			$('.phrasecontrol').addClass('hide');
+			$(visibleID).removeClass('hide');
 
 		}
 

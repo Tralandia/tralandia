@@ -3,11 +3,18 @@
 {includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
 {form phraseEditForm , class => 'phraseEditForm'}
 
+	{label $form['showOptions']}
+		Show options
+		{input $form['showOptions'], class => ''}
+	{/label}
+
+	{input $form['toLanguages'], class => 'toLanguages pull-right'}
+	<hr>
+
 	{foreach $form['list']->getComponents() as $phraseComponent}
 		{include #phrase, control => $phraseComponent}
+		<hr>
 	{/foreach}
-
-	{dump $form->getAllErrors()}
 
 	{include #submit, control => $form['save']}
 

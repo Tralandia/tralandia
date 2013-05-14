@@ -143,12 +143,17 @@ abstract class BasePresenter extends Presenter {
 
 	public function checkPermission($resource = IAuthorizator::ALL, $privilege = IAuthorizator::ALL)
 	{
-		if (!$this->getUser()->isAllowed($resource, $privilege)) $this->accessDeny();
+		if (!$this->getUser()->isAllowed($resource, $privilege)) $this->accessDeny($resource, $privilege);
 	}
 
-	public function accessDeny()
+	public function accessDeny($resource, $privilege)
 	{
-		$this->flashMessage('Hey dude! You don\'t have permissions to view that page.', 'warning');
+		$class = [];
+		$class[] = is_scalar($resource) ? $resource : NULL;
+		$class[] = is_scalar($privilege) ? $privilege : NULL;
+		$class = implode(':', array_filter($class));
+
+		$this->flashMessage('Hey dude! You don\'t have permissions to view that page. ' . $class, 'warning');
 		$this->redirect(':Front:Home:default');
 	}
 

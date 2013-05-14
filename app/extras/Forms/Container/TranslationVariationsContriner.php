@@ -25,17 +25,18 @@ class TranslationVariationContainer extends BaseContainer
 	{
 		$translation = $this->translation;
 		$phrase = $translation->getPhrase();
+		$isHtml = $phrase->getType()->isHtml();
 
 		foreach ($translation->getVariations() as $pluralKey => $genders) {
 			$plural = $this->addContainer($pluralKey);
 			foreach ($genders as $genderKey => $genderValue) {
 				$gender = $plural->addContainer($genderKey);
 				foreach ($genderValue as $caseKey => $caseValue) {
-					if($phrase->getType()->isHtml()) {
-						$field = $gender->addText($caseKey, $caseValue);
-					} else {
+					if($isHtml) {
 						$field = $gender->addTextArea($caseKey, $caseValue);
 						$field->getControlPrototype()->class('texyla');
+					} else {
+						$field = $gender->addText($caseKey, $caseValue);
 					}
 					if($disabled) $field->setDisabled();
 				}
