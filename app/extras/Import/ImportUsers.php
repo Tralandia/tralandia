@@ -91,7 +91,7 @@ class ImportUsers extends BaseImport {
 
 	private function importManagers() {
 
-		$role = $this->context->userRoleRepositoryAccessor->get()->findOneBySlug('admin');
+		$role = $this->context->userRoleRepositoryAccessor->get()->findOneBySlug('translator');
 
 		$countryLocationType = $this->context->locationTypeRepositoryAccessor->get()->findOneBySlug('country');
 
