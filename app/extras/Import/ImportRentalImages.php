@@ -65,10 +65,9 @@ class ImportRentalImages extends BaseImport {
 		$context = $this->context;
 		$model = $this->model;
 		
-		$endBy = microtime(true) + 5;
-		d(microtime(true));
-		d($endBy);
+		$endBy = microtime(true) + 20;
 
+		$i = 0;
 		while(microtime(true) < $endBy) {
 			$r = qNew('select * from __importImages where status = "toImport"  order by id limit 1');
 			$x = mysql_fetch_array($r);
@@ -84,7 +83,9 @@ class ImportRentalImages extends BaseImport {
 			} catch (Nette\UnknownImageFileException $e) {
 				qNew('update __importImages set status = "error" where id = '.$x['id']);
 			}
+			$i++;
 		}
+		d($i.' images imported');
 		$model->flush();
 		$this->saveVariables();
 		exit;
