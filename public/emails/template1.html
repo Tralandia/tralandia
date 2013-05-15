@@ -26,7 +26,7 @@
 			* @theme page
 			*/
 			body, #backgroundTable{
-				/*@editable*/ background-color:#FAFAFA;
+				/*@editable*/ background-color:#eef2d1;
 			}
 			
 			/**
@@ -45,7 +45,7 @@
 			* @style heading 1
 			*/
 			h1, .h1{
-				/*@editable*/ color:#202020;
+				/*@editable*/ color:#7d3300;
 				display:block;
 				/*@editable*/ font-family:Arial;
 				/*@editable*/ font-size:40px;
@@ -65,11 +65,11 @@
 			* @style heading 2
 			*/
 			h2, .h2{
-				/*@editable*/ color:#404040;
+				/*@editable*/ color:#174a90;
 				display:block;
 				/*@editable*/ font-family:Arial;
 				/*@editable*/ font-size:18px;
-				/*@editable*/ font-weight:bold;
+				/*@editable*/ font-weight:normal;
 				/*@editable*/ line-height:100%;
 				margin-top:2%;
 				margin-right:0;
@@ -85,11 +85,11 @@
 			* @style heading 3
 			*/
 			h3, .h3{
-				/*@editable*/ color:#606060;
+				/*@editable*/ color:#698308;
 				display:block;
 				/*@editable*/ font-family:Arial;
 				/*@editable*/ font-size:16px;
-				/*@editable*/ font-weight:bold;
+				/*@editable*/ font-weight:normal;
 				/*@editable*/ line-height:100%;
 				margin-top:2%;
 				margin-right:0;
@@ -105,11 +105,11 @@
 			* @style heading 4
 			*/
 			h4, .h4{
-				/*@editable*/ color:#808080;
+				/*@editable*/ color:#698308;
 				display:block;
 				/*@editable*/ font-family:Arial;
 				/*@editable*/ font-size:14px;
-				/*@editable*/ font-weight:bold;
+				/*@editable*/ font-weight:normal;
 				/*@editable*/ line-height:100%;
 				margin-top:2%;
 				margin-right:0;
@@ -127,7 +127,7 @@
 			* @theme page
 			*/
 			#templatePreheader{
-				/*@editable*/ background-color:#FAFAFA;
+				/*@editable*/ background-color:#eef2d1;
 			}
 			
 			/**
@@ -136,7 +136,7 @@
 			* @tip Set the styling for your email's preheader text. Choose a size and color that is easy to read.
 			*/
 			.preheaderContent div{
-				/*@editable*/ color:#707070;
+				/*@editable*/ color:#7d3300;
 				/*@editable*/ font-family:Arial;
 				/*@editable*/ font-size:10px;
 				/*@editable*/ line-height:100%;
@@ -149,7 +149,7 @@
 			* @tip Set the styling for your email's preheader links. Choose a color that helps them stand out from your text.
 			*/
 			.preheaderContent div a:link, .preheaderContent div a:visited, /* Yahoo! Mail Override */ .preheaderContent div a .yshortcuts /* Yahoo! Mail Override */{
-				/*@editable*/ color:#336699;
+				/*@editable*/ color:#698308;
 				/*@editable*/ font-weight:normal;
 				/*@editable*/ text-decoration:underline;
 			}
@@ -173,7 +173,8 @@
 			*/
 			#templateHeader{
 				/*@editable*/ background-color:#FFFFFF;
-				/*@editable*/ border-bottom:5px solid #505050;
+				/*background: url(http://www.sk.tra.com/images/headerBanner/sk.jpg) center center no-repeat;*/
+				/*@editable*/ border-bottom:1px solid #cbd2a0;
 			}
 			
 			/**
@@ -198,9 +199,17 @@
 			* @tip Set the styling for your email's header links. Choose a color that helps them stand out from your text.
 			*/
 			.headerContent a:link, .headerContent a:visited, /* Yahoo! Mail Override */ .headerContent a .yshortcuts /* Yahoo! Mail Override */{
-				/*@editable*/ color:#336699;
+				/*@editable*/ color:#698308;
 				/*@editable*/ font-weight:normal;
 				/*@editable*/ text-decoration:underline;
+			}
+
+			.headerContent span {
+				color: #698308;
+				font-size: 13px;
+				float: left;
+				line-height: 15px;
+				margin-left: 7px;
 			}
 			
 			#headerImage{
@@ -216,7 +225,7 @@
 			* @tip Set the background color for your email's body area.
 			*/
 			#templateContainer, .bodyContent{
-				/*@editable*/ background-color:#FDFDFD;
+				/*@editable*/ background-color:#fdfdf8;
 			}
 			
 			/**
@@ -228,7 +237,7 @@
 			.bodyContent div{
 				/*@editable*/ color:#505050;
 				/*@editable*/ font-family:Arial;
-				/*@editable*/ font-size:14px;
+				/*@editable*/ font-size:12px;
 				/*@editable*/ line-height:150%;
 				/*@editable*/ text-align:justify;
 			}
@@ -239,7 +248,7 @@
 			* @tip Set the styling for your email's main content links. Choose a color that helps them stand out from your text.
 			*/
 			.bodyContent div a:link, .bodyContent div a:visited, /* Yahoo! Mail Override */ .bodyContent div a .yshortcuts /* Yahoo! Mail Override */{
-				/*@editable*/ color:#336699;
+				/*@editable*/ color:#698308;
 				/*@editable*/ font-weight:normal;
 				/*@editable*/ text-decoration:underline;
 			}
@@ -248,7 +257,31 @@
 				display:inline;
 				height:auto;
 			}
+
+			.bodyContent img.medium {
+				width: 160px;
+				
+			}
 			
+			.bodyContent img.right {
+				float: right;
+				margin-left: 10px;
+				margin-bottom: 10px;
+			} 
+
+			.bodyContent img.left {
+				float: left;
+				margin-right: 10px;
+			}
+
+			.bodyContent .teaser {
+				padding: 10px;
+				color: #d32c16;
+				font-size: 14px;
+				margin-top: 10px;
+				background: #fdf5ce;
+			}
+
 			/* /\/\/\/\/\/\/\/\/\/\ STANDARD STYLING: SIDEBAR /\/\/\/\/\/\/\/\/\/\ */
 			
 			/**
@@ -257,7 +290,7 @@
 			* @tip Set the background color and border for your email's sidebar area.
 			*/
 			#templateSidebar{
-				/*@editable*/ background-color:#FDFDFD;
+				/*@editable*/ background-color:#fdfdf8;
 			}
 			
 			/**
@@ -275,11 +308,15 @@
 			* @tip Set the styling for your email's sidebar text. Choose a size and color that is easy to read.
 			*/
 			.sidebarContent div{
-				/*@editable*/ color:#505050;
+				/*@editable*/ color:rgb(146, 146, 146);
 				/*@editable*/ font-family:Arial;
-				/*@editable*/ font-size:10px;
+				/*@editable*/ font-size:11px;
 				/*@editable*/ line-height:150%;
 				/*@editable*/ text-align:left;
+			}
+
+			.sidebarContent div a {
+				display: block;
 			}
 			
 			/**
@@ -288,7 +325,7 @@
 			* @tip Set the styling for your email's sidebar links. Choose a color that helps them stand out from your text.
 			*/
 			.sidebarContent div a:link, .sidebarContent div a:visited, /* Yahoo! Mail Override */ .sidebarContent div a .yshortcuts /* Yahoo! Mail Override */{
-				/*@editable*/ color:#336699;
+				/*@editable*/ color:#698308;
 				/*@editable*/ font-weight:normal;
 				/*@editable*/ text-decoration:underline;
 			}
@@ -308,7 +345,7 @@
 			*/
 			#templateFooter{
 				/*@editable*/ background-color:#FAFAFA;
-				/*@editable*/ border-top:3px solid #909090;
+				/*border-top:1px solid #cbd2a0;*/
 			}
 			
 			/**
@@ -318,7 +355,7 @@
 			* @theme footer
 			*/
 			.footerContent div{
-				/*@editable*/ color:#707070;
+				/*@editable*/ color:#cbd2a0;
 				/*@editable*/ font-family:Arial;
 				/*@editable*/ font-size:11px;
 				/*@editable*/ line-height:125%;
@@ -331,7 +368,7 @@
 			* @tip Set the styling for your email's footer links. Choose a color that helps them stand out from your text.
 			*/
 			.footerContent div a:link, .footerContent div a:visited, /* Yahoo! Mail Override */ .footerContent div a .yshortcuts /* Yahoo! Mail Override */{
-				/*@editable*/ color:#336699;
+				/*@editable*/ color:#698308;
 				/*@editable*/ font-weight:normal;
 				/*@editable*/ text-decoration:underline;
 			}
@@ -347,7 +384,7 @@
 			* @theme footer
 			*/
 			#social{
-				/*@editable*/ background-color:#FFFFFF;
+				/*@editable*/ background-color:#eef2d1;
 				/*@editable*/ border:0;
 			}
 			
@@ -383,6 +420,34 @@
 			#monkeyRewards img{
 				max-width:170px !important;
 			}
+
+			.sidebarContent div a:hover:link {
+				background: rgb(255, 173, 0);
+				color: rgb(165, 82, 25);
+				text-decoration: none;
+						
+			}
+
+			.sidebarContent div a:link {
+				padding: 5px 10px;
+				color: #888;
+				text-decoration: none;
+			}
+
+			.sidebarContent div a:link strong {
+				text-decoration: underline;
+				color: #698308;
+			}
+
+			.sidebarContent div a:hover:link strong {
+				color: rgb(165, 82, 25);
+			}
+
+			.sidebarContent div a small {
+				display: block;
+			}
+
+
 		</style>
 	</head>
     <body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0">
@@ -425,11 +490,12 @@
                                 	<table border="0" cellpadding="0" cellspacing="0" width="600" id="templateHeader">
                                         <tr>
                                         	<td class="headerContent">
-                                            	<img src="http://gallery.mailchimp.com/27aac8a65e64c994c4416d6b8/images/placeholder_180x100.gif" style="max-width:180px;" id="headerImage campaign-icon" mc:label="header_image" mc:edit="header_image" mc:allowtext />
+                                            	<img src="http://www.sk.tra.com/images/tra-logo-icon.png" style="max-width:90px;margin-left:20px;" id="headerImage campaign-icon" mc:label="header_image" mc:edit="header_image" mc:allowtext />
                                             </td>
                                             <td class="headerContent" width="100%" style="padding-left:10px; padding-right:20px;">
                                             	<div mc:edit="Header_content">
-                                                    <h1>Heading 1</h1>
+                                                    <h1>Tralandia.sk</h1>
+                                                    <span>Ubytovanie a dovolenka na Slovensku</span>
                                             	</div>
                                             </td>
                                         </tr>
@@ -451,16 +517,21 @@
                                                             <!-- // Begin Module: Standard Content \\ -->
                                                             <table border="0" cellpadding="20" cellspacing="0" width="100%" class="sidebarContent">
                                                                 <tr>
-                                                                    <td valign="top" style="padding-left:10px;">
+                                                                    <td valign="top" style="padding-left:10px;padding-top:10px;">
                                                                         <div mc:edit="std_content01">
-                                                                            <strong>Basic content module</strong>
+
+                                                                        	<a class="button" href="#"><strong>Super truper Akcia</strong> ostatne popisane drobnim pismom >P</a>
+
+                                                                        	<a href="#"><strong>Editujte svoj objekt</strong></a>
+                                                                        	<a href="#"><strong>Kalendar pre vase stranky</strong>
+                                                                        	<small>toto je maly podtext</small></a>
+                                                                        	<a href="#"><strong>Editujte svoj objekt</strong>
+                                                                        		<small>toto je maly podtext toto je maly podtext toto je maly podtext </small></a>
+
                                                                             <br />
-                                                                            Far far away, behind the word mountains.
                                                                             <br />
-                                                                            <br />
-                                                                            <strong>Far from the countries</strong>
-                                                                            <br />
-                                                                            Vokalia and Consonantia, there live the blind texts.
+
+                          
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -479,9 +550,19 @@
                                                     <tr>
                                                         <td valign="top" style="padding-left:0;">
                                                             <div mc:edit="std_content00">
+
+                                                    			<div class="" style="height:100px;width:100%;background:#333; background:url(http://www.sk.tra.com/images/headerBanner/sk.jpg) center center no-repeat;"></div>
+
+                                                                <div class="teaser"><strong>Hura text</strong> pokracovanie hura sloganu</div>
+
+
                                                             	<h2 class="h2">Heading 2</h2>
                                                             	<h3 class="h3">Heading 3</h3>
-                                                                <strong>Getting started:</strong> Customize your template by clicking on the style editor tabs up above. Set your fonts, colors, and styles. After setting your styling is all done you can click here in this area, delete the text, and start adding your own awesome content!
+                                                                <strong>Getting started:</strong> <img src="http://www.sk.tra.com/fakeimages/13559275089209.jpg" class="medium right" /> Customize your template by clicking on the style editor tabs up above. Set your fonts, colors, and styles. After setting your styling 
+                                                                is all done you can click here in this area, delete the text, and start adding your own awesome content!
+                                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur semper varius dui nec malesuada. Curabitur rhoncus scelerisque consectetur. Maecenas ac eros vel urna semper lobortis. Proin placerat ante at nibh 
+                                                                <img class="medium left" src="https://maps.googleapis.com/maps/api/staticmap?center=48.987708626274,19.593172073364&markers=color:blue%7C48.987708626274,19.593172073364&zoom=10&size=288x170&sensor=false" />
+                                                                hendrerit sollicitudin. Nullam rhoncus convallis velit id pulvinar. Nam elementum auctor turpis, sed congue dolor feugiat sit amet. Aenean lobortis felis eu neque aliquam ac dignissim purus euismod.
                                                                 <br />
                                                                 <br />
                                                                 <h4 class="h4">Heading 4</h4>
@@ -510,32 +591,7 @@
                                                     <tr>
                                                         <td colspan="2" valign="middle" id="social">
                                                             <div mc:edit="std_social">
-                                                                &nbsp;<a href="*|TWITTER:PROFILEURL|*">follow on Twitter</a> | <a href="*|FACEBOOK:PROFILEURL|*">friend on Facebook</a> | <a href="*|FORWARD|*">forward to a friend</a>&nbsp;
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td valign="top" width="350">
-                                                            <div mc:edit="std_footer">
-																<em>Copyright &copy; *|CURRENT_YEAR|* *|LIST:COMPANY|*, All rights reserved.</em>
-																<br />
-																*|IFNOT:ARCHIVE_PAGE|* *|LIST:DESCRIPTION|*
-																<br />
-																<strong>Our mailing address is:</strong>
-																<br />
-																*|HTML:LIST_ADDRESS_HTML|**|END:IF|* 
-                                                            </div>
-                                                        </td>
-                                                        <td valign="top" width="190" id="monkeyRewards">
-                                                            <div mc:edit="monkeyrewards">
-                                                                *|IF:REWARDS|* *|HTML:REWARDS|* *|END:IF|*
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="2" valign="middle" id="utility">
-                                                            <div mc:edit="std_utility">
-                                                                &nbsp;<a href="*|UNSUB|*">unsubscribe from this list</a> | <a href="*|UPDATE_PROFILE|*">update subscription preferences</a>&nbsp;
+                                                                &nbsp;<a href="*|TWITTER:PROFILEURL|*">follow on Twitter</a> | <a href="*|FACEBOOK:PROFILEURL|*">friend on Facebook</a>  <a style="float:right;" href="*|FORWARD|*">forward to a friend</a>&nbsp;
                                                             </div>
                                                         </td>
                                                     </tr>

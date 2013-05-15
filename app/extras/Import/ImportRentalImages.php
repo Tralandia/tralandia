@@ -67,7 +67,7 @@ class ImportRentalImages extends BaseImport {
 		
 		$endBy = microtime(true) + 55;
 
-		while(microtime(true) < $endBy) 
+		while(microtime(true) < $endBy) {
 			$r = qNew('select * from __importImages where status = "toImport"  order by id limit 1');
 			$x = mysql_fetch_array($r);
 
