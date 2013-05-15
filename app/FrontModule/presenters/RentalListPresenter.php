@@ -50,6 +50,7 @@ class RentalListPresenter extends BasePresenter {
 			$rentals = $favoriteList->getRentals();
 			$itemCount = $rentals->count();
 		} else {
+			/** @var $search \Service\Rental\RentalSearchService */
 			$search = $this['searchBar']->getSearch();
 
 			$itemCount = $search->getRentalsCount();
