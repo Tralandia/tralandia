@@ -91,7 +91,7 @@ class ImportUsers extends BaseImport {
 
 	private function importManagers() {
 
-		$role = $this->context->userRoleRepositoryAccessor->get()->findOneBySlug('admin');
+		$role = $this->context->userRoleRepositoryAccessor->get()->findOneBySlug('translator');
 
 		$countryLocationType = $this->context->locationTypeRepositoryAccessor->get()->findOneBySlug('country');
 
@@ -144,16 +144,30 @@ class ImportUsers extends BaseImport {
 			$user->role = $role;
 			// $user->invoicingData = @todo;
 			
-			$user->primaryLocation = $world;			
+			$user->primaryLocation = $world;				
 			$user->language = $en;
 
+			$language = $this->context->languageRepositoryAccessor->get()->findOneByOldId($x['language_to']);
+			$language->translator = $user;
+
 			$details = array(
-				'language' => $this->context->languageRepositoryAccessor->get()->findOneByOldId($x['language_to']),
+				'language' => $language,
 				'pricePerStandardPage' => $x['price'],
 			);
 			$user->details = $details;
 
 			$this->model->persist($user);
+		}
+		$this->model->flush();
+
+		$supportedLanguages = $this->context->languageRepositoryAccessor->get()->findBySupported(true);
+		$defaultTranslator = $this->context->userRepositoryAccessor->get()->findOneByLogin('toth@tralandia.com');
+
+		foreach ($supportedLanguages as $key => $language) {
+			if (!$language->translator) {
+				$language->translator = $defaultTranslator;
+				$this->model->persist($user);
+			}
 		}
 		$this->model->flush();
 	}
