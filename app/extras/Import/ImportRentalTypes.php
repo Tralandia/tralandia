@@ -45,6 +45,7 @@ class ImportRentalTypes extends BaseImport {
 
 		$phrase = $this->createPhraseType('\Rental\Type', 'name', 'ACTIVE');
 		$questionPhraseType = $this->createPhraseType('\Rental\interviewQuestion', 'question', 'ACTIVE');
+
 		$this->model->persist($phrase);
 		$this->model->flush();
 
@@ -61,13 +62,13 @@ class ImportRentalTypes extends BaseImport {
 
 			//d($rentalType); exit;
 			$variations = array();
-			$enTranslation = $rentalType->name->createTranslation($en);
+			$enTranslation = $rentalType->name->getTranslation($en);
 			$variations[0][0]['nominative'] = $value[0];
 			$variations[1][0]['nominative'] = $value[1];
 			$enTranslation->updateVariations($variations);
 
 			$variations = array();
-			$skTranslation = $rentalType->name->createTranslation($sk);
+			$skTranslation = $rentalType->name->getTranslation($sk);
 			$variations[0][0]['nominative'] = $value[2];
 			$variations[1][0]['nominative'] = $value[3];
 			$skTranslation->updateVariations($variations);
