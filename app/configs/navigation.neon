@@ -139,6 +139,9 @@ common:
 				layout:
 					label: Layouts
 					link: ':Admin:EmailLayout:list'
+				tester:
+					label: Template Tester
+					link: ':Admin:EmailTester:sendTemplate'
 
 
 		phraseChecking:
