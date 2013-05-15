@@ -152,7 +152,7 @@ class ImportRentals extends BaseImport {
 			}
 
 			// Contact Email
-			$rental->setEmail($context->contactEmailRepositoryAccessor->get()->createNew(FALSE)->setValue($x['contact_email']));
+			$rental->setEmail($x['contact_email']);
 
 			// Contact Url
 			if (\Nette\Utils\Validators::isUrl($x['contact_url'])) {

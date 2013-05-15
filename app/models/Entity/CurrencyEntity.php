@@ -111,7 +111,7 @@ class Currency extends \Entity\BaseEntity {
 	{
 		return $this->iso;
 	}
-				
+		
 	/**
 	 * @return \Entity\Currency
 	 */

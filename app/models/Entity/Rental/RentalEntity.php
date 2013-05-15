@@ -116,16 +116,16 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	protected $phone;
 
 	/**
-	 * @var Collection
-	 * @ORM\ManyToOne(targetEntity="Entity\Contact\Email", cascade={"persist"})
+	 * @var string
+	 * @ORM\Column(type="string", nullable=true)
 	 */
-	protected $email;
+	protected $url;
 
 	/**
 	 * @var string
 	 * @ORM\Column(type="string", nullable=true)
 	 */
-	protected $url;
+	protected $email;
 
 	/**
 	 * @var Collection
@@ -847,23 +847,6 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	 * @param \Entity\Rental\Placement
 	 * @return \Entity\Rental\Rental
 	 */
-	public function setPlacement(\Entity\Rental\Placement $placement)
-	{
-		if ($this->hasPlacement()) {
-			foreach ($this->placements as $placementEntity) {
-				$this->removePlacement($placementEntity);
-			}
-		}
-		$this->placements->add($placement);
-		$placement->addRental($this);
-
-		return $this;
-	}
-		
-	/**
-	 * @param \Entity\Rental\Placement
-	 * @return \Entity\Rental\Rental
-	 */
 	public function addPlacement(\Entity\Rental\Placement $placement)
 	{
 		if(!$this->placements->contains($placement)) {
@@ -1009,35 +992,6 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	}
 		
 	/**
-	 * @param \Entity\Contact\Email
-	 * @return \Entity\Rental\Rental
-	 */
-	public function setEmail(\Entity\Contact\Email $email)
-	{
-		$this->email = $email;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Rental\Rental
-	 */
-	public function unsetEmail()
-	{
-		$this->email = NULL;
-
-		return $this;
-	}
-		
-	/**
-	 * @return \Entity\Contact\Email|NULL
-	 */
-	public function getEmail()
-	{
-		return $this->email;
-	}
-		
-	/**
 	 * @param string
 	 * @return \Entity\Rental\Rental
 	 */
@@ -1064,6 +1018,35 @@ class Rental extends \Entity\BaseEntity implements \Security\IOwnerable
 	public function getUrl()
 	{
 		return $this->url;
+	}
+		
+	/**
+	 * @param string
+	 * @return \Entity\Rental\Rental
+	 */
+	public function setEmail($email)
+	{
+		$this->email = $email;
+
+		return $this;
+	}
+		
+	/**
+	 * @return \Entity\Rental\Rental
+	 */
+	public function unsetEmail()
+	{
+		$this->email = NULL;
+
+		return $this;
+	}
+		
+	/**
+	 * @return string|NULL
+	 */
+	public function getEmail()
+	{
+		return $this->email;
 	}
 		
 	/**
