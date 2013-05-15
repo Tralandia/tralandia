@@ -452,6 +452,11 @@
 
 <div class="row-fluid phraseForm">
 
+
+
+	
+	<div class="span5">
+
 	<div class="phraseFormHeader">
 		<div class="span2">
 			{label $container['sourceLanguage'] /}
@@ -467,9 +472,6 @@
 			{label $container['corrected'] /}
 		</div>
 	</div>
-
-	<div class="clearfix"></div>
-	<div class="span5">
 
 		{include #translationVatiations, control => $container['fromVariations']}
 
@@ -493,8 +495,9 @@
 				{include #translationVatiations, control => $languageContainer['variations']}
 			</div>
 		{/foreach}
+		<small>{$container->getPhraseTypeString()}</small>
 	</div>
-	{$container->getPhraseTypeString()}
+	
 </div>
 
 
