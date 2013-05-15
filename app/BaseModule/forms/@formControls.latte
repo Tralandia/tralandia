@@ -623,14 +623,14 @@
 			<div class="priceListRowsContainer">
 				{foreach $replicator->getComponents() as $component}
 					<div class="rentalPriceRow">
-						{input $component['name'] , placeholder => '#file name Placeholder'}
+						{input $component['name'] , placeholder => 'o100191'}
 						{input $component['language'] , class => 'notFulltext'}
-						<span class="btn btn-green fileinput-button"><i class="entypo-upload"></i><span>#file</span>{input $component['file']}</span>
+						<span data-placeholder="{_o100192}" class="btn btn-green fileinput-button"><i class="entypo-upload"></i><span>{_o100192}</span>{input $component['file']}</span>
 						<span class="btn btn-cancel remove"><i class="icon-remove"></i></span>
 					</div>
 				{/foreach}
 			</div>
-			<a class="btn addLine btn-green">#Add</a>
+			<a class="btn addLine btn-green">{_o100168}</a>
 
 		</div>
 	</td>
@@ -654,16 +654,17 @@
 		{var $replicator = $container->getComponent('list')}
 		{foreach $replicator->getComponents() as $component}
 			<div class="priceList">
-				{input $component['roomCount']}
-				{input $component['roomType'] , class => 'string'}
-				{input $component['bedCount'] , class => 'string'}
-				{input $component['extraBedCount'] , class => 'string'}
+				{input $component['roomCount'] , class => ' pull-left'}
+				{input $component['roomType'] , class => 'string pull-left'}
+				{input $component['bedCount'] , class => 'string pull-left'}
+				{input $component['extraBedCount'] , class => 'string pull-left'}
 
 				{* {input $component['price']['currency'] , class => 'select2'} *}
-				{input $component['price'] , class => 'price' }
-				<span class="input-append">
-					{$component['price']->getOption('append')}
-				</span>
+				<div class="input-append pull-left">
+					{input $component['price'] , class => 'price' }<span class="add-on">
+						{$component['price']->getOption('append')}
+					</span>
+				</div>
 				<span class="btn btn-cancel remove"><i class="icon-remove"></i></span>
 			</div>
 
@@ -671,7 +672,7 @@
 	</td>
 </tr>
 <tr class="pricelistControlButton">
-	<td colspan="3"><a href="#" class="btn-green btn createNewLine">#Add</a></td>
+	<td colspan="3"><a href="#" class="btn-green btn createNewLine">{_o100168}</a></td>
 </tr>
 {/define #rentalPriceList}
 

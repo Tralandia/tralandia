@@ -175,9 +175,11 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 			}
 		}
 
-		$rentalContainer->addText('bedroomCount', '#bedroomCount');
+		
 
-		$rentalContainer->addText('roomsLayout', '#rooms layout');
+		$rentalContainer->addText('bedroomCount', $this->translate('o100075'));
+
+		$rentalContainer->addText('roomsLayout', $this->translate('o100190'));
 
 		$amenities = $this->amenityRepository->findByChildrenTypeForSelect($this->getTranslator(), $this->collator);
 		$rentalContainer->addMultiOptionList('children', 'o100169', $amenities);
