@@ -172,7 +172,7 @@ class RentalContainer extends BaseContainer
 			'phone' => $this->rental->getPhone(),
 			'name' => $name,
 			'teaser' => $teaser,
-			'price' => $rental->getPrice()->getSourceAmount(),
+			'price' => $rental->getPrice(),
 			'maxCapacity' => $rental->getMaxCapacity(),
 			'interview' => $interview,
 			'bedroomCount' => $rental->bedroomCount,
@@ -262,7 +262,7 @@ class RentalContainer extends BaseContainer
 	 */
 	public function validation(\Nette\Forms\Form $form)
 	{
-		$values = $form->getValues();
+		$values = $form->getFormattedValues();
 
 		$rentalValues = $values->rental;
 		// $photosSort = $rentalValues->photos->sort;
@@ -286,11 +286,13 @@ class RentalContainer extends BaseContainer
 		// }
 
 		$phone = $rentalValues->phone;
-		if ($phone->number && !$phone->phone instanceof Phone) {
+		if ($phone->number && !$phone->entity instanceof Phone) {
 			$form['rental']['phone']->getMainControl()->addError('#invalid phone number');
 		}
 
 	}
+
+
 
 
 	/**

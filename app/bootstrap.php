@@ -89,24 +89,26 @@ FormContainer::extensionMethod('addRentalPhotosContainer',
 	});
 
 FormContainer::extensionMethod('addPriceContainer',
-	function (FormContainer $container, $name, $label, $currencies) use ($dic) {
+	function (FormContainer $container, $name, $label) use ($dic) {
+		$em = $dic->getService('model');
 		$translator = $dic->getService('translator');
-		return $container[$name] = new \Extras\Forms\Container\PriceContainer($label, $currencies, $translator);
+		$collator = $dic->getService('environment')->getLocale()->getCollator();
+		return $container[$name] = new \Extras\Forms\Container\PriceContainer($label, $em, $translator, $collator);
 	});
 
 FormContainer::extensionMethod('addRentalPriceUploadContainer',
 	function (FormContainer $container, $name, $rental = NULL) use ($dic) {
+		$em = $dic->getService('model');
 		$manager = $dic->getService('rentalPriceListManager');
-		$repository = $dic->getService('rentalPricelistRepositoryAccessor')->get();
-		return $container[$name] = new \Extras\Forms\Container\RentalPriceUploadContainer($rental, $manager, $repository);
+		return $container[$name] = new \Extras\Forms\Container\RentalPriceUploadContainer($rental, $manager, $em);
 	});
 
 FormContainer::extensionMethod('addRentalPriceListContainer',
-	function (FormContainer $container, $name, $currency) use ($dic) {
+	function (FormContainer $container, $name, $currency, $rental) use ($dic) {
 		$em = $dic->getService('model');
 		$translator = $dic->getService('translator');
 		$collator = $dic->getService('environment')->getLocale()->getCollator();
-		return $container[$name] = new \Extras\Forms\Container\RentalPriceListContainer($currency, $em, $translator, $collator);
+		return $container[$name] = new \Extras\Forms\Container\RentalPriceListContainer($currency, $em, $rental, $translator, $collator);
 	});
 
 FormContainer::extensionMethod('addAddressContainer',

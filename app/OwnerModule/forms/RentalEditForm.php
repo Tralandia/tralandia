@@ -117,7 +117,7 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 		$rentalContainer = $this->rentalContainer;
 		$this['rental'] = $rentalContainer;
 
-		$rentalContainer->addRentalPriceListContainer('priceList', $currency);
+		$rentalContainer->addRentalPriceListContainer('priceList', $currency, $rental);
 		$rentalContainer->addRentalPriceUploadContainer('priceUpload', $rental);
 
 		$rentalContainer->addPhoneContainer('phone', 'o10899', $phonePrefixes);
@@ -127,10 +127,7 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 			->setOption('prepend', 'http://')
 			->addRule(self::URL, $this->translate('o100102'));
 
-		$rentalContainer->addText('price', 'o100078')
-			->setOption('append', $currency->getIso() . ' ' . $this->translate('o100004'))
-			->setOption('help', $this->translate('o100073'))
-			->addRule(self::RANGE, $this->translate('o100105'), [0, 999999999999999]);
+		$rentalContainer->addPriceContainer('price', 'o100078');
 
 		$languages = array();
 
@@ -205,7 +202,7 @@ class RentalEditForm extends \FrontModule\Forms\BaseForm
 		$rentalContainer->addMultiOptionList('parking', 'o100178', $amenities);
 
 		$amenities = $this->amenityRepository->findByRoomTypeForSelect($this->getTranslator(), $this->collator);
-		$rentalContainer->addMultiOptionList('room', 'o100176', $amenities);
+		$rentalContainer->addMultiOptionList('rooms', 'o100176', $amenities);
 
 		$amenities = $this->amenityRepository->findByOtherTypeForSelect($this->getTranslator(), $this->collator);
 		$rentalContainer->addMultiOptionList('other', 'o100179', $amenities);
