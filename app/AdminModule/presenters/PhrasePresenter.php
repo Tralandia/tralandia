@@ -40,7 +40,6 @@ class PhrasePresenter extends BasePresenter {
 
 	public function actionEditList()
 	{
-		$this->checkPermission($this->name, $this->action);
 
 	}
 
