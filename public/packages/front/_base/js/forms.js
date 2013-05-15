@@ -1,5 +1,10 @@
 $(function(){
+
+	$('.showOptionsCheckbox').on('change',function(){
+		$('.phraseFormHeader').toggleClass('hide');
+	});	
 	$('.priceListRowsContainer input[type=file]').fileInputUi();
+
 });
 
 
@@ -81,26 +86,21 @@ $(function(){
 		
 		base.init = function(){
 			base.defaultRender();
-			base.onChangeLanguage();
+			base.bind();
 		};
 		
 		base.defaultRender = function(){
 			base.showCurrentLanguage();			
 		}
 
-		base.onChangeLanguage = function(){
-
-			base.select.on('change',function(){
-
-				base.showCurrentLanguage();
-
-			});
+		base.bind = function(){
+			base.select.on('change',base.showCurrentLanguage);
 		}
+
 
 		base.showCurrentLanguage = function(){
 			var visibleID = base.select.val();
 			visibleID = '.'+visibleID+'_phrase';
-			console.log(visibleID);
 			$('.phrasecontrol').addClass('hide');
 			$(visibleID).removeClass('hide');
 
@@ -1121,6 +1121,12 @@ function createNewLineInPriceList(){
 
 
 $(function(){
+
+
+
 	$('.rentalPriceUpload').rentalPriceUpload();
 	$('form').invalidScroll();
+
+
+
 });

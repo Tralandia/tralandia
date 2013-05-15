@@ -3,12 +3,26 @@
 {includeblock APP_DIR.'/BaseModule/forms/@formControls.latte'}
 {form phraseEditForm , class => 'phraseEditForm'}
 
+<div class="phraseEditFormHeader row-fluid">
+
+	<div class="span9"><h1>#title</h1></div>
+	<div class="span3">
 	{label $form['showOptions']}
 		Show options
-		{input $form['showOptions'], class => ''}
+		{input $form['showOptions'] , class => 'showOptionsCheckbox'}
 	{/label}
-
 	{input $form['toLanguages'], class => 'toLanguages pull-right'}
+	</div>
+
+	
+
+
+
+</div>
+
+
+
+	
 	<hr>
 
 	{foreach $form['list']->getComponents() as $phraseComponent}
