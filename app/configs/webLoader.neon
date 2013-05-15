@@ -102,6 +102,7 @@ parameters:
 			calendarIframe:
 				css:
 					- front/_base/less/calendar.less
+					- front/calendarIframe/less/calendarIframe.less
 			Front:
 				css:
 					#- front/_base/less/fonts.less
@@ -324,5 +325,6 @@ parameters:
 				-  %webloader.packages.adminFront%
 				#-  %webloader.packages.texyla%
 				-  %webloader.packages.nette%
+				-  %webloader.packages.socialite%
 
 

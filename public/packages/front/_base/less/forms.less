@@ -38,7 +38,7 @@ table.formTable {
 			float: right;
 			margin: 0;
 			i {
-				color: rgb(117, 117, 117);
+				color: rgb(216, 64, 64);
 				top: 4px;
 				left: 0px;
 			}
@@ -78,6 +78,7 @@ table.formTable {
 	tr td.pricelistControl {
 		.priceList {
 			margin-bottom: 10px;
+			height: 30px;
 		}
 
 		select {
@@ -86,7 +87,7 @@ table.formTable {
 			width: 70px;
 
 			&.string {
-				width: 162px;
+				width: 127px;
 			}
 		}
 
@@ -107,6 +108,14 @@ table.formTable {
 			
 			}
 		}
+
+		.add-on {
+			width: 100px;
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;			
+		}
+
 	}
 
 	tr.simpleInput {
@@ -587,7 +596,16 @@ table.formTable {
 			span.fileinput-button {
 				float: none;
 				margin: 0;
-				width: 127px;
+				width: 128px;
+
+				span {
+					white-space: nowrap;
+					overflow: hidden;
+					width: 91px;
+					text-overflow: ellipsis;
+					top: 1px;
+					padding-right: 12px;					
+				}
 			}
 
 			input[type=text] {
