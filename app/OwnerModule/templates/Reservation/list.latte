@@ -10,17 +10,15 @@
 		<tr n:class="$reservation->arrivalDate < $today ? old">
 			<td>
 				<div class="info pull-right">
-					({$reservation->created|date}, {_$reservation->language->name})
+					({$reservation->created|dateTime}, {_$reservation->language->name}, #{$reservation->getId()})
 				</div>
 				<p class="sender">
 					<b>{$reservation->senderName}</b>,
 
-						<a href="mailto:{$reservation->senderEmail}">{$reservation->senderEmail}</a>
-						{if $reservation->senderPhone}, {$reservation->senderPhone|phone}{/if}
-
+						<a href="mailto:{$reservation->senderEmail}">{$reservation->senderEmail}</a>{if $reservation->senderPhone}, {$reservation->senderPhone|phone}{/if}
 				</p>
 
-				<p class="date">#nastup {$reservation->arrivalDate|date} ({$reservation->arrivalDate|dayName}) <i class="icon-arrow-right"></i> #odchod {$reservation->departureDate|date} ({$reservation->departureDate|dayName})</p>
+				<p class="date">{$reservation->arrivalDate|date} ({$reservation->arrivalDate|dayName}) <i class="icon-arrow-right"></i> {$reservation->departureDate|date} ({$reservation->departureDate|dayName})</p>
 				<p class="count">
 					{$reservation->adultsCount} {_o100060,null,[count=>$reservation->adultsCount]},
 					{$reservation->childrenCount} {_o100061,null,[count=>$reservation->childrenCount]}
@@ -30,4 +28,5 @@
 		</tr>
 		{/foreach}
 	</table>
+	{control vp}
 </div>
