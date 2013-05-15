@@ -8,8 +8,6 @@ use Service\Seo\ISeoServiceFactory;
 abstract class BasePresenter extends \SecuredPresenter {
 
 	protected $userRentalReservationRepositoryAccessor;
-	protected $languageRepositoryAccessor;
-	protected $locationRepositoryAccessor;
 	protected $rentalTypeRepositoryAccessor;
 	protected $rentalRepositoryAccessor;
 
@@ -35,8 +33,6 @@ abstract class BasePresenter extends \SecuredPresenter {
 
 	public function injectBaseRepositories(\Nette\DI\Container $dic) {
 		$this->userRentalReservationRepositoryAccessor = $dic->userRentalReservationRepositoryAccessor;
-		$this->languageRepositoryAccessor = $dic->languageRepositoryAccessor;
-		$this->locationRepositoryAccessor = $dic->locationRepositoryAccessor;
 		$this->rentalTypeRepositoryAccessor = $dic->rentalTypeRepositoryAccessor;
 		$this->rentalRepositoryAccessor = $dic->rentalRepositoryAccessor;
 	}
