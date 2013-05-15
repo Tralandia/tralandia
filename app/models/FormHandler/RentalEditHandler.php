@@ -46,7 +46,9 @@ class RentalEditHandler extends FormHandler
 		}
 
 		if ($value = $values['placement']) {
-			$rental->placement = $value;
+			$placementRepository = $this->em->getRepository(RENTAL_PLACEMENT_ENTITY);
+			$placementEntity = $placementRepository->find($value);
+			$rental->placement = $placementEntity;
 		}
 
 		if ($value = $values['type']) {
@@ -64,7 +66,9 @@ class RentalEditHandler extends FormHandler
 				$rental->removePricelistRow($pricelistRow);
 			}
 			foreach ($value->list as $pricelistRow) {
-				if ($pricelistRow->entity) $rental->addPricelistRow($pricelistRow->entity);
+				if ($pricelistRow->entity) {
+					$rental->addPricelistRow($pricelistRow->entity);
+				}
 			}
 		}
 
@@ -125,15 +129,18 @@ class RentalEditHandler extends FormHandler
 			}
 		}
 
-		$amenities = ['board', 'children', 'activity', 'relax', 'service', 'wellness', 'congress', 'kitchen', 'bathroom', 'heating', 'parking', 'room', 'other'];
+		$amenities = ['board', 'children', 'activity', 'relax', 'service', 'wellness', 'congress', 'kitchen', 'bathroom', 'heating', 'parking', 'rooms', 'other'];
 		foreach ($amenities as $amenityName) {
 			$value = $values[$amenityName];
 			$amenities = $rental->getAmenitiesByType($amenityName);
 			foreach ($amenities as $amenity) {
 				$rental->removeAmenity($amenity);
 			}
-			foreach ($value as $amenity) {
-				$rental->addAmenity($amenity);
+
+			$amenityRepository = $this->em->getRepository(RENTAL_AMENITY_ENTITY);
+			foreach ($value as $amenityId) {
+				$amenityEntity = $amenityRepository->find($amenityId);
+				$rental->addAmenity($amenityEntity);
 			}
 		}
 
@@ -141,7 +148,7 @@ class RentalEditHandler extends FormHandler
 			$petAmenity = $this->em->getRepository(RENTAL_AMENITY_ENTITY)->findByPetType();
 
 			foreach($petAmenity as $amenity) {
-				if ($value && $amenity->id == $value->id) {
+				if ($value && $amenity->id == $value) {
 					$rental->addAmenity($amenity);
 				} else {
 					$rental->removeAmenity($amenity);
@@ -166,7 +173,7 @@ class RentalEditHandler extends FormHandler
 		if ($value = $values['ownerAvailability']) {
 			$availibilityAmenities = $rental->getAmenitiesByType('owner-availability');
 			foreach($availibilityAmenities as $amenity) {
-				if ($value && $value->id==$amenity->id) {
+				if ($value && $amenity->id==$value) {
 					$rental->addAmenity($amenity);
 				} else {
 					$rental->removeAmenity($amenity);

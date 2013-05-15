@@ -52,7 +52,7 @@
 
 		{include #fieldset, text => 'o100085'}
 		{include #rentalType, control => $rentalContainer['type']}
-		{include #text, control => $rentalContainer['price']}
+		{include #price, control => $rentalContainer['price']}
 		{include #text, control => $rentalContainer['maxCapacity']}
 		{include #text, control => $rentalContainer['bedroomCount']}
 		{include #text, control => $rentalContainer['roomsLayout']}
@@ -75,7 +75,7 @@
 		{include #checkboxList, control => $rentalContainer['congress'], colCount => 3}
 		{include #checkboxList, control => $rentalContainer['kitchen'], colCount => 3}
 		{include #checkboxList, control => $rentalContainer['bathroom'], colCount => 3}
-		{include #checkboxList, control => $rentalContainer['room'], colCount => 3}
+		{include #checkboxList, control => $rentalContainer['rooms'], colCount => 3}
 		{include #checkboxList, control => $rentalContainer['heating'], colCount => 3}
 		{include #checkboxList, control => $rentalContainer['parking'], colCount => 3}
 		{include #checkboxList, control => $rentalContainer['other'], colCount => 3}

@@ -164,7 +164,6 @@ class EditFormHandlerTest extends \Tests\TestCase
 			'phone' => [
 				'prefix' => 421,
 				'number' => "903 618 998",
-				'phone' => FALSE,
 				'entity' => $this->contactPhoneRepositoryAccessor->get()->find(440663),
 			],
 			'url' => "http://test.sk",

@@ -5,13 +5,17 @@ namespace Extras\Forms\Container;
 use AdminModule\Forms\Form;
 use Doctrine\ORM\EntityManager;
 use Entity\Currency;
-use Extras\Models\Repository\RepositoryAccessor;
+use Entity\Rental\Rental;
 use Environment\Collator;
 use Nette\Forms\Container;
 use Nette\Localization\ITranslator;
 
 class RentalPriceListContainer extends BaseContainer
 {
+	/**
+	 * @var \Entity\Rental\Rental
+	 */
+	protected $rental;
 
 	/**
 	 * @var \Doctrine\ORM\EntityManager
@@ -24,11 +28,6 @@ class RentalPriceListContainer extends BaseContainer
 	protected $translator;
 
 	/**
-	 * @var \Extras\Models\Repository\RepositoryAccessor
-	 */
-	protected $rentalPricelistRowRepositoryAccessor;
-
-	/**
 	 * @var \Entity\Currency
 	 */
 	protected $currency;
@@ -39,15 +38,15 @@ class RentalPriceListContainer extends BaseContainer
 	protected $extraBedCount = [];
 
 
-	public function __construct(Currency $currency, EntityManager $em, ITranslator $translator, Collator $collator, RepositoryAccessor $rentalPricelistRowRepositoryAccessor)
+	public function __construct(Currency $currency, EntityManager $em, Rental $rental = NULL, ITranslator $translator, Collator $collator)
 	{
 		parent::__construct();
 		$this->em = $em;
 
-		$this->rentalPricelistRowRepositoryAccessor = $rentalPricelistRowRepositoryAccessor;
+		$this->rental = $rental;
 		$this->translator = $translator;
 		$this->currency = $currency;
-		$this->roomTypes = $em->getRepository(RENTAL_AMENITY_ENTITY)->findByRoomTypeTypeForSelect($translator);
+		$this->roomTypes = $em->getRepository(RENTAL_ROOM_TYPE_ENTITY)->getForSelect($translator, $collator);
 
 		$maxCount = 51;
 
@@ -73,17 +72,34 @@ class RentalPriceListContainer extends BaseContainer
 			->addRule(Form::RANGE, $this->translator->translate('o100105'), [0, 999999999999999]);
 	}
 
-	public function getValues($asArray = FALSE)
+	public function getFormattedValues($asArray = FALSE)
 	{
-		$values = $asArray ? array() : new \Nette\ArrayHash;
+		$values = $asArray
+			? ['list'=>[]]
+			: \Nette\ArrayHash::from(['list'=>[]]);
+
+		$pricelistRowRepository = $this->em->getRepository(RENTAL_PRICELIST_ROW_ENTITY);
+		$roomTypeRepository = $this->em->getRepository(RENTAL_ROOM_TYPE_ENTITY);
+
 		foreach ($this->getComponents() as $control) {
 			$list = $control->getValues();
-			foreach($list as $values) {
-				if ($values->entityId) {
-
-				} else {
-					$this->rentalPricelistRowRepositoryAccessor->get();
+			foreach($list as $key => $row) {
+				$rowEntity = NULL;
+				if (isset($row->entityId)) {
+					$rowEntity = $pricelistRowRepository->find($row->entityId);
 				}
+				if (!$rowEntity) {
+					$rowEntity = $pricelistRowRepository->createNew();
+				}
+				$rowEntity->rental = $this->rental;
+				$rowEntity->roomCount = $row['roomCount'];
+				$rowEntity->roomType = $roomTypeRepository->find($row['roomType']);
+				$rowEntity->bedCount = $row['bedCount'];
+				$rowEntity->extraBedCount = $row['extraBedCount'];
+				$rowEntity->price = new \Extras\Types\Price($row['price'], $this->currency);
+
+				$row['entity'] = $rowEntity;
+				$values['list'][$key] = $row;
 			}
 		}
 		return $values;

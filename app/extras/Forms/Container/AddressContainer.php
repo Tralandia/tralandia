@@ -92,8 +92,8 @@ class AddressContainer extends BaseContainer
 	 */
 	public function getAddressEntity()
 	{
-		$address = $this->getValues()->addressEntity;
-		return $address ? $address : $this->address;
+		$address = $this->getValues();
+		return isset($address->addressEntity) ? $address->addressEntity : $this->address;
 	}
 
 
@@ -139,9 +139,8 @@ class AddressContainer extends BaseContainer
 	}
 
 
-	public function getValues($asArray = FALSE)
+	public function getFormattedValues($asArray = FALSE)
 	{
-
 		$values = parent::getValues($asArray);
 		$address = $values['address'];
 		if($address) {
