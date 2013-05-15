@@ -48,7 +48,7 @@ class RentalTypeContainer extends BaseContainer
 
 	}
 
-	public function getValues($asArray = FALSE)
+	public function getFormattedValues($asArray = FALSE)
 	{
 		$values = $asArray ? array() : new \Nette\ArrayHash;
 		foreach ($this->getComponents() as $name => $control) {
