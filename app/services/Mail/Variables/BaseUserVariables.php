@@ -34,7 +34,7 @@ abstract class BaseUserVariables extends Nette\Object {
 	 * @return string
 	 */
 	public function getVariableEmail() {
-		return 'janko@hrasko.com';
+		return $this->user->getLogin();
 	}
 
 }

@@ -18,13 +18,12 @@ class ImportUpdateEmails extends BaseImport {
 
 		$replace = array(
 			'default' => [
-				'emailFrom' => 'sender_email',
-				'siteDomain' => 'env_siteDomain',
-				'siteName' => 'env_siteName',
-				'message' => 'message',
+				'siteDomain' => 'environment_siteDomain',
+				'siteName' => 'environment_siteName',
 				'objectLink' => 'rental_link',
 				'objectName' => 'rental_name',
-				'loginLink' => 'env_loginLink',
+				'objectEmail' => 'rental_email',
+				'loginLink' => 'environment_loginLink',
 				'email' => 'owner_email',
 				'password' => 'owner_password',
 				'RID' => self::DELETE,
@@ -35,12 +34,25 @@ class ImportUpdateEmails extends BaseImport {
 				'phone' => 'reservation_senderPhone',
 				'date_from' => 'reservation_arrivalDate',
 				'date_to' => 'reservation_departureDate',
-				'people' => 'reservation_people',
-				'children' => 'reservation_children',
+				'people' => 'reservation_adultsCount',
+				'children' => 'reservation_childrenCount',
 				'details' => 'reservation_message',
 			],
-			'ticket-system-new-ticket' => [
-				'link' => 'ticket_link',
+			'reservation-client' => [
+				'reservationName' => 'reservation_senderName',
+				'reservationEmail' => 'reservation_senderEmail',
+				'reservationPhone' => 'reservation_senderPhone',
+				'reservationDateFrom' => 'reservation_arrivalDate',
+				'reservationDateTo' => 'reservation_departureDate',
+				'reservationPeopleCount' => 'reservation_adultsCount',
+				'reservationChildrenCount' => 'reservation_childrenCount',
+				'reservationMessage' => 'reservation_message',
+			],
+			'dictionary-request-translations' => [
+				'ns' => 'wordCount',
+				'priceNS' => 'wordPrice',
+				'priceTotal' => 'totalPrice',
+				'deadline' => 'deadline',
 			],
 		);
 
@@ -73,6 +85,16 @@ class ImportUpdateEmails extends BaseImport {
 				$translation->setTranslation($translationText);
 			}
 
+			$subject = $email->subject;
+			foreach ($subject->translations as $translation) {
+				$translationText = str_replace(
+					array_keys($replaceTemp),
+					array_values($replaceTemp),
+					$translation->getTranslation()
+				);
+
+				$translation->setTranslation($translationText);
+			}
 		}
 
 
