@@ -2,6 +2,7 @@
 
 namespace Extras\Forms\Container;
 
+use Doctrine\ORM\EntityManager;
 use Entity\Language;
 use Entity\Phrase\Phrase;
 use Entity\Phrase\Translation;
@@ -31,13 +32,20 @@ class PhraseContainer extends BaseContainer
 	 */
 	protected $settings = [];
 
-	public function __construct(Phrase $phrase, \SupportedLanguages $supportedLanguages)
+	/**
+	 * @var \Doctrine\ORM\EntityManager
+	 */
+	private $em;
+
+
+	public function __construct(Phrase $phrase, \SupportedLanguages $supportedLanguages, EntityManager $em)
 	{
 		$this->phrase = $phrase;
 		$this->sourceLanguages = $supportedLanguages->getForSelect();
 
 		$this->fromLanguage = $phrase->getSourceLanguage();
 		parent::__construct();
+		$this->em = $em;
 	}
 
 
@@ -119,13 +127,13 @@ class PhraseContainer extends BaseContainer
 			$languageContainer['variations'] = new TranslationVariationContainer($translation, FALSE);
 			$languageContainer['variations']->setDefaults($translation->getVariations());
 
-			if($phraseType->getGenderRequired()) {
-				$genderList = $language->getGenders();
+			$genderList = $language->getGenders();
+			if($phraseType->getGenderRequired() && count($genderList)) {
 				$languageContainer->addSelect('gender', 'Gender', $genderList)
 					->setDefaultValue($translation->getGender());
 			}
 
-			if($phraseType->getPositionRequired()) {
+			if($phraseType->getPositionRequired() && count($positionList)) {
 				$languageContainer->addSelect('position', 'Position', $positionList)
 					->setDefaultValue($translation->getPosition());
 			}
@@ -185,6 +193,30 @@ class PhraseContainer extends BaseContainer
 		} else {
 			$this->settings[$name] = $value;
 		}
+	}
 
+
+	public function getFormattedValues()
+	{
+		$values = $this->getValues(TRUE);
+		$phrase = $this->phrase;
+		$languageRepository = $this->em->getRepository(LANGUAGE_ENTITY);
+
+		if(array_key_exists('ready', $values)) $phrase->setReady($values['ready']);
+		if(array_key_exists('corrected', $values)) $phrase->setCorrected($values['corrected']);
+		if(array_key_exists('sourceLanguage', $values)) {
+			$language = $languageRepository->find($values['sourceLanguage']);
+			$phrase->setSourceLanguage($language);
+		}
+		foreach($values['to'] as $languageIso => $variations) {
+			$language = $languageRepository->findOneByIso($languageIso);
+			$variations = $variations['variations'];
+			$translation = $phrase->getTranslation($language);
+
+			$translation->setVariations($variations);
+		}
+
+		$values['phrase'] = $phrase;
+		return $values;
 	}
 }
