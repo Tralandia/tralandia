@@ -4653,5 +4653,14 @@ ul.dropdown-menu:before {
 padding: 80px;
 color: #555;
 font-size: 20px;
+text-align: center;
 line-height: 30px;	
+}
+
+.introText p {
+	margin-bottom: 20px;
+}
+
+.introText p.small {
+	font-size: 15px;
 }
