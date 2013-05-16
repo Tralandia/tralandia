@@ -31,5 +31,16 @@ class RentalVariables extends Nette\Object {
 		return $environment->link('//Rental:detail', ['rental' => $this->rental]);
 	}
 
+	public function getVariableEmail() {
+		return $this->rental->getEmail();
+	}
+
+	public function getVariableName() {
+		return $this->rental->getName();
+	}
+
+	public function getVariableName() {
+		return $this->rental->getName();
+	}
 
 }
