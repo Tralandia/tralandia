@@ -64,13 +64,13 @@ class RunRobotPresenter extends BasePresenter {
 		$robot = $this->updateTranslationStatusRobot;
 		$robot->setCurrentIteration($iteration);
 
-		//$this->terminate();
+		$robot->run();
 
 		if($robot->needToRun()) {
-			//$robot->run();
+			$nextIteration = $robot->getNextIteration();
+			$nextLink = $this->link('this', ['iteration' => $nextIteration]);
+			$this->template->nextLink = $nextLink;
 		}
-		$nextIteration = $robot->getNextIteration();
 
-		$this->redirect('this', ['iteration' => $nextIteration]);
 	}
 }

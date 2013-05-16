@@ -448,6 +448,7 @@
 	$container = $control;
 	$phrase = $container->getPhrase();
 }
+{default $showDetails = TRUE}
 {?unset($control)}
 
 {var $hasErrors = count($container->getAllErrors())}
@@ -456,7 +457,7 @@
 
 	<div class="span5">
 
-		<div class="phraseFormHeader">
+		<div n:class="$showDetails ? phraseFormHeader : 'phraseFormHeader hide'">
 			<div class="span2">
 				{label $container['sourceLanguage'] /}
 				{input $container['sourceLanguage']}
@@ -495,7 +496,7 @@
 				{include #translationVatiations, control => $languageContainer['variations']}
 			</div>
 		{/foreach}
-		<small>{$container->getPhraseTypeString()}</small>
+		<small>{$container->getPhraseTypeString()} #{$phrase->getId()}</small>
 	</div>
 
 </div>
