@@ -67,7 +67,7 @@ class PhraseContainer extends BaseContainer
 	public function getPhraseTypeString()
 	{
 		$phraseType = $this->phrase->getType();
-		return $phraseType->getEntityName() . '.' . $phraseType->getEntityAttribute();
+		return $phraseType->getEntityName() . ':' . $phraseType->getEntityAttribute();
 	}
 
 

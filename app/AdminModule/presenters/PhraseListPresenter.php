@@ -25,26 +25,45 @@ class PhraseListPresenter extends BasePresenter {
 	 */
 	protected $supportedLanguages;
 
+	/**
+	 * @autowire
+	 * @var \Dictionary\FindOutdatedTranslations
+	 */
+	protected $findOutdatedTranslations;
+
 	protected $phraseRepositoryAccessor;
 
 	/**
-	 * @var \Entity\Phrase\Phrase
+	 * @var array|\Entity\Phrase\Phrase[]
 	 */
-	protected $phrase;
+	protected $translations;
 
 	public function injectDic(\Nette\DI\Container $dic) {
 		$this->phraseRepositoryAccessor = $dic->phraseRepositoryAccessor;
 	}
 
+
+	/***/
+	public function actionToTranslate($to)
+	{
+		$language = $this->languageRepositoryAccessor->get()->findOneByIso($to);
+		$this->translations = $this->findOutdatedTranslations->getWaitingForTranslation($language, 10);
+		$editForm = $this['phraseEditForm'];
+		$editForm->setDefaults([
+			'toLanguages' => $language->getId()
+		]);
+	}
+
+
 	public function actionEdit()
 	{
+		$this->translations = $this->phraseRepositoryAccessor->get()->findBy(['type' => 9], [], 5);
 
 	}
 
 
 	protected function createComponentPhraseEditForm()
 	{
-		$phrases = $this->phraseRepositoryAccessor->get()->findBy(['type' => 9], [], 5);
 
 		$phraseContainerSettings = [];
 		if($this->user->isInRole(Role::TRANSLATOR)) {
@@ -79,7 +98,8 @@ class PhraseListPresenter extends BasePresenter {
 
 
 		$listContainer = $form->addContainer('list');
-		foreach($phrases as $phrase) {
+		foreach($this->translations as $translation) {
+			$phrase = $translation->getPhrase();
 			$phraseContainer = $listContainer->addPhraseContainer($phrase->getId(), $phrase);
 			$phraseContainer->build($phraseContainerSettings);
 			$phraseContainer->setDefaultValues();

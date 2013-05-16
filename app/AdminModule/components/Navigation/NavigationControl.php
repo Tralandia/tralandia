@@ -8,6 +8,7 @@ use BaseModule\Components\BaseControl,
 	Nette\Utils\Strings;
 use BaseModule\Forms\ISimpleFormFactory;
 use Doctrine\ORM\EntityManager;
+use Entity\User\Role;
 use Environment\Collator;
 use Environment\Environment;
 use Nette\Security\User;
@@ -17,12 +18,15 @@ class NavigationControl extends BaseControl
 
 	protected $navigation;
 
-	protected $autopilotRegime;
-
 	/**
 	 * @var \Nette\Security\User
 	 */
 	protected $user;
+
+	/**
+	 * @var \Entity\User\User
+	 */
+	protected $loggedUser;
 
 	/**
 	 * @var \BaseModule\Forms\ISimpleFormFactory
@@ -39,6 +43,11 @@ class NavigationControl extends BaseControl
 	 */
 	protected $collator;
 
+	/**
+	 * @var \Doctrine\ORM\EntityManager
+	 */
+	private $em;
+
 
 	/**
 	 * @param User $user
@@ -51,15 +60,15 @@ class NavigationControl extends BaseControl
 		$this->user = $user;
 		$this->simpleFormFactory = $simpleFormFactory;
 		$this->languageRepository = $em->getRepository(LANGUAGE_ENTITY);
+		$this->loggedUser = $em->getRepository(USER_ENTITY)->find($user->getId());
 		$this->collator = $collator;
+		$this->em = $em;
 	}
 
 
 	public function render()
 	{
 		$template = $this->template;
-
-		$this->autopilotRegime = Strings::endsWith($this->getPresenter()->name, ':Ap');
 
 		$template->leftItems = $this->prepareNavigation($this->getNavigation()->left);
 		$template->rightItems = $this->prepareNavigation($this->getNavigation()->right);
@@ -76,9 +85,6 @@ class NavigationControl extends BaseControl
 			if (!isset($value->class)) {
 				$value->class = '';
 			}
-			if ($this->autopilotRegime) {
-				$value->class .= 'inIframe';
-			}
 
 			if (!isset($value->label)) {
 				$value->label = ucfirst($key);
@@ -90,7 +96,7 @@ class NavigationControl extends BaseControl
 			}
 			if (isset($value->link)) {
 				$linkArgs = (isset($value->linkArgs) ? $value->linkArgs : array());
-				$value->href = $this->presenter->link($value->link, $linkArgs);
+				$value->href = $this->presenter->link($value->link,(array) $linkArgs);
 			} else {
 				$value->href = '#';
 			}
@@ -118,9 +124,25 @@ class NavigationControl extends BaseControl
 	public function extendNavigation()
 	{
 		$navigation = $this->getNavigation();
-		if ($this->user->isLoggedIn()) {
-			$identity = $this->user->getIdentity();
-			// $navigation->right->account->label = $identity->login;
+		if($this->user->isInRole(Role::TRANSLATOR)) {
+			$left = [];
+			$languages = $this->em->getRepository(LANGUAGE_ENTITY)->findByTranslator($this->loggedUser);
+			foreach($languages as $language) {
+				$languageTree = [];
+				$languageTree['label'] = $language->getName()->getCentralTranslationText() . ' (' . $language->getIso() . ')';
+
+				$languageItems = [];
+				$languageItems['toTranslate'] = [
+					'label' => 'To Translate',
+					'link' => 'PhraseList:toTranslate',
+					'linkArgs' => ['to' => $language->getIso()],
+				];
+				$languageTree['items'] = $languageItems;
+
+				$left[$language->getIso()] = $languageTree;
+			}
+			$left = ArrayHash::from($left);
+			$navigation->left = $left;
 		}
 	}
 
@@ -157,7 +179,11 @@ class NavigationControl extends BaseControl
 	{
 		$config = new \Nette\Config\Loader;
 
-		return ArrayHash::from($config->load(APP_DIR . '/configs/navigation.neon', 'common'));
+		$file = $this->user->getRoles()[0];
+
+		$navigationConfig = $config->load(APP_DIR . '/configs/adminNavigation/'.$file.'.neon', 'common');
+
+		return ArrayHash::from($navigationConfig);
 	}
 
 }

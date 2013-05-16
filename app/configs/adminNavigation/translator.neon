@@ -1,0 +1,8 @@
+common:
+
+	right: # parave strana
+		account:
+			items:
+				logout:
+					icon: icon-off
+					link: ':Front:Sign:out'
