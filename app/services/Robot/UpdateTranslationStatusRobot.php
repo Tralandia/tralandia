@@ -15,7 +15,7 @@ use Nette\Utils\Paginator;
 class UpdateTranslationStatusRobot extends \Nette\Object implements IRobot
 {
 
-	protected $itemsPerIteration = 100;
+	protected $itemsPerIteration = 2000;
 
 	protected $itemCount = 0;
 
@@ -54,7 +54,7 @@ class UpdateTranslationStatusRobot extends \Nette\Object implements IRobot
 	}
 
 
-	public function getIterationCont()
+	public function getIterationCount()
 	{
 		return $this->getPaginator()->getPageCount();
 	}
@@ -68,7 +68,7 @@ class UpdateTranslationStatusRobot extends \Nette\Object implements IRobot
 
 	public function needToRun()
 	{
-		return $this->getNextIteration() <= $this->getIterationCont();
+		return $this->getNextIteration() <= $this->getIterationCount();
 	}
 
 
@@ -83,8 +83,8 @@ class UpdateTranslationStatusRobot extends \Nette\Object implements IRobot
 
 		foreach($phrases as $phrase) {
 			$this->updateTranslationStatus->updatePhrase($phrase);
-			$this->em->flush();
 		}
+		$this->em->flush();
 	}
 
 

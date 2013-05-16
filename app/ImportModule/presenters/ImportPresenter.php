@@ -131,41 +131,41 @@ class ImportPresenter extends Presenter {
 			}
 
 			$automaticUrls = array(
-				'http://www.sk.tra.com/import?importSection=phraseType',
-				'http://www.sk.tra.com/import?importSection=languages',
-				'http://www.sk.tra.com/import?importSection=htmlPhrases&subsection=importPhrases',
-				'http://www.sk.tra.com/import?importSection=htmlPhrases&subsection=importNewPhrases',
-				'http://www.sk.tra.com/import?importSection=amenities',
-				'http://www.sk.tra.com/import?importSection=currencies',
-				'http://www.sk.tra.com/import?importSection=userRoles',
-				'http://www.sk.tra.com/import?importSection=domains',
-				'http://www.sk.tra.com/import?importSection=locations&subsection=importContinents',
+				$this->link('default', array('importSection' => 'phraseType')),
+				$this->link('default', array('importSection' => 'languages')),
+				$this->link('default', array('importSection' => 'htmlPhrases', 'subsection' => 'importPhrases')),
+				$this->link('default', array('importSection' => 'htmlPhrases', 'subsection' => 'importNewPhrases')),
+				$this->link('default', array('importSection' => 'amenities')),
+				$this->link('default', array('importSection' => 'currencies')),
+				$this->link('default', array('importSection' => 'userRoles')),
+				$this->link('default', array('importSection' => 'domains')),
+				$this->link('default', array('importSection' => 'locations', 'subsection' => 'importContinents')),
 			);
 			foreach ($allCountries as $key => $value) {
-				$automaticUrls[] = 'http://www.sk.tra.com/import?importSection=locations&subsection=importRegions&countryIso='.$value;
+				$automaticUrls[] = $this->link('default', array('importSection' => 'locations', 'subsection' => 'importRegions', 'countryIso' => $value));
 			}
 
 			foreach ($allCountries as $key => $value) {
-				$automaticUrls[] = 'http://www.sk.tra.com/import?importSection=locations&subsection=importLocalities&countryIso='.$value;
+				$automaticUrls[] = $this->link('default', array('importSection' => 'locations', 'subsection' => 'importLocalities', 'countryIso' => $value));
 			}
 
 			$automaticUrls = array_merge($automaticUrls, array(
-				'http://www.sk.tra.com/import?importSection=phones',
-				'http://www.sk.tra.com/import?importSection=users&subsection=importSuperAdmins',
-				'http://www.sk.tra.com/import?importSection=users&subsection=importAdmins',
-				'http://www.sk.tra.com/import?importSection=users&subsection=importManagers',
-				'http://www.sk.tra.com/import?importSection=users&subsection=importTranslators',
+				$this->link('default', array('importSection' => 'phones')),
+				$this->link('default', array('importSection' => 'users', 'subsection' => 'importSuperAdmins')),
+				$this->link('default', array('importSection' => 'users', 'subsection' => 'importAdmins')),
+				$this->link('default', array('importSection' => 'users', 'subsection' => 'importManagers')),
+				$this->link('default', array('importSection' => 'users', 'subsection' => 'importTranslators')),
 			));
 			
 			foreach ($allCountries as $key => $value) {
-				$automaticUrls[] = 'http://www.sk.tra.com/import?importSection=users&subsection=importOwners&countryIso='.$value;
+				$automaticUrls[] = $this->link('default', array('importSection' => 'users', 'subsection' => 'importOwners', 'countryIso' => $value));
 			}
 
-			$automaticUrls[] = 'http://www.sk.tra.com/import?importSection=users&subsection=importBlacklist';
+			$automaticUrls[] = $this->link('default', array('importSection' => 'users', 'subsection' => 'importBlacklist'));
 
-			//$automaticUrls[] = 	'http://www.sk.tra.com/import?importSection=users&subsection=importVisitors';
-			$automaticUrls[] = 	'http://www.sk.tra.com/import?importSection=rentalTypes';
-			$automaticUrls[] = 	'http://www.sk.tra.com/import?importSection=rentalInformation';
+			//$automaticUrls[] = 	$this->link('default', array('importSection' => 'users', 'subsection' => 'importVisitors'));
+			$automaticUrls[] = 	$this->link('default', array('importSection' => 'rentalTypes'));
+			$automaticUrls[] = 	$this->link('default', array('importSection' => 'rentalInformation'));
 
 			// Rentals
 			foreach ($allCountries as $key => $value) {
@@ -178,11 +178,11 @@ class ImportPresenter extends Presenter {
 				}
 
 				for ($i=0; $i < $c; $i++) { 
-					$automaticUrls[] = 'http://www.sk.tra.com/import?importSection=rentals&countryIso='.$value.'&limit='.($i*$countPerGroup).','.$countPerGroup;				
+					$automaticUrls[] = $this->link('default', array('importSection' => 'rentals', 'countryIso' => $value, 'limit' => ($i*$countPerGroup).','.$countPerGroup));
 				}
 			}
 
-			$automaticUrls[] = 	'http://www.sk.tra.com/import?importSection=invoice';
+			$automaticUrls[] = 	$this->link('default', array('importSection' => 'invoice'));
 
 			// Reservations
 			$countPerGroup = 1000;
@@ -194,20 +194,29 @@ class ImportPresenter extends Presenter {
 			}
 
 			for ($i=0; $i < $c; $i++) { 
-				$automaticUrls[] = 'http://www.sk.tra.com/import?importSection=interactions&subsection=importRentalReservations&limit='.($i*$countPerGroup).','.$countPerGroup;				
+				$automaticUrls[] = $this->link('default', array('importSection' => 'interactions', 'subsection' => 'importRentalReservations', 'limit' => ($i*$countPerGroup).','.$countPerGroup));	
 			}
 
 			$automaticUrls = array_merge($automaticUrls, array(
-				'http://www.sk.tra.com/import?importSection=interactions&subsection=importRentalToFriend',
-				'http://www.sk.tra.com/import?importSection=interactions&subsection=importSiteReviews',
-				'http://www.sk.tra.com/import?importSection=email',
-				'http://www.sk.tra.com/import?importSection=backLinks',
-				'http://www.sk.tra.com/import?importSection=updateLanguage',
-				'http://www.sk.tra.com/import?importSection=updateEmails',
-				'http://www.sk.tra.com/import?importSection=faq',
-				'http://www.sk.tra.com/import?importSection=page',
-				'http://www.sk.tra.com/import?importSection=pathsegments',
+				$this->link('default', array('importSection' => 'interactions', 'subsection' => 'importRentalToFriend')),
+				$this->link('default', array('importSection' => 'interactions', 'subsection' => 'importSiteReviews')),
+				$this->link('default', array('importSection' => 'email')),
+				$this->link('default', array('importSection' => 'backLinks')),
+				$this->link('default', array('importSection' => 'updateLanguage')),
+				$this->link('default', array('importSection' => 'updateEmails')),
+				$this->link('default', array('importSection' => 'faq')),
+				$this->link('default', array('importSection' => 'page')),
+				$this->link('default', array('importSection' => 'pathsegments')),
 			));
+
+			// Translation Statuses
+			$robot = $this->context->updateTranslationStatusRobot;
+			$c = $robot->getIterationCount();
+
+			for ($i=1; $i <= $c; $i++) { 
+				$automaticUrls[] = $this->link('default', array('importSection' => 'updateTranslationStatus', 'iteration' => $i));
+			}
+
 
 			$this->session->automaticUrls = $automaticUrls;
 			//d($automaticUrls); exit;
