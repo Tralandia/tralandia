@@ -1,5 +1,5 @@
 php:
-	max_execution_time: 60
+	max_execution_time: 160
 	memory_limit: 1024M
 
 nette:
