@@ -2,6 +2,7 @@
 namespace Repository;
 
 use Doctrine\ORM\Query\Expr;
+use Entity\Language;
 use Environment\Collator;
 use Nette\Application\UI\Presenter;
 use Nette\Localization\ITranslator;
@@ -18,7 +19,17 @@ class LanguageRepository extends \Repository\BaseRepository {
 
 	public function findSupported($order = NULL) {
 		$entityName = $this->_entityName;
-		return $this->findBySupported($entityName::SUPPORTED, $order);
+			return $this->findBySupported($entityName::SUPPORTED, $order);
+	}
+
+	public function findSupportedQb() {
+
+		$qb = $this->_em->createQueryBuilder();
+
+		$qb->select('e')->from($this->_entityName, 'e')
+			->andWhere($qb->expr()->eq('e.supported', ':status'))->setParameter('status', Language::SUPPORTED);
+
+		return $qb;
 	}
 
 	public function getSupportedSortedByName(ITranslator $translator, Collator $collator) {
