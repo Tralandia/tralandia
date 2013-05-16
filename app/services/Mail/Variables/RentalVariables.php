@@ -39,8 +39,4 @@ class RentalVariables extends Nette\Object {
 		return $this->rental->getName();
 	}
 
-	public function getVariableName() {
-		return $this->rental->getName();
-	}
-
 }
