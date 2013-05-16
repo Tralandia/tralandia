@@ -99,7 +99,7 @@ class Image extends \Entity\BaseEntity
 	{
 		return $this->filePath;
 	}
-				
+		
 	/**
 	 * @param integer
 	 * @return \Entity\Rental\Image
