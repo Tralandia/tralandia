@@ -59,7 +59,7 @@ class PhoneContainer extends BaseContainer
 	}
 
 
-	public function getValues($asArray = FALSE)
+	public function getFormattedValues($asArray = FALSE)
 	{
 
 		$phone = $this['prefix']->getValue() . $this['number']->getValue();
@@ -68,7 +68,7 @@ class PhoneContainer extends BaseContainer
 		$values = $asArray ? array() : new \Nette\ArrayHash;
 		$values['prefix'] = $this['prefix']->getValue();
 		$values['number'] = $this['number']->getValue();
-		$values['phone'] = $phone;
+		$values['entity'] = $phone;
 
 		return $values;
 	}

@@ -15,7 +15,8 @@ abstract class FormHandler extends Nette\Object
 		if (method_exists($this, 'handleSuccess')) {
 			$form->onSuccess[] = function (Form $form) use ($self) {
 				try {
-					$self->handleSuccess($form->getValues());
+					$values = $form->getFormattedValues();
+					$self->handleSuccess($values);
 
 				} catch (ValidationError $e) {
 					foreach ($e->errors as $error) {
