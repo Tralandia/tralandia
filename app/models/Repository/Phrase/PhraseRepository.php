@@ -2,6 +2,7 @@
 namespace Repository\Phrase;
 
 use Doctrine\ORM\Query\Expr;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * PhraseRepository class
@@ -33,6 +34,31 @@ class PhraseRepository extends \Repository\BaseRepository {
 
 		return $array;
 	}
+
+
+	public function findTranslatedQb()
+	{
+
+		$qb = $this->_em->createQueryBuilder();
+
+		$qb->select('e')->from($this->_entityName, 'e')
+			->leftJoin('e.type', 'type')
+			->andWhere($qb->expr()->eq('type.translated', ':translated'))->setParameter('translated', TRUE);
+
+		return $qb;
+	}
+
+
+	/**
+	 * @return int|number
+	 */
+	public function getTranslatedCount()
+	{
+		$qb = $this->findTranslatedQb();
+		$paginator = new Paginator($qb);
+		return $paginator->count();
+	}
+
 
 	/**
 	 * Vrati vnorene pole ID-cok fraz zoskupene podla jazyka ktore treba prelozit

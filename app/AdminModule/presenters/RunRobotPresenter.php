@@ -59,14 +59,18 @@ class RunRobotPresenter extends BasePresenter {
 		$this->sendResponse(new TextResponse('done'));
 	}
 
-	public function actionUpdateTranslationStatus()
+	public function actionUpdateTranslationStatus($iteration = 1)
 	{
 		$robot = $this->updateTranslationStatusRobot;
+		$robot->setCurrentIteration($iteration);
+
+		//$this->terminate();
 
 		if($robot->needToRun()) {
-			$robot->run();
+			//$robot->run();
 		}
+		$nextIteration = $robot->getNextIteration();
 
-		$this->redirect(':Admin:Currency:list');
+		$this->redirect('this', ['iteration' => $nextIteration]);
 	}
 }

@@ -450,28 +450,28 @@
 }
 {?unset($control)}
 
-<div class="row-fluid phraseForm">
+{var $hasErrors = count($container->getAllErrors())}
 
+<div  n:class="$hasErrors ? 'invalid row-fluid phraseForm' : 'row-fluid phraseForm'">
 
-
-	
 	<div class="span5">
 
-	<div class="phraseFormHeader">
-		<div class="span2">
-			{label $container['sourceLanguage'] /}
-			{input $container['sourceLanguage']}
-		</div>
+		<div class="phraseFormHeader">
+			<div class="span2">
+				{label $container['sourceLanguage'] /}
+				{input $container['sourceLanguage']}
+			</div>
 
-		<div class="checkbox">
-			{input $container['ready']}
-			{label $container['ready'] /}
+			<div class="checkbox">
+				{input $container['ready']}
+				{label $container['ready'] /}
+			</div>
+
+			<div class="checkbox">
+				{input $container['corrected']}
+				{label $container['corrected'] /}
+			</div>
 		</div>
-		<div class="checkbox">
-			{input $container['corrected']}
-			{label $container['corrected'] /}
-		</div>
-	</div>
 
 		{include #translationVatiations, control => $container['fromVariations']}
 
@@ -497,7 +497,7 @@
 		{/foreach}
 		<small>{$container->getPhraseTypeString()}</small>
 	</div>
-	
+
 </div>
 
 
