@@ -31,7 +31,7 @@ class ImportHtmlPhrases extends BaseImport {
 		while ($x = mysql_fetch_array($r)) {
 			if (in_array($x['id'], $this->multiIds)) {
 				$newPhrase = $this->createNewPhrase($dictionaryTypeMulti, $x['id']);
-			} else if ($x['is_html'] == 1)) {
+			} else if ($x['is_html'] == 1) {
 				$newPhrase = $this->createNewPhrase($dictionaryTypeHtml, $x['id']);
 			} else {
 				$newPhrase = $this->createNewPhrase($dictionaryType, $x['id']);
@@ -87,7 +87,7 @@ class ImportHtmlPhrases extends BaseImport {
 				$variations[2][0]['nominative'] = $x['sk2'];
 				$thisPhrase->getTranslation($sk)->setVariations($variations);
 			}
-			$languageRepository->persist($thisPhrase); 
+			$languageRepository->persist($thisPhrase);
 		}
 		$languageRepository->flush();
 	}

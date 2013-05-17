@@ -4,6 +4,7 @@ namespace Repository\Phrase;
 use Doctrine\ORM\Query\Expr;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Entity\Language;
+use Entity\Phrase\Translation;
 
 /**
  * PhraseRepository class
@@ -96,7 +97,7 @@ class PhraseRepository extends \Repository\BaseRepository {
 		$qb->select('e')->from($this->_entityName, 'e')
 			->leftJoin('e.translations', 't')
 			->andWhere($qb->expr()->eq('t.language', ':language'))->setParameter('language', $language)
-			->andWhere($qb->expr()->eq('t.checked', ':checked'))->setParameter('checked', FALSE);
+			->andWhere($qb->expr()->eq('t.status', ':status'))->setParameter('status', Translation::WAITING_FOR_CHECKING);
 
 		return $qb;
 	}
